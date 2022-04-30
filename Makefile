@@ -115,7 +115,7 @@ endif
 ASFLAGS := -march=vr4300 -32 -Iinclude
 
 ifeq ($(COMPILER),gcc)
-  CFLAGS += -G 0 -nostdinc $(INC) -DAVOID_UB -march=vr4300 -mfix4300 -mabi=32 -mno-abicalls -mdivide-breaks -fno-zero-initialized-in-bss -fno-toplevel-reorder -ffreestanding -fno-common -fno-merge-constants -mno-explicit-relocs -mno-split-addresses $(CHECK_WARNINGS) -funsigned-char
+  CFLAGS += -G 0 -nostdinc $(INC) -DAVOID_UB -march=vr4300 -mfix4300 -mabi=32 -mno-abicalls -mdivide-breaks -fno-zero-initialized-in-bss -fno-toplevel-reorder -ffreestanding -fno-common -mno-explicit-relocs -mno-split-addresses $(CHECK_WARNINGS) -funsigned-char
   MIPS_VERSION := -mips3
 else 
   # we support Microsoft extensions such as anonymous structs, which the compiler does support but warns for their usage. Surpress the warnings with -woff.
@@ -165,11 +165,17 @@ O_FILES       := $(foreach f,$(S_FILES:.s=.o),build/$f) \
                  $(foreach f,$(C_FILES:.c=.o),build/$f) \
                  $(foreach f,$(wildcard baserom/*),build/$f.o)
 
-OVL_RELOC_FILES := $(shell $(CPP) $(CPPFLAGS) $(SPEC) | grep -o '[^"]*_reloc.o' )
+SEGMENTS            := $(shell $(CPP) $(CPPFLAGS) $(SPEC) | grep -o '^[ \t]*name[ \t]\+".\+"' | sed 's/.*"\(.*\)".*/\1/g' )
+SEGMENTS_OVL        := $(filter ovl_%,$(SEGMENTS))
+SEGMENT_DIR         := build/segments
+SEGMENT_OBJECTS     := $(SEGMENTS:%=$(SEGMENT_DIR)/%.o)
+SEGMENT_RELOCS      := $(SEGMENTS_OVL:%=$(SEGMENT_DIR)/%.reloc.o)
+SEGMENT_SCRIPTS     := $(SEGMENT_OBJECTS:.o=.ld)
+SEGMENT_DEPENDS     := $(SEGMENT_OBJECTS:.o=.d)
 
 # Automatic dependency files
 # (Only asm_processor dependencies and reloc dependencies are handled for now)
-DEP_FILES := $(O_FILES:.o=.asmproc.d) $(OVL_RELOC_FILES:.o=.d)
+DEP_FILES := $(O_FILES:.o=.asmproc.d)
 
 
 TEXTURE_FILES_PNG := $(foreach dir,$(ASSET_BIN_DIRS),$(wildcard $(dir)/*.png))
@@ -178,7 +184,7 @@ TEXTURE_FILES_OUT := $(foreach f,$(TEXTURE_FILES_PNG:.png=.inc.c),build/$f) \
 					 $(foreach f,$(TEXTURE_FILES_JPG:.jpg=.jpg.inc.c),build/$f) \
 
 # create build directories
-$(shell mkdir -p build/baserom build/assets/text $(foreach dir,$(SRC_DIRS) $(ASM_DIRS) $(ASSET_BIN_DIRS),build/$(dir)))
+$(shell mkdir -p build/baserom build/assets/text $(SEGMENT_DIR) $(foreach dir,$(SRC_DIRS) $(ASM_DIRS) $(ASSET_BIN_DIRS),build/$(dir)))
 
 ifeq ($(COMPILER),ido)
 build/src/code/fault.o: CFLAGS += -trapuv
@@ -262,30 +268,44 @@ test: $(ROM)
 $(ROM): $(ELF)
 	$(ELF2ROM) -cic 6105 $< $@
 
-$(ELF): $(TEXTURE_FILES_OUT) $(ASSET_FILES_OUT) $(O_FILES) $(OVL_RELOC_FILES) build/ldscript.txt build/undefined_syms.txt
-	$(LD) -T build/undefined_syms.txt -T build/ldscript.txt --no-check-sections --accept-unknown-input-arch --emit-relocs -Map build/z64.map -o $@
+$(ELF): $(SEGMENT_OBJECTS) $(SEGMENT_RELOCS) build/ldscript.txt build/undefined_syms.txt
+	$(LD) -T build/undefined_syms.txt -T build/ldscript.txt --emit-relocs -Map build/z64.map -o $@
 
-## Order-only prerequisites 
-# These ensure e.g. the O_FILES are built before the OVL_RELOC_FILES.
-# The intermediate phony targets avoid quadratically-many dependencies between the targets and prerequisites.
-
-o_files: $(O_FILES)
-$(OVL_RELOC_FILES): | o_files
-
-asset_files: $(TEXTURE_FILES_OUT) $(ASSET_FILES_OUT)
-$(O_FILES): | asset_files
-
-.PHONY: o_files asset_files
-
+build/undefined_syms.txt: undefined_syms.txt
+	$(CPP) $(CPPFLAGS) $< > $@
 
 build/$(SPEC): $(SPEC)
 	$(CPP) $(CPPFLAGS) $< > $@
 
 build/ldscript.txt: build/$(SPEC)
-	$(MKLDSCRIPT) $< $@
+	$(MKLDSCRIPT) -r $< $(SEGMENT_DIR) $@
 
-build/undefined_syms.txt: undefined_syms.txt
-	$(CPP) $(CPPFLAGS) $< > $@
+$(SEGMENT_SCRIPTS): build/$(SPEC)
+$(SEGMENT_SCRIPTS): %.ld: %.d
+
+$(SEGMENT_DEPENDS): build/$(SPEC)
+	$(MKLDSCRIPT) -s $< $(SEGMENT_DIR) $(@:$(SEGMENT_DIR)/%.d=%)
+
+ifeq ($(MAKECMDGOALS),$(filter-out clean assetclean distclean setup,$(MAKECMDGOALS)))
+-include $(SEGMENT_DEPENDS)
+endif
+
+$(SEGMENT_DIR)/%.reloc.o: $(SEGMENT_DIR)/%.o
+	$(FADO) $< -n $(<F:.o=) -o $(@:.o=.s)
+	$(AS) $(ASFLAGS) $(@:.o=.s) -o $@
+
+$(SEGMENT_OBJECTS): %.o: %.ld %.d
+	$(LD) -r -T $< --accept-unknown-input-arch -Map $(@:.o=.map) -o $@
+
+## Order-only prerequisites 
+# These ensure e.g. the asset include files are built before the files that include them
+# The intermediate phony targets avoid quadratically-many dependencies between the targets and prerequisites.
+
+asset_files: $(TEXTURE_FILES_OUT) $(ASSET_FILES_OUT)
+$(O_FILES): | asset_files
+
+.PHONY: asset_files
+
 
 build/baserom/%.o: baserom/%
 	$(OBJCOPY) -I binary -O elf32-big $< $@
@@ -330,10 +350,6 @@ build/src/libultra/libc/llcvt.o: src/libultra/libc/llcvt.c
 	$(CC_CHECK) $<
 	python3 tools/set_o32abi_bit.py $@
 	@$(OBJDUMP) -d $@ > $(@:.o=.s)
-
-build/src/overlays/%_reloc.o: build/$(SPEC)
-	$(FADO) $$(tools/reloc_prereq $< $(notdir $*)) -n $(notdir $*) -o $(@:.o=.s) -M $(@:.o=.d)
-	$(AS) $(ASFLAGS) $(@:.o=.s) -o $@
 
 build/%.inc.c: %.png
 	$(ZAPD) btex -eh -tt $(subst .,,$(suffix $*)) -i $< -o $@
