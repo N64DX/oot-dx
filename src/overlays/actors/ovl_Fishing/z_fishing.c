@@ -12,7 +12,7 @@
 #include "terminal.h"
 
 // For retail BSS ordering, the block number of sStreamSfxProjectedPos must be 0.
-#pragma increment_block_number 208
+#pragma increment_block_number 243
 
 #define FLAGS ACTOR_FLAG_4
 
@@ -1683,7 +1683,7 @@ void Fishing_DrawLureHook(PlayState* play, Vec3f* pos, Vec3f* refPos, u8 hookInd
 
             Matrix_MultVec3f(&sZeroVec, &effect->pos);
             Matrix_Get(&mf);
-            Matrix_MtxFToYXZRotS(&mf, &sEffOwnersHatRot, 0);
+            Matrix_MtxFToYXZRot(&mf, &sEffOwnersHatRot, 0);
 
             sIsOwnersHatSunk = false;
             sIsOwnersHatHooked = false;

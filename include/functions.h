@@ -292,8 +292,6 @@ void EffectSsDeadSound_SpawnStationary(PlayState* play, Vec3f* pos, u16 sfxId, s
                                        s16 repeatMode, s32 life);
 void EffectSsIceSmoke_Spawn(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale);
 void FlagSet_Update(PlayState* play);
-void Overlay_LoadGameState(GameStateOverlay* overlayEntry);
-void Overlay_FreeGameState(GameStateOverlay* overlayEntry);
 void ActorShape_Init(ActorShape* shape, f32 yOffset, ActorShadowFunc shadowDraw, f32 shadowScale);
 void ActorShadow_DrawCircle(Actor* actor, Lights* lights, PlayState* play);
 void ActorShadow_DrawWhiteCircle(Actor* actor, Lights* lights, PlayState* play);
@@ -984,55 +982,6 @@ u32 Player_InitPauseDrawData(PlayState* play, u8* segment, SkelAnime* skelAnime)
 void Player_DrawPause(PlayState* play, u8* segment, SkelAnime* skelAnime, Vec3f* pos, Vec3s* rot, f32 scale,
                       s32 sword, s32 tunic, s32 shield, s32 boots);
 void PreNMI_Init(GameState* thisx);
-Gfx* Gfx_SetFog(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 near, s32 far);
-Gfx* Gfx_SetFogWithSync(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 near, s32 far);
-Gfx* Gfx_SetFog2(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 near, s32 far);
-Gfx* Gfx_SetupDL(Gfx* gfx, u32 i);
-Gfx* Gfx_SetupDL_57(Gfx* gfx);
-Gfx* Gfx_SetupDL_52NoCD(Gfx* gfx);
-void Gfx_SetupDL_57Opa(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_51Opa(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_54Opa(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_26Opa(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_25Xlu2(GraphicsContext* gfxCtx);
-void func_80093C80(PlayState* play);
-void Gfx_SetupDL_25Opa(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_25Xlu(GraphicsContext* gfxCtx);
-Gfx* Gfx_SetupDL_64(Gfx* gfx);
-Gfx* Gfx_SetupDL_34(Gfx* gfx);
-void Gfx_SetupDL_44Xlu(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_36Opa(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_28Opa(GraphicsContext* gfxCtx);
-Gfx* Gfx_SetupDL_28(Gfx* gfx);
-void Gfx_SetupDL_38Xlu(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_4Xlu(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_37Opa(GraphicsContext* gfxCtx);
-Gfx* Gfx_SetupDL_39(Gfx* gfx);
-void Gfx_SetupDL_39Opa(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_39Overlay(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_39Ptr(Gfx** gfxP);
-void Gfx_SetupDL_40Opa(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_41Opa(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_47Xlu(GraphicsContext* gfxCtx);
-Gfx* Gfx_SetupDL_20NoCD(Gfx* gfx);
-Gfx* Gfx_SetupDL_66(Gfx* gfx);
-Gfx* func_800947AC(Gfx* gfx);
-void Gfx_SetupDL_42Opa(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_42Overlay(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_27Xlu(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_60NoCDXlu(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_61Xlu(GraphicsContext* gfxCtx);
-void Gfx_SetupDL_56Ptr(Gfx** gfxP);
-Gfx* Gfx_BranchTexScroll(Gfx** gfxP, u32 x, u32 y, s32 width, s32 height);
-Gfx* func_80094E78(GraphicsContext* gfxCtx, u32 x, u32 y);
-Gfx* Gfx_TexScroll(GraphicsContext* gfxCtx, u32 x, u32 y, s32 width, s32 height);
-Gfx* Gfx_TwoTexScroll(GraphicsContext* gfxCtx, s32 tile1, u32 x1, u32 y1, s32 width1, s32 height1, s32 tile2, u32 x2,
-                      u32 y2, s32 width2, s32 height2);
-Gfx* Gfx_TwoTexScrollEnvColor(GraphicsContext* gfxCtx, s32 tile1, u32 x1, u32 y1, s32 width1, s32 height1, s32 tile2,
-                              u32 x2, u32 y2, s32 width2, s32 height2, s32 r, s32 g, s32 b, s32 a);
-Gfx* Gfx_EnvColor(GraphicsContext* gfxCtx, s32 r, s32 g, s32 b, s32 a);
-void Gfx_SetupFrame(GraphicsContext* gfxCtx, u8 r, u8 g, u8 b);
-void func_80095974(GraphicsContext* gfxCtx);
 void func_80095AA0(PlayState* play, Room* room, Input* input, s32 arg3);
 void Room_DrawBackground2D(Gfx** gfxP, void* tex, void* tlut, u16 width, u16 height, u8 fmt, u8 siz, u16 tlutMode,
                            u16 tlutCount, f32 offsetX, f32 offsetY);
@@ -1218,41 +1167,6 @@ void func_800C213C(PreRender* this, Gfx** gfxP);
 void PreRender_RestoreFramebuffer(PreRender* this, Gfx** gfxP);
 void PreRender_CopyImageRegion(PreRender* this, Gfx** gfxP);
 void PreRender_ApplyFilters(PreRender* this);
-void GameState_SetFBFilter(Gfx** gfxP);
-void GameState_Draw(GameState* gameState, GraphicsContext* gfxCtx);
-void GameState_SetFrameBuffer(GraphicsContext* gfxCtx);
-void GameState_ReqPadData(GameState* gameState);
-void GameState_Update(GameState* gameState);
-void GameState_InitArena(GameState* gameState, size_t size);
-void GameState_Realloc(GameState* gameState, size_t size);
-void GameState_Init(GameState* gameState, GameStateFunc init, GraphicsContext* gfxCtx);
-void GameState_Destroy(GameState* gameState);
-GameStateFunc GameState_GetInit(GameState* gameState);
-u32 GameState_IsRunning(GameState* gameState);
-#if OOT_DEBUG
-void* GameState_Alloc(GameState* gameState, size_t size, const char* file, int line);
-void* GameAlloc_MallocDebug(GameAlloc* this, u32 size, const char* file, int line);
-#endif
-void* GameAlloc_Malloc(GameAlloc* this, u32 size);
-void GameAlloc_Free(GameAlloc* this, void* data);
-void GameAlloc_Cleanup(GameAlloc* this);
-void GameAlloc_Init(GameAlloc* this);
-void Graph_InitTHGA(GraphicsContext* gfxCtx);
-GameStateOverlay* Graph_GetNextGameState(GameState* gameState);
-void Graph_Init(GraphicsContext* gfxCtx);
-void Graph_Destroy(GraphicsContext* gfxCtx);
-void Graph_TaskSet00(GraphicsContext* gfxCtx);
-void Graph_Update(GraphicsContext* gfxCtx, GameState* gameState);
-void Graph_ThreadEntry(void*);
-void* Graph_Alloc(GraphicsContext* gfxCtx, size_t size);
-void* Graph_Alloc2(GraphicsContext* gfxCtx, size_t size);
-#if OOT_DEBUG
-void Graph_OpenDisps(Gfx** dispRefs, GraphicsContext* gfxCtx, const char* file, int line);
-void Graph_CloseDisps(Gfx** dispRefs, GraphicsContext* gfxCtx, const char* file, int line);
-#endif
-Gfx* Gfx_Open(Gfx* gfx);
-Gfx* Gfx_Close(Gfx* gfx, Gfx* dst);
-void* Gfx_Alloc(Gfx** gfxP, u32 size);
 ListAlloc* ListAlloc_Init(ListAlloc* this);
 void* ListAlloc_Alloc(ListAlloc* this, u32 size);
 void ListAlloc_Free(ListAlloc* this, void* data);
@@ -1261,45 +1175,8 @@ void Main(void* arg);
 void SysCfb_Init(s32 n64dd);
 void* SysCfb_GetFbPtr(s32 idx);
 void* SysCfb_GetFbEnd(void);
-
 void Math3D_DrawSphere(PlayState* play, Sphere16* sph);
 void Math3D_DrawCylinder(PlayState* play, Cylinder16* cyl);
-void Matrix_Init(GameState* gameState);
-void Matrix_Push(void);
-void Matrix_Pop(void);
-void Matrix_Get(MtxF* dest);
-void Matrix_Put(MtxF* src);
-void Matrix_Mult(MtxF* mf, u8 mode);
-void Matrix_Translate(f32 x, f32 y, f32 z, u8 mode);
-void Matrix_Scale(f32 x, f32 y, f32 z, u8 mode);
-void Matrix_RotateX(f32 x, u8 mode);
-void Matrix_RotateY(f32 y, u8 mode);
-void Matrix_RotateZ(f32 z, u8 mode);
-void Matrix_RotateZYX(s16 x, s16 y, s16 z, u8 mode);
-void Matrix_TranslateRotateZYX(Vec3f* translation, Vec3s* rotation);
-void Matrix_SetTranslateRotateYXZ(f32 translateX, f32 translateY, f32 translateZ, Vec3s* rot);
-Mtx* Matrix_MtxFToMtx(MtxF* src, Mtx* dest);
-#if OOT_DEBUG
-Mtx* Matrix_ToMtx(Mtx* dest, const char* file, int line);
-Mtx* Matrix_NewMtx(GraphicsContext* gfxCtx, const char* file, int line);
-#else
-Mtx* Matrix_ToMtx(Mtx* dest);
-Mtx* Matrix_NewMtx(GraphicsContext* gfxCtx);
-#endif
-void Matrix_MultVec3f(Vec3f* src, Vec3f* dest);
-void Matrix_MtxFCopy(MtxF* dest, MtxF* src);
-void Matrix_MtxToMtxF(Mtx* src, MtxF* dest);
-void Matrix_MultVec3fExt(Vec3f* src, Vec3f* dest, MtxF* mf);
-void Matrix_Transpose(MtxF* mf);
-void Matrix_ReplaceRotation(MtxF* mf);
-void Matrix_MtxFToYXZRotS(MtxF* mf, Vec3s* rotDest, s32 flag);
-void Matrix_MtxFToZYXRotS(MtxF* mf, Vec3s* rotDest, s32 flag);
-void Matrix_RotateAxis(f32 angle, Vec3f* axis, u8 mode);
-#if OOT_DEBUG
-MtxF* Matrix_CheckFloats(MtxF* mf, const char* file, int line);
-#endif
-void Matrix_SetTranslateScaleMtx2(Mtx* mtx, f32 scaleX, f32 scaleY, f32 scaleZ, f32 translateX, f32 translateY,
-                                  f32 translateZ);
 u64* SysUcode_GetUCodeBoot(void);
 size_t SysUcode_GetUCodeBootSize(void);
 u64* SysUcode_GetUCode(void);
@@ -1325,11 +1202,6 @@ void* DebugArena_ReallocDebug(void* ptr, u32 newSize, const char* file, int line
 void DebugArena_FreeDebug(void* ptr, const char* file, int line);
 void DebugArena_Display(void);
 #endif
-void UCodeDisas_Init(UCodeDisas*);
-void UCodeDisas_Destroy(UCodeDisas*);
-void UCodeDisas_Disassemble(UCodeDisas*, Gfx*);
-void UCodeDisas_RegisterUCode(UCodeDisas*, s32, UCodeInfo*);
-void UCodeDisas_SetCurUCode(UCodeDisas*, void*);
 Acmd* AudioSynth_Update(Acmd* cmdStart, s32* cmdCnt, s16* aiStart, s32 aiBufLen);
 void AudioHeap_DiscardFont(s32 fontId);
 void AudioHeap_DiscardSequence(s32 seqId);

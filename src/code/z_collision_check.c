@@ -14,7 +14,7 @@ typedef s32 (*ColChkLineFunc)(PlayState*, CollisionCheckContext*, Collider*, Vec
 
 // For retail BSS ordering, the block number of sparkInit in CollisionCheck_BlueBlood
 // must be between 183 and 255 inclusive.
-#pragma increment_block_number 50
+#pragma increment_block_number 80
 
 #if OOT_DEBUG
 /**
@@ -37,7 +37,7 @@ void Collider_DrawPoly(GraphicsContext* gfxCtx, Vec3f* vA, Vec3f* vB, Vec3f* vC,
 
     OPEN_DISPS(gfxCtx, "../z_collision_check.c", 713);
 
-    gSPMatrix(POLY_OPA_DISP++, &gMtxClear, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    gSPMatrix(POLY_OPA_DISP++, &gIdentityMtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
     gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0xFF, r, g, b, 50);
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetRenderMode(POLY_OPA_DISP++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
@@ -2315,7 +2315,7 @@ void CollisionCheck_ATQuadVsACCyl(PlayState* play, CollisionCheckContext* colChk
 static s8 sBssDummy3;
 static s8 sBssDummy4;
 static s8 sBssDummy5;
-static s8 sBssDummy6;
+// static s8 sBssDummy6;
 #endif
 
 void CollisionCheck_ATTrisVsACTris(PlayState* play, CollisionCheckContext* colChkCtx, Collider* atCol,

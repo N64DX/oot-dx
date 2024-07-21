@@ -206,6 +206,10 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_F32(targetArrowOffset, 0, ICHAIN_STOP),
 };
 
+// For retail BSS ordering, the block number of sEnvType must be between
+// 0 and 187 inclusive.
+#pragma increment_block_number 30
+
 static s8 sEnvType;
 static u8 sGroundBlastType;
 static BossTw* sKotakePtr;
@@ -1110,7 +1114,7 @@ void BossTw_ShootBeam(BossTw* this, PlayState* play) {
 
                         this->beamShootState = 1;
                         Sfx_PlaySfxAtPos(&player->actor.projectedPos, NA_SE_IT_SHIELD_REFLECT_MG);
-                        Matrix_MtxFToYXZRotS(&player->shieldMf, &sp128, 0);
+                        Matrix_MtxFToYXZRot(&player->shieldMf, &sp128, 0);
                         sp128.y += 0x8000;
                         sp128.x = -sp128.x;
                         this->magicDir.x = sp128.x;
@@ -1216,7 +1220,7 @@ void BossTw_ShootBeam(BossTw* this, PlayState* play) {
 
     if (this->beamShootState == 1) {
         if (this->csState1 == 0) {
-            Matrix_MtxFToYXZRotS(&player->shieldMf, &sp128, 0);
+            Matrix_MtxFToYXZRot(&player->shieldMf, &sp128, 0);
             sp128.y += 0x8000;
             sp128.x = -sp128.x;
             Math_ApproachS(&this->magicDir.x, sp128.x, 5, 0x2000);
@@ -3952,7 +3956,7 @@ void BossTw_BlastFire(BossTw* this, PlayState* play) {
 
                         this->actor.world.pos = player2->bodyPartsPos[PLAYER_BODYPART_R_HAND];
                         this->actor.world.pos.y = -2000.0f;
-                        Matrix_MtxFToYXZRotS(&player2->shieldMf, &blastDir, 0);
+                        Matrix_MtxFToYXZRot(&player2->shieldMf, &blastDir, 0);
                         blastDir.x = -blastDir.x;
                         blastDir.y += 0x8000;
                         Math_ApproachS(&this->magicDir.x, blastDir.x, 0xA, 0x800);
@@ -4141,7 +4145,7 @@ void BossTw_BlastIce(BossTw* this, PlayState* play) {
 
                         this->actor.world.pos = player2->bodyPartsPos[PLAYER_BODYPART_R_HAND];
                         this->actor.world.pos.y = -2000.0f;
-                        Matrix_MtxFToYXZRotS(&player2->shieldMf, &reflDir, 0);
+                        Matrix_MtxFToYXZRot(&player2->shieldMf, &reflDir, 0);
                         reflDir.x = -reflDir.x;
                         reflDir.y += 0x8000;
                         Math_ApproachS(&this->magicDir.x, reflDir.x, 0xA, 0x800);
@@ -4367,7 +4371,7 @@ s32 BossTw_BlastShieldCheck(BossTw* this, PlayState* play) {
                     if ((sShieldIceCharge >= 3) || (sShieldFireCharge >= 3)) {
                         this->timers[0] = 80;
                         this->csState1 = 10;
-                        Matrix_MtxFToYXZRotS(&player->shieldMf, &this->magicDir, 0);
+                        Matrix_MtxFToYXZRot(&player->shieldMf, &this->magicDir, 0);
                         this->magicDir.y += 0x8000;
                         this->magicDir.x = -this->magicDir.x;
                         D_8094C86F = 8;

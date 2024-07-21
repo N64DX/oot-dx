@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gfxalloc.h"
 #include "quake.h"
 #include "z64camera.h"
 
@@ -122,7 +123,7 @@ u16 gCamAtPointAppliedFrame;
 
 // For retail BSS ordering, the block number of sReturnToCamId must be greater
 // than that of gCamAtPointAppliedFrame (declared in variables.h).
-#pragma increment_block_number 180
+#pragma increment_block_number 10
 
 // Cam ID to return to when a scripted cutscene is finished
 s16 sReturnToCamId;
@@ -2211,18 +2212,17 @@ void CutsceneHandler_RunScript(PlayState* play, CutsceneContext* csCtx) {
     if (gSaveContext.save.cutsceneIndex >= 0xFFF0) {
 #if OOT_DEBUG
         if (BREG(0) != 0) {
-            Gfx* displayList;
-            Gfx* prevDisplayList;
+            Gfx* newDisp;
+            Gfx* lockedGfxDisp;
 
             OPEN_DISPS(play->state.gfxCtx, "../z_demo.c", 4101);
 
-            prevDisplayList = POLY_OPA_DISP;
-            displayList = Gfx_Open(POLY_OPA_DISP);
-            gSPDisplayList(OVERLAY_DISP++, displayList);
-            Cutscene_DrawDebugInfo(play, &displayList, csCtx);
-            gSPEndDisplayList(displayList++);
-            Gfx_Close(prevDisplayList, displayList);
-            POLY_OPA_DISP = displayList;
+            newDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
+            gSPDisplayList(OVERLAY_DISP++, newDisp);
+            Cutscene_DrawDebugInfo(play, &newDisp, csCtx);
+            gSPEndDisplayList(newDisp++);
+            Gfx_Close(lockedGfxDisp, newDisp);
+            POLY_OPA_DISP = newDisp;
 
             if (1) {}
             CLOSE_DISPS(play->state.gfxCtx, "../z_demo.c", 4108);

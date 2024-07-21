@@ -1,5 +1,13 @@
 #include "global.h"
+#include "gfxbuffers.h"
+#include "graph.h"
+#include "gfx.h"
+#include "ucode_disas.h"
 #include "terminal.h"
+#include "z64game.h"
+#include "z_game_dlftbls.h"
+#include "regs.h"
+#include "speed_meter.h"
 
 #define GFXPOOL_HEAD_MAGIC 0x1234
 #define GFXPOOL_TAIL_MAGIC 0x5678
@@ -43,9 +51,6 @@ void Graph_FaultClient(void) {
     Fault_WaitForInput();
     osViSwapBuffer(nextFb);
 }
-
-// TODO: merge Gfx and GfxMod to make this function's arguments consistent
-void UCodeDisas_Disassemble(UCodeDisas*, Gfx*);
 
 void Graph_DisassembleUCode(Gfx* workBuf) {
     UCodeDisas disassembler;
@@ -115,6 +120,9 @@ void Graph_InitTHGA(GraphicsContext* gfxCtx) {
     gfxCtx->overlayBuffer = pool->overlayBuffer;
     gfxCtx->workBuffer = pool->workBuffer;
 
+    //! @bug fbIdx is a signed integer that can overflow into the negatives. When compiled with IDO, the remainder
+    //! operator will yield -1 for odd negative values of fbIdx (i.e. the same as C99 onwards). This results in an out
+    //! of bounds array access in SysCfb_GetFbPtr due to the negative index value.
     gfxCtx->curFrameBuffer = SysCfb_GetFbPtr(gfxCtx->fbIdx % 2);
     gfxCtx->unk_014 = 0;
 }
@@ -440,7 +448,7 @@ void Graph_Update(GraphicsContext* gfxCtx, GameState* gameState) {
 #endif
 }
 
-void Graph_ThreadEntry(void* arg0) {
+void Graph_ThreadEntry(void* arg) {
     GraphicsContext gfxCtx;
     GameState* gameState;
     u32 size;
