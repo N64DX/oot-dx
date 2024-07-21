@@ -48,7 +48,7 @@ static InitChainEntry sInitChain[] = {
 };
 
 void BgSpot02Objects_Init(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BgSpot02Objects* this = (BgSpot02Objects*)thisx;
     CollisionHeader* colHeader = NULL;
 

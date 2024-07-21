@@ -58,9 +58,9 @@ void Overlay_Relocate(void* allocatedRamAddr, OverlayRelocationSection* ovlReloc
     u32 dbg;
     s32 relocOffset = 0;
     u32 relocatedValue = 0;
-    uintptr_t unrelocatedAddress = 0;
+    UNUSED_NDEBUG uintptr_t unrelocatedAddress = 0;
     uintptr_t relocatedAddress = 0;
-    s32 pad;
+    STACK_PAD(s32);
 
     if (gOverlayLogSeverity >= 3) {
         PRINTF("DoRelocation(%08x, %08x, %08x)\n", allocatedRamAddr, ovlRelocs, vramStart);

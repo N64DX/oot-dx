@@ -415,8 +415,9 @@ static s16 sCursorColors[][3] = {
 static void* sSavePromptTexs[] =
     LANGUAGE_ARRAY(gPauseSavePromptJPNTex, gPauseSavePromptENGTex, gPauseSavePromptGERTex, gPauseSavePromptFRATex);
 
-static void* sSaveConfirmationTexs[] = LANGUAGE_ARRAY(gPauseSaveConfirmationJPNTex, gPauseSaveConfirmationENGTex,
-                                                      gPauseSaveConfirmationGERTex, gPauseSaveConfirmationFRATex);
+UNUSED static void* sSaveConfirmationTexs[] =
+    LANGUAGE_ARRAY(gPauseSaveConfirmationJPNTex, gPauseSaveConfirmationENGTex, gPauseSaveConfirmationGERTex,
+                   gPauseSaveConfirmationFRATex);
 
 static void* sContinuePromptTexs[] =
     LANGUAGE_ARRAY(gContinuePlayingJPNTex, gContinuePlayingENGTex, gContinuePlayingGERTex, gContinuePlayingFRATex);
@@ -640,7 +641,7 @@ void KaleidoScope_HandlePageToggles(PauseContext* pauseCtx, Input* input) {
 
 void KaleidoScope_DrawCursor(PlayState* play, u16 pageIndex) {
     PauseContext* pauseCtx = &play->pauseCtx;
-    s32 pad;
+    STACK_PAD(s32);
 
     OPEN_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 955);
 
@@ -1141,7 +1142,7 @@ void KaleidoScope_DrawInfoPanel(PlayState* play) {
     };
     static s16 D_8082AE00 = 20;
     static s16 D_8082AE04 = 0;
-    static s16 D_8082AE08[] = {
+    UNUSED static s16 D_8082AE08[] = {
         10, 16, 16, 17, 12, 13, 18, 17, 17, 19, 13, 21, 20, 21, 14, 15, 15, 15, 11, 14,
     };
     static s16 D_8082AE30[] = {
@@ -2675,7 +2676,7 @@ void KaleidoScope_UpdateCursorSize(PlayState* play) {
 
 void KaleidoScope_LoadDungeonMap(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
-    s32 pad;
+    STACK_PAD(s32);
 
     DMA_REQUEST_SYNC(interfaceCtx->mapSegment,
                      (uintptr_t)_map_48x85_staticSegmentRomStart + ((R_MAP_TEX_INDEX + 0) * MAP_48x85_TEX_SIZE),

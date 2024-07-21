@@ -116,7 +116,7 @@ void func_808958F0(Vec3f* dest, Vec3f* src, f32 arg2, f32 arg3) {
 }
 
 void BgJyaCobra_InitDynapoly(BgJyaCobra* this, PlayState* play, CollisionHeader* collision, s32 flags) {
-    s32 pad;
+    STACK_PAD(s32);
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, flags);
@@ -125,7 +125,7 @@ void BgJyaCobra_InitDynapoly(BgJyaCobra* this, PlayState* play, CollisionHeader*
 
 #if OOT_DEBUG
     if (this->dyna.bgId == BG_ACTOR_MAX) {
-        s32 pad2;
+        STACK_PAD(s32);
 
         // "Warning : move BG Registration Failure"
         PRINTF("Warning : move BG 登録失敗(%s %d)(name %d)(arg_data 0x%04x)\n", "../z_bg_jya_cobra.c", 247,
@@ -149,7 +149,7 @@ void BgJyaCobra_SpawnRay(BgJyaCobra* this, PlayState* play) {
 }
 
 void func_80895A70(BgJyaCobra* this) {
-    s32 pad;
+    STACK_PAD(s32);
     BgJyaBigmirror* mirror = (BgJyaBigmirror*)this->dyna.actor.parent;
     MirRay* mirRay;
 
@@ -197,7 +197,7 @@ void func_80895A70(BgJyaCobra* this) {
 
 void func_80895BEC(BgJyaCobra* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
-    s32 pad;
+    STACK_PAD(s32);
     Vec3f sp2C;
 
     func_808958F0(&sp2C, &this->unk_174, Math_SinS(this->unk_170), Math_CosS(this->unk_170));
@@ -545,7 +545,7 @@ void func_80896CB4(PlayState* play) {
 }
 
 void func_80896D78(BgJyaCobra* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     Vec3s sp44;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_bg_jya_cobra.c", 924);
@@ -566,7 +566,7 @@ void func_80896D78(BgJyaCobra* this, PlayState* play) {
 }
 
 void BgJyaCobra_DrawShadow(BgJyaCobra* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     s16 params = this->dyna.actor.params & 3;
     Vec3f sp64;
     Vec3s* phi_a3;

@@ -141,7 +141,7 @@ void ObjMure_SpawnActors0(ObjMure* this, PlayState* play) {
     Actor* actor = &this->actor;
     s32 i;
     Vec3f pos;
-    s32 pad;
+    STACK_PAD(s32);
     s32 maxChildren = ObjMure_GetMaxChildSpawns(this);
 
     for (i = 0; i < maxChildren; i++) {

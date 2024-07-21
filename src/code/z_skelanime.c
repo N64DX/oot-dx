@@ -67,7 +67,7 @@ void SkelAnime_DrawLimbLod(PlayState* play, s32 limbIndex, void** skeleton, Vec3
 void SkelAnime_DrawLod(PlayState* play, void** skeleton, Vec3s* jointTable, OverrideLimbDrawOpa overrideLimbDraw,
                        PostLimbDrawOpa postLimbDraw, void* arg, s32 lod) {
     LodLimb* rootLimb;
-    s32 pad;
+    STACK_PAD(s32);
     Gfx* dList;
     Vec3f pos;
     Vec3s rot;
@@ -178,7 +178,7 @@ void SkelAnime_DrawFlexLimbLod(PlayState* play, s32 limbIndex, void** skeleton, 
 void SkelAnime_DrawFlexLod(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dListCount,
                            OverrideLimbDrawOpa overrideLimbDraw, PostLimbDrawOpa postLimbDraw, void* arg, s32 lod) {
     LodLimb* rootLimb;
-    s32 pad;
+    STACK_PAD(s32);
     Gfx* newDList;
     Gfx* limbDList;
     Vec3f pos;
@@ -285,7 +285,7 @@ void SkelAnime_DrawLimbOpa(PlayState* play, s32 limbIndex, void** skeleton, Vec3
 void SkelAnime_DrawOpa(PlayState* play, void** skeleton, Vec3s* jointTable, OverrideLimbDrawOpa overrideLimbDraw,
                        PostLimbDrawOpa postLimbDraw, void* arg) {
     StandardLimb* rootLimb;
-    s32 pad;
+    STACK_PAD(s32);
     Gfx* dList;
     Vec3f pos;
     Vec3s rot;
@@ -396,7 +396,7 @@ void SkelAnime_DrawFlexLimbOpa(PlayState* play, s32 limbIndex, void** skeleton, 
 void SkelAnime_DrawFlexOpa(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dListCount,
                            OverrideLimbDrawOpa overrideLimbDraw, PostLimbDrawOpa postLimbDraw, void* arg) {
     StandardLimb* rootLimb;
-    s32 pad;
+    STACK_PAD(s32);
     Gfx* newDList;
     Gfx* limbDList;
     Vec3f pos;
@@ -551,7 +551,7 @@ Gfx* SkelAnime_DrawLimb(PlayState* play, s32 limbIndex, void** skeleton, Vec3s* 
 Gfx* SkelAnime_Draw(PlayState* play, void** skeleton, Vec3s* jointTable, OverrideLimbDraw overrideLimbDraw,
                     PostLimbDraw postLimbDraw, void* arg, Gfx* gfx) {
     StandardLimb* rootLimb;
-    s32 pad;
+    STACK_PAD(s32);
     Gfx* dList;
     Vec3f pos;
     Vec3s rot;
@@ -658,7 +658,7 @@ Gfx* SkelAnime_DrawFlexLimb(PlayState* play, s32 limbIndex, void** skeleton, Vec
 Gfx* SkelAnime_DrawFlex(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dListCount,
                         OverrideLimbDraw overrideLimbDraw, PostLimbDraw postLimbDraw, void* arg, Gfx* gfx) {
     StandardLimb* rootLimb;
-    s32 pad;
+    STACK_PAD(s32);
     Gfx* newDList;
     Gfx* limbDList;
     Vec3f pos;
@@ -815,7 +815,7 @@ void AnimTaskQueue_Reset(AnimTaskQueue* animTaskQueue) {
  * Every time the group number changes, a single bit moves 1 position to the left. This is an implementation detail
  * that allows for `sDisabledTransformTaskGroups` to compare against a set of bit flags.
  */
-void AnimTaskQueue_SetNextGroup(PlayState* play) {
+void AnimTaskQueue_SetNextGroup(UNUSED PlayState* play) {
     sCurAnimTaskGroup <<= 1;
 }
 
@@ -827,7 +827,7 @@ void AnimTaskQueue_SetNextGroup(PlayState* play) {
  * LoadPlayerFrame and ActorMove, which don't alter the appearance of an existing animation,
  * will always run even if a group has its transformative tasks disabled.
  */
-void AnimTaskQueue_DisableTransformTasksForGroup(PlayState* play) {
+void AnimTaskQueue_DisableTransformTasksForGroup(UNUSED PlayState* play) {
     sDisabledTransformTaskGroups |= sCurAnimTaskGroup;
 }
 
@@ -870,7 +870,7 @@ void AnimTaskQueue_AddLoadPlayerFrame(PlayState* play, LinkAnimationHeader* anim
 
     if (task != NULL) {
         LinkAnimationHeader* linkAnimHeader = SEGMENTED_TO_VIRTUAL(animation);
-        s32 pad;
+        STACK_PAD(s32);
 
         osCreateMesgQueue(&task->data.loadPlayerFrame.msgQueue, &task->data.loadPlayerFrame.msg, 1);
         DMA_REQUEST_ASYNC(&task->data.loadPlayerFrame.req, frameTable,
@@ -974,7 +974,7 @@ void AnimTaskQueue_AddActorMove(PlayState* play, Actor* actor, SkelAnime* skelAn
 /**
  * Wait for the DMA request submitted by `AnimTaskQueue_AddLoadPlayerFrame` to complete.
  */
-void AnimTask_LoadPlayerFrame(PlayState* play, AnimTaskData* data) {
+void AnimTask_LoadPlayerFrame(UNUSED PlayState* play, AnimTaskData* data) {
     AnimTaskLoadPlayerFrame* task = &data->loadPlayerFrame;
 
     osRecvMesg(&task->msgQueue, NULL, OS_MESG_BLOCK);
@@ -983,7 +983,7 @@ void AnimTask_LoadPlayerFrame(PlayState* play, AnimTaskData* data) {
 /**
  * Copy all data from the `src` frame table to the `dest` table.
  */
-void AnimTask_Copy(PlayState* play, AnimTaskData* data) {
+void AnimTask_Copy(UNUSED PlayState* play, AnimTaskData* data) {
     AnimTaskCopy* task = &data->copy;
 
     if (!(task->group & sDisabledTransformTaskGroups)) {
@@ -1000,7 +1000,7 @@ void AnimTask_Copy(PlayState* play, AnimTaskData* data) {
 /**
  * Interpolate between the `base` and `mod` frame tables.
  */
-void AnimTask_Interp(PlayState* play, AnimTaskData* data) {
+void AnimTask_Interp(UNUSED PlayState* play, AnimTaskData* data) {
     AnimTaskInterp* task = &data->interp;
 
     if (!(task->group & sDisabledTransformTaskGroups)) {
@@ -1011,7 +1011,7 @@ void AnimTask_Interp(PlayState* play, AnimTaskData* data) {
 /**
  * Copy all data from the `src` frame table to the `dest` table according to the copy map.
  */
-void AnimTask_CopyUsingMap(PlayState* play, AnimTaskData* data) {
+void AnimTask_CopyUsingMap(UNUSED PlayState* play, AnimTaskData* data) {
     AnimTaskCopyUsingMap* task = &data->copyUsingMap;
 
     if (!(task->group & sDisabledTransformTaskGroups)) {
@@ -1031,7 +1031,7 @@ void AnimTask_CopyUsingMap(PlayState* play, AnimTaskData* data) {
 /**
  * Copy all data from the `src` frame table to the `dest` table according to the inverted copy map.
  */
-void AnimTask_CopyUsingMapInverted(PlayState* play, AnimTaskData* data) {
+void AnimTask_CopyUsingMapInverted(UNUSED PlayState* play, AnimTaskData* data) {
     AnimTaskCopyUsingMapInverted* task = &data->copyUsingMapInverted;
 
     if (!(task->group & sDisabledTransformTaskGroups)) {
@@ -1051,7 +1051,7 @@ void AnimTask_CopyUsingMapInverted(PlayState* play, AnimTaskData* data) {
 /**
  * Move an actor according to the translation of its root limb for the current animation frame.
  */
-void AnimTask_ActorMove(PlayState* play, AnimTaskData* data) {
+void AnimTask_ActorMove(UNUSED PlayState* play, AnimTaskData* data) {
     AnimTaskActorMove* task = &data->actorMove;
     Actor* actor = task->actor;
     Vec3f diff;
@@ -1092,7 +1092,7 @@ void AnimTaskQueue_Update(PlayState* play, AnimTaskQueue* animTaskQueue) {
  */
 void SkelAnime_InitLink(PlayState* play, SkelAnime* skelAnime, FlexSkeletonHeader* skeletonHeaderSeg,
                         LinkAnimationHeader* animation, s32 flags, Vec3s* jointTable, Vec3s* morphTable,
-                        s32 limbBufCount) {
+                        UNUSED_NDEBUG s32 limbBufCount) {
     FlexSkeletonHeader* skeletonHeader = SEGMENTED_TO_VIRTUAL(skeletonHeaderSeg);
     s32 headerJointCount = skeletonHeader->sh.limbCount;
     s32 limbCount;
@@ -1238,7 +1238,7 @@ s32 LinkAnimation_Once(PlayState* play, SkelAnime* skelAnime) {
 /**
  * Sets a new morph and resets the morph weight for the current animation.
  */
-void Animation_SetMorph(PlayState* play, SkelAnime* skelAnime, f32 morphFrames) {
+void Animation_SetMorph(UNUSED PlayState* play, SkelAnime* skelAnime, f32 morphFrames) {
     skelAnime->morphWeight = 1.0f;
     skelAnime->morphRate = 1.0f / morphFrames;
 }
@@ -1426,8 +1426,9 @@ s32 LinkAnimation_OnFrame(SkelAnime* skelAnime, f32 frame) {
 /**
  * Initializes a normal skeleton to a looping animation, dynamically allocating the frame tables if not provided.
  */
-BAD_RETURN(s32) SkelAnime_Init(PlayState* play, SkelAnime* skelAnime, SkeletonHeader* skeletonHeaderSeg,
-                               AnimationHeader* animation, Vec3s* jointTable, Vec3s* morphTable, s32 limbCount) {
+BAD_RETURN(s32) SkelAnime_Init(UNUSED PlayState* play, SkelAnime* skelAnime, SkeletonHeader* skeletonHeaderSeg,
+                               AnimationHeader* animation, Vec3s* jointTable, Vec3s* morphTable,
+                               UNUSED_NDEBUG s32 limbCount) {
     SkeletonHeader* skeletonHeader = SEGMENTED_TO_VIRTUAL(skeletonHeaderSeg);
 
     skelAnime->limbCount = skeletonHeader->limbCount + 1;
@@ -1456,8 +1457,9 @@ BAD_RETURN(s32) SkelAnime_Init(PlayState* play, SkelAnime* skelAnime, SkeletonHe
 /**
  * Initializes a flex skeleton to a looping animation, dynamically allocating the frame tables if not given.
  */
-BAD_RETURN(s32) SkelAnime_InitFlex(PlayState* play, SkelAnime* skelAnime, FlexSkeletonHeader* skeletonHeaderSeg,
-                                   AnimationHeader* animation, Vec3s* jointTable, Vec3s* morphTable, s32 limbCount) {
+BAD_RETURN(s32) SkelAnime_InitFlex(UNUSED PlayState* play, SkelAnime* skelAnime, FlexSkeletonHeader* skeletonHeaderSeg,
+                                   AnimationHeader* animation, Vec3s* jointTable, Vec3s* morphTable,
+                                   UNUSED_NDEBUG s32 limbCount) {
     FlexSkeletonHeader* skeletonHeader = SEGMENTED_TO_VIRTUAL(skeletonHeaderSeg);
 
     skelAnime->limbCount = skeletonHeader->sh.limbCount + 1;
@@ -1490,7 +1492,7 @@ BAD_RETURN(s32) SkelAnime_InitFlex(PlayState* play, SkelAnime* skelAnime, FlexSk
 /**
  * Initializes a skeleton with SkinLimbs to a looping animation, dynamically allocating the frame tables.
  */
-BAD_RETURN(s32) SkelAnime_InitSkin(PlayState* play, SkelAnime* skelAnime, SkeletonHeader* skeletonHeaderSeg,
+BAD_RETURN(s32) SkelAnime_InitSkin(UNUSED PlayState* play, SkelAnime* skelAnime, SkeletonHeader* skeletonHeaderSeg,
                                    AnimationHeader* animation) {
     SkeletonHeader* skeletonHeader = SEGMENTED_TO_VIRTUAL(skeletonHeaderSeg);
 
@@ -1892,7 +1894,7 @@ s32 Animation_OnFrame(SkelAnime* skelAnime, f32 frame) {
 /**
  * Frees the frame tables for a skelAnime with dynamically allocated tables.
  */
-void SkelAnime_Free(SkelAnime* skelAnime, PlayState* play) {
+void SkelAnime_Free(SkelAnime* skelAnime, UNUSED PlayState* play) {
     if (skelAnime->jointTable != NULL) {
         ZELDA_ARENA_FREE(skelAnime->jointTable, "../z_skelanime.c", 3729);
     } else {

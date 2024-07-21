@@ -94,7 +94,7 @@ void ActorOverlayTable_LogPrint(void) {
 #endif
 }
 
-void ActorOverlayTable_FaultPrint(void* arg0, void* arg1) {
+void ActorOverlayTable_FaultPrint(UNUSED void* arg0, UNUSED void* arg1) {
     ActorOverlay* overlayEntry;
     u32 overlaySize;
     s32 i;

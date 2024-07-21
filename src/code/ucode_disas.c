@@ -1,5 +1,7 @@
 #include "global.h"
 
+#if OOT_DEBUG
+
 typedef struct {
     /* 0x00 */ u32 value;
     /* 0x04 */ const char* name;
@@ -209,7 +211,7 @@ void UCodeDisas_Init(UCodeDisas* this) {
     }
 }
 
-void UCodeDisas_Destroy(UCodeDisas* this) {
+void UCodeDisas_Destroy(UNUSED UCodeDisas* this) {
 }
 
 void UCodeDisas_SetCurUCodeImpl(UCodeDisas* this, void* ptr) {
@@ -319,7 +321,7 @@ void UCodeDisas_PrintVertices(UCodeDisas* this, Vtx* vtx, s32 count, s32 start) 
 }
 
 void UCodeDisas_Disassemble(UCodeDisas* this, Gfx* ptr) {
-    u32 pad;
+    STACK_PAD(s32);
     uintptr_t addr;
     u32 rdpHalf;
     u16 linkDlLow;
@@ -1007,7 +1009,7 @@ void UCodeDisas_Disassemble(UCodeDisas* this, Gfx* ptr) {
                             }
 
                             case G_MOVEWORD: {
-                                u32 pad;
+                                STACK_PAD(s32);
                                 Gdma dma = ptr->dma;
                                 Gmovewd movewd = ptr->movewd;
 
@@ -1193,7 +1195,7 @@ void UCodeDisas_Disassemble(UCodeDisas* this, Gfx* ptr) {
                             } break;
 
                             case G_MOVEWORD: {
-                                u32 pad[2];
+                                STACK_PADS(s32, 2);
                                 Gmovewd movewd = ptr->movewd;
 
                                 switch (movewd.index) {
@@ -1243,3 +1245,5 @@ void UCodeDisas_RegisterUCode(UCodeDisas* this, s32 count, UCodeInfo* ucodeArray
 void UCodeDisas_SetCurUCode(UCodeDisas* this, void* ptr) {
     UCodeDisas_SetCurUCodeImpl(this, ptr);
 }
+
+#endif

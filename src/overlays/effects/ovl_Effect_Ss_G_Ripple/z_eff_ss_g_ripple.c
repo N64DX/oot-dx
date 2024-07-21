@@ -30,7 +30,7 @@ EffectSsInit Effect_Ss_G_Ripple_InitVars = {
 };
 
 u32 EffectSsGRipple_Init(PlayState* play, u32 index, EffectSs* this, void* initParamsx) {
-    s32 pad;
+    STACK_PAD(s32);
     Vec3f zeroVec = { 0.0f, 0.0f, 0.0f };
     WaterBox* waterBox;
     EffectSsGRippleInitParams* initParams = (EffectSsGRippleInitParams*)initParamsx;

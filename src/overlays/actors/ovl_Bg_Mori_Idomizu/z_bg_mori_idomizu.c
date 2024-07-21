@@ -46,7 +46,7 @@ void BgMoriIdomizu_SetWaterLevel(PlayState* play, s16 waterLevel) {
 }
 
 void BgMoriIdomizu_Init(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BgMoriIdomizu* this = (BgMoriIdomizu*)thisx;
 
     if (sIsSpawned) {
@@ -82,7 +82,7 @@ void BgMoriIdomizu_Init(Actor* thisx, PlayState* play) {
 }
 
 void BgMoriIdomizu_Destroy(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BgMoriIdomizu* this = (BgMoriIdomizu*)thisx;
 
     if (this->isLoaded) {
@@ -148,7 +148,7 @@ void BgMoriIdomizu_Main(BgMoriIdomizu* this, PlayState* play) {
 }
 
 void BgMoriIdomizu_Update(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BgMoriIdomizu* this = (BgMoriIdomizu*)thisx;
 
     if (this->actionFunc != NULL) {
@@ -157,7 +157,7 @@ void BgMoriIdomizu_Update(Actor* thisx, PlayState* play) {
 }
 
 void BgMoriIdomizu_Draw(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BgMoriIdomizu* this = (BgMoriIdomizu*)thisx;
     u32 gameplayFrames = play->gameplayFrames;
 

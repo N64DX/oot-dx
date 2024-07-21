@@ -67,7 +67,7 @@ static InitChainEntry sInitChain[] = {
 };
 
 void BgJya1flift_InitDynapoly(BgJya1flift* this, PlayState* play, CollisionHeader* collision, s32 moveFlag) {
-    s32 pad;
+    STACK_PAD(s32);
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, moveFlag);
@@ -76,7 +76,7 @@ void BgJya1flift_InitDynapoly(BgJya1flift* this, PlayState* play, CollisionHeade
 
 #if OOT_DEBUG
     if (this->dyna.bgId == BG_ACTOR_MAX) {
-        s32 pad2;
+        STACK_PAD(s32);
 
         // "Warning : move BG login failed"
         PRINTF("Warning : move BG 登録失敗(%s %d)(name %d)(arg_data 0x%04x)\n", "../z_bg_jya_1flift.c", 179,

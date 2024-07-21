@@ -117,7 +117,7 @@ void BgBdanObjects_SetProperty(BgBdanObjects* this, s32 arg1) {
 }
 
 void BgBdanObjects_Init(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BgBdanObjects* this = (BgBdanObjects*)thisx;
     CollisionHeader* colHeader = NULL;
 

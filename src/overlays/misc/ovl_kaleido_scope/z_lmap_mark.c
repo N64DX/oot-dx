@@ -23,13 +23,13 @@ static PauseMapMarkInfo sMapMarkInfoTable[] = {
 
 extern PauseMapMarksData gPauseMapMarkDataTable[];
 
-void PauseMapMark_Init(PlayState* play) {
+void PauseMapMark_Init(UNUSED PlayState* play) {
     gBossMarkState = 0;
     gBossMarkScale = 1.0f;
     gLoadedPauseMarkDataTable = gPauseMapMarkDataTable;
 }
 
-void PauseMapMark_Clear(PlayState* play) {
+void PauseMapMark_Clear(UNUSED PlayState* play) {
     gLoadedPauseMarkDataTable = NULL;
 }
 

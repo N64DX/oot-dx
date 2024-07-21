@@ -43,10 +43,10 @@ static ColliderQuadInit sQuadInit = {
     { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } },
 };
 
-static Vec3f sUnusedVec1 = { 0.0f, 0.5f, 0.0f };
-static Vec3f sUnusedVec2 = { 0.0f, 0.5f, 0.0f };
+UNUSED static Vec3f sUnusedVec1 = { 0.0f, 0.5f, 0.0f };
+UNUSED static Vec3f sUnusedVec2 = { 0.0f, 0.5f, 0.0f };
 
-static Color_RGB8 sUnusedColors[] = {
+UNUSED static Color_RGB8 sUnusedColors[] = {
     { 255, 255, 100 },
     { 255, 255, 50 },
 };
@@ -173,7 +173,7 @@ void ArmsHook_Shoot(ArmsHook* this, PlayState* play) {
         Vec3f newPos;
         f32 bodyDistDiff;
         f32 phi_f16;
-        s32 pad1;
+        STACK_PAD(s32);
         f32 curGrabbedDist;
         f32 grabbedDist;
         f32 velocity;
@@ -263,7 +263,7 @@ void ArmsHook_Shoot(ArmsHook* this, PlayState* play) {
             !func_8002F9EC(play, &this->actor, poly, bgId, &intersectPos)) {
             f32 polyNormalX = COLPOLY_GET_NORMAL(poly->normal.x);
             f32 polyNormalZ = COLPOLY_GET_NORMAL(poly->normal.z);
-            s32 pad;
+            STACK_PAD(s32);
 
             Math_Vec3f_Copy(&this->actor.world.pos, &intersectPos);
             this->actor.world.pos.x += 10.0f * polyNormalX;
@@ -301,7 +301,7 @@ void ArmsHook_Update(Actor* thisx, PlayState* play) {
 }
 
 void ArmsHook_Draw(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     ArmsHook* this = (ArmsHook*)thisx;
     Player* player = GET_PLAYER(play);
     Vec3f sp78;

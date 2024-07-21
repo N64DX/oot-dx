@@ -47,13 +47,13 @@ void DemoGt_SpawnDust(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel
 }
 
 void func_8097D7D8(PlayState* play, Vec3f* pos, Vec3f* velOffset, f32 scale, s32 arg4, s32 arg5, s16 life) {
-    s32 pad;
+    STACK_PAD(s32);
 
     if (!FrameAdvance_IsEnabled(play)) {
         s32 frames = play->gameplayFrames;
 
         if (ABS(frames % arg4) == arg5) {
-            s32 pad[2];
+            STACK_PADS(s32, 2);
             Vec3f velocity = { 0.0f, 6.0f, 0.0f };
             Vec3f accel = { 0.0f, 0.0f, 0.0f };
 
@@ -81,7 +81,7 @@ Actor* DemoGt_SpawnCloudRing(PlayState* play, Vec3f* pos, s16 params) {
 }
 
 void DemoGt_SpawnExplosionWithSound(PlayState* play, Vec3f* pos, f32 scale) {
-    s32 pad;
+    STACK_PAD(s32);
     Vec3f velocity = { 0.0f, 0.0f, 0.0f };
     Vec3f accel = { 0.0f, 0.0f, 0.0f };
 
@@ -261,7 +261,7 @@ void func_8097E1D4(PlayState* play, Vec3f* arg1, s16 arg2) {
 
 void func_8097E454(PlayState* play, Vec3f* spawnerPos, Vec3f* velocity, Vec3f* accel, f32 arg4, f32 scale, s32 arg6,
                    s32 arg7, s16 life) {
-    s32 pad2[3];
+    STACK_PADS(s32, 3);
     s16 increment;
     s32 frames;
     s32 i;
@@ -301,7 +301,7 @@ u8 DemoGt_IsCutsceneIdle(PlayState* play) {
 }
 
 CsCmdActorCue* DemoGt_GetCue(PlayState* play, u32 cueChannel) {
-    s32 pad[2];
+    STACK_PADS(s32, 2);
     CsCmdActorCue* cue = NULL;
 
     if (!DemoGt_IsCutsceneIdle(play)) {
@@ -355,7 +355,7 @@ void func_8097E824(DemoGt* this, s32 arg1) {
     s16 phi_a3;
     Vec3f* pos = &this->dyna.actor.world.pos;
     Vec3s* unk16C = &this->unk_16C;
-    s32 pad;
+    STACK_PAD(s32);
     f32 tempf3;
     f32 tempf2;
     f32 tempf1;
@@ -454,7 +454,7 @@ static InitChainEntry sInitChain[] = {
 };
 
 void func_8097EDD8(DemoGt* this, PlayState* play, CollisionHeader* collision) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     CollisionHeader* colHeader;
 
     if (collision != NULL) {
@@ -499,12 +499,12 @@ void func_8097EF34(DemoGt* this, PlayState* play) {
 
 void func_8097EF40(DemoGt* this, PlayState* play) {
     u16 csCurFrame = play->csCtx.curFrame;
-    s32 pad1[3];
+    STACK_PADS(s32, 3);
     Vec3f dustPos;
     Vec3f velocity = { 0.0f, -16.0f, 0.0f };
     Vec3f accel = { 0.0f, 1.2f, 0.0f };
     Vec3f* pos = &this->dyna.actor.world.pos;
-    s32 pad;
+    STACK_PAD(s32);
 
     if ((OOT_DEBUG && (kREG(1) == 20)) || (csCurFrame == 220)) {
         dustPos.x = pos->x + 256.0f;
@@ -522,12 +522,12 @@ void func_8097EF40(DemoGt* this, PlayState* play) {
 }
 
 void func_8097F0AC(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f sp38;
-    s16 pad1[3];
+    STACK_PADS(s16, 3);
     Vec3f sp24;
     u16 csCurFrame = play->csCtx.curFrame;
-    s32 pad2;
+    STACK_PAD(s32);
 
 #if OOT_DEBUG
     if (csCurFrame == 140 || kREG(1) == 19)
@@ -630,10 +630,10 @@ void DemoGt_Update8(DemoGt* this, PlayState* play) {
 }
 
 void DemoGt_Draw1(DemoGt* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     GraphicsContext* gfxCtx = play->state.gfxCtx;
     u32 gameplayFrames = play->gameplayFrames;
-    s16 pad2[2];
+    STACK_PADS(s16, 2);
     s16 spC6;
     f32 spC0;
     f32 spBC;
@@ -707,7 +707,7 @@ void func_8097F960(DemoGt* this, PlayState* play) {
 }
 
 void func_8097F96C(DemoGt* this, PlayState* play) {
-    s32 pad[4];
+    STACK_PADS(s32, 4);
     Vec3f pos;
     Actor* actor;
     u16 csCurFrame = play->csCtx.curFrame;
@@ -731,12 +731,12 @@ void func_8097F96C(DemoGt* this, PlayState* play) {
 }
 
 void func_8097FA1C(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f* pos = &this->dyna.actor.world.pos;
     Vec3f velOffset = { -12.0f, -17.0, 5.0 };
-    s32 pad1[3];
+    STACK_PADS(s32, 3);
 
     if (((csCurFrame > 502) && !(csCurFrame >= 581)) || (OOT_DEBUG && (kREG(1) == 5))) {
         dustPos.x = pos->x + 300.0f;
@@ -747,7 +747,7 @@ void func_8097FA1C(DemoGt* this, PlayState* play) {
 }
 
 void func_8097FAFC(DemoGt* this, PlayState* play) {
-    s32 pad[2];
+    STACK_PADS(s32, 2);
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f pos;
     f32 new_var = -200.0;
@@ -775,12 +775,12 @@ void func_8097FAFC(DemoGt* this, PlayState* play) {
 }
 
 void func_8097FC1C(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f* pos = &this->dyna.actor.world.pos;
     Vec3f velOffset = { 5.0f, -16.0f, -16.0f };
-    s32 pad1[3];
+    STACK_PADS(s32, 3);
 
     if (csCurFrame > 682 || (OOT_DEBUG && (kREG(1) == 7))) {
         dustPos.x = pos->x + 260.0f;
@@ -791,7 +791,7 @@ void func_8097FC1C(DemoGt* this, PlayState* play) {
 }
 
 void func_8097FCE4(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f vec;
     u16 csCurFrame = play->csCtx.curFrame;
 
@@ -863,7 +863,7 @@ void DemoGt_Draw2(DemoGt* this, PlayState* play) {
     GraphicsContext* gfxCtx = play->state.gfxCtx;
     s32* unk198;
     s32* unk178;
-    s32 pad;
+    STACK_PAD(s32);
 
     OPEN_DISPS(gfxCtx, "../z_demo_gt_part2.c", 470);
 
@@ -895,7 +895,7 @@ void func_80980178(DemoGt* this, PlayState* play) {
 }
 
 void func_80980184(DemoGt* this, PlayState* play) {
-    s32 pad[4];
+    STACK_PADS(s32, 4);
     Vec3f pos;
     Actor* actor;
 
@@ -918,7 +918,7 @@ void func_80980184(DemoGt* this, PlayState* play) {
 }
 
 void func_80980218(DemoGt* this, PlayState* play) {
-    s32 pad[4];
+    STACK_PADS(s32, 4);
     Vec3f pos;
     Actor* actor;
 
@@ -941,12 +941,12 @@ void func_80980218(DemoGt* this, PlayState* play) {
 }
 
 void func_809802AC(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f* pos = &this->dyna.actor.world.pos;
     Vec3f velOffset = { 0.0f, 0.0f, -10.0f };
-    s32 pad1[3];
+    STACK_PADS(s32, 3);
 
     if (csCurFrame > 109 && csCurFrame < 140) {
         dustPos.x = pos->x - 100.0f;
@@ -957,12 +957,12 @@ void func_809802AC(DemoGt* this, PlayState* play) {
 }
 
 void func_8098036C(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f* world = &this->dyna.actor.world.pos;
     Vec3f velOffset = { 5.0f, -3.0f, 0.0f };
-    s32 pad1[3];
+    STACK_PADS(s32, 3);
 
     if ((csCurFrame > 284) && (csCurFrame < 421)) {
         dustPos.x = world->x + 760.0f;
@@ -973,12 +973,12 @@ void func_8098036C(DemoGt* this, PlayState* play) {
 }
 
 void func_80980430(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f* pos = &this->dyna.actor.world.pos;
     Vec3f velOffset = { 5.0f, -3.0f, 0.0f };
-    s32 pad1[3];
+    STACK_PADS(s32, 3);
 
     if (csCurFrame > 709 || (OOT_DEBUG && (kREG(1) == 8))) {
         dustPos.x = pos->x + 760.0f;
@@ -989,12 +989,12 @@ void func_80980430(DemoGt* this, PlayState* play) {
 }
 
 void func_80980504(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f* pos = &this->dyna.actor.world.pos;
     Vec3f velOffset = { 5.0f, -16.0f, -16.0f };
-    s32 pad1[3];
+    STACK_PADS(s32, 3);
 
     if ((csCurFrame > 704) || (OOT_DEBUG && (kREG(1) == 9))) {
         dustPos.x = pos->x + 830.0f;
@@ -1005,12 +1005,12 @@ void func_80980504(DemoGt* this, PlayState* play) {
 }
 
 void func_809805D8(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f* homePos = &this->dyna.actor.home.pos;
     Vec3f velOffset = { 15.0f, -26.0, 0.0f };
-    s32 pad1[3];
+    STACK_PADS(s32, 3);
 
     if (((csCurFrame > 739) && (csCurFrame < 781)) || (OOT_DEBUG && (kREG(1) == 11))) {
         dustPos.x = homePos->x + 550.0f;
@@ -1021,12 +1021,12 @@ void func_809805D8(DemoGt* this, PlayState* play) {
 }
 
 void func_809806B8(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f* pos = &this->dyna.actor.world.pos;
     Vec3f velOffset = { 5.0f, -16.0f, -16.0f };
-    s32 pad1[3];
+    STACK_PADS(s32, 3);
 
     if ((csCurFrame > 964) || (OOT_DEBUG && (kREG(1) == 12))) {
         dustPos.x = pos->x + 460.0f;
@@ -1037,12 +1037,12 @@ void func_809806B8(DemoGt* this, PlayState* play) {
 }
 
 void func_8098078C(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f* pos = &this->dyna.actor.world.pos;
     Vec3f velOffset = { 5.0f, -16.0f, -16.0f };
-    s32 pad1[3];
+    STACK_PADS(s32, 3);
 
     if ((csCurFrame > 939) || (OOT_DEBUG && (kREG(1) == 14))) {
         dustPos.x = pos->x + 360.0f;
@@ -1053,7 +1053,7 @@ void func_8098078C(DemoGt* this, PlayState* play) {
 }
 
 void func_8098085C(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f sp28;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f* pos = &this->dyna.actor.world.pos;
@@ -1082,12 +1082,12 @@ void func_809809C0(DemoGt* this, PlayState* play2) {
     s32 gameplayFrames = play->gameplayFrames;
     u16 csCurFrame = play->csCtx.curFrame;
     Vec3f sp54;
-    s16 pad[3];
+    STACK_PADS(s16, 3);
 
     if (((csCurFrame > 469) && (csCurFrame < 481)) || (OOT_DEBUG && (kREG(1) == 3))) {
         Vec3f sp40 = { 20.0f, 6.0f, 0.0f };
         Vec3f sp34 = { 0.0f, 0.0f, 0.0f };
-        s16 pad2[3];
+        STACK_PADS(s16, 3);
 
         sp54.x = this2->dyna.actor.world.pos.x + 790.0f;
         sp54.y = this2->dyna.actor.world.pos.y + 60.0f;
@@ -1100,7 +1100,7 @@ void func_809809C0(DemoGt* this, PlayState* play2) {
 }
 
 void func_80980AD4(DemoGt* this, PlayState* play) {
-    s32 pad[4];
+    STACK_PADS(s32, 4);
     Vec3f pos;
     u16 csCurFrame = play->csCtx.curFrame;
 
@@ -1115,7 +1115,7 @@ void func_80980AD4(DemoGt* this, PlayState* play) {
 }
 
 void func_80980B68(DemoGt* this, PlayState* play) {
-    s32 pad[4];
+    STACK_PADS(s32, 4);
     Vec3f pos;
     u16 csCurFrame = play->csCtx.curFrame;
 
@@ -1129,7 +1129,7 @@ void func_80980B68(DemoGt* this, PlayState* play) {
 }
 
 void func_80980BFC(DemoGt* this, PlayState* play) {
-    s32 pad[4];
+    STACK_PADS(s32, 4);
     Vec3f pos;
     u16 csCurFrame = play->csCtx.curFrame;
 
@@ -1210,14 +1210,14 @@ void func_80980F58(DemoGt* this, PlayState* play) {
 }
 
 void func_80980F8C(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f sp58;
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
 
     if ((csCurFrame > 259) && (csCurFrame < 289)) {
         Vec3f velOfset = { 0.0f, -17.0f, 0.0f };
-        s32 pad[3];
+        STACK_PADS(s32, 3);
 
         sp58.x = 640.0f;
         sp58.y = 2100.0f;
@@ -1262,13 +1262,13 @@ void DemoGt_Draw4(DemoGt* this, PlayState* play2) {
     GraphicsContext* gfxCtx;
     PlayState* play = play2;
     u16 csCurFrame = play->csCtx.curFrame;
-    s32 pad;
+    STACK_PAD(s32);
     s16 sp76;
     f32 sp70;
     f32 sp6C;
     s16 sp6A;
     s16 sp68;
-    s16 pad2;
+    STACK_PAD(s16);
     Mtx* sp60;
     Vec3f sp54;
     Vec3f sp48;
@@ -1333,14 +1333,14 @@ void func_80981424(DemoGt* this, PlayState* play) {
 }
 
 void func_80981458(DemoGt* this, PlayState* play) {
-    s32 pad[3];
+    STACK_PADS(s32, 3);
     Vec3f sp58;
     Vec3f dustPos;
     u16 csCurFrame = play->csCtx.curFrame;
 
     if (((csCurFrame > 855) && (csCurFrame < 891)) || (OOT_DEBUG && (kREG(1) == 13))) {
         Vec3f velOffset = { 0.0f, -30.0f, 0.0f };
-        s32 pad1[3];
+        STACK_PADS(s32, 3);
 
         sp58.x = 0.0f;
         sp58.y = 1170.0f;
@@ -1383,13 +1383,13 @@ void DemoGt_Update17(DemoGt* this, PlayState* play) {
 
 void DemoGt_Draw5(DemoGt* this, PlayState* play) {
     GraphicsContext* gfxCtx;
-    s32 pad;
+    STACK_PAD(s32);
     s16 sp76;
     f32 sp70;
     f32 sp6C;
     s16 sp6A;
     s16 sp68;
-    s16 pad1;
+    STACK_PAD(s16);
     Mtx* sp60;
     Vec3f sp54;
     Vec3f sp48;

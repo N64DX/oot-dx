@@ -609,7 +609,7 @@ void SkinMatrix_SetRotateAxis(MtxF* mf, s16 angle, f32 axisX, f32 axisY, f32 axi
     f32 xy;
     f32 yz;
     f32 xz;
-    f32 pad;
+    STACK_PAD(s32);
 
     sinA = Math_SinS(angle);
     cosA = Math_CosS(angle);

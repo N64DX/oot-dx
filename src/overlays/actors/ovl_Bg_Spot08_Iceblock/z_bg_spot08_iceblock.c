@@ -39,7 +39,7 @@ void BgSpot08Iceblock_SetupAction(BgSpot08Iceblock* this, BgSpot08IceblockAction
 }
 
 void BgSpot08Iceblock_InitDynaPoly(BgSpot08Iceblock* this, PlayState* play, CollisionHeader* collision, s32 flags) {
-    s32 pad;
+    STACK_PAD(s32);
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, flags);
@@ -48,7 +48,7 @@ void BgSpot08Iceblock_InitDynaPoly(BgSpot08Iceblock* this, PlayState* play, Coll
 
 #if OOT_DEBUG
     if (this->dyna.bgId == BG_ACTOR_MAX) {
-        s32 pad2;
+        STACK_PAD(s32);
 
         // "Warning: move BG registration failed"
         PRINTF("Warning : move BG 登録失敗(%s %d)(name %d)(arg_data 0x%04x)\n", "../z_bg_spot08_iceblock.c", 0xD9,
@@ -174,7 +174,7 @@ void BgSpot08Iceblock_Roll(BgSpot08Iceblock* this, PlayState* play) {
     f32 playerCentroidDist;
     s32 rollDataIndex;
     MtxF mtx;
-    s32 pad;
+    STACK_PAD(s32);
     Player* player = GET_PLAYER(play);
 
     switch (this->dyna.actor.params & 0xFF) {
@@ -255,7 +255,7 @@ void BgSpot08Iceblock_Roll(BgSpot08Iceblock* this, PlayState* play) {
 }
 
 void BgSpot08Iceblock_SpawnTwinFloe(BgSpot08Iceblock* this, PlayState* play) {
-    s32 pad[2];
+    STACK_PADS(s32, 2);
     f32 sin;
     f32 cos;
 

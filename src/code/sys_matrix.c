@@ -778,7 +778,7 @@ void Matrix_MtxFToYXZRotS(MtxF* mf, Vec3s* rotDest, s32 flag) {
     f32 temp;
     f32 temp2;
     f32 temp3;
-    f32 temp4;
+    STACK_PAD(s32);
 
     temp = mf->xz;
     temp *= temp;
@@ -831,7 +831,7 @@ void Matrix_MtxFToZYXRotS(MtxF* mf, Vec3s* rotDest, s32 flag) {
     f32 temp;
     f32 temp2;
     f32 temp3;
-    f32 temp4;
+    STACK_PAD(s32);
 
     temp = mf->xx;
     temp *= temp;

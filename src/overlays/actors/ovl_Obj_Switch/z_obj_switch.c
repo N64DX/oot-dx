@@ -190,7 +190,7 @@ void ObjSwitch_RotateY(Vec3f* dest, Vec3f* src, s16 rotY) {
 }
 
 void ObjSwitch_InitDynaPoly(ObjSwitch* this, PlayState* play, CollisionHeader* collision, s32 moveFlag) {
-    s32 pad;
+    STACK_PAD(s32);
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, moveFlag);
@@ -199,7 +199,7 @@ void ObjSwitch_InitDynaPoly(ObjSwitch* this, PlayState* play, CollisionHeader* c
 
 #if OOT_DEBUG
     if (this->dyna.bgId == BG_ACTOR_MAX) {
-        s32 pad2;
+        STACK_PAD(s32);
 
         // "Warning : move BG registration failure"
         PRINTF("Warning : move BG 登録失敗(%s %d)(name %d)(arg_data 0x%04x)\n", "../z_obj_switch.c", 531,
@@ -249,7 +249,7 @@ Actor* ObjSwitch_SpawnIce(ObjSwitch* this, PlayState* play) {
 }
 
 void ObjSwitch_SetOn(ObjSwitch* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     s32 subType;
 
     if (Flags_GetSwitch(play, OBJSWITCH_SWITCH_FLAG(&this->dyna.actor))) {
@@ -767,7 +767,7 @@ void ObjSwitch_DrawEye(ObjSwitch* this, PlayState* play) {
         gEyeSwitch1DL, // OBJSWITCH_SUBTYPE_ONCE
         gEyeSwitch2DL, // OBJSWITCH_SUBTYPE_TOGGLE
     };
-    s32 pad;
+    STACK_PAD(s32);
     s32 subType = OBJSWITCH_SUBTYPE(&this->dyna.actor);
 
     OPEN_DISPS(play->state.gfxCtx, "../z_obj_switch.c", 1459);
@@ -796,11 +796,9 @@ void ObjSwitch_DrawCrystal(ObjSwitch* this, PlayState* play) {
         NULL,                       // OBJSWITCH_SUBTYPE_HOLD_INVERTED
         gCrystalSwitchCoreOpaDL     // OBJSWITCH_SUBTYPE_SYNC
     };
-    s32 pad1;
-    s32 pad2;
-    s32 subType;
+    STACK_PADS(s32, 2);
+    s32 subType = OBJSWITCH_SUBTYPE(&this->dyna.actor);
 
-    subType = OBJSWITCH_SUBTYPE(&this->dyna.actor);
     func_8002ED80(&this->dyna.actor, play, 0);
 
     if (1) {}

@@ -59,7 +59,7 @@ static void* sStoneTextures[] = {
 };
 
 void EnTana_Init(Actor* thisx, PlayState* play) {
-    EnTana* this = (EnTana*)thisx;
+    UNUSED EnTana* this = (EnTana*)thisx;
 
     PRINTF("☆☆☆ %s ☆☆☆\n", sShelfTypes[thisx->params]);
     Actor_SetScale(thisx, 1.0f);
@@ -74,7 +74,7 @@ void EnTana_Update(Actor* thisx, PlayState* play) {
 }
 
 void EnTana_DrawWoodenShelves(Actor* thisx, PlayState* play) {
-    EnTana* this = (EnTana*)thisx;
+    UNUSED EnTana* this = (EnTana*)thisx;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_tana.c", 148);
 
@@ -87,7 +87,7 @@ void EnTana_DrawWoodenShelves(Actor* thisx, PlayState* play) {
 }
 
 void EnTana_DrawStoneShelves(Actor* thisx, PlayState* play) {
-    EnTana* this = (EnTana*)thisx;
+    UNUSED EnTana* this = (EnTana*)thisx;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_tana.c", 163);
 

@@ -44,7 +44,7 @@ void ObjElevator_SetupAction(ObjElevator* this, ObjElevatorActionFunc actionFunc
 }
 
 void func_80B92B08(ObjElevator* this, PlayState* play, CollisionHeader* collision, s32 flag) {
-    s16 pad1;
+    STACK_PAD(s16);
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, flag);
@@ -53,7 +53,7 @@ void func_80B92B08(ObjElevator* this, PlayState* play, CollisionHeader* collisio
 
 #if OOT_DEBUG
     if (this->dyna.bgId == BG_ACTOR_MAX) {
-        s32 pad2;
+        STACK_PAD(s32);
 
         PRINTF("Warning : move BG 登録失敗(%s %d)(name %d)(arg_data 0x%04x)\n", "../z_obj_elevator.c", 136,
                this->dyna.actor.id, this->dyna.actor.params);

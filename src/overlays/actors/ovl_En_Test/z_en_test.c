@@ -359,7 +359,7 @@ void EnTest_ChooseRandomAction(EnTest* this, PlayState* play) {
 }
 
 void EnTest_ChooseAction(EnTest* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     Player* player = GET_PLAYER(play);
     s16 yawDiff = player->actor.shape.rot.y - this->actor.shape.rot.y;
 
@@ -566,7 +566,7 @@ void EnTest_SetupWalkAndBlock(EnTest* this) {
 }
 
 void EnTest_WalkAndBlock(EnTest* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     f32 checkDist = 0.0f;
     s32 absPlaySpeed;
     s32 prevFrame;
@@ -600,7 +600,7 @@ void EnTest_WalkAndBlock(EnTest* this, PlayState* play) {
         }
 
         if (ABS(this->actor.speed) < 3.0f) {
-            s32 pad;
+            STACK_PAD(s32);
 
             Animation_Change(&this->skelAnime, &gStalfosSlowAdvanceAnim, 0.0f, this->skelAnime.curFrame,
                              Animation_GetLastFrame(&gStalfosSlowAdvanceAnim), 0, -6.0f);
@@ -790,7 +790,7 @@ void func_80860EC0(EnTest* this) {
 // a variation of sidestep
 void func_80860F84(EnTest* this, PlayState* play) {
     s16 playerYaw180;
-    s32 pad;
+    STACK_PAD(s32);
     s32 prevFrame;
     s32 beforeCurFrame;
     s16 yawDiff;
@@ -1362,12 +1362,12 @@ void func_808627C4(EnTest* this, PlayState* play) {
 
 // a variation of sidestep
 void func_808628C8(EnTest* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     Player* player = GET_PLAYER(play);
-    s32 pad1;
+    STACK_PAD(s32);
     s32 prevFrame;
     s32 beforeCurFrame;
-    s32 pad2;
+    STACK_PAD(s32);
     f32 checkDist = 0.0f;
     s16 newYaw;
     f32 absPlaySpeed;
@@ -1704,7 +1704,7 @@ void EnTest_Update(Actor* thisx, PlayState* play) {
     EnTest* this = (EnTest*)thisx;
     f32 oldWeight;
     u32 floorProperty;
-    s32 pad;
+    STACK_PAD(s32);
 
     EnTest_UpdateDamage(this, play);
 
@@ -1846,7 +1846,7 @@ s32 EnTest_OverrideLimbDraw(PlayState* play2, s32 limbIndex, Gfx** dList, Vec3f*
 }
 
 void EnTest_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx) {
-    static Vec3f unused1 = { 1100.0f, -700.0f, 0.0f };
+    UNUSED static Vec3f unused1 = { 1100.0f, -700.0f, 0.0f };
     static Vec3f D_80864658 = { 300.0f, 0.0f, 0.0f };
     static Vec3f D_80864664 = { 3400.0f, 0.0f, 0.0f };
     static Vec3f D_80864670 = { 0.0f, 0.0f, 0.0f };
@@ -1854,17 +1854,17 @@ void EnTest_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot
     static Vec3f D_80864688 = { 3000.0f, -2000.0f, -1000.0f };
     static Vec3f D_80864694 = { 3000.0f, -2000.0f, 1000.0f };
     static Vec3f D_808646A0 = { -1300.0f, 1100.0f, 0.0f };
-    static Vec3f unused2 = { -3000.0f, 1900.0f, 800.0f };
-    static Vec3f unused3 = { -3000.0f, -1100.0f, 800.0f };
-    static Vec3f unused4 = { 1900.0f, 1900.0f, 800.0f };
-    static Vec3f unused5 = { -3000.0f, -1100.0f, 800.0f };
-    static Vec3f unused6 = { 1900.0f, -1100.0f, 800.0f };
-    static Vec3f unused7 = { 1900.0f, 1900.0f, 800.0f };
+    UNUSED static Vec3f unused2 = { -3000.0f, 1900.0f, 800.0f };
+    UNUSED static Vec3f unused3 = { -3000.0f, -1100.0f, 800.0f };
+    UNUSED static Vec3f unused4 = { 1900.0f, 1900.0f, 800.0f };
+    UNUSED static Vec3f unused5 = { -3000.0f, -1100.0f, 800.0f };
+    UNUSED static Vec3f unused6 = { 1900.0f, -1100.0f, 800.0f };
+    UNUSED static Vec3f unused7 = { 1900.0f, 1900.0f, 800.0f };
     s32 bodyPart = -1;
     Vec3f sp70;
     Vec3f sp64;
     EnTest* this = (EnTest*)thisx;
-    s32 pad;
+    STACK_PAD(s32);
     Vec3f sp50;
 
     BodyBreak_SetInfo(&this->bodyBreak, limbIndex, 0, 60, 60, dList, BODYBREAK_OBJECT_SLOT_DEFAULT);

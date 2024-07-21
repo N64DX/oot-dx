@@ -56,7 +56,7 @@ static Vec3f sBoxGroundCheckPoints[] = {
 };
 
 void func_808B3960(BgSpot15Rrbox* this, PlayState* play, CollisionHeader* collision, s32 flags) {
-    s32 pad;
+    STACK_PAD(s32);
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, flags);
@@ -65,7 +65,7 @@ void func_808B3960(BgSpot15Rrbox* this, PlayState* play, CollisionHeader* collis
 
 #if OOT_DEBUG
     if (this->dyna.bgId == BG_ACTOR_MAX) {
-        s32 pad2;
+        STACK_PAD(s32);
 
         PRINTF("Warning : move BG 登録失敗(%s %d)(name %d)(arg_data 0x%04x)\n", "../z_bg_spot15_rrbox.c", 171,
                this->dyna.actor.id, this->dyna.actor.params);

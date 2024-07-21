@@ -312,7 +312,7 @@ void EnWood02_Update(Actor* thisx, PlayState* play2) {
         if (!(this->actor.flags & ACTOR_FLAG_6)) {
             u8 new_var = this->unk_14E[0];
             u8 phi_v0 = 0;
-            s32 pad;
+            STACK_PAD(s32);
 
             if (this->unk_14C < 0) {
                 phi_v0 = 0x80;

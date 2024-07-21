@@ -94,7 +94,7 @@ void EnDyExtra_Draw(Actor* thisx, PlayState* play) {
                                0x00, 0x02, 0x01, 0x00, 0x02, 0x01, 0x00, 0x02, 0x01, 0x00, 0x01, 0x02, 0x00 };
     EnDyExtra* this = (EnDyExtra*)thisx;
     GraphicsContext* gfxCtx = play->state.gfxCtx;
-    s32 pad;
+    STACK_PAD(s32);
     Vtx* vertices = SEGMENTED_TO_VIRTUAL(gGreatFairySpiralBeamVtx);
     s32 i;
     u8 unk[3];

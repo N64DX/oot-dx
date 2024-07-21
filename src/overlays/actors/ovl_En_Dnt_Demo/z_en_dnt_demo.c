@@ -72,7 +72,7 @@ void EnDntDemo_Init(Actor* thisx, PlayState* play2) {
     PlayState* play = play2;
     EnDntDemo* this = (EnDntDemo*)thisx;
     s32 i;
-    s32 pad;
+    STACK_PAD(s32);
 
     PRINTF("\n\n");
     // "Deku Scrub mask show start"
@@ -316,7 +316,7 @@ void EnDntDemo_Prize(EnDntDemo* this, PlayState* play) {
 }
 
 void EnDntDemo_Update(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     EnDntDemo* this = (EnDntDemo*)thisx;
 
     if (this->unkTimer2 != 0) {

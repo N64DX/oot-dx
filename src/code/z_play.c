@@ -241,7 +241,7 @@ void Play_Init(GameState* thisx) {
     s32 playerStartBgCamIndex;
     s32 i;
     u8 baseSceneLayer;
-    s32 pad[2];
+    STACK_PADS(s32, 2);
 
     if (gSaveContext.save.entranceIndex == ENTR_LOAD_OPENING) {
         gSaveContext.save.entranceIndex = 0;
@@ -476,7 +476,7 @@ void Play_Init(GameState* thisx) {
 void Play_Update(PlayState* this) {
     Input* input = this->state.input;
     s32 isPaused;
-    s32 pad1;
+    STACK_PAD(s32);
 
 #if OOT_DEBUG
     if ((SREG(1) < 0) || (DREG(0) != 0)) {
@@ -486,7 +486,7 @@ void Play_Update(PlayState* this) {
 
     if ((R_HREG_MODE == HREG_MODE_PRINT_OBJECT_TABLE) && (R_PRINT_OBJECT_TABLE_TRIGGER < 0)) {
         u32 i;
-        s32 pad2;
+        STACK_PAD(s32);
 
         R_PRINT_OBJECT_TABLE_TRIGGER = 0;
         PRINTF("object_exchange_rom_address %u\n", gObjectTableSize);
@@ -1385,7 +1385,7 @@ f32 func_800BFCB8(PlayState* this, MtxF* mf, Vec3f* pos) {
         f32 nx = COLPOLY_GET_NORMAL(poly.normal.x);
         f32 ny = COLPOLY_GET_NORMAL(poly.normal.y);
         f32 nz = COLPOLY_GET_NORMAL(poly.normal.z);
-        s32 pad[5];
+        STACK_PADS(s32, 5);
 
         temp1 = sqrtf(1.0f - SQ(nx));
 
@@ -1475,7 +1475,7 @@ void Play_InitScene(PlayState* this, s32 spawn) {
 
 void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn) {
     SceneTableEntry* scene = &gSceneTable[sceneId];
-    u32 size;
+    UNUSED_NDEBUG u32 size;
 
     scene->unk_13 = 0;
     this->loadedScene = scene;

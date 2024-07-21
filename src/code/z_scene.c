@@ -47,7 +47,7 @@ s32 Object_SpawnPersistent(ObjectContext* objectCtx, s16 objectId) {
 
 void Object_InitContext(PlayState* play, ObjectContext* objectCtx) {
     PlayState* play2 = play;
-    s32 pad;
+    STACK_PAD(s32);
     u32 spaceSize;
     s32 i;
 
@@ -332,7 +332,7 @@ BAD_RETURN(s32) Scene_CommandTransitionActorEntryList(PlayState* play, SceneCmd*
     play->transiActorCtx.list = SEGMENTED_TO_VIRTUAL(cmd->transiActorList.data);
 }
 
-void TransitionActor_InitContext(GameState* state, TransitionActorContext* transiActorCtx) {
+void TransitionActor_InitContext(UNUSED GameState* state, TransitionActorContext* transiActorCtx) {
     transiActorCtx->numActors = 0;
 }
 
@@ -405,7 +405,7 @@ BAD_RETURN(s32) Scene_CommandExitList(PlayState* play, SceneCmd* cmd) {
     play->exitList = SEGMENTED_TO_VIRTUAL(cmd->exitList.data);
 }
 
-BAD_RETURN(s32) Scene_CommandUndefined9(PlayState* play, SceneCmd* cmd) {
+BAD_RETURN(s32) Scene_CommandUndefined9(UNUSED PlayState* play, UNUSED SceneCmd* cmd) {
 }
 
 BAD_RETURN(s32) Scene_CommandSoundSettings(PlayState* play, SceneCmd* cmd) {

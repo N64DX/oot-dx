@@ -157,7 +157,7 @@ void EnDh_Init(Actor* thisx, PlayState* play) {
 }
 
 void EnDh_Destroy(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     EnDh* this = (EnDh*)thisx;
 
     func_800F5B58();
@@ -335,7 +335,7 @@ void EnDh_Attack(EnDh* this, PlayState* play) {
             break;
         case 3:
             if ((this->actor.xzDistToPlayer <= 100.0f) && (Actor_IsFacingPlayer(&this->actor, 60 * 0x10000 / 360))) {
-                s32 pad;
+                STACK_PAD(s32);
 
                 Animation_Change(&this->skelAnime, &object_dh_Anim_004658, 1.0f, 20.0f,
                                  Animation_GetLastFrame(&object_dh_Anim_004658), ANIMMODE_ONCE, -6.0f);
@@ -472,7 +472,7 @@ void EnDh_Death(EnDh* this, PlayState* play) {
 }
 
 void EnDh_CollisionCheck(EnDh* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     Player* player = GET_PLAYER(play);
     s32 lastHealth;
 
@@ -503,10 +503,10 @@ void EnDh_CollisionCheck(EnDh* this, PlayState* play) {
 }
 
 void EnDh_Update(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     EnDh* this = (EnDh*)thisx;
     Player* player = GET_PLAYER(play);
-    s32 pad40;
+    STACK_PAD(s32);
 
     EnDh_CollisionCheck(this, play);
     this->actionFunc(this, play);
@@ -549,7 +549,7 @@ void EnDh_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, 
 }
 
 void EnDh_Draw(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     EnDh* this = (EnDh*)thisx;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_dh.c", 1099);

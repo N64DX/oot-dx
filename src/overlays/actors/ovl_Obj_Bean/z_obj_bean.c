@@ -134,7 +134,7 @@ void ObjBean_InitCollider(Actor* thisx, PlayState* play) {
 }
 
 void ObjBean_InitDynaPoly(ObjBean* this, PlayState* play, CollisionHeader* collision, s32 moveFlag) {
-    s32 pad;
+    STACK_PAD(s32);
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, moveFlag);
@@ -143,7 +143,7 @@ void ObjBean_InitDynaPoly(ObjBean* this, PlayState* play, CollisionHeader* colli
 
 #if OOT_DEBUG
     if (this->dyna.bgId == BG_ACTOR_MAX) {
-        s32 pad2;
+        STACK_PAD(s32);
 
         PRINTF("Warning : move BG 登録失敗(%s %d)(name %d)(arg_data 0x%04x)\n", "../z_obj_bean.c", 374,
                this->dyna.actor.id, this->dyna.actor.params);
@@ -607,7 +607,6 @@ void func_80B90010(ObjBean* this) {
 // Control is returned to the player and the leaves start to flatten out
 void func_80B90050(ObjBean* this, PlayState* play) {
     s16 temp_a0;
-    f32 temp_f2;
 
     this->unk_1B6.x += 0x3E80;
     this->unk_1B6.y += -0xC8;
@@ -864,7 +863,7 @@ void func_80B90A34(ObjBean* this, PlayState* play) {
     }
 }
 void ObjBean_Update(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     ObjBean* this = (ObjBean*)thisx;
 
     if (this->timer > 0) {

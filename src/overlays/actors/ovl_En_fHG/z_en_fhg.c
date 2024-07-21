@@ -108,11 +108,10 @@ void EnfHG_SetupIntro(EnfHG* this, PlayState* play) {
 
 void EnfHG_Intro(EnfHG* this, PlayState* play) {
     static Vec3f audioVec = { 0.0f, 0.0f, 50.0f };
-    s32 pad64;
+    STACK_PAD(s32);
     Player* player = GET_PLAYER(play);
     BossGanondrof* bossGnd = (BossGanondrof*)this->actor.parent;
-    s32 pad58;
-    s32 pad54;
+    STACK_PADS(s32, 2);
 
     if (this->cutsceneState != INTRO_FINISH) {
         SkelAnime_Update(&this->skin.skelAnime);
@@ -651,7 +650,7 @@ void EnfHG_Retreat(EnfHG* this, PlayState* play) {
         BossGanondrof* bossGnd = (BossGanondrof*)this->actor.parent;
         s16 paintingIdxReal;
         s16 paintingIdxFake;
-        Actor* child;
+        UNUSED_NDEBUG Actor* child;
 
         if (this->actor.params != GND_REAL_BOSS) {
             this->killActor = true;
@@ -679,7 +678,7 @@ void EnfHG_Done(EnfHG* this, PlayState* play) {
 }
 
 void EnfHG_Update(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     EnfHG* this = (EnfHG*)thisx;
     u8 i;
 
@@ -715,7 +714,7 @@ void EnfHG_PostDraw(Actor* thisx, PlayState* play, Skin* skin) {
 void EnfHG_Draw(Actor* thisx, PlayState* play) {
     EnfHG* this = (EnfHG*)thisx;
     BossGanondrof* bossGnd = (BossGanondrof*)this->actor.parent;
-    s32 pad;
+    STACK_PAD(s32);
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_fhg.c", 2439);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);

@@ -2309,7 +2309,7 @@ void BossTw_DeathBall(BossTw* this, PlayState* play) {
     f32 xDiff;
     f32 yDiff;
     f32 zDiff;
-    s32 pad;
+    STACK_PAD(s32);
     s16 i;
     s16 yaw;
 
@@ -2383,9 +2383,7 @@ void BossTw_TwinrovaSetupDeathCS(BossTw* this, PlayState* play) {
 }
 
 void BossTw_DeathCSMsgSfx(BossTw* this, PlayState* play) {
-    s32 pad;
-    s32 pad2;
-    s32 pad3;
+    STACK_PADS(s32, 3);
     s16 msgId2;
     s16 msgId1;
     u8 kotakeAnim;
@@ -2846,7 +2844,7 @@ void BossTw_Update(Actor* thisx, PlayState* play) {
     BossTw* this = (BossTw*)thisx;
     Player* player = GET_PLAYER(play);
     s16 i;
-    s32 pad;
+    STACK_PAD(s32);
 
     this->collider.base.colType = COLTYPE_HIT3;
     Math_ApproachF(&this->fogR, play->lightCtx.fogColor[0], 1.0f, 10.0f);
@@ -3262,7 +3260,7 @@ void BossTw_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot
 }
 
 void func_80941BC0(BossTw* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
 
     OPEN_DISPS(play->state.gfxCtx, "../z_boss_tw.c", 6341);
 
@@ -3305,7 +3303,7 @@ void func_80941BC0(BossTw* this, PlayState* play) {
 }
 
 void func_80942180(BossTw* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
 
     OPEN_DISPS(play->state.gfxCtx, "../z_boss_tw.c", 6468);
 
@@ -3353,7 +3351,7 @@ void func_80942180(BossTw* this, PlayState* play) {
 }
 
 void func_809426F0(BossTw* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     s16 i;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_boss_tw.c", 6587);
@@ -3679,7 +3677,7 @@ void BossTw_TwinrovaPostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 }
 
 void BossTw_ShieldChargeDraw(BossTw* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     Player* player = GET_PLAYER(play);
     s16 temp_t0;
     s16 temp_a0;
@@ -3782,7 +3780,7 @@ void BossTw_ShieldChargeDraw(BossTw* this, PlayState* play) {
 }
 
 void BossTw_SpawnPortalDraw(BossTw* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
 
     OPEN_DISPS(play->state.gfxCtx, "../z_boss_tw.c", 7546);
 
@@ -3827,7 +3825,7 @@ void BossTw_SpawnPortalDraw(BossTw* this, PlayState* play) {
 }
 
 void func_80944C50(BossTw* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     f32 scale;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_boss_tw.c", 7645);
@@ -4234,7 +4232,7 @@ void BossTw_BlastIce(BossTw* this, PlayState* play) {
 
         case TW_ICE_BLAST_GROUND:
             if (this->timers[0] != 0) {
-                s32 pad;
+                STACK_PAD(s32);
 
                 if (this->timers[0] == 1) {
                     sEnvType = 0;
@@ -4900,7 +4898,7 @@ void BossTw_DrawEffects(PlayState* play) {
     u8 materialFlag = 0;
     s16 i;
     s16 j;
-    s32 pad;
+    STACK_PAD(s32);
     Player* player = GET_PLAYER(play);
     s16 phi_s4;
     BossTwEffect* currentEffect;
@@ -5395,7 +5393,7 @@ void BossTw_TwinrovaFly(BossTw* this, PlayState* play) {
     f32 xDiff;
     f32 yDiff;
     f32 zDiff;
-    s32 pad;
+    STACK_PAD(s32);
     f32 yaw;
     f32 xzDist;
 

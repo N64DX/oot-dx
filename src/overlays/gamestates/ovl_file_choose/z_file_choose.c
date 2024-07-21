@@ -3,7 +3,7 @@
 #include "assets/textures/title_static/title_static.h"
 #include "assets/textures/parameter_static/parameter_static.h"
 
-static s16 sUnused = 106;
+UNUSED static s16 sUnused = 106;
 
 static s16 sScreenFillAlpha = 255;
 
@@ -65,7 +65,7 @@ void FileSelect_InitModeUpdate(GameState* thisx) {
     }
 }
 
-void FileSelect_InitModeDraw(GameState* thisx) {
+void FileSelect_InitModeDraw(UNUSED GameState* thisx) {
 }
 
 /**
@@ -285,7 +285,7 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
 /**
  * Update function for `CM_UNUSED_31`
  */
-void FileSelect_UnusedCM31(GameState* thisx) {
+void FileSelect_UnusedCM31(UNUSED GameState* thisx) {
 }
 
 /**
@@ -382,8 +382,8 @@ void FileSelect_PulsateCursor(GameState* thisx) {
     static s16 cursorAlphaTargets[] = { 70, 200 };
     FileSelectState* this = (FileSelectState*)thisx;
     s16 alphaStep;
-    SramContext* sramCtx = &this->sramCtx;
-    Input* debugInput = &this->state.input[2];
+    UNUSED_NDEBUG SramContext* sramCtx = &this->sramCtx;
+    UNUSED_NDEBUG Input* debugInput = &this->state.input[2];
 
 #if OOT_DEBUG
     if (CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {
@@ -973,7 +973,7 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
     s16 i;
     s16 quadVtxIndex;
     s16 isActive;
-    s16 pad;
+    STACK_PAD(s16);
 
     OPEN_DISPS(this->state.gfxCtx, "../z_file_choose.c", 1940);
 
@@ -1897,13 +1897,13 @@ void FileSelect_InitContext(GameState* thisx) {
     }
 }
 
-void FileSelect_Destroy(GameState* thisx) {
+void FileSelect_Destroy(UNUSED GameState* thisx) {
 }
 
 void FileSelect_Init(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
     u32 size = (uintptr_t)_title_staticSegmentRomEnd - (uintptr_t)_title_staticSegmentRomStart;
-    s32 pad;
+    STACK_PAD(s32);
 
     SREG(30) = 1;
     PRINTF("SIZE=%x\n", size);

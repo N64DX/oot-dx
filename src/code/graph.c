@@ -151,7 +151,7 @@ void Graph_Init(GraphicsContext* gfxCtx) {
 #endif
 }
 
-void Graph_Destroy(GraphicsContext* gfxCtx) {
+void Graph_Destroy(UNUSED GraphicsContext* gfxCtx) {
 #if OOT_DEBUG
     func_800D3210();
     Fault_RemoveClient(&sGraphFaultClient);
@@ -261,7 +261,7 @@ void Graph_TaskSet00(GraphicsContext* gfxCtx) {
         scTask->msgQueue = &gfxCtx->queue;
         scTask->msg = NULL;
 
-        { s16 pad; }
+        { STACK_PAD(s16); }
 
         cfb = &sGraphCfbInfos[sGraphCfbInfoIdx];
 
@@ -278,7 +278,7 @@ void Graph_TaskSet00(GraphicsContext* gfxCtx) {
 
         scTask->framebuffer = cfb;
 
-        { s16 pad2; }
+        { STACK_PAD(s16); }
 
         gfxCtx->schedMsgQueue = &gScheduler.cmdQueue;
 
@@ -408,7 +408,7 @@ void Graph_Update(GraphicsContext* gfxCtx, GameState* gameState) {
 
     {
         OSTime timeNow = osGetTime();
-        s32 pad;
+        STACK_PAD(s32);
 
         gRSPGfxTimeTotal = gRSPGfxTimeAcc;
         gRSPAudioTimeTotal = gRSPAudioTimeAcc;
@@ -440,7 +440,7 @@ void Graph_Update(GraphicsContext* gfxCtx, GameState* gameState) {
 #endif
 }
 
-void Graph_ThreadEntry(void* arg0) {
+void Graph_ThreadEntry(UNUSED void* arg) {
     GraphicsContext gfxCtx;
     GameState* gameState;
     u32 size;
@@ -488,7 +488,7 @@ void Graph_ThreadEntry(void* arg0) {
 }
 
 void* Graph_Alloc(GraphicsContext* gfxCtx, size_t size) {
-    TwoHeadGfxArena* thga = &gfxCtx->polyOpa;
+    UNUSED_NDEBUG TwoHeadGfxArena* thga = &gfxCtx->polyOpa;
 
     if (HREG(59) == 1) {
         PRINTF("graph_alloc siz=%d thga size=%08x bufp=%08x head=%08x tail=%08x\n", size, thga->size, thga->start,
@@ -498,7 +498,7 @@ void* Graph_Alloc(GraphicsContext* gfxCtx, size_t size) {
 }
 
 void* Graph_Alloc2(GraphicsContext* gfxCtx, size_t size) {
-    TwoHeadGfxArena* thga = &gfxCtx->polyOpa;
+    UNUSED_NDEBUG TwoHeadGfxArena* thga = &gfxCtx->polyOpa;
 
     if (HREG(59) == 1) {
         PRINTF("graph_alloc siz=%d thga size=%08x bufp=%08x head=%08x tail=%08x\n", size, thga->size, thga->start,

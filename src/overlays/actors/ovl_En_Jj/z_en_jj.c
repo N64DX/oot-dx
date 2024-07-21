@@ -40,11 +40,11 @@ ActorInit En_Jj_InitVars = {
     /**/ EnJj_Draw,
 };
 
-static s32 sUnused = 0;
+UNUSED static s32 sUnused = 0;
 
 #include "z_en_jj_cutscene_data.inc.c"
 
-static s32 sUnused2[] = { 0, 0 };
+UNUSED static s32 sUnused2[] = { 0, 0 };
 
 static ColliderCylinderInit sCylinderInit = {
     {

@@ -227,8 +227,8 @@ static Vec3f sSubCamEyePoints[] = {
 static Vec3f sZeroVec = { 0.0f, 0.0f, 0.0f };
 static u32 sBodyStatic = false;
 
-// Unreferenced. Maybe two zero vectors?
-static u32 sUnkValues[] = { 0, 0, 0, 0, 0, 0 };
+// Maybe two zero vectors?
+UNUSED static u32 sUnkValues[] = { 0, 0, 0, 0, 0, 0 };
 
 static Color_RGBA8 sBodyColor = { 255, 255, 255, 255 };
 static Color_RGBA8 sStaticColor = { 0, 0, 0, 255 };
@@ -333,7 +333,7 @@ void BossSst_Init(Actor* thisx, PlayState* play2) {
 }
 
 void BossSst_Destroy(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BossSst* this = (BossSst*)thisx;
 
     Collider_DestroyJntSph(play, &this->colliderJntSph);
@@ -1175,7 +1175,7 @@ void BossSst_HeadSetupFinish(BossSst* this) {
 void BossSst_HeadFinish(BossSst* this, PlayState* play) {
     static Color_RGBA8 colorIndigo = { 80, 80, 150, 255 };
     static Color_RGBA8 colorDarkIndigo = { 40, 40, 80, 255 };
-    static Color_RGBA8 colorUnused[2] = {
+    UNUSED static Color_RGBA8 colorUnused[2] = {
         { 0, 0, 0, 255 },
         { 100, 100, 100, 0 },
     };
@@ -2582,7 +2582,7 @@ void BossSst_HeadCollisionCheck(BossSst* this, PlayState* play) {
 }
 
 void BossSst_UpdateHand(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BossSst* this = (BossSst*)thisx;
     BossSstHandTrail* trail;
 
@@ -2637,7 +2637,7 @@ void BossSst_UpdateHand(Actor* thisx, PlayState* play) {
 }
 
 void BossSst_UpdateHead(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BossSst* this = (BossSst*)thisx;
 
     func_8002DBD0(&this->actor, &sHandOffsets[RIGHT], &sHands[RIGHT]->actor.world.pos);
@@ -2739,7 +2739,7 @@ void BossSst_DrawHand(Actor* thisx, PlayState* play) {
         s32 i;
         s32 idx;
         s32 end;
-        s32 pad;
+        STACK_PAD(s32);
 
         Gfx_SetupDL_25Xlu(play->state.gfxCtx);
 
@@ -2851,7 +2851,7 @@ void BossSst_PostHeadDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* ro
 }
 
 void BossSst_DrawHead(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BossSst* this = (BossSst*)thisx;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_boss_sst.c", 6810);
@@ -2931,7 +2931,7 @@ void BossSst_SpawnHeadShadow(BossSst* this) {
         { -160.0f, 0.0f, 250.0f },
         { 160.0f, 0.0f, 250.0f },
     };
-    s32 pad;
+    STACK_PAD(s32);
     s32 i;
     f32 sn;
     f32 cs;
@@ -3150,7 +3150,7 @@ void BossSst_UpdateEffects(Actor* thisx, PlayState* play) {
 }
 
 void BossSst_DrawEffects(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     BossSst* this = (BossSst*)thisx;
     s32 i;
     BossSstEffect* effect;

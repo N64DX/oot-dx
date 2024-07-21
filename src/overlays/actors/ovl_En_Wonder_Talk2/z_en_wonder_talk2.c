@@ -37,7 +37,7 @@ void EnWonderTalk2_Destroy(Actor* thisx, PlayState* play) {
 }
 
 void EnWonderTalk2_Init(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     EnWonderTalk2* this = (EnWonderTalk2*)thisx;
 
     PRINTF("\n\n");
@@ -270,7 +270,7 @@ void EnWonderTalk2_DoNothing(EnWonderTalk2* this, PlayState* play) {
 }
 
 void EnWonderTalk2_Update(Actor* thisx, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     EnWonderTalk2* this = (EnWonderTalk2*)thisx;
 
     this->actionFunc(this, play);

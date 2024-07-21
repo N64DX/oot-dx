@@ -62,7 +62,7 @@ void ObjLift_SetupAction(ObjLift* this, ObjLiftActionFunc actionFunc) {
 }
 
 void ObjLift_InitDynaPoly(ObjLift* this, PlayState* play, CollisionHeader* collision, s32 flags) {
-    s32 pad;
+    STACK_PAD(s32);
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, flags);
@@ -71,7 +71,7 @@ void ObjLift_InitDynaPoly(ObjLift* this, PlayState* play, CollisionHeader* colli
 
 #if OOT_DEBUG
     if (this->dyna.bgId == BG_ACTOR_MAX) {
-        s32 pad2;
+        STACK_PAD(s32);
 
         PRINTF("Warning : move BG 登録失敗(%s %d)(name %d)(arg_data 0x%04x)\n", "../z_obj_lift.c", 188,
                this->dyna.actor.id, this->dyna.actor.params);
@@ -83,7 +83,7 @@ void ObjLift_SpawnFragments(ObjLift* this, PlayState* play) {
     Vec3f pos;
     Vec3f velocity;
     Vec3f* temp_s3;
-    s32 pad0;
+    STACK_PAD(s32);
     s32 i;
 
     temp_s3 = &this->dyna.actor.world.pos;
@@ -138,7 +138,7 @@ void ObjLift_SetupWait(ObjLift* this) {
 }
 
 void ObjLift_Wait(ObjLift* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     s32 quakeIndex;
 
     if (DynaPolyActor_IsPlayerOnTop(&this->dyna)) {
@@ -193,7 +193,7 @@ void ObjLift_SetupFall(ObjLift* this) {
 }
 
 void ObjLift_Fall(ObjLift* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     s32 bgId;
     Vec3f pos;
 

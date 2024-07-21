@@ -63,7 +63,7 @@ static InitChainEntry sInitChain[] = {
 };
 
 void BgJyaBombiwa_SetupDynaPoly(BgJyaBombiwa* this, PlayState* play, CollisionHeader* collision, s32 flag) {
-    s32 pad1;
+    STACK_PAD(s32);
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, flag);
@@ -72,7 +72,7 @@ void BgJyaBombiwa_SetupDynaPoly(BgJyaBombiwa* this, PlayState* play, CollisionHe
 
 #if OOT_DEBUG
     if (this->dyna.bgId == BG_ACTOR_MAX) {
-        s32 pad2;
+        STACK_PAD(s32);
 
         // "Warning: move BG registration failed"
         PRINTF("Warning : move BG 登録失敗(%s %d)(name %d)(arg_data 0x%04x)\n", "../z_bg_jya_bombiwa.c", 174,
@@ -82,7 +82,7 @@ void BgJyaBombiwa_SetupDynaPoly(BgJyaBombiwa* this, PlayState* play, CollisionHe
 }
 
 void BgJyaBombiwa_InitCollider(BgJyaBombiwa* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
 
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, &this->dyna.actor, &sJntSphInit, this->colliderItems);

@@ -150,7 +150,7 @@ void func_80A2F180(EnGb* this) {
 
 void EnGb_Init(Actor* thisx, PlayState* play) {
     EnGb* this = (EnGb*)thisx;
-    s32 pad;
+    STACK_PAD(s32);
     CollisionHeader* colHeader = NULL;
     s32 i;
     f32 rand;
@@ -183,7 +183,7 @@ void EnGb_Init(Actor* thisx, PlayState* play) {
     this->actionTimer = (s16)Rand_ZeroFloat(100.0f) + 100;
 
     for (i = 0; i < ARRAY_COUNT(sCagedSoulPositions); i++) {
-        s32 pad;
+        STACK_PAD(s32);
 
         this->cagedSouls[i].infoIdx = (s32)Rand_ZeroFloat(30.0f) % 3;
         this->cagedSouls[i].unk_14.x = this->cagedSouls[i].translation.x =
@@ -282,7 +282,7 @@ void func_80A2F83C(EnGb* this, PlayState* play) {
         }
     }
     if (Actor_TalkOfferAccepted(&this->dyna.actor, play)) {
-        s32 pad;
+        STACK_PAD(s32);
 
         switch (func_8002F368(play)) {
             case EXCH_ITEM_NONE:
@@ -422,7 +422,7 @@ void EnGb_Update(Actor* thisx, PlayState* play2) {
 
 void EnGb_Draw(Actor* thisx, PlayState* play) {
     EnGb* this = (EnGb*)thisx;
-    s32 pad;
+    STACK_PAD(s32);
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_gb.c", 763);
 
@@ -516,7 +516,7 @@ void EnGb_UpdateCagedSouls(EnGb* this, PlayState* play) {
 }
 
 void EnGb_DrawCagedSouls(EnGb* this, PlayState* play) {
-    s32 pad;
+    STACK_PAD(s32);
     s32 i;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_gb.c", 914);
