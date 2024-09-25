@@ -66,9 +66,42 @@ typedef enum MagicChangeType {
 #define MAGIC_NORMAL_METER 0x30
 #define MAGIC_DOUBLE_METER (2 * MAGIC_NORMAL_METER)
 
+typedef enum {
+    /* 0 */ INTERACT_BC_BTN_B,
+    /* 1 */ INTERACT_BC_BTN_C_LEFT,
+    /* 2 */ INTERACT_BC_BTN_C_DOWN,
+    /* 3 */ INTERACT_BC_BTN_C_RIGHT,
+    /* 4 */ INTERACT_BC_BTN_MAX
+} InteractBCButton;
+
+#define INTERACT_BC_BTN_C_FIRST INTERACT_BC_BTN_C_LEFT
+#define INTERACT_BC_BTN_C_LAST INTERACT_BC_BTN_C_RIGHT
+
+typedef enum {
+    /* 0 */ INTERACT_C_BTN_C_LEFT,
+    /* 1 */ INTERACT_C_BTN_C_DOWN,
+    /* 2 */ INTERACT_C_BTN_C_RIGHT,
+    /* 3 */ INTERACT_C_BTN_MAX
+} InteractCButton;
+
+#define INTERACT_C_BTN_TO_BC_BTN(btnsC) ((btnsC) + 1)
+#define INTERACT_BC_BTN_TO_C_BTN(btnsBC) ((btnsBC) - 1)
+
+typedef enum {
+    /* 0 */ INTERACT_BCA_BTN_B,
+    /* 1 */ INTERACT_BCA_BTN_C_LEFT,
+    /* 2 */ INTERACT_BCA_BTN_C_DOWN,
+    /* 3 */ INTERACT_BCA_BTN_C_RIGHT,
+    /* 4 */ INTERACT_BCA_BTN_A,
+    /* 5 */ INTERACT_BCA_BTN_MAX
+} InteractBCAButton;
+
+#define INTERACT_C_BTN_TO_BCA_BTN(btnsC) ((btnsC) + 1)
+#define INTERACT_BC_BTN_TO_BCA_BTN(btnsBC) (btnsBC)
+
 typedef struct ItemEquips {
-    /* 0x00 */ u8 buttonItems[4];
-    /* 0x04 */ u8 cButtonSlots[3];
+    /* 0x00 */ u8 buttonItems[INTERACT_BC_BTN_MAX];
+    /* 0x04 */ u8 cButtonSlots[INTERACT_C_BTN_MAX];
     /* 0x08 */ u16 equipment; // a mask where each nibble corresponds to a type of equipment `EquipmentType`, and each nibble is a piece `EquipValue*`
 } ItemEquips; // size = 0x0A
 
@@ -295,7 +328,7 @@ typedef struct SaveContext {
     /* 0x13DE */ char unk_13DE[0x0002];
     /* 0x13E0 */ u8 seqId;
     /* 0x13E1 */ u8 natureAmbienceId;
-    /* 0x13E2 */ u8 buttonStatus[5];
+    /* 0x13E2 */ u8 buttonStatus[INTERACT_BCA_BTN_MAX];
     /* 0x13E7 */ u8 forceRisingButtonAlphas; // if btn alphas are updated through Interface_DimButtonAlphas, instead update them through Interface_RaiseButtonAlphas
     /* 0x13E8 */ u16 nextHudVisibilityMode; // triggers the hud to change visibility mode to the requested value. Reset to HUD_VISIBILITY_NO_CHANGE when target is reached
     /* 0x13EA */ u16 hudVisibilityMode; // current hud visibility mode
@@ -442,15 +475,16 @@ typedef enum LinkAge {
 
 #define HIGH_SCORE(score) (gSaveContext.save.info.highScores[score])
 
-#define B_BTN_ITEM ((gSaveContext.buttonStatus[0] == ITEM_NONE)                     \
-                        ? ITEM_NONE                                                 \
-                        : (gSaveContext.save.info.equips.buttonItems[0] == ITEM_GIANTS_KNIFE) \
-                            ? ITEM_SWORD_BIGGORON                                   \
-                            : gSaveContext.save.info.equips.buttonItems[0])
+#define B_BTN_ITEM                                                                         \
+    ((gSaveContext.buttonStatus[INTERACT_BCA_BTN_B] == ITEM_NONE) ? ITEM_NONE              \
+     : (gSaveContext.save.info.equips.buttonItems[INTERACT_BC_BTN_B] == ITEM_GIANTS_KNIFE) \
+         ? ITEM_SWORD_BIGGORON                                                             \
+         : gSaveContext.save.info.equips.buttonItems[INTERACT_BC_BTN_B])
 
-#define C_BTN_ITEM(button) ((gSaveContext.buttonStatus[(button) + 1] != BTN_DISABLED) \
-                                ? gSaveContext.save.info.equips.buttonItems[(button) + 1]       \
-                                : ITEM_NONE)
+#define C_BTN_ITEM(button)                                                             \
+    ((gSaveContext.buttonStatus[INTERACT_C_BTN_TO_BCA_BTN(button)] != BTN_DISABLED)    \
+         ? gSaveContext.save.info.equips.buttonItems[INTERACT_C_BTN_TO_BC_BTN(button)] \
+         : ITEM_NONE)
 
 
 /*
