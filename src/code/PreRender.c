@@ -8,6 +8,7 @@
 #include "libu64/debug.h"
 #include "alloca.h"
 #include "color.h"
+#include "config.h"
 #include "gfx.h"
 #include "prerender.h"
 #include "printf.h"
@@ -806,6 +807,7 @@ void PreRender_DivotFilter(PreRender* this) {
  * `this->cvgSave`
  */
 void PreRender_ApplyFilters(PreRender* this) {
+#if PAUSE_BG_AA
     s32 x;
     s32 y;
 
@@ -829,4 +831,5 @@ void PreRender_ApplyFilters(PreRender* this) {
             PreRender_DivotFilter(this);
         }
     }
+#endif
 }

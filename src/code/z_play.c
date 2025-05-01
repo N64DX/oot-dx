@@ -4,6 +4,7 @@
 #include "array_count.h"
 #include "buffers.h"
 #include "color.h"
+#include "config.h"
 #include "controller.h"
 #include "fault.h"
 #include "file_select_state.h"
@@ -1243,7 +1244,9 @@ void Play_Draw(PlayState* this) {
             // content and can be used by `PreRender_ApplyFilters` below.
             Sched_FlushTaskQueue();
 
+#if PAUSE_BG_AA
             PreRender_ApplyFilters(&this->pauseBgPreRender);
+#endif
 
             R_PAUSE_BG_PRERENDER_STATE = PAUSE_BG_PRERENDER_READY;
         } else if (R_PAUSE_BG_PRERENDER_STATE >= PAUSE_BG_PRERENDER_MAX) {
