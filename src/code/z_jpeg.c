@@ -77,7 +77,7 @@ void Jpeg_ScheduleDecoderTask(JpegContext* ctx) {
  * Copies a 16x16 block of decoded image data to the Z-buffer.
  */
 void Jpeg_CopyToZbuffer(u16* src, u16* zbuffer, s32 x, s32 y) {
-    u16* dst = zbuffer + (((y * SCREEN_WIDTH) + x) * 16);
+    u16* dst = zbuffer + (((y * 320) + x) * 16);
     s32 i;
 
     for (i = 0; i < 16; i++) {
@@ -99,7 +99,7 @@ void Jpeg_CopyToZbuffer(u16* src, u16* zbuffer, s32 x, s32 y) {
         dst[15] = src[15];
 
         src += 16;
-        dst += SCREEN_WIDTH;
+        dst += 320;
     }
 }
 

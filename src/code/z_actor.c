@@ -1,6 +1,7 @@
 #include "libc64/math64.h"
 #include "libu64/overlay.h"
 #include "array_count.h"
+#include "config.h"
 #include "fault.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
@@ -835,7 +836,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         width = titleCtx->width;
         height = titleCtx->height;
         doubleWidth = width * 2;
-        titleX1 = (titleCtx->x * 4) - (width * 2);
+        titleX1 = ((titleCtx->x + (WIDESCREEN ? 52 : 0)) * 4) - (width * 2);
         titleX2 = titleX1 + (doubleWidth * 2) - 4;
         titleY1 = (titleCtx->y * 4) - (height * 2);
 
@@ -2657,7 +2658,7 @@ void Actor_UpdateFlaggedAudio(Actor* actor) {
 #define LENS_MASK_WIDTH 64
 #define LENS_MASK_HEIGHT 64
 // 26 and 6 are for padding between the mask texture and the screen borders
-#define LENS_MASK_OFFSET_S ((SCREEN_WIDTH / 2 - LENS_MASK_WIDTH) - 26)
+#define LENS_MASK_OFFSET_S ((SCREEN_WIDTH / 2 - LENS_MASK_WIDTH) - 26 - (WIDESCREEN ? 26 : 0))
 #define LENS_MASK_OFFSET_T ((SCREEN_HEIGHT / 2 - LENS_MASK_HEIGHT) - 6)
 
 void Actor_DrawLensOverlay(GraphicsContext* gfxCtx) {

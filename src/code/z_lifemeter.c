@@ -1,3 +1,4 @@
+#include "config.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "sfx.h"
@@ -487,7 +488,7 @@ void Health_DrawMeter(PlayState* play) {
                 Mtx* matrix = GRAPH_ALLOC(gfxCtx, sizeof(Mtx));
                 Matrix_SetTranslateScaleMtx2(
                     matrix, 1.0f - (0.32f * beatingHeartPulsingSize), 1.0f - (0.32f * beatingHeartPulsingSize),
-                    1.0f - (0.32f * beatingHeartPulsingSize), -130.0f + offsetX, 94.5f - offsetY, 0.0f);
+                    1.0f - (0.32f * beatingHeartPulsingSize), (WIDESCREEN ? (-182.0f) : (-130.0f)) + offsetX, 94.5f - offsetY, 0.0f);
                 gSPMatrix(OVERLAY_DISP++, matrix, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
                 gSPVertex(OVERLAY_DISP++, beatingHeartVtx, 4, 0);
                 gSP1Quadrangle(OVERLAY_DISP++, 0, 2, 3, 1, 0);

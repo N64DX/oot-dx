@@ -2345,7 +2345,7 @@ void EnOssan_DrawStickDirectionPrompts(PlayState* play, EnOssan* this) {
         if (drawStickRightPrompt) {
             EnOssan_DrawTextRec(play, this->stickRightPrompt.arrowColorR, this->stickRightPrompt.arrowColorG,
                                 this->stickRightPrompt.arrowColorB, this->stickRightPrompt.arrowColorA,
-                                this->stickRightPrompt.arrowTexX, this->stickRightPrompt.arrowTexY,
+                                this->stickRightPrompt.arrowTexX + (WIDESCREEN ? 104 : 0), this->stickRightPrompt.arrowTexY,
                                 this->stickRightPrompt.z, 0, 0, 1.0f, 1.0f);
         }
         gDPLoadTextureBlock(OVERLAY_DISP++, gControlStickTex, G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0,
@@ -2360,7 +2360,7 @@ void EnOssan_DrawStickDirectionPrompts(PlayState* play, EnOssan* this) {
         if (drawStickRightPrompt) {
             EnOssan_DrawTextRec(play, this->stickRightPrompt.stickColorR, this->stickRightPrompt.stickColorG,
                                 this->stickRightPrompt.stickColorB, this->stickRightPrompt.stickColorA,
-                                this->stickRightPrompt.stickTexX, this->stickRightPrompt.stickTexY,
+                                this->stickRightPrompt.stickTexX + (WIDESCREEN ? 104 : 0), this->stickRightPrompt.stickTexY,
                                 this->stickRightPrompt.z, 0, 0, 1.0f, 1.0f);
         }
     }

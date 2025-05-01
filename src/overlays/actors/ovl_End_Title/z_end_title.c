@@ -96,18 +96,18 @@ void EndTitle_DrawFull(Actor* thisx, PlayState* play) {
     gDPSetPrimColor(OVERLAY_DISP++, 0x00, 0x80, 0, 0, 0, this->endAlpha);
     gDPLoadTextureTile(OVERLAY_DISP++, sTheEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 80, 24, 0, 0, 80, 24, 0,
                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 0, 0, 0, 0);
-    gSPTextureRectangle(OVERLAY_DISP++, 120 << 2, 90 << 2, 200 << 2, 113 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+    gSPTextureRectangle(OVERLAY_DISP++, (120 + (WIDESCREEN ? 52 : 0)) << 2, 90 << 2, (200 + (WIDESCREEN ? 52 : 0)) << 2, 113 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetPrimColor(OVERLAY_DISP++, 0x00, 0x80, 0, 0, 0, this->tlozAlpha);
     gDPLoadTextureTile(OVERLAY_DISP++, sTheLegendOfZeldaTex, G_IM_FMT_IA, G_IM_SIZ_8b, 120, 24, 0, 0, 120, 24, 0,
                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 0, 0, 0, 0);
-    gSPTextureRectangle(OVERLAY_DISP++, 100 << 2, 160 << 2, 220 << 2, 183 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10,
+    gSPTextureRectangle(OVERLAY_DISP++, (100 + (WIDESCREEN ? 52 : 0)) << 2, 160 << 2, (220 + (WIDESCREEN ? 52 : 0)) << 2, 183 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10,
                         1 << 10);
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetPrimColor(OVERLAY_DISP++, 0x00, 0x80, 0, 0, 0, this->ootAlpha);
     gDPLoadTextureTile(OVERLAY_DISP++, sOcarinaOfTimeTex, G_IM_FMT_IA, G_IM_SIZ_8b, 112, 16, 0, 0, 112, 16, 0,
                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 0, 0, 0, 0);
-    gSPTextureRectangle(OVERLAY_DISP++, 104 << 2, 177 << 2, 216 << 2, 192 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10,
+    gSPTextureRectangle(OVERLAY_DISP++, (104 + (WIDESCREEN ? 52 : 0)) << 2, 177 << 2, (216 + (WIDESCREEN ? 52 : 0)) << 2, 192 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10,
                         1 << 10);
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_end_title.c", 515);

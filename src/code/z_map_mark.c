@@ -1,5 +1,6 @@
 #include "libu64/debug.h"
 #include "libu64/overlay.h"
+#include "config.h"
 #include "map.h"
 #include "printf.h"
 #if PLATFORM_N64
@@ -129,7 +130,7 @@ void MapMark_DrawForDungeon(PlayState* play) {
                                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                rectLeft = ((DEBUG_FEATURES ? GREG(94) : 0) + markPoint->x + 204) << 2;
+                rectLeft = ((DEBUG_FEATURES ? GREG(94) : 0) + markPoint->x + 204 + (WIDESCREEN ? 104 : 0)) << 2;
                 rectTop = ((DEBUG_FEATURES ? GREG(95) : 0) + markPoint->y + 140) << 2;
                 gSPTextureRectangle(OVERLAY_DISP++, rectLeft, rectTop, markInfo->rectWidth + rectLeft,
                                     rectTop + markInfo->rectHeight, G_TX_RENDERTILE, 0, 0, markInfo->dsdx,
