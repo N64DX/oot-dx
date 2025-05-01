@@ -404,7 +404,7 @@ BAD_RETURN(s32) EnMag_DrawTextureI8(Gfx** gfxP, void* texture, s16 texWidth, s16
     gDPLoadTextureBlock(gfx++, texture, G_IM_FMT_I, G_IM_SIZ_8b, texWidth, texHeight, 0, G_TX_NOMIRROR | G_TX_WRAP,
                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-    gSPTextureRectangle(gfx++, rectLeft << 2, rectTop << 2, (rectLeft + rectWidth) << 2, (rectTop + rectHeight) << 2,
+    gSPTextureRectangle(gfx++, (rectLeft + (WIDESCREEN ? 52 : 0)) << 2, rectTop << 2, (rectLeft + (WIDESCREEN ? 52 : 0) + rectWidth) << 2, (rectTop + rectHeight) << 2,
                         G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
 
     *gfxP = gfx;
@@ -427,7 +427,7 @@ BAD_RETURN(s32) EnMag_DrawEffectTextures(Gfx** gfxP, void* maskTex, void* effect
         gDPSetTileSize(gfx++, 1, 0, this->effectScroll & 0x7F, 31 << 2, (31 << 2) + (this->effectScroll & 0x7F));
     }
 
-    gSPTextureRectangle(gfx++, rectLeft << 2, rectTop << 2, (rectLeft + rectWidth) << 2, (rectTop + rectHeight) << 2,
+    gSPTextureRectangle(gfx++, (rectLeft + (WIDESCREEN ? 52 : 0)) << 2, rectTop << 2, (rectLeft + (WIDESCREEN ? 52 : 0) + rectWidth) << 2, (rectTop + rectHeight) << 2,
                         G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
 
     *gfxP = gfx;
@@ -470,7 +470,7 @@ void EnMag_DrawImageRGBA32(Gfx** gfxP, s16 centerX, s16 centerY, u8* source, u32
         gDPLoadSync(gfx++);
         gDPLoadTile(gfx++, G_TX_LOADTILE, 0, 0, (width - 1) << 2, (textureHeight - 1) << 2);
 
-        gSPTextureRectangle(gfx++, rectLeft << 2, rectTop << 2, (rectLeft + (s32)width) << 2,
+        gSPTextureRectangle(gfx++, (rectLeft + (WIDESCREEN ? 52 : 0)) << 2, rectTop << 2, (rectLeft + (WIDESCREEN ? 52 : 0) + (s32)width) << 2,
                             (rectTop + textureHeight) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
         curTexture += textureSize;
@@ -497,7 +497,7 @@ void EnMag_DrawImageRGBA32(Gfx** gfxP, s16 centerX, s16 centerY, u8* source, u32
 void func_80AEEA48_unknown(Gfx** gfxP, s16 arg1, s16 arg2, u32 arg3) {
     if ((D_80121212 != 0) && (func_801C70FC() != 0)) {
         Gfx* gfx = *gfxP;
-        s32 temp_a3 = (arg1 + 0x40) << 2;
+        s32 temp_a3 = (arg1 + 0x40 + (WIDESCREEN ? 52 : 0)) << 2;
         s32 temp_t0 = (arg2 + 5) << 2;
 
         gDPPipeSync(gfx++);
@@ -528,7 +528,7 @@ void EnMag_DrawCharTexture(Gfx** gfxP, u8* texture, s32 rectLeft, s32 rectTop) {
     gDPLoadTextureBlock_4b(gfx++, texture, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP,
                            G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-    gSPTextureRectangle(gfx++, rectLeft << 2, rectTop << 2, (rectLeft + YREG(2)) << 2, (rectTop + YREG(2)) << 2,
+    gSPTextureRectangle(gfx++, (rectLeft + (WIDESCREEN ? 52 : 0)) << 2, rectTop << 2, (rectLeft + (WIDESCREEN ? 52 : 0) + YREG(2)) << 2, (rectTop + YREG(2)) << 2,
                         G_TX_RENDERTILE, 0, 0, YREG(0), YREG(0));
 
     *gfxP = gfx;
@@ -541,10 +541,10 @@ void EnMag_DrawCharTexture(Gfx** gfxP, u8* texture, s32 rectLeft, s32 rectTop) {
 // Title logo is shifted to the left in Master Quest
 #if !OOT_MQ
 #define LOGO_X_SHIFT 0
-#define TITLE_X_SHIFT 0
+#define TITLE_X_SHIFT (0 + (WIDESCREEN ? 156 : 0))
 #else
 #define LOGO_X_SHIFT (-8)
-#define TITLE_X_SHIFT (-32)
+#define TITLE_X_SHIFT (-32 + (WIDESCREEN ? 156 : 0))
 #endif
 
 void EnMag_DrawInner(Actor* thisx, PlayState* play, Gfx** gfxP) {
@@ -712,7 +712,7 @@ void EnMag_DrawInner(Actor* thisx, PlayState* play, Gfx** gfxP) {
                               G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 2, 1);
             gDPSetTileSize(gfx++, 1, this->unk_E30C & 0x7F, this->effectScroll & 0x7F,
                            (this->unk_E30C & 0x7F) + ((32 - 1) << 2), (this->effectScroll & 0x7F) + ((32 - 1) << 2));
-            gSPTextureRectangle(gfx++, 424 + TITLE_X_SHIFT, 576, 424 + TITLE_X_SHIFT + 512, 576 + 64, G_TX_RENDERTILE,
+            gSPTextureRectangle(gfx++, 424 + TITLE_X_SHIFT + (WIDESCREEN ? 52 : 0), 576, 424 + TITLE_X_SHIFT + 512 + (WIDESCREEN ? 52 : 0), 576 + 64, G_TX_RENDERTILE,
                                 0, 0, 1 << 10, 1 << 10);
         }
     }
@@ -731,12 +731,12 @@ void EnMag_DrawInner(Actor* thisx, PlayState* play, Gfx** gfxP) {
         gDPLoadTextureBlock(gfx++, gTitleCopyright1998Tex, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0,
                             G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK,
                             G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(gfx++, 94 << 2, 198 << 2, 222 << 2, 214 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gSPTextureRectangle(gfx++, (94 + (WIDESCREEN ? 52 : 0)) << 2, 198 << 2, (222 + (WIDESCREEN ? 52 : 0)) << 2, 214 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 #elif PLATFORM_GC && OOT_VERSION < GC_US
         gDPLoadTextureBlock(gfx++, gTitleCopyright19982002Tex, G_IM_FMT_IA, G_IM_SIZ_8b, 160, 16, 0,
                             G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK,
                             G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(gfx++, 78 << 2, 198 << 2, 238 << 2, 214 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gSPTextureRectangle(gfx++, (78 + (WIDESCREEN ? 52 : 0)) << 2, 198 << 2, (238 + (WIDESCREEN ? 52 : 0)) << 2, 214 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 #elif PLATFORM_GC && OOT_NTSC
         if (gSaveContext.language == LANGUAGE_JPN) {
             gDPLoadTextureBlock(gfx++, gTitleCopyright19982002Tex, G_IM_FMT_IA, G_IM_SIZ_8b, 160, 16, 0,
@@ -747,17 +747,17 @@ void EnMag_DrawInner(Actor* thisx, PlayState* play, Gfx** gfxP) {
                                 G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK,
                                 G_TX_NOLOD, G_TX_NOLOD);
         }
-        gSPTextureRectangle(gfx++, 78 << 2, 198 << 2, 238 << 2, 214 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gSPTextureRectangle(gfx++, (78 + (WIDESCREEN ? 52 : 0)) << 2, 198 << 2, (238 + (WIDESCREEN ? 52 : 0)) << 2, 214 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 #elif PLATFORM_GC && OOT_PAL
         gDPLoadTextureBlock(gfx++, gTitleCopyright19982003Tex, G_IM_FMT_IA, G_IM_SIZ_8b, 160, 16, 0,
                             G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK,
                             G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(gfx++, 78 << 2, 198 << 2, 238 << 2, 214 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gSPTextureRectangle(gfx++, (78 + (WIDESCREEN ? 52 : 0)) << 2, 198 << 2, (238 + (WIDESCREEN ? 52 : 0)) << 2, 214 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 #elif PLATFORM_IQUE
         gDPLoadTextureBlock(gfx++, gTitleCopyright19982003IQueTex, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 32, 0,
                             G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK,
                             G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(gfx++, 94 << 2, 198 << 2, 222 << 2, 230 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gSPTextureRectangle(gfx++, (94 + (WIDESCREEN ? 52 : 0)) << 2, 198 << 2, (222 + (WIDESCREEN ? 52 : 0)) << 2, 230 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 #endif
     }
 

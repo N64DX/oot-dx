@@ -1,6 +1,7 @@
 #include "libc64/aprintf.h"
 #include "libu64/gfxprint.h"
 #include "attributes.h"
+#include "config.h"
 #include "translation.h"
 
 u16 sGfxPrintFontTLUT[64] = {
@@ -206,7 +207,7 @@ void GfxPrint_SetPosPx(GfxPrint* this, s32 x, s32 y) {
 }
 
 void GfxPrint_SetPos(GfxPrint* this, s32 x, s32 y) {
-    GfxPrint_SetPosPx(this, x * GFX_CHAR_X_SPACING, y * GFX_CHAR_Y_SPACING);
+    GfxPrint_SetPosPx(this, (x + (WIDESCREEN ? 6 : 0)) * GFX_CHAR_X_SPACING, y * GFX_CHAR_Y_SPACING);
 }
 
 void GfxPrint_SetBasePosPx(GfxPrint* this, s32 x, s32 y) {
@@ -238,15 +239,15 @@ void GfxPrint_PrintCharImpl(GfxPrint* this, u8 c) {
         gDPSetColor(this->dList++, G_SETPRIMCOLOR, 0);
 
 #if PLATFORM_N64
-        gSPTextureRectangle(this->dList++, this->posX + 4, this->posY + 4, this->posX + 4 + 32, this->posY + 4 + 32,
+        gSPTextureRectangle(this->dList++, this->posX + 4 + (WIDESCREEN ? 52 : 0), this->posY + 4, this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0), this->posY + 4 + 32,
                             tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 10, 1 << 10);
 #else
         if (this->flags & GFXP_FLAG_ENLARGE) {
-            gSPTextureRectangle(this->dList++, (this->posX + 4) << 1, (this->posY + 4) << 1, (this->posX + 4 + 32) << 1,
+            gSPTextureRectangle(this->dList++, (this->posX + 4 + (WIDESCREEN ? 52 : 0)) << 1, (this->posY + 4) << 1, (this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0)) << 1,
                                 (this->posY + 4 + 32) << 1, tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 9,
                                 1 << 9);
         } else {
-            gSPTextureRectangle(this->dList++, this->posX + 4, this->posY + 4, this->posX + 4 + 32, this->posY + 4 + 32,
+            gSPTextureRectangle(this->dList++, this->posX + 4 + (WIDESCREEN ? 52 : 0), this->posY + 4, this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0), this->posY + 4 + 32,
                                 tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 10, 1 << 10);
         }
 #endif
@@ -255,14 +256,14 @@ void GfxPrint_PrintCharImpl(GfxPrint* this, u8 c) {
     }
 
 #if PLATFORM_N64
-    gSPTextureRectangle(this->dList++, this->posX, this->posY, this->posX + 32, this->posY + 32, tile,
+    gSPTextureRectangle(this->dList++, this->posX + (WIDESCREEN ? 52 : 0), this->posY, this->posX + 32 + (WIDESCREEN ? 52 : 0), this->posY + 32, tile,
                         (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 10, 1 << 10);
 #else
     if (this->flags & GFXP_FLAG_ENLARGE) {
-        gSPTextureRectangle(this->dList++, this->posX << 1, this->posY << 1, (this->posX + 32) << 1,
+        gSPTextureRectangle(this->dList++, this->posX << 1 + (WIDESCREEN ? 52 : 0), this->posY << 1, (this->posX + 32 + (WIDESCREEN ? 52 : 0)) << 1,
                             (this->posY + 32) << 1, tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 9, 1 << 9);
     } else {
-        gSPTextureRectangle(this->dList++, this->posX, this->posY, this->posX + 32, this->posY + 32, tile,
+        gSPTextureRectangle(this->dList++, this->posX + (WIDESCREEN ? 52 : 0), this->posY, this->posX + 32 + (WIDESCREEN ? 52 : 0), this->posY + 32, tile,
                             (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 10, 1 << 10);
     }
 #endif

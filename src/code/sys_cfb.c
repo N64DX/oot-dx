@@ -19,13 +19,13 @@ void SysCfb_Init(s32 n64dd) {
 
     if (osMemSize >= 0x800000) {
         PRINTF(T("８Ｍバイト以上のメモリが搭載されています\n", "8MB or more memory is installed\n"));
-        tmpFbEnd = 0x8044BE80;
+        tmpFbEnd = 0x8044BE80 + 0x200000;
         if (n64dd == 1) {
             PRINTF(T("RAM 8M mode (N64DD対応)\n", "RAM 8M mode (N64DD compatible)\n"));
 #if DEBUG_FEATURES
             sSysCfbEnd = 0x805FB000;
 #else
-            sSysCfbEnd = 0x80600000;
+            sSysCfbEnd = 0x80600000 + 0x100000;
 #endif
         } else {
             PRINTF(T("このバージョンのマージンは %dK バイトです\n", "The margin for this version is %dK bytes\n"),
@@ -33,7 +33,7 @@ void SysCfb_Init(s32 n64dd) {
 #if DEBUG_FEATURES
             sSysCfbEnd = tmpFbEnd;
 #else
-            sSysCfbEnd = 0x80400000;
+            sSysCfbEnd = 0x80400000 + 0x400000;
 #endif
         }
     } else if (osMemSize >= 0x400000) {

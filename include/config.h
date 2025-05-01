@@ -13,4 +13,10 @@
 */
 #define LINK_LOD false
 
+/**
+ * 16:9 Widescreen
+ * Extends the viewport to 424px over the original 320px
+*/
+#define WIDESCREEN false
+
 #endif

@@ -183,7 +183,7 @@ void GameState_DrawInputDisplay(u16 input, Gfx** gfxP) {
         if (input & (1 << i)) {
             gDPSetFillColor(gfx++, (sInpDispBtnColors[i] << 0x10) | sInpDispBtnColors[i]);
             k = i + 1;
-            gDPFillRectangle(gfx++, (j * 4) + 226, 220, (k * 4) + 225, 223);
+            gDPFillRectangle(gfx++, (j * 4) + 226 + (WIDESCREEN ? 104 : 0), 220, (k * 4) + 225 + (WIDESCREEN ? 104 : 0), 223);
             gDPPipeSync(gfx++);
         }
     }
