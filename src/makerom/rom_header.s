@@ -24,9 +24,9 @@
 #if OOT_REGION == REGION_US
 /* 0x3E */ REGION(US)
 #elif OOT_REGION == REGION_JP
-/* 0x3E */ REGION(JP)
+/* 0x3E */ REGION(US)
 #elif OOT_REGION == REGION_EU
-/* 0x3E */ REGION(PAL)
+/* 0x3E */ REGION(US)
 #else
 #error "Unknown OOT_REGION"
 #endif
