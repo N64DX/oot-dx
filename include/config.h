@@ -8,4 +8,9 @@
 */
 #define PAUSE_BG_AA false
 
+/**
+ * Use low poly model for Link when the camera is far away.
+*/
+#define LINK_LOD false
+
 #endif
