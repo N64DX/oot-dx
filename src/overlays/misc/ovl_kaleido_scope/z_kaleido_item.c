@@ -431,6 +431,32 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                         }
                     }
+                    else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT)) {
+                        if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
+                            u8 button;
+                            
+                            if (CHECK_BTN_ALL(input->press.button, BTN_DUP))
+                                button = 0;
+                            else if (CHECK_BTN_ALL(input->press.button, BTN_DRIGHT))
+                                button = 1;
+                            else if (CHECK_BTN_ALL(input->press.button, BTN_DDOWN))
+                                button = 2;
+                            else button = 3;
+                            
+                            for (i=0; i<4; i++)
+                                if (DPAD_BUTTON(i) == cursorItem) {
+                                    DPAD_BUTTON(i) = DPAD_BUTTON(button);
+                                    Interface_LoadItemIconDpad(play, i);
+                                    break;
+                                }
+                            
+                            DPAD_BUTTON(button) = cursorSlot;
+                            Interface_LoadItemIconDpad(play, button);
+                            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                        }
+                        else Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    }
+                    
                 }
             } else {
                 pauseCtx->cursorVtx[0].v.ob[0] = pauseCtx->cursorVtx[2].v.ob[0] = pauseCtx->cursorVtx[1].v.ob[0] =

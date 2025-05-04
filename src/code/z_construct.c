@@ -14,13 +14,15 @@ void Interface_Destroy(PlayState* play) {
     Map_Destroy(play);
 }
 
-#define ICON_ITEM_SEGMENT_SIZE (4 * ITEM_ICON_SIZE)
+#define ICON_ITEM_SEGMENT_SIZE (8 * ITEM_ICON_SIZE)
 
 void Interface_Init(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     u32 parameterSize;
     u16 doActionOffset;
     u8 timerId;
+    u8 i;
+    u8 item;
 
     gSaveContext.sunsSongState = SUNSSONG_INACTIVE;
     gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
@@ -35,7 +37,7 @@ void Interface_Init(PlayState* play) {
     interfaceCtx->lensMagicConsumptionTimer = 16;
     interfaceCtx->unk_228 = XREG(95);
     interfaceCtx->unk_244 = interfaceCtx->aAlpha = interfaceCtx->bAlpha = interfaceCtx->cLeftAlpha =
-        interfaceCtx->cDownAlpha = interfaceCtx->cRightAlpha = interfaceCtx->healthAlpha = interfaceCtx->startAlpha =
+        interfaceCtx->cDownAlpha = interfaceCtx->cRightAlpha = interfaceCtx->healthAlpha = interfaceCtx->startAlpha = dpadAlphas[0] = dpadAlphas[1] = dpadAlphas[2] = dpadAlphas[3] = dpadAlphas[4] = 
             interfaceCtx->magicAlpha = 0;
     interfaceCtx->minimapAlpha = 0;
     interfaceCtx->unk_260 = 0;
@@ -138,6 +140,12 @@ void Interface_Init(PlayState* play) {
         DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (3 * ITEM_ICON_SIZE),
                          GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[3]), ITEM_ICON_SIZE,
                          "../z_construct.c", 219);
+    }
+    
+    for (i=0; i<4; i++) {
+        u8 item = Interface_GetItemFromDpad(i);
+        if (item < 0xF0)
+            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + ( (4 + i) * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, "../z_construct.c", 219);
     }
 
     PRINTF("ＥＶＥＮＴ＝%d\n", ((void)0, gSaveContext.timerState));

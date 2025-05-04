@@ -1684,7 +1684,7 @@ static LinkAnimationHeader* D_80854378[] = {
 static u8 D_80854380[2] = { PLAYER_MWA_SPIN_ATTACK_1H, PLAYER_MWA_SPIN_ATTACK_2H };
 static u8 D_80854384[2] = { PLAYER_MWA_BIG_SPIN_1H, PLAYER_MWA_BIG_SPIN_2H };
 
-static u16 sItemButtons[] = { BTN_B, BTN_CLEFT, BTN_CDOWN, BTN_CRIGHT };
+static u16 sItemButtons[] = { BTN_B, BTN_CLEFT, BTN_CDOWN, BTN_CRIGHT, BTN_DUP, BTN_DRIGHT, BTN_DDOWN, BTN_DLEFT };
 
 static u8 sMagicSpellCosts[] = { 12, 24, 24, 12, 24, 12 };
 
@@ -2620,7 +2620,7 @@ s32 Player_ItemIsItemAction(s32 item1, s32 itemAction) {
 }
 
 s32 Player_GetItemOnButton(PlayState* play, s32 index) {
-    if (index >= 4) {
+    if (index >= 8) {
         return ITEM_NONE;
     } else if (play->bombchuBowlingStatus != 0) {
         return (play->bombchuBowlingStatus > 0) ? ITEM_BOMBCHU : ITEM_NONE;
@@ -2630,9 +2630,113 @@ s32 Player_GetItemOnButton(PlayState* play, s32 index) {
         return C_BTN_ITEM(0);
     } else if (index == 2) {
         return C_BTN_ITEM(1);
-    } else {
+    } else if (index == 3) {
         return C_BTN_ITEM(2);
+    } else if (index == 4) {
+        return Interface_GetItemFromDpad(0);
+    } else if (index == 5) {
+        return Interface_GetItemFromDpad(1);
+    } else if (index == 6) {
+        return Interface_GetItemFromDpad(2);
+    } else {
+        return Interface_GetItemFromDpad(3);
     }
+}
+
+void Player_ChangeEquipment(Player* this, PlayState* play, s32 button) {
+    if (button < 4)
+        Interface_LoadItemIcon1(play, button);
+    else Interface_LoadItemIconDpad(play, button-4);
+    Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
+}
+
+void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
+    u8 current = this->currentSwordItemId;
+    
+    if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON))
+        return;
+    
+    this->currentSwordItemId++;
+    if (this->currentSwordItemId == ITEM_SWORD_KOKIRI   && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)   || !LINK_IS_CHILD))
+        this->currentSwordItemId++;
+    if (this->currentSwordItemId == ITEM_SWORD_MASTER   && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)   || !LINK_IS_ADULT))
+        this->currentSwordItemId++;
+    if (this->currentSwordItemId == ITEM_SWORD_BIGGORON && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) || !LINK_IS_ADULT))
+        this->currentSwordItemId++;
+    
+    if (this->currentSwordItemId > ITEM_SWORD_BIGGORON)
+        this->currentSwordItemId = LINK_IS_CHILD ? ITEM_SWORD_KOKIRI : ITEM_SWORD_MASTER;
+    if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE) && this->currentSwordItemId == ITEM_SWORD_BIGGORON)
+        this->currentSwordItemId = ITEM_GIANTS_KNIFE;
+    
+    if (current != this->currentSwordItemId) {
+        gSaveContext.save.info.equips.buttonItems[0] = this->currentSwordItemId;
+        Interface_LoadItemIcon1(play, 0);
+        Player_ChangeEquipment(this, play, button);
+    }
+}
+
+void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
+    u8 current = this->currentShield;
+    
+    if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR))
+        return;
+    
+    this->currentShield++;
+    if (this->currentShield == 1 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)   || !LINK_IS_CHILD))
+        this->currentShield++;
+    if (this->currentShield == 2 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)))
+        this->currentShield++;
+    if (this->currentShield == 3 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR) || !LINK_IS_ADULT))
+        this->currentShield++;
+    
+    if (this->currentShield > 3)
+        this->currentShield = LINK_IS_CHILD ? 1 : 2;
+    
+    if (current != this->currentShield)
+        Player_ChangeEquipment(this, play, button);
+}
+
+void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
+    u8 current = this->currentTunic;
+    
+    if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
+        return;
+    
+    this->currentTunic++;
+    if (this->currentTunic == 0 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI)))
+        this->currentTunic++;
+    if (this->currentTunic == 1 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON) || !LINK_IS_ADULT))
+        this->currentTunic++;
+    if (this->currentTunic == 2 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA)  || !LINK_IS_ADULT))
+        this->currentTunic++;
+    
+    if (this->currentTunic > 2)
+        this->currentTunic = 0;
+    
+    if (current != this->currentTunic)
+        Player_ChangeEquipment(this, play, button);
+}
+
+void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
+    u8 current = this->currentBoots;
+    
+    if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_KOKIRI) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
+        return;
+    
+    this->currentBoots++;
+    if (this->currentBoots == 0 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_KOKIRI)))
+        this->currentBoots++;
+    if (this->currentBoots == 1 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON)  || !LINK_IS_ADULT))
+        this->currentBoots++;
+    if (this->currentBoots == 2 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER) || !LINK_IS_ADULT))
+        this->currentBoots++;
+    
+    if (this->currentBoots > 2)
+        this->currentBoots = 0;
+    
+    if (current != this->currentBoots)
+        Player_ChangeEquipment(this, play, button);
 }
 
 /**
@@ -2652,17 +2756,16 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     if (this->currentMask != PLAYER_MASK_NONE) {
         maskItemAction = this->currentMask - 1 + PLAYER_IA_MASK_KEATON;
 
-        if (!Player_ItemIsItemAction(C_BTN_ITEM(0), maskItemAction) &&
-            !Player_ItemIsItemAction(C_BTN_ITEM(1), maskItemAction) &&
-            !Player_ItemIsItemAction(C_BTN_ITEM(2), maskItemAction)) {
+        if (!Player_ItemIsItemAction(C_BTN_ITEM(0), maskItemAction)                && !Player_ItemIsItemAction(C_BTN_ITEM(1), maskItemAction)                && !Player_ItemIsItemAction(C_BTN_ITEM(2), maskItemAction) &&
+            !Player_ItemIsItemAction(Interface_GetItemFromDpad(0), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(1), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(2), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(3), maskItemAction) ) {
             this->currentMask = PLAYER_MASK_NONE;
         }
     }
 
     if (!(this->stateFlags1 & (PLAYER_STATE1_CARRYING_ACTOR | PLAYER_STATE1_29)) && !func_8008F128(this)) {
         if (this->itemAction >= PLAYER_IA_FISHING_POLE) {
-            if (!Player_ItemIsInUse(this, B_BTN_ITEM) && !Player_ItemIsInUse(this, C_BTN_ITEM(0)) &&
-                !Player_ItemIsInUse(this, C_BTN_ITEM(1)) && !Player_ItemIsInUse(this, C_BTN_ITEM(2))) {
+            if (!Player_ItemIsInUse(this, B_BTN_ITEM)                   && !Player_ItemIsInUse(this, C_BTN_ITEM(0))                && !Player_ItemIsInUse(this, C_BTN_ITEM(1))                && !Player_ItemIsInUse(this, C_BTN_ITEM(2)) &&
+                !Player_ItemIsInUse(this, Interface_GetItemFromDpad(0)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(1)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(2)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(3)) ) {
                 Player_UseItem(play, this, ITEM_NONE);
                 return;
             }
@@ -2676,7 +2779,39 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
 
         item = Player_GetItemOnButton(play, i);
 
-        if (item >= ITEM_NONE_FE) {
+        if (item == ITEM_SWORDS)
+                Player_ChangeSword(this, play, i);
+        else if (item == ITEM_SHIELDS)
+            Player_ChangeShield(this, play, i);
+        else if (item == ITEM_TUNICS)
+            Player_ChangeTunic(this, play, i);
+        else if (item == ITEM_BOOTS)
+            Player_ChangeBoots(this, play, i);
+        else if (item == ITEM_TUNIC_GORON) {
+            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_TUNIC_GORON)) {
+                this->currentTunic = this->currentTunic == 1 ? 0 : 1;
+                Player_ChangeEquipment(this, play, i);
+            }
+        }
+        else if (item == ITEM_TUNIC_ZORA) {
+            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_TUNIC_ZORA)) {
+                this->currentTunic = this->currentTunic == 2 ? 0 : 2;
+                Player_ChangeEquipment(this, play, i);
+            }
+        }
+        else if (item == ITEM_BOOTS_IRON) {
+            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON)) {
+                this->currentBoots = this->currentBoots == 1 ? 0 : 1;
+                Player_ChangeEquipment(this, play, i);
+            }
+        }
+        else if (item == ITEM_BOOTS_HOVER) {
+            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER)) {
+                this->currentBoots = this->currentBoots == 2 ? 0 : 2;
+                Player_ChangeEquipment(this, play, i);
+            }
+        }
+        else if (item >= ITEM_NONE_FE) {
             for (i = 0; i < ARRAY_COUNT(sItemButtons); i++) {
                 if (CHECK_BTN_ALL(sControlInput->cur.button, sItemButtons[i])) {
                     break;
@@ -2968,7 +3103,7 @@ s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play) {
 s32 func_80834B5C(Player* this, PlayState* play) {
     LinkAnimation_Update(play, &this->upperSkelAnime);
 
-    if (!CHECK_BTN_ALL(sControlInput->cur.button, BTN_R)) {
+    if (!CHECK_BTN_ALL(sControlInput->cur.button, BTN_R) || CHECK_BTN_ALL(sControlInput->cur.button, BTN_L)) {
         func_80834894(this);
         return true;
     } else {
@@ -6502,7 +6637,7 @@ s32 Player_ActionHandler_11(Player* this, PlayState* play) {
     f32 frame;
 
     if ((play->shootingGalleryStatus == 0) && (this->currentShield != PLAYER_SHIELD_NONE) &&
-        CHECK_BTN_ALL(sControlInput->cur.button, BTN_R) &&
+        CHECK_BTN_ALL(sControlInput->cur.button, BTN_R) && !CHECK_BTN_ALL(sControlInput->cur.button, BTN_L) &&
         (Player_IsChildWithHylianShield(this) ||
          (!Player_FriendlyLockOnOrParallel(this) && (this->focusActor == NULL)))) {
 
@@ -7467,7 +7602,7 @@ s32 Player_CanThrowCarriedActor(Player* this, Actor* actor) {
 
 s32 Player_ActionHandler_9(Player* this, PlayState* play) {
     if ((this->stateFlags1 & PLAYER_STATE1_CARRYING_ACTOR) && (this->heldActor != NULL) &&
-        CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
+        CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT)) {
         if (!func_80835644(play, this, this->heldActor)) {
             if (!Player_CanThrowCarriedActor(this, this->heldActor)) {
                 Player_SetupAction(play, this, Player_Action_808464B0, 1);
@@ -9575,7 +9710,7 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
             heldActor = this->heldActor;
 
             if (!func_80835644(play, this, heldActor) && (heldActor->id == ACTOR_EN_NIW) &&
-                CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
+                CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT)) {
                 func_8084409C(play, this, this->speedXZ + 2.0f, this->actor.velocity.y + 2.0f);
             }
         }
@@ -10385,7 +10520,7 @@ void Player_Action_80846260(Player* this, PlayState* play) {
         } else if (LinkAnimation_OnFrame(&this->skelAnime, 25.0f)) {
             Player_PlayVoiceSfx(this, NA_SE_VO_LI_SWORD_L);
         }
-    } else if (CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
+    } else if (CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT)) {
         Player_SetupAction(play, this, Player_Action_80846358, 1);
         Player_AnimPlayOnce(play, this, &gPlayerAnim_link_silver_throw);
     }

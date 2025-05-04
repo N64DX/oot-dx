@@ -234,8 +234,9 @@ typedef struct SavePlayerData {
     /* 0x23  0x003F */ u8 ocarinaGameRoundNum;
     /* 0x24  0x0040 */ ItemEquips childEquips;
     /* 0x2E  0x004A */ ItemEquips adultEquips;
-    /* 0x38  0x0054 */ u32 unk_54; // this may be incorrect, currently used for alignment
-    /* 0x3C  0x0058 */ char unk_58[0x0E];
+    /* 0x38  0x0054 */ u8 unk_54; // this may be incorrect, currently used for alignment
+    /* 0x39  0x0055 */ u8 dpadDualSet;
+    /* 0x3A  0x0056 */ u8 dpadItems[4][4];
     /* 0x4A  0x0066 */ s16 savedSceneId;
 } SavePlayerData;
 
@@ -407,6 +408,12 @@ typedef enum LinkAge {
     /* 1 */ LINK_AGE_CHILD
 } LinkAge;
 
+
+#define DPAD_BUTTONS(button)     (((u8*)gSaveContext.save.info.playerData.dpadItems)[button])
+#define IS_DPAD_DUAL_SET         (gSaveContext.save.info.playerData.dpadDualSet)
+#define CUR_DPAD_SET             (LINK_IS_CHILD + IS_DPAD_DUAL_SET * 2)
+#define DPAD_BUTTON(button)      (gSaveContext.save.info.playerData.dpadItems[CUR_DPAD_SET][button])
+#define DPAD_BUTTON_ITEM(button) (DPAD_BUTTON(button) < SLOT_SWORDS ? Interface_GetArrowFromDpad(button) : 0xFF)
 
 #define LINK_IS_ADULT (gSaveContext.save.linkAge == LINK_AGE_ADULT)
 #define LINK_IS_CHILD (gSaveContext.save.linkAge == LINK_AGE_CHILD)

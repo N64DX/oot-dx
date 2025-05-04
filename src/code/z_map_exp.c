@@ -26,6 +26,8 @@ s16 sPlayerInitialPosX = 0;
 s16 sPlayerInitialPosZ = 0;
 s16 sPlayerInitialDirection = 0;
 s16 sEntranceIconMapIndex = 0;
+u8 minimap_timer = 0;
+u8 pressed_r = false;
 
 void Map_SavePlayerInitialInfo(PlayState* play) {
     Player* player = GET_PLAYER(play);
@@ -411,6 +413,7 @@ void Minimap_Draw(PlayState* play) {
     s32 pad[2];
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     s32 mapIndex = gSaveContext.mapIndex;
+    u8 i;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_map_exp.c", 626);
 
@@ -452,19 +455,17 @@ void Minimap_Draw(PlayState* play) {
                     }
                 }
 
-                if (CHECK_BTN_ALL(play->state.input[0].press.button, BTN_L) && !Play_InCsMode(play)) {
-                    PRINTF("Game_play_demo_mode_check=%d\n", Play_InCsMode(play));
-                    // clang-format off
-                    if (!R_MINIMAP_DISABLED) { Audio_PlaySfxGeneral(NA_SE_SY_CAMERA_ZOOM_UP, &gSfxDefaultPos, 4,
-                                                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-                                                                      &gSfxDefaultReverb);
-                    } else {
-                        Audio_PlaySfxGeneral(NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4,
-                                               &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-                                               &gSfxDefaultReverb);
+                if (!Play_InCsMode(play)) {
+                    if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R)) {
+                        Audio_PlaySfxGeneral(!gSaveContext.save.info.playerData.dpadDualSet ? NA_SE_SY_CAMERA_ZOOM_UP : NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                        gSaveContext.save.info.playerData.dpadDualSet ^= 1;
+                        for (i=0; i<4; i++)
+                            Interface_LoadItemIconDpad(play, i);
                     }
-                    // clang-format on
-                    R_MINIMAP_DISABLED ^= 1;
+                    if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L) && !pressed_r && minimap_timer < 60) {
+                        Audio_PlaySfxGeneral(!R_MINIMAP_DISABLED ? NA_SE_SY_CAMERA_ZOOM_UP : NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                        R_MINIMAP_DISABLED ^= 1;
+                    }
                 }
 
                 break;
@@ -539,23 +540,29 @@ void Minimap_Draw(PlayState* play) {
                     Minimap_DrawCompassIcons(play); // Draw icons for the player spawn and current position
                 }
 
-                if (CHECK_BTN_ALL(play->state.input[0].press.button, BTN_L) && !Play_InCsMode(play)) {
-                    // clang-format off
-                    if (!R_MINIMAP_DISABLED) { Audio_PlaySfxGeneral(NA_SE_SY_CAMERA_ZOOM_UP, &gSfxDefaultPos, 4,
-                                                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-                                                                      &gSfxDefaultReverb);
-                    } else {
-                        Audio_PlaySfxGeneral(NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4,
-                                               &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-                                               &gSfxDefaultReverb);
+                if (!Play_InCsMode(play)) {
+                    if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R)) {
+                        Audio_PlaySfxGeneral(!gSaveContext.save.info.playerData.dpadDualSet ? NA_SE_SY_CAMERA_ZOOM_UP : NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                        gSaveContext.save.info.playerData.dpadDualSet ^= 1;
+                        for (i=0; i<4; i++)
+                            Interface_LoadItemIconDpad(play, i);
                     }
-                    // clang-format on
-                    R_MINIMAP_DISABLED ^= 1;
+                    if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L) && !pressed_r && minimap_timer < 60) {
+                        Audio_PlaySfxGeneral(!R_MINIMAP_DISABLED ? NA_SE_SY_CAMERA_ZOOM_UP : NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                        R_MINIMAP_DISABLED ^= 1;
+                    }
                 }
 
                 break;
         }
     }
+
+    if (CHECK_BTN_ALL(play->state.input[0].press.button, BTN_R))
+        pressed_r = 1;
+    if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && minimap_timer < 255)
+        minimap_timer++;
+    if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L))
+        minimap_timer = pressed_r = 0;
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_map_exp.c", 782);
 }

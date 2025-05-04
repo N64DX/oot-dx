@@ -51,6 +51,9 @@ void GameOver_Update(PlayState* play) {
                             Interface_LoadItemIcon1(play, j);
                         }
                     }
+                    for (j=0; j<4; j++)
+                        if (DPAD_BUTTON_ITEM(j) == gSpoilingItemReverts[i])
+                            Interface_LoadItemIconDpad(play, j);
                 }
             }
 
@@ -81,7 +84,7 @@ void GameOver_Update(PlayState* play) {
             gSaveContext.eventInf[2] = 0;
             gSaveContext.eventInf[3] = 0;
             gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
-                gSaveContext.buttonStatus[3] = gSaveContext.buttonStatus[4] = BTN_ENABLED;
+                gSaveContext.buttonStatus[3] = gSaveContext.buttonStatus[4] = dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
             gSaveContext.forceRisingButtonAlphas = gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode =
                 gSaveContext.hudVisibilityModeTimer = 0; // false, HUD_VISIBILITY_NO_CHANGE
 

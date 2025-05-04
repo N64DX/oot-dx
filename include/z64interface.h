@@ -119,11 +119,11 @@ typedef struct InterfaceContext {
     /* 0x0240 */ u16    unk_240;
     /* 0x0242 */ u16    unk_242;
     /* 0x0224 */ u16    unk_244; // screen fill alpha?
-    /* 0x0246 */ u16    aAlpha; // also carrots alpha
-    /* 0x0248 */ u16    bAlpha; // also HBA score alpha
-    /* 0x024A */ u16    cLeftAlpha;
-    /* 0x024C */ u16    cDownAlpha;
-    /* 0x024E */ u16    cRightAlpha;
+    /* 0x0246 */ u8     aAlpha; // also carrots alpha
+    /* 0x0248 */ u8     bAlpha; // also HBA score alpha
+    /* 0x024A */ u8     cLeftAlpha;
+    /* 0x024C */ u8     cDownAlpha;
+    /* 0x024E */ u8     cRightAlpha;
     /* 0x0250 */ u16    healthAlpha; // also max C-Up alpha
     /* 0x0252 */ u16    magicAlpha; // also Rupee and Key counters alpha
     /* 0x0254 */ u16    minimapAlpha;
@@ -191,6 +191,17 @@ typedef struct InterfaceContext {
 #define C_UP_BUTTON_X 254 + (WIDESCREEN ? 104 : 0)
 #define C_UP_BUTTON_Y 16
 
+#define DPAD_X           (18     + 6)  // R_MAGIC_METER_X
+#define DPAD_Y           (42     + 30) // R_MAGIC_METER_Y_LOWER
+#define D_UP_BUTTON_X    (DPAD_X + 2)
+#define D_UP_BUTTON_Y    (DPAD_Y - 14)
+#define D_RIGHT_BUTTON_X (DPAD_X + 18)
+#define D_RIGHT_BUTTON_Y (DPAD_Y + 2)
+#define D_DOWN_BUTTON_X  (DPAD_X + 2)
+#define D_DOWN_BUTTON_Y  (DPAD_Y + 16)
+#define D_LEFT_BUTTON_X  (DPAD_X - 14)
+#define D_LEFT_BUTTON_Y  (DPAD_Y + 2)
+
 #if !PLATFORM_GC
 #define START_BUTTON_R 200
 #define START_BUTTON_G 0
@@ -252,8 +263,11 @@ void Interface_SetSceneRestrictions(struct PlayState* play);
 void Inventory_SwapAgeEquipment(void);
 void Interface_InitHorsebackArchery(struct PlayState* play);
 void func_800849EC(struct PlayState* play);
-void Interface_LoadItemIcon1(struct PlayState* play, u16 button);
-void Interface_LoadItemIcon2(struct PlayState* play, u16 button);
+void Interface_LoadItemIcon1(struct PlayState* play, u8 button);
+void Interface_LoadItemIcon2(struct PlayState* play, u8 button);
+void Interface_LoadItemIconDpad(struct PlayState* play, u8 button);
+u8 Interface_GetArrowFromDpad(u8 button);
+u8 Interface_GetItemFromDpad(u8 button);
 void func_80084BF4(struct PlayState* play, u16 flag);
 u8 Item_Give(struct PlayState* play, u8 item);
 u8 Item_CheckObtainability(u8 item);
@@ -282,5 +296,7 @@ void Interface_Init(struct PlayState* play);
 
 extern s16 gSpoilingItems[3];
 extern s16 gSpoilingItemReverts[3];
+extern u8 dpadStatus[4];
+extern u8 dpadAlphas[5];
 
 #endif
