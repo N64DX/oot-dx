@@ -407,17 +407,6 @@ void Play_Init(GameState* thisx) {
 
     PRINTF("\nSCENE_NO=%d COUNTER=%d\n", ((void)0, gSaveContext.save.entranceIndex), gSaveContext.sceneLayer);
 
-#if PLATFORM_GC
-    // When entering Gerudo Valley in the credits, trigger the GC emulator to play the ending movie.
-    // The emulator constantly checks whether PC is 0x81000000, so this works even though it's not a valid address.
-    if ((gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId == SCENE_GERUDO_VALLEY) &&
-        gSaveContext.sceneLayer == 6) {
-        PRINTF(T("エンディングはじまるよー\n", "The ending starts\n"));
-        ((void (*)(void))0x81000000)();
-        PRINTF(T("出戻り？\n", "Return?\n"));
-    }
-#endif
-
 #if PLATFORM_N64
     if ((B_80121220 != NULL && B_80121220->unk_54 != NULL && B_80121220->unk_54(this))) {
     } else {
