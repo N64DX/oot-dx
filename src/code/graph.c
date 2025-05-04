@@ -14,6 +14,8 @@
 #include "prenmi_state.h"
 #include "printf.h"
 #include "regs.h"
+#include "rt64/patches.h"
+#include "rt64/transform_ids.h"
 #include "setup_state.h"
 #include "speed_meter.h"
 #include "sys_cfb.h"
@@ -36,6 +38,8 @@
 
 #pragma increment_block_number "gc-eu:0 gc-eu-mq:0 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ique-cn:128" \
                                "ntsc-1.0:224 ntsc-1.1:224 ntsc-1.2:224 pal-1.0:224 pal-1.1:224"
+
+int rt64_version = 0;
 
 /**
  * The time at which the previous `Graph_Update` ended.
@@ -152,6 +156,12 @@ void Graph_InitTHGA(GraphicsContext* gfxCtx) {
     gfxCtx->curFrameBuffer = SysCfb_GetFbPtr(gfxCtx->fbIdx % 2);
     gfxCtx->redrawFramebuffer = SysCfb_GetFbPtr(REDRAW_BUFFER);
     gfxCtx->unk_014 = 0;
+
+    // Enable RT64 extended GBI mode
+    OPEN_DISPS(gfxCtx, "", 0);
+    gEXEnable(POLY_OPA_DISP++);
+    gEXGetVersion(POLY_OPA_DISP++, &rt64_version);
+    CLOSE_DISPS(gfxCtx, "", 0);
 }
 
 GameStateOverlay* Graph_GetNextGameState(GameState* gameState) {

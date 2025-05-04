@@ -1,7 +1,11 @@
 #include "gfx.h"
 #include "gfx_setupdl.h"
+#include "rt64/patches.h"
+#include "rt64/transform_ids.h"
 #include "sys_matrix.h"
 #include "skybox.h"
+
+extern int rt64_version;
 
 Mtx* sSkyboxDrawMatrix;
 
@@ -34,6 +38,10 @@ void Skybox_Draw(SkyboxContext* skyboxCtx, GraphicsContext* gfxCtx, s16 skyboxId
     Matrix_RotateY(skyboxCtx->rot.y, MTXMODE_APPLY);
     Matrix_RotateZ(skyboxCtx->rot.z, MTXMODE_APPLY);
     MATRIX_TO_MTX(sSkyboxDrawMatrix, "../z_vr_box_draw.c", 76);
+
+    if (rt64_version)
+        gEXMatrixGroupDecomposedNormal(POLY_OPA_DISP++, SKYBOX_TRANSFORM_ID_START, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_NONE);
+
     gSPMatrix(POLY_OPA_DISP++, sSkyboxDrawMatrix, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
     // Enable magic square RGB dithering and bilinear filtering
@@ -95,6 +103,9 @@ void Skybox_Draw(SkyboxContext* skyboxCtx, GraphicsContext* gfxCtx, s16 skyboxId
     }
 
     gDPPipeSync(POLY_OPA_DISP++);
+
+    if (rt64_version)
+        gEXPopMatrixGroup(POLY_OPA_DISP++, G_MTX_MODELVIEW);
 
     CLOSE_DISPS(gfxCtx, "../z_vr_box_draw.c", 125);
 }

@@ -1,9 +1,77 @@
 #include "gfx.h"
 #include "printf.h"
+#include "rt64/patches.h"
+#include "rt64/transform_ids.h"
 #include "translation.h"
 #include "effect.h"
 #include "frame_advance.h"
 #include "play_state.h"
+
+extern int rt64_version;
+
+#define tag_interpolate_effect(gfxCtx, id)                             \
+    do {                                                               \
+        OPEN_DISPS((gfxCtx), "", 0);                                   \
+        gEXMatrixGroupDecomposedNormal(POLY_OPA_DISP++, (id),          \
+            G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);              \
+        gEXMatrixGroupDecomposedNormal(POLY_XLU_DISP++,                \
+            (id) + EFFECT_TRANSFORM_ID_COUNT,                          \
+            G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);              \
+        CLOSE_DISPS((gfxCtx), "", 0);                                  \
+    } while (0)
+
+#define tag_skip_effect(gfxCtx, id)                                                                           \
+    do {                                                                                                  \
+        OPEN_DISPS((gfxCtx), "", 0);                                                                      \
+        gEXMatrixGroupSimple(POLY_OPA_DISP++, id, G_EX_PUSH, G_MTX_MODELVIEW,                             \
+            G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP,                                \
+            G_EX_COMPONENT_SKIP, G_EX_COMPONENT_INTERPOLATE, G_EX_ORDER_LINEAR, G_EX_EDIT_NONE);          \
+        gEXMatrixGroupSimple(POLY_XLU_DISP++, id + EFFECT_TRANSFORM_ID_COUNT, G_EX_PUSH, G_MTX_MODELVIEW, \
+            G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP,                                \
+            G_EX_COMPONENT_SKIP, G_EX_COMPONENT_INTERPOLATE, G_EX_ORDER_LINEAR, G_EX_EDIT_NONE);          \
+        CLOSE_DISPS((gfxCtx), "", 0);                                                                     \
+    } while (0)
+
+#define pop_effect_tag(gfxCtx)                                         \
+    do {                                                               \
+        OPEN_DISPS((gfxCtx), "", 0);                                   \
+        gEXPopMatrixGroup(POLY_OPA_DISP++, G_MTX_MODELVIEW);           \
+        gEXPopMatrixGroup(POLY_XLU_DISP++, G_MTX_MODELVIEW);           \
+        CLOSE_DISPS((gfxCtx), "", 0);                                  \
+    } while (0)
+
+//static inline void tag_interpolate_effect(GraphicsContext* gfxCtx, u32 id) {
+//    OPEN_DISPS(gfxCtx, "", 0);
+//
+//    gEXMatrixGroupDecomposedNormal(POLY_OPA_DISP++, id, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);
+//    
+//    gEXMatrixGroupDecomposedNormal(POLY_XLU_DISP++, id + EFFECT_TRANSFORM_ID_COUNT, G_EX_PUSH, G_MTX_MODELVIEW, G_EX_EDIT_ALLOW);
+//
+//    CLOSE_DISPS(gfxCtx, "", 0);
+//}
+//
+//static inline void tag_skip_effect(GraphicsContext* gfxCtx, u32 id) {
+//    OPEN_DISPS(gfxCtx, "", 0);
+//
+//    gEXMatrixGroupSimple(POLY_OPA_DISP++, id, G_EX_PUSH, G_MTX_MODELVIEW,
+//        G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP,
+//        G_EX_COMPONENT_SKIP, G_EX_COMPONENT_INTERPOLATE, G_EX_ORDER_LINEAR, G_EX_EDIT_NONE);
+//    
+//    gEXMatrixGroupSimple(POLY_XLU_DISP++, id + EFFECT_TRANSFORM_ID_COUNT, G_EX_PUSH, G_MTX_MODELVIEW,
+//        G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP, G_EX_COMPONENT_SKIP,
+//        G_EX_COMPONENT_SKIP, G_EX_COMPONENT_INTERPOLATE, G_EX_ORDER_LINEAR, G_EX_EDIT_NONE);
+//
+//    CLOSE_DISPS(gfxCtx, "", 0);
+//}
+//
+//static inline void pop_effect_tag(GraphicsContext* gfxCtx) {
+//    OPEN_DISPS(gfxCtx, "", 0);
+//
+//    gEXPopMatrixGroup(POLY_OPA_DISP++, G_MTX_MODELVIEW);
+//    gEXPopMatrixGroup(POLY_XLU_DISP++, G_MTX_MODELVIEW);
+//
+//    CLOSE_DISPS(gfxCtx, "", 0);
+//}
 
 EffectContext sEffectContext;
 
@@ -169,21 +237,39 @@ void Effect_DrawAll(GraphicsContext* gfxCtx) {
         if (!sEffectContext.sparks[i].status.active) {
             continue;
         }
+        if (rt64_version)
+            tag_interpolate_effect(gfxCtx, EFFECT_SPARK_TRANSFORM_ID_START + i);
+
         sEffectInfoTable[EFFECT_SPARK].draw(&sEffectContext.sparks[i].effect, gfxCtx);
+
+        if (rt64_version)
+            pop_effect_tag(gfxCtx);
     }
 
     for (i = 0; i < BLURE_COUNT; i++) {
         if (!sEffectContext.blures[i].status.active) {
             continue;
         }
+        if (rt64_version)
+            tag_skip_effect(gfxCtx, EFFECT_BLURE_TRANSFORM_ID_START + i);
+
         sEffectInfoTable[EFFECT_BLURE1].draw(&sEffectContext.blures[i].effect, gfxCtx);
+
+        if (rt64_version)
+            pop_effect_tag(gfxCtx);
     }
 
     for (i = 0; i < SHIELD_PARTICLE_COUNT; i++) {
         if (!sEffectContext.shieldParticles[i].status.active) {
             continue;
         }
+        if (rt64_version)
+            tag_interpolate_effect(gfxCtx, EFFECT_SHIELD_PARTICLE_TRANSFORM_ID_START + i);
+
         sEffectInfoTable[EFFECT_SHIELD_PARTICLE].draw(&sEffectContext.shieldParticles[i].effect, gfxCtx);
+
+        if (rt64_version)
+            pop_effect_tag(gfxCtx);
     }
 }
 
