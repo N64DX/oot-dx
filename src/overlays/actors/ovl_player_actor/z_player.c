@@ -2735,8 +2735,10 @@ void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
     if (this->currentBoots > 2)
         this->currentBoots = 0;
     
-    if (current != this->currentBoots)
+    if (current != this->currentBoots) {
+        Player_SetBootData(play, this);
         Player_ChangeEquipment(this, play, button);
+    }
 }
 
 /**
@@ -2802,12 +2804,14 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
         else if (item == ITEM_BOOTS_IRON) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON)) {
                 this->currentBoots = this->currentBoots == 1 ? 0 : 1;
+                Player_SetBootData(play, this);
                 Player_ChangeEquipment(this, play, i);
             }
         }
         else if (item == ITEM_BOOTS_HOVER) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER)) {
                 this->currentBoots = this->currentBoots == 2 ? 0 : 2;
+                Player_SetBootData(play, this);
                 Player_ChangeEquipment(this, play, i);
             }
         }
@@ -3673,10 +3677,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
           (itemAction == PLAYER_IA_NONE))) ||
         ((this->itemAction < 0) && ((Player_ActionToMeleeWeapon(itemAction) != 0) || (itemAction == PLAYER_IA_NONE)))) {
 
-        if ((itemAction == PLAYER_IA_NONE) || !(this->stateFlags1 & PLAYER_STATE1_27) ||
-            ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) &&
-             ((itemAction == PLAYER_IA_HOOKSHOT) || (itemAction == PLAYER_IA_LONGSHOT)))) {
-
+        if (itemAction == PLAYER_IA_NONE || !(this->stateFlags1 & PLAYER_STATE1_27) || ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && (itemAction == PLAYER_IA_HOOKSHOT || itemAction == PLAYER_IA_LONGSHOT) ) || ( (this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && itemAction >= PLAYER_IA_MASK_KEATON && itemAction <= PLAYER_IA_MASK_TRUTH) ) {
             if ((play->bombchuBowlingStatus == 0) &&
                 (((itemAction == PLAYER_IA_DEKU_STICK) && (AMMO(ITEM_DEKU_STICK) == 0)) ||
                  ((itemAction == PLAYER_IA_MAGIC_BEAN) && (AMMO(ITEM_MAGIC_BEAN) == 0)) ||

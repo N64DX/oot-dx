@@ -443,12 +443,16 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                 button = 2;
                             else button = 3;
                             
-                            for (i=0; i<4; i++)
-                                if (DPAD_BUTTON(i) == cursorItem) {
+                            for (i=0; i<4; i++) {
+                                if (i == button)
+                                    continue;
+                            
+                                if (DPAD_BUTTON(i) == cursorSlot) {
                                     DPAD_BUTTON(i) = DPAD_BUTTON(button);
                                     Interface_LoadItemIconDpad(play, i);
                                     break;
                                 }
+                            }
                             
                             DPAD_BUTTON(button) = cursorSlot;
                             Interface_LoadItemIconDpad(play, button);
@@ -485,7 +489,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
     gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
 
     for (i = 0, j = ITEM_QUAD_GRID_SELECTED_C_LEFT * 4; i < 3; i++, j += 4) {
-        if (gSaveContext.save.info.equips.buttonItems[i + 1] != ITEM_NONE) {
+        if (gSaveContext.save.info.equips.buttonItems[i + 1] != ITEM_NONE && gSaveContext.save.info.equips.cButtonSlots[i] != SLOT_NONE) {
             gSPVertex(POLY_OPA_DISP++, &pauseCtx->itemVtx[j], 4, 0);
             POLY_OPA_DISP = KaleidoScope_QuadTextureIA8(POLY_OPA_DISP, gEquippedItemOutlineTex, 32, 32, 0);
         }
