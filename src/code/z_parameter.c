@@ -156,10 +156,8 @@ static s16 sMagicBorderB = 255;
 u8 dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
 u8 dpadAlphas[] = { 0, 0, 0, 0, 0 };
 
-const u16 dpad_icon_x[] = { D_UP_BUTTON_X,     D_RIGHT_BUTTON_X,     D_DOWN_BUTTON_X,     D_LEFT_BUTTON_X };
-const u16 dpad_icon_y[] = { D_UP_BUTTON_Y,     D_RIGHT_BUTTON_Y,     D_DOWN_BUTTON_Y,     D_LEFT_BUTTON_Y };
-const u16 dpad_ammo_x[] = { D_UP_BUTTON_X + 1, D_RIGHT_BUTTON_X + 1, D_DOWN_BUTTON_X + 1, D_LEFT_BUTTON_X + 1 };
-const u16 dpad_ammo_y[] = { D_UP_BUTTON_Y + 8, D_RIGHT_BUTTON_Y + 8, D_DOWN_BUTTON_Y + 8, D_LEFT_BUTTON_Y + 8 };
+u16 dpad_x;
+u16 dpad_y;
 
 static s16 sExtraItemBases[] = {
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_5
@@ -3048,11 +3046,19 @@ void Interface_DrawItemButtons(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 2900);
 
+    // D-Pad positions
+    dpad_x = R_MAGIC_METER_X + 6;
+    dpad_y = (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER;
+    if (gSaveContext.save.info.playerData.magicLevel != 0)
+        dpad_y += 30;
+    if ( (gSaveContext.timerState == TIMER_STATE_ENV_HAZARD_TICK || gSaveContext.timerState == TIMER_STATE_DOWN_TICK || gSaveContext.timerState == TIMER_STATE_UP_TICK || gSaveContext.timerState == TIMER_STATE_UP_FREEZE) && pauseCtx->state == PAUSE_STATE_OFF)
+        dpad_y += 15;
+
     if (gSaveContext.save.info.playerData.dpadDualSet)
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[0]);
     else gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 192, 192, 192, dpadAlphas[0]);
     gDPLoadTextureBlock(OVERLAY_DISP++, gDpadTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-    gSPTextureRectangle(OVERLAY_DISP++, (DPAD_X) << 2, (DPAD_Y) << 2, (DPAD_X + 16) << 2, (DPAD_Y + 16) << 2, G_TX_RENDERTILE, 0, 0, 2 << 10, 2 << 10);
+    gSPTextureRectangle(OVERLAY_DISP++, (dpad_x) << 2, (dpad_y) << 2, (dpad_x + 16) << 2, (dpad_y + 16) << 2, G_TX_RENDERTILE, 0, 0, 2 << 10, 2 << 10);
     
     // B Button Color & Texture
     // Also loads the Item Button Texture reused by other buttons afterwards
@@ -3229,15 +3235,29 @@ void Interface_DrawItemIconTexture(PlayState* play, void* texture, u8 button) {
         width = R_ITEM_ICON_WIDTH(button);
     }
     else {
-        x     = dpad_icon_x[button-4];
-        y     = dpad_icon_y[button-4];
         dd    = 1400;
         width = 12;
         
-        if (button < 4)
-            item = gSaveContext.save.info.equips.buttonItems[button];
-        else item = Interface_GetItemFromDpad(button-4);
-
+        switch (button) {
+            case 4:
+                x = D_UP_BUTTON_X;
+                y = D_UP_BUTTON_Y;
+                break;
+            case 5:
+                x = D_RIGHT_BUTTON_X;
+                y = D_RIGHT_BUTTON_Y;
+                break;
+            case 6:
+                x = D_DOWN_BUTTON_X;
+                y = D_DOWN_BUTTON_Y;
+                break;
+            default:
+                x = D_LEFT_BUTTON_X;
+                y = D_LEFT_BUTTON_Y;
+                break;
+        }
+        
+        item = Interface_GetItemFromDpad(button-4);
         if ( (item == ITEM_TUNIC_GORON && player->currentTunic == 1) || (item == ITEM_TUNIC_ZORA && player->currentTunic == 2) || (item == ITEM_BOOTS_IRON && player->currentBoots == 1) || (item == ITEM_BOOTS_HOVER && player->currentBoots == 2) || (item >= ITEM_MASK_KEATON && item <= ITEM_MASK_TRUTH && player->currentMask == item - ITEM_MASK_KEATON + 1) ) {
             dd    *=  0.8;
             width +=  3;
@@ -3311,9 +3331,29 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
             OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, R_ITEM_AMMO_X(button) + 6, R_ITEM_AMMO_Y(button), 8, 8, 1 << 10, 1 << 10);
         }
         else {
+            u8 x, y;
+            switch (button) {
+                case 4:
+                    x = D_UP_BUTTON_X + 1;
+                    y = D_UP_BUTTON_Y + 8;
+                    break;
+                case 5:
+                    x = D_RIGHT_BUTTON_X + 1;
+                    y = D_RIGHT_BUTTON_Y + 8;
+                    break;
+                case 6:
+                    x = D_DOWN_BUTTON_X + 1;
+                    y = D_DOWN_BUTTON_Y + 8;
+                    break;
+                default:
+                    x = D_LEFT_BUTTON_X + 1;
+                    y = D_LEFT_BUTTON_Y + 8;
+                    break;
+            }
+            
             if (i != 0)
-                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, dpad_ammo_x[button-4], dpad_ammo_y[button-4], 6, 6, 1 << 11, 1 << 11);
-            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, dpad_ammo_x[button-4] + 3, dpad_ammo_y[button-4], 6, 6, 1 << 11, 1 << 11);
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, x, y, 6, 6, 1 << 11, 1 << 11);
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, x + 3, y, 6, 6, 1 << 11, 1 << 11);
         }
     }
 

@@ -191,16 +191,14 @@ typedef struct InterfaceContext {
 #define C_UP_BUTTON_X 254 + (WIDESCREEN ? 104 : 0)
 #define C_UP_BUTTON_Y 16
 
-#define DPAD_X           (18     + 6)  // R_MAGIC_METER_X
-#define DPAD_Y           (42     + 30) // R_MAGIC_METER_Y_LOWER
-#define D_UP_BUTTON_X    (DPAD_X + 2)
-#define D_UP_BUTTON_Y    (DPAD_Y - 14)
-#define D_RIGHT_BUTTON_X (DPAD_X + 18)
-#define D_RIGHT_BUTTON_Y (DPAD_Y + 2)
-#define D_DOWN_BUTTON_X  (DPAD_X + 2)
-#define D_DOWN_BUTTON_Y  (DPAD_Y + 16)
-#define D_LEFT_BUTTON_X  (DPAD_X - 14)
-#define D_LEFT_BUTTON_Y  (DPAD_Y + 2)
+#define D_UP_BUTTON_X    (dpad_x + 2)
+#define D_UP_BUTTON_Y    (dpad_y - 14)
+#define D_RIGHT_BUTTON_X (dpad_x + 18)
+#define D_RIGHT_BUTTON_Y (dpad_y + 2)
+#define D_DOWN_BUTTON_X  (dpad_x + 2)
+#define D_DOWN_BUTTON_Y  (dpad_y + 16)
+#define D_LEFT_BUTTON_X  (dpad_x - 14)
+#define D_LEFT_BUTTON_Y  (dpad_y + 2)
 
 #if !PLATFORM_GC
 #define START_BUTTON_R 200
