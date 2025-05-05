@@ -52,38 +52,38 @@ void KaleidoScope_DrawDebugEditorText(Gfx** gfxP) {
     GfxPrint_Init(&printer);
     GfxPrint_Open(&printer, *gfxP);
 
-    GfxPrint_SetPos(&printer, 4, 2);
+    GfxPrint_SetPos(&printer, 4 - (WIDESCREEN ? 1 : 0), 2);
     GfxPrint_SetColor(&printer, 255, 60, 0, 255);
     GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ﾙﾋﾟｰ"); // "Rupee"
-    GfxPrint_SetPos(&printer, 15, 2);
+    GfxPrint_SetPos(&printer, 15 - (WIDESCREEN ? 1 : 0), 2);
     GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ﾊｰﾄ"); // "Heart"
-    GfxPrint_SetPos(&printer, 26, 3);
+    GfxPrint_SetPos(&printer, 26 - (WIDESCREEN ? 2 : 0), 3);
     GfxPrint_Printf(&printer, "%s", "/4");
-    GfxPrint_SetPos(&printer, 4, 5);
+    GfxPrint_SetPos(&printer, 4 - (WIDESCREEN ? 1 : 0), 5);
     GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｱｲﾃﾑ"); // "Item"
-    GfxPrint_SetPos(&printer, 4, 13);
+    GfxPrint_SetPos(&printer, 4 - (WIDESCREEN ? 1 : 0), 13);
     GfxPrint_Printf(&printer, "%s", "KEY");
-    GfxPrint_SetPos(&printer, 4, 15);
+    GfxPrint_SetPos(&printer, 4 - (WIDESCREEN ? 1 : 0), 15);
     GfxPrint_Printf(&printer, "%s", GFXP_HIRAGANA "ｿｳﾋﾞ"); // "Equipment"
-    GfxPrint_SetPos(&printer, 23, 14);
+    GfxPrint_SetPos(&printer, 23 - (WIDESCREEN ? 1 : 0), 14);
     GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｹﾝ"); // "Sword"
-    GfxPrint_SetPos(&printer, 23, 15);
+    GfxPrint_SetPos(&printer, 23 - (WIDESCREEN ? 1 : 0), 15);
     GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ﾀﾃ"); // "Shield"
-    GfxPrint_SetPos(&printer, 4, 17);
+    GfxPrint_SetPos(&printer, 4 - (WIDESCREEN ? 1 : 0), 17);
     GfxPrint_Printf(&printer, "%s", "MAP");
-    GfxPrint_SetPos(&printer, 4, 19);
+    GfxPrint_SetPos(&printer, 4 - (WIDESCREEN ? 1 : 0), 19);
     GfxPrint_Printf(&printer, "%s", GFXP_HIRAGANA "ﾌｳｲﾝ"); // "Seal"
-    GfxPrint_SetPos(&printer, 20, 19);
+    GfxPrint_SetPos(&printer, 20 - (WIDESCREEN ? 1 : 0), 19);
     GfxPrint_Printf(&printer, "%s", GFXP_HIRAGANA "ｾｲﾚｲｾｷ"); // "Spiritual Stone"
-    GfxPrint_SetPos(&printer, 4, 21);
+    GfxPrint_SetPos(&printer, 4 - (WIDESCREEN ? 1 : 0), 21);
     GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｵｶﾘﾅ"); // "Ocarina"
-    GfxPrint_SetPos(&printer, 4, 24);
+    GfxPrint_SetPos(&printer, 4 - (WIDESCREEN ? 1 : 0), 24);
     GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｺﾚｸﾄ"); // "Collect"
-    GfxPrint_SetPos(&printer, 14, 24);
+    GfxPrint_SetPos(&printer, 14 - (WIDESCREEN ? 1 : 0), 24);
     GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｷﾝｽﾀ"); // "Skulltula"
-    GfxPrint_SetPos(&printer, 23, 24);
+    GfxPrint_SetPos(&printer, 23 - (WIDESCREEN ? 1 : 0), 24);
     GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｶｹﾗ"); // "Gold Token"
-    GfxPrint_SetPos(&printer, 28, 24);
+    GfxPrint_SetPos(&printer, 28 - (WIDESCREEN ? 2 : 0), 24);
     GfxPrint_Printf(&printer, "%s", "/4");
 
     *gfxP = GfxPrint_Close(&printer);
