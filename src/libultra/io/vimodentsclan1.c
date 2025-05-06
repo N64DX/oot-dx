@@ -30,11 +30,13 @@ OSViMode osViModeNtscLan1 = {
         HSYNC(3093, 0),                // hSync
         LEAP(3093, 3093),              // leap
         HSTART(108, 748),              // hStart
+
 #if WIDESCREEN
-        0x300,                         // xScale
+        0x2A6,                         // xScale
 #else
         SCALE(2, 0),                   // xScale
 #endif
+
         VCURRENT(0),                   // vCurrent
     },
     {
