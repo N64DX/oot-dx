@@ -437,6 +437,17 @@ static s16 sDungeonEntrances[] = {
     ENTR_INSIDE_GANONS_CASTLE_COLLAPSE_0,  // SCENE_INSIDE_GANONS_CASTLE_COLLAPSE
 };
 
+u8 HasDuplicateDpadItems() {
+    u8 col, i, j;
+
+    for (col=0; col<4; col++)
+        for (i=0; i<4; i++)
+            for (j=i+1; j<4; j++)
+                if (gSaveContext.save.info.playerData.dpadItems[i][col] == gSaveContext.save.info.playerData.dpadItems[j][col])
+                    return true;
+    return false;
+}
+
 /**
  *  Copy save currently on the buffer to Save Context and complete various tasks to open the save.
  *  This includes:
@@ -609,6 +620,22 @@ void Sram_OpenSave(SramContext* sramCtx) {
     }
 
     gSaveContext.save.info.playerData.magicLevel = 0;
+
+    if (HasDuplicateDpadItems()) {
+        gSaveContext.save.info.playerData.dpadItems[0][1] = SLOT_BOOTS_IRON;
+        gSaveContext.save.info.playerData.dpadItems[0][3] = SLOT_BOOTS_HOVER;
+        
+        gSaveContext.save.info.playerData.dpadItems[1][1] = SLOT_TRADE_CHILD;
+        gSaveContext.save.info.playerData.dpadItems[1][3] = SLOT_DEKU_NUT;
+        
+        gSaveContext.save.info.playerData.dpadItems[0][0] = gSaveContext.save.info.playerData.dpadItems[1][0] = SLOT_LENS_OF_TRUTH;
+        gSaveContext.save.info.playerData.dpadItems[0][2] = gSaveContext.save.info.playerData.dpadItems[1][2] = SLOT_OCARINA;
+        
+        gSaveContext.save.info.playerData.dpadItems[2][0] = gSaveContext.save.info.playerData.dpadItems[3][0] = SLOT_SWORDS;
+        gSaveContext.save.info.playerData.dpadItems[2][1] = gSaveContext.save.info.playerData.dpadItems[3][1] = SLOT_BOOTS;
+        gSaveContext.save.info.playerData.dpadItems[2][2] = gSaveContext.save.info.playerData.dpadItems[3][2] = SLOT_SHIELDS;
+        gSaveContext.save.info.playerData.dpadItems[2][3] = gSaveContext.save.info.playerData.dpadItems[3][3] = SLOT_TUNICS;
+    }
 }
 
 /**
