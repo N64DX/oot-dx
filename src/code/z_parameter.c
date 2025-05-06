@@ -3264,6 +3264,10 @@ void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
         }
         
         item = Interface_GetItemFromDpad(button-4);
+        if ( (DPAD_BUTTON(button-4) == SLOT_TUNIC_GORON && !CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) || (DPAD_BUTTON(button-4) == SLOT_TUNIC_ZORA  && !CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA)) ||
+             (DPAD_BUTTON(button-4) == SLOT_BOOTS_IRON  && !CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON))  || (DPAD_BUTTON(button-4) == SLOT_BOOTS_HOVER && !CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER)) )
+            return;
+        
         if ( (item == ITEM_TUNIC_GORON && player->currentTunic == 1) || (item == ITEM_TUNIC_ZORA && player->currentTunic == 2) || (item == ITEM_BOOTS_IRON && player->currentBoots == 1) || (item == ITEM_BOOTS_HOVER && player->currentBoots == 2) || (item >= ITEM_MASK_KEATON && item <= ITEM_MASK_TRUTH && player->currentMask == item - ITEM_MASK_KEATON + 1) ) {
             dd    *=  0.8;
             width +=  3;
@@ -3739,17 +3743,16 @@ void Interface_Draw(PlayState* play) {
         }
 
         for (svar1=0; svar1<4; svar1++) {
-            gDPPipeSync(OVERLAY_DISP++);
-           
+            if (Interface_GetItemFromDpad(svar1) >= 0xF0)
+                continue;
+
             // D-Pad Button Icon & Ammo Count
-            if (DPAD_BUTTON_ITEM(svar1) < 0xF0 || Interface_GetItemFromDpad(svar1) < 0xF0)  {
-                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[svar1+1]);
-                gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
-                Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x4000 + (0x1000*svar1), 4+svar1);
-                gDPPipeSync(OVERLAY_DISP++);
-                gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
-                Interface_DrawAmmoCount(play, 4+svar1,  dpadAlphas[svar1+1]);
-            }
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[svar1+1]);
+            gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
+            Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x4000 + (0x1000*svar1), 4+svar1);
+            gDPPipeSync(OVERLAY_DISP++);
+            gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+            Interface_DrawAmmoCount(play, 4+svar1,  dpadAlphas[svar1+1]);
         }
 
         // A Button
