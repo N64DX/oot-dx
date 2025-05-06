@@ -667,7 +667,7 @@ static u8 gPageSwitchNextButtonStatus[][5] = {
     // PAUSE_ITEM  + PAGE_SWITCH_PT_LEFT
     //
     //  -> PAUSE_EQUIP
-    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_ENABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
     // PAUSE_MAP   + PAGE_SWITCH_PT_LEFT
     //
     //  -> PAUSE_ITEM
@@ -683,7 +683,7 @@ static u8 gPageSwitchNextButtonStatus[][5] = {
     //
     // PAUSE_QUEST + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_EQUIP
-    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_ENABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
     //
     // PAUSE_EQUIP + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_ITEM
@@ -1093,6 +1093,7 @@ void KaleidoScope_SetupPageSwitch(PauseContext* pauseCtx, u8 pt) {
     gSaveContext.buttonStatus[2] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][2];
     gSaveContext.buttonStatus[3] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][3];
     gSaveContext.buttonStatus[4] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][4];
+    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][1];
 
     PRINTF("kscope->kscp_pos+pt = %d\n", pauseCtx->pageIndex + pt);
 

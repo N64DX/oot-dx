@@ -2754,19 +2754,24 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     s32 maskItemAction;
     s32 item;
     s32 i;
+    
+    Interface_ChangeDpadSet(play);
 
     if (this->currentMask != PLAYER_MASK_NONE) {
         maskItemAction = this->currentMask - 1 + PLAYER_IA_MASK_KEATON;
 
-        if (!Player_ItemIsItemAction(C_BTN_ITEM(0), maskItemAction)                && !Player_ItemIsItemAction(C_BTN_ITEM(1), maskItemAction)                && !Player_ItemIsItemAction(C_BTN_ITEM(2), maskItemAction) &&
-            !Player_ItemIsItemAction(Interface_GetItemFromDpad(0), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(1), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(2), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(3), maskItemAction) ) {
+        if (!Player_ItemIsItemAction(C_BTN_ITEM(0), maskItemAction) &&
+            !Player_ItemIsItemAction(C_BTN_ITEM(1), maskItemAction) &&
+            !Player_ItemIsItemAction(C_BTN_ITEM(2), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(0), maskItemAction) &&
+            !Player_ItemIsItemAction(Interface_GetItemFromDpad(1), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(2), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(3), maskItemAction) ) {
             this->currentMask = PLAYER_MASK_NONE;
         }
     }
 
     if (!(this->stateFlags1 & (PLAYER_STATE1_CARRYING_ACTOR | PLAYER_STATE1_29)) && !func_8008F128(this)) {
         if (this->itemAction >= PLAYER_IA_FISHING_POLE) {
-            if (!Player_ItemIsInUse(this, B_BTN_ITEM)                   && !Player_ItemIsInUse(this, C_BTN_ITEM(0))                && !Player_ItemIsInUse(this, C_BTN_ITEM(1))                && !Player_ItemIsInUse(this, C_BTN_ITEM(2)) &&
+            if (!Player_ItemIsInUse(this, B_BTN_ITEM) && !Player_ItemIsInUse(this, C_BTN_ITEM(0)) &&
+                !Player_ItemIsInUse(this, C_BTN_ITEM(1)) && !Player_ItemIsInUse(this, C_BTN_ITEM(2)) &&
                 !Player_ItemIsInUse(this, Interface_GetItemFromDpad(0)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(1)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(2)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(3)) ) {
                 Player_UseItem(play, this, ITEM_NONE);
                 return;
@@ -2781,7 +2786,19 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
 
         item = Player_GetItemOnButton(play, i);
 
-        if (item == ITEM_SWORDS)
+        if (item >= ITEM_NONE_FE) {
+            for (i = 0; i < ARRAY_COUNT(sItemButtons); i++) {
+                if (CHECK_BTN_ALL(sControlInput->cur.button, sItemButtons[i])) {
+                    break;
+                }
+            }
+
+            item = Player_GetItemOnButton(play, i);
+
+            if ((item < ITEM_NONE_FE) && (Player_ItemToItemAction(item) == this->heldItemAction)) {
+                sHeldItemButtonIsHeldDown = true;
+            }
+        } else if (item == ITEM_SWORDS)
                 Player_ChangeSword(this, play, i);
         else if (item == ITEM_SHIELDS)
             Player_ChangeShield(this, play, i);
@@ -2794,38 +2811,22 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 this->currentTunic = this->currentTunic == 1 ? 0 : 1;
                 Player_ChangeEquipment(this, play, i);
             }
-        }
-        else if (item == ITEM_TUNIC_ZORA) {
+        } else if (item == ITEM_TUNIC_ZORA) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_TUNIC_ZORA)) {
                 this->currentTunic = this->currentTunic == 2 ? 0 : 2;
                 Player_ChangeEquipment(this, play, i);
             }
-        }
-        else if (item == ITEM_BOOTS_IRON) {
+        } else if (item == ITEM_BOOTS_IRON) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON)) {
                 this->currentBoots = this->currentBoots == 1 ? 0 : 1;
                 Player_SetBootData(play, this);
                 Player_ChangeEquipment(this, play, i);
             }
-        }
-        else if (item == ITEM_BOOTS_HOVER) {
+        } else if (item == ITEM_BOOTS_HOVER) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER)) {
                 this->currentBoots = this->currentBoots == 2 ? 0 : 2;
                 Player_SetBootData(play, this);
                 Player_ChangeEquipment(this, play, i);
-            }
-        }
-        else if (item >= ITEM_NONE_FE) {
-            for (i = 0; i < ARRAY_COUNT(sItemButtons); i++) {
-                if (CHECK_BTN_ALL(sControlInput->cur.button, sItemButtons[i])) {
-                    break;
-                }
-            }
-
-            item = Player_GetItemOnButton(play, i);
-
-            if ((item < ITEM_NONE_FE) && (Player_ItemToItemAction(item) == this->heldItemAction)) {
-                sHeldItemButtonIsHeldDown = true;
             }
         } else {
             this->heldItemButton = i;
@@ -3107,7 +3108,7 @@ s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play) {
 s32 func_80834B5C(Player* this, PlayState* play) {
     LinkAnimation_Update(play, &this->upperSkelAnime);
 
-    if (!CHECK_BTN_ALL(sControlInput->cur.button, BTN_R) || CHECK_BTN_ALL(sControlInput->cur.button, BTN_L)) {
+    if (!CHECK_BTN_ALL(sControlInput->cur.button, BTN_R)) {
         func_80834894(this);
         return true;
     } else {
@@ -3677,7 +3678,11 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
           (itemAction == PLAYER_IA_NONE))) ||
         ((this->itemAction < 0) && ((Player_ActionToMeleeWeapon(itemAction) != 0) || (itemAction == PLAYER_IA_NONE)))) {
 
-        if (itemAction == PLAYER_IA_NONE || !(this->stateFlags1 & PLAYER_STATE1_27) || ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && (itemAction == PLAYER_IA_HOOKSHOT || itemAction == PLAYER_IA_LONGSHOT) ) || ( (this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && itemAction >= PLAYER_IA_MASK_KEATON && itemAction <= PLAYER_IA_MASK_TRUTH) ) {
+        if ((itemAction == PLAYER_IA_NONE) || !(this->stateFlags1 & PLAYER_STATE1_27) ||
+            ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) &&
+             ((itemAction == PLAYER_IA_HOOKSHOT) || (itemAction == PLAYER_IA_LONGSHOT))) ||
+             ((this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && itemAction >= PLAYER_IA_MASK_KEATON && itemAction <= PLAYER_IA_MASK_TRUTH)) {
+
             if ((play->bombchuBowlingStatus == 0) &&
                 (((itemAction == PLAYER_IA_DEKU_STICK) && (AMMO(ITEM_DEKU_STICK) == 0)) ||
                  ((itemAction == PLAYER_IA_MAGIC_BEAN) && (AMMO(ITEM_MAGIC_BEAN) == 0)) ||
