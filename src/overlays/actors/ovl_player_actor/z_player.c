@@ -2765,6 +2765,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             !Player_ItemIsItemAction(C_BTN_ITEM(2), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(0), maskItemAction) &&
             !Player_ItemIsItemAction(Interface_GetItemFromDpad(1), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(2), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(3), maskItemAction) ) {
             this->currentMask = PLAYER_MASK_NONE;
+            SET_MASK_AGE(this->currentMask);
         }
     }
 
@@ -3729,6 +3730,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
                 } else {
                     this->currentMask = itemAction - PLAYER_IA_MASK_KEATON + 1;
                 }
+                SET_MASK_AGE(this->currentMask);
 
                 func_808328EC(this, NA_SE_PL_CHANGE_ARMS);
             } else if (((itemAction >= PLAYER_IA_OCARINA_FAIRY) && (itemAction <= PLAYER_IA_OCARINA_OF_TIME)) ||

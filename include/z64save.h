@@ -227,7 +227,7 @@ typedef struct SavePlayerData {
     /* 0x1A  0x0036 */ u16 swordHealth;
     /* 0x1C  0x0038 */ u16 naviTimer;
     /* 0x1E  0x003A */ u8 isMagicAcquired;
-    /* 0x1F  0x003B */ char unk_3B[0x01];
+    /* 0x1F  0x003B */ u8 mask;
     /* 0x20  0x003C */ u8 isDoubleMagicAcquired;
     /* 0x21  0x003D */ u8 isDoubleDefenseAcquired;
     /* 0x22  0x003E */ u8 bgsFlag;
@@ -417,6 +417,13 @@ typedef enum LinkAge {
 
 #define LINK_IS_ADULT (gSaveContext.save.linkAge == LINK_AGE_ADULT)
 #define LINK_IS_CHILD (gSaveContext.save.linkAge == LINK_AGE_CHILD)
+
+#define SET_MASK_AGE(val)       ((LINK_IS_ADULT) ? SET_MASK_ADULT(val) : SET_MASK_CHILD(val))
+#define GET_MASK_AGE()          ((LINK_IS_ADULT) ? GET_MASK_ADULT()    : GET_MASK_CHILD())
+#define GET_MASK_ADULT()        ((u8)(((gSaveContext.save.info.playerData.mask) >> 8) & 0xFF))
+#define GET_MASK_CHILD()        ((u8)((gSaveContext.save.info.playerData.mask) & 0xFF))
+#define SET_MASK_ADULT(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0x00FF) | (((val) & 0xFF) << 8)))
+#define SET_MASK_CHILD(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0xFF00) | ((val) & 0xFF)))
 
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17

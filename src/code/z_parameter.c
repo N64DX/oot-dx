@@ -1243,6 +1243,9 @@ void Interface_SetSceneRestrictions(PlayState* play) {
         }
         i++;
     } while (sRestrictionFlags[i].sceneId != 0xFF);
+    
+    if (interfaceCtx->restrictions.tradeItems == 0)
+        GET_PLAYER(play)->currentMask = GET_MASK_AGE();
 }
 
 Gfx* Gfx_TextureIA8(Gfx* displayListHead, void* texture, s16 textureWidth, s16 textureHeight, s16 rectLeft, s16 rectTop,
