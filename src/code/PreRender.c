@@ -807,29 +807,5 @@ void PreRender_DivotFilter(PreRender* this) {
  * `this->cvgSave`
  */
 void PreRender_ApplyFilters(PreRender* this) {
-#if PAUSE_BG_AA
-    s32 x;
-    s32 y;
 
-    if ((this->cvgSave != NULL) && (this->fbufSave != NULL)) {
-        // Apply AA filter
-        for (y = 0; y < this->height; y++) {
-            for (x = 0; x < this->width; x++) {
-                s32 cvg = this->cvgSave[x + y * this->width];
-
-                cvg >>= 5;
-                cvg++;
-                if (cvg != 8) {
-                    // If this pixel has only partial coverage, perform the Video Filter interpolation on it
-                    PreRender_AntiAliasFilter(this, x, y);
-                }
-            }
-        }
-
-        if (PRERENDER_DIVOT_CONTROL != 0) {
-            // Apply divot filter
-            PreRender_DivotFilter(this);
-        }
-    }
-#endif
 }
