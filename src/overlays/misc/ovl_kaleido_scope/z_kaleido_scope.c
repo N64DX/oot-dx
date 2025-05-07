@@ -963,11 +963,7 @@ void KaleidoScope_SetupPlayerPreRender(PlayState* play) {
 }
 
 void KaleidoScope_ProcessPlayerPreRender(void) {
-#if PAUSE_BG_AA
     Sleep_Msec(50);
-    PreRender_ApplyFilters(&sPlayerPreRender);
-    PreRender_Destroy(&sPlayerPreRender);
-#endif
 }
 
 Gfx* KaleidoScope_QuadTextureIA4(Gfx* gfx, void* texture, s16 width, s16 height, u16 point) {
