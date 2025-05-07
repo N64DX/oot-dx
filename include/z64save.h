@@ -474,6 +474,8 @@ typedef enum LinkAge {
 #define C_BTN_ITEM(button) ((gSaveContext.buttonStatus[(button) + 1] != BTN_DISABLED) \
                                 ? gSaveContext.save.info.equips.buttonItems[(button) + 1]       \
                                 : ITEM_NONE)
+                                
+#define D_BTN_ITEM(button) ((dpadStatus[button] != BTN_DISABLED) ? Interface_GetItemFromDpad(button) : ITEM_NONE)
 
 
 /*

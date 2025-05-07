@@ -127,10 +127,10 @@ static SavePlayerData sNewSavePlayerData = {
     0,                                                  // unk_38
     0,                                                  // dpadDualSet
     {
-        { SLOT_LENS_OF_TRUTH, SLOT_BOOTS_IRON,  SLOT_OCARINA, SLOT_BOOTS_HOVER }, // dpadItems (set 1 adult)
-        { SLOT_LENS_OF_TRUTH, SLOT_TRADE_CHILD, SLOT_OCARINA, SLOT_DEKU_NUT    }, // dpadItems (set 1 child)
-        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS      }, // dpadItems (set 2 adult)
-        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS      }, // dpadItems (set 2 child)
+        { SLOT_LENS_OF_TRUTH, SLOT_BOOTS_HOVER, SLOT_OCARINA, SLOT_BOOTS_IRON }, // dpadItems (set 1 adult)
+        { SLOT_LENS_OF_TRUTH, SLOT_TRADE_CHILD, SLOT_OCARINA, SLOT_DEKU_NUT   }, // dpadItems (set 1 child)
+        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS     }, // dpadItems (set 2 adult)
+        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS     }, // dpadItems (set 2 child)
     },
     SCENE_LINKS_HOUSE,                                  // savedSceneId
 };
@@ -281,10 +281,10 @@ static SavePlayerData sDebugSavePlayerData = {
     0,                                                  // unk_38
     0,                                                  // dpadDualSet
     {
-        { SLOT_LENS_OF_TRUTH, SLOT_BOOTS_IRON,  SLOT_OCARINA, SLOT_BOOTS_HOVER }, // dpadItems (set 1 adult)
-        { SLOT_LENS_OF_TRUTH, SLOT_TRADE_CHILD, SLOT_OCARINA, SLOT_DEKU_NUT    }, // dpadItems (set 1 child)
-        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS      }, // dpadItems (set 2 adult)
-        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS      }, // dpadItems (set 2 child)
+        { SLOT_LENS_OF_TRUTH, SLOT_BOOTS_HOVER, SLOT_OCARINA, SLOT_BOOTS_IRON }, // dpadItems (set 1 adult)
+        { SLOT_LENS_OF_TRUTH, SLOT_TRADE_CHILD, SLOT_OCARINA, SLOT_DEKU_NUT   }, // dpadItems (set 1 child)
+        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS     }, // dpadItems (set 2 adult)
+        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS     }, // dpadItems (set 2 child)
     },
     SCENE_HYRULE_FIELD,                                 // savedSceneId
 };
@@ -622,8 +622,8 @@ void Sram_OpenSave(SramContext* sramCtx) {
     gSaveContext.save.info.playerData.magicLevel = 0;
 
     if (HasDuplicateDpadItems()) {
-        gSaveContext.save.info.playerData.dpadItems[0][1] = SLOT_BOOTS_IRON;
-        gSaveContext.save.info.playerData.dpadItems[0][3] = SLOT_BOOTS_HOVER;
+        gSaveContext.save.info.playerData.dpadItems[0][1] = SLOT_BOOTS_HOVER;
+        gSaveContext.save.info.playerData.dpadItems[0][3] = SLOT_BOOTS_IRON;
         
         gSaveContext.save.info.playerData.dpadItems[1][1] = SLOT_TRADE_CHILD;
         gSaveContext.save.info.playerData.dpadItems[1][3] = SLOT_DEKU_NUT;

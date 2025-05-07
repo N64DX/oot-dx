@@ -35,8 +35,9 @@ void Interface_Init(PlayState* play) {
     interfaceCtx->lensMagicConsumptionTimer = 16;
     interfaceCtx->unk_228 = XREG(95);
     interfaceCtx->unk_244 = interfaceCtx->aAlpha = interfaceCtx->bAlpha = interfaceCtx->cLeftAlpha =
-        interfaceCtx->cDownAlpha = interfaceCtx->cRightAlpha = interfaceCtx->healthAlpha = interfaceCtx->startAlpha = dpadAlphas[0] = dpadAlphas[1] = dpadAlphas[2] = dpadAlphas[3] = dpadAlphas[4] = 
+        interfaceCtx->cDownAlpha = interfaceCtx->cRightAlpha = interfaceCtx->healthAlpha = interfaceCtx->startAlpha =
             interfaceCtx->magicAlpha = 0;
+    dpadAlphas[0] = dpadAlphas[1] = dpadAlphas[2] = dpadAlphas[3] = dpadAlphas[4] = 0;
     interfaceCtx->minimapAlpha = 0;
     interfaceCtx->unk_260 = 0;
 

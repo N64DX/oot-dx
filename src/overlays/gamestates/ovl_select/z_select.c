@@ -48,7 +48,8 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = 0;
     }
     gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
-        gSaveContext.buttonStatus[3] = gSaveContext.buttonStatus[4] = dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
+        gSaveContext.buttonStatus[3] = gSaveContext.buttonStatus[4] = BTN_ENABLED;
+    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
     gSaveContext.forceRisingButtonAlphas = gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode =
         gSaveContext.hudVisibilityModeTimer = 0; // false, HUD_VISIBILITY_NO_CHANGE
     SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0);
