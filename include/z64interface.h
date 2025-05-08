@@ -120,11 +120,11 @@ typedef struct InterfaceContext {
     /* 0x0240 */ u16    unk_240;
     /* 0x0242 */ u16    unk_242;
     /* 0x0224 */ u16    unk_244; // screen fill alpha?
-    /* 0x0246 */ u8     aAlpha; // also carrots alpha
-    /* 0x0248 */ u8     bAlpha; // also HBA score alpha
-    /* 0x024A */ u8     cLeftAlpha;
-    /* 0x024C */ u8     cDownAlpha;
-    /* 0x024E */ u8     cRightAlpha;
+    /* 0x0246 */ u16    aAlpha; // also carrots alpha
+    /* 0x0248 */ u16    bAlpha; // also HBA score alpha
+    /* 0x024A */ u16    cLeftAlpha;
+    /* 0x024C */ u16    cDownAlpha;
+    /* 0x024E */ u16    cRightAlpha;
     /* 0x0250 */ u16    healthAlpha; // also max C-Up alpha
     /* 0x0252 */ u16    magicAlpha; // also Rupee and Key counters alpha
     /* 0x0254 */ u16    minimapAlpha;

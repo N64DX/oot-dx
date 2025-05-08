@@ -194,6 +194,10 @@ static Gfx sSetupDL_80125A60[] = {
     gsSPEndDisplayList(),
 };
 
+u8 Interface_IsEquipmentItem(u8 item) {
+    return ((item >= ITEM_SWORDS && item <= ITEM_BOOTS) || item == ITEM_TUNIC_GORON || item == ITEM_TUNIC_ZORA || item == ITEM_BOOTS_IRON || item == ITEM_BOOTS_HOVER);
+}
+
 // original name: "alpha_change"
 void Interface_ChangeHudVisibilityMode(u16 hudVisibilityMode) {
     if (hudVisibilityMode != gSaveContext.hudVisibilityMode) {
@@ -706,7 +710,6 @@ void func_80083108(PlayState* play) {
     MessageContext* msgCtx = &play->msgCtx;
     s16 i;
     s16 sp28 = false;
-    u8 item;
 
     if ((gSaveContext.save.cutsceneIndex < 0xFFF0) ||
         ((play->sceneId == SCENE_LON_LON_RANCH) && (gSaveContext.save.cutsceneIndex == 0xFFF0))) {
@@ -820,31 +823,31 @@ void func_80083108(PlayState* play) {
                 gSaveContext.buttonStatus[0] = BTN_DISABLED;
 
                 for (i = 1; i < 4; i++) {
-                    item = gSaveContext.save.info.equips.buttonItems[i];
                     if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) {
-                        if (item == ITEM_HOOKSHOT || item == ITEM_LONGSHOT || (item >= ITEM_SWORDS && item <= ITEM_BOOTS) || item == ITEM_TUNIC_GORON || item == ITEM_TUNIC_ZORA || item == ITEM_BOOTS_IRON || item == ITEM_BOOTS_HOVER) {
+                        if ((gSaveContext.save.info.equips.buttonItems[i] != ITEM_HOOKSHOT) &&
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LONGSHOT) && !Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i])) {
                             if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                                 sp28 = true;
                             }
 
-                            gSaveContext.buttonStatus[i] = BTN_ENABLED;
+                            gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         } else {
                             if (gSaveContext.buttonStatus[i] == BTN_DISABLED) {
                                 sp28 = true;
                             }
 
-                            gSaveContext.buttonStatus[i] = BTN_DISABLED;
-                        }
-                    } else if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_SWIMMING) {
-                        if ((item >= ITEM_MASK_KEATON && item <= ITEM_MASK_TRUTH) || (item >= ITEM_SWORDS && item <= ITEM_BOOTS) || item == ITEM_TUNIC_GORON || item == ITEM_TUNIC_ZORA || item == ITEM_BOOTS_IRON || item == ITEM_BOOTS_HOVER) {
-                            if (gSaveContext.buttonStatus[i] == BTN_DISABLED)
-                                sp28 = true;
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
-                        else {
+                    } else if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_SWIMMING) {
+                        if ((gSaveContext.save.info.equips.buttonItems[i]  < ITEM_MASK_KEATON || gSaveContext.save.info.equips.buttonItems[i]  > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i])) {
                             if (gSaveContext.buttonStatus[i] == BTN_ENABLED)
                                 sp28 = true;
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
+                        }
+                        else {
+                            if (gSaveContext.buttonStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     } else {
                         if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
@@ -855,28 +858,27 @@ void func_80083108(PlayState* play) {
                     }
                 }
                 for (i=0; i<4; i++) {
-                    item = Interface_GetItemFromDpad(i);
                     if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) {
-                        if (item == ITEM_HOOKSHOT || item == ITEM_LONGSHOT || (item >= ITEM_SWORDS && item <= ITEM_BOOTS) || item == ITEM_TUNIC_GORON || item == ITEM_TUNIC_ZORA || item == ITEM_BOOTS_IRON || item == ITEM_BOOTS_HOVER) {
-                            if (dpadStatus[i] == BTN_DISABLED)
-                                sp28 = true;
-                            dpadStatus[i] = BTN_ENABLED;
-                        } else {
+                        if (Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT && Interface_GetItemFromDpad(i) != ITEM_LONGSHOT && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
                             if (dpadStatus[i] == BTN_ENABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_DISABLED;
+                        } else {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
                         }
                     }
                     else if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_SWIMMING) {
-                        if ((item >= ITEM_MASK_KEATON && item <= ITEM_MASK_TRUTH) || (item >= ITEM_SWORDS && item <= ITEM_BOOTS) || item == ITEM_TUNIC_GORON || item == ITEM_TUNIC_ZORA || item == ITEM_BOOTS_IRON || item == ITEM_BOOTS_HOVER) {
-                            if (dpadStatus[i] == BTN_DISABLED)
-                                sp28 = true;
-                            dpadStatus[i] = BTN_ENABLED;
-                        }
-                        else {
+                        if (((Interface_GetItemFromDpad(i) < ITEM_MASK_KEATON || Interface_GetItemFromDpad(i) > ITEM_MASK_TRUTH)) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
                             if (dpadStatus[i] == BTN_ENABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_DISABLED;
+                        }
+                        else {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
                         }
                     }
                     else {
@@ -1029,7 +1031,7 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if (Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY || Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) {
+                        if (Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) {
                             if (dpadStatus[i] == BTN_ENABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_DISABLED;
@@ -1046,7 +1048,7 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if (Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY || Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) {
+                        if (Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_ENABLED;
@@ -1232,26 +1234,34 @@ void func_80083108(PlayState* play) {
                         }
                 }
 
-                if (interfaceCtx->restrictions.all) {
-                    for (i=1; i<4; i++) {
-                        item = gSaveContext.save.info.equips.buttonItems[i];
-                        if (item != ITEM_OCARINA_FAIRY && item != ITEM_OCARINA_OF_TIME && !(item >= ITEM_BOTTLE_EMPTY && item <= ITEM_BOTTLE_POE) && !(item >= ITEM_WEIRD_EGG && item <= ITEM_CLAIM_CHECK) && !(item >= ITEM_SWORDS && item <= ITEM_BOOTS) && item != ITEM_TUNIC_GORON && item != ITEM_TUNIC_ZORA && item != ITEM_BOOTS_IRON && item != ITEM_BOOTS_HOVER) {
-                            if (play->sceneId != SCENE_TREASURE_BOX_SHOP || gSaveContext.save.info.equips.buttonItems[i] != ITEM_LENS_OF_TRUTH) {
-                                if (gSaveContext.buttonStatus[i] == BTN_ENABLED)
+                if (interfaceCtx->restrictions.all != 0) {
+                    for (i = 1; i < 4; i++) {
+                        if ((gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_FAIRY) &&
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_OF_TIME) &&
+                            !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
+                            !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
+                            !(Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i]))) {
+                            if ((play->sceneId != SCENE_TREASURE_BOX_SHOP) ||
+                                (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LENS_OF_TRUTH)) {
+                                if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                                     sp28 = true;
+                                }
+
                                 gSaveContext.buttonStatus[i] = BTN_DISABLED;
-                            }
-                            else {
-                                if (gSaveContext.buttonStatus[i] == BTN_DISABLED)
+                            } else {
+                                if (gSaveContext.buttonStatus[i] == BTN_DISABLED) {
                                     sp28 = true;
+                                }
+
                                 gSaveContext.buttonStatus[i] = BTN_ENABLED;
                             }
                         }
                     }
-                    for (i=0; i<4; i++) {
-                        item = Interface_GetItemFromDpad(i);
-                        if (item != ITEM_OCARINA_FAIRY && item != ITEM_OCARINA_OF_TIME && !(item >= ITEM_BOTTLE_EMPTY && item <= ITEM_BOTTLE_POE) && !(item >= ITEM_WEIRD_EGG && item <= ITEM_CLAIM_CHECK) && !(item >= ITEM_SWORDS && item <= ITEM_BOOTS) && item != ITEM_TUNIC_GORON && item != ITEM_TUNIC_ZORA && item != ITEM_BOOTS_IRON && item != ITEM_BOOTS_HOVER) {
-                            if (play->sceneId != SCENE_TREASURE_BOX_SHOP || item != ITEM_LENS_OF_TRUTH) {
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) && !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                            if (play->sceneId != SCENE_TREASURE_BOX_SHOP || Interface_GetItemFromDpad(i) != ITEM_LENS_OF_TRUTH) {
                                 if (dpadStatus[i] == BTN_ENABLED)
                                     sp28 = true;
                                 dpadStatus[i] = BTN_DISABLED;
@@ -1262,25 +1272,35 @@ void func_80083108(PlayState* play) {
                                 dpadStatus[i] = BTN_ENABLED;
                             }
                         }
-                    }
-                }
-                else if (!interfaceCtx->restrictions.all) {
-                    for (i=1; i<4; i++) {
-                        item = gSaveContext.save.info.equips.buttonItems[i];
-                        if (item != ITEM_DINS_FIRE && item != ITEM_HOOKSHOT && item != ITEM_LONGSHOT && item != ITEM_FARORES_WIND && item != ITEM_NAYRUS_LOVE && item != ITEM_OCARINA_FAIRY && item != ITEM_OCARINA_OF_TIME && !(item >= ITEM_BOTTLE_EMPTY && item <= ITEM_BOTTLE_POE) && !(item >= ITEM_WEIRD_EGG && item <= ITEM_CLAIM_CHECK) && !(item >= ITEM_SWORDS && item <= ITEM_BOOTS) && item != ITEM_TUNIC_GORON && item != ITEM_TUNIC_ZORA && item != ITEM_BOOTS_IRON && item != ITEM_BOOTS_HOVER) {
-                            if (gSaveContext.buttonStatus[i] == BTN_DISABLED)
+                } else if (interfaceCtx->restrictions.all == 0) {
+                    for (i = 1; i < 4; i++) {
+                        if ((gSaveContext.save.info.equips.buttonItems[i] != ITEM_DINS_FIRE) &&
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_HOOKSHOT) &&
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LONGSHOT) &&
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_FARORES_WIND) &&
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_NAYRUS_LOVE) &&
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_FAIRY) &&
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_OF_TIME) &&
+                            !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
+                            !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
+                            !(Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i]))) {
+                            if (gSaveContext.buttonStatus[i] == BTN_DISABLED) {
                                 sp28 = true;
+                            }
+
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
-                    for (i=0; i<4; i++) {
-                        item = Interface_GetItemFromDpad(i);
-                        if (item != ITEM_DINS_FIRE && item != ITEM_HOOKSHOT && item != ITEM_LONGSHOT && item != ITEM_FARORES_WIND && item != ITEM_NAYRUS_LOVE && item != ITEM_OCARINA_FAIRY && item != ITEM_OCARINA_OF_TIME && !(item >= ITEM_BOTTLE_EMPTY && item <= ITEM_BOTTLE_POE) && !(item >= ITEM_WEIRD_EGG && item <= ITEM_CLAIM_CHECK) && !(item >= ITEM_SWORDS && item <= ITEM_BOOTS) && item != ITEM_TUNIC_GORON && item != ITEM_TUNIC_ZORA && item != ITEM_BOOTS_IRON && item != ITEM_BOOTS_HOVER) {
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) != ITEM_DINS_FIRE     && Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT         &&   Interface_GetItemFromDpad(i) != ITEM_LONGSHOT     && Interface_GetItemFromDpad(i) != ITEM_FARORES_WIND && Interface_GetItemFromDpad(i) != ITEM_NAYRUS_LOVE &&
+                            Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME  && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE)  &&
+                          !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)     &&  !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_ENABLED;
                         }
-                    }
                 }
             }
         }
@@ -1552,7 +1572,7 @@ void Interface_LoadItemIconDpad(PlayState* play, u8 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     Player* player = GET_PLAYER(play);
     u8 item;
-    
+
     if (DPAD_BUTTON(button) < SLOT_SWORDS)
         item = DPAD_BUTTON_ITEM(button);
     else if (DPAD_BUTTON(button) == SLOT_SWORDS)
@@ -1573,9 +1593,7 @@ void Interface_LoadItemIconDpad(PlayState* play, u8 button) {
         item = ITEM_BOOTS_HOVER;
     else item = ITEM_NONE;
 
-    osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + ((button+4) * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
-    osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
 
 u8 Interface_GetArrowFromDpad(u8 button) {

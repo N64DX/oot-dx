@@ -227,14 +227,14 @@ typedef struct SavePlayerData {
     /* 0x1A  0x0036 */ u16 swordHealth;
     /* 0x1C  0x0038 */ u16 naviTimer;
     /* 0x1E  0x003A */ u8 isMagicAcquired;
-    /* 0x1F  0x003B */ u8 mask;
+    /* 0x1F  0x003B */ char unk_3B[0x01];
     /* 0x20  0x003C */ u8 isDoubleMagicAcquired;
     /* 0x21  0x003D */ u8 isDoubleDefenseAcquired;
     /* 0x22  0x003E */ u8 bgsFlag;
     /* 0x23  0x003F */ u8 ocarinaGameRoundNum;
     /* 0x24  0x0040 */ ItemEquips childEquips;
     /* 0x2E  0x004A */ ItemEquips adultEquips;
-    /* 0x38  0x0054 */ u8 unk_54; // this may be incorrect, currently used for alignment
+    /* 0x38  0x0054 */ u8 mask;
     /* 0x39  0x0055 */ u8 dpadDualSet;
     /* 0x3A  0x0056 */ u8 dpadItems[4][4];
     /* 0x4A  0x0066 */ s16 savedSceneId;

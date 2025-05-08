@@ -474,6 +474,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             CHECK_BTN_ALL(input->press.button, BTN_A) && (pauseCtx->cursorX[PAUSE_EQUIP] != 0)) {
 
             if (CHECK_AGE_REQ_EQUIP(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP])) {
+                u8 item;
                 Inventory_ChangeEquipment(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP]);
 
                 if (pauseCtx->cursorY[PAUSE_EQUIP] == 0) {
@@ -496,6 +497,25 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                     }
 
                     Interface_LoadItemIcon1(play, 0);
+                }
+
+                for (i=1; i<8; i++) {
+                    if (i<4)
+                        item = gSaveContext.save.info.equips.buttonItems[i];
+                    else item = Interface_GetItemFromDpad(i-4);
+
+                    if (pauseCtx->cursorY[PAUSE_EQUIP] == 0 && item == ITEM_SWORDS)
+                        item = ITEM_SWORD_KOKIRI + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
+                    else if (pauseCtx->cursorY[PAUSE_EQUIP] == 1 && item == ITEM_SHIELDS)
+                        item = ITEM_SHIELD_DEKU + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
+                    else if (pauseCtx->cursorY[PAUSE_EQUIP] == 2 && item == ITEM_TUNICS)
+                        item = ITEM_TUNIC_KOKIRI + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
+                    else if (pauseCtx->cursorY[PAUSE_EQUIP] == 3 && item == ITEM_BOOTS)
+                        item = ITEM_BOOTS_KOKIRI + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
+                    else item = ITEM_NONE;
+
+                    if (item != ITEM_NONE)
+                        DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
                 }
 
                 Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
