@@ -633,34 +633,6 @@ void DmaMgr_Init(void) {
     DmaMgr_DmaRomToRam((uintptr_t)_dmadataSegmentRomStart, _dmadataSegmentStart,
                        (u32)(_dmadataSegmentRomEnd - _dmadataSegmentRomStart));
 
-#if DEBUG_FEATURES
-    PRINTF("dma_rom_ad[]\n");
-
-    name = sDmaMgrFileNames;
-    iter = gDmaDataTable;
-    idx = 0;
-
-    // Check if the ROM is compressed (romEnd not 0)
-    sDmaMgrIsRomCompressed = false;
-    while (iter->file.vromEnd != 0) {
-        if (iter->romEnd != 0) {
-            sDmaMgrIsRomCompressed = true;
-        }
-
-        PRINTF("%3d %08x %08x %08x %08x %08x %c %s\n", idx, iter->file.vromStart, iter->file.vromEnd, iter->romStart,
-               iter->romEnd,
-               (iter->romEnd != 0) ? iter->romEnd - iter->romStart : iter->file.vromEnd - iter->file.vromStart,
-               (((iter->romEnd != 0) ? iter->romEnd - iter->romStart : 0) > 0x10000) ? '*' : ' ', name ? *name : "");
-
-        idx++;
-        iter++;
-
-        if (name != NULL) {
-            name++;
-        }
-    }
-#endif
-
     // Ensure that the boot segment always follows after the makerom segment.
     if ((uintptr_t)_bootSegmentRomStart != gDmaDataTable[0].file.vromEnd) {
         PRINTF("_bootSegmentRomStart(%08x) != dma_rom_ad[0].rom_b(%08x)\n", _bootSegmentRomStart,
