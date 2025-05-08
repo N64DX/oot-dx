@@ -434,7 +434,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                     else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT)) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
                             u8 button;
-                            
+
                             if (CHECK_BTN_ALL(input->press.button, BTN_DUP))
                                 button = 0;
                             else if (CHECK_BTN_ALL(input->press.button, BTN_DRIGHT))
@@ -442,18 +442,24 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                             else if (CHECK_BTN_ALL(input->press.button, BTN_DDOWN))
                                 button = 2;
                             else button = 3;
-                            
+
                             for (i=0; i<4; i++) {
                                 if (i == button)
                                     continue;
-                            
+
                                 if (DPAD_BUTTON(i) == cursorSlot) {
                                     DPAD_BUTTON(i) = DPAD_BUTTON(button);
                                     Interface_LoadItemIconDpad(play, i);
                                     break;
                                 }
+
+                                if (DPAD_BUTTON(i) == cursorSlot || ((cursorSlot == SLOT_BOW || cursorSlot == SLOT_ARROW_FIRE || cursorSlot == SLOT_ARROW_ICE || cursorSlot == SLOT_ARROW_LIGHT) && (DPAD_BUTTON(i) == SLOT_BOW || DPAD_BUTTON(i) == SLOT_ARROW_FIRE || DPAD_BUTTON(i) == SLOT_ARROW_ICE || DPAD_BUTTON(i) == SLOT_ARROW_LIGHT))) {
+                                    DPAD_BUTTON(i) = DPAD_BUTTON(button);
+                                    Interface_LoadItemIconDpad(play, i);
+                                    break;
+                                }
                             }
-                            
+
                             DPAD_BUTTON(button) = cursorSlot;
                             Interface_LoadItemIconDpad(play, button);
                             Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);

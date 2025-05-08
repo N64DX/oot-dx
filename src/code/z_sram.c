@@ -437,17 +437,6 @@ static s16 sDungeonEntrances[] = {
     ENTR_INSIDE_GANONS_CASTLE_COLLAPSE_0,  // SCENE_INSIDE_GANONS_CASTLE_COLLAPSE
 };
 
-u8 HasDuplicateDpadItems() {
-    u8 col, i, j;
-
-    for (col=0; col<4; col++)
-        for (i=0; i<4; i++)
-            for (j=i+1; j<4; j++)
-                if (gSaveContext.save.info.playerData.dpadItems[i][col] == gSaveContext.save.info.playerData.dpadItems[j][col])
-                    return true;
-    return false;
-}
-
 /**
  *  Copy save currently on the buffer to Save Context and complete various tasks to open the save.
  *  This includes:
@@ -1112,4 +1101,15 @@ void Sram_Alloc(GameState* gameState, SramContext* sramCtx) {
 }
 
 void Sram_Init(GameState* gameState, SramContext* sramCtx) {
+}
+
+u8 HasDuplicateDpadItems(void) {
+    u8 col, i, j;
+
+    for (col=0; col<4; col++)
+        for (i=0; i<4; i++)
+            for (j=i+1; j<4; j++)
+                if (gSaveContext.save.info.playerData.dpadItems[i][col] == gSaveContext.save.info.playerData.dpadItems[j][col])
+                    return true;
+    return false;
 }

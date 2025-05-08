@@ -3193,9 +3193,11 @@ void Interface_DrawItemButtons(PlayState* play) {
         dpad_y += 15;
 
     if (Interface_GetItemFromDpad(0) != ITEM_NONE || Interface_GetItemFromDpad(1) != ITEM_NONE || Interface_GetItemFromDpad(2) != ITEM_NONE || Interface_GetItemFromDpad(3) != ITEM_NONE) {
-        if (gSaveContext.save.info.playerData.dpadDualSet)
+        if (gSaveContext.save.info.playerData.dpadDualSet) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[0]);
-        else gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 192, 192, 192, dpadAlphas[0]);
+        } else {
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 192, 192, 192, dpadAlphas[0]);
+        }
         gDPLoadTextureBlock(OVERLAY_DISP++, gDpadTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
         gSPTextureRectangle(OVERLAY_DISP++, (dpad_x) << 2, (dpad_y) << 2, (dpad_x + 16) << 2, (dpad_y + 16) << 2, G_TX_RENDERTILE, 0, 0, 2 << 10, 2 << 10);
     }
