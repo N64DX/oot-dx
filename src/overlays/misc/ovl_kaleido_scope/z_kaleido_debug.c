@@ -46,6 +46,9 @@ static s16 sSlotItems[] = {
 };
 
 void KaleidoScope_DrawDebugEditorText(Gfx** gfxP) {
+    GfxPrint printer;
+    s32 pad[2];
+
     static bool JPN = false;
 
 #if OOT_NTSC
@@ -53,9 +56,6 @@ void KaleidoScope_DrawDebugEditorText(Gfx** gfxP) {
         JPN = true;
     }
 #endif
-
-    GfxPrint printer;
-    s32 pad[2];
 
     GfxPrint_Init(&printer);
     GfxPrint_Open(&printer, *gfxP);
@@ -65,7 +65,7 @@ void KaleidoScope_DrawDebugEditorText(Gfx** gfxP) {
     GfxPrint_Printf(&printer, "%s", JPN ? (GFXP_KATAKANA "ﾙﾋﾟｰ") : "Rup"); // "Rupee"
     GfxPrint_SetPos(&printer, 15 - (WIDESCREEN ? 1 : 0), 2);
     GfxPrint_Printf(&printer, "%s", JPN ? (GFXP_KATAKANA "ﾊｰﾄ") : " HP"); // "Heart"
-    GfxPrint_SetPos(&printer, 26 - (WIDESCREEN ? 2 : 0), 3);
+    GfxPrint_SetPos(&printer, 26 - (WIDESCREEN ? 1 : 0), 3);
     GfxPrint_Printf(&printer, "%s", "/4");
     GfxPrint_SetPos(&printer, 4 - (WIDESCREEN ? 1 : 0), 5);
     GfxPrint_Printf(&printer, "%s", JPN ? (GFXP_KATAKANA "ｱｲﾃﾑ") : "Item" ); // "Item"
@@ -91,7 +91,7 @@ void KaleidoScope_DrawDebugEditorText(Gfx** gfxP) {
     GfxPrint_Printf(&printer, "%s", JPN ? (GFXP_KATAKANA "ｷﾝｽﾀ") : "  GS" ); // "Skulltula"
     GfxPrint_SetPos(&printer, 23 - (WIDESCREEN ? 1 : 0), 24);
     GfxPrint_Printf(&printer, "%s", JPN ? (GFXP_KATAKANA "ｶｹﾗ") : "PoH" ); // "Gold Token"
-    GfxPrint_SetPos(&printer, 28 - (WIDESCREEN ? 2 : 0), 24);
+    GfxPrint_SetPos(&printer, 28 - (WIDESCREEN ? 1 : 0), 24);
     GfxPrint_Printf(&printer, "%s", "/4");
 
     *gfxP = GfxPrint_Close(&printer);
