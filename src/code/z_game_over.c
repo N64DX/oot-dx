@@ -52,7 +52,7 @@ void GameOver_Update(PlayState* play) {
                         }
                     }
                     for (j=0; j<4; j++)
-                        if (DPAD_BUTTON_ITEM(j) == gSpoilingItemReverts[i])
+                        if (Interface_GetItemFromDpad(j) == gSpoilingItemReverts[i])
                             Interface_LoadItemIconDpad(play, j);
                 }
             }

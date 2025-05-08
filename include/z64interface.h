@@ -297,7 +297,7 @@ void Interface_ChangeDpadSet(struct PlayState* play);
 
 extern s16 gSpoilingItems[3];
 extern s16 gSpoilingItemReverts[3];
-extern u8 dpadStatus[4];
+extern bool dpadStatus[4];
 extern u8 dpadAlphas[5];
 
 #endif

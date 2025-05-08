@@ -153,11 +153,11 @@ static s16 sMagicBorderR = 255;
 static s16 sMagicBorderG = 255;
 static s16 sMagicBorderB = 255;
 
-u8 dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
+bool dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
 u8 dpadAlphas[] = { 0, 0, 0, 0, 0 };
-u8 pressed_z    = false;
-u16 dpad_x;
-u16 dpad_y;
+static bool pressed_z = false;
+static u16 dpad_x;
+static u16 dpad_y;
 
 static s16 sExtraItemBases[] = {
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_5
@@ -952,7 +952,7 @@ void func_80083108(PlayState* play) {
                     }
                 }
                 for (i=0; i<4; i++) {
-                    if (DPAD_BUTTON_ITEM(i) != ITEM_OCARINA_FAIRY && DPAD_BUTTON_ITEM(i) != ITEM_OCARINA_OF_TIME) {
+                    if (Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME) {
                         if (dpadStatus[i] == BTN_ENABLED)
                             sp28 = true;
                         dpadStatus[i] = BTN_DISABLED;
@@ -1284,8 +1284,7 @@ void func_80083108(PlayState* play) {
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
-                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
-                            !(Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i]))) {
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK))) {
                             if (gSaveContext.buttonStatus[i] == BTN_DISABLED) {
                                 sp28 = true;
                             }
@@ -1294,9 +1293,9 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if (Interface_GetItemFromDpad(i) != ITEM_DINS_FIRE     && Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT         &&   Interface_GetItemFromDpad(i) != ITEM_LONGSHOT     && Interface_GetItemFromDpad(i) != ITEM_FARORES_WIND && Interface_GetItemFromDpad(i) != ITEM_NAYRUS_LOVE &&
-                            Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME  && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE)  &&
-                          !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)     &&  !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                        if (Interface_GetItemFromDpad(i) != ITEM_DINS_FIRE     && Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT        &&   Interface_GetItemFromDpad(i) != ITEM_LONGSHOT     && Interface_GetItemFromDpad(i) != ITEM_FARORES_WIND && Interface_GetItemFromDpad(i) != ITEM_NAYRUS_LOVE &&
+                            Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE)  &&
+                          !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_ENABLED;
@@ -1511,6 +1510,8 @@ void Inventory_SwapAgeEquipment(void) {
             gSaveContext.save.info.equips.equipment &= gEquipNegMasks[EQUIP_TYPE_SHIELD];
         }
     }
+
+    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
 }
 
 void Interface_InitHorsebackArchery(PlayState* play) {
@@ -1574,7 +1575,7 @@ void Interface_LoadItemIconDpad(PlayState* play, u8 button) {
     u8 item;
 
     if (DPAD_BUTTON(button) < SLOT_SWORDS)
-        item = DPAD_BUTTON_ITEM(button);
+        item = Interface_GetItemFromDpad(button);
     else if (DPAD_BUTTON(button) == SLOT_SWORDS)
         item = (player->currentSwordItemId == ITEM_GIANTS_KNIFE) ? ITEM_GIANTS_KNIFE : player->currentSwordItemId;
     else if (DPAD_BUTTON(button) == SLOT_SHIELDS)
@@ -1596,19 +1597,15 @@ void Interface_LoadItemIconDpad(PlayState* play, u8 button) {
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + ((button+4) * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
 }
 
-u8 Interface_GetArrowFromDpad(u8 button) {
+u8 Interface_GetItemFromDpad(u8 button) {
     if (gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_FIRE)
         return ITEM_BOW_FIRE;
     else if (gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_ICE)
         return ITEM_BOW_ICE;
     else if (gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_LIGHT)
         return ITEM_BOW_LIGHT;
-    else return gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)];
-}
-
-u8 Interface_GetItemFromDpad(u8 button) {
-    if (DPAD_BUTTON(button) < SLOT_SWORDS)
-        return DPAD_BUTTON_ITEM(button);
+    else if (DPAD_BUTTON(button) < SLOT_SWORDS)
+        return gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)];
     else if (DPAD_BUTTON(button) == SLOT_SWORDS)
         return ITEM_SWORDS;
     else if (DPAD_BUTTON(button) == SLOT_SHIELDS)
@@ -2121,7 +2118,7 @@ u8 Item_Give(PlayState* play, u8 item) {
                     }
 
                     for (j=0; j<4; j++)
-                        if (DPAD_BUTTON_ITEM(j) == temp + i) {
+                        if (Interface_GetItemFromDpad(j) == temp + i) {
                             Interface_LoadItemIconDpad(play, j);
                             dpadStatus[j] = BTN_ENABLED;
                         }
@@ -2327,7 +2324,7 @@ s32 Inventory_ReplaceItem(PlayState* play, u16 oldItem, u16 newItem) {
                 }
             }
             for (i=0; i<4; i++)
-                if (DPAD_BUTTON_ITEM(i) == oldItem)
+                if (Interface_GetItemFromDpad(i) == oldItem)
                     Interface_LoadItemIconDpad(play, i);                 
             return true;
         }
@@ -2395,7 +2392,7 @@ void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
     gSaveContext.save.info.equips.buttonItems[button] = item;
     
     for (i=0; i<4; i++)
-        if (DPAD_BUTTON_ITEM(i) == item)
+        if (Interface_GetItemFromDpad(i) == item)
             Interface_LoadItemIconDpad(play, i);
 
     Interface_LoadItemIcon1(play, button);
@@ -2921,7 +2918,7 @@ void Magic_Update(PlayState* play) {
                      (Player_GetEnvironmentalHazard(play) <= PLAYER_ENV_HAZARD_UNDERWATER_FREE)) ||
                     ((gSaveContext.save.info.equips.buttonItems[1] != ITEM_LENS_OF_TRUTH) &&
                      (gSaveContext.save.info.equips.buttonItems[2] != ITEM_LENS_OF_TRUTH) &&
-                     (gSaveContext.save.info.equips.buttonItems[3] != ITEM_LENS_OF_TRUTH) && (DPAD_BUTTON_ITEM(0) != ITEM_LENS_OF_TRUTH) && (DPAD_BUTTON_ITEM(1) != ITEM_LENS_OF_TRUTH) && (DPAD_BUTTON_ITEM(2) != ITEM_LENS_OF_TRUTH) && (DPAD_BUTTON_ITEM(3) != ITEM_LENS_OF_TRUTH)) ||
+                     (gSaveContext.save.info.equips.buttonItems[3] != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(0) != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(1) != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(2) != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(3) != ITEM_LENS_OF_TRUTH)) ||
                     !play->actorCtx.lensActive) {
                     // Force lens off and set magic meter state to idle
                     play->actorCtx.lensActive = false;
@@ -3426,7 +3423,7 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
 
     if (button < 4)
         i = gSaveContext.save.info.equips.buttonItems[button];
-    else i = DPAD_BUTTON_ITEM(button-4);
+    else i = Interface_GetItemFromDpad(button-4);
 
     if ((i == ITEM_DEKU_STICK) || (i == ITEM_DEKU_NUT) || (i == ITEM_BOMB) || (i == ITEM_BOW) ||
         ((i >= ITEM_BOW_FIRE) && (i <= ITEM_BOW_LIGHT)) || (i == ITEM_SLINGSHOT) || (i == ITEM_BOMBCHU) ||
@@ -4069,7 +4066,7 @@ void Interface_Draw(PlayState* play) {
                         }
                     }
                     for (svar2=0; svar2<4; svar2++)
-                        if (DPAD_BUTTON_ITEM(svar2) == gSpoilingItemReverts[svar1])
+                        if (Interface_GetItemFromDpad(svar2) == gSpoilingItemReverts[svar1])
                             Interface_LoadItemIconDpad(play, svar2);
                 }
             }

@@ -26,8 +26,8 @@ s16 sPlayerInitialPosX = 0;
 s16 sPlayerInitialPosZ = 0;
 s16 sPlayerInitialDirection = 0;
 s16 sEntranceIconMapIndex = 0;
-u8 minimap_timer = 0;
-u8 pressed_r = false;
+static u8 minimap_timer = 0;
+static bool pressed_r = false;
 
 void Map_SavePlayerInitialInfo(PlayState* play) {
     Player* player = GET_PLAYER(play);

@@ -408,12 +408,7 @@ typedef enum LinkAge {
     /* 1 */ LINK_AGE_CHILD
 } LinkAge;
 
-
-#define DPAD_BUTTONS(button)     (((u8*)gSaveContext.save.info.playerData.dpadItems)[button])
-#define IS_DPAD_DUAL_SET         (gSaveContext.save.info.playerData.dpadDualSet)
-#define CUR_DPAD_SET             (LINK_IS_CHILD + IS_DPAD_DUAL_SET * 2)
-#define DPAD_BUTTON(button)      (gSaveContext.save.info.playerData.dpadItems[CUR_DPAD_SET][button])
-#define DPAD_BUTTON_ITEM(button) (DPAD_BUTTON(button) < SLOT_SWORDS ? Interface_GetArrowFromDpad(button) : 0xFF)
+#define DPAD_BUTTON(button)      (gSaveContext.save.info.playerData.dpadItems[gSaveContext.save.linkAge + gSaveContext.save.info.playerData.dpadDualSet * 2][button])
 
 #define LINK_IS_ADULT (gSaveContext.save.linkAge == LINK_AGE_ADULT)
 #define LINK_IS_CHILD (gSaveContext.save.linkAge == LINK_AGE_CHILD)
