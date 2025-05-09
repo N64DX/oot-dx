@@ -2644,9 +2644,19 @@ s32 Player_GetItemOnButton(PlayState* play, s32 index) {
 }
 
 void Player_ChangeEquipment(Player* this, PlayState* play, s32 button) {
-    if (button < 4)
+    u8 i;
+    
+    if (button < 4) {
+        for (i=0; i<4; i++)
+            if (Interface_GetItemFromDpad(i) == gSaveContext.save.info.equips.buttonItems[button])
+                Interface_LoadItemIconDpad(play, i);
         Interface_LoadItemIcon1(play, button);
-    else Interface_LoadItemIconDpad(play, button-4);
+    } else {
+        for (i=1; i<4; i++)
+            if (gSaveContext.save.info.equips.buttonItems[i] == Interface_GetItemFromDpad(button-4))
+                Interface_LoadItemIcon1(play, i);
+        Interface_LoadItemIconDpad(play, button-4);
+    }
     Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
 }
 
@@ -2818,12 +2828,24 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 this->currentTunic = this->currentTunic == 1 ? 0 : 1;
                 Inventory_ChangeEquipment(EQUIP_TYPE_TUNIC, this->currentTunic + 1);
                 Player_ChangeEquipment(this, play, i);
+                for (i=0; i<4; i++) {
+                    if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
+                        Interface_LoadItemIconDpad(play, i);
+                    if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_TUNICS)
+                        Interface_LoadItemIcon1(play, i);
+                }
             }
         } else if (item == ITEM_TUNIC_ZORA) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_TUNIC_ZORA)) {
                 this->currentTunic = this->currentTunic == 2 ? 0 : 2;
                 Inventory_ChangeEquipment(EQUIP_TYPE_TUNIC, this->currentTunic + 1);
                 Player_ChangeEquipment(this, play, i);
+                for (i=0; i<4; i++) {
+                    if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
+                        Interface_LoadItemIconDpad(play, i);
+                    if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_TUNICS)
+                        Interface_LoadItemIcon1(play, i);
+                }
             }
         } else if (item == ITEM_BOOTS_IRON) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON)) {
@@ -2831,6 +2853,12 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 Player_SetBootData(play, this);
                 Inventory_ChangeEquipment(EQUIP_TYPE_BOOTS, this->currentBoots + 1);
                 Player_ChangeEquipment(this, play, i);
+                for (i=0; i<4; i++) {
+                    if (Interface_GetItemFromDpad(i) == ITEM_BOOTS)
+                        Interface_LoadItemIconDpad(play, i);
+                    if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_BOOTS)
+                        Interface_LoadItemIcon1(play, i);
+                }
             }
         } else if (item == ITEM_BOOTS_HOVER) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER)) {
@@ -2838,6 +2866,12 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 Player_SetBootData(play, this);
                 Inventory_ChangeEquipment(EQUIP_TYPE_BOOTS, this->currentBoots + 1);
                 Player_ChangeEquipment(this, play, i);
+                for (i=0; i<4; i++) {
+                    if (Interface_GetItemFromDpad(i) == ITEM_BOOTS)
+                        Interface_LoadItemIconDpad(play, i);
+                    if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_BOOTS)
+                        Interface_LoadItemIcon1(play, i);
+                }
             }
         } else {
             this->heldItemButton = i;
