@@ -673,7 +673,7 @@ void KaleidoScope_DrawDebugEditor(PlayState* play) {
     // The editor is opened with `debugState` set to 1, and becomes closable after a frame once `debugState` is set to 2
     if (pauseCtx->debugState == 1) {
         pauseCtx->debugState = 2;
-    } else if ((pauseCtx->debugState == 2) && CHECK_BTN_ALL(input->press.button, BTN_L)) {
+    } else if ((pauseCtx->debugState == 2) && CHECK_BTN_ALL(input->rel.button, BTN_L)) {
         pauseCtx->debugState = 0;
     }
 

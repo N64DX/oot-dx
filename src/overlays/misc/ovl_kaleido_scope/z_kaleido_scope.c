@@ -79,6 +79,9 @@ typedef enum {
 #define VTX_PAGE_MAP_WORLD_QUADS 32           // VTX_PAGE_MAP_WORLD
 #define VTX_PAGE_PROMPT_QUADS PROMPT_QUAD_MAX // VTX_PAGE_PROMPT
 
+static u8 editor_timer = 0;
+static bool pressed_r = false;
+
 #if OOT_NTSC
 
 // Japanese
@@ -1102,19 +1105,28 @@ void KaleidoScope_SetupPageSwitch(PauseContext* pauseCtx, u8 pt) {
 }
 
 void KaleidoScope_HandlePageToggles(PauseContext* pauseCtx, Input* input) {
-    if ((pauseCtx->debugState == 0) && CHECK_BTN_ALL(input->press.button, BTN_L)) {
+    if ((pauseCtx->debugState == 0) && CHECK_BTN_ALL(input->rel.button, BTN_L) && !pressed_r && editor_timer < (60 / R_UPDATE_RATE)) {
 #if DEBUG_FEATURES
         pauseCtx->debugState = 1;
 #endif
         return;
     }
+    
+    if (pauseCtx->debugState == 0) {
+        if (CHECK_BTN_ALL(input->press.button, BTN_R))
+            pressed_r = 1;
+        if (CHECK_BTN_ALL(input->cur.button, BTN_L) && editor_timer < 255)
+            editor_timer++;
+        if (CHECK_BTN_ALL(input->rel.button, BTN_L))
+            editor_timer = pressed_r = 0;
+    }
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
+    if (CHECK_BTN_ALL(input->press.button, BTN_R) && !CHECK_BTN_ALL(input->cur.button, BTN_L)) {
         KaleidoScope_SetupPageSwitch(pauseCtx, PAGE_SWITCH_PT_RIGHT);
         return;
     }
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_Z)) {
+    if (CHECK_BTN_ALL(input->press.button, BTN_Z) && !CHECK_BTN_ALL(input->cur.button, BTN_L)) {
         KaleidoScope_SetupPageSwitch(pauseCtx, PAGE_SWITCH_PT_LEFT);
         return;
     }
@@ -4052,6 +4064,7 @@ void KaleidoScope_Update(PlayState* play) {
         case PAUSE_STATE_MAIN:
             switch (pauseCtx->mainState) {
                 case PAUSE_MAIN_STATE_IDLE:
+                    Interface_ChangeDpadSet(play);
                     if (CHECK_BTN_ALL(input->press.button, BTN_START)) {
                         Interface_SetDoAction(play, DO_ACTION_NONE);
                         pauseCtx->state = PAUSE_STATE_CLOSING;
