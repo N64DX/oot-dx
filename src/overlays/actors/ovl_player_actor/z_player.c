@@ -2632,6 +2632,8 @@ s32 Player_GetItemOnButton(PlayState* play, s32 index) {
         return C_BTN_ITEM(1);
     } else if (index == 3) {
         return C_BTN_ITEM(2);
+    } else if (sNoclipTimer != 0) {
+        return ITEM_NONE; 
     } else if (index == 4) {
         return D_BTN_ITEM(0);
     } else if (index == 5) {
@@ -14698,11 +14700,15 @@ void Player_Action_8084FBF4(Player* this, PlayState* play) {
 s32 Player_UpdateNoclip(Player* this, PlayState* play) {
     sControlInput = &play->state.input[0];
 
+    if (sNoclipTimer > 0 && !sNoclipEnabled)
+        sNoclipTimer--;
+
     if ((CHECK_BTN_ALL(sControlInput->cur.button, BTN_A | BTN_L | BTN_R) &&
          CHECK_BTN_ALL(sControlInput->press.button, BTN_B)) ||
         (CHECK_BTN_ALL(sControlInput->cur.button, BTN_L) && CHECK_BTN_ALL(sControlInput->press.button, BTN_DRIGHT))) {
 
         sNoclipEnabled ^= 1;
+        sNoclipTimer = 60 / R_UPDATE_RATE / 4;
 
         if (sNoclipEnabled) {
             Camera_RequestMode(Play_GetCamera(play, CAM_ID_MAIN), CAM_MODE_Z_AIM);

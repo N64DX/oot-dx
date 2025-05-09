@@ -156,6 +156,7 @@ static s16 sMagicBorderB = 255;
 bool dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
 u8 dpadAlphas[] = { 0, 0, 0, 0, 0 };
 bool switchedDualSet = false;
+u8 sNoclipTimer = 0;
 static bool pressed_z = false;
 static u16 dpad_x;
 static u16 dpad_y;
@@ -1525,6 +1526,8 @@ void Interface_InitHorsebackArchery(PlayState* play) {
 }
 
 void func_800849EC(PlayState* play) {
+    u8 i;
+
     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON);
     gSaveContext.save.info.inventory.equipment ^=
         OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE);
@@ -1536,6 +1539,17 @@ void func_800849EC(PlayState* play) {
     }
 
     Interface_LoadItemIcon1(play, 0);
+
+    for (i=1; i<8; i++) {
+        if (i<4) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                Interface_LoadItemIcon1(play, i);
+        }
+        else {
+            if (DPAD_BUTTON(i-4) == SLOT_SWORDS)
+                Interface_LoadItemIconDpad(play, i-4);
+        }
+    }
 }
 
 void Interface_LoadItemIcon1(PlayState* play, u16 button) {
@@ -1544,14 +1558,17 @@ void Interface_LoadItemIcon1(PlayState* play, u16 button) {
     u8 item;
 
     if (gSaveContext.save.info.equips.buttonItems[button] == ITEM_SWORDS)
-        item = (player->currentSwordItemId == ITEM_GIANTS_KNIFE) ? ITEM_GIANTS_KNIFE : player->currentSwordItemId;
+        item = (gSaveContext.save.info.equips.buttonItems[0] == ITEM_GIANTS_KNIFE) ? ITEM_GIANTS_KNIFE : B_BTN_ITEM;
     else if (gSaveContext.save.info.equips.buttonItems[button] == ITEM_SHIELDS)
-        item = (player->currentShield == 0) ? ITEM_NONE : (ITEM_SHIELD_DEKU + player->currentShield - 1);
+        item = ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1;
     else if (gSaveContext.save.info.equips.buttonItems[button] == ITEM_TUNICS)
-        item = ITEM_TUNIC_KOKIRI + player->currentTunic;
+        item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
     else if (gSaveContext.save.info.equips.buttonItems[button] == ITEM_BOOTS)
-        item = ITEM_BOOTS_KOKIRI + player->currentBoots;
+        item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
     else item = gSaveContext.save.info.equips.buttonItems[button];
+
+    if (item == ITEM_NONE)
+        return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (button * ITEM_ICON_SIZE),
@@ -1578,13 +1595,13 @@ void Interface_LoadItemIconDpad(PlayState* play, u8 button) {
     if (DPAD_BUTTON(button) < SLOT_SWORDS)
         item = Interface_GetItemFromDpad(button);
     else if (DPAD_BUTTON(button) == SLOT_SWORDS)
-        item = (player->currentSwordItemId == ITEM_GIANTS_KNIFE) ? ITEM_GIANTS_KNIFE : player->currentSwordItemId;
+        item = (gSaveContext.save.info.equips.buttonItems[0] == ITEM_GIANTS_KNIFE) ? ITEM_GIANTS_KNIFE : B_BTN_ITEM;
     else if (DPAD_BUTTON(button) == SLOT_SHIELDS)
-        item = (player->currentShield == 0) ? ITEM_NONE : (ITEM_SHIELD_DEKU + player->currentShield - 1);
+        item = ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1;
     else if (DPAD_BUTTON(button) == SLOT_TUNICS)
-        item = ITEM_TUNIC_KOKIRI + player->currentTunic;
+        item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
     else if (DPAD_BUTTON(button) == SLOT_BOOTS)
-        item = ITEM_BOOTS_KOKIRI + player->currentBoots;
+        item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
     else if (DPAD_BUTTON(button) == SLOT_TUNIC_GORON && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))
         item = ITEM_TUNIC_GORON;
     else if (DPAD_BUTTON(button) == SLOT_TUNIC_ZORA  && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
@@ -1594,6 +1611,9 @@ void Interface_LoadItemIconDpad(PlayState* play, u8 button) {
     else if (DPAD_BUTTON(button) == SLOT_BOOTS_HOVER && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
         item = ITEM_BOOTS_HOVER;
     else item = ITEM_NONE;
+
+    if (item == ITEM_NONE)
+        return;
 
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + ((button+4) * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
 }
@@ -3190,8 +3210,11 @@ void Interface_DrawItemButtons(PlayState* play) {
     dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 15;
     if (gSaveContext.save.info.playerData.magicLevel != 0)
         dpad_y += 15;
-    if ( (gSaveContext.timerState == TIMER_STATE_ENV_HAZARD_TICK || gSaveContext.timerState == TIMER_STATE_DOWN_TICK || gSaveContext.timerState == TIMER_STATE_UP_TICK || gSaveContext.timerState == TIMER_STATE_UP_FREEZE) && pauseCtx->state == PAUSE_STATE_OFF)
+    if ( (gSaveContext.timerState == TIMER_STATE_ENV_HAZARD_TICK || gSaveContext.timerState == TIMER_STATE_DOWN_TICK || gSaveContext.timerState == TIMER_STATE_UP_TICK || gSaveContext.timerState == TIMER_STATE_UP_FREEZE) && pauseCtx->state == PAUSE_STATE_OFF) {
         dpad_y += 15;
+        if (gSaveContext.save.info.playerData.magicLevel == 0)
+            dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 45;
+    }
 
     if (Interface_GetItemFromDpad(0) != ITEM_NONE || Interface_GetItemFromDpad(1) != ITEM_NONE || Interface_GetItemFromDpad(2) != ITEM_NONE || Interface_GetItemFromDpad(3) != ITEM_NONE) {
         if (gSaveContext.save.info.playerData.dpadDualSet) {
@@ -3839,7 +3862,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Left Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[1] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[1] < 0xF0 || (gSaveContext.save.info.equips.buttonItems[1] == ITEM_SWORDS && player->currentSwordItemId == -1) || (gSaveContext.save.info.equips.buttonItems[1] == ITEM_SHIELDS && player->currentShield == PLAYER_SHIELD_NONE)) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cLeftAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x1000, 1);
@@ -3852,7 +3875,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Down Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[2] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[2] < 0xF0 || (gSaveContext.save.info.equips.buttonItems[2] == ITEM_SWORDS && player->currentSwordItemId == -1) || (gSaveContext.save.info.equips.buttonItems[2] == ITEM_SHIELDS && player->currentShield == PLAYER_SHIELD_NONE)) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cDownAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x2000, 2);
@@ -3865,7 +3888,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Right Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[3] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[3] < 0xF0 || (gSaveContext.save.info.equips.buttonItems[3] == ITEM_SWORDS && player->currentSwordItemId == -1) || (gSaveContext.save.info.equips.buttonItems[3] == ITEM_SHIELDS && player->currentShield == PLAYER_SHIELD_NONE)) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cRightAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x3000, 3);
@@ -3876,7 +3899,7 @@ void Interface_Draw(PlayState* play) {
         }
 
         for (svar1=0; svar1<4; svar1++) {
-            if (Interface_GetItemFromDpad(svar1) >= 0xF0)
+            if (Interface_GetItemFromDpad(svar1) >= 0xF0 || (Interface_GetItemFromDpad(svar1) == ITEM_SWORDS && player->currentSwordItemId == -1) || (Interface_GetItemFromDpad(svar1) == ITEM_SHIELDS && player->currentShield == PLAYER_SHIELD_NONE))
                 continue;
 
             // D-Pad Button Icon & Ammo Count

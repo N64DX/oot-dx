@@ -500,22 +500,14 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 }
 
                 for (i=1; i<8; i++) {
-                    if (i<4)
-                        item = gSaveContext.save.info.equips.buttonItems[i];
-                    else item = Interface_GetItemFromDpad(i-4);
-
-                    if (pauseCtx->cursorY[PAUSE_EQUIP] == 0 && item == ITEM_SWORDS)
-                        item = ITEM_SWORD_KOKIRI + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
-                    else if (pauseCtx->cursorY[PAUSE_EQUIP] == 1 && item == ITEM_SHIELDS)
-                        item = ITEM_SHIELD_DEKU + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
-                    else if (pauseCtx->cursorY[PAUSE_EQUIP] == 2 && item == ITEM_TUNICS)
-                        item = ITEM_TUNIC_KOKIRI + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
-                    else if (pauseCtx->cursorY[PAUSE_EQUIP] == 3 && item == ITEM_BOOTS)
-                        item = ITEM_BOOTS_KOKIRI + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
-                    else item = ITEM_NONE;
-
-                    if (item != ITEM_NONE)
-                        DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
+                    if (i<4) {
+                        if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS || gSaveContext.save.info.equips.buttonItems[i] == ITEM_SHIELDS || gSaveContext.save.info.equips.buttonItems[i] == ITEM_TUNICS || gSaveContext.save.info.equips.buttonItems[i] == ITEM_BOOTS)
+                            Interface_LoadItemIcon1(play, i);
+                    }
+                    else {
+                        if (Interface_GetItemFromDpad(i-4) == ITEM_SWORDS || Interface_GetItemFromDpad(i-4) == ITEM_SHIELDS || Interface_GetItemFromDpad(i-4) == ITEM_TUNICS || Interface_GetItemFromDpad(i-4) == ITEM_BOOTS)
+                            Interface_LoadItemIconDpad(play, i-4);
+                    }
                 }
 
                 Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,

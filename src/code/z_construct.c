@@ -183,21 +183,21 @@ void ItemIcons_Init(PlayState* play, Player* player) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     u8 item;
     u8 i;
-    
+
     for (i=0; i<8; i++) {
         if (i<4)
             item = gSaveContext.save.info.equips.buttonItems[i];
         else item = Interface_GetItemFromDpad(i-4);
-        
+
         if (item == ITEM_SWORDS)
-            item = (player->currentSwordItemId == ITEM_GIANTS_KNIFE) ? ITEM_GIANTS_KNIFE : player->currentSwordItemId;
+            item = player->currentSwordItemId;
         else if (item == ITEM_SHIELDS)
-            item = (player->currentShield == 0) ? ITEM_NONE : (ITEM_SHIELD_DEKU + player->currentShield - 1);
+            item = ITEM_SHIELD_DEKU + player->currentShield - 1;
         else if (item == ITEM_TUNICS)
             item = ITEM_TUNIC_KOKIRI + player->currentTunic;
         else if (item == ITEM_BOOTS)
             item = ITEM_BOOTS_KOKIRI + player->currentBoots;
-        
+
         if (item < 0xF0)
             DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, "../z_construct.c", 198);
     }

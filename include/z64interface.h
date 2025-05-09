@@ -300,5 +300,6 @@ extern s16 gSpoilingItemReverts[3];
 extern bool dpadStatus[4];
 extern u8 dpadAlphas[5];
 extern bool switchedDualSet;
+extern u8 sNoclipTimer;
 
 #endif
