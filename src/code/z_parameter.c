@@ -3186,9 +3186,9 @@ void Interface_DrawItemButtons(PlayState* play) {
 
     // D-Pad positions
     dpad_x = R_MAGIC_METER_X + 6;
-    dpad_y = (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER;
+    dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 15;
     if (gSaveContext.save.info.playerData.magicLevel != 0)
-        dpad_y += 30;
+        dpad_y += 15;
     if ( (gSaveContext.timerState == TIMER_STATE_ENV_HAZARD_TICK || gSaveContext.timerState == TIMER_STATE_DOWN_TICK || gSaveContext.timerState == TIMER_STATE_UP_TICK || gSaveContext.timerState == TIMER_STATE_UP_FREEZE) && pauseCtx->state == PAUSE_STATE_OFF)
         dpad_y += 15;
 
