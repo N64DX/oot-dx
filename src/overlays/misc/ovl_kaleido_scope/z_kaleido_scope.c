@@ -4697,10 +4697,17 @@ void KaleidoScope_Update(PlayState* play) {
             gSaveContext.buttonStatus[2] = D_808321A8[2];
             gSaveContext.buttonStatus[3] = D_808321A8[3];
             gSaveContext.buttonStatus[4] = D_808321A8[4];
-            dpadStatus[0] = D_808321A8[5];
-            dpadStatus[1] = D_808321A8[6];
-            dpadStatus[2] = D_808321A8[7];
-            dpadStatus[3] = D_808321A8[8];
+            
+            if (!switchedDualSet) {
+                dpadStatus[0] = D_808321A8[5];
+                dpadStatus[1] = D_808321A8[6];
+                dpadStatus[2] = D_808321A8[7];
+                dpadStatus[3] = D_808321A8[8];
+            }
+            else {
+                dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
+                switchedDualSet = false;
+            }
             
             interfaceCtx->unk_1FA = interfaceCtx->unk_1FC = 0;
             PRINTF_COLOR_YELLOW();

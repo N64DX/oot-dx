@@ -155,6 +155,7 @@ static s16 sMagicBorderB = 255;
 
 bool dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
 u8 dpadAlphas[] = { 0, 0, 0, 0, 0 };
+bool switchedDualSet = false;
 static bool pressed_z = false;
 static u16 dpad_x;
 static u16 dpad_y;
@@ -4916,16 +4917,21 @@ void Interface_Update(PlayState* play) {
 
 void Interface_ChangeDpadSet(PlayState* play) {
     u8 i;
-    
+
     if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R) && !pressed_z && gSaveContext.minigameState == 0 && !IS_CUTSCENE_LAYER) {
         Audio_PlaySfxGeneral(!gSaveContext.save.info.playerData.dpadDualSet ? NA_SE_SY_CAMERA_ZOOM_UP : NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.save.info.playerData.dpadDualSet ^= 1;
         for (i=0; i<4; i++) {
             Interface_LoadItemIconDpad(play, i);
-            dpadStatus[i] = BTN_ENABLED;
+            if (play->pauseCtx.state == PAUSE_STATE_OFF) {
+                dpadStatus[i] = BTN_ENABLED;
+                switchedDualSet = false;
+            }
+            else switchedDualSet = true;
         }
         gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode;
     }
+
     if (!IS_PAUSED(&play->pauseCtx) && &play->pauseCtx.debugState == 0 && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_Z))
         pressed_z = 1;
     if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L))
