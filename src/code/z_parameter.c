@@ -827,7 +827,7 @@ void func_80083108(PlayState* play) {
                 for (i = 1; i < 4; i++) {
                     if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] != ITEM_HOOKSHOT) &&
-                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LONGSHOT) && !Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i])) {
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LONGSHOT) && (gSaveContext.save.info.equips.buttonItems[i] < ITEM_MASK_KEATON || gSaveContext.save.info.equips.buttonItems[i] > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i])) {
                             if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                                 sp28 = true;
                             }
@@ -840,8 +840,8 @@ void func_80083108(PlayState* play) {
 
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
-                    } else if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_SWIMMING) {
-                        if ((gSaveContext.save.info.equips.buttonItems[i]  < ITEM_MASK_KEATON || gSaveContext.save.info.equips.buttonItems[i]  > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i])) {
+                    } else if (Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_SWIMMING) {
+                        if ((gSaveContext.save.info.equips.buttonItems[i]  < ITEM_MASK_KEATON || gSaveContext.save.info.equips.buttonItems[i] > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i])) {
                             if (gSaveContext.buttonStatus[i] == BTN_ENABLED)
                                 sp28 = true;
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
@@ -861,7 +861,7 @@ void func_80083108(PlayState* play) {
                 }
                 for (i=0; i<4; i++) {
                     if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) {
-                        if (Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT && Interface_GetItemFromDpad(i) != ITEM_LONGSHOT && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                        if (Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT && Interface_GetItemFromDpad(i) != ITEM_LONGSHOT && (Interface_GetItemFromDpad(i) < ITEM_MASK_KEATON || Interface_GetItemFromDpad(i) > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
                             if (dpadStatus[i] == BTN_ENABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_DISABLED;
@@ -871,7 +871,7 @@ void func_80083108(PlayState* play) {
                             dpadStatus[i] = BTN_ENABLED;
                         }
                     }
-                    else if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_SWIMMING) {
+                    else if (Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_SWIMMING) {
                         if (((Interface_GetItemFromDpad(i) < ITEM_MASK_KEATON || Interface_GetItemFromDpad(i) > ITEM_MASK_TRUTH)) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
                             if (dpadStatus[i] == BTN_ENABLED)
                                 sp28 = true;
