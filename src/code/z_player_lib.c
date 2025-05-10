@@ -832,6 +832,7 @@ Player* Player_UnsetMask(PlayState* play) {
     Player* this = GET_PLAYER(play);
 
     this->currentMask = PLAYER_MASK_NONE;
+    SET_MASK_AGE(this->currentMask);
 
     return this;
 }

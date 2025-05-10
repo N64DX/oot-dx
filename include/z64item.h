@@ -148,6 +148,14 @@ typedef enum InventorySlot {
     /* 0x15 */ SLOT_BOTTLE_4,
     /* 0x16 */ SLOT_TRADE_ADULT,
     /* 0x17 */ SLOT_TRADE_CHILD,
+    /* 0x18 */ SLOT_SWORDS,
+    /* 0x19 */ SLOT_SHIELDS,
+    /* 0x1A */ SLOT_TUNICS,
+    /* 0x1B */ SLOT_BOOTS,
+    /* 0x1C */ SLOT_TUNIC_GORON,
+    /* 0x1D */ SLOT_TUNIC_ZORA,
+    /* 0x1E */ SLOT_BOOTS_IRON,
+    /* 0x20 */ SLOT_BOOTS_HOVER,
     /* 0xFF */ SLOT_NONE = 0xFF
 } InventorySlot;
 
@@ -308,6 +316,10 @@ typedef enum ItemID {
     /* 0x99 */ ITEM_DEKU_STICK_UPGRADE_30,
     /* 0x9A */ ITEM_DEKU_NUT_UPGRADE_30,
     /* 0x9B */ ITEM_DEKU_NUT_UPGRADE_40,
+    /* 0xEC */ ITEM_SWORDS,
+    /* 0xED */ ITEM_SHIELDS,
+    /* 0xEE */ ITEM_TUNICS,
+    /* 0xEF */ ITEM_BOOTS,
     /* 0xFC */ ITEM_SWORD_CS = 0xFC,
     /* 0xFE */ ITEM_NONE_FE = 0xFE,
     /* 0xFF */ ITEM_NONE = 0xFF

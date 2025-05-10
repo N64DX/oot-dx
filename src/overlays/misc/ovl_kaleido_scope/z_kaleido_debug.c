@@ -561,6 +561,9 @@ void KaleidoScope_DrawDebugEditor(PlayState* play) {
                         }
                     }
                 }
+                if (CHECK_BTN_ANY(input->press.button, BTN_CUP | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT))
+                    for (j=4; j<8; j++)
+                        Interface_LoadItemIcon1(play, j);
             } else if (curSection < 0x2C) {
                 if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                     i = curSection - 0x1B;
@@ -610,6 +613,9 @@ void KaleidoScope_DrawDebugEditor(PlayState* play) {
                             gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG_ALT(i, 3);
                         }
                     }
+                    if (CHECK_BTN_ANY(input->press.button, BTN_CUP | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT))
+                        for (j=4; j<8; j++)
+                            Interface_LoadItemIcon1(play, j);
                 } else if (curSection < 0x44) {
                     i = curSection - 0x38;
                     if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
@@ -667,7 +673,7 @@ void KaleidoScope_DrawDebugEditor(PlayState* play) {
     // The editor is opened with `debugState` set to 1, and becomes closable after a frame once `debugState` is set to 2
     if (pauseCtx->debugState == 1) {
         pauseCtx->debugState = 2;
-    } else if ((pauseCtx->debugState == 2) && CHECK_BTN_ALL(input->press.button, BTN_L)) {
+    } else if ((pauseCtx->debugState == 2) && CHECK_BTN_ALL(input->rel.button, BTN_L)) {
         pauseCtx->debugState = 0;
     }
 

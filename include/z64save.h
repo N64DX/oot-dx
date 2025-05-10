@@ -234,8 +234,9 @@ typedef struct SavePlayerData {
     /* 0x23  0x003F */ u8 ocarinaGameRoundNum;
     /* 0x24  0x0040 */ ItemEquips childEquips;
     /* 0x2E  0x004A */ ItemEquips adultEquips;
-    /* 0x38  0x0054 */ u32 unk_54; // this may be incorrect, currently used for alignment
-    /* 0x3C  0x0058 */ char unk_58[0x0E];
+    /* 0x38  0x0054 */ u8 mask;
+    /* 0x39  0x0055 */ u8 dpadDualSet;
+    /* 0x3A  0x0056 */ u8 dpadItems[4][4];
     /* 0x4A  0x0066 */ s16 savedSceneId;
 } SavePlayerData;
 
@@ -407,9 +408,17 @@ typedef enum LinkAge {
     /* 1 */ LINK_AGE_CHILD
 } LinkAge;
 
+#define DPAD_BUTTON(button)      (gSaveContext.save.info.playerData.dpadItems[gSaveContext.save.linkAge + gSaveContext.save.info.playerData.dpadDualSet * 2][button])
 
 #define LINK_IS_ADULT (gSaveContext.save.linkAge == LINK_AGE_ADULT)
 #define LINK_IS_CHILD (gSaveContext.save.linkAge == LINK_AGE_CHILD)
+
+#define SET_MASK_AGE(val)       ((LINK_IS_ADULT) ? SET_MASK_ADULT(val) : SET_MASK_CHILD(val))
+#define GET_MASK_AGE()          ((LINK_IS_ADULT) ? GET_MASK_ADULT()    : GET_MASK_CHILD())
+#define GET_MASK_ADULT()        ((u8)(((gSaveContext.save.info.playerData.mask) >> 8) & 0xFF))
+#define GET_MASK_CHILD()        ((u8)((gSaveContext.save.info.playerData.mask) & 0xFF))
+#define SET_MASK_ADULT(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0x00FF) | (((val) & 0xFF) << 8)))
+#define SET_MASK_CHILD(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0xFF00) | ((val) & 0xFF)))
 
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17
@@ -460,6 +469,8 @@ typedef enum LinkAge {
 #define C_BTN_ITEM(button) ((gSaveContext.buttonStatus[(button) + 1] != BTN_DISABLED) \
                                 ? gSaveContext.save.info.equips.buttonItems[(button) + 1]       \
                                 : ITEM_NONE)
+                                
+#define D_BTN_ITEM(button) ((dpadStatus[button] != BTN_DISABLED) ? Interface_GetItemFromDpad(button) : ITEM_NONE)
 
 
 /*

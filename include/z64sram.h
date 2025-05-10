@@ -34,5 +34,6 @@ void Sram_WriteSramHeader(SramContext* sramCtx);
 void Sram_InitSram(struct GameState* gameState, SramContext* sramCtx);
 void Sram_Alloc(struct GameState* gameState, SramContext* sramCtx);
 void Sram_Init(struct GameState* gameState, SramContext* sramCtx);
+u8 HasDuplicateDpadItems(void);
 
 #endif

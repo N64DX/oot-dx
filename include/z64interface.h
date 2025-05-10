@@ -5,6 +5,7 @@
 #include "ultra64.h"
 #include "z64dma.h"
 #include "z64view.h"
+#include "z64player.h"
 
 struct PlayState;
 
@@ -191,6 +192,15 @@ typedef struct InterfaceContext {
 #define C_UP_BUTTON_X 254 + (WIDESCREEN ? 104 : 0)
 #define C_UP_BUTTON_Y 16
 
+#define D_UP_BUTTON_X    (dpad_x + 2)
+#define D_UP_BUTTON_Y    (dpad_y - 14)
+#define D_RIGHT_BUTTON_X (dpad_x + 18)
+#define D_RIGHT_BUTTON_Y (dpad_y + 2)
+#define D_DOWN_BUTTON_X  (dpad_x + 2)
+#define D_DOWN_BUTTON_Y  (dpad_y + 16)
+#define D_LEFT_BUTTON_X  (dpad_x - 14)
+#define D_LEFT_BUTTON_Y  (dpad_y + 2)
+
 #if !PLATFORM_GC
 #define START_BUTTON_R 200
 #define START_BUTTON_G 0
@@ -254,6 +264,8 @@ void Interface_InitHorsebackArchery(struct PlayState* play);
 void func_800849EC(struct PlayState* play);
 void Interface_LoadItemIcon1(struct PlayState* play, u16 button);
 void Interface_LoadItemIcon2(struct PlayState* play, u16 button);
+u8 Interface_GetArrowFromDpad(u8 button);
+u8 Interface_GetItemFromDpad(u8 button);
 void func_80084BF4(struct PlayState* play, u16 flag);
 u8 Item_Give(struct PlayState* play, u8 item);
 u8 Item_CheckObtainability(u8 item);
@@ -279,8 +291,13 @@ void Interface_Draw(struct PlayState* play);
 void Interface_Update(struct PlayState* play);
 void Interface_Destroy(struct PlayState* play);
 void Interface_Init(struct PlayState* play);
+void Interface_ChangeDpadSet(struct PlayState* play);
 
 extern s16 gSpoilingItems[3];
 extern s16 gSpoilingItemReverts[3];
+extern bool dpadStatus[4];
+extern u8 dpadAlphas[5];
+extern bool switchedDualSet;
+extern u8 sNoclipTimer;
 
 #endif

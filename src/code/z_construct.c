@@ -14,13 +14,15 @@ void Interface_Destroy(PlayState* play) {
     Map_Destroy(play);
 }
 
-#define ICON_ITEM_SEGMENT_SIZE (4 * ITEM_ICON_SIZE)
+#define ICON_ITEM_SEGMENT_SIZE (8 * ITEM_ICON_SIZE)
 
 void Interface_Init(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     u32 parameterSize;
     u16 doActionOffset;
     u8 timerId;
+    u8 item;
+    u8 i;
 
     gSaveContext.sunsSongState = SUNSSONG_INACTIVE;
     gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
@@ -37,6 +39,7 @@ void Interface_Init(PlayState* play) {
     interfaceCtx->unk_244 = interfaceCtx->aAlpha = interfaceCtx->bAlpha = interfaceCtx->cLeftAlpha =
         interfaceCtx->cDownAlpha = interfaceCtx->cRightAlpha = interfaceCtx->healthAlpha = interfaceCtx->startAlpha =
             interfaceCtx->magicAlpha = 0;
+    dpadAlphas[0] = dpadAlphas[1] = dpadAlphas[2] = dpadAlphas[3] = dpadAlphas[4] = 0;
     interfaceCtx->minimapAlpha = 0;
     interfaceCtx->unk_260 = 0;
 
@@ -110,34 +113,22 @@ void Interface_Init(PlayState* play) {
            gSaveContext.save.info.equips.buttonItems[1], gSaveContext.save.info.equips.buttonItems[2],
            gSaveContext.save.info.equips.buttonItems[3]);
 
-    if (gSaveContext.save.info.equips.buttonItems[0] < 0xF0) {
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (0 * ITEM_ICON_SIZE),
+    for (i=0; i<8; i++) {
+        if (i<4)
+            item = gSaveContext.save.info.equips.buttonItems[i];
+        else item = Interface_GetItemFromDpad(i-4);
 
-                         GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[0]), ITEM_ICON_SIZE,
-                         "../z_construct.c", 198);
-    } else if (gSaveContext.save.info.equips.buttonItems[0] != 0xFF) {
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (0 * ITEM_ICON_SIZE),
+        if (item == ITEM_SWORDS)
+            item = gSaveContext.save.info.equips.buttonItems[0];
+        else if (item == ITEM_SHIELDS)
+            item = (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
+        else if (item == ITEM_TUNICS)
+            item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+        else if (item == ITEM_BOOTS)
+            item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
 
-                         GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[0]), ITEM_ICON_SIZE,
-                         "../z_construct.c", 203);
-    }
-
-    if (gSaveContext.save.info.equips.buttonItems[1] < 0xF0) {
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (1 * ITEM_ICON_SIZE),
-                         GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[1]), ITEM_ICON_SIZE,
-                         "../z_construct.c", 209);
-    }
-
-    if (gSaveContext.save.info.equips.buttonItems[2] < 0xF0) {
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (2 * ITEM_ICON_SIZE),
-                         GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[2]), ITEM_ICON_SIZE,
-                         "../z_construct.c", 214);
-    }
-
-    if (gSaveContext.save.info.equips.buttonItems[3] < 0xF0) {
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (3 * ITEM_ICON_SIZE),
-                         GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[3]), ITEM_ICON_SIZE,
-                         "../z_construct.c", 219);
+        if (item < 0xF0)
+            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, "../z_construct.c", 198);
     }
 
     PRINTF("ＥＶＥＮＴ＝%d\n", ((void)0, gSaveContext.timerState));
