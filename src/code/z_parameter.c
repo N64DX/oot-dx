@@ -157,7 +157,7 @@ bool dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
 u8 dpadAlphas[] = { 0, 0, 0, 0, 0 };
 bool switchedDualSet = false;
 u8 sNoclipTimer = 0;
-static bool pressed_z = false;
+static u8 shielded = 0;
 static u16 dpad_x;
 static u16 dpad_y;
 
@@ -4923,7 +4923,7 @@ void Interface_ChangeDpadSet(PlayState* play) {
     if (play->pauseCtx.debugState != 0 || gSaveContext.gameMode != GAMEMODE_NORMAL)
         return;
 
-    if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R) && !pressed_z && !IS_CUTSCENE_LAYER && gSaveContext.minigameState == 0) {
+    if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R) && !IS_CUTSCENE_LAYER && gSaveContext.minigameState == 0 && shielded == 0) {
         Audio_PlaySfxGeneral(!gSaveContext.save.info.playerData.dpadDualSet ? NA_SE_SY_CAMERA_ZOOM_UP : NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.save.info.playerData.dpadDualSet ^= 1;
         for (i=0; i<4; i++) {
@@ -4937,8 +4937,14 @@ void Interface_ChangeDpadSet(PlayState* play) {
         gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode;
     }
 
-    if (!IS_PAUSED(&play->pauseCtx) && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_Z))
-        pressed_z = true;
-    if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L))
-        pressed_z = false;
+    if (!IS_PAUSED(&play->pauseCtx)) {
+        Player* player = GET_PLAYER(play);
+        if (player->stateFlags1 & PLAYER_STATE1_SHIELDING)
+            shielded = 5;
+        if (!(player->stateFlags1 & PLAYER_STATE1_SHIELDING) && !CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && shielded > 0)
+            shielded--;
+        if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R))
+            shielded = 0;
+    }
+    else shielded = 0;
 }
