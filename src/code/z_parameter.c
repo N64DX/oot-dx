@@ -1547,27 +1547,29 @@ void func_800849EC(PlayState* play) {
         }
         else {
             if (DPAD_BUTTON(i-4) == SLOT_SWORDS)
-                Interface_LoadItemIconDpad(play, i-4);
+                Interface_LoadItemIcon1(play, i);
         }
     }
 }
 
 void Interface_LoadItemIcon1(PlayState* play, u16 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
-    Player* player = GET_PLAYER(play);
     u8 item;
 
-    if (gSaveContext.save.info.equips.buttonItems[button] == ITEM_SWORDS)
-        item = (gSaveContext.save.info.equips.buttonItems[0] == ITEM_GIANTS_KNIFE) ? ITEM_GIANTS_KNIFE : B_BTN_ITEM;
-    else if (gSaveContext.save.info.equips.buttonItems[button] == ITEM_SHIELDS)
-        item = ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1;
-    else if (gSaveContext.save.info.equips.buttonItems[button] == ITEM_TUNICS)
-        item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
-    else if (gSaveContext.save.info.equips.buttonItems[button] == ITEM_BOOTS)
-        item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
-    else item = gSaveContext.save.info.equips.buttonItems[button];
+    if (button < 4)
+        item = gSaveContext.save.info.equips.buttonItems[button];
+    else item = Interface_GetItemFromDpad(button-4);
 
-    if (item == ITEM_NONE)
+    if (item == ITEM_SWORDS)
+        item = gSaveContext.save.info.equips.buttonItems[0];
+    else if (item == ITEM_SHIELDS)
+        item = (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
+    else if (item == ITEM_TUNICS)
+        item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+    else if (item == ITEM_BOOTS)
+        item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
+
+    if (item >= 0xF0)
         return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
@@ -1587,43 +1589,12 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
 
-void Interface_LoadItemIconDpad(PlayState* play, u8 button) {
-    InterfaceContext* interfaceCtx = &play->interfaceCtx;
-    Player* player = GET_PLAYER(play);
-    u8 item;
-
-    if (DPAD_BUTTON(button) < SLOT_SWORDS)
-        item = Interface_GetItemFromDpad(button);
-    else if (DPAD_BUTTON(button) == SLOT_SWORDS)
-        item = (gSaveContext.save.info.equips.buttonItems[0] == ITEM_GIANTS_KNIFE) ? ITEM_GIANTS_KNIFE : B_BTN_ITEM;
-    else if (DPAD_BUTTON(button) == SLOT_SHIELDS)
-        item = ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1;
-    else if (DPAD_BUTTON(button) == SLOT_TUNICS)
-        item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
-    else if (DPAD_BUTTON(button) == SLOT_BOOTS)
-        item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
-    else if (DPAD_BUTTON(button) == SLOT_TUNIC_GORON && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))
-        item = ITEM_TUNIC_GORON;
-    else if (DPAD_BUTTON(button) == SLOT_TUNIC_ZORA  && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
-        item = ITEM_TUNIC_ZORA;
-    else if (DPAD_BUTTON(button) == SLOT_BOOTS_IRON  && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON))
-        item = ITEM_BOOTS_IRON;
-    else if (DPAD_BUTTON(button) == SLOT_BOOTS_HOVER && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
-        item = ITEM_BOOTS_HOVER;
-    else item = ITEM_NONE;
-
-    if (item == ITEM_NONE)
-        return;
-
-    DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + ((button+4) * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
-}
-
 u8 Interface_GetItemFromDpad(u8 button) {
-    if (gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_FIRE)
+    if (DPAD_BUTTON(button) == SLOT_ARROW_FIRE && gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_FIRE)
         return ITEM_BOW_FIRE;
-    else if (gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_ICE)
+    else if (DPAD_BUTTON(button) == SLOT_ARROW_ICE && gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_ICE)
         return ITEM_BOW_ICE;
-    else if (gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_LIGHT)
+    else if (DPAD_BUTTON(button) == SLOT_ARROW_LIGHT && gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_LIGHT)
         return ITEM_BOW_LIGHT;
     else if (DPAD_BUTTON(button) < SLOT_SWORDS)
         return gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)];
@@ -1899,7 +1870,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_HOOKSHOT)
-                Interface_LoadItemIconDpad(play, i);
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_DEKU_STICK) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -2032,7 +2003,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_OCARINA)
-                Interface_LoadItemIconDpad(play, i);
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_MAGIC_BEAN) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -2111,7 +2082,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         temp = SLOT(item);
 
         if ((item != ITEM_BOTTLE_MILK_FULL) && (item != ITEM_BOTTLE_RUTOS_LETTER)) {
-            s16 j;
+            u8 j;
             if (item == ITEM_MILK) {
                 item = ITEM_BOTTLE_MILK_FULL;
                 temp = SLOT(item);
@@ -2138,13 +2109,15 @@ u8 Item_Give(PlayState* play, u8 item) {
                         gSaveContext.buttonStatus[3] = BTN_ENABLED;
                     }
 
-                    for (j=0; j<4; j++)
-                        if (Interface_GetItemFromDpad(j) == temp + i) {
-                            Interface_LoadItemIconDpad(play, j);
-                            dpadStatus[j] = BTN_ENABLED;
-                        }
-                    
                     gSaveContext.save.info.inventory.items[temp + i] = item;
+
+                    for (j=0; j<4; j++)
+                        if (DPAD_BUTTON(j) == temp + i) {
+                            Interface_LoadItemIcon1(play, j+4);
+                            dpadStatus[j] = BTN_ENABLED;
+                            break;
+                        }
+
                     return ITEM_NONE;
                 }
             }
@@ -2346,7 +2319,7 @@ s32 Inventory_ReplaceItem(PlayState* play, u16 oldItem, u16 newItem) {
             }
             for (i=0; i<4; i++)
                 if (Interface_GetItemFromDpad(i) == oldItem)
-                    Interface_LoadItemIconDpad(play, i);                 
+                    Interface_LoadItemIcon1(play, i+4);                 
             return true;
         }
     }
@@ -2396,7 +2369,7 @@ void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
             }
         
         gSaveContext.save.info.inventory.items[DPAD_BUTTON(button-4)] = item;
-        Interface_LoadItemIconDpad(play, button-4);
+        Interface_LoadItemIcon1(play, button);
         dpadStatus[button-4] = BTN_ENABLED;
         
         return;
@@ -2414,7 +2387,7 @@ void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
     
     for (i=0; i<4; i++)
         if (Interface_GetItemFromDpad(i) == item)
-            Interface_LoadItemIconDpad(play, i);
+            Interface_LoadItemIcon1(play, i+4);
 
     Interface_LoadItemIcon1(play, button);
 
@@ -2441,7 +2414,7 @@ s32 Inventory_ConsumeFairy(PlayState* play) {
 
             for (j=0; j<4; j++)
                 if (DPAD_BUTTON(j) == bottleSlot) {
-                    Interface_LoadItemIconDpad(play, j);
+                    Interface_LoadItemIcon1(play, j+4);
                     break;
                 }
 
@@ -3206,7 +3179,7 @@ void Interface_DrawItemButtons(PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 2900);
 
     // D-Pad positions
-    dpad_x = R_MAGIC_METER_X + 6;
+    dpad_x = R_MAGIC_METER_X + 20;
     dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 15;
     if (gSaveContext.save.info.playerData.magicLevel != 0)
         dpad_y += 15;
@@ -3392,28 +3365,31 @@ void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
     u8  width;
     u8  item;
     s8  offset = 0;
-    Player* player = GET_PLAYER(play);
     
     if (button < 4) {
         x     = R_ITEM_ICON_X(button);
         y     = R_ITEM_ICON_Y(button);
         dd    = R_ITEM_ICON_DD(button);
         width = R_ITEM_ICON_WIDTH(button);
+        
+        if ((gSaveContext.save.info.equips.buttonItems[button] == ITEM_SWORDS && gSaveContext.save.info.equips.buttonItems[0] == ITEM_NONE) || (gSaveContext.save.info.equips.buttonItems[button] == ITEM_SHIELDS && SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_NONE)))
+            return;
     }
     else {
+        Player* player = GET_PLAYER(play);
         dd    = 1400;
         width = 12;
         
-        switch (button) {
-            case 4:
+        switch (button-4) {
+            case 0:
                 x = D_UP_BUTTON_X;
                 y = D_UP_BUTTON_Y;
                 break;
-            case 5:
+            case 1:
                 x = D_RIGHT_BUTTON_X;
                 y = D_RIGHT_BUTTON_Y;
                 break;
-            case 6:
+            case 2:
                 x = D_DOWN_BUTTON_X;
                 y = D_DOWN_BUTTON_Y;
                 break;
@@ -3429,6 +3405,9 @@ void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
             width +=  3;
             offset = -1;
         }
+        
+        if ((item == ITEM_SWORDS && gSaveContext.save.info.equips.buttonItems[0] == ITEM_NONE) || (item == ITEM_SHIELDS && SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_NONE)))
+            return;
     }
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3079);
@@ -3498,16 +3477,16 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
         }
         else {
             u8 x, y;
-            switch (button) {
-                case 4:
+            switch (button-4) {
+                case 0:
                     x = D_UP_BUTTON_X + 1;
                     y = D_UP_BUTTON_Y + 8;
                     break;
-                case 5:
+                case 1:
                     x = D_RIGHT_BUTTON_X + 1;
                     y = D_RIGHT_BUTTON_Y + 8;
                     break;
-                case 6:
+                case 2:
                     x = D_DOWN_BUTTON_X + 1;
                     y = D_DOWN_BUTTON_Y + 8;
                     break;
@@ -3518,8 +3497,8 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
             }
 
             if (i != 0)
-                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, x, y, 6, 6, 1 << 11, 1 << 11);
-            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, x + 3, y, 6, 6, 1 << 11, 1 << 11);
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, x, y, 4, 4, 1 << 11, 1 << 11);
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, x + 3, y, 4, 4, 1 << 11, 1 << 11);
         }
     }
 
@@ -3862,7 +3841,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Left Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[1] < 0xF0 || (gSaveContext.save.info.equips.buttonItems[1] == ITEM_SWORDS && player->currentSwordItemId == -1) || (gSaveContext.save.info.equips.buttonItems[1] == ITEM_SHIELDS && player->currentShield == PLAYER_SHIELD_NONE)) {
+        if (gSaveContext.save.info.equips.buttonItems[1] < 0xF0) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cLeftAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x1000, 1);
@@ -3875,7 +3854,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Down Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[2] < 0xF0 || (gSaveContext.save.info.equips.buttonItems[2] == ITEM_SWORDS && player->currentSwordItemId == -1) || (gSaveContext.save.info.equips.buttonItems[2] == ITEM_SHIELDS && player->currentShield == PLAYER_SHIELD_NONE)) {
+        if (gSaveContext.save.info.equips.buttonItems[2] < 0xF0) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cDownAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x2000, 2);
@@ -3888,7 +3867,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Right Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[3] < 0xF0 || (gSaveContext.save.info.equips.buttonItems[3] == ITEM_SWORDS && player->currentSwordItemId == -1) || (gSaveContext.save.info.equips.buttonItems[3] == ITEM_SHIELDS && player->currentShield == PLAYER_SHIELD_NONE)) {
+        if (gSaveContext.save.info.equips.buttonItems[3] < 0xF0) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cRightAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x3000, 3);
@@ -3899,7 +3878,7 @@ void Interface_Draw(PlayState* play) {
         }
 
         for (svar1=0; svar1<4; svar1++) {
-            if (Interface_GetItemFromDpad(svar1) >= 0xF0 || (Interface_GetItemFromDpad(svar1) == ITEM_SWORDS && player->currentSwordItemId == -1) || (Interface_GetItemFromDpad(svar1) == ITEM_SHIELDS && player->currentShield == PLAYER_SHIELD_NONE))
+            if (Interface_GetItemFromDpad(svar1) >= 0xF0)
                 continue;
 
             // D-Pad Button Icon & Ammo Count
@@ -4093,7 +4072,7 @@ void Interface_Draw(PlayState* play) {
                     }
                     for (svar2=0; svar2<4; svar2++)
                         if (Interface_GetItemFromDpad(svar2) == gSpoilingItemReverts[svar1])
-                            Interface_LoadItemIconDpad(play, svar2);
+                            Interface_LoadItemIcon1(play, svar2+4);
                 }
             }
         }
@@ -4941,11 +4920,14 @@ void Interface_Update(PlayState* play) {
 void Interface_ChangeDpadSet(PlayState* play) {
     u8 i;
 
-    if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R) && !pressed_z && gSaveContext.minigameState == 0 && !IS_CUTSCENE_LAYER) {
+    if (play->pauseCtx.debugState != 0 || gSaveContext.gameMode != GAMEMODE_NORMAL)
+        return;
+
+    if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R) && !pressed_z && !IS_CUTSCENE_LAYER && gSaveContext.minigameState == 0) {
         Audio_PlaySfxGeneral(!gSaveContext.save.info.playerData.dpadDualSet ? NA_SE_SY_CAMERA_ZOOM_UP : NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.save.info.playerData.dpadDualSet ^= 1;
         for (i=0; i<4; i++) {
-            Interface_LoadItemIconDpad(play, i);
+            Interface_LoadItemIcon1(play, i+4);
             if (play->pauseCtx.state == PAUSE_STATE_OFF) {
                 dpadStatus[i] = BTN_ENABLED;
                 switchedDualSet = false;
@@ -4955,8 +4937,8 @@ void Interface_ChangeDpadSet(PlayState* play) {
         gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode;
     }
 
-    if (!IS_PAUSED(&play->pauseCtx) && &play->pauseCtx.debugState == 0 && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_Z))
-        pressed_z = 1;
+    if (!IS_PAUSED(&play->pauseCtx) && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_Z))
+        pressed_z = true;
     if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L))
-        pressed_z = 0;
+        pressed_z = false;
 }

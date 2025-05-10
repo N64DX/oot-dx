@@ -53,7 +53,7 @@ void GameOver_Update(PlayState* play) {
                     }
                     for (j=0; j<4; j++)
                         if (Interface_GetItemFromDpad(j) == gSpoilingItemReverts[i])
-                            Interface_LoadItemIconDpad(play, j);
+                            Interface_LoadItemIcon1(play, j+4);
                 }
             }
 

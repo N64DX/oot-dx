@@ -447,21 +447,15 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                 if (i == button)
                                     continue;
 
-                                if (DPAD_BUTTON(i) == cursorSlot) {
-                                    DPAD_BUTTON(i) = DPAD_BUTTON(button);
-                                    Interface_LoadItemIconDpad(play, i);
-                                    break;
-                                }
-
                                 if (DPAD_BUTTON(i) == cursorSlot || ((cursorSlot == SLOT_BOW || cursorSlot == SLOT_ARROW_FIRE || cursorSlot == SLOT_ARROW_ICE || cursorSlot == SLOT_ARROW_LIGHT) && (DPAD_BUTTON(i) == SLOT_BOW || DPAD_BUTTON(i) == SLOT_ARROW_FIRE || DPAD_BUTTON(i) == SLOT_ARROW_ICE || DPAD_BUTTON(i) == SLOT_ARROW_LIGHT))) {
                                     DPAD_BUTTON(i) = DPAD_BUTTON(button);
-                                    Interface_LoadItemIconDpad(play, i);
+                                    Interface_LoadItemIcon1(play, i+4);
                                     break;
                                 }
                             }
 
                             DPAD_BUTTON(button) = cursorSlot;
-                            Interface_LoadItemIconDpad(play, button);
+                            Interface_LoadItemIcon1(play, button+4);
                             Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                         }
                         else Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);

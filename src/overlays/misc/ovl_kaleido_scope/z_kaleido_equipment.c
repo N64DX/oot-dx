@@ -506,7 +506,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                     }
                     else {
                         if (Interface_GetItemFromDpad(i-4) == ITEM_SWORDS || Interface_GetItemFromDpad(i-4) == ITEM_SHIELDS || Interface_GetItemFromDpad(i-4) == ITEM_TUNICS || Interface_GetItemFromDpad(i-4) == ITEM_BOOTS)
-                            Interface_LoadItemIconDpad(play, i-4);
+                            Interface_LoadItemIcon1(play, i);
                     }
                 }
 
@@ -527,16 +527,12 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                     temp = SLOT_SHIELDS;
                 else if (cursorSlot == 9)
                     temp = SLOT_TUNICS;
-                else if (cursorSlot == 10)
-                    temp = SLOT_TUNIC_GORON;
-                else if (cursorSlot == 11)
-                    temp = SLOT_TUNIC_ZORA;
+                else if (cursorSlot == 10 || cursorSlot == 11)
+                    temp = SLOT_TUNIC_GORON + cursorSlot - 10;
                 else if (cursorSlot == 13)
                     temp = SLOT_BOOTS;
-                else if (cursorSlot == 14)
-                    temp = SLOT_BOOTS_IRON;
-                else if (cursorSlot == 15)
-                    temp = SLOT_BOOTS_HOVER;
+                else if (cursorSlot == 14 || cursorSlot == 15)
+                    temp = SLOT_BOOTS_IRON + cursorSlot - 14;
                 else temp = SLOT_NONE;
                 
                 if (temp != SLOT_NONE) {
@@ -564,17 +560,13 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                             i = 2;
                         else i = 3;
                         
-                        for (j=1; j<4; j++) {
-                            if (j == i)
-                                continue;
-                            
-                            if (gSaveContext.save.info.equips.buttonItems[j] == temp) {
+                        for (j=1; j<4; j++)
+                            if (gSaveContext.save.info.equips.buttonItems[j] == temp && j != i) {
                                 gSaveContext.save.info.equips.buttonItems[j]    = gSaveContext.save.info.equips.buttonItems[i];
                                 gSaveContext.save.info.equips.cButtonSlots[j-1] = gSaveContext.save.info.equips.cButtonSlots[i-1];
                                 Interface_LoadItemIcon1(play, j);
                                 break;
                             }
-                        }
                         
                         gSaveContext.save.info.equips.buttonItems[i]    = temp;
                         gSaveContext.save.info.equips.cButtonSlots[i-1] = SLOT_NONE;
@@ -590,19 +582,15 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                             i = 2;
                         else i = 3;
                         
-                        for (j=0; j<4; j++) {
-                            if (j == i)
-                                continue;
-                            
-                            if (DPAD_BUTTON(j) == temp) {
+                        for (j=0; j<4; j++)
+                            if (DPAD_BUTTON(j) == temp && j != i) {
                                 DPAD_BUTTON(j) = DPAD_BUTTON(i);
-                                Interface_LoadItemIconDpad(play, j);
+                                Interface_LoadItemIcon1(play, j+4);
                                 break;
                             }
-                        }
                         
                         DPAD_BUTTON(i) = temp;
-                        Interface_LoadItemIconDpad(play, i);
+                        Interface_LoadItemIcon1(play, i+4);
                         Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                     }
                 }

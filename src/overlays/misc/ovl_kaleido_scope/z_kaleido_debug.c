@@ -562,8 +562,8 @@ void KaleidoScope_DrawDebugEditor(PlayState* play) {
                     }
                 }
                 if (CHECK_BTN_ANY(input->press.button, BTN_CUP | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT))
-                    for (j=0; j<4; j++)
-                        Interface_LoadItemIconDpad(play, j);
+                    for (j=4; j<8; j++)
+                        Interface_LoadItemIcon1(play, j);
             } else if (curSection < 0x2C) {
                 if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                     i = curSection - 0x1B;
@@ -614,8 +614,8 @@ void KaleidoScope_DrawDebugEditor(PlayState* play) {
                         }
                     }
                     if (CHECK_BTN_ANY(input->press.button, BTN_CUP | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT))
-                        for (j=0; j<4; j++)
-                            Interface_LoadItemIconDpad(play, j);
+                        for (j=4; j<8; j++)
+                            Interface_LoadItemIcon1(play, j);
                 } else if (curSection < 0x44) {
                     i = curSection - 0x38;
                     if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {

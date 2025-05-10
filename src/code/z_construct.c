@@ -21,6 +21,8 @@ void Interface_Init(PlayState* play) {
     u32 parameterSize;
     u16 doActionOffset;
     u8 timerId;
+    u8 item;
+    u8 i;
 
     gSaveContext.sunsSongState = SUNSSONG_INACTIVE;
     gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
@@ -111,6 +113,24 @@ void Interface_Init(PlayState* play) {
            gSaveContext.save.info.equips.buttonItems[1], gSaveContext.save.info.equips.buttonItems[2],
            gSaveContext.save.info.equips.buttonItems[3]);
 
+    for (i=0; i<8; i++) {
+        if (i<4)
+            item = gSaveContext.save.info.equips.buttonItems[i];
+        else item = Interface_GetItemFromDpad(i-4);
+
+        if (item == ITEM_SWORDS)
+            item = gSaveContext.save.info.equips.buttonItems[0];
+        else if (item == ITEM_SHIELDS)
+            item = (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
+        else if (item == ITEM_TUNICS)
+            item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+        else if (item == ITEM_BOOTS)
+            item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
+
+        if (item < 0xF0)
+            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, "../z_construct.c", 198);
+    }
+
     PRINTF("ＥＶＥＮＴ＝%d\n", ((void)0, gSaveContext.timerState));
 
     if ((gSaveContext.timerState == TIMER_STATE_ENV_HAZARD_TICK) ||
@@ -177,30 +197,6 @@ void Interface_Init(PlayState* play) {
     R_A_BTN_COLOR(0) = A_BUTTON_R;
     R_A_BTN_COLOR(1) = A_BUTTON_G;
     R_A_BTN_COLOR(2) = A_BUTTON_B;
-}
-
-void ItemIcons_Init(PlayState* play, Player* player) {
-    InterfaceContext* interfaceCtx = &play->interfaceCtx;
-    u8 item;
-    u8 i;
-
-    for (i=0; i<8; i++) {
-        if (i<4)
-            item = gSaveContext.save.info.equips.buttonItems[i];
-        else item = Interface_GetItemFromDpad(i-4);
-
-        if (item == ITEM_SWORDS)
-            item = player->currentSwordItemId;
-        else if (item == ITEM_SHIELDS)
-            item = ITEM_SHIELD_DEKU + player->currentShield - 1;
-        else if (item == ITEM_TUNICS)
-            item = ITEM_TUNIC_KOKIRI + player->currentTunic;
-        else if (item == ITEM_BOOTS)
-            item = ITEM_BOOTS_KOKIRI + player->currentBoots;
-
-        if (item < 0xF0)
-            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, "../z_construct.c", 198);
-    }
 }
 
 #define TEXTBOX_SEGMENT_SIZE \

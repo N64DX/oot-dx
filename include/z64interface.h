@@ -264,7 +264,6 @@ void Interface_InitHorsebackArchery(struct PlayState* play);
 void func_800849EC(struct PlayState* play);
 void Interface_LoadItemIcon1(struct PlayState* play, u16 button);
 void Interface_LoadItemIcon2(struct PlayState* play, u16 button);
-void Interface_LoadItemIconDpad(struct PlayState* play, u8 button);
 u8 Interface_GetArrowFromDpad(u8 button);
 u8 Interface_GetItemFromDpad(u8 button);
 void func_80084BF4(struct PlayState* play, u16 flag);
@@ -292,7 +291,6 @@ void Interface_Draw(struct PlayState* play);
 void Interface_Update(struct PlayState* play);
 void Interface_Destroy(struct PlayState* play);
 void Interface_Init(struct PlayState* play);
-void ItemIcons_Init(struct PlayState* play, struct Player* player);
 void Interface_ChangeDpadSet(struct PlayState* play);
 
 extern s16 gSpoilingItems[3];
