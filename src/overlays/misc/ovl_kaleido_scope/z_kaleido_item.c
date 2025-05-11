@@ -567,13 +567,16 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_item.c", 516);
 }
 
-#if WIDESCREEN
+#if HIRES
+static s16 sCButtonPosX[] = { 2260, 2500, 2740 };
+static s16 sCButtonPosY[] = { 1700, 1520, 1700 };
+#elif WIDESCREEN
 static s16 sCButtonPosX[] = { 1180, 1420, 1660 };
+static s16 sCButtonPosY[] = { 1100, 920, 1100 };
 #else
 static s16 sCButtonPosX[] = { 660, 900, 1140 };
-#endif
-
 static s16 sCButtonPosY[] = { 1100, 920, 1100 };
+#endif
 
 void KaleidoScope_UpdateItemEquip(PlayState* play) {
     static s16 D_8082A488 = 0;

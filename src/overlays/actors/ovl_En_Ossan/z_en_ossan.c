@@ -2293,7 +2293,7 @@ void EnOssan_DrawCursor(PlayState* play, EnOssan* this, f32 x, f32 y, f32 z, u8 
         lrx = (x + w) * 4.0f;
         lry = (y + w) * 4.0f;
         dsdx = (1.0f / z) * 1024.0f;
-        gSPTextureRectangle(OVERLAY_DISP++, ulx, uly, lrx, lry, G_TX_RENDERTILE, 0, 0, dsdx, dsdx);
+        gSPTextureRectangle(OVERLAY_DISP++, ulx * (HIRES ? 2 : 1), uly * (HIRES ? 2 : 1), lrx * (HIRES ? 2 : 1), lry * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, dsdx / (HIRES ? 2 : 1), dsdx / (HIRES ? 2 : 1));
     }
     CLOSE_DISPS(play->state.gfxCtx, "../z_en_oB1.c", 4215);
 }
@@ -2321,7 +2321,7 @@ void EnOssan_DrawTextRec(PlayState* play, s32 r, s32 g, s32 b, s32 a, f32 x, f32
     dsdx = texCoordScale * dx;
     dtdy = dy * texCoordScale;
 
-    gSPTextureRectangle(OVERLAY_DISP++, ulx, uly, lrx, lry, G_TX_RENDERTILE, s, t, dsdx, dtdy);
+    gSPTextureRectangle(OVERLAY_DISP++, ulx * (HIRES ? 2 : 1), uly * (HIRES ? 2 : 1), lrx * (HIRES ? 2 : 1), lry * (HIRES ? 2 : 1), G_TX_RENDERTILE, s, t, dsdx / (HIRES ? 2 : 1), dtdy / (HIRES ? 2 : 1));
     CLOSE_DISPS(play->state.gfxCtx, "../z_en_oB1.c", 4242);
 }
 
