@@ -71,6 +71,12 @@ typedef enum MagicChangeType {
 #define MAGIC_NORMAL_METER 0x30
 #define MAGIC_DOUBLE_METER (2 * MAGIC_NORMAL_METER)
 
+typedef struct {
+        u8 itemId;
+        u8 equipId;
+        u8 requiredAge;
+} EquipmentSwapEntry;
+
 typedef struct ItemEquips {
     /* 0x00 */ u8 buttonItems[4];
     /* 0x04 */ u8 cButtonSlots[3];
@@ -181,6 +187,9 @@ typedef enum TimerId {
     /* 1 */ TIMER_ID_SUB, // See `subTimerState` and `subTimerSeconds`
     /* 2 */ TIMER_ID_MAX
 } TimerId;
+
+#define IS_ACTIVE_TIMER (gSaveContext.timerState    == TIMER_STATE_DOWN_TICK    || gSaveContext.timerState    == TIMER_STATE_UP_TICK    || gSaveContext.timerState == TIMER_STATE_UP_FREEZE || gSaveContext.timerState == TIMER_STATE_ENV_HAZARD_TICK || \
+                         gSaveContext.subTimerState == SUBTIMER_STATE_DOWN_TICK || gSaveContext.subTimerState == SUBTIMER_STATE_UP_TICK)
 
 #define MARATHON_TIME_LIMIT 240 // 4 minutes
 

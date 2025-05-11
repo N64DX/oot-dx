@@ -2645,8 +2645,19 @@ s32 Player_GetItemOnButton(PlayState* play, s32 index) {
     }
 }
 
-void Player_ChangeEquipment(Player* this, PlayState* play, s32 button) {
+void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipType, u8 nextEquip) {
     u8 i;
+
+    if (equipType == EQUIP_TYPE_BOOTS)
+        Player_SetBootData(play, this);
+    if (equipType == EQUIP_TYPE_TUNIC || equipType == EQUIP_TYPE_BOOTS)
+        nextEquip++;
+    if (equipType == EQUIP_TYPE_SWORD)
+        gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
+
+    Inventory_ChangeEquipment(equipType, nextEquip);
+    Player_SetEquipmentData(play, this);
+    Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
 
     if (button < 4) {
         for (i=0; i<4; i++)
@@ -2659,114 +2670,175 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button) {
                 Interface_LoadItemIcon1(play, i);
         Interface_LoadItemIcon1(play, button);
     }
-
-    Player_SetEquipmentData(play, this);
-    Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
 }
 
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
-    u8 current = gSaveContext.save.info.equips.buttonItems[0];
-    u8 new     = current;
- 
-    if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON))
+    static const EquipmentSwapEntry equipments[] = {
+        { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
+        { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
+    };
+
+    u8 current    = gSaveContext.save.info.equips.buttonItems[0];
+    u8 validCount = 0;
+    u8 validItems[3], validEquips[3], i, nextItem, nextEquip;
+
+    for (i=0; i<3; i++) {
+        const EquipmentSwapEntry* equipment = &equipments[i];
+
+        if (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD)
+            continue;
+
+        if (equipment->itemId == ITEM_SWORD_BIGGORON)
+            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE)) {
+                validItems[validCount]  = ITEM_GIANTS_KNIFE;
+                validEquips[validCount] = EQUIP_INV_SWORD_BROKENGIANTKNIFE;
+                validCount++;
+                continue;
+            }
+
+        if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, equipment->equipId)) {
+            validItems[validCount]  = equipment->itemId;
+            validEquips[validCount] = equipment->equipId;
+            validCount++;
+        }
+    }
+
+    if (validCount == 0)
         return;
-    
-    if (new != ITEM_SWORD_KOKIRI && new != ITEM_SWORD_MASTER && new != ITEM_SWORD_BIGGORON && new != ITEM_GIANTS_KNIFE)
-        new = ITEM_SWORD_KOKIRI;
 
-    new++;
-    if (new == ITEM_SWORD_KOKIRI   && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)   || !LINK_IS_CHILD))
-        new++;
-    if (new == ITEM_SWORD_MASTER   && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)   || !LINK_IS_ADULT))
-        new++;
-    if (new == ITEM_SWORD_BIGGORON && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) || !LINK_IS_ADULT))
-        new++;
+    if (current == PLAYER_SWORD_NONE)
+        nextItem = validItems[0];
+    else {
+        for (i=0; i<validCount; i++)
+            if (validItems[i] == current) {
+                i = (i + 1) % validCount;
+                break;
+            }
+    }
 
-    if (new > ITEM_SWORD_BIGGORON)
-        new = LINK_IS_CHILD ? ITEM_SWORD_KOKIRI : ITEM_SWORD_MASTER;
-    if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE) && new == ITEM_SWORD_BIGGORON)
-        new = ITEM_GIANTS_KNIFE;
-
-    if (current != new) {
-        gSaveContext.save.info.equips.buttonItems[0] = new;
-        Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, new == ITEM_GIANTS_KNIFE ? EQUIP_INV_SWORD_BROKENGIANTKNIFE : new - ITEM_SWORD_KOKIRI + 1);
+    nextItem  = validItems[i  % validCount];
+    nextEquip = validEquips[i % validCount] + 1;
+    if (current != nextItem) {
+        gSaveContext.save.info.equips.buttonItems[0] = nextItem;
         Interface_LoadItemIcon1(play, 0);
-        Player_ChangeEquipment(this, play, button);
+        Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SWORD, nextEquip);
     }
 }
 
 void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
-    u8 current = SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD));
-    u8 new     = current;
+    static const EquipmentSwapEntry equipments[] = {
+        { PLAYER_SHIELD_DEKU,   EQUIP_INV_SHIELD_DEKU,   LINK_AGE_CHILD },
+        { PLAYER_SHIELD_HYLIAN, EQUIP_INV_SHIELD_HYLIAN, 9              },
+        { PLAYER_SHIELD_MIRROR, EQUIP_INV_SHIELD_MIRROR, LINK_AGE_ADULT },
+    };
 
-    if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR))
+    u8 current    = SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD));
+    u8 validCount = 0;
+    u8 validItems[3], i, nextItem;
+    
+    for (i=0; i<3; i++) {
+        const EquipmentSwapEntry* equipment = &equipments[i];
+
+        if (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD)
+            continue;
+
+        if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
+            validItems[validCount]  = equipment->itemId;
+            validCount++;
+        }
+    }
+
+    if (validCount == 0)
         return;
 
-    new++;
-    if (new == PLAYER_SHIELD_DEKU   && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)   || !LINK_IS_CHILD))
-        new++;
-    if (new == PLAYER_SHIELD_HYLIAN && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)))
-        new++;
-    if (new == PLAYER_SHIELD_MIRROR && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR) || !LINK_IS_ADULT))
-        new++;
-
-    if (new > PLAYER_SHIELD_MIRROR)
-        new = LINK_IS_CHILD ? PLAYER_SHIELD_DEKU : PLAYER_SHIELD_HYLIAN;
-
-    if (LINK_IS_CHILD && new == PLAYER_SHIELD_HYLIAN  && (this->stateFlags1 & PLAYER_STATE1_SHIELDING))
-        new = current;
-    else if (current != new) {
-        Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, new);
-        Player_ChangeEquipment(this, play, button);
+    if (current == PLAYER_SHIELD_NONE)
+        nextItem = validItems[0];
+    else {
+        for (i=0; i<validCount; i++)
+            if (validItems[i] == current) {
+                i = (i + 1) % validCount;
+                break;
+            }
     }
+
+    nextItem = validItems[i % validCount];
+    if (current != nextItem)
+        Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SHIELD, nextItem);
 }
 
 void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
-    u8 current = TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
-    u8 new     = current;
+    static const EquipmentSwapEntry equipments[] = {
+        { PLAYER_TUNIC_KOKIRI, EQUIP_INV_TUNIC_KOKIRI, 9              },
+        { PLAYER_TUNIC_GORON,  EQUIP_INV_TUNIC_GORON,  LINK_AGE_ADULT },
+        { PLAYER_TUNIC_ZORA,   EQUIP_INV_TUNIC_ZORA,   LINK_AGE_ADULT },
+    };
 
-    if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
+    u8 current    = TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+    u8 validCount = 0;
+    u8 validItems[3], i, nextItem;
+
+    for (i=0; i<3; i++) {
+        const EquipmentSwapEntry* equipment = &equipments[i];
+
+        if (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD)
+            continue;
+
+        if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, equipment->equipId)) {
+            validItems[validCount]  = equipment->itemId;
+            validCount++;
+        }
+    }
+
+    if (validCount == 0)
         return;
 
-    new++;
-    if (new == 0 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI)))
-        new++;
-    if (new == 1 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON) || !LINK_IS_ADULT))
-        new++;
-    if (new == 2 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA)  || !LINK_IS_ADULT))
-        new++;
+    for (i=0; i<validCount; i++)
+        if (validItems[i] == current) {
+            i = (i + 1) % validCount;
+            break;
+        }
 
-    if (new > 2)
-        new = 0;
-
-    if (current != new) {
-        Inventory_ChangeEquipment(EQUIP_TYPE_TUNIC, new + 1);
-        Player_ChangeEquipment(this, play, button);
-    }
+    nextItem = validItems[i % validCount];
+    if (current != nextItem)
+        Player_ChangeEquipment(this, play, button, EQUIP_TYPE_TUNIC, nextItem);
 }
 
 void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
-    u8 current = BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
-    u8 new     = current;
-    
-    if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_KOKIRI) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON) && !CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
-        return;
-    
-    new++;
-    if (new == 0 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_KOKIRI)))
-        new++;
-    if (new == 1 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON)  || !LINK_IS_ADULT))
-        new++;
-    if (new == 2 && (!CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER) || !LINK_IS_ADULT))
-        new++;
-    
-    if (new > 2)
-        new = 0;
-    
-    if (current != new) {
-        Inventory_ChangeEquipment(EQUIP_TYPE_BOOTS, new + 1);
-        Player_ChangeEquipment(this, play, button);
+    static const EquipmentSwapEntry equipments[] = {
+        { PLAYER_BOOTS_KOKIRI, EQUIP_INV_BOOTS_KOKIRI, 9              },
+        { PLAYER_BOOTS_IRON,   EQUIP_INV_BOOTS_IRON,   LINK_AGE_ADULT },
+        { PLAYER_BOOTS_HOVER,  EQUIP_INV_BOOTS_HOVER,  LINK_AGE_ADULT },
+    };
+
+    u8 current    = BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
+    u8 validCount = 0;
+    u8 validItems[3], i, nextItem;
+
+    for (i=0; i<3; i++) {
+        const EquipmentSwapEntry* equipment = &equipments[i];
+
+        if (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD)
+            continue;
+
+        if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, equipment->equipId)) {
+            validItems[validCount]  = equipment->itemId;
+            validCount++;
+        }
     }
+
+    if (validCount == 0)
+        return;
+
+    for (i=0; i<validCount; i++)
+        if (validItems[i] == current) {
+            i = (i + 1) % validCount;
+            break;
+        }
+
+    nextItem = validItems[i % validCount];
+    if (current != nextItem)
+        Player_ChangeEquipment(this, play, button, EQUIP_TYPE_BOOTS, nextItem);
 }
 
 /**
@@ -2837,9 +2909,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             Player_ChangeBoots(this, play, i);
         else if (item == ITEM_TUNIC_GORON) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_TUNIC_GORON)) {
-                this->currentTunic = this->currentTunic == 1 ? 0 : 1;
-                Inventory_ChangeEquipment(EQUIP_TYPE_TUNIC, this->currentTunic + 1);
-                Player_ChangeEquipment(this, play, i);
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 0 ? 1 : 0);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -2849,9 +2919,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             }
         } else if (item == ITEM_TUNIC_ZORA) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_TUNIC_ZORA)) {
-                this->currentTunic = this->currentTunic == 2 ? 0 : 2;
-                Inventory_ChangeEquipment(EQUIP_TYPE_TUNIC, this->currentTunic + 1);
-                Player_ChangeEquipment(this, play, i);
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 0 ? 2 : 0);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -2861,10 +2929,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             }
         } else if (item == ITEM_BOOTS_IRON) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON)) {
-                this->currentBoots = this->currentBoots == 1 ? 0 : 1;
-                Player_SetBootData(play, this);
-                Inventory_ChangeEquipment(EQUIP_TYPE_BOOTS, this->currentBoots + 1);
-                Player_ChangeEquipment(this, play, i);
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_BOOTS, BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS)) == 0 ? 1 : 0);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_BOOTS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -2874,10 +2939,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             }
         } else if (item == ITEM_BOOTS_HOVER) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER)) {
-                this->currentBoots = this->currentBoots == 2 ? 0 : 2;
-                Player_SetBootData(play, this);
-                Inventory_ChangeEquipment(EQUIP_TYPE_BOOTS, this->currentBoots + 1);
-                Player_ChangeEquipment(this, play, i);
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_BOOTS, BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS)) == 0 ? 2 : 0);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_BOOTS)
                         Interface_LoadItemIcon1(play, i+4);

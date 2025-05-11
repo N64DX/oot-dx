@@ -1590,12 +1590,14 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
 }
 
 u8 Interface_GetItemFromDpad(u8 button) {
-    if (DPAD_BUTTON(button) == SLOT_ARROW_FIRE && gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_FIRE)
-        return ITEM_BOW_FIRE;
-    else if (DPAD_BUTTON(button) == SLOT_ARROW_ICE && gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_ICE)
-        return ITEM_BOW_ICE;
-    else if (DPAD_BUTTON(button) == SLOT_ARROW_LIGHT && gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)] == ITEM_ARROW_LIGHT)
-        return ITEM_BOW_LIGHT;
+    if (DPAD_BUTTON(button) == SLOT_ARROW_FIRE)
+        return (gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE]  == ITEM_ARROW_FIRE)  ? ITEM_BOW_FIRE  : ITEM_NONE;
+    else if (DPAD_BUTTON(button) == SLOT_ARROW_ICE)
+        return (gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE]   == ITEM_ARROW_ICE)   ? ITEM_BOW_ICE   : ITEM_NONE;
+    else if (DPAD_BUTTON(button) == SLOT_ARROW_LIGHT)
+        return( gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] == ITEM_ARROW_LIGHT) ? ITEM_BOW_LIGHT : ITEM_NONE;
+    else if (DPAD_BUTTON(button) == SLOT_TRADE_CHILD)
+        return (gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] >= ITEM_WEIRD_EGG && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] <= ITEM_MASK_TRUTH) ? gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] : ITEM_NONE;
     else if (DPAD_BUTTON(button) < SLOT_SWORDS)
         return gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)];
     else if (DPAD_BUTTON(button) == SLOT_SWORDS)
@@ -3183,7 +3185,7 @@ void Interface_DrawItemButtons(PlayState* play) {
     dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 15;
     if (gSaveContext.save.info.playerData.magicLevel != 0)
         dpad_y += 15;
-    if ( (gSaveContext.timerState == TIMER_STATE_ENV_HAZARD_TICK || gSaveContext.timerState == TIMER_STATE_DOWN_TICK || gSaveContext.timerState == TIMER_STATE_UP_TICK || gSaveContext.timerState == TIMER_STATE_UP_FREEZE) && pauseCtx->state == PAUSE_STATE_OFF) {
+    if (IS_ACTIVE_TIMER && pauseCtx->state == PAUSE_STATE_OFF) {
         dpad_y += 15;
         if (gSaveContext.save.info.playerData.magicLevel == 0)
             dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 45;
