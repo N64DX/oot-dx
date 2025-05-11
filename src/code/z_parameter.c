@@ -153,6 +153,14 @@ static s16 sMagicBorderR = 255;
 static s16 sMagicBorderG = 255;
 static s16 sMagicBorderB = 255;
 
+bool dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
+u8 dpadAlphas[] = { 0, 0, 0, 0, 0 };
+bool switchedDualSet = false;
+u8 sNoclipTimer = 0;
+static u8 shielded = 0;
+static u16 dpad_x;
+static u16 dpad_y;
+
 static s16 sExtraItemBases[] = {
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_5
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_10
@@ -188,6 +196,10 @@ static Gfx sSetupDL_80125A60[] = {
     gsSPEndDisplayList(),
 };
 
+u8 Interface_IsEquipmentItem(u8 item) {
+    return ((item >= ITEM_SWORDS && item <= ITEM_BOOTS) || item == ITEM_TUNIC_GORON || item == ITEM_TUNIC_ZORA || item == ITEM_BOOTS_IRON || item == ITEM_BOOTS_HOVER);
+}
+
 // original name: "alpha_change"
 void Interface_ChangeHudVisibilityMode(u16 hudVisibilityMode) {
     if (hudVisibilityMode != gSaveContext.hudVisibilityMode) {
@@ -203,6 +215,7 @@ void Interface_ChangeHudVisibilityMode(u16 hudVisibilityMode) {
  */
 void Interface_RaiseButtonAlphas(PlayState* play, s16 risingAlpha) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    u8 i;
 
     if (gSaveContext.buttonStatus[0] == BTN_DISABLED) {
         if (interfaceCtx->bAlpha != 70) {
@@ -253,6 +266,30 @@ void Interface_RaiseButtonAlphas(PlayState* play, s16 risingAlpha) {
             interfaceCtx->aAlpha = risingAlpha;
         }
     }
+
+    if (dpadStatus[0] == BTN_DISABLED && dpadStatus[1] == BTN_DISABLED && dpadStatus[2] == BTN_DISABLED && dpadStatus[3] == BTN_DISABLED) {
+        if (dpadAlphas[0] != 70)
+            dpadAlphas[0] = 70;
+    }
+    else if (dpadAlphas[0] != 255)
+        dpadAlphas[0] = risingAlpha;
+    
+    for (i=1; i<5; i++) {
+        if (dpadStatus[i-1] == BTN_DISABLED) {
+            if (dpadAlphas[i] != 70)
+                dpadAlphas[i] = 70;
+        }
+        else if (dpadAlphas[i] != 255)
+            dpadAlphas[i] = risingAlpha;
+    }
+}
+
+void updateDpadAlphas(u8 dimmingAlpha) {
+    u8 i;
+
+    for (i=0; i<5; i++)
+        if (dpadAlphas[i] != 0 && dpadAlphas[i] > dimmingAlpha)
+            dpadAlphas[i] = dimmingAlpha;
 }
 
 /**
@@ -286,6 +323,8 @@ void Interface_DimButtonAlphas(PlayState* play, s16 dimmingAlpha, s16 risingAlph
     if ((interfaceCtx->cRightAlpha != 0) && (interfaceCtx->cRightAlpha > dimmingAlpha)) {
         interfaceCtx->cRightAlpha = dimmingAlpha;
     }
+
+    updateDpadAlphas(dimmingAlpha);
 }
 
 void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
@@ -338,6 +377,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
 
             PRINTF("a_alpha=%d, c_alpha=%d\n", interfaceCtx->aAlpha, interfaceCtx->cLeftAlpha);
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_HEARTS_FORCE:
@@ -400,6 +440,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 interfaceCtx->aAlpha = risingAlpha;
             }
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_A_HEARTS_MAGIC_FORCE:
@@ -526,6 +567,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 interfaceCtx->magicAlpha = risingAlpha;
             }
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_B_ALT:
@@ -561,6 +603,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 interfaceCtx->bAlpha = risingAlpha;
             }
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_HEARTS:
@@ -596,6 +639,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 interfaceCtx->healthAlpha = risingAlpha;
             }
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_A_B_MINIMAP:
@@ -631,6 +675,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 interfaceCtx->healthAlpha = dimmingAlpha;
             }
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_HEARTS_MAGIC_FORCE:
@@ -680,6 +725,7 @@ void func_80083108(PlayState* play) {
                 if (gSaveContext.buttonStatus[0] == BTN_DISABLED) {
                     gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                         gSaveContext.buttonStatus[3] = BTN_ENABLED;
+                    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
                 }
 
                 if ((gSaveContext.save.info.equips.buttonItems[0] != ITEM_SLINGSHOT) &&
@@ -710,6 +756,7 @@ void func_80083108(PlayState* play) {
 
                     gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] = gSaveContext.buttonStatus[3] =
                         BTN_DISABLED;
+                    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                     Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_A_HEARTS_MAGIC_MINIMAP_FORCE);
                 }
 
@@ -756,6 +803,7 @@ void func_80083108(PlayState* play) {
 
                 gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                     gSaveContext.buttonStatus[3] = BTN_DISABLED;
+                dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
             } else {
                 if (gSaveContext.buttonStatus[0] == BTN_ENABLED) {
@@ -764,6 +812,7 @@ void func_80083108(PlayState* play) {
 
                 gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                     gSaveContext.buttonStatus[3] = BTN_DISABLED;
+                dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
             }
         } else if (msgCtx->msgMode == MSGMODE_NONE) {
@@ -778,7 +827,7 @@ void func_80083108(PlayState* play) {
                 for (i = 1; i < 4; i++) {
                     if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] != ITEM_HOOKSHOT) &&
-                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LONGSHOT)) {
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LONGSHOT) && (gSaveContext.save.info.equips.buttonItems[i] < ITEM_MASK_KEATON || gSaveContext.save.info.equips.buttonItems[i] > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i])) {
                             if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                                 sp28 = true;
                             }
@@ -791,12 +840,53 @@ void func_80083108(PlayState* play) {
 
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
+                    } else if (Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_SWIMMING) {
+                        if ((gSaveContext.save.info.equips.buttonItems[i]  < ITEM_MASK_KEATON || gSaveContext.save.info.equips.buttonItems[i] > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i])) {
+                            if (gSaveContext.buttonStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            gSaveContext.buttonStatus[i] = BTN_DISABLED;
+                        }
+                        else {
+                            if (gSaveContext.buttonStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            gSaveContext.buttonStatus[i] = BTN_ENABLED;
+                        }
                     } else {
                         if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                             sp28 = true;
                         }
 
                         gSaveContext.buttonStatus[i] = BTN_DISABLED;
+                    }
+                }
+                for (i=0; i<4; i++) {
+                    if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) {
+                        if (Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT && Interface_GetItemFromDpad(i) != ITEM_LONGSHOT && (Interface_GetItemFromDpad(i) < ITEM_MASK_KEATON || Interface_GetItemFromDpad(i) > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        } else {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
+                    }
+                    else if (Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_SWIMMING) {
+                        if (((Interface_GetItemFromDpad(i) < ITEM_MASK_KEATON || Interface_GetItemFromDpad(i) > ITEM_MASK_TRUTH)) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
+                        else {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
+                    }
+                    else {
+                        if (dpadStatus[i] == BTN_ENABLED)
+                            sp28 = true;
+                        dpadStatus[i] = BTN_DISABLED;
                     }
                 }
 
@@ -811,6 +901,7 @@ void func_80083108(PlayState* play) {
                     gSaveContext.buttonStatus[1] = BTN_DISABLED;
                     gSaveContext.buttonStatus[2] = BTN_DISABLED;
                     gSaveContext.buttonStatus[3] = BTN_DISABLED;
+                    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                     gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
                     Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
                 }
@@ -862,6 +953,18 @@ void func_80083108(PlayState* play) {
                         gSaveContext.buttonStatus[i] = BTN_ENABLED;
                     }
                 }
+                for (i=0; i<4; i++) {
+                    if (Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME) {
+                        if (dpadStatus[i] == BTN_ENABLED)
+                            sp28 = true;
+                        dpadStatus[i] = BTN_DISABLED;
+                    }
+                    else {
+                        if (dpadStatus[i] == BTN_DISABLED)
+                            sp28 = true;
+                        dpadStatus[i] = BTN_ENABLED;
+                    }
+                }
 
                 if (sp28) {
                     gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
@@ -869,6 +972,8 @@ void func_80083108(PlayState* play) {
 
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
             } else {
+                u8 status, item;
+
                 if (interfaceCtx->restrictions.bButton == 0) {
                     if ((gSaveContext.save.info.equips.buttonItems[0] == ITEM_SLINGSHOT) ||
                         (gSaveContext.save.info.equips.buttonItems[0] == ITEM_BOW) ||
@@ -927,6 +1032,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.bottles == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
@@ -938,6 +1049,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.tradeItems != 0) {
@@ -951,6 +1068,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.tradeItems == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
@@ -962,6 +1085,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.hookshot != 0) {
@@ -975,6 +1104,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_HOOKSHOT || Interface_GetItemFromDpad(i) == ITEM_LONGSHOT) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.hookshot == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] == ITEM_HOOKSHOT) ||
@@ -986,6 +1121,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_HOOKSHOT || Interface_GetItemFromDpad(i) == ITEM_LONGSHOT) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.ocarina != 0) {
@@ -999,6 +1140,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_OCARINA_FAIRY || Interface_GetItemFromDpad(i) == ITEM_OCARINA_OF_TIME) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.ocarina == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] == ITEM_OCARINA_FAIRY) ||
@@ -1010,6 +1157,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_OCARINA_FAIRY || Interface_GetItemFromDpad(i) == ITEM_OCARINA_OF_TIME) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.farores != 0) {
@@ -1023,6 +1176,12 @@ void func_80083108(PlayState* play) {
                             PRINTF("***(i=%d)***  ", i);
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_FARORES_WIND) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.farores == 0) {
                     for (i = 1; i < 4; i++) {
                         if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_FARORES_WIND) {
@@ -1033,6 +1192,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_FARORES_WIND) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.dinsNayrus != 0) {
@@ -1046,6 +1211,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_DINS_FIRE || Interface_GetItemFromDpad(i) == ITEM_NAYRUS_LOVE) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.dinsNayrus == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] == ITEM_DINS_FIRE) ||
@@ -1057,6 +1228,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_DINS_FIRE || Interface_GetItemFromDpad(i) == ITEM_NAYRUS_LOVE) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.all != 0) {
@@ -1066,7 +1243,8 @@ void func_80083108(PlayState* play) {
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
-                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK))) {
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
+                            !(Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i]))) {
                             if ((play->sceneId != SCENE_TREASURE_BOX_SHOP) ||
                                 (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LENS_OF_TRUTH)) {
                                 if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
@@ -1083,6 +1261,19 @@ void func_80083108(PlayState* play) {
                             }
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) && !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                            if (play->sceneId != SCENE_TREASURE_BOX_SHOP || Interface_GetItemFromDpad(i) != ITEM_LENS_OF_TRUTH) {
+                                if (dpadStatus[i] == BTN_ENABLED)
+                                    sp28 = true;
+                                dpadStatus[i] = BTN_DISABLED;
+                            }
+                            else {
+                                if (dpadStatus[i] == BTN_DISABLED)
+                                    sp28 = true;
+                                dpadStatus[i] = BTN_ENABLED;
+                            }
+                        }
                 } else if (interfaceCtx->restrictions.all == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] != ITEM_DINS_FIRE) &&
@@ -1103,6 +1294,14 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) != ITEM_DINS_FIRE     && Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT        &&   Interface_GetItemFromDpad(i) != ITEM_LONGSHOT     && Interface_GetItemFromDpad(i) != ITEM_FARORES_WIND && Interface_GetItemFromDpad(i) != ITEM_NAYRUS_LOVE &&
+                            Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE)  &&
+                          !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
             }
         }
@@ -1177,6 +1376,9 @@ void Interface_SetSceneRestrictions(PlayState* play) {
         }
         i++;
     } while (sRestrictionFlags[i].sceneId != 0xFF);
+    
+    if (!interfaceCtx->restrictions.tradeItems)
+        GET_PLAYER(play)->currentMask = GET_MASK_AGE();
 }
 
 Gfx* Gfx_TextureIA8(Gfx* displayListHead, void* texture, s16 textureWidth, s16 textureHeight, s16 rectLeft, s16 rectTop,
@@ -1310,6 +1512,8 @@ void Inventory_SwapAgeEquipment(void) {
             gSaveContext.save.info.equips.equipment &= gEquipNegMasks[EQUIP_TYPE_SHIELD];
         }
     }
+
+    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
 }
 
 void Interface_InitHorsebackArchery(PlayState* play) {
@@ -1322,6 +1526,8 @@ void Interface_InitHorsebackArchery(PlayState* play) {
 }
 
 void func_800849EC(PlayState* play) {
+    u8 i;
+
     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON);
     gSaveContext.save.info.inventory.equipment ^=
         OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE);
@@ -1333,14 +1539,42 @@ void func_800849EC(PlayState* play) {
     }
 
     Interface_LoadItemIcon1(play, 0);
+
+    for (i=1; i<8; i++) {
+        if (i<4) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                Interface_LoadItemIcon1(play, i);
+        }
+        else {
+            if (DPAD_BUTTON(i-4) == SLOT_SWORDS)
+                Interface_LoadItemIcon1(play, i);
+        }
+    }
 }
 
 void Interface_LoadItemIcon1(PlayState* play, u16 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    u8 item;
+
+    if (button < 4)
+        item = gSaveContext.save.info.equips.buttonItems[button];
+    else item = Interface_GetItemFromDpad(button-4);
+
+    if (item == ITEM_SWORDS)
+        item = gSaveContext.save.info.equips.buttonItems[0];
+    else if (item == ITEM_SHIELDS)
+        item = (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
+    else if (item == ITEM_TUNICS)
+        item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+    else if (item == ITEM_BOOTS)
+        item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
+
+    if (item >= 0xF0)
+        return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (button * ITEM_ICON_SIZE),
-                      GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[button]), ITEM_ICON_SIZE, 0,
+                      GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1171);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
@@ -1353,6 +1587,36 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
                       GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[button]), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
+}
+
+u8 Interface_GetItemFromDpad(u8 button) {
+    if (DPAD_BUTTON(button) == SLOT_ARROW_FIRE)
+        return (gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE]  == ITEM_ARROW_FIRE)  ? ITEM_BOW_FIRE  : ITEM_NONE;
+    else if (DPAD_BUTTON(button) == SLOT_ARROW_ICE)
+        return (gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE]   == ITEM_ARROW_ICE)   ? ITEM_BOW_ICE   : ITEM_NONE;
+    else if (DPAD_BUTTON(button) == SLOT_ARROW_LIGHT)
+        return( gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] == ITEM_ARROW_LIGHT) ? ITEM_BOW_LIGHT : ITEM_NONE;
+    else if (DPAD_BUTTON(button) == SLOT_TRADE_CHILD)
+        return (gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] >= ITEM_WEIRD_EGG && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] <= ITEM_MASK_TRUTH) ? gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] : ITEM_NONE;
+    else if (DPAD_BUTTON(button) < SLOT_SWORDS)
+        return gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)];
+    else if (DPAD_BUTTON(button) == SLOT_SWORDS)
+        return ITEM_SWORDS;
+    else if (DPAD_BUTTON(button) == SLOT_SHIELDS)
+        return ITEM_SHIELDS;
+    else if (DPAD_BUTTON(button) == SLOT_TUNICS)
+        return ITEM_TUNICS;
+    else if (DPAD_BUTTON(button) == SLOT_BOOTS)
+        return ITEM_BOOTS;
+    else if (DPAD_BUTTON(button) == SLOT_TUNIC_GORON && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))
+        return ITEM_TUNIC_GORON;
+    else if (DPAD_BUTTON(button) == SLOT_TUNIC_ZORA  && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
+        return ITEM_TUNIC_ZORA;
+    else if (DPAD_BUTTON(button) == SLOT_BOOTS_IRON  && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON))
+        return ITEM_BOOTS_IRON;
+    else if (DPAD_BUTTON(button) == SLOT_BOOTS_HOVER && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
+        return ITEM_BOOTS_HOVER;
+    else return ITEM_NONE;
 }
 
 void func_80084BF4(PlayState* play, u16 flag) {
@@ -1379,10 +1643,12 @@ void func_80084BF4(PlayState* play, u16 flag) {
 
         gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
             gSaveContext.buttonStatus[3] = BTN_ENABLED;
+        dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL_NO_MINIMAP_BY_BTN_STATUS);
     } else {
         gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
             gSaveContext.buttonStatus[3] = BTN_ENABLED;
+        dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
         func_80083108(play);
     }
 }
@@ -1604,6 +1870,9 @@ u8 Item_Give(PlayState* play, u8 item) {
                 Interface_LoadItemIcon1(play, i);
             }
         }
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_HOOKSHOT)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_DEKU_STICK) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -1734,6 +2003,9 @@ u8 Item_Give(PlayState* play, u8 item) {
                 Interface_LoadItemIcon1(play, i);
             }
         }
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_OCARINA)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_MAGIC_BEAN) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -1812,6 +2084,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         temp = SLOT(item);
 
         if ((item != ITEM_BOTTLE_MILK_FULL) && (item != ITEM_BOTTLE_RUTOS_LETTER)) {
+            u8 j;
             if (item == ITEM_MILK) {
                 item = ITEM_BOTTLE_MILK_FULL;
                 temp = SLOT(item);
@@ -1839,6 +2112,14 @@ u8 Item_Give(PlayState* play, u8 item) {
                     }
 
                     gSaveContext.save.info.inventory.items[temp + i] = item;
+
+                    for (j=0; j<4; j++)
+                        if (DPAD_BUTTON(j) == temp + i) {
+                            Interface_LoadItemIcon1(play, j+4);
+                            dpadStatus[j] = BTN_ENABLED;
+                            break;
+                        }
+
                     return ITEM_NONE;
                 }
             }
@@ -2036,9 +2317,11 @@ s32 Inventory_ReplaceItem(PlayState* play, u16 oldItem, u16 newItem) {
                 if (gSaveContext.save.info.equips.buttonItems[i] == oldItem) {
                     gSaveContext.save.info.equips.buttonItems[i] = newItem;
                     Interface_LoadItemIcon1(play, i);
-                    return true;
                 }
             }
+            for (i=0; i<4; i++)
+                if (Interface_GetItemFromDpad(i) == oldItem)
+                    Interface_LoadItemIcon1(play, i+4);                 
             return true;
         }
     }
@@ -2071,9 +2354,28 @@ s32 Inventory_HasSpecificBottle(u8 bottleItem) {
 }
 
 void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
+    u8 i;
+    
     PRINTF("item_no=%x,  c_no=%x,  Pt=%x  Item_Register=%x\n", item, button,
            gSaveContext.save.info.equips.cButtonSlots[button - 1],
            gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button - 1]]);
+
+    if (button >= 4) {
+        if (gSaveContext.save.info.inventory.items[DPAD_BUTTON(button-4)] == ITEM_BOTTLE_MILK_FULL && item == ITEM_BOTTLE_EMPTY)
+            item = ITEM_BOTTLE_MILK_HALF;
+        
+        for (i=1; i<4; i++)
+            if (gSaveContext.save.info.equips.cButtonSlots[i-1] == DPAD_BUTTON(button-4)) {
+                gSaveContext.save.info.equips.cButtonSlots[i-1] = gSaveContext.save.info.equips.buttonItems[i] = item;
+                Interface_LoadItemIcon1(play, i);
+            }
+        
+        gSaveContext.save.info.inventory.items[DPAD_BUTTON(button-4)] = item;
+        Interface_LoadItemIcon1(play, button);
+        dpadStatus[button-4] = BTN_ENABLED;
+        
+        return;
+    }
 
     // Special case to only empty half of a Lon Lon Milk Bottle
     if ((gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button - 1]] ==
@@ -2084,6 +2386,10 @@ void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
 
     gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button - 1]] = item;
     gSaveContext.save.info.equips.buttonItems[button] = item;
+    
+    for (i=0; i<4; i++)
+        if (Interface_GetItemFromDpad(i) == item)
+            Interface_LoadItemIcon1(play, i+4);
 
     Interface_LoadItemIcon1(play, button);
 
@@ -2107,6 +2413,13 @@ s32 Inventory_ConsumeFairy(PlayState* play) {
                     break;
                 }
             }
+
+            for (j=0; j<4; j++)
+                if (DPAD_BUTTON(j) == bottleSlot) {
+                    Interface_LoadItemIcon1(play, j+4);
+                    break;
+                }
+
             PRINTF(T("妖精使用＝%d\n", "Fairy Usage=%d\n"), bottleSlot);
             gSaveContext.save.info.inventory.items[bottleSlot + i] = ITEM_BOTTLE_EMPTY;
             return true;
@@ -2601,7 +2914,7 @@ void Magic_Update(PlayState* play) {
                      (Player_GetEnvironmentalHazard(play) <= PLAYER_ENV_HAZARD_UNDERWATER_FREE)) ||
                     ((gSaveContext.save.info.equips.buttonItems[1] != ITEM_LENS_OF_TRUTH) &&
                      (gSaveContext.save.info.equips.buttonItems[2] != ITEM_LENS_OF_TRUTH) &&
-                     (gSaveContext.save.info.equips.buttonItems[3] != ITEM_LENS_OF_TRUTH)) ||
+                     (gSaveContext.save.info.equips.buttonItems[3] != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(0) != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(1) != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(2) != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(3) != ITEM_LENS_OF_TRUTH)) ||
                     !play->actorCtx.lensActive) {
                     // Force lens off and set magic meter state to idle
                     play->actorCtx.lensActive = false;
@@ -2804,6 +3117,52 @@ void Interface_DrawActionLabel(GraphicsContext* gfxCtx, void* texture) {
     CLOSE_DISPS(gfxCtx, "../z_parameter.c", 2829);
 }
 
+const u32 gDpadTex[] = {
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0xf7f7f7ff, 0xd7d7d7ff, 0xc2c2c2ff,
+    0xbababaff, 0xa1a1a1ff, 0x434343ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0xffffffff, 0xfdfdfdff, 0xe2e2e2ff, 0xcacacaff, 0xc3c3c3ff, 0x9e9e9eff, 0x393939ff, 0x181818ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xfbfbfbff, 0xfefefeff, 0xf4f4f4ff, 0xcacacaff, 0x8a8a8aff, 0x797979ff, 0x626262ff, 0x404040ff, 0x111111ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xf1f1f1ff, 0xf1f1f1ff, 0xd9d9d9ff, 0xa7a7a7ff, 0x000000ff,
+    0x0e0e0eff, 0x757575ff, 0x5f5f5fff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x000000ff, 0xf1f1f1ff, 0xecececff, 0xc3c3c3ff, 0x000000ff, 0x1b1b1bff, 0x696969ff, 0x7a7a7aff, 0x717171ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xf5f5f5ff, 0xf1f1f1ff, 0xcececeff, 0x7a7a7aff, 0xbfbfbfff, 0xc8c8c8ff, 0xe4e4e4ff, 0x7d7d7dff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xf9f9f9ff, 0xf4f4f4ff, 0xd8d8d8ff, 0xcacacaff, 0xbbbbbbff,
+    0xabababff, 0x9b9b9bff, 0x8a8a8aff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x000000ff, 0xfcfcfcff, 0xf8f8f8ff, 0xe2e2e2ff, 0xd5d5d5ff, 0xc7c7c7ff, 0xb7b7b7ff, 0xa7a7a7ff, 0x979797ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xfefefeff, 0xfbfbfbff, 0xebebebff, 0xdfdfdfff, 0xd1d1d1ff, 0xc3c3c3ff, 0xb3b3b3ff, 0xa3a3a3ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0xfefefeff, 0xfefefeff, 0xf2f2f2ff, 0xe8e8e8ff, 0xdcdcdcff,
+    0xcececeff, 0xbfbfbfff, 0xafafafff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0xf5f5f5ff, 0xdcdcdcff, 0xd7d7d7ff, 0xdededeff, 0xe5e5e5ff,
+    0xebebebff, 0xf1f1f1ff, 0xfbfbfbff, 0xffffffff, 0xffffffff, 0xf9f9f9ff, 0xf0f0f0ff, 0xe5e5e5ff, 0xd8d8d8ff, 0xcacacaff, 0xbbbbbbff, 0x555555ff, 0x4d4d4dff, 0xa9a9a9ff, 0xc5c5c5ff, 0xbebebeff, 0xb7b7b7ff, 0xb0b0b0ff, 0xa9a9a9ff, 0x8d8d8dff, 0x212121ff, 0x000000ff, 0x00000096, 0x00000000,
+    0x00000096, 0x000000ff, 0xfefefeff, 0xfcfcfcff, 0xe0e0e0ff, 0xd5d5d5ff, 0xdbdbdbff, 0xe2e2e2ff, 0xe8e8e8ff, 0xeeeeeeff, 0xf6f6f6ff, 0xfbfbfbff, 0xfbfbfbff, 0xffffffff, 0xf7f7f7ff, 0xedededff, 0xe2e2e2ff, 0xd5d5d5ff, 0xc7c7c7ff, 0xadadadff, 0xacacacff, 0xc5c5c5ff, 0xcececeff, 0xc7c7c7ff,
+    0xc0c0c0ff, 0xb9b9b9ff, 0xb3b3b3ff, 0x878787ff, 0x1d1d1dff, 0x0b0b0bff, 0x000000ff, 0x00000096, 0x000000ff, 0xf1f1f1ff, 0xfcfcfcff, 0xecececff, 0xb8b8b8ff, 0x8a8a8aff, 0x9b9b9bff, 0xabababff, 0xbbbbbbff, 0xcacacaff, 0xd8d8d8ff, 0xe5e5e5ff, 0xf0f0f0ff, 0xf9f9f9ff, 0xfdfdfdff, 0xf5f5f5ff,
+    0xebebebff, 0xdfdfdfff, 0xd1d1d1ff, 0xc3c3c3ff, 0xb3b3b3ff, 0xa3a3a3ff, 0x939393ff, 0x828282ff, 0x717171ff, 0x606060ff, 0x505050ff, 0x3c3c3cff, 0x242424ff, 0x080808ff, 0x000000ff, 0x000000ff, 0x000000ff, 0xc0c0c0ff, 0xd1d1d1ff, 0xa9a9a9ff, 0x6c6c6cff, 0x000000ff, 0x4e4e4eff, 0x9f9f9fff,
+    0xafafafff, 0xbfbfbfff, 0xcececeff, 0xdcdcdcff, 0xe8e8e8ff, 0xf2f2f2ff, 0xfbfbfbff, 0xfbfbfbff, 0xf2f2f2ff, 0xe8e8e8ff, 0xdcdcdcff, 0xcececeff, 0xbfbfbfff, 0xafafafff, 0x9f9f9fff, 0x8e8e8eff, 0x7d7d7dff, 0x000000ff, 0x070707ff, 0x4c4c4cff, 0x393939ff, 0x000000ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0xa6a6a6ff, 0xb1b1b1ff, 0x505050ff, 0x000000ff, 0x0f0f0fff, 0xa2a2a2ff, 0x939393ff, 0xa3a3a3ff, 0xb3b3b3ff, 0xc3c3c3ff, 0xd1d1d1ff, 0xdfdfdfff, 0xebebebff, 0xf5f5f5ff, 0xfdfdfdff, 0xf9f9f9ff, 0xf0f0f0ff, 0xe5e5e5ff, 0xd8d8d8ff, 0xcacacaff, 0xbbbbbbff, 0xabababff, 0x9b9b9bff,
+    0x8a8a8aff, 0x000000ff, 0x2b2b2bff, 0x4e4e4eff, 0x484848ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0xa2a2a2ff, 0xadadadff, 0x444444ff, 0x050505ff, 0x3b3b3bff, 0xb5b5b5ff, 0x868686ff, 0x979797ff, 0xa7a7a7ff, 0xb7b7b7ff, 0xc7c7c7ff, 0xd5d5d5ff, 0xe2e2e2ff, 0xedededff, 0xf7f7f7ff,
+    0xffffffff, 0xf7f7f7ff, 0xedededff, 0xe2e2e2ff, 0xd5d5d5ff, 0xc7c7c7ff, 0xb7b7b7ff, 0xa7a7a7ff, 0x979797ff, 0x000000ff, 0x9e9e9eff, 0xd7d7d7ff, 0x545454ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x868686ff, 0x818181ff, 0x353535ff, 0x484848ff, 0x5a5a5aff, 0xdededeff, 0x797979ff,
+    0x8a8a8aff, 0x9b9b9bff, 0xabababff, 0xbbbbbbff, 0xcacacaff, 0xd8d8d8ff, 0xe5e5e5ff, 0xf0f0f0ff, 0xf9f9f9ff, 0xfdfdfdff, 0xf5f5f5ff, 0xebebebff, 0xdfdfdfff, 0xd1d1d1ff, 0xc3c3c3ff, 0xb3b3b3ff, 0xa3a3a3ff, 0x515151ff, 0xd4d4d4ff, 0x717171ff, 0x181818ff, 0x000000ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0x181818ff, 0x181818ff, 0x222222ff, 0x393939ff, 0x4c4c4cff, 0x5c5c5cff, 0x6c6c6cff, 0x7d7d7dff, 0x8e8e8eff, 0x9f9f9fff, 0xafafafff, 0xbfbfbfff, 0xcececeff, 0xdcdcdcff, 0xe8e8e8ff, 0xf2f2f2ff, 0xfbfbfbff, 0xfbfbfbff, 0xf2f2f2ff, 0xe8e8e8ff, 0xdcdcdcff, 0xcececeff, 0xbfbfbfff,
+    0xafafafff, 0x9f9f9fff, 0x8e8e8eff, 0x1f1f1fff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x000000ff, 0x090909ff, 0x080808ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x515151ff, 0xa9a9a9ff, 0xc3c3c3ff, 0xd1d1d1ff, 0xdfdfdfff,
+    0xebebebff, 0xf5f5f5ff, 0xfdfdfdff, 0x3e3e3eff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0x000000ff, 0x000000ff, 0x4b4b4bff, 0xacacacff, 0xb7b7b7ff, 0xc7c7c7ff, 0xd5d5d5ff, 0xe2e2e2ff, 0xedededff, 0xf7f7f7ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000,
+    0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0xa9a9a9ff, 0xc7c7c7ff, 0xabababff, 0xbbbbbbff, 0xcacacaff, 0xd8d8d8ff, 0xe5e5e5ff, 0xf0f0f0ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xc7c7c7ff, 0xd1d1d1ff, 0x9f9f9fff, 0xafafafff, 0xbfbfbfff,
+    0xcececeff, 0xdcdcdcff, 0xe8e8e8ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x000000ff, 0xc2c2c2ff, 0xccccccff, 0x939393ff, 0xa3a3a3ff, 0xb3b3b3ff, 0xc3c3c3ff, 0xd1d1d1ff, 0xdfdfdfff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xbcbcbcff, 0xc7c7c7ff, 0x868686ff, 0x979797ff, 0xa7a7a7ff, 0xb7b7b7ff, 0xc7c7c7ff, 0xd5d5d5ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xb7b7b7ff, 0xc1c1c1ff, 0x797979ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0x767676ff, 0xcacacaff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x000000ff, 0xb2b2b2ff, 0xbdbdbdff, 0x6c6c6cff, 0x0d0d0dff, 0x4c4c4cff, 0xb7b7b7ff, 0xe1e1e1ff, 0xbfbfbfff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0x989898ff, 0x979797ff, 0x5b5b5bff, 0x717171ff, 0x707070ff, 0xe0e0e0ff, 0xa3a3a3ff, 0x2d2d2dff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0x383838ff, 0x333333ff, 0x3d3d3dff, 0x5f5f5fff, 0x757575ff,
+    0x868686ff, 0x262626ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x171717ff, 0x111111ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+};
+
 void Interface_DrawItemButtons(PlayState* play) {
     static void* cUpLabelTextures[] = LANGUAGE_ARRAY(gNaviCUpJPNTex, gNaviCUpENGTex, gNaviCUpENGTex, gNaviCUpENGTex);
 #if OOT_VERSION >= PAL_1_0
@@ -2820,6 +3179,27 @@ void Interface_DrawItemButtons(PlayState* play) {
 #endif
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 2900);
+
+    // D-Pad positions
+    dpad_x = R_MAGIC_METER_X + 20;
+    dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 15;
+    if (gSaveContext.save.info.playerData.magicLevel != 0)
+        dpad_y += 15;
+    if (IS_ACTIVE_TIMER && pauseCtx->state == PAUSE_STATE_OFF) {
+        dpad_y += 15;
+        if (gSaveContext.save.info.playerData.magicLevel == 0)
+            dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 45;
+    }
+
+    if (Interface_GetItemFromDpad(0) != ITEM_NONE || Interface_GetItemFromDpad(1) != ITEM_NONE || Interface_GetItemFromDpad(2) != ITEM_NONE || Interface_GetItemFromDpad(3) != ITEM_NONE) {
+        if (gSaveContext.save.info.playerData.dpadDualSet) {
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[0]);
+        } else {
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 192, 192, 192, dpadAlphas[0]);
+        }
+        gDPLoadTextureBlock(OVERLAY_DISP++, gDpadTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(OVERLAY_DISP++, (dpad_x) << 2, (dpad_y) << 2, (dpad_x + 16) << 2, (dpad_y + 16) << 2, G_TX_RENDERTILE, 0, 0, 2 << 10, 2 << 10);
+    }
 
     // B Button Color & Texture
     // Also loads the Item Button Texture reused by other buttons afterwards
@@ -2981,15 +3361,63 @@ void Interface_DrawItemButtons(PlayState* play) {
 }
 
 void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
+    u16 x;
+    u16 y;
+    u16 dd;
+    u8  width;
+    u8  item;
+    s8  offset = 0;
+    
+    if (button < 4) {
+        x     = R_ITEM_ICON_X(button);
+        y     = R_ITEM_ICON_Y(button);
+        dd    = R_ITEM_ICON_DD(button);
+        width = R_ITEM_ICON_WIDTH(button);
+        
+        if ((gSaveContext.save.info.equips.buttonItems[button] == ITEM_SWORDS && gSaveContext.save.info.equips.buttonItems[0] == ITEM_NONE) || (gSaveContext.save.info.equips.buttonItems[button] == ITEM_SHIELDS && SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_NONE)))
+            return;
+    }
+    else {
+        Player* player = GET_PLAYER(play);
+        dd    = 1400;
+        width = 12;
+        
+        switch (button-4) {
+            case 0:
+                x = D_UP_BUTTON_X;
+                y = D_UP_BUTTON_Y;
+                break;
+            case 1:
+                x = D_RIGHT_BUTTON_X;
+                y = D_RIGHT_BUTTON_Y;
+                break;
+            case 2:
+                x = D_DOWN_BUTTON_X;
+                y = D_DOWN_BUTTON_Y;
+                break;
+            default:
+                x = D_LEFT_BUTTON_X;
+                y = D_LEFT_BUTTON_Y;
+                break;
+        }
+        
+        item = Interface_GetItemFromDpad(button-4);
+        if ( (item == ITEM_TUNIC_GORON && player->currentTunic == 1) || (item == ITEM_TUNIC_ZORA && player->currentTunic == 2) || (item == ITEM_BOOTS_IRON && player->currentBoots == 1) || (item == ITEM_BOOTS_HOVER && player->currentBoots == 2) || (item >= ITEM_MASK_KEATON && item <= ITEM_MASK_TRUTH && player->currentMask == item - ITEM_MASK_KEATON + 1) ) {
+            dd    *=  0.8;
+            width +=  3;
+            offset = -1;
+        }
+        
+        if ((item == ITEM_SWORDS && gSaveContext.save.info.equips.buttonItems[0] == ITEM_NONE) || (item == ITEM_SHIELDS && SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_NONE)))
+            return;
+    }
+
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3079);
 
     gDPLoadTextureBlock(OVERLAY_DISP++, texture, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP,
                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-    gSPTextureRectangle(OVERLAY_DISP++, R_ITEM_ICON_X(button) << 2, R_ITEM_ICON_Y(button) << 2,
-                        (R_ITEM_ICON_X(button) + R_ITEM_ICON_WIDTH(button)) << 2,
-                        (R_ITEM_ICON_Y(button) + R_ITEM_ICON_WIDTH(button)) << 2, G_TX_RENDERTILE, 0, 0,
-                        R_ITEM_ICON_DD(button) << 1, R_ITEM_ICON_DD(button) << 1);
+    gSPTextureRectangle(OVERLAY_DISP++, (x + offset) << 2, (y + offset) << 2, (x + width + offset) << 2, (y + width + offset) << 2, G_TX_RENDERTILE, 0, 0, dd << 1, dd << 1);
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3094);
 }
@@ -3000,7 +3428,9 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3105);
 
-    i = gSaveContext.save.info.equips.buttonItems[button];
+    if (button < 4)
+        i = gSaveContext.save.info.equips.buttonItems[button];
+    else i = Interface_GetItemFromDpad(button-4);
 
     if ((i == ITEM_DEKU_STICK) || (i == ITEM_DEKU_NUT) || (i == ITEM_BOMB) || (i == ITEM_BOW) ||
         ((i >= ITEM_BOW_FIRE) && (i <= ITEM_BOW_LIGHT)) || (i == ITEM_SLINGSHOT) || (i == ITEM_BOMBCHU) ||
@@ -3042,13 +3472,36 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
             ammo -= 10;
         }
 
-        if (i != 0) {
-            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8,
-                                          R_ITEM_AMMO_X(button), R_ITEM_AMMO_Y(button), 8, 8, 1 << 10, 1 << 10);
+        if (button < 4) {
+            if (i != 0)
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, R_ITEM_AMMO_X(button), R_ITEM_AMMO_Y(button), 8, 8, 1 << 10, 1 << 10);
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, R_ITEM_AMMO_X(button) + 6, R_ITEM_AMMO_Y(button), 8, 8, 1 << 10, 1 << 10);
         }
+        else {
+            u8 x, y;
+            switch (button-4) {
+                case 0:
+                    x = D_UP_BUTTON_X + 1;
+                    y = D_UP_BUTTON_Y + 8;
+                    break;
+                case 1:
+                    x = D_RIGHT_BUTTON_X + 1;
+                    y = D_RIGHT_BUTTON_Y + 8;
+                    break;
+                case 2:
+                    x = D_DOWN_BUTTON_X + 1;
+                    y = D_DOWN_BUTTON_Y + 8;
+                    break;
+                default:
+                    x = D_LEFT_BUTTON_X + 1;
+                    y = D_LEFT_BUTTON_Y + 8;
+                    break;
+            }
 
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8,
-                                      R_ITEM_AMMO_X(button) + 6, R_ITEM_AMMO_Y(button), 8, 8, 1 << 10, 1 << 10);
+            if (i != 0)
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, x, y, 4, 4, 1 << 11, 1 << 11);
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, x + 3, y, 4, 4, 1 << 11, 1 << 11);
+        }
     }
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3158);
@@ -3426,6 +3879,19 @@ void Interface_Draw(PlayState* play) {
             Interface_DrawAmmoCount(play, 3, interfaceCtx->cRightAlpha);
         }
 
+        for (svar1=0; svar1<4; svar1++) {
+            if (Interface_GetItemFromDpad(svar1) >= 0xF0)
+                continue;
+
+            // D-Pad Button Icon & Ammo Count
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[svar1+1]);
+            gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
+            Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x4000 + (0x1000*svar1), 4+svar1);
+            gDPPipeSync(OVERLAY_DISP++);
+            gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+            Interface_DrawAmmoCount(play, 4+svar1,  dpadAlphas[svar1+1]);
+        }
+
         // A Button
         Gfx_SetupDL_42Overlay(play->state.gfxCtx);
         func_8008A8B8(play, R_A_BTN_Y, R_A_BTN_Y + 45, R_A_BTN_X, R_A_BTN_X + 45);
@@ -3606,6 +4072,9 @@ void Interface_Draw(PlayState* play) {
                             Interface_LoadItemIcon1(play, svar2);
                         }
                     }
+                    for (svar2=0; svar2<4; svar2++)
+                        if (Interface_GetItemFromDpad(svar2) == gSpoilingItemReverts[svar1])
+                            Interface_LoadItemIcon1(play, svar2+4);
                 }
             }
         }
@@ -4448,4 +4917,36 @@ void Interface_Update(PlayState* play) {
             gSaveContext.sunsSongState = SUNSSONG_SPECIAL;
         }
     }
+}
+
+void Interface_ChangeDpadSet(PlayState* play) {
+    u8 i;
+
+    if (play->pauseCtx.debugState != 0 || gSaveContext.gameMode != GAMEMODE_NORMAL)
+        return;
+
+    if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R) && !IS_CUTSCENE_LAYER && gSaveContext.minigameState == 0 && shielded == 0) {
+        Audio_PlaySfxGeneral(!gSaveContext.save.info.playerData.dpadDualSet ? NA_SE_SY_CAMERA_ZOOM_UP : NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        gSaveContext.save.info.playerData.dpadDualSet ^= 1;
+        for (i=0; i<4; i++) {
+            Interface_LoadItemIcon1(play, i+4);
+            if (play->pauseCtx.state == PAUSE_STATE_OFF) {
+                dpadStatus[i] = BTN_ENABLED;
+                switchedDualSet = false;
+            }
+            else switchedDualSet = true;
+        }
+        gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode;
+    }
+
+    if (!IS_PAUSED(&play->pauseCtx)) {
+        Player* player = GET_PLAYER(play);
+        if (player->stateFlags1 & PLAYER_STATE1_SHIELDING)
+            shielded = 5;
+        if (!(player->stateFlags1 & PLAYER_STATE1_SHIELDING) && !CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && shielded > 0)
+            shielded--;
+        if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R))
+            shielded = 0;
+    }
+    else shielded = 0;
 }
