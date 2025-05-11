@@ -781,7 +781,7 @@ Gfx gFieldSandstormDL[] = {
     gsDPLoadMultiBlock(gFieldSandstorm2Tex, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP,
                        G_TX_NOMIRROR | G_TX_WRAP, 6, 5, 2, 1),
     gsSPDisplayList(0x08000000),
-    gsSPTextureRectangle(0, 0, 0x0500 + (WIDESCREEN ? 0x01A0 : 0), 0x03C0, G_TX_RENDERTILE, 0, 0, 0x008C, -0x008C),
+    gsSPTextureRectangle(0, 0, SCREEN_WIDTH * 4, SCREEN_HEIGHT * 4, G_TX_RENDERTILE, 0, 0, 0x008C / (HIRES ? 2 : 1), (-0x008C) / (HIRES ? 2 : 1)),
     gsSPEndDisplayList(),
 };
 

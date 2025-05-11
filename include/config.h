@@ -2,6 +2,12 @@
 #define CONFIG_H
 
 /**
+ * 480i high resolution
+ * Increases the resolution to 640x480
+*/
+#define HIRES true
+
+/**
  * Use low poly model for Link when the camera is far away.
 */
 #define LINK_LOD false

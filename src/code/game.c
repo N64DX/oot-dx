@@ -183,7 +183,7 @@ void GameState_DrawInputDisplay(u16 input, Gfx** gfxP) {
         if (input & (1 << i)) {
             gDPSetFillColor(gfx++, (sInpDispBtnColors[i] << 0x10) | sInpDispBtnColors[i]);
             k = i + 1;
-            gDPFillRectangle(gfx++, (j * 4) + 226 + (WIDESCREEN ? 104 : 0), 220, (k * 4) + 225 + (WIDESCREEN ? 104 : 0), 223);
+            gDPFillRectangle(gfx++, ((j * 4) + 226 + (WIDESCREEN ? 104 : 0)) * (HIRES ? 2 : 1), 220 * (HIRES ? 2 : 1), ((k * 4) + 225 + (WIDESCREEN ? 104 : 0)) * (HIRES ? 2 : 1), 223 * (HIRES ? 2 : 1));
             gDPPipeSync(gfx++);
         }
     }
@@ -341,7 +341,11 @@ void GameState_Update(GameState* gameState) {
         gfxCtx->yScale = gViConfigYScale;
 
         if (SREG(63) == 6 || (SREG(63) == 2u && (u32)osTvType == OS_TV_NTSC)) {
+#if HIRES
+            gfxCtx->viMode = &osViModeNtscHan1;
+#else
             gfxCtx->viMode = &osViModeNtscLan1;
+#endif
             gfxCtx->yScale = 1.0f;
         }
 

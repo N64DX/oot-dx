@@ -1,4 +1,3 @@
-#include "config.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "sfx.h"
@@ -455,13 +454,13 @@ void Health_DrawMeter(PlayState* play) {
                 }
             }
 
-            heartCenterY = 26.0f + offsetY;
-            heartCenterX = 30.0f + offsetX;
+            heartCenterY = 26.0f * (HIRES ? 2.0f : 1.0f) + offsetY;
+            heartCenterX = 30.0f * (HIRES ? 2.0f : 1.0f) + offsetX;
             heartTexCoordPerPixel = 1.0f;
             heartTexCoordPerPixel /= 0.68f;
-            heartTexCoordPerPixel *= 1 << 10;
+            heartTexCoordPerPixel *= (1 << 10) / (HIRES ? 2 : 1);
             halfHeartLength = 8.0f;
-            halfHeartLength *= 0.68f;
+            halfHeartLength *= 0.68f * (HIRES ? 2 : 1);
             gSPTextureRectangle(OVERLAY_DISP++, (s32)((heartCenterX - halfHeartLength) * 4),
                                 (s32)((heartCenterY - halfHeartLength) * 4),
                                 (s32)((heartCenterX + halfHeartLength) * 4),
@@ -487,8 +486,8 @@ void Health_DrawMeter(PlayState* play) {
             {
                 Mtx* matrix = GRAPH_ALLOC(gfxCtx, sizeof(Mtx));
                 Matrix_SetTranslateScaleMtx2(
-                    matrix, 1.0f - (0.32f * beatingHeartPulsingSize), 1.0f - (0.32f * beatingHeartPulsingSize),
-                    1.0f - (0.32f * beatingHeartPulsingSize), (WIDESCREEN ? (-182.0f) : (-130.0f)) + offsetX, 94.5f - offsetY, 0.0f);
+                    matrix, 1.0f * (HIRES ? 2 : 1) - ((HIRES ? 2 : 1) * 0.32f * beatingHeartPulsingSize), 1.0f * (HIRES ? 2 : 1) - ((HIRES ? 2 : 1) * 0.32f * beatingHeartPulsingSize),
+                    1.0f * (HIRES ? 2 : 1) - ((HIRES ? 2 : 1) * 0.32f * beatingHeartPulsingSize), (WIDESCREEN ? (-182.0f) : (-130.0f)) - (HIRES ? 130.0f : 0.0f) + offsetX, 94.5f + (HIRES ? 94.5f : 0.0f) - offsetY, 0.0f);
                 gSPMatrix(OVERLAY_DISP++, matrix, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
                 gSPVertex(OVERLAY_DISP++, beatingHeartVtx, 4, 0);
                 gSP1Quadrangle(OVERLAY_DISP++, 0, 2, 3, 1, 0);
@@ -496,11 +495,11 @@ void Health_DrawMeter(PlayState* play) {
         }
 
         // Move offset to next heart
-        offsetX += 10.0f;
+        offsetX += 10.0f * (HIRES ? 2 : 1);
 
         // Go down one line after 10 hearts
         if (heartIndex == 9) {
-            offsetY += 10.0f;
+            offsetY += 10.0f * (HIRES ? 2 : 1);
             offsetX = 0.0f;
         }
     }

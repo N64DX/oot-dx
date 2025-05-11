@@ -497,16 +497,16 @@ void Message_DrawTextChar(PlayState* play, void* textureImage, Gfx** p) {
     // Draw drop shadow
     if (msgCtx->textBoxType != TEXTBOX_TYPE_NONE_NO_SHADOW) {
         gDPSetPrimColor(gfx++, 0, 0, 0, 0, 0, msgCtx->textColorAlpha);
-        gSPTextureRectangle(gfx++, (x + R_TEXT_DROP_SHADOW_OFFSET + (WIDESCREEN ? 52 : 0)) << 2, (y + R_TEXT_DROP_SHADOW_OFFSET) << 2,
-                            (x + R_TEXT_DROP_SHADOW_OFFSET + (WIDESCREEN ? 52 : 0) + sCharTexSize) << 2,
-                            (y + R_TEXT_DROP_SHADOW_OFFSET + sCharTexSize) << 2, G_TX_RENDERTILE, 0, 0, sCharTexScale,
-                            sCharTexScale);
+        gSPTextureRectangle(gfx++, ((x + R_TEXT_DROP_SHADOW_OFFSET + (WIDESCREEN ? 52 : 0)) << 2) * (HIRES ? 2 : 1), ((y + R_TEXT_DROP_SHADOW_OFFSET) << 2) * (HIRES ? 2 : 1),
+                            ((x + R_TEXT_DROP_SHADOW_OFFSET + (WIDESCREEN ? 52 : 0) + sCharTexSize) << 2) * (HIRES ? 2 : 1),
+                            ((y + R_TEXT_DROP_SHADOW_OFFSET + sCharTexSize) << 2) * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, sCharTexScale / (HIRES ? 2 : 1),
+                            sCharTexScale / (HIRES ? 2 : 1));
     }
 
     gDPPipeSync(gfx++);
     gDPSetPrimColor(gfx++, 0, 0, msgCtx->textColorR, msgCtx->textColorG, msgCtx->textColorB, msgCtx->textColorAlpha);
-    gSPTextureRectangle(gfx++, (x + (WIDESCREEN ? 52 : 0)) << 2, y << 2, (x + (WIDESCREEN ? 52 : 0) + sCharTexSize) << 2, (y + sCharTexSize) << 2, G_TX_RENDERTILE, 0, 0,
-                        sCharTexScale, sCharTexScale);
+    gSPTextureRectangle(gfx++, ((x + (WIDESCREEN ? 52 : 0)) << 2) * (HIRES ? 2 : 1), (y << 2) * (HIRES ? 2 : 1), ((x + (WIDESCREEN ? 52 : 0) + sCharTexSize) << 2) * (HIRES ? 2 : 1), ((y + sCharTexSize) << 2) * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0,
+                        sCharTexScale / (HIRES ? 2 : 1), sCharTexScale / (HIRES ? 2 : 1));
     *p = gfx;
 }
 
@@ -986,8 +986,8 @@ void Message_DrawTextboxIcon(PlayState* play, Gfx** p, s16 x, s16 y) {
     sCharTexSize = 16.0f * ((f32)R_TEXT_CHAR_SCALE / 100.0f);
     sCharTexScale = 1024.0f / ((f32)R_TEXT_CHAR_SCALE / 100.0f);
 
-    gSPTextureRectangle(gfx++, (x + (WIDESCREEN ? 52 : 0)) << 2, y << 2, (x + (WIDESCREEN ? 52 : 0) + sCharTexSize) << 2, (y + sCharTexSize) << 2, G_TX_RENDERTILE, 0, 0,
-                        sCharTexScale, sCharTexScale);
+    gSPTextureRectangle(gfx++, ((x + (WIDESCREEN ? 52 : 0)) << 2) * (HIRES ? 2 : 1), (y << 2) * (HIRES ? 2 : 1), ((x + (WIDESCREEN ? 52 : 0) + sCharTexSize) << 2) * (HIRES ? 2 : 1), ((y + sCharTexSize) << 2) * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0,
+                        sCharTexScale / (HIRES ? 2 : 1), sCharTexScale / (HIRES ? 2 : 1));
 
     msgCtx->stateTimer++;
 
@@ -1171,9 +1171,9 @@ u16 Message_DrawItemIcon(PlayState* play, u16 itemId, Gfx** p, u16 i) {
                             ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                             G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     }
-    gSPTextureRectangle(gfx++, (msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + (WIDESCREEN ? 52 : 0)) << 2, R_TEXTBOX_ICON_YPOS << 2,
-                        (msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + R_TEXTBOX_ICON_DIMENSION + (WIDESCREEN ? 52 : 0)) << 2,
-                        (R_TEXTBOX_ICON_YPOS + R_TEXTBOX_ICON_DIMENSION) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+    gSPTextureRectangle(gfx++, ((msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + (WIDESCREEN ? 52 : 0)) << 2) * (HIRES ? 2 : 1), (R_TEXTBOX_ICON_YPOS << 2) * (HIRES ? 2 : 1),
+                        ((msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + R_TEXTBOX_ICON_DIMENSION + (WIDESCREEN ? 52 : 0)) << 2) * (HIRES ? 2 : 1),
+                        ((R_TEXTBOX_ICON_YPOS + R_TEXTBOX_ICON_DIMENSION) << 2) * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
     gDPPipeSync(gfx++);
     gDPSetCombineLERP(gfx++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
 
@@ -3190,9 +3190,9 @@ void Message_DrawTextBox(PlayState* play, Gfx** p) {
     R_TEXTBOX_TEXHEIGHT = 442;
 #endif
 
-    gSPTextureRectangle(gfx++, (R_TEXTBOX_X + (WIDESCREEN ? 52 : 0)) << 2, R_TEXTBOX_Y << 2, (R_TEXTBOX_X + (WIDESCREEN ? 52 : 0) + R_TEXTBOX_WIDTH) << 2,
-                        (R_TEXTBOX_Y + R_TEXTBOX_HEIGHT) << 2, G_TX_RENDERTILE, 0, 0, R_TEXTBOX_TEXWIDTH << 1,
-                        R_TEXTBOX_TEXHEIGHT << 1);
+    gSPTextureRectangle(gfx++, ((R_TEXTBOX_X + (WIDESCREEN ? 52 : 0)) << 2) * (HIRES ? 2 : 1), (R_TEXTBOX_Y << 2) * (HIRES ? 2 : 1), ((R_TEXTBOX_X + (WIDESCREEN ? 52 : 0) + R_TEXTBOX_WIDTH) << 2) * (HIRES ? 2 : 1),
+                        ((R_TEXTBOX_Y + R_TEXTBOX_HEIGHT) << 2) * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, (R_TEXTBOX_TEXWIDTH << 1) / (HIRES ? 2 : 1),
+                        (R_TEXTBOX_TEXHEIGHT << 1) / (HIRES ? 2 : 1));
 
     // Draw treble clef
     if (msgCtx->textBoxType == TEXTBOX_TYPE_OCARINA) {
@@ -3202,8 +3202,8 @@ void Message_DrawTextBox(PlayState* play, Gfx** p) {
         gDPSetPrimColor(gfx++, 0, 0, 255, 100, 0, 255);
         gDPLoadTextureBlock_4b(gfx++, gOcarinaTrebleClefTex, G_IM_FMT_I, 16, 32, 0, G_TX_MIRROR, G_TX_MIRROR,
                                G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(gfx++, (R_TEXTBOX_CLEF_XPOS + (WIDESCREEN ? 52 : 0)) << 2, R_TEXTBOX_CLEF_YPOS << 2, (R_TEXTBOX_CLEF_XPOS + (WIDESCREEN ? 52 : 0) + 16) << 2,
-                            (R_TEXTBOX_CLEF_YPOS + 32) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gSPTextureRectangle(gfx++, ((R_TEXTBOX_CLEF_XPOS + (WIDESCREEN ? 52 : 0)) << 2) * (HIRES ? 2 : 1), (R_TEXTBOX_CLEF_YPOS << 2) * (HIRES ? 2 : 1), ((R_TEXTBOX_CLEF_XPOS + (WIDESCREEN ? 52 : 0) + 16) << 2) * (HIRES ? 2 : 1),
+                            ((R_TEXTBOX_CLEF_YPOS + 32) << 2) * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
     }
 
     *p = gfx;
@@ -4167,11 +4167,11 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
                                         G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP,
                                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                    gSPTextureRectangle(gfx++, notePosX << 2,
-                                        R_OCARINA_BUTTONS_YPOS(gOcarinaSongButtons[g].buttonsIndex[i]) << 2,
-                                        (notePosX + 16) << 2,
-                                        (R_OCARINA_BUTTONS_YPOS(gOcarinaSongButtons[g].buttonsIndex[i]) + 16) << 2,
-                                        G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                    gSPTextureRectangle(gfx++, (notePosX << 2) * (HIRES ? 2 : 1),
+                                        (R_OCARINA_BUTTONS_YPOS(gOcarinaSongButtons[g].buttonsIndex[i]) << 2) * (HIRES ? 2 : 1),
+                                        ((notePosX + 16) << 2) * (HIRES ? 2 : 1),
+                                        ((R_OCARINA_BUTTONS_YPOS(gOcarinaSongButtons[g].buttonsIndex[i]) + 16) << 2) * (HIRES ? 2 : 1),
+                                        G_TX_RENDERTILE, 0, 0, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
                     notePosX += R_OCARINA_BUTTONS_XPOS_OFFSET;
                 }
             }
@@ -4206,10 +4206,10 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
                                         G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                                         G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                    gSPTextureRectangle(gfx++, notePosX << 2, R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) << 2,
-                                        (notePosX + 16) << 2,
-                                        (R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) + 16) << 2, G_TX_RENDERTILE,
-                                        0, 0, 1 << 10, 1 << 10);
+                    gSPTextureRectangle(gfx++, (notePosX << 2) * (HIRES ? 2 : 1), (R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) << 2) * (HIRES ? 2 : 1),
+                                        ((notePosX + 16) << 2) * (HIRES ? 2 : 1),
+                                        ((R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) + 16) << 2) * (HIRES ? 2 : 1), G_TX_RENDERTILE,
+                                        0, 0, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
                     notePosX += R_OCARINA_BUTTONS_XPOS_OFFSET;
                 }
             }
@@ -4422,24 +4422,24 @@ void Message_Update(PlayState* play) {
                             if (averageY < XREG(92)) {
                                 R_TEXTBOX_Y_TARGET = sTextboxLowerYPositions[var];
                             } else {
-                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var];
+                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var] + (HIRES ? 104 : 0);
                             }
                         } else if (play->sceneId == SCENE_MARKET_DAY || play->sceneId == SCENE_MARKET_NIGHT ||
                                    play->sceneId == SCENE_MARKET_RUINS) {
                             if (averageY < XREG(93)) {
                                 R_TEXTBOX_Y_TARGET = sTextboxLowerYPositions[var];
                             } else {
-                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var];
+                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var] + (HIRES ? 104 : 0);
                             }
                         } else {
                             if (averageY < XREG(94)) {
                                 R_TEXTBOX_Y_TARGET = sTextboxLowerYPositions[var];
                             } else {
-                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var];
+                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var] + (HIRES ? 104 : 0);
                             }
                         }
                     } else if (msgCtx->textBoxPos == TEXTBOX_POS_TOP) {
-                        R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var];
+                        R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var] + (HIRES ? 104 : 0);
                     } else if (msgCtx->textBoxPos == TEXTBOX_POS_MIDDLE) {
                         R_TEXTBOX_Y_TARGET = sTextboxMidYPositions[var];
                     } else {
