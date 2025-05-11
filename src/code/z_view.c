@@ -181,9 +181,9 @@ void View_ApplyLetterbox(View* view) {
     }
 
     ulx = view->viewport.leftX + pillarboxSize;
-    uly = view->viewport.topY + letterboxSize;
+    uly = view->viewport.topY + letterboxSize * (HIRES ? 2 : 1);
     lrx = view->viewport.rightX - pillarboxSize;
-    lry = view->viewport.bottomY - letterboxSize;
+    lry = view->viewport.bottomY - letterboxSize * (HIRES ? 2 : 1);
 
     ASSERT(ulx >= 0, "ulx >= 0", "../z_view.c", 454);
     ASSERT(uly >= 0, "uly >= 0", "../z_view.c", 455);

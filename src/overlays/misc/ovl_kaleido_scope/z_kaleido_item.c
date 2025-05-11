@@ -572,7 +572,6 @@ static s16 sCButtonPosX[] = { 1180, 1420, 1660 };
 #else
 static s16 sCButtonPosX[] = { 660, 900, 1140 };
 #endif
-
 static s16 sCButtonPosY[] = { 1100, 920, 1100 };
 
 void KaleidoScope_UpdateItemEquip(PlayState* play) {

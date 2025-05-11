@@ -66,13 +66,13 @@ static Gfx sPresentedByNintendoDL[37] = {
     gsDPSetEnvColor(200, 230, 225, 255),
     gsDPLoadTextureTile(sNintendoLeftTex, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 0, 0, 0, 63, 47, 0, G_TX_NOMIRROR | G_TX_WRAP,
                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPTextureRectangle(0x0184 + (WIDESCREEN ? 0x00D0 : 0), 0x0168, 0x0280 + (WIDESCREEN ? 0x00D0 : 0), 0x0224, G_TX_RENDERTILE, 0, 0, 0x0400, 0x0400),
+    gsSPTextureRectangle((0x0184 + (WIDESCREEN ? 0x00D0 : 0)) * (HIRES ? 2 : 1), 0x0168 * (HIRES ? 2 : 1), (0x0280 + (WIDESCREEN ? 0x00D0 : 0)) * (HIRES ? 2 : 1), 0x0224 * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, 0x0400 / (HIRES ? 2 : 1), 0x0400 / (HIRES ? 2 : 1)),
     gsDPLoadTextureTile(sNintendoRightTex, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 0, 0, 0, 63, 47, 0, G_TX_NOMIRROR | G_TX_WRAP,
                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPTextureRectangle(0x0280 + (WIDESCREEN ? 0x00D0 : 0), 0x0168, 0x037C + (WIDESCREEN ? 0x00D0 : 0), 0x0224, G_TX_RENDERTILE, 0, 0, 0x0400, 0x0400),
+    gsSPTextureRectangle((0x0280 + (WIDESCREEN ? 0x00D0 : 0)) * (HIRES ? 2 : 1), 0x0168 * (HIRES ? 2 : 1), (0x037C + (WIDESCREEN ? 0x00D0 : 0)) * (HIRES ? 2 : 1), 0x0224 * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, 0x0400 / (HIRES ? 2 : 1), 0x0400 / (HIRES ? 2 : 1)),
     gsDPLoadTextureTile(sPresentedByTex, G_IM_FMT_IA, G_IM_SIZ_8b, 96, 0, 0, 0, 95, 15, 0, G_TX_NOMIRROR | G_TX_WRAP,
                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPTextureRectangle(0x01C4 + (WIDESCREEN ? 0x00D0 : 0), 0x0140, 0x0340 + (WIDESCREEN ? 0x00D0 : 0), 0x017C, G_TX_RENDERTILE, 0, 0, 0x0400, 0x0400),
+    gsSPTextureRectangle((0x01C4 + (WIDESCREEN ? 0x00D0 : 0)) * (HIRES ? 2 : 1), 0x0140 * (HIRES ? 2 : 1), (0x0340 + (WIDESCREEN ? 0x00D0 : 0)) * (HIRES ? 2 : 1), 0x017C * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, 0x0400 / (HIRES ? 2 : 1), 0x0400 / (HIRES ? 2 : 1)),
     gsSPEndDisplayList(),
 };
 
