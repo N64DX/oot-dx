@@ -2970,23 +2970,13 @@ static void ArrowCycleHandle(Player* player, PlayState* play) {
         return;
     }
 
-    arrow->params = nextInfo->var;
-    ovl           = &gActorOverlayTable[ACTOR_EN_ARROW];
-    vram          = (u32)ovl->profile;
-    if (ovl->loadedRamAddr && (u32)ovl->vramStart <= vram && vram < (u32)ovl->vramEnd) {
-        ActorProfile* init = (void*)((char*)ovl->loadedRamAddr + (vram - (u32)ovl->vramStart));
-        init->destroy(arrow, play);
-        init->init(arrow, play);
-    }
-
-    if (arrow->child != NULL)
-        arrow->child->draw = NULL;
+    arrow->params = nextInfo->var << 8;
+    UpdateButton(player, play, nextInfo);
 
     gArrowCycleState.arrow = arrow;
     gArrowCycleState.frameDelay++;
     gArrowCycleState.magicCost = GetMagicCostByInfo(curInfo);
 
-    UpdateButton(player, play, nextInfo);
     if (curInfo->item == ITEM_BOW)
         gSaveContext.magicState = 5;
 }
@@ -12901,13 +12891,7 @@ void func_8084B158(PlayState* play, Player* this, Input* input, f32 arg3) {
     LinkAnimation_Update(play, &this->skelAnime);
 }
 
-static u8 checked_buttons_without_bow(Player* this) {
-    if (CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B))
-        return true;
-    if (CHECK_BTN_ANY(sControlInput->press.button, BTN_R))
-        return (this->heldItemAction < PLAYER_IA_BOW || this->heldItemAction > PLAYER_IA_BOW_0E);
-    return false;
-}
+#define CHECKED_BUTTONS_WITHOUT_BOW (CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B) || (CHECK_BTN_ANY(sControlInput->press.button, BTN_R) && ((this)->heldItemAction < PLAYER_IA_BOW || (this)->heldItemAction > PLAYER_IA_BOW_0E)))
 
 void Player_Action_8084B1D8(Player* this, PlayState* play) {
     if (this->stateFlags1 & PLAYER_STATE1_27) {
@@ -12925,7 +12909,7 @@ void Player_Action_8084B1D8(Player* this, PlayState* play) {
         Player_UpdateHostileLockOn(this) || (this->focusActor != NULL) ||
         (func_8083AD4C(play, this) == CAM_MODE_NORMAL) ||
         (((this->unk_6AD == 2) &&
-          (checked_buttons_without_bow(this) || Player_FriendlyLockOnOrParallel(this) ||
+          (CHECKED_BUTTONS_WITHOUT_BOW || Player_FriendlyLockOnOrParallel(this) ||
            (!func_8002DD78(this) && !func_808334B4(this)))) ||
          ((this->unk_6AD == 1) &&
           CHECK_BTN_ANY(sControlInput->press.button,

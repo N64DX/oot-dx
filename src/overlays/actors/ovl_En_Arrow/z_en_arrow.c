@@ -405,6 +405,18 @@ void EnArrow_Update(Actor* thisx, PlayState* play) {
     EnArrow* this = (EnArrow*)thisx;
     Player* player = GET_PLAYER(play);
 
+    if (this->actor.params >= 0x100) {
+        this->actor.params = this->actor.params >> 8;
+        if (this->actor.params >= 2 && this->actor.params <= 5) {
+            EnArrow_Destroy(thisx, play);
+            EnArrow_Init(thisx, play);
+
+            if (this->actor.child != NULL)
+                this->actor.child->draw = NULL;
+        }
+        return;
+     }
+
     if (this->isCsNut || ((this->actor.params >= ARROW_NORMAL_LIT) && (player->unk_A73 != 0)) ||
         !Player_InBlockingCsMode(play, player)) {
         this->actionFunc(this, play);
