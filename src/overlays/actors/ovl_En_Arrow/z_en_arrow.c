@@ -70,31 +70,33 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_F32(minVelocityY, -150, ICHAIN_STOP),
 };
 
+static EffectBlureInit2 blureNormal = {
+    0, 4, 0, { 0, 255, 200, 255 },   { 0, 255, 255, 255 }, { 0, 255, 200, 0 }, { 0, 255, 255, 0 }, 16,
+    0, 1, 0, { 255, 255, 170, 255 }, { 0, 150, 0, 0 },
+};
+static EffectBlureInit2 blureFire = {
+    0, 4, 0, { 0, 255, 200, 255 }, { 0, 255, 255, 255 }, { 0, 255, 200, 0 }, { 0, 255, 255, 0 }, 16,
+    0, 1, 0, { 255, 200, 0, 255 }, { 255, 0, 0, 0 },
+};
+static EffectBlureInit2 blureIce = {
+    0, 4, 0, { 0, 255, 200, 255 },   { 0, 255, 255, 255 }, { 0, 255, 200, 0 }, { 0, 255, 255, 0 }, 16,
+    0, 1, 0, { 170, 255, 255, 255 }, { 0, 100, 255, 0 },
+};
+static EffectBlureInit2 blureLight = {
+    0, 4, 0, { 0, 255, 200, 255 },   { 0, 255, 255, 255 }, { 0, 255, 200, 0 }, { 0, 255, 255, 0 }, 16,
+    0, 1, 0, { 255, 255, 170, 255 }, { 255, 255, 0, 0 },
+};
+
+static u32 dmgFlags[] = {
+    DMG_ARROW_FIRE,  DMG_ARROW_NORMAL, DMG_ARROW_NORMAL, DMG_ARROW_FIRE, DMG_ARROW_ICE,
+    DMG_ARROW_LIGHT, DMG_ARROW_UNK3,   DMG_ARROW_UNK1,   DMG_ARROW_UNK2, DMG_SLINGSHOT,
+};
+
 void EnArrow_SetupAction(EnArrow* this, EnArrowActionFunc actionFunc) {
     this->actionFunc = actionFunc;
 }
 
 void EnArrow_Init(Actor* thisx, PlayState* play) {
-    static EffectBlureInit2 blureNormal = {
-        0, 4, 0, { 0, 255, 200, 255 },   { 0, 255, 255, 255 }, { 0, 255, 200, 0 }, { 0, 255, 255, 0 }, 16,
-        0, 1, 0, { 255, 255, 170, 255 }, { 0, 150, 0, 0 },
-    };
-    static EffectBlureInit2 blureFire = {
-        0, 4, 0, { 0, 255, 200, 255 }, { 0, 255, 255, 255 }, { 0, 255, 200, 0 }, { 0, 255, 255, 0 }, 16,
-        0, 1, 0, { 255, 200, 0, 255 }, { 255, 0, 0, 0 },
-    };
-    static EffectBlureInit2 blureIce = {
-        0, 4, 0, { 0, 255, 200, 255 },   { 0, 255, 255, 255 }, { 0, 255, 200, 0 }, { 0, 255, 255, 0 }, 16,
-        0, 1, 0, { 170, 255, 255, 255 }, { 0, 100, 255, 0 },
-    };
-    static EffectBlureInit2 blureLight = {
-        0, 4, 0, { 0, 255, 200, 255 },   { 0, 255, 255, 255 }, { 0, 255, 200, 0 }, { 0, 255, 255, 0 }, 16,
-        0, 1, 0, { 255, 255, 170, 255 }, { 255, 255, 0, 0 },
-    };
-    static u32 dmgFlags[] = {
-        DMG_ARROW_FIRE,  DMG_ARROW_NORMAL, DMG_ARROW_NORMAL, DMG_ARROW_FIRE, DMG_ARROW_ICE,
-        DMG_ARROW_LIGHT, DMG_ARROW_UNK3,   DMG_ARROW_UNK1,   DMG_ARROW_UNK2, DMG_SLINGSHOT,
-    };
     EnArrow* this = (EnArrow*)thisx;
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
@@ -404,6 +406,33 @@ void EnArrow_Update(Actor* thisx, PlayState* play) {
     s32 pad;
     EnArrow* this = (EnArrow*)thisx;
     Player* player = GET_PLAYER(play);
+
+    if (this->actor.params >= 0x100) {
+        this->actor.params = this->actor.params >> 8;
+        if (this->actor.params >= ARROW_NORMAL && this->actor.params <= ARROW_LIGHT) {
+            Effect_Delete(play, this->effectIndex);
+            if (this->actor.params == ARROW_NORMAL)
+                Effect_Add(play, &this->effectIndex, EFFECT_BLURE2, 0, 0, &blureNormal);
+            else if (this->actor.params == ARROW_FIRE)
+                Effect_Add(play, &this->effectIndex, EFFECT_BLURE2, 0, 0, &blureFire);
+            else if (this->actor.params == ARROW_ICE) 
+                Effect_Add(play, &this->effectIndex, EFFECT_BLURE2, 0, 0, &blureIce);
+            else Effect_Add(play, &this->effectIndex, EFFECT_BLURE2, 0, 0, &blureLight);
+
+            if (this->actor.params == ARROW_NORMAL) {
+                this->collider.elem.atElemFlags &= ~ATELEM_SFX_MASK;
+                this->collider.elem.atElemFlags |=  ATELEM_SFX_NORMAL;
+            }
+            else {
+                this->collider.elem.atElemFlags |=  ATELEM_SFX_MASK;
+                this->collider.elem.atElemFlags &= ~ATELEM_SFX_NORMAL;
+            }
+
+            this->collider.elem.atDmgInfo.dmgFlags = dmgFlags[this->actor.params];
+            if (this->actor.child != NULL)
+                this->actor.child->draw = NULL;
+        }
+     }
 
     if (this->isCsNut || ((this->actor.params >= ARROW_NORMAL_LIT) && (player->unk_A73 != 0)) ||
         !Player_InBlockingCsMode(play, player)) {

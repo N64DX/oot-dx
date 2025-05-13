@@ -2841,6 +2841,143 @@ void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_BOOTS, nextItem);
 }
 
+typedef struct {
+    u16 frameDelay;
+    s8  magicCost;
+    Actor* arrow;
+} ArrowCycleState;
+
+static ArrowCycleState gArrowCycleState;
+
+typedef struct {
+    u8  item;
+    u8  slot;
+    u8  icon;
+    u8  action;
+    u16 var;
+} ArrowInfo;
+
+static const ArrowInfo gArrows[] = {
+    { ITEM_BOW,         SLOT_BOW,         ITEM_BOW,       0x8, 0x2, },
+    { ITEM_ARROW_FIRE,  SLOT_ARROW_FIRE,  ITEM_BOW_FIRE,  0x9, 0x3, },
+    { ITEM_ARROW_ICE,   SLOT_ARROW_ICE,   ITEM_BOW_ICE,   0xA, 0x4, },
+    { ITEM_ARROW_LIGHT, SLOT_ARROW_LIGHT, ITEM_BOW_LIGHT, 0xB, 0x5, },
+};
+
+static const ArrowInfo* GetInfo(u16 variable) {
+    u8 i;
+    for (i=0; i<ARRAY_COUNT(gArrows); i++)
+        if (gArrows[i].var == variable)
+            return &gArrows[i];
+    return NULL;
+}
+
+static u8 GetMagicCostByInfo(const ArrowInfo *info) {
+    switch (info->item) {
+        case ITEM_ARROW_FIRE:  return sMagicArrowCosts[0];
+        case ITEM_ARROW_ICE:   return sMagicArrowCosts[1];
+        case ITEM_ARROW_LIGHT: return sMagicArrowCosts[2];
+        default:               return 0;
+    }
+}
+
+static const ArrowInfo* GetNextInfo(u16 variable) {
+    static const u8 cycleOrder[] = { 2, 3, 4, 5 };
+    const ArrowInfo* curInfo     = GetInfo(variable);
+    const u8 magicCost           = GetMagicCostByInfo(curInfo);
+    u8 i, startIdx = 0;
+
+    for (i=0; i<ARRAY_COUNT(cycleOrder); i++)
+        if (cycleOrder[i] == variable) {
+            startIdx = i;
+            break;
+        }
+
+    for (i=1; i<ARRAY_COUNT(cycleOrder); i++) {
+        u8  nextIdx           = (startIdx + i) % ARRAY_COUNT(cycleOrder);
+        u16 nextVar           = cycleOrder[nextIdx];
+        const ArrowInfo* info = GetInfo(nextVar);
+        if (info != NULL && info->item == gSaveContext.save.info.inventory.items[info->slot] && gSaveContext.save.info.playerData.magic >= (GetMagicCostByInfo(info) - magicCost))
+            return info;
+    }
+    return NULL;
+}
+
+static void UpdateButton(Player* player, PlayState* play, const ArrowInfo* info) {
+    if (player->heldItemButton < 4)
+        gSaveContext.save.info.equips.buttonItems[player->heldItemButton] = info->icon;
+    else DPAD_BUTTON(player->heldItemButton - 4) = info->slot;
+    Interface_LoadItemIcon1(play, player->heldItemButton);
+    player->heldItemAction = player->itemAction = info->action;
+}
+
+static void ArrowCycleHandle(Player* player, PlayState* play) {
+    Actor* arrow;
+    const ArrowInfo *curInfo, *nextInfo;
+    u8 item;
+
+    if (player->stateFlags1 & PLAYER_STATE1_26)
+        return;
+
+    if (gArrowCycleState.frameDelay >= 1) {
+        if (Actor_Find(&play->actorCtx, ACTOR_EN_ARROW, ACTORCAT_ITEMACTION)) {
+            curInfo = GetInfo(gArrowCycleState.arrow->params);
+            if (gArrowCycleState.arrow != NULL && curInfo != NULL) {
+                if (gArrowCycleState.arrow->child != NULL) {
+                    Actor_Delete(&play->actorCtx, gArrowCycleState.arrow->child, play);
+                    gArrowCycleState.arrow->child = NULL;
+                }
+
+                gSaveContext.magicState = (curInfo->item != ITEM_BOW) ? 3 : 5;
+                gSaveContext.save.info.playerData.magic += gArrowCycleState.magicCost;
+                gSaveContext.save.info.playerData.magic -= GetMagicCostByInfo(curInfo);
+            }
+        }
+
+        gArrowCycleState.arrow      = NULL;
+        gArrowCycleState.frameDelay = gArrowCycleState.magicCost = 0;
+        return;
+    }
+
+    if (!CHECK_BTN_ALL(sControlInput->press.button, BTN_R))
+        return;
+
+    arrow = player->actor.child;
+    if (arrow == NULL || arrow->id != ACTOR_EN_ARROW || arrow->parent != &player->actor)
+        return;
+
+    if (player->heldItemButton < 4)
+        item = gSaveContext.save.info.equips.buttonItems[player->heldItemButton];
+    else item = Interface_GetItemFromDpad(player->heldItemButton-4);
+    if ( (arrow->params < 2 || arrow->params > 5) || (item != ITEM_BOW && item != ITEM_BOW_FIRE && item != ITEM_BOW_ICE && item != ITEM_BOW_LIGHT) || (gSaveContext.hudVisibilityMode != HUD_VISIBILITY_ALL && gSaveContext.save.info.equips.buttonItems[0] == ITEM_BOW) )
+        return;
+
+    curInfo  = GetInfo(arrow->params);
+    nextInfo = GetNextInfo(arrow->params);
+
+    if (curInfo == NULL || nextInfo == NULL || curInfo->var == nextInfo->var) {
+        if (curInfo->var == 2 && item != ITEM_BOW && gSaveContext.save.info.inventory.items[SLOT_BOW] == ITEM_BOW)
+            UpdateButton(player, play, &gArrows[0]);
+        Sfx_PlaySfxCentered(NA_SE_SY_ERROR);
+        return;
+    }
+
+    if (curInfo->item == ITEM_BOW && gSaveContext.save.info.playerData.magic < GetMagicCostByInfo(nextInfo)) {
+        Sfx_PlaySfxCentered(NA_SE_SY_ERROR);
+        return;
+    }
+
+    arrow->params = nextInfo->var << 8;
+    UpdateButton(player, play, nextInfo);
+
+    gArrowCycleState.arrow = arrow;
+    gArrowCycleState.frameDelay++;
+    gArrowCycleState.magicCost = GetMagicCostByInfo(curInfo);
+
+    if (curInfo->item == ITEM_BOW)
+        gSaveContext.magicState = 5;
+}
+
 /**
  * Handles the high level item usage and changing process based on the B and C buttons.
  *
@@ -2856,6 +2993,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     s32 i;
     
     Interface_ChangeDpadSet(play);
+    ArrowCycleHandle(this, play);
 
     if (this->currentMask != PLAYER_MASK_NONE) {
         maskItemAction = this->currentMask - 1 + PLAYER_IA_MASK_KEATON;
@@ -12750,6 +12888,8 @@ void func_8084B158(PlayState* play, Player* this, Input* input, f32 arg3) {
     LinkAnimation_Update(play, &this->skelAnime);
 }
 
+#define CHECKED_BUTTONS_WITHOUT_BOW (CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B) || (CHECK_BTN_ANY(sControlInput->press.button, BTN_R) && ((this)->heldItemAction < PLAYER_IA_BOW || (this)->heldItemAction > PLAYER_IA_BOW_0E)))
+
 void Player_Action_8084B1D8(Player* this, PlayState* play) {
     if (this->stateFlags1 & PLAYER_STATE1_27) {
         func_8084B000(this);
@@ -12766,7 +12906,7 @@ void Player_Action_8084B1D8(Player* this, PlayState* play) {
         Player_UpdateHostileLockOn(this) || (this->focusActor != NULL) ||
         (func_8083AD4C(play, this) == CAM_MODE_NORMAL) ||
         (((this->unk_6AD == 2) &&
-          (CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B | BTN_R) || Player_FriendlyLockOnOrParallel(this) ||
+          (CHECKED_BUTTONS_WITHOUT_BOW || Player_FriendlyLockOnOrParallel(this) ||
            (!func_8002DD78(this) && !func_808334B4(this)))) ||
          ((this->unk_6AD == 1) &&
           CHECK_BTN_ANY(sControlInput->press.button,
