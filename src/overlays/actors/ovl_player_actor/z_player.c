@@ -51,8 +51,6 @@
 #include "z64play.h"
 #include "z64save.h"
 #include "z64skin_matrix.h"
-#include "z64actor.h"
-#include "z_actor_dlftbls.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_link_child/object_link_child.h"
@@ -2916,8 +2914,7 @@ static void UpdateButton(Player* player, PlayState* play, const ArrowInfo* info)
 static void ArrowCycleHandle(Player* player, PlayState* play) {
     Actor* arrow;
     const ArrowInfo *curInfo, *nextInfo;
-    u8 item, vram;
-    ActorOverlay* ovl;
+    u8 item;
 
     if (player->stateFlags1 & PLAYER_STATE1_26)
         return;
