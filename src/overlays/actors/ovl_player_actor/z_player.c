@@ -3047,7 +3047,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             Player_ChangeBoots(this, play, i);
         else if (item == ITEM_TUNIC_GORON) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_TUNIC_GORON)) {
-                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 0 ? 1 : 0);
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 1 ? 0 : 1);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3057,7 +3057,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             }
         } else if (item == ITEM_TUNIC_ZORA) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_TUNIC_ZORA)) {
-                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 0 ? 2 : 0);
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 2 ? 0 : 2);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3067,7 +3067,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             }
         } else if (item == ITEM_BOOTS_IRON) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON)) {
-                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_BOOTS, BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS)) == 0 ? 1 : 0);
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_BOOTS, BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS)) == 1 ? 0 : 1);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_BOOTS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3077,7 +3077,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             }
         } else if (item == ITEM_BOOTS_HOVER) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER)) {
-                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_BOOTS, BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS)) == 0 ? 2 : 0);
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_BOOTS, BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS)) == 2 ? 0 : 2);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_BOOTS)
                         Interface_LoadItemIcon1(play, i+4);
