@@ -17,7 +17,12 @@
 #include "z64save.h"
 
 #include "assets/textures/title_static/title_static.h"
+#if OOT_NTSC_N64
+#include "assets/textures/title_static/title_static_all.h"
+#include "assets/overlays/ovl_file_choose/ovl_file_choose_all.h"
+#else
 #include "assets/overlays/ovl_file_choose/ovl_file_choose.h"
+#endif
 
 void FileSelect_DrawCharacter(GraphicsContext* gfxCtx, void* texture, s16 vtx) {
     OPEN_DISPS(gfxCtx, "../z_file_nameset_PAL.c", 110);
@@ -216,7 +221,7 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
 
 #if OOT_NTSC
     for (phi_t1 = 0, phi_s0 = 4; phi_t1 < 5; phi_t1++, phi_s0 += 4) {
-        if (gSaveContext.language == LANGUAGE_JPN) {
+        if (gSaveContext.language == LANGUAGE_JPN || OOT_NTSC_N64) {
             gDPPipeSync(POLY_OPA_DISP++);
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2],
                             255);
@@ -1017,7 +1022,7 @@ void FileSelect_UpdateKeyboardCursor(GameState* thisx) {
 #if OOT_NTSC
     if (this->charPage <= FS_CHAR_PAGE_ENG) {
         if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
-            if (gSaveContext.language == LANGUAGE_JPN) {
+            if (gSaveContext.language == LANGUAGE_JPN || OOT_NTSC_N64) {
                 if (this->charPage == FS_CHAR_PAGE_HIRA) {
                     this->charPage = FS_CHAR_PAGE_HIRA_TO_KATA;
                     Audio_PlaySfxGeneral(NA_SE_SY_WIN_OPEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -1055,7 +1060,7 @@ void FileSelect_UpdateKeyboardCursor(GameState* thisx) {
                         this->charIndex = this->kbdY * 13 + this->kbdX;
                     }
                 }
-            } else if (gSaveContext.language == LANGUAGE_JPN) {
+            } else if (gSaveContext.language == LANGUAGE_JPN || OOT_NTSC_N64) {
                 if (this->stickAdjX < -30) {
                     Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                          &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -1094,7 +1099,7 @@ void FileSelect_UpdateKeyboardCursor(GameState* thisx) {
                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                 this->kbdY--;
                 if (this->kbdY < 0) {
-                    if (gSaveContext.language == LANGUAGE_JPN) {
+                    if (gSaveContext.language == LANGUAGE_JPN || OOT_NTSC_N64) {
                         this->kbdY = 5;
                         this->charIndex += 52;
                         prevKbdX = this->kbdX;
@@ -1150,7 +1155,7 @@ void FileSelect_UpdateKeyboardCursor(GameState* thisx) {
                     this->charIndex += 13;
 
                     if (this->kbdY == 5) {
-                        if (gSaveContext.language != LANGUAGE_JPN) {
+                        if (gSaveContext.language != LANGUAGE_JPN || OOT_NTSC_N64) {
                             if (this->kbdX < 8) {
                                 this->kbdY = 0;
                                 this->charIndex = this->kbdX;
@@ -1357,7 +1362,7 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
         this->configMode = CM_OPTIONS_TO_MAIN;
         sramCtx->readBuff[0] = gSaveContext.soundSetting;
         sramCtx->readBuff[1] = gSaveContext.zTargetSetting;
-#if OOT_PAL_N64
+#if OOT_PAL_N64 || OOT_NTSC_N64
         sramCtx->readBuff[2] = gSaveContext.language;
 #endif
         PRINTF("ＳＡＶＥ");
@@ -1386,7 +1391,7 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
                 gSaveContext.soundSetting = SOUND_SETTING_SURROUND;
             }
         } else {
-#if !OOT_PAL_N64
+#if !OOT_PAL_N64 && !OOT_NTSC_N64
             gSaveContext.zTargetSetting ^= 1;
 #else
             if (sSelectedSetting == FS_SETTING_TARGET) {
@@ -1410,7 +1415,7 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
                 gSaveContext.soundSetting = SOUND_SETTING_STEREO;
             }
         } else {
-#if !OOT_PAL_N64
+#if !OOT_PAL_N64 && !OOT_NTSC_N64
             gSaveContext.zTargetSetting ^= 1;
 #else
             if (sSelectedSetting == FS_SETTING_TARGET) {
@@ -1425,7 +1430,7 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
         }
     }
 
-#if !OOT_PAL_N64
+#if !OOT_PAL_N64 && !OOT_NTSC_N64
     if ((this->stickAdjY < -30) || (this->stickAdjY > 30)) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -1461,7 +1466,54 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
 #endif
 }
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+
+static u16 sZTargetSettingWidths[2][4] = {
+    { 48, 80, 48, 48 },
+    { 48, 80, 48, 48 },
+};
+
+typedef struct LanguageChoiceTextureInfo {
+    /* 0x00 */ void* texture;
+    /* 0x04 */ u16 width;
+    /* 0x06 */ u16 height;
+} LanguageChoiceTextureInfo; // size = 0x10
+
+static LanguageChoiceTextureInfo sLanguageChoices[] = {
+    { gFileSelLanguageChoiceENGTex, 48, 16 },
+    { gFileSelLanguageChoiceGERTex, 48, 16 },
+    { gFileSelLanguageChoiceFRATex, 48, 16 },
+    { gFileSelLanguageChoiceJPNTex, 48, 16 },
+};
+
+typedef struct OptionsMenuTextureInfo {
+    /* 0x00 */ void* texture[4];
+    /* 0x10 */ u16 width;
+    /* 0x12 */ u16 height;
+} OptionsMenuTextureInfo; // size = 0x14
+
+#define OPTIONS_MENU_TEXTURE_WIDTH(info) info.width
+#define OPTIONS_MENU_TEXTURE_HEIGHT(info) info.height
+
+static OptionsMenuTextureInfo sOptionsMenuHeaders[] = {
+    { { gFileSelOptionsENGTex, gFileSelOptionsGERTex, gFileSelOptionsENGTex, gFileSelOptionsJPNTex }, 128, 16 },
+    { { gFileSelSOUNDENGTex, gFileSelSOUNDENGTex, gFileSelSOUNDFRATex, gFileSelSOUNDENGTex }, 64, 16 },
+    { { gFileSelZTargetingENGTex, gFileSelZTargetingGERTex, gFileSelZTargetingFRATex, gFileSelZTargetingJPNTex }, 64, 16 },
+    { { gFileSelLanguageENGTex, gFileSelLanguageGERTex, gFileSelLanguageFRATex, gFileSelLanguageENGTex }, 64, 16 },
+};
+
+static OptionsMenuTextureInfo sOptionsMenuSettings[] = {
+    { { gFileSelStereoENGTex, gFileSelStereoENGTex, gFileSelStereoFRATex, gFileSelStereoJPNTex }, 48, 16 },
+    { { gFileSelMonoENGTex, gFileSelMonoENGTex, gFileSelMonoENGTex, gFileSelMonoJPNTex }, 48, 16 },
+    { { gFileSelHeadsetENGTex, gFileSelHeadsetGERTex, gFileSelHeadsetFRATex, gFileSelHeadsetJPNTex }, 48, 16 },
+    { { gFileSelSurroundENGTex, gFileSelSurroundENGTex, gFileSelSurroundENGTex, gFileSelSurroundJPNTex }, 48, 16 },
+    { { gFileSelSwitchENGTex, gFileSelSwitchGERTex, gFileSelSwitchFRATex, gFileSelSwitchJPNTex }, 48, 16 },
+    { { gFileSelHoldENGTex, gFileSelHoldGERTex, gFileSelHoldFRATex, gFileSelHoldJPNTex }, 48, 16 },
+    { { gFileSelSwitchENGTex, gFileSelSwitchGERTex, gFileSelSwitchFRATex, gFileSelSwitchJPNTex }, 48, 16 },
+    { { gFileSelHoldENGTex, gFileSelHoldGERTex, gFileSelHoldFRATex, gFileSelHoldJPNTex }, 48, 16 },
+};
+
+#elif OOT_NTSC
 
 typedef struct OptionsMenuTextureInfo {
     /* 0x00 */ void* texture[2];
@@ -1589,17 +1641,11 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
     s16 cursorRed;
     s16 cursorGreen;
     s16 cursorBlue;
-#if !OOT_PAL_N64
-    s16 i;
-    s16 j;
-    s16 vtx;
-#else
     s16 startIndex;
     s32 endIndex;
-    s32 i;
+    s32 i, j;
     s32 vtx;
     s32 pad;
-#endif
 
     OPEN_DISPS(this->state.gfxCtx, "../z_file_nameset_PAL.c", 848);
 
@@ -1663,7 +1709,9 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
         }
     }
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    gSPVertex(POLY_OPA_DISP++, gOptionsMenuHeadersVtx, 24, 0);
+#elif OOT_NTSC
     gSPVertex(POLY_OPA_DISP++, gOptionsMenuHeadersVtx, 32, 0);
 #elif OOT_PAL_N64
     gSPVertex(POLY_OPA_DISP++, gOptionsMenuHeadersVtx, 24, 0);
@@ -1681,7 +1729,30 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->titleAlpha[0]);
     gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 255);
 
-#if !OOT_PAL_N64
+#if OOT_NTSC_N64
+for (i = 0, vtx = 0; i < 4; i++, vtx += 4) {
+        if (i == 2 && gSaveContext.language == LANGUAGE_GER) {
+            gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[i].texture[gSaveContext.language], G_IM_FMT_IA,
+                                G_IM_SIZ_8b, 144, OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[i]), 0,
+                                G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
+                                G_TX_NOLOD, G_TX_NOLOD);
+            gSP1Quadrangle(POLY_OPA_DISP++, vtx + 12, vtx + 14, vtx + 15, vtx + 13, 0);
+        } else {
+            gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[i].texture[gSaveContext.language], G_IM_FMT_IA,
+                                G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[i]),
+                                OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,
+                                G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            if (gSaveContext.language == LANGUAGE_JPN && i == 2) {
+                u16 x1 = WIDESCREEN ? 109 : 57;
+                u16 y1 = 100;
+                u16 x2 = x1 + (OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[i])  * 0.89f);
+                u16 y2 = y1 + (OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[i]) * 0.89f);
+                gSPTextureRectangle(POLY_OPA_DISP++, x1 << 2, y1 << 2, x2 << 2, y2 << 2, G_TX_RENDERTILE, 0, 0, 1152, 1152);
+            }            
+            else gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
+        }
+    }
+#elif !OOT_PAL_N64
     for (i = 0, vtx = 0; i < 4; i++, vtx += 4) {
         gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[i].texture[gSaveContext.language], G_IM_FMT_IA,
                             G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[i]),
@@ -1734,17 +1805,26 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 120, 120, 120, this->titleAlpha[0]);
             gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 255);
         }
-
-        //! @bug Mistakenly using sOptionsMenuHeaders instead of sOptionsMenuSettings for the height.
-        //! This works out anyway because all heights are 16.
+        
         gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuSettings[i].texture[gSaveContext.language], G_IM_FMT_IA,
                             G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i]),
-                            OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,
+                            OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettings[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,
                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+#if OOT_NTSC_N64
+        if (gSaveContext.language == LANGUAGE_JPN) {
+            u16 x1 = (WIDESCREEN ? 113 : 61) + (i * OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i])) * 1.1f;
+            u16 y1 = 86;
+            u16 x2 = x1 + (OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i])  * 0.89f);
+            u16 y2 = y1 + (OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettings[i]) * 0.89f);
+            gSPTextureRectangle(POLY_OPA_DISP++, x1 << 2, y1 << 2, x2 << 2, y2 << 2, G_TX_RENDERTILE, 0, 0, 1152, 1152);
+        }            
+        else gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
+#elif
         gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
+#endif
     }
 
-#if !OOT_PAL_N64
+#if !OOT_PAL_N64 && !NTSC_1_0
     for (; i < 6; i++, vtx += 4) {
         gDPPipeSync(POLY_OPA_DISP++);
 
@@ -1762,21 +1842,10 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
             gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 255);
         }
 
-#ifndef AVOID_UB
-        //! @bug Mistakenly using sOptionsMenuHeaders instead of sOptionsMenuSettings for the height.
-        //! This is also an OOB read that happens to access the height of the first two elements in
-        //! sOptionsMenuSettings, and since all heights are 16, it works out anyway.
-#define sOptionsMenuSettingsBug sOptionsMenuHeaders
-#else
-        // Avoid UB: Use the correct array for the heights to avoid reading out of bounds memory that may not
-        // happen to work out nicely.
-#define sOptionsMenuSettingsBug sOptionsMenuSettings
-#endif
         gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuSettings[i].texture[gSaveContext.language], G_IM_FMT_IA,
                             G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i]),
-                            OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettingsBug[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,
+                            OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettings[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,
                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-#undef sOptionsMenuSettingsBug
         gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
     }
 #else
@@ -1809,30 +1878,33 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
             gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 255);
         }
 
-#ifndef AVOID_UB
-        //! @bug Mistakenly using sOptionsMenuHeaders instead of sOptionsMenuSettings for the height.
-        //! This is also an OOB read that happens to access the height of up to the first three elements
-        //! in sOptionsMenuSettings, and since all heights are 16, it works out anyway.
-#define sOptionsMenuSettingsBug sOptionsMenuHeaders
-#else
-        // Avoid UB: Use the correct array for the heights to avoid reading out of bounds memory that may not
-        // happen to work out nicely.
-#define sOptionsMenuSettingsBug sOptionsMenuSettings
-#endif
         gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuSettings[i].texture[gSaveContext.language], G_IM_FMT_IA,
                             G_IM_SIZ_8b, sZTargetSettingWidths[j][gSaveContext.language],
-                            OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettingsBug[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,
+                            OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettings[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,
                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-#undef sOptionsMenuSettingsBug
+#if OOT_NTSC_N64
+        if (gSaveContext.language == LANGUAGE_JPN) {
+            u16 x1 = (WIDESCREEN ? 113 : 61) + ((i-4) * OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i])) * 1.7f;
+            u16 y1 = 116;
+            u16 x2 = x1 + (OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i])  * 0.89f);
+            u16 y2 = y1 + (OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettings[i]) * 0.89f);
+            gSPTextureRectangle(POLY_OPA_DISP++, x1 << 2, y1 << 2, x2 << 2, y2 << 2, G_TX_RENDERTILE, 0, 0, 1152, 1152);
+        }            
+        else gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
+#elif
         gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
+#endif      
     }
 
+#if !OOT_NTSC_N64
     gSPVertex(POLY_OPA_DISP++, gOptionsMenuBrightnessVtx, 8, 0);
+#endif
     vtx = 0;
 #endif
 
     gDPPipeSync(POLY_OPA_DISP++);
 
+#if !OOT_NTSC_N64
     // check brightness bars
     gDPLoadTextureBlock_4b(POLY_OPA_DISP++, gFileSelBrightnessCheckTex, G_IM_FMT_IA, 96, 16, 0,
                            G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
@@ -1849,9 +1921,14 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
     gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
 
     vtx += 4;
+#endif
 
+#if OOT_PAL_N64 || OOT_NTSC_N64
 #if OOT_PAL_N64
     gSPVertex(POLY_OPA_DISP++, gOptionsMenuLanguageVtx, 12, 0);
+#else
+    gSPVertex(POLY_OPA_DISP++, gOptionsMenuLanguageVtx, 16, 0);
+#endif
 
     for (i = 0, vtx = 0; i != LANGUAGE_MAX; i++, vtx += 4) {
         gDPPipeSync(POLY_OPA_DISP++);
@@ -1873,7 +1950,18 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
         gDPLoadTextureBlock(POLY_OPA_DISP++, sLanguageChoices[i].texture, G_IM_FMT_IA, G_IM_SIZ_8b,
                             sLanguageChoices[i].width, sLanguageChoices[i].height, 0, G_TX_NOMIRROR | G_TX_WRAP,
                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        #if OOT_NTSC_N64
+        if (i == LANGUAGE_JPN) {
+            u16 x1 = WIDESCREEN ? 270 : 218;
+            u16 y1 = 148;
+            u16 x2 = x1 + (OPTIONS_MENU_TEXTURE_WIDTH(sLanguageChoices[i])  * 0.7f);
+            u16 y2 = y1 + (OPTIONS_MENU_TEXTURE_HEIGHT(sLanguageChoices[i]) * 0.7f);
+            gSPTextureRectangle(POLY_OPA_DISP++, x1 << 2, y1 << 2, x2 << 2, y2 << 2, G_TX_RENDERTILE, 0, 0, 1408, 1408);
+        }            
+        else gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
+#elif
         gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
+#endif   
     }
 #endif
 
@@ -1901,14 +1989,16 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
     gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
     Matrix_Pop();
 
+#if !OOT_NTSC_N64
     Matrix_Push();
     Matrix_Translate(0.0f, 0.4f, 0.0f, MTXMODE_APPLY);
     MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, this->state.gfxCtx, "../z_file_nameset_PAL.c", 1033);
     gSPVertex(POLY_OPA_DISP++, gOptionsDividerBrightnessVtx, 4, 0);
     gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
     Matrix_Pop();
+#endif
 
-#if OOT_PAL_N64
+#if OOT_PAL_N64 || OOT_NTSC_N64
     Matrix_Push();
     Matrix_Translate(0.0f, 0.8f, 0.0f, MTXMODE_APPLY);
     MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, this->state.gfxCtx, "../z_file_nameset_PAL.c", UNK_LINE);

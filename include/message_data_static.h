@@ -38,7 +38,18 @@ typedef struct MessageTableEntry {
 
 /* Non-Credits Messages */
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+#define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    extern const char _message_##textId##_nes[]; \
+    extern const char _message_##textId##_ger[]; \
+    extern const char _message_##textId##_fra[];
+
+#define DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    extern const char _message_##textId##_jpn[];
+
+#define DEFINE_MESSAGE_FFFC(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#elif OOT_NTSC
 #define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
     extern const char _message_##textId##_nes[];
 

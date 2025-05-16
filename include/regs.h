@@ -106,7 +106,12 @@ struct PlayState;
 #define R_TEXTBOX_TEXHEIGHT                      YREG(17)
 #define R_TEXTBOX_WIDTH                          YREG(22)
 #define R_TEXTBOX_HEIGHT                         YREG(23)
-#if OOT_NTSC
+#if OOT_NTSC_N64
+#define R_B_LABEL_SCALE(i)                       YREG(48 + (i))
+#define R_B_LABEL_X(i)                           YREG(52 + (i))
+#define R_B_LABEL_Y(i)                           YREG(56 + (i))
+#define R_A_LABEL_Z(i)                           YREG(60 + (i))
+#elif OOT_NTSC
 #define R_KALEIDO_UNK1(i)                        YREG(48 + (i))
 #define R_KALEIDO_UNK2(i)                        YREG(50 + (i))
 #define R_KALEIDO_UNK3(i)                        YREG(52 + (i))
@@ -128,7 +133,11 @@ struct PlayState;
 #define R_PAUSE_PAGE_SWITCH_FRAME_ADVANCE_ON     ZREG(13)
 #define R_C_BTN_COLOR(i)                         ZREG(39 + (i))
 #define R_B_BTN_COLOR(i)                         ZREG(43 + (i))
-#if OOT_NTSC
+#if OOT_NTSC_N64
+#define R_START_LABEL_DD(i)                      ZREG(48 + (i))
+#define R_START_LABEL_Y(i)                       ZREG(52 + (i))
+#define R_START_LABEL_X(i)                       ZREG(56 + (i))
+#elif OOT_NTSC
 #define R_START_LABEL_SCALE                      ZREG(48)
 #define R_START_LABEL_DD(i)                      ZREG(49 + (i))
 #define R_START_LABEL_WIDTH                      ZREG(51)
@@ -192,7 +201,7 @@ struct PlayState;
 #define R_B_LABEL_DD                             WREG(0)
 #define R_PAUSE_PAGES_Y_ORIGIN_2                 WREG(2) // Complements PauseContext.pagesYOrigin1
 #define R_PAUSE_DEPTH_OFFSET                     WREG(3) // Offset position of all pages away from the camera
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
 #define R_B_LABEL_SCALE(i)                       WREG(8 + (i))
 #define R_B_LABEL_X(i)                           WREG(10 + (i))
 #define R_B_LABEL_Y(i)                           WREG(12 + (i))
@@ -211,6 +220,13 @@ struct PlayState;
 #define R_KALEIDO_UNK3(i)                        WREG(55 + (i))
 #define R_KALEIDO_UNK4(i)                        WREG(58 + (i))
 #define R_KALEIDO_UNK5(i)                        WREG(61 + (i))
+#define R_KALEIDO_UNK6(i)                        WREG(64 + (i))
+#elif OOT_NTSC_N64
+#define R_KALEIDO_UNK1(i)                        WREG(44 + (i))
+#define R_KALEIDO_UNK2(i)                        WREG(48 + (i))
+#define R_KALEIDO_UNK3(i)                        WREG(52 + (i))
+#define R_KALEIDO_UNK4(i)                        WREG(56 + (i))
+#define R_KALEIDO_UNK5(i)                        WREG(60 + (i))
 #define R_KALEIDO_UNK6(i)                        WREG(64 + (i))
 #endif
 #define R_DGN_MINIMAP_X                          WREG(68)

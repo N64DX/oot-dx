@@ -13,7 +13,12 @@
 #include "z64save.h"
 
 #include "assets/textures/icon_item_24_static/icon_item_24_static.h"
-#if OOT_NTSC
+#if OOT_NTSC_N64
+#include "assets/textures/icon_item_nes_static/icon_item_nes_static.h"
+#include "assets/textures/icon_item_ger_static/icon_item_ger_static.h"
+#include "assets/textures/icon_item_fra_static/icon_item_fra_static.h"
+#include "assets/textures/icon_item_jpn_static/icon_item_jpn_static.h"
+#elif OOT_NTSC
 #include "assets/textures/icon_item_jpn_static/icon_item_jpn_static.h"
 #include "assets/textures/icon_item_nes_static/icon_item_nes_static.h"
 #else
