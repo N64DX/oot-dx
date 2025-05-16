@@ -50,7 +50,9 @@ typedef struct n64ddStruct_80121220 {
     struct SceneTableEntry* (*unk_48)(s32 sceneId, struct SceneTableEntry* sceneTable);
     char unk_4C[0x08];
     s32 (*unk_54)(struct PlayState*);
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    void (*unk_58)(struct MessageTableEntry**, struct MessageTableEntry**, const char***, const char***, struct MessageTableEntry**);
+#elif OOT_NTSC
     void (*unk_58)(struct MessageTableEntry**, struct MessageTableEntry**, struct MessageTableEntry**);
 #else
     void (*unk_58)(struct MessageTableEntry**, const char***, const char***, struct MessageTableEntry**);

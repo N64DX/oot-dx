@@ -6,6 +6,9 @@
 #include "z64save.h"
 
 #include "assets/textures/icon_item_static/icon_item_static.h"
+#if OOT_NTSC_N64
+#include "assets/textures/icon_item_static/icon_item_static_all.h"
+#endif
 #include "assets/textures/icon_item_24_static/icon_item_24_static.h"
 #include "assets/textures/parameter_static/parameter_static.h"
 

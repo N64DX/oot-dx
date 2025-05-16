@@ -151,7 +151,70 @@ s16 sMessageHasSetSfx = false;
 
 u16 sOcarinaSongBitFlags = 0; // ocarina bit flags
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+
+MessageTableEntry sJpnMessageEntryTable[] = {
+#define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) { textId, (_SHIFTL(type, 4, 4) | _SHIFTL(yPos, 0, 4)), _message_##textId##_jpn },
+#define DEFINE_MESSAGE(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE_FFFC(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#include "assets/text/message_data.h"
+#undef DEFINE_MESSAGE
+#undef DEFINE_MESSAGE_NES
+#undef DEFINE_MESSAGE_JPN
+#undef DEFINE_MESSAGE_FFFC
+    { 0xFFFF, 0, NULL },
+};
+
+MessageTableEntry sNesMessageEntryTable[] = {
+#define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) { textId, (_SHIFTL(type, 4, 4) | _SHIFTL(yPos, 0, 4)), _message_##textId##_nes },
+#define DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE_FFFC(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#include "assets/text/message_data.h"
+#undef DEFINE_MESSAGE
+#undef DEFINE_MESSAGE_NES
+#undef DEFINE_MESSAGE_JPN
+#undef DEFINE_MESSAGE_FFFC
+    { 0xFFFF, 0, NULL },
+};
+
+const char* sGerMessageEntryTable[] = {
+#define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) _message_##textId##_ger,
+#define DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE_FFFC(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#include "assets/text/message_data.h"
+#undef DEFINE_MESSAGE
+#undef DEFINE_MESSAGE_NES
+#undef DEFINE_MESSAGE_JPN
+#undef DEFINE_MESSAGE_FFFC
+    NULL,
+};
+
+const char* sFraMessageEntryTable[] = {
+#define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) _message_##textId##_nes,
+#define DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE_FFFC(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#include "assets/text/message_data.h"
+#undef DEFINE_MESSAGE
+#undef DEFINE_MESSAGE_NES
+#undef DEFINE_MESSAGE_JPN
+#undef DEFINE_MESSAGE_FFFC
+    NULL,
+};
+
+#elif OOT_NTSC
 
 MessageTableEntry sJpnMessageEntryTable[] = {
 #define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) /* Not Present */
@@ -250,6 +313,10 @@ MessageTableEntry* sJpnMessageEntryTablePtr = sJpnMessageEntryTable;
 MessageTableEntry* sNesMessageEntryTablePtr = sNesMessageEntryTable;
 #else
 MessageTableEntry* sNesMessageEntryTablePtr = sNesMessageEntryTable;
+const char** sGerMessageEntryTablePtr = sGerMessageEntryTable;
+const char** sFraMessageEntryTablePtr = sFraMessageEntryTable;
+#endif
+#if OOT_NTSC_N64
 const char** sGerMessageEntryTablePtr = sGerMessageEntryTable;
 const char** sFraMessageEntryTablePtr = sFraMessageEntryTable;
 #endif
@@ -554,8 +621,9 @@ void Message_FindMessageNES(PlayState* play, u16 textId) {
     font->msgOffset = foundSeg - seg;
     font->msgLength = nextSeg - foundSeg;
 }
+#endif
 
-#else
+#if OOT_PAL || OOT_NTSC_N64
 
 void Message_FindMessagePAL(PlayState* play, u16 textId) {
     const char* foundSeg;
@@ -624,6 +692,60 @@ void Message_FindMessagePAL(PlayState* play, u16 textId) {
     font->msgOffset = foundSeg - seg;
     font->msgLength = nextSeg - foundSeg;
 }
+
+#elif OOT_NTSC_N64
+
+/*void Message_FindMessagePAL(PlayState* play, u16 textId) {
+    const char* foundSeg;
+    const char* nextSeg;
+    Font* font = &play->msgCtx.font;
+    const char* seg;
+    
+    if (gSaveContext.language == LANGUAGE_GER) {
+        seg = sGerMessageEntryTablePtr->segment;
+
+        while (sGerMessageEntryTablePtr->textId != 0xFFFF) {
+            if (sGerMessageEntryTablePtr->textId == textId) {
+                foundSeg = sGerMessageEntryTablePtr->segment;
+                font->charTexBuf[0] = sGerMessageEntryTablePtr->typePos;
+                sGerMessageEntryTablePtr++;
+                nextSeg = sGerMessageEntryTablePtr->segment;
+                font->msgOffset = foundSeg - seg;
+                font->msgLength = nextSeg - foundSeg;
+                return;
+            }
+            sGerMessageEntryTablePtr++;
+
+            foundSeg = sGerMessageEntryTablePtr->segment;
+            font->charTexBuf[0] = sGerMessageEntryTablePtr->typePos;
+            sGerMessageEntryTablePtr++;
+            nextSeg = sGerMessageEntryTablePtr->segment;
+        }
+    } else {
+        seg = sFraMessageEntryTablePtr->segment;
+
+        while (sFraMessageEntryTablePtr->textId != 0xFFFF) {
+            if (sFraMessageEntryTablePtr->textId == textId) {
+                foundSeg = sFraMessageEntryTablePtr->segment;
+                font->charTexBuf[0] = sFraMessageEntryTablePtr->typePos;
+                sFraMessageEntryTablePtr++;
+                nextSeg = sFraMessageEntryTablePtr->segment;
+                font->msgOffset = foundSeg - seg;
+                font->msgLength = nextSeg - foundSeg;
+                return;
+            }
+            sFraMessageEntryTablePtr++;
+            
+            foundSeg = sFraMessageEntryTablePtr->segment;
+            font->charTexBuf[0] = sFraMessageEntryTablePtr->typePos;
+            sFraMessageEntryTablePtr++;
+            nextSeg = sFraMessageEntryTablePtr->segment;
+        }
+    }
+
+    font->msgOffset = foundSeg - seg;
+    font->msgLength = nextSeg - foundSeg;
+}*/
 
 #endif
 
@@ -1766,10 +1888,7 @@ void Message_Decode(PlayState* play) {
     MessageContext* msgCtx = &play->msgCtx;
     Font* font = &play->msgCtx.font;
     s32 charTexIdx = 0;
-    s16 i;
-#if !(PLATFORM_GC && OOT_PAL)
-    s16 j;
-#endif
+    s16 i, j;
     s16 decodedBufPos = 0;
     s16 numLines = 0;
     s16 digits[4];
@@ -1778,7 +1897,7 @@ void Message_Decode(PlayState* play) {
     s16 loadChar;
     u16 value;
     u8 curChar;
-#if !(PLATFORM_GC && OOT_PAL)
+#if !PLATFORM_GC
     u16 curCharWide;
     u8* fontBuf;
 #endif
@@ -2491,15 +2610,8 @@ void Message_Decode(PlayState* play) {
                 Message_LoadItemIcon(play, MSG_BUF[msgCtx->msgBufPos + 1], R_TEXTBOX_Y + 10);
             } else if (curChar == MESSAGE_BACKGROUND) {
                 msgCtx->textboxBackgroundIdx = MSG_BUF[msgCtx->msgBufPos + 1] * 2;
-#if OOT_VERSION < PAL_1_0
-                //! @bug Wrong shift amounts cause textboxBackgroundForeColorIdx and textboxBackgroundBackColorIdx
-                //! to always be 0. Fortunately MESSAGE_BACKGROUND is only present in unused messages.
-                msgCtx->textboxBackgroundForeColorIdx = (MSG_BUF[msgCtx->msgBufPos + 2] & 0xF0) >> 12;
-                msgCtx->textboxBackgroundBackColorIdx = (MSG_BUF[msgCtx->msgBufPos + 2] & 0xF) >> 8;
-#else
                 msgCtx->textboxBackgroundForeColorIdx = (MSG_BUF[msgCtx->msgBufPos + 2] & 0xF0) >> 4;
                 msgCtx->textboxBackgroundBackColorIdx = MSG_BUF[msgCtx->msgBufPos + 2] & 0xF;
-#endif
                 msgCtx->textboxBackgroundYOffsetIdx = (MSG_BUF[msgCtx->msgBufPos + 3] & 0xF0) >> 4;
                 msgCtx->textboxBackgroundUnkArg = MSG_BUF[msgCtx->msgBufPos + 3] & 0xF;
                 DMA_REQUEST_SYNC(msgCtx->textboxSegment + MESSAGE_STATIC_TEX_SIZE,
@@ -2645,7 +2757,31 @@ void Message_OpenText(PlayState* play, u16 textId) {
                          font->msgLength, "../z_message_PAL.c", 1954);
 #endif
     } else {
-#if OOT_NTSC
+#if OOT_NTSC_N64
+        if (gSaveContext.language == LANGUAGE_JPN) {
+            Message_FindMessageJPN(play, textId);
+            msgCtx->msgLength = font->msgLength;
+            if ((B_80121220 != NULL) && (B_80121220->unk_64 != NULL) && B_80121220->unk_64(&play->msgCtx.font)) { }
+            else DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_jpn_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+        } else if (gSaveContext.language == LANGUAGE_ENG) {
+            Message_FindMessageNES(play, textId);
+            msgCtx->msgLength = font->msgLength;
+            if ((B_80121220 != NULL) && (B_80121220->unk_68 != NULL) && B_80121220->unk_68(&play->msgCtx.font)) { }
+            else  DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_nes_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+        } else if (gSaveContext.language == LANGUAGE_GER) {
+            Message_FindMessagePAL(play, textId);
+            msgCtx->msgLength = font->msgLength;
+            //! @bug checks unk_64 != NULL instead of unk_68 != NULL
+            if ((B_80121220 != NULL) && (B_80121220->unk_68 != NULL) && B_80121220->unk_68(&play->msgCtx.font)) { }
+            else DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_ger_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+        } else {
+            Message_FindMessagePAL(play, textId);
+            msgCtx->msgLength = font->msgLength;
+            //! @bug checks unk_64 != NULL instead of unk_6C_PAL != NULL
+            if ((B_80121220 != NULL) && (B_80121220->unk_68 != NULL) && B_80121220->unk_68(&play->msgCtx.font)) { }
+            else DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_fra_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+        }
+#elif OOT_NTSC
         if (gSaveContext.language == LANGUAGE_JPN) {
             Message_FindMessageJPN(play, textId);
             msgCtx->msgLength = font->msgLength;
@@ -4497,10 +4633,17 @@ void Message_SetTables(void) {
     sGerMessageEntryTablePtr = sGerMessageEntryTable;
     sFraMessageEntryTablePtr = sFraMessageEntryTable;
 #endif
+#if OOT_NTSC_N64
+    sGerMessageEntryTablePtr = sGerMessageEntryTable;
+    sFraMessageEntryTablePtr = sFraMessageEntryTable;
+#endif
 
     sStaffMessageEntryTablePtr = sStaffMessageEntryTable;
 
-#if PLATFORM_N64 && OOT_NTSC
+#if PLATFORM_N64 && OOT_NTSC_N64
+    if ((B_80121220 != NULL) && (B_80121220->unk_58 != NULL))
+        B_80121220->unk_58(&sJpnMessageEntryTablePtr, &sNesMessageEntryTablePtr, &sGerMessageEntryTablePtr, &sFraMessageEntryTablePtr, &sStaffMessageEntryTablePtr);
+#elif PLATFORM_N64 && OOT_NTSC
     if ((B_80121220 != NULL) && (B_80121220->unk_58 != NULL)) {
         B_80121220->unk_58(&sJpnMessageEntryTablePtr, &sNesMessageEntryTablePtr, &sStaffMessageEntryTablePtr);
     }

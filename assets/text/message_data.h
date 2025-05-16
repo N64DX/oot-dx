@@ -1,4 +1,4 @@
-#include "text/message_data.h"
+#include "message_data_all.h"
 
 /*
  * The following two messages should be kept last and in this order.

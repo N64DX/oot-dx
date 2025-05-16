@@ -149,7 +149,7 @@ typedef enum ActionButtonIndex {
 typedef enum SettingIndex {
     /* 0 */ FS_SETTING_AUDIO,
     /* 1 */ FS_SETTING_TARGET,
-#if OOT_PAL_N64
+#if OOT_PAL_N64 || OOT_NTSC_N64
     /* 2 */ FS_SETTING_LANGUAGE,
 #endif
     /*   */ FS_SETTING_MAX

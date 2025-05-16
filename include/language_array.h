@@ -3,7 +3,9 @@
 
 #include "versions.h"
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+#define LANGUAGE_ARRAY(jpn, eng, ger, fra) { eng, ger, fra, jpn }
+#elif OOT_NTSC
 #define LANGUAGE_ARRAY(jpn, eng, ger, fra) { jpn, eng }
 #else
 #define LANGUAGE_ARRAY(jpn, eng, ger, fra) { eng, ger, fra }
