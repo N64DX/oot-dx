@@ -14,6 +14,7 @@
 #endif
 #include "printf.h"
 #include "regs.h"
+#include "resolution.h"
 #include "segment_symbols.h"
 #include "segmented_address.h"
 #include "seqcmd.h"
@@ -3405,21 +3406,21 @@ void KaleidoScope_DrawGameOver(PlayState* play) {
 
     gDPSetTileSize(POLY_OPA_DISP++, 1, 0, VREG(89) & 0x7F, 63 << 2, (31 << 2) + (VREG(89) & 0x7F));
 
-    gSPTextureRectangle(POLY_OPA_DISP++, ((VREG(87) + (WIDESCREEN ? 52 : 0)) << 2) * (HIRES ? 2 : 1), (VREG(88) << 2) * (HIRES ? 2 : 1), ((VREG(87) + (WIDESCREEN ? 52 : 0) + 64) << 2) * (HIRES ? 2 : 1), ((VREG(88) + 32) << 2) * (HIRES ? 2 : 1),
-                        G_TX_RENDERTILE, 0, 0, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((VREG(87) + (WIDESCREEN ? 52 : 0)) << 2)), HIRES_MULTIPLY((VREG(88) << 2)), HIRES_MULTIPLY(((VREG(87) + (WIDESCREEN ? 52 : 0) + 64) << 2)), HIRES_MULTIPLY(((VREG(88) + 32) << 2)),
+                        G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
     gDPLoadMultiBlock(POLY_OPA_DISP++, gGameOverP2Tex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0,
                       G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
                       G_TX_NOLOD);
 
-    gSPTextureRectangle(POLY_OPA_DISP++, ((VREG(87) + (WIDESCREEN ? 52 : 0) + 64) << 2) * (HIRES ? 2 : 1), (VREG(88) << 2) * (HIRES ? 2 : 1), ((VREG(87) + (WIDESCREEN ? 52 : 0) + 128) << 2) * (HIRES ? 2 : 1),
-                        ((VREG(88) + 32) << 2) * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((VREG(87) + (WIDESCREEN ? 52 : 0) + 64) << 2)), HIRES_MULTIPLY((VREG(88) << 2)), HIRES_MULTIPLY(((VREG(87) + (WIDESCREEN ? 52 : 0) + 128) << 2)),
+                        HIRES_MULTIPLY(((VREG(88) + 32) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
     gDPLoadMultiBlock(POLY_OPA_DISP++, gGameOverP3Tex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0,
                       G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
                       G_TX_NOLOD);
-    gSPTextureRectangle(POLY_OPA_DISP++, (VREG(87) + ((WIDESCREEN ? 52 : 0) + 128) << 2) * (HIRES ? 2 : 1), (VREG(88) << 2) * (HIRES ? 2 : 1), ((VREG(87) + (WIDESCREEN ? 52 : 0) + 192) << 2) * (HIRES ? 2 : 1),
-                        ((VREG(88) + 32) << 2) * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((VREG(87) + ((WIDESCREEN ? 52 : 0) + 128) << 2)), HIRES_MULTIPLY((VREG(88) << 2)), HIRES_MULTIPLY(((VREG(87) + (WIDESCREEN ? 52 : 0) + 192) << 2)),
+                        HIRES_MULTIPLY(((VREG(88) + 32) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
     CLOSE_DISPS(gfxCtx, "../z_kaleido_scope_PAL.c", 3169);
 }
