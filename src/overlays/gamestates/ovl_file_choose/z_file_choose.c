@@ -2,7 +2,6 @@
 #include "file_select_state.h"
 
 #include "attributes.h"
-#include "config.h"
 #include "controller.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
@@ -16,6 +15,7 @@
 #endif
 #include "printf.h"
 #include "regs.h"
+#include "resolution.h"
 #include "rumble.h"
 #include "segment_symbols.h"
 #include "seqcmd.h"
@@ -2183,8 +2183,8 @@ void FileSelect_Main(GameState* thisx) {
         gDPLoadTextureBlock(POLY_OPA_DISP++, controlsTextures[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, 144, 16,
                             0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                             G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(POLY_OPA_DISP++, ((90 + (WIDESCREEN ? 52 : 0)) << 2) * (HIRES ? 2 : 1), (204 << 2) * (HIRES ? 2 : 1), ((234 + (WIDESCREEN ? 52 : 0)) << 2) * (HIRES ? 2 : 1), (220 << 2) * (HIRES ? 2 : 1), G_TX_RENDERTILE, 0, 0, (1 << 10) / (HIRES ? 2 : 1),
-                            (1 << 10) / (HIRES ? 2 : 1));
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((90 + (WIDESCREEN ? 52 : 0)) << 2)), HIRES_MULTIPLY((204 << 2)), HIRES_MULTIPLY(((234 + (WIDESCREEN ? 52 : 0)) << 2)), HIRES_MULTIPLY((220 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+                            HIRES_DIVIDE((1 << 10)));
     }
 
     gDPPipeSync(POLY_OPA_DISP++);

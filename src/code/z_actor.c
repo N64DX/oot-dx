@@ -1,7 +1,6 @@
 #include "libc64/math64.h"
 #include "libu64/overlay.h"
 #include "array_count.h"
-#include "config.h"
 #include "fault.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
@@ -9,6 +8,7 @@
 #include "quake.h"
 #include "rand.h"
 #include "regs.h"
+#include "resolution.h"
 #include "rumble.h"
 #include "segmented_address.h"
 #include "sfx.h"
@@ -836,9 +836,9 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         width = titleCtx->width;
         height = titleCtx->height;
         doubleWidth = width * 2;
-        titleX1 = (((titleCtx->x + (WIDESCREEN ? 52 : 0)) * 4) - (width * 2)) * (HIRES ? 2 : 1);
-        titleX2 = titleX1 + (doubleWidth * 2 * (HIRES ? 2 : 1)) - (4 * (HIRES ? 2 : 1));
-        titleY1 = ((titleCtx->y * 4) - (height * 2)) * (HIRES ? 2 : 1);
+        titleX1 = HIRES_MULTIPLY((((titleCtx->x + (WIDESCREEN ? 52 : 0)) * 4) - (width * 2)));
+        titleX2 = titleX1 + HIRES_MULTIPLY((doubleWidth * 2)) - HIRES_MULTIPLY(4);
+        titleY1 = HIRES_MULTIPLY(((titleCtx->y * 4) - (height * 2)));
 
         OPEN_DISPS(play->state.gfxCtx, "../z_actor.c", 2824);
 
@@ -858,7 +858,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
             height = 0x1000 / width;
         }
 
-        titleY2 = titleY1 + (height * 4 * (HIRES ? 2 : 1));
+        titleY2 = titleY1 + HIRES_MULTIPLY((height * 4));
 
         OVERLAY_DISP = Gfx_SetupDL_52NoCD(OVERLAY_DISP);
 
@@ -869,8 +869,8 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                             width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-        gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY1, titleX2, titleY2 - 1, G_TX_RENDERTILE, 0, 0, (1 << 10) / (HIRES ? 2 : 1),
-                            (1 << 10) / (HIRES ? 2 : 1));
+        gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY1, titleX2, titleY2 - 1, G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+                            HIRES_DIVIDE((1 << 10)));
 
         height = titleCtx->height - height;
 
@@ -880,8 +880,8 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                                 G_IM_SIZ_8b, width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                                 G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY2, titleX2, titleY2 + (height * 4 * (HIRES ? 2 : 1)) - (1 * (HIRES ? 2 : 1)), G_TX_RENDERTILE,
-                                0, 0, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
+            gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY2, titleX2, titleY2 + HIRES_MULTIPLY((height * 4)) - HIRES_MULTIPLY(1), G_TX_RENDERTILE,
+                                0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         }
 
         CLOSE_DISPS(play->state.gfxCtx, "../z_actor.c", 2880);

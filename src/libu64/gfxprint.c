@@ -1,7 +1,7 @@
 #include "libc64/aprintf.h"
 #include "libu64/gfxprint.h"
 #include "attributes.h"
-#include "config.h"
+#include "resolution.h"
 #include "translation.h"
 
 u16 sGfxPrintFontTLUT[64] = {
@@ -239,16 +239,16 @@ void GfxPrint_PrintCharImpl(GfxPrint* this, u8 c) {
         gDPSetColor(this->dList++, G_SETPRIMCOLOR, 0);
 
 #if PLATFORM_N64
-        gSPTextureRectangle(this->dList++, (this->posX + 4 + (WIDESCREEN ? 52 : 0)) * (HIRES ? 2 : 1), (this->posY + 4) * (HIRES ? 2 : 1), (this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0)) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0), (this->posY + 4 + 32) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0),
-                            tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
+        gSPTextureRectangle(this->dList++, HIRES_MULTIPLY((this->posX + 4 + (WIDESCREEN ? 52 : 0))), HIRES_MULTIPLY((this->posY + 4)), HIRES_MULTIPLY((this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0))) - (HIRES ? 2 : 0), HIRES_MULTIPLY((this->posY + 4 + 32)) - (HIRES ? 2 : 0),
+                            tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 #else
         if (this->flags & GFXP_FLAG_ENLARGE) {
-            gSPTextureRectangle(this->dList++, ((this->posX + 4 + (WIDESCREEN ? 52 : 0)) << 1) * (HIRES ? 2 : 1), ((this->posY + 4) << 1) * (HIRES ? 2 : 1), ((this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0)) << 1) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0),
-                                ((this->posY + 4 + 32) << 1) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0), tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, (1 << 9) / (HIRES ? 2 : 1),
-                                (1 << 9) / (HIRES ? 2 : 1));
+            gSPTextureRectangle(this->dList++, HIRES_MULTIPLY(((this->posX + 4 + (WIDESCREEN ? 52 : 0)) << 1)), HIRES_MULTIPLY(((this->posY + 4) << 1)), HIRES_MULTIPLY(((this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0)) << 1)) - (HIRES ? 2 : 0),
+                                HIRES_MULTIPLY(((this->posY + 4 + 32) << 1)) - (HIRES ? 2 : 0), tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, HIRES_DIVIDE((1 << 9)),
+                                HIRES_DIVIDE((1 << 9)));
         } else {
-            gSPTextureRectangle(this->dList++, (this->posX + 4 + (WIDESCREEN ? 52 : 0)) * (HIRES ? 2 : 1), (this->posY + 4) * (HIRES ? 2 : 1), (this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0)) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0), (this->posY + 4 + 32) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0),
-                                tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
+            gSPTextureRectangle(this->dList++, HIRES_MULTIPLY((this->posX + 4 + (WIDESCREEN ? 52 : 0))), HIRES_MULTIPLY((this->posY + 4)), HIRES_MULTIPLY((this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0))) - (HIRES ? 2 : 0), HIRES_MULTIPLY((this->posY + 4 + 32)) - (HIRES ? 2 : 0),
+                                tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         }
 #endif
 
@@ -256,15 +256,15 @@ void GfxPrint_PrintCharImpl(GfxPrint* this, u8 c) {
     }
 
 #if PLATFORM_N64
-    gSPTextureRectangle(this->dList++, (this->posX + (WIDESCREEN ? 52 : 0)) * (HIRES ? 2 : 1), (this->posY) * (HIRES ? 2 : 1), (this->posX + 32 + (WIDESCREEN ? 52 : 0)) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0), (this->posY + 32) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0), tile,
-                        (u16)(c & 4) * 64, (u16)(c >> 3) * 256, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
+    gSPTextureRectangle(this->dList++, HIRES_MULTIPLY((this->posX + (WIDESCREEN ? 52 : 0))), HIRES_MULTIPLY((this->posY)), HIRES_MULTIPLY((this->posX + 32 + (WIDESCREEN ? 52 : 0))) - (HIRES ? 2 : 0), HIRES_MULTIPLY((this->posY + 32)) - (HIRES ? 2 : 0), tile,
+                        (u16)(c & 4) * 64, (u16)(c >> 3) * 256, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 #else
     if (this->flags & GFXP_FLAG_ENLARGE) {
-        gSPTextureRectangle(this->dList++, (this->posX << 1 + (WIDESCREEN ? 52 : 0)) * (HIRES ? 2 : 1), (this->posY << 1) * (HIRES ? 2 : 1), ((this->posX + 32 + (WIDESCREEN ? 52 : 0)) << 1) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0),
-                            ((this->posY + 32) << 1) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0), tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, (1 << 9) / (HIRES ? 2 : 1), (1 << 9) / (HIRES ? 2 : 1));
+        gSPTextureRectangle(this->dList++, HIRES_MULTIPLY((this->posX << 1 + (WIDESCREEN ? 52 : 0))), HIRES_MULTIPLY((this->posY << 1)), HIRES_MULTIPLY(((this->posX + 32 + (WIDESCREEN ? 52 : 0)) << 1)) - (HIRES ? 2 : 0),
+                            HIRES_MULTIPLY(((this->posY + 32) << 1)) - (HIRES ? 2 : 0), tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, HIRES_DIVIDE((1 << 9)), HIRES_DIVIDE((1 << 9)));
     } else {
-        gSPTextureRectangle(this->dList++, (this->posX + (WIDESCREEN ? 52 : 0)) * (HIRES ? 2 : 1), (this->posY, this->posX + 32 + (WIDESCREEN ? 52 : 0)) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0), (this->posY + 32) * (HIRES ? 2 : 1) - (HIRES ? 2 : 0), tile,
-                            (u16)(c & 4) * 64, (u16)(c >> 3) * 256, (1 << 10) / (HIRES ? 2 : 1), (1 << 10) / (HIRES ? 2 : 1));
+        gSPTextureRectangle(this->dList++, HIRES_MULTIPLY((this->posX + (WIDESCREEN ? 52 : 0))), HIRES_MULTIPLY((this->posY, this->posX + 32 + (WIDESCREEN ? 52 : 0))) - (HIRES ? 2 : 0), HIRES_MULTIPLY((this->posY + 32)) - (HIRES ? 2 : 0), tile,
+                            (u16)(c & 4) * 64, (u16)(c >> 3) * 256, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
     }
 #endif
 

@@ -18,6 +18,7 @@
 #include "padmgr.h"
 #include "printf.h"
 #include "regs.h"
+#include "resolution.h"
 #include "rumble.h"
 #include "speed_meter.h"
 #include "sys_debug_controller.h"
@@ -183,7 +184,7 @@ void GameState_DrawInputDisplay(u16 input, Gfx** gfxP) {
         if (input & (1 << i)) {
             gDPSetFillColor(gfx++, (sInpDispBtnColors[i] << 0x10) | sInpDispBtnColors[i]);
             k = i + 1;
-            gDPFillRectangle(gfx++, ((j * 4) + 226 + (WIDESCREEN ? 104 : 0)) * (HIRES ? 2 : 1), 220 * (HIRES ? 2 : 1), ((k * 4) + 225 + (WIDESCREEN ? 104 : 0)) * (HIRES ? 2 : 1), 223 * (HIRES ? 2 : 1));
+            gDPFillRectangle(gfx++, HIRES_MULTIPLY(((j * 4) + 226 + (WIDESCREEN ? 104 : 0))), HIRES_MULTIPLY(220), HIRES_MULTIPLY(((k * 4) + 225 + (WIDESCREEN ? 104 : 0))), HIRES_MULTIPLY(223));
             gDPPipeSync(gfx++);
         }
     }
