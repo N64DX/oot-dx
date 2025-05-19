@@ -1038,7 +1038,7 @@ u8 shop1_room_0_unaccounted_003F60[] = {
 };
 
 u64 shop1_room_0Background_003FB0[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WIDESCREEN || ULTRA_WS
 #include "assets/scenes/shops/shop1/shop1_room_0Background_003FB0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/shops/shop1/shop1_room_0Background_003FB0.jpg.inc.c"

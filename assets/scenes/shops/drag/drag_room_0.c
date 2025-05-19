@@ -781,7 +781,7 @@ u8 drag_room_0_unaccounted_006650[] = {
 };
 
 u64 drag_room_0Background_006660[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WIDESCREEN || ULTRA_WS
 #include "assets/scenes/shops/drag/drag_room_0Background_006660_ws.jpg.inc.c"
 #else
 #include "assets/scenes/shops/drag/drag_room_0Background_006660.jpg.inc.c"

@@ -536,7 +536,7 @@ u8 kakariko3_room_0_unaccounted_004D68[] = {
 };
 
 u64 kakariko3_room_0Background_004D80[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WIDESCREEN || ULTRA_WS
 #include "assets/scenes/misc/kakariko3/kakariko3_room_0Background_004D80_ws.jpg.inc.c"
 #else
 #include "assets/scenes/misc/kakariko3/kakariko3_room_0Background_004D80.jpg.inc.c"

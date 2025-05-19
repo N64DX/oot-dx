@@ -14,6 +14,9 @@
 #elif HIRES
     #define SCREEN_WIDTH  640
     #define SCREEN_HEIGHT 480
+#elif ULTRA_WS
+    #define SCREEN_WIDTH  560
+    #define SCREEN_HEIGHT 240
 #elif WIDESCREEN
     #define SCREEN_WIDTH  424
     #define SCREEN_HEIGHT 240

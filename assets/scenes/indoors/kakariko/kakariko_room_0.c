@@ -637,7 +637,7 @@ u8 kakariko_room_0_unaccounted_0057B0[] = {
 };
 
 u64 kakariko_room_0Background_0057C0[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WIDESCREEN || ULTRA_WS
 #include "assets/scenes/indoors/kakariko/kakariko_room_0Background_0057C0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/kakariko/kakariko_room_0Background_0057C0.jpg.inc.c"

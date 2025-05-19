@@ -373,11 +373,14 @@ void Room_DrawBackground2D(Gfx** gfxP, void* tex, void* tlut, u16 width, u16 hei
         gDPSetCombineLERP(gfx++, 0, 0, 0, TEXEL0, 0, 0, 0, 1, 0, 0, 0, TEXEL0, 0, 0, 0, 1);
         gSPObjRenderMode(gfx++, G_OBJRM_ANTIALIAS | G_OBJRM_BILERP);        
 		gSPBgRect1Cyc(gfx++, bg);
-#elif WIDESCREEN
+#elif WIDESCREEN || ULTRA_WS
         bg->s.frameW = 424 * 4;
         bg->s.frameH = height * 4;
         bg->s.scaleW = 775; //adjusted for squished 420px -> 320px WS images
         bg->s.scaleH = 1024;
+#if ULTRA_WS
+        bg->s.frameX = bg->b.frameX + 272; // (560 - 424) * 2
+#endif
         bg->s.imageYorig = bg->b.imageY;
         gDPSetOtherMode(gfx++,
                         tlutMode | G_AD_DISABLE | G_CD_DISABLE | G_CK_NONE | G_TC_FILT | G_TF_POINT | G_TT_NONE |

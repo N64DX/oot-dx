@@ -567,7 +567,9 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_item.c", 516);
 }
 
-#if WIDESCREEN
+#if ULTRA_WS
+static s16 sCButtonPosX[] = { 1960, 2200, 2440 };
+#elif WIDESCREEN
 static s16 sCButtonPosX[] = { 1180, 1420, 1660 };
 #else
 static s16 sCButtonPosX[] = { 660, 900, 1140 };

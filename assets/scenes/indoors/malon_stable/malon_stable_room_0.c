@@ -769,7 +769,7 @@ u8 malon_stable_room_0_unaccounted_008A38[] = {
 };
 
 u64 malon_stable_room_0Background_008A50[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WIDESCREEN || ULTRA_WS
 #include "assets/scenes/indoors/malon_stable/malon_stable_room_0Background_008A50_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/malon_stable/malon_stable_room_0Background_008A50.jpg.inc.c"

@@ -815,7 +815,7 @@ u8 labo_room_0_unaccounted_006ED8[] = {
 };
 
 u64 labo_room_0Background_006EF0[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WIDESCREEN || ULTRA_WS
 #include "assets/scenes/indoors/labo/labo_room_0Background_006EF0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/labo/labo_room_0Background_006EF0.jpg.inc.c"

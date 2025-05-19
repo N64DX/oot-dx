@@ -247,7 +247,7 @@ u8 alley_shop_room_0_unaccounted_001418[] = {
 };
 
 u64 alley_shop_room_0Background_001430[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WIDESCREEN || ULTRA_WS
 #include "assets/scenes/shops/alley_shop/alley_shop_room_0Background_001430_ws.jpg.inc.c"
 #else
 #include "assets/scenes/shops/alley_shop/alley_shop_room_0Background_001430.jpg.inc.c"

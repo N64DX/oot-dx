@@ -3079,7 +3079,7 @@ void Magic_DrawMeter(PlayState* play) {
 }
 
 void Interface_SetSubTimer(s16 seconds) {
-    gSaveContext.timerX[TIMER_ID_SUB] = 140 + (WIDESCREEN ? 52 : 0);
+    gSaveContext.timerX[TIMER_ID_SUB] = 140 + WS_SHIFT_HALF;
     gSaveContext.timerY[TIMER_ID_SUB] = 80;
     sEnvHazardActive = false;
     gSaveContext.subTimerSeconds = seconds;
@@ -3108,7 +3108,7 @@ void Interface_SetSubTimerToFinalSecond(PlayState* play) {
 }
 
 void Interface_SetTimer(s16 seconds) {
-    gSaveContext.timerX[TIMER_ID_MAIN] = 140 + (WIDESCREEN ? 52 : 0);
+    gSaveContext.timerX[TIMER_ID_MAIN] = 140 + WS_SHIFT_HALF;
     gSaveContext.timerY[TIMER_ID_MAIN] = 80;
     sEnvHazardActive = false;
     gSaveContext.timerSeconds = seconds;
@@ -3260,15 +3260,15 @@ void Interface_DrawItemButtons(PlayState* play) {
                             interfaceCtx->startAlpha);
 
 #if (OOT_VERSION < PAL_1_0) && !OOT_NTSC_N64
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_START_BTN_X + (WIDESCREEN ? 104 : 0)) << 2)), HIRES_MULTIPLY((R_START_BTN_Y << 2)), HIRES_MULTIPLY(((R_START_BTN_X + (WIDESCREEN ? 104 : 0) + 22) << 2)),
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_START_BTN_X + WS_SHIFT_FULL) << 2)), HIRES_MULTIPLY((R_START_BTN_Y << 2)), HIRES_MULTIPLY(((R_START_BTN_X + WS_SHIFT_FULL + 22) << 2)),
                                 HIRES_MULTIPLY(((R_START_BTN_Y + 22) << 2)), G_TX_RENDERTILE, 0, 0, (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))),
                                 (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))));
 #elif OOT_NTSC && !OOT_NTSC_N64
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((132 + (WIDESCREEN ? 104 : 0)) << 2)), HIRES_MULTIPLY((17 << 2)), HIRES_MULTIPLY(((132 + (WIDESCREEN ? 104 : 0) + 22) << 2)), HIRES_MULTIPLY(((17 + 22) << 2)), G_TX_RENDERTILE, 0,
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((132 + WS_SHIFT_FULL) << 2)), HIRES_MULTIPLY((17 << 2)), HIRES_MULTIPLY(((132 + WS_SHIFT_FULL + 22) << 2)), HIRES_MULTIPLY(((17 + 22) << 2)), G_TX_RENDERTILE, 0,
                                 0, (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))), (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))));
 #else
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((startButtonLeftPos[gSaveContext.language] + (WIDESCREEN ? 104 : 0)) << 2)), HIRES_MULTIPLY((17 << 2)),
-                                HIRES_MULTIPLY(((startButtonLeftPos[gSaveContext.language] + (WIDESCREEN ? 104 : 0) + 22) << 2)), HIRES_MULTIPLY(((17 + 22) << 2)), G_TX_RENDERTILE,
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL) << 2)), HIRES_MULTIPLY((17 << 2)),
+                                HIRES_MULTIPLY(((startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL + 22) << 2)), HIRES_MULTIPLY(((17 + 22) << 2)), G_TX_RENDERTILE,
                                 0, 0, (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))), (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))));
 #endif
 
@@ -3286,18 +3286,18 @@ void Interface_DrawItemButtons(PlayState* play) {
             R_START_LABEL_SCALE = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             R_START_LABEL_WIDTH = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             R_START_LABEL_HEIGHT = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + (WIDESCREEN ? 104 : 0)) << 2)),
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL) << 2)),
                                 HIRES_MULTIPLY((R_START_LABEL_Y(gSaveContext.language) << 2)),
-                                HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + (WIDESCREEN ? 104 : 0) + R_START_LABEL_WIDTH) << 2)),
+                                HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + R_START_LABEL_WIDTH) << 2)),
                                 HIRES_MULTIPLY(((R_START_LABEL_Y(gSaveContext.language) + R_START_LABEL_HEIGHT) << 2)), G_TX_RENDERTILE,
                                 0, 0, HIRES_DIVIDE(R_START_LABEL_SCALE), HIRES_DIVIDE(R_START_LABEL_SCALE));
 #else
             texCoordScale = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             width = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             height = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + (WIDESCREEN ? 104 : 0)) << 2)),
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL) << 2)),
                                 HIRES_MULTIPLY((R_START_LABEL_Y(gSaveContext.language) << 2)),
-                                HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + (WIDESCREEN ? 104 : 0) + width) << 2)),
+                                HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + width) << 2)),
                                 HIRES_MULTIPLY(((R_START_LABEL_Y(gSaveContext.language) + height) << 2)), G_TX_RENDERTILE, 0, 0,
                                 HIRES_DIVIDE(texCoordScale), HIRES_DIVIDE(texCoordScale));
 #endif
@@ -3998,7 +3998,7 @@ void Interface_Draw(PlayState* play) {
                                         G_TX_NOLOD, G_TX_NOLOD);
 
                     // Draw 6 carrots
-                    for (svar1 = 1, svar5 = ZREG(14) + (WIDESCREEN ? 52 : 0); svar1 < 7; svar1++, svar5 += 16) {
+                    for (svar1 = 1, svar5 = ZREG(14) + WS_SHIFT_HALF; svar1 < 7; svar1++, svar5 += 16) {
                         // Carrot Color (based on availability)
                         if ((interfaceCtx->numHorseBoosts == 0) || (interfaceCtx->numHorseBoosts < svar1)) {
                             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 150, 255, interfaceCtx->aAlpha);
@@ -4012,7 +4012,7 @@ void Interface_Draw(PlayState* play) {
                 }
             } else {
                 // Score for the Horseback Archery
-                svar5 = WREG(32) + (WIDESCREEN ? 104 : 0);
+                svar5 = WREG(32) + WS_SHIFT_FULL;
                 gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->bAlpha);
 
                 // Target Icon
@@ -4028,7 +4028,7 @@ void Interface_Draw(PlayState* play) {
                 gDPSetCombineLERP(OVERLAY_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE,
                                   TEXEL0, 0, PRIMITIVE, 0);
 
-                svar5 = WREG(32) + (WIDESCREEN ? 104 : 0) + 6 * 9;
+                svar5 = WREG(32) + WS_SHIFT_FULL + 6 * 9;
 
                 for (svar1 = svar2 = 0; svar1 < 4; svar1++) {
                     if (sHBAScoreDigits[svar1] != 0 || (svar2 != 0) || (svar1 >= 3)) {
@@ -4275,7 +4275,7 @@ void Interface_Draw(PlayState* play) {
                     if (gSaveContext.subTimerState != SUBTIMER_STATE_OFF) {
                         sSubTimerStateTimer = 20;
                         sSubTimerNextSecondTimer = 20;
-                        gSaveContext.timerX[TIMER_ID_SUB] = 140 + (WIDESCREEN ? 52 : 0);
+                        gSaveContext.timerX[TIMER_ID_SUB] = 140 + WS_SHIFT_HALF;
                         gSaveContext.timerY[TIMER_ID_SUB] = 80;
 
                         if (gSaveContext.subTimerState <= SUBTIMER_STATE_STOP) {
@@ -4301,7 +4301,7 @@ void Interface_Draw(PlayState* play) {
                         case SUBTIMER_STATE_UP_INIT:
                             sSubTimerStateTimer = 20;
                             sSubTimerNextSecondTimer = 20;
-                            gSaveContext.timerX[TIMER_ID_SUB] = 140 + (WIDESCREEN ? 52 : 0);
+                            gSaveContext.timerX[TIMER_ID_SUB] = 140 + WS_SHIFT_HALF;
                             gSaveContext.timerY[TIMER_ID_SUB] = 80;
                             if (gSaveContext.subTimerState == SUBTIMER_STATE_DOWN_INIT) {
                                 gSaveContext.subTimerState = SUBTIMER_STATE_DOWN_PREVIEW;
@@ -4827,7 +4827,7 @@ void Interface_Update(PlayState* play) {
 
             ((gSaveContext.save.info.playerData.health >> 1) != 0)) {
             gSaveContext.timerState = TIMER_STATE_ENV_HAZARD_INIT;
-            gSaveContext.timerX[TIMER_ID_MAIN] = 140 + (WIDESCREEN ? 52 : 0);
+            gSaveContext.timerX[TIMER_ID_MAIN] = 140 + WS_SHIFT_HALF;
             gSaveContext.timerY[TIMER_ID_MAIN] = 80;
             sEnvHazardActive = true;
         }
