@@ -97,7 +97,7 @@ void Idle_ThreadEntry(void* arg) {
     switch (osTvType) {
         case OS_TV_NTSC:
             gViConfigModeType = OS_VI_NTSC_LAN1;
-#if HIRES
+#if HIRES && INTERLACED
             gViConfigMode = osViModeNtscHan1;
 #else
             gViConfigMode = osViModeNtscLan1;
@@ -123,7 +123,7 @@ void Idle_ThreadEntry(void* arg) {
         case OS_TV_PAL:
         case OS_TV_NTSC:
             gViConfigModeType = OS_VI_NTSC_LAN1;
-#ifdef HIRES
+#ifdef HIRES && INTERLACED
             gViConfigMode = osViModeNtscHan1;
 #else
             gViConfigMode = osViModeNtscLan1;
