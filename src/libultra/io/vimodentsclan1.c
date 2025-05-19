@@ -63,7 +63,9 @@ OSViMode osViModeNtscLan1 = {
         VI_CTRL_TYPE_16 | VI_CTRL_GAMMA_DITHER_ON | VI_CTRL_GAMMA_ON | VI_CTRL_DIVOT_ON | VI_CTRL_ANTIALIAS_MODE_1 |
             VI_CTRL_PIXEL_ADV_DEFAULT, // ctrl
 
-#if WIDESCREEN
+#if HIRES
+        WIDTH(640),                    // width
+#elif WIDESCREEN
         WIDTH(424),                    // width
 #else
         WIDTH(320),                    // width
@@ -75,7 +77,9 @@ OSViMode osViModeNtscLan1 = {
         LEAP(3093, 3093),              // leap
         HSTART(108, 748),              // hStart
 
-#if WIDESCREEN
+#if HIRES
+        0x400,                         // xScale
+#elif WIDESCREEN
         0x2A6,                         // xScale
 #else
         SCALE(2, 0),                   // xScale
@@ -88,13 +92,20 @@ OSViMode osViModeNtscLan1 = {
         {
             // [0]
 
-#if WIDESCREEN
+#if HIRES
+            ORIGIN(1280),       // origin
+#elif WIDESCREEN
             ORIGIN(848),        // origin
 #else
             ORIGIN(640),        // origin
 #endif
 
+#if HIRES
+            0x800,              // yScale
+#else
             SCALE(1, 0),        // yScale
+#endif
+
             VSTART(37, 511),    // vStart
             BURST(4, 2, 14, 0), // vBurst
             VINTR(2),           // vIntr
@@ -102,13 +113,20 @@ OSViMode osViModeNtscLan1 = {
         {
             // [1]
 
-#if WIDESCREEN
+#if HIRES
+            ORIGIN(1280),       // origin
+#elif WIDESCREEN
             ORIGIN(848),        // origin
 #else
             ORIGIN(640),        // origin
 #endif
 
+#if HIRES
+            0x800,              // yScale
+#else
             SCALE(1, 0),        // yScale
+#endif
+
             VSTART(37, 511),    // vStart
             BURST(4, 2, 14, 0), // vBurst
             VINTR(2),           // vIntr
