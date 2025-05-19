@@ -17,6 +17,13 @@
 #define LINK_LOD false
 
 /**
+ * 21:9 Widescreen
+ * Extends the viewport to 640px over the original 320px
+ * Incompatible with hires mode
+*/
+#define ULTRA_WS false
+
+/**
  * 16:9 Widescreen
  * Extends the viewport to 424px over the original 320px
  * Uses 640x360 if hires mode is enabled

@@ -9,6 +9,7 @@
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "printf.h"
+#include "resolution.h"
 #include "sys_matrix.h"
 #include "terminal.h"
 #include "z_lib.h"
@@ -89,9 +90,9 @@ void OceffWipe_Draw(Actor* thisx, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_oceff_wipe.c", 346);
 
     if (this->timer < 32) {
-        z = Math_SinS(this->timer << 9) * 1400;
+        z = Math_SinS(this->timer << 9) * (1400 - LULLABY_SHIFT);
     } else {
-        z = 1400;
+        z = 1400 - LULLABY_SHIFT;
     }
 
     if (this->timer >= 80) {

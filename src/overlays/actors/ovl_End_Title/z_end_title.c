@@ -97,18 +97,18 @@ void EndTitle_DrawFull(Actor* thisx, PlayState* play) {
     gDPSetPrimColor(OVERLAY_DISP++, 0x00, 0x80, 0, 0, 0, this->endAlpha);
     gDPLoadTextureTile(OVERLAY_DISP++, sTheEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 80, 24, 0, 0, 80, 24, 0,
                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 0, 0, 0, 0);
-    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((120 + (WIDESCREEN ? 52 : 0)) << 2)), HIRES_MULTIPLY((90 << 2)), HIRES_MULTIPLY(((200 + (WIDESCREEN ? 52 : 0)) << 2)), HIRES_MULTIPLY((113 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((120 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((90 << 2)), HIRES_MULTIPLY(((200 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((113 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetPrimColor(OVERLAY_DISP++, 0x00, 0x80, 0, 0, 0, this->tlozAlpha);
     gDPLoadTextureTile(OVERLAY_DISP++, sTheLegendOfZeldaTex, G_IM_FMT_IA, G_IM_SIZ_8b, 120, 24, 0, 0, 120, 24, 0,
                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 0, 0, 0, 0);
-    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((100 + (WIDESCREEN ? 52 : 0)) << 2)), HIRES_MULTIPLY((160 << 2)), HIRES_MULTIPLY(((220 + (WIDESCREEN ? 52 : 0)) << 2)), HIRES_MULTIPLY((183 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((100 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((160 << 2)), HIRES_MULTIPLY(((220 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((183 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
                         HIRES_DIVIDE((1 << 10)));
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetPrimColor(OVERLAY_DISP++, 0x00, 0x80, 0, 0, 0, this->ootAlpha);
     gDPLoadTextureTile(OVERLAY_DISP++, sOcarinaOfTimeTex, G_IM_FMT_IA, G_IM_SIZ_8b, 112, 16, 0, 0, 112, 16, 0,
                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 0, 0, 0, 0);
-    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((104 + (WIDESCREEN ? 52 : 0)) << 2)), HIRES_MULTIPLY((177 << 2)), HIRES_MULTIPLY(((216 + (WIDESCREEN ? 52 : 0)) << 2)), HIRES_MULTIPLY((192 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((104 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((177 << 2)), HIRES_MULTIPLY(((216 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((192 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
                         HIRES_DIVIDE((1 << 10)));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_end_title.c", 515);

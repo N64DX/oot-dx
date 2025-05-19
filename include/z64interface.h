@@ -1,7 +1,7 @@
 #ifndef Z64INTERFACE_H
 #define Z64INTERFACE_H
 
-#include "config.h"
+#include "resolution.h"
 #include "ultra64.h"
 #include "z64dma.h"
 #include "z64view.h"
@@ -154,7 +154,7 @@ typedef struct InterfaceContext {
 /**
  * Button HUD positions and colors
  */
-#define A_BUTTON_X 186 + (WIDESCREEN ? 104 : 0)
+#define A_BUTTON_X 186 + WS_SHIFT_FULL
 #define A_BUTTON_Y 9
 
 #if !PLATFORM_GC
@@ -167,7 +167,7 @@ typedef struct InterfaceContext {
 #define A_BUTTON_B 50
 #endif
 
-#define B_BUTTON_X 160 + (WIDESCREEN ? 104 : 0)
+#define B_BUTTON_X 160 + WS_SHIFT_FULL
 #define B_BUTTON_Y 17
 
 #if !PLATFORM_GC
@@ -180,16 +180,16 @@ typedef struct InterfaceContext {
 #define B_BUTTON_B 30
 #endif
 
-#define C_LEFT_BUTTON_X 227 + (WIDESCREEN ? 104 : 0)
+#define C_LEFT_BUTTON_X 227 + WS_SHIFT_FULL
 #define C_LEFT_BUTTON_Y 18
 
-#define C_DOWN_BUTTON_X 249 + (WIDESCREEN ? 104 : 0)
+#define C_DOWN_BUTTON_X 249 + WS_SHIFT_FULL
 #define C_DOWN_BUTTON_Y 34
 
-#define C_RIGHT_BUTTON_X 271 + (WIDESCREEN ? 104 : 0)
+#define C_RIGHT_BUTTON_X 271 + WS_SHIFT_FULL
 #define C_RIGHT_BUTTON_Y 18
 
-#define C_UP_BUTTON_X 254 + (WIDESCREEN ? 104 : 0)
+#define C_UP_BUTTON_X 254 + WS_SHIFT_FULL
 #define C_UP_BUTTON_Y 16
 
 #define D_UP_BUTTON_X    (dpad_x + 2)

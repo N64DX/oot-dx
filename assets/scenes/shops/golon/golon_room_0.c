@@ -124,7 +124,7 @@ u8 golon_room_0_unaccounted_0009C0[] = {
 };
 
 u64 golon_room_0Background_0009D0[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WIDESCREEN || ULTRA_WS
 #include "assets/scenes/shops/golon/golon_room_0Background_0009D0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/shops/golon/golon_room_0Background_0009D0.jpg.inc.c"

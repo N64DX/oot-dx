@@ -836,7 +836,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         width = titleCtx->width;
         height = titleCtx->height;
         doubleWidth = width * 2;
-        titleX1 = HIRES_MULTIPLY((((titleCtx->x + (WIDESCREEN ? 52 : 0)) * 4) - (width * 2)));
+        titleX1 = HIRES_MULTIPLY((((titleCtx->x + WS_SHIFT_HALF) * 4) - (width * 2)));
         titleX2 = titleX1 + HIRES_MULTIPLY((doubleWidth * 2)) - HIRES_MULTIPLY(4);
         titleY1 = HIRES_MULTIPLY(((titleCtx->y * 4) - (height * 2)));
 
@@ -2660,7 +2660,7 @@ void Actor_UpdateFlaggedAudio(Actor* actor) {
 #define LENS_MASK_WIDTH 64
 #define LENS_MASK_HEIGHT 64
 // 26 and 6 are for padding between the mask texture and the screen borders
-#define LENS_MASK_OFFSET_S ((SCREEN_WIDTH / 2 - LENS_MASK_WIDTH) - 26 - (WIDESCREEN ? 26 : 0))
+#define LENS_MASK_OFFSET_S ((SCREEN_WIDTH / 2 - LENS_MASK_WIDTH) - 26 - WS_SHIFT_QUARTER)
 #define LENS_MASK_OFFSET_T ((SCREEN_HEIGHT / 2 - LENS_MASK_HEIGHT) - 6)
 
 void Actor_DrawLensOverlay(GraphicsContext* gfxCtx) {

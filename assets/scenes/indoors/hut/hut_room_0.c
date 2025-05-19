@@ -541,7 +541,7 @@ u8 hut_room_0_unaccounted_003D88[] = {
 };
 
 u64 hut_room_0Background_003DA0[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WIDESCREEN || ULTRA_WS
 #include "assets/scenes/indoors/hut/hut_room_0Background_003DA0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/hut/hut_room_0Background_003DA0.jpg.inc.c"
