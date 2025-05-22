@@ -221,7 +221,7 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
 
 #if OOT_NTSC
     for (phi_t1 = 0, phi_s0 = 4; phi_t1 < 5; phi_t1++, phi_s0 += 4) {
-        if (gSaveContext.language == LANGUAGE_JPN || OOT_NTSC_N64) {
+        if (gSaveContext.language == LANGUAGE_JPN) {
             gDPPipeSync(POLY_OPA_DISP++);
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2],
                             255);
@@ -1022,7 +1022,7 @@ void FileSelect_UpdateKeyboardCursor(GameState* thisx) {
 #if OOT_NTSC
     if (this->charPage <= FS_CHAR_PAGE_ENG) {
         if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
-            if (gSaveContext.language == LANGUAGE_JPN || OOT_NTSC_N64) {
+            if (gSaveContext.language == LANGUAGE_JPN) {
                 if (this->charPage == FS_CHAR_PAGE_HIRA) {
                     this->charPage = FS_CHAR_PAGE_HIRA_TO_KATA;
                     Audio_PlaySfxGeneral(NA_SE_SY_WIN_OPEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -1060,7 +1060,7 @@ void FileSelect_UpdateKeyboardCursor(GameState* thisx) {
                         this->charIndex = this->kbdY * 13 + this->kbdX;
                     }
                 }
-            } else if (gSaveContext.language == LANGUAGE_JPN || OOT_NTSC_N64) {
+            } else if (gSaveContext.language == LANGUAGE_JPN) {
                 if (this->stickAdjX < -30) {
                     Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                          &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -1099,7 +1099,7 @@ void FileSelect_UpdateKeyboardCursor(GameState* thisx) {
                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                 this->kbdY--;
                 if (this->kbdY < 0) {
-                    if (gSaveContext.language == LANGUAGE_JPN || OOT_NTSC_N64) {
+                    if (gSaveContext.language == LANGUAGE_JPN) {
                         this->kbdY = 5;
                         this->charIndex += 52;
                         prevKbdX = this->kbdX;

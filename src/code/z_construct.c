@@ -583,7 +583,7 @@ void Regs_InitDataImpl(void) {
     R_B_LABEL_SCALE(0) = 100;
     R_B_LABEL_SCALE(1) = 99;
     R_B_LABEL_SCALE(2) = 109;
-    R_B_LABEL_X(0) = B_BUTTON_X - 9;
+    R_B_LABEL_X(0) = B_BUTTON_X - 10;
     R_B_LABEL_X(1) = B_BUTTON_X - 9;
     R_B_LABEL_X(2) = B_BUTTON_X - 11;
     R_B_LABEL_Y(0) = B_BUTTON_Y + 6;
@@ -613,7 +613,7 @@ void Regs_InitDataImpl(void) {
 #endif
 #if OOT_NTSC_N64
     R_B_LABEL_SCALE(3) = 100;
-    R_B_LABEL_X(3)     = B_BUTTON_X - 12;
+    R_B_LABEL_X(3)     = B_BUTTON_X - 10;
     R_B_LABEL_Y(3)     = B_BUTTON_Y + 6;
     R_A_LABEL_Z(3)     = -380;
     R_KALEIDO_UNK1(3)  = -45;
