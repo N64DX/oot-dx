@@ -232,6 +232,10 @@ Vtx gOptionsMenuSettingsVtx[] = {
 #include "assets/overlays/ovl_file_choose/gOptionsMenuSettingsAllVtx.vtx.inc"
 };
 
+Vtx gOptionsMenuSettingsJapaneseVtx[] = {
+#include "assets/overlays/ovl_file_choose/gOptionsMenuSettingsJapaneseVtx.vtx.inc"
+};
+
 Vtx gOptionsDividerSoundVtx[] = {
 #include "assets/overlays/ovl_file_choose/gOptionsDividerSoundAllVtx.vtx.inc"
 };

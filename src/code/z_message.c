@@ -1093,7 +1093,7 @@ f32 sFontWidths[144] = {
     10.0f, // '~'
     10.0f, // ' '
     12.0f, // 'À'
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
     12.0f, // 'î'
 #else
     6.0f, // 'î'

@@ -1730,26 +1730,16 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
     gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 255);
 
 #if OOT_NTSC_N64
-for (i = 0, vtx = 0; i < 4; i++, vtx += 4) {
+    for (i=0, vtx=0; i<4; i++, vtx+=4) {
         if (i == 2 && gSaveContext.language == LANGUAGE_GER) {
-            gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[i].texture[gSaveContext.language], G_IM_FMT_IA,
-                                G_IM_SIZ_8b, 144, OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[i]), 0,
-                                G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
-                                G_TX_NOLOD, G_TX_NOLOD);
+            gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[i].texture[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, 144, OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[i]), 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            gSP1Quadrangle(POLY_OPA_DISP++, vtx + 8, vtx + 10, vtx + 11, vtx + 9, 0);
+        } else if (i == 2 && gSaveContext.language == LANGUAGE_JPN) {
+            gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[i].texture[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[i]), OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[i]), 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
             gSP1Quadrangle(POLY_OPA_DISP++, vtx + 12, vtx + 14, vtx + 15, vtx + 13, 0);
         } else {
-            gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[i].texture[gSaveContext.language], G_IM_FMT_IA,
-                                G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[i]),
-                                OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,
-                                G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-            if (gSaveContext.language == LANGUAGE_JPN && i == 2) {
-                u16 x1 = WIDESCREEN ? 109 : 57;
-                u16 y1 = 100;
-                u16 x2 = x1 + (OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[i])  * 0.89f);
-                u16 y2 = y1 + (OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[i]) * 0.89f);
-                gSPTextureRectangle(POLY_OPA_DISP++, x1 << 2, y1 << 2, x2 << 2, y2 << 2, G_TX_RENDERTILE, 0, 0, 1152, 1152);
-            }            
-            else gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
+            gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[i].texture[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[i]), OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[i]), 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
         }
     }
 #elif !OOT_PAL_N64
@@ -1779,7 +1769,7 @@ for (i = 0, vtx = 0; i < 4; i++, vtx += 4) {
 #endif
 
 #if OOT_NTSC
-    gSPVertex(POLY_OPA_DISP++, gOptionsMenuSettingsVtx, 32, 0);
+    gSPVertex(POLY_OPA_DISP++, ((gSaveContext.language == LANGUAGE_JPN) ? gOptionsMenuSettingsJapaneseVtx : gOptionsMenuSettingsVtx), 32, 0);
 #elif OOT_PAL_N64
     gSPVertex(POLY_OPA_DISP++, gOptionsMenuSettingsVtx, 32, 0);
 #else
@@ -1810,18 +1800,7 @@ for (i = 0, vtx = 0; i < 4; i++, vtx += 4) {
                             G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i]),
                             OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettings[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,
                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-#if OOT_NTSC_N64
-        if (gSaveContext.language == LANGUAGE_JPN) {
-            u16 x1 = (WIDESCREEN ? 113 : 61) + (i * OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i])) * 1.1f;
-            u16 y1 = 86;
-            u16 x2 = x1 + (OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i])  * 0.89f);
-            u16 y2 = y1 + (OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettings[i]) * 0.89f);
-            gSPTextureRectangle(POLY_OPA_DISP++, x1 << 2, y1 << 2, x2 << 2, y2 << 2, G_TX_RENDERTILE, 0, 0, 1152, 1152);
-        }            
-        else gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
-#elif
         gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
-#endif
     }
 
 #if !OOT_PAL_N64 && !NTSC_1_0
@@ -1882,18 +1861,7 @@ for (i = 0, vtx = 0; i < 4; i++, vtx += 4) {
                             G_IM_SIZ_8b, sZTargetSettingWidths[j][gSaveContext.language],
                             OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettings[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,
                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-#if OOT_NTSC_N64
-        if (gSaveContext.language == LANGUAGE_JPN) {
-            u16 x1 = (WIDESCREEN ? 113 : 61) + ((i-4) * OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i])) * 1.7f;
-            u16 y1 = 116;
-            u16 x2 = x1 + (OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i])  * 0.89f);
-            u16 y2 = y1 + (OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettings[i]) * 0.89f);
-            gSPTextureRectangle(POLY_OPA_DISP++, x1 << 2, y1 << 2, x2 << 2, y2 << 2, G_TX_RENDERTILE, 0, 0, 1152, 1152);
-        }            
-        else gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
-#elif
-        gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
-#endif      
+        gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);  
     }
 
 #if !OOT_NTSC_N64
@@ -1950,18 +1918,7 @@ for (i = 0, vtx = 0; i < 4; i++, vtx += 4) {
         gDPLoadTextureBlock(POLY_OPA_DISP++, sLanguageChoices[i].texture, G_IM_FMT_IA, G_IM_SIZ_8b,
                             sLanguageChoices[i].width, sLanguageChoices[i].height, 0, G_TX_NOMIRROR | G_TX_WRAP,
                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        #if OOT_NTSC_N64
-        if (i == LANGUAGE_JPN) {
-            u16 x1 = WIDESCREEN ? 270 : 218;
-            u16 y1 = 148;
-            u16 x2 = x1 + (OPTIONS_MENU_TEXTURE_WIDTH(sLanguageChoices[i])  * 0.7f);
-            u16 y2 = y1 + (OPTIONS_MENU_TEXTURE_HEIGHT(sLanguageChoices[i]) * 0.7f);
-            gSPTextureRectangle(POLY_OPA_DISP++, x1 << 2, y1 << 2, x2 << 2, y2 << 2, G_TX_RENDERTILE, 0, 0, 1408, 1408);
-        }            
-        else gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
-#elif
-        gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
-#endif   
+        gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);  
     }
 #endif
 

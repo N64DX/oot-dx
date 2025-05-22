@@ -8,6 +8,7 @@ extern s16 gCharPageEng[];
 extern s16 gNextCharPage[];
 extern Vtx gOptionsMenuHeadersVtx[];
 extern Vtx gOptionsMenuSettingsVtx[];
+extern Vtx gOptionsMenuSettingsJapaneseVtx[];
 extern Vtx gOptionsDividerSoundVtx[];
 extern Vtx gOptionsDividerZTargetVtx[];
 extern Vtx gOptionsMenuLanguageVtx[];
