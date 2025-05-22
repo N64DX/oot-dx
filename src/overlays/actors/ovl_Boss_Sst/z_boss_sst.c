@@ -31,6 +31,9 @@
 
 #include "assets/objects/object_sst/object_sst.h"
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
+#if OOT_NTSC_N64
+#include "assets/objects/object_sst/object_sst_title_card.h"
+#endif
 
 #pragma increment_block_number "gc-eu:0 gc-eu-mq:0 gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128" \
                                "ique-cn:128 pal-1.0:128 pal-1.1:128"
@@ -626,8 +629,12 @@ void BossSst_HeadIntro(BossSst* this, PlayState* play) {
                     sSubCamEye.z -= 350.0f * 0.01f;
                 } else if (revealStateTimer == 85) {
                     if (!GET_EVENTCHKINF(EVENTCHKINF_BEGAN_BONGO_BONGO_BATTLE)) {
+#if OOT_NTSC_N64
+                        TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gBongoTitleCardTex : gBongoTitleCardPalTex), 160, 180, 128, 40);
+#else
                         TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gBongoTitleCardTex),
                                                160, 180, 128, 40);
+#endif
                     }
                     SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_BOSS);
                     Animation_MorphToPlayOnce(&this->skelAnime, &gBongoHeadEyeCloseAnim, -5.0f);

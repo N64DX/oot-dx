@@ -36,6 +36,9 @@
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_mo/object_mo.h"
+#if OOT_NTSC_N64
+#include "assets/objects/object_mo/object_mo_title_card.h"
+#endif
 
 #pragma increment_block_number "gc-eu:128 gc-eu-mq:128 gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128" \
                                "pal-1.0:128 pal-1.1:128"
@@ -1459,8 +1462,12 @@ void BossMo_IntroCs(BossMo* this, PlayState* play) {
                 SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_BOSS);
             }
             if (this->timers[2] == 130) {
+#if OOT_NTSC_N64
+                TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gMorphaTitleCardTex : gMorphaTitleCardPalTex), 160, 180, 128, 40);
+#else
                 TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gMorphaTitleCardTex), 160,
                                        180, 128, 40);
+#endif
                 SET_EVENTCHKINF(EVENTCHKINF_BEGAN_MORPHA_BATTLE);
             }
             break;

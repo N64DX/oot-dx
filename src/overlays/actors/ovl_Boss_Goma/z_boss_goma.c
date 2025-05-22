@@ -32,6 +32,9 @@
 #include "z64save.h"
 
 #include "assets/objects/object_goma/object_goma.h"
+#if OOT_NTSC_N64
+#include "assets/objects/object_goma/object_goma_title_card.h"
+#endif
 
 #define FLAGS                                                                                 \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | \
@@ -952,8 +955,12 @@ void BossGoma_Encounter(BossGoma* this, PlayState* play) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_CRY1);
 
                 if (!GET_EVENTCHKINF(EVENTCHKINF_BEGAN_GOHMA_BATTLE)) {
+#if OOT_NTSC_N64
+                    TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gGohmaTitleCardTex : gGohmaTitleCardPalTex), 160, 180, 128, 40);
+#else
                     TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gGohmaTitleCardTex),
                                            160, 180, 128, 40);
+#endif
                 }
 
                 SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_BOSS);

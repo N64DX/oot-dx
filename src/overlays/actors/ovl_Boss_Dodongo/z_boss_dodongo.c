@@ -23,6 +23,9 @@
 
 #include "assets/objects/object_kingdodongo/object_kingdodongo.h"
 #include "assets/scenes/dungeons/ddan_boss/ddan_boss_room_1.h"
+#if OOT_NTSC_N64
+#include "assets/objects/object_kingdodongo/object_kingdodongo_title_card.h"
+#endif
 
 #define FLAGS                                                                                 \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | \
@@ -427,8 +430,12 @@ void BossDodongo_IntroCutscene(BossDodongo* this, PlayState* play) {
 
             if (this->unk_198 == 0x5A) {
                 if (!GET_EVENTCHKINF(EVENTCHKINF_BEGAN_KING_DODONGO_BATTLE)) {
+#if OOT_NTSC_N64
+                    TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gKingDodongoTitleCardTex : gKingDodongoTitleCardPalTex), 160, 180, 128, 40);
+#else
                     TitleCard_InitBossName(play, &play->actorCtx.titleCtx,
                                            SEGMENTED_TO_VIRTUAL(gKingDodongoTitleCardTex), 160, 180, 128, 40);
+#endif
                 }
                 SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_FIRE_BOSS);
             }

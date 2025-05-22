@@ -210,7 +210,7 @@ void Sram_InitNewSave(void) {
 static SavePlayerData sDebugSavePlayerData = {
     { 'Z', 'E', 'L', 'D', 'A', 'Z' }, // newf
     0,                                // deaths
-#if OOT_VERSION < PAL_1_0
+#if OOT_VERSION < PAL_1_0 && !OOT_NTSC_N64
     {
         0x81, // リ
         0x87, // ン

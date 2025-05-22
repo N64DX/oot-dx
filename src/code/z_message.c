@@ -194,7 +194,6 @@ const char* sGerMessageEntryTable[] = {
 #include "assets/text/message_data.h"
 #undef DEFINE_MESSAGE
 #undef DEFINE_MESSAGE_NES
-#undef DEFINE_MESSAGE_PAL
 #undef DEFINE_MESSAGE_JPN
 #undef DEFINE_MESSAGE_FFFC
     NULL,
@@ -1908,7 +1907,10 @@ void Message_Decode(PlayState* play) {
     MessageContext* msgCtx = &play->msgCtx;
     Font* font = &play->msgCtx.font;
     s32 charTexIdx = 0;
-    s16 i, j;
+    s16 i;
+#if !(PLATFORM_GC && OOT_PAL)
+    s16 j;
+#endif
     s16 decodedBufPos = 0;
     s16 numLines = 0;
     s16 digits[4];
@@ -1917,7 +1919,7 @@ void Message_Decode(PlayState* play) {
     s16 loadChar;
     u16 value;
     u8 curChar;
-#if !PLATFORM_GC
+#if !(PLATFORM_GC && OOT_PAL)
     u16 curCharWide;
     u8* fontBuf;
 #endif
@@ -2340,16 +2342,33 @@ void Message_Decode(PlayState* play) {
                 }
                 break;
             } else if (curChar == MESSAGE_NAME) {
+                u8* fontBuf;
+                u8 playerName[8];
+                memcpy(playerName, gSaveContext.save.info.playerData.playerName, sizeof(playerName));
+
                 // Substitute the player name control character for the file's player name.
-                for (playerNameLen = ARRAY_COUNT(gSaveContext.save.info.playerData.playerName); playerNameLen > 0;
+                for (playerNameLen = ARRAY_COUNT(playerName); playerNameLen > 0;
                      playerNameLen--) {
-                    if (gSaveContext.save.info.playerData.playerName[playerNameLen - 1] != FILENAME_SPACE) {
+                    if (playerName[playerNameLen - 1] != FILENAME_SPACE) {
                         break;
                     }
                 }
+
+                for (i=0; i < playerNameLen; i++) {
+                    curChar = playerName[i];
+                    if (curChar < FILENAME_UPPERCASE('A') || curChar > FILENAME_SLASH) {
+                        playerName[0] = FILENAME_UPPERCASE('L');
+                        playerName[1] = FILENAME_LOWERCASE('i');
+                        playerName[2] = FILENAME_LOWERCASE('n');
+                        playerName[3] = FILENAME_LOWERCASE('k');
+                        playerNameLen = 4;
+                        break;
+                    }
+                }
+
                 PRINTF(T("\n名前 ＝ ", "\nName = "));
                 for (i = 0; i < playerNameLen; i++) {
-                    curChar = gSaveContext.save.info.playerData.playerName[i];
+                    curChar = playerName[i];
                     if (curChar == FILENAME_SPACE) {
                         curChar = ' ';
                     } else if (curChar == FILENAME_PERIOD) {

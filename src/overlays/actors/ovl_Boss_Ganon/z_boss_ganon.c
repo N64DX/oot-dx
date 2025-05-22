@@ -31,6 +31,9 @@
 #include "assets/objects/object_ganon_anime1/object_ganon_anime1.h"
 #include "assets/objects/object_ganon_anime2/object_ganon_anime2.h"
 #include "assets/scenes/dungeons/ganon_boss/ganon_boss_scene.h"
+#if OOT_NTSC_N64
+#include "assets/objects/object_ganon/object_ganon_title_card.h"
+#endif
 
 #define FLAGS                                                                                 \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | \
@@ -1121,8 +1124,12 @@ void BossGanon_IntroCutscene(BossGanon* this, PlayState* play) {
                     OS_K0_TO_PHYSICAL(play->objectCtx.slots[Object_GetSlot(&play->objectCtx, OBJECT_GANON)].segment);
 
                 if (!GET_EVENTCHKINF(EVENTCHKINF_BEGAN_GANONDORF_BATTLE)) {
+#if OOT_NTSC_N64
+                    TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gGanondorfTitleCardTex : gGanondorfTitleCardPalTex), 160, 180, 128, 40);
+#else
                     TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gGanondorfTitleCardTex),
                                            160, 180, 128, 40);
+#endif
                 }
 
                 SET_EVENTCHKINF(EVENTCHKINF_BEGAN_GANONDORF_BATTLE);
