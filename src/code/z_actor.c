@@ -843,7 +843,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         OPEN_DISPS(play->state.gfxCtx, "../z_actor.c", 2824);
 
 #if OOT_NTSC_N64
-        textureLanguageOffset = (gSaveContext.language == LANGUAGE_JPN) ? 0 : (width * height * gSaveContext.language);
+        textureLanguageOffset = (gSaveContext.language == LANGUAGE_JPN && titleCtx->height == 40) ? 0 : width * height * gSaveContext.language;
 #elif OOT_NTSC
         if (gSaveContext.language == LANGUAGE_JPN) {
             textureLanguageOffset = 0;
