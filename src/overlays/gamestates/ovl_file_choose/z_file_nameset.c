@@ -1768,8 +1768,10 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
     }
 #endif
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
     gSPVertex(POLY_OPA_DISP++, ((gSaveContext.language == LANGUAGE_JPN) ? gOptionsMenuSettingsJapaneseVtx : gOptionsMenuSettingsVtx), 32, 0);
+#elif OOT_NTSC
+    gSPVertex(POLY_OPA_DISP++, gOptionsMenuSettingsVtx, 32, 0);
 #elif OOT_PAL_N64
     gSPVertex(POLY_OPA_DISP++, gOptionsMenuSettingsVtx, 32, 0);
 #else
