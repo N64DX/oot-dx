@@ -8,10 +8,7 @@
 #include "thga.h"
 #include "versions.h"
 
-#if HIRES && WIDESCREEN
-    #define SCREEN_WIDTH  640
-    #define SCREEN_HEIGHT 360
-#elif HIRES
+#if HIRES
     #define SCREEN_WIDTH  640
     #define SCREEN_HEIGHT 480
 #elif ULTRA_WS

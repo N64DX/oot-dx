@@ -32,11 +32,7 @@ OSViMode osViModeNtscHan1 = {
         {
             // [0]
             ORIGIN(1280),       // origin
-#if WIDESCREEN
-            0x300,              // yScale
-#else
             SCALE(1, 0),        // yScale
-#endif
             VSTART(35, 509),    // vStart
             BURST(4, 2, 14, 0), // vBurst
             VINTR(2),           // vIntr
@@ -44,11 +40,7 @@ OSViMode osViModeNtscHan1 = {
         {
             // [1]
             ORIGIN(2560),       // origin
-#if WIDESCREEN
-            0x300,              // yScale
-#else
             SCALE(1, 0),        // yScale
-#endif
             VSTART(37, 511),    // vStart
             BURST(4, 2, 14, 0), // vBurst
             VINTR(2),           // vIntr
