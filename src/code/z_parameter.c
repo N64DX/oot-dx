@@ -3050,7 +3050,7 @@ void Magic_DrawMeter(PlayState* play) {
 
             gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_MAGIC_FILL_X << 2)), HIRES_MULTIPLY(((magicMeterY + 3) << 2)),
                                 HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2)),
-                                HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES ? 2 : 0) + (HIRES_WS ? 1 : 0), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+                                HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES ? 2 : 0), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
             // Fill the rest of the meter with the normal magic color
             gDPPipeSync(OVERLAY_DISP++);
@@ -3058,7 +3058,7 @@ void Magic_DrawMeter(PlayState* play) {
                             interfaceCtx->magicAlpha);
 
             gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_MAGIC_FILL_X << 2)), HIRES_MULTIPLY(((magicMeterY + 3) << 2)),
-                                HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2)), HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES ? 2 : 0) + (HIRES_WS ? 1 : 0),
+                                HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2)), HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES ? 2 : 0),
                                 G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         } else {
             // Fill the whole meter with the normal magic color
@@ -3071,7 +3071,7 @@ void Magic_DrawMeter(PlayState* play) {
 
             gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_MAGIC_FILL_X << 2)), HIRES_MULTIPLY(((magicMeterY + 3) << 2)),
                                 HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2)),
-                                HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES ? 2 : 0) + (HIRES_WS ? 1 : 0), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+                                HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES ? 2 : 0), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         }
     }
 
@@ -3519,7 +3519,7 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
 
             if (i != 0)
                 OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, HIRES_MULTIPLY(x), HIRES_MULTIPLY(y), HIRES_MULTIPLY(4), HIRES_MULTIPLY(4), HIRES_DIVIDE((1 << 11)), HIRES_DIVIDE((1 << 11)));
-            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, HIRES_MULTIPLY((x + 3)) - (HIRES_WS ? 1 : 0), HIRES_MULTIPLY(y), HIRES_MULTIPLY(4), HIRES_MULTIPLY(4), HIRES_DIVIDE((1 << 11)), HIRES_DIVIDE((1 << 11)));
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, HIRES_MULTIPLY((x + 3)), HIRES_MULTIPLY(y), HIRES_MULTIPLY(4), HIRES_MULTIPLY(4), HIRES_DIVIDE((1 << 11)), HIRES_DIVIDE((1 << 11)));
         }
     }
 

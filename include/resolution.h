@@ -3,9 +3,10 @@
 
 #include "config.h"
 
+#define HIRES_MULTIPLY(var) (var * (HIRES ? 2 : 1))
+#define HIRES_DIVIDE(var) (var / (HIRES ? 2 : 1))
+
 #if WIDESCREEN
-    #define HIRES_MULTIPLY(var) (var / (HIRES ? 2 : 1) * (HIRES ? 3 : 1))
-    #define HIRES_DIVIDE(var) (var / (HIRES ? 3 : 1) * (HIRES ? 2 : 1))
     #define ASPECT_RATIO (16.0f / 9.0f)
     #define FBDEMO_SHIFT 104
     #define GFXPRINT_SHIFT 6
@@ -15,8 +16,6 @@
     #define WS_SHIFT_HALF 52
     #define WS_SHIFT_QUARTER 26
 #elif ULTRA_WS
-    #define HIRES_MULTIPLY(var) (var / (HIRES ? 2 : 1) * (HIRES ? 3 : 1))
-    #define HIRES_DIVIDE(var) (var / (HIRES ? 3 : 1) * (HIRES ? 2 : 1))
     #define ASPECT_RATIO (21.0f / 9.0f)
     #define FBDEMO_SHIFT 240
     #define GFXPRINT_SHIFT 12
@@ -26,8 +25,6 @@
     #define WS_SHIFT_HALF 120
     #define WS_SHIFT_QUARTER 60
 #else
-    #define HIRES_MULTIPLY(var) (var * (HIRES ? 2 : 1))
-    #define HIRES_DIVIDE(var) (var / (HIRES ? 2 : 1))
     #define ASPECT_RATIO (4.0f / 3.0f)
     #define FBDEMO_SHIFT 18
     #define GFXPRINT_SHIFT 0
@@ -38,10 +35,7 @@
     #define WS_SHIFT_QUARTER 0
 #endif
 
-#if HIRES && WIDESCREEN
-    #define beatingHeartPulsingSizeX (((-130.0f) * 2) - 15.0f)
-    #define beatingHeartPulsingSizeY (94.5f * 1.5f)
-#elif ULTRA_WS
+#if ULTRA_WS
     #define beatingHeartPulsingSizeX ((-130.0f) - 120.0f)
     #define beatingHeartPulsingSizeY (94.5f)
 #else
@@ -59,12 +53,6 @@
     #define LULLABY_SHIFT 60
 #else
     #define LULLABY_SHIFT 0
-#endif
-
-#if HIRES && WIDESCREEN
-    #define HIRES_WS true
-#else
-    #define HIRES_WS false
 #endif
 
 #endif
