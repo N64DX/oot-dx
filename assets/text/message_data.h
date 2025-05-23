@@ -1,4 +1,6 @@
-//#if (true)
+#include "versions.h"
+
+#if OOT_NTSC_N64
 #include "message_data_00xx_items.h"
 #include "message_data_01xx_navi.h"
 #include "message_data_02xx_doors.h"
@@ -13,9 +15,9 @@
 #include "message_data_5xxx_kakariko.h"
 #include "message_data_6xxx_valley.h"
 #include "message_data_7xxx_market_&_masks.h"
-//#else
-//#include "text/message_data.h"
-//#endif
+#else
+#include "text/message_data.h"
+#endif
 
 /*
  * The following two messages should be kept last and in this order.

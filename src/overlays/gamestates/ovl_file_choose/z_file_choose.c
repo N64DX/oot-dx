@@ -40,8 +40,9 @@
 
 #if OOT_NTSC_N64
 #include "assets/textures/title_static/title_static_all.h"
-#endif
+#else
 #include "assets/textures/title_static/title_static.h"
+#endif
 #include "assets/textures/parameter_static/parameter_static.h"
 
 #if OOT_PAL_N64
@@ -1174,7 +1175,7 @@ static s16 sQuestItemFlags[] = {
     QUEST_MEDALLION_WATER, QUEST_MEDALLION_SPIRIT, QUEST_MEDALLION_SHADOW, QUEST_MEDALLION_LIGHT,
 };
 
-#if (OOT_NTSC && OOT_VERSION < GC_JP_CE) || PLATFORM_IQUE
+#if (!OOT_NTSC_N64 && OOT_NTSC && OOT_VERSION < GC_JP_CE) || PLATFORM_IQUE
 static void* sSaveXTextures[] = { gFileSelSaveXJPNTex, gFileSelSaveXENGTex };
 #endif
 

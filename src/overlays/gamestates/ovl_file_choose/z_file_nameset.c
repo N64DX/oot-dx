@@ -16,11 +16,11 @@
 #include "z64audio.h"
 #include "z64save.h"
 
-#include "assets/textures/title_static/title_static.h"
 #if OOT_NTSC_N64
 #include "assets/textures/title_static/title_static_all.h"
 #include "assets/overlays/ovl_file_choose/ovl_file_choose_all.h"
 #else
+#include "assets/textures/title_static/title_static.h"
 #include "assets/overlays/ovl_file_choose/ovl_file_choose.h"
 #endif
 
@@ -1797,7 +1797,7 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 120, 120, 120, this->titleAlpha[0]);
             gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 255);
         }
-        
+
         gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuSettings[i].texture[gSaveContext.language], G_IM_FMT_IA,
                             G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuSettings[i]),
                             OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuSettings[i]), 0, G_TX_NOMIRROR | G_TX_WRAP,

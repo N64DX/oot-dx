@@ -25,12 +25,12 @@ void Font_LoadCharWide(Font* font, u16 character, u16 codePointIndex) {
  * at `codePointIndex`. The value of `character` is the ASCII codepoint subtract ' '/0x20.
  */
 void Font_LoadChar(Font* font, u8 character, u16 codePointIndex) {
-    /*
+#if !OOT_NTSC_N64
     s32 offset = character * FONT_CHAR_TEX_SIZE;
 
-    DMA_REQUEST_SYNC(&font->charTexBuf[codePointIndex], (uintptr_t)_nes_font_staticSegmentRomStart + offset,
+    DMA_REQUEST_SYNC(&font->fontBuf[codePointIndex], (uintptr_t)_nes_font_staticSegmentRomStart + offset,
                      FONT_CHAR_TEX_SIZE, "../z_kanfont.c", 93);
-    */
+#endif
 }
 
 #if PLATFORM_IQUE

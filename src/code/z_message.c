@@ -1857,8 +1857,11 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
                 }
 #endif
 
-              //Message_DrawTextChar(play, &font->fontBuf[charTexIdx], &gfx);
+#if OOT_NTSC_N64
                 Message_DrawTextChar(play, &msgCtx->font.fontBuf[(character - ' ') * FONT_CHAR_TEX_SIZE], &gfx);
+#else
+                Message_DrawTextChar(play, &font->fontBuf[charTexIdx], &gfx);
+#endif
                 charTexIdx += FONT_CHAR_TEX_SIZE;
 
                 msgCtx->textPosX += (s32)(sFontWidths[character - ' '] * (R_TEXT_CHAR_SCALE / 100.0f));
@@ -2357,7 +2360,7 @@ void Message_Decode(PlayState* play) {
 #if OOT_NTSC_N64
                 for (i=0; i < playerNameLen; i++) {
                     curChar = playerName[i];
-                    if (curChar < FILENAME_UPPERCASE('A') || curChar > FILENAME_SLASH) {
+                    if (curChar < FILENAME_UPPERCASE('A') || curChar > (FILENAME_PERIOD + 1) ) {
                         playerName[0] = FILENAME_UPPERCASE('L');
                         playerName[1] = FILENAME_LOWERCASE('i');
                         playerName[2] = FILENAME_LOWERCASE('n');

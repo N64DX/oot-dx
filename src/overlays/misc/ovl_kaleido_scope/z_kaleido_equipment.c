@@ -14,7 +14,6 @@
 #if OOT_NTSC_N64
 #include "assets/textures/icon_item_static/icon_item_static_all.h"
 #endif
-
 #include "assets/textures/parameter_static/parameter_static.h"
 
 static u8 sChildUpgrades[] = { UPG_BULLET_BAG, UPG_BOMB_BAG, UPG_STRENGTH, UPG_SCALE };

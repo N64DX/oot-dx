@@ -4743,9 +4743,10 @@ beginseg
     name "title_static"
     compress
     romalign 0x1000
-    include "$(BUILD_DIR)/assets/textures/title_static/title_static.o"
 #if OOT_NTSC_N64
     include "$(BUILD_DIR)/assets/textures/title_static/title_static_all.o"
+#else
+    include "$(BUILD_DIR)/assets/textures/title_static/title_static.o"
 #endif
     number 1
 endseg
