@@ -4550,9 +4550,9 @@ void Interface_Update(PlayState* play) {
 #if OOT_NTSC_N64
         else if (CHECK_BTN_ALL(debugInput->press.button, BTN_DDOWN))
             gSaveContext.language = LANGUAGE_JPN;
-#endif
         if (gSaveContext.language != LANGUAGE_JPN)
             DMA_REQUEST_SYNC(play->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
+#endif
     }
 #endif
 

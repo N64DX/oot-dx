@@ -302,8 +302,11 @@ void Play_Init(GameState* thisx) {
         this->state.running = false;
         SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
         return;
-    } else if (gSaveContext.language != LANGUAGE_JPN)
+    }
+#if OOT_NTSC_N64
+    else if (gSaveContext.language != LANGUAGE_JPN)
         DMA_REQUEST_SYNC(this->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
+#endif
 
 #if PLATFORM_GC && DEBUG_FEATURES
     SystemArena_Display();

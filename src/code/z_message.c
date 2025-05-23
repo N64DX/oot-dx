@@ -2354,6 +2354,7 @@ void Message_Decode(PlayState* play) {
                     }
                 }
 
+#if OOT_NTSC_N64
                 for (i=0; i < playerNameLen; i++) {
                     curChar = playerName[i];
                     if (curChar < FILENAME_UPPERCASE('A') || curChar > FILENAME_SLASH) {
@@ -2365,6 +2366,7 @@ void Message_Decode(PlayState* play) {
                         break;
                     }
                 }
+#endif
 
                 PRINTF(T("\n名前 ＝ ", "\nName = "));
                 for (i = 0; i < playerNameLen; i++) {
