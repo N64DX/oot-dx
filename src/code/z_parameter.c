@@ -26,8 +26,14 @@
 #include "z64save.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
-#include "assets/textures/do_action_static/do_action_static.h"
 #include "assets/textures/icon_item_static/icon_item_static.h"
+
+#if OOT_NTSC_N64
+#include "assets/textures/do_action_static/do_action_static_all.h"
+#include "assets/textures/icon_item_static/icon_item_static_all.h"
+#else
+#include "assets/textures/do_action_static/do_action_static.h"
+#endif
 
 typedef struct RestrictionFlags {
     /* 0x00 */ u8 sceneId;
@@ -2438,7 +2444,7 @@ void func_80086D5C(s32* buf, u16 size) {
 }
 
 void Interface_LoadActionLabel(InterfaceContext* interfaceCtx, u16 action, s16 loadOffset) {
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
     static void* sDoActionTextures[] = { gAttackDoActionJPNTex, gCheckDoActionJPNTex };
 #else
     static void* sDoActionTextures[] = { gAttackDoActionENGTex, gCheckDoActionENGTex };
@@ -2452,13 +2458,19 @@ void Interface_LoadActionLabel(InterfaceContext* interfaceCtx, u16 action, s16 l
         action += DO_ACTION_MAX;
     }
 
-#if OOT_VERSION >= PAL_1_0
+#if (OOT_VERSION >= PAL_1_0) || OOT_NTSC_N64
     if (gSaveContext.language == 2) { // LANGUAGE_FRA for PAL versions
         action += DO_ACTION_MAX;
     }
 #endif
+#if OOT_NTSC_N64
+    if (gSaveContext.language == 3)
+        action += DO_ACTION_MAX * 2;
+#endif
 
-#if OOT_VERSION < PAL_1_0
+#if OOT_NTSC_N64
+    if ((action != 0 * DO_ACTION_MAX + DO_ACTION_NONE) && (action != 1 * DO_ACTION_MAX + DO_ACTION_NONE) && (action != 2 * DO_ACTION_MAX + DO_ACTION_NONE) && (action != 3 * DO_ACTION_MAX + DO_ACTION_NONE))
+#elif OOT_VERSION < PAL_1_0
     if ((action != 0 * DO_ACTION_MAX + DO_ACTION_NONE) && (action != 1 * DO_ACTION_MAX + DO_ACTION_NONE))
 #else
     if ((action != 0 * DO_ACTION_MAX + DO_ACTION_NONE) && (action != 1 * DO_ACTION_MAX + DO_ACTION_NONE) &&
@@ -2523,10 +2535,14 @@ void Interface_LoadActionLabelB(PlayState* play, u16 action) {
         action += DO_ACTION_MAX;
     }
 
-#if OOT_VERSION >= PAL_1_0
+#if (OOT_VERSION >= PAL_1_0) || OOT_NTSC_N64
     if (gSaveContext.language == 2) { // LANGUAGE_FRA for PAL versions
         action += DO_ACTION_MAX;
     }
+#endif
+#if OOT_NTSC_N64
+    if (gSaveContext.language == 3)
+        action += DO_ACTION_MAX * 2;
 #endif
 
     interfaceCtx->unk_1FC = action;
@@ -3165,14 +3181,16 @@ const u32 gDpadTex[] = {
 
 void Interface_DrawItemButtons(PlayState* play) {
     static void* cUpLabelTextures[] = LANGUAGE_ARRAY(gNaviCUpJPNTex, gNaviCUpENGTex, gNaviCUpENGTex, gNaviCUpENGTex);
-#if OOT_VERSION >= PAL_1_0
+#if OOT_NTSC_N64
+    static s16 startButtonLeftPos[] = { 132, 130, 130, 132 };
+#elif OOT_VERSION >= PAL_1_0
     static s16 startButtonLeftPos[] = { 132, 130, 130 };
 #endif
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     Player* player = GET_PLAYER(play);
     PauseContext* pauseCtx = &play->pauseCtx;
     s16 temp; // Used as both an alpha value and a button index
-#if OOT_PAL
+#if OOT_PAL || OOT_NTSC_N64
     s16 texCoordScale;
     s16 width;
     s16 height;
@@ -3240,11 +3258,11 @@ void Interface_DrawItemButtons(PlayState* play) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, START_BUTTON_R, START_BUTTON_G, START_BUTTON_B,
                             interfaceCtx->startAlpha);
 
-#if OOT_VERSION < PAL_1_0
+#if (OOT_VERSION < PAL_1_0) && !OOT_NTSC_N64
             gSPTextureRectangle(OVERLAY_DISP++, (R_START_BTN_X + (WIDESCREEN ? 104 : 0)) << 2, R_START_BTN_Y << 2, (R_START_BTN_X + (WIDESCREEN ? 104 : 0) + 22) << 2,
                                 (R_START_BTN_Y + 22) << 2, G_TX_RENDERTILE, 0, 0, (s32)(1.4277344 * (1 << 10)),
                                 (s32)(1.4277344 * (1 << 10)));
-#elif OOT_NTSC
+#elif OOT_NTSC && !OOT_NTSC_N64
             gSPTextureRectangle(OVERLAY_DISP++, (132 + (WIDESCREEN ? 104 : 0)) << 2, 17 << 2, (132 + (WIDESCREEN ? 104 : 0) + 22) << 2, (17 + 22) << 2, G_TX_RENDERTILE, 0,
                                 0, (s32)(1.4277344 * (1 << 10)), (s32)(1.4277344 * (1 << 10)));
 #else
@@ -3263,7 +3281,7 @@ void Interface_DrawItemButtons(PlayState* play) {
                                    DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP,
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
             R_START_LABEL_SCALE = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             R_START_LABEL_WIDTH = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             R_START_LABEL_HEIGHT = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
@@ -3809,20 +3827,6 @@ void Interface_Draw(PlayState* play) {
             }
         } else {
             // B Button Do Action Label
-            int B_LABEL_SHIFT = 0;
-
-#if OOT_NTSC && WIDESCREEN
-            B_LABEL_SHIFT = 104;
-#elif OOT_PAL
-            if (gSaveContext.language == LANGUAGE_ENG) {
-                B_LABEL_SHIFT = -1;
-            } else if (gSaveContext.language == LANGUAGE_GER) {
-                B_LABEL_SHIFT = 2;
-            } else {
-                B_LABEL_SHIFT = 1;
-            }
-#endif
-
             gDPPipeSync(OVERLAY_DISP++);
             gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0,
                               PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
@@ -3833,9 +3837,9 @@ void Interface_Draw(PlayState* play) {
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
             R_B_LABEL_DD = (1 << 10) / (R_B_LABEL_SCALE(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, (R_B_LABEL_X(gSaveContext.language) + B_LABEL_SHIFT) << 2,
+            gSPTextureRectangle(OVERLAY_DISP++, (R_B_LABEL_X(gSaveContext.language)) << 2,
                                 R_B_LABEL_Y(gSaveContext.language) << 2,
-                                (R_B_LABEL_X(gSaveContext.language) + B_LABEL_SHIFT + DO_ACTION_TEX_WIDTH) << 2,
+                                (R_B_LABEL_X(gSaveContext.language) + DO_ACTION_TEX_WIDTH) << 2,
                                 (R_B_LABEL_Y(gSaveContext.language) + DO_ACTION_TEX_HEIGHT) << 2, G_TX_RENDERTILE, 0, 0,
                                 R_B_LABEL_DD, R_B_LABEL_DD);
         }
@@ -4529,8 +4533,8 @@ void Interface_Update(PlayState* play) {
     s16 risingAlpha;
     u16 action;
 
-#if OOT_PAL && DEBUG_FEATURES
-    {
+#if (OOT_PAL || OOT_NTSC_N64) && DEBUG_FEATURES
+    if (Message_GetState(&play->msgCtx) == 0) {
         Input* debugInput = &play->state.input[2];
 
         if (CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {
@@ -4543,6 +4547,12 @@ void Interface_Update(PlayState* play) {
             gSaveContext.language = LANGUAGE_FRA;
             PRINTF("J_N=%x J_N=%x\n", gSaveContext.language, &gSaveContext.language);
         }
+#if OOT_NTSC_N64
+        else if (CHECK_BTN_ALL(debugInput->press.button, BTN_DDOWN))
+            gSaveContext.language = LANGUAGE_JPN;
+        if (gSaveContext.language != LANGUAGE_JPN)
+            DMA_REQUEST_SYNC(play->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
+#endif
     }
 #endif
 

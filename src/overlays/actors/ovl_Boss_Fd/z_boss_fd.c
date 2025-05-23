@@ -32,6 +32,9 @@
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_fd/object_fd.h"
+#if OOT_NTSC_N64
+#include "assets/objects/object_fd/object_fd_title_card.h"
+#endif
 
 #define FLAGS                                                                                 \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | \
@@ -510,8 +513,12 @@ void BossFd_Fly(BossFd* this, PlayState* play) {
                     SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_FIRE_BOSS);
                 }
                 if ((this->timers[3] == 130) && !GET_EVENTCHKINF(EVENTCHKINF_BEGAN_VOLVAGIA_BATTLE)) {
+#if OOT_NTSC_N64
+                    TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gVolvagiaTitleCardTex : gVolvagiaTitleCardPalTex), 160, 180, 128, 40);
+#else
                     TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gVolvagiaTitleCardTex),
                                            160, 180, 128, 40);
+#endif
                 }
                 if (this->timers[3] <= 100) {
                     this->subCamEyeVel.x = this->subCamEyeVel.y = this->subCamEyeVel.z = 2.0f;

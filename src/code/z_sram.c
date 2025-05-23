@@ -48,7 +48,7 @@ u16 gSramSlotOffsets[] = {
 static u8 sSramDefaultHeader[] = {
     SOUND_SETTING_STEREO,    // SRAM_HEADER_SOUND
     Z_TARGET_SETTING_SWITCH, // SRAM_HEADER_Z_TARGET
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
     LANGUAGE_JPN, // SRAM_HEADER_LANGUAGE
 #else
     LANGUAGE_ENG, // SRAM_HEADER_LANGUAGE
@@ -210,7 +210,7 @@ void Sram_InitNewSave(void) {
 static SavePlayerData sDebugSavePlayerData = {
     { 'Z', 'E', 'L', 'D', 'A', 'Z' }, // newf
     0,                                // deaths
-#if OOT_VERSION < PAL_1_0
+#if OOT_VERSION < PAL_1_0 && !OOT_NTSC_N64
     {
         0x81, // リ
         0x87, // ン
@@ -1044,7 +1044,7 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
     gSaveContext.soundSetting = sramCtx->readBuff[SRAM_HEADER_SOUND] & 3;
     gSaveContext.zTargetSetting = sramCtx->readBuff[SRAM_HEADER_Z_TARGET] & 1;
 
-#if OOT_PAL
+#if OOT_PAL || OOT_NTSC_N64
     gSaveContext.language = sramCtx->readBuff[SRAM_HEADER_LANGUAGE];
     if (gSaveContext.language >= LANGUAGE_MAX) {
         gSaveContext.language = LANGUAGE_ENG;

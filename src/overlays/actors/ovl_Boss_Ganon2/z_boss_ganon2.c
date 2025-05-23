@@ -30,6 +30,10 @@
 #include "assets/objects/object_geff/object_geff.h"
 #include "assets/overlays/ovl_Boss_Ganon2/ovl_Boss_Ganon2.h"
 
+#if OOT_NTSC_N64
+#include "assets/objects/object_ganon2/object_ganon2_title_card.h"
+#endif
+
 #pragma increment_block_number "gc-eu:128 gc-eu-mq:128 gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128" \
                                "ique-cn:128 ntsc-1.0:128 ntsc-1.1:128 ntsc-1.2:128 pal-1.0:128 pal-1.1:128"
 
@@ -975,8 +979,12 @@ void func_808FD5F4(BossGanon2* this, PlayState* play) {
             }
             if (this->unk_398 == 80) {
                 BossGanon2_SetObjectSegment(this, play, OBJECT_GANON2, false);
+#if OOT_NTSC_N64
+                TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gGanonTitleCardTex : gGanonTitleCardPalTex), 160, 180, 128, 40);
+#else
                 TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gGanonTitleCardTex), 160,
                                        180, 128, 40);
+#endif
             }
             this->subCamEye.x = ((this->actor.world.pos.x + 500.0f) - 350.0f) + 100.0f;
             this->subCamEye.y = this->actor.world.pos.y;

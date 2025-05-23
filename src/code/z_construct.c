@@ -62,7 +62,15 @@ void Interface_Init(PlayState* play) {
 
     ASSERT(interfaceCtx->doActionSegment != NULL, "parameter->do_actionSegment != NULL", "../z_construct.c", 169);
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    if (gSaveContext.language == LANGUAGE_JPN)
+        doActionOffset = (LANGUAGE_JPN * DO_ACTION_MAX + DO_ACTION_ATTACK) * DO_ACTION_TEX_SIZE;
+    else if (gSaveContext.language == LANGUAGE_ENG)
+        doActionOffset = (LANGUAGE_ENG * DO_ACTION_MAX + DO_ACTION_ATTACK) * DO_ACTION_TEX_SIZE;
+    else if (gSaveContext.language == LANGUAGE_GER)
+        doActionOffset = (LANGUAGE_GER * DO_ACTION_MAX + DO_ACTION_ATTACK) * DO_ACTION_TEX_SIZE;
+    else doActionOffset = (LANGUAGE_FRA * DO_ACTION_MAX + DO_ACTION_ATTACK) * DO_ACTION_TEX_SIZE;
+#elif OOT_NTSC
     if (gSaveContext.language == LANGUAGE_JPN) {
         doActionOffset = (LANGUAGE_JPN * DO_ACTION_MAX + DO_ACTION_ATTACK) * DO_ACTION_TEX_SIZE;
     } else {
@@ -81,7 +89,15 @@ void Interface_Init(PlayState* play) {
     DMA_REQUEST_SYNC(interfaceCtx->doActionSegment, (uintptr_t)_do_action_staticSegmentRomStart + doActionOffset,
                      2 * DO_ACTION_TEX_SIZE, "../z_construct.c", 174);
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    if (gSaveContext.language == LANGUAGE_JPN)
+        doActionOffset = (LANGUAGE_JPN * DO_ACTION_MAX + DO_ACTION_RETURN) * DO_ACTION_TEX_SIZE;
+    else if (gSaveContext.language == LANGUAGE_ENG)
+        doActionOffset = (LANGUAGE_ENG * DO_ACTION_MAX + DO_ACTION_RETURN) * DO_ACTION_TEX_SIZE;
+    else if (gSaveContext.language == LANGUAGE_GER)
+        doActionOffset = (LANGUAGE_GER * DO_ACTION_MAX + DO_ACTION_RETURN) * DO_ACTION_TEX_SIZE;
+    else doActionOffset = (LANGUAGE_FRA * DO_ACTION_MAX + DO_ACTION_RETURN) * DO_ACTION_TEX_SIZE;
+#elif OOT_NTSC
     if (gSaveContext.language == LANGUAGE_JPN) {
         doActionOffset = (LANGUAGE_JPN * DO_ACTION_MAX + DO_ACTION_RETURN) * DO_ACTION_TEX_SIZE;
     } else {
@@ -357,7 +373,7 @@ void Regs_InitDataImpl(void) {
     ZREG(46) = 1;
     ZREG(47) = 1;
 
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
     R_START_LABEL_DD(0) = 86;
     R_START_LABEL_DD(1) = 100;
     R_START_LABEL_WIDTH = 0;
@@ -376,6 +392,11 @@ void Regs_InitDataImpl(void) {
     R_START_LABEL_X(0) = 120;
     R_START_LABEL_X(1) = 119;
     R_START_LABEL_X(2) = 119;
+#endif
+#if OOT_NTSC_N64
+    R_START_LABEL_DD(3) = 86;
+    R_START_LABEL_Y(3)  = 21;
+    R_START_LABEL_X(3)  = 122;
 #endif
 
     R_PAUSE_QUEST_MEDALLION_SHINE_TIME(0) = 1;
@@ -519,8 +540,8 @@ void Regs_InitDataImpl(void) {
 #if OOT_NTSC
     R_B_LABEL_SCALE(0) = 100;
     R_B_LABEL_SCALE(1) = 109;
-    R_B_LABEL_X(0) = 151;
-    R_B_LABEL_X(1) = 148;
+    R_B_LABEL_X(0) = B_BUTTON_X - 9;
+    R_B_LABEL_X(1) = B_BUTTON_X - 12;
     R_B_LABEL_Y(0) = 23;
     R_B_LABEL_Y(1) = 22;
     R_A_LABEL_Z(0) = -380;
@@ -558,13 +579,13 @@ void Regs_InitDataImpl(void) {
     WREG(35) = 0;
     WREG(36) = 0;
 
-#if OOT_PAL
+#if OOT_PAL || OOT_NTSC_N64
     R_B_LABEL_SCALE(0) = 100;
     R_B_LABEL_SCALE(1) = 99;
     R_B_LABEL_SCALE(2) = 109;
-    R_B_LABEL_X(0) = B_BUTTON_X - 9;
-    R_B_LABEL_X(1) = B_BUTTON_X - 11;
-    R_B_LABEL_X(2) = B_BUTTON_X - 12;
+    R_B_LABEL_X(0) = B_BUTTON_X - 10;
+    R_B_LABEL_X(1) = B_BUTTON_X - 9;
+    R_B_LABEL_X(2) = B_BUTTON_X - 11;
     R_B_LABEL_Y(0) = B_BUTTON_Y + 6;
     R_B_LABEL_Y(1) = B_BUTTON_Y + 5;
     R_B_LABEL_Y(2) = B_BUTTON_Y + 5;
@@ -589,6 +610,18 @@ void Regs_InitDataImpl(void) {
     R_KALEIDO_UNK6(0) = -37;
     R_KALEIDO_UNK6(1) = 30;
     R_KALEIDO_UNK6(2) = -50;
+#endif
+#if OOT_NTSC_N64
+    R_B_LABEL_SCALE(3) = 100;
+    R_B_LABEL_X(3)     = B_BUTTON_X - 10;
+    R_B_LABEL_Y(3)     = B_BUTTON_Y + 6;
+    R_A_LABEL_Z(3)     = -380;
+    R_KALEIDO_UNK1(3)  = -45;
+    R_KALEIDO_UNK2(3)  = 16;
+    R_KALEIDO_UNK3(3)  = -55;
+    R_KALEIDO_UNK4(3)  = 43;
+    R_KALEIDO_UNK5(3)  = -33;
+    R_KALEIDO_UNK6(3)  = -33;
 #endif
 
     R_DGN_MINIMAP_X = 204;
