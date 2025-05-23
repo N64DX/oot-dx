@@ -32,29 +32,8 @@
 
 #define SLOT_OFFSET(index) (SRAM_HEADER_SIZE + 0x10 + (index * SLOT_SIZE))
 
-#if !PLATFORM_IQUE
-
 #define SRAM_READ(addr, dramAddr, size) SsSram_ReadWrite(addr, dramAddr, size, OS_READ)
 #define SRAM_WRITE(addr, dramAddr, size) SsSram_ReadWrite(addr, dramAddr, size, OS_WRITE)
-
-#else
-
-void Sram_ReadWriteIQue(s32 addr, void* dramAddr, size_t size, s32 direction) {
-    void* sramAddr;
-
-    addr -= OS_K1_TO_PHYSICAL(0xA8000000);
-    sramAddr = (void*)(__osBbSramAddress + addr);
-    if (direction == OS_READ) {
-        bcopy(sramAddr, dramAddr, size);
-    } else if (direction == OS_WRITE) {
-        bcopy(dramAddr, sramAddr, size);
-    }
-}
-
-#define SRAM_READ(addr, dramAddr, size) Sram_ReadWriteIQue(addr, dramAddr, size, OS_READ)
-#define SRAM_WRITE(addr, dramAddr, size) Sram_ReadWriteIQue(addr, dramAddr, size, OS_WRITE)
-
-#endif
 
 u16 gSramSlotOffsets[] = {
     SLOT_OFFSET(0),
