@@ -8,9 +8,9 @@
  * N = Deinterlaced
  * 1 = 16-bit Framebuffer
  */
+#include "config.h"
 #include "ultra64.h"
 #include "ultra64/viint.h"
-#include "config.h"
 
 OSViMode osViModeNtscHan1 = {
     OS_VI_NTSC_HAN1, // type

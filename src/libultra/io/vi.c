@@ -1,3 +1,4 @@
+#include "config.h"
 #include "ultra64.h"
 #include "ultra64/viint.h"
 
@@ -18,9 +19,21 @@ void __osViInit(void) {
     if (osTvType == OS_TV_PAL) {
         __osViNext->modep = &osViModePalLan1;
     } else if (osTvType == OS_TV_MPAL) {
+
+#if HIRES && INTERLACED
+        __osViNext->modep = &osViModeMpalHan1;
+#else
         __osViNext->modep = &osViModeMpalLan1;
+#endif
+
     } else {
+
+#if HIRES && INTERLACED
+        __osViNext->modep = &osViModeNtscHan1;
+#else
         __osViNext->modep = &osViModeNtscLan1;
+#endif
+
     }
 
     __osViNext->state = VI_STATE_BLACK;
