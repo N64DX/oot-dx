@@ -3026,7 +3026,7 @@ void Magic_DrawMeter(PlayState* play) {
                                       HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
         OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, HIRES_MULTIPLY((R_MAGIC_METER_X + 8)), HIRES_MULTIPLY(magicMeterY),
-                                      HIRES_MULTIPLY(gSaveContext.magicCapacity), HIRES_MULTIPLY(16) - (HIRES ? 1 : 0), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+                                      HIRES_MULTIPLY(gSaveContext.magicCapacity), HIRES_MULTIPLY(16) - HIRES_PX_SHIFT, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
         gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0,
                             G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
@@ -3050,7 +3050,7 @@ void Magic_DrawMeter(PlayState* play) {
 
             gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_MAGIC_FILL_X << 2)), HIRES_MULTIPLY(((magicMeterY + 3) << 2)),
                                 HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2)),
-                                HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES ? 2 : 0), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+                                HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES_PX_SHIFT * 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
             // Fill the rest of the meter with the normal magic color
             gDPPipeSync(OVERLAY_DISP++);
@@ -3058,7 +3058,7 @@ void Magic_DrawMeter(PlayState* play) {
                             interfaceCtx->magicAlpha);
 
             gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_MAGIC_FILL_X << 2)), HIRES_MULTIPLY(((magicMeterY + 3) << 2)),
-                                HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2)), HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES ? 2 : 0),
+                                HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2)), HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES_PX_SHIFT * 2),
                                 G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         } else {
             // Fill the whole meter with the normal magic color
@@ -3071,7 +3071,7 @@ void Magic_DrawMeter(PlayState* play) {
 
             gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_MAGIC_FILL_X << 2)), HIRES_MULTIPLY(((magicMeterY + 3) << 2)),
                                 HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2)),
-                                HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES ? 2 : 0), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+                                HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES_PX_SHIFT * 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         }
     }
 
@@ -3494,7 +3494,7 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
         if (button < 4) {
             if (i != 0)
                 OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, HIRES_MULTIPLY(R_ITEM_AMMO_X(button)), HIRES_MULTIPLY(R_ITEM_AMMO_Y(button)), HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
-            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, HIRES_MULTIPLY((R_ITEM_AMMO_X(button) + 6)), HIRES_MULTIPLY(R_ITEM_AMMO_Y(button)), HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, HIRES_MULTIPLY((R_ITEM_AMMO_X(button) + 6)) - HIRES_PX_SHIFT, HIRES_MULTIPLY(R_ITEM_AMMO_Y(button)), HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         }
         else {
             u8 x, y;
@@ -4507,7 +4507,7 @@ void Interface_Draw(PlayState* play) {
                 for (svar1 = 0; svar1 < ARRAY_COUNT(sTimerDigits); svar1++) {
                     OVERLAY_DISP =
                         Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sTimerDigits[svar1])), 8, 16,
-                                      (((void)0, gSaveContext.timerX[timerId]) + HIRES_MULTIPLY(timerDigitLeftPos[svar1])),
+                                      (((void)0, HIRES_MULTIPLY(gSaveContext.timerX[timerId])) + HIRES_MULTIPLY(timerDigitLeftPos[svar1])),
                                       ((void)0, HIRES_MULTIPLY(gSaveContext.timerY[timerId])), HIRES_MULTIPLY(sDigitWidths[svar1]), HIRES_MULTIPLY(VREG(42)),
                                       HIRES_DIVIDE((VREG(43) << 1)), HIRES_DIVIDE((VREG(43) << 1)));
                 }

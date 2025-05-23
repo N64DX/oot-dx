@@ -6,6 +6,14 @@
 #define HIRES_MULTIPLY(var) (var * (HIRES ? 2 : 1))
 #define HIRES_DIVIDE(var) (var / (HIRES ? 2 : 1))
 
+#if HIRES
+    #define HIRES_PX_SHIFT 1
+    #define HIRES_TEXTBOX_SHIFT 104
+#else
+    #define HIRES_PX_SHIFT 0
+    #define HIRES_TEXTBOX_SHIFT 0
+#endif
+
 #if WIDESCREEN
     #define ASPECT_RATIO (16.0f / 9.0f)
     #define FBDEMO_SHIFT 104
@@ -38,21 +46,17 @@
 #if ULTRA_WS
     #define beatingHeartPulsingSizeX ((-130.0f) - 120.0f)
     #define beatingHeartPulsingSizeY (94.5f)
+    #define LULLABY_SHIFT 60
 #else
     #define beatingHeartPulsingSizeX ((WIDESCREEN ? (-182.0f) : (-130.0f)) * (HIRES ? 2 : 1))
     #define beatingHeartPulsingSizeY (94.5f * (HIRES ? 2 : 1))
+    #define LULLABY_SHIFT 0
 #endif
 
 #if WIDESCREEN || ULTRA_WS
     #define WS_PX_SHIFT 1
 #else
     #define WS_PX_SHIFT 0
-#endif
-
-#if ULTRA_WS
-    #define LULLABY_SHIFT 60
-#else
-    #define LULLABY_SHIFT 0
 #endif
 
 #endif
