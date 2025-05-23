@@ -1803,7 +1803,7 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
         gSP1Quadrangle(POLY_OPA_DISP++, vtx, vtx + 2, vtx + 3, vtx + 1, 0);
     }
 
-#if !OOT_PAL_N64 && !NTSC_1_0
+#if !OOT_PAL_N64 && !OOT_NTSC_N64
     for (; i < 6; i++, vtx += 4) {
         gDPPipeSync(POLY_OPA_DISP++);
 
