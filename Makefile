@@ -134,7 +134,7 @@ else ifeq ($(VERSION),gc-us-mq)
   BUILD_TIME := 14:05:42
   REVISION := 15
 else ifeq ($(VERSION),gc-eu-mq-dbg)
-  REGION ?= EU
+  REGION ?= US
   PLATFORM := GC
   DEBUG_FEATURES ?= 1
   BUILD_CREATOR := zelda@srd022j
@@ -142,7 +142,7 @@ else ifeq ($(VERSION),gc-eu-mq-dbg)
   BUILD_TIME := 00:16:31
   REVISION := 15
 else ifeq ($(VERSION),gc-eu)
-  REGION ?= EU
+  REGION ?= US
   PLATFORM := GC
   DEBUG_FEATURES ?= 0
   BUILD_CREATOR := zelda@srd022j
@@ -150,7 +150,7 @@ else ifeq ($(VERSION),gc-eu)
   BUILD_TIME := 20:12:23
   REVISION := 15
 else ifeq ($(VERSION),gc-eu-mq)
-  REGION ?= EU
+  REGION ?= US
   PLATFORM := GC
   DEBUG_FEATURES ?= 0
   BUILD_CREATOR := zelda@srd022j
