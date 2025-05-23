@@ -2081,7 +2081,7 @@ static void (*sFileSelectUpdateFuncs[])(GameState*) = {
 
 void FileSelect_Main(GameState* thisx) {
     static void* controlsTextures[] =
-    LANGUAGE_ARRAY(gFileSelControlsJPNTex, gFileSelControlsENGTex, gFileSelControlsGERTex, gFileSelControlsFRATex);
+        LANGUAGE_ARRAY(gFileSelControlsJPNTex, gFileSelControlsENGTex, gFileSelControlsGERTex, gFileSelControlsFRATex);
     FileSelectState* this = (FileSelectState*)thisx;
     Input* input = &this->state.input[0];
 
