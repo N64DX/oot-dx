@@ -1,13 +1,13 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-/**
- * 640x480 high resolution
-*/
-#define HIRES true
+#define SCREEN_DEFAULT   0 // 320x240
+#define SCREEN_HIRES     1 // 640x480
+#define SCREEN_WIDE      2 // 424x240
+#define SCREEN_ULTRAWIDE 3 // 560x240
 
 /**
- * Use Interlaced Mode for hires
+ * Use Interlaced Mode for Hires
 */
 #define INTERLACED false
 
@@ -17,15 +17,13 @@
 #define LINK_LOD false
 
 /**
- * 21:9 Widescreen
- * Extends the viewport to 560px over the original 320px
+ * Choose Screen Mode
 */
-#define ULTRA_WS false
+#define SCREEN_MODE SCREEN_HIRES
 
-/**
- * 16:9 Widescreen
- * Extends the viewport to 424px over the original 320px
-*/
-#define WIDESCREEN false
+// Derived from chosen Screen Mode
+#define HIRES (SCREEN_MODE == SCREEN_HIRES ? 1 : 0)
+#define WIDESCREEN (SCREEN_MODE == SCREEN_WIDE ? 1 : 0)
+#define ULTRA_WS (SCREEN_MODE == SCREEN_ULTRAWIDE ? 1 : 0)
 
 #endif
