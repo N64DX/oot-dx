@@ -360,12 +360,20 @@ void GameState_Update(GameState* gameState) {
         }
 
         if (SREG(63) == 4 || (SREG(63) == 2u && (u32)osTvType == OS_TV_PAL)) {
+#if HIRES && INTERLACED
+            gfxCtx->viMode = &osViModePalHan1;
+#else
             gfxCtx->viMode = &osViModePalLan1;
+#endif
             gfxCtx->yScale = 1.0f;
         }
 
         if (SREG(63) == 3 || (SREG(63) == 2u && (u32)osTvType == OS_TV_PAL)) {
+#if HIRES && INTERLACED
+            gfxCtx->viMode = &osViModeFpalHan1;
+#else
             gfxCtx->viMode = &osViModeFpalLan1;
+#endif
             gfxCtx->yScale = 0.833f;
         }
     } else {
