@@ -58,7 +58,7 @@ OSViMode osViModeFpalLan1 = {
 #if HIRES
         WIDTH(640),                    // width
 #elif ULTRA_WS
-        WIDTH(560),                    // width
+        WIDTH(576),                    // width
 #elif WIDESCREEN
         WIDTH(424),                    // width
 #else
@@ -74,7 +74,7 @@ OSViMode osViModeFpalLan1 = {
 #if HIRES
         0x400,                         // xScale
 #elif ULTRA_WS
-        0x380,                         // xScale
+        0x39A,                         // xScale
 #elif WIDESCREEN
         0x2A6,                         // xScale
 #else
@@ -91,7 +91,7 @@ OSViMode osViModeFpalLan1 = {
 #if HIRES
             ORIGIN(1280),       // origin
 #elif ULTRA_WS
-            ORIGIN(1120),       // origin
+            ORIGIN(1152),       // origin
 #elif WIDESCREEN
             ORIGIN(848),        // origin
 #else
@@ -114,7 +114,7 @@ OSViMode osViModeFpalLan1 = {
 #if HIRES
             ORIGIN(1280),       // origin
 #elif ULTRA_WS
-            ORIGIN(1120),       // origin
+            ORIGIN(1152),       // origin
 #elif WIDESCREEN
             ORIGIN(848),        // origin
 #else

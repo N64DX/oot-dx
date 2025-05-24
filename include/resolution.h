@@ -22,19 +22,19 @@
     #define TITLE_SHIFT 156
     #define WS_PX_SHIFT 1
     #define WS_SHIFT_FULL 104
-    #define WS_SHIFT_HALF 52
-    #define WS_SHIFT_QUARTER 26
+    #define WS_SHIFT_HALF (WS_SHIFT_FULL / 2)
+    #define WS_SHIFT_QUARTER (WS_SHIFT_FULL / 4)
 #elif ULTRA_WS
-    #define ASPECT_RATIO (21.0f / 9.0f)
-    #define FBDEMO_SHIFT 240
-    #define GFXPRINT_SHIFT 12
-    #define LULLABY_SHIFT 60
+    #define ASPECT_RATIO 2.40f
+    #define FBDEMO_SHIFT 256
+    #define GFXPRINT_SHIFT 13
+    #define LULLABY_SHIFT 70
     #define OCEFF_SHIFT 155
-    #define TITLE_SHIFT 360
+    #define TITLE_SHIFT 376
     #define WS_PX_SHIFT 1
-    #define WS_SHIFT_FULL 240
-    #define WS_SHIFT_HALF 120
-    #define WS_SHIFT_QUARTER 60
+    #define WS_SHIFT_FULL 256
+    #define WS_SHIFT_HALF (WS_SHIFT_FULL / 2)
+    #define WS_SHIFT_QUARTER (WS_SHIFT_FULL / 4)
 #else
     #define ASPECT_RATIO (4.0f / 3.0f)
     #define FBDEMO_SHIFT 18

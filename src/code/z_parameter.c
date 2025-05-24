@@ -3943,10 +3943,10 @@ void Interface_Draw(PlayState* play) {
             gSPMatrix(OVERLAY_DISP++, &gIdentityMtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
             // PAUSE_CURSOR_QUAD_4
-            pauseCtx->cursorVtx[16].v.ob[0] = pauseCtx->cursorVtx[18].v.ob[0] = pauseCtx->equipAnimX / HIRES_DIVIDE(10.0f);
+            pauseCtx->cursorVtx[16].v.ob[0] = pauseCtx->cursorVtx[18].v.ob[0] = pauseCtx->equipAnimX / HIRES_DIVIDE(10);
             pauseCtx->cursorVtx[17].v.ob[0] = pauseCtx->cursorVtx[19].v.ob[0] =
                 pauseCtx->cursorVtx[16].v.ob[0] + HIRES_MULTIPLY((WREG(90) / 10));
-            pauseCtx->cursorVtx[16].v.ob[1] = pauseCtx->cursorVtx[17].v.ob[1] = pauseCtx->equipAnimY / HIRES_DIVIDE(10.0f);
+            pauseCtx->cursorVtx[16].v.ob[1] = pauseCtx->cursorVtx[17].v.ob[1] = pauseCtx->equipAnimY / HIRES_DIVIDE(10);
             pauseCtx->cursorVtx[18].v.ob[1] = pauseCtx->cursorVtx[19].v.ob[1] =
                 pauseCtx->cursorVtx[16].v.ob[1] - HIRES_MULTIPLY((WREG(90) / 10));
 

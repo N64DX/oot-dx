@@ -4,7 +4,7 @@
 #define SCREEN_DEFAULT   0 // 320x240
 #define SCREEN_HIRES     1 // 640x480
 #define SCREEN_WIDE      2 // 424x240
-#define SCREEN_ULTRAWIDE 3 // 560x240
+#define SCREEN_ULTRAWIDE 3 // 576x240
 
 /**
  * Use Interlaced Mode for Hires
@@ -19,7 +19,7 @@
 /**
  * Choose Screen Mode
 */
-#define SCREEN_MODE SCREEN_HIRES
+#define SCREEN_MODE SCREEN_DEFAULT
 
 // Derived from chosen Screen Mode
 #define HIRES (SCREEN_MODE == SCREEN_HIRES ? 1 : 0)
