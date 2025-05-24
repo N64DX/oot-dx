@@ -3,24 +3,10 @@
 
 #include "ultra64.h"
 #include "ultra64/gbi.h"
-#include "config.h"
+#include "resolution.h"
 #include "sched.h"
 #include "thga.h"
 #include "versions.h"
-
-#if HIRES
-    #define SCREEN_WIDTH  640
-    #define SCREEN_HEIGHT 480
-#elif ULTRA_WS
-    #define SCREEN_WIDTH  576
-    #define SCREEN_HEIGHT 240
-#elif WIDESCREEN
-    #define SCREEN_WIDTH  424
-    #define SCREEN_HEIGHT 240
-#else
-    #define SCREEN_WIDTH  320
-    #define SCREEN_HEIGHT 240
-#endif
 
 // Texture memory size, 4 KiB
 #define TMEM_SIZE 0x1000

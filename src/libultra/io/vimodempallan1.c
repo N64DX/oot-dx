@@ -8,7 +8,7 @@
  * N = Deinterlaced
  * 1 = 16-bit Framebuffer
  */
-#include "config.h"
+#include "resolution.h"
 #include "ultra64.h"
 #include "ultra64/viint.h"
 
@@ -54,79 +54,29 @@ OSViMode osViModeMpalLan1 = {
         // comRegs
         VI_CTRL_TYPE_16 | VI_CTRL_GAMMA_DITHER_ON | VI_CTRL_GAMMA_ON | VI_CTRL_DIVOT_ON | VI_CTRL_ANTIALIAS_MODE_1 |
             VI_CTRL_PIXEL_ADV_DEFAULT, // ctrl
-
-#if HIRES
-        WIDTH(640),                    // width
-#elif ULTRA_WS
-        WIDTH(576),                    // width
-#elif WIDESCREEN
-        WIDTH(424),                    // width
-#else
-        WIDTH(320),                    // width
-#endif
-
+        WIDTH(SCREEN_WIDTH),           // width
         BURST(57, 30, 5, 70),          // burst
         VSYNC(525),                    // vSync
         HSYNC(3089, 4),                // hSync
         LEAP(3097, 3098),              // leap
         HSTART(108, 748),              // hStart
-
-#if HIRES
-        0x400,                         // xScale
-#elif ULTRA_WS
-        0x39A,                         // xScale
-#elif WIDESCREEN
-        0x2A6,                         // xScale
-#else
-        SCALE(2, 0),                   // xScale
-#endif
-
+        (SCREEN_WIDTH*512)/320,        // xScale
         VCURRENT(0),                   // vCurrent
     },
     {
         // fldRegs
         {
             // [0]
-
-#if HIRES
-            ORIGIN(1280),       // origin
-#elif ULTRA_WS
-            ORIGIN(1152),       // origin
-#elif WIDESCREEN
-            ORIGIN(848),        // origin
-#else
-            ORIGIN(640),        // origin
-#endif
-
-#if HIRES
-            0x800,              // yScale
-#else
-            SCALE(1, 0),        // yScale
-#endif
-
+            ORIGIN(SCREEN_WIDTH * 2),  // origin
+            (SCREEN_HEIGHT*1024)/240,  // yScale
             VSTART(37, 511),    // vStart
             BURST(4, 2, 14, 0), // vBurst
             VINTR(2),           // vIntr
         },
         {
             // [1]
-
-#if HIRES
-            ORIGIN(1280),       // origin
-#elif ULTRA_WS
-            ORIGIN(1152),       // origin
-#elif WIDESCREEN
-            ORIGIN(848),        // origin
-#else
-            ORIGIN(640),        // origin
-#endif
-
-#if HIRES
-            0x800,              // yScale
-#else
-            SCALE(1, 0),        // yScale
-#endif
-
+            ORIGIN(SCREEN_WIDTH * 2),  // origin
+            (SCREEN_HEIGHT*1024)/240,  // yScale
             VSTART(37, 511),    // vStart
             BURST(4, 2, 14, 0), // vBurst
             VINTR(2),           // vIntr
