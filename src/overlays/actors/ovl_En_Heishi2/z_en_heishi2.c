@@ -432,7 +432,7 @@ void func_80A53AD4(EnHeishi2* this, PlayState* play) {
     yawDiff = ABS(yawDiffTemp);
 
     if (!(120.0f < this->actor.xzDistToPlayer) && (yawDiff < 0x4300)) {
-        Actor_OfferTalkExchangeEquiCylinder(&this->actor, play, 100.0f, EXCH_ITEM_ZELDAS_LETTER);
+        Actor_OfferTalkExchangeEquiCylinder(&this->actor, play, 100.0f, EXCH_ITEM_BOTTLE_BLUE_FIRE);
     }
 }
 
