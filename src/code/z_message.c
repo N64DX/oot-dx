@@ -4423,24 +4423,24 @@ void Message_Update(PlayState* play) {
                             if (averageY < XREG(92)) {
                                 R_TEXTBOX_Y_TARGET = sTextboxLowerYPositions[var];
                             } else {
-                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var] + HIRES_TEXTBOX_SHIFT;
+                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var];
                             }
                         } else if (play->sceneId == SCENE_MARKET_DAY || play->sceneId == SCENE_MARKET_NIGHT ||
                                    play->sceneId == SCENE_MARKET_RUINS) {
                             if (averageY < XREG(93)) {
                                 R_TEXTBOX_Y_TARGET = sTextboxLowerYPositions[var];
                             } else {
-                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var] + HIRES_TEXTBOX_SHIFT;
+                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var];
                             }
                         } else {
                             if (averageY < XREG(94)) {
                                 R_TEXTBOX_Y_TARGET = sTextboxLowerYPositions[var];
                             } else {
-                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var] + HIRES_TEXTBOX_SHIFT;
+                                R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var];
                             }
                         }
                     } else if (msgCtx->textBoxPos == TEXTBOX_POS_TOP) {
-                        R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var] + HIRES_TEXTBOX_SHIFT;
+                        R_TEXTBOX_Y_TARGET = sTextboxUpperYPositions[var];
                     } else if (msgCtx->textBoxPos == TEXTBOX_POS_MIDDLE) {
                         R_TEXTBOX_Y_TARGET = sTextboxMidYPositions[var];
                     } else {

@@ -526,9 +526,9 @@ void Regs_InitDataImpl(void) {
     XREG(89) = -100;
     XREG(90) = -500;
     XREG(91) = 0;
-    XREG(92) = 100;
-    XREG(93) = 100;
-    XREG(94) = 160;
+    XREG(92) = HIRES_MULTIPLY(100);
+    XREG(93) = HIRES_MULTIPLY(100);
+    XREG(94) = HIRES_MULTIPLY(160);
     XREG(95) = 200;
     R_PAUSE_PAGES_Y_ORIGIN_2 = -6080;
     R_PAUSE_DEPTH_OFFSET = 9355;

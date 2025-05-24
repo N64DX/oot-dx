@@ -7,11 +7,9 @@
 #if HIRES
     #define HIRES_SCALE 2
     #define HIRES_PX_SHIFT 1
-    #define HIRES_TEXTBOX_SHIFT 104
 #else
     #define HIRES_SCALE 1
     #define HIRES_PX_SHIFT 0
-    #define HIRES_TEXTBOX_SHIFT 0
 #endif
 
 // WIDESCREEN, ULTRA_WS and DEFAULT values
