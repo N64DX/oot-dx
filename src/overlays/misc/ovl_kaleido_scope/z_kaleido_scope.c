@@ -2,7 +2,6 @@
 
 #include "libc64/sleep.h"
 #include "array_count.h"
-#include "config.h"
 #include "controller.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"

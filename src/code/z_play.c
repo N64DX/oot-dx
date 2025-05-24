@@ -4,7 +4,6 @@
 #include "array_count.h"
 #include "buffers.h"
 #include "color.h"
-#include "config.h"
 #include "controller.h"
 #include "fault.h"
 #include "file_select_state.h"

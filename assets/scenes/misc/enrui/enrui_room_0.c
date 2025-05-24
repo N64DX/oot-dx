@@ -1,4 +1,4 @@
-#include "config.h"
+#include "resolution.h"
 #include "ultra64.h"
 #include "z64.h"
 #include "assets/scenes/misc/enrui/enrui_room_0.h"
