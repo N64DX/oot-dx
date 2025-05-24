@@ -6,10 +6,10 @@
 
 #include "z_oceff_wipe3.h"
 
-#include "config.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "printf.h"
+#include "resolution.h"
 #include "sys_matrix.h"
 #include "terminal.h"
 #include "z_lib.h"
@@ -82,9 +82,9 @@ void OceffWipe3_Draw(Actor* thisx, PlayState* play) {
     eye = GET_ACTIVE_CAM(play)->eye;
     quakeOffset = Camera_GetQuakeOffset(GET_ACTIVE_CAM(play));
     if (this->counter < 32) {
-        z = Math_SinS(this->counter << 9) * (1330 - (WIDESCREEN ? 80 : 18));
+        z = Math_SinS(this->counter << 9) * (1330 - OCEFF_SHIFT);
     } else {
-        z = (1330 - (WIDESCREEN ? 80 : 18));
+        z = (1330 - OCEFF_SHIFT);
     }
 
     vtxPtr = sFrustumVtx;

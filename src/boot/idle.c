@@ -96,18 +96,33 @@ void Idle_ThreadEntry(void* arg) {
     // Allow both 60 Hz and 50 Hz
     switch (osTvType) {
         case OS_TV_NTSC:
+#if HIRES && INTERLACED
+            gViConfigModeType = OS_VI_NTSC_HAN1;
+            gViConfigMode = osViModeNtscHan1;
+#else
             gViConfigModeType = OS_VI_NTSC_LAN1;
             gViConfigMode = osViModeNtscLan1;
+#endif
             break;
 
         case OS_TV_MPAL:
+#if HIRES && INTERLACED
+            gViConfigModeType = OS_VI_MPAL_HAN1;
+            gViConfigMode = osViModeMpalHan1;
+#else
             gViConfigModeType = OS_VI_MPAL_LAN1;
             gViConfigMode = osViModeMpalLan1;
+#endif
             break;
 
         case OS_TV_PAL:
+#if HIRES && INTERLACED
+            gViConfigModeType = OS_VI_FPAL_HAN1;
+            gViConfigMode = osViModeFpalHan1;
+#else
             gViConfigModeType = OS_VI_FPAL_LAN1;
             gViConfigMode = osViModeFpalLan1;
+#endif
 #if OOT_VERSION >= PAL_1_0
             gViConfigYScale = 0.833f;
 #endif
@@ -118,13 +133,23 @@ void Idle_ThreadEntry(void* arg) {
     switch (osTvType) {
         case OS_TV_PAL:
         case OS_TV_NTSC:
+#if HIRES && INTERLACED
+            gViConfigModeType = OS_VI_NTSC_HAN1;
+            gViConfigMode = osViModeNtscHan1;
+#else
             gViConfigModeType = OS_VI_NTSC_LAN1;
             gViConfigMode = osViModeNtscLan1;
+#endif
             break;
 
         case OS_TV_MPAL:
+#if HIRES && INTERLACED
+            gViConfigModeType = OS_VI_MPAL_HAN1;
+            gViConfigMode = osViModeMpalHan1;
+#else
             gViConfigModeType = OS_VI_MPAL_LAN1;
             gViConfigMode = osViModeMpalLan1;
+#endif
             break;
     }
 #else
@@ -133,8 +158,13 @@ void Idle_ThreadEntry(void* arg) {
         case OS_TV_NTSC:
         case OS_TV_MPAL:
         case OS_TV_PAL:
+#if HIRES && INTERLACED
+            gViConfigModeType = OS_VI_FPAL_HAN1;
+            gViConfigMode = osViModeFpalHan1;
+#else
             gViConfigModeType = OS_VI_FPAL_LAN1;
             gViConfigMode = osViModeFpalLan1;
+#endif
             gViConfigYScale = 0.833f;
             break;
     }

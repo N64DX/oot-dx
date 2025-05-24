@@ -59,7 +59,7 @@ u8 kokiri_home5_room_0_possiblePadding_0000D8[] = {
 };
 
 u64 kokiri_home5_room_0Background_0000E0[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WIDESCREEN || ULTRA_WS
 #include "assets/scenes/indoors/kokiri_home5/kokiri_home5_room_0Background_0000E0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/kokiri_home5/kokiri_home5_room_0Background_0000E0.jpg.inc.c"
