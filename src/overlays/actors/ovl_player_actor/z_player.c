@@ -12660,17 +12660,6 @@ void Player_Draw(Actor* thisx, PlayState* play2) {
 
     if (!(this->stateFlags2 & PLAYER_STATE2_29)) {
         OverrideLimbDrawOpa overrideLimbDraw = Player_OverrideLimbDrawGameplayDefault;
-        s32 lod = 0;
-        s32 pad;
-
-#if (LINK_LOD)
-        if ((this->csAction != PLAYER_CSACTION_NONE) || (Player_CheckHostileLockOn(this) && 0) ||
-            (this->actor.projectedPos.z < 160.0f)) {
-            lod = 0;
-        } else {
-            lod = 1;
-        }
-#endif
 
         func_80093C80(play);
         Gfx_SetupDL_25Xlu(play->state.gfxCtx);
@@ -12715,7 +12704,7 @@ void Player_Draw(Actor* thisx, PlayState* play2) {
             Matrix_Scale(1.1f, 0.95f, 1.05f, MTXMODE_APPLY);
             Matrix_RotateY(-sp74, MTXMODE_APPLY);
             Matrix_RotateX(-sp78, MTXMODE_APPLY);
-            Player_DrawGameplay(play, this, lod, gCullFrontDList, overrideLimbDraw);
+            Player_DrawGameplay(play, this, 0, gCullFrontDList, overrideLimbDraw);
             this->actor.scale.y = -this->actor.scale.y;
             Matrix_Pop();
         }
@@ -12723,7 +12712,7 @@ void Player_Draw(Actor* thisx, PlayState* play2) {
         gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
         gSPClearGeometryMode(POLY_XLU_DISP++, G_CULL_BOTH);
 
-        Player_DrawGameplay(play, this, lod, gCullBackDList, overrideLimbDraw);
+        Player_DrawGameplay(play, this, 0, gCullBackDList, overrideLimbDraw);
 
         if (this->invincibilityTimer > 0) {
             POLY_OPA_DISP = Play_SetFog(play, POLY_OPA_DISP);
