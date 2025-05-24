@@ -2803,13 +2803,11 @@ void Message_OpenText(PlayState* play, u16 textId) {
     } else {
 #if OOT_NTSC_N64
         Language language = gSaveContext.language;
-        if (Message_FindMessage(play, textId, language))
-            msgCtx->msgLength = font->msgLength;
-        else if (language != LANGUAGE_ENG) {
+        if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG && language != LANGUAGE_JPN) {
             language = LANGUAGE_ENG;
             Message_FindMessage(play, textId, language);
-            msgCtx->msgLength = font->msgLength;
         }
+        msgCtx->msgLength = font->msgLength;
 
         if (B_80121220 == NULL || B_80121220->unk_64 == NULL || !B_80121220->unk_64(&play->msgCtx.font))
             switch (language) {
