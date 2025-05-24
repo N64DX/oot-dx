@@ -14,6 +14,9 @@
  */
 void Font_LoadCharWide(Font* font, u16 character, u16 codePointIndex) {
 #if OOT_NTSC
+    if (gSaveContext.language != LANGUAGE_JPN)
+        return;
+
     DMA_REQUEST_SYNC(&font->fontBuf[codePointIndex],
                      (uintptr_t)_kanjiSegmentRomStart + Kanji_OffsetFromShiftJIS(character), FONT_CHAR_TEX_SIZE,
                      "../z_kanfont.c", UNK_LINE);

@@ -140,5 +140,4 @@ extern u64 gMsgCharA7ButtonCLeftTex[];
 extern u64 gMsgCharA8ButtonCRightTex[];
 extern u64 gMsgCharA9ZTargetSignTex[];
 extern u64 gMsgCharAAControlStickTex[];
-extern u64 gMsgCharACLatinCapitalLetterIWithCircumflexTex[];
 #endif
