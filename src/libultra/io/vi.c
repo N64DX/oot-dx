@@ -17,7 +17,12 @@ void __osViInit(void) {
     __osViCurr->framep = (void*)K0BASE;
 
     if (osTvType == OS_TV_PAL) {
+
+#if HIRES && INTERLACED
+        __osViNext->modep = &osViModePalHan1;
+#else
         __osViNext->modep = &osViModePalLan1;
+#endif
     } else if (osTvType == OS_TV_MPAL) {
 
 #if HIRES && INTERLACED
