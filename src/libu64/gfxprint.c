@@ -263,7 +263,7 @@ void GfxPrint_PrintCharImpl(GfxPrint* this, u8 c) {
         gSPTextureRectangle(this->dList++, HIRES_MULTIPLY((this->posX << 1 + WS_SHIFT_HALF)), HIRES_MULTIPLY((this->posY << 1)), HIRES_MULTIPLY(((this->posX + 32 + WS_SHIFT_HALF) << 1)) - (HIRES_PX_SHIFT * 2),
                             HIRES_MULTIPLY(((this->posY + 32) << 1)) - (HIRES_PX_SHIFT * 2), tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, HIRES_DIVIDE((1 << 9)), HIRES_DIVIDE((1 << 9)));
     } else {
-        gSPTextureRectangle(this->dList++, HIRES_MULTIPLY((this->posX + WS_SHIFT_HALF)), HIRES_MULTIPLY((this->posY, this->posX + 32 + WS_SHIFT_HALF)) - (HIRES_PX_SHIFT * 2), HIRES_MULTIPLY((this->posY + 32)) - (HIRES_PX_SHIFT * 2), tile,
+        gSPTextureRectangle(this->dList++, HIRES_MULTIPLY((this->posX + WS_SHIFT_HALF)), HIRES_MULTIPLY(this->posY), HIRES_MULTIPLY(this->posX + 32 + WS_SHIFT_HALF) - (HIRES_PX_SHIFT * 2), HIRES_MULTIPLY((this->posY + 32)) - (HIRES_PX_SHIFT * 2), tile,
                             (u16)(c & 4) * 64, (u16)(c >> 3) * 256, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
     }
 #endif

@@ -355,7 +355,7 @@ void Room_DrawBackground2D(Gfx** gfxP, void* tex, void* tlut, u16 width, u16 hei
         bg->s.scaleH = 1 << 10;
 #endif
 #if ULTRA_WS
-        bg->s.frameX = bg->b.frameX + 272; // (560 - 424) * 2
+        bg->s.frameX = bg->b.frameX + 304; // (576 - 424) * 2
 #endif
 #if HIRES || WIDESCREEN || ULTRA_WS
         bg->s.imageYorig = bg->b.imageY;

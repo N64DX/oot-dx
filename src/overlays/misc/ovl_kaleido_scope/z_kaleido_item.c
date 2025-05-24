@@ -568,7 +568,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
 }
 
 #if ULTRA_WS
-static s16 sCButtonPosX[] = { 1960, 2200, 2440 };
+static s16 sCButtonPosX[] = { 2040, 2280, 2520 };
 #elif WIDESCREEN
 static s16 sCButtonPosX[] = { 1180, 1420, 1660 };
 #else
