@@ -816,7 +816,7 @@ ifeq ($(PLATFORM),IQUE)
   COMPRESS_ARGS := --format gzip --pad-to 0x4000
   CIC = 6102
 else
-  COMPRESS_ARGS := --format yaz0 --pad-to 0x800000 --fill-padding-bytes
+  COMPRESS_ARGS := --format yaz0 --pad-to 0x4000 --fill-padding-bytes
   CIC = 6105
 endif
 
