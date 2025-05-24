@@ -1,4 +1,4 @@
-#include "config.h"
+#include "resolution.h"
 #include "ultra64.h"
 #include "ultra64/viint.h"
 

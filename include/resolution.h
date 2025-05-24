@@ -1,7 +1,21 @@
 #ifndef RESOLUTION_H
 #define RESOLUTION_H
 
-#include "config.h"
+#define SCREEN_DEFAULT   0 // 320x240
+#define SCREEN_HIRES     1 // 640x480
+#define SCREEN_WIDE      2 // 424x240
+#define SCREEN_ULTRAWIDE 3 // 576x240
+
+// @setting: Use interlaced mode for hires
+#define INTERLACED false
+
+// @setting: SCREEN_MODE option
+#define SCREEN_MODE SCREEN_DEFAULT
+
+// Derived from SCREEN_MODE setting
+#define HIRES (SCREEN_MODE == SCREEN_HIRES ? 1 : 0)
+#define WIDESCREEN (SCREEN_MODE == SCREEN_WIDE ? 1 : 0)
+#define ULTRA_WS (SCREEN_MODE == SCREEN_ULTRAWIDE ? 1 : 0)
 
 // Values
 #if HIRES
