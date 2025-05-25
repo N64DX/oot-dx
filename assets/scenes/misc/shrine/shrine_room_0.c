@@ -1044,7 +1044,7 @@ Gfx shrine_room_0DL_007AE0[] = {
 };
 
 u64 shrine_room_0Background_007AF0[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/misc/shrine/shrine_room_0Background_007AF0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/misc/shrine/shrine_room_0Background_007AF0.jpg.inc.c"
@@ -1052,7 +1052,7 @@ u64 shrine_room_0Background_007AF0[320 * 240 / 4] = {
 };
 
 u64 shrine_room_0Background_02D2F0[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/misc/shrine/shrine_room_0Background_02D2F0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/misc/shrine/shrine_room_0Background_02D2F0.jpg.inc.c"

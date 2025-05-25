@@ -442,7 +442,7 @@ u8 night_shop_room_0_unaccounted_003150[] = {
 };
 
 u64 night_shop_room_0Background_003160[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/shops/night_shop/night_shop_room_0Background_003160_ws.jpg.inc.c"
 #else
 #include "assets/scenes/shops/night_shop/night_shop_room_0Background_003160.jpg.inc.c"

@@ -264,7 +264,7 @@ u8 impa_room_0_unaccounted_001788[] = {
 };
 
 u64 impa_room_0Background_0017A0[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/indoors/impa/impa_room_0Background_0017A0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/impa/impa_room_0Background_0017A0.jpg.inc.c"

@@ -982,7 +982,7 @@ u8 face_shop_room_0_unaccounted_008E30[] = {
 };
 
 u64 face_shop_room_0Background_008E40[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/shops/face_shop/face_shop_room_0Background_008E40_ws.jpg.inc.c"
 #else
 #include "assets/scenes/shops/face_shop/face_shop_room_0Background_008E40.jpg.inc.c"

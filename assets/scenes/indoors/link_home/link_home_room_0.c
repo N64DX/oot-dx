@@ -403,7 +403,7 @@ s16 link_home_room_0ObjectList_002478[] = {
 };
 
 u64 link_home_room_0Background_002480[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/indoors/link_home/link_home_room_0Background_002480_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/link_home/link_home_room_0Background_002480.jpg.inc.c"

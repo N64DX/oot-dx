@@ -866,7 +866,7 @@ u8 kokiri_home_room_0_unaccounted_006418[] = {
 };
 
 u64 kokiri_home_room_0Background_006430[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/indoors/kokiri_home/kokiri_home_room_0Background_006430_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/kokiri_home/kokiri_home_room_0Background_006430.jpg.inc.c"

@@ -125,7 +125,7 @@ u8 zoora_room_0_unaccounted_0009D0[] = {
 };
 
 u64 zoora_room_0Background_0009E0[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/shops/zoora/zoora_room_0Background_0009E0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/shops/zoora/zoora_room_0Background_0009E0.jpg.inc.c"

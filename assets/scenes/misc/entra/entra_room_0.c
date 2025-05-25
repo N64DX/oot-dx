@@ -90,7 +90,7 @@ u8 entra_room_0_unaccounted_000358[] = {
 };
 
 u64 entra_room_0Background_000370[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/misc/entra/entra_room_0Background_000370_ws.jpg.inc.c"
 #else
 #include "assets/scenes/misc/entra/entra_room_0Background_000370.jpg.inc.c"

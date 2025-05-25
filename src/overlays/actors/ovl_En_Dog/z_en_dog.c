@@ -482,7 +482,7 @@ void EnDog_Draw(Actor* thisx, PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_dog.c", 972);
 
-#if ULTRA_WS
+#if ((WIDESCREEN && !WS_JPEG) || ULTRA_WS)
     if (play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT && thisx->world.pos.z > -880 && GET_ACTIVE_CAM(play)->bgCamIndex == 0)
         return;
 #endif

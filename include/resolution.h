@@ -12,10 +12,28 @@
 // @setting: SCREEN_MODE option
 #define SCREEN_MODE SCREEN_DEFAULT
 
+// @setting: Include Widescreen JPEGs that have been squished from 420x240 to 320x240
+#define WS_JPEG true
+
 // Derived from SCREEN_MODE setting
 #define HIRES (SCREEN_MODE == SCREEN_HIRES ? 1 : 0)
 #define WIDESCREEN (SCREEN_MODE == SCREEN_WIDE ? 1 : 0)
 #define ULTRA_WS (SCREEN_MODE == SCREEN_ULTRAWIDE ? 1 : 0)
+
+// Derived from WS_JPEG setting
+#if WS_JPEG
+    #define JPEG_POS_DEFAULT ((320 - 424) * 2)
+    #define JPEG_POS_WIDE 0
+    #define JPEG_POS_ULTRAWIDE ((576 - 424) * 2)
+    #define JPEG_WIDTH 424
+    #define JPEG_SCALE 775
+#else
+    #define JPEG_POS_DEFAULT 0
+    #define JPEG_POS_WIDE ((424 - 320) * 2)
+    #define JPEG_POS_ULTRAWIDE ((576 - 320) * 2)
+    #define JPEG_WIDTH 320
+    #define JPEG_SCALE 1024
+#endif
 
 // Values
 #if HIRES
@@ -29,10 +47,10 @@
     #define GFXPRINT_SHIFT 0
     #define HIRES_SCALE 2
     #define HIRES_PX_SHIFT 1
-    #define JPEG_FRAME_X 0
-    #define JPEG_FRAME_W (320 * 4 * 2)
+    #define JPEG_FRAME_X (JPEG_POS_DEFAULT * 2)
+    #define JPEG_FRAME_W (JPEG_WIDTH * 4 * 2)
     #define JPEG_FRAME_H (240 * 4 * 2)
-    #define JPEG_SCALE_W (1024 / 2)
+    #define JPEG_SCALE_W (JPEG_SCALE / 2)
     #define JPEG_SCALE_H (1024 / 2)
     #define LULLABY_SHIFT 0
     #define OCEFF_SHIFT 18
@@ -52,10 +70,10 @@
     #define GFXPRINT_SHIFT 6
     #define HIRES_SCALE 1
     #define HIRES_PX_SHIFT 0
-    #define JPEG_FRAME_X 0
-    #define JPEG_FRAME_W (424 * 4)
+    #define JPEG_FRAME_X JPEG_POS_WIDE
+    #define JPEG_FRAME_W (JPEG_WIDTH * 4)
     #define JPEG_FRAME_H (240 * 4)
-    #define JPEG_SCALE_W 775
+    #define JPEG_SCALE_W JPEG_SCALE
     #define JPEG_SCALE_H 1024
     #define LULLABY_SHIFT 0
     #define OCEFF_SHIFT 80
@@ -75,10 +93,10 @@
     #define GFXPRINT_SHIFT 13
     #define HIRES_SCALE 1
     #define HIRES_PX_SHIFT 0
-    #define JPEG_FRAME_X ((SCREEN_WIDTH - 424) * 2)
-    #define JPEG_FRAME_W (424 * 4)
+    #define JPEG_FRAME_X JPEG_POS_ULTRAWIDE
+    #define JPEG_FRAME_W (JPEG_WIDTH * 4)
     #define JPEG_FRAME_H (240 * 4)
-    #define JPEG_SCALE_W 775
+    #define JPEG_SCALE_W JPEG_SCALE
     #define JPEG_SCALE_H 1024
     #define LULLABY_SHIFT 70
     #define OCEFF_SHIFT 155
@@ -98,10 +116,10 @@
     #define GFXPRINT_SHIFT 0
     #define HIRES_SCALE 1
     #define HIRES_PX_SHIFT 0
-    #define JPEG_FRAME_X 0
-    #define JPEG_FRAME_W (320 * 4)
+    #define JPEG_FRAME_X JPEG_POS_DEFAULT
+    #define JPEG_FRAME_W (JPEG_WIDTH * 4)
     #define JPEG_FRAME_H (240 * 4)
-    #define JPEG_SCALE_W 1024
+    #define JPEG_SCALE_W JPEG_SCALE
     #define JPEG_SCALE_H 1024
     #define LULLABY_SHIFT 0
     #define OCEFF_SHIFT 18

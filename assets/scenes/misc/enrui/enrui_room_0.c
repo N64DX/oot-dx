@@ -88,7 +88,7 @@ u8 enrui_room_0_unaccounted_000348[] = {
 };
 
 u64 enrui_room_0Background_000360[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/misc/enrui/enrui_room_0Background_000360_ws.jpg.inc.c"
 #else
 #include "assets/scenes/misc/enrui/enrui_room_0Background_000360.jpg.inc.c"

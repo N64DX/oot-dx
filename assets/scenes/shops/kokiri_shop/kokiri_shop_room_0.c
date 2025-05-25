@@ -1199,7 +1199,7 @@ u8 kokiri_shop_room_0_unaccounted_00B478[] = {
 };
 
 u64 kokiri_shop_room_0Background_00B490[320 * 240 / 4] = {
-#if WIDESCREEN || ULTRA_WS
+#if WS_JPEG
 #include "assets/scenes/shops/kokiri_shop/kokiri_shop_room_0Background_00B490_ws.jpg.inc.c"
 #else
 #include "assets/scenes/shops/kokiri_shop/kokiri_shop_room_0Background_00B490.jpg.inc.c"
