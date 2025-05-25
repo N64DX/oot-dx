@@ -1295,13 +1295,6 @@ beginseg
 endseg
 
 beginseg
-    name "object_oE2"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_oE2/object_oE2.o"
-    number 6
-endseg
-
-beginseg
     name "object_ydan_objects"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ydan_objects/object_ydan_objects.o"
@@ -1623,13 +1616,6 @@ beginseg
     name "object_trap"
     compress
     include "$(BUILD_DIR)/assets/objects/object_trap/object_trap.o"
-    number 6
-endseg
-
-beginseg
-    name "object_vase"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_vase/object_vase.o"
     number 6
 endseg
 
@@ -2677,13 +2663,6 @@ beginseg
     name "object_daiku"
     compress
     include "$(BUILD_DIR)/assets/objects/object_daiku/object_daiku.o"
-    number 6
-endseg
-
-beginseg
-    name "object_nwc"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_nwc/object_nwc.o"
     number 6
 endseg
 

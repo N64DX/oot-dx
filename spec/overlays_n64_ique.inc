@@ -428,13 +428,6 @@ beginseg
 endseg
 
 beginseg
-    name "ovl_En_OE2"
-    compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_OE2/z_en_oe2.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_OE2/ovl_En_OE2_reloc.o"
-endseg
-
-beginseg
     name "ovl_Bg_Ydan_Hasi"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ydan_Hasi/z_bg_ydan_hasi.o"
@@ -669,31 +662,10 @@ beginseg
 endseg
 
 beginseg
-    name "ovl_En_Bird"
-    compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Bird/z_en_bird.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Bird/ovl_En_Bird_reloc.o"
-endseg
-
-beginseg
     name "ovl_En_Wood02"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Wood02/z_en_wood02.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Wood02/ovl_En_Wood02_reloc.o"
-endseg
-
-beginseg
-    name "ovl_En_Lightbox"
-    compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Lightbox/z_en_lightbox.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Lightbox/ovl_En_Lightbox_reloc.o"
-endseg
-
-beginseg
-    name "ovl_En_Pu_box"
-    compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Pu_box/z_en_pu_box.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Pu_box/ovl_En_Pu_box_reloc.o"
 endseg
 
 beginseg
@@ -708,13 +680,6 @@ beginseg
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Arow_Trap/z_en_arow_trap.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Arow_Trap/ovl_En_Arow_Trap_reloc.o"
-endseg
-
-beginseg
-    name "ovl_En_Vase"
-    compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Vase/z_en_vase.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Vase/ovl_En_Vase_reloc.o"
 endseg
 
 beginseg
@@ -1882,13 +1847,6 @@ beginseg
 endseg
 
 beginseg
-    name "ovl_En_Nwc"
-    compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Nwc/z_en_nwc.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Nwc/ovl_En_Nwc_reloc.o"
-endseg
-
-beginseg
     name "ovl_En_Blkobj"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Blkobj/z_en_blkobj.o"
@@ -2082,13 +2040,6 @@ beginseg
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Mure2/z_obj_mure2.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Mure2/ovl_Obj_Mure2_reloc.o"
-endseg
-
-beginseg
-    name "ovl_En_Go"
-    compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Go/z_en_go.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Go/ovl_En_Go_reloc.o"
 endseg
 
 beginseg
