@@ -29,6 +29,11 @@
     #define GFXPRINT_SHIFT 0
     #define HIRES_SCALE 2
     #define HIRES_PX_SHIFT 1
+    #define JPEG_FRAME_X 0
+    #define JPEG_FRAME_W (320 * 4 * 2)
+    #define JPEG_FRAME_H (240 * 4 * 2)
+    #define JPEG_SCALE_W (1024 / 2)
+    #define JPEG_SCALE_H (1024 / 2)
     #define LULLABY_SHIFT 0
     #define OCEFF_SHIFT 18
     #define TITLE_SHIFT 0
@@ -47,6 +52,11 @@
     #define GFXPRINT_SHIFT 6
     #define HIRES_SCALE 1
     #define HIRES_PX_SHIFT 0
+    #define JPEG_FRAME_X 0
+    #define JPEG_FRAME_W (424 * 4)
+    #define JPEG_FRAME_H (240 * 4)
+    #define JPEG_SCALE_W 775
+    #define JPEG_SCALE_H 1024
     #define LULLABY_SHIFT 0
     #define OCEFF_SHIFT 80
     #define TITLE_SHIFT ((SCREEN_WIDTH - 320) / 3 * 2)
@@ -65,6 +75,11 @@
     #define GFXPRINT_SHIFT 13
     #define HIRES_SCALE 1
     #define HIRES_PX_SHIFT 0
+    #define JPEG_FRAME_X ((SCREEN_WIDTH - 424) * 2)
+    #define JPEG_FRAME_W (424 * 4)
+    #define JPEG_FRAME_H (240 * 4)
+    #define JPEG_SCALE_W 775
+    #define JPEG_SCALE_H 1024
     #define LULLABY_SHIFT 70
     #define OCEFF_SHIFT 155
     #define TITLE_SHIFT ((SCREEN_WIDTH - 320) / 3 * 2)
@@ -83,6 +98,11 @@
     #define GFXPRINT_SHIFT 0
     #define HIRES_SCALE 1
     #define HIRES_PX_SHIFT 0
+    #define JPEG_FRAME_X 0
+    #define JPEG_FRAME_W (320 * 4)
+    #define JPEG_FRAME_H (240 * 4)
+    #define JPEG_SCALE_W 1024
+    #define JPEG_SCALE_H 1024
     #define LULLABY_SHIFT 0
     #define OCEFF_SHIFT 18
     #define TITLE_SHIFT 0
@@ -97,7 +117,7 @@
 #define HIRES_DIVIDE(var) (var / HIRES_SCALE)
 
 // Beating heart position
-#define beatingHeartPulsingSizeX (((-130.0f) - WS_SHIFT_HALF) * HIRES_SCALE)
-#define beatingHeartPulsingSizeY (94.5f * HIRES_SCALE)
+#define BEATING_HEART_PULSING_SIZE_X (((-130.0f) - WS_SHIFT_HALF) * HIRES_SCALE)
+#define BEATING_HEART_PULSING_SIZE_Y (94.5f * HIRES_SCALE)
 
 #endif

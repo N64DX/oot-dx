@@ -342,22 +342,12 @@ void Room_DrawBackground2D(Gfx** gfxP, void* tex, void* tlut, u16 width, u16 hei
     }
 
     if ((fmt == G_IM_FMT_RGBA) && !R_ROOM_BG2D_FORCE_SCALEBG) {
-
-#if HIRES
-        bg->s.frameW = width * (1 << 2) * 2;
-        bg->s.frameH = height * (1 << 2) * 2;
-        bg->s.scaleW = (1 << 10) / 2;
-        bg->s.scaleH = (1 << 10) / 2;
-#elif WIDESCREEN || ULTRA_WS
-        bg->s.frameW = 424 * (1 << 2);
-        bg->s.frameH = height * (1 << 2);
-        bg->s.scaleW = 775; // adjusted for squished 420px -> 320px WS images
-        bg->s.scaleH = 1 << 10;
-#endif
-#if ULTRA_WS
-        bg->s.frameX = bg->b.frameX + 304; // (576 - 424) * 2
-#endif
 #if HIRES || WIDESCREEN || ULTRA_WS
+        bg->s.frameW = JPEG_FRAME_W;
+        bg->s.frameH = JPEG_FRAME_H;
+        bg->s.scaleW = JPEG_SCALE_W;
+        bg->s.scaleH = JPEG_SCALE_H;
+        bg->s.frameX = bg->b.frameX + JPEG_FRAME_X;
         bg->s.imageYorig = bg->b.imageY;
         gDPSetOtherMode(gfx++,
                         tlutMode | G_AD_DISABLE | G_CD_DISABLE | G_CK_NONE | G_TC_FILT | G_TF_POINT | G_TT_NONE |
@@ -376,7 +366,6 @@ void Room_DrawBackground2D(Gfx** gfxP, void* tex, void* tlut, u16 width, u16 hei
                         G_AC_THRESHOLD | G_ZS_PIXEL | G_RM_NOOP | G_RM_NOOP2);
         gSPBgRectCopy(gfx++, bg);
 #endif
-
     } else {
         bg->s.frameW = width * (1 << 2);
         bg->s.frameH = height * (1 << 2);
