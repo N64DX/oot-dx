@@ -188,10 +188,6 @@ Vtx gameplay_field_keepVtx_000548[] = {
 #include "assets/objects/gameplay_field_keep/gameplay_field_keepVtx_000548.vtx.inc"
 };
 
-u8 gameplay_field_keep_possiblePadding_000748[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 gHanaFlowerTex[] = {
 #include "assets/objects/gameplay_field_keep/hana_flower.rgba16.inc.c"
 };
@@ -366,10 +362,6 @@ void* gButterflySkelLimbs[] = {
 
 SkeletonHeader gButterflySkel = { 
     gButterflySkelLimbs, ARRAY_COUNT(gButterflySkelLimbs)
-};
-
-u8 gameplay_field_keep_possiblePadding_0036F8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
 u64 gBgBombwallTLUT[] = {
@@ -557,10 +549,6 @@ Gfx gFieldDoorRightDL[] = {
     gsSPEndDisplayList(),
 };
 
-u8 gameplay_field_keep_possiblePadding_004B48[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 gFieldDoorKnobTopHalfTex[] = {
 #include "assets/objects/gameplay_field_keep/field_door_knob_upper.rgba16.inc.c"
 };
@@ -573,174 +561,12 @@ u64 gFieldDoor1Tex[] = {
 #include "assets/objects/gameplay_field_keep/field_door1.i4.inc.c"
 };
 
-s16 sFieldUnusedFishAnimFrameData[] = {
-    0x0000, 0x4000, 0xFFC0, 0xFF2D, 0xFE8D, 0xFDEE, 0xFD5B, 0xFCE2, 0xFC90, 0xFC72, 0xFC90, 0xFCE2, 0xFD5B, 0xFDEE, 
-    0xFE8D, 0xFF2D, 0xFFC0, 0x0040, 0x00D3, 0x0173, 0x0212, 0x02A5, 0x031E, 0x0370, 0x038E, 0x0370, 0x031E, 0x02A5, 
-    0x0212, 0x0173, 0x00D3, 0x0040, 0xFDBC, 0xFEF1, 0x0000, 0x010F, 0x0244, 0x0387, 0x04BD, 0x05CB, 0x0699, 0x070D, 
-    0x070D, 0x0699, 0x05CB, 0x04BD, 0x0387, 0x0244, 0x010F, 0x0000, 0xFEF1, 0xFDBC, 0xFC79, 0xFB43, 0xFA35, 0xF967, 
-    0xF8F3, 0xF8F3, 0xF967, 0xFA35, 0xFB43, 0xFC79, 
-};
-
-JointIndex sFieldUnusedFishAnimJointIndices[] = {
-    { 0x0000, 0x0000, 0x0000 },
-    { 0x0000, 0x0001, 0x0000 },
-    { 0x0000, 0x0002, 0x0000 },
-    { 0x0000, 0x0020, 0x0000 },
-    { 0x0000, 0x0000, 0x0000 },
-    { 0x0000, 0x0000, 0x0000 },
-};
-
-AnimationHeader gFieldUnusedFishAnim = { 
-    { 30 }, sFieldUnusedFishAnimFrameData,
-    sFieldUnusedFishAnimJointIndices, 2
-};
-
-Gfx gFieldUnusedFishDL[] = {
-    gsDPPipeSync(),
-    gsDPSetPrimColor(0, 0x01, 255, 255, 255, 255),
-    gsDPPipeSync(),
-    gsDPSetRenderMode(AA_EN | Z_CMP | Z_UPD | IM_RD | CVG_DST_CLAMP | ZMODE_INTER | CVG_X_ALPHA | ALPHA_CVG_SEL |
-                      G_RM_FOG_SHADE_A, AA_EN | Z_CMP | Z_UPD | IM_RD | CVG_DST_CLAMP | ZMODE_INTER | CVG_X_ALPHA |
-                      ALPHA_CVG_SEL | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, COMBINED, 0, SHADE, 0, TEXEL1, 0,
-                       PRIM_LOD_FRAC, COMBINED),
-    gsDPLoadTextureBlock(gFieldUnusedFishTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-                         G_TX_NOMIRROR | G_TX_CLAMP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPSetGeometryMode(G_CULL_BACK),
-    gsSPSetGeometryMode(G_LIGHTING),
-    gsSPSetGeometryMode(G_SHADING_SMOOTH),
-    gsSPVertex(gameplay_field_keepVtx_006208, 10, 0),
-    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
-    gsSP2Triangles(2, 1, 4, 0, 5, 6, 7, 0),
-    gsSP2Triangles(7, 8, 5, 0, 6, 5, 9, 0),
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, COMBINED, 0, SHADE, 0, TEXEL1, 0,
-                       PRIM_LOD_FRAC, COMBINED),
-    gsDPLoadTextureBlock(gFieldUnusedFishBottomTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-                         G_TX_NOMIRROR | G_TX_CLAMP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&gameplay_field_keepVtx_006208[10], 10, 0),
-    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
-    gsSP2Triangles(0, 3, 4, 0, 5, 6, 7, 0),
-    gsSP2Triangles(7, 8, 5, 0, 6, 5, 9, 0),
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, COMBINED, 0, SHADE, 0, TEXEL1, 0,
-                       PRIM_LOD_FRAC, COMBINED),
-    gsDPLoadTextureBlock(gFieldUnusedFishTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-                         G_TX_NOMIRROR | G_TX_CLAMP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPClearGeometryMode(G_CULL_BACK),
-    gsSPVertex(&gameplay_field_keepVtx_006208[20], 3, 0),
-    gsSP1Triangle(0, 1, 2, 0),
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, COMBINED, 0, SHADE, 0, TEXEL1, 0,
-                       PRIM_LOD_FRAC, COMBINED),
-    gsDPLoadTextureBlock(gFieldUnusedFishBottomTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-                         G_TX_NOMIRROR | G_TX_CLAMP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&gameplay_field_keepVtx_006208[23], 3, 0),
-    gsSP1Triangle(0, 1, 2, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gFieldSkelUnusedFishDL_0061E8[] = {
-    gsSPDisplayList(gFieldUnusedFishDL),
-    gsSPEndDisplayList(),
-};
-
-Gfx gFieldUnusedFishSkelLimbsLimb_0088D8DL_0061F8[] = {
-    gsSPDisplayList(gFieldSkelUnusedFishDL_0061E8),
-    gsSPEndDisplayList(),
-};
-
 Vtx gameplay_field_keepVtx_006208[] = {
 #include "assets/objects/gameplay_field_keep/gameplay_field_keepVtx_006208.vtx.inc"
 };
 
-Gfx gFieldSkelUnusedFishDL_0063A8[] = {
-    gsDPPipeSync(),
-    gsDPSetPrimColor(0, 0x01, 255, 255, 255, 255),
-    gsDPPipeSync(),
-    gsDPSetRenderMode(AA_EN | Z_CMP | Z_UPD | IM_RD | CVG_DST_CLAMP | ZMODE_INTER | CVG_X_ALPHA | ALPHA_CVG_SEL |
-                      G_RM_FOG_SHADE_A, AA_EN | Z_CMP | Z_UPD | IM_RD | CVG_DST_CLAMP | ZMODE_INTER | CVG_X_ALPHA |
-                      ALPHA_CVG_SEL | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, COMBINED, 0, SHADE, 0, TEXEL1, 0,
-                       PRIM_LOD_FRAC, COMBINED),
-    gsDPLoadTextureBlock(gFieldUnusedFishFinTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-                         G_TX_MIRROR | G_TX_WRAP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPClearGeometryMode(G_CULL_BACK),
-    gsSPSetGeometryMode(G_LIGHTING),
-    gsSPSetGeometryMode(G_SHADING_SMOOTH),
-    gsSPVertex(gameplay_field_keepVtx_006468, 4, 0),
-    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gFieldSkelUnusedFishDL_006448[] = {
-    gsSPDisplayList(gFieldSkelUnusedFishDL_0063A8),
-    gsSPEndDisplayList(),
-};
-
-Gfx gFieldUnusedFishSkelLimbsLimb_0088CCDL_006458[] = {
-    gsSPDisplayList(gFieldSkelUnusedFishDL_006448),
-    gsSPEndDisplayList(),
-};
-
 Vtx gameplay_field_keepVtx_006468[] = {
 #include "assets/objects/gameplay_field_keep/gameplay_field_keepVtx_006468.vtx.inc"
-};
-
-u64 gFieldUnusedFishTex[] = {
-#include "assets/objects/gameplay_field_keep/unused_fish.rgba16.inc.c"
-};
-
-u64 gFieldUnusedFishBottomTex[] = {
-#include "assets/objects/gameplay_field_keep/unused_fish_bottom.rgba16.inc.c"
-};
-
-u64 gFieldUnusedFishFinTex[] = {
-#include "assets/objects/gameplay_field_keep/unused_fish_fin.rgba16.inc.c"
-};
-
-StandardLimb gFieldUnusedFishSkelLimbsLimb_0088A8 = { 
-    { 0, 0, 0 }, 0x01, LIMB_DONE,
-    NULL
-};
-
-StandardLimb gFieldUnusedFishSkelLimbsLimb_0088B4 = { 
-    { 0, 0, 0 }, 0x02, LIMB_DONE,
-    NULL
-};
-
-StandardLimb gFieldUnusedFishSkelLimbsLimb_0088C0 = { 
-    { 700, 0, 0 }, 0x03, 0x04,
-    NULL
-};
-
-StandardLimb gFieldUnusedFishSkelLimbsLimb_0088CC = { 
-    { 0, 0, 0 }, LIMB_DONE, LIMB_DONE,
-    gFieldUnusedFishSkelLimbsLimb_0088CCDL_006458
-};
-
-StandardLimb gFieldUnusedFishSkelLimbsLimb_0088D8 = { 
-    { 0, 0, 0 }, LIMB_DONE, LIMB_DONE,
-    gFieldUnusedFishSkelLimbsLimb_0088D8DL_0061F8
-};
-
-void* gFieldUnusedFishSkelLimbs[] = {
-    &gFieldUnusedFishSkelLimbsLimb_0088A8,
-    &gFieldUnusedFishSkelLimbsLimb_0088B4,
-    &gFieldUnusedFishSkelLimbsLimb_0088C0,
-    &gFieldUnusedFishSkelLimbsLimb_0088CC,
-    &gFieldUnusedFishSkelLimbsLimb_0088D8,
-};
-
-SkeletonHeader gFieldUnusedFishSkel = { 
-    gFieldUnusedFishSkelLimbs, ARRAY_COUNT(gFieldUnusedFishSkelLimbs)
 };
 
 u64 gFieldBeehiveTex[] = {
@@ -821,10 +647,6 @@ u64 gFieldSilverRockTLUT[] = {
 #include "assets/objects/gameplay_field_keep/silver_rock_tlut.rgba16.inc.c"
 };
 
-u8 gameplay_field_keep_possiblePadding_0099F0[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 gFieldSilverRockTex[] = {
 #include "assets/objects/gameplay_field_keep/silver_rock.ci4.inc.c"
 };
@@ -885,10 +707,6 @@ Gfx gSilverRockFragmentsDL[] = {
     gsSPEndDisplayList(),
 };
 
-u8 gameplay_field_keep_possiblePadding_00A6C8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 Vtx gameplay_field_keepVtx_00A6D0[] = {
 #include "assets/objects/gameplay_field_keep/gameplay_field_keepVtx_00A6D0.vtx.inc"
 };
@@ -912,10 +730,6 @@ Gfx gFieldKakeraDL[] = {
     gsSP2Triangles(18, 19, 20, 0, 21, 22, 16, 0),
     gsSP2Triangles(23, 24, 16, 0, 25, 26, 13, 0),
     gsSPEndDisplayList(),
-};
-
-u8 gameplay_field_keep_possiblePadding_00A938[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
 u64 gFieldKakeraTex[] = {
@@ -945,10 +759,6 @@ Gfx gFieldBushDL[] = {
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP1Triangle(6, 7, 8, 0),
     gsSPEndDisplayList(),
-};
-
-u8 gameplay_field_keep_possiblePadding_00BA68[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
 u64 gFieldSandstorm1Tex[] = {
