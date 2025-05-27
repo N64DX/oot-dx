@@ -303,10 +303,6 @@ void Play_Init(GameState* thisx) {
         SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
         return;
     }
-#if OOT_NTSC_N64
-    else if (gSaveContext.language != LANGUAGE_JPN)
-        DMA_REQUEST_SYNC(this->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
-#endif
 
 #if PLATFORM_GC && DEBUG_FEATURES
     SystemArena_Display();
@@ -353,6 +349,11 @@ void Play_Init(GameState* thisx) {
     CollisionCheck_InitContext(this, &this->colChkCtx);
     AnimTaskQueue_Reset(&this->animTaskQueue);
     Cutscene_InitContext(this, &this->csCtx);
+    
+#if OOT_NTSC_N64
+    if (gSaveContext.language != LANGUAGE_JPN && gSaveContext.gameMode == GAMEMODE_NORMAL)
+        DMA_REQUEST_SYNC(this->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
+#endif
 
     if (gSaveContext.nextCutsceneIndex != 0xFFEF) {
         gSaveContext.save.cutsceneIndex = gSaveContext.nextCutsceneIndex;
