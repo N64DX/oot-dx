@@ -171,7 +171,7 @@ void ConsoleLogo_Main(GameState* thisx) {
     ConsoleLogo_Draw(this);
 
 #if DEBUG_FEATURES
-    if (gIsCtrlr2Valid) {
+    if (1) {
         Gfx* gfx = POLY_OPA_DISP;
 
         ConsoleLogo_PrintBuildInfo(&gfx);
