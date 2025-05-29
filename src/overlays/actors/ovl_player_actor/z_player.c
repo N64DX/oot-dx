@@ -7601,6 +7601,8 @@ void func_8083DFE0(Player* this, f32* arg1, s16* arg2) {
 static struct_80854578 D_80854578[] = {
     { &gPlayerAnim_link_uma_left_up, 35.17f, 6.6099997f },
     { &gPlayerAnim_link_uma_right_up, -34.16f, 7.91f },
+    { &gPlayerAnim_link_uma_right_up, 34.16f, 7.91f },
+    { &gPlayerAnim_link_uma_left_up, -35.17f, 6.6099997f },
 };
 
 s32 Player_ActionHandler_3(Player* this, PlayState* play) {
@@ -7626,6 +7628,9 @@ s32 Player_ActionHandler_3(Player* this, PlayState* play) {
         } else {
             temp = 1;
         }
+        
+        if (R_ENABLE_MIRROR)
+            temp += 2;
 
         unk_04 = D_80854578[temp].unk_04;
         unk_08 = D_80854578[temp].unk_08;
@@ -9603,7 +9608,7 @@ void Player_Action_80843188(Player* this, PlayState* play) {
         f32 sp40;
 
         sp54 = sControlInput->rel.stick_y * 100;
-        sp50 = sControlInput->rel.stick_x * ( (R_ENABLE_MIRROR) ? 120 : -120);
+        sp50 = sControlInput->rel.stick_x * (R_ENABLE_MIRROR ? 120 : -120);
         sp4E = this->actor.shape.rot.y - Camera_GetInputDirYaw(GET_ACTIVE_CAM(play));
 
         sp40 = Math_CosS(sp4E);
@@ -12744,11 +12749,12 @@ void Player_Draw(Actor* thisx, PlayState* play2) {
         gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
         gSPClearGeometryMode(POLY_XLU_DISP++, G_CULL_BOTH);
 
-        if (R_ENABLE_MIRROR) {
+        if (!R_ENABLE_MIRROR || (Play_GetCamera(play, CAM_ID_MAIN)->mode == CAM_MODE_AIM_ADULT && this->rideActor != NULL) )
+            Player_DrawGameplay(play, this, lod, gCullBackDList, overrideLimbDraw);
+        else {
             Matrix_Scale(-1.0f, 1.0f, 1.0f, MTXMODE_APPLY);
             Player_DrawGameplay(play, this, lod, gCullFrontDList, overrideLimbDraw);
         }
-        else Player_DrawGameplay(play, this, lod, gCullBackDList, overrideLimbDraw);
 
         if (this->invincibilityTimer > 0) {
             POLY_OPA_DISP = Play_SetFog(play, POLY_OPA_DISP);
@@ -13574,9 +13580,10 @@ s32 func_8084C9BC(Player* this, PlayState* play) {
                 rideActor->actor.child = NULL;
                 Player_SetupActionPreserveAnimMovement(play, this, Player_Action_8084D3E4, 0);
                 this->unk_878 = sp34 - rideActor->actor.world.pos.y;
-                Player_AnimPlayOnce(play, this,
-                                    (this->mountSide < 0) ? &gPlayerAnim_link_uma_left_down
-                                                          : &gPlayerAnim_link_uma_right_down);
+
+                if (R_ENABLE_MIRROR)
+                    Player_AnimPlayOnce(play, this, (this->mountSide < 0) ? &gPlayerAnim_link_uma_right_down : &gPlayerAnim_link_uma_left_down);
+                else Player_AnimPlayOnce(play, this, (this->mountSide < 0) ? &gPlayerAnim_link_uma_left_down : &gPlayerAnim_link_uma_right_down);
                 return 1;
             }
         }

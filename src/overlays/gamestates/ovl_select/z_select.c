@@ -736,10 +736,8 @@ void MapSelect_Init(GameState* thisx) {
     this->lockDown = 0;
     this->unk_234 = 0;
     
-    this->mirrorMode = IS_MIRROR_MODE ? 1 : 0;
-    if (IS_MASTER_QUEST)
-        this->questMode = 1;
-    else this->questMode = 0;
+    this->mirrorMode = MIRROR_MODE ? 1 : 0;
+    this->questMode  = QUEST_MODE;
 
     if ((dREG(80) >= 0) && (dREG(80) < this->count)) {
         this->currentEntry = dREG(80);

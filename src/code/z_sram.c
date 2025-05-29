@@ -606,11 +606,8 @@ void Sram_OpenSave(SramContext* sramCtx) {
         gSaveContext.save.info.playerData.dpadItems[2][3] = gSaveContext.save.info.playerData.dpadItems[3][3] = SLOT_TUNICS;
     }
     
-    R_ENABLE_MIRROR = IS_MIRROR_MODE;
-    
-    if (IS_MASTER_QUEST)
-        R_QUEST_MODE = 1;
-    else R_QUEST_MODE = 0;
+    R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
+    R_QUEST_MODE    = QUEST_MODE;
 }
 
 /**
@@ -891,11 +888,8 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
         gSaveContext.save.info.playerData.playerName[offset] = fileName[offset];
 #endif
     }
-    
-    if (fileSelect->mirrorMode[fileSelect->buttonIndex])
-        ENABLE_MIRROR_MODE;
-    if (fileSelect->questMode[fileSelect->buttonIndex] == 1)
-        ENABLE_MASTER_QUEST;
+
+    gSaveContext.save.info.questMode = fileSelect->questMode[fileSelect->buttonIndex] + (fileSelect->mirrorMode[fileSelect->buttonIndex] * 128);
 
     gSaveContext.save.info.playerData.newf[0] = 'Z';
     gSaveContext.save.info.playerData.newf[1] = 'E';

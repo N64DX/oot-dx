@@ -439,14 +439,9 @@ typedef enum LinkAge {
 #define YEARS_ADULT 17
 #define LINK_AGE_IN_YEARS (!LINK_IS_ADULT ? YEARS_CHILD : YEARS_ADULT)
 
-#define ENABLE_MASTER_QUEST  (gSaveContext.save.info.questMode |=  1)
-#define DISABLE_MASTER_QUEST (gSaveContext.save.info.questMode &= ~1)
-#define TOGGLE_MASTER_QUEST  (gSaveContext.save.info.questMode ^=  1)
-#define IS_MASTER_QUEST      (gSaveContext.save.info.questMode &   1)
-#define ENABLE_MIRROR_MODE   (gSaveContext.save.info.questMode |=  128)
-#define DISABLE_MIRROR_MODE  (gSaveContext.save.info.questMode &= ~128)
-#define TOGGLE_MIRROR_MODE   (gSaveContext.save.info.questMode ^=  128)
-#define IS_MIRROR_MODE       (gSaveContext.save.info.questMode &   128)
+#define QUEST_MODE           (gSaveContext.save.info.questMode &  127)
+#define MIRROR_MODE          (gSaveContext.save.info.questMode &  128)
+#define ENABLE_MIRROR_MODE   (gSaveContext.save.info.questMode |= 128)
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
