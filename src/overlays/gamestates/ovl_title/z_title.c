@@ -57,7 +57,6 @@ void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
 #endif
 
 void ConsoleLogo_Calc(ConsoleLogoState* this) {
-#if !PLATFORM_GC
     if ((this->coverAlpha == 0) && (this->visibleDuration != 0)) {
         this->unk_1D4--;
         this->visibleDuration--;
@@ -76,9 +75,6 @@ void ConsoleLogo_Calc(ConsoleLogoState* this) {
     }
     this->uls = this->ult & 0x7F;
     this->ult++;
-#else
-    this->exit = true;
-#endif
 }
 
 void ConsoleLogo_SetupView(ConsoleLogoState* this, f32 x, f32 y, f32 z) {
@@ -181,10 +177,6 @@ void ConsoleLogo_Main(GameState* thisx) {
         ConsoleLogo_PrintBuildInfo(&gfx);
         POLY_OPA_DISP = gfx;
     }
-#endif
-
-#if PLATFORM_IQUE
-    this->exit = true;
 #endif
 
     if (this->exit) {
