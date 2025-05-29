@@ -16,6 +16,7 @@
 #include "z64save.h"
 #include "z64scene.h"
 #include "z64ss_sram.h"
+#include "regs.h"
 
 #define SLOT_SIZE (sizeof(SaveContext) + 0x28)
 #define CHECKSUM_SIZE (sizeof(Save) / 2)
@@ -604,6 +605,12 @@ void Sram_OpenSave(SramContext* sramCtx) {
         gSaveContext.save.info.playerData.dpadItems[2][2] = gSaveContext.save.info.playerData.dpadItems[3][2] = SLOT_SHIELDS;
         gSaveContext.save.info.playerData.dpadItems[2][3] = gSaveContext.save.info.playerData.dpadItems[3][3] = SLOT_TUNICS;
     }
+    
+    R_ENABLE_MIRROR = IS_MIRROR_MODE;
+    
+    if (IS_MASTER_QUEST)
+        R_QUEST_MODE = 1;
+    else R_QUEST_MODE = 0;
 }
 
 /**

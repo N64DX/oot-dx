@@ -1050,6 +1050,7 @@ extern Gfx* gPlayerLeftHandClosedDLs[];
 extern Gfx* gPlayerLeftHandBoomerangDLs[];
 extern Gfx gCullBackDList[];
 extern Gfx gCullFrontDList[];
+extern Gfx gCullNoneDList[];
 
 // object_table.c
 extern s16 gLinkObjectIds[2];

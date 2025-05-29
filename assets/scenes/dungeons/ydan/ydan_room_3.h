@@ -1,0 +1,59 @@
+#ifndef YDAN_ROOM_3_H
+#define YDAN_ROOM_3_H 1
+
+extern SceneCmd ydan_room_3Commands[];
+extern SceneCmd* ydan_room_3QuestHeaders[];
+extern s16 ydan_room_3ObjectList_000040[];
+extern ActorEntry ydan_room_3ActorEntry_000058[];
+extern RoomShapeCullable ydan_room_3RoomShapeCullable_0001A0;
+extern RoomShapeCullableEntry ydan_room_3RoomShapeCullableEntry_0001AC[11];
+extern s32 ydan_room_3_terminatorMaybe_00025C;
+
+extern SceneCmd ydan_mq_room_3Set[];
+extern s16 ydan_mq_room_3ObjectList[];
+extern ActorEntry ydan_mq_room_3ActorEntry[];
+
+extern Vtx ydan_room_3Vtx_000260[];
+extern Gfx ydan_room_3DL_000EF0[];
+extern Vtx ydan_room_3Vtx_0011D8[];
+extern Gfx ydan_room_3DL_0033F8[];
+extern Vtx ydan_room_3Vtx_004880[];
+extern Gfx ydan_room_3DL_005150[];
+extern Vtx ydan_room_3Vtx_005420[];
+extern Gfx ydan_room_3DL_005EB0[];
+extern Vtx ydan_room_3Vtx_006358[];
+extern Gfx ydan_room_3DL_006B08[];
+extern Vtx ydan_room_3Vtx_006E88[];
+extern Gfx ydan_room_3DL_0071F8[];
+extern u64 ydan_room_3Tex_0074B0[];
+extern u64 ydan_room_3Tex_0084B0[];
+extern u64 ydan_room_3Tex_008CB0[];
+extern u64 ydan_room_3Tex_0094B0[];
+extern u64 ydan_room_3Tex_009CB0[];
+extern u64 ydan_room_3Tex_00A0B0[];
+extern u64 ydan_room_3Tex_00A8B0[];
+extern u64 ydan_room_3Tex_00B0B0[];
+extern u64 ydan_room_3Tex_00B4B0[];
+extern u64 ydan_room_3Tex_00B8B0[];
+extern u64 ydan_room_3Tex_00C0B0[];
+extern u64 ydan_room_3Tex_00C8B0[];
+extern u64 ydan_room_3Tex_00D0B0[];
+extern u64 ydan_room_3Tex_00D4B0[];
+extern u64 ydan_room_3Tex_00D8B0[];
+extern u64 ydan_room_3Tex_00E0B0[];
+extern u64 ydan_room_3Tex_00E8B0[];
+extern u64 ydan_room_3Tex_00F8B0[];
+extern Vtx ydan_room_3Vtx_0100B0[];
+extern Gfx ydan_room_3DL_0106D0[];
+extern Vtx ydan_room_3Vtx_010A38[];
+extern Gfx ydan_room_3DL_010B38[];
+extern Vtx ydan_room_3Vtx_010C58[];
+extern Gfx ydan_room_3DL_0116B8[];
+extern Vtx ydan_room_3Vtx_0119B0[];
+extern Gfx ydan_room_3DL_011AB0[];
+extern Vtx ydan_room_3Vtx_011B78[];
+extern Gfx ydan_room_3DL_011C58[];
+extern u64 ydan_room_3Tex_011DA0[];
+extern u64 ydan_room_3Tex_012DA0[];
+extern u64 ydan_room_3Tex_0131A0[];
+#endif
