@@ -233,6 +233,7 @@ void ItemShield_Draw(Actor* thisx, PlayState* play) {
 
     if (!(this->unk_19C & 2)) {
         OPEN_DISPS(play->state.gfxCtx, "../z_item_shield.c", 457);
+        gSPSegment(POLY_OPA_DISP++, 0x0C, gCullBackDList);
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_item_shield.c", 460);
         gSPDisplayList(POLY_OPA_DISP++, SEGMENTED_TO_VIRTUAL(gLinkChildDekuShieldDL));
