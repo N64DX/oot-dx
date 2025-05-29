@@ -15,6 +15,8 @@
 #include "versions.h"
 #include "z64audio.h"
 #include "z64save.h"
+#include "assets/objects/object_mag/object_mag.h"
+#include "assets/textures/parameter_static/parameter_static.h"
 
 #if OOT_NTSC_N64
 #include "assets/textures/title_static/title_static_all.h"
@@ -199,6 +201,54 @@ static s16 D_808125EC[] = {
 static s16 D_80812604[] = {
     0x0048, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045,
 };
+
+void FileSelect_DrawImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 centerY, u8* source, u32 width, u32 height, bool mirrorMode) {
+    u8* curTexture;
+    s32 textureCount, rectLeft, rectTop, remainingSize, textureSize, i;
+    u32 textureHeight;
+
+    OPEN_DISPS(gfxCtx, "../z_file_choose.c", UNK_LINE);
+
+    Gfx_SetupDL_56Opa(gfxCtx);
+
+    curTexture = source;
+    rectLeft = centerX - (width / 2);
+    rectTop = centerY - (height / 2);
+    remainingSize = (width * height) << 2;
+    textureHeight = 4096 / (width << 2);
+    textureSize = (width * textureHeight) << 2;
+    textureCount = remainingSize / textureSize;
+    if ((remainingSize % textureSize) != 0)
+        textureCount++;
+
+    gDPSetTileCustom(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, width - 1, textureHeight - 1, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    remainingSize -= textureSize;
+
+    for (i=0; i<textureCount; i++) {
+        gDPSetTextureImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, width, curTexture);
+        gDPLoadSync(POLY_OPA_DISP++);
+        gDPLoadTile(POLY_OPA_DISP++, G_TX_LOADTILE, 0, 0, (width - 1) << 2, (textureHeight - 1) << 2);
+
+        if (mirrorMode) {
+            gSPTextureRectangle(POLY_OPA_DISP++, rectLeft << 2, rectTop << 2, (rectLeft + (s32)width) << 2, (rectTop + textureHeight) << 2, G_TX_RENDERTILE, (width - 1) << 5, 0, (u16)(-1 << 10), 1 << 10);
+        } else {
+            gSPTextureRectangle(POLY_OPA_DISP++, rectLeft << 2, rectTop << 2, (rectLeft + (s32)width) << 2, (rectTop + textureHeight) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        }
+
+        curTexture += textureSize;
+        rectTop += textureHeight;
+
+        if ((remainingSize - textureSize) < 0) {
+            if (remainingSize > 0) {
+                textureHeight = remainingSize / (s32)(width << 2);
+                remainingSize -= textureSize;
+                gDPSetTileCustom(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, width - 1, textureHeight - 1, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            }
+        } else remainingSize -= textureSize;
+    }
+
+    CLOSE_DISPS(gfxCtx, "../z_file_choose.c", UNK_LINE);
+}
 
 /**
  * Set vertices used by all elements of the name entry screen that are NOT the keyboard.
@@ -668,7 +718,8 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 
     gSP1Quadrangle(POLY_OPA_DISP++, 4, 6, 7, 5, 0);
 
-    FileSelect_DrawKeyboard(&this->state);
+    if (!this->selectingQuestMode)
+        FileSelect_DrawKeyboard(&this->state);
     gDPPipeSync(POLY_OPA_DISP++);
     Gfx_SetupDL_42Opa(this->state.gfxCtx);
 
@@ -676,7 +727,64 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                       PRIMITIVE, 0);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
 
-    if (this->configMode == CM_NAME_ENTRY) {
+    if (this->selectingQuestMode) {
+        void* logoTexture;
+        u16 x;
+        u8 y = 115;
+        
+        if (this->questMode[this->buttonIndex] == 1)
+            logoTexture = gLogoMasterQuestTex;
+        else logoTexture = gLogoOcarinaOfTimeTex;
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
+        FileSelect_DrawImageRGBA32(this->state.gfxCtx, 220, 130, (u8*)logoTexture, 160, 160, this->mirrorMode[this->buttonIndex]);
+        
+        x = 100;
+        gDPLoadTextureBlock(POLY_OPA_DISP++, gEmptyCLeftArrowTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(POLY_OPA_DISP++, x << 2, y << 2, (x + 32) << 2, (y + 32) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        
+        x = 300;
+        gDPLoadTextureBlock(POLY_OPA_DISP++, gEmptyCRightArrowTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(POLY_OPA_DISP++, x << 2, y << 2, (x + 32) << 2, (y + 32) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+        if (this->stickAdjX < -30) {
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            if (this->questMode[this->buttonIndex] <= 0)
+                this->questMode[this->buttonIndex] = 1;
+            else this->questMode[this->buttonIndex]--;
+        }
+        if (this->stickAdjX > 30) {
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            if (this->questMode[this->buttonIndex] >= 1)
+                this->questMode[this->buttonIndex] = 0;
+            else this->questMode[this->buttonIndex]++;
+        }
+        if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            this->mirrorMode[this->buttonIndex] = (this->mirrorMode[this->buttonIndex] ? false : true);
+        }
+        
+        if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            this->selectingQuestMode = false;
+        }
+        
+        if (CHECK_BTN_ALL(input->press.button, BTN_A)) {
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            gSaveContext.fileNum = this->buttonIndex;
+            dayTime = ((void)0, gSaveContext.save.dayTime);
+
+            this->selectingQuestMode = false;
+
+            Sram_InitSave(this, &this->sramCtx);
+            gSaveContext.save.dayTime = dayTime;
+            this->configMode = CM_NAME_ENTRY_TO_MAIN;
+            this->nameBoxAlpha[this->buttonIndex] = this->nameAlpha[this->buttonIndex] = 200;
+            this->connectorAlpha[this->buttonIndex] = 255;
+            Rumble_Request(300.0f, 180, 20, 100);
+        }
+    }
+
+    else if (this->configMode == CM_NAME_ENTRY) {
         if (CHECK_BTN_ALL(input->press.button, BTN_START)) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -859,14 +967,9 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4,
                                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
                                                      &gSfxDefaultReverb);
-                                gSaveContext.fileNum = this->buttonIndex;
-                                dayTime = ((void)0, gSaveContext.save.dayTime);
-                                Sram_InitSave(this, &this->sramCtx);
-                                gSaveContext.save.dayTime = dayTime;
-                                this->configMode = CM_NAME_ENTRY_TO_MAIN;
-                                this->nameBoxAlpha[this->buttonIndex] = this->nameAlpha[this->buttonIndex] = 200;
-                                this->connectorAlpha[this->buttonIndex] = 255;
-                                Rumble_Request(300.0f, 180, 20, 100);
+                                this->selectingQuestMode = true;
+                                this->mirrorMode[this->buttonIndex] = false;
+                                this->questMode[this->buttonIndex] = 0;
                             } else {
                                 Audio_PlaySfxGeneral(NA_SE_SY_FSEL_ERROR, &gSfxDefaultPos, 4,
                                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
@@ -1042,6 +1145,9 @@ void FileSelect_UpdateKeyboardCursor(GameState* thisx) {
     Input* input = &this->state.input[0];
     s32 pad;
 #endif
+
+    if (this->selectingQuestMode)
+        return;
 
 #if OOT_NTSC
     if (this->charPage <= FS_CHAR_PAGE_ENG) {

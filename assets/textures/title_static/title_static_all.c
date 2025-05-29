@@ -795,3 +795,11 @@ Gfx gFileSelWindow3DL[] = {
     gsDPPipeSync(),
     gsSPEndDisplayList(),
 };
+
+u64 gLogoOcarinaOfTimeTex[] = {
+#include "assets/textures/title_static/logo_ocarina_of_time.rgba32.inc.c"
+};
+
+u64 gLogoMasterQuestTex[] = {
+#include "assets/textures/title_static/logo_master_quest.rgba32.inc.c"
+};

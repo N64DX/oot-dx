@@ -725,8 +725,6 @@ void MapSelect_Init(GameState* thisx) {
     this->pageDownStops[5] = 73; // Bottom of the Well
     this->pageDownStops[6] = 91; // Escaping Ganon's Tower 3
     this->pageDownIndex = 0;
-    this->questMode = 0;
-    this->mirrorMode = 0;
     this->count = ARRAY_COUNT(sMapSelectEntries);
     View_Init(&this->view, this->state.gfxCtx);
     this->view.flags = (VIEW_PROJECTION_ORTHO | VIEW_VIEWPORT);
@@ -737,6 +735,11 @@ void MapSelect_Init(GameState* thisx) {
     this->lockUp = 0;
     this->lockDown = 0;
     this->unk_234 = 0;
+    
+    this->mirrorMode = IS_MIRROR_MODE ? 1 : 0;
+    if (IS_MASTER_QUEST)
+        this->questMode = 1;
+    else this->questMode = 0;
 
     if ((dREG(80) >= 0) && (dREG(80) < this->count)) {
         this->currentEntry = dREG(80);

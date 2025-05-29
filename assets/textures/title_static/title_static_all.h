@@ -186,4 +186,8 @@ extern u64 gFileSelSelectYourLanguageTex[];
 extern Gfx gFileSelWindow1DL[];
 extern Gfx gFileSelWindow2DL[];
 extern Gfx gFileSelWindow3DL[];
+
+extern u64 gLogoOcarinaOfTimeTex[];
+extern u64 gLogoMasterQuestTex[];
+
 #endif

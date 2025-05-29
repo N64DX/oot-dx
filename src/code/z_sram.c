@@ -891,6 +891,11 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
         gSaveContext.save.info.playerData.playerName[offset] = fileName[offset];
 #endif
     }
+    
+    if (fileSelect->mirrorMode[fileSelect->buttonIndex])
+        ENABLE_MIRROR_MODE;
+    if (fileSelect->questMode[fileSelect->buttonIndex] == 1)
+        ENABLE_MASTER_QUEST;
 
     gSaveContext.save.info.playerData.newf[0] = 'Z';
     gSaveContext.save.info.playerData.newf[1] = 'E';
