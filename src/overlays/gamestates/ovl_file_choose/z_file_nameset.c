@@ -166,7 +166,16 @@ void FileSelect_SetKeyboardVtx(GameState* thisx) {
 static void* sNameLabelTextures[] =
     LANGUAGE_ARRAY(gFileSelNameJPNTex, gFileSelNameENGTex, gFileSelNameENGTex, gFileSelNameFRATex);
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+static void* sButtonTextures[][5] = {
+    { gFileSelHiraganaButtonTex,  gFileSelKatakanaButtonTex, gFileSelKanjiButtonTex, gFileSelBackspaceButtonTex, gFileSelENDButtonENGTex },
+    { gFileSelHiraganaButtonTex,  gFileSelKatakanaButtonTex, gFileSelKanjiButtonTex, gFileSelBackspaceButtonTex, gFileSelENDButtonGERTex },
+    { gFileSelHiraganaButtonTex,  gFileSelKatakanaButtonTex, gFileSelKanjiButtonTex, gFileSelBackspaceButtonTex, gFileSelENDButtonFRATex },
+    { gFileSelHiraganaButtonTex,  gFileSelKatakanaButtonTex, gFileSelKanjiButtonTex, gFileSelBackspaceButtonTex, gFileSelENDButtonENGTex },
+};
+
+static u16 sButtonWidths[] = { 44, 44, 28, 28, 44 };
+#elif OOT_NTSC
 static void* sButtonTextures[] = {
     gFileSelHiraganaButtonTex,  gFileSelKatakanaButtonTex, gFileSelKanjiButtonTex,
     gFileSelBackspaceButtonTex, gFileSelENDButtonENGTex,
@@ -219,7 +228,22 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
     gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
     gDPPipeSync(POLY_OPA_DISP++);
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    for (phi_t1 = 0, phi_s0 = 4; phi_t1 < 5; phi_t1++, phi_s0 += 4) {
+        if (gSaveContext.language == LANGUAGE_JPN) {
+            gDPPipeSync(POLY_OPA_DISP++);
+            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2], 255);
+            gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
+            gDPLoadTextureBlock(POLY_OPA_DISP++, sButtonTextures[gSaveContext.language][phi_t1], G_IM_FMT_IA, G_IM_SIZ_16b, sButtonWidths[phi_t1], 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            gSP1Quadrangle(POLY_OPA_DISP++, phi_s0, phi_s0 + 2, phi_s0 + 3, phi_s0 + 1, 0);
+        } else if (phi_t1 >= 3) {
+            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2], 255);
+            gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
+            gDPLoadTextureBlock(POLY_OPA_DISP++, sButtonTextures[gSaveContext.language][phi_t1], G_IM_FMT_IA, G_IM_SIZ_16b, sButtonWidths[phi_t1], 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            gSP1Quadrangle(POLY_OPA_DISP++, phi_s0, phi_s0 + 2, phi_s0 + 3, phi_s0 + 1, 0);
+        }
+    }
+#elif OOT_NTSC
     for (phi_t1 = 0, phi_s0 = 4; phi_t1 < 5; phi_t1++, phi_s0 += 4) {
         if (gSaveContext.language == LANGUAGE_JPN) {
             gDPPipeSync(POLY_OPA_DISP++);
