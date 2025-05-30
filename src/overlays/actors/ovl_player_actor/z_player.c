@@ -14986,9 +14986,9 @@ s32 Player_UpdateNoclip(Player* this, PlayState* play) {
                 if (CHECK_BTN_ALL(sControlInput->cur.button, BTN_DDOWN)) {
                     angle = temp + 0x8000;
                 } else if (CHECK_BTN_ALL(sControlInput->cur.button, BTN_DLEFT)) {
-                    angle = temp + 0x4000;
+                    angle = R_ENABLE_MIRROR ? (temp - 0x4000) : (temp + 0x4000);
                 } else if (CHECK_BTN_ALL(sControlInput->cur.button, BTN_DRIGHT)) {
-                    angle = temp - 0x4000;
+                    angle = R_ENABLE_MIRROR ? (temp + 0x4000) : (temp - 0x4000);
                 }
 
                 this->actor.world.pos.x += speed * Math_SinS(angle);

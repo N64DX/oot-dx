@@ -53,4 +53,3 @@ Gfx object_yabusame_point_mirrored_DL_000DC0[] = {
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSPEndDisplayList(),
 };
-

@@ -2,7 +2,7 @@
 #define YDAN_SCENE_H 1
 
 extern SceneCmd ydan_sceneCommands[];
-extern SceneCmd* ydan_sceneQuestHeaders[];
+extern SceneCmd* ydan_sceneMQHeaders[];
 extern ActorEntry ydan_sceneStartPositionList0x000060[];
 extern TransitionActorEntry ydan_sceneTransitionActorList_000080[];
 extern RomFile ydan_sceneRoomList0x000140[];
@@ -23,12 +23,7 @@ extern u64 gDekuTreeNightEntranceTex[];
 
 extern SceneCmd ydan_mq_sceneSet[];
 extern TransitionActorEntry ydan_mq_sceneTransitionActorList[];
-extern Vec3s ydan_mq_sceneCollisionHeader_CamPosData[];
-extern Vec3s ydan_sceneCollisionHeader_CamPosData[];
-extern BgCamInfo ydan_sceneCollisionHeader_CamDataList[];
 extern SurfaceType ydan_mq_sceneCollisionHeader_SurfaceType[];
 extern CollisionPoly ydan_mq_sceneCollisionHeader_Polygons[];
-extern Vec3s ydan_mq_sceneCollisionHeader_Vertices[];
-extern WaterBox ydan_mq_sceneCollisionHeader_WaterBoxes[];
 extern CollisionHeader ydan_mq_sceneCollisionHeader;
 #endif

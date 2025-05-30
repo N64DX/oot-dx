@@ -421,7 +421,7 @@ void Attention_Draw(Attention* attention, PlayState* play) {
 
         Actor_ProjectPos(play, &attention->reticlePos, &projectedPos, &invW);
 
-        projectedPos.x = ((SCREEN_WIDTH / 2) * (projectedPos.x * invW)) * projectdPosScale;
+        projectedPos.x = ((SCREEN_WIDTH / 2) * (projectedPos.x * invW)) * projectdPosScale * (R_ENABLE_MIRROR ? -1 : 1);
         projectedPos.x = CLAMP(projectedPos.x, -SCREEN_WIDTH, SCREEN_WIDTH);
 
         projectedPos.y = ((SCREEN_HEIGHT / 2) * (projectedPos.y * invW)) * projectdPosScale;

@@ -527,9 +527,9 @@ void MapSelect_PrintMenu(MapSelectState* this, GfxPrint* printer) {
     GfxPrint_SetColor(printer, 155, 55, 150, 255);
     GfxPrint_SetPos(printer, 22, 25);
     
-    if (this->questMode == 0)
+    if (this->questMode == VANILLA_QUEST)
         GfxPrint_Printf(printer, "Vanilla Quest");
-    else if (this->questMode == 1)
+    else if (this->questMode == MASTER_QUEST)
         GfxPrint_Printf(printer, "Master Quest");
     else GfxPrint_Printf(printer, "Quest:%d", this->questMode);
     
