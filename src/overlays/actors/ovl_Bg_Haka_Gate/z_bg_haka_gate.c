@@ -204,7 +204,7 @@ void BgHakaGate_StatueTurn(BgHakaGate* this, PlayState* play) {
 
     this->vTurnRateDeg10++;
     this->vTurnRateDeg10 = CLAMP_MAX(this->vTurnRateDeg10, 5);
-    turnFinished = Math_StepToS(&this->vTurnAngleDeg10, 600, this->vTurnRateDeg10);
+    turnFinished = Math_StepToS(&this->vTurnAngleDeg10, 600, this->vTurnRateDeg10 * 3);
     turnAngle = this->vTurnAngleDeg10 * this->vTurnDirection;
     this->dyna.actor.shape.rot.y = DEG_TO_BINANG((this->vRotYDeg10 + turnAngle) * 0.1f);
     if ((player->stateFlags2 & PLAYER_STATE2_4) && (sStatueDistToPlayer > 0.0f)) {

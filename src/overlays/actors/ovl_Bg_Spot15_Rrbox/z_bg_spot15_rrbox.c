@@ -273,7 +273,7 @@ void func_808B4194(BgSpot15Rrbox* this, PlayState* play) {
     s32 approxFResult;
     Actor* actor = &this->dyna.actor;
 
-    this->unk_174 += 0.5f;
+    this->unk_174 += 0.5f * 2;
 
     this->unk_174 = CLAMP_MAX(this->unk_174, 2.0f);
 
@@ -307,7 +307,7 @@ void func_808B4194(BgSpot15Rrbox* this, PlayState* play) {
         this->dyna.unk_150 = 0.0f;
         this->unk_178 = 0.0f;
         this->unk_174 = 0.0f;
-        this->unk_168 = 10;
+        this->unk_168 = 0;
         func_808B4084(this, play);
     }
     Actor_PlaySfx(actor, NA_SE_EV_ROCK_SLIDE - SFX_FLAG);

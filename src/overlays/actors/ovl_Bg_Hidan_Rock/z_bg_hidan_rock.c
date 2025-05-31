@@ -148,7 +148,7 @@ void func_8088B268(BgHidanRock* this, PlayState* play) {
                 }
             }
 
-            this->dyna.actor.speed += 0.05f;
+            this->dyna.actor.speed += 0.05f * 20;
             this->dyna.actor.speed = CLAMP_MAX(this->dyna.actor.speed, 2.0f);
 
             if (D_8088BFC0 > 0.0f) {
@@ -167,7 +167,7 @@ void func_8088B268(BgHidanRock* this, PlayState* play) {
                 this->dyna.actor.home.pos.z = this->dyna.actor.world.pos.z;
                 D_8088BFC0 = 0.0f;
                 this->dyna.actor.speed = 0.0f;
-                this->timer = 5;
+                this->timer = 0;
             }
 
             Actor_PlaySfx_Flagged(&this->dyna.actor, NA_SE_EV_ROCK_SLIDE - SFX_FLAG);
