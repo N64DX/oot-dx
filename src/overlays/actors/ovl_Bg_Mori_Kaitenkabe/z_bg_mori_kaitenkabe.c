@@ -106,7 +106,7 @@ void BgMoriKaitenkabe_Wait(BgMoriKaitenkabe* this, PlayState* play) {
 
     if (this->dyna.unk_150 > 0.001f) {
         this->timer++;
-        if ((this->timer > 28) && !Player_InCsMode(play)) {
+        if ((this->timer > 0) && !Player_InCsMode(play)) {
             BgMoriKaitenkabe_SetupRotate(this);
             Player_SetCsActionWithHaltedActors(play, &this->dyna.actor, PLAYER_CSACTION_8);
             Math_Vec3f_Copy(&this->lockedPlayerPos, &player->actor.world.pos);
@@ -139,7 +139,7 @@ void BgMoriKaitenkabe_Rotate(BgMoriKaitenkabe* this, PlayState* play) {
     Actor* thisx = &this->dyna.actor;
     s16 rotY;
 
-    Math_StepToF(&this->rotSpeed, 0.6f, 0.02f);
+    Math_StepToF(&this->rotSpeed, 0.6f * 2, 0.02f * 30);
     if (Math_StepToF(&this->rotYdeg, this->rotDirection * 45.0f, this->rotSpeed)) {
         BgMoriKaitenkabe_SetupWait(this);
         Player_SetCsActionWithHaltedActors(play, thisx, PLAYER_CSACTION_7);

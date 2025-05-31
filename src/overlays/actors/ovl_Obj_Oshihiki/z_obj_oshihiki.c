@@ -556,7 +556,7 @@ void ObjOshihiki_Push(ObjOshihiki* this, PlayState* play) {
     f32 pushDistSigned;
     s32 stopFlag;
 
-    this->pushSpeed += 0.5f;
+    this->pushSpeed += 0.5f * 2;
     this->stateFlags |= PUSHBLOCK_PUSH;
     this->pushSpeed = CLAMP_MAX(this->pushSpeed, 2.0f);
     stopFlag = Math_StepToF(&this->pushDist, 20.0f, this->pushSpeed);
@@ -584,7 +584,7 @@ void ObjOshihiki_Push(ObjOshihiki* this, PlayState* play) {
         this->dyna.unk_150 = 0.0f;
         this->pushDist = 0.0f;
         this->pushSpeed = 0.0f;
-        this->timer = 10;
+        this->timer = 0;
         if (this->floorBgIds[this->highestFloor] == BGCHECK_SCENE) {
             ObjOshihiki_SetupOnScene(this, play);
         } else {
