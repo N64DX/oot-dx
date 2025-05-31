@@ -2,7 +2,7 @@
 #define BDAN_SCENE_H 1
 
 extern SceneCmd bdan_sceneCommands[];
-extern SceneCmd* bdan_sceneMQHeaders[];
+extern SceneCmd* bdan_sceneQuestHeaders[];
 extern SceneCmd* bdan_sceneAlternateHeaders0x000068[];
 extern ActorEntry bdan_sceneStartPositionList0x000078[];
 extern TransitionActorEntry bdan_sceneTransitionActorList_000098[];
@@ -31,6 +31,7 @@ extern RomFile bdan_sceneRoomList0x0138E8[];
 extern Spawn bdan_sceneEntranceList0x013968[];
 extern u16 bdan_sceneExitList_01396C[];
 extern EnvLightSettings bdan_sceneLightSettings0x013970[];
+
 extern u64 bdan_sceneTLUT_0139D0[];
 extern u64 bdan_sceneTLUT_013BD8[];
 extern u64 bdan_sceneTex_013DE0[];

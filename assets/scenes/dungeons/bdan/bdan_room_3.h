@@ -2,7 +2,7 @@
 #define BDAN_ROOM_3_H 1
 
 extern SceneCmd bdan_room_3Commands[];
-extern SceneCmd* bdan_room_3MQHeaders[];
+extern SceneCmd* bdan_room_3QuestHeaders[];
 extern SceneCmd* bdan_room_3AlternateHeaders0x000048[];
 extern s16 bdan_room_3ObjectList_000058[];
 extern ActorEntry bdan_room_3ActorEntry_00006C[];

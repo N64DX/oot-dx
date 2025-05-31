@@ -24,7 +24,7 @@
 #include "bdan_room_15.h"
 
 SceneCmd bdan_room_5Commands[] = {
-    SCENE_CMD_MQ_HEADER_LIST(bdan_room_5MQHeaders),
+    SCENE_CMD_QUEST_HEADER_LIST(bdan_room_5QuestHeaders),
     SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_room_5AlternateHeaders0x000048),
     SCENE_CMD_ECHO_SETTINGS(7),
     SCENE_CMD_ROOM_BEHAVIOR(0x01, 0x00, false, false),
@@ -36,12 +36,8 @@ SceneCmd bdan_room_5Commands[] = {
     SCENE_CMD_END(),
 };
 
-SceneCmd* bdan_room_5MQHeaders[] = {
-    bdan_mq_room_0Set,
-    NULL,
-    NULL,
-    NULL,
-    bdan_room_5Set_000110,
+SceneCmd* bdan_room_5QuestHeaders[] = {
+    bdan_mq_room_5Set,
 };
 
 SceneCmd* bdan_room_5AlternateHeaders0x000048[] = {
@@ -96,6 +92,7 @@ u8 bdan_room_5_possiblePadding_000108[] = {
 };
 
 SceneCmd bdan_mq_room_5Set[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_room_5AlternateHeaders0x000048),
     SCENE_CMD_ECHO_SETTINGS(7),
     SCENE_CMD_ROOM_BEHAVIOR(0x01, 0x00, false, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),

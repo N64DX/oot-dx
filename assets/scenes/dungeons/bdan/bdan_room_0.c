@@ -24,7 +24,7 @@
 #include "bdan_room_15.h"
 
 SceneCmd bdan_room_0Commands[] = {
-    SCENE_CMD_MQ_HEADER_LIST(bdan_room_0MQHeaders),
+    SCENE_CMD_QUEST_HEADER_LIST(bdan_room_0QuestHeaders),
     SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_room_0AlternateHeaders0x000048),
     SCENE_CMD_ECHO_SETTINGS(7),
     SCENE_CMD_ROOM_BEHAVIOR(0x01, 0x00, false, false),
@@ -36,12 +36,8 @@ SceneCmd bdan_room_0Commands[] = {
     SCENE_CMD_END(),
 };
 
-SceneCmd* bdan_room_0MQHeaders[] = {
+SceneCmd* bdan_room_0QuestHeaders[] = {
     bdan_mq_room_0Set,
-    NULL,
-    NULL,
-    NULL,
-    bdan_room_0Set_0000E0,
 };
 
 SceneCmd* bdan_room_0AlternateHeaders0x000048[] = {
@@ -69,10 +65,6 @@ ActorEntry bdan_room_0ActorEntry_000068[] = {
     { ACTOR_EN_BUBBLE,      {    -28,   -257,   -900 }, {      0,      0,      0 }, 0xFFFF },
 };
 
-u8 bdan_room_0_possiblePadding_0000B8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 RoomShapeNormal bdan_room_0RoomShapeNormal_0000C0 = { 
     0, 1,
     bdan_room_0RoomShapeDListsEntry_0000CC,
@@ -85,11 +77,8 @@ RoomShapeDListsEntry bdan_room_0RoomShapeDListsEntry_0000CC[1] = {
 
 s32 bdan_room_0_terminatorMaybe_0000D4 = { 0x01000000 };
 
-u8 bdan_room_0_possiblePadding_0000D8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 SceneCmd bdan_mq_room_0Set[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_room_0AlternateHeaders0x000048),
     SCENE_CMD_ECHO_SETTINGS(7),
     SCENE_CMD_ROOM_BEHAVIOR(0x01, 0x00, false, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
@@ -159,10 +148,6 @@ ActorEntry bdan_room_0ActorEntry_000128[] = {
     { ACTOR_EN_BUBBLE, {   -129,   -340,   -157 }, {      0,      0,      0 }, 0xFFFF },
     { ACTOR_EN_BUBBLE, {     93,   -330,   -268 }, {      0,      0,      0 }, 0xFFFF },
     { ACTOR_EN_BUBBLE, {    -73,   -340,   -398 }, {      0,      0,      0 }, 0xFFFF },
-};
-
-u8 bdan_room_0_possiblePadding_000178[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
 Vtx bdan_room_0Vtx_000180[] = {
@@ -455,10 +440,6 @@ u64 bdan_room_0Tex_0030E8[] = {
 
 u64 bdan_room_0Tex_0038E8[] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_0Tex_0038E8.ci8.inc.c"
-};
-
-u8 bdan_room_0_possiblePadding_003CE8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
 Vtx bdan_room_0Vtx_003CF0[] = {

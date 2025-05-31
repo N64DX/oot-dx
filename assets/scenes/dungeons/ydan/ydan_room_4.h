@@ -2,7 +2,7 @@
 #define YDAN_ROOM_4_H 1
 
 extern SceneCmd ydan_room_4Commands[];
-extern SceneCmd* ydan_room_4MQHeaders[];
+extern SceneCmd* ydan_room_4QuestHeaders[];
 extern s16 ydan_room_4ObjectList_000040[];
 extern ActorEntry ydan_room_4ActorEntry_000054[];
 extern RoomShapeCullable ydan_room_4RoomShapeCullable_0000C0;

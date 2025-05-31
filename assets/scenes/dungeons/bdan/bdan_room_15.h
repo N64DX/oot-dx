@@ -2,7 +2,7 @@
 #define BDAN_ROOM_15_H 1
 
 extern SceneCmd bdan_room_15Commands[];
-extern SceneCmd* bdan_room_15MQHeaders[];
+extern SceneCmd* bdan_room_15QuestHeaders[];
 extern SceneCmd* bdan_room_15AlternateHeaders0x000040[];
 extern s16 bdan_room_15ObjectList_000050[];
 extern RoomShapeNormal bdan_room_15RoomShapeNormal_000060;

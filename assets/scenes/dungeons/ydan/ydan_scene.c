@@ -20,7 +20,7 @@
 #include "ydan_room_11.h"
 
 SceneCmd ydan_sceneCommands[] = {
-    SCENE_CMD_MQ_HEADER_LIST(ydan_sceneMQHeaders),
+    SCENE_CMD_QUEST_HEADER_LIST(ydan_sceneQuestHeaders),
     SCENE_CMD_SOUND_SETTINGS(3, 19, 28),
     SCENE_CMD_ROOM_LIST(12, ydan_sceneRoomList0x000140),
     SCENE_CMD_TRANSITION_ACTOR_LIST(12, ydan_sceneTransitionActorList_000080),
@@ -35,7 +35,7 @@ SceneCmd ydan_sceneCommands[] = {
     SCENE_CMD_END(),
 };
 
-SceneCmd* ydan_sceneMQHeaders[] = {
+SceneCmd* ydan_sceneQuestHeaders[] = {
     ydan_mq_sceneSet,
 };
 
@@ -99,10 +99,6 @@ EnvLightSettings ydan_sceneLightSettings0x0001A8[] = {
     0x07D4, 0x0FA0 },
     { 0x43, 0x2D, 0x28, 0x49, 0x49, 0x49, 0x8C, 0x96, 0x64, 0xB7, 0xB7, 0xB7, 0x64, 0x78, 0x5A, 0x28, 0x32, 0x00,
     0x07C5, 0x0FA0 },
-};
-
-u8 ydan_scene_possiblePadding_000244[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
 Vec3s ydan_sceneCollisionHeader_00B610CamPosData[] = {
@@ -3893,59 +3889,6 @@ CollisionHeader ydan_sceneCollisionHeader_00B610 = {
     ARRAY_COUNT(ydan_sceneCollisionHeader_00B610WaterBoxes), ydan_sceneCollisionHeader_00B610WaterBoxes
 };
 
-u8 ydan_scene_possiblePadding_00B63C[] = {
-    0x00, 0x00, 0x00, 0x00, 
-};
-
-CutsceneData gDekuTreeIntroCs[] = {
-    CS_HEADER(4, 1270),
-    CS_MISC_LIST(1),
-        CS_MISC(CS_MISC_STOP_CUTSCENE, 165, 166, 0, 0, 0, -29, -88, 0, -29, -88, 0, 0, 0),
-    CS_MISC_LIST(1),
-        CS_MISC(CS_MISC_SHOW_TITLE_CARD, 0, 2, 0, 0, 0, -6, 6, 0, -6, 6, 0, 0, 0),
-    CS_CAM_EYE_SPLINE(0, 1241),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 466, 126, 0x0000),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 466, 126, 0x2778),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 466, 126, 0x5410),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 277, 126, 0x5434),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 140, 126, 0x547C),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 53, 126, 0x21D8),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 53, 126, 0x009F),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 53, 126, 0x0000),
-        CS_CAM_POINT(CS_CAM_STOP, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 53, 126, 0xFFFFFFFF),
-    CS_CAM_AT_SPLINE(0, 1270),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 40, CS_FLOAT(0x42700000, 60.000000f), -201, 567, 95, 0x0000),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 40, CS_FLOAT(0x42700000, 60.000000f), -201, 567, 95, 0x2778),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 40, CS_FLOAT(0x42700000, 60.000000f), -194, 566, 100, 0x5410),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 30, CS_FLOAT(0x42700000, 60.000000f), -137, 294, 173, 0x5434),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 30, CS_FLOAT(0x42700000, 60.000000f), -193, 122, 225, 0x547C),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 30, CS_FLOAT(0x42700000, 60.000000f), -200, 26, 225, 0x21D8),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 1000, CS_FLOAT(0x42700000, 60.000000f), -200, 26, 225, 0x009F),
-        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 30, CS_FLOAT(0x42700000, 60.000000f), -200, 26, 225, 0x0000),
-        CS_CAM_POINT(CS_CAM_STOP, 0x00, 30, CS_FLOAT(0x42700000, 60.000000f), -200, 26, 225, 0xFFFFFFFF),
-    CS_END_OF_SCRIPT(),
-};
-
-u8 ydan_scene_possiblePadding_00B7F8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
-u64 ydan_sceneTLUT_00B800[] = {
-#include "assets/scenes/dungeons/ydan/ydan_sceneTLUT_00B800.rgba16.inc.c"
-};
-
-u8 ydan_scene_unaccounted_00BA00[] = {
-    0x00, 0x00, 0x08, 0x01, 0x00, 0x37, 0x00, 0x00, 
-};
-
-u64 gDekuTreeDayEntranceTex[] = {
-#include "assets/scenes/dungeons/ydan/gDekuTreeDayEntranceTex.rgba16.inc.c"
-};
-
-u64 gDekuTreeNightEntranceTex[] = {
-#include "assets/scenes/dungeons/ydan/gDekuTreeNightEntranceTex.rgba16.inc.c"
-};
-
 SceneCmd ydan_mq_sceneSet[] = {
     SCENE_CMD_SOUND_SETTINGS(3, 19, 28),
     SCENE_CMD_ROOM_LIST(12, ydan_sceneRoomList0x000140),
@@ -6319,4 +6262,45 @@ CollisionHeader ydan_mq_sceneCollisionHeader = {
     ydan_mq_sceneCollisionHeader_SurfaceType,
     ydan_sceneCollisionHeader_00B610CamDataList,
     ARRAY_COUNT(ydan_sceneCollisionHeader_00B610WaterBoxes), ydan_sceneCollisionHeader_00B610WaterBoxes
+};
+
+CutsceneData gDekuTreeIntroCs[] = {
+    CS_HEADER(4, 1270),
+    CS_MISC_LIST(1),
+        CS_MISC(CS_MISC_STOP_CUTSCENE, 165, 166, 0, 0, 0, -29, -88, 0, -29, -88, 0, 0, 0),
+    CS_MISC_LIST(1),
+        CS_MISC(CS_MISC_SHOW_TITLE_CARD, 0, 2, 0, 0, 0, -6, 6, 0, -6, 6, 0, 0, 0),
+    CS_CAM_EYE_SPLINE(0, 1241),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 466, 126, 0x0000),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 466, 126, 0x2778),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 466, 126, 0x5410),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 277, 126, 0x5434),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 140, 126, 0x547C),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 53, 126, 0x21D8),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 53, 126, 0x009F),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 53, 126, 0x0000),
+        CS_CAM_POINT(CS_CAM_STOP, 0x00, 0, CS_FLOAT(0x42700000, 60.000000f), -233, 53, 126, 0xFFFFFFFF),
+    CS_CAM_AT_SPLINE(0, 1270),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 40, CS_FLOAT(0x42700000, 60.000000f), -201, 567, 95, 0x0000),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 40, CS_FLOAT(0x42700000, 60.000000f), -201, 567, 95, 0x2778),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 40, CS_FLOAT(0x42700000, 60.000000f), -194, 566, 100, 0x5410),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 30, CS_FLOAT(0x42700000, 60.000000f), -137, 294, 173, 0x5434),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 30, CS_FLOAT(0x42700000, 60.000000f), -193, 122, 225, 0x547C),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 30, CS_FLOAT(0x42700000, 60.000000f), -200, 26, 225, 0x21D8),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 1000, CS_FLOAT(0x42700000, 60.000000f), -200, 26, 225, 0x009F),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 30, CS_FLOAT(0x42700000, 60.000000f), -200, 26, 225, 0x0000),
+        CS_CAM_POINT(CS_CAM_STOP, 0x00, 30, CS_FLOAT(0x42700000, 60.000000f), -200, 26, 225, 0xFFFFFFFF),
+    CS_END_OF_SCRIPT(),
+};
+
+u64 ydan_sceneTLUT_00B800[] = {
+#include "assets/scenes/dungeons/ydan/ydan_sceneTLUT_00B800.rgba16.inc.c"
+};
+
+u64 gDekuTreeDayEntranceTex[] = {
+#include "assets/scenes/dungeons/ydan/gDekuTreeDayEntranceTex.rgba16.inc.c"
+};
+
+u64 gDekuTreeNightEntranceTex[] = {
+#include "assets/scenes/dungeons/ydan/gDekuTreeNightEntranceTex.rgba16.inc.c"
 };

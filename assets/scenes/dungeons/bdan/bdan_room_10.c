@@ -24,7 +24,7 @@
 #include "bdan_room_15.h"
 
 SceneCmd bdan_room_10Commands[] = {
-    SCENE_CMD_MQ_HEADER_LIST(bdan_room_10MQHeaders),
+    SCENE_CMD_QUEST_HEADER_LIST(bdan_room_10QuestHeaders),
     SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_room_10AlternateHeaders0x000048),
     SCENE_CMD_ECHO_SETTINGS(7),
     SCENE_CMD_ROOM_BEHAVIOR(0x01, 0x00, false, false),
@@ -36,12 +36,8 @@ SceneCmd bdan_room_10Commands[] = {
     SCENE_CMD_END(),
 };
 
-SceneCmd* bdan_room_10MQHeaders[] = {
-    bdan_mq_room_0Set,
-    NULL,
-    NULL,
-    NULL,
-    bdan_room_10Set_0000B0,
+SceneCmd* bdan_room_10QuestHeaders[] = {
+    bdan_mq_room_10Set,
 };
 
 SceneCmd* bdan_room_10AlternateHeaders0x000048[] = {
@@ -69,10 +65,6 @@ ActorEntry bdan_room_10ActorEntry_00006C[] = {
     { ACTOR_EN_BOX, {  -1793,   -340,  -4680 }, {      0, 0XC000,      0 }, 0x1822 },
 };
 
-u8 bdan_room_10_possiblePadding_00008C[] = {
-    0x00, 0x00, 0x00, 0x00, 
-};
-
 RoomShapeNormal bdan_room_10RoomShapeNormal_000090 = { 
     0, 1,
     bdan_room_10RoomShapeDListsEntry_00009C,
@@ -85,11 +77,8 @@ RoomShapeDListsEntry bdan_room_10RoomShapeDListsEntry_00009C[1] = {
 
 s32 bdan_room_10_terminatorMaybe_0000A4 = { 0x01000000 };
 
-u8 bdan_room_10_possiblePadding_0000A8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 SceneCmd bdan_mq_room_10Set[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_room_10AlternateHeaders0x000048),
     SCENE_CMD_ECHO_SETTINGS(7),
     SCENE_CMD_ROOM_BEHAVIOR(0x01, 0x00, false, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),

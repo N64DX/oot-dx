@@ -2,7 +2,7 @@
 #define BDAN_ROOM_8_H 1
 
 extern SceneCmd bdan_room_8Commands[];
-extern SceneCmd* bdan_room_8MQHeaders[];
+extern SceneCmd* bdan_room_8QuestHeaders[];
 extern SceneCmd* bdan_room_8AlternateHeaders0x000048[];
 extern s16 bdan_room_8ObjectList_000058[];
 extern ActorEntry bdan_room_8ActorEntry_00006C[];

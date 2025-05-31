@@ -252,6 +252,7 @@ typedef union SceneCmd {
     SCmdEchoSettings      echoSettings;
     SCmdMiscSettings      miscSettings;
     SCmdAltHeaders        altHeaders;
+    SCmdAltHeaders        questHeaders;
 } SceneCmd; // size = 0x8
 
 typedef BAD_RETURN(s32) (*SceneCmdHandlerFunc)(struct PlayState*, SceneCmd*);
@@ -426,7 +427,7 @@ typedef enum SceneCommandTypeID {
     /* 0x17 */ SCENE_CMD_ID_CUTSCENE_DATA,
     /* 0x18 */ SCENE_CMD_ID_ALTERNATE_HEADER_LIST,
     /* 0x19 */ SCENE_CMD_ID_MISC_SETTINGS,
-    /* 0x1A */ SCENE_CMD_ID_MQ_HEADER_LIST,
+    /* 0x1A */ SCENE_CMD_ID_QUEST_HEADER_LIST,
     /* 0x1B */ SCENE_CMD_ID_MAX
 } SceneCommandTypeID;
 
@@ -509,8 +510,8 @@ typedef enum SceneCommandTypeID {
 #define SCENE_CMD_MISC_SETTINGS(sceneCamType, worldMapLocation) \
     { SCENE_CMD_ID_MISC_SETTINGS, sceneCamType, CMD_W(worldMapLocation) }
 
-#define SCENE_CMD_MQ_HEADER_LIST(questHeaderList) \
-    { SCENE_CMD_ID_MQ_HEADER_LIST, 0, CMD_PTR(questHeaderList) }
+#define SCENE_CMD_QUEST_HEADER_LIST(questHeaderList) \
+    { SCENE_CMD_ID_QUEST_HEADER_LIST, 0, CMD_PTR(questHeaderList) }
 
 s32 Scene_ExecuteCommands(struct PlayState* play, SceneCmd* sceneCmd);
 void Scene_ResetTransitionActorList(struct GameState* state, TransitionActorList* transitionActors);

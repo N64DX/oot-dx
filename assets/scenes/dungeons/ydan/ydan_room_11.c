@@ -20,7 +20,7 @@
 #include "ydan_room_10.h"
 
 SceneCmd ydan_room_11Commands[] = {
-    SCENE_CMD_MQ_HEADER_LIST(ydan_room_11MQHeaders),
+    SCENE_CMD_QUEST_HEADER_LIST(ydan_room_11QuestHeaders),
     SCENE_CMD_ECHO_SETTINGS(7),
     SCENE_CMD_ROOM_BEHAVIOR(0x01, 0x00, false, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
@@ -30,7 +30,7 @@ SceneCmd ydan_room_11Commands[] = {
     SCENE_CMD_END(),
 };
 
-SceneCmd* ydan_room_11MQHeaders[] = {
+SceneCmd* ydan_room_11QuestHeaders[] = {
     ydan_mq_room_11Set,
 };
 

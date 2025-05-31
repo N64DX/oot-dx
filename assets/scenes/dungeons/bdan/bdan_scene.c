@@ -24,7 +24,7 @@
 #include "bdan_room_15.h"
 
 SceneCmd bdan_sceneCommands[] = {
-    SCENE_CMD_MQ_HEADER_LIST(bdan_sceneMQHeaders),
+    SCENE_CMD_QUEST_HEADER_LIST(bdan_sceneQuestHeaders),
     SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_sceneAlternateHeaders0x000068),
     SCENE_CMD_SOUND_SETTINGS(3, 19, 38),
     SCENE_CMD_ROOM_LIST(16, bdan_sceneRoomList0x0001F8),
@@ -40,12 +40,8 @@ SceneCmd bdan_sceneCommands[] = {
     SCENE_CMD_END(),
 };
 
-SceneCmd* bdan_sceneMQHeaders[] = {
+SceneCmd* bdan_sceneQuestHeaders[] = {
     bdan_mq_sceneSet,
-    NULL,
-    NULL,
-    NULL,
-    bdan_sceneSet_013700,
 };
 
 SceneCmd* bdan_sceneAlternateHeaders0x000068[] = {
@@ -123,10 +119,6 @@ EnvLightSettings bdan_sceneLightSettings0x000280[] = {
     0x07E1, 0x3200 },
     { 0x28, 0x28, 0x46, 0x49, 0x49, 0x49, 0x14, 0x14, 0x23, 0xB7, 0xB7, 0xB7, 0x32, 0x32, 0x64, 0x00, 0x00, 0x1E,
     0x07E0, 0x3200 },
-};
-
-u8 bdan_scene_possiblePadding_0002D8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
 BgCamInfo bdan_sceneCollisionHeader_013054CamDataList[] = {
@@ -6326,6 +6318,7 @@ CollisionHeader bdan_sceneCollisionHeader_013054 = {
 };
 
 SceneCmd bdan_mq_sceneSet[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_sceneAlternateHeaders0x000068),
     SCENE_CMD_SOUND_SETTINGS(3, 19, 38),
     SCENE_CMD_ROOM_LIST(16, bdan_sceneRoomList0x0001F8),
     SCENE_CMD_TRANSITION_ACTOR_LIST(22, bdan_mq_sceneTransitionActorList),
@@ -10561,24 +10554,12 @@ EnvLightSettings bdan_sceneLightSettings0x013970[] = {
     0x07E0, 0x3200 },
 };
 
-u8 bdan_scene_possiblePadding_0139C8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 bdan_sceneTLUT_0139D0[] = {
 #include "assets/scenes/dungeons/bdan/bdan_sceneTLUT_0139D0.rgba16.inc.c"
 };
 
-u8 bdan_scene_unaccounted_013BD0[] = {
-    0x00, 0x00, 0x01, 0xF8, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 bdan_sceneTLUT_013BD8[] = {
 #include "assets/scenes/dungeons/bdan/bdan_sceneTLUT_013BD8.rgba16.inc.c"
-};
-
-u8 bdan_scene_unaccounted_013DD8[] = {
-    0x00, 0x00, 0x04, 0x01, 0x00, 0x00, 0x00, 0x00, 
 };
 
 u64 bdan_sceneTex_013DE0[] = {
