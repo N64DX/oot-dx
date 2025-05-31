@@ -64,10 +64,6 @@ ActorEntry bdan_room_4ActorEntry_000068[] = {
     { ACTOR_EN_BROB,  {  -1363,    -40,  -1700 }, {      0, 0X80B6,      0 }, 0x00FF },
 };
 
-u8 bdan_room_4_possiblePadding_000098[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 RoomShapeNormal bdan_room_4RoomShapeNormal_0000A0 = { 
     0, 1,
     bdan_room_4RoomShapeDListsEntry_0000AC,
@@ -79,10 +75,6 @@ RoomShapeDListsEntry bdan_room_4RoomShapeDListsEntry_0000AC[1] = {
 };
 
 s32 bdan_room_4_terminatorMaybe_0000B4 = { 0x01000000 };
-
-u8 bdan_room_4_possiblePadding_0000B8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
 
 SceneCmd bdan_mq_room_4Set[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_room_4AlternateHeaders0x000048),
@@ -148,10 +140,6 @@ ActorEntry bdan_room_4ActorEntry_000108[] = {
     { ACTOR_EN_OKUTA, {  -1223,    -40,  -1479 }, {      0, 0X80B6,      0 }, 0x0000 },
     { ACTOR_EN_BROB,  {  -1104,    -40,  -1700 }, {      0, 0XC000,      0 }, 0x00FF },
     { ACTOR_EN_BROB,  {  -1363,    -40,  -1700 }, {      0, 0X80B6,      0 }, 0x00FF },
-};
-
-u8 bdan_room_4_possiblePadding_000138[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
 Vtx bdan_room_4Vtx_000140[] = {
@@ -511,4 +499,3 @@ Gfx bdan_room_4DL_004040[] = {
     gsSPDisplayList(bdan_room_4DL_003F50),
     gsSPEndDisplayList(),
 };
-

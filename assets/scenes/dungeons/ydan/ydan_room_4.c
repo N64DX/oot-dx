@@ -57,10 +57,6 @@ ActorEntry ydan_room_4ActorEntry_000054[] = {
     { ACTOR_OBJ_SWITCH,  {   -314,   -759,    960 }, {      0, 0X4000,      0 }, 0x0412 },
 };
 
-u8 ydan_room_4_possiblePadding_0000B4[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 RoomShapeCullable ydan_room_4RoomShapeCullable_0000C0 = { 
     2, 2,
     ydan_room_4RoomShapeCullableEntry_0000CC,
@@ -289,10 +285,6 @@ Gfx ydan_room_4DL_001020[] = {
     gsSPEndDisplayList(),
 };
 
-u8 ydan_room_4_unaccounted_0018B0[] = {
-    0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x10, 0x20, 0xDF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 ydan_room_4Tex_0018C0[] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_4Tex_0018C0.ci8.inc.c"
 };
@@ -343,11 +335,6 @@ Gfx ydan_room_4DL_003AC0[] = {
     gsSPEndDisplayList(),
 };
 
-u8 ydan_room_4_unaccounted_003BB8[] = {
-    0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x3A, 0xC0, 0xDF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 ydan_room_4Tex_003BC8[] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_4Tex_003BC8.ia16.inc.c"
 };
-

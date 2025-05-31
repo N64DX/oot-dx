@@ -485,4 +485,3 @@ Gfx bdan_room_0DL_004060[] = {
     gsSPDisplayList(bdan_room_0DL_003F10),
     gsSPEndDisplayList(),
 };
-

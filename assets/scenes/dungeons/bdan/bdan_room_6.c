@@ -72,10 +72,6 @@ ActorEntry bdan_room_6ActorEntry_00006C[] = {
     { ACTOR_OBJ_TSUBO,       {  -1295,     80,  -3612 }, {      0,      0,      0 }, 0x540C },
 };
 
-u8 bdan_room_6_possiblePadding_0000FC[] = {
-    0x00, 0x00, 0x00, 0x00, 
-};
-
 RoomShapeNormal bdan_room_6RoomShapeNormal_000100 = { 
     0, 1,
     bdan_room_6RoomShapeDListsEntry_00010C,
@@ -87,10 +83,6 @@ RoomShapeDListsEntry bdan_room_6RoomShapeDListsEntry_00010C[1] = {
 };
 
 s32 bdan_room_6_terminatorMaybe_000114 = { 0x01000000 };
-
-u8 bdan_room_6_possiblePadding_000118[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
 
 SceneCmd bdan_mq_room_6Set[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_room_6AlternateHeaders0x000048),
@@ -561,10 +553,6 @@ u64 bdan_room_6Tex_003868[] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_6Tex_003868.ci8.inc.c"
 };
 
-u8 bdan_room_6_possiblePadding_004068[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 Vtx bdan_room_6Vtx_004070[] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_6Vtx_004070.vtx.inc"
 };
@@ -596,4 +584,3 @@ Gfx bdan_room_6DL_004230[] = {
     gsSPDisplayList(bdan_room_6DL_004140),
     gsSPEndDisplayList(),
 };
-

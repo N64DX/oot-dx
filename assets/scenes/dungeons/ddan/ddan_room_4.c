@@ -72,10 +72,6 @@ ActorEntry ddan_room_4ActorEntry_000058[] = {
     { ACTOR_OBJ_TSUBO,    {   2281,     80,  -1799 }, {      0,      0,      0 }, 0x6403 },
 };
 
-u8 ddan_room_4_possiblePadding_000138[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 RoomShapeCullable ddan_room_4RoomShapeCullable_000140 = { 
     2, 2,
     ddan_room_4RoomShapeCullableEntry_00014C,
@@ -981,17 +977,8 @@ Gfx ddan_room_4DL_0067B0[] = {
     gsSPEndDisplayList(),
 };
 
-u8 ddan_room_4_unaccounted_006A28[] = {
-    0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x31, 0x50, 0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x67, 0xB0, 
-    0xDF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 ddan_room_4TLUT_006A40[] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_4TLUT_006A40.rgba16.inc.c"
-};
-
-u8 ddan_room_4_unaccounted_006C40[] = {
-    0x00, 0x00, 0x08, 0x01, 0x00, 0x00, 0x00, 0x00, 
 };
 
 u64 ddan_room_4Tex_006C48[] = {
@@ -1021,4 +1008,3 @@ u64 ddan_room_4Tex_008C48[] = {
 u64 ddan_room_4Tex_009048[] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_4Tex_009048.ci8.inc.c"
 };
-

@@ -60,10 +60,6 @@ ActorEntry ydan_room_9ActorEntry_000054[] = {
     { ACTOR_EN_ITEM00,   {   -354,  -1943,   -206 }, {      0,      0,      0 }, 0x3103 },
 };
 
-u8 ydan_room_9_possiblePadding_0000E4[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 RoomShapeCullable ydan_room_9RoomShapeCullable_0000F0 = { 
     2, 5,
     ydan_room_9RoomShapeCullableEntry_0000FC,
@@ -400,11 +396,6 @@ Gfx ydan_room_9DL_002290[] = {
     gsSPEndDisplayList(),
 };
 
-u8 ydan_room_9_unaccounted_002468[] = {
-    0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x13, 0xE0, 0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x22, 0x90, 
-    0xDF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 ydan_room_9Tex_002480[] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_9Tex_002480.ci8.inc.c"
 };
@@ -553,11 +544,6 @@ Gfx ydan_room_9DL_007368[] = {
     gsSPEndDisplayList(),
 };
 
-u8 ydan_room_9_unaccounted_007478[] = {
-    0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x6E, 0xA0, 0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x70, 0xE0, 
-    0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x73, 0x68, 0xDF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 ydan_room_9Tex_007498[] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_9Tex_007498.rgba16.inc.c"
 };
@@ -569,4 +555,3 @@ u64 ydan_room_9Tex_008498[] = {
 u64 ydan_room_9Tex_008898[] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_9Tex_008898.ia16.inc.c"
 };
-

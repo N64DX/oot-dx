@@ -63,10 +63,6 @@ ActorEntry ydan_room_5ActorEntry_000058[] = {
     { ACTOR_BG_YDAN_HASI,   {   -835,   -900,   1050 }, {      0,      0,      0 }, 0x3E01 },
 };
 
-u8 ydan_room_5_possiblePadding_000108[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 RoomShapeCullable ydan_room_5RoomShapeCullable_000110 = { 
     2, 2,
     ydan_room_5RoomShapeCullableEntry_00011C,
@@ -536,11 +532,6 @@ Gfx ydan_room_5DL_003C28[] = {
     gsSPEndDisplayList(),
 };
 
-u8 ydan_room_5_unaccounted_003F00[] = {
-    0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x22, 0x80, 0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x3C, 0x28, 
-    0xDF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 ydan_room_5Tex_003F18[] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_5Tex_003F18.ci8.inc.c"
 };
@@ -584,4 +575,3 @@ u64 ydan_room_5Tex_007718[] = {
 u64 ydan_room_5Tex_007B18[] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_5Tex_007B18.ci8.inc.c"
 };
-

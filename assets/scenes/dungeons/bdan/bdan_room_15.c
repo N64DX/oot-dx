@@ -69,10 +69,6 @@ RoomShapeDListsEntry bdan_room_15RoomShapeDListsEntry_00006C[1] = {
 
 s32 bdan_room_15_terminatorMaybe_000074 = { 0x01000000 };
 
-u8 bdan_room_15_possiblePadding_000078[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 SceneCmd bdan_mq_room_15Set[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_room_15AlternateHeaders0x000040),
     SCENE_CMD_ECHO_SETTINGS(7),
@@ -536,4 +532,3 @@ Gfx bdan_room_15DL_002688[] = {
     gsSPDisplayList(bdan_room_15DL_002580),
     gsSPEndDisplayList(),
 };
-

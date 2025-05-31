@@ -25,6 +25,7 @@ extern u64 ydan_room_0Tex_007160[];
 extern u64 ydan_room_0Tex_008160[];
 extern u64 ydan_room_0Tex_009160[];
 extern u64 ydan_room_0Tex_009960[];
+extern u64 ydan_room_0Tex_00A560[];
 extern u64 ydan_room_0Tex_00A160[];
 extern u64 ydan_room_0Tex_00A560[];
 extern u64 ydan_room_0Tex_00AD60[];

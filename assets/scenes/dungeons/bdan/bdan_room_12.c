@@ -73,10 +73,6 @@ ActorEntry bdan_room_12ActorEntry_00006C[] = {
     { ACTOR_EN_BUBBLE,     {   -852,   -340,  -5480 }, {      0,      0,      0 }, 0xFFFF },
 };
 
-u8 bdan_room_12_possiblePadding_00011C[] = {
-    0x00, 0x00, 0x00, 0x00, 
-};
-
 RoomShapeNormal bdan_room_12RoomShapeNormal_000120 = { 
     0, 1,
     bdan_room_12RoomShapeDListsEntry_00012C,
@@ -88,10 +84,6 @@ RoomShapeDListsEntry bdan_room_12RoomShapeDListsEntry_00012C[1] = {
 };
 
 s32 bdan_room_12_terminatorMaybe_000134 = { 0x01000000 };
-
-u8 bdan_room_12_possiblePadding_000138[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
 
 SceneCmd bdan_mq_room_12Set[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(bdan_room_12AlternateHeaders0x000048),
@@ -158,10 +150,6 @@ ActorEntry bdan_room_12ActorEntry_000188[] = {
     { ACTOR_EN_OKUTA, {   -476,   -340,  -5499 }, {      0, 0XA000,      0 }, 0x0000 },
     { ACTOR_EN_OKUTA, {   -481,   -340,  -5860 }, {      0, 0XDD28,      0 }, 0x0000 },
     { ACTOR_EN_BOX,   {   -659,   -340,  -5681 }, {      0, 0X8000,      0 }, 0x0043 },
-};
-
-u8 bdan_room_12_possiblePadding_0001D8[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
 Vtx bdan_room_12Vtx_0001E0[] = {
@@ -979,4 +967,3 @@ Gfx bdan_room_12DL_003838[] = {
 u64 bdan_room_12Tex_0038D0[] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_12Tex_0038D0.ci8.inc.c"
 };
-

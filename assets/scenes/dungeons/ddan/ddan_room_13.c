@@ -210,10 +210,6 @@ Gfx ddan_room_13DL_000690[] = {
     gsSPEndDisplayList(),
 };
 
-u8 ddan_room_13_unaccounted_000C68[] = {
-    0xDE, 0x00, 0x00, 0x00, 0x03, 0x00, 0x06, 0x90, 0xDF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 ddan_room_13Tex_000C78[] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_13Tex_000C78.ci8.inc.c"
 };
@@ -229,4 +225,3 @@ u64 ddan_room_13Tex_001C78[] = {
 u64 ddan_room_13Tex_002078[] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_13Tex_002078.ci8.inc.c"
 };
-
