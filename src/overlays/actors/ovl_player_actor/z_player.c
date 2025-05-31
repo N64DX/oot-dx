@@ -9212,6 +9212,10 @@ void Player_Action_80842180(Player* this, PlayState* play) {
 
         Player_GetMovementSpeedAndYaw(this, &speedTarget, &yawTarget, SPEED_MODE_CURVED, play);
 
+        if (this->currentMask == PLAYER_MASK_BUNNY) {
+            speedTarget *= 1.5f;
+        }
+
         if (!func_8083C484(this, &speedTarget, &yawTarget)) {
             func_8083DF68(this, speedTarget, yawTarget);
             func_8083DDC8(this, play);
