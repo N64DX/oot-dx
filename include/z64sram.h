@@ -17,7 +17,8 @@ typedef enum SramHeaderField {
     /* 0x00 */ SRAM_HEADER_SOUND,
     /* 0x01 */ SRAM_HEADER_Z_TARGET,
     /* 0x02 */ SRAM_HEADER_LANGUAGE,
-    /* 0x03 */ SRAM_HEADER_MAGIC // must be the value in `sSramDefaultHeader` for save to be considered valid
+    /* 0x03 */ SRAM_HEADER_SCREEN_MODE,
+    /* 0x04 */ SRAM_HEADER_MAGIC // must be the value in `sSramDefaultHeader` for save to be considered valid
 } SramHeaderField;
 
 extern u16 gSramSlotOffsets[];

@@ -1,24 +1,21 @@
 #ifndef RESOLUTION_H
 #define RESOLUTION_H
 
-#define SCREEN_DEFAULT   0 // 320x240
-#define SCREEN_HIRES     1 // 640x480
-#define SCREEN_WIDE      2 // 424x240
-#define SCREEN_ULTRAWIDE 3 // 576x240
+#include "regs.h"
 
 // @setting: Use interlaced mode for hires
-#define INTERLACED false
+#define INTERLACED true
 
 // @setting: SCREEN_MODE option
-#define SCREEN_MODE SCREEN_DEFAULT
+#define SCREEN_MODE 1 //#define SCREEN_MODE R_SCREEN_MODE
 
 // @setting: Include Widescreen JPEGs that have been squished from 420x240 to 320x240
 #define WS_JPEG true
 
 // Derived from SCREEN_MODE setting
-#define HIRES (SCREEN_MODE == SCREEN_HIRES ? 1 : 0)
-#define WIDESCREEN (SCREEN_MODE == SCREEN_WIDE ? 1 : 0)
-#define ULTRA_WS (SCREEN_MODE == SCREEN_ULTRAWIDE ? 1 : 0)
+#define HIRES (SCREEN_MODE == 1 ? 1 : 0)
+#define WIDESCREEN (SCREEN_MODE == 2 ? 1 : 0)
+#define ULTRA_WS (SCREEN_MODE == 3 ? 1 : 0)
 
 // Derived from WS_JPEG setting
 #if WS_JPEG
@@ -33,6 +30,29 @@
     #define JPEG_POS_ULTRAWIDE ((576 - 320) * 2)
     #define JPEG_WIDTH 320
     #define JPEG_SCALE 1024
+#endif
+
+// Shrine scene light settings
+#if ((WIDESCREEN && !WS_JPEG) || ULTRA_WS)
+    #define SHRINE_LIGHT_1 0x00
+    #define SHRINE_LIGHT_2 0x00
+    #define SHRINE_LIGHT_3 0x07FA
+    #define SHRINE_N_LIGHT_1 0x00
+    #define SHRINE_N_LIGHT_2 0x00
+    #define SHRINE_N_LIGHT_3 0x07DA
+    #define SHRINE_R_LIGHT_1 0x00
+    #define SHRINE_R_LIGHT_2 0x00
+    #define SHRINE_R_LIGHT_3 0x07EA
+#else
+    #define SHRINE_LIGHT_1 0x82
+    #define SHRINE_LIGHT_2 0x8C
+    #define SHRINE_LIGHT_3 0x07CA
+    #define SHRINE_N_LIGHT_1 0x12
+    #define SHRINE_N_LIGHT_2 0x1C
+    #define SHRINE_N_LIGHT_3 0x07CA
+    #define SHRINE_R_LIGHT_1 0x32
+    #define SHRINE_R_LIGHT_2 0x37
+    #define SHRINE_R_LIGHT_3 0x07CA
 #endif
 
 // Values
