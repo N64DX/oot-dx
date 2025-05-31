@@ -53,6 +53,7 @@ static u8 sSramDefaultHeader[] = {
 #else
     LANGUAGE_ENG, // SRAM_HEADER_LANGUAGE
 #endif
+    SCREEN_MODE,             // SRAM_HEADER_SCREEN_MODE
 
     // SRAM_HEADER_MAGIC
     0x98,
@@ -1052,6 +1053,8 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
         Sram_WriteSramHeader(sramCtx);
     }
 #endif
+
+    gSaveContext.screenMode = sramCtx->readBuff[SRAM_HEADER_SCREEN_MODE] & 3;
 
 #if DEBUG_FEATURES
     if (CHECK_BTN_ANY(gameState->input[2].cur.button, BTN_DRIGHT)) {

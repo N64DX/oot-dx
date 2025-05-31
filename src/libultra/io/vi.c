@@ -18,23 +18,35 @@ void __osViInit(void) {
 
     if (osTvType == OS_TV_PAL) {
 
-#if HIRES && INTERLACED
-        __osViNext->modep = &osViModePalHan1;
+#if INTERLACED
+        if (SCREEN_MODE == 1) { // HIRES
+            __osViNext->modep = &osViModePalHan1;
+        } else {
+            __osViNext->modep = &osViModePalLan1;
+        }
 #else
         __osViNext->modep = &osViModePalLan1;
 #endif
     } else if (osTvType == OS_TV_MPAL) {
 
-#if HIRES && INTERLACED
-        __osViNext->modep = &osViModeMpalHan1;
+#if INTERLACED
+        if (SCREEN_MODE == 1) { // HIRES
+            __osViNext->modep = &osViModeMpalHan1;
+        } else {
+            __osViNext->modep = &osViModeMpalLan1;
+        }
 #else
         __osViNext->modep = &osViModeMpalLan1;
 #endif
 
     } else {
 
-#if HIRES && INTERLACED
-        __osViNext->modep = &osViModeNtscHan1;
+#if INTERLACED
+        if (SCREEN_MODE == 1) { // HIRES
+            __osViNext->modep = &osViModeNtscHan1;
+        } else {
+            __osViNext->modep = &osViModeNtscLan1;
+        }
 #else
         __osViNext->modep = &osViModeNtscLan1;
 #endif

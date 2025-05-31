@@ -274,6 +274,8 @@ struct PlayState;
 #define R_USE_DEBUG_CUTSCENE                     dREG(95)
 
 
+#define R_SCREEN_MODE                            HREG(77)
+
 #define R_HREG_MODE  HREG(80) // see `HRegMode` for mode options
 
 typedef enum HRegMode {

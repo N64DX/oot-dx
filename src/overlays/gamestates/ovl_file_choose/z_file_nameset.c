@@ -1380,6 +1380,10 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
     SramContext* sramCtx = &this->sramCtx;
     Input* input = &this->state.input[0];
 
+    if (CHECK_BTN_ALL(input->press.button, BTN_DLEFT)) {
+        gSaveContext.screenMode = 1;
+    }
+
     if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -1389,6 +1393,7 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
 #if OOT_PAL_N64 || OOT_NTSC_N64
         sramCtx->readBuff[2] = gSaveContext.language;
 #endif
+        sramCtx->readBuff[3] = gSaveContext.screenMode;
         PRINTF("ＳＡＶＥ");
         Sram_WriteSramHeader(sramCtx);
         PRINTF_COLOR_YELLOW();
