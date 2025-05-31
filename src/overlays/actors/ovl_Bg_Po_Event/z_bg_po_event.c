@@ -279,7 +279,7 @@ void BgPoEvent_BlockShake(BgPoEvent* this, PlayState* play) {
     if (this->timer == 0) {
         this->dyna.actor.world.pos.x = this->dyna.actor.home.pos.x;
         sPuzzleState = 0;
-        this->timer = 60;
+        this->timer = 60 - 20;
         this->actionFunc = BgPoEvent_BlockFall;
     }
 }
@@ -400,7 +400,7 @@ void BgPoEvent_BlockPush(BgPoEvent* this, PlayState* play) {
     s32 blockStop;
     Player* player = GET_PLAYER(play);
 
-    this->dyna.actor.speed += 0.1f;
+    this->dyna.actor.speed += 0.1f * 10;
     this->dyna.actor.speed = CLAMP_MAX(this->dyna.actor.speed, 2.0f);
     blockStop = Math_StepToF(&blockPushDist, 20.0f, this->dyna.actor.speed);
     displacement = this->direction * blockPushDist;
@@ -416,7 +416,7 @@ void BgPoEvent_BlockPush(BgPoEvent* this, PlayState* play) {
         this->dyna.actor.home.pos.z = this->dyna.actor.world.pos.z;
         blockPushDist = 0.0f;
         this->dyna.actor.speed = 0.0f;
-        this->direction = 5;
+        this->direction = 0;
         sBlocksAtRest++;
         this->actionFunc = BgPoEvent_BlockIdle;
         if (this->type == 1) {

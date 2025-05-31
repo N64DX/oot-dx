@@ -687,7 +687,7 @@ void EnAm_Statue(EnAm* this, PlayState* play) {
             this->unk_258 = 0x8000;
         }
     } else {
-        this->unk_258 -= 0x800;
+        this->unk_258 -= 0x800 * 2;
         Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_ROCK_SLIDE - SFX_FLAG);
 
         if (this->dyna.unk_150 < 0.0f) {
@@ -711,7 +711,7 @@ void EnAm_Statue(EnAm* this, PlayState* play) {
         }
 
         this->dyna.actor.world.rot.y = this->dyna.unk_158;
-        this->dyna.actor.speed = Math_SinS(this->unk_258) * (this->dyna.unk_150 * 0.5f);
+        this->dyna.actor.speed = Math_SinS(this->unk_258) * (this->dyna.unk_150 * 0.5f * 2);
     }
 
     if (this->dyna.actor.bgCheckFlags & BGCHECKFLAG_GROUND_TOUCH) {
