@@ -1,7 +1,7 @@
 #include "libc64/aprintf.h"
 #include "libu64/gfxprint.h"
 #include "attributes.h"
-#include "config.h"
+#include "resolution.h"
 #include "translation.h"
 
 u16 sGfxPrintFontTLUT[64] = {
@@ -130,11 +130,6 @@ u8 sGfxPrintFontData[(16 * 256) / 2] = {
     0x1B, 0xAA, 0x40, 0x21, 0x00, 0x23, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-#if !PLATFORM_N64
-// Can be used to set GFXP_FLAG_ENLARGE by default
-static u8 sDefaultSpecialFlags;
-#endif
-
 void GfxPrint_Setup(GfxPrint* this) {
     s32 width;
     s32 height;
@@ -207,7 +202,7 @@ void GfxPrint_SetPosPx(GfxPrint* this, s32 x, s32 y) {
 }
 
 void GfxPrint_SetPos(GfxPrint* this, s32 x, s32 y) {
-    GfxPrint_SetPosPx(this, (x + (WIDESCREEN ? 6 : 0)) * GFX_CHAR_X_SPACING, y * GFX_CHAR_Y_SPACING);
+    GfxPrint_SetPosPx(this, (x + GFXPRINT_SHIFT) * GFX_CHAR_X_SPACING, y * GFX_CHAR_Y_SPACING);
 }
 
 void GfxPrint_SetBasePosPx(GfxPrint* this, s32 x, s32 y) {
@@ -238,35 +233,14 @@ void GfxPrint_PrintCharImpl(GfxPrint* this, u8 c) {
     if (this->flags & GFXP_FLAG_SHADOW) {
         gDPSetColor(this->dList++, G_SETPRIMCOLOR, 0);
 
-#if PLATFORM_N64
-        gSPTextureRectangle(this->dList++, this->posX + 4 + (WIDESCREEN ? 52 : 0), this->posY + 4, this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0), this->posY + 4 + 32,
-                            tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 10, 1 << 10);
-#else
-        if (this->flags & GFXP_FLAG_ENLARGE) {
-            gSPTextureRectangle(this->dList++, (this->posX + 4 + (WIDESCREEN ? 52 : 0)) << 1, (this->posY + 4) << 1, (this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0)) << 1,
-                                (this->posY + 4 + 32) << 1, tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 9,
-                                1 << 9);
-        } else {
-            gSPTextureRectangle(this->dList++, this->posX + 4 + (WIDESCREEN ? 52 : 0), this->posY + 4, this->posX + 4 + 32 + (WIDESCREEN ? 52 : 0), this->posY + 4 + 32,
-                                tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 10, 1 << 10);
-        }
-#endif
+        gSPTextureRectangle(this->dList++, HIRES_MULTIPLY((this->posX + 4 + WS_SHIFT_HALF)), HIRES_MULTIPLY((this->posY + 4)), HIRES_MULTIPLY((this->posX + 4 + 32 + WS_SHIFT_HALF)) - (HIRES_PX_SHIFT * 2), HIRES_MULTIPLY((this->posY + 4 + 32)) - (HIRES_PX_SHIFT * 2),
+                            tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
         gDPSetColor(this->dList++, G_SETPRIMCOLOR, this->color.rgba);
     }
 
-#if PLATFORM_N64
-    gSPTextureRectangle(this->dList++, this->posX + (WIDESCREEN ? 52 : 0), this->posY, this->posX + 32 + (WIDESCREEN ? 52 : 0), this->posY + 32, tile,
-                        (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 10, 1 << 10);
-#else
-    if (this->flags & GFXP_FLAG_ENLARGE) {
-        gSPTextureRectangle(this->dList++, this->posX << 1 + (WIDESCREEN ? 52 : 0), this->posY << 1, (this->posX + 32 + (WIDESCREEN ? 52 : 0)) << 1,
-                            (this->posY + 32) << 1, tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 9, 1 << 9);
-    } else {
-        gSPTextureRectangle(this->dList++, this->posX + (WIDESCREEN ? 52 : 0), this->posY, this->posX + 32 + (WIDESCREEN ? 52 : 0), this->posY + 32, tile,
-                            (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 10, 1 << 10);
-    }
-#endif
+    gSPTextureRectangle(this->dList++, HIRES_MULTIPLY((this->posX + WS_SHIFT_HALF)), HIRES_MULTIPLY((this->posY)), HIRES_MULTIPLY((this->posX + 32 + WS_SHIFT_HALF)) - (HIRES_PX_SHIFT * 2), HIRES_MULTIPLY((this->posY + 32)) - (HIRES_PX_SHIFT * 2), tile,
+                        (u16)(c & 4) * 64, (u16)(c >> 3) * 256, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
     this->posX += GFX_CHAR_X_SPACING << 2;
 }
@@ -367,14 +341,6 @@ void GfxPrint_Init(GfxPrint* this) {
     this->flags &= ~GFXP_FLAG_RAINBOW;
     this->flags |= GFXP_FLAG_SHADOW;
     this->flags |= GFXP_FLAG_UPDATE;
-
-#if !PLATFORM_N64
-    if (sDefaultSpecialFlags & GFXP_FLAG_ENLARGE) {
-        this->flags |= GFXP_FLAG_ENLARGE;
-    } else {
-        this->flags &= ~GFXP_FLAG_ENLARGE;
-    }
-#endif
 }
 
 void GfxPrint_Destroy(GfxPrint* this) {

@@ -18,6 +18,7 @@
 #include "padmgr.h"
 #include "printf.h"
 #include "regs.h"
+#include "resolution.h"
 #include "rumble.h"
 #include "speed_meter.h"
 #include "sys_debug_controller.h"
@@ -183,7 +184,7 @@ void GameState_DrawInputDisplay(u16 input, Gfx** gfxP) {
         if (input & (1 << i)) {
             gDPSetFillColor(gfx++, (sInpDispBtnColors[i] << 0x10) | sInpDispBtnColors[i]);
             k = i + 1;
-            gDPFillRectangle(gfx++, (j * 4) + 226 + (WIDESCREEN ? 104 : 0), 220, (k * 4) + 225 + (WIDESCREEN ? 104 : 0), 223);
+            gDPFillRectangle(gfx++, HIRES_MULTIPLY(((j * 4) + 226 + WS_SHIFT_FULL)), HIRES_MULTIPLY(220), HIRES_MULTIPLY(((k * 4) + 225 + WS_SHIFT_FULL)), HIRES_MULTIPLY(223));
             gDPPipeSync(gfx++);
         }
     }
@@ -341,22 +342,38 @@ void GameState_Update(GameState* gameState) {
         gfxCtx->yScale = gViConfigYScale;
 
         if (SREG(63) == 6 || (SREG(63) == 2u && (u32)osTvType == OS_TV_NTSC)) {
+#if HIRES && INTERLACED
+            gfxCtx->viMode = &osViModeNtscHan1;
+#else
             gfxCtx->viMode = &osViModeNtscLan1;
+#endif
             gfxCtx->yScale = 1.0f;
         }
 
         if (SREG(63) == 5 || (SREG(63) == 2u && (u32)osTvType == OS_TV_MPAL)) {
+#if HIRES && INTERLACED
+            gfxCtx->viMode = &osViModeMpalHan1;
+#else
             gfxCtx->viMode = &osViModeMpalLan1;
+#endif
             gfxCtx->yScale = 1.0f;
         }
 
         if (SREG(63) == 4 || (SREG(63) == 2u && (u32)osTvType == OS_TV_PAL)) {
+#if HIRES && INTERLACED
+            gfxCtx->viMode = &osViModePalHan1;
+#else
             gfxCtx->viMode = &osViModePalLan1;
+#endif
             gfxCtx->yScale = 1.0f;
         }
 
         if (SREG(63) == 3 || (SREG(63) == 2u && (u32)osTvType == OS_TV_PAL)) {
+#if HIRES && INTERLACED
+            gfxCtx->viMode = &osViModeFpalHan1;
+#else
             gfxCtx->viMode = &osViModeFpalLan1;
+#endif
             gfxCtx->yScale = 0.833f;
         }
     } else {

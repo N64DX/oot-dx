@@ -1,4 +1,4 @@
-#include "config.h"
+#include "resolution.h"
 #include "ultra64.h"
 #include "z64.h"
 #include "assets/scenes/indoors/tent/tent_room_0.h"
@@ -1352,7 +1352,7 @@ u8 tent_room_0_unaccounted_00DE88[] = {
 };
 
 u64 tent_room_0Background_00DEA0[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WS_JPEG
 #include "assets/scenes/indoors/tent/tent_room_0Background_00DEA0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/tent/tent_room_0Background_00DEA0.jpg.inc.c"

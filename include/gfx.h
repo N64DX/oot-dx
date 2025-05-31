@@ -3,27 +3,19 @@
 
 #include "ultra64.h"
 #include "ultra64/gbi.h"
-#include "config.h"
+#include "resolution.h"
 #include "sched.h"
 #include "thga.h"
 #include "versions.h"
-
-#if WIDESCREEN
-    #define SCREEN_WIDTH  424
-#else
-    #define SCREEN_WIDTH  320
-#endif
-
-#define SCREEN_HEIGHT 240
 
 // Texture memory size, 4 KiB
 #define TMEM_SIZE 0x1000
 
 typedef struct GfxPool {
     /* 0x00000 */ u16 headMagic; // GFXPOOL_HEAD_MAGIC
-    /* 0x00008 */ Gfx polyOpaBuffer[0x17E0];
+    /* 0x00008 */ Gfx polyOpaBuffer[0x17E0 + 0x200];
     /* 0x0BF08 */ Gfx polyXluBuffer[0x800];
-    /* 0x0FF08 */ Gfx overlayBuffer[0x400 + 0x200];
+    /* 0x0FF08 */ Gfx overlayBuffer[0x400 + 0x900];
     /* 0x11F08 */ Gfx workBuffer[0x80];
     /* 0x11308 */ Gfx unusedBuffer[0x20];
     /* 0x12408 */ u16 tailMagic; // GFXPOOL_TAIL_MAGIC

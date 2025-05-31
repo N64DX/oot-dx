@@ -8,7 +8,6 @@
 #include "libu64/debug.h"
 #include "alloca.h"
 #include "color.h"
-#include "config.h"
 #include "gfx.h"
 #include "prerender.h"
 #include "printf.h"

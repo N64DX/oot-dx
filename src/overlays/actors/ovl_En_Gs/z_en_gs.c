@@ -588,6 +588,11 @@ void EnGs_Draw(Actor* thisx, PlayState* play) {
     if (!(this->unk_19E & 8)) {
         OPEN_DISPS(play->state.gfxCtx, "../z_en_gs.c", 1046);
 
+#if WIDESCREEN || ULTRA_WS
+        if ( ((play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY || play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT || play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS)) && GET_ACTIVE_CAM(play)->bgCamIndex == 0)
+            return;
+#endif
+
         frames = play->gameplayFrames;
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         Matrix_Push();
