@@ -13,6 +13,7 @@
 #endif
 #include "printf.h"
 #include "regs.h"
+#include "resolution.h"
 #include "segment_symbols.h"
 #include "segmented_address.h"
 #include "seqcmd.h"
@@ -30,7 +31,14 @@
 
 #include "assets/textures/icon_item_static/icon_item_static.h"
 #include "assets/textures/icon_item_24_static/icon_item_24_static.h"
-#if OOT_NTSC
+#if OOT_NTSC_N64
+#include "assets/textures/icon_item_static/icon_item_static_all.h"
+#include "assets/textures/icon_item_nes_static/icon_item_nes_static.h"
+#include "assets/textures/icon_item_ger_static/icon_item_ger_static.h"
+#include "assets/textures/icon_item_fra_static/icon_item_fra_static.h"
+#include "assets/textures/icon_item_jpn_static/icon_item_jpn_static.h"
+#include "assets/textures/icon_item_gameover_static/icon_item_gameover_static_all.h"
+#elif OOT_NTSC
 #include "assets/textures/icon_item_jpn_static/icon_item_jpn_static.h"
 #include "assets/textures/icon_item_nes_static/icon_item_nes_static.h"
 #else
@@ -78,6 +86,9 @@ typedef enum {
 #define VTX_PAGE_QUEST_QUADS 0                // VTX_PAGE_QUEST
 #define VTX_PAGE_MAP_WORLD_QUADS 32           // VTX_PAGE_MAP_WORLD
 #define VTX_PAGE_PROMPT_QUADS PROMPT_QUAD_MAX // VTX_PAGE_PROMPT
+
+static u8 editor_timer = 0;
+static bool pressed_r = false;
 
 #if OOT_NTSC
 
@@ -187,8 +198,9 @@ static void* sSavePromptBgQuadsJPNTexs[] = {
     gPauseSave23Tex,
     gPauseSave24Tex,
 };
+#endif
 
-#else
+#if !OOT_NTSC || OOT_NTSC_N64
 
 // French
 
@@ -534,7 +546,48 @@ static void* sGameOverTexs[] = {
     gPauseSave24Tex,
 };
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+static void* sEquipPageBgQuadsTexs[] = {
+    sEquipPageBgQuadsENGTexs,
+    sEquipPageBgQuadsGERTexs,
+    sEquipPageBgQuadsFRATexs,
+    sEquipPageBgQuadsJPNTexs,
+};
+
+static void* sItemPageBgQuadsTexs[] = {
+    sItemPageBgQuadsENGTexs,
+    sItemPageBgQuadsGERTexs,
+    sItemPageBgQuadsFRATexs,
+    sItemPageBgQuadsJPNTexs,
+};
+
+static void* sMapPageBgQuadsTexs[] = {
+    sMapPageBgQuadsENGTexs,
+    sMapPageBgQuadsGERTexs,
+    sMapPageBgQuadsFRATexs,
+    sMapPageBgQuadsJPNTexs,
+};
+
+static void* sQuestPageBgQuadsTexs[] = {
+    sQuestPageBgQuadsENGTexs,
+    sQuestPageBgQuadsGERTexs,
+    sQuestPageBgQuadsFRATexs,
+    sQuestPageBgQuadsJPNTexs,
+};
+
+static void* sSavePromptBgQuadsTexs[] = {
+    sSavePromptBgQuadsENGTexs,
+    sSavePromptBgQuadsGERTexs,
+    sSavePromptBgQuadsFRATexs,
+    sSavePromptBgQuadsJPNTexs,
+};
+
+#define EQUIPMENT_TEXS(language) (sEquipPageBgQuadsTexs[(language)])
+#define SELECT_ITEM_TEXS(language) (sItemPageBgQuadsTexs[(language)])
+#define MAP_TEXS(language) (sMapPageBgQuadsTexs[(language)])
+#define QUEST_STATUS_TEXS(language) (sQuestPageBgQuadsTexs[(language)])
+#define SAVE_TEXS(language) (sSavePromptBgQuadsTexs[(language)])
+#elif OOT_NTSC
 #define EQUIPMENT_TEXS(language) ((language) != LANGUAGE_JPN ? sEquipPageBgQuadsENGTexs : sEquipPageBgQuadsJPNTexs)
 #define SELECT_ITEM_TEXS(language) ((language) != LANGUAGE_JPN ? sItemPageBgQuadsENGTexs : sItemPageBgQuadsJPNTexs)
 #define MAP_TEXS(language) ((language) != LANGUAGE_JPN ? sMapPageBgQuadsENGTexs : sMapPageBgQuadsJPNTexs)
@@ -667,7 +720,7 @@ static u8 gPageSwitchNextButtonStatus[][5] = {
     // PAUSE_ITEM  + PAGE_SWITCH_PT_LEFT
     //
     //  -> PAUSE_EQUIP
-    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_ENABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
     // PAUSE_MAP   + PAGE_SWITCH_PT_LEFT
     //
     //  -> PAUSE_ITEM
@@ -683,7 +736,7 @@ static u8 gPageSwitchNextButtonStatus[][5] = {
     //
     // PAUSE_QUEST + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_EQUIP
-    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_ENABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
     //
     // PAUSE_EQUIP + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_ITEM
@@ -917,7 +970,12 @@ static void* sContinuePromptTexs[] =
     LANGUAGE_ARRAY(gContinuePlayingJPNTex, gContinuePlayingENGTex, gContinuePlayingGERTex, gContinuePlayingFRATex);
 
 static void* sPromptChoiceTexs[][2] = {
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    { gPauseYesENGTex, gPauseNoENGTex },
+    { gPauseYesGERTex, gPauseNoGERTex },
+    { gPauseYesFRATex, gPauseNoFRATex },
+    { gPauseYesJPNTex, gPauseNoJPNTex },
+#elif OOT_NTSC
     { gPauseYesJPNTex, gPauseNoJPNTex },
     { gPauseYesENGTex, gPauseNoENGTex },
 #else
@@ -932,7 +990,7 @@ static void* sPromptChoiceTexs[][2] = {
 //! non-static, but we make it static here to match the bss order and patch the relocation section later in the build
 //! as our relocation generator does count COMMON symbols.
 
-static u8 D_808321A8[5];
+static u8 D_808321A8[9];
 static PreRender sPlayerPreRender;
 void* sPreRenderCvg;
 
@@ -964,8 +1022,6 @@ void KaleidoScope_SetupPlayerPreRender(PlayState* play) {
 
 void KaleidoScope_ProcessPlayerPreRender(void) {
     Sleep_Msec(50);
-    PreRender_ApplyFilters(&sPlayerPreRender);
-    PreRender_Destroy(&sPlayerPreRender);
 }
 
 Gfx* KaleidoScope_QuadTextureIA4(Gfx* gfx, void* texture, s16 width, s16 height, u16 point) {
@@ -1095,6 +1151,7 @@ void KaleidoScope_SetupPageSwitch(PauseContext* pauseCtx, u8 pt) {
     gSaveContext.buttonStatus[2] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][2];
     gSaveContext.buttonStatus[3] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][3];
     gSaveContext.buttonStatus[4] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][4];
+    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][1];
 
     PRINTF("kscope->kscp_pos+pt = %d\n", pauseCtx->pageIndex + pt);
 
@@ -1103,19 +1160,28 @@ void KaleidoScope_SetupPageSwitch(PauseContext* pauseCtx, u8 pt) {
 }
 
 void KaleidoScope_HandlePageToggles(PauseContext* pauseCtx, Input* input) {
-    if ((pauseCtx->debugState == 0) && CHECK_BTN_ALL(input->press.button, BTN_L)) {
+    if ((pauseCtx->debugState == 0) && CHECK_BTN_ALL(input->rel.button, BTN_L) && !pressed_r && editor_timer < (60 / R_UPDATE_RATE)) {
 #if DEBUG_FEATURES
         pauseCtx->debugState = 1;
 #endif
         return;
     }
+    
+    if (pauseCtx->debugState == 0) {
+        if (CHECK_BTN_ALL(input->press.button, BTN_R))
+            pressed_r = 1;
+        if (CHECK_BTN_ALL(input->cur.button, BTN_L) && editor_timer < 255)
+            editor_timer++;
+        if (CHECK_BTN_ALL(input->rel.button, BTN_L))
+            editor_timer = pressed_r = 0;
+    }
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
+    if (CHECK_BTN_ALL(input->press.button, BTN_R) && !CHECK_BTN_ALL(input->cur.button, BTN_L)) {
         KaleidoScope_SetupPageSwitch(pauseCtx, PAGE_SWITCH_PT_RIGHT);
         return;
     }
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_Z)) {
+    if (CHECK_BTN_ALL(input->press.button, BTN_Z) && !CHECK_BTN_ALL(input->cur.button, BTN_L)) {
         KaleidoScope_SetupPageSwitch(pauseCtx, PAGE_SWITCH_PT_LEFT);
         return;
     }
@@ -2048,7 +2114,7 @@ void KaleidoScope_DrawInfoPanel(PlayState* play) {
                     pauseCtx->infoPanelVtx[20].v.ob[0] = pauseCtx->infoPanelVtx[22].v.ob[0] =
                         pauseCtx->infoPanelVtx[16].v.ob[0] + R_KALEIDO_UNK2(gSaveContext.language);
 
-#if OOT_PAL
+#if OOT_PAL || OOT_NTSC_N64
                     if (gSaveContext.language == LANGUAGE_GER) {
                         pauseCtx->infoPanelVtx[20].v.ob[0] = pauseCtx->infoPanelVtx[22].v.ob[0] =
                             pauseCtx->infoPanelVtx[16].v.ob[0] - 99;
@@ -2123,10 +2189,14 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                     texIndex += WORLD_MAP_POINT_MAX;
                 }
 
-#if OOT_PAL
+#if OOT_PAL || OOT_NTSC_N64
                 if (gSaveContext.language == LANGUAGE_FRA) {
                     texIndex += WORLD_MAP_POINT_MAX;
                 }
+#endif
+#if OOT_NTSC_N64
+                if (gSaveContext.language == LANGUAGE_JPN)
+                    texIndex += WORLD_MAP_POINT_MAX * 2;
 #endif
 
                 DMA_REQUEST_SYNC(pauseCtx->nameSegment,
@@ -2139,10 +2209,14 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                     texIndex += 123;
                 }
 
-#if OOT_PAL
+#if OOT_PAL || OOT_NTSC_N64
                 if (gSaveContext.language == LANGUAGE_FRA) {
                     texIndex += 123;
                 }
+#endif
+#if OOT_NTSC_N64
+                if (gSaveContext.language == LANGUAGE_JPN)
+                    texIndex += 123 * 2;
 #endif
 
                 PRINTF("J_N=%d  point=%d\n", gSaveContext.language, texIndex);
@@ -3360,21 +3434,21 @@ void KaleidoScope_DrawGameOver(PlayState* play) {
 
     gDPSetTileSize(POLY_OPA_DISP++, 1, 0, VREG(89) & 0x7F, 63 << 2, (31 << 2) + (VREG(89) & 0x7F));
 
-    gSPTextureRectangle(POLY_OPA_DISP++, VREG(87) << 2, VREG(88) << 2, (VREG(87) + 64) << 2, (VREG(88) + 32) << 2,
-                        G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((VREG(87) + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((VREG(88) << 2)), HIRES_MULTIPLY(((VREG(87) + WS_SHIFT_HALF + 64) << 2)), HIRES_MULTIPLY(((VREG(88) + 32) << 2)),
+                        G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
     gDPLoadMultiBlock(POLY_OPA_DISP++, gGameOverP2Tex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0,
                       G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
                       G_TX_NOLOD);
 
-    gSPTextureRectangle(POLY_OPA_DISP++, (VREG(87) + 64) << 2, VREG(88) << 2, (VREG(87) + 128) << 2,
-                        (VREG(88) + 32) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((VREG(87) + WS_SHIFT_HALF + 64) << 2)), HIRES_MULTIPLY((VREG(88) << 2)), HIRES_MULTIPLY(((VREG(87) + WS_SHIFT_HALF + 128) << 2)),
+                        HIRES_MULTIPLY(((VREG(88) + 32) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
     gDPLoadMultiBlock(POLY_OPA_DISP++, gGameOverP3Tex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0,
                       G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
                       G_TX_NOLOD);
-    gSPTextureRectangle(POLY_OPA_DISP++, (VREG(87) + 128) << 2, VREG(88) << 2, (VREG(87) + 192) << 2,
-                        (VREG(88) + 32) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((VREG(87) + (WS_SHIFT_HALF + 128) << 2)), HIRES_MULTIPLY((VREG(88) << 2)), HIRES_MULTIPLY(((VREG(87) + WS_SHIFT_HALF + 192) << 2)),
+                        HIRES_MULTIPLY(((VREG(88) + 32) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
     CLOSE_DISPS(gfxCtx, "../z_kaleido_scope_PAL.c", 3169);
 }
@@ -3464,6 +3538,7 @@ void KaleidoScope_UpdateOpening(PlayState* play) {
         gSaveContext.buttonStatus[2] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + PAGE_SWITCH_PT_LEFT][2];
         gSaveContext.buttonStatus[3] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + PAGE_SWITCH_PT_LEFT][3];
         gSaveContext.buttonStatus[4] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + PAGE_SWITCH_PT_LEFT][4];
+        dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + PAGE_SWITCH_PT_LEFT][1];
 
         pauseCtx->pageIndex = sPageSwitchNextPageIndex[pauseCtx->nextPageMode];
 
@@ -3669,6 +3744,10 @@ void KaleidoScope_Update(PlayState* play) {
             D_808321A8[2] = gSaveContext.buttonStatus[2];
             D_808321A8[3] = gSaveContext.buttonStatus[3];
             D_808321A8[4] = gSaveContext.buttonStatus[4];
+            D_808321A8[5] = dpadStatus[0];
+            D_808321A8[6] = dpadStatus[1];
+            D_808321A8[7] = dpadStatus[2];
+            D_808321A8[8] = dpadStatus[3];
 
             pauseCtx->cursorX[PAUSE_MAP] = 0;
             pauseCtx->cursorSlot[PAUSE_MAP] = pauseCtx->cursorPoint[PAUSE_MAP] = pauseCtx->dungeonMapSlot =
@@ -3753,7 +3832,21 @@ void KaleidoScope_Update(PlayState* play) {
 
             pauseCtx->iconItemLangSegment = (void*)ALIGN16((uintptr_t)pauseCtx->iconItemAltSegment + size2);
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+            if (gSaveContext.language == LANGUAGE_JPN) {
+                size = (uintptr_t)_icon_item_jpn_staticSegmentRomEnd - (uintptr_t)_icon_item_jpn_staticSegmentRomStart;
+                DMA_REQUEST_SYNC(pauseCtx->iconItemLangSegment, (uintptr_t)_icon_item_jpn_staticSegmentRomStart, size, "../z_kaleido_scope_PAL.c", UNK_LINE);
+            } else if (gSaveContext.language == LANGUAGE_ENG) {
+                size = (uintptr_t)_icon_item_nes_staticSegmentRomEnd - (uintptr_t)_icon_item_nes_staticSegmentRomStart;
+                DMA_REQUEST_SYNC(pauseCtx->iconItemLangSegment, (uintptr_t)_icon_item_nes_staticSegmentRomStart, size, "../z_kaleido_scope_PAL.c", UNK_LINE);
+            } else if (gSaveContext.language == LANGUAGE_GER) {
+                size = (uintptr_t)_icon_item_ger_staticSegmentRomEnd - (uintptr_t)_icon_item_ger_staticSegmentRomStart;
+                DMA_REQUEST_SYNC(pauseCtx->iconItemLangSegment, (uintptr_t)_icon_item_ger_staticSegmentRomStart, size, "../z_kaleido_scope_PAL.c", UNK_LINE);
+            } else {
+                size = (uintptr_t)_icon_item_fra_staticSegmentRomEnd - (uintptr_t)_icon_item_fra_staticSegmentRomStart;
+                DMA_REQUEST_SYNC(pauseCtx->iconItemLangSegment, (uintptr_t)_icon_item_fra_staticSegmentRomStart, size, "../z_kaleido_scope_PAL.c", UNK_LINE);
+            }
+#elif OOT_NTSC
             if (gSaveContext.language == LANGUAGE_JPN) {
                 size = (uintptr_t)_icon_item_jpn_staticSegmentRomEnd - (uintptr_t)_icon_item_jpn_staticSegmentRomStart;
                 PRINTF("icon_item_jpn dungeon-size=%x\n", size);
@@ -3792,7 +3885,15 @@ void KaleidoScope_Update(PlayState* play) {
             PRINTF(T("サイズ＝%x\n", "size=%x\n"), size2 + size1 + size0 + size + 0x800);
 
             if (((void)0, gSaveContext.worldMapArea) < WORLD_MAP_AREA_MAX) {
-#if OOT_NTSC
+#if OOT_NTSC_N64
+                if (gSaveContext.language == LANGUAGE_JPN)
+                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_JPN) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                else if (gSaveContext.language == LANGUAGE_ENG)
+                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                else if (gSaveContext.language == LANGUAGE_GER)
+                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_GER) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                else DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_FRA) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+#elif OOT_NTSC
                 if (gSaveContext.language == LANGUAGE_JPN) {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
@@ -4076,6 +4177,7 @@ void KaleidoScope_Update(PlayState* play) {
         case PAUSE_STATE_MAIN:
             switch (pauseCtx->mainState) {
                 case PAUSE_MAIN_STATE_IDLE:
+                    Interface_ChangeDpadSet(play);
                     if (CHECK_BTN_ALL(input->press.button, BTN_START)) {
                         Interface_SetDoAction(play, DO_ACTION_NONE);
                         pauseCtx->state = PAUSE_STATE_CLOSING;
@@ -4091,6 +4193,7 @@ void KaleidoScope_Update(PlayState* play) {
                                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                         gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                             gSaveContext.buttonStatus[3] = BTN_DISABLED;
+                        dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                         gSaveContext.buttonStatus[4] = BTN_ENABLED;
                         gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
                         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
@@ -4139,6 +4242,7 @@ void KaleidoScope_Update(PlayState* play) {
                                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                         gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                             gSaveContext.buttonStatus[3] = BTN_DISABLED;
+                        dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                         gSaveContext.buttonStatus[4] = BTN_ENABLED;
                         gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
                         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
@@ -4193,6 +4297,7 @@ void KaleidoScope_Update(PlayState* play) {
                                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                         gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                             gSaveContext.buttonStatus[3] = BTN_DISABLED;
+                        dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                         gSaveContext.buttonStatus[4] = BTN_ENABLED;
                         gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
                         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
@@ -4228,6 +4333,7 @@ void KaleidoScope_Update(PlayState* play) {
                             Interface_SetDoAction(play, DO_ACTION_NONE);
                             gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                                 gSaveContext.buttonStatus[3] = BTN_ENABLED;
+                            dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
                             gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
                             Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
                             pauseCtx->savePromptState = PAUSE_SAVE_PROMPT_STATE_CLOSING;
@@ -4260,6 +4366,7 @@ void KaleidoScope_Update(PlayState* play) {
                         func_800F64E0(0);
                         gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                             gSaveContext.buttonStatus[3] = BTN_ENABLED;
+                        dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
                         gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
                         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
 #if PLATFORM_GC && OOT_NTSC
@@ -4274,6 +4381,7 @@ void KaleidoScope_Update(PlayState* play) {
                         Interface_SetDoAction(play, DO_ACTION_NONE);
                         gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                             gSaveContext.buttonStatus[3] = BTN_ENABLED;
+                        dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
                         gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
                         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
                         pauseCtx->savePromptState = PAUSE_SAVE_PROMPT_STATE_CLOSING_AFTER_SAVED;
@@ -4357,7 +4465,21 @@ void KaleidoScope_Update(PlayState* play) {
 
             pauseCtx->iconItemLangSegment = (void*)ALIGN16((uintptr_t)pauseCtx->iconItemAltSegment + size2);
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+            if (gSaveContext.language == LANGUAGE_JPN) {
+                size = (uintptr_t)_icon_item_jpn_staticSegmentRomEnd - (uintptr_t)_icon_item_jpn_staticSegmentRomStart;
+                DMA_REQUEST_SYNC(pauseCtx->iconItemLangSegment, (uintptr_t)_icon_item_jpn_staticSegmentRomStart, size, "../z_kaleido_scope_PAL.c", UNK_LINE);
+            } else if (gSaveContext.language == LANGUAGE_ENG) {
+                size = (uintptr_t)_icon_item_nes_staticSegmentRomEnd - (uintptr_t)_icon_item_nes_staticSegmentRomStart;
+                DMA_REQUEST_SYNC(pauseCtx->iconItemLangSegment, (uintptr_t)_icon_item_nes_staticSegmentRomStart, size, "../z_kaleido_scope_PAL.c", UNK_LINE);
+            } else if (gSaveContext.language == LANGUAGE_GER) {
+                size = (uintptr_t)_icon_item_ger_staticSegmentRomEnd - (uintptr_t)_icon_item_ger_staticSegmentRomStart;
+                DMA_REQUEST_SYNC(pauseCtx->iconItemLangSegment, (uintptr_t)_icon_item_ger_staticSegmentRomStart, size, "../z_kaleido_scope_PAL.c", UNK_LINE);
+            } else {
+                size = (uintptr_t)_icon_item_fra_staticSegmentRomEnd - (uintptr_t)_icon_item_fra_staticSegmentRomStart;
+                DMA_REQUEST_SYNC(pauseCtx->iconItemLangSegment, (uintptr_t)_icon_item_fra_staticSegmentRomStart, size, "../z_kaleido_scope_PAL.c", UNK_LINE);
+            }
+#elif OOT_NTSC
             if (gSaveContext.language == LANGUAGE_JPN) {
                 size = (uintptr_t)_icon_item_jpn_staticSegmentRomEnd - (uintptr_t)_icon_item_jpn_staticSegmentRomStart;
                 PRINTF("icon_item_jpn dungeon-size=%x\n", size);
@@ -4702,6 +4824,18 @@ void KaleidoScope_Update(PlayState* play) {
             gSaveContext.buttonStatus[2] = D_808321A8[2];
             gSaveContext.buttonStatus[3] = D_808321A8[3];
             gSaveContext.buttonStatus[4] = D_808321A8[4];
+            
+            if (!switchedDualSet) {
+                dpadStatus[0] = D_808321A8[5];
+                dpadStatus[1] = D_808321A8[6];
+                dpadStatus[2] = D_808321A8[7];
+                dpadStatus[3] = D_808321A8[8];
+            }
+            else {
+                dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
+                switchedDualSet = false;
+            }
+            
             interfaceCtx->unk_1FA = interfaceCtx->unk_1FC = 0;
             PRINTF_COLOR_YELLOW();
             PRINTF("i=%d  LAST_TIME_TYPE=%d\n", i, gSaveContext.prevHudVisibilityMode);

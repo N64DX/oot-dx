@@ -6,6 +6,9 @@
 #include "z64save.h"
 
 #include "assets/textures/icon_item_static/icon_item_static.h"
+#if OOT_NTSC_N64
+#include "assets/textures/icon_item_static/icon_item_static_all.h"
+#endif
 #include "assets/textures/icon_item_24_static/icon_item_24_static.h"
 #include "assets/textures/parameter_static/parameter_static.h"
 
@@ -290,6 +293,8 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
     Player* player = GET_PLAYER(play);
     s32 pad;
     u16 equipValue = gSaveContext.save.info.equips.equipment & gEquipMasks[equipment];
+    u8 i;
+    u8 item;
 
     PRINTF(T("装備アイテム抹消 = %d  zzz=%d\n", "Erasing equipment item = %d  zzz=%d\n"), equipment, equipValue);
 
@@ -306,6 +311,23 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
         if (equipment == EQUIP_TYPE_SWORD) {
             gSaveContext.save.info.equips.buttonItems[0] = ITEM_NONE;
             gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 1;
+        }
+
+        if (equipment == EQUIP_TYPE_SWORD || equipment == EQUIP_TYPE_SHIELD)
+            for (i=1; i<4; i++)
+                if ( (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS && equipment == EQUIP_TYPE_SWORD) || (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SHIELDS && equipment == EQUIP_TYPE_SHIELD) ) {
+                    gSaveContext.save.info.equips.buttonItems[i]    = ITEM_NONE;
+                    gSaveContext.save.info.equips.cButtonSlots[i-1] = SLOT_NONE;
+                    break;
+                }
+
+        for (i=1; i<8; i++) {
+            if (i<4)
+                item = gSaveContext.save.info.equips.buttonItems[i];
+            else item = Interface_GetItemFromDpad(i-4);
+
+            if ( (item == ITEM_SWORDS && equipment == EQUIP_TYPE_SWORD) || (item == ITEM_SHIELDS && equipment == EQUIP_TYPE_SHIELD) || (item == ITEM_TUNICS && equipment == EQUIP_TYPE_TUNIC) || (item == ITEM_BOOTS && equipment == EQUIP_TYPE_BOOTS) )
+                Interface_LoadItemIcon1(play, i);
         }
 
         Player_SetEquipmentData(play, player);

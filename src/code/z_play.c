@@ -46,6 +46,7 @@
 #include "z64player.h"
 #include "z64save.h"
 #include "z64vis.h"
+#include "segment_symbols.h"
 
 #pragma increment_block_number "gc-eu:0 gc-eu-mq:0 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ique-cn:224" \
                                "ntsc-1.0:240 ntsc-1.1:240 ntsc-1.2:240 pal-1.0:240 pal-1.1:240"
@@ -347,6 +348,11 @@ void Play_Init(GameState* thisx) {
     CollisionCheck_InitContext(this, &this->colChkCtx);
     AnimTaskQueue_Reset(&this->animTaskQueue);
     Cutscene_InitContext(this, &this->csCtx);
+    
+#if OOT_NTSC_N64
+    if (gSaveContext.language != LANGUAGE_JPN && gSaveContext.gameMode == GAMEMODE_NORMAL)
+        DMA_REQUEST_SYNC(this->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
+#endif
 
     if (gSaveContext.nextCutsceneIndex != 0xFFEF) {
         gSaveContext.save.cutsceneIndex = gSaveContext.nextCutsceneIndex;
@@ -405,17 +411,6 @@ void Play_Init(GameState* thisx) {
         gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + ((void)0, gSaveContext.sceneLayer)].spawn);
 
     PRINTF("\nSCENE_NO=%d COUNTER=%d\n", ((void)0, gSaveContext.save.entranceIndex), gSaveContext.sceneLayer);
-
-#if PLATFORM_GC
-    // When entering Gerudo Valley in the credits, trigger the GC emulator to play the ending movie.
-    // The emulator constantly checks whether PC is 0x81000000, so this works even though it's not a valid address.
-    if ((gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId == SCENE_GERUDO_VALLEY) &&
-        gSaveContext.sceneLayer == 6) {
-        PRINTF(T("エンディングはじまるよー\n", "The ending starts\n"));
-        ((void (*)(void))0x81000000)();
-        PRINTF(T("出戻り？\n", "Return?\n"));
-    }
-#endif
 
 #if PLATFORM_N64
     if ((B_80121220 != NULL && B_80121220->unk_54 != NULL && B_80121220->unk_54(this))) {
@@ -1242,8 +1237,6 @@ void Play_Draw(PlayState* this) {
             // so that `pauseBgPreRender.fbufSave` and `pauseBgPreRender.cvgSave` are filled with the appropriate
             // content and can be used by `PreRender_ApplyFilters` below.
             Sched_FlushTaskQueue();
-
-            PreRender_ApplyFilters(&this->pauseBgPreRender);
 
             R_PAUSE_BG_PRERENDER_STATE = PAUSE_BG_PRERENDER_READY;
         } else if (R_PAUSE_BG_PRERENDER_STATE >= PAUSE_BG_PRERENDER_MAX) {

@@ -9,6 +9,7 @@
 #include "map.h"
 #include "printf.h"
 #include "regs.h"
+#include "resolution.h"
 #include "segment_symbols.h"
 #include "segmented_address.h"
 #include "sequence.h"
@@ -26,8 +27,14 @@
 #include "z64save.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
-#include "assets/textures/do_action_static/do_action_static.h"
 #include "assets/textures/icon_item_static/icon_item_static.h"
+
+#if OOT_NTSC_N64
+#include "assets/textures/do_action_static/do_action_static_all.h"
+#include "assets/textures/icon_item_static/icon_item_static_all.h"
+#else
+#include "assets/textures/do_action_static/do_action_static.h"
+#endif
 
 typedef struct RestrictionFlags {
     /* 0x00 */ u8 sceneId;
@@ -153,6 +160,14 @@ static s16 sMagicBorderR = 255;
 static s16 sMagicBorderG = 255;
 static s16 sMagicBorderB = 255;
 
+bool dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
+u8 dpadAlphas[] = { 0, 0, 0, 0, 0 };
+bool switchedDualSet = false;
+u8 sNoclipTimer = 0;
+static u8 shielded = 0;
+static u16 dpad_x;
+static u16 dpad_y;
+
 static s16 sExtraItemBases[] = {
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_5
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_10
@@ -188,6 +203,10 @@ static Gfx sSetupDL_80125A60[] = {
     gsSPEndDisplayList(),
 };
 
+u8 Interface_IsEquipmentItem(u8 item) {
+    return ((item >= ITEM_SWORDS && item <= ITEM_BOOTS) || item == ITEM_TUNIC_GORON || item == ITEM_TUNIC_ZORA || item == ITEM_BOOTS_IRON || item == ITEM_BOOTS_HOVER);
+}
+
 // original name: "alpha_change"
 void Interface_ChangeHudVisibilityMode(u16 hudVisibilityMode) {
     if (hudVisibilityMode != gSaveContext.hudVisibilityMode) {
@@ -203,6 +222,7 @@ void Interface_ChangeHudVisibilityMode(u16 hudVisibilityMode) {
  */
 void Interface_RaiseButtonAlphas(PlayState* play, s16 risingAlpha) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    u8 i;
 
     if (gSaveContext.buttonStatus[0] == BTN_DISABLED) {
         if (interfaceCtx->bAlpha != 70) {
@@ -253,6 +273,30 @@ void Interface_RaiseButtonAlphas(PlayState* play, s16 risingAlpha) {
             interfaceCtx->aAlpha = risingAlpha;
         }
     }
+
+    if (dpadStatus[0] == BTN_DISABLED && dpadStatus[1] == BTN_DISABLED && dpadStatus[2] == BTN_DISABLED && dpadStatus[3] == BTN_DISABLED) {
+        if (dpadAlphas[0] != 70)
+            dpadAlphas[0] = 70;
+    }
+    else if (dpadAlphas[0] != 255)
+        dpadAlphas[0] = risingAlpha;
+    
+    for (i=1; i<5; i++) {
+        if (dpadStatus[i-1] == BTN_DISABLED) {
+            if (dpadAlphas[i] != 70)
+                dpadAlphas[i] = 70;
+        }
+        else if (dpadAlphas[i] != 255)
+            dpadAlphas[i] = risingAlpha;
+    }
+}
+
+void updateDpadAlphas(u8 dimmingAlpha) {
+    u8 i;
+
+    for (i=0; i<5; i++)
+        if (dpadAlphas[i] != 0 && dpadAlphas[i] > dimmingAlpha)
+            dpadAlphas[i] = dimmingAlpha;
 }
 
 /**
@@ -286,6 +330,8 @@ void Interface_DimButtonAlphas(PlayState* play, s16 dimmingAlpha, s16 risingAlph
     if ((interfaceCtx->cRightAlpha != 0) && (interfaceCtx->cRightAlpha > dimmingAlpha)) {
         interfaceCtx->cRightAlpha = dimmingAlpha;
     }
+
+    updateDpadAlphas(dimmingAlpha);
 }
 
 void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
@@ -338,6 +384,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
 
             PRINTF("a_alpha=%d, c_alpha=%d\n", interfaceCtx->aAlpha, interfaceCtx->cLeftAlpha);
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_HEARTS_FORCE:
@@ -400,6 +447,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 interfaceCtx->aAlpha = risingAlpha;
             }
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_A_HEARTS_MAGIC_FORCE:
@@ -526,6 +574,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 interfaceCtx->magicAlpha = risingAlpha;
             }
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_B_ALT:
@@ -561,6 +610,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 interfaceCtx->bAlpha = risingAlpha;
             }
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_HEARTS:
@@ -596,6 +646,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 interfaceCtx->healthAlpha = risingAlpha;
             }
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_A_B_MINIMAP:
@@ -631,6 +682,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 interfaceCtx->healthAlpha = dimmingAlpha;
             }
 
+            updateDpadAlphas(dimmingAlpha);
             break;
 
         case HUD_VISIBILITY_HEARTS_MAGIC_FORCE:
@@ -680,6 +732,7 @@ void func_80083108(PlayState* play) {
                 if (gSaveContext.buttonStatus[0] == BTN_DISABLED) {
                     gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                         gSaveContext.buttonStatus[3] = BTN_ENABLED;
+                    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
                 }
 
                 if ((gSaveContext.save.info.equips.buttonItems[0] != ITEM_SLINGSHOT) &&
@@ -710,6 +763,7 @@ void func_80083108(PlayState* play) {
 
                     gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] = gSaveContext.buttonStatus[3] =
                         BTN_DISABLED;
+                    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                     Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_A_HEARTS_MAGIC_MINIMAP_FORCE);
                 }
 
@@ -756,6 +810,7 @@ void func_80083108(PlayState* play) {
 
                 gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                     gSaveContext.buttonStatus[3] = BTN_DISABLED;
+                dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
             } else {
                 if (gSaveContext.buttonStatus[0] == BTN_ENABLED) {
@@ -764,6 +819,7 @@ void func_80083108(PlayState* play) {
 
                 gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
                     gSaveContext.buttonStatus[3] = BTN_DISABLED;
+                dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
             }
         } else if (msgCtx->msgMode == MSGMODE_NONE) {
@@ -778,7 +834,7 @@ void func_80083108(PlayState* play) {
                 for (i = 1; i < 4; i++) {
                     if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] != ITEM_HOOKSHOT) &&
-                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LONGSHOT)) {
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LONGSHOT) && (gSaveContext.save.info.equips.buttonItems[i] < ITEM_MASK_KEATON || gSaveContext.save.info.equips.buttonItems[i] > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i])) {
                             if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                                 sp28 = true;
                             }
@@ -791,12 +847,53 @@ void func_80083108(PlayState* play) {
 
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
+                    } else if (Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_SWIMMING) {
+                        if ((gSaveContext.save.info.equips.buttonItems[i]  < ITEM_MASK_KEATON || gSaveContext.save.info.equips.buttonItems[i] > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i])) {
+                            if (gSaveContext.buttonStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            gSaveContext.buttonStatus[i] = BTN_DISABLED;
+                        }
+                        else {
+                            if (gSaveContext.buttonStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            gSaveContext.buttonStatus[i] = BTN_ENABLED;
+                        }
                     } else {
                         if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                             sp28 = true;
                         }
 
                         gSaveContext.buttonStatus[i] = BTN_DISABLED;
+                    }
+                }
+                for (i=0; i<4; i++) {
+                    if (Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) {
+                        if (Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT && Interface_GetItemFromDpad(i) != ITEM_LONGSHOT && (Interface_GetItemFromDpad(i) < ITEM_MASK_KEATON || Interface_GetItemFromDpad(i) > ITEM_MASK_TRUTH) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        } else {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
+                    }
+                    else if (Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_SWIMMING) {
+                        if (((Interface_GetItemFromDpad(i) < ITEM_MASK_KEATON || Interface_GetItemFromDpad(i) > ITEM_MASK_TRUTH)) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
+                        else {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
+                    }
+                    else {
+                        if (dpadStatus[i] == BTN_ENABLED)
+                            sp28 = true;
+                        dpadStatus[i] = BTN_DISABLED;
                     }
                 }
 
@@ -811,6 +908,7 @@ void func_80083108(PlayState* play) {
                     gSaveContext.buttonStatus[1] = BTN_DISABLED;
                     gSaveContext.buttonStatus[2] = BTN_DISABLED;
                     gSaveContext.buttonStatus[3] = BTN_DISABLED;
+                    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                     gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
                     Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
                 }
@@ -862,6 +960,18 @@ void func_80083108(PlayState* play) {
                         gSaveContext.buttonStatus[i] = BTN_ENABLED;
                     }
                 }
+                for (i=0; i<4; i++) {
+                    if (Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME) {
+                        if (dpadStatus[i] == BTN_ENABLED)
+                            sp28 = true;
+                        dpadStatus[i] = BTN_DISABLED;
+                    }
+                    else {
+                        if (dpadStatus[i] == BTN_DISABLED)
+                            sp28 = true;
+                        dpadStatus[i] = BTN_ENABLED;
+                    }
+                }
 
                 if (sp28) {
                     gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
@@ -869,6 +979,8 @@ void func_80083108(PlayState* play) {
 
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
             } else {
+                u8 status, item;
+
                 if (interfaceCtx->restrictions.bButton == 0) {
                     if ((gSaveContext.save.info.equips.buttonItems[0] == ITEM_SLINGSHOT) ||
                         (gSaveContext.save.info.equips.buttonItems[0] == ITEM_BOW) ||
@@ -927,6 +1039,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.bottles == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
@@ -938,6 +1056,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.tradeItems != 0) {
@@ -951,6 +1075,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.tradeItems == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
@@ -962,6 +1092,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.hookshot != 0) {
@@ -975,6 +1111,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_HOOKSHOT || Interface_GetItemFromDpad(i) == ITEM_LONGSHOT) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.hookshot == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] == ITEM_HOOKSHOT) ||
@@ -986,6 +1128,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_HOOKSHOT || Interface_GetItemFromDpad(i) == ITEM_LONGSHOT) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.ocarina != 0) {
@@ -999,6 +1147,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_OCARINA_FAIRY || Interface_GetItemFromDpad(i) == ITEM_OCARINA_OF_TIME) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.ocarina == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] == ITEM_OCARINA_FAIRY) ||
@@ -1010,6 +1164,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_OCARINA_FAIRY || Interface_GetItemFromDpad(i) == ITEM_OCARINA_OF_TIME) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.farores != 0) {
@@ -1023,6 +1183,12 @@ void func_80083108(PlayState* play) {
                             PRINTF("***(i=%d)***  ", i);
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_FARORES_WIND) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.farores == 0) {
                     for (i = 1; i < 4; i++) {
                         if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_FARORES_WIND) {
@@ -1033,6 +1199,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_FARORES_WIND) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.dinsNayrus != 0) {
@@ -1046,6 +1218,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_DISABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_DINS_FIRE || Interface_GetItemFromDpad(i) == ITEM_NAYRUS_LOVE) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
                 } else if (interfaceCtx->restrictions.dinsNayrus == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] == ITEM_DINS_FIRE) ||
@@ -1057,6 +1235,12 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) == ITEM_DINS_FIRE || Interface_GetItemFromDpad(i) == ITEM_NAYRUS_LOVE) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
 
                 if (interfaceCtx->restrictions.all != 0) {
@@ -1066,7 +1250,8 @@ void func_80083108(PlayState* play) {
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
-                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK))) {
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
+                            !(Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i]))) {
                             if ((play->sceneId != SCENE_TREASURE_BOX_SHOP) ||
                                 (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LENS_OF_TRUTH)) {
                                 if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
@@ -1083,6 +1268,19 @@ void func_80083108(PlayState* play) {
                             }
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) && !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                            if (play->sceneId != SCENE_TREASURE_BOX_SHOP || Interface_GetItemFromDpad(i) != ITEM_LENS_OF_TRUTH) {
+                                if (dpadStatus[i] == BTN_ENABLED)
+                                    sp28 = true;
+                                dpadStatus[i] = BTN_DISABLED;
+                            }
+                            else {
+                                if (dpadStatus[i] == BTN_DISABLED)
+                                    sp28 = true;
+                                dpadStatus[i] = BTN_ENABLED;
+                            }
+                        }
                 } else if (interfaceCtx->restrictions.all == 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] != ITEM_DINS_FIRE) &&
@@ -1103,6 +1301,14 @@ void func_80083108(PlayState* play) {
                             gSaveContext.buttonStatus[i] = BTN_ENABLED;
                         }
                     }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) != ITEM_DINS_FIRE     && Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT        &&   Interface_GetItemFromDpad(i) != ITEM_LONGSHOT     && Interface_GetItemFromDpad(i) != ITEM_FARORES_WIND && Interface_GetItemFromDpad(i) != ITEM_NAYRUS_LOVE &&
+                            Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE)  &&
+                          !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
                 }
             }
         }
@@ -1177,6 +1383,9 @@ void Interface_SetSceneRestrictions(PlayState* play) {
         }
         i++;
     } while (sRestrictionFlags[i].sceneId != 0xFF);
+    
+    if (!interfaceCtx->restrictions.tradeItems)
+        GET_PLAYER(play)->currentMask = GET_MASK_AGE();
 }
 
 Gfx* Gfx_TextureIA8(Gfx* displayListHead, void* texture, s16 textureWidth, s16 textureHeight, s16 rectLeft, s16 rectTop,
@@ -1310,6 +1519,8 @@ void Inventory_SwapAgeEquipment(void) {
             gSaveContext.save.info.equips.equipment &= gEquipNegMasks[EQUIP_TYPE_SHIELD];
         }
     }
+
+    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
 }
 
 void Interface_InitHorsebackArchery(PlayState* play) {
@@ -1322,6 +1533,8 @@ void Interface_InitHorsebackArchery(PlayState* play) {
 }
 
 void func_800849EC(PlayState* play) {
+    u8 i;
+
     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON);
     gSaveContext.save.info.inventory.equipment ^=
         OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE);
@@ -1333,14 +1546,42 @@ void func_800849EC(PlayState* play) {
     }
 
     Interface_LoadItemIcon1(play, 0);
+
+    for (i=1; i<8; i++) {
+        if (i<4) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                Interface_LoadItemIcon1(play, i);
+        }
+        else {
+            if (DPAD_BUTTON(i-4) == SLOT_SWORDS)
+                Interface_LoadItemIcon1(play, i);
+        }
+    }
 }
 
 void Interface_LoadItemIcon1(PlayState* play, u16 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    u8 item;
+
+    if (button < 4)
+        item = gSaveContext.save.info.equips.buttonItems[button];
+    else item = Interface_GetItemFromDpad(button-4);
+
+    if (item == ITEM_SWORDS)
+        item = gSaveContext.save.info.equips.buttonItems[0];
+    else if (item == ITEM_SHIELDS)
+        item = (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
+    else if (item == ITEM_TUNICS)
+        item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+    else if (item == ITEM_BOOTS)
+        item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
+
+    if (item >= 0xF0)
+        return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (button * ITEM_ICON_SIZE),
-                      GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[button]), ITEM_ICON_SIZE, 0,
+                      GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1171);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
@@ -1353,6 +1594,36 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
                       GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[button]), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
+}
+
+u8 Interface_GetItemFromDpad(u8 button) {
+    if (DPAD_BUTTON(button) == SLOT_ARROW_FIRE)
+        return (gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE]  == ITEM_ARROW_FIRE)  ? ITEM_BOW_FIRE  : ITEM_NONE;
+    else if (DPAD_BUTTON(button) == SLOT_ARROW_ICE)
+        return (gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE]   == ITEM_ARROW_ICE)   ? ITEM_BOW_ICE   : ITEM_NONE;
+    else if (DPAD_BUTTON(button) == SLOT_ARROW_LIGHT)
+        return( gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] == ITEM_ARROW_LIGHT) ? ITEM_BOW_LIGHT : ITEM_NONE;
+    else if (DPAD_BUTTON(button) == SLOT_TRADE_CHILD)
+        return (gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] >= ITEM_WEIRD_EGG && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] <= ITEM_MASK_TRUTH) ? gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] : ITEM_NONE;
+    else if (DPAD_BUTTON(button) < SLOT_SWORDS)
+        return gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)];
+    else if (DPAD_BUTTON(button) == SLOT_SWORDS)
+        return ITEM_SWORDS;
+    else if (DPAD_BUTTON(button) == SLOT_SHIELDS)
+        return ITEM_SHIELDS;
+    else if (DPAD_BUTTON(button) == SLOT_TUNICS)
+        return ITEM_TUNICS;
+    else if (DPAD_BUTTON(button) == SLOT_BOOTS)
+        return ITEM_BOOTS;
+    else if (DPAD_BUTTON(button) == SLOT_TUNIC_GORON && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))
+        return ITEM_TUNIC_GORON;
+    else if (DPAD_BUTTON(button) == SLOT_TUNIC_ZORA  && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
+        return ITEM_TUNIC_ZORA;
+    else if (DPAD_BUTTON(button) == SLOT_BOOTS_IRON  && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON))
+        return ITEM_BOOTS_IRON;
+    else if (DPAD_BUTTON(button) == SLOT_BOOTS_HOVER && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
+        return ITEM_BOOTS_HOVER;
+    else return ITEM_NONE;
 }
 
 void func_80084BF4(PlayState* play, u16 flag) {
@@ -1379,10 +1650,12 @@ void func_80084BF4(PlayState* play, u16 flag) {
 
         gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
             gSaveContext.buttonStatus[3] = BTN_ENABLED;
+        dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL_NO_MINIMAP_BY_BTN_STATUS);
     } else {
         gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
             gSaveContext.buttonStatus[3] = BTN_ENABLED;
+        dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
         func_80083108(play);
     }
 }
@@ -1604,6 +1877,9 @@ u8 Item_Give(PlayState* play, u8 item) {
                 Interface_LoadItemIcon1(play, i);
             }
         }
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_HOOKSHOT)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_DEKU_STICK) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -1734,6 +2010,9 @@ u8 Item_Give(PlayState* play, u8 item) {
                 Interface_LoadItemIcon1(play, i);
             }
         }
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_OCARINA)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_MAGIC_BEAN) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -1812,6 +2091,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         temp = SLOT(item);
 
         if ((item != ITEM_BOTTLE_MILK_FULL) && (item != ITEM_BOTTLE_RUTOS_LETTER)) {
+            u8 j;
             if (item == ITEM_MILK) {
                 item = ITEM_BOTTLE_MILK_FULL;
                 temp = SLOT(item);
@@ -1839,6 +2119,14 @@ u8 Item_Give(PlayState* play, u8 item) {
                     }
 
                     gSaveContext.save.info.inventory.items[temp + i] = item;
+
+                    for (j=0; j<4; j++)
+                        if (DPAD_BUTTON(j) == temp + i) {
+                            Interface_LoadItemIcon1(play, j+4);
+                            dpadStatus[j] = BTN_ENABLED;
+                            break;
+                        }
+
                     return ITEM_NONE;
                 }
             }
@@ -1851,10 +2139,6 @@ u8 Item_Give(PlayState* play, u8 item) {
             }
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
-        if (item == ITEM_POACHERS_SAW) {
-            //! @bug Setting this shared flag makes getting the Deku Nut upgrade impossible
-            SET_ITEMGETINF(ITEMGETINF_FOREST_STAGE_NUT_UPGRADE);
-        }
 
         temp = INV_CONTENT(item);
         INV_CONTENT(item) = item;
@@ -2040,9 +2324,11 @@ s32 Inventory_ReplaceItem(PlayState* play, u16 oldItem, u16 newItem) {
                 if (gSaveContext.save.info.equips.buttonItems[i] == oldItem) {
                     gSaveContext.save.info.equips.buttonItems[i] = newItem;
                     Interface_LoadItemIcon1(play, i);
-                    return true;
                 }
             }
+            for (i=0; i<4; i++)
+                if (Interface_GetItemFromDpad(i) == oldItem)
+                    Interface_LoadItemIcon1(play, i+4);                 
             return true;
         }
     }
@@ -2075,9 +2361,28 @@ s32 Inventory_HasSpecificBottle(u8 bottleItem) {
 }
 
 void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
+    u8 i;
+    
     PRINTF("item_no=%x,  c_no=%x,  Pt=%x  Item_Register=%x\n", item, button,
            gSaveContext.save.info.equips.cButtonSlots[button - 1],
            gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button - 1]]);
+
+    if (button >= 4) {
+        if (gSaveContext.save.info.inventory.items[DPAD_BUTTON(button-4)] == ITEM_BOTTLE_MILK_FULL && item == ITEM_BOTTLE_EMPTY)
+            item = ITEM_BOTTLE_MILK_HALF;
+        
+        for (i=1; i<4; i++)
+            if (gSaveContext.save.info.equips.cButtonSlots[i-1] == DPAD_BUTTON(button-4)) {
+                gSaveContext.save.info.equips.cButtonSlots[i-1] = gSaveContext.save.info.equips.buttonItems[i] = item;
+                Interface_LoadItemIcon1(play, i);
+            }
+        
+        gSaveContext.save.info.inventory.items[DPAD_BUTTON(button-4)] = item;
+        Interface_LoadItemIcon1(play, button);
+        dpadStatus[button-4] = BTN_ENABLED;
+        
+        return;
+    }
 
     // Special case to only empty half of a Lon Lon Milk Bottle
     if ((gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button - 1]] ==
@@ -2088,6 +2393,10 @@ void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
 
     gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button - 1]] = item;
     gSaveContext.save.info.equips.buttonItems[button] = item;
+    
+    for (i=0; i<4; i++)
+        if (Interface_GetItemFromDpad(i) == item)
+            Interface_LoadItemIcon1(play, i+4);
 
     Interface_LoadItemIcon1(play, button);
 
@@ -2111,6 +2420,13 @@ s32 Inventory_ConsumeFairy(PlayState* play) {
                     break;
                 }
             }
+
+            for (j=0; j<4; j++)
+                if (DPAD_BUTTON(j) == bottleSlot) {
+                    Interface_LoadItemIcon1(play, j+4);
+                    break;
+                }
+
             PRINTF(T("妖精使用＝%d\n", "Fairy Usage=%d\n"), bottleSlot);
             gSaveContext.save.info.inventory.items[bottleSlot + i] = ITEM_BOTTLE_EMPTY;
             return true;
@@ -2129,7 +2445,7 @@ void func_80086D5C(s32* buf, u16 size) {
 }
 
 void Interface_LoadActionLabel(InterfaceContext* interfaceCtx, u16 action, s16 loadOffset) {
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
     static void* sDoActionTextures[] = { gAttackDoActionJPNTex, gCheckDoActionJPNTex };
 #else
     static void* sDoActionTextures[] = { gAttackDoActionENGTex, gCheckDoActionENGTex };
@@ -2143,13 +2459,19 @@ void Interface_LoadActionLabel(InterfaceContext* interfaceCtx, u16 action, s16 l
         action += DO_ACTION_MAX;
     }
 
-#if OOT_VERSION >= PAL_1_0
+#if (OOT_VERSION >= PAL_1_0) || OOT_NTSC_N64
     if (gSaveContext.language == 2) { // LANGUAGE_FRA for PAL versions
         action += DO_ACTION_MAX;
     }
 #endif
+#if OOT_NTSC_N64
+    if (gSaveContext.language == 3)
+        action += DO_ACTION_MAX * 2;
+#endif
 
-#if OOT_VERSION < PAL_1_0
+#if OOT_NTSC_N64
+    if ((action != 0 * DO_ACTION_MAX + DO_ACTION_NONE) && (action != 1 * DO_ACTION_MAX + DO_ACTION_NONE) && (action != 2 * DO_ACTION_MAX + DO_ACTION_NONE) && (action != 3 * DO_ACTION_MAX + DO_ACTION_NONE))
+#elif OOT_VERSION < PAL_1_0
     if ((action != 0 * DO_ACTION_MAX + DO_ACTION_NONE) && (action != 1 * DO_ACTION_MAX + DO_ACTION_NONE))
 #else
     if ((action != 0 * DO_ACTION_MAX + DO_ACTION_NONE) && (action != 1 * DO_ACTION_MAX + DO_ACTION_NONE) &&
@@ -2214,10 +2536,14 @@ void Interface_LoadActionLabelB(PlayState* play, u16 action) {
         action += DO_ACTION_MAX;
     }
 
-#if OOT_VERSION >= PAL_1_0
+#if (OOT_VERSION >= PAL_1_0) || OOT_NTSC_N64
     if (gSaveContext.language == 2) { // LANGUAGE_FRA for PAL versions
         action += DO_ACTION_MAX;
     }
+#endif
+#if OOT_NTSC_N64
+    if (gSaveContext.language == 3)
+        action += DO_ACTION_MAX * 2;
 #endif
 
     interfaceCtx->unk_1FC = action;
@@ -2605,7 +2931,7 @@ void Magic_Update(PlayState* play) {
                      (Player_GetEnvironmentalHazard(play) <= PLAYER_ENV_HAZARD_UNDERWATER_FREE)) ||
                     ((gSaveContext.save.info.equips.buttonItems[1] != ITEM_LENS_OF_TRUTH) &&
                      (gSaveContext.save.info.equips.buttonItems[2] != ITEM_LENS_OF_TRUTH) &&
-                     (gSaveContext.save.info.equips.buttonItems[3] != ITEM_LENS_OF_TRUTH)) ||
+                     (gSaveContext.save.info.equips.buttonItems[3] != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(0) != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(1) != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(2) != ITEM_LENS_OF_TRUTH) && (Interface_GetItemFromDpad(3) != ITEM_LENS_OF_TRUTH)) ||
                     !play->actorCtx.lensActive) {
                     // Force lens off and set magic meter state to idle
                     play->actorCtx.lensActive = false;
@@ -2696,18 +3022,18 @@ void Magic_DrawMeter(PlayState* play) {
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
         gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
 
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8, 16, R_MAGIC_METER_X, magicMeterY, 8, 16,
-                                      1 << 10, 1 << 10);
+        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8, 16, HIRES_MULTIPLY(R_MAGIC_METER_X), HIRES_MULTIPLY(magicMeterY), HIRES_MULTIPLY(8), HIRES_MULTIPLY(16),
+                                      HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, R_MAGIC_METER_X + 8, magicMeterY,
-                                      gSaveContext.magicCapacity, 16, 1 << 10, 1 << 10);
+        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, HIRES_MULTIPLY((R_MAGIC_METER_X + 8)), HIRES_MULTIPLY(magicMeterY),
+                                      HIRES_MULTIPLY(gSaveContext.magicCapacity), HIRES_MULTIPLY(16) - HIRES_PX_SHIFT, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
         gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0,
                             G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-        gSPTextureRectangle(OVERLAY_DISP++, (R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity) << 2, magicMeterY << 2,
-                            (R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity + 8) << 2, (magicMeterY + 16) << 2,
-                            G_TX_RENDERTILE, 256, 0, 1 << 10, 1 << 10);
+        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity) << 2)), HIRES_MULTIPLY((magicMeterY << 2)),
+                            HIRES_MULTIPLY(((R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity + 8) << 2)), HIRES_MULTIPLY(((magicMeterY + 16) << 2)),
+                            G_TX_RENDERTILE, 256, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
         gDPPipeSync(OVERLAY_DISP++);
         gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE, PRIMITIVE,
@@ -2718,34 +3044,34 @@ void Magic_DrawMeter(PlayState* play) {
             // Yellow part of the meter indicating the amount of magic to be subtracted
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 250, 250, 0, interfaceCtx->magicAlpha);
 
-            gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0,
+            gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 8, 0,
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                  G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, R_MAGIC_FILL_X << 2, (magicMeterY + 3) << 2,
-                                (R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2,
-                                (magicMeterY + 10) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_MAGIC_FILL_X << 2)), HIRES_MULTIPLY(((magicMeterY + 3) << 2)),
+                                HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2)),
+                                HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES_PX_SHIFT * 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
             // Fill the rest of the meter with the normal magic color
             gDPPipeSync(OVERLAY_DISP++);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
                             interfaceCtx->magicAlpha);
 
-            gSPTextureRectangle(OVERLAY_DISP++, R_MAGIC_FILL_X << 2, (magicMeterY + 3) << 2,
-                                (R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2, (magicMeterY + 10) << 2,
-                                G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_MAGIC_FILL_X << 2)), HIRES_MULTIPLY(((magicMeterY + 3) << 2)),
+                                HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2)), HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES_PX_SHIFT * 2),
+                                G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         } else {
             // Fill the whole meter with the normal magic color
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
                             interfaceCtx->magicAlpha);
 
-            gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0,
+            gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 8, 0,
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                  G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, R_MAGIC_FILL_X << 2, (magicMeterY + 3) << 2,
-                                (R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2,
-                                (magicMeterY + 10) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_MAGIC_FILL_X << 2)), HIRES_MULTIPLY(((magicMeterY + 3) << 2)),
+                                HIRES_MULTIPLY(((R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2)),
+                                HIRES_MULTIPLY(((magicMeterY + 10) << 2)) - (HIRES_PX_SHIFT * 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         }
     }
 
@@ -2753,7 +3079,7 @@ void Magic_DrawMeter(PlayState* play) {
 }
 
 void Interface_SetSubTimer(s16 seconds) {
-    gSaveContext.timerX[TIMER_ID_SUB] = 140;
+    gSaveContext.timerX[TIMER_ID_SUB] = 140 + WS_SHIFT_HALF;
     gSaveContext.timerY[TIMER_ID_SUB] = 80;
     sEnvHazardActive = false;
     gSaveContext.subTimerSeconds = seconds;
@@ -2782,7 +3108,7 @@ void Interface_SetSubTimerToFinalSecond(PlayState* play) {
 }
 
 void Interface_SetTimer(s16 seconds) {
-    gSaveContext.timerX[TIMER_ID_MAIN] = 140;
+    gSaveContext.timerX[TIMER_ID_MAIN] = 140 + WS_SHIFT_HALF;
     gSaveContext.timerY[TIMER_ID_MAIN] = 80;
     sEnvHazardActive = false;
     gSaveContext.timerSeconds = seconds;
@@ -2808,22 +3134,91 @@ void Interface_DrawActionLabel(GraphicsContext* gfxCtx, void* texture) {
     CLOSE_DISPS(gfxCtx, "../z_parameter.c", 2829);
 }
 
+const u32 gDpadTex[] = {
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0xf7f7f7ff, 0xd7d7d7ff, 0xc2c2c2ff,
+    0xbababaff, 0xa1a1a1ff, 0x434343ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0xffffffff, 0xfdfdfdff, 0xe2e2e2ff, 0xcacacaff, 0xc3c3c3ff, 0x9e9e9eff, 0x393939ff, 0x181818ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xfbfbfbff, 0xfefefeff, 0xf4f4f4ff, 0xcacacaff, 0x8a8a8aff, 0x797979ff, 0x626262ff, 0x404040ff, 0x111111ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xf1f1f1ff, 0xf1f1f1ff, 0xd9d9d9ff, 0xa7a7a7ff, 0x000000ff,
+    0x0e0e0eff, 0x757575ff, 0x5f5f5fff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x000000ff, 0xf1f1f1ff, 0xecececff, 0xc3c3c3ff, 0x000000ff, 0x1b1b1bff, 0x696969ff, 0x7a7a7aff, 0x717171ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xf5f5f5ff, 0xf1f1f1ff, 0xcececeff, 0x7a7a7aff, 0xbfbfbfff, 0xc8c8c8ff, 0xe4e4e4ff, 0x7d7d7dff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xf9f9f9ff, 0xf4f4f4ff, 0xd8d8d8ff, 0xcacacaff, 0xbbbbbbff,
+    0xabababff, 0x9b9b9bff, 0x8a8a8aff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x000000ff, 0xfcfcfcff, 0xf8f8f8ff, 0xe2e2e2ff, 0xd5d5d5ff, 0xc7c7c7ff, 0xb7b7b7ff, 0xa7a7a7ff, 0x979797ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xfefefeff, 0xfbfbfbff, 0xebebebff, 0xdfdfdfff, 0xd1d1d1ff, 0xc3c3c3ff, 0xb3b3b3ff, 0xa3a3a3ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0xfefefeff, 0xfefefeff, 0xf2f2f2ff, 0xe8e8e8ff, 0xdcdcdcff,
+    0xcececeff, 0xbfbfbfff, 0xafafafff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0xf5f5f5ff, 0xdcdcdcff, 0xd7d7d7ff, 0xdededeff, 0xe5e5e5ff,
+    0xebebebff, 0xf1f1f1ff, 0xfbfbfbff, 0xffffffff, 0xffffffff, 0xf9f9f9ff, 0xf0f0f0ff, 0xe5e5e5ff, 0xd8d8d8ff, 0xcacacaff, 0xbbbbbbff, 0x555555ff, 0x4d4d4dff, 0xa9a9a9ff, 0xc5c5c5ff, 0xbebebeff, 0xb7b7b7ff, 0xb0b0b0ff, 0xa9a9a9ff, 0x8d8d8dff, 0x212121ff, 0x000000ff, 0x00000096, 0x00000000,
+    0x00000096, 0x000000ff, 0xfefefeff, 0xfcfcfcff, 0xe0e0e0ff, 0xd5d5d5ff, 0xdbdbdbff, 0xe2e2e2ff, 0xe8e8e8ff, 0xeeeeeeff, 0xf6f6f6ff, 0xfbfbfbff, 0xfbfbfbff, 0xffffffff, 0xf7f7f7ff, 0xedededff, 0xe2e2e2ff, 0xd5d5d5ff, 0xc7c7c7ff, 0xadadadff, 0xacacacff, 0xc5c5c5ff, 0xcececeff, 0xc7c7c7ff,
+    0xc0c0c0ff, 0xb9b9b9ff, 0xb3b3b3ff, 0x878787ff, 0x1d1d1dff, 0x0b0b0bff, 0x000000ff, 0x00000096, 0x000000ff, 0xf1f1f1ff, 0xfcfcfcff, 0xecececff, 0xb8b8b8ff, 0x8a8a8aff, 0x9b9b9bff, 0xabababff, 0xbbbbbbff, 0xcacacaff, 0xd8d8d8ff, 0xe5e5e5ff, 0xf0f0f0ff, 0xf9f9f9ff, 0xfdfdfdff, 0xf5f5f5ff,
+    0xebebebff, 0xdfdfdfff, 0xd1d1d1ff, 0xc3c3c3ff, 0xb3b3b3ff, 0xa3a3a3ff, 0x939393ff, 0x828282ff, 0x717171ff, 0x606060ff, 0x505050ff, 0x3c3c3cff, 0x242424ff, 0x080808ff, 0x000000ff, 0x000000ff, 0x000000ff, 0xc0c0c0ff, 0xd1d1d1ff, 0xa9a9a9ff, 0x6c6c6cff, 0x000000ff, 0x4e4e4eff, 0x9f9f9fff,
+    0xafafafff, 0xbfbfbfff, 0xcececeff, 0xdcdcdcff, 0xe8e8e8ff, 0xf2f2f2ff, 0xfbfbfbff, 0xfbfbfbff, 0xf2f2f2ff, 0xe8e8e8ff, 0xdcdcdcff, 0xcececeff, 0xbfbfbfff, 0xafafafff, 0x9f9f9fff, 0x8e8e8eff, 0x7d7d7dff, 0x000000ff, 0x070707ff, 0x4c4c4cff, 0x393939ff, 0x000000ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0xa6a6a6ff, 0xb1b1b1ff, 0x505050ff, 0x000000ff, 0x0f0f0fff, 0xa2a2a2ff, 0x939393ff, 0xa3a3a3ff, 0xb3b3b3ff, 0xc3c3c3ff, 0xd1d1d1ff, 0xdfdfdfff, 0xebebebff, 0xf5f5f5ff, 0xfdfdfdff, 0xf9f9f9ff, 0xf0f0f0ff, 0xe5e5e5ff, 0xd8d8d8ff, 0xcacacaff, 0xbbbbbbff, 0xabababff, 0x9b9b9bff,
+    0x8a8a8aff, 0x000000ff, 0x2b2b2bff, 0x4e4e4eff, 0x484848ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0xa2a2a2ff, 0xadadadff, 0x444444ff, 0x050505ff, 0x3b3b3bff, 0xb5b5b5ff, 0x868686ff, 0x979797ff, 0xa7a7a7ff, 0xb7b7b7ff, 0xc7c7c7ff, 0xd5d5d5ff, 0xe2e2e2ff, 0xedededff, 0xf7f7f7ff,
+    0xffffffff, 0xf7f7f7ff, 0xedededff, 0xe2e2e2ff, 0xd5d5d5ff, 0xc7c7c7ff, 0xb7b7b7ff, 0xa7a7a7ff, 0x979797ff, 0x000000ff, 0x9e9e9eff, 0xd7d7d7ff, 0x545454ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x868686ff, 0x818181ff, 0x353535ff, 0x484848ff, 0x5a5a5aff, 0xdededeff, 0x797979ff,
+    0x8a8a8aff, 0x9b9b9bff, 0xabababff, 0xbbbbbbff, 0xcacacaff, 0xd8d8d8ff, 0xe5e5e5ff, 0xf0f0f0ff, 0xf9f9f9ff, 0xfdfdfdff, 0xf5f5f5ff, 0xebebebff, 0xdfdfdfff, 0xd1d1d1ff, 0xc3c3c3ff, 0xb3b3b3ff, 0xa3a3a3ff, 0x515151ff, 0xd4d4d4ff, 0x717171ff, 0x181818ff, 0x000000ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0x181818ff, 0x181818ff, 0x222222ff, 0x393939ff, 0x4c4c4cff, 0x5c5c5cff, 0x6c6c6cff, 0x7d7d7dff, 0x8e8e8eff, 0x9f9f9fff, 0xafafafff, 0xbfbfbfff, 0xcececeff, 0xdcdcdcff, 0xe8e8e8ff, 0xf2f2f2ff, 0xfbfbfbff, 0xfbfbfbff, 0xf2f2f2ff, 0xe8e8e8ff, 0xdcdcdcff, 0xcececeff, 0xbfbfbfff,
+    0xafafafff, 0x9f9f9fff, 0x8e8e8eff, 0x1f1f1fff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x000000ff, 0x090909ff, 0x080808ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x515151ff, 0xa9a9a9ff, 0xc3c3c3ff, 0xd1d1d1ff, 0xdfdfdfff,
+    0xebebebff, 0xf5f5f5ff, 0xfdfdfdff, 0x3e3e3eff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0x000000ff, 0x000000ff, 0x4b4b4bff, 0xacacacff, 0xb7b7b7ff, 0xc7c7c7ff, 0xd5d5d5ff, 0xe2e2e2ff, 0xedededff, 0xf7f7f7ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000,
+    0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0xa9a9a9ff, 0xc7c7c7ff, 0xabababff, 0xbbbbbbff, 0xcacacaff, 0xd8d8d8ff, 0xe5e5e5ff, 0xf0f0f0ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xc7c7c7ff, 0xd1d1d1ff, 0x9f9f9fff, 0xafafafff, 0xbfbfbfff,
+    0xcececeff, 0xdcdcdcff, 0xe8e8e8ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x000000ff, 0xc2c2c2ff, 0xccccccff, 0x939393ff, 0xa3a3a3ff, 0xb3b3b3ff, 0xc3c3c3ff, 0xd1d1d1ff, 0xdfdfdfff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xbcbcbcff, 0xc7c7c7ff, 0x868686ff, 0x979797ff, 0xa7a7a7ff, 0xb7b7b7ff, 0xc7c7c7ff, 0xd5d5d5ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0xb7b7b7ff, 0xc1c1c1ff, 0x797979ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0x767676ff, 0xcacacaff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x000000ff, 0xb2b2b2ff, 0xbdbdbdff, 0x6c6c6cff, 0x0d0d0dff, 0x4c4c4cff, 0xb7b7b7ff, 0xe1e1e1ff, 0xbfbfbfff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0x989898ff, 0x979797ff, 0x5b5b5bff, 0x717171ff, 0x707070ff, 0xe0e0e0ff, 0xa3a3a3ff, 0x2d2d2dff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x000000ff, 0x383838ff, 0x333333ff, 0x3d3d3dff, 0x5f5f5fff, 0x757575ff,
+    0x868686ff, 0x262626ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x171717ff, 0x111111ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000096, 0x000000ff, 0x000000ff, 0x000000ff,
+    0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+};
+
 void Interface_DrawItemButtons(PlayState* play) {
     static void* cUpLabelTextures[] = LANGUAGE_ARRAY(gNaviCUpJPNTex, gNaviCUpENGTex, gNaviCUpENGTex, gNaviCUpENGTex);
-#if OOT_VERSION >= PAL_1_0
+#if OOT_NTSC_N64
+    static s16 startButtonLeftPos[] = { 132, 130, 130, 132 };
+#elif OOT_VERSION >= PAL_1_0
     static s16 startButtonLeftPos[] = { 132, 130, 130 };
 #endif
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     Player* player = GET_PLAYER(play);
     PauseContext* pauseCtx = &play->pauseCtx;
     s16 temp; // Used as both an alpha value and a button index
-#if OOT_PAL
+#if OOT_PAL || OOT_NTSC_N64
     s16 texCoordScale;
     s16 width;
     s16 height;
 #endif
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 2900);
+
+    // D-Pad positions
+    dpad_x = R_MAGIC_METER_X + 20;
+    dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 15;
+    if (gSaveContext.save.info.playerData.magicLevel != 0)
+        dpad_y += 15;
+    if (IS_ACTIVE_TIMER && pauseCtx->state == PAUSE_STATE_OFF) {
+        dpad_y += 15;
+        if (gSaveContext.save.info.playerData.magicLevel == 0)
+            dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + HIRES_MULTIPLY(45);
+    }
+
+    if (Interface_GetItemFromDpad(0) != ITEM_NONE || Interface_GetItemFromDpad(1) != ITEM_NONE || Interface_GetItemFromDpad(2) != ITEM_NONE || Interface_GetItemFromDpad(3) != ITEM_NONE) {
+        if (gSaveContext.save.info.playerData.dpadDualSet) {
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[0]);
+        } else {
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 192, 192, 192, dpadAlphas[0]);
+        }
+        gDPLoadTextureBlock(OVERLAY_DISP++, gDpadTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((dpad_x << 2)), HIRES_MULTIPLY((dpad_y << 2)), HIRES_MULTIPLY(((dpad_x + 16) << 2)), HIRES_MULTIPLY(((dpad_y + 16) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((2 << 10)), HIRES_DIVIDE((2 << 10)));
+    }
 
     // B Button Color & Texture
     // Also loads the Item Button Texture reused by other buttons afterwards
@@ -2832,30 +3227,30 @@ void Interface_DrawItemButtons(PlayState* play) {
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_B_BTN_COLOR(0), R_B_BTN_COLOR(1), R_B_BTN_COLOR(2), interfaceCtx->bAlpha);
     gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
     OVERLAY_DISP =
-        Gfx_TextureIA8(OVERLAY_DISP, gButtonBackgroundTex, 32, 32, R_ITEM_BTN_X(0), R_ITEM_BTN_Y(0),
-                       R_ITEM_BTN_WIDTH(0), R_ITEM_BTN_WIDTH(0), R_ITEM_BTN_DD(0) << 1, R_ITEM_BTN_DD(0) << 1);
+        Gfx_TextureIA8(OVERLAY_DISP, gButtonBackgroundTex, 32, 32, HIRES_MULTIPLY(R_ITEM_BTN_X(0)), HIRES_MULTIPLY(R_ITEM_BTN_Y(0)),
+                       HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), HIRES_DIVIDE((R_ITEM_BTN_DD(0) << 1)), HIRES_DIVIDE((R_ITEM_BTN_DD(0) << 1)));
 
     // C-Left Button Color & Texture
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cLeftAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, R_ITEM_BTN_X(1) << 2, R_ITEM_BTN_Y(1) << 2,
-                        (R_ITEM_BTN_X(1) + R_ITEM_BTN_WIDTH(1)) << 2, (R_ITEM_BTN_Y(1) + R_ITEM_BTN_WIDTH(1)) << 2,
-                        G_TX_RENDERTILE, 0, 0, R_ITEM_BTN_DD(1) << 1, R_ITEM_BTN_DD(1) << 1);
+    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_ITEM_BTN_X(1) << 2)), HIRES_MULTIPLY((R_ITEM_BTN_Y(1) << 2)),
+                        HIRES_MULTIPLY(((R_ITEM_BTN_X(1) + R_ITEM_BTN_WIDTH(1)) << 2)), HIRES_MULTIPLY(((R_ITEM_BTN_Y(1) + R_ITEM_BTN_WIDTH(1)) << 2)),
+                        G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((R_ITEM_BTN_DD(1) << 1)), HIRES_DIVIDE((R_ITEM_BTN_DD(1) << 1)));
 
     // C-Down Button Color & Texture
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cDownAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, R_ITEM_BTN_X(2) << 2, R_ITEM_BTN_Y(2) << 2,
-                        (R_ITEM_BTN_X(2) + R_ITEM_BTN_WIDTH(2)) << 2, (R_ITEM_BTN_Y(2) + R_ITEM_BTN_WIDTH(2)) << 2,
-                        G_TX_RENDERTILE, 0, 0, R_ITEM_BTN_DD(2) << 1, R_ITEM_BTN_DD(2) << 1);
+    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_ITEM_BTN_X(2) << 2)), HIRES_MULTIPLY((R_ITEM_BTN_Y(2) << 2)),
+                        HIRES_MULTIPLY(((R_ITEM_BTN_X(2) + R_ITEM_BTN_WIDTH(2)) << 2)), HIRES_MULTIPLY(((R_ITEM_BTN_Y(2) + R_ITEM_BTN_WIDTH(2)) << 2)),
+                        G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((R_ITEM_BTN_DD(2) << 1)), HIRES_DIVIDE((R_ITEM_BTN_DD(2) << 1)));
 
     // C-Right Button Color & Texture
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cRightAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, R_ITEM_BTN_X(3) << 2, R_ITEM_BTN_Y(3) << 2,
-                        (R_ITEM_BTN_X(3) + R_ITEM_BTN_WIDTH(3)) << 2, (R_ITEM_BTN_Y(3) + R_ITEM_BTN_WIDTH(3)) << 2,
-                        G_TX_RENDERTILE, 0, 0, R_ITEM_BTN_DD(3) << 1, R_ITEM_BTN_DD(3) << 1);
+    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_ITEM_BTN_X(3) << 2)), HIRES_MULTIPLY((R_ITEM_BTN_Y(3) << 2)),
+                        HIRES_MULTIPLY(((R_ITEM_BTN_X(3) + R_ITEM_BTN_WIDTH(3)) << 2)), HIRES_MULTIPLY(((R_ITEM_BTN_Y(3) + R_ITEM_BTN_WIDTH(3)) << 2)),
+                        G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((R_ITEM_BTN_DD(3) << 1)), HIRES_DIVIDE((R_ITEM_BTN_DD(3) << 1)));
 
     if (!IS_PAUSE_STATE_GAMEOVER(pauseCtx)) {
         if (IS_PAUSED(&play->pauseCtx)) {
@@ -2864,17 +3259,17 @@ void Interface_DrawItemButtons(PlayState* play) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, START_BUTTON_R, START_BUTTON_G, START_BUTTON_B,
                             interfaceCtx->startAlpha);
 
-#if OOT_VERSION < PAL_1_0
-            gSPTextureRectangle(OVERLAY_DISP++, R_START_BTN_X << 2, R_START_BTN_Y << 2, (R_START_BTN_X + 22) << 2,
-                                (R_START_BTN_Y + 22) << 2, G_TX_RENDERTILE, 0, 0, (s32)(1.4277344 * (1 << 10)),
-                                (s32)(1.4277344 * (1 << 10)));
-#elif OOT_NTSC
-            gSPTextureRectangle(OVERLAY_DISP++, 132 << 2, 17 << 2, (132 + 22) << 2, (17 + 22) << 2, G_TX_RENDERTILE, 0,
-                                0, (s32)(1.4277344 * (1 << 10)), (s32)(1.4277344 * (1 << 10)));
+#if (OOT_VERSION < PAL_1_0) && !OOT_NTSC_N64
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_START_BTN_X + WS_SHIFT_FULL) << 2)), HIRES_MULTIPLY((R_START_BTN_Y << 2)), HIRES_MULTIPLY(((R_START_BTN_X + WS_SHIFT_FULL + 22) << 2)),
+                                HIRES_MULTIPLY(((R_START_BTN_Y + 22) << 2)), G_TX_RENDERTILE, 0, 0, (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))),
+                                (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))));
+#elif OOT_NTSC && !OOT_NTSC_N64
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((132 + WS_SHIFT_FULL) << 2)), HIRES_MULTIPLY((17 << 2)), HIRES_MULTIPLY(((132 + WS_SHIFT_FULL + 22) << 2)), HIRES_MULTIPLY(((17 + 22) << 2)), G_TX_RENDERTILE, 0,
+                                0, (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))), (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))));
 #else
-            gSPTextureRectangle(OVERLAY_DISP++, startButtonLeftPos[gSaveContext.language] << 2, 17 << 2,
-                                (startButtonLeftPos[gSaveContext.language] + 22) << 2, (17 + 22) << 2, G_TX_RENDERTILE,
-                                0, 0, (s32)(1.4277344 * (1 << 10)), (s32)(1.4277344 * (1 << 10)));
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL) << 2)), HIRES_MULTIPLY((17 << 2)),
+                                HIRES_MULTIPLY(((startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL + 22) << 2)), HIRES_MULTIPLY(((17 + 22) << 2)), G_TX_RENDERTILE,
+                                0, 0, (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))), (s32)(1.4277344 * HIRES_DIVIDE((1 << 10))));
 #endif
 
             gDPPipeSync(OVERLAY_DISP++);
@@ -2887,24 +3282,24 @@ void Interface_DrawItemButtons(PlayState* play) {
                                    DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP,
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
             R_START_LABEL_SCALE = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             R_START_LABEL_WIDTH = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             R_START_LABEL_HEIGHT = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, R_START_LABEL_X(gSaveContext.language) << 2,
-                                R_START_LABEL_Y(gSaveContext.language) << 2,
-                                (R_START_LABEL_X(gSaveContext.language) + R_START_LABEL_WIDTH) << 2,
-                                (R_START_LABEL_Y(gSaveContext.language) + R_START_LABEL_HEIGHT) << 2, G_TX_RENDERTILE,
-                                0, 0, R_START_LABEL_SCALE, R_START_LABEL_SCALE);
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL) << 2)),
+                                HIRES_MULTIPLY((R_START_LABEL_Y(gSaveContext.language) << 2)),
+                                HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + R_START_LABEL_WIDTH) << 2)),
+                                HIRES_MULTIPLY(((R_START_LABEL_Y(gSaveContext.language) + R_START_LABEL_HEIGHT) << 2)), G_TX_RENDERTILE,
+                                0, 0, HIRES_DIVIDE(R_START_LABEL_SCALE), HIRES_DIVIDE(R_START_LABEL_SCALE));
 #else
             texCoordScale = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             width = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             height = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, R_START_LABEL_X(gSaveContext.language) << 2,
-                                R_START_LABEL_Y(gSaveContext.language) << 2,
-                                (R_START_LABEL_X(gSaveContext.language) + width) << 2,
-                                (R_START_LABEL_Y(gSaveContext.language) + height) << 2, G_TX_RENDERTILE, 0, 0,
-                                texCoordScale, texCoordScale);
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL) << 2)),
+                                HIRES_MULTIPLY((R_START_LABEL_Y(gSaveContext.language) << 2)),
+                                HIRES_MULTIPLY(((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + width) << 2)),
+                                HIRES_MULTIPLY(((R_START_LABEL_Y(gSaveContext.language) + height) << 2)), G_TX_RENDERTILE, 0, 0,
+                                HIRES_DIVIDE(texCoordScale), HIRES_DIVIDE(texCoordScale));
 #endif
         }
     }
@@ -2928,8 +3323,8 @@ void Interface_DrawItemButtons(PlayState* play) {
 
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), temp);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-            gSPTextureRectangle(OVERLAY_DISP++, R_C_UP_BTN_X << 2, R_C_UP_BTN_Y << 2, (R_C_UP_BTN_X + 16) << 2,
-                                (R_C_UP_BTN_Y + 16) << 2, G_TX_RENDERTILE, 0, 0, 2 << 10, 2 << 10);
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_C_UP_BTN_X << 2)), HIRES_MULTIPLY((R_C_UP_BTN_Y << 2)), HIRES_MULTIPLY(((R_C_UP_BTN_X + 16) << 2)),
+                                HIRES_MULTIPLY(((R_C_UP_BTN_Y + 16) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((2 << 10)), HIRES_DIVIDE((2 << 10)));
             gDPPipeSync(OVERLAY_DISP++);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, temp);
             gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 0);
@@ -2940,15 +3335,15 @@ void Interface_DrawItemButtons(PlayState* play) {
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, cUpLabelTextures[gSaveContext.language], G_IM_FMT_IA, 32, 8, 0,
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                    G_TX_NOLOD, G_TX_NOLOD);
-            gSPTextureRectangle(OVERLAY_DISP++, R_C_UP_ICON_X << 2, R_C_UP_ICON_Y << 2, (R_C_UP_ICON_X + 32) << 2,
-                                (R_C_UP_ICON_Y + 8) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_C_UP_ICON_X << 2)), HIRES_MULTIPLY((R_C_UP_ICON_Y << 2)), HIRES_MULTIPLY(((R_C_UP_ICON_X + 32) << 2)),
+                                HIRES_MULTIPLY(((R_C_UP_ICON_Y + 8) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 #else
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, cUpLabelTextures[gSaveContext.language], G_IM_FMT_IA, 48, 16, 0,
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                    G_TX_NOLOD, G_TX_NOLOD);
-            gSPTextureRectangle(OVERLAY_DISP++, (R_C_UP_ICON_X - 8) << 2, (R_C_UP_ICON_Y - 4) << 2,
-                                (R_C_UP_ICON_X + 40) << 2, (R_C_UP_ICON_Y + 12) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10,
-                                1 << 10);
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((R_C_UP_ICON_X - 8) << 2)), HIRES_MULTIPLY(((R_C_UP_ICON_Y - 4) << 2)),
+                                HIRES_MULTIPLY(((R_C_UP_ICON_X + 40) << 2)), HIRES_MULTIPLY(((R_C_UP_ICON_Y + 12) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+                                HIRES_DIVIDE((1 << 10)));
 #endif
         }
 
@@ -2976,8 +3371,8 @@ void Interface_DrawItemButtons(PlayState* play) {
             }
 
             OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gButtonBackgroundTex + ((32 * 32) * (temp + 1))), 32, 32,
-                                          R_ITEM_BTN_X(temp), R_ITEM_BTN_Y(temp), R_ITEM_BTN_WIDTH(temp),
-                                          R_ITEM_BTN_WIDTH(temp), R_ITEM_BTN_DD(temp) << 1, R_ITEM_BTN_DD(temp) << 1);
+                                          HIRES_MULTIPLY(R_ITEM_BTN_X(temp)), HIRES_MULTIPLY(R_ITEM_BTN_Y(temp)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(temp)),
+                                          HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(temp)), HIRES_DIVIDE((R_ITEM_BTN_DD(temp) << 1)), HIRES_DIVIDE((R_ITEM_BTN_DD(temp) << 1)));
         }
     }
 
@@ -2985,15 +3380,63 @@ void Interface_DrawItemButtons(PlayState* play) {
 }
 
 void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
+    u16 x;
+    u16 y;
+    u16 dd;
+    u8  width;
+    u8  item;
+    s8  offset = 0;
+    
+    if (button < 4) {
+        x     = R_ITEM_ICON_X(button);
+        y     = R_ITEM_ICON_Y(button);
+        dd    = R_ITEM_ICON_DD(button);
+        width = R_ITEM_ICON_WIDTH(button);
+        
+        if ((gSaveContext.save.info.equips.buttonItems[button] == ITEM_SWORDS && gSaveContext.save.info.equips.buttonItems[0] == ITEM_NONE) || (gSaveContext.save.info.equips.buttonItems[button] == ITEM_SHIELDS && SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_NONE)))
+            return;
+    }
+    else {
+        Player* player = GET_PLAYER(play);
+        dd    = 1400;
+        width = 12;
+        
+        switch (button-4) {
+            case 0:
+                x = D_UP_BUTTON_X;
+                y = D_UP_BUTTON_Y;
+                break;
+            case 1:
+                x = D_RIGHT_BUTTON_X;
+                y = D_RIGHT_BUTTON_Y;
+                break;
+            case 2:
+                x = D_DOWN_BUTTON_X;
+                y = D_DOWN_BUTTON_Y;
+                break;
+            default:
+                x = D_LEFT_BUTTON_X;
+                y = D_LEFT_BUTTON_Y;
+                break;
+        }
+        
+        item = Interface_GetItemFromDpad(button-4);
+        if ( (item == ITEM_TUNIC_GORON && player->currentTunic == 1) || (item == ITEM_TUNIC_ZORA && player->currentTunic == 2) || (item == ITEM_BOOTS_IRON && player->currentBoots == 1) || (item == ITEM_BOOTS_HOVER && player->currentBoots == 2) || (item >= ITEM_MASK_KEATON && item <= ITEM_MASK_TRUTH && player->currentMask == item - ITEM_MASK_KEATON + 1) ) {
+            dd    *=  0.8;
+            width +=  3;
+            offset = -1;
+        }
+        
+        if ((item == ITEM_SWORDS && gSaveContext.save.info.equips.buttonItems[0] == ITEM_NONE) || (item == ITEM_SHIELDS && SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_NONE)))
+            return;
+    }
+
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3079);
 
     gDPLoadTextureBlock(OVERLAY_DISP++, texture, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP,
                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-    gSPTextureRectangle(OVERLAY_DISP++, R_ITEM_ICON_X(button) << 2, R_ITEM_ICON_Y(button) << 2,
-                        (R_ITEM_ICON_X(button) + R_ITEM_ICON_WIDTH(button)) << 2,
-                        (R_ITEM_ICON_Y(button) + R_ITEM_ICON_WIDTH(button)) << 2, G_TX_RENDERTILE, 0, 0,
-                        R_ITEM_ICON_DD(button) << 1, R_ITEM_ICON_DD(button) << 1);
+    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((x + offset) << 2)), HIRES_MULTIPLY(((y + offset) << 2)), HIRES_MULTIPLY(((x + width + offset) << 2)), HIRES_MULTIPLY(((y + width + offset) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((dd << 1) ), HIRES_DIVIDE((dd << 1)));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3094);
 }
@@ -3004,7 +3447,9 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3105);
 
-    i = gSaveContext.save.info.equips.buttonItems[button];
+    if (button < 4)
+        i = gSaveContext.save.info.equips.buttonItems[button];
+    else i = Interface_GetItemFromDpad(button-4);
 
     if ((i == ITEM_DEKU_STICK) || (i == ITEM_DEKU_NUT) || (i == ITEM_BOMB) || (i == ITEM_BOW) ||
         ((i >= ITEM_BOW_FIRE) && (i <= ITEM_BOW_LIGHT)) || (i == ITEM_SLINGSHOT) || (i == ITEM_BOMBCHU) ||
@@ -3046,13 +3491,36 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
             ammo -= 10;
         }
 
-        if (i != 0) {
-            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8,
-                                          R_ITEM_AMMO_X(button), R_ITEM_AMMO_Y(button), 8, 8, 1 << 10, 1 << 10);
+        if (button < 4) {
+            if (i != 0)
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, HIRES_MULTIPLY(R_ITEM_AMMO_X(button)), HIRES_MULTIPLY(R_ITEM_AMMO_Y(button)), HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, HIRES_MULTIPLY((R_ITEM_AMMO_X(button) + 6)) - HIRES_PX_SHIFT, HIRES_MULTIPLY(R_ITEM_AMMO_Y(button)), HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         }
+        else {
+            u8 x, y;
+            switch (button-4) {
+                case 0:
+                    x = D_UP_BUTTON_X + 1;
+                    y = D_UP_BUTTON_Y + 8;
+                    break;
+                case 1:
+                    x = D_RIGHT_BUTTON_X + 1;
+                    y = D_RIGHT_BUTTON_Y + 8;
+                    break;
+                case 2:
+                    x = D_DOWN_BUTTON_X + 1;
+                    y = D_DOWN_BUTTON_Y + 8;
+                    break;
+                default:
+                    x = D_LEFT_BUTTON_X + 1;
+                    y = D_LEFT_BUTTON_Y + 8;
+                    break;
+            }
 
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8,
-                                      R_ITEM_AMMO_X(button) + 6, R_ITEM_AMMO_Y(button), 8, 8, 1 << 10, 1 << 10);
+            if (i != 0)
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, HIRES_MULTIPLY(x), HIRES_MULTIPLY(y), HIRES_MULTIPLY(4), HIRES_MULTIPLY(4), HIRES_DIVIDE((1 << 11)), HIRES_DIVIDE((1 << 11)));
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, HIRES_MULTIPLY((x + 3)), HIRES_MULTIPLY(y), HIRES_MULTIPLY(4), HIRES_MULTIPLY(4), HIRES_DIVIDE((1 << 11)), HIRES_DIVIDE((1 << 11)));
+        }
     }
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3158);
@@ -3222,6 +3690,13 @@ void Interface_Draw(PlayState* play) {
     gSPSegment(OVERLAY_DISP++, 0x0B, interfaceCtx->mapSegment);
 
     if (pauseCtx->debugState == 0) {
+        static u8 walletColors[][3] = {
+            { 200, 255, 100 },
+            { 130, 130, 255 },
+            { 255, 100, 100 }
+        };
+        u8 curWallet = CUR_UPG_VALUE(UPG_WALLET);
+
         Interface_InitVertices(play);
         func_8008A994(interfaceCtx);
         Health_DrawMeter(play);
@@ -3229,9 +3704,9 @@ void Interface_Draw(PlayState* play) {
         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
 
         // Rupee Icon
-        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 255, 100, interfaceCtx->magicAlpha);
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, walletColors[curWallet][0], walletColors[curWallet][1], walletColors[curWallet][2], interfaceCtx->magicAlpha);
         gDPSetEnvColor(OVERLAY_DISP++, 0, 80, 0, 255);
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gRupeeCounterIconTex, 16, 16, 26, 206, 16, 16, 1 << 10, 1 << 10);
+        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gRupeeCounterIconTex, 16, 16, HIRES_MULTIPLY(26), HIRES_MULTIPLY(206), HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
         switch (play->sceneId) {
             case SCENE_FOREST_TEMPLE:
@@ -3253,8 +3728,8 @@ void Interface_Draw(PlayState* play) {
                     gDPPipeSync(OVERLAY_DISP++);
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 230, 255, interfaceCtx->magicAlpha);
                     gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 20, 255);
-                    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gSmallKeyCounterIconTex, 16, 16, 26, 190, 16, 16,
-                                                  1 << 10, 1 << 10);
+                    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gSmallKeyCounterIconTex, 16, 16, HIRES_MULTIPLY(26), HIRES_MULTIPLY(190), HIRES_MULTIPLY(16), HIRES_MULTIPLY(16),
+                                                  HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
                     // Small Key Counter
                     gDPPipeSync(OVERLAY_DISP++);
@@ -3271,18 +3746,18 @@ void Interface_Draw(PlayState* play) {
                         interfaceCtx->counterDigits[3] -= 10;
                     }
 
-                    svar3 = 42;
+                    svar3 = HIRES_MULTIPLY(42);
 
                     if (interfaceCtx->counterDigits[2] != 0) {
                         OVERLAY_DISP = Gfx_TextureI8(
                             OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[2])), 8, 16,
-                            svar3, 190, 8, 16, 1 << 10, 1 << 10);
-                        svar3 += 8;
+                            svar3, HIRES_MULTIPLY(190), HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+                        svar3 += HIRES_MULTIPLY(8);
                     }
 
                     OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP,
                                                  ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[3])),
-                                                 8, 16, svar3, 190, 8, 16, 1 << 10, 1 << 10);
+                                                 8, 16, svar3, HIRES_MULTIPLY(190), HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
                 }
                 break;
             default:
@@ -3323,10 +3798,10 @@ void Interface_Draw(PlayState* play) {
         svar2 = rupeeDigitsFirst[CUR_UPG_VALUE(UPG_WALLET)];
         svar4 = rupeeDigitsCount[CUR_UPG_VALUE(UPG_WALLET)];
 
-        for (svar1 = 0, svar3 = 42; svar1 < svar4; svar1++, svar2++, svar3 += 8) {
+        for (svar1 = 0, svar3 = HIRES_MULTIPLY(42); svar1 < svar4; svar1++, svar2++, svar3 += HIRES_MULTIPLY(8)) {
             OVERLAY_DISP =
                 Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[svar2])), 8,
-                              16, svar3, 206, 8, 16, 1 << 10, 1 << 10);
+                              16, svar3, HIRES_MULTIPLY(206), HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         }
 
         Magic_DrawMeter(play);
@@ -3370,11 +3845,11 @@ void Interface_Draw(PlayState* play) {
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
             R_B_LABEL_DD = (1 << 10) / (R_B_LABEL_SCALE(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, R_B_LABEL_X(gSaveContext.language) << 2,
-                                R_B_LABEL_Y(gSaveContext.language) << 2,
-                                (R_B_LABEL_X(gSaveContext.language) + DO_ACTION_TEX_WIDTH) << 2,
-                                (R_B_LABEL_Y(gSaveContext.language) + DO_ACTION_TEX_HEIGHT) << 2, G_TX_RENDERTILE, 0, 0,
-                                R_B_LABEL_DD, R_B_LABEL_DD);
+            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_B_LABEL_X(gSaveContext.language) << 2)),
+                                HIRES_MULTIPLY((R_B_LABEL_Y(gSaveContext.language) << 2)),
+                                HIRES_MULTIPLY(((R_B_LABEL_X(gSaveContext.language) + DO_ACTION_TEX_WIDTH) << 2)),
+                                HIRES_MULTIPLY(((R_B_LABEL_Y(gSaveContext.language) + DO_ACTION_TEX_HEIGHT) << 2)), G_TX_RENDERTILE, 0, 0,
+                                HIRES_DIVIDE(R_B_LABEL_DD), HIRES_DIVIDE(R_B_LABEL_DD));
         }
 
         gDPPipeSync(OVERLAY_DISP++);
@@ -3416,16 +3891,29 @@ void Interface_Draw(PlayState* play) {
             Interface_DrawAmmoCount(play, 3, interfaceCtx->cRightAlpha);
         }
 
+        for (svar1=0; svar1<4; svar1++) {
+            if (Interface_GetItemFromDpad(svar1) >= 0xF0)
+                continue;
+
+            // D-Pad Button Icon & Ammo Count
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[svar1+1]);
+            gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
+            Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x4000 + (0x1000*svar1), 4+svar1);
+            gDPPipeSync(OVERLAY_DISP++);
+            gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+            Interface_DrawAmmoCount(play, 4+svar1,  dpadAlphas[svar1+1]);
+        }
+
         // A Button
         Gfx_SetupDL_42Overlay(play->state.gfxCtx);
-        func_8008A8B8(play, R_A_BTN_Y, R_A_BTN_Y + 45, R_A_BTN_X, R_A_BTN_X + 45);
+        func_8008A8B8(play, HIRES_MULTIPLY(R_A_BTN_Y), HIRES_MULTIPLY((R_A_BTN_Y + 45)), HIRES_MULTIPLY(R_A_BTN_X), HIRES_MULTIPLY((R_A_BTN_X + 45)));
         gSPClearGeometryMode(OVERLAY_DISP++, G_CULL_BOTH);
         gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_A_BTN_COLOR(0), R_A_BTN_COLOR(1), R_A_BTN_COLOR(2),
                         interfaceCtx->aAlpha);
         Interface_DrawActionButton(play);
         gDPPipeSync(OVERLAY_DISP++);
-        func_8008A8B8(play, R_A_ICON_Y, R_A_ICON_Y + 45, R_A_ICON_X, R_A_ICON_X + 45);
+        func_8008A8B8(play, HIRES_MULTIPLY(R_A_ICON_Y), HIRES_MULTIPLY((R_A_ICON_Y + 45)), HIRES_MULTIPLY(R_A_ICON_X), HIRES_MULTIPLY((R_A_ICON_X + 45)));
         gSPSetGeometryMode(OVERLAY_DISP++, G_CULL_BACK);
         gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0,
                           PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
@@ -3455,12 +3943,12 @@ void Interface_Draw(PlayState* play) {
             gSPMatrix(OVERLAY_DISP++, &gIdentityMtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
             // PAUSE_CURSOR_QUAD_4
-            pauseCtx->cursorVtx[16].v.ob[0] = pauseCtx->cursorVtx[18].v.ob[0] = pauseCtx->equipAnimX / 10;
+            pauseCtx->cursorVtx[16].v.ob[0] = pauseCtx->cursorVtx[18].v.ob[0] = pauseCtx->equipAnimX / HIRES_DIVIDE(10);
             pauseCtx->cursorVtx[17].v.ob[0] = pauseCtx->cursorVtx[19].v.ob[0] =
-                pauseCtx->cursorVtx[16].v.ob[0] + WREG(90) / 10;
-            pauseCtx->cursorVtx[16].v.ob[1] = pauseCtx->cursorVtx[17].v.ob[1] = pauseCtx->equipAnimY / 10;
+                pauseCtx->cursorVtx[16].v.ob[0] + HIRES_MULTIPLY((WREG(90) / 10));
+            pauseCtx->cursorVtx[16].v.ob[1] = pauseCtx->cursorVtx[17].v.ob[1] = pauseCtx->equipAnimY / HIRES_DIVIDE(10);
             pauseCtx->cursorVtx[18].v.ob[1] = pauseCtx->cursorVtx[19].v.ob[1] =
-                pauseCtx->cursorVtx[16].v.ob[1] - WREG(90) / 10;
+                pauseCtx->cursorVtx[16].v.ob[1] - HIRES_MULTIPLY((WREG(90) / 10));
 
             if (pauseCtx->equipTargetItem < 0xBF) {
                 // Normal Equip (icon goes from the inventory slot to the C button when equipping it)
@@ -3482,11 +3970,11 @@ void Interface_Draw(PlayState* play) {
                     pauseCtx->cursorVtx[16].v.ob[0] = pauseCtx->cursorVtx[18].v.ob[0] =
                         pauseCtx->cursorVtx[16].v.ob[0] - svar1;
                     pauseCtx->cursorVtx[17].v.ob[0] = pauseCtx->cursorVtx[19].v.ob[0] =
-                        pauseCtx->cursorVtx[16].v.ob[0] + 32 + svar1 * 2;
+                        pauseCtx->cursorVtx[16].v.ob[0] + HIRES_MULTIPLY(32) + svar1 * 2;
                     pauseCtx->cursorVtx[16].v.ob[1] = pauseCtx->cursorVtx[17].v.ob[1] =
                         pauseCtx->cursorVtx[16].v.ob[1] + svar1;
                     pauseCtx->cursorVtx[18].v.ob[1] = pauseCtx->cursorVtx[19].v.ob[1] =
-                        pauseCtx->cursorVtx[16].v.ob[1] - 32 - svar1 * 2;
+                        pauseCtx->cursorVtx[16].v.ob[1] - HIRES_MULTIPLY(32) - svar1 * 2;
                 }
 
                 gSPVertex(OVERLAY_DISP++, &pauseCtx->cursorVtx[PAUSE_CURSOR_QUAD_4 * 4], 4, 0);
@@ -3511,7 +3999,7 @@ void Interface_Draw(PlayState* play) {
                                         G_TX_NOLOD, G_TX_NOLOD);
 
                     // Draw 6 carrots
-                    for (svar1 = 1, svar5 = ZREG(14); svar1 < 7; svar1++, svar5 += 16) {
+                    for (svar1 = 1, svar5 = ZREG(14) + WS_SHIFT_HALF; svar1 < 7; svar1++, svar5 += 16) {
                         // Carrot Color (based on availability)
                         if ((interfaceCtx->numHorseBoosts == 0) || (interfaceCtx->numHorseBoosts < svar1)) {
                             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 150, 255, interfaceCtx->aAlpha);
@@ -3519,13 +4007,13 @@ void Interface_Draw(PlayState* play) {
                             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->aAlpha);
                         }
 
-                        gSPTextureRectangle(OVERLAY_DISP++, svar5 << 2, ZREG(15) << 2, (svar5 + 16) << 2,
-                                            (ZREG(15) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((svar5 << 2)), HIRES_MULTIPLY((ZREG(15) << 2)), HIRES_MULTIPLY(((svar5 + 16) << 2)),
+                                            HIRES_MULTIPLY(((ZREG(15) + 16) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
                     }
                 }
             } else {
                 // Score for the Horseback Archery
-                svar5 = WREG(32);
+                svar5 = WREG(32) + WS_SHIFT_FULL;
                 gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->bAlpha);
 
                 // Target Icon
@@ -3533,21 +4021,21 @@ void Interface_Draw(PlayState* play) {
                                     G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                     G_TX_NOLOD, G_TX_NOLOD);
 
-                gSPTextureRectangle(OVERLAY_DISP++, (svar5 + 28) << 2, ZREG(15) << 2, (svar5 + 52) << 2,
-                                    (ZREG(15) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((svar5 + 28) << 2)), HIRES_MULTIPLY((ZREG(15) << 2)), HIRES_MULTIPLY(((svar5 + 52) << 2)),
+                                    HIRES_MULTIPLY(((ZREG(15) + 16) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
                 // Score Counter
                 gDPPipeSync(OVERLAY_DISP++);
                 gDPSetCombineLERP(OVERLAY_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE,
                                   TEXEL0, 0, PRIMITIVE, 0);
 
-                svar5 = WREG(32) + 6 * 9;
+                svar5 = WREG(32) + WS_SHIFT_FULL + 6 * 9;
 
                 for (svar1 = svar2 = 0; svar1 < 4; svar1++) {
                     if (sHBAScoreDigits[svar1] != 0 || (svar2 != 0) || (svar1 >= 3)) {
                         OVERLAY_DISP = Gfx_TextureI8(
-                            OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sHBAScoreDigits[svar1])), 8, 16, svar5,
-                            (ZREG(15) - 2), sDigitWidths[0], VREG(42), VREG(43) << 1, VREG(43) << 1);
+                            OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sHBAScoreDigits[svar1])), 8, 16, HIRES_MULTIPLY(svar5),
+                            HIRES_MULTIPLY((ZREG(15) - 2)), HIRES_MULTIPLY(sDigitWidths[0]), HIRES_MULTIPLY(VREG(42)), HIRES_DIVIDE((VREG(43) << 1)), HIRES_DIVIDE((VREG(43) << 1)));
                         svar5 += 9;
                         svar2++;
                     }
@@ -3597,6 +4085,9 @@ void Interface_Draw(PlayState* play) {
                             Interface_LoadItemIcon1(play, svar2);
                         }
                     }
+                    for (svar2=0; svar2<4; svar2++)
+                        if (Interface_GetItemFromDpad(svar2) == gSpoilingItemReverts[svar1])
+                            Interface_LoadItemIcon1(play, svar2+4);
                 }
             }
         }
@@ -3785,7 +4276,7 @@ void Interface_Draw(PlayState* play) {
                     if (gSaveContext.subTimerState != SUBTIMER_STATE_OFF) {
                         sSubTimerStateTimer = 20;
                         sSubTimerNextSecondTimer = 20;
-                        gSaveContext.timerX[TIMER_ID_SUB] = 140;
+                        gSaveContext.timerX[TIMER_ID_SUB] = 140 + WS_SHIFT_HALF;
                         gSaveContext.timerY[TIMER_ID_SUB] = 80;
 
                         if (gSaveContext.subTimerState <= SUBTIMER_STATE_STOP) {
@@ -3811,7 +4302,7 @@ void Interface_Draw(PlayState* play) {
                         case SUBTIMER_STATE_UP_INIT:
                             sSubTimerStateTimer = 20;
                             sSubTimerNextSecondTimer = 20;
-                            gSaveContext.timerX[TIMER_ID_SUB] = 140;
+                            gSaveContext.timerX[TIMER_ID_SUB] = 140 + WS_SHIFT_HALF;
                             gSaveContext.timerY[TIMER_ID_SUB] = 80;
                             if (gSaveContext.subTimerState == SUBTIMER_STATE_DOWN_INIT) {
                                 gSaveContext.subTimerState = SUBTIMER_STATE_DOWN_PREVIEW;
@@ -3990,8 +4481,8 @@ void Interface_Draw(PlayState* play) {
                 gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
                 gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 0);
                 OVERLAY_DISP =
-                    Gfx_TextureIA8(OVERLAY_DISP, gClockIconTex, 16, 16, ((void)0, gSaveContext.timerX[timerId]),
-                                   ((void)0, gSaveContext.timerY[timerId]) + 2, 16, 16, 1 << 10, 1 << 10);
+                    Gfx_TextureIA8(OVERLAY_DISP, gClockIconTex, 16, 16, ((void)0, HIRES_MULTIPLY(gSaveContext.timerX[timerId])),
+                                   (((void)0, HIRES_MULTIPLY(gSaveContext.timerY[timerId]) + 2)), HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
                 // Timer Counter
                 gDPPipeSync(OVERLAY_DISP++);
@@ -4017,9 +4508,9 @@ void Interface_Draw(PlayState* play) {
                 for (svar1 = 0; svar1 < ARRAY_COUNT(sTimerDigits); svar1++) {
                     OVERLAY_DISP =
                         Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sTimerDigits[svar1])), 8, 16,
-                                      ((void)0, gSaveContext.timerX[timerId]) + timerDigitLeftPos[svar1],
-                                      ((void)0, gSaveContext.timerY[timerId]), sDigitWidths[svar1], VREG(42),
-                                      VREG(43) << 1, VREG(43) << 1);
+                                      (((void)0, HIRES_MULTIPLY(gSaveContext.timerX[timerId])) + HIRES_MULTIPLY(timerDigitLeftPos[svar1])),
+                                      ((void)0, HIRES_MULTIPLY(gSaveContext.timerY[timerId])), HIRES_MULTIPLY(sDigitWidths[svar1]), HIRES_MULTIPLY(VREG(42)),
+                                      HIRES_DIVIDE((VREG(43) << 1)), HIRES_DIVIDE((VREG(43) << 1)));
                 }
             }
         }
@@ -4051,8 +4542,8 @@ void Interface_Update(PlayState* play) {
     s16 risingAlpha;
     u16 action;
 
-#if OOT_PAL && DEBUG_FEATURES
-    {
+#if (OOT_PAL || OOT_NTSC_N64) && DEBUG_FEATURES
+    if (Message_GetState(&play->msgCtx) == 0) {
         Input* debugInput = &play->state.input[2];
 
         if (CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {
@@ -4065,6 +4556,12 @@ void Interface_Update(PlayState* play) {
             gSaveContext.language = LANGUAGE_FRA;
             PRINTF("J_N=%x J_N=%x\n", gSaveContext.language, &gSaveContext.language);
         }
+#if OOT_NTSC_N64
+        else if (CHECK_BTN_ALL(debugInput->press.button, BTN_DDOWN))
+            gSaveContext.language = LANGUAGE_JPN;
+        if (gSaveContext.language != LANGUAGE_JPN)
+            DMA_REQUEST_SYNC(play->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
+#endif
     }
 #endif
 
@@ -4331,7 +4828,7 @@ void Interface_Update(PlayState* play) {
 
             ((gSaveContext.save.info.playerData.health >> 1) != 0)) {
             gSaveContext.timerState = TIMER_STATE_ENV_HAZARD_INIT;
-            gSaveContext.timerX[TIMER_ID_MAIN] = 140;
+            gSaveContext.timerX[TIMER_ID_MAIN] = 140 + WS_SHIFT_HALF;
             gSaveContext.timerY[TIMER_ID_MAIN] = 80;
             sEnvHazardActive = true;
         }
@@ -4439,4 +4936,36 @@ void Interface_Update(PlayState* play) {
             gSaveContext.sunsSongState = SUNSSONG_SPECIAL;
         }
     }
+}
+
+void Interface_ChangeDpadSet(PlayState* play) {
+    u8 i;
+
+    if (play->pauseCtx.debugState != 0 || gSaveContext.gameMode != GAMEMODE_NORMAL)
+        return;
+
+    if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R) && !IS_CUTSCENE_LAYER && gSaveContext.minigameState == 0 && shielded == 0) {
+        Audio_PlaySfxGeneral(!gSaveContext.save.info.playerData.dpadDualSet ? NA_SE_SY_CAMERA_ZOOM_UP : NA_SE_SY_CAMERA_ZOOM_DOWN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        gSaveContext.save.info.playerData.dpadDualSet ^= 1;
+        for (i=0; i<4; i++) {
+            Interface_LoadItemIcon1(play, i+4);
+            if (play->pauseCtx.state == PAUSE_STATE_OFF) {
+                dpadStatus[i] = BTN_ENABLED;
+                switchedDualSet = false;
+            }
+            else switchedDualSet = true;
+        }
+        gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode;
+    }
+
+    if (!IS_PAUSED(&play->pauseCtx)) {
+        Player* player = GET_PLAYER(play);
+        if (player->stateFlags1 & PLAYER_STATE1_SHIELDING)
+            shielded = 5;
+        if (!(player->stateFlags1 & PLAYER_STATE1_SHIELDING) && !CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && shielded > 0)
+            shielded--;
+        if (CHECK_BTN_ALL(play->state.input[0].cur.button, BTN_L) && CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_R))
+            shielded = 0;
+    }
+    else shielded = 0;
 }

@@ -14,13 +14,15 @@ void Interface_Destroy(PlayState* play) {
     Map_Destroy(play);
 }
 
-#define ICON_ITEM_SEGMENT_SIZE (4 * ITEM_ICON_SIZE)
+#define ICON_ITEM_SEGMENT_SIZE (8 * ITEM_ICON_SIZE)
 
 void Interface_Init(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     u32 parameterSize;
     u16 doActionOffset;
     u8 timerId;
+    u8 item;
+    u8 i;
 
     gSaveContext.sunsSongState = SUNSSONG_INACTIVE;
     gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
@@ -37,6 +39,7 @@ void Interface_Init(PlayState* play) {
     interfaceCtx->unk_244 = interfaceCtx->aAlpha = interfaceCtx->bAlpha = interfaceCtx->cLeftAlpha =
         interfaceCtx->cDownAlpha = interfaceCtx->cRightAlpha = interfaceCtx->healthAlpha = interfaceCtx->startAlpha =
             interfaceCtx->magicAlpha = 0;
+    dpadAlphas[0] = dpadAlphas[1] = dpadAlphas[2] = dpadAlphas[3] = dpadAlphas[4] = 0;
     interfaceCtx->minimapAlpha = 0;
     interfaceCtx->unk_260 = 0;
 
@@ -59,7 +62,15 @@ void Interface_Init(PlayState* play) {
 
     ASSERT(interfaceCtx->doActionSegment != NULL, "parameter->do_actionSegment != NULL", "../z_construct.c", 169);
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    if (gSaveContext.language == LANGUAGE_JPN)
+        doActionOffset = (LANGUAGE_JPN * DO_ACTION_MAX + DO_ACTION_ATTACK) * DO_ACTION_TEX_SIZE;
+    else if (gSaveContext.language == LANGUAGE_ENG)
+        doActionOffset = (LANGUAGE_ENG * DO_ACTION_MAX + DO_ACTION_ATTACK) * DO_ACTION_TEX_SIZE;
+    else if (gSaveContext.language == LANGUAGE_GER)
+        doActionOffset = (LANGUAGE_GER * DO_ACTION_MAX + DO_ACTION_ATTACK) * DO_ACTION_TEX_SIZE;
+    else doActionOffset = (LANGUAGE_FRA * DO_ACTION_MAX + DO_ACTION_ATTACK) * DO_ACTION_TEX_SIZE;
+#elif OOT_NTSC
     if (gSaveContext.language == LANGUAGE_JPN) {
         doActionOffset = (LANGUAGE_JPN * DO_ACTION_MAX + DO_ACTION_ATTACK) * DO_ACTION_TEX_SIZE;
     } else {
@@ -78,7 +89,15 @@ void Interface_Init(PlayState* play) {
     DMA_REQUEST_SYNC(interfaceCtx->doActionSegment, (uintptr_t)_do_action_staticSegmentRomStart + doActionOffset,
                      2 * DO_ACTION_TEX_SIZE, "../z_construct.c", 174);
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    if (gSaveContext.language == LANGUAGE_JPN)
+        doActionOffset = (LANGUAGE_JPN * DO_ACTION_MAX + DO_ACTION_RETURN) * DO_ACTION_TEX_SIZE;
+    else if (gSaveContext.language == LANGUAGE_ENG)
+        doActionOffset = (LANGUAGE_ENG * DO_ACTION_MAX + DO_ACTION_RETURN) * DO_ACTION_TEX_SIZE;
+    else if (gSaveContext.language == LANGUAGE_GER)
+        doActionOffset = (LANGUAGE_GER * DO_ACTION_MAX + DO_ACTION_RETURN) * DO_ACTION_TEX_SIZE;
+    else doActionOffset = (LANGUAGE_FRA * DO_ACTION_MAX + DO_ACTION_RETURN) * DO_ACTION_TEX_SIZE;
+#elif OOT_NTSC
     if (gSaveContext.language == LANGUAGE_JPN) {
         doActionOffset = (LANGUAGE_JPN * DO_ACTION_MAX + DO_ACTION_RETURN) * DO_ACTION_TEX_SIZE;
     } else {
@@ -110,34 +129,22 @@ void Interface_Init(PlayState* play) {
            gSaveContext.save.info.equips.buttonItems[1], gSaveContext.save.info.equips.buttonItems[2],
            gSaveContext.save.info.equips.buttonItems[3]);
 
-    if (gSaveContext.save.info.equips.buttonItems[0] < 0xF0) {
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (0 * ITEM_ICON_SIZE),
+    for (i=0; i<8; i++) {
+        if (i<4)
+            item = gSaveContext.save.info.equips.buttonItems[i];
+        else item = Interface_GetItemFromDpad(i-4);
 
-                         GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[0]), ITEM_ICON_SIZE,
-                         "../z_construct.c", 198);
-    } else if (gSaveContext.save.info.equips.buttonItems[0] != 0xFF) {
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (0 * ITEM_ICON_SIZE),
+        if (item == ITEM_SWORDS)
+            item = gSaveContext.save.info.equips.buttonItems[0];
+        else if (item == ITEM_SHIELDS)
+            item = (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
+        else if (item == ITEM_TUNICS)
+            item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+        else if (item == ITEM_BOOTS)
+            item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
 
-                         GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[0]), ITEM_ICON_SIZE,
-                         "../z_construct.c", 203);
-    }
-
-    if (gSaveContext.save.info.equips.buttonItems[1] < 0xF0) {
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (1 * ITEM_ICON_SIZE),
-                         GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[1]), ITEM_ICON_SIZE,
-                         "../z_construct.c", 209);
-    }
-
-    if (gSaveContext.save.info.equips.buttonItems[2] < 0xF0) {
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (2 * ITEM_ICON_SIZE),
-                         GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[2]), ITEM_ICON_SIZE,
-                         "../z_construct.c", 214);
-    }
-
-    if (gSaveContext.save.info.equips.buttonItems[3] < 0xF0) {
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (3 * ITEM_ICON_SIZE),
-                         GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[3]), ITEM_ICON_SIZE,
-                         "../z_construct.c", 219);
+        if (item < 0xF0)
+            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, "../z_construct.c", 198);
     }
 
     PRINTF("ＥＶＥＮＴ＝%d\n", ((void)0, gSaveContext.timerState));
@@ -366,7 +373,7 @@ void Regs_InitDataImpl(void) {
     ZREG(46) = 1;
     ZREG(47) = 1;
 
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
     R_START_LABEL_DD(0) = 86;
     R_START_LABEL_DD(1) = 100;
     R_START_LABEL_WIDTH = 0;
@@ -385,6 +392,11 @@ void Regs_InitDataImpl(void) {
     R_START_LABEL_X(0) = 120;
     R_START_LABEL_X(1) = 119;
     R_START_LABEL_X(2) = 119;
+#endif
+#if OOT_NTSC_N64
+    R_START_LABEL_DD(3) = 86;
+    R_START_LABEL_Y(3)  = 21;
+    R_START_LABEL_X(3)  = 122;
 #endif
 
     R_PAUSE_QUEST_MEDALLION_SHINE_TIME(0) = 1;
@@ -514,9 +526,9 @@ void Regs_InitDataImpl(void) {
     XREG(89) = -100;
     XREG(90) = -500;
     XREG(91) = 0;
-    XREG(92) = 100;
-    XREG(93) = 100;
-    XREG(94) = 160;
+    XREG(92) = HIRES_MULTIPLY(100);
+    XREG(93) = HIRES_MULTIPLY(100);
+    XREG(94) = HIRES_MULTIPLY(160);
     XREG(95) = 200;
     R_PAUSE_PAGES_Y_ORIGIN_2 = -6080;
     R_PAUSE_DEPTH_OFFSET = 9355;
@@ -528,8 +540,8 @@ void Regs_InitDataImpl(void) {
 #if OOT_NTSC
     R_B_LABEL_SCALE(0) = 100;
     R_B_LABEL_SCALE(1) = 109;
-    R_B_LABEL_X(0) = 151;
-    R_B_LABEL_X(1) = 148;
+    R_B_LABEL_X(0) = B_BUTTON_X - 9;
+    R_B_LABEL_X(1) = B_BUTTON_X - 12;
     R_B_LABEL_Y(0) = 23;
     R_B_LABEL_Y(1) = 22;
     R_A_LABEL_Z(0) = -380;
@@ -567,13 +579,13 @@ void Regs_InitDataImpl(void) {
     WREG(35) = 0;
     WREG(36) = 0;
 
-#if OOT_PAL
+#if OOT_PAL || OOT_NTSC_N64
     R_B_LABEL_SCALE(0) = 100;
     R_B_LABEL_SCALE(1) = 99;
     R_B_LABEL_SCALE(2) = 109;
-    R_B_LABEL_X(0) = B_BUTTON_X - 9;
-    R_B_LABEL_X(1) = B_BUTTON_X - 11;
-    R_B_LABEL_X(2) = B_BUTTON_X - 12;
+    R_B_LABEL_X(0) = B_BUTTON_X - 10;
+    R_B_LABEL_X(1) = B_BUTTON_X - 9;
+    R_B_LABEL_X(2) = B_BUTTON_X - 11;
     R_B_LABEL_Y(0) = B_BUTTON_Y + 6;
     R_B_LABEL_Y(1) = B_BUTTON_Y + 5;
     R_B_LABEL_Y(2) = B_BUTTON_Y + 5;
@@ -598,6 +610,18 @@ void Regs_InitDataImpl(void) {
     R_KALEIDO_UNK6(0) = -37;
     R_KALEIDO_UNK6(1) = 30;
     R_KALEIDO_UNK6(2) = -50;
+#endif
+#if OOT_NTSC_N64
+    R_B_LABEL_SCALE(3) = 100;
+    R_B_LABEL_X(3)     = B_BUTTON_X - 10;
+    R_B_LABEL_Y(3)     = B_BUTTON_Y + 6;
+    R_A_LABEL_Z(3)     = -380;
+    R_KALEIDO_UNK1(3)  = -45;
+    R_KALEIDO_UNK2(3)  = 16;
+    R_KALEIDO_UNK3(3)  = -55;
+    R_KALEIDO_UNK4(3)  = 43;
+    R_KALEIDO_UNK5(3)  = -33;
+    R_KALEIDO_UNK6(3)  = -33;
 #endif
 
     R_DGN_MINIMAP_X = 204;

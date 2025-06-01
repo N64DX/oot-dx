@@ -472,13 +472,6 @@ s32 func_80B4F45C(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s
 
         Matrix_Push();
 
-#if PLATFORM_N64
-        // Anti-piracy check, Zelda's hair is misshapen if the check fails
-        if (osCicId != 6105) {
-            Matrix_Scale(2.0f, 0.5f, 2.0f, MTXMODE_APPLY);
-        }
-#endif
-
         Matrix_Translate(pos->x, pos->y, pos->z, MTXMODE_APPLY);
         Matrix_RotateZYX(rot->x, rot->y, rot->z, MTXMODE_APPLY);
         Matrix_Push();

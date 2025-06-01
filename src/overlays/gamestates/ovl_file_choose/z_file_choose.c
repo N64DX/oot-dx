@@ -15,6 +15,7 @@
 #endif
 #include "printf.h"
 #include "regs.h"
+#include "resolution.h"
 #include "rumble.h"
 #include "segment_symbols.h"
 #include "seqcmd.h"
@@ -37,7 +38,12 @@
 #if OOT_PAL_N64
 #include "assets/objects/object_mag/object_mag.h"
 #endif
+
+#if OOT_NTSC_N64
+#include "assets/textures/title_static/title_static_all.h"
+#else
 #include "assets/textures/title_static/title_static.h"
+#endif
 #include "assets/textures/parameter_static/parameter_static.h"
 
 #if OOT_PAL_N64
@@ -1170,7 +1176,7 @@ static s16 sQuestItemFlags[] = {
     QUEST_MEDALLION_WATER, QUEST_MEDALLION_SPIRIT, QUEST_MEDALLION_SHADOW, QUEST_MEDALLION_LIGHT,
 };
 
-#if (OOT_NTSC && OOT_VERSION < GC_JP_CE) || PLATFORM_IQUE
+#if (!OOT_NTSC_N64 && OOT_NTSC && OOT_VERSION < GC_JP_CE) || PLATFORM_IQUE
 static void* sSaveXTextures[] = { gFileSelSaveXJPNTex, gFileSelSaveXENGTex };
 #endif
 
@@ -1316,7 +1322,20 @@ static void* sFileInfoBoxTextures[] = {
 };
 
 static void* sTitleLabels[][9] = {
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    { gFileSelPleaseSelectAFileENGTex, gFileSelOpenThisFileENGTex, gFileSelCopyWhichFileENGTex,
+      gFileSelCopyToWhichFileENGTex, gFileSelAreYouSureENGTex, gFileSelFileCopiedENGTex, gFileSelEraseWhichFileENGTex,
+      gFileSelAreYouSure2ENGTex, gFileSelFileErasedENGTex },
+    { gFileSelPleaseSelectAFileGERTex, gFileSelOpenThisFileGERTex, gFileSelCopyWhichFileGERTex,
+      gFileSelCopyToWhichFileGERTex, gFileSelAreYouSureGERTex, gFileSelFileCopiedGERTex, gFileSelEraseWhichFileGERTex,
+      gFileSelAreYouSure2GERTex, gFileSelFileErasedGERTex },
+    { gFileSelPleaseSelectAFileFRATex, gFileSelOpenThisFileFRATex, gFileSelCopyWhichFileFRATex,
+      gFileSelCopyToWhichFileFRATex, gFileSelAreYouSureFRATex, gFileSelFileCopiedFRATex, gFileSelEraseWhichFileFRATex,
+      gFileSelAreYouSure2FRATex, gFileSelFileErasedFRATex },
+    { gFileSelPleaseSelectAFileJPNTex, gFileSelOpenThisFileJPNTex, gFileSelCopyWhichFileJPNTex,
+      gFileSelCopyToWhichFileJPNTex, gFileSelAreYouSureJPNTex, gFileSelFileCopiedJPNTex, gFileSelEraseWhichFileJPNTex,
+      gFileSelAreYouSure2JPNTex, gFileSelFileErasedJPNTex },
+#elif OOT_NTSC
     { gFileSelPleaseSelectAFileJPNTex, gFileSelOpenThisFileJPNTex, gFileSelCopyWhichFileJPNTex,
       gFileSelCopyToWhichFileJPNTex, gFileSelAreYouSureJPNTex, gFileSelFileCopiedJPNTex, gFileSelEraseWhichFileJPNTex,
       gFileSelAreYouSure2JPNTex, gFileSelFileErasedJPNTex },
@@ -1337,7 +1356,16 @@ static void* sTitleLabels[][9] = {
 };
 
 static void* sWarningLabels[][5] = {
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    { gFileSelNoFileToCopyENGTex, gFileSelNoFileToEraseENGTex, gFileSelNoEmptyFileENGTex, gFileSelFileEmptyENGTex,
+      gFileSelFileInUseENGTex },
+    { gFileSelNoFileToCopyGERTex, gFileSelNoFileToEraseGERTex, gFileSelNoEmptyFileGERTex, gFileSelFileEmptyGERTex,
+      gFileSelFileInUseGERTex },
+    { gFileSelNoFileToCopyFRATex, gFileSelNoFileToEraseFRATex, gFileSelNoEmptyFileFRATex, gFileSelFileEmptyFRATex,
+      gFileSelFileInUseFRATex },
+    { gFileSelNoFileToCopyJPNTex, gFileSelNoFileToEraseJPNTex, gFileSelNoEmptyFileJPNTex, gFileSelFileEmptyJPNTex,
+      gFileSelFileInUseJPNTex },
+#elif OOT_NTSC
     { gFileSelNoFileToCopyJPNTex, gFileSelNoFileToEraseJPNTex, gFileSelNoEmptyFileJPNTex, gFileSelFileEmptyJPNTex,
       gFileSelFileInUseJPNTex },
     { gFileSelNoFileToCopyENGTex, gFileSelNoFileToEraseENGTex, gFileSelNoEmptyFileENGTex, gFileSelFileEmptyENGTex,
@@ -1353,7 +1381,12 @@ static void* sWarningLabels[][5] = {
 };
 
 static void* sFileButtonTextures[][3] = {
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    { gFileSelFile1ButtonENGTex, gFileSelFile2ButtonENGTex, gFileSelFile3ButtonENGTex },
+    { gFileSelFile1ButtonGERTex, gFileSelFile2ButtonGERTex, gFileSelFile3ButtonGERTex },
+    { gFileSelFile1ButtonFRATex, gFileSelFile2ButtonFRATex, gFileSelFile3ButtonFRATex },
+    { gFileSelFile1ButtonJPNTex, gFileSelFile2ButtonJPNTex, gFileSelFile3ButtonJPNTex },
+#elif OOT_NTSC
     { gFileSelFile1ButtonJPNTex, gFileSelFile2ButtonJPNTex, gFileSelFile3ButtonJPNTex },
     { gFileSelFile1ButtonENGTex, gFileSelFile2ButtonENGTex, gFileSelFile3ButtonENGTex },
 #else
@@ -1364,7 +1397,12 @@ static void* sFileButtonTextures[][3] = {
 };
 
 static void* sActionButtonTextures[][4] = {
-#if OOT_NTSC
+#if OOT_NTSC_N64
+    { gFileSelCopyButtonENGTex, gFileSelEraseButtonENGTex, gFileSelYesButtonENGTex, gFileSelQuitButtonENGTex },
+    { gFileSelCopyButtonGERTex, gFileSelEraseButtonGERTex, gFileSelYesButtonGERTex, gFileSelQuitButtonGERTex },
+    { gFileSelCopyButtonFRATex, gFileSelEraseButtonFRATex, gFileSelYesButtonFRATex, gFileSelQuitButtonFRATex },
+    { gFileSelCopyButtonJPNTex, gFileSelEraseButtonJPNTex, gFileSelYesButtonJPNTex, gFileSelQuitButtonJPNTex },
+#elif OOT_NTSC
     { gFileSelCopyButtonJPNTex, gFileSelEraseButtonJPNTex, gFileSelYesButtonJPNTex, gFileSelQuitButtonJPNTex },
     { gFileSelCopyButtonENGTex, gFileSelEraseButtonENGTex, gFileSelYesButtonENGTex, gFileSelQuitButtonENGTex },
 #else
@@ -1929,6 +1967,7 @@ void FileSelect_LoadGame(GameState* thisx) {
 
     gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
         gSaveContext.buttonStatus[3] = gSaveContext.buttonStatus[4] = BTN_ENABLED;
+    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
 
     gSaveContext.forceRisingButtonAlphas = gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode =
         gSaveContext.hudVisibilityModeTimer = gSaveContext.magicCapacity = 0; // false, HUD_VISIBILITY_NO_CHANGE
@@ -2154,8 +2193,8 @@ void FileSelect_Main(GameState* thisx) {
         gDPLoadTextureBlock(POLY_OPA_DISP++, controlsTextures[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, 144, 16,
                             0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                             G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(POLY_OPA_DISP++, 90 << 2, 204 << 2, 234 << 2, 220 << 2, G_TX_RENDERTILE, 0, 0, 1 << 10,
-                            1 << 10);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((90 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((204 << 2)), HIRES_MULTIPLY(((234 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((220 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+                            HIRES_DIVIDE((1 << 10)));
     }
 
     gDPPipeSync(POLY_OPA_DISP++);
@@ -2326,6 +2365,7 @@ void FileSelect_InitContext(GameState* thisx) {
 
     gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
         gSaveContext.buttonStatus[3] = gSaveContext.buttonStatus[4] = BTN_ENABLED;
+    dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
 
     this->n64ddFlags[0] = this->n64ddFlags[1] = this->n64ddFlags[2] = this->defense[0] = this->defense[1] =
         this->defense[2] = 0;

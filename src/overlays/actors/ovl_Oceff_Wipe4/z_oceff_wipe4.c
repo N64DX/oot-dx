@@ -8,6 +8,7 @@
 
 #include "gfx.h"
 #include "gfx_setupdl.h"
+#include "resolution.h"
 #include "printf.h"
 #include "sys_matrix.h"
 #include "terminal.h"
@@ -77,9 +78,9 @@ void OceffWipe4_Draw(Actor* thisx, PlayState* play) {
     eye = GET_ACTIVE_CAM(play)->eye;
     quakeOffset = Camera_GetQuakeOffset(GET_ACTIVE_CAM(play));
     if (this->timer < 16) {
-        z = Math_SinS(this->timer * 1024) * 1330.0f;
+        z = Math_SinS(this->timer * 1024) * (1330.0f - OCEFF_SHIFT);
     } else {
-        z = 1330.0f;
+        z = (1330.0f - OCEFF_SHIFT);
     }
 
     vtxPtr = sFrustumVtx;

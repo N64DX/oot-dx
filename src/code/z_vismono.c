@@ -36,6 +36,7 @@
 extern u16 D_0F000000[];
 
 void VisMono_Init(VisMono* this) {
+#if !HIRES && !ULTRA_WS
     bzero(this, sizeof(VisMono));
     this->vis.type = 0;
     this->vis.scissorType = VIS_NO_SETSCISSOR;
@@ -47,13 +48,17 @@ void VisMono_Init(VisMono* this) {
     this->vis.envColor.g = 0;
     this->vis.envColor.b = 0;
     this->vis.envColor.a = 0;
+#endif
 }
 
 void VisMono_Destroy(VisMono* this) {
+#if !HIRES && !ULTRA_WS
     SYSTEM_ARENA_FREE(this->dList, "../z_vismono.c", 137);
+#endif
 }
 
 void VisMono_DesaturateTLUT(VisMono* this, u16* tlut) {
+#if !HIRES && !ULTRA_WS
     s32 i;
 
     for (i = 0; i < 256; i++) {
@@ -72,9 +77,11 @@ void VisMono_DesaturateTLUT(VisMono* this, u16* tlut) {
             ((i >> 3 & 0x1F) * VISMONO_FAC_RED + (i << 2 & 0x1F) * VISMONO_FAC_GREEN) * 255 / VISMONO_FAC_NORM,
             ((i >> 6 & 0x1F) * VISMONO_FAC_GREEN + (i >> 1 & 0x1F) * VISMONO_FAC_BLUE) * 255 / VISMONO_FAC_NORM);
     }
+#endif
 }
 
 Gfx* VisMono_DesaturateDList(VisMono* this, Gfx* gfx) {
+#if !HIRES && !ULTRA_WS
     s32 y;
     s32 height = VISMONO_CFBFRAG_HEIGHT;
     u16* cfbFrag = D_0F000000;
@@ -139,9 +146,11 @@ Gfx* VisMono_DesaturateDList(VisMono* this, Gfx* gfx) {
     gDPPipeSync(gfx++);
     gSPEndDisplayList(gfx++);
     return gfx;
+#endif
 }
 
 void VisMono_Draw(VisMono* this, Gfx** gfxP) {
+#if !HIRES && !ULTRA_WS
     Gfx* gfx = *gfxP;
     u16* tlut;
     Gfx* dList;
@@ -185,9 +194,11 @@ void VisMono_Draw(VisMono* this, Gfx** gfxP) {
     gDPPipeSync(gfx++);
 
     *gfxP = gfx;
+#endif
 }
 
 void VisMono_DrawOld(VisMono* this) {
+#if !HIRES && !ULTRA_WS
     UNUSED_NDEBUG Gfx* dListEnd;
 
     if (this->tlut == NULL) {
@@ -200,4 +211,5 @@ void VisMono_DrawOld(VisMono* this) {
         dListEnd = VisMono_DesaturateDList(this, this->dList);
         ASSERT(dListEnd <= this->dList + VISMONO_DLSIZE, "glistp_end <= this->mono_dl + DLSIZE", "../z_vismono.c", 292);
     }
+#endif
 }

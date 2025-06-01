@@ -432,6 +432,36 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                         }
                     }
+                    else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT)) {
+                        if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
+                            u8 button;
+
+                            if (CHECK_BTN_ALL(input->press.button, BTN_DUP))
+                                button = 0;
+                            else if (CHECK_BTN_ALL(input->press.button, BTN_DRIGHT))
+                                button = 1;
+                            else if (CHECK_BTN_ALL(input->press.button, BTN_DDOWN))
+                                button = 2;
+                            else button = 3;
+
+                            for (i=0; i<4; i++) {
+                                if (i == button)
+                                    continue;
+
+                                if (DPAD_BUTTON(i) == cursorSlot || ((cursorSlot == SLOT_BOW || cursorSlot == SLOT_ARROW_FIRE || cursorSlot == SLOT_ARROW_ICE || cursorSlot == SLOT_ARROW_LIGHT) && (DPAD_BUTTON(i) == SLOT_BOW || DPAD_BUTTON(i) == SLOT_ARROW_FIRE || DPAD_BUTTON(i) == SLOT_ARROW_ICE || DPAD_BUTTON(i) == SLOT_ARROW_LIGHT))) {
+                                    DPAD_BUTTON(i) = DPAD_BUTTON(button);
+                                    Interface_LoadItemIcon1(play, i+4);
+                                    break;
+                                }
+                            }
+
+                            DPAD_BUTTON(button) = cursorSlot;
+                            Interface_LoadItemIcon1(play, button+4);
+                            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                        }
+                        else Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    }
+                    
                 }
             } else {
                 pauseCtx->cursorVtx[0].v.ob[0] = pauseCtx->cursorVtx[2].v.ob[0] = pauseCtx->cursorVtx[1].v.ob[0] =
@@ -460,7 +490,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
     gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
 
     for (i = 0, j = ITEM_QUAD_GRID_SELECTED_C_LEFT * 4; i < 3; i++, j += 4) {
-        if (gSaveContext.save.info.equips.buttonItems[i + 1] != ITEM_NONE) {
+        if (gSaveContext.save.info.equips.buttonItems[i + 1] != ITEM_NONE && gSaveContext.save.info.equips.cButtonSlots[i] != SLOT_NONE) {
             gSPVertex(POLY_OPA_DISP++, &pauseCtx->itemVtx[j], 4, 0);
             POLY_OPA_DISP = KaleidoScope_QuadTextureIA8(POLY_OPA_DISP, gEquippedItemOutlineTex, 32, 32, 0);
         }
@@ -538,7 +568,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_item.c", 516);
 }
 
-static s16 sCButtonPosX[] = { 660, 900, 1140 };
+static s16 sCButtonPosX[] = { C_BUTTON_EQUIP_1, C_BUTTON_EQUIP_2, C_BUTTON_EQUIP_3 };
 static s16 sCButtonPosY[] = { 1100, 920, 1100 };
 
 void KaleidoScope_UpdateItemEquip(PlayState* play) {

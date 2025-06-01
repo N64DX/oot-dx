@@ -26,6 +26,13 @@
 #define OOT_PAL 0
 #endif
 
+// NTSC N64
+#if OOT_VERSION == NTSC_1_0 || OOT_VERSION == NTSC_1_1 || OOT_VERSION == NTSC_1_2
+#define OOT_NTSC_N64 1
+#else
+#define OOT_NTSC_N64 0
+#endif
+
 // PAL N64 (50 Hz)
 #if OOT_VERSION == PAL_1_0 || OOT_VERSION == PAL_1_1
 #define OOT_PAL_N64 1

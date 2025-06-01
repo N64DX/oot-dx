@@ -15,6 +15,7 @@
 #include "segment_symbols.h"
 #include "sequence.h"
 #include "regs.h"
+#include "resolution.h"
 #include "terminal.h"
 #include "translation.h"
 #include "versions.h"
@@ -151,7 +152,70 @@ s16 sMessageHasSetSfx = false;
 
 u16 sOcarinaSongBitFlags = 0; // ocarina bit flags
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+
+MessageTableEntry sJpnMessageEntryTable[] = {
+#define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) { textId, (_SHIFTL(type, 4, 4) | _SHIFTL(yPos, 0, 4)), _message_##textId##_jpn },
+#define DEFINE_MESSAGE(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE_FFFC(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#include "assets/text/message_data.h"
+#undef DEFINE_MESSAGE
+#undef DEFINE_MESSAGE_NES
+#undef DEFINE_MESSAGE_JPN
+#undef DEFINE_MESSAGE_FFFC
+    { 0xFFFF, 0, NULL },
+};
+
+MessageTableEntry sNesMessageEntryTable[] = {
+#define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) { textId, (_SHIFTL(type, 4, 4) | _SHIFTL(yPos, 0, 4)), _message_##textId##_nes },
+#define DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE_FFFC(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#include "assets/text/message_data.h"
+#undef DEFINE_MESSAGE
+#undef DEFINE_MESSAGE_NES
+#undef DEFINE_MESSAGE_JPN
+#undef DEFINE_MESSAGE_FFFC
+    { 0xFFFF, 0, NULL },
+};
+
+const char* sGerMessageEntryTable[] = {
+#define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) _message_##textId##_ger,
+#define DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE_FFFC(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#include "assets/text/message_data.h"
+#undef DEFINE_MESSAGE
+#undef DEFINE_MESSAGE_NES
+#undef DEFINE_MESSAGE_JPN
+#undef DEFINE_MESSAGE_FFFC
+    NULL,
+};
+
+const char* sFraMessageEntryTable[] = {
+#define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) _message_##textId##_fra,
+#define DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) \
+    DEFINE_MESSAGE_JPN(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#define DEFINE_MESSAGE_FFFC(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage)
+#include "assets/text/message_data.h"
+#undef DEFINE_MESSAGE
+#undef DEFINE_MESSAGE_NES
+#undef DEFINE_MESSAGE_JPN
+#undef DEFINE_MESSAGE_FFFC
+    NULL,
+};
+
+#elif OOT_NTSC
 
 MessageTableEntry sJpnMessageEntryTable[] = {
 #define DEFINE_MESSAGE_NES(textId, type, yPos, jpnMessage, nesMessage, gerMessage, fraMessage) /* Not Present */
@@ -250,6 +314,10 @@ MessageTableEntry* sJpnMessageEntryTablePtr = sJpnMessageEntryTable;
 MessageTableEntry* sNesMessageEntryTablePtr = sNesMessageEntryTable;
 #else
 MessageTableEntry* sNesMessageEntryTablePtr = sNesMessageEntryTable;
+const char** sGerMessageEntryTablePtr = sGerMessageEntryTable;
+const char** sFraMessageEntryTablePtr = sFraMessageEntryTable;
+#endif
+#if OOT_NTSC_N64
 const char** sGerMessageEntryTablePtr = sGerMessageEntryTable;
 const char** sFraMessageEntryTablePtr = sFraMessageEntryTable;
 #endif
@@ -430,16 +498,16 @@ void Message_DrawTextChar(PlayState* play, void* textureImage, Gfx** p) {
     // Draw drop shadow
     if (msgCtx->textBoxType != TEXTBOX_TYPE_NONE_NO_SHADOW) {
         gDPSetPrimColor(gfx++, 0, 0, 0, 0, 0, msgCtx->textColorAlpha);
-        gSPTextureRectangle(gfx++, (x + R_TEXT_DROP_SHADOW_OFFSET) << 2, (y + R_TEXT_DROP_SHADOW_OFFSET) << 2,
-                            (x + R_TEXT_DROP_SHADOW_OFFSET + sCharTexSize) << 2,
-                            (y + R_TEXT_DROP_SHADOW_OFFSET + sCharTexSize) << 2, G_TX_RENDERTILE, 0, 0, sCharTexScale,
-                            sCharTexScale);
+        gSPTextureRectangle(gfx++, HIRES_MULTIPLY(((x + R_TEXT_DROP_SHADOW_OFFSET + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY(((y + R_TEXT_DROP_SHADOW_OFFSET) << 2)),
+                            HIRES_MULTIPLY(((x + R_TEXT_DROP_SHADOW_OFFSET + WS_SHIFT_HALF + sCharTexSize) << 2)),
+                            HIRES_MULTIPLY(((y + R_TEXT_DROP_SHADOW_OFFSET + sCharTexSize) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(sCharTexScale),
+                            HIRES_DIVIDE(sCharTexScale));
     }
 
     gDPPipeSync(gfx++);
     gDPSetPrimColor(gfx++, 0, 0, msgCtx->textColorR, msgCtx->textColorG, msgCtx->textColorB, msgCtx->textColorAlpha);
-    gSPTextureRectangle(gfx++, x << 2, y << 2, (x + sCharTexSize) << 2, (y + sCharTexSize) << 2, G_TX_RENDERTILE, 0, 0,
-                        sCharTexScale, sCharTexScale);
+    gSPTextureRectangle(gfx++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + sCharTexSize) << 2)), HIRES_MULTIPLY(((y + sCharTexSize) << 2)), G_TX_RENDERTILE, 0, 0,
+                        HIRES_DIVIDE(sCharTexScale), HIRES_DIVIDE(sCharTexScale));
     *p = gfx;
 }
 
@@ -481,7 +549,80 @@ void Message_GrowTextbox(MessageContext* msgCtx) {
     R_TEXTBOX_X = R_TEXTBOX_WIDTH_TARGET - (R_TEXTBOX_WIDTH / 2) + R_TEXTBOX_X_TARGET;
 }
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+
+bool Message_FindMessage(PlayState* play, u16 textId, Language language) {
+    Font* font = &play->msgCtx.font;
+    MessageTableEntry* messageTableEntry;
+    const char** languageSegmentTable;
+    const char* foundSeg;
+    const char* nextSeg;
+    const char* seg;
+
+    if (language == LANGUAGE_JPN || language == LANGUAGE_ENG) {
+        messageTableEntry = (language == LANGUAGE_JPN) ? sJpnMessageEntryTablePtr : sNesMessageEntryTablePtr;
+        seg               = messageTableEntry->segment;
+
+        while (messageTableEntry->textId != 0xFFFF) {
+            if (messageTableEntry->textId == textId) {
+                foundSeg = messageTableEntry->segment;
+                font->fontBuf[0] = messageTableEntry->typePos;
+                messageTableEntry++;
+                nextSeg = messageTableEntry->segment;
+                font->msgOffset = foundSeg - seg;
+                font->msgLength = nextSeg - foundSeg;
+                return (font->msgLength > 8);
+            }
+            messageTableEntry++;
+        }
+    } else {
+        messageTableEntry = sNesMessageEntryTablePtr;
+        seg               = messageTableEntry->segment;
+
+        switch (language) {
+            case LANGUAGE_GER:
+                languageSegmentTable = sGerMessageEntryTablePtr;
+                break;
+            case LANGUAGE_FRA:
+                languageSegmentTable = sFraMessageEntryTablePtr;
+                break;
+            default:
+                return false;
+        }
+
+        while (messageTableEntry->textId != 0xFFFF) {
+            if (messageTableEntry->textId == textId) {
+                foundSeg = *languageSegmentTable;
+                font->fontBuf[0] = messageTableEntry->typePos;
+                languageSegmentTable++;
+                nextSeg = *languageSegmentTable;
+                font->msgOffset = foundSeg - seg;
+                font->msgLength = nextSeg - foundSeg;
+                return (font->msgLength > 4);
+            }
+            messageTableEntry++;
+            languageSegmentTable++;
+        }
+    }
+
+    if (language == LANGUAGE_JPN || language == LANGUAGE_ENG) {
+        foundSeg = messageTableEntry->segment;
+        font->fontBuf[0] = messageTableEntry->typePos;
+        messageTableEntry++;
+        nextSeg = messageTableEntry->segment;
+    } else {
+        foundSeg = *languageSegmentTable;
+        font->fontBuf[0] = messageTableEntry->typePos;
+        languageSegmentTable++;
+        nextSeg = *languageSegmentTable;
+    }
+
+    font->msgOffset = foundSeg - seg;
+    font->msgLength = nextSeg - foundSeg;
+    return false;
+}
+
+#elif OOT_NTSC
 
 void Message_FindMessageJPN(PlayState* play, u16 textId) {
     const char* foundSeg;
@@ -495,7 +636,7 @@ void Message_FindMessageJPN(PlayState* play, u16 textId) {
     while (messageTableEntry->textId != 0xFFFF) {
         if (messageTableEntry->textId == textId) {
             foundSeg = messageTableEntry->segment;
-            font->charTexBuf[0] = messageTableEntry->typePos;
+            font->fontBuf[0] = messageTableEntry->typePos;
             messageTableEntry++;
             nextSeg = messageTableEntry->segment;
             font->msgOffset = foundSeg - seg;
@@ -512,7 +653,7 @@ void Message_FindMessageJPN(PlayState* play, u16 textId) {
     messageTableEntry = sJpnMessageEntryTablePtr;
 
     foundSeg = messageTableEntry->segment;
-    font->charTexBuf[0] = messageTableEntry->typePos;
+    font->fontBuf[0] = messageTableEntry->typePos;
     messageTableEntry++;
     nextSeg = messageTableEntry->segment;
 
@@ -531,7 +672,7 @@ void Message_FindMessageNES(PlayState* play, u16 textId) {
     while (messageTableEntry->textId != 0xFFFF) {
         if (messageTableEntry->textId == textId) {
             foundSeg = messageTableEntry->segment;
-            font->charTexBuf[0] = messageTableEntry->typePos;
+            font->fontBuf[0] = messageTableEntry->typePos;
             messageTableEntry++;
             nextSeg = messageTableEntry->segment;
             font->msgOffset = foundSeg - seg;
@@ -548,7 +689,7 @@ void Message_FindMessageNES(PlayState* play, u16 textId) {
     messageTableEntry = sNesMessageEntryTablePtr;
 
     foundSeg = messageTableEntry->segment;
-    font->charTexBuf[0] = messageTableEntry->typePos;
+    font->fontBuf[0] = messageTableEntry->typePos;
     messageTableEntry++;
     nextSeg = messageTableEntry->segment;
     font->msgOffset = foundSeg - seg;
@@ -571,7 +712,7 @@ void Message_FindMessagePAL(PlayState* play, u16 textId) {
         while (messageTableEntry->textId != 0xFFFF) {
             if (messageTableEntry->textId == textId) {
                 foundSeg = messageTableEntry->segment;
-                font->charTexBuf[0] = messageTableEntry->typePos;
+                font->fontBuf[0] = messageTableEntry->typePos;
                 messageTableEntry++;
                 nextSeg = messageTableEntry->segment;
                 font->msgOffset = foundSeg - seg;
@@ -591,7 +732,7 @@ void Message_FindMessagePAL(PlayState* play, u16 textId) {
         while (messageTableEntry->textId != 0xFFFF) {
             if (messageTableEntry->textId == textId) {
                 foundSeg = *languageSegmentTable;
-                font->charTexBuf[0] = messageTableEntry->typePos;
+                font->fontBuf[0] = messageTableEntry->typePos;
                 languageSegmentTable++;
                 nextSeg = *languageSegmentTable;
                 font->msgOffset = foundSeg - seg;
@@ -610,14 +751,14 @@ void Message_FindMessagePAL(PlayState* play, u16 textId) {
 
     if (gSaveContext.language == LANGUAGE_ENG) {
         foundSeg = messageTableEntry->segment;
-        font->charTexBuf[0] = messageTableEntry->typePos;
+        font->fontBuf[0] = messageTableEntry->typePos;
         messageTableEntry++;
         nextSeg = messageTableEntry->segment;
     } else {
         languageSegmentTable =
             (gSaveContext.language == LANGUAGE_GER) ? sGerMessageEntryTablePtr : sFraMessageEntryTablePtr;
         foundSeg = *languageSegmentTable;
-        font->charTexBuf[0] = messageTableEntry->typePos;
+        font->fontBuf[0] = messageTableEntry->typePos;
         languageSegmentTable++;
         nextSeg = *languageSegmentTable;
     }
@@ -638,7 +779,7 @@ void Message_FindCreditsMessage(PlayState* play, u16 textId) {
     while (messageTableEntry->textId != 0xFFFF) {
         if (messageTableEntry->textId == textId) {
             foundSeg = messageTableEntry->segment;
-            font->charTexBuf[0] = messageTableEntry->typePos;
+            font->fontBuf[0] = messageTableEntry->typePos;
             messageTableEntry++;
             nextSeg = messageTableEntry->segment;
             font->msgOffset = foundSeg - seg;
@@ -846,8 +987,8 @@ void Message_DrawTextboxIcon(PlayState* play, Gfx** p, s16 x, s16 y) {
     sCharTexSize = 16.0f * ((f32)R_TEXT_CHAR_SCALE / 100.0f);
     sCharTexScale = 1024.0f / ((f32)R_TEXT_CHAR_SCALE / 100.0f);
 
-    gSPTextureRectangle(gfx++, x << 2, y << 2, (x + sCharTexSize) << 2, (y + sCharTexSize) << 2, G_TX_RENDERTILE, 0, 0,
-                        sCharTexScale, sCharTexScale);
+    gSPTextureRectangle(gfx++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + sCharTexSize) << 2)), HIRES_MULTIPLY(((y + sCharTexSize) << 2)), G_TX_RENDERTILE, 0, 0,
+                        HIRES_DIVIDE(sCharTexScale), HIRES_DIVIDE(sCharTexScale));
 
     msgCtx->stateTimer++;
 
@@ -953,7 +1094,7 @@ f32 sFontWidths[144] = {
     10.0f, // '~'
     10.0f, // ' '
     12.0f, // 'À'
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
     12.0f, // 'î'
 #else
     6.0f, // 'î'
@@ -1031,9 +1172,9 @@ u16 Message_DrawItemIcon(PlayState* play, u16 itemId, Gfx** p, u16 i) {
                             ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                             G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     }
-    gSPTextureRectangle(gfx++, (msgCtx->textPosX + R_TEXTBOX_ICON_XPOS) << 2, R_TEXTBOX_ICON_YPOS << 2,
-                        (msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + R_TEXTBOX_ICON_DIMENSION) << 2,
-                        (R_TEXTBOX_ICON_YPOS + R_TEXTBOX_ICON_DIMENSION) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+    gSPTextureRectangle(gfx++, HIRES_MULTIPLY(((msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((R_TEXTBOX_ICON_YPOS << 2)),
+                        HIRES_MULTIPLY(((msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + R_TEXTBOX_ICON_DIMENSION + WS_SHIFT_HALF) << 2)),
+                        HIRES_MULTIPLY(((R_TEXTBOX_ICON_YPOS + R_TEXTBOX_ICON_DIMENSION) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
     gDPPipeSync(gfx++);
     gDPSetCombineLERP(gfx++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
 
@@ -1385,7 +1526,7 @@ void Message_DrawTextWide(PlayState* play, Gfx** gfxP) {
                     Audio_PlaySfxGeneral(NA_SE_NONE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                          &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                 }
-                Message_DrawTextChar(play, &font->charTexBuf[charTexIdx], &gfx);
+                Message_DrawTextChar(play, &font->fontBuf[charTexIdx], &gfx);
                 charTexIdx += FONT_CHAR_TEX_SIZE;
 
                 switch (character) {
@@ -1717,7 +1858,11 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
                 }
 #endif
 
-                Message_DrawTextChar(play, &font->charTexBuf[charTexIdx], &gfx);
+#if OOT_NTSC_N64
+                Message_DrawTextChar(play, &msgCtx->font.fontBuf[(character - ' ') * FONT_CHAR_TEX_SIZE], &gfx);
+#else
+                Message_DrawTextChar(play, &font->fontBuf[charTexIdx], &gfx);
+#endif
                 charTexIdx += FONT_CHAR_TEX_SIZE;
 
                 msgCtx->textPosX += (s32)(sFontWidths[character - ' '] * (R_TEXT_CHAR_SCALE / 100.0f));
@@ -1725,7 +1870,7 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
         }
     }
     if (msgCtx->textDelayTimer == 0) {
-        msgCtx->textDrawPos = i + 1;
+        msgCtx->textDrawPos = i + 2;
         msgCtx->textDelayTimer = msgCtx->textDelay;
     } else {
         msgCtx->textDelayTimer--;
@@ -1835,10 +1980,10 @@ void Message_Decode(PlayState* play) {
                     fontBuf = &font->fontBuf[(curCharWide * 32) << 2]; // fake
 
                     for (j = 0; j < FONT_CHAR_TEX_SIZE; j += 4) {
-                        font->charTexBuf[charTexIdx + j + 0] = fontBuf[j + 0];
-                        font->charTexBuf[charTexIdx + j + 1] = fontBuf[j + 1];
-                        font->charTexBuf[charTexIdx + j + 2] = fontBuf[j + 2];
-                        font->charTexBuf[charTexIdx + j + 3] = fontBuf[j + 3];
+                        font->fontBuf[charTexIdx + j + 0] = fontBuf[j + 0];
+                        font->fontBuf[charTexIdx + j + 1] = fontBuf[j + 1];
+                        font->fontBuf[charTexIdx + j + 2] = fontBuf[j + 2];
+                        font->fontBuf[charTexIdx + j + 3] = fontBuf[j + 3];
                     }
                     charTexIdx += FONT_CHAR_TEX_SIZE;
                 }
@@ -2201,16 +2346,35 @@ void Message_Decode(PlayState* play) {
                 }
                 break;
             } else if (curChar == MESSAGE_NAME) {
+                u8* fontBuf;
+                u8 playerName[8];
+                memcpy(playerName, gSaveContext.save.info.playerData.playerName, sizeof(playerName));
+
                 // Substitute the player name control character for the file's player name.
-                for (playerNameLen = ARRAY_COUNT(gSaveContext.save.info.playerData.playerName); playerNameLen > 0;
+                for (playerNameLen = ARRAY_COUNT(playerName); playerNameLen > 0;
                      playerNameLen--) {
-                    if (gSaveContext.save.info.playerData.playerName[playerNameLen - 1] != FILENAME_SPACE) {
+                    if (playerName[playerNameLen - 1] != FILENAME_SPACE) {
                         break;
                     }
                 }
+
+#if OOT_NTSC_N64
+                for (i=0; i < playerNameLen; i++) {
+                    curChar = playerName[i];
+                    if (curChar < FILENAME_UPPERCASE('A') || curChar > (FILENAME_PERIOD + 1) ) {
+                        playerName[0] = FILENAME_UPPERCASE('L');
+                        playerName[1] = FILENAME_LOWERCASE('i');
+                        playerName[2] = FILENAME_LOWERCASE('n');
+                        playerName[3] = FILENAME_LOWERCASE('k');
+                        playerNameLen = 4;
+                        break;
+                    }
+                }
+#endif
+
                 PRINTF(T("\n名前 ＝ ", "\nName = "));
                 for (i = 0; i < playerNameLen; i++) {
-                    curChar = gSaveContext.save.info.playerData.playerName[i];
+                    curChar = playerName[i];
                     if (curChar == FILENAME_SPACE) {
                         curChar = ' ';
                     } else if (curChar == FILENAME_PERIOD) {
@@ -2491,15 +2655,8 @@ void Message_Decode(PlayState* play) {
                 Message_LoadItemIcon(play, MSG_BUF[msgCtx->msgBufPos + 1], R_TEXTBOX_Y + 10);
             } else if (curChar == MESSAGE_BACKGROUND) {
                 msgCtx->textboxBackgroundIdx = MSG_BUF[msgCtx->msgBufPos + 1] * 2;
-#if OOT_VERSION < PAL_1_0
-                //! @bug Wrong shift amounts cause textboxBackgroundForeColorIdx and textboxBackgroundBackColorIdx
-                //! to always be 0. Fortunately MESSAGE_BACKGROUND is only present in unused messages.
-                msgCtx->textboxBackgroundForeColorIdx = (MSG_BUF[msgCtx->msgBufPos + 2] & 0xF0) >> 12;
-                msgCtx->textboxBackgroundBackColorIdx = (MSG_BUF[msgCtx->msgBufPos + 2] & 0xF) >> 8;
-#else
                 msgCtx->textboxBackgroundForeColorIdx = (MSG_BUF[msgCtx->msgBufPos + 2] & 0xF0) >> 4;
                 msgCtx->textboxBackgroundBackColorIdx = MSG_BUF[msgCtx->msgBufPos + 2] & 0xF;
-#endif
                 msgCtx->textboxBackgroundYOffsetIdx = (MSG_BUF[msgCtx->msgBufPos + 3] & 0xF0) >> 4;
                 msgCtx->textboxBackgroundUnkArg = MSG_BUF[msgCtx->msgBufPos + 3] & 0xF;
                 DMA_REQUEST_SYNC(msgCtx->textboxSegment + MESSAGE_STATIC_TEX_SIZE,
@@ -2645,7 +2802,32 @@ void Message_OpenText(PlayState* play, u16 textId) {
                          font->msgLength, "../z_message_PAL.c", 1954);
 #endif
     } else {
-#if OOT_NTSC
+#if OOT_NTSC_N64
+        Language language = gSaveContext.language;
+        if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG && language != LANGUAGE_JPN) {
+            language = LANGUAGE_ENG;
+            Message_FindMessage(play, textId, language);
+        }
+        msgCtx->msgLength = font->msgLength;
+
+        if (B_80121220 == NULL || B_80121220->unk_64 == NULL || !B_80121220->unk_64(&play->msgCtx.font))
+            switch (language) {
+                case LANGUAGE_ENG:
+                     DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_nes_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+                     break;
+                case LANGUAGE_GER:
+                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_ger_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+                    break;
+                case LANGUAGE_FRA:
+                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_fra_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+                    break;
+                case LANGUAGE_JPN:
+                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_jpn_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+                    break;
+                default:
+                    break;
+            }
+#elif OOT_NTSC
         if (gSaveContext.language == LANGUAGE_JPN) {
             Message_FindMessageJPN(play, textId);
             msgCtx->msgLength = font->msgLength;
@@ -2723,7 +2905,7 @@ void Message_OpenText(PlayState* play, u16 textId) {
         }
 #endif
     }
-    msgCtx->textBoxProperties = font->charTexBuf[0];
+    msgCtx->textBoxProperties = font->fontBuf[0];
     msgCtx->textBoxType = msgCtx->textBoxProperties >> 4;
     msgCtx->textBoxPos = msgCtx->textBoxProperties & 0xF;
     textBoxType = msgCtx->textBoxType;
@@ -3009,9 +3191,9 @@ void Message_DrawTextBox(PlayState* play, Gfx** p) {
     R_TEXTBOX_TEXHEIGHT = 442;
 #endif
 
-    gSPTextureRectangle(gfx++, R_TEXTBOX_X << 2, R_TEXTBOX_Y << 2, (R_TEXTBOX_X + R_TEXTBOX_WIDTH) << 2,
-                        (R_TEXTBOX_Y + R_TEXTBOX_HEIGHT) << 2, G_TX_RENDERTILE, 0, 0, R_TEXTBOX_TEXWIDTH << 1,
-                        R_TEXTBOX_TEXHEIGHT << 1);
+    gSPTextureRectangle(gfx++, HIRES_MULTIPLY(((R_TEXTBOX_X + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((R_TEXTBOX_Y << 2)), HIRES_MULTIPLY(((R_TEXTBOX_X + WS_SHIFT_HALF + R_TEXTBOX_WIDTH) << 2)),
+                        HIRES_MULTIPLY(((R_TEXTBOX_Y + R_TEXTBOX_HEIGHT) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((R_TEXTBOX_TEXWIDTH << 1)),
+                        HIRES_DIVIDE((R_TEXTBOX_TEXHEIGHT << 1)));
 
     // Draw treble clef
     if (msgCtx->textBoxType == TEXTBOX_TYPE_OCARINA) {
@@ -3021,8 +3203,8 @@ void Message_DrawTextBox(PlayState* play, Gfx** p) {
         gDPSetPrimColor(gfx++, 0, 0, 255, 100, 0, 255);
         gDPLoadTextureBlock_4b(gfx++, gOcarinaTrebleClefTex, G_IM_FMT_I, 16, 32, 0, G_TX_MIRROR, G_TX_MIRROR,
                                G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(gfx++, R_TEXTBOX_CLEF_XPOS << 2, R_TEXTBOX_CLEF_YPOS << 2, (R_TEXTBOX_CLEF_XPOS + 16) << 2,
-                            (R_TEXTBOX_CLEF_YPOS + 32) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gSPTextureRectangle(gfx++, HIRES_MULTIPLY(((R_TEXTBOX_CLEF_XPOS + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((R_TEXTBOX_CLEF_YPOS << 2)), HIRES_MULTIPLY(((R_TEXTBOX_CLEF_XPOS + WS_SHIFT_HALF + 16) << 2)),
+                            HIRES_MULTIPLY(((R_TEXTBOX_CLEF_YPOS + 32) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
     }
 
     *p = gfx;
@@ -3977,7 +4159,7 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
             if (msgCtx->msgMode == MSGMODE_SONG_PLAYBACK) {
                 g = msgCtx->ocarinaAction - OCARINA_ACTION_PLAYBACK_MINUET;
                 r = gOcarinaSongButtons[g].numButtons;
-                for (notePosX = R_OCARINA_BUTTONS_XPOS, i = 0; i < r; i++) {
+                for (notePosX = R_OCARINA_BUTTONS_XPOS + WS_SHIFT_HALF, i = 0; i < r; i++) {
                     gDPPipeSync(gfx++);
                     gDPSetPrimColor(gfx++, 0, 0, 150, 150, 150, 150);
                     gDPSetEnvColor(gfx++, 10, 10, 10, 0);
@@ -3986,18 +4168,18 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
                                         G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP,
                                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                    gSPTextureRectangle(gfx++, notePosX << 2,
-                                        R_OCARINA_BUTTONS_YPOS(gOcarinaSongButtons[g].buttonsIndex[i]) << 2,
-                                        (notePosX + 16) << 2,
-                                        (R_OCARINA_BUTTONS_YPOS(gOcarinaSongButtons[g].buttonsIndex[i]) + 16) << 2,
-                                        G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                    gSPTextureRectangle(gfx++, HIRES_MULTIPLY((notePosX << 2)),
+                                        HIRES_MULTIPLY((R_OCARINA_BUTTONS_YPOS(gOcarinaSongButtons[g].buttonsIndex[i]) << 2)),
+                                        HIRES_MULTIPLY(((notePosX + 16) << 2)),
+                                        HIRES_MULTIPLY(((R_OCARINA_BUTTONS_YPOS(gOcarinaSongButtons[g].buttonsIndex[i]) + 16) << 2)),
+                                        G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
                     notePosX += R_OCARINA_BUTTONS_XPOS_OFFSET;
                 }
             }
 
             if (msgCtx->msgMode != MSGMODE_SCARECROW_LONG_RECORDING_START &&
                 msgCtx->msgMode != MSGMODE_MEMORY_GAME_START) {
-                for (notePosX = R_OCARINA_BUTTONS_XPOS, i = 0; i < 8; i++) {
+                for (notePosX = R_OCARINA_BUTTONS_XPOS + WS_SHIFT_HALF, i = 0; i < 8; i++) {
                     if (sOcarinaButtonIndexBuf[i] == OCARINA_BTN_INVALID) {
                         break;
                     }
@@ -4025,10 +4207,10 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
                                         G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                                         G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                    gSPTextureRectangle(gfx++, notePosX << 2, R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) << 2,
-                                        (notePosX + 16) << 2,
-                                        (R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) + 16) << 2, G_TX_RENDERTILE,
-                                        0, 0, 1 << 10, 1 << 10);
+                    gSPTextureRectangle(gfx++, HIRES_MULTIPLY((notePosX << 2)), HIRES_MULTIPLY((R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) << 2)),
+                                        HIRES_MULTIPLY(((notePosX + 16) << 2)),
+                                        HIRES_MULTIPLY(((R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) + 16) << 2)), G_TX_RENDERTILE,
+                                        0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
                     notePosX += R_OCARINA_BUTTONS_XPOS_OFFSET;
                 }
             }
@@ -4497,10 +4679,17 @@ void Message_SetTables(void) {
     sGerMessageEntryTablePtr = sGerMessageEntryTable;
     sFraMessageEntryTablePtr = sFraMessageEntryTable;
 #endif
+#if OOT_NTSC_N64
+    sGerMessageEntryTablePtr = sGerMessageEntryTable;
+    sFraMessageEntryTablePtr = sFraMessageEntryTable;
+#endif
 
     sStaffMessageEntryTablePtr = sStaffMessageEntryTable;
 
-#if PLATFORM_N64 && OOT_NTSC
+#if PLATFORM_N64 && OOT_NTSC_N64
+    if ((B_80121220 != NULL) && (B_80121220->unk_58 != NULL))
+        B_80121220->unk_58(&sJpnMessageEntryTablePtr, &sNesMessageEntryTablePtr, &sGerMessageEntryTablePtr, &sFraMessageEntryTablePtr, &sStaffMessageEntryTablePtr);
+#elif PLATFORM_N64 && OOT_NTSC
     if ((B_80121220 != NULL) && (B_80121220->unk_58 != NULL)) {
         B_80121220->unk_58(&sJpnMessageEntryTablePtr, &sNesMessageEntryTablePtr, &sStaffMessageEntryTablePtr);
     }

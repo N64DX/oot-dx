@@ -6,6 +6,8 @@
 #include "gfx_setupdl.h"
 #include "gfxalloc.h"
 #include "printf.h"
+#include "resolution.h"
+#include "translation.h"
 #include "z64play.h"
 #include "z64save.h"
 
@@ -51,38 +53,38 @@ void KaleidoScope_DrawDebugEditorText(Gfx** gfxP) {
     GfxPrint_Init(&printer);
     GfxPrint_Open(&printer, *gfxP);
 
-    GfxPrint_SetPos(&printer, 4, 2);
+    GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 2);
     GfxPrint_SetColor(&printer, 255, 60, 0, 255);
-    GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ﾙﾋﾟｰ"); // "Rupee"
-    GfxPrint_SetPos(&printer, 15, 2);
-    GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ﾊｰﾄ"); // "Heart"
-    GfxPrint_SetPos(&printer, 26, 3);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ﾙﾋﾟｰ", "Rup")); // "Rupee"
+    GfxPrint_SetPos(&printer, 15 - WS_PX_SHIFT, 2);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ﾊｰﾄ", " HP")); // "Heart"
+    GfxPrint_SetPos(&printer, 26 - WS_PX_SHIFT, 3);
     GfxPrint_Printf(&printer, "%s", "/4");
-    GfxPrint_SetPos(&printer, 4, 5);
-    GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｱｲﾃﾑ"); // "Item"
-    GfxPrint_SetPos(&printer, 4, 13);
-    GfxPrint_Printf(&printer, "%s", "KEY");
-    GfxPrint_SetPos(&printer, 4, 15);
-    GfxPrint_Printf(&printer, "%s", GFXP_HIRAGANA "ｿｳﾋﾞ"); // "Equipment"
-    GfxPrint_SetPos(&printer, 23, 14);
-    GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｹﾝ"); // "Sword"
-    GfxPrint_SetPos(&printer, 23, 15);
-    GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ﾀﾃ"); // "Shield"
-    GfxPrint_SetPos(&printer, 4, 17);
-    GfxPrint_Printf(&printer, "%s", "MAP");
-    GfxPrint_SetPos(&printer, 4, 19);
-    GfxPrint_Printf(&printer, "%s", GFXP_HIRAGANA "ﾌｳｲﾝ"); // "Seal"
-    GfxPrint_SetPos(&printer, 20, 19);
-    GfxPrint_Printf(&printer, "%s", GFXP_HIRAGANA "ｾｲﾚｲｾｷ"); // "Spiritual Stone"
-    GfxPrint_SetPos(&printer, 4, 21);
-    GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｵｶﾘﾅ"); // "Ocarina"
-    GfxPrint_SetPos(&printer, 4, 24);
-    GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｺﾚｸﾄ"); // "Collect"
-    GfxPrint_SetPos(&printer, 14, 24);
-    GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｷﾝｽﾀ"); // "Skulltula"
-    GfxPrint_SetPos(&printer, 23, 24);
-    GfxPrint_Printf(&printer, "%s", GFXP_KATAKANA "ｶｹﾗ"); // "Gold Token"
-    GfxPrint_SetPos(&printer, 28, 24);
+    GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 5);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ｱｲﾃﾑ", "Item" )); // "Item"
+    GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 13);
+    GfxPrint_Printf(&printer, "%s", T("KEY", "Key"));
+    GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 15);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_HIRAGANA "ｿｳﾋﾞ", "Gear" )); // "Equipment"
+    GfxPrint_SetPos(&printer, 23 - WS_PX_SHIFT, 14);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ｹﾝ", "Sw" )); // "Sword"
+    GfxPrint_SetPos(&printer, 23 - WS_PX_SHIFT, 15);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ﾀﾃ", "Sh" )); // "Shield"
+    GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 17);
+    GfxPrint_Printf(&printer, "%s", T("MAP", "Map"));
+    GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 19);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_HIRAGANA "ﾌｳｲﾝ", "Medal" )); // "Seal"
+    GfxPrint_SetPos(&printer, 20 - WS_PX_SHIFT, 19);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_HIRAGANA "ｾｲﾚｲｾｷ", "Stone" )); // "Spiritual Stone"
+    GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 21);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ｵｶﾘﾅ", "Song" )); // "Ocarina"
+    GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 24);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ｺﾚｸﾄ", "Misc" )); // "Collect"
+    GfxPrint_SetPos(&printer, 14 - WS_PX_SHIFT, 24);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ｷﾝｽﾀ", "  GS" )); // "Skulltula"
+    GfxPrint_SetPos(&printer, 23 - WS_PX_SHIFT, 24);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ｶｹﾗ", "PoH" )); // "Gold Token"
+    GfxPrint_SetPos(&printer, 28 - WS_PX_SHIFT, 24);
     GfxPrint_Printf(&printer, "%s", "/4");
 
     *gfxP = GfxPrint_Close(&printer);
@@ -95,8 +97,8 @@ void KaleidoScope_DrawDigit(PlayState* play, s32 digit, s32 rectLeft, s32 rectTo
     gDPLoadTextureBlock(POLY_OPA_DISP++, ((u8*)gCounterDigit0Tex + (8 * 16 * digit)), G_IM_FMT_I, G_IM_SIZ_8b, 8, 16, 0,
                         G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
                         G_TX_NOLOD);
-    gSPTextureRectangle(POLY_OPA_DISP++, rectLeft << 2, rectTop << 2, (rectLeft + 8) << 2, (rectTop + 16) << 2,
-                        G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((rectLeft + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((rectTop << 2)), HIRES_MULTIPLY(((rectLeft + 8 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY(((rectTop + 16) << 2)),
+                        G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_debug.c", 220);
 }
@@ -128,7 +130,7 @@ void KaleidoScope_DrawDebugEditor(PlayState* play) {
     gDPSetRenderMode(POLY_OPA_DISP++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
     gDPSetCombineMode(POLY_OPA_DISP++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 0, 0, 0, 220);
-    gDPFillRectangle(POLY_OPA_DISP++, 24, 12, 298, 228);
+    gDPFillRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((24 + WS_SHIFT_HALF)), HIRES_MULTIPLY(12), HIRES_MULTIPLY((298 + WS_SHIFT_HALF)), HIRES_MULTIPLY(228));
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetCombineLERP(POLY_OPA_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0,
                       PRIMITIVE, 0);
@@ -552,6 +554,9 @@ void KaleidoScope_DrawDebugEditor(PlayState* play) {
                         }
                     }
                 }
+                if (CHECK_BTN_ANY(input->press.button, BTN_CUP | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT))
+                    for (j=4; j<8; j++)
+                        Interface_LoadItemIcon1(play, j);
             } else if (curSection < 0x2C) {
                 if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                     i = curSection - 0x1B;
@@ -601,6 +606,9 @@ void KaleidoScope_DrawDebugEditor(PlayState* play) {
                             gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG_ALT(i, 3);
                         }
                     }
+                    if (CHECK_BTN_ANY(input->press.button, BTN_CUP | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT))
+                        for (j=4; j<8; j++)
+                            Interface_LoadItemIcon1(play, j);
                 } else if (curSection < 0x44) {
                     i = curSection - 0x38;
                     if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
@@ -644,21 +652,21 @@ void KaleidoScope_DrawDebugEditor(PlayState* play) {
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 0, 0, 200, 120);
 
     if (curSection == 0) {
-        gDPFillRectangle(POLY_OPA_DISP++, sSectionPositions[curSection][0], sSectionPositions[curSection][1],
-                         sSectionPositions[curSection][0] + 45, sSectionPositions[curSection][1] + 16);
+        gDPFillRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((sSectionPositions[curSection][0] + WS_SHIFT_HALF - WS_PX_SHIFT)), HIRES_MULTIPLY(sSectionPositions[curSection][1]),
+                         HIRES_MULTIPLY((sSectionPositions[curSection][0] + WS_SHIFT_HALF + WS_PX_SHIFT + 45)), HIRES_MULTIPLY((sSectionPositions[curSection][1] + 16)));
     } else if ((curSection >= 0x1B) || (curSection == 0x5B)) {
-        gDPFillRectangle(POLY_OPA_DISP++, sSectionPositions[curSection][0] - 2, sSectionPositions[curSection][1],
-                         sSectionPositions[curSection][0] + 14, sSectionPositions[curSection][1] + 16);
+        gDPFillRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((sSectionPositions[curSection][0] + WS_SHIFT_HALF - 2)), HIRES_MULTIPLY(sSectionPositions[curSection][1]),
+                         HIRES_MULTIPLY((sSectionPositions[curSection][0] + WS_SHIFT_HALF + 14)), HIRES_MULTIPLY((sSectionPositions[curSection][1] + 16)));
     } else {
-        gDPFillRectangle(POLY_OPA_DISP++, sSectionPositions[curSection][0] - 4, sSectionPositions[curSection][1],
-                         sSectionPositions[curSection][0] + 24, sSectionPositions[curSection][1] + 16);
+        gDPFillRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((sSectionPositions[curSection][0] + WS_SHIFT_HALF - 4)), HIRES_MULTIPLY(sSectionPositions[curSection][1]),
+                         HIRES_MULTIPLY((sSectionPositions[curSection][0] + WS_SHIFT_HALF + 24)), HIRES_MULTIPLY((sSectionPositions[curSection][1] + 16)));
     }
 
     // Handles exiting the inventory editor with the L button
     // The editor is opened with `debugState` set to 1, and becomes closable after a frame once `debugState` is set to 2
     if (pauseCtx->debugState == 1) {
         pauseCtx->debugState = 2;
-    } else if ((pauseCtx->debugState == 2) && CHECK_BTN_ALL(input->press.button, BTN_L)) {
+    } else if ((pauseCtx->debugState == 2) && CHECK_BTN_ALL(input->rel.button, BTN_L)) {
         pauseCtx->debugState = 0;
     }
 

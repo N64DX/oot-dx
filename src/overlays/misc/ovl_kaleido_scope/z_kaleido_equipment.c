@@ -12,6 +12,9 @@
 #include "z64save.h"
 
 #include "assets/textures/icon_item_static/icon_item_static.h"
+#if OOT_NTSC_N64
+#include "assets/textures/icon_item_static/icon_item_static_all.h"
+#endif
 #include "assets/textures/parameter_static/parameter_static.h"
 
 static u8 sChildUpgrades[] = {
@@ -550,6 +553,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             CHECK_BTN_ALL(input->press.button, BTN_A) && (pauseCtx->cursorX[PAUSE_EQUIP] != EQUIP_CURSOR_X_UPG)) {
 
             if (CHECK_AGE_REQ_EQUIP(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP])) {
+                u8 item;
                 Inventory_ChangeEquipment(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP]);
 
                 if (pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_TYPE_SWORD) {
@@ -574,6 +578,17 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                     Interface_LoadItemIcon1(play, 0);
                 }
 
+                for (i=1; i<8; i++) {
+                    if (i<4) {
+                        if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS || gSaveContext.save.info.equips.buttonItems[i] == ITEM_SHIELDS || gSaveContext.save.info.equips.buttonItems[i] == ITEM_TUNICS || gSaveContext.save.info.equips.buttonItems[i] == ITEM_BOOTS)
+                            Interface_LoadItemIcon1(play, i);
+                    }
+                    else {
+                        if (Interface_GetItemFromDpad(i-4) == ITEM_SWORDS || Interface_GetItemFromDpad(i-4) == ITEM_SHIELDS || Interface_GetItemFromDpad(i-4) == ITEM_TUNICS || Interface_GetItemFromDpad(i-4) == ITEM_BOOTS)
+                            Interface_LoadItemIcon1(play, i);
+                    }
+                }
+
                 Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 
@@ -584,6 +599,84 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             }
+        }
+        if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) && (pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE) && CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && (pauseCtx->cursorX[PAUSE_EQUIP] != 0)) {
+            if (CHECK_AGE_REQ_EQUIP(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP])) {
+                if (cursorSlot == 1 || cursorSlot == 2 || cursorSlot == 3)
+                    temp = SLOT_SWORDS;
+                else if (cursorSlot == 5 || cursorSlot == 6 || cursorSlot == 7)
+                    temp = SLOT_SHIELDS;
+                else if (cursorSlot == 9)
+                    temp = SLOT_TUNICS;
+                else if (cursorSlot == 10 || cursorSlot == 11)
+                    temp = SLOT_TUNIC_GORON + cursorSlot - 10;
+                else if (cursorSlot == 13)
+                    temp = SLOT_BOOTS;
+                else if (cursorSlot == 14 || cursorSlot == 15)
+                    temp = SLOT_BOOTS_IRON + cursorSlot - 14;
+                else temp = SLOT_NONE;
+                
+                if (temp != SLOT_NONE) {
+                    if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
+                        if (temp == SLOT_SWORDS)
+                            temp = ITEM_SWORDS;
+                        else if (temp == SLOT_SHIELDS)
+                            temp = ITEM_SHIELDS;
+                        else if (temp == SLOT_TUNICS)
+                            temp = ITEM_TUNICS;
+                        else if (temp == SLOT_BOOTS)
+                            temp = ITEM_BOOTS;
+                        else if (temp == SLOT_TUNIC_GORON)
+                            temp = ITEM_TUNIC_GORON;
+                        else if (temp == SLOT_TUNIC_ZORA)
+                            temp = ITEM_TUNIC_ZORA;
+                        else if (temp == SLOT_BOOTS_IRON)
+                            temp = ITEM_BOOTS_IRON;
+                        else if (temp == SLOT_BOOTS_HOVER)
+                            temp = ITEM_BOOTS_HOVER;
+                        
+                        if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
+                            i = 1;
+                        else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
+                            i = 2;
+                        else i = 3;
+                        
+                        for (j=1; j<4; j++)
+                            if (gSaveContext.save.info.equips.buttonItems[j] == temp && j != i) {
+                                gSaveContext.save.info.equips.buttonItems[j]    = gSaveContext.save.info.equips.buttonItems[i];
+                                gSaveContext.save.info.equips.cButtonSlots[j-1] = gSaveContext.save.info.equips.cButtonSlots[i-1];
+                                Interface_LoadItemIcon1(play, j);
+                                break;
+                            }
+                        
+                        gSaveContext.save.info.equips.buttonItems[i]    = temp;
+                        gSaveContext.save.info.equips.cButtonSlots[i-1] = SLOT_NONE;
+                        Interface_LoadItemIcon1(play, i);
+                        Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    }
+                    else {
+                        if (CHECK_BTN_ALL(input->press.button, BTN_DUP))
+                            i = 0;
+                        else if (CHECK_BTN_ALL(input->press.button, BTN_DRIGHT))
+                            i = 1;
+                        else if (CHECK_BTN_ALL(input->press.button, BTN_DDOWN))
+                            i = 2;
+                        else i = 3;
+                        
+                        for (j=0; j<4; j++)
+                            if (DPAD_BUTTON(j) == temp && j != i) {
+                                DPAD_BUTTON(j) = DPAD_BUTTON(i);
+                                Interface_LoadItemIcon1(play, j+4);
+                                break;
+                            }
+                        
+                        DPAD_BUTTON(i) = temp;
+                        Interface_LoadItemIcon1(play, i+4);
+                        Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    }
+                }
+            }
+            else Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         }
 
         if (oldCursorPoint != pauseCtx->cursorPoint[PAUSE_EQUIP]) {

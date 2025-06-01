@@ -32,29 +32,8 @@
 
 #define SLOT_OFFSET(index) (SRAM_HEADER_SIZE + 0x10 + (index * SLOT_SIZE))
 
-#if !PLATFORM_IQUE
-
 #define SRAM_READ(addr, dramAddr, size) SsSram_ReadWrite(addr, dramAddr, size, OS_READ)
 #define SRAM_WRITE(addr, dramAddr, size) SsSram_ReadWrite(addr, dramAddr, size, OS_WRITE)
-
-#else
-
-void Sram_ReadWriteIQue(s32 addr, void* dramAddr, size_t size, s32 direction) {
-    void* sramAddr;
-
-    addr -= OS_K1_TO_PHYSICAL(0xA8000000);
-    sramAddr = (void*)(__osBbSramAddress + addr);
-    if (direction == OS_READ) {
-        bcopy(sramAddr, dramAddr, size);
-    } else if (direction == OS_WRITE) {
-        bcopy(dramAddr, sramAddr, size);
-    }
-}
-
-#define SRAM_READ(addr, dramAddr, size) Sram_ReadWriteIQue(addr, dramAddr, size, OS_READ)
-#define SRAM_WRITE(addr, dramAddr, size) Sram_ReadWriteIQue(addr, dramAddr, size, OS_WRITE)
-
-#endif
 
 u16 gSramSlotOffsets[] = {
     SLOT_OFFSET(0),
@@ -69,7 +48,7 @@ u16 gSramSlotOffsets[] = {
 static u8 sSramDefaultHeader[] = {
     SOUND_SETTING_STEREO,    // SRAM_HEADER_SOUND
     Z_TARGET_SETTING_SWITCH, // SRAM_HEADER_Z_TARGET
-#if OOT_NTSC
+#if OOT_NTSC && !OOT_NTSC_N64
     LANGUAGE_JPN, // SRAM_HEADER_LANGUAGE
 #else
     LANGUAGE_ENG, // SRAM_HEADER_LANGUAGE
@@ -125,7 +104,13 @@ static SavePlayerData sNewSavePlayerData = {
         0,                                              // equipment
     },                                                  // adultEquips
     0,                                                  // unk_38
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },       // unk_3C
+    0,                                                  // dpadDualSet
+    {
+        { SLOT_LENS_OF_TRUTH, SLOT_BOOTS_HOVER, SLOT_OCARINA, SLOT_BOOTS_IRON }, // dpadItems (set 1 adult)
+        { SLOT_LENS_OF_TRUTH, SLOT_TRADE_CHILD, SLOT_OCARINA, SLOT_DEKU_NUT   }, // dpadItems (set 1 child)
+        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS     }, // dpadItems (set 2 adult)
+        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS     }, // dpadItems (set 2 child)
+    },
     SCENE_LINKS_HOUSE,                                  // savedSceneId
 };
 
@@ -225,7 +210,7 @@ void Sram_InitNewSave(void) {
 static SavePlayerData sDebugSavePlayerData = {
     { 'Z', 'E', 'L', 'D', 'A', 'Z' }, // newf
     0,                                // deaths
-#if OOT_VERSION < PAL_1_0
+#if OOT_VERSION < PAL_1_0 && !OOT_NTSC_N64
     {
         0x81, // リ
         0x87, // ン
@@ -273,7 +258,13 @@ static SavePlayerData sDebugSavePlayerData = {
         0,                                              // equipment
     },                                                  // adultEquips
     0,                                                  // unk_38
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },       // unk_3C
+    0,                                                  // dpadDualSet
+    {
+        { SLOT_LENS_OF_TRUTH, SLOT_BOOTS_HOVER, SLOT_OCARINA, SLOT_BOOTS_IRON }, // dpadItems (set 1 adult)
+        { SLOT_LENS_OF_TRUTH, SLOT_TRADE_CHILD, SLOT_OCARINA, SLOT_DEKU_NUT   }, // dpadItems (set 1 child)
+        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS     }, // dpadItems (set 2 adult)
+        { SLOT_SWORDS,        SLOT_BOOTS,       SLOT_SHIELDS, SLOT_TUNICS     }, // dpadItems (set 2 child)
+    },
     SCENE_HYRULE_FIELD,                                 // savedSceneId
 };
 
@@ -597,6 +588,22 @@ void Sram_OpenSave(SramContext* sramCtx) {
     }
 
     gSaveContext.save.info.playerData.magicLevel = 0;
+
+    if (HasDuplicateDpadItems()) {
+        gSaveContext.save.info.playerData.dpadItems[0][1] = SLOT_BOOTS_HOVER;
+        gSaveContext.save.info.playerData.dpadItems[0][3] = SLOT_BOOTS_IRON;
+        
+        gSaveContext.save.info.playerData.dpadItems[1][1] = SLOT_TRADE_CHILD;
+        gSaveContext.save.info.playerData.dpadItems[1][3] = SLOT_DEKU_NUT;
+        
+        gSaveContext.save.info.playerData.dpadItems[0][0] = gSaveContext.save.info.playerData.dpadItems[1][0] = SLOT_LENS_OF_TRUTH;
+        gSaveContext.save.info.playerData.dpadItems[0][2] = gSaveContext.save.info.playerData.dpadItems[1][2] = SLOT_OCARINA;
+        
+        gSaveContext.save.info.playerData.dpadItems[2][0] = gSaveContext.save.info.playerData.dpadItems[3][0] = SLOT_SWORDS;
+        gSaveContext.save.info.playerData.dpadItems[2][1] = gSaveContext.save.info.playerData.dpadItems[3][1] = SLOT_BOOTS;
+        gSaveContext.save.info.playerData.dpadItems[2][2] = gSaveContext.save.info.playerData.dpadItems[3][2] = SLOT_SHIELDS;
+        gSaveContext.save.info.playerData.dpadItems[2][3] = gSaveContext.save.info.playerData.dpadItems[3][3] = SLOT_TUNICS;
+    }
 }
 
 /**
@@ -775,7 +782,7 @@ void Sram_VerifyAndLoadAllSaves(FileSelectState* fileSelect, SramContext* sramCt
                 SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + i, &gSaveContext, SLOT_SIZE);
 
                 //! @bug The ??= below is interpreted as a trigraph for # by IDO
-                PRINTF("??????=%x,%x,%x,%x,%x,%x\n", gSaveContext.save.info.playerData.newf[0],
+                PRINTF("?=%x,%x,%x,%x,%x,%x\n", gSaveContext.save.info.playerData.newf[0],
                        gSaveContext.save.info.playerData.newf[1], gSaveContext.save.info.playerData.newf[2],
                        gSaveContext.save.info.playerData.newf[3], gSaveContext.save.info.playerData.newf[4],
                        gSaveContext.save.info.playerData.newf[5]);
@@ -1037,7 +1044,7 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
     gSaveContext.soundSetting = sramCtx->readBuff[SRAM_HEADER_SOUND] & 3;
     gSaveContext.zTargetSetting = sramCtx->readBuff[SRAM_HEADER_Z_TARGET] & 1;
 
-#if OOT_PAL
+#if OOT_PAL || OOT_NTSC_N64
     gSaveContext.language = sramCtx->readBuff[SRAM_HEADER_LANGUAGE];
     if (gSaveContext.language >= LANGUAGE_MAX) {
         gSaveContext.language = LANGUAGE_ENG;
@@ -1073,4 +1080,15 @@ void Sram_Alloc(GameState* gameState, SramContext* sramCtx) {
 }
 
 void Sram_Init(GameState* gameState, SramContext* sramCtx) {
+}
+
+u8 HasDuplicateDpadItems(void) {
+    u8 col, i, j;
+
+    for (col=0; col<4; col++)
+        for (i=0; i<4; i++)
+            for (j=i+1; j<4; j++)
+                if (gSaveContext.save.info.playerData.dpadItems[i][col] == gSaveContext.save.info.playerData.dpadItems[j][col])
+                    return true;
+    return false;
 }

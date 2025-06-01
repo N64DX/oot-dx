@@ -60,9 +60,7 @@ void* THA_AllocTail(TwoHeadArena* tha, size_t size) {
         // Align 0x10 for allocations greater than 0x10
         mask = ALIGN_MASK(0x10);
     } else {
-        //! @bug if size is less than 16 and odd the computation below will give NULL. The mask for this case would be
-        //! more sensible as ~0, for no extra alignment
-        mask = 0;
+        mask = ~0;
     }
 
     tha->tail = (void*)((((uintptr_t)tha->tail & mask) - size) & mask);

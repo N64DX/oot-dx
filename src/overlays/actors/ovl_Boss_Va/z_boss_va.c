@@ -28,6 +28,9 @@
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_bv/object_bv.h"
+#if OOT_NTSC_N64
+#include "assets/objects/object_bv/object_bv_title_card.h"
+#endif
 
 #pragma increment_block_number "gc-eu:128 gc-eu-mq:128 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ntsc-1.0:0" \
                                "ntsc-1.1:0 ntsc-1.2:0 pal-1.0:128 pal-1.1:128"
@@ -1002,8 +1005,12 @@ void BossVa_BodyIntro(BossVa* this, PlayState* play) {
                 sSubCamAtNext.z = -200.0f;
 
                 if (!GET_EVENTCHKINF(EVENTCHKINF_BEGAN_BARINADE_BATTLE)) {
+#if OOT_NTSC_N64
+                    TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gBarinadeTitleCardTex : gBarinadeTitleCardPalTex), 160, 180, 128, 40);
+#else
                     TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gBarinadeTitleCardTex),
                                            160, 180, 128, 40);
+#endif
                 }
 
                 if (Rand_ZeroOne() < 0.1f) {

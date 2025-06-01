@@ -8,6 +8,7 @@
 #include "quake.h"
 #include "rand.h"
 #include "regs.h"
+#include "resolution.h"
 #include "rumble.h"
 #include "segmented_address.h"
 #include "sfx.h"
@@ -835,13 +836,15 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         width = titleCtx->width;
         height = titleCtx->height;
         doubleWidth = width * 2;
-        titleX1 = (titleCtx->x * 4) - (width * 2);
-        titleX2 = titleX1 + (doubleWidth * 2) - 4;
-        titleY1 = (titleCtx->y * 4) - (height * 2);
+        titleX1 = HIRES_MULTIPLY((((titleCtx->x + WS_SHIFT_HALF) * 4) - (width * 2)));
+        titleX2 = titleX1 + HIRES_MULTIPLY((doubleWidth * 2)) - HIRES_MULTIPLY(4);
+        titleY1 = HIRES_MULTIPLY(((titleCtx->y * 4) - (height * 2)));
 
         OPEN_DISPS(play->state.gfxCtx, "../z_actor.c", 2824);
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+        textureLanguageOffset = (gSaveContext.language == LANGUAGE_JPN && titleCtx->height == 40) ? 0 : width * height * gSaveContext.language;
+#elif OOT_NTSC
         if (gSaveContext.language == LANGUAGE_JPN) {
             textureLanguageOffset = 0;
         } else {
@@ -855,7 +858,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
             height = 0x1000 / width;
         }
 
-        titleY2 = titleY1 + (height * 4);
+        titleY2 = titleY1 + HIRES_MULTIPLY((height * 4));
 
         OVERLAY_DISP = Gfx_SetupDL_52NoCD(OVERLAY_DISP);
 
@@ -866,8 +869,8 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                             width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-        gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY1, titleX2, titleY2 - 1, G_TX_RENDERTILE, 0, 0, 1 << 10,
-                            1 << 10);
+        gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY1, titleX2, titleY2 - 1, G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+                            HIRES_DIVIDE((1 << 10)));
 
         height = titleCtx->height - height;
 
@@ -877,8 +880,8 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                                 G_IM_SIZ_8b, width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                                 G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY2, titleX2, titleY2 + (height * 4) - 1, G_TX_RENDERTILE,
-                                0, 0, 1 << 10, 1 << 10);
+            gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY2, titleX2, titleY2 + HIRES_MULTIPLY((height * 4)) - HIRES_MULTIPLY(1), G_TX_RENDERTILE,
+                                0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
         }
 
         CLOSE_DISPS(play->state.gfxCtx, "../z_actor.c", 2880);
@@ -2657,7 +2660,7 @@ void Actor_UpdateFlaggedAudio(Actor* actor) {
 #define LENS_MASK_WIDTH 64
 #define LENS_MASK_HEIGHT 64
 // 26 and 6 are for padding between the mask texture and the screen borders
-#define LENS_MASK_OFFSET_S ((SCREEN_WIDTH / 2 - LENS_MASK_WIDTH) - 26)
+#define LENS_MASK_OFFSET_S ((SCREEN_WIDTH / 2 - LENS_MASK_WIDTH) - 26 - WS_SHIFT_QUARTER)
 #define LENS_MASK_OFFSET_T ((SCREEN_HEIGHT / 2 - LENS_MASK_HEIGHT) - 6)
 
 void Actor_DrawLensOverlay(GraphicsContext* gfxCtx) {

@@ -1608,7 +1608,6 @@ s32 Camera_Normal1(Camera* camera) {
     f32 sp98;
     f32 sp94;
     Vec3f sp88;
-    s16 wiggleAdj;
     s16 t;
     VecGeo eyeAdjustment;
     VecGeo atEyeGeo;
@@ -1810,11 +1809,6 @@ s32 Camera_Normal1(Camera* camera) {
             camera->inputDir.z = 0;
         }
 
-        // crit wiggle
-        if (gSaveContext.save.info.playerData.health <= 16 && ((camera->play->state.frames % 256) == 0)) {
-            wiggleAdj = Rand_ZeroOne() * 10000.0f;
-            camera->inputDir.y = wiggleAdj + camera->inputDir.y;
-        }
     } else {
         rwData->swing.swingUpdateRate = roData->unk_0C;
         rwData->swing.unk_18 = 0;

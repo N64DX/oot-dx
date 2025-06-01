@@ -18,6 +18,7 @@
 #include "padmgr.h"
 #include "printf.h"
 #include "regs.h"
+#include "resolution.h"
 #include "segment_symbols.h"
 #include "sequence.h"
 #include "sys_matrix.h"
@@ -56,7 +57,6 @@ void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
 #endif
 
 void ConsoleLogo_Calc(ConsoleLogoState* this) {
-#if !PLATFORM_GC
     if ((this->coverAlpha == 0) && (this->visibleDuration != 0)) {
         this->unk_1D4--;
         this->visibleDuration--;
@@ -75,9 +75,6 @@ void ConsoleLogo_Calc(ConsoleLogoState* this) {
     }
     this->uls = this->ult & 0x7F;
     this->ult++;
-#else
-    this->exit = true;
-#endif
 }
 
 void ConsoleLogo_SetupView(ConsoleLogoState* this, f32 x, f32 y, f32 z) {
@@ -151,8 +148,8 @@ void ConsoleLogo_Draw(ConsoleLogoState* this) {
                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
         gDPSetTileSize(POLY_OPA_DISP++, 1, this->uls, (this->ult & 0x7F) - (idx << 2), 0, 0);
-        gSPTextureRectangle(POLY_OPA_DISP++, 97 << 2, y << 2, 289 << 2, (y + 2) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10,
-                            1 << 10);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((WS_SHIFT_HALF + 97) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((WS_SHIFT_HALF + 289) << 2)), HIRES_MULTIPLY(((y + 2) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+                            HIRES_DIVIDE((1 << 10)));
     }
 
     Environment_FillScreen(this->state.gfxCtx, 0, 0, 0, (s16)this->coverAlpha, FILL_SCREEN_XLU);
@@ -174,16 +171,12 @@ void ConsoleLogo_Main(GameState* thisx) {
     ConsoleLogo_Draw(this);
 
 #if DEBUG_FEATURES
-    if (gIsCtrlr2Valid) {
+    if (1) {
         Gfx* gfx = POLY_OPA_DISP;
 
         ConsoleLogo_PrintBuildInfo(&gfx);
         POLY_OPA_DISP = gfx;
     }
-#endif
-
-#if PLATFORM_IQUE
-    this->exit = true;
 #endif
 
     if (this->exit) {

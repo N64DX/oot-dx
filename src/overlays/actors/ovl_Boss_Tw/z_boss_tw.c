@@ -25,6 +25,9 @@
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_tw/object_tw.h"
+#if OOT_NTSC_N64
+#include "assets/objects/object_tw/object_tw_title_card.h"
+#endif
 
 #pragma increment_block_number "gc-eu:128 gc-eu-mq:128 gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128" \
                                "ique-cn:128 ntsc-1.0:128 ntsc-1.1:128 ntsc-1.2:128 pal-1.0:128 pal-1.1:128"
@@ -2243,8 +2246,12 @@ void BossTw_TwinrovaIntroCS(BossTw* this, PlayState* play) {
                 play->envCtx.prevLightSetting = 1;
                 play->envCtx.lightSetting = 1;
                 play->envCtx.lightBlend = 0.0f;
+#if OOT_NTSC_N64
+                TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gTwinrovaTitleCardTex : gTwinrovaTitleCardPalTex), 160, 180, 128, 40);
+#else
                 TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gTwinrovaTitleCardTex), 160,
                                        180, 128, 40);
+#endif
                 SET_EVENTCHKINF(EVENTCHKINF_BEGAN_TWINROVA_BATTLE);
                 SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_BOSS);
             }

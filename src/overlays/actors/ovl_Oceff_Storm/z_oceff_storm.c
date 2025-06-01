@@ -115,7 +115,7 @@ void OceffStorm_UnkAction(OceffStorm* this, PlayState* play) {
     if (this->primColorAlpha < 100) {
         this->primColorAlpha += 5;
     }
-    //! @bug Actor_Kill is never called so the actor will stay alive forever
+    Actor_Kill(&this->actor);
 }
 
 void OceffStorm_Update(Actor* thisx, PlayState* play) {

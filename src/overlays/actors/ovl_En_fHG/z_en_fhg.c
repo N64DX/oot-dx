@@ -26,6 +26,9 @@
 #include "z64skin.h"
 
 #include "assets/objects/object_fhg/object_fhg.h"
+#if OOT_NTSC_N64
+#include "assets/objects/object_fhg/object_fhg_title_card.h"
+#endif
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -349,8 +352,12 @@ void EnfHG_Intro(EnfHG* this, PlayState* play) {
             this->actor.world.pos.y += 2.0f * Math_SinS(this->gallopTimer * 0x5DC);
             Math_ApproachF(&this->subCamVelFactor, 1.0f, 1.0f, 0.05f);
             if (this->timers[0] == 75) {
+#if OOT_NTSC_N64
+                TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gPhantomGanonTitleCardTex : gPhantomGanonTitleCardPalTex), 160, 180, 128, 40);
+#else
                 TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gPhantomGanonTitleCardTex),
                                        160, 180, 128, 40);
+#endif
             }
             if (this->timers[0] == 0) {
                 this->cutsceneState = INTRO_RETREAT;
