@@ -1,143 +1,424 @@
 #ifndef NES_FONT_STATIC_ALL_H
-#define NES_FONT_STATIC_ALL_H 1
+#define NES_FONT_STATIC_ALL_H
 
-extern u64 gMsgChar20SpaceTex[];
-extern u64 gMsgChar21ExclamationMarkTex[];
-extern u64 gMsgChar22QuotationMarkTex[];
-extern u64 gMsgChar23NumberSignTex[];
-extern u64 gMsgChar24DollarSignTex[];
-extern u64 gMsgChar25PercentSignTex[];
-extern u64 gMsgChar26AmpersandTex[];
-extern u64 gMsgChar27ApostropheTex[];
-extern u64 gMsgChar28LeftParenthesesTex[];
-extern u64 gMsgChar29RightParenthesesTex[];
-extern u64 gMsgChar2AAsteriskTex[];
-extern u64 gMsgChar2BPlusSignTex[];
-extern u64 gMsgChar2CCommaTex[];
-extern u64 gMsgChar2DHyphenMinusTex[];
-extern u64 gMsgChar2EFullStopTex[];
-extern u64 gMsgChar2FSolidusTex[];
-extern u64 gMsgChar30Digit0Tex[];
-extern u64 gMsgChar31Digit1Tex[];
-extern u64 gMsgChar32Digit2Tex[];
-extern u64 gMsgChar33Digit3Tex[];
-extern u64 gMsgChar34Digit4Tex[];
-extern u64 gMsgChar35Digit5Tex[];
-extern u64 gMsgChar36Digit6Tex[];
-extern u64 gMsgChar37Digit7Tex[];
-extern u64 gMsgChar38Digit8Tex[];
-extern u64 gMsgChar39Digit9Tex[];
-extern u64 gMsgChar3AColonTex[];
-extern u64 gMsgChar3BSemicolonTex[];
-extern u64 gMsgChar3CLessThanSignTex[];
-extern u64 gMsgChar3DEqualsSignTex[];
-extern u64 gMsgChar3EGreaterThanSignTex[];
-extern u64 gMsgChar3FQuestionMarkTex[];
-extern u64 gMsgChar40CommercialAtTex[];
-extern u64 gMsgChar41LatinCapitalLetterATex[];
-extern u64 gMsgChar42LatinCapitalLetterBTex[];
-extern u64 gMsgChar43LatinCapitalLetterCTex[];
-extern u64 gMsgChar44LatinCapitalLetterDTex[];
-extern u64 gMsgChar45LatinCapitalLetterETex[];
-extern u64 gMsgChar46LatinCapitalLetterFTex[];
-extern u64 gMsgChar47LatinCapitalLetterGTex[];
-extern u64 gMsgChar48LatinCapitalLetterHTex[];
-extern u64 gMsgChar49LatinCapitalLetterITex[];
-extern u64 gMsgChar4ALatinCapitalLetterJTex[];
-extern u64 gMsgChar4BLatinCapitalLetterKTex[];
-extern u64 gMsgChar4CLatinCapitalLetterLTex[];
-extern u64 gMsgChar4DLatinCapitalLetterMTex[];
-extern u64 gMsgChar4ELatinCapitalLetterNTex[];
-extern u64 gMsgChar4FLatinCapitalLetterOTex[];
-extern u64 gMsgChar50LatinCapitalLetterPTex[];
-extern u64 gMsgChar51LatinCapitalLetterQTex[];
-extern u64 gMsgChar52LatinCapitalLetterRTex[];
-extern u64 gMsgChar53LatinCapitalLetterSTex[];
-extern u64 gMsgChar54LatinCapitalLetterTTex[];
-extern u64 gMsgChar55LatinCapitalLetterUTex[];
-extern u64 gMsgChar56LatinCapitalLetterVTex[];
-extern u64 gMsgChar57LatinCapitalLetterWTex[];
-extern u64 gMsgChar58LatinCapitalLetterXTex[];
-extern u64 gMsgChar59LatinCapitalLetterYTex[];
-extern u64 gMsgChar5ALatinCapitalLetterZTex[];
-extern u64 gMsgChar5BLeftSquareBracketTex[];
-extern u64 gMsgChar5CYenSignTex[];
-extern u64 gMsgChar5DRightSquareBracketTex[];
-extern u64 gMsgChar5ECircumflexAccentTex[];
-extern u64 gMsgChar5FLowLineTex[];
-extern u64 gMsgChar60GraveAccentTex[];
-extern u64 gMsgChar61LatinSmallLetterATex[];
-extern u64 gMsgChar62LatinSmallLetterBTex[];
-extern u64 gMsgChar63LatinSmallLetterCTex[];
-extern u64 gMsgChar64LatinSmallLetterDTex[];
-extern u64 gMsgChar65LatinSmallLetterETex[];
-extern u64 gMsgChar66LatinSmallLetterFTex[];
-extern u64 gMsgChar67LatinSmallLetterGTex[];
-extern u64 gMsgChar68LatinSmallLetterHTex[];
-extern u64 gMsgChar69LatinSmallLetterITex[];
-extern u64 gMsgChar6ALatinSmallLetterJTex[];
-extern u64 gMsgChar6BLatinSmallLetterKTex[];
-extern u64 gMsgChar6CLatinSmallLetterLTex[];
-extern u64 gMsgChar6DLatinSmallLetterMTex[];
-extern u64 gMsgChar6ELatinSmallLetterNTex[];
-extern u64 gMsgChar6FLatinSmallLetterOTex[];
-extern u64 gMsgChar70LatinSmallLetterPTex[];
-extern u64 gMsgChar71LatinSmallLetterQTex[];
-extern u64 gMsgChar72LatinSmallLetterRTex[];
-extern u64 gMsgChar73LatinSmallLetterSTex[];
-extern u64 gMsgChar74LatinSmallLetterTTex[];
-extern u64 gMsgChar75LatinSmallLetterUTex[];
-extern u64 gMsgChar76LatinSmallLetterVTex[];
-extern u64 gMsgChar77LatinSmallLetterWTex[];
-extern u64 gMsgChar78LatinSmallLetterXTex[];
-extern u64 gMsgChar79LatinSmallLetterYTex[];
-extern u64 gMsgChar7ALatinSmallLetterZTex[];
-extern u64 gMsgChar7BLeftCurlyBracketTex[];
-extern u64 gMsgChar7CVerticalLineTex[];
-extern u64 gMsgChar7DRightCurlyBracketTex[];
-extern u64 gMsgChar7ETildeTex[];
-extern u64 gMsgChar7FBlankTex[];
-extern u64 gMsgChar80LatinCapitalLetterAWithGraveTex[];
-extern u64 gMsgChar81LatinCapitalLetterIWithCircumflexTex[];
-extern u64 gMsgChar82LatinCapitalLetterAWithCircumflexTex[];
-extern u64 gMsgChar83LatinCapitalLetterAWithDiaeresisTex[];
-extern u64 gMsgChar84LatinCapitalLetterCWithCedillaTex[];
-extern u64 gMsgChar85LatinCapitalLetterEWithGraveTex[];
-extern u64 gMsgChar86LatinCapitalLetterEWithAcuteTex[];
-extern u64 gMsgChar87LatinCapitalLetterEWithCircumflexTex[];
-extern u64 gMsgChar88LatinCapitalLetterEWithDiaeresisTex[];
-extern u64 gMsgChar89LatinCapitalLetterIWithDiaeresisTex[];
-extern u64 gMsgChar8ALatinCapitalLetterOWithCircumflexTex[];
-extern u64 gMsgChar8BLatinCapitalLetterOWithDiaeresisTex[];
-extern u64 gMsgChar8CLatinCapitalLetterUWithGraveTex[];
-extern u64 gMsgChar8DLatinCapitalLetterUWithCircumflexTex[];
-extern u64 gMsgChar8ELatinCapitalLetterUWithDiaeresisTex[];
-extern u64 gMsgChar8FLatinSmallLetterSharpSTex[];
-extern u64 gMsgChar90LatinSmallLetterAWithGraveTex[];
-extern u64 gMsgChar91LatinSmallLetterAWithAcuteTex[];
-extern u64 gMsgChar92LatinSmallLetterAWithCircumflexTex[];
-extern u64 gMsgChar93LatinSmallLetterAWithDiaeresisTex[];
-extern u64 gMsgChar94LatinSmallLetterCWithCedillaTex[];
-extern u64 gMsgChar95LatinSmallLetterEWithGraveTex[];
-extern u64 gMsgChar96LatinSmallLetterEWithAcuteTex[];
-extern u64 gMsgChar97LatinSmallLetterEWithCircumflexTex[];
-extern u64 gMsgChar98LatinSmallLetterEWithDiaeresisTex[];
-extern u64 gMsgChar99LatinSmallLetterIWithDiaeresisTex[];
-extern u64 gMsgChar9ALatinSmallLetterOWithCircumflexTex[];
-extern u64 gMsgChar9BLatinSmallLetterOWithDiaeresisTex[];
-extern u64 gMsgChar9CLatinSmallLetterUWithGraveTex[];
-extern u64 gMsgChar9DLatinSmallLetterUWithCircumflexTex[];
-extern u64 gMsgChar9ELatinSmallLetterUWithDiaeresisTex[];
-extern u64 gMsgChar9FButtonATex[];
-extern u64 gMsgCharA0ButtonBTex[];
-extern u64 gMsgCharA1ButtonCTex[];
-extern u64 gMsgCharA2ButtonLTex[];
-extern u64 gMsgCharA3ButtonRTex[];
-extern u64 gMsgCharA4ButtonZTex[];
-extern u64 gMsgCharA5ButtonCUpTex[];
-extern u64 gMsgCharA6ButtonCDownTex[];
-extern u64 gMsgCharA7ButtonCLeftTex[];
-extern u64 gMsgCharA8ButtonCRightTex[];
-extern u64 gMsgCharA9ZTargetSignTex[];
-extern u64 gMsgCharAAControlStickTex[];
+#include "tex_len.h"
+#include "ultra64.h"
+
+#define gMsgChar20SpaceTex_WIDTH 16
+#define gMsgChar20SpaceTex_HEIGHT 16
+extern u64 gMsgChar20SpaceTex[TEX_LEN(u64, gMsgChar20SpaceTex_WIDTH, gMsgChar20SpaceTex_HEIGHT, 4)];
+#define gMsgChar21ExclamationMarkTex_WIDTH 16
+#define gMsgChar21ExclamationMarkTex_HEIGHT 16
+extern u64 gMsgChar21ExclamationMarkTex[TEX_LEN(u64, gMsgChar21ExclamationMarkTex_WIDTH, gMsgChar21ExclamationMarkTex_HEIGHT, 4)];
+#define gMsgChar22QuotationMarkTex_WIDTH 16
+#define gMsgChar22QuotationMarkTex_HEIGHT 16
+extern u64 gMsgChar22QuotationMarkTex[TEX_LEN(u64, gMsgChar22QuotationMarkTex_WIDTH, gMsgChar22QuotationMarkTex_HEIGHT, 4)];
+#define gMsgChar23NumberSignTex_WIDTH 16
+#define gMsgChar23NumberSignTex_HEIGHT 16
+extern u64 gMsgChar23NumberSignTex[TEX_LEN(u64, gMsgChar23NumberSignTex_WIDTH, gMsgChar23NumberSignTex_HEIGHT, 4)];
+#define gMsgChar24DollarSignTex_WIDTH 16
+#define gMsgChar24DollarSignTex_HEIGHT 16
+extern u64 gMsgChar24DollarSignTex[TEX_LEN(u64, gMsgChar24DollarSignTex_WIDTH, gMsgChar24DollarSignTex_HEIGHT, 4)];
+#define gMsgChar25PercentSignTex_WIDTH 16
+#define gMsgChar25PercentSignTex_HEIGHT 16
+extern u64 gMsgChar25PercentSignTex[TEX_LEN(u64, gMsgChar25PercentSignTex_WIDTH, gMsgChar25PercentSignTex_HEIGHT, 4)];
+#define gMsgChar26AmpersandTex_WIDTH 16
+#define gMsgChar26AmpersandTex_HEIGHT 16
+extern u64 gMsgChar26AmpersandTex[TEX_LEN(u64, gMsgChar26AmpersandTex_WIDTH, gMsgChar26AmpersandTex_HEIGHT, 4)];
+#define gMsgChar27ApostropheTex_WIDTH 16
+#define gMsgChar27ApostropheTex_HEIGHT 16
+extern u64 gMsgChar27ApostropheTex[TEX_LEN(u64, gMsgChar27ApostropheTex_WIDTH, gMsgChar27ApostropheTex_HEIGHT, 4)];
+#define gMsgChar28LeftParenthesesTex_WIDTH 16
+#define gMsgChar28LeftParenthesesTex_HEIGHT 16
+extern u64 gMsgChar28LeftParenthesesTex[TEX_LEN(u64, gMsgChar28LeftParenthesesTex_WIDTH, gMsgChar28LeftParenthesesTex_HEIGHT, 4)];
+#define gMsgChar29RightParenthesesTex_WIDTH 16
+#define gMsgChar29RightParenthesesTex_HEIGHT 16
+extern u64 gMsgChar29RightParenthesesTex[TEX_LEN(u64, gMsgChar29RightParenthesesTex_WIDTH, gMsgChar29RightParenthesesTex_HEIGHT, 4)];
+#define gMsgChar2AAsteriskTex_WIDTH 16
+#define gMsgChar2AAsteriskTex_HEIGHT 16
+extern u64 gMsgChar2AAsteriskTex[TEX_LEN(u64, gMsgChar2AAsteriskTex_WIDTH, gMsgChar2AAsteriskTex_HEIGHT, 4)];
+#define gMsgChar2BPlusSignTex_WIDTH 16
+#define gMsgChar2BPlusSignTex_HEIGHT 16
+extern u64 gMsgChar2BPlusSignTex[TEX_LEN(u64, gMsgChar2BPlusSignTex_WIDTH, gMsgChar2BPlusSignTex_HEIGHT, 4)];
+#define gMsgChar2CCommaTex_WIDTH 16
+#define gMsgChar2CCommaTex_HEIGHT 16
+extern u64 gMsgChar2CCommaTex[TEX_LEN(u64, gMsgChar2CCommaTex_WIDTH, gMsgChar2CCommaTex_HEIGHT, 4)];
+#define gMsgChar2DHyphenMinusTex_WIDTH 16
+#define gMsgChar2DHyphenMinusTex_HEIGHT 16
+extern u64 gMsgChar2DHyphenMinusTex[TEX_LEN(u64, gMsgChar2DHyphenMinusTex_WIDTH, gMsgChar2DHyphenMinusTex_HEIGHT, 4)];
+#define gMsgChar2EFullStopTex_WIDTH 16
+#define gMsgChar2EFullStopTex_HEIGHT 16
+extern u64 gMsgChar2EFullStopTex[TEX_LEN(u64, gMsgChar2EFullStopTex_WIDTH, gMsgChar2EFullStopTex_HEIGHT, 4)];
+#define gMsgChar2FSolidusTex_WIDTH 16
+#define gMsgChar2FSolidusTex_HEIGHT 16
+extern u64 gMsgChar2FSolidusTex[TEX_LEN(u64, gMsgChar2FSolidusTex_WIDTH, gMsgChar2FSolidusTex_HEIGHT, 4)];
+#define gMsgChar30Digit0Tex_WIDTH 16
+#define gMsgChar30Digit0Tex_HEIGHT 16
+extern u64 gMsgChar30Digit0Tex[TEX_LEN(u64, gMsgChar30Digit0Tex_WIDTH, gMsgChar30Digit0Tex_HEIGHT, 4)];
+#define gMsgChar31Digit1Tex_WIDTH 16
+#define gMsgChar31Digit1Tex_HEIGHT 16
+extern u64 gMsgChar31Digit1Tex[TEX_LEN(u64, gMsgChar31Digit1Tex_WIDTH, gMsgChar31Digit1Tex_HEIGHT, 4)];
+#define gMsgChar32Digit2Tex_WIDTH 16
+#define gMsgChar32Digit2Tex_HEIGHT 16
+extern u64 gMsgChar32Digit2Tex[TEX_LEN(u64, gMsgChar32Digit2Tex_WIDTH, gMsgChar32Digit2Tex_HEIGHT, 4)];
+#define gMsgChar33Digit3Tex_WIDTH 16
+#define gMsgChar33Digit3Tex_HEIGHT 16
+extern u64 gMsgChar33Digit3Tex[TEX_LEN(u64, gMsgChar33Digit3Tex_WIDTH, gMsgChar33Digit3Tex_HEIGHT, 4)];
+#define gMsgChar34Digit4Tex_WIDTH 16
+#define gMsgChar34Digit4Tex_HEIGHT 16
+extern u64 gMsgChar34Digit4Tex[TEX_LEN(u64, gMsgChar34Digit4Tex_WIDTH, gMsgChar34Digit4Tex_HEIGHT, 4)];
+#define gMsgChar35Digit5Tex_WIDTH 16
+#define gMsgChar35Digit5Tex_HEIGHT 16
+extern u64 gMsgChar35Digit5Tex[TEX_LEN(u64, gMsgChar35Digit5Tex_WIDTH, gMsgChar35Digit5Tex_HEIGHT, 4)];
+#define gMsgChar36Digit6Tex_WIDTH 16
+#define gMsgChar36Digit6Tex_HEIGHT 16
+extern u64 gMsgChar36Digit6Tex[TEX_LEN(u64, gMsgChar36Digit6Tex_WIDTH, gMsgChar36Digit6Tex_HEIGHT, 4)];
+#define gMsgChar37Digit7Tex_WIDTH 16
+#define gMsgChar37Digit7Tex_HEIGHT 16
+extern u64 gMsgChar37Digit7Tex[TEX_LEN(u64, gMsgChar37Digit7Tex_WIDTH, gMsgChar37Digit7Tex_HEIGHT, 4)];
+#define gMsgChar38Digit8Tex_WIDTH 16
+#define gMsgChar38Digit8Tex_HEIGHT 16
+extern u64 gMsgChar38Digit8Tex[TEX_LEN(u64, gMsgChar38Digit8Tex_WIDTH, gMsgChar38Digit8Tex_HEIGHT, 4)];
+#define gMsgChar39Digit9Tex_WIDTH 16
+#define gMsgChar39Digit9Tex_HEIGHT 16
+extern u64 gMsgChar39Digit9Tex[TEX_LEN(u64, gMsgChar39Digit9Tex_WIDTH, gMsgChar39Digit9Tex_HEIGHT, 4)];
+#define gMsgChar3AColonTex_WIDTH 16
+#define gMsgChar3AColonTex_HEIGHT 16
+extern u64 gMsgChar3AColonTex[TEX_LEN(u64, gMsgChar3AColonTex_WIDTH, gMsgChar3AColonTex_HEIGHT, 4)];
+#define gMsgChar3BSemicolonTex_WIDTH 16
+#define gMsgChar3BSemicolonTex_HEIGHT 16
+extern u64 gMsgChar3BSemicolonTex[TEX_LEN(u64, gMsgChar3BSemicolonTex_WIDTH, gMsgChar3BSemicolonTex_HEIGHT, 4)];
+#define gMsgChar3CLessThanSignTex_WIDTH 16
+#define gMsgChar3CLessThanSignTex_HEIGHT 16
+extern u64 gMsgChar3CLessThanSignTex[TEX_LEN(u64, gMsgChar3CLessThanSignTex_WIDTH, gMsgChar3CLessThanSignTex_HEIGHT, 4)];
+#define gMsgChar3DEqualsSignTex_WIDTH 16
+#define gMsgChar3DEqualsSignTex_HEIGHT 16
+extern u64 gMsgChar3DEqualsSignTex[TEX_LEN(u64, gMsgChar3DEqualsSignTex_WIDTH, gMsgChar3DEqualsSignTex_HEIGHT, 4)];
+#define gMsgChar3EGreaterThanSignTex_WIDTH 16
+#define gMsgChar3EGreaterThanSignTex_HEIGHT 16
+extern u64 gMsgChar3EGreaterThanSignTex[TEX_LEN(u64, gMsgChar3EGreaterThanSignTex_WIDTH, gMsgChar3EGreaterThanSignTex_HEIGHT, 4)];
+#define gMsgChar3FQuestionMarkTex_WIDTH 16
+#define gMsgChar3FQuestionMarkTex_HEIGHT 16
+extern u64 gMsgChar3FQuestionMarkTex[TEX_LEN(u64, gMsgChar3FQuestionMarkTex_WIDTH, gMsgChar3FQuestionMarkTex_HEIGHT, 4)];
+#define gMsgChar40CommercialAtTex_WIDTH 16
+#define gMsgChar40CommercialAtTex_HEIGHT 16
+extern u64 gMsgChar40CommercialAtTex[TEX_LEN(u64, gMsgChar40CommercialAtTex_WIDTH, gMsgChar40CommercialAtTex_HEIGHT, 4)];
+#define gMsgChar41LatinCapitalLetterATex_WIDTH 16
+#define gMsgChar41LatinCapitalLetterATex_HEIGHT 16
+extern u64 gMsgChar41LatinCapitalLetterATex[TEX_LEN(u64, gMsgChar41LatinCapitalLetterATex_WIDTH, gMsgChar41LatinCapitalLetterATex_HEIGHT, 4)];
+#define gMsgChar42LatinCapitalLetterBTex_WIDTH 16
+#define gMsgChar42LatinCapitalLetterBTex_HEIGHT 16
+extern u64 gMsgChar42LatinCapitalLetterBTex[TEX_LEN(u64, gMsgChar42LatinCapitalLetterBTex_WIDTH, gMsgChar42LatinCapitalLetterBTex_HEIGHT, 4)];
+#define gMsgChar43LatinCapitalLetterCTex_WIDTH 16
+#define gMsgChar43LatinCapitalLetterCTex_HEIGHT 16
+extern u64 gMsgChar43LatinCapitalLetterCTex[TEX_LEN(u64, gMsgChar43LatinCapitalLetterCTex_WIDTH, gMsgChar43LatinCapitalLetterCTex_HEIGHT, 4)];
+#define gMsgChar44LatinCapitalLetterDTex_WIDTH 16
+#define gMsgChar44LatinCapitalLetterDTex_HEIGHT 16
+extern u64 gMsgChar44LatinCapitalLetterDTex[TEX_LEN(u64, gMsgChar44LatinCapitalLetterDTex_WIDTH, gMsgChar44LatinCapitalLetterDTex_HEIGHT, 4)];
+#define gMsgChar45LatinCapitalLetterETex_WIDTH 16
+#define gMsgChar45LatinCapitalLetterETex_HEIGHT 16
+extern u64 gMsgChar45LatinCapitalLetterETex[TEX_LEN(u64, gMsgChar45LatinCapitalLetterETex_WIDTH, gMsgChar45LatinCapitalLetterETex_HEIGHT, 4)];
+#define gMsgChar46LatinCapitalLetterFTex_WIDTH 16
+#define gMsgChar46LatinCapitalLetterFTex_HEIGHT 16
+extern u64 gMsgChar46LatinCapitalLetterFTex[TEX_LEN(u64, gMsgChar46LatinCapitalLetterFTex_WIDTH, gMsgChar46LatinCapitalLetterFTex_HEIGHT, 4)];
+#define gMsgChar47LatinCapitalLetterGTex_WIDTH 16
+#define gMsgChar47LatinCapitalLetterGTex_HEIGHT 16
+extern u64 gMsgChar47LatinCapitalLetterGTex[TEX_LEN(u64, gMsgChar47LatinCapitalLetterGTex_WIDTH, gMsgChar47LatinCapitalLetterGTex_HEIGHT, 4)];
+#define gMsgChar48LatinCapitalLetterHTex_WIDTH 16
+#define gMsgChar48LatinCapitalLetterHTex_HEIGHT 16
+extern u64 gMsgChar48LatinCapitalLetterHTex[TEX_LEN(u64, gMsgChar48LatinCapitalLetterHTex_WIDTH, gMsgChar48LatinCapitalLetterHTex_HEIGHT, 4)];
+#define gMsgChar49LatinCapitalLetterITex_WIDTH 16
+#define gMsgChar49LatinCapitalLetterITex_HEIGHT 16
+extern u64 gMsgChar49LatinCapitalLetterITex[TEX_LEN(u64, gMsgChar49LatinCapitalLetterITex_WIDTH, gMsgChar49LatinCapitalLetterITex_HEIGHT, 4)];
+#define gMsgChar4ALatinCapitalLetterJTex_WIDTH 16
+#define gMsgChar4ALatinCapitalLetterJTex_HEIGHT 16
+extern u64 gMsgChar4ALatinCapitalLetterJTex[TEX_LEN(u64, gMsgChar4ALatinCapitalLetterJTex_WIDTH, gMsgChar4ALatinCapitalLetterJTex_HEIGHT, 4)];
+#define gMsgChar4BLatinCapitalLetterKTex_WIDTH 16
+#define gMsgChar4BLatinCapitalLetterKTex_HEIGHT 16
+extern u64 gMsgChar4BLatinCapitalLetterKTex[TEX_LEN(u64, gMsgChar4BLatinCapitalLetterKTex_WIDTH, gMsgChar4BLatinCapitalLetterKTex_HEIGHT, 4)];
+#define gMsgChar4CLatinCapitalLetterLTex_WIDTH 16
+#define gMsgChar4CLatinCapitalLetterLTex_HEIGHT 16
+extern u64 gMsgChar4CLatinCapitalLetterLTex[TEX_LEN(u64, gMsgChar4CLatinCapitalLetterLTex_WIDTH, gMsgChar4CLatinCapitalLetterLTex_HEIGHT, 4)];
+#define gMsgChar4DLatinCapitalLetterMTex_WIDTH 16
+#define gMsgChar4DLatinCapitalLetterMTex_HEIGHT 16
+extern u64 gMsgChar4DLatinCapitalLetterMTex[TEX_LEN(u64, gMsgChar4DLatinCapitalLetterMTex_WIDTH, gMsgChar4DLatinCapitalLetterMTex_HEIGHT, 4)];
+#define gMsgChar4ELatinCapitalLetterNTex_WIDTH 16
+#define gMsgChar4ELatinCapitalLetterNTex_HEIGHT 16
+extern u64 gMsgChar4ELatinCapitalLetterNTex[TEX_LEN(u64, gMsgChar4ELatinCapitalLetterNTex_WIDTH, gMsgChar4ELatinCapitalLetterNTex_HEIGHT, 4)];
+#define gMsgChar4FLatinCapitalLetterOTex_WIDTH 16
+#define gMsgChar4FLatinCapitalLetterOTex_HEIGHT 16
+extern u64 gMsgChar4FLatinCapitalLetterOTex[TEX_LEN(u64, gMsgChar4FLatinCapitalLetterOTex_WIDTH, gMsgChar4FLatinCapitalLetterOTex_HEIGHT, 4)];
+#define gMsgChar50LatinCapitalLetterPTex_WIDTH 16
+#define gMsgChar50LatinCapitalLetterPTex_HEIGHT 16
+extern u64 gMsgChar50LatinCapitalLetterPTex[TEX_LEN(u64, gMsgChar50LatinCapitalLetterPTex_WIDTH, gMsgChar50LatinCapitalLetterPTex_HEIGHT, 4)];
+#define gMsgChar51LatinCapitalLetterQTex_WIDTH 16
+#define gMsgChar51LatinCapitalLetterQTex_HEIGHT 16
+extern u64 gMsgChar51LatinCapitalLetterQTex[TEX_LEN(u64, gMsgChar51LatinCapitalLetterQTex_WIDTH, gMsgChar51LatinCapitalLetterQTex_HEIGHT, 4)];
+#define gMsgChar52LatinCapitalLetterRTex_WIDTH 16
+#define gMsgChar52LatinCapitalLetterRTex_HEIGHT 16
+extern u64 gMsgChar52LatinCapitalLetterRTex[TEX_LEN(u64, gMsgChar52LatinCapitalLetterRTex_WIDTH, gMsgChar52LatinCapitalLetterRTex_HEIGHT, 4)];
+#define gMsgChar53LatinCapitalLetterSTex_WIDTH 16
+#define gMsgChar53LatinCapitalLetterSTex_HEIGHT 16
+extern u64 gMsgChar53LatinCapitalLetterSTex[TEX_LEN(u64, gMsgChar53LatinCapitalLetterSTex_WIDTH, gMsgChar53LatinCapitalLetterSTex_HEIGHT, 4)];
+#define gMsgChar54LatinCapitalLetterTTex_WIDTH 16
+#define gMsgChar54LatinCapitalLetterTTex_HEIGHT 16
+extern u64 gMsgChar54LatinCapitalLetterTTex[TEX_LEN(u64, gMsgChar54LatinCapitalLetterTTex_WIDTH, gMsgChar54LatinCapitalLetterTTex_HEIGHT, 4)];
+#define gMsgChar55LatinCapitalLetterUTex_WIDTH 16
+#define gMsgChar55LatinCapitalLetterUTex_HEIGHT 16
+extern u64 gMsgChar55LatinCapitalLetterUTex[TEX_LEN(u64, gMsgChar55LatinCapitalLetterUTex_WIDTH, gMsgChar55LatinCapitalLetterUTex_HEIGHT, 4)];
+#define gMsgChar56LatinCapitalLetterVTex_WIDTH 16
+#define gMsgChar56LatinCapitalLetterVTex_HEIGHT 16
+extern u64 gMsgChar56LatinCapitalLetterVTex[TEX_LEN(u64, gMsgChar56LatinCapitalLetterVTex_WIDTH, gMsgChar56LatinCapitalLetterVTex_HEIGHT, 4)];
+#define gMsgChar57LatinCapitalLetterWTex_WIDTH 16
+#define gMsgChar57LatinCapitalLetterWTex_HEIGHT 16
+extern u64 gMsgChar57LatinCapitalLetterWTex[TEX_LEN(u64, gMsgChar57LatinCapitalLetterWTex_WIDTH, gMsgChar57LatinCapitalLetterWTex_HEIGHT, 4)];
+#define gMsgChar58LatinCapitalLetterXTex_WIDTH 16
+#define gMsgChar58LatinCapitalLetterXTex_HEIGHT 16
+extern u64 gMsgChar58LatinCapitalLetterXTex[TEX_LEN(u64, gMsgChar58LatinCapitalLetterXTex_WIDTH, gMsgChar58LatinCapitalLetterXTex_HEIGHT, 4)];
+#define gMsgChar59LatinCapitalLetterYTex_WIDTH 16
+#define gMsgChar59LatinCapitalLetterYTex_HEIGHT 16
+extern u64 gMsgChar59LatinCapitalLetterYTex[TEX_LEN(u64, gMsgChar59LatinCapitalLetterYTex_WIDTH, gMsgChar59LatinCapitalLetterYTex_HEIGHT, 4)];
+#define gMsgChar5ALatinCapitalLetterZTex_WIDTH 16
+#define gMsgChar5ALatinCapitalLetterZTex_HEIGHT 16
+extern u64 gMsgChar5ALatinCapitalLetterZTex[TEX_LEN(u64, gMsgChar5ALatinCapitalLetterZTex_WIDTH, gMsgChar5ALatinCapitalLetterZTex_HEIGHT, 4)];
+#define gMsgChar5BLeftSquareBracketTex_WIDTH 16
+#define gMsgChar5BLeftSquareBracketTex_HEIGHT 16
+extern u64 gMsgChar5BLeftSquareBracketTex[TEX_LEN(u64, gMsgChar5BLeftSquareBracketTex_WIDTH, gMsgChar5BLeftSquareBracketTex_HEIGHT, 4)];
+#define gMsgChar5CYenSignTex_WIDTH 16
+#define gMsgChar5CYenSignTex_HEIGHT 16
+extern u64 gMsgChar5CYenSignTex[TEX_LEN(u64, gMsgChar5CYenSignTex_WIDTH, gMsgChar5CYenSignTex_HEIGHT, 4)];
+#define gMsgChar5DRightSquareBracketTex_WIDTH 16
+#define gMsgChar5DRightSquareBracketTex_HEIGHT 16
+extern u64 gMsgChar5DRightSquareBracketTex[TEX_LEN(u64, gMsgChar5DRightSquareBracketTex_WIDTH, gMsgChar5DRightSquareBracketTex_HEIGHT, 4)];
+#define gMsgChar5ECircumflexAccentTex_WIDTH 16
+#define gMsgChar5ECircumflexAccentTex_HEIGHT 16
+extern u64 gMsgChar5ECircumflexAccentTex[TEX_LEN(u64, gMsgChar5ECircumflexAccentTex_WIDTH, gMsgChar5ECircumflexAccentTex_HEIGHT, 4)];
+#define gMsgChar5FLowLineTex_WIDTH 16
+#define gMsgChar5FLowLineTex_HEIGHT 16
+extern u64 gMsgChar5FLowLineTex[TEX_LEN(u64, gMsgChar5FLowLineTex_WIDTH, gMsgChar5FLowLineTex_HEIGHT, 4)];
+#define gMsgChar60GraveAccentTex_WIDTH 16
+#define gMsgChar60GraveAccentTex_HEIGHT 16
+extern u64 gMsgChar60GraveAccentTex[TEX_LEN(u64, gMsgChar60GraveAccentTex_WIDTH, gMsgChar60GraveAccentTex_HEIGHT, 4)];
+#define gMsgChar61LatinSmallLetterATex_WIDTH 16
+#define gMsgChar61LatinSmallLetterATex_HEIGHT 16
+extern u64 gMsgChar61LatinSmallLetterATex[TEX_LEN(u64, gMsgChar61LatinSmallLetterATex_WIDTH, gMsgChar61LatinSmallLetterATex_HEIGHT, 4)];
+#define gMsgChar62LatinSmallLetterBTex_WIDTH 16
+#define gMsgChar62LatinSmallLetterBTex_HEIGHT 16
+extern u64 gMsgChar62LatinSmallLetterBTex[TEX_LEN(u64, gMsgChar62LatinSmallLetterBTex_WIDTH, gMsgChar62LatinSmallLetterBTex_HEIGHT, 4)];
+#define gMsgChar63LatinSmallLetterCTex_WIDTH 16
+#define gMsgChar63LatinSmallLetterCTex_HEIGHT 16
+extern u64 gMsgChar63LatinSmallLetterCTex[TEX_LEN(u64, gMsgChar63LatinSmallLetterCTex_WIDTH, gMsgChar63LatinSmallLetterCTex_HEIGHT, 4)];
+#define gMsgChar64LatinSmallLetterDTex_WIDTH 16
+#define gMsgChar64LatinSmallLetterDTex_HEIGHT 16
+extern u64 gMsgChar64LatinSmallLetterDTex[TEX_LEN(u64, gMsgChar64LatinSmallLetterDTex_WIDTH, gMsgChar64LatinSmallLetterDTex_HEIGHT, 4)];
+#define gMsgChar65LatinSmallLetterETex_WIDTH 16
+#define gMsgChar65LatinSmallLetterETex_HEIGHT 16
+extern u64 gMsgChar65LatinSmallLetterETex[TEX_LEN(u64, gMsgChar65LatinSmallLetterETex_WIDTH, gMsgChar65LatinSmallLetterETex_HEIGHT, 4)];
+#define gMsgChar66LatinSmallLetterFTex_WIDTH 16
+#define gMsgChar66LatinSmallLetterFTex_HEIGHT 16
+extern u64 gMsgChar66LatinSmallLetterFTex[TEX_LEN(u64, gMsgChar66LatinSmallLetterFTex_WIDTH, gMsgChar66LatinSmallLetterFTex_HEIGHT, 4)];
+#define gMsgChar67LatinSmallLetterGTex_WIDTH 16
+#define gMsgChar67LatinSmallLetterGTex_HEIGHT 16
+extern u64 gMsgChar67LatinSmallLetterGTex[TEX_LEN(u64, gMsgChar67LatinSmallLetterGTex_WIDTH, gMsgChar67LatinSmallLetterGTex_HEIGHT, 4)];
+#define gMsgChar68LatinSmallLetterHTex_WIDTH 16
+#define gMsgChar68LatinSmallLetterHTex_HEIGHT 16
+extern u64 gMsgChar68LatinSmallLetterHTex[TEX_LEN(u64, gMsgChar68LatinSmallLetterHTex_WIDTH, gMsgChar68LatinSmallLetterHTex_HEIGHT, 4)];
+#define gMsgChar69LatinSmallLetterITex_WIDTH 16
+#define gMsgChar69LatinSmallLetterITex_HEIGHT 16
+extern u64 gMsgChar69LatinSmallLetterITex[TEX_LEN(u64, gMsgChar69LatinSmallLetterITex_WIDTH, gMsgChar69LatinSmallLetterITex_HEIGHT, 4)];
+#define gMsgChar6ALatinSmallLetterJTex_WIDTH 16
+#define gMsgChar6ALatinSmallLetterJTex_HEIGHT 16
+extern u64 gMsgChar6ALatinSmallLetterJTex[TEX_LEN(u64, gMsgChar6ALatinSmallLetterJTex_WIDTH, gMsgChar6ALatinSmallLetterJTex_HEIGHT, 4)];
+#define gMsgChar6BLatinSmallLetterKTex_WIDTH 16
+#define gMsgChar6BLatinSmallLetterKTex_HEIGHT 16
+extern u64 gMsgChar6BLatinSmallLetterKTex[TEX_LEN(u64, gMsgChar6BLatinSmallLetterKTex_WIDTH, gMsgChar6BLatinSmallLetterKTex_HEIGHT, 4)];
+#define gMsgChar6CLatinSmallLetterLTex_WIDTH 16
+#define gMsgChar6CLatinSmallLetterLTex_HEIGHT 16
+extern u64 gMsgChar6CLatinSmallLetterLTex[TEX_LEN(u64, gMsgChar6CLatinSmallLetterLTex_WIDTH, gMsgChar6CLatinSmallLetterLTex_HEIGHT, 4)];
+#define gMsgChar6DLatinSmallLetterMTex_WIDTH 16
+#define gMsgChar6DLatinSmallLetterMTex_HEIGHT 16
+extern u64 gMsgChar6DLatinSmallLetterMTex[TEX_LEN(u64, gMsgChar6DLatinSmallLetterMTex_WIDTH, gMsgChar6DLatinSmallLetterMTex_HEIGHT, 4)];
+#define gMsgChar6ELatinSmallLetterNTex_WIDTH 16
+#define gMsgChar6ELatinSmallLetterNTex_HEIGHT 16
+extern u64 gMsgChar6ELatinSmallLetterNTex[TEX_LEN(u64, gMsgChar6ELatinSmallLetterNTex_WIDTH, gMsgChar6ELatinSmallLetterNTex_HEIGHT, 4)];
+#define gMsgChar6FLatinSmallLetterOTex_WIDTH 16
+#define gMsgChar6FLatinSmallLetterOTex_HEIGHT 16
+extern u64 gMsgChar6FLatinSmallLetterOTex[TEX_LEN(u64, gMsgChar6FLatinSmallLetterOTex_WIDTH, gMsgChar6FLatinSmallLetterOTex_HEIGHT, 4)];
+#define gMsgChar70LatinSmallLetterPTex_WIDTH 16
+#define gMsgChar70LatinSmallLetterPTex_HEIGHT 16
+extern u64 gMsgChar70LatinSmallLetterPTex[TEX_LEN(u64, gMsgChar70LatinSmallLetterPTex_WIDTH, gMsgChar70LatinSmallLetterPTex_HEIGHT, 4)];
+#define gMsgChar71LatinSmallLetterQTex_WIDTH 16
+#define gMsgChar71LatinSmallLetterQTex_HEIGHT 16
+extern u64 gMsgChar71LatinSmallLetterQTex[TEX_LEN(u64, gMsgChar71LatinSmallLetterQTex_WIDTH, gMsgChar71LatinSmallLetterQTex_HEIGHT, 4)];
+#define gMsgChar72LatinSmallLetterRTex_WIDTH 16
+#define gMsgChar72LatinSmallLetterRTex_HEIGHT 16
+extern u64 gMsgChar72LatinSmallLetterRTex[TEX_LEN(u64, gMsgChar72LatinSmallLetterRTex_WIDTH, gMsgChar72LatinSmallLetterRTex_HEIGHT, 4)];
+#define gMsgChar73LatinSmallLetterSTex_WIDTH 16
+#define gMsgChar73LatinSmallLetterSTex_HEIGHT 16
+extern u64 gMsgChar73LatinSmallLetterSTex[TEX_LEN(u64, gMsgChar73LatinSmallLetterSTex_WIDTH, gMsgChar73LatinSmallLetterSTex_HEIGHT, 4)];
+#define gMsgChar74LatinSmallLetterTTex_WIDTH 16
+#define gMsgChar74LatinSmallLetterTTex_HEIGHT 16
+extern u64 gMsgChar74LatinSmallLetterTTex[TEX_LEN(u64, gMsgChar74LatinSmallLetterTTex_WIDTH, gMsgChar74LatinSmallLetterTTex_HEIGHT, 4)];
+#define gMsgChar75LatinSmallLetterUTex_WIDTH 16
+#define gMsgChar75LatinSmallLetterUTex_HEIGHT 16
+extern u64 gMsgChar75LatinSmallLetterUTex[TEX_LEN(u64, gMsgChar75LatinSmallLetterUTex_WIDTH, gMsgChar75LatinSmallLetterUTex_HEIGHT, 4)];
+#define gMsgChar76LatinSmallLetterVTex_WIDTH 16
+#define gMsgChar76LatinSmallLetterVTex_HEIGHT 16
+extern u64 gMsgChar76LatinSmallLetterVTex[TEX_LEN(u64, gMsgChar76LatinSmallLetterVTex_WIDTH, gMsgChar76LatinSmallLetterVTex_HEIGHT, 4)];
+#define gMsgChar77LatinSmallLetterWTex_WIDTH 16
+#define gMsgChar77LatinSmallLetterWTex_HEIGHT 16
+extern u64 gMsgChar77LatinSmallLetterWTex[TEX_LEN(u64, gMsgChar77LatinSmallLetterWTex_WIDTH, gMsgChar77LatinSmallLetterWTex_HEIGHT, 4)];
+#define gMsgChar78LatinSmallLetterXTex_WIDTH 16
+#define gMsgChar78LatinSmallLetterXTex_HEIGHT 16
+extern u64 gMsgChar78LatinSmallLetterXTex[TEX_LEN(u64, gMsgChar78LatinSmallLetterXTex_WIDTH, gMsgChar78LatinSmallLetterXTex_HEIGHT, 4)];
+#define gMsgChar79LatinSmallLetterYTex_WIDTH 16
+#define gMsgChar79LatinSmallLetterYTex_HEIGHT 16
+extern u64 gMsgChar79LatinSmallLetterYTex[TEX_LEN(u64, gMsgChar79LatinSmallLetterYTex_WIDTH, gMsgChar79LatinSmallLetterYTex_HEIGHT, 4)];
+#define gMsgChar7ALatinSmallLetterZTex_WIDTH 16
+#define gMsgChar7ALatinSmallLetterZTex_HEIGHT 16
+extern u64 gMsgChar7ALatinSmallLetterZTex[TEX_LEN(u64, gMsgChar7ALatinSmallLetterZTex_WIDTH, gMsgChar7ALatinSmallLetterZTex_HEIGHT, 4)];
+#define gMsgChar7BLeftCurlyBracketTex_WIDTH 16
+#define gMsgChar7BLeftCurlyBracketTex_HEIGHT 16
+extern u64 gMsgChar7BLeftCurlyBracketTex[TEX_LEN(u64, gMsgChar7BLeftCurlyBracketTex_WIDTH, gMsgChar7BLeftCurlyBracketTex_HEIGHT, 4)];
+#define gMsgChar7CVerticalLineTex_WIDTH 16
+#define gMsgChar7CVerticalLineTex_HEIGHT 16
+extern u64 gMsgChar7CVerticalLineTex[TEX_LEN(u64, gMsgChar7CVerticalLineTex_WIDTH, gMsgChar7CVerticalLineTex_HEIGHT, 4)];
+#define gMsgChar7DRightCurlyBracketTex_WIDTH 16
+#define gMsgChar7DRightCurlyBracketTex_HEIGHT 16
+extern u64 gMsgChar7DRightCurlyBracketTex[TEX_LEN(u64, gMsgChar7DRightCurlyBracketTex_WIDTH, gMsgChar7DRightCurlyBracketTex_HEIGHT, 4)];
+#define gMsgChar7ETildeTex_WIDTH 16
+#define gMsgChar7ETildeTex_HEIGHT 16
+extern u64 gMsgChar7ETildeTex[TEX_LEN(u64, gMsgChar7ETildeTex_WIDTH, gMsgChar7ETildeTex_HEIGHT, 4)];
+#define gMsgChar7FBlankTex_WIDTH 16
+#define gMsgChar7FBlankTex_HEIGHT 16
+extern u64 gMsgChar7FBlankTex[TEX_LEN(u64, gMsgChar7FBlankTex_WIDTH, gMsgChar7FBlankTex_HEIGHT, 4)];
+#define gMsgChar80LatinCapitalLetterAWithGraveTex_WIDTH 16
+#define gMsgChar80LatinCapitalLetterAWithGraveTex_HEIGHT 16
+extern u64 gMsgChar80LatinCapitalLetterAWithGraveTex[TEX_LEN(u64, gMsgChar80LatinCapitalLetterAWithGraveTex_WIDTH, gMsgChar80LatinCapitalLetterAWithGraveTex_HEIGHT, 4)];
+#define gMsgChar81LatinCapitalLetterIWithCircumflexTex_WIDTH 16
+#define gMsgChar81LatinCapitalLetterIWithCircumflexTex_HEIGHT 16
+extern u64 gMsgChar81LatinCapitalLetterIWithCircumflexTex[TEX_LEN(u64, gMsgChar81LatinCapitalLetterIWithCircumflexTex_WIDTH, gMsgChar81LatinCapitalLetterIWithCircumflexTex_HEIGHT, 4)];
+#define gMsgChar82LatinCapitalLetterAWithCircumflexTex_WIDTH 16
+#define gMsgChar82LatinCapitalLetterAWithCircumflexTex_HEIGHT 16
+extern u64 gMsgChar82LatinCapitalLetterAWithCircumflexTex[TEX_LEN(u64, gMsgChar82LatinCapitalLetterAWithCircumflexTex_WIDTH, gMsgChar82LatinCapitalLetterAWithCircumflexTex_HEIGHT, 4)];
+#define gMsgChar83LatinCapitalLetterAWithDiaeresisTex_WIDTH 16
+#define gMsgChar83LatinCapitalLetterAWithDiaeresisTex_HEIGHT 16
+extern u64 gMsgChar83LatinCapitalLetterAWithDiaeresisTex[TEX_LEN(u64, gMsgChar83LatinCapitalLetterAWithDiaeresisTex_WIDTH, gMsgChar83LatinCapitalLetterAWithDiaeresisTex_HEIGHT, 4)];
+#define gMsgChar84LatinCapitalLetterCWithCedillaTex_WIDTH 16
+#define gMsgChar84LatinCapitalLetterCWithCedillaTex_HEIGHT 16
+extern u64 gMsgChar84LatinCapitalLetterCWithCedillaTex[TEX_LEN(u64, gMsgChar84LatinCapitalLetterCWithCedillaTex_WIDTH, gMsgChar84LatinCapitalLetterCWithCedillaTex_HEIGHT, 4)];
+#define gMsgChar85LatinCapitalLetterEWithGraveTex_WIDTH 16
+#define gMsgChar85LatinCapitalLetterEWithGraveTex_HEIGHT 16
+extern u64 gMsgChar85LatinCapitalLetterEWithGraveTex[TEX_LEN(u64, gMsgChar85LatinCapitalLetterEWithGraveTex_WIDTH, gMsgChar85LatinCapitalLetterEWithGraveTex_HEIGHT, 4)];
+#define gMsgChar86LatinCapitalLetterEWithAcuteTex_WIDTH 16
+#define gMsgChar86LatinCapitalLetterEWithAcuteTex_HEIGHT 16
+extern u64 gMsgChar86LatinCapitalLetterEWithAcuteTex[TEX_LEN(u64, gMsgChar86LatinCapitalLetterEWithAcuteTex_WIDTH, gMsgChar86LatinCapitalLetterEWithAcuteTex_HEIGHT, 4)];
+#define gMsgChar87LatinCapitalLetterEWithCircumflexTex_WIDTH 16
+#define gMsgChar87LatinCapitalLetterEWithCircumflexTex_HEIGHT 16
+extern u64 gMsgChar87LatinCapitalLetterEWithCircumflexTex[TEX_LEN(u64, gMsgChar87LatinCapitalLetterEWithCircumflexTex_WIDTH, gMsgChar87LatinCapitalLetterEWithCircumflexTex_HEIGHT, 4)];
+#define gMsgChar88LatinCapitalLetterEWithDiaeresisTex_WIDTH 16
+#define gMsgChar88LatinCapitalLetterEWithDiaeresisTex_HEIGHT 16
+extern u64 gMsgChar88LatinCapitalLetterEWithDiaeresisTex[TEX_LEN(u64, gMsgChar88LatinCapitalLetterEWithDiaeresisTex_WIDTH, gMsgChar88LatinCapitalLetterEWithDiaeresisTex_HEIGHT, 4)];
+#define gMsgChar89LatinCapitalLetterIWithDiaeresisTex_WIDTH 16
+#define gMsgChar89LatinCapitalLetterIWithDiaeresisTex_HEIGHT 16
+extern u64 gMsgChar89LatinCapitalLetterIWithDiaeresisTex[TEX_LEN(u64, gMsgChar89LatinCapitalLetterIWithDiaeresisTex_WIDTH, gMsgChar89LatinCapitalLetterIWithDiaeresisTex_HEIGHT, 4)];
+#define gMsgChar8ALatinCapitalLetterOWithCircumflexTex_WIDTH 16
+#define gMsgChar8ALatinCapitalLetterOWithCircumflexTex_HEIGHT 16
+extern u64 gMsgChar8ALatinCapitalLetterOWithCircumflexTex[TEX_LEN(u64, gMsgChar8ALatinCapitalLetterOWithCircumflexTex_WIDTH, gMsgChar8ALatinCapitalLetterOWithCircumflexTex_HEIGHT, 4)];
+#define gMsgChar8BLatinCapitalLetterOWithDiaeresisTex_WIDTH 16
+#define gMsgChar8BLatinCapitalLetterOWithDiaeresisTex_HEIGHT 16
+extern u64 gMsgChar8BLatinCapitalLetterOWithDiaeresisTex[TEX_LEN(u64, gMsgChar8BLatinCapitalLetterOWithDiaeresisTex_WIDTH, gMsgChar8BLatinCapitalLetterOWithDiaeresisTex_HEIGHT, 4)];
+#define gMsgChar8CLatinCapitalLetterUWithGraveTex_WIDTH 16
+#define gMsgChar8CLatinCapitalLetterUWithGraveTex_HEIGHT 16
+extern u64 gMsgChar8CLatinCapitalLetterUWithGraveTex[TEX_LEN(u64, gMsgChar8CLatinCapitalLetterUWithGraveTex_WIDTH, gMsgChar8CLatinCapitalLetterUWithGraveTex_HEIGHT, 4)];
+#define gMsgChar8DLatinCapitalLetterUWithCircumflexTex_WIDTH 16
+#define gMsgChar8DLatinCapitalLetterUWithCircumflexTex_HEIGHT 16
+extern u64 gMsgChar8DLatinCapitalLetterUWithCircumflexTex[TEX_LEN(u64, gMsgChar8DLatinCapitalLetterUWithCircumflexTex_WIDTH, gMsgChar8DLatinCapitalLetterUWithCircumflexTex_HEIGHT, 4)];
+#define gMsgChar8ELatinCapitalLetterUWithDiaeresisTex_WIDTH 16
+#define gMsgChar8ELatinCapitalLetterUWithDiaeresisTex_HEIGHT 16
+extern u64 gMsgChar8ELatinCapitalLetterUWithDiaeresisTex[TEX_LEN(u64, gMsgChar8ELatinCapitalLetterUWithDiaeresisTex_WIDTH, gMsgChar8ELatinCapitalLetterUWithDiaeresisTex_HEIGHT, 4)];
+#define gMsgChar8FLatinSmallLetterSharpSTex_WIDTH 16
+#define gMsgChar8FLatinSmallLetterSharpSTex_HEIGHT 16
+extern u64 gMsgChar8FLatinSmallLetterSharpSTex[TEX_LEN(u64, gMsgChar8FLatinSmallLetterSharpSTex_WIDTH, gMsgChar8FLatinSmallLetterSharpSTex_HEIGHT, 4)];
+#define gMsgChar90LatinSmallLetterAWithGraveTex_WIDTH 16
+#define gMsgChar90LatinSmallLetterAWithGraveTex_HEIGHT 16
+extern u64 gMsgChar90LatinSmallLetterAWithGraveTex[TEX_LEN(u64, gMsgChar90LatinSmallLetterAWithGraveTex_WIDTH, gMsgChar90LatinSmallLetterAWithGraveTex_HEIGHT, 4)];
+#define gMsgChar91LatinSmallLetterAWithAcuteTex_WIDTH 16
+#define gMsgChar91LatinSmallLetterAWithAcuteTex_HEIGHT 16
+extern u64 gMsgChar91LatinSmallLetterAWithAcuteTex[TEX_LEN(u64, gMsgChar91LatinSmallLetterAWithAcuteTex_WIDTH, gMsgChar91LatinSmallLetterAWithAcuteTex_HEIGHT, 4)];
+#define gMsgChar92LatinSmallLetterAWithCircumflexTex_WIDTH 16
+#define gMsgChar92LatinSmallLetterAWithCircumflexTex_HEIGHT 16
+extern u64 gMsgChar92LatinSmallLetterAWithCircumflexTex[TEX_LEN(u64, gMsgChar92LatinSmallLetterAWithCircumflexTex_WIDTH, gMsgChar92LatinSmallLetterAWithCircumflexTex_HEIGHT, 4)];
+#define gMsgChar93LatinSmallLetterAWithDiaeresisTex_WIDTH 16
+#define gMsgChar93LatinSmallLetterAWithDiaeresisTex_HEIGHT 16
+extern u64 gMsgChar93LatinSmallLetterAWithDiaeresisTex[TEX_LEN(u64, gMsgChar93LatinSmallLetterAWithDiaeresisTex_WIDTH, gMsgChar93LatinSmallLetterAWithDiaeresisTex_HEIGHT, 4)];
+#define gMsgChar94LatinSmallLetterCWithCedillaTex_WIDTH 16
+#define gMsgChar94LatinSmallLetterCWithCedillaTex_HEIGHT 16
+extern u64 gMsgChar94LatinSmallLetterCWithCedillaTex[TEX_LEN(u64, gMsgChar94LatinSmallLetterCWithCedillaTex_WIDTH, gMsgChar94LatinSmallLetterCWithCedillaTex_HEIGHT, 4)];
+#define gMsgChar95LatinSmallLetterEWithGraveTex_WIDTH 16
+#define gMsgChar95LatinSmallLetterEWithGraveTex_HEIGHT 16
+extern u64 gMsgChar95LatinSmallLetterEWithGraveTex[TEX_LEN(u64, gMsgChar95LatinSmallLetterEWithGraveTex_WIDTH, gMsgChar95LatinSmallLetterEWithGraveTex_HEIGHT, 4)];
+#define gMsgChar96LatinSmallLetterEWithAcuteTex_WIDTH 16
+#define gMsgChar96LatinSmallLetterEWithAcuteTex_HEIGHT 16
+extern u64 gMsgChar96LatinSmallLetterEWithAcuteTex[TEX_LEN(u64, gMsgChar96LatinSmallLetterEWithAcuteTex_WIDTH, gMsgChar96LatinSmallLetterEWithAcuteTex_HEIGHT, 4)];
+#define gMsgChar97LatinSmallLetterEWithCircumflexTex_WIDTH 16
+#define gMsgChar97LatinSmallLetterEWithCircumflexTex_HEIGHT 16
+extern u64 gMsgChar97LatinSmallLetterEWithCircumflexTex[TEX_LEN(u64, gMsgChar97LatinSmallLetterEWithCircumflexTex_WIDTH, gMsgChar97LatinSmallLetterEWithCircumflexTex_HEIGHT, 4)];
+#define gMsgChar98LatinSmallLetterEWithDiaeresisTex_WIDTH 16
+#define gMsgChar98LatinSmallLetterEWithDiaeresisTex_HEIGHT 16
+extern u64 gMsgChar98LatinSmallLetterEWithDiaeresisTex[TEX_LEN(u64, gMsgChar98LatinSmallLetterEWithDiaeresisTex_WIDTH, gMsgChar98LatinSmallLetterEWithDiaeresisTex_HEIGHT, 4)];
+#define gMsgChar99LatinSmallLetterIWithDiaeresisTex_WIDTH 16
+#define gMsgChar99LatinSmallLetterIWithDiaeresisTex_HEIGHT 16
+extern u64 gMsgChar99LatinSmallLetterIWithDiaeresisTex[TEX_LEN(u64, gMsgChar99LatinSmallLetterIWithDiaeresisTex_WIDTH, gMsgChar99LatinSmallLetterIWithDiaeresisTex_HEIGHT, 4)];
+#define gMsgChar9ALatinSmallLetterOWithCircumflexTex_WIDTH 16
+#define gMsgChar9ALatinSmallLetterOWithCircumflexTex_HEIGHT 16
+extern u64 gMsgChar9ALatinSmallLetterOWithCircumflexTex[TEX_LEN(u64, gMsgChar9ALatinSmallLetterOWithCircumflexTex_WIDTH, gMsgChar9ALatinSmallLetterOWithCircumflexTex_HEIGHT, 4)];
+#define gMsgChar9BLatinSmallLetterOWithDiaeresisTex_WIDTH 16
+#define gMsgChar9BLatinSmallLetterOWithDiaeresisTex_HEIGHT 16
+extern u64 gMsgChar9BLatinSmallLetterOWithDiaeresisTex[TEX_LEN(u64, gMsgChar9BLatinSmallLetterOWithDiaeresisTex_WIDTH, gMsgChar9BLatinSmallLetterOWithDiaeresisTex_HEIGHT, 4)];
+#define gMsgChar9CLatinSmallLetterUWithGraveTex_WIDTH 16
+#define gMsgChar9CLatinSmallLetterUWithGraveTex_HEIGHT 16
+extern u64 gMsgChar9CLatinSmallLetterUWithGraveTex[TEX_LEN(u64, gMsgChar9CLatinSmallLetterUWithGraveTex_WIDTH, gMsgChar9CLatinSmallLetterUWithGraveTex_HEIGHT, 4)];
+#define gMsgChar9DLatinSmallLetterUWithCircumflexTex_WIDTH 16
+#define gMsgChar9DLatinSmallLetterUWithCircumflexTex_HEIGHT 16
+extern u64 gMsgChar9DLatinSmallLetterUWithCircumflexTex[TEX_LEN(u64, gMsgChar9DLatinSmallLetterUWithCircumflexTex_WIDTH, gMsgChar9DLatinSmallLetterUWithCircumflexTex_HEIGHT, 4)];
+#define gMsgChar9ELatinSmallLetterUWithDiaeresisTex_WIDTH 16
+#define gMsgChar9ELatinSmallLetterUWithDiaeresisTex_HEIGHT 16
+extern u64 gMsgChar9ELatinSmallLetterUWithDiaeresisTex[TEX_LEN(u64, gMsgChar9ELatinSmallLetterUWithDiaeresisTex_WIDTH, gMsgChar9ELatinSmallLetterUWithDiaeresisTex_HEIGHT, 4)];
+#define gMsgChar9FButtonATex_WIDTH 16
+#define gMsgChar9FButtonATex_HEIGHT 16
+extern u64 gMsgChar9FButtonATex[TEX_LEN(u64, gMsgChar9FButtonATex_WIDTH, gMsgChar9FButtonATex_HEIGHT, 4)];
+#define gMsgCharA0ButtonBTex_WIDTH 16
+#define gMsgCharA0ButtonBTex_HEIGHT 16
+extern u64 gMsgCharA0ButtonBTex[TEX_LEN(u64, gMsgCharA0ButtonBTex_WIDTH, gMsgCharA0ButtonBTex_HEIGHT, 4)];
+#define gMsgCharA1ButtonCTex_WIDTH 16
+#define gMsgCharA1ButtonCTex_HEIGHT 16
+extern u64 gMsgCharA1ButtonCTex[TEX_LEN(u64, gMsgCharA1ButtonCTex_WIDTH, gMsgCharA1ButtonCTex_HEIGHT, 4)];
+#define gMsgCharA2ButtonLTex_WIDTH 16
+#define gMsgCharA2ButtonLTex_HEIGHT 16
+extern u64 gMsgCharA2ButtonLTex[TEX_LEN(u64, gMsgCharA2ButtonLTex_WIDTH, gMsgCharA2ButtonLTex_HEIGHT, 4)];
+#define gMsgCharA3ButtonRTex_WIDTH 16
+#define gMsgCharA3ButtonRTex_HEIGHT 16
+extern u64 gMsgCharA3ButtonRTex[TEX_LEN(u64, gMsgCharA3ButtonRTex_WIDTH, gMsgCharA3ButtonRTex_HEIGHT, 4)];
+#define gMsgCharA4ButtonZTex_WIDTH 16
+#define gMsgCharA4ButtonZTex_HEIGHT 16
+extern u64 gMsgCharA4ButtonZTex[TEX_LEN(u64, gMsgCharA4ButtonZTex_WIDTH, gMsgCharA4ButtonZTex_HEIGHT, 4)];
+#define gMsgCharA5ButtonCUpTex_WIDTH 16
+#define gMsgCharA5ButtonCUpTex_HEIGHT 16
+extern u64 gMsgCharA5ButtonCUpTex[TEX_LEN(u64, gMsgCharA5ButtonCUpTex_WIDTH, gMsgCharA5ButtonCUpTex_HEIGHT, 4)];
+#define gMsgCharA6ButtonCDownTex_WIDTH 16
+#define gMsgCharA6ButtonCDownTex_HEIGHT 16
+extern u64 gMsgCharA6ButtonCDownTex[TEX_LEN(u64, gMsgCharA6ButtonCDownTex_WIDTH, gMsgCharA6ButtonCDownTex_HEIGHT, 4)];
+#define gMsgCharA7ButtonCLeftTex_WIDTH 16
+#define gMsgCharA7ButtonCLeftTex_HEIGHT 16
+extern u64 gMsgCharA7ButtonCLeftTex[TEX_LEN(u64, gMsgCharA7ButtonCLeftTex_WIDTH, gMsgCharA7ButtonCLeftTex_HEIGHT, 4)];
+#define gMsgCharA8ButtonCRightTex_WIDTH 16
+#define gMsgCharA8ButtonCRightTex_HEIGHT 16
+extern u64 gMsgCharA8ButtonCRightTex[TEX_LEN(u64, gMsgCharA8ButtonCRightTex_WIDTH, gMsgCharA8ButtonCRightTex_HEIGHT, 4)];
+#define gMsgCharA9ZTargetSignTex_WIDTH 16
+#define gMsgCharA9ZTargetSignTex_HEIGHT 16
+extern u64 gMsgCharA9ZTargetSignTex[TEX_LEN(u64, gMsgCharA9ZTargetSignTex_WIDTH, gMsgCharA9ZTargetSignTex_HEIGHT, 4)];
+#define gMsgCharAAControlStickTex_WIDTH 16
+#define gMsgCharAAControlStickTex_HEIGHT 16
+extern u64 gMsgCharAAControlStickTex[TEX_LEN(u64, gMsgCharAAControlStickTex_WIDTH, gMsgCharAAControlStickTex_HEIGHT, 4)];
 #endif
