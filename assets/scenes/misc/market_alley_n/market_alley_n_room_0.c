@@ -1,4 +1,4 @@
-#include "config.h"
+#include "resolution.h"
 #include "ultra64.h"
 #include "z64.h"
 #include "assets/scenes/misc/market_alley_n/market_alley_n_room_0.h"
@@ -78,7 +78,7 @@ u8 market_alley_n_room_0_possiblePadding_00010C[] = {
 };
 
 u64 market_alley_n_room_0Background_000110[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WS_JPEG
 #include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_000110_ws.jpg.inc.c"
 #else
 #include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_000110.jpg.inc.c"
@@ -86,7 +86,7 @@ u64 market_alley_n_room_0Background_000110[320 * 240 / 4] = {
 };
 
 u64 market_alley_n_room_0Background_025910[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WS_JPEG
 #include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_025910_ws.jpg.inc.c"
 #else
 #include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_025910.jpg.inc.c"
@@ -94,7 +94,7 @@ u64 market_alley_n_room_0Background_025910[320 * 240 / 4] = {
 };
 
 u64 market_alley_n_room_0Background_04B110[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WS_JPEG
 #include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_04B110_ws.jpg.inc.c"
 #else
 #include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_04B110.jpg.inc.c"

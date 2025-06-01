@@ -21,7 +21,6 @@
 #include "array_count.h"
 #include "avoid_ub.h"
 #include "controller.h"
-#include "config.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "ichain.h"
@@ -12662,15 +12661,6 @@ void Player_Draw(Actor* thisx, PlayState* play2) {
         OverrideLimbDrawOpa overrideLimbDraw = Player_OverrideLimbDrawGameplayDefault;
         s32 lod = 0;
         s32 pad;
-
-#if (LINK_LOD)
-        if ((this->csAction != PLAYER_CSACTION_NONE) || (Player_CheckHostileLockOn(this) && 0) ||
-            (this->actor.projectedPos.z < 160.0f)) {
-            lod = 0;
-        } else {
-            lod = 1;
-        }
-#endif
 
         func_80093C80(play);
         Gfx_SetupDL_25Xlu(play->state.gfxCtx);

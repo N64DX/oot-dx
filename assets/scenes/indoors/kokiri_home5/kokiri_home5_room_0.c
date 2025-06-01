@@ -1,4 +1,4 @@
-#include "config.h"
+#include "resolution.h"
 #include "ultra64.h"
 #include "z64.h"
 #include "assets/scenes/indoors/kokiri_home5/kokiri_home5_room_0.h"
@@ -59,7 +59,7 @@ u8 kokiri_home5_room_0_possiblePadding_0000D8[] = {
 };
 
 u64 kokiri_home5_room_0Background_0000E0[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WS_JPEG
 #include "assets/scenes/indoors/kokiri_home5/kokiri_home5_room_0Background_0000E0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/kokiri_home5/kokiri_home5_room_0Background_0000E0.jpg.inc.c"

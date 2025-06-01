@@ -12,13 +12,13 @@
 
 #include "alloca.h"
 #include "build.h"
-#include "config.h"
 #include "console_logo_state.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "padmgr.h"
 #include "printf.h"
 #include "regs.h"
+#include "resolution.h"
 #include "segment_symbols.h"
 #include "sequence.h"
 #include "sys_matrix.h"
@@ -148,8 +148,8 @@ void ConsoleLogo_Draw(ConsoleLogoState* this) {
                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
         gDPSetTileSize(POLY_OPA_DISP++, 1, this->uls, (this->ult & 0x7F) - (idx << 2), 0, 0);
-        gSPTextureRectangle(POLY_OPA_DISP++, ((WIDESCREEN ? 52 : 0) + 97) << 2, y << 2, ((WIDESCREEN ? 52 : 0) + 289) << 2, (y + 2) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10,
-                            1 << 10);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((WS_SHIFT_HALF + 97) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((WS_SHIFT_HALF + 289) << 2)), HIRES_MULTIPLY(((y + 2) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+                            HIRES_DIVIDE((1 << 10)));
     }
 
     Environment_FillScreen(this->state.gfxCtx, 0, 0, 0, (s16)this->coverAlpha, FILL_SCREEN_XLU);

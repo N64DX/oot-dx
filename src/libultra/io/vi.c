@@ -1,3 +1,4 @@
+#include "resolution.h"
 #include "ultra64.h"
 #include "ultra64/viint.h"
 
@@ -16,11 +17,28 @@ void __osViInit(void) {
     __osViCurr->framep = (void*)K0BASE;
 
     if (osTvType == OS_TV_PAL) {
+
+#if HIRES && INTERLACED
+        __osViNext->modep = &osViModePalHan1;
+#else
         __osViNext->modep = &osViModePalLan1;
+#endif
     } else if (osTvType == OS_TV_MPAL) {
+
+#if HIRES && INTERLACED
+        __osViNext->modep = &osViModeMpalHan1;
+#else
         __osViNext->modep = &osViModeMpalLan1;
+#endif
+
     } else {
+
+#if HIRES && INTERLACED
+        __osViNext->modep = &osViModeNtscHan1;
+#else
         __osViNext->modep = &osViModeNtscLan1;
+#endif
+
     }
 
     __osViNext->state = VI_STATE_BLACK;

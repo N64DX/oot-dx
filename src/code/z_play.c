@@ -4,7 +4,6 @@
 #include "array_count.h"
 #include "buffers.h"
 #include "color.h"
-#include "config.h"
 #include "controller.h"
 #include "fault.h"
 #include "file_select_state.h"
@@ -308,7 +307,7 @@ void Play_Init(GameState* thisx) {
     SystemArena_Display();
 #endif
 
-    GameState_Realloc(&this->state, 0x1D4790 + 0x300000);
+    GameState_Realloc(&this->state, 0x1D4790);
 
 #if PLATFORM_N64
     if ((B_80121220 != NULL) && (B_80121220->unk_10 != NULL)) {

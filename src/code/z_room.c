@@ -342,12 +342,12 @@ void Room_DrawBackground2D(Gfx** gfxP, void* tex, void* tlut, u16 width, u16 hei
     }
 
     if ((fmt == G_IM_FMT_RGBA) && !R_ROOM_BG2D_FORCE_SCALEBG) {
-
-#if WIDESCREEN
-        bg->s.frameW = 424 * 4;
-        bg->s.frameH = height * 4;
-        bg->s.scaleW = 775; //adjusted for squished 420px -> 320px WS images
-        bg->s.scaleH = 1024;
+#if HIRES || WS_JPEG
+        bg->s.frameW = JPEG_FRAME_W;
+        bg->s.frameH = JPEG_FRAME_H;
+        bg->s.scaleW = JPEG_SCALE_W;
+        bg->s.scaleH = JPEG_SCALE_H;
+        bg->s.frameX = bg->b.frameX + JPEG_FRAME_X;
         bg->s.imageYorig = bg->b.imageY;
         gDPSetOtherMode(gfx++,
                         tlutMode | G_AD_DISABLE | G_CD_DISABLE | G_CK_NONE | G_TC_FILT | G_TF_POINT | G_TT_NONE |
@@ -361,6 +361,7 @@ void Room_DrawBackground2D(Gfx** gfxP, void* tex, void* tlut, u16 width, u16 hei
 #else
         bg->b.frameW = width * (1 << 2);
         bg->b.frameH = height * (1 << 2);
+        bg->b.frameX += JPEG_FRAME_X;
         guS2DInitBg(bg);
         gDPSetOtherMode(gfx++, tlutMode | G_TL_TILE | G_TD_CLAMP | G_TP_NONE | G_CYC_COPY | G_PM_NPRIMITIVE,
                         G_AC_THRESHOLD | G_ZS_PIXEL | G_RM_NOOP | G_RM_NOOP2);

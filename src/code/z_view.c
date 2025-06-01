@@ -8,6 +8,7 @@
 #include "main.h"
 #include "printf.h"
 #include "regs.h"
+#include "resolution.h"
 #include "sys_matrix.h"
 #include "terminal.h"
 #include "translation.h"
@@ -181,9 +182,9 @@ void View_ApplyLetterbox(View* view) {
     }
 
     ulx = view->viewport.leftX + pillarboxSize;
-    uly = view->viewport.topY + letterboxSize;
+    uly = view->viewport.topY + HIRES_MULTIPLY(letterboxSize);
     lrx = view->viewport.rightX - pillarboxSize;
-    lry = view->viewport.bottomY - letterboxSize;
+    lry = view->viewport.bottomY - HIRES_MULTIPLY(letterboxSize);
 
     ASSERT(ulx >= 0, "ulx >= 0", "../z_view.c", 454);
     ASSERT(uly >= 0, "uly >= 0", "../z_view.c", 455);

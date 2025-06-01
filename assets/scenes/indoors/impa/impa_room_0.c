@@ -1,4 +1,4 @@
-#include "config.h"
+#include "resolution.h"
 #include "ultra64.h"
 #include "z64.h"
 #include "assets/scenes/indoors/impa/impa_room_0.h"
@@ -264,7 +264,7 @@ u8 impa_room_0_unaccounted_001788[] = {
 };
 
 u64 impa_room_0Background_0017A0[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WS_JPEG
 #include "assets/scenes/indoors/impa/impa_room_0Background_0017A0_ws.jpg.inc.c"
 #else
 #include "assets/scenes/indoors/impa/impa_room_0Background_0017A0.jpg.inc.c"

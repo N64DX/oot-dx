@@ -1,4 +1,4 @@
-#include "config.h"
+#include "resolution.h"
 #include "ultra64.h"
 #include "z64.h"
 #include "assets/scenes/misc/kakariko3/kakariko3_room_0.h"
@@ -536,7 +536,7 @@ u8 kakariko3_room_0_unaccounted_004D68[] = {
 };
 
 u64 kakariko3_room_0Background_004D80[320 * 240 / 4] = {
-#if WIDESCREEN
+#if WS_JPEG
 #include "assets/scenes/misc/kakariko3/kakariko3_room_0Background_004D80_ws.jpg.inc.c"
 #else
 #include "assets/scenes/misc/kakariko3/kakariko3_room_0Background_004D80.jpg.inc.c"
