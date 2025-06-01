@@ -275,7 +275,7 @@ class JFIFResource(Resource):
         )
 
     def get_c_declaration_base(self):
-        return f"u64 {self.symbol_name}[SCREEN_WIDTH * SCREEN_HEIGHT * G_IM_SIZ_16b_BYTES / sizeof(u64)]"
+        return f"u64 {self.symbol_name}[320 * 240 * G_IM_SIZ_16b_BYTES / sizeof(u64)]"
 
     def get_c_reference(self, resource_offset: int):
         if resource_offset == 0:
