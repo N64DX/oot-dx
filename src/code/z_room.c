@@ -367,6 +367,7 @@ void Room_DrawBackground2D(Gfx** gfxP, void* tex, void* tlut, u16 width, u16 hei
                         G_AC_THRESHOLD | G_ZS_PIXEL | G_RM_NOOP | G_RM_NOOP2);
         gSPBgRectCopy(gfx++, bg);
 #endif
+
     } else {
         bg->s.frameW = width * (1 << 2);
         bg->s.frameH = height * (1 << 2);

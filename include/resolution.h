@@ -1,26 +1,30 @@
 #ifndef RESOLUTION_H
 #define RESOLUTION_H
 
-#define SCREEN_DEFAULT   0 // 320x240
-#define SCREEN_HIRES     1 // 640x480
-#define SCREEN_WIDE      2 // 424x240
-#define SCREEN_ULTRAWIDE 3 // 576x240
+// @setting: Interlaced mode for 640x480 resolution
+// Hires works in progressive mode, but looks worse in native res
+#define INTERLACED true
 
-// @setting: Use interlaced mode for hires
-#define INTERLACED false
+// @setting: SCREEN_MODE
+// 0: DEFAULT, 1: HIRES, 2: WIDE, 3: ULTRAWIDE
+#define SCREEN_MODE 0
 
-// @setting: SCREEN_MODE option
-#define SCREEN_MODE SCREEN_DEFAULT
+// Derived from SCREEN_MODE
+#define DEFAULT    (SCREEN_MODE == 0 ? 1 : 0) // SCREEN_DEFAULT   (320x240)
+#define HIRES      (SCREEN_MODE == 1 ? 1 : 0) // SCREEN_HIRES     (640x480)
+#define WIDESCREEN (SCREEN_MODE == 2 ? 1 : 0) // SCREEN_WIDE      (424x240)
+#define ULTRA_WS   (SCREEN_MODE == 3 ? 1 : 0) // SCREEN_ULTRAWIDE (576x240)
 
-// @setting: Include Widescreen JPEGs that have been squished from 420x240 to 320x240
-#define WS_JPEG true
+// Include widescreen JPEGs that have been squished from 420x240 to 320x240
+// All screen modes can handle original and widescreen backgrounds
+// The following configuration is recommended however
+#if WIDESCREEN || ULTRA_WS
+    #define WS_JPEG true
+#else
+    #define WS_JPEG false
+#endif
 
-// Derived from SCREEN_MODE setting
-#define HIRES (SCREEN_MODE == SCREEN_HIRES ? 1 : 0)
-#define WIDESCREEN (SCREEN_MODE == SCREEN_WIDE ? 1 : 0)
-#define ULTRA_WS (SCREEN_MODE == SCREEN_ULTRAWIDE ? 1 : 0)
-
-// Derived from WS_JPEG setting
+// Derived from WS_JPEG
 #if WS_JPEG
     #define JPEG_POS_DEFAULT ((320 - 424) * 2)
     #define JPEG_POS_WIDE 0
@@ -33,6 +37,31 @@
     #define JPEG_POS_ULTRAWIDE ((576 - 320) * 2)
     #define JPEG_WIDTH 320
     #define JPEG_SCALE 1024
+#endif
+
+// Shrine scene light settings
+// Out of bounds collision can still be seen despite being recolored black
+// Changing the light settings hides it, but also changes appearance of the halo 
+#if ((WIDESCREEN && !WS_JPEG) || ULTRA_WS)
+    #define SHRINE_LIGHT_1 0x00
+    #define SHRINE_LIGHT_2 0x00
+    #define SHRINE_LIGHT_3 0x07FA
+    #define SHRINE_N_LIGHT_1 0x00
+    #define SHRINE_N_LIGHT_2 0x00
+    #define SHRINE_N_LIGHT_3 0x07DA
+    #define SHRINE_R_LIGHT_1 0x00
+    #define SHRINE_R_LIGHT_2 0x00
+    #define SHRINE_R_LIGHT_3 0x07EA
+#else
+    #define SHRINE_LIGHT_1 0x82
+    #define SHRINE_LIGHT_2 0x8C
+    #define SHRINE_LIGHT_3 0x07CA
+    #define SHRINE_N_LIGHT_1 0x12
+    #define SHRINE_N_LIGHT_2 0x1C
+    #define SHRINE_N_LIGHT_3 0x07CA
+    #define SHRINE_R_LIGHT_1 0x32
+    #define SHRINE_R_LIGHT_2 0x37
+    #define SHRINE_R_LIGHT_3 0x07CA
 #endif
 
 // Values
@@ -132,7 +161,7 @@
 
 // Scaling macros
 #define HIRES_MULTIPLY(var) (var * HIRES_SCALE)
-#define HIRES_DIVIDE(var) (var / HIRES_SCALE)
+#define HIRES_DIVIDE(var)   (var / HIRES_SCALE)
 
 // Beating heart position
 #define BEATING_HEART_PULSING_SIZE_X (((-130.0f) - WS_SHIFT_HALF) * HIRES_SCALE)
