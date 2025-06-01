@@ -36,6 +36,8 @@
 #include "assets/textures/do_action_static/do_action_static.h"
 #endif
 
+#pragma increment_block_number "gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128"
+
 typedef struct RestrictionFlags {
     /* 0x00 */ u8 sceneId;
     /* 0x01 */ u8 flags1;
@@ -3689,7 +3691,7 @@ void Interface_Draw(PlayState* play) {
     gSPSegment(OVERLAY_DISP++, 0x08, interfaceCtx->iconItemSegment);
     gSPSegment(OVERLAY_DISP++, 0x0B, interfaceCtx->mapSegment);
 
-    if (pauseCtx->debugState == 0) {
+    if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) {
         static u8 walletColors[][3] = {
             { 200, 255, 100 },
             { 130, 130, 255 },
@@ -4517,7 +4519,7 @@ void Interface_Draw(PlayState* play) {
     }
 
 #if DEBUG_FEATURES
-    if (pauseCtx->debugState == 3) {
+    if (pauseCtx->debugState == PAUSE_DEBUG_STATE_FLAG_SET_OPEN) {
         FlagSet_Update(play);
     }
 #endif

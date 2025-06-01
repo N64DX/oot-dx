@@ -1160,9 +1160,9 @@ void KaleidoScope_SetupPageSwitch(PauseContext* pauseCtx, u8 pt) {
 }
 
 void KaleidoScope_HandlePageToggles(PauseContext* pauseCtx, Input* input) {
-    if ((pauseCtx->debugState == 0) && CHECK_BTN_ALL(input->rel.button, BTN_L) && !pressed_r && editor_timer < (60 / R_UPDATE_RATE)) {
+    if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) && CHECK_BTN_ALL(input->rel.button, BTN_L) && !pressed_r && editor_timer < (60 / R_UPDATE_RATE)) {
 #if DEBUG_FEATURES
-        pauseCtx->debugState = 1;
+        pauseCtx->debugState = PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPENING;
 #endif
         return;
     }
@@ -3471,7 +3471,7 @@ void KaleidoScope_Draw(PlayState* play) {
     gSPSegment(POLY_OPA_DISP++, 0x0C, pauseCtx->iconItemAltSegment);
     gSPSegment(POLY_OPA_DISP++, 0x0D, pauseCtx->iconItemLangSegment);
 
-    if (pauseCtx->debugState == 0) {
+    if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) {
         KaleidoScope_SetView(pauseCtx, pauseCtx->eye.x, pauseCtx->eye.y, pauseCtx->eye.z);
 
         Gfx_SetupDL_42Opa(play->state.gfxCtx);
@@ -3493,8 +3493,9 @@ void KaleidoScope_Draw(PlayState* play) {
         KaleidoScope_DrawGameOver(play);
     }
 
-    if ((pauseCtx->debugState == 1) || (pauseCtx->debugState == 2)) {
-        KaleidoScope_DrawDebugEditor(play);
+    if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPENING) ||
+        (pauseCtx->debugState == PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPEN)) {
+        KaleidoScope_DrawInventoryEditor(play);
     }
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 3254);
@@ -4420,7 +4421,7 @@ void KaleidoScope_Update(PlayState* play) {
                             pauseCtx->alpha = 0;
                         }
                     } else {
-                        pauseCtx->debugState = 0;
+                        pauseCtx->debugState = PAUSE_DEBUG_STATE_CLOSED;
                         pauseCtx->state = PAUSE_STATE_RESUME_GAMEPLAY;
                         pauseCtx->itemPagePitch = pauseCtx->equipPagePitch = pauseCtx->mapPagePitch =
                             pauseCtx->questPagePitch = 160.0f;
@@ -4777,7 +4778,7 @@ void KaleidoScope_Update(PlayState* play) {
                     pauseCtx->alpha = 0;
                 }
             } else {
-                pauseCtx->debugState = 0;
+                pauseCtx->debugState = PAUSE_DEBUG_STATE_CLOSED;
                 pauseCtx->state = PAUSE_STATE_RESUME_GAMEPLAY;
                 pauseCtx->questPagePitch = 160.0f;
                 pauseCtx->mapPagePitch = 160.0f;
