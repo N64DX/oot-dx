@@ -1,6 +1,5 @@
 #include "ultra64.h"
 #include "versions.h"
-#include "z64.h"
 #include "nintendo_rogo_static.h"
 #include "assets/misc/link_animetion/link_animetion.h"
 #include "assets/objects/gameplay_keep/gameplay_keep.h"

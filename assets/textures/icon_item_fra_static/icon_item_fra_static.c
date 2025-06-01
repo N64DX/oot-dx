@@ -136,7 +136,6 @@ u64 gPauseSave20FRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEI
 };
 */
 #include "ultra64.h"
-#include "z64.h"
 #include "icon_item_fra_static.h"
 #include "assets/misc/link_animetion/link_animetion.h"
 #include "assets/objects/gameplay_keep/gameplay_keep.h"

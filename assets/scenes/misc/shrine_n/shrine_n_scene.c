@@ -1,6 +1,5 @@
 #include "resolution.h"
 #include "ultra64.h"
-#include "z64.h"
 #include "assets/scenes/misc/shrine_n/shrine_n_scene.h"
 #include "segment_symbols.h"
 #include "command_macros_base.h"
