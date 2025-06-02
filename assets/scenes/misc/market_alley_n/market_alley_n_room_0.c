@@ -1,680 +1,124 @@
-#include "resolution.h"
-#include "ultra64.h"
 #include "assets/scenes/misc/market_alley_n/market_alley_n_room_0.h"
-#include "segment_symbols.h"
-#include "command_macros_base.h"
-#include "z64cutscene_commands.h"
-#include "assets/misc/link_animetion/link_animetion.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/scenes/misc/market_alley_n/market_alley_n_scene.h"
 
-SceneCmd market_alley_n_room_0Commands[] = {
-    SCENE_CMD_ECHO_SETTINGS(5),
-    SCENE_CMD_ROOM_BEHAVIOR(0x00, 0x06, false, false),
-    SCENE_CMD_SKYBOX_DISABLES(false, true),
-    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
-    SCENE_CMD_ROOM_SHAPE(&market_alley_n_room_0RoomShapeImageMulti_0000A0),
-    SCENE_CMD_OBJECT_LIST(2, market_alley_n_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(5, market_alley_n_room_0ActorEntry_000044),
-    SCENE_CMD_END(),
+#include "array_count.h"
+#include "gfx.h"
+#include "sequence.h"
+#include "sys_matrix.h"
+#include "ultra64.h"
+#include "z64actor.h"
+#include "z64object.h"
+#include "z64skybox.h"
+
+SceneCmd market_alley_n_room_0[] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0.inc.c"
 };
 
-s16 market_alley_n_room_0ObjectList_000040[] = {
-    OBJECT_DOG,
-    OBJECT_SD,
+s16 market_alley_n_room_0_03000040_ObjectList[LENGTH_market_alley_n_room_0_03000040_ObjectList] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_03000040_ObjectList.inc.c"
 };
 
-ActorEntry market_alley_n_room_0ActorEntry_000044[] = {
-    { ACTOR_EN_DOG,         {   -533,      0,    871 }, {      0, 0XBBBC,      0 }, 0x0A01 },
-    { ACTOR_EN_DOG,         {   -224,      0,   1318 }, {      0, 0XB555,      0 }, 0x0B10 },
-    { ACTOR_EN_DOG,         {    143,      0,   1233 }, {      0, 0X16C1,      0 }, 0x0C21 },
-    { ACTOR_EN_HEISHI4,     {   -328,      0,   1199 }, {      0,      0,      0 }, 0xFF07 },
-    { ACTOR_EN_RIVER_SOUND, {     71,      0,   1324 }, {      0,      0,      0 }, 0x000B },
+ActorEntry market_alley_n_room_0_03000044_ActorEntryList[LENGTH_market_alley_n_room_0_03000044_ActorEntryList] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_03000044_ActorEntryList.inc.c"
 };
 
-u8 market_alley_n_room_0_possiblePadding_000094[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+u8 market_alley_n_room_0_zeros_000094[12] = { 0 };
+
+RoomShapeImageMulti market_alley_n_room_0_030000A0_RoomShapeImageMulti = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_030000A0_RoomShapeImageMulti.inc.c"
 };
 
-RoomShapeImageMulti market_alley_n_room_0RoomShapeImageMulti_0000A0 = { 
-    { 1, 2, &market_alley_n_room_0RoomShapeDListsEntry_000104, }, 
-    3, market_alley_n_room_0RoomShapeImageMultiBgEntry_0000B0, 
+RoomShapeImageMultiBgEntry market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries[LENGTH_market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries.inc.c"
 };
 
-RoomShapeImageMultiBgEntry market_alley_n_room_0RoomShapeImageMultiBgEntry_0000B0[] = {
-    { 
-        0x0082, 0, 
-        market_alley_n_room_0Background_000110, 
-        0x00000000, 0x00000000, 
-        320, 240, 
-        0, 2, 
-        0x0000, 0x0000,  
-    }, 
-    { 
-        0x0082, 1, 
-        market_alley_n_room_0Background_025910, 
-        0x00000000, 0x00000000, 
-        320, 240, 
-        0, 2, 
-        0x0000, 0x0000,  
-    }, 
-    { 
-        0x0082, 2, 
-        market_alley_n_room_0Background_04B110, 
-        0x00000000, 0x00000000, 
-        320, 240, 
-        0, 2, 
-        0x0000, 0x0000,  
-    }, 
+RoomShapeDListsEntry market_alley_n_room_0_030000A0_RoomShapeImageMulti_03000104_RoomShapeDListsEntry = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_030000A0_RoomShapeImageMulti_03000104_RoomShapeDListsEntry.inc.c"
 };
 
-RoomShapeDListsEntry market_alley_n_room_0RoomShapeDListsEntry_000104 = { 
-    market_alley_n_room_0DL_075678, NULL
-};
+u8 market_alley_n_room_0_zeros_00010C[4] = { 0 };
 
-u8 market_alley_n_room_0_possiblePadding_00010C[] = {
-    0x00, 0x00, 0x00, 0x00, 
-};
-
-u64 market_alley_n_room_0Background_000110[320 * 240 / 4] = {
+u64 market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries_03000110_JFIF[320 * 240 * G_IM_SIZ_16b_BYTES / sizeof(u64)] = {
 #if WS_JPEG
-#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_000110_ws.jpg.inc.c"
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries_03000110_JFIF_WS.jpg.inc.c"
 #else
-#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_000110.jpg.inc.c"
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries_03000110_JFIF.jpg.inc.c"
 #endif
 };
 
-u64 market_alley_n_room_0Background_025910[320 * 240 / 4] = {
+u64 market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries_03025910_JFIF[320 * 240 * G_IM_SIZ_16b_BYTES / sizeof(u64)] = {
 #if WS_JPEG
-#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_025910_ws.jpg.inc.c"
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries_03025910_JFIF_WS.jpg.inc.c"
 #else
-#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_025910.jpg.inc.c"
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries_03025910_JFIF.jpg.inc.c"
 #endif
 };
 
-u64 market_alley_n_room_0Background_04B110[320 * 240 / 4] = {
+u64 market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries_0304B110_JFIF[320 * 240 * G_IM_SIZ_16b_BYTES / sizeof(u64)] = {
 #if WS_JPEG
-#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_04B110_ws.jpg.inc.c"
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries_0304B110_JFIF_WS.jpg.inc.c"
 #else
-#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Background_04B110.jpg.inc.c"
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0_030000A0_RoomShapeImageMulti_030000B0_RoomShapeImageMultiBgEntries_0304B110_JFIF.jpg.inc.c"
 #endif
 };
 
-Vtx market_alley_n_room_0Vtx_070910[] = {
-#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0Vtx_070910.vtx.inc"
+Vtx market_alley_n_room_0DL_0756E0_03075678_DL_03074650_DL_03070910_Vtx_fused_[] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_03074650_DL_03070910_Vtx_fused_.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_074650[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[884], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(market_alley_n_room_0Vtx_070910, 8, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_03074650_DL[17] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_03074650_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_0746D8[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[892], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[8], 8, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_030746D8_DL[17] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_030746D8_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_074760[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[900], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[16], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 5, 0, 8, 5, 4, 0),
-    gsSP2Triangles(3, 2, 10, 0, 3, 10, 11, 0),
-    gsSP2Triangles(1, 12, 13, 0, 1, 13, 2, 0),
-    gsSP2Triangles(5, 14, 15, 0, 5, 15, 6, 0),
-    gsSP2Triangles(9, 16, 14, 0, 9, 14, 5, 0),
-    gsSP2Triangles(2, 13, 17, 0, 2, 17, 10, 0),
-    gsSP2Triangles(12, 18, 19, 0, 12, 19, 13, 0),
-    gsSP2Triangles(14, 20, 21, 0, 14, 21, 15, 0),
-    gsSP2Triangles(16, 22, 20, 0, 16, 20, 14, 0),
-    gsSP2Triangles(13, 19, 23, 0, 13, 23, 17, 0),
-    gsSP2Triangles(18, 24, 25, 0, 18, 25, 19, 0),
-    gsSP2Triangles(20, 26, 27, 0, 20, 27, 21, 0),
-    gsSP2Triangles(22, 28, 26, 0, 22, 26, 20, 0),
-    gsSP2Triangles(19, 25, 29, 0, 19, 29, 23, 0),
-    gsSP2Triangles(24, 30, 31, 0, 24, 31, 25, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[48], 17, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 1, 0, 4, 1, 0, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
-    gsSP2Triangles(10, 11, 12, 0, 10, 12, 7, 0),
-    gsSP2Triangles(1, 13, 14, 0, 1, 14, 2, 0),
-    gsSP2Triangles(5, 15, 13, 0, 5, 13, 1, 0),
-    gsSP2Triangles(7, 12, 16, 0, 7, 16, 8, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_03074760_DL[40] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_03074760_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_0748A0[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[908], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[65], 25, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(3, 2, 4, 0, 3, 4, 5, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
-    gsSP2Triangles(9, 8, 10, 0, 9, 10, 11, 0),
-    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
-    gsSP2Triangles(15, 14, 16, 0, 15, 16, 17, 0),
-    gsSP2Triangles(18, 0, 3, 0, 18, 3, 14, 0),
-    gsSP2Triangles(14, 3, 5, 0, 14, 5, 16, 0),
-    gsSP2Triangles(19, 20, 21, 0, 19, 21, 22, 0),
-    gsSP2Triangles(23, 24, 20, 0, 23, 20, 19, 0),
-    gsSP2Triangles(20, 8, 7, 0, 20, 7, 21, 0),
-    gsSP2Triangles(24, 10, 8, 0, 24, 8, 20, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_030748A0_DL[27] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_030748A0_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_074978[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[916], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[90], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 1, 0, 4, 1, 0, 0),
-    gsSP2Triangles(1, 6, 7, 0, 1, 7, 2, 0),
-    gsSP2Triangles(5, 8, 6, 0, 5, 6, 1, 0),
-    gsSP2Triangles(9, 10, 11, 0, 9, 11, 12, 0),
-    gsSP2Triangles(12, 11, 13, 0, 12, 13, 14, 0),
-    gsSP2Triangles(15, 16, 17, 0, 15, 17, 18, 0),
-    gsSP2Triangles(18, 17, 19, 0, 18, 19, 20, 0),
-    gsSP2Triangles(21, 22, 23, 0, 21, 23, 24, 0),
-    gsSP2Triangles(25, 26, 27, 0, 25, 27, 28, 0),
-    gsSP2Triangles(27, 29, 30, 0, 27, 30, 31, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[122], 4, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_03074978_DL[28] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_03074978_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_074A58[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[924], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[126], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSP2Triangles(9, 12, 13, 0, 9, 13, 10, 0),
-    gsSP2Triangles(14, 15, 16, 0, 14, 16, 13, 0),
-    gsSP2Triangles(15, 17, 18, 0, 15, 18, 19, 0),
-    gsSP2Triangles(17, 20, 21, 0, 17, 21, 22, 0),
-    gsSP2Triangles(20, 23, 24, 0, 20, 24, 25, 0),
-    gsSP2Triangles(23, 26, 27, 0, 23, 27, 24, 0),
-    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[158], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(5, 8, 9, 0, 5, 9, 6, 0),
-    gsSP2Triangles(10, 11, 12, 0, 10, 12, 8, 0),
-    gsSP2Triangles(11, 13, 14, 0, 11, 14, 12, 0),
-    gsSP2Triangles(13, 15, 16, 0, 13, 16, 14, 0),
-    gsSP2Triangles(17, 18, 19, 0, 17, 19, 16, 0),
-    gsSP2Triangles(18, 20, 21, 0, 18, 21, 19, 0),
-    gsSP2Triangles(20, 22, 23, 0, 20, 23, 21, 0),
-    gsSP2Triangles(22, 24, 25, 0, 22, 25, 23, 0),
-    gsSP2Triangles(24, 26, 27, 0, 24, 27, 25, 0),
-    gsSP2Triangles(26, 28, 29, 0, 26, 29, 27, 0),
-    gsSP2Triangles(28, 30, 31, 0, 28, 31, 29, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[190], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSP2Triangles(12, 13, 14, 0, 12, 14, 9, 0),
-    gsSP2Triangles(13, 15, 16, 0, 13, 16, 17, 0),
-    gsSP2Triangles(15, 18, 19, 0, 15, 19, 16, 0),
-    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
-    gsSP2Triangles(21, 24, 25, 0, 21, 25, 22, 0),
-    gsSP2Triangles(24, 26, 27, 0, 24, 27, 25, 0),
-    gsSP2Triangles(26, 28, 29, 0, 26, 29, 27, 0),
-    gsSP2Triangles(28, 30, 31, 0, 28, 31, 29, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[222], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
-    gsSP2Triangles(10, 11, 12, 0, 10, 12, 8, 0),
-    gsSP2Triangles(13, 14, 15, 0, 13, 15, 16, 0),
-    gsSP2Triangles(14, 17, 18, 0, 14, 18, 19, 0),
-    gsSP2Triangles(20, 21, 22, 0, 20, 22, 17, 0),
-    gsSP2Triangles(23, 24, 25, 0, 23, 25, 26, 0),
-    gsSP2Triangles(27, 28, 29, 0, 27, 29, 30, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[253], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
-    gsSP2Triangles(6, 8, 9, 0, 6, 9, 7, 0),
-    gsSP2Triangles(8, 10, 11, 0, 8, 11, 9, 0),
-    gsSP2Triangles(10, 12, 13, 0, 10, 13, 11, 0),
-    gsSP2Triangles(12, 14, 15, 0, 12, 15, 13, 0),
-    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
-    gsSP2Triangles(17, 20, 21, 0, 17, 21, 18, 0),
-    gsSP2Triangles(22, 23, 24, 0, 22, 24, 25, 0),
-    gsSP2Triangles(23, 26, 27, 0, 23, 27, 24, 0),
-    gsSP2Triangles(28, 29, 30, 0, 28, 30, 26, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[284], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
-    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
-    gsSP2Triangles(14, 15, 16, 0, 14, 16, 17, 0),
-    gsSP2Triangles(15, 18, 19, 0, 15, 19, 16, 0),
-    gsSP2Triangles(18, 20, 21, 0, 18, 21, 19, 0),
-    gsSP2Triangles(20, 22, 23, 0, 20, 23, 21, 0),
-    gsSP2Triangles(22, 24, 25, 0, 22, 25, 23, 0),
-    gsSP2Triangles(26, 27, 28, 0, 26, 28, 29, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[314], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 6, 0),
-    gsSP2Triangles(11, 12, 13, 0, 11, 13, 14, 0),
-    gsSP2Triangles(15, 16, 17, 0, 15, 17, 18, 0),
-    gsSP2Triangles(16, 19, 20, 0, 16, 20, 17, 0),
-    gsSP2Triangles(21, 22, 23, 0, 21, 23, 24, 0),
-    gsSP2Triangles(22, 25, 26, 0, 22, 26, 23, 0),
-    gsSP2Triangles(25, 27, 28, 0, 25, 28, 26, 0),
-    gsSP2Triangles(27, 29, 30, 0, 27, 30, 28, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[345], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
-    gsSP2Triangles(7, 10, 11, 0, 7, 11, 8, 0),
-    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
-    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
-    gsSP2Triangles(20, 21, 22, 0, 20, 22, 17, 0),
-    gsSP2Triangles(21, 23, 24, 0, 21, 24, 22, 0),
-    gsSP2Triangles(23, 25, 26, 0, 23, 26, 24, 0),
-    gsSP2Triangles(27, 28, 29, 0, 27, 29, 30, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[376], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
-    gsSP2Triangles(6, 8, 9, 0, 6, 9, 7, 0),
-    gsSP2Triangles(8, 10, 11, 0, 8, 11, 9, 0),
-    gsSP2Triangles(10, 12, 13, 0, 10, 13, 11, 0),
-    gsSP2Triangles(14, 15, 16, 0, 14, 16, 17, 0),
-    gsSP2Triangles(18, 19, 20, 0, 18, 20, 21, 0),
-    gsSP2Triangles(22, 23, 24, 0, 22, 24, 25, 0),
-    gsSP2Triangles(26, 27, 28, 0, 26, 28, 29, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[406], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSP2Triangles(9, 12, 13, 0, 9, 13, 10, 0),
-    gsSP2Triangles(12, 14, 15, 0, 12, 15, 13, 0),
-    gsSP2Triangles(14, 16, 17, 0, 14, 17, 15, 0),
-    gsSP2Triangles(16, 18, 19, 0, 16, 19, 17, 0),
-    gsSP2Triangles(18, 20, 21, 0, 18, 21, 19, 0),
-    gsSP2Triangles(20, 22, 23, 0, 20, 23, 21, 0),
-    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
-    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[438], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
-    gsSP2Triangles(7, 10, 11, 0, 7, 11, 8, 0),
-    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
-    gsSP2Triangles(13, 16, 17, 0, 13, 17, 14, 0),
-    gsSP2Triangles(16, 18, 19, 0, 16, 19, 17, 0),
-    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
-    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
-    gsSP2Triangles(25, 28, 29, 0, 25, 29, 30, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[469], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
-    gsSP2Triangles(6, 8, 9, 0, 6, 9, 7, 0),
-    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
-    gsSP2Triangles(14, 15, 16, 0, 14, 16, 17, 0),
-    gsSP2Triangles(18, 19, 20, 0, 18, 20, 21, 0),
-    gsSP2Triangles(19, 22, 23, 0, 19, 23, 20, 0),
-    gsSP2Triangles(22, 24, 25, 0, 22, 25, 23, 0),
-    gsSP2Triangles(24, 26, 27, 0, 24, 27, 25, 0),
-    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[501], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSP2Triangles(9, 12, 13, 0, 9, 13, 10, 0),
-    gsSP2Triangles(12, 14, 15, 0, 12, 15, 13, 0),
-    gsSP2Triangles(14, 16, 17, 0, 14, 17, 15, 0),
-    gsSP2Triangles(16, 18, 19, 0, 16, 19, 17, 0),
-    gsSP2Triangles(19, 20, 21, 0, 19, 21, 22, 0),
-    gsSP2Triangles(23, 24, 25, 0, 23, 25, 26, 0),
-    gsSP2Triangles(24, 27, 28, 0, 24, 28, 25, 0),
-    gsSP2Triangles(27, 29, 30, 0, 27, 30, 28, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[532], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSP2Triangles(9, 12, 13, 0, 9, 13, 10, 0),
-    gsSP2Triangles(12, 14, 15, 0, 12, 15, 13, 0),
-    gsSP2Triangles(14, 16, 17, 0, 14, 17, 15, 0),
-    gsSP2Triangles(16, 18, 19, 0, 16, 19, 17, 0),
-    gsSP2Triangles(18, 20, 21, 0, 18, 21, 19, 0),
-    gsSP2Triangles(20, 22, 23, 0, 20, 23, 21, 0),
-    gsSP2Triangles(23, 24, 25, 0, 23, 25, 26, 0),
-    gsSP2Triangles(27, 28, 29, 0, 27, 29, 30, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[563], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(5, 8, 9, 0, 5, 9, 6, 0),
-    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
-    gsSP2Triangles(11, 14, 15, 0, 11, 15, 12, 0),
-    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
-    gsSP2Triangles(17, 20, 21, 0, 17, 21, 18, 0),
-    gsSP2Triangles(20, 22, 23, 0, 20, 23, 21, 0),
-    gsSP2Triangles(22, 24, 25, 0, 22, 25, 23, 0),
-    gsSP2Triangles(24, 26, 27, 0, 24, 27, 25, 0),
-    gsSP2Triangles(26, 28, 29, 0, 26, 29, 27, 0),
-    gsSP2Triangles(28, 30, 31, 0, 28, 31, 29, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[595], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
-    gsSP2Triangles(14, 16, 17, 0, 14, 17, 13, 0),
-    gsSP2Triangles(18, 19, 20, 0, 18, 20, 21, 0),
-    gsSP2Triangles(22, 23, 24, 0, 22, 24, 25, 0),
-    gsSP2Triangles(26, 27, 28, 0, 26, 28, 29, 0),
-    gsSP2Triangles(27, 30, 31, 0, 27, 31, 28, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[627], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
-    gsSP2Triangles(6, 8, 9, 0, 6, 9, 7, 0),
-    gsSP2Triangles(9, 10, 11, 0, 9, 11, 12, 0),
-    gsSP2Triangles(13, 14, 15, 0, 13, 15, 16, 0),
-    gsSP2Triangles(17, 18, 19, 0, 17, 19, 20, 0),
-    gsSP2Triangles(21, 22, 23, 0, 21, 23, 24, 0),
-    gsSP2Triangles(22, 25, 26, 0, 22, 26, 23, 0),
-    gsSP2Triangles(27, 28, 29, 0, 27, 29, 30, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[658], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSP2Triangles(9, 12, 13, 0, 9, 13, 10, 0),
-    gsSP2Triangles(12, 14, 15, 0, 12, 15, 13, 0),
-    gsSP2Triangles(14, 16, 17, 0, 14, 17, 15, 0),
-    gsSP2Triangles(16, 18, 19, 0, 16, 19, 17, 0),
-    gsSP2Triangles(18, 20, 21, 0, 18, 21, 19, 0),
-    gsSP2Triangles(21, 22, 23, 0, 21, 23, 24, 0),
-    gsSP2Triangles(22, 25, 26, 0, 22, 26, 23, 0),
-    gsSP2Triangles(27, 28, 29, 0, 27, 29, 30, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[689], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
-    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
-    gsSP2Triangles(17, 20, 21, 0, 17, 21, 18, 0),
-    gsSP2Triangles(20, 22, 23, 0, 20, 23, 21, 0),
-    gsSP2Triangles(22, 24, 25, 0, 22, 25, 23, 0),
-    gsSP2Triangles(24, 26, 27, 0, 24, 27, 25, 0),
-    gsSP2Triangles(26, 28, 29, 0, 26, 29, 27, 0),
-    gsSP1Triangle(29, 30, 31, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[721], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(3, 5, 1, 0, 6, 7, 8, 0),
-    gsSP2Triangles(6, 8, 9, 0, 7, 10, 11, 0),
-    gsSP2Triangles(7, 11, 8, 0, 10, 12, 13, 0),
-    gsSP2Triangles(10, 13, 11, 0, 12, 14, 15, 0),
-    gsSP2Triangles(12, 15, 13, 0, 16, 17, 18, 0),
-    gsSP2Triangles(16, 18, 19, 0, 20, 21, 22, 0),
-    gsSP2Triangles(20, 22, 23, 0, 21, 24, 25, 0),
-    gsSP2Triangles(21, 25, 22, 0, 24, 26, 27, 0),
-    gsSP2Triangles(24, 27, 25, 0, 26, 28, 29, 0),
-    gsSP2Triangles(26, 29, 27, 0, 28, 30, 31, 0),
-    gsSP1Triangle(28, 31, 29, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[753], 10, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_03074A58_DL[257] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_03074A58_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_075260[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[932], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[763], 24, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
-    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
-    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
-    gsDPPipeSync(),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[787], 27, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(5, 0, 8, 0, 5, 8, 9, 0),
-    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
-    gsSP2Triangles(11, 14, 15, 0, 11, 15, 16, 0),
-    gsSP2Triangles(17, 18, 19, 0, 17, 19, 20, 0),
-    gsSP2Triangles(21, 17, 22, 0, 21, 22, 23, 0),
-    gsSP2Triangles(24, 21, 25, 0, 24, 25, 26, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_03075260_DL[32] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_03075260_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_075360[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[940], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[814], 16, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_03075360_DL[19] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_03075360_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_0753F8[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[948], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[830], 18, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(3, 2, 4, 0, 3, 4, 5, 0),
-    gsSP2Triangles(1, 6, 7, 0, 1, 7, 2, 0),
-    gsSP2Triangles(2, 7, 8, 0, 2, 8, 4, 0),
-    gsSP2Triangles(9, 10, 11, 0, 9, 11, 12, 0),
-    gsSP2Triangles(12, 11, 13, 0, 12, 13, 14, 0),
-    gsSP2Triangles(10, 15, 16, 0, 10, 16, 11, 0),
-    gsSP2Triangles(11, 16, 17, 0, 11, 17, 13, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_030753F8_DL[23] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_030753F8_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_0754B0[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[956], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[848], 12, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(3, 2, 4, 0, 3, 4, 5, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
-    gsSP2Triangles(9, 8, 10, 0, 9, 10, 11, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_030754B0_DL[19] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_030754B0_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_075548[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[964], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[860], 12, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 1, 0, 4, 1, 0, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
-    gsSP2Triangles(10, 11, 7, 0, 10, 7, 6, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_03075548_DL[19] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_03075548_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_0755E0[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[972], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-    gsSPVertex(&market_alley_n_room_0Vtx_070910[872], 12, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(3, 2, 4, 0, 3, 4, 5, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
-    gsSP2Triangles(9, 8, 10, 0, 9, 10, 11, 0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL_030755E0_DL[19] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL_030755E0_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_075678[] = {
-    gsSPDisplayList(market_alley_n_room_0DL_074650),
-    gsSPDisplayList(market_alley_n_room_0DL_0746D8),
-    gsSPDisplayList(market_alley_n_room_0DL_074760),
-    gsSPDisplayList(market_alley_n_room_0DL_0748A0),
-    gsSPDisplayList(market_alley_n_room_0DL_074978),
-    gsSPDisplayList(market_alley_n_room_0DL_074A58),
-    gsSPDisplayList(market_alley_n_room_0DL_075260),
-    gsSPDisplayList(market_alley_n_room_0DL_075360),
-    gsSPDisplayList(market_alley_n_room_0DL_0753F8),
-    gsSPDisplayList(market_alley_n_room_0DL_0754B0),
-    gsSPDisplayList(market_alley_n_room_0DL_075548),
-    gsSPDisplayList(market_alley_n_room_0DL_0755E0),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0_03075678_DL[13] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0_03075678_DL.inc.c"
 };
 
-Gfx market_alley_n_room_0DL_0756E0[] = {
-    gsSPDisplayList(market_alley_n_room_0DL_075678),
-    gsSPEndDisplayList(),
+Gfx market_alley_n_room_0DL_0756E0[2] = {
+#include "assets/scenes/misc/market_alley_n/market_alley_n_room_0DL_0756E0.inc.c"
 };
 
