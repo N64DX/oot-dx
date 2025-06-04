@@ -4,8 +4,8 @@
         { 190, 180, 170 }, // light1Color
         {  -39,   72,  -96 }, // light2Dir
         { 220, 230, 250 }, // light2Color
-        { 130, 130, 140 }, // fogColor
-        ((4 / 4) << 10) | 970, // blendRateAndFogNear
+        { SHRINE_LIGHT_1, SHRINE_LIGHT_1, SHRINE_LIGHT_2 }, // fogColor
+        SHRINE_LIGHT_3, // blendRateAndFogNear
         3000, // zFar
     }, // 0
     {
