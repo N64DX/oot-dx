@@ -4,5 +4,5 @@
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 u64 gVolvagiaTitleCardPalTex[] = {
-#include "assets/objects/object_fd/volvagia_title_card_pal.ia8.inc.c"
+#include "build/gc-eu-mq-dbg/assets/objects/object_fd/gVolvagiaTitleCardTex.ia8.inc.c"
 };
