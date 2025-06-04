@@ -1,76 +1,20 @@
-#include "ultra64.h"
 #include "g_pn_44_all.h"
-#include "assets/misc/link_animetion/link_animetion.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
-#include "g_pn_01_all.h"
-#include "g_pn_02_all.h"
-#include "g_pn_03_all.h"
-#include "g_pn_04_all.h"
-#include "g_pn_05_all.h"
-#include "g_pn_06_all.h"
-#include "g_pn_07_all.h"
-#include "g_pn_08_all.h"
-#include "g_pn_09_all.h"
-#include "g_pn_10_all.h"
-#include "g_pn_11_all.h"
-#include "g_pn_12_all.h"
-#include "g_pn_13_all.h"
-#include "g_pn_14_all.h"
-#include "g_pn_15_all.h"
-#include "g_pn_16_all.h"
-#include "g_pn_17_all.h"
-#include "g_pn_18_all.h"
-#include "g_pn_19_all.h"
-#include "g_pn_20_all.h"
-#include "g_pn_21_all.h"
-#include "g_pn_22_all.h"
-#include "g_pn_23_all.h"
-#include "g_pn_24_all.h"
-#include "g_pn_25_all.h"
-#include "g_pn_26_all.h"
-#include "g_pn_27_all.h"
-#include "g_pn_28_all.h"
-#include "g_pn_29_all.h"
-#include "g_pn_30_all.h"
-#include "g_pn_31_all.h"
-#include "g_pn_32_all.h"
-#include "g_pn_33_all.h"
-#include "g_pn_34_all.h"
-#include "g_pn_35_all.h"
-#include "g_pn_36_all.h"
-#include "g_pn_37_all.h"
-#include "g_pn_38_all.h"
-#include "g_pn_39_all.h"
-#include "g_pn_40_all.h"
-#include "g_pn_41_all.h"
-#include "g_pn_42_all.h"
-#include "g_pn_43_all.h"
-#include "g_pn_45_all.h"
-#include "g_pn_46_all.h"
-#include "g_pn_47_all.h"
-#include "g_pn_48_all.h"
-#include "g_pn_49_all.h"
-#include "g_pn_50_all.h"
-#include "g_pn_51_all.h"
-#include "g_pn_52_all.h"
-#include "g_pn_53_all.h"
-#include "g_pn_54_all.h"
-#include "g_pn_55_all.h"
-#include "g_pn_56_all.h"
-#include "g_pn_57_all.h"
 
-u64 gRoyalFamilysTombTitleCardENGTex[] = {
-#include "assets/textures/place_title_cards/royal_familys_tomb_eng.ia8.inc.c"
+
+u64 gRoyalFamilysTombTitleCardENGTex[TEX_LEN(u64, gRoyalFamilysTombTitleCardENGTex_WIDTH, gRoyalFamilysTombTitleCardENGTex_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gRoyalFamilysTombTitleCardENGTex.ia8.inc.c"
 };
 
-u64 gRoyalFamilysTombTitleCardGERTex[] = {
-#include "assets/textures/place_title_cards/royal_familys_tomb_ger.ia8.inc.c"
+u64 gRoyalFamilysTombTitleCardGERTex[TEX_LEN(u64, gRoyalFamilysTombTitleCardGERTex_WIDTH, gRoyalFamilysTombTitleCardGERTex_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gRoyalFamilysTombTitleCardGERTex.ia8.inc.c"
 };
 
-u64 gRoyalFamilysTombTitleCardFRATex[] = {
-#include "assets/textures/place_title_cards/royal_familys_tomb_fra.ia8.inc.c"
+u64 gRoyalFamilysTombTitleCardFRATex[TEX_LEN(u64, gRoyalFamilysTombTitleCardFRATex_WIDTH, gRoyalFamilysTombTitleCardFRATex_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gRoyalFamilysTombTitleCardFRATex.ia8.inc.c"
 };
 
-u64 gRoyalFamilysTombTitleCardJPNTex[] = {
-#include "assets/textures/place_title_cards/royal_familys_tomb_jpn.ia8.inc.c"
+u64 gRoyalFamilysTombTitleCardJPNTex[TEX_LEN(u64, gRoyalFamilysTombTitleCardJPNTex_WIDTH, gRoyalFamilysTombTitleCardJPNTex_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gRoyalFamilysTombTitleCardJPNTex.ia8.inc.c"
 };
+
+

@@ -1,76 +1,20 @@
-#include "ultra64.h"
 #include "g_pn_54_all.h"
-#include "assets/misc/link_animetion/link_animetion.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
-#include "g_pn_01_all.h"
-#include "g_pn_02_all.h"
-#include "g_pn_03_all.h"
-#include "g_pn_04_all.h"
-#include "g_pn_05_all.h"
-#include "g_pn_06_all.h"
-#include "g_pn_07_all.h"
-#include "g_pn_08_all.h"
-#include "g_pn_09_all.h"
-#include "g_pn_10_all.h"
-#include "g_pn_11_all.h"
-#include "g_pn_12_all.h"
-#include "g_pn_13_all.h"
-#include "g_pn_14_all.h"
-#include "g_pn_15_all.h"
-#include "g_pn_16_all.h"
-#include "g_pn_17_all.h"
-#include "g_pn_18_all.h"
-#include "g_pn_19_all.h"
-#include "g_pn_20_all.h"
-#include "g_pn_21_all.h"
-#include "g_pn_22_all.h"
-#include "g_pn_23_all.h"
-#include "g_pn_24_all.h"
-#include "g_pn_25_all.h"
-#include "g_pn_26_all.h"
-#include "g_pn_27_all.h"
-#include "g_pn_28_all.h"
-#include "g_pn_29_all.h"
-#include "g_pn_30_all.h"
-#include "g_pn_31_all.h"
-#include "g_pn_32_all.h"
-#include "g_pn_33_all.h"
-#include "g_pn_34_all.h"
-#include "g_pn_35_all.h"
-#include "g_pn_36_all.h"
-#include "g_pn_37_all.h"
-#include "g_pn_38_all.h"
-#include "g_pn_39_all.h"
-#include "g_pn_40_all.h"
-#include "g_pn_41_all.h"
-#include "g_pn_42_all.h"
-#include "g_pn_43_all.h"
-#include "g_pn_44_all.h"
-#include "g_pn_45_all.h"
-#include "g_pn_46_all.h"
-#include "g_pn_47_all.h"
-#include "g_pn_48_all.h"
-#include "g_pn_49_all.h"
-#include "g_pn_50_all.h"
-#include "g_pn_51_all.h"
-#include "g_pn_52_all.h"
-#include "g_pn_53_all.h"
-#include "g_pn_55_all.h"
-#include "g_pn_56_all.h"
-#include "g_pn_57_all.h"
 
-u64 gBottomOfTheWellTitleCardENGTex[] = {
-#include "assets/textures/place_title_cards/bottom_of_the_well_eng.ia8.inc.c"
+
+u64 gBottomOfTheWellTitleCardENGTex[TEX_LEN(u64, gBottomOfTheWellTitleCardENGTex_WIDTH, gBottomOfTheWellTitleCardENGTex_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gBottomOfTheWellTitleCardENGTex.ia8.inc.c"
 };
 
-u64 gBottomOfTheWellTitleCardGERTex[] = {
-#include "assets/textures/place_title_cards/bottom_of_the_well_ger.ia8.inc.c"
+u64 gBottomOfTheWellTitleCardGERTex[TEX_LEN(u64, gBottomOfTheWellTitleCardGERTex_WIDTH, gBottomOfTheWellTitleCardGERTex_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gBottomOfTheWellTitleCardGERTex.ia8.inc.c"
 };
 
-u64 gBottomOfTheWellTitleCardFRATex[] = {
-#include "assets/textures/place_title_cards/bottom_of_the_well_fra.ia8.inc.c"
+u64 gBottomOfTheWellTitleCardFRATex[TEX_LEN(u64, gBottomOfTheWellTitleCardFRATex_WIDTH, gBottomOfTheWellTitleCardFRATex_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gBottomOfTheWellTitleCardFRATex.ia8.inc.c"
 };
 
-u64 gBottomOfTheWellTitleCardJPNTex[] = {
-#include "assets/textures/place_title_cards/bottom_of_the_well_jpn.ia8.inc.c"
+u64 gBottomOfTheWellTitleCardJPNTex[TEX_LEN(u64, gBottomOfTheWellTitleCardJPNTex_WIDTH, gBottomOfTheWellTitleCardJPNTex_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gBottomOfTheWellTitleCardJPNTex.ia8.inc.c"
 };
+
+
