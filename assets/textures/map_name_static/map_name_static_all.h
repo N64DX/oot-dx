@@ -420,7 +420,4 @@ extern u64 gQuestionMarkPositionNameJPNTex[TEX_LEN(u64, gQuestionMarkPositionNam
 #define gGanonsCastlePositionNameJPNTex_HEIGHT 32
 extern u64 gGanonsCastlePositionNameJPNTex[TEX_LEN(u64, gGanonsCastlePositionNameJPNTex_WIDTH, gGanonsCastlePositionNameJPNTex_HEIGHT, 8)];
 
-
-
-
 #endif

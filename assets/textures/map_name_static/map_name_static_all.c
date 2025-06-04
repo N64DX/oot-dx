@@ -1,51 +1,51 @@
 #include "map_name_static_all.h"
 
 u64 gHauntedWastelandPointNameENGTex[TEX_LEN(u64, gHauntedWastelandPointNameENGTex_WIDTH, gHauntedWastelandPointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gHauntedWastelandPointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gHauntedWastelandPointNameENGTex.ia4.inc.c"
 };
 
 u64 gGerudosFortressPointNameENGTex[TEX_LEN(u64, gGerudosFortressPointNameENGTex_WIDTH, gGerudosFortressPointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gGerudosFortressPointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gGerudosFortressPointNameENGTex.ia4.inc.c"
 };
 
 u64 gGerudoValleyPointNameENGTex[TEX_LEN(u64, gGerudoValleyPointNameENGTex_WIDTH, gGerudoValleyPointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gGerudoValleyPointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gGerudoValleyPointNameENGTex.ia4.inc.c"
 };
 
 u64 gHyliaLakesidePointNameENGTex[TEX_LEN(u64, gHyliaLakesidePointNameENGTex_WIDTH, gHyliaLakesidePointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gHyliaLakesidePointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gHyliaLakesidePointNameENGTex.ia4.inc.c"
 };
 
 u64 gLonLonRanchPointNameENGTex[TEX_LEN(u64, gLonLonRanchPointNameENGTex_WIDTH, gLonLonRanchPointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gLonLonRanchPointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gLonLonRanchPointNameENGTex.ia4.inc.c"
 };
 
 u64 gMarketPointNameENGTex[TEX_LEN(u64, gMarketPointNameENGTex_WIDTH, gMarketPointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gMarketPointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gMarketPointNameENGTex.ia4.inc.c"
 };
 
 u64 gHyruleFieldPointNameENGTex[TEX_LEN(u64, gHyruleFieldPointNameENGTex_WIDTH, gHyruleFieldPointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gHyruleFieldPointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gHyruleFieldPointNameENGTex.ia4.inc.c"
 };
 
 u64 gDeathMountainPointNameENGTex[TEX_LEN(u64, gDeathMountainPointNameENGTex_WIDTH, gDeathMountainPointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gDeathMountainPointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gDeathMountainPointNameENGTex.ia4.inc.c"
 };
 
 u64 gKakarikoVillagePointNameENGTex[TEX_LEN(u64, gKakarikoVillagePointNameENGTex_WIDTH, gKakarikoVillagePointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gKakarikoVillagePointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gKakarikoVillagePointNameENGTex.ia4.inc.c"
 };
 
 u64 gLostWoodsPointNameENGTex[TEX_LEN(u64, gLostWoodsPointNameENGTex_WIDTH, gLostWoodsPointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gLostWoodsPointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gLostWoodsPointNameENGTex.ia4.inc.c"
 };
 
 u64 gKokiriForestPointNameENGTex[TEX_LEN(u64, gKokiriForestPointNameENGTex_WIDTH, gKokiriForestPointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gKokiriForestPointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gKokiriForestPointNameENGTex.ia4.inc.c"
 };
 
 u64 gZorasDomainPointNameENGTex[TEX_LEN(u64, gZorasDomainPointNameENGTex_WIDTH, gZorasDomainPointNameENGTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gZorasDomainPointNameENGTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gZorasDomainPointNameENGTex.ia4.inc.c"
 };
 
 u64 gHauntedWastelandPointNameGERTex[TEX_LEN(u64, gHauntedWastelandPointNameGERTex_WIDTH, gHauntedWastelandPointNameGERTex_HEIGHT, 4)] = {
@@ -145,51 +145,51 @@ u64 gZorasDomainPointNameFRATex[TEX_LEN(u64, gZorasDomainPointNameFRATex_WIDTH, 
 };
 
 u64 gHauntedWastelandPointNameJPNTex[TEX_LEN(u64, gHauntedWastelandPointNameJPNTex_WIDTH, gHauntedWastelandPointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gHauntedWastelandPointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gHauntedWastelandPointNameJPNTex.ia4.inc.c"
 };
 
 u64 gGerudosFortressPointNameJPNTex[TEX_LEN(u64, gGerudosFortressPointNameJPNTex_WIDTH, gGerudosFortressPointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gGerudosFortressPointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gGerudosFortressPointNameJPNTex.ia4.inc.c"
 };
 
 u64 gGerudoValleyPointNameJPNTex[TEX_LEN(u64, gGerudoValleyPointNameJPNTex_WIDTH, gGerudoValleyPointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gGerudoValleyPointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gGerudoValleyPointNameJPNTex.ia4.inc.c"
 };
 
 u64 gHyliaLakesidePointNameJPNTex[TEX_LEN(u64, gHyliaLakesidePointNameJPNTex_WIDTH, gHyliaLakesidePointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gHyliaLakesidePointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gHyliaLakesidePointNameJPNTex.ia4.inc.c"
 };
 
 u64 gLonLonRanchPointNameJPNTex[TEX_LEN(u64, gLonLonRanchPointNameJPNTex_WIDTH, gLonLonRanchPointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gLonLonRanchPointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gLonLonRanchPointNameJPNTex.ia4.inc.c"
 };
 
 u64 gMarketPointNameJPNTex[TEX_LEN(u64, gMarketPointNameJPNTex_WIDTH, gMarketPointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gMarketPointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gMarketPointNameJPNTex.ia4.inc.c"
 };
 
 u64 gHyruleFieldPointNameJPNTex[TEX_LEN(u64, gHyruleFieldPointNameJPNTex_WIDTH, gHyruleFieldPointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gHyruleFieldPointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gHyruleFieldPointNameJPNTex.ia4.inc.c"
 };
 
 u64 gDeathMountainPointNameJPNTex[TEX_LEN(u64, gDeathMountainPointNameJPNTex_WIDTH, gDeathMountainPointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gDeathMountainPointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gDeathMountainPointNameJPNTex.ia4.inc.c"
 };
 
 u64 gKakarikoVillagePointNameJPNTex[TEX_LEN(u64, gKakarikoVillagePointNameJPNTex_WIDTH, gKakarikoVillagePointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gKakarikoVillagePointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gKakarikoVillagePointNameJPNTex.ia4.inc.c"
 };
 
 u64 gLostWoodsPointNameJPNTex[TEX_LEN(u64, gLostWoodsPointNameJPNTex_WIDTH, gLostWoodsPointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gLostWoodsPointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gLostWoodsPointNameJPNTex.ia4.inc.c"
 };
 
 u64 gKokiriForestPointNameJPNTex[TEX_LEN(u64, gKokiriForestPointNameJPNTex_WIDTH, gKokiriForestPointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gKokiriForestPointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gKokiriForestPointNameJPNTex.ia4.inc.c"
 };
 
 u64 gZorasDomainPointNameJPNTex[TEX_LEN(u64, gZorasDomainPointNameJPNTex_WIDTH, gZorasDomainPointNameJPNTex_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gZorasDomainPointNameJPNTex.ia4.inc.c"
+#include "assets/textures/map_name_static/gZorasDomainPointNameJPNTex.ia4.inc.c"
 };
 
 u64 gHyruleFieldPositionNameENGTex[TEX_LEN(u64, gHyruleFieldPositionNameENGTex_WIDTH, gHyruleFieldPositionNameENGTex_HEIGHT, 8)] = {
@@ -361,7 +361,7 @@ u64 gLonLonRanchPositionNameGERTex[TEX_LEN(u64, gLonLonRanchPositionNameGERTex_W
 };
 
 u64 gQuestionMarkPositionNameGERTex[TEX_LEN(u64, gQuestionMarkPositionNameGERTex_WIDTH, gQuestionMarkPositionNameGERTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gQuestionMarkPositionNameENGTex.ia8.inc.c"
+#include "build/pal-1.0/assets/textures/map_name_static/gQuestionMarkPositionNameGERTex.ia8.inc.c"
 };
 
 u64 gGanonsCastlePositionNameGERTex[TEX_LEN(u64, gGanonsCastlePositionNameGERTex_WIDTH, gGanonsCastlePositionNameGERTex_HEIGHT, 8)] = {
@@ -449,7 +449,7 @@ u64 gLonLonRanchPositionNameFRATex[TEX_LEN(u64, gLonLonRanchPositionNameFRATex_W
 };
 
 u64 gQuestionMarkPositionNameFRATex[TEX_LEN(u64, gQuestionMarkPositionNameFRATex_WIDTH, gQuestionMarkPositionNameFRATex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gQuestionMarkPositionNameENGTex.ia8.inc.c"
+#include "build/pal-1.0/assets/textures/map_name_static/gQuestionMarkPositionNameFRATex.ia8.inc.c"
 };
 
 u64 gGanonsCastlePositionNameFRATex[TEX_LEN(u64, gGanonsCastlePositionNameFRATex_WIDTH, gGanonsCastlePositionNameFRATex_HEIGHT, 8)] = {
@@ -457,89 +457,81 @@ u64 gGanonsCastlePositionNameFRATex[TEX_LEN(u64, gGanonsCastlePositionNameFRATex
 };
 
 u64 gHyruleFieldPositionNameJPNTex[TEX_LEN(u64, gHyruleFieldPositionNameJPNTex_WIDTH, gHyruleFieldPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gHyruleFieldPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gHyruleFieldPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gKakarikoVillagePositionNameJPNTex[TEX_LEN(u64, gKakarikoVillagePositionNameJPNTex_WIDTH, gKakarikoVillagePositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gKakarikoVillagePositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gKakarikoVillagePositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gGraveyardPositionNameJPNTex[TEX_LEN(u64, gGraveyardPositionNameJPNTex_WIDTH, gGraveyardPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gGraveyardPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gGraveyardPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gZorasRiverPositionNameJPNTex[TEX_LEN(u64, gZorasRiverPositionNameJPNTex_WIDTH, gZorasRiverPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gZorasRiverPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gZorasRiverPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gKokiriForestPositionNameJPNTex[TEX_LEN(u64, gKokiriForestPositionNameJPNTex_WIDTH, gKokiriForestPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gKokiriForestPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gKokiriForestPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gSacredForestMeadowPositionNameJPNTex[TEX_LEN(u64, gSacredForestMeadowPositionNameJPNTex_WIDTH, gSacredForestMeadowPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gSacredForestMeadowPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gSacredForestMeadowPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gLakeHyliaPositionNameJPNTex[TEX_LEN(u64, gLakeHyliaPositionNameJPNTex_WIDTH, gLakeHyliaPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gLakeHyliaPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gLakeHyliaPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gZorasDomainPositionNameJPNTex[TEX_LEN(u64, gZorasDomainPositionNameJPNTex_WIDTH, gZorasDomainPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gZorasDomainPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gZorasDomainPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gZorasFountainPositionNameJPNTex[TEX_LEN(u64, gZorasFountainPositionNameJPNTex_WIDTH, gZorasFountainPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gZorasFountainPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gZorasFountainPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gGerudoValleyPositionNameJPNTex[TEX_LEN(u64, gGerudoValleyPositionNameJPNTex_WIDTH, gGerudoValleyPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gGerudoValleyPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gGerudoValleyPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gLostWoodsPositionNameJPNTex[TEX_LEN(u64, gLostWoodsPositionNameJPNTex_WIDTH, gLostWoodsPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gLostWoodsPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gLostWoodsPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gDesertColossusPositionNameJPNTex[TEX_LEN(u64, gDesertColossusPositionNameJPNTex_WIDTH, gDesertColossusPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gDesertColossusPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gDesertColossusPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gGerudosFortressPositionNameJPNTex[TEX_LEN(u64, gGerudosFortressPositionNameJPNTex_WIDTH, gGerudosFortressPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gGerudosFortressPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gGerudosFortressPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gHauntedWastelandPositionNameJPNTex[TEX_LEN(u64, gHauntedWastelandPositionNameJPNTex_WIDTH, gHauntedWastelandPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gHauntedWastelandPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gHauntedWastelandPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gMarketPositionNameJPNTex[TEX_LEN(u64, gMarketPositionNameJPNTex_WIDTH, gMarketPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gMarketPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gMarketPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gHyruleCastlePositionNameJPNTex[TEX_LEN(u64, gHyruleCastlePositionNameJPNTex_WIDTH, gHyruleCastlePositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gHyruleCastlePositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gHyruleCastlePositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gDeathMountainTrailPositionNameJPNTex[TEX_LEN(u64, gDeathMountainTrailPositionNameJPNTex_WIDTH, gDeathMountainTrailPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gDeathMountainTrailPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gDeathMountainTrailPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gDeathMountainCraterPositionNameJPNTex[TEX_LEN(u64, gDeathMountainCraterPositionNameJPNTex_WIDTH, gDeathMountainCraterPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gDeathMountainCraterPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gDeathMountainCraterPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gGoronCityPositionNameJPNTex[TEX_LEN(u64, gGoronCityPositionNameJPNTex_WIDTH, gGoronCityPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gGoronCityPositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gGoronCityPositionNameJPNTex.ia8.inc.c"
 };
 
 u64 gLonLonRanchPositionNameJPNTex[TEX_LEN(u64, gLonLonRanchPositionNameJPNTex_WIDTH, gLonLonRanchPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gLonLonRanchPositionNameJPNTex.ia8.inc.c"
-};
-
-u64 gQuestionMarkPositionNameJPNTex[TEX_LEN(u64, gQuestionMarkPositionNameJPNTex_WIDTH, gQuestionMarkPositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gQuestionMarkPositionNameJPNTex.ia8.inc.c"
-};
-
-u64 gGanonsCastlePositionNameJPNTex[TEX_LEN(u64, gGanonsCastlePositionNameJPNTex_WIDTH, gGanonsCastlePositionNameJPNTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/assets/textures/map_name_static/gGanonsCastlePositionNameJPNTex.ia8.inc.c"
+#include "assets/textures/map_name_static/gLonLonRanchPositionNameJPNTex.ia8.inc.c"
 };

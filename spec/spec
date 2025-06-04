@@ -385,11 +385,7 @@ endseg
 
 beginseg
     name "item_name_static"
-    #if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/item_name_static/item_name_static_all.o"
-    #else
     include "$(BUILD_DIR)/assets/textures/item_name_static/item_name_static.o"
-    #endif
     number 10
 endseg
 
