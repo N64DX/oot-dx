@@ -14,8 +14,8 @@
 #include "terminal.h"
 #include "translation.h"
 #include "versions.h"
-#include "z64audio.h"
-#include "z64save.h"
+#include "audio.h"
+#include "save.h"
 
 #if OOT_NTSC_N64
 #include "assets/textures/title_static/title_static_all.h"
