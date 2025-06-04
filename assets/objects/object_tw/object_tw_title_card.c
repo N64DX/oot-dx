@@ -4,5 +4,5 @@
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 u64 gTwinrovaTitleCardPalTex[] = {
-#include "build/gc-eu-mq-dbg/assets/objects/object_tw/gTwinrovaTitleCardTex.ia8.inc.c"
+#include "assets/objects/object_tw/twinrova_title_card_pal.ia8.inc.c"
 };

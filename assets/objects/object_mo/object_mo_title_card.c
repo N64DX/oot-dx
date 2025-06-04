@@ -4,5 +4,5 @@
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 u64 gMorphaTitleCardPalTex[] = {
-#include "build/gc-eu-mq-dbg/assets/objects/object_mo/gMorphaTitleCardTex.ia8.inc.c"
+#include "assets/objects/object_mo/gMorphaTitleCardPalTex.ia8.inc.c"
 };

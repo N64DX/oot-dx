@@ -4,5 +4,5 @@
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 u64 gBarinadeTitleCardPalTex[] = {
-#include "build/gc-eu-mq-dbg/assets/objects/object_bv/gBarinadeTitleCardTex.ia8.inc.c"
+#include "assets/objects/object_bv/barinade_title_card_pal.ia8.inc.c"
 };

@@ -4,5 +4,5 @@
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 u64 gGanonTitleCardPalTex[] = {
-#include "build/gc-eu-mq-dbg/assets/objects/object_ganon2/gGanonTitleCardTex.ia8.inc.c"
+#include "assets/objects/object_ganon2/ganon_title_card_pal.ia8.inc.c"
 };
