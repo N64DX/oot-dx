@@ -8,6 +8,7 @@
 #include "interface.h"
 #include "ocarina.h"
 #include "play_state.h"
+#include "player.h"
 #include "save.h"
 
 void Interface_Destroy(PlayState* play) {
