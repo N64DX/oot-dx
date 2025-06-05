@@ -5,7 +5,7 @@
 #include "stdbool.h"
 #include "sys_matrix.h"
 #include "ultra64.h"
-#include "z64camera.h"
+#include "camera.h"
 
 Gfx gHanaFlower1DL[20] = {
 #include "assets/objects/gameplay_field_keep/gHanaFlower1DL.inc.c"
