@@ -1,77 +1,20 @@
-#include "ultra64.h"
-#include "z64.h"
 #include "g_pn_16_all.h"
-#include "assets/misc/link_animetion/link_animetion.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
-#include "g_pn_01_all.h"
-#include "g_pn_02_all.h"
-#include "g_pn_03_all.h"
-#include "g_pn_04_all.h"
-#include "g_pn_05_all.h"
-#include "g_pn_06_all.h"
-#include "g_pn_07_all.h"
-#include "g_pn_08_all.h"
-#include "g_pn_09_all.h"
-#include "g_pn_10_all.h"
-#include "g_pn_11_all.h"
-#include "g_pn_12_all.h"
-#include "g_pn_13_all.h"
-#include "g_pn_14_all.h"
-#include "g_pn_15_all.h"
-#include "g_pn_17_all.h"
-#include "g_pn_18_all.h"
-#include "g_pn_19_all.h"
-#include "g_pn_20_all.h"
-#include "g_pn_21_all.h"
-#include "g_pn_22_all.h"
-#include "g_pn_23_all.h"
-#include "g_pn_24_all.h"
-#include "g_pn_25_all.h"
-#include "g_pn_26_all.h"
-#include "g_pn_27_all.h"
-#include "g_pn_28_all.h"
-#include "g_pn_29_all.h"
-#include "g_pn_30_all.h"
-#include "g_pn_31_all.h"
-#include "g_pn_32_all.h"
-#include "g_pn_33_all.h"
-#include "g_pn_34_all.h"
-#include "g_pn_35_all.h"
-#include "g_pn_36_all.h"
-#include "g_pn_37_all.h"
-#include "g_pn_38_all.h"
-#include "g_pn_39_all.h"
-#include "g_pn_40_all.h"
-#include "g_pn_41_all.h"
-#include "g_pn_42_all.h"
-#include "g_pn_43_all.h"
-#include "g_pn_44_all.h"
-#include "g_pn_45_all.h"
-#include "g_pn_46_all.h"
-#include "g_pn_47_all.h"
-#include "g_pn_48_all.h"
-#include "g_pn_49_all.h"
-#include "g_pn_50_all.h"
-#include "g_pn_51_all.h"
-#include "g_pn_52_all.h"
-#include "g_pn_53_all.h"
-#include "g_pn_54_all.h"
-#include "g_pn_55_all.h"
-#include "g_pn_56_all.h"
-#include "g_pn_57_all.h"
 
-u64 gTempleOfTimeTitleCardENGTex[] = {
-#include "assets/textures/place_title_cards/temple_of_time_eng.ia8.inc.c"
+
+u64 gTempleOfTimeTitleCardENGTex[TEX_LEN(u64, gTempleOfTimeTitleCardENGTex_WIDTH, gTempleOfTimeTitleCardENGTex_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gTempleOfTimeTitleCardENGTex.ia8.inc.c"
 };
 
-u64 gTempleOfTimeTitleCardGERTex[] = {
-#include "assets/textures/place_title_cards/temple_of_time_ger.ia8.inc.c"
+u64 gTempleOfTimeTitleCardGERTex[TEX_LEN(u64, gTempleOfTimeTitleCardGERTex_WIDTH, gTempleOfTimeTitleCardGERTex_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gTempleOfTimeTitleCardGERTex.ia8.inc.c"
 };
 
-u64 gTempleOfTimeTitleCardFRATex[] = {
-#include "assets/textures/place_title_cards/temple_of_time_fra.ia8.inc.c"
+u64 gTempleOfTimeTitleCardFRATex[TEX_LEN(u64, gTempleOfTimeTitleCardFRATex_WIDTH, gTempleOfTimeTitleCardFRATex_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gTempleOfTimeTitleCardFRATex.ia8.inc.c"
 };
 
-u64 gTempleOfTimeTitleCardJPNTex[] = {
-#include "assets/textures/place_title_cards/temple_of_time_jpn.ia8.inc.c"
+u64 gTempleOfTimeTitleCardJPNTex[TEX_LEN(u64, gTempleOfTimeTitleCardJPNTex_WIDTH, gTempleOfTimeTitleCardJPNTex_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gTempleOfTimeTitleCardJPNTex.ia8.inc.c"
 };
+
+

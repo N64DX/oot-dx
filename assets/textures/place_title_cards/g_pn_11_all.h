@@ -1,8 +1,20 @@
-#ifndef G_PN_11_ALL_H
-#define G_PN_11_ALL_H 1
+#ifndef G_PN_11_H_ALL
+#define G_PN_11_H_ALL 1
 
-extern u64 gGERudoTrainingGroundTitleCardENGTex[];
-extern u64 gGERudoTrainingGroundTitleCardGERTex[];
-extern u64 gGERudoTrainingGroundTitleCardFRATex[];
-extern u64 gGERudoTrainingGroundTitleCardJPNTex[];
+#include "tex_len.h"
+#include "ultra64.h"
+
+#define gGERudoTrainingGroundTitleCardENGTex_WIDTH 144
+#define gGERudoTrainingGroundTitleCardENGTex_HEIGHT 24
+extern u64 gGERudoTrainingGroundTitleCardENGTex[TEX_LEN(u64, gGERudoTrainingGroundTitleCardENGTex_WIDTH, gGERudoTrainingGroundTitleCardENGTex_HEIGHT, 8)];
+#define gGERudoTrainingGroundTitleCardGERTex_WIDTH 144
+#define gGERudoTrainingGroundTitleCardGERTex_HEIGHT 24
+extern u64 gGERudoTrainingGroundTitleCardGERTex[TEX_LEN(u64, gGERudoTrainingGroundTitleCardGERTex_WIDTH, gGERudoTrainingGroundTitleCardGERTex_HEIGHT, 8)];
+#define gGERudoTrainingGroundTitleCardFRATex_WIDTH 144
+#define gGERudoTrainingGroundTitleCardFRATex_HEIGHT 24
+extern u64 gGERudoTrainingGroundTitleCardFRATex[TEX_LEN(u64, gGERudoTrainingGroundTitleCardFRATex_WIDTH, gGERudoTrainingGroundTitleCardFRATex_HEIGHT, 8)];
+#define gGERudoTrainingGroundTitleCardJPNTex_WIDTH 144
+#define gGERudoTrainingGroundTitleCardJPNTex_HEIGHT 24
+extern u64 gGERudoTrainingGroundTitleCardJPNTex[TEX_LEN(u64, gGERudoTrainingGroundTitleCardJPNTex_WIDTH, gGERudoTrainingGroundTitleCardJPNTex_HEIGHT, 8)];
+
 #endif

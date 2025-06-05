@@ -1,8 +1,20 @@
-#ifndef G_PN_13_ALL_H
-#define G_PN_13_ALL_H 1
+#ifndef G_PN_13_H_ALL
+#define G_PN_13_H_ALL 1
 
-extern u64 gGreatFairysFountainTitleCardENGTex[];
-extern u64 gGreatFairysFountainTitleCardGERTex[];
-extern u64 gGreatFairysFountainTitleCardFRATex[];
-extern u64 gGreatFairysFountainTitleCardJPNTex[];
+#include "tex_len.h"
+#include "ultra64.h"
+
+#define gGreatFairysFountainTitleCardENGTex_WIDTH 144
+#define gGreatFairysFountainTitleCardENGTex_HEIGHT 24
+extern u64 gGreatFairysFountainTitleCardENGTex[TEX_LEN(u64, gGreatFairysFountainTitleCardENGTex_WIDTH, gGreatFairysFountainTitleCardENGTex_HEIGHT, 8)];
+#define gGreatFairysFountainTitleCardGERTex_WIDTH 144
+#define gGreatFairysFountainTitleCardGERTex_HEIGHT 24
+extern u64 gGreatFairysFountainTitleCardGERTex[TEX_LEN(u64, gGreatFairysFountainTitleCardGERTex_WIDTH, gGreatFairysFountainTitleCardGERTex_HEIGHT, 8)];
+#define gGreatFairysFountainTitleCardFRATex_WIDTH 144
+#define gGreatFairysFountainTitleCardFRATex_HEIGHT 24
+extern u64 gGreatFairysFountainTitleCardFRATex[TEX_LEN(u64, gGreatFairysFountainTitleCardFRATex_WIDTH, gGreatFairysFountainTitleCardFRATex_HEIGHT, 8)];
+#define gGreatFairysFountainTitleCardJPNTex_WIDTH 144
+#define gGreatFairysFountainTitleCardJPNTex_HEIGHT 24
+extern u64 gGreatFairysFountainTitleCardJPNTex[TEX_LEN(u64, gGreatFairysFountainTitleCardJPNTex_WIDTH, gGreatFairysFountainTitleCardJPNTex_HEIGHT, 8)];
+
 #endif

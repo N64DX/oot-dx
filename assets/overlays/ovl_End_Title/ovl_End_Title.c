@@ -1,79 +1,118 @@
-#include "resolution.h"
-#include "ultra64.h"
-#include "z64.h"
-#include "assets/overlays/ovl_End_Title/ovl_End_Title.h"
-#include "assets/misc/link_animetion/link_animetion.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
-static u64 sTheLegendOfZeldaTex[360];
-static u64 sOcarinaOfTimeTex[224];
-static u64 sTheEndTex[240];
-static u64 sNintendoLeftTex[384];
-static u64 sNintendoRightTex[384];
-static u64 sPresentedByTex[192];
-static Vtx sTriforceVtx[6];
-static Gfx sTriforceDL[12];
-static Gfx sPresentedByNintendoDL[37];
+#include "ovl_End_Title.h"
 
-static u64 sTheLegendOfZeldaTex[360] = {
-#include "assets/overlays/ovl_End_Title/the_legend_of_zelda.ia8.inc.c"
+#include "gfx.h"
+#include "sys_matrix.h"
+
+#if OOT_VERSION == IQUE_CN
+
+static Gfx sEmptyDL1[1] = {
+#include "assets/overlays/ovl_End_Title/sEmptyDL1.inc.c"
 };
 
-static u64 sOcarinaOfTimeTex[224] = {
-#include "assets/overlays/ovl_End_Title/ocarina_of_time.ia8.inc.c"
+static u64 sIQueTop[TEX_LEN(u64, sIQueTop_WIDTH, sIQueTop_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sIQueTop.ia8.inc.c"
 };
 
-static u64 sTheEndTex[240] = {
-#include "assets/overlays/ovl_End_Title/the_end.ia8.inc.c"
+static u64 sIQueBottom[TEX_LEN(u64, sIQueBottom_WIDTH, sIQueBottom_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sIQueBottom.ia8.inc.c"
 };
 
-static u64 sNintendoLeftTex[384] = {
-#include "assets/overlays/ovl_End_Title/nintendo_left.ia8.inc.c"
+static Gfx sEmptyDL2[1] = {
+#include "assets/overlays/ovl_End_Title/sEmptyDL2.inc.c"
 };
 
-static u64 sNintendoRightTex[384] = {
-#include "assets/overlays/ovl_End_Title/nintendo_right.ia8.inc.c"
+static u64 sNintendoLeftTex[TEX_LEN(u64, sNintendoLeftTex_WIDTH, sNintendoLeftTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sNintendoLeftTex.ia8.inc.c"
 };
 
-static u64 sPresentedByTex[192] = {
-#include "assets/overlays/ovl_End_Title/presented_by.ia8.inc.c"
+static Gfx sEmptyDL3[1] = {
+#include "assets/overlays/ovl_End_Title/sEmptyDL3.inc.c"
+};
+
+static u64 sNintendoRightTex[TEX_LEN(u64, sNintendoRightTex_WIDTH, sNintendoRightTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sNintendoRightTex.ia8.inc.c"
+};
+
+static Gfx sEmptyDL4[1] = {
+#include "assets/overlays/ovl_End_Title/sEmptyDL4.inc.c"
+};
+
+static u64 sPresentedByTex[TEX_LEN(u64, sPresentedByTex_WIDTH, sPresentedByTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sPresentedByTex.ia8.inc.c"
+};
+
+static Gfx sEmptyDL5[1] = {
+#include "assets/overlays/ovl_End_Title/sEmptyDL5.inc.c"
+};
+
+static u64 sTheEndTex[TEX_LEN(u64, sTheEndTex_WIDTH, sTheEndTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sTheEndTex.ia8.inc.c"
+};
+
+static Gfx sEmptyDL6[1] = {
+#include "assets/overlays/ovl_End_Title/sEmptyDL6.inc.c"
+};
+
+static u64 sTheLegendOfZeldaTex[TEX_LEN(u64, sTheLegendOfZeldaTex_WIDTH, sTheLegendOfZeldaTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sTheLegendOfZeldaTex.ia8.inc.c"
+};
+
+static Gfx sEmptyDL7[1] = {
+#include "assets/overlays/ovl_End_Title/sEmptyDL7.inc.c"
+};
+
+static u64 sOcarinaOfTimeTex[TEX_LEN(u64, sOcarinaOfTimeTex_WIDTH, sOcarinaOfTimeTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sOcarinaOfTimeTex.ia8.inc.c"
 };
 
 static Vtx sTriforceVtx[6] = {
-#include "assets/overlays/ovl_End_Title/sTriforceVtx.vtx.inc"
+#include "assets/overlays/ovl_End_Title/sTriforceVtx.inc.c"
 };
 
 static Gfx sTriforceDL[12] = {
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetCombineLERP(0, 0, 0, PRIMITIVE, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2),
-    gsSPClearGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPVertex(sTriforceVtx, 6, 0),
-    gsDPSetPrimColor(0, 0x80, 128, 128, 50, 255),
-    gsSP2Triangles(0, 1, 3, 0, 3, 4, 5, 0),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 150, 255),
-    gsSP1Triangle(1, 2, 4, 0),
-    gsSPEndDisplayList(),
+#include "assets/overlays/ovl_End_Title/sTriforceDL.inc.c"
+};
+
+static Gfx sPresentedByNintendoDL[57] = {
+#include "assets/overlays/ovl_End_Title/sPresentedByNintendoDL.inc.c"
+};
+
+#else
+
+static u64 sTheLegendOfZeldaTex[TEX_LEN(u64, sTheLegendOfZeldaTex_WIDTH, sTheLegendOfZeldaTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sTheLegendOfZeldaTex.ia8.inc.c"
+};
+
+static u64 sOcarinaOfTimeTex[TEX_LEN(u64, sOcarinaOfTimeTex_WIDTH, sOcarinaOfTimeTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sOcarinaOfTimeTex.ia8.inc.c"
+};
+
+static u64 sTheEndTex[TEX_LEN(u64, sTheEndTex_WIDTH, sTheEndTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sTheEndTex.ia8.inc.c"
+};
+
+static u64 sNintendoLeftTex[TEX_LEN(u64, sNintendoLeftTex_WIDTH, sNintendoLeftTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sNintendoLeftTex.ia8.inc.c"
+};
+
+static u64 sNintendoRightTex[TEX_LEN(u64, sNintendoRightTex_WIDTH, sNintendoRightTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sNintendoRightTex.ia8.inc.c"
+};
+
+static u64 sPresentedByTex[TEX_LEN(u64, sPresentedByTex_WIDTH, sPresentedByTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_End_Title/sPresentedByTex.ia8.inc.c"
+};
+
+static Vtx sTriforceVtx[6] = {
+#include "assets/overlays/ovl_End_Title/sTriforceVtx.inc.c"
+};
+
+static Gfx sTriforceDL[12] = {
+#include "assets/overlays/ovl_End_Title/sTriforceDL.inc.c"
 };
 
 static Gfx sPresentedByNintendoDL[37] = {
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPSetRenderMode(G_RM_PASS, G_RM_XLU_SURF2),
-    gsSPClearGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED, 0, 0, 0,
-                       COMBINED),
-    gsDPSetEnvColor(200, 230, 225, 255),
-    gsDPLoadTextureTile(sNintendoLeftTex, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 0, 0, 0, 63, 47, 0, G_TX_NOMIRROR | G_TX_WRAP,
-                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPTextureRectangle(HIRES_MULTIPLY((0x0184 + (WS_SHIFT_FULL * 2))), HIRES_MULTIPLY(0x0168), HIRES_MULTIPLY((0x0280 + (WS_SHIFT_FULL * 2))), HIRES_MULTIPLY(0x0224), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(0x0400), HIRES_DIVIDE(0x0400)),
-    gsDPLoadTextureTile(sNintendoRightTex, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 0, 0, 0, 63, 47, 0, G_TX_NOMIRROR | G_TX_WRAP,
-                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPTextureRectangle(HIRES_MULTIPLY((0x0280 + (WS_SHIFT_FULL * 2))), HIRES_MULTIPLY(0x0168), HIRES_MULTIPLY((0x037C + (WS_SHIFT_FULL * 2))), HIRES_MULTIPLY(0x0224), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(0x0400), HIRES_DIVIDE(0x0400)),
-    gsDPLoadTextureTile(sPresentedByTex, G_IM_FMT_IA, G_IM_SIZ_8b, 96, 0, 0, 0, 95, 15, 0, G_TX_NOMIRROR | G_TX_WRAP,
-                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPTextureRectangle(HIRES_MULTIPLY((0x01C4 + (WS_SHIFT_FULL * 2))), HIRES_MULTIPLY(0x0140), HIRES_MULTIPLY((0x0340 + (WS_SHIFT_FULL * 2))), HIRES_MULTIPLY(0x017C), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(0x0400), HIRES_DIVIDE(0x0400)),
-    gsSPEndDisplayList(),
+#include "assets/overlays/ovl_End_Title/sPresentedByNintendoDL.inc.c"
 };
 
+#endif
