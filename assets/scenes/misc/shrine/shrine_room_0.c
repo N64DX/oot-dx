@@ -6,9 +6,9 @@
 #include "sequence.h"
 #include "sys_matrix.h"
 #include "ultra64.h"
-#include "z64actor.h"
-#include "z64object.h"
-#include "z64skybox.h"
+#include "actor.h"
+#include "object.h"
+#include "skybox.h"
 
 SceneCmd shrine_room_0[] = {
 #include "assets/scenes/misc/shrine/shrine_room_0.inc.c"
