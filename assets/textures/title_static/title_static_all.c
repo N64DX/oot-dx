@@ -3,6 +3,38 @@
 #include "sys_matrix.h"
 #include "ultra64.h"
 
+u64 gFileSelCopyButtonJPNTex[TEX_LEN(u64, gFileSelCopyButtonJPNTex_WIDTH, gFileSelCopyButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelCopyButtonJPNTex.ia16.inc.c"
+};
+
+u64 gFileSelFile1ButtonJPNTex[TEX_LEN(u64, gFileSelFile1ButtonJPNTex_WIDTH, gFileSelFile1ButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile1ButtonJPNTex.ia16.inc.c"
+};
+
+u64 gFileSelFile2ButtonJPNTex[TEX_LEN(u64, gFileSelFile2ButtonJPNTex_WIDTH, gFileSelFile2ButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile2ButtonJPNTex.ia16.inc.c"
+};
+
+u64 gFileSelFile3ButtonJPNTex[TEX_LEN(u64, gFileSelFile3ButtonJPNTex_WIDTH, gFileSelFile3ButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile3ButtonJPNTex.ia16.inc.c"
+};
+
+u64 gFileSelYesButtonJPNTex[TEX_LEN(u64, gFileSelYesButtonJPNTex_WIDTH, gFileSelYesButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelYesButtonJPNTex.ia16.inc.c"
+};
+
+u64 gFileSelEraseButtonJPNTex[TEX_LEN(u64, gFileSelEraseButtonJPNTex_WIDTH, gFileSelEraseButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelEraseButtonJPNTex.ia16.inc.c"
+};
+
+u64 gFileSelOptionsButtonJPNTex[TEX_LEN(u64, gFileSelOptionsButtonJPNTex_WIDTH, gFileSelOptionsButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelOptionsButtonJPNTex.ia16.inc.c"
+};
+
+u64 gFileSelQuitButtonJPNTex[TEX_LEN(u64, gFileSelQuitButtonJPNTex_WIDTH, gFileSelQuitButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelQuitButtonJPNTex.ia16.inc.c"
+};
+
 u64 gFileSelNoFileToCopyJPNTex[TEX_LEN(u64, gFileSelNoFileToCopyJPNTex_WIDTH, gFileSelNoFileToCopyJPNTex_HEIGHT, 8)] = {
 #include "assets/textures/title_static/gFileSelNoFileToCopyJPNTex.ia8.inc.c"
 };
@@ -188,7 +220,7 @@ u64 gFileSelSwitchFRATex[TEX_LEN(u64, gFileSelSwitchFRATex_WIDTH, gFileSelSwitch
 };
 
 u64 gFileSelHoldENGTex[TEX_LEN(u64, gFileSelHoldENGTex_WIDTH, gFileSelHoldENGTex_HEIGHT, 8)] = {
-#include "build/pal-1.0/build/pal-1.0/assets/textures/title_static/gFileSelHoldENGTex.ia8.inc.c"
+#include "build/pal-1.0/assets/textures/title_static/gFileSelHoldENGTex.ia8.inc.c"
 };
 
 u64 gFileSelHoldGERTex[TEX_LEN(u64, gFileSelHoldGERTex_WIDTH, gFileSelHoldGERTex_HEIGHT, 8)] = {
@@ -492,7 +524,7 @@ u64 gFileSelOptionsButtonENGTex[TEX_LEN(u64, gFileSelOptionsButtonENGTex_WIDTH, 
 };
 
 u64 gFileSelOptionsButtonGERTex[TEX_LEN(u64, gFileSelOptionsButtonGERTex_WIDTH, gFileSelOptionsButtonGERTex_HEIGHT, 16)] = {
-#include "assets/textures/title_static/gFileSelOptionsButtonGERTex.ia16.inc.c"
+#include "build/pal-1.0/assets/textures/title_static/gFileSelOptionsButtonGERTex.ia16.inc.c"
 };
 
 u64 gFileSelQuitButtonENGTex[TEX_LEN(u64, gFileSelQuitButtonENGTex_WIDTH, gFileSelQuitButtonENGTex_HEIGHT, 16)] = {
@@ -640,7 +672,7 @@ u64 gFileSelOpenThisFileFRATex[TEX_LEN(u64, gFileSelOpenThisFileFRATex_WIDTH, gF
 };
 
 u64 gFileSelEraseWhichFileFRATex[TEX_LEN(u64, gFileSelEraseWhichFileFRATex_WIDTH, gFileSelEraseWhichFileFRATex_HEIGHT, 8)] = {
-#include "assets/textures/title_static/gFileSelEraseWhichFileFRATex.ia8.inc.c"
+#include "build/pal-1.0/assets/textures/title_static/gFileSelEraseWhichFileFRATex.ia8.inc.c"
 };
 
 u64 gFileSelAreYouSure2FRATex[TEX_LEN(u64, gFileSelAreYouSure2FRATex_WIDTH, gFileSelAreYouSure2FRATex_HEIGHT, 8)] = {

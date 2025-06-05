@@ -4,6 +4,30 @@
 #include "tex_len.h"
 #include "ultra64.h"
 
+#define gFileSelCopyButtonJPNTex_WIDTH 64
+#define gFileSelCopyButtonJPNTex_HEIGHT 16
+extern u64 gFileSelCopyButtonJPNTex[TEX_LEN(u64, gFileSelCopyButtonJPNTex_WIDTH, gFileSelCopyButtonJPNTex_HEIGHT, 16)];
+#define gFileSelFile1ButtonJPNTex_WIDTH 64
+#define gFileSelFile1ButtonJPNTex_HEIGHT 16
+extern u64 gFileSelFile1ButtonJPNTex[TEX_LEN(u64, gFileSelFile1ButtonJPNTex_WIDTH, gFileSelFile1ButtonJPNTex_HEIGHT, 16)];
+#define gFileSelFile2ButtonJPNTex_WIDTH 64
+#define gFileSelFile2ButtonJPNTex_HEIGHT 16
+extern u64 gFileSelFile2ButtonJPNTex[TEX_LEN(u64, gFileSelFile2ButtonJPNTex_WIDTH, gFileSelFile2ButtonJPNTex_HEIGHT, 16)];
+#define gFileSelFile3ButtonJPNTex_WIDTH 64
+#define gFileSelFile3ButtonJPNTex_HEIGHT 16
+extern u64 gFileSelFile3ButtonJPNTex[TEX_LEN(u64, gFileSelFile3ButtonJPNTex_WIDTH, gFileSelFile3ButtonJPNTex_HEIGHT, 16)];
+#define gFileSelYesButtonJPNTex_WIDTH 64
+#define gFileSelYesButtonJPNTex_HEIGHT 16
+extern u64 gFileSelYesButtonJPNTex[TEX_LEN(u64, gFileSelYesButtonJPNTex_WIDTH, gFileSelYesButtonJPNTex_HEIGHT, 16)];
+#define gFileSelEraseButtonJPNTex_WIDTH 64
+#define gFileSelEraseButtonJPNTex_HEIGHT 16
+extern u64 gFileSelEraseButtonJPNTex[TEX_LEN(u64, gFileSelEraseButtonJPNTex_WIDTH, gFileSelEraseButtonJPNTex_HEIGHT, 16)];
+#define gFileSelOptionsButtonJPNTex_WIDTH 64
+#define gFileSelOptionsButtonJPNTex_HEIGHT 16
+extern u64 gFileSelOptionsButtonJPNTex[TEX_LEN(u64, gFileSelOptionsButtonJPNTex_WIDTH, gFileSelOptionsButtonJPNTex_HEIGHT, 16)];
+#define gFileSelQuitButtonJPNTex_WIDTH 64
+#define gFileSelQuitButtonJPNTex_HEIGHT 16
+extern u64 gFileSelQuitButtonJPNTex[TEX_LEN(u64, gFileSelQuitButtonJPNTex_WIDTH, gFileSelQuitButtonJPNTex_HEIGHT, 16)];
 #define gFileSelNoFileToCopyJPNTex_WIDTH 128
 #define gFileSelNoFileToCopyJPNTex_HEIGHT 16
 extern u64 gFileSelNoFileToCopyJPNTex[TEX_LEN(u64, gFileSelNoFileToCopyJPNTex_WIDTH, gFileSelNoFileToCopyJPNTex_HEIGHT, 8)];
