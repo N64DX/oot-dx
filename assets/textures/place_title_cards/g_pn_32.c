@@ -3,6 +3,25 @@
 #include "versions.h"
 #include "actor.h"
 
+#if OOT_NTSC_N64
+u64 gLakeHyliaTitleCardENGTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gLakeHyliaTitleCardENGTex.ia8.inc.c"
+};
+
+u64 gLakeHyliaTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gLakeHyliaTitleCardGERTex.ia8.inc.c"
+};
+
+u64 gLakeHyliaTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gLakeHyliaTitleCardFRATex.ia8.inc.c"
+};
+
+u64 gLakeHyliaTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gLakeHyliaTitleCardJPNTex.ia8.inc.c"
+};
+
+#else
+
 #if OOT_NTSC
 u64 gLakeHyliaTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gLakeHyliaTitleCardJPNTex.ia8.inc.c"
@@ -21,4 +40,6 @@ u64 gLakeHyliaTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_
 u64 gLakeHyliaTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gLakeHyliaTitleCardFRATex.ia8.inc.c"
 };
+#endif
+
 #endif

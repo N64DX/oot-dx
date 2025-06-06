@@ -3,6 +3,25 @@
 #include "versions.h"
 #include "actor.h"
 
+#if OOT_NTSC_N64
+u64 gZoraShopTitleCardENGTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gZoraShopTitleCardENGTex.ia8.inc.c"
+};
+
+u64 gZoraShopTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gZoraShopTitleCardGERTex.ia8.inc.c"
+};
+
+u64 gZoraShopTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gZoraShopTitleCardFRATex.ia8.inc.c"
+};
+
+u64 gZoraShopTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gZoraShopTitleCardJPNTex.ia8.inc.c"
+};
+
+#else
+
 #if OOT_NTSC
 u64 gZoraShopTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gZoraShopTitleCardJPNTex.ia8.inc.c"
@@ -21,4 +40,6 @@ u64 gZoraShopTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_H
 u64 gZoraShopTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gZoraShopTitleCardFRATex.ia8.inc.c"
 };
+#endif
+
 #endif

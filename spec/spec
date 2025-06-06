@@ -3451,571 +3451,343 @@ endseg
 beginseg
     name "g_pn_01"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_01_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_01.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_02"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_02_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_02.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_03"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_03_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_03.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_04"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_04_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_04.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_05"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_05_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_05.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_06"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_06_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_06.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_07"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_07_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_07.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_08"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_08_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_08.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_09"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_09_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_09.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_10"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_10_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_10.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_11"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_11_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_11.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_12"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_12_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_12.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_13"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_13_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_13.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_14"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_14_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_14.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_15"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_15_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_15.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_16"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_16_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_16.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_17"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_17_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_17.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_18"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_18_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_18.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_19"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_19_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_19.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_20"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_20_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_20.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_21"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_21_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_21.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_22"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_22_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_22.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_23"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_23_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_23.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_24"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_24_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_24.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_25"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_25_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_25.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_26"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_26_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_26.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_27"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_27_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_27.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_28"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_28_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_28.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_29"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_29_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_29.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_30"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_30_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_30.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_31"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_31_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_31.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_32"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_32_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_32.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_33"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_33_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_33.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_34"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_34_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_34.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_35"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_35_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_35.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_36"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_36_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_36.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_37"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_37_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_37.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_38"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_38_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_38.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_39"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_39_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_39.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_40"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_40_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_40.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_41"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_41_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_41.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_42"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_42_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_42.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_43"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_43_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_43.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_44"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_44_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_44.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_45"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_45_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_45.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_46"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_46_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_46.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_47"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_47_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_47.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_48"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_48_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_48.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_49"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_49_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_49.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_50"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_50_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_50.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_51"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_51_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_51.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_52"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_52_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_52.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_53"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_53_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_53.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_54"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_54_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_54.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_55"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_55_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_55.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_56"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_56_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_56.o"
-#endif
 endseg
 
 beginseg
     name "g_pn_57"
     compress
-#if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_57_all.o"
-#else
     include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_57.o"
-#endif
 endseg
 
 beginseg

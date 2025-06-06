@@ -3,6 +3,25 @@
 #include "versions.h"
 #include "actor.h"
 
+#if OOT_NTSC_N64
+u64 gGERudoTrainingGroundTitleCardENGTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gGERudoTrainingGroundTitleCardENGTex.ia8.inc.c"
+};
+
+u64 gGERudoTrainingGroundTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gGERudoTrainingGroundTitleCardGERTex.ia8.inc.c"
+};
+
+u64 gGERudoTrainingGroundTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gGERudoTrainingGroundTitleCardFRATex.ia8.inc.c"
+};
+
+u64 gGERudoTrainingGroundTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gGERudoTrainingGroundTitleCardJPNTex.ia8.inc.c"
+};
+
+#else
+
 #if OOT_NTSC
 u64 gGERudoTrainingGroundTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gGERudoTrainingGroundTitleCardJPNTex.ia8.inc.c"
@@ -21,4 +40,6 @@ u64 gGERudoTrainingGroundTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLAC
 u64 gGERudoTrainingGroundTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gGERudoTrainingGroundTitleCardFRATex.ia8.inc.c"
 };
+#endif
+
 #endif
