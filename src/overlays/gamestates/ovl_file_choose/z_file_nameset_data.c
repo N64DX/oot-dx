@@ -1,10 +1,3 @@
-#include "versions.h"
-
-#if OOT_NTSC_N64
-#include "assets/overlays/ovl_file_choose/ovl_file_choose_all.c"
-#else
-#include "assets/overlays/ovl_file_choose/ovl_file_choose.c"
-
 #include "file_select.h"
 
 #include "ultra64.h"
@@ -15,7 +8,52 @@ Vtx gNameEntryVtx[] = {
 #include "assets/overlays/ovl_file_choose/gNameEntryVtx.inc.c"
 };
 
-#if OOT_NTSC
+#if OOT_NTSC_N64
+s16 gCharPageHira[] = {
+#include "assets/overlays/ovl_file_choose/gCharPageHira.inc.c"
+};
+
+s16 gCharPageKata[] = {
+#include "assets/overlays/ovl_file_choose/gCharPageKata.inc.c"
+};
+
+s16 gCharPageEng[] = {
+#include "assets/overlays/ovl_file_choose/gCharPageEng.inc.c"
+};
+
+s16 gNextCharPage[] = {
+#include "assets/overlays/ovl_file_choose/gNextCharPage.inc.c"
+};
+
+Vtx gOptionsMenuHeadersVtx[] = {
+#include "assets/overlays/ovl_file_choose/gOptionsMenuHeadersAllVtx.inc.c"
+};
+
+Vtx gOptionsMenuSettingsVtx[] = {
+#include "assets/overlays/ovl_file_choose/gOptionsMenuSettingsAllVtx.inc.c"
+};
+
+Vtx gOptionsMenuSettingsJapaneseVtx[] = {
+#include "assets/overlays/ovl_file_choose/gOptionsMenuSettingsJapaneseVtx.inc.c"
+};
+
+Vtx gOptionsDividerSoundVtx[] = {
+#include "assets/overlays/ovl_file_choose/gOptionsDividerSoundAllVtx.inc.c"
+};
+
+Vtx gOptionsDividerZTargetVtx[] = {
+#include "assets/overlays/ovl_file_choose/gOptionsDividerZTargetAllVtx.inc.c"
+};
+
+Vtx gOptionsMenuLanguageVtx[] = {
+#include "assets/overlays/ovl_file_choose/gOptionsMenuLanguageAllVtx.inc.c"
+};
+
+Vtx gOptionsDividerLanguageVtx[] = {
+#include "assets/overlays/ovl_file_choose/gOptionsDividerLanguageAllVtx.inc.c"
+};
+
+#elif OOT_NTSC
 s16 gCharPageHira[] = {
 #include "assets/overlays/ovl_file_choose/gCharPageHira.inc.c"
 };
@@ -87,4 +125,5 @@ Vtx gOptionsDividerLanguageVtx[] = {
 s16 gCharPageEng[] = {
 #include "assets/overlays/ovl_file_choose/gCharPageEng.inc.c"
 };
+
 #endif
