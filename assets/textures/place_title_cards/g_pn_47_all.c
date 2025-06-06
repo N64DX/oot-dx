@@ -2,7 +2,7 @@
 
 
 u64 gBombchuBowlingAlleyCardENGTex[TEX_LEN(u64, gBombchuBowlingAlleyCardENGTex_WIDTH, gBombchuBowlingAlleyCardENGTex_HEIGHT, 8)] = {
-#include "assets/textures/place_title_cards/gBombchuBowlingAlleyCardGERTex.ia8.inc.c" //@bug
+#include "assets/textures/place_title_cards/gBombchuBowlingAlleyCardENGTex.ia8.inc.c"
 };
 
 u64 gBombchuBowlingAlleyCardGERTex[TEX_LEN(u64, gBombchuBowlingAlleyCardGERTex_WIDTH, gBombchuBowlingAlleyCardGERTex_HEIGHT, 8)] = {
@@ -14,7 +14,7 @@ u64 gBombchuBowlingAlleyCardFRATex[TEX_LEN(u64, gBombchuBowlingAlleyCardFRATex_W
 };
 
 u64 gBombchuBowlingAlleyCardJPNTex[TEX_LEN(u64, gBombchuBowlingAlleyCardJPNTex_WIDTH, gBombchuBowlingAlleyCardJPNTex_HEIGHT, 8)] = {
-#include "assets/textures/place_title_cards/gBombchuBowlingAlleyCardENGTex.ia8.inc.c" //@bug
+#include "assets/textures/place_title_cards/gBombchuBowlingAlleyCardJPNTex.ia8.inc.c"
 };
 
 

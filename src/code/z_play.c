@@ -44,6 +44,7 @@
 #include "light.h"
 #include "play_state.h"
 #include "player.h"
+#include "segment_symbols.h"
 #include "save.h"
 #include "vis.h"
 

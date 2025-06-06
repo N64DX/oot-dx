@@ -241,6 +241,10 @@ extern s16 gNextCharPage[];
 extern Vtx gOptionsMenuBrightnessVtx[];
 extern Vtx gOptionsMenuLanguageVtx[];
 extern Vtx gOptionsDividerLanguageVtx[];
+#elif OOT_NTSC_N64
+extern Vtx gOptionsMenuLanguageVtx[];
+extern Vtx gOptionsDividerLanguageVtx[];
+extern Vtx gOptionsMenuSettingsJapaneseVtx[];
 #endif
 #if OOT_PAL && PLATFORM_GC
 extern Vtx gOptionsMenuHeadersGERVtx[];

@@ -71,9 +71,11 @@ s16 gNextCharPage[] = {
 };
 #endif
 
+#if !OOT_NTSC_N64
 Vtx gOptionsMenuHeadersVtx[] = {
 #include "assets/overlays/ovl_file_choose/gOptionsMenuHeadersVtx.inc.c"
 };
+#endif
 
 #if OOT_PAL && PLATFORM_GC
 Vtx gOptionsMenuHeadersGERVtx[] = {
@@ -81,9 +83,11 @@ Vtx gOptionsMenuHeadersGERVtx[] = {
 };
 #endif
 
+#if !OOT_NTSC_N64
 Vtx gOptionsMenuSettingsVtx[] = {
 #include "assets/overlays/ovl_file_choose/gOptionsMenuSettingsVtx.inc.c"
 };
+#endif
 
 #if OOT_PAL && PLATFORM_GC
 Vtx gOptionsMenuSettingsGERVtx[] = {
@@ -96,13 +100,16 @@ Vtx gOptionsMenuBrightnessVtx[] = {
 #include "assets/overlays/ovl_file_choose/gOptionsMenuBrightnessVtx.inc.c"
 };
 
+#if !OOT_NTSC_N64
 Vtx gOptionsMenuLanguageVtx[] = {
 #include "assets/overlays/ovl_file_choose/gOptionsMenuLanguageVtx.inc.c"
 };
+#endif
 
 u8 ovl_file_choose_zeros_000640[320] = { 0 };
 #endif
 
+#if !OOT_NTSC_N64
 Vtx gOptionsDividerSoundVtx[] = {
 #include "assets/overlays/ovl_file_choose/gOptionsDividerSoundVtx.inc.c"
 };
@@ -114,6 +121,7 @@ Vtx gOptionsDividerZTargetVtx[] = {
 Vtx gOptionsDividerBrightnessVtx[] = {
 #include "assets/overlays/ovl_file_choose/gOptionsDividerBrightnessVtx.inc.c"
 };
+#endif
 
 #if OOT_PAL && PLATFORM_N64
 Vtx gOptionsDividerLanguageVtx[] = {
