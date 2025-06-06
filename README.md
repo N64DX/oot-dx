@@ -1,5 +1,84 @@
 # The Legend of Zelda: Ocarina of Time
 
+## OoT-DX
+
+This is a modding fork of https://github.com/zeldaret/oot, which includes quality of life improvements, extended viewport options, alternative dungeon layouts and more.
+
+### Credits
+
+**Brought to you by:**
+- Admentus
+- GhostlyDark
+
+**Help and code snippets from:**
+- [Decomp Discord](https://discord.zelda.deco.mp)
+- [HackerOoT](https://github.com/HackerN64/HackerOoT)
+
+**Acknowledgements and contributions:**
+- **Aegiker:** Mirror mode concept
+- **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
+- **spaztron64:** Hires mode concept
+
+### Instructions
+
+#### 1. Install build dependencies
+
+Under Debian / Ubuntu (native or using WSL), install dependencies:
+
+```bash
+sudo apt-get update
+sudo apt-get install git build-essential binutils-mips-linux-gnu curl python3 python3-pip python3-venv libpng-dev libxml2-dev
+```
+
+#### 2. Clone the repository
+
+Clone using git:
+
+```bash
+git clone https://github.com/N64DX/oot-dx
+```
+
+Change directory:
+
+```bash
+cd oot-dx
+```
+
+#### 3. Prepare base ROMs
+
+Place copies of your ROMs inside the `baseroms` folder. The file name for each ROM should be `baserom.z64`.
+By default, `ntsc-1.0` is built. Additionally, `pal-1.0` is required for `ntsc-1.x` ROMs to be **built first**.
+
+```
+baseroms/pal-1.0/baserom.z64
+baseroms/ntsc-1.0/baserom.z64
+```
+
+#### 4. Setup the ROM and build process
+
+First, setup and build `pal-1.0`:
+
+```bash
+make setup -j VERSION=pal-1.0
+make -j VERSION=pal-1.0
+```
+
+Build `ntsc-1.0`:
+
+```bash
+make setup -j
+make -j
+```
+
+You can also build a different ROM, e.g. `ique-cn`:
+
+```bash
+make setup -j VERSION=ique-cn
+make -j VERSION=ique-cn
+```
+
+## Original README
+
 [![Build Status][jenkins-badge]][jenkins] [![Decompilation Progress][progress-badge]][progress] [![Contributors][contributors-badge]][contributors] [![Discord Channel][discord-badge]][discord]
 
 [jenkins]: https://jenkins.deco.mp/job/OOT/job/main
