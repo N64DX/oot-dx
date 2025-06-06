@@ -14,15 +14,13 @@
 #include "terminal.h"
 #include "translation.h"
 #include "versions.h"
-#include "z64audio.h"
-#include "z64save.h"
+#include "audio.h"
+#include "save.h"
 
 #if OOT_NTSC_N64
 #include "assets/textures/title_static/title_static_all.h"
-#include "assets/overlays/ovl_file_choose/ovl_file_choose_all.h"
 #else
 #include "assets/textures/title_static/title_static.h"
-#include "assets/overlays/ovl_file_choose/ovl_file_choose.h"
 #endif
 
 void FileSelect_DrawCharacter(GraphicsContext* gfxCtx, void* texture, s16 vtx) {

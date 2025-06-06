@@ -6,9 +6,9 @@
 #include "sequence.h"
 #include "sys_matrix.h"
 #include "ultra64.h"
-#include "z64actor.h"
-#include "z64object.h"
-#include "z64skybox.h"
+#include "actor.h"
+#include "object.h"
+#include "skybox.h"
 
 SceneCmd kokiri_home3_room_0[] = {
 #include "assets/scenes/indoors/kokiri_home3/kokiri_home3_room_0.inc.c"
