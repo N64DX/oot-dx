@@ -3,6 +3,25 @@
 #include "versions.h"
 #include "actor.h"
 
+#if OOT_NTSC_N64
+u64 gTempleOfTimeTitleCardENGTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gTempleOfTimeTitleCardENGTex.ia8.inc.c"
+};
+
+u64 gTempleOfTimeTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gTempleOfTimeTitleCardGERTex.ia8.inc.c"
+};
+
+u64 gTempleOfTimeTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gTempleOfTimeTitleCardFRATex.ia8.inc.c"
+};
+
+u64 gTempleOfTimeTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gTempleOfTimeTitleCardJPNTex.ia8.inc.c"
+};
+
+#else
+
 #if OOT_NTSC
 u64 gTempleOfTimeTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gTempleOfTimeTitleCardJPNTex.ia8.inc.c"
@@ -21,4 +40,6 @@ u64 gTempleOfTimeTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_T
 u64 gTempleOfTimeTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gTempleOfTimeTitleCardFRATex.ia8.inc.c"
 };
+#endif
+
 #endif

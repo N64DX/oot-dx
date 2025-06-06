@@ -3,6 +3,25 @@
 #include "versions.h"
 #include "actor.h"
 
+#if OOT_NTSC_N64
+u64 gBottomOfTheWellTitleCardENGTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gBottomOfTheWellTitleCardENGTex.ia8.inc.c"
+};
+
+u64 gBottomOfTheWellTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gBottomOfTheWellTitleCardGERTex.ia8.inc.c"
+};
+
+u64 gBottomOfTheWellTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gBottomOfTheWellTitleCardFRATex.ia8.inc.c"
+};
+
+u64 gBottomOfTheWellTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gBottomOfTheWellTitleCardJPNTex.ia8.inc.c"
+};
+
+#else
+
 #if OOT_NTSC
 u64 gBottomOfTheWellTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gBottomOfTheWellTitleCardJPNTex.ia8.inc.c"
@@ -21,4 +40,6 @@ u64 gBottomOfTheWellTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAM
 u64 gBottomOfTheWellTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gBottomOfTheWellTitleCardFRATex.ia8.inc.c"
 };
+#endif
+
 #endif

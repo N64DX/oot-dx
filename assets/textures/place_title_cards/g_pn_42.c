@@ -3,6 +3,25 @@
 #include "versions.h"
 #include "actor.h"
 
+#if OOT_NTSC_N64
+u64 gLonLonRanchTitleCardENGTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gLonLonRanchTitleCardENGTex.ia8.inc.c"
+};
+
+u64 gLonLonRanchTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gLonLonRanchTitleCardGERTex.ia8.inc.c"
+};
+
+u64 gLonLonRanchTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "build/pal-1.0/assets/textures/place_title_cards/gLonLonRanchTitleCardFRATex.ia8.inc.c"
+};
+
+u64 gLonLonRanchTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
+#include "assets/textures/place_title_cards/gLonLonRanchTitleCardJPNTex.ia8.inc.c"
+};
+
+#else
+
 #if OOT_NTSC
 u64 gLonLonRanchTitleCardJPNTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gLonLonRanchTitleCardJPNTex.ia8.inc.c"
@@ -21,4 +40,6 @@ u64 gLonLonRanchTitleCardGERTex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TE
 u64 gLonLonRanchTitleCardFRATex[TEX_LEN(u64, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 8)] = {
 #include "assets/textures/place_title_cards/gLonLonRanchTitleCardFRATex.ia8.inc.c"
 };
+#endif
+
 #endif
