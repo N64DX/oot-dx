@@ -1,0 +1,4 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_SK2, // 1
+    OBJECT_FIREFLY, // 2
+

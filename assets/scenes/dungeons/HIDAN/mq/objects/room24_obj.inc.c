@@ -1,0 +1,4 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_FW, // 1
+    OBJECT_GI_KEY, // 2
+

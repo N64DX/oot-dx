@@ -1,0 +1,6 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_OF1D_MAP, // 1
+    OBJECT_BOX, // 2
+    OBJECT_RR, // 3
+    OBJECT_GI_CLOTHES, // 4
+

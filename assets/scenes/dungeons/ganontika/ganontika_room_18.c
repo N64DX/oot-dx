@@ -1,0 +1,203 @@
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18.h"
+#include "assets/scenes/dungeons/ganontika/ganontika_scene.h"
+
+#include "actor.h"
+#include "array_count.h"
+#include "gfx.h"
+#include "object.h"
+#include "sequence.h"
+#include "skybox.h"
+#include "sys_matrix.h"
+#include "ultra64.h"
+
+static SceneCmd* questHeaders[1];
+
+SceneCmd ganontika_room_18[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18.inc.c"
+};
+
+s16 ganontika_room_18_03000040_ObjectList[LENGTH_ganontika_room_18_03000040_ObjectList] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_03000040_ObjectList.inc.c"
+};
+
+ActorEntry ganontika_room_18_03000054_ActorEntryList[LENGTH_ganontika_room_18_03000054_ActorEntryList] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_03000054_ActorEntryList.inc.c"
+};
+
+u8 ganontika_room_18_zeros_0001D4[12] = { 0 };
+
+RoomShapeCullable ganontika_room_18_030001E0_RoomShapeCullable = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable.inc.c"
+};
+
+RoomShapeCullableEntry ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries[LENGTH_ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries.inc.c"
+};
+
+u8 ganontika_room_18_unaccounted_00028C[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_unaccounted_00028C.bin.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03000D00_DL_03000290_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03000D00_DL_03000290_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03000D00_DL[260] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03000D00_DL.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030016B0_DL_03001520_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030016B0_DL_03001520_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030016B0_DL[51] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030016B0_DL.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001F58_DL_03001848_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001F58_DL_03001848_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001F58_DL[233] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001F58_DL.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002870_DL_030026A0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002870_DL_030026A0_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002870_DL[36] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002870_DL.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002E10_DL_03002990_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002E10_DL_03002990_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002E10_DL[39] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002E10_DL.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003098_DL_03002F48_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003098_DL_03002F48_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003098_DL[29] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003098_DL.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL_03003180_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL_03003180_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL[88] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003B00_DL_03003780_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003B00_DL_03003780_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003B00_DL[35] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003B00_DL.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_03003C18_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_03003C18_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL[48] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03004118_DL_03003F58_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03004118_DL_03003F58_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03004118_DL[48] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03004118_DL.inc.c"
+};
+
+u8 ganontika_room_18_unaccounted_004298[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_unaccounted_004298.bin.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030016B0_DL_000042F0_TLUT[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030016B0_DL_00009910_CITex.tlut.rgba16.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002E10_DL_00004310_Tex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002E10_DL_00004310_Tex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002E10_DL_00004310_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03002E10_DL_00004310_Tex.rgba16.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03000D00_DL_00005310_CITex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03000D00_DL_00005310_CITex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03000D00_DL_00005310_CITex_HEIGHT, 8)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03000D00_DL_00005310_CITex.ci8.tlut_ganontika_room_0_030000C0_RoomShapeCullable_030000CC_CullableEntries_03000500_DL_0001F370_TLUT.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00005710_Tex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00005710_Tex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00005710_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00005710_Tex.rgba16.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00006710_Tex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00006710_Tex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00006710_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00006710_Tex.rgba16.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00007710_Tex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00007710_Tex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00007710_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003DD8_DL_00007710_Tex.rgba16.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001F58_DL_00007F10_Tex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001F58_DL_00007F10_Tex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001F58_DL_00007F10_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001F58_DL_00007F10_Tex.rgba16.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL_00008F10_Tex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL_00008F10_Tex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL_00008F10_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL_00008F10_Tex.rgba16.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL_00009110_Tex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL_00009110_Tex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL_00009110_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030034C0_DL_00009110_Tex.rgba16.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030016B0_DL_00009910_CITex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030016B0_DL_00009910_CITex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030016B0_DL_00009910_CITex_HEIGHT, 4)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_030016B0_DL_00009910_CITex.ci4.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003B00_DL_0000A110_Tex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003B00_DL_0000A110_Tex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003B00_DL_0000A110_Tex_HEIGHT, 4)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003B00_DL_0000A110_Tex.i4.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003098_DL_0000A310_Tex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003098_DL_0000A310_Tex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003098_DL_0000A310_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003098_DL_0000A310_Tex.rgba16.inc.c"
+};
+
+Vtx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_0300B540_DL_0300B310_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_0300B540_DL_0300B310_Vtx_fused_.inc.c"
+};
+
+Gfx ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_0300B540_DL[36] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_0300B540_DL.inc.c"
+};
+
+u8 ganontika_room_18_unaccounted_00B660[] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_unaccounted_00B660.bin.inc.c"
+};
+
+u64 ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_0300B540_DL_0000B670_Tex[TEX_LEN(u64, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_0300B540_DL_0000B670_Tex_WIDTH, ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_0300B540_DL_0000B670_Tex_HEIGHT, 8)] = {
+#include "assets/scenes/dungeons/ganontika/ganontika_room_18_030001E0_RoomShapeCullable_030001EC_CullableEntries_0300B540_DL_0000B670_Tex.ia8.inc.c"
+};
+
+static s16 mq_objects[] = {
+#include "assets/scenes/dungeons/ganontika/mq/objects/room18_obj.inc.c"
+};
+
+static ActorEntry mq_actors[] = {
+#include "assets/scenes/dungeons/ganontika/mq/actors/room18_actor.inc.c"
+};
+
+static SceneCmd mq_header[] = {
+#include "assets/scenes/dungeons/ganontika/mq/headers/room18.inc.c"
+};
+
+static SceneCmd* questHeaders[] = {
+#include "assets/scenes/dungeons/questHeaders.inc.c"
+};

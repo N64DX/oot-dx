@@ -1,0 +1,8 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_MORI_OBJECTS, // 1
+    OBJECT_MORI_TEX, // 2
+    OBJECT_GI_MEDAL, // 3
+    OBJECT_DEMO_6K, // 4
+    OBJECT_NB, // 5
+    OBJECT_WARP2, // 6
+

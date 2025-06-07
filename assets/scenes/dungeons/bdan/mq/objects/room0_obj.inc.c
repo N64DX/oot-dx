@@ -1,0 +1,12 @@
+    OBJECT_BDAN_OBJECTS, // 0
+    OBJECT_COW, // 1
+    OBJECT_KUSA, // 2
+    OBJECT_BOX, // 3
+    OBJECT_BOMBIWA, // 4
+    OBJECT_OKUTA, // 5
+    OBJECT_BUBBLE, // 6
+    OBJECT_SIOFUKI, // 7
+    OBJECT_TIMEBLOCK, // 8
+    OBJECT_EFC_TW, // 9
+    OBJECT_BOMBF, // 10
+

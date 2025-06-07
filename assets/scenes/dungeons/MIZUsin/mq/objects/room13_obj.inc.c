@@ -1,0 +1,6 @@
+    OBJECT_MIZU_OBJECTS, // 0
+    OBJECT_BLKOBJ, // 1
+    OBJECT_STREAM, // 2
+    OBJECT_SIOFUKI, // 3
+    OBJECT_TORCH2, // 4
+

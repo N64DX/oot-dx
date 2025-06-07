@@ -10,7 +10,7 @@
 #pragma increment_block_number "gc-eu:128 gc-eu-mq:128 gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128" \
                                "pal-1.1:128"
 
-uintptr_t sSysCfbFbPtr[2];
+uintptr_t sSysCfbFbPtr[3];
 uintptr_t sSysCfbEnd;
 
 void SysCfb_Init(s32 n64dd) {
@@ -34,20 +34,22 @@ void SysCfb_Init(s32 n64dd) {
 
     PRINTF(T("システムが使用する最終アドレスは %08x です\n", "The final address used by the system is %08x\n"),
            sSysCfbEnd);
-    sSysCfbFbPtr[0] = sSysCfbEnd - (screenSize * 4);
-    sSysCfbFbPtr[1] = sSysCfbEnd - (screenSize * 2);
+    sSysCfbFbPtr[FRAMEBUFFER_0] = sSysCfbEnd - (screenSize * 6);
+    sSysCfbFbPtr[FRAMEBUFFER_1] = sSysCfbEnd - (screenSize * 4);
+    sSysCfbFbPtr[REDRAW_BUFFER] = sSysCfbEnd - (screenSize * 2);
     PRINTF(T("フレームバッファのアドレスは %08x と %08x です\n", "Frame buffer addresses are %08x and %08x\n"),
            sSysCfbFbPtr[0], sSysCfbFbPtr[1]);
 }
 
 void SysCfb_Reset(void) {
-    sSysCfbFbPtr[0] = 0;
-    sSysCfbFbPtr[1] = 0;
+    sSysCfbFbPtr[FRAMEBUFFER_0] = 0;
+    sSysCfbFbPtr[FRAMEBUFFER_1] = 0;
+    sSysCfbFbPtr[REDRAW_BUFFER] = 0;
     sSysCfbEnd = 0;
 }
 
 void* SysCfb_GetFbPtr(s32 idx) {
-    if (idx < 2) {
+    if (idx < 3) {
         return (void*)sSysCfbFbPtr[idx];
     }
     return NULL;

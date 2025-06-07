@@ -1,0 +1,10 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_ICE_OBJECTS, // 1
+    OBJECT_BOX, // 2
+    OBJECT_TRAP, // 3
+    OBJECT_NY, // 4
+    OBJECT_SIOFUKI, // 5
+    OBJECT_DH, // 6
+    OBJECT_FZ, // 7
+    OBJECT_GI_HEART, // 8
+

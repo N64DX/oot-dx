@@ -1,0 +1,7 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_ST, // 1
+    OBJECT_GI_SOUL, // 2
+    OBJECT_GOL, // 3
+    OBJECT_KIBAKO2, // 4
+    OBJECT_BOX, // 5
+

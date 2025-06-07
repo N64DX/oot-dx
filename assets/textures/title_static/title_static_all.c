@@ -731,5 +731,14 @@ Gfx gFileSelWindow3DL[34] = {
 #include "assets/textures/title_static/gFileSelWindow3DL.inc.c"
 };
 
-u8 title_static_zeros_04D2B8[8] = { 0 };
+u64 gLogoOcarinaOfTimeTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)] = {
+#include "assets/textures/title_static/gLogoOcarinaOfTimeTex.rgba32.inc.c"
+};
 
+u64 gLogoMasterQuestTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)] = {
+#include "assets/textures/title_static/gLogoMasterQuestTex.rgba32.inc.c"
+};
+
+u64 gMirrorModeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
+#include "assets/textures/title_static/gMirrorModeTex.ia8.inc.c"
+};

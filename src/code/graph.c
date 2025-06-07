@@ -134,14 +134,17 @@ void Graph_InitTHGA(GraphicsContext* gfxCtx) {
     THGA_Init(&gfxCtx->polyOpa, pool->polyOpaBuffer, sizeof(pool->polyOpaBuffer));
     THGA_Init(&gfxCtx->polyXlu, pool->polyXluBuffer, sizeof(pool->polyXluBuffer));
     THGA_Init(&gfxCtx->overlay, pool->overlayBuffer, sizeof(pool->overlayBuffer));
+    THGA_Init(&gfxCtx->redraw, pool->redrawBuffer, sizeof(pool->redrawBuffer));
     THGA_Init(&gfxCtx->work, pool->workBuffer, sizeof(pool->workBuffer));
 
     gfxCtx->polyOpaBuffer = pool->polyOpaBuffer;
     gfxCtx->polyXluBuffer = pool->polyXluBuffer;
     gfxCtx->overlayBuffer = pool->overlayBuffer;
+    gfxCtx->redrawBuffer = pool->redrawBuffer;
     gfxCtx->workBuffer = pool->workBuffer;
 
     gfxCtx->curFrameBuffer = SysCfb_GetFbPtr(gfxCtx->fbIdx % 2);
+    gfxCtx->redrawFramebuffer = SysCfb_GetFbPtr(REDRAW_BUFFER);
     gfxCtx->unk_014 = 0;
 }
 
@@ -335,6 +338,7 @@ void Graph_Update(GraphicsContext* gfxCtx, GameState* gameState) {
     gDPNoOpString(POLY_OPA_DISP++, T("POLY_OPA_DISP 開始", "POLY_OPA_DISP start"), 0);
     gDPNoOpString(POLY_XLU_DISP++, T("POLY_XLU_DISP 開始", "POLY_XLU_DISP start"), 0);
     gDPNoOpString(OVERLAY_DISP++, T("OVERLAY_DISP 開始", "OVERLAY_DISP start"), 0);
+    gDPNoOpString(REDRAW_DISP++, T("REDRAW_DISP 開始", "REDRAW_DISP start"), 0);
 
     CLOSE_DISPS(gfxCtx, "../graph.c", 975);
 #endif
@@ -349,6 +353,7 @@ void Graph_Update(GraphicsContext* gfxCtx, GameState* gameState) {
     gDPNoOpString(POLY_OPA_DISP++, T("POLY_OPA_DISP 終了", "POLY_OPA_DISP end"), 0);
     gDPNoOpString(POLY_XLU_DISP++, T("POLY_XLU_DISP 終了", "POLY_XLU_DISP end"), 0);
     gDPNoOpString(OVERLAY_DISP++, T("OVERLAY_DISP 終了", "OVERLAY_DISP end"), 0);
+    gDPNoOpString(REDRAW_DISP++, T("REDRAW_DISP 終了", "REDRAW_DISP end"), 0);
 
     CLOSE_DISPS(gfxCtx, "../graph.c", 996);
 #endif
@@ -357,7 +362,8 @@ void Graph_Update(GraphicsContext* gfxCtx, GameState* gameState) {
 
     gSPBranchList(WORK_DISP++, gfxCtx->polyOpaBuffer);
     gSPBranchList(POLY_OPA_DISP++, gfxCtx->polyXluBuffer);
-    gSPBranchList(POLY_XLU_DISP++, gfxCtx->overlayBuffer);
+    gSPBranchList(POLY_XLU_DISP++, gfxCtx->redrawBuffer);
+    gSPBranchList(REDRAW_DISP++, gfxCtx->overlayBuffer);
     gDPPipeSync(OVERLAY_DISP++);
     gDPFullSync(OVERLAY_DISP++);
     gSPEndDisplayList(OVERLAY_DISP++);

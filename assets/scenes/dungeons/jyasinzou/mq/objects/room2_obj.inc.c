@@ -1,0 +1,7 @@
+    OBJECT_JYA_OBJ, // 0
+    OBJECT_JYA_DOOR, // 1
+    OBJECT_BOMBIWA, // 2
+    OBJECT_RD, // 3
+    OBJECT_HAKA, // 4
+    OBJECT_DEMO_KEKKAI, // 5
+

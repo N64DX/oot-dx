@@ -1,0 +1,6 @@
+    OBJECT_MIZU_OBJECTS, // 0
+    OBJECT_STREAM, // 1
+    OBJECT_D_HSBLOCK, // 2
+    OBJECT_ST, // 3
+    OBJECT_GI_SUTARU, // 4
+

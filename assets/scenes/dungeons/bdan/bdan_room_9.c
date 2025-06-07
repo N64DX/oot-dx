@@ -1,0 +1,295 @@
+#include "assets/scenes/dungeons/bdan/bdan_room_9.h"
+#include "assets/scenes/dungeons/bdan/bdan_scene.h"
+
+#include "actor.h"
+#include "array_count.h"
+#include "gfx.h"
+#include "object.h"
+#include "sequence.h"
+#include "skybox.h"
+#include "sys_matrix.h"
+#include "ultra64.h"
+
+static SceneCmd* questHeaders[1];
+
+SceneCmd bdan_room_9[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9.inc.c"
+};
+
+SceneCmd* bdan_room_9_03000048_AltHeaders[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_03000048_AltHeaders.inc.c"
+};
+
+s16 bdan_room_9_03000058_ObjectList[LENGTH_bdan_room_9_03000058_ObjectList] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_03000058_ObjectList.inc.c"
+};
+
+ActorEntry bdan_room_9_0300006C_ActorEntryList[LENGTH_bdan_room_9_0300006C_ActorEntryList] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_0300006C_ActorEntryList.inc.c"
+};
+
+u8 bdan_room_9_zeros_0000BC[4] = { 0 };
+
+RoomShapeNormal bdan_room_9_030000C0_RoomShapeNormal = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal.inc.c"
+};
+
+RoomShapeDListsEntry bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries[LENGTH_bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries.inc.c"
+};
+
+u8 bdan_room_9_unaccounted_0000D4[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_unaccounted_0000D4.bin.inc.c"
+};
+
+SceneCmd bdan_room_9_03000048_AltHeaders_030000E0_Cmds[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_03000048_AltHeaders_030000E0_Cmds.inc.c"
+};
+
+s16 bdan_room_9_03000048_AltHeaders_030000E0_Cmds_03000120_ObjectList[LENGTH_bdan_room_9_03000048_AltHeaders_030000E0_Cmds_03000120_ObjectList] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_03000048_AltHeaders_030000E0_Cmds_03000120_ObjectList.inc.c"
+};
+
+ActorEntry bdan_room_9_03000048_AltHeaders_030000E0_Cmds_0300012C_ActorEntryList[LENGTH_bdan_room_9_03000048_AltHeaders_030000E0_Cmds_0300012C_ActorEntryList] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_03000048_AltHeaders_030000E0_Cmds_0300012C_ActorEntryList.inc.c"
+};
+
+u8 bdan_room_9_zeros_00015C[4] = { 0 };
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_03000160_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_03000160_Vtx_fused_.inc.c"
+};
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL[67] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03000CA8_DL_030008D8_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03000CA8_DL_030008D8_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03000CA8_DL_03000C68_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03000CA8_DL_03000C68_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03000CA8_DL[63] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03000CA8_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001020_DL_03000EA0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001020_DL_03000EA0_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001020_DL_03000FE0_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001020_DL_03000FE0_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001020_DL[40] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001020_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001320_DL_03001160_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001320_DL_03001160_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001320_DL_030012E0_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001320_DL_030012E0_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001320_DL[43] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001320_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030015F8_DL_03001478_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030015F8_DL_03001478_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030015F8_DL_030015B8_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030015F8_DL_030015B8_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030015F8_DL[40] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030015F8_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030018F8_DL_03001738_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030018F8_DL_03001738_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030018F8_DL_030018B8_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030018F8_DL_030018B8_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030018F8_DL[43] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030018F8_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001BD0_DL_03001A50_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001BD0_DL_03001A50_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001BD0_DL_03001B90_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001BD0_DL_03001B90_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001BD0_DL[40] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001BD0_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001F40_DL_03001D10_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001F40_DL_03001D10_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001F40_DL_03001F00_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001F40_DL_03001F00_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001F40_DL[43] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03001F40_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002218_DL_03002098_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002218_DL_03002098_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002218_DL_030021D8_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002218_DL_030021D8_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002218_DL[40] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002218_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002468_DL_03002358_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002468_DL_03002358_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002468_DL_03002428_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002468_DL_03002428_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002468_DL[33] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002468_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030026B0_DL_03002570_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030026B0_DL_03002570_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030026B0_DL_03002670_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030026B0_DL_03002670_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030026B0_DL[35] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030026B0_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030028D8_DL_030027C8_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030028D8_DL_030027C8_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030028D8_DL_03002898_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030028D8_DL_03002898_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030028D8_DL[33] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030028D8_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002B20_DL_030029E0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002B20_DL_030029E0_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002B20_DL_03002AE0_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002B20_DL_03002AE0_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002B20_DL[35] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002B20_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002D48_DL_03002C38_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002D48_DL_03002C38_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002D48_DL_03002D08_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002D48_DL_03002D08_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002D48_DL[33] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002D48_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002F90_DL_03002E50_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002F90_DL_03002E50_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002F90_DL_03002F50_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002F90_DL_03002F50_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002F90_DL[35] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03002F90_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030031B8_DL_030030A8_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030031B8_DL_030030A8_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030031B8_DL_03003178_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030031B8_DL_03003178_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030031B8_DL[33] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030031B8_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03003400_DL_030032C0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03003400_DL_030032C0_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03003400_DL_030033C0_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03003400_DL_030033C0_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03003400_DL[35] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_03003400_DL.inc.c"
+};
+
+Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030036A8_DL_03003518_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030036A8_DL_03003518_Vtx_fused_.inc.c"
+};
+
+Mtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030036A8_DL_03003668_Mtx =
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030036A8_DL_03003668_Mtx.inc.c"
+;
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030036A8_DL[37] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030036A8_DL.inc.c"
+};
+
+Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL[19] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL.inc.c"
+};
+
+u64 bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_00003868_CITex[TEX_LEN(u64, bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_00003868_CITex_WIDTH, bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_00003868_CITex_HEIGHT, 8)] = {
+#include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_00003868_CITex.ci8.tlut_bdan_room_0_030000C0_RoomShapeNormal_030000CC_DListsEntries_03002CD8_DL_03002360_DL_00013BD8_TLUT.inc.c"
+};
+
+u8 bdan_room_9_zeros_003C68[8] = { 0 };
+
+static s16 mq_objects[] = {
+#include "assets/scenes/dungeons/bdan/mq/objects/room9_obj.inc.c"
+};
+
+static ActorEntry mq_actors[] = {
+#include "assets/scenes/dungeons/bdan/mq/actors/room9_actor.inc.c"
+};
+
+static SceneCmd mq_header[] = {
+#include "assets/scenes/dungeons/bdan/mq/headers/room9.inc.c"
+};
+
+static SceneCmd* questHeaders[] = {
+#include "assets/scenes/dungeons/questHeaders.inc.c"
+};
