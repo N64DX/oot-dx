@@ -1,0 +1,8 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_HIDAN_OBJECTS, // 1
+    OBJECT_BW, // 2
+    OBJECT_BB, // 3
+    OBJECT_D_HSBLOCK, // 4
+    OBJECT_HEAVY_OBJECT, // 5
+    OBJECT_VM, // 6
+

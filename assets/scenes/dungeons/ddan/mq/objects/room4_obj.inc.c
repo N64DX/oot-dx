@@ -1,0 +1,7 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_BOMBF, // 1
+    OBJECT_BOMBIWA, // 2
+    OBJECT_HAKA, // 3
+    OBJECT_POH, // 4
+    OBJECT_KIBAKO2, // 5
+

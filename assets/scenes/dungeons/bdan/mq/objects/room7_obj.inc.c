@@ -1,0 +1,10 @@
+    OBJECT_BDAN_OBJECTS, // 0
+    OBJECT_TP, // 1
+    OBJECT_BXA, // 2
+    OBJECT_BUBBLE, // 3
+    OBJECT_VALI, // 4
+    OBJECT_YDAN_OBJECTS, // 5
+    OBJECT_KUSA, // 6
+    OBJECT_BOMBIWA, // 7
+    OBJECT_ZF, // 8
+

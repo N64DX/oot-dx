@@ -1,0 +1,5 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_YUKABYUN, // 1
+    OBJECT_IK, // 2
+    OBJECT_JYA_IRON, // 3
+

@@ -1,0 +1,6 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_JYA_IRON, // 1
+    OBJECT_IK, // 2
+    OBJECT_BW, // 3
+    OBJECT_FIREFLY, // 4
+

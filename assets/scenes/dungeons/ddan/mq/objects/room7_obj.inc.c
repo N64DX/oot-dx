@@ -1,0 +1,12 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_DODOJR, // 1
+    OBJECT_ZF, // 2
+    OBJECT_AM, // 3
+    OBJECT_GI_SUTARU, // 4
+    OBJECT_ST, // 5
+    OBJECT_BOMBF, // 6
+    OBJECT_HAKA, // 7
+    OBJECT_KA, // 8
+    OBJECT_DEMO_KEKKAI, // 9
+    OBJECT_KUSA, // 10
+

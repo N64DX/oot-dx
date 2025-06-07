@@ -1,0 +1,7 @@
+    OBJECT_JYA_OBJ, // 0
+    OBJECT_JYA_DOOR, // 1
+    OBJECT_GI_HEART, // 2
+    OBJECT_SYOKUDAI, // 3
+    OBJECT_FIREFLY, // 4
+    OBJECT_BW, // 5
+

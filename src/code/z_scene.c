@@ -485,6 +485,16 @@ BAD_RETURN(s32) Scene_CommandAlternateHeaderList(PlayState* play, SceneCmd* cmd)
     }
 }
 
+BAD_RETURN(s32) Scene_CommandQuestHeaderList(PlayState* play, SceneCmd* cmd) {
+    if (R_QUEST_MODE > 0) {
+       SceneCmd* questHeader = ((SceneCmd**)SEGMENTED_TO_VIRTUAL(cmd->questHeaders.data))[R_QUEST_MODE - 1];
+        if (questHeader != NULL) {
+            Scene_ExecuteCommands(play, SEGMENTED_TO_VIRTUAL(questHeader));
+            (cmd + 1)->base.code = SCENE_CMD_ID_END;
+        }
+    }
+}
+
 BAD_RETURN(s32) Scene_CommandCutsceneData(PlayState* play, SceneCmd* cmd) {
     PRINTF("\ngame_play->demo_play.data=[%x]", play->csCtx.script);
     play->csCtx.script = SEGMENTED_TO_VIRTUAL(cmd->cutsceneData.data);
@@ -557,6 +567,7 @@ SceneCmdHandlerFunc sSceneCmdHandlers[SCENE_CMD_ID_MAX] = {
     Scene_CommandCutsceneData,             // SCENE_CMD_ID_CUTSCENE_DATA
     Scene_CommandAlternateHeaderList,      // SCENE_CMD_ID_ALTERNATE_HEADER_LIST
     Scene_CommandMiscSettings,             // SCENE_CMD_ID_MISC_SETTINGS
+    Scene_CommandQuestHeaderList,          // SCENE_CMD_ID_QUEST_HEADER_LIST
 };
 
 RomFile sNaviQuestHintFiles[] = {

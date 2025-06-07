@@ -1,0 +1,6 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_GI_KEY, // 1
+    OBJECT_HAKA_OBJECTS, // 2
+    OBJECT_SK2, // 3
+    OBJECT_SYOKUDAI, // 4
+

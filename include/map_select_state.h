@@ -22,7 +22,8 @@ typedef struct MapSelectState {
     /* 0x01DC */ s32 pageDownIndex; // Index of pageDownStops
     /* 0x01E0 */ s32 pageDownStops[7];
     /* 0x01FC */ char unk_1FC[0x0C];
-    /* 0x0208 */ s32 opt;
+    /* 0x0208 */ s16 questMode;
+    /* 0x0208 */ s16 mirrorMode;
     /* 0x020C */ s32 topDisplayedEntry; // The entry which is currently at the top of the screen
     /* 0x0210 */ char unk_210[0x0C];
     /* 0x021C */ s32 verticalInputAccumulator;

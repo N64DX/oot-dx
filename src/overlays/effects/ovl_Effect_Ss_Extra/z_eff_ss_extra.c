@@ -12,6 +12,7 @@
 #include "sys_matrix.h"
 #include "effect.h"
 #include "play_state.h"
+#include "regs.h"
 
 #include "assets/objects/object_yabusame_point/object_yabusame_point.h"
 
@@ -79,7 +80,7 @@ void EffectSsExtra_Draw(PlayState* play, u32 index, EffectSs* this) {
     Matrix_ReplaceRotation(&play->billboardMtxF);
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_eff_ss_extra.c", 186);
     gSPSegment(POLY_XLU_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(sTextures[this->rScoreIdx]));
-    gSPDisplayList(POLY_XLU_DISP++, SEGMENTED_TO_VIRTUAL(object_yabusame_point_DL_000DC0));
+    gSPDisplayList(POLY_XLU_DISP++, SEGMENTED_TO_VIRTUAL(R_ENABLE_MIRROR ? object_yabusame_point_mirrored_DL : object_yabusame_point_DL_000DC0));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_eff_ss_extra.c", 194);
 }

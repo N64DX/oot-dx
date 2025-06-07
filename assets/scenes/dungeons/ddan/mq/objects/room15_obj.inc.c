@@ -1,0 +1,6 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_TIMEBLOCK, // 1
+    OBJECT_ST, // 2
+    OBJECT_GI_SUTARU, // 3
+    OBJECT_EFC_TW, // 4
+

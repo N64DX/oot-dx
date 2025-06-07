@@ -546,4 +546,13 @@ extern Gfx gFileSelWindow1DL[67];
 extern Gfx gFileSelWindow2DL[66];
 extern Gfx gFileSelWindow3DL[34];
 
+#define gLogoWidth_WIDTH 160
+#define gLogoWidth_HEIGHT 160
+extern u64 gLogoOcarinaOfTimeTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)];
+extern u64 gLogoMasterQuestTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)];
+
+#define gQuestTitle_WIDTH 128
+#define gQuestTitle_HEIGHT 16
+extern u64 gMirrorModeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
+
 #endif

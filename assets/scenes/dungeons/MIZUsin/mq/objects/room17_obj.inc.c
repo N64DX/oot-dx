@@ -1,0 +1,8 @@
+    OBJECT_MIZU_OBJECTS, // 0
+    OBJECT_BOX, // 1
+    OBJECT_D_HSBLOCK, // 2
+    OBJECT_SYOKUDAI, // 3
+    OBJECT_RU2, // 4
+    OBJECT_TIMEBLOCK, // 5
+    OBJECT_EFC_TW, // 6
+

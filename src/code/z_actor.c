@@ -421,7 +421,7 @@ void Attention_Draw(Attention* attention, PlayState* play) {
 
         Actor_ProjectPos(play, &attention->reticlePos, &projectedPos, &invW);
 
-        projectedPos.x = ((SCREEN_WIDTH / 2) * (projectedPos.x * invW)) * projectdPosScale;
+        projectedPos.x = ((SCREEN_WIDTH / 2) * (projectedPos.x * invW)) * projectdPosScale * (R_ENABLE_MIRROR ? -1 : 1);
         projectedPos.x = CLAMP(projectedPos.x, -SCREEN_WIDTH, SCREEN_WIDTH);
 
         projectedPos.y = ((SCREEN_HEIGHT / 2) * (projectedPos.y * invW)) * projectdPosScale;
@@ -831,6 +831,8 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
     s32 titleY1;
     s32 titleY2;
     s32 textureLanguageOffset;
+    u32 dsdx = HIRES_DIVIDE(1 << 10);
+    s32 s = 0;
 
     if (titleCtx->alpha != 0) {
         width = titleCtx->width;
@@ -860,6 +862,11 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
 
         titleY2 = titleY1 + HIRES_MULTIPLY((height * 4));
 
+        if (R_ENABLE_MIRROR && play->pauseCtx.state >= 2) {
+            dsdx = -HIRES_DIVIDE(1 << 10);
+            s = width << 5;
+        }
+
         OVERLAY_DISP = Gfx_SetupDL_52NoCD(OVERLAY_DISP);
 
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, (u8)titleCtx->intensity, (u8)titleCtx->intensity, (u8)titleCtx->intensity,
@@ -869,7 +876,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                             width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-        gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY1, titleX2, titleY2 - 1, G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+        gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY1, titleX2, titleY2 - 1, G_TX_RENDERTILE, s, 0, dsdx,
                             HIRES_DIVIDE((1 << 10)));
 
         height = titleCtx->height - height;
@@ -881,7 +888,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                                 G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
             gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY2, titleX2, titleY2 + HIRES_MULTIPLY((height * 4)) - HIRES_MULTIPLY(1), G_TX_RENDERTILE,
-                                0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+                                s, 0, dsdx, HIRES_DIVIDE((1 << 10)));
         }
 
         CLOSE_DISPS(play->state.gfxCtx, "../z_actor.c", 2880);
@@ -1044,7 +1051,7 @@ void Actor_SetProjectileSpeed(Actor* actor, f32 speedXYZ) {
 void Actor_UpdatePosByAnimation(Actor* actor, SkelAnime* skelAnime) {
     Vec3f posDiff;
 
-    SkelAnime_UpdateTranslation(skelAnime, &posDiff, actor->shape.rot.y);
+    SkelAnime_UpdateTranslation(skelAnime, &posDiff, actor->shape.rot.y, (actor->category == ACTORCAT_PLAYER && R_ENABLE_MIRROR) ? -1 : 1);
 
     actor->world.pos.x += posDiff.x * actor->scale.x;
     actor->world.pos.y += posDiff.y * actor->scale.y;

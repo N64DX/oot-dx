@@ -667,7 +667,7 @@ void EnOssan_UpdateCursorPos(PlayState* play, EnOssan* this) {
     s16 y;
 
     Actor_GetScreenPos(play, &this->shelfSlots[this->cursorIndex]->actor, &x, &y);
-    this->cursorX = x;
+    this->cursorX = (R_ENABLE_MIRROR) ? SCREEN_WIDTH - x : x;
     this->cursorY = y;
 }
 
@@ -773,7 +773,7 @@ void EnOssan_State_Idle(EnOssan* this, PlayState* play, Player* player) {
 
 void EnOssan_UpdateJoystickInputState(PlayState* play, EnOssan* this) {
     Input* input = &play->state.input[0];
-    s8 stickX = input->rel.stick_x;
+    s8 stickX = (R_ENABLE_MIRROR) ? -input->rel.stick_x : input->rel.stick_x;
     s8 stickY = input->rel.stick_y;
 
     this->moveHorizontal = this->moveVertical = false;

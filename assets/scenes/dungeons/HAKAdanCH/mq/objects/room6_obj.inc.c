@@ -1,0 +1,8 @@
+    OBJECT_HAKACH_OBJECTS, // 0
+    OBJECT_HAKA_DOOR, // 1
+    OBJECT_HAKA, // 2
+    OBJECT_FIREFLY, // 3
+    OBJECT_ST, // 4
+    OBJECT_GI_KEY, // 5
+    OBJECT_GI_SUTARU, // 6
+

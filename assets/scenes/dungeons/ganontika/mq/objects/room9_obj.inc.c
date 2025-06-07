@@ -1,0 +1,6 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_BOX, // 1
+    OBJECT_EFC_FLASH, // 2
+    OBJECT_ZF, // 3
+    OBJECT_BW, // 4
+

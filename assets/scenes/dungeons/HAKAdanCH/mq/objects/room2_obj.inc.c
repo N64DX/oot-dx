@@ -1,0 +1,9 @@
+    OBJECT_HAKACH_OBJECTS, // 0
+    OBJECT_HAKA_DOOR, // 1
+    OBJECT_BOX, // 2
+    OBJECT_GI_SUTARU, // 3
+    OBJECT_RD, // 4
+    OBJECT_ST, // 5
+    OBJECT_SYOKUDAI, // 6
+    OBJECT_POH, // 7
+
