@@ -266,14 +266,17 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->titleAlpha[0]);
     gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
     gSPVertex(POLY_OPA_DISP++, gNameEntryVtx, 24, 0);
-    gDPLoadTextureBlock(POLY_OPA_DISP++, sNameLabelTextures[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, 56, 16, 0,
-                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
-                        G_TX_NOLOD);
-    gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
-    gDPPipeSync(POLY_OPA_DISP++);
+    if (!this->selectingQuestMode) {
+        gDPLoadTextureBlock(POLY_OPA_DISP++, sNameLabelTextures[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, 56, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+        gDPPipeSync(POLY_OPA_DISP++);
+    }
 
 #if OOT_NTSC_N64
     for (phi_t1 = 0, phi_s0 = 4; phi_t1 < 5; phi_t1++, phi_s0 += 4) {
+        if (this->selectingQuestMode && phi_t1 < 4)
+            continue;
+
         if (gSaveContext.language == LANGUAGE_JPN) {
             gDPPipeSync(POLY_OPA_DISP++);
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2], 255);
@@ -289,6 +292,9 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
     }
 #elif OOT_NTSC
     for (phi_t1 = 0, phi_s0 = 4; phi_t1 < 5; phi_t1++, phi_s0 += 4) {
+        if (this->selectingQuestMode && phi_t1 < 4)
+            continue;
+
         if (gSaveContext.language == LANGUAGE_JPN) {
             gDPPipeSync(POLY_OPA_DISP++);
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2],
@@ -315,6 +321,9 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
 #else
     phi_s0 = 0x10;
     for (phi_t1 = 0; phi_t1 < 2; phi_t1++, phi_s0 += 4) {
+        if (this->selectingQuestMode && phi_t1 < 1)
+            continue;
+
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2], 255);
         gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
 
@@ -390,27 +399,23 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
     this->nameEntryVtx[2].v.ob[1] = this->nameEntryVtx[3].v.ob[1] = this->nameEntryVtx[0].v.ob[1] - 0x10;
     this->nameEntryVtx[1].v.tc[0] = this->nameEntryVtx[3].v.tc[0] = 0xD80;
 
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetCombineLERP(POLY_OPA_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE,
-                      ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
-    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2],
-                    this->nameEntryBoxAlpha);
-    gSPVertex(POLY_OPA_DISP++, this->nameEntryVtx, 4, 0);
-    gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelNameBoxTex, G_IM_FMT_IA, G_IM_SIZ_16b, 108, 16, 0,
-                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
-                        G_TX_NOLOD);
-    gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+    if (!this->selectingQuestMode) {
+        gDPPipeSync(POLY_OPA_DISP++);
+        gDPSetCombineLERP(POLY_OPA_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2], this->nameEntryBoxAlpha);
+        gSPVertex(POLY_OPA_DISP++, this->nameEntryVtx, 4, 0);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelNameBoxTex, G_IM_FMT_IA, G_IM_SIZ_16b, 108, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+    }
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetCombineLERP(POLY_OPA_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0,
                       PRIMITIVE, 0);
     gSPVertex(POLY_OPA_DISP++, this->nameEntryVtx + 4, 32, 0);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->nameEntryBoxAlpha);
 
-    for (phi_s0 = 0, phi_v0 = 0; phi_s0 < 0x20; phi_s0 += 4, phi_v0++) {
-        FileSelect_DrawCharacter(this->state.gfxCtx,
-                                 font->fontBuf + this->fileNames[this->buttonIndex][phi_v0] * FONT_CHAR_TEX_SIZE,
-                                 phi_s0);
-    }
+    if (!this->selectingQuestMode)
+        for (phi_s0 = 0, phi_v0 = 0; phi_s0 < 0x20; phi_s0 += 4, phi_v0++)
+            FileSelect_DrawCharacter(this->state.gfxCtx, font->fontBuf + this->fileNames[this->buttonIndex][phi_v0] * FONT_CHAR_TEX_SIZE, phi_s0);
 
     this->nameEntryVtx[0x25].v.tc[0] = this->nameEntryVtx[0x26].v.tc[1] = this->nameEntryVtx[0x27].v.tc[0] =
         this->nameEntryVtx[0x27].v.tc[1] = this->nameEntryVtx[0x29].v.tc[0] = this->nameEntryVtx[0x2A].v.tc[1] =
@@ -693,10 +698,11 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                       PRIMITIVE, 0);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->highlightColor[0], this->highlightColor[1], this->highlightColor[2],
                     this->highlightColor[3]);
-    gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelCharHighlightTex, G_IM_FMT_I, G_IM_SIZ_8b, 24, 24, 0,
-                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
-                        G_TX_NOLOD);
-    gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+
+    if (!this->selectingQuestMode) {
+        gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelCharHighlightTex, G_IM_FMT_I, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+    }
 
     if ((this->kbdButton == FS_KBD_BTN_HIRA) || (this->kbdButton == FS_KBD_BTN_KATA) ||
         (this->kbdButton == FS_KBD_BTN_END)) {
@@ -725,18 +731,32 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         void* logoTexture;
         u16 x, y;
 
-        x = 150;
-        y = 80;
+        x = 135;
+        y = 170;
         if (this->mirrorMode[this->buttonIndex])   { gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 0, 255, 0, 255); }
         else                                       { gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 0, 0, 255); }
         gDPLoadTextureBlock(POLY_OPA_DISP++, gMirrorModeTex, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 96) << 2)), HIRES_MULTIPLY(((y + 12) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1280)), HIRES_DIVIDE((1280)));
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 90) << 2)), HIRES_MULTIPLY(((y + 11) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1462)), HIRES_DIVIDE((1462)));
 
         if (this->questMode[this->buttonIndex] == 1)
-            logoTexture = gLogoMasterQuestTex;
+#if OOT_MQ
+            logoTexture = gTitleZeldaShieldLogoTex;
         else logoTexture = gLogoOcarinaOfTimeTex;
+#else
+            logoTexture = gLogoMasterQuestTex;
+        else logoTexture = gTitleZeldaShieldLogoTex;
+#endif
+
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
         FileSelect_DrawImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)logoTexture, 160, 160);
+        
+        x = 160 - 64;
+        y = 45;
+        if (this->questMode[this->buttonIndex] == 1)
+            logoTexture = gQuestMasterQuestTex;
+        else logoTexture = gQuestOcarinaOfTimeTex;
+        gDPLoadTextureBlock(POLY_OPA_DISP++, logoTexture, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 128) << 2)), HIRES_MULTIPLY(((y + 16) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1024)), HIRES_DIVIDE((1024)));
 
         y = 115;
         x = 48;
