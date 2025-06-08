@@ -40,20 +40,12 @@ EnvLightSettings men_scene_02000238_EnvLightSettingsList[LENGTH_men_scene_020002
 #include "assets/scenes/dungeons/men/men_scene_02000238_EnvLightSettingsList.inc.c"
 };
 
-u8 men_scene_unaccounted_000290[] = {
-#include "assets/scenes/dungeons/men/men_scene_unaccounted_000290.bin.inc.c"
-};
-
 Vec3s men_scene_020002F0_PathList_020002C0_Points[] = {
 #include "assets/scenes/dungeons/men/men_scene_020002F0_PathList_020002C0_Points.inc.c"
 };
 
 Path men_scene_020002F0_PathList[] = {
 #include "assets/scenes/dungeons/men/men_scene_020002F0_PathList.inc.c"
-};
-
-u8 men_scene_unaccounted_0002F8[] = {
-#include "assets/scenes/dungeons/men/men_scene_unaccounted_0002F8.bin.inc.c"
 };
 
 Vec3s men_scene_0200F700_BgCamList_02000300_BgCamFuncData[] = {
@@ -83,8 +75,6 @@ WaterBox men_scene_0200F700_WaterBoxes[] = {
 CollisionHeader men_scene_0200F700_Col = {
 #include "assets/scenes/dungeons/men/men_scene_0200F700_Col.inc.c"
 };
-
-u8 men_scene_zeros_00F72C[4] = { 0 };
 
 u64 gMenDL_008118_03002AD0_DL_0000F730_TLUT[] = {
 #include "assets/scenes/dungeons/men/gMenDL_008118_03002AD0_DL_0000F730_TLUT.tlut.rgba16.inc.c"

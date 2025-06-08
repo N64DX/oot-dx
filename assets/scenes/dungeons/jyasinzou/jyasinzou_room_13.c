@@ -32,10 +32,6 @@ RoomShapeCullableEntry jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_Cul
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries.inc.c"
 };
 
-u8 jyasinzou_room_13_unaccounted_00013C[] = {
-#include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_13_unaccounted_00013C.bin.inc.c"
-};
-
 Vtx jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_03001B00_DL_030001A0_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_03001B00_DL_030001A0_Vtx_fused_.inc.c"
 };
@@ -50,10 +46,6 @@ Vtx jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_030026
 
 Gfx jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_030026B0_DL[48] = {
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_030026B0_DL.inc.c"
-};
-
-u8 jyasinzou_room_13_unaccounted_002830[] = {
-#include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_13_unaccounted_002830.bin.inc.c"
 };
 
 u64 jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_03001B00_DL_00002848_CITex[TEX_LEN(u64, jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_03001B00_DL_00002848_CITex_WIDTH, jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_03001B00_DL_00002848_CITex_HEIGHT, 8)] = {
@@ -83,8 +75,6 @@ u64 jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_030026
 u64 jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_03001B00_DL_00005048_CITex[TEX_LEN(u64, jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_03001B00_DL_00005048_CITex_WIDTH, jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_03001B00_DL_00005048_CITex_HEIGHT, 4)] = {
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_13_03000110_RoomShapeCullable_0300011C_CullableEntries_03001B00_DL_00005048_CITex.ci4.tlut_jyasinzou_room_0_03000160_RoomShapeCullable_0300016C_CullableEntries_03001650_DL_00018020_TLUT.inc.c"
 };
-
-u8 jyasinzou_room_13_zeros_005848[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/jyasinzou/mq/objects/room13_obj.inc.c"

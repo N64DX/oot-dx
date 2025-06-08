@@ -32,10 +32,6 @@ RoomShapeCullableEntry ganontika_room_5_030000C0_RoomShapeCullable_030000CC_Cull
 #include "assets/scenes/dungeons/ganontika/ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries.inc.c"
 };
 
-u8 ganontika_room_5_unaccounted_00013C[] = {
-#include "assets/scenes/dungeons/ganontika/ganontika_room_5_unaccounted_00013C.bin.inc.c"
-};
-
 Vtx ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_03000340_DL_03000140_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/ganontika/ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_03000340_DL_03000140_Vtx_fused_.inc.c"
 };
@@ -92,10 +88,6 @@ Gfx ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_030035C
 #include "assets/scenes/dungeons/ganontika/ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_030035C8_DL.inc.c"
 };
 
-u8 ganontika_room_5_unaccounted_003AF8[] = {
-#include "assets/scenes/dungeons/ganontika/ganontika_room_5_unaccounted_003AF8.bin.inc.c"
-};
-
 u64 ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_030035C8_DL_00003B38_Tex[TEX_LEN(u64, ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_030035C8_DL_00003B38_Tex_WIDTH, ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_030035C8_DL_00003B38_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/ganontika/ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_030035C8_DL_00003B38_Tex.rgba16.inc.c"
 };
@@ -123,8 +115,6 @@ u64 ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_0300034
 u64 ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_030015A8_DL_00006538_Tex[TEX_LEN(u64, ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_030015A8_DL_00006538_Tex_WIDTH, ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_030015A8_DL_00006538_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/ganontika/ganontika_room_5_030000C0_RoomShapeCullable_030000CC_CullableEntries_030015A8_DL_00006538_Tex.rgba16.inc.c"
 };
-
-u8 ganontika_room_5_zeros_007538[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/ganontika/mq/objects/room5_obj.inc.c"

@@ -144,8 +144,6 @@ CollisionHeader HIDAN_scene_02018AFC_Col = {
 #include "assets/scenes/dungeons/HIDAN/HIDAN_scene_02018AFC_Col.inc.c"
 };
 
-u8 HIDAN_scene_zeros_018B28[8] = { 0 };
-
 u64 HIDAN_room_0_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002C20_DL_00018B30_TLUT[] = {
 #include "assets/scenes/dungeons/HIDAN/HIDAN_room_0_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002C20_DL_00018B30_TLUT.tlut.rgba16.inc.c"
 };

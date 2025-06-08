@@ -32,10 +32,6 @@ RoomShapeCullableEntry ddan_room_1_030001A0_RoomShapeCullable_030001AC_CullableE
 #include "assets/scenes/dungeons/ddan/ddan_room_1_030001A0_RoomShapeCullable_030001AC_CullableEntries.inc.c"
 };
 
-u8 ddan_room_1_unaccounted_0001CC[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_1_unaccounted_0001CC.bin.inc.c"
-};
-
 Vtx ddan_room_1_030001A0_RoomShapeCullable_030001AC_CullableEntries_030024B0_DL_030001D0_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_1_030001A0_RoomShapeCullable_030001AC_CullableEntries_030024B0_DL_030001D0_Vtx_fused_.inc.c"
 };
@@ -50,10 +46,6 @@ Vtx ddan_room_1_030001A0_RoomShapeCullable_030001AC_CullableEntries_030045C0_DL_
 
 Gfx ddan_room_1_030001A0_RoomShapeCullable_030001AC_CullableEntries_030045C0_DL[37] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_1_030001A0_RoomShapeCullable_030001AC_CullableEntries_030045C0_DL.inc.c"
-};
-
-u8 ddan_room_1_unaccounted_0046E8[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_1_unaccounted_0046E8.bin.inc.c"
 };
 
 u64 ddan_room_1_030001A0_RoomShapeCullable_030001AC_CullableEntries_030024B0_DL_00004700_CITex[TEX_LEN(u64, ddan_room_1_030001A0_RoomShapeCullable_030001AC_CullableEntries_030024B0_DL_00004700_CITex_WIDTH, ddan_room_1_030001A0_RoomShapeCullable_030001AC_CullableEntries_030024B0_DL_00004700_CITex_HEIGHT, 8)] = {

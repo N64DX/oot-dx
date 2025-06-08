@@ -72,8 +72,6 @@ Path MIZUsin_scenePathList_000424[] = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_scenePathList_000424.inc.c"
 };
 
-u8 MIZUsin_scene_zeros_00045C[4] = { 0 };
-
 BgCamInfo MIZUsin_scene_02013CC4_BgCamList[] = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_scene_02013CC4_BgCamList.inc.c"
 };

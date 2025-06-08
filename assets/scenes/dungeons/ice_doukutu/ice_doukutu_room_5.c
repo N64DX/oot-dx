@@ -28,18 +28,12 @@ ActorEntry ice_doukutu_room_5_03000068_ActorEntryList[LENGTH_ice_doukutu_room_5_
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_5_03000068_ActorEntryList.inc.c"
 };
 
-u8 ice_doukutu_room_5_zeros_0001A8[8] = { 0 };
-
 RoomShapeNormal ice_doukutu_room_5_030001B0_RoomShapeNormal = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_5_030001B0_RoomShapeNormal.inc.c"
 };
 
 RoomShapeDListsEntry ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries[LENGTH_ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries.inc.c"
-};
-
-u8 ice_doukutu_room_5_unaccounted_0001C4[] = {
-#include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_5_unaccounted_0001C4.bin.inc.c"
 };
 
 SceneCmd ice_doukutu_room_5_03000048_AltHeaders_030001D0_Cmds[] = {
@@ -53,8 +47,6 @@ s16 ice_doukutu_room_5_03000048_AltHeaders_030001D0_Cmds_03000210_ObjectList[LEN
 ActorEntry ice_doukutu_room_5_03000048_AltHeaders_030001D0_Cmds_03000218_ActorEntryList[LENGTH_ice_doukutu_room_5_03000048_AltHeaders_030001D0_Cmds_03000218_ActorEntryList] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_5_03000048_AltHeaders_030001D0_Cmds_03000218_ActorEntryList.inc.c"
 };
-
-u8 ice_doukutu_room_5_zeros_000248[8] = { 0 };
 
 Vtx ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03004628_DL_03000E60_DL_03000250_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03004628_DL_03000E60_DL_03000250_Vtx_fused_.inc.c"
@@ -116,8 +108,6 @@ u64 ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03004628_
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03004628_DL_03000E60_DL_00006658_Tex.rgba16.inc.c"
 };
 
-u8 ice_doukutu_room_5_zeros_006E58[8] = { 0 };
-
 Vtx ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03007470_DL_03006F20_DL_03006E60_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03007470_DL_03006F20_DL_03006E60_Vtx_fused_.inc.c"
 };
@@ -145,8 +135,6 @@ u64 ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03007470_
 u64 ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03007470_DL_03007368_DL_00007888_Tex[TEX_LEN(u64, ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03007470_DL_03007368_DL_00007888_Tex_WIDTH, ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03007470_DL_03007368_DL_00007888_Tex_HEIGHT, 8)] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_5_030001B0_RoomShapeNormal_030001BC_DListsEntries_03007470_DL_03007368_DL_00007888_Tex.i8.inc.c"
 };
-
-u8 ice_doukutu_room_5_zeros_008888[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/ice_doukutu/mq/objects/room5_obj.inc.c"

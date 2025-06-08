@@ -24,18 +24,12 @@ ActorEntry HAKAdanCH_room_6_0300004C_ActorEntryList[LENGTH_HAKAdanCH_room_6_0300
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_6_0300004C_ActorEntryList.inc.c"
 };
 
-u8 HAKAdanCH_room_6_zeros_00009C[4] = { 0 };
-
 RoomShapeCullable HAKAdanCH_room_6_030000A0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_6_030000A0_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry HAKAdanCH_room_6_030000A0_RoomShapeCullable_030000AC_CullableEntries[LENGTH_HAKAdanCH_room_6_030000A0_RoomShapeCullable_030000AC_CullableEntries] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_6_030000A0_RoomShapeCullable_030000AC_CullableEntries.inc.c"
-};
-
-u8 HAKAdanCH_room_6_unaccounted_0000CC[] = {
-#include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_6_unaccounted_0000CC.bin.inc.c"
 };
 
 Vtx HAKAdanCH_room_6_030000A0_RoomShapeCullable_030000AC_CullableEntries_030003F0_DL_030000D0_Vtx_fused_[] = {
@@ -52,10 +46,6 @@ Vtx HAKAdanCH_room_6_030000A0_RoomShapeCullable_030000AC_CullableEntries_03000C1
 
 Gfx HAKAdanCH_room_6_030000A0_RoomShapeCullable_030000AC_CullableEntries_03000C10_DL[75] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_6_030000A0_RoomShapeCullable_030000AC_CullableEntries_03000C10_DL.inc.c"
-};
-
-u8 HAKAdanCH_room_6_unaccounted_000E68[] = {
-#include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_6_unaccounted_000E68.bin.inc.c"
 };
 
 u64 HAKAdanCH_room_6_030000A0_RoomShapeCullable_030000AC_CullableEntries_030003F0_DL_00000E80_Tex[TEX_LEN(u64, HAKAdanCH_room_6_030000A0_RoomShapeCullable_030000AC_CullableEntries_030003F0_DL_00000E80_Tex_WIDTH, HAKAdanCH_room_6_030000A0_RoomShapeCullable_030000AC_CullableEntries_030003F0_DL_00000E80_Tex_HEIGHT, 16)] = {

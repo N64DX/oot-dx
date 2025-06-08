@@ -24,18 +24,12 @@ ActorEntry men_room_6_03000054_ActorEntryList[LENGTH_men_room_6_03000054_ActorEn
 #include "assets/scenes/dungeons/men/men_room_6_03000054_ActorEntryList.inc.c"
 };
 
-u8 men_room_6_zeros_000194[12] = { 0 };
-
 RoomShapeCullable men_room_6_030001A0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/men/men_room_6_030001A0_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries[LENGTH_men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries] = {
 #include "assets/scenes/dungeons/men/men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries.inc.c"
-};
-
-u8 men_room_6_unaccounted_00024C[] = {
-#include "assets/scenes/dungeons/men/men_room_6_unaccounted_00024C.bin.inc.c"
 };
 
 Vtx men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03000390_DL_03000250_Vtx_fused_[] = {
@@ -118,10 +112,6 @@ Gfx men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03003E20_DL[2
 #include "assets/scenes/dungeons/men/men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03003E20_DL.inc.c"
 };
 
-u8 men_room_6_unaccounted_003EE0[] = {
-#include "assets/scenes/dungeons/men/men_room_6_unaccounted_003EE0.bin.inc.c"
-};
-
 u64 men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03003B50_DL_00003F38_Tex[TEX_LEN(u64, men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03003B50_DL_00003F38_Tex_WIDTH, men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03003B50_DL_00003F38_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/men/men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03003B50_DL_00003F38_Tex.rgba16.inc.c"
 };
@@ -157,8 +147,6 @@ u64 men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03001390_DL_0
 u64 men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03002DA8_DL_00007738_CITex[TEX_LEN(u64, men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03002DA8_DL_00007738_CITex_WIDTH, men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03002DA8_DL_00007738_CITex_HEIGHT, 8)] = {
 #include "assets/scenes/dungeons/men/men_room_6_030001A0_RoomShapeCullable_030001AC_CullableEntries_03002DA8_DL_00007738_CITex.ci8.tlut_gMenDL_008118_03002AD0_DL_0000F730_TLUT.inc.c"
 };
-
-u8 men_room_6_zeros_007F38[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/men/mq/objects/room6_obj.inc.c"

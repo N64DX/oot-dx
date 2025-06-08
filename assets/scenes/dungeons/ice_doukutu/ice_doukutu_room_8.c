@@ -36,10 +36,6 @@ RoomShapeDListsEntry ice_doukutu_room_8_03000110_RoomShapeNormal_0300011C_DLists
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_8_03000110_RoomShapeNormal_0300011C_DListsEntries.inc.c"
 };
 
-u8 ice_doukutu_room_8_unaccounted_000124[] = {
-#include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_8_unaccounted_000124.bin.inc.c"
-};
-
 SceneCmd ice_doukutu_room_8_03000048_AltHeaders_03000130_Cmds[] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_8_03000048_AltHeaders_03000130_Cmds.inc.c"
 };
@@ -75,8 +71,6 @@ Gfx ice_doukutu_room_8_03000110_RoomShapeNormal_0300011C_DListsEntries_03001928_
 Gfx ice_doukutu_room_8_03000110_RoomShapeNormal_0300011C_DListsEntries_03001928_DL[4] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_8_03000110_RoomShapeNormal_0300011C_DListsEntries_03001928_DL.inc.c"
 };
-
-u8 ice_doukutu_room_8_zeros_001948[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/ice_doukutu/mq/objects/room8_obj.inc.c"

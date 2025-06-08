@@ -24,8 +24,6 @@ ActorEntry ydan_room_10_03000058_ActorEntryList[LENGTH_ydan_room_10_03000058_Act
 #include "assets/scenes/dungeons/ydan/ydan_room_10_03000058_ActorEntryList.inc.c"
 };
 
-u8 ydan_room_10_zeros_000128[8] = { 0 };
-
 RoomShapeCullable ydan_room_10_03000130_RoomShapeCullable = {
 #include "assets/scenes/dungeons/ydan/ydan_room_10_03000130_RoomShapeCullable.inc.c"
 };
@@ -34,20 +32,12 @@ RoomShapeCullableEntry ydan_room_10_03000130_RoomShapeCullable_0300013C_Cullable
 #include "assets/scenes/dungeons/ydan/ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries.inc.c"
 };
 
-u8 ydan_room_10_unaccounted_00015C[] = {
-#include "assets/scenes/dungeons/ydan/ydan_room_10_unaccounted_00015C.bin.inc.c"
-};
-
 Vtx ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_030012F0_DL_03000160_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_030012F0_DL_03000160_Vtx_fused_.inc.c"
 };
 
 Gfx ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_030012F0_DL[268] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_030012F0_DL.inc.c"
-};
-
-u8 ydan_room_10_unaccounted_001B50[] = {
-#include "assets/scenes/dungeons/ydan/ydan_room_10_unaccounted_001B50.bin.inc.c"
 };
 
 u64 ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_030012F0_DL_00001B60_CITex[TEX_LEN(u64, ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_030012F0_DL_00001B60_CITex_WIDTH, ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_030012F0_DL_00001B60_CITex_HEIGHT, 8)] = {
@@ -74,15 +64,9 @@ Gfx ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_03003CA0_DL
 #include "assets/scenes/dungeons/ydan/ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_03003CA0_DL.inc.c"
 };
 
-u8 ydan_room_10_unaccounted_003D68[] = {
-#include "assets/scenes/dungeons/ydan/ydan_room_10_unaccounted_003D68.bin.inc.c"
-};
-
 u64 ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_03003CA0_DL_00003D78_Tex[TEX_LEN(u64, ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_03003CA0_DL_00003D78_Tex_WIDTH, ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_03003CA0_DL_00003D78_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_10_03000130_RoomShapeCullable_0300013C_CullableEntries_03003CA0_DL_00003D78_Tex.rgba16.inc.c"
 };
-
-u8 ydan_room_10_zeros_004D78[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/ydan/mq/objects/room10_obj.inc.c"

@@ -32,10 +32,6 @@ RoomShapeCullableEntry MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_Culla
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries.inc.c"
 };
 
-u8 MIZUsin_room_21_unaccounted_00020C[] = {
-#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_21_unaccounted_00020C.bin.inc.c"
-};
-
 Vtx MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_030003E0_DL_03000210_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_030003E0_DL_03000210_Vtx_fused_.inc.c"
 };
@@ -84,10 +80,6 @@ Gfx MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03004228
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03004228_DL.inc.c"
 };
 
-u8 MIZUsin_room_21_unaccounted_004328[] = {
-#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_21_unaccounted_004328.bin.inc.c"
-};
-
 u64 MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03002D40_DL_00004360_Tex[TEX_LEN(u64, MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03002D40_DL_00004360_Tex_WIDTH, MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03002D40_DL_00004360_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03002D40_DL_00004360_Tex.rgba16.inc.c"
 };
@@ -110,10 +102,6 @@ Vtx MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03006A40
 
 Gfx MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03006A40_DL[74] = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03006A40_DL.inc.c"
-};
-
-u8 MIZUsin_room_21_unaccounted_006C90[] = {
-#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_21_unaccounted_006C90.bin.inc.c"
 };
 
 u64 MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03006A40_DL_00006CA0_Tex[TEX_LEN(u64, MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03006A40_DL_00006CA0_Tex_WIDTH, MIZUsin_room_21_03000190_RoomShapeCullable_0300019C_CullableEntries_03006A40_DL_00006CA0_Tex_HEIGHT, 16)] = {

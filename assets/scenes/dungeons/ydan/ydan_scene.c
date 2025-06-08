@@ -43,8 +43,6 @@ EnvLightSettings ydan_scene_020001A8_EnvLightSettingsList[LENGTH_ydan_scene_0200
 #include "assets/scenes/dungeons/ydan/ydan_scene_020001A8_EnvLightSettingsList.inc.c"
 };
 
-u8 ydan_scene_zeros_000244[12] = { 0 };
-
 Vec3s ydan_scene_0200B610_BgCamList_02000250_BgCamFuncData[] = {
 #include "assets/scenes/dungeons/ydan/ydan_scene_0200B610_BgCamList_02000250_BgCamFuncData.inc.c"
 };
@@ -73,20 +71,12 @@ CollisionHeader ydan_scene_0200B610_Col = {
 #include "assets/scenes/dungeons/ydan/ydan_scene_0200B610_Col.inc.c"
 };
 
-u8 ydan_scene_zeros_00B63C[4] = { 0 };
-
 CutsceneData gDekuTreeIntroCs[] = {
 #include "assets/scenes/dungeons/ydan/gDekuTreeIntroCs.csdata.inc.c"
 };
 
-u8 ydan_scene_zeros_00B7F8[8] = { 0 };
-
 u64 ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_030033F0_DL_0000B800_TLUT[] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_030033F0_DL_0000B800_TLUT.tlut.rgba16.inc.c"
-};
-
-u8 ydan_scene_unaccounted_00BA00[] = {
-#include "assets/scenes/dungeons/ydan/ydan_scene_unaccounted_00BA00.bin.inc.c"
 };
 
 u64 gDekuTreeDayEntranceTex[TEX_LEN(u64, gDekuTreeDayEntranceTex_WIDTH, gDekuTreeDayEntranceTex_HEIGHT, 16)] = {
@@ -96,8 +86,6 @@ u64 gDekuTreeDayEntranceTex[TEX_LEN(u64, gDekuTreeDayEntranceTex_WIDTH, gDekuTre
 u64 gDekuTreeNightEntranceTex[TEX_LEN(u64, gDekuTreeNightEntranceTex_WIDTH, gDekuTreeNightEntranceTex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/ydan/gDekuTreeNightEntranceTex.rgba16.inc.c"
 };
-
-u8 ydan_scene_zeros_00DA08[8] = { 0 };
 
 static TransitionActorEntry mq_transition_actors[] = {
 #include "assets/scenes/dungeons/ydan/mq/scene/transitionActors.inc.c"

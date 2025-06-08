@@ -47,8 +47,6 @@ EnvLightSettings bdan_scene_02000280_EnvLightSettingsList[LENGTH_bdan_scene_0200
 #include "assets/scenes/dungeons/bdan/bdan_scene_02000280_EnvLightSettingsList.inc.c"
 };
 
-u8 bdan_scene_zeros_0002D8[8] = { 0 };
-
 BgCamInfo bdan_scene_02013054_BgCamList[] = {
 #include "assets/scenes/dungeons/bdan/bdan_scene_02013054_BgCamList.inc.c"
 };
@@ -105,22 +103,12 @@ EnvLightSettings bdan_scene_02000068_AltHeaders_02013700_Cmds_02013970_EnvLightS
 #include "assets/scenes/dungeons/bdan/bdan_scene_02000068_AltHeaders_02013700_Cmds_02013970_EnvLightSettingsList.inc.c"
 };
 
-u8 bdan_scene_zeros_0139C8[8] = { 0 };
-
 u64 bdan_room_0_030000C0_RoomShapeNormal_030000CC_DListsEntries_03004060_DL_03003F10_DL_000139D0_TLUT[] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_0_030000C0_RoomShapeNormal_030000CC_DListsEntries_03004060_DL_03003F10_DL_000139D0_TLUT.tlut.rgba16.inc.c"
 };
 
-u8 bdan_scene_unaccounted_013BD0[] = {
-#include "assets/scenes/dungeons/bdan/bdan_scene_unaccounted_013BD0.bin.inc.c"
-};
-
 u64 bdan_room_0_030000C0_RoomShapeNormal_030000CC_DListsEntries_03002CD8_DL_03002360_DL_00013BD8_TLUT[] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_0_030000C0_RoomShapeNormal_030000CC_DListsEntries_03002CD8_DL_03002360_DL_00013BD8_TLUT.tlut.rgba16.inc.c"
-};
-
-u8 bdan_scene_unaccounted_013DD8[] = {
-#include "assets/scenes/dungeons/bdan/bdan_scene_unaccounted_013DD8.bin.inc.c"
 };
 
 u64 bdan_room_1_030000F0_RoomShapeNormal_030000FC_DListsEntries_03004CC0_DL_03003350_DL_00013DE0_CITex[TEX_LEN(u64, bdan_room_1_030000F0_RoomShapeNormal_030000FC_DListsEntries_03004CC0_DL_03003350_DL_00013DE0_CITex_WIDTH, bdan_room_1_030000F0_RoomShapeNormal_030000FC_DListsEntries_03004CC0_DL_03003350_DL_00013DE0_CITex_HEIGHT, 8)] = {
@@ -142,8 +130,6 @@ u64 bdan_room_0_030000C0_RoomShapeNormal_030000CC_DListsEntries_03004060_DL_0300
 CutsceneData gJabuIntroCs[] = {
 #include "assets/scenes/dungeons/bdan/gJabuIntroCs.csdata.inc.c"
 };
-
-u8 bdan_scene_zeros_0157B8[8] = { 0 };
 
 static TransitionActorEntry mq_transition_actors[] = {
 #include "assets/scenes/dungeons/bdan/mq/scene/transitionActors.inc.c"

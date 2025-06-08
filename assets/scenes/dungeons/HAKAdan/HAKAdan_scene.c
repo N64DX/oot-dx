@@ -40,8 +40,6 @@ EnvLightSettings HAKAdan_scene_020002B0_EnvLightSettingsList[LENGTH_HAKAdan_scen
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_scene_020002B0_EnvLightSettingsList.inc.c"
 };
 
-u8 HAKAdan_scene_zeros_000308[8] = { 0 };
-
 BgCamInfo HAKAdan_scene_02016394_BgCamList[] = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_scene_02016394_BgCamList.inc.c"
 };

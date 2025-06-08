@@ -32,20 +32,12 @@ RoomShapeCullableEntry ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableE
 #include "assets/scenes/dungeons/ddan/ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries.inc.c"
 };
 
-u8 ddan_room_9_unaccounted_00017C[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_9_unaccounted_00017C.bin.inc.c"
-};
-
 Vtx ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL_03000180_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL_03000180_Vtx_fused_.inc.c"
 };
 
 Gfx ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL[973] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL.inc.c"
-};
-
-u8 ddan_room_9_unaccounted_005138[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_9_unaccounted_005138.bin.inc.c"
 };
 
 u64 ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL_00005148_CITex[TEX_LEN(u64, ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL_00005148_CITex_WIDTH, ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL_00005148_CITex_HEIGHT, 8)] = {
@@ -99,8 +91,6 @@ u64 ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL_
 u64 ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL_0000B148_CITex[TEX_LEN(u64, ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL_0000B148_CITex_WIDTH, ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL_0000B148_CITex_HEIGHT, 8)] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_9_03000160_RoomShapeCullable_0300016C_CullableEntries_030032D0_DL_0000B148_CITex.ci8.tlut_gDCSceneTLUT.inc.c"
 };
-
-u8 ddan_room_9_zeros_00B548[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/ddan/mq/objects/room9_obj.inc.c"

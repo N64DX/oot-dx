@@ -32,10 +32,6 @@ RoomShapeCullableEntry HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_Cull
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries.inc.c"
 };
 
-u8 HAKAdanCH_room_0_unaccounted_0004BC[] = {
-#include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_0_unaccounted_0004BC.bin.inc.c"
-};
-
 Vtx HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03000680_DL_030004C0_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03000680_DL_030004C0_Vtx_fused_.inc.c"
 };
@@ -276,10 +272,6 @@ Gfx HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_0300D42
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_0300D420_DL.inc.c"
 };
 
-u8 HAKAdanCH_room_0_unaccounted_00D4F8[] = {
-#include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_0_unaccounted_00D4F8.bin.inc.c"
-};
-
 u64 HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03000680_DL_0000D5F0_Tex[TEX_LEN(u64, HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03000680_DL_0000D5F0_Tex_WIDTH, HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03000680_DL_0000D5F0_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03000680_DL_0000D5F0_Tex.rgba16.inc.c"
 };
@@ -374,10 +366,6 @@ Vtx HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_0301490
 
 Gfx HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03014908_DL[24] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03014908_DL.inc.c"
-};
-
-u8 HAKAdanCH_room_0_unaccounted_0149C8[] = {
-#include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_0_unaccounted_0149C8.bin.inc.c"
 };
 
 u64 HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03014300_DL_000149F0_Tex[TEX_LEN(u64, HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03014300_DL_000149F0_Tex_WIDTH, HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03014300_DL_000149F0_Tex_HEIGHT, 4)] = {

@@ -47,13 +47,9 @@ EnvLightSettings ice_doukutu_scene_020001C0_EnvLightSettingsList[LENGTH_ice_douk
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene_020001C0_EnvLightSettingsList.inc.c"
 };
 
-u8 ice_doukutu_scene_zeros_000244[12] = { 0 };
-
 CutsceneData gIceCavernSerenadeCs[] = {
 #include "assets/scenes/dungeons/ice_doukutu/gIceCavernSerenadeCs.csdata.inc.c"
 };
-
-u8 ice_doukutu_scene_zeros_0019F8[8] = { 0 };
 
 Vec3s ice_doukutu_scene_0200F5C4_BgCamList_02001A00_BgCamFuncData[] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene_0200F5C4_BgCamList_02001A00_BgCamFuncData.inc.c"
@@ -110,8 +106,6 @@ s16 ice_doukutu_scene_02000068_AltHeaders_0200F5F0_Cmds_0200F78C_ExitList[] = {
 EnvLightSettings ice_doukutu_scene_02000068_AltHeaders_0200F5F0_Cmds_0200F790_EnvLightSettingsList[LENGTH_ice_doukutu_scene_02000068_AltHeaders_0200F5F0_Cmds_0200F790_EnvLightSettingsList] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene_02000068_AltHeaders_0200F5F0_Cmds_0200F790_EnvLightSettingsList.inc.c"
 };
-
-u8 ice_doukutu_scene_zeros_00F7E8[8] = { 0 };
 
 u64 ice_doukutu_room_2_030000D0_RoomShapeNormal_030000DC_DListsEntries_030016F0_DL_030015C0_DL_0000F7F0_TLUT[] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_2_030000D0_RoomShapeNormal_030000DC_DListsEntries_030016F0_DL_030015C0_DL_0000F7F0_TLUT.tlut.rgba16.inc.c"

@@ -28,18 +28,12 @@ ActorEntry bdan_room_4_03000068_ActorEntryList[LENGTH_bdan_room_4_03000068_Actor
 #include "assets/scenes/dungeons/bdan/bdan_room_4_03000068_ActorEntryList.inc.c"
 };
 
-u8 bdan_room_4_zeros_000098[8] = { 0 };
-
 RoomShapeNormal bdan_room_4_030000A0_RoomShapeNormal = {
 #include "assets/scenes/dungeons/bdan/bdan_room_4_030000A0_RoomShapeNormal.inc.c"
 };
 
 RoomShapeDListsEntry bdan_room_4_030000A0_RoomShapeNormal_030000AC_DListsEntries[LENGTH_bdan_room_4_030000A0_RoomShapeNormal_030000AC_DListsEntries] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_4_030000A0_RoomShapeNormal_030000AC_DListsEntries.inc.c"
-};
-
-u8 bdan_room_4_unaccounted_0000B4[] = {
-#include "assets/scenes/dungeons/bdan/bdan_room_4_unaccounted_0000B4.bin.inc.c"
 };
 
 SceneCmd bdan_room_4_03000048_AltHeaders_030000C0_Cmds[] = {
@@ -53,8 +47,6 @@ s16 bdan_room_4_03000048_AltHeaders_030000C0_Cmds_03000100_ObjectList[LENGTH_bda
 ActorEntry bdan_room_4_03000048_AltHeaders_030000C0_Cmds_03000108_ActorEntryList[LENGTH_bdan_room_4_03000048_AltHeaders_030000C0_Cmds_03000108_ActorEntryList] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_4_03000048_AltHeaders_030000C0_Cmds_03000108_ActorEntryList.inc.c"
 };
-
-u8 bdan_room_4_zeros_000138[8] = { 0 };
 
 Vtx bdan_room_4_030000A0_RoomShapeNormal_030000AC_DListsEntries_03002A70_DL_03001CF0_DL_03000140_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_4_030000A0_RoomShapeNormal_030000AC_DListsEntries_03002A70_DL_03001CF0_DL_03000140_Vtx_fused_.inc.c"

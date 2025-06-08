@@ -48,8 +48,6 @@ Path HAKAdanCH_scenePathList_000220[] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_scenePathList_000220.inc.c"
 };
 
-u8 HAKAdanCH_scene_zeros_000228[8] = { 0 };
-
 Vec3s HAKAdanCH_scene_0200A528_BgCamList_02000230_BgCamFuncData[] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_scene_0200A528_BgCamList_02000230_BgCamFuncData.inc.c"
 };
@@ -77,8 +75,6 @@ WaterBox HAKAdanCH_scene_0200A528_WaterBoxes[] = {
 CollisionHeader HAKAdanCH_scene_0200A528_Col = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_scene_0200A528_Col.inc.c"
 };
-
-u8 HAKAdanCH_scene_zeros_00A554[12] = { 0 };
 
 u64 HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_030033E8_DL_0000A560_Tex[TEX_LEN(u64, HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_030033E8_DL_0000A560_Tex_WIDTH, HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_030033E8_DL_0000A560_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_030033E8_DL_0000A560_Tex.rgba16.inc.c"

@@ -24,18 +24,12 @@ ActorEntry ddan_room_7_0300004C_ActorEntryList[LENGTH_ddan_room_7_0300004C_Actor
 #include "assets/scenes/dungeons/ddan/ddan_room_7_0300004C_ActorEntryList.inc.c"
 };
 
-u8 ddan_room_7_zeros_0000CC[4] = { 0 };
-
 RoomShapeCullable ddan_room_7_030000D0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/ddan/ddan_room_7_030000D0_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries[LENGTH_ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries.inc.c"
-};
-
-u8 ddan_room_7_unaccounted_0000FC[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_7_unaccounted_0000FC.bin.inc.c"
 };
 
 Vtx ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002640_DL_03000100_Vtx_fused_[] = {
@@ -52,10 +46,6 @@ Vtx ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03004508_DL_
 
 Gfx ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03004508_DL[53] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03004508_DL.inc.c"
-};
-
-u8 ddan_room_7_unaccounted_0046B0[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_7_unaccounted_0046B0.bin.inc.c"
 };
 
 u64 ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002640_DL_000046C8_CITex[TEX_LEN(u64, ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002640_DL_000046C8_CITex_WIDTH, ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002640_DL_000046C8_CITex_HEIGHT, 8)] = {
@@ -85,8 +75,6 @@ u64 ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002640_DL_
 u64 ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002640_DL_00006EC8_CITex[TEX_LEN(u64, ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002640_DL_00006EC8_CITex_WIDTH, ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002640_DL_00006EC8_CITex_HEIGHT, 8)] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_7_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002640_DL_00006EC8_CITex.ci8.tlut_gDCSceneTLUT.inc.c"
 };
-
-u8 ddan_room_7_zeros_0076C8[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/ddan/mq/objects/room7_obj.inc.c"

@@ -63,14 +63,8 @@ CollisionHeader ddan_scene_02011D38_Col = {
 #include "assets/scenes/dungeons/ddan/ddan_scene_02011D38_Col.inc.c"
 };
 
-u8 ddan_scene_zeros_011D64[12] = { 0 };
-
 u64 gDCSceneTLUT[] = {
 #include "assets/scenes/dungeons/ddan/gDCSceneTLUT.tlut.rgba16.inc.c"
-};
-
-u8 ddan_scene_unaccounted_011F70[] = {
-#include "assets/scenes/dungeons/ddan/ddan_scene_unaccounted_011F70.bin.inc.c"
 };
 
 u64 gDCLavaFloor1Tex[TEX_LEN(u64, gDCLavaFloor1Tex_WIDTH, gDCLavaFloor1Tex_HEIGHT, 8)] = {
@@ -113,13 +107,9 @@ u64 gDCLavaFloor5Tex[TEX_LEN(u64, gDCLavaFloor5Tex_WIDTH, gDCLavaFloor5Tex_HEIGH
 #include "assets/scenes/dungeons/ddan/gDCLavaFloor5Tex.ci8.tlut_gDCRoom0TLUT.inc.c"
 };
 
-u8 ddan_scene_zeros_014F78[8] = { 0 };
-
 CutsceneData gDcOpeningCs[] = {
 #include "assets/scenes/dungeons/ddan/gDcOpeningCs.csdata.inc.c"
 };
-
-u8 ddan_scene_zeros_015138[8] = { 0 };
 
 static TransitionActorEntry mq_transition_actors[] = {
 #include "assets/scenes/dungeons/ddan/mq/scene/transitionActors.inc.c"

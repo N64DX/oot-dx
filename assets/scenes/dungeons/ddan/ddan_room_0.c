@@ -32,10 +32,6 @@ RoomShapeCullableEntry ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableE
 #include "assets/scenes/dungeons/ddan/ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries.inc.c"
 };
 
-u8 ddan_room_0_unaccounted_0003AC[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_0_unaccounted_0003AC.bin.inc.c"
-};
-
 Vtx ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03000580_DL_030003B0_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03000580_DL_030003B0_Vtx_fused_.inc.c"
 };
@@ -212,16 +208,8 @@ Gfx ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03011050_DL[
 #include "assets/scenes/dungeons/ddan/ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03011050_DL.inc.c"
 };
 
-u8 ddan_room_0_unaccounted_0111D8[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_0_unaccounted_0111D8.bin.inc.c"
-};
-
 u64 gDCRoom0TLUT[] = {
 #include "assets/scenes/dungeons/ddan/gDCRoom0TLUT.tlut.rgba16.inc.c"
-};
-
-u8 ddan_room_0_unaccounted_011490[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_0_unaccounted_011490.bin.inc.c"
 };
 
 u64 ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03007E68_DL_00011498_CITex[TEX_LEN(u64, ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03007E68_DL_00011498_CITex_WIDTH, ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03007E68_DL_00011498_CITex_HEIGHT, 8)] = {
@@ -299,8 +287,6 @@ u64 ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_0300DE20_DL_
 u64 ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03000D98_DL_0001B498_CITex[TEX_LEN(u64, ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03000D98_DL_0001B498_CITex_WIDTH, ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03000D98_DL_0001B498_CITex_HEIGHT, 8)] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_0_03000240_RoomShapeCullable_0300024C_CullableEntries_03000D98_DL_0001B498_CITex.ci8.tlut_gDCSceneTLUT.inc.c"
 };
-
-u8 ddan_room_0_zeros_01B898[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/ddan/mq/objects/room0_obj.inc.c"

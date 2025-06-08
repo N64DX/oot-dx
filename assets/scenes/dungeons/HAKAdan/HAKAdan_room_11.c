@@ -32,10 +32,6 @@ RoomShapeDListsEntry HAKAdan_room_11_030000F0_RoomShapeNormal_030000FC_DListsEnt
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_11_030000F0_RoomShapeNormal_030000FC_DListsEntries.inc.c"
 };
 
-u8 HAKAdan_room_11_unaccounted_000104[] = {
-#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_11_unaccounted_000104.bin.inc.c"
-};
-
 Vtx HAKAdan_room_11_030000F0_RoomShapeNormal_030000FC_DListsEntries_03001D08_DL_03000790_DL_03000110_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_11_030000F0_RoomShapeNormal_030000FC_DListsEntries_03001D08_DL_03000790_DL_03000110_Vtx_fused_.inc.c"
 };

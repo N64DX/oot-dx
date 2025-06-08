@@ -24,18 +24,12 @@ ActorEntry HAKAdan_room_17_0300004C_ActorEntryList[LENGTH_HAKAdan_room_17_030000
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_17_0300004C_ActorEntryList.inc.c"
 };
 
-u8 HAKAdan_room_17_zeros_00008C[4] = { 0 };
-
 RoomShapeNormal HAKAdan_room_17_03000090_RoomShapeNormal = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_17_03000090_RoomShapeNormal.inc.c"
 };
 
 RoomShapeDListsEntry HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries[LENGTH_HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries] = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries.inc.c"
-};
-
-u8 HAKAdan_room_17_unaccounted_0000A4[] = {
-#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_17_unaccounted_0000A4.bin.inc.c"
 };
 
 Vtx HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries_03001110_DL_030002F0_DL_030000B0_Vtx_fused_[] = {
@@ -90,8 +84,6 @@ u64 HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries_03001110_DL_
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries_03001110_DL_03000C18_DL_00001F38_Tex.rgba16.inc.c"
 };
 
-u8 HAKAdan_room_17_zeros_002338[8] = { 0 };
-
 Vtx HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries_030024B8_DL_03002400_DL_03002340_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries_030024B8_DL_03002400_DL_03002340_Vtx_fused_.inc.c"
 };
@@ -107,8 +99,6 @@ Gfx HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries_030024B8_DL[
 u64 HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries_030024B8_DL_03002400_DL_000024C8_Tex[TEX_LEN(u64, HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries_030024B8_DL_03002400_DL_000024C8_Tex_WIDTH, HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries_030024B8_DL_03002400_DL_000024C8_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_17_03000090_RoomShapeNormal_0300009C_DListsEntries_030024B8_DL_03002400_DL_000024C8_Tex.ia16.inc.c"
 };
-
-u8 HAKAdan_room_17_zeros_002CC8[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/HAKAdan/mq/objects/room17_obj.inc.c"

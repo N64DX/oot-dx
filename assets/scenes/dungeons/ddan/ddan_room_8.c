@@ -24,8 +24,6 @@ ActorEntry ddan_room_8_0300004C_ActorEntryList[LENGTH_ddan_room_8_0300004C_Actor
 #include "assets/scenes/dungeons/ddan/ddan_room_8_0300004C_ActorEntryList.inc.c"
 };
 
-u8 ddan_room_8_zeros_0000CC[4] = { 0 };
-
 RoomShapeCullable ddan_room_8_030000D0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/ddan/ddan_room_8_030000D0_RoomShapeCullable.inc.c"
 };
@@ -34,20 +32,12 @@ RoomShapeCullableEntry ddan_room_8_030000D0_RoomShapeCullable_030000DC_CullableE
 #include "assets/scenes/dungeons/ddan/ddan_room_8_030000D0_RoomShapeCullable_030000DC_CullableEntries.inc.c"
 };
 
-u8 ddan_room_8_unaccounted_0000EC[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_8_unaccounted_0000EC.bin.inc.c"
-};
-
 Vtx ddan_room_8_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002470_DL_030000F0_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_8_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002470_DL_030000F0_Vtx_fused_.inc.c"
 };
 
 Gfx ddan_room_8_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002470_DL[880] = {
 #include "assets/scenes/dungeons/ddan/ddan_room_8_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002470_DL.inc.c"
-};
-
-u8 ddan_room_8_unaccounted_003FF0[] = {
-#include "assets/scenes/dungeons/ddan/ddan_room_8_unaccounted_003FF0.bin.inc.c"
 };
 
 u64 ddan_room_8_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002470_DL_00004000_CITex[TEX_LEN(u64, ddan_room_8_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002470_DL_00004000_CITex_WIDTH, ddan_room_8_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002470_DL_00004000_CITex_HEIGHT, 8)] = {

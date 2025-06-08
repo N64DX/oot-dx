@@ -28,18 +28,12 @@ ActorEntry bdan_room_9_0300006C_ActorEntryList[LENGTH_bdan_room_9_0300006C_Actor
 #include "assets/scenes/dungeons/bdan/bdan_room_9_0300006C_ActorEntryList.inc.c"
 };
 
-u8 bdan_room_9_zeros_0000BC[4] = { 0 };
-
 RoomShapeNormal bdan_room_9_030000C0_RoomShapeNormal = {
 #include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal.inc.c"
 };
 
 RoomShapeDListsEntry bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries[LENGTH_bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries.inc.c"
-};
-
-u8 bdan_room_9_unaccounted_0000D4[] = {
-#include "assets/scenes/dungeons/bdan/bdan_room_9_unaccounted_0000D4.bin.inc.c"
 };
 
 SceneCmd bdan_room_9_03000048_AltHeaders_030000E0_Cmds[] = {
@@ -53,8 +47,6 @@ s16 bdan_room_9_03000048_AltHeaders_030000E0_Cmds_03000120_ObjectList[LENGTH_bda
 ActorEntry bdan_room_9_03000048_AltHeaders_030000E0_Cmds_0300012C_ActorEntryList[LENGTH_bdan_room_9_03000048_AltHeaders_030000E0_Cmds_0300012C_ActorEntryList] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_9_03000048_AltHeaders_030000E0_Cmds_0300012C_ActorEntryList.inc.c"
 };
-
-u8 bdan_room_9_zeros_00015C[4] = { 0 };
 
 Vtx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_03000160_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_03000160_Vtx_fused_.inc.c"
@@ -275,8 +267,6 @@ Gfx bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL[19] 
 u64 bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_00003868_CITex[TEX_LEN(u64, bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_00003868_CITex_WIDTH, bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_00003868_CITex_HEIGHT, 8)] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_9_030000C0_RoomShapeNormal_030000CC_DListsEntries_030037D0_DL_030006C0_DL_00003868_CITex.ci8.tlut_bdan_room_0_030000C0_RoomShapeNormal_030000CC_DListsEntries_03002CD8_DL_03002360_DL_00013BD8_TLUT.inc.c"
 };
-
-u8 bdan_room_9_zeros_003C68[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/bdan/mq/objects/room9_obj.inc.c"

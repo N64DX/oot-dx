@@ -24,18 +24,12 @@ ActorEntry HIDAN_room_11_03000058_ActorEntryList[LENGTH_HIDAN_room_11_03000058_A
 #include "assets/scenes/dungeons/HIDAN/HIDAN_room_11_03000058_ActorEntryList.inc.c"
 };
 
-u8 HIDAN_room_11_zeros_0000D8[8] = { 0 };
-
 RoomShapeCullable HIDAN_room_11_030000E0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/HIDAN/HIDAN_room_11_030000E0_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries[LENGTH_HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries] = {
 #include "assets/scenes/dungeons/HIDAN/HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries.inc.c"
-};
-
-u8 HIDAN_room_11_unaccounted_00011C[] = {
-#include "assets/scenes/dungeons/HIDAN/HIDAN_room_11_unaccounted_00011C.bin.inc.c"
 };
 
 Vtx HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_030009C0_DL_03000120_Vtx_fused_[] = {
@@ -62,10 +56,6 @@ Gfx HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_03002608_D
 #include "assets/scenes/dungeons/HIDAN/HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_03002608_DL.inc.c"
 };
 
-u8 HIDAN_room_11_unaccounted_002798[] = {
-#include "assets/scenes/dungeons/HIDAN/HIDAN_room_11_unaccounted_002798.bin.inc.c"
-};
-
 u64 HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_030009C0_DL_000027B8_Tex[TEX_LEN(u64, HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_030009C0_DL_000027B8_Tex_WIDTH, HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_030009C0_DL_000027B8_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/HIDAN/HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_030009C0_DL_000027B8_Tex.rgba16.inc.c"
 };
@@ -77,8 +67,6 @@ u64 HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_030018E8_D
 u64 HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_030009C0_DL_000033B8_CITex[TEX_LEN(u64, HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_030009C0_DL_000033B8_CITex_WIDTH, HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_030009C0_DL_000033B8_CITex_HEIGHT, 4)] = {
 #include "assets/scenes/dungeons/HIDAN/HIDAN_room_11_030000E0_RoomShapeCullable_030000EC_CullableEntries_030009C0_DL_000033B8_CITex.ci4.tlut_HIDAN_room_0_030000D0_RoomShapeCullable_030000DC_CullableEntries_03002C20_DL_00018B50_TLUT.inc.c"
 };
-
-u8 HIDAN_room_11_zeros_0037B8[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/HIDAN/mq/objects/room11_obj.inc.c"

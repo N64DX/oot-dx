@@ -23,18 +23,12 @@ s16 ice_doukutu_room_10_03000050_ObjectList[LENGTH_ice_doukutu_room_10_03000050_
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_10_03000050_ObjectList.inc.c"
 };
 
-u8 ice_doukutu_room_10_zeros_000064[12] = { 0 };
-
 RoomShapeNormal ice_doukutu_room_10_03000070_RoomShapeNormal = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_10_03000070_RoomShapeNormal.inc.c"
 };
 
 RoomShapeDListsEntry ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries[LENGTH_ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries.inc.c"
-};
-
-u8 ice_doukutu_room_10_unaccounted_000084[] = {
-#include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_10_unaccounted_000084.bin.inc.c"
 };
 
 SceneCmd ice_doukutu_room_10_03000040_AltHeaders_03000090_Cmds[] = {
@@ -97,8 +91,6 @@ u64 ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries_030019F8
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries_030019F8_DL_03001800_DL_00002A28_Tex.i8.inc.c"
 };
 
-u8 ice_doukutu_room_10_zeros_003A28[8] = { 0 };
-
 Vtx ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries_03003BC8_DL_03003AF0_DL_03003A30_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries_03003BC8_DL_03003AF0_DL_03003A30_Vtx_fused_.inc.c"
 };
@@ -114,8 +106,6 @@ Gfx ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries_03003BC8
 u64 ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries_03003BC8_DL_03003AF0_DL_00003BD8_Tex[TEX_LEN(u64, ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries_03003BC8_DL_03003AF0_DL_00003BD8_Tex_WIDTH, ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries_03003BC8_DL_03003AF0_DL_00003BD8_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_10_03000070_RoomShapeNormal_0300007C_DListsEntries_03003BC8_DL_03003AF0_DL_00003BD8_Tex.rgba16.inc.c"
 };
-
-u8 ice_doukutu_room_10_zeros_0043D8[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/ice_doukutu/mq/objects/room10_obj.inc.c"

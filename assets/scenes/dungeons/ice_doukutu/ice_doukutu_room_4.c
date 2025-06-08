@@ -28,18 +28,12 @@ ActorEntry ice_doukutu_room_4_03000068_ActorEntryList[LENGTH_ice_doukutu_room_4_
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_4_03000068_ActorEntryList.inc.c"
 };
 
-u8 ice_doukutu_room_4_zeros_0000E8[8] = { 0 };
-
 RoomShapeNormal ice_doukutu_room_4_030000F0_RoomShapeNormal = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_4_030000F0_RoomShapeNormal.inc.c"
 };
 
 RoomShapeDListsEntry ice_doukutu_room_4_030000F0_RoomShapeNormal_030000FC_DListsEntries[LENGTH_ice_doukutu_room_4_030000F0_RoomShapeNormal_030000FC_DListsEntries] = {
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_4_030000F0_RoomShapeNormal_030000FC_DListsEntries.inc.c"
-};
-
-u8 ice_doukutu_room_4_unaccounted_000104[] = {
-#include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_4_unaccounted_000104.bin.inc.c"
 };
 
 SceneCmd ice_doukutu_room_4_03000048_AltHeaders_03000110_Cmds[] = {

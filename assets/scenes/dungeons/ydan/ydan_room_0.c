@@ -24,18 +24,12 @@ ActorEntry ydan_room_0_03000058_ActorEntryList[LENGTH_ydan_room_0_03000058_Actor
 #include "assets/scenes/dungeons/ydan/ydan_room_0_03000058_ActorEntryList.inc.c"
 };
 
-u8 ydan_room_0_zeros_000208[8] = { 0 };
-
 RoomShapeCullable ydan_room_0_03000210_RoomShapeCullable = {
 #include "assets/scenes/dungeons/ydan/ydan_room_0_03000210_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries[LENGTH_ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries.inc.c"
-};
-
-u8 ydan_room_0_unaccounted_00028C[] = {
-#include "assets/scenes/dungeons/ydan/ydan_room_0_unaccounted_00028C.bin.inc.c"
 };
 
 Vtx ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_030033F0_DL_03000290_Vtx_fused_[] = {
@@ -68,10 +62,6 @@ Vtx ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03006D28_DL_
 
 Gfx ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03006D28_DL[130] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03006D28_DL.inc.c"
-};
-
-u8 ydan_room_0_unaccounted_007138[] = {
-#include "assets/scenes/dungeons/ydan/ydan_room_0_unaccounted_007138.bin.inc.c"
 };
 
 u64 ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03005E00_DL_00007160_Tex[TEX_LEN(u64, ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03005E00_DL_00007160_Tex_WIDTH, ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03005E00_DL_00007160_Tex_HEIGHT, 16)] = {
@@ -178,10 +168,6 @@ Gfx ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012DD0_DL[
 #include "assets/scenes/dungeons/ydan/ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012DD0_DL.inc.c"
 };
 
-u8 ydan_room_0_unaccounted_012EC0[] = {
-#include "assets/scenes/dungeons/ydan/ydan_room_0_unaccounted_012EC0.bin.inc.c"
-};
-
 u64 ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012460_DL_00012EE8_Tex[TEX_LEN(u64, ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012460_DL_00012EE8_Tex_WIDTH, ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012460_DL_00012EE8_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012460_DL_00012EE8_Tex.rgba16.inc.c"
 };
@@ -193,8 +179,6 @@ u64 ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012DD0_DL_
 u64 ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012460_DL_000142E8_Tex[TEX_LEN(u64, ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012460_DL_000142E8_Tex_WIDTH, ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012460_DL_000142E8_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_03012460_DL_000142E8_Tex.ia16.inc.c"
 };
-
-u8 ydan_room_0_zeros_0152E8[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/ydan/mq/objects/room0_obj.inc.c"

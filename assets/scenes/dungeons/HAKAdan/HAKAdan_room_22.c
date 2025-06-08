@@ -27,10 +27,6 @@ RoomShapeDListsEntry HAKAdan_room_22_03000040_RoomShapeNormal_0300004C_DListsEnt
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_22_03000040_RoomShapeNormal_0300004C_DListsEntries.inc.c"
 };
 
-u8 HAKAdan_room_22_unaccounted_000054[] = {
-#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_22_unaccounted_000054.bin.inc.c"
-};
-
 Vtx HAKAdan_room_22_03000040_RoomShapeNormal_0300004C_DListsEntries_03000F88_DL_03000AF0_DL_03000060_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_22_03000040_RoomShapeNormal_0300004C_DListsEntries_03000F88_DL_03000AF0_DL_03000060_Vtx_fused_.inc.c"
 };
@@ -54,8 +50,6 @@ u64 HAKAdan_room_22_03000040_RoomShapeNormal_0300004C_DListsEntries_03000F88_DL_
 u64 HAKAdan_room_22_03000040_RoomShapeNormal_0300004C_DListsEntries_03000F88_DL_03000AF0_DL_00002198_Tex[TEX_LEN(u64, HAKAdan_room_22_03000040_RoomShapeNormal_0300004C_DListsEntries_03000F88_DL_03000AF0_DL_00002198_Tex_WIDTH, HAKAdan_room_22_03000040_RoomShapeNormal_0300004C_DListsEntries_03000F88_DL_03000AF0_DL_00002198_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_22_03000040_RoomShapeNormal_0300004C_DListsEntries_03000F88_DL_03000AF0_DL_00002198_Tex.rgba16.inc.c"
 };
-
-u8 HAKAdan_room_22_zeros_002998[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/HAKAdan/mq/objects/room22_obj.inc.c"

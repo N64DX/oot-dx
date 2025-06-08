@@ -24,18 +24,12 @@ ActorEntry jyasinzou_room_2_03000054_ActorEntryList[LENGTH_jyasinzou_room_2_0300
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_2_03000054_ActorEntryList.inc.c"
 };
 
-u8 jyasinzou_room_2_zeros_000184[12] = { 0 };
-
 RoomShapeCullable jyasinzou_room_2_03000190_RoomShapeCullable = {
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_2_03000190_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry jyasinzou_room_2_03000190_RoomShapeCullable_0300019C_CullableEntries[LENGTH_jyasinzou_room_2_03000190_RoomShapeCullable_0300019C_CullableEntries] = {
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_2_03000190_RoomShapeCullable_0300019C_CullableEntries.inc.c"
-};
-
-u8 jyasinzou_room_2_unaccounted_0001EC[] = {
-#include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_2_unaccounted_0001EC.bin.inc.c"
 };
 
 Vtx jyasinzou_room_2_03000190_RoomShapeCullable_0300019C_CullableEntries_03000750_DL_030002D0_Vtx_fused_[] = {
@@ -76,10 +70,6 @@ Vtx jyasinzou_room_2_03000190_RoomShapeCullable_0300019C_CullableEntries_030021D
 
 Gfx jyasinzou_room_2_03000190_RoomShapeCullable_0300019C_CullableEntries_030021D0_DL[66] = {
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_2_03000190_RoomShapeCullable_0300019C_CullableEntries_030021D0_DL.inc.c"
-};
-
-u8 jyasinzou_room_2_unaccounted_0023E0[] = {
-#include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_2_unaccounted_0023E0.bin.inc.c"
 };
 
 u64 jyasinzou_room_2_03000190_RoomShapeCullable_0300019C_CullableEntries_03001DE8_DL_00002410_Tex[TEX_LEN(u64, jyasinzou_room_2_03000190_RoomShapeCullable_0300019C_CullableEntries_03001DE8_DL_00002410_Tex_WIDTH, jyasinzou_room_2_03000190_RoomShapeCullable_0300019C_CullableEntries_03001DE8_DL_00002410_Tex_HEIGHT, 16)] = {

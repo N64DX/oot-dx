@@ -24,18 +24,12 @@ ActorEntry HAKAdan_room_0_03000048_ActorEntryList[LENGTH_HAKAdan_room_0_03000048
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_0_03000048_ActorEntryList.inc.c"
 };
 
-u8 HAKAdan_room_0_zeros_000188[8] = { 0 };
-
 RoomShapeNormal HAKAdan_room_0_03000190_RoomShapeNormal = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_0_03000190_RoomShapeNormal.inc.c"
 };
 
 RoomShapeDListsEntry HAKAdan_room_0_03000190_RoomShapeNormal_0300019C_DListsEntries[LENGTH_HAKAdan_room_0_03000190_RoomShapeNormal_0300019C_DListsEntries] = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_0_03000190_RoomShapeNormal_0300019C_DListsEntries.inc.c"
-};
-
-u8 HAKAdan_room_0_unaccounted_0001A4[] = {
-#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_0_unaccounted_0001A4.bin.inc.c"
 };
 
 Vtx HAKAdan_room_0_03000190_RoomShapeNormal_0300019C_DListsEntries_03008170_DL_03000C70_DL_030001B0_Vtx_fused_[] = {
@@ -109,8 +103,6 @@ Gfx HAKAdan_room_0_03000190_RoomShapeNormal_0300019C_DListsEntries_0300ACA8_DL[2
 u64 HAKAdan_room_0_03000190_RoomShapeNormal_0300019C_DListsEntries_0300ACA8_DL_0300ABB0_DL_0000ACB8_Tex[TEX_LEN(u64, HAKAdan_room_0_03000190_RoomShapeNormal_0300019C_DListsEntries_0300ACA8_DL_0300ABB0_DL_0000ACB8_Tex_WIDTH, HAKAdan_room_0_03000190_RoomShapeNormal_0300019C_DListsEntries_0300ACA8_DL_0300ABB0_DL_0000ACB8_Tex_HEIGHT, 8)] = {
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_0_03000190_RoomShapeNormal_0300019C_DListsEntries_0300ACA8_DL_0300ABB0_DL_0000ACB8_Tex.ia8.inc.c"
 };
-
-u8 HAKAdan_room_0_zeros_00B0B8[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/HAKAdan/mq/objects/room0_obj.inc.c"

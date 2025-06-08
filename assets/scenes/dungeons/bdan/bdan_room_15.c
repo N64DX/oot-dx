@@ -31,10 +31,6 @@ RoomShapeDListsEntry bdan_room_15_03000060_RoomShapeNormal_0300006C_DListsEntrie
 #include "assets/scenes/dungeons/bdan/bdan_room_15_03000060_RoomShapeNormal_0300006C_DListsEntries.inc.c"
 };
 
-u8 bdan_room_15_unaccounted_000074[] = {
-#include "assets/scenes/dungeons/bdan/bdan_room_15_unaccounted_000074.bin.inc.c"
-};
-
 SceneCmd bdan_room_15_03000040_AltHeaders_03000080_Cmds[] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_15_03000040_AltHeaders_03000080_Cmds.inc.c"
 };
@@ -42,8 +38,6 @@ SceneCmd bdan_room_15_03000040_AltHeaders_03000080_Cmds[] = {
 s16 bdan_room_15_03000040_AltHeaders_03000080_Cmds_030000B8_ObjectList[LENGTH_bdan_room_15_03000040_AltHeaders_03000080_Cmds_030000B8_ObjectList] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_15_03000040_AltHeaders_03000080_Cmds_030000B8_ObjectList.inc.c"
 };
-
-u8 bdan_room_15_zeros_0000BC[4] = { 0 };
 
 Vtx bdan_room_15_03000060_RoomShapeNormal_0300006C_DListsEntries_03002688_DL_030006B0_DL_030000C0_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/bdan/bdan_room_15_03000060_RoomShapeNormal_0300006C_DListsEntries_03002688_DL_030006B0_DL_030000C0_Vtx_fused_.inc.c"

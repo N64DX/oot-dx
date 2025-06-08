@@ -24,8 +24,6 @@ ActorEntry Bmori1_room_19_03000054_ActorEntryList[LENGTH_Bmori1_room_19_03000054
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_19_03000054_ActorEntryList.inc.c"
 };
 
-u8 Bmori1_room_19_zeros_0000A4[12] = { 0 };
-
 RoomShapeCullable Bmori1_room_19_030000B0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_19_030000B0_RoomShapeCullable.inc.c"
 };
@@ -34,20 +32,12 @@ RoomShapeCullableEntry Bmori1_room_19_030000B0_RoomShapeCullable_030000BC_Cullab
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries.inc.c"
 };
 
-u8 Bmori1_room_19_unaccounted_0000CC[] = {
-#include "assets/scenes/dungeons/Bmori1/Bmori1_room_19_unaccounted_0000CC.bin.inc.c"
-};
-
 Vtx Bmori1_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_030003C0_DL_030000D0_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_030003C0_DL_030000D0_Vtx_fused_.inc.c"
 };
 
 Gfx Bmori1_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_030003C0_DL[40] = {
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_030003C0_DL.inc.c"
-};
-
-u8 Bmori1_room_19_unaccounted_000500[] = {
-#include "assets/scenes/dungeons/Bmori1/Bmori1_room_19_unaccounted_000500.bin.inc.c"
 };
 
 static s16 mq_objects[] = {

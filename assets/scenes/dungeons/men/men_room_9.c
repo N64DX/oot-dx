@@ -24,18 +24,12 @@ ActorEntry men_room_9_03000058_ActorEntryList[LENGTH_men_room_9_03000058_ActorEn
 #include "assets/scenes/dungeons/men/men_room_9_03000058_ActorEntryList.inc.c"
 };
 
-u8 men_room_9_zeros_0001D8[8] = { 0 };
-
 RoomShapeCullable men_room_9_030001E0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/men/men_room_9_030001E0_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries[LENGTH_men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries] = {
 #include "assets/scenes/dungeons/men/men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries.inc.c"
-};
-
-u8 men_room_9_unaccounted_00024C[] = {
-#include "assets/scenes/dungeons/men/men_room_9_unaccounted_00024C.bin.inc.c"
 };
 
 Vtx men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03000780_DL_03000250_Vtx_fused_[] = {
@@ -78,10 +72,6 @@ Gfx men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001A40_DL[2
 #include "assets/scenes/dungeons/men/men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001A40_DL.inc.c"
 };
 
-u8 men_room_9_unaccounted_001B00[] = {
-#include "assets/scenes/dungeons/men/men_room_9_unaccounted_001B00.bin.inc.c"
-};
-
 u64 men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001A40_DL_00001B30_Tex[TEX_LEN(u64, men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001A40_DL_00001B30_Tex_WIDTH, men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001A40_DL_00001B30_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/men/men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03001A40_DL_00001B30_Tex.rgba16.inc.c"
 };
@@ -100,10 +90,6 @@ Vtx men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003000_DL_0
 
 Gfx men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003000_DL[28] = {
 #include "assets/scenes/dungeons/men/men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003000_DL.inc.c"
-};
-
-u8 men_room_9_unaccounted_0030E0[] = {
-#include "assets/scenes/dungeons/men/men_room_9_unaccounted_0030E0.bin.inc.c"
 };
 
 u64 men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003000_DL_000030F0_Tex[TEX_LEN(u64, men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003000_DL_000030F0_Tex_WIDTH, men_room_9_030001E0_RoomShapeCullable_030001EC_CullableEntries_03003000_DL_000030F0_Tex_HEIGHT, 16)] = {

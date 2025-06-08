@@ -24,18 +24,12 @@ ActorEntry HAKAdanCH_room_2_0300004C_ActorEntryList[LENGTH_HAKAdanCH_room_2_0300
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_2_0300004C_ActorEntryList.inc.c"
 };
 
-u8 HAKAdanCH_room_2_zeros_00013C[4] = { 0 };
-
 RoomShapeCullable HAKAdanCH_room_2_03000140_RoomShapeCullable = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_2_03000140_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries[LENGTH_HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries.inc.c"
-};
-
-u8 HAKAdanCH_room_2_unaccounted_00017C[] = {
-#include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_2_unaccounted_00017C.bin.inc.c"
 };
 
 Vtx HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03000710_DL_03000180_Vtx_fused_[] = {
@@ -62,10 +56,6 @@ Gfx HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03001FD
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03001FD8_DL.inc.c"
 };
 
-u8 HAKAdanCH_room_2_unaccounted_002968[] = {
-#include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_2_unaccounted_002968.bin.inc.c"
-};
-
 u64 HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03000A10_DL_00002988_Tex[TEX_LEN(u64, HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03000A10_DL_00002988_Tex_WIDTH, HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03000A10_DL_00002988_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03000A10_DL_00002988_Tex.rgba16.inc.c"
 };
@@ -81,8 +71,6 @@ u64 HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03001FD
 u64 HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03001FD8_DL_00002F88_Tex[TEX_LEN(u64, HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03001FD8_DL_00002F88_Tex_WIDTH, HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03001FD8_DL_00002F88_Tex_HEIGHT, 4)] = {
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_2_03000140_RoomShapeCullable_0300014C_CullableEntries_03001FD8_DL_00002F88_Tex.i4.inc.c"
 };
-
-u8 HAKAdanCH_room_2_zeros_003188[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/HAKAdanCH/mq/objects/room2_obj.inc.c"

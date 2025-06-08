@@ -32,20 +32,12 @@ RoomShapeCullableEntry Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_Cullab
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries.inc.c"
 };
 
-u8 Bmori1_room_16_unaccounted_0000EC[] = {
-#include "assets/scenes/dungeons/Bmori1/Bmori1_room_16_unaccounted_0000EC.bin.inc.c"
-};
-
 Vtx Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL_030000F0_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL_030000F0_Vtx_fused_.inc.c"
 };
 
 Gfx Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL[677] = {
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL.inc.c"
-};
-
-u8 Bmori1_room_16_unaccounted_002F88[] = {
-#include "assets/scenes/dungeons/Bmori1/Bmori1_room_16_unaccounted_002F88.bin.inc.c"
 };
 
 u64 Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL_00002F98_Tex[TEX_LEN(u64, Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL_00002F98_Tex_WIDTH, Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL_00002F98_Tex_HEIGHT, 16)] = {
@@ -67,8 +59,6 @@ u64 Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_
 u64 Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL_00004798_CITex[TEX_LEN(u64, Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL_00004798_CITex_WIDTH, Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL_00004798_CITex_HEIGHT, 8)] = {
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_16_030000D0_RoomShapeCullable_030000DC_CullableEntries_03001A60_DL_00004798_CITex.ci8.tlut_Bmori1_room_0_030000A0_RoomShapeCullable_030000AC_CullableEntries_03001D10_DL_00014288_TLUT.inc.c"
 };
-
-u8 Bmori1_room_16_zeros_004F98[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/Bmori1/mq/objects/room16_obj.inc.c"

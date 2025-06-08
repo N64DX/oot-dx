@@ -24,8 +24,6 @@ ActorEntry MIZUsin_room_19_03000058_ActorEntryList[LENGTH_MIZUsin_room_19_030000
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_19_03000058_ActorEntryList.inc.c"
 };
 
-u8 MIZUsin_room_19_zeros_0000A8[8] = { 0 };
-
 RoomShapeCullable MIZUsin_room_19_030000B0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_19_030000B0_RoomShapeCullable.inc.c"
 };
@@ -34,20 +32,12 @@ RoomShapeCullableEntry MIZUsin_room_19_030000B0_RoomShapeCullable_030000BC_Culla
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries.inc.c"
 };
 
-u8 MIZUsin_room_19_unaccounted_0000CC[] = {
-#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_19_unaccounted_0000CC.bin.inc.c"
-};
-
 Vtx MIZUsin_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_03000D00_DL_030000D0_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_03000D00_DL_030000D0_Vtx_fused_.inc.c"
 };
 
 Gfx MIZUsin_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_03000D00_DL[132] = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_03000D00_DL.inc.c"
-};
-
-u8 MIZUsin_room_19_unaccounted_001120[] = {
-#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_19_unaccounted_001120.bin.inc.c"
 };
 
 u64 MIZUsin_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_03000D00_DL_00001130_Tex[TEX_LEN(u64, MIZUsin_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_03000D00_DL_00001130_Tex_WIDTH, MIZUsin_room_19_030000B0_RoomShapeCullable_030000BC_CullableEntries_03000D00_DL_00001130_Tex_HEIGHT, 16)] = {

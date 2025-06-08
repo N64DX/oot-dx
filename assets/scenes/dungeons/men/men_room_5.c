@@ -32,10 +32,6 @@ RoomShapeCullableEntry men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEn
 #include "assets/scenes/dungeons/men/men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries.inc.c"
 };
 
-u8 men_room_5_unaccounted_0001DC[] = {
-#include "assets/scenes/dungeons/men/men_room_5_unaccounted_0001DC.bin.inc.c"
-};
-
 Vtx men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030012F0_DL_030001E0_Vtx_fused_[] = {
 #include "assets/scenes/dungeons/men/men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030012F0_DL_030001E0_Vtx_fused_.inc.c"
 };
@@ -50,10 +46,6 @@ Vtx men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030021E8_DL_0
 
 Gfx men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030021E8_DL[91] = {
 #include "assets/scenes/dungeons/men/men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030021E8_DL.inc.c"
-};
-
-u8 men_room_5_unaccounted_0024C0[] = {
-#include "assets/scenes/dungeons/men/men_room_5_unaccounted_0024C0.bin.inc.c"
 };
 
 u64 men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030021E8_DL_000024D8_CITex[TEX_LEN(u64, men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030021E8_DL_000024D8_CITex_WIDTH, men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030021E8_DL_000024D8_CITex_HEIGHT, 8)] = {
@@ -79,8 +71,6 @@ u64 men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030012F0_DL_0
 u64 men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030012F0_DL_000048D8_CITex[TEX_LEN(u64, men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030012F0_DL_000048D8_CITex_WIDTH, men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030012F0_DL_000048D8_CITex_HEIGHT, 8)] = {
 #include "assets/scenes/dungeons/men/men_room_5_030001B0_RoomShapeCullable_030001BC_CullableEntries_030012F0_DL_000048D8_CITex.ci8.tlut_gMenDL_008118_03002AD0_DL_0000F730_TLUT.inc.c"
 };
-
-u8 men_room_5_zeros_0050D8[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/men/mq/objects/room5_obj.inc.c"

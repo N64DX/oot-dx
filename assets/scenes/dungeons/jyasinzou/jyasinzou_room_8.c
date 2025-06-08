@@ -24,18 +24,12 @@ ActorEntry jyasinzou_room_8_03000054_ActorEntryList[LENGTH_jyasinzou_room_8_0300
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_8_03000054_ActorEntryList.inc.c"
 };
 
-u8 jyasinzou_room_8_zeros_0001B4[12] = { 0 };
-
 RoomShapeCullable jyasinzou_room_8_030001C0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_8_030001C0_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries[LENGTH_jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries] = {
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries.inc.c"
-};
-
-u8 jyasinzou_room_8_unaccounted_00025C[] = {
-#include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_8_unaccounted_00025C.bin.inc.c"
 };
 
 Vtx jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries_030009B0_DL_03000320_Vtx_fused_[] = {
@@ -102,10 +96,6 @@ Gfx jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries_030036A
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries_030036A8_DL.inc.c"
 };
 
-u8 jyasinzou_room_8_unaccounted_0039C8[] = {
-#include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_8_unaccounted_0039C8.bin.inc.c"
-};
-
 u64 jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries_030026E0_DL_00003A10_CITex[TEX_LEN(u64, jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries_030026E0_DL_00003A10_CITex_WIDTH, jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries_030026E0_DL_00003A10_CITex_HEIGHT, 8)] = {
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries_030026E0_DL_00003A10_CITex.ci8.tlut_jyasinzou_room_0_03000160_RoomShapeCullable_0300016C_CullableEntries_03004770_DL_00017E00_TLUT.inc.c"
 };
@@ -148,10 +138,6 @@ Vtx jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries_03007E9
 
 Gfx jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries_03007E90_DL[57] = {
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_8_030001C0_RoomShapeCullable_030001CC_CullableEntries_03007E90_DL.inc.c"
-};
-
-u8 jyasinzou_room_8_unaccounted_008058[] = {
-#include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_8_unaccounted_008058.bin.inc.c"
 };
 
 static s16 mq_objects[] = {

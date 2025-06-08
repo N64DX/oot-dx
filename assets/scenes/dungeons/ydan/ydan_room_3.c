@@ -24,18 +24,12 @@ ActorEntry ydan_room_3_03000058_ActorEntryList[LENGTH_ydan_room_3_03000058_Actor
 #include "assets/scenes/dungeons/ydan/ydan_room_3_03000058_ActorEntryList.inc.c"
 };
 
-u8 ydan_room_3_zeros_000198[8] = { 0 };
-
 RoomShapeCullable ydan_room_3_030001A0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/ydan/ydan_room_3_030001A0_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries[LENGTH_ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries.inc.c"
-};
-
-u8 ydan_room_3_unaccounted_00025C[] = {
-#include "assets/scenes/dungeons/ydan/ydan_room_3_unaccounted_00025C.bin.inc.c"
 };
 
 Vtx ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_03000EF0_DL_03000260_Vtx_fused_[] = {
@@ -84,10 +78,6 @@ Vtx ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_030071F8_DL_
 
 Gfx ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_030071F8_DL[80] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_030071F8_DL.inc.c"
-};
-
-u8 ydan_room_3_unaccounted_007478[] = {
-#include "assets/scenes/dungeons/ydan/ydan_room_3_unaccounted_007478.bin.inc.c"
 };
 
 u64 ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_03006B08_DL_000074B0_Tex[TEX_LEN(u64, ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_03006B08_DL_000074B0_Tex_WIDTH, ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_03006B08_DL_000074B0_Tex_HEIGHT, 16)] = {
@@ -200,10 +190,6 @@ Vtx ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_03011C58_DL_
 
 Gfx ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_03011C58_DL[35] = {
 #include "assets/scenes/dungeons/ydan/ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_03011C58_DL.inc.c"
-};
-
-u8 ydan_room_3_unaccounted_011D70[] = {
-#include "assets/scenes/dungeons/ydan/ydan_room_3_unaccounted_011D70.bin.inc.c"
 };
 
 u64 ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_030106D0_DL_00011DA0_Tex[TEX_LEN(u64, ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_030106D0_DL_00011DA0_Tex_WIDTH, ydan_room_3_030001A0_RoomShapeCullable_030001AC_CullableEntries_030106D0_DL_00011DA0_Tex_HEIGHT, 16)] = {

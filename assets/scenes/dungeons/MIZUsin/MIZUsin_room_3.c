@@ -24,18 +24,12 @@ ActorEntry MIZUsin_room_3_03000058_ActorEntryList[LENGTH_MIZUsin_room_3_03000058
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_3_03000058_ActorEntryList.inc.c"
 };
 
-u8 MIZUsin_room_3_zeros_000148[8] = { 0 };
-
 RoomShapeCullable MIZUsin_room_3_03000150_RoomShapeCullable = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_3_03000150_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries[LENGTH_MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries] = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries.inc.c"
-};
-
-u8 MIZUsin_room_3_unaccounted_0001DC[] = {
-#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_3_unaccounted_0001DC.bin.inc.c"
 };
 
 Vtx MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03000310_DL_030001E0_Vtx_fused_[] = {
@@ -102,10 +96,6 @@ Gfx MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_DL.inc.c"
 };
 
-u8 MIZUsin_room_3_unaccounted_0036C0[] = {
-#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_3_unaccounted_0036C0.bin.inc.c"
-};
-
 u64 MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_DL_00003708_Tex[TEX_LEN(u64, MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_DL_00003708_Tex_WIDTH, MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_DL_00003708_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_DL_00003708_Tex.rgba16.inc.c"
 };
@@ -129,8 +119,6 @@ u64 MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_
 u64 MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_DL_00005F08_Tex[TEX_LEN(u64, MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_DL_00005F08_Tex_WIDTH, MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_DL_00005F08_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_3_03000150_RoomShapeCullable_0300015C_CullableEntries_03003020_DL_00005F08_Tex.rgba16.inc.c"
 };
-
-u8 MIZUsin_room_3_zeros_006708[8] = { 0 };
 
 static s16 mq_objects[] = {
 #include "assets/scenes/dungeons/MIZUsin/mq/objects/room3_obj.inc.c"

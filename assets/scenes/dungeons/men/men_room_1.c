@@ -24,18 +24,12 @@ ActorEntry men_room_1_0300004C_ActorEntryList[LENGTH_men_room_1_0300004C_ActorEn
 #include "assets/scenes/dungeons/men/men_room_1_0300004C_ActorEntryList.inc.c"
 };
 
-u8 men_room_1_zeros_0000AC[4] = { 0 };
-
 RoomShapeCullable men_room_1_030000B0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/men/men_room_1_030000B0_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry men_room_1_030000B0_RoomShapeCullable_030000BC_CullableEntries[LENGTH_men_room_1_030000B0_RoomShapeCullable_030000BC_CullableEntries] = {
 #include "assets/scenes/dungeons/men/men_room_1_030000B0_RoomShapeCullable_030000BC_CullableEntries.inc.c"
-};
-
-u8 men_room_1_unaccounted_00016C[] = {
-#include "assets/scenes/dungeons/men/men_room_1_unaccounted_00016C.bin.inc.c"
 };
 
 Vtx men_room_1_030000B0_RoomShapeCullable_030000BC_CullableEntries_03000B90_DL_03000170_Vtx_fused_[] = {
@@ -124,10 +118,6 @@ Vtx men_room_1_030000B0_RoomShapeCullable_030000BC_CullableEntries_03004170_DL_0
 
 Gfx men_room_1_030000B0_RoomShapeCullable_030000BC_CullableEntries_03004170_DL[24] = {
 #include "assets/scenes/dungeons/men/men_room_1_030000B0_RoomShapeCullable_030000BC_CullableEntries_03004170_DL.inc.c"
-};
-
-u8 men_room_1_unaccounted_004230[] = {
-#include "assets/scenes/dungeons/men/men_room_1_unaccounted_004230.bin.inc.c"
 };
 
 u64 men_room_1_030000B0_RoomShapeCullable_030000BC_CullableEntries_03003F60_DL_00004290_Tex[TEX_LEN(u64, men_room_1_030000B0_RoomShapeCullable_030000BC_CullableEntries_03003F60_DL_00004290_Tex_WIDTH, men_room_1_030000B0_RoomShapeCullable_030000BC_CullableEntries_03003F60_DL_00004290_Tex_HEIGHT, 16)] = {

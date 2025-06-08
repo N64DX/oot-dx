@@ -24,18 +24,12 @@ ActorEntry Bmori1_room_5_0300004C_ActorEntryList[LENGTH_Bmori1_room_5_0300004C_A
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_5_0300004C_ActorEntryList.inc.c"
 };
 
-u8 Bmori1_room_5_zeros_00009C[4] = { 0 };
-
 RoomShapeCullable Bmori1_room_5_030000A0_RoomShapeCullable = {
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_5_030000A0_RoomShapeCullable.inc.c"
 };
 
 RoomShapeCullableEntry Bmori1_room_5_030000A0_RoomShapeCullable_030000AC_CullableEntries[LENGTH_Bmori1_room_5_030000A0_RoomShapeCullable_030000AC_CullableEntries] = {
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_5_030000A0_RoomShapeCullable_030000AC_CullableEntries.inc.c"
-};
-
-u8 Bmori1_room_5_unaccounted_0000DC[] = {
-#include "assets/scenes/dungeons/Bmori1/Bmori1_room_5_unaccounted_0000DC.bin.inc.c"
 };
 
 Vtx Bmori1_room_5_030000A0_RoomShapeCullable_030000AC_CullableEntries_03000920_DL_030000E0_Vtx_fused_[] = {
@@ -60,10 +54,6 @@ Vtx Bmori1_room_5_030000A0_RoomShapeCullable_030000AC_CullableEntries_03002180_D
 
 Gfx Bmori1_room_5_030000A0_RoomShapeCullable_030000AC_CullableEntries_03002180_DL[72] = {
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_5_030000A0_RoomShapeCullable_030000AC_CullableEntries_03002180_DL.inc.c"
-};
-
-u8 Bmori1_room_5_unaccounted_0023C0[] = {
-#include "assets/scenes/dungeons/Bmori1/Bmori1_room_5_unaccounted_0023C0.bin.inc.c"
 };
 
 u64 Bmori1_room_5_030000A0_RoomShapeCullable_030000AC_CullableEntries_03000920_DL_000023E0_CITex[TEX_LEN(u64, Bmori1_room_5_030000A0_RoomShapeCullable_030000AC_CullableEntries_03000920_DL_000023E0_CITex_WIDTH, Bmori1_room_5_030000A0_RoomShapeCullable_030000AC_CullableEntries_03000920_DL_000023E0_CITex_HEIGHT, 8)] = {
