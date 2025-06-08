@@ -12,11 +12,16 @@
 #include "skybox.h"
 #include "stdbool.h"
 #include "ultra64.h"
+#include "versions.h"
 
 static SceneCmd* questHeaders[1];
 
 SceneCmd ice_doukutu_scene[] = {
+#if OOT_NTSC
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene.inc.c"
+#else
+#include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene_pal.inc.c"
+#endif
 };
 
 SceneCmd* ice_doukutu_scene_02000068_AltHeaders[] = {
