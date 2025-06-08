@@ -373,21 +373,8 @@ void Fault_Sleep(u32 msec) {
     Fault_SleepImpl(msec);
 }
 
-#ifndef AVOID_UB
-void PadMgr_RequestPadData(Input* inputs, s32 gameRequest);
-#endif
-
 void Fault_PadCallback(Input* inputs) {
-    //! @bug This function is not called correctly, it is missing a leading PadMgr* argument. This
-    //! renders the crash screen unusable.
-    //! In Majora's Mask, PadMgr functions were changed to not require this argument, and this was
-    //! likely just not addressed when backporting.
-#ifndef AVOID_UB
-    PadMgr_RequestPadData(inputs, false);
-#else
-    // Guarantee crashing behavior: false -> NULL, previous value in a2 is more often non-zero than zero
-    PadMgr_RequestPadData((PadMgr*)inputs, NULL, true);
-#endif
+    PadMgr_RequestPadData(&gPadMgr, inputs, 0);
 }
 
 void Fault_UpdatePadImpl(void) {
@@ -1246,7 +1233,7 @@ void Fault_ThreadEntry(void* arg) {
         }
 
         // Set auto-scrolling and default colors
-        sFaultInstance->autoScroll = true;
+        sFaultInstance->autoScroll = false;
         Fault_SetForeColor(GPACK_RGBA5551(255, 255, 255, 1));
         Fault_SetBackColor(GPACK_RGBA5551(0, 0, 0, 0));
 
@@ -1266,13 +1253,6 @@ void Fault_ThreadEntry(void* arg) {
             Fault_ProcessClients();
             // Memory dump page
             Fault_DrawMemDump(faultedThread->context.pc - 0x100, (uintptr_t)faultedThread->context.sp, 0, 0);
-            // End page
-            Fault_FillScreenRed();
-            Fault_DrawText(64, 80, "    CONGRATURATIONS!    ");
-            Fault_DrawText(64, 90, "All Pages are displayed.");
-            Fault_DrawText(64, 100, "       THANK YOU!       ");
-            Fault_DrawText(64, 110, " You are great debugger!");
-            Fault_WaitForInput();
         } while (!sFaultInstance->exit);
 
         while (!sFaultInstance->exit) {}

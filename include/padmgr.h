@@ -44,11 +44,7 @@ void PadMgr_Init(PadMgr* padMgr, OSMesgQueue* serialEventQueue, IrqMgr* irqMgr, 
 
 // Fetching inputs
 
-// This function cannot be prototyped here in all configurations because it is called incorrectly in fault_gc.c
-// (see bug in `Fault_PadCallback`)
-#if PLATFORM_N64 || defined(AVOID_UB)
 void PadMgr_RequestPadData(PadMgr* padmgr, Input* inputs, s32 gameRequest);
-#endif
 
 // For internal use by Controller Pak systems
 
