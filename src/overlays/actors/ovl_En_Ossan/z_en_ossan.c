@@ -988,7 +988,9 @@ void EnOssan_State_FacingShopkeeper(EnOssan* this, PlayState* play, Player* play
                 this->cursorIndex = nextIndex;
                 this->stateFlag = OSSAN_STATE_LOOK_SHELF_LEFT;
                 Interface_SetDoAction(play, DO_ACTION_DECIDE);
-                this->stickLeftPrompt.isEnabled = false;
+                if (R_ENABLE_MIRROR)
+                    this->stickRightPrompt.isEnabled = false;
+                else this->stickLeftPrompt.isEnabled = false;
                 Sfx_PlaySfxCentered(NA_SE_SY_CURSOR);
             }
         } else if (this->stickAccumX > 0) {
@@ -997,7 +999,9 @@ void EnOssan_State_FacingShopkeeper(EnOssan* this, PlayState* play, Player* play
                 this->cursorIndex = nextIndex;
                 this->stateFlag = OSSAN_STATE_LOOK_SHELF_RIGHT;
                 Interface_SetDoAction(play, DO_ACTION_DECIDE);
-                this->stickRightPrompt.isEnabled = false;
+                if (R_ENABLE_MIRROR)
+                    this->stickLeftPrompt.isEnabled = false;
+                else this->stickRightPrompt.isEnabled = false;
                 Sfx_PlaySfxCentered(NA_SE_SY_CURSOR);
             }
         }
@@ -1213,7 +1217,9 @@ void EnOssan_State_BrowseLeftShelf(EnOssan* this, PlayState* play, Player* playe
         return;
     }
     this->drawCursor = 0xFF;
-    this->stickRightPrompt.isEnabled = true;
+    if (R_ENABLE_MIRROR)
+        this->stickLeftPrompt.isEnabled = true;
+    else this->stickRightPrompt.isEnabled = true;
     EnOssan_UpdateCursorPos(play, this);
     if ((Message_GetState(&play->msgCtx) == TEXT_STATE_EVENT) &&
         !EnOssan_HasPlayerSelectedItem(play, this, &play->state.input[0])) {
@@ -1272,7 +1278,9 @@ void EnOssan_State_BrowseRightShelf(EnOssan* this, PlayState* play, Player* play
         return;
     }
     this->drawCursor = 0xFF;
-    this->stickLeftPrompt.isEnabled = true;
+    if (R_ENABLE_MIRROR)
+        this->stickRightPrompt.isEnabled = true;
+    else this->stickLeftPrompt.isEnabled = true;
     EnOssan_UpdateCursorPos(play, this);
     if ((Message_GetState(&play->msgCtx) == TEXT_STATE_EVENT) &&
         !EnOssan_HasPlayerSelectedItem(play, this, &play->state.input[0])) {

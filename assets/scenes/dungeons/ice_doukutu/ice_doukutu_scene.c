@@ -57,12 +57,8 @@ CutsceneData gIceCavernSerenadeCs[] = {
 };
 
 #if OOT_NTSC
-Vec3s ice_doukutu_scene_0200F5C4_BgCamList_02001A00_BgCamFuncData[] = {
-#include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene_0200F5C4_BgCamList_02001A00_BgCamFuncData.inc.c"
-};
-
 BgCamInfo ice_doukutu_scene_0200F5C4_BgCamList[] = {
-#include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene_0200F5C4_BgCamList.inc.c"
+#include "assets/scenes/dungeons/ice_doukutu/mq/scene/camList.inc.c"
 };
 
 SurfaceType ice_doukutu_scene_0200F5C4_SurfaceTypes[] = {
@@ -146,7 +142,7 @@ u64 ice_doukutu_room_2_030000D0_RoomShapeNormal_030000DC_DListsEntries_030016F0_
 };
 #else
 BgCamInfo ice_doukutu_scene_0200F5A8_BgCamList[] = {
-#include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene_0200F5A8_BgCamList.inc.c"
+#include "assets/scenes/dungeons/ice_doukutu/mq/scene/camList.inc.c"
 };
 
 SurfaceType ice_doukutu_scene_0200F5A8_SurfaceTypes[] = {

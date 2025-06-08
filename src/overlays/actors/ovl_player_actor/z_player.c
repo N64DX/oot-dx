@@ -11880,7 +11880,7 @@ void Player_UpdateCamAndSeqModes(PlayState* play, Player* this) {
                 }
             } else if (this->stateFlags1 & (PLAYER_STATE1_PARALLEL | PLAYER_STATE1_LOCK_ON_FORCED_TO_RELEASE)) {
                 if (func_8002DD78(this) || func_808334B4(this)) {
-                    camMode = CAM_MODE_Z_AIM;
+                    camMode = R_ENABLE_MIRROR ? CAM_MODE_Z_AIM_MIRROR : CAM_MODE_Z_AIM;
                 } else if (this->stateFlags1 & PLAYER_STATE1_21) {
                     camMode = CAM_MODE_Z_WALL_CLIMB;
                 } else {
@@ -15003,7 +15003,7 @@ s32 Player_UpdateNoclip(Player* this, PlayState* play) {
         sNoclipTimer = 60 / R_UPDATE_RATE / 4;
 
         if (sNoclipEnabled) {
-            Camera_RequestMode(Play_GetCamera(play, CAM_ID_MAIN), CAM_MODE_Z_AIM);
+            Camera_RequestMode(Play_GetCamera(play, CAM_ID_MAIN), R_ENABLE_MIRROR ? CAM_MODE_Z_AIM_MIRROR : CAM_MODE_Z_AIM);
         }
     }
 

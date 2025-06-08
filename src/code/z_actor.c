@@ -831,7 +831,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
     s32 titleY1;
     s32 titleY2;
     s32 textureLanguageOffset;
-    u32 dsdx = HIRES_DIVIDE(1 << 10);
+    u32 dsdx = HIRES_DIVIDE((1 << 10));
     s32 s = 0;
 
     if (titleCtx->alpha != 0) {
@@ -863,7 +863,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         titleY2 = titleY1 + HIRES_MULTIPLY((height * 4));
 
         if (R_ENABLE_MIRROR && play->pauseCtx.state >= 2) {
-            dsdx = -HIRES_DIVIDE(1 << 10);
+            dsdx = -HIRES_DIVIDE((1 << 10));
             s = width << 5;
         }
 

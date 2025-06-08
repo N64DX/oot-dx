@@ -500,9 +500,13 @@ void EnArrow_Draw(Actor* thisx, PlayState* play) {
     f32 scale;
 
     if (this->actor.params <= ARROW_0E) {
+        Matrix_Push();
+        if (R_ENABLE_MIRROR)
+            Matrix_RotateZ(1.2f, MTXMODE_APPLY);
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         SkelAnime_DrawLod(play, this->skelAnime.skeleton, this->skelAnime.jointTable, NULL, NULL, this,
                           (this->actor.projectedPos.z < MREG(95)) ? 0 : 1);
+        Matrix_Pop();
     } else if (this->actor.speed != 0.0f) {
         alpha = (Math_CosS(this->timer * 5000) * 127.5f) + 127.5f;
 

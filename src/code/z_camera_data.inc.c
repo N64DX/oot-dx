@@ -267,6 +267,11 @@ CameraModeValue sSetNormal0ModeZAimData[] = {
                        CAM_INTERFACE_FIELD(CAM_LETTERBOX_MEDIUM, CAM_HUD_VISIBILITY_ALL, 0)),
 };
 
+CameraModeValue sSetNormal0ModeZAimDataMirror[] = {
+    CAM_FUNCDATA_SUBJ3(20, 70, 70, 10, 120, 20, 0, 45,
+                       CAM_INTERFACE_FIELD(CAM_LETTERBOX_MEDIUM, CAM_HUD_VISIBILITY_ALL, 0)),
+};
+
 CameraModeValue sSetNormal0ModeHookshotFlyData[] = {
     CAM_FUNCDATA_SPEC5_ALT(-20, 80, 250, 45, 60, 40, 6,
                            CAM_INTERFACE_FIELD(CAM_LETTERBOX_MEDIUM, CAM_HUD_VISIBILITY_ALL, 0)),
@@ -1489,6 +1494,7 @@ CameraMode sCamSetNormal0Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),       // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),          // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),              // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),       // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),      // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),          // CAM_MODE_AIM_CHILD
@@ -1513,6 +1519,7 @@ CameraMode sCamSetNormal1Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),       // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),          // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),              // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal1ModeHookshotFlyData),       // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),      // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),          // CAM_MODE_AIM_CHILD
@@ -1537,6 +1544,7 @@ CameraMode sCamSetDungeon0Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),        // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),           // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),               // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),         // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal1ModeHookshotFlyData),        // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),       // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),           // CAM_MODE_AIM_CHILD
@@ -1561,6 +1569,7 @@ CameraMode sCamSetDungeon1Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),        // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),           // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),               // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),         // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal1ModeHookshotFlyData),        // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),       // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),           // CAM_MODE_AIM_CHILD
@@ -1585,6 +1594,7 @@ CameraMode sCamSetNormal3Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),       // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),          // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),              // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),       // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_JUMP3, sSetNormal3ModeAimBoomerangData),      // CAM_MODE_AIM_BOOMERANG
     { CAM_FUNC_NONE, 0, NULL },                                                   // CAM_MODE_AIM_CHILD
@@ -1608,6 +1618,7 @@ CameraMode sCamSetHorseModes[] = {
     { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetHorseModeAimAdultData),        // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),          // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),    // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossGohmaModes[] = {
@@ -1620,6 +1631,7 @@ CameraMode sCamSetBossGohmaModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),         // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),            // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),          // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),         // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),        // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),            // CAM_MODE_AIM_CHILD
@@ -1644,6 +1656,7 @@ CameraMode sCamSetBossDodongoModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),           // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),              // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                  // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),            // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),           // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),          // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),              // CAM_MODE_AIM_CHILD
@@ -1668,6 +1681,7 @@ CameraMode sCamSetBossBarinadeModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),            // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),               // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                   // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),            // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),           // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),               // CAM_MODE_AIM_CHILD
@@ -1693,6 +1707,7 @@ CameraMode sCamSetBossPhantomGanonModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),     // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),        // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),            // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),      // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),     // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),    // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),        // CAM_MODE_AIM_CHILD
@@ -1717,6 +1732,7 @@ CameraMode sCamSetBossVolvagiaModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),            // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),               // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                   // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),            // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),           // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),               // CAM_MODE_AIM_CHILD
@@ -1741,6 +1757,7 @@ CameraMode sCamSetBossBongoModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),         // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),            // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),          // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),         // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),        // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),            // CAM_MODE_AIM_CHILD
@@ -1765,6 +1782,7 @@ CameraMode sCamSetBossMorphaModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),          // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),             // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                 // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),           // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),          // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),         // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),             // CAM_MODE_AIM_CHILD
@@ -1789,6 +1807,7 @@ CameraMode sCamSetBossTwinrovaPlatformModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),            // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),               // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                   // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),            // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),           // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),               // CAM_MODE_AIM_CHILD
@@ -1813,6 +1832,7 @@ CameraMode sCamSetBossTwinrovaFloorModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),            // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),               // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                   // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),            // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),           // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),               // CAM_MODE_AIM_CHILD
@@ -1838,6 +1858,7 @@ CameraMode sCamSetBossGanondorfModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),     // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),        // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),            // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),      // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),     // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),    // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),        // CAM_MODE_AIM_CHILD
@@ -1862,6 +1883,7 @@ CameraMode sCamSetBossGanonModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),         // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),            // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),          // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),         // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),        // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),            // CAM_MODE_AIM_CHILD
@@ -1886,6 +1908,7 @@ CameraMode sCamSetTowerClimbModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),       // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),          // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),              // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),       // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),      // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),          // CAM_MODE_AIM_CHILD
@@ -1910,6 +1933,7 @@ CameraMode sCamSetTowerUnusedModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),       // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),          // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),              // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),       // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),      // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),          // CAM_MODE_AIM_CHILD
@@ -1953,6 +1977,7 @@ CameraMode sCamSetPivotInFrontModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),            // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),               // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                   // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),            // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),           // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),               // CAM_MODE_AIM_CHILD
@@ -2064,6 +2089,7 @@ CameraMode sCamSetBeanGenericModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),       // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),          // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),              // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),       // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),      // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),          // CAM_MODE_AIM_CHILD
@@ -2088,6 +2114,7 @@ CameraMode sCamSetBeanLostWoodsModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),       // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),          // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),              // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),       // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),      // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),          // CAM_MODE_AIM_CHILD
@@ -2136,6 +2163,7 @@ CameraMode sCamSetBigOctoModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),       // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),          // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),              // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal1ModeHookshotFlyData),       // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),      // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),          // CAM_MODE_AIM_CHILD
@@ -2195,6 +2223,7 @@ CameraMode sCamSetNorm2Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),       // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),          // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),              // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),       // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),      // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),          // CAM_MODE_AIM_CHILD
@@ -2219,6 +2248,7 @@ CameraMode sCamSetFishingModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetFishingModeFirstPersonData),     // CAM_MODE_FIRST_PERSON
     { CAM_FUNC_NONE, 0, NULL },                                                 // CAM_MODE_AIM_ADULT
     { CAM_FUNC_NONE, 0, NULL },                                                 // CAM_MODE_Z_AIM
+    { CAM_FUNC_NONE, 0, NULL },                                                 // CAM_MODE_Z_AIM_MIRROR
     { CAM_FUNC_NONE, 0, NULL },                                                 // CAM_MODE_HOOKSHOT_FLY
     { CAM_FUNC_NONE, 0, NULL },                                                 // CAM_MODE_AIM_BOOMERANG
     { CAM_FUNC_NONE, 0, NULL },                                                 // CAM_MODE_AIM_CHILD
@@ -2243,6 +2273,7 @@ CameraMode sCamSetJabuTentacleModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),            // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),               // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                   // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),            // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),           // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),               // CAM_MODE_AIM_CHILD
@@ -2267,6 +2298,7 @@ CameraMode sCamSetDungeon2Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),        // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),           // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),               // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),         // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal1ModeHookshotFlyData),        // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),       // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),           // CAM_MODE_AIM_CHILD
@@ -2291,6 +2323,7 @@ CameraMode sCamSetDirectedYawModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),         // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),            // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),                // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),          // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),         // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),        // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),            // CAM_MODE_AIM_CHILD
@@ -2315,6 +2348,7 @@ CameraMode sCamSetPivotFromSideModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),            // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),               // CAM_MODE_AIM_ADULT
     { CAM_FUNC_NONE, 0, NULL },                                                        // CAM_MODE_Z_AIM
+    { CAM_FUNC_NONE, 0, NULL },                                                        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),            // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),           // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),               // CAM_MODE_AIM_CHILD
@@ -2330,6 +2364,7 @@ CameraMode sCamSetNormal4Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeFirstPersonData),       // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimAdultData),          // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),              // CAM_MODE_Z_AIM
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC5, sSetNormal0ModeHookshotFlyData),       // CAM_MODE_HOOKSHOT_FLY
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimBoomerangData),      // CAM_MODE_AIM_BOOMERANG
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeAimChildData),          // CAM_MODE_AIM_CHILD

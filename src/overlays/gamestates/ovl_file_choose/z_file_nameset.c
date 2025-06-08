@@ -202,7 +202,7 @@ static s16 D_80812604[] = {
     0x0048, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045,
 };
 
-void FileSelect_DrawImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 centerY, u8* source, u32 width, u32 height) {
+void FileSelect_DrawQuestImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 centerY, u8* source, u32 width, u32 height) {
     u8* curTexture;
     s32 textureCount, rectLeft, rectTop, remainingSize, textureSize, i;
     u32 textureHeight;
@@ -748,7 +748,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 #endif
 
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
-        FileSelect_DrawImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)logoTexture, 160, 160);
+        FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)logoTexture, 160, 160);
         
         x = 160 - 64;
         y = 45;

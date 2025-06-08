@@ -308,7 +308,7 @@ void Play_Init(GameState* thisx) {
     SystemArena_Display();
 #endif
 
-    GameState_Realloc(&this->state, 0x1D4790);
+    GameState_Realloc(&this->state, 4 * 1024 * 1024);
 
 #if PLATFORM_N64
     if ((B_80121220 != NULL) && (B_80121220->unk_10 != NULL)) {
@@ -1135,7 +1135,7 @@ void Play_DrawOverlayElements(PlayState* this) {
 }
 
 #define SCANLINE_TMEM_MAX 3500 // how much of TMEM a scanline is allowed to use
-#define SCANLINE_DEFAULT (SCANLINE_TMEM_MAX / (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES))
+#define SCANLINE_DEFAULT (SCANLINE_TMEM_MAX / ((SCREEN_WIDTH + WS_MIRROR_SHIFT) * G_IM_SIZ_16b_BYTES))
 
 void Play_DrawMirrorScanline(PlayState* this, GraphicsContext* gfxCtx, u32 scanline, u32 drawPosX, u32 drawPosY, f32 scaleX, f32 scaleY, u8 mirrorX, Gfx** gfxP, void* texPtr) {
     u32 texOffset = 0; // because ido won't let you directly modify a pointer
