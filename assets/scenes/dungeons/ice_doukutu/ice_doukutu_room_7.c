@@ -9,6 +9,7 @@
 #include "skybox.h"
 #include "sys_matrix.h"
 #include "ultra64.h"
+#include "versions.h"
 
 static SceneCmd* questHeaders[1];
 
@@ -85,7 +86,11 @@ Gfx ice_doukutu_room_7_030000B0_RoomShapeNormal_030000BC_DListsEntries_03001730_
 };
 
 u64 ice_doukutu_room_7_030000B0_RoomShapeNormal_030000BC_DListsEntries_03001730_DL_03000DA0_DL_00001758_CITex[TEX_LEN(u64, ice_doukutu_room_7_030000B0_RoomShapeNormal_030000BC_DListsEntries_03001730_DL_03000DA0_DL_00001758_CITex_WIDTH, ice_doukutu_room_7_030000B0_RoomShapeNormal_030000BC_DListsEntries_03001730_DL_03000DA0_DL_00001758_CITex_HEIGHT, 4)] = {
+#if OOT_NTSC
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_7_030000B0_RoomShapeNormal_030000BC_DListsEntries_03001730_DL_03000DA0_DL_00001758_CITex.ci4.tlut_ice_doukutu_room_2_030000D0_RoomShapeNormal_030000DC_DListsEntries_030016F0_DL_030015C0_DL_0000F7F0_TLUT.inc.c"
+#else
+#include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_room_7_030000B0_RoomShapeNormal_030000BC_DListsEntries_03001730_DL_03000DA0_DL_00001758_CITex.ci4.tlut_ice_doukutu_room_2_030000D0_RoomShapeNormal_030000DC_DListsEntries_030016F0_DL_030015C0_DL_0000F7E0_TLUT.inc.c"
+#endif
 };
 
 Vtx ice_doukutu_room_7_030000B0_RoomShapeNormal_030000BC_DListsEntries_030040A8_DL_030030B0_DL_03001F60_Vtx_fused_[] = {
