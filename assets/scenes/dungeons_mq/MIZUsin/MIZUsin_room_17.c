@@ -1,0 +1,201 @@
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17.h"
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_scene.h"
+
+#include "actor.h"
+#include "array_count.h"
+#include "gfx.h"
+#include "object.h"
+#include "sequence.h"
+#include "skybox.h"
+#include "sys_matrix.h"
+#include "ultra64.h"
+
+static SceneCmd* questHeaders[1];
+
+SceneCmd MIZUsin_room_17[] = {
+#include "assets/scenes/dungeons_mq/MIZUsin/MIZUsin_room_17.inc.c"
+};
+
+s16 MIZUsin_room_17_03000040_ObjectList[LENGTH_MIZUsin_room_17_03000040_ObjectList] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000040_ObjectList.inc.c"
+};
+
+ActorEntry MIZUsin_room_17_03000058_ActorEntryList[LENGTH_MIZUsin_room_17_03000058_ActorEntryList] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000058_ActorEntryList.inc.c"
+};
+
+RoomShapeCullable MIZUsin_room_17_03000110_RoomShapeCullable = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable.inc.c"
+};
+
+RoomShapeCullableEntry MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries[LENGTH_MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_03000220_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_03000220_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL[192] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001650_DL_03001580_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001650_DL_03001580_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001650_DL[24] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001650_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001880_DL_03001710_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001880_DL_03001710_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001880_DL[37] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001880_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002028_DL_030019A8_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002028_DL_030019A8_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002028_DL[56] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002028_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002568_DL_030021E8_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002568_DL_030021E8_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002568_DL[43] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002568_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002880_DL_030026C0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002880_DL_030026C0_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002880_DL[36] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002880_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002BE0_DL_030029A0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002BE0_DL_030029A0_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002BE0_DL[37] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03002BE0_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_030033C8_DL_03002D08_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_030033C8_DL_03002D08_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_030033C8_DL[61] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_030033C8_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03003830_DL_030035B0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03003830_DL_030035B0_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03003830_DL[38] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03003830_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03003A70_DL_03003960_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03003A70_DL_03003960_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03003A70_DL[33] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03003A70_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03004138_DL_03003B78_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03004138_DL_03003B78_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03004138_DL[61] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03004138_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03004AA0_DL_03004320_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03004AA0_DL_03004320_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03004AA0_DL[61] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03004AA0_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005088_DL_03004C88_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005088_DL_03004C88_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005088_DL[45] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005088_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005450_DL_030051F0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005450_DL_030051F0_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005450_DL[39] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005450_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005658_DL_03005588_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005658_DL_03005588_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005658_DL[32] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005658_DL.inc.c"
+};
+
+Vtx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005898_DL_03005758_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005898_DL_03005758_Vtx_fused_.inc.c"
+};
+
+Gfx MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005898_DL[31] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005898_DL.inc.c"
+};
+
+u64 MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005658_DL_00005A18_Tex[TEX_LEN(u64, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005658_DL_00005A18_Tex_WIDTH, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005658_DL_00005A18_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03005658_DL_00005A18_Tex.rgba16.inc.c"
+};
+
+u64 MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001650_DL_00006218_Tex[TEX_LEN(u64, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001650_DL_00006218_Tex_WIDTH, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001650_DL_00006218_Tex_HEIGHT, 4)] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03001650_DL_00006218_Tex.i4.inc.c"
+};
+
+u64 MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00006A18_Tex[TEX_LEN(u64, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00006A18_Tex_WIDTH, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00006A18_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00006A18_Tex.rgba16.inc.c"
+};
+
+u64 MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00007218_Tex[TEX_LEN(u64, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00007218_Tex_WIDTH, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00007218_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00007218_Tex.rgba16.inc.c"
+};
+
+u64 MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00007A18_Tex[TEX_LEN(u64, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00007A18_Tex_WIDTH, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00007A18_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00007A18_Tex.rgba16.inc.c"
+};
+
+u64 MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00008218_Tex[TEX_LEN(u64, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00008218_Tex_WIDTH, MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00008218_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/MIZUsin/MIZUsin_room_17_03000110_RoomShapeCullable_0300011C_CullableEntries_03000F80_DL_00008218_Tex.rgba16.inc.c"
+};
+
+static s16 mq_objects[] = {
+#include "assets/scenes/dungeons_mq/MIZUsin/mq/objects/room17_obj.inc.c"
+};
+
+static ActorEntry mq_actors[] = {
+#include "assets/scenes/dungeons_mq/MIZUsin/mq/actors/room17_actor.inc.c"
+};
+
+static SceneCmd mq_header[] = {
+#include "assets/scenes/dungeons_mq/MIZUsin/mq/headers/room17.inc.c"
+};
+
+static SceneCmd* questHeaders[] = {
+#include "assets/scenes/dungeons_mq/questHeaders.inc.c"
+};

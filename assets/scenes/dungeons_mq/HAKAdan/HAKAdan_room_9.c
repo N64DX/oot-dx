@@ -1,0 +1,176 @@
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9.h"
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_scene.h"
+
+#include "actor.h"
+#include "array_count.h"
+#include "gfx.h"
+#include "object.h"
+#include "sequence.h"
+#include "skybox.h"
+#include "sys_matrix.h"
+
+static SceneCmd* questHeaders[1];
+
+SceneCmd HAKAdan_room_9[] = {
+#include "assets/scenes/dungeons_mq/HAKAdan/HAKAdan_room_9.inc.c"
+};
+
+s16 HAKAdan_room_9_03000040_ObjectList[LENGTH_HAKAdan_room_9_03000040_ObjectList] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_03000040_ObjectList.inc.c"
+};
+
+ActorEntry HAKAdan_room_9_03000050_ActorEntryList[LENGTH_HAKAdan_room_9_03000050_ActorEntryList] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_03000050_ActorEntryList.inc.c"
+};
+
+RoomShapeNormal HAKAdan_room_9_030001B0_RoomShapeNormal = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal.inc.c"
+};
+
+RoomShapeDListsEntry HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries[LENGTH_HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03000340_DL_030001D0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03000340_DL_030001D0_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03000340_DL[41] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03000340_DL.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03000738_DL_03000488_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03000738_DL_03000488_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03000738_DL[42] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03000738_DL.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03002118_DL_03000888_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03002118_DL_03000888_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03002118_DL[155] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03002118_DL.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_030025F0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_030025F0_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL[468] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_03004BA0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_03004BA0_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL[162] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030064D0_DL_03005ED0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030064D0_DL_03005ED0_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030064D0_DL[68] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030064D0_DL.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030074F0_DL_030066F0_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030074F0_DL_030066F0_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030074F0_DL[91] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030074F0_DL.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03007F28_DL_030077C8_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03007F28_DL_030077C8_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03007F28_DL[82] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03007F28_DL.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030084C8_DL_030081B8_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030084C8_DL_030081B8_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030084C8_DL[47] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030084C8_DL.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030087E0_DL_03008640_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030087E0_DL_03008640_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030087E0_DL[41] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030087E0_DL.inc.c"
+};
+
+Vtx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03008D38_DL_03008928_Vtx_fused_[] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03008D38_DL_03008928_Vtx_fused_.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03008D38_DL[57] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03008D38_DL.inc.c"
+};
+
+Gfx HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL[12] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL.inc.c"
+};
+
+u64 HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_00008F60_Tex[TEX_LEN(u64, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_00008F60_Tex_WIDTH, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_00008F60_Tex_HEIGHT, 4)] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_00008F60_Tex.i4.inc.c"
+};
+
+u64 HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03002118_DL_00009760_Tex[TEX_LEN(u64, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03002118_DL_00009760_Tex_WIDTH, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03002118_DL_00009760_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03002118_DL_00009760_Tex.rgba16.inc.c"
+};
+
+u64 HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_00009F60_Tex[TEX_LEN(u64, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_00009F60_Tex_WIDTH, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_00009F60_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_00009F60_Tex.rgba16.inc.c"
+};
+
+u64 HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_0000A160_Tex[TEX_LEN(u64, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_0000A160_Tex_WIDTH, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_0000A160_Tex_HEIGHT, 4)] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_0000A160_Tex.ia4.inc.c"
+};
+
+u64 HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030064D0_DL_0000B160_Tex[TEX_LEN(u64, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030064D0_DL_0000B160_Tex_WIDTH, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030064D0_DL_0000B160_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030064D0_DL_0000B160_Tex.rgba16.inc.c"
+};
+
+u64 HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_0000B960_Tex[TEX_LEN(u64, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_0000B960_Tex_WIDTH, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_0000B960_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_0000B960_Tex.rgba16.inc.c"
+};
+
+u64 HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030074F0_DL_0000BD60_Tex[TEX_LEN(u64, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030074F0_DL_0000BD60_Tex_WIDTH, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030074F0_DL_0000BD60_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030074F0_DL_0000BD60_Tex.rgba16.inc.c"
+};
+
+u64 HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_0000C560_Tex[TEX_LEN(u64, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_0000C560_Tex_WIDTH, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_0000C560_Tex_HEIGHT, 4)] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_03003D00_DL_0000C560_Tex.i4.inc.c"
+};
+
+u64 HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_0000C760_Tex[TEX_LEN(u64, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_0000C760_Tex_WIDTH, HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_0000C760_Tex_HEIGHT, 16)] = {
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_9_030001B0_RoomShapeNormal_030001BC_DListsEntries_03008F00_DL_030059C0_DL_0000C760_Tex.rgba16.inc.c"
+};
+
+static s16 mq_objects[] = {
+#include "assets/scenes/dungeons_mq/HAKAdan/mq/objects/room9_obj.inc.c"
+};
+
+static ActorEntry mq_actors[] = {
+#include "assets/scenes/dungeons_mq/HAKAdan/mq/actors/room9_actor.inc.c"
+};
+
+static SceneCmd mq_header[] = {
+#include "assets/scenes/dungeons_mq/HAKAdan/mq/headers/room9.inc.c"
+};
+
+static SceneCmd* questHeaders[] = {
+#include "assets/scenes/dungeons_mq/questHeaders.inc.c"
+};

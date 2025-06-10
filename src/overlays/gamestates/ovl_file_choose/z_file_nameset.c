@@ -727,8 +727,12 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                       PRIMITIVE, 0);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
 
+#if !OOT_MQ
     if (this->selectingQuestMode) {
-        void* logoTexture;
+        void* textures[][2] = {
+            { gQuestOcarinaOfTimeTex, gTitleZeldaShieldLogoTex },
+            { gQuestMasterQuestTex,   gLogoMasterQuestTex      } 
+        };
         u16 x, y;
 
         x = 135;
@@ -738,24 +742,11 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         gDPLoadTextureBlock(POLY_OPA_DISP++, gMirrorModeTex, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
         gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 90) << 2)), HIRES_MULTIPLY(((y + 11) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1462)), HIRES_DIVIDE((1462)));
 
-        if (this->questMode[this->buttonIndex] == 1)
-#if OOT_MQ
-            logoTexture = gTitleZeldaShieldLogoTex;
-        else logoTexture = gLogoOcarinaOfTimeTex;
-#else
-            logoTexture = gLogoMasterQuestTex;
-        else logoTexture = gTitleZeldaShieldLogoTex;
-#endif
-
-        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
-        FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)logoTexture, 160, 160);
-        
         x = 160 - 64;
         y = 45;
-        if (this->questMode[this->buttonIndex] == 1)
-            logoTexture = gQuestMasterQuestTex;
-        else logoTexture = gQuestOcarinaOfTimeTex;
-        gDPLoadTextureBlock(POLY_OPA_DISP++, logoTexture, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
+        FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)textures[this->questMode[this->buttonIndex]][1], 160, 160);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, textures[this->questMode[this->buttonIndex]][0], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
         gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 128) << 2)), HIRES_MULTIPLY(((y + 16) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1024)), HIRES_DIVIDE((1024)));
 
         y = 115;
@@ -770,12 +761,12 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         if (this->stickAdjX < -30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             if (this->questMode[this->buttonIndex] <= 0)
-                this->questMode[this->buttonIndex] = 1;
+                this->questMode[this->buttonIndex] = QUEST_MAX;
             else this->questMode[this->buttonIndex]--;
         }
         if (this->stickAdjX > 30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            if (this->questMode[this->buttonIndex] >= 1)
+            if (this->questMode[this->buttonIndex] >= QUEST_MAX)
                 this->questMode[this->buttonIndex] = 0;
             else this->questMode[this->buttonIndex]++;
         }
@@ -805,7 +796,9 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         }
     }
 
-    else if (this->configMode == CM_NAME_ENTRY) {
+    else
+#endif
+    if (this->configMode == CM_NAME_ENTRY) {
         if (CHECK_BTN_ALL(input->press.button, BTN_START)) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -988,9 +981,20 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4,
                                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
                                                      &gSfxDefaultReverb);
+#if OOT_MQ
+                                gSaveContext.fileNum = this->buttonIndex;
+                                dayTime = ((void)0, gSaveContext.save.dayTime);
+                                Sram_InitSave(this, &this->sramCtx);
+                                gSaveContext.save.dayTime = dayTime;
+                                this->configMode = CM_NAME_ENTRY_TO_MAIN;
+                                this->nameBoxAlpha[this->buttonIndex] = this->nameAlpha[this->buttonIndex] = 200;
+                                this->connectorAlpha[this->buttonIndex] = 255;
+                                Rumble_Request(300.0f, 180, 20, 100);
+#else
                                 this->selectingQuestMode = true;
                                 this->mirrorMode[this->buttonIndex] = false;
                                 this->questMode[this->buttonIndex] = 0;
+#endif
                             } else {
                                 Audio_PlaySfxGeneral(NA_SE_SY_FSEL_ERROR, &gSfxDefaultPos, 4,
                                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,

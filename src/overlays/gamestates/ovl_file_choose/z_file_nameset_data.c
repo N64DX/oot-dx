@@ -135,15 +135,10 @@ s16 gCharPageEng[] = {
 };
 #endif
 
-#if OOT_MQ
-u64 gLogoOcarinaOfTimeTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)] = {
-#include "assets/overlays/ovl_file_choose/gLogoOcarinaOfTimeTex.rgba32.inc.c"
-};
-#else
+#if !OOT_MQ
 u64 gLogoMasterQuestTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)] = {
 #include "assets/overlays/ovl_file_choose/gLogoMasterQuestTex.rgba32.inc.c"
 };
-#endif
 
 u64 gMirrorModeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
 #include "assets/overlays/ovl_file_choose/gMirrorModeTex.ia8.inc.c"
@@ -156,3 +151,4 @@ u64 gQuestOcarinaOfTimeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8
 u64 gQuestMasterQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
 #include "assets/overlays/ovl_file_choose/gQuestMasterQuestTex.ia8.inc.c"
 };
+#endif

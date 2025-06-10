@@ -4224,5 +4224,10 @@ endseg
 #if PLATFORM_N64
 #include "scenes_n64.inc"
 #else
+#if OOT_MQ
+#include "scenes_gc_ique_dungeons_mq.inc"
+#else
+#include "scenes_gc_ique_dungeons.inc"
+#endif
 #include "scenes_gc_ique.inc"
 #endif
