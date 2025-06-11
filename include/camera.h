@@ -215,7 +215,6 @@ typedef enum CameraModeType {
     /* 0x06 */ CAM_MODE_FIRST_PERSON,
     /* 0x07 */ CAM_MODE_AIM_ADULT, // First person aiming as adult: bow and hookshot
     /* 0x08 */ CAM_MODE_Z_AIM, // Third person aiming for all items, child and adult
-    /* 0x08 */ CAM_MODE_Z_AIM_MIRROR, // Third person aiming for all items, child and adult (mirrored)
     /* 0x09 */ CAM_MODE_HOOKSHOT_FLY, // Player being pulled by the hookshot to a target
     /* 0x0A */ CAM_MODE_AIM_BOOMERANG, // Aiming the boomerang
     /* 0x0B */ CAM_MODE_AIM_CHILD, // First person aiming as child: slingshot
@@ -228,7 +227,8 @@ typedef enum CameraModeType {
     /* 0x12 */ CAM_MODE_STILL, // Attacks without Z pressed, falling in air from knockback
     /* 0x13 */ CAM_MODE_PUSH_PULL,
     /* 0x14 */ CAM_MODE_FOLLOW_BOOMERANG, // Boomerang has been thrown, force-target the boomerang as it flies
-    /* 0x15 */ CAM_MODE_MAX
+    /* 0x15 */ CAM_MODE_Z_AIM_MIRROR, // Third person aiming for all items, child and adult (mirrored)
+    /* 0x16 */ CAM_MODE_MAX
 } CameraModeType;
 
 typedef enum CameraFuncType {

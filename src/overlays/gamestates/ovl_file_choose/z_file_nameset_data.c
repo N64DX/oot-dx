@@ -135,7 +135,7 @@ s16 gCharPageEng[] = {
 };
 #endif
 
-#if !OOT_MQ
+#if OOT_VERSION <= PAL_1_1
 u64 gLogoMasterQuestTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)] = {
 #include "assets/overlays/ovl_file_choose/gLogoMasterQuestTex.rgba32.inc.c"
 };

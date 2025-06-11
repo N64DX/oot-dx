@@ -1598,7 +1598,7 @@ void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 arg2) {
         sp60 = (sp64 < 200.0f) ? 0.08f : (sp64 / 200.0f) * 0.08f;
 
         if (R_ENABLE_MIRROR)
-            sp74.x += 6.0f;
+            sp74.x += -6.0f;
 
         Matrix_Translate(sp74.x, sp74.y, sp74.z, MTXMODE_NEW);
         Matrix_Scale(sp60, sp60, sp60, MTXMODE_APPLY);

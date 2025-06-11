@@ -727,7 +727,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                       PRIMITIVE, 0);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
 
-#if !OOT_MQ
+#if OOT_VERSION <= PAL_1_1
     if (this->selectingQuestMode) {
         void* textures[][2] = {
             { gQuestOcarinaOfTimeTex, gTitleZeldaShieldLogoTex },
@@ -981,7 +981,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4,
                                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
                                                      &gSfxDefaultReverb);
-#if OOT_MQ
+#if OOT_VERSION > PAL_1_1
                                 gSaveContext.fileNum = this->buttonIndex;
                                 dayTime = ((void)0, gSaveContext.save.dayTime);
                                 Sram_InitSave(this, &this->sramCtx);
