@@ -1438,7 +1438,11 @@ static MapMarkData sMapMarkIceCavern[] = {
     },
 };
 
+#if OOT_VERSION <= PAL_1_1
+MapMarkData* gMapMarkDataMQTable[] = {
+#else
 MapMarkData* gMapMarkDataTable[] = {
+#endif
     sMapMarkDekuTree,    sMapMarkDodongosCavern, sMapMarkJabuJabuBelly, sMapMarkForestTemple, sMapMarkFireTemple,
     sMapMarkWaterTemple, sMapMarkSpiritTemple,   sMapMarkShadowTemple,  sMapMarkBottomWell,   sMapMarkIceCavern,
 };
