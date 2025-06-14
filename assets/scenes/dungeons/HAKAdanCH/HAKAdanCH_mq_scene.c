@@ -12,6 +12,14 @@ static TransitionActorEntry mq_transition_actors[] = {
 #include "assets/scenes/dungeons/HAKAdanCH/mq/scene/transitionActors.inc.c"
 };
 
+static Vec3s mq_cam_data[] = {
+#include "assets/scenes/dungeons/HAKAdanCH/mq/scene/camData.inc.c"
+};
+
+static BgCamInfo mq_cam_list[] = {
+#include "assets/scenes/dungeons/HAKAdanCH/mq/scene/camList.inc.c"
+};
+
 static CollisionPoly mq_polygons[] = {
 #include "assets/scenes/dungeons/HAKAdanCH/mq/scene/polygons.inc.c"
 };

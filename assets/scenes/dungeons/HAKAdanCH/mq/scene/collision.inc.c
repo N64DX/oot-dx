@@ -13,7 +13,7 @@
     ARRAY_COUNT(mq_polygons), // numPolygons
     mq_polygons, // polyList
     mq_surface_types, // surfaceTypeList
-    HAKAdanCH_scene_0200A528_BgCamList, // bgCamList
+    mq_cam_list, // bgCamList
     ARRAY_COUNT(HAKAdanCH_scene_0200A528_WaterBoxes), // numWaterBoxes
     HAKAdanCH_scene_0200A528_WaterBoxes, // waterBoxes
 
