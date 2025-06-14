@@ -1,0 +1,6 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_KUSA, // 1
+    OBJECT_HAKA, // 2
+    OBJECT_BOX, // 3
+    OBJECT_POH, // 4
+

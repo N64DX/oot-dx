@@ -6,6 +6,7 @@
 #include "gfx.h"
 #include "versions.h"
 #include "game.h"
+#include "tex_len.h"
 
 
 #define GET_NEWF(sramCtx, slotNum, index) (sramCtx->readBuff[gSramSlotOffsets[slotNum] + offsetof(SaveContext, save.info.playerData.newf[index])])
@@ -250,5 +251,19 @@ extern Vtx gOptionsMenuSettingsJapaneseVtx[];
 extern Vtx gOptionsMenuHeadersGERVtx[];
 extern Vtx gOptionsMenuSettingsGERVtx[];
 #endif
+
+#define gLogoWidth_WIDTH 160
+#define gLogoWidth_HEIGHT 160
+#if OOT_MQ
+extern u64 gLogoOcarinaOfTimeTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)];
+#else
+extern u64 gLogoMasterQuestTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)];
+#endif
+
+#define gQuestTitle_WIDTH 128
+#define gQuestTitle_HEIGHT 16
+extern u64 gMirrorModeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
+extern u64 gQuestOcarinaOfTimeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
+extern u64 gQuestMasterQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
 
 #endif

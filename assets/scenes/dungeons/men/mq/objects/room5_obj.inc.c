@@ -1,0 +1,7 @@
+    OBJECT_MENKURI_OBJECTS, // 0
+    OBJECT_BOX, // 1
+    OBJECT_EFC_FLASH, // 2
+    OBJECT_GI_HEART, // 3
+    OBJECT_IK, // 4
+    OBJECT_BW, // 5
+

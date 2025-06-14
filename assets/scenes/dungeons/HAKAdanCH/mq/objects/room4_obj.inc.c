@@ -1,0 +1,6 @@
+    OBJECT_HAKACH_OBJECTS, // 0
+    OBJECT_HAKA_DOOR, // 1
+    OBJECT_BOX, // 2
+    OBJECT_DH, // 3
+    OBJECT_KUSA, // 4
+

@@ -1,0 +1,6 @@
+    OBJECT_MENKURI_OBJECTS, // 0
+    OBJECT_BOX, // 1
+    OBJECT_EFC_FLASH, // 2
+    OBJECT_NY, // 3
+    OBJECT_FZ, // 4
+

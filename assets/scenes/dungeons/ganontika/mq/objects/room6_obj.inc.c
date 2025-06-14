@@ -1,0 +1,10 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_HAKA_OBJECTS, // 1
+    OBJECT_D_HSBLOCK, // 2
+    OBJECT_TIMEBLOCK, // 3
+    OBJECT_EFC_TW, // 4
+    OBJECT_AM, // 5
+    OBJECT_VM, // 6
+    OBJECT_BOX, // 7
+    OBJECT_EFC_FLASH, // 8
+

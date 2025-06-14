@@ -730,6 +730,3 @@ Gfx gFileSelWindow2DL[66] = {
 Gfx gFileSelWindow3DL[34] = {
 #include "assets/textures/title_static/gFileSelWindow3DL.inc.c"
 };
-
-u8 title_static_zeros_04D2B8[8] = { 0 };
-

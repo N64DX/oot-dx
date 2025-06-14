@@ -1,0 +1,10 @@
+    OBJECT_HAKA_OBJECTS, // 0
+    OBJECT_HAKA_DOOR, // 1
+    OBJECT_BOX, // 2
+    OBJECT_SYOKUDAI, // 3
+    OBJECT_BB, // 4
+    OBJECT_RR, // 5
+    OBJECT_GI_SHIELD_1, // 6
+    OBJECT_GI_SHIELD_2, // 7
+    OBJECT_GI_CLOTHES, // 8
+

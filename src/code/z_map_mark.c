@@ -95,6 +95,7 @@ void MapMark_DrawForDungeon(PlayState* play) {
     s32 i;
     s32 rectLeft;
     s32 rectTop;
+    s16 markPointX;
 
     interfaceCtx = &play->interfaceCtx;
 
@@ -123,6 +124,7 @@ void MapMark_DrawForDungeon(PlayState* play) {
         for (i = 0; i < mapMarkIconData->count; i++) {
             if ((mapMarkIconData->markType != MAP_MARK_CHEST) || !Flags_GetTreasure(play, markPoint->chestFlag)) {
                 markInfo = &sMapMarkInfoTable[mapMarkIconData->markType];
+                markPointX = R_ENABLE_MIRROR ? 96 - markPoint->x - (markInfo->textureWidth  * 1.0f) : markPoint->x;
 
                 gDPPipeSync(OVERLAY_DISP++);
                 gDPLoadTextureBlock_Runtime(OVERLAY_DISP++, markInfo->texture, markInfo->imageFormat,
@@ -130,7 +132,7 @@ void MapMark_DrawForDungeon(PlayState* play) {
                                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                rectLeft = HIRES_MULTIPLY((((DEBUG_FEATURES ? GREG(94) : 0) + markPoint->x + 204 + WS_SHIFT_FULL) << 2));
+                rectLeft = HIRES_MULTIPLY((((DEBUG_FEATURES ? GREG(94) : 0) + markPointX + 204 + WS_SHIFT_FULL) << 2));
                 rectTop = HIRES_MULTIPLY((((DEBUG_FEATURES ? GREG(95) : 0) + markPoint->y + 140) << 2));
                 gSPTextureRectangle(OVERLAY_DISP++, rectLeft, rectTop, HIRES_MULTIPLY((markInfo->rectWidth)) + rectLeft,
                                     rectTop + HIRES_MULTIPLY((markInfo->rectHeight)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((markInfo->dsdx)),

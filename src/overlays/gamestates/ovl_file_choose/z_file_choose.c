@@ -526,6 +526,7 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
     Input* input = &this->state.input[0];
 
     if (CHECK_BTN_ALL(input->press.button, BTN_START) || CHECK_BTN_ALL(input->press.button, BTN_A)) {
+        this->selectingQuestMode = false;
         if (this->buttonIndex <= FS_BTN_MAIN_FILE_3) {
             PRINTF("REGCK_ALL[%x]=%x,%x,%x,%x,%x,%x\n", this->buttonIndex, GET_NEWF(sramCtx, this->buttonIndex, 0),
                    GET_NEWF(sramCtx, this->buttonIndex, 1), GET_NEWF(sramCtx, this->buttonIndex, 2),
@@ -2115,7 +2116,7 @@ void FileSelect_Main(GameState* thisx) {
     gSPSegment(POLY_OPA_DISP++, 0x06, this->objectMagSegment);
 #endif
 
-    Gfx_SetupFrame(this->state.gfxCtx, 0, 0, 0);
+    Gfx_SetupFrame(this->state.gfxCtx, 0, 0, 0, 0);
 
     this->stickAdjX = input->rel.stick_x;
     this->stickAdjY = input->rel.stick_y;

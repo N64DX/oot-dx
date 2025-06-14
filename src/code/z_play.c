@@ -44,6 +44,7 @@
 #include "light.h"
 #include "play_state.h"
 #include "player.h"
+#include "main.h"
 #include "segment_symbols.h"
 #include "save.h"
 #include "vis.h"
@@ -307,7 +308,7 @@ void Play_Init(GameState* thisx) {
     SystemArena_Display();
 #endif
 
-    GameState_Realloc(&this->state, 0x1D4790);
+    GameState_Realloc(&this->state, 4 * 1024 * 1024);
 
 #if PLATFORM_N64
     if ((B_80121220 != NULL) && (B_80121220->unk_10 != NULL)) {
@@ -1133,10 +1134,61 @@ void Play_DrawOverlayElements(PlayState* this) {
     }
 }
 
+#define SCANLINE_TMEM_MAX 3500 // how much of TMEM a scanline is allowed to use
+#define SCANLINE_DEFAULT (SCANLINE_TMEM_MAX / ((SCREEN_WIDTH + WS_MIRROR_SHIFT) * G_IM_SIZ_16b_BYTES))
+
+void Play_DrawMirrorScanline(PlayState* this, GraphicsContext* gfxCtx, u32 scanline, u32 drawPosX, u32 drawPosY, f32 scaleX, f32 scaleY, u8 mirrorX, Gfx** gfxP, void* texPtr) {
+    u32 texOffset = 0; // because ido won't let you directly modify a pointer
+    s32 scanlineHeight = ((scanline + SCANLINE_DEFAULT) > SCREEN_HEIGHT) ? SCREEN_HEIGHT - scanline : SCANLINE_DEFAULT;
+    s32 uls = 0;
+    s32 ult = 0;
+    s32 lrs = SCREEN_WIDTH;
+    s32 lrt = scanlineHeight;
+    s32 width = SCREEN_WIDTH * scaleX;
+    s32 s = (mirrorX) ? (width << 5) : (0);
+    s8 sx = (mirrorX) ? -1 : 1;
+    Gfx* gfx = *gfxP;
+
+    if (scanlineHeight <= 0)
+        return;
+
+    texOffset += (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) * scanline;
+    drawPosX *= scaleX;
+    drawPosY *= scaleY;
+
+    gDPLoadTextureTile(gfx++, (u32)texPtr + texOffset, G_IM_FMT_RGBA, G_IM_SIZ_16b, SCREEN_WIDTH, SCREEN_HEIGHT, uls, ult, lrs, lrt, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(gfx++, drawPosX << 2, drawPosY << 2, (s32)(drawPosX + width) << 2, (s32)((drawPosY + scanlineHeight) * scaleY) << 2, G_TX_RENDERTILE, s, 0, sx * (u32)((1 << 10) / scaleX), (u32)((1 << 10) / scaleY));
+
+    *gfxP = gfx;
+}
+
+void Play_DrawMirrorMode(PlayState* this, GraphicsContext* gfxCtx, Gfx** gfxP, void* texPtr) {
+    u16 i;
+    s32 remainingScanlines = SCREEN_WIDTH / SCANLINE_DEFAULT;
+    Gfx* gfx = *gfxP;
+
+    // set up DL
+    gDPPipeSync(gfx++);
+    gDPSetOtherMode(gfx++, G_AD_DISABLE | G_CD_DISABLE | G_CK_NONE | G_TC_FILT | G_TF_AVERAGE | G_TT_NONE | G_TL_TILE | G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE, G_AC_NONE | G_ZS_PRIM | G_RM_PASS | G_RM_OPA_CI2);
+    gDPSetCombineLERP(gfx++, 0, 0, 0, TEXEL0, 0, 0, 0, 0, 0, 0, 0, TEXEL0, 0, 0, 0, 0);
+    gDPSetScissor(gfx++, G_SC_NON_INTERLACE, 0, 0, gScreenWidth, gScreenHeight);
+    gDPSetTileCustom(gfx++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, SCREEN_WIDTH, SCANLINE_DEFAULT, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+
+    for (i=0; i<SCREEN_HEIGHT; i += SCANLINE_DEFAULT)
+        Play_DrawMirrorScanline(this, gfxCtx, i, 0, i, 1, 1, 1, &gfx, texPtr);
+
+    *gfxP = gfx;
+}
+
+#define MIRROR_STATUS_OFF      0
+#define MIRROR_STATUS_ON       1
+#define MIRROR_STATUS_PAUSE_BG 2
+
 void Play_Draw(PlayState* this) {
     GraphicsContext* gfxCtx = this->state.gfxCtx;
     Lights* sp228;
     Vec3f sp21C;
+    u8 mirrorStatus;
 
     OPEN_DISPS(gfxCtx, "../z_play.c", 3907);
 
@@ -1146,21 +1198,31 @@ void Play_Draw(PlayState* this) {
 
     gSPSegment(POLY_OPA_DISP++, 0x00, NULL);
     gSPSegment(POLY_XLU_DISP++, 0x00, NULL);
+    gSPSegment(REDRAW_DISP++, 0x00, NULL);
     gSPSegment(OVERLAY_DISP++, 0x00, NULL);
 
     gSPSegment(POLY_OPA_DISP++, 0x04, this->objectCtx.slots[this->objectCtx.mainKeepSlot].segment);
     gSPSegment(POLY_XLU_DISP++, 0x04, this->objectCtx.slots[this->objectCtx.mainKeepSlot].segment);
+    gSPSegment(REDRAW_DISP++, 0x04, this->objectCtx.slots[this->objectCtx.mainKeepSlot].segment);
     gSPSegment(OVERLAY_DISP++, 0x04, this->objectCtx.slots[this->objectCtx.mainKeepSlot].segment);
 
     gSPSegment(POLY_OPA_DISP++, 0x05, this->objectCtx.slots[this->objectCtx.subKeepSlot].segment);
     gSPSegment(POLY_XLU_DISP++, 0x05, this->objectCtx.slots[this->objectCtx.subKeepSlot].segment);
+    gSPSegment(REDRAW_DISP++, 0x05, this->objectCtx.slots[this->objectCtx.subKeepSlot].segment);
     gSPSegment(OVERLAY_DISP++, 0x05, this->objectCtx.slots[this->objectCtx.subKeepSlot].segment);
 
     gSPSegment(POLY_OPA_DISP++, 0x02, this->sceneSegment);
     gSPSegment(POLY_XLU_DISP++, 0x02, this->sceneSegment);
+    gSPSegment(REDRAW_DISP++, 0x02, this->sceneSegment);
     gSPSegment(OVERLAY_DISP++, 0x02, this->sceneSegment);
 
-    Gfx_SetupFrame(gfxCtx, 0, 0, 0);
+    if (R_ENABLE_MIRROR) {
+        if (this->pauseCtx.state < 2)
+            mirrorStatus = MIRROR_STATUS_ON;
+        else mirrorStatus = MIRROR_STATUS_PAUSE_BG;
+    }
+    else mirrorStatus = MIRROR_STATUS_OFF;
+    Gfx_SetupFrame(gfxCtx, 0, 0, 0, mirrorStatus);
 
     if (!DEBUG_FEATURES || (R_HREG_MODE != HREG_MODE_PLAY) || R_PLAY_RUN_DRAW) {
         POLY_OPA_DISP = Play_SetFog(this, POLY_OPA_DISP);
@@ -1247,6 +1309,9 @@ void Play_Draw(PlayState* this) {
             Gfx* gfxP = POLY_OPA_DISP;
 
             PreRender_RestoreFramebuffer(&this->pauseBgPreRender, &gfxP);
+            if (mirrorStatus == MIRROR_STATUS_PAUSE_BG)
+                Play_DrawMirrorMode(this, gfxCtx, &gfxP, gfxCtx->redrawFramebuffer);
+
             POLY_OPA_DISP = gfxP;
 
             goto Play_Draw_DrawOverlayElements;
@@ -1386,6 +1451,8 @@ void Play_Draw(PlayState* this) {
         }
 
     Play_Draw_DrawOverlayElements:
+        if (mirrorStatus == MIRROR_STATUS_ON)
+            Play_DrawMirrorMode(this, gfxCtx, &REDRAW_DISP, gfxCtx->redrawFramebuffer);
         if (!DEBUG_FEATURES || (R_HREG_MODE != HREG_MODE_PLAY) || R_PLAY_DRAW_OVERLAY_ELEMENTS) {
             Play_DrawOverlayElements(this);
         }

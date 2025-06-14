@@ -1,0 +1,5 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_SYOKUDAI, // 1
+    OBJECT_BOX, // 2
+    OBJECT_SK2, // 3
+

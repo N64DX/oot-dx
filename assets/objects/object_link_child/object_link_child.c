@@ -65,12 +65,6 @@ u64 gLinkChildNoseTex[TEX_LEN(u64, gLinkChildNoseTex_WIDTH, gLinkChildNoseTex_HE
 #include "assets/objects/object_link_child/gLinkChildNoseTex.ci8.tlut_gLinkChildSkinTLUT.inc.c"
 };
 
-#define gLinkChildUnusedHandTex_WIDTH 16
-#define gLinkChildUnusedHandTex_HEIGHT 16
-u64 gLinkChildUnusedHandTex[TEX_LEN(u64, gLinkChildUnusedHandTex_WIDTH, gLinkChildUnusedHandTex_HEIGHT, 8)] = {
-#include "assets/objects/object_link_child/gLinkChildUnusedHandTex.ci8.tlut_gLinkChildSkinTLUT.inc.c"
-};
-
 #define gLinkChildEarTex_WIDTH 16
 #define gLinkChildEarTex_HEIGHT 16
 u64 gLinkChildEarTex[TEX_LEN(u64, gLinkChildEarTex_WIDTH, gLinkChildEarTex_HEIGHT, 8)] = {
@@ -83,22 +77,6 @@ u64 gLinkChildBeltTLUT[] = {
 
 u64 gLinkChildSkinTLUT[] = {
 #include "assets/objects/object_link_child/gLinkChildSkinTLUT.tlut.rgba16.inc.c"
-};
-
-u64 gLinkChildUnusedTLUT[] = {
-#include "assets/objects/object_link_child/gLinkChildUnused1Tex.tlut.rgba16.inc.c"
-};
-
-#define gLinkChildUnused1Tex_WIDTH 16
-#define gLinkChildUnused1Tex_HEIGHT 16
-u64 gLinkChildUnused1Tex[TEX_LEN(u64, gLinkChildUnused1Tex_WIDTH, gLinkChildUnused1Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_link_child/gLinkChildUnused1Tex.ci8.inc.c"
-};
-
-#define gLinkChildUnused2Tex_WIDTH 32
-#define gLinkChildUnused2Tex_HEIGHT 16
-u64 gLinkChildUnused2Tex[TEX_LEN(u64, gLinkChildUnused2Tex_WIDTH, gLinkChildUnused2Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_link_child/gLinkChildUnused2Tex.ci8.tlut_gLinkChildBeltTLUT.inc.c"
 };
 
 #define gLinkChildLowerBootTex_WIDTH 32
@@ -202,10 +180,6 @@ u64 gLinkChildHandTLUT[] = {
 
 u64 gLinkChildSwordsTLUT[] = {
 #include "assets/objects/object_link_child/gLinkChildSwordsTLUT.tlut.rgba16.inc.c"
-};
-
-u8 gLinkChild_A110_Blob[] = {
-#include "assets/objects/object_link_child/gLinkChild_A110_Blob.bin.inc.c"
 };
 
 u64 gLinkChildSwordTLUT[] = {
@@ -330,74 +304,6 @@ Vtx gLinkChildGoronBraceletVtx1[] = {
 #include "assets/objects/object_link_child/gLinkChildGoronBraceletVtx1.inc.c"
 };
 
-Vtx gLinkChildLeftHandFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildLeftHandFarVtx.inc.c"
-};
-
-Vtx gLinkChildLeftFistFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildLeftFistFarVtx.inc.c"
-};
-
-Vtx gLinkChildRightHandFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightHandFarVtx.inc.c"
-};
-
-Vtx gLinkChildRightHandClosedFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightHandClosedFarVtx.inc.c"
-};
-
-Vtx gLinkChildRightFistAndDekuShieldFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightFistAndDekuShieldFarVtx.inc.c"
-};
-
-Vtx gLinkChildLeftFistAndBoomerangFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildLeftFistAndBoomerangFarVtx.inc.c"
-};
-
-Vtx gLinkChildHylianShieldSwordAndSheathFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildHylianShieldSwordAndSheathFarVtx.inc.c"
-};
-
-Vtx gLinkChildHylianShieldAndSheathFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildHylianShieldAndSheathFarVtx.inc.c"
-};
-
-Vtx gLinkChildDekuShieldSwordAndSheathFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildDekuShieldSwordAndSheathFarVtx.inc.c"
-};
-
-Vtx gLinkChildDekuShieldAndSheathFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildDekuShieldAndSheathFarVtx.inc.c"
-};
-
-Vtx gLinkChildSwordAndSheathFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildSwordAndSheathFarVtx.inc.c"
-};
-
-Vtx gLinkChildSheathFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildSheathFarVtx.inc.c"
-};
-
-Vtx gLinkChildLeftFistAndKokiriSwordFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildLeftFistAndKokiriSwordFarVtx.inc.c"
-};
-
-Vtx gLinkChildRightHandHoldingOOTFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightHandHoldingOOTFarVtx.inc.c"
-};
-
-Vtx gLinkChildRightHandHoldingFairyOcarinaFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightHandHoldingFairyOcarinaFarVtx.inc.c"
-};
-
-Vtx gLinkChildRightHandHoldingSlingshotFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightHandHoldingSlingshotFarVtx.inc.c"
-};
-
-Vtx gLinkChildLeftHandUpFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildLeftHandUpFarVtx.inc.c"
-};
-
 Vtx gLinkChildRightArmStretchedSlingshotVtx[] = {
 #include "assets/objects/object_link_child/gLinkChildRightArmStretchedSlingshotVtx.inc.c"
 };
@@ -494,74 +400,6 @@ Gfx gLinkChildGoronBraceletDL[45] = {
 #include "assets/objects/object_link_child/gLinkChildGoronBraceletDL.inc.c"
 };
 
-Gfx gLinkChildLeftHandFarDL[40] = {
-#include "assets/objects/object_link_child/gLinkChildLeftHandFarDL.inc.c"
-};
-
-Gfx gLinkChildLeftFistFarDL[36] = {
-#include "assets/objects/object_link_child/gLinkChildLeftFistFarDL.inc.c"
-};
-
-Gfx gLinkChildRightHandFarDL[40] = {
-#include "assets/objects/object_link_child/gLinkChildRightHandFarDL.inc.c"
-};
-
-Gfx gLinkChildRightHandClosedFarDL[36] = {
-#include "assets/objects/object_link_child/gLinkChildRightHandClosedFarDL.inc.c"
-};
-
-Gfx gLinkChildRightFistAndDekuShieldFarDL[57] = {
-#include "assets/objects/object_link_child/gLinkChildRightFistAndDekuShieldFarDL.inc.c"
-};
-
-Gfx gLinkChildLeftFistAndBoomerangFarDL[50] = {
-#include "assets/objects/object_link_child/gLinkChildLeftFistAndBoomerangFarDL.inc.c"
-};
-
-Gfx gLinkChildHylianShieldSwordAndSheathFarDL[76] = {
-#include "assets/objects/object_link_child/gLinkChildHylianShieldSwordAndSheathFarDL.inc.c"
-};
-
-Gfx gLinkChildHylianShieldAndSheathFarDL[62] = {
-#include "assets/objects/object_link_child/gLinkChildHylianShieldAndSheathFarDL.inc.c"
-};
-
-Gfx gLinkChildDekuShieldSwordAndSheathFarDL[77] = {
-#include "assets/objects/object_link_child/gLinkChildDekuShieldSwordAndSheathFarDL.inc.c"
-};
-
-Gfx gLinkChildDekuShieldAndSheathFarDL[66] = {
-#include "assets/objects/object_link_child/gLinkChildDekuShieldAndSheathFarDL.inc.c"
-};
-
-Gfx gLinkChildSwordAndSheathFarDL[52] = {
-#include "assets/objects/object_link_child/gLinkChildSwordAndSheathFarDL.inc.c"
-};
-
-Gfx gLinkChildSheathFarDL[38] = {
-#include "assets/objects/object_link_child/gLinkChildSheathFarDL.inc.c"
-};
-
-Gfx gLinkChildLeftFistAndKokiriSwordFarDL[78] = {
-#include "assets/objects/object_link_child/gLinkChildLeftFistAndKokiriSwordFarDL.inc.c"
-};
-
-Gfx gLinkChildRightHandHoldingOOTFarDL[74] = {
-#include "assets/objects/object_link_child/gLinkChildRightHandHoldingOOTFarDL.inc.c"
-};
-
-Gfx gLinkChildRightHandHoldingFairyOcarinaFarDL[73] = {
-#include "assets/objects/object_link_child/gLinkChildRightHandHoldingFairyOcarinaFarDL.inc.c"
-};
-
-Gfx gLinkChildRightHandHoldingSlingshotFarDL[57] = {
-#include "assets/objects/object_link_child/gLinkChildRightHandHoldingSlingshotFarDL.inc.c"
-};
-
-Gfx gLinkChildLeftHandUpFarDL[41] = {
-#include "assets/objects/object_link_child/gLinkChildLeftHandUpFarDL.inc.c"
-};
-
 Gfx gLinkChildRightArmStretchedSlingshotDL[134] = {
 #include "assets/objects/object_link_child/gLinkChildRightArmStretchedSlingshotDL.inc.c"
 };
@@ -576,140 +414,6 @@ Gfx gLinkChildDL_18580[25] = {
 
 Gfx gLinkChildBottle2DL[34] = {
 #include "assets/objects/object_link_child/gLinkChildBottle2DL.inc.c"
-};
-
-// Far skeleton vertices and DLs
-
-Vtx gLinkChildRightFootFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightFootFarVtx.inc.c"
-};
-
-Vtx gLinkChildRightShinFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightShinFarVtx.inc.c"
-};
-
-Vtx gLinkChildRightThighFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightThighFarVtx.inc.c"
-};
-
-Vtx gLinkChildLeftFootFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildLeftFootFarVtx.inc.c"
-};
-
-Vtx gLinkChildLeftShinFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildLeftShinFarVtx.inc.c"
-};
-
-Vtx gLinkChildLeftThighFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildLeftThighFarVtx.inc.c"
-};
-
-Vtx gLinkChildWaistFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildWaistFarVtx.inc.c"
-};
-
-Vtx gLinkChildHatFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildHatFarVtx.inc.c"
-};
-
-Vtx gLinkChildHeadFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildHeadFarVtx.inc.c"
-};
-
-Vtx gLinkChildCollarFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildCollarFarVtx.inc.c"
-};
-
-Vtx gLinkChildVtx_019E08[] = {
-#include "assets/objects/object_link_child/gLinkChildVtx_019E08.inc.c"
-};
-
-Vtx gLinkChildLeftForearmFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildLeftForearmFarVtx.inc.c"
-};
-
-Vtx gLinkChildLeftShoulderFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildLeftShoulderFarVtx.inc.c"
-};
-
-Vtx gLinkChildVtx_01A428[] = {
-#include "assets/objects/object_link_child/gLinkChildVtx_01A428.inc.c"
-};
-
-Vtx gLinkChildRightForearmFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightForearmFarVtx.inc.c"
-};
-
-Vtx gLinkChildRightShoulderFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildRightShoulderFarVtx.inc.c"
-};
-
-Vtx gLinkChildVtx_01AA98[] = {
-#include "assets/objects/object_link_child/gLinkChildVtx_01AA98.inc.c"
-};
-
-Vtx gLinkChildTorsoFarVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildTorsoFarVtx.inc.c"
-};
-
-Gfx gLinkChildWaistFarDL[70] = {
-#include "assets/objects/object_link_child/gLinkChildWaistFarDL.inc.c"
-};
-
-Gfx gLinkChildRightThighFarDL[56] = {
-#include "assets/objects/object_link_child/gLinkChildRightThighFarDL.inc.c"
-};
-
-Gfx gLinkChildRightShinFarDL[75] = {
-#include "assets/objects/object_link_child/gLinkChildRightShinFarDL.inc.c"
-};
-
-Gfx gLinkChildRightFootFarDL[37] = {
-#include "assets/objects/object_link_child/gLinkChildRightFootFarDL.inc.c"
-};
-
-Gfx gLinkChildLeftThighFarDL[56] = {
-#include "assets/objects/object_link_child/gLinkChildLeftThighFarDL.inc.c"
-};
-
-Gfx gLinkChildLeftShinFarDL[75] = {
-#include "assets/objects/object_link_child/gLinkChildLeftShinFarDL.inc.c"
-};
-
-Gfx gLinkChildLeftFootFarDL[37] = {
-#include "assets/objects/object_link_child/gLinkChildLeftFootFarDL.inc.c"
-};
-
-Gfx gLinkChildCollarFarDL[12] = {
-#include "assets/objects/object_link_child/gLinkChildCollarFarDL.inc.c"
-};
-
-Gfx gLinkChildTorsoFarDL[57] = {
-#include "assets/objects/object_link_child/gLinkChildTorsoFarDL.inc.c"
-};
-
-Gfx gLinkChildHeadFarDL[161] = {
-#include "assets/objects/object_link_child/gLinkChildHeadFarDL.inc.c"
-};
-
-Gfx gLinkChildHatFarDL[30] = {
-#include "assets/objects/object_link_child/gLinkChildHatFarDL.inc.c"
-};
-
-Gfx gLinkChildRightShoulderFarDL[56] = {
-#include "assets/objects/object_link_child/gLinkChildRightShoulderFarDL.inc.c"
-};
-
-Gfx gLinkChildRightForearmFarDL[38] = {
-#include "assets/objects/object_link_child/gLinkChildRightForearmFarDL.inc.c"
-};
-
-Gfx gLinkChildLeftShoulderFarDL[56] = {
-#include "assets/objects/object_link_child/gLinkChildLeftShoulderFarDL.inc.c"
-};
-
-Gfx gLinkChildLeftForearmFarDL[38] = {
-#include "assets/objects/object_link_child/gLinkChildLeftForearmFarDL.inc.c"
 };
 
 // Near skeleton vertices and DLs

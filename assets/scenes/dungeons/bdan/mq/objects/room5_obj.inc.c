@@ -1,0 +1,11 @@
+    OBJECT_BDAN_OBJECTS, // 0
+    OBJECT_RR, // 1
+    OBJECT_COW, // 2
+    OBJECT_D_HSBLOCK, // 3
+    OBJECT_BOX, // 4
+    OBJECT_KUSA, // 5
+    OBJECT_GI_SHIELD_2, // 6
+    OBJECT_GI_SHIELD_1, // 7
+    OBJECT_GI_SUTARU, // 8
+    OBJECT_ST, // 9
+

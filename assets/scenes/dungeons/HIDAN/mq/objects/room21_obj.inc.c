@@ -1,0 +1,4 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_SYOKUDAI, // 1
+    OBJECT_GI_HEART, // 2
+

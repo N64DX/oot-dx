@@ -16,6 +16,7 @@
 #include "save.h"
 #include "scene.h"
 #include "ss_sram.h"
+#include "regs.h"
 
 #define SLOT_SIZE (sizeof(SaveContext) + 0x28)
 #define CHECKSUM_SIZE (sizeof(Save) / 2)
@@ -604,6 +605,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
         gSaveContext.save.info.playerData.dpadItems[2][2] = gSaveContext.save.info.playerData.dpadItems[3][2] = SLOT_SHIELDS;
         gSaveContext.save.info.playerData.dpadItems[2][3] = gSaveContext.save.info.playerData.dpadItems[3][3] = SLOT_TUNICS;
     }
+    
+    R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
+    R_QUEST_MODE    = QUEST_MODE;
 }
 
 /**
@@ -884,6 +888,8 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
         gSaveContext.save.info.playerData.playerName[offset] = fileName[offset];
 #endif
     }
+
+    gSaveContext.save.info.questMode = fileSelect->questMode[fileSelect->buttonIndex] + (fileSelect->mirrorMode[fileSelect->buttonIndex] * 128);
 
     gSaveContext.save.info.playerData.newf[0] = 'Z';
     gSaveContext.save.info.playerData.newf[1] = 'E';
