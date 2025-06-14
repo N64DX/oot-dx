@@ -12794,7 +12794,7 @@ void Player_Draw(Actor* thisx, PlayState* play2) {
         gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
         gSPClearGeometryMode(POLY_XLU_DISP++, G_CULL_BOTH);
 
-        if (!R_ENABLE_MIRROR || (Play_GetCamera(play, CAM_ID_MAIN)->mode == CAM_MODE_AIM_ADULT && this->rideActor != NULL) )
+        if (!R_ENABLE_MIRROR || ( (Play_GetCamera(play, CAM_ID_MAIN)->mode == CAM_MODE_AIM_ADULT || Play_GetCamera(play, CAM_ID_MAIN)->mode == CAM_MODE_Z_AIM_MIRROR) && this->rideActor != NULL) )
             Player_DrawGameplay(play, this, lod, gCullBackDList, overrideLimbDraw);
         else {
             Matrix_Scale(-1.0f, 1.0f, 1.0f, MTXMODE_APPLY);
