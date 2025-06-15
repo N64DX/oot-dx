@@ -105,6 +105,10 @@ DECLARE_BSS_SEGMENT(n64dd)
 DECLARE_OVERLAY_SEGMENT(kaleido_scope)
 DECLARE_OVERLAY_SEGMENT(player_actor)
 DECLARE_OVERLAY_SEGMENT(map_mark_data)
+#if OOT_VERSION <= PAL_1_1
+DECLARE_OVERLAY_SEGMENT(map_mark_data_mq)
+#endif
+
 
 DECLARE_ROM_SEGMENT(z_select_static)
 DECLARE_ROM_SEGMENT(nintendo_rogo_static)

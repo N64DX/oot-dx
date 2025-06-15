@@ -61,6 +61,9 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     gSaveContext.showTitleCard = true;
     gWeatherMode = WEATHER_MODE_CLEAR;
 
+    R_ENABLE_MIRROR = this->mirrorMode;
+    R_QUEST_MODE = this->questMode;
+
     this->state.running = false;
     SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);
 }
@@ -369,12 +372,13 @@ void MapSelect_UpdateMenu(MapSelectState* this) {
             gSaveContext.save.nightFlag = 1;
         }
 
-        // user can change "opt", but it doesn't do anything
         if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
-            this->opt--;
+            this->questMode++;
+            if (this->questMode >= 2)
+                this->questMode = 0;
         }
-        if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN)) {
-            this->opt++;
+        else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN)) {
+            this->mirrorMode = (this->mirrorMode == 1) ? 0 : 1;
         }
 
         if (CHECK_BTN_ALL(input->press.button, BTN_DUP)) {
@@ -521,8 +525,17 @@ void MapSelect_PrintMenu(MapSelectState* this, GfxPrint* printer) {
     };
 
     GfxPrint_SetColor(printer, 155, 55, 150, 255);
-    GfxPrint_SetPos(printer, 20, 26);
-    GfxPrint_Printf(printer, "OPT=%d", this->opt);
+    GfxPrint_SetPos(printer, 22, 25);
+    
+    if (this->questMode == VANILLA_QUEST)
+        GfxPrint_Printf(printer, "Vanilla Quest");
+    else if (this->questMode == MASTER_QUEST)
+        GfxPrint_Printf(printer, "Master Quest");
+    else GfxPrint_Printf(printer, "Quest:%d", this->questMode);
+    
+    GfxPrint_SetColor(printer, 155, 55, 150, 255);
+    GfxPrint_SetPos(printer, 22, 26);
+    GfxPrint_Printf(printer, "Mirror:%d", this->mirrorMode);
 }
 
 static const char* sLoadingMessages[] = {
@@ -625,7 +638,7 @@ void MapSelect_DrawMenu(MapSelectState* this) {
     OPEN_DISPS(gfxCtx, "../z_select.c", 930);
 
     gSPSegment(POLY_OPA_DISP++, 0x00, NULL);
-    Gfx_SetupFrame(gfxCtx, 0, 0, 0);
+    Gfx_SetupFrame(gfxCtx, 0, 0, 0, 0);
     SET_FULLSCREEN_VIEWPORT(&this->view);
     View_Apply(&this->view, VIEW_ALL);
     Gfx_SetupDL_28Opa(gfxCtx);
@@ -649,7 +662,7 @@ void MapSelect_DrawLoadingScreen(MapSelectState* this) {
     OPEN_DISPS(gfxCtx, "../z_select.c", 977);
 
     gSPSegment(POLY_OPA_DISP++, 0x00, NULL);
-    Gfx_SetupFrame(gfxCtx, 0, 0, 0);
+    Gfx_SetupFrame(gfxCtx, 0, 0, 0, 0);
     SET_FULLSCREEN_VIEWPORT(&this->view);
     View_Apply(&this->view, VIEW_ALL);
     Gfx_SetupDL_28Opa(gfxCtx);
@@ -670,7 +683,7 @@ void MapSelect_Draw(MapSelectState* this) {
     OPEN_DISPS(gfxCtx, "../z_select.c", 1013);
 
     gSPSegment(POLY_OPA_DISP++, 0x00, NULL);
-    Gfx_SetupFrame(gfxCtx, 0, 0, 0);
+    Gfx_SetupFrame(gfxCtx, 0, 0, 0, 0);
     SET_FULLSCREEN_VIEWPORT(&this->view);
     View_Apply(&this->view, VIEW_ALL);
 
@@ -712,7 +725,6 @@ void MapSelect_Init(GameState* thisx) {
     this->pageDownStops[5] = 73; // Bottom of the Well
     this->pageDownStops[6] = 91; // Escaping Ganon's Tower 3
     this->pageDownIndex = 0;
-    this->opt = 0;
     this->count = ARRAY_COUNT(sMapSelectEntries);
     View_Init(&this->view, this->state.gfxCtx);
     this->view.flags = (VIEW_PROJECTION_ORTHO | VIEW_VIEWPORT);
@@ -723,6 +735,9 @@ void MapSelect_Init(GameState* thisx) {
     this->lockUp = 0;
     this->lockDown = 0;
     this->unk_234 = 0;
+    
+    this->mirrorMode = MIRROR_MODE ? 1 : 0;
+    this->questMode  = QUEST_MODE;
 
     if ((dREG(80) >= 0) && (dREG(80) < this->count)) {
         this->currentEntry = dREG(80);

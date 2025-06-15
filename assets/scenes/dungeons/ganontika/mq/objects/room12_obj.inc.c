@@ -1,0 +1,9 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_BOX, // 1
+    OBJECT_EFC_FLASH, // 2
+    OBJECT_HAKA_OBJECTS, // 3
+    OBJECT_BOMBF, // 4
+    OBJECT_BB, // 5
+    OBJECT_VM, // 6
+    OBJECT_SYOKUDAI, // 7
+

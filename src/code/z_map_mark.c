@@ -49,11 +49,26 @@ static MapMarkDataOverlay sMapMarkDataOvl = {
     NULL, ROM_FILE(ovl_map_mark_data), _ovl_map_mark_dataSegmentStart, _ovl_map_mark_dataSegmentEnd, gMapMarkDataTable,
 };
 
+#if OOT_VERSION <= PAL_1_1
+static MapMarkDataOverlay sMapMarkDataMQOvl = {
+    NULL, ROM_FILE(ovl_map_mark_data_mq), _ovl_map_mark_data_mqSegmentStart, _ovl_map_mark_data_mqSegmentEnd, gMapMarkDataMQTable,
+};
+#endif
+
 static MapMarkData** sLoadedMarkDataTable;
 
 void MapMark_Init(PlayState* play) {
-    MapMarkDataOverlay* overlay = &sMapMarkDataOvl;
-    u32 overlaySize = (uintptr_t)overlay->vramEnd - (uintptr_t)overlay->vramStart;
+    MapMarkDataOverlay* overlay;
+    u32 overlaySize;
+
+#if OOT_VERSION <= PAL_1_1
+    if (R_QUEST_MODE == MASTER_QUEST)
+        overlay = &sMapMarkDataMQOvl;
+    else overlay = &sMapMarkDataOvl;
+#else
+    overlay = &sMapMarkDataOvl;
+#endif
+    overlaySize = (uintptr_t)overlay->vramEnd - (uintptr_t)overlay->vramStart;
 
     overlay->loadedRamAddr = GAME_STATE_ALLOC(&play->state, overlaySize, "../z_map_mark.c", 235);
     LOG_UTILS_CHECK_NULL_POINTER("dlftbl->allocp", overlay->loadedRamAddr, "../z_map_mark.c", 236);
@@ -95,6 +110,7 @@ void MapMark_DrawForDungeon(PlayState* play) {
     s32 i;
     s32 rectLeft;
     s32 rectTop;
+    s16 markPointX;
 
     interfaceCtx = &play->interfaceCtx;
 
@@ -123,6 +139,7 @@ void MapMark_DrawForDungeon(PlayState* play) {
         for (i = 0; i < mapMarkIconData->count; i++) {
             if ((mapMarkIconData->markType != MAP_MARK_CHEST) || !Flags_GetTreasure(play, markPoint->chestFlag)) {
                 markInfo = &sMapMarkInfoTable[mapMarkIconData->markType];
+                markPointX = R_ENABLE_MIRROR ? gMapData->dungeonXOffset[dungeon][interfaceCtx->mapRoomNum] + MAP_I_TEX_WIDTH - markPoint->x - (markInfo->textureWidth  * 1.0f) : markPoint->x;
 
                 gDPPipeSync(OVERLAY_DISP++);
                 gDPLoadTextureBlock_Runtime(OVERLAY_DISP++, markInfo->texture, markInfo->imageFormat,
@@ -130,7 +147,7 @@ void MapMark_DrawForDungeon(PlayState* play) {
                                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                rectLeft = HIRES_MULTIPLY((((DEBUG_FEATURES ? GREG(94) : 0) + markPoint->x + 204 + WS_SHIFT_FULL) << 2));
+                rectLeft = HIRES_MULTIPLY((((DEBUG_FEATURES ? GREG(94) : 0) + markPointX + 204 + WS_SHIFT_FULL) << 2));
                 rectTop = HIRES_MULTIPLY((((DEBUG_FEATURES ? GREG(95) : 0) + markPoint->y + 140) << 2));
                 gSPTextureRectangle(OVERLAY_DISP++, rectLeft, rectTop, HIRES_MULTIPLY((markInfo->rectWidth)) + rectLeft,
                                     rectTop + HIRES_MULTIPLY((markInfo->rectHeight)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((markInfo->dsdx)),

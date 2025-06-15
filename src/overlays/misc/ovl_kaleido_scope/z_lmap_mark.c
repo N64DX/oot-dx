@@ -6,6 +6,7 @@
 #include "z_kaleido_scope.h"
 #include "z_lib.h"
 #include "play_state.h"
+#include "save.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
 
@@ -30,11 +31,20 @@ static PauseMapMarkInfo sMapMarkInfoTable[] = {
 };
 
 extern PauseMapMarksData gPauseMapMarkDataTable[];
+#if OOT_VERSION <= PAL_1_1
+extern PauseMapMarksData gPauseMapMarkDataMQTable[];
+#endif
 
 void PauseMapMark_Init(PlayState* play) {
     gBossMarkState = 0;
     gBossMarkScale = 1.0f;
+#if OOT_VERSION <= PAL_1_1
+    if (R_QUEST_MODE == MASTER_QUEST)
+        gLoadedPauseMarkDataTable = gPauseMapMarkDataMQTable;
+    else gLoadedPauseMarkDataTable = gPauseMapMarkDataTable;
+#else
     gLoadedPauseMarkDataTable = gPauseMapMarkDataTable;
+#endif
 #if PLATFORM_N64
     if ((B_80121220 != NULL) && (B_80121220->unk_34 != NULL)) {
         B_80121220->unk_34(&gLoadedPauseMarkDataTable);

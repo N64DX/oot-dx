@@ -1,0 +1,7 @@
+    OBJECT_HAKA_OBJECTS, // 0
+    OBJECT_HAKA_DOOR, // 1
+    OBJECT_BOX, // 2
+    OBJECT_SYOKUDAI, // 3
+    OBJECT_FIREFLY, // 4
+    OBJECT_ST, // 5
+

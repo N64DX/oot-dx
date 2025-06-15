@@ -1,0 +1,7 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_ICE_OBJECTS, // 1
+    OBJECT_DEMO_6K, // 2
+    OBJECT_RU2, // 3
+    OBJECT_GI_MEDAL, // 4
+    OBJECT_WARP2, // 5
+

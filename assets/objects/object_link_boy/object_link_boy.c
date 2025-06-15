@@ -77,22 +77,6 @@ u64 gLinkAdultNose2Tex[TEX_LEN(u64, gLinkAdultNose2Tex_WIDTH, gLinkAdultNose2Tex
 #include "assets/objects/object_link_boy/gLinkAdultNose2Tex.ci8.tlut_gLinkAdultHeadTLUT.inc.c"
 };
 
-#define gLinkAdultUnusedHandTex_WIDTH 16
-#define gLinkAdultUnusedHandTex_HEIGHT 16
-u64 gLinkAdultUnusedHandTex[TEX_LEN(u64, gLinkAdultUnusedHandTex_WIDTH, gLinkAdultUnusedHandTex_HEIGHT, 8)] = {
-#include "assets/objects/object_link_boy/gLinkAdultUnusedHandTex.ci8.tlut_gLinkAdultHeadTLUT.inc.c"
-};
-
-u64 gLinkAdultTLUT1[] = {
-#include "assets/objects/object_link_boy/gLinkAdultBootFarTex.tlut.rgba16.inc.c"
-};
-
-#define gLinkAdultBootFarTex_WIDTH 16
-#define gLinkAdultBootFarTex_HEIGHT 32
-u64 gLinkAdultBootFarTex[TEX_LEN(u64, gLinkAdultBootFarTex_WIDTH, gLinkAdultBootFarTex_HEIGHT, 8)] = {
-#include "assets/objects/object_link_boy/gLinkAdultBootFarTex.ci8.inc.c"
-};
-
 u64 gLinkAdultTLUT2[] = {
 #include "assets/objects/object_link_boy/gLinkAdultTLUT2.tlut.rgba16.inc.c"
 };
@@ -101,16 +85,8 @@ u64 gLinkAdultTLUT3[] = {
 #include "assets/objects/object_link_boy/gLinkAdultTLUT3.tlut.rgba16.inc.c"
 };
 
-u8 gLinkAdult_5AB0_Blob[] = {
-#include "assets/objects/object_link_boy/gLinkAdult_5AB0_Blob.bin.inc.c"
-};
-
 u64 gLinkAdultHeadTLUT[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHeadTLUT.tlut.rgba16.inc.c"
-};
-
-u64 gLinkAdultTlut_005E00[] = {
-#include "assets/objects/object_link_boy/gLinkAdultTlut_005E00.tlut.rgba16.inc.c"
 };
 
 #define gLinkAdultBootTex_WIDTH 16
@@ -167,58 +143,10 @@ u64 gLinkAdultNeckTex[TEX_LEN(u64, gLinkAdultNeckTex_WIDTH, gLinkAdultNeckTex_HE
 #include "assets/objects/object_link_boy/gLinkAdultNeckTex.ci8.tlut_gLinkAdultTLUT3.inc.c"
 };
 
-#define gLinkAdultUnusedGauntlet1Tex_WIDTH 16
-#define gLinkAdultUnusedGauntlet1Tex_HEIGHT 32
-u64 gLinkAdultUnusedGauntlet1Tex[TEX_LEN(u64, gLinkAdultUnusedGauntlet1Tex_WIDTH, gLinkAdultUnusedGauntlet1Tex_HEIGHT,
-                                         8)] = {
-#include "assets/objects/object_link_boy/gLinkAdultUnusedGauntlet1Tex.ci8.tlut_gLinkAdultTLUT2.inc.c"
-};
-
-#define gLinkAdultUnusedGauntlet2Tex_WIDTH 16
-#define gLinkAdultUnusedGauntlet2Tex_HEIGHT 32
-u64 gLinkAdultUnusedGauntlet2Tex[TEX_LEN(u64, gLinkAdultUnusedGauntlet2Tex_WIDTH, gLinkAdultUnusedGauntlet2Tex_HEIGHT,
-                                         8)] = {
-#include "assets/objects/object_link_boy/gLinkAdultUnusedGauntlet2Tex.ci8.tlut_gLinkAdultTLUT2.inc.c"
-};
-
 #define gLinkAdultArmGauntletTex_WIDTH 32
 #define gLinkAdultArmGauntletTex_HEIGHT 32
 u64 gLinkAdultArmGauntletTex[TEX_LEN(u64, gLinkAdultArmGauntletTex_WIDTH, gLinkAdultArmGauntletTex_HEIGHT, 8)] = {
 #include "assets/objects/object_link_boy/gLinkAdultArmGauntletTex.ci8.tlut_gLinkAdultTLUT2.inc.c"
-};
-
-#define gLinkAdultUnusedSheathTex_WIDTH 32
-#define gLinkAdultUnusedSheathTex_HEIGHT 64
-u64 gLinkAdultUnusedSheathTex[TEX_LEN(u64, gLinkAdultUnusedSheathTex_WIDTH, gLinkAdultUnusedSheathTex_HEIGHT, 8)] = {
-#include "assets/objects/object_link_boy/gLinkAdultUnusedSheathTex.ci8.tlut_gLinkAdultTlut_005E00.inc.c"
-};
-
-#define gLinkAdultUnusedSheathBandTex_WIDTH 32
-#define gLinkAdultUnusedSheathBandTex_HEIGHT 16
-u64 gLinkAdultUnusedSheathBandTex[TEX_LEN(u64, gLinkAdultUnusedSheathBandTex_WIDTH,
-                                          gLinkAdultUnusedSheathBandTex_HEIGHT, 8)] = {
-#include "assets/objects/object_link_boy/gLinkAdultUnusedSheathBandTex.ci8.tlut_gLinkAdultTlut_005E00.inc.c"
-};
-
-#define gLinkAdultUnusedSwordPommelTex_WIDTH 16
-#define gLinkAdultUnusedSwordPommelTex_HEIGHT 16
-u64 gLinkAdultUnusedSwordPommelTex[TEX_LEN(u64, gLinkAdultUnusedSwordPommelTex_WIDTH,
-                                           gLinkAdultUnusedSwordPommelTex_HEIGHT, 8)] = {
-#include "assets/objects/object_link_boy/gLinkAdultUnusedSwordPommelTex.ci8.tlut_gLinkAdultTlut_005E00.inc.c"
-};
-
-#define gLinkAdultUnusedSwordGuardTex_WIDTH 32
-#define gLinkAdultUnusedSwordGuardTex_HEIGHT 32
-u64 gLinkAdultUnusedSwordGuardTex[TEX_LEN(u64, gLinkAdultUnusedSwordGuardTex_WIDTH,
-                                          gLinkAdultUnusedSwordGuardTex_HEIGHT, 8)] = {
-#include "assets/objects/object_link_boy/gLinkAdultUnusedSwordGuardTex.ci8.tlut_gLinkAdultTlut_005E00.inc.c"
-};
-
-#define gLinkAdultUnusedSwordEmblemTex_WIDTH 16
-#define gLinkAdultUnusedSwordEmblemTex_HEIGHT 16
-u64 gLinkAdultUnusedSwordEmblemTex[TEX_LEN(u64, gLinkAdultUnusedSwordEmblemTex_WIDTH,
-                                           gLinkAdultUnusedSwordEmblemTex_HEIGHT, 8)] = {
-#include "assets/objects/object_link_boy/gLinkAdultUnusedSwordEmblemTex.ci8.tlut_gLinkAdultTlut_005E00.inc.c"
 };
 
 #define gLinkAdultTunicTex_WIDTH 16
@@ -299,24 +227,12 @@ u64 gLinkAdultTLUT4[] = {
 #include "assets/objects/object_link_boy/gLinkAdultTLUT4.tlut.rgba16.inc.c"
 };
 
-u8 gLinkAdult_CD40_Blob[] = {
-#include "assets/objects/object_link_boy/gLinkAdult_CD40_Blob.bin.inc.c"
-};
-
 u64 gLinkAdultTLUT5[] = {
 #include "assets/objects/object_link_boy/gLinkAdultTLUT5.tlut.rgba16.inc.c"
 };
 
-u8 gLinkAdult_CF48_Blob[] = {
-#include "assets/objects/object_link_boy/gLinkAdult_CF48_Blob.bin.inc.c"
-};
-
 u64 gLinkAdultTLUT6[] = {
 #include "assets/objects/object_link_boy/gLinkAdultTLUT6.tlut.rgba16.inc.c"
-};
-
-u8 gLinkAdult_D070_Blob[] = {
-#include "assets/objects/object_link_boy/gLinkAdult_D070_Blob.bin.inc.c"
 };
 
 u64 gLinkAdultTLUT7[] = {
@@ -555,78 +471,6 @@ Vtx gLinkAdultRightHoverBootVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultRightHoverBootVtx.inc.c"
 };
 
-Vtx gLinkAdultHylianShieldSwordAndSheathFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultHylianShieldSwordAndSheathFarVtx.inc.c"
-};
-
-Vtx gLinkAdultHylianShieldAndSheathFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultHylianShieldAndSheathFarVtx.inc.c"
-};
-
-Vtx gLinkAdultMirrorShieldSwordAndSheathFarVtx1[] = {
-#include "assets/objects/object_link_boy/gLinkAdultMirrorShieldSwordAndSheathFarVtx1.inc.c"
-};
-
-Vtx gLinkAdultMirrorShieldAndSheathFarVtx1[] = {
-#include "assets/objects/object_link_boy/gLinkAdultMirrorShieldAndSheathFarVtx1.inc.c"
-};
-
-Vtx gLinkAdultLeftHandFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandFarVtx.inc.c"
-};
-
-Vtx gLinkAdultLeftHandClosedFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandClosedFarVtx.inc.c"
-};
-
-Vtx gLinkAdultLeftHandHoldingMasterSwordFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandHoldingMasterSwordFarVtx.inc.c"
-};
-
-Vtx gLinkAdultRightHandFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandFarVtx.inc.c"
-};
-
-Vtx gLinkAdultRightHandClosedFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandClosedFarVtx.inc.c"
-};
-
-Vtx gLinkAdultRightHandHoldingHylianShieldFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandHoldingHylianShieldFarVtx.inc.c"
-};
-
-Vtx gLinkAdultRightHandHoldingBowFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandHoldingBowFarVtx.inc.c"
-};
-
-Vtx gLinkAdultMasterSwordAndSheathFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultMasterSwordAndSheathFarVtx.inc.c"
-};
-
-Vtx gLinkAdultSheathFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultSheathFarVtx.inc.c"
-};
-
-Vtx gLinkAdultLeftHandHoldingHammerFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandHoldingHammerFarVtx.inc.c"
-};
-
-Vtx gLinkAdultLeftHandHoldingBgsFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandHoldingBgsFarVtx.inc.c"
-};
-
-Vtx gLinkAdultRightHandHoldingMirrorShieldFarVtx1[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandHoldingMirrorShieldFarVtx1.inc.c"
-};
-
-Vtx gLinkAdultRightHandHoldingOotFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandHoldingOotFarVtx.inc.c"
-};
-
-Vtx gLinkAdultHandHoldingBrokenGiantsKnifeFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultHandHoldingBrokenGiantsKnifeFarVtx.inc.c"
-};
-
 Vtx gLinkAdultHandHoldingBottleVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHandHoldingBottleVtx.inc.c"
 };
@@ -665,18 +509,6 @@ Vtx gLinkAdultRightHandHoldingMirrorShieldNearVtx2[] = {
 
 Vtx gLinkAdultBottleVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultBottleVtx.inc.c"
-};
-
-Vtx gLinkAdultMirrorShieldSwordAndSheathFarVtx2[] = {
-#include "assets/objects/object_link_boy/gLinkAdultMirrorShieldSwordAndSheathFarVtx2.inc.c"
-};
-
-Vtx gLinkAdultMirrorShieldAndSheathFarVtx2[] = {
-#include "assets/objects/object_link_boy/gLinkAdultMirrorShieldAndSheathFarVtx2.inc.c"
-};
-
-Vtx gLinkAdultRightHandHoldingMirrorShieldFarVtx2[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandHoldingMirrorShieldFarVtx2.inc.c"
 };
 
 Gfx gLinkAdultHylianShieldSwordAndSheathNearDL[127] = {
@@ -799,78 +631,6 @@ Gfx gLinkAdultRightHoverBootDL[65] = {
 #include "assets/objects/object_link_boy/gLinkAdultRightHoverBootDL.inc.c"
 };
 
-Gfx gLinkAdultHylianShieldSwordAndSheathFarDL[96] = {
-#include "assets/objects/object_link_boy/gLinkAdultHylianShieldSwordAndSheathFarDL.inc.c"
-};
-
-Gfx gLinkAdultHylianShieldAndSheathFarDL[71] = {
-#include "assets/objects/object_link_boy/gLinkAdultHylianShieldAndSheathFarDL.inc.c"
-};
-
-Gfx gLinkAdultMirrorShieldSwordAndSheathFarDL[132] = {
-#include "assets/objects/object_link_boy/gLinkAdultMirrorShieldSwordAndSheathFarDL.inc.c"
-};
-
-Gfx gLinkAdultMirrorShieldAndSheathFarDL[105] = {
-#include "assets/objects/object_link_boy/gLinkAdultMirrorShieldAndSheathFarDL.inc.c"
-};
-
-Gfx gLinkAdultLeftHandFarDL[51] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandFarDL.inc.c"
-};
-
-Gfx gLinkAdultLeftHandClosedFarDL[81] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandClosedFarDL.inc.c"
-};
-
-Gfx gLinkAdultLeftHandHoldingMasterSwordFarDL[144] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandHoldingMasterSwordFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightHandFarDL[51] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightHandClosedFarDL[81] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandClosedFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightHandHoldingHylianShieldFarDL[78] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandHoldingHylianShieldFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightHandHoldingBowFarDL[111] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandHoldingBowFarDL.inc.c"
-};
-
-Gfx gLinkAdultMasterSwordAndSheathFarDL[74] = {
-#include "assets/objects/object_link_boy/gLinkAdultMasterSwordAndSheathFarDL.inc.c"
-};
-
-Gfx gLinkAdultSheathFarDL[39] = {
-#include "assets/objects/object_link_boy/gLinkAdultSheathFarDL.inc.c"
-};
-
-Gfx gLinkAdultLeftHandHoldingHammerFarDL[134] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandHoldingHammerFarDL.inc.c"
-};
-
-Gfx gLinkAdultLeftHandHoldingBgsFarDL[145] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandHoldingBgsFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightHandHoldingMirrorShieldFarDL[131] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandHoldingMirrorShieldFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightHandHoldingOotFarDL[82] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightHandHoldingOotFarDL.inc.c"
-};
-
-Gfx gLinkAdultHandHoldingBrokenGiantsKnifeFarDL[131] = {
-#include "assets/objects/object_link_boy/gLinkAdultHandHoldingBrokenGiantsKnifeFarDL.inc.c"
-};
-
 Gfx gLinkAdultHandHoldingBottleDL[99] = {
 #include "assets/objects/object_link_boy/gLinkAdultHandHoldingBottleDL.inc.c"
 };
@@ -957,136 +717,6 @@ Vtx gLinkAdultHookshotReticleVtx[] = {
 
 Gfx gLinkAdultHookshotReticleDL[13] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotReticleDL.inc.c"
-};
-
-// Far skeleton vertices and DLs
-
-Vtx gLinkAdultRightFootFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightFootFarVtx.inc.c"
-};
-
-Vtx gLinkAdultRightLegFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightLegFarVtx.inc.c"
-};
-
-Vtx gLinkAdultRightThighFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightThighFarVtx.inc.c"
-};
-
-Vtx gLinkAdultLeftFootFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftFootFarVtx.inc.c"
-};
-
-Vtx gLinkAdultLeftLegFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftLegFarVtx.inc.c"
-};
-
-Vtx gLinkAdultLeftThighFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftThighFarVtx.inc.c"
-};
-
-Vtx gLinkAdultWaistFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultWaistFarVtx.inc.c"
-};
-
-Vtx gLinkAdultHatFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultHatFarVtx.inc.c"
-};
-
-Vtx gLinkAdultHeadFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultHeadFarVtx.inc.c"
-};
-
-Vtx gLinkAdultVtx_02E120[] = {
-#include "assets/objects/object_link_boy/gLinkAdultVtx_02E120.inc.c"
-};
-
-Vtx gLinkAdultLeftArmFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftArmFarVtx.inc.c"
-};
-
-Vtx gLinkAdultLeftShoulderFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftShoulderFarVtx.inc.c"
-};
-
-Vtx gLinkAdultVtx_02E7E0[] = {
-#include "assets/objects/object_link_boy/gLinkAdultVtx_02E7E0.inc.c"
-};
-
-Vtx gLinkAdultRightArmFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightArmFarVtx.inc.c"
-};
-
-Vtx gLinkAdultRightShoulderFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightShoulderFarVtx.inc.c"
-};
-
-Vtx gLinkAdultTorsoFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultTorsoFarVtx.inc.c"
-};
-
-Vtx gLinkAdultCollarFarVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultCollarFarVtx.inc.c"
-};
-
-Gfx gLinkAdultWaistFarDL[78] = {
-#include "assets/objects/object_link_boy/gLinkAdultWaistFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightThighFarDL[67] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightThighFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightLegFarDL[57] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightLegFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightFootFarDL[36] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightFootFarDL.inc.c"
-};
-
-Gfx gLinkAdultLeftThighFarDL[68] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftThighFarDL.inc.c"
-};
-
-Gfx gLinkAdultLeftLegFarDL[57] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftLegFarDL.inc.c"
-};
-
-Gfx gLinkAdultLeftFootFarDL[36] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftFootFarDL.inc.c"
-};
-
-Gfx gLinkAdultCollarFarDL[21] = {
-#include "assets/objects/object_link_boy/gLinkAdultCollarFarDL.inc.c"
-};
-
-Gfx gLinkAdultTorsoFarDL[54] = {
-#include "assets/objects/object_link_boy/gLinkAdultTorsoFarDL.inc.c"
-};
-
-Gfx gLinkAdultHeadFarDL[182] = {
-#include "assets/objects/object_link_boy/gLinkAdultHeadFarDL.inc.c"
-};
-
-Gfx gLinkAdultHatFarDL[30] = {
-#include "assets/objects/object_link_boy/gLinkAdultHatFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightShoulderFarDL[53] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightShoulderFarDL.inc.c"
-};
-
-Gfx gLinkAdultRightArmFarDL[86] = {
-#include "assets/objects/object_link_boy/gLinkAdultRightArmFarDL.inc.c"
-};
-
-Gfx gLinkAdultLeftShoulderFarDL[53] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftShoulderFarDL.inc.c"
-};
-
-Gfx gLinkAdultLeftArmFarDL[86] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftArmFarDL.inc.c"
 };
 
 // Near skeleton vertices and DLs

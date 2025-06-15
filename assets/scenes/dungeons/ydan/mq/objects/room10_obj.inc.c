@@ -1,0 +1,11 @@
+    OBJECT_YDAN_OBJECTS, // 0
+    OBJECT_GOL, // 1
+    OBJECT_ST, // 2
+    OBJECT_DEKUBABA, // 3
+    OBJECT_HINTNUTS, // 4
+    OBJECT_BOX, // 5
+    OBJECT_SYOKUDAI, // 6
+    OBJECT_KUSA, // 7
+    OBJECT_GI_HEART, // 8
+    OBJECT_KIBAKO2, // 9
+

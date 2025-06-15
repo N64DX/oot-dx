@@ -1581,6 +1581,7 @@ void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 arg2) {
     f32 sp64;
     f32 sp60;
 
+    D_801260C8.x = R_ENABLE_MIRROR ? 325.0f : -500.0f;
     D_801260C8.z = 0.0f;
     Matrix_MultVec3f(&D_801260C8, &sp8C);
     D_801260C8.z = arg2;
@@ -1770,7 +1771,9 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
             Matrix_Scale(1.0f, this->unk_858, 1.0f, MTXMODE_APPLY);
 
             if (!LINK_IS_ADULT) {
-                Matrix_RotateZ(this->unk_858 * -0.2f, MTXMODE_APPLY);
+                if (R_ENABLE_MIRROR)
+                    Matrix_RotateZ(this->unk_858 * -0.3f, MTXMODE_APPLY);
+                else Matrix_RotateZ(this->unk_858 * -0.2f, MTXMODE_APPLY);
             }
 
             MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_player_lib.c", 2804);

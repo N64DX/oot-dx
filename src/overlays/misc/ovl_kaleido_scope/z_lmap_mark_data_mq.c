@@ -14,7 +14,11 @@ static const Vtx sMarkChestVtx[] = {
     VTX(4, -4, 0, 256, 256, 255, 255, 255, 255),
 };
 
+#if OOT_VERSION <= PAL_1_1
+PauseMapMarksData gPauseMapMarkDataMQTable[] = {
+#else
 PauseMapMarksData gPauseMapMarkDataTable[] = {
+#endif
     // Deku Tree map 0
     {
         { PAUSE_MAP_MARK_CHEST,

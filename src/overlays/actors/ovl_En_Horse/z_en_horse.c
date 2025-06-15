@@ -3088,7 +3088,7 @@ void EnHorse_StickDirection(Vec2f* curStick, f32* stickMag, s16* angle) {
     f32 y;
     f32 x;
 
-    x = curStick->x;
+    x = curStick->x * (R_ENABLE_MIRROR ? -1 : 1);
     y = curStick->y;
     dist = sqrtf(SQ(x) + SQ(y));
 
@@ -3104,7 +3104,7 @@ void EnHorse_StickDirection(Vec2f* curStick, f32* stickMag, s16* angle) {
 
 void EnHorse_UpdateStick(EnHorse* this, PlayState* play) {
     this->lastStick = this->curStick;
-    this->curStick.x = play->state.input[0].rel.stick_x;
+    this->curStick.x = play->state.input[0].rel.stick_x * (R_ENABLE_MIRROR ? -1 : 1);
     this->curStick.y = play->state.input[0].rel.stick_y;
 }
 
