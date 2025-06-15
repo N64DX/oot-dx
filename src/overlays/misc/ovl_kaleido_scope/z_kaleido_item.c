@@ -258,8 +258,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
 
-                Audio_PlaySfxGeneral(NA_SE_SY_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                SFX_PLAY_CENTERED(NA_SE_SY_CURSOR);
 
                 cursorPoint = cursorX = cursorY = 0;
                 while (true) {
@@ -289,8 +288,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
 
-                Audio_PlaySfxGeneral(NA_SE_SY_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                SFX_PLAY_CENTERED(NA_SE_SY_CURSOR);
 
                 cursorPoint = cursorX = ITEM_GRID_COLS - 1;
                 cursorY = 0;
@@ -441,16 +439,15 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                         index = 1;
                                     if (pauseCtx->equipTargetItem == ITEM_ARROW_LIGHT)
                                         index = 2;
-                                    Audio_PlaySfxGeneral(NA_SE_SY_SET_FIRE_ARROW + index, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                                    SFX_PLAY_CENTERED(NA_SE_SY_SET_FIRE_ARROW + index);
                                     pauseCtx->equipTargetItem = 0xBF + index;
                                     sEquipState = 0;
                                     pauseCtx->equipAnimAlpha = 0;
                                     sEquipMoveTimer = 6;
-                                } else Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                                } else {
+                                    SFX_PLAY_CENTERED(NA_SE_SY_ERROR);
+                                }
                             }
-                        } else {
-                            Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                         }
                     }
                     else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && canSelectItem) {
@@ -501,8 +498,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
         }
 
         if (oldCursorPoint != pauseCtx->cursorPoint[PAUSE_ITEM]) {
-            Audio_PlaySfxGeneral(NA_SE_SY_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_CENTERED(NA_SE_SY_CURSOR);
         }
     } else if ((pauseCtx->mainState == PAUSE_MAIN_STATE_3) && (pauseCtx->pageIndex == PAUSE_ITEM)) {
         //! @bug cursorSlot is uninitialized
@@ -624,8 +620,7 @@ void KaleidoScope_UpdateItemEquip(PlayState* play) {
             WREG(90) = 320;
             WREG(87) = WREG(91);
             sEquipState++;
-            Audio_PlaySfxGeneral(NA_SE_SY_SYNTH_MAGIC_ARROW, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_CENTERED(NA_SE_SY_SYNTH_MAGIC_ARROW);
         }
         return;
     }
