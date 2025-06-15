@@ -62,7 +62,9 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     gWeatherMode = WEATHER_MODE_CLEAR;
 
     R_ENABLE_MIRROR = this->mirrorMode;
+#if OOT_VERSION <= PAL_1_1
     R_QUEST_MODE = this->questMode;
+#endif
 
     this->state.running = false;
     SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);
@@ -372,12 +374,15 @@ void MapSelect_UpdateMenu(MapSelectState* this) {
             gSaveContext.save.nightFlag = 1;
         }
 
+#if OOT_VERSION <= PAL_1_1
         if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
             this->questMode++;
             if (this->questMode >= 2)
                 this->questMode = 0;
         }
-        else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN)) {
+        else
+#endif
+        if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN)) {
             this->mirrorMode = (this->mirrorMode == 1) ? 0 : 1;
         }
 
@@ -526,12 +531,14 @@ void MapSelect_PrintMenu(MapSelectState* this, GfxPrint* printer) {
 
     GfxPrint_SetColor(printer, 155, 55, 150, 255);
     GfxPrint_SetPos(printer, 22, 25);
-    
+
+#if OOT_VERSION <= PAL_1_1
     if (this->questMode == VANILLA_QUEST)
         GfxPrint_Printf(printer, "Vanilla Quest");
     else if (this->questMode == MASTER_QUEST)
         GfxPrint_Printf(printer, "Master Quest");
     else GfxPrint_Printf(printer, "Quest:%d", this->questMode);
+#endif
     
     GfxPrint_SetColor(printer, 155, 55, 150, 255);
     GfxPrint_SetPos(printer, 22, 26);
@@ -736,8 +743,10 @@ void MapSelect_Init(GameState* thisx) {
     this->lockDown = 0;
     this->unk_234 = 0;
     
-    this->mirrorMode = MIRROR_MODE ? 1 : 0;
+#if OOT_VERSION <= PAL_1_1
     this->questMode  = QUEST_MODE;
+#endif
+    this->mirrorMode = MIRROR_MODE ? 1 : 0;
 
     if ((dREG(80) >= 0) && (dREG(80) < this->count)) {
         this->currentEntry = dREG(80);

@@ -25,7 +25,9 @@ static SurfaceType mq_surface_types[] = {
 };
 
 static CollisionHeader mq_collision = {
-#if OOT_NTSC
+#if OOT_VERSION == NTSC_1_2
+#include "assets/scenes/dungeons/ice_doukutu/mq/scene/collision_us_rev2.inc.c"
+#elif OOT_NTSC
 #include "assets/scenes/dungeons/ice_doukutu/mq/scene/collision.inc.c"
 #else
 #include "assets/scenes/dungeons/ice_doukutu/mq/scene/collision_pal.inc.c"
