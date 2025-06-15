@@ -1581,6 +1581,7 @@ void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 arg2) {
     f32 sp64;
     f32 sp60;
 
+    D_801260C8.x = R_ENABLE_MIRROR ? 325.0f : -500.0f;
     D_801260C8.z = 0.0f;
     Matrix_MultVec3f(&D_801260C8, &sp8C);
     D_801260C8.z = arg2;
@@ -1596,9 +1597,6 @@ void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 arg2) {
         SkinMatrix_Vec3fMtxFMultXYZW(&play->viewProjectionMtxF, &sp74, &sp68, &sp64);
 
         sp60 = (sp64 < 200.0f) ? 0.08f : (sp64 / 200.0f) * 0.08f;
-
-        if (R_ENABLE_MIRROR)
-            sp74.x += -6.0f;
 
         Matrix_Translate(sp74.x, sp74.y, sp74.z, MTXMODE_NEW);
         Matrix_Scale(sp60, sp60, sp60, MTXMODE_APPLY);
