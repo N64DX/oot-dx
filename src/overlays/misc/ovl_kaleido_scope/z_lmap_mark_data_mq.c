@@ -1,4 +1,5 @@
 #include "z_kaleido_scope.h"
+#include "versions.h"
 
 static const Vtx sMarkBossVtx[] = {
     VTX(-4, 4, 0, 0, 0, 255, 255, 255, 255),
