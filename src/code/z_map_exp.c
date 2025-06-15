@@ -380,13 +380,13 @@ void Minimap_DrawCompassIcons(PlayState* play) {
         gDPSetCombineMode(OVERLAY_DISP++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
 
         if (play->sceneId >= SCENE_HYRULE_FIELD && play->sceneId <= SCENE_OUTSIDE_GANONS_CASTLE) { // Overworld
-            mapStartPosX = R_OW_MINIMAP_X + WS_SHIFT_HALF;
+            mapStartPosX = R_OW_MINIMAP_X + WS_SHIFT_HALF + (gMapData->overworldXOffset[R_MAP_INDEX]/2);
             mapWidth = gMapData->owMinimapWidth[R_MAP_INDEX];
         } else if (play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_ICE_CAVERN) { // Dungeons
-            mapStartPosX = R_DGN_MINIMAP_X + WS_SHIFT_HALF;
+            mapStartPosX = R_DGN_MINIMAP_X + WS_SHIFT_HALF + (gMapData->dungeonXOffset[R_MAP_INDEX][play->interfaceCtx.mapRoomNum]/2);
             mapWidth = MAP_I_TEX_WIDTH;
         }
-        mirrorOffset = ((mapWidth / 2) - ((R_COMPASS_OFFSET_X / 10) - (mapStartPosX - SCREEN_WIDTH / 2))) * 2 * 10;
+        mirrorOffset = ((mapWidth / 2) - ((R_COMPASS_OFFSET_X / 10) - (mapStartPosX - HIRES_DIVIDE((SCREEN_WIDTH)) / 2))) * 2 * 10;
 
         tempX = player->actor.world.pos.x;
         tempZ = player->actor.world.pos.z;
@@ -458,7 +458,8 @@ void Minimap_Draw(PlayState* play) {
                                                G_TX_NOLOD);
 
                         if (R_ENABLE_MIRROR) {
-                            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((WS_SHIFT_FULL + R_DGN_MINIMAP_X) << 2)), HIRES_MULTIPLY((R_DGN_MINIMAP_Y << 2)), HIRES_MULTIPLY(((WS_SHIFT_FULL + R_DGN_MINIMAP_X + MAP_I_TEX_WIDTH) << 2)),
+                            u16 x = WS_SHIFT_FULL + R_DGN_MINIMAP_X + gMapData->dungeonXOffset[mapIndex][interfaceCtx->mapRoomNum];
+                            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((x) << 2)), HIRES_MULTIPLY((R_DGN_MINIMAP_Y << 2)), HIRES_MULTIPLY(((x + MAP_I_TEX_WIDTH) << 2)),
                                 HIRES_MULTIPLY(((R_DGN_MINIMAP_Y + MAP_I_TEX_HEIGHT) << 2)), G_TX_RENDERTILE, (MAP_I_TEX_WIDTH - 1) << 5, 0, -HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
                         } else {
                             gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((WS_SHIFT_FULL + R_DGN_MINIMAP_X) << 2)), HIRES_MULTIPLY((R_DGN_MINIMAP_Y << 2)), HIRES_MULTIPLY(((WS_SHIFT_FULL + R_DGN_MINIMAP_X + MAP_I_TEX_WIDTH) << 2)),
@@ -512,6 +513,8 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_LON_LON_RANCH:
             case SCENE_OUTSIDE_GANONS_CASTLE:
                 if (!R_MINIMAP_DISABLED) {
+                    s8 xOffset = gMapData->overworldXOffset[mapIndex];
+                    
                     Gfx_SetupDL_39Overlay(play->state.gfxCtx);
 
                     gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
@@ -524,7 +527,8 @@ void Minimap_Draw(PlayState* play) {
                                            G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
                     if (R_ENABLE_MIRROR) {
-                        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((WS_SHIFT_FULL + R_OW_MINIMAP_X) << 2)), HIRES_MULTIPLY((R_OW_MINIMAP_Y << 2)), HIRES_MULTIPLY(((WS_SHIFT_FULL + R_OW_MINIMAP_X + gMapData->owMinimapWidth[mapIndex]) << 2)), HIRES_MULTIPLY((((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[mapIndex]) << 2))),
+                        u16 x = WS_SHIFT_FULL + R_OW_MINIMAP_X + xOffset;
+                        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((x) << 2)), HIRES_MULTIPLY((R_OW_MINIMAP_Y << 2)), HIRES_MULTIPLY(((x + gMapData->owMinimapWidth[mapIndex]) << 2)), HIRES_MULTIPLY((((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[mapIndex]) << 2))),
                             G_TX_RENDERTILE, (gMapData->owMinimapWidth[mapIndex] - 1) << 5, 0, -HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
                     } else {
                         gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((WS_SHIFT_FULL + R_OW_MINIMAP_X) << 2)), HIRES_MULTIPLY((R_OW_MINIMAP_Y << 2)), HIRES_MULTIPLY(((WS_SHIFT_FULL + R_OW_MINIMAP_X + gMapData->owMinimapWidth[mapIndex]) << 2)), HIRES_MULTIPLY((((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[mapIndex]) << 2))),
@@ -538,7 +542,7 @@ void Minimap_Draw(PlayState* play) {
                             ((gMapData->owEntranceFlag[sEntranceIconMapIndex] != 0xFFFF) &&
                              (gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] &
                               gBitFlags[gMapData->owEntranceFlag[mapIndex]]))) {
-                            s16 newX = gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (R_ENABLE_MIRROR ? (((R_OW_MINIMAP_X + (gMapData->owMinimapWidth[mapIndex] / 2)) - (gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (8 / 2))) * 2 + (8 / 2) - 2) : 0);
+                            s16 newX = gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (R_ENABLE_MIRROR ? (((xOffset + R_OW_MINIMAP_X + (gMapData->owMinimapWidth[mapIndex] / 2)) - (gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (8 / 2))) * 2 + (8 / 2) - 2) : 0);
 
                             gDPLoadTextureBlock(OVERLAY_DISP++, gMapDungeonEntranceIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b,
                                                 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
@@ -559,7 +563,7 @@ void Minimap_Draw(PlayState* play) {
                                             8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((WS_SHIFT_FULL + (R_ENABLE_MIRROR ? 257 : 270)) << 2)), HIRES_MULTIPLY((154 << 2)), HIRES_MULTIPLY(((WS_SHIFT_FULL + (R_ENABLE_MIRROR ? 265 : 278)) << 2)), HIRES_MULTIPLY((162 << 2)), G_TX_RENDERTILE, 0,
+                        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((WS_SHIFT_FULL + (R_ENABLE_MIRROR ? (257 + xOffset) : 270)) << 2)), HIRES_MULTIPLY((154 << 2)), HIRES_MULTIPLY(((WS_SHIFT_FULL + (R_ENABLE_MIRROR ? (265 + xOffset) : 278)) << 2)), HIRES_MULTIPLY((162 << 2)), G_TX_RENDERTILE, 0,
                                             0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
                     }
 
