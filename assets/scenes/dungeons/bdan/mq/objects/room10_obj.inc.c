@@ -1,0 +1,4 @@
+    OBJECT_BDAN_OBJECTS, // 0
+    OBJECT_RU1, // 1
+    OBJECT_BXA, // 2
+

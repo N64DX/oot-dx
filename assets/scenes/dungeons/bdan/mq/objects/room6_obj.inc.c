@@ -1,0 +1,12 @@
+    OBJECT_BDAN_OBJECTS, // 0
+    OBJECT_RU1, // 1
+    OBJECT_BIGOKUTA, // 2
+    OBJECT_BUBBLE, // 3
+    OBJECT_BL, // 4
+    OBJECT_VALI, // 5
+    OBJECT_EI, // 6
+    OBJECT_EFC_FLASH, // 7
+    OBJECT_GI_JEWEL, // 8
+    OBJECT_KUSA, // 9
+    OBJECT_COW, // 10
+

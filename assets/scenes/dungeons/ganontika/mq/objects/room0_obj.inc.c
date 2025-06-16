@@ -1,0 +1,7 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_BB, // 1
+    OBJECT_IK, // 2
+    OBJECT_AM, // 3
+    OBJECT_TRAP, // 4
+    OBJECT_SYOKUDAI, // 5
+

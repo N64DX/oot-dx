@@ -84,6 +84,7 @@
     #define LULLABY_SHIFT 0
     #define OCEFF_SHIFT 18
     #define TITLE_SHIFT 0
+    #define WS_MIRROR_SHIFT 0
     #define WS_PX_SHIFT 0
     #define WS_SHIFT_FULL 0
     #define WS_SHIFT_HALF 0
@@ -107,6 +108,7 @@
     #define LULLABY_SHIFT 0
     #define OCEFF_SHIFT 80
     #define TITLE_SHIFT ((SCREEN_WIDTH - 320) / 3 * 2)
+    #define WS_MIRROR_SHIFT 16
     #define WS_PX_SHIFT 1
     #define WS_SHIFT_FULL (SCREEN_WIDTH - 320)
     #define WS_SHIFT_HALF (WS_SHIFT_FULL / 2)
@@ -130,6 +132,7 @@
     #define LULLABY_SHIFT 70
     #define OCEFF_SHIFT 155
     #define TITLE_SHIFT ((SCREEN_WIDTH - 320) / 3 * 2)
+    #define WS_MIRROR_SHIFT 8
     #define WS_PX_SHIFT 1
     #define WS_SHIFT_FULL (SCREEN_WIDTH - 320)
     #define WS_SHIFT_HALF (WS_SHIFT_FULL / 2)
@@ -153,6 +156,7 @@
     #define LULLABY_SHIFT 0
     #define OCEFF_SHIFT 18
     #define TITLE_SHIFT 0
+    #define WS_MIRROR_SHIFT 0
     #define WS_PX_SHIFT 0
     #define WS_SHIFT_FULL 0
     #define WS_SHIFT_HALF 0

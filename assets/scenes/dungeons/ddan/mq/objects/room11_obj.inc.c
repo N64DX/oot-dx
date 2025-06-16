@@ -1,0 +1,3 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_SHOPNUTS, // 1
+

@@ -211,6 +211,7 @@ char sCameraModeNames[][12] = {
     "STILL      ", // CAM_MODE_STILL
     "PUSHPULL   ", // CAM_MODE_PUSH_PULL
     "BOOKEEPON  ", // CAM_MODE_FOLLOW_BOOMERANG
+    "BOWARROWZ2 ", // CAM_MODE_Z_AIM_MIRROR
 };
 #endif
 
@@ -264,6 +265,11 @@ CameraModeValue sSetNormal0ModeAimAdultData[] = {
 
 CameraModeValue sSetNormal0ModeZAimData[] = {
     CAM_FUNCDATA_SUBJ3(20, 70, 70, 10, -120, 20, 0, 45,
+                       CAM_INTERFACE_FIELD(CAM_LETTERBOX_MEDIUM, CAM_HUD_VISIBILITY_ALL, 0)),
+};
+
+CameraModeValue sSetNormal0ModeZAimDataMirror[] = {
+    CAM_FUNCDATA_SUBJ3(20, 70, 70, 10, 120, 20, 0, 45,
                        CAM_INTERFACE_FIELD(CAM_LETTERBOX_MEDIUM, CAM_HUD_VISIBILITY_ALL, 0)),
 };
 
@@ -1501,6 +1507,7 @@ CameraMode sCamSetNormal0Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),   // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetNormal1Modes[] = {
@@ -1525,6 +1532,7 @@ CameraMode sCamSetNormal1Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal1ModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),   // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetDungeon0Modes[] = {
@@ -1549,6 +1557,7 @@ CameraMode sCamSetDungeon0Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetDungeon0ModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),           // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),    // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),         // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetDungeon1Modes[] = {
@@ -1573,6 +1582,7 @@ CameraMode sCamSetDungeon1Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetDungeon1ModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetDungeon1ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),    // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),         // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetNormal3Modes[] = {
@@ -1596,6 +1606,8 @@ CameraMode sCamSetNormal3Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_BATT4, sSetNormal0ModeChargeData),            // CAM_MODE_CHARGE
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),          // CAM_MODE_PUSH_PULL
+    { CAM_FUNC_NONE, 0, NULL },                                                   // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetHorseModes[] = {
@@ -1608,6 +1620,19 @@ CameraMode sCamSetHorseModes[] = {
     { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_FIRST_PERSON
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetHorseModeAimAdultData),        // CAM_MODE_AIM_ADULT
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimData),          // CAM_MODE_Z_AIM
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_HOOKSHOT_FLY
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_AIM_BOOMERANG
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_AIM_CHILD
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_Z_WALL_CLIMB
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_JUMP
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_LEDGE_HANG
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_Z_LEDGE_HANG
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_FREE_FALL
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_CHARGE
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_STILL
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_PUSH_PULL
+    { CAM_FUNC_NONE, 0, NULL },                                               // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),    // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossGohmaModes[] = {
@@ -1632,6 +1657,7 @@ CameraMode sCamSetBossGohmaModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),               // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),            // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),     // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),          // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossDodongoModes[] = {
@@ -1656,6 +1682,7 @@ CameraMode sCamSetBossDodongoModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),                 // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),              // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),       // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),            // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossBarinadeModes[] = {
@@ -1680,6 +1707,7 @@ CameraMode sCamSetBossBarinadeModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),                  // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),               // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),        // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossPhantomGanonModes[] = {
@@ -1705,6 +1733,7 @@ CameraMode sCamSetBossPhantomGanonModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),           // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),        // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData), // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),      // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossVolvagiaModes[] = {
@@ -1729,6 +1758,7 @@ CameraMode sCamSetBossVolvagiaModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),                  // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),               // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),        // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossBongoModes[] = {
@@ -1753,6 +1783,7 @@ CameraMode sCamSetBossBongoModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),               // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),            // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),     // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),          // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossMorphaModes[] = {
@@ -1777,6 +1808,7 @@ CameraMode sCamSetBossMorphaModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),                // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),             // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),      // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),           // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossTwinrovaPlatformModes[] = {
@@ -1801,6 +1833,7 @@ CameraMode sCamSetBossTwinrovaPlatformModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),                  // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),               // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),        // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossTwinrovaFloorModes[] = {
@@ -1825,6 +1858,7 @@ CameraMode sCamSetBossTwinrovaFloorModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),                  // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),               // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),        // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossGanondorfModes[] = {
@@ -1850,6 +1884,7 @@ CameraMode sCamSetBossGanondorfModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),           // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),        // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData), // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),      // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBossGanonModes[] = {
@@ -1874,6 +1909,7 @@ CameraMode sCamSetBossGanonModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),               // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),            // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),     // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),          // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetTowerClimbModes[] = {
@@ -1898,6 +1934,7 @@ CameraMode sCamSetTowerClimbModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),   // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetTowerUnusedModes[] = {
@@ -1922,6 +1959,7 @@ CameraMode sCamSetTowerUnusedModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),   // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetMarketBalconyModes[] = {
@@ -1965,6 +2003,7 @@ CameraMode sCamSetPivotInFrontModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),                  // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),               // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),        // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetPreRendFixedModes[] = {
@@ -2076,6 +2115,7 @@ CameraMode sCamSetBeanGenericModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetBeanGenericModeStillData),         // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),   // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetBeanLostWoodsModes[] = {
@@ -2100,6 +2140,7 @@ CameraMode sCamSetBeanLostWoodsModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetBeanLostWoodsModeStillData),       // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),   // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetSceneUnusedModes[] = {
@@ -2148,6 +2189,7 @@ CameraMode sCamSetBigOctoModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetBigOctoModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),   // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetMeadowBirdsEyeModes[] = {
@@ -2207,6 +2249,7 @@ CameraMode sCamSetNorm2Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),   // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetFishingModes[] = {
@@ -2255,6 +2298,7 @@ CameraMode sCamSetJabuTentacleModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),                  // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),               // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),        // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),             // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetDungeon2Modes[] = {
@@ -2279,6 +2323,7 @@ CameraMode sCamSetDungeon2Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetDungeon2ModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetDungeon2ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),    // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),         // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetDirectedYawModes[] = {
@@ -2303,6 +2348,7 @@ CameraMode sCamSetDirectedYawModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),               // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),            // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),     // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),          // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraMode sCamSetPivotFromSideModes[] = {
@@ -2342,34 +2388,35 @@ CameraMode sCamSetNormal4Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_NORM1, sSetNormal0ModeStillData),             // CAM_MODE_STILL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_PARA1, sSetNormal0ModePushPullData),          // CAM_MODE_PUSH_PULL
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_KEEP1, sSetNormal0ModeFollowBoomerangData),   // CAM_MODE_FOLLOW_BOOMERANG
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
 CameraSetting sCameraSettings[] = {
     { { 0x00000000 }, NULL },                             // CAM_SET_NONE
-    { { 0x051FFFFF }, sCamSetNormal0Modes },              // CAM_SET_NORMAL0
-    { { 0x051FFFFF }, sCamSetNormal1Modes },              // CAM_SET_NORMAL1
-    { { 0x051FFFFF }, sCamSetDungeon0Modes },             // CAM_SET_DUNGEON0
-    { { 0x051FFFFF }, sCamSetDungeon1Modes },             // CAM_SET_DUNGEON1
-    { { 0x050FF7FF }, sCamSetNormal3Modes },              // CAM_SET_NORMAL3
-    { { 0x8500018F }, sCamSetHorseModes },                // CAM_SET_HORSE
-    { { 0x051FFFFF }, sCamSetBossGohmaModes },            // CAM_SET_BOSS_GOHMA
-    { { 0x051FFFFF }, sCamSetBossDodongoModes },          // CAM_SET_BOSS_DODONGO
-    { { 0x051FFFFF }, sCamSetBossBarinadeModes },         // CAM_SET_BOSS_BARINADE
-    { { 0x051FFFFF }, sCamSetBossPhantomGanonModes },     // CAM_SET_BOSS_PHANTOM_GANON
-    { { 0x051FFFFF }, sCamSetBossVolvagiaModes },         // CAM_SET_BOSS_VOLVAGIA
-    { { 0x051FFFFF }, sCamSetBossBongoModes },            // CAM_SET_BOSS_BONGO
-    { { 0x051FFFFF }, sCamSetBossMorphaModes },           // CAM_SET_BOSS_MORPHA
-    { { 0x051FFFFF }, sCamSetBossTwinrovaPlatformModes }, // CAM_SET_BOSS_TWINROVA_PLATFORM
-    { { 0x051FFFFF }, sCamSetBossTwinrovaFloorModes },    // CAM_SET_BOSS_TWINROVA_FLOOR
-    { { 0x051FFFFF }, sCamSetBossGanondorfModes },        // CAM_SET_BOSS_GANONDORF
-    { { 0x051FFFFF }, sCamSetBossGanonModes },            // CAM_SET_BOSS_GANON
-    { { 0x851FFFFF }, sCamSetTowerClimbModes },           // CAM_SET_TOWER_CLIMB
-    { { 0x851FFFFF }, sCamSetTowerUnusedModes },          // CAM_SET_TOWER_UNUSED
+    { { 0x053FFFFF }, sCamSetNormal0Modes },              // CAM_SET_NORMAL0
+    { { 0x053FFFFF }, sCamSetNormal1Modes },              // CAM_SET_NORMAL1
+    { { 0x053FFFFF }, sCamSetDungeon0Modes },             // CAM_SET_DUNGEON0
+    { { 0x053FFFFF }, sCamSetDungeon1Modes },             // CAM_SET_DUNGEON1
+    { { 0x052FF7FF }, sCamSetNormal3Modes },              // CAM_SET_NORMAL3
+    { { 0x8520018F }, sCamSetHorseModes },                // CAM_SET_HORSE
+    { { 0x053FFFFF }, sCamSetBossGohmaModes },            // CAM_SET_BOSS_GOHMA
+    { { 0x053FFFFF }, sCamSetBossDodongoModes },          // CAM_SET_BOSS_DODONGO
+    { { 0x053FFFFF }, sCamSetBossBarinadeModes },         // CAM_SET_BOSS_BARINADE
+    { { 0x053FFFFF }, sCamSetBossPhantomGanonModes },     // CAM_SET_BOSS_PHANTOM_GANON
+    { { 0x053FFFFF }, sCamSetBossVolvagiaModes },         // CAM_SET_BOSS_VOLVAGIA
+    { { 0x053FFFFF }, sCamSetBossBongoModes },            // CAM_SET_BOSS_BONGO
+    { { 0x053FFFFF }, sCamSetBossMorphaModes },           // CAM_SET_BOSS_MORPHA
+    { { 0x053FFFFF }, sCamSetBossTwinrovaPlatformModes }, // CAM_SET_BOSS_TWINROVA_PLATFORM
+    { { 0x053FFFFF }, sCamSetBossTwinrovaFloorModes },    // CAM_SET_BOSS_TWINROVA_FLOOR
+    { { 0x053FFFFF }, sCamSetBossGanondorfModes },        // CAM_SET_BOSS_GANONDORF
+    { { 0x053FFFFF }, sCamSetBossGanonModes },            // CAM_SET_BOSS_GANON
+    { { 0x853FFFFF }, sCamSetTowerClimbModes },           // CAM_SET_TOWER_CLIMB
+    { { 0x853FFFFF }, sCamSetTowerUnusedModes },          // CAM_SET_TOWER_UNUSED
     { { 0x8500000D }, sCamSetMarketBalconyModes },        // CAM_SET_MARKET_BALCONY
     { { 0x85000001 }, sCamSetChuBowlingModes },           // CAM_SET_CHU_BOWLING
     { { 0x85000001 }, sCamSetPivotCrawlspaceModes },      // CAM_SET_PIVOT_CRAWLSPACE
     { { 0x85000001 }, sCamSetPivotShopBrowsingModes },    // CAM_SET_PIVOT_SHOP_BROWSING
-    { { 0x851E1FFF }, sCamSetPivotInFrontModes },         // CAM_SET_PIVOT_IN_FRONT
+    { { 0x853E1FFF }, sCamSetPivotInFrontModes },         // CAM_SET_PIVOT_IN_FRONT
     { { 0x8C00000D }, sCamSetPreRendFixedModes },         // CAM_SET_PREREND_FIXED
     { { 0x8C00000D }, sCamSetPreRendPivotModes },         // CAM_SET_PREREND_PIVOT
     { { 0x8C000001 }, sCamSetPreRendSideScrollModes },    // CAM_SET_PREREND_SIDE_SCROLL
@@ -2389,28 +2436,28 @@ CameraSetting sCameraSettings[] = {
     { { 0x45000001 }, sCamSetItemUnusedModes },           // CAM_SET_ITEM_UNUSED
     { { 0x45000001 }, sCamSetCs3Modes },                  // CAM_SET_CS_3
     { { 0x45000001 }, sCamSetCsAttentionModes },          // CAM_SET_CS_ATTENTION
-    { { 0x451FFFFF }, sCamSetBeanGenericModes },          // CAM_SET_BEAN_GENERIC
-    { { 0x451FFFFF }, sCamSetBeanLostWoodsModes },        // CAM_SET_BEAN_LOST_WOODS
+    { { 0x453FFFFF }, sCamSetBeanGenericModes },          // CAM_SET_BEAN_GENERIC
+    { { 0x453FFFFF }, sCamSetBeanLostWoodsModes },        // CAM_SET_BEAN_LOST_WOODS
     { { 0xC5000001 }, sCamSetSceneUnusedModes },          // CAM_SET_SCENE_UNUSED
     { { 0x45000001 }, sCamSetSceneTransitionModes },      // CAM_SET_SCENE_TRANSITION
     { { 0x05000001 }, sCamSetElevatorPlatformModes },     // CAM_SET_ELEVATOR_PLATFORM
     { { 0x45000001 }, sCamSetFireStaircaseModes },        // CAM_SET_FIRE_STAIRCASE
     { { 0x45000001 }, sCamSetForestUnusedModes },         // CAM_SET_FOREST_UNUSED
     { { 0x45000001 }, sCamSetForestDefeatPoeModes },      // CAM_SET_FOREST_DEFEAT_POE
-    { { 0x451FFFFF }, sCamSetBigOctoModes },              // CAM_SET_BIG_OCTO
+    { { 0x453FFFFF }, sCamSetBigOctoModes },              // CAM_SET_BIG_OCTO
     { { 0x05000033 }, sCamSetMeadowBirdsEyeModes },       // CAM_SET_MEADOW_BIRDS_EYE
     { { 0x05000033 }, sCamSetMeadowUnusedModes },         // CAM_SET_MEADOW_UNUSED
     { { 0x05000033 }, sCamSetFireBirdsEyeModes },         // CAM_SET_FIRE_BIRDS_EYE
     { { 0x4A000001 }, sCamSetTurnAroundModes },           // CAM_SET_TURN_AROUND
     { { 0x05000001 }, sCamSetPivotVerticalModes },        // CAM_SET_PIVOT_VERTICAL
-    { { 0x051FFFFF }, sCamSetNorm2Modes },                // CAM_SET_NORMAL2
+    { { 0x053FFFFF }, sCamSetNorm2Modes },                // CAM_SET_NORMAL2
     { { 0x0501E05F }, sCamSetFishingModes },              // CAM_SET_FISHING
     { { 0x45000001 }, sCamSetCsCModes },                  // CAM_SET_CS_C
-    { { 0x051FFFFF }, sCamSetJabuTentacleModes },         // CAM_SET_JABU_TENTACLE
-    { { 0x051FFFFF }, sCamSetDungeon2Modes },             // CAM_SET_DUNGEON2
-    { { 0x051FFFFF }, sCamSetDirectedYawModes },          // CAM_SET_DIRECTED_YAW
+    { { 0x053FFFFF }, sCamSetJabuTentacleModes },         // CAM_SET_JABU_TENTACLE
+    { { 0x053FFFFF }, sCamSetDungeon2Modes },             // CAM_SET_DUNGEON2
+    { { 0x053FFFFF }, sCamSetDirectedYawModes },          // CAM_SET_DIRECTED_YAW
     { { 0xC5000ECD }, sCamSetPivotFromSideModes },        // CAM_SET_PIVOT_FROM_SIDE
-    { { 0x051FFFFF }, sCamSetNormal4Modes },              // CAM_SET_NORMAL4
+    { { 0x053FFFFF }, sCamSetNormal4Modes },              // CAM_SET_NORMAL4
 };
 
 s32 Camera_Normal0(Camera* camera);

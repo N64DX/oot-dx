@@ -27,5 +27,8 @@ void MapMark_ClearPointers(struct PlayState* play);
 void MapMark_Draw(struct PlayState* play);
 
 extern MapMarkData* gMapMarkDataTable[];
+#if OOT_VERSION <= PAL_1_1
+extern MapMarkData* gMapMarkDataMQTable[];
+#endif
 
 #endif

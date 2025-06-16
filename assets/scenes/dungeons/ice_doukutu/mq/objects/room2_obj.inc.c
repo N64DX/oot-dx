@@ -1,0 +1,14 @@
+    OBJECT_ICE_OBJECTS, // 0
+    OBJECT_TITE, // 1
+    OBJECT_GOROIWA, // 2
+    OBJECT_FZ, // 3
+    OBJECT_DEMO_KEKKAI, // 4
+    OBJECT_ST, // 5
+    OBJECT_GI_SUTARU, // 6
+    OBJECT_TIMEBLOCK, // 7
+    OBJECT_EFC_TW, // 8
+    OBJECT_WF, // 9
+    OBJECT_BOX, // 10
+    OBJECT_KA, // 11
+    OBJECT_FIREFLY, // 12
+

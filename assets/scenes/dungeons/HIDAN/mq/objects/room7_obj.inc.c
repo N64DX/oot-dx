@@ -1,0 +1,4 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_BW, // 1
+    OBJECT_D_HSBLOCK, // 2
+

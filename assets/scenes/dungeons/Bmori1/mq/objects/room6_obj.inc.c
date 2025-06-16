@@ -1,0 +1,11 @@
+    OBJECT_MORI_TEX, // 0
+    OBJECT_MORI_OBJECTS, // 1
+    OBJECT_BOX, // 2
+    OBJECT_SYOKUDAI, // 3
+    OBJECT_BB, // 4
+    OBJECT_ST, // 5
+    OBJECT_SK2, // 6
+    OBJECT_TIMEBLOCK, // 7
+    OBJECT_EFC_TW, // 8
+    OBJECT_WF, // 9
+

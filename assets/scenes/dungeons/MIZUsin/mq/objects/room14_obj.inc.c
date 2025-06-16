@@ -1,0 +1,6 @@
+    OBJECT_MIZU_OBJECTS, // 0
+    OBJECT_D_HSBLOCK, // 1
+    OBJECT_BOX, // 2
+    OBJECT_KIBAKO2, // 3
+    OBJECT_DODONGO, // 4
+

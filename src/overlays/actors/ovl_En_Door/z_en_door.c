@@ -17,6 +17,8 @@
 #include "play_state.h"
 #include "player.h"
 #include "save.h"
+#include "sys_matrix.h"
+#include "regs.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/gameplay_field_keep/gameplay_field_keep.h"
@@ -378,6 +380,14 @@ void EnDoor_Draw(Actor* thisx, PlayState* play) {
         OPEN_DISPS(play->state.gfxCtx, "../z_en_door.c", 910);
 
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
+
+        gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
+        if (R_ENABLE_MIRROR) {
+            gSPSetGeometryMode(POLY_OPA_DISP++, G_CULL_FRONT);
+            Matrix_Scale(-1.0f, 1.0f, 1.0f, MTXMODE_APPLY);
+        }
+        else gSPSetGeometryMode(POLY_OPA_DISP++, G_CULL_BACK);
+
         SkelAnime_DrawOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, EnDoor_OverrideLimbDraw, NULL,
                           &this->actor);
         if (this->actor.world.rot.y != 0) {

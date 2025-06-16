@@ -1,6 +1,7 @@
 #include "alignment.h"
 #include "ultra64.h"
 #include "audio.h"
+#include "regs.h"
 
 // DMEM Addresses for the RSP
 #define DMEM_TEMP 0x3C0
@@ -701,7 +702,11 @@ Acmd* AudioSynth_DoOneAudioUpdate(s16* aiBuf, s32 aiBufLen, Acmd* cmd, s32 updat
         i++;
     }
 
-    aInterleave(cmd++, DMEM_TEMP, DMEM_LEFT_CH, DMEM_RIGHT_CH, 2 * aiBufLen);
+    if (R_ENABLE_MIRROR) {
+        aInterleave(cmd++, DMEM_TEMP, DMEM_RIGHT_CH, DMEM_LEFT_CH, 2 * aiBufLen);
+    } else {
+        aInterleave(cmd++, DMEM_TEMP, DMEM_LEFT_CH, DMEM_RIGHT_CH, 2 * aiBufLen);
+    }
     aSaveBuffer(cmd++, DMEM_TEMP, aiBuf, 2 * (aiBufLen * (s32)SAMPLE_SIZE));
 
     return cmd;

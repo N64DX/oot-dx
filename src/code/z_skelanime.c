@@ -1069,7 +1069,7 @@ void AnimTask_ActorMovement(PlayState* play, AnimTaskData* data) {
     Actor* actor = task->actor;
     Vec3f diff;
 
-    SkelAnime_UpdateTranslation(task->skelAnime, &diff, actor->shape.rot.y);
+    SkelAnime_UpdateTranslation(task->skelAnime, &diff, actor->shape.rot.y, (actor->category == ACTORCAT_PLAYER && R_ENABLE_MIRROR) ? -1 : 1);
 
     actor->world.pos.x += diff.x * actor->scale.x;
     actor->world.pos.y += diff.y * actor->scale.y * task->diffScaleY;
@@ -1845,7 +1845,7 @@ void SkelAnime_CopyFrameTableFalse(SkelAnime* skelAnime, Vec3s* dst, Vec3s* src,
  * the old and new positions of the root limb as rotated by `angle`. Used to allow
  * animations to change an actor's position.
  */
-void SkelAnime_UpdateTranslation(SkelAnime* skelAnime, Vec3f* diff, s16 angle) {
+void SkelAnime_UpdateTranslation(SkelAnime* skelAnime, Vec3f* diff, s16 angle, s8 mirror) {
     f32 x;
     f32 z;
     f32 sin;
@@ -1855,7 +1855,7 @@ void SkelAnime_UpdateTranslation(SkelAnime* skelAnime, Vec3f* diff, s16 angle) {
     if (skelAnime->movementFlags & ANIM_FLAG_ADJUST_STARTING_POS) {
         diff->x = diff->z = 0.0f;
     } else {
-        x = skelAnime->jointTable[0].x;
+        x = mirror * skelAnime->jointTable[0].x;
         z = skelAnime->jointTable[0].z;
         sin = Math_SinS(angle);
         cos = Math_CosS(angle);
@@ -1872,7 +1872,7 @@ void SkelAnime_UpdateTranslation(SkelAnime* skelAnime, Vec3f* diff, s16 angle) {
 
     skelAnime->prevRot = angle;
 
-    skelAnime->prevTransl.x = skelAnime->jointTable[0].x;
+    skelAnime->prevTransl.x = mirror * skelAnime->jointTable[0].x;
     skelAnime->jointTable[0].x = skelAnime->baseTransl.x;
 
     skelAnime->prevTransl.z = skelAnime->jointTable[0].z;

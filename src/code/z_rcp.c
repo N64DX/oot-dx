@@ -1462,28 +1462,33 @@ Gfx* Gfx_EnvColor(GraphicsContext* gfxCtx, s32 r, s32 g, s32 b, s32 a) {
  * The whole screen is filled with the color supplied as arguments.
  * Letterbox is also applied here, and will share the color of the screen base.
  */
-void Gfx_SetupFrame(GraphicsContext* gfxCtx, u8 r, u8 g, u8 b) {
+void Gfx_SetupFrame(GraphicsContext* gfxCtx, u8 r, u8 g, u8 b, u8 mirrorStatus) {
+    u16* primaryFbuf = (mirrorStatus == 1) ? gfxCtx->redrawFramebuffer : gfxCtx->curFrameBuffer;
+
     OPEN_DISPS(gfxCtx, "../z_rcp.c", 2386);
 
     // Set up the RDP render state for rectangles in FILL mode
     gSPDisplayList(POLY_OPA_DISP++, sFillSetupDL);
     gSPDisplayList(POLY_XLU_DISP++, sFillSetupDL);
+    gSPDisplayList(REDRAW_DISP++, sFillSetupDL);
     gSPDisplayList(OVERLAY_DISP++, sFillSetupDL);
 
     // Set the scissor region to the full screen
     gDPSetScissor(POLY_OPA_DISP++, G_SC_NON_INTERLACE, 0, 0, gScreenWidth, gScreenHeight);
     gDPSetScissor(POLY_XLU_DISP++, G_SC_NON_INTERLACE, 0, 0, gScreenWidth, gScreenHeight);
+    gDPSetScissor(REDRAW_DISP++, G_SC_NON_INTERLACE, 0, 0, gScreenWidth, gScreenHeight);
     gDPSetScissor(OVERLAY_DISP++, G_SC_NON_INTERLACE, 0, 0, gScreenWidth, gScreenHeight);
 
     // Set up the framebuffer, primitives will be drawn here
-    gDPSetColorImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_16b, gScreenWidth, gfxCtx->curFrameBuffer);
-    gDPSetColorImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_16b, gScreenWidth, gfxCtx->curFrameBuffer);
-    gDPSetColorImage(POLY_XLU_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_16b, gScreenWidth, gfxCtx->curFrameBuffer);
+    gDPSetColorImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_16b, gScreenWidth, primaryFbuf);
+    gDPSetColorImage(POLY_XLU_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_16b, gScreenWidth, primaryFbuf);
+    gDPSetColorImage(REDRAW_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_16b, gScreenWidth, gfxCtx->curFrameBuffer);
     gDPSetColorImage(OVERLAY_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_16b, gScreenWidth, gfxCtx->curFrameBuffer);
 
     // Set up the z-buffer
     gDPSetDepthImage(POLY_OPA_DISP++, gZBuffer);
     gDPSetDepthImage(POLY_XLU_DISP++, gZBuffer);
+    gDPSetDepthImage(REDRAW_DISP++, gZBuffer);
     gDPSetDepthImage(OVERLAY_DISP++, gZBuffer);
 
     if ((R_PAUSE_BG_PRERENDER_STATE <= PAUSE_BG_PRERENDER_SETUP) && (gTransitionTileState <= TRANS_TILE_SETUP)) {
@@ -1545,7 +1550,7 @@ void Gfx_SetupFrame(GraphicsContext* gfxCtx, u8 r, u8 g, u8 b) {
 
         // Fill the whole screen with the base color
         // Don't bother with pixels that are being covered by the letterbox
-        gDPSetColorImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_16b, gScreenWidth, gfxCtx->curFrameBuffer);
+        gDPSetColorImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_16b, gScreenWidth, primaryFbuf);
         gDPSetCycleType(POLY_OPA_DISP++, G_CYC_FILL);
         gDPSetRenderMode(POLY_OPA_DISP++, G_RM_NOOP, G_RM_NOOP2);
         gDPSetFillColor(POLY_OPA_DISP++, (GPACK_RGBA5551(r, g, b, 1) << 16) | GPACK_RGBA5551(r, g, b, 1));

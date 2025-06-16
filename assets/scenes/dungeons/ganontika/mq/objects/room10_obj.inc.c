@@ -1,0 +1,8 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_ZF, // 1
+    OBJECT_DEMO_6K, // 2
+    OBJECT_GI_MEDAL, // 3
+    OBJECT_RL, // 4
+    OBJECT_WARP2, // 5
+    OBJECT_ST, // 6
+

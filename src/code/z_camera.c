@@ -8413,6 +8413,7 @@ s32 Camera_RequestModeImpl(Camera* camera, s16 requestedMode, u8 forceModeChange
         case CAM_MODE_Z_PARALLEL:
         case CAM_MODE_TALK:
         case CAM_MODE_Z_AIM:
+        case CAM_MODE_Z_AIM_MIRROR:
         case CAM_MODE_Z_LEDGE_HANG:
         case CAM_MODE_PUSH_PULL:
             sModeRequestFlags = CAM_REQUEST_MODE_SFX_ATTENTION;
@@ -8457,6 +8458,7 @@ s32 Camera_RequestModeImpl(Camera* camera, s16 requestedMode, u8 forceModeChange
             break;
 
         case CAM_MODE_Z_AIM:
+        case CAM_MODE_Z_AIM_MIRROR:
         case CAM_MODE_Z_LEDGE_HANG:
         case CAM_MODE_PUSH_PULL:
             sModeRequestFlags |= CAM_REQUEST_MODE_FORCE_NO_SFX;

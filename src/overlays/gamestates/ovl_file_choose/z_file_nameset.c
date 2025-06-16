@@ -16,6 +16,9 @@
 #include "versions.h"
 #include "audio.h"
 #include "save.h"
+#include "resolution.h"
+#include "assets/objects/object_mag/object_mag.h"
+#include "assets/textures/parameter_static/parameter_static.h"
 
 #if OOT_NTSC_N64
 #include "assets/textures/title_static/title_static_all.h"
@@ -199,6 +202,48 @@ static s16 D_80812604[] = {
     0x0048, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045, 0x0045,
 };
 
+void FileSelect_DrawQuestImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 centerY, u8* source, u32 width, u32 height) {
+    u8* curTexture;
+    s32 textureCount, rectLeft, rectTop, remainingSize, textureSize, i;
+    u32 textureHeight;
+
+    OPEN_DISPS(gfxCtx, "../z_file_choose.c", UNK_LINE);
+
+    Gfx_SetupDL_56Opa(gfxCtx);
+
+    curTexture = source;
+    rectLeft = centerX - (width / 2);
+    rectTop = centerY - (height / 2);
+    remainingSize = (width * height) << 2;
+    textureHeight = 4096 / (width << 2);
+    textureSize = (width * textureHeight) << 2;
+    textureCount = remainingSize / textureSize;
+    if ((remainingSize % textureSize) != 0)
+        textureCount++;
+
+    gDPSetTileCustom(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, width - 1, textureHeight - 1, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    remainingSize -= textureSize;
+
+    for (i=0; i<textureCount; i++) {
+        gDPSetTextureImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, width, curTexture);
+        gDPLoadSync(POLY_OPA_DISP++);
+        gDPLoadTile(POLY_OPA_DISP++, G_TX_LOADTILE, 0, 0, (width - 1) << 2, (textureHeight - 1) << 2);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((rectLeft + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((rectTop << 2)), HIRES_MULTIPLY(((rectLeft + WS_SHIFT_HALF + (s32)width) << 2)), HIRES_MULTIPLY(((rectTop + textureHeight) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+        curTexture += textureSize;
+        rectTop += textureHeight;
+
+        if ((remainingSize - textureSize) < 0) {
+            if (remainingSize > 0) {
+                textureHeight = remainingSize / (s32)(width << 2);
+                remainingSize -= textureSize;
+                gDPSetTileCustom(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, width - 1, textureHeight - 1, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            }
+        } else remainingSize -= textureSize;
+    }
+
+    CLOSE_DISPS(gfxCtx, "../z_file_choose.c", UNK_LINE);
+}
+
 /**
  * Set vertices used by all elements of the name entry screen that are NOT the keyboard.
  * This includes the cursor highlight, the name entry plate and characters, and the buttons.
@@ -221,14 +266,17 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->titleAlpha[0]);
     gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
     gSPVertex(POLY_OPA_DISP++, gNameEntryVtx, 24, 0);
-    gDPLoadTextureBlock(POLY_OPA_DISP++, sNameLabelTextures[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, 56, 16, 0,
-                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
-                        G_TX_NOLOD);
-    gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
-    gDPPipeSync(POLY_OPA_DISP++);
+    if (!this->selectingQuestMode) {
+        gDPLoadTextureBlock(POLY_OPA_DISP++, sNameLabelTextures[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, 56, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+        gDPPipeSync(POLY_OPA_DISP++);
+    }
 
 #if OOT_NTSC_N64
     for (phi_t1 = 0, phi_s0 = 4; phi_t1 < 5; phi_t1++, phi_s0 += 4) {
+        if (this->selectingQuestMode && phi_t1 < 4)
+            continue;
+
         if (gSaveContext.language == LANGUAGE_JPN) {
             gDPPipeSync(POLY_OPA_DISP++);
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2], 255);
@@ -244,6 +292,9 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
     }
 #elif OOT_NTSC
     for (phi_t1 = 0, phi_s0 = 4; phi_t1 < 5; phi_t1++, phi_s0 += 4) {
+        if (this->selectingQuestMode && phi_t1 < 4)
+            continue;
+
         if (gSaveContext.language == LANGUAGE_JPN) {
             gDPPipeSync(POLY_OPA_DISP++);
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2],
@@ -270,6 +321,9 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
 #else
     phi_s0 = 0x10;
     for (phi_t1 = 0; phi_t1 < 2; phi_t1++, phi_s0 += 4) {
+        if (this->selectingQuestMode && phi_t1 < 1)
+            continue;
+
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2], 255);
         gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
 
@@ -345,27 +399,23 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
     this->nameEntryVtx[2].v.ob[1] = this->nameEntryVtx[3].v.ob[1] = this->nameEntryVtx[0].v.ob[1] - 0x10;
     this->nameEntryVtx[1].v.tc[0] = this->nameEntryVtx[3].v.tc[0] = 0xD80;
 
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetCombineLERP(POLY_OPA_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE,
-                      ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
-    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2],
-                    this->nameEntryBoxAlpha);
-    gSPVertex(POLY_OPA_DISP++, this->nameEntryVtx, 4, 0);
-    gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelNameBoxTex, G_IM_FMT_IA, G_IM_SIZ_16b, 108, 16, 0,
-                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
-                        G_TX_NOLOD);
-    gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+    if (!this->selectingQuestMode) {
+        gDPPipeSync(POLY_OPA_DISP++);
+        gDPSetCombineLERP(POLY_OPA_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2], this->nameEntryBoxAlpha);
+        gSPVertex(POLY_OPA_DISP++, this->nameEntryVtx, 4, 0);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelNameBoxTex, G_IM_FMT_IA, G_IM_SIZ_16b, 108, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+    }
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetCombineLERP(POLY_OPA_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0,
                       PRIMITIVE, 0);
     gSPVertex(POLY_OPA_DISP++, this->nameEntryVtx + 4, 32, 0);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->nameEntryBoxAlpha);
 
-    for (phi_s0 = 0, phi_v0 = 0; phi_s0 < 0x20; phi_s0 += 4, phi_v0++) {
-        FileSelect_DrawCharacter(this->state.gfxCtx,
-                                 font->fontBuf + this->fileNames[this->buttonIndex][phi_v0] * FONT_CHAR_TEX_SIZE,
-                                 phi_s0);
-    }
+    if (!this->selectingQuestMode)
+        for (phi_s0 = 0, phi_v0 = 0; phi_s0 < 0x20; phi_s0 += 4, phi_v0++)
+            FileSelect_DrawCharacter(this->state.gfxCtx, font->fontBuf + this->fileNames[this->buttonIndex][phi_v0] * FONT_CHAR_TEX_SIZE, phi_s0);
 
     this->nameEntryVtx[0x25].v.tc[0] = this->nameEntryVtx[0x26].v.tc[1] = this->nameEntryVtx[0x27].v.tc[0] =
         this->nameEntryVtx[0x27].v.tc[1] = this->nameEntryVtx[0x29].v.tc[0] = this->nameEntryVtx[0x2A].v.tc[1] =
@@ -648,10 +698,11 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                       PRIMITIVE, 0);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->highlightColor[0], this->highlightColor[1], this->highlightColor[2],
                     this->highlightColor[3]);
-    gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelCharHighlightTex, G_IM_FMT_I, G_IM_SIZ_8b, 24, 24, 0,
-                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
-                        G_TX_NOLOD);
-    gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+
+    if (!this->selectingQuestMode) {
+        gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelCharHighlightTex, G_IM_FMT_I, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+    }
 
     if ((this->kbdButton == FS_KBD_BTN_HIRA) || (this->kbdButton == FS_KBD_BTN_KATA) ||
         (this->kbdButton == FS_KBD_BTN_END)) {
@@ -667,7 +718,8 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 
     gSP1Quadrangle(POLY_OPA_DISP++, 4, 6, 7, 5, 0);
 
-    FileSelect_DrawKeyboard(&this->state);
+    if (!this->selectingQuestMode)
+        FileSelect_DrawKeyboard(&this->state);
     gDPPipeSync(POLY_OPA_DISP++);
     Gfx_SetupDL_42Opa(this->state.gfxCtx);
 
@@ -675,6 +727,79 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                       PRIMITIVE, 0);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
 
+#if OOT_VERSION <= PAL_1_1
+    if (this->selectingQuestMode) {
+        void* textures[][2] = {
+            { gQuestOcarinaOfTimeTex, gTitleZeldaShieldLogoTex },
+            { gQuestMasterQuestTex,   gLogoMasterQuestTex      } 
+        };
+        u16 x, y;
+
+        x = 140;
+        y = 171;
+        gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, gMirrorModeTex, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        if (!this->mirrorMode[this->buttonIndex])
+            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 128, 128, 128, 255);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 90) << 2)), HIRES_MULTIPLY(((y + 11) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1462)), HIRES_DIVIDE((1462)));
+
+        x = 160 - 64;
+        y = 45;
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
+        FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)textures[this->questMode[this->buttonIndex]][1], 160, 160);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, textures[this->questMode[this->buttonIndex]][0], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 128) << 2)), HIRES_MULTIPLY(((y + 16) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1024)), HIRES_DIVIDE((1024)));
+
+        x = 48;
+        y = 115;
+        gDPLoadTextureBlock(POLY_OPA_DISP++, gEmptyCLeftArrowTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 32) << 2)), HIRES_MULTIPLY(((y + 32) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+
+        x = 248;
+        gDPLoadTextureBlock(POLY_OPA_DISP++, gEmptyCRightArrowTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 32) << 2)), HIRES_MULTIPLY(((y + 32) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+
+        if (this->stickAdjX < -30) {
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            if (this->questMode[this->buttonIndex] <= 0)
+                this->questMode[this->buttonIndex] = QUEST_MAX;
+            else this->questMode[this->buttonIndex]--;
+        }
+        if (this->stickAdjX > 30) {
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            if (this->questMode[this->buttonIndex] >= QUEST_MAX)
+                this->questMode[this->buttonIndex] = 0;
+            else this->questMode[this->buttonIndex]++;
+        }
+        if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            this->mirrorMode[this->buttonIndex] = (this->mirrorMode[this->buttonIndex] ? false : true);
+        }
+
+        if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            this->selectingQuestMode = false;
+        }
+
+        if (CHECK_BTN_ALL(input->press.button, BTN_A)) {
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            gSaveContext.fileNum = this->buttonIndex;
+            dayTime = ((void)0, gSaveContext.save.dayTime);
+
+            this->selectingQuestMode = false;
+
+            Sram_InitSave(this, &this->sramCtx);
+            gSaveContext.save.dayTime = dayTime;
+            this->configMode = CM_NAME_ENTRY_TO_MAIN;
+            this->nameBoxAlpha[this->buttonIndex] = this->nameAlpha[this->buttonIndex] = 200;
+            this->connectorAlpha[this->buttonIndex] = 255;
+            Rumble_Request(300.0f, 180, 20, 100);
+        }
+    }
+
+    else
+#endif
     if (this->configMode == CM_NAME_ENTRY) {
         if (CHECK_BTN_ALL(input->press.button, BTN_START)) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -858,6 +983,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4,
                                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
                                                      &gSfxDefaultReverb);
+#if OOT_VERSION > PAL_1_1
                                 gSaveContext.fileNum = this->buttonIndex;
                                 dayTime = ((void)0, gSaveContext.save.dayTime);
                                 Sram_InitSave(this, &this->sramCtx);
@@ -866,6 +992,11 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 this->nameBoxAlpha[this->buttonIndex] = this->nameAlpha[this->buttonIndex] = 200;
                                 this->connectorAlpha[this->buttonIndex] = 255;
                                 Rumble_Request(300.0f, 180, 20, 100);
+#else
+                                this->selectingQuestMode = true;
+                                this->mirrorMode[this->buttonIndex] = false;
+                                this->questMode[this->buttonIndex] = 0;
+#endif
                             } else {
                                 Audio_PlaySfxGeneral(NA_SE_SY_FSEL_ERROR, &gSfxDefaultPos, 4,
                                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
@@ -1041,6 +1172,9 @@ void FileSelect_UpdateKeyboardCursor(GameState* thisx) {
     Input* input = &this->state.input[0];
     s32 pad;
 #endif
+
+    if (this->selectingQuestMode)
+        return;
 
 #if OOT_NTSC
     if (this->charPage <= FS_CHAR_PAGE_ENG) {

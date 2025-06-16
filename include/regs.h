@@ -273,6 +273,8 @@ struct PlayState;
 #define R_NAVI_MSG_REGION_ALPHA                  nREG(87)
 #define R_USE_DEBUG_CUTSCENE                     dREG(95)
 
+#define R_ENABLE_MIRROR                          HREG(78)
+#define R_QUEST_MODE                             HREG(79)
 
 #define R_HREG_MODE  HREG(80) // see `HRegMode` for mode options
 

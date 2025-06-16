@@ -1,0 +1,5 @@
+    OBJECT_JYA_OBJ, // 0
+    OBJECT_JYA_DOOR, // 1
+    OBJECT_JYA_IRON, // 2
+    OBJECT_IK, // 3
+

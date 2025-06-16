@@ -3736,6 +3736,7 @@ void BossTw_ShieldChargeDraw(BossTw* this, PlayState* play) {
 
     if (Player_HasMirrorShieldEquipped(play)) {
         if (temp_t0 != 0) {
+            gSPClearGeometryMode(POLY_XLU_DISP++, G_CULL_BOTH);
             Matrix_Mult(&player->shieldMf, MTXMODE_NEW);
             Matrix_RotateX(M_PI / 2.0f, MTXMODE_APPLY);
             MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_boss_tw.c", 7362);

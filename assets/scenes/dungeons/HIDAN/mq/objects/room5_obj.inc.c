@@ -1,0 +1,10 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_BOX, // 1
+    OBJECT_D_HSBLOCK, // 2
+    OBJECT_SYOKUDAI, // 3
+    OBJECT_ZF, // 4
+    OBJECT_KIBAKO2, // 5
+    OBJECT_TIMEBLOCK, // 6
+    OBJECT_EFC_TW, // 7
+    OBJECT_ST, // 8
+

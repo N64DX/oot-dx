@@ -1,7 +1,7 @@
 #include "map.h"
 #include "save.h"
 
-static s16 sFloorTexIndexOffset[10][8] = {
+static u8 sFloorTexIndexOffset[10][8] = {
     { 0, 0, 0, 0, 2, 4, 6, 8 }, { 0, 0, 0, 0, 0, 0, 0, 2 },
     { 0, 0, 0, 0, 0, 0, 0, 2 }, { 0, 0, 0, 0, 0, 2, 4, 6 },
     { 0, 0, 0, 0, 2, 4, 6, 8 }, { 0, 0, 0, 0, 0, 2, 4, 6 },
@@ -9,11 +9,11 @@ static s16 sFloorTexIndexOffset[10][8] = {
     { 0, 0, 0, 0, 0, 0, 2, 4 }, { 0 },
 };
 
-static s16 sBossFloor[8] = {
+static u8 sBossFloor[8] = {
     7, 7, 6, 7, 7, 4, 5, 7,
 };
 
-static s16 sRoomPalette[10][32] = {
+static u8 sRoomPalette[10][32] = {
     { 10, 1, 2, 10, 4, 5, 6, 7, 8, 10, 11 },
     { 1, 3, 5, 6, 10, 3, 9, 2, 4, 2, 4, 7, 7, 8, 13, 11 },
     { 3, 1, 2, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 3 },
@@ -26,11 +26,11 @@ static s16 sRoomPalette[10][32] = {
     { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 },
 };
 
-static s16 sMaxPaletteCount[10] = {
+static u8 sMaxPaletteCount[10] = {
     6, 11, 12, 14, 11, 13, 13, 13, 7, 12,
 };
 
-static s16 sPaletteRoom[10][8][14] = {
+static u8 sPaletteRoom[10][8][14] = {
     {
         { 255, 255, 255, 255, 255, 255 },
         { 255, 255, 255, 255, 255, 255 },
@@ -181,7 +181,7 @@ static u8 sDgnMinimapCount[12] = {
     13, 19, 17, 27, 38, 44, 32, 27, 10, 12, 0, 0,
 };
 
-static u16 sDgnMinimapTexIndexOffset[10] = {
+static u8 sDgnMinimapTexIndexOffset[10] = {
     0, 13, 32, 49, 76, 114, 158, 190, 217, 227,
 };
 
@@ -195,12 +195,12 @@ static u16 sOwMinimapTexOffset[24] = {
     0x7068, 0x7DB0, 0x84B0, 0x8C10, 0x9408, 0xA038, 0xA938, 0xB1B8, 0xB918, 0xBF30, 0xCBD8, 0xD600,
 };
 
-static s16 sOwMinimapPosX[24] = {
+static u8 sOwMinimapPosX[24] = {
     216, 216, 218, 202, 202, 250, 216, 234, 234, 216, 234, 234,
     216, 234, 234, 250, 216, 234, 234, 234, 218, 80,  80,  216,
 };
 
-static s16 sOwMinimapPosY[24] = {
+static u8 sOwMinimapPosY[24] = {
     150, 158, 184, 164, 160, 138, 140, 150, 156, 158, 168, 162,
     138, 168, 162, 138, 146, 150, 154, 162, 218, 81,  65,  216,
 };
@@ -214,7 +214,7 @@ static s16 sOwCompassInfo[24][4] = {
     { 6, 6, 890, -800 },    { 13, 13, 1080, -260 }, { 11, 11, 1060, -680 }, { 9, 9, 850, -830 },
 };
 
-static s16 sDgnTexIndexBase[10] = {
+static u8 sDgnTexIndexBase[10] = {
     0, 10, 14, 18, 26, 36, 44, 52, 60, 66,
 };
 
@@ -223,11 +223,11 @@ static s16 sDgnCompassInfo[10][4] = {
     { 4, 4, 900, -640 },  { 3, 3, 900, -640 },  { 10, 10, 900, -640 }, { 5, 5, 900, -640 },  { 3, 3, 900, -640 },
 };
 
-static s16 sOwMinimapWidth[24] = {
+static u8 sOwMinimapWidth[24] = {
     80, 80, 80, 96, 96, 48, 80, 64, 64, 80, 64, 64, 80, 64, 64, 48, 80, 64, 64, 64, 80, 80, 80, 80,
 };
 
-static s16 sOwMinimapHeight[24] = {
+static u8 sOwMinimapHeight[24] = {
     73, 64, 39, 58, 62, 85, 81, 73, 65, 65, 56, 59, 85, 56, 59, 85, 78, 72, 68, 59, 39, 81, 65, 85,
 };
 
@@ -275,7 +275,7 @@ static f32 sFloorCoordY[10][8] = {
     { 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, -3000.0f },
 };
 
-static u16 sSwitchEntryCount[10] = { 5, 6, 4, 10, 25, 50, 8, 10, 6, 1 };
+static u8 sSwitchEntryCount[10] = { 5, 6, 4, 10, 25, 50, 8, 10, 6, 1 };
 
 static u8 sSwitchFromRoom[10][51] = {
     { 11, 0, 0, 12, 11 },
@@ -335,7 +335,24 @@ static u8 sFloorID[10][8] = {
 
 /* Y coord of big skull icon on map screen, relative to center of screen.
    -99 if no dungeon map, otherwise (51 - 14 * FloorNumber) */
-static s16 sSkullFloorIconY[10] = { -47, -47, -33, -47, -47, -5, -19, -47, -99, -99 };
+static s8 sSkullFloorIconY[10] = { -47, -47, -33, -47, -47, -5, -19, -47, -99, -99 };
+
+static s8 sDungeonXOffset[10][44] = {
+    { 32, 48, 48, 32, 48, 32, 48, 24, 48, 32, 32, 32, 32                                                                                                                             }, // Inside the Deku Tree (13)
+    { 0, 0, 32, 32, 24, 32, 48, 24, 32, 32, 16, 48, 32, 48, 48, 48, 16, 32, 16                                                                                                       }, // Dodongo's Cavern (19)
+    { 40, 32, 32, 32, 40, 40, 32, 0, 48, 48, 48, 48, 48, 48, 40, 32, 48                                                                                                              }, // Inside Jabu-Jabu's Belly (17)
+    { 48, 56, 16, 56, 56, 56, 56, 32, 32, 0, 48, 40, 48, 40, 40, 32, 58, 16, 48, 32, 32, 48, 48, 48, 32, 32, 40                                                                      }, // Forest Temple (27)
+    { 48, 16, 32, 56, 32, 40, 56, 56, 32, 48, 64, 56, 56, 56, 48, 48, 40, 64, 56, 48, 56, 48, 56, 56, 56, 56, 64, 64, 56, 56, 64, 16, 64, 56, 64, 32, 64, 64                         }, // Fire Temple (38)
+    { 35, 64, 50, 24, 55, 26, 47, 59, 51, 61, 64, 68, 39, 20, 59, 65, 64, 46, 56, 57, 54, 34, 35, 32, 32, 64, 64, 64, 23, 55, 26, 26, 47, 51, 61, 64, 39, 59, 65, 46, 46, 54, 35, 26 }, // Water Temple (44)
+    { 4, 50, 54, 55, 64, 24, 48, 61, 45, 68, 44, 0, 52, 53, 58, 64, 61, 52, 60, 68, 44, 52, 56, 52, 61, 53, 41, 50, 59, 26, 54, 63                                                   }, // Spirit Temple (32)
+    { 57, 64, 54, 64, 64, 64, 64, 64, 64, 41, 64, 64, 64, 64, 64, 56, 64, 64, 53, 64, 64, 0, 64, 41, 64, 64, 0                                                                       }, // Shadow Temple (27)
+    { 27, 64, 59, 64, 56, 64, 64, 27, 64, 35                                                                                                                                         }, // Bottom of the Well (10)
+    { 48, 48, 56, 32, 48, 24, 56, 48, 40, 32, 64, 48                                                                                                                                 }, // Ice Cavern (12)
+};
+
+static s8 sOverworldXOffset[24] = {
+    11, 3, 3, 3, 3, 20, 17, 13, 3, 15, 6, 1, 5, 6, 15, 10, 12, 3, 14, 14, 3, 17, 15, 5
+};
 
 MapData gMapDataTable = {
     sFloorTexIndexOffset, sBossFloor,          sRoomPalette,
@@ -347,5 +364,5 @@ MapData gMapDataTable = {
     sOwEntranceIconPosX,  sOwEntranceIconPosY, sOwEntranceFlag,
     sFloorCoordY,         sSwitchEntryCount,   sSwitchFromRoom,
     sSwitchFromFloor,     sSwitchToRoom,       sFloorID,
-    sSkullFloorIconY,
+    sSkullFloorIconY,     sDungeonXOffset,     sOverworldXOffset,
 };

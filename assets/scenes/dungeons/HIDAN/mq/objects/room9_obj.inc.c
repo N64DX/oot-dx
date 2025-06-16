@@ -1,0 +1,3 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_DOOR_KILLER, // 1
+

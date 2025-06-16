@@ -1,0 +1,11 @@
+    OBJECT_JYA_OBJ, // 0
+    OBJECT_JYA_DOOR, // 1
+    OBJECT_BOMBIWA, // 2
+    OBJECT_BOX, // 3
+    OBJECT_SIOFUKI, // 4
+    OBJECT_MAMENOKI, // 5
+    OBJECT_D_HSBLOCK, // 6
+    OBJECT_BW, // 7
+    OBJECT_NB, // 8
+    OBJECT_GI_HEART, // 9
+

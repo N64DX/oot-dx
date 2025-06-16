@@ -1,0 +1,9 @@
+    OBJECT_HAKA_OBJECTS, // 0
+    OBJECT_HAKA_DOOR, // 1
+    OBJECT_BOX, // 2
+    OBJECT_SYOKUDAI, // 3
+    OBJECT_VM, // 4
+    OBJECT_ST, // 5
+    OBJECT_TRAP, // 6
+    OBJECT_D_HSBLOCK, // 7
+

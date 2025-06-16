@@ -276,7 +276,8 @@ typedef struct SaveInfo {
     /* 0x1285  0x12A1 */ char unk_12A1[0x24];
     /* 0x12A9  0x12C5 */ u8 scarecrowSpawnSongSet;
     /* 0x12AA  0x12C6 */ u8 scarecrowSpawnSong[0x80];
-    /* 0x132A  0x1346 */ char unk_1346[0x02];
+    /* 0x132A  0x1346 */ char unk_1346[0x01];
+    /* 0x13CB  0x1347 */ u8 questMode;
     /* 0x132C  0x1348 */ HorseData horseData;
     /* 0x1336  0x1352 */ Checksum checksum; // "check_sum"
 } SaveInfo;
@@ -437,6 +438,18 @@ typedef enum LinkAge {
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17
 #define LINK_AGE_IN_YEARS (!LINK_IS_ADULT ? YEARS_CHILD : YEARS_ADULT)
+
+#define VANILLA_QUEST        0
+#define MASTER_QUEST         1
+#define QUEST_MAX            MASTER_QUEST
+
+#define QUEST_MODE           (gSaveContext.save.info.questMode &  127)
+#define MIRROR_MODE          (gSaveContext.save.info.questMode &  128)
+#define ENABLE_MIRROR_MODE   (gSaveContext.save.info.questMode |= 128)
+
+#define SET_BIT_16(x)    ((x) |= BIT_16)
+#define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
+#define GET_BIT_16(x)    (((x) & BIT_16) >> 15)
 
 #define CLOCK_TIME(hr, min) ((s32)(((hr) * 60 + (min)) * (f32)0x10000 / (24 * 60) + 0.5f))
 
