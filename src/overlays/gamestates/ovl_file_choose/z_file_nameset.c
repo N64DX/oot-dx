@@ -735,11 +735,13 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         };
         u16 x, y;
 
-        x = 135;
-        y = 170;
-        if (this->mirrorMode[this->buttonIndex])   { gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 0, 255, 0, 255); }
-        else                                       { gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 0, 0, 255); }
+        x = 140;
+        y = 171;
+        gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
         gDPLoadTextureBlock(POLY_OPA_DISP++, gMirrorModeTex, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        if (!this->mirrorMode[this->buttonIndex])
+            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 128, 128, 128, 255);
         gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 90) << 2)), HIRES_MULTIPLY(((y + 11) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1462)), HIRES_DIVIDE((1462)));
 
         x = 160 - 64;
@@ -749,8 +751,8 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         gDPLoadTextureBlock(POLY_OPA_DISP++, textures[this->questMode[this->buttonIndex]][0], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
         gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 128) << 2)), HIRES_MULTIPLY(((y + 16) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1024)), HIRES_DIVIDE((1024)));
 
-        y = 115;
         x = 48;
+        y = 115;
         gDPLoadTextureBlock(POLY_OPA_DISP++, gEmptyCLeftArrowTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
         gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 32) << 2)), HIRES_MULTIPLY(((y + 32) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
