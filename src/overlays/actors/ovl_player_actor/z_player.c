@@ -11662,7 +11662,7 @@ void Player_Init(Actor* thisx, PlayState* play2) {
     startMode = PLAYER_GET_START_MODE(thisx);
 
     if ((startMode == PLAYER_START_MODE_WARP_SONG) || (startMode == PLAYER_START_MODE_FARORES_WIND)) {
-        if (gSaveContext.save.cutsceneIndex >= 0xFFF0) {
+        if (gSaveContext.save.cutsceneIndex >= CS_INDEX_0) {
             startMode = PLAYER_START_MODE_IDLE;
         }
     }
@@ -14714,7 +14714,7 @@ s32 func_8084DFF4(PlayState* play, Player* this) {
             if (play->sceneId == SCENE_DESERT_COLOSSUS && !IS_RUSH_QUEST && (this->getItemId == GI_GORONS_BRACELET || this->getItemId == GI_SILVER_GAUNTLETS || this->getItemId == GI_GOLD_GAUNTLETS || this->getItemId == GI_POWER_BRACELET || this->getItemId == GI_POWER_BRACELETS) ) {
                 play->nextEntranceIndex = ENTR_DESERT_COLOSSUS_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
-                gSaveContext.nextCutsceneIndex = 0xFFF1;
+                gSaveContext.nextCutsceneIndex = CS_INDEX_1;
                 play->transitionType = TRANS_TYPE_SANDSTORM_END;
                 this->stateFlags1 &= ~PLAYER_STATE1_29;
                 Player_TryCsAction(play, NULL, PLAYER_CSACTION_8);
