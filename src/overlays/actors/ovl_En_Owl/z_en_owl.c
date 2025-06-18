@@ -164,6 +164,21 @@ void EnOwl_Init(Actor* thisx, PlayState* play) {
     this->unk_3EE = 0;
     this->unk_400 = this->actor.world.rot.y;
 
+    if (NO_OWL)
+        switch (owlType) {
+            case OWL_DEFAULT:
+            case OWL_OUTSIDE_KOKIRI:
+            case OWL_HYRULE_CASTLE:
+            case OWL_KAKARIKO:
+            case OWL_HYLIA_GERUDO:
+            case OWL_LAKE_HYLIA:
+            case OWL_ZORA_RIVER:
+            case OWL_LOST_WOODS_PRESARIA:
+            default:
+                Actor_Kill(&this->actor);
+                return;
+        }
+
     switch (owlType) {
         case OWL_DEFAULT:
             this->actionFunc = EnOwl_WaitDefault;

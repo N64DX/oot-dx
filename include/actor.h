@@ -798,4 +798,6 @@ u16 func_80037C30(struct PlayState* play, s16 arg1);
 s32 func_80037D98(struct PlayState* play, Actor* actor, s32 arg2, s32* arg3);
 s32 Actor_TrackPlayer(struct PlayState* play, Actor* actor, Vec3s* headRot, Vec3s* torsoRot, Vec3f focusPos);
 
+u16 Actor_EnemyHealthMultiply(u16 health, u8 type);
+
 #endif

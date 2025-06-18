@@ -4350,6 +4350,7 @@ void KaleidoScope_Update(PlayState* play) {
                                                  &gSfxDefaultReverb);
                             Play_SaveSceneFlags(play);
                             gSaveContext.save.info.playerData.savedSceneId = play->sceneId;
+                            gSaveContext.save.linkAgeBackup = gSaveContext.save.linkAge;
                             Sram_WriteSave(&play->sramCtx);
                             pauseCtx->savePromptState = PAUSE_SAVE_PROMPT_STATE_SAVED;
 #if !PLATFORM_GC
@@ -4631,6 +4632,7 @@ void KaleidoScope_Update(PlayState* play) {
                     pauseCtx->promptChoice = 0;
                     Play_SaveSceneFlags(play);
                     gSaveContext.save.info.playerData.savedSceneId = play->sceneId;
+                    gSaveContext.save.linkAgeBackup = gSaveContext.save.linkAge;
                     Sram_WriteSave(&play->sramCtx);
                     pauseCtx->state = PAUSE_STATE_GAME_OVER_SAVED;
 #if !PLATFORM_GC

@@ -4998,6 +4998,30 @@ void Player_SetInvulnerability(Player* this, s32 timer) {
  * @return false if player is out of health
  */
 s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
+    switch (DAMAGE_TAKEN) {
+        case 1:
+            damage *= 2;
+            break;
+        case 2:
+            damage *= 3;
+            break;
+        case 3:
+            damage *= 4;
+            break;
+        case 4:
+            damage *= 6;
+            break;
+        case 5:
+            damage *= 8;
+            break;
+        case 6:
+            damage /= 2;
+            break;
+        case 7:
+            damage /= 4;
+            break;
+    }
+    
     if ((this->invincibilityTimer != 0) || (this->actor.category != ACTORCAT_PLAYER)) {
         return true;
     }

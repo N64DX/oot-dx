@@ -6323,3 +6323,62 @@ s32 Actor_TrackPlayer(PlayState* play, Actor* actor, Vec3s* headRot, Vec3s* tors
 
     return true;
 }
+
+u16 Actor_EnemyHealthMultiply(u16 health, u8 type) {
+    switch (type) {
+        case 1:
+            return (health * 3) / 2;
+        case 2:
+            return health *= 2;
+        case 3:
+            return (health * 5) / 2;
+        case 4:
+            return health *= 3;
+        case 5:
+            return health *= 4;
+        case 6:
+            return health *= 5;
+        case 7:
+            return health /= 2;
+    }
+    
+/*  case ACTOR_EN_ST:          // Skulltula
+    case ACTOR_EN_RR:          // Like-Like
+    case ACTOR_EN_PEEHAT:      // Peahat
+    case ACTOR_EN_OKUTA:       // Octorok
+    case ACTOR_EN_SB:          // Shell Blade
+    case ACTOR_EN_MB:          // Moblin
+    case ACTOR_EN_BILI:        // Biri
+    case ACTOR_EN_VALI:        // Bari
+    case ACTOR_EN_BUBBLE:      // Shabom
+    case ACTOR_EN_RD:          // ReDead / Gibdo
+    case ACTOR_EN_SKB:         // Stalchild
+    case ACTOR_EN_POH:         // Graveyard Poe / Sharp / Flat
+    case ACTOR_EN_BB:          // Blue Bubble / Red Bubble
+    case ACTOR_EN_BA:          // Tentacle
+    case ACTOR_EN_TP:          // Tailpasaran
+    case ACTOR_EN_EIYER:       // Stinger (Land)
+    case ACTOR_EN_WEIYER:      // Stinger (Water)
+    case ACTOR_EN_WALLMAS:     // Wallmaster
+    case ACTOR_EN_FLOORMAS:    // Floormaster
+    case ACTOR_EN_REEBA:       // Leever / Purple Leever
+    case ACTOR_EN_VM:          // Beamos
+    case ACTOR_EN_DODONGO:     // Dodongo
+    case ACTOR_EN_DODOJR:      // Baby Dodongo
+
+    case ACTOR_EN_PO_SISTERS:  // Poe Sisters
+    case ACTOR_EN_ZF:          // Lizalfos / Dinolfos
+    case ACTOR_EN_GELDB:       // Gerudo Fighter
+    case ACTOR_EN_SKJ:         // Skull Kid
+    case ACTOR_EN_BIGOKUTA:    // Big Octo
+
+    case ACTOR_BOSS_GOMA:      // Gohma
+    case ACTOR_BOSS_VA:        // Barinade
+    case ACTOR_BOSS_GANONDROF: // Phantom Ganon
+    case ACTOR_BOSS_FD:        // Volvagia
+    case ACTOR_BOSS_MO:        // Morpha
+    case ACTOR_BOSS_SST:       // Bongo Bongo
+    case ACTOR_BOSS_TW:        // Twinrova
+    case ACTOR_BOSS_GANON:     // Ganondorf
+    case ACTOR_BOSS_GANON2:    // Ganon */
+}

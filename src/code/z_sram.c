@@ -375,7 +375,7 @@ void Sram_InitDebugSave(void) {
                                                          INFTABLE_MASK(INFTABLE_0C) | INFTABLE_MASK(INFTABLE_0E);
 
     gSaveContext.save.info.eventChkInf[EVENTCHKINF_INDEX_0] |=
-        EVENTCHKINF_MASK(EVENTCHKINF_00_UNUSED) | EVENTCHKINF_MASK(EVENTCHKINF_01_UNUSED) |
+        EVENTCHKINF_MASK(EVENTCHKINF_SAVED_AFTER_INTRO) | EVENTCHKINF_MASK(EVENTCHKINF_01_UNUSED) |
         EVENTCHKINF_MASK(EVENTCHKINF_MIDO_DENIED_DEKU_TREE_ACCESS) | EVENTCHKINF_MASK(EVENTCHKINF_03) |
         EVENTCHKINF_MASK(EVENTCHKINF_04) | EVENTCHKINF_MASK(EVENTCHKINF_05) | EVENTCHKINF_MASK(EVENTCHKINF_09) |
         EVENTCHKINF_MASK(EVENTCHKINF_0C);
@@ -442,6 +442,8 @@ void Sram_OpenSave(SramContext* sramCtx) {
     PRINTF("SCENE_DATA_ID = %d   SceneNo = %d\n", gSaveContext.save.info.playerData.savedSceneId,
            ((void)0, gSaveContext.save.entranceIndex));
 
+    gSaveContext.save.linkAgeBackup = gSaveContext.save.linkAge;
+
     switch (gSaveContext.save.info.playerData.savedSceneId) {
         case SCENE_DEKU_TREE:
         case SCENE_DODONGOS_CAVERN:
@@ -501,15 +503,13 @@ void Sram_OpenSave(SramContext* sramCtx) {
             break;
 
         default:
-            if (gSaveContext.save.info.playerData.savedSceneId != SCENE_LINKS_HOUSE) {
-                if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
-                    gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
-                } else {
-                    gSaveContext.save.entranceIndex = ENTR_TEMPLE_OF_TIME_7;
-                }
-            } else {
-                gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
+            if (!RESUME_LAST_AREA) {
+                if (gSaveContext.save.info.playerData.savedSceneId != SCENE_LINKS_HOUSE)
+                    gSaveContext.save.entranceIndex = (LINK_AGE_IN_YEARS == YEARS_CHILD) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
+                else gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
             }
+            else if (gSaveContext.save.info.playerData.savedSceneId == SCENE_FAIRYS_FOUNTAIN || gSaveContext.save.info.playerData.savedSceneId == SCENE_GROTTOS)
+                gSaveContext.save.entranceIndex = (LINK_AGE_IN_YEARS == YEARS_CHILD) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
             break;
     }
 
@@ -610,6 +610,11 @@ void Sram_OpenSave(SramContext* sramCtx) {
     R_QUEST_MODE    = QUEST_MODE;
 }
 
+void Sram_OpenSaveOptions(SramContext* sramCtx) {
+    u16 i = gSramSlotOffsets[gSaveContext.fileNum];
+    MemCpy(&gSaveContext, sramCtx->readBuff + i, sizeof(Save));
+}
+
 /**
  *  Write the contents of the Save Context to a main and backup slot in SRAM.
  *  Note: The whole Save Context is written even though only the `save` substruct is read back later
@@ -620,6 +625,7 @@ void Sram_WriteSave(SramContext* sramCtx) {
     u16 j;
     u16* ptr;
 
+    SET_EVENTCHKINF(EVENTCHKINF_SAVED_AFTER_INTRO);
     gSaveContext.save.info.checksum.value = 0;
 
     ptr = (u16*)&gSaveContext;
@@ -868,7 +874,7 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
 #endif
 
     gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
-    gSaveContext.save.linkAge = LINK_AGE_CHILD;
+    gSaveContext.save.linkAge = gSaveContext.save.linkAgeBackup = LINK_AGE_CHILD;
     gSaveContext.save.dayTime = CLOCK_TIME(10, 0);
     gSaveContext.save.cutsceneIndex = 0xFFF1;
 
@@ -891,11 +897,12 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
 
 #if OOT_VERSION <= PAL_1_1
     gSaveContext.save.info.questMode = fileSelect->questMode[fileSelect->buttonIndex];
-    if (fileSelect->mirrorMode[fileSelect->buttonIndex])
-        ENABLE_MIRROR_MODE;
+    if (fileSelect->mirrorMode[fileSelect->buttonIndex] && !MIRROR_MODE)
+        TOGGLE_MIRROR_MODE;
 #else
     gSaveContext.save.info.questMode = 0;
 #endif
+    gSaveContext.save.info.heroMode = gSaveContext.save.info.settings = 0;
 
     gSaveContext.save.info.playerData.newf[0] = 'Z';
     gSaveContext.save.info.playerData.newf[1] = 'E';

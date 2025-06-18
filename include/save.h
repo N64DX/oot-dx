@@ -270,7 +270,8 @@ typedef struct SaveInfo {
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
     /* 0x0F18  0x0F34 */ char unk_F34[0x04];
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
-    /* 0x0F20  0x0F3C */ char unk_F3C[0x4];
+    /* 0x0F20  0x0F3C */ u16 heroMode;
+    /* 0x0F22  0x0F3E */ u16 settings;
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
     /* 0x1285  0x12A1 */ char unk_12A1[0x24];
@@ -284,7 +285,8 @@ typedef struct SaveInfo {
 
 typedef struct Save {
     /* 0x00 */ s32 entranceIndex;
-    /* 0x04 */ s32 linkAge; // 0: Adult; 1: Child (see enum `LinkAge`)
+    /* 0x04 */ s16 linkAge; // 0: Adult; 1: Child (see enum `LinkAge`)
+    /* 0x04 */ s16 linkAgeBackup;
     /* 0x08 */ s32 cutsceneIndex;
     /* 0x0C */ u16 dayTime; // "zelda_time"
     /* 0x10 */ s32 nightFlag;
@@ -439,13 +441,32 @@ typedef enum LinkAge {
 #define YEARS_ADULT 17
 #define LINK_AGE_IN_YEARS (!LINK_IS_ADULT ? YEARS_CHILD : YEARS_ADULT)
 
-#define VANILLA_QUEST        0
-#define MASTER_QUEST         1
-#define QUEST_MAX            MASTER_QUEST
+#define VANILLA_QUEST 0
+#define MASTER_QUEST  1
+#define QUEST_MAX     MASTER_QUEST
+#define QUEST_MODE    (gSaveContext.save.info.questMode & 127)
 
-#define QUEST_MODE           (gSaveContext.save.info.questMode &  127)
-#define MIRROR_MODE          (gSaveContext.save.info.questMode &  128)
-#define ENABLE_MIRROR_MODE   (gSaveContext.save.info.questMode |= 128)
+#define MIRROR_MODE                ((gSaveContext.save.info.questMode >> 7)  & 1) // Bits: 7
+#define RECOVERY_TAKEN             ((gSaveContext.save.info.heroMode  >> 0)  & 3) // Bits: 0-1
+#define DAMAGE_TAKEN               ((gSaveContext.save.info.heroMode  >> 2)  & 7) // Bits: 2-4
+#define NO_BOTTLED_FAIRIES         ((gSaveContext.save.info.heroMode  >> 5)  & 1) // Bits: 5
+#define MONSTER_HP                 ((gSaveContext.save.info.heroMode  >> 6)  & 7) // Bits: 6-8
+#define ELITE_HP                   ((gSaveContext.save.info.heroMode  >> 9)  & 7) // Bits: 9-11
+#define BOSS_HP                    ((gSaveContext.save.info.heroMode  >> 12) & 7) // Bits: 12-14
+#define RESUME_LAST_AREA           ((gSaveContext.save.info.settings  >> 0)  & 1) // Bits: 0
+#define CENSOR_FIRE_TEMPLE         ((gSaveContext.save.info.settings  >> 1)  & 1) // Bits: 1
+#define NO_OWL                     ((gSaveContext.save.info.settings  >> 1)  & 2) // Bits: 2
+
+#define TOGGLE_MIRROR_MODE          (gSaveContext.save.info.questMode ^=                                     (1 << 7))
+#define SET_RECOVERY_TAKEN(value)   (gSaveContext.save.info.heroMode   = (gSaveContext.save.info.heroMode & ~(3 << 0))  | (((value) & 3) << 0))
+#define SET_DAMAGE_TAKEN(value)     (gSaveContext.save.info.heroMode   = (gSaveContext.save.info.heroMode & ~(7 << 2))  | (((value) & 7) << 2))
+#define TOGGLE_NO_BOTTLED_FAIRIES   (gSaveContext.save.info.heroMode  ^=                                     (1 << 5))
+#define SET_MONSTER_HP(value)       (gSaveContext.save.info.heroMode   = (gSaveContext.save.info.heroMode & ~(7 << 6))  | (((value) & 7) << 6))
+#define SET_ELITE_HP(value)         (gSaveContext.save.info.heroMode   = (gSaveContext.save.info.heroMode & ~(7 << 9))  | (((value) & 7) << 9))
+#define SET_BOSS_HP(value)          (gSaveContext.save.info.heroMode   = (gSaveContext.save.info.heroMode & ~(7 << 12)) | (((value) & 7) << 12))
+#define TOGGLE_RESUME_LAST_AREA     (gSaveContext.save.info.settings  ^=                                     (1 << 0))
+#define TOGGLE_CENSOR_FIRE_TEMPLE   (gSaveContext.save.info.settings  ^=                                     (1 << 1))
+#define TOGGLE_NO_OWL               (gSaveContext.save.info.settings  ^=                                     (1 << 2))
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
@@ -520,7 +541,7 @@ typedef enum LinkAge {
 
 // EVENTCHKINF 0x00-0x0F
 #define EVENTCHKINF_INDEX_0 0
-#define EVENTCHKINF_00_UNUSED 0x00 // flag is set in the debug save, but has no functionality
+#define EVENTCHKINF_SAVED_AFTER_INTRO 0x00 // flag is set in the debug save, but has no functionality
 #define EVENTCHKINF_01_UNUSED 0x01 // flag is set in the debug save, but has no functionality
 #define EVENTCHKINF_MIDO_DENIED_DEKU_TREE_ACCESS 0x02
 #define EVENTCHKINF_03 0x03
