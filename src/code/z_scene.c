@@ -448,6 +448,9 @@ BAD_RETURN(s32) Scene_CommandSoundSettings(PlayState* play, SceneCmd* cmd) {
     if (gSaveContext.seqId == (u8)NA_BGM_DISABLED) {
         SEQCMD_RESET_AUDIO_HEAP(0, cmd->soundSettings.specId);
     }
+
+    if (CENSOR_FIRE_TEMPLE && play->sceneSequences.seqId  == NA_BGM_FIRE_TEMPLE)
+        play->sceneSequences.seqId = NA_BGM_FIRE_TEMPLE_ALT;
 }
 
 BAD_RETURN(s32) Scene_CommandEchoSettings(PlayState* play, SceneCmd* cmd) {

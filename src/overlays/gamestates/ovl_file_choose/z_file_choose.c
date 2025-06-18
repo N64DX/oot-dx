@@ -9,6 +9,7 @@
 #include "letterbox.h"
 #include "main.h"
 #include "map_select_state.h"
+#include "file_options_state.h"
 #include "memory_utils.h"
 #if PLATFORM_N64
 #include "n64dd.h"
@@ -524,9 +525,17 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
     SramContext* sramCtx = &this->sramCtx;
     Input* input = &this->state.input[0];
-
-    if (CHECK_BTN_ALL(input->press.button, BTN_START) || CHECK_BTN_ALL(input->press.button, BTN_A)) {
+    
+    if (this->lastFileNum > 0) {
+        this->buttonIndex = this->selectedFileIndex = this->lastFileNum - 1;
+        this->lastFileNum = 0;
+        this->actionTimer = 8;
+        this->selectMode = SM_FADE_MAIN_TO_SELECT;
+        this->menuMode = FS_MENU_MODE_SELECT;
+        this->nextTitleLabel = FS_TITLE_OPEN_FILE;
+    } else if (CHECK_BTN_ALL(input->press.button, BTN_START) || CHECK_BTN_ALL(input->press.button, BTN_A)) {
         this->selectingQuestMode = false;
+
         if (this->buttonIndex <= FS_BTN_MAIN_FILE_3) {
             PRINTF("REGCK_ALL[%x]=%x,%x,%x,%x,%x,%x\n", this->buttonIndex, GET_NEWF(sramCtx, this->buttonIndex, 0),
                    GET_NEWF(sramCtx, this->buttonIndex, 1), GET_NEWF(sramCtx, this->buttonIndex, 2),
@@ -750,6 +759,9 @@ void FileSelect_PulsateCursor(GameState* thisx) {
     s16 alphaStep;
     SramContext* sramCtx = &this->sramCtx;
     Input* debugInput = &this->state.input[2];
+    
+    if (this->lastFileNum > 0)
+        return;
 
 #if OOT_PAL && DEBUG_FEATURES
     if (CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {
@@ -1794,9 +1806,19 @@ void FileSelect_FadeInFileInfo(GameState* thisx) {
  * Update the cursor and handle the option that the player picks for confirming the selected file.
  * Update function for `SM_CONFIRM_FILE`
  */
+
 void FileSelect_ConfirmFile(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
     Input* input = &this->state.input[0];
+
+    if ((CHECK_BTN_ALL(input->press.button, BTN_R))) {
+        Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        gSaveContext.fileNum = this->buttonIndex;
+        this->lastFileNum = gSaveContext.fileNum + 1;
+        Sram_OpenSaveOptions(&this->sramCtx);
+        SET_NEXT_GAMESTATE(&this->state, FileOptions_Init, FileOptionsState);
+        this->state.running = false;
+    }
 
     if (CHECK_BTN_ALL(input->press.button, BTN_START) || (CHECK_BTN_ALL(input->press.button, BTN_A))) {
         if (this->confirmButtonIndex == FS_BTN_CONFIRM_YES) {
@@ -2428,4 +2450,7 @@ void FileSelect_Init(GameState* thisx) {
     SEQCMD_RESET_AUDIO_HEAP(0, 10);
     // Setting ioData to 1 and writing it to ioPort 7 will skip the harp intro
     Audio_PlaySequenceWithSeqPlayerIO(SEQ_PLAYER_BGM_MAIN, NA_BGM_FILE_SELECT, 0, 7, 1);
+    
+    if (this->lastFileNum > 0)
+        this->buttonIndex = this->lastFileNum - 1;
 }

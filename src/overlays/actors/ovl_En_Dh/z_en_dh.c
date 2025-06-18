@@ -173,7 +173,7 @@ void EnDh_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 64.0f);
     this->actor.params = ENDH_WAIT_UNDERGROUND;
     this->actor.colChkInfo.mass = MASS_HEAVY;
-    this->actor.colChkInfo.health = LINK_IS_ADULT ? 14 : 20;
+    this->actor.colChkInfo.health = LINK_IS_ADULT ? Actor_EnemyHealthMultiply(14, ELITE_HP) : Actor_EnemyHealthMultiply(20, ELITE_HP);
     this->alpha = this->unk_258 = 255;
     this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
     Collider_InitCylinder(play, &this->collider1);

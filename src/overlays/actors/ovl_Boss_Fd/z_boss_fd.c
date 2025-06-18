@@ -230,7 +230,7 @@ void BossFd_Init(Actor* thisx, PlayState* play) {
         }
     }
 
-    this->actor.colChkInfo.health = 24;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(24, BOSS_HP);;
     this->skinSegments = 18;
     if (this->introState == BFD_CS_NONE) {
         this->actionFunc = BossFd_Wait;

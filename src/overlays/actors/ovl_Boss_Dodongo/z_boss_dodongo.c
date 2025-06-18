@@ -230,7 +230,7 @@ void BossDodongo_Init(Actor* thisx, PlayState* play) {
     Animation_PlayLoop(&this->skelAnime, &object_kingdodongo_Anim_00F0D8);
     this->unk_1F8 = 1.0f;
     BossDodongo_SetupIntroCutscene(this, play);
-    this->health = 12;
+    this->health = Actor_EnemyHealthMultiply(12, BOSS_HP);
     this->colorFilterMin = 995.0f;
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
     this->colorFilterMax = 1000.0f;

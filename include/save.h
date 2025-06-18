@@ -263,14 +263,14 @@ typedef struct SaveInfo {
     /* 0x0E48  0x0E64 */ FaroresWindData fw;
     /* 0x0E70  0x0E8C */ char unk_E8C[0x10];
     /* 0x0E80  0x0E9C */ s32 gsFlags[6];
-    /* 0x0E98  0x0EB4 */ char unk_EB4[0x4];
+    /* 0x0E98  0x0EB4 */ u32 settings;
     /* 0x0E9C  0x0EB8 */ s32 highScores[7];
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
     /* 0x0F18  0x0F34 */ char unk_F34[0x04];
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
-    /* 0x0F20  0x0F3C */ char unk_F3C[0x4];
+    /* 0x0F20  0x0F3C */ u32 heroMode;
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
     /* 0x1285  0x12A1 */ char unk_12A1[0x24];
@@ -439,13 +439,37 @@ typedef enum LinkAge {
 #define YEARS_ADULT 17
 #define LINK_AGE_IN_YEARS (!LINK_IS_ADULT ? YEARS_CHILD : YEARS_ADULT)
 
-#define VANILLA_QUEST        0
-#define MASTER_QUEST         1
-#define QUEST_MAX            MASTER_QUEST
+#define VANILLA_QUEST 0
+#define MASTER_QUEST  1
+#define QUEST_MAX     MASTER_QUEST
+#define QUEST_MODE    (gSaveContext.save.info.questMode & 127)
 
-#define QUEST_MODE           (gSaveContext.save.info.questMode &  127)
-#define MIRROR_MODE          (gSaveContext.save.info.questMode &  128)
-#define ENABLE_MIRROR_MODE   (gSaveContext.save.info.questMode |= 128)
+#define MIRROR_MODE                ((gSaveContext.save.info.questMode >> 7)  & 1) // Bits: 7
+#define RECOVERY_TAKEN             ((gSaveContext.save.info.heroMode  >> 0)  & 3) // Bits: 0-1
+#define DAMAGE_TAKEN               ((gSaveContext.save.info.heroMode  >> 2)  & 7) // Bits: 2-4
+#define MONSTER_HP                 ((gSaveContext.save.info.heroMode  >> 5)  & 7) // Bits: 5-7
+#define ELITE_HP                   ((gSaveContext.save.info.heroMode  >> 8)  & 7) // Bits: 8-10
+#define BOSS_HP                    ((gSaveContext.save.info.heroMode  >> 11) & 7) // Bits: 11-13
+#define HARDER_ENEMIES             ((gSaveContext.save.info.heroMode  >> 14) & 1) // Bits: 14
+#define FIXED_DARK_LINK_HP         ((gSaveContext.save.info.heroMode  >> 15) & 1) // Bits: 15
+#define NO_BOTTLED_FAIRIES         ((gSaveContext.save.info.heroMode  >> 16) & 1) // Bits: 16
+#define RESUME_LAST_AREA           ((gSaveContext.save.info.settings  >> 0)  & 1) // Bits: 0
+#define CENSOR_FIRE_TEMPLE         ((gSaveContext.save.info.settings  >> 1)  & 1) // Bits: 1
+#define NO_OWL                     ((gSaveContext.save.info.settings  >> 1)  & 2) // Bits: 2
+
+#define SET_MIRROR_MODE             (gSaveContext.save.info.questMode ^=                                     (1 << 7))
+#define SET_RECOVERY_TAKEN(value)   (gSaveContext.save.info.heroMode   = (gSaveContext.save.info.heroMode & ~(3 << 0))  | (((value) & 3) << 0))
+#define SET_DAMAGE_TAKEN(value)     (gSaveContext.save.info.heroMode   = (gSaveContext.save.info.heroMode & ~(7 << 2))  | (((value) & 7) << 2))
+#define SET_MONSTER_HP(value)       (gSaveContext.save.info.heroMode   = (gSaveContext.save.info.heroMode & ~(7 << 5))  | (((value) & 7) << 5))
+#define SET_ELITE_HP(value)         (gSaveContext.save.info.heroMode   = (gSaveContext.save.info.heroMode & ~(7 << 8))  | (((value) & 7) << 8))
+#define SET_BOSS_HP(value)          (gSaveContext.save.info.heroMode   = (gSaveContext.save.info.heroMode & ~(7 << 11)) | (((value) & 7) << 11))
+#define SET_HARDER_ENEMIES          (gSaveContext.save.info.heroMode  ^=                                     (1 << 14))
+#define SET_FIXED_DARK_LINK_HP      (gSaveContext.save.info.heroMode  ^=                                     (1 << 15))
+#define SET_NO_BOTTLED_FAIRIES      (gSaveContext.save.info.heroMode  ^=                                     (1 << 16))
+
+#define SET_RESUME_LAST_AREA        (gSaveContext.save.info.settings  ^=                                     (1 << 0))
+#define SET_CENSOR_FIRE_TEMPLE      (gSaveContext.save.info.settings  ^=                                     (1 << 1))
+#define SET_NO_OWL                  (gSaveContext.save.info.settings  ^=                                     (1 << 2))
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
@@ -520,7 +544,7 @@ typedef enum LinkAge {
 
 // EVENTCHKINF 0x00-0x0F
 #define EVENTCHKINF_INDEX_0 0
-#define EVENTCHKINF_00_UNUSED 0x00 // flag is set in the debug save, but has no functionality
+#define EVENTCHKINF_SAVED_AFTER_INTRO 0x00 // flag is set in the debug save, but has no functionality
 #define EVENTCHKINF_01_UNUSED 0x01 // flag is set in the debug save, but has no functionality
 #define EVENTCHKINF_MIDO_DENIED_DEKU_TREE_ACCESS 0x02
 #define EVENTCHKINF_03 0x03

@@ -16,6 +16,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_bigokuta/object_bigokuta.h"
 
@@ -193,6 +194,7 @@ void EnBigokuta_Init(Actor* thisx, PlayState* play) {
     }
 
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, sColChkInfoInit);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
 
     this->unk_194 = 1;
 

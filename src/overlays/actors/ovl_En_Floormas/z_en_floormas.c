@@ -145,6 +145,7 @@ void EnFloormas_Init(Actor* thisx, PlayState* play2) {
     Collider_InitCylinder(play, &this->collider);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     this->zOffset = -1600;
     invisble = PARAMS_GET_NOSHIFT(this->actor.params, 15, 1); // SPAWN_INVISIBLE
 
@@ -309,7 +310,7 @@ void EnFloormas_SetupSplit(EnFloormas* this) {
     this->actor.speed = 4.0f;
     this->actor.velocity.y = 7.0f;
     // using div creates a signed check.
-    this->actor.colChkInfo.health = sColChkInfoInit.health >> 1;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply((sColChkInfoInit.health >> 1), MONSTER_HP);
     this->actionFunc = EnFloormas_Split;
 }
 

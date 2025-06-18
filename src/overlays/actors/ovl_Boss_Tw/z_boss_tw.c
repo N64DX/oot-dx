@@ -578,7 +578,7 @@ void BossTw_Init(Actor* thisx, PlayState* play2) {
         // Twinrova
         Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInitTwinrova);
         this->actor.naviEnemyId = NAVI_ENEMY_TWINROVA;
-        this->actor.colChkInfo.health = 24;
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(24, BOSS_HP);
         this->actor.update = BossTw_TwinrovaUpdate;
         this->actor.draw = BossTw_TwinrovaDraw;
         SkelAnime_InitFlex(play, &this->skelAnime, &gTwinrovaSkel, &gTwinrovaTPoseAnim, NULL, NULL, 0);
@@ -1507,7 +1507,7 @@ void BossTw_SetupWait(BossTw* this, PlayState* play) {
 void BossTw_Wait(BossTw* this, PlayState* play) {
     if ((this->actor.params == TW_TWINROVA) && (sKoumePtr->actionFunc == BossTw_FlyTo) &&
         (sKotakePtr->actionFunc == BossTw_FlyTo) &&
-        ((sKoumePtr->actor.colChkInfo.health + sKotakePtr->actor.colChkInfo.health) >= 4)) {
+        ((sKoumePtr->actor.colChkInfo.health + sKotakePtr->actor.colChkInfo.health) >= Actor_EnemyHealthMultiply(4, BOSS_HP))) {
 
         BossTw_TwinrovaSetupMergeCS(this, play);
         BossTw_SetupMergeCS(sKotakePtr, play);
@@ -5152,7 +5152,7 @@ void BossTw_TwinrovaChargeBlast(BossTw* this, PlayState* play) {
     Math_ApproachS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 5, 0x1000);
 
     if (Animation_OnFrame(&this->skelAnime, this->workf[ANIM_SW_TGT])) {
-        if ((s8)this->actor.colChkInfo.health < 10) {
+        if ((s8)this->actor.colChkInfo.health < Actor_EnemyHealthMultiply(10, BOSS_HP)) {
             sTwinrovaBlastType = Rand_ZeroFloat(1.99f);
         } else {
             if (++sFixedBlatSeq >= 4) {

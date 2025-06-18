@@ -20,6 +20,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_Bb/object_Bb.h"
@@ -333,7 +334,7 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
     SkelAnime_Init(play, &this->skelAnime, &object_Bb_Skel_001A30, &object_Bb_Anim_000444, this->jointTable,
                    this->morphTable, 16);
     this->unk_254 = 0;
-    thisx->colChkInfo.health = 4;
+    thisx->colChkInfo.health = Actor_EnemyHealthMultiply(4, MONSTER_HP);
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, thisx, &sJntSphInit, this->colliderElements);
 
@@ -775,7 +776,7 @@ void EnBb_SetupRed(PlayState* play, EnBb* this) {
         this->moveMode = BBMOVE_NORMAL;
         this->actor.bgCheckFlags &= ~BGCHECKFLAG_GROUND;
     } else {
-        this->actor.colChkInfo.health = 4;
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(4, MONSTER_HP);
         this->timer = 0;
         this->actionState = BBRED_WAIT;
         this->moveMode = BBMOVE_HIDDEN;

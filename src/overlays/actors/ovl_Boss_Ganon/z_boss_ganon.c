@@ -392,7 +392,7 @@ void BossGanon_Init(Actor* thisx, PlayState* play2) {
         }
 
         sGanondorf = this;
-        thisx->colChkInfo.health = 40;
+        thisx->colChkInfo.health = Actor_EnemyHealthMultiply(40, BOSS_HP);
         Actor_ProcessInitChain(thisx, sInitChain);
         ActorShape_Init(&thisx->shape, 0, NULL, 0);
         Actor_SetScale(thisx, 0.01f);
@@ -2257,7 +2257,7 @@ void BossGanon_Wait(BossGanon* this, PlayState* play) {
         } else if ((this->timers[0] == 0) && !(player->stateFlags1 & PLAYER_STATE1_13)) {
             this->timers[0] = (s16)Rand_ZeroFloat(30.0f) + 30;
 
-            if ((s8)this->actor.colChkInfo.health >= 20) {
+            if ((s8)this->actor.colChkInfo.health >= Actor_EnemyHealthMultiply(20, BOSS_HP)) {
                 BossGanon_SetupChargeLightBall(this, play);
             } else if (Rand_ZeroOne() >= 0.5f) {
                 if ((Rand_ZeroOne() >= 0.5f) || (this->actor.xzDistToPlayer > 350.0f)) {

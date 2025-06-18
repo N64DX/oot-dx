@@ -380,7 +380,7 @@ void BossMo_Init(Actor* thisx, PlayState* play2) {
         this->actor.world.pos.y = MO_WATER_LEVEL(play) + 50.0f;
         this->fwork[MO_TENT_SWING_SIZE_X] = 5.0f;
         this->drawActor = true;
-        this->actor.colChkInfo.health = 20;
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(20, BOSS_HP);;
         this->actor.colChkInfo.mass = 0;
         this->actor.params = 0;
         Actor_SetScale(&this->actor, 0.01f);
@@ -978,7 +978,7 @@ void BossMo_Tentacle(BossMo* this, PlayState* play) {
                     break;
                 }
             }
-            if ((this == sMorphaTent1) && (sMorphaCore->hitCount >= 3) && (sMorphaTent2 == NULL)) {
+            if ((this == sMorphaTent1) && (sMorphaCore->hitCount >= Actor_EnemyHealthMultiply(3, BOSS_HP)) && (sMorphaTent2 == NULL)) {
                 sMorphaTent2 =
                     (BossMo*)Actor_Spawn(&play->actorCtx, play, ACTOR_BOSS_MO, this->actor.world.pos.x,
                                          this->actor.world.pos.y, this->actor.world.pos.z, 0, 0, 0, BOSSMO_TENTACLE);

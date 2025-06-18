@@ -14,6 +14,7 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
+#include "save.h"
 
 #include "assets/objects/object_dekunuts/object_dekunuts.h"
 
@@ -128,6 +129,7 @@ void EnDekunuts_Init(Actor* thisx, PlayState* play) {
         Collider_InitCylinder(play, &this->collider);
         Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
         CollisionCheck_SetInfo(&thisx->colChkInfo, &sDamageTable, &sColChkInfoInit);
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
         this->shotsPerRound = PARAMS_GET_U(thisx->params, 8, 8);
         thisx->params &= 0xFF;
         if ((this->shotsPerRound == 0xFF) || (this->shotsPerRound == 0)) {
@@ -212,6 +214,13 @@ void EnDekunuts_SetupGasp(EnDekunuts* this) {
 }
 
 void EnDekunuts_SetupBeDamaged(EnDekunuts* this) {
+    if (this->actor.colChkInfo.health > 0) {
+        Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_DAMAGE);
+        Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_CUTBODY);
+        Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, Animation_GetLastFrame(&gDekuNutsDamageAnim));
+        return;
+    }
+
     Animation_MorphToPlayOnce(&this->skelAnime, &gDekuNutsDamageAnim, -3.0f);
     if (this->collider.elem.acHitElem->atDmgInfo.dmgFlags & (DMG_ARROW | DMG_SLINGSHOT)) {
         this->actor.world.rot.y = this->collider.base.ac->world.rot.y;
@@ -461,8 +470,9 @@ void EnDekunuts_ColliderCheck(EnDekunuts* this, PlayState* play) {
                     if (this->actor.colChkInfo.damageReaction == 2) {
                         EffectSsFCircle_Spawn(play, &this->actor, &this->actor.world.pos, 40, 50);
                     }
+                    Actor_ApplyDamage(&this->actor);
                     EnDekunuts_SetupBeDamaged(this);
-                    if (Actor_ApplyDamage(&this->actor) == 0) {
+                    if (this->actor.colChkInfo.health == 0) {
                         Enemy_StartFinishingBlow(play, &this->actor);
                     }
                 } else if (this->actionFunc != EnDekunuts_BeStunned) {

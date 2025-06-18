@@ -21,6 +21,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.h"
 #include "assets/objects/object_gol/object_gol.h"
@@ -162,7 +163,7 @@ void EnGoma_Init(Actor* thisx, PlayState* play) {
         SkelAnime_Init(play, &this->skelanime, &gObjectGolSkel, &gObjectGolStandAnim, this->jointTable,
                        this->morphTable, GOMA_LIMB_MAX);
         Animation_PlayLoop(&this->skelanime, &gObjectGolStandAnim);
-        this->actor.colChkInfo.health = 2;
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(2, MONSTER_HP);
 
         if (this->actor.params < 3) { // Spawned by boss
             this->actionFunc = EnGoma_EggFallToGround;

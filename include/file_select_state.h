@@ -19,7 +19,8 @@ typedef struct FileSelectState {
 #endif
     /* 0x000B8 */ View view;
     /* 0x001E0 */ SramContext sramCtx;
-    /* 0x001E4 */ char unk_1E4[0x4];
+    /* 0x001E4 */ u8 lastFileNum;
+    /* 0x001E5 */ char unk_1E4[0x3];
     /* 0x001E8 */ SkyboxContext skyboxCtx;
     /* 0x00348 */ MessageContext msgCtx;
     /* 0x0E760 */ Font font;

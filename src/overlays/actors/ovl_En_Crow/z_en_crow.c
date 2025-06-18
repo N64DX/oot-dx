@@ -10,11 +10,12 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_crow/object_crow.h"
 
 #define FLAGS \
-    (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_IGNORE_QUAKE | ACTOR_FLAG_CAN_ATTACH_TO_ARROW)
+    (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_IGNORE_QUAKE)
 
 void EnCrow_Init(Actor* thisx, PlayState* play);
 void EnCrow_Destroy(Actor* thisx, PlayState* play);
@@ -127,6 +128,7 @@ void EnCrow_Init(Actor* thisx, PlayState* play) {
     Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
     this->collider.elements[0].dim.worldSphere.radius = sJntSphInit.elements[0].dim.modelSphere.radius;
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     ActorShape_Init(&this->actor.shape, 2000.0f, ActorShadow_DrawCircle, 20.0f);
     sDeathCount = 0;
     EnCrow_SetupFlyIdle(this);
@@ -414,8 +416,8 @@ void EnCrow_Respawn(EnCrow* this, PlayState* play) {
         }
         if (Math_StepToF(&this->actor.scale.x, target, target * 0.1f)) {
             this->actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
-            this->actor.flags &= ~ACTOR_FLAG_UPDATE_CULLING_DISABLED;
-            this->actor.colChkInfo.health = 1;
+            this->actor.flags &= ~(ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_CAN_ATTACH_TO_ARROW);
+            this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(1, MONSTER_HP);
             EnCrow_SetupFlyIdle(this);
         }
         this->actor.scale.z = this->actor.scale.y = this->actor.scale.x;
@@ -431,9 +433,16 @@ void EnCrow_UpdateDamage(EnCrow* this, PlayState* play) {
                 EnCrow_SetupTurnAway(this);
             } else {
                 Actor_ApplyDamage(&this->actor);
-                this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
-                Enemy_StartFinishingBlow(play, &this->actor);
-                EnCrow_SetupDamaged(this, play);
+
+                if (this->actor.colChkInfo.health > 0) {
+                    Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 40);
+                    Actor_PlaySfx(&this->actor, NA_SE_EN_KAICHO_DEAD);
+                } else {
+                    this->actor.flags |= ACTOR_FLAG_CAN_ATTACH_TO_ARROW;
+                    this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
+                    Enemy_StartFinishingBlow(play, &this->actor);
+                    EnCrow_SetupDamaged(this, play);
+                }
             }
         }
     }
