@@ -421,7 +421,7 @@ void Attention_Draw(Attention* attention, PlayState* play) {
 
         Actor_ProjectPos(play, &attention->reticlePos, &projectedPos, &invW);
 
-        projectedPos.x = ((SCREEN_WIDTH / 2) * (projectedPos.x * invW)) * projectdPosScale * (R_ENABLE_MIRROR ? -1 : 1);
+        projectedPos.x = ((SCREEN_WIDTH / 2) * (projectedPos.x * invW)) * projectdPosScale * (R_ENABLE_MIRROR == 1 ? -1 : 1);
         projectedPos.x = CLAMP(projectedPos.x, -SCREEN_WIDTH, SCREEN_WIDTH);
 
         projectedPos.y = ((SCREEN_HEIGHT / 2) * (projectedPos.y * invW)) * projectdPosScale;
@@ -862,7 +862,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
 
         titleY2 = titleY1 + HIRES_MULTIPLY((height * 4));
 
-        if (R_ENABLE_MIRROR && play->pauseCtx.state >= 2) {
+        if (R_ENABLE_MIRROR == 1 && play->pauseCtx.state >= 2) {
             dsdx = -HIRES_DIVIDE((1 << 10));
             s = width << 5;
         }
@@ -1051,7 +1051,7 @@ void Actor_SetProjectileSpeed(Actor* actor, f32 speedXYZ) {
 void Actor_UpdatePosByAnimation(Actor* actor, SkelAnime* skelAnime) {
     Vec3f posDiff;
 
-    SkelAnime_UpdateTranslation(skelAnime, &posDiff, actor->shape.rot.y, (actor->category == ACTORCAT_PLAYER && R_ENABLE_MIRROR) ? -1 : 1);
+    SkelAnime_UpdateTranslation(skelAnime, &posDiff, actor->shape.rot.y, (actor->category == ACTORCAT_PLAYER && R_ENABLE_MIRROR == 1) ? -1 : 1);
 
     actor->world.pos.x += posDiff.x * actor->scale.x;
     actor->world.pos.y += posDiff.y * actor->scale.y;

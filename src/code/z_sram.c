@@ -889,7 +889,13 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
 #endif
     }
 
-    gSaveContext.save.info.questMode = fileSelect->questMode[fileSelect->buttonIndex] + (fileSelect->mirrorMode[fileSelect->buttonIndex] * 128);
+#if OOT_VERSION <= PAL_1_1
+    gSaveContext.save.info.questMode = fileSelect->questMode[fileSelect->buttonIndex];
+    if (fileSelect->mirrorMode[fileSelect->buttonIndex])
+        ENABLE_MIRROR_MODE;
+#else
+    gSaveContext.save.info.questMode = 0;
+#endif
 
     gSaveContext.save.info.playerData.newf[0] = 'Z';
     gSaveContext.save.info.playerData.newf[1] = 'E';

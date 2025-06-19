@@ -702,7 +702,7 @@ Acmd* AudioSynth_DoOneAudioUpdate(s16* aiBuf, s32 aiBufLen, Acmd* cmd, s32 updat
         i++;
     }
 
-    if (R_ENABLE_MIRROR) {
+    if (R_ENABLE_MIRROR == 1) {
         aInterleave(cmd++, DMEM_TEMP, DMEM_RIGHT_CH, DMEM_LEFT_CH, 2 * aiBufLen);
     } else {
         aInterleave(cmd++, DMEM_TEMP, DMEM_LEFT_CH, DMEM_RIGHT_CH, 2 * aiBufLen);

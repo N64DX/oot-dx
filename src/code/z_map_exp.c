@@ -390,16 +390,16 @@ void Minimap_DrawCompassIcons(PlayState* play) {
 
         tempX = player->actor.world.pos.x;
         tempZ = player->actor.world.pos.z;
-        tempX /= R_COMPASS_SCALE_X * (R_ENABLE_MIRROR ? -1 : 1);
+        tempX /= R_COMPASS_SCALE_X * (R_ENABLE_MIRROR == 1 ? -1 : 1);
         tempZ /= R_COMPASS_SCALE_Y;
 
-        tempXOffset = R_COMPASS_OFFSET_X + (R_ENABLE_MIRROR ? mirrorOffset : 0);
+        tempXOffset = R_COMPASS_OFFSET_X + (R_ENABLE_MIRROR == 1 ? mirrorOffset : 0);
 
         Matrix_Translate(HIRES_MULTIPLY(((tempXOffset + tempX + (WS_SHIFT_FULL * 5)) / 10.0f)), HIRES_MULTIPLY(((R_COMPASS_OFFSET_Y - tempZ) / 10.0f)), 0.0f, MTXMODE_NEW);
         
         Matrix_Scale(HIRES_MULTIPLY(0.4f), HIRES_MULTIPLY(0.4f), HIRES_MULTIPLY(0.4f), MTXMODE_APPLY);
         Matrix_RotateX(-1.6f, MTXMODE_APPLY);
-        tempX = ((0x7FFF - player->actor.shape.rot.y) / 0x400) * (R_ENABLE_MIRROR ? -1 : 1);
+        tempX = ((0x7FFF - player->actor.shape.rot.y) / 0x400) * (R_ENABLE_MIRROR == 1 ? -1 : 1);
         Matrix_RotateY(tempX / 10.0f, MTXMODE_APPLY);
         MATRIX_FINALIZE_AND_LOAD(OVERLAY_DISP++, play->state.gfxCtx, "../z_map_exp.c", 585);
 
@@ -408,14 +408,14 @@ void Minimap_DrawCompassIcons(PlayState* play) {
 
         tempX = sPlayerInitialPosX;
         tempZ = sPlayerInitialPosZ;
-        tempX /= R_COMPASS_SCALE_X * (R_ENABLE_MIRROR ? -1 : 1);;
+        tempX /= R_COMPASS_SCALE_X * (R_ENABLE_MIRROR == 1 ? -1 : 1);;
         tempZ /= R_COMPASS_SCALE_Y;
 
         Matrix_Translate(HIRES_MULTIPLY(((tempXOffset + tempX + (WS_SHIFT_FULL * 5)) / 10.0f)), HIRES_MULTIPLY(((R_COMPASS_OFFSET_Y - tempZ) / 10.0f)), 0.0f, MTXMODE_NEW);
 
         Matrix_Scale(HIRES_MULTIPLY((VREG(9) / 100.0f)), HIRES_MULTIPLY((VREG(9) / 100.0f)), HIRES_MULTIPLY((VREG(9) / 100.0f)), MTXMODE_APPLY);
         Matrix_RotateX(VREG(52) / 10.0f, MTXMODE_APPLY);
-        Matrix_RotateY((sPlayerInitialDirection * (R_ENABLE_MIRROR ? -1 : 1)) / 10.0f, MTXMODE_APPLY);
+        Matrix_RotateY((sPlayerInitialDirection * (R_ENABLE_MIRROR == 1 ? -1 : 1)) / 10.0f, MTXMODE_APPLY);
         MATRIX_FINALIZE_AND_LOAD(OVERLAY_DISP++, play->state.gfxCtx, "../z_map_exp.c", 603);
 
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0xFF, 200, 0, 0, 255);
@@ -457,7 +457,7 @@ void Minimap_Draw(PlayState* play) {
                                                G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
                                                G_TX_NOLOD);
 
-                        if (R_ENABLE_MIRROR) {
+                        if (R_ENABLE_MIRROR == 1) {
                             u16 x = WS_SHIFT_FULL + R_DGN_MINIMAP_X + gMapData->dungeonXOffset[mapIndex][interfaceCtx->mapRoomNum];
                             gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((x) << 2)), HIRES_MULTIPLY((R_DGN_MINIMAP_Y << 2)), HIRES_MULTIPLY(((x + MAP_I_TEX_WIDTH) << 2)),
                                 HIRES_MULTIPLY(((R_DGN_MINIMAP_Y + MAP_I_TEX_HEIGHT) << 2)), G_TX_RENDERTILE, (MAP_I_TEX_WIDTH - 1) << 5, 0, -HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
@@ -526,7 +526,7 @@ void Minimap_Draw(PlayState* play) {
                                            G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                                            G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                    if (R_ENABLE_MIRROR) {
+                    if (R_ENABLE_MIRROR == 1) {
                         u16 x = WS_SHIFT_FULL + R_OW_MINIMAP_X + xOffset;
                         gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((x) << 2)), HIRES_MULTIPLY((R_OW_MINIMAP_Y << 2)), HIRES_MULTIPLY(((x + gMapData->owMinimapWidth[mapIndex]) << 2)), HIRES_MULTIPLY((((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[mapIndex]) << 2))),
                             G_TX_RENDERTILE, (gMapData->owMinimapWidth[mapIndex] - 1) << 5, 0, -HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
@@ -542,7 +542,7 @@ void Minimap_Draw(PlayState* play) {
                             ((gMapData->owEntranceFlag[sEntranceIconMapIndex] != 0xFFFF) &&
                              (gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] &
                               gBitFlags[gMapData->owEntranceFlag[mapIndex]]))) {
-                            s16 newX = gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (R_ENABLE_MIRROR ? (((xOffset + R_OW_MINIMAP_X + (gMapData->owMinimapWidth[mapIndex] / 2)) - (gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (8 / 2))) * 2 + (8 / 2) - 2) : 0);
+                            s16 newX = gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (R_ENABLE_MIRROR == 1 ? (((xOffset + R_OW_MINIMAP_X + (gMapData->owMinimapWidth[mapIndex] / 2)) - (gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (8 / 2))) * 2 + (8 / 2) - 2) : 0);
 
                             gDPLoadTextureBlock(OVERLAY_DISP++, gMapDungeonEntranceIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b,
                                                 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
@@ -563,7 +563,7 @@ void Minimap_Draw(PlayState* play) {
                                             8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((WS_SHIFT_FULL + (R_ENABLE_MIRROR ? (257 + xOffset) : 270)) << 2)), HIRES_MULTIPLY((154 << 2)), HIRES_MULTIPLY(((WS_SHIFT_FULL + (R_ENABLE_MIRROR ? (265 + xOffset) : 278)) << 2)), HIRES_MULTIPLY((162 << 2)), G_TX_RENDERTILE, 0,
+                        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((WS_SHIFT_FULL + (R_ENABLE_MIRROR == 1 ? (257 + xOffset) : 270)) << 2)), HIRES_MULTIPLY((154 << 2)), HIRES_MULTIPLY(((WS_SHIFT_FULL + (R_ENABLE_MIRROR ? (265 + xOffset) : 278)) << 2)), HIRES_MULTIPLY((162 << 2)), G_TX_RENDERTILE, 0,
                                             0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
                     }
 

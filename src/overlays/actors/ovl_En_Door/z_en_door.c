@@ -382,7 +382,7 @@ void EnDoor_Draw(Actor* thisx, PlayState* play) {
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
 
         gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
-        if (R_ENABLE_MIRROR) {
+        if (R_ENABLE_MIRROR == 1) {
             gSPSetGeometryMode(POLY_OPA_DISP++, G_CULL_FRONT);
             Matrix_Scale(-1.0f, 1.0f, 1.0f, MTXMODE_APPLY);
         }

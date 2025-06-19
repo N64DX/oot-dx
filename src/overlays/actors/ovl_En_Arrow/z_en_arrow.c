@@ -501,7 +501,7 @@ void EnArrow_Draw(Actor* thisx, PlayState* play) {
 
     if (this->actor.params <= ARROW_0E) {
         Matrix_Push();
-        if (R_ENABLE_MIRROR)
+        if (R_ENABLE_MIRROR == 1)
             Matrix_RotateZ(1.2f, MTXMODE_APPLY);
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         SkelAnime_DrawLod(play, this->skelAnime.skeleton, this->skelAnime.jointTable, NULL, NULL, this,

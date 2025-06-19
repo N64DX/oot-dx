@@ -1069,7 +1069,7 @@ void AnimTask_ActorMovement(PlayState* play, AnimTaskData* data) {
     Actor* actor = task->actor;
     Vec3f diff;
 
-    SkelAnime_UpdateTranslation(task->skelAnime, &diff, actor->shape.rot.y, (actor->category == ACTORCAT_PLAYER && R_ENABLE_MIRROR) ? -1 : 1);
+    SkelAnime_UpdateTranslation(task->skelAnime, &diff, actor->shape.rot.y, (actor->category == ACTORCAT_PLAYER && R_ENABLE_MIRROR == 1) ? -1 : 1);
 
     actor->world.pos.x += diff.x * actor->scale.x;
     actor->world.pos.y += diff.y * actor->scale.y * task->diffScaleY;
