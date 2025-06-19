@@ -1216,7 +1216,7 @@ void Play_Draw(PlayState* this) {
     gSPSegment(REDRAW_DISP++, 0x02, this->sceneSegment);
     gSPSegment(OVERLAY_DISP++, 0x02, this->sceneSegment);
 
-    if (R_ENABLE_MIRROR) {
+    if (R_ENABLE_MIRROR == 1) {
         if (this->pauseCtx.state < 2)
             mirrorStatus = MIRROR_STATUS_ON;
         else mirrorStatus = MIRROR_STATUS_PAUSE_BG;
@@ -1648,6 +1648,11 @@ void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn) {
     this->loadedScene = scene;
     this->sceneId = sceneId;
     this->sceneDrawConfig = scene->drawConfig;
+
+    if (this->sceneId == SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 1)
+        R_ENABLE_MIRROR = 2;
+    else if (this->sceneId != SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 2)
+        R_ENABLE_MIRROR = 1;
 
     PRINTF("\nSCENE SIZE %fK\n", (scene->sceneFile.vromEnd - scene->sceneFile.vromStart) / 1024.0f);
 

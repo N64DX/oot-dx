@@ -667,7 +667,7 @@ void EnOssan_UpdateCursorPos(PlayState* play, EnOssan* this) {
     s16 y;
 
     Actor_GetScreenPos(play, &this->shelfSlots[this->cursorIndex]->actor, &x, &y);
-    this->cursorX = (R_ENABLE_MIRROR) ? SCREEN_WIDTH - x : x;
+    this->cursorX = (R_ENABLE_MIRROR == 1) ? SCREEN_WIDTH - x : x;
     this->cursorY = y;
 }
 
@@ -773,7 +773,7 @@ void EnOssan_State_Idle(EnOssan* this, PlayState* play, Player* player) {
 
 void EnOssan_UpdateJoystickInputState(PlayState* play, EnOssan* this) {
     Input* input = &play->state.input[0];
-    s8 stickX = (R_ENABLE_MIRROR) ? -input->rel.stick_x : input->rel.stick_x;
+    s8 stickX = (R_ENABLE_MIRROR == 1) ? -input->rel.stick_x : input->rel.stick_x;
     s8 stickY = input->rel.stick_y;
 
     this->moveHorizontal = this->moveVertical = false;
@@ -988,7 +988,7 @@ void EnOssan_State_FacingShopkeeper(EnOssan* this, PlayState* play, Player* play
                 this->cursorIndex = nextIndex;
                 this->stateFlag = OSSAN_STATE_LOOK_SHELF_LEFT;
                 Interface_SetDoAction(play, DO_ACTION_DECIDE);
-                if (R_ENABLE_MIRROR)
+                if (R_ENABLE_MIRROR == 1)
                     this->stickRightPrompt.isEnabled = false;
                 else this->stickLeftPrompt.isEnabled = false;
                 Sfx_PlaySfxCentered(NA_SE_SY_CURSOR);
@@ -999,7 +999,7 @@ void EnOssan_State_FacingShopkeeper(EnOssan* this, PlayState* play, Player* play
                 this->cursorIndex = nextIndex;
                 this->stateFlag = OSSAN_STATE_LOOK_SHELF_RIGHT;
                 Interface_SetDoAction(play, DO_ACTION_DECIDE);
-                if (R_ENABLE_MIRROR)
+                if (R_ENABLE_MIRROR == 1)
                     this->stickLeftPrompt.isEnabled = false;
                 else this->stickRightPrompt.isEnabled = false;
                 Sfx_PlaySfxCentered(NA_SE_SY_CURSOR);
@@ -1217,7 +1217,7 @@ void EnOssan_State_BrowseLeftShelf(EnOssan* this, PlayState* play, Player* playe
         return;
     }
     this->drawCursor = 0xFF;
-    if (R_ENABLE_MIRROR)
+    if (R_ENABLE_MIRROR == 1)
         this->stickLeftPrompt.isEnabled = true;
     else this->stickRightPrompt.isEnabled = true;
     EnOssan_UpdateCursorPos(play, this);
@@ -1278,7 +1278,7 @@ void EnOssan_State_BrowseRightShelf(EnOssan* this, PlayState* play, Player* play
         return;
     }
     this->drawCursor = 0xFF;
-    if (R_ENABLE_MIRROR)
+    if (R_ENABLE_MIRROR == 1)
         this->stickRightPrompt.isEnabled = true;
     else this->stickLeftPrompt.isEnabled = true;
     EnOssan_UpdateCursorPos(play, this);

@@ -3088,7 +3088,7 @@ void EnHorse_StickDirection(Vec2f* curStick, f32* stickMag, s16* angle) {
     f32 y;
     f32 x;
 
-    x = curStick->x * (R_ENABLE_MIRROR ? -1 : 1);
+    x = curStick->x * (R_ENABLE_MIRROR == 1 ? -1 : 1);
     y = curStick->y;
     dist = sqrtf(SQ(x) + SQ(y));
 

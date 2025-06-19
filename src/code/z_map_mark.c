@@ -139,7 +139,7 @@ void MapMark_DrawForDungeon(PlayState* play) {
         for (i = 0; i < mapMarkIconData->count; i++) {
             if ((mapMarkIconData->markType != MAP_MARK_CHEST) || !Flags_GetTreasure(play, markPoint->chestFlag)) {
                 markInfo = &sMapMarkInfoTable[mapMarkIconData->markType];
-                markPointX = R_ENABLE_MIRROR ? gMapData->dungeonXOffset[dungeon][interfaceCtx->mapRoomNum] + MAP_I_TEX_WIDTH - markPoint->x - (markInfo->textureWidth  * 1.0f) : markPoint->x;
+                markPointX = R_ENABLE_MIRROR == 1 ? gMapData->dungeonXOffset[dungeon][interfaceCtx->mapRoomNum] + MAP_I_TEX_WIDTH - markPoint->x - (markInfo->textureWidth  * 1.0f) : markPoint->x;
 
                 gDPPipeSync(OVERLAY_DISP++);
                 gDPLoadTextureBlock_Runtime(OVERLAY_DISP++, markInfo->texture, markInfo->imageFormat,
