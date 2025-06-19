@@ -32,8 +32,51 @@
 
 #include "assets/textures/nintendo_rogo_static/nintendo_rogo_static.h"
 
-#if DEBUG_FEATURES
 void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
+#if OOT_VERSION == NTSC_1_0
+    char buildInfo[] = "    NTSC 1.0";
+#elif OOT_VERSION == NTSC_1_1
+    char buildInfo[] = "    NTSC 1.1";
+#elif OOT_VERSION == PAL_1_0
+    char buildInfo[] = "     PAL 1.0";
+#elif OOT_VERSION == NTSC_1_2
+    char buildInfo[] = "    NTSC 1.2";
+#elif OOT_VERSION == PAL_1_1
+    char buildInfo[] = "     PAL 1.1";
+#elif OOT_VERSION == GC_JP
+    char buildInfo[] = "       GC JP";
+#elif OOT_VERSION == GC_JP_MQ
+    char buildInfo[] = "    GC JP MQ";
+#elif OOT_VERSION == GC_US
+    char buildInfo[] = "       GC US";
+#elif OOT_VERSION == GC_US_MQ
+    char buildInfo[] = "    GC US MQ";
+#elif OOT_VERSION == GC_EU_MQ_DBG
+    char buildInfo[] = "GC EU MQ DBG";
+#elif OOT_VERSION == GC_EU
+    char buildInfo[] = "       GC EU";
+#elif OOT_VERSION == GC_EU_MQ
+    char buildInfo[] = "    GC EU MQ";
+#elif OOT_VERSION == GC_JP_CE
+    char buildInfo[] = "    GC JP CE";
+#elif OOT_VERSION == IQUE_CN
+    char buildInfo[] = "     IQUE CN";
+#else
+    char buildInfo[] = "     UNKNOWN";
+#endif
+
+#if HIRES && INTERLACED
+    char screenModeInfo[] = "Hires: 640x480i";
+#elif HIRES && !INTERLACED
+    char screenModeInfo[] = "Hires: 640x480p";
+#elif WIDESCREEN
+    char screenModeInfo[] = "Widescreen: 424x240p";
+#elif ULTRA_WS
+    char screenModeInfo[] = "Ultra Widescreen: 576x240p";
+#else
+    char screenModeInfo[] = "Default: 320x240p";
+#endif
+
     Gfx* gfx;
     GfxPrint* printer;
 
@@ -42,19 +85,25 @@ void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
     printer = alloca(sizeof(GfxPrint));
     GfxPrint_Init(printer);
     GfxPrint_Open(printer, gfx);
-    GfxPrint_SetColor(printer, 255, 155, 255, 255);
-    GfxPrint_SetPos(printer, 9, 21);
-    GfxPrint_Printf(printer, "NOT MARIO CLUB VERSION");
+    GfxPrint_SetColor(printer, 125, 125, 255, 255);
+    GfxPrint_SetPos(printer, 7, 21);
+    GfxPrint_Printf(printer, "OoT DX v0.0.1");
     GfxPrint_SetColor(printer, 255, 255, 255, 255);
+    GfxPrint_SetPos(printer, 26, 21);
+    GfxPrint_Printf(printer, WS_JPEG ? "JPEG: WS" : "JPEG: OG");
+    GfxPrint_SetColor(printer, 125, 255, 125, 255);
     GfxPrint_SetPos(printer, 7, 23);
-    GfxPrint_Printf(printer, "[Creator:%s]", gBuildCreator);
-    GfxPrint_SetPos(printer, 7, 24);
-    GfxPrint_Printf(printer, "[Date:%s]", gBuildDate);
+    GfxPrint_Printf(printer, DEBUG_FEATURES ? "Build: Debug" : "Build: Release");
+    GfxPrint_SetColor(printer, 255, 255, 125, 255);
+    GfxPrint_SetPos(printer, 22, 23);
+    GfxPrint_Printf(printer, "%s", buildInfo);
+    GfxPrint_SetColor(printer, 255, 125, 125, 255);
+    GfxPrint_SetPos(printer, 7, 25);
+    GfxPrint_Printf(printer, "%s", screenModeInfo);
     gfx = GfxPrint_Close(printer);
     GfxPrint_Destroy(printer);
     *gfxP = gfx;
 }
-#endif
 
 void ConsoleLogo_Calc(ConsoleLogoState* this) {
     if ((this->coverAlpha == 0) && (this->visibleDuration != 0)) {
@@ -170,14 +219,12 @@ void ConsoleLogo_Main(GameState* thisx) {
     ConsoleLogo_Calc(this);
     ConsoleLogo_Draw(this);
 
-#if DEBUG_FEATURES
     if (1) {
         Gfx* gfx = POLY_OPA_DISP;
 
         ConsoleLogo_PrintBuildInfo(&gfx);
         POLY_OPA_DISP = gfx;
     }
-#endif
 
     if (this->exit) {
         gSaveContext.seqId = (u8)NA_BGM_DISABLED;
