@@ -87,7 +87,7 @@ void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
     GfxPrint_Open(printer, gfx);
     GfxPrint_SetColor(printer, 125, 125, 255, 255);
     GfxPrint_SetPos(printer, 7, 21);
-    GfxPrint_Printf(printer, "OoT DX v0.0.1");
+    GfxPrint_Printf(printer, "OoT DX v%s", DX_VERSION);
     GfxPrint_SetColor(printer, 125, 255, 125, 255);
     GfxPrint_SetPos(printer, 7, 23);
     GfxPrint_Printf(printer, DEBUG_FEATURES ? "Build: Debug" : "Build: Release");
