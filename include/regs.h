@@ -110,7 +110,7 @@ struct PlayState;
 #define R_B_LABEL_SCALE(i)                       YREG(48 + (i))
 #define R_B_LABEL_X(i)                           YREG(52 + (i))
 #define R_B_LABEL_Y(i)                           YREG(56 + (i))
-#define R_A_LABEL_Z(i)                           YREG(60 + (i))
+#define R_A_LABEL_Z(i)                           WREG(40 + (i))
 #elif OOT_NTSC
 #define R_KALEIDO_UNK1(i)                        YREG(48 + (i))
 #define R_KALEIDO_UNK2(i)                        YREG(50 + (i))
