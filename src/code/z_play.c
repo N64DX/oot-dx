@@ -1216,7 +1216,7 @@ void Play_Draw(PlayState* this) {
     gSPSegment(REDRAW_DISP++, 0x02, this->sceneSegment);
     gSPSegment(OVERLAY_DISP++, 0x02, this->sceneSegment);
 
-    if (R_ENABLE_MIRROR == 1) {
+    if (R_ENABLE_MIRROR == 1 && (this->pauseCtx.state <= 8 || this->pauseCtx.state >= 18) ) {
         if (this->pauseCtx.state < 2)
             mirrorStatus = MIRROR_STATUS_ON;
         else mirrorStatus = MIRROR_STATUS_PAUSE_BG;
