@@ -913,7 +913,6 @@ beginseg
     name "ovl_select"
     compress
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_select/z_select.o"
-    include "$(BUILD_DIR)/src/overlays/gamestates/ovl_select/z_options.o"
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_select/ovl_select_reloc.o"
 endseg
 
@@ -931,6 +930,7 @@ beginseg
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_copy_erase.o"
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_nameset.o"
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_choose.o"
+    include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_options.o"
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/ovl_file_choose_reloc.o"
 endseg
 

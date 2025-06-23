@@ -9,7 +9,6 @@
 #include "letterbox.h"
 #include "main.h"
 #include "map_select_state.h"
-#include "file_options_state.h"
 #include "memory_utils.h"
 #if PLATFORM_N64
 #include "n64dd.h"
@@ -525,17 +524,9 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
     SramContext* sramCtx = &this->sramCtx;
     Input* input = &this->state.input[0];
-    
-    if (this->lastFileNum > 0) {
-        this->buttonIndex = this->selectedFileIndex = this->lastFileNum - 1;
-        this->lastFileNum = 0;
-        this->actionTimer = 8;
-        this->selectMode = SM_FADE_MAIN_TO_SELECT;
-        this->menuMode = FS_MENU_MODE_SELECT;
-        this->nextTitleLabel = FS_TITLE_OPEN_FILE;
-    } else if (CHECK_BTN_ALL(input->press.button, BTN_START) || CHECK_BTN_ALL(input->press.button, BTN_A)) {
-        this->selectingQuestMode = false;
 
+    if (CHECK_BTN_ALL(input->press.button, BTN_START) || CHECK_BTN_ALL(input->press.button, BTN_A)) {
+        this->selectingQuestMode = false;
         if (this->buttonIndex <= FS_BTN_MAIN_FILE_3) {
             PRINTF("REGCK_ALL[%x]=%x,%x,%x,%x,%x,%x\n", this->buttonIndex, GET_NEWF(sramCtx, this->buttonIndex, 0),
                    GET_NEWF(sramCtx, this->buttonIndex, 1), GET_NEWF(sramCtx, this->buttonIndex, 2),
@@ -759,9 +750,6 @@ void FileSelect_PulsateCursor(GameState* thisx) {
     s16 alphaStep;
     SramContext* sramCtx = &this->sramCtx;
     Input* debugInput = &this->state.input[2];
-    
-    if (this->lastFileNum > 0)
-        return;
 
 #if OOT_PAL && DEBUG_FEATURES
     if (CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {
@@ -1605,6 +1593,9 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIDECALA, G_CC_MODULATEIDECALA);
 
+    if (this->selectingOptionsMode)
+        FileSelectOptions_Draw(this);
+
     CLOSE_DISPS(this->state.gfxCtx, "../z_file_choose.c", 2198);
 }
 
@@ -1806,18 +1797,31 @@ void FileSelect_FadeInFileInfo(GameState* thisx) {
  * Update the cursor and handle the option that the player picks for confirming the selected file.
  * Update function for `SM_CONFIRM_FILE`
  */
-
 void FileSelect_ConfirmFile(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
     Input* input = &this->state.input[0];
 
-    if ((CHECK_BTN_ALL(input->press.button, BTN_R))) {
-        Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
+        this->selectingOptionsMode ^= 1;
+        Audio_PlaySfxGeneral(this->selectingOptionsMode ? NA_SE_SY_FSEL_DECIDE_L : NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.fileNum = this->buttonIndex;
-        this->lastFileNum = gSaveContext.fileNum + 1;
-        Sram_OpenSaveOptions(&this->sramCtx);
-        SET_NEXT_GAMESTATE(&this->state, FileOptions_Init, FileOptionsState);
-        this->state.running = false;
+
+        if (!this->selectingOptionsMode) {
+            gSaveContext.save.info.questMode = nREG(0  + gSaveContext.fileNum);
+            gSaveContext.save.info.heroMode  = nREG(3  + gSaveContext.fileNum);
+            gSaveContext.save.info.heroMode2 = nREG(4  + gSaveContext.fileNum);
+            gSaveContext.save.info.settings  = nREG(9  + gSaveContext.fileNum);
+            gSaveContext.save.info.settings2 = nREG(10 + gSaveContext.fileNum);
+            Sram_WriteSave(&this->sramCtx);
+        } else {
+            Sram_OpenSaveOptions(&this->sramCtx);
+            FileSelectOptions_Reset(this);
+        }
+    }
+    
+    if (this->selectingOptionsMode) {
+        FileSelectOptions_UpdateMenu(this);
+        return;
     }
 
     if (CHECK_BTN_ALL(input->press.button, BTN_START) || (CHECK_BTN_ALL(input->press.button, BTN_A))) {
@@ -2206,7 +2210,9 @@ void FileSelect_Main(GameState* thisx) {
     sFileSelectDrawFuncs[this->menuMode](&this->state);
 
     // do not draw controls text in the options menu
-    if ((this->configMode <= CM_NAME_ENTRY_TO_MAIN) || (this->configMode >= CM_UNUSED_DELAY)) {
+    if ((this->configMode <= CM_NAME_ENTRY_TO_MAIN || this->configMode >= CM_UNUSED_DELAY) && !this->selectingOptionsMode) {
+        u16 x = this->menuMode == FS_MENU_MODE_SELECT ? 40 : 90;
+
         Gfx_SetupDL_39Opa(this->state.gfxCtx);
 
         gDPSetCombineLERP(POLY_OPA_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0,
@@ -2216,8 +2222,20 @@ void FileSelect_Main(GameState* thisx) {
         gDPLoadTextureBlock(POLY_OPA_DISP++, controlsTextures[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, 144, 16,
                             0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                             G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((90 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((204 << 2)), HIRES_MULTIPLY(((234 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((220 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((204 << 2)), HIRES_MULTIPLY(((x + 144 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((220 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)),
                             HIRES_DIVIDE((1 << 10)));
+    }
+
+    if (this->menuMode == FS_MENU_MODE_SELECT) {
+        u16 x = this->selectingOptionsMode ? 120 : 180;
+
+        Gfx_SetupDL_39Opa(this->state.gfxCtx);
+
+        gDPSetCombineLERP(POLY_OPA_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 100, 255, 255, this->controlsAlpha);
+        gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelControlsRTex, G_IM_FMT_IA, G_IM_SIZ_8b, 72, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((204 << 2)), HIRES_MULTIPLY(((x + 72 + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((220 << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
     }
 
     gDPPipeSync(POLY_OPA_DISP++);
@@ -2450,7 +2468,7 @@ void FileSelect_Init(GameState* thisx) {
     SEQCMD_RESET_AUDIO_HEAP(0, 10);
     // Setting ioData to 1 and writing it to ioPort 7 will skip the harp intro
     Audio_PlaySequenceWithSeqPlayerIO(SEQ_PLAYER_BGM_MAIN, NA_BGM_FILE_SELECT, 0, 7, 1);
-    
-    if (this->lastFileNum > 0)
-        this->buttonIndex = this->lastFileNum - 1;
+
+    this->selectingQuestMode = this->selectingOptionsMode = false;
+    FileSelectOptions_Init(this);
 }

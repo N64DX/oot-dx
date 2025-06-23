@@ -152,3 +152,7 @@ u64 gQuestMasterQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)]
 #include "assets/overlays/ovl_file_choose/gQuestMasterQuestTex.ia8.inc.c"
 };
 #endif
+
+u64 gFileSelControlsRTex[TEX_LEN(u64, gFileSelControlsRTex_WIDTH, gFileSelControlsRTex_HEIGHT, 8)] = {
+#include "assets/textures/title_static/gFileSelControlsRTex.ia8.inc.c"
+};

@@ -266,4 +266,8 @@ extern u64 gMirrorModeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)
 extern u64 gQuestOcarinaOfTimeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
 extern u64 gQuestMasterQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
 
+#define gFileSelControlsRTex_WIDTH 72
+#define gFileSelControlsRTex_HEIGHT 16
+extern u64 gFileSelControlsRTex[TEX_LEN(u64, gFileSelControlsRTex_WIDTH, gFileSelControlsRTex_HEIGHT, 8)];
+
 #endif

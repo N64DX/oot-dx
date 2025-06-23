@@ -1,7 +1,6 @@
 #include "segment_symbols.h"
 #include "console_logo_state.h"
 #include "file_select_state.h"
-#include "file_options_state.h"
 #include "map_select_state.h"
 #include "setup_state.h"
 #include "title_setup_state.h"

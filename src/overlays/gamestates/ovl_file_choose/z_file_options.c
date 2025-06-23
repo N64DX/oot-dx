@@ -1,18 +1,14 @@
-/*
- * File: z_options.c
- * Overlay: ovl_select
- * Description: File Options Menu
- */
+#include "file_select.h"
+#include "file_select_state.h"
 
 #include "libc64/qrand.h"
 #include "libu64/gfxprint.h"
 #include "alloca.h"
 #include "array_count.h"
-#include "file_select_state.h"
 #include "controller.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
-#include "file_options_state.h"
+#include "gfxalloc.h"
 #include "printf.h"
 #include "regs.h"
 #include "segment_symbols.h"
@@ -25,84 +21,100 @@
 #include "play_state.h"
 #include "save.h"
 #include "sram.h"
+#include "resolution.h"
 
-void FileOptions_SetMirrorMode() {
+void FileSelectOptions_SetMirrorMode(FileSelectState* this) {
     SET_MIRROR_MODE;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetResumeLastArea() {
+void FileSelectOptions_SetResumeLastArea(FileSelectState* this) {
     SET_RESUME_LAST_AREA;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetCensorFireTemple() {
+void FileSelectOptions_SetCensorFireTemple(FileSelectState* this) {
     SET_CENSOR_FIRE_TEMPLE;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetNoOwl() {
+void FileSelectOptions_SetNoOwl(FileSelectState* this) {
     SET_NO_OWL;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetDamageTaken() {
-    SET_DAMAGE_TAKEN((DAMAGE_TAKEN + 1));
+void FileSelectOptions_SetDamageTaken(FileSelectState* this) {
+    Input* input = &this->state.input[0];
+    if (CHECK_BTN_ALL(input->press.button, BTN_A))
+        SET_DAMAGE_TAKEN((DAMAGE_TAKEN + 1));
+    else SET_DAMAGE_TAKEN((DAMAGE_TAKEN - 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetRecoveryTaken() {
-    SET_RECOVERY_TAKEN((RECOVERY_TAKEN + 1));
+void FileSelectOptions_SetRecoveryTaken(FileSelectState* this) {
+    Input* input = &this->state.input[0];
+    if (CHECK_BTN_ALL(input->press.button, BTN_A))
+        SET_RECOVERY_TAKEN((RECOVERY_TAKEN + 1));
+    else SET_RECOVERY_TAKEN((RECOVERY_TAKEN - 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetMonsterHP() {
-    SET_MONSTER_HP((MONSTER_HP + 1));
+void FileSelectOptions_SetMonsterHP(FileSelectState* this) {
+    Input* input = &this->state.input[0];
+    if (CHECK_BTN_ALL(input->press.button, BTN_A))
+        SET_MONSTER_HP((MONSTER_HP + 1));
+    else SET_MONSTER_HP((MONSTER_HP - 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetEliteHP() {
-    SET_ELITE_HP((ELITE_HP + 1));
+void FileSelectOptions_SetEliteHP(FileSelectState* this) {
+    Input* input = &this->state.input[0];
+    if (CHECK_BTN_ALL(input->press.button, BTN_A))
+        SET_ELITE_HP((ELITE_HP + 1));
+    else SET_ELITE_HP((ELITE_HP - 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetBossHP() {
-    SET_BOSS_HP((BOSS_HP + 1));
+void FileSelectOptions_SetBossHP(FileSelectState* this) {
+    Input* input = &this->state.input[0];
+    if (CHECK_BTN_ALL(input->press.button, BTN_A))
+        SET_BOSS_HP((BOSS_HP + 1));
+    else SET_BOSS_HP((BOSS_HP - 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetHarderEnemies() {
+void FileSelectOptions_SetHarderEnemies(FileSelectState* this) {
     SET_HARDER_ENEMIES;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetFixedDarkLinkHP() {
+void FileSelectOptions_SetFixedDarkLinkHP(FileSelectState* this) {
     SET_FIXED_DARK_LINK_HP;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileOptions_SetNoBottledFairies() {
+void FileSelectOptions_SetNoBottledFairies(FileSelectState* this) {
     SET_NO_BOTTLED_FAIRIES;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-char* FileOptions_GetMirrorMode() {
+char* FileSelectOptions_GetMirrorMode(FileSelectState* this) {
     return MIRROR_MODE ? "On" : "Off";
 }
 
-char* FileOptions_GetResumeLastArea() {
+char* FileSelectOptions_GetResumeLastArea(FileSelectState* this) {
     return RESUME_LAST_AREA ? "On" : "Off";
 }
 
-char* FileOptions_GetCensorFireTemple() {
+char* FileSelectOptions_GetCensorFireTemple(FileSelectState* this) {
     return CENSOR_FIRE_TEMPLE ? "On" : "Off";
 }
 
-char* FileOptions_GetNoOwl() {
+char* FileSelectOptions_GetNoOwl(FileSelectState* this) {
     return NO_OWL ? "On" : "Off";
 }
 
-char* FileOptions_GetDamageTaken() {
+char* FileSelectOptions_GetDamageTaken(FileSelectState* this) {
     switch (DAMAGE_TAKEN) {
         case 1:
             return "2x";
@@ -123,7 +135,7 @@ char* FileOptions_GetDamageTaken() {
     }
 }
 
-char* FileOptions_GetRecoveryTaken() {
+char* FileSelectOptions_GetRecoveryTaken(FileSelectState* this) {
     switch (RECOVERY_TAKEN) {
         case 1:
             return "1/2x";
@@ -136,7 +148,7 @@ char* FileOptions_GetRecoveryTaken() {
     }
 }
 
-char* FileOptions_GetMonsterHP() {
+char* FileSelectOptions_GetMonsterHP(FileSelectState* this) {
     switch (MONSTER_HP) {
         case 1:
             return "1.5x";
@@ -157,7 +169,7 @@ char* FileOptions_GetMonsterHP() {
     }
 }
 
-char* FileOptions_GetEliteHP() {
+char* FileSelectOptions_GetEliteHP(FileSelectState* this) {
     switch (ELITE_HP) {
         case 1:
             return "1.5x";
@@ -178,7 +190,7 @@ char* FileOptions_GetEliteHP() {
     }
 }
 
-char* FileOptions_GetBossHP() {
+char* FileSelectOptions_GetBossHP(FileSelectState* this) {
     switch (BOSS_HP) {
         case 1:
             return "1.5x";
@@ -199,48 +211,42 @@ char* FileOptions_GetBossHP() {
     }
 }
 
-char* FileOptions_GetHarderEnemies() {
+char* FileSelectOptions_GetHarderEnemies(FileSelectState* this) {
     return HARDER_ENEMIES ? "On" : "Off";
 }
 
-char* FileOptions_GetFixedDarkLinkHP() {
+char* FileSelectOptions_GetFixedDarkLinkHP(FileSelectState* this) {
     return FIXED_DARK_LINK_HP ? "On" : "Off";
 }
 
-char* FileOptions_GetNoBottledFairies() {
+char* FileSelectOptions_GetNoBottledFairies(FileSelectState* this) {
     return NO_BOTTLED_FAIRIES ? "On" : "Off";
 }
 
-static FileOptionsEntry sFileOptionsEntries[] = {
-    { "Mirror Mode",          FileOptions_SetMirrorMode,       FileOptions_GetMirrorMode       },
-    { "Resume Last Area",     FileOptions_SetResumeLastArea,   FileOptions_GetResumeLastArea   },
-    { "Censor Fire Temple",   FileOptions_SetCensorFireTemple, FileOptions_GetCensorFireTemple },
-    { "No Owl",               FileOptions_SetNoOwl,            FileOptions_GetNoOwl            },
-    { "Damage Taken",         FileOptions_SetDamageTaken,      FileOptions_GetDamageTaken      },
-    { "Recovery Taken",       FileOptions_SetRecoveryTaken,    FileOptions_GetRecoveryTaken    },
-    { "Monster Health",       FileOptions_SetMonsterHP,        FileOptions_GetMonsterHP        },
-    { "Elite Monster Health", FileOptions_SetEliteHP,          FileOptions_GetEliteHP          },
-    { "Boss Health",          FileOptions_SetBossHP,           FileOptions_GetBossHP           },
-    { "Harder Enemies",       FileOptions_SetHarderEnemies,    FileOptions_GetHarderEnemies },
-    { "Fixed Dark Link HP",   FileOptions_SetFixedDarkLinkHP,  FileOptions_GetFixedDarkLinkHP },
-    { "No Bottled Fairies",   FileOptions_SetNoBottledFairies, FileOptions_GetNoBottledFairies },
+static FileSelectOptionsEntry sFileOptionsEntries[] = {
+    { " 1: Mirror Mode",          FileSelectOptions_SetMirrorMode,       FileSelectOptions_GetMirrorMode       },
+    { " 2: Resume Last Area",     FileSelectOptions_SetResumeLastArea,   FileSelectOptions_GetResumeLastArea   },
+    { " 3: Censor Fire Temple",   FileSelectOptions_SetCensorFireTemple, FileSelectOptions_GetCensorFireTemple },
+    { " 4: No Owl",               FileSelectOptions_SetNoOwl,            FileSelectOptions_GetNoOwl            },
+    { " 5: Damage Taken",         FileSelectOptions_SetDamageTaken,      FileSelectOptions_GetDamageTaken      },
+    { " 6: Recovery Taken",       FileSelectOptions_SetRecoveryTaken,    FileSelectOptions_GetRecoveryTaken    },
+    { " 7: Monster Health",       FileSelectOptions_SetMonsterHP,        FileSelectOptions_GetMonsterHP        },
+    { " 8: Elite Monster Health", FileSelectOptions_SetEliteHP,          FileSelectOptions_GetEliteHP          },
+    { " 9: Boss Health",          FileSelectOptions_SetBossHP,           FileSelectOptions_GetBossHP           },
+    { "10: Harder Enemies",       FileSelectOptions_SetHarderEnemies,    FileSelectOptions_GetHarderEnemies    },
+    { "11: Fixed Dark Link HP",   FileSelectOptions_SetFixedDarkLinkHP,  FileSelectOptions_GetFixedDarkLinkHP  },
+    { "12: No Bottled Fairies",   FileSelectOptions_SetNoBottledFairies, FileSelectOptions_GetNoBottledFairies },
 };
 
-void FileOptions_UpdateMenu(FileOptionsState* this) {
+void FileSelectOptions_UpdateMenu(FileSelectState* this) {
     Input* input = &this->state.input[0];
     s32 pad;
-    FileOptionsEntry* selectedEntry;
+    FileSelectOptionsEntry* selectedEntry;
 
     if (this->verticalInputAccumulator == 0) {
-        if (CHECK_BTN_ALL(input->press.button, BTN_A)) {
+        if (CHECK_BTN_ANY(input->press.button, BTN_A | BTN_B)) {
             selectedEntry = &this->entries[this->currentEntry];
-            selectedEntry->setFunc();
-        }
-        
-        if (CHECK_BTN_ANY(input->press.button, BTN_B | BTN_START)) {
-            Sram_WriteSave(&this->sramCtx);
-            SET_NEXT_GAMESTATE(&this->state, FileSelect_Init, FileSelectState);
-            this->state.running = false;
+            selectedEntry->setFunc(this);
         }
 
         if (CHECK_BTN_ALL(input->press.button, BTN_DUP) || input->rel.stick_y > 30) {
@@ -322,9 +328,9 @@ void FileOptions_UpdateMenu(FileOptionsState* this) {
     this->currentEntry = (this->currentEntry + this->count) % this->count;
     this->topDisplayedEntry = (this->topDisplayedEntry + this->count) % this->count;
 
-    dREG(80) = this->currentEntry;
-    dREG(81) = this->topDisplayedEntry;
-    dREG(82) = this->pageDownIndex;
+    dREG(83) = this->currentEntry;
+    dREG(84) = this->topDisplayedEntry;
+    dREG(85) = this->pageDownIndex;
 
     if (this->timerUp != 0)
         this->timerUp--;
@@ -339,76 +345,59 @@ void FileOptions_UpdateMenu(FileOptionsState* this) {
         this->lockDown = false;
 }
 
-void FileOptions_PrintMenu(FileOptionsState* this, GfxPrint* printer) {
-    u16 title, i;
-
-    GfxPrint_SetColor(printer, 255, 155, 150, 255);
-    GfxPrint_SetPos(printer, 12, 2);
-    GfxPrint_Printf(printer, "File %d Options", (gSaveContext.fileNum+1));
-
-    for (i=0; i<(this->count >= 20 ? 20 : this->count); i++) {
-        GfxPrint_SetPos(printer, 9, i + 4);
-
-        title = (this->topDisplayedEntry + i + this->count) % this->count;
-        if (title == this->currentEntry)
-            GfxPrint_SetColor(printer, 255, 20, 20, 255);
-        else  GfxPrint_SetColor(printer, 200, 200, 55, 255);
-
-        GfxPrint_Printf(printer, "%s", this->entries[title].name);
-        
-        GfxPrint_SetPos(printer, 30, i + 4);
-        GfxPrint_Printf(printer, "%s", this->entries[title].getFunc());
-    };
-    
-    GfxPrint_SetColor(printer, 155, 55, 150, 255);
-    GfxPrint_SetPos(printer, 22, 25);
-}
-
-void FileOptions_Draw(FileOptionsState* this) {
+void FileSelectOptions_Draw(FileSelectState* this) {
     GraphicsContext* gfxCtx = this->state.gfxCtx;
-    GfxPrint* printer;
+    GfxPrint printer;
+    Gfx* gfx;
+    Gfx* gfxRef;
+    u16 title, i;
 
     OPEN_DISPS(gfxCtx, "../z_options.c", 1013);
 
-    gSPSegment(POLY_OPA_DISP++, 0x00, NULL);
-    Gfx_SetupFrame(gfxCtx, 0, 0, 0, 0);
-    SET_FULLSCREEN_VIEWPORT(&this->view);
-    View_Apply(&this->view, VIEW_ALL);
-    
-    Gfx_SetupDL_28Opa(gfxCtx);
+    Gfx_SetupDL_39Opa(gfxCtx);
 
-    printer = alloca(sizeof(GfxPrint));
-    GfxPrint_Init(printer);
-    GfxPrint_Open(printer, POLY_OPA_DISP);
-    FileOptions_PrintMenu(this, printer);
-    POLY_OPA_DISP = GfxPrint_Close(printer);
-    GfxPrint_Destroy(printer);
-    
+    gDPSetRenderMode(POLY_OPA_DISP++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+    gDPSetCombineMode(POLY_OPA_DISP++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 0, 0, 0, 220);
+    gDPFillRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((24 + WS_SHIFT_HALF)), HIRES_MULTIPLY(12), HIRES_MULTIPLY((298 + WS_SHIFT_HALF)), HIRES_MULTIPLY(228));
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetCombineLERP(POLY_OPA_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
+
+    GfxPrint_Init(&printer);
+    GfxPrint_Open(&printer, POLY_OPA_DISP);
+
+    GfxPrint_SetColor(&printer, 255, 155, 150, 255);
+    GfxPrint_SetPos(&printer, 12, 2);
+    GfxPrint_Printf(&printer, "File %d Options", (gSaveContext.fileNum+1));
+
+    for (i=0; i<(this->count >= 20 ? 20 : this->count); i++) {
+        GfxPrint_SetPos(&printer, 4, i + 4);
+
+        title = (this->topDisplayedEntry + i + this->count) % this->count;
+        if (title == this->currentEntry)
+            GfxPrint_SetColor(&printer, 255, 20, 20, 255);
+        else  GfxPrint_SetColor(&printer, 200, 200, 55, 255);
+
+        GfxPrint_Printf(&printer, "%s", this->entries[title].name);
+
+        GfxPrint_SetPos(&printer, 30, i + 4);
+        GfxPrint_Printf(&printer, "%s", this->entries[title].getFunc(this));
+    };
+
+    GfxPrint_SetColor(&printer, 155, 55, 150, 255);
+    GfxPrint_SetPos(&printer, 22, 25);
+
+    POLY_OPA_DISP = GfxPrint_Close(&printer);
+    GfxPrint_Destroy(&printer);
+
     CLOSE_DISPS(gfxCtx, "../z_options.c", 1037);
 }
 
-void FileOptions_Main(GameState* thisx) {
-    FileOptionsState* this = (FileOptionsState*)thisx;
-
-    FileOptions_UpdateMenu(this);
-    FileOptions_Draw(this);
-}
-
-void FileOptions_Destroy(GameState* thisx) {
-}
-
-void FileOptions_Init(GameState* thisx) {
-    FileOptionsState* this = (FileOptionsState*)thisx;
-
-    this->state.main = FileOptions_Main;
-    this->state.destroy = FileOptions_Destroy;
-    this->entries = sFileOptionsEntries;
+void FileSelectOptions_Reset(FileSelectState* this) {
     this->topDisplayedEntry = 0;
     this->currentEntry = 0;
     this->pageDownIndex = 0;
-    this->count = ARRAY_COUNT(sFileOptionsEntries);
-    View_Init(&this->view, this->state.gfxCtx);
-    this->view.flags = (VIEW_PROJECTION_ORTHO | VIEW_VIEWPORT);
+
     this->verticalInputAccumulator = 0;
     this->verticalInput = 0;
     this->timerUp = 0;
@@ -416,11 +405,16 @@ void FileOptions_Init(GameState* thisx) {
     this->lockUp = 0;
     this->lockDown = 0;
 
-    if ((dREG(80) >= 0) && (dREG(80) < this->count)) {
-        this->currentEntry = dREG(80);
-        this->topDisplayedEntry = dREG(81);
-        this->pageDownIndex = dREG(82);
+    if ((dREG(83) >= 0) && (dREG(83) < this->count)) {
+        this->currentEntry = dREG(83);
+        this->topDisplayedEntry = dREG(84);
+        this->pageDownIndex = dREG(85);
     }
+}
 
-    R_UPDATE_RATE = 1;
+void FileSelectOptions_Init(FileSelectState* this) {
+    this->entries = sFileOptionsEntries;
+    this->count = ARRAY_COUNT(sFileOptionsEntries);
+
+    FileSelectOptions_Reset(this);
 }

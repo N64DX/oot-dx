@@ -31,6 +31,10 @@
 #define HEALTH offsetof(SaveContext, save.info.playerData.health)
 #endif
 
+#define FILE_QUEST_MODE offsetof(SaveContext, save.info.questMode)
+#define FILE_HERO_MODE  offsetof(SaveContext, save.info.heroMode)
+#define FILE_SETTINGS   offsetof(SaveContext, save.info.settings)
+
 #define SLOT_OFFSET(index) (SRAM_HEADER_SIZE + 0x10 + (index * SLOT_SIZE))
 
 #define SRAM_READ(addr, dramAddr, size) SsSram_ReadWrite(addr, dramAddr, size, OS_READ)
@@ -375,7 +379,7 @@ void Sram_InitDebugSave(void) {
                                                          INFTABLE_MASK(INFTABLE_0C) | INFTABLE_MASK(INFTABLE_0E);
 
     gSaveContext.save.info.eventChkInf[EVENTCHKINF_INDEX_0] |=
-        EVENTCHKINF_MASK(EVENTCHKINF_SAVED_AFTER_INTRO) | EVENTCHKINF_MASK(EVENTCHKINF_01_UNUSED) |
+        EVENTCHKINF_MASK(EVENTCHKINF_00_UNUSED) | EVENTCHKINF_MASK(EVENTCHKINF_01_UNUSED) |
         EVENTCHKINF_MASK(EVENTCHKINF_MIDO_DENIED_DEKU_TREE_ACCESS) | EVENTCHKINF_MASK(EVENTCHKINF_03) |
         EVENTCHKINF_MASK(EVENTCHKINF_04) | EVENTCHKINF_MASK(EVENTCHKINF_05) | EVENTCHKINF_MASK(EVENTCHKINF_09) |
         EVENTCHKINF_MASK(EVENTCHKINF_0C);
@@ -623,7 +627,6 @@ void Sram_WriteSave(SramContext* sramCtx) {
     u16 j;
     u16* ptr;
 
-    SET_EVENTCHKINF(EVENTCHKINF_SAVED_AFTER_INTRO);
     gSaveContext.save.info.checksum.value = 0;
 
     ptr = (u16*)&gSaveContext;
@@ -848,6 +851,34 @@ void Sram_VerifyAndLoadAllSaves(FileSelectState* fileSelect, SramContext* sramCt
     MemCpy(&fileSelect->health[2], sramCtx->readBuff + SLOT_OFFSET(2) + HEALTH, sizeof(fileSelect->health[0]));
 #endif
 
+    MemCpy(&fileSelect->fileQuestMode[0], sramCtx->readBuff + SLOT_OFFSET(0) + FILE_QUEST_MODE, sizeof(fileSelect->fileQuestMode[0]));
+    MemCpy(&fileSelect->fileQuestMode[1], sramCtx->readBuff + SLOT_OFFSET(1) + FILE_QUEST_MODE, sizeof(fileSelect->fileQuestMode[0]));
+    MemCpy(&fileSelect->fileQuestMode[2], sramCtx->readBuff + SLOT_OFFSET(2) + FILE_QUEST_MODE, sizeof(fileSelect->fileQuestMode[0]));
+    
+    MemCpy(&fileSelect->fileHeroMode[0], sramCtx->readBuff + SLOT_OFFSET(0) + FILE_HERO_MODE, sizeof(fileSelect->fileHeroMode[0]));
+    MemCpy(&fileSelect->fileHeroMode[1], sramCtx->readBuff + SLOT_OFFSET(1) + FILE_HERO_MODE, sizeof(fileSelect->fileHeroMode[0]));
+    MemCpy(&fileSelect->fileHeroMode[2], sramCtx->readBuff + SLOT_OFFSET(2) + FILE_HERO_MODE, sizeof(fileSelect->fileHeroMode[0]));
+    
+    MemCpy(&fileSelect->fileSettings[0], sramCtx->readBuff + SLOT_OFFSET(0) + FILE_SETTINGS, sizeof(fileSelect->fileSettings[0]));
+    MemCpy(&fileSelect->fileSettings[1], sramCtx->readBuff + SLOT_OFFSET(1) + FILE_SETTINGS, sizeof(fileSelect->fileSettings[0]));
+    MemCpy(&fileSelect->fileSettings[2], sramCtx->readBuff + SLOT_OFFSET(2) + FILE_SETTINGS, sizeof(fileSelect->fileSettings[0]));
+    
+    nREG(0)  =  fileSelect->fileQuestMode[0];
+    nREG(1)  =  fileSelect->fileQuestMode[1];
+    nREG(2)  =  fileSelect->fileQuestMode[2];
+    nREG(3)  =  fileSelect->fileHeroMode[0];
+    nREG(4)  =  fileSelect->fileHeroMode[1];
+    nREG(5)  =  fileSelect->fileHeroMode[2];
+    nREG(6)  =  fileSelect->fileHeroMode2[0];
+    nREG(7)  =  fileSelect->fileHeroMode2[1];
+    nREG(8)  =  fileSelect->fileHeroMode2[2];
+    nREG(9)  =  fileSelect->fileSettings[0];
+    nREG(10) =  fileSelect->fileSettings[1];
+    nREG(11) =  fileSelect->fileSettings[2];
+    nREG(12) =  fileSelect->fileSettings2[2];
+    nREG(13) =  fileSelect->fileSettings2[2];
+    nREG(14) =  fileSelect->fileSettings2[2];
+
     PRINTF("f_64dd=%d, %d, %d\n", fileSelect->n64ddFlags[0], fileSelect->n64ddFlags[1], fileSelect->n64ddFlags[2]);
     PRINTF("heart_status=%d, %d, %d\n", fileSelect->defense[0], fileSelect->defense[1], fileSelect->defense[2]);
 #if OOT_PAL
@@ -960,6 +991,18 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
 #if OOT_PAL
     MemCpy(&fileSelect->health[gSaveContext.fileNum], sramCtx->readBuff + j + HEALTH, sizeof(fileSelect->health[0]));
 #endif
+
+    MemCpy(&fileSelect->fileQuestMode[gSaveContext.fileNum], sramCtx->readBuff + j + FILE_QUEST_MODE,    sizeof(fileSelect->fileQuestMode[0]));
+    MemCpy(&fileSelect->fileHeroMode[gSaveContext.fileNum],  sramCtx->readBuff + j + FILE_HERO_MODE,     sizeof(fileSelect->fileHeroMode[0]));
+    MemCpy(&fileSelect->fileHeroMode2[gSaveContext.fileNum], sramCtx->readBuff + j + FILE_HERO_MODE + 2, sizeof(fileSelect->fileHeroMode2[0]));
+    MemCpy(&fileSelect->fileSettings[gSaveContext.fileNum],  sramCtx->readBuff + j + FILE_SETTINGS,      sizeof(fileSelect->fileSettings[0]));
+    MemCpy(&fileSelect->fileSettings2[gSaveContext.fileNum], sramCtx->readBuff + j + FILE_SETTINGS  + 2, sizeof(fileSelect->fileSettings[0]));
+
+    nREG(0  + gSaveContext.fileNum) =  fileSelect->fileQuestMode[gSaveContext.fileNum];
+    nREG(3  + gSaveContext.fileNum) =  fileSelect->fileHeroMode[gSaveContext.fileNum];
+    nREG(4  + gSaveContext.fileNum) =  fileSelect->fileHeroMode2[gSaveContext.fileNum];
+    nREG(9  + gSaveContext.fileNum) =  fileSelect->fileSettings[gSaveContext.fileNum];
+    nREG(10 + gSaveContext.fileNum) =  fileSelect->fileSettings2[gSaveContext.fileNum];
 
     PRINTF("f_64dd[%d]=%d\n", gSaveContext.fileNum, fileSelect->n64ddFlags[gSaveContext.fileNum]);
     PRINTF("heart_status[%d]=%d\n", gSaveContext.fileNum, fileSelect->defense[gSaveContext.fileNum]);
