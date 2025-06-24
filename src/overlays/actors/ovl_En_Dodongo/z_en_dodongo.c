@@ -65,7 +65,7 @@ ActorProfile En_Dodongo_Profile = {
     /**/ EnDodongo_Draw,
 };
 
-static ColliderJntSphElementInit sBodyElementsInit[6] = {
+static ColliderJntSphElementInit sBodyElementsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
@@ -147,7 +147,7 @@ static ColliderJntSphInit sBodyJntSphInit = {
     sBodyElementsInit,
 };
 
-static ColliderTrisElementInit sHardElementsInit[3] = {
+static ColliderTrisElementInit sHardElementsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK2,

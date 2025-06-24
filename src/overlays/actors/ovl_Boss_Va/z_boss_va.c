@@ -248,7 +248,7 @@ static ColliderCylinderInit sCylinderInit = {
     { 85, 120, 0, { 0, 0, 0 } },
 };
 
-static ColliderJntSphElementInit sJntSphElementsInitSupport[1] = {
+static ColliderJntSphElementInit sJntSphElementsInitSupport[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
@@ -275,7 +275,7 @@ static ColliderJntSphInit sJntSphInitSupport = {
     sJntSphElementsInitSupport,
 };
 
-static ColliderJntSphElementInit sJntSphElementsInitBari[1] = {
+static ColliderJntSphElementInit sJntSphElementsInitBari[] = {
     {
         {
             ELEM_MATERIAL_UNK0,

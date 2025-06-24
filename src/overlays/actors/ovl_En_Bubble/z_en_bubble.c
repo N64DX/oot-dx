@@ -37,7 +37,7 @@ ActorProfile En_Bubble_Profile = {
     /**/ EnBubble_Draw,
 };
 
-static ColliderJntSphElementInit sJntSphElementsInit[2] = {
+static ColliderJntSphElementInit sJntSphElementsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
