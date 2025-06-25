@@ -1472,7 +1472,8 @@ endseg
 beginseg
     name "object_yukabyun"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_yukabyun/object_yukabyun.o"
+    include "$(BUILD_DIR)/assets/objects/object_yukabyun/gFloorTileEnemyDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_yukabyun/gFloorTileEnemyFragmentDL.o"
     number 6
 endseg
 
@@ -1655,6 +1656,13 @@ beginseg
     name "object_trap"
     compress
     include "$(BUILD_DIR)/assets/objects/object_trap/object_trap.o"
+    number 6
+endseg
+
+beginseg
+    name "object_vase"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_vase/gUnusedVaseDL.o"
     number 6
 endseg
 
@@ -2480,7 +2488,8 @@ endseg
 beginseg
     name "object_umajump"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_umajump/object_umajump.o"
+    include "$(BUILD_DIR)/assets/objects/object_umajump/gJumpableHorseFenceDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_umajump/gJumpableHorseFenceCol.o"
     number 6
 endseg
 
@@ -3065,7 +3074,8 @@ endseg
 beginseg
     name "object_zg"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_zg/object_zg.o"
+    include "$(BUILD_DIR)/assets/objects/object_zg/gTowerCollapseBarsDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_zg/gTowerCollapseBarsCol.o"
     number 6
 endseg
 
