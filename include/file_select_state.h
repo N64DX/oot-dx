@@ -11,8 +11,10 @@
 
 typedef struct FileSelectOptionsEntry {
     /* 0x00 */ char* name;
-    /* 0x04 */ void  (*setFunc) (struct FileSelectState*);
-    /* 0x04 */ char* (*getFunc) (struct FileSelectState*);
+    /* 0x04 */ void  (*setFunc) (struct FileSelectState*, u8, u8);
+    /* 0x08 */ char* (*getFunc) (struct FileSelectState*, u8, u8);
+    /* 0x0C */ u8 reg;
+    /* 0x10 */ u8 shift;
 } FileSelectOptionsEntry; // size = 0x8
 
 typedef struct FileSelectState {

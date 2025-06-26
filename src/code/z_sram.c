@@ -514,6 +514,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
                 gSaveContext.save.entranceIndex = (LINK_AGE_IN_YEARS == YEARS_CHILD) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
             break;
     }
+    
+    if (SKIP_INTROS && gSaveContext.save.entranceIndex == ENTR_LINKS_HOUSE_0)
+        gSaveContext.save.cutsceneIndex = 0;
 
     PRINTF("scene_no = %d\n", gSaveContext.save.entranceIndex);
     PRINTF_RST();

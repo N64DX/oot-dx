@@ -2393,6 +2393,9 @@ void Cutscene_HandleEntranceTriggers(PlayState* play) {
     EntranceCutscene* entranceCutscene;
     u8 requiredAge;
     s16 i;
+    
+    if (SKIP_INTROS)
+        return;
 
     for (i = 0; i < ARRAY_COUNT(sEntranceCutsceneTable); i++) {
         entranceCutscene = &sEntranceCutsceneTable[i];

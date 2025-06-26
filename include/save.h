@@ -458,7 +458,8 @@ typedef enum LinkAge {
 #define NO_BOTTLED_FAIRIES         ((nREG(4 + gSaveContext.fileNum) >> 0)  & 1) // Bits: 16
 #define RESUME_LAST_AREA           ((nREG(9 + gSaveContext.fileNum) >> 0)  & 1) // Bits: 0
 #define CENSOR_FIRE_TEMPLE         ((nREG(9 + gSaveContext.fileNum) >> 1)  & 1) // Bits: 1
-#define NO_OWL                     ((nREG(9 + gSaveContext.fileNum) >> 1)  & 2) // Bits: 2
+#define SKIP_INTROS                ((nREG(9 + gSaveContext.fileNum) >> 2)  & 1) // Bits: 2
+#define NO_OWL                     ((nREG(9 + gSaveContext.fileNum) >> 3)  & 1) // Bits: 3
 
 #define SET_MIRROR_MODE             (nREG(0 + gSaveContext.fileNum) ^=                                    (1 << 7))
 #define SET_RECOVERY_TAKEN(value)   (nREG(3 + gSaveContext.fileNum)  = (nREG(3 + gSaveContext.fileNum) & ~(3 << 0))  | (((value) & 3) << 0))
@@ -471,7 +472,8 @@ typedef enum LinkAge {
 #define SET_NO_BOTTLED_FAIRIES      (nREG(4 + gSaveContext.fileNum)  ^=                                   (1 << 0))
 #define SET_RESUME_LAST_AREA        (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 0))
 #define SET_CENSOR_FIRE_TEMPLE      (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 1))
-#define SET_NO_OWL                  (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 2))
+#define SET_SKIP_INTROS             (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 2))
+#define SET_NO_OWL                  (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 3))
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
