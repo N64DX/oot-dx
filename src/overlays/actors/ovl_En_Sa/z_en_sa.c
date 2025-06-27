@@ -412,7 +412,7 @@ s32 func_80AF5DFC(EnSa* this, PlayState* play) {
         if (GET_INFTABLE(INFTABLE_00)) {
             return 1;
         }
-        return 4;
+        return SKIP_INTROS ? 3: 4;
     }
     return 0;
 }

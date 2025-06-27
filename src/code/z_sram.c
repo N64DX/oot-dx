@@ -441,6 +441,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
     PRINTF(T("ぽいんと＝%x(%d)\n", "Point=%x(%d)\n"), i, gSaveContext.fileNum);
 
     MemCpy(&gSaveContext, sramCtx->readBuff + i, sizeof(Save));
+    MemCpy(&gSaveContext.respawn, sramCtx->readBuff + i + offsetof(SaveContext, respawn), sizeof(gSaveContext.respawn));
 
     PRINTF_COLOR_YELLOW();
     PRINTF("SCENE_DATA_ID = %d   SceneNo = %d\n", gSaveContext.save.info.playerData.savedSceneId,
@@ -510,8 +511,6 @@ void Sram_OpenSave(SramContext* sramCtx) {
                     gSaveContext.save.entranceIndex = (LINK_AGE_IN_YEARS == YEARS_CHILD) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
                 else gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
             }
-            else if (gSaveContext.save.info.playerData.savedSceneId == SCENE_FAIRYS_FOUNTAIN || gSaveContext.save.info.playerData.savedSceneId == SCENE_GROTTOS)
-                gSaveContext.save.entranceIndex = (LINK_AGE_IN_YEARS == YEARS_CHILD) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
             break;
     }
     
@@ -616,8 +615,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
 }
 
 void Sram_OpenSaveOptions(SramContext* sramCtx) {
-    u16 i = gSramSlotOffsets[gSaveContext.fileNum];
-    MemCpy(&gSaveContext, sramCtx->readBuff + i, sizeof(Save));
+    MemCpy(&gSaveContext, sramCtx->readBuff + gSramSlotOffsets[gSaveContext.fileNum], sizeof(Save));
 }
 
 /**
@@ -669,6 +667,37 @@ void Sram_WriteSave(SramContext* sramCtx) {
 
     offset = gSramSlotOffsets[gSaveContext.fileNum + 3];
     SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + offset, &gSaveContext, SLOT_SIZE);
+}
+
+void Sram_WriteSaveOptions(SramContext* sramCtx) {
+    u16 offset;
+    u16 checksum = 0;
+    u16 j = 0;
+    u16* ptr = (u16*)&gSaveContext;
+    
+    static const SramOptions sramFields[] = {
+        { FILE_QUEST_MODE,                           sizeof(gSaveContext.save.info.questMode), &gSaveContext.save.info.questMode },
+        { FILE_HERO_MODE,                            sizeof(gSaveContext.save.info.heroMode),  &gSaveContext.save.info.heroMode },
+        { FILE_HERO_MODE + 2,                        sizeof(gSaveContext.save.info.heroMode2) , &gSaveContext.save.info.heroMode2 },
+        { FILE_SETTINGS,                             sizeof(gSaveContext.save.info.settings),  &gSaveContext.save.info.settings },
+        { FILE_SETTINGS  + 2,                        sizeof(gSaveContext.save.info.settings2), &gSaveContext.save.info.settings2 },
+        { offsetof(SaveContext, save.info.checksum), sizeof(gSaveContext.save.info.checksum),  &gSaveContext.save.info.checksum },
+    };
+
+    gSaveContext.save.info.checksum.value = 0;
+
+    for (offset = 0; offset < CHECKSUM_SIZE; offset++) {
+        if (++j == 0x20)
+            j = 0;
+        checksum += *ptr++;
+    }
+
+    gSaveContext.save.info.checksum.value = checksum;
+
+    for (j = 0; j<ARRAY_COUNT(sramFields); j++)
+        SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + gSramSlotOffsets[gSaveContext.fileNum]     + sramFields[j].offset, sramFields[j].src, sramFields[j].size);
+    for (j = 0; j<ARRAY_COUNT(sramFields); j++)
+        SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + gSramSlotOffsets[gSaveContext.fileNum + 3] + sramFields[j].offset, sramFields[j].src, sramFields[j].size);
 }
 
 /**
@@ -999,7 +1028,7 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
     MemCpy(&fileSelect->fileHeroMode[gSaveContext.fileNum],  sramCtx->readBuff + j + FILE_HERO_MODE,     sizeof(fileSelect->fileHeroMode[0]));
     MemCpy(&fileSelect->fileHeroMode2[gSaveContext.fileNum], sramCtx->readBuff + j + FILE_HERO_MODE + 2, sizeof(fileSelect->fileHeroMode2[0]));
     MemCpy(&fileSelect->fileSettings[gSaveContext.fileNum],  sramCtx->readBuff + j + FILE_SETTINGS,      sizeof(fileSelect->fileSettings[0]));
-    MemCpy(&fileSelect->fileSettings2[gSaveContext.fileNum], sramCtx->readBuff + j + FILE_SETTINGS  + 2, sizeof(fileSelect->fileSettings[0]));
+    MemCpy(&fileSelect->fileSettings2[gSaveContext.fileNum], sramCtx->readBuff + j + FILE_SETTINGS  + 2, sizeof(fileSelect->fileSettings2[0]));
 
     nREG(0  + gSaveContext.fileNum) =  fileSelect->fileQuestMode[gSaveContext.fileNum];
     nREG(3  + gSaveContext.fileNum) =  fileSelect->fileHeroMode[gSaveContext.fileNum];

@@ -1,27 +1,12 @@
 #include "file_select.h"
 #include "file_select_state.h"
 
-#include "libc64/qrand.h"
 #include "libu64/gfxprint.h"
-#include "alloca.h"
 #include "array_count.h"
 #include "controller.h"
-#include "gfx.h"
 #include "gfx_setupdl.h"
-#include "gfxalloc.h"
-#include "printf.h"
-#include "regs.h"
-#include "segment_symbols.h"
-#include "seqcmd.h"
-#include "sequence.h"
 #include "sfx.h"
-#include "terminal.h"
-#include "translation.h"
-#include "ultra64.h"
-#include "play_state.h"
 #include "save.h"
-#include "sram.h"
-#include "resolution.h"
 
 void FileSelectOptions_ToggleOption(FileSelectState* this, u8 reg, u8 shift) {
     nREG(reg + gSaveContext.fileNum) ^= 1 << shift;
@@ -29,42 +14,27 @@ void FileSelectOptions_ToggleOption(FileSelectState* this, u8 reg, u8 shift) {
 }
 
 void FileSelectOptions_SetDamageTaken(FileSelectState* this, u8 reg, u8 shift) {
-    Input* input = &this->state.input[0];
-    if (CHECK_BTN_ALL(input->press.button, BTN_A))
-        SET_DAMAGE_TAKEN((DAMAGE_TAKEN + 1));
-    else SET_DAMAGE_TAKEN((DAMAGE_TAKEN - 1));
+    SET_DAMAGE_TAKEN((DAMAGE_TAKEN + 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
 void FileSelectOptions_SetRecoveryTaken(FileSelectState* this, u8 reg, u8 shift) {
-    Input* input = &this->state.input[0];
-    if (CHECK_BTN_ALL(input->press.button, BTN_A))
-        SET_RECOVERY_TAKEN((RECOVERY_TAKEN + 1));
-    else SET_RECOVERY_TAKEN((RECOVERY_TAKEN - 1));
+    SET_RECOVERY_TAKEN((RECOVERY_TAKEN + 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
 void FileSelectOptions_SetMonsterHP(FileSelectState* this, u8 reg, u8 shift) {
-    Input* input = &this->state.input[0];
-    if (CHECK_BTN_ALL(input->press.button, BTN_A))
-        SET_MONSTER_HP((MONSTER_HP + 1));
-    else SET_MONSTER_HP((MONSTER_HP - 1));
+    SET_MONSTER_HP((MONSTER_HP + 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
 void FileSelectOptions_SetEliteHP(FileSelectState* this, u8 reg, u8 shift) {
-    Input* input = &this->state.input[0];
-    if (CHECK_BTN_ALL(input->press.button, BTN_A))
-        SET_ELITE_HP((ELITE_HP + 1));
-    else SET_ELITE_HP((ELITE_HP - 1));
+    SET_ELITE_HP((ELITE_HP + 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
 void FileSelectOptions_SetBossHP(FileSelectState* this, u8 reg, u8 shift) {
-    Input* input = &this->state.input[0];
-    if (CHECK_BTN_ALL(input->press.button, BTN_A))
-        SET_BOSS_HP((BOSS_HP + 1));
-    else SET_BOSS_HP((BOSS_HP - 1));
+    SET_BOSS_HP((BOSS_HP + 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
@@ -175,14 +145,15 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { " 3: Censor Fire Temple",   FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        9, 1  },
     { " 4: Skip Intros",          FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        9, 2  },
     { " 5: No Owl",               FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        9, 3  },
-    { " 6: Damage Taken",         FileSelectOptions_SetDamageTaken,      FileSelectOptions_GetDamageTaken,   0, 0  },
-    { " 7: Recovery Taken",       FileSelectOptions_SetRecoveryTaken,    FileSelectOptions_GetRecoveryTaken, 0, 0  },
-    { " 8: Monster Health",       FileSelectOptions_SetMonsterHP,        FileSelectOptions_GetMonsterHP,     0, 0  },
-    { " 9: Elite Monster Health", FileSelectOptions_SetEliteHP,          FileSelectOptions_GetEliteHP,       0, 0  },
-    { "10: Boss Health",          FileSelectOptions_SetBossHP,           FileSelectOptions_GetBossHP,        0, 0  },
-    { "11: Harder Enemies",       FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        3, 14 },
-    { "12: Fixed Dark Link HP",   FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        3, 15 },
-    { "13: No Bottled Fairies",   FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        4, 0  },
+    { " 6: Instant Put Away",     FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        9, 4  },
+    { " 7: Damage Taken",         FileSelectOptions_SetDamageTaken,      FileSelectOptions_GetDamageTaken,   0, 0  },
+    { " 8: Recovery Taken",       FileSelectOptions_SetRecoveryTaken,    FileSelectOptions_GetRecoveryTaken, 0, 0  },
+    { " 9: Monster Health",       FileSelectOptions_SetMonsterHP,        FileSelectOptions_GetMonsterHP,     0, 0  },
+    { "10: Elite Monster Health", FileSelectOptions_SetEliteHP,          FileSelectOptions_GetEliteHP,       0, 0  },
+    { "11: Boss Health",          FileSelectOptions_SetBossHP,           FileSelectOptions_GetBossHP,        0, 0  },
+    { "12: Harder Enemies",       FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        3, 14 },
+    { "13: Static Dark Link HP",  FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        3, 15 },
+    { "14: No Bottled Fairies",   FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        4, 0  },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {
@@ -191,7 +162,7 @@ void FileSelectOptions_UpdateMenu(FileSelectState* this) {
     FileSelectOptionsEntry* selectedEntry;
 
     if (this->verticalInputAccumulator == 0) {
-        if (CHECK_BTN_ANY(input->press.button, BTN_A | BTN_B)) {
+        if (CHECK_BTN_ANY(input->press.button, BTN_A)) {
             selectedEntry = &this->entries[this->currentEntry];
             selectedEntry->setFunc(this, selectedEntry->reg, selectedEntry->shift);
         }

@@ -10,6 +10,12 @@ typedef struct SramContext {
     /* 0x00 */ u8* readBuff;
 } SramContext; // size = 0x4
 
+typedef struct SramOptions {
+    /* 0x00 */ u16 offset;
+    /* 0x02 */ u16 size;
+    /* 0x06 */ void* src;
+} SramOptions; // size = 0xA
+
 #define SRAM_SIZE 0x8000
 #define SRAM_HEADER_SIZE 0x10
 
@@ -27,6 +33,7 @@ void Sram_InitDebugSave(void);
 void Sram_OpenSave(SramContext* sramCtx);
 void Sram_OpenSaveOptions(SramContext* sramCtx);
 void Sram_WriteSave(SramContext* sramCtx);
+void Sram_WriteSaveOptions(SramContext* sramCtx);
 void Sram_VerifyAndLoadAllSaves(struct FileSelectState* fileSelect, SramContext* sramCtx);
 void Sram_InitSave(struct FileSelectState* fileSelect, SramContext* sramCtx);
 void Sram_EraseSave(struct FileSelectState* fileSelect, SramContext* sramCtx);

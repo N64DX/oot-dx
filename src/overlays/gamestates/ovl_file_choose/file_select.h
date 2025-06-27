@@ -137,7 +137,8 @@ typedef enum SelectMenuButtonIndex {
 
 typedef enum ConfirmButtonIndex {
     /* 0 */ FS_BTN_CONFIRM_YES,
-    /* 1 */ FS_BTN_CONFIRM_QUIT
+    /* 1 */ FS_BTN_CONFIRM_QUIT,
+    /* 2 */ FS_BTN_CONFIRM_OPTIONS
 } ConfirmButtonIndex;
 
 typedef enum ActionButtonIndex {
@@ -265,9 +266,5 @@ extern u64 gLogoMasterQuestTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT,
 extern u64 gMirrorModeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
 extern u64 gQuestOcarinaOfTimeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
 extern u64 gQuestMasterQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
-
-#define gFileSelControlsRTex_WIDTH 72
-#define gFileSelControlsRTex_HEIGHT 16
-extern u64 gFileSelControlsRTex[TEX_LEN(u64, gFileSelControlsRTex_WIDTH, gFileSelControlsRTex_HEIGHT, 8)];
 
 #endif

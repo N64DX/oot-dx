@@ -11449,7 +11449,7 @@ void Player_UpdateInterface(PlayState* play, Player* this) {
         }
 
         if (doAction != DO_ACTION_PUTAWAY) {
-            this->putAwayCooldownTimer = 20;
+            this->putAwayCooldownTimer = INSTANT_PUTAWAY ? 1: 20;
         } else if (this->putAwayCooldownTimer != 0) {
             // Replace the "Put Away" Do Action label with a blank label while
             // the cooldown timer is counting down

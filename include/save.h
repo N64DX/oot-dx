@@ -454,12 +454,13 @@ typedef enum LinkAge {
 #define ELITE_HP                   ((nREG(3 + gSaveContext.fileNum) >> 8)  & 7) // Bits: 8-10
 #define BOSS_HP                    ((nREG(3 + gSaveContext.fileNum) >> 11) & 7) // Bits: 11-13
 #define HARDER_ENEMIES             ((nREG(3 + gSaveContext.fileNum) >> 14) & 1) // Bits: 14
-#define FIXED_DARK_LINK_HP         ((nREG(3 + gSaveContext.fileNum) >> 15) & 1) // Bits: 15
+#define STATIC_DARK_LINK_HP        ((nREG(3 + gSaveContext.fileNum) >> 15) & 1) // Bits: 15
 #define NO_BOTTLED_FAIRIES         ((nREG(4 + gSaveContext.fileNum) >> 0)  & 1) // Bits: 16
 #define RESUME_LAST_AREA           ((nREG(9 + gSaveContext.fileNum) >> 0)  & 1) // Bits: 0
 #define CENSOR_FIRE_TEMPLE         ((nREG(9 + gSaveContext.fileNum) >> 1)  & 1) // Bits: 1
 #define SKIP_INTROS                ((nREG(9 + gSaveContext.fileNum) >> 2)  & 1) // Bits: 2
 #define NO_OWL                     ((nREG(9 + gSaveContext.fileNum) >> 3)  & 1) // Bits: 3
+#define INSTANT_PUTAWAY            ((nREG(9 + gSaveContext.fileNum) >> 4)  & 1) // Bits: 3
 
 #define SET_MIRROR_MODE             (nREG(0 + gSaveContext.fileNum) ^=                                    (1 << 7))
 #define SET_RECOVERY_TAKEN(value)   (nREG(3 + gSaveContext.fileNum)  = (nREG(3 + gSaveContext.fileNum) & ~(3 << 0))  | (((value) & 3) << 0))
@@ -468,12 +469,13 @@ typedef enum LinkAge {
 #define SET_ELITE_HP(value)         (nREG(3 + gSaveContext.fileNum)  = (nREG(3 + gSaveContext.fileNum) & ~(7 << 8))  | (((value) & 7) << 8))
 #define SET_BOSS_HP(value)          (nREG(3 + gSaveContext.fileNum)  = (nREG(3 + gSaveContext.fileNum) & ~(7 << 11)) | (((value) & 7) << 11))
 #define SET_HARDER_ENEMIES          (nREG(3 + gSaveContext.fileNum)  ^=                                   (1 << 14))
-#define SET_FIXED_DARK_LINK_HP      (nREG(3 + gSaveContext.fileNum)  ^=                                   (1 << 15))
+#define SET_STATIC_DARK_LINK_HP     (nREG(3 + gSaveContext.fileNum)  ^=                                   (1 << 15))
 #define SET_NO_BOTTLED_FAIRIES      (nREG(4 + gSaveContext.fileNum)  ^=                                   (1 << 0))
 #define SET_RESUME_LAST_AREA        (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 0))
 #define SET_CENSOR_FIRE_TEMPLE      (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 1))
 #define SET_SKIP_INTROS             (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 2))
 #define SET_NO_OWL                  (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 3))
+#define SET_INSTANT_PUTAWAY         (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 4))
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)

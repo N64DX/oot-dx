@@ -1279,8 +1279,9 @@ void EnWf_UpdateDamage(EnWf* this, PlayState* play) {
 
             if ((!(this->bodyColliderCylinder.base.acFlags & AC_HIT) &&
                  (this->tailColliderCylinder.base.acFlags & AC_HIT)) ||
-                (ABS(yawDiff) > 19000) && !HARDER_ENEMIES) {
-                this->actor.colChkInfo.damage *= 4;
+                (ABS(yawDiff) > 19000)) {
+                if (!HARDER_ENEMIES)
+                    this->actor.colChkInfo.damage *= 4;
             }
 
             this->bodyColliderCylinder.base.acFlags &= ~AC_HIT;
