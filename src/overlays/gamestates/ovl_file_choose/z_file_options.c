@@ -7,42 +7,37 @@
 #include "gfx_setupdl.h"
 #include "sfx.h"
 #include "save.h"
+#include "regs.h"
 
-void FileSelectOptions_ToggleOption(FileSelectState* this, u8 reg, u8 shift) {
-    nREG(reg + gSaveContext.fileNum) ^= 1 << shift;
+void FileSelectOptions_ToggleOption(FileSelectState* this, u8 index, u8 shift) {
+    gFileOptions[gSaveContext.fileNum][index] ^= 1 << shift;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileSelectOptions_SetDamageTaken(FileSelectState* this, u8 reg, u8 shift) {
+void FileSelectOptions_SetDamageTaken(FileSelectState* this, u8 index, u8 shift) {
     SET_DAMAGE_TAKEN((DAMAGE_TAKEN + 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileSelectOptions_SetRecoveryTaken(FileSelectState* this, u8 reg, u8 shift) {
+void FileSelectOptions_SetRecoveryTaken(FileSelectState* this, u8 index, u8 shift) {
     SET_RECOVERY_TAKEN((RECOVERY_TAKEN + 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileSelectOptions_SetMonsterHP(FileSelectState* this, u8 reg, u8 shift) {
-    SET_MONSTER_HP((MONSTER_HP + 1));
+void FileSelectOptions_SetHP(FileSelectState* this, u8 index, u8 shift) {
+    if (shift == 5)
+        SET_MONSTER_HP((MONSTER_HP + 1));
+    else if (shift == 8)
+        SET_ELITE_HP((ELITE_HP + 1));
+    else SET_BOSS_HP((BOSS_HP + 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileSelectOptions_SetEliteHP(FileSelectState* this, u8 reg, u8 shift) {
-    SET_ELITE_HP((ELITE_HP + 1));
-    Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+char* FileSelectOptions_GetOption(FileSelectState* this, u8 index, u8 shift) {
+    return ((gFileOptions[gSaveContext.fileNum][index] >> shift) & 1) ? "On" : "Off";
 }
 
-void FileSelectOptions_SetBossHP(FileSelectState* this, u8 reg, u8 shift) {
-    SET_BOSS_HP((BOSS_HP + 1));
-    Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-}
-
-char* FileSelectOptions_GetOption(FileSelectState* this, u8 reg, u8 shift) {
-    return ((nREG(reg + gSaveContext.fileNum) >> shift) & 1) ? "On" : "Off";
-}
-
-char* FileSelectOptions_GetDamageTaken(FileSelectState* this, u8 reg, u8 shift) {
+char* FileSelectOptions_GetDamageTaken(FileSelectState* this, u8 index, u8 shift) {
     switch (DAMAGE_TAKEN) {
         case 1:
             return "2x";
@@ -63,7 +58,7 @@ char* FileSelectOptions_GetDamageTaken(FileSelectState* this, u8 reg, u8 shift) 
     }
 }
 
-char* FileSelectOptions_GetRecoveryTaken(FileSelectState* this, u8 reg, u8 shift) {
+char* FileSelectOptions_GetRecoveryTaken(FileSelectState* this, u8 index, u8 shift) {
     switch (RECOVERY_TAKEN) {
         case 1:
             return "1/2x";
@@ -76,50 +71,8 @@ char* FileSelectOptions_GetRecoveryTaken(FileSelectState* this, u8 reg, u8 shift
     }
 }
 
-char* FileSelectOptions_GetMonsterHP(FileSelectState* this, u8 reg, u8 shift) {
-    switch (MONSTER_HP) {
-        case 1:
-            return "1.5x";
-        case 2:
-            return "2x";
-        case 3:
-            return "2.5x";
-        case 4:
-            return "3x";
-        case 5:
-            return "4x";
-        case 6:
-            return "5x";
-        case 7:
-            return "1/2x";
-        default:
-            return "1x";
-    }
-}
-
-char* FileSelectOptions_GetEliteHP(FileSelectState* this, u8 reg, u8 shift) {
-    switch (ELITE_HP) {
-        case 1:
-            return "1.5x";
-        case 2:
-            return "2x";
-        case 3:
-            return "2.5x";
-        case 4:
-            return "3x";
-        case 5:
-            return "4x";
-        case 6:
-            return "5x";
-        case 7:
-            return "1/2x";
-        default:
-            return "1x";
-    }
-}
-
-char* FileSelectOptions_GetBossHP(FileSelectState* this, u8 reg, u8 shift) {
-    switch (BOSS_HP) {
+char* FileSelectOptions_GetHP(FileSelectState* this, u8 index, u8 shift) {
+    switch ((gFileOptions[gSaveContext.fileNum][index] >> shift)  & 7) {
         case 1:
             return "1.5x";
         case 2:
@@ -140,20 +93,21 @@ char* FileSelectOptions_GetBossHP(FileSelectState* this, u8 reg, u8 shift) {
 }
 
 static FileSelectOptionsEntry sFileOptionsEntries[] = {
-    { " 1: Mirror Mode",          FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        0, 7  },
-    { " 2: Resume Last Area",     FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        9, 0  },
-    { " 3: Censor Fire Temple",   FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        9, 1  },
-    { " 4: Skip Intros",          FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        9, 2  },
-    { " 5: No Owl",               FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        9, 3  },
-    { " 6: Instant Put Away",     FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        9, 4  },
-    { " 7: Damage Taken",         FileSelectOptions_SetDamageTaken,      FileSelectOptions_GetDamageTaken,   0, 0  },
-    { " 8: Recovery Taken",       FileSelectOptions_SetRecoveryTaken,    FileSelectOptions_GetRecoveryTaken, 0, 0  },
-    { " 9: Monster Health",       FileSelectOptions_SetMonsterHP,        FileSelectOptions_GetMonsterHP,     0, 0  },
-    { "10: Elite Monster Health", FileSelectOptions_SetEliteHP,          FileSelectOptions_GetEliteHP,       0, 0  },
-    { "11: Boss Health",          FileSelectOptions_SetBossHP,           FileSelectOptions_GetBossHP,        0, 0  },
-    { "12: Harder Enemies",       FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        3, 14 },
-    { "13: Static Dark Link HP",  FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        3, 15 },
-    { "14: No Bottled Fairies",   FileSelectOptions_ToggleOption,        FileSelectOptions_GetOption,        4, 0  },
+    { " 1: Mirror Mode",          FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 0  },
+    { " 2: Resume Last Area",     FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 1  },
+    { " 3: Censor Fire Temple",   FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 2  },
+    { " 4: Skip Intros",          FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 3  },
+    { " 5: No Owl",               FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 4  },
+    { " 6: Instant Put Away",     FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 5  },
+    { " 7: Remove Dungeon Texts", FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 6  },
+    { " 8: Damage Taken",         FileSelectOptions_SetDamageTaken,   FileSelectOptions_GetDamageTaken,   1, 0  },
+    { " 9: Recovery Taken",       FileSelectOptions_SetRecoveryTaken, FileSelectOptions_GetRecoveryTaken, 1, 0  },
+    { "10: Monster Health",       FileSelectOptions_SetHP,            FileSelectOptions_GetHP,            1, 5  },
+    { "11: Elite Monster Health", FileSelectOptions_SetHP,            FileSelectOptions_GetHP,            1, 8  },
+    { "12: Boss Health",          FileSelectOptions_SetHP,            FileSelectOptions_GetHP,            1, 11 },
+    { "13: Harder Enemies",       FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        1, 14 },
+    { "14: Static Dark Link HP",  FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        1, 15 },
+    { "15: No Bottled Fairies",   FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        1, 16 },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {
@@ -164,7 +118,7 @@ void FileSelectOptions_UpdateMenu(FileSelectState* this) {
     if (this->verticalInputAccumulator == 0) {
         if (CHECK_BTN_ANY(input->press.button, BTN_A)) {
             selectedEntry = &this->entries[this->currentEntry];
-            selectedEntry->setFunc(this, selectedEntry->reg, selectedEntry->shift);
+            selectedEntry->setFunc(this, selectedEntry->index, selectedEntry->shift);
         }
 
         if (CHECK_BTN_ALL(input->press.button, BTN_DUP) || input->rel.stick_y > 30) {
@@ -299,7 +253,7 @@ void FileSelectOptions_Draw(FileSelectState* this) {
         GfxPrint_Printf(&printer, "%s", this->entries[title].name);
 
         GfxPrint_SetPos(&printer, 30, i + 4);
-        GfxPrint_Printf(&printer, "%s", this->entries[title].getFunc(this, this->entries[title].reg, this->entries[title].shift));
+        GfxPrint_Printf(&printer, "%s", this->entries[title].getFunc(this, this->entries[title].index, this->entries[title].shift));
     };
 
     GfxPrint_SetColor(&printer, 155, 55, 150, 255);

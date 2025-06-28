@@ -1823,16 +1823,14 @@ void FileSelect_FadeInFileInfo(GameState* thisx) {
 void FileSelect_ConfirmFile(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
     Input* input = &this->state.input[0];
+    u8 i;
 
     if (this->selectingOptionsMode) {
         if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
             this->selectingOptionsMode = 0;
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            gSaveContext.save.info.questMode = nREG(0  + gSaveContext.fileNum);
-            gSaveContext.save.info.heroMode  = nREG(3  + gSaveContext.fileNum);
-            gSaveContext.save.info.heroMode2 = nREG(4  + gSaveContext.fileNum);
-            gSaveContext.save.info.settings  = nREG(9  + gSaveContext.fileNum);
-            gSaveContext.save.info.settings2 = nREG(10 + gSaveContext.fileNum);
+            for (i=0; i<FILE_OPTIONS_SIZE; i++)
+                gSaveContext.options[i] = gFileOptions[gSaveContext.fileNum][i];
             Sram_WriteSaveOptions(&this->sramCtx);
         }
         FileSelectOptions_UpdateMenu(this);

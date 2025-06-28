@@ -5,7 +5,6 @@
 #include "versions.h"
 #include "inventory.h"
 #include "z_math.h"
-#include "regs.h"
 
 typedef enum ZTargetSetting {
     /* 0 */ Z_TARGET_SETTING_SWITCH,
@@ -264,16 +263,14 @@ typedef struct SaveInfo {
     /* 0x0E48  0x0E64 */ FaroresWindData fw;
     /* 0x0E70  0x0E8C */ char unk_E8C[0x10];
     /* 0x0E80  0x0E9C */ s32 gsFlags[6];
-    /* 0x0E98  0x0EB4 */ u16 settings;
-    /* 0x0E9A  0x0EB6 */ u16 settings2;
+    /* 0x0E98  0x0EB4 */ char unk_EB4[0x4];
     /* 0x0E9C  0x0EB8 */ s32 highScores[7];
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
     /* 0x0F18  0x0F34 */ char unk_F34[0x04];
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
-    /* 0x0F20  0x0F3C */ u16 heroMode;
-    /* 0x0F22  0x0F3E */ u16 heroMode2;
+    /* 0x0F20  0x0F3C */ char unk_F3C[0x4];
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
     /* 0x1285  0x12A1 */ char unk_12A1[0x24];
@@ -359,7 +356,9 @@ typedef struct SaveContext {
     /* 0x1420 */ s16 worldMapArea;
     /* 0x1422 */ s16 sunsSongState; // controls the effects of suns song
     /* 0x1424 */ s16 healthAccumulator;
-} SaveContext; // size = 0x1428
+    /* 0x1426 */ char unk_1426[0x0002];
+    /* 0x1428 */ u32 options[10];
+} SaveContext; // size = 0x1450
 
 typedef enum ButtonStatus {
     /* 0x00 */ BTN_ENABLED,
@@ -447,35 +446,41 @@ typedef enum LinkAge {
 #define QUEST_MAX     MASTER_QUEST
 #define QUEST_MODE    (gSaveContext.save.info.questMode & 127)
 
-#define MIRROR_MODE                ((nREG(0 + gSaveContext.fileNum) >> 7)  & 1) // Bits: 7
-#define RECOVERY_TAKEN             ((nREG(3 + gSaveContext.fileNum) >> 0)  & 3) // Bits: 0-1
-#define DAMAGE_TAKEN               ((nREG(3 + gSaveContext.fileNum) >> 2)  & 7) // Bits: 2-4
-#define MONSTER_HP                 ((nREG(3 + gSaveContext.fileNum) >> 5)  & 7) // Bits: 5-7
-#define ELITE_HP                   ((nREG(3 + gSaveContext.fileNum) >> 8)  & 7) // Bits: 8-10
-#define BOSS_HP                    ((nREG(3 + gSaveContext.fileNum) >> 11) & 7) // Bits: 11-13
-#define HARDER_ENEMIES             ((nREG(3 + gSaveContext.fileNum) >> 14) & 1) // Bits: 14
-#define STATIC_DARK_LINK_HP        ((nREG(3 + gSaveContext.fileNum) >> 15) & 1) // Bits: 15
-#define NO_BOTTLED_FAIRIES         ((nREG(4 + gSaveContext.fileNum) >> 0)  & 1) // Bits: 16
-#define RESUME_LAST_AREA           ((nREG(9 + gSaveContext.fileNum) >> 0)  & 1) // Bits: 0
-#define CENSOR_FIRE_TEMPLE         ((nREG(9 + gSaveContext.fileNum) >> 1)  & 1) // Bits: 1
-#define SKIP_INTROS                ((nREG(9 + gSaveContext.fileNum) >> 2)  & 1) // Bits: 2
-#define NO_OWL                     ((nREG(9 + gSaveContext.fileNum) >> 3)  & 1) // Bits: 3
-#define INSTANT_PUTAWAY            ((nREG(9 + gSaveContext.fileNum) >> 4)  & 1) // Bits: 3
+#define FILE_OPTIONS_SIZE 2
+extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 
-#define SET_MIRROR_MODE             (nREG(0 + gSaveContext.fileNum) ^=                                    (1 << 7))
-#define SET_RECOVERY_TAKEN(value)   (nREG(3 + gSaveContext.fileNum)  = (nREG(3 + gSaveContext.fileNum) & ~(3 << 0))  | (((value) & 3) << 0))
-#define SET_DAMAGE_TAKEN(value)     (nREG(3 + gSaveContext.fileNum)  = (nREG(3 + gSaveContext.fileNum) & ~(7 << 2))  | (((value) & 7) << 2))
-#define SET_MONSTER_HP(value)       (nREG(3 + gSaveContext.fileNum)  = (nREG(3 + gSaveContext.fileNum) & ~(7 << 5))  | (((value) & 7) << 5))
-#define SET_ELITE_HP(value)         (nREG(3 + gSaveContext.fileNum)  = (nREG(3 + gSaveContext.fileNum) & ~(7 << 8))  | (((value) & 7) << 8))
-#define SET_BOSS_HP(value)          (nREG(3 + gSaveContext.fileNum)  = (nREG(3 + gSaveContext.fileNum) & ~(7 << 11)) | (((value) & 7) << 11))
-#define SET_HARDER_ENEMIES          (nREG(3 + gSaveContext.fileNum)  ^=                                   (1 << 14))
-#define SET_STATIC_DARK_LINK_HP     (nREG(3 + gSaveContext.fileNum)  ^=                                   (1 << 15))
-#define SET_NO_BOTTLED_FAIRIES      (nREG(4 + gSaveContext.fileNum)  ^=                                   (1 << 0))
-#define SET_RESUME_LAST_AREA        (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 0))
-#define SET_CENSOR_FIRE_TEMPLE      (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 1))
-#define SET_SKIP_INTROS             (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 2))
-#define SET_NO_OWL                  (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 3))
-#define SET_INSTANT_PUTAWAY         (nREG(9 + gSaveContext.fileNum)  ^=                                   (1 << 4))
+#define MIRROR_MODE                ((gFileOptions[gSaveContext.fileNum][0] >> 0)  & 1)  // Bits: 0
+#define RESUME_LAST_AREA           ((gFileOptions[gSaveContext.fileNum][0] >> 1)  & 1)  // Bits: 1
+#define CENSOR_FIRE_TEMPLE         ((gFileOptions[gSaveContext.fileNum][0] >> 2)  & 1)  // Bits: 2
+#define SKIP_INTROS                ((gFileOptions[gSaveContext.fileNum][0] >> 3)  & 1)  // Bits: 3
+#define NO_OWL                     ((gFileOptions[gSaveContext.fileNum][0] >> 4)  & 1)  // Bits: 4
+#define INSTANT_PUTAWAY            ((gFileOptions[gSaveContext.fileNum][0] >> 5)  & 1)  // Bits: 5
+#define REMOVE_DUNGEON_TEXTS       ((gFileOptions[gSaveContext.fileNum][0] >> 6)  & 1)  // Bits: 6
+#define RECOVERY_TAKEN             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
+#define DAMAGE_TAKEN               ((gFileOptions[gSaveContext.fileNum][1] >> 2)  & 7)  // Bits: 2-4
+#define MONSTER_HP                 ((gFileOptions[gSaveContext.fileNum][1] >> 5)  & 7)  // Bits: 5-7
+#define ELITE_HP                   ((gFileOptions[gSaveContext.fileNum][1] >> 8)  & 7)  // Bits: 8-10
+#define BOSS_HP                    ((gFileOptions[gSaveContext.fileNum][1] >> 11) & 7)  // Bits: 11-13
+#define HARDER_ENEMIES             ((gFileOptions[gSaveContext.fileNum][1] >> 14) & 1)  // Bits: 14
+#define STATIC_DARK_LINK_HP        ((gFileOptions[gSaveContext.fileNum][1] >> 15) & 1)  // Bits: 15
+#define NO_BOTTLED_FAIRIES         ((gFileOptions[gSaveContext.fileNum][1] >> 16) & 1)  // Bits: 16
+
+
+#define SET_MIRROR_MODE             (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 0))
+#define SET_RESUME_LAST_AREA        (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 1))
+#define SET_CENSOR_FIRE_TEMPLE      (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 2))
+#define SET_SKIP_INTROS             (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 3))
+#define SET_NO_OWL                  (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 4))
+#define SET_INSTANT_PUTAWAY         (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 5))
+#define SET_REMOVE_DUNGEON_TEXTS    (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 6))
+#define SET_RECOVERY_TAKEN(value)   (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(3 << 0))  | (((value) & 3) << 0))
+#define SET_DAMAGE_TAKEN(value)     (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 2))  | (((value) & 7) << 2))
+#define SET_MONSTER_HP(value)       (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 5))  | (((value) & 7) << 5))
+#define SET_ELITE_HP(value)         (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 8))  | (((value) & 7) << 8))
+#define SET_BOSS_HP(value)          (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 11)) | (((value) & 7) << 11))
+#define SET_HARDER_ENEMIES          (gFileOptions[gSaveContext.fileNum][1] ^=                                           (1 << 14))
+#define SET_STATIC_DARK_LINK_HP     (gFileOptions[gSaveContext.fileNum][1] ^=                                           (1 << 15))
+#define SET_NO_BOTTLED_FAIRIES      (gFileOptions[gSaveContext.fileNum][1] ^=                                           (1 << 16))
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)

@@ -13,7 +13,7 @@ typedef struct FileSelectOptionsEntry {
     /* 0x00 */ char* name;
     /* 0x04 */ void  (*setFunc) (struct FileSelectState*, u8, u8);
     /* 0x08 */ char* (*getFunc) (struct FileSelectState*, u8, u8);
-    /* 0x0C */ u8 reg;
+    /* 0x0C */ u8 index;
     /* 0x10 */ u8 shift;
 } FileSelectOptionsEntry; // size = 0x8
 
@@ -50,11 +50,7 @@ typedef struct FileSelectState {
 #if OOT_PAL
     /* 0x1CA32 */ u16 health[3];
 #endif
-    /* 0x1CA32 */ u8 fileQuestMode[3];
-    /* 0x1CA32 */ u16 fileHeroMode[3];
-    /* 0x1CA32 */ u16 fileHeroMode2[3];
-    /* 0x1CA32 */ u16 fileSettings[3];
-    /* 0x1CA32 */ u16 fileSettings2[3];
+    /* 0x1CA32 */ u32 fileOptions[3][8];
     /* 0x1CA38 */ s16 buttonIndex;
     /* 0x1CA3A */ s16 confirmButtonIndex; // 0: yes, 1: quit
     /* 0x1CA3C */ s16 menuMode;
