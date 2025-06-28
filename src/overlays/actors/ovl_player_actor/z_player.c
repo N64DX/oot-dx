@@ -12826,12 +12826,9 @@ void Player_Draw(Actor* thisx, PlayState* play2) {
         else if (gSaveContext.sceneLayer >= 4 && gSaveContext.sceneLayer <= 5 && play->sceneId == SCENE_HYRULE_FIELD)
             unmirror = true;
 
-        if (R_ENABLE_MIRROR != 1 || unmirror)
-            Player_DrawGameplay(play, this, lod, gCullBackDList, overrideLimbDraw);
-        else {
+        if (R_ENABLE_MIRROR == 1 && !unmirror)
             Matrix_Scale(-1.0f, 1.0f, 1.0f, MTXMODE_APPLY);
-            Player_DrawGameplay(play, this, lod, gCullFrontDList, overrideLimbDraw);
-        }
+        Player_DrawGameplay(play, this, lod, gCullBackDList, overrideLimbDraw);
 
         if (this->invincibilityTimer > 0) {
             POLY_OPA_DISP = Play_SetFog(play, POLY_OPA_DISP);

@@ -559,7 +559,7 @@ Gfx** sPlayerDListGroups[PLAYER_MODELTYPE_MAX] = {
 };
 
 Gfx gCullBackDList[] = {
-    gsSPSetGeometryMode(G_CULL_BACK),
+    gsSPSetGeometryMode(0),
     gsSPEndDisplayList(),
 };
 
