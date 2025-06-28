@@ -608,7 +608,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
         gSaveContext.save.info.playerData.dpadItems[2][2] = gSaveContext.save.info.playerData.dpadItems[3][2] = SLOT_SHIELDS;
         gSaveContext.save.info.playerData.dpadItems[2][3] = gSaveContext.save.info.playerData.dpadItems[3][3] = SLOT_TUNICS;
     }
-    
+
     R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
     R_QUEST_MODE    = QUEST_MODE;
 }

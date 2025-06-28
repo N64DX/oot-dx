@@ -1818,6 +1818,23 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                                                    (this->heldItemAction == PLAYER_IA_HOOKSHOT) ? 38600.0f : 77600.0f);
                     }
                 }
+            } else if (this->heldItemAction == PLAYER_IA_BOW_FIRE || this->heldItemAction == PLAYER_IA_BOW_ICE || this->heldItemAction == PLAYER_IA_BOW_LIGHT || this->heldItemAction == PLAYER_IA_BOW) {
+                if (heldActor != NULL && BOW_AIMING_RETICLE) {
+                    bool skip = false;
+                    MtxF sp44;
+
+                    if (R_ENABLE_MIRROR == 1)
+                        if ( (Play_GetCamera(play, CAM_ID_MAIN)->mode == CAM_MODE_AIM_ADULT && this->rideActor != NULL) || play->shootingGalleryStatus > 0)
+                            skip = true;
+
+                    Matrix_RotateZYX(0, -15216, -17496, MTXMODE_APPLY);
+                    Matrix_Get(&sp44);
+
+                    if (func_8002DD78(this) && !skip) {
+                        Matrix_Translate(500.0f, 300.0f, 0.0f, MTXMODE_APPLY);
+                        Player_DrawHookshotReticle(play, this, 77600.0f * 32.0f);
+                    }
+                }
             }
 
             if ((this->unk_862 != 0) || ((func_8002DD6C(this) == 0) && (heldActor != NULL))) {

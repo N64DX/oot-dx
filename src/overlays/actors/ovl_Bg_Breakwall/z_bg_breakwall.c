@@ -264,11 +264,13 @@ void BgBreakwall_Wait(BgBreakwall* this, PlayState* play) {
 
         if ((wallType == BWALL_DC_ENTRANCE) && !Flags_GetEventChkInf(EVENTCHKINF_B0)) {
             Flags_SetEventChkInf(EVENTCHKINF_B0);
-            Cutscene_SetScript(play, gDcOpeningCs);
-            gSaveContext.cutsceneTrigger = 1;
+            if (!SKIP_INTROS) {
+                Cutscene_SetScript(play, gDcOpeningCs);
+                gSaveContext.cutsceneTrigger = 1;
+                Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
+            }
             Audio_PlaySfxGeneral(NA_SE_SY_CORRECT_CHIME, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
         }
 
         if (this->dyna.actor.params < 0) {
