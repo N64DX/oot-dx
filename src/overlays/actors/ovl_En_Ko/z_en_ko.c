@@ -1110,7 +1110,7 @@ void func_80A98CD8(EnKo* this) {
     this->actor.attentionRangeType = info->attentionRangeType;
     this->lookDist = info->lookDist;
     this->lookDist += this->collider.dim.radius;
-    this->appearDist = info->appearDist;
+    this->appearDist = EXTENDED_DRAW_DISTANCE ? 32767 : info->appearDist;
 }
 
 // Used to fetch actor animation?

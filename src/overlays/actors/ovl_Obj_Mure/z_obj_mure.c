@@ -12,6 +12,7 @@
 #include "printf.h"
 #include "translation.h"
 #include "play_state.h"
+#include "save.h"
 
 #define FLAGS 0
 
@@ -298,7 +299,7 @@ void ObjMure_InitialAction(ObjMure* this, PlayState* play) {
 }
 
 void ObjMure_CulledState(ObjMure* this, PlayState* play) {
-    if (fabsf(this->actor.projectedPos.z) < sZClip[this->type]) {
+    if (fabsf(this->actor.projectedPos.z) < sZClip[this->type] || EXTENDED_DRAW_DISTANCE) {
         this->actionFunc = ObjMure_ActiveState;
         this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
         ObjMure_SpawnActors(this, play);
@@ -421,7 +422,7 @@ static ObjMureActionFunc sTypeGroupBehaviorFunc[] = {
 
 void ObjMure_ActiveState(ObjMure* this, PlayState* play) {
     ObjMure_CheckChildren(this, play);
-    if (sZClip[this->type] + 40.0f <= fabsf(this->actor.projectedPos.z)) {
+    if (sZClip[this->type] + 40.0f <= fabsf(this->actor.projectedPos.z) && EXTENDED_DRAW_DISTANCE) {
         this->actionFunc = ObjMure_CulledState;
         this->actor.flags &= ~ACTOR_FLAG_UPDATE_CULLING_DISABLED;
         ObjMure_KillActors(this, play);
