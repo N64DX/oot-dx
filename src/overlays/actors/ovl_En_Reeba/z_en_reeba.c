@@ -24,6 +24,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_reeba/object_reeba.h"
 
@@ -138,7 +139,7 @@ void EnReeba_Init(Actor* thisx, PlayState* play) {
     SkelAnime_Init(play, &this->skelanime, &object_reeba_Skel_001EE8, &object_reeba_Anim_0001E4, this->jointTable,
                    this->morphTable, 18);
     this->actor.colChkInfo.mass = MASS_HEAVY;
-    this->actor.colChkInfo.health = 4;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(4, MONSTER_HP);
     Collider_InitCylinder(play, &this->collider);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
     this->type = this->actor.params;
@@ -150,7 +151,7 @@ void EnReeba_Init(Actor* thisx, PlayState* play) {
         this->collider.dim.height = 45;
         PRINTF(VT_FGCOL(YELLOW) T("☆☆☆☆☆ リーバぼす登場 ☆☆☆☆☆ %f\n", "☆☆☆☆☆ Reeba boss appears ☆☆☆☆☆ %f\n") VT_RST,
                this->scale);
-        this->actor.colChkInfo.health = 20;
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(20, MONSTER_HP);;
         this->collider.elem.atDmgInfo.effect = 4;
         this->collider.elem.atDmgInfo.damage = 16;
         Actor_ChangeCategory(play, &play->actorCtx, &this->actor, ACTORCAT_ENEMY);

@@ -2035,7 +2035,17 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_RECOVERY_HEART) {
         PRINTF(T("回復ハート回復ハート回復ハート\n", "Recovery Heart Recovery Heart Recovery Heart\n"));
-        Health_ChangeBy(play, 0x10);
+        switch (RECOVERY_TAKEN) {
+            case 0:
+                Health_ChangeBy(play, 0x10);
+                break;
+            case 1:
+                Health_ChangeBy(play, 0x8);
+                break;
+            case 2:
+                Health_ChangeBy(play, 0x4);
+                break;
+        }
         return item;
     } else if (item == ITEM_MAGIC_JAR_SMALL) {
         // Magic_Fill is only used to store the magicState.

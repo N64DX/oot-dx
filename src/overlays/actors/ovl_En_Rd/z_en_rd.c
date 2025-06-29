@@ -173,7 +173,7 @@ void EnRd_Init(Actor* thisx, PlayState* play) {
     this->actor.focus.pos = thisx->world.pos;
     this->actor.focus.pos.y += 50.0f;
     this->actor.colChkInfo.mass = MASS_HEAVY;
-    this->actor.colChkInfo.health = 8;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(8, MONSTER_HP);
     this->alpha = this->unk_31D = 255;
     this->rdFlags = REDEAD_GET_RDFLAGS(thisx);
 

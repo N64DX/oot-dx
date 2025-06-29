@@ -956,6 +956,13 @@ void Actor_Init(Actor* actor, PlayState* play) {
     actor->cullingVolumeDistance = 1000.0f;
     actor->cullingVolumeScale = 350.0f;
     actor->cullingVolumeDownward = 700.0f;
+
+    if (EXTENDED_DRAW_DISTANCE && actor->id != ACTOR_EN_TORCH2 && actor->id != ACTOR_EN_BLKOBJ && actor->id != ACTOR_EN_HORSE && actor->id != ACTOR_EN_HORSE_GANON && actor->id != ACTOR_EN_HORSE_ZELDA && !(play->sceneId == SCENE_DODONGOS_CAVERN && actor->id == ACTOR_EN_ZF)) {
+        actor->cullingVolumeDistance = 32767.0f;
+        actor->cullingVolumeScale = 32767.0f;
+        actor->cullingVolumeDownward = 32767.0f;
+    }
+
     CollisionCheck_InitInfo(&actor->colChkInfo);
     actor->floorBgId = BGCHECK_SCENE;
     ActorShape_Init(&actor->shape, 0.0f, NULL, 0.0f);
@@ -6322,4 +6329,25 @@ s32 Actor_TrackPlayer(PlayState* play, Actor* actor, Vec3s* headRot, Vec3s* tors
     Actor_TrackPoint(actor, &target, headRot, torsoRot);
 
     return true;
+}
+
+u16 Actor_EnemyHealthMultiply(u16 health, u8 type) {
+    switch (type) {
+        case 1:
+            return (health * 3) / 2;
+        case 2:
+            return health *= 2;
+        case 3:
+            return (health * 5) / 2;
+        case 4:
+            return health *= 3;
+        case 5:
+            return health *= 4;
+        case 6:
+            return health *= 5;
+        case 7:
+            return health /= 2;
+        default:
+            return health;
+    }
 }

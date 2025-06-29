@@ -235,13 +235,13 @@ void EnIk_InitImpl(Actor* thisx, PlayState* play) {
     thisx->colChkInfo.damageTable = &sDamageTable;
     thisx->colChkInfo.mass = MASS_HEAVY;
     this->isBreakingProp = false;
-    thisx->colChkInfo.health = 30;
+    thisx->colChkInfo.health = Actor_EnemyHealthMultiply(30, ELITE_HP);
     thisx->gravity = -1.0f;
     this->switchFlag = IK_GET_SWITCH_FLAG(thisx);
     thisx->params = IK_GET_ARMOR_TYPE(thisx);
 
     if (thisx->params == IK_TYPE_NABOORU) {
-        thisx->colChkInfo.health += 20;
+        thisx->colChkInfo.health += Actor_EnemyHealthMultiply(20, ELITE_HP);
         thisx->naviEnemyId = NAVI_ENEMY_IRON_KNUCKLE_NABOORU;
     } else {
         Actor_SetScale(thisx, 0.012f);
@@ -351,7 +351,7 @@ void EnIk_SetupIdle(EnIk* this) {
 }
 
 void EnIk_Idle(EnIk* this, PlayState* play) {
-    s32 detectionThreshold = (this->armorStatusFlag == 0) ? 0xAAA : 0x3FFC;
+    s32 detectionThreshold = (this->armorStatusFlag == 0 && !HARDER_ENEMIES) ? 0xAAA : 0x3FFC;
     s16 yawDiff = this->actor.yawTowardsPlayer - this->actor.shape.rot.y;
 
     if ((ABS(yawDiff) <= detectionThreshold) && (this->actor.xzDistToPlayer < 100.0f) &&
@@ -374,7 +374,7 @@ void EnIk_Idle(EnIk* this, PlayState* play) {
 void EnIk_SetupWalkOrRun(EnIk* this) {
     this->unk_2F8 = 5;
 
-    if (this->armorStatusFlag == 0) {
+    if (this->armorStatusFlag == 0 && !HARDER_ENEMIES) {
         Animation_Change(&this->skelAnime, &gIronKnuckleWalkAnim, 1.0f, 0.0f,
                          Animation_GetLastFrame(&gIronKnuckleWalkAnim), ANIMMODE_LOOP, -4.0f);
         this->actor.speed = 0.9f;
@@ -397,7 +397,7 @@ void EnIk_WalkOrRun(EnIk* this, PlayState* play) {
     s16 footstepFrame2;
     s16 stepVal;
 
-    if (this->armorStatusFlag == 0) {
+    if (this->armorStatusFlag == 0 && !HARDER_ENEMIES) {
         temp_t0 = 0xAAA;
         stepVal = 0x320;
         footstepFrame1 = 0;
@@ -772,11 +772,11 @@ void EnIk_UpdateDamage(EnIk* this, PlayState* play) {
         Actor_ApplyDamage(&this->actor);
 
         if (this->actor.params != IK_TYPE_NABOORU) {
-            if ((prevHealth > 10) && (this->actor.colChkInfo.health <= 10)) {
+            if ((prevHealth > Actor_EnemyHealthMultiply(10, ELITE_HP)) && (this->actor.colChkInfo.health <= Actor_EnemyHealthMultiply(10, ELITE_HP))) {
                 this->armorStatusFlag = ARMOR_BROKEN;
                 BodyBreak_Alloc(&this->bodyBreak, 3, play);
             }
-        } else if (this->actor.colChkInfo.health <= 10) {
+        } else if (this->actor.colChkInfo.health <= Actor_EnemyHealthMultiply(10, ELITE_HP)) {
             Actor_ChangeCategory(play, &play->actorCtx, &this->actor, ACTORCAT_BOSS);
             SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EN_LAST_DAMAGE);
 #if !OOT_PAL_N64
@@ -785,7 +785,7 @@ void EnIk_UpdateDamage(EnIk* this, PlayState* play) {
             }
 #endif
             return;
-        } else if (prevHealth == 50) {
+        } else if (prevHealth == Actor_EnemyHealthMultiply(50, ELITE_HP)) {
             Actor_ChangeCategory(play, &play->actorCtx, &this->actor, ACTORCAT_ENEMY);
         }
 
@@ -804,7 +804,7 @@ void EnIk_UpdateDamage(EnIk* this, PlayState* play) {
         }
 
         if ((this->actor.params != IK_TYPE_NABOORU) && (this->armorStatusFlag != 0)) {
-            if ((prevHealth > 10) && (this->actor.colChkInfo.health <= 10)) {
+            if ((prevHealth > 10) && (this->actor.colChkInfo.health <= Actor_EnemyHealthMultiply(10, ELITE_HP))) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_IRONNACK_ARMOR_OFF_DEMO);
             } else {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_IRONNACK_DAMAGE);
@@ -829,7 +829,7 @@ void EnIk_UpdateEnemy(Actor* thisx, PlayState* play) {
     this->drawArmorFlag = this->armorStatusFlag;
     EnIk_UpdateDamage(this, play);
 
-    if ((this->actor.params == IK_TYPE_NABOORU) && (this->actor.colChkInfo.health <= 10)) {
+    if ((this->actor.params == IK_TYPE_NABOORU) && (this->actor.colChkInfo.health <= Actor_EnemyHealthMultiply(10, ELITE_HP))) {
         EnIk_StartDefeatCutscene(&this->actor, play);
     } else {
         this->actionFunc(this, play);

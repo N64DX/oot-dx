@@ -17,6 +17,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_st/object_st.h"
 
@@ -320,6 +321,7 @@ void EnSt_InitColliders(EnSt* this, PlayState* play) {
         ~(DMG_MAGIC_FIRE | DMG_ARROW | DMG_HOOKSHOT | DMG_HAMMER_SWING | DMG_BOOMERANG | DMG_EXPLOSIVE | DMG_DEKU_NUT);
 
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, DamageTable_Get(2), &sColChkInit);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
 
     Collider_InitJntSph(play, &this->colliderJntSph);
     Collider_SetJntSph(play, &this->colliderJntSph, &this->actor, &sJntSphInit, this->colliderJntSphElements);
@@ -494,9 +496,10 @@ s32 EnSt_CheckHitBackside(EnSt* this, PlayState* play) {
     this->actor.gravity = -1.0f;
     Actor_PlaySfx(&this->actor, NA_SE_EN_STALWALL_DEAD);
 
-    if (flags & DMG_ARROW) {
+    if ( (flags & DMG_ARROW) && this->actor.colChkInfo.health <= 2) {
         EnSt_SetupAction(this, EnSt_Die);
         this->finishDeathTimer = 8;
+        this->actor.flags |= ACTOR_FLAG_CAN_ATTACH_TO_ARROW;
     } else {
         EnSt_SetupAction(this, EnSt_BounceAround);
     }
@@ -821,7 +824,6 @@ void EnSt_Init(Actor* thisx, PlayState* play) {
         this->actor.naviEnemyId = NAVI_ENEMY_SKULLTULA;
     }
     EnSt_CheckCeilingPos(this, play);
-    this->actor.flags |= ACTOR_FLAG_CAN_ATTACH_TO_ARROW;
     this->actor.flags |= ACTOR_FLAG_SFX_FOR_PLAYER_BODY_HIT;
     EnSt_SetColliderScale(this);
     this->actor.gravity = 0.0f;

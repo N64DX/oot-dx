@@ -4998,6 +4998,30 @@ void Player_SetInvulnerability(Player* this, s32 timer) {
  * @return false if player is out of health
  */
 s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
+    switch (DAMAGE_TAKEN) {
+        case 1:
+            damage *= 2;
+            break;
+        case 2:
+            damage *= 3;
+            break;
+        case 3:
+            damage *= 4;
+            break;
+        case 4:
+            damage *= 6;
+            break;
+        case 5:
+            damage *= 8;
+            break;
+        case 6:
+            damage /= 2;
+            break;
+        case 7:
+            damage /= 4;
+            break;
+    }
+    
     if ((this->invincibilityTimer != 0) || (this->actor.category != ACTORCAT_PLAYER)) {
         return true;
     }
@@ -11425,7 +11449,7 @@ void Player_UpdateInterface(PlayState* play, Player* this) {
         }
 
         if (doAction != DO_ACTION_PUTAWAY) {
-            this->putAwayCooldownTimer = 20;
+            this->putAwayCooldownTimer = INSTANT_PUTAWAY ? 1: 20;
         } else if (this->putAwayCooldownTimer != 0) {
             // Replace the "Put Away" Do Action label with a blank label while
             // the cooldown timer is counting down
@@ -12802,12 +12826,9 @@ void Player_Draw(Actor* thisx, PlayState* play2) {
         else if (gSaveContext.sceneLayer >= 4 && gSaveContext.sceneLayer <= 5 && play->sceneId == SCENE_HYRULE_FIELD)
             unmirror = true;
 
-        if (R_ENABLE_MIRROR != 1 || unmirror)
-            Player_DrawGameplay(play, this, lod, gCullBackDList, overrideLimbDraw);
-        else {
+        if (R_ENABLE_MIRROR == 1 && !unmirror)
             Matrix_Scale(-1.0f, 1.0f, 1.0f, MTXMODE_APPLY);
-            Player_DrawGameplay(play, this, lod, gCullFrontDList, overrideLimbDraw);
-        }
+        Player_DrawGameplay(play, this, lod, gCullBackDList, overrideLimbDraw);
 
         if (this->invincibilityTimer > 0) {
             POLY_OPA_DISP = Play_SetFog(play, POLY_OPA_DISP);

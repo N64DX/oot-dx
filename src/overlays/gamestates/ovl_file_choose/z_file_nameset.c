@@ -17,7 +17,6 @@
 #include "audio.h"
 #include "save.h"
 #include "resolution.h"
-#include "assets/objects/object_mag/object_mag.h"
 #include "assets/textures/parameter_static/parameter_static.h"
 
 #if OOT_NTSC_N64
@@ -730,8 +729,8 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 #if OOT_VERSION <= PAL_1_1
     if (this->selectingQuestMode) {
         void* textures[][2] = {
-            { gQuestOcarinaOfTimeTex, gTitleZeldaShieldLogoTex },
-            { gQuestMasterQuestTex,   gLogoMasterQuestTex      } 
+            { gQuestOcarinaOfTimeTex, gLogoOcarinaOfTimeTex },
+            { gQuestMasterQuestTex,   gLogoMasterQuestTex   } 
         };
         u16 x, y;
 
@@ -993,9 +992,9 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 this->connectorAlpha[this->buttonIndex] = 255;
                                 Rumble_Request(300.0f, 180, 20, 100);
 #else
-                                this->selectingQuestMode = true;
                                 this->mirrorMode[this->buttonIndex] = false;
                                 this->questMode[this->buttonIndex] = 0;
+                                this->selectingQuestMode = true;
 #endif
                             } else {
                                 Audio_PlaySfxGeneral(NA_SE_SY_FSEL_ERROR, &gSfxDefaultPos, 4,

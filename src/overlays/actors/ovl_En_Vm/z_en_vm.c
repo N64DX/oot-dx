@@ -20,6 +20,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_vm/object_vm.h"
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
@@ -162,10 +163,10 @@ void EnVm_Init(Actor* thisx, PlayState* play) {
     thisx->naviEnemyId = NAVI_ENEMY_BEAMOS;
 
     if (thisx->params == BEAMOS_LARGE) {
-        thisx->colChkInfo.health = 2;
+        thisx->colChkInfo.health = Actor_EnemyHealthMultiply(2, MONSTER_HP);
         Actor_SetScale(thisx, 0.014f);
     } else {
-        thisx->colChkInfo.health = 1;
+        thisx->colChkInfo.health = Actor_EnemyHealthMultiply(1, MONSTER_HP);
         Actor_SetScale(thisx, 0.01f);
     }
 

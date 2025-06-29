@@ -21,6 +21,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_tp/object_tp.h"
 
@@ -157,7 +158,7 @@ void EnTp_Init(Actor* thisx, PlayState* play2) {
     this->actor.colChkInfo.damageTable = &sDamageTable;
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 0.14f);
     this->unk_150 = 0;
-    this->actor.colChkInfo.health = 1;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(1, MONSTER_HP);;
     now = this;
     this->alpha = 255;
     Collider_InitJntSph(play, &this->collider);

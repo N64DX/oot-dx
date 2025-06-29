@@ -136,6 +136,10 @@ s16 gCharPageEng[] = {
 #endif
 
 #if OOT_VERSION <= PAL_1_1
+u64 gLogoOcarinaOfTimeTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_WIDTH, 32)] = {
+#include "assets/objects/object_mag/gTitleZeldaShieldLogoTex.rgba32.inc.c"
+};
+
 u64 gLogoMasterQuestTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)] = {
 #include "assets/overlays/ovl_file_choose/gLogoMasterQuestTex.rgba32.inc.c"
 };

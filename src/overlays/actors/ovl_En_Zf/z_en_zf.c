@@ -22,6 +22,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_zf/object_zf.h"
 
@@ -340,12 +341,12 @@ void EnZf_Init(Actor* thisx, PlayState* play) {
     Collider_SetQuad(play, &this->swordCollider, thisx, &sSwordQuadInit);
 
     if (thisx->params == ENZF_TYPE_DINOLFOS) {
-        thisx->colChkInfo.health = 12;
+        thisx->colChkInfo.health = Actor_EnemyHealthMultiply(12, ELITE_HP);
         thisx->naviEnemyId = NAVI_ENEMY_DINOLFOS;
         SkelAnime_Init(play, &this->skelAnime, &gZfDinolfosSkel, &gZfCryingAnim, this->jointTable, this->morphTable,
                        ENZF_LIMB_MAX);
     } else { // Lizalfos
-        thisx->colChkInfo.health = 6;
+        thisx->colChkInfo.health = Actor_EnemyHealthMultiply(6, ELITE_HP);
         thisx->naviEnemyId = NAVI_ENEMY_LIZALFOS;
         SkelAnime_Init(play, &this->skelAnime, &gZfLizalfosSkel, &gZfCryingAnim, this->jointTable, this->morphTable,
                        ENZF_LIMB_MAX);
