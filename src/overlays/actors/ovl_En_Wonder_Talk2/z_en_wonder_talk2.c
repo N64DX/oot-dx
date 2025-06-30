@@ -49,7 +49,7 @@ void EnWonderTalk2_Init(Actor* thisx, PlayState* play) {
     s32 pad;
     EnWonderTalk2* this = (EnWonderTalk2*)thisx;
     
-    if (REMOVE_DUNGEON_TEXTS && play->sceneId <= SCENE_THIEVES_HIDEOUT) {
+    if (NO_DISRUPTIVE_TEXT && play->sceneId <= SCENE_THIEVES_HIDEOUT) {
         Actor_Kill(&this->actor);
         return;
     }

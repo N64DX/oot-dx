@@ -2035,7 +2035,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_RECOVERY_HEART) {
         PRINTF(T("回復ハート回復ハート回復ハート\n", "Recovery Heart Recovery Heart Recovery Heart\n"));
-        switch (RECOVERY_TAKEN) {
+        switch (HEALTH_RECOVERY) {
             case 0:
                 Health_ChangeBy(play, 0x10);
                 break;

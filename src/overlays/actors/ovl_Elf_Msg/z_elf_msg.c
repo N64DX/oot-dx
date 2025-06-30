@@ -62,7 +62,7 @@ void ElfMsg_SetupAction(ElfMsg* this, ElfMsgActionFunc actionFunc) {
  * Can also set a switch flag from params while killing.
  */
 s32 ElfMsg_KillCheck(ElfMsg* this, PlayState* play) {
-    if (REMOVE_DUNGEON_TEXTS && !PARAMS_GET_NOSHIFT(this->actor.params, 15, 1) && play->sceneId <= SCENE_THIEVES_HIDEOUT) {
+    if (NO_DISRUPTIVE_TEXT && !PARAMS_GET_NOSHIFT(this->actor.params, 15, 1)) {
         Actor_Kill(&this->actor);
         return 0;
     }

@@ -101,8 +101,9 @@ void func_80AFB768(EnSi* this, PlayState* play) {
             if (this->collider.base.ocFlags2 & OC2_HIT_PLAYER) {
                 this->collider.base.ocFlags2 &= ~OC2_HIT_PLAYER;
                 Item_Give(play, ITEM_SKULL_TOKEN);
-                player->actor.freezeTimer = 10;
-                Message_StartTextbox(play, 0xB4, NULL);
+                if (!DISABLE_PLAYER_FREEZE)
+                    player->actor.freezeTimer = 10;
+                Message_StartTextbox(play, DISABLE_PLAYER_FREEZE ? 0xB5 : 0xB4, NULL);
                 Audio_PlayFanfare(NA_BGM_SMALL_ITEM_GET);
                 this->actionFunc = func_80AFB950;
             } else {
@@ -123,8 +124,9 @@ void func_80AFB89C(EnSi* this, PlayState* play) {
 
     if (!ACTOR_FLAGS_CHECK_ALL(&this->actor, ACTOR_FLAG_HOOKSHOT_ATTACHED)) {
         Item_Give(play, ITEM_SKULL_TOKEN);
-        player->actor.freezeTimer = 10;
-        Message_StartTextbox(play, 0xB4, NULL);
+        if (!DISABLE_PLAYER_FREEZE)
+            player->actor.freezeTimer = 10;
+        Message_StartTextbox(play, DISABLE_PLAYER_FREEZE ? 0xB5 : 0xB4, NULL);
         Audio_PlayFanfare(NA_BGM_SMALL_ITEM_GET);
         this->actionFunc = func_80AFB950;
     }
@@ -133,7 +135,7 @@ void func_80AFB89C(EnSi* this, PlayState* play) {
 void func_80AFB950(EnSi* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
 
-    if (Message_GetState(&play->msgCtx) != TEXT_STATE_CLOSING) {
+    if (!DISABLE_PLAYER_FREEZE && Message_GetState(&play->msgCtx) != TEXT_STATE_CLOSING) {
         player->actor.freezeTimer = 10;
     } else {
         SET_GS_FLAGS(PARAMS_GET_S(this->actor.params, 8, 5), PARAMS_GET_S(this->actor.params, 0, 8));

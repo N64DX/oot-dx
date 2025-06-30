@@ -19,8 +19,8 @@ void FileSelectOptions_SetDamageTaken(FileSelectState* this, u8 index, u8 shift)
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileSelectOptions_SetRecoveryTaken(FileSelectState* this, u8 index, u8 shift) {
-    SET_RECOVERY_TAKEN((RECOVERY_TAKEN + 1));
+void FileSelectOptions_SetHealthRecovery(FileSelectState* this, u8 index, u8 shift) {
+    SET_HEALTH_RECOVERY((HEALTH_RECOVERY + 1));
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
@@ -58,8 +58,8 @@ char* FileSelectOptions_GetDamageTaken(FileSelectState* this, u8 index, u8 shift
     }
 }
 
-char* FileSelectOptions_GetRecoveryTaken(FileSelectState* this, u8 index, u8 shift) {
-    switch (RECOVERY_TAKEN) {
+char* FileSelectOptions_GetHealthRecovery(FileSelectState* this, u8 index, u8 shift) {
+    switch (HEALTH_RECOVERY) {
         case 1:
             return "1/2x";
         case 2:
@@ -92,25 +92,27 @@ char* FileSelectOptions_GetHP(FileSelectState* this, u8 index, u8 shift) {
     }
 }
 
-static FileSelectOptionsEntry sFileOptionsEntries[] = {
-    { " 1: Mirror Mode",            FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 0  },
-    { " 2: Extended Draw Distance", FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 1  },
-    { " 3: Resume Last Area",       FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 2  },
-    { " 4: Censor Fire Temple",     FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 3  },
-    { " 5: Skip Intros",            FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 4  },
-    { " 6: No Owl",                 FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 5  },
-    { " 7: Instant Put Away",       FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 6  },
-    { " 8: Remove Dungeon Texts",   FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 7  },
-    { " 9: Bow Aiming Reticle",     FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 8  },
-    { "10: No Low Health Beep",     FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        0, 9  },
-    { "11: Damage Taken",           FileSelectOptions_SetDamageTaken,   FileSelectOptions_GetDamageTaken,   1, 0  },
-    { "12: Recovery Taken",         FileSelectOptions_SetRecoveryTaken, FileSelectOptions_GetRecoveryTaken, 1, 2  },
-    { "13: Monster Health",         FileSelectOptions_SetHP,            FileSelectOptions_GetHP,            1, 5  },
-    { "14: Elite Monster Health",   FileSelectOptions_SetHP,            FileSelectOptions_GetHP,            1, 8  },
-    { "15: Boss Health",            FileSelectOptions_SetHP,            FileSelectOptions_GetHP,            1, 11 },
-    { "16: Harder Enemies",         FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        1, 14 },
-    { "17: Static Dark Link HP",    FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        1, 15 },
-    { "18: No Bottled Fairies",     FileSelectOptions_ToggleOption,     FileSelectOptions_GetOption,        1, 16 },
+static FileSelectOptionsEntry sFileOptionsEntries[] = { 
+    { " 1: Mirror Mode",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 0  },
+    { " 2: Extended Draw Distance", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 1  },
+    { " 3: No Letterboxing",        FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 2  },
+    { " 4: Resume Last Area",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 3  },
+    { " 5: Disable Player Freeze",  FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 4  },
+    { " 6: Censor Fire Temple",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 5  },
+    { " 7: Skip Intros",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 6  },
+    { " 8: No Owl",                 FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 7  },
+    { " 9: Instant Put Away",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 8  },
+    { "10: No Disruptive Text",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 9  },
+    { "11: Bow Aiming Reticle",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 10 },
+    { "12: No Low Health Beep",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 11 },
+    { "13: Damage Taken",           FileSelectOptions_SetDamageTaken,    FileSelectOptions_GetDamageTaken,    1, 0  },
+    { "14: Health Recovery",        FileSelectOptions_SetHealthRecovery, FileSelectOptions_GetHealthRecovery, 1, 2  },
+    { "15: Monster Health",         FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 5  },
+    { "16: Elite Monster Health",   FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 8  },
+    { "17: Boss Health",            FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 11 },
+    { "18: Harder Enemies",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 14 },
+    { "19: Static Dark Link HP",    FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 15 },
+    { "20: No Bottled Fairies",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 16 },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {

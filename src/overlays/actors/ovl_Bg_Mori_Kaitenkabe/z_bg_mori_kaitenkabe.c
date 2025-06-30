@@ -16,6 +16,7 @@
 #include "z_lib.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_mori_objects/object_mori_objects.h"
 
@@ -108,8 +109,10 @@ void BgMoriKaitenkabe_Wait(BgMoriKaitenkabe* this, PlayState* play) {
         this->timer++;
         if ((this->timer > 0) && !Player_InCsMode(play)) {
             BgMoriKaitenkabe_SetupRotate(this);
-            Player_SetCsActionWithHaltedActors(play, &this->dyna.actor, PLAYER_CSACTION_8);
-            Math_Vec3f_Copy(&this->lockedPlayerPos, &player->actor.world.pos);
+            if (!DISABLE_PLAYER_FREEZE) {
+                Player_SetCsActionWithHaltedActors(play, &this->dyna.actor, PLAYER_CSACTION_8);
+                Math_Vec3f_Copy(&this->lockedPlayerPos, &player->actor.world.pos);
+            }
             push.x = Math_SinS(this->dyna.unk_158);
             push.y = 0.0f;
             push.z = Math_CosS(this->dyna.unk_158);
@@ -142,7 +145,8 @@ void BgMoriKaitenkabe_Rotate(BgMoriKaitenkabe* this, PlayState* play) {
     Math_StepToF(&this->rotSpeed, 0.6f * 2, 0.02f * 30);
     if (Math_StepToF(&this->rotYdeg, this->rotDirection * 45.0f, this->rotSpeed)) {
         BgMoriKaitenkabe_SetupWait(this);
-        Player_SetCsActionWithHaltedActors(play, thisx, PLAYER_CSACTION_7);
+        if (!DISABLE_PLAYER_FREEZE)
+            Player_SetCsActionWithHaltedActors(play, thisx, PLAYER_CSACTION_7);
         if (this->rotDirection > 0.0f) {
             thisx->home.rot.y += 0x2000;
         } else {
@@ -159,7 +163,8 @@ void BgMoriKaitenkabe_Rotate(BgMoriKaitenkabe* this, PlayState* play) {
         this->dyna.unk_150 = 0.0f;
         player->stateFlags2 &= ~PLAYER_STATE2_4;
     }
-    Math_Vec3f_Copy(&player->actor.world.pos, &this->lockedPlayerPos);
+    if (!DISABLE_PLAYER_FREEZE)
+        Math_Vec3f_Copy(&player->actor.world.pos, &this->lockedPlayerPos);
 }
 
 void BgMoriKaitenkabe_Update(Actor* thisx, PlayState* play) {

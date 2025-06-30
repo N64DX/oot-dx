@@ -12716,6 +12716,7 @@ void Player_DrawGameplay(PlayState* play, Player* this, s32 lod, Gfx* cullDList,
             MATRIX_TO_MTX(bunnyEarMtx, "../z_player.c", 19279);
         }
 
+        gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
         gSPDisplayList(POLY_OPA_DISP++, sMaskDlists[this->currentMask - 1]);
     }
 
@@ -12826,9 +12827,12 @@ void Player_Draw(Actor* thisx, PlayState* play2) {
         else if (gSaveContext.sceneLayer >= 4 && gSaveContext.sceneLayer <= 5 && play->sceneId == SCENE_HYRULE_FIELD)
             unmirror = true;
 
-        if (R_ENABLE_MIRROR == 1 && !unmirror)
+        if (R_ENABLE_MIRROR != 1 || unmirror)
+            Player_DrawGameplay(play, this, lod, gCullBackDList, overrideLimbDraw);
+        else {
             Matrix_Scale(-1.0f, 1.0f, 1.0f, MTXMODE_APPLY);
-        Player_DrawGameplay(play, this, lod, gCullBackDList, overrideLimbDraw);
+            Player_DrawGameplay(play, this, lod, gCullFrontDList, overrideLimbDraw);
+        }
 
         if (this->invincibilityTimer > 0) {
             POLY_OPA_DISP = Play_SetFog(play, POLY_OPA_DISP);

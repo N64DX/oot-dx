@@ -6062,25 +6062,23 @@ COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "! Ce symbole prouve\n"
 DEFINE_MESSAGE(0x00B5, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE SHIFT(12) COLOR(RED) "黄金のスタルチュラ" COLOR(DEFAULT) "を　倒した！" QUICKTEXT_DISABLE "\n"
-SHIFT(15) "倒した「しるし」を手に入れた！"
+SHIFT(15) "倒した「しるし」を手に入れた！" FADE(40)
 )
 ,
 MSG(
-"You destroyed a " COLOR(RED) "Gold Skulltula" COLOR(DEFAULT) ".\n"
-"You got a token proving you \n"
-"destroyed it!"
+"You got a " COLOR(RED) "Gold Skulltula Token" COLOR(DEFAULT) "!\n"
+"You've collected " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " tokens in total." FADE(40)
 )
 ,
 MSG(
-"Du hast eine " COLOR(RED) "Goldene Skulltula" COLOR(DEFAULT) "\n"
-"zerstört. Du erhältst dafür ein\n"
-"Skulltula-Symbol als Beweis!"
+"Du erhältst ein " COLOR(RED) "Skulltula-Symbol" COLOR(DEFAULT) ". Du\n"
+"hast insgesamt " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " Skulltulas zerstört." FADE(40)
 )
 ,
 MSG(
 "Vous venez de détruire une\n"
 COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "! Ce symbole prouve\n"
-"votre haut fait!"
+"votre haut fait!" FADE(40)
 )
 )
 

@@ -948,6 +948,9 @@ void Camera_UpdateInterface(s16 interfaceField) {
                 break;
         }
 
+        if (NO_LETTERBOXING)
+            sCameraLetterboxSize = 0;
+
         if (interfaceField & CAM_LETTERBOX_INSTANT) {
             Letterbox_SetSize(sCameraLetterboxSize);
         } else {

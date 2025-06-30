@@ -451,15 +451,17 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 
 #define MIRROR_MODE                 ((gFileOptions[gSaveContext.fileNum][0] >> 0)  & 1)  // Bits: 0
 #define EXTENDED_DRAW_DISTANCE      ((gFileOptions[gSaveContext.fileNum][0] >> 1)  & 1)  // Bits: 1
-#define RESUME_LAST_AREA            ((gFileOptions[gSaveContext.fileNum][0] >> 2)  & 1)  // Bits: 2
-#define CENSOR_FIRE_TEMPLE          ((gFileOptions[gSaveContext.fileNum][0] >> 3)  & 1)  // Bits: 3
-#define SKIP_INTROS                 ((gFileOptions[gSaveContext.fileNum][0] >> 4)  & 1)  // Bits: 4
-#define NO_OWL                      ((gFileOptions[gSaveContext.fileNum][0] >> 5)  & 1)  // Bits: 5
-#define INSTANT_PUTAWAY             ((gFileOptions[gSaveContext.fileNum][0] >> 6)  & 1)  // Bits: 6
-#define REMOVE_DUNGEON_TEXTS        ((gFileOptions[gSaveContext.fileNum][0] >> 7)  & 1)  // Bits: 7
-#define BOW_AIMING_RETICLE          ((gFileOptions[gSaveContext.fileNum][0] >> 8)  & 1)  // Bits: 8
-#define NO_LOW_HEALTH_BEEP          ((gFileOptions[gSaveContext.fileNum][0] >> 9)  & 1)  // Bits: 9
-#define RECOVERY_TAKEN              ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
+#define NO_LETTERBOXING             ((gFileOptions[gSaveContext.fileNum][0] >> 2)  & 1)  // Bits: 2
+#define RESUME_LAST_AREA            ((gFileOptions[gSaveContext.fileNum][0] >> 3)  & 1)  // Bits: 3
+#define DISABLE_PLAYER_FREEZE       ((gFileOptions[gSaveContext.fileNum][0] >> 4)  & 1)  // Bits: 4
+#define CENSOR_FIRE_TEMPLE          ((gFileOptions[gSaveContext.fileNum][0] >> 5)  & 1)  // Bits: 5
+#define SKIP_INTROS                 ((gFileOptions[gSaveContext.fileNum][0] >> 6)  & 1)  // Bits: 6
+#define NO_OWL                      ((gFileOptions[gSaveContext.fileNum][0] >> 7)  & 1)  // Bits: 6
+#define INSTANT_PUTAWAY             ((gFileOptions[gSaveContext.fileNum][0] >> 8)  & 1)  // Bits: 7
+#define NO_DISRUPTIVE_TEXT          ((gFileOptions[gSaveContext.fileNum][0] >> 9)  & 1)  // Bits: 8
+#define BOW_AIMING_RETICLE          ((gFileOptions[gSaveContext.fileNum][0] >> 10) & 1)  // Bits: 10
+#define NO_LOW_HEALTH_BEEP          ((gFileOptions[gSaveContext.fileNum][0] >> 11) & 1)  // Bits: 11
+#define HEALTH_RECOVERY             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gFileOptions[gSaveContext.fileNum][1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gFileOptions[gSaveContext.fileNum][1] >> 5)  & 7)  // Bits: 5-7
 #define ELITE_HP                    ((gFileOptions[gSaveContext.fileNum][1] >> 8)  & 7)  // Bits: 8-10
@@ -469,23 +471,11 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define NO_BOTTLED_FAIRIES          ((gFileOptions[gSaveContext.fileNum][1] >> 16) & 1)  // Bits: 16
 
 #define SET_MIRROR_MODE              (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 0))
-#define SET_EXTENDED_DRAW_DISTANCE   (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 1))
-#define SET_RESUME_LAST_AREA         (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 2))
-#define SET_CENSOR_FIRE_TEMPLE       (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 3))
-#define SET_SKIP_INTROS              (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 4))
-#define SET_NO_OWL                   (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 5))
-#define SET_INSTANT_PUTAWAY          (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 6))
-#define SET_REMOVE_DUNGEON_TEXTS     (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 7))
-#define SET_BOW_AIMING_RETICLE       (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 8))
-#define SET_NO_LOW_HEALTH_BEEP       (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 9))
-#define SET_RECOVERY_TAKEN(value)    (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(3 << 0))  | (((value) & 3) << 0))
+#define SET_HEALTH_RECOVERY(value)   (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(3 << 0))  | (((value) & 3) << 0))
 #define SET_DAMAGE_TAKEN(value)      (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 2))  | (((value) & 7) << 2))
 #define SET_MONSTER_HP(value)        (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 5))  | (((value) & 7) << 5))
 #define SET_ELITE_HP(value)          (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 8))  | (((value) & 7) << 8))
 #define SET_BOSS_HP(value)           (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 11)) | (((value) & 7) << 11))
-#define SET_HARDER_ENEMIES           (gFileOptions[gSaveContext.fileNum][1] ^=                                           (1 << 14))
-#define SET_STATIC_DARK_LINK_HP      (gFileOptions[gSaveContext.fileNum][1] ^=                                           (1 << 15))
-#define SET_NO_BOTTLED_FAIRIES       (gFileOptions[gSaveContext.fileNum][1] ^=                                           (1 << 16))
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
