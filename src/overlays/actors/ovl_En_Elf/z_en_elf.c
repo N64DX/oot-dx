@@ -1457,7 +1457,9 @@ void func_80A053F0(Actor* thisx, PlayState* play) {
 #endif
 
         if (!Play_InCsMode(play)) {
-            if (gSaveContext.save.info.playerData.naviTimer < 25800) {
+            if (NO_DISRUPTIVE_TEXT) {
+                gSaveContext.save.info.playerData.naviTimer = 0;
+            } else if (gSaveContext.save.info.playerData.naviTimer < 25800) {
                 gSaveContext.save.info.playerData.naviTimer++;
             } else if (!(this->fairyFlags & 0x80)) {
                 gSaveContext.save.info.playerData.naviTimer = 0;

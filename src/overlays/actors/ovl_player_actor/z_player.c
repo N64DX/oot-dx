@@ -8378,7 +8378,7 @@ s32 func_8083FD78(Player* this, f32* arg1, s16* arg2, PlayState* play) {
         if (this->focusActor != NULL) {
             func_8083DB98(this, true);
         } else {
-            Math_SmoothStepToS(&this->actor.focus.rot.x, sControlInput->rel.stick_y * 240.0f, 14, 4000, 30);
+            Math_SmoothStepToS(&this->actor.focus.rot.x, sControlInput->rel.stick_y * 240.0f * (INVERSE_AIMING ? -1 : 1), 14, 4000, 30);
             func_80836AB8(this, true);
         }
     } else {
@@ -9413,11 +9413,24 @@ s32 func_8084285C(Player* this, f32 arg1, f32 arg2, f32 arg3) {
 }
 
 s32 func_808428D8(Player* this, PlayState* play) {
+    u8 swordId;
+    u32 dmgFlags;
+
     if (!Player_IsChildWithHylianShield(this) && (Player_GetMeleeWeaponHeld2(this) != 0) && sUseHeldItem) {
         Player_AnimPlayOnce(play, this, &gPlayerAnim_link_normal_defense_kiru);
         this->av1.actionVar1 = 1;
         this->meleeWeaponAnimation = PLAYER_MWA_STAB_1H;
         this->yaw = this->actor.shape.rot.y + this->upperLimbRot.y;
+
+        if (FIX_POWER_CROUCH_STAB) {
+            if (Player_HoldsBrokenKnife(this))
+                swordId = 1;
+            else swordId = Player_GetMeleeWeaponHeld2(this) - 1;
+
+            dmgFlags = D_80854488[swordId][0];
+            func_80837918(this, 0, dmgFlags);
+            func_80837918(this, 1, dmgFlags);
+        }
         return 1;
     }
 
@@ -9635,7 +9648,7 @@ void Player_Action_80843188(Player* this, PlayState* play) {
         s16 sp46;
         f32 sp40;
 
-        sp54 = sControlInput->rel.stick_y * 100;
+        sp54 = sControlInput->rel.stick_y * 100 * (INVERSE_AIMING ? -1 : 1);
         sp50 = sControlInput->rel.stick_x * (R_ENABLE_MIRROR == 1 ? 120 : -120);
         sp4E = this->actor.shape.rot.y - Camera_GetInputDirYaw(GET_ACTIVE_CAM(play));
 
@@ -11664,9 +11677,7 @@ void Player_ProcessSceneCollision(PlayState* play, Player* this) {
         yawDiff = this->actor.shape.rot.y - (s16)(this->actor.wallYaw + 0x8000);
         sTouchedWallFlags = SurfaceType_GetWallFlags(&play->colCtx, this->actor.wallPoly, this->actor.wallBgId);
 
-        /**
-        /* From https://github.com/HackerN64/HackerOoT committed by krm01
-        */
+        // From https://github.com/HackerN64/HackerOoT committed by krm01
         // This fixes the "started climbing a wall and then immediately fell off" bug.
         // The main idea is if a climbing wall is detected, double-check that it will
         // still be valid once climbing begins by doing a second raycast with a small
@@ -12880,7 +12891,7 @@ s16 func_8084ABD8(PlayState* play, Player* this, s32 arg2, s16 arg3) {
     s16 temp3;
 
     if (!func_8002DD78(this) && !func_808334B4(this) && !arg2) {
-        temp2 = sControlInput->rel.stick_y * 240.0f;
+        temp2 = sControlInput->rel.stick_y * 240.0f * (INVERSE_AIMING ? -1 : 1);
         Math_SmoothStepToS(&this->actor.focus.rot.x, temp2, 14, 4000, 30);
 
         temp2 = sControlInput->rel.stick_x * -16.0f;
@@ -12890,7 +12901,7 @@ s16 func_8084ABD8(PlayState* play, Player* this, s32 arg2, s16 arg3) {
         temp1 = (this->stateFlags1 & PLAYER_STATE1_23) ? 3500 : 14000;
         temp3 = ((sControlInput->rel.stick_y >= 0) ? 1 : -1) *
                 (s32)((1.0f - Math_CosS(sControlInput->rel.stick_y * 200)) * 1500.0f);
-        this->actor.focus.rot.x += temp3;
+        this->actor.focus.rot.x += temp3 * (INVERSE_AIMING ? -1 : 1);
         this->actor.focus.rot.x = CLAMP(this->actor.focus.rot.x, -temp1, temp1);
 
         temp1 = 19114;
@@ -15283,7 +15294,7 @@ void Player_Action_8085063C(Player* this, PlayState* play) {
 
         if (play->msgCtx.choiceIndex == 1) {
             gSaveContext.respawn[RESPAWN_MODE_TOP].data = -respawnData;
-            gSaveContext.save.info.fw.set = 0;
+            gSaveContext.save.info.fw[gSaveContext.save.linkAge].set = 0;
             Sfx_PlaySfxAtPos(&gSaveContext.respawn[RESPAWN_MODE_TOP].pos, NA_SE_PL_MAGIC_WIND_VANISH);
         }
 
@@ -15365,17 +15376,17 @@ void Player_Action_808507F4(Player* this, PlayState* play) {
                 gSaveContext.respawn[RESPAWN_MODE_TOP].data = 1;
                 Play_SetupRespawnPoint(play, RESPAWN_MODE_TOP,
                                        PLAYER_PARAMS(PLAYER_START_MODE_FARORES_WIND, PLAYER_START_BG_CAM_DEFAULT));
-                gSaveContext.save.info.fw.set = 1;
-                gSaveContext.save.info.fw.pos.x = gSaveContext.respawn[RESPAWN_MODE_DOWN].pos.x;
-                gSaveContext.save.info.fw.pos.y = gSaveContext.respawn[RESPAWN_MODE_DOWN].pos.y;
-                gSaveContext.save.info.fw.pos.z = gSaveContext.respawn[RESPAWN_MODE_DOWN].pos.z;
-                gSaveContext.save.info.fw.yaw = gSaveContext.respawn[RESPAWN_MODE_DOWN].yaw;
-                gSaveContext.save.info.fw.playerParams =
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].set = 1;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].pos.x = gSaveContext.respawn[RESPAWN_MODE_DOWN].pos.x;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].pos.y = gSaveContext.respawn[RESPAWN_MODE_DOWN].pos.y;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].pos.z = gSaveContext.respawn[RESPAWN_MODE_DOWN].pos.z;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].yaw = gSaveContext.respawn[RESPAWN_MODE_DOWN].yaw;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].playerParams =
                     PLAYER_PARAMS(PLAYER_START_MODE_FARORES_WIND, PLAYER_START_BG_CAM_DEFAULT);
-                gSaveContext.save.info.fw.entranceIndex = gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex;
-                gSaveContext.save.info.fw.roomIndex = gSaveContext.respawn[RESPAWN_MODE_DOWN].roomIndex;
-                gSaveContext.save.info.fw.tempSwchFlags = gSaveContext.respawn[RESPAWN_MODE_DOWN].tempSwchFlags;
-                gSaveContext.save.info.fw.tempCollectFlags = gSaveContext.respawn[RESPAWN_MODE_DOWN].tempCollectFlags;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].entranceIndex = gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].roomIndex = gSaveContext.respawn[RESPAWN_MODE_DOWN].roomIndex;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].tempSwchFlags = gSaveContext.respawn[RESPAWN_MODE_DOWN].tempSwchFlags;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].tempCollectFlags = gSaveContext.respawn[RESPAWN_MODE_DOWN].tempCollectFlags;
                 this->av2.actionVar2 = 2;
             }
         } else if (this->av1.actionVar1 >= 0) {

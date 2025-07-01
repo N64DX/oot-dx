@@ -146,14 +146,14 @@ typedef struct RespawnData {
 
 typedef struct FaroresWindData {
     /* 0x00 */ Vec3i pos;
-    /* 0x0C */ s32 yaw;
-    /* 0x10 */ s32 playerParams;
-    /* 0x14 */ s32 entranceIndex;
-    /* 0x18 */ s32 roomIndex;
-    /* 0x1C */ s32 set;
-    /* 0x20 */ s32 tempSwchFlags;
-    /* 0x24 */ s32 tempCollectFlags;
-} FaroresWindData; // size = 0x28
+    /* 0x0C */ s16 yaw;
+    /* 0x0E */ s16 playerParams;
+    /* 0x10 */ s16 entranceIndex;
+    /* 0x12 */ s8 roomIndex;
+    /* 0x13 */ s8 set;
+    /* 0x14 */ s32 tempSwchFlags;
+    /* 0x18 */ s32 tempCollectFlags;
+} FaroresWindData; // size = 0x1C
 
 typedef enum TimerState {
     /* 0x0 */ TIMER_STATE_OFF,
@@ -260,8 +260,7 @@ typedef struct SaveInfo {
     /* 0x004C  0x0068 */ ItemEquips equips;
     /* 0x0058  0x0074 */ Inventory inventory;
     /* 0x00B8  0x00D4 */ SavedSceneFlags sceneFlags[124];
-    /* 0x0E48  0x0E64 */ FaroresWindData fw;
-    /* 0x0E70  0x0E8C */ char unk_E8C[0x10];
+    /* 0x0E48  0x0E64 */ FaroresWindData fw[2];
     /* 0x0E80  0x0E9C */ s32 gsFlags[6];
     /* 0x0E98  0x0EB4 */ char unk_EB4[0x4];
     /* 0x0E9C  0x0EB8 */ s32 highScores[7];
@@ -461,6 +460,8 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define NO_DISRUPTIVE_TEXT          ((gFileOptions[gSaveContext.fileNum][0] >> 9)  & 1)  // Bits: 8
 #define BOW_AIMING_RETICLE          ((gFileOptions[gSaveContext.fileNum][0] >> 10) & 1)  // Bits: 10
 #define NO_LOW_HEALTH_BEEP          ((gFileOptions[gSaveContext.fileNum][0] >> 11) & 1)  // Bits: 11
+#define INVERSE_AIMING              ((gFileOptions[gSaveContext.fileNum][0] >> 12) & 1)  // Bits: 12
+#define FIX_POWER_CROUCH_STAB       ((gFileOptions[gSaveContext.fileNum][0] >> 13) & 1)  // Bits: 13
 #define HEALTH_RECOVERY             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gFileOptions[gSaveContext.fileNum][1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gFileOptions[gSaveContext.fileNum][1] >> 5)  & 7)  // Bits: 5-7

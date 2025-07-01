@@ -92,27 +92,29 @@ char* FileSelectOptions_GetHP(FileSelectState* this, u8 index, u8 shift) {
     }
 }
 
-static FileSelectOptionsEntry sFileOptionsEntries[] = { 
-    { " 1: Mirror Mode",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 0  },
-    { " 2: Extended Draw Distance", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 1  },
-    { " 3: No Letterboxing",        FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 2  },
-    { " 4: Resume Last Area",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 3  },
-    { " 5: Disable Player Freeze",  FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 4  },
-    { " 6: Censor Fire Temple",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 5  },
-    { " 7: Skip Intros",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 6  },
-    { " 8: No Owl",                 FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 7  },
-    { " 9: Instant Put Away",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 8  },
-    { "10: No Disruptive Text",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 9  },
-    { "11: Bow Aiming Reticle",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 10 },
-    { "12: No Low Health Beep",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 11 },
-    { "13: Damage Taken",           FileSelectOptions_SetDamageTaken,    FileSelectOptions_GetDamageTaken,    1, 0  },
-    { "14: Health Recovery",        FileSelectOptions_SetHealthRecovery, FileSelectOptions_GetHealthRecovery, 1, 2  },
-    { "15: Monster Health",         FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 5  },
-    { "16: Elite Monster Health",   FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 8  },
-    { "17: Boss Health",            FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 11 },
-    { "18: Harder Enemies",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 14 },
-    { "19: Static Dark Link HP",    FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 15 },
-    { "20: No Bottled Fairies",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 16 },
+static FileSelectOptionsEntry sFileOptionsEntries[] = {
+    { 0, "Mirror Mode",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 0  },
+    { 0, "Extended Draw Distance", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 1  },
+    { 0, "No Letterboxing",        FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 2  },
+    { 0, "Resume Last Area",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 3  },
+    { 0, "Disable Player Freeze",  FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 4  },
+    { 0, "Censor Fire Temple",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 5  },
+    { 0, "Skip Intros",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 6  },
+    { 0, "No Owl",                 FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 7  },
+    { 0, "Instant Put Away",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 8  },
+    { 0, "No Disruptive Text",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 9  },
+    { 0, "Bow Aiming Reticle",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 10 },
+    { 0, "No Low Health Beep",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 11 },
+    { 0, "Inverse Aiming",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 12 },
+    { 0, "Fix Power Crouch Stab",  FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 13 },
+    { 0, "Damage Taken",           FileSelectOptions_SetDamageTaken,    FileSelectOptions_GetDamageTaken,    1, 0  },
+    { 0, "Health Recovery",        FileSelectOptions_SetHealthRecovery, FileSelectOptions_GetHealthRecovery, 1, 2  },
+    { 0, "Monster Health",         FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 5  },
+    { 0, "Elite Monster Health",   FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 8  },
+    { 0, "Boss Health",            FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 11 },
+    { 0, "Harder Enemies",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 14 },
+    { 0, "Static Dark Link HP",    FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 15 },
+    { 0, "No Bottled Fairies",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 16 },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {
@@ -255,7 +257,9 @@ void FileSelectOptions_Draw(FileSelectState* this) {
             GfxPrint_SetColor(&printer, 255, 20, 20, 255);
         else  GfxPrint_SetColor(&printer, 200, 200, 55, 255);
 
-        GfxPrint_Printf(&printer, "%s", this->entries[title].name);
+        if (this->entries[title].number < 10)
+            GfxPrint_Printf(&printer, " %d: %s", this->entries[title].number, this->entries[title].name);
+        else GfxPrint_Printf(&printer, "%d: %s", this->entries[title].number, this->entries[title].name);
 
         GfxPrint_SetPos(&printer, 31, i + 4);
         GfxPrint_Printf(&printer, "%s", this->entries[title].getFunc(this, this->entries[title].index, this->entries[title].shift));
@@ -290,8 +294,13 @@ void FileSelectOptions_Reset(FileSelectState* this) {
 }
 
 void FileSelectOptions_Init(FileSelectState* this) {
+    u8 i;
+
     this->entries = sFileOptionsEntries;
     this->count = ARRAY_COUNT(sFileOptionsEntries);
+
+    for (i=1; i<=this->count; i++)
+        this->entries[i-1].number = i;
 
     FileSelectOptions_Reset(this);
 }

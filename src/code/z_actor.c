@@ -2152,17 +2152,17 @@ void func_8002FA60(PlayState* play) {
     f32 lightPosY;
     f32 lightPosZ;
 
-    if (gSaveContext.save.info.fw.set) {
+    if (gSaveContext.save.info.fw[gSaveContext.save.linkAge].set) {
         gSaveContext.respawn[RESPAWN_MODE_TOP].data = 0x28;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x = gSaveContext.save.info.fw.pos.x;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.y = gSaveContext.save.info.fw.pos.y;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.z = gSaveContext.save.info.fw.pos.z;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].yaw = gSaveContext.save.info.fw.yaw;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].playerParams = gSaveContext.save.info.fw.playerParams;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].entranceIndex = gSaveContext.save.info.fw.entranceIndex;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].roomIndex = gSaveContext.save.info.fw.roomIndex;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].tempSwchFlags = gSaveContext.save.info.fw.tempSwchFlags;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].tempCollectFlags = gSaveContext.save.info.fw.tempCollectFlags;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x = gSaveContext.save.info.fw[gSaveContext.save.linkAge].pos.x;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.y = gSaveContext.save.info.fw[gSaveContext.save.linkAge].pos.y;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.z = gSaveContext.save.info.fw[gSaveContext.save.linkAge].pos.z;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].yaw = gSaveContext.save.info.fw[gSaveContext.save.linkAge].yaw;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].playerParams = gSaveContext.save.info.fw[gSaveContext.save.linkAge].playerParams;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].entranceIndex = gSaveContext.save.info.fw[gSaveContext.save.linkAge].entranceIndex;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].roomIndex = gSaveContext.save.info.fw[gSaveContext.save.linkAge].roomIndex;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].tempSwchFlags = gSaveContext.save.info.fw[gSaveContext.save.linkAge].tempSwchFlags;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].tempCollectFlags = gSaveContext.save.info.fw[gSaveContext.save.linkAge].tempCollectFlags;
     } else {
         gSaveContext.respawn[RESPAWN_MODE_TOP].data = 0;
         gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x = 0.0f;
@@ -2277,7 +2277,7 @@ void Actor_DrawFaroresWindPointer(PlayState* play) {
             alpha = 255 - (temp * 30);
 
             if (alpha < 0) {
-                gSaveContext.save.info.fw.set = 0;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].set = 0;
                 gSaveContext.respawn[RESPAWN_MODE_TOP].data = 0;
                 alpha = 0;
             } else {

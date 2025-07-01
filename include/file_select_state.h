@@ -10,12 +10,13 @@
 #include "view.h"
 
 typedef struct FileSelectOptionsEntry {
-    /* 0x00 */ char* name;
-    /* 0x04 */ void  (*setFunc) (struct FileSelectState*, u8, u8);
-    /* 0x08 */ char* (*getFunc) (struct FileSelectState*, u8, u8);
-    /* 0x0C */ u8 index;
-    /* 0x10 */ u8 shift;
-} FileSelectOptionsEntry; // size = 0x8
+    /* 0x00 */ u8 number;
+    /* 0x04 */ char* name;
+    /* 0x08 */ void  (*setFunc) (struct FileSelectState*, u8, u8);
+    /* 0x0C */ char* (*getFunc) (struct FileSelectState*, u8, u8);
+    /* 0x10 */ u8 index;
+    /* 0x11 */ u8 shift;
+} FileSelectOptionsEntry; // size = 0x12
 
 typedef struct FileSelectState {
     /* 0x00000 */ GameState state;

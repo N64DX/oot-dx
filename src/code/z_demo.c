@@ -671,7 +671,6 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_TEMPLE_OF_TIME_FROM_MASTER_SWORD:
-                gSaveContext.save.info.fw.set = 0;
                 gSaveContext.respawn[RESPAWN_MODE_TOP].data = 0;
 
                 if (!GET_EVENTCHKINF(EVENTCHKINF_45)) {
