@@ -46,26 +46,26 @@ typedef struct RestrictionFlags {
 } RestrictionFlags; // size = 0x4
 
 static RestrictionFlags sRestrictionFlags[] = {
-    { SCENE_HYRULE_FIELD, 0x00, 0x00, 0x10 },
-    { SCENE_KAKARIKO_VILLAGE, 0x00, 0x00, 0x10 },
-    { SCENE_GRAVEYARD, 0x00, 0x00, 0x10 },
-    { SCENE_ZORAS_RIVER, 0x00, 0x00, 0x10 },
-    { SCENE_KOKIRI_FOREST, 0x00, 0x00, 0x10 },
-    { SCENE_SACRED_FOREST_MEADOW, 0x00, 0x00, 0x10 },
-    { SCENE_LAKE_HYLIA, 0x00, 0x00, 0x10 },
-    { SCENE_ZORAS_DOMAIN, 0x00, 0x00, 0x10 },
-    { SCENE_ZORAS_FOUNTAIN, 0x00, 0x00, 0x10 },
-    { SCENE_GERUDO_VALLEY, 0x00, 0x00, 0x10 },
-    { SCENE_LOST_WOODS, 0x00, 0x00, 0x10 },
-    { SCENE_DESERT_COLOSSUS, 0x00, 0x00, 0x10 },
-    { SCENE_GERUDOS_FORTRESS, 0x00, 0x00, 0x10 },
-    { SCENE_HAUNTED_WASTELAND, 0x00, 0x00, 0x10 },
-    { SCENE_HYRULE_CASTLE, 0x00, 0x00, 0x10 },
-    { SCENE_OUTSIDE_GANONS_CASTLE, 0x00, 0x00, 0x10 },
-    { SCENE_DEATH_MOUNTAIN_TRAIL, 0x00, 0x00, 0x10 },
-    { SCENE_DEATH_MOUNTAIN_CRATER, 0x00, 0x00, 0x10 },
-    { SCENE_GORON_CITY, 0x00, 0x00, 0x10 },
-    { SCENE_LON_LON_RANCH, 0x00, 0x00, 0x10 },
+    { SCENE_HYRULE_FIELD, 0x00, 0x00, 0x00 },
+    { SCENE_KAKARIKO_VILLAGE, 0x00, 0x00, 0x00 },
+    { SCENE_GRAVEYARD, 0x00, 0x00, 0x00 },
+    { SCENE_ZORAS_RIVER, 0x00, 0x00, 0x00 },
+    { SCENE_KOKIRI_FOREST, 0x00, 0x00, 0x00 },
+    { SCENE_SACRED_FOREST_MEADOW, 0x00, 0x00, 0x00 },
+    { SCENE_LAKE_HYLIA, 0x00, 0x00, 0x00 },
+    { SCENE_ZORAS_DOMAIN, 0x00, 0x00, 0x00 },
+    { SCENE_ZORAS_FOUNTAIN, 0x00, 0x00, 0x00 },
+    { SCENE_GERUDO_VALLEY, 0x00, 0x00, 0x00 },
+    { SCENE_LOST_WOODS, 0x00, 0x00, 0x00 },
+    { SCENE_DESERT_COLOSSUS, 0x00, 0x00, 0x00 },
+    { SCENE_GERUDOS_FORTRESS, 0x00, 0x00, 0x00 },
+    { SCENE_HAUNTED_WASTELAND, 0x00, 0x00, 0x00 },
+    { SCENE_HYRULE_CASTLE, 0x00, 0x00, 0x00 },
+    { SCENE_OUTSIDE_GANONS_CASTLE, 0x00, 0x00, 0x00 },
+    { SCENE_DEATH_MOUNTAIN_TRAIL, 0x00, 0x00, 0x00 },
+    { SCENE_DEATH_MOUNTAIN_CRATER, 0x00, 0x00, 0x00 },
+    { SCENE_GORON_CITY, 0x00, 0x00, 0x00 },
+    { SCENE_LON_LON_RANCH, 0x00, 0x00, 0x00 },
     { SCENE_TEMPLE_OF_TIME, 0x00, 0x10, 0x15 },
     { SCENE_CHAMBER_OF_THE_SAGES, 0xA2, 0xAA, 0xAA },
     { SCENE_SHOOTING_GALLERY, 0x11, 0x55, 0x55 },
@@ -118,7 +118,7 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_POTION_SHOP_MARKET, 0x10, 0x10, 0x15 },
     { SCENE_BOMBCHU_SHOP, 0x10, 0x10, 0x15 },
     { SCENE_HAPPY_MASK_SHOP, 0x10, 0x10, 0x15 },
-    { SCENE_GERUDO_TRAINING_GROUND, 0x00, 0x03, 0x10 },
+    { SCENE_GERUDO_TRAINING_GROUND, 0x00, 0x00, 0x00 },
     { SCENE_DEKU_TREE, 0x00, 0x00, 0x00 },
     { SCENE_DEKU_TREE_BOSS, 0x00, 0x45, 0x50 },
     { SCENE_DODONGOS_CAVERN, 0x00, 0x00, 0x00 },
@@ -140,11 +140,11 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_GANONDORF_BOSS, 0x00, 0x45, 0x50 },
     { SCENE_ICE_CAVERN, 0x00, 0x00, 0xC0 },
     { SCENE_WINDMILL_AND_DAMPES_GRAVE, 0x00, 0x03, 0x14 },
-    { SCENE_INSIDE_GANONS_CASTLE, 0x00, 0x03, 0x10 },
+    { SCENE_INSIDE_GANONS_CASTLE, 0x00, 0x00, 0x00 },
     { SCENE_GANON_BOSS, 0x00, 0x45, 0x50 },
     { SCENE_GANONS_TOWER_COLLAPSE_INTERIOR, 0x00, 0x05, 0x50 },
     { SCENE_INSIDE_GANONS_CASTLE_COLLAPSE, 0x00, 0x05, 0x50 },
-    { SCENE_THIEVES_HIDEOUT, 0x00, 0x00, 0x10 },
+    { SCENE_THIEVES_HIDEOUT, 0x00, 0x00, 0x00 },
     { SCENE_GROTTOS, 0x00, 0x00, 0xD0 },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
@@ -2035,7 +2035,17 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_RECOVERY_HEART) {
         PRINTF(T("回復ハート回復ハート回復ハート\n", "Recovery Heart Recovery Heart Recovery Heart\n"));
-        Health_ChangeBy(play, 0x10);
+        switch (HEALTH_RECOVERY) {
+            case 0:
+                Health_ChangeBy(play, 0x10);
+                break;
+            case 1:
+                Health_ChangeBy(play, 0x8);
+                break;
+            case 2:
+                Health_ChangeBy(play, 0x4);
+                break;
+        }
         return item;
     } else if (item == ITEM_MAGIC_JAR_SMALL) {
         // Magic_Fill is only used to store the magicState.

@@ -213,6 +213,7 @@ void EnPoh_Init(Actor* thisx, PlayState* play) {
     Collider_InitCylinder(play, &this->colliderCylinder);
     Collider_SetCylinder(play, &this->colliderCylinder, &this->actor, &sCylinderInit);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     this->unk_194 = 0;
     this->unk_195 = 32;
     this->visibilityTimer = Rand_S16Offset(700, 300);

@@ -673,7 +673,7 @@ void EnMd_UpdateAlphaByDistance(EnMd* this, PlayState* play) {
         radius = (CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD) && !GET_EVENTCHKINF(EVENTCHKINF_1C) &&
                   (play->sceneId == SCENE_KOKIRI_FOREST))
                      ? 100.0f
-                     : 400.0f;
+                     : (EXTENDED_DRAW_DISTANCE ? 32767.0f : 400.0f);
         this->alpha = Actor_UpdateAlphaByDistance(&this->actor, play, this->alpha, radius);
         this->actor.shape.shadowAlpha = this->alpha;
     } else {

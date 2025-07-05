@@ -956,6 +956,13 @@ void Actor_Init(Actor* actor, PlayState* play) {
     actor->cullingVolumeDistance = 1000.0f;
     actor->cullingVolumeScale = 350.0f;
     actor->cullingVolumeDownward = 700.0f;
+
+    if (EXTENDED_DRAW_DISTANCE && actor->id != ACTOR_EN_TORCH2 && actor->id != ACTOR_EN_BLKOBJ && actor->id != ACTOR_EN_HORSE && actor->id != ACTOR_EN_HORSE_GANON && actor->id != ACTOR_EN_HORSE_ZELDA && !(play->sceneId == SCENE_DODONGOS_CAVERN && actor->id == ACTOR_EN_ZF)) {
+        actor->cullingVolumeDistance = 32767.0f;
+        actor->cullingVolumeScale = 32767.0f;
+        actor->cullingVolumeDownward = 32767.0f;
+    }
+
     CollisionCheck_InitInfo(&actor->colChkInfo);
     actor->floorBgId = BGCHECK_SCENE;
     ActorShape_Init(&actor->shape, 0.0f, NULL, 0.0f);
@@ -2145,17 +2152,17 @@ void func_8002FA60(PlayState* play) {
     f32 lightPosY;
     f32 lightPosZ;
 
-    if (gSaveContext.save.info.fw.set) {
+    if (gSaveContext.save.info.fw[gSaveContext.save.linkAge].set) {
         gSaveContext.respawn[RESPAWN_MODE_TOP].data = 0x28;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x = gSaveContext.save.info.fw.pos.x;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.y = gSaveContext.save.info.fw.pos.y;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.z = gSaveContext.save.info.fw.pos.z;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].yaw = gSaveContext.save.info.fw.yaw;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].playerParams = gSaveContext.save.info.fw.playerParams;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].entranceIndex = gSaveContext.save.info.fw.entranceIndex;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].roomIndex = gSaveContext.save.info.fw.roomIndex;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].tempSwchFlags = gSaveContext.save.info.fw.tempSwchFlags;
-        gSaveContext.respawn[RESPAWN_MODE_TOP].tempCollectFlags = gSaveContext.save.info.fw.tempCollectFlags;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x = gSaveContext.save.info.fw[gSaveContext.save.linkAge].pos.x;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.y = gSaveContext.save.info.fw[gSaveContext.save.linkAge].pos.y;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].pos.z = gSaveContext.save.info.fw[gSaveContext.save.linkAge].pos.z;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].yaw = gSaveContext.save.info.fw[gSaveContext.save.linkAge].yaw;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].playerParams = gSaveContext.save.info.fw[gSaveContext.save.linkAge].playerParams;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].entranceIndex = gSaveContext.save.info.fw[gSaveContext.save.linkAge].entranceIndex;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].roomIndex = gSaveContext.save.info.fw[gSaveContext.save.linkAge].roomIndex;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].tempSwchFlags = gSaveContext.save.info.fw[gSaveContext.save.linkAge].tempSwchFlags;
+        gSaveContext.respawn[RESPAWN_MODE_TOP].tempCollectFlags = gSaveContext.save.info.fw[gSaveContext.save.linkAge].tempCollectFlags;
     } else {
         gSaveContext.respawn[RESPAWN_MODE_TOP].data = 0;
         gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x = 0.0f;
@@ -2270,7 +2277,7 @@ void Actor_DrawFaroresWindPointer(PlayState* play) {
             alpha = 255 - (temp * 30);
 
             if (alpha < 0) {
-                gSaveContext.save.info.fw.set = 0;
+                gSaveContext.save.info.fw[gSaveContext.save.linkAge].set = 0;
                 gSaveContext.respawn[RESPAWN_MODE_TOP].data = 0;
                 alpha = 0;
             } else {
@@ -6322,4 +6329,25 @@ s32 Actor_TrackPlayer(PlayState* play, Actor* actor, Vec3s* headRot, Vec3s* tors
     Actor_TrackPoint(actor, &target, headRot, torsoRot);
 
     return true;
+}
+
+u16 Actor_EnemyHealthMultiply(u16 health, u8 type) {
+    switch (type) {
+        case 1:
+            return (health * 3) / 2;
+        case 2:
+            return health *= 2;
+        case 3:
+            return (health * 5) / 2;
+        case 4:
+            return health *= 3;
+        case 5:
+            return health *= 4;
+        case 6:
+            return health *= 5;
+        case 7:
+            return health /= 2;
+        default:
+            return health;
+    }
 }

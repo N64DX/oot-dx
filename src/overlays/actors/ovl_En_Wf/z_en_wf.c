@@ -26,6 +26,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_wf/object_wf.h"
 
@@ -237,7 +238,7 @@ void EnWf_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&thisx->shape, 0.0f, ActorShadow_DrawCircle, 0.0f);
     thisx->focus.pos = thisx->world.pos;
     thisx->colChkInfo.mass = MASS_HEAVY;
-    thisx->colChkInfo.health = 8;
+    thisx->colChkInfo.health = Actor_EnemyHealthMultiply(8, ELITE_HP);
     thisx->colChkInfo.cylRadius = 50;
     thisx->colChkInfo.cylHeight = 100;
     this->switchFlag = PARAMS_GET_U(thisx->params, 8, 8);
@@ -1279,7 +1280,8 @@ void EnWf_UpdateDamage(EnWf* this, PlayState* play) {
             if ((!(this->bodyColliderCylinder.base.acFlags & AC_HIT) &&
                  (this->tailColliderCylinder.base.acFlags & AC_HIT)) ||
                 (ABS(yawDiff) > 19000)) {
-                this->actor.colChkInfo.damage *= 4;
+                if (!HARDER_ENEMIES)
+                    this->actor.colChkInfo.damage *= 4;
             }
 
             this->bodyColliderCylinder.base.acFlags &= ~AC_HIT;

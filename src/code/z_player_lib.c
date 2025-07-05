@@ -1581,7 +1581,6 @@ void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 arg2) {
     f32 sp64;
     f32 sp60;
 
-    D_801260C8.x = R_ENABLE_MIRROR == 1 ? 325.0f : -500.0f;
     D_801260C8.z = 0.0f;
     Matrix_MultVec3f(&D_801260C8, &sp8C);
     D_801260C8.z = arg2;
@@ -1813,9 +1812,26 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                     heldActor->shape.rot = heldActor->world.rot;
 
                     if (func_8002DD78(this)) {
-                        Matrix_Translate(500.0f, 300.0f, 0.0f, MTXMODE_APPLY);
+                        Matrix_Translate(R_ENABLE_MIRROR == 1 ? 1000.0f : 500.0f, 300.0f, 0.0f, MTXMODE_APPLY);
                         Player_DrawHookshotReticle(play, this,
                                                    (this->heldItemAction == PLAYER_IA_HOOKSHOT) ? 38600.0f : 77600.0f);
+                    }
+                }
+            } else if (this->heldItemAction == PLAYER_IA_BOW_FIRE || this->heldItemAction == PLAYER_IA_BOW_ICE || this->heldItemAction == PLAYER_IA_BOW_LIGHT || this->heldItemAction == PLAYER_IA_BOW) {
+                if (heldActor != NULL && BOW_AIMING_RETICLE) {
+                    bool skip = false;
+                    MtxF sp44;
+
+                    if (R_ENABLE_MIRROR == 1)
+                        if ( (Play_GetCamera(play, CAM_ID_MAIN)->mode == CAM_MODE_AIM_ADULT && this->rideActor != NULL) || play->shootingGalleryStatus > 0)
+                            skip = true;
+
+                    Matrix_RotateZYX(0, R_ENABLE_MIRROR == 1 ? -15016 : -15216, -17496, MTXMODE_APPLY);
+                    Matrix_Get(&sp44);
+
+                    if (func_8002DD78(this) && !skip) {
+                        Matrix_Translate(R_ENABLE_MIRROR == 1 ? 800.0f : 500.0f, 300.0f, 0.0f, MTXMODE_APPLY);
+                        Player_DrawHookshotReticle(play, this, 77600.0f * 32.0f);
                     }
                 }
             }

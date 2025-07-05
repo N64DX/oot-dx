@@ -871,7 +871,7 @@ static s16 D_80812828[] = { 0x0010, 0x000C, 0x000C, 0x000C };
 static s16 D_80812830[] = { 0x0040, 0x0054, 0x0068, 0x0274, 0x0278, 0x027C };
 static s16 D_8081283C[] = { 0x0040, 0x0054, 0x0068, 0x0278 };
 static s16 D_80812844[] = { 0x0274, 0x0278 };
-static s16 D_80812848[] = { 0x0274, 0x0278 };
+static s16 D_80812848[] = { 0x0274, 0x0278, 0x027C };
 
 void FileSelect_SetWindowContentVtx(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
@@ -885,6 +885,7 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
 #if OOT_PAL_N64
     u8 fileNameChar;
 #endif
+    bool is_in_file_confirm = this->menuMode == FS_MENU_MODE_SELECT && (this->selectMode == SM_FADE_IN_FILE_INFO || this->selectMode == SM_CONFIRM_FILE || this->selectMode == SM_FADE_OUT_FILE_INFO || this->selectMode == SM_FADE_OUT);
 
     this->windowContentVtx = GRAPH_ALLOC(this->state.gfxCtx, 0x288 * sizeof(Vtx));
 
@@ -1112,6 +1113,14 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
         this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
             this->windowContentVtx[phi_t2].v.ob[1] - 0x10;
         this->windowContentVtx[phi_t2 + 1].v.tc[0] = this->windowContentVtx[phi_t2 + 3].v.tc[0] = 0x800;
+        
+        // Move the Yes and Quit buttons up
+        if (is_in_file_confirm) {
+            this->windowContentVtx[phi_t2 + 0].v.ob[1] += 16;
+            this->windowContentVtx[phi_t2 + 1].v.ob[1] += 16;
+            this->windowContentVtx[phi_t2 + 2].v.ob[1] += 16;
+            this->windowContentVtx[phi_t2 + 3].v.ob[1] += 16;
+        }
     }
 
     this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
@@ -1159,6 +1168,13 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
     this->windowContentVtx[phi_t2 + 6].v.ob[1] = this->windowContentVtx[phi_t2 + 7].v.ob[1] =
         this->windowContentVtx[phi_t2 + 4].v.ob[1] - 0x10;
     this->windowContentVtx[phi_t2 + 5].v.tc[0] = this->windowContentVtx[phi_t2 + 7].v.tc[0] = 0x1000;
+    
+    // Copy the vertices for the Options button from the Yes button and move it down 2 buttons
+    if (is_in_file_confirm)
+        for (phi_t5=0; phi_t5<4; phi_t5++) {
+            this->windowContentVtx[phi_t2 + 4 + phi_t5] = this->windowContentVtx[0x288 - 20 + phi_t5];
+            this->windowContentVtx[phi_t2 + 4 + phi_t5].v.ob[1] -= 32;
+        }
 }
 
 static u16 D_8081284C[] = { 0x007C, 0x0124, 0x01CC };
@@ -1524,7 +1540,7 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
     gDPSetCombineLERP(POLY_OPA_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE,
                       ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
     gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
-    gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[0x274], 20, 0);
+    gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[0x274], 24, 0);
 
     // draw primary action buttons (copy/erase)
     for (quadVtxIndex = 0, i = 0; i < 2; i++, quadVtxIndex += 4) {
@@ -1549,6 +1565,13 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
                             G_IM_SIZ_16b, 64, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
         gSP1Quadrangle(POLY_OPA_DISP++, quadVtxIndex, quadVtxIndex + 2, quadVtxIndex + 3, quadVtxIndex + 1, 0);
+    }
+
+    // draw options button
+    if (this->menuMode == FS_MENU_MODE_SELECT) {
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2], this->actionButtonAlpha[2]);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsButtonTextures[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_16b, 64, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSP1Quadrangle(POLY_OPA_DISP++, 16, 18, 19, 17, 0);
     }
 
     // draw options button
@@ -1592,6 +1615,9 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
 
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIDECALA, G_CC_MODULATEIDECALA);
+
+    if (this->selectingOptionsMode)
+        FileSelectOptions_Draw(this);
 
     CLOSE_DISPS(this->state.gfxCtx, "../z_file_choose.c", 2198);
 }
@@ -1797,9 +1823,25 @@ void FileSelect_FadeInFileInfo(GameState* thisx) {
 void FileSelect_ConfirmFile(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
     Input* input = &this->state.input[0];
+    u8 i;
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_START) || (CHECK_BTN_ALL(input->press.button, BTN_A))) {
-        if (this->confirmButtonIndex == FS_BTN_CONFIRM_YES) {
+    if (this->selectingOptionsMode) {
+        if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
+            this->selectingOptionsMode = 0;
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            for (i=0; i<FILE_OPTIONS_SIZE; i++)
+                gSaveContext.options[i] = gFileOptions[gSaveContext.fileNum][i];
+            Sram_WriteSaveOptions(&this->sramCtx);
+        }
+        FileSelectOptions_UpdateMenu(this);
+    } else if (CHECK_BTN_ALL(input->press.button, BTN_START) || (CHECK_BTN_ALL(input->press.button, BTN_A))) {
+        if (this->confirmButtonIndex == FS_BTN_CONFIRM_OPTIONS) {
+            this->selectingOptionsMode = 1;
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            gSaveContext.fileNum = this->buttonIndex;
+            Sram_OpenSaveOptions(&this->sramCtx);
+            FileSelectOptions_Reset(this);
+        } else if (this->confirmButtonIndex == FS_BTN_CONFIRM_YES) {
             Rumble_Request(300.0f, 180, 20, 100);
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -1814,10 +1856,20 @@ void FileSelect_ConfirmFile(GameState* thisx) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         this->selectMode++;
-    } else if (ABS(this->stickAdjY) >= 30) {
+    } else if (ABS(this->stickAdjY) > 30) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-        this->confirmButtonIndex ^= 1;
+                             
+        // Allow the cursor to navigate to the options button
+        if (this->stickAdjY > 30) {
+            this->confirmButtonIndex--;
+            if (this->confirmButtonIndex < FS_BTN_CONFIRM_YES)
+                this->confirmButtonIndex = FS_BTN_CONFIRM_OPTIONS;
+        } else {
+            this->confirmButtonIndex++;
+            if (this->confirmButtonIndex > FS_BTN_CONFIRM_OPTIONS)
+                this->confirmButtonIndex = FS_BTN_CONFIRM_YES;
+        }
     }
 }
 
@@ -2428,4 +2480,7 @@ void FileSelect_Init(GameState* thisx) {
     SEQCMD_RESET_AUDIO_HEAP(0, 10);
     // Setting ioData to 1 and writing it to ioPort 7 will skip the harp intro
     Audio_PlaySequenceWithSeqPlayerIO(SEQ_PLAYER_BGM_MAIN, NA_BGM_FILE_SELECT, 0, 7, 1);
+
+    this->selectingQuestMode = this->selectingOptionsMode = false;
+    FileSelectOptions_Init(this);
 }

@@ -100,43 +100,44 @@ typedef struct EntranceCutscene {
     /* 0x02 */ u8 ageRestriction; // 0 for adult only, 1 for child only, 2 for both ages
     /* 0x03 */ u8 flag;           // eventChkInf flag bound to the entrance cutscene
     /* 0x04 */ void* script;      // cutscene script that should run
-} EntranceCutscene;               // size = 0x8
+    /* 0x08 */ bool skip;         // if cutscene is skipable
+} EntranceCutscene;               // size = 0x9
 
 EntranceCutscene sEntranceCutsceneTable[] = {
-    { ENTR_HYRULE_FIELD_3, 2, EVENTCHKINF_A0, gHyruleFieldIntroCs },
-    { ENTR_DEATH_MOUNTAIN_TRAIL_0, 2, EVENTCHKINF_A1, gDMTIntroCs },
-    { ENTR_KAKARIKO_VILLAGE_0, 2, EVENTCHKINF_A3, gKakarikoVillageIntroCs },
-    { ENTR_ZORAS_DOMAIN_0, 2, EVENTCHKINF_A4, gZorasDomainIntroCs },
-    { ENTR_HYRULE_CASTLE_0, 1, EVENTCHKINF_A5, gHyruleCastleIntroCs },
-    { ENTR_GORON_CITY_0, 2, EVENTCHKINF_A6, gGoronCityIntroCs },
-    { ENTR_TEMPLE_OF_TIME_0, 2, EVENTCHKINF_A7, gTempleOfTimeIntroCs },
-    { ENTR_DEKU_TREE_0, 2, EVENTCHKINF_A8, gDekuTreeIntroCs },
-    { ENTR_HYRULE_FIELD_11, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldSouthEponaJumpCs },
-    { ENTR_HYRULE_FIELD_13, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldEastEponaJumpCs },
-    { ENTR_HYRULE_FIELD_12, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldWestEponaJumpCs },
-    { ENTR_HYRULE_FIELD_15, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldGateEponaJumpCs },
-    { ENTR_HYRULE_FIELD_16, 1, EVENTCHKINF_A9, gHyruleFieldGetOoTCs },
-    { ENTR_LAKE_HYLIA_0, 2, EVENTCHKINF_B1, gLakeHyliaIntroCs },
-    { ENTR_GERUDO_VALLEY_0, 2, EVENTCHKINF_B2, gGerudoValleyIntroCs },
-    { ENTR_GERUDOS_FORTRESS_0, 2, EVENTCHKINF_B3, gGerudoFortressIntroCs },
-    { ENTR_LON_LON_RANCH_0, 2, EVENTCHKINF_B4, gLonLonRanchIntroCs },
-    { ENTR_JABU_JABU_0, 2, EVENTCHKINF_B5, gJabuIntroCs },
-    { ENTR_GRAVEYARD_0, 2, EVENTCHKINF_B6, gGraveyardIntroCs },
-    { ENTR_ZORAS_FOUNTAIN_2, 2, EVENTCHKINF_B7, gZorasFountainIntroCs },
-    { ENTR_DESERT_COLOSSUS_0, 2, EVENTCHKINF_B8, gDesertColossusIntroCs },
-    { ENTR_DEATH_MOUNTAIN_CRATER_0, 2, EVENTCHKINF_B9, gDeathMountainCraterIntroCs },
-    { ENTR_HYRULE_CASTLE_0, 0, EVENTCHKINF_BA, gGanonsCastleIntroCs },
-    { ENTR_ROYAL_FAMILYS_TOMB_1, 2, EVENTCHKINF_5A, gSunSongGraveSunSongTeachPart2Cs },
-    { ENTR_INSIDE_GANONS_CASTLE_2, 2, EVENTCHKINF_BB, gForestBarrierCs },
-    { ENTR_INSIDE_GANONS_CASTLE_3, 2, EVENTCHKINF_BC, gWaterBarrierCs },
-    { ENTR_INSIDE_GANONS_CASTLE_4, 2, EVENTCHKINF_BD, gShadowBarrierCs },
-    { ENTR_INSIDE_GANONS_CASTLE_5, 2, EVENTCHKINF_BE, gFireBarrierCs },
-    { ENTR_INSIDE_GANONS_CASTLE_6, 2, EVENTCHKINF_BF, gLightBarrierCs },
-    { ENTR_INSIDE_GANONS_CASTLE_7, 2, EVENTCHKINF_AD, gSpiritBarrierCs },
-    { ENTR_SPIRIT_TEMPLE_BOSS_0, 0, EVENTCHKINF_C0, gSpiritBossNabooruKnuckleIntroCs },
-    { ENTR_GERUDOS_FORTRESS_17, 0, EVENTCHKINF_C7, gGerudoFortressFirstCaptureCs },
-    { ENTR_DEATH_MOUNTAIN_CRATER_1, 2, EVENTCHKINF_B9, gDeathMountainCraterIntroCs },
-    { ENTR_KOKIRI_FOREST_12, 2, EVENTCHKINF_C6, gKokiriForestDekuSproutPart3Cs },
+    { ENTR_HYRULE_FIELD_3, 2, EVENTCHKINF_A0, gHyruleFieldIntroCs, true },
+    { ENTR_DEATH_MOUNTAIN_TRAIL_0, 2, EVENTCHKINF_A1, gDMTIntroCs, true },
+    { ENTR_KAKARIKO_VILLAGE_0, 2, EVENTCHKINF_A3, gKakarikoVillageIntroCs, true },
+    { ENTR_ZORAS_DOMAIN_0, 2, EVENTCHKINF_A4, gZorasDomainIntroCs, true },
+    { ENTR_HYRULE_CASTLE_0, 1, EVENTCHKINF_A5, gHyruleCastleIntroCs, true },
+    { ENTR_GORON_CITY_0, 2, EVENTCHKINF_A6, gGoronCityIntroCs, true },
+    { ENTR_TEMPLE_OF_TIME_0, 2, EVENTCHKINF_A7, gTempleOfTimeIntroCs, true },
+    { ENTR_DEKU_TREE_0, 2, EVENTCHKINF_A8, gDekuTreeIntroCs, true },
+    { ENTR_HYRULE_FIELD_11, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldSouthEponaJumpCs, false },
+    { ENTR_HYRULE_FIELD_13, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldEastEponaJumpCs, false },
+    { ENTR_HYRULE_FIELD_12, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldWestEponaJumpCs, false },
+    { ENTR_HYRULE_FIELD_15, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldGateEponaJumpCs, false },
+    { ENTR_HYRULE_FIELD_16, 1, EVENTCHKINF_A9, gHyruleFieldGetOoTCs, false },
+    { ENTR_LAKE_HYLIA_0, 2, EVENTCHKINF_B1, gLakeHyliaIntroCs, true },
+    { ENTR_GERUDO_VALLEY_0, 2, EVENTCHKINF_B2, gGerudoValleyIntroCs, true },
+    { ENTR_GERUDOS_FORTRESS_0, 2, EVENTCHKINF_B3, gGerudoFortressIntroCs, true },
+    { ENTR_LON_LON_RANCH_0, 2, EVENTCHKINF_B4, gLonLonRanchIntroCs, true },
+    { ENTR_JABU_JABU_0, 2, EVENTCHKINF_B5, gJabuIntroCs, true },
+    { ENTR_GRAVEYARD_0, 2, EVENTCHKINF_B6, gGraveyardIntroCs, true },
+    { ENTR_ZORAS_FOUNTAIN_2, 2, EVENTCHKINF_B7, gZorasFountainIntroCs, true },
+    { ENTR_DESERT_COLOSSUS_0, 2, EVENTCHKINF_B8, gDesertColossusIntroCs, true },
+    { ENTR_DEATH_MOUNTAIN_CRATER_0, 2, EVENTCHKINF_B9, gDeathMountainCraterIntroCs, true },
+    { ENTR_HYRULE_CASTLE_0, 0, EVENTCHKINF_BA, gGanonsCastleIntroCs, true },
+    { ENTR_ROYAL_FAMILYS_TOMB_1, 2, EVENTCHKINF_5A, gSunSongGraveSunSongTeachPart2Cs, false },
+    { ENTR_INSIDE_GANONS_CASTLE_2, 2, EVENTCHKINF_BB, gForestBarrierCs, false },
+    { ENTR_INSIDE_GANONS_CASTLE_3, 2, EVENTCHKINF_BC, gWaterBarrierCs, false },
+    { ENTR_INSIDE_GANONS_CASTLE_4, 2, EVENTCHKINF_BD, gShadowBarrierCs, false },
+    { ENTR_INSIDE_GANONS_CASTLE_5, 2, EVENTCHKINF_BE, gFireBarrierCs, false },
+    { ENTR_INSIDE_GANONS_CASTLE_6, 2, EVENTCHKINF_BF, gLightBarrierCs, false },
+    { ENTR_INSIDE_GANONS_CASTLE_7, 2, EVENTCHKINF_AD, gSpiritBarrierCs, false },
+    { ENTR_SPIRIT_TEMPLE_BOSS_0, 0, EVENTCHKINF_C0, gSpiritBossNabooruKnuckleIntroCs, false },
+    { ENTR_GERUDOS_FORTRESS_17, 0, EVENTCHKINF_C7, gGerudoFortressFirstCaptureCs, false },
+    { ENTR_DEATH_MOUNTAIN_CRATER_1, 2, EVENTCHKINF_B9, gDeathMountainCraterIntroCs, true },
+    { ENTR_KOKIRI_FOREST_12, 2, EVENTCHKINF_C6, gKokiriForestDekuSproutPart3Cs, false },
 };
 
 void* sCutscenesUnknownList[] = {
@@ -670,7 +671,6 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_TEMPLE_OF_TIME_FROM_MASTER_SWORD:
-                gSaveContext.save.info.fw.set = 0;
                 gSaveContext.respawn[RESPAWN_MODE_TOP].data = 0;
 
                 if (!GET_EVENTCHKINF(EVENTCHKINF_45)) {
@@ -2401,6 +2401,9 @@ void Cutscene_HandleEntranceTriggers(PlayState* play) {
         if (requiredAge == 2) {
             requiredAge = gSaveContext.save.linkAge;
         }
+
+        if (SKIP_INTROS && entranceCutscene->skip)
+            continue;
 
         if ((gSaveContext.save.entranceIndex == entranceCutscene->entrance) &&
             (!Flags_GetEventChkInf(entranceCutscene->flag) || (entranceCutscene->flag == EVENTCHKINF_EPONA_OBTAINED)) &&

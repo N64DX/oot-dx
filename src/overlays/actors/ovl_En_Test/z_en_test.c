@@ -19,6 +19,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_sk2/object_sk2.h"
 
@@ -297,7 +298,7 @@ void EnTest_Init(Actor* thisx, PlayState* play) {
     Collider_SetQuad(play, &this->swordCollider, &this->actor, &sSwordColliderQuadInit);
 
     this->actor.colChkInfo.mass = MASS_HEAVY;
-    this->actor.colChkInfo.health = 10;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(10, ELITE_HP);
 
     slashBlure.p1StartColor[0] = slashBlure.p1StartColor[1] = slashBlure.p1StartColor[2] = slashBlure.p1StartColor[3] =
         slashBlure.p2StartColor[0] = slashBlure.p2StartColor[1] = slashBlure.p2StartColor[2] =
@@ -1524,7 +1525,7 @@ void func_80862E6C(EnTest* this, PlayState* play) {
         }
     } else {
         if (this->actor.home.rot.x == 0) {
-            this->actor.colChkInfo.health = 10;
+            this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(10, ELITE_HP);
 
             if (this->actor.params == STALFOS_TYPE_4) {
                 this->actor.params = -1;

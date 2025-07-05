@@ -20,11 +20,12 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_firefly/object_firefly.h"
 
 #define FLAGS \
-    (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_IGNORE_QUAKE | ACTOR_FLAG_CAN_ATTACH_TO_ARROW)
+    (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_IGNORE_QUAKE)
 
 void EnFirefly_Init(Actor* thisx, PlayState* play);
 void EnFirefly_Destroy(Actor* thisx, PlayState* play);
@@ -161,6 +162,7 @@ void EnFirefly_Init(Actor* thisx, PlayState* play) {
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
 
     if (PARAMS_GET_NOSHIFT(this->actor.params, 15, 1) != 0) {
         this->actor.flags |= ACTOR_FLAG_REACT_TO_LENS;
@@ -225,16 +227,23 @@ void EnFirefly_SetupFlyIdle(EnFirefly* this) {
 }
 
 void EnFirefly_SetupFall(EnFirefly* this) {
+    if (this->actor.colChkInfo.health > 0) {
+        Actor_PlaySfx(&this->actor, NA_SE_EN_FFLY_DEAD);
+        Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 40);
+        return;
+    }
+
     this->timer = 40;
     this->actor.velocity.y = 0.0f;
     Animation_Change(&this->skelAnime, &gKeeseFlyAnim, 0.5f, 0.0f, 0.0f, ANIMMODE_LOOP_INTERP, -3.0f);
     Actor_PlaySfx(&this->actor, NA_SE_EN_FFLY_DEAD);
-    this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
+    this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_CAN_ATTACH_TO_ARROW;
     Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 40);
     this->actionFunc = EnFirefly_Fall;
 }
 
 void EnFirefly_SetupDie(EnFirefly* this) {
+    this->actor.colChkInfo.health = 0;
     this->timer = 15;
     this->actor.speed = 0.0f;
     this->actionFunc = EnFirefly_Die;
@@ -276,7 +285,7 @@ void EnFirefly_SetupFrozenFall(EnFirefly* this, PlayState* play) {
     s32 i;
     Vec3f iceParticlePos;
 
-    this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
+    this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_CAN_ATTACH_TO_ARROW;
     this->auraType = KEESE_AURA_NONE;
     this->actor.speed = 0.0f;
     Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_BLUE, 255, COLORFILTER_BUFFLAG_OPA, 255);

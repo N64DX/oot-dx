@@ -30,6 +30,7 @@
 #include "light.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_gnd/object_gnd.h"
 
@@ -306,7 +307,7 @@ void BossGanondrof_Init(Actor* thisx, PlayState* play) {
     SkelAnime_Init(play, &this->skelAnime, &gPhantomGanonSkel, &gPhantomGanonRideAnim, NULL, NULL, 0);
     if (this->actor.params < GND_FAKE_BOSS) {
         this->actor.params = GND_REAL_BOSS;
-        this->actor.colChkInfo.health = 30;
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(30, BOSS_HP);
         this->lightNode = LightContext_InsertLight(play, &play->lightCtx, &this->lightInfo);
         Lights_PointNoGlowSetInfo(&this->lightInfo, this->actor.world.pos.x, this->actor.world.pos.y,
                                   this->actor.world.pos.z, 255, 255, 255, 255);
@@ -520,7 +521,7 @@ void BossGanondrof_Neutral(BossGanondrof* this, PlayState* play) {
             if (this->timers[0] == 0) {
                 this->timers[0] = (s16)(Rand_ZeroOne() * 64.0f) + 30;
                 rand01 = Rand_ZeroOne();
-                if (thisx->colChkInfo.health < 5) {
+                if (thisx->colChkInfo.health < Actor_EnemyHealthMultiply(5, BOSS_HP)) {
                     if (rand01 < 0.25f) {
                         BossGanondrof_SetupThrow(this, play);
                     } else if (rand01 >= 0.8f) {

@@ -166,6 +166,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_35.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_36.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_37.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_38.o"
 #if OOT_VERSION >= PAL_1_0
     include "$(BUILD_DIR)/assets/audio/audiobank_padding.o"
 #endif
@@ -283,6 +284,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_107.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_108.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_109.prg.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_110.o"
 endseg
 
 beginseg
@@ -928,6 +930,7 @@ beginseg
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_copy_erase.o"
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_nameset.o"
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_choose.o"
+    include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_options.o"
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/ovl_file_choose_reloc.o"
 endseg
 

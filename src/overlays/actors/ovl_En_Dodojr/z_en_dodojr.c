@@ -17,6 +17,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_dodojr/object_dodojr.h"
 
@@ -86,6 +87,7 @@ void EnDodojr_Init(Actor* thisx, PlayState* play) {
     Collider_InitCylinder(play, &this->collider);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, DamageTable_Get(4), &sColChkInit);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
 
     this->actor.naviEnemyId = NAVI_ENEMY_BABY_DODONGO;
     this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;

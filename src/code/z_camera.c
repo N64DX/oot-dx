@@ -936,7 +936,7 @@ void Camera_UpdateInterface(s16 interfaceField) {
                 break;
 
             case CAM_LETTERBOX_MEDIUM:
-                sCameraLetterboxSize = 27;
+                sCameraLetterboxSize = NO_LETTERBOXING ? 0 : 27;
                 break;
 
             case CAM_LETTERBOX_LARGE:
@@ -8250,7 +8250,7 @@ Vec3s Camera_Update(Camera* camera) {
 
     Camera_UpdateDistortion(camera);
 
-    if ((camera->play->sceneId == SCENE_HYRULE_FIELD) && (camera->fov < 59.0f)) {
+    if ((camera->play->sceneId == SCENE_HYRULE_FIELD) && (camera->fov < 59.0f) && !EXTENDED_DRAW_DISTANCE) {
         View_SetScale(&camera->play->view, 0.79f);
     } else {
         View_SetScale(&camera->play->view, 1.0f);

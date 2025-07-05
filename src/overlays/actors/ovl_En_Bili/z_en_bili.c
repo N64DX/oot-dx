@@ -19,6 +19,7 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
+#include "save.h"
 
 #include "assets/objects/object_bl/object_bl.h"
 
@@ -138,6 +139,7 @@ void EnBili_Init(Actor* thisx, PlayState* play) {
     Collider_InitCylinder(play, &this->collider);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     this->playFlySfx = false;
 
     if (this->actor.params == EN_BILI_TYPE_NORMAL) {

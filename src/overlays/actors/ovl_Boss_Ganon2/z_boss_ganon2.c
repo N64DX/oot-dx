@@ -445,7 +445,7 @@ void BossGanon2_Init(Actor* thisx, PlayState* play) {
     }
 
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
-    this->actor.colChkInfo.health = 30;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(30, BOSS_HP);
     Collider_InitJntSph(play, &this->unk_424);
     Collider_SetJntSph(play, &this->unk_424, &this->actor, &sJntSphInit1, this->unk_464);
     Collider_InitJntSph(play, &this->unk_444);
@@ -1734,7 +1734,7 @@ void func_80900890(BossGanon2* this, PlayState* play) {
             if (Animation_OnFrame(&this->skelAnime, this->unk_194)) {
                 func_808FFDB0(this, play);
                 if (this->unk_334 == 0) {
-                    this->actor.colChkInfo.health = 25;
+                    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(25, BOSS_HP);
                 }
                 this->unk_336 = 1;
             }
@@ -2250,7 +2250,7 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
                     Audio_StopSfxById(NA_SE_EN_MGANON_UNARI);
                     this->actor.colChkInfo.health -= 2;
                     health = this->actor.colChkInfo.health;
-                    if (health <= 20 && this->unk_334 == 0) {
+                    if (health <= Actor_EnemyHealthMultiply(20, BOSS_HP) && this->unk_334 == 0) {
                         func_80900818(this, play);
                     } else {
                         if (health <= 0) {

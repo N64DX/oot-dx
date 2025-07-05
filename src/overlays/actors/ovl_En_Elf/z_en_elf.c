@@ -682,7 +682,7 @@ void func_80A0329C(EnElf* this, PlayState* play) {
             }
         }
 
-        if (!(this->fairyFlags & FAIRY_FLAG_BIG)) {
+        if (!(this->fairyFlags & FAIRY_FLAG_BIG) && !NO_BOTTLED_FAIRIES) {
             // GI_MAX in this case allows the player to catch the actor in a bottle
             Actor_OfferGetItem(&this->actor, play, GI_MAX, 80.0f, 60.0f);
         }
@@ -1457,7 +1457,9 @@ void func_80A053F0(Actor* thisx, PlayState* play) {
 #endif
 
         if (!Play_InCsMode(play)) {
-            if (gSaveContext.save.info.playerData.naviTimer < 25800) {
+            if (NO_DISRUPTIVE_TEXT) {
+                gSaveContext.save.info.playerData.naviTimer = 0;
+            } else if (gSaveContext.save.info.playerData.naviTimer < 25800) {
                 gSaveContext.save.info.playerData.naviTimer++;
             } else if (!(this->fairyFlags & 0x80)) {
                 gSaveContext.save.info.playerData.naviTimer = 0;

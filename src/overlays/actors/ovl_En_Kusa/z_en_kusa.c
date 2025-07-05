@@ -20,6 +20,7 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
+#include "save.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/gameplay_field_keep/gameplay_field_keep.h"
@@ -247,6 +248,12 @@ void EnKusa_Init(Actor* thisx, PlayState* play) {
 
     if (play->csCtx.state != CS_STATE_IDLE) {
         this->actor.cullingVolumeDistance += 1000.0f;
+    }
+
+    if (EXTENDED_DRAW_DISTANCE) {
+        this->actor.cullingVolumeDistance = 32767.0f;
+        this->actor.cullingVolumeScale = 32767.0f;
+        this->actor.cullingVolumeDownward = 32767.0f;
     }
 
     EnKusa_InitCollider(thisx, play);

@@ -19,6 +19,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_am/object_am.h"
 
@@ -234,7 +235,7 @@ void EnAm_Init(Actor* thisx, PlayState* play) {
     Collider_SetCylinder(play, &this->hurtCollider, &this->dyna.actor, &sHurtCylinderInit);
 
     if (this->dyna.actor.params == ARMOS_STATUE) {
-        this->dyna.actor.colChkInfo.health = 1;
+        this->dyna.actor.colChkInfo.health = Actor_EnemyHealthMultiply(1, MONSTER_HP);
         Collider_SetCylinder(play, &this->blockCollider, &this->dyna.actor, &sHurtCylinderInit);
         this->hurtCollider.base.ocFlags1 = (OC1_ON | OC1_NO_PUSH | OC1_TYPE_1 | OC1_TYPE_2);
         this->blockCollider.base.ocFlags1 = (OC1_ON | OC1_NO_PUSH | OC1_TYPE_PLAYER);
@@ -246,7 +247,7 @@ void EnAm_Init(Actor* thisx, PlayState* play) {
         Collider_SetCylinder(play, &this->blockCollider, &this->dyna.actor, &sBlockCylinderInit);
         Collider_InitQuad(play, &this->hitCollider);
         Collider_SetQuad(play, &this->hitCollider, &this->dyna.actor, &sQuadInit);
-        this->dyna.actor.colChkInfo.health = 1;
+        this->dyna.actor.colChkInfo.health = Actor_EnemyHealthMultiply(1, MONSTER_HP);
         this->dyna.actor.colChkInfo.damageTable = &sDamageTable;
         EnAm_SetupSleep(this);
         this->unk_258 = 0;
@@ -567,7 +568,8 @@ void EnAm_RecoilFromDamage(EnAm* this, PlayState* play) {
 
     if (SkelAnime_Update(&this->skelAnime)) {
         EnAm_SetupLunge(this);
-        this->deathTimer = 64;
+        if (this->dyna.actor.colChkInfo.health == 0)
+            this->deathTimer = 64;
         this->panicSpinRot = 0;
     }
 }
@@ -822,7 +824,7 @@ void EnAm_UpdateDamage(EnAm* this, PlayState* play) {
                         EnAm_SetupStunned(this, play);
 
                         if (this->dyna.actor.colChkInfo.damage != 0) {
-                            this->dyna.actor.colChkInfo.health = 0;
+                            Actor_ApplyDamage(&this->dyna.actor);
                         }
                     } else if (this->dyna.actor.colChkInfo.damageReaction == AM_DMG_REACT_STUN) {
                         Vec3f sparkPos = this->dyna.actor.world.pos;
@@ -832,7 +834,7 @@ void EnAm_UpdateDamage(EnAm* this, PlayState* play) {
                     }
                 } else if ((this->dyna.actor.colChkInfo.damageReaction == AM_DMG_REACT_KILL) ||
                            (this->behavior == AM_BEHAVIOR_STUNNED)) {
-                    this->dyna.actor.colChkInfo.health = 0;
+                    Actor_ApplyDamage(&this->dyna.actor);
 
                     EnAm_SetupRecoilFromDamage(this, play);
                 } else {

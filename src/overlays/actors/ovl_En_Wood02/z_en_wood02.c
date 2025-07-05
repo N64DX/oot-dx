@@ -19,6 +19,7 @@
 #include "play_state.h"
 #include "player.h"
 #include "skin_matrix.h"
+#include "save.h"
 
 #include "assets/objects/object_wood02/object_wood02.h"
 
@@ -114,6 +115,9 @@ static f32 sSpawnSin;
 
 s32 EnWood02_SpawnZoneCheck(EnWood02* this, PlayState* play, Vec3f* pos) {
     f32 phi_f12;
+    
+    if (EXTENDED_DRAW_DISTANCE)
+        return true;
 
     SkinMatrix_Vec3fMtxFMultXYZW(&play->viewProjectionMtxF, pos, &this->actor.projectedPos, &this->actor.projectedW);
 

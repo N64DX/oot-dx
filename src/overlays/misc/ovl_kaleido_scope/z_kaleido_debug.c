@@ -741,8 +741,6 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             Interface_LoadItemIcon1(play, j);
                 } else if (curSection <= SECTION_LAST_DUNGEON_ITEMS) {
                     i = curSection - SECTION_FIRST_DUNGEON_ITEMS;
-                } else if (curSection <= SECTION_LAST_DUNGEON_ITEMS) {
-                    i = curSection - SECTION_FIRST_DUNGEON_ITEMS;
                     if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                         gSaveContext.save.info.inventory.dungeonItems[i] ^= 4;
                     }

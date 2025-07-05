@@ -12,6 +12,7 @@
 #include "translation.h"
 #include "z_lib.h"
 #include "play_state.h"
+#include "save.h"
 
 #define FLAGS 0
 
@@ -196,7 +197,7 @@ void func_80B9A658(ObjMure2* this) {
 
 void func_80B9A668(ObjMure2* this, PlayState* play) {
     if (Math3D_Dist1DSq(this->actor.projectedPos.x, this->actor.projectedPos.z) <
-        (sDistSquared1[PARAMS_GET_U(this->actor.params, 0, 2)] * this->unk_184)) {
+        (sDistSquared1[PARAMS_GET_U(this->actor.params, 0, 2)] * this->unk_184) || EXTENDED_DRAW_DISTANCE) {
         this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
         ObjMure2_SpawnActors(this, play);
         func_80B9A6E8(this);
@@ -209,6 +210,10 @@ void func_80B9A6E8(ObjMure2* this) {
 
 void func_80B9A6F8(ObjMure2* this, PlayState* play) {
     func_80B9A534(this);
+
+    if (EXTENDED_DRAW_DISTANCE)
+        return;
+
     if ((sDistSquared2[PARAMS_GET_U(this->actor.params, 0, 2)] * this->unk_184) <=
         Math3D_Dist1DSq(this->actor.projectedPos.x, this->actor.projectedPos.z)) {
         this->actor.flags &= ~ACTOR_FLAG_UPDATE_CULLING_DISABLED;

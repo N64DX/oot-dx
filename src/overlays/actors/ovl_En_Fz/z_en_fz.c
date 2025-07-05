@@ -11,6 +11,7 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
+#include "save.h"
 
 #include "assets/objects/object_fz/object_fz.h"
 
@@ -175,7 +176,7 @@ void EnFz_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->actor.colChkInfo.damageTable = &sDamageTable;
-    this->actor.colChkInfo.health = 6;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(6, MONSTER_HP);
 
     Collider_InitCylinder(play, &this->collider1);
     Collider_SetCylinderType1(play, &this->collider1, &this->actor, &sCylinderInit1);
@@ -730,10 +731,15 @@ void EnFz_Draw(Actor* thisx, PlayState* play) {
         gFreezardHeadChippedDL,         // Entire head chipped off     (1 or 2 health)
     };
     EnFz* this = (EnFz*)thisx;
-    s32 pad;
-    s32 index;
+    u8 index;
+    u8 maxHealth  = Actor_EnemyHealthMultiply(6, MONSTER_HP);
+    u8 currHealth = this->actor.colChkInfo.health;
 
-    index = (6 - this->actor.colChkInfo.health) >> 1;
+    if (currHealth >= (maxHealth * 2) / 3)
+        index = 0;
+    else if (currHealth >= (maxHealth * 1) / 3)
+        index = 1;
+    else index = 2;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_fz.c", 1167);
 

@@ -16,6 +16,7 @@
 #include "translation.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "overlays/actors/ovl_En_Elf/z_en_elf.h"
 
@@ -61,6 +62,11 @@ void ElfMsg_SetupAction(ElfMsg* this, ElfMsgActionFunc actionFunc) {
  * Can also set a switch flag from params while killing.
  */
 s32 ElfMsg_KillCheck(ElfMsg* this, PlayState* play) {
+    if (NO_DISRUPTIVE_TEXT && !PARAMS_GET_NOSHIFT(this->actor.params, 15, 1)) {
+        Actor_Kill(&this->actor);
+        return 0;
+    }
+    
     if ((this->actor.world.rot.y > 0) && (this->actor.world.rot.y < 0x41) &&
         Flags_GetSwitch(play, this->actor.world.rot.y - 1)) {
         LOG_STRING_T("共倒れ", "Mutual destruction", "../z_elf_msg.c", 161);

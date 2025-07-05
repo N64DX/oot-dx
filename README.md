@@ -17,7 +17,9 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes qualit
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
+- **OoT Randomizer:** Key chest textures
 - **spaztron64:** Hires mode concept
+- **Syeo:** Deluxe chest textures
 
 ### Instructions
 

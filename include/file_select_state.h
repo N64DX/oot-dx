@@ -9,6 +9,15 @@
 #include "sram.h"
 #include "view.h"
 
+typedef struct FileSelectOptionsEntry {
+    /* 0x00 */ u8 number;
+    /* 0x04 */ char* name;
+    /* 0x08 */ void  (*setFunc) (struct FileSelectState*, u8, u8);
+    /* 0x0C */ char* (*getFunc) (struct FileSelectState*, u8, u8);
+    /* 0x10 */ u8 index;
+    /* 0x11 */ u8 shift;
+} FileSelectOptionsEntry; // size = 0x12
+
 typedef struct FileSelectState {
     /* 0x00000 */ GameState state;
     /* 0x000A4 */ Vtx* windowVtx;
@@ -34,6 +43,7 @@ typedef struct FileSelectState {
     /* 0x1C9FC */ bool mirrorMode[3];
     /* 0x1C9FC */ u8 questMode[3];
     /* 0x1C9FC */ bool selectingQuestMode;
+    /* 0x1C9FC */ bool selectingOptionsMode;
     /* 0x1CA14 */ u16 healthCapacities[3];
     /* 0x1CA1C */ u32 questItems[3];
     /* 0x1CA28 */ s16 n64ddFlags[3];
@@ -41,6 +51,7 @@ typedef struct FileSelectState {
 #if OOT_PAL
     /* 0x1CA32 */ u16 health[3];
 #endif
+    /* 0x1CA32 */ u32 fileOptions[3][8];
     /* 0x1CA38 */ s16 buttonIndex;
     /* 0x1CA3A */ s16 confirmButtonIndex; // 0: yes, 1: quit
     /* 0x1CA3C */ s16 menuMode;
@@ -92,9 +103,26 @@ typedef struct FileSelectState {
     /* 0x1CAD2 */ s16 kbdY;
     /* 0x1CAD4 */ s16 newFileNameCharCount;
     /* 0x1CAD6 */ s16 unk_1CAD6[5];
+
+    /* 0x01D0 */ s32 count;
+    /* 0x01D4 */ FileSelectOptionsEntry* entries;
+    /* 0x01D8 */ s32 currentEntry;
+    /* 0x01DC */ s32 pageDownIndex; // Index of pageDownStops
+    /* 0x020C */ s32 topDisplayedEntry; // The entry which is currently at the top of the screen
+    /* 0x021C */ s32 verticalInputAccumulator;
+    /* 0x0220 */ s32 verticalInput;
+    /* 0x0224 */ s32 timerUp;
+    /* 0x0228 */ s32 timerDown;
+    /* 0x022C */ s32 lockUp;
+    /* 0x0230 */ s32 lockDown;
 } FileSelectState; // size = 0x1CAE0
 
 void FileSelect_Init(GameState* thisx);
 void FileSelect_Destroy(GameState* thisx);
+
+void FileSelectOptions_Reset(FileSelectState* thisx);
+void FileSelectOptions_Init(FileSelectState* thisx);
+void FileSelectOptions_Draw(FileSelectState* thisx);
+void FileSelectOptions_UpdateMenu(FileSelectState* thisx);
 
 #endif

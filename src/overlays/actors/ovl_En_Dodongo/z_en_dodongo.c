@@ -15,6 +15,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_dodongo/object_dodongo.h"
 
@@ -332,7 +333,7 @@ void EnDodongo_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 48.0f);
     Actor_SetScale(&this->actor, 0.01875f);
     SkelAnime_Init(play, &this->skelAnime, &gDodongoSkel, &gDodongoWaitAnim, this->jointTable, this->morphTable, 31);
-    this->actor.colChkInfo.health = 4;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(4, MONSTER_HP);
     this->actor.colChkInfo.mass = MASS_HEAVY;
     this->actor.colChkInfo.damageTable = &sDamageTable;
     Collider_InitQuad(play, &this->colliderAT);

@@ -568,18 +568,39 @@ void EnBox_Update(Actor* thisx, PlayState* play) {
 void EnBox_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx, Gfx** gfx) {
     EnBox* this = (EnBox*)thisx;
     s32 pad;
+    u8 i = PARAMS_GET_U(this->dyna.actor.params, 5, 7);
+    bool is_key = i == GI_SMALL_KEY;
+    bool is_dungeon_item = i == GI_COMPASS || i == GI_DUNGEON_MAP;
+    bool is_item = i == GI_BOW || i == GI_SLINGSHOT || i == GI_BOOMERANG || i == GI_HOOKSHOT || i == GI_LONGSHOT || i == GI_LENS_OF_TRUTH || i == GI_HAMMER || i == GI_BOTTLE_EMPTY || i == GI_SWORD_KOKIRI || i == GI_SWORD_KNIFE || i == GI_SWORD_BIGGORON || i == GI_SHIELD_DEKU || i == GI_SHIELD_HYLIAN || i == GI_SHIELD_MIRROR || i == GI_BOOTS_IRON || i == GI_BOOTS_HOVER ||
+        i == GI_SILVER_GAUNTLETS || i == GI_GOLD_GAUNTLETS || i == GI_ARROW_FIRE || i == GI_ARROW_ICE || i == GI_ARROW_LIGHT || i == GI_ARROW_LIGHT || i == GI_BOMB_BAG_20 || i == GI_BOMB_BAG_30 || i == GI_BOMB_BAG_40 || i == GI_OCARINA_FAIRY || i == GI_OCARINA_OF_TIME || i == GI_SCALE_SILVER || i == GI_SCALE_GOLDEN || i == GI_TUNIC_GORON || i == GI_TUNIC_ZORA;
 
     if (limbIndex == 1) {
         MATRIX_FINALIZE_AND_LOAD((*gfx)++, play->state.gfxCtx, "../z_en_box.c", 1492);
         if (this->type != ENBOX_TYPE_DECORATED_BIG) {
-            gSPDisplayList((*gfx)++, gTreasureChestChestFrontDL);
+            if (is_key && REFLECT_CHEST_CONTENTS) {
+                gSPDisplayList((*gfx)++, gTreasureChestKeyChestFrontDL);
+            } else if (is_dungeon_item && REFLECT_CHEST_CONTENTS) {
+                gSPDisplayList((*gfx)++, gTreasureChestGildedChestFrontDL);
+            } else if (is_item && REFLECT_CHEST_CONTENTS) {
+                gSPDisplayList((*gfx)++, gTreasureChestDeluxeChestFrontDL);
+            } else {
+                gSPDisplayList((*gfx)++, gTreasureChestChestFrontDL);
+            }
         } else {
             gSPDisplayList((*gfx)++, gTreasureChestBossKeyChestFrontDL);
         }
     } else if (limbIndex == 3) {
         MATRIX_FINALIZE_AND_LOAD((*gfx)++, play->state.gfxCtx, "../z_en_box.c", 1502);
         if (this->type != ENBOX_TYPE_DECORATED_BIG) {
-            gSPDisplayList((*gfx)++, gTreasureChestChestSideAndLidDL);
+            if (is_key && REFLECT_CHEST_CONTENTS) {
+                gSPDisplayList((*gfx)++, gTreasureChestKeyChestSideAndLidDL);
+            } else if (is_dungeon_item && REFLECT_CHEST_CONTENTS) {
+                gSPDisplayList((*gfx)++, gTreasureChestGildedChestSideAndLidDL);
+            } else if (is_item && REFLECT_CHEST_CONTENTS) {
+                gSPDisplayList((*gfx)++, gTreasureChestDeluxeChestSideAndLidDL);
+            } else {
+                gSPDisplayList((*gfx)++, gTreasureChestChestSideAndLidDL);
+            }
         } else {
             gSPDisplayList((*gfx)++, gTreasureChestBossKeyChestSideAndTopDL);
         }

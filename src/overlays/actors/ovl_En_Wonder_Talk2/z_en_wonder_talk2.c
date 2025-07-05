@@ -14,6 +14,7 @@
 #include "item.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY | ACTOR_FLAG_LOCK_ON_DISABLED)
 
@@ -47,6 +48,11 @@ void EnWonderTalk2_Destroy(Actor* thisx, PlayState* play) {
 void EnWonderTalk2_Init(Actor* thisx, PlayState* play) {
     s32 pad;
     EnWonderTalk2* this = (EnWonderTalk2*)thisx;
+    
+    if (NO_DISRUPTIVE_TEXT && play->sceneId <= SCENE_THIEVES_HIDEOUT) {
+        Actor_Kill(&this->actor);
+        return;
+    }
 
     PRINTF("\n\n");
     PRINTF(VT_FGCOL(GREEN) T("☆☆☆☆☆ 透明メッセージ君 ☆☆☆☆☆ %x\n", "☆☆☆☆☆ Transparent message ☆☆☆☆☆ %x\n") VT_RST,

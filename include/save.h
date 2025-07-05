@@ -146,14 +146,14 @@ typedef struct RespawnData {
 
 typedef struct FaroresWindData {
     /* 0x00 */ Vec3i pos;
-    /* 0x0C */ s32 yaw;
-    /* 0x10 */ s32 playerParams;
-    /* 0x14 */ s32 entranceIndex;
-    /* 0x18 */ s32 roomIndex;
-    /* 0x1C */ s32 set;
-    /* 0x20 */ s32 tempSwchFlags;
-    /* 0x24 */ s32 tempCollectFlags;
-} FaroresWindData; // size = 0x28
+    /* 0x0C */ s16 yaw;
+    /* 0x0E */ s16 playerParams;
+    /* 0x10 */ s16 entranceIndex;
+    /* 0x12 */ s8 roomIndex;
+    /* 0x13 */ s8 set;
+    /* 0x14 */ s32 tempSwchFlags;
+    /* 0x18 */ s32 tempCollectFlags;
+} FaroresWindData; // size = 0x1C
 
 typedef enum TimerState {
     /* 0x0 */ TIMER_STATE_OFF,
@@ -260,8 +260,7 @@ typedef struct SaveInfo {
     /* 0x004C  0x0068 */ ItemEquips equips;
     /* 0x0058  0x0074 */ Inventory inventory;
     /* 0x00B8  0x00D4 */ SavedSceneFlags sceneFlags[124];
-    /* 0x0E48  0x0E64 */ FaroresWindData fw;
-    /* 0x0E70  0x0E8C */ char unk_E8C[0x10];
+    /* 0x0E48  0x0E64 */ FaroresWindData fw[2];
     /* 0x0E80  0x0E9C */ s32 gsFlags[6];
     /* 0x0E98  0x0EB4 */ char unk_EB4[0x4];
     /* 0x0E9C  0x0EB8 */ s32 highScores[7];
@@ -356,7 +355,9 @@ typedef struct SaveContext {
     /* 0x1420 */ s16 worldMapArea;
     /* 0x1422 */ s16 sunsSongState; // controls the effects of suns song
     /* 0x1424 */ s16 healthAccumulator;
-} SaveContext; // size = 0x1428
+    /* 0x1426 */ char unk_1426[0x0002];
+    /* 0x1428 */ u32 options[10];
+} SaveContext; // size = 0x1450
 
 typedef enum ButtonStatus {
     /* 0x00 */ BTN_ENABLED,
@@ -439,13 +440,44 @@ typedef enum LinkAge {
 #define YEARS_ADULT 17
 #define LINK_AGE_IN_YEARS (!LINK_IS_ADULT ? YEARS_CHILD : YEARS_ADULT)
 
-#define VANILLA_QUEST        0
-#define MASTER_QUEST         1
-#define QUEST_MAX            MASTER_QUEST
+#define VANILLA_QUEST 0
+#define MASTER_QUEST  1
+#define QUEST_MAX     MASTER_QUEST
+#define QUEST_MODE    (gSaveContext.save.info.questMode & 127)
 
-#define QUEST_MODE           (gSaveContext.save.info.questMode &  127)
-#define MIRROR_MODE          (gSaveContext.save.info.questMode &  128)
-#define ENABLE_MIRROR_MODE   (gSaveContext.save.info.questMode |= 128)
+#define FILE_OPTIONS_SIZE 2
+extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
+
+#define MIRROR_MODE                 ((gFileOptions[gSaveContext.fileNum][0] >> 0)  & 1)  // Bits: 0
+#define EXTENDED_DRAW_DISTANCE      ((gFileOptions[gSaveContext.fileNum][0] >> 1)  & 1)  // Bits: 1
+#define NO_LETTERBOXING             ((gFileOptions[gSaveContext.fileNum][0] >> 2)  & 1)  // Bits: 2
+#define RESUME_LAST_AREA            ((gFileOptions[gSaveContext.fileNum][0] >> 3)  & 1)  // Bits: 3
+#define DISABLE_TOKEN_FREEZE        ((gFileOptions[gSaveContext.fileNum][0] >> 4)  & 1)  // Bits: 4
+#define CENSOR_FIRE_TEMPLE          ((gFileOptions[gSaveContext.fileNum][0] >> 5)  & 1)  // Bits: 5
+#define SKIP_INTROS                 ((gFileOptions[gSaveContext.fileNum][0] >> 6)  & 1)  // Bits: 6
+#define NO_OWL                      ((gFileOptions[gSaveContext.fileNum][0] >> 7)  & 1)  // Bits: 6
+#define INSTANT_PUTAWAY             ((gFileOptions[gSaveContext.fileNum][0] >> 8)  & 1)  // Bits: 7
+#define NO_DISRUPTIVE_TEXT          ((gFileOptions[gSaveContext.fileNum][0] >> 9)  & 1)  // Bits: 8
+#define BOW_AIMING_RETICLE          ((gFileOptions[gSaveContext.fileNum][0] >> 10) & 1)  // Bits: 10
+#define NO_LOW_HEALTH_BEEP          ((gFileOptions[gSaveContext.fileNum][0] >> 11) & 1)  // Bits: 11
+#define UNINVERTED_AIMING           ((gFileOptions[gSaveContext.fileNum][0] >> 12) & 1)  // Bits: 12
+#define FIX_POWER_CROUCH_STAB       ((gFileOptions[gSaveContext.fileNum][0] >> 13) & 1)  // Bits: 13
+#define REFLECT_CHEST_CONTENTS      ((gFileOptions[gSaveContext.fileNum][0] >> 14) & 1)  // Bits: 14
+#define HEALTH_RECOVERY             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
+#define DAMAGE_TAKEN                ((gFileOptions[gSaveContext.fileNum][1] >> 2)  & 7)  // Bits: 2-4
+#define MONSTER_HP                  ((gFileOptions[gSaveContext.fileNum][1] >> 5)  & 7)  // Bits: 5-7
+#define ELITE_HP                    ((gFileOptions[gSaveContext.fileNum][1] >> 8)  & 7)  // Bits: 8-10
+#define BOSS_HP                     ((gFileOptions[gSaveContext.fileNum][1] >> 11) & 7)  // Bits: 11-13
+#define HARDER_ENEMIES              ((gFileOptions[gSaveContext.fileNum][1] >> 14) & 1)  // Bits: 14
+#define STATIC_DARK_LINK_HP         ((gFileOptions[gSaveContext.fileNum][1] >> 15) & 1)  // Bits: 15
+#define NO_BOTTLED_FAIRIES          ((gFileOptions[gSaveContext.fileNum][1] >> 16) & 1)  // Bits: 16
+
+#define SET_MIRROR_MODE              (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 0))
+#define SET_HEALTH_RECOVERY(value)   (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(3 << 0))  | (((value) & 3) << 0))
+#define SET_DAMAGE_TAKEN(value)      (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 2))  | (((value) & 7) << 2))
+#define SET_MONSTER_HP(value)        (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 5))  | (((value) & 7) << 5))
+#define SET_ELITE_HP(value)          (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 8))  | (((value) & 7) << 8))
+#define SET_BOSS_HP(value)           (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 11)) | (((value) & 7) << 11))
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
