@@ -107,6 +107,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "No Low Health Beep",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 11 },
     { 0, "Inverse Aiming",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 12 },
     { 0, "Fix Power Crouch Stab",  FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 13 },
+    { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 14 },
     { 0, "Damage Taken",           FileSelectOptions_SetDamageTaken,    FileSelectOptions_GetDamageTaken,    1, 0  },
     { 0, "Health Recovery",        FileSelectOptions_SetHealthRecovery, FileSelectOptions_GetHealthRecovery, 1, 2  },
     { 0, "Monster Health",         FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 5  },
@@ -249,7 +250,7 @@ void FileSelectOptions_Draw(FileSelectState* this) {
     GfxPrint_SetPos(&printer, 12, 2);
     GfxPrint_Printf(&printer, "File %d Options", (gSaveContext.fileNum+1));
 
-    for (i=0; i<(this->count >= 20 ? 20 : this->count); i++) {
+    for (i=0; i<20; i++) {
         GfxPrint_SetPos(&printer, 3, i + 4);
 
         title = (this->topDisplayedEntry + i + this->count) % this->count;

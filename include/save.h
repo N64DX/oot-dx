@@ -462,6 +462,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define NO_LOW_HEALTH_BEEP          ((gFileOptions[gSaveContext.fileNum][0] >> 11) & 1)  // Bits: 11
 #define INVERSE_AIMING              ((gFileOptions[gSaveContext.fileNum][0] >> 12) & 1)  // Bits: 12
 #define FIX_POWER_CROUCH_STAB       ((gFileOptions[gSaveContext.fileNum][0] >> 13) & 1)  // Bits: 13
+#define REFLECT_CHEST_CONTENTS      ((gFileOptions[gSaveContext.fileNum][0] >> 14) & 1)  // Bits: 14
 #define HEALTH_RECOVERY             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gFileOptions[gSaveContext.fileNum][1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gFileOptions[gSaveContext.fileNum][1] >> 5)  & 7)  // Bits: 5-7
