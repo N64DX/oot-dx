@@ -6077,8 +6077,8 @@ MSG(
 ,
 MSG(
 "Vous venez de détruire une\n"
-COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "! Ce symbole prouve\n"
-"votre haut fait!" FADE(40)
+COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "!\n"
+"Vous avez collecté " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " jetons au total." FADE(40)
 )
 )
 
@@ -8230,5 +8230,28 @@ BOX_BREAK
 
 "Bien entendu, rien ne t'oblige à\n"
 "nous aider, tu sais..." TEXTID(0x0027)
+)
+)
+
+DEFINE_MESSAGE(0x00FF, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+QUICKTEXT_ENABLE SHIFT(12) COLOR(RED) "黄金のスタルチュラ" COLOR(DEFAULT) "を　倒した！" QUICKTEXT_DISABLE "\n"
+SHIFT(15) "倒した「しるし」を手に入れた！" FADE(40)
+)
+,
+MSG(
+"You got a " COLOR(RED) "Gold Skulltula Token" COLOR(DEFAULT) "!\n"
+"You've collected " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " token in total." FADE(40)
+)
+,
+MSG(
+"Du erhältst ein " COLOR(RED) "Skulltula-Symbol" COLOR(DEFAULT) ". Du\n"
+"hast insgesamt " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " Skulltula zerstört." FADE(40)
+)
+,
+MSG(
+"Vous venez de détruire une\n"
+COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "!\n"
+"Vous avez collecté " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " jeton au total." FADE(40)
 )
 )

@@ -452,7 +452,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define EXTENDED_DRAW_DISTANCE      ((gFileOptions[gSaveContext.fileNum][0] >> 1)  & 1)  // Bits: 1
 #define NO_LETTERBOXING             ((gFileOptions[gSaveContext.fileNum][0] >> 2)  & 1)  // Bits: 2
 #define RESUME_LAST_AREA            ((gFileOptions[gSaveContext.fileNum][0] >> 3)  & 1)  // Bits: 3
-#define DISABLE_PLAYER_FREEZE       ((gFileOptions[gSaveContext.fileNum][0] >> 4)  & 1)  // Bits: 4
+#define DISABLE_TOKEN_FREEZE        ((gFileOptions[gSaveContext.fileNum][0] >> 4)  & 1)  // Bits: 4
 #define CENSOR_FIRE_TEMPLE          ((gFileOptions[gSaveContext.fileNum][0] >> 5)  & 1)  // Bits: 5
 #define SKIP_INTROS                 ((gFileOptions[gSaveContext.fileNum][0] >> 6)  & 1)  // Bits: 6
 #define NO_OWL                      ((gFileOptions[gSaveContext.fileNum][0] >> 7)  & 1)  // Bits: 6
@@ -460,7 +460,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define NO_DISRUPTIVE_TEXT          ((gFileOptions[gSaveContext.fileNum][0] >> 9)  & 1)  // Bits: 8
 #define BOW_AIMING_RETICLE          ((gFileOptions[gSaveContext.fileNum][0] >> 10) & 1)  // Bits: 10
 #define NO_LOW_HEALTH_BEEP          ((gFileOptions[gSaveContext.fileNum][0] >> 11) & 1)  // Bits: 11
-#define INVERSE_AIMING              ((gFileOptions[gSaveContext.fileNum][0] >> 12) & 1)  // Bits: 12
+#define UNINVERTED_AIMING           ((gFileOptions[gSaveContext.fileNum][0] >> 12) & 1)  // Bits: 12
 #define FIX_POWER_CROUCH_STAB       ((gFileOptions[gSaveContext.fileNum][0] >> 13) & 1)  // Bits: 13
 #define REFLECT_CHEST_CONTENTS      ((gFileOptions[gSaveContext.fileNum][0] >> 14) & 1)  // Bits: 14
 #define HEALTH_RECOVERY             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1

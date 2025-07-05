@@ -512,7 +512,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
             }
             break;
     }
-    
+
     if (SKIP_INTROS && gSaveContext.save.entranceIndex == ENTR_LINKS_HOUSE_0)
         gSaveContext.save.cutsceneIndex = 0;
 
@@ -998,7 +998,7 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
 
     MemCpy(&fileSelect->fileOptions[gSaveContext.fileNum], sramCtx->readBuff + j + offsetof(SaveContext, options),    sizeof(fileSelect->fileOptions[0]));
 
-    for (j=1; j<FILE_OPTIONS_SIZE; j++)
+    for (j=0; j<FILE_OPTIONS_SIZE; j++)
         gFileOptions[gSaveContext.fileNum][j] = fileSelect->fileOptions[gSaveContext.fileNum][j];
 
     PRINTF("f_64dd[%d]=%d\n", gSaveContext.fileNum, fileSelect->n64ddFlags[gSaveContext.fileNum]);

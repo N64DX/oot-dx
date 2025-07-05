@@ -1826,11 +1826,11 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                         if ( (Play_GetCamera(play, CAM_ID_MAIN)->mode == CAM_MODE_AIM_ADULT && this->rideActor != NULL) || play->shootingGalleryStatus > 0)
                             skip = true;
 
-                    Matrix_RotateZYX(0, -15216, -17496, MTXMODE_APPLY);
+                    Matrix_RotateZYX(0, R_ENABLE_MIRROR == 1 ? -15016 : -15216, -17496, MTXMODE_APPLY);
                     Matrix_Get(&sp44);
 
                     if (func_8002DD78(this) && !skip) {
-                        Matrix_Translate(R_ENABLE_MIRROR == 1 ? 1000.0f : 500.0f, 300.0f, 0.0f, MTXMODE_APPLY);
+                        Matrix_Translate(R_ENABLE_MIRROR == 1 ? 800.0f : 500.0f, 300.0f, 0.0f, MTXMODE_APPLY);
                         Player_DrawHookshotReticle(play, this, 77600.0f * 32.0f);
                     }
                 }

@@ -4511,7 +4511,11 @@ void Message_Update(PlayState* play) {
                 break;
             case MSGMODE_TEXT_NEXT_MSG:
                 Message_Decode(play);
-                if (sTextFade && !(DISABLE_PLAYER_FREEZE && msgCtx->textId >= 0xB4 && msgCtx->textId <= 0xB5)) {
+#if OOT_NTSC_N64
+                if (sTextFade && !(DISABLE_TOKEN_FREEZE && (msgCtx->textId == 0xB5 || msgCtx->textId == 0xFF))) {
+#else
+                if (sTextFade) {
+#endif
                     Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_NOTHING);
                 }
                 if (D_80153D74 != 0) {

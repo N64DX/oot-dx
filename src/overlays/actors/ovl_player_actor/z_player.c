@@ -8378,7 +8378,7 @@ s32 func_8083FD78(Player* this, f32* arg1, s16* arg2, PlayState* play) {
         if (this->focusActor != NULL) {
             func_8083DB98(this, true);
         } else {
-            Math_SmoothStepToS(&this->actor.focus.rot.x, sControlInput->rel.stick_y * 240.0f * (INVERSE_AIMING ? -1 : 1), 14, 4000, 30);
+            Math_SmoothStepToS(&this->actor.focus.rot.x, sControlInput->rel.stick_y * 240.0f * (UNINVERTED_AIMING ? -1 : 1), 14, 4000, 30);
             func_80836AB8(this, true);
         }
     } else {
@@ -9648,7 +9648,7 @@ void Player_Action_80843188(Player* this, PlayState* play) {
         s16 sp46;
         f32 sp40;
 
-        sp54 = sControlInput->rel.stick_y * 100 * (INVERSE_AIMING ? -1 : 1);
+        sp54 = sControlInput->rel.stick_y * 100 * (UNINVERTED_AIMING ? -1 : 1);
         sp50 = sControlInput->rel.stick_x * (R_ENABLE_MIRROR == 1 ? 120 : -120);
         sp4E = this->actor.shape.rot.y - Camera_GetInputDirYaw(GET_ACTIVE_CAM(play));
 
@@ -12891,7 +12891,7 @@ s16 func_8084ABD8(PlayState* play, Player* this, s32 arg2, s16 arg3) {
     s16 temp3;
 
     if (!func_8002DD78(this) && !func_808334B4(this) && !arg2) {
-        temp2 = sControlInput->rel.stick_y * 240.0f * (INVERSE_AIMING ? -1 : 1);
+        temp2 = sControlInput->rel.stick_y * 240.0f * (UNINVERTED_AIMING ? -1 : 1);
         Math_SmoothStepToS(&this->actor.focus.rot.x, temp2, 14, 4000, 30);
 
         temp2 = sControlInput->rel.stick_x * -16.0f;
@@ -12901,7 +12901,7 @@ s16 func_8084ABD8(PlayState* play, Player* this, s32 arg2, s16 arg3) {
         temp1 = (this->stateFlags1 & PLAYER_STATE1_23) ? 3500 : 14000;
         temp3 = ((sControlInput->rel.stick_y >= 0) ? 1 : -1) *
                 (s32)((1.0f - Math_CosS(sControlInput->rel.stick_y * 200)) * 1500.0f);
-        this->actor.focus.rot.x += temp3 * (INVERSE_AIMING ? -1 : 1);
+        this->actor.focus.rot.x += temp3 * (UNINVERTED_AIMING ? -1 : 1);
         this->actor.focus.rot.x = CLAMP(this->actor.focus.rot.x, -temp1, temp1);
 
         temp1 = 19114;

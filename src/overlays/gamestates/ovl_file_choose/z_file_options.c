@@ -97,7 +97,9 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Extended Draw Distance", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 1  },
     { 0, "No Letterboxing",        FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 2  },
     { 0, "Resume Last Area",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 3  },
-    { 0, "Disable Player Freeze",  FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 4  },
+#if OOT_NTSC_N64
+    { 0, "Disable Token Freeze",   FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 4  },
+#endif
     { 0, "Censor Fire Temple",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 5  },
     { 0, "Skip Intros",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 6  },
     { 0, "No Owl",                 FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 7  },
@@ -105,7 +107,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "No Disruptive Text",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 9  },
     { 0, "Bow Aiming Reticle",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 10 },
     { 0, "No Low Health Beep",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 11 },
-    { 0, "Inverse Aiming",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 12 },
+    { 0, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 12 },
     { 0, "Fix Power Crouch Stab",  FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 13 },
     { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 14 },
     { 0, "Damage Taken",           FileSelectOptions_SetDamageTaken,    FileSelectOptions_GetDamageTaken,    1, 0  },
@@ -251,7 +253,7 @@ void FileSelectOptions_Draw(FileSelectState* this) {
     GfxPrint_Printf(&printer, "File %d Options", (gSaveContext.fileNum+1));
 
     for (i=0; i<20; i++) {
-        GfxPrint_SetPos(&printer, 3, i + 4);
+        GfxPrint_SetPos(&printer, SCREEN_MODE <= 1 ? 4 : 3, i + 4);
 
         title = (this->topDisplayedEntry + i + this->count) % this->count;
         if (title == this->currentEntry)
@@ -262,12 +264,9 @@ void FileSelectOptions_Draw(FileSelectState* this) {
             GfxPrint_Printf(&printer, " %d: %s", this->entries[title].number, this->entries[title].name);
         else GfxPrint_Printf(&printer, "%d: %s", this->entries[title].number, this->entries[title].name);
 
-        GfxPrint_SetPos(&printer, 31, i + 4);
+        GfxPrint_SetPos(&printer, SCREEN_MODE <= 1 ? 32 : 31, i + 4);
         GfxPrint_Printf(&printer, "%s", this->entries[title].getFunc(this, this->entries[title].index, this->entries[title].shift));
     };
-
-    GfxPrint_SetColor(&printer, 155, 55, 150, 255);
-    GfxPrint_SetPos(&printer, 22, 25);
 
     POLY_OPA_DISP = GfxPrint_Close(&printer);
     GfxPrint_Destroy(&printer);

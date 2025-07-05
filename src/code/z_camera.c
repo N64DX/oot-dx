@@ -936,7 +936,7 @@ void Camera_UpdateInterface(s16 interfaceField) {
                 break;
 
             case CAM_LETTERBOX_MEDIUM:
-                sCameraLetterboxSize = 27;
+                sCameraLetterboxSize = NO_LETTERBOXING ? 0 : 27;
                 break;
 
             case CAM_LETTERBOX_LARGE:
@@ -947,9 +947,6 @@ void Camera_UpdateInterface(s16 interfaceField) {
                 sCameraLetterboxSize = 0;
                 break;
         }
-
-        if (NO_LETTERBOXING)
-            sCameraLetterboxSize = 0;
 
         if (interfaceField & CAM_LETTERBOX_INSTANT) {
             Letterbox_SetSize(sCameraLetterboxSize);
