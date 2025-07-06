@@ -661,18 +661,6 @@ Gfx gLinkAdultBottleDL[35] = {
 
 // Hookshot, bow, broken giant's knife
 
-Vtx gLinkAdultHookshotChainVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultHookshotChainVtx.inc.c"
-};
-
-#define gLinkAdultHookshotChainTex_WIDTH 16
-#define gLinkAdultHookshotChainTex_HEIGHT 32
-u64 gLinkAdultHookshotChainTex[TEX_LEN(u64, gLinkAdultHookshotChainTex_WIDTH, gLinkAdultHookshotChainTex_HEIGHT, 16)];
-
-Gfx gLinkAdultHookshotChainDL[23] = {
-#include "assets/objects/object_link_boy/gLinkAdultHookshotChainDL.inc.c"
-};
-
 Vtx gLinkAdultBowStringVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultBowStringVtx.inc.c"
 };
@@ -681,42 +669,12 @@ Gfx gLinkAdultBowStringDL[12] = {
 #include "assets/objects/object_link_boy/gLinkAdultBowStringDL.inc.c"
 };
 
-Vtx gLinkAdultHookshotTipVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultHookshotTipVtx.inc.c"
-};
-
-Gfx gLinkAdultHookshotTipDL[22] = {
-#include "assets/objects/object_link_boy/gLinkAdultHookshotTipDL.inc.c"
-};
-
-u64 gLinkAdultHookshotChainTex[TEX_LEN(u64, gLinkAdultHookshotChainTex_WIDTH, gLinkAdultHookshotChainTex_HEIGHT,
-                                       16)] = {
-#include "assets/objects/object_link_boy/gLinkAdultHookshotChainTex.rgba16.inc.c"
-};
-
 Vtx gLinkAdultBrokenGiantsKnifeBladeVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultBrokenGiantsKnifeBladeVtx.inc.c"
 };
 
 Gfx gLinkAdultBrokenGiantsKnifeBladeDL[28] = {
 #include "assets/objects/object_link_boy/gLinkAdultBrokenGiantsKnifeBladeDL.inc.c"
-};
-
-// Hookshot reticle
-
-#define gLinkAdultHookshotReticleTex_WIDTH 64
-#define gLinkAdultHookshotReticleTex_HEIGHT 64
-u64 gLinkAdultHookshotReticleTex[TEX_LEN(u64, gLinkAdultHookshotReticleTex_WIDTH, gLinkAdultHookshotReticleTex_HEIGHT,
-                                         8)] = {
-#include "assets/objects/object_link_boy/gLinkAdultHookshotReticleTex.i8.inc.c"
-};
-
-Vtx gLinkAdultHookshotReticleVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultHookshotReticleVtx.inc.c"
-};
-
-Gfx gLinkAdultHookshotReticleDL[13] = {
-#include "assets/objects/object_link_boy/gLinkAdultHookshotReticleDL.inc.c"
 };
 
 // Near skeleton vertices and DLs
