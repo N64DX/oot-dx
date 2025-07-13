@@ -117,23 +117,18 @@ extern Gfx gGildedSwordSheathDL[];
 extern Gfx gLinkChildDekuShieldKokiriSwordSheathedDL[];
 extern Gfx gLinkChildDekuShieldRazorSwordSheathedDL[];
 extern Gfx gLinkChildDekuShieldGildedSwordSheathedDL[];
+extern Gfx gLinkChildHylianShieldKokiriSwordSheathedDL[];
+extern Gfx gLinkChildHylianShieldRazorSwordSheathedDL[];
+extern Gfx gLinkChildHylianShieldGildedSwordSheathedDL[];
+extern Gfx gLinkChildHylianShieldKokiriSwordSheathDL[];
+extern Gfx gLinkChildHylianShieldRazorSwordSheathDL[];
+extern Gfx gLinkChildHylianShieldGildedSwordSheathDL[];
 extern Gfx gLinkChildHerosShieldKokiriSwordSheathedDL[];
 extern Gfx gLinkChildHerosShieldRazorSwordSheathedDL[];
 extern Gfx gLinkChildHerosShieldGildedSwordSheathedDL[];
 extern Gfx gLinkChildMirrorShieldKokiriSwordSheathedDL[];
 extern Gfx gLinkChildMirrorShieldRazorSwordSheathedDL[];
 extern Gfx gLinkChildMirrorShieldGildedSwordSheathedDL[];
-
-// Shields With Sheaths
-extern Gfx gLinkChildDekuShieldKokiriSwordSheathDL[];
-extern Gfx gLinkChildDekuShieldRazorSwordSheathDL[];
-extern Gfx gLinkChildDekuShieldGildedSwordSheathDL[];
-extern Gfx gLinkChildHerosShieldKokiriSwordSheathDL[];
-extern Gfx gLinkChildHerosShieldRazorSwordSheathDL[];
-extern Gfx gLinkChildHerosShieldGildedSwordSheathDL[];
-extern Gfx gLinkChildMirrorShieldKokiriSwordSheathDL[];
-extern Gfx gLinkChildMirrorShieldRazorSwordSheathDL[];
-extern Gfx gLinkChildMirrorShieldGildedSwordSheathDL[];
 
 // Hero's Shield
 extern u64 gLinkChildHerosShieldFrontTLUT[];
@@ -173,12 +168,10 @@ extern Vtx hookshot_chain_vtx[];
 extern Vtx hookshot_reticle_vtx[];
 extern Vtx hookshot_hand_vtx[];
 extern Vtx hookshot_far_vtx[];
-extern Vtx hookshot_tip_vtx[];
 extern Gfx gLinkChildRightHandHoldingHookshot[];
 extern Gfx gLinkChildRightHandHoldingHookshotNear[];
 extern Gfx gLinkChildRightHandHoldingHookshotNearDL[];
 extern Gfx gLinkChildRightHandHoldingHookshotFarDL[];
-extern Gfx gLinkChildHookshotTipDL[];
 extern Gfx gLinkChildHookshotChainDL[];
 extern Gfx gLinkChildHookshotReticleDL[];
 

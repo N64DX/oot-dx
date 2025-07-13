@@ -11,6 +11,8 @@
 #include "player.h"
 #include "save.h"
 
+#include "assets/textures/icon_item_static/icon_item_static.h"
+
 void Interface_Destroy(PlayState* play) {
     Map_Destroy(play);
 }
@@ -24,6 +26,17 @@ void Interface_Init(PlayState* play) {
     u8 timerId;
     u8 item;
     u8 i;
+    
+    gItemIcons[ITEM_HOOKSHOT]       = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconHookshotMMTex        : gItemIconHookshotTex;
+    gItemIcons[ITEM_LONGSHOT]       = (IS_CHILD_QUEST && LINK_IS_CHILD) ? (u64*)gItemIconLongshotMMTex        : gItemIconLongshotTex;
+    gItemIcons[ITEM_BOW]            = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconHerosBowTex          : gItemIconBowTex;
+    gItemIcons[ITEM_BOW_FIRE]       = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconHerosBowFireTex      : gItemIconBowFireTex;
+    gItemIcons[ITEM_BOW_ICE]        = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconHerosBowIceTex       : gItemIconBowIceTex;
+    gItemIcons[ITEM_BOW_LIGHT]      = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconHerosBowLightTex     : gItemIconBowLightTex;
+    gItemIcons[ITEM_SWORD_MASTER]   = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconSwordRazorTex        : gItemIconSwordMasterTex;
+    gItemIcons[ITEM_SWORD_BIGGORON] = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconSwordGildedTex       : gItemIconSwordBiggoronTex;
+    gItemIcons[ITEM_GIANTS_KNIFE]   = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconBrokenGiantsKnifeTex : gItemIconBrokenGiantsKnifeTex;
+    gItemIcons[ITEM_SHIELD_MIRROR]  = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconShieldMirrorMMTex    : gItemIconShieldMirrorTex;
 
     gSaveContext.sunsSongState = SUNSSONG_INACTIVE;
     gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
@@ -145,7 +158,7 @@ void Interface_Init(PlayState* play) {
             item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
 
         if (item < 0xF0)
-            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, "../z_construct.c", 198);
+            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, "../z_construct.c", 198);
     }
 
     PRINTF("ＥＶＥＮＴ＝%d\n", ((void)0, gSaveContext.timerState));

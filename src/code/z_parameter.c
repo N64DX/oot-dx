@@ -1583,7 +1583,7 @@ void Interface_LoadItemIcon1(PlayState* play, u16 button) {
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (button * ITEM_ICON_SIZE),
-                      GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, 0,
+                      GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1171);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
@@ -1593,9 +1593,39 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_180, interfaceCtx->iconItemSegment + (button * ITEM_ICON_SIZE),
-                      GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[button]), ITEM_ICON_SIZE, 0,
+                      GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(gSaveContext.save.info.equips.buttonItems[button])), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
+}
+
+u8 Interface_LoadItemIconChildQuest(u8 item) {
+    if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+        return ITEM_FISHING_POLE + 1;
+    else if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        if (item == ITEM_HOOKSHOT)
+            return ITEM_FISHING_POLE + 7;
+        else if (item == ITEM_LONGSHOT)
+            return ITEM_FISHING_POLE + 8;
+
+        else if (item == ITEM_BOW)
+            return ITEM_FISHING_POLE + 9;
+        else if (item == ITEM_BOW_FIRE)
+            return ITEM_FISHING_POLE + 10;
+        else if (item == ITEM_BOW_ICE)
+            return ITEM_FISHING_POLE + 11;
+        else if (item == ITEM_BOW_LIGHT)
+            return ITEM_FISHING_POLE + 12;
+
+        else if (item == ITEM_SWORD_MASTER)
+            return ITEM_FISHING_POLE + 4;
+        else if (item == ITEM_SWORD_BIGGORON && !gSaveContext.save.info.playerData.bgsFlag)
+            return ITEM_FISHING_POLE + 5;
+        else if (item == ITEM_SWORD_BIGGORON)
+            return ITEM_FISHING_POLE + 6;
+        else if (item == ITEM_SHIELD_MIRROR)
+            return ITEM_FISHING_POLE + 2;
+    }
+    return item;
 }
 
 u8 Interface_GetItemFromDpad(u8 button) {
@@ -1756,6 +1786,12 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
+        return ITEM_NONE;
+    } else if (item == ITEM_SHIELD_HEROS) {
+        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        SET_HEROS_SHIELD;
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
+            Player_SetEquipmentData(play, GET_PLAYER(play));
         return ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI);
@@ -2210,6 +2246,8 @@ u8 Item_CheckObtainability(u8 item) {
         } else {
             return ITEM_NONE;
         }
+    } else if (item == ITEM_SHIELD_HEROS) {
+        return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI + EQUIP_INV_TUNIC_KOKIRI)) {
             return item;

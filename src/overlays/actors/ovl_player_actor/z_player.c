@@ -62,9 +62,9 @@ typedef struct GetItemEntry {
     /* 0x00 */ u8 itemId;
     /* 0x01 */ u8 field; // various bit-packed data
     /* 0x02 */ s8 gi;    // defines the draw id and chest opening animation
-    /* 0x03 */ u8 textId;
-    /* 0x04 */ u16 objectId;
-} GetItemEntry; // size = 0x06
+    /* 0x03 */ u16 textId;
+    /* 0x05 */ u16 objectId;
+} GetItemEntry; // size = 0x07
 
 #define GET_ITEM(itemId, objectId, drawId, textId, field, chestAnim) \
     { itemId, field, (chestAnim != CHEST_ANIM_SHORT ? 1 : -1) * (drawId + 1), textId, objectId }
@@ -789,8 +789,8 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_BULLET_BAG_50, OBJECT_GI_DEKUPOUCH, GID_BULLET_BAG_50, 0x6C, 0x80, CHEST_ANIM_LONG),
     // GI_ICE_TRAP
     GET_ITEM_NONE,
-    // GI_TEXT_0
-    GET_ITEM_NONE,
+    // GI_SHIELD_HEROS
+    GET_ITEM(ITEM_SHIELD_HEROS, OBJECT_GI_SHIELD_4, GID_SHIELD_HEROS, 0x8002, 0xA0, CHEST_ANIM_SHORT),
 };
 
 #define GET_PLAYER_ANIM(group, type) D_80853914[group * PLAYER_ANIMTYPE_MAX + type]
@@ -2654,9 +2654,14 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
     if (equipType == EQUIP_TYPE_SWORD)
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
 
-    Inventory_ChangeEquipment(equipType, nextEquip);
+    if (equipType == EQUIP_TYPE_SHIELD && nextEquip == PLAYER_SHIELD_HEROS)
+        Inventory_ChangeEquipment(equipType, PLAYER_SHIELD_HYLIAN);
+    else Inventory_ChangeEquipment(equipType, nextEquip);
+    
     Player_SetEquipmentData(play, this);
     Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
+    
+    
 
     if (button < 4) {
         for (i=0; i<4; i++)
@@ -2685,7 +2690,7 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     for (i=0; i<3; i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
-        if (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD)
+        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !(IS_CHILD_QUEST && LINK_IS_CHILD) )
             continue;
 
         if (equipment->itemId == ITEM_SWORD_BIGGORON)
@@ -2728,22 +2733,23 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
 void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
     static const EquipmentSwapEntry equipments[] = {
         { PLAYER_SHIELD_DEKU,   EQUIP_INV_SHIELD_DEKU,   LINK_AGE_CHILD },
+        { PLAYER_SHIELD_HEROS,  EQUIP_INV_SHIELD_HEROS,  LINK_AGE_CHILD },
         { PLAYER_SHIELD_HYLIAN, EQUIP_INV_SHIELD_HYLIAN, 9              },
         { PLAYER_SHIELD_MIRROR, EQUIP_INV_SHIELD_MIRROR, LINK_AGE_ADULT },
     };
 
-    u8 current    = SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD));
+    u8 current    = this->currentShield;
     u8 validCount = 0;
-    u8 validItems[3], i, nextItem;
+    u8 validItems[4], i, nextItem;
     
-    for (i=0; i<3; i++) {
+    for (i=0; i<4; i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
-        if (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD)
+        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !(IS_CHILD_QUEST && LINK_IS_CHILD) )
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
-            validItems[validCount]  = equipment->itemId;
+            validItems[validCount] = equipment->itemId;
             validCount++;
         }
     }
@@ -2762,8 +2768,13 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
     }
 
     nextItem = validItems[i % validCount];
-    if (current != nextItem)
+    if (current != nextItem) {
+        if (nextItem == PLAYER_SHIELD_HEROS)
+            SET_HEROS_SHIELD;
+        else if (nextItem == PLAYER_SHIELD_HYLIAN )
+            CLEAR_HEROS_SHIELD;
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SHIELD, nextItem);
+    }
 }
 
 void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
@@ -2780,7 +2791,7 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
     for (i=0; i<3; i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
-        if (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD)
+        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !(IS_CHILD_QUEST && LINK_IS_CHILD) )
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, equipment->equipId)) {
@@ -2817,7 +2828,7 @@ void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
     for (i=0; i<3; i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
-        if (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD)
+        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !(IS_CHILD_QUEST && LINK_IS_CHILD) )
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, equipment->equipId)) {
@@ -3161,7 +3172,7 @@ void Player_UpdateItems(Player* this, PlayState* play) {
 }
 
 s32 func_80834380(PlayState* play, Player* this, s32* itemPtr, s32* typePtr) {
-    if (LINK_IS_ADULT) {
+    if (this->heldItemAction != PLAYER_IA_SLINGSHOT) {
         *itemPtr = ITEM_BOW;
         if (this->stateFlags1 & PLAYER_STATE1_23) {
             *typePtr = ARROW_NORMAL_HORSE;
@@ -6329,10 +6340,10 @@ s32 func_8083AD4C(PlayState* play, Player* this) {
 
     if (this->unk_6AD == 2) {
         if (func_8002DD6C(this)) {
-            if (LINK_IS_ADULT) {
-                camMode = CAM_MODE_AIM_ADULT;
-            } else {
+            if (LINK_IS_CHILD && this->heldItemAction == PLAYER_IA_SLINGSHOT) {
                 camMode = CAM_MODE_AIM_CHILD;
+            } else {
+                camMode = CAM_MODE_AIM_ADULT;
             }
         } else {
             camMode = CAM_MODE_AIM_BOOMERANG;

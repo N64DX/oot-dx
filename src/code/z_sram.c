@@ -611,6 +611,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
 
     R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
     R_QUEST_MODE    = QUEST_MODE;
+    
+    if (IS_CHILD_QUEST)
+        gSaveContext.language = LANGUAGE_ENG;
 }
 
 void Sram_OpenSaveOptions(SramContext* sramCtx) {
@@ -880,6 +883,10 @@ void Sram_VerifyAndLoadAllSaves(FileSelectState* fileSelect, SramContext* sramCt
     MemCpy(&fileSelect->fileOptions[1], sramCtx->readBuff + SLOT_OFFSET(1) + offsetof(SaveContext, options), sizeof(fileSelect->fileOptions[0]));
     MemCpy(&fileSelect->fileOptions[2], sramCtx->readBuff + SLOT_OFFSET(2) + offsetof(SaveContext, options), sizeof(fileSelect->fileOptions[0]));
     
+    MemCpy(&fileSelect->questMode[0], sramCtx->readBuff + SLOT_OFFSET(0) + offsetof(SaveContext, save.info.questMode), sizeof(fileSelect->questMode[0]));
+    MemCpy(&fileSelect->questMode[1], sramCtx->readBuff + SLOT_OFFSET(1) + offsetof(SaveContext, save.info.questMode), sizeof(fileSelect->questMode[0]));
+    MemCpy(&fileSelect->questMode[2], sramCtx->readBuff + SLOT_OFFSET(2) + offsetof(SaveContext, save.info.questMode), sizeof(fileSelect->questMode[0]));
+    
     for (i=0; i<3; i++)
         for (j=0; j<FILE_OPTIONS_SIZE; j++)
             gFileOptions[i][j] = fileSelect->fileOptions[i][j];
@@ -931,8 +938,6 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
 
 #if OOT_VERSION <= PAL_1_1
     gSaveContext.save.info.questMode = fileSelect->questMode[fileSelect->buttonIndex];
-    if (fileSelect->mirrorMode[fileSelect->buttonIndex] == true && !MIRROR_MODE)
-        SET_MIRROR_MODE;
 #else
     gSaveContext.save.info.questMode = 0;
 #endif

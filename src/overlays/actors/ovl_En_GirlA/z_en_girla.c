@@ -40,6 +40,7 @@ s32 EnGirlA_CanBuy_BluePotion(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_Longsword(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_HylianShield(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_DekuShield(PlayState* play, EnGirlA* this);
+s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_GoronTunic(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_ZoraTunic(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_RecoveryHeart(PlayState* play, EnGirlA* this);
@@ -63,6 +64,7 @@ void EnGirlA_ItemGive_BottledItem(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_Longsword(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_HylianShield(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_DekuShield(PlayState* play, EnGirlA* this);
+void EnGirlA_ItemGive_HerosShield(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_GoronTunic(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_ZoraTunic(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_Health(PlayState* play, EnGirlA* this);
@@ -140,6 +142,7 @@ static char* sShopItemDescriptions[] = {
     T("爆弾×5       ", "Bombs x5      "),
     T("赤クスリ      ", "Red medicine  "),
     T("赤クスリ      ", "Red medicine  "),
+    T("赤クスリ      ", "Hero's Shield  "),
 };
 #endif
 
@@ -314,7 +317,10 @@ static ShopItemEntry sShopItemEntries[] = {
       EnGirlA_CanBuy_RedPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount },
     /* SI_RED_POTION_R50 */
     { OBJECT_GI_LIQUID, GID_BOTTLE_POTION_RED, func_8002EBCC, 50, 1, 0x0065, 0x0063, GI_BOTTLE_POTION_RED,
-      EnGirlA_CanBuy_RedPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount }
+      EnGirlA_CanBuy_RedPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount },
+    /* SI_HEROS_SHIELD */
+    { OBJECT_GI_SHIELD_4, GID_SHIELD_HEROS, func_8002EBCC, 80, 1, 0x8001, 0x8000, GI_SHIELD_HEROS,
+      EnGirlA_CanBuy_HerosShield, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
 };
 
 // Defines the Hylian Shield discount amount
@@ -326,6 +332,12 @@ void EnGirlA_SetupAction(EnGirlA* this, EnGirlAActionFunc func) {
 
 s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
     switch (this->actor.params) {
+        case SI_DEKU_SHIELD:
+            if (GET_EVENTCHKINF(EVENTCHKINF_45)) {
+                this->actor.params = SI_HEROS_SHIELD;
+                return true;
+            }
+            break;
         case SI_MILK_BOTTLE:
             if (GET_ITEMGETINF(ITEMGETINF_TALON_BOTTLE)) {
                 this->actor.params = SI_RECOVERY_HEART;
@@ -575,6 +587,19 @@ s32 EnGirlA_CanBuy_DekuShield(PlayState* play, EnGirlA* this) {
     return CANBUY_RESULT_SUCCESS;
 }
 
+s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this) {
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
+        return CANBUY_RESULT_CANT_GET_NOW;
+    }
+    if (gSaveContext.save.info.playerData.rupees < this->basePrice) {
+        return CANBUY_RESULT_NEED_RUPEES;
+    }
+    if (Item_CheckObtainability(ITEM_SHIELD_HEROS) == ITEM_NONE) {
+        return CANBUY_RESULT_SUCCESS_FANFARE;
+    }
+    return CANBUY_RESULT_SUCCESS;
+}
+
 s32 EnGirlA_CanBuy_GoronTunic(PlayState* play, EnGirlA* this) {
     if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
         return CANBUY_RESULT_CANT_GET_NOW;
@@ -780,6 +805,11 @@ void EnGirlA_ItemGive_HylianShield(PlayState* play, EnGirlA* this) {
 
 void EnGirlA_ItemGive_DekuShield(PlayState* play, EnGirlA* this) {
     Item_Give(play, ITEM_SHIELD_DEKU);
+    Rupees_ChangeBy(-this->basePrice);
+}
+
+void EnGirlA_ItemGive_HerosShield(PlayState* play, EnGirlA* this) {
+    Item_Give(play, ITEM_SHIELD_HEROS);
     Rupees_ChangeBy(-this->basePrice);
 }
 

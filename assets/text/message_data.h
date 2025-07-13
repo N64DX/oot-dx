@@ -15,8 +15,10 @@
 #include "message_data_5xxx_kakariko.h"
 #include "message_data_6xxx_valley.h"
 #include "message_data_7xxx_market_&_masks.h"
+#include "message_data_8xxx_child_quest.h"
 #else
 #include "text/message_data.h"
+#include "message_data_8xxx_child_quest.h"
 #endif
 
 /*

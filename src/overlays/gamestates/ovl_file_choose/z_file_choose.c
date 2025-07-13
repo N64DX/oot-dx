@@ -44,6 +44,9 @@
 #else
 #include "assets/textures/title_static/title_static.h"
 #endif
+#if OOT_VERSION <= PAL_1_1
+#include "assets/textures/title_static/title_static_quest.h"
+#endif
 #include "assets/textures/parameter_static/parameter_static.h"
 
 #if OOT_PAL_N64
@@ -1432,6 +1435,8 @@ static void* sActionButtonTextures[][4] = {
 static void* sOptionsButtonTextures[] = LANGUAGE_ARRAY(gFileSelOptionsButtonJPNTex, gFileSelOptionsButtonENGTex,
                                                        gFileSelOptionsButtonGERTex, gFileSelOptionsButtonENGTex);
 
+static void* sQuestButtonTextures[] = { gFileSelQuestOcarinaOfTimeButtonTex, gFileSelQuestMasterQuestButtonTex, gFileSelQuestUraQuestButtonTex, gFileSelQuestChildQuestButtonTex };
+
 /**
  * Draw most window contents including buttons, labels, and icons.
  * Does not include anything from the keyboard and settings windows.
@@ -1517,6 +1522,15 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
             gSP1Quadrangle(POLY_OPA_DISP++, 8, 10, 11, 9, 0);
         }
 
+#if OOT_VERSION <= PAL_1_1
+        else if (this->nameAlpha[i] != 0) {
+            // draw quest label for 64DD
+            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, sWindowContentColors[isActive][0], sWindowContentColors[isActive][1], sWindowContentColors[isActive][2], this->nameAlpha[i]);
+            gDPLoadTextureBlock(POLY_OPA_DISP++, sQuestButtonTextures[this->questMode[i]], G_IM_FMT_IA, G_IM_SIZ_16b, 44, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            gSP1Quadrangle(POLY_OPA_DISP++, 8, 10, 11, 9, 0);
+        }
+#endif
+
         // draw connectors
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, sWindowContentColors[isActive][0], sWindowContentColors[isActive][1],
                         sWindowContentColors[isActive][2], this->connectorAlpha[i]);
@@ -1528,6 +1542,10 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
         if (this->n64ddFlags[i]) {
             gSP1Quadrangle(POLY_OPA_DISP++, 16, 18, 19, 17, 0);
         }
+#if OOT_VERSION <= PAL_1_1
+        else if (this->nameAlpha[i] != 0)
+            gSP1Quadrangle(POLY_OPA_DISP++, 16, 18, 19, 17, 0);
+#endif
     }
 
     // draw file info

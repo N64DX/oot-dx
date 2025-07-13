@@ -295,7 +295,7 @@ void EnRr_SetupGrabPlayer(EnRr* this, Player* player) {
 u8 EnRr_GetMessage(u8 shield, u8 tunic) {
     u8 messageIndex = 0;
 
-    if ((shield == 1 /* Deku shield */) || (shield == 2 /* Hylian shield */)) {
+    if ((shield == 1 /* Deku shield */) || (shield == 2 /* Hylian shield */) || (shield == 4 /* Hero's Shield */)) {
         messageIndex = RR_MESSAGE_SHIELD;
     }
     if ((tunic == 2 /* Goron tunic */) || (tunic == 3 /* Zora tunic */)) {

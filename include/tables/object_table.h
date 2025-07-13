@@ -196,6 +196,7 @@
 /* 0x00EC */ DEFINE_OBJECT(object_ani, OBJECT_ANI)
 /* 0x00ED */ DEFINE_OBJECT(object_demo_6k, OBJECT_DEMO_6K)
 /* 0x00EE */ DEFINE_OBJECT(object_gi_shield_3, OBJECT_GI_SHIELD_3)
+/* 0x00EE */ DEFINE_OBJECT(object_gi_shield_4, OBJECT_GI_SHIELD_4)
 /* 0x00EF */ DEFINE_OBJECT(object_gi_letter, OBJECT_GI_LETTER)
 /* 0x00F0 */ DEFINE_OBJECT(object_spot15_obj, OBJECT_SPOT15_OBJ)
 /* 0x00F1 */ DEFINE_OBJECT(object_jya_obj, OBJECT_JYA_OBJ)

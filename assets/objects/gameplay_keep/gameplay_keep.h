@@ -1679,7 +1679,8 @@ extern u64 gEffSpark3Tex[TEX_LEN(u64, gEffSpark3Tex_WIDTH, gEffSpark3Tex_HEIGHT,
 extern u64 gEffSpark4Tex[TEX_LEN(u64, gEffSpark4Tex_WIDTH, gEffSpark4Tex_HEIGHT, 4)];
 
 extern Gfx gLinkHookshotChainDL[23];
-extern Gfx gLinkHookshotTipDL[22];
+extern Gfx gLinkOcarinaHookshotTipDL[22];
+extern Gfx gLinkMajoraHookshotTipDL[];
 extern Gfx gLinkHookshotReticleDL[13];
 
 #endif

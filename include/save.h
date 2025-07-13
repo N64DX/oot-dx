@@ -241,7 +241,7 @@ typedef struct SavePlayerData {
     /* 0x1A  0x0036 */ u16 swordHealth;
     /* 0x1C  0x0038 */ u16 naviTimer;
     /* 0x1E  0x003A */ u8 isMagicAcquired;
-    /* 0x1F  0x003B */ char unk_3B[0x01];
+    /* 0x1F  0x003B */ u8 equipmentUpgrades;
     /* 0x20  0x003C */ u8 isDoubleMagicAcquired;
     /* 0x21  0x003D */ u8 isDoubleDefenseAcquired;
     /* 0x22  0x003E */ u8 bgsFlag;
@@ -436,14 +436,30 @@ typedef enum LinkAge {
 #define SET_MASK_ADULT(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0x00FF) | (((val) & 0xFF) << 8)))
 #define SET_MASK_CHILD(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0xFF00) | ((val) & 0xFF)))
 
+#define SET_KOKIRI_SWORD_UPGRADE    (gSaveContext.save.info.playerData.equipmentUpgrades   |=   1 << 0)
+#define HAS_KOKIRI_SWORD_UPGRADE   ((gSaveContext.save.info.playerData.equipmentUpgrades   >>   0) & 1)
+#define SET_HEROS_SHIELD            (gSaveContext.save.info.playerData.equipmentUpgrades   |=   1 << 1)
+#define CLEAR_HEROS_SHIELD          (gSaveContext.save.info.playerData.equipmentUpgrades   &= ~(1 << 1))
+#define TOGGLE_HEROS_SHIELD         (gSaveContext.save.info.playerData.equipmentUpgrades   ^=   1 << 1)
+#define ACTIVE_HEROS_SHIELD        ((gSaveContext.save.info.playerData.equipmentUpgrades   >>   1) & 1)
+#define IS_HEROS_SHIELD             (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (ACTIVE_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) ) )
+
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17
 #define LINK_AGE_IN_YEARS (!LINK_IS_ADULT ? YEARS_CHILD : YEARS_ADULT)
 
 #define VANILLA_QUEST 0
 #define MASTER_QUEST  1
-#define QUEST_MAX     MASTER_QUEST
+#define URA_QUEST     2
+#define CHILD_QUEST   3
+
+#define QUEST_MAX     CHILD_QUEST
 #define QUEST_MODE    (gSaveContext.save.info.questMode & 127)
+
+#define IS_VANILLA_QUEST (R_QUEST_MODE == VANILLA_QUEST)
+#define IS_MASTER_QUEST  (R_QUEST_MODE == MASTER_QUEST)
+#define IS_URA_QUEST     (R_QUEST_MODE == URA_QUEST)
+#define IS_CHILD_QUEST   (R_QUEST_MODE == CHILD_QUEST)
 
 #define FILE_OPTIONS_SIZE 2
 extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
@@ -472,7 +488,6 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define STATIC_DARK_LINK_HP         ((gFileOptions[gSaveContext.fileNum][1] >> 15) & 1)  // Bits: 15
 #define NO_BOTTLED_FAIRIES          ((gFileOptions[gSaveContext.fileNum][1] >> 16) & 1)  // Bits: 16
 
-#define SET_MIRROR_MODE              (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 0))
 #define SET_HEALTH_RECOVERY(value)   (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(3 << 0))  | (((value) & 3) << 0))
 #define SET_DAMAGE_TAKEN(value)      (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 2))  | (((value) & 7) << 2))
 #define SET_MONSTER_HP(value)        (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 5))  | (((value) & 7) << 5))

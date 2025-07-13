@@ -301,8 +301,19 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
     if (equipValue) {
         equipValue >>= gEquipShifts[equipment];
 
-        gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
-        gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
+        if (equipment == EQUIP_TYPE_SHIELD) {
+            if (IS_HEROS_SHIELD) {
+                CLEAR_HEROS_SHIELD;
+                gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
+                gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(equipment, 3);
+            } else {
+                gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
+                gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
+            }
+        } else {
+            gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
+            gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
+        }
 
         if (equipment == EQUIP_TYPE_TUNIC) {
             gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_TUNIC_KOKIRI << (EQUIP_TYPE_TUNIC * 4);

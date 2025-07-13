@@ -27,7 +27,8 @@ typedef enum EquipInvSword {
 typedef enum EquipInvShield {
     /* 0 */ EQUIP_INV_SHIELD_DEKU,
     /* 1 */ EQUIP_INV_SHIELD_HYLIAN,
-    /* 2 */ EQUIP_INV_SHIELD_MIRROR
+    /* 2 */ EQUIP_INV_SHIELD_MIRROR,
+    /* 3 */ EQUIP_INV_SHIELD_HEROS
 } EquipInvShield;
 
 typedef enum EquipInvTunic {
@@ -316,6 +317,7 @@ typedef enum ItemID {
     /* 0x99 */ ITEM_DEKU_STICK_UPGRADE_30,
     /* 0x9A */ ITEM_DEKU_NUT_UPGRADE_30,
     /* 0x9B */ ITEM_DEKU_NUT_UPGRADE_40,
+    /* 0x9C */ ITEM_SHIELD_HEROS,
     /* 0xEC */ ITEM_SWORDS,
     /* 0xED */ ITEM_SHIELDS,
     /* 0xEE */ ITEM_TUNICS,
@@ -455,7 +457,7 @@ typedef enum GetItemID {
     /* 0x7A */ GI_DEKU_NUT_UPGRADE_40,
     /* 0x7B */ GI_BULLET_BAG_50,
     /* 0x7C */ GI_ICE_TRAP, // freezes link when opened from a chest
-    /* 0x7D */ GI_TEXT_0, // no model appears over Link, shows text id 0 (pocket egg)
+    /* 0x7D */ GI_SHIELD_HEROS,
     /* 0x7E */ GI_MAX
 } GetItemID;
 
@@ -577,7 +579,8 @@ typedef enum GetItemDrawID {
     /* 0x72 */ GID_BULLET_BAG_50,
     /* 0x73 */ GID_SWORD_KOKIRI,
     /* 0x74 */ GID_SKULL_TOKEN_2,
-    /* 0x75 */ GID_MAX
+    /* 0x75 */ GID_SHIELD_HEROS,
+    /* 0x76 */ GID_MAX
 } GetItemDrawID;
 
 typedef enum ExchangeItemID {

@@ -263,6 +263,7 @@ void Interface_InitHorsebackArchery(struct PlayState* play);
 void func_800849EC(struct PlayState* play);
 void Interface_LoadItemIcon1(struct PlayState* play, u16 button);
 void Interface_LoadItemIcon2(struct PlayState* play, u16 button);
+u8 Interface_LoadItemIconChildQuest(u8 item);
 u8 Interface_GetArrowFromDpad(u8 button);
 u8 Interface_GetItemFromDpad(u8 button);
 void func_80084BF4(struct PlayState* play, u16 flag);
