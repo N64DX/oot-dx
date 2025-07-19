@@ -19,6 +19,7 @@
 #include "play_state.h"
 #include "player.h"
 #include "save.h"
+#include "regs.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_oF1d_map/object_oF1d_map.h"
@@ -599,7 +600,7 @@ s16 EnGo2_UpdateTalkStateGoronDmtBiggoron(PlayState* play, EnGo2* this) {
 #endif
             if (this->actor.textId == 0x305E) {
                 if (!gSaveContext.save.info.playerData.bgsFlag) {
-                    EnGo2_GetItem(this, play, GI_SWORD_BIGGORON);
+                    EnGo2_GetItem(this, play, (IS_CHILD_QUEST && LINK_IS_CHILD) ? GI_SWORD_GILDED : GI_SWORD_BIGGORON);
                     this->actionFunc = EnGo2_SetupGetItem;
                     return NPC_TALK_STATE_ACTION;
                 } else {
@@ -1837,6 +1838,7 @@ void EnGo2_SetGetItem(EnGo2* this, PlayState* play) {
                 EnGo2_GetItemAnimation(this, play);
                 return;
             case GI_SWORD_BIGGORON:
+            case GI_SWORD_GILDED:
                 gSaveContext.save.info.playerData.bgsFlag = true;
                 break;
             case GI_BOMB_BAG_30:

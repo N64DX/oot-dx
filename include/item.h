@@ -457,8 +457,18 @@ typedef enum GetItemID {
     /* 0x7A */ GI_DEKU_NUT_UPGRADE_40,
     /* 0x7B */ GI_BULLET_BAG_50,
     /* 0x7C */ GI_ICE_TRAP, // freezes link when opened from a chest
-    /* 0x7D */ GI_SHIELD_HEROS,
-    /* 0x7E */ GI_MAX
+    /* 0x7D */ GI_SHIELD_MIRROR_MM,
+    /* 0x7E */ GI_SHIELD_HEROS,
+    /* 0x7F */ GI_SWORD_HEROS,
+    /* 0x80 */ GI_SWORD_SILVER,
+    /* 0x81 */ GI_SWORD_GILDED,
+    /* 0x82 */ GI_POWER_BRACELET,
+    /* 0x83 */ GI_POWER_BRACELETS,
+    /* 0x84 */ GI_HOOKSHOT_MM,
+    /* 0x85 */ GI_LONGSHOT_MM,
+    /* 0x86 */ GI_HEROS_BOW,
+    /* 0x87 */ GI_GOLD_DUST,
+    /* 0x88 */ GI_MAX
 } GetItemID;
 
 typedef enum GetItemDrawID {
@@ -579,8 +589,17 @@ typedef enum GetItemDrawID {
     /* 0x72 */ GID_BULLET_BAG_50,
     /* 0x73 */ GID_SWORD_KOKIRI,
     /* 0x74 */ GID_SKULL_TOKEN_2,
-    /* 0x75 */ GID_SHIELD_HEROS,
-    /* 0x76 */ GID_MAX
+    /* 0x75 */ GID_SHIELD_MIRROR_MM,
+    /* 0x76 */ GID_SHIELD_HEROS,
+    /* 0x77 */ GID_SWORD_HEROS,
+    /* 0x78 */ GID_SWORD_SILVER,
+    /* 0x79 */ GID_SWORD_GILDED,
+    /* 0x7A */ GID_POWER_BRACELET,
+    /* 0x7B */ GID_HOOKSHOT_MM,
+    /* 0x7C */ GID_LONGSHOT_MM,
+    /* 0x7D */ GID_HEROS_BOW,
+    /* 0x7E */ GID_GOLD_DUST,
+    /* 0x7E */ GID_MAX
 } GetItemDrawID;
 
 typedef enum ExchangeItemID {

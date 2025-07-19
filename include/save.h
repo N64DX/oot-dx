@@ -5,6 +5,7 @@
 #include "versions.h"
 #include "inventory.h"
 #include "z_math.h"
+#include "regs.h"
 
 typedef enum ZTargetSetting {
     /* 0 */ Z_TARGET_SETTING_SWITCH,
@@ -436,13 +437,14 @@ typedef enum LinkAge {
 #define SET_MASK_ADULT(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0x00FF) | (((val) & 0xFF) << 8)))
 #define SET_MASK_CHILD(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0xFF00) | ((val) & 0xFF)))
 
-#define SET_KOKIRI_SWORD_UPGRADE    (gSaveContext.save.info.playerData.equipmentUpgrades   |=   1 << 0)
-#define HAS_KOKIRI_SWORD_UPGRADE   ((gSaveContext.save.info.playerData.equipmentUpgrades   >>   0) & 1)
-#define SET_HEROS_SHIELD            (gSaveContext.save.info.playerData.equipmentUpgrades   |=   1 << 1)
-#define CLEAR_HEROS_SHIELD          (gSaveContext.save.info.playerData.equipmentUpgrades   &= ~(1 << 1))
-#define TOGGLE_HEROS_SHIELD         (gSaveContext.save.info.playerData.equipmentUpgrades   ^=   1 << 1)
-#define ACTIVE_HEROS_SHIELD        ((gSaveContext.save.info.playerData.equipmentUpgrades   >>   1) & 1)
-#define IS_HEROS_SHIELD             (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (ACTIVE_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) ) )
+#define SET_HEROS_SWORD       (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 0)
+#define HAS_HEROS_SWORD     (((gSaveContext.save.info.playerData.equipmentUpgrades >>   0) & 1) && IS_CHILD_QUEST)
+#define IS_HEROS_SWORD        (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SWORD_KOKIRI) && HAS_HEROS_SWORD)
+#define SET_HEROS_SHIELD      (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 1)
+#define CLEAR_HEROS_SHIELD    (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 1))
+#define TOGGLE_HEROS_SHIELD   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 1)
+#define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST)
+#define IS_HEROS_SHIELD       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (HAS_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) )
 
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17
@@ -766,6 +768,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 
 #define GET_ITEMGETINF(flag) (gSaveContext.save.info.itemGetInf[ITEMGETINF_INDEX(flag)] & ITEMGETINF_MASK(flag))
 #define SET_ITEMGETINF(flag) (gSaveContext.save.info.itemGetInf[ITEMGETINF_INDEX(flag)] |= ITEMGETINF_MASK(flag))
+#define CLEAR_ITEMGETINF(flag) (gSaveContext.save.info.infTable[ITEMGETINF_INDEX(flag)] &= ~ITEMGETINF_MASK(flag))
 
 #define ITEMGETINF_TALON_BOTTLE 0x02
 #define ITEMGETINF_03 0x03

@@ -1600,6 +1600,8 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
 
 u8 Interface_LoadItemIconChildQuest(u8 item) {
     if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+        return ITEM_FISHING_POLE + 2;
+    else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
         return ITEM_FISHING_POLE + 1;
     else if (IS_CHILD_QUEST && LINK_IS_CHILD) {
         if (item == ITEM_HOOKSHOT)
@@ -1618,12 +1620,20 @@ u8 Interface_LoadItemIconChildQuest(u8 item) {
 
         else if (item == ITEM_SWORD_MASTER)
             return ITEM_FISHING_POLE + 4;
-        else if (item == ITEM_SWORD_BIGGORON && !gSaveContext.save.info.playerData.bgsFlag)
+        else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
             return ITEM_FISHING_POLE + 5;
-        else if (item == ITEM_SWORD_BIGGORON)
+        else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
             return ITEM_FISHING_POLE + 6;
         else if (item == ITEM_SHIELD_MIRROR)
-            return ITEM_FISHING_POLE + 2;
+            return ITEM_FISHING_POLE + 3;
+        
+        else if (item == ITEM_STRENGTH_SILVER_GAUNTLETS)
+            return ITEM_FISHING_POLE + 13;
+        else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
+            return ITEM_FISHING_POLE + 14;
+        
+        else if (item == ITEM_BROKEN_GORONS_SWORD)
+            return ITEM_FISHING_POLE + 15;
     }
     return item;
 }

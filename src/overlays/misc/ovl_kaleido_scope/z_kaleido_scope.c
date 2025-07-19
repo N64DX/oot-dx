@@ -2188,14 +2188,22 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
             if (pauseCtx->pageIndex == PAUSE_ITEM) {
                 if (pauseCtx->namedItem == ITEM_BOW)
                     texIndex = 0x59;
+                else if (pauseCtx->namedItem == ITEM_BROKEN_GORONS_SWORD)
+                    texIndex = 0x3A;
             }
             else if (pauseCtx->pageIndex == PAUSE_EQUIP) {
-                if (pauseCtx->namedItem == ITEM_SWORD_MASTER)
+                if (pauseCtx->namedItem == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
+                    texIndex = 0x58;
+                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER)
                     texIndex = 0x77;
                 else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON && gSaveContext.save.info.playerData.bgsFlag)
                     texIndex = 0x78;
                 else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON)
                     texIndex = 0x73;
+                else if (pauseCtx->namedItem == ITEM_STRENGTH_SILVER_GAUNTLETS)
+                    texIndex = 0x56;
+                else if (pauseCtx->namedItem == ITEM_STRENGTH_GOLD_GAUNTLETS)
+                    texIndex = 0x57;
             }
         }
 

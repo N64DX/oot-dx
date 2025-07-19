@@ -564,6 +564,15 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 Player_SetEquipmentData(play, GET_PLAYER(play));
                 pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
                 sEquipTimer = 10;
+
+                for (i=1; i<8; i++) {
+                    if (i<4) {
+                        if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SHIELDS)
+                            Interface_LoadItemIcon1(play, i);
+                    }
+                    else if (Interface_GetItemFromDpad(i-4) == ITEM_SHIELDS)
+                        Interface_LoadItemIcon1(play, i);
+                }
             }
         } else if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) &&
             (pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE) &&
@@ -600,10 +609,8 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                         if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS || gSaveContext.save.info.equips.buttonItems[i] == ITEM_SHIELDS || gSaveContext.save.info.equips.buttonItems[i] == ITEM_TUNICS || gSaveContext.save.info.equips.buttonItems[i] == ITEM_BOOTS)
                             Interface_LoadItemIcon1(play, i);
                     }
-                    else {
-                        if (Interface_GetItemFromDpad(i-4) == ITEM_SWORDS || Interface_GetItemFromDpad(i-4) == ITEM_SHIELDS || Interface_GetItemFromDpad(i-4) == ITEM_TUNICS || Interface_GetItemFromDpad(i-4) == ITEM_BOOTS)
-                            Interface_LoadItemIcon1(play, i);
-                    }
+                    else if (Interface_GetItemFromDpad(i-4) == ITEM_SWORDS || Interface_GetItemFromDpad(i-4) == ITEM_SHIELDS || Interface_GetItemFromDpad(i-4) == ITEM_TUNICS || Interface_GetItemFromDpad(i-4) == ITEM_BOOTS)
+                        Interface_LoadItemIcon1(play, i);
                 }
 
                 Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -790,6 +797,8 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                        (gBitFlags[bit + 1] & gSaveContext.save.info.inventory.equipment)) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconBrokenGiantsKnifeTex, ITEM_ICON_WIDTH,
                                                    ITEM_ICON_HEIGHT, point);
+            } else if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_KOKIRI && IS_HEROS_SWORD) {
+                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconSwordHerosTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if (i == EQUIP_TYPE_SHIELD && k == EQUIP_INV_SHIELD_HYLIAN && IS_HEROS_SHIELD) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconShieldHerosTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if (gBitFlags[bit] & gSaveContext.save.info.inventory.equipment) {

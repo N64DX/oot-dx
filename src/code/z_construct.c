@@ -27,16 +27,19 @@ void Interface_Init(PlayState* play) {
     u8 item;
     u8 i;
     
-    gItemIcons[ITEM_HOOKSHOT]       = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconHookshotMMTex        : gItemIconHookshotTex;
-    gItemIcons[ITEM_LONGSHOT]       = (IS_CHILD_QUEST && LINK_IS_CHILD) ? (u64*)gItemIconLongshotMMTex        : gItemIconLongshotTex;
-    gItemIcons[ITEM_BOW]            = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconHerosBowTex          : gItemIconBowTex;
-    gItemIcons[ITEM_BOW_FIRE]       = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconHerosBowFireTex      : gItemIconBowFireTex;
-    gItemIcons[ITEM_BOW_ICE]        = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconHerosBowIceTex       : gItemIconBowIceTex;
-    gItemIcons[ITEM_BOW_LIGHT]      = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconHerosBowLightTex     : gItemIconBowLightTex;
-    gItemIcons[ITEM_SWORD_MASTER]   = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconSwordRazorTex        : gItemIconSwordMasterTex;
-    gItemIcons[ITEM_SWORD_BIGGORON] = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconSwordGildedTex       : gItemIconSwordBiggoronTex;
-    gItemIcons[ITEM_GIANTS_KNIFE]   = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconBrokenGiantsKnifeTex : gItemIconBrokenGiantsKnifeTex;
-    gItemIcons[ITEM_SHIELD_MIRROR]  = (IS_CHILD_QUEST && LINK_IS_CHILD) ?       gItemIconShieldMirrorMMTex    : gItemIconShieldMirrorTex;
+    gItemIcons[ITEM_HOOKSHOT]                  = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconHookshotMMTex        : gItemIconHookshotTex;
+    gItemIcons[ITEM_LONGSHOT]                  = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconLongshotMMTex        : gItemIconLongshotTex;
+    gItemIcons[ITEM_BOW]                       = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconHerosBowTex          : gItemIconBowTex;
+    gItemIcons[ITEM_BOW_FIRE]                  = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconHerosBowFireTex      : gItemIconBowFireTex;
+    gItemIcons[ITEM_BOW_ICE]                   = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconHerosBowIceTex       : gItemIconBowIceTex;
+    gItemIcons[ITEM_BOW_LIGHT]                 = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconHerosBowLightTex     : gItemIconBowLightTex;
+    gItemIcons[ITEM_SWORD_MASTER]              = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconSwordRazorTex        : gItemIconSwordMasterTex;
+    gItemIcons[ITEM_SWORD_BIGGORON]            = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconSwordGildedTex       : gItemIconSwordBiggoronTex;
+    gItemIcons[ITEM_GIANTS_KNIFE]              = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconBrokenGiantsKnifeTex : gItemIconBrokenGiantsKnifeTex;
+    gItemIcons[ITEM_SHIELD_MIRROR]             = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconShieldMirrorMMTex    : gItemIconShieldMirrorTex;
+    gItemIcons[ITEM_STRENGTH_SILVER_GAUNTLETS] = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconPowerBraceletTex     :  gItemIconSilverGauntletsTex;
+    gItemIcons[ITEM_STRENGTH_GOLD_GAUNTLETS]   = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconPowerBraceletsTex    :  gItemIconGoldenGauntletsTex;
+    gItemIcons[ITEM_BROKEN_GORONS_SWORD]       = (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconGoldDustTex          :  gItemIconBrokenGoronsSwordTex;
 
     gSaveContext.sunsSongState = SUNSSONG_INACTIVE;
     gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;

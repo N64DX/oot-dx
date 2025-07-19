@@ -1887,6 +1887,21 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                 s32 absYawDiff = ABS(yawDiff);
 
                 if ((getItemId != GI_NONE) || (player->getItemDirection < absYawDiff)) {
+                    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+                        if (getItemId == -GI_SHIELD_MIRROR)
+                            getItemId = -GI_SHIELD_MIRROR_MM;
+                        else if (getItemId == -GI_SILVER_GAUNTLETS)
+                            getItemId = -GI_POWER_BRACELET;
+                        else if (getItemId == -GI_GOLD_GAUNTLETS)
+                            getItemId = -GI_POWER_BRACELETS;
+                        else if (getItemId == -GI_HOOKSHOT)
+                            getItemId = -GI_HOOKSHOT_MM;
+                        else if (getItemId == -GI_LONGSHOT)
+                            getItemId = -GI_LONGSHOT_MM;
+                        else if (getItemId == -GI_BOW)
+                            getItemId = -GI_HEROS_BOW;
+                    }
+                    
                     player->getItemId = getItemId;
                     player->interactRangeActor = actor;
                     player->getItemDirection = absYawDiff;

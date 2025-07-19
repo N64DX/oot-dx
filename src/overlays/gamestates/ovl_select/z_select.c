@@ -29,6 +29,22 @@
 #include "save.h"
 #include "sram.h"
 
+typedef struct {
+    u16   entrance_index;
+    char* name;
+} warp_t;
+
+typedef struct {
+    Vec3f pos;
+    u16   yaw;
+    char* name;
+} room_t;
+
+typedef struct {
+    u8      number_of_rooms;
+    room_t* room;
+} rooms_t;
+
 void MapSelect_LoadTitle(MapSelectState* this) {
     this->state.running = false;
     SET_NEXT_GAMESTATE(&this->state, ConsoleLogo_Init, ConsoleLogoState);
@@ -68,6 +84,132 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
 
     this->state.running = false;
     SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);
+}
+
+void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
+    switch (type) {
+        case EVENT:
+            if (GET_EVENTCHKINF(flag))
+                CLEAR_EVENTCHKINF(flag);
+            else SET_EVENTCHKINF(flag);
+            break;
+        case ITEM:
+            if (GET_ITEMGETINF(flag))
+                CLEAR_ITEMGETINF(flag);
+            else SET_ITEMGETINF(flag);
+            break;
+        case INFTABLE:
+            if (GET_INFTABLE(flag))
+                CLEAR_INFTABLE(flag);
+            else SET_INFTABLE(flag);
+            break;
+        case CARPENTERS:
+            if (!GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED)) {
+                SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED);
+                SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED);
+                SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED);
+                SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED);
+            }
+            else {
+                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED);
+            }
+            break;
+        case NABOORU:
+            if (!GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE)) {
+                SET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE);
+                SET_EVENTCHKINF(EVENTCHKINF_3B);
+                SET_EVENTCHKINF(EVENTCHKINF_C0);
+                gSaveContext.save.info.sceneFlags[SCENE_SPIRIT_TEMPLE_BOSS].swch |= (1 << flag);
+            }
+            else {
+                CLEAR_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_3B);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_C0);
+                gSaveContext.save.info.sceneFlags[SCENE_SPIRIT_TEMPLE_BOSS].swch &= ~(1 << flag);
+            }
+            break;
+        case MASK:
+            if (!GET_ITEMGETINF(ITEMGETINF_23)) {
+                SET_ITEMGETINF(ITEMGETINF_23);
+                SET_ITEMGETINF(ITEMGETINF_24);
+                SET_ITEMGETINF(ITEMGETINF_25);
+                SET_ITEMGETINF(ITEMGETINF_26);
+                SET_ITEMGETINF(ITEMGETINF_38);
+                SET_ITEMGETINF(ITEMGETINF_39);
+                SET_ITEMGETINF(ITEMGETINF_3A);
+                SET_ITEMGETINF(ITEMGETINF_3B);
+                SET_ITEMGETINF(ITEMGETINF_3F);
+                SET_ITEMGETINF(ITEMGETINF_2A);
+                SET_EVENTCHKINF(EVENTCHKINF_PAID_BACK_KEATON_MASK);
+                SET_EVENTCHKINF(EVENTCHKINF_PAID_BACK_SKULL_MASK);
+                SET_EVENTCHKINF(EVENTCHKINF_PAID_BACK_SPOOKY_MASK);
+                SET_EVENTCHKINF(EVENTCHKINF_PAID_BACK_BUNNY_HOOD);
+            }
+            else {
+                CLEAR_ITEMGETINF(ITEMGETINF_23);
+                CLEAR_ITEMGETINF(ITEMGETINF_24);
+                CLEAR_ITEMGETINF(ITEMGETINF_25);
+                CLEAR_ITEMGETINF(ITEMGETINF_26);
+                CLEAR_ITEMGETINF(ITEMGETINF_38);
+                CLEAR_ITEMGETINF(ITEMGETINF_39);
+                CLEAR_ITEMGETINF(ITEMGETINF_3A);
+                CLEAR_ITEMGETINF(ITEMGETINF_3B);
+                CLEAR_ITEMGETINF(ITEMGETINF_3F);
+                CLEAR_ITEMGETINF(ITEMGETINF_2A);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_KEATON_MASK);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_SKULL_MASK);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_SPOOKY_MASK);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_BUNNY_HOOD);
+            }
+            break;
+        case WELL:
+            if (!GET_EVENTCHKINF(flag)) {
+                SET_EVENTCHKINF(flag);
+                gSaveContext.save.info.sceneFlags[SCENE_WINDMILL_AND_DAMPES_GRAVE].swch |= (1 << 2);
+            }
+            else {
+                CLEAR_EVENTCHKINF(flag);
+                gSaveContext.save.info.sceneFlags[SCENE_WINDMILL_AND_DAMPES_GRAVE].swch &= ~(1 << 2);
+            }
+            break;
+        case SHADOW:
+            if (!GET_EVENTCHKINF(EVENTCHKINF_AA)) {
+                SET_EVENTCHKINF(EVENTCHKINF_AA);
+                SET_EVENTCHKINF(EVENTCHKINF_54);
+            }
+            else {
+                CLEAR_EVENTCHKINF(EVENTCHKINF_AA);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_54);
+            }
+            break;
+        default:
+            gSaveContext.save.info.sceneFlags[type].clear ^= (1 << flag);
+            break;
+    }
+}
+
+char* MapSelect_GetEvent(MapSelectState* this, u8 type, u16 flag) {
+    switch (type) {
+        case EVENT:
+        case WELL:
+        case SHADOW:
+            return GET_EVENTCHKINF(flag) ? "On" : "Off";
+        case ITEM:
+        case MASK:
+            return GET_ITEMGETINF(flag) ? "On" : "Off";
+        case INFTABLE:
+             return GET_INFTABLE(flag) ? "On" : "Off";
+        case CARPENTERS:
+            return (GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED)) ? "On" : "Off";
+        case NABOORU:
+            return (GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE) && GET_EVENTCHKINF(EVENTCHKINF_3B) && GET_EVENTCHKINF(EVENTCHKINF_C0) && (gSaveContext.save.info.sceneFlags[SCENE_SPIRIT_TEMPLE_BOSS].swch &= (1 << flag))) ? "On" : "Off";
+        default:
+            return gSaveContext.save.info.sceneFlags[type].clear & (1 << flag) ? "On" : "Off";
+    }
+
 }
 
 #if PLATFORM_N64
@@ -290,100 +432,193 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };
 
+static SaveSelectEntry sSaveSelectEntries[] = {
+    { 0, "Talked Malon Castle",      EVENT,                      EVENTCHKINF_TALKED_TO_MALON_FIRST_TIME   },
+    { 0, "Got Weird Egg",            EVENT,                      EVENTCHKINF_RECEIVED_WEIRD_EGG           },
+    { 0, "Talon Woken Castle",       EVENT,                      EVENTCHKINF_TALON_WOKEN_IN_CASTLE        },
+    { 0, "Talon Woken Kakariko",     EVENT,                      EVENTCHKINF_TALON_WOKEN_IN_KAKARIKO      },
+    { 0, "Talon Returned Castle",    EVENT,                      EVENTCHKINF_TALON_RETURNED_FROM_CASTLE   },
+    { 0, "Talon Returned Kakariko",  EVENT,                      EVENTCHKINF_TALON_RETURNED_FROM_KAKARIKO },
+    { 0, "Zelda Visited",            EVENT,                      EVENTCHKINF_40                           },
+    { 0, "Zelda Fled",               EVENT,                      EVENTCHKINF_80                           },
+    { 0, "Gave Zelda's Letter",      INFTABLE,                   INFTABLE_76                              },
+    { 0, "Gave Letter King Zora",    EVENT,                      EVENTCHKINF_GAVE_LETTER_TO_KING_ZORA     },
+    { 0, "Opened Jabu-Jabu",         EVENT,                      EVENTCHKINF_OPENED_JABU_JABU             },
+    { 0, "Opened Door of Time",      EVENT,                      EVENTCHKINF_OPENED_DOOR_OF_TIME          },
+    { 0, "Pulled Master Sword",      EVENT,                      EVENTCHKINF_45                           },
+    { 0, "Learned Song of Storms",   EVENT,                      EVENTCHKINF_5B                           },
+    { 0, "Learned Prelude of Light", EVENT,                      EVENTCHKINF_55                           },
+    { 0, "Activated Scarecrow",      EVENT,                      EVENTCHKINF_9C                           },
+    { 0, "Epona Obtained",           EVENT,                      EVENTCHKINF_EPONA_OBTAINED               },
+    { 0, "Race Cow Unlocked",        EVENT,                      EVENTCHKINF_HORSE_RACE_COW_UNLOCK        },
+    { 0, "Carpenters Freed",         CARPENTERS,                 EVENTCHKINF_CARPENTER_0_RESCUED          },
+    { 0, "Deku Tree Died",           EVENT,                      EVENTCHKINF_07                           },
+    { 0, "Got Kokiri's Emerald",     EVENT,                      EVENTCHKINF_09                           },
+    { 0, "Got Goron's Ruby",         EVENT,                      EVENTCHKINF_25                           },
+    { 0, "Got Zora's Sapphire",      EVENT,                      EVENTCHKINF_37                           },
+    { 0, "Cleansed Kokiri Forest",   EVENT,                      EVENTCHKINF_48                           },
+    { 0, "Cleansed Death Mountain",  EVENT,                      EVENTCHKINF_49                           },
+    { 0, "Cleansed Lake Hylia",      EVENT,                      EVENTCHKINF_4A                           },
+    { 0, "Unfrozen King Zora",       INFTABLE,                   INFTABLE_138                             },
+    { 0, "Restored Lake Hylia",      EVENT,                      EVENTCHKINF_RESTORED_LAKE_HYLIA          },
+    { 0, "Shadow Attacks Kakariko",  SHADOW,                     EVENTCHKINF_AA                           },
+    { 0, "Fast Windmill",            EVENT,                      EVENTCHKINF_65                           },
+    { 0, "Drained Well",             WELL,                       EVENTCHKINF_DRAINED_WELL                 },
+    { 0, "Sheik Reveal",             EVENT,                      EVENTCHKINF_C4                           },
+    { 0, "Rainbow Bridge",           EVENT,                      EVENTCHKINF_CREATED_RAINBOW_BRIDGE       },
+    { 0, "Killed Gohma",             SCENE_DEKU_TREE_BOSS,       1,                                       },
+    { 0, "Killed King Dodongo",      SCENE_DODONGOS_CAVERN_BOSS, 1,                                       },
+    { 0, "Killed Barinade",          SCENE_JABU_JABU_BOSS,       1,                                       },
+    { 0, "Killed Phantom Ganon",     SCENE_FOREST_TEMPLE_BOSS,   1,                                       },
+    { 0, "Killed Volvagia",          SCENE_FIRE_TEMPLE_BOSS,     1,                                       },
+    { 0, "Killed Morpha",            SCENE_WATER_TEMPLE_BOSS,    1,                                       },
+    { 0, "Killed Bongo Bongo",       SCENE_SHADOW_TEMPLE_BOSS,   1                                        },
+    { 0, "Killed Nabooru",           NABOORU,                    5                                        },
+    { 0, "Killed Twinrova",          SCENE_SPIRIT_TEMPLE_BOSS,   3                                        },
+    { 0, "Completed Mask Quest",     MASK,                       ITEMGETINF_3F,                           },
+    { 0, "Got Bottle Cucco Lady",    ITEM,                       ITEMGETINF_0C,                           },
+    { 0, "Got Pocket Egg",           ITEM,                       ITEMGETINF_2C,                           },
+    { 0, "Got Cojiro",               ITEM,                       ITEMGETINF_2E,                           },
+};
+
 void MapSelect_UpdateMenu(MapSelectState* this) {
     Input* input = &this->state.input[0];
     s32 pad;
     MapSelectEntry* selectedEntry;
 
     if (this->verticalInputAccumulator == 0) {
-        if (CHECK_BTN_ALL(input->press.button, BTN_A) || CHECK_BTN_ALL(input->press.button, BTN_START)) {
-            selectedEntry = &this->entries[this->currentEntry];
-            if (selectedEntry->loadFunc != NULL) {
-                selectedEntry->loadFunc(this, selectedEntry->entranceIndex);
-            }
-        }
+        if (CHECK_BTN_ALL(input->press.button, BTN_START) && gSaveContext.fileNum != 0xFF) {
+            this->mainTab = !this->mainTab;
 
-        if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
-            if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
-                gSaveContext.save.linkAge = LINK_AGE_CHILD;
+            if (this->currentEntryBackup >= 0) {
+                s32 temp = this->currentEntry;
+                this->currentEntry = this->currentEntryBackup;
+                this->currentEntryBackup = temp;
+                
+                temp = this->topDisplayedEntry;
+                this->topDisplayedEntry = this->topDisplayedEntryBackup;
+                this->topDisplayedEntryBackup = temp;
+                
+                temp = this->pageDownIndex;
+                this->pageDownIndex = this->pageDownIndexBackup;
+                this->pageDownIndexBackup = temp;
             } else {
-                gSaveContext.save.linkAge = LINK_AGE_ADULT;
+                this->currentEntryBackup = this->currentEntry;
+                this->topDisplayedEntryBackup = this->topDisplayedEntry;
+                this->pageDownIndexBackup = this->pageDownIndex;
+                this->currentEntry = this->topDisplayedEntry = this->pageDownIndex = 0;
+            }
+
+            if (this->mainTab) {
+                this->count = ARRAY_COUNT(sMapSelectEntries);
+                if ((dREG(80) >= 0) && (dREG(80) < this->count)) {
+                    this->currentEntry = dREG(80);
+                    this->topDisplayedEntry = dREG(81);
+                    this->pageDownIndex = dREG(82);
+                }
+            } else {
+                this->count = ARRAY_COUNT(sSaveSelectEntries);
+                if ((dREG(86) >= 0) && (dREG(87) < this->count)) {
+                    this->currentEntry = dREG(86);
+                    this->topDisplayedEntry = dREG(87);
+                    this->pageDownIndex = dREG(88);
+                }
             }
         }
-
-        if (CHECK_BTN_ALL(input->press.button, BTN_Z)) {
-            if (gSaveContext.save.cutsceneIndex == 0x8000) {
-                gSaveContext.save.cutsceneIndex = 0;
-            } else if (gSaveContext.save.cutsceneIndex == 0) {
-                gSaveContext.save.cutsceneIndex = 0xFFF0;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF0) {
-                gSaveContext.save.cutsceneIndex = 0xFFF1;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF1) {
-                gSaveContext.save.cutsceneIndex = 0xFFF2;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF2) {
-                gSaveContext.save.cutsceneIndex = 0xFFF3;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF3) {
-                gSaveContext.save.cutsceneIndex = 0xFFF4;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF4) {
-                gSaveContext.save.cutsceneIndex = 0xFFF5;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF5) {
-                gSaveContext.save.cutsceneIndex = 0xFFF6;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF6) {
-                gSaveContext.save.cutsceneIndex = 0xFFF7;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF7) {
-                gSaveContext.save.cutsceneIndex = 0xFFF8;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF8) {
-                gSaveContext.save.cutsceneIndex = 0xFFF9;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF9) {
-                gSaveContext.save.cutsceneIndex = 0xFFFA;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFFA) {
-                gSaveContext.save.cutsceneIndex = 0x8000;
+        
+        if (this->mainTab) {
+            if (CHECK_BTN_ALL(input->press.button, BTN_A)) {
+                selectedEntry = &this->entries[this->currentEntry];
+                if (selectedEntry->loadFunc != NULL) {
+                    selectedEntry->loadFunc(this, selectedEntry->entranceIndex);
+                }
             }
-        } else if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
-            if (gSaveContext.save.cutsceneIndex == 0x8000) {
-                gSaveContext.save.cutsceneIndex = 0xFFFA;
-            } else if (gSaveContext.save.cutsceneIndex == 0) {
-                gSaveContext.save.cutsceneIndex = 0x8000;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF0) {
-                gSaveContext.save.cutsceneIndex = 0;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF1) {
-                gSaveContext.save.cutsceneIndex = 0xFFF0;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF2) {
-                gSaveContext.save.cutsceneIndex = 0xFFF1;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF3) {
-                gSaveContext.save.cutsceneIndex = 0xFFF2;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF4) {
-                gSaveContext.save.cutsceneIndex = 0xFFF3;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF5) {
-                gSaveContext.save.cutsceneIndex = 0xFFF4;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF6) {
-                gSaveContext.save.cutsceneIndex = 0xFFF5;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF7) {
-                gSaveContext.save.cutsceneIndex = 0xFFF6;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF8) {
-                gSaveContext.save.cutsceneIndex = 0xFFF7;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFF9) {
-                gSaveContext.save.cutsceneIndex = 0xFFF8;
-            } else if (gSaveContext.save.cutsceneIndex == 0xFFFA) {
-                gSaveContext.save.cutsceneIndex = 0xFFF9;
+
+            if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
+                if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
+                    gSaveContext.save.linkAge = LINK_AGE_CHILD;
+                } else {
+                    gSaveContext.save.linkAge = LINK_AGE_ADULT;
+                }
             }
-        }
 
-        gSaveContext.save.nightFlag = 0;
-        if (gSaveContext.save.cutsceneIndex == 0) {
-            gSaveContext.save.nightFlag = 1;
-        }
+            if (CHECK_BTN_ALL(input->press.button, BTN_Z)) {
+                if (gSaveContext.save.cutsceneIndex == 0x8000) {
+                    gSaveContext.save.cutsceneIndex = 0;
+                } else if (gSaveContext.save.cutsceneIndex == 0) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF0;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF0) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF1;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF1) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF2;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF2) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF3;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF3) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF4;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF4) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF5;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF5) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF6;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF6) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF7;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF7) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF8;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF8) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF9;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF9) {
+                    gSaveContext.save.cutsceneIndex = 0xFFFA;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFFA) {
+                    gSaveContext.save.cutsceneIndex = 0x8000;
+                }
+            } else if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
+                if (gSaveContext.save.cutsceneIndex == 0x8000) {
+                    gSaveContext.save.cutsceneIndex = 0xFFFA;
+                } else if (gSaveContext.save.cutsceneIndex == 0) {
+                    gSaveContext.save.cutsceneIndex = 0x8000;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF0) {
+                    gSaveContext.save.cutsceneIndex = 0;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF1) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF0;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF2) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF1;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF3) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF2;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF4) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF3;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF5) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF4;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF6) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF5;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF7) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF6;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF8) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF7;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFF9) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF8;
+                } else if (gSaveContext.save.cutsceneIndex == 0xFFFA) {
+                    gSaveContext.save.cutsceneIndex = 0xFFF9;
+                }
+            }
 
-#if OOT_VERSION <= PAL_1_1
-        if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
-            this->questMode++;
-            if (this->questMode >= 2)
-                this->questMode = 0;
-        }
-        else
-#endif
-        if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN)) {
-            this->mirrorMode = (this->mirrorMode == 1) ? 0 : 1;
+            gSaveContext.save.nightFlag = 0;
+            if (gSaveContext.save.cutsceneIndex == 0) {
+                gSaveContext.save.nightFlag = 1;
+            }
+
+    #if OOT_VERSION <= PAL_1_1
+            if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                this->questMode++;
+                if (this->questMode >= 2)
+                    this->questMode = 0;
+            }
+            else
+    #endif
+            if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN)) {
+                this->mirrorMode = (this->mirrorMode == 1) ? 0 : 1;
+            }
+        } else if (CHECK_BTN_ALL(input->press.button, BTN_A)) {
+            SaveSelectEntry* selectedSaveEntry = &this->saveEntries[this->currentEntry];
+            MapSelect_SetEvent(this, selectedSaveEntry->type, selectedSaveEntry->flag);
         }
 
         if (CHECK_BTN_ALL(input->press.button, BTN_DUP)) {
@@ -439,8 +674,7 @@ void MapSelect_UpdateMenu(MapSelectState* this) {
 
     if (CHECK_BTN_ALL(input->press.button, BTN_L)) {
         this->pageDownIndex++;
-        this->pageDownIndex =
-            (this->pageDownIndex + ARRAY_COUNT(this->pageDownStops)) % ARRAY_COUNT(this->pageDownStops);
+        this->pageDownIndex = this->mainTab ? ((this->pageDownIndex + ARRAY_COUNT(this->pageDownStops)) % ARRAY_COUNT(this->pageDownStops)) : ((this->pageDownIndex + 3) % 3);
         this->currentEntry = this->topDisplayedEntry = this->pageDownStops[this->pageDownIndex];
     }
 
@@ -480,9 +714,15 @@ void MapSelect_UpdateMenu(MapSelectState* this) {
     this->currentEntry = (this->currentEntry + this->count) % this->count;
     this->topDisplayedEntry = (this->topDisplayedEntry + this->count) % this->count;
 
-    dREG(80) = this->currentEntry;
-    dREG(81) = this->topDisplayedEntry;
-    dREG(82) = this->pageDownIndex;
+    if (this->mainTab) {
+        dREG(80) = this->currentEntry;
+        dREG(81) = this->topDisplayedEntry;
+        dREG(82) = this->pageDownIndex;
+    } else {
+        dREG(86) = this->currentEntry;
+        dREG(87) = this->topDisplayedEntry;
+        dREG(88) = this->pageDownIndex;
+    }
 
     if (this->timerUp != 0) {
         this->timerUp--;
@@ -543,6 +783,33 @@ void MapSelect_PrintMenu(MapSelectState* this, GfxPrint* printer) {
     GfxPrint_SetColor(printer, 155, 55, 150, 255);
     GfxPrint_SetPos(printer, 22, 26);
     GfxPrint_Printf(printer, "Mirror:%d", this->mirrorMode);
+}
+
+void MapSelect_PrintSaveMenu(MapSelectState* this, GfxPrint* printer) {
+    s32 entry;
+    s32 i;
+    char* name;
+
+    GfxPrint_SetColor(printer, 255, 155, 150, 255);
+    GfxPrint_SetPos(printer, 10, 2);
+    GfxPrint_Printf(printer, "ZELDA SAVE FLAG EDITOR");
+    GfxPrint_SetColor(printer, 255, 255, 255, 255);
+
+    for (i=0; i<20; i++) {
+        entry = (this->topDisplayedEntry + i + this->count) % this->count;
+
+        if (entry == this->currentEntry)
+            GfxPrint_SetColor(printer, 255, 20, 20, 255);
+        else GfxPrint_SetColor(printer, 200, 200, 55, 255);
+
+        GfxPrint_SetPos(printer, 1, i + 4);
+        if (this->saveEntries[entry].number < 10)
+            GfxPrint_Printf(printer, " %d:%s", this->saveEntries[entry].number, this->saveEntries[entry].name);
+        else GfxPrint_Printf(printer, "%d:%s", this->saveEntries[entry].number, this->saveEntries[entry].name);
+
+        GfxPrint_SetPos(printer, 31, i + 4);
+        GfxPrint_Printf(printer, "%s", MapSelect_GetEvent(this, this->saveEntries[entry].type, this->saveEntries[entry].flag));
+    };
 }
 
 static const char* sLoadingMessages[] = {
@@ -653,9 +920,15 @@ void MapSelect_DrawMenu(MapSelectState* this) {
     printer = alloca(sizeof(GfxPrint));
     GfxPrint_Init(printer);
     GfxPrint_Open(printer, POLY_OPA_DISP);
-    MapSelect_PrintMenu(this, printer);
-    MapSelect_PrintAgeSetting(this, printer, ((void)0, gSaveContext.save.linkAge));
-    MapSelect_PrintCutsceneSetting(this, printer, ((void)0, gSaveContext.save.cutsceneIndex));
+    
+    if (this->mainTab) {
+        MapSelect_PrintMenu(this, printer);
+        MapSelect_PrintAgeSetting(this, printer, ((void)0, gSaveContext.save.linkAge));
+        MapSelect_PrintCutsceneSetting(this, printer, ((void)0, gSaveContext.save.cutsceneIndex));
+    } else {
+        MapSelect_PrintSaveMenu(this, printer);
+    }
+    
     POLY_OPA_DISP = GfxPrint_Close(printer);
     GfxPrint_Destroy(printer);
 
@@ -718,10 +991,12 @@ void MapSelect_Destroy(GameState* thisx) {
 
 void MapSelect_Init(GameState* thisx) {
     MapSelectState* this = (MapSelectState*)thisx;
+    u8 i;
 
     this->state.main = MapSelect_Main;
     this->state.destroy = MapSelect_Destroy;
     this->entries = sMapSelectEntries;
+    this->saveEntries = sSaveSelectEntries;
     this->topDisplayedEntry = 0;
     this->currentEntry = 0;
     this->pageDownStops[0] = 0;  // Hyrule Field
@@ -741,7 +1016,14 @@ void MapSelect_Init(GameState* thisx) {
     this->timerDown = 0;
     this->lockUp = 0;
     this->lockDown = 0;
-    this->unk_234 = 0;
+    this->mainTab = true;
+    this->currentEntryBackup = this->topDisplayedEntryBackup = this->pageDownIndexBackup = -1;
+
+    if (gSaveContext.fileNum == 0xFF)
+        this->mainTab = true;
+
+    for (i=1; i<=ARRAY_COUNT(sSaveSelectEntries); i++)
+        this->saveEntries[i-1].number = i;
     
 #if OOT_VERSION <= PAL_1_1
     this->questMode  = QUEST_MODE;

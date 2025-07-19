@@ -749,8 +749,8 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             }
                         }
                         else if (i == 1) {
-                            if ( (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)  && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU)   || (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && !ACTIVE_HEROS_SHIELD) ||
-                                 (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_MIRROR) || (CHECK_BTN_ALL(input->press.button, BTN_CUP)   && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN &&  ACTIVE_HEROS_SHIELD)) {
+                            if ( (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)  && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU)   || (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && !HAS_HEROS_SHIELD) ||
+                                 (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_MIRROR) || (CHECK_BTN_ALL(input->press.button, BTN_CUP)   && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN &&  HAS_HEROS_SHIELD)) {
                                 Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, PLAYER_SHIELD_NONE);
                                 Player_SetEquipmentData(play, player);
                             }

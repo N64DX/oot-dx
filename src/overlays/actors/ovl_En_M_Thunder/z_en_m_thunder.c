@@ -23,6 +23,7 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2);
 
 void func_80A9F314(PlayState* play, f32 arg1);
 void func_80A9F408(EnMThunder* this, PlayState* play);
+void EnMThunder_SwordBeam_Attack(EnMThunder* this, PlayState* play);
 void func_80A9F9B4(EnMThunder* this, PlayState* play);
 
 ActorProfile En_M_Thunder_Profile = {
@@ -59,6 +60,14 @@ static ColliderCylinderInit D_80AA0420 = {
 
 static u32 D_80AA044C[] = { DMG_SPIN_MASTER, DMG_SPIN_KOKIRI, DMG_SPIN_GIANT };
 static u32 D_80AA0458[] = { DMG_JUMP_MASTER, DMG_JUMP_KOKIRI, DMG_JUMP_GIANT };
+
+typedef enum {
+    /* 0 */ ENMTHUNDER_SUBTYPE_SPIN_GREAT,
+    /* 1 */ ENMTHUNDER_SUBTYPE_SPIN_REGULAR,
+    /* 2 */ ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT,
+    /* 3 */ ENMTHUNDER_SUBTYPE_SWORDBEAM_REGULAR,
+    /* 4 */ ENMTHUNDER_SUBTYPE_MAX
+} EnMThunderSubType;
 
 // Setup action
 void func_80A9EFE0(EnMThunder* this, EnMThunderActionFunc actionFunc) {
@@ -106,8 +115,17 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
         this->collider.elem.atDmgInfo.dmgFlags = D_80AA044C[this->unk_1C7];
         this->unk_1C6 = 1;
         this->unk_1C9 = ((this->unk_1C7 == 1) ? 2 : 4);
-        func_80A9EFE0(this, func_80A9F9B4);
-        this->unk_1C4 = 8;
+
+        if (HAS_HEROS_SWORD && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI) {
+            this->unk_1C6 += ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT;
+            func_80A9EFE0(this, EnMThunder_SwordBeam_Attack);
+            this->unk_1C4 = 1;
+            this->unk_1C9 = 12;
+        } else {
+            func_80A9EFE0(this, func_80A9F9B4);
+            this->unk_1C4 = 8;
+        }
+
         Audio_PlaySfxGeneral(NA_SE_IT_ROLLING_CUT_LV1, &player->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         this->unk_1AC = 1.0f;
@@ -210,9 +228,16 @@ void func_80A9F408(EnMThunder* this, PlayState* play) {
                 this->unk_1C6 = 0;
                 this->unk_1C9 = ((this->unk_1C7 == 1) ? 4 : 8);
             }
-
-            func_80A9EFE0(this, func_80A9F9B4);
-            this->unk_1C4 = 8;
+            
+            if (HAS_HEROS_SWORD && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI) {
+                this->unk_1C6 += ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT;
+                func_80A9EFE0(this, EnMThunder_SwordBeam_Attack);
+                this->unk_1C4 = 1;
+                this->unk_1C9 = 12;
+            } else {
+                func_80A9EFE0(this, func_80A9F9B4);
+                this->unk_1C4 = 8;
+            }
 
             {
                 static u16 sSfxIds[] = {
@@ -318,6 +343,47 @@ void func_80A9F9B4(EnMThunder* this, PlayState* play) {
     }
 }
 
+void EnMThunder_SwordBeam_Attack(EnMThunder* this, PlayState* play) {
+    f32 sp2C;
+
+    if (this->unk_1AC > (9.0f / 10.0f))
+        this->unk_1B0 = 1.0f;
+    else this->unk_1B0 = this->unk_1AC * (10.0f / 9.0f);
+
+    if (Math_StepToF(&this->unk_1AC, 0.0f, 0.05f))
+        Actor_Kill(&this->actor);
+    else {
+        sp2C = -80.0f * Math_CosS(this->actor.world.rot.x);
+
+        this->actor.world.pos.x += sp2C * Math_SinS(this->actor.shape.rot.y);
+        this->actor.world.pos.z += sp2C * Math_CosS(this->actor.shape.rot.y);
+        this->actor.world.pos.y += -80.0f * Math_SinS(this->actor.world.rot.x);
+
+        Math_SmoothStepToF(&this->actor.scale.x, this->unk_1C9, 0.6f, 2.0f, 0.0f);
+        Actor_SetScale(&this->actor, this->actor.scale.x);
+
+        this->collider.dim.radius = this->actor.scale.x * 5.0f;
+
+        this->collider.dim.pos.x = this->actor.world.pos.x;
+        this->collider.dim.pos.y = this->actor.world.pos.y;
+        this->collider.dim.pos.z = this->actor.world.pos.z;
+
+        this->collider.dim.pos.x = (Math_SinS(this->actor.shape.rot.y) * -5.0f * this->actor.scale.x) + this->actor.world.pos.x;
+        this->collider.dim.pos.y = this->actor.world.pos.y;
+        this->collider.dim.pos.z = (Math_CosS(this->actor.shape.rot.y) * -5.0f * this->actor.scale.z) + this->actor.world.pos.z;
+
+        CollisionCheck_SetAT(play, &play->colChkCtx, &this->collider.base);
+    }
+
+    if (this->unk_1C4 > 0)
+        this->unk_1C4--;
+
+    func_80A9F938(this, play);
+    
+    if (Play_InCsMode(play))
+        Actor_Kill(&this->actor);
+}
+
 void EnMThunder_Update(Actor* thisx, PlayState* play) {
     EnMThunder* this = (EnMThunder*)thisx;
     f32 blueRadius;
@@ -353,6 +419,11 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
                                         0xFF - ((u8)(s32)(this->unk_1B4 * 30) & 0xFF), 0, 0x40, 0x20, 1,
                                         0xFF - ((u8)(s32)(this->unk_1B4 * 20) & 0xFF), 0, 8, 8));
             break;
+        case ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT:
+        case ENMTHUNDER_SUBTYPE_SWORDBEAM_REGULAR:
+            gSPSegment(POLY_XLU_DISP++, 0x08,
+                       Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, 0, 16, 64, 1, 0,
+                                        0x1FF - ((u16)(s32)(this->unk_1B4 * 10.0f) & 0x1FF), 32, 128));
     }
 
     switch (this->unk_1C6) {
@@ -365,6 +436,17 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
             gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x80, 170, 255, 255, (u8)(this->unk_1B0 * 255));
             gSPDisplayList(POLY_XLU_DISP++, gSpinAttack1DL);
             gSPDisplayList(POLY_XLU_DISP++, gSpinAttack2DL);
+            break;
+        case ENMTHUNDER_SUBTYPE_SWORDBEAM_REGULAR:
+            gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x80, 170, 255, 255, (u16)(this->unk_1B0 * 255.0f));
+            gDPSetEnvColor(POLY_XLU_DISP++, 0, 100, 255, 128);
+            gSPDisplayList(POLY_XLU_DISP++, gUnusedBeamBladeDL);
+            break;
+
+        case ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT:
+            gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x80, 0, 255, 255, (u16)(this->unk_1B0 * 255.0f));
+            gDPSetEnvColor(POLY_XLU_DISP++, 200, 200, 200, 128);
+            gSPDisplayList(POLY_XLU_DISP++, gUnusedBeamBladeDL);
             break;
     }
 

@@ -2216,6 +2216,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_gi_hookshot_mm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_hookshot_mm/object_gi_hookshot_mm.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_ocarina"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_ocarina/object_gi_ocarina.o"
@@ -2292,6 +2299,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_gi_heros_bow"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_heros_bow/object_gi_heros_bow.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_glasses"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_glasses/object_gi_glasses.o"
@@ -2323,6 +2337,20 @@ beginseg
     name "object_gi_shield_3"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_shield_3/object_gi_shield_3.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_shield_3_mm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_shield_3_mm/object_gi_shield_3_mm.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_shield_4"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_shield_4/object_gi_shield_4.o"
     number 6
 endseg
 
@@ -2393,6 +2421,13 @@ beginseg
     name "object_gi_longsword"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_longsword/object_gi_longsword.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_longsword_mm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_longsword_mm/object_gi_longsword_mm.o"
     number 6
 endseg
 
@@ -2890,6 +2925,13 @@ beginseg
     name "object_gi_brokensword"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_brokensword/object_gi_brokensword.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_gold_dust"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_gold_dust/object_gi_gold_dust.o"
     number 6
 endseg
 
@@ -3436,6 +3478,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_gi_sword_heros"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_sword_heros/object_gi_sword_heros.o"
+    number 6
+endseg
+
+beginseg
     name "object_door_killer"
     compress
     include "$(BUILD_DIR)/assets/objects/object_door_killer/object_door_killer.o"
@@ -3826,6 +3875,9 @@ beginseg
     include "$(BUILD_DIR)/assets/textures/title_static/title_static_all.o"
 #else
     include "$(BUILD_DIR)/assets/textures/title_static/title_static.o"
+#endif
+#if OOT_VERSION <= PAL_1_1
+    include "$(BUILD_DIR)/assets/textures/title_static/title_static_quest.o"
 #endif
     number 1
 endseg

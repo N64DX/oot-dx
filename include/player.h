@@ -320,7 +320,7 @@ typedef enum PlayerModelGroup {
     /* 0x01 */ PLAYER_MODELGROUP_CHILD_HYLIAN_SHIELD,  //hold sword only. used for holding sword only as child link with hylian shield equipped
     /* 0x02 */ PLAYER_MODELGROUP_SWORD_AND_SHIELD, // hold sword and shield or just sword if no shield is equipped
     /* 0x03 */ PLAYER_MODELGROUP_DEFAULT, // non-specific models, for items that don't have particular link models
-    /* 0x04 */ PLAYER_MODELGROUP_SWORD2, // unused, same as PLAYER_MODELGROUP_DEFAULT
+    /* 0x04 */ PLAYER_MODELGROUP_4, // unused, same as PLAYER_MODELGROUP_DEFAULT
     /* 0x05 */ PLAYER_MODELGROUP_BGS, // biggoron sword
     /* 0x06 */ PLAYER_MODELGROUP_BOW_SLINGSHOT, // bow/slingshot
     /* 0x07 */ PLAYER_MODELGROUP_EXPLOSIVES, // bombs, bombchus, same as PLAYER_MODELGROUP_DEFAULT
@@ -836,7 +836,7 @@ typedef struct Player {
     /* 0x042D */ s8 doorDirection;
     /* 0x042E */ s16 doorTimer;
     /* 0x0430 */ Actor* doorActor;
-    /* 0x0434 */ s8 getItemId;
+    /* 0x0434 */ s16 getItemId;
     /* 0x0436 */ u16 getItemDirection;
     /* 0x0438 */ Actor* interactRangeActor;
     /* 0x043C */ s8 mountSide;

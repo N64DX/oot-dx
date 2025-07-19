@@ -428,18 +428,21 @@ Gfx* gPlayerSheathedSwordsWithShields[][5] = {
     { gLinkChildDekuShieldKokiriSwordSheathedDL, gLinkChildHylianShieldKokiriSwordSheathedDL, gLinkChildMirrorShieldKokiriSwordSheathedDL, gLinkChildHerosShieldKokiriSwordSheathedDL, gLinkChildHylianShieldKokiriSwordSheathDL },
     { gLinkChildDekuShieldRazorSwordSheathedDL,  gLinkChildHylianShieldRazorSwordSheathedDL,  gLinkChildMirrorShieldRazorSwordSheathedDL,  gLinkChildHerosShieldRazorSwordSheathedDL,  gLinkChildHylianShieldRazorSwordSheathDL  },
     { gLinkChildDekuShieldGildedSwordSheathedDL, gLinkChildHylianShieldGildedSwordSheathedDL, gLinkChildMirrorShieldGildedSwordSheathedDL, gLinkChildHerosShieldGildedSwordSheathedDL, gLinkChildHylianShieldGildedSwordSheathDL },
+    { gLinkChildDekuShieldHerosSwordSheathedDL,  gLinkChildHylianShieldHerosSwordSheathedDL,  gLinkChildMirrorShieldHerosSwordSheathedDL,  gLinkChildHerosShieldHerosSwordSheathedDL,  gLinkChildHylianShieldHerosSwordSheathDL  },
 };
 
 Gfx* gPlayerSheathedSwords[] = {
     gSheathedKokiriSwordDL,
     gSheathedRazorSwordDL,
     gSheathedGildedSwordDL,
+    gSheathedHerosSwordDL,
 };
 
 Gfx* gPlayerSwordSheaths[] = {
     gKokiriSwordSheathDL,
     gRazorSwordSheathDL,
     gGildedSwordSheathDL,
+    gHerosSwordSheathDL,
 };
 
 Gfx* gPlayerSwords[] = {
@@ -447,6 +450,7 @@ Gfx* gPlayerSwords[] = {
     gLinkChildLeftHandHoldingRazorSwordDL,
     gLinkChildLeftHandHoldingSilverSwordDL,
     gLinkChildLeftHandHoldingGoldenSwordDL,
+    gLinkChildLeftHandHoldingHerosSwordDL,
 };
 
 // Identical to `sPlayerLeftHandSwordDLs` and unused
@@ -702,7 +706,7 @@ int Player_IsChildWithHylianShield(Player* this) {
 
 s32 Player_ActionToModelGroup(Player* this, s32 itemAction) {
     s32 modelGroup = sActionModelGroups[itemAction];
-    
+
     if (LINK_IS_CHILD && modelGroup == PLAYER_MODELGROUP_BGS)
         return Player_IsChildWithHylianShield(this) ? PLAYER_MODELGROUP_CHILD_HYLIAN_SHIELD : PLAYER_MODELGROUP_SWORD_AND_SHIELD;
     if ((modelGroup == PLAYER_MODELGROUP_SWORD_AND_SHIELD) && Player_IsChildWithHylianShield(this)) {
@@ -1438,13 +1442,13 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                 EquipValueSword swordEquipValue = CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD);
 
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD) {
-                    *dLists = gPlayerSwords[swordEquipValue - 1];
                     if (gSaveContext.save.info.playerData.bgsFlag && swordEquipValue == EQUIP_VALUE_SWORD_BIGGORON)
-                        dLists++;
+                        *dLists = gPlayerSwords[3];
+                    else if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                        *dLists = gPlayerSwords[4];
+                    else *dLists = gPlayerSwords[swordEquipValue - 1];
                 }
-            }
-
-            if ((sLeftHandType == PLAYER_MODELTYPE_LH_BGS) && (gSaveContext.save.info.playerData.swordHealth <= 0.0f)) {
+            } else if ((sLeftHandType == PLAYER_MODELTYPE_LH_BGS) && (gSaveContext.save.info.playerData.swordHealth <= 0.0f)) {
                 dLists += 4;
             } else if ((sLeftHandType == PLAYER_MODELTYPE_LH_BOOMERANG) &&
                        (this->stateFlags1 & PLAYER_STATE1_BOOMERANG_THROWN)) {
@@ -1474,31 +1478,29 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
 
             if ((this->sheathType == PLAYER_MODELTYPE_SHEATH_18) || (this->sheathType == PLAYER_MODELTYPE_SHEATH_19)) {
                 dLists += this->currentShield * 4;
-                /*if (!LINK_IS_ADULT && (this->currentShield < PLAYER_SHIELD_HYLIAN) &&
-                    (gSaveContext.save.info.equips.buttonItems[0] != ITEM_SWORD_KOKIRI)) {
-                    dLists += PLAYER_SHIELD_MAX * 4;
-                }*/
-            } /*else if (!LINK_IS_ADULT &&
-                       ((this->sheathType == PLAYER_MODELTYPE_SHEATH_16) ||
-                        (this->sheathType == PLAYER_MODELTYPE_SHEATH_17)) &&
-                       (gSaveContext.save.info.equips.buttonItems[0] != ITEM_SWORD_KOKIRI)) {
-                dLists = D_80125D28 + PLAYER_SHIELD_MAX * 4;
-            }*/
-            
+            }
+
             if (LINK_IS_CHILD) {
                 EquipValueSword swordEquipValue = CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD);
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
-                    if (this->currentShield == PLAYER_SHIELD_NONE && this->sheathType == PLAYER_MODELTYPE_SHEATH_18)
-                        dLists = &gPlayerSheathedSwords[swordEquipValue - 1];
-                    else if (this->currentShield == PLAYER_SHIELD_NONE)
-                        dLists = &gPlayerSwordSheaths[swordEquipValue - 1];
-                    else if (PLAYER_MODELTYPE_SHEATH_19 && this->currentShield == PLAYER_SHIELD_HYLIAN && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD)
-                        dLists = &gPlayerSheathedSwordsWithShields[swordEquipValue - 1][4];
-                    else if (this->sheathType == PLAYER_MODELTYPE_SHEATH_18)
-                        dLists = &gPlayerSheathedSwordsWithShields[swordEquipValue - 1][this->currentShield - 1];
-                    else dLists = &gPlayerSwordSheaths[swordEquipValue - 1];
-                }
-                else if (this->currentShield > PLAYER_SHIELD_NONE)
+                    if (this->currentShield == PLAYER_SHIELD_NONE && this->sheathType == PLAYER_MODELTYPE_SHEATH_18) {
+                        if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                            dLists = &gPlayerSheathedSwords[3];
+                        else dLists = &gPlayerSheathedSwords[swordEquipValue - 1];
+                    } else if (this->currentShield == PLAYER_SHIELD_NONE) {
+                        if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                            dLists = &gPlayerSwordSheaths[3];
+                        else dLists = &gPlayerSwordSheaths[swordEquipValue - 1];
+                    } else if (PLAYER_MODELTYPE_SHEATH_19 && this->currentShield == PLAYER_SHIELD_HYLIAN && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD) {
+                        if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                            dLists = &gPlayerSheathedSwordsWithShields[3][4];
+                        else dLists = &gPlayerSheathedSwordsWithShields[swordEquipValue - 1][4];
+                    } else if (this->sheathType == PLAYER_MODELTYPE_SHEATH_18) {
+                        if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                            dLists = &gPlayerSheathedSwordsWithShields[3][this->currentShield - 1];
+                        else dLists = &gPlayerSheathedSwordsWithShields[swordEquipValue - 1][this->currentShield - 1];
+                    } else dLists = &gPlayerSwordSheaths[swordEquipValue - 1];
+                } else if (this->currentShield > PLAYER_SHIELD_NONE)
                     dLists = &gPlayerShields[this->currentShield - 1];
                 else dLists = D_80125D28 + PLAYER_SHIELD_MAX * 4;
             }
@@ -2106,7 +2108,11 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
             modelGroup = PLAYER_MODELGROUP_SWORD_AND_SHIELD;
 
         if (limbIndex == PLAYER_LIMB_L_HAND) {
-            if (swordEquipValue != EQUIP_VALUE_SWORD_NONE)
+            if (gSaveContext.save.info.playerData.bgsFlag && swordEquipValue == EQUIP_VALUE_SWORD_BIGGORON)
+                *dList = gPlayerSwords[3];
+            else if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                *dList = gPlayerSwords[4];
+            else if (swordEquipValue != EQUIP_VALUE_SWORD_NONE)
                 *dList = gPlayerSwords[swordEquipValue - 1];
         }
         else if (limbIndex == PLAYER_LIMB_R_HAND) {
@@ -2123,15 +2129,27 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
             type = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_SHEATH];
             
             if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
-                if (shieldEquipValue == EQUIP_VALUE_SHIELD_NONE && type == PLAYER_MODELTYPE_SHEATH_18)
-                    *dList = gPlayerSheathedSwords[swordEquipValue - 1];
-                else if (shieldEquipValue == EQUIP_VALUE_SHIELD_NONE)
-                    *dList = gPlayerSwordSheaths[swordEquipValue - 1];
-                else if (shieldEquipValue == EQUIP_VALUE_SHIELD_HYLIAN && !IS_HEROS_SHIELD)
-                    *dList = gPlayerSheathedSwordsWithShields[swordEquipValue - 1][4];
-                else if (type == PLAYER_MODELTYPE_SHEATH_18)
-                    *dList = gPlayerSheathedSwordsWithShields[swordEquipValue - 1][shieldEquipValue - 1];
-                else *dList = gPlayerSwordSheaths[swordEquipValue - 1];
+                if (shieldEquipValue == EQUIP_VALUE_SHIELD_NONE && type == PLAYER_MODELTYPE_SHEATH_18) {
+                    if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                        *dList = gPlayerSheathedSwords[3];
+                    else *dList = gPlayerSheathedSwords[swordEquipValue - 1];
+                } else if (shieldEquipValue == EQUIP_VALUE_SHIELD_NONE) {
+                    if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                        *dList = gPlayerSwordSheaths[3];
+                    else *dList = gPlayerSwordSheaths[swordEquipValue - 1];
+                } else if (shieldEquipValue == EQUIP_VALUE_SHIELD_HYLIAN && !IS_HEROS_SHIELD) {
+                    if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                        *dList = gPlayerSheathedSwordsWithShields[3][4];
+                    else *dList = gPlayerSheathedSwordsWithShields[swordEquipValue - 1][4];
+                } else if (type == PLAYER_MODELTYPE_SHEATH_18) {
+                    if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                        *dList = gPlayerSheathedSwordsWithShields[3][shieldEquipValue - 1];
+                    else *dList = gPlayerSheathedSwordsWithShields[swordEquipValue - 1][shieldEquipValue - 1];
+                } else {
+                    if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
+                        *dList = gPlayerSwordSheaths[3];
+                    else *dList = gPlayerSwordSheaths[swordEquipValue - 1];
+                }
             }
             else if (shieldEquipValue == EQUIP_VALUE_SHIELD_HYLIAN && !IS_HEROS_SHIELD)
                 *dList = gPlayerShields[shieldEquipValue - 1];

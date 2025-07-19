@@ -381,6 +381,8 @@ void Play_Init(GameState* thisx) {
         gSaveContext.nayrusLoveTimer = 0;
         Magic_Reset(this);
         gSaveContext.sceneLayer = SCENE_LAYER_CUTSCENE_FIRST + (gSaveContext.save.cutsceneIndex & 0xF);
+    } else if (IS_CHILD_QUEST) {
+        gSaveContext.sceneLayer = !IS_DAY;
     } else if (!LINK_IS_ADULT && IS_DAY) {
         gSaveContext.sceneLayer = SCENE_LAYER_CHILD_DAY;
     } else if (!LINK_IS_ADULT && !IS_DAY) {
@@ -394,7 +396,23 @@ void Play_Init(GameState* thisx) {
     // save the base scene layer (before accounting for the special cases below) to use later for the transition type
     baseSceneLayer = gSaveContext.sceneLayer;
 
-    if ((gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId == SCENE_HYRULE_FIELD) && !LINK_IS_ADULT &&
+    if (IS_CHILD_QUEST) {
+        if (!IS_CUTSCENE_LAYER) {
+            u8 sceneId = gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId;
+            if (GET_EVENTCHKINF(EVENTCHKINF_45)) {
+                if (sceneId == SCENE_KOKIRI_FOREST) 
+                    gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_48) ? 3 : 2;
+                else if (sceneId == SCENE_GORON_CITY) 
+                    gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_49) ? 3 : 2;
+                else if (sceneId == SCENE_ZORAS_DOMAIN) 
+                    gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_4A) ? 3 : 2;
+                else if (sceneId < SCENE_MARKET_ENTRANCE_DAY || sceneId > SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS)
+                    if (sceneId != SCENE_GROTTOS && sceneId != SCENE_HYRULE_CASTLE && sceneId != SCENE_OUTSIDE_GANONS_CASTLE && gSaveContext.save.entranceIndex != ENTR_MARKET_GUARD_HOUSE_0 && gSaveContext.save.entranceIndex != ENTR_BAZAAR_1)
+                        gSaveContext.sceneLayer += 2;
+            } else if (sceneId == SCENE_HYRULE_FIELD)
+                gSaveContext.sceneLayer = (gSaveContext.save.info.inventory.questItems & (gBitFlags[QUEST_KOKIRI_EMERALD] | gBitFlags[QUEST_GORON_RUBY] | gBitFlags[QUEST_ZORA_SAPPHIRE])) == (gBitFlags[QUEST_KOKIRI_EMERALD] | gBitFlags[QUEST_GORON_RUBY] | gBitFlags[QUEST_ZORA_SAPPHIRE]);
+        }
+    } else if ((gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId == SCENE_HYRULE_FIELD) && !LINK_IS_ADULT &&
         !IS_CUTSCENE_LAYER) {
         if (CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD) && CHECK_QUEST_ITEM(QUEST_GORON_RUBY) &&
             CHECK_QUEST_ITEM(QUEST_ZORA_SAPPHIRE)) {
