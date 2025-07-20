@@ -1,7 +1,7 @@
 beginseg
     name "ydan_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/ydan/ydan_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/ydan/ydan_mq_scene.o"
     number 2
 endseg
 
@@ -92,7 +92,7 @@ endseg
 beginseg
     name "ddan_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/ddan/ddan_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/ddan/ddan_mq_scene.o"
     number 2
 endseg
 
@@ -218,7 +218,7 @@ endseg
 beginseg
     name "bdan_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/bdan/bdan_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/bdan/bdan_mq_scene.o"
     number 2
 endseg
 
@@ -337,7 +337,7 @@ endseg
 beginseg
     name "Bmori1_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/Bmori1/Bmori1_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/Bmori1/Bmori1_mq_scene.o"
     number 2
 endseg
 
@@ -505,7 +505,7 @@ endseg
 beginseg
     name "HIDAN_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/HIDAN/HIDAN_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/HIDAN/HIDAN_mq_scene.o"
     number 2
 endseg
 
@@ -701,7 +701,7 @@ endseg
 beginseg
     name "MIZUsin_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/MIZUsin/MIZUsin_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/MIZUsin/MIZUsin_mq_scene.o"
     number 2
 endseg
 
@@ -869,7 +869,7 @@ endseg
 beginseg
     name "jyasinzou_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/jyasinzou/jyasinzou_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/jyasinzou/jyasinzou_mq_scene.o"
     number 2
 endseg
 
@@ -1079,7 +1079,7 @@ endseg
 beginseg
     name "HAKAdan_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/HAKAdan/HAKAdan_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/HAKAdan/HAKAdan_mq_scene.o"
     number 2
 endseg
 
@@ -1247,7 +1247,7 @@ endseg
 beginseg
     name "HAKAdanCH_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_mq_scene.o"
     number 2
 endseg
 
@@ -1303,7 +1303,7 @@ endseg
 beginseg
     name "ice_doukutu_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/ice_doukutu/ice_doukutu_mq_scene.o"
     number 2
 endseg
 
@@ -1394,7 +1394,7 @@ endseg
 beginseg
     name "men_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/men/men_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/men/men_mq_scene.o"
     number 2
 endseg
 
@@ -1478,7 +1478,7 @@ endseg
 beginseg
     name "ganontika_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/ganontika/ganontika_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/ganontika/ganontika_mq_scene.o"
     number 2
 endseg
 

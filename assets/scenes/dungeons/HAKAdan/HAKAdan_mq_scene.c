@@ -1,5 +1,7 @@
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_scene.h"
 
+#if PLATFORM_N64
+
 static SceneCmd* questHeaders[1];
 
 static SceneCmd start[] = {
@@ -31,3 +33,9 @@ static SceneCmd mq_header[] = {
 static SceneCmd* questHeaders[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };
+
+#else
+
+#include "assets/scenes/dungeons/HAKAdan/HAKAdan_scene.c"
+
+#endif

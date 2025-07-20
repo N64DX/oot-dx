@@ -1002,6 +1002,7 @@ beginseg
     name "gameplay_keep"
     compress
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep.o"
+    include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_extra.o"
     number 4
 endseg
 

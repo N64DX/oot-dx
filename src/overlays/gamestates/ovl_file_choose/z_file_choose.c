@@ -1435,7 +1435,9 @@ static void* sActionButtonTextures[][4] = {
 static void* sOptionsButtonTextures[] = LANGUAGE_ARRAY(gFileSelOptionsButtonJPNTex, gFileSelOptionsButtonENGTex,
                                                        gFileSelOptionsButtonGERTex, gFileSelOptionsButtonENGTex);
 
+#if OOT_VERSION <= PAL_1_1
 static void* sQuestButtonTextures[] = { gFileSelQuestOcarinaOfTimeButtonTex, gFileSelQuestMasterQuestButtonTex, gFileSelQuestUraQuestButtonTex, gFileSelQuestChildQuestButtonTex };
+#endif
 
 /**
  * Draw most window contents including buttons, labels, and icons.

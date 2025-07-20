@@ -70,6 +70,63 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         gSaveContext.hudVisibilityModeTimer = 0; // false, HUD_VISIBILITY_NO_CHANGE
     SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0);
     gSaveContext.save.entranceIndex = entranceIndex;
+
+    if (this->roomNum > 0) {
+        switch (entranceIndex) {
+            case ENTR_DEKU_TREE_0:
+                if (this->roomNum <= 11)
+                    gSaveContext.save.entranceIndex = DBG_DEKU_TREE_0 + this->roomNum - 1;
+                break;
+            case ENTR_DODONGOS_CAVERN_0:
+                if (this->roomNum <= 16)
+                    gSaveContext.save.entranceIndex = DBG_DODONGOS_CAVERN_0 + this->roomNum - 1;
+                break;
+            case ENTR_JABU_JABU_0:
+                if (this->roomNum <= 15)
+                    gSaveContext.save.entranceIndex = DBG_JABU_JABU_0 + this->roomNum - 1;
+                break;
+            case ENTR_FOREST_TEMPLE_0:
+                if (this->roomNum <= 22)
+                    gSaveContext.save.entranceIndex = DBG_FOREST_TEMPLE_0 + this->roomNum - 1;
+                break;
+            case ENTR_FIRE_TEMPLE_0:
+                if (this->roomNum <= 26)
+                    gSaveContext.save.entranceIndex = DBG_FIRE_TEMPLE_0 + this->roomNum - 1;
+                break;
+            case ENTR_WATER_TEMPLE_0:
+                if (this->roomNum <= 22)
+                    gSaveContext.save.entranceIndex = DBG_WATER_TEMPLE_0 + this->roomNum - 1;
+                break;
+            case ENTR_SHADOW_TEMPLE_0:
+                if (this->roomNum <= 22)
+                    gSaveContext.save.entranceIndex = DBG_SHADOW_TEMPLE_0 + this->roomNum - 1;
+                break;
+            case ENTR_SPIRIT_TEMPLE_0:
+                if (this->roomNum <= 28)
+                    gSaveContext.save.entranceIndex = DBG_SPIRIT_TEMPLE_0 + this->roomNum - 1;
+                break;
+            case ENTR_ICE_CAVERN_0:
+                if (this->roomNum <= 12)
+                    gSaveContext.save.entranceIndex = DBG_ICE_CAVERN_0 + this->roomNum - 1;
+                break;
+            case ENTR_BOTTOM_OF_THE_WELL_0:
+                if (this->roomNum <= 7)
+                    gSaveContext.save.entranceIndex = DBG_BOTTOM_OF_THE_WELL_0 + this->roomNum - 1;
+                break;
+            case ENTR_GERUDO_TRAINING_GROUND_0:
+                if (this->roomNum <= 11)
+                    gSaveContext.save.entranceIndex = DBG_GERUDO_TRAINING_GROUND_0 + this->roomNum - 1;
+                break;
+            case ENTR_INSIDE_GANONS_CASTLE_0:
+                if (this->roomNum <= 20)
+                    gSaveContext.save.entranceIndex = DBG_INSIDE_GANONS_CASTLE_0 + this->roomNum - 1;
+                break;
+            case ENTR_GANONS_TOWER_0:
+                if (this->roomNum <= 9)
+                    gSaveContext.save.entranceIndex = DBG_GANONS_TOWER_0 + this->roomNum - 1;
+                break;
+        }
+    }
     gSaveContext.respawnFlag = 0;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
     gSaveContext.seqId = (u8)NA_BGM_DISABLED;
@@ -608,7 +665,7 @@ void MapSelect_UpdateMenu(MapSelectState* this) {
     #if OOT_VERSION <= PAL_1_1
             if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
                 this->questMode++;
-                if (this->questMode >= 2)
+                if (this->questMode > QUEST_MAX)
                     this->questMode = 0;
             }
             else
@@ -616,6 +673,19 @@ void MapSelect_UpdateMenu(MapSelectState* this) {
             if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN)) {
                 this->mirrorMode = (this->mirrorMode == 1) ? 0 : 1;
             }
+
+            if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
+                this->roomNum--;
+                if (this->roomNum < 0)
+                    this->roomNum = 0;
+                dREG(89) = this->roomNum;
+            } else if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                this->roomNum++;
+                if (this->roomNum > 28)
+                    this->roomNum = 28;
+                dREG(89) = this->roomNum;
+            }
+            
         } else if (CHECK_BTN_ALL(input->press.button, BTN_A)) {
             SaveSelectEntry* selectedSaveEntry = &this->saveEntries[this->currentEntry];
             MapSelect_SetEvent(this, selectedSaveEntry->type, selectedSaveEntry->flag);
@@ -773,11 +843,23 @@ void MapSelect_PrintMenu(MapSelectState* this, GfxPrint* printer) {
     GfxPrint_SetPos(printer, 22, 25);
 
 #if OOT_VERSION <= PAL_1_1
-    if (this->questMode == VANILLA_QUEST)
-        GfxPrint_Printf(printer, "Vanilla Quest");
-    else if (this->questMode == MASTER_QUEST)
-        GfxPrint_Printf(printer, "Master Quest");
-    else GfxPrint_Printf(printer, "Quest:%d", this->questMode);
+    switch (this->questMode) {
+        case VANILLA_QUEST:
+            GfxPrint_Printf(printer, "Vanilla Quest");
+            break;
+        case MASTER_QUEST:
+            GfxPrint_Printf(printer, "Master Quest");
+            break;
+        case URA_QUEST:
+            GfxPrint_Printf(printer, "Ura Quest");
+            break;
+        case CHILD_QUEST:
+            GfxPrint_Printf(printer, "Child Quest");
+            break;
+        default:
+            GfxPrint_Printf(printer, "Quest:%d", this->questMode);
+            break;
+    }
 #endif
     
     GfxPrint_SetColor(printer, 155, 55, 150, 255);
@@ -835,6 +917,15 @@ void MapSelect_PrintLoadingMessage(MapSelectState* this, GfxPrint* printer) {
     GfxPrint_SetColor(printer, 255, 255, 255, 255);
     randomMsg = Rand_ZeroOne() * ARRAY_COUNT(sLoadingMessages);
     GfxPrint_Printf(printer, "%s", sLoadingMessages[randomMsg]);
+}
+
+void MapSelect_PrintRoomNumSetting(MapSelectState* this, GfxPrint* printer) {
+    GfxPrint_SetPos(printer, 4, 27);
+    GfxPrint_SetColor(printer, 255, 255, 55, 255);
+
+    if (this->roomNum > 0)
+        GfxPrint_Printf(printer, "Room:%d", this->roomNum - 1);
+    else GfxPrint_Printf(printer, "Room:Default");
 }
 
 static const char* sAgeLabels[] = {
@@ -922,7 +1013,9 @@ void MapSelect_DrawMenu(MapSelectState* this) {
     GfxPrint_Open(printer, POLY_OPA_DISP);
     
     if (this->mainTab) {
+        
         MapSelect_PrintMenu(this, printer);
+        MapSelect_PrintRoomNumSetting(this, printer);
         MapSelect_PrintAgeSetting(this, printer, ((void)0, gSaveContext.save.linkAge));
         MapSelect_PrintCutsceneSetting(this, printer, ((void)0, gSaveContext.save.cutsceneIndex));
     } else {
@@ -1016,6 +1109,7 @@ void MapSelect_Init(GameState* thisx) {
     this->timerDown = 0;
     this->lockUp = 0;
     this->lockDown = 0;
+    this->roomNum = 0;
     this->mainTab = true;
     this->currentEntryBackup = this->topDisplayedEntryBackup = this->pageDownIndexBackup = -1;
 
@@ -1035,6 +1129,7 @@ void MapSelect_Init(GameState* thisx) {
         this->topDisplayedEntry = dREG(81);
         this->pageDownIndex = dREG(82);
     }
+    this->roomNum = dREG(89);
 
     R_UPDATE_RATE = 1;
 

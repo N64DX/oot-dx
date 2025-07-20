@@ -381,6 +381,8 @@ void Play_Init(GameState* thisx) {
         gSaveContext.nayrusLoveTimer = 0;
         Magic_Reset(this);
         gSaveContext.sceneLayer = SCENE_LAYER_CUTSCENE_FIRST + (gSaveContext.save.cutsceneIndex & 0xF);
+    } else if (gSaveContext.save.entranceIndex >= DBG_DEKU_TREE_0 && gSaveContext.save.entranceIndex <= DBG_GANONS_TOWER_8) {
+        gSaveContext.sceneLayer = 0;
     } else if (IS_CHILD_QUEST) {
         gSaveContext.sceneLayer = !IS_DAY;
     } else if (!LINK_IS_ADULT && IS_DAY) {

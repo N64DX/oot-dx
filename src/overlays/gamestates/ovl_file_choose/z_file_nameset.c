@@ -630,12 +630,14 @@ s32 FileSelect_ApplyDiacriticToFilename(GameState* thisx, s16 diacritic) {
 }
 #endif
 
+#if OOT_VERSION <= PAL_1_1
 static void* sQuestTextures[][2] = {
     { gQuestOcarinaOfTimeTex, gLogoOcarinaOfTimeTex },
     { gQuestMasterQuestTex,   gLogoMasterQuestTex   },
     { gQuestUraQuestTex,      gLogoUraQuestTex      },
     { gQuestChildQuestTex,    gLogoChildQuestTex    },
 };
+#endif
 
 void FileSelect_DrawNameEntry(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
