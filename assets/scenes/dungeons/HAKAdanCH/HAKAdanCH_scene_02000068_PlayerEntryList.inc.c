@@ -4,12 +4,6 @@
         {  0x0000, -0x8000,  0x0000 }, // rot
          0x0FFF, // params
     }, // 0
-    {
-        ACTOR_PLAYER,
-        {     -1,    240,   1705 }, // pos
-        {  0x0000, -0x8000,  0x0000 }, // rot
-         0x0FFF, // params
-    }, // 0
 
     { ACTOR_PLAYER, {  0,    -12,    117  }, { 0, 32768, 0 }, 0x0DFF, }, // Entrance & Main Area
     { ACTOR_PLAYER, { -555,  -720,  -300  }, { 0, 16384, 0 }, 0x0DFF, }, // Bottom Pit

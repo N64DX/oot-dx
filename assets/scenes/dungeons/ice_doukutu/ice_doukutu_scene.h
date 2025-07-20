@@ -11,9 +11,10 @@
 #include "z_math.h"
 #include "versions.h"
 
+extern SceneCmd ice_doukutu_scene[];
+
 #if !OOT_MQ
 
-extern SceneCmd ice_doukutu_scene[];
 extern SceneCmd* ice_doukutu_scene_02000068_AltHeaders[];
 #define LENGTH_ice_doukutu_scene_02000078_PlayerEntryList 2 + 12
 extern ActorEntry ice_doukutu_scene_02000078_PlayerEntryList[LENGTH_ice_doukutu_scene_02000078_PlayerEntryList];
@@ -117,7 +118,6 @@ extern u64 ice_doukutu_room_2_030000D0_RoomShapeNormal_030000DC_DListsEntries_03
 
 #else
 
-extern SceneCmd ice_doukutu_scene[];
 extern SceneCmd* ice_doukutu_scene_02000070_AltHeaders[];
 #define LENGTH_ice_doukutu_scene_02000080_PlayerEntryList 2 + 12
 extern ActorEntry ice_doukutu_scene_02000080_PlayerEntryList[LENGTH_ice_doukutu_scene_02000080_PlayerEntryList];

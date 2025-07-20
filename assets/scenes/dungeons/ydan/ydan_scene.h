@@ -24,6 +24,7 @@ extern s16 ydan_scene_020001A4_ExitList[];
 extern EnvLightSettings ydan_scene_020001A8_EnvLightSettingsList[LENGTH_ydan_scene_020001A8_EnvLightSettingsList];
 
 #if !OOT_MQ
+
 extern Vec3s ydan_scene_0200B610_BgCamList_02000250_BgCamFuncData[];
 extern BgCamInfo ydan_scene_0200B610_BgCamList[];
 extern SurfaceType ydan_scene_0200B610_SurfaceTypes[];
@@ -33,7 +34,9 @@ extern WaterBox ydan_scene_0200B610_WaterBoxes[];
 extern CollisionHeader ydan_scene_0200B610_Col;
 extern CutsceneData gDekuTreeIntroCs[];
 extern u64 ydan_room_0_03000210_RoomShapeCullable_0300021C_CullableEntries_030033F0_DL_0000B800_TLUT[];
+
 #else
+
 extern Vec3s ydan_scene_0200B618_BgCamList_02000250_BgCamFuncData[];
 extern BgCamInfo ydan_scene_0200B618_BgCamList[];
 extern SurfaceType ydan_scene_0200B618_SurfaceTypes[];
@@ -43,6 +46,7 @@ extern WaterBox ydan_scene_0200B618_WaterBoxes[];
 extern CollisionHeader ydan_scene_0200B618_Col;
 extern CutsceneData gDekuTreeIntroCs[];
 extern u64 ydan_room_0_03000270_RoomShapeCullable_0300027C_CullableEntries_03003450_DL_0000B810_TLUT[];
+
 #endif
 
 #define gDekuTreeDayEntranceTex_WIDTH 32

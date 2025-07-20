@@ -9,9 +9,10 @@
 #include "tex_len.h"
 #include "ultra64.h"
 #include "z_math.h"
+#include "versions.h"
 
 extern SceneCmd HAKAdanCH_scene[];
-#define LENGTH_HAKAdanCH_scene_02000068_PlayerEntryList 2 + 7
+#define LENGTH_HAKAdanCH_scene_02000068_PlayerEntryList 1 + 7
 extern ActorEntry HAKAdanCH_scene_02000068_PlayerEntryList[LENGTH_HAKAdanCH_scene_02000068_PlayerEntryList];
 #define LENGTH_HAKAdanCH_scene_02000078_TransitionActorEntryList 15
 extern TransitionActorEntry HAKAdanCH_scene_02000078_TransitionActorEntryList[LENGTH_HAKAdanCH_scene_02000078_TransitionActorEntryList];
@@ -24,6 +25,7 @@ extern EnvLightSettings HAKAdanCH_scene_020001A8_EnvLightSettingsList[LENGTH_HAK
 extern Vec3s HAKAdanCH_scenePathList_000220_02000200_Points[];
 
 #if !OOT_MQ
+
 extern Path HAKAdanCH_scenePathList_000220[];
 extern Vec3s HAKAdanCH_scene_0200A528_BgCamList_02000230_BgCamFuncData[];
 extern BgCamInfo HAKAdanCH_scene_0200A528_BgCamList[];
@@ -44,7 +46,9 @@ extern u64 HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_
 #define HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03001230_DL_0000BD60_Tex_WIDTH 32
 #define HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03001230_DL_0000BD60_Tex_HEIGHT 32
 extern u64 HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03001230_DL_0000BD60_Tex[TEX_LEN(u64, HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03001230_DL_0000BD60_Tex_WIDTH, HAKAdanCH_room_0_03000290_RoomShapeCullable_0300029C_CullableEntries_03001230_DL_0000BD60_Tex_HEIGHT, 16)];
+
 #else
+
 extern Vec3s HAKAdanCH_scenePathList_000248_02000224_Points[];
 extern Path HAKAdanCH_scenePathList_000248[];
 extern Vec3s HAKAdanCH_scene_0200A558_BgCamList_02000260_BgCamFuncData[];
@@ -66,6 +70,7 @@ extern u64 HAKAdanCH_room_0_030003C0_RoomShapeCullable_030003CC_CullableEntries_
 #define HAKAdanCH_room_0_030003C0_RoomShapeCullable_030003CC_CullableEntries_03001360_DL_0000BD90_Tex_WIDTH 32
 #define HAKAdanCH_room_0_030003C0_RoomShapeCullable_030003CC_CullableEntries_03001360_DL_0000BD90_Tex_HEIGHT 32
 extern u64 HAKAdanCH_room_0_030003C0_RoomShapeCullable_030003CC_CullableEntries_03001360_DL_0000BD90_Tex[TEX_LEN(u64, HAKAdanCH_room_0_030003C0_RoomShapeCullable_030003CC_CullableEntries_03001360_DL_0000BD90_Tex_WIDTH, HAKAdanCH_room_0_030003C0_RoomShapeCullable_030003CC_CullableEntries_03001360_DL_0000BD90_Tex_HEIGHT, 16)];
+
 #endif
 
 #endif

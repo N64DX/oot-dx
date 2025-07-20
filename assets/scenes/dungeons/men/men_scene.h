@@ -11,9 +11,10 @@
 #include "z_math.h"
 #include "versions.h"
 
+extern SceneCmd men_scene[];
+
 #if !OOT_MQ
 
-extern SceneCmd men_scene[];
 #define LENGTH_men_scene_02000068_PlayerEntryList 1 + 11
 extern ActorEntry men_scene_02000068_PlayerEntryList[LENGTH_men_scene_02000068_PlayerEntryList];
 #define LENGTH_men_scene_02000078_TransitionActorEntryList 22
@@ -51,7 +52,6 @@ extern u64 gMenDL_008118_03002AD0_DL_00010D30_CITex[TEX_LEN(u64, gMenDL_008118_0
 
 #else
 
-extern SceneCmd men_scene[];
 #define LENGTH_men_scene_02000060_PlayerEntryList 1 + 11
 extern ActorEntry men_scene_02000060_PlayerEntryList[LENGTH_men_scene_02000060_PlayerEntryList];
 #define LENGTH_men_scene_02000070_TransitionActorEntryList 22
