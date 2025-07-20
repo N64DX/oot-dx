@@ -1,0 +1,8 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_BWALL, // 1
+    OBJECT_FIREFLY, // 2
+    OBJECT_BOX, // 3
+    OBJECT_SYOKUDAI, // 4
+    OBJECT_KUSA, // 5
+    OBJECT_SHOPNUTS, // 6
+

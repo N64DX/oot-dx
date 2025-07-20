@@ -1,0 +1,4 @@
+    OBJECT_ICE_OBJECTS, // 0
+    OBJECT_FZ, // 1
+    OBJECT_FIREFLY, // 2
+

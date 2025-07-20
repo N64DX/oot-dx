@@ -1,0 +1,10 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_BW, // 1
+    OBJECT_FIREFLY, // 2
+    OBJECT_TRAP, // 3
+    OBJECT_D_HSBLOCK, // 4
+    OBJECT_SYOKUDAI, // 5
+    OBJECT_BOX, // 6
+    OBJECT_ST, // 7
+    OBJECT_GI_SUTARU, // 8
+

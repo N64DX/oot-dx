@@ -1,0 +1,6 @@
+    OBJECT_ICE_OBJECTS, // 0
+    OBJECT_FZ, // 1
+    OBJECT_SPOT02_OBJECTS, // 2
+    OBJECT_FIREFLY, // 3
+    OBJECT_TRAP, // 4
+

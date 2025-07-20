@@ -1,0 +1,6 @@
+    OBJECT_ICE_OBJECTS, // 0
+    OBJECT_TSUBO, // 1
+    OBJECT_GI_HEART, // 2
+    OBJECT_GI_SUTARU, // 3
+    OBJECT_ST, // 4
+

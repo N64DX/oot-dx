@@ -1,0 +1,11 @@
+    OBJECT_HAKACH_OBJECTS, // 0
+    OBJECT_HAKA_DOOR, // 1
+    OBJECT_RD, // 2
+    OBJECT_BOX, // 3
+    OBJECT_EFC_FLASH, // 4
+    OBJECT_KUSA, // 5
+    OBJECT_BOMBF, // 6
+    OBJECT_BOMBIWA, // 7
+    OBJECT_DH, // 8
+    OBJECT_SYOKUDAI, // 9
+

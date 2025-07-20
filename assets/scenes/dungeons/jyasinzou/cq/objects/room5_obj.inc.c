@@ -1,0 +1,13 @@
+    OBJECT_JYA_OBJ, // 0
+    OBJECT_JYA_DOOR, // 1
+    OBJECT_MIR_RAY, // 2
+    OBJECT_BDOOR, // 3
+    OBJECT_SYOKUDAI, // 4
+    OBJECT_LIGHTSWITCH, // 5
+    OBJECT_BOX, // 6
+    OBJECT_EFC_FLASH, // 7
+    OBJECT_KA, // 8
+    OBJECT_AM, // 9
+    OBJECT_D_HSBLOCK, // 10
+    OBJECT_ST, // 11
+

@@ -1,0 +1,8 @@
+    OBJECT_MENKURI_OBJECTS, // 0
+    OBJECT_BOX, // 1
+    OBJECT_EFC_FLASH, // 2
+    OBJECT_RR, // 3
+    OBJECT_GI_SHIELD_2, // 4
+    OBJECT_GI_CLOTHES, // 5
+    OBJECT_FZ, // 6
+

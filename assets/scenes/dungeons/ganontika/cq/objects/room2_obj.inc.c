@@ -1,0 +1,5 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_ICE_OBJECTS, // 1
+    OBJECT_FZ, // 2
+    OBJECT_BOX, // 3
+

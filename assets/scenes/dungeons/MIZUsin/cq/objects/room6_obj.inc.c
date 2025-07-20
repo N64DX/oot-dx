@@ -1,0 +1,13 @@
+    OBJECT_MIZU_OBJECTS, // 0
+    OBJECT_BLKOBJ, // 1
+    OBJECT_SB, // 2
+    OBJECT_NY, // 3
+    OBJECT_TITE, // 4
+    OBJECT_BUBBLE, // 5
+    OBJECT_EI, // 6
+    OBJECT_D_HSBLOCK, // 7
+    OBJECT_RR, // 8
+    OBJECT_GI_SHIELD_2, // 9
+    OBJECT_GI_CLOTHES, // 10
+    OBJECT_FIREFLY, // 11
+

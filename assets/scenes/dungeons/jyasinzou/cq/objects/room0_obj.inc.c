@@ -1,0 +1,9 @@
+    OBJECT_JYA_OBJ, // 0
+    OBJECT_JYA_DOOR, // 1
+    OBJECT_SYOKUDAI, // 2
+    OBJECT_AM, // 3
+    OBJECT_NB, // 4
+    OBJECT_TRAP, // 5
+    OBJECT_FIREFLY, // 6
+    OBJECT_VM, // 7
+

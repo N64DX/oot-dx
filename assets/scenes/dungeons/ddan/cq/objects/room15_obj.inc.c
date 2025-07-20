@@ -1,0 +1,6 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_BWALL, // 1
+    OBJECT_AM, // 2
+    OBJECT_BOX, // 3
+    OBJECT_BOMBF, // 4
+

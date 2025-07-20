@@ -1,0 +1,9 @@
+    OBJECT_ICE_OBJECTS, // 0
+    OBJECT_FZ, // 1
+    OBJECT_BOX, // 2
+    OBJECT_EFC_FLASH, // 3
+    OBJECT_TRAP, // 4
+    OBJECT_FIREFLY, // 5
+    OBJECT_ST, // 6
+    OBJECT_GI_SUTARU, // 7
+

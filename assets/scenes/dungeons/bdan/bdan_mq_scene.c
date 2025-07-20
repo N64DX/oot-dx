@@ -3,7 +3,7 @@
 
 #if PLATFORM_N64
 
-static SceneCmd* questHeaders[1];
+static SceneCmd* questHeaders[3];
 
 static SceneCmd start[] = {
 #include "assets/scenes/dungeons/start.inc.c"
@@ -32,7 +32,9 @@ static SceneCmd mq_header[] = {
 };
 
 static SceneCmd* questHeaders[] = {
-#include "assets/scenes/dungeons/questHeaders.inc.c"
+    mq_header, // 0
+    NULL,      // 1
+    NULL,      // 2
 };
 
 #else

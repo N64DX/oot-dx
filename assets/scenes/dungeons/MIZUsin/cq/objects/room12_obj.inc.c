@@ -1,0 +1,14 @@
+    OBJECT_MIZU_OBJECTS, // 0
+    OBJECT_STREAM, // 1
+    OBJECT_SIOFUKI, // 2
+    OBJECT_D_HSBLOCK, // 3
+    OBJECT_SB, // 4
+    OBJECT_NY, // 5
+    OBJECT_TITE, // 6
+    OBJECT_BUBBLE, // 7
+    OBJECT_EI, // 8
+    OBJECT_GOROIWA, // 9
+    OBJECT_EFC_FLASH, // 10
+    OBJECT_ST, // 11
+    OBJECT_GI_SUTARU, // 12
+

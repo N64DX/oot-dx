@@ -1,0 +1,11 @@
+    OBJECT_ICE_OBJECTS, // 0
+    OBJECT_XC, // 1
+    OBJECT_FZ, // 2
+    OBJECT_BOX, // 3
+    OBJECT_TRAP, // 4
+    OBJECT_TSUBO, // 5
+    OBJECT_EFC_FLASH, // 6
+    OBJECT_GI_HEART, // 7
+    OBJECT_ST, // 8
+    OBJECT_GI_SUTARU, // 9
+

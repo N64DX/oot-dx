@@ -1,0 +1,16 @@
+    OBJECT_MIZU_OBJECTS, // 0
+    OBJECT_STREAM, // 1
+    OBJECT_SIOFUKI, // 2
+    OBJECT_D_HSBLOCK, // 3
+    OBJECT_SB, // 4
+    OBJECT_NY, // 5
+    OBJECT_TITE, // 6
+    OBJECT_EI, // 7
+    OBJECT_BOX, // 8
+    OBJECT_GOROIWA, // 9
+    OBJECT_GI_HEART, // 10
+    OBJECT_FIREFLY, // 11
+    OBJECT_ST, // 12
+    OBJECT_GI_SUTARU, // 13
+    OBJECT_GI_HEART, // 14
+

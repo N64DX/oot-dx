@@ -1,0 +1,16 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_BWALL, // 1
+    OBJECT_FIREFLY, // 2
+    OBJECT_BOMBF, // 3
+    OBJECT_BOX, // 4
+    OBJECT_DODOJR, // 5
+    OBJECT_AM, // 6
+    OBJECT_TRAP, // 7
+    OBJECT_KUSA, // 8
+    OBJECT_VM, // 9
+    OBJECT_GI_SOUL, // 10
+    OBJECT_SHOPNUTS, // 11
+    OBJECT_ST, // 12
+    OBJECT_KA, // 13
+    OBJECT_GS, // 14
+
