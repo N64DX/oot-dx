@@ -42,10 +42,10 @@
     }, // 6
     {
         ACTOR_OBJ_OSHIHIKI,
-        {  -1807,    843,  -1380 }, // pos
+        {  -1787,    843,  -1140 }, // pos
         {  0x0000,  0x4000,  0x0000 }, // rot
          0x0702, // params
-    }, // 7
+    }, // 7: Reposition upper push block
     {
         ACTOR_OBJ_OSHIHIKI,
         {  -1607,    823,  -1140 }, // pos
@@ -82,4 +82,8 @@
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x2012, // params
     }, // 13
-
+    
+    { ACTOR_BG_GND_DARKMEIRO, {  -2027,    793,  -1140 }, {  0x0000,  0x0000,  0xC000 }, 0xFF01, }, // 14: Prevent jumping down from upper to lower push block (possible softlock)
+    { ACTOR_BG_GND_DARKMEIRO, {  -1450,    850,  -1330 }, {  0x0000,  0x0000,  0x0000 }, 0x0701, }, // 15: Add clear blocks for climbing up top (0x05 and 0x07 push block switches)
+    { ACTOR_BG_GND_DARKMEIRO, {  -1450,    925,  -1505 }, {  0x0000,  0x0000,  0x0000 }, 0x0501, }, // 16
+    { ACTOR_BG_GND_DARKMEIRO, {  -1450,   1000,  -1330 }, {  0x0000,  0x0000,  0x0000 }, 0x0701, }, // 17

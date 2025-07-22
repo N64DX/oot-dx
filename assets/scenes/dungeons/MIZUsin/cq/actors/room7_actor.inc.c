@@ -14,6 +14,6 @@
         ACTOR_OBJ_TIMEBLOCK,
         {  -3121,    962,  -4220 }, // pos
         {  0x0000,  0x0000,  0x0001 }, // rot
-        -0x47F4 /* 0xB80C */, // params
+         0x380C, // params
     }, // 2
 

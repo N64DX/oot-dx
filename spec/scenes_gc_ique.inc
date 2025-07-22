@@ -2884,7 +2884,7 @@ endseg
 beginseg
     name "ganon_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/ganon/ganon_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/ganon/ganon_all_scene.o"
     number 2
 endseg
 

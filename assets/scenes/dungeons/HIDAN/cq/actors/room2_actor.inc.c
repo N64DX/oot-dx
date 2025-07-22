@@ -70,4 +70,10 @@
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x5C12, // params
     }, // 11
-
+    
+    { ACTOR_OBJ_HSBLOCK,      { -882,  -50,   220 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 12: Hookshot targets to get out near the entrance
+    { ACTOR_OBJ_HSBLOCK,      { -735,   40,   145 }, { 0x0000, 0x2600, 0x0000 }, 0xFF00, }, // 13
+    { ACTOR_OBJ_HSBLOCK,      { -1060, -130, -40  }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 14: Hookshot target to prevent being stuck in the center
+    { ACTOR_BG_GND_DARKMEIRO, { -1208,  200,  0   }, { 0x0000, 0x0000, 0x0000 }, 0x0E01, }, // 15: Clear blocks for reaching the boss door (0x0E Stone Spike Platform switch)
+    { ACTOR_BG_GND_DARKMEIRO, {  -840,  200,  0   }, { 0x0000, 0x0000, 0x0000 }, 0x0E01, }, // 16
+    { ACTOR_OBJ_HSBLOCK,      {  1238,  300, -725 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 17: Hookshot target for reaching the pots

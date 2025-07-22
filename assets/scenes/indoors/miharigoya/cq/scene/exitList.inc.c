@@ -1,0 +1,2 @@
+    ENTR_ROAD_TO_LAKE_HYLIA_2, // 0
+    ENTR_DEKU_TREE_0, // 1

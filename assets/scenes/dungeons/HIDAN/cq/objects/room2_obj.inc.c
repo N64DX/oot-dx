@@ -4,4 +4,4 @@
     OBJECT_DU, // 3
     OBJECT_OF1D_MAP, // 4
     OBJECT_D_HSBLOCK, // 5
-
+    OBJECT_DEMO_KEKKAI, // 6

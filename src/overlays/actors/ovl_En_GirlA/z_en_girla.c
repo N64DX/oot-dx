@@ -41,6 +41,7 @@ s32 EnGirlA_CanBuy_Longsword(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_HylianShield(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_DekuShield(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this);
+s32 EnGirlA_CanBuy_HerosSword(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_GoronTunic(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_ZoraTunic(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_RecoveryHeart(PlayState* play, EnGirlA* this);
@@ -65,6 +66,7 @@ void EnGirlA_ItemGive_Longsword(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_HylianShield(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_DekuShield(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_HerosShield(PlayState* play, EnGirlA* this);
+void EnGirlA_ItemGive_HerosSword(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_GoronTunic(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_ZoraTunic(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_Health(PlayState* play, EnGirlA* this);
@@ -143,6 +145,7 @@ static char* sShopItemDescriptions[] = {
     T("赤クスリ      ", "Red medicine  "),
     T("赤クスリ      ", "Red medicine  "),
     T("赤クスリ      ", "Hero's Shield  "),
+    T("赤クスリ      ", "Hero's Sword  "),
 };
 #endif
 
@@ -321,6 +324,9 @@ static ShopItemEntry sShopItemEntries[] = {
     /* SI_HEROS_SHIELD */
     { OBJECT_GI_SHIELD_4, GID_SHIELD_HEROS, func_8002EBCC, 80, 1, 0x8001, 0x8000, GI_SHIELD_HEROS,
       EnGirlA_CanBuy_HerosShield, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
+    /* SI_HEROS_SWORD */
+    { OBJECT_GI_SWORD_HEROS, GID_SWORD_HEROS, func_8002EBCC, 200, 1, 0x800C, 0x800B, GI_SWORD_HEROS,
+      EnGirlA_CanBuy_HerosSword, EnGirlA_ItemGive_HerosSword, EnGirlA_BuyEvent_ShieldDiscount },
 };
 
 // Defines the Hylian Shield discount amount
@@ -332,9 +338,9 @@ void EnGirlA_SetupAction(EnGirlA* this, EnGirlAActionFunc func) {
 
 s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
     switch (this->actor.params) {
-        case SI_DEKU_SHIELD:
-            if (GET_EVENTCHKINF(EVENTCHKINF_45)) {
-                this->actor.params = SI_HEROS_SHIELD;
+        case SI_HEROS_SWORD:
+            if (HAS_HEROS_SWORD) {
+                this->actor.params = SI_SOLD_OUT;
                 return true;
             }
             break;
@@ -600,8 +606,21 @@ s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this) {
     return CANBUY_RESULT_SUCCESS;
 }
 
+s32 EnGirlA_CanBuy_HerosSword(PlayState* play, EnGirlA* this) {
+    if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI) || HAS_HEROS_SWORD) {
+        return CANBUY_RESULT_CANT_GET_NOW;
+    }
+    if (gSaveContext.save.info.playerData.rupees < this->basePrice) {
+        return CANBUY_RESULT_NEED_RUPEES;
+    }
+    if (!HAS_HEROS_SWORD) {
+        return CANBUY_RESULT_SUCCESS_FANFARE;
+    }
+    return CANBUY_RESULT_SUCCESS;
+}
+
 s32 EnGirlA_CanBuy_GoronTunic(PlayState* play, EnGirlA* this) {
-    if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         return CANBUY_RESULT_CANT_GET_NOW;
     }
     if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
@@ -617,7 +636,7 @@ s32 EnGirlA_CanBuy_GoronTunic(PlayState* play, EnGirlA* this) {
 }
 
 s32 EnGirlA_CanBuy_ZoraTunic(PlayState* play, EnGirlA* this) {
-    if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         return CANBUY_RESULT_CANT_GET_NOW;
     }
     if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA)) {
@@ -810,6 +829,15 @@ void EnGirlA_ItemGive_DekuShield(PlayState* play, EnGirlA* this) {
 
 void EnGirlA_ItemGive_HerosShield(PlayState* play, EnGirlA* this) {
     Item_Give(play, ITEM_SHIELD_HEROS);
+    Rupees_ChangeBy(-this->basePrice);
+}
+
+void EnGirlA_ItemGive_HerosSword(PlayState* play, EnGirlA* this) {
+    u8 i;
+    
+    SET_HEROS_SWORD;
+    for (i=0; i<8; i++)
+        Interface_LoadItemIcon1(play, i);
     Rupees_ChangeBy(-this->basePrice);
 }
 

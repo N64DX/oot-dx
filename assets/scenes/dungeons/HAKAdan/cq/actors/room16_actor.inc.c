@@ -24,13 +24,13 @@
     }, // 3
     {
         ACTOR_EN_ITEM00,
-        {   5676,  -1028,   1565 }, // pos
+        {   5676,  -1058,   1565 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x2003, // params
-    }, // 4
+    }, // 4: Invert time blocks, lower them and nearby collectables
     {
         ACTOR_EN_ITEM00,
-        {   5695,  -1028,   1589 }, // pos
+        {   5695,  -1058,   1589 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x2103, // params
     }, // 5
@@ -42,7 +42,7 @@
     }, // 6
     {
         ACTOR_OBJ_TIMEBLOCK,
-        {   5669,  -1143,   1585 }, // pos
+        {   5669,  -1173,   1585 }, // pos
         {  0x0000,  0x0000,  0x0002 }, // rot
          0x380A, // params
     }, // 7
@@ -60,7 +60,7 @@
     }, // 9
     {
         ACTOR_BG_HAKA_SGAMI,
-        {   5318,  -1143,   2135 }, // pos
+        {   5318,  -1183,   2135 }, // pos
         {  0x0000, -0x4000,  0x0000 }, // rot
          0x0001, // params
     }, // 10

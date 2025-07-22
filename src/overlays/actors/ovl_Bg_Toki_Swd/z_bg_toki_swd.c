@@ -85,7 +85,7 @@ void BgTokiSwd_Init(Actor* thisx, PlayState* play) {
     this->actor.shape.yOffset = 800.0f;
     BgTokiSwd_SetupAction(this, func_808BAF40);
 
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT || (CQ_IS_TIMESKIP && gSaveContext.sceneLayer != 5)) {
         this->actor.draw = NULL;
     }
 
@@ -112,7 +112,8 @@ void func_808BAF40(BgTokiSwd* this, PlayState* play) {
         play->csCtx.script = gRevealMasterSwordCs;
         gSaveContext.cutsceneTrigger = 1;
     }
-    if (!LINK_IS_ADULT || GET_EVENTCHKINF(EVENTCHKINF_55)) {
+
+    if ((IS_CHILD_QUEST ? (!CQ_IS_TIMESKIP || gSaveContext.sceneLayer == 5) : (!LINK_IS_ADULT || GET_EVENTCHKINF(EVENTCHKINF_55)))) {
         if (Actor_HasParent(&this->actor, play)) {
             if (!LINK_IS_ADULT) {
                 Item_Give(play, ITEM_SWORD_MASTER);

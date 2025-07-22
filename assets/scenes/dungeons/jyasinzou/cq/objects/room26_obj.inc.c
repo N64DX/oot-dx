@@ -5,4 +5,5 @@
     OBJECT_BB, // 4
     OBJECT_BOX, // 5
     OBJECT_LIGHTSWITCH, // 6
-
+    OBJECT_TIMEBLOCK, // 7
+    OBJECT_EFC_TW, // 8

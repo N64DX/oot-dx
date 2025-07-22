@@ -56,6 +56,5 @@
         ACTOR_OBJ_SWITCH,
         {  -1342,   3680,   -258 }, // pos
         {  0x0000, -0x2000,  0x0000 }, // rot
-         0x3D20, // params
-    }, // 9
-
+         0x3D01, // params
+    }, // 9: Replace temporary switch with a rusty one

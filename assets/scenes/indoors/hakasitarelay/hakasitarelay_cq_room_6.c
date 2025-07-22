@@ -1,0 +1,21 @@
+#include "assets/scenes/indoors/hakasitarelay/hakasitarelay_scene.h"
+
+static SceneCmd* questHeaders[3];
+
+static SceneCmd start[] = {
+#include "assets/scenes/overworld/start.inc.c"
+};
+
+#include "assets/scenes/indoors/hakasitarelay/hakasitarelay_room_6.c"
+
+static ActorEntry cq_actors[] = {
+#include "assets/scenes/indoors/hakasitarelay/cq/actors/room6_actor.inc.c"
+};
+
+static SceneCmd cq_header[] = {
+#include "assets/scenes/indoors/hakasitarelay/cq/headers/room6.inc.c"
+};
+
+static SceneCmd* questHeaders[] = {
+#include "assets/scenes/overworld/questHeaders.inc.c"
+};

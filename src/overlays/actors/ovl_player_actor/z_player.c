@@ -154,6 +154,8 @@ typedef struct struct_80854B18 {
     };
 } struct_80854B18; // size = 0x08
 
+static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX];
+
 void Player_InitItemAction(PlayState* play, Player* this, s8 itemAction);
 
 void Player_InitDefaultIA(PlayState* play, Player* this);
@@ -794,7 +796,7 @@ static GetItemEntry sGetItemTable[] = {
     // GI_SHIELD_HEROS
     GET_ITEM(ITEM_SHIELD_HEROS, OBJECT_GI_SHIELD_4, GID_SHIELD_HEROS, 0x8002, 0xA0, CHEST_ANIM_SHORT),
     // GI_SWORD_HEROS
-	GET_ITEM(ITEM_SWORD_KOKIRI, OBJECT_GI_SWORD_HEROS, GID_SWORD_HEROS, 0x8006, 0x80, CHEST_ANIM_LONG),
+	GET_ITEM(ITEM_SWORD_HEROS, OBJECT_GI_SWORD_HEROS, GID_SWORD_HEROS, 0x8006, 0x80, CHEST_ANIM_LONG),
     // GI_SWORD_SILVER
     GET_ITEM(ITEM_SWORD_BIGGORON, OBJECT_GI_LONGSWORD_MM, GID_SWORD_SILVER, 0x8004, 0x80, CHEST_ANIM_LONG),
     // GI_SWORD_GILDED
@@ -11052,6 +11054,12 @@ void Player_PutSwordInHand(PlayState* play, Player* this, s32 playSfx) {
     static u8 sSwordItemIds[] = { ITEM_SWORD_MASTER, ITEM_SWORD_KOKIRI };
     s32 swordItemId = sSwordItemIds[(void)0, gSaveContext.save.linkAge];
     s32 swordItemAction = sItemActions[swordItemId];
+    
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        swordItemId = this->currentSwordItemId;
+        swordItemAction = sItemActions[swordItemId];
+        if (swordItemId <= -1) { swordItemId = this->currentSwordItemId = -1; }
+    }
 
     Player_DestroyHookshot(this);
     Player_DetachHeldActor(play, this);
@@ -11220,6 +11228,12 @@ void Player_Init(Actor* thisx, PlayState* play2) {
     this->prevBoots = this->currentBoots;
 
     Player_InitCommon(this, play, gPlayerSkelHeaders[((void)0, gSaveContext.save.linkAge)]);
+
+    D_80854B18[PLAYER_CSACTION_63].type = LINK_IS_CHILD ? 2 : 5;
+    D_80854B18[PLAYER_CSACTION_70].type = LINK_IS_CHILD ? 3 : 6;
+    D_80854B18[PLAYER_CSACTION_71].type = LINK_IS_CHILD ? 3 : 6;
+    D_80854B18[PLAYER_CSACTION_79].type = LINK_IS_CHILD ? 0 : 3;
+    D_80854B18[PLAYER_CSACTION_80].type = LINK_IS_CHILD ? 3 : 6;
 
     // `giObjectSegment` is used for both "get item" objects and title cards. The maximum size for
     // get item objects is 0x2000 (see the assert in func_8083AE40), and the maximum size for

@@ -3819,7 +3819,7 @@ SHIFT(36) "やるわね、おニイさん！"
 )
 ,
 MSG(
-"You did so great, young man!"
+"You did so great, young " AGE_LAD "!"
 )
 ,
 MSG(

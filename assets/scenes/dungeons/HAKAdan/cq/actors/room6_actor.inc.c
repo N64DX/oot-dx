@@ -54,10 +54,10 @@
     }, // 8
     {
         ACTOR_BG_HAKA_SGAMI,
-        {   3358,   -543,   -946 }, // pos
+        {   3358,   -563,   -946 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x0000, // params
-    }, // 9
+    }, // 9: Lower scythe trap
     {
         ACTOR_EN_BOX,
         {   3992,   -543,   -784 }, // pos

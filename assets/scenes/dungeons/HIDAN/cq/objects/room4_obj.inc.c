@@ -7,4 +7,4 @@
     OBJECT_YUKABYUN, // 6
     OBJECT_BOX, // 7
     OBJECT_OF1D_MAP, // 8
-
+    OBJECT_D_HSBLOCK, // 9

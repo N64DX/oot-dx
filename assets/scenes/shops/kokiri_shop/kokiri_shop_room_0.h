@@ -7,7 +7,7 @@
 #include "ultra64.h"
 
 extern SceneCmd kokiri_shop_room_0[];
-#define LENGTH_kokiri_shop_room_0_03000040_ObjectList 13
+#define LENGTH_kokiri_shop_room_0_03000040_ObjectList 12
 extern s16 kokiri_shop_room_0_03000040_ObjectList[LENGTH_kokiri_shop_room_0_03000040_ObjectList];
 #define LENGTH_kokiri_shop_room_0_03000058_ActorEntryList 5
 extern ActorEntry kokiri_shop_room_0_03000058_ActorEntryList[LENGTH_kokiri_shop_room_0_03000058_ActorEntryList];

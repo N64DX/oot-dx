@@ -410,7 +410,8 @@ void Play_Init(GameState* thisx) {
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_4A) ? 3 : 2;
                 else if (sceneId < SCENE_MARKET_ENTRANCE_DAY || sceneId > SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS)
                     if (sceneId != SCENE_GROTTOS && sceneId != SCENE_HYRULE_CASTLE && sceneId != SCENE_OUTSIDE_GANONS_CASTLE && gSaveContext.save.entranceIndex != ENTR_MARKET_GUARD_HOUSE_0 && gSaveContext.save.entranceIndex != ENTR_BAZAAR_1)
-                        gSaveContext.sceneLayer += 2;
+                        if (gSaveContext.save.entranceIndex < DBG_DEKU_TREE_0 || gSaveContext.save.entranceIndex > DBG_GANONS_TOWER_8)
+                            gSaveContext.sceneLayer += 2;
             } else if (sceneId == SCENE_HYRULE_FIELD)
                 gSaveContext.sceneLayer = (gSaveContext.save.info.inventory.questItems & (gBitFlags[QUEST_KOKIRI_EMERALD] | gBitFlags[QUEST_GORON_RUBY] | gBitFlags[QUEST_ZORA_SAPPHIRE])) == (gBitFlags[QUEST_KOKIRI_EMERALD] | gBitFlags[QUEST_GORON_RUBY] | gBitFlags[QUEST_ZORA_SAPPHIRE]);
         }

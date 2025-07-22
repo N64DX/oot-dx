@@ -545,7 +545,7 @@ u8 EnMd_ShouldSpawn(EnMd* this, PlayState* play) {
 
     if (play->sceneId == SCENE_MIDOS_HOUSE) {
         if (GET_EVENTCHKINF(EVENTCHKINF_1C) || GET_EVENTCHKINF(EVENTCHKINF_40)) {
-            if (!LINK_IS_ADULT) {
+            if (!LINK_IS_ADULT_OR_TIMESKIP) {
                 return 1;
             }
         }

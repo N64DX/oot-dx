@@ -32,8 +32,8 @@
         ACTOR_OBJ_TIMEBLOCK,
         {   -619,    243,  -2180 }, // pos
         {  0x0000,  0x2000,  0x0004 }, // rot
-        -0x47E7 /* 0xB819 */, // params
-    }, // 5
+        -0x47E7 /* 0x3819 */, // params
+    }, // 5: Invert time block
     {
         ACTOR_BG_MORI_ELEVATOR,
         {    119,    233,  -1566 }, // pos

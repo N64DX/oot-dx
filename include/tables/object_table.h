@@ -28,6 +28,7 @@
 /* 0x0018 */ DEFINE_OBJECT(object_peehat, OBJECT_PEEHAT)
 /* 0x0019 */ DEFINE_OBJECT(object_kingdodongo, OBJECT_KINGDODONGO)
 /* 0x001A */ DEFINE_OBJECT(object_horse, OBJECT_HORSE)
+/* 0x001A */ DEFINE_OBJECT(object_horse_young, OBJECT_HORSE_YOUNG)
 /* 0x001B */ DEFINE_OBJECT(object_zf, OBJECT_ZF)
 /* 0x001C */ DEFINE_OBJECT(object_goma, OBJECT_GOMA)
 /* 0x001D */ DEFINE_OBJECT(object_zl1, OBJECT_ZL1)

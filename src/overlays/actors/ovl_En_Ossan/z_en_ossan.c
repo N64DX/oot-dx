@@ -265,10 +265,10 @@ static ShopItem sShopkeeperStores[][8] = {
       { SI_DEKU_STICK, -80, 52, -3 },
       { SI_ARROWS_30, -80, 76, -3 } },
 
-    { { SI_HYLIAN_SHIELD, 50, 52, -20 },
+    { { SI_HEROS_SHIELD, 50, 52, -20 },
       { SI_BOMBS_5_R25, 50, 76, -20 },
-      { SI_DEKU_NUTS_5, 80, 52, -3 },
-      { SI_RECOVERY_HEART, 80, 76, -3 },
+      { SI_HEROS_SWORD, 80, 52, -3 },
+      { SI_DEKU_NUTS_5, 80, 76, -3 },
       { SI_ARROWS_10, -50, 52, -20 },
       { SI_ARROWS_50, -50, 76, -20 },
       { SI_DEKU_STICK, -80, 52, -3 },
@@ -332,7 +332,7 @@ static EnOssanGetGirlAParamsFunc sShopItemReplaceFunc[] = {
     ShopItemDisp_GoronMask, ShopItemDisp_GerudoMask, ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
-    ShopItemDisp_Default,   ShopItemDisp_Default,
+    ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
 };
 
 static InitChainEntry sInitChain[] = {

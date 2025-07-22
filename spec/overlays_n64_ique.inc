@@ -83,6 +83,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Horse_Young"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Young/z_en_horse_young.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Young/ovl_En_Horse_Young_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Arrow"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Arrow/z_en_arrow.o"

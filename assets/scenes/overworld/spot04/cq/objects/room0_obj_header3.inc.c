@@ -1,0 +1,8 @@
+    OBJECT_GS, // 0
+    OBJECT_KANBAN, // 1
+    OBJECT_MAMENOKI, // 2
+    OBJECT_KM1, // 3
+    OBJECT_KW1, // 4
+    OBJECT_OS_ANIME, // 5
+    OBJECT_ST, // 6
+

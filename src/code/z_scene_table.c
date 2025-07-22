@@ -1204,11 +1204,7 @@ void Scene_DrawConfigKokiriForest(PlayState* play) {
     } else if (gSaveContext.sceneLayer == 6) {
         spA0 = play->roomCtx.drawParams[0] + 500;
     } else if (
-#if OOT_VERSION < PAL_1_0
-        !IS_CUTSCENE_LAYER && GET_EVENTCHKINF(EVENTCHKINF_07)
-#else
-        (!IS_CUTSCENE_LAYER || LINK_IS_ADULT) && GET_EVENTCHKINF(EVENTCHKINF_07)
-#endif
+        (!IS_CUTSCENE_LAYER || LINK_IS_ADULT_OR_TIMESKIP) && GET_EVENTCHKINF(EVENTCHKINF_07)
     ) {
         spA0 = 2150;
     }
@@ -1236,7 +1232,7 @@ void Scene_DrawConfigLakeHylia(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7058);
 
-    if (IS_CUTSCENE_LAYER || (LINK_IS_ADULT && !GET_EVENTCHKINF(EVENTCHKINF_RESTORED_LAKE_HYLIA))) {
+    if (IS_CUTSCENE_LAYER || (LINK_IS_ADULT_OR_TIMESKIP && !GET_EVENTCHKINF(EVENTCHKINF_RESTORED_LAKE_HYLIA))) {
         play->roomCtx.drawParams[0] = 87;
     }
 
@@ -1267,7 +1263,7 @@ void Scene_DrawConfigZorasDomain(PlayState* play) {
 
     gameplayFrames = play->gameplayFrames;
     var = 127 - (gameplayFrames * 1) % 128;
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT || (CQ_IS_TIMESKIP && !GET_EVENTCHKINF(EVENTCHKINF_RESTORED_LAKE_HYLIA))) {
         var = 0;
     }
     gSPSegment(POLY_OPA_DISP++, 0x0C,

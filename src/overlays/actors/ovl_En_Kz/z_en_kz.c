@@ -316,7 +316,7 @@ void func_80A9CB18(EnKz* this, PlayState* play) {
             return;
         }
 
-        if (LINK_IS_ADULT) {
+        if (LINK_IS_ADULT_OR_TIMESKIP) {
             if ((INV_CONTENT(ITEM_TRADE_ADULT) == ITEM_PRESCRIPTION) &&
                 (Actor_GetPlayerExchangeItemId(play) == EXCH_ITEM_PRESCRIPTION)) {
                 this->actor.textId = 0x4014;
@@ -403,11 +403,11 @@ void EnKz_Init(Actor* thisx, PlayState* play) {
     this->interactInfo.talkState = NPC_TALK_STATE_IDLE;
     Animation_ChangeByInfo(&this->skelanime, sAnimationInfo, ENKZ_ANIM_0);
 
-    if (GET_EVENTCHKINF(EVENTCHKINF_GAVE_LETTER_TO_KING_ZORA)) {
+    if (GET_EVENTCHKINF(EVENTCHKINF_GAVE_LETTER_TO_KING_ZORA) || CQ_IS_TIMESKIP) {
         EnKz_SetMovedPos(this, play);
     }
 
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT_OR_TIMESKIP) {
         if (!GET_INFTABLE(INFTABLE_138)) {
             Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_BG_ICE_SHELTER, this->actor.world.pos.x,
                                this->actor.world.pos.y, this->actor.world.pos.z, 0, 0, 0, 0x04FF);

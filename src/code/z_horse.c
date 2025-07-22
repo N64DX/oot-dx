@@ -9,6 +9,7 @@
 #include "player.h"
 #include "save.h"
 #include "overlays/actors/ovl_En_Horse/z_en_horse.h"
+#include "overlays/actors/ovl_En_Horse_Young/z_en_horse_young.h"
 
 /**
  * Tests if the player horse can be spawned
@@ -18,7 +19,7 @@
  */
 s32 Horse_CanSpawn(s32 sceneId) {
     s32 validSceneIds[] = { SCENE_HYRULE_FIELD, SCENE_LAKE_HYLIA, SCENE_GERUDO_VALLEY, SCENE_GERUDOS_FORTRESS,
-                            SCENE_LON_LON_RANCH };
+                            SCENE_LON_LON_RANCH, SCENE_ROAD_TO_LAKE_HYLIA, SCENE_ROAD_TO_FORTRESS };
     s32 i;
 
     for (i = 0; i < ARRAY_COUNT(validSceneIds); i++) {
@@ -70,13 +71,15 @@ void Horse_SetupInGameplay(PlayState* play, Player* player) {
         { SCENE_GERUDO_VALLEY, 2566, -259, 767, 0, HORSE_PTYPE_INACTIVE },
         { SCENE_GERUDOS_FORTRESS, -328, 10, 953, 0, HORSE_PTYPE_INACTIVE },
         { SCENE_LON_LON_RANCH, 928, 0, -2280, 0, HORSE_PTYPE_INACTIVE },
+        { SCENE_ROAD_TO_LAKE_HYLIA, 326, -138, 432, 0, HORSE_PTYPE_INACTIVE },
+        { SCENE_ROAD_TO_FORTRESS, -2428, 40, -128, 0, HORSE_PTYPE_INACTIVE },
     };
 
     if (R_EXITED_SCENE_RIDING_HORSE &&
         (Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED)) {
         // Player entering scene on top of horse
         player->rideActor =
-            Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, player->actor.world.pos.x, player->actor.world.pos.y,
+            Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, player->actor.world.pos.x, player->actor.world.pos.y,
                         player->actor.world.pos.z, player->actor.shape.rot.x, player->actor.shape.rot.y,
                         player->actor.shape.rot.z, HORSE_PTYPE_PLAYER_SPAWNED_RIDING);
 
@@ -93,13 +96,13 @@ void Horse_SetupInGameplay(PlayState* play, Player* player) {
         Actor* horseActor;
         gSaveContext.minigameState = 0;
         horseActor =
-            Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, 3586.0f, 1413.0f, -402.0f, 0, 0x4000, 0, HORSE_PTYPE_1);
+            Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, 3586.0f, 1413.0f, -402.0f, 0, 0x4000, 0, HORSE_PTYPE_1);
         horseActor->room = -1;
     } else if ((gSaveContext.save.entranceIndex == ENTR_LON_LON_RANCH_7) &&
                GET_EVENTCHKINF(EVENTCHKINF_EPONA_OBTAINED)) {
         // Completed Horse Race
         Actor* horseActor =
-            Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, -25.0f, 0.0f, -1600.0f, 0, -0x4000, 0, HORSE_PTYPE_1);
+            Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, -25.0f, 0.0f, -1600.0f, 0, -0x4000, 0, HORSE_PTYPE_1);
         ASSERT(horseActor != NULL, "horse_actor != NULL", "../z_horse.c", 389);
     } else if ((play->sceneId == gSaveContext.save.info.horseData.sceneId) &&
                (Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED)) {
@@ -110,7 +113,7 @@ void Horse_SetupInGameplay(PlayState* play, Player* player) {
 
         if (Horse_CanSpawn(gSaveContext.save.info.horseData.sceneId)) {
             Actor* horseActor =
-                Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, gSaveContext.save.info.horseData.pos.x,
+                Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, gSaveContext.save.info.horseData.pos.x,
                             gSaveContext.save.info.horseData.pos.y, gSaveContext.save.info.horseData.pos.z, 0,
                             gSaveContext.save.info.horseData.angle, 0, HORSE_PTYPE_1);
             ASSERT(horseActor != NULL, "horse_actor != NULL", "../z_horse.c", 414);
@@ -130,7 +133,7 @@ void Horse_SetupInGameplay(PlayState* play, Player* player) {
                !(Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED)) {
         // Player spawns in Lon-Lon Ranch without owning Epona
         Actor* horseActor =
-            Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, 0.0f, 0.0f, -500.0f, 0, 0, 0, HORSE_PTYPE_1);
+            Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, 0.0f, 0.0f, -500.0f, 0, 0, 0, HORSE_PTYPE_1);
         ASSERT(horseActor != NULL, "horse_actor != NULL", "../z_horse.c", 443);
     } else if (Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED) {
         // Player owns Epona, but isn't riding her and the current scene is not the same as the horse's last location.
@@ -138,7 +141,7 @@ void Horse_SetupInGameplay(PlayState* play, Player* player) {
             HorseSpawn* horseSpawn = &horseSpawns[i];
             if (horseSpawn->sceneId == play->sceneId) {
                 Actor* horseActor =
-                    Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, horseSpawn->pos.x, horseSpawn->pos.y,
+                    Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, horseSpawn->pos.x, horseSpawn->pos.y,
                                 horseSpawn->pos.z, 0, horseSpawn->angle, 0, horseSpawn->type);
                 ASSERT(horseActor != NULL, "horse_actor != NULL", "../z_horse.c", 466);
 
@@ -150,7 +153,7 @@ void Horse_SetupInGameplay(PlayState* play, Player* player) {
         }
     } else if (!(Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED) &&
                (play->sceneId == SCENE_LON_LON_BUILDINGS) && !IS_DAY) {
-        Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, 0.0f, 0.0f, -60.0f, 0, 0x7360, 0, HORSE_PTYPE_1);
+        Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, 0.0f, 0.0f, -60.0f, 0, 0x7360, 0, HORSE_PTYPE_1);
     }
 }
 
@@ -208,7 +211,7 @@ void Horse_SetupInCutscene(PlayState* play, Player* player) {
             spawnPos = spawnPositions[3];
         }
 
-        player->rideActor = Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, spawnPos.x, spawnPos.y, spawnPos.z, 0,
+        player->rideActor = Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, spawnPos.x, spawnPos.y, spawnPos.z, 0,
                                         player->actor.world.rot.y, 0, HORSE_PTYPE_7);
         ASSERT(player->rideActor != NULL, "player->ride.actor != NULL", "../z_horse.c", 561);
 
@@ -219,7 +222,7 @@ void Horse_SetupInCutscene(PlayState* play, Player* player) {
                (GET_EVENTINF_INGO_RACE_STATE() == INGO_RACE_STATE_TRAPPED_WIN_EPONA) &&
                !(Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED)) {
         player->rideActor =
-            Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, 894.0f, 0.0f, -2084.0f, 0, -0x7FFF, 0, HORSE_PTYPE_5);
+            Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, 894.0f, 0.0f, -2084.0f, 0, -0x7FFF, 0, HORSE_PTYPE_5);
         ASSERT(player->rideActor != NULL, "player->ride.actor != NULL", "../z_horse.c", 582);
 
         Actor_MountHorse(play, player, player->rideActor);
@@ -242,7 +245,7 @@ void Horse_SetupInCutscene(PlayState* play, Player* player) {
                     }
 
                     player->rideActor =
-                        Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, horseSpawns[i].pos.x, horseSpawns[i].pos.y,
+                        Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, horseSpawns[i].pos.x, horseSpawns[i].pos.y,
                                     horseSpawns[i].pos.z, 0, player->actor.world.rot.y, 0, horseSpawns[i].type);
                     ASSERT(player->rideActor != NULL, "player->ride.actor != NULL", "../z_horse.c", 628);
 
@@ -259,7 +262,7 @@ void Horse_SetupInCutscene(PlayState* play, Player* player) {
                     }
 
                     player->rideActor =
-                        Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, horseSpawns[i].pos.x, horseSpawns[i].pos.y,
+                        Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, horseSpawns[i].pos.x, horseSpawns[i].pos.y,
                                     horseSpawns[i].pos.z, 0, horseSpawns[i].angle, 0, horseSpawns[i].type | paramFlag);
                     ASSERT(player->rideActor != NULL, "player->ride.actor != NULL", "../z_horse.c", 667);
 
@@ -278,7 +281,7 @@ void Horse_SetupInCutscene(PlayState* play, Player* player) {
 
                     Play_SetCameraAtEye(play, play->activeCamId, &player->actor.world.pos, &eye);
                 } else {
-                    Actor_Spawn(&play->actorCtx, play, ACTOR_EN_HORSE, horseSpawns[i].pos.x, horseSpawns[i].pos.y,
+                    Actor_Spawn(&play->actorCtx, play, LINK_IS_CHILD ? ACTOR_EN_HORSE_YOUNG : ACTOR_EN_HORSE, horseSpawns[i].pos.x, horseSpawns[i].pos.y,
                                 horseSpawns[i].pos.z, 0, horseSpawns[i].angle, 0, horseSpawns[i].type);
                 }
                 break;
@@ -293,7 +296,7 @@ void Horse_SetupInCutscene(PlayState* play, Player* player) {
  * This function should be called during `Play_Init`.
  */
 void Horse_InitPlayerHorse(PlayState* play, Player* player) {
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT_OR_TIMESKIP && (play->sceneId != SCENE_LON_LON_RANCH || gSaveContext.sceneLayer != 5) ) {
         if (!Horse_CanSpawn(gSaveContext.save.info.horseData.sceneId)) {
             PRINTF_COLOR_ERROR();
             PRINTF(

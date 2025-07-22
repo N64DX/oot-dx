@@ -749,7 +749,10 @@ void func_80083108(PlayState* play) {
                     } else {
                         gSaveContext.save.info.equips.buttonItems[0] = ITEM_BOW;
                         if (play->shootingGalleryStatus > 1) {
-                            if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
+                            if (IS_CHILD_QUEST) {
+                                if (gSaveContext.save.entranceIndex == ENTR_SHOOTING_GALLERY_1)
+                                    gSaveContext.save.info.equips.buttonItems[0] = player->heldItemId = ITEM_SLINGSHOT;
+                            } else if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
                                 gSaveContext.save.info.equips.buttonItems[0] = ITEM_SLINGSHOT;
                             }
 
@@ -2258,6 +2261,8 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if (item == ITEM_SHIELD_HEROS) {
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
+    } else if (item == ITEM_SWORD_HEROS) {
+        return HAS_HEROS_SWORD ? item : ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI + EQUIP_INV_TUNIC_KOKIRI)) {
             return item;

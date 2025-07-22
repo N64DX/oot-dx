@@ -178,9 +178,9 @@ void EnTa_Init(Actor* thisx, PlayState* play2) {
     switch (this->actor.params) {
         case ENTA_IN_KAKARIKO:
             PRINTF(VT_FGCOL(CYAN) T(" 追放タロン \n", " Exile Talon \n") VT_RST);
-            if (GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_KAKARIKO)) {
+            if (IS_CHILD_QUEST ? (GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_KAKARIKO) || !GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE) || !GET_EVENTCHKINF(EVENTCHKINF_45)) : (GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_KAKARIKO))) {
                 Actor_Kill(&this->actor);
-            } else if (!LINK_IS_ADULT) {
+            } else if (!LINK_IS_ADULT_OR_TIMESKIP) {
                 Actor_Kill(&this->actor);
             } else if (GET_EVENTCHKINF(EVENTCHKINF_TALON_WOKEN_IN_KAKARIKO)) {
                 EnTa_SetupAction(this, EnTa_IdleAwakeInKakariko, EnTa_AnimRepeatCurrent);
@@ -200,7 +200,7 @@ void EnTa_Init(Actor* thisx, PlayState* play2) {
             PRINTF(VT_FGCOL(CYAN) T(" 出戻りタロン \n", " Return Talon \n") VT_RST);
             if (!GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_KAKARIKO)) {
                 Actor_Kill(&this->actor);
-            } else if (!LINK_IS_ADULT) {
+            } else if (!LINK_IS_ADULT_OR_TIMESKIP) {
                 Actor_Kill(&this->actor);
             } else if (play->sceneId == SCENE_STABLE && !IS_DAY) {
                 Actor_Kill(&this->actor);
@@ -233,7 +233,7 @@ void EnTa_Init(Actor* thisx, PlayState* play2) {
             } else if (play->sceneId == SCENE_LON_LON_BUILDINGS) {
                 PRINTF(VT_FGCOL(CYAN) T(" ロンロン牧場の倉庫 の タロン\n", " Talon in the warehouse at Lon Lon Ranch\n")
                            VT_RST);
-                if (!GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE)) {
+                if (IS_CHILD_QUEST ? ( (!GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_KAKARIKO) && GET_EVENTCHKINF(EVENTCHKINF_45)) || (!GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE) && !GET_EVENTCHKINF(EVENTCHKINF_45) ) ) : !GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE)) {
                     Actor_Kill(&this->actor);
                 } else if (LINK_IS_ADULT) {
                     Actor_Kill(&this->actor);
@@ -332,7 +332,7 @@ void EnTa_SleepTalkInLonLonHouse(EnTa* this, PlayState* play) {
 }
 
 void EnTa_SetupAwake(EnTa* this) {
-    if (!LINK_IS_ADULT) {
+    if (IS_CHILD_QUEST ? gSaveContext.save.entranceIndex != ENTR_KAKARIKO_CENTER_GUEST_HOUSE_0 : !LINK_IS_ADULT) {
         EnTa_SetupAction(this, EnTa_IdleAwakeInCastle, EnTa_AnimRepeatCurrent);
         SET_EVENTCHKINF(EVENTCHKINF_TALON_WOKEN_IN_CASTLE);
     } else {

@@ -223,7 +223,7 @@ void EnHorseNormal_Init(Actor* thisx, PlayState* play) {
             Actor_Kill(&this->actor);
             return;
         }
-        if (!LINK_IS_ADULT) {
+        if (!LINK_IS_ADULT_OR_TIMESKIP) {
             if (Flags_GetEventChkInf(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE)) {
                 if (this->actor.world.rot.z != 3) {
                     Actor_Kill(&this->actor);

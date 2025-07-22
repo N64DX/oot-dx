@@ -2197,7 +2197,7 @@ SHIFT(72) "ヘヘヘ…"
 )
 ,
 MSG(
-UNSKIPPABLE "Hehehe, young man...\n"
+UNSKIPPABLE "Hehehe, young " AGE_ONE "...\n"
 "You were very quick to be able\n"
 "to keep up with me! Hehehe!"
 BOX_BREAK
@@ -2278,7 +2278,7 @@ SHIFT(18) "プレゼントは　使ってるだか？"
 )
 ,
 MSG(
-"You're back, young man...\n"
+"You're back, young " AGE_ONE "...\n"
 "Was the present I gave to you\n"
 "fun and useful?"
 )
@@ -3098,7 +3098,7 @@ SHIFT(21) "ココで　オラと　競争するだ。\n"
 )
 ,
 MSG(
-"Heh heh heh, young man!\n"
+"Heh heh heh, young " AGE_ONE "!\n"
 "Are you fast on your feet?"
 BOX_BREAK
 
@@ -4012,7 +4012,7 @@ SHIFT(33) "なにか　あったのかな…" TEXTID(0x505C)
 )
 ,
 MSG(
-UNSKIPPABLE "Hey! Young man! A grown boy\n"
+UNSKIPPABLE "Hey! Young " AGE_LAD "! A grown boy\n"
 "like you entering a person's house\n"
 "without permission?! I want to\n"
 "talk to your parents!"
@@ -4037,7 +4037,7 @@ BOX_BREAK
 
 UNSKIPPABLE "Only the great Impa has kept \n"
 "peace in our village. You have to\n"
-"remember that, young man!"
+"remember that, young " AGE_LAD "!"
 BOX_BREAK
 
 UNSKIPPABLE SHIFT(66) "Oh well."

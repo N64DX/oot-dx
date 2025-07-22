@@ -9,4 +9,4 @@
     OBJECT_BB, // 8
     OBJECT_ST, // 9
     OBJECT_GI_HEART, // 10
-
+    OBJECT_DEMO_KEKKAI, // 11

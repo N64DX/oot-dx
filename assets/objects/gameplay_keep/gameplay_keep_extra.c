@@ -1,7 +1,5 @@
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 
-#include "gameplay_keep_extra.h"
-
 #include "gfx.h"
 
 Vtx gLinkAdultHookshotChainVtx[] = {

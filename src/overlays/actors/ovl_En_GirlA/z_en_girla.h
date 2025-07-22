@@ -87,7 +87,8 @@ typedef enum EnGirlAShopItem {
     /* 0x30 */ SI_RED_POTION_R40,
     /* 0x31 */ SI_RED_POTION_R50,
     /* 0x32 */ SI_HEROS_SHIELD,
-    /* 0x33 */ SI_MAX
+    /* 0x33 */ SI_HEROS_SWORD,
+    /* 0x34 */ SI_MAX
 } EnGirlAShopItem;
 
 typedef enum EnGirlACanBuyResult {

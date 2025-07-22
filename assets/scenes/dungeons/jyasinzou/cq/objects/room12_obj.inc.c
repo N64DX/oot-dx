@@ -4,4 +4,5 @@
     OBJECT_RR, // 3
     OBJECT_GI_SHIELD_2, // 4
     OBJECT_GI_CLOTHES, // 5
-
+    OBJECT_GI_SHIELD_1, // 6
+    OBJECT_GI_SHIELD_4, // 7

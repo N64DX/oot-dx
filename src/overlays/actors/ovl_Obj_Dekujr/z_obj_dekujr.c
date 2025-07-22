@@ -53,7 +53,7 @@ void ObjDekujr_Init(Actor* thisx, PlayState* play) {
     s32 pad;
 
     if (gSaveContext.save.cutsceneIndex < 0xFFF0) {
-        if (!LINK_IS_ADULT) {
+        if (!LINK_IS_ADULT_OR_TIMESKIP) {
             Actor_Kill(thisx);
             return;
         }

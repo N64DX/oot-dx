@@ -71,3 +71,4 @@
         -0x79F8 /* 0x8608 */, // params
     }, // 11
 
+    { ACTOR_OBJ_HSBLOCK, { -881, 240, -2351 }, { 0x4000, 0x0000, 0x0000 }, 0xFF02, }, // 12: Hookshot target to be able to get out of the upper water area

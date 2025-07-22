@@ -1903,7 +1903,7 @@ MSG(
 "say..."
 BOX_BREAK
 
-"\"" COLOR(LIGHTBLUE) "Go, young man. Go to the\n"
+"\"" COLOR(LIGHTBLUE) "Go, young " AGE_ONE ". Go to the\n"
 "Desert Goddess with an ocarina." COLOR(DEFAULT) "\"\n"
 "Do you have any idea what he\n"
 "may have meant by this?" EVENT

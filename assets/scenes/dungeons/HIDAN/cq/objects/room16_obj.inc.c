@@ -8,4 +8,5 @@
     OBJECT_BOX, // 7
     OBJECT_GI_HEART, // 8
     OBJECT_DOOR_KILLER, // 9
+    OBJECT_D_HSBLOCK, // 10
 
