@@ -65,3 +65,4 @@
         -0x730E /* 0x8CF2 */, // params
     }, // 10
 
+    { ACTOR_OBJ_TIMEBLOCK, { -560, 1720, -900 }, { 0x0000, 0x0000, 0x0003 }, 0x39FF }, // 11: Time block, so Child can activate the sun switch

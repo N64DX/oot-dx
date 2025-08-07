@@ -36,7 +36,7 @@
     }, // 5
     {
         ACTOR_OBJ_WARP2BLOCK,
-        {  -1730,   2800,    188 }, // pos
+        {  -1780,   2800,    188 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x3021, // params
     }, // 6
@@ -47,3 +47,4 @@
          0x3F05, // params
     }, // 7
 
+    { ACTOR_OBJ_HSBLOCK, { -1700, 2740, 280 }, {  0x0000,  0x0000,  0x0000 }, 0xFF00, }, // 8: Hookshot target and repositioned Time Block

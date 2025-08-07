@@ -430,6 +430,9 @@ typedef enum LinkAge {
 #define LINK_IS_ADULT (gSaveContext.save.linkAge == LINK_AGE_ADULT)
 #define LINK_IS_CHILD (gSaveContext.save.linkAge == LINK_AGE_CHILD)
 
+#define CQ_IS_TIMESKIP              (IS_CHILD_QUEST && GET_EVENTCHKINF(EVENTCHKINF_45))
+#define LINK_IS_ADULT_OR_TIMESKIP   (LINK_IS_ADULT  || CQ_IS_TIMESKIP)
+
 #define SET_MASK_AGE(val)       ((LINK_IS_ADULT) ? SET_MASK_ADULT(val) : SET_MASK_CHILD(val))
 #define GET_MASK_AGE()          ((LINK_IS_ADULT) ? GET_MASK_ADULT()    : GET_MASK_CHILD())
 #define GET_MASK_ADULT()        ((u8)(((gSaveContext.save.info.playerData.mask) >> 8) & 0xFF))
@@ -481,6 +484,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define UNINVERTED_AIMING           ((gFileOptions[gSaveContext.fileNum][0] >> 12) & 1)  // Bits: 12
 #define FIX_POWER_CROUCH_STAB       ((gFileOptions[gSaveContext.fileNum][0] >> 13) & 1)  // Bits: 13
 #define REFLECT_CHEST_CONTENTS      ((gFileOptions[gSaveContext.fileNum][0] >> 14) & 1)  // Bits: 14
+#define EASIER_FISHING              ((gFileOptions[gSaveContext.fileNum][0] >> 15) & 1)  // Bits: 15
 #define HEALTH_RECOVERY             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gFileOptions[gSaveContext.fileNum][1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gFileOptions[gSaveContext.fileNum][1] >> 5)  & 7)  // Bits: 5-7

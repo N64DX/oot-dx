@@ -117,7 +117,7 @@ static ColliderCylinderInit sLightBallCylinderInit = {
     {
         ELEM_MATERIAL_UNK6,
         { 0x00100700, 0x00, 0x08 },
-        { 0x0D900740, 0x00, 0x00 },
+        { 0x0FD00740, 0x00, 0x00 },
         ATELEM_ON | ATELEM_SFX_NORMAL,
         ACELEM_ON,
         OCELEM_ON,

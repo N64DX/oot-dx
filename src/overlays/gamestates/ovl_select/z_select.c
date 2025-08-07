@@ -486,6 +486,12 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "125:" T(GFXP_KATAKANA "ﾊｲﾗﾙ" GFXP_HIRAGANA "ﾆﾜ" GFXP_KATAKANA "ｹﾞｰﾑ2", "Castle Courtyard (Beta)"),
       MapSelect_LoadGame, ENTR_HAIRAL_NIWA2_0 },
 #endif
+#if PLATFORM_N64
+    { "116:" T("Road to Lake Hylia", "Road to Lake Hylia"), MapSelect_LoadGame, ENTR_ROAD_TO_LAKE_HYLIA_0 },
+    { "117:" T("Road to Fortress", "Road to Fortress"), MapSelect_LoadGame, ENTR_ROAD_TO_FORTRESS_0 },
+    { "118:" T("Grotto (Shortcut 1)", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
+    { "119:" T("Grotto (Shortcut 2)", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
+#endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };
 
@@ -516,6 +522,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Cleansed Kokiri Forest",   EVENT,                      EVENTCHKINF_48                           },
     { 0, "Cleansed Death Mountain",  EVENT,                      EVENTCHKINF_49                           },
     { 0, "Cleansed Lake Hylia",      EVENT,                      EVENTCHKINF_4A                           },
+    { 0, "Death Mountain Erupted",   EVENT,                      EVENTCHKINF_2F                           },
     { 0, "Unfrozen King Zora",       INFTABLE,                   INFTABLE_138                             },
     { 0, "Restored Lake Hylia",      EVENT,                      EVENTCHKINF_RESTORED_LAKE_HYLIA          },
     { 0, "Shadow Attacks Kakariko",  SHADOW,                     EVENTCHKINF_AA                           },

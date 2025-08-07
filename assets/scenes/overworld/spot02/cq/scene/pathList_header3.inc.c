@@ -1,0 +1,3 @@
+    { ARRAY_COUNT(spot02_scene_02000070_AltHeaders_020068D0_Cmds_02006BFC_PathList_02006BD8_Points), spot02_scene_02000070_AltHeaders_020068D0_Cmds_02006BFC_PathList_02006BD8_Points }, // 0
+    { ARRAY_COUNT(spot02_scene_02000070_AltHeaders_02006550_Cmds_020068C0_PathList_020068AC_Points), spot02_scene_02000070_AltHeaders_02006550_Cmds_020068C0_PathList_020068AC_Points }, // 1
+

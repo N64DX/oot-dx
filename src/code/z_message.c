@@ -2400,6 +2400,37 @@ void Message_Decode(PlayState* play) {
                     decodedBufPos++;
                 }
                 decodedBufPos--;
+            } else if (curChar == MESSAGE_AGE_LAD || curChar == MESSAGE_AGE_ONE || curChar == MESSAGE_AGE_BOY || curChar == MESSAGE_AGE_GUY || curChar == MESSAGE_AGE_GUY_C) {
+                const char* ageWord = "";
+                s8 len;
+                if (gSaveContext.language == LANGUAGE_ENG) {
+                    switch (curChar) {
+                        case MESSAGE_AGE_LAD:
+                            ageWord = (LINK_IS_CHILD) ? "lad" : "man";
+                            break;
+                        case MESSAGE_AGE_ONE:
+                            ageWord = (LINK_IS_CHILD) ? "one" : "man";
+                            break;
+                        case MESSAGE_AGE_BOY:
+                            ageWord = (LINK_IS_CHILD) ? "boy" : "mister";
+                            break;
+                        case MESSAGE_AGE_GUY:
+                            ageWord = (LINK_IS_CHILD) ? "little guy" : "mister";
+                            break;
+                        case MESSAGE_AGE_GUY_C:
+                            ageWord = (LINK_IS_CHILD) ? "Little guy" : "Mister";
+                            break;
+                    }
+                }
+                len = strlen(ageWord);
+
+                for (i=0; i<len; i++) {
+                    Font_LoadChar(font, ageWord[i] - ' ', charTexIdx);
+                    charTexIdx += FONT_CHAR_TEX_SIZE;
+                    MSG_BUF_DECODED[decodedBufPos] = ageWord[i];
+                    if (i < len - 1)
+                        decodedBufPos++;
+                }
             } else if (curChar == MESSAGE_MARATHON_TIME || curChar == MESSAGE_RACE_TIME) {
                 // Convert the values of the appropriate timer to digits and add the
                 //  digits to the decoded buffer in place of the control character.
@@ -2804,7 +2835,103 @@ void Message_OpenText(PlayState* play, u16 textId) {
     } else {
 #if OOT_NTSC_N64
         Language language = gSaveContext.language;
-        if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG && language != LANGUAGE_JPN) {
+
+        if (IS_CHILD_QUEST) {
+            language = LANGUAGE_ENG;
+            switch (textId) {
+                case 0x015A:
+                    textId = 0x8119;
+                    break;
+
+                case 0x0220:
+                    textId = 0x8103;
+                    break;
+                case 0x0221:
+                    textId = 0x8104;
+                    break;
+                case 0x0237:
+                    textId = 0x8105;
+                    break;
+
+                case 0x1052:
+                    textId = 0x8100;
+                    break;
+                case 0x105D:
+                    textId = 0x8101;
+                    break;
+                case 0x1063:
+                    textId = 0x8109;
+                    break;
+                case 0x1064:
+                    textId = 0x810A;
+                    break;
+                case 0x1074:
+                    textId = 0x8102;
+                    break;
+
+                case 0x3039:
+                    textId = 0x8107;
+                    break;
+                case 0x304E:
+                    textId = 0x8106;
+                    break;
+                case 0x3053:
+                    textId = 0x810B;
+                    break;
+                case 0x3054:
+                    textId = 0x810C;
+                    break;
+
+                case 0x403E:
+                    textId = 0x8108;
+                    break;
+
+                case 0x600C:
+                    textId = 0x8116;
+                    break;
+                case 0x601B:
+                    textId = 0x810D;
+                    break;
+                case 0x6024:
+                    textId = 0x811A;
+                    break;
+                case 0x6026:
+                    textId = 0x811B;
+                    break;
+                case 0x6035:
+                    textId = 0x8117;
+                    break;
+                case 0x6036:
+                    textId = 0x8115;
+                    break;
+                case 0x606E:
+                    textId = 0x810E;
+                    break;
+                case 0x6079:
+                    textId = 0x8118;
+                    break;
+
+                case 0x704F:
+                    textId = 0x810F;
+                    break;
+                case 0x7050:
+                    textId = 0x8110;
+                    break;
+                case 0x7051:
+                    textId = 0x8114;
+                    break;
+                case 0x7054:
+                    textId = 0x8111;
+                    break;
+                case 0x7074:
+                    textId = 0x8112;
+                    break;
+                case 0x7078:
+                    textId = 0x8113;
+                    break;
+            }
+            Message_FindMessage(play, textId, language);
+        } else if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG && language != LANGUAGE_JPN) {
             language = LANGUAGE_ENG;
             Message_FindMessage(play, textId, language);
         }

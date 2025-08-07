@@ -114,7 +114,7 @@ void BgJya1flift_Init(Actor* thisx, PlayState* play) {
     Actor_ProcessInitChain(thisx, sInitChain);
     BgJya1flift_InitCollision(thisx, play);
     if (Flags_GetSwitch(play, PARAMS_GET_U(thisx->params, 0, 6))) {
-        LINK_AGE_IN_YEARS == YEARS_ADULT ? BgJya1flift_ChangeDirection(this) : BgJya1flift_SetupDoNothing(this);
+        LINK_IS_ADULT_OR_TIMESKIP ? BgJya1flift_ChangeDirection(this) : BgJya1flift_SetupDoNothing(this);
     } else {
         BgJya1flift_SetupWaitForSwitch(this);
     }

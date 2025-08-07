@@ -842,7 +842,7 @@ SHIFT(42) "こっち…　牢屋の中！" EVENT
 )
 ,
 MSG(
-"Hey, you! Young man, over there!\n"
+"Hey, you! Young " AGE_LAD ", over there!\n"
 "Look over here, inside the cell!" EVENT
 )
 ,
@@ -1740,5 +1740,27 @@ MSG(
 QUICKTEXT_ENABLE SHIFT(16) "Seul le détenteur de l'" COLOR(RED) "oeil de" COLOR(DEFAULT) "\n"
 SHIFT(10) COLOR(RED) "vérité" COLOR(DEFAULT) " du Village Cocorico sera\n"
 SHIFT(35) "porté par les Ombres." QUICKTEXT_DISABLE
+)
+)
+
+DEFINE_MESSAGE(0x023D, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+SHIFT(60) COLOR(LIGHTBLUE) "開かないヨ…？\n"
+COLOR(DEFAULT) SHIFT(66) COLOR(LIGHTBLUE) "ヘンだね…" COLOR(DEFAULT)
+)
+,
+MSG(
+COLOR(LIGHTBLUE) "Closed for the foreseeable future.\n"
+"Awaiting the return of evil spirits." COLOR(DEFAULT)
+)
+,
+MSG(
+COLOR(LIGHTBLUE) "Auf absehbare Zeit geschlossen.\n"
+"Wir warten auf die Rückkehr böser Geister." COLOR(DEFAULT)
+)
+,
+MSG(
+COLOR(LIGHTBLUE) "Fermé pour une durée indéterminée.\n"
+"En attendant le retour des mauvais esprits." COLOR(DEFAULT)
 )
 )

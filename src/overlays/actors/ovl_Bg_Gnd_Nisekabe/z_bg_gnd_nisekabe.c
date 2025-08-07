@@ -52,7 +52,7 @@ void BgGndNisekabe_Update(Actor* thisx, PlayState* play) {
 void BgGndNisekabe_Draw(Actor* thisx, PlayState* play) {
     static Gfx* dLists[] = {
         gLightTrialFakeWallDL,
-        gGanonsCastleUnusedFakeWallDL,
+        gGanonsCastleScrubsFakeWallDL,
         gGanonsCastleScrubsFakeWallDL,
     };
     BgGndNisekabe* this = (BgGndNisekabe*)thisx;

@@ -384,7 +384,7 @@ DrawItemTableEntry sDrawItemTable[] = {
     // GID_SHIELD_HEROS
     { GetItem_DrawOpa0Xlu1, { gGiHerosShieldEmblemDL, gGiHerosShieldDL } },
     // GID_SWORD_HEROS
-    { GetItem_DrawOpa0, { gGiHerosSwordBladeHiltDL, gGiHerosSwordGuardDL } },
+    { GetItem_DrawOpa0Xlu1, { gGiHerosSwordBladeHiltDL, gGiHerosSwordGuardDL } },
     // GID_SWORD_SILVER
     { GetItem_DrawOpa0, { gGiSilverSwordDL } },
     // GID_SWORD_GILDED

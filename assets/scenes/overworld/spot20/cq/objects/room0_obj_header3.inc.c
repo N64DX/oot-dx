@@ -1,0 +1,7 @@
+    OBJECT_UMAJUMP, // 0
+    OBJECT_HORSE, // 1
+    OBJECT_MA2, // 2
+    OBJECT_TA, // 3
+    OBJECT_INGATE, // 4
+    OBJECT_ST, // 5
+    OBJECT_WOOD02, // 6

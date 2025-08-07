@@ -113,3 +113,5 @@
          0x030D, // params
     }, // 18
 
+    { ACTOR_OBJ_HSBLOCK,      { 600,  -60, -570 }, { 0x0000, 0x1000, 0x0000 }, 0xFF00, }, // 14: Hookshot target and a clear block for climbing up
+    { ACTOR_BG_GND_DARKMEIRO, { 415,  164, -570 }, { 0x0000, 0x2000, 0x0000 }, 0xFF01, }, // 15

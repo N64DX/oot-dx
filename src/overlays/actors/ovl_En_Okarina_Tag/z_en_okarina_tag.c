@@ -91,6 +91,8 @@ void EnOkarinaTag_Init(Actor* thisx, PlayState* play) {
     PRINTF(VT_FGCOL(GREEN) T("☆☆☆☆☆ 当り？\t\t ☆☆☆☆☆ %d\n", "☆☆☆☆☆ Hit?\t\t ☆☆☆☆☆ %d\n") VT_RST, this->unk_158);
     PRINTF("\n\n");
 
+
+
     if ((this->switchFlag >= 0) && (Flags_GetSwitch(play, this->switchFlag))) {
         Actor_Kill(&this->actor);
     } else {
@@ -337,7 +339,11 @@ void func_80ABF7CC(EnOkarinaTag* this, PlayState* play) {
 void EnOkarinaTag_Update(Actor* thisx, PlayState* play) {
     EnOkarinaTag* this = (EnOkarinaTag*)thisx;
 
-    this->actionFunc(this, play);
+    if (this->type == 2 && IS_CHILD_QUEST) {
+        if (GET_EVENTCHKINF(EVENTCHKINF_5B))
+            this->actionFunc(this, play);
+    }
+    else this->actionFunc(this, play);
 
     if (DEBUG_FEATURES && BREG(0) != 0) {
         if (this->unk_15A != 0) {

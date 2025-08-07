@@ -72,10 +72,10 @@
     }, // 11
     {
         ACTOR_OBJ_TIMEBLOCK,
-        {  -3065,  -1363,   -642 }, // pos
+        {  -3065,  -1393,   -642 }, // pos
         {  0x0000,  0x0000,  0x0002 }, // rot
-         0x380C, // params
-    }, // 12
+         0xB80C, // params
+    }, // 12: Invert existing time block and lower it
     {
         ACTOR_EN_TEST,
         {   2746,   -991,  -2011 }, // pos
@@ -167,3 +167,5 @@
          0x3800, // params
     }, // 27
 
+    { ACTOR_OBJ_HSBLOCK,   { -4520, -1410,  -1506 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 12: Reach ladder
+    { ACTOR_OBJ_TIMEBLOCK, { -2465, -1423,   -804 }, { 0x0000, 0x0000, 0x0002 }, 0xB8FF, }, // 29: Insert time block to be able to backtrack

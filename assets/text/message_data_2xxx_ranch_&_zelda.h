@@ -1764,7 +1764,7 @@ DEFINE_MESSAGE_NES(0x2025, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(/* MISSING */)
 ,
 MSG(
-"Hey! Time's up, young man!\n"
+"Hey! Time's up, young " AGE_LAD "!\n"
 "You only paid 10 Rupees!\n"
 "You've played around long enough!" EVENT
 )
@@ -2190,7 +2190,7 @@ UNSKIPPABLE "I will raise a fine horse and\n"
 "Ganondorf!"
 BOX_BREAK
 
-UNSKIPPABLE "Say, young man, do you want\n"
+UNSKIPPABLE "Say, young " AGE_LAD ", do you want\n"
 "to ride one of my fine horses?" TEXTID(0x2031)
 )
 ,
@@ -2546,7 +2546,7 @@ MSG(
 "and press " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
 BOX_BREAK
 
-"Hey young man!\n"
+"Hey young " AGE_LAD "!\n"
 "Do I know you? I just felt as \n"
 "though I've seen you\n"
 "somewhere before..." TEXTID(0x2036)

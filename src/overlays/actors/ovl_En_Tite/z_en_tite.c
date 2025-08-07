@@ -215,6 +215,11 @@ void EnTite_Init(Actor* thisx, PlayState* play) {
         thisx->colChkInfo.health = Actor_EnemyHealthMultiply(4, MONSTER_HP);
         thisx->naviEnemyId += NAVI_ENEMY_BLUE_TEKTITE - NAVI_ENEMY_RED_TEKTITE;
     }
+    else if (this->actor.params == TEKTITE_YELLOW) {
+        this->collider.elements[0].base.atDmgInfo.effect = 3; // Electric
+        thisx->colChkInfo.health = 6;
+        thisx->naviEnemyId = 0xB;
+    }
     EnTite_SetupIdle(this);
 }
 
@@ -785,8 +790,10 @@ void EnTite_DeathCry(EnTite* this, PlayState* play) {
  * Spawn EnPart and drop items
  */
 void EnTite_FallApart(EnTite* this, PlayState* play) {
-    if (BodyBreak_SpawnParts(&this->actor, &this->bodyBreak, play, this->actor.params + 0xB)) {
-        if (this->actor.params == TEKTITE_BLUE) {
+    if (BodyBreak_SpawnParts(&this->actor, &this->bodyBreak, play, this->actor.params + (this->actor.params == TEKTITE_YELLOW ? 23 : 0xB))) {
+        if (this->actor.params == TEKTITE_YELLOW) {
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
+        } else if (this->actor.params == TEKTITE_BLUE) {
             Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xE0);
         } else {
             Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
@@ -1007,7 +1014,11 @@ void EnTite_Draw(Actor* thisx, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_en_tite.c", 1704);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     Collider_UpdateSpheres(0, &this->collider);
-    if (this->actor.params == TEKTITE_BLUE) {
+    if (this->actor.params == TEKTITE_YELLOW) {
+        gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(object_tite_Tex_yellow_body));
+        gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(object_tite_Tex_yellow_eye));
+        gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(object_tite_Tex_yellow_leg));
+    } else if (this->actor.params == TEKTITE_BLUE) {
         gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(object_tite_Tex_001300));
         gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(object_tite_Tex_001700));
         gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(object_tite_Tex_001900));

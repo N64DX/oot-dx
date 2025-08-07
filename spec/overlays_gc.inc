@@ -2048,6 +2048,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Horse_Young"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Young/z_en_horse_young.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Young/ovl_En_Horse_Young_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Horse_Game_Check"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Game_Check/z_en_horse_game_check.o"

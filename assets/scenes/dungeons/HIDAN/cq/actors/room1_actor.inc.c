@@ -144,10 +144,10 @@
     }, // 23
     {
         ACTOR_OBJ_WARP2BLOCK,
-        {   1560,    100,  -1340 }, // pos
+        {   1639,     70,  -1340 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x3820, // params
-    }, // 24
+    }, // 24: Reposition time block to access upper left room
     {
         ACTOR_OBJ_WARP2BLOCK,
         {   1560,    240,  -1390 }, // pos
@@ -179,3 +179,4 @@
          0x3F05, // params
     }, // 29
 
+    { ACTOR_OBJ_SYOKUDAI, { 1649, 200, 1419 }, { 0x0000, 0x0000, 0x0000 }, 0x1400, }, // 30: Reach room to the right

@@ -64,4 +64,6 @@
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x3FE3, // params
     }, // 10
-
+    
+    { ACTOR_OBJ_SYOKUDAI, { 2518, 2260, 698 }, {  0x0000,  0x0000,  0x0000 }, 0x1400, }, // 11: Reach Torch Slug places
+    { ACTOR_OBJ_HSBLOCK,  { 2181, 2321, 274 }, {  0x0000,  0x0000,  0x0000 }, 0xFF02, }, // 12: Reach push block

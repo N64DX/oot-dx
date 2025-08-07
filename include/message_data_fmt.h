@@ -41,6 +41,11 @@
 #define MESSAGE_FISH_INFO                  0x1D
 #define MESSAGE_HIGHSCORE                  0x1E
 #define MESSAGE_TIME                       0x1F
+#define MESSAGE_AGE_LAD                    0xFB
+#define MESSAGE_AGE_ONE                    0xFC
+#define MESSAGE_AGE_BOY                    0xFD
+#define MESSAGE_AGE_GUY                    0xFE
+#define MESSAGE_AGE_GUY_C                  0xFF
 
 // Wide (jpn)
 
@@ -74,6 +79,11 @@
 #define MESSAGE_WIDE_FISH_INFO             0x86A4
 #define MESSAGE_WIDE_HIGHSCORE             0x869F
 #define MESSAGE_WIDE_TIME                  0x81A1
+#define MESSAGE_WIDE_AGE_LAD               0x81A2
+#define MESSAGE_WIDE_AGE_ONE               0x81A3
+#define MESSAGE_WIDE_AGE_BOY               0x81A4
+#define MESSAGE_WIDE_AGE_GUY               0x81A5
+#define MESSAGE_WIDE_AGE_GUY_C             0x81A6
 
 /*
  * Message character constants
@@ -212,6 +222,11 @@ typedef enum TextboxBackgroundYOffsetIndex {
 # define FISH_INFO                                          CTRL_BASE(FISH_INFO)
 # define HIGHSCORE(highscore)                               CTRL_BASE(HIGHSCORE)            ARG1(highscore)
 # define TIME                                               CTRL_BASE(TIME)
+# define AGE_LAD                                            CTRL_BASE(AGE_LAD)
+# define AGE_ONE                                            CTRL_BASE(AGE_ONE)
+# define AGE_BOY                                            CTRL_BASE(AGE_BOY)
+# define AGE_GUY                                            CTRL_BASE(AGE_GUY)
+# define AGE_GUY_C                                          CTRL_BASE(AGE_GUY_C)
 
 #endif
 

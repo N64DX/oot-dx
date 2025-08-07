@@ -59,3 +59,5 @@
          0x3303, // params
     }, // 9
 
+    { ACTOR_OBJ_HSBLOCK,  { 1446, 3040, -549 }, {  0x0000,  0xBF68,  0x0000 }, 0xFF02, }, // 10: Hookshot targets for reaching the upper Boulder Maze area and the Fire Wall Maze respectively
+    { ACTOR_OBJ_HSBLOCK,  {  354, 3039,  110 }, {  0x0000,  0x4000,  0x0000 }, 0xFF02, }, // 11

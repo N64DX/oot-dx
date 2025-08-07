@@ -119,13 +119,13 @@
          0x1301, // params
     }, // 19
     {
-        ACTOR_OBJ_SWITCH,
+        ACTOR_BG_GND_DARKMEIRO,
         {  -1502,    523,  -1741 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x1313, // params
     }, // 20
     {
-        ACTOR_BG_MORI_HINERI,
+        ACTOR_BG_GND_DARKMEIRO,
         {  -1761,   1278,  -3015 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x7F13, // params

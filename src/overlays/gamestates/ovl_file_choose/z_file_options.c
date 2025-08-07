@@ -110,6 +110,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 12 },
     { 0, "Fix Power Crouch Stab",  FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 13 },
     { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 14 },
+    { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 15 },
     { 0, "Damage Taken",           FileSelectOptions_SetDamageTaken,    FileSelectOptions_GetDamageTaken,    1, 0  },
     { 0, "Health Recovery",        FileSelectOptions_SetHealthRecovery, FileSelectOptions_GetHealthRecovery, 1, 2  },
     { 0, "Monster Health",         FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 5  },

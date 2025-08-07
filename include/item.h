@@ -318,6 +318,7 @@ typedef enum ItemID {
     /* 0x9A */ ITEM_DEKU_NUT_UPGRADE_30,
     /* 0x9B */ ITEM_DEKU_NUT_UPGRADE_40,
     /* 0x9C */ ITEM_SHIELD_HEROS,
+    /* 0x9D */ ITEM_SWORD_HEROS,
     /* 0xEC */ ITEM_SWORDS,
     /* 0xED */ ITEM_SHIELDS,
     /* 0xEE */ ITEM_TUNICS,

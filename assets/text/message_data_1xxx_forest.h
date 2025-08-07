@@ -3628,7 +3628,7 @@ SHIFT(33) "ヘンな　おニイちゃん…" TEXTID(0x1054)
 ,
 MSG(
 "Where's Saria? \n"
-"Do you know Saria, mister?\n"
+"Do you know Saria, " AGE_BOY "?\n"
 "That's weird..." TEXTID(0x1054)
 )
 ,
@@ -3683,7 +3683,7 @@ SHIFT(6) "あんなヤツら　いなかったのにサ。" TEXTID(0x1056)
 MSG(
 "I see. You didn't have any \n"
 "problems entering the forest, \n"
-"mister..."
+AGE_BOY "..."
 BOX_BREAK
 
 "Did the meanies out there bother\n"
@@ -3753,7 +3753,7 @@ SHIFT(18) "おニイちゃん、「弓」持ってる？"
 MSG(
 "You can buy " COLOR(RED) "arrows " COLOR(DEFAULT) "at a shop \n"
 "only if you have a " COLOR(RED) "bow" COLOR(DEFAULT) ". Have you \n"
-"got one, mister?"
+"got one, " AGE_BOY "?"
 )
 ,
 MSG(
@@ -3786,7 +3786,7 @@ SHIFT(3) NAME "を　かばってた…" TEXTID(0x1059)
 ,
 MSG(
 UNSKIPPABLE "Have you been travelling around\n"
-"much, mister?\n"
+"much, " AGE_GUY "?\n"
 "Have you ever met a boy named \n"
 NAME "?"
 BOX_BREAK
@@ -3861,7 +3861,7 @@ SHIFT(15) "どっかで　会ったこと…　ある？"
 ,
 MSG(
 "Haven't I seen you somewhere\n"
-"before, mister?"
+"before, " AGE_BOY "?"
 )
 ,
 MSG(
@@ -3886,7 +3886,7 @@ SHIFT(48) "帰ってこないの…" TEXTID(0x105C)
 )
 ,
 MSG(
-UNSKIPPABLE "Mister, do you know a boy \n"
+UNSKIPPABLE AGE_GUY_C ", do you know a boy \n"
 "named " NAME "?"
 BOX_BREAK
 
@@ -4903,7 +4903,7 @@ SHIFT(33) "だれかに　にてるナァ…"
 ,
 MSG(
 "I still think you really look like\n"
-"somebody I've seen before, mister."
+"somebody I've seen before, " AGE_BOY "."
 )
 ,
 MSG(
@@ -4978,7 +4978,7 @@ SHIFT(36) "そんな気が　するんダ。"
 ,
 MSG(
 "I feel like I've known you for a\n"
-"long time, mister!"
+"long time, " AGE_BOY "!"
 )
 ,
 MSG(

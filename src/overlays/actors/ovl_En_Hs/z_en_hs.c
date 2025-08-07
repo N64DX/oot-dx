@@ -79,7 +79,7 @@ void EnHs_Init(Actor* thisx, PlayState* play) {
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
     Actor_SetScale(&this->actor, 0.01f);
 
-    if (!LINK_IS_ADULT) {
+    if (!LINK_IS_ADULT && !IS_CHILD_QUEST) {
         this->actor.params = 0;
     } else {
         this->actor.params = 1;

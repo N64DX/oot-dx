@@ -1,0 +1,3906 @@
+/**
+ * File: z_en_horse_young.c
+ * Overlay: ovl_En_Horse_Young
+ * Description: Rideable horses (young)
+ */
+
+#include "z_en_horse_young.h"
+#include "overlays/actors/ovl_En_In/z_en_in.h"
+
+#include "libc64/math64.h"
+#include "libc64/qrand.h"
+#include "array_count.h"
+#include "controller.h"
+#include "gfx.h"
+#include "gfx_setupdl.h"
+#include "ichain.h"
+#include "regs.h"
+#include "rumble.h"
+#include "segmented_address.h"
+#include "seqcmd.h"
+#include "sequence.h"
+#include "sfx.h"
+#include "sys_math3d.h"
+#include "versions.h"
+#include "z_lib.h"
+#include "audio.h"
+#include "effect.h"
+#include "horse.h"
+#include "play_state.h"
+#include "player.h"
+#include "save.h"
+#include "skin_matrix.h"
+
+#include "assets/objects/object_horse_young/object_horse_young.h"
+#include "assets/objects/object_hni/object_hni.h"
+#include "assets/scenes/overworld/spot09/spot09_scene.h"
+
+#define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
+
+typedef void (*EnHorseYoungCsFunc)(EnHorseYoung*, PlayState*, CsCmdActorCue*);
+typedef void (*EnHorseYoungActionFunc)(EnHorseYoung*, PlayState*);
+
+void EnHorseYoung_Init(Actor* thisx, PlayState* play2);
+void EnHorseYoung_Destroy(Actor* thisx, PlayState* play);
+void EnHorseYoung_Update(Actor* thisx, PlayState* play2);
+void EnHorseYoung_Draw(Actor* thisx, PlayState* play);
+
+void EnHorseYoung_InitCutscene(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_InitHorsebackArchery(EnHorseYoung* this);
+void EnHorseYoung_InitFleePlayer(EnHorseYoung* this);
+void EnHorseYoung_ResetIdleAnimation(EnHorseYoung* this);
+void EnHorseYoung_StartIdleRidable(EnHorseYoung* this);
+void EnHorseYoung_InitInactive(EnHorseYoung* this);
+void EnHorseYoung_InitIngoHorse(EnHorseYoung* this);
+
+void EnHorseYoung_Frozen(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_Inactive(EnHorseYoung* this, PlayState* play2);
+void EnHorseYoung_Idle(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_FollowPlayer(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_UpdateIngoRace(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_MountedIdle(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_MountedIdleWhinneying(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_MountedTurn(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_MountedWalk(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_MountedTrot(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_MountedGallop(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_MountedRearing(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_Stopping(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_Reverse(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_LowJump(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_HighJump(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_BridgeJump(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_CutsceneUpdate(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_UpdateHorsebackArchery(EnHorseYoung* this, PlayState* play);
+void EnHorseYoung_FleePlayer(EnHorseYoung* this, PlayState* play);
+
+static AnimationHeader* sEponaAnimHeaders[] = {
+    &gYoungEponaIdleAnim, &gYoungEponaWhinnyAnim, &object_horse_young_Anim_005F64, &object_horse_young_Anim_004DE8, &gYoungEponaWalkAnim,
+    &gYoungEponaTrotAnim, &gYoungEponaGallopAnim, &object_horse_young_Anim_0035B0, &object_horse_young_Anim_003D38,
+};
+
+static AnimationHeader* sHniAnimHeaders[] = {
+    &gHorseIngoIdleAnim,      &gHorseIngoWhinnyAnim,  &gHorseIngoRefuseAnim,
+    &gHorseIngoRearingAnim,   &gHorseIngoWalkingAnim, &gHorseIngoTrottingAnim,
+    &gHorseIngoGallopingAnim, &gHorseIngoJumpingAnim, &gHorseIngoJumpingHighAnim,
+};
+
+static AnimationHeader** sAnimationHeaders[] = { sEponaAnimHeaders, sHniAnimHeaders };
+
+static f32 sPlaybackSpeeds[] = { 2.0f / 3.0f, 2.0f / 3.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 2.0f / 3.0f, 2.0f / 3.0f };
+
+static SkeletonHeader* sSkeletonHeaders[] = { &gYoungEponaSkel, &gHorseIngoSkel };
+
+ActorProfile En_Horse_Young_Profile = {
+    /**/ ACTOR_EN_HORSE_YOUNG,
+    /**/ ACTORCAT_BG,
+    /**/ FLAGS,
+    /**/ OBJECT_HORSE_YOUNG,
+    /**/ sizeof(EnHorseYoung),
+    /**/ EnHorseYoung_Init,
+    /**/ EnHorseYoung_Destroy,
+    /**/ EnHorseYoung_Update,
+    /**/ EnHorseYoung_Draw,
+};
+
+static ColliderCylinderInit sCylinderInit1 = {
+    {
+        COL_MATERIAL_NONE,
+        AT_TYPE_PLAYER,
+        AC_NONE,
+        OC1_ON | OC1_TYPE_ALL,
+        OC2_TYPE_1 | OC2_UNK1,
+        COLSHAPE_CYLINDER,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0x00000400, 0x00, 0x04 },
+        { 0xFFCFFFFF, 0x00, 0x00 },
+        ATELEM_ON | ATELEM_SFX_NONE,
+        ACELEM_NONE,
+        OCELEM_ON,
+    },
+    { 20, 70, 0, { 0, 0, 0 } },
+};
+
+static ColliderCylinderInit sCylinderInit2 = {
+    {
+        COL_MATERIAL_NONE,
+        AT_NONE,
+        AC_NONE,
+        OC1_ON | OC1_TYPE_ALL,
+        OC2_TYPE_1 | OC2_UNK1,
+        COLSHAPE_CYLINDER,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0xFFCFFFFF, 0x00, 0x00 },
+        { 0xFFCFFFFF, 0x00, 0x00 },
+        ATELEM_NONE,
+        ACELEM_NONE,
+        OCELEM_ON,
+    },
+    { 20, 70, 0, { 0, 0, 0 } },
+};
+
+static ColliderJntSphElementInit sJntSphElementsInit[1] = {
+    {
+        {
+            ELEM_MATERIAL_UNK0,
+            { 0x00000000, 0x00, 0x00 },
+            { 0x0001F824, 0x00, 0x00 },
+            ATELEM_NONE,
+            ACELEM_ON | ACELEM_NO_AT_INFO | ACELEM_NO_DAMAGE | ACELEM_NO_SWORD_SFX | ACELEM_NO_HITMARK,
+            OCELEM_ON,
+        },
+        { 13, { { 0, 0, 0 }, 20 }, 100 },
+    },
+};
+
+static ColliderJntSphInit sJntSphInit = {
+    {
+        COL_MATERIAL_NONE,
+        AT_NONE,
+        AC_ON | AC_TYPE_PLAYER,
+        OC1_ON | OC1_TYPE_ALL,
+        OC2_TYPE_1 | OC2_UNK1,
+        COLSHAPE_JNTSPH,
+    },
+    1,
+    sJntSphElementsInit,
+};
+
+static CollisionCheckInfoInit D_80A65F38 = { 10, 35, 100, MASS_HEAVY };
+
+typedef struct EnHorseYoungSpawnpoint {
+    /* 0x0 */ s16 sceneId;
+    /* 0x2 */ Vec3s pos;
+    /* 0x8 */ s16 angle;
+} EnHorseYoungSpawnpoint; // size = 0xA
+
+static EnHorseYoungSpawnpoint sHorseSpawns[] = {
+    { SCENE_HYRULE_FIELD, 16, 0, 1341, 0 },
+    { SCENE_HYRULE_FIELD, -1297, 0, 1459, 0 },
+    { SCENE_HYRULE_FIELD, -5416, -300, 1296, 0 },
+    { SCENE_HYRULE_FIELD, -4667, -300, 3620, 0 },
+    { SCENE_HYRULE_FIELD, -3837, 81, 5537, 0 },
+    { SCENE_HYRULE_FIELD, -5093, -226, 6661, 0 },
+    { SCENE_HYRULE_FIELD, -6588, -79, 5053, 0 },
+    { SCENE_HYRULE_FIELD, -7072, -500, 7538, 0 },
+    { SCENE_HYRULE_FIELD, -6139, -500, 8910, 0 },
+    { SCENE_HYRULE_FIELD, -8497, -300, 7802, 0 },
+    { SCENE_HYRULE_FIELD, -5481, -499, 12127, 0 },
+    { SCENE_HYRULE_FIELD, -4808, -700, 13583, 0 },
+    { SCENE_HYRULE_FIELD, -3416, -490, 12092, 0 },
+    { SCENE_HYRULE_FIELD, -2915, 100, 8339, 0 },
+    { SCENE_HYRULE_FIELD, -2277, -500, 13247, 0 },
+    { SCENE_HYRULE_FIELD, -1026, -500, 12101, 0 },
+    { SCENE_HYRULE_FIELD, 1427, -500, 13341, 0 },
+    { SCENE_HYRULE_FIELD, -200, -486, 10205, 0 },
+    { SCENE_HYRULE_FIELD, -1469, 100, 7496, 0 },
+    { SCENE_HYRULE_FIELD, -995, 168, 5652, 0 },
+    { SCENE_HYRULE_FIELD, 1938, 89, 6232, 0 },
+    { SCENE_HYRULE_FIELD, 1387, -105, 9206, 0 },
+    { SCENE_HYRULE_FIELD, 1571, -223, 7701, 0 },
+    { SCENE_HYRULE_FIELD, 3893, -121, 7068, 0 },
+    { SCENE_HYRULE_FIELD, 3179, 373, 5221, 0 },
+    { SCENE_HYRULE_FIELD, 4678, -20, 3869, 0 },
+    { SCENE_HYRULE_FIELD, 3460, 246, 4207, 0 },
+    { SCENE_HYRULE_FIELD, 3686, 128, 2366, 0 },
+    { SCENE_HYRULE_FIELD, 1791, 18, 152, 0 },
+    { SCENE_HYRULE_FIELD, 3667, -16, 1399, 0 },
+    { SCENE_HYRULE_FIELD, 1827, -15, 983, 0 },
+    { SCENE_HYRULE_FIELD, 1574, 399, 4318, 0 },
+    { SCENE_HYRULE_FIELD, 716, 95, 3391, 0 },
+    { SCENE_HYRULE_FIELD, -1189, -41, 4739, 0 },
+    { SCENE_HYRULE_FIELD, -1976, -171, 4172, 0 },
+    { SCENE_HYRULE_FIELD, 1314, 391, 5665, 0 },
+    { SCENE_HYRULE_FIELD, 112, 0, 1959, 0 },
+    { SCENE_HYRULE_FIELD, -3011, -111, 9397, 0 },
+    { SCENE_HYRULE_FIELD, -5674, -270, 8585, 0 },
+    { SCENE_HYRULE_FIELD, -8861, -300, 7836, 0 },
+    { SCENE_HYRULE_FIELD, -6056, -500, 7810, 0 },
+    { SCENE_HYRULE_FIELD, -7306, -500, 5994, 0 },
+    { SCENE_HYRULE_FIELD, -7305, -500, 7605, 0 },
+    { SCENE_HYRULE_FIELD, -7439, -300, 7600, 0 },
+    { SCENE_HYRULE_FIELD, -7464, -300, 6268, 0 },
+    { SCENE_HYRULE_FIELD, -8080, -300, 7553, 0 },
+    { SCENE_HYRULE_FIELD, -8091, -300, 7349, 0 },
+    { SCENE_HYRULE_FIELD, -8785, -300, 7383, 0 },
+    { SCENE_HYRULE_FIELD, -8745, -300, 7508, 0 },
+    { SCENE_HYRULE_FIELD, -8777, -300, 7788, 0 },
+    { SCENE_HYRULE_FIELD, -8048, -299, 7738, 0 },
+    { SCENE_HYRULE_FIELD, -7341, -184, 7730, 0 },
+    { SCENE_HYRULE_FIELD, -6410, -288, 7824, 0 },
+    { SCENE_HYRULE_FIELD, -6326, -290, 8205, 0 },
+    { SCENE_HYRULE_FIELD, -6546, -292, 8400, 0 },
+    { SCENE_HYRULE_FIELD, -7533, -180, 8459, 0 },
+    { SCENE_HYRULE_FIELD, -8024, -295, 7903, 0 },
+    { SCENE_HYRULE_FIELD, -8078, -308, 7994, 0 },
+    { SCENE_HYRULE_FIELD, -9425, -287, 7696, 0 },
+    { SCENE_HYRULE_FIELD, -9322, -292, 7577, 0 },
+    { SCENE_HYRULE_FIELD, -9602, -199, 7160, 0 },
+    { SCENE_HYRULE_FIELD, -9307, -300, 7758, 0 },
+    { SCENE_HYRULE_FIELD, -9230, -300, 7642, 0 },
+    { SCENE_HYRULE_FIELD, -7556, -499, 8695, 0 },
+    { SCENE_HYRULE_FIELD, -6438, -500, 8606, 0 },
+    { SCENE_HYRULE_FIELD, -6078, -500, 8258, 0 },
+    { SCENE_HYRULE_FIELD, -6233, -500, 7613, 0 },
+    { SCENE_HYRULE_FIELD, -5035, -205, 7814, 0 },
+    { SCENE_HYRULE_FIELD, -5971, -500, 8501, 0 },
+    { SCENE_HYRULE_FIELD, -5724, -498, 10123, 0 },
+    { SCENE_HYRULE_FIELD, -5094, -392, 11106, 0 },
+    { SCENE_HYRULE_FIELD, -5105, -393, 11312, 0 },
+    { SCENE_HYRULE_FIELD, -4477, -314, 11132, 0 },
+    { SCENE_HYRULE_FIELD, -3867, -380, 11419, 0 },
+    { SCENE_HYRULE_FIELD, -2952, -500, 11944, 0 },
+    { SCENE_HYRULE_FIELD, -2871, -488, 11743, 0 },
+    { SCENE_HYRULE_FIELD, -3829, -372, 11327, 0 },
+    { SCENE_HYRULE_FIELD, -4439, -293, 10989, 0 },
+    { SCENE_HYRULE_FIELD, -5014, -381, 11086, 0 },
+    { SCENE_HYRULE_FIELD, -5113, -188, 10968, 0 },
+    { SCENE_HYRULE_FIELD, -5269, -188, 11156, 0 },
+    { SCENE_HYRULE_FIELD, -5596, -178, 9972, 0 },
+    { SCENE_HYRULE_FIELD, -5801, -288, 8518, 0 },
+    { SCENE_HYRULE_FIELD, -4910, -178, 7931, 0 },
+    { SCENE_HYRULE_FIELD, -3586, 73, 8140, 0 },
+    { SCENE_HYRULE_FIELD, -4487, -106, 9362, 0 },
+    { SCENE_HYRULE_FIELD, -4339, -112, 6412, 0 },
+    { SCENE_HYRULE_FIELD, -3417, 105, 8194, 0 },
+    { SCENE_HYRULE_FIELD, -4505, -20, 6608, 0 },
+    { SCENE_HYRULE_FIELD, -5038, -199, 6603, 0 },
+    { SCENE_HYRULE_FIELD, -4481, 1, 6448, 0 },
+    { SCENE_HYRULE_FIELD, -5032, -168, 6418, 0 },
+    { SCENE_HYRULE_FIELD, -5256, -700, 14329, 0 },
+    { SCENE_HYRULE_FIELD, -5749, -820, 15380, 0 },
+    { SCENE_HYRULE_FIELD, -3122, -700, 13608, 0 },
+    { SCENE_HYRULE_FIELD, -3758, -525, 13228, 0 },
+    { SCENE_HYRULE_FIELD, -3670, -500, 13123, 0 },
+    { SCENE_HYRULE_FIELD, -2924, -500, 13526, 0 },
+    { SCENE_HYRULE_FIELD, 1389, -115, 9370, 0 },
+    { SCENE_HYRULE_FIELD, 548, -116, 8889, 0 },
+    { SCENE_HYRULE_FIELD, -106, -107, 8530, 0 },
+    { SCENE_HYRULE_FIELD, -1608, 85, 7646, 0 },
+    { SCENE_HYRULE_FIELD, -5300, -700, 13772, 0 },
+    { SCENE_HYRULE_FIELD, -5114, -700, 13400, 0 },
+    { SCENE_HYRULE_FIELD, -4561, -700, 13700, 0 },
+    { SCENE_HYRULE_FIELD, -4762, -700, 14084, 0 },
+    { SCENE_HYRULE_FIELD, -2954, 100, 8216, 0 },
+    { SCENE_HYRULE_FIELD, 1460, -104, 9246, 0 },
+    { SCENE_HYRULE_FIELD, 629, -105, 8791, 0 },
+    { SCENE_HYRULE_FIELD, -10, -90, 8419, 0 },
+    { SCENE_HYRULE_FIELD, -1462, 100, 7504, 0 },
+    { SCENE_HYRULE_FIELD, -3018, -500, 12493, 0 },
+    { SCENE_HYRULE_FIELD, -2994, -311, 10331, 0 },
+    { SCENE_HYRULE_FIELD, -4006, -700, 14152, 0 },
+    { SCENE_HYRULE_FIELD, -4341, -500, 12743, 0 },
+    { SCENE_HYRULE_FIELD, -5879, -497, 6799, 0 },
+    { SCENE_HYRULE_FIELD, 22, -473, 10103, 0 },
+    { SCENE_HYRULE_FIELD, -1389, -192, 8874, 0 },
+    { SCENE_HYRULE_FIELD, -4, 92, 6866, 0 },
+    { SCENE_HYRULE_FIELD, 483, 104, 6637, 0 },
+    { SCENE_HYRULE_FIELD, 1580, 183, 5987, 0 },
+    { SCENE_HYRULE_FIELD, 1548, 308, 5077, 0 },
+    { SCENE_HYRULE_FIELD, 1511, 399, 4267, 0 },
+    { SCENE_HYRULE_FIELD, 1358, 385, 4271, 0 },
+    { SCENE_HYRULE_FIELD, 1379, 395, 5063, 0 },
+    { SCENE_HYRULE_FIELD, 1360, 394, 5870, 0 },
+    { SCENE_HYRULE_FIELD, 813, 283, 6194, 0 },
+    { SCENE_HYRULE_FIELD, -57, 101, 6743, 0 },
+    { SCENE_HYRULE_FIELD, 91, 325, 5143, 0 },
+    { SCENE_HYRULE_FIELD, 1425, -214, 7659, 0 },
+    { SCENE_HYRULE_FIELD, 3487, -19, 880, 0 },
+    { SCENE_HYRULE_FIELD, 2933, 152, 2094, 0 },
+    { SCENE_HYRULE_FIELD, 2888, -145, 6862, 0 },
+    { SCENE_HYRULE_FIELD, 1511, 67, 6471, 0 },
+    { SCENE_HYRULE_FIELD, 4051, -47, 1722, 0 },
+    { SCENE_HYRULE_FIELD, -7335, -500, 8627, 0 },
+    { SCENE_HYRULE_FIELD, -7728, -462, 8498, 0 },
+    { SCENE_HYRULE_FIELD, -7791, -446, 8832, 0 },
+    { SCENE_HYRULE_FIELD, -2915, -435, 11334, 0 },
+    { SCENE_HYRULE_FIELD, 165, -278, 3352, 0 },
+
+    { SCENE_LAKE_HYLIA, -2109, -882, 1724, 0 },
+    { SCENE_LAKE_HYLIA, -328, -1238, 2705, 0 },
+    { SCENE_LAKE_HYLIA, -3092, -1033, 3527, 0 },
+
+    { SCENE_GERUDO_VALLEY, 2687, -269, 753, 0 },
+    { SCENE_GERUDO_VALLEY, 2066, -132, 317, 0 },
+    { SCENE_GERUDO_VALLEY, 523, -8, 635, 0 },
+    { SCENE_GERUDO_VALLEY, 558, 36, -323, 0 },
+    { SCENE_GERUDO_VALLEY, 615, 51, -839, 0 },
+    { SCENE_GERUDO_VALLEY, -614, 32, 29, 0 },
+    { SCENE_GERUDO_VALLEY, -639, -3, 553, 0 },
+    { SCENE_GERUDO_VALLEY, -540, 10, -889, 0 },
+    { SCENE_GERUDO_VALLEY, -1666, 58, 378, 0 },
+    { SCENE_GERUDO_VALLEY, -3044, 210, -648, 0 },
+
+    { SCENE_GERUDOS_FORTRESS, -678, 21, -623, 0 },
+    { SCENE_GERUDOS_FORTRESS, 149, 333, -2499, 0 },
+    { SCENE_GERUDOS_FORTRESS, 499, 581, -547, 0 },
+    { SCENE_GERUDOS_FORTRESS, 3187, 1413, -3775, 0 },
+    { SCENE_GERUDOS_FORTRESS, 3198, 1413, 307, 0 },
+    { SCENE_GERUDOS_FORTRESS, 3380, 1413, -1200, 0 },
+    { SCENE_GERUDOS_FORTRESS, -966, 1, -56, 0 },
+    { SCENE_GERUDOS_FORTRESS, -966, 24, -761, 0 },
+    { SCENE_GERUDOS_FORTRESS, -694, 174, -2820, 0 },
+
+    { SCENE_LON_LON_RANCH, 1039, 0, 2051, 0 },
+    { SCENE_LON_LON_RANCH, -1443, 0, 1429, 0 },
+    { SCENE_LON_LON_RANCH, 856, 0, -918, 0 }, // Hardcoded to always load in lon lon
+    { SCENE_LON_LON_RANCH, 882, 0, -2256, 0 },
+    { SCENE_LON_LON_RANCH, -1003, 0, -755, 0 }, // Hardcoded to always load in lon lon
+    { SCENE_LON_LON_RANCH, -2254, 0, -629, 0 },
+    { SCENE_LON_LON_RANCH, 907, 0, -2336, 0 },
+};
+
+typedef struct BridgeJumpPoint {
+    /* 0x00 */ s16 zMin;
+    /* 0x02 */ s16 zMax;
+    /* 0x04 */ s16 xMin;
+    /* 0x06 */ s16 xMax;
+    /* 0x08 */ s16 xOffset;
+    /* 0x0A */ s16 angle;
+    /* 0x0C */ s16 angleRange;
+    /* 0x0E */ Vec3s pos;
+} BridgeJumpPoint; // size = 0x14
+
+static BridgeJumpPoint sBridgeJumps[] = {
+    { -195, -40, 225, 120, 360, -0x4000, 0x7D0, -270, -52, -117 },
+    { -195, -40, -240, -120, -360, 0x4000, 0x7D0, 270, -52, -117 },
+};
+
+typedef struct RaceWaypoint {
+    /* 0x0 */ s16 x;
+    /* 0x2 */ s16 y;
+    /* 0x4 */ s16 z;
+    /* 0x6 */ s16 speedXZ;
+    /* 0x8 */ s16 angle;
+} RaceWaypoint; // size = 0xA
+
+typedef struct RaceInfo {
+    /* 0x0 */ s32 numWaypoints;
+    /* 0x4 */ RaceWaypoint* waypoints;
+} RaceInfo; // size = 0x8
+
+static RaceWaypoint sIngoRaceWaypoints[] = {
+    { 1056, 1, -1540, 11, 0x2A8D },  { 1593, 1, -985, 10, 0xFC27 },   { 1645, 1, -221, 11, 0xE891 },
+    { 985, 1, 403, 10, 0xBB9C },     { -1023, 1, 354, 11, 0xA37D },   { -1679, 1, -213, 10, 0x889C },
+    { -1552, 1, -1008, 11, 0x638D }, { -947, -1, -1604, 10, 0x4002 },
+};
+
+static RaceInfo sIngoRace = { ARRAY_COUNT(sIngoRaceWaypoints), sIngoRaceWaypoints };
+static s32 sAnimSoundFrames[] = { 0, 16 };
+
+static InitChainEntry sInitChain[] = {
+    ICHAIN_F32(cullingVolumeScale, 600, ICHAIN_CONTINUE),
+    ICHAIN_F32(cullingVolumeDownward, 300, ICHAIN_STOP),
+};
+
+static u8 sResetNoInput[] = { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 };
+
+static s32 sIdleAnimIds[] = { 1, 3, 0, 3, 1, 0 };
+
+static s16 sIngoAnimations[] = { 7, 6, 2, 2, 1, 1, 0, 0, 0, 0 };
+
+void EnHorseYoung_CsMoveInit(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue);
+void EnHorseYoung_CsJumpInit(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue);
+void EnHorseYoung_CsRearingInit(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue);
+void EnHorseYoung_WarpMoveInit(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue);
+void EnHorseYoung_CsWarpRearingInit(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue);
+
+static EnHorseYoungCsFunc sCutsceneInitFuncs[] = {
+    NULL,
+    EnHorseYoung_CsMoveInit,
+    EnHorseYoung_CsJumpInit,
+    EnHorseYoung_CsRearingInit,
+    EnHorseYoung_WarpMoveInit,
+    EnHorseYoung_CsWarpRearingInit,
+};
+
+void EnHorseYoung_CsMoveToPoint(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue);
+void EnHorseYoung_CsJump(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue);
+void EnHorseYoung_CsRearing(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue);
+void EnHorseYoung_CsWarpMoveToPoint(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue);
+void EnHorseYoung_CsWarpRearing(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue);
+
+static EnHorseYoungCsFunc sCutsceneActionFuncs[] = {
+    NULL, EnHorseYoung_CsMoveToPoint, EnHorseYoung_CsJump, EnHorseYoung_CsRearing, EnHorseYoung_CsWarpMoveToPoint, EnHorseYoung_CsWarpRearing,
+};
+
+typedef struct CsActionEntry {
+    /* 0x0 */ s32 cueId;
+    /* 0x4 */ s32 csFuncIdx;
+} CsActionEntry; // size = 0x8
+
+static CsActionEntry sCsActionTable[] = {
+    { PLAYER_CUEID_36, 1 }, { PLAYER_CUEID_37, 2 }, { PLAYER_CUEID_38, 3 },
+    { PLAYER_CUEID_64, 4 }, { PLAYER_CUEID_65, 5 },
+};
+
+static RaceWaypoint sHbaWaypoints[] = {
+    { 3600, 1413, -5055, 11, 0x8001 }, { 3360, 1413, -5220, 5, 0xC000 }, { 3100, 1413, -4900, 5, 0x0000 },
+    { 3600, 1413, -4100, 11, 0x0000 }, { 3600, 1413, 360, 11, 0x0000 },
+};
+
+static RaceInfo sHbaInfo = { ARRAY_COUNT(sHbaWaypoints), sHbaWaypoints };
+
+static EnHorseYoungActionFunc sActionFuncs[] = {
+    EnHorseYoung_Frozen,                 // ENHORSEYOUNG_ACT_FROZEN
+    EnHorseYoung_Inactive,               // ENHORSEYOUNG_ACT_INACTIVE
+    EnHorseYoung_Idle,                   // ENHORSEYOUNG_ACT_IDLE
+    EnHorseYoung_FollowPlayer,           // ENHORSEYOUNG_ACT_FOLLOW_PLAYER
+    EnHorseYoung_UpdateIngoRace,         // ENHORSEYOUNG_ACT_INGO_RACE
+    EnHorseYoung_MountedIdle,            // ENHORSEYOUNG_ACT_MOUNTED_IDLE
+    EnHorseYoung_MountedIdleWhinneying,  // ENHORSEYOUNG_ACT_MOUNTED_IDLE_WHINNEYING
+    EnHorseYoung_MountedTurn,            // ENHORSEYOUNG_ACT_MOUNTED_TURN
+    EnHorseYoung_MountedWalk,            // ENHORSEYOUNG_ACT_MOUNTED_WALK
+    EnHorseYoung_MountedTrot,            // ENHORSEYOUNG_ACT_MOUNTED_TROT
+    EnHorseYoung_MountedGallop,          // ENHORSEYOUNG_ACT_MOUNTED_GALLOP
+    EnHorseYoung_MountedRearing,         // ENHORSEYOUNG_ACT_MOUNTED_REARING
+    EnHorseYoung_Stopping,               // ENHORSEYOUNG_ACT_STOPPING
+    EnHorseYoung_Reverse,                // ENHORSEYOUNG_ACT_REVERSE
+    EnHorseYoung_LowJump,                // ENHORSEYOUNG_ACT_LOW_JUMP
+    EnHorseYoung_HighJump,               // ENHORSEYOUNG_ACT_HIGH_JUMP
+    EnHorseYoung_BridgeJump,             // ENHORSEYOUNG_ACT_BRIDGE_JUMP
+    EnHorseYoung_CutsceneUpdate,         // ENHORSEYOUNG_ACT_CS_UPDATE
+    EnHorseYoung_UpdateHorsebackArchery, // ENHORSEYOUNG_ACT_HBA
+    EnHorseYoung_FleePlayer,             // ENHORSEYOUNG_ACT_FLEE_PLAYER
+};
+
+s32 EnHorseYoung_BgCheckBridgeJumpPoint(EnHorseYoung* this, PlayState* play) {
+    f32 xMin;
+    f32 xMax;
+    s32 i;
+
+    if (play->sceneId != SCENE_GERUDO_VALLEY) {
+        return false;
+    }
+    if (this->actor.speed < 12.8f) {
+        return false;
+    }
+    if (GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED()) {
+        return false;
+    }
+
+    for (i = 0; i < ARRAY_COUNT(sBridgeJumps); i++) {
+        xMin = sBridgeJumps[i].xMin;
+        xMax = (xMin + sBridgeJumps[i].xMax) + sBridgeJumps[i].xOffset;
+        if (xMax < xMin) {
+            f32 temp = xMin;
+
+            xMin = xMax;
+            xMax = temp;
+        }
+        if (sBridgeJumps[i].zMin < this->actor.world.pos.z && this->actor.world.pos.z < sBridgeJumps[i].zMax) {
+            if (xMin < this->actor.world.pos.x && this->actor.world.pos.x < xMax) {
+                if (sBridgeJumps[i].angle - sBridgeJumps[i].angleRange < this->actor.world.rot.y &&
+                    this->actor.world.rot.y < sBridgeJumps[i].angle + sBridgeJumps[i].angleRange) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+void EnHorseYoung_StartBridgeJump(EnHorseYoung* this, PlayState* play);
+
+s32 EnHorseYoung_CheckBridgeJumps(EnHorseYoung* this, PlayState* play) {
+    f32 xMin;
+    f32 xMax;
+    s32 i;
+
+    if (this->actor.speed < 12.8f) {
+        return false;
+    }
+
+    for (i = 0; i < ARRAY_COUNT(sBridgeJumps); i++) {
+        xMin = sBridgeJumps[i].xMin;
+        xMax = sBridgeJumps[i].xMax + xMin;
+
+        if (xMax < xMin) {
+            f32 temp = xMin;
+
+            xMin = xMax;
+            xMax = temp;
+        }
+
+        if (sBridgeJumps[i].zMin < this->actor.world.pos.z && this->actor.world.pos.z < sBridgeJumps[i].zMax) {
+            if (xMin < this->actor.world.pos.x && this->actor.world.pos.x < xMax) {
+                if (sBridgeJumps[i].angle - sBridgeJumps[i].angleRange < this->actor.world.rot.y &&
+                    this->actor.world.rot.y < sBridgeJumps[i].angle + sBridgeJumps[i].angleRange) {
+                    this->bridgeJumpIdx = i;
+                    EnHorseYoung_StartBridgeJump(this, play);
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+void EnHorseYoung_RaceWaypointPos(RaceWaypoint* waypoints, s32 index, Vec3f* pos) {
+    pos->x = waypoints[index].x;
+    pos->y = waypoints[index].y;
+    pos->z = waypoints[index].z;
+}
+
+void EnHorseYoung_RotateToPoint(EnHorseYoung* this, PlayState* play, Vec3f* pos, s16 turnAmount) {
+    Horse_RotateToPoint(&this->actor, pos, turnAmount);
+}
+
+void EnHorseYoung_UpdateIngoRaceInfo(EnHorseYoung* this, PlayState* play, RaceInfo* raceInfo) {
+    Vec3f curWaypointPos;
+    Vec3f prevWaypointPos;
+    s32 prevWaypoint;
+    f32 sp50;
+    s16 relPlayerYaw;
+    f32 px;
+    f32 pz;
+    f32 d;
+    f32 distSq;
+
+    EnHorseYoung_RaceWaypointPos(raceInfo->waypoints, this->curRaceWaypoint, &curWaypointPos);
+    Math3D_RotateXZPlane(&curWaypointPos, raceInfo->waypoints[this->curRaceWaypoint].angle, &px, &pz, &d);
+    if (((this->actor.world.pos.x * px) + (pz * this->actor.world.pos.z) + d) > 0.0f) {
+        this->curRaceWaypoint++;
+        if (this->curRaceWaypoint >= raceInfo->numWaypoints) {
+            this->curRaceWaypoint = 0;
+        }
+    }
+
+    EnHorseYoung_RaceWaypointPos(raceInfo->waypoints, this->curRaceWaypoint, &curWaypointPos);
+
+    prevWaypoint = this->curRaceWaypoint - 1;
+    if (prevWaypoint < 0) {
+        prevWaypoint = raceInfo->numWaypoints - 1;
+    }
+    EnHorseYoung_RaceWaypointPos(raceInfo->waypoints, prevWaypoint, &prevWaypointPos);
+    Math3D_PointDistSqToLine2D(this->actor.world.pos.x, this->actor.world.pos.z, prevWaypointPos.x, prevWaypointPos.z,
+                               curWaypointPos.x, curWaypointPos.z, &distSq);
+    EnHorseYoung_RotateToPoint(this, play, &curWaypointPos, 400);
+
+    if (distSq < SQ(300.0f)) {
+        if (this->actor.xzDistToPlayer < 130.0f || this->colliderJntSph.elements[0].base.ocElemFlags & OCELEM_HIT) {
+            s32 pad;
+
+            if (Math_SinS(this->actor.yawTowardsPlayer - this->actor.world.rot.y) > 0.0f) {
+                this->actor.world.rot.y -= 280;
+            } else {
+                this->actor.world.rot.y += 280;
+            }
+        } else if (this->actor.xzDistToPlayer < 300.0f) {
+            if (Math_SinS(this->actor.yawTowardsPlayer - this->actor.world.rot.y) > 0.0f) {
+                this->actor.world.rot.y += 280;
+            } else {
+                this->actor.world.rot.y -= 280;
+            }
+        }
+        this->actor.shape.rot.y = this->actor.world.rot.y;
+    }
+
+    sp50 = Actor_WorldDistXZToActor(&this->actor, &GET_PLAYER(play)->actor);
+    relPlayerYaw = Actor_WorldYawTowardActor(&this->actor, &GET_PLAYER(play)->actor) - this->actor.world.rot.y;
+    if (sp50 <= 200.0f || (fabsf(Math_SinS(relPlayerYaw)) < 0.8f && Math_CosS(relPlayerYaw) > 0.0f)) {
+        if (this->actor.speed < this->ingoHorseMaxSpeed) {
+            this->actor.speed += 0.47f;
+        } else {
+            this->actor.speed -= 0.47f;
+        }
+        this->ingoRaceFlags |= 1;
+        return;
+    }
+
+    if (this->actor.speed < raceInfo->waypoints[this->curRaceWaypoint].speedXZ) {
+        this->actor.speed += 0.4f;
+    } else {
+        this->actor.speed -= 0.4f;
+    }
+    this->ingoRaceFlags &= ~0x1;
+}
+
+void EnHorseYoung_PlayWalkingSfx(EnHorseYoung* this) {
+    if (sAnimSoundFrames[this->soundTimer] < this->curFrame) {
+        if (this->soundTimer == 0 && (sAnimSoundFrames[1] < this->curFrame)) {
+            return;
+        }
+
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_WALK, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        if (++this->soundTimer >= ARRAY_COUNT(sAnimSoundFrames)) {
+            this->soundTimer = 0;
+        }
+    }
+}
+
+void EnHorseYoung_PlayTrottingSfx(EnHorseYoung* this) {
+    Audio_PlaySfxGeneral(NA_SE_EV_HORSE_RUN, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+}
+
+void EnHorseYoung_PlayGallopingSfx(EnHorseYoung* this) {
+    Audio_PlaySfxGeneral(NA_SE_EV_HORSE_RUN, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+}
+
+f32 EnHorseYoung_SlopeSpeedMultiplier(EnHorseYoung* this, PlayState* play) {
+    f32 multiplier = 1.0f;
+
+    if (Math_CosS(this->actor.shape.rot.x) < 0.939262f && Math_SinS(this->actor.shape.rot.x) < 0.0f) {
+        multiplier = 0.7f;
+    }
+    return multiplier;
+}
+
+void func_80A5BB90_young(PlayState* play, Vec3f* vec, Vec3f* arg2, f32* arg3) {
+    SkinMatrix_Vec3fMtxFMultXYZW(&play->viewProjectionMtxF, vec, arg2, arg3);
+}
+
+int func_80A5BBBC_young(PlayState* play, EnHorseYoung* this, Vec3f* pos) {
+    Vec3f sp24;
+    f32 sp20;
+    f32 eyeDist;
+
+    func_80A5BB90_young(play, pos, &sp24, &sp20);
+    if (fabsf(sp20) < 0.008f) {
+        return false;
+    }
+    eyeDist = Math3D_Vec3f_DistXYZ(pos, &play->view.eye);
+    return Actor_CullingVolumeTest(play, &this->actor, &sp24, sp20) || eyeDist < 100.0f;
+}
+
+void EnHorseYoung_IdleAnimSounds(EnHorseYoung* this, PlayState* play) {
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_IDLE &&
+        ((this->curFrame > 35.0f && this->type == HORSE_YOUNG_EPONA) ||
+         (this->curFrame > 28.0f && this->type == HORSE_YOUNG_HNI)) &&
+        !(this->stateFlags & ENHORSEYOUNG_SANDDUST_SOUND)) {
+        this->stateFlags |= ENHORSEYOUNG_SANDDUST_SOUND;
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_SANDDUST, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_REARING && this->curFrame > 25.0f &&
+               !(this->stateFlags & ENHORSEYOUNG_LAND2_SOUND)) {
+        this->stateFlags |= ENHORSEYOUNG_LAND2_SOUND;
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_LAND2, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    }
+}
+
+s32 EnHorseYoung_Spawn(EnHorseYoung* this, PlayState* play) {
+    f32 minDist = 1e38f;
+    s32 spawn = false;
+    f32 dist;
+    s32 i;
+    Player* player;
+    Vec3f spawnPos;
+
+    for (i = 0; i < ARRAY_COUNT(sHorseSpawns); i++) {
+        if (sHorseSpawns[i].sceneId == play->sceneId) {
+            player = GET_PLAYER(play);
+            if (play->sceneId != SCENE_LON_LON_RANCH ||
+                //! Same flag checked twice
+                (Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) &&
+                 (GET_EVENTINF_INGO_RACE_STATE() != INGO_RACE_STATE_TRAPPED_WIN_EPONA ||
+                  Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED))) ||
+                // always load two spawns inside lon lon
+                ((sHorseSpawns[i].pos.x == 856 && sHorseSpawns[i].pos.y == 0 && sHorseSpawns[i].pos.z == -918) ||
+                 (sHorseSpawns[i].pos.x == -1003 && sHorseSpawns[i].pos.y == 0 && sHorseSpawns[i].pos.z == -755))) {
+
+                spawnPos.x = sHorseSpawns[i].pos.x;
+                spawnPos.y = sHorseSpawns[i].pos.y;
+                spawnPos.z = sHorseSpawns[i].pos.z;
+                dist = Math3D_Vec3f_DistXYZ(&player->actor.world.pos, &spawnPos);
+
+                if ((minDist < dist) || func_80A5BBBC_young(play, this, &spawnPos)) {
+                    continue;
+                }
+
+                minDist = dist;
+                this->actor.world.pos.x = sHorseSpawns[i].pos.x;
+                this->actor.world.pos.y = sHorseSpawns[i].pos.y;
+                this->actor.world.pos.z = sHorseSpawns[i].pos.z;
+                this->actor.prevPos = this->actor.world.pos;
+                this->actor.world.rot.y = sHorseSpawns[i].angle;
+                this->actor.shape.rot.y = Actor_WorldYawTowardActor(&this->actor, &GET_PLAYER(play)->actor);
+                spawn = true;
+#if OOT_VERSION >= PAL_1_0
+                SkinMatrix_Vec3fMtxFMultXYZW(&play->viewProjectionMtxF, &this->actor.world.pos,
+                                             &this->actor.projectedPos, &this->actor.projectedW);
+#endif
+            }
+        }
+    }
+
+    return spawn;
+}
+
+void EnHorseYoung_ResetCutscene(EnHorseYoung* this, PlayState* play) {
+    this->cutsceneAction = -1;
+    this->cutsceneFlags = 0;
+}
+
+void EnHorseYoung_ResetRace(EnHorseYoung* this, PlayState* play) {
+    this->inRace = false;
+}
+
+s32 EnHorseYoung_PlayerCanMove(EnHorseYoung* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+
+    if ((player->stateFlags1 & PLAYER_STATE1_0) || func_8002DD78(GET_PLAYER(play)) == true ||
+        (player->stateFlags1 & PLAYER_STATE1_20) || ((this->stateFlags & ENHORSEYOUNG_FLAG_19) && !this->inRace) ||
+        this->action == ENHORSEYOUNG_ACT_HBA || player->actor.flags & ACTOR_FLAG_TALK ||
+        play->csCtx.state != CS_STATE_IDLE) {
+        return false;
+    }
+    return true;
+}
+
+void EnHorseYoung_ResetHorsebackArchery(EnHorseYoung* this, PlayState* play) {
+    this->unk_39C = 0;
+    this->hbaStarted = 0;
+    this->hbaFlags = 0;
+}
+
+void EnHorseYoung_ClearDustFlags(u16* dustFlags) {
+    *dustFlags = 0;
+}
+
+void EnHorseYoung_Init(Actor* thisx, PlayState* play2) {
+    EnHorseYoung* this = (EnHorseYoung*)thisx;
+    PlayState* play = play2;
+
+    R_EXITED_SCENE_RIDING_HORSE = false;
+    Actor_ProcessInitChain(&this->actor, sInitChain);
+    EnHorseYoung_ClearDustFlags(&this->dustFlags);
+    R_EPONAS_SONG_PLAYED = false;
+    this->riderPos = this->actor.world.pos;
+    this->noInputTimer = 0;
+    this->noInputTimerMax = 0;
+    this->riderPos.y += 83.0f;
+
+    if (DREG(4) == 0) {
+        DREG(4) = 70;
+    }
+
+    if (PARAMS_GET_NOSHIFT(this->actor.params, 15, 1)) {
+        this->actor.params &= ~0x8000;
+        this->type = HORSE_YOUNG_HNI;
+
+        if ((this->hniObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_HNI)) < 0) {
+            Actor_Kill(&this->actor);
+            return;
+        }
+
+        do {
+        } while (!Object_IsLoaded(&play->objectCtx, this->hniObjectSlot));
+
+        this->actor.objectSlot = this->hniObjectSlot;
+        Actor_SetObjectDependency(play, &this->actor);
+        this->boostSpeed = 12;
+        Actor_SetScale(&this->actor, 0.01f);
+    } else {
+        this->type = HORSE_YOUNG_EPONA;
+        this->boostSpeed = 14;
+        Actor_SetScale(&this->actor, 0.006f);
+    }
+
+    // params was -1
+    if (this->actor.params == 0x7FFF) {
+        this->actor.params = HORSE_YOUNG_PTYPE_1;
+    }
+
+    if (play->sceneId == SCENE_LON_LON_BUILDINGS) {
+        this->stateFlags = ENHORSEYOUNG_UNRIDEABLE;
+    } else if (play->sceneId == SCENE_GERUDOS_FORTRESS && this->type == HORSE_YOUNG_HNI) {
+        this->stateFlags = ENHORSEYOUNG_FLAG_18 | ENHORSEYOUNG_UNRIDEABLE;
+    } else {
+        if (this->actor.params == HORSE_YOUNG_PTYPE_INGO_SPAWNED_RIDING) {
+            this->stateFlags = ENHORSEYOUNG_FLAG_19 | ENHORSEYOUNG_CANT_JUMP | ENHORSEYOUNG_UNRIDEABLE;
+        } else if (this->actor.params == HORSE_YOUNG_PTYPE_6) {
+            this->stateFlags = ENHORSEYOUNG_FLAG_19 | ENHORSEYOUNG_CANT_JUMP;
+            if (Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED) {
+                this->stateFlags &= ~ENHORSEYOUNG_CANT_JUMP;
+                this->stateFlags |= ENHORSEYOUNG_FLAG_26;
+            } else if (GET_EVENTINF(EVENTINF_INGO_RACE_SECOND_RACE) && this->type == HORSE_YOUNG_HNI) {
+                this->stateFlags |= ENHORSEYOUNG_FLAG_21 | ENHORSEYOUNG_FLAG_20;
+            }
+        } else if (this->actor.params == HORSE_YOUNG_PTYPE_1) {
+            this->stateFlags = ENHORSEYOUNG_FLAG_7;
+        } else {
+            this->stateFlags = 0;
+        }
+    }
+
+    if (play->sceneId == SCENE_LON_LON_RANCH && GET_EVENTINF_INGO_RACE_STATE() == INGO_RACE_STATE_TRAPPED_WIN_EPONA &&
+        !(Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED)) {
+        this->stateFlags |= ENHORSEYOUNG_FLAG_25;
+    }
+
+    this->actor.gravity = -3.5f;
+    ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawHorse, 20.0f);
+    this->action = ENHORSEYOUNG_ACT_IDLE;
+    this->actor.speed = 0.0f;
+    Collider_InitCylinder(play, &this->colliderCylinder1);
+    Collider_SetCylinder(play, &this->colliderCylinder1, &this->actor, &sCylinderInit1);
+    Collider_InitCylinder(play, &this->colliderCylinder2);
+    Collider_SetCylinder(play, &this->colliderCylinder2, &this->actor, &sCylinderInit2);
+    Collider_InitJntSph(play, &this->colliderJntSph);
+    Collider_SetJntSph(play, &this->colliderJntSph, &this->actor, &sJntSphInit, this->colliderJntSphElements);
+    CollisionCheck_SetInfo(&this->actor.colChkInfo, DamageTable_Get(0xB), &D_80A65F38);
+    this->actor.focus.pos = this->actor.world.pos;
+    this->actor.focus.pos.y += 70.0f;
+    this->playerControlled = false;
+
+    if ((play->sceneId == SCENE_LON_LON_RANCH) && !IS_CUTSCENE_LAYER) {
+        if (this->type == HORSE_YOUNG_HNI) {
+            if (this->actor.world.rot.z == 0 || !IS_DAY) {
+                Actor_Kill(&this->actor);
+                return;
+            }
+            if (Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED)) {
+                Actor_Kill(&this->actor);
+                return;
+            }
+            if (this->actor.world.rot.z != 5) {
+                Actor_Kill(&this->actor);
+                return;
+            }
+        } else if (!(Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED) && !IS_DAY) {
+            Actor_Kill(&this->actor);
+            return;
+        }
+    } else if (play->sceneId == SCENE_STABLE) {
+        if (IS_DAY || Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED) {
+            Actor_Kill(&this->actor);
+            return;
+        }
+        this->stateFlags |= ENHORSEYOUNG_UNRIDEABLE;
+    }
+
+    Skin_Init(play, &this->skin, sSkeletonHeaders[this->type], sAnimationHeaders[this->type][ENHORSEYOUNG_ANIM_IDLE]);
+    this->animationIdx = ENHORSEYOUNG_ANIM_IDLE;
+    Animation_PlayOnce(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx]);
+    this->numBoosts = 6;
+    this->boostRegenTime = 0;
+    this->postDrawFunc = NULL;
+    this->blinkTimer = 0;
+    EnHorseYoung_ResetCutscene(this, play);
+    EnHorseYoung_ResetRace(this, play);
+    EnHorseYoung_ResetHorsebackArchery(this, play);
+
+    if (this->actor.params == HORSE_YOUNG_PTYPE_INACTIVE) {
+        EnHorseYoung_InitInactive(this);
+    } else if (this->actor.params == HORSE_YOUNG_PTYPE_INGO_SPAWNED_RIDING) {
+        EnHorseYoung_InitIngoHorse(this);
+        this->rider = Actor_Spawn(&play->actorCtx, play, ACTOR_EN_IN, this->actor.world.pos.x, this->actor.world.pos.y,
+                                  this->actor.world.pos.z, this->actor.shape.rot.x, this->actor.shape.rot.y, 1, 1);
+        ASSERT(this->rider != NULL, "this->race.rider != NULL", "../z_en_horse.c", 3077);
+        if (!GET_EVENTINF(EVENTINF_INGO_RACE_SECOND_RACE)) {
+            this->ingoHorseMaxSpeed = 12.07f;
+        } else {
+            this->ingoHorseMaxSpeed = 12.625f;
+        }
+    } else if (this->actor.params == HORSE_YOUNG_PTYPE_7) {
+        EnHorseYoung_InitCutscene(this, play);
+    } else if (this->actor.params == HORSE_YOUNG_PTYPE_HORSEBACK_ARCHERY) {
+        EnHorseYoung_InitHorsebackArchery(this);
+        Interface_InitHorsebackArchery(play);
+    } else if (play->sceneId == SCENE_LON_LON_RANCH && !Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) &&
+               !R_DEBUG_FORCE_EPONA_OBTAINED) {
+        EnHorseYoung_InitFleePlayer(this);
+    } else {
+        if (play->sceneId == SCENE_LON_LON_BUILDINGS) {
+            EnHorseYoung_ResetIdleAnimation(this);
+        } else if (play->sceneId == SCENE_GERUDOS_FORTRESS && this->type == HORSE_YOUNG_HNI) {
+            EnHorseYoung_ResetIdleAnimation(this);
+        } else {
+            EnHorseYoung_StartIdleRidable(this);
+        }
+    }
+    this->actor.home.rot.z = this->actor.world.rot.z = this->actor.shape.rot.z = 0;
+}
+
+void EnHorseYoung_Destroy(Actor* thisx, PlayState* play) {
+    EnHorseYoung* this = (EnHorseYoung*)thisx;
+
+    if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+        Audio_StopSfxByPos(&this->unk_21C);
+    }
+    Skin_Free(play, &this->skin);
+    Collider_DestroyCylinder(play, &this->colliderCylinder1);
+    Collider_DestroyCylinder(play, &this->colliderCylinder2);
+    Collider_DestroyJntSph(play, &this->colliderJntSph);
+}
+
+void EnHorseYoung_RotateToPlayer(EnHorseYoung* this, PlayState* play) {
+    EnHorseYoung_RotateToPoint(this, play, &GET_PLAYER(play)->actor.world.pos, 400);
+    if (this->stateFlags & ENHORSEYOUNG_OBSTACLE) {
+        this->actor.world.rot.y += 800.0f;
+    }
+    this->actor.shape.rot.y = this->actor.world.rot.y;
+}
+
+void EnHorseYoung_Freeze(EnHorseYoung* this) {
+    if (this->action != ENHORSEYOUNG_ACT_CS_UPDATE && this->action != ENHORSEYOUNG_ACT_HBA) {
+        if (!(sResetNoInput[this->actor.params] == 0 || this->actor.params == HORSE_YOUNG_PTYPE_4)) {
+            this->noInputTimer = 0;
+            this->noInputTimerMax = 0;
+        }
+        this->prevAction = this->action;
+        this->action = ENHORSEYOUNG_ACT_FROZEN;
+        this->colliderCylinder1.base.ocFlags1 &= ~OC1_ON;
+        this->colliderCylinder2.base.ocFlags1 &= ~OC1_ON;
+        this->colliderJntSph.base.ocFlags1 &= ~OC1_ON;
+        this->animationIdx = ENHORSEYOUNG_ANIM_IDLE;
+    }
+}
+
+void EnHorseYoung_ChangeIdleAnimation(EnHorseYoung* this, s32 anim, f32 morphFrames);
+void EnHorseYoung_StartMountedIdleResetAnim(EnHorseYoung* this);
+void EnHorseYoung_StartMountedIdle(EnHorseYoung* this);
+void EnHorseYoung_StartGalloping(EnHorseYoung* this);
+
+void EnHorseYoung_Frozen(EnHorseYoung* this, PlayState* play) {
+    this->actor.speed = 0.0f;
+    this->noInputTimer--;
+    if (this->noInputTimer < 0) {
+        this->colliderCylinder1.base.ocFlags1 |= OC1_ON;
+        this->colliderCylinder2.base.ocFlags1 |= OC1_ON;
+        this->colliderJntSph.base.ocFlags1 |= OC1_ON;
+        if (this->playerControlled == true) {
+            this->stateFlags &= ~ENHORSEYOUNG_FLAG_7;
+            if (this->actor.params == HORSE_YOUNG_PTYPE_4) {
+                EnHorseYoung_StartMountedIdleResetAnim(this);
+            } else if (this->actor.params == HORSE_YOUNG_PTYPE_PLAYER_SPAWNED_RIDING) {
+                this->actor.params = HORSE_YOUNG_PTYPE_5;
+                if (play->csCtx.state != CS_STATE_IDLE) {
+                    EnHorseYoung_StartMountedIdle(this);
+                } else {
+                    this->actor.speed = 8.0f;
+                    EnHorseYoung_StartGalloping(this);
+                }
+            } else if (this->prevAction == 2) {
+                EnHorseYoung_StartMountedIdle(this);
+            } else {
+                EnHorseYoung_StartMountedIdleResetAnim(this);
+            }
+            if (this->actor.params != HORSE_YOUNG_PTYPE_0) {
+                this->actor.params = HORSE_YOUNG_PTYPE_0;
+                return;
+            }
+        } else {
+            if (this->prevAction == 5) {
+                EnHorseYoung_ChangeIdleAnimation(this, 0, 0);
+                return;
+            }
+            if (this->prevAction == 6) {
+                EnHorseYoung_ChangeIdleAnimation(this, 0, 0);
+                return;
+            }
+            EnHorseYoung_ChangeIdleAnimation(this, 0, 0);
+        }
+    }
+}
+
+void EnHorseYoung_StickDirection(Vec2f* curStick, f32* stickMag, s16* angle);
+
+void EnHorseYoung_UpdateSpeed(EnHorseYoung* this, PlayState* play, f32 brakeDecel, f32 brakeAngle, f32 minStickMag, f32 decel,
+                         f32 baseSpeed, s16 turnSpeed) {
+    s16* stickAnglePtr; // probably fake
+    f32 stickMag;
+    s16 stickAngle;
+    f32 temp_f12;
+    f32 traction;
+    s16 turn;
+
+    if (!EnHorseYoung_PlayerCanMove(this, play)) {
+        if (this->actor.speed > 8) {
+            this->actor.speed -= decel;
+        } else if (this->actor.speed < 0) {
+            this->actor.speed = 0;
+        }
+
+        return;
+    }
+
+    stickAnglePtr = &stickAngle;
+
+    baseSpeed *= EnHorseYoung_SlopeSpeedMultiplier(this, play);
+    EnHorseYoung_StickDirection(&this->curStick, &stickMag, &stickAngle);
+    if (Math_CosS(stickAngle) <= brakeAngle) {
+        this->actor.speed -= brakeDecel;
+        this->actor.speed = CLAMP_MIN(this->actor.speed, 0.0f);
+        return;
+    }
+
+    if (stickMag < minStickMag) {
+        this->stateFlags &= ~ENHORSEYOUNG_BOOST;
+        this->stateFlags &= ~ENHORSEYOUNG_BOOST_DECEL;
+        this->actor.speed -= decel;
+        if (this->actor.speed < 0.0f) {
+            this->actor.speed = 0.0f;
+        }
+
+        return;
+    }
+
+    if (this->stateFlags & ENHORSEYOUNG_BOOST) {
+        if ((16 - this->boostTimer) > 0) {
+            this->actor.speed = (EnHorseYoung_SlopeSpeedMultiplier(this, play) * this->boostSpeed - this->actor.speed) /
+                                    (16 - this->boostTimer) +
+                                this->actor.speed;
+        } else {
+            this->actor.speed = EnHorseYoung_SlopeSpeedMultiplier(this, play) * this->boostSpeed;
+        }
+
+        if ((EnHorseYoung_SlopeSpeedMultiplier(this, play) * this->boostSpeed) <= this->actor.speed) {
+            this->stateFlags &= ~ENHORSEYOUNG_BOOST;
+            this->stateFlags |= ENHORSEYOUNG_BOOST_DECEL;
+        }
+
+    } else if (this->stateFlags & ENHORSEYOUNG_BOOST_DECEL) {
+        if (baseSpeed < this->actor.speed) {
+            temp_f12 = this->actor.speed;
+            this->actor.speed = temp_f12 - 0.06f;
+        } else if (this->actor.speed < baseSpeed) {
+            this->actor.speed = baseSpeed;
+            this->stateFlags &= ~ENHORSEYOUNG_BOOST_DECEL;
+        }
+    } else {
+        this->actor.speed +=
+            (this->actor.speed <= baseSpeed * (1.0f / 54.0f) * stickMag ? 1.0f : -1.0f) * 50.0f * 0.01f;
+        if (baseSpeed < this->actor.speed) {
+            this->actor.speed -= decel;
+            if (this->actor.speed < baseSpeed) {
+                this->actor.speed = baseSpeed;
+            }
+        }
+    }
+
+    temp_f12 = *stickAnglePtr * (1 / 32236.f);
+    traction = 2.2f - (this->actor.speed * (1.0f / this->boostSpeed));
+    turn = *stickAnglePtr * temp_f12 * temp_f12 * traction;
+    turn = CLAMP(turn, -turnSpeed * traction, turnSpeed * traction);
+    this->actor.world.rot.y += turn;
+    this->actor.shape.rot.y = this->actor.world.rot.y;
+}
+
+void EnHorseYoung_StartMountedIdleResetAnim(EnHorseYoung* this) {
+    this->skin.skelAnime.curFrame = 0.0f;
+    EnHorseYoung_StartMountedIdle(this);
+    this->stateFlags &= ~ENHORSEYOUNG_SANDDUST_SOUND;
+}
+
+void EnHorseYoung_StartMountedIdle(EnHorseYoung* this) {
+    f32 curFrame;
+
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_IDLE;
+    this->animationIdx = ENHORSEYOUNG_ANIM_IDLE;
+    if ((this->curFrame > 35.0f && this->type == HORSE_YOUNG_EPONA) || (this->curFrame > 28.0f && this->type == HORSE_YOUNG_HNI)) {
+        if (!(this->stateFlags & ENHORSEYOUNG_SANDDUST_SOUND)) {
+            this->stateFlags |= ENHORSEYOUNG_SANDDUST_SOUND;
+            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_SANDDUST, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        }
+    }
+    curFrame = this->skin.skelAnime.curFrame;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, curFrame,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+}
+
+void EnHorseYoung_StartReversingInterruptable(EnHorseYoung* this);
+void EnHorseYoung_StartTurning(EnHorseYoung* this);
+void EnHorseYoung_StartWalkingFromIdle(EnHorseYoung* this);
+void EnHorseYoung_MountedIdleAnim(EnHorseYoung* this);
+void EnHorseYoung_StartReversing(EnHorseYoung* this);
+void EnHorseYoung_StartWalkingInterruptable(EnHorseYoung* this);
+void EnHorseYoung_MountedIdleWhinney(EnHorseYoung* this);
+void EnHorseYoung_StartWalking(EnHorseYoung* this);
+
+void EnHorseYoung_MountedIdle(EnHorseYoung* this, PlayState* play) {
+    f32 mag;
+    s16 angle = 0;
+
+    this->actor.speed = 0;
+    EnHorseYoung_StickDirection(&this->curStick, &mag, &angle);
+    if (mag > 10.0f && EnHorseYoung_PlayerCanMove(this, play) == true) {
+        if (Math_CosS(angle) <= -0.5f) {
+            EnHorseYoung_StartReversingInterruptable(this);
+        } else if (Math_CosS(angle) <= 0.7071) { // cos(45 degrees)
+            EnHorseYoung_StartTurning(this);
+        } else {
+            EnHorseYoung_StartWalkingFromIdle(this);
+        }
+    }
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        EnHorseYoung_MountedIdleAnim(this);
+    }
+}
+
+void EnHorseYoung_MountedIdleAnim(EnHorseYoung* this) {
+    this->skin.skelAnime.curFrame = 0.0f;
+    EnHorseYoung_MountedIdleWhinney(this);
+}
+
+void EnHorseYoung_MountedIdleWhinney(EnHorseYoung* this) {
+    f32 curFrame;
+
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_IDLE_WHINNEYING;
+    this->animationIdx = ENHORSEYOUNG_ANIM_WHINNEY;
+    curFrame = this->skin.skelAnime.curFrame;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, curFrame,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+    this->unk_21C = this->unk_228;
+    if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_GROAN, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    }
+}
+
+void EnHorseYoung_MountedIdleWhinneying(EnHorseYoung* this, PlayState* play) {
+    f32 stickMag;
+    s16 stickAngle = 0;
+
+    this->actor.speed = 0;
+    EnHorseYoung_StickDirection(&this->curStick, &stickMag, &stickAngle);
+    if (stickMag > 10.0f && EnHorseYoung_PlayerCanMove(this, play) == true) {
+        if (Math_CosS(stickAngle) <= -0.5f) {
+            EnHorseYoung_StartReversingInterruptable(this);
+        } else if (Math_CosS(stickAngle) <= 0.7071) { // cos(45 degrees)
+            EnHorseYoung_StartTurning(this);
+        } else {
+            EnHorseYoung_StartWalkingFromIdle(this);
+        }
+    }
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        EnHorseYoung_StartMountedIdleResetAnim(this);
+    }
+}
+
+void EnHorseYoung_StartTurning(EnHorseYoung* this) {
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_TURN;
+    this->soundTimer = 0;
+    this->animationIdx = ENHORSEYOUNG_ANIM_WALK;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+}
+
+void EnHorseYoung_MountedTurn(EnHorseYoung* this, PlayState* play) {
+    f32 stickMag;
+    s16 clampedYaw;
+    s16 stickAngle;
+
+    this->actor.speed = 0;
+    EnHorseYoung_PlayWalkingSfx(this);
+    EnHorseYoung_StickDirection(&this->curStick, &stickMag, &stickAngle);
+    if (stickMag > 10.0f) {
+        if (!EnHorseYoung_PlayerCanMove(this, play)) {
+            EnHorseYoung_StartMountedIdleResetAnim(this);
+        } else if (Math_CosS(stickAngle) <= -0.5f) {
+            EnHorseYoung_StartReversingInterruptable(this);
+        } else if (Math_CosS(stickAngle) <= 0.7071) { // cos(45 degrees)
+            clampedYaw = CLAMP(stickAngle, -800.0f, 800.0f);
+            this->actor.world.rot.y += clampedYaw;
+            this->actor.shape.rot.y = this->actor.world.rot.y;
+        } else {
+            EnHorseYoung_StartWalkingInterruptable(this);
+        }
+    }
+
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        if (Math_CosS(stickAngle) <= 0.7071) { // cos(45 degrees)
+            EnHorseYoung_StartTurning(this);
+        } else {
+            EnHorseYoung_StartMountedIdleResetAnim(this);
+        }
+    }
+}
+
+void EnHorseYoung_StartWalkingFromIdle(EnHorseYoung* this) {
+    EnHorseYoung_StartWalkingInterruptable(this);
+
+    if (!(this->stateFlags & ENHORSEYOUNG_FLAG_8) && !(this->stateFlags & ENHORSEYOUNG_FLAG_9)) {
+        this->stateFlags |= ENHORSEYOUNG_FLAG_9;
+        this->waitTimer = 8;
+        return;
+    }
+    this->waitTimer = 0;
+}
+
+void EnHorseYoung_StartWalkingInterruptable(EnHorseYoung* this) {
+    this->noInputTimer = 0;
+    this->noInputTimerMax = 0;
+    EnHorseYoung_StartWalking(this);
+}
+
+void EnHorseYoung_StartWalking(EnHorseYoung* this) {
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_WALK;
+    this->soundTimer = 0;
+    this->animationIdx = ENHORSEYOUNG_ANIM_WALK;
+    this->waitTimer = 0;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+}
+
+void EnHorseYoung_MountedWalkingReset(EnHorseYoung* this) {
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_WALK;
+    this->soundTimer = 0;
+    this->animationIdx = ENHORSEYOUNG_ANIM_WALK;
+    this->waitTimer = 0;
+    Animation_PlayOnce(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx]);
+}
+
+void EnHorseYoung_StartTrotting(EnHorseYoung* this);
+
+void EnHorseYoung_MountedWalk(EnHorseYoung* this, PlayState* play) {
+    f32 stickMag;
+    s16 stickAngle;
+
+    EnHorseYoung_PlayWalkingSfx(this);
+    EnHorseYoung_StickDirection(&this->curStick, &stickMag, &stickAngle);
+    if (this->noInputTimerMax == 0.0f ||
+        (this->noInputTimer > 0.0f && this->noInputTimer < this->noInputTimerMax - 20.0f)) {
+        EnHorseYoung_UpdateSpeed(this, play, 0.3f, -0.5f, 10.0f, 0.06f, 3.0f, 400);
+    } else {
+        this->actor.speed = 3.0f;
+    }
+
+    if (this->actor.speed == 0.0f) {
+        this->stateFlags &= ~ENHORSEYOUNG_FLAG_9;
+        EnHorseYoung_StartMountedIdleResetAnim(this);
+        this->noInputTimer = 0;
+        this->noInputTimerMax = 0;
+    } else if (this->actor.speed > 3.0f) {
+        this->stateFlags &= ~ENHORSEYOUNG_FLAG_9;
+        EnHorseYoung_StartTrotting(this);
+        this->noInputTimer = 0;
+        this->noInputTimerMax = 0;
+    }
+
+    if (this->noInputTimer > 0.0f) {
+        this->noInputTimer--;
+        if (this->noInputTimer <= 0.0f) {
+            this->noInputTimerMax = 0;
+        }
+    }
+
+    if (this->waitTimer <= 0) {
+        this->stateFlags &= ~ENHORSEYOUNG_FLAG_9;
+        this->skin.skelAnime.playSpeed = this->actor.speed * 0.75f;
+        if (SkelAnime_Update(&this->skin.skelAnime) || this->actor.speed == 0.0f) {
+            if (this->noInputTimer <= 0.0f) {
+                if (this->actor.speed > 3.0f) {
+                    EnHorseYoung_StartTrotting(this);
+                    this->noInputTimer = 0;
+                    this->noInputTimerMax = 0;
+                } else if ((stickMag < 10.0f) || (Math_CosS(stickAngle) <= -0.5f)) {
+                    EnHorseYoung_StartMountedIdleResetAnim(this);
+                    this->noInputTimer = 0;
+                    this->noInputTimerMax = 0;
+                } else {
+                    EnHorseYoung_MountedWalkingReset(this);
+                }
+            }
+        }
+    } else {
+        this->actor.speed = 0.0f;
+        this->waitTimer--;
+    }
+}
+
+void EnHorseYoung_StartTrotting(EnHorseYoung* this) {
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_TROT;
+    this->animationIdx = ENHORSEYOUNG_ANIM_TROT;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+}
+
+void EnHorseYoung_MountedTrotReset(EnHorseYoung* this) {
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_TROT;
+    this->animationIdx = ENHORSEYOUNG_ANIM_TROT;
+    Animation_PlayOnce(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx]);
+}
+
+void EnHorseYoung_StartGallopingInterruptable(EnHorseYoung* this);
+
+void EnHorseYoung_MountedTrot(EnHorseYoung* this, PlayState* play) {
+    f32 stickMag;
+    s16 stickAngle;
+
+    EnHorseYoung_UpdateSpeed(this, play, 0.3f, -0.5f, 10.0f, 0.06f, 6.0f, 400);
+    EnHorseYoung_StickDirection(&this->curStick, &stickMag, &stickAngle);
+    if (this->actor.speed < 3.0f) {
+        EnHorseYoung_StartWalkingInterruptable(this);
+    }
+
+    this->skin.skelAnime.playSpeed = this->actor.speed * 0.375f;
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        EnHorseYoung_PlayTrottingSfx(this);
+        Rumble_Request(0.0f, 60, 8, 255);
+        if (this->actor.speed >= 6.0f) {
+            EnHorseYoung_StartGallopingInterruptable(this);
+        } else if (this->actor.speed < 3.0f) {
+            EnHorseYoung_StartWalkingInterruptable(this);
+        } else {
+            EnHorseYoung_MountedTrotReset(this);
+        }
+    }
+}
+
+void EnHorseYoung_StartGallopingInterruptable(EnHorseYoung* this) {
+    this->noInputTimerMax = this->noInputTimer = 0;
+    EnHorseYoung_StartGalloping(this);
+}
+
+void EnHorseYoung_StartGalloping(EnHorseYoung* this) {
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_GALLOP;
+    this->animationIdx = ENHORSEYOUNG_ANIM_GALLOP;
+    this->unk_234 = 0;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+}
+
+void EnHorseYoung_MountedGallopReset(EnHorseYoung* this) {
+    this->noInputTimerMax = this->noInputTimer = 0;
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_GALLOP;
+    this->animationIdx = ENHORSEYOUNG_ANIM_GALLOP;
+    this->unk_234 = 0;
+    Animation_PlayOnce(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx]);
+}
+
+void EnHorseYoung_JumpLanding(EnHorseYoung* this, PlayState* play) {
+    Vec3s* jointTable;
+    f32 y;
+
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_GALLOP;
+    this->animationIdx = ENHORSEYOUNG_ANIM_GALLOP;
+    Animation_PlayOnce(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx]);
+    jointTable = this->skin.skelAnime.jointTable;
+    y = jointTable->y;
+    this->riderPos.y += y * 0.01f;
+    this->postDrawFunc = NULL;
+}
+
+void EnHorseYoung_StartBraking(EnHorseYoung* this, PlayState* play);
+
+void EnHorseYoung_MountedGallop(EnHorseYoung* this, PlayState* play) {
+    f32 stickMag;
+    s16 stickAngle;
+
+    EnHorseYoung_StickDirection(&this->curStick, &stickMag, &stickAngle);
+
+    if (this->noInputTimer <= 0.0f) {
+        EnHorseYoung_UpdateSpeed(this, play, 0.3f, -0.5f, 10.0f, 0.06f, 8.0f, 0x190);
+    } else if (this->noInputTimer > 0.0f) {
+        this->noInputTimer--;
+        this->actor.speed = 8.0f;
+    }
+    if (this->actor.speed < 6.0f) {
+        EnHorseYoung_StartTrotting(this);
+    }
+
+    this->skin.skelAnime.playSpeed = this->actor.speed * 0.3f;
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        EnHorseYoung_PlayGallopingSfx(this);
+        Rumble_Request(0, 120, 8, 255);
+        if (EnHorseYoung_PlayerCanMove(this, play) == true) {
+            if (stickMag >= 10.0f && Math_CosS(stickAngle) <= -0.5f) {
+                EnHorseYoung_StartBraking(this, play);
+            } else if (this->actor.speed < 6.0f) {
+                EnHorseYoung_StartTrotting(this);
+            } else {
+                EnHorseYoung_MountedGallopReset(this);
+            }
+            return;
+        }
+        EnHorseYoung_MountedGallopReset(this);
+    }
+}
+
+void EnHorseYoung_StartRearing(EnHorseYoung* this) {
+    this->action = ENHORSEYOUNG_ACT_MOUNTED_REARING;
+    this->animationIdx = ENHORSEYOUNG_ANIM_REARING;
+    this->stateFlags &= ~ENHORSEYOUNG_LAND2_SOUND;
+    this->unk_21C = this->unk_228;
+    if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    }
+    Rumble_Request(0.0f, 180, 20, 100);
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+}
+
+void EnHorseYoung_MountedRearing(EnHorseYoung* this, PlayState* play) {
+    f32 stickMag;
+    s16 stickAngle;
+
+    this->actor.speed = 0.0f;
+    if (this->curFrame > 25.0f) {
+        if (!(this->stateFlags & ENHORSEYOUNG_LAND2_SOUND)) {
+            this->stateFlags |= ENHORSEYOUNG_LAND2_SOUND;
+            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_LAND2, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            Rumble_Request(0.0f, 180, 20, 100);
+        }
+    }
+
+    EnHorseYoung_StickDirection(&this->curStick, &stickMag, &stickAngle);
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        if (EnHorseYoung_PlayerCanMove(this, play) == true) {
+            if (this->stateFlags & ENHORSEYOUNG_FORCE_REVERSING) {
+                this->noInputTimer = 100;
+                this->noInputTimerMax = 100;
+                this->stateFlags &= ~ENHORSEYOUNG_FORCE_REVERSING;
+                EnHorseYoung_StartReversing(this);
+            } else if (this->stateFlags & ENHORSEYOUNG_FORCE_WALKING) {
+                this->noInputTimer = 100;
+                this->noInputTimerMax = 100;
+                this->stateFlags &= ~ENHORSEYOUNG_FORCE_WALKING;
+                EnHorseYoung_StartWalking(this);
+            } else if (Math_CosS(stickAngle) <= -0.5f) {
+                EnHorseYoung_StartReversingInterruptable(this);
+            } else {
+                EnHorseYoung_StartMountedIdleResetAnim(this);
+            }
+            return;
+        }
+        EnHorseYoung_StartMountedIdleResetAnim(this);
+    }
+}
+
+void EnHorseYoung_StartBraking(EnHorseYoung* this, PlayState* play) {
+    this->action = ENHORSEYOUNG_ACT_STOPPING;
+    this->animationIdx = ENHORSEYOUNG_ANIM_STOPPING;
+
+    Audio_PlaySfxGeneral(NA_SE_EV_HORSE_SLIP, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.5f, 0.0f,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+
+    this->stateFlags |= ENHORSEYOUNG_STOPPING_NEIGH_SOUND;
+    this->stateFlags &= ~ENHORSEYOUNG_BOOST;
+}
+
+void EnHorseYoung_Stopping(EnHorseYoung* this, PlayState* play) {
+    if (this->actor.speed > 0.0f) {
+        this->actor.speed -= 0.6f;
+        if (this->actor.speed < 0.0f) {
+            this->actor.speed = 0.0f;
+        }
+    }
+
+    if (this->stateFlags & ENHORSEYOUNG_STOPPING_NEIGH_SOUND && this->skin.skelAnime.curFrame > 29.0f) {
+        this->actor.speed = 0.0f;
+        if (Rand_ZeroOne() > 0.5) {
+            this->unk_21C = this->unk_228;
+            if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+                Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            }
+            Rumble_Request(0.0f, 180, 20, 100);
+            this->stateFlags &= ~ENHORSEYOUNG_STOPPING_NEIGH_SOUND;
+        } else {
+            EnHorseYoung_StartMountedIdleResetAnim(this);
+        }
+    }
+
+    if (this->skin.skelAnime.curFrame > 29.0f) {
+        this->actor.speed = 0.0f;
+    } else if (this->actor.speed > 3.0f && this->stateFlags & ENHORSEYOUNG_FORCE_REVERSING) {
+        this->actor.speed = 3.0f;
+    }
+
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        if (this->stateFlags & ENHORSEYOUNG_FORCE_REVERSING) {
+            this->noInputTimer = 100;
+            this->noInputTimerMax = 100;
+            EnHorseYoung_StartReversing(this);
+            this->stateFlags &= ~ENHORSEYOUNG_FORCE_REVERSING;
+        } else {
+            EnHorseYoung_StartMountedIdleResetAnim(this);
+        }
+    }
+}
+
+void EnHorseYoung_StartReversingInterruptable(EnHorseYoung* this) {
+    this->noInputTimerMax = this->noInputTimer = 0;
+    EnHorseYoung_StartReversing(this);
+}
+
+void EnHorseYoung_StartReversing(EnHorseYoung* this) {
+    this->action = ENHORSEYOUNG_ACT_REVERSE;
+    this->animationIdx = ENHORSEYOUNG_ANIM_WALK;
+    this->soundTimer = 0;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_LOOP, -3.0f);
+}
+
+void EnHorseYoung_Reverse(EnHorseYoung* this, PlayState* play) {
+    f32 stickMag;
+    s16 stickAngle;
+    s16 turnAmount;
+    Player* player = GET_PLAYER(play);
+
+    EnHorseYoung_PlayWalkingSfx(this);
+    EnHorseYoung_StickDirection(&this->curStick, &stickMag, &stickAngle);
+    if (EnHorseYoung_PlayerCanMove(this, play) == true) {
+        if (this->noInputTimerMax == 0.0f ||
+            (this->noInputTimer > 0.0f && this->noInputTimer < this->noInputTimerMax - 20.0f)) {
+            if (stickMag < 10.0f && this->noInputTimer <= 0.0f) {
+                EnHorseYoung_StartMountedIdleResetAnim(this);
+                this->actor.speed = 0.0f;
+                return;
+            }
+            if (stickMag < 10.0f) {
+                stickAngle = -0x7FFF;
+            } else if (Math_CosS(stickAngle) > -0.5f) {
+                this->noInputTimerMax = 0;
+                EnHorseYoung_StartMountedIdleResetAnim(this);
+                this->actor.speed = 0.0f;
+                return;
+            }
+        } else if (stickMag < 10.0f) {
+            stickAngle = -0x7FFF;
+        }
+    } else if (player->actor.flags & ACTOR_FLAG_TALK) {
+        EnHorseYoung_StartMountedIdleResetAnim(this);
+        this->actor.speed = 0.0f;
+        return;
+    } else {
+        stickAngle = -0x7FFF;
+    }
+
+    this->actor.speed = -2.0f;
+    turnAmount = 0x7FFF - stickAngle;
+    turnAmount = CLAMP(turnAmount, -1200.0f, 1200.0f);
+    this->actor.world.rot.y += turnAmount;
+    this->actor.shape.rot.y = this->actor.world.rot.y;
+
+    if (this->noInputTimer > 0.0f) {
+        this->noInputTimer--;
+        if (this->noInputTimer <= 0.0f) {
+            this->noInputTimerMax = 0;
+        }
+    }
+    this->skin.skelAnime.playSpeed = this->actor.speed * 0.5f * 1.5f;
+    if (SkelAnime_Update(&this->skin.skelAnime) && (f32)this->noInputTimer <= 0.0f &&
+        EnHorseYoung_PlayerCanMove(this, play) == true) {
+        if (stickMag > 10.0f && Math_CosS(stickAngle) <= -0.5f) {
+            this->noInputTimerMax = 0;
+            EnHorseYoung_StartReversingInterruptable(this);
+        } else if (stickMag < 10.0f) {
+            this->noInputTimerMax = 0;
+            EnHorseYoung_StartMountedIdleResetAnim(this);
+        } else {
+            EnHorseYoung_StartReversing(this);
+        }
+    }
+}
+
+void EnHorseYoung_StartLowJump(EnHorseYoung* this, PlayState* play);
+
+void EnHorseYoung_LowJumpInit(EnHorseYoung* this, PlayState* play) {
+    this->skin.skelAnime.curFrame = 0.0f;
+    EnHorseYoung_StartLowJump(this, play);
+}
+
+void EnHorseYoung_StartLowJump(EnHorseYoung* this, PlayState* play) {
+    f32 curFrame;
+    Vec3s* jointTable;
+    f32 y;
+
+    this->action = ENHORSEYOUNG_ACT_LOW_JUMP;
+    this->animationIdx = ENHORSEYOUNG_ANIM_LOW_JUMP;
+    curFrame = this->skin.skelAnime.curFrame;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.5f, curFrame,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+
+    this->postDrawFunc = NULL;
+    this->jumpStartY = this->actor.world.pos.y;
+
+    this->actor.gravity = 0.0f;
+    this->actor.velocity.y = 0;
+
+    jointTable = this->skin.skelAnime.jointTable;
+    y = jointTable->y;
+    this->riderPos.y -= y * 0.01f;
+
+    Audio_PlaySfxGeneral(NA_SE_EV_HORSE_JUMP, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    Rumble_Request(0.0f, 170, 10, 10);
+}
+
+void EnHorseYoung_Stub1(EnHorseYoung* this) {
+}
+
+void EnHorseYoung_LowJump(EnHorseYoung* this, PlayState* play) {
+    Vec3f pad;
+    Vec3s* jointTable;
+    f32 curFrame;
+    f32 y;
+
+    curFrame = this->skin.skelAnime.curFrame;
+    this->stateFlags |= ENHORSEYOUNG_JUMPING;
+    this->actor.speed = 12.0f;
+    if (curFrame > 17.0f) {
+        this->actor.gravity = -3.5f;
+        if (this->actor.velocity.y == 0) {
+            this->actor.velocity.y = -6.0f;
+        }
+        if (this->actor.world.pos.y < this->actor.floorHeight + 90.0f) {
+            this->skin.skelAnime.playSpeed = 1.5f;
+        } else {
+            this->skin.skelAnime.playSpeed = 0;
+        }
+    } else {
+        jointTable = this->skin.skelAnime.jointTable;
+        y = jointTable->y;
+        this->actor.world.pos.y = this->jumpStartY + y * 0.01f;
+    }
+
+    if (SkelAnime_Update(&this->skin.skelAnime) ||
+        (curFrame > 17.0f && this->actor.world.pos.y < this->actor.floorHeight - this->actor.velocity.y + 80.0f)) {
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_LAND, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        Rumble_Request(0.0f, 255, 10, 80);
+        this->stateFlags &= ~ENHORSEYOUNG_JUMPING;
+        this->actor.gravity = -3.5f;
+        this->actor.world.pos.y = this->actor.floorHeight;
+        func_80028A54(play, 25.0f, &this->actor.world.pos);
+        EnHorseYoung_JumpLanding(this, play);
+    }
+}
+
+void EnHorseYoung_StartHighJump(EnHorseYoung* this, PlayState* play);
+
+void EnHorseYoung_HighJumpInit(EnHorseYoung* this, PlayState* play) {
+    this->skin.skelAnime.curFrame = 0.0f;
+    EnHorseYoung_StartHighJump(this, play);
+}
+
+void EnHorseYoung_StartHighJump(EnHorseYoung* this, PlayState* play) {
+    f32 curFrame;
+    Vec3s* jointTable;
+    f32 y;
+
+    this->action = ENHORSEYOUNG_ACT_HIGH_JUMP;
+    this->animationIdx = ENHORSEYOUNG_ANIM_HIGH_JUMP;
+    curFrame = this->skin.skelAnime.curFrame;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.5f, curFrame,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+
+    this->jumpStartY = this->actor.world.pos.y;
+    this->postDrawFunc = NULL;
+
+    this->actor.gravity = 0;
+    this->actor.velocity.y = 0.0f;
+
+    jointTable = this->skin.skelAnime.jointTable;
+    y = jointTable->y;
+    this->riderPos.y -= y * 0.01f;
+
+    this->stateFlags |= ENHORSEYOUNG_CALC_RIDER_POS;
+    Audio_PlaySfxGeneral(NA_SE_EV_HORSE_JUMP, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    Rumble_Request(0.0f, 170, 10, 10);
+}
+
+void EnHorseYoung_Stub2(EnHorseYoung* this) {
+}
+
+void EnHorseYoung_HighJump(EnHorseYoung* this, PlayState* play) {
+    Vec3f pad;
+    Vec3s* jointTable;
+    f32 curFrame;
+    f32 y;
+
+    curFrame = this->skin.skelAnime.curFrame;
+    this->stateFlags |= ENHORSEYOUNG_JUMPING;
+    this->actor.speed = 13.0f;
+    if (curFrame > 23.0f) {
+        this->actor.gravity = -3.5f;
+        if (this->actor.velocity.y == 0) {
+            this->actor.velocity.y = -10.5f;
+        }
+
+        if (this->actor.world.pos.y < this->actor.floorHeight + 90.0f) {
+            this->skin.skelAnime.playSpeed = 1.5f;
+        } else {
+            this->skin.skelAnime.playSpeed = 0;
+        }
+    } else {
+        jointTable = this->skin.skelAnime.jointTable;
+        y = jointTable->y;
+        this->actor.world.pos.y = this->jumpStartY + y * 0.01f;
+    }
+
+    if (SkelAnime_Update(&this->skin.skelAnime) ||
+        (curFrame > 23.0f && this->actor.world.pos.y < this->actor.floorHeight - this->actor.velocity.y + 80.0f)) {
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_LAND, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        Rumble_Request(0.0f, 255, 10, 80);
+        this->stateFlags &= ~ENHORSEYOUNG_JUMPING;
+        this->actor.gravity = -3.5f;
+        this->actor.world.pos.y = this->actor.floorHeight;
+        func_80028A54(play, 25.0f, &this->actor.world.pos);
+        EnHorseYoung_JumpLanding(this, play);
+    }
+}
+
+void EnHorseYoung_InitInactive(EnHorseYoung* this) {
+    this->colliderCylinder1.base.ocFlags1 &= ~OC1_ON;
+    this->colliderCylinder2.base.ocFlags1 &= ~OC1_ON;
+    this->colliderJntSph.base.ocFlags1 &= ~OC1_ON;
+    this->action = ENHORSEYOUNG_ACT_INACTIVE;
+    this->animationIdx = ENHORSEYOUNG_ANIM_WALK;
+    this->stateFlags |= ENHORSEYOUNG_INACTIVE;
+    this->followTimer = 0;
+}
+
+void EnHorseYoung_SetFollowAnimation(EnHorseYoung* this, PlayState* play);
+
+void EnHorseYoung_Inactive(EnHorseYoung* this, PlayState* play2) {
+    PlayState* play = play2;
+
+    if (R_EPONAS_SONG_PLAYED && this->type == HORSE_YOUNG_EPONA) {
+        R_EPONAS_SONG_PLAYED = false;
+        if (EnHorseYoung_Spawn(this, play)) {
+#if OOT_VERSION >= PAL_1_0
+            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+#endif
+            this->stateFlags &= ~ENHORSEYOUNG_INACTIVE;
+            gSaveContext.save.info.horseData.sceneId = play->sceneId;
+
+            // Focus the camera on Epona
+            Camera_SetViewParam(play->cameraPtrs[CAM_ID_MAIN], CAM_VIEW_TARGET, &this->actor);
+            Camera_RequestSetting(play->cameraPtrs[CAM_ID_MAIN], CAM_SET_TURN_AROUND);
+            Camera_SetCameraData(play->cameraPtrs[CAM_ID_MAIN], 4, NULL, NULL, 0x51, 0, 0);
+        }
+    }
+    if (!(this->stateFlags & ENHORSEYOUNG_INACTIVE)) {
+        this->followTimer = 0;
+        EnHorseYoung_SetFollowAnimation(this, play);
+        this->actor.params = HORSE_YOUNG_PTYPE_0;
+        this->colliderCylinder1.base.ocFlags1 |= OC1_ON;
+        this->colliderCylinder2.base.ocFlags1 |= OC1_ON;
+        this->colliderJntSph.base.ocFlags1 |= OC1_ON;
+    }
+}
+
+void EnHorseYoung_PlayIdleAnimation(EnHorseYoung* this, s32 anim, f32 morphFrames, f32 startFrame) {
+    this->action = ENHORSEYOUNG_ACT_IDLE;
+    this->actor.speed = 0.0f;
+    if (anim != ENHORSEYOUNG_ANIM_IDLE && anim != ENHORSEYOUNG_ANIM_WHINNEY && anim != ENHORSEYOUNG_ANIM_REARING) {
+        anim = ENHORSEYOUNG_ANIM_IDLE;
+    }
+    if (anim != this->animationIdx) {
+        this->animationIdx = anim;
+        if (this->animationIdx == ENHORSEYOUNG_ANIM_IDLE) {
+            this->stateFlags &= ~ENHORSEYOUNG_SANDDUST_SOUND;
+        } else if (this->animationIdx == ENHORSEYOUNG_ANIM_WHINNEY) {
+            this->unk_21C = this->unk_228;
+            if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+                Audio_PlaySfxGeneral(NA_SE_EV_HORSE_GROAN, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            }
+        } else if (this->animationIdx == ENHORSEYOUNG_ANIM_REARING) {
+            this->unk_21C = this->unk_228;
+            if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+                Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            }
+            this->stateFlags &= ~ENHORSEYOUNG_LAND2_SOUND;
+        }
+
+        Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, startFrame,
+                         Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE,
+                         morphFrames);
+    }
+}
+
+void EnHorseYoung_ChangeIdleAnimation(EnHorseYoung* this, s32 anim, f32 morphFrames) {
+    EnHorseYoung_PlayIdleAnimation(this, anim, morphFrames, this->curFrame);
+}
+
+void EnHorseYoung_ResetIdleAnimation(EnHorseYoung* this) {
+    this->animationIdx = ENHORSEYOUNG_ANIM_WALK; // this forces anim 0 to play from the beginning
+    EnHorseYoung_PlayIdleAnimation(this, this->animationIdx, 0, 0);
+}
+
+void EnHorseYoung_StartIdleRidable(EnHorseYoung* this) {
+    EnHorseYoung_ResetIdleAnimation(this);
+    this->stateFlags &= ~ENHORSEYOUNG_UNRIDEABLE;
+}
+
+void EnHorseYoung_StartMovingAnimation(EnHorseYoung* this, s32 animId, f32 morphFrames, f32 startFrame);
+
+void EnHorseYoung_Idle(EnHorseYoung* this, PlayState* play) {
+    this->actor.speed = 0.0f;
+    EnHorseYoung_IdleAnimSounds(this, play);
+
+    if (R_EPONAS_SONG_PLAYED && this->type == HORSE_YOUNG_EPONA) {
+        R_EPONAS_SONG_PLAYED = false;
+        if (!func_80A5BBBC_young(play, this, &this->actor.world.pos)) {
+            if (EnHorseYoung_Spawn(this, play)) {
+#if OOT_VERSION >= PAL_1_0
+                Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+#endif
+                this->followTimer = 0;
+                EnHorseYoung_SetFollowAnimation(this, play);
+                Camera_SetViewParam(play->cameraPtrs[CAM_ID_MAIN], CAM_VIEW_TARGET, &this->actor);
+                Camera_RequestSetting(play->cameraPtrs[CAM_ID_MAIN], CAM_SET_TURN_AROUND);
+                Camera_SetCameraData(play->cameraPtrs[CAM_ID_MAIN], 4, NULL, NULL, 0x51, 0, 0);
+            }
+        } else {
+            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            this->followTimer = 0;
+            EnHorseYoung_StartMovingAnimation(this, 6, -3.0f, 0.0f);
+        }
+    }
+
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        s32 idleAnimIdx = 0;
+
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_IDLE) {
+            if (this->animationIdx == ENHORSEYOUNG_ANIM_WHINNEY) {
+                idleAnimIdx = 1;
+            } else if (this->animationIdx == ENHORSEYOUNG_ANIM_REARING) {
+                idleAnimIdx = 2;
+            }
+        }
+
+        // Play one of the two other idle animations
+        EnHorseYoung_PlayIdleAnimation(this, sIdleAnimIds[(Rand_ZeroOne() > 0.5f ? 0 : 1) + idleAnimIdx * 2], 0.0f, 0.0f);
+    }
+}
+
+void EnHorseYoung_StartMovingAnimation(EnHorseYoung* this, s32 animId, f32 morphFrames, f32 startFrame) {
+    this->action = ENHORSEYOUNG_ACT_FOLLOW_PLAYER;
+    this->stateFlags &= ~ENHORSEYOUNG_TURNING_TO_PLAYER;
+    if (animId != ENHORSEYOUNG_ANIM_TROT && animId != ENHORSEYOUNG_ANIM_GALLOP && animId != ENHORSEYOUNG_ANIM_WALK) {
+        animId = ENHORSEYOUNG_ANIM_WALK;
+    }
+    if (this->animationIdx != animId) {
+        this->animationIdx = animId;
+        Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, startFrame,
+                         Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE,
+                         morphFrames);
+    } else {
+        Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, startFrame,
+                         Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE,
+                         0.0f);
+    }
+}
+
+void EnHorseYoung_SetFollowAnimation(EnHorseYoung* this, PlayState* play) {
+    s32 animId = ENHORSEYOUNG_ANIM_WALK;
+    f32 distToPlayer;
+
+    distToPlayer = Actor_WorldDistXZToActor(&this->actor, &GET_PLAYER(play)->actor);
+    if (distToPlayer > 400.0f) {
+        animId = ENHORSEYOUNG_ANIM_GALLOP;
+    } else if (!(distToPlayer <= 300.0f)) {
+        if (distToPlayer <= 400.0f) {
+            animId = ENHORSEYOUNG_ANIM_TROT;
+        }
+    }
+
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_GALLOP) {
+        if (distToPlayer > 400.0f) {
+            animId = ENHORSEYOUNG_ANIM_GALLOP;
+        } else {
+            animId = ENHORSEYOUNG_ANIM_TROT;
+        }
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_TROT) {
+        if (distToPlayer > 400.0f) {
+            animId = ENHORSEYOUNG_ANIM_GALLOP;
+        } else if (distToPlayer < 300.0f) {
+            animId = ENHORSEYOUNG_ANIM_WALK;
+        } else {
+            animId = ENHORSEYOUNG_ANIM_TROT;
+        }
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_WALK) {
+        if (distToPlayer > 300.0f) {
+            animId = ENHORSEYOUNG_ANIM_TROT;
+        } else {
+            animId = ENHORSEYOUNG_ANIM_WALK;
+        }
+    }
+    EnHorseYoung_StartMovingAnimation(this, animId, -3.0f, 0.0f);
+}
+
+void EnHorseYoung_FollowPlayer(EnHorseYoung* this, PlayState* play) {
+    f32 distToPlayer;
+
+    R_EPONAS_SONG_PLAYED = false;
+    distToPlayer = Actor_WorldDistXZToActor(&this->actor, &GET_PLAYER(play)->actor);
+
+    // First rotate if the player is behind
+    if ((this->playerDir == PLAYER_YOUNG_DIR_BACK_R || this->playerDir == PLAYER_YOUNG_DIR_BACK_L) &&
+        (distToPlayer > 300.0f && !(this->stateFlags & ENHORSEYOUNG_TURNING_TO_PLAYER))) {
+        f32 angleDiff;
+
+        this->animationIdx = ENHORSEYOUNG_ANIM_REARING;
+        this->stateFlags |= ENHORSEYOUNG_TURNING_TO_PLAYER;
+        this->angleToPlayer = Actor_WorldYawTowardActor(&this->actor, &GET_PLAYER(play)->actor);
+        angleDiff = (f32)this->angleToPlayer - (f32)this->actor.world.rot.y;
+        if (angleDiff > 32767.f) {
+            angleDiff -= 32767.0f;
+        } else if (angleDiff < -32767) {
+            angleDiff += 32767;
+        }
+
+        this->followPlayerTurnSpeed =
+            angleDiff / Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]);
+        Animation_PlayOnce(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx]);
+        this->skin.skelAnime.playSpeed = 1.0f;
+        this->stateFlags &= ~ENHORSEYOUNG_LAND2_SOUND;
+        this->unk_21C = this->unk_228;
+#if OOT_VERSION < PAL_1_0
+        if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        }
+#endif
+    } else if (this->stateFlags & ENHORSEYOUNG_TURNING_TO_PLAYER) {
+        this->actor.world.rot.y += this->followPlayerTurnSpeed;
+        this->actor.shape.rot.y = this->actor.world.rot.y;
+        if (this->curFrame > 25.0f) {
+            if (!(this->stateFlags & ENHORSEYOUNG_LAND2_SOUND)) {
+                this->stateFlags |= ENHORSEYOUNG_LAND2_SOUND;
+                Audio_PlaySfxGeneral(NA_SE_EV_HORSE_LAND2, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            }
+        }
+    } else {
+        EnHorseYoung_RotateToPlayer(this, play);
+    }
+
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_GALLOP) {
+        this->actor.speed = 8;
+        this->skin.skelAnime.playSpeed = this->actor.speed * 0.3f;
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_TROT) {
+        this->actor.speed = 6;
+        this->skin.skelAnime.playSpeed = this->actor.speed * 0.375f;
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_WALK) {
+        this->actor.speed = 3;
+        EnHorseYoung_PlayWalkingSfx(this);
+        this->skin.skelAnime.playSpeed = this->actor.speed * 0.75f;
+    } else {
+        this->actor.speed = 0;
+        this->skin.skelAnime.playSpeed = 1.0f;
+    }
+
+    if (!(this->stateFlags & ENHORSEYOUNG_TURNING_TO_PLAYER) && ++this->followTimer > 300) {
+        EnHorseYoung_StartIdleRidable(this);
+        this->unk_21C = this->unk_228;
+
+        if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        }
+    }
+
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        if (this->animationIdx == ENHORSEYOUNG_ANIM_GALLOP) {
+            EnHorseYoung_PlayGallopingSfx(this);
+        } else if (this->animationIdx == ENHORSEYOUNG_ANIM_TROT) {
+            EnHorseYoung_PlayTrottingSfx(this);
+        }
+        this->stateFlags &= ~ENHORSEYOUNG_TURNING_TO_PLAYER;
+        if (distToPlayer < 100.0f) {
+            EnHorseYoung_StartIdleRidable(this);
+        } else {
+            EnHorseYoung_SetFollowAnimation(this, play);
+        }
+    }
+}
+
+void EnHorseYoung_UpdateIngoHorseAnim(EnHorseYoung* this);
+
+void EnHorseYoung_InitIngoHorse(EnHorseYoung* this) {
+    this->curRaceWaypoint = 0;
+    this->soundTimer = 0;
+    this->actor.speed = 0.0f;
+    EnHorseYoung_UpdateIngoHorseAnim(this);
+    this->unk_21C = this->unk_228;
+    if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+        Audio_PlaySfxGeneral(NA_SE_IT_INGO_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    }
+}
+
+void EnHorseYoung_SetIngoAnimation(s32 index, f32 curFrame, s32 arg2, s16* animIdxOut, f32* curFrameOut) {
+    *animIdxOut = sIngoAnimations[index];
+    *curFrameOut = curFrame;
+    if ((index == 3) || (index == 7) || (index == 8) || (index == 4)) {
+        *curFrameOut = 0.0f;
+    }
+    if (arg2 == 1) {
+        if (index == 5) {
+            *animIdxOut = 4;
+            *curFrameOut = curFrame;
+        } else if (index == 6) {
+            *animIdxOut = 3;
+            *curFrameOut = curFrame;
+        }
+    }
+}
+
+void EnHorseYoung_UpdateIngoHorseAnim(EnHorseYoung* this) {
+    s32 animChanged = 0;
+    f32 animSpeed;
+
+    this->action = ENHORSEYOUNG_ACT_INGO_RACE;
+    this->stateFlags &= ~ENHORSEYOUNG_SANDDUST_SOUND;
+    if (this->actor.speed == 0.0f) {
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_IDLE) {
+            animChanged = true;
+        }
+        this->animationIdx = ENHORSEYOUNG_ANIM_IDLE;
+    } else if (this->actor.speed <= 3.0f) {
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_WALK) {
+            animChanged = true;
+        }
+        this->animationIdx = ENHORSEYOUNG_ANIM_WALK;
+    } else if (this->actor.speed <= 6.0f) {
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_TROT) {
+            animChanged = true;
+        }
+        this->animationIdx = ENHORSEYOUNG_ANIM_TROT;
+    } else {
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_GALLOP) {
+            animChanged = true;
+        }
+        this->animationIdx = ENHORSEYOUNG_ANIM_GALLOP;
+    }
+
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_WALK) {
+        animSpeed = this->actor.speed * 0.5f;
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_TROT) {
+        animSpeed = this->actor.speed * 0.25f;
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_RUN, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_GALLOP) {
+        animSpeed = this->actor.speed * 0.2f;
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_RUN, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    } else {
+        animSpeed = 1.0f;
+    }
+
+    if (animChanged == true) {
+        Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx],
+                         sPlaybackSpeeds[this->animationIdx] * animSpeed * 1.5f, 0,
+                         Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3);
+    } else {
+        Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx],
+                         sPlaybackSpeeds[this->animationIdx] * animSpeed * 1.5f, 0,
+                         Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, 0);
+    }
+}
+
+void EnHorseYoung_UpdateIngoRace(EnHorseYoung* this, PlayState* play) {
+    f32 playSpeed;
+
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_IDLE || this->animationIdx == ENHORSEYOUNG_ANIM_WHINNEY) {
+        EnHorseYoung_IdleAnimSounds(this, play);
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_WALK) {
+        EnHorseYoung_PlayWalkingSfx(this);
+    }
+
+    EnHorseYoung_UpdateIngoRaceInfo(this, play, &sIngoRace);
+    if (!this->inRace) {
+        this->actor.speed = 0.0f;
+        this->rider->speed = 0.0f;
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_IDLE) {
+            EnHorseYoung_UpdateIngoHorseAnim(this);
+        }
+    }
+
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_WALK) {
+        playSpeed = this->actor.speed * 0.5f;
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_TROT) {
+        playSpeed = this->actor.speed * 0.25f;
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_GALLOP) {
+        playSpeed = this->actor.speed * 0.2f;
+    } else {
+        playSpeed = 1.0f;
+    }
+    this->skin.skelAnime.playSpeed = playSpeed;
+    if (SkelAnime_Update(&this->skin.skelAnime) ||
+        (this->animationIdx == ENHORSEYOUNG_ANIM_IDLE && this->actor.speed != 0.0f)) {
+        EnHorseYoung_UpdateIngoHorseAnim(this);
+    }
+
+    if (this->stateFlags & ENHORSEYOUNG_INGO_WON) {
+        ((EnIn*)this->rider)->animationIdx = 7;
+        ((EnIn*)this->rider)->unk_1E0 = 0;
+        return;
+    }
+
+    EnHorseYoung_SetIngoAnimation(this->animationIdx, this->skin.skelAnime.curFrame, this->ingoRaceFlags & 1,
+                             &((EnIn*)this->rider)->animationIdx, &((EnIn*)this->rider)->unk_1E0);
+}
+
+void EnHorseYoung_CsMoveInit(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue) {
+    this->animationIdx = ENHORSEYOUNG_ANIM_GALLOP;
+    this->cutsceneAction = 1;
+    Animation_PlayOnceSetSpeed(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx],
+                               this->actor.speed * 0.3f);
+}
+
+void EnHorseYoung_CsPlayHighJumpAnim(EnHorseYoung* this, PlayState* play);
+
+void EnHorseYoung_CsMoveToPoint(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue) {
+    Vec3f endPos;
+    f32 speedXZ = 8.0f;
+
+    endPos.x = cue->endPos.x;
+    endPos.y = cue->endPos.y;
+    endPos.z = cue->endPos.z;
+
+    if (Math3D_Vec3f_DistXYZ(&endPos, &this->actor.world.pos) > speedXZ) {
+        EnHorseYoung_RotateToPoint(this, play, &endPos, 400);
+        this->actor.speed = speedXZ;
+        this->skin.skelAnime.playSpeed = speedXZ * 0.3f;
+    } else {
+        this->actor.world.pos = endPos;
+        this->actor.speed = 0.0f;
+    }
+
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        EnHorseYoung_PlayGallopingSfx(this);
+        Rumble_Request(0.0f, 120, 8, 255);
+        Animation_PlayOnceSetSpeed(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx],
+                                   this->actor.speed * 0.3f);
+    }
+}
+
+void EnHorseYoung_CsSetAnimHighJump(EnHorseYoung* this, PlayState* play) {
+    this->skin.skelAnime.curFrame = 0.0f;
+    EnHorseYoung_CsPlayHighJumpAnim(this, play);
+}
+
+void EnHorseYoung_CsPlayHighJumpAnim(EnHorseYoung* this, PlayState* play) {
+    f32 curFrame;
+    f32 y;
+    Vec3s* jointTable;
+
+    this->animationIdx = ENHORSEYOUNG_ANIM_HIGH_JUMP;
+    curFrame = this->skin.skelAnime.curFrame;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.5f, curFrame,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+    this->postDrawFunc = NULL;
+    this->jumpStartY = this->actor.world.pos.y;
+    this->actor.gravity = 0.0f;
+    this->actor.velocity.y = 0;
+
+    jointTable = this->skin.skelAnime.jointTable;
+    y = jointTable->y;
+    this->riderPos.y -= y * 0.01f;
+
+    this->stateFlags |= ENHORSEYOUNG_CALC_RIDER_POS;
+    Audio_PlaySfxGeneral(NA_SE_EV_HORSE_JUMP, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    Rumble_Request(0.0f, 170, 10, 10);
+}
+
+void EnHorseYoung_CsJumpInit(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue) {
+    EnHorseYoung_CsSetAnimHighJump(this, play);
+    this->cutsceneAction = 2;
+    this->cutsceneFlags &= ~1;
+}
+
+void EnHorseYoung_CsJump(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue) {
+    f32 temp_f2;
+    Vec3s* jointTable;
+    f32 y;
+
+    if (this->cutsceneFlags & 1) {
+        EnHorseYoung_CsMoveToPoint(this, play, cue);
+        return;
+    }
+    temp_f2 = this->skin.skelAnime.curFrame;
+    this->stateFlags |= ENHORSEYOUNG_JUMPING;
+    this->actor.speed = 13.0f;
+    if (temp_f2 > 19.0f) {
+        this->actor.gravity = -3.5f;
+        if (this->actor.velocity.y == 0.0f) {
+            this->actor.velocity.y = -10.5f;
+        }
+        if (this->actor.world.pos.y < (this->actor.floorHeight + 90.0f)) {
+            this->skin.skelAnime.playSpeed = 1.5f;
+        } else {
+            this->skin.skelAnime.playSpeed = 0.0f;
+        }
+    } else {
+        Vec3s* jointTable;
+        f32 y;
+
+        jointTable = this->skin.skelAnime.jointTable;
+        y = jointTable->y;
+        this->actor.world.pos.y = this->jumpStartY + y * 0.01f;
+    }
+    if (SkelAnime_Update(&this->skin.skelAnime) ||
+        (temp_f2 > 19.0f && this->actor.world.pos.y < (this->actor.floorHeight - this->actor.velocity.y) + 80.0f)) {
+        this->cutsceneFlags |= 1;
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_LAND, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        Rumble_Request(0.0f, 255, 10, 80);
+        this->stateFlags &= ~ENHORSEYOUNG_JUMPING;
+        this->actor.gravity = -3.5f;
+        this->actor.velocity.y = 0;
+        this->actor.world.pos.y = this->actor.floorHeight;
+        func_80028A54(play, 25.0f, &this->actor.world.pos);
+        this->animationIdx = ENHORSEYOUNG_ANIM_GALLOP;
+        Animation_PlayOnceSetSpeed(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx],
+                                   sPlaybackSpeeds[6]);
+        jointTable = this->skin.skelAnime.jointTable;
+        y = jointTable->y;
+        this->riderPos.y += y * 0.01f;
+        this->postDrawFunc = NULL;
+    }
+}
+
+void EnHorseYoung_CsRearingInit(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue) {
+    this->animationIdx = ENHORSEYOUNG_ANIM_REARING;
+    this->cutsceneAction = 3;
+    this->cutsceneFlags &= ~4;
+    this->stateFlags &= ~ENHORSEYOUNG_LAND2_SOUND;
+    this->unk_21C = this->unk_228;
+    if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    }
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+}
+
+void EnHorseYoung_CsRearing(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue) {
+    this->actor.speed = 0.0f;
+    if (this->curFrame > 25.0f) {
+        if (!(this->stateFlags & ENHORSEYOUNG_LAND2_SOUND)) {
+            this->stateFlags |= ENHORSEYOUNG_LAND2_SOUND;
+            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_LAND2, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        }
+    }
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        this->animationIdx = ENHORSEYOUNG_ANIM_IDLE;
+        if (!(this->cutsceneFlags & 4)) {
+            this->cutsceneFlags |= 4;
+            Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                             Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE,
+                             -3.0f);
+        } else {
+            Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                             Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), 0, 0.0f);
+        }
+    }
+}
+
+void EnHorseYoung_WarpMoveInit(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue) {
+    this->actor.world.pos.x = cue->startPos.x;
+    this->actor.world.pos.y = cue->startPos.y;
+    this->actor.world.pos.z = cue->startPos.z;
+
+    this->actor.prevPos = this->actor.world.pos;
+
+    this->actor.world.rot.y = cue->rot.y;
+    this->actor.shape.rot = this->actor.world.rot;
+
+    this->animationIdx = ENHORSEYOUNG_ANIM_GALLOP;
+    this->cutsceneAction = 4;
+    Animation_PlayOnceSetSpeed(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx],
+                               this->actor.speed * 0.3f);
+}
+
+void EnHorseYoung_CsWarpMoveToPoint(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue) {
+    Vec3f endPos;
+    f32 speedXZ = 8.0f;
+
+    endPos.x = cue->endPos.x;
+    endPos.y = cue->endPos.y;
+    endPos.z = cue->endPos.z;
+
+    if (Math3D_Vec3f_DistXYZ(&endPos, &this->actor.world.pos) > speedXZ) {
+        EnHorseYoung_RotateToPoint(this, play, &endPos, 400);
+        this->actor.speed = speedXZ;
+        this->skin.skelAnime.playSpeed = speedXZ * 0.3f;
+    } else {
+        this->actor.world.pos = endPos;
+        this->actor.speed = 0.0f;
+    }
+
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        EnHorseYoung_PlayGallopingSfx(this);
+        Rumble_Request(0.0f, 120, 8, 255);
+        Animation_PlayOnceSetSpeed(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx],
+                                   this->actor.speed * 0.3f);
+    }
+}
+
+void EnHorseYoung_CsWarpRearingInit(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue) {
+    this->actor.world.pos.x = cue->startPos.x;
+    this->actor.world.pos.y = cue->startPos.y;
+    this->actor.world.pos.z = cue->startPos.z;
+
+    this->actor.prevPos = this->actor.world.pos;
+
+    this->actor.world.rot.y = cue->rot.y;
+    this->actor.shape.rot = this->actor.world.rot;
+
+    this->animationIdx = ENHORSEYOUNG_ANIM_REARING;
+    this->cutsceneAction = 5;
+    this->cutsceneFlags &= ~4;
+    this->stateFlags &= ~ENHORSEYOUNG_LAND2_SOUND;
+    this->unk_21C = this->unk_228;
+
+    if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    }
+
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+}
+
+void EnHorseYoung_CsWarpRearing(EnHorseYoung* this, PlayState* play, CsCmdActorCue* cue) {
+    this->actor.speed = 0.0f;
+    if (this->curFrame > 25.0f) {
+        if (!(this->stateFlags & ENHORSEYOUNG_LAND2_SOUND)) {
+            this->stateFlags |= ENHORSEYOUNG_LAND2_SOUND;
+            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_LAND2, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        }
+    }
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        this->animationIdx = ENHORSEYOUNG_ANIM_IDLE;
+        if (!(this->cutsceneFlags & 4)) {
+            this->cutsceneFlags |= 4;
+            Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                             Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE,
+                             -3.0f);
+        } else {
+            Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                             Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), 0, 0.0f);
+        }
+    }
+}
+
+void EnHorseYoung_InitCutscene(EnHorseYoung* this, PlayState* play) {
+    this->playerControlled = false;
+    this->action = ENHORSEYOUNG_ACT_CS_UPDATE;
+    this->cutsceneAction = 0;
+    this->actor.speed = 0.0f;
+}
+
+s32 EnHorseYoung_GetCutsceneFunctionIndex(s32 cueId) {
+    s32 numActions = ARRAY_COUNT(sCsActionTable); // prevents unrolling
+    s32 i;
+
+    for (i = 0; i < numActions; i++) {
+        if (cueId == sCsActionTable[i].cueId) {
+            return sCsActionTable[i].csFuncIdx;
+        }
+        if (cueId < sCsActionTable[i].cueId) {
+            return 0;
+        }
+    }
+    return 0;
+}
+
+void EnHorseYoung_CutsceneUpdate(EnHorseYoung* this, PlayState* play) {
+    s32 csFunctionIdx;
+    CsCmdActorCue* playerCue = play->csCtx.playerCue;
+
+    if (play->csCtx.state == 3) {
+        this->playerControlled = 1;
+        this->actor.params = HORSE_YOUNG_PTYPE_10;
+        this->action = ENHORSEYOUNG_ACT_IDLE;
+        EnHorseYoung_Freeze(this);
+        return;
+    }
+    if (playerCue != NULL) {
+        csFunctionIdx = EnHorseYoung_GetCutsceneFunctionIndex(playerCue->id);
+
+        if (csFunctionIdx != 0) {
+            if (this->cutsceneAction != csFunctionIdx) {
+                if (this->cutsceneAction == 0) {
+                    this->actor.world.pos.x = playerCue->startPos.x;
+                    this->actor.world.pos.y = playerCue->startPos.y;
+                    this->actor.world.pos.z = playerCue->startPos.z;
+
+                    this->actor.world.rot.y = playerCue->rot.y;
+                    this->actor.shape.rot = this->actor.world.rot;
+
+                    this->actor.prevPos = this->actor.world.pos;
+                }
+                this->cutsceneAction = csFunctionIdx;
+                sCutsceneInitFuncs[this->cutsceneAction](this, play, playerCue);
+            }
+            sCutsceneActionFuncs[this->cutsceneAction](this, play, playerCue);
+        }
+    }
+}
+
+s32 EnHorseYoung_UpdateHbaRaceInfo(EnHorseYoung* this, PlayState* play, RaceInfo* raceInfo) {
+    Vec3f pos;
+    f32 px;
+    f32 pz;
+    f32 d;
+
+    EnHorseYoung_RaceWaypointPos(raceInfo->waypoints, this->curRaceWaypoint, &pos);
+    Math3D_RotateXZPlane(&pos, raceInfo->waypoints[this->curRaceWaypoint].angle, &px, &pz, &d);
+
+    if (this->curRaceWaypoint >= raceInfo->numWaypoints - 1 &&
+        Math3D_Vec3f_DistXYZ(&pos, &this->actor.world.pos) < DREG(8)) {
+        this->hbaFlags |= 2;
+    }
+
+    if (((this->actor.world.pos.x * px) + (pz * this->actor.world.pos.z) + d) > 0.0f) {
+        this->curRaceWaypoint++;
+        if (this->curRaceWaypoint >= raceInfo->numWaypoints) {
+            this->hbaFlags |= 1;
+            return 1;
+        }
+    }
+
+    if (!(this->hbaFlags & 1)) {
+        EnHorseYoung_RotateToPoint(this, play, &pos, 800);
+    }
+
+    this->actor.shape.rot.y = this->actor.world.rot.y;
+    if (this->actor.speed < raceInfo->waypoints[this->curRaceWaypoint].speedXZ && !(this->hbaFlags & 1)) {
+        this->actor.speed += 0.4f;
+    } else {
+        this->actor.speed -= 0.4f;
+        if (this->actor.speed < 0.0f) {
+            this->actor.speed = 0.0f;
+        }
+    }
+    return 0;
+}
+
+void EnHorseYoung_UpdateHbaAnim(EnHorseYoung* this);
+
+void EnHorseYoung_InitHorsebackArchery(EnHorseYoung* this) {
+    this->hbaStarted = 0;
+    this->soundTimer = 0;
+    this->curRaceWaypoint = 0;
+    this->hbaTimer = 0;
+    this->actor.speed = 0.0f;
+    EnHorseYoung_UpdateHbaAnim(this);
+}
+
+void EnHorseYoung_UpdateHbaAnim(EnHorseYoung* this) {
+    s32 animChanged = 0;
+    f32 animSpeed;
+
+    this->action = ENHORSEYOUNG_ACT_HBA;
+    if (this->actor.speed == 0.0f) {
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_IDLE) {
+            animChanged = true;
+        }
+        this->animationIdx = ENHORSEYOUNG_ANIM_IDLE;
+    } else if (this->actor.speed <= 3.0f) {
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_WALK) {
+            animChanged = true;
+        }
+        this->animationIdx = ENHORSEYOUNG_ANIM_WALK;
+    } else if (this->actor.speed <= 6.0f) {
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_TROT) {
+            animChanged = true;
+        }
+        this->animationIdx = ENHORSEYOUNG_ANIM_TROT;
+    } else {
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_GALLOP) {
+            animChanged = true;
+        }
+        this->animationIdx = ENHORSEYOUNG_ANIM_GALLOP;
+    }
+
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_WALK) {
+        animSpeed = this->actor.speed * 0.5f;
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_TROT) {
+        animSpeed = this->actor.speed * 0.25f;
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_RUN, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        Rumble_Request(0.0f, 60, 8, 255);
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_GALLOP) {
+        animSpeed = this->actor.speed * 0.2f;
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_RUN, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        Rumble_Request(0.0f, 120, 8, 255);
+    } else {
+        animSpeed = 1.0f;
+    }
+
+    if (animChanged == true) {
+        Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx],
+                         sPlaybackSpeeds[this->animationIdx] * animSpeed * 1.5f, 0,
+                         Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE,
+                         -3.0f);
+    } else {
+        Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx],
+                         sPlaybackSpeeds[this->animationIdx] * animSpeed * 1.5f, 0,
+                         Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, 0);
+    }
+}
+
+void EnHorseYoung_UpdateHorsebackArchery(EnHorseYoung* this, PlayState* play) {
+    f32 playSpeed;
+    s32 isFanfarePlaying;
+
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_WALK) {
+        EnHorseYoung_PlayWalkingSfx(this);
+    }
+    if (play->interfaceCtx.hbaAmmo == 0) {
+        this->hbaTimer++;
+    }
+
+    isFanfarePlaying = Audio_IsSequencePlaying(NA_BGM_HORSE_GOAL);
+    EnHorseYoung_UpdateHbaRaceInfo(this, play, &sHbaInfo);
+    if ((this->hbaFlags & 1) || (this->hbaTimer >= 46)) {
+        if ((isFanfarePlaying != true) && (gSaveContext.minigameState != 3)) {
+            gSaveContext.save.cutsceneIndex = 0;
+            play->nextEntranceIndex = ENTR_GERUDOS_FORTRESS_16;
+            play->transitionTrigger = TRANS_TRIGGER_START;
+            play->transitionType = TRANS_TYPE_CIRCLE(TCA_NORMAL, TCC_BLACK, TCS_FAST);
+        }
+    }
+
+    if (play->interfaceCtx.hbaAmmo != 0) {
+        if (!(this->hbaFlags & 2)) {
+            if (GET_INFTABLE(INFTABLE_190)) {
+                if ((s32)gSaveContext.minigameScore >= 1500) {
+                    this->hbaFlags |= 4;
+                }
+            } else {
+                if ((s32)gSaveContext.minigameScore >= 1000) {
+                    this->hbaFlags |= 4;
+                }
+            }
+        }
+    }
+
+    if ((play->interfaceCtx.hbaAmmo == 0) || (this->hbaFlags & 2)) {
+        if (this->hbaFlags & 4) {
+            this->hbaFlags &= ~4;
+            SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_HORSE_GOAL);
+        }
+    }
+
+    if (!this->hbaStarted) {
+        this->actor.speed = 0.0f;
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_IDLE) {
+            EnHorseYoung_UpdateHbaAnim(this);
+        }
+    }
+
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_WALK) {
+        playSpeed = this->actor.speed * 0.5f;
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_TROT) {
+        playSpeed = this->actor.speed * 0.25f;
+    } else if (this->animationIdx == ENHORSEYOUNG_ANIM_GALLOP) {
+        playSpeed = this->actor.speed * 0.2f;
+    } else {
+        playSpeed = 1.0f;
+    }
+
+    this->skin.skelAnime.playSpeed = playSpeed;
+    if (SkelAnime_Update(&this->skin.skelAnime) ||
+        (this->animationIdx == ENHORSEYOUNG_ANIM_IDLE && this->actor.speed != 0.0f)) {
+        EnHorseYoung_UpdateHbaAnim(this);
+    }
+}
+
+void EnHorseYoung_InitFleePlayer(EnHorseYoung* this) {
+    this->action = ENHORSEYOUNG_ACT_FLEE_PLAYER;
+    this->stateFlags |= ENHORSEYOUNG_UNRIDEABLE;
+    this->actor.speed = 0.0f;
+}
+
+void EnHorseYoung_FleePlayer(EnHorseYoung* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+    f32 distToHome;
+    f32 playerDistToHome;
+    f32 distToPlayer;
+    s32 nextAnim = this->animationIdx;
+    s32 animFinished;
+    s16 yaw;
+
+    if (R_EPONAS_SONG_PLAYED || this->type == HORSE_YOUNG_HNI) {
+        EnHorseYoung_StartIdleRidable(this);
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    }
+
+    distToHome = Math3D_Vec3f_DistXYZ(&this->actor.home.pos, &this->actor.world.pos);
+    playerDistToHome = Math3D_Vec3f_DistXYZ(&player->actor.world.pos, &this->actor.home.pos);
+    distToPlayer = Math3D_Vec3f_DistXYZ(&player->actor.world.pos, &this->actor.world.pos);
+
+    // Run home
+    if (playerDistToHome > 300.0f) {
+        if (distToHome > 150.0f) {
+            this->actor.speed += 0.4f;
+            if (this->actor.speed > 8.0f) {
+                this->actor.speed = 8.0f;
+            }
+        } else {
+            this->actor.speed -= 0.47f;
+            if (this->actor.speed < 0.0f) {
+                this->actor.speed = 0.0f;
+            }
+        }
+    } else {
+        // Run away from Link
+        if (distToPlayer < 300.0f) {
+            this->actor.speed += 0.4f;
+            if (this->actor.speed > 8.0f) {
+                this->actor.speed = 8.0f;
+            }
+        } else {
+            this->actor.speed -= 0.47f;
+            if (this->actor.speed < 0.0f) {
+                this->actor.speed = 0.0f;
+            }
+        }
+    }
+
+    if (this->actor.speed >= 6.0f) { // hoof it
+        this->skin.skelAnime.playSpeed = this->actor.speed * 0.3f;
+        nextAnim = ENHORSEYOUNG_ANIM_GALLOP;
+    } else if (this->actor.speed >= 3.0f) { // trot
+        this->skin.skelAnime.playSpeed = this->actor.speed * 0.375f;
+        nextAnim = ENHORSEYOUNG_ANIM_TROT;
+    } else if (this->actor.speed > 0.1f) { // walk
+        this->skin.skelAnime.playSpeed = this->actor.speed * 0.75f;
+        nextAnim = ENHORSEYOUNG_ANIM_WALK;
+        EnHorseYoung_PlayWalkingSfx(this);
+    } else { // idle
+        nextAnim = Rand_ZeroOne() > 0.5f ? 1 : 0;
+        EnHorseYoung_IdleAnimSounds(this, play);
+        this->skin.skelAnime.playSpeed = 1.0f;
+    }
+
+    // Turn away from Link, or towards home
+    if (nextAnim == ENHORSEYOUNG_ANIM_GALLOP || nextAnim == ENHORSEYOUNG_ANIM_TROT || nextAnim == ENHORSEYOUNG_ANIM_WALK) {
+        if (playerDistToHome < 300.0f) {
+            yaw = player->actor.shape.rot.y;
+            yaw += (Actor_WorldYawTowardActor(&this->actor, &player->actor) > 0 ? 1 : -1) * 0x3FFF;
+        } else {
+            yaw = Math_Vec3f_Yaw(&this->actor.world.pos, &this->actor.home.pos) - this->actor.world.rot.y;
+        }
+
+        if (yaw > 400) {
+            this->actor.world.rot.y += 400;
+        } else if (yaw < -400) {
+            this->actor.world.rot.y -= 400;
+        } else {
+            this->actor.world.rot.y += yaw;
+        }
+
+        this->actor.shape.rot.y = this->actor.world.rot.y;
+    }
+
+    animFinished = SkelAnime_Update(&this->skin.skelAnime);
+
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_IDLE || this->animationIdx == ENHORSEYOUNG_ANIM_WHINNEY) {
+        if (nextAnim == ENHORSEYOUNG_ANIM_GALLOP || nextAnim == ENHORSEYOUNG_ANIM_TROT || nextAnim == ENHORSEYOUNG_ANIM_WALK) {
+            this->animationIdx = nextAnim;
+            Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                             Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE,
+                             -3.0f);
+            if (this->animationIdx == ENHORSEYOUNG_ANIM_GALLOP) {
+                EnHorseYoung_PlayGallopingSfx(this);
+            } else if (this->animationIdx == ENHORSEYOUNG_ANIM_TROT) {
+                EnHorseYoung_PlayTrottingSfx(this);
+            }
+            return;
+        }
+    }
+
+    if (animFinished) {
+        if (nextAnim == ENHORSEYOUNG_ANIM_GALLOP) {
+            EnHorseYoung_PlayGallopingSfx(this);
+        } else if (nextAnim == ENHORSEYOUNG_ANIM_TROT) {
+            EnHorseYoung_PlayTrottingSfx(this);
+        }
+
+        if (this->animationIdx == ENHORSEYOUNG_ANIM_IDLE || this->animationIdx == ENHORSEYOUNG_ANIM_WHINNEY) {
+            if (nextAnim != this->animationIdx) {
+                this->animationIdx = nextAnim;
+                Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                                 Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]),
+                                 ANIMMODE_ONCE, -3.0f);
+                return;
+            } else {
+                if (Rand_ZeroOne() > 0.5f) {
+                    this->animationIdx = ENHORSEYOUNG_ANIM_IDLE;
+                    this->stateFlags &= ~ENHORSEYOUNG_SANDDUST_SOUND;
+                } else {
+                    this->animationIdx = ENHORSEYOUNG_ANIM_WHINNEY;
+                    this->unk_21C = this->unk_228;
+                    if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+                        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_GROAN, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    }
+                }
+                Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                                 Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]),
+                                 ANIMMODE_ONCE, -3.0f);
+                return;
+            }
+        }
+
+        if (nextAnim != this->animationIdx) {
+            this->animationIdx = nextAnim;
+            Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                             Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE,
+                             -3.0f);
+        } else {
+            Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                             Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE,
+                             0.0f);
+        }
+        return;
+    }
+
+    if (this->animationIdx == ENHORSEYOUNG_ANIM_WALK) {
+        if (nextAnim == ENHORSEYOUNG_ANIM_IDLE || nextAnim == ENHORSEYOUNG_ANIM_WHINNEY) {
+            this->animationIdx = nextAnim;
+            Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.0f, 0.0f,
+                             Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE,
+                             -3.0f);
+        }
+    }
+}
+
+void EnHorseYoung_BridgeJumpInit(EnHorseYoung* this, PlayState* play) {
+    f32 y;
+
+    func_80028A54(play, 25.0f, &this->actor.world.pos);
+    this->action = ENHORSEYOUNG_ACT_BRIDGE_JUMP;
+    this->stateFlags |= ENHORSEYOUNG_JUMPING;
+    this->animationIdx = ENHORSEYOUNG_ANIM_HIGH_JUMP;
+    y = this->skin.skelAnime.jointTable->y;
+    y *= 0.01f;
+    this->bridgeJumpStart = this->actor.world.pos;
+    this->bridgeJumpStart.y += y;
+    this->bridgeJumpYVel =
+        (((sBridgeJumps[this->bridgeJumpIdx].pos.y + 48.7f) - this->bridgeJumpStart.y) - -360.0f) / 30.0f;
+    this->riderPos.y -= y;
+    this->stateFlags |= ENHORSEYOUNG_CALC_RIDER_POS;
+    this->bridgeJumpRelAngle = this->actor.world.rot.y - sBridgeJumps[this->bridgeJumpIdx].angle;
+    this->bridgeJumpTimer = 0;
+    this->actor.gravity = 0.0f;
+    this->actor.speed = 0;
+    Animation_Change(&this->skin.skelAnime, sAnimationHeaders[this->type][this->animationIdx], 1.5f, 0.0f,
+                     Animation_GetLastFrame(sAnimationHeaders[this->type][this->animationIdx]), ANIMMODE_ONCE, -3.0f);
+    this->unk_21C = this->unk_228;
+    if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    }
+    Audio_PlaySfxGeneral(NA_SE_EV_HORSE_JUMP, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    Rumble_Request(0.0f, 170, 10, 10);
+    this->postDrawFunc = NULL;
+}
+
+void EnHorseYoung_StartBridgeJump(EnHorseYoung* this, PlayState* play) {
+    this->postDrawFunc = EnHorseYoung_BridgeJumpInit;
+    if (this->bridgeJumpIdx == 0) {
+        play->csCtx.script = SEGMENTED_TO_VIRTUAL(gGerudoValleyBridgeJumpFieldFortressCs);
+        gSaveContext.cutsceneTrigger = 1;
+    } else {
+        play->csCtx.script = SEGMENTED_TO_VIRTUAL(gGerudoValleyBridgeJumpFortressToFieldCs);
+        gSaveContext.cutsceneTrigger = 1;
+    }
+}
+
+void EnHorseYoung_BridgeJumpMove(EnHorseYoung* this, PlayState* play) {
+    f32 interp;
+    f32 timeSq;
+
+    interp = this->bridgeJumpTimer / 30.0f;
+    timeSq = (this->bridgeJumpTimer * this->bridgeJumpTimer);
+
+    this->actor.world.pos.x =
+        ((sBridgeJumps[this->bridgeJumpIdx].pos.x - this->bridgeJumpStart.x) * interp) + this->bridgeJumpStart.x;
+    this->actor.world.pos.z =
+        ((sBridgeJumps[this->bridgeJumpIdx].pos.z - this->bridgeJumpStart.z) * interp) + this->bridgeJumpStart.z;
+
+    this->actor.world.pos.y =
+        (this->bridgeJumpStart.y + (this->bridgeJumpYVel * this->bridgeJumpTimer) + (-0.4f * timeSq));
+
+    this->actor.world.rot.y = this->actor.shape.rot.y =
+        (sBridgeJumps[this->bridgeJumpIdx].angle + ((1.0f - interp) * this->bridgeJumpRelAngle));
+    this->skin.skelAnime.curFrame = 23.0f * interp;
+    SkelAnime_Update(&this->skin.skelAnime);
+    if (this->bridgeJumpTimer < 30) {
+        this->stateFlags |= ENHORSEYOUNG_FLAG_24;
+    }
+}
+
+void EnHorseYoung_CheckBridgeJumpLanding(EnHorseYoung* this, PlayState* play) {
+    this->actor.speed = 8.0f;
+    this->skin.skelAnime.playSpeed = 1.5f;
+    if (SkelAnime_Update(&this->skin.skelAnime)) {
+        this->stateFlags &= ~ENHORSEYOUNG_JUMPING;
+        this->actor.gravity = -3.5f;
+        this->actor.world.pos.y = sBridgeJumps[this->bridgeJumpIdx].pos.y;
+        func_80028A54(play, 25.0f, &this->actor.world.pos);
+        EnHorseYoung_JumpLanding(this, play);
+        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_LAND, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        Rumble_Request(0.0f, 255, 10, 80);
+    }
+}
+
+void EnHorseYoung_BridgeJump(EnHorseYoung* this, PlayState* play) {
+    this->bridgeJumpTimer++;
+    if (this->bridgeJumpTimer < 30) {
+        EnHorseYoung_BridgeJumpMove(this, play);
+        return;
+    }
+    EnHorseYoung_CheckBridgeJumpLanding(this, play);
+}
+
+void EnHorseYoung_Vec3fOffset(Vec3f* src, s16 yaw, f32 dist, f32 height, Vec3f* dst) {
+    dst->x = src->x + Math_SinS(yaw) * dist;
+    dst->y = src->y + height;
+    dst->z = src->z + Math_CosS(yaw) * dist;
+}
+
+s32 EnHorseYoung_CalcFloorHeight(EnHorseYoung* this, PlayState* play, Vec3f* pos, CollisionPoly** floorPoly, f32* floorHeight) {
+    s32 bgId;
+    f32 waterY;
+    WaterBox* waterBox;
+
+    *floorPoly = NULL;
+    *floorHeight = BgCheck_EntityRaycastDown3(&play->colCtx, floorPoly, &bgId, pos);
+
+    if (*floorHeight == BGCHECK_Y_MIN) {
+        return 1; // No floor
+    }
+
+    if (WaterBox_GetSurfaceImpl(play, &play->colCtx, pos->x, pos->z, &waterY, &waterBox) == 1 &&
+        *floorHeight < waterY) {
+        return 2; // Water
+    }
+
+    if (COLPOLY_GET_NORMAL((*floorPoly)->normal.y) < 0.81915206f || // cos(35 degrees)
+        SurfaceType_IsHorseBlocked(&play->colCtx, *floorPoly, bgId) ||
+        SurfaceType_GetFloorType(&play->colCtx, *floorPoly, bgId) == FLOOR_TYPE_7) {
+        return 3; // Horse blocked surface
+    }
+    return 0;
+}
+
+/**
+ * obstacleType:
+ *  1: Water in front
+ *  2: Water behind?
+ *  3: ?
+ *  4: Obstructed in front
+ *  5: Obstructed behind
+ */
+void EnHorseYoung_ObstructMovement(EnHorseYoung* this, PlayState* play, s32 obstacleType, s32 galloping) {
+    if (this->action == ENHORSEYOUNG_ACT_CS_UPDATE || EnHorseYoung_BgCheckBridgeJumpPoint(this, play)) {
+        return;
+    }
+
+    this->actor.world.pos = this->lastPos;
+    this->actor.shape.rot.y = this->lastYaw;
+    this->actor.world.rot.y = this->lastYaw;
+    this->stateFlags |= ENHORSEYOUNG_OBSTACLE;
+
+    if (!this->playerControlled) {
+        if (this->animationIdx != ENHORSEYOUNG_ANIM_REARING) {
+            return;
+        }
+    } else if (this->action != ENHORSEYOUNG_ACT_MOUNTED_REARING) {
+        if (this->stateFlags & ENHORSEYOUNG_JUMPING) {
+            this->stateFlags &= ~ENHORSEYOUNG_JUMPING;
+            this->actor.gravity = -3.5f;
+            this->actor.world.pos.y = this->actor.floorHeight;
+        }
+        if (obstacleType == 1 || obstacleType == 4) {
+            this->stateFlags |= ENHORSEYOUNG_FORCE_REVERSING;
+        } else if (obstacleType == 2 || obstacleType == 5) {
+            this->stateFlags |= ENHORSEYOUNG_FORCE_WALKING;
+        }
+        if (galloping == true) {
+            EnHorseYoung_StartRearing(this);
+        }
+    }
+}
+
+void EnHorseYoung_CheckFloors(EnHorseYoung* this, PlayState* play) {
+    s32 status;
+    CollisionPoly* frontFloor;
+    CollisionPoly* backFloor;
+    s16 floorSlope;
+    Vec3f frontPos;
+    Vec3f backPos;
+    Vec3f pos;
+    f32 nx;
+    f32 ny;
+    f32 nz;
+    s32 galloping = this->actor.speed > 8;
+    f32 dist;
+    f32 waterHeight;
+    WaterBox* waterBox;
+    s32 pad;
+
+    if (WaterBox_GetSurfaceImpl(play, &play->colCtx, this->actor.world.pos.x, this->actor.world.pos.z, &waterHeight,
+                                &waterBox) == 1 &&
+        this->actor.floorHeight < waterHeight) {
+        EnHorseYoung_ObstructMovement(this, play, 1, galloping);
+        return;
+    }
+
+    EnHorseYoung_Vec3fOffset(&this->actor.world.pos, this->actor.shape.rot.y, 30.0f, 60.0f, &frontPos);
+    status = EnHorseYoung_CalcFloorHeight(this, play, &frontPos, &frontFloor, &this->yFront);
+    if (status == 1) {
+        this->actor.shape.rot.x = 0;
+        EnHorseYoung_ObstructMovement(this, play, 4, galloping);
+        return;
+    }
+    if (status == 2) {
+        EnHorseYoung_ObstructMovement(this, play, 4, galloping);
+        return;
+    }
+    if (status == 3) {
+        EnHorseYoung_ObstructMovement(this, play, 4, galloping);
+        return;
+    }
+
+    EnHorseYoung_Vec3fOffset(&this->actor.world.pos, this->actor.shape.rot.y, -30.0f, 60.0f, &backPos);
+    status = EnHorseYoung_CalcFloorHeight(this, play, &backPos, &backFloor, &this->yBack);
+    if (status == 1) {
+        this->actor.shape.rot.x = 0;
+        EnHorseYoung_ObstructMovement(this, play, 5, galloping);
+        return;
+    }
+    if (status == 2) {
+        EnHorseYoung_ObstructMovement(this, play, 5, galloping);
+        return;
+    }
+    if (status == 3) {
+        EnHorseYoung_ObstructMovement(this, play, 5, galloping);
+        return;
+    }
+
+    floorSlope = RAD_TO_BINANG(Math_FAtan2F(this->yBack - this->yFront, 60.0f));
+    if (this->actor.floorPoly != NULL) {
+        nx = COLPOLY_GET_NORMAL(this->actor.floorPoly->normal.x);
+        ny = COLPOLY_GET_NORMAL(this->actor.floorPoly->normal.y);
+        nz = COLPOLY_GET_NORMAL(this->actor.floorPoly->normal.z);
+        pos = frontPos;
+        pos.y = this->yFront;
+        dist = Math3D_DistPlaneToPos(nx, ny, nz, this->actor.floorPoly->dist, &pos);
+        if ((frontFloor != this->actor.floorPoly) && (this->actor.speed >= 0.0f)) {
+            if ((!(this->stateFlags & ENHORSEYOUNG_JUMPING) && dist < -40.0f) ||
+                (this->stateFlags & ENHORSEYOUNG_JUMPING && dist < -200.0f)) {
+                EnHorseYoung_ObstructMovement(this, play, 4, galloping);
+                return;
+            }
+        }
+
+        pos = backPos;
+        pos.y = this->yBack;
+        dist = Math3D_DistPlaneToPos(nx, ny, nz, this->actor.floorPoly->dist, &pos);
+        if (((backFloor != this->actor.floorPoly) && (this->actor.speed <= 0.0f) &&
+             !(this->stateFlags & ENHORSEYOUNG_JUMPING) && (dist < -40.0f)) ||
+            (this->stateFlags & ENHORSEYOUNG_JUMPING && dist < -200.0f)) {
+            EnHorseYoung_ObstructMovement(this, play, 5, galloping);
+            return;
+        }
+
+        if (ny < 0.81915206f || // cos(35 degrees)
+            SurfaceType_IsHorseBlocked(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId) ||
+            SurfaceType_GetFloorType(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId) == FLOOR_TYPE_7) {
+            if (this->actor.speed >= 0.0f) {
+                EnHorseYoung_ObstructMovement(this, play, 4, galloping);
+            } else {
+                EnHorseYoung_ObstructMovement(this, play, 5, galloping);
+            }
+            return;
+        }
+
+        if (this->stateFlags & ENHORSEYOUNG_JUMPING) {
+            this->actor.shape.rot.x = 0;
+            return;
+        }
+
+        if (this->actor.floorHeight + 4.0f < this->actor.world.pos.y) {
+            this->actor.shape.rot.x = 0;
+            return;
+        }
+
+        if (fabsf(floorSlope) > 8191.0f) {
+            return;
+        }
+
+        this->actor.shape.rot.x = floorSlope;
+        this->actor.shape.yOffset =
+            (this->yFront + (((this->yBack - this->yFront) * 20.0f) / 45.0f)) - this->actor.floorHeight;
+    }
+}
+
+s32 EnHorseYoung_GetMountSide(EnHorseYoung* this, PlayState* play);
+
+void EnHorseYoung_MountDismount(EnHorseYoung* this, PlayState* play) {
+    s32 pad[2];
+    s32 mountSide;
+    Player* player = GET_PLAYER(play);
+    
+    mountSide = EnHorseYoung_GetMountSide(this, play);
+    if (mountSide != 0 && !(this->stateFlags & ENHORSEYOUNG_UNRIDEABLE) && player->rideActor == NULL && this->type == HORSE_YOUNG_EPONA) {
+        Actor_SetRideActor(play, &this->actor, mountSide);
+    }
+
+    if (!this->playerControlled && Actor_IsMounted(play, &this->actor) == true) {
+        this->noInputTimer = 55;
+        this->noInputTimerMax = 55;
+        this->playerControlled = 1;
+        EnHorseYoung_Freeze(this);
+    } else if (this->playerControlled == true && Actor_NotMounted(play, &this->actor) == true) {
+        this->noInputTimer = 35;
+        this->noInputTimerMax = 35;
+        this->stateFlags &= ~ENHORSEYOUNG_UNRIDEABLE;
+        this->playerControlled = 0;
+        EnHorseYoung_Freeze(this);
+    }
+}
+
+void EnHorseYoung_StickDirection(Vec2f* curStick, f32* stickMag, s16* angle) {
+    f32 dist;
+    f32 y;
+    f32 x;
+
+    x = curStick->x * (R_ENABLE_MIRROR == 1 ? -1 : 1);
+    y = curStick->y;
+    dist = sqrtf(SQ(x) + SQ(y));
+
+    *stickMag = dist;
+    if (dist > 60.0f) {
+        *stickMag = 60.0f;
+    } else {
+        *stickMag = *stickMag;
+    }
+
+    *angle = RAD_TO_BINANG(Math_FAtan2F(-curStick->x, curStick->y));
+}
+
+void EnHorseYoung_UpdateStick(EnHorseYoung* this, PlayState* play) {
+    this->lastStick = this->curStick;
+    this->curStick.x = play->state.input[0].rel.stick_x * (R_ENABLE_MIRROR ? -1 : 1);
+    this->curStick.y = play->state.input[0].rel.stick_y;
+}
+
+void EnHorseYoung_ResolveCollision(EnHorseYoung* this, PlayState* play, CollisionPoly* colPoly) {
+    f32 dist;
+    f32 nx;
+    f32 ny;
+    f32 nz;
+    f32 offset;
+
+    nx = COLPOLY_GET_NORMAL(colPoly->normal.x);
+    ny = COLPOLY_GET_NORMAL(colPoly->normal.y);
+    nz = COLPOLY_GET_NORMAL(colPoly->normal.z);
+    if (!(Math_CosS(this->actor.world.rot.y - RAD_TO_BINANG(Math_FAtan2F(colPoly->normal.x, colPoly->normal.z)) -
+                    0x7FFF) < 0.7071f)) { // cos(45 degrees)
+        dist = Math3D_DistPlaneToPos(nx, ny, nz, colPoly->dist, &this->actor.world.pos);
+        offset = (1.0f / sqrtf(SQ(nx) + SQ(nz)));
+        offset = (30.0f - dist) * offset;
+        this->actor.world.pos.x += offset * nx;
+        this->actor.world.pos.z += offset * nz;
+    }
+}
+
+void EnHorseYoung_BgCheckSlowMoving(EnHorseYoung* this, PlayState* play) {
+    f32 yOffset;
+    Vec3f start;
+    Vec3f end;
+    Vec3f intersect;
+    CollisionPoly* colPoly;
+    s32 bgId;
+
+    if (play->sceneId == SCENE_LON_LON_RANCH) {
+        yOffset = 19.0f;
+    } else {
+        yOffset = 40.0f;
+    }
+    Math_Vec3f_Copy(&start, &this->actor.world.pos);
+    start.y += yOffset;
+
+    Math_Vec3f_Copy(&end, &start);
+    end.x += 30.0f * Math_SinS(this->actor.world.rot.y);
+    end.y += 30.0f * Math_SinS(-this->actor.shape.rot.x);
+    end.z += 30.0f * Math_CosS(this->actor.world.rot.y);
+    if (BgCheck_EntityLineTest1(&play->colCtx, &start, &end, &intersect, &colPoly, 1, 0, 0, 1, &bgId) != 0) {
+        EnHorseYoung_ResolveCollision(this, play, colPoly);
+    }
+}
+
+void EnHorseYoung_UpdateBgCheckInfo(EnHorseYoung* this, PlayState* play) {
+    s32 pad;
+    s32 pad2;
+    Vec3f startPos;
+    Vec3f endPos;
+    Vec3f obstaclePos;
+    f32 pad3;
+    f32 intersectDist;
+    CollisionPoly* wall = NULL;
+    CollisionPoly* obstacleFloor = NULL;
+    s32 bgId;
+    f32 obstacleHeight;
+    f32 behindObstacleHeight;
+    f32 ny;
+    s32 movingFast;
+    s32 pad5;
+    DynaPolyActor* dynaPoly;
+    Vec3f intersect;
+    Vec3f obstacleTop;
+
+    Actor_UpdateBgCheckInfo(play, &this->actor, play->sceneId == SCENE_LON_LON_RANCH ? 19.0f : 40.0f, 35.0f, 100.0f,
+                            UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2 | UPDBGCHECKINFO_FLAG_3 |
+                                UPDBGCHECKINFO_FLAG_4);
+
+    if (EnHorseYoung_BgCheckBridgeJumpPoint(this, play)) {
+        return;
+    }
+
+    // void 0 trick required to match, but is surely not real. revisit at a later time
+    if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) &&
+        Math_CosS(this->actor.wallYaw - ((void)0, this->actor.world).rot.y) < -0.3f) {
+        if (this->actor.speed > 4.0f) {
+            this->actor.speed -= 1.0f;
+            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_SANDDUST, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
+                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        }
+    }
+
+    if (this->stateFlags & ENHORSEYOUNG_JUMPING || !this->playerControlled) {
+        return;
+    }
+
+    if (this->actor.speed < 0.0f) {
+        return;
+    }
+
+    // Braking or rearing from obstacle
+    if (this->action == ENHORSEYOUNG_ACT_STOPPING || this->action == ENHORSEYOUNG_ACT_MOUNTED_REARING) {
+        return;
+    }
+
+    if (this->actor.speed > 8.0f) {
+        if (this->actor.speed < 12.8f) {
+            intersectDist = 160.0f;
+            movingFast = 0;
+        } else {
+            intersectDist = 230.0f;
+            movingFast = 1;
+        }
+    } else {
+        EnHorseYoung_BgCheckSlowMoving(this, play);
+        return;
+    }
+
+    startPos = this->actor.world.pos;
+    startPos.y += 19.0f;
+    endPos = startPos;
+    endPos.x += (intersectDist * Math_SinS(this->actor.world.rot.y));
+    endPos.y += (intersectDist * Math_SinS(-this->actor.shape.rot.x));
+    endPos.z += (intersectDist * Math_CosS(this->actor.world.rot.y));
+    intersect = endPos;
+    wall = NULL;
+    if (BgCheck_EntityLineTest1(&play->colCtx, &startPos, &endPos, &intersect, &wall, 1, 0, 0, 1, &bgId) == 1) {
+        intersectDist = sqrt(Math3D_Vec3fDistSq(&startPos, &intersect));
+        this->stateFlags |= ENHORSEYOUNG_OBSTACLE;
+    }
+
+    if (wall != NULL) {
+        if (intersectDist < 30.0f) {
+            EnHorseYoung_ResolveCollision(this, play, wall);
+        }
+        if ((Math_CosS(this->actor.world.rot.y - RAD_TO_BINANG(Math_FAtan2F(wall->normal.x, wall->normal.z)) - 0x7FFF) <
+             0.5f) ||
+            SurfaceType_IsHorseBlocked(&play->colCtx, wall, bgId) != 0) {
+            return;
+        }
+
+        // too close to jump
+        if ((!movingFast && intersectDist < 80.0f) || (movingFast == true && intersectDist < 150.0f)) {
+            if (!movingFast) {
+                this->stateFlags |= ENHORSEYOUNG_FORCE_REVERSING;
+            } else if (movingFast == true) {
+                this->stateFlags |= ENHORSEYOUNG_FORCE_REVERSING;
+                EnHorseYoung_StartBraking(this, play);
+            }
+            return;
+        }
+
+        dynaPoly = DynaPoly_GetActor(&play->colCtx, bgId);
+        if ((this->stateFlags & ENHORSEYOUNG_FLAG_26) &&
+            ((dynaPoly && dynaPoly->actor.id != ACTOR_BG_UMAJUMP) || dynaPoly == NULL)) {
+            if (!movingFast) {
+                this->stateFlags |= ENHORSEYOUNG_FORCE_REVERSING;
+            } else if (movingFast == true) {
+                this->stateFlags |= ENHORSEYOUNG_FORCE_REVERSING;
+                EnHorseYoung_StartBraking(this, play);
+            }
+            return;
+        }
+    }
+
+    // Get obstacle's height
+    intersectDist += 5.0f;
+    obstaclePos = startPos;
+    obstaclePos.x += intersectDist * Math_SinS(this->actor.world.rot.y);
+    obstaclePos.y = this->actor.world.pos.y + 120.0f;
+    obstaclePos.z += intersectDist * Math_CosS(this->actor.world.rot.y);
+    obstacleTop = obstaclePos;
+    obstacleTop.y = BgCheck_EntityRaycastDown3(&play->colCtx, &obstacleFloor, &bgId, &obstaclePos);
+    if (obstacleTop.y == BGCHECK_Y_MIN) {
+        return;
+    }
+    obstacleHeight = obstacleTop.y - this->actor.world.pos.y;
+    if (this->actor.floorPoly == NULL || obstacleFloor == NULL) {
+        return;
+    }
+
+    if (Math3D_DistPlaneToPos(
+            COLPOLY_GET_NORMAL(this->actor.floorPoly->normal.x), COLPOLY_GET_NORMAL(this->actor.floorPoly->normal.y),
+            COLPOLY_GET_NORMAL(this->actor.floorPoly->normal.z), this->actor.floorPoly->dist, &obstacleTop) < -40.0f &&
+        Math3D_DistPlaneToPos(COLPOLY_GET_NORMAL(obstacleFloor->normal.x), COLPOLY_GET_NORMAL(obstacleFloor->normal.y),
+                              COLPOLY_GET_NORMAL(obstacleFloor->normal.z), obstacleFloor->dist,
+                              &this->actor.world.pos) > 40.0f) {
+        if (movingFast == true && this->action != ENHORSEYOUNG_ACT_STOPPING) {
+            this->stateFlags |= ENHORSEYOUNG_FORCE_REVERSING;
+            EnHorseYoung_StartBraking(this, play);
+        }
+        this->stateFlags |= ENHORSEYOUNG_OBSTACLE;
+        return;
+    }
+
+    ny = COLPOLY_GET_NORMAL(obstacleFloor->normal.y);
+    if (ny < 0.81915206f || // cos(35 degrees)
+        (SurfaceType_IsHorseBlocked(&play->colCtx, obstacleFloor, bgId) != 0) ||
+        (SurfaceType_GetFloorType(&play->colCtx, obstacleFloor, bgId) == FLOOR_TYPE_7)) {
+        if (movingFast == true && this->action != ENHORSEYOUNG_ACT_STOPPING) {
+            this->stateFlags |= ENHORSEYOUNG_FORCE_REVERSING;
+            EnHorseYoung_StartBraking(this, play);
+        }
+        return;
+    }
+
+    if (wall == NULL || obstacleTop.y < intersect.y || (this->stateFlags & ENHORSEYOUNG_CANT_JUMP)) {
+        return;
+    }
+
+    obstaclePos = startPos;
+    obstaclePos.y = this->actor.world.pos.y + 120.0f;
+    if (!movingFast) {
+        obstaclePos.x += (276.0f * Math_SinS(this->actor.world.rot.y));
+        obstaclePos.z += (276.0f * Math_CosS(this->actor.world.rot.y));
+    } else {
+        obstaclePos.x += (390.0f * Math_SinS(this->actor.world.rot.y));
+        obstaclePos.z += (390.0f * Math_CosS(this->actor.world.rot.y));
+    }
+
+    obstacleTop = obstaclePos;
+    obstacleTop.y = BgCheck_EntityRaycastDown3(&play->colCtx, &obstacleFloor, &bgId, &obstaclePos);
+    if (obstacleTop.y == BGCHECK_Y_MIN) {
+        return;
+    }
+
+    behindObstacleHeight = obstacleTop.y - this->actor.world.pos.y;
+
+    if (obstacleFloor == NULL) {
+        return;
+    }
+
+    ny = COLPOLY_GET_NORMAL(obstacleFloor->normal.y);
+    if (ny < 0.81915206f || // cos(35 degrees)
+        SurfaceType_IsHorseBlocked(&play->colCtx, obstacleFloor, bgId) ||
+        SurfaceType_GetFloorType(&play->colCtx, obstacleFloor, bgId) == FLOOR_TYPE_7) {
+        if (movingFast == true && this->action != ENHORSEYOUNG_ACT_STOPPING) {
+            this->stateFlags |= ENHORSEYOUNG_FORCE_REVERSING;
+            EnHorseYoung_StartBraking(this, play);
+        }
+    } else if (behindObstacleHeight < -DREG(4)) { // -70
+        if (movingFast == true && this->action != ENHORSEYOUNG_ACT_STOPPING) {
+            this->stateFlags |= ENHORSEYOUNG_FORCE_REVERSING;
+            EnHorseYoung_StartBraking(this, play);
+        }
+    } else if (!movingFast && obstacleHeight > 19.0f && obstacleHeight <= 40.0f) {
+        EnHorseYoung_Stub1(this);
+        this->postDrawFunc = EnHorseYoung_LowJumpInit;
+    } else if ((movingFast == true && this->actor.speed < 13.8f && obstacleHeight > 19.0f && obstacleHeight <= 72.0f) ||
+               (this->actor.speed > 13.8f && obstacleHeight <= 112.0f)) {
+
+        EnHorseYoung_Stub2(this);
+        this->postDrawFunc = EnHorseYoung_HighJumpInit;
+    }
+}
+
+void EnHorseYoung_CheckBoost(EnHorseYoung* thisx, PlayState* play2) {
+    EnHorseYoung* this = (EnHorseYoung*)thisx;
+    PlayState* play = play2;
+    s32 pad;
+
+    if (this->action == ENHORSEYOUNG_ACT_MOUNTED_WALK || this->action == ENHORSEYOUNG_ACT_MOUNTED_TROT ||
+        this->action == ENHORSEYOUNG_ACT_MOUNTED_GALLOP) {
+        if (CHECK_BTN_ALL(play->state.input[0].press.button, BTN_A) && (play->interfaceCtx.unk_1EE == 8)) {
+            if (!(this->stateFlags & ENHORSEYOUNG_BOOST) && !(this->stateFlags & ENHORSEYOUNG_FLAG_8) &&
+                !(this->stateFlags & ENHORSEYOUNG_FLAG_9)) {
+                if (this->numBoosts > 0) {
+                    Rumble_Request(0.0f, 180, 20, 100);
+                    this->stateFlags |= ENHORSEYOUNG_BOOST;
+                    this->stateFlags |= ENHORSEYOUNG_FIRST_BOOST_REGEN;
+                    this->stateFlags |= ENHORSEYOUNG_FLAG_8;
+                    this->numBoosts--;
+                    this->boostTimer = 0;
+                    if (this->numBoosts == 0) {
+                        this->boostRegenTime = 140;
+                        return;
+                    }
+                    if (this->type == HORSE_YOUNG_EPONA) {
+                        if (this->stateFlags & ENHORSEYOUNG_FIRST_BOOST_REGEN) {
+                            this->boostRegenTime = 60;
+                            this->stateFlags &= ~ENHORSEYOUNG_FIRST_BOOST_REGEN;
+                        } else {
+                            this->boostRegenTime = 8; // Never happens
+                        }
+                    } else {
+                        this->boostRegenTime = 70;
+                    }
+                    return;
+                }
+                this->unk_21C = this->unk_228;
+                if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+                    if (Rand_ZeroOne() < 0.1f) {
+                        Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void EnHorseYoung_RegenBoost(EnHorseYoung* this, PlayState* play) {
+    if (this->numBoosts < 6 && this->numBoosts > 0) {
+        this->boostRegenTime--;
+        this->boostTimer++;
+
+        if (this->boostRegenTime <= 0) {
+            this->numBoosts++;
+
+            if (!EN_HORSE_YOUNG_CHECK_4(this)) {
+                Audio_PlaySfxGeneral(NA_SE_SY_CARROT_RECOVER, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
+                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            }
+
+            if (this->numBoosts < 6) {
+                this->boostRegenTime = 11;
+            }
+        }
+    } else if (this->numBoosts == 0) {
+        this->boostRegenTime--;
+        this->boostTimer++;
+
+        if (this->boostRegenTime <= 0) {
+            this->boostRegenTime = 0;
+            this->numBoosts = 6;
+
+            if (!EN_HORSE_YOUNG_CHECK_4(this)) {
+                Audio_PlaySfxGeneral(NA_SE_SY_CARROT_RECOVER, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
+                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            }
+        }
+    }
+
+    if (this->boostTimer == 8 && Rand_ZeroOne() < 0.25f) {
+        this->unk_21C = this->unk_228;
+        if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        }
+    }
+    play->interfaceCtx.numHorseBoosts = this->numBoosts;
+}
+
+void EnHorseYoung_UpdatePlayerDir(EnHorseYoung* this, PlayState* play) {
+    EnHorseYoung* pad;
+    s16 angle;
+    f32 s;
+    f32 c;
+    Player* player = GET_PLAYER(play);
+
+    angle = Actor_WorldYawTowardActor(&this->actor, &player->actor) - this->actor.world.rot.y;
+    s = Math_SinS(angle);
+    c = Math_CosS(angle);
+    if (s > 0.8660254f) { // sin(60 degrees)
+        this->playerDir = PLAYER_YOUNG_DIR_SIDE_L;
+    } else if (s < -0.8660254f) { // -sin(60 degrees)
+        this->playerDir = PLAYER_YOUNG_DIR_SIDE_R;
+    } else {
+        if (c > 0.0f) {
+            if (s > 0) {
+                this->playerDir = PLAYER_YOUNG_DIR_FRONT_L;
+            } else {
+                this->playerDir = PLAYER_YOUNG_DIR_FRONT_R;
+            }
+        } else {
+            if (s > 0) {
+                this->playerDir = PLAYER_YOUNG_DIR_BACK_L;
+            } else {
+                this->playerDir = PLAYER_YOUNG_DIR_BACK_R;
+            }
+        }
+    }
+}
+
+void EnHorseYoung_TiltBody(EnHorseYoung* this, PlayState* play) {
+    f32 speed;
+    f32 rollDiff;
+    s32 targetRoll;
+    s16 turnVel;
+
+    speed = this->actor.speed / this->boostSpeed;
+    turnVel = this->actor.shape.rot.y - this->lastYaw;
+    targetRoll = -((s16)((1820.0f * speed) * (turnVel / 480.00003f)));
+    rollDiff = targetRoll - this->actor.world.rot.z;
+
+    if (fabsf(targetRoll) < 100.0f) {
+        this->actor.world.rot.z = 0;
+    } else if (fabsf(rollDiff) < 100.0f) {
+        this->actor.world.rot.z = targetRoll;
+    } else if (rollDiff > 0.0f) {
+        this->actor.world.rot.z += 100;
+    } else {
+        this->actor.world.rot.z -= 100;
+    }
+
+    this->actor.shape.rot.z = this->actor.world.rot.z;
+}
+
+s32 EnHorseYoung_UpdateConveyors(EnHorseYoung* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+    s16 conveyorDir;
+
+    if ((this->actor.floorPoly == NULL) && (this != (EnHorseYoung*)player->rideActor)) {
+        return 0;
+    }
+    conveyorDir = SurfaceType_GetConveyorDirection(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId);
+    conveyorDir = CONVEYOR_DIRECTION_TO_BINANG(conveyorDir) - this->actor.world.rot.y;
+    if (conveyorDir > 800.0f) {
+        this->actor.world.rot.y += 800.0f;
+    } else if (conveyorDir < -800.0f) {
+        this->actor.world.rot.y -= 800.0f;
+    } else {
+        this->actor.world.rot.y += conveyorDir;
+    }
+    this->actor.shape.rot.y = this->actor.world.rot.y;
+
+    return 1;
+}
+
+s32 EnHorseYoung_RandInt(f32 range) {
+    return Rand_ZeroOne() * range;
+}
+
+void EnHorseYoung_Update(Actor* thisx, PlayState* play2) {
+    EnHorseYoung* this = (EnHorseYoung*)thisx;
+    PlayState* play = play2;
+    Vec3f dustAcc = { 0.0f, 0.0f, 0.0f };
+    Vec3f dustVel = { 0.0f, 1.0f, 0.0f };
+    Player* player = GET_PLAYER(play);
+
+    this->lastYaw = thisx->shape.rot.y;
+    EnHorseYoung_UpdateStick(this, play);
+    EnHorseYoung_UpdatePlayerDir(this, play);
+
+    if (!(this->stateFlags & ENHORSEYOUNG_INACTIVE)) {
+        EnHorseYoung_MountDismount(this, play);
+    }
+
+    if (this->stateFlags & ENHORSEYOUNG_FLAG_19) {
+        if (this->stateFlags & ENHORSEYOUNG_FLAG_20 && this->inRace == true) {
+            this->stateFlags &= ~ENHORSEYOUNG_FLAG_20;
+            EnHorseYoung_StartRearing(this);
+        } else if (!(this->stateFlags & ENHORSEYOUNG_FLAG_20) && this->stateFlags & ENHORSEYOUNG_FLAG_21 &&
+                   this->action != ENHORSEYOUNG_ACT_MOUNTED_REARING && this->inRace == true) {
+            this->stateFlags &= ~ENHORSEYOUNG_FLAG_21;
+            EnHorseYoung_StartRearing(this);
+        }
+    }
+
+    sActionFuncs[this->action](this, play);
+    this->stateFlags &= ~ENHORSEYOUNG_OBSTACLE;
+    this->curFrame = this->skin.skelAnime.curFrame;
+    this->lastPos = thisx->world.pos;
+    if (!(this->stateFlags & ENHORSEYOUNG_INACTIVE)) {
+        if (this->action == ENHORSEYOUNG_ACT_MOUNTED_GALLOP || this->action == ENHORSEYOUNG_ACT_MOUNTED_TROT ||
+            this->action == ENHORSEYOUNG_ACT_MOUNTED_WALK) {
+            EnHorseYoung_CheckBoost(this, play);
+        }
+        if (this->playerControlled == true) {
+            EnHorseYoung_RegenBoost(this, play);
+        }
+        Actor_MoveXZGravity(thisx);
+        if (this->action == ENHORSEYOUNG_ACT_INGO_RACE) {
+            if (this->rider != NULL) {
+                this->rider->world.pos.x = thisx->world.pos.x;
+                this->rider->world.pos.y = thisx->world.pos.y + 10.0f;
+                this->rider->world.pos.z = thisx->world.pos.z;
+                this->rider->shape.rot.x = thisx->shape.rot.x;
+                this->rider->shape.rot.y = thisx->shape.rot.y;
+            }
+        }
+        if (this->colliderJntSph.elements[0].base.ocElemFlags & OCELEM_HIT) {
+            if (thisx->speed > 6.0f) {
+                thisx->speed -= 1.0f;
+            }
+        }
+        if (this->colliderJntSph.base.acFlags & AC_HIT) {
+            this->unk_21C = this->unk_228;
+            if (this->stateFlags & ENHORSEYOUNG_DRAW) {
+                Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->unk_21C, 4, &gSfxDefaultFreqAndVolScale,
+                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            }
+        }
+        if (this->action != ENHORSEYOUNG_ACT_INGO_RACE) {
+            EnHorseYoung_TiltBody(this, play);
+        }
+        Collider_UpdateCylinder(thisx, &this->colliderCylinder1);
+        Collider_UpdateCylinder(thisx, &this->colliderCylinder2);
+
+        // Required to match
+        this->colliderCylinder1.dim.pos.x =
+            this->colliderCylinder1.dim.pos.x + (s16)(Math_SinS(thisx->shape.rot.y) * 11.0f);
+        this->colliderCylinder1.dim.pos.z =
+            this->colliderCylinder1.dim.pos.z + (s16)(Math_CosS(thisx->shape.rot.y) * 11.0f);
+        this->colliderCylinder2.dim.pos.x =
+            this->colliderCylinder2.dim.pos.x + (s16)(Math_SinS(thisx->shape.rot.y) * -18.0f);
+        this->colliderCylinder2.dim.pos.z =
+            this->colliderCylinder2.dim.pos.z + (s16)(Math_CosS(thisx->shape.rot.y) * -18.0f);
+        CollisionCheck_SetAT(play, &play->colChkCtx, &this->colliderCylinder1.base);
+        CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderCylinder1.base);
+        CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderCylinder2.base);
+        if ((player->stateFlags1 & PLAYER_STATE1_0) && player->rideActor != NULL) {
+            if (play->sceneId != SCENE_LON_LON_RANCH ||
+                (play->sceneId == SCENE_LON_LON_RANCH && (thisx->world.pos.z < -2400.0f))) {
+                EnHorseYoung_UpdateConveyors(this, play);
+            }
+        }
+        if (!(this->stateFlags & ENHORSEYOUNG_FLAG_24)) {
+            EnHorseYoung_UpdateBgCheckInfo(this, play);
+            EnHorseYoung_CheckFloors(this, play);
+            if (thisx->world.pos.y < this->yFront && thisx->world.pos.y < this->yBack) {
+                if (this->yBack < this->yFront) {
+                    thisx->world.pos.y = this->yBack;
+                } else {
+                    thisx->world.pos.y = this->yFront;
+                }
+            }
+
+        } else {
+            this->stateFlags &= ~ENHORSEYOUNG_FLAG_24;
+        }
+
+        if (play->sceneId == SCENE_GERUDO_VALLEY && !GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED()) {
+            EnHorseYoung_CheckBridgeJumps(this, play);
+        }
+
+        thisx->focus.pos = thisx->world.pos;
+        thisx->focus.pos.y += 70.0f;
+        if ((Rand_ZeroOne() < 0.025f) && this->blinkTimer == 0) {
+            this->blinkTimer++;
+        } else if (this->blinkTimer > 0) {
+            this->blinkTimer++;
+            if (this->blinkTimer >= 4) {
+                this->blinkTimer = 0;
+            }
+        }
+
+        if (thisx->speed == 0.0f && !(this->stateFlags & ENHORSEYOUNG_FLAG_19)) {
+            thisx->colChkInfo.mass = MASS_IMMOVABLE;
+        } else {
+            thisx->colChkInfo.mass = MASS_HEAVY;
+        }
+
+        if (thisx->speed >= 5.0f) {
+            this->colliderCylinder1.base.atFlags |= AT_ON;
+        } else {
+            this->colliderCylinder1.base.atFlags &= ~AT_ON;
+        }
+
+        if (gSaveContext.save.entranceIndex != ENTR_LON_LON_RANCH_0 || gSaveContext.sceneLayer != 9) {
+            if (this->dustFlags & 1) {
+                this->dustFlags &= ~1;
+                func_800287AC(play, &this->frontRightHoof, &dustVel, &dustAcc, EnHorseYoung_RandInt(100) + 200,
+                              EnHorseYoung_RandInt(10) + 30, EnHorseYoung_RandInt(20) + 30);
+            } else if (this->dustFlags & 2) {
+                this->dustFlags &= ~2;
+                func_800287AC(play, &this->frontLeftHoof, &dustVel, &dustAcc, EnHorseYoung_RandInt(100) + 200,
+                              EnHorseYoung_RandInt(10) + 30, EnHorseYoung_RandInt(20) + 30);
+            } else if (this->dustFlags & 4) {
+                this->dustFlags &= ~4;
+                func_800287AC(play, &this->backRightHoof, &dustVel, &dustAcc, EnHorseYoung_RandInt(100) + 200,
+                              EnHorseYoung_RandInt(10) + 30, EnHorseYoung_RandInt(20) + 30);
+            } else if (this->dustFlags & 8) {
+                this->dustFlags &= ~8;
+                func_800287AC(play, &this->backLeftHoof, &dustVel, &dustAcc, EnHorseYoung_RandInt(100) + 200,
+                              EnHorseYoung_RandInt(10) + 30, EnHorseYoung_RandInt(20) + 30);
+            }
+        }
+        this->stateFlags &= ~ENHORSEYOUNG_DRAW;
+    }
+}
+
+s32 EnHorseYoung_PlayerDirToMountSide(EnHorseYoung* this, PlayState* play, Player* player) {
+    if (this->playerDir == PLAYER_YOUNG_DIR_SIDE_L) {
+        return -1;
+    }
+    if (this->playerDir == PLAYER_YOUNG_DIR_SIDE_R) {
+        return 1;
+    }
+    return 0;
+}
+
+s32 EnHorseYoung_MountSideCheck(EnHorseYoung* this, PlayState* play, Player* player) {
+    s32 mountSide;
+
+    if (Actor_WorldDistXZToActor(&this->actor, &player->actor) > 75.0f) {
+        return 0;
+    } else if (fabsf(this->actor.world.pos.y - player->actor.world.pos.y) > 30.0f) {
+        return 0;
+    } else if (Math_CosS(Actor_WorldYawTowardActor(&player->actor, &this->actor) - player->actor.world.rot.y) <
+               0.17364818f) { // cos(80 degrees)
+        return 0;
+    } else {
+        mountSide = EnHorseYoung_PlayerDirToMountSide(this, play, player);
+        if (mountSide == -1) {
+            return -1;
+        }
+        if (mountSide == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+s32 EnHorseYoung_GetMountSide(EnHorseYoung* this, PlayState* play) {
+    if (this->action != ENHORSEYOUNG_ACT_IDLE) {
+        return 0;
+    }
+    if ((this->animationIdx != ENHORSEYOUNG_ANIM_IDLE) && (this->animationIdx != ENHORSEYOUNG_ANIM_WHINNEY)) {
+        return 0;
+    }
+    return EnHorseYoung_MountSideCheck(this, play, GET_PLAYER(play));
+}
+
+void EnHorseYoung_RandomOffset(Vec3f* src, f32 dist, Vec3f* dst) {
+    dst->x = (Rand_ZeroOne() * (dist * 2.0f) + src->x) - dist;
+    dst->y = (Rand_ZeroOne() * (dist * 2.0f) + src->y) - dist;
+    dst->z = (Rand_ZeroOne() * (dist * 2.0f) + src->z) - dist;
+}
+
+void EnHorseYoung_PostDraw(Actor* thisx, PlayState* play, Skin* skin) {
+    EnHorseYoung* this = (EnHorseYoung*)thisx;
+    s32 pad;
+    Vec3f sp94 = { 0.0f, 0.0f, 0.0f };
+    Vec3f hoofOffset = { 5.0f, -4.0f, 5.0f };
+    Vec3f riderOffset = { 0.0f, 3400.0f, 0.0f };
+    Vec3f sp70;
+    Vec3f sp64 = { 0.0f, 0.0f, 0.0f };
+    Vec3f sp58 = { 0.0f, -1.0f, 0.0f };
+
+    f32 frame = this->skin.skelAnime.curFrame;
+    Vec3f center;
+    Vec3f newCenter;
+    s32 i;
+    Vec3f sp2C;
+    f32 sp28;
+
+    if (!(this->stateFlags & ENHORSEYOUNG_CALC_RIDER_POS)) {
+        Skin_GetLimbPos(skin, 5, &riderOffset, &this->riderPos);
+        this->riderPos.x -= this->actor.world.pos.x;
+        this->riderPos.y -= this->actor.world.pos.y;
+        this->riderPos.z -= this->actor.world.pos.z;
+    } else {
+        this->stateFlags &= ~ENHORSEYOUNG_CALC_RIDER_POS;
+    }
+
+    Skin_GetLimbPos(skin, 13, &sp94, &sp2C);
+    SkinMatrix_Vec3fMtxFMultXYZW(&play->viewProjectionMtxF, &sp2C, &this->unk_228, &sp28);
+    if ((this->animationIdx == ENHORSEYOUNG_ANIM_IDLE && this->action != ENHORSEYOUNG_ACT_FROZEN) &&
+        ((frame > 40.0f && frame < 45.0f && this->type == HORSE_YOUNG_EPONA) ||
+         (frame > 28.0f && frame < 33.0f && this->type == HORSE_YOUNG_HNI))) {
+        if (Rand_ZeroOne() < 0.6f) {
+            this->dustFlags |= 1;
+            Skin_GetLimbPos(skin, 28, &hoofOffset, &this->frontRightHoof);
+            this->frontRightHoof.y -= 5.0f;
+        }
+    } else {
+        if (this->action == ENHORSEYOUNG_ACT_STOPPING) {
+            if ((frame > 10.0f && frame < 13.0f) || (frame > 25.0f && frame < 33.0f)) {
+                if (Rand_ZeroOne() < 0.7f) {
+                    this->dustFlags |= 2;
+                    Skin_GetLimbPos(skin, 20, &hoofOffset, &sp70);
+                    EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->frontLeftHoof);
+                }
+                if (Rand_ZeroOne() < 0.7f) {
+                    this->dustFlags |= 1;
+                    Skin_GetLimbPos(skin, 28, &hoofOffset, &sp70);
+                    EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->frontRightHoof);
+                }
+            }
+
+            if ((frame > 6.0f && frame < 10.0f) || (frame > 23.0f && frame < 29.0f)) {
+                if (Rand_ZeroOne() < 0.7f) {
+                    this->dustFlags |= 8;
+                    Skin_GetLimbPos(skin, 36, &hoofOffset, &sp70);
+                    EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->backLeftHoof);
+                }
+            }
+
+            if ((frame > 7.0f && frame < 14.0f) || (frame > 26.0f && frame < 30.0f)) {
+                if (Rand_ZeroOne() < 0.7f) {
+                    this->dustFlags |= 4;
+                    Skin_GetLimbPos(skin, 44, &hoofOffset, &sp70);
+                    EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->backRightHoof);
+                }
+            }
+        } else if (this->animationIdx == ENHORSEYOUNG_ANIM_GALLOP) {
+            if ((frame > 14.0f) && (frame < 16.0f)) {
+                this->dustFlags |= 1;
+                Skin_GetLimbPos(skin, 28, &hoofOffset, &sp70);
+                EnHorseYoung_RandomOffset(&sp70, 5.0f, &this->frontRightHoof);
+            } else if (frame > 8.0f && frame < 10.0f) {
+                this->dustFlags |= 2;
+                Skin_GetLimbPos(skin, 20, &hoofOffset, &sp70);
+                EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->frontLeftHoof);
+            } else if (frame > 1.0f && frame < 3.0f) {
+                this->dustFlags |= 4;
+                Skin_GetLimbPos(skin, 44, &hoofOffset, &sp70);
+                EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->backRightHoof);
+            } else if ((frame > 26.0f) && (frame < 28.0f)) {
+                this->dustFlags |= 8;
+                Skin_GetLimbPos(skin, 36, &hoofOffset, &sp70);
+                EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->backLeftHoof);
+            }
+        } else if (this->action == ENHORSEYOUNG_ACT_LOW_JUMP && frame > 6.0f &&
+                   Rand_ZeroOne() < 1.0f - (frame - 6.0f) * (1.0f / 17.0f)) {
+            if (Rand_ZeroOne() < 0.5f) {
+                this->dustFlags |= 8;
+                Skin_GetLimbPos(skin, 36, &hoofOffset, &sp70);
+                EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->backLeftHoof);
+            }
+            if (Rand_ZeroOne() < 0.5f) {
+                this->dustFlags |= 4;
+                Skin_GetLimbPos(skin, 44, &hoofOffset, &sp70);
+                EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->backRightHoof);
+            }
+        } else if (this->action == ENHORSEYOUNG_ACT_HIGH_JUMP && frame > 5.0f &&
+                   Rand_ZeroOne() < 1.0f - (frame - 5.0f) * (1.0f / 25.0f)) {
+            if (Rand_ZeroOne() < 0.5f) {
+                this->dustFlags |= 8;
+                Skin_GetLimbPos(skin, 36, &hoofOffset, &sp70);
+                EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->backLeftHoof);
+            }
+            if (Rand_ZeroOne() < 0.5f) {
+                this->dustFlags |= 4;
+                Skin_GetLimbPos(skin, 44, &hoofOffset, &sp70);
+                EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->backRightHoof);
+            }
+        } else if (this->action == ENHORSEYOUNG_ACT_BRIDGE_JUMP && Rand_ZeroOne() < 0.5f) {
+            if (Rand_ZeroOne() < 0.5f) {
+                this->dustFlags |= 8;
+                Skin_GetLimbPos(skin, 36, &hoofOffset, &sp70);
+                EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->backLeftHoof);
+            } else {
+                this->dustFlags |= 4;
+                Skin_GetLimbPos(skin, 44, &hoofOffset, &sp70);
+                EnHorseYoung_RandomOffset(&sp70, 10.0f, &this->backRightHoof);
+            }
+        }
+    }
+
+    for (i = 0; i < this->colliderJntSph.count; i++) {
+        center.x = this->colliderJntSph.elements[i].dim.modelSphere.center.x;
+        center.y = this->colliderJntSph.elements[i].dim.modelSphere.center.y;
+        center.z = this->colliderJntSph.elements[i].dim.modelSphere.center.z;
+
+        Skin_GetLimbPos(skin, this->colliderJntSph.elements[i].dim.limb, &center, &newCenter);
+        this->colliderJntSph.elements[i].dim.worldSphere.center.x = newCenter.x;
+        this->colliderJntSph.elements[i].dim.worldSphere.center.y = newCenter.y;
+        this->colliderJntSph.elements[i].dim.worldSphere.center.z = newCenter.z;
+        this->colliderJntSph.elements[i].dim.worldSphere.radius =
+            this->colliderJntSph.elements[i].dim.modelSphere.radius * this->colliderJntSph.elements[i].dim.scale;
+    }
+
+    //! @bug Setting colliders in a draw function allows for duplicate entries to be added to their respective lists
+    //! under certain conditions, like when pausing and unpausing the game.
+    //! Actors will draw for a couple of frames between the pauses, but some important logic updates will not occur.
+    //! In the case of OC, this can cause unwanted effects such as a very large amount of displacement being applied to
+    //! a colliding actor.
+    CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderJntSph.base);
+    CollisionCheck_SetAC(play, &play->colChkCtx, &this->colliderJntSph.base);
+}
+
+// unused
+static s32 D_80A667DC[] = { 0, 3, 7, 14 };
+
+s32 EnHorseYoung_OverrideLimbDraw(Actor* thisx, PlayState* play, s32 limbIndex, Skin* arg3) {
+    static void* eyeTextures[] = {
+        gYoungEponaEyeOpenTex,
+        gYoungEponaEyeHalfTex,
+        gYoungEponaEyeClosedTex,
+    };
+    static u8 eyeBlinkIndices[] = { 0, 1, 2, 1 };
+    EnHorseYoung* this = (EnHorseYoung*)thisx;
+    s32 drawOriginalLimb = true;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_en_horse.c", 8582);
+    if (limbIndex == 13 && this->type == HORSE_YOUNG_EPONA) {
+        u8 index = eyeBlinkIndices[this->blinkTimer];
+
+        gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(eyeTextures[index]));
+    } else if (this->type == HORSE_YOUNG_HNI && this->stateFlags & ENHORSEYOUNG_FLAG_18 && limbIndex == 30) {
+        Skin_DrawLimb(play->state.gfxCtx, &this->skin, limbIndex, gHorseIngoGerudoSaddleDL, 0);
+        drawOriginalLimb = false;
+    }
+    CLOSE_DISPS(play->state.gfxCtx, "../z_en_horse.c", 8601);
+    return drawOriginalLimb;
+}
+
+void EnHorseYoung_Draw(Actor* thisx, PlayState* play) {
+    EnHorseYoung* this = (EnHorseYoung*)thisx;
+
+    if (!(this->stateFlags & ENHORSEYOUNG_INACTIVE)) {
+        Gfx_SetupDL_25Opa(play->state.gfxCtx);
+        this->stateFlags |= ENHORSEYOUNG_DRAW;
+        if (this->stateFlags & ENHORSEYOUNG_JUMPING) {
+            func_800A6360(thisx, play, &this->skin, EnHorseYoung_PostDraw, EnHorseYoung_OverrideLimbDraw, false);
+        } else {
+            func_800A6360(thisx, play, &this->skin, EnHorseYoung_PostDraw, EnHorseYoung_OverrideLimbDraw, true);
+        }
+        if (this->postDrawFunc != NULL) {
+            this->postDrawFunc(this, play);
+        }
+    }
+}

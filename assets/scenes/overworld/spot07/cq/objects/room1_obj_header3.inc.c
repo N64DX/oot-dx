@@ -1,0 +1,7 @@
+    OBJECT_SPOT07_OBJECT, // 0
+    OBJECT_SYOKUDAI, // 1
+    OBJECT_KANBAN, // 2
+    OBJECT_TSUBO, // 3
+    OBJECT_ZO, // 4
+    OBJECT_BOX, // 5
+    OBJECT_EFC_FLASH, // 6

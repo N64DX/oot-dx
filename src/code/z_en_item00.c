@@ -1164,7 +1164,7 @@ s16 func_8001F404(s16 dropId) {
         } else if (dropId == ITEM00_STICK) {
             dropId = ITEM00_RUPEE_GREEN;
         }
-    } else {
+    } else if (!IS_CHILD_QUEST) {
         if (dropId == ITEM00_ARROWS_SMALL || dropId == ITEM00_ARROWS_MEDIUM || dropId == ITEM00_ARROWS_LARGE) {
             dropId = ITEM00_SEEDS;
         }
@@ -1341,7 +1341,7 @@ void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnP
             params = 0xA * 0x10;
             dropTableIndex = 0x0;
             dropId = ITEM00_SEEDS;
-        } else if (LINK_IS_ADULT && (AMMO(ITEM_BOW) < 6)) {
+        } else if ((LINK_IS_ADULT || IS_CHILD_QUEST) && (AMMO(ITEM_BOW) < 6)) {
             params = 0xA * 0x10;
             dropTableIndex = 0x0;
             dropId = ITEM00_ARROWS_MEDIUM;

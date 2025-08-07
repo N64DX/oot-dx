@@ -3,4 +3,5 @@
     OBJECT_GI_HEART, // 2
     OBJECT_GI_SUTARU, // 3
     OBJECT_ST, // 4
-
+    OBJECT_D_HSBLOCK, // 5
+    OBJECT_DEMO_KEKKAI, // 6

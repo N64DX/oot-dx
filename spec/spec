@@ -1002,7 +1002,6 @@ beginseg
     name "gameplay_keep"
     compress
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep.o"
-    include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_extra.o"
     number 4
 endseg
 
@@ -1131,6 +1130,13 @@ beginseg
     name "object_horse"
     compress
     include "$(BUILD_DIR)/assets/objects/object_horse/object_horse.o"
+    number 6
+endseg
+
+beginseg
+    name "object_horse_young"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_horse_young/object_horse_young.o"
     number 6
 endseg
 

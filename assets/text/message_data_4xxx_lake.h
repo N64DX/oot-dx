@@ -5235,7 +5235,7 @@ SHIFT(3) "兄さん　今日は　ブルブルすんで〜！" EVENT
 MSG(
 "Wow! You have a " COLOR(RED) "Rumble Pak" COLOR(DEFAULT) "!\n"
 "Today, you can feel the vibration,\n"
-"young man!" EVENT
+"young " AGE_LAD "!" EVENT
 )
 ,
 MSG(
@@ -5702,7 +5702,7 @@ SHIFT(54) "ま、いいけどね。"
 )
 ,
 MSG(
-"Hey, young man! Don't you have \n"
+"Hey, young " AGE_LAD "! Don't you have \n"
 "anything important you should be\n"
 "doing?"
 BOX_BREAK
@@ -6121,7 +6121,7 @@ TWO_CHOICE
 )
 ,
 MSG(
-UNSKIPPABLE "Hey, mister! I remember you!\n"
+UNSKIPPABLE "Hey, " AGE_BOY "! I remember you!\n"
 "It's been a long time!"
 BOX_BREAK
 

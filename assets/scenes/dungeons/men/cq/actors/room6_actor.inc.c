@@ -32,13 +32,13 @@
         ACTOR_OBJ_TIMEBLOCK,
         {   1230,   -237,  -1491 }, // pos
         {  0x0000,  0x0000,  0x0006 }, // rot
-         0x382C, // params
-    }, // 5
+         0xB82C, // params
+    }, // 5: Invert time blocks
     {
         ACTOR_OBJ_TIMEBLOCK,
         {   1330,   -293,  -1491 }, // pos
         {  0x0000,  0x0000,  0x0006 }, // rot
-         0x382D, // params
+         0xB82D, // params
     }, // 6
     {
         ACTOR_OBJ_SYOKUDAI,

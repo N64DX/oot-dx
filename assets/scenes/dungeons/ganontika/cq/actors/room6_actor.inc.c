@@ -89,3 +89,4 @@
          0x3700, // params
     }, // 14
 
+    { ACTOR_OBJ_HSBLOCK, { 1742, 110, 2044 }, { 0x0000, 0x1555, 0x0000 }, 0xFF00, }, // 15: Hookshot target near barrier door

@@ -18,6 +18,8 @@
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_DRAW_CULLING_DISABLED)
 
+#define IS_FROZEN (LINK_IS_ADULT || (CQ_IS_TIMESKIP && !GET_EVENTCHKINF(EVENTCHKINF_RESTORED_LAKE_HYLIA)))
+
 void BgSpot07Taki_Init(Actor* thisx, PlayState* play);
 void BgSpot07Taki_Destroy(Actor* thisx, PlayState* play);
 void BgSpot07Taki_Update(Actor* thisx, PlayState* play);
@@ -48,7 +50,7 @@ void BgSpot07Taki_Init(Actor* thisx, PlayState* play) {
 
     DynaPolyActor_Init(&this->dyna, DYNA_TRANSFORM_POS);
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
-    if (LINK_IS_ADULT) {
+    if (IS_FROZEN) {
         if (this->dyna.actor.params == 0) {
             CollisionHeader_GetVirtual(&object_spot07_object_Col_002590, &colHeader);
         } else {
@@ -80,7 +82,7 @@ void BgSpot07Taki_Draw(Actor* thisx, PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_bg_spot07_taki.c", 169);
     frames = play->gameplayFrames;
-    if (LINK_IS_ADULT) {
+    if (IS_FROZEN) {
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_bg_spot07_taki.c", 177);
         if (this->dyna.actor.params == 0) {
@@ -97,7 +99,7 @@ void BgSpot07Taki_Draw(Actor* thisx, PlayState* play) {
                Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, ((frames * -1) & 0x7F), ((frames * 1) & 0x7F), 32,
                                 32, 1, ((frames * 1) & 0x7F), ((frames * 1) & 0x7F), 32, 32));
 
-    if (!LINK_IS_ADULT) {
+    if (!IS_FROZEN) {
         gDPSetEnvColor(POLY_XLU_DISP++, 255, 255, 255, 128);
         if (this->dyna.actor.params == 0) {
 #if !OOT_PAL_N64

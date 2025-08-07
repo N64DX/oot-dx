@@ -356,7 +356,7 @@ void EnSyatekiMan_EndGame(EnSyatekiMan* this, PlayState* play) {
                 case SYATEKI_RESULT_WINNER:
                     this->tempGallery = this->actor.parent;
                     this->actor.parent = NULL;
-                    if (!LINK_IS_ADULT) {
+                    if (IS_CHILD_QUEST ? gSaveContext.save.entranceIndex == ENTR_SHOOTING_GALLERY_1 : !LINK_IS_ADULT) {
                         if (!GET_ITEMGETINF(ITEMGETINF_0D)) {
                             PRINTF(VT_FGCOL(GREEN) "☆☆☆☆☆ Equip_Pachinko ☆☆☆☆☆ %d\n" VT_RST,
                                    CUR_UPG_VALUE(UPG_BULLET_BAG));
@@ -423,7 +423,7 @@ void EnSyatekiMan_FinishPrize(EnSyatekiMan* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
     if ((Message_GetState(&play->msgCtx) == TEXT_STATE_DONE) && Message_ShouldAdvance(play)) {
         PRINTF(VT_FGCOL(GREEN) T("☆☆☆☆☆ 正常終了 ☆☆☆☆☆ \n", "☆☆☆☆☆ Normal termination ☆☆☆☆☆ \n") VT_RST);
-        if (!LINK_IS_ADULT) {
+        if (IS_CHILD_QUEST ? gSaveContext.save.entranceIndex == ENTR_SHOOTING_GALLERY_1 : !LINK_IS_ADULT) {
             SET_ITEMGETINF(ITEMGETINF_0D);
         } else if ((this->getItemId == GI_QUIVER_40) || (this->getItemId == GI_QUIVER_50)) {
             SET_ITEMGETINF(ITEMGETINF_0E);

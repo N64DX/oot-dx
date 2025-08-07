@@ -699,7 +699,7 @@ SHIFT(36) "わかったかい、ぼーや。" PERSISTENT
 MSG(
 "If you want potions, you'd better \n"
 "bring an empty bottle. Understand,\n"
-"young man?" PERSISTENT
+"young " AGE_LAD "?" PERSISTENT
 )
 ,
 MSG(
@@ -9111,7 +9111,7 @@ SHIFT(27) "ポウを　つかまえてきたら\n"
 ,
 MSG(
 UNSKIPPABLE "Oh...you are quite an energetic\n"
-"young man. You're brave and\n"
+"young " AGE_LAD ". You're brave and\n"
 "handsome, too."
 BOX_BREAK
 
@@ -9147,7 +9147,7 @@ UNSKIPPABLE "The ghosts, called " COLOR(RED) "Poes" COLOR(DEFAULT) ", are \n"
 "graveyard. They hate the world!"
 BOX_BREAK
 
-UNSKIPPABLE "Young man, if you catch a Poe, I\n"
+UNSKIPPABLE "Young " AGE_LAD ", if you catch a Poe, I\n"
 "will pay a lot of money for it...\n"
 "Heh heh hee!"
 )
@@ -9255,7 +9255,7 @@ SHIFT(12) "また　よろしく。　イーッヒッヒ！"
 )
 ,
 MSG(
-"Hey, young man. What's happening \n"
+"Hey, young " AGE_LAD ". What's happening \n"
 "today? If you have a " COLOR(RED) "Poe" COLOR(DEFAULT) ", I will \n"
 "buy it."
 BOX_BREAK
@@ -9499,7 +9499,7 @@ BOX_BREAK
 UNSKIPPABLE "You have earned " COLOR(RED) "1,000 points" COLOR(DEFAULT) "!"
 BOX_BREAK
 
-UNSKIPPABLE "Young man, you are a genuine\n"
+UNSKIPPABLE "Young " AGE_LAD ", you are a genuine\n"
 COLOR(RED) "Ghost Hunter" COLOR(DEFAULT) "!"
 BOX_BREAK
 

@@ -303,7 +303,7 @@ void func_80B3C9EC(EnXc* this) {
 
 void func_80B3CA38(EnXc* this, PlayState* play) {
     // If Player is adult but hasn't learned Minuet of Forest
-    if (!GET_EVENTCHKINF(EVENTCHKINF_50) && LINK_IS_ADULT) {
+    if (!GET_EVENTCHKINF(EVENTCHKINF_50) && LINK_IS_ADULT_OR_TIMESKIP) {
         s32 pad;
 
         this->action = SHEIK_ACTION_INIT;
@@ -338,7 +338,7 @@ s32 EnXc_MinuetCS(EnXc* this, PlayState* play) {
 
 void func_80B3CB58(EnXc* this, PlayState* play) {
     // If hasn't learned Bolero and Player is Adult
-    if (!GET_EVENTCHKINF(EVENTCHKINF_51) && LINK_IS_ADULT) {
+    if (!GET_EVENTCHKINF(EVENTCHKINF_51) && LINK_IS_ADULT_OR_TIMESKIP) {
         s32 pad;
 
         this->action = SHEIK_ACTION_INIT;
@@ -372,7 +372,7 @@ s32 EnXc_BoleroCS(EnXc* this, PlayState* play) {
 
 void EnXc_SetupSerenadeAction(EnXc* this, PlayState* play) {
     if (!(CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON) && DEBUG_FEATURES) &&
-        !GET_EVENTCHKINF(EVENTCHKINF_52) && LINK_IS_ADULT) {
+        !GET_EVENTCHKINF(EVENTCHKINF_52) && LINK_IS_ADULT_OR_TIMESKIP) {
         s32 pad;
 
         this->action = SHEIK_ACTION_SERENADE;
@@ -1818,7 +1818,7 @@ void EnXc_SetThrownAroundSFX(EnXc* this) {
 
 void EnXc_PlayLinkScreamSFX(EnXc* this, PlayState* play) {
     if (play->csCtx.curFrame == 1455) {
-        Audio_PlayCutsceneEffectsSequence(SEQ_CS_EFFECTS_BONGO_HURL_LINK);
+        Audio_PlayCutsceneEffectsSequence(LINK_IS_CHILD ? SEQ_CS_EFFECTS_LINK_SCREAM : SEQ_CS_EFFECTS_BONGO_HURL_LINK);
     }
 }
 
@@ -2201,7 +2201,7 @@ void EnXc_DrawSquintingEyes(Actor* thisx, PlayState* play) {
 }
 
 void EnXc_InitTempleOfTime(EnXc* this, PlayState* play) {
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT_OR_TIMESKIP) {
         if (!GET_EVENTCHKINF(EVENTCHKINF_C5)) {
             SET_EVENTCHKINF(EVENTCHKINF_C5);
             play->csCtx.script = SEGMENTED_TO_VIRTUAL(gTempleOfTimeFirstAdultCs);

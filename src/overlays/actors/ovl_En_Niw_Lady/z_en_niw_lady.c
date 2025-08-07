@@ -185,16 +185,17 @@ void func_80AB9F24(EnNiwLady* this, PlayState* play) {
         this->unk_272 = 0;
         this->actor.attentionRangeType = ATTENTION_RANGE_6;
         this->actor.draw = EnNiwLady_Draw;
+
         switch (this->unk_278) {
             case 0:
-                if (!GET_ITEMGETINF(ITEMGETINF_0C) && !LINK_IS_ADULT) {
+                if (IS_CHILD_QUEST ? !GET_ITEMGETINF(ITEMGETINF_0C) : !GET_ITEMGETINF(ITEMGETINF_0C) && !LINK_IS_ADULT) {
                     frames = Animation_GetLastFrame(&gObjOsAnim_A630);
                     Animation_Change(&this->skelAnime, &gObjOsAnim_A630, 1.0f, 0.0f, (s16)frames, ANIMMODE_LOOP, 0.0f);
                 } else {
                     frames = Animation_GetLastFrame(&gObjOsAnim_07D0);
                     Animation_Change(&this->skelAnime, &gObjOsAnim_07D0, 1.0f, 0.0f, (s16)frames, ANIMMODE_LOOP, 0.0f);
                 }
-                if (LINK_IS_ADULT) {
+                if (IS_CHILD_QUEST ? GET_ITEMGETINF(ITEMGETINF_0C) && !GET_ITEMGETINF(ITEMGETINF_2E) && GET_EVENTCHKINF(EVENTCHKINF_45) : LINK_IS_ADULT) {
                     this->actionFunc = func_80ABA778;
                 } else {
                     this->actionFunc = func_80ABA21C;
@@ -482,7 +483,7 @@ void func_80ABAC00(EnNiwLady* this, PlayState* play) {
         this->actionFunc = func_80ABAC84;
     } else {
         getItemId = this->getItemId;
-        if (LINK_IS_ADULT) {
+        if (LINK_IS_ADULT_OR_TIMESKIP) {
             getItemId = !GET_ITEMGETINF(ITEMGETINF_2C) ? GI_POCKET_EGG : GI_COJIRO;
         }
         Actor_OfferGetItem(&this->actor, play, getItemId, 200.0f, 100.0f);
@@ -494,7 +495,7 @@ void func_80ABAC84(EnNiwLady* this, PlayState* play) {
         return;
     }
     PRINTF(VT_FGCOL(GREEN) T("☆☆☆☆☆ 正常終了 ☆☆☆☆☆ \n", "☆☆☆☆☆ Normal termination ☆☆☆☆☆ \n") VT_RST);
-    if (LINK_IS_ADULT) {
+    if (IS_CHILD_QUEST ? GET_ITEMGETINF(ITEMGETINF_0C) : LINK_IS_ADULT) {
         if (!GET_ITEMGETINF(ITEMGETINF_2C)) {
             SET_ITEMGETINF(ITEMGETINF_2C);
         } else {

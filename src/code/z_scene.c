@@ -325,6 +325,9 @@ BAD_RETURN(s32) Scene_CommandObjectList(PlayState* play, SceneCmd* cmd) {
            "scene_info->object_bank.num <= OBJECT_EXCHANGE_BANK_MAX", "../z_scene.c", 705);
 
     while (k < cmd->objectList.length) {
+        if (LINK_IS_CHILD && *objectListEntry == OBJECT_HORSE)
+            *objectListEntry = OBJECT_HORSE_YOUNG;
+        
         nextPtr = func_800982FC(&play->objectCtx, i, *objectListEntry);
         if (i < (ARRAY_COUNT(play->objectCtx.slots) - 1)) {
             entries[i + 1].segment = nextPtr;
@@ -508,7 +511,7 @@ BAD_RETURN(s32) Scene_CommandMiscSettings(PlayState* play, SceneCmd* cmd) {
     gSaveContext.worldMapArea = cmd->miscSettings.area;
 
     if ((play->sceneId == SCENE_BAZAAR) || (play->sceneId == SCENE_SHOOTING_GALLERY)) {
-        if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
+        if (gSaveContext.save.entranceIndex == ENTR_BAZAAR_0 || gSaveContext.save.entranceIndex == ENTR_SHOOTING_GALLERY_0) {
             gSaveContext.worldMapArea = WORLD_MAP_AREA_KAKARIKO_VILLAGE;
         }
     }

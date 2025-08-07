@@ -2,10 +2,9 @@
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #include "gfx.h"
-#include "sys_matrix.h"
 
-Vtx object_gi_sword_1Vtx[] = {
-#include "assets/objects/object_gi_sword_heros/object_gi_sword_1Vtx.inc.c"
+Vtx object_gi_sword_herosVtx[] = {
+#include "assets/objects/object_gi_sword_heros/object_gi_sword_herosVtx.inc.c"
 };
 
 u64 gGiKokiriSwordGuardTex[] = {
@@ -31,7 +30,7 @@ Gfx gGiHerosSwordGuardDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gGiKokiriSwordGuardTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_sword_1Vtx[85], 32, 0),
+    gsSPVertex(&object_gi_sword_herosVtx[85], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 4, 0),
     gsSP2Triangles(2, 1, 4, 0, 3, 5, 4, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
@@ -50,7 +49,7 @@ Gfx gGiHerosSwordGuardDL[] = {
     gsSP2Triangles(5, 3, 21, 0, 5, 21, 19, 0),
     gsSP2Triangles(24, 25, 26, 0, 24, 27, 25, 0),
     gsSP2Triangles(28, 29, 30, 0, 28, 31, 29, 0),
-    gsSPVertex(&object_gi_sword_1Vtx[117], 16, 0),
+    gsSPVertex(&object_gi_sword_herosVtx[117], 16, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSP2Triangles(8, 9, 10, 0, 8, 11, 9, 0),
@@ -67,7 +66,7 @@ Gfx gGiHerosSwordBladeHiltDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gGiKokiriSwordHiltTex, G_IM_FMT_I, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_sword_1Vtx[71], 14, 0),
+    gsSPVertex(&object_gi_sword_herosVtx[71], 14, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 4, 0),
     gsSP2Triangles(5, 0, 6, 0, 3, 5, 7, 0),
     gsSP2Triangles(8, 7, 9, 0, 7, 5, 9, 0),
@@ -84,7 +83,7 @@ Gfx gGiHerosSwordBladeHiltDL[] = {
     gsDPSetPrimColor(0, 0xFF, 255, 255, 0, 255),
     gsDPSetEnvColor(0, 140, 155, 255),
     gsDPLoadTextureBlock(gGiKokiriSwordHiltTex, G_IM_FMT_I, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 1),
-    gsSPVertex(&object_gi_sword_1Vtx[66], 5, 0),
+    gsSPVertex(&object_gi_sword_herosVtx[66], 5, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 0, 0),
     gsSP2Triangles(4, 1, 3, 0, 2, 1, 4, 0),
     gsSPTexture(0x076C, 0x0FA0, 0, G_TX_RENDERTILE, G_ON),
@@ -93,7 +92,7 @@ Gfx gGiHerosSwordBladeHiltDL[] = {
     gsDPSetEnvColor(50, 50, 115, 255),
     gsDPLoadTextureBlock(gGiKokiriSwordBladeTex, G_IM_FMT_I, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_sword_1Vtx[50], 16, 0),
+    gsSPVertex(&object_gi_sword_herosVtx[50], 16, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
     gsSP2Triangles(4, 5, 6, 0, 6, 5, 7, 0),
     gsSP2Triangles(8, 9, 10, 0, 10, 9, 11, 0),
@@ -101,7 +100,7 @@ Gfx gGiHerosSwordBladeHiltDL[] = {
     gsSPTexture(0x07D0, 0x07D0, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gGiKokiriSwordHiltTex, G_IM_FMT_I, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_gi_sword_1Vtx[40], 10, 0),
+    gsSPVertex(&object_gi_sword_herosVtx[40], 10, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 4, 0),
     gsSP2Triangles(5, 2, 6, 0, 7, 8, 9, 0),
     gsSPTexture(0x04B0, 0x04B0, 0, G_TX_RENDERTILE, G_ON),
@@ -109,7 +108,7 @@ Gfx gGiHerosSwordBladeHiltDL[] = {
     gsDPSetPrimColor(0, 0xFF, 225, 225, 255, 255),
     gsDPSetEnvColor(0, 0, 0, 255),
     gsDPLoadTextureBlock(gGiKokiriSwordHiltTex, G_IM_FMT_I, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_gi_sword_1Vtx[8], 32, 0),
+    gsSPVertex(&object_gi_sword_herosVtx[8], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(2, 1, 4, 0, 1, 5, 4, 0),
     gsSP2Triangles(4, 6, 7, 0, 4, 5, 6, 0),
@@ -137,7 +136,7 @@ Gfx gGiHerosSwordBladeHiltDL[] = {
     gsSPTexture(0x03E8, 0x03E8, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gGiKokiriSwordHiltTex, G_IM_FMT_I, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(object_gi_sword_1Vtx, 8, 0),
+    gsSPVertex(object_gi_sword_herosVtx, 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(2, 1, 4, 0, 1, 5, 4, 0),
     gsSP2Triangles(4, 6, 7, 0, 4, 5, 6, 0),

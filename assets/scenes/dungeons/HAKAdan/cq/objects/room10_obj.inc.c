@@ -7,4 +7,4 @@
     OBJECT_GI_SUTARU, // 6
     OBJECT_TRAP, // 7
     OBJECT_SYOKUDAI, // 8
-
+    OBJECT_D_HSBLOCK, // 9

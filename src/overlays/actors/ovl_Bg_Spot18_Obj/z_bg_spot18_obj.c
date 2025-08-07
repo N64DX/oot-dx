@@ -103,7 +103,7 @@ static Gfx(*sDlists[]) = {
 s32 func_808B8910(BgSpot18Obj* this, PlayState* play) {
     s32 age;
 
-    if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
+    if (LINK_IS_ADULT_OR_TIMESKIP) {
         age = 1;
     } else if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
         age = 0;
@@ -166,7 +166,7 @@ s32 func_808B8B38(BgSpot18Obj* this, PlayState* play) {
 s32 func_808B8BB4(BgSpot18Obj* this, PlayState* play) {
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain1);
 
-    if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         func_808B9030(this);
     } else if (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 8, 6))) {
         func_808B9030(this);

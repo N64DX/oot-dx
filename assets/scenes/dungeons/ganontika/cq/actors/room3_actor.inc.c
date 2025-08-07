@@ -41,3 +41,7 @@
          0x2D02, // params
     }, // 6
 
+    { ACTOR_OBJ_HSBLOCK,    { 2822, -380, -1175 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 7: Reach rusted floor switch / upper silver rupee
+    { ACTOR_BG_JYA_KANAAMI, { 2790, -165, -1319 }, { 0x0000, 0x0000, 0xBFEA }, 0x00FF, }, // 8
+    { ACTOR_OBJ_HSBLOCK,    { 3310, -380,  -945 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 9: Reach door leading to the barrier
+    { ACTOR_OBJ_HSBLOCK,    { 2829, -480,  -743 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 10: Prevent being stuck in the push block gap

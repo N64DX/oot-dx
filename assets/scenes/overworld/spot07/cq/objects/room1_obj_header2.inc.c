@@ -1,0 +1,7 @@
+    OBJECT_SPOT07_OBJECT, // 0
+    OBJECT_ICE_OBJECTS, // 1
+    OBJECT_SYOKUDAI, // 2
+    OBJECT_KANBAN, // 3
+    OBJECT_TSUBO, // 4
+    OBJECT_GS, // 5
+    OBJECT_ST, // 6

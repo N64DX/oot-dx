@@ -1,0 +1,1 @@
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders),

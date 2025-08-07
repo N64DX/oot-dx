@@ -216,7 +216,7 @@ void func_80AA2E54(EnMa3* this, PlayState* play) {
 }
 
 s32 func_80AA2EC8(EnMa3* this, PlayState* play) {
-    if (LINK_IS_CHILD) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         return 2;
     }
     if (!GET_EVENTCHKINF(EVENTCHKINF_EPONA_OBTAINED)) {

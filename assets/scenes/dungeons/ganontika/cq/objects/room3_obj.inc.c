@@ -4,4 +4,5 @@
     OBJECT_BB, // 3
     OBJECT_FIREFLY, // 4
     OBJECT_WALLMASTER, // 5
-
+    OBJECT_D_HSBLOCK, // 6
+    OBJECT_JYA_OBJ, // 7

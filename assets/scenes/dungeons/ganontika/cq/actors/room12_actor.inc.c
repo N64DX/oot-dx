@@ -56,8 +56,8 @@
         ACTOR_OBJ_TIMEBLOCK,
         {    500,     50,  -2125 }, // pos
         {  0x0000, -0x1555,  0x0007 }, // rot
-         0x3821, // params
-    }, // 9
+         0xB821, // params
+    }, // 9: Invert time blocks
     {
         ACTOR_EN_ITEM00,
         {   1844,    162,  -4038 }, // pos
@@ -68,7 +68,7 @@
         ACTOR_OBJ_TIMEBLOCK,
         {    414,     50,  -2175 }, // pos
         {  0x0000, -0x1555,  0x0007 }, // rot
-         0x3822, // params
+         0xB822, // params
     }, // 11
     {
         ACTOR_EN_ITEM00,
@@ -80,7 +80,7 @@
         ACTOR_OBJ_TIMEBLOCK,
         {    465,     50,  -2262 }, // pos
         {  0x0000, -0x1555,  0x0007 }, // rot
-         0x3823, // params
+         0xB823, // params
     }, // 13
     {
         ACTOR_OBJ_TSUBO,

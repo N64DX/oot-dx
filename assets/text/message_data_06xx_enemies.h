@@ -246,6 +246,31 @@ COLOR(LIGHTBLUE) "Son seul contact te fera souffrir!" COLOR(DEFAULT) QUICKTEXT_D
 )
 )
 
+DEFINE_MESSAGE(0x060B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(60) "赤テクタイト\n"
+SHIFT(3) COLOR(LIGHTBLUE) "はねる動きは" COLOR(DEFAULT) "Ｚ注目" COLOR(LIGHTBLUE) "でロックして！" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+,
+MSG(
+QUICKTEXT_ENABLE "Yellow Tektite\n"
+COLOR(LIGHTBLUE) "Be careful not to get stunned\n"
+"by it when it hits you!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+,
+MSG(
+QUICKTEXT_ENABLE "Ein gelber Arachno!\n"
+COLOR(LIGHTBLUE) "Passen Sie auf, dass Sie nicht\n"
+"betäubt werden, wenn er Sie trifft!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+,
+MSG(
+QUICKTEXT_ENABLE "Araknon Jaune\n"
+COLOR(LIGHTBLUE) "Attention à ne pas être étourdi\n"
+"quand il vous touche!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)
+
 DEFINE_MESSAGE(0x060A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(
 QUICKTEXT_ENABLE SHIFT(66) "デクナッツ\n"

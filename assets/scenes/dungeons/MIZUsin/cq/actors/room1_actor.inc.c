@@ -29,3 +29,5 @@
          0x1C9D, // params
     }, // 4
 
+    { ACTOR_OBJ_HSBLOCK, { -178, 30, -320 }, { 0x3E80, 0xBF68, 0x0000 }, 0xFF00, }, // 5: Be able to get out of the spikes
+    { ACTOR_OBJ_HSBLOCK, { -181, 30, -320 }, { 0x3E80, 0x4047, 0x0000 }, 0xFF00, }, // 6

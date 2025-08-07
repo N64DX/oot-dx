@@ -1,0 +1,8 @@
+    SCENE_CMD_ECHO_SETTINGS(7),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
+    SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
+    SCENE_CMD_ROOM_SHAPE(&gerudoway_room_0_030000F0_RoomShapeCullable),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(gerudoway_room_0_03000040_ObjectList), gerudoway_room_0_03000040_ObjectList),
+    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(cq_actors), cq_actors),
+    SCENE_CMD_END(),
