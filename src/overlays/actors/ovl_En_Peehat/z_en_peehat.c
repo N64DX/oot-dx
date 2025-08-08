@@ -226,6 +226,12 @@ void EnPeehat_Init(Actor* thisx, PlayState* play) {
     Collider_InitJntSph(play, &this->colliderJntSph);
     Collider_SetJntSph(play, &this->colliderJntSph, &this->actor, &sJntSphInit, this->colliderJntSphElements);
 
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
+
     this->actor.naviEnemyId = NAVI_ENEMY_PEAHAT;
     this->xzDistToRise = 740.0f;
     this->xzDistMax = 1200.0f;

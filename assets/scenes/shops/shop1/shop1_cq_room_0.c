@@ -8,6 +8,10 @@ static SceneCmd start[] = {
 
 #include "assets/scenes/shops/shop1/shop1_room_0.c"
 
+static s16 cq_objects[] = {
+#include "assets/scenes/shops/shop1/cq/objects/room0_obj.inc.c"
+};
+
 static s16 cq_objects_header2[] = {
 #include "assets/scenes/shops/shop1/cq/objects/room0_obj_header2.inc.c"
 };

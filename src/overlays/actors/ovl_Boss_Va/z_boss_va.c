@@ -666,6 +666,12 @@ void BossVa_Init(Actor* thisx, PlayState* play2) {
                 Actor_Kill(&this->actor);
             } else {
                 this->actor.colChkInfo.damageTable = sDamageTable;
+                if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+                    this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
+                    this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
+                    this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
+                }
+
                 sPhase2Timer = 0xFFFF;
                 if (GET_EVENTCHKINF(EVENTCHKINF_BEGAN_BARINADE_BATTLE)) {
                     sCsState = INTRO_CALL_BARI;

@@ -775,6 +775,10 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
     }
 
     if (gSaveContext.worldMapArea < WORLD_MAP_AREA_MAX) {
+        u8 worldMapArea = gSaveContext.worldMapArea;
+        if (IS_CHILD_QUEST && worldMapArea == WORLD_MAP_AREA_GANONS_CASTLE)
+            worldMapArea = WORLD_MAP_AREA_GERUDO_VALLEY;
+
         gDPPipeSync(POLY_OPA_DISP++);
         gDPSetTextureFilter(POLY_OPA_DISP++, G_TF_POINT);
 
@@ -782,38 +786,38 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
 
         pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 0].v.ob[0] =
             pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 2].v.ob[0] =
-                areaBoxPosX[((void)0, gSaveContext.worldMapArea)];
+                areaBoxPosX[((void)0, worldMapArea)];
 
         pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 1].v.ob[0] =
             pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 3].v.ob[0] =
                 pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 0].v.ob[0] +
-                areaBoxWidths[((void)0, gSaveContext.worldMapArea)];
+                areaBoxWidths[((void)0, worldMapArea)];
 
         pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 0].v.ob[1] =
             pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 1].v.ob[1] =
-                areaBoxPosY[((void)0, gSaveContext.worldMapArea)] + pauseCtx->pagesYOrigin1;
+                areaBoxPosY[((void)0, worldMapArea)] + pauseCtx->pagesYOrigin1;
 
         pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 2].v.ob[1] =
             pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 3].v.ob[1] =
                 pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 0].v.ob[1] -
-                areaBoxHeights[((void)0, gSaveContext.worldMapArea)];
+                areaBoxHeights[((void)0, worldMapArea)];
 
         pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 1].v.tc[0] =
             pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 3].v.tc[0] =
-                areaBoxWidths[((void)0, gSaveContext.worldMapArea)] << 5;
+                areaBoxWidths[((void)0, worldMapArea)] << 5;
 
         pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 2].v.tc[1] =
             pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4 + 3].v.tc[1] =
-                areaBoxHeights[((void)0, gSaveContext.worldMapArea)] << 5;
+                areaBoxHeights[((void)0, worldMapArea)] << 5;
 
         gSPVertex(POLY_OPA_DISP++, &pauseCtx->mapPageVtx[(PAGE_BG_QUADS + WORLD_MAP_QUAD_28) * 4], 4, 0);
 
         gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 100, 255, 255, pauseCtx->alpha);
 
-        gDPLoadTextureBlock_4b(POLY_OPA_DISP++, areaBoxTexs[((void)0, (gSaveContext.worldMapArea))], G_IM_FMT_IA,
-                               areaBoxWidths[((void)0, (gSaveContext.worldMapArea))],
-                               areaBoxHeights[((void)0, (gSaveContext.worldMapArea))], 0, G_TX_WRAP | G_TX_NOMIRROR,
+        gDPLoadTextureBlock_4b(POLY_OPA_DISP++, areaBoxTexs[((void)0, (worldMapArea))], G_IM_FMT_IA,
+                               areaBoxWidths[((void)0, (worldMapArea))],
+                               areaBoxHeights[((void)0, (worldMapArea))], 0, G_TX_WRAP | G_TX_NOMIRROR,
                                G_TX_WRAP | G_TX_NOMIRROR, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
         gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);

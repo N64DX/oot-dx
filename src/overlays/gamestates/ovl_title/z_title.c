@@ -294,7 +294,7 @@ void ConsoleLogo_Init(GameState* thisx) {
 
     Sram_Alloc(&this->state, &this->sramCtx);
 
-#if SKIP_N64_BOOT_LOGO
+#if SKIP_N64_BOOT_LOGO && DEBUG_FEATURES
     SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
     return;
 #endif

@@ -65,9 +65,9 @@ static ColliderCylinderInitType1 sCylinderInit = {
 static DamageTable sDamageTable[] = {
     /* Deku nut      */ DMG_ENTRY(0, 0x0),
     /* Deku stick    */ DMG_ENTRY(0, 0x0),
-    /* Slingshot     */ DMG_ENTRY(0, 0x0),
+    /* Slingshot     */ DMG_ENTRY(1, 0xF),
     /* Explosive     */ DMG_ENTRY(2, 0xF),
-    /* Boomerang     */ DMG_ENTRY(0, 0x0),
+    /* Boomerang     */ DMG_ENTRY(1, 0x1),
     /* Normal arrow  */ DMG_ENTRY(2, 0xF),
     /* Hammer swing  */ DMG_ENTRY(2, 0xF),
     /* Hookshot      */ DMG_ENTRY(2, 0x1),
@@ -93,7 +93,7 @@ static DamageTable sDamageTable[] = {
     /* Master jump   */ DMG_ENTRY(4, 0xD),
     /* Unknown 1     */ DMG_ENTRY(0, 0x0),
     /* Unblockable   */ DMG_ENTRY(0, 0x0),
-    /* Hammer jump   */ DMG_ENTRY(0, 0x0),
+    /* Hammer jump   */ DMG_ENTRY(4, 0xD),
     /* Unknown 2     */ DMG_ENTRY(0, 0x0),
 };
 
@@ -137,6 +137,12 @@ void EnSb_Init(Actor* thisx, PlayState* play) {
     this->hitByWindArrow = false;
     this->actor.velocity.y = -1.0f;
     EnSb_SetupWaitClosed(this);
+
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
 }
 
 void EnSb_Destroy(Actor* thisx, PlayState* play) {

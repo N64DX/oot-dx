@@ -246,6 +246,12 @@ void EnWf_Init(Actor* thisx, PlayState* play) {
     this->eyeIndex = 0;
     this->unk_2F4 = 10.0f; // Set and not used
 
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
+
     Collider_InitJntSph(play, &this->colliderJntSph);
     Collider_SetJntSph(play, &this->colliderJntSph, thisx, &sJntSphInit, this->colliderJntSphElements);
     Collider_InitCylinder(play, &this->bodyColliderCylinder);

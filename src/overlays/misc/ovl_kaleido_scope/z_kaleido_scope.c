@@ -4141,7 +4141,7 @@ void KaleidoScope_Update(PlayState* play) {
             pauseCtx->tradeQuestMarker = TRADE_QUEST_MARKER_NONE;
 
             i = INV_CONTENT(ITEM_TRADE_ADULT);
-            if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
+            if (LINK_IS_ADULT_OR_TIMESKIP) {
                 if ((i <= ITEM_POCKET_CUCCO) || (i == ITEM_ODD_MUSHROOM)) {
                     pauseCtx->tradeQuestMarker = WORLD_MAP_POINT_KAKARIKO_VILLAGE;
                 }

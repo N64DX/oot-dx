@@ -132,6 +132,12 @@ void EnCrow_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&this->actor.shape, 2000.0f, ActorShadow_DrawCircle, 20.0f);
     sDeathCount = 0;
     EnCrow_SetupFlyIdle(this);
+
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
 }
 
 void EnCrow_Destroy(Actor* thisx, PlayState* play) {

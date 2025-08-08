@@ -489,8 +489,9 @@ static MapSelectEntry sMapSelectEntries[] = {
 #if PLATFORM_N64
     { "116:" T("Road to Lake Hylia", "Road to Lake Hylia"), MapSelect_LoadGame, ENTR_ROAD_TO_LAKE_HYLIA_0 },
     { "117:" T("Road to Fortress", "Road to Fortress"), MapSelect_LoadGame, ENTR_ROAD_TO_FORTRESS_0 },
-    { "118:" T("Grotto (Shortcut 1)", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
-    { "119:" T("Grotto (Shortcut 2)", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
+    { "118:" T("Outside Ganon's Castle", "Outside Ganon's Castle"), MapSelect_LoadGame, MAP_OUTSIDE_GANONS_CASTLE_0 },
+    { "119:" T("Grotto (Shortcut 1)", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
+    { "120:" T("Grotto (Shortcut 2)", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };

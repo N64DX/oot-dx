@@ -318,6 +318,15 @@ static ShopItem sShopkeeperStores[][8] = {
       { SI_KEATON_MASK, -50, 76, -20 },
       { SI_BUNNY_HOOD, -80, 52, -3 },
       { SI_SPOOKY_MASK, -80, 76, -3 } },
+      
+    { { SI_HYLIAN_SHIELD, 50, 52, -20 },
+      { SI_BOMBS_5_R35, 50, 76, -20 },
+      { SI_ARROWS_10, 80, 52, -3 },
+      { SI_RECOVERY_HEART, 80, 76, -3 },
+      { SI_DEKU_SEEDS_30, -50, 52, -20 },
+      { SI_DEKU_NUTS_10, -50, 76, -20 },
+      { SI_DEKU_STICK, -80, 52, -3 },
+      { SI_DEKU_NUTS_5, -80, 76, -3 } },
 };
 static EnOssanGetGirlAParamsFunc sShopItemReplaceFunc[] = {
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
@@ -332,7 +341,7 @@ static EnOssanGetGirlAParamsFunc sShopItemReplaceFunc[] = {
     ShopItemDisp_GoronMask, ShopItemDisp_GerudoMask, ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
-    ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
+    ShopItemDisp_Default,   ShopItemDisp_Default,
 };
 
 static InitChainEntry sInitChain[] = {
@@ -534,7 +543,7 @@ void EnOssan_TalkZoraShopkeeper(PlayState* play) {
 
 // Goron City, Goron
 void EnOssan_TalkGoronShopkeeper(PlayState* play) {
-    if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         if (GET_EVENTCHKINF(EVENTCHKINF_25)) {
             Message_ContinueTextbox(play, 0x3028);
         } else if (CUR_UPG_VALUE(UPG_STRENGTH) != 0) {
@@ -598,7 +607,7 @@ void EnOssan_Init(Actor* thisx, PlayState* play) {
     s32 pad;
     s16* objectIds;
 
-    if (this->actor.params == OSSAN_TYPE_TALON && (LINK_AGE_IN_YEARS != YEARS_CHILD)) {
+    if (this->actor.params == OSSAN_TYPE_TALON && LINK_IS_ADULT_OR_TIMESKIP) {
         this->actor.params = OSSAN_TYPE_INGO;
     }
 
@@ -619,7 +628,7 @@ void EnOssan_Init(Actor* thisx, PlayState* play) {
         return;
     }
 
-    if (this->actor.params == OSSAN_TYPE_KAKARIKO_POTION && (LINK_AGE_IN_YEARS == YEARS_CHILD)) {
+    if (this->actor.params == OSSAN_TYPE_KAKARIKO_POTION && !LINK_IS_ADULT_OR_TIMESKIP) {
         Actor_Kill(&this->actor);
         return;
     }
@@ -2161,7 +2170,9 @@ void EnOssan_InitActionFunc(EnOssan* this, PlayState* play) {
         this->actor.world.pos.y += sShopkeeperPositionOffsets[this->actor.params].y;
         this->actor.world.pos.z += sShopkeeperPositionOffsets[this->actor.params].z;
 
-        items = sShopkeeperStores[this->actor.params];
+        if (IS_CHILD_QUEST && this->actor.params == 4)
+            items = sShopkeeperStores[11];
+        else items = sShopkeeperStores[this->actor.params];
 
         ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 20.0f);
         sInitFuncs[this->actor.params](this, play);

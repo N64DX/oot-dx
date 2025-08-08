@@ -1606,38 +1606,40 @@ u8 Interface_LoadItemIconChildQuest(u8 item) {
         return ITEM_FISHING_POLE + 2;
     else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
         return ITEM_FISHING_POLE + 1;
-    else if (IS_CHILD_QUEST && LINK_IS_CHILD) {
-        if (item == ITEM_HOOKSHOT)
-            return ITEM_FISHING_POLE + 7;
-        else if (item == ITEM_LONGSHOT)
-            return ITEM_FISHING_POLE + 8;
-
-        else if (item == ITEM_BOW)
-            return ITEM_FISHING_POLE + 9;
-        else if (item == ITEM_BOW_FIRE)
-            return ITEM_FISHING_POLE + 10;
-        else if (item == ITEM_BOW_ICE)
-            return ITEM_FISHING_POLE + 11;
-        else if (item == ITEM_BOW_LIGHT)
-            return ITEM_FISHING_POLE + 12;
-
-        else if (item == ITEM_SWORD_MASTER)
-            return ITEM_FISHING_POLE + 4;
-        else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
-            return ITEM_FISHING_POLE + 5;
-        else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
-            return ITEM_FISHING_POLE + 6;
-        else if (item == ITEM_SHIELD_MIRROR)
-            return ITEM_FISHING_POLE + 3;
-        
-        else if (item == ITEM_STRENGTH_SILVER_GAUNTLETS)
-            return ITEM_FISHING_POLE + 13;
-        else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
-            return ITEM_FISHING_POLE + 14;
-        
-        else if (item == ITEM_BROKEN_GORONS_SWORD)
+    else if (IS_CHILD_QUEST) {
+        if (item == ITEM_BROKEN_GORONS_SWORD)
             return ITEM_FISHING_POLE + 15;
+        else if (LINK_IS_CHILD) {
+            if (item == ITEM_HOOKSHOT)
+                return ITEM_FISHING_POLE + 7;
+            else if (item == ITEM_LONGSHOT)
+                return ITEM_FISHING_POLE + 8;
+
+            else if (item == ITEM_BOW)
+                return ITEM_FISHING_POLE + 9;
+            else if (item == ITEM_BOW_FIRE)
+                return ITEM_FISHING_POLE + 10;
+            else if (item == ITEM_BOW_ICE)
+                return ITEM_FISHING_POLE + 11;
+            else if (item == ITEM_BOW_LIGHT)
+                return ITEM_FISHING_POLE + 12;
+
+            else if (item == ITEM_SWORD_MASTER)
+                return ITEM_FISHING_POLE + 4;
+            else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
+                return ITEM_FISHING_POLE + 5;
+            else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
+                return ITEM_FISHING_POLE + 6;
+            else if (item == ITEM_SHIELD_MIRROR)
+                return ITEM_FISHING_POLE + 3;
+            
+            else if (item == ITEM_STRENGTH_SILVER_GAUNTLETS)
+                return ITEM_FISHING_POLE + 13;
+            else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
+                return ITEM_FISHING_POLE + 14;
+        }
     }
+
     return item;
 }
 
@@ -4608,7 +4610,7 @@ void Interface_Update(PlayState* play) {
     u16 action;
 
 #if (OOT_PAL || OOT_NTSC_N64) && DEBUG_FEATURES
-    if (Message_GetState(&play->msgCtx) == 0) {
+    if (Message_GetState(&play->msgCtx) == 0 && !IS_CHILD_QUEST) {
         Input* debugInput = &play->state.input[2];
 
         if (CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {

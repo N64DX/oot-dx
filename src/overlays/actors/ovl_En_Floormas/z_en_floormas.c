@@ -149,6 +149,12 @@ void EnFloormas_Init(Actor* thisx, PlayState* play2) {
     this->zOffset = -1600;
     invisble = PARAMS_GET_NOSHIFT(this->actor.params, 15, 1); // SPAWN_INVISIBLE
 
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
+
     // s16 cast needed
     this->actor.params &= (s16) ~(SPAWN_INVISIBLE);
     if (invisble) {

@@ -68,7 +68,7 @@ MSG()
 DEFINE_MESSAGE(0x8005, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "You got the Silver Sword\n"
+UNSKIPPABLE ITEM_ICON(0x5F) QUICKTEXT_ENABLE "You got the Silver Sword\n"
 "reforged into the " COLOR(RED) "Gilded Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "This blade was forged by a\n"
 "master smith for great power!"
@@ -109,7 +109,7 @@ MSG()
 DEFINE_MESSAGE(0x8008, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE "You found another " COLOR(BLUE) "Power Bracelet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE "You got another " COLOR(BLUE) "Power Bracelet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "You can feel even more power \n"
 "coursing through your arms!\n"
 "Grab with " COLOR(BLUE) "[A] " COLOR(DEFAULT) "and lift stuff up!"
@@ -138,7 +138,7 @@ MSG()
 DEFINE_MESSAGE(0x800A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BOW) QUICKTEXT_ENABLE "You traded the Poacher's Saw\n"
+UNSKIPPABLE ITEM_ICON(ITEM_BROKEN_GORONS_SWORD) QUICKTEXT_ENABLE "You traded the Poacher's Saw\n"
 "for some high quality " COLOR(RED) "Gold Dust" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Bring it to a master smith to\n"
 "reforge a sword with it!"
@@ -167,6 +167,50 @@ QUICKTEXT_ENABLE COLOR(RED) "Hero's Sword   200 Rupees\n"
 COLOR(DEFAULT) "A sword fit for young heroes!\n"
 "This powered-up sword can shoot\n"
 "beams when charged!" QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x800D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+ITEM_ICON(ITEM_TUNIC_GORON) QUICKTEXT_ENABLE "You got a " COLOR(RED) "Goron Tunic" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"This is a heat-resistant tunic.\n"
+"Going to a hot place? No worry!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x800E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+ITEM_ICON(ITEM_TUNIC_ZORA) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Zora Tunic" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"This is diving suit. Wear it\n"
+"and you won't drown underwater."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x800F, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(RED) "Goron Tunic   200 Rupees\n"
+COLOR(DEFAULT) "A tunic made by Gorons.\n"
+"Protects you from heat damage." QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8010, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(RED) "Zora Tunic   300 Rupees\n"
+COLOR(DEFAULT) "A tunic made by Zoras. Prevents\n"
+"you from drowning underwater." QUICKTEXT_DISABLE PERSISTENT
 ),
 MSG(),
 MSG()
@@ -799,6 +843,19 @@ COLOR(BLUE) "Power Bracelet" COLOR(DEFAULT) "..."
 BOX_BREAK
 
 "I'll do something great for you!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x811C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"How about buying this silver sword\n"
+"for 200 Rupees?\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Buy\n"
+    "Don't buy" COLOR(DEFAULT)
 ),
 MSG(),
 MSG()

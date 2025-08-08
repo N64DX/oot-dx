@@ -303,6 +303,13 @@ void BossSst_Init(Actor* thisx, PlayState* play2) {
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
     Flags_SetSwitch(play, 0x14);
+
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
+
     if (this->actor.params == BONGO_HEAD) {
         sFloor = (BgSstFloor*)Actor_Spawn(&play->actorCtx, play, ACTOR_BG_SST_FLOOR, sRoomCenter.x, sRoomCenter.y,
                                           sRoomCenter.z, 0, 0, 0, BONGOFLOOR_REST);

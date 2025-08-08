@@ -322,7 +322,7 @@ void EnToryo_HandleTalking(EnToryo* this, PlayState* play) {
             this->actor.parent = NULL;
             this->messageState = 5;
         } else {
-            Actor_OfferGetItem(&this->actor, play, GI_BROKEN_GORONS_SWORD, 100.0f, 10.0f);
+            Actor_OfferGetItem(&this->actor, play, IS_CHILD_QUEST ? GI_GOLD_DUST : GI_BROKEN_GORONS_SWORD, 100.0f, 10.0f);
         }
         return;
     }

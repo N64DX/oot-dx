@@ -12,6 +12,7 @@
 #include "frame_advance.h"
 #include "zelda_arena.h"
 #include "play_state.h"
+#include "save.h"
 
 #include "overlays/effects/ovl_Effect_Ss_HitMark/z_eff_ss_hitmark.h"
 #include "z_lib.h"
@@ -3730,9 +3731,9 @@ u8 CollisionCheck_GetSwordDamage(s32 dmgFlags) {
     } else if (dmgFlags & (DMG_JUMP_KOKIRI | DMG_SPIN_MASTER | DMG_SLASH_MASTER | DMG_HAMMER_SWING | DMG_DEKU_STICK)) {
         damage = 2;
     } else if (dmgFlags & (DMG_HAMMER_JUMP | DMG_JUMP_MASTER | DMG_SPIN_GIANT | DMG_SLASH_GIANT)) {
-        damage = 4;
+        damage = (IS_CHILD_QUEST && LINK_IS_CHILD && (dmgFlags & DMG_SPIN_GIANT | DMG_SLASH_GIANT)) ? 3 : 4;
     } else if (dmgFlags & DMG_JUMP_GIANT) {
-        damage = 8;
+        damage = (IS_CHILD_QUEST && LINK_IS_CHILD && (dmgFlags & DMG_JUMP_GIANT)) ? 6 : 8;
     }
 
 #if DEBUG_FEATURES

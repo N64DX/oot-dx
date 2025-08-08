@@ -4,6 +4,6 @@
     SCENE_CMD_SKYBOX_DISABLES(false /* skybox enabled */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&shop1_room_0_030000A0_RoomShapeImageSingle),
-    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(shop1_room_0_03000040_ObjectList), shop1_room_0_03000040_ObjectList),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(cq_objects), cq_objects),
     SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(shop1_room_0_03000058_ActorEntryList), shop1_room_0_03000058_ActorEntryList),
     SCENE_CMD_END(),

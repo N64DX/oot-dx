@@ -520,15 +520,15 @@ void Message_GrowTextbox(MessageContext* msgCtx) {
         0.6f, 0.75f, 0.9f, 1.0f, 1.05f, 1.1f, 1.05f, 1.0f,
     };
     f32 width =
-        R_TEXTBOX_WIDTH_TARGET * (sWidthCoefficients[msgCtx->stateTimer] + sWidthCoefficients[msgCtx->stateTimer]);
-    f32 height = R_TEXTBOX_HEIGHT_TARGET * sHeightCoefficients[msgCtx->stateTimer];
+        R_TEXTBOX_WIDTH_TARGET * (sWidthCoefficients[(u8)msgCtx->stateTimer] + sWidthCoefficients[(u8)msgCtx->stateTimer]);
+    f32 height = R_TEXTBOX_HEIGHT_TARGET * sHeightCoefficients[(u8)msgCtx->stateTimer];
     f32 texWidth =
-        R_TEXTBOX_TEXWIDTH_TARGET / (sWidthCoefficients[msgCtx->stateTimer] + sWidthCoefficients[msgCtx->stateTimer]);
-    f32 texHeight = R_TEXTBOX_TEXHEIGHT_TARGET / sHeightCoefficients[msgCtx->stateTimer];
+        R_TEXTBOX_TEXWIDTH_TARGET / (sWidthCoefficients[(u8)msgCtx->stateTimer] + sWidthCoefficients[(u8)msgCtx->stateTimer]);
+    f32 texHeight = R_TEXTBOX_TEXHEIGHT_TARGET / sHeightCoefficients[(u8)msgCtx->stateTimer];
 
     // Adjust y pos
     R_TEXTBOX_Y = R_TEXTBOX_Y_TARGET +
-                  (R_TEXTBOX_Y_TARGET - (s16)(R_TEXTBOX_Y_TARGET * sHeightCoefficients[msgCtx->stateTimer] + 0.5f)) / 2;
+                  (R_TEXTBOX_Y_TARGET - (s16)(R_TEXTBOX_Y_TARGET * sHeightCoefficients[(u8)msgCtx->stateTimer] + 0.5f)) / 2;
 
     msgCtx->textboxColorAlphaCurrent += msgCtx->textboxColorAlphaTarget / 8;
     msgCtx->stateTimer++;
@@ -2839,6 +2839,19 @@ void Message_OpenText(PlayState* play, u16 textId) {
         if (IS_CHILD_QUEST) {
             language = LANGUAGE_ENG;
             switch (textId) {
+                case 0x0050:
+                    textId = 0x800D;
+                    break;
+                case 0x0051:
+                    textId = 0x800E;
+                    break;
+                case 0x00AA:
+                    textId = 0x800F;
+                    break;
+                case 0x00AB:
+                    textId = 0x8010;
+                    break;
+
                 case 0x015A:
                     textId = 0x8119;
                     break;
@@ -2874,6 +2887,9 @@ void Message_OpenText(PlayState* play, u16 textId) {
                     break;
                 case 0x304E:
                     textId = 0x8106;
+                    break;
+                case 0x304F:
+                    textId = 0x811C;
                     break;
                 case 0x3053:
                     textId = 0x810B;

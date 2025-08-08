@@ -177,6 +177,12 @@ void EnRd_Init(Actor* thisx, PlayState* play) {
     this->alpha = this->unk_31D = 255;
     this->rdFlags = REDEAD_GET_RDFLAGS(thisx);
 
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
+
     if (PARAMS_GET_NOSHIFT(this->actor.params, 7, 1)) {
         this->actor.params |= 0xFF00;
     } else {

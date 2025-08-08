@@ -240,6 +240,12 @@ void EnIk_InitImpl(Actor* thisx, PlayState* play) {
     this->switchFlag = IK_GET_SWITCH_FLAG(thisx);
     thisx->params = IK_GET_ARMOR_TYPE(thisx);
 
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
+
     if (thisx->params == IK_TYPE_NABOORU) {
         thisx->colChkInfo.health += Actor_EnemyHealthMultiply(20, ELITE_HP);
         thisx->naviEnemyId = NAVI_ENEMY_IRON_KNUCKLE_NABOORU;

@@ -359,6 +359,12 @@ void EnBubble_Init(Actor* thisx, PlayState* play) {
     this->velocityFromBounce.z = this->bounceDirection.z * 3.0f;
     EnBubble_SetDimensions(this, 0.0f);
     this->actionFunc = EnBubble_Wait;
+
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
 }
 
 void EnBubble_Destroy(Actor* thisx, PlayState* play) {

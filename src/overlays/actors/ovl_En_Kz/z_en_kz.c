@@ -123,7 +123,7 @@ u16 EnKz_GetTextId(PlayState* play, Actor* thisx) {
         return textId;
     }
 
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT_OR_TIMESKIP) {
         return EnKz_GetTextIdAdult(play, this);
     } else {
         return EnKz_GetTextIdChild(play, this);

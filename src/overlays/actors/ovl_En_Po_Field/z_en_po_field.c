@@ -193,6 +193,12 @@ void EnPoField_Init(Actor* thisx, PlayState* play) {
                             255, 255, 255, 0);
     this->actor.shape.shadowDraw = ActorShadow_DrawCircle;
     EnPoField_SetupWaitForSpawn(this, play);
+
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
 }
 
 void EnPoField_Destroy(Actor* thisx, PlayState* play) {

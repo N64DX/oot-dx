@@ -2512,7 +2512,7 @@ void func_80833A20(Player* this, s32 newMeleeWeaponState) {
 
     if (this->meleeWeaponState == 0) {
         if ((this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) &&
-            (gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
+            (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth > 0.0f : gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
             itemSfx = NA_SE_IT_HAMMER_SWING;
         } else {
             itemSfx = NA_SE_IT_SWORD_SWING;
@@ -4978,6 +4978,8 @@ void func_80837948(PlayState* play, Player* this, s32 arg2) {
         temp = 1;
     } else {
         temp = Player_GetMeleeWeaponHeld(this) - 1;
+        if (IS_CHILD_QUEST && LINK_IS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON && !gSaveContext.save.info.playerData.bgsFlag)
+            temp = 0;
     }
 
     if ((arg2 >= PLAYER_MWA_FLIPSLASH_START) && (arg2 <= PLAYER_MWA_JUMPSLASH_FINISH)) {
@@ -7040,6 +7042,10 @@ s32 Player_ActionHandler_8(Player* this, PlayState* play) {
             (this->unk_844 == 1) && (this->heldItemAction != PLAYER_IA_DEKU_STICK)) {
             if ((this->heldItemAction != PLAYER_IA_SWORD_BIGGORON) ||
                 (gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
+                func_808377DC(play, this);
+                return 1;
+            }
+            else if (IS_CHILD_QUEST && LINK_IS_CHILD) {
                 func_808377DC(play, this);
                 return 1;
             }
@@ -9509,7 +9515,7 @@ s32 func_80842AC4(PlayState* play, Player* this) {
 
 s32 func_80842B7C(PlayState* play, Player* this) {
     if (this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) {
-        if (!gSaveContext.save.info.playerData.bgsFlag && (gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
+        if (!gSaveContext.save.info.playerData.bgsFlag && (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth > 0.0f :  gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
             if ((gSaveContext.save.info.playerData.swordHealth -= 1.0f) <= 0.0f) {
                 EffectSsStick_Spawn(play, &this->bodyPartsPos[PLAYER_BODYPART_R_HAND],
                                     this->actor.shape.rot.y + 0x8000);
@@ -11228,7 +11234,8 @@ void Player_Init(Actor* thisx, PlayState* play2) {
     this->prevBoots = this->currentBoots;
 
     Player_InitCommon(this, play, gPlayerSkelHeaders[((void)0, gSaveContext.save.linkAge)]);
-
+    
+    D_80854528[0xA] = IS_CHILD_QUEST ? GI_GOLD_DUST : GI_BROKEN_GORONS_SWORD;
     D_80854B18[PLAYER_CSACTION_63].type = LINK_IS_CHILD ? 2 : 5;
     D_80854B18[PLAYER_CSACTION_70].type = LINK_IS_CHILD ? 3 : 6;
     D_80854B18[PLAYER_CSACTION_71].type = LINK_IS_CHILD ? 3 : 6;

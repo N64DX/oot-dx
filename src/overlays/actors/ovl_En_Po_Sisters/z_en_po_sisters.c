@@ -240,6 +240,12 @@ void EnPoSisters_Init(Actor* thisx, PlayState* play) {
         func_80AD9D44(this);
     }
     this->actor.params &= 0x3F;
+
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
 }
 
 void EnPoSisters_Destroy(Actor* thisx, PlayState* play) {

@@ -138,6 +138,12 @@ void EnDekunuts_Init(Actor* thisx, PlayState* play) {
         EnDekunuts_SetupWait(this);
         Actor_SpawnAsChild(&play->actorCtx, thisx, play, ACTOR_EN_DEKUNUTS, thisx->world.pos.x, thisx->world.pos.y,
                            thisx->world.pos.z, 0, thisx->world.rot.y, 0, DEKUNUTS_FLOWER);
+                           
+        if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+            thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+            thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+            thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+        }
     }
 }
 

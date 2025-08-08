@@ -948,7 +948,7 @@ s32 Player_GetMeleeWeaponHeld(Player* this) {
 
 s32 Player_HoldsTwoHandedWeapon(Player* this) {
     if ((this->heldItemAction >= PLAYER_IA_SWORD_BIGGORON) && (this->heldItemAction <= PLAYER_IA_HAMMER)) {
-        return (LINK_IS_CHILD) ? 0 : 1;
+        return (LINK_IS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) ? 0 : 1;
     } else {
         return 0;
     }
@@ -956,7 +956,7 @@ s32 Player_HoldsTwoHandedWeapon(Player* this) {
 
 int Player_HoldsBrokenKnife(Player* this) {
     return (this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) &&
-           (gSaveContext.save.info.playerData.swordHealth <= 0.0f);
+           (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth <= 0.0f : gSaveContext.save.info.playerData.swordHealth <= 0.0f);
 }
 
 s32 Player_ActionToBottle(Player* this, s32 itemAction) {
@@ -1223,6 +1223,7 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
         } else {
             if (IS_CHILD_QUEST) {
                 s32 strengthUpgrade = CUR_UPG_VALUE(UPG_STRENGTH);
+                gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
                 if (strengthUpgrade == PLAYER_STR_BRACELET) {
                     gSPDisplayList(POLY_OPA_DISP++, gLinkChildGoronBraceletDL);
                 } else if (strengthUpgrade == PLAYER_STR_SILVER_G) {

@@ -346,6 +346,12 @@ void EnMb_Init(Actor* thisx, PlayState* play) {
             EnMb_SetupSpearPatrolTurnTowardsWaypoint(this, play);
             break;
     }
+
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
 }
 
 void EnMb_Destroy(Actor* thisx, PlayState* play) {

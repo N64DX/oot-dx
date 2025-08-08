@@ -111,8 +111,8 @@ void EnBb_Stunned(EnBb* this, PlayState* play);
 
 static DamageTable sDamageTableBlueGreen = {
     /* Deku nut      */ DMG_ENTRY(0, 0xF),
-    /* Deku stick    */ DMG_ENTRY(2, 0x0),
-    /* Slingshot     */ DMG_ENTRY(1, 0x0),
+    /* Deku stick    */ DMG_ENTRY(2, 0xD),
+    /* Slingshot     */ DMG_ENTRY(1, 0xD),
     /* Explosive     */ DMG_ENTRY(2, 0xA),
     /* Boomerang     */ DMG_ENTRY(0, 0xF),
     /* Normal arrow  */ DMG_ENTRY(2, 0xE),
@@ -146,14 +146,14 @@ static DamageTable sDamageTableBlueGreen = {
 
 static DamageTable sDamageTableRed = {
     /* Deku nut      */ DMG_ENTRY(0, 0xD),
-    /* Deku stick    */ DMG_ENTRY(0, 0xD),
-    /* Slingshot     */ DMG_ENTRY(0, 0xD),
+    /* Deku stick    */ DMG_ENTRY(2, 0xD),
+    /* Slingshot     */ DMG_ENTRY(1, 0xD),
     /* Explosive     */ DMG_ENTRY(2, 0xA),
     /* Boomerang     */ DMG_ENTRY(0, 0xD),
     /* Normal arrow  */ DMG_ENTRY(2, 0xE),
     /* Hammer swing  */ DMG_ENTRY(2, 0xA),
     /* Hookshot      */ DMG_ENTRY(0, 0xD),
-    /* Kokiri sword  */ DMG_ENTRY(0, 0xD),
+    /* Kokiri sword  */ DMG_ENTRY(1, 0xE),
     /* Master sword  */ DMG_ENTRY(2, 0xE),
     /* Giant's Knife */ DMG_ENTRY(4, 0xE),
     /* Fire arrow    */ DMG_ENTRY(2, 0xE),
@@ -167,10 +167,10 @@ static DamageTable sDamageTableRed = {
     /* Light magic   */ DMG_ENTRY(0, 0x6),
     /* Shield        */ DMG_ENTRY(0, 0xA),
     /* Mirror Ray    */ DMG_ENTRY(0, 0xA),
-    /* Kokiri spin   */ DMG_ENTRY(1, 0x0),
+    /* Kokiri spin   */ DMG_ENTRY(1, 0xE),
     /* Giant spin    */ DMG_ENTRY(4, 0xE),
     /* Master spin   */ DMG_ENTRY(2, 0xE),
-    /* Kokiri jump   */ DMG_ENTRY(2, 0x0),
+    /* Kokiri jump   */ DMG_ENTRY(2, 0xE),
     /* Giant jump    */ DMG_ENTRY(8, 0xE),
     /* Master jump   */ DMG_ENTRY(4, 0xE),
     /* Unknown 1     */ DMG_ENTRY(0, 0x6),
@@ -416,6 +416,12 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
     }
     this->collider.elements[0].dim.worldSphere.radius =
         this->collider.elements[0].dim.modelSphere.radius * this->collider.elements[0].dim.scale;
+
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
 }
 
 void EnBb_Destroy(Actor* thisx, PlayState* play) {
@@ -1315,13 +1321,8 @@ void EnBb_Draw(Actor* thisx, PlayState* play) {
                               this);
 
             if (this->fireIceTimer != 0) {
-                this->actor.colorFilterTimer++;
-                //! @bug:
-                //! The purpose of this is to counteract Actor_UpdateAll decrementing colorFilterTimer. However,
-                //! the above bugs mean unk_2A8 can be nonzero without damage effects ever having been set.
-                //! This routine will then increment colorFilterTimer, and on the next frame Actor_Draw will try
-                //! to draw the unset colorFilterParams. This causes a divide-by-zero error, crashing the game.
-                if (1) {}
+                if (this->dmgEffect == 5 || this->dmgEffect == 7)
+                    this->actor.colorFilterTimer++;
                 this->fireIceTimer--;
                 if ((this->fireIceTimer % 4) == 0) {
                     Vec3f sp70;

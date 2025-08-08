@@ -91,7 +91,7 @@ static DamageTable sDamageTable = {
     /* Master jump   */ DMG_ENTRY(4, LEEVER_DMG_REACT_OTHER),
     /* Unknown 1     */ DMG_ENTRY(0, LEEVER_DMG_REACT_UNK),
     /* Unblockable   */ DMG_ENTRY(0, LEEVER_DMG_REACT_NONE),
-    /* Hammer jump   */ DMG_ENTRY(0, LEEVER_DMG_REACT_NONE),
+    /* Hammer jump   */ DMG_ENTRY(4, LEEVER_DMG_REACT_OTHER),
     /* Unknown 2     */ DMG_ENTRY(0, LEEVER_DMG_REACT_NONE),
 };
 
@@ -165,6 +165,12 @@ void EnReeba_Init(Actor* thisx, PlayState* play) {
                                 UPDBGCHECKINFO_FLAG_4);
 
     surfaceType = SurfaceType_GetFloorType(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId);
+
+    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
 
     if ((surfaceType != FLOOR_TYPE_4) && (surfaceType != FLOOR_TYPE_7)) {
         Actor_Kill(&this->actor);
