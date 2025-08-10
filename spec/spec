@@ -285,6 +285,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_108.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_109.prg.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_110.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_111.o"
 endseg
 
 beginseg
@@ -1371,6 +1372,13 @@ beginseg
     name "object_dekunuts"
     compress
     include "$(BUILD_DIR)/assets/objects/object_dekunuts/object_dekunuts.o"
+    number 6
+endseg
+
+beginseg
+    name "object_buffdeku"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_buffdeku/object_buffdeku.o"
     number 6
 endseg
 

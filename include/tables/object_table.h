@@ -61,6 +61,7 @@
 /* 0x0047 */ DEFINE_OBJECT(object_opening_demo1, OBJECT_OPENING_DEMO1)
 /* 0x0048 */ DEFINE_OBJECT(object_warp1, OBJECT_WARP1)
 /* 0x004A */ DEFINE_OBJECT(object_dekunuts, OBJECT_DEKUNUTS)
+/* 0x004A */ DEFINE_OBJECT(object_buffdeku, OBJECT_BUFFDEKU)
 /* 0x004B */ DEFINE_OBJECT(object_oE3, OBJECT_OE3)
 /* 0x004D */ DEFINE_OBJECT(object_menkuri_objects, OBJECT_MENKURI_OBJECTS)
 /* 0x0056 */ DEFINE_OBJECT(object_vali, OBJECT_VALI)

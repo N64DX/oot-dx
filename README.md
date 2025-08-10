@@ -20,6 +20,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes qualit
 - **OoT Randomizer:** Key chest textures
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
+- **LeSéducteur:** Buff Scrub actor
 
 ### Instructions
 

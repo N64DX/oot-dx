@@ -1656,6 +1656,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_BuffDeku"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_BuffDeku/z_en_buffdeku.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_BuffDeku/ovl_En_BuffDeku_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Dh"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Dh/z_en_dh.o"

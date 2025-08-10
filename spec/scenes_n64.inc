@@ -232,7 +232,7 @@ endseg
 beginseg
     name "spot05_room_0"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/spot05/spot05_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/spot05/spot05_cq_room_0.o"
     number 3
 endseg
 

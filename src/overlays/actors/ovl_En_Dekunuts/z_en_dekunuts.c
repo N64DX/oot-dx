@@ -139,6 +139,9 @@ void EnDekunuts_Init(Actor* thisx, PlayState* play) {
         Actor_SpawnAsChild(&play->actorCtx, thisx, play, ACTOR_EN_DEKUNUTS, thisx->world.pos.x, thisx->world.pos.y,
                            thisx->world.pos.z, 0, thisx->world.rot.y, 0, DEKUNUTS_FLOWER);
                            
+        if ((this->actor.params & 0x20) && Flags_GetSwitch(play, (this->actor.params & 0x1F)))
+            Actor_Kill(thisx);
+
         if (IS_CHILD_QUEST && LINK_IS_CHILD) {
             thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
             thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
@@ -192,13 +195,20 @@ void EnDekunuts_SetupBurrow(EnDekunuts* this) {
     this->actionFunc = EnDekunuts_Burrow;
 }
 
-void EnDekunuts_SetupBeginRun(EnDekunuts* this) {
+void EnDekunuts_SetupBeginRun(EnDekunuts* this, PlayState* play) {
     Animation_MorphToPlayOnce(&this->skelAnime, &gDekuNutsUnburrowAnim, -3.0f);
     this->collider.dim.height = 37;
     this->actor.colChkInfo.mass = 50;
     Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_DAMAGE);
     this->collider.base.acFlags &= ~AC_ON;
     this->actionFunc = EnDekunuts_BeginRun;
+
+    if (this->actor.params & 0x80) {
+        Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_EN_BUFFDEKU, 
+        this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, 
+        0, this->actor.shape.rot.y, 0, this->actor.params);
+        Actor_Kill(&this->actor);
+    }
 }
 
 void EnDekunuts_SetupRun(EnDekunuts* this) {
@@ -486,10 +496,10 @@ void EnDekunuts_ColliderCheck(EnDekunuts* this, PlayState* play) {
                 }
             }
         } else {
-            EnDekunuts_SetupBeginRun(this);
+            EnDekunuts_SetupBeginRun(this, play);
         }
     } else if ((this->actor.colChkInfo.mass == MASS_IMMOVABLE) && (play->actorCtx.unk_02 != 0)) {
-        EnDekunuts_SetupBeginRun(this);
+        EnDekunuts_SetupBeginRun(this, play);
     }
 }
 

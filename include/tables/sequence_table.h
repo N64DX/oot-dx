@@ -131,3 +131,4 @@ DEFINE_SEQUENCE    (Sequence_107,       NA_BGM_FIRE_BOSS,        MEDIUM_CART, CA
 DEFINE_SEQUENCE    (Sequence_108,       NA_BGM_TIMED_MINI_GAME,  MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESTORE                       ) // timed_mini_game
 DEFINE_SEQUENCE    (Sequence_109,       NA_BGM_CUTSCENE_EFFECTS, MEDIUM_CART, CACHE_LOAD_TEMPORARY,  0                                      ) // cutscene_effects
 DEFINE_SEQUENCE    (Sequence_110,       NA_BGM_FIRE_TEMPLE_ALT,  MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // fire_temple_censored
+DEFINE_SEQUENCE    (Sequence_111,       NA_BGM_MINI_BOSS2,       MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_NO_AMBIENCE | SEQ_FLAG_RESTORE) // mini_boss2
