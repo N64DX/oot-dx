@@ -3203,3 +3203,10 @@ beginseg
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Shot_Sun/z_shot_sun.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Shot_Sun/ovl_Shot_Sun_reloc.o"
 endseg
+
+beginseg
+    name "ovl_En_Hammergeist"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Hammergeist/z_en_hammergeist.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Hammergeist/ovl_En_Hammergeist_reloc.o"
+endseg

@@ -1799,6 +1799,9 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
 
         return ITEM_NONE;
+    } else if (item == ITEM_SWORD_HEROS) {
+        SET_HEROS_SWORD;
+        return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
         return ITEM_NONE;

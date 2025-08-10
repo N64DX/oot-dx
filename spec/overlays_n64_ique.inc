@@ -3203,3 +3203,10 @@ beginseg
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Warp2block/z_obj_warp2block.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Warp2block/ovl_Obj_Warp2block_reloc.o"
 endseg
+
+beginseg
+    name "ovl_En_Hammergeist"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Hammergeist/z_en_hammergeist.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Hammergeist/ovl_En_Hammergeist_reloc.o"
+endseg

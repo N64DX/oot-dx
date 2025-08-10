@@ -80,8 +80,8 @@ MSG()
 DEFINE_MESSAGE(0x8006, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5A) QUICKTEXT_ENABLE "You got the Kokiri Sword\n"
-"reforged into the " COLOR(RED) "Hero's Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(0x5A) QUICKTEXT_ENABLE "A powerful foe left behind a\n"
+COLOR(RED) "Hero's Sword" COLOR(DEFAULT) "! It is yours now!" QUICKTEXT_DISABLE "\n"
 "This sword is capable at\n"
 "throwing powerful beams!"
 ),

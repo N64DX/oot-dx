@@ -17,8 +17,8 @@ SceneCmd roadtofortress_room_0Commands[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_WIND_SETTINGS(80, 80, 80, 0),
     SCENE_CMD_ROOM_SHAPE(&roadtofortress_room_0RoomShapeCullable_000550),
-    SCENE_CMD_OBJECT_LIST(7, roadtofortress_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(34, roadtofortress_room_0ActorEntry_000064),
+    SCENE_CMD_OBJECT_LIST(9, roadtofortress_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(35, roadtofortress_room_0ActorEntry_000064),
     SCENE_CMD_END(),
 };
 
@@ -30,6 +30,8 @@ s16 roadtofortress_room_0ObjectList_000040[] = {
     OBJECT_BOMBIWA,
     OBJECT_UMAJUMP,
     OBJECT_GOROIWA,
+    OBJECT_HAMMERGEIST,
+    OBJECT_GI_SWORD_HEROS,
 };
 
 ActorEntry roadtofortress_room_0ActorEntry_000064[] = {
@@ -67,6 +69,7 @@ ActorEntry roadtofortress_room_0ActorEntry_000064[] = {
     { ACTOR_EN_GOROIWA,          {  3775, 1461, -1170 }, { 0,     0,   1 }, 0x4D01 },
     { ACTOR_EN_GOROIWA,          {  4443, 1462,    45 }, { 0,     0,   1 }, 0x4D02 },
     { ACTOR_EN_A_OBJ,            {  1614,  200,  -877 }, { 0, 0x4180,  0 }, 0x460A },
+    { ACTOR_EN_HAMMERGEIST,      {  1482,  200,  -864 }, { 0, 0xC000,  0 }, 0x0100 },
 };
 
 u8 roadtofortress_room_0padding_1[] = {

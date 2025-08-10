@@ -3,6 +3,7 @@
  * Overlay: ovl_En_BuffDeku
  * Description: Really Fucking Buff Mad Scrub
  * How to spawn: set the params of a regular scrub to 0xXX80. When hit, it'll disappear and spawn the buff scrub.
+  * Author: CLeSeducteur
  */
 
 #include "z_en_buffdeku.h"
@@ -239,9 +240,8 @@ bool EnBuffDeku_ShouldPanic(EnBuffDeku* this, PlayState* play) {
     actor = play->actorCtx.actorLists[ACTORCAT_ITEMACTION].head;
 
     while (actor != NULL) {
-        if (actor->id == ACTOR_ARROW_FIRE) {
+        if (actor->id == ACTOR_ARROW_FIRE)
             return true;
-        }
         actor = actor->next;
     }
 
@@ -249,20 +249,17 @@ bool EnBuffDeku_ShouldPanic(EnBuffDeku* this, PlayState* play) {
         return true;
 
     return false;
-
 }
 
 void EnBuffDeku_ColliderCheck(EnBuffDeku* this, PlayState* play) {
-    if (this->colliderSpheres.base.atFlags & AT_HIT) {
+    if (this->colliderSpheres.base.atFlags & AT_HIT)
         this->playerHit = true;
-    }
 
     if ((this->colliderBody.base.acFlags & AC_HIT) || (this->colliderSpheres.base.acFlags & AC_HIT))  {
         this->colliderSpheres.base.acFlags &= ~AC_HIT;
         this->colliderBody.base.acFlags &= ~AC_HIT;
-        if (this->actor.colChkInfo.damageReaction == 2) { //FIRE DMG
-            //DEATH
-            if (this->actor.colChkInfo.health != 0) {
+        if (this->actor.colChkInfo.damageReaction == 2) { // Fire damage
+            if (this->actor.colChkInfo.health != 0) { // Death
                 this->actor.colChkInfo.health = 0;
                 EnBuffDeku_SetupDeath(this);
             }
@@ -278,9 +275,7 @@ void EnBuffDeku_Update(Actor* thisx, PlayState* play) {
 	EnBuffDeku_ColliderCheck(this, play);
     this->actionFunc(this, play);
     Actor_MoveXZGravity(&this->actor);
-    Actor_UpdateBgCheckInfo(play, &this->actor, 20.0f, this->colliderBody.dim.radius, 
-        this->colliderBody.dim.height,  UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2 | 
-        UPDBGCHECKINFO_FLAG_3 | UPDBGCHECKINFO_FLAG_4);
+    Actor_UpdateBgCheckInfo(play, &this->actor, 20.0f, this->colliderBody.dim.radius,  this->colliderBody.dim.height,  UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2 |  UPDBGCHECKINFO_FLAG_3 | UPDBGCHECKINFO_FLAG_4);
 
 
     Collider_UpdateCylinder(&this->actor, &this->colliderBody);
@@ -297,13 +292,11 @@ void EnBuffDeku_Update(Actor* thisx, PlayState* play) {
     CollisionCheck_SetOC(play, &play->colChkCtx, &this->colliderSpheres.base);
 
     
-    /* panic mode */
-    if (EnBuffDeku_ShouldPanic(this,play) && (this->colliderBody.base.acFlags & AC_ON) ) {
+    /* Panic mode */
+    if (EnBuffDeku_ShouldPanic(this,play) && (this->colliderBody.base.acFlags & AC_ON) )
         EnBuffDeku_SetupPanic(this);
-    } else if (this->actionFunc == EnBuffDeku_Panic) {
+    else if (this->actionFunc == EnBuffDeku_Panic)
         EnBuffDeku_SetupBehaviour(this);
-    }
-
 }
 
 void EnBuffDeku_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx) {
@@ -315,47 +308,45 @@ void EnBuffDeku_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s*
 
     Collider_UpdateSpheres(limbIndex, &this->colliderSpheres);
 
-    switch (limbIndex)
-    {
-    case BUFFDEKUSKEL_HEAD_LIMB:
-        //FOCUS
-        Matrix_MultVec3f(&src, &dest);
-        this->actor.focus.pos.x = dest.x;
-        this->actor.focus.pos.y = dest.y;
-        this->actor.focus.pos.z = dest.z;
-        break;
-    default:
-        break;
+    switch (limbIndex) {
+        case BUFFDEKUSKEL_HEAD_LIMB: // Focus
+            Matrix_MultVec3f(&src, &dest);
+            this->actor.focus.pos.x = dest.x;
+            this->actor.focus.pos.y = dest.y;
+            this->actor.focus.pos.z = dest.z;
+            break;
+        default:
+            break;
     }
 
     if (this->onFire) {
         switch (limbIndex) {
-        case BUFFDEKUSKEL_HEAD_LIMB:
-            bodyPartIndex = 0;
-            break;
-        case BUFFDEKUSKEL_HAND_L_LIMB:
-            bodyPartIndex = 1;
-            break;
-        case BUFFDEKUSKEL_HAND_R_LIMB:
-            bodyPartIndex = 2;
-            break;
-        case BUFFDEKUSKEL_SHOULDER_R_LIMB:
-            bodyPartIndex = 3;
-            break;
-        case BUFFDEKUSKEL_SHOULDER_L_LIMB:
-            bodyPartIndex = 4;
-            break;
-        case BUFFDEKUSKEL_TORSO_LIMB:
-            bodyPartIndex = 5;
-            break;
-        case BUFFDEKUSKEL_THIGH_R_LIMB:
-            bodyPartIndex = 6;
-            break;
-        case BUFFDEKUSKEL_THIGH_L_LIMB:
-            bodyPartIndex = 7;
-            break;
-        default:
-            break;
+            case BUFFDEKUSKEL_HEAD_LIMB:
+                bodyPartIndex = 0;
+                break;
+            case BUFFDEKUSKEL_HAND_L_LIMB:
+                bodyPartIndex = 1;
+                break;
+            case BUFFDEKUSKEL_HAND_R_LIMB:
+                bodyPartIndex = 2;
+                break;
+            case BUFFDEKUSKEL_SHOULDER_R_LIMB:
+                bodyPartIndex = 3;
+                break;
+            case BUFFDEKUSKEL_SHOULDER_L_LIMB:
+                bodyPartIndex = 4;
+                break;
+            case BUFFDEKUSKEL_TORSO_LIMB:
+                bodyPartIndex = 5;
+                break;
+            case BUFFDEKUSKEL_THIGH_R_LIMB:
+                bodyPartIndex = 6;
+                break;
+            case BUFFDEKUSKEL_THIGH_L_LIMB:
+                bodyPartIndex = 7;
+                break;
+            default:
+                break;
         }
 
         if (bodyPartIndex >= 0) {
@@ -372,28 +363,19 @@ void EnBuffDeku_Draw(Actor* thisx, PlayState* play) {
 
     Gfx* gfx = play->state.gfxCtx->polyOpa.p + 1;
     gSPDisplayList(play->state.gfxCtx->overlay.p++, gfx);
-
     gSPEndDisplayList(gfx++);
     gSPBranchList(play->state.gfxCtx->polyOpa.p, gfx);
     play->state.gfxCtx->polyOpa.p = gfx;
-
-    OPEN_DISPS(play->state.gfxCtx, "", 0);
-
-	SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable,
-		this->skelAnime.dListCount, NULL, EnBuffDeku_PostLimbDraw, this);
+    OPEN_DISPS(play->state.gfxCtx, "../z_en_buffdeku.c", 369);
+	SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount, NULL, EnBuffDeku_PostLimbDraw, this);
 
     if (this->onFire) {
         u8 i;
         for (i = 0; i <= 2; i++) 
             EffectSsEnFire_SpawnVec3f(play, &this->actor, &this->bodyPartsPos[Rand_S16Offset(0,8)], 0x8C, 0, 0, -1);
-
     }
 
-    //CollisionCheck_DrawCollision(play, &play->colChkCtx); //ONLY DEBUG
-
     CLOSE_DISPS(play->state.gfxCtx, "", 0);
-
-
 }
 
 void EnBuffDeku_SetupWaitGetOutGround(EnBuffDeku* this) {
@@ -416,21 +398,19 @@ void EnBuffDeku_SetupGetOutGround(EnBuffDeku* this) {
 void EnBuffDeku_GetOutGround(EnBuffDeku* this, PlayState* play) {
 	SkelAnime_Update(&this->skelAnime);
 
-	if ((this->skelAnime.curFrame == 7 ) ||(this->skelAnime.curFrame == 25 ) || (this->skelAnime.curFrame == 47 )) { 
-		//rumble 7, 25, 47
-		Actor_PlaySfx(&this->actor, NA_SE_EV_EARTHQUAKE);
-	} else if ((this->skelAnime.curFrame == 17 ) || (this->skelAnime.curFrame == 35 ) ) { 
-		//big sound 17, 35
+	if ((this->skelAnime.curFrame == 7 ) ||(this->skelAnime.curFrame == 25 ) || (this->skelAnime.curFrame == 47 ))
+		Actor_PlaySfx(&this->actor, NA_SE_EV_EARTHQUAKE); //rumble 7, 25, 47
+    else if ((this->skelAnime.curFrame == 17 ) || (this->skelAnime.curFrame == 35 ) ) { 
 		Audio_StopSfxById(NA_SE_EV_EARTHQUAKE);
-		Actor_PlaySfx(&this->actor,NA_SE_EN_IRONNACK_BREAK_PILLAR2);
-	} else if ((this->skelAnime.curFrame == 28 ) || (this->skelAnime.curFrame == 44 )) {
-		// touch ground hand 28, 44
-		Actor_PlaySfx(&this->actor,NA_SE_EN_DODO_J_WALK);
-	} else if (this->skelAnime.curFrame == 60 ) {
-		//stop it + step
+		Actor_PlaySfx(&this->actor,NA_SE_EN_IRONNACK_BREAK_PILLAR2); // Big sound 17, 35
+	}
+    else if ((this->skelAnime.curFrame == 28 ) || (this->skelAnime.curFrame == 44 ))
+		Actor_PlaySfx(&this->actor,NA_SE_EN_DODO_J_WALK); // Touch ground hand 28, 44
+    else if (this->skelAnime.curFrame == 60 ) {
 		Audio_StopSfxById(NA_SE_EV_EARTHQUAKE);
-		Actor_PlaySfx(&this->actor,NA_SE_EN_DODO_J_WALK);
-	} else if (this->skelAnime.curFrame == Animation_GetLastFrame( &BuffDekuSkelGetoutgroundAnim )) {
+		Actor_PlaySfx(&this->actor,NA_SE_EN_DODO_J_WALK); // Stop it + step
+	}
+    else if (this->skelAnime.curFrame == Animation_GetLastFrame( &BuffDekuSkelGetoutgroundAnim )) {
 		EnBuffDeku_SetupBehaviour(this);
         if ((this->actor.params & 0x40))
             func_800F5ACC(NA_BGM_MINI_BOSS2);
@@ -438,14 +418,12 @@ void EnBuffDeku_GetOutGround(EnBuffDeku* this, PlayState* play) {
 }
 
 void EnBuffDeku_SetupBehaviour(EnBuffDeku* this) {
-
 	Animation_MorphToLoop(&this->skelAnime, &BuffDekuSkelWalkcycleAnim , -3.0f);
 	this->actor.flags |=  ACTOR_FLAG_ATTENTION_ENABLED ;
     this->colliderBody.base.acFlags |= AC_ON;
     this->colliderSpheres.base.acFlags |= AC_ON;
     this->panicTest = false;
 	this->actionFunc = EnBuffDeku_Behaviour;
-
 }
 
 void EnBuffDeku_Behaviour(EnBuffDeku* this, PlayState* play) {
@@ -453,20 +431,16 @@ void EnBuffDeku_Behaviour(EnBuffDeku* this, PlayState* play) {
 	SkelAnime_Update(&this->skelAnime);
     
     if ( ABS((s16) this->actor.yawTowardsPlayer - this->actor.world.rot.y) > 0x4000 ) {
-        if (this->actor.xzDistToPlayer <= 100.0f) {
+        if (this->actor.xzDistToPlayer <= 100.0f)
             EnBuffDeku_SetupSpin(this);
-        }
         this->actor.speed = 0.0f;
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xE38, 0x0);
-    } else {
+    }
+    else {
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0x310, 0x0);
-        if (this->actor.xzDistToPlayer <= 90.0f) {
-            //setupAttack
-            EnBuffDeku_SetupPunch(this);
-        } else {
-            //Walk
-            this->actor.speed = 1.5f;
-        }
+        if (this->actor.xzDistToPlayer <= 90.0f)
+            EnBuffDeku_SetupPunch(this); //setupAttack
+        else this->actor.speed = 1.5f; //Walk
     }
 
     if ((this->skelAnime.curFrame == 3) || (this->skelAnime.curFrame == 12))
@@ -487,15 +461,15 @@ void EnBuffDeku_Punch(EnBuffDeku* this, PlayState* play) {
     if (this->skelAnime.curFrame == 8) {
         this->colliderSpheres.base.atFlags |= AT_ON;
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
-    } else if (this->skelAnime.curFrame == 16) {
+    }
+    else if (this->skelAnime.curFrame == 16)
         this->colliderSpheres.base.atFlags &= ~AT_ON;
-    } else if (this->skelAnime.curFrame == Animation_GetLastFrame( &BuffDekuSkelPunchAnim )) {
+    else if (this->skelAnime.curFrame == Animation_GetLastFrame( &BuffDekuSkelPunchAnim )) {
         if (this->playerHit) {
             this->playerHit = false;
             EnBuffDeku_SetupTaunt(this);
-        } else {
-            EnBuffDeku_SetupBehaviour(this);
         }
+        else EnBuffDeku_SetupBehaviour(this);
     }
 }
 
@@ -521,7 +495,6 @@ void EnBuffDeku_SetupTaunt(EnBuffDeku* this) {
     this->actor.speed = 0.0f;
     Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_DAMAGE);
     this->actionFunc = EnBuffDeku_Taunt;
-    
 }
 
 void EnBuffDeku_Taunt(EnBuffDeku* this, PlayState* play) {
@@ -529,11 +502,9 @@ void EnBuffDeku_Taunt(EnBuffDeku* this, PlayState* play) {
 
     if (this->skelAnime.curFrame == Animation_GetLastFrame( &BuffDekuSkelTaunt1Anim )) {
         this->timer++;
-        if (this->timer == 5) {
+        if (this->timer == 5)
             EnBuffDeku_SetupBehaviour(this);
-        }
     }
-
 }
 
 void EnBuffDeku_SetupSpin(EnBuffDeku* this) {
@@ -546,9 +517,9 @@ void EnBuffDeku_SetupSpin(EnBuffDeku* this) {
 
 void EnBuffDeku_Spin(EnBuffDeku* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
-    if (this->skelAnime.curFrame == 5) {
+    if (this->skelAnime.curFrame == 5)
         this->colliderSpheres.base.atFlags |= AT_ON;
-    } else if (this->skelAnime.curFrame == Animation_GetLastFrame( &BuffDekuSkelSpinAnim )) {
+    else if (this->skelAnime.curFrame == Animation_GetLastFrame( &BuffDekuSkelSpinAnim )) {
 		this->timer++;
         if (this->timer == 2) {
             this->colliderSpheres.base.atFlags &= ~AT_ON;
@@ -585,22 +556,17 @@ void EnBuffDeku_SetupPanic(EnBuffDeku* this) {
 void EnBuffDeku_Panic(EnBuffDeku* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
-    if (this->skelAnime.curFrame == 0) {
+    if (this->skelAnime.curFrame == 0)
         	Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_FAINT);
-    }
 
     Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xE38, 0x0);
-    if (this->actor.xzDistToPlayer <= 500.0f) {
+    if (this->actor.xzDistToPlayer <= 500.0f)
         this->actor.speed = -4.5f;
-    } else {
-         this->actor.speed = 0.0f;
-    }
+    else this->actor.speed = 0.0f;
 
-    if (Player_IsBurningStickInRange(play, &this->actor.world.pos, 70.0f, 50.0f) != 0) {
+    if (Player_IsBurningStickInRange(play, &this->actor.world.pos, 70.0f, 50.0f) != 0)
         if (this->actor.colChkInfo.health != 0) {
             this->actor.colChkInfo.health = 0;
             EnBuffDeku_SetupDeath(this);
         }
-    }
-
 }

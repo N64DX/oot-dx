@@ -2359,3 +2359,29 @@ QUICKTEXT_ENABLE "Peste Costaud\n"
 COLOR(LIGHTBLUE) "Tu portes vraiment?" COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
+
+DEFINE_MESSAGE(0x065E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(60) "モルモーク\n"
+SHIFT(3) COLOR(LIGHTBLUE) "巨大なハンマーに　気をつけろ！\n"
+"吹き飛ばされちゃうぞ！" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+,
+MSG(
+QUICKTEXT_ENABLE "Molmauk\n"
+COLOR(LIGHTBLUE) "Watch out for his massive hammers!\n"
+"Those will knock you back!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+,
+MSG(
+QUICKTEXT_ENABLE "Ein Hammermann!\n"
+COLOR(LIGHTBLUE) "Pass auf seine gewaltigen Hämmer auf!\n"
+"Sie schleudern dich zurück!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+,
+MSG(
+QUICKTEXT_ENABLE "Un Homme-Marteau\n"
+COLOR(LIGHTBLUE) "Attention à ses énormes marteaux!\n"
+"Ils vont te repousser!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)
