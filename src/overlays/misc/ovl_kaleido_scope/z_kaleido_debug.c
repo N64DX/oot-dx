@@ -165,7 +165,7 @@ static u8 sMaxUpgradeValues[] = {
     /* UPG_BOMB_BAG    */ 3,
     /* UPG_STRENGTH    */ 3,
     /* UPG_SCALE       */ 2,
-    /* UPG_WALLET      */ 2,
+    /* UPG_WALLET      */ 3,
     /* UPG_BULLET_BAG  */ 3,
     /* UPG_DEKU_STICKS */ 3,
     /* UPG_DEKU_NUTS   */ 3,

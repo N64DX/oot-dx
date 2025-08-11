@@ -425,6 +425,9 @@ typedef enum LinkAge {
     /* 1 */ LINK_AGE_CHILD
 } LinkAge;
 
+#define SCENE_LAYER_CONDITION(play)   ((IS_CHILD_QUEST && LINK_IS_CHILD) || play->nextEntranceIndex > ENTR_DESERT_COLOSSUS_8_3)
+#define SCENE_LAYER_GOTO(play, layer) (SCENE_LAYER_CONDITION(play) ? 0 : layer)
+
 #define DPAD_BUTTON(button)      (gSaveContext.save.info.playerData.dpadItems[gSaveContext.save.linkAge + gSaveContext.save.info.playerData.dpadDualSet * 2][button])
 
 #define LINK_IS_ADULT (gSaveContext.save.linkAge == LINK_AGE_ADULT)
@@ -774,6 +777,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define SET_ITEMGETINF(flag) (gSaveContext.save.info.itemGetInf[ITEMGETINF_INDEX(flag)] |= ITEMGETINF_MASK(flag))
 #define CLEAR_ITEMGETINF(flag) (gSaveContext.save.info.infTable[ITEMGETINF_INDEX(flag)] &= ~ITEMGETINF_MASK(flag))
 
+#define ITEMGETINF_BAZAAR_WALLET 0x01
 #define ITEMGETINF_TALON_BOTTLE 0x02
 #define ITEMGETINF_03 0x03
 #define ITEMGETINF_04 0x04

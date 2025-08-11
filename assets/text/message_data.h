@@ -16,9 +16,11 @@
 #include "message_data_6xxx_valley.h"
 #include "message_data_7xxx_market_&_masks.h"
 #include "message_data_8xxx_child_quest.h"
+#include "message_data_9xxx_global.h"
 #else
 #include "text/message_data.h"
 #include "message_data_8xxx_child_quest.h"
+#include "message_data_9xxx_global.h"
 #endif
 
 /*

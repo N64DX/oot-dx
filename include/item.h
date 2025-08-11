@@ -319,6 +319,7 @@ typedef enum ItemID {
     /* 0x9B */ ITEM_DEKU_NUT_UPGRADE_40,
     /* 0x9C */ ITEM_SHIELD_HEROS,
     /* 0x9D */ ITEM_SWORD_HEROS,
+    /* 0x9E */ ITEM_ROYAL_WALLET,
     /* 0xEC */ ITEM_SWORDS,
     /* 0xED */ ITEM_SHIELDS,
     /* 0xEE */ ITEM_TUNICS,
@@ -469,7 +470,8 @@ typedef enum GetItemID {
     /* 0x85 */ GI_LONGSHOT_MM,
     /* 0x86 */ GI_HEROS_BOW,
     /* 0x87 */ GI_GOLD_DUST,
-    /* 0x88 */ GI_MAX
+    /* 0x88 */ GI_WALLET_ROYAL,
+    /* 0x89 */ GI_MAX
 } GetItemID;
 
 typedef enum GetItemDrawID {

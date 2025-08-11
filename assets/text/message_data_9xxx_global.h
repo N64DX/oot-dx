@@ -1,0 +1,98 @@
+DEFINE_MESSAGE(0x9000, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE COLOR(BLUE) "王家のサイフ" COLOR(DEFAULT) "を　手に入れた！" QUICKTEXT_DISABLE "\n"
+"でっかい　でっかい　巨大サイフ。\n"
+COLOR(YELLOW) "９９９ルピー" COLOR(DEFAULT) "まで　持てるゾ！"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Royal Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"What a gigantic wallet! Now \n"
+"you can carry up to " COLOR(YELLOW) "999" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "Die " COLOR(BLUE) "Königsbörse" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Welch eine gigantische Geldbörse!\n"
+"Jetzt kannst Du sogar \n"
+COLOR(YELLOW) "999 Rubine" COLOR(DEFAULT) " tragen!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "Vous recevez la " COLOR(BLUE) "Bourse de \n"
+"Royale" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Elle peut contenir\n"
+"jusqu'à " COLOR(YELLOW) "999" COLOR(DEFAULT) " " COLOR(YELLOW) "Rubis" COLOR(DEFAULT) "."
+)
+)
+
+DEFINE_MESSAGE(0x9001, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Adult's Wallet   200 Rupees" QUICKTEXT_DISABLE "\n"
+"\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Buy\n"
+    "Don't buy" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9002, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Giant's Wallet   200 Rupees" QUICKTEXT_DISABLE "\n"
+"\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Buy\n"
+    "Don't buy" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9003, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Royal Wallet   200 Rupees" QUICKTEXT_DISABLE "\n"
+"\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Buy\n"
+    "Don't buy" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9004, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(RED) "Adult's Wallet   200 Rupees\n"
+COLOR(DEFAULT) "An adult-sized wallet meant for\n"
+"big spenders.\n"
+"This wallet holds up to 200 Rupees!" QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9005, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(RED) "Giant's Wallet   200 Rupees\n"
+COLOR(DEFAULT) "A giant-sized wallet meant for\n"
+"rich people.\n"
+"This wallet holds up to 500 Rupees!" QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9006, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(RED) "Royal Wallet   200 Rupees\n"
+COLOR(DEFAULT) "A royal-sized wallet meant for\n"
+"the wealthiest among Hylians.\n"
+"This wallet holds up to 999 Rupees!" QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)

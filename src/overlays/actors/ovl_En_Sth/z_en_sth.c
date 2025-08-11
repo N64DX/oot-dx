@@ -254,6 +254,10 @@ void EnSth_GivePlayerItem(EnSth* this, PlayState* play) {
                 case 1:
                     getItemId = GI_WALLET_GIANT;
                     break;
+
+                default:
+                    getItemId = GI_WALLET_ROYAL;
+                    break;
             }
             break;
     }

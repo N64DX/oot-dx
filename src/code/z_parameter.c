@@ -1897,6 +1897,9 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_GIANTS_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 2);
         return ITEM_NONE;
+    } else if (item == ITEM_ROYAL_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        return ITEM_NONE;
     } else if (item == ITEM_DEKU_STICK_UPGRADE_20) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
             INV_CONTENT(ITEM_DEKU_STICK) = ITEM_DEKU_STICK;
@@ -2358,6 +2361,8 @@ u8 Item_CheckObtainability(u8 item) {
             }
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
+        return ITEM_NONE;
+    } else if (item == ITEM_ADULTS_WALLET || item == ITEM_GIANTS_WALLET || item == ITEM_ROYAL_WALLET) {
         return ITEM_NONE;
     }
 
@@ -3731,8 +3736,8 @@ void Interface_Draw(PlayState* play) {
     static s16 D_80125B1C[][3] = {
         { 0, 150, 0 }, { 100, 255, 0 }, { 255, 255, 255 }, { 0, 0, 0 }, { 255, 255, 255 },
     };
-    static s16 rupeeDigitsFirst[] = { 1, 0, 0 };
-    static s16 rupeeDigitsCount[] = { 2, 3, 3 };
+    static s16 rupeeDigitsFirst[] = { 1, 0, 0, 0 };
+    static s16 rupeeDigitsCount[] = { 2, 3, 3, 3 };
     static s16 spoilingItemEntrances[] = { ENTR_LOST_WOODS_2, ENTR_ZORAS_DOMAIN_3, ENTR_ZORAS_DOMAIN_3 };
     static f32 D_80125B54[] = { -40.0f, -35.0f }; // unused
     static s16 D_80125B5C[] = { 91, 91 };         // unused
@@ -3760,10 +3765,11 @@ void Interface_Draw(PlayState* play) {
     gSPSegment(OVERLAY_DISP++, 0x0B, interfaceCtx->mapSegment);
 
     if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) {
-        static u8 walletColors[][3] = {
+        static u8 walletColors[][4] = {
             { 200, 255, 100 },
             { 130, 130, 255 },
-            { 255, 100, 100 }
+            { 255, 100, 100 },
+            { 255, 165, 0   }
         };
         u8 curWallet = CUR_UPG_VALUE(UPG_WALLET);
 
