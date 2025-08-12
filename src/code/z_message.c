@@ -1907,6 +1907,38 @@ void Message_LoadItemIcon(PlayState* play, u16 itemId, s16 y) {
     msgCtx->choiceNum = 1;
 }
 
+#if !PLATFORM_IQUE
+static const char* lad_words[2][4] = {
+    { "少年", "lad", "junge", "gars" },
+    { "男", "man", "mann", "homme" }
+};
+
+static const char* one_words[2][4] = {
+    { "子", "one", "kleiner", "petit" },
+    { "男", "man", "mann", "homme" }
+};
+
+static const char* boy_words[2][4] = {
+    { "男の子", "boy", "junge", "garçon" },
+    { "さん",  "mister", "herr", "monsieur" }
+};
+
+static const char* guy_words[2][4] = {
+    { "小さい子", "little guy", "kleiner kerl", "petit gars" },
+    { "さん", "mister", "herr", "monsieur" }
+};
+
+static const char* guy_c_words[2][4] = {
+    { "小さい子", "Little guy", "Kleiner kerl", "Petit gars" },
+    { "さん", "Mister", "Herr", "Monsieur" }
+};
+
+static const char* token_words[2][4] = {
+    { "しるし", "token", "Skulltula", "jeton" },
+    { "しるし", "tokens", "Skulltulas", "jetons" }
+};
+#endif
+
 void Message_Decode(PlayState* play) {
     MessageContext* msgCtx = &play->msgCtx;
     Font* font = &play->msgCtx.font;
@@ -2400,38 +2432,66 @@ void Message_Decode(PlayState* play) {
                     decodedBufPos++;
                 }
                 decodedBufPos--;
-            } else if (curChar == MESSAGE_AGE_LAD || curChar == MESSAGE_AGE_ONE || curChar == MESSAGE_AGE_BOY || curChar == MESSAGE_AGE_GUY || curChar == MESSAGE_AGE_GUY_C) {
-                const char* ageWord = "";
+            }
+#if !PLATFORM_IQUE
+            else if (curChar == MESSAGE_AGE_LAD || curChar == MESSAGE_AGE_ONE || curChar == MESSAGE_AGE_BOY || curChar == MESSAGE_AGE_GUY || curChar == MESSAGE_AGE_GUY_C || curChar == MESSAGE_PLURAL_TOKENS) {
+                const char* word = NULL;
+                const char* const* words = NULL;
                 s8 len;
-                if (gSaveContext.language == LANGUAGE_ENG) {
-                    switch (curChar) {
-                        case MESSAGE_AGE_LAD:
-                            ageWord = (LINK_IS_CHILD) ? "lad" : "man";
-                            break;
-                        case MESSAGE_AGE_ONE:
-                            ageWord = (LINK_IS_CHILD) ? "one" : "man";
-                            break;
-                        case MESSAGE_AGE_BOY:
-                            ageWord = (LINK_IS_CHILD) ? "boy" : "mister";
-                            break;
-                        case MESSAGE_AGE_GUY:
-                            ageWord = (LINK_IS_CHILD) ? "little guy" : "mister";
-                            break;
-                        case MESSAGE_AGE_GUY_C:
-                            ageWord = (LINK_IS_CHILD) ? "Little guy" : "Mister";
-                            break;
-                    }
+
+                switch (curChar) {
+                    case MESSAGE_AGE_LAD:
+                        words = lad_words[!LINK_IS_CHILD];
+                        break;
+                    case MESSAGE_AGE_ONE:
+                        words = one_words[!LINK_IS_CHILD];
+                        break;
+                    case MESSAGE_AGE_BOY:
+                        words = boy_words[!LINK_IS_CHILD];
+                        break;
+                    case MESSAGE_AGE_GUY:
+                        words = guy_words[!LINK_IS_CHILD];
+                        break;
+                    case MESSAGE_AGE_GUY_C:
+                        words = guy_c_words[!LINK_IS_CHILD];
+                        break;
+                    case MESSAGE_PLURAL_TOKENS:
+                        words = token_words[gSaveContext.save.info.inventory.gsTokens > 0];
+                        break;
                 }
-                len = strlen(ageWord);
+                ASSERT(words != NULL, "words != null", "../message.c", 2444);
+
+                switch (gSaveContext.language) {
+#if OOT_NTSC
+                    case LANGUAGE_JPN:
+                        word = words[0];
+                        break;
+#endif
+                    case LANGUAGE_ENG:
+                        word = words[1];
+                        break;
+#if OOT_NTSC_N64 || OOT_PAL
+                    case LANGUAGE_GER:
+                        word = words[2];
+                        break;
+                    case LANGUAGE_FRA:
+                        word = words[3];
+                        break;
+#endif
+                }
+                ASSERT(word != NULL, "word != null", "../message.c", 2465);
+                len = strlen(word);
 
                 for (i=0; i<len; i++) {
-                    Font_LoadChar(font, ageWord[i] - ' ', charTexIdx);
+                    Font_LoadChar(font, word[i] - ' ', charTexIdx);
                     charTexIdx += FONT_CHAR_TEX_SIZE;
-                    MSG_BUF_DECODED[decodedBufPos] = ageWord[i];
+                    MSG_BUF_DECODED[decodedBufPos] = word[i];
                     if (i < len - 1)
                         decodedBufPos++;
                 }
-            } else if (curChar == MESSAGE_MARATHON_TIME || curChar == MESSAGE_RACE_TIME) {
+            }
+#endif
+            else if (curChar == MESSAGE_MARATHON_TIME || curChar == MESSAGE_RACE_TIME) {
                 // Convert the values of the appropriate timer to digits and add the
                 //  digits to the decoded buffer in place of the control character.
                 PRINTF(T("\nＥＶＥＮＴタイマー ＝ ", "\nEVENT timer = "));

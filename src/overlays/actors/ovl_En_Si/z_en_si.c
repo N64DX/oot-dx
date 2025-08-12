@@ -101,10 +101,10 @@ void func_80AFB768(EnSi* this, PlayState* play) {
             if (this->collider.base.ocFlags2 & OC2_HIT_PLAYER) {
                 this->collider.base.ocFlags2 &= ~OC2_HIT_PLAYER;
                 Item_Give(play, ITEM_SKULL_TOKEN);
-#if OOT_NTSC_N64
+#if !PLATFORM_IQUE
                 if (!DISABLE_TOKEN_FREEZE)
                     player->actor.freezeTimer = 10;
-                Message_StartTextbox(play, DISABLE_TOKEN_FREEZE ? (gSaveContext.save.info.inventory.gsTokens == 1 ? 0xFF : 0xB5) : 0xB4, NULL);
+                Message_StartTextbox(play, DISABLE_TOKEN_FREEZE ? 0x9000 : 0xB4, NULL);
 #else
                 player->actor.freezeTimer = 10;
                 Message_StartTextbox(play, 0xB4, NULL);
@@ -129,10 +129,10 @@ void func_80AFB89C(EnSi* this, PlayState* play) {
 
     if (!ACTOR_FLAGS_CHECK_ALL(&this->actor, ACTOR_FLAG_HOOKSHOT_ATTACHED)) {
         Item_Give(play, ITEM_SKULL_TOKEN);
-#if OOT_NTSC_N64
+#if !PLATFORM_IQUE
         if (!DISABLE_TOKEN_FREEZE)
             player->actor.freezeTimer = 10;
-        Message_StartTextbox(play, DISABLE_TOKEN_FREEZE ? (gSaveContext.save.info.inventory.gsTokens == 1 ? 0xFF : 0xB5) : 0xB4, NULL);
+        Message_StartTextbox(play, DISABLE_TOKEN_FREEZE ? 0x9000 : 0xB4, NULL);
 #else
         player->actor.freezeTimer = 10;
         Message_StartTextbox(play, 0xB4, NULL);
@@ -145,7 +145,7 @@ void func_80AFB89C(EnSi* this, PlayState* play) {
 void func_80AFB950(EnSi* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
 
-#if OOT_NTSC_N64
+#if !PLATFORM_IQUE
     if (!DISABLE_TOKEN_FREEZE && Message_GetState(&play->msgCtx) != TEXT_STATE_CLOSING) {
 #else
     if (Message_GetState(&play->msgCtx) != TEXT_STATE_CLOSING) {

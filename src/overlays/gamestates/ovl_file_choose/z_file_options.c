@@ -97,7 +97,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Extended Draw Distance", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 1  },
     { 0, "No Letterboxing",        FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 2  },
     { 0, "Resume Last Area",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 3  },
-#if OOT_NTSC_N64
+#if !PLATFORM_IQUE
     { 0, "Disable Token Freeze",   FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 4  },
 #endif
     { 0, "Censor Fire Temple",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 5  },
