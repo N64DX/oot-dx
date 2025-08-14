@@ -302,7 +302,7 @@ endseg
 beginseg
     name "spot10_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/spot10/spot10_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/spot10/spot10_cq_scene.o"
     number 2
 endseg
 
@@ -323,7 +323,7 @@ endseg
 beginseg
     name "spot10_room_2"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/spot10/spot10_room_2.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/spot10/spot10_cq_room_2.o"
     number 3
 endseg
 
@@ -3418,47 +3418,5 @@ beginseg
     name "ganontikasonogo_room_1"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/ganontikasonogo/ganontikasonogo_room_1.o"
-    number 3
-endseg
-
-beginseg
-    name "roadtolake_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/roadtolake/roadtolake_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "roadtolake_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/roadtolake/roadtolake_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "roadtofortress_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/roadtofortress/roadtofortress_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "roadtofortress_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/roadtofortress/roadtofortress_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "grotto_shortcuts_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "grotto_shortcuts_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0.o"
     number 3
 endseg

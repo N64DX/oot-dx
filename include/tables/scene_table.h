@@ -113,6 +113,7 @@
 /* 0x65 */ DEFINE_SCENE(roadtolake_scene, g_pn_27, SCENE_ROAD_TO_LAKE_HYLIA, SDC_HYRULE_FIELD, 0, 0)
 /* 0x66 */ DEFINE_SCENE(roadtofortress_scene, g_pn_35, SCENE_ROAD_TO_FORTRESS, SDC_GERUDO_VALLEY, 0, 0)
 /* 0x67 */ DEFINE_SCENE(grotto_shortcuts_scene, none, SCENE_GROTTO_SHORTCUTS, SDC_GROTTOS, 0, 0)
+/* 0x68 */ DEFINE_SCENE(swamp_spider_house_scene, none, SCENE_SWAMP_SPIDER_HOUSE, SDC_DEFAULT, 0, 0)
 #if DEBUG_ASSETS
 /* 0x65 */ DEFINE_SCENE(test01_scene, none, SCENE_TEST01, SDC_CALM_WATER, 0, 0)
 /* 0x66 */ DEFINE_SCENE(besitu_scene, none, SCENE_BESITU, SDC_BESITU, 0, 0)

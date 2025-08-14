@@ -167,6 +167,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_36.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_37.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_38.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_39.o"
 #if OOT_VERSION >= PAL_1_0
     include "$(BUILD_DIR)/assets/audio/audiobank_padding.o"
 #endif
@@ -286,6 +287,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_109.prg.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_110.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_111.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_112.o"
 endseg
 
 beginseg
@@ -999,6 +1001,8 @@ endseg
 #include "overlays_gc.inc"
 #endif
 
+#include "extra_overlays.inc"
+
 beginseg
     name "gameplay_keep"
     compress
@@ -1131,13 +1135,6 @@ beginseg
     name "object_horse"
     compress
     include "$(BUILD_DIR)/assets/objects/object_horse/object_horse.o"
-    number 6
-endseg
-
-beginseg
-    name "object_horse_young"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_horse_young/object_horse_young.o"
     number 6
 endseg
 
@@ -1372,13 +1369,6 @@ beginseg
     name "object_dekunuts"
     compress
     include "$(BUILD_DIR)/assets/objects/object_dekunuts/object_dekunuts.o"
-    number 6
-endseg
-
-beginseg
-    name "object_buffdeku"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_buffdeku/object_buffdeku.o"
     number 6
 endseg
 
@@ -2231,13 +2221,6 @@ beginseg
 endseg
 
 beginseg
-    name "object_gi_hookshot_mm"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_hookshot_mm/object_gi_hookshot_mm.o"
-    number 6
-endseg
-
-beginseg
     name "object_gi_ocarina"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_ocarina/object_gi_ocarina.o"
@@ -2314,13 +2297,6 @@ beginseg
 endseg
 
 beginseg
-    name "object_gi_heros_bow"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_heros_bow/object_gi_heros_bow.o"
-    number 6
-endseg
-
-beginseg
     name "object_gi_glasses"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_glasses/object_gi_glasses.o"
@@ -2352,20 +2328,6 @@ beginseg
     name "object_gi_shield_3"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_shield_3/object_gi_shield_3.o"
-    number 6
-endseg
-
-beginseg
-    name "object_gi_shield_3_mm"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_shield_3_mm/object_gi_shield_3_mm.o"
-    number 6
-endseg
-
-beginseg
-    name "object_gi_shield_4"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_shield_4/object_gi_shield_4.o"
     number 6
 endseg
 
@@ -2436,13 +2398,6 @@ beginseg
     name "object_gi_longsword"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_longsword/object_gi_longsword.o"
-    number 6
-endseg
-
-beginseg
-    name "object_gi_longsword_mm"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_longsword_mm/object_gi_longsword_mm.o"
     number 6
 endseg
 
@@ -2940,13 +2895,6 @@ beginseg
     name "object_gi_brokensword"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_brokensword/object_gi_brokensword.o"
-    number 6
-endseg
-
-beginseg
-    name "object_gi_gold_dust"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_gold_dust/object_gi_gold_dust.o"
     number 6
 endseg
 
@@ -3493,13 +3441,6 @@ beginseg
 endseg
 
 beginseg
-    name "object_gi_sword_heros"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_sword_heros/object_gi_sword_heros.o"
-    number 6
-endseg
-
-beginseg
     name "object_door_killer"
     compress
     include "$(BUILD_DIR)/assets/objects/object_door_killer/object_door_killer.o"
@@ -3527,12 +3468,7 @@ beginseg
     number 6
 endseg
 
-beginseg
-    name "object_hammergeist"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_hammergeist/object_hammergeist.o"
-    number 6
-endseg
+#include "extra_objects.inc"
 
 beginseg
     name "g_pn_01"
@@ -4315,3 +4251,5 @@ endseg
 #else
 #include "scenes_gc_ique.inc"
 #endif
+
+#include "extra_scenes.inc"

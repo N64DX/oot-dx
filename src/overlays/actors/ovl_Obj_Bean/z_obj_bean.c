@@ -489,7 +489,7 @@ void ObjBean_Init(Actor* thisx, PlayState* play) {
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
     
     if (IS_CHILD_QUEST) {
-        if (GET_EVENTCHKINF(EVENTCHKINF_45) && IS_DAY && Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6))) {
+        if ( (GET_EVENTCHKINF(EVENTCHKINF_45) && IS_DAY && Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6))) || (this->dyna.actor.params & 0x20)) {
             path = PARAMS_GET_U(this->dyna.actor.params, 8, 5);
             if (path == 0x1F) {
                 Actor_Kill(&this->dyna.actor);
@@ -518,7 +518,7 @@ void ObjBean_Init(Actor* thisx, PlayState* play) {
         else ObjBean_SetupWaitForBean(this);
     } else {
         if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
-            if (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6)) || (DEBUG_FEATURES && mREG(1) == 1)) {
+            if (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6)) || (DEBUG_FEATURES && mREG(1) == 1) || (this->dyna.actor.params & 0x20)) {
                 path = PARAMS_GET_U(this->dyna.actor.params, 8, 5);
                 if (path == 0x1F) {
                     PRINTF_COLOR_ERROR();

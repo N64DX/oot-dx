@@ -1656,13 +1656,6 @@ beginseg
 endseg
 
 beginseg
-    name "ovl_En_BuffDeku"
-    compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_BuffDeku/z_en_buffdeku.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_BuffDeku/ovl_En_BuffDeku_reloc.o"
-endseg
-
-beginseg
     name "ovl_En_Dh"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Dh/z_en_dh.o"
@@ -2052,13 +2045,6 @@ beginseg
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse/z_en_horse.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse/ovl_En_Horse_reloc.o"
-endseg
-
-beginseg
-    name "ovl_En_Horse_Young"
-    compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Young/z_en_horse_young.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Young/ovl_En_Horse_Young_reloc.o"
 endseg
 
 beginseg
@@ -3202,11 +3188,4 @@ beginseg
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Shot_Sun/z_shot_sun.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Shot_Sun/ovl_Shot_Sun_reloc.o"
-endseg
-
-beginseg
-    name "ovl_En_Hammergeist"
-    compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Hammergeist/z_en_hammergeist.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Hammergeist/ovl_En_Hammergeist_reloc.o"
 endseg

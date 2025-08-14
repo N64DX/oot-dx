@@ -4619,7 +4619,7 @@ void Interface_Update(PlayState* play) {
     u16 action;
 
 #if (OOT_PAL || OOT_NTSC_N64) && DEBUG_FEATURES
-    if (Message_GetState(&play->msgCtx) == 0 && !IS_CHILD_QUEST) {
+    if (Message_GetState(&play->msgCtx) == 0) {
         Input* debugInput = &play->state.input[2];
 
         if (CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {

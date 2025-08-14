@@ -13,7 +13,7 @@
 SceneCmd roadtolake_room_0Commands[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(roadtolake_room_0AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(4),
-    SCENE_CMD_ROOM_BEHAVIOR(0x00, 0x04, false, false),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_UNK_STRETCH_1, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_WIND_SETTINGS(80, 80, 80, 0),
@@ -63,7 +63,7 @@ ActorEntry roadtolake_room_0ActorEntry_00005C[] = {
 
 SceneCmd roadtolake_room_0Set_timeskip[] = {
     SCENE_CMD_ECHO_SETTINGS(4),
-    SCENE_CMD_ROOM_BEHAVIOR(0x00, 0x04, false, false),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_UNK_STRETCH_1, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_WIND_SETTINGS(80, 80, 80, 0),

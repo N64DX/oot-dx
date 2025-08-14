@@ -27,12 +27,7 @@ extern WaterBox roadtolake_sceneCollisionHeader_0026F8WaterBoxes[];
 extern CollisionHeader roadtolake_sceneCollisionHeader_0026F8;
 
 extern SceneCmd roadtolake_sceneSet_timeskip[];
-extern ActorEntry roadtolake_sceneStartPositionList_timeskip[];
 extern TransitionActorEntry roadtolake_sceneTransitionActorList_timeskip[];
-extern RomFile roadtolake_sceneRoomList_timeskip[];
-extern Spawn roadtolake_sceneEntranceList_timeskip[];
-extern u16 roadtolake_sceneExitList_timeskip[];
-extern EnvLightSettings roadtolake_sceneLightSettings_timeskip[];
 
 extern u64 roadtolake_sceneTex_002730[];
 extern u64 roadtolake_sceneTex_002F30[];

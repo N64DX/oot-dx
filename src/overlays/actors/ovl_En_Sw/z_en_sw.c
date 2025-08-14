@@ -268,7 +268,8 @@ void EnSw_Init(Actor* thisx, PlayState* play) {
     }
 
     if (PARAMS_GET_S(thisx->params, 13, 3) == 0) {
-        this->actor.world.rot.x = 0;
+        if (thisx->params != 1)
+            this->actor.world.rot.x = 0;
         this->actor.world.rot.z = 0;
         thisx->shape.rot = this->actor.world.rot;
         this->unk_484.y = this->actor.world.pos.y;

@@ -15,15 +15,15 @@
 #include "ultra64.h"
 
 SceneCmd roadtofortressCommands[] = {
-    SCENE_CMD_SOUND_SETTINGS(1, 0, 95),
+    SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_GERUDO_VALLEY),
     SCENE_CMD_ROOM_LIST(1, roadtofortressRoomList0x0000D0),
-    SCENE_CMD_MISC_SETTINGS(0x00, 0x00000009),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 0),
     SCENE_CMD_COL_HEADER(&roadtofortressCollisionHeader_002824),
     SCENE_CMD_ENTRANCE_LIST(roadtofortressEntranceList0x0000D8),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PATH_LIST(roadtofortressPathway_0003F0),
     SCENE_CMD_SPAWN_LIST(4, roadtofortressStartPositionList0x000090),
-    SCENE_CMD_SKYBOX_SETTINGS(1, 0, false),
+    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(roadtofortressExitList_0000E0),
     SCENE_CMD_ENV_LIGHT_SETTINGS(28, roadtofortressLightSettings0x0000E8),
     SCENE_CMD_END(),
@@ -51,7 +51,6 @@ u16 roadtofortressExitList_0000E0[] = {
     ENTR_GERUDO_VALLEY_3,
     ENTR_GERUDOS_FORTRESS_0,
     ENTR_OUTSIDE_GANONS_CASTLE_0_2,
-    0x0000,
 };
 
 EnvLightSettings roadtofortressLightSettings0x0000E8[] = {
@@ -176,10 +175,6 @@ Vec3s roadtofortressCsCameraPoints_000528[] = {
     {   1496,    725,   -169 },
     {    728, -14564,      0 },
     {     -1,     -1,     -1 },
-};
-
-u8 roadtofortress_scenePadding_1[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
 BgCamInfo roadtofortressCollisionHeader_002824CamDataList[] = {

@@ -2897,7 +2897,6 @@ void Message_OpenText(PlayState* play, u16 textId) {
         Language language = gSaveContext.language;
 
         if (IS_CHILD_QUEST) {
-            language = LANGUAGE_ENG;
             switch (textId) {
                 case 0x0050:
                     textId = 0x800D;
