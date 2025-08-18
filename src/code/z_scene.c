@@ -529,12 +529,11 @@ BAD_RETURN(s32) Scene_CommandMiscSettings(PlayState* play, SceneCmd* cmd) {
 void Scene_SetTransitionForNextEntrance(PlayState* play) {
     s16 entranceIndex;
 
-    if (SCENE_LAYER_CONDITION(play)) {
-        play->transitionType = ENTRANCE_INFO_START_TRANS_TYPE(gEntranceTable[play->nextEntranceIndex].field);
-        return;
-    }
-
-    if (!IS_DAY) {
+    if (play->nextEntranceIndex > ENTR_DESERT_COLOSSUS_8_3)
+        entranceIndex = play->nextEntranceIndex;
+    else if (IS_CHILD_QUEST && LINK_IS_CHILD)
+        entranceIndex = play->nextEntranceIndex + (IS_DAY ? 0 : 1);
+    else if (!IS_DAY) {
         if (!LINK_IS_ADULT) {
             entranceIndex = play->nextEntranceIndex + 1;
         } else {

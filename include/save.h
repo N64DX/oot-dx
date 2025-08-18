@@ -425,8 +425,7 @@ typedef enum LinkAge {
     /* 1 */ LINK_AGE_CHILD
 } LinkAge;
 
-#define SCENE_LAYER_CONDITION(play)   ((IS_CHILD_QUEST && LINK_IS_CHILD) || play->nextEntranceIndex > ENTR_DESERT_COLOSSUS_8_3)
-#define SCENE_LAYER_GOTO(play, layer) (SCENE_LAYER_CONDITION(play) ? 0 : layer)
+#define SCENE_LAYER_GOTO(play, layer) ((IS_CHILD_QUEST && LINK_IS_CHILD) ? (play->nextEntranceIndex > ENTR_DESERT_COLOSSUS_8_3 || IS_DAY ? 0 : 1) : layer)
 
 #define DPAD_BUTTON(button)      (gSaveContext.save.info.playerData.dpadItems[gSaveContext.save.linkAge + gSaveContext.save.info.playerData.dpadDualSet * 2][button])
 

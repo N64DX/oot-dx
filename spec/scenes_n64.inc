@@ -526,7 +526,7 @@ endseg
 beginseg
     name "market_day_room_0"
     compress
-    include "$(BUILD_DIR)/assets/scenes/misc/market_day/market_day_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/misc/market_day/market_day_cq_room_0.o"
     number 3
 endseg
 
@@ -540,7 +540,7 @@ endseg
 beginseg
     name "market_night_room_0"
     compress
-    include "$(BUILD_DIR)/assets/scenes/misc/market_night/market_night_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/misc/market_night/market_night_cq_room_0.o"
     number 3
 endseg
 

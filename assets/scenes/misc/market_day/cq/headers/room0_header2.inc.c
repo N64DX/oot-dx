@@ -1,0 +1,8 @@
+    SCENE_CMD_ECHO_SETTINGS(5),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_UNK_STRETCH_1, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_SKYBOX_DISABLES(false /* skybox enabled */, true /* no sun/moon */),
+    SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
+    SCENE_CMD_ROOM_SHAPE(&market_day_room_0_030002D0_RoomShapeNormal),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(market_day_room_0_03000040_ObjectList), market_day_room_0_03000040_ObjectList),
+    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(cq_actors_header2), cq_actors_header2),
+    SCENE_CMD_END(),
