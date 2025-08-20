@@ -221,7 +221,7 @@ void EnPoh_Init(Actor* thisx, PlayState* play) {
     Lights_PointGlowSetInfo(&this->lightInfo, this->actor.home.pos.x, this->actor.home.pos.y, this->actor.home.pos.z,
                             255, 255, 255, 0);
 
-    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+    if (IS_CHILD_QUEST_AS_CHILD) {
         thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
         thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
         thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;

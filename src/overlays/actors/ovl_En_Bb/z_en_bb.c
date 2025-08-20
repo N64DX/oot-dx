@@ -417,7 +417,7 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
     this->collider.elements[0].dim.worldSphere.radius =
         this->collider.elements[0].dim.modelSphere.radius * this->collider.elements[0].dim.scale;
 
-    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+    if (IS_CHILD_QUEST_AS_CHILD) {
         thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
         thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
         thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;

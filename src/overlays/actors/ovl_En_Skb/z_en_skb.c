@@ -182,7 +182,7 @@ void EnSkb_Init(Actor* thisx, PlayState* play) {
                    this->morphTable, 20);
     this->actor.naviEnemyId = NAVI_ENEMY_STALCHILD;
 
-    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+    if (IS_CHILD_QUEST_AS_CHILD) {
         this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
         this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
         this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;

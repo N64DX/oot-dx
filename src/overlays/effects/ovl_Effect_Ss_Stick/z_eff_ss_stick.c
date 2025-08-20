@@ -15,8 +15,7 @@
 #include "player.h"
 #include "save.h"
 
-#include "assets/objects/object_link_boy/object_link_boy.h"
-#include "assets/objects/object_link_child/object_link_child.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #define rObjectSlot regs[0]
 #define rYaw regs[1]
@@ -30,21 +29,11 @@ EffectSsProfile Effect_Ss_Stick_Profile = {
     EffectSsStick_Init,
 };
 
-typedef struct StickDrawInfo {
-    /* 0x00 */ s16 objectId;
-    /* 0x04 */ Gfx* displayList;
-} StickDrawInfo;
-
 u32 EffectSsStick_Init(PlayState* play, u32 index, EffectSs* this, void* initParamsx) {
-    StickDrawInfo drawInfo[] = {
-        { OBJECT_LINK_BOY, gLinkAdultBrokenGiantsKnifeBladeDL }, // adult, broken sword
-        { OBJECT_LINK_CHILD, gLinkChildLinkDekuStickDL },        // child, broken stick
-    };
-    StickDrawInfo* ageInfoEntry = gSaveContext.save.linkAge + drawInfo;
     EffectSsStickInitParams* initParams = (EffectSsStickInitParams*)initParamsx;
 
-    this->rObjectSlot = Object_GetSlot(&play->objectCtx, ageInfoEntry->objectId);
-    this->gfx = ageInfoEntry->displayList;
+    this->rObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GAMEPLAY_KEEP);
+    this->gfx = gLinkDekuStickDL;
     this->vec = this->pos = initParams->pos;
     this->rYaw = initParams->yaw;
     this->velocity.x = Math_SinS(initParams->yaw) * 6.0f;

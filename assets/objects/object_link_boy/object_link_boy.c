@@ -783,7 +783,7 @@ Gfx gLinkAdultTorsoNearDL[70] = {
 #include "assets/objects/object_link_boy/gLinkAdultTorsoNearDL.inc.c"
 };
 
-Gfx gLinkAdultHeadNearDL[233] = {
+Gfx gLinkAdultHeadNearDL[234] = {
 #include "assets/objects/object_link_boy/gLinkAdultHeadNearDL.inc.c"
 };
 

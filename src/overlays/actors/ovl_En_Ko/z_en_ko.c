@@ -681,7 +681,7 @@ f32 func_80A97BC0(EnKo* this) {
     if (LINK_IS_ADULT && ENKO_TYPE == ENKO_TYPE_CHILD_FADO) {
         return -20.0f;
     }
-    return D_80A9A62C[IS_CHILD_QUEST && LINK_IS_CHILD][ENKO_TYPE][EnKo_GetForestQuestState(this)];
+    return D_80A9A62C[IS_CHILD_QUEST_AS_CHILD][ENKO_TYPE][EnKo_GetForestQuestState(this)];
 }
 
 u8 func_80A97C7C(EnKo* this) {
@@ -1229,7 +1229,7 @@ void func_80A99048(EnKo* this, PlayState* play) {
             this->collider.base.ocFlags1 |= 0x40;
         }
         this->forestQuestState = EnKo_GetForestQuestState2(this);
-        Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, sOsAnimeLookup[ENKO_TYPE == 1 && IS_CHILD_QUEST && LINK_IS_CHILD ? 13 : ENKO_TYPE][this->forestQuestState]);
+        Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, sOsAnimeLookup[ENKO_TYPE == 1 && IS_CHILD_QUEST_AS_CHILD ? 13 : ENKO_TYPE][this->forestQuestState]);
         Actor_SetScale(&this->actor, 0.01f);
         func_80A98CD8(this);
         this->modelAlpha = 0.0f;

@@ -1,4 +1,11 @@
 beginseg
+    name "object_link_young"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_link_child/object_link_young.o"
+    number 6
+endseg
+
+beginseg
     name "object_ladder"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ladder/object_ladder.o"

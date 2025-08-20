@@ -3,6 +3,7 @@
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPVertex(&gLinkChildHeadNearVtx[0], 5, 0),
+    gsSPCullDisplayList(0, 5),
     gsSPMatrix(0x0D0001C0, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),

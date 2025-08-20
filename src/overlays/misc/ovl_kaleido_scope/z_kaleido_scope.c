@@ -2182,9 +2182,8 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
         texIndex = pauseCtx->namedItem;
         lastHylianShieldItem = IS_HEROS_SHIELD;
         
-        if (pauseCtx->pageIndex == PAUSE_EQUIP && pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-            texIndex = 0x79;
-        else if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        
+        if (IS_CHILD_QUEST_AS_CHILD) {
             if (pauseCtx->pageIndex == PAUSE_ITEM) {
                 if (pauseCtx->namedItem == ITEM_BOW)
                     texIndex = 0x59;
@@ -2200,6 +2199,8 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                     texIndex = 0x78;
                 else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON)
                     texIndex = 0x73;
+                else if (pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+                    texIndex = 0x79;
                 else if (pauseCtx->namedItem == ITEM_STRENGTH_SILVER_GAUNTLETS)
                     texIndex = 0x56;
                 else if (pauseCtx->namedItem == ITEM_STRENGTH_GOLD_GAUNTLETS)

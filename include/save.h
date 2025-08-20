@@ -425,15 +425,18 @@ typedef enum LinkAge {
     /* 1 */ LINK_AGE_CHILD
 } LinkAge;
 
-#define SCENE_LAYER_GOTO(play, layer) ((IS_CHILD_QUEST && LINK_IS_CHILD) ? (play->nextEntranceIndex > ENTR_DESERT_COLOSSUS_8_3 || IS_DAY ? 0 : 1) : layer)
+#define SCENE_LAYER_GOTO(play, layer) (IS_CHILD_QUEST_AS_CHILD ? (play->nextEntranceIndex > ENTR_DESERT_COLOSSUS_8_3 || IS_DAY ? 0 : 1) : layer)
 
 #define DPAD_BUTTON(button)      (gSaveContext.save.info.playerData.dpadItems[gSaveContext.save.linkAge + gSaveContext.save.info.playerData.dpadDualSet * 2][button])
 
 #define LINK_IS_ADULT (gSaveContext.save.linkAge == LINK_AGE_ADULT)
 #define LINK_IS_CHILD (gSaveContext.save.linkAge == LINK_AGE_CHILD)
 
-#define CQ_IS_TIMESKIP              (IS_CHILD_QUEST && GET_EVENTCHKINF(EVENTCHKINF_45))
-#define LINK_IS_ADULT_OR_TIMESKIP   (LINK_IS_ADULT  || CQ_IS_TIMESKIP)
+#define CQ_IS_TIMESKIP            (IS_CHILD_QUEST && GET_EVENTCHKINF(EVENTCHKINF_45))
+#define LINK_IS_ADULT_OR_TIMESKIP (LINK_IS_ADULT  || CQ_IS_TIMESKIP)
+#define IS_YOUNG_LINK             (R_IS_YOUNG_LINK)
+#define GET_LINK_MODEL            (IS_YOUNG_LINK ? 2 : gSaveContext.save.linkAge)
+#define IS_CHILD_QUEST_AS_CHILD   (IS_CHILD_QUEST && LINK_IS_CHILD)
 
 #define SET_MASK_AGE(val)       ((LINK_IS_ADULT) ? SET_MASK_ADULT(val) : SET_MASK_CHILD(val))
 #define GET_MASK_AGE()          ((LINK_IS_ADULT) ? GET_MASK_ADULT()    : GET_MASK_CHILD())
@@ -443,12 +446,12 @@ typedef enum LinkAge {
 #define SET_MASK_CHILD(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0xFF00) | ((val) & 0xFF)))
 
 #define SET_HEROS_SWORD       (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 0)
-#define HAS_HEROS_SWORD     (((gSaveContext.save.info.playerData.equipmentUpgrades >>   0) & 1) && IS_CHILD_QUEST)
+#define HAS_HEROS_SWORD     (((gSaveContext.save.info.playerData.equipmentUpgrades >>   0) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SWORD        (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SWORD_KOKIRI) && HAS_HEROS_SWORD)
 #define SET_HEROS_SHIELD      (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 1)
 #define CLEAR_HEROS_SHIELD    (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 1))
 #define TOGGLE_HEROS_SHIELD   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 1)
-#define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST)
+#define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SHIELD       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (HAS_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) )
 
 #define YEARS_CHILD 5
@@ -487,6 +490,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define FIX_POWER_CROUCH_STAB       ((gFileOptions[gSaveContext.fileNum][0] >> 13) & 1)  // Bits: 13
 #define REFLECT_CHEST_CONTENTS      ((gFileOptions[gSaveContext.fileNum][0] >> 14) & 1)  // Bits: 14
 #define EASIER_FISHING              ((gFileOptions[gSaveContext.fileNum][0] >> 15) & 1)  // Bits: 15
+#define USE_YOUNG_LINK              ((gFileOptions[gSaveContext.fileNum][0] >> 16) & 1)  // Bits: 16
 #define HEALTH_RECOVERY             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gFileOptions[gSaveContext.fileNum][1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gFileOptions[gSaveContext.fileNum][1] >> 5)  & 7)  // Bits: 5-7

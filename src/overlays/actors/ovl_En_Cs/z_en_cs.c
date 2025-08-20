@@ -14,7 +14,7 @@
 #include "save.h"
 
 #include "assets/objects/object_cs/object_cs.h"
-#include "assets/objects/object_link_child/object_link_child.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY)
 
@@ -484,7 +484,7 @@ void EnCs_Draw(Actor* thisx, PlayState* play) {
                           EnCs_OverrideLimbDraw, EnCs_PostLimbDraw, &this->actor);
 
     if (GET_ITEMGETINF(ITEMGETINF_3A)) {
-        s32 linkChildObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_LINK_CHILD);
+        s32 linkChildObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GAMEPLAY_KEEP);
 
         // Handle attaching the Spooky Mask to the boy's face
         if (linkChildObjectSlot >= 0) {

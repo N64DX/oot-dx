@@ -1,6 +1,4 @@
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
-
-#include "gfx.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 Vtx gLinkAdultHookshotChainVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotChainVtx.inc.c"
@@ -78,4 +76,230 @@ Vtx gLinkAdultHookshotReticleVtx[] = {
 
 Gfx gLinkHookshotReticleDL[13] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotReticleDL.inc.c"
+};
+
+
+
+// Deku stick
+
+Vtx gLinkChildLinkDekuStickVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildLinkDekuStickVtx.inc.c"
+};
+
+Gfx gLinkDekuStickDL[41] = {
+#include "assets/objects/object_link_child/gLinkChildLinkDekuStickDL.inc.c"
+};
+
+
+
+// Masks
+
+#define gLinkChildSpookyMaskTex_WIDTH 32
+#define gLinkChildSpookyMaskTex_HEIGHT 64
+u64 gLinkChildSpookyMaskTex[TEX_LEN(u64, gLinkChildSpookyMaskTex_WIDTH, gLinkChildSpookyMaskTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildSpookyMaskTex.ia16.inc.c"
+};
+
+#define gLinkChildKeatonMaskEyeBrowTex_WIDTH 32
+#define gLinkChildKeatonMaskEyeBrowTex_HEIGHT 16
+u64 gLinkChildKeatonMaskEyeBrowTex[TEX_LEN(u64, gLinkChildKeatonMaskEyeBrowTex_WIDTH, gLinkChildKeatonMaskEyeBrowTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildKeatonMaskEyeBrowTex.rgba16.inc.c"
+};
+
+#define gLinkChildKeatonMaskEarTex_WIDTH 8
+#define gLinkChildKeatonMaskEarTex_HEIGHT 8
+u64 gLinkChildKeatonMaskEarTex[TEX_LEN(u64, gLinkChildKeatonMaskEarTex_WIDTH, gLinkChildKeatonMaskEarTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildKeatonMaskEarTex.rgba16.inc.c"
+};
+
+#define gLinkChildSkullMaskEyeTex_WIDTH 16
+#define gLinkChildSkullMaskEyeTex_HEIGHT 16
+u64 gLinkChildSkullMaskEyeTex[TEX_LEN(u64, gLinkChildSkullMaskEyeTex_WIDTH, gLinkChildSkullMaskEyeTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildSkullMaskEyeTex.rgba16.inc.c"
+};
+
+#define gLinkChildMaskOfTruthTex_WIDTH 32
+#define gLinkChildMaskOfTruthTex_HEIGHT 64
+u64 gLinkChildMaskOfTruthTex[TEX_LEN(u64, gLinkChildMaskOfTruthTex_WIDTH, gLinkChildMaskOfTruthTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildMaskOfTruthTex.rgba16.inc.c"
+};
+
+#define gLinkChildMaskOfTruthCurveTex_WIDTH 16
+#define gLinkChildMaskOfTruthCurveTex_HEIGHT 32
+u64 gLinkChildMaskOfTruthCurveTex[TEX_LEN(u64, gLinkChildMaskOfTruthCurveTex_WIDTH, gLinkChildMaskOfTruthCurveTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildMaskOfTruthCurveTex.rgba16.inc.c"
+};
+
+#define gLinkChildGoronMaskMouthTex_WIDTH 64
+#define gLinkChildGoronMaskMouthTex_HEIGHT 32
+u64 gLinkChildGoronMaskMouthTex[TEX_LEN(u64, gLinkChildGoronMaskMouthTex_WIDTH, gLinkChildGoronMaskMouthTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskMouthTex.rgba16.inc.c"
+};
+
+#define gLinkChildGoronMaskEyeTex_WIDTH 32
+#define gLinkChildGoronMaskEyeTex_HEIGHT 32
+u64 gLinkChildGoronMaskEyeTex[TEX_LEN(u64, gLinkChildGoronMaskEyeTex_WIDTH, gLinkChildGoronMaskEyeTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskEyeTex.rgba16.inc.c"
+};
+
+#define gLinkChildGoronMaskNoseTex_WIDTH 8
+#define gLinkChildGoronMaskNoseTex_HEIGHT 8
+u64 gLinkChildGoronMaskNoseTex[TEX_LEN(u64, gLinkChildGoronMaskNoseTex_WIDTH, gLinkChildGoronMaskNoseTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskNoseTex.rgba16.inc.c"
+};
+
+#define gLinkChildGoronMaskHairTex_WIDTH 16
+#define gLinkChildGoronMaskHairTex_HEIGHT 16
+u64 gLinkChildGoronMaskHairTex[TEX_LEN(u64, gLinkChildGoronMaskHairTex_WIDTH, gLinkChildGoronMaskHairTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskHairTex.rgba16.inc.c"
+};
+
+#define gLinkChildSkullMaskTeethTex_WIDTH 8
+#define gLinkChildSkullMaskTeethTex_HEIGHT 8
+u64 gLinkChildSkullMaskTeethTex[TEX_LEN(u64, gLinkChildSkullMaskTeethTex_WIDTH, gLinkChildSkullMaskTeethTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildSkullMaskTeethTex.rgba16.inc.c"
+};
+
+#define gLinkChildGoronMaskEarTex_WIDTH 8
+#define gLinkChildGoronMaskEarTex_HEIGHT 8
+u64 gLinkChildGoronMaskEarTex[TEX_LEN(u64, gLinkChildGoronMaskEarTex_WIDTH, gLinkChildGoronMaskEarTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskEarTex.rgba16.inc.c"
+};
+
+#define gLinkChildZoraMaskEyeBoarderTex_WIDTH 8
+#define gLinkChildZoraMaskEyeBoarderTex_HEIGHT 8
+u64 gLinkChildZoraMaskEyeBoarderTex[TEX_LEN(u64, gLinkChildZoraMaskEyeBoarderTex_WIDTH, gLinkChildZoraMaskEyeBoarderTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskEyeBoarderTex.rgba16.inc.c"
+};
+
+#define gLinkChildZoraMaskEarTex_WIDTH 32
+#define gLinkChildZoraMaskEarTex_HEIGHT 32
+u64 gLinkChildZoraMaskEarTex[TEX_LEN(u64, gLinkChildZoraMaskEarTex_WIDTH, gLinkChildZoraMaskEarTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskEarTex.rgba16.inc.c"
+};
+
+#define gLinkChildSkullMaskNoseTex_WIDTH 8
+#define gLinkChildSkullMaskNoseTex_HEIGHT 8
+u64 gLinkChildSkullMaskNoseTex[TEX_LEN(u64, gLinkChildSkullMaskNoseTex_WIDTH, gLinkChildSkullMaskNoseTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildSkullMaskNoseTex.rgba16.inc.c"
+};
+
+#define gLinkChildZoraMaskEyeTex_WIDTH 32
+#define gLinkChildZoraMaskEyeTex_HEIGHT 32
+u64 gLinkChildZoraMaskEyeTex[TEX_LEN(u64, gLinkChildZoraMaskEyeTex_WIDTH, gLinkChildZoraMaskEyeTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskEyeTex.rgba16.inc.c"
+};
+
+#define gLinkChildZoraMaskMouthTex_WIDTH 32
+#define gLinkChildZoraMaskMouthTex_HEIGHT 32
+u64 gLinkChildZoraMaskMouthTex[TEX_LEN(u64, gLinkChildZoraMaskMouthTex_WIDTH, gLinkChildZoraMaskMouthTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskMouthTex.rgba16.inc.c"
+};
+
+#define gLinkChildGerudoMaskEyeTex_WIDTH 32
+#define gLinkChildGerudoMaskEyeTex_HEIGHT 32
+u64 gLinkChildGerudoMaskEyeTex[TEX_LEN(u64, gLinkChildGerudoMaskEyeTex_WIDTH, gLinkChildGerudoMaskEyeTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskEyeTex.rgba16.inc.c"
+};
+
+#define gLinkChildGerudoMaskMouthTex_WIDTH 16
+#define gLinkChildGerudoMaskMouthTex_HEIGHT 16
+u64 gLinkChildGerudoMaskMouthTex[TEX_LEN(u64, gLinkChildGerudoMaskMouthTex_WIDTH, gLinkChildGerudoMaskMouthTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskMouthTex.rgba16.inc.c"
+};
+
+#define gLinkChildGerudoMaskHairTex_WIDTH 16
+#define gLinkChildGerudoMaskHairTex_HEIGHT 16
+u64 gLinkChildGerudoMaskHairTex[TEX_LEN(u64, gLinkChildGerudoMaskHairTex_WIDTH, gLinkChildGerudoMaskHairTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskHairTex.rgba16.inc.c"
+};
+
+#define gLinkChildGerudoMaskNoseTex_WIDTH 8
+#define gLinkChildGerudoMaskNoseTex_HEIGHT 8
+u64 gLinkChildGerudoMaskNoseTex[TEX_LEN(u64, gLinkChildGerudoMaskNoseTex_WIDTH, gLinkChildGerudoMaskNoseTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskNoseTex.rgba16.inc.c"
+};
+
+Vtx gLinkChildSkullMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildSkullMaskVtx.inc.c"
+};
+
+Vtx gLinkChildSpookyMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildSpookyMaskVtx.inc.c"
+};
+
+Vtx gLinkChildKeatonMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildKeatonMaskVtx.inc.c"
+};
+
+Vtx gLinkChildMaskOfTruthVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildMaskOfTruthVtx.inc.c"
+};
+
+Vtx gLinkChildGoronMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskVtx.inc.c"
+};
+
+Vtx gLinkChildZoraMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskVtx.inc.c"
+};
+
+Vtx gLinkChildGerudoMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskVtx.inc.c"
+};
+
+Gfx gLinkChildSkullMaskDL[70] = {
+#include "assets/objects/object_link_child/gLinkChildSkullMaskDL.inc.c"
+};
+
+Gfx gLinkChildSpookyMaskDL[30] = {
+#include "assets/objects/object_link_child/gLinkChildSpookyMaskDL.inc.c"
+};
+
+Gfx gLinkChildKeatonMaskDL[50] = {
+#include "assets/objects/object_link_child/gLinkChildKeatonMaskDL.inc.c"
+};
+
+Gfx gLinkChildMaskOfTruthDL[44] = {
+#include "assets/objects/object_link_child/gLinkChildMaskOfTruthDL.inc.c"
+};
+
+Gfx gLinkChildGoronMaskDL[70] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskDL.inc.c"
+};
+
+Gfx gLinkChildZoraMaskDL[65] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskDL.inc.c"
+};
+
+Gfx gLinkChildGerudoMaskDL[84] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskDL.inc.c"
+};
+
+// Bunny hood
+
+#define gLinkChildBunnyHoodEyeTex_WIDTH 16
+#define gLinkChildBunnyHoodEyeTex_HEIGHT 16
+u64 gLinkChildBunnyHoodEyeTex[TEX_LEN(u64, gLinkChildBunnyHoodEyeTex_WIDTH, gLinkChildBunnyHoodEyeTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildBunnyHoodEyeTex.rgba16.inc.c"
+};
+
+#define gLinkChildBunnyHoodTex_WIDTH 16
+#define gLinkChildBunnyHoodTex_HEIGHT 32
+u64 gLinkChildBunnyHoodTex[TEX_LEN(u64, gLinkChildBunnyHoodTex_WIDTH, gLinkChildBunnyHoodTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildBunnyHoodTex.rgba16.inc.c"
+};
+
+#define gLinkChildBunnyHoodEarTex_WIDTH 16
+#define gLinkChildBunnyHoodEarTex_HEIGHT 32
+u64 gLinkChildBunnyHoodEarTex[TEX_LEN(u64, gLinkChildBunnyHoodEarTex_WIDTH, gLinkChildBunnyHoodEarTex_HEIGHT, 16)] = {
+#include "assets/objects/object_link_child/gLinkChildBunnyHoodEarTex.rgba16.inc.c"
+};
+
+Vtx gLinkChildBunnyHoodVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildBunnyHoodVtx.inc.c"
+};
+
+Gfx gLinkChildBunnyHoodDL[114] = {
+#include "assets/objects/object_link_child/gLinkChildBunnyHoodDL.inc.c"
 };

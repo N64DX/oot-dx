@@ -20,7 +20,7 @@
 #include "save.h"
 
 #include "assets/objects/object_mm/object_mm.h"
-#include "assets/objects/object_link_child/object_link_child.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -534,7 +534,7 @@ void EnMm_Draw(Actor* thisx, PlayState* play) {
                           EnMm_OverrideLimbDraw, EnMm_PostLimbDraw, this);
 
     if (GET_ITEMGETINF(ITEMGETINF_3B)) {
-        s32 linkChildObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_LINK_CHILD);
+        s32 linkChildObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GAMEPLAY_KEEP);
 
         // Draw Bunny Hood
         if (linkChildObjectSlot >= 0) {

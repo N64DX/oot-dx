@@ -21,13 +21,13 @@ extern u8 gAreaGsFlags[];
 #define AGE_REQ_NONE 9
 
 #define CHECK_AGE_REQ_SLOT(slot) \
-    ((gSlotAgeReqs[slot] == AGE_REQ_NONE) || gSlotAgeReqs[slot] == ((void)0, gSaveContext.save.linkAge) || (IS_CHILD_QUEST && LINK_IS_CHILD))
+    ((gSlotAgeReqs[slot] == AGE_REQ_NONE) || gSlotAgeReqs[slot] == ((void)0, gSaveContext.save.linkAge) || IS_CHILD_QUEST_AS_CHILD)
 
 #define CHECK_AGE_REQ_EQUIP(y, x) \
-    ((gEquipAgeReqs[y][x] == AGE_REQ_NONE) || (gEquipAgeReqs[y][x] == ((void)0, gSaveContext.save.linkAge)) || (IS_CHILD_QUEST && LINK_IS_CHILD))
+    ((gEquipAgeReqs[y][x] == AGE_REQ_NONE) || (gEquipAgeReqs[y][x] == ((void)0, gSaveContext.save.linkAge)) || IS_CHILD_QUEST_AS_CHILD)
 
 #define CHECK_AGE_REQ_ITEM(item) \
-    ((gItemAgeReqs[item] == AGE_REQ_NONE) || (gItemAgeReqs[item] == ((void)0, gSaveContext.save.linkAge)) || (IS_CHILD_QUEST && LINK_IS_CHILD))
+    ((gItemAgeReqs[item] == AGE_REQ_NONE) || (gItemAgeReqs[item] == ((void)0, gSaveContext.save.linkAge)) || IS_CHILD_QUEST_AS_CHILD)
 
 // Each page's background is made of a 3x5 grid of quads
 #define PAGE_BG_COLS 3

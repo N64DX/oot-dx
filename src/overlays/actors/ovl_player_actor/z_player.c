@@ -52,7 +52,7 @@
 #include "skin_matrix.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
-#include "assets/objects/object_link_child/object_link_child.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 // Some player animations are played at this reduced speed, for reasons yet unclear.
 // This is called "adjusted" for now.
@@ -2711,7 +2711,7 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     for (i=0; i<3; i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
-        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !(IS_CHILD_QUEST && LINK_IS_CHILD) )
+        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
 
         if (equipment->itemId == ITEM_SWORD_BIGGORON)
@@ -2766,7 +2766,7 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
     for (i=0; i<4; i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
-        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !(IS_CHILD_QUEST && LINK_IS_CHILD) )
+        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
@@ -2812,7 +2812,7 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
     for (i=0; i<3; i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
-        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !(IS_CHILD_QUEST && LINK_IS_CHILD) )
+        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, equipment->equipId)) {
@@ -2849,7 +2849,7 @@ void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
     for (i=0; i<3; i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
-        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !(IS_CHILD_QUEST && LINK_IS_CHILD) )
+        if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, equipment->equipId)) {
@@ -4980,7 +4980,7 @@ void func_80837948(PlayState* play, Player* this, s32 arg2) {
         temp = 1;
     } else {
         temp = Player_GetMeleeWeaponHeld(this) - 1;
-        if (IS_CHILD_QUEST && LINK_IS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON && !gSaveContext.save.info.playerData.bgsFlag)
+        if (IS_CHILD_QUEST_AS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON && !gSaveContext.save.info.playerData.bgsFlag)
             temp = 0;
     }
 
@@ -5244,7 +5244,7 @@ int func_8083816C(s32 arg0) {
 
 void func_8083819C(Player* this, PlayState* play) {
     if (this->currentShield == PLAYER_SHIELD_DEKU) {
-        Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_SHIELD, this->actor.world.pos.x, this->actor.world.pos.y,
+        Actor_Spawn(&play->actorCtx, play, IS_YOUNG_LINK ? ACTOR_ITEM_SHIELD_YOUNG : ACTOR_ITEM_SHIELD, this->actor.world.pos.x, this->actor.world.pos.y,
                     this->actor.world.pos.z, 0, 0, 0, 1);
         Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
         Message_StartTextbox(play, 0x305F, NULL);
@@ -7047,7 +7047,7 @@ s32 Player_ActionHandler_8(Player* this, PlayState* play) {
                 func_808377DC(play, this);
                 return 1;
             }
-            else if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+            else if (IS_CHILD_QUEST_AS_CHILD) {
                 func_808377DC(play, this);
                 return 1;
             }
@@ -11063,7 +11063,7 @@ void Player_PutSwordInHand(PlayState* play, Player* this, s32 playSfx) {
     s32 swordItemId = sSwordItemIds[(void)0, gSaveContext.save.linkAge];
     s32 swordItemAction = sItemActions[swordItemId];
     
-    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+    if (IS_CHILD_QUEST_AS_CHILD) {
         swordItemId = this->currentSwordItemId;
         swordItemAction = sItemActions[swordItemId];
         if (swordItemId <= -1) { swordItemId = this->currentSwordItemId = -1; }
@@ -11235,7 +11235,7 @@ void Player_Init(Actor* thisx, PlayState* play2) {
     Player_SetEquipmentData(play, this);
     this->prevBoots = this->currentBoots;
 
-    Player_InitCommon(this, play, gPlayerSkelHeaders[((void)0, gSaveContext.save.linkAge)]);
+    Player_InitCommon(this, play, gPlayerSkelHeaders[GET_LINK_MODEL]);
     
     D_80854528[0xA] = IS_CHILD_QUEST ? GI_GOLD_DUST : GI_BROKEN_GORONS_SWORD;
     D_80854B18[PLAYER_CSACTION_63].type = LINK_IS_CHILD ? 2 : 5;
@@ -16137,7 +16137,7 @@ void func_80851A50(PlayState* play, Player* this, CsCmdActorCue* cue) {
         } else {
             dLists = gPlayerLeftHandClosedDLs;
         }
-        this->leftHandDLists = dLists + gSaveContext.save.linkAge;
+        this->leftHandDLists = dLists + GET_LINK_MODEL;
 
         Player_PlaySfx(this, sp2C->unk_00);
         if (!LINK_IS_ADULT) {

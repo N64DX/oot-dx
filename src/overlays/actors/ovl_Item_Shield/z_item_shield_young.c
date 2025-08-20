@@ -1,0 +1,239 @@
+/*
+ * File: z_item_shield_young.c
+ * Overlay: ovl_Item_Shield_Young
+ * Description: Deku Shield
+ */
+
+#include "z_item_shield_young.h"
+
+#include "gfx.h"
+#include "gfx_setupdl.h"
+#include "printf.h"
+#include "rand.h"
+#include "segmented_address.h"
+#include "sys_math.h"
+#include "sys_matrix.h"
+#include "terminal.h"
+#include "z_lib.h"
+#include "effect.h"
+#include "item.h"
+#include "play_state.h"
+#include "player.h"
+
+#include "assets/objects/object_link_child/object_link_young.h"
+
+#define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
+
+void ItemShieldYoung_Init(Actor* thisx, PlayState* play);
+void ItemShieldYoung_Destroy(Actor* thisx, PlayState* play);
+void ItemShieldYoung_Update(Actor* thisx, PlayState* play);
+void ItemShieldYoung_Draw(Actor* thisx, PlayState* play);
+
+void func_80B86F68_Young(ItemShieldYoung* this, PlayState* play);
+void func_80B86BC8_Young(ItemShieldYoung* this, PlayState* play);
+
+static ColliderCylinderInit sCylinderInit = {
+    {
+        COL_MATERIAL_NONE,
+        AT_NONE,
+        AC_ON | AC_TYPE_PLAYER,
+        OC1_ON | OC1_TYPE_ALL,
+        OC2_TYPE_1,
+        COLSHAPE_CYLINDER,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0x00000000, 0x00, 0x00 },
+        { 0x00000004, 0x00, 0x00 },
+        ATELEM_NONE,
+        ACELEM_ON,
+        OCELEM_ON,
+    },
+    { 15, 15, 0, { 0, 0, 0 } },
+};
+
+ActorProfile Item_Shield_Young_Profile = {
+    /**/ ACTOR_ITEM_SHIELD_YOUNG,
+    /**/ ACTORCAT_ITEMACTION,
+    /**/ FLAGS,
+    /**/ OBJECT_LINK_YOUNG,
+    /**/ sizeof(ItemShieldYoung),
+    /**/ ItemShieldYoung_Init,
+    /**/ ItemShieldYoung_Destroy,
+    /**/ ItemShieldYoung_Update,
+    /**/ ItemShieldYoung_Draw,
+};
+
+void ItemShieldYoung_SetupAction(ItemShieldYoung* this, ItemShieldYoungActionFunc actionFunc) {
+    this->actionFunc = actionFunc;
+}
+
+void ItemShieldYoung_Init(Actor* thisx, PlayState* play) {
+    ItemShieldYoung* this = (ItemShieldYoung*)thisx;
+    s32 i;
+
+    this->timer = 0;
+    this->unk_19C = 0;
+
+    switch (this->actor.params) {
+        case 0:
+            ActorShape_Init(&this->actor.shape, 1400.0f, NULL, 0.0f);
+            this->actor.shape.rot.x = 0x4000;
+            ItemShieldYoung_SetupAction(this, func_80B86BC8_Young);
+            break;
+
+        case 1:
+            ActorShape_Init(&this->actor.shape, 0.0f, NULL, 0.0f);
+            ItemShieldYoung_SetupAction(this, func_80B86F68_Young);
+            this->unk_19C |= 2;
+            for (i = 0; i < 8; i++) {
+                this->unk_19E[i] = 1 + 2 * i;
+                this->unk_1A8[i].x = Rand_CenteredFloat(10.0f);
+                this->unk_1A8[i].y = Rand_CenteredFloat(10.0f);
+                this->unk_1A8[i].z = Rand_CenteredFloat(10.0f);
+            }
+            break;
+    }
+
+    Actor_SetScale(&this->actor, 0.01f);
+    Collider_InitCylinder(play, &this->collider);
+    Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
+    PRINTF(VT_FGCOL(GREEN) "Item_Shild %d \n" VT_RST, this->actor.params);
+}
+
+void ItemShieldYoung_Destroy(Actor* thisx, PlayState* play) {
+    ItemShieldYoung* this = (ItemShieldYoung*)thisx;
+
+    Collider_DestroyCylinder(play, &this->collider);
+}
+
+void func_80B86AC8_Young(ItemShieldYoung* this, PlayState* play) {
+    Actor_MoveXZGravity(&this->actor);
+    if (Actor_HasParent(&this->actor, play)) {
+        Actor_Kill(&this->actor);
+        return;
+    }
+    Actor_OfferGetItem(&this->actor, play, GI_SHIELD_DEKU, 30.0f, 50.0f);
+    Actor_UpdateBgCheckInfo(play, &this->actor, 10.0f, 10.0f, 0.0f, UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2);
+    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+        this->timer--;
+        if (this->timer < 60) {
+            if (this->timer & 1) {
+                this->unk_19C |= 2;
+            } else {
+                this->unk_19C &= ~2;
+            }
+        }
+        if (this->timer == 0) {
+            Actor_Kill(&this->actor);
+        }
+    }
+}
+
+void func_80B86BC8_Young(ItemShieldYoung* this, PlayState* play) {
+    if (Actor_HasParent(&this->actor, play)) {
+        Actor_Kill(&this->actor);
+        return;
+    }
+    Actor_OfferGetItem(&this->actor, play, GI_SHIELD_DEKU, 30.0f, 50.0f);
+    if (this->collider.base.acFlags & AC_HIT) {
+        ItemShieldYoung_SetupAction(this, func_80B86AC8_Young);
+        this->actor.velocity.y = 4.0f;
+        this->actor.minVelocityY = -4.0f;
+        this->actor.gravity = -0.8f;
+        this->actor.speed = 0.0f;
+        this->timer = 160;
+    } else {
+        Collider_UpdateCylinder(&this->actor, &this->collider);
+        CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
+    }
+}
+
+void func_80B86CA8_Young(ItemShieldYoung* this, PlayState* play) {
+    static Vec3f D_80B871F4 = { 0.0f, 0.0f, 0.0f };
+    static f32 D_80B87200[] = { 0.3f, 0.6f,  0.9f, 1.0f,  1.0f, 1.0f,  1.0f, 1.0f,
+                                1.0f, 0.85f, 0.7f, 0.55f, 0.4f, 0.25f, 0.1f, 0.0f };
+    static f32 D_80B87240[] = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.8f,
+                                0.6f, 0.4f, 0.2f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+    s32 i;
+    s32 temp;
+
+    Actor_MoveXZGravity(&this->actor);
+    Actor_UpdateBgCheckInfo(play, &this->actor, 10.0f, 10.0f, 0.0f, UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2);
+    this->actor.shape.yOffset = ABS(Math_SinS(this->actor.shape.rot.x)) * 1500.0f;
+
+    for (i = 0; i < 8; i++) {
+        temp = 15 - this->unk_19E[i];
+        D_80B871F4.x = this->unk_1A8[i].x;
+        D_80B871F4.y = this->unk_1A8[i].y + (this->actor.shape.yOffset * 0.01f) + (D_80B87200[temp] * -10.0f * 0.2f);
+        D_80B871F4.z = this->unk_1A8[i].z;
+        EffectSsFireTail_SpawnFlame(play, &this->actor, &D_80B871F4, D_80B87200[temp] * 0.2f, -1, D_80B87240[temp]);
+        if (this->unk_19E[i] != 0) {
+            this->unk_19E[i]--;
+        } else if (this->timer > 16) {
+            this->unk_19E[i] = 15;
+            this->unk_1A8[i].x = Rand_CenteredFloat(15.0f);
+            this->unk_1A8[i].y = Rand_CenteredFloat(10.0f);
+            this->unk_1A8[i].z = Rand_CenteredFloat(15.0f);
+        }
+    }
+    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+        this->unk_198 -= this->actor.shape.rot.x >> 1;
+        this->unk_198 -= this->unk_198 >> 2;
+        this->actor.shape.rot.x += this->unk_198;
+        if ((this->timer >= 8) && (this->timer < 24)) {
+            Actor_SetScale(&this->actor, (this->timer - 8) * 0.000625f);
+        }
+        if (this->timer != 0) {
+            this->timer--;
+        } else {
+            Actor_Kill(&this->actor);
+        }
+    }
+}
+
+void func_80B86F68_Young(ItemShieldYoung* this, PlayState* play) {
+    s32 pad;
+    Player* player = GET_PLAYER(play);
+    MtxF* shield = &player->shieldMf;
+
+    this->actor.world.pos.x = shield->xw;
+    this->actor.world.pos.y = shield->yw;
+    this->actor.world.pos.z = shield->zw;
+    this->unk_19C &= ~2;
+
+    this->actor.shape.rot.y = Math_Atan2S(-shield->zz, -shield->xz);
+    this->actor.shape.rot.x = Math_Atan2S(-shield->yz, sqrtf(shield->zz * shield->zz + shield->xz * shield->xz));
+
+    if (ABS(this->actor.shape.rot.x) > 0x4000) {
+        this->unk_19C |= 1;
+    }
+
+    ItemShieldYoung_SetupAction(this, func_80B86CA8_Young);
+
+    this->actor.velocity.y = 4.0;
+    this->actor.minVelocityY = -4.0;
+    this->actor.gravity = -0.8;
+    this->unk_198 = 0;
+    this->timer = 70;
+    this->actor.speed = 0;
+}
+
+void ItemShieldYoung_Update(Actor* thisx, PlayState* play) {
+    ItemShieldYoung* this = (ItemShieldYoung*)thisx;
+
+    this->actionFunc(this, play);
+}
+
+void ItemShieldYoung_Draw(Actor* thisx, PlayState* play) {
+    ItemShieldYoung* this = (ItemShieldYoung*)thisx;
+
+    if (!(this->unk_19C & 2)) {
+        OPEN_DISPS(play->state.gfxCtx, "../z_item_shield_young.c", 457);
+        gSPSegment(POLY_OPA_DISP++, 0x0C, gCullBackDList);
+        Gfx_SetupDL_25Opa(play->state.gfxCtx);
+        MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_item_shield_young.c", 460);
+        gSPDisplayList(POLY_OPA_DISP++, SEGMENTED_TO_VIRTUAL(gLinkYoungDekuShieldDL));
+        CLOSE_DISPS(play->state.gfxCtx, "../z_item_shield_young.c", 465);
+    }
+}

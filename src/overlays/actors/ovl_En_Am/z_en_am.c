@@ -250,7 +250,7 @@ void EnAm_Init(Actor* thisx, PlayState* play) {
         this->dyna.actor.colChkInfo.health = Actor_EnemyHealthMultiply(1, MONSTER_HP);
         this->dyna.actor.colChkInfo.damageTable = &sDamageTable;
 
-        if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+        if (IS_CHILD_QUEST_AS_CHILD) {
             this->dyna.actor.colChkInfo.damageTable->table[10] = (this->dyna.actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
             this->dyna.actor.colChkInfo.damageTable->table[23] = (this->dyna.actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
             this->dyna.actor.colChkInfo.damageTable->table[26] = (this->dyna.actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;

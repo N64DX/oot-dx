@@ -23,8 +23,6 @@ extern u64 gLinkChildMouthHalfTex[TEX_LEN(u64, LINK_CHILD_MOUTH_TEX_WIDTH, LINK_
 extern u64 gLinkChildMouthOpenTex[TEX_LEN(u64, LINK_CHILD_MOUTH_TEX_WIDTH, LINK_CHILD_MOUTH_TEX_HEIGHT, 8)];
 extern u64 gLinkChildMouthSmileTex[TEX_LEN(u64, LINK_CHILD_MOUTH_TEX_WIDTH, LINK_CHILD_MOUTH_TEX_HEIGHT, 8)];
 
-extern Gfx gLinkChildLinkDekuStickDL[41];
-
 extern Gfx gLinkChildLeftHandNearDL[45];
 extern Gfx gLinkChildLeftFistNearDL[36];
 extern Gfx gLinkChildLeftFistAndKokiriSwordNearDL[81];
@@ -55,53 +53,30 @@ extern Gfx gLinkChildSlingshotStringDL[12];
 extern Gfx gLinkChildDekuShieldDL[42];
 extern Gfx gLinkChildDekuShieldWithMatrixDL[3];
 
-extern Gfx gLinkChildSkullMaskDL[70];
-extern Gfx gLinkChildSpookyMaskDL[30];
-extern Gfx gLinkChildKeatonMaskDL[50];
-extern Gfx gLinkChildMaskOfTruthDL[44];
-extern Gfx gLinkChildGoronMaskDL[70];
-extern Gfx gLinkChildZoraMaskDL[65];
-extern Gfx gLinkChildGerudoMaskDL[84];
-extern Gfx gLinkChildBunnyHoodDL[114];
-
 extern FlexSkeletonHeader gLinkChildSkel;
 
 
 
-// Kokiri Sword
-extern Gfx gLinkChildLeftHandHoldingBrokenSwordDL[];
-extern Gfx gKokiriSwordBladeDL[];
-extern Gfx gKokiriSwordHandleDL[];
-
 // Hero's Sword
 extern Gfx gLinkChildLeftHandHoldingHerosSwordDL[];
-extern Gfx gHerosSwordBladeDL[];
-extern Gfx gHerosSwordHandleDL[];
 
 // Razor Sword
-extern u64 gSwordMetalTex[];
 extern Gfx gLinkChildLeftHandHoldingRazorSwordDL[];
-extern Gfx gRazorSwordHandleDL[];
-extern Gfx gRazorSwordBladeDL[];
 
 // Gilded Sword
 extern Gfx gLinkChildLeftHandHoldingSilverSwordDL[];
 extern Gfx gLinkChildLeftHandHoldingGoldenSwordDL[];
-extern Gfx gGildedSwordHandleDL[];
-extern Gfx gSilverSwordBladeDL[];
-extern Gfx gGoldenSwordBladeDL[];
-extern Gfx gGildedSwordBladeDL[];
 
 // Sheaths
-extern Gfx gSheathedKokiriSwordDL[];
-extern Gfx gSheathedHerosSwordDL[];
-extern Gfx gSheathedRazorSwordDL[];
-extern Gfx gSheathedGildedSwordDL[];
-extern Gfx gKokiriSwordSheathDL[];
-extern Gfx gHerosSwordSheathDL[];
-extern Gfx gKokiriHerosSheathDL[];
-extern Gfx gRazorSwordSheathDL[];
-extern Gfx gGildedSwordSheathDL[];
+extern Gfx gLinkChildSheathedKokiriSwordDL[];
+extern Gfx gLinkChildSheathedHerosSwordDL[];
+extern Gfx gLinkChildSheathedRazorSwordDL[];
+extern Gfx gLinkChildSheathedGildedSwordDL[];
+extern Gfx gLinkChildKokiriSwordSheathDL[];
+extern Gfx gLinkChildHerosSwordSheathDL[];
+extern Gfx gLinkChildKokiriHerosSheathDL[];
+extern Gfx gLinkChildRazorSwordSheathDL[];
+extern Gfx gLinkChildGildedSwordSheathDL[];
 
 // Shields With Sheathed Swords
 extern Gfx gLinkChildDekuShieldKokiriSwordSheathedDL[];
@@ -143,26 +118,18 @@ extern Gfx gLinkChildRightHandHoldingHookshot[];
 extern Gfx gLinkChildRightHandHoldingHookshotNear[];
 extern Gfx gLinkChildRightHandHoldingHookshotNearDL[];
 extern Gfx gLinkChildRightHandHoldingHookshotFarDL[];
-extern Gfx gLinkChildHookshotChainDL[];
-extern Gfx gLinkChildHookshotReticleDL[];
 
 // Bow
-extern u64 gLinkChildBowTex[];
-extern u64 gLinkChildBowDesignTex[];
 extern Gfx gLinkChildRightHandHoldingBowNearDL[];
 extern Gfx gLinkChildRightHandHoldingBowFirstPersonDL[];
 extern Gfx gLinkChildBowStringDL[];
 
 // Power Bracelet
-extern Gfx gLinkChildBracelet1DL[];
-extern Gfx gLinkChildBracelet2DL[];
 extern Gfx gLinkChildPowerBraceletDL[];
 extern Gfx gLinkChildPowerBraceletsDL[];
 
 // Earring
 extern Gfx gLinkChildEarringsIronDL[];
 extern Gfx gLinkChildEarringsHoverDL[];
-extern Gfx gLinkChildEarringsEmpty1DL[];
-extern Gfx gLinkChildEarringsEmpty2DL[];
 
 #endif

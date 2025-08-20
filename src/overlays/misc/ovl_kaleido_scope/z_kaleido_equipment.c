@@ -789,9 +789,9 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
 
             if (((u32)i == EQUIP_TYPE_SWORD) && (k == EQUIP_INV_SWORD_BIGGORON) &&
                 gSaveContext.save.info.playerData.bgsFlag) {
-                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, (IS_CHILD_QUEST && LINK_IS_CHILD) ? gItemIconSwordGildedTex : gItemIconSwordBiggoronTex, ITEM_ICON_WIDTH,
+                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, IS_CHILD_QUEST_AS_CHILD ? gItemIconSwordGildedTex : gItemIconSwordBiggoronTex, ITEM_ICON_WIDTH,
                                                    ITEM_ICON_HEIGHT, point);
-            } else if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_BIGGORON && IS_CHILD_QUEST && LINK_IS_CHILD && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
+            } else if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_BIGGORON && IS_CHILD_QUEST_AS_CHILD && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconSwordSilverTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if ((i == EQUIP_TYPE_SWORD) && (k == EQUIP_INV_SWORD_BIGGORON) &&
                        (gBitFlags[bit + 1] & gSaveContext.save.info.inventory.equipment)) {

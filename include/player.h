@@ -7,6 +7,8 @@
 
 struct Player;
 
+#define MAX_LINK_MODELS 3
+
 #define PLAYER_PARAMS(startMode, startBgCamIndex) (PARAMS_PACK_NOMASK(startMode, 8) | PARAMS_PACK_NOMASK(startBgCamIndex, 0))
 
 // Determines behavior when spawning. See `PlayerStartMode`.
@@ -1042,7 +1044,7 @@ void Player_DrawPause(struct PlayState* play, u8* segment, SkelAnime* skelAnime,
                       s32 sword, s32 tunic, s32 shield, s32 boots);
 
 // z_player_lib.c
-extern FlexSkeletonHeader* gPlayerSkelHeaders[2];
+extern FlexSkeletonHeader* gPlayerSkelHeaders[MAX_LINK_MODELS];
 extern u8 gPlayerModelTypes[PLAYER_MODELGROUP_MAX][PLAYER_MODELGROUPENTRY_MAX];
 extern Gfx* gPlayerLeftHandBgsDLs[];
 extern Gfx* gPlayerLeftHandOpenDLs[];
@@ -1052,6 +1054,6 @@ extern Gfx gCullBackDList[];
 extern Gfx gCullFrontDList[];
 
 // object_table.c
-extern s16 gLinkObjectIds[2];
+extern s16 gLinkObjectIds[MAX_LINK_MODELS];
 
 #endif

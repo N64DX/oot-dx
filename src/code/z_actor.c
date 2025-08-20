@@ -1887,7 +1887,7 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                 s32 absYawDiff = ABS(yawDiff);
 
                 if ((getItemId != GI_NONE) || (player->getItemDirection < absYawDiff)) {
-                    if (IS_CHILD_QUEST && LINK_IS_CHILD) {
+                    if (IS_CHILD_QUEST_AS_CHILD) {
                         if (getItemId == -GI_SHIELD_MIRROR)
                             getItemId = -GI_SHIELD_MIRROR_MM;
                         else if (getItemId == -GI_SILVER_GAUNTLETS)

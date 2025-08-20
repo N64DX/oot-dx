@@ -24,7 +24,7 @@
 #include "save.h"
 
 #include "assets/objects/object_sd/object_sd.h"
-#include "assets/objects/object_link_child/object_link_child.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY)
 
@@ -864,7 +864,7 @@ void EnHeishi2_Draw(Actor* thisx, PlayState* play2) {
     SkelAnime_DrawOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, EnHeishi2_OverrideLimbDraw,
                       EnHeishi2_PostLimbDraw, this);
     if ((this->type == 5) && GET_INFTABLE(INFTABLE_77)) {
-        linkChildObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_LINK_CHILD);
+        linkChildObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GAMEPLAY_KEEP);
         if (linkChildObjectSlot >= 0) {
             Mtx* mtx;
 

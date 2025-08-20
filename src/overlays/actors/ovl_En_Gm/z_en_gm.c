@@ -271,7 +271,7 @@ void EnGm_ProcessChoiceIndex(EnGm* this, PlayState* play) {
                     Message_ContinueTextbox(play, 0xC8);
                     this->actionFunc = func_80A3DD7C;
                 } else {
-                    Actor_OfferGetItem(&this->actor, play, (IS_CHILD_QUEST && LINK_IS_CHILD) ? GI_SWORD_SILVER : GI_SWORD_KNIFE, 415.0f, 10.0f);
+                    Actor_OfferGetItem(&this->actor, play, IS_CHILD_QUEST_AS_CHILD ? GI_SWORD_SILVER : GI_SWORD_KNIFE, 415.0f, 10.0f);
                     this->actionFunc = func_80A3DF00;
                 }
                 break;
@@ -288,7 +288,7 @@ void func_80A3DF00(EnGm* this, PlayState* play) {
         this->actor.parent = NULL;
         this->actionFunc = func_80A3DF60;
     } else {
-        Actor_OfferGetItem(&this->actor, play, (IS_CHILD_QUEST && LINK_IS_CHILD) ? GI_SWORD_SILVER : GI_SWORD_KNIFE, 415.0f, 10.0f);
+        Actor_OfferGetItem(&this->actor, play, IS_CHILD_QUEST_AS_CHILD ? GI_SWORD_SILVER : GI_SWORD_KNIFE, 415.0f, 10.0f);
     }
 }
 

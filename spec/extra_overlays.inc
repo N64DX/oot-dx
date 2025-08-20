@@ -1,4 +1,11 @@
 beginseg
+    name "ovl_Item_Shield_Young"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Item_Shield/z_item_shield_young.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Item_Shield/ovl_Item_Shield_Young_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Invisible_Ruppe"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Invisible_Ruppe/z_en_invisible_ruppe.o"
