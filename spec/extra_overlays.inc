@@ -1,4 +1,11 @@
 beginseg
+    name "ovl_Effect_Ss_Dinofos_Fire"
+    compress
+    include "$(BUILD_DIR)/src/overlays/effects/ovl_Effect_Ss_Dinofos_Fire/z_eff_ss_dinofos_fire.o"
+    include "$(BUILD_DIR)/src/overlays/effects/ovl_Effect_Ss_Dinofos_Fire/ovl_Effect_Ss_Dinofos_Fire_reloc.o"
+endseg
+
+beginseg
     name "ovl_Item_Shield_Young"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Item_Shield/z_item_shield_young.o"
@@ -31,6 +38,13 @@ beginseg
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Young/z_en_horse_young.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Young/ovl_En_Horse_Young_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Dinofos"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Dinofos/z_en_dinofos.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Dinofos/ovl_En_Dinofos_reloc.o"
 endseg
 
 beginseg

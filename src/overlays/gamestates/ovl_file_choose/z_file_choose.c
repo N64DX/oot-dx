@@ -1202,16 +1202,12 @@ static void* sSaveXTextures[] = { gFileSelSaveXJPNTex, gFileSelSaveXENGTex };
 
 static s16 sNamePrimColors[2][3] = { { 255, 255, 255 }, { 100, 100, 100 } };
 
-#if !OOT_PAL_N64
-static void* sHeartTextures[] = { gHeartFullTex, gDefenseHeartFullTex };
-#else
 static void* sHeartTextures[][5] = {
     { gHeartEmptyTex, gHeartQuarterTex, gHeartHalfTex, gHeartThreeQuarterTex, gHeartFullTex },
     { gDefenseHeartEmptyTex, gDefenseHeartQuarterTex, gDefenseHeartHalfTex, gDefenseHeartThreeQuarterTex,
       gDefenseHeartFullTex },
 };
 static u8 sHeartTextureIndices[16] = { 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3 };
-#endif
 
 static s16 sHeartPrimColors[2][3] = { { 255, 70, 50 }, { 200, 0, 0 } };
 static s16 sHeartEnvColors[2][3] = { { 50, 40, 60 }, { 255, 255, 255 } };
@@ -1222,10 +1218,8 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
     s16 i;
     s16 j;
     s16 k;
-#if OOT_PAL_N64
     s16 health;
     s16 heartTextureIndex;
-#endif
     s16 heartType;
     s16 vtxOffset;
     s16 deathCountSplit[3];
@@ -1276,22 +1270,15 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
                        sHeartEnvColors[heartType][2], 255);
 
         k = this->healthCapacities[fileIndex] / 0x10;
-
-#if !OOT_PAL_N64
-        // draw hearts
-        for (vtxOffset = 0, j = 0; j < k; j++, vtxOffset += 4) {
-            gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[D_8081284C[fileIndex] + vtxOffset] + 0x30, 4, 0);
-            POLY_OPA_DISP = FileSelect_QuadTextureIA8(POLY_OPA_DISP, sHeartTextures[heartType], 0x10, 0x10, 0);
-        }
-#else
         health = this->health[fileIndex];
+        
         if (health <= 48) { // 3 hearts
             health = 48;
         }
         heartTextureIndex = 4;
 
         // draw hearts
-        for (vtxOffset = 0, j = 0; j < k; j++, vtxOffset += 4) {
+        for (vtxOffset = 0, j = 0; j < (k > 20 ? 20 : k); j++, vtxOffset += 4) {
             if (health < 16) {
                 if (health != 0) {
                     heartTextureIndex = sHeartTextureIndices[health];
@@ -1307,7 +1294,6 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
             POLY_OPA_DISP =
                 FileSelect_QuadTextureIA8(POLY_OPA_DISP, sHeartTextures[heartType][heartTextureIndex], 0x10, 0x10, 0);
         }
-#endif
 
         gDPPipeSync(POLY_OPA_DISP++);
 

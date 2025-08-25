@@ -3,6 +3,11 @@
 
 #include "z_math.h"
 
+#define ABS_ALT(x) ((x) < 0 ? -(x) : (x))
+#define BINANG_ROT180(angle) ((s16)(angle + 0x8000))
+#define BINANG_SUB(a, b) ((s16)(a - b))
+#define BINANG_ADD(a, b) ((s16)(a + b))
+
 struct GraphicsContext;
 struct GameState;
 
@@ -84,5 +89,14 @@ void Matrix_ReplaceRotation(MtxF* mf);
 void Matrix_MtxFToYXZRotS(MtxF* mf, Vec3s* rotDest, s32 flag);
 void Matrix_MtxFToZYXRotS(MtxF* mf, Vec3s* rotDest, s32 flag);
 void Matrix_RotateAxis(f32 angle, Vec3f* axis, u8 mode);
+
+void Matrix_MultZero(Vec3f* dest);
+void Matrix_MultVecY(f32 y, Vec3f* dest);
+void Matrix_MultVecX(f32 x, Vec3f* dest);
+void Matrix_MultVecZ(f32 z, Vec3f* dest);
+void Matrix_RotateXFApply(f32 x);
+void Matrix_RotateYF(f32 y, MatrixMode mode);
+void Matrix_RotateZF(f32 z, MatrixMode mode);
+MtxF* Matrix_GetCurrent(void);
 
 #endif

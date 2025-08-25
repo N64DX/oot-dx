@@ -3086,7 +3086,7 @@ void Magic_DrawMeter(PlayState* play) {
 
     if (gSaveContext.save.info.playerData.magicLevel != 0) {
         // NOLINTBEGIN
-        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0)
+        if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW)
             magicMeterY = R_MAGIC_METER_Y_LOWER; // two rows of hearts
         else
             magicMeterY = R_MAGIC_METER_Y_HIGHER; // one row of hearts
@@ -3276,13 +3276,13 @@ void Interface_DrawItemButtons(PlayState* play) {
 
     // D-Pad positions
     dpad_x = R_MAGIC_METER_X + 20;
-    dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 15;
+    dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 15;
     if (gSaveContext.save.info.playerData.magicLevel != 0)
         dpad_y += 15;
     if (IS_ACTIVE_TIMER && pauseCtx->state == PAUSE_STATE_OFF) {
         dpad_y += 15;
         if (gSaveContext.save.info.playerData.magicLevel == 0)
-            dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + HIRES_MULTIPLY(45);
+            dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + HIRES_MULTIPLY(45);
     }
 
     if (Interface_GetItemFromDpad(0) != ITEM_NONE || Interface_GetItemFromDpad(1) != ITEM_NONE || Interface_GetItemFromDpad(2) != ITEM_NONE || Interface_GetItemFromDpad(3) != ITEM_NONE) {
@@ -4221,7 +4221,7 @@ void Interface_Draw(PlayState* play) {
                     svar1 = (gSaveContext.timerX[TIMER_ID_MAIN] - 26) / sTimerStateTimer;
                     gSaveContext.timerX[TIMER_ID_MAIN] -= svar1;
 
-                    if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                    if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) {
                         svar1 = (gSaveContext.timerY[TIMER_ID_MAIN] - 54) / sTimerStateTimer; // two rows of hearts
                     } else {
                         svar1 = (gSaveContext.timerY[TIMER_ID_MAIN] - 46) / sTimerStateTimer; // one row of hearts
@@ -4233,7 +4233,7 @@ void Interface_Draw(PlayState* play) {
                         sTimerStateTimer = 20;
                         gSaveContext.timerX[TIMER_ID_MAIN] = 26;
 
-                        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                        if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 54; // two rows of hearts
                         } else {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 46; // one row of hearts
@@ -4250,7 +4250,7 @@ void Interface_Draw(PlayState* play) {
                 case TIMER_STATE_DOWN_TICK:
                     if ((gSaveContext.timerState == TIMER_STATE_ENV_HAZARD_TICK) ||
                         (gSaveContext.timerState == TIMER_STATE_DOWN_TICK)) {
-                        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                        if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 54; // two rows of hearts
                         } else {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 46; // one row of hearts
@@ -4301,7 +4301,7 @@ void Interface_Draw(PlayState* play) {
                     svar1 = (gSaveContext.timerX[TIMER_ID_MAIN] - 26) / sTimerStateTimer;
                     gSaveContext.timerX[TIMER_ID_MAIN] -= svar1;
 
-                    if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                    if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) {
                         svar1 = (gSaveContext.timerY[TIMER_ID_MAIN] - 54) / sTimerStateTimer; // two rows of hearts
                     } else {
                         svar1 = (gSaveContext.timerY[TIMER_ID_MAIN] - 46) / sTimerStateTimer; // one row of hearts
@@ -4312,7 +4312,7 @@ void Interface_Draw(PlayState* play) {
                     if (sTimerStateTimer == 0) {
                         sTimerStateTimer = 20;
                         gSaveContext.timerX[TIMER_ID_MAIN] = 26;
-                        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                        if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 54; // two rows of hearts
                         } else {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 46; // one row of hearts
@@ -4323,7 +4323,7 @@ void Interface_Draw(PlayState* play) {
                     FALLTHROUGH;
                 case TIMER_STATE_UP_TICK:
                     if (gSaveContext.timerState == TIMER_STATE_UP_TICK) {
-                        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                        if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 54; // two rows of hearts
                         } else {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 46; // one row of hearts
@@ -4407,7 +4407,7 @@ void Interface_Draw(PlayState* play) {
                                    ((void)0, gSaveContext.timerY[TIMER_ID_SUB]), gSaveContext.subTimerSeconds);
                             svar1 = (gSaveContext.timerX[TIMER_ID_SUB] - 26) / sSubTimerStateTimer;
                             gSaveContext.timerX[TIMER_ID_SUB] -= svar1;
-                            if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                            if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) {
                                 // two rows of hearts
                                 svar1 = (gSaveContext.timerY[TIMER_ID_SUB] - 54) / sSubTimerStateTimer;
                             } else {
@@ -4421,7 +4421,7 @@ void Interface_Draw(PlayState* play) {
                                 sSubTimerStateTimer = 20;
                                 gSaveContext.timerX[TIMER_ID_SUB] = 26;
 
-                                if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                                if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) {
                                     gSaveContext.timerY[TIMER_ID_SUB] = 54; // two rows of hearts
                                 } else {
                                     gSaveContext.timerY[TIMER_ID_SUB] = 46; // one row of hearts
@@ -4438,7 +4438,7 @@ void Interface_Draw(PlayState* play) {
                         case SUBTIMER_STATE_UP_TICK:
                             if ((gSaveContext.subTimerState == SUBTIMER_STATE_DOWN_TICK) ||
                                 (gSaveContext.subTimerState == SUBTIMER_STATE_UP_TICK)) {
-                                if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                                if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) {
                                     gSaveContext.timerY[TIMER_ID_SUB] = 54; // two rows of hearts
                                 } else {
                                     gSaveContext.timerY[TIMER_ID_SUB] = 46; // one row of hearts

@@ -520,8 +520,8 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
             } else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) ||
                        CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
                 gSaveContext.save.info.playerData.healthCapacity += 0x10;
-                if (gSaveContext.save.info.playerData.healthCapacity >= 0x140) {
-                    gSaveContext.save.info.playerData.healthCapacity = 0x140;
+                if (gSaveContext.save.info.playerData.healthCapacity >= (CHILD_QUEST ? 0x150 : 0x140)) {
+                    gSaveContext.save.info.playerData.healthCapacity = (CHILD_QUEST ? 0x150 : 0x140);
                 }
             }
             break;

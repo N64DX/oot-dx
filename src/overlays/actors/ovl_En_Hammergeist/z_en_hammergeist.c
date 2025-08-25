@@ -257,23 +257,23 @@ static DamageTable sDamageTable[] = {
     /* Unk arrow 2   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
     /* Unk arrow 3   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
     /* Fire magic    */ DMG_ENTRY(0, ENHAMMERGEIST_DMGEFF_FIRE),
-    /* Ice magic     */ DMG_ENTRY(3, ENHAMMERGEIST_DMGEFF_ICE_MAGIC),
+    /* Ice magic     */ DMG_ENTRY(4, ENHAMMERGEIST_DMGEFF_ICE_MAGIC),
     /* Light magic   */ DMG_ENTRY(4, ENHAMMERGEIST_DMGEFF_LIGHT_MAGIC),
     /* Shield        */ DMG_ENTRY(0, ENHAMMERGEIST_DMGEFF_NONE),
     /* Mirror Ray    */ DMG_ENTRY(0, ENHAMMERGEIST_DMGEFF_NONE),
     /* Kokiri spin   */ DMG_ENTRY(1, ENHAMMERGEIST_DMGEFF_NONE),
-    /* Giant spin    */ DMG_ENTRY(5, ENHAMMERGEIST_DMGEFF_NONE),
-    /* Master spin   */ DMG_ENTRY(3, ENHAMMERGEIST_DMGEFF_NONE),
+    /* Giant spin    */ DMG_ENTRY(4, ENHAMMERGEIST_DMGEFF_NONE),
+    /* Master spin   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
     /* Kokiri jump   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
-    /* Giant jump    */ DMG_ENTRY(6, ENHAMMERGEIST_DMGEFF_NONE),
+    /* Giant jump    */ DMG_ENTRY(8, ENHAMMERGEIST_DMGEFF_NONE),
     /* Master jump   */ DMG_ENTRY(4, ENHAMMERGEIST_DMGEFF_NONE),
     /* Unknown 1     */ DMG_ENTRY(0, ENHAMMERGEIST_DMGEFF_NONE),
     /* Unblockable   */ DMG_ENTRY(0, ENHAMMERGEIST_DMGEFF_NONE),
-    /* Hammer jump   */ DMG_ENTRY(3, ENHAMMERGEIST_DMGEFF_NONE),
+    /* Hammer jump   */ DMG_ENTRY(4, ENHAMMERGEIST_DMGEFF_NONE),
     /* Unknown 2     */ DMG_ENTRY(0, ENHAMMERGEIST_DMGEFF_NONE),
 };
 
-static CollisionCheckInfoInit2 sColChkInit = { 16, 35, 55, 0, MASS_HEAVY };
+static CollisionCheckInfoInit2 sColChkInit = { 20, 35, 55, 0, MASS_HEAVY };
 
 void EnHammergeist_SetupAction(EnHammergeist* this, EnHammergeistActionFunc actionFunc) {
     this->actionFunc = actionFunc;
@@ -397,7 +397,8 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
     this->rightHammerInfused = false;
     this->playerHit = false;
     this->alpha = 255;
-    this->switchFlag = this->actor.params & 0xFF;
+    this->switchFlag = PARAMS_GET_U(thisx->params, 8, 8);
+    this->reward = thisx->params & 0xFF;
 
     EnHammergeist_ChangeFace(this, HAMMERGEIST_FACE_NORMAL);
 
@@ -405,10 +406,17 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
     SkelAnime_InitFlex(play, &this->skelAnime, &gHammergeistSkel, NULL, this->jointTable, this->morphTable, GHAMMERGEISTSKEL_NUM_LIMBS);
     EnHammergeist_SetupDoNothing(this, play);
 
-    if (this->switchFlag != 0xFF && Flags_GetSwitch(play, this->switchFlag))
+    if (IS_CHILD_QUEST_AS_CHILD) {
+        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
+
+    if (this->switchFlag != 0xFF && Flags_GetSwitch(play, this->switchFlag)) {
+        if (this->reward == HAMMERGEIST_REWARD_HEROS_SWORD && !HAS_HEROS_SWORD)
+            Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 5.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_SWORD_HEROS);
         Actor_Kill(thisx);
-    if ( (this->actor.params & 0x100) && HAS_HEROS_SWORD)
-        Actor_Kill(thisx);
+    }
 }
 
 void EnHammergeist_Destroy(Actor* thisx, PlayState* play) {
@@ -420,7 +428,7 @@ void EnHammergeist_Destroy(Actor* thisx, PlayState* play) {
     Collider_DestroyCylinder(play, &this->hammerRightCollider);
     Collider_DestroyJntSph(play, &this->explosionCollider);
 
-    if (this->actor.params & 0x100)
+    if (this->switchFlag != 0xFF)
         func_800F5B58();
 }
 
@@ -664,7 +672,7 @@ void EnHammergeist_SetupApproachPlayer(EnHammergeist* this, PlayState* play) {
     EnHammergeist_ChangeAnimation(this, HAMMERGEIST_ANIMATION_WALK);
     EnHammergeist_SetupAction(this, EnHammergeist_ApproachPlayer);
     
-    if ((this->actor.params & 0x100))
+    if (this->switchFlag != 0xFF)
         func_800F5ACC(NA_BGM_MINI_BOSS2);
 }
 
@@ -774,7 +782,7 @@ void EnHammergeist_Die(EnHammergeist* this, PlayState* play) {
         if (DECR(this->fireTimer) == 0 && this->actor.colorFilterTimer == 0) {
             if (this->switchFlag != 0xFF)
                 Flags_SetSwitch(play, this->switchFlag);
-            if ( (this->actor.params & 0x100) && !HAS_HEROS_SWORD)
+            if (this->reward == HAMMERGEIST_REWARD_HEROS_SWORD && !HAS_HEROS_SWORD)
                 Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 5.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_SWORD_HEROS);
             Actor_Kill(&this->actor);
         }

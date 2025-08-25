@@ -493,6 +493,7 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "119:" T("Outside Ganon's Castle", "Outside Ganon's Castle"), MapSelect_LoadGame, MAP_OUTSIDE_GANONS_CASTLE_0 },
     { "120:" T("Grotto (Shortcut 1)", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
     { "121:" T("Grotto (Shortcut 2)", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
+    { "122:" T("Grotto (Dinolfos)", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };

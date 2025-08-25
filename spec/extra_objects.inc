@@ -69,6 +69,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_dinofos"
+    compress
+    number 6
+    include "$(BUILD_DIR)/assets/objects/object_dinofos/object_dinofos.o"
+endseg
+
+beginseg
     name "object_buffdeku"
     compress
     include "$(BUILD_DIR)/assets/objects/object_buffdeku/object_buffdeku.o"

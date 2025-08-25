@@ -53,7 +53,7 @@ ActorEntry swamp_spider_house_room_1ActorEntry_000068[] = {
     { ACTOR_EN_SW,          {  270,  0,   -700  }, { 0xC000, 0x1000, 0 }, 0x0001, }, // 7
     { ACTOR_EN_SW,          { -300,  0,   -1140 }, { 0xC000, 0x7000, 0 }, 0x0001, }, // 8
     { ACTOR_EN_DEKUNUTS,    { -268,  300, -690  }, { 0,      0xC000, 0 }, 0x007F, }, // 9
-    { ACTOR_EN_DEKUNUTS,    {  0,    294, -900  }, { 0,      0x4000, 0 }, 0x007F, }, // 10
+    { ACTOR_EN_ITEM00,      {  0,    294, -900  }, { 0,      0,      0 }, 0x0806, }, // 10
     { ACTOR_EN_DEKUNUTS,    {  270,  300, -690  }, { 0,      0x4000, 0 }, 0x007F, }, // 11
     { ACTOR_OBJ_TSUBO,      { -330,  300, -210  }, { 0,      0,      0 }, 0x0008, }, // 12
     { ACTOR_OBJ_TSUBO,      { -270,  300, -210  }, { 0,      0,      0 }, 0x0008, }, // 13

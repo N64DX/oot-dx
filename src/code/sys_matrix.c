@@ -1175,3 +1175,201 @@ void Matrix_SetTranslateScaleMtx2(Mtx* mtx, f32 scaleX, f32 scaleY, f32 scaleZ, 
     intPart[15] = 1;
     (*m)[3][3] = fixedPoint << 16;
 }
+
+void Matrix_MultZero(Vec3f* dest) {
+    MtxF* cmf = sCurrentMatrix;
+
+    dest->x = cmf->xw;
+    dest->y = cmf->yw;
+    dest->z = cmf->zw;
+}
+
+void Matrix_MultVecY(f32 y, Vec3f* dest) {
+    MtxF* cmf = sCurrentMatrix;
+
+    dest->x = cmf->xw + cmf->xy * y;
+    dest->y = cmf->yw + cmf->yy * y;
+    dest->z = cmf->zw + cmf->zy * y;
+}
+
+void Matrix_MultVecX(f32 x, Vec3f* dest) {
+    MtxF* cmf = sCurrentMatrix;
+
+    dest->x = cmf->xw + cmf->xx * x;
+    dest->y = cmf->yw + cmf->yx * x;
+    dest->z = cmf->zw + cmf->zx * x;
+}
+
+void Matrix_MultVecZ(f32 z, Vec3f* dest) {
+    MtxF* cmf = sCurrentMatrix;
+
+    dest->x = cmf->xw + cmf->xz * z;
+    dest->y = cmf->yw + cmf->yz * z;
+    dest->z = cmf->zw + cmf->zz * z;
+}
+
+void Matrix_RotateXFApply(f32 x) {
+    MtxF* cmf;
+    f32 sin;
+    f32 cos;
+    f32 tempY;
+    f32 tempZ;
+    //s32 pad;
+
+    if (x != 0.0f) {
+        cmf = sCurrentMatrix;
+
+        sin = sins(RAD_TO_BINANG(x)) * SHT_MINV;
+        cos = coss(RAD_TO_BINANG(x)) * SHT_MINV;
+
+        tempY = cmf->xy;
+        tempZ = cmf->xz;
+        cmf->xy = (tempY * cos) + (tempZ * sin);
+        cmf->xz = (tempZ * cos) - (tempY * sin);
+
+        tempY = cmf->yy;
+        tempZ = cmf->yz;
+        cmf->yy = (tempY * cos) + (tempZ * sin);
+        cmf->yz = (tempZ * cos) - (tempY * sin);
+
+        tempY = cmf->zy;
+        tempZ = cmf->zz;
+        cmf->zy = (tempY * cos) + (tempZ * sin);
+        cmf->zz = (tempZ * cos) - (tempY * sin);
+
+        tempY = cmf->wy;
+        tempZ = cmf->wz;
+        cmf->wy = (tempY * cos) + (tempZ * sin);
+        cmf->wz = (tempZ * cos) - (tempY * sin);
+    }
+}
+
+void Matrix_RotateYF(f32 y, MatrixMode mode) {
+    MtxF* cmf;
+    f32 sin;
+    f32 cos;
+    f32 tempX;
+    f32 tempZ;
+    f32 zero = 0.0;
+    f32 one = 1.0;
+
+    if (mode == MTXMODE_APPLY) {
+        if (y != 0.0f) {
+            cmf = sCurrentMatrix;
+
+            sin = sinf(y);
+            cos = cosf(y);
+
+            tempX = cmf->xx;
+            tempZ = cmf->xz;
+            cmf->xx = tempX * cos - tempZ * sin;
+            cmf->xz = tempX * sin + tempZ * cos;
+
+            tempX = cmf->yx;
+            tempZ = cmf->yz;
+            cmf->yx = tempX * cos - tempZ * sin;
+            cmf->yz = tempX * sin + tempZ * cos;
+
+            tempX = cmf->zx;
+            tempZ = cmf->zz;
+            cmf->zx = tempX * cos - tempZ * sin;
+            cmf->zz = tempX * sin + tempZ * cos;
+
+            tempX = cmf->wx;
+            tempZ = cmf->wz;
+            cmf->wx = tempX * cos - tempZ * sin;
+            cmf->wz = tempX * sin + tempZ * cos;
+        }
+    } else {
+        cmf = sCurrentMatrix;
+
+        if (y != 0.0f) {
+            sin = sinf(y);
+            cos = cosf(y);
+        } else {
+            cos = one;
+            sin = zero;
+        }
+
+        cmf->yx = zero;
+        cmf->wx = zero;
+        cmf->xy = zero;
+        cmf->zy = zero;
+        cmf->wy = zero;
+        cmf->yz = zero;
+        cmf->wz = zero;
+        cmf->xw = zero;
+        cmf->yw = zero;
+        cmf->zw = zero;
+        cmf->yy = one;
+        cmf->ww = one;
+        cmf->xx = cos;
+        cmf->zz = cos;
+        cmf->zx = -sin;
+        cmf->xz = sin;
+    }
+}
+
+void Matrix_RotateZF(f32 z, MatrixMode mode) {
+    MtxF* cmf;
+    f32 sin;
+    f32 cos;
+    f32 tempX;
+    f32 tempY;
+
+    if (mode == MTXMODE_APPLY) {
+        if (z != 0) {
+            cmf = sCurrentMatrix;
+
+            sin = sinf(z);
+            cos = cosf(z);
+
+            tempX = cmf->xx;
+            tempY = cmf->xy;
+            cmf->xx = tempX * cos + tempY * sin;
+            cmf->xy = tempY * cos - tempX * sin;
+
+            tempX = cmf->yx;
+            tempY = cmf->yy;
+            cmf->yx = tempX * cos + tempY * sin;
+            cmf->yy = tempY * cos - tempX * sin;
+
+            tempX = cmf->zx;
+            tempY = cmf->zy;
+            cmf->zx = tempX * cos + tempY * sin;
+            cmf->zy = tempY * cos - tempX * sin;
+
+            tempX = cmf->wx;
+            tempY = cmf->wy;
+            cmf->wx = tempX * cos + tempY * sin;
+            cmf->wy = tempY * cos - tempX * sin;
+        }
+    } else {
+        cmf = sCurrentMatrix;
+
+        if (z != 0) {
+            sin = sinf(z);
+            cos = cosf(z);
+        } else {
+            sin = 0.0f;
+            cos = 1.0f;
+        }
+
+        cmf->zx = 0.0f;
+        cmf->wx = 0.0f;
+        cmf->zy = 0.0f;
+        cmf->wy = 0.0f;
+        cmf->xz = 0.0f;
+        cmf->yz = 0.0f;
+        cmf->wz = 0.0f;
+        cmf->xw = 0.0f;
+        cmf->yw = 0.0f;
+        cmf->zw = 0.0f;
+        cmf->zz = 1.0f;
+        cmf->ww = 1.0f;
+        cmf->xx = cos;
+        cmf->yy = cos;
+        cmf->yx = sin;
+        cmf->xy = -sin;
+    }
+}

@@ -1,4 +1,5 @@
 #include "grotto_shortcuts_room_0.h"
+#include "grotto_shortcuts_room_1.h"
 #include "grotto_shortcuts_scene.h"
 
 #include "actor.h"
@@ -12,7 +13,7 @@
 
 SceneCmd grotto_shortcuts_room_0Commands[] = {
     SCENE_CMD_ECHO_SETTINGS(0),
-    SCENE_CMD_ROOM_BEHAVIOR(0x00, 0x00, false, false),
+    SCENE_CMD_ROOM_BEHAVIOR(1, 0, false, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&grotto_shortcuts_room_0RoomShapeCullable_0000E0),
@@ -67,8 +68,80 @@ RoomShapeCullableEntry grotto_shortcuts_room_0RoomShapeCullableEntry_0000EC[14] 
 
 s32 grotto_shortcuts_room_0_terminatorMaybe_00014C = { 0x01000000 };
 
+u64 grotto_shortcuts_room_0Tex_001620[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_001620.rgba16.inc.c"
+};
+
+u64 grotto_shortcuts_room_0Tex_001820[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_001820.rgba16.inc.c"
+};
+
+u64 grotto_shortcuts_room_0Tex_001698[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_001698.rgba16.inc.c"
+};
+
+u64 grotto_shortcuts_room_0Tex_001898[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_001898.rgba16.inc.c"
+};
+
+u64 grotto_shortcuts_room_0Tex_002098[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_002098.rgba16.inc.c"
+};
+
+u64 grotto_shortcuts_room_0Tex_002D60[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_002D60.rgba16.inc.c"
+};
+
 Vtx grotto_shortcuts_room_0Vtx_000150[] = {
 #include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000150.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_0008A0[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0008A0.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_000C30[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000C30.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_0010A0[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0010A0.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_001448[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_001448.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_002020[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_002020.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_000200[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000200.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_0008F8[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0008F8.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_000AF8[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000AF8.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_000E68[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000E68.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_0014B8[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0014B8.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_0028A0[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0028A0.Vtx.inc"
+};
+
+Vtx grotto_shortcuts_room_0Vtx_002BA0[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_002BA0.Vtx.inc"
 };
 
 Gfx grotto_shortcuts_room_0DL_0006C0[] = {
@@ -122,10 +195,6 @@ Gfx grotto_shortcuts_room_0DL_0006C0[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx grotto_shortcuts_room_0Vtx_0008A0[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0008A0.Vtx.inc"
-};
-
 Gfx grotto_shortcuts_room_0DL_000AE0[] = {
     gsSPVertex(&grotto_shortcuts_room_0Vtx_0008A0[28], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -157,10 +226,6 @@ Gfx grotto_shortcuts_room_0DL_000AE0[] = {
     gsSP2Triangles(26, 11, 14, 0, 26, 14, 27, 0),
     gsSP2Triangles(14, 19, 25, 0, 14, 25, 27, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx grotto_shortcuts_room_0Vtx_000C30[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000C30.Vtx.inc"
 };
 
 Gfx grotto_shortcuts_room_0DL_000F70[] = {
@@ -198,10 +263,6 @@ Gfx grotto_shortcuts_room_0DL_000F70[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx grotto_shortcuts_room_0Vtx_0010A0[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0010A0.Vtx.inc"
-};
-
 Gfx grotto_shortcuts_room_0DL_0012A0[] = {
     gsSPVertex(&grotto_shortcuts_room_0Vtx_0010A0[24], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -234,10 +295,6 @@ Gfx grotto_shortcuts_room_0DL_0012A0[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx grotto_shortcuts_room_0Vtx_001448[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_001448.Vtx.inc"
-};
-
 Gfx grotto_shortcuts_room_0DL_001548[] = {
     gsSPVertex(&grotto_shortcuts_room_0Vtx_001448[8], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -254,18 +311,6 @@ Gfx grotto_shortcuts_room_0DL_001548[] = {
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSPEndDisplayList(),
-};
-
-u64 grotto_shortcuts_room_0Tex_001620[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_001620.rgba16.inc.c"
-};
-
-u64 grotto_shortcuts_room_0Tex_001820[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_001820.rgba16.inc.c"
-};
-
-Vtx grotto_shortcuts_room_0Vtx_002020[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_002020.Vtx.inc"
 };
 
 Gfx grotto_shortcuts_room_0DL_002220[] = {
@@ -289,24 +334,6 @@ Gfx grotto_shortcuts_room_0DL_002220[] = {
     gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
     gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
     gsSPEndDisplayList(),
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Vtx grotto_shortcuts_room_0Vtx_000200[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000200.Vtx.inc"
 };
 
 Gfx grotto_shortcuts_room_0DL_000740[] = {
@@ -355,10 +382,6 @@ Gfx grotto_shortcuts_room_0DL_000740[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx grotto_shortcuts_room_0Vtx_0008F8[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0008F8.Vtx.inc"
-};
-
 Gfx grotto_shortcuts_room_0DL_000A18[] = {
     gsSPVertex(&grotto_shortcuts_room_0Vtx_0008F8[10], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -376,10 +399,6 @@ Gfx grotto_shortcuts_room_0DL_000A18[] = {
     gsSP2Triangles(3, 4, 2, 0, 5, 6, 7, 0),
     gsSP2Triangles(6, 8, 7, 0, 8, 9, 7, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx grotto_shortcuts_room_0Vtx_000AF8[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000AF8.Vtx.inc"
 };
 
 Gfx grotto_shortcuts_room_0DL_000D38[] = {
@@ -409,10 +428,6 @@ Gfx grotto_shortcuts_room_0DL_000D38[] = {
     gsSP2Triangles(23, 25, 26, 0, 23, 26, 24, 0),
     gsSP2Triangles(26, 27, 22, 0, 26, 22, 24, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx grotto_shortcuts_room_0Vtx_000E68[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000E68.Vtx.inc"
 };
 
 Gfx grotto_shortcuts_room_0DL_001108[] = {
@@ -471,10 +486,6 @@ Gfx grotto_shortcuts_room_0DL_001340[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx grotto_shortcuts_room_0Vtx_0014B8[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0014B8.Vtx.inc"
-};
-
 Gfx grotto_shortcuts_room_0DL_0015B8[] = {
     gsSPVertex(&grotto_shortcuts_room_0Vtx_0014B8[8], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -491,22 +502,6 @@ Gfx grotto_shortcuts_room_0DL_0015B8[] = {
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSPEndDisplayList(),
-};
-
-u64 grotto_shortcuts_room_0Tex_001698[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_001698.rgba16.inc.c"
-};
-
-u64 grotto_shortcuts_room_0Tex_001898[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_001898.rgba16.inc.c"
-};
-
-u64 grotto_shortcuts_room_0Tex_002098[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_002098.rgba16.inc.c"
-};
-
-Vtx grotto_shortcuts_room_0Vtx_0028A0[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0028A0.Vtx.inc"
 };
 
 Gfx grotto_shortcuts_room_0DL_002AA0[] = {
@@ -532,10 +527,6 @@ Gfx grotto_shortcuts_room_0DL_002AA0[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx grotto_shortcuts_room_0Vtx_002BA0[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_002BA0.Vtx.inc"
-};
-
 Gfx grotto_shortcuts_room_0DL_002CA0[] = {
     gsSPVertex(&grotto_shortcuts_room_0Vtx_002BA0[8], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -552,8 +543,4 @@ Gfx grotto_shortcuts_room_0DL_002CA0[] = {
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSPEndDisplayList(),
-};
-
-u64 grotto_shortcuts_room_0Tex_002D60[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Tex_002D60.rgba16.inc.c"
 };

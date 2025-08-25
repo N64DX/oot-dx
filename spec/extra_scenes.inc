@@ -41,6 +41,13 @@ beginseg
 endseg
 
 beginseg
+    name "grotto_shortcuts_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_1.o"
+    number 3
+endseg
+
+beginseg
     name "swamp_spider_house_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_scene.o"

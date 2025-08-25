@@ -10,6 +10,11 @@ struct EnHammergeist;
 
 typedef void (*EnHammergeistActionFunc)(struct EnHammergeist*, struct PlayState*);
 
+typedef enum EnHammerGeistReward {
+    HAMMERGEIST_REWARD_NONE,
+    HAMMERGEIST_REWARD_HEROS_SWORD
+} EnHammerGeistReward;
+
 typedef struct EnHammergeist {
     Actor actor;
     Vec3s firePos[10]; // Because of the fire effect spawn function, it's necessary that firePos is exactly at this offset (0x014C)
@@ -41,6 +46,7 @@ typedef struct EnHammergeist {
     u8 playerHit;
     u8 noHitAgain;
     u8 switchFlag;
+    u8 reward;
     EnHammergeistActionFunc actionFunc;
 } EnHammergeist;
 

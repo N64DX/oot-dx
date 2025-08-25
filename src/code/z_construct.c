@@ -189,7 +189,7 @@ void Interface_Init(PlayState* play) {
 
         gSaveContext.timerX[timerId] = 26;
 
-        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+        if (gSaveContext.save.info.playerData.healthCapacity > MAX_HEALTH_ROW) {
             gSaveContext.timerY[timerId] = 54; // two rows of hearts
         } else {
             gSaveContext.timerY[timerId] = 46; // one row of hearts

@@ -106,7 +106,7 @@ ActorEntry roadtolake_room_0ActorEntry_timeskip[] = {
     { ACTOR_EN_WOOD02,         {   2323,   -182,   2657 }, { 0, 0x5A00, 0 }, 0x0200 },
     { ACTOR_EN_WOOD02,         {   1443,   -182,   2342 }, { 0, 0x5A00, 0 }, 0x0200 },
     { ACTOR_EN_WOOD02,         {   2166,   -182,   2491 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_ITEM00,         {    401,    143,   2068 }, { 0, 0x5A00, 0 }, 0x0114 },
+    { ACTOR_EN_ITEM00,         {    401,    143,   2068 }, { 0, 0x5A00, 0 }, 0x0106 },
     { ACTOR_DOOR_ANA,          {    104,   -182,   2202 }, { 0, 0xB80, 15 }, 0x0000 },
     { ACTOR_OBJ_MURE2,         {    104,   -182,   2202 }, { 0, 0xB80,  0 }, 0x0202 },
     { ACTOR_EN_KUSA,           {   2734,    -28,   3399 }, { 0, 0,      0 }, 0x0200 },

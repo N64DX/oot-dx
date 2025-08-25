@@ -15,12 +15,12 @@
 
 SceneCmd grotto_shortcuts_sceneCommands[] = {
     SCENE_CMD_SOUND_SETTINGS(4, 19, 28),
-    SCENE_CMD_ROOM_LIST(1, grotto_shortcuts_sceneRoomList0x000198),
+    SCENE_CMD_ROOM_LIST(2, grotto_shortcuts_sceneRoomList0x000198),
     SCENE_CMD_MISC_SETTINGS(0x00, 0x00000016),
     SCENE_CMD_COL_HEADER(&grotto_shortcuts_sceneCollisionHeader_00AC9C),
     SCENE_CMD_ENTRANCE_LIST(grotto_shortcuts_sceneEntranceList0x000210),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
-    SCENE_CMD_SPAWN_LIST(4, grotto_shortcuts_sceneStartPositionList0x000088),
+    SCENE_CMD_SPAWN_LIST(5, grotto_shortcuts_sceneStartPositionList0x000088),
     SCENE_CMD_SKYBOX_SETTINGS(0, 0, true),
     SCENE_CMD_EXIT_LIST(grotto_shortcuts_sceneExitList_000234),
     SCENE_CMD_ENV_LIGHT_SETTINGS(16, grotto_shortcuts_sceneLightSettings0x000244),
@@ -32,10 +32,12 @@ ActorEntry grotto_shortcuts_sceneStartPositionList0x000088[] = {
     { ACTOR_PLAYER, { -203,   2,  798 }, { 0,      0, 0 }, 0x0DFF },
     { ACTOR_PLAYER, { 1211,   2, 1508 }, { 0, 0x8000, 0 }, 0x0DFF },
     { ACTOR_PLAYER, { 1231, 449,  801 }, { 0,      0, 0 }, 0x0DFF },
+    { ACTOR_PLAYER, {  627, 435, 1477 }, { 0, 0x8000, 0 }, 0x0DFF },
 };
 
 RomFile grotto_shortcuts_sceneRoomList0x000198[] = {
     { (uintptr_t)_grotto_shortcuts_room_0SegmentRomStart, (uintptr_t)_grotto_shortcuts_room_0SegmentRomEnd },
+    { (uintptr_t)_grotto_shortcuts_room_1SegmentRomStart, (uintptr_t)_grotto_shortcuts_room_1SegmentRomEnd },
 };
 
 Spawn grotto_shortcuts_sceneEntranceList0x000210[] = {
@@ -43,10 +45,11 @@ Spawn grotto_shortcuts_sceneEntranceList0x000210[] = {
     { 0x01, 0x00 },
     { 0x02, 0x00 },
     { 0x03, 0x00 },
+    { 0x04, 0x01 },
 };
 
 u16 grotto_shortcuts_sceneExitList_000234[] = {
-    0,
+    ENTR_RETURN_GROTTO,
     0,
     ENTR_KOKIRI_FOREST_13,
     ENTR_ROAD_TO_LAKE_HYLIA_3,
@@ -3571,4 +3574,8 @@ u64 grotto_shortcuts_sceneTex_00E8D0[] = {
 
 u64 grotto_shortcuts_sceneTex_00F0D0[] = {
 #include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_sceneTex_00F0D0.ia8.inc.c"
+};
+
+u64 grotto_shortcuts_sceneTex_00F4D0[] = {
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_sceneTex_00F4D0.rgba16.inc.c"
 };

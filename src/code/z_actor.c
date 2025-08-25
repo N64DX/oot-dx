@@ -33,6 +33,7 @@
 #include "overlays/actors/ovl_En_Part/z_en_part.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 #include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.h"
 #include "assets/objects/object_bdoor/object_bdoor.h"
 
@@ -61,6 +62,8 @@ s32 sCurCeilingBgId;
 #define ACTOR_COLOR_ERROR ""
 #define ACTOR_RST ""
 #endif
+
+Mtx sActorHiliteMtx;
 
 void ActorShape_Init(ActorShape* shape, f32 yOffset, ActorShadowFunc shadowDraw, f32 shadowScale) {
     shape->yOffset = yOffset;
@@ -6364,5 +6367,311 @@ u16 Actor_EnemyHealthMultiply(u16 health, u8 type) {
             return health /= 2;
         default:
             return health;
+    }
+}
+
+/**
+ * Returns true if the player is targeting an actor other than the provided actor
+ */
+bool Actor_OtherIsTargeted(PlayState* play, Actor* actor) {
+    Player* player = GET_PLAYER(play);
+
+    if ((player->stateFlags3 & PLAYER_STATE1_HOSTILE_LOCK_ON) && !actor->isLockedOn) {
+        return true;
+    }
+
+    return false;
+}
+
+static void* sElectricSparkTextures[] = {
+    gElectricSpark1Tex,
+    gElectricSpark2Tex,
+    gElectricSpark3Tex,
+    gElectricSpark4Tex,
+};
+
+Gfx* Hilite_Draw(Vec3f* object, Vec3f* eye, Vec3f* lightDir, GraphicsContext* gfxCtx, Gfx* dl, Hilite** hiliteP) {
+    LookAt* lookAt = Graph_Alloc(gfxCtx, sizeof(LookAt));
+    f32 correctedEyeX = (eye->x == object->x) && (eye->z == object->z) ? eye->x + 0.001f : eye->x;
+    *hiliteP = Graph_Alloc(gfxCtx, sizeof(Hilite));
+    guLookAtHilite(&sActorHiliteMtx, lookAt, *hiliteP, correctedEyeX, eye->y, eye->z, object->x, object->y, object->z, 0.0f, 1.0f, 0.0f, lightDir->x, lightDir->y, lightDir->z, lightDir->x, lightDir->y, lightDir->z, 0x10, 0x10);
+    gSPLookAt(dl++, lookAt);
+    gDPSetHilite1Tile(dl++, 1, *hiliteP, 0x10, 0x10);
+    return dl;
+}
+
+Hilite* Hilite_DrawXlu(Vec3f* object, Vec3f* eye, Vec3f* lightDir, GraphicsContext* gfxCtx) {
+    Hilite* hilite;
+    OPEN_DISPS(gfxCtx, "../z_actor.c", 6393);
+    POLY_XLU_DISP = Hilite_Draw(object, eye, lightDir, gfxCtx, POLY_XLU_DISP, &hilite);
+    CLOSE_DISPS(gfxCtx, "../z_actor.c", 6395);
+    return hilite;
+}
+
+Hilite* func_800BCC68(Vec3f* arg0, PlayState* play) {
+    Vec3f lightDir;
+
+    lightDir.x = play->envCtx.dirLight1.params.dir.x;
+    lightDir.y = play->envCtx.dirLight1.params.dir.y;
+    lightDir.z = play->envCtx.dirLight1.params.dir.z;
+
+    return Hilite_DrawXlu(arg0, &play->view.eye, &lightDir, play->state.gfxCtx);
+}
+
+/**
+ * Draw common damage effects applied to each body part provided in bodyPartsPos
+ */
+void Actor_DrawDamageEffects(PlayState* play, Actor* actor, Vec3f bodyPartsPos[], s16 bodyPartsCount, f32 effectScale, f32 frozenSteamScale, f32 effectAlpha, u8 type) {
+    if (effectAlpha > 0.001f) {
+        s32 twoTexScrollParam;
+        s16 bodyPartIndex;
+        MtxF* currentMatrix;
+        f32 alpha;
+        f32 frozenScale;
+        f32 lightOrbsScale;
+        f32 electricSparksScale;
+        f32 steamScale;
+        Vec3f* bodyPartsPosStart = bodyPartsPos;
+        u32 gameplayFrames = play->gameplayFrames;
+        f32 effectAlphaScaled;
+
+        currentMatrix = Matrix_GetCurrent();
+
+        // Apply sfx along with damage effect
+        if ((actor != NULL) && (effectAlpha > 0.05f) && (play->gameOverCtx.state == GAMEOVER_INACTIVE)) {
+            if (type == ACTOR_DRAW_DMGEFF_FIRE)
+                Actor_PlaySfx(actor, NA_SE_EV_BURN_OUT - SFX_FLAG);
+            //else if (type == ACTOR_DRAW_DMGEFF_BLUE_FIRE)
+            //    SoundEffect_PlayHeld(SOUND_MM_ENEMY_EXTINCT_LOOP, 0.5f, 1.0f, 1.0f, &actor->world.pos, 0.0f, 1000.0f, &actor); //Actor_PlaySfx(actor, NA_SE_EN_EXTINCT_LOOP - SFX_FLAG);
+            else if (type == ACTOR_DRAW_DMGEFF_FROZEN_SFX)
+                Actor_PlaySfx(actor, NA_SE_EV_ICE_FREEZE - SFX_FLAG);
+            //else if ((type == ACTOR_DRAW_DMGEFF_LIGHT_ORBS) || (type == ACTOR_DRAW_DMGEFF_BLUE_LIGHT_ORBS))
+            //    SoundEffect_PlayHeld(SOUND_MM_LIGHT_DAMAGE, 1.0f, 1.0f, 1.0f, &actor->world.pos, 0.0f, 1000.0f, &actor);
+        }
+
+        OPEN_DISPS(play->state.gfxCtx, "../z_actor.c", 6418);
+        Gfx_SetupDL_25Xlu(play->state.gfxCtx);
+
+        switch (type) {
+            case ACTOR_DRAW_DMGEFF_FROZEN_NO_SFX:
+            case ACTOR_DRAW_DMGEFF_FROZEN_SFX:
+                frozenScale = ((KREG(19) * 0.01f) + 2.3f) * effectScale;
+                steamScale = ((KREG(28) * 0.0001f) + 0.035f) * frozenSteamScale;
+                func_800BCC68(bodyPartsPos, play);
+
+                // Setup to draw ice over frozen actor
+                gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, gameplayFrames & 0xFF, 32, 16, 1, 0, (gameplayFrames * 2) & 0xFF, 64, 32));
+                gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x80, 170, 255, 255, 255);
+                gSPDisplayList(POLY_XLU_DISP++, gEffIceFragment2MaterialDL);
+
+                effectAlphaScaled = effectAlpha * 255.0f;
+
+                // Apply and draw ice over each body part of frozen actor
+                for (bodyPartIndex = 0; bodyPartIndex < bodyPartsCount; bodyPartIndex++, bodyPartsPos++) {
+                    alpha = bodyPartIndex & 3;
+                    alpha = effectAlphaScaled - (30.0f * alpha);
+                    if (effectAlphaScaled < (30.0f * (bodyPartIndex & 3)))
+                        alpha = 0.0f;
+                    if (alpha > 255.0f)
+                        alpha = 255.0f;
+
+                    gDPSetEnvColor(POLY_XLU_DISP++, KREG(20) + 200, KREG(21) + 200, KREG(22) + 255, (u8)alpha);
+
+                    Matrix_Translate(bodyPartsPos->x, bodyPartsPos->y, bodyPartsPos->z, MTXMODE_NEW);
+                    Matrix_Scale(frozenScale, frozenScale, frozenScale, MTXMODE_APPLY);
+
+                    if (bodyPartIndex & 1)
+                        Matrix_RotateYF(M_PI, MTXMODE_APPLY);
+                    if (bodyPartIndex & 2)
+                        Matrix_RotateZF(M_PI, MTXMODE_APPLY);
+
+                    MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_actor.c", 6458);
+                    gSPDisplayList(POLY_XLU_DISP++, gEffIceFragment2ModelDL);
+                }
+
+                bodyPartsPos = bodyPartsPosStart; // reset bodyPartsPos
+
+                // Setup to draw steam over frozen actor
+                gDPSetColorDither(POLY_XLU_DISP++, G_CD_BAYER);
+                gDPSetAlphaDither(POLY_XLU_DISP++, G_AD_PATTERN);
+                gSPDisplayList(POLY_XLU_DISP++, gFrozenSteamMaterialDL);
+
+                alpha = effectAlpha * 100.0f;
+                if (alpha > 100.0f)
+                    alpha = 100.0f;
+
+                gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 195, 225, 235, (u8)alpha);
+
+                // Apply and draw steam over each body part of frozen actor
+                for (bodyPartIndex = 0; bodyPartIndex < bodyPartsCount; bodyPartIndex++, bodyPartsPos++) {
+                    twoTexScrollParam = ((bodyPartIndex * 3) + gameplayFrames);
+                    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, twoTexScrollParam * 3, twoTexScrollParam * -12, 32, 64, 1, 0, 0, 32, 32));
+
+                    Matrix_Translate(bodyPartsPos->x, bodyPartsPos->y, bodyPartsPos->z, MTXMODE_NEW);
+                    Matrix_ReplaceRotation(&play->billboardMtxF);
+                    Matrix_Scale(steamScale, steamScale, 1.0f, MTXMODE_APPLY);
+
+                    MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_actor.c", 6484);
+                    gSPDisplayList(POLY_XLU_DISP++, gFrozenSteamModelDL);
+                }
+                break;
+
+            case ACTOR_DRAW_DMGEFF_FIRE:
+            case ACTOR_DRAW_DMGEFF_BLUE_FIRE:
+                if (type == ACTOR_DRAW_DMGEFF_FIRE) {
+                    gDPSetEnvColor(POLY_XLU_DISP++, 255, 10, 0, 0);
+                } else {
+                    gDPSetEnvColor(POLY_XLU_DISP++, 0, 255, 255, 0);
+                    type = 255; // Reuse type for blue primitive color
+                }
+
+                Matrix_Put(&play->billboardMtxF);
+                Matrix_Scale((effectScale * 0.005f) * 1.35f, (effectScale * 0.005f), (effectScale * 0.005f) * 1.35f, MTXMODE_APPLY);
+
+                effectAlphaScaled = effectAlpha * 255.0f;
+
+                // Apply and draw fire on every body part
+                for (bodyPartIndex = 0; bodyPartIndex < bodyPartsCount; bodyPartIndex++, bodyPartsPos++) {
+                    alpha = bodyPartIndex & 3;
+                    alpha = effectAlphaScaled - 30.0f * alpha;
+                    if (effectAlphaScaled < 30.0f * (bodyPartIndex & 3))
+                        alpha = 0.0f;
+                    if (alpha > 255.0f)
+
+                    // Use type for blue primitive color
+                    // = 0 for ACTOR_DRAW_DMGEFF_FIRE
+                    // = 255 for ACTOR_DRAW_DMGEFF_BLUE_FIRE
+                    gDPSetPrimColor(POLY_XLU_DISP++, 0x80, 0x80, 255, 255, type, (u8)alpha);
+
+                    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, 0, 32, 64, 1, 0, ((bodyPartIndex * 10 + gameplayFrames) * -20) & 0x1FF, 32, 128));
+
+                    Matrix_RotateYF(M_PI, MTXMODE_APPLY);
+                    currentMatrix->mf[3][0] = bodyPartsPos->x;
+                    currentMatrix->mf[3][1] = bodyPartsPos->y;
+                    currentMatrix->mf[3][2] = bodyPartsPos->z;
+
+                    MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_actor.c", 6523);
+                    gSPDisplayList(POLY_XLU_DISP++, gEffFire1DL);
+                }
+                break;
+
+            case ACTOR_DRAW_DMGEFF_LIGHT_ORBS:
+            case ACTOR_DRAW_DMGEFF_BLUE_LIGHT_ORBS:
+                // Setup to draw light orbs on actor
+                lightOrbsScale = ((KREG(19) * 0.01f) + 4.0f) * effectScale;
+
+                gSPDisplayList(POLY_XLU_DISP++, gLightOrbMaterial1DL);
+
+                alpha = effectAlpha * 255.0f;
+                if (alpha > 255.0f)
+                    alpha = 255.0f;
+
+                if (type == ACTOR_DRAW_DMGEFF_BLUE_LIGHT_ORBS) {
+                    gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, (u8)(sREG(16) + 255), (u8)(sREG(17) + 255), (u8)(sREG(18) + 255), (u8)alpha);
+                    gDPSetEnvColor(POLY_XLU_DISP++, (u8)sREG(19), (u8)(sREG(20) + 255), (u8)(sREG(21) + 255), 128);
+                }
+                else {
+                    gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 255, 255, 200, (u8)alpha);
+                    gDPSetEnvColor(POLY_XLU_DISP++, 255, 255, 100, 128);
+                }
+
+                Matrix_Put(&play->billboardMtxF);
+                Matrix_Scale(lightOrbsScale, lightOrbsScale, 1.0f, MTXMODE_APPLY);
+
+                // Apply and draw a light orb over each body part of frozen actor
+                for (bodyPartIndex = 0; bodyPartIndex < bodyPartsCount; bodyPartIndex++, bodyPartsPos++) {
+                    Matrix_RotateZF(Rand_CenteredFloat(2 * M_PI), MTXMODE_APPLY);
+                    currentMatrix->mf[3][0] = bodyPartsPos->x;
+                    currentMatrix->mf[3][1] = bodyPartsPos->y;
+                    currentMatrix->mf[3][2] = bodyPartsPos->z;
+
+                    MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_actor.c", 6558);
+                    gSPDisplayList(POLY_XLU_DISP++, gLightOrbModelDL);
+                }
+                break;
+
+            case ACTOR_DRAW_DMGEFF_ELECTRIC_SPARKS_SMALL:
+            case ACTOR_DRAW_DMGEFF_ELECTRIC_SPARKS_MEDIUM:
+            case ACTOR_DRAW_DMGEFF_ELECTRIC_SPARKS_LARGE:
+                if (type == ACTOR_DRAW_DMGEFF_ELECTRIC_SPARKS_SMALL)
+                    electricSparksScale = (KREG(19) * 0.01f + 1.0f) * effectScale;
+                else if (type == ACTOR_DRAW_DMGEFF_ELECTRIC_SPARKS_MEDIUM)
+                    electricSparksScale = (KREG(19) * 0.01f + 1.5f) * effectScale;
+                else electricSparksScale = (KREG(19) * 0.01f + 2.0f) * effectScale;
+
+                gSPSegment(POLY_XLU_DISP++, 0x08, sElectricSparkTextures[play->gameplayFrames % 4]);
+                gSPDisplayList(POLY_XLU_DISP++, gElectricSparkMaterialDL);
+                gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, (u8)(sREG(16) + 255), (u8)(sREG(17) + 255), (u8)(sREG(18) + 150), (u8)(sREG(19) + 255));
+                gDPSetEnvColor(POLY_XLU_DISP++, (u8)(sREG(20) + 255), (u8)(sREG(21) + 255), (u8)sREG(22), (u8)sREG(23));
+
+                Matrix_Put(&play->billboardMtxF);
+                Matrix_Scale(electricSparksScale, electricSparksScale, electricSparksScale, MTXMODE_APPLY);
+
+                // Every body part draws two electric sparks at random orientations
+                for (bodyPartIndex = 0; bodyPartIndex < bodyPartsCount; bodyPartIndex++, bodyPartsPos++) {
+                    // first electric spark
+                    Matrix_RotateXFApply(Rand_ZeroFloat(2 * M_PI));
+                    Matrix_RotateZF(Rand_ZeroFloat(2 * M_PI), MTXMODE_APPLY);
+                    currentMatrix->mf[3][0] = Rand_CenteredFloat((f32)sREG(24) + 30.0f) + bodyPartsPos->x;
+                    currentMatrix->mf[3][1] = Rand_CenteredFloat((f32)sREG(24) + 30.0f) + bodyPartsPos->y;
+                    currentMatrix->mf[3][2] = Rand_CenteredFloat((f32)sREG(24) + 30.0f) + bodyPartsPos->z;
+
+                    MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_actor.c", 6589);
+                    gSPDisplayList(POLY_XLU_DISP++, gElectricSparkModelDL);
+
+                    // second electric spark
+                    Matrix_RotateXFApply(Rand_ZeroFloat(2 * M_PI));
+                    Matrix_RotateZF(Rand_ZeroFloat(2 * M_PI), MTXMODE_APPLY);
+                    currentMatrix->mf[3][0] = Rand_CenteredFloat((f32)sREG(24) + 30.0f) + bodyPartsPos->x;
+                    currentMatrix->mf[3][1] = Rand_CenteredFloat((f32)sREG(24) + 30.0f) + bodyPartsPos->y;
+                    currentMatrix->mf[3][2] = Rand_CenteredFloat((f32)sREG(24) + 30.0f) + bodyPartsPos->z;
+
+                    MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_actor.c", 6599);
+                    gSPDisplayList(POLY_XLU_DISP++, gElectricSparkModelDL);
+                }
+
+                break;
+        }
+
+        CLOSE_DISPS(play->state.gfxCtx, "../z_actor.c", 6606);
+    }
+}
+
+void Actor_SpawnIceEffects(PlayState* play, Actor* actor, Vec3f limbPos[], s32 limbPosCount, s32 effectsPerLimb, f32 scale, f32 scaleRange) {
+    static Color_RGBA8 primColor = { 170, 255, 255, 255 };
+    static Color_RGBA8 envColor = { 200, 200, 255, 255 };
+    static Vec3f accel = { 0.0f, -1.0f, 0.0f };
+    s32 i;
+    Vec3f velocity;
+    s16 randomYaw;
+    s16 yaw;
+    s32 j;
+
+    SfxSource_PlaySfxAtFixedWorldPos(play, &actor->world.pos, 30, NA_SE_EV_ICE_BROKEN);
+    switch (Rand_S16Offset(0,2)) {
+        case 0:
+            //SoundEffect_PlayOneshot(SOUND_MM_GLASS_SHATTER, 1.0f, 1.5f, &actor->world.pos, 0.0f, 1000.0f, &actor);
+        break;
+        case 1:
+        default:
+            //SoundEffect_PlayOneshot(SOUND_RAREWARE_GLASS_SHATTER, 1.0f, 1.5f, &actor->world.pos, 0.0f, 1000.0f, &actor);
+        break;
+    }
+
+    for (i = 0; i < limbPosCount; i++) {
+        yaw = Actor_WorldYawTowardPoint(actor, limbPos);
+
+        for (j = 0; j < effectsPerLimb; j++) {
+            randomYaw = ((s32)Rand_Next() >> 0x13) + yaw;
+
+            velocity.z = Rand_ZeroFloat(5.0f);
+            velocity.x = Math_SinS(randomYaw) * velocity.z;
+            velocity.y = Rand_ZeroFloat(4.0f) + 8.0f;
+            velocity.z *= Math_CosS(randomYaw);
+
+            EffectSsEnIce_Spawn(play, limbPos, Rand_ZeroFloat(scaleRange) + scale, &velocity, &accel, &primColor, &envColor, 30);
+        }
+
+        limbPos++;
     }
 }

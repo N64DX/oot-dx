@@ -521,4 +521,6 @@ void Scene_Draw(struct PlayState* play);
 extern EntranceInfo gEntranceTable[ENTR_MAX];
 extern SceneTableEntry gSceneTable[SCENE_ID_MAX];
 
+void Scene_SetRenderModeXlu(struct PlayState* play, s32 index, u32 flags);
+
 #endif

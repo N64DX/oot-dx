@@ -17,8 +17,8 @@ SceneCmd roadtofortress_room_0Commands[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_WIND_SETTINGS(80, 80, 80, 0),
     SCENE_CMD_ROOM_SHAPE(&roadtofortress_room_0RoomShapeCullable_000550),
-    SCENE_CMD_OBJECT_LIST(7, roadtofortress_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(34, roadtofortress_room_0ActorEntry_000064),
+    SCENE_CMD_OBJECT_LIST(9, roadtofortress_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(36, roadtofortress_room_0ActorEntry_000064),
     SCENE_CMD_END(),
 };
 
@@ -30,47 +30,47 @@ s16 roadtofortress_room_0ObjectList_000040[] = {
     OBJECT_BOMBIWA,
     OBJECT_UMAJUMP,
     OBJECT_GOROIWA,
+    OBJECT_HAMMERGEIST,
+    OBJECT_BOX,
 };
 
 ActorEntry roadtofortress_room_0ActorEntry_000064[] = {
-    { ACTOR_EN_WOOD02,           {  2115, 475,   -841 }, { 0,      0,  0 }, 0xFF0A },
-    { ACTOR_OBJ_KIBAKO2,         {  2115, 475,   -941 }, { 0,      0,  0 }, 0x0000 },
-    { ACTOR_EN_TITE,             { -2207,   0,   -181 }, { 0, 0x7900,  0 }, 0xFFFD },
-    { ACTOR_EN_TITE,             { -1394,  41,   -402 }, { 0, 0x8B80,  0 }, 0xFFFD },
-    { ACTOR_EN_TITE,             {   -40, 200,   -654 }, { 0, 0x9000,  0 }, 0xFFFD },
-    { ACTOR_EN_TITE,             {  1286, 215,  -1239 }, { 0,      0,  0 }, 0xFFFD },
-    { ACTOR_EN_TITE,             {   788, 200,     94 }, { 0, 0x3300,  0 }, 0xFFFD },
-    { ACTOR_EN_TITE,             {   358, 200,   -363 }, { 0, 0x3F00,  0 }, 0xFFFD },
-    { ACTOR_EN_TITE,             {  1182, 200,   -624 }, { 0,      0,  0 }, 0xFFFD },
-    { ACTOR_EN_TITE,             {  -596, 193,   -593 }, { 0, 0x9280,  0 }, 0xFFFD },
-    { ACTOR_EN_TITE,             {   755, 233,  -1394 }, { 0, 0x4C80,  0 }, 0xFFFD },
-    { ACTOR_EN_TITE,             {  2856, 491,   -837 }, { 0, 0x2000,  0 }, 0xFFFE },
-    { ACTOR_EN_TITE,             {  3041, 508,   -519 }, { 0, 0x4000,  0 }, 0xFFFE },
-    { ACTOR_EN_TITE,             {  4804, 575,   -187 }, { 0, 0x6000,  0 }, 0xFFFE },
-    { ACTOR_EN_TITE,             {  4141, 575,   -655 }, { 0, 0x8000,  0 }, 0xFFFE },
-    { ACTOR_EN_TITE,             {  4102, 575,   -226 }, { 0, 0xA000,  0 }, 0xFFFE },
-    { ACTOR_EN_TITE,             {  3720, 575,   -675 }, { 0, 0xC000,  0 }, 0xFFFE },
-    { ACTOR_OBJ_BOMBIWA,         {  3949, 575,   -685 }, { 0, 0,       0 }, 0x00FF },
-    { ACTOR_OBJ_BOMBIWA,         {  3166, 515,   -895 }, { 0, 0,       0 }, 0x00FF },
-    { ACTOR_OBJ_BOMBIWA,         {  2338, 475,   -472 }, { 0, 0,       0 }, 0x00FF },
-    { ACTOR_OBJ_BOMBIWA,         {  3333, 564,   -547 }, { 0, 0,       0 }, 0x00FF },
-    { ACTOR_OBJ_BOMBIWA,         {  4764, 575,   -120 }, { 0, 0,       0 }, 0x00FF },
-    { ACTOR_OBJ_BOMBIWA,         {  2528, 475,  -1061 }, { 0, 0,       0 }, 0x00FF },
-    { ACTOR_DOOR_ANA,            {  1740, 200,    -94 }, { 0, 0,      17 }, 0x0000 },
-    { ACTOR_OBJ_MURE2,           {  1740, 200,    -94 }, { 0, 0,       0 }, 0x0202 },
-    { ACTOR_BG_UMAJUMP,          {  -355, 200,   -668 }, { 0, 0x47C0,  0 }, 0x0000 },
-    { ACTOR_BG_UMAJUMP,          {  -294, 200,   -354 }, { 0, 0x47C0,  0 }, 0x0000 },
-    { ACTOR_BG_UMAJUMP,          {   790, 200,   -550 }, { 0, 0x57C0,  0 }, 0x0000 },
-    { ACTOR_BG_UMAJUMP,          {   966, 200,   -283 }, { 0, 0x57C0,  0 }, 0x0000 },
-    { ACTOR_BG_UMAJUMP,          {  1115, 200,    109 }, { 0, 0x4E80,  0 }, 0x0000 },
-    { ACTOR_BG_UMAJUMP,          {  1227, 200,    409 }, { 0, 0x4E80,  0 }, 0x0000 },
-    { ACTOR_EN_GOROIWA,          {  3775, 1461, -1170 }, { 0,     0,   1 }, 0x4D01 },
-    { ACTOR_EN_GOROIWA,          {  4443, 1462,    45 }, { 0,     0,   1 }, 0x4D02 },
-    { ACTOR_EN_A_OBJ,            {  1614,  200,  -877 }, { 0, 0x4180,  0 }, 0x460A },
-};
-
-u8 roadtofortress_room_0padding_1[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+    { ACTOR_EN_WOOD02,           {  2115, 475,   -841 }, { 0,      0,  0 }, 0xFF0A }, // 1
+    { ACTOR_OBJ_KIBAKO2,         {  2115, 475,   -941 }, { 0,      0,  0 }, 0x0000 }, // 2
+    { ACTOR_EN_TITE,             { -2207,   0,   -181 }, { 0, 0x7900,  0 }, 0xFFFD }, // 3
+    { ACTOR_EN_TITE,             { -1394,  41,   -402 }, { 0, 0x8B80,  0 }, 0xFFFD }, // 4
+    { ACTOR_EN_TITE,             {   -40, 200,   -654 }, { 0, 0x9000,  0 }, 0xFFFD }, // 5
+    { ACTOR_EN_TITE,             {  1286, 215,  -1239 }, { 0,      0,  0 }, 0xFFFD }, // 6
+    { ACTOR_EN_TITE,             {   788, 200,     94 }, { 0, 0x3300,  0 }, 0xFFFD }, // 7
+    { ACTOR_EN_TITE,             {   358, 200,   -363 }, { 0, 0x3F00,  0 }, 0xFFFD }, // 8
+    { ACTOR_EN_TITE,             {  1182, 200,   -624 }, { 0,      0,  0 }, 0xFFFD }, // 9
+    { ACTOR_EN_TITE,             {  -596, 193,   -593 }, { 0, 0x9280,  0 }, 0xFFFD }, // 10
+    { ACTOR_EN_TITE,             {   755, 233,  -1394 }, { 0, 0x4C80,  0 }, 0xFFFD }, // 11
+    { ACTOR_EN_TITE,             {  2856, 491,   -837 }, { 0, 0x2000,  0 }, 0xFFFE }, // 12
+    { ACTOR_EN_TITE,             {  3041, 508,   -519 }, { 0, 0x4000,  0 }, 0xFFFE }, // 13
+    { ACTOR_EN_TITE,             {  4804, 575,   -187 }, { 0, 0x6000,  0 }, 0xFFFE }, // 14
+    { ACTOR_EN_TITE,             {  4141, 575,   -655 }, { 0, 0x8000,  0 }, 0xFFFE }, // 15
+    { ACTOR_EN_TITE,             {  4102, 575,   -226 }, { 0, 0xA000,  0 }, 0xFFFE }, // 16
+    { ACTOR_EN_TITE,             {  3720, 575,   -675 }, { 0, 0xC000,  0 }, 0xFFFE }, // 17
+    { ACTOR_OBJ_BOMBIWA,         {  3949, 575,   -685 }, { 0, 0,       0 }, 0x00FF }, // 18
+    { ACTOR_OBJ_BOMBIWA,         {  3166, 515,   -895 }, { 0, 0,       0 }, 0x00FF }, // 19
+    { ACTOR_OBJ_BOMBIWA,         {  2338, 475,   -472 }, { 0, 0,       0 }, 0x00FF }, // 20
+    { ACTOR_OBJ_BOMBIWA,         {  3333, 564,   -547 }, { 0, 0,       0 }, 0x00FF }, // 21
+    { ACTOR_OBJ_BOMBIWA,         {  4764, 575,   -120 }, { 0, 0,       0 }, 0x00FF }, // 22
+    { ACTOR_OBJ_BOMBIWA,         {  2528, 475,  -1061 }, { 0, 0,       0 }, 0x00FF }, // 23
+    { ACTOR_DOOR_ANA,            {  1740, 200,    -94 }, { 0, 0,      17 }, 0x0000 }, // 24
+    { ACTOR_OBJ_MURE2,           {  1740, 200,    -94 }, { 0, 0,       0 }, 0x0202 }, // 25
+    { ACTOR_BG_UMAJUMP,          {  -355, 200,   -668 }, { 0, 0x47C0,  0 }, 0x0000 }, // 26
+    { ACTOR_BG_UMAJUMP,          {  -294, 200,   -354 }, { 0, 0x47C0,  0 }, 0x0000 }, // 27
+    { ACTOR_BG_UMAJUMP,          {   790, 200,   -550 }, { 0, 0x57C0,  0 }, 0x0000 }, // 28
+    { ACTOR_BG_UMAJUMP,          {   966, 200,   -283 }, { 0, 0x57C0,  0 }, 0x0000 }, // 29
+    { ACTOR_BG_UMAJUMP,          {  1115, 200,    109 }, { 0, 0x4E80,  0 }, 0x0000 }, // 30
+    { ACTOR_BG_UMAJUMP,          {  1227, 200,    409 }, { 0, 0x4E80,  0 }, 0x0000 }, // 31
+    { ACTOR_EN_GOROIWA,          {  3775, 1461, -1170 }, { 0,     0,   1 }, 0x4D01 }, // 32
+    { ACTOR_EN_GOROIWA,          {  4443, 1462,    45 }, { 0,     0,   1 }, 0x4D02 }, // 33
+    { ACTOR_EN_A_OBJ,            {  1614,  200,  -877 }, { 0, 0x4180,  0 }, 0x460A }, // 34
+    { ACTOR_EN_HAMMERGEIST,      {  1614,  200,  -777 }, { 0, 0xC000,  0 }, 0x0000 }, // 35
+    { ACTOR_EN_BOX,              {  2014,  200,  -877 }, { 0, 0xC000,  0 }, 0xB7C0 }, // 36
 };
 
 RoomShapeCullable roadtofortress_room_0RoomShapeCullable_000550 = { 

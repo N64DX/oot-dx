@@ -21,6 +21,10 @@
 #define FIDGET_FREQ_LIMB 0x32
 #define FIDGET_AMPLITUDE 200.0f
 
+#define BODYPART_NONE -1
+#define CLEAR_TAG_PARAMS(type) (type)
+#define CLEAR_TAG_LARGE_LIGHT_RAYS 5
+
 struct Actor;
 struct ActorEntry;
 struct ActorOverlay;
@@ -43,6 +47,18 @@ typedef struct ActorShape {
     /* 0x15 */ u8 feetFloorFlag; // 0 if actor or feet aren't on ground, or 1 or 2 depending on feet positions
     /* 0x18 */ Vec3f feetPos[2]; // Update by using `Actor_SetFeetPos` in PostLimbDraw
 } ActorShape; // size = 0x30
+
+typedef enum ActorDrawDamageEffectType {
+    /*  0 */ ACTOR_DRAW_DMGEFF_FIRE,
+    /*  1 */ ACTOR_DRAW_DMGEFF_BLUE_FIRE,
+    /* 10 */ ACTOR_DRAW_DMGEFF_FROZEN_NO_SFX = 10,
+    /* 11 */ ACTOR_DRAW_DMGEFF_FROZEN_SFX,
+    /* 20 */ ACTOR_DRAW_DMGEFF_LIGHT_ORBS = 20,
+    /* 21 */ ACTOR_DRAW_DMGEFF_BLUE_LIGHT_ORBS,
+    /* 30 */ ACTOR_DRAW_DMGEFF_ELECTRIC_SPARKS_SMALL = 30,
+    /* 31 */ ACTOR_DRAW_DMGEFF_ELECTRIC_SPARKS_MEDIUM,
+    /* 32 */ ACTOR_DRAW_DMGEFF_ELECTRIC_SPARKS_LARGE
+} ActorDrawDamageEffectType;
 
 // Actor is discoverable by the Attention System. This enables Navi to hover over the actor when it is in range.
 // The actor can also be locked onto (as long as `ACTOR_FLAG_LOCK_ON_DISABLED` is not set).
@@ -310,7 +326,7 @@ typedef enum NaviEnemy {
     /* 0x08 */ NAVI_ENEMY_BIG_DEKU_BABA,
     /* 0x09 */ NAVI_ENEMY_WITHERED_DEKU_BABA,
     /* 0x0A */ NAVI_ENEMY_DEKU_SCRUB,
-    /* 0x0B */ NAVI_ENEMY_UNUSED_B,
+    /* 0x0B */ NAVI_ENEMY_YELLOW_TEKTITE,
     /* 0x0C */ NAVI_ENEMY_KING_DODONGO,
     /* 0x0D */ NAVI_ENEMY_DODONGO,
     /* 0x0E */ NAVI_ENEMY_BABY_DODONGO,
@@ -343,7 +359,7 @@ typedef enum NaviEnemy {
     /* 0x29 */ NAVI_ENEMY_BONGO_BONGO,
     /* 0x2A */ NAVI_ENEMY_REDEAD,
     /* 0x2B */ NAVI_ENEMY_PHANTOM_GANON_PHASE_1,
-    /* 0x2C */ NAVI_ENEMY_UNUSED_2C,
+    /* 0x2C */ NAVI_ENEMY_BUFF_SCRUB,
     /* 0x2D */ NAVI_ENEMY_GIBDO,
     /* 0x2E */ NAVI_ENEMY_DEAD_HANDS_HAND,
     /* 0x2F */ NAVI_ENEMY_DEAD_HAND,
@@ -355,11 +371,11 @@ typedef enum NaviEnemy {
     /* 0x35 */ NAVI_ENEMY_IRON_KNUCKLE,
     /* 0x36 */ NAVI_ENEMY_SKULL_KID_ADULT,
     /* 0x37 */ NAVI_ENEMY_LIKE_LIKE,
-    /* 0x38 */ NAVI_ENEMY_UNUSED_38,
+    /* 0x38 */ NAVI_ENEMY_MOLMAUK,
     /* 0x39 */ NAVI_ENEMY_BEAMOS,
     /* 0x3A */ NAVI_ENEMY_ANUBIS,
     /* 0x3B */ NAVI_ENEMY_FREEZARD,
-    /* 0x3C */ NAVI_ENEMY_UNUSED_3C,
+    /* 0x3C */ NAVI_ENEMY_ARMORED_DINOLFOS,
     /* 0x3D */ NAVI_ENEMY_GANONDORF,
     /* 0x3E */ NAVI_ENEMY_GANON,
     /* 0x3F */ NAVI_ENEMY_SKULL_KID,
@@ -392,8 +408,6 @@ typedef enum NaviEnemy {
     /* 0x5A */ NAVI_ENEMY_BIG_POE,
     /* 0x5B */ NAVI_ENEMY_TWINROVA,
     /* 0x5C */ NAVI_ENEMY_POE_WASTELAND,
-    /* 0x5D */ NAVI_ENEMY_BUFF_SCRUB,
-    /* 0x5E */ NAVI_ENEMY_MOLMAUK,
     /* 0xFF */ NAVI_ENEMY_NONE = 0xFF
 } NaviEnemy;
 
@@ -801,5 +815,8 @@ s32 func_80037D98(struct PlayState* play, Actor* actor, s32 arg2, s32* arg3);
 s32 Actor_TrackPlayer(struct PlayState* play, Actor* actor, Vec3s* headRot, Vec3s* torsoRot, Vec3f focusPos);
 
 u16 Actor_EnemyHealthMultiply(u16 health, u8 type);
+bool Actor_OtherIsTargeted(struct PlayState* play, Actor* actor);
+void Actor_DrawDamageEffects(struct PlayState* play, Actor* actor, Vec3f bodyPartsPos[], s16 bodyPartsCount, f32 effectScale, f32 frozenSteamScale, f32 effectAlpha, u8 type);
+void Actor_SpawnIceEffects(struct PlayState* play, Actor* actor, Vec3f limbPos[], s32 limbPosCount, s32 effectsPerLimb, f32 scale, f32 scaleRange);
 
 #endif

@@ -364,5 +364,6 @@
 /* 0x0199 */ DEFINE_OBJECT(object_gi_shield_3_mm, OBJECT_GI_SHIELD_3_MM)
 /* 0x019A */ DEFINE_OBJECT(object_gi_shield_4, OBJECT_GI_SHIELD_4)
 /* 0x019B */ DEFINE_OBJECT(object_horse_young, OBJECT_HORSE_YOUNG)
-/* 0x019C */ DEFINE_OBJECT(object_buffdeku, OBJECT_BUFFDEKU)
-/* 0x019D */ DEFINE_OBJECT(object_hammergeist, OBJECT_HAMMERGEIST)
+/* 0x019C */ DEFINE_OBJECT(object_dinofos, OBJECT_DINOFOS)
+/* 0x019D */ DEFINE_OBJECT(object_buffdeku, OBJECT_BUFFDEKU)
+/* 0x019E */ DEFINE_OBJECT(object_hammergeist, OBJECT_HAMMERGEIST)

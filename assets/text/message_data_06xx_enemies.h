@@ -1034,6 +1034,25 @@ COLOR(LIGHTBLUE) "Attaque-le " COLOR(DEFAULT) "lorsqu'il sort des \n"
 )
 )
 
+DEFINE_MESSAGE(0x062C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(60) "マッチョナッツ\n"
+SHIFT(3) COLOR(LIGHTBLUE) "近づくと　草の中に　逃げちゃうよ！" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Buff Scrub\n"
+COLOR(LIGHTBLUE) "Do you even lift?" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Ein muskulöser Laubkerl!\n"
+COLOR(LIGHTBLUE) "Hebst du überhaupt?" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Peste Costaud\n"
+COLOR(LIGHTBLUE) "Tu portes vraiment?" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)
+
 DEFINE_MESSAGE(0x062D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(
 QUICKTEXT_ENABLE SHIFT(78) "ギブド\n"
@@ -1310,6 +1329,29 @@ COLOR(DEFAULT) "boucliers" COLOR(LIGHTBLUE) ". Détruis-le vite pour\n"
 )
 )
 
+DEFINE_MESSAGE(0x0638, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(60) "モルモーク\n"
+SHIFT(3) COLOR(LIGHTBLUE) "巨大なハンマーに　気をつけろ！\n"
+"吹き飛ばされちゃうぞ！" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Molmauk\n"
+COLOR(LIGHTBLUE) "Watch out for his massive hammers!\n"
+"Those will knock you back!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Ein Hammermann!\n"
+COLOR(LIGHTBLUE) "Pass auf seine gewaltigen Hämmer auf!\n"
+"Sie schleudern dich zurück!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Un Homme-Marteau\n"
+COLOR(LIGHTBLUE) "Attention à ses énormes marteaux!\n"
+"Ils vont te repousser!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)
+
 DEFINE_MESSAGE(0x0639, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(
 QUICKTEXT_ENABLE SHIFT(66) "ビーモス\n"
@@ -1379,6 +1421,33 @@ QUICKTEXT_ENABLE "Mr. Freezzard\n"
 COLOR(LIGHTBLUE) "Attention à son souffle glacé! \n"
 "Détruis-le entièrement avant qu'il\n"
 "ne régénère." COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)
+
+DEFINE_MESSAGE(0x063C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE "よろいのディンフォス\n"
+COLOR(LIGHTBLUE) "防御しながら\n"
+"注目を使え。\n"
+"炎の息に気をつけろ！" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Armored Dinolfos\n"
+COLOR(LIGHTBLUE) "Use targeting methods while\n"
+"defending. And watch out for\n"
+"its fiery breath!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Ein Gepanzerter Dinolfos!\n"
+COLOR(LIGHTBLUE) "Benutze Zielmethoden, während du\n"
+"dich verteidigst. Und hüte dich vor\n"
+"seinem eurigen Atem!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Dinolfos Blindé\n"
+COLOR(LIGHTBLUE) "Utilise le ciblage tout en te\n"
+"défendant. Et méfie-toi de son\n"
+"souffle ardent!" COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
 
@@ -2071,47 +2140,5 @@ QUICKTEXT_ENABLE "Esprit\n"
 COLOR(LIGHTBLUE) "Cet Esprit ne disparaît pas si tu\n"
 "le fixes. Rien ne lui fait peur,\n"
 "apparemment..." COLOR(DEFAULT) QUICKTEXT_DISABLE
-)
-)
-
-DEFINE_MESSAGE(0x065D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
-MSG(
-QUICKTEXT_ENABLE SHIFT(60) "マッチョナッツ\n"
-SHIFT(3) COLOR(LIGHTBLUE) "近づくと　草の中に　逃げちゃうよ！" COLOR(DEFAULT) QUICKTEXT_DISABLE
-),
-MSG(
-QUICKTEXT_ENABLE "Buff Scrub\n"
-COLOR(LIGHTBLUE) "Do you even lift?" COLOR(DEFAULT) QUICKTEXT_DISABLE
-),
-MSG(
-QUICKTEXT_ENABLE "Ein muskulöser Laubkerl!\n"
-COLOR(LIGHTBLUE) "Hebst du überhaupt?" COLOR(DEFAULT) QUICKTEXT_DISABLE
-),
-MSG(
-QUICKTEXT_ENABLE "Peste Costaud\n"
-COLOR(LIGHTBLUE) "Tu portes vraiment?" COLOR(DEFAULT) QUICKTEXT_DISABLE
-)
-)
-
-DEFINE_MESSAGE(0x065E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
-MSG(
-QUICKTEXT_ENABLE SHIFT(60) "モルモーク\n"
-SHIFT(3) COLOR(LIGHTBLUE) "巨大なハンマーに　気をつけろ！\n"
-"吹き飛ばされちゃうぞ！" COLOR(DEFAULT) QUICKTEXT_DISABLE
-),
-MSG(
-QUICKTEXT_ENABLE "Molmauk\n"
-COLOR(LIGHTBLUE) "Watch out for his massive hammers!\n"
-"Those will knock you back!" COLOR(DEFAULT) QUICKTEXT_DISABLE
-),
-MSG(
-QUICKTEXT_ENABLE "Ein Hammermann!\n"
-COLOR(LIGHTBLUE) "Pass auf seine gewaltigen Hämmer auf!\n"
-"Sie schleudern dich zurück!" COLOR(DEFAULT) QUICKTEXT_DISABLE
-),
-MSG(
-QUICKTEXT_ENABLE "Un Homme-Marteau\n"
-COLOR(LIGHTBLUE) "Attention à ses énormes marteaux!\n"
-"Ils vont te repousser!" COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )

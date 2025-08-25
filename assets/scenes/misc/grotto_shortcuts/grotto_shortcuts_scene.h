@@ -30,5 +30,6 @@ extern u64 grotto_shortcuts_sceneTex_00C8D0[];
 extern u64 grotto_shortcuts_sceneTex_00D0D0[];
 extern u64 grotto_shortcuts_sceneTex_00E8D0[];
 extern u64 grotto_shortcuts_sceneTex_00F0D0[];
+extern u64 grotto_shortcuts_sceneTex_00F4D0[];
 
 #endif

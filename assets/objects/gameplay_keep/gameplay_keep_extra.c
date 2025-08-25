@@ -80,6 +80,163 @@ Gfx gLinkHookshotReticleDL[13] = {
 
 
 
+// Spark
+
+Vtx gameplay_keepVtx_023440[] = {
+#include "assets/objects/gameplay_keep/gameplay_keep_Vtx_023440.inc.c"
+};
+
+u64 gElectricSpark1Tex[] = {
+#include "assets/objects/gameplay_keep/electric_spark_1.i4.inc.h"
+};
+
+u64 gElectricSpark2Tex[] = {
+#include "assets/objects/gameplay_keep/electric_spark_2.i4.inc.h"
+};
+
+u64 gElectricSpark3Tex[] = {
+#include "assets/objects/gameplay_keep/electric_spark_3.i4.inc.h"
+};
+
+u64 gElectricSpark4Tex[] = {
+#include "assets/objects/gameplay_keep/electric_spark_4.i4.inc.h"
+};
+
+Gfx gElectricSparkMaterialDL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock_4b(0x08000000, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,  G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_ZB_OVL_SURF2),
+    gsSPClearGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPEndDisplayList(),
+};
+
+Gfx gElectricSparkModelDL[] = {
+    gsSPVertex(gameplay_keepVtx_023440, 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
+    gsSPEndDisplayList(),
+};
+
+
+
+// Light Orb
+
+Vtx gameplay_keepVtx_023308[] = {
+#include "assets/objects/gameplay_keep/gameplay_keep_Vtx_023308.inc.c"
+};
+
+Gfx gLightOrbMaterial1DL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(gFlashTex, G_IM_FMT_I, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
+    gsSPClearGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPEndDisplayList(),
+};
+
+Gfx gLightOrbMaterial2DL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(gFlashTex, G_IM_FMT_I, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2),
+    gsSPClearGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPEndDisplayList(),
+};
+
+Gfx gLightOrbModelDL[] = {
+    gsSPVertex(gameplay_keepVtx_023308, 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+
+
+// Frozen Steam
+
+Vtx gameplay_keepVtx_051080[] = {
+#include "assets/objects/gameplay_keep/gameplay_keep_Vtx_051080.inc.c"
+};
+
+u64 gEffFireMask1Tex[] = {
+#include "assets/objects/gameplay_keep/eff_fire_mask_1.i4.inc.c"
+};
+
+u64 gEffIceSmokeTex[] = {
+#include "assets/objects/gameplay_keep/eff_ice_smoke.i4.inc.c"
+};
+
+Gfx gFrozenSteamMaterialDL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock_4b(gEffFireMask1Tex, G_IM_FMT_I, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, 15),
+    gsDPLoadMultiBlock_4b(gEffIceSmokeTex, 0x0100, 1, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetCombineLERP(TEXEL0, 0, ENV_ALPHA, TEXEL1, TEXEL0, 1, ENVIRONMENT, TEXEL1, PRIMITIVE, ENVIRONMENT, COMBINED, ENVIRONMENT, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
+    gsSPClearGeometryMode(G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPSetGeometryMode(G_CULL_BACK),
+    gsDPSetEnvColor(255, 255, 255, 128),
+    gsSPEndDisplayList(),
+};
+
+Gfx gFrozenSteamModelDL[] = {
+    gsSPDisplayList(0x08000000),
+    gsSPVertex(gameplay_keepVtx_051080, 3, 0),
+    gsSP1Triangle(0, 1, 2, 0),
+    gsSPEndDisplayList(),
+};
+
+
+
+// Ice Fragment
+
+Vtx gameplay_keepVtx_0502C0[] = {
+#include "assets/objects/gameplay_keep/gameplay_keep_Vtx_0502C0.inc.c"
+};
+
+u64 gEffIceFragmentTex[] = {
+#include "assets/objects/gameplay_keep/eff_ice_fragment.i8.inc.c"
+};
+
+Gfx gEffIceFragment2MaterialDL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0x0FA0, 0x0FA0, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(gEffIceFragmentTex, G_IM_FMT_I, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, 15),
+    gsDPTileSync(),
+    gsDPSetTile(G_IM_FMT_I, G_IM_SIZ_8b, 4, 0x0000, 1, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, 1),
+    gsDPSetTileSize(1, 0, 0, 0x007C, 0x007C),
+    gsDPSetCombineLERP(TEXEL1, PRIMITIVE, PRIM_LOD_FRAC, TEXEL0, TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, PRIMITIVE, ENVIRONMENT, COMBINED, ENVIRONMENT, COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2),
+    gsSPClearGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPSetGeometryMode(G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPDisplayList(0x08000000),
+    gsSPEndDisplayList(),
+};
+
+Gfx gEffIceFragment2ModelDL[] = {
+    gsSPVertex(gameplay_keepVtx_0502C0, 3, 0),
+    gsSP1Triangle(0, 1, 2, 0),
+    gsSPVertex(&gameplay_keepVtx_0502C0[3], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
+    gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 27, 28, 29, 0),
+    gsSPVertex(&gameplay_keepVtx_0502C0[33], 8, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 0, 4, 0),
+    gsSP1Triangle(5, 6, 7, 0),
+    gsSPEndDisplayList(),
+};
+
+
+
 // Deku stick
 
 Vtx gLinkChildLinkDekuStickVtx[] = {

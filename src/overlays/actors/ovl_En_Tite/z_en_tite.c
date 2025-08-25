@@ -218,7 +218,7 @@ void EnTite_Init(Actor* thisx, PlayState* play) {
     else if (this->actor.params == TEKTITE_YELLOW) {
         this->collider.elements[0].base.atDmgInfo.effect = 3; // Electric
         thisx->colChkInfo.health = 6;
-        thisx->naviEnemyId = 0xB;
+        thisx->naviEnemyId = NAVI_ENEMY_YELLOW_TEKTITE;
     }
     EnTite_SetupIdle(this);
 

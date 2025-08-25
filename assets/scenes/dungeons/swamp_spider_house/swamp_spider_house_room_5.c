@@ -44,7 +44,7 @@ s16 swamp_spider_house_room_5ObjectList_000040[] = {
 };
 
 ActorEntry swamp_spider_house_room_5ActorEntry_000068[] = {
-    { ACTOR_EN_HAMMERGEIST, { 100, 120, -2500 }, { 0, 0, 0 }, 0x0100, },
+    { ACTOR_EN_HAMMERGEIST, { 100, 120, -2500 }, { 0, 0, 0 }, 0x0701, },
 };
 
 RoomShapeCullable swamp_spider_house_room_5RoomShapeCullable_000190 = { 

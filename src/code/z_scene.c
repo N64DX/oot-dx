@@ -15,6 +15,7 @@
 #include "player.h"
 #include "save.h"
 #include "scene.h"
+#include "gfx.h"
 
 SceneCmdHandlerFunc sSceneCmdHandlers[SCENE_CMD_ID_MAX];
 RomFile sNaviQuestHintFiles[];
@@ -585,3 +586,32 @@ RomFile sNaviQuestHintFiles[] = {
     ROM_FILE(elf_message_field),
     ROM_FILE(elf_message_ydan),
 };
+
+void Scene_SetRenderModeXlu(PlayState* play, s32 index, u32 flags) {
+    static Gfx renderModeSetNoneDL[] = {
+        gsSPEndDisplayList(),
+    };
+    static Gfx renderModeSetXluSingleCycleDL[] = {
+        gsDPSetRenderMode(AA_EN | Z_CMP | IM_RD | CLR_ON_CVG | CVG_DST_WRAP | ZMODE_XLU | FORCE_BL | GBL_c1(G_BL_CLR_IN, G_BL_0, G_BL_CLR_IN, G_BL_1), G_RM_AA_ZB_XLU_SURF2),
+        gsSPEndDisplayList(),
+    };
+    static Gfx renderModeSetXluTwoCycleDL[] = {
+        gsDPSetRenderMode(AA_EN | Z_CMP | Z_UPD | IM_RD | CLR_ON_CVG | CVG_DST_WRAP | ZMODE_XLU | FORCE_BL | GBL_c1(G_BL_CLR_IN, G_BL_0, G_BL_CLR_IN, G_BL_1), AA_EN | Z_CMP | Z_UPD | IM_RD | CLR_ON_CVG | CVG_DST_WRAP | ZMODE_XLU | FORCE_BL | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
+        gsSPEndDisplayList(),
+    };
+    static Gfx* dLists[] = {
+        renderModeSetNoneDL,
+        renderModeSetXluSingleCycleDL,
+        renderModeSetXluTwoCycleDL,
+    };
+    Gfx* dList = dLists[index];
+
+    OPEN_DISPS(play->state.gfxCtx, "..\z_scene.c", 608);
+
+    if (flags & 1)
+        gSPSegment(POLY_OPA_DISP++, 0x0C, dList);
+    if (flags & 2)
+        gSPSegment(POLY_XLU_DISP++, 0x0C, dList);
+
+    CLOSE_DISPS(play->state.gfxCtx, "..\z_scene.c", 615);
+}

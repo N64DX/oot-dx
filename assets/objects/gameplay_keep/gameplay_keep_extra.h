@@ -6,6 +6,23 @@ extern Gfx gLinkOcarinaHookshotTipDL[22];
 extern Gfx gLinkMajoraHookshotTipDL[];
 extern Gfx gLinkHookshotReticleDL[13];
 
+extern u64 gElectricSpark1Tex[];
+extern u64 gElectricSpark2Tex[];
+extern u64 gElectricSpark3Tex[];
+extern u64 gElectricSpark4Tex[];
+extern Gfx gElectricSparkMaterialDL[];
+extern Gfx gElectricSparkModelDL[];
+
+extern Gfx gLightOrbMaterial1DL[];
+extern Gfx gLightOrbMaterial2DL[];
+extern Gfx gLightOrbModelDL[];
+
+extern Gfx gFrozenSteamMaterialDL[];
+extern Gfx gFrozenSteamModelDL[];
+
+extern Gfx gEffIceFragment2MaterialDL[];
+extern Gfx gEffIceFragment2ModelDL[];
+
 extern Gfx gLinkDekuStickDL[41];
 
 extern Gfx gLinkChildSkullMaskDL[70];
