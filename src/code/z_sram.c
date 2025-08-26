@@ -608,10 +608,8 @@ void Sram_OpenSave(SramContext* sramCtx) {
     R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
     R_QUEST_MODE    = QUEST_MODE;
     
-    if (IS_CHILD_QUEST) {
+    if (IS_CHILD_QUEST)
         gSaveContext.save.linkAge = LINK_AGE_CHILD;
-        gSaveContext.language     = LANGUAGE_ENG;
-    }
 }
 
 void Sram_OpenSaveOptions(SramContext* sramCtx) {

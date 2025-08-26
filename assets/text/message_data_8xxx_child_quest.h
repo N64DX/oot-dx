@@ -111,7 +111,7 @@ UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) "Du hast versprochen, sie 
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) QUICKTEXT_ENABLE "Vous trouvez le " COLOR(BLUE) "Bracelet\n"
-"de Force" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " En les portant vous \n"
+"des Titans" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " En les portant vous \n"
 "pourriez soulever d'énormes \n"
 "objets avec " COLOR(BLUE) "[A]" COLOR(DEFAULT) "!"
 BOX_BREAK
@@ -141,7 +141,7 @@ UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE "Du hast ei
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE "Vous trouvez le " COLOR(BLUE) "Bracelet\n"
-"de Force" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Une puissance encore\n"
+"des Titans" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Une puissance encore\n"
 "plus grande vous envahit! Utilisez\n"
 COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour soulever d'énormes objets!"
 )
@@ -1963,7 +1963,7 @@ COLOR(LIGHTBLUE) "Verwende die " COLOR(DEFAULT) "Kraftarmband" COLOR(LIGHTBLUE) 
 "zuvor nicht bewegen konntest!" COLOR(DEFAULT)
 ),
 MSG(
-COLOR(LIGHTBLUE) "Enfile tes " COLOR(DEFAULT) "Bracelet de Force " COLOR(LIGHTBLUE) "et \n"
+COLOR(LIGHTBLUE) "Enfile tes " COLOR(DEFAULT) "Bracelet des Titans " COLOR(LIGHTBLUE) "et \n"
 "tente de bouger quelque chose de\n"
 "très lourd!" COLOR(DEFAULT)
 )
@@ -2178,7 +2178,7 @@ BOX_BREAK
 ),
 MSG(
 "En échange, si tu me rapportes \n"
-"les " COLOR(BLUE) "Bracelet de Force" COLOR(DEFAULT) "..."
+"les " COLOR(BLUE) "Bracelet des Titans" COLOR(DEFAULT) "..."
 BOX_BREAK
 
 "Je te donnerai un petit bisou!"

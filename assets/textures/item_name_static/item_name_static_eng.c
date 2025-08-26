@@ -231,7 +231,7 @@ u64 gUnusedFireMedallionItemName1JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_N
 };
 
 u64 gGoldDustItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gGoldDustItemNameEngTex.ia4.inc.c"
+#include "assets/textures/item_name_static/gGoldDustItemNameENGTex.ia4.inc.c"
 };
 
 u64 gKokiriSwordItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -350,8 +350,8 @@ u64 gPowerBraceletsItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TE
 #include "assets/textures/item_name_static/gPowerBraceletsItemNameENGTex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameEngTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameEngTex.ia4.inc.c"
+u64 gHerosSwordItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameENGTex.ia4.inc.c"
 };
 
 u64 gHerosBowItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
