@@ -6,11 +6,15 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes qualit
 
 ### Credits
 
+**Lead Developer:**
+- Admentus
+
 **Brought to you by:**
 - Admentus
 - GhostlyDark
 
 **Help and code snippets from:**
+- [Hylian Modding Discord](http://discord.gg/qQqDsM8)
 - [Decomp Discord](https://discord.zelda.deco.mp)
 - [HackerOoT](https://github.com/HackerN64/HackerOoT)
 
