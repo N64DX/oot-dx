@@ -2233,6 +2233,10 @@ u8 Item_Give(PlayState* play, u8 item) {
     PRINTF("Item_Register(%d)=%d  %d\n", slot, item, temp);
     INV_CONTENT(item) = item;
 
+    for (i=0; i<4; i++)
+        if (Interface_GetItemFromDpad(i) == item)
+                Interface_LoadItemIcon1(play, i+4);
+
     return temp;
 }
 

@@ -327,7 +327,6 @@ endseg
 
 beginseg
     name "icon_item_24_static"
-    compress
     include "$(BUILD_DIR)/assets/textures/icon_item_24_static/icon_item_24_static.o"
     number 9
 endseg

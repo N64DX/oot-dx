@@ -11278,12 +11278,11 @@ void Player_Init(Actor* thisx, PlayState* play2) {
     }
 
     if ((respawnFlag == 0) || (respawnFlag < -1)) {
-        u16 layer = (gSaveContext.save.entranceIndex > ENTR_DESERT_COLOSSUS_8_3) ? 0 : gSaveContext.sceneLayer;
         titleFileSize = scene->titleFile.vromEnd - scene->titleFile.vromStart;
 
         if ((titleFileSize != 0) && gSaveContext.showTitleCard) {
             if (!IS_CUTSCENE_LAYER &&
-                (gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + ((void)0, layer)].field &
+                (gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + ((void)0, gSaveContext.sceneLayer)].field &
                  ENTRANCE_INFO_DISPLAY_TITLE_CARD_FLAG) &&
                 ((play->sceneId != SCENE_DODONGOS_CAVERN) || GET_EVENTCHKINF(EVENTCHKINF_B0)) &&
                 ((play->sceneId != SCENE_BOMBCHU_SHOP) || GET_EVENTCHKINF(EVENTCHKINF_25))

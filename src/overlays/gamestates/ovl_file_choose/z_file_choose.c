@@ -1511,9 +1511,9 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
         }
 
 #if OOT_VERSION <= PAL_1_1
-        else if (this->nameAlpha[i] != 0) {
-            // draw quest label for 64DD
-            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, sWindowContentColors[isActive][0], sWindowContentColors[isActive][1], sWindowContentColors[isActive][2], this->nameAlpha[i]);
+        else if (!this->n64ddFlags[i]) {
+            // draw quest label
+            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, sWindowContentColors[isActive][0], sWindowContentColors[isActive][1], sWindowContentColors[isActive][2], this->connectorAlpha[i]);
             gDPLoadTextureBlock(POLY_OPA_DISP++, sQuestButtonTextures[this->questMode[i]], G_IM_FMT_IA, G_IM_SIZ_16b, 44, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
             gSP1Quadrangle(POLY_OPA_DISP++, 8, 10, 11, 9, 0);
         }

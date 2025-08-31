@@ -606,12 +606,12 @@ void Scene_SetRenderModeXlu(PlayState* play, s32 index, u32 flags) {
     };
     Gfx* dList = dLists[index];
 
-    OPEN_DISPS(play->state.gfxCtx, "..\z_scene.c", 608);
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene.c", 608);
 
     if (flags & 1)
         gSPSegment(POLY_OPA_DISP++, 0x0C, dList);
     if (flags & 2)
         gSPSegment(POLY_XLU_DISP++, 0x0C, dList);
 
-    CLOSE_DISPS(play->state.gfxCtx, "..\z_scene.c", 615);
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene.c", 615);
 }

@@ -1140,24 +1140,45 @@ MSG(
 QUICKTEXT_ENABLE SHIFT(27) COLOR(PURPLE) "カンバンを　突いてみよう\n"
 COLOR(DEFAULT) SHIFT(15) "「突き」をだすには　" COLOR(LIGHTBLUE) "Ｚ注目" COLOR(DEFAULT) "中に\n"
 SHIFT(39) COLOR(LIGHTBLUE) "[Control-Pad]" COLOR(DEFAULT) "を前にたおして　" COLOR(ADJUSTABLE) "[B]" COLOR(DEFAULT) QUICKTEXT_DISABLE
+
+QUICKTEXT_ENABLE COLOR(PURPLE) "Ｄパッドセットきりかえ！\n"
+COLOR(DEFAULT) "ふたつのＤパッドアイテムセットを\n"
+"きりかえるには、　" COLOR(LIGHTBLUE) "[L]" COLOR(DEFAULT) "をおしながら　" COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) "をおしてください。\n"
+"あたらしいアイテムを　" COLOR(LIGHTBLUE) "[D-Pad]" COLOR(DEFAULT) "にセットできます。" QUICKTEXT_DISABLE
 ),
 MSG(
 QUICKTEXT_ENABLE COLOR(PURPLE) "Thrust Attack Signs!\n"
 COLOR(DEFAULT) "To thrust with your sword, press\n"
 COLOR(LIGHTBLUE) "[Control-Pad]" COLOR(DEFAULT) " toward your target while \n"
 COLOR(LIGHTBLUE) "[Z] Targeting" COLOR(DEFAULT) ", then press " COLOR(ADJUSTABLE) "[B]" COLOR(DEFAULT) "." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE COLOR(PURPLE) "D-Pad Set Swap!\n"
+COLOR(DEFAULT) "To swap between both D-Pad item\n"
+"sets, hold " COLOR(LIGHTBLUE) "[L]" COLOR(DEFAULT) " and press " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) ".\n"
+"You can have new items on the " COLOR(LIGHTBLUE) "[D-Pad]" COLOR(DEFAULT) "." QUICKTEXT_DISABLE
 ),
 MSG(
 QUICKTEXT_ENABLE SHIFT(64) COLOR(PURPLE) "Stoßattacke\n"
 COLOR(DEFAULT) "Um mit dem Schwert zuzustoßen,\n"
 "drücke" COLOR(LIGHTBLUE) " [Control-Pad]" COLOR(DEFAULT) " in Zielrichtung und halte \n"
 COLOR(LIGHTBLUE) "[Z] " COLOR(DEFAULT) "gedrückt. Drücke dann " COLOR(ADJUSTABLE) "[B]" COLOR(DEFAULT) "." QUICKTEXT_DISABLE
+
+QUICKTEXT_ENABLE COLOR(PURPLE) "Steuerkreuz-Set!\n"
+COLOR(DEFAULT) "Zum Wechseln der beiden Sets,\n"
+"halte " COLOR(LIGHTBLUE) "[L]" COLOR(DEFAULT) " und drücke " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) ".\n"
+"Neue Items können aufs " COLOR(LIGHTBLUE) "[D-Pad]" COLOR(DEFAULT) "." QUICKTEXT_DISABLE
 ),
 MSG(
 QUICKTEXT_ENABLE COLOR(PURPLE) "Attaque en Fente!\n"
 COLOR(DEFAULT) "Pour faire une fente avec votre \n"
 "lame, maintenez " COLOR(LIGHTBLUE) "[Z] " COLOR(DEFAULT) "et" COLOR(LIGHTBLUE) " [Control-Pad] " COLOR(DEFAULT) "vers\n"
 "votre cible puis appuyez sur " COLOR(ADJUSTABLE) "[B]" COLOR(DEFAULT) "." QUICKTEXT_DISABLE
+
+QUICKTEXT_ENABLE COLOR(PURPLE) "Échange D-Pad!\n"
+COLOR(DEFAULT) "Pour changer entre les 2 sets,\n"
+"maintenez " COLOR(LIGHTBLUE) "[L]" COLOR(DEFAULT) " et pressez " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) ".\n"
+"De nouveaux objets vont sur le " COLOR(LIGHTBLUE) "[D-Pad]" COLOR(DEFAULT) "." QUICKTEXT_DISABLE
 )
 )
 

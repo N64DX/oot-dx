@@ -50,6 +50,13 @@ void MapSelect_LoadTitle(MapSelectState* this) {
     SET_NEXT_GAMESTATE(&this->state, ConsoleLogo_Init, ConsoleLogoState);
 }
 
+#if DEBUG_FEATURES
+void MapSelect_LoadRoom(u16 entrance, u8 roomNum, u8 maxRoomNum) {
+    if (roomNum > 0 && roomNum <= maxRoomNum)
+        gSaveContext.save.entranceIndex = entrance + (roomNum - 1) * 4;
+}
+#endif
+
 void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     PRINTF_COLOR_BLUE();
     PRINTF("\n\n\nＦＩＬＥ＿ＮＯ＝%x\n\n\n", gSaveContext.fileNum);
@@ -71,62 +78,35 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0);
     gSaveContext.save.entranceIndex = entranceIndex;
 
-    if (this->roomNum > 0) {
-        switch (entranceIndex) {
-            case ENTR_DEKU_TREE_0:
-                if (this->roomNum <= 11)
-                    gSaveContext.save.entranceIndex = DBG_DEKU_TREE_0 + this->roomNum - 1;
-                break;
-            case ENTR_DODONGOS_CAVERN_0:
-                if (this->roomNum <= 16)
-                    gSaveContext.save.entranceIndex = DBG_DODONGOS_CAVERN_0 + this->roomNum - 1;
-                break;
-            case ENTR_JABU_JABU_0:
-                if (this->roomNum <= 15)
-                    gSaveContext.save.entranceIndex = DBG_JABU_JABU_0 + this->roomNum - 1;
-                break;
-            case ENTR_FOREST_TEMPLE_0:
-                if (this->roomNum <= 22)
-                    gSaveContext.save.entranceIndex = DBG_FOREST_TEMPLE_0 + this->roomNum - 1;
-                break;
-            case ENTR_FIRE_TEMPLE_0:
-                if (this->roomNum <= 26)
-                    gSaveContext.save.entranceIndex = DBG_FIRE_TEMPLE_0 + this->roomNum - 1;
-                break;
-            case ENTR_WATER_TEMPLE_0:
-                if (this->roomNum <= 22)
-                    gSaveContext.save.entranceIndex = DBG_WATER_TEMPLE_0 + this->roomNum - 1;
-                break;
-            case ENTR_SHADOW_TEMPLE_0:
-                if (this->roomNum <= 22)
-                    gSaveContext.save.entranceIndex = DBG_SHADOW_TEMPLE_0 + this->roomNum - 1;
-                break;
-            case ENTR_SPIRIT_TEMPLE_0:
-                if (this->roomNum <= 28)
-                    gSaveContext.save.entranceIndex = DBG_SPIRIT_TEMPLE_0 + this->roomNum - 1;
-                break;
-            case ENTR_ICE_CAVERN_0:
-                if (this->roomNum <= 12)
-                    gSaveContext.save.entranceIndex = DBG_ICE_CAVERN_0 + this->roomNum - 1;
-                break;
-            case ENTR_BOTTOM_OF_THE_WELL_0:
-                if (this->roomNum <= 7)
-                    gSaveContext.save.entranceIndex = DBG_BOTTOM_OF_THE_WELL_0 + this->roomNum - 1;
-                break;
-            case ENTR_GERUDO_TRAINING_GROUND_0:
-                if (this->roomNum <= 11)
-                    gSaveContext.save.entranceIndex = DBG_GERUDO_TRAINING_GROUND_0 + this->roomNum - 1;
-                break;
-            case ENTR_INSIDE_GANONS_CASTLE_0:
-                if (this->roomNum <= 20)
-                    gSaveContext.save.entranceIndex = DBG_INSIDE_GANONS_CASTLE_0 + this->roomNum - 1;
-                break;
-            case ENTR_GANONS_TOWER_0:
-                if (this->roomNum <= 9)
-                    gSaveContext.save.entranceIndex = DBG_GANONS_TOWER_0 + this->roomNum - 1;
-                break;
-        }
-    }
+#if DEBUG_FEATURES
+    if (entranceIndex == ENTR_DEKU_TREE_0)
+        MapSelect_LoadRoom(DBG_DEKU_TREE_0, this->roomNum, 11);
+    else if (entranceIndex == ENTR_DODONGOS_CAVERN_0)
+        MapSelect_LoadRoom(DBG_DODONGOS_CAVERN_0, this->roomNum, 16);
+    else if (entranceIndex == ENTR_JABU_JABU_0)
+        MapSelect_LoadRoom(DBG_JABU_JABU_0, this->roomNum, 15);
+    else if (entranceIndex == ENTR_FOREST_TEMPLE_0)
+        MapSelect_LoadRoom(DBG_FOREST_TEMPLE_0, this->roomNum, 22);
+    else if (entranceIndex == ENTR_FIRE_TEMPLE_0)
+        MapSelect_LoadRoom(DBG_FIRE_TEMPLE_0, this->roomNum, 26);
+    else if (entranceIndex == ENTR_WATER_TEMPLE_0)
+        MapSelect_LoadRoom(DBG_WATER_TEMPLE_0, this->roomNum, 22);
+    else if (entranceIndex == ENTR_SHADOW_TEMPLE_0)
+        MapSelect_LoadRoom(DBG_SHADOW_TEMPLE_0, this->roomNum, 22);
+    else if (entranceIndex == ENTR_SPIRIT_TEMPLE_0)
+        MapSelect_LoadRoom(DBG_SPIRIT_TEMPLE_0, this->roomNum, 28);
+    else if (entranceIndex == ENTR_ICE_CAVERN_0)
+        MapSelect_LoadRoom(DBG_ICE_CAVERN_0, this->roomNum, 12);
+    else if (entranceIndex == ENTR_BOTTOM_OF_THE_WELL_0)
+        MapSelect_LoadRoom(DBG_BOTTOM_OF_THE_WELL_0, this->roomNum, 7);
+    else if (entranceIndex == ENTR_GERUDO_TRAINING_GROUND_0)
+        MapSelect_LoadRoom(DBG_GERUDO_TRAINING_GROUND_0, this->roomNum, 11);
+    else if (entranceIndex == ENTR_INSIDE_GANONS_CASTLE_0)
+        MapSelect_LoadRoom(DBG_INSIDE_GANONS_CASTLE_0, this->roomNum, 20);
+    else if (entranceIndex == ENTR_GANONS_TOWER_0)
+        MapSelect_LoadRoom(DBG_GANONS_TOWER_0, this->roomNum, 9);
+#endif
+
     gSaveContext.respawnFlag = 0;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
     gSaveContext.seqId = (u8)NA_BGM_DISABLED;
@@ -930,12 +910,14 @@ void MapSelect_PrintLoadingMessage(MapSelectState* this, GfxPrint* printer) {
 }
 
 void MapSelect_PrintRoomNumSetting(MapSelectState* this, GfxPrint* printer) {
+#if DEBUG_FEATURES
     GfxPrint_SetPos(printer, 4, 27);
     GfxPrint_SetColor(printer, 255, 255, 55, 255);
 
     if (this->roomNum > 0)
         GfxPrint_Printf(printer, "Room:%d", this->roomNum - 1);
     else GfxPrint_Printf(printer, "Room:Default");
+#endif
 }
 
 static const char* sAgeLabels[] = {

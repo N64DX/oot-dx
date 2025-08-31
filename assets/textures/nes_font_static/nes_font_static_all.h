@@ -421,4 +421,7 @@ extern u64 gMsgCharA9ZTargetSignTex[TEX_LEN(u64, gMsgCharA9ZTargetSignTex_WIDTH,
 #define gMsgCharAAControlStickTex_WIDTH 16
 #define gMsgCharAAControlStickTex_HEIGHT 16
 extern u64 gMsgCharAAControlStickTex[TEX_LEN(u64, gMsgCharAAControlStickTex_WIDTH, gMsgCharAAControlStickTex_HEIGHT, 4)];
+#define gMsgCharABControlPadTex_WIDTH 16
+#define gMsgCharABControlPadTex_HEIGHT 16
+extern u64 gMsgCharABControlPadTex[TEX_LEN(u64, gMsgCharABControlPadTex_WIDTH, gMsgCharABControlPadTex_HEIGHT, 4)];
 #endif

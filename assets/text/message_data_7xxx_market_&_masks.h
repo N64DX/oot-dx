@@ -6924,19 +6924,23 @@ COLOR(DEFAULT) "Le Renard est à la mode!" QUICKTEXT_DISABLE PERSISTENT
 DEFINE_MESSAGE(0x70B7, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "ウサギずきん　　貸し出し自由\n"
-COLOR(DEFAULT) "プラプラゆれる　ウサギのお耳" QUICKTEXT_DISABLE PERSISTENT
+COLOR(DEFAULT) "プラプラゆれる　ウサギのお耳\n"
+"はやくはしれる！" QUICKTEXT_DISABLE PERSISTENT
 ),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Bunny Hood -- Free to Borrow\n"
-COLOR(DEFAULT) "With swinging rabbit ears!" QUICKTEXT_DISABLE PERSISTENT
+COLOR(DEFAULT) "With swinging rabbit ears!\n"
+"It also makes you run faster!" QUICKTEXT_DISABLE PERSISTENT
 ),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Hasenohren -- Gebührenfrei!\n"
-COLOR(DEFAULT) "Wippende Hasenohren! Supersüß!" QUICKTEXT_DISABLE PERSISTENT
+COLOR(DEFAULT) "Wippende Hasenohren! Supersüß!\n"
+"Du rennst schneller!" QUICKTEXT_DISABLE PERSISTENT
 ),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Masque du Lapin -- Gratuit\n"
-COLOR(DEFAULT) "Ses oreilles sont à croquer!" QUICKTEXT_DISABLE PERSISTENT
+COLOR(DEFAULT) "Ses oreilles sont à croquer!\n"
+"Tu cours plus vite!" QUICKTEXT_DISABLE PERSISTENT
 )
 )
 
@@ -6964,21 +6968,25 @@ COLOR(DEFAULT) "Une grosse tête, c'est rigolo!" QUICKTEXT_DISABLE PERSISTENT
 DEFINE_MESSAGE(0x70B9, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "ゾーラのお面　　貸し出し自由\n"
-COLOR(DEFAULT) "クールなまなざし　水泳にいかが" QUICKTEXT_DISABLE PERSISTENT
+COLOR(DEFAULT) "クールなまなざし　水泳にいかが\n"
+"泳ぐのも速くなる!" QUICKTEXT_DISABLE PERSISTENT
 ),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Zora Mask -- Free to Borrow" COLOR(DEFAULT) "\n"
 "You'll look cool while you're\n"
-"swimming if you wear this mask!" QUICKTEXT_DISABLE PERSISTENT
+"swimming if you wear this mask!\n"
+"It also makes you swim faster!" QUICKTEXT_DISABLE PERSISTENT
 ),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Zora-Maske -- Gebührenfrei!" COLOR(DEFAULT) "\n"
 "Sieht besonders cool beim\n"
-"Schwimmen aus!" QUICKTEXT_DISABLE PERSISTENT
+"Schwimmen aus!\n"
+"Du schwimmst auch schneller!" QUICKTEXT_DISABLE PERSISTENT
 ),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Masque de Zora -- Gratuit" COLOR(DEFAULT) "\n"
-"A la mode pour une baignade!" QUICKTEXT_DISABLE PERSISTENT
+"A la mode pour une baignade!\n"
+"Tu nages aussi plus vite!" QUICKTEXT_DISABLE PERSISTENT
 )
 )
 

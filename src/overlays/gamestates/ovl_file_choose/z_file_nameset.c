@@ -1,6 +1,8 @@
 #include "file_select.h"
 #include "file_select_state.h"
 
+#include "libu64/gfxprint.h"
+#include "alloca.h"
 #include "array_count.h"
 #include "controller.h"
 #include "gfx.h"
@@ -631,11 +633,59 @@ s32 FileSelect_ApplyDiacriticToFilename(GameState* thisx, s16 diacritic) {
 #endif
 
 #if OOT_VERSION <= PAL_1_1
-static void* sQuestTextures[][2] = {
+static const void* sQuestTextures[][2] = {
     { gQuestOcarinaOfTimeTex, gLogoOcarinaOfTimeTex },
     { gQuestMasterQuestTex,   gLogoMasterQuestTex   },
     { gQuestUraQuestTex,      gLogoUraQuestTex      },
     { gQuestChildQuestTex,    gLogoChildQuestTex    },
+};
+
+static const char* sQuestMessages[][4][2] = {
+    {
+        { "The original experience",        "" },
+        { "Harder arranged dungeons",       "" },
+        { "A beta version of Master Quest", "" },
+        { "Play as Young Link only",        "and discover new areas" },
+    }, {
+        { "Das originale Abenteuer",            "" },
+        { "Schwerere, neu gestaltete Dungeons", "" },
+        { "Eine Beta-Version von Master Quest", "" },
+        { "Spiele nur als junger Link",         "und entdecke neue Gebiete" },
+    }, {
+        { "L'experience originale",            "" },
+        { "Donjons plus difficiles",           "et remanies" },
+        { "Une version beta de Master Quest",  "" },
+        { "Incarnez uniquement le jeune Link", "et decouvrez de nouvelles zones" },
+    }, {
+        { "ｵﾘｼﾞﾅﾙﾀｲｹﾝ",        "" },
+        { "ﾑｽﾞｶｼｸﾅｯﾀﾀﾞﾝｼﾞｮﾝ",   "" },
+        { "ﾏｽﾀｰｸｴｽﾄﾉﾍﾞｰﾀﾊﾞﾝ",   "" },
+        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ", "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+    }
+};
+
+static const u8 sQuestMessagesOffset[][4][2] = {
+    {
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+    }, {
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 6,  6  },
+    }, {
+        { 8,  8  },
+        { 7,  13 },
+        { 7,  7  },
+        { 4,  5  },
+    }, {
+        { 14, 14 },
+        { 11, 11 },
+        { 10, 10 },
+        { 10, 11 },
+    }
 };
 #endif
 
@@ -738,6 +788,22 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 #if OOT_VERSION <= PAL_1_1
     if (this->selectingQuestMode) {
         u16 x, y;
+        GfxPrint* printer;
+
+        printer = alloca(sizeof(GfxPrint));
+        GfxPrint_Init(printer);
+        GfxPrint_Open(printer, POLY_OPA_DISP);
+
+        GfxPrint_SetPos(printer, sQuestMessagesOffset[gSaveContext.language][this->questMode[this->buttonIndex]][0], 2);
+        GfxPrint_SetColor(printer, 255, 255, 255, 255);
+        GfxPrint_Printf(printer, "%s", sQuestMessages[gSaveContext.language][this->questMode[this->buttonIndex]][0]);
+
+        GfxPrint_SetPos(printer, sQuestMessagesOffset[gSaveContext.language][this->questMode[this->buttonIndex]][1], 3);
+        GfxPrint_SetColor(printer, 255, 255, 255, 255);
+        GfxPrint_Printf(printer, "%s", sQuestMessages[gSaveContext.language][this->questMode[this->buttonIndex]][1]);
+        
+        POLY_OPA_DISP = GfxPrint_Close(printer);
+        GfxPrint_Destroy(printer);
 
         x = 160 - 64;
         y = 45;
@@ -760,12 +826,16 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
             if (this->questMode[this->buttonIndex] <= 0)
                 this->questMode[this->buttonIndex] = QUEST_MAX;
             else this->questMode[this->buttonIndex]--;
+            if (this->questMode[this->buttonIndex] == URA_QUEST)
+                this->questMode[this->buttonIndex]--;
         }
         if (this->stickAdjX > 30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             if (this->questMode[this->buttonIndex] >= QUEST_MAX)
                 this->questMode[this->buttonIndex] = 0;
             else this->questMode[this->buttonIndex]++;
+            if (this->questMode[this->buttonIndex] == URA_QUEST)
+                this->questMode[this->buttonIndex]++;
         }
 
         if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
