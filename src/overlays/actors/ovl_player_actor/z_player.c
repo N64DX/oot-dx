@@ -3739,7 +3739,7 @@ s32 Player_UpperAction_CarryActor(Player* this, PlayState* play) {
 }
 
 void func_808357E8(Player* this, Gfx** dLists) {
-    this->leftHandDLists = dLists + gSaveContext.save.linkAge;
+    this->leftHandDLists = dLists + GET_LINK_MODEL;
 }
 
 s32 func_80835800(Player* this, PlayState* play) {
@@ -12653,9 +12653,7 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
     Collider_ResetQuadAT(play, &this->shieldQuad.base);
 }
 
-#if DEBUG_FEATURES
 s32 Player_UpdateNoclip(Player* this, PlayState* play);
-#endif
 
 void Player_Update(Actor* thisx, PlayState* play) {
     Player* this = (Player*)thisx;
@@ -12663,11 +12661,9 @@ void Player_Update(Actor* thisx, PlayState* play) {
     s32 pad;
     Input input;
 
-#if DEBUG_FEATURES
     if (!Player_UpdateNoclip(this, play)) {
         goto skip_update;
     }
-#endif
 
     if (gSaveContext.dogParams < 0) {
         static Vec3f sDogSpawnOffset = { 0.0f, 0.0f, -30.0f };
@@ -12713,9 +12709,7 @@ void Player_Update(Actor* thisx, PlayState* play) {
 
     Player_UpdateCommon(this, play, &input);
 
-#if DEBUG_FEATURES
 skip_update:;
-#endif
     {
         s32 pad;
 
@@ -15059,7 +15053,6 @@ void Player_Action_8084FBF4(Player* this, PlayState* play) {
     Actor_PlaySfx_Flagged2(&this->actor, NA_SE_VO_LI_TAKEN_AWAY - SFX_FLAG + this->ageProperties->unk_92);
 }
 
-#if DEBUG_FEATURES
 /**
  * Updates the "Noclip" debug feature, which allows the player to fly around anywhere
  * in the world and clip through any collision.
@@ -15082,6 +15075,9 @@ void Player_Action_8084FBF4(Player* this, PlayState* play) {
  */
 s32 Player_UpdateNoclip(Player* this, PlayState* play) {
     sControlInput = &play->state.input[0];
+    
+    if (!DEBUG_FEATURES && !gSaveContext.debugMode)
+        return true;
 
     if (sNoclipTimer > 0 && !sNoclipEnabled)
         sNoclipTimer--;
@@ -15151,7 +15147,6 @@ s32 Player_UpdateNoclip(Player* this, PlayState* play) {
 
     return true;
 }
-#endif
 
 void func_8084FF7C(Player* this) {
     this->unk_858 += this->unk_85C;

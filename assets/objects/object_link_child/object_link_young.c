@@ -150,10 +150,6 @@ Vtx deku_shield_vtx[] = {
 #include "assets/objects/object_link_child/other/deku_shield.vtx.inc"
 };
 
-Vtx boomerang_vtx[] = {
-#include "assets/objects/object_link_child/other/boomerang.vtx.inc"
-};
-
 Vtx master_sword_vtx[] = {
 #include "assets/objects/object_link_child/other/master_sword.vtx.inc"
 };
@@ -256,6 +252,10 @@ u64 gLinkYoungMasterSwordGuardTex[] = {
 
 u64 gLinkYoungMasterSwordEmblemTex[] = {
 #include "assets/objects/object_link_child/gLinkChildMasterSwordEmblemTex.ci8.tlut_gLinkChildSwordsTLUT.inc.c"
+};
+
+Vtx gLinkYoungLeftFistAndBoomerangNearVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildLeftFistAndBoomerangNearVtx.inc.c"
 };
 
 Vtx gLinkYoungHylianShieldAndSheathNearVtx[] = {
@@ -487,22 +487,22 @@ Gfx gLinkYoungLeftFistAndBoomerangNearDL[] = {
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsDPSetPrimColor(0, 0, 243, 0, 97, 255),
-    gsSPVertex(&boomerang_vtx, 3, 0),
+    gsSPVertex(&gLinkYoungLeftFistAndBoomerangNearVtx, 3, 0),
     gsSP1Triangle(0, 1, 2, 0),
-    gsSPVertex(&boomerang_vtx[3], 32, 0),
+    gsSPVertex(&gLinkYoungLeftFistAndBoomerangNearVtx[3], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
     gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
     gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
     gsSP2Triangles(24, 25, 26, 0, 27, 28, 29, 0),
-    gsSPVertex(&boomerang_vtx[33], 3, 0),
+    gsSPVertex(&gLinkYoungLeftFistAndBoomerangNearVtx[33], 3, 0),
     gsSP1Triangle(0, 1, 2, 0),
     gsDPPipeSync(),
     gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
     gsDPSetCombineLERP(SHADE, 0, PRIMITIVE, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsDPSetPrimColor(0, 0, 255, 255, 0, 255),
-    gsSPVertex(&boomerang_vtx[36], 15, 0),
+    gsSPVertex(&gLinkYoungLeftFistAndBoomerangNearVtx[36], 15, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(2, 4, 0, 0, 5, 6, 7, 0),
     gsSP2Triangles(6, 5, 3, 0, 5, 7, 4, 0),
@@ -521,7 +521,7 @@ Gfx gLinkYoungLeftFistAndBoomerangNearDL[] = {
     gsDPLoadTLUT_pal256(gLinkYoungHandTLUT),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&boomerang_vtx[51], 32, 0),
+    gsSPVertex(&gLinkYoungLeftFistAndBoomerangNearVtx[51], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 7, 6, 0),
     gsSP2Triangles(10, 11, 12, 0, 13, 12, 11, 0),
@@ -533,7 +533,7 @@ Gfx gLinkYoungLeftFistAndBoomerangNearDL[] = {
     gsSP2Triangles(20, 21, 12, 0, 12, 30, 10, 0),
     gsSP2Triangles(30, 17, 10, 0, 12, 17, 30, 0),
     gsSP2Triangles(8, 24, 6, 0, 31, 24, 8, 0),
-    gsSPVertex(&boomerang_vtx[83], 6, 0),
+    gsSPVertex(&gLinkYoungLeftFistAndBoomerangNearVtx[83], 6, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     
     gsSPEndDisplayList(),

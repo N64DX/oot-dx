@@ -582,7 +582,7 @@ s32 FileSelect_ApplyDiacriticToCharacter(GameState* thisx, s16 diacritic, s16 ch
     s16 i;
 
     if (diacritic == FILENAME_SPACE) {
-        for (i = 0; i < ARRAY_COUNTU(sRemoveDiacriticRangeOffset); i++) {
+        for (i = 0; i < (s16)ARRAY_COUNTU(sRemoveDiacriticRangeOffset); i++) {
             if (sRemoveDiacriticRangeMin[i] <= this->fileNames[this->buttonIndex][charIndex] &&
                 this->fileNames[this->buttonIndex][charIndex] <= sRemoveDiacriticRangeMax[i]) {
                 this->fileNames[this->buttonIndex][charIndex] += sRemoveDiacriticRangeOffset[i];
@@ -590,7 +590,7 @@ s32 FileSelect_ApplyDiacriticToCharacter(GameState* thisx, s16 diacritic, s16 ch
             }
         }
     } else if (diacritic == FILENAME_DAKUTEN) {
-        for (i = 0; i < ARRAY_COUNTU(sDakutenDiacriticRangeOffset); i++) {
+        for (i = 0; i < (s16)ARRAY_COUNTU(sDakutenDiacriticRangeOffset); i++) {
             if (sDakutenDiacriticRangeMin[i] <= this->fileNames[this->buttonIndex][charIndex] &&
                 this->fileNames[this->buttonIndex][charIndex] <= sDakutenDiacriticRangeMax[i]) {
                 this->fileNames[this->buttonIndex][charIndex] += sDakutenDiacriticRangeOffset[i];
@@ -598,7 +598,7 @@ s32 FileSelect_ApplyDiacriticToCharacter(GameState* thisx, s16 diacritic, s16 ch
             }
         }
     } else if (diacritic == FILENAME_HANDAKUTEN) {
-        for (i = 0; i < ARRAY_COUNTU(sHandakutenDiacriticRangeOffset); i++) {
+        for (i = 0; i < (s16)ARRAY_COUNTU(sHandakutenDiacriticRangeOffset); i++) {
             if (sHandakutenDiacriticRangeMin[i] <= this->fileNames[this->buttonIndex][charIndex] &&
                 this->fileNames[this->buttonIndex][charIndex] <= sHandakutenDiacriticRangeMax[i]) {
                 this->fileNames[this->buttonIndex][charIndex] += sHandakutenDiacriticRangeOffset[i];
@@ -1572,6 +1572,24 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
     SramContext* sramCtx = &this->sramCtx;
     Input* input = &this->state.input[0];
+    
+    if (this->selectingOptionsMode) {
+        if (CHECK_BTN_ANY(input->press.button, BTN_B | BTN_L)) {
+            this->selectingOptionsMode = 0;
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            //for (i=0; i<FILE_OPTIONS_SIZE; i++)
+            //    gSaveContext.options[i] = gFileOptions[gSaveContext.fileNum][i];
+            //Sram_WriteSaveOptions(&this->sramCtx);
+        }
+        FileSelectOptions_UpdateMenu(this);
+        return;
+    } else if (CHECK_BTN_ALL(input->press.button, BTN_L)) {
+        this->selectingOptionsMode = 1;
+        Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        //gSaveContext.fileNum = this->buttonIndex;
+        //Sram_OpenSaveOptions(&this->sramCtx);
+        FileSelectOptions_Reset(this);
+    }
 
     if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -1582,6 +1600,7 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
 #if OOT_PAL_N64 || OOT_NTSC_N64
         sramCtx->readBuff[2] = gSaveContext.language;
 #endif
+        sramCtx->readBuff[3] = gSaveContext.debugMode;
         PRINTF("ＳＡＶＥ");
         Sram_WriteSramHeader(sramCtx);
         PRINTF_COLOR_YELLOW();

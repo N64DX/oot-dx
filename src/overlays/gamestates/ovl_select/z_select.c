@@ -50,12 +50,10 @@ void MapSelect_LoadTitle(MapSelectState* this) {
     SET_NEXT_GAMESTATE(&this->state, ConsoleLogo_Init, ConsoleLogoState);
 }
 
-#if DEBUG_FEATURES
 void MapSelect_LoadRoom(u16 entrance, u8 roomNum, u8 maxRoomNum) {
     if (roomNum > 0 && roomNum <= maxRoomNum)
         gSaveContext.save.entranceIndex = entrance + (roomNum - 1) * 4;
 }
-#endif
 
 void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     PRINTF_COLOR_BLUE();
@@ -78,7 +76,6 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0);
     gSaveContext.save.entranceIndex = entranceIndex;
 
-#if DEBUG_FEATURES
     if (entranceIndex == ENTR_DEKU_TREE_0)
         MapSelect_LoadRoom(DBG_DEKU_TREE_0, this->roomNum, 11);
     else if (entranceIndex == ENTR_DODONGOS_CAVERN_0)
@@ -105,7 +102,6 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         MapSelect_LoadRoom(DBG_INSIDE_GANONS_CASTLE_0, this->roomNum, 20);
     else if (entranceIndex == ENTR_GANONS_TOWER_0)
         MapSelect_LoadRoom(DBG_GANONS_TOWER_0, this->roomNum, 9);
-#endif
 
     gSaveContext.respawnFlag = 0;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
@@ -910,14 +906,12 @@ void MapSelect_PrintLoadingMessage(MapSelectState* this, GfxPrint* printer) {
 }
 
 void MapSelect_PrintRoomNumSetting(MapSelectState* this, GfxPrint* printer) {
-#if DEBUG_FEATURES
     GfxPrint_SetPos(printer, 4, 27);
     GfxPrint_SetColor(printer, 255, 255, 55, 255);
 
     if (this->roomNum > 0)
         GfxPrint_Printf(printer, "Room:%d", this->roomNum - 1);
     else GfxPrint_Printf(printer, "Room:Default");
-#endif
 }
 
 static const char* sAgeLabels[] = {

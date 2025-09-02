@@ -571,7 +571,6 @@ Gfx gCullFrontDList[] = {
 };
 
 Vec3f* sCurBodyPartPos;
-s32 sDListsLodOffset;
 Vec3f sGetItemRefPos;
 s32 sLeftHandType;
 s32 sRightHandType;
@@ -1148,8 +1147,6 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
     color = &sTunicColors[tunic];
     gDPSetEnvColor(POLY_OPA_DISP++, color->r, color->g, color->b, 0);
 
-    sDListsLodOffset = lod * 2;
-
     SkelAnime_DrawFlexLod(play, skeleton, jointTable, dListCount, overrideLimbDraw, postLimbDraw, data, lod);
 
     if ((overrideLimbDraw != Player_OverrideLimbDrawGameplayFirstPerson) &&
@@ -1420,7 +1417,7 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                 sLeftHandType = PLAYER_MODELTYPE_LH_CLOSED;
             }
 
-            *dList = *(dLists + sDListsLodOffset);
+            *dList = *dLists;
         } else if (limbIndex == PLAYER_LIMB_R_HAND) {
             Gfx** dLists = this->rightHandDLists;
 
@@ -1432,7 +1429,7 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                 sRightHandType = PLAYER_MODELTYPE_RH_CLOSED;
             }
 
-            *dList = *(dLists + sDListsLodOffset);
+            *dList = *dLists;
         } else if (limbIndex == PLAYER_LIMB_SHEATH) {
             Gfx** dLists = this->sheathDLists;
 
@@ -1460,9 +1457,9 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                     dLists = &gPlayerShields[IS_YOUNG_LINK][this->currentShield - 1];
             }
 
-            *dList = *(dLists + sDListsLodOffset);
+            *dList = *dLists;
         } else if (limbIndex == PLAYER_LIMB_WAIST) {
-            *dList = *(this->waistDLists + sDListsLodOffset);
+            *dList = *this->waistDLists;
         }
     }
 

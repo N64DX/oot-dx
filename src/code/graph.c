@@ -467,14 +467,14 @@ void Graph_Update(GraphicsContext* gfxCtx, GameState* gameState) {
         sGraphPrevUpdateEndTime = timeNow;
     }
 
-#if DEBUG_FEATURES
     if (CHECK_BTN_ALL(gameState->input[0].press.button, BTN_Z) &&
-        CHECK_BTN_ALL(gameState->input[0].cur.button, BTN_L | BTN_R)) {
+        CHECK_BTN_ALL(gameState->input[0].cur.button, BTN_L | BTN_R) && (DEBUG_FEATURES || gSaveContext.debugMode)) {
         gSaveContext.gameMode = GAMEMODE_NORMAL;
         SET_NEXT_GAMESTATE(gameState, MapSelect_Init, MapSelectState);
         gameState->running = false;
     }
 
+#if DEBUG_FEATURES
     if (gIsCtrlr2Valid && PreNmiBuff_IsResetting(gAppNmiBufferPtr) && !gameState->inPreNMIState) {
         PRINTF(VT_COL(YELLOW, BLACK) T("PRE-NMIによりリセットモードに移行します\n",
                                        "PRE-NMI causes the system to transition to reset mode\n") VT_RST);

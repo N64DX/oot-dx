@@ -6930,7 +6930,7 @@ COLOR(DEFAULT) "プラプラゆれる　ウサギのお耳\n"
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Bunny Hood -- Free to Borrow\n"
 COLOR(DEFAULT) "With swinging rabbit ears!\n"
-"It also makes you run faster!" QUICKTEXT_DISABLE PERSISTENT
+"It makes you run faster!" QUICKTEXT_DISABLE PERSISTENT
 ),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Hasenohren -- Gebührenfrei!\n"

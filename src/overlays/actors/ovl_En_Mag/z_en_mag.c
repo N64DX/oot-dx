@@ -77,6 +77,7 @@ void EnMag_ResetSram(void) {
 
     gSaveContext.soundSetting = 0; // SOUND_SETTING_STEREO
     gSaveContext.zTargetSetting = 1; // Z_TARGET_SETTING_HOLD
+    gSaveContext.debugMode = 0;
     Audio_SetSoundOutputMode(gSaveContext.soundSetting);
 }
 #endif
