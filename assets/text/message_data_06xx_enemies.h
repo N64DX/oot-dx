@@ -1037,19 +1037,24 @@ COLOR(LIGHTBLUE) "Attaque-le " COLOR(DEFAULT) "lorsqu'il sort des \n"
 DEFINE_MESSAGE(0x062C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(
 QUICKTEXT_ENABLE SHIFT(60) "マッチョナッツ\n"
-SHIFT(3) COLOR(LIGHTBLUE) "近づくと　草の中に　逃げちゃうよ！" COLOR(DEFAULT) QUICKTEXT_DISABLE
+COLOR(LIGHTBLUE) "気をつけろ　とても強そうだ！\n"
+"でも　火に弱そうだ…" COLOR(DEFAULT) QUICKTEXT_DISABLE
 ),
 MSG(
 QUICKTEXT_ENABLE "Buff Scrub\n"
-COLOR(LIGHTBLUE) "Do you even lift?" COLOR(DEFAULT) QUICKTEXT_DISABLE
+COLOR(LIGHTBLUE) "Watch out, he looks really strong!\n"
+"He looks weak to fire though..." COLOR(DEFAULT) QUICKTEXT_DISABLE
 ),
 MSG(
 QUICKTEXT_ENABLE "Ein muskulöser Laubkerl!\n"
-COLOR(LIGHTBLUE) "Hebst du überhaupt?" COLOR(DEFAULT) QUICKTEXT_DISABLE
+COLOR(LIGHTBLUE) "Pass auf, er sieht sehr stark aus!\n"
+"Doch Feuer scheint seine Schwäche\n"
+"zu sein..." COLOR(DEFAULT) QUICKTEXT_DISABLE
 ),
 MSG(
 QUICKTEXT_ENABLE "Peste Costaud\n"
-COLOR(LIGHTBLUE) "Tu portes vraiment?" COLOR(DEFAULT) QUICKTEXT_DISABLE
+COLOR(LIGHTBLUE) "Attention, il a l’air très fort!\n"
+"Mais il semble faible face au feu..." COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
 

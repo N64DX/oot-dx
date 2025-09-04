@@ -361,6 +361,13 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
             case ENBB_BLUE:
                 thisx->naviEnemyId = NAVI_ENEMY_BLUE_BUBBLE;
                 thisx->colChkInfo.damageTable = &sDamageTableBlueGreen;
+
+                if (IS_CHILD_QUEST_AS_CHILD) {
+                    thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+                    thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+                    thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+                }
+
                 this->flamePrimBlue = this->flameEnvColor.b = 255;
                 thisx->world.pos.y += 50.0f;
                 EnBb_SetupBlue(this);
@@ -369,6 +376,13 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
             case ENBB_RED:
                 thisx->naviEnemyId = NAVI_ENEMY_RED_BUBBLE;
                 thisx->colChkInfo.damageTable = &sDamageTableRed;
+
+                if (IS_CHILD_QUEST_AS_CHILD) {
+                    thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+                    thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+                    thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+                }
+
                 this->flameEnvColor.r = 255;
                 this->collider.elements[0].base.atDmgInfo.effect = 1;
                 EnBb_SetupRed(play, this);
@@ -376,6 +390,13 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
             case ENBB_WHITE:
                 thisx->naviEnemyId = NAVI_ENEMY_WHITE_BUBBLE;
                 thisx->colChkInfo.damageTable = &sDamageTableWhite;
+
+                if (IS_CHILD_QUEST_AS_CHILD) {
+                    thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+                    thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+                    thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+                }
+
                 this->path = this->actionState;
                 blureInit.p1StartColor[0] = blureInit.p1StartColor[1] = blureInit.p1StartColor[2] =
                     blureInit.p1StartColor[3] = blureInit.p2StartColor[0] = blureInit.p2StartColor[1] =
@@ -404,6 +425,13 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
                 thisx->naviEnemyId = NAVI_ENEMY_GREEN_BUBBLE;
                 this->bobSize = (this->actionState & 0xF) * 20.0f;
                 thisx->colChkInfo.damageTable = &sDamageTableBlueGreen;
+
+                if (IS_CHILD_QUEST_AS_CHILD) {
+                    thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+                    thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+                    thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+                }
+
                 this->flameEnvColor.g = 255;
                 thisx->colChkInfo.health = 1;
 
@@ -416,12 +444,6 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
     }
     this->collider.elements[0].dim.worldSphere.radius =
         this->collider.elements[0].dim.modelSphere.radius * this->collider.elements[0].dim.scale;
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
-    }
 }
 
 void EnBb_Destroy(Actor* thisx, PlayState* play) {

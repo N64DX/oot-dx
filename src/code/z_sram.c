@@ -505,7 +505,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
         default:
             if (!RESUME_LAST_AREA) {
                 if (gSaveContext.save.info.playerData.savedSceneId != SCENE_LINKS_HOUSE)
-                    gSaveContext.save.entranceIndex = (LINK_AGE_IN_YEARS == YEARS_CHILD) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
+                    gSaveContext.save.entranceIndex = (!LINK_IS_ADULT_OR_TIMESKIP) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
                 else gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
             }
             break;

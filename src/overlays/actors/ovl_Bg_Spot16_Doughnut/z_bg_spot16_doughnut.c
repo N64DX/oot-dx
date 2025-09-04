@@ -130,6 +130,9 @@ void BgSpot16Doughnut_Draw(Actor* thisx, PlayState* play) {
     BgSpot16Doughnut* this = (BgSpot16Doughnut*)thisx;
     u32 scroll = play->gameplayFrames & 0xFFFF;
     s32 pad;
+    
+    if ( ((play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY || play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT || play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS)) && GET_ACTIVE_CAM(play)->bgCamIndex == 1)
+        return;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_bg_spot16_doughnut.c", 210);
 

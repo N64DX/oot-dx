@@ -2214,3 +2214,82 @@ TWO_CHOICE
     "Trop cher" COLOR(DEFAULT)
 )
 )
+
+DEFINE_MESSAGE(0x811D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_TOP,
+MSG(
+QUICKTEXT_ENABLE SHIFT(12) "これ　読んだ人、\n"
+SHIFT(12) "オラの墓の中に　おいで。\n"
+SHIFT(12) "のびちぢみする" COLOR(RED) "形見" COLOR(DEFAULT) "　あげマス。" QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE SHIFT(9) "あなたの　おこしを　まってます。\n"
+SHIFT(90) "ダンペイの　失われた双子" QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Whoever reads this, please enter\n"
+"my grave. I will let you have my\n"
+"stretching, shrinking " COLOR(RED) "keepsake" COLOR(DEFAULT) "." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "I'm waiting for you.\n"
+"--Dampé's lost twin brother" QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Wer immer dies liest, der möge\n"
+"mein Grab betreten. Ihm gebe ich\n"
+"meinen langen, kurzen " COLOR(RED) "Schatz" COLOR(DEFAULT) "." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Ich warte!\n"
+"Boris' verschollener Zwillingsbruder" QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Toi le petit curieux qui lit ce\n"
+"journal, viens dans ma tombe.\n"
+"Et peut-être auras-tu droit à mon\n"
+"précieux " COLOR(RED) "trésor" COLOR(DEFAULT) "." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Je t'attends...\n"
+"--Le frère jumeau perdu d'Igor" QUICKTEXT_DISABLE
+)
+)
+
+DEFINE_MESSAGE(0x811E, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(
+SHIFT(21) "オレ、ほんとに　見たんだよ！"
+BOX_BREAK
+
+SHIFT(33) "とっくに　死んだはずの\n"
+SHIFT(9) "ダンペイの　失われた双子が　" COLOR(RED) "お宝" COLOR(DEFAULT) "を持って\n"
+SHIFT(3) "自分の墓の中に　消えてくのをサ…"
+),
+MSG(
+"I tell you, I saw him!"
+BOX_BREAK
+
+"I saw the ghostly figure of Dampé's\n"
+"lost twin brother sinking into\n"
+"his grave. It looked like he was\n"
+"holding some kind of " COLOR(RED) "treasure" COLOR(DEFAULT) "!"
+),
+MSG(
+"Ich schwöre,\n"
+"ich habe ihn gesehen!"
+BOX_BREAK
+
+"Ich habe den Geist von Boris', dem\n"
+"verlorenen Zwillingsbruder, im Grab\n"
+"verschwinden sehen! Man sagt, er\n"
+"lagere viel " COLOR(RED) "Wertvolles" COLOR(DEFAULT) " dort!"
+),
+MSG(
+"Mais j'en suis sûr! J'l'ai vu!"
+BOX_BREAK
+
+"J'ai vu le fantôme d'Igor, son\n"
+"frère jumeau perdu, entrer dans\n"
+"sa tombe! Il portait même un\n"
+COLOR(RED) "trésor" COLOR(DEFAULT) "... J'te l'jure!"
+)
+)

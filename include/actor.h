@@ -256,9 +256,6 @@ typedef struct Actor {
     /* 0x130 */ ActorFunc update; // Update Routine. Called by `Actor_UpdateAll`
     /* 0x134 */ ActorFunc draw; // Draw Routine. Called by `Actor_Draw`
     /* 0x138 */ struct ActorOverlay* overlayEntry; // Pointer to the overlay table entry for this actor
-#if DEBUG_FEATURES
-    /* 0x13C */ char dbgPad[0x10];
-#endif
 } Actor; // size = 0x14C
 
 typedef enum ActorFootIndex {
@@ -578,8 +575,7 @@ typedef struct NpcInteractInfo {
     /* 0x0E */ Vec3s torsoRot;
     /* 0x14 */ f32 yOffset; // Y position offset to add to actor position when calculating angle to target
     /* 0x18 */ Vec3f trackPos;
-    /* 0x24 */ char unk_24[0x4];
-} NpcInteractInfo; // size = 0x28
+} NpcInteractInfo; // size = 0x24
 
 // Converts a number of bits to a bitmask, helper for params macros
 // e.g. 3 becomes 0b111 (7)

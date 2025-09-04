@@ -805,7 +805,6 @@ typedef struct Player {
     /* 0x0152 */ u8 heldItemId; // Item id for the item currently used
     /* 0x0153 */ s8 prevBoots; // previous boots from `PlayerBoots`
     /* 0x0154 */ s8 itemAction; // the difference between this and heldItemAction is unclear
-    /* 0x0155 */ char unk_155[0x003];
     /* 0x0158 */ u8 modelGroup;
     /* 0x0159 */ u8 nextModelGroup;
     /* 0x015A */ s8 itemChangeType;
@@ -833,7 +832,6 @@ typedef struct Player {
     /* 0x03BC */ Vec3s unk_3BC;
     /* 0x03C4 */ Actor* unk_3C4;
     /* 0x03C8 */ Vec3f unk_3C8;
-    /* 0x03D4 */ char unk_3D4[0x058];
     /* 0x042C */ s8 doorType;
     /* 0x042D */ s8 doorDirection;
     /* 0x042E */ s16 doorTimer;
@@ -842,28 +840,23 @@ typedef struct Player {
     /* 0x0436 */ u16 getItemDirection;
     /* 0x0438 */ Actor* interactRangeActor;
     /* 0x043C */ s8 mountSide;
-    /* 0x043D */ char unk_43D[0x003];
     /* 0x0440 */ Actor* rideActor;
     /* 0x0444 */ u8 csAction;
     /* 0x0445 */ u8 prevCsAction;
     /* 0x0446 */ u8 cueId;
     /* 0x0447 */ u8 unk_447;
     /* 0x0448 */ Actor* csActor; // Actor involved in a `csAction`. Typically the actor that invoked the cutscene.
-    /* 0x044C */ char unk_44C[0x004];
     /* 0x0450 */ Vec3f unk_450;
     /* 0x045C */ Vec3f unk_45C;
-    /* 0x0468 */ char unk_468[0x002];
     /* 0x046A */ union {
         s16 haltActorsDuringCsAction; // If true, halt actors belonging to certain categories during a `csAction`
         s16 slidingDoorBgCamIndex; // `BgCamIndex` used during a sliding door cutscene
     } cv; // "Cutscene Variable": context dependent variable that has different meanings depending on what function is called
     /* 0x046C */ s16 subCamId;
-    /* 0x046E */ char unk_46E[0x02A];
     /* 0x0498 */ ColliderCylinder cylinder;
     /* 0x04E4 */ ColliderQuad meleeWeaponQuads[2];
     /* 0x05E4 */ ColliderQuad shieldQuad;
     /* 0x0664 */ Actor* focusActor; // Actor that Player and the camera are looking at; Used for lock-on, talking, and more
-    /* 0x0668 */ char unk_668[0x004];
     /* 0x066C */ s32 zTargetActiveTimer; // Non-zero values indicate Z-Targeting should update; Values under 5 indicate lock-on is releasing
     /* 0x0670 */ s32 meleeWeaponEffectIndex;
     /* 0x0674 */ PlayerActionFunc actionFunc;
@@ -878,7 +871,6 @@ typedef struct Player {
     /* 0x0693 */ s8 exchangeItemId;
     /* 0x0694 */ Actor* talkActor; // Actor offering to talk, or currently talking to, depending on context
     /* 0x0698 */ f32 talkActorDistance; // xz distance away from `talkActor`
-    /* 0x069C */ char unk_69C[0x004];
     /* 0x06A0 */ f32 unk_6A0;
     /* 0x06A4 */ f32 closestSecretDistSq;
     /* 0x06A8 */ Actor* unk_6A8;
@@ -886,7 +878,6 @@ typedef struct Player {
     /* 0x06AD */ u8 unk_6AD;
     /* 0x06AE */ u16 unk_6AE_rotFlags; // See `UNK6AE_ROT_` macros. If its flag isn't set, a rot steps to 0.
     /* 0x06B0 */ s16 upperLimbYawSecondary;
-    /* 0x06B2 */ char unk_6B4[0x004];
     /* 0x06B6 */ Vec3s headLimbRot;
     /* 0x06BC */ Vec3s upperLimbRot;
     /* 0x06C2 */ s16 unk_6C2;

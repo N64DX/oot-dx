@@ -2898,112 +2898,49 @@ void Message_OpenText(PlayState* play, u16 textId) {
 
         if (IS_CHILD_QUEST) {
             switch (textId) {
-                case 0x0050:
-                    textId = 0x800D;
-                    break;
-                case 0x0051:
-                    textId = 0x800E;
-                    break;
-                case 0x00AA:
-                    textId = 0x800F;
-                    break;
-                case 0x00AB:
-                    textId = 0x8010;
-                    break;
+                case 0x0050: textId = 0x800D; break;
+                case 0x0051: textId = 0x800E; break;
+                case 0x00AA: textId = 0x800F; break;
+                case 0x00AB: textId = 0x8010; break;
 
-                case 0x015A:
-                    textId = 0x8119;
-                    break;
+                case 0x015A: textId = 0x8119; break;
 
-                case 0x0220:
-                    textId = 0x8103;
-                    break;
-                case 0x0221:
-                    textId = 0x8104;
-                    break;
-                case 0x0237:
-                    textId = 0x8105;
-                    break;
+                case 0x0220: textId = 0x8103; break;
+                case 0x0221: textId = 0x8104; break;
+                case 0x0237: textId = 0x8105; break;
 
-                case 0x1052:
-                    textId = 0x8100;
-                    break;
-                case 0x105D:
-                    textId = 0x8101;
-                    break;
-                case 0x1063:
-                    textId = 0x8109;
-                    break;
-                case 0x1064:
-                    textId = 0x810A;
-                    break;
-                case 0x1074:
-                    textId = 0x8102;
-                    break;
+                case 0x1052: textId = 0x8100; break;
+                case 0x105D: textId = 0x8101; break;
+                case 0x1063: textId = 0x8109; break;
+                case 0x1064: textId = 0x810A; break;
+                case 0x1074: textId = 0x8102; break;
 
-                case 0x3039:
-                    textId = 0x8107;
-                    break;
-                case 0x304E:
-                    textId = 0x8106;
-                    break;
-                case 0x304F:
-                    textId = 0x811C;
-                    break;
-                case 0x3053:
-                    textId = 0x810B;
-                    break;
-                case 0x3054:
-                    textId = 0x810C;
-                    break;
+                case 0x3039: textId = 0x8107; break;
+                case 0x304E: textId = 0x8106; break;
+                case 0x304F: textId = 0x811C; break;
+                case 0x3053: textId = 0x810B; break;
+                case 0x3054: textId = 0x810C; break;
 
-                case 0x403E:
-                    textId = 0x8108;
-                    break;
+                case 0x403E: textId = 0x8108; break;
+                    
+                case 0x5003: textId = 0x811D; break;
+                case 0x507B: textId = 0x811E; break;
 
-                case 0x600C:
-                    textId = 0x8116;
-                    break;
-                case 0x601B:
-                    textId = 0x810D;
-                    break;
-                case 0x6024:
-                    textId = 0x811A;
-                    break;
-                case 0x6026:
-                    textId = 0x811B;
-                    break;
-                case 0x6035:
-                    textId = 0x8117;
-                    break;
-                case 0x6036:
-                    textId = 0x8115;
-                    break;
-                case 0x606E:
-                    textId = 0x810E;
-                    break;
-                case 0x6079:
-                    textId = 0x8118;
-                    break;
+                case 0x600C: textId = 0x8116; break;
+                case 0x601B: textId = 0x810D; break;
+                case 0x6024: textId = 0x811A; break;
+                case 0x6026: textId = 0x811B; break;
+                case 0x6035: textId = 0x8117; break;
+                case 0x6036: textId = 0x8115; break;
+                case 0x606E: textId = 0x810E; break;
+                case 0x6079: textId = 0x8118; break;
 
-                case 0x704F:
-                    textId = 0x810F;
-                    break;
-                case 0x7050:
-                    textId = 0x8110;
-                    break;
-                case 0x7051:
-                    textId = 0x8114;
-                    break;
-                case 0x7054:
-                    textId = 0x8111;
-                    break;
-                case 0x7074:
-                    textId = 0x8112;
-                    break;
-                case 0x7078:
-                    textId = 0x8113;
-                    break;
+                case 0x704F: textId = 0x810F; break;
+                case 0x7050: textId = 0x8110; break;
+                case 0x7051: textId = 0x8114; break;
+                case 0x7054: textId = 0x8111; break;
+                case 0x7074: textId = 0x8112; break;
+                case 0x7078: textId = 0x8113; break;
             }
             Message_FindMessage(play, textId, language);
         } else if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG && language != LANGUAGE_JPN) {
