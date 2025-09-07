@@ -240,6 +240,7 @@ void EnGeldB_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(thisx, sInitChain);
     thisx->colChkInfo.damageTable = &sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     ActorShape_Init(&thisx->shape, 0.0f, ActorShadow_DrawFeet, 0.0f);
     this->actor.colChkInfo.mass = MASS_HEAVY;
     thisx->colChkInfo.health = Actor_EnemyHealthMultiply(20, ELITE_HP);
@@ -267,12 +268,6 @@ void EnGeldB_Init(Actor* thisx, PlayState* play) {
     blureInit.elemDuration = 8;
     blureInit.unkFlag = 0;
     blureInit.calcMode = 2;
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
-    }
 
     Effect_Add(play, &this->blureIndex, EFFECT_BLURE1, 0, 0, &blureInit);
     Actor_SetScale(thisx, 0.012499999f);

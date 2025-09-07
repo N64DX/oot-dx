@@ -201,6 +201,7 @@ void EnTite_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&thisx->shape, -200.0f, ActorShadow_DrawCircle, 70.0f);
     this->flipState = TEKTITE_INITIAL;
     thisx->colChkInfo.damageTable = sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     this->actionVar1 = 0;
     this->bodyBreak.val = BODYBREAK_STATUS_FINISHED;
     thisx->focus.pos = thisx->world.pos;
@@ -221,12 +222,6 @@ void EnTite_Init(Actor* thisx, PlayState* play) {
         thisx->naviEnemyId = NAVI_ENEMY_YELLOW_TEKTITE;
     }
     EnTite_SetupIdle(this);
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
-    }
 }
 
 void EnTite_Destroy(Actor* thisx, PlayState* play) {

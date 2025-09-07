@@ -308,15 +308,10 @@ void EnDinofos_Init(Actor* thisx, PlayState* play) {
     Collider_SetJntSph(play, &this->bodyAndFireCollider, &this->actor, &sJntSphInit, this->bodyAndFireColliderElements);
     Collider_SetQuad(play, &this->knifeCollider, &this->actor, &sQuadInit);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
+    Actor_SetGildedSwordDamageTaken(thisx);
     SkelAnime_InitFlex(play, &this->skelAnime, &gDinolfosSkel, &gDinolfosIdleAnim, this->jointTable, this->morphTable, DINOLFOS_LIMB_MAX);
 
     this->envColorAlpha = 255;
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
-    }
 
     if (!sTexturesDesegmented) {
         for (i=0; i<ARRAY_COUNT(sEyeTextures); i++)

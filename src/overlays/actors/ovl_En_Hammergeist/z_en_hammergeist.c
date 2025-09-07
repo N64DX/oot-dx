@@ -403,14 +403,9 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
     EnHammergeist_ChangeFace(this, HAMMERGEIST_FACE_NORMAL);
 
     EnHammergeist_InitAndSetCollision(this, play);
+    Actor_SetGildedSwordDamageTaken(thisx);
     SkelAnime_InitFlex(play, &this->skelAnime, &gHammergeistSkel, NULL, this->jointTable, this->morphTable, GHAMMERGEISTSKEL_NUM_LIMBS);
     EnHammergeist_SetupDoNothing(this, play);
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
-    }
 
     if (this->switchFlag != 0xFF && Flags_GetSwitch(play, this->switchFlag)) {
         if (this->reward == HAMMERGEIST_REWARD_HEROS_SWORD && !HAS_HEROS_SWORD)

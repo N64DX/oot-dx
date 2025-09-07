@@ -444,6 +444,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
     PRINTF("SCENE_DATA_ID = %d   SceneNo = %d\n", gSaveContext.save.info.playerData.savedSceneId,
            ((void)0, gSaveContext.save.entranceIndex));
 
+    R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
+    R_QUEST_MODE    = QUEST_MODE;
+
     switch (gSaveContext.save.info.playerData.savedSceneId) {
         case SCENE_DEKU_TREE:
         case SCENE_DODONGOS_CAVERN:
@@ -605,9 +608,6 @@ void Sram_OpenSave(SramContext* sramCtx) {
         gSaveContext.save.info.playerData.dpadItems[2][3] = gSaveContext.save.info.playerData.dpadItems[3][3] = SLOT_TUNICS;
     }
 
-    R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
-    R_QUEST_MODE    = QUEST_MODE;
-    
     if (IS_CHILD_QUEST)
         gSaveContext.save.linkAge = LINK_AGE_CHILD;
 }
@@ -1137,7 +1137,7 @@ u8 HasDuplicateDpadItems(void) {
     for (col=0; col<4; col++)
         for (i=0; i<4; i++)
             for (j=i+1; j<4; j++)
-                if (gSaveContext.save.info.playerData.dpadItems[i][col] == gSaveContext.save.info.playerData.dpadItems[j][col])
+                if (gSaveContext.save.info.playerData.dpadItems[col][i] == gSaveContext.save.info.playerData.dpadItems[col][j])
                     return true;
     return false;
 }

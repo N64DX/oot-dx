@@ -4622,8 +4622,8 @@ void Interface_Update(PlayState* play) {
     s16 risingAlpha;
     u16 action;
 
-#if (OOT_PAL || OOT_NTSC_N64) && DEBUG_FEATURES
-    if (Message_GetState(&play->msgCtx) == 0) {
+#if (OOT_PAL || OOT_NTSC_N64)
+    if (Message_GetState(&play->msgCtx) == 0 && (DEBUG_FEATURES || gSaveContext.debugMode)) {
         Input* debugInput = &play->state.input[2];
 
         if (CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {

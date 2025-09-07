@@ -168,6 +168,7 @@ void EnRd_Init(Actor* thisx, PlayState* play) {
     Actor_ProcessInitChain(thisx, sInitChain);
     this->actor.attentionRangeType = ATTENTION_RANGE_0;
     this->actor.colChkInfo.damageTable = &sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     ActorShape_Init(&thisx->shape, 0.0f, NULL, 0.0f);
     this->upperBodyYRotation = this->headYRotation = 0;
     this->actor.focus.pos = thisx->world.pos;
@@ -176,12 +177,6 @@ void EnRd_Init(Actor* thisx, PlayState* play) {
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(8, MONSTER_HP);
     this->alpha = this->unk_31D = 255;
     this->rdFlags = REDEAD_GET_RDFLAGS(thisx);
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
-    }
 
     if (PARAMS_GET_NOSHIFT(this->actor.params, 7, 1)) {
         this->actor.params |= 0xFF00;

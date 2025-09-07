@@ -249,13 +249,7 @@ void EnAm_Init(Actor* thisx, PlayState* play) {
         Collider_SetQuad(play, &this->hitCollider, &this->dyna.actor, &sQuadInit);
         this->dyna.actor.colChkInfo.health = Actor_EnemyHealthMultiply(1, MONSTER_HP);
         this->dyna.actor.colChkInfo.damageTable = &sDamageTable;
-
-        if (IS_CHILD_QUEST_AS_CHILD) {
-            this->dyna.actor.colChkInfo.damageTable->table[10] = (this->dyna.actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
-            this->dyna.actor.colChkInfo.damageTable->table[23] = (this->dyna.actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
-            this->dyna.actor.colChkInfo.damageTable->table[26] = (this->dyna.actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
-        }
-
+        Actor_SetGildedSwordDamageTaken(thisx);
         EnAm_SetupSleep(this);
         this->unk_258 = 0;
     }

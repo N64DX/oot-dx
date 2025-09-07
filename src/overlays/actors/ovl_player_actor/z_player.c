@@ -2373,13 +2373,7 @@ void Player_SetUpperActionFunc(Player* this, UpperActionFunc upperActionFunc) {
     func_808326F0(this);
 }
 
-#if OOT_VERSION < NTSC_1_1
-s32 Player_GetMeleeWeaponHeld2(Player* this) {
-    return Player_GetMeleeWeaponHeld(this);
-}
-#else
 #define Player_GetMeleeWeaponHeld2 Player_GetMeleeWeaponHeld
-#endif
 
 void Player_InitItemActionWithAnim(PlayState* play, Player* this, s8 itemAction) {
     LinkAnimationHeader* current = this->skelAnime.animation;

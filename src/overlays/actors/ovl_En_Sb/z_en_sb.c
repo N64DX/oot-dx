@@ -123,6 +123,7 @@ void EnSb_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->actor.colChkInfo.damageTable = sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(2, MONSTER_HP);
     SkelAnime_InitFlex(play, &this->skelAnime, &object_sb_Skel_002BF0, &object_sb_Anim_000194, NULL, NULL, 0);
     Collider_InitCylinder(play, &this->collider);
@@ -137,12 +138,6 @@ void EnSb_Init(Actor* thisx, PlayState* play) {
     this->hitByWindArrow = false;
     this->actor.velocity.y = -1.0f;
     EnSb_SetupWaitClosed(this);
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
-    }
 }
 
 void EnSb_Destroy(Actor* thisx, PlayState* play) {

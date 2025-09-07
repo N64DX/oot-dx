@@ -487,6 +487,12 @@ Gfx* sPlayerRightHandHookshotDLs[MAX_LINK_MODELS] = {
     gLinkYoungRightHandHoldingHookshotNearDL,
 };
 
+Gfx* sPlayerRightHandHookshotFirstPersonDLs[MAX_LINK_MODELS] = {
+    gLinkAdultRightHandHoldingHookshotFarDL,
+    gLinkChildRightHandHoldingHookshotNearDL,
+    gLinkYoungRightHandHoldingHookshotNearDL,
+};
+
 Gfx* sPlayerLeftHandHammerDLs[MAX_LINK_MODELS] = {
     gLinkAdultLeftHandHoldingHammerNearDL,
     gLinkChildLeftHandHoldingHammerNearDL,
@@ -1482,7 +1488,7 @@ s32 Player_OverrideLimbDrawGameplayFirstPerson(PlayState* play, s32 limbIndex, G
         } else if (limbIndex == PLAYER_LIMB_R_FOREARM) {
             *dList = sFirstPersonForearmDLs[GET_LINK_MODEL];
         } else if (limbIndex == PLAYER_LIMB_R_HAND) {
-            *dList = Player_HoldsHookshot(this) ? sPlayerRightHandHookshotDLs[GET_LINK_MODEL] : sFirstPersonRightHandHoldingWeaponDLs[GET_LINK_MODEL][this->heldItemAction == PLAYER_IA_SLINGSHOT];
+            *dList = Player_HoldsHookshot(this) ? sPlayerRightHandHookshotFirstPersonDLs[GET_LINK_MODEL] : sFirstPersonRightHandHoldingWeaponDLs[GET_LINK_MODEL][this->heldItemAction == PLAYER_IA_SLINGSHOT];
         } else {
             *dList = NULL;
         }
@@ -1748,6 +1754,10 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
             if (Player_HoldsBrokenKnife(this)) {
                 D_80126080.x = 1500.0f;
+            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 0) { // Razor Sword
+                D_80126080.x = 3000.0f;
+            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 2) { // Silver / Gilded Sword
+                D_80126080.x = 4000.0f;
             } else {
                 D_80126080.x = sMeleeWeaponLengths[Player_GetMeleeWeaponHeld(this)];
             }

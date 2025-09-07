@@ -463,13 +463,14 @@ static MapSelectEntry sMapSelectEntries[] = {
       MapSelect_LoadGame, ENTR_HAIRAL_NIWA2_0 },
 #endif
 #if PLATFORM_N64
-    { "116:" T("GFXP_HIRAGANA ﾚｲｸﾊｲﾘｱﾐﾁ", "Lake Hylia Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_LAKE_HYLIA_0 },
-    { "117:" T("GFXP_HIRAGANA ﾄﾘﾃﾞﾐﾁ", "Fortress Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_FORTRESS_0 },
-    { "118:" T("GFXP_HIRAGANA ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Skulltula Cavern"), MapSelect_LoadGame, ENTR_SWAMP_SPIDER_HOUSE_0 },
-    { "119:" T("GFXP_HIRAGANA ｶﾞﾉﾝｼﾞｮｳﾉｿﾄ", "Outside Ganon's Castle"), MapSelect_LoadGame, MAP_OUTSIDE_GANONS_CASTLE_0 },
-    { "120:" T("GFXP_HIRAGANA ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
-    { "121:" T("GFXP_HIRAGANA ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
-    { "122:" T("GFXP_HIRAGANA ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
+    { "116:" T(GFXP_HIRAGANA "ｳｨﾝﾄﾞﾐﾙ", "Windmill"), MapSelect_LoadGame, ENTR_WINDMILL_AND_DAMPES_GRAVE_1 },
+    { "117:" T(GFXP_HIRAGANA "ｶﾞﾉﾝｼﾞｮｳﾉｿﾄ", "Outside Ganon's Castle"), MapSelect_LoadGame, MAP_OUTSIDE_GANONS_CASTLE_0 },
+    { "118:" T(GFXP_HIRAGANA "ﾚｲｸﾊｲﾘｱﾐﾁ", "Lake Hylia Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_LAKE_HYLIA_0 },
+    { "119:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Fortress Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_FORTRESS_0 },
+    { "120:" T(GFXP_HIRAGANA "ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Skulltula Cavern"), MapSelect_LoadGame, ENTR_SWAMP_SPIDER_HOUSE_0 },
+    { "121:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
+    { "122:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
+    { "123:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };

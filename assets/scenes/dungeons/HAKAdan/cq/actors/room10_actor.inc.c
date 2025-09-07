@@ -89,4 +89,4 @@
          0x5886, // params
     }, // 14
 
-    { ACTOR_OBJ_HSBLOCK, { -275, -1395, 3735 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 15: Hookshot target to get onto the push block
+    { ACTOR_OBJ_HSBLOCK, { 275, -1395, 3735 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 15: Hookshot target to get onto the push block

@@ -155,6 +155,7 @@ void EnBw_Init(Actor* thisx, PlayState* play) {
                    this->morphTable, TORCH_SLUG_LIMB_MAX);
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 40.0f);
     this->actor.colChkInfo.damageTable = &sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     this->actor.colChkInfo.health = 6;
     this->actor.colChkInfo.mass = MASS_HEAVY;
     this->actor.focus.pos = this->actor.world.pos;
@@ -170,12 +171,6 @@ void EnBw_Init(Actor* thisx, PlayState* play) {
     this->unk_236 = this->actor.world.rot.y;
     this->actor.params = sSlugGroup;
     sSlugGroup = (sSlugGroup + 1) & 3;
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
-    }
 }
 
 void EnBw_Destroy(Actor* thisx, PlayState* play) {

@@ -188,17 +188,12 @@ void EnPoField_Init(Actor* thisx, PlayState* play) {
     Collider_InitCylinder(play, &this->flameCollider);
     Collider_SetCylinder(play, &this->flameCollider, &this->actor, &D_80AD70AC);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &D_80AD70D8);
+    Actor_SetGildedSwordDamageTaken(thisx);
     this->lightNode = LightContext_InsertLight(play, &play->lightCtx, &this->lightInfo);
     Lights_PointGlowSetInfo(&this->lightInfo, this->actor.home.pos.x, this->actor.home.pos.y, this->actor.home.pos.z,
                             255, 255, 255, 0);
     this->actor.shape.shadowDraw = ActorShadow_DrawCircle;
     EnPoField_SetupWaitForSpawn(this, play);
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
-    }
 }
 
 void EnPoField_Destroy(Actor* thisx, PlayState* play) {

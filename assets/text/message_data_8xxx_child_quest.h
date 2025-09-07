@@ -2293,3 +2293,45 @@ BOX_BREAK
 COLOR(RED) "trésor" COLOR(DEFAULT) "... J'te l'jure!"
 )
 )
+
+DEFINE_MESSAGE(0x811F, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE SHIFT(39) "元の時代へ　帰るなら\n"
+SHIFT(51) "その　" COLOR(RED) "時の台座" COLOR(DEFAULT) "に\n"
+SHIFT(12) "マスターソードを　刺すがいい。"
+BOX_BREAK
+
+UNSKIPPABLE SHIFT(33) "そうすれば　七年の時を\n"
+SHIFT(3) "さかのぼることが　できるだろう…"
+),
+MSG(
+UNSKIPPABLE "You can no longer return to your\n"
+"your original time at will\n."
+BOX_BREAK
+
+UNSKIPPABLE "Only by putting an end to the\n"
+"evil Ganondorf will allow you to\n"
+"return to your time once more."
+),
+MSG(
+UNSKIPPABLE "Willst Du in die Zeit, aus der Du\n"
+"kamst, zurückkehren, so plaziere \n"
+"das Master-Schwert wieder im \n"
+COLOR(RED) "Zeitenfels" COLOR(DEFAULT) "..."
+BOX_BREAK
+
+UNSKIPPABLE "Tust Du dies, so reist Du\n"
+"sieben Jahre in der Zeit \n"
+"zurück..."
+),
+MSG(
+UNSKIPPABLE "Pour voyager vers le passé, \n"
+"pose l'Epée de Légende dans le \n"
+COLOR(RED) "piédestal" COLOR(DEFAULT) "."
+BOX_BREAK
+
+UNSKIPPABLE "A nouveau tu seras un jeune\n"
+"garçon...."
+)
+)
+

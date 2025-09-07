@@ -2941,6 +2941,7 @@ void Message_OpenText(PlayState* play, u16 textId) {
                 case 0x7054: textId = 0x8111; break;
                 case 0x7074: textId = 0x8112; break;
                 case 0x7078: textId = 0x8113; break;
+                case 0x708B: textId = 0x811F; break;
             }
             Message_FindMessage(play, textId, language);
         } else if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG && language != LANGUAGE_JPN) {

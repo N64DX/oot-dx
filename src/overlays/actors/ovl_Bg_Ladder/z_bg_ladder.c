@@ -82,7 +82,7 @@ void BgLadder_Init(Actor* thisx, PlayState* play) {
     
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
 
-    if (Flags_GetSwitch(play, this->switchFlag)) {
+    if (Flags_GetSwitch(play, this->switchFlag) || this->switchFlag == 0xFF) {
         // If the flag is set, then the ladder draws immediately
         this->alpha = 255;
         this->dyna.actor.flags &= ~ACTOR_FLAG_UPDATE_CULLING_DISABLED; // always update = off

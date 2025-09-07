@@ -6370,6 +6370,20 @@ u16 Actor_EnemyHealthMultiply(u16 health, u8 type) {
     }
 }
 
+void Actor_SetGildedSwordDamageTaken(Actor* thisx) {
+    if (IS_CHILD_QUEST_AS_CHILD) {
+        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
+        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
+    }
+}
+
+bool Actor_ZeldaFledDialogue() {
+    if (!IS_CHILD_QUEST)
+        return GET_EVENTCHKINF(EVENTCHKINF_80);
+    else return GET_EVENTCHKINF(EVENTCHKINF_80) && !GET_EVENTCHKINF(EVENTCHKINF_45);
+}
+
 /**
  * Returns true if the player is targeting an actor other than the provided actor
  */

@@ -167,5 +167,5 @@
          0x3800, // params
     }, // 27
 
-    { ACTOR_OBJ_HSBLOCK,   { -4520, -1410,  -1506 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 12: Reach ladder
+    { ACTOR_OBJ_HSBLOCK,   {  4520, -1410,  -1506 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 12: Reach ladder
     { ACTOR_OBJ_TIMEBLOCK, { -2465, -1423,   -804 }, { 0x0000, 0x0000, 0x0002 }, 0xB8FF, }, // 29: Insert time block to be able to backtrack

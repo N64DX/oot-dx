@@ -261,6 +261,7 @@ void EnDekubaba_Init(Actor* thisx, PlayState* play) {
         }
 
         CollisionCheck_SetInfo(&this->actor.colChkInfo, &sBigDekuBabaDamageTable, &sColChkInfoInit);
+        Actor_SetGildedSwordDamageTaken(thisx);
         this->actor.colChkInfo.health = 4;
         this->actor.naviEnemyId = NAVI_ENEMY_BIG_DEKU_BABA;
         this->actor.attentionRangeType = ATTENTION_RANGE_2;
@@ -276,14 +277,9 @@ void EnDekubaba_Init(Actor* thisx, PlayState* play) {
         }
 
         CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDekuBabaDamageTable, &sColChkInfoInit);
+        Actor_SetGildedSwordDamageTaken(thisx);
         this->actor.naviEnemyId = NAVI_ENEMY_DEKU_BABA;
         this->actor.attentionRangeType = ATTENTION_RANGE_1;
-    }
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
     }
 
     EnDekubaba_SetupWait(this);

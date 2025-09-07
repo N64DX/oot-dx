@@ -144,9 +144,9 @@
     }, // 23
     {
         ACTOR_OBJ_WARP2BLOCK,
-        {   1639,     70,  -1340 }, // pos
+        {   1650,    105,  -1305 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
-         0x3820, // params
+         0x3A20, // params
     }, // 24: Reposition time block to access upper left room
     {
         ACTOR_OBJ_WARP2BLOCK,

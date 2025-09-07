@@ -811,6 +811,8 @@ s32 func_80037D98(struct PlayState* play, Actor* actor, s32 arg2, s32* arg3);
 s32 Actor_TrackPlayer(struct PlayState* play, Actor* actor, Vec3s* headRot, Vec3s* torsoRot, Vec3f focusPos);
 
 u16 Actor_EnemyHealthMultiply(u16 health, u8 type);
+void Actor_SetGildedSwordDamageTaken(Actor* thisx);
+bool Actor_ZeldaFledDialogue(void);
 bool Actor_OtherIsTargeted(struct PlayState* play, Actor* actor);
 void Actor_DrawDamageEffects(struct PlayState* play, Actor* actor, Vec3f bodyPartsPos[], s16 bodyPartsCount, f32 effectScale, f32 frozenSteamScale, f32 effectAlpha, u8 type);
 void Actor_SpawnIceEffects(struct PlayState* play, Actor* actor, Vec3f limbPos[], s32 limbPosCount, s32 effectsPerLimb, f32 scale, f32 scaleRange);

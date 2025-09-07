@@ -453,20 +453,32 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
     Matrix_Mult(&player->mf_9E0, MTXMODE_NEW);
 
     switch (this->unk_1C7) {
-        case 1:
+        case 1: // Kokiri Sword
             Matrix_Translate(0.0f, 220.0f, 0.0f, MTXMODE_APPLY);
             Matrix_Scale(-0.7f, -0.6f, -0.4f, MTXMODE_APPLY);
             Matrix_RotateX(16384.0f, MTXMODE_APPLY);
             break;
         case 0:
-            Matrix_Translate(0.0f, 300.0f, -100.0f, MTXMODE_APPLY);
-            Matrix_Scale(-1.2f, -1.0f, -0.7f, MTXMODE_APPLY);
-            Matrix_RotateX(16384.0f, MTXMODE_APPLY);
+            if (LINK_IS_ADULT) { // Master Sword
+                Matrix_Translate(0.0f, 300.0f, -100.0f, MTXMODE_APPLY);
+                Matrix_Scale(-1.2f, -1.0f, -0.7f, MTXMODE_APPLY);
+                Matrix_RotateX(16384.0f, MTXMODE_APPLY);
+            } else { // Razor Sword
+                Matrix_Translate(0.0f, 220.0f, 0.0f, MTXMODE_APPLY);
+                Matrix_Scale(-0.7f, -0.6f, -0.4f, MTXMODE_APPLY);
+                Matrix_RotateX(16384.0f, MTXMODE_APPLY);
+            }
             break;
         case 2:
-            Matrix_Translate(200.0f, 350.0f, 0.0f, MTXMODE_APPLY);
-            Matrix_Scale(-1.8f, -1.4f, -0.7f, MTXMODE_APPLY);
-            Matrix_RotateX(16384.0f, MTXMODE_APPLY);
+            if (LINK_IS_ADULT) { // Giant's Knife
+                Matrix_Translate(200.0f, 350.0f, 0.0f, MTXMODE_APPLY);
+                Matrix_Scale(-1.8f, -1.4f, -0.7f, MTXMODE_APPLY);
+                Matrix_RotateX(16384.0f, MTXMODE_APPLY);
+            } else { // Silver / Gilded Sword
+                Matrix_Translate(0.0f, 300.0f, -100.0f, MTXMODE_APPLY);
+                Matrix_Scale(-1.2f, -1.0f, -0.7f, MTXMODE_APPLY);
+                Matrix_RotateX(16384.0f, MTXMODE_APPLY);
+            }
             break;
     }
 

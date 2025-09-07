@@ -452,6 +452,7 @@ void EnSkj_Init(Actor* thisx, PlayState* play2) {
             }
 
             this->actor.colChkInfo.damageTable = &sDamageTable;
+            Actor_SetGildedSwordDamageTaken(thisx);
             this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(10, ELITE_HP);
             Collider_InitCylinder(play, &this->collider);
             Collider_SetCylinderType1(play, &this->collider, &this->actor, &D_80B01678);
@@ -466,12 +467,6 @@ void EnSkj_Init(Actor* thisx, PlayState* play2) {
             this->actor.velocity.y = 0.0f;
             this->actor.gravity = -1.0f;
             EnSkj_CalculateCenter(this);
-
-            if (IS_CHILD_QUEST_AS_CHILD) {
-                this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
-                this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
-                this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
-            }
 
 #if DEBUG_FEATURES
             {

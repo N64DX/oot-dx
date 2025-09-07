@@ -8,6 +8,10 @@ static SceneCmd start[] = {
 
 #include "assets/scenes/indoors/hakasitarelay/hakasitarelay_room_6.c"
 
+static s16 cq_objects[] = {
+#include "assets/scenes/indoors/hakasitarelay/cq/objects/room6_obj.inc.c"
+};
+
 static ActorEntry cq_actors[] = {
 #include "assets/scenes/indoors/hakasitarelay/cq/actors/room6_actor.inc.c"
 };

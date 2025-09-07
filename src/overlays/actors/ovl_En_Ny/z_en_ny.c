@@ -14,7 +14,6 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
-#include "save.h"
 
 #include "assets/objects/object_ny/object_ny.h"
 
@@ -125,6 +124,7 @@ void EnNy_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->actor.colChkInfo.damageTable = &sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     this->actor.colChkInfo.health = 2;
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, &this->actor, &sColliderJntSphInit, this->colliderElements);
@@ -156,12 +156,6 @@ void EnNy_Init(Actor* thisx, PlayState* play) {
         this->actor.colChkInfo.mass = MASS_IMMOVABLE;
         this->actor.update = EnNy_UpdateUnused;
         this->collider.base.colMaterial = COL_MATERIAL_METAL;
-    }
-
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        this->actor.colChkInfo.damageTable->table[10] = (this->actor.colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[23] = (this->actor.colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        this->actor.colChkInfo.damageTable->table[26] = (this->actor.colChkInfo.damageTable->table[26] & 0xF0) | 6;
     }
 }
 

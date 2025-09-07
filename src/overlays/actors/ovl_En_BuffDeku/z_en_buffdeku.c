@@ -219,6 +219,7 @@ void EnBuffDeku_Init(Actor* thisx, PlayState* play) {
     this->colliderSpheres.base.atFlags &= ~AT_ON;
 
 	CollisionCheck_SetInfo(&thisx->colChkInfo, &sDamageTable, &sColChkInfoInit);
+    Actor_SetGildedSwordDamageTaken(thisx);
     SkelAnime_InitFlex(play, &this->skelAnime, &BuffDekuSkel, &BuffDekuSkelGetoutgroundAnim, this->jointTable, this->morphTable, BUFFDEKUSKEL_NUM_LIMBS);
 	EnBuffDeku_SetupWaitGetOutGround(this);
 }
