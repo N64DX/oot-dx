@@ -50,7 +50,7 @@
         ACTOR_EN_SW,
         {   2832,   1055,  -1466 }, // pos
         {  0x4000,  0x238E,  0x0000 }, // rot
-        -0x4DF8 /* 0xB208 */, // params
+        0xB208, // params
     }, // 8
     {
         ACTOR_EN_WEATHER_TAG,
@@ -74,11 +74,11 @@
         ACTOR_EN_WONDER_TALK2,
         {   4097,    920,  -1399 }, // pos
         {  0x0000, -0x4000,  0x0029 }, // rot
-        -0x7481 /* 0x8B7F */, // params
+        0x8B7F, // params
     }, // 12
     {
         ACTOR_EN_SW,
         {   3727,    647,  -1609 }, // pos
         {  0x4000, -0x6000,  0x0000 }, // rot
-        -0x4DFF /* 0xB201 */, // params
+        0xB201, // params
     }, // 13

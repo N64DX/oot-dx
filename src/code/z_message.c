@@ -1908,6 +1908,11 @@ void Message_LoadItemIcon(PlayState* play, u16 itemId, s16 y) {
 }
 
 #if !PLATFORM_IQUE
+static const char* sword_words[2][4] = {
+    { "マスターソード", "Master Sword", "Master-Schwert", "L'Epée de Légende" },
+    { "レイザーソード", "Razor Sword", "Elfenschwert", "Lame Rasoir" }
+};
+
 static const char* lad_words[2][4] = {
     { "少年", "lad", "junge", "gars" },
     { "男", "man", "mann", "homme" }
@@ -2434,7 +2439,7 @@ void Message_Decode(PlayState* play) {
                 decodedBufPos--;
             }
 #if !PLATFORM_IQUE
-            else if (curChar == MESSAGE_AGE_LAD || curChar == MESSAGE_AGE_ONE || curChar == MESSAGE_AGE_BOY || curChar == MESSAGE_AGE_GUY || curChar == MESSAGE_AGE_GUY_C || curChar == MESSAGE_PLURAL_TOKENS) {
+            else if (curChar == MESSAGE_AGE_LAD || curChar == MESSAGE_AGE_ONE || curChar == MESSAGE_AGE_BOY || curChar == MESSAGE_AGE_GUY || curChar == MESSAGE_AGE_GUY_C || curChar == MESSAGE_PLURAL_TOKENS || curChar == MESSAGE_MASTER_SWORD) {
                 const char* word = NULL;
                 const char* const* words = NULL;
                 s8 len;
@@ -2457,6 +2462,9 @@ void Message_Decode(PlayState* play) {
                         break;
                     case MESSAGE_PLURAL_TOKENS:
                         words = token_words[gSaveContext.save.info.inventory.gsTokens > 0];
+                        break;
+                    case MESSAGE_MASTER_SWORD:
+                        words = sword_words[IS_CHILD_QUEST_AS_CHILD];
                         break;
                 }
                 ASSERT(words != NULL, "words != null", "../message.c", 2444);
@@ -2924,6 +2932,8 @@ void Message_OpenText(PlayState* play, u16 textId) {
                 case 0x403E: textId = 0x8108; break;
                     
                 case 0x5003: textId = 0x811D; break;
+                case 0x5034: textId = 0x8120; break;
+                case 0x5035: textId = 0x8121; break;
                 case 0x507B: textId = 0x811E; break;
 
                 case 0x600C: textId = 0x8116; break;

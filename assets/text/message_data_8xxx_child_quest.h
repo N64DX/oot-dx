@@ -2335,3 +2335,119 @@ UNSKIPPABLE "A nouveau tu seras un jeune\n"
 )
 )
 
+DEFINE_MESSAGE(0x8120, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(
+SHIFT(42) "ムカムカムカ〜ッ！！"
+BOX_BREAK
+
+SHIFT(27) "オレは　七年前の　あの日、\n"
+SHIFT(3) "ここで　起きた事を　忘れないゾ〜！\n"
+SHIFT(51) "ムカムカ〜ッ！！！"
+BOX_BREAK
+
+SHIFT(30) "あの　オカリナこぞうめ…\n"
+SHIFT(12) "こんど　きたら　ボコボコだぜ！\n"
+SHIFT(39) "ムカムカムカ〜ッ！！！"
+),
+MSG(
+"Grrrrrrrrr!"
+BOX_BREAK
+
+"I'll never forget what happened on\n"
+"that day during the attack!\n"
+"Grrrrrrrrr!"
+BOX_BREAK
+
+"It's all that Shadow Beast's fault!\n"
+"Next time that monster comes up,\n"
+"I'll tear him to pieces!"
+),
+MSG(
+"Grrrrrrrrr!"
+BOX_BREAK
+
+"Ich werde nie vergessen, was vor\n"
+"sieben Jahren geschehen ist!\n"
+"Grrrrrrrrr!"
+BOX_BREAK
+
+"Daran ist nur dieser Typ\n"
+"mit seiner Okarina schuld!\n"
+"Wenn er sich nochmal sehen\n"
+"läßt, kann er etwas erleben!"
+),
+MSG(
+"Grrrrrrrrr!"
+BOX_BREAK
+
+"Si jamais je retrouve ce môme...\n"
+"Je lui écrase la tête!\n"
+"Grrrrrrrrr!"
+BOX_BREAK
+
+"Il y a sept ans, il a tout détraqué \n"
+"mon beau moulin avec son ocarina!\n"
+"Si jamais je le retrouve...\n"
+"Ping! Vlan! Dans les dents!"
+)
+)
+
+DEFINE_MESSAGE(0x8121, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE SHIFT(9) "オマエ、オカリナ　持ってんのか？"
+BOX_BREAK
+
+UNSKIPPABLE SHIFT(72) "キーッ！！"
+BOX_BREAK
+
+UNSKIPPABLE SHIFT(9) "七年前を　思い出しちまうぜ〜！！"
+BOX_BREAK
+
+UNSKIPPABLE SHIFT(12) "あの日、悪魔のような　こぞうが\n"
+SHIFT(15) "ここで　" COLOR(PURPLE) "ヘンな歌" COLOR(DEFAULT) "を　演奏して、\n"
+SHIFT(6) "風車に　イタズラしやがったんだ！"
+),
+MSG(
+UNSKIPPABLE "What?! You've got an ocarina!!"
+BOX_BREAK
+
+UNSKIPPABLE "What the heck!"
+BOX_BREAK
+
+UNSKIPPABLE "That reminds me of what happened\n"
+"during the attack!"
+BOX_BREAK
+
+UNSKIPPABLE "Back then I heard a " COLOR(PURPLE) "strange song" COLOR(DEFAULT) "\n"
+"when the monster appeared...\n"
+"It messed up this windmill!"
+
+),
+MSG(
+UNSKIPPABLE "Was?! Du besitzt eine Okarina!"
+BOX_BREAK
+
+UNSKIPPABLE "Das darf doch nicht wahr sein!"
+BOX_BREAK
+
+UNSKIPPABLE "Das erinnert mich an diesen\n"
+"Tag vor genau sieben Jahren!"
+BOX_BREAK
+
+UNSKIPPABLE "Damals kam so ein Rattengesicht\n"
+"hier herein und hat ein " COLOR(PURPLE) "seltsames" COLOR(BLUE) "\n"
+COLOR(PURPLE) "Lied" COLOR(DEFAULT) " gespielt. Das hat alles \n"
+"durcheinander gebracht!"
+),
+MSG(
+UNSKIPPABLE "Quoi?! Tu as un ocarina!!\n"
+"Nom d'un chou-péteur!\n"
+"Comme ce môme, il y a sept ans..."
+BOX_BREAK
+
+UNSKIPPABLE "Il est arrivé ici comme une fleur\n"
+"et il a joué une " COLOR(PURPLE) "curieuse mélodie" COLOR(DEFAULT) ". \n"
+"Mon moulin est ensuite devenu \n"
+"complètement dingue!"
+)
+)

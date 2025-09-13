@@ -462,7 +462,8 @@ void Sram_OpenSave(SramContext* sramCtx) {
         case SCENE_GERUDO_TRAINING_GROUND:
         case SCENE_THIEVES_HIDEOUT:
         case SCENE_INSIDE_GANONS_CASTLE:
-            gSaveContext.save.entranceIndex = sDungeonEntrances[gSaveContext.save.info.playerData.savedSceneId];
+            if (!RESUME_LAST_AREA)
+                gSaveContext.save.entranceIndex = sDungeonEntrances[gSaveContext.save.info.playerData.savedSceneId];
             break;
 
         case SCENE_DEKU_TREE_BOSS:

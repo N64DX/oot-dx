@@ -86,7 +86,7 @@
         ACTOR_EN_SW,
         {     26,    702,    258 }, // pos
         {  0x4000, -0x7D28,  0x0000 }, // rot
-        -0x4DF0 /* 0xB210 */, // params
+        0xB210, // params
     }, // 14
     {
         ACTOR_EN_WEATHER_TAG,

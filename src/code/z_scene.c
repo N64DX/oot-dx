@@ -303,7 +303,13 @@ BAD_RETURN(s32) Scene_CommandObjectList(PlayState* play, SceneCmd* cmd) {
     entry = &play->objectCtx.slots[i];
 
     while (i < play->objectCtx.numEntries) {
-        if (entry->id != *objectListEntry) {
+        s16 expectedId = *objectListEntry;
+
+        // Always swap horse → young horse if child Link
+        if (LINK_IS_CHILD && expectedId == OBJECT_HORSE)
+            expectedId = OBJECT_HORSE_YOUNG;
+
+        if (entry->id != expectedId) {
 
             invalidatedEntry = &play->objectCtx.slots[i];
             for (j = i; j < play->objectCtx.numEntries; j++) {

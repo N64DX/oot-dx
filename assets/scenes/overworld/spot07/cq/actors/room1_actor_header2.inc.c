@@ -44,7 +44,7 @@
         ACTOR_EN_SW,
         {    -10,    897,   -909 }, // pos
         {  0x4000,  0x0000,  0x0000 }, // rot
-        -0x4DC0 /* 0xB240 */, // params
+        0xB240, // params
     }, // 7
     {
         ACTOR_OBJ_SYOKUDAI,

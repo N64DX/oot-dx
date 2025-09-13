@@ -41,6 +41,7 @@
 #define MESSAGE_FISH_INFO                  0x1D
 #define MESSAGE_HIGHSCORE                  0x1E
 #define MESSAGE_TIME                       0x1F
+#define MESSAGE_MASTER_SWORD               0xF9
 #define MESSAGE_PLURAL_TOKENS              0xFA
 #define MESSAGE_AGE_LAD                    0xFB
 #define MESSAGE_AGE_ONE                    0xFC
@@ -211,14 +212,15 @@ typedef enum TextboxBackgroundYOffsetIndex {
 # define MARATHON_TIME                                      CTRL_BASE(MARATHON_TIME)
 # define RACE_TIME                                          CTRL_BASE(RACE_TIME)
 # define POINTS                                             CTRL_BASE(POINTS)
-# define PLURAL_TOKENS                                      CTRL_BASE(PLURAL_TOKENS)
+# define TOKENS                                             CTRL_BASE(TOKENS)
 # define UNSKIPPABLE                                        CTRL_BASE(UNSKIPPABLE)
 # define TWO_CHOICE                                         CTRL_BASE(TWO_CHOICE)
 # define THREE_CHOICE                                       CTRL_BASE(THREE_CHOICE)
 # define FISH_INFO                                          CTRL_BASE(FISH_INFO)
 # define HIGHSCORE(highscore)                               CTRL_BASE(HIGHSCORE)            ARG1(highscore)
 # define TIME                                               CTRL_BASE(TIME)
-# define TOKENS                                             CTRL_BASE(TOKENS)
+# define MASTER_SWORD                                       CTRL_BASE(MASTER_SWORD)
+# define PLURAL_TOKENS                                      CTRL_BASE(PLURAL_TOKENS)
 # define AGE_LAD                                            CTRL_BASE(AGE_LAD)
 # define AGE_ONE                                            CTRL_BASE(AGE_ONE)
 # define AGE_BOY                                            CTRL_BASE(AGE_BOY)

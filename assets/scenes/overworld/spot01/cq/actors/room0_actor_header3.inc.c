@@ -110,7 +110,7 @@
         ACTOR_EN_SW,
         {    -18,    540,   1800 }, // pos
         {  0x0000, -0x8000,  0x0000 }, // rot
-        -0x4EC0 /* 0xB140 */, // params
+        0xB140, // params
     }, // 18
     {
         ACTOR_EN_ISHI,
@@ -181,7 +181,7 @@
     {
         ACTOR_EN_WOOD02,
         {   -860,      0,    522 }, // pos
-        {  0x0000,  0x0000,  0x0000 }, // rot
+        {  0x0000,  0x0000,  0x0071 }, // rot
         0x200A, // params
     }, // 30
     {
@@ -278,25 +278,25 @@
         ACTOR_EN_SW,
         {   -465,    377,   -888 }, // pos
         {  0x0000,  0x6E39,  0x0000 }, // rot
-        -0x4EFE /* 0xB102 */, // params
+        0xB102, // params
     }, // 46
     {
         ACTOR_EN_SW,
         {      5,    686,   -171 }, // pos
         {  0x0000, -0x8000,  0x0000 }, // rot
-        -0x4EFC /* 0xB104 */, // params
+        0xB104, // params
     }, // 47
     {
         ACTOR_EN_SW,
         {    525,    295,    1035 }, // pos
         {  0x4000,  0x4000,  0x0000 }, // rot
-        -0x4EF8 /* 0xB108 */, // params
+        0xB108, // params
     }, // 48
     {
         ACTOR_EN_SW,
         {   -602,    120,   1120 }, // pos
         {  0x4000,  0x0000,  0x0000 }, // rot
-        -0x4EF0 /* 0xB110 */, // params
+        0xB110, // params
     }, // 49
     {
         ACTOR_OBJ_KIBAKO2,

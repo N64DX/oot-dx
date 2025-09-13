@@ -5603,7 +5603,7 @@ static s16 sReturnEntranceGroupData[] = {
     // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
     /*  0 */ ENTR_DEATH_MOUNTAIN_TRAIL_4,  // from Magic Fairy Fountain
     /*  1 */ ENTR_DEATH_MOUNTAIN_CRATER_3, // from Double Magic Fairy Fountain
-    /*  2 */ ENTR_HYRULE_CASTLE_2,         // from Double Defense Fairy Fountain (as adult)
+    /*  2 */ MAP_OUTSIDE_GANONS_CASTLE_2,  // from Double Defense Fairy Fountain (as adult)
 
     // ENTR_RETURN_2
     /*  3 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
@@ -14281,7 +14281,7 @@ s32 func_8084DFF4(PlayState* play, Player* this) {
         }
     } else {
         if (Message_GetState(&play->msgCtx) == TEXT_STATE_CLOSING) {
-            if (this->getItemId == GI_SILVER_GAUNTLETS) {
+            if (play->sceneId == SCENE_DESERT_COLOSSUS && (this->getItemId == GI_SILVER_GAUNTLETS || this->getItemId == GI_POWER_BRACELET) ) {
                 play->nextEntranceIndex = ENTR_DESERT_COLOSSUS_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 gSaveContext.nextCutsceneIndex = 0xFFF1;
@@ -16457,7 +16457,7 @@ void func_80852648(PlayState* play, Player* this, CsCmdActorCue* cue) {
         this->heldItemAction = this->itemAction = PLAYER_IA_NONE;
         this->heldItemId = ITEM_NONE;
         this->modelGroup = this->nextModelGroup = Player_ActionToModelGroup(this, PLAYER_IA_NONE);
-        this->leftHandDLists = gPlayerLeftHandOpenDLs;
+        this->leftHandDLists = gPlayerLeftHandOpenDLs + GET_LINK_MODEL;
         Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_MASTER);
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
         Inventory_DeleteEquipment(play, EQUIP_TYPE_SWORD);

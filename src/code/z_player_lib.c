@@ -822,7 +822,7 @@ int Player_IsBurningStickInRange(PlayState* play, Vec3f* pos, f32 xzRange, f32 y
 s32 Player_GetStrength(void) {
     s32 strengthUpgrade = CUR_UPG_VALUE(UPG_STRENGTH);
 
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT || IS_CHILD_QUEST) {
         return strengthUpgrade;
     } else if (strengthUpgrade != 0) {
         return PLAYER_STR_BRACELET;
@@ -1186,18 +1186,11 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
         } else if (IS_CHILD_QUEST) {
             s32 strengthUpgrade = CUR_UPG_VALUE(UPG_STRENGTH);
             gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
-            if (strengthUpgrade == PLAYER_STR_BRACELET) {
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][2]);
-            } else if (strengthUpgrade == PLAYER_STR_SILVER_G) {
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][3]);
-            } else if (strengthUpgrade == PLAYER_STR_GOLD_G) {
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][4]);
+            if (strengthUpgrade >= PLAYER_STR_BRACELET) {
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][strengthUpgrade + 1]);
             }
-
-            if (boots == PLAYER_BOOTS_IRON) {
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][0]);
-            } else if (boots == PLAYER_BOOTS_HOVER) {
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][1]);
+            if (boots == PLAYER_BOOTS_IRON || boots == PLAYER_BOOTS_HOVER) {
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][boots - 1]);
             }
         } else if (Player_GetStrength() > PLAYER_STR_NONE) {
             gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][2]);
@@ -1401,7 +1394,13 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
         if (limbIndex == PLAYER_LIMB_L_HAND) {
             Gfx** dLists = this->leftHandDLists;
 
-            if (LINK_IS_CHILD) {
+            if ((sLeftHandType == PLAYER_MODELTYPE_LH_BOOMERANG) && (this->stateFlags1 & PLAYER_STATE1_BOOMERANG_THROWN)) {
+                dLists = gPlayerLeftHandOpenDLs + GET_LINK_MODEL;
+                sLeftHandType = PLAYER_MODELTYPE_LH_OPEN;
+            } else if ((this->leftHandType == PLAYER_MODELTYPE_LH_OPEN) && (this->actor.speed > 2.0f) && !(this->stateFlags1 & PLAYER_STATE1_27)) {
+                dLists = gPlayerLeftHandClosedDLs + GET_LINK_MODEL;
+                sLeftHandType = PLAYER_MODELTYPE_LH_CLOSED;
+            } else if (LINK_IS_CHILD) {
                 EquipValueSword swordEquipValue = CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD);
 
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD) {
@@ -1413,14 +1412,6 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                 }
             } else if ((sLeftHandType == PLAYER_MODELTYPE_LH_BGS) && (gSaveContext.save.info.playerData.swordHealth <= 0.0f)) {
                 dLists += MAX_LINK_MODELS;
-            } else if ((sLeftHandType == PLAYER_MODELTYPE_LH_BOOMERANG) &&
-                       (this->stateFlags1 & PLAYER_STATE1_BOOMERANG_THROWN)) {
-                dLists = gPlayerLeftHandOpenDLs + GET_LINK_MODEL;
-                sLeftHandType = PLAYER_MODELTYPE_LH_OPEN;
-            } else if ((this->leftHandType == PLAYER_MODELTYPE_LH_OPEN) && (this->actor.speed > 2.0f) &&
-                       !(this->stateFlags1 & PLAYER_STATE1_27)) {
-                dLists = gPlayerLeftHandClosedDLs + GET_LINK_MODEL;
-                sLeftHandType = PLAYER_MODELTYPE_LH_CLOSED;
             }
 
             *dList = *dLists;
@@ -1439,9 +1430,8 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
         } else if (limbIndex == PLAYER_LIMB_SHEATH) {
             Gfx** dLists = this->sheathDLists;
 
-            if ((this->sheathType == PLAYER_MODELTYPE_SHEATH_18) || (this->sheathType == PLAYER_MODELTYPE_SHEATH_19)) {
+            if ((this->sheathType == PLAYER_MODELTYPE_SHEATH_18) || (this->sheathType == PLAYER_MODELTYPE_SHEATH_19))
                 dLists += this->currentShield * MAX_LINK_MODELS;
-            }
 
             if (LINK_IS_CHILD) {
                 EquipValueSword swordEquipValue = CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD);

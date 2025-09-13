@@ -7766,19 +7766,19 @@ SHIFT(24) "マスターソードは　ここに！\n"
 SHIFT(24) QUICKTEXT_ENABLE "急いで！！" QUICKTEXT_DISABLE
 ),
 MSG(
-UNSKIPPABLE NAME "! The Master \n"
-"Sword is here! \n"
+UNSKIPPABLE NAME "!\n"
+"The " MASTER_SWORD " is here!\n"
 QUICKTEXT_ENABLE "Hurry up!!" QUICKTEXT_DISABLE
 ),
 MSG(
 UNSKIPPABLE NAME "!\n"
-"Das Master-Schwert!\n"
+"Das " MASTER_SWORD "!\n"
 "Es ist hier! \n"
 QUICKTEXT_ENABLE "Schnell!" QUICKTEXT_DISABLE
 ),
 MSG(
 UNSKIPPABLE NAME "! \n"
-"L'Epée de Légende est ici! \n"
+MASTER_SWORD " est ici! \n"
 QUICKTEXT_ENABLE "Vite!!" QUICKTEXT_DISABLE
 )
 )

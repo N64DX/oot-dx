@@ -266,7 +266,7 @@
         ACTOR_EN_SW,
         {    989,   1063,   1688 }, // pos
         {  0x4000,  0x56C1,  0x0000 }, // rot
-        -0x4DE0 /* 0xB220 */, // params
+        0xB220, // params
     }, // 47
     {
         ACTOR_EN_ISHI,
@@ -312,9 +312,9 @@
     }, // 54
     {
         ACTOR_EN_SW,
-        {    989,   1063,   1688 }, // pos
-        {  0x4000,  0x56C1,  0x0000 }, // rot
-        -0x4DE0 /* 0xB220 */, // params
+        {  -1891,    187,   1911 }, // pos
+        {  0x4000,  0x4666,  0x0000 }, // rot
+        0xB204, // params
     }, // 55
     {
         ACTOR_EN_WOOD02,
@@ -356,5 +356,5 @@
         ACTOR_EN_WOOD02,
         {    186,     44,   2222 }, // pos
         {  0x0000,  0x2000,  0x0072 }, // rot
-        -0x7FFF /* 0x8001 */, // params
+        0x8001, // params
     }, // 62
