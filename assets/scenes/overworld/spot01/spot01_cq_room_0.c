@@ -32,9 +32,19 @@ static SceneCmd cq_header3[] = {
 #include "assets/scenes/overworld/spot01/cq/headers/room0_header3.inc.c"
 };
 
+#if OOT_VERSION <= NTSC_1_1
+
 static SceneCmd* cq_altHeaders[] = {
 #include "assets/scenes/overworld/spot01/cq/headers/room0_altHeaders.inc.c"
 };
+
+#else
+
+static SceneCmd* cq_altHeaders[] = {
+#include "assets/scenes/overworld/spot01/cq/headers/room0_altHeaders_pal.inc.c"
+};
+
+#endif
 
 static SceneCmd cq_header[] = {
 #include "assets/scenes/overworld/spot01/cq/headers/room0.inc.c"

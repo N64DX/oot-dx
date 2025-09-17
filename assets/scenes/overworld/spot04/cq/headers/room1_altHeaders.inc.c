@@ -11,4 +11,3 @@
     spot04_room_1_03000048_AltHeaders_030007E0_Cmds, // 10
     spot04_room_1_03000048_AltHeaders_03000840_Cmds, // 11
     spot04_room_1_03000048_AltHeaders_030008E0_Cmds, // 12
-

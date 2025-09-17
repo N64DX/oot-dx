@@ -12,6 +12,8 @@ static s16 cq_exit_list[] = {
 #include "assets/scenes/overworld/spot00/cq/scene/exitList.inc.c"
 };
 
+#if OOT_NTSC
+
 static SceneCmd cq_header1[] = {
 #include "assets/scenes/overworld/spot00/cq/scene/header1.inc.c"
 };
@@ -23,6 +25,22 @@ static SceneCmd cq_header2[] = {
 static SceneCmd* cq_altHeaders[] = {
 #include "assets/scenes/overworld/spot00/cq/scene/altHeaders.inc.c"
 };
+
+#else
+    
+static SceneCmd cq_header1[] = {
+#include "assets/scenes/overworld/spot00/cq/scene/header1_pal.inc.c"
+};
+
+static SceneCmd cq_header2[] = {
+#include "assets/scenes/overworld/spot00/cq/scene/header2_pal.inc.c"
+};
+
+static SceneCmd* cq_altHeaders[] = {
+#include "assets/scenes/overworld/spot00/cq/scene/altHeaders_pal.inc.c"
+};
+
+#endif
 
 static SceneCmd cq_header[] = {
 #include "assets/scenes/overworld/spot00/cq/scene/header.inc.c"

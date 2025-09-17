@@ -1,5 +1,5 @@
-#ifndef OVL_BOSS_GANON2_H
-#define OVL_BOSS_GANON2_H
+#ifndef OVL_BOSS_GANON2_EXTRA_H
+#define OVL_BOSS_GANON2_EXTRA_H
 
 #include "tex_len.h"
 #include "ultra64.h"

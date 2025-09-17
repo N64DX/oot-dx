@@ -32,9 +32,7 @@ static SceneCmd mq_header[] = {
 };
 
 static SceneCmd* questHeaders[] = {
-    mq_header, // 0
-    NULL,      // 1
-    NULL,      // 2
+#include "assets/scenes/dungeons/questHeadersScene.inc.c"
 };
 
 #else

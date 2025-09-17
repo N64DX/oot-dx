@@ -1,3 +1,4 @@
+#include "versions.h"
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_scene.h"
 
 #if PLATFORM_N64

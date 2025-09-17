@@ -1,4 +1,7 @@
+#include "versions.h"
 #include "assets/scenes/overworld/spot03/spot03_scene.h"
+
+#if PLATFORM_N64
 
 static SceneCmd* questHeaders[3];
 
@@ -31,3 +34,9 @@ static SceneCmd cq_header[] = {
 static SceneCmd* questHeaders[] = {
 #include "assets/scenes/overworld/questHeaders.inc.c"
 };
+
+#else
+
+#include "assets/scenes/overworld/spot03/spot03_room_1.c"
+
+#endif

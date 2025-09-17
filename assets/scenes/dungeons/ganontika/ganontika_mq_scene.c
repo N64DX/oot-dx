@@ -78,4 +78,3 @@ static SceneCmd* questHeaders[] = {
 #include "assets/scenes/dungeons/ganontika/ganontika_scene.c"
 
 #endif
-

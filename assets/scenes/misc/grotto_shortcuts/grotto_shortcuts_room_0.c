@@ -93,55 +93,55 @@ u64 grotto_shortcuts_room_0Tex_002D60[] = {
 };
 
 Vtx grotto_shortcuts_room_0Vtx_000150[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000150.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000150.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_0008A0[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0008A0.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0008A0.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_000C30[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000C30.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000C30.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_0010A0[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0010A0.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0010A0.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_001448[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_001448.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_001448.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_002020[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_002020.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_002020.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_000200[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000200.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000200.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_0008F8[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0008F8.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0008F8.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_000AF8[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000AF8.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000AF8.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_000E68[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000E68.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_000E68.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_0014B8[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0014B8.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0014B8.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_0028A0[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0028A0.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0028A0.vtx.inc"
 };
 
 Vtx grotto_shortcuts_room_0Vtx_002BA0[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_002BA0.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_002BA0.vtx.inc"
 };
 
 Gfx grotto_shortcuts_room_0DL_0006C0[] = {
@@ -457,7 +457,7 @@ Gfx grotto_shortcuts_room_0DL_001108[] = {
 };
 
 Vtx grotto_shortcuts_room_0Vtx_0011F0[] = {
-#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0011F0.Vtx.inc"
+#include "assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0Vtx_0011F0.vtx.inc"
 };
 
 Gfx grotto_shortcuts_room_0DL_001340[] = {

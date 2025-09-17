@@ -430,6 +430,7 @@
     <Sample Name="SAMPLE_0_427" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample427.aifc"/>
     <Sample Name="SAMPLE_0_428" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample428.aifc"/>
     <Sample Name="SAMPLE_0_429" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample429.aifc"/>
+    <Sample Name="SAMPLE_0_430" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample430.aifc"/>
     <Sample Name="SAMPLE_0_431" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample431.aifc"/>
     <Sample Name="SAMPLE_0_432" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample432.aifc"/>
     <Sample Name="SAMPLE_0_433" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample433.aifc"/>
