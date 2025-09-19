@@ -1,7 +1,4 @@
-#include "versions.h"
 #include "assets/scenes/dungeons/ganontika/ganontika_scene.h"
-
-#if PLATFORM_N64
 
 static SceneCmd* questHeaders[3];
 
@@ -72,9 +69,3 @@ static SceneCmd* questHeaders[] = {
     NULL,      // 1
     cq_header, // 2
 };
-
-#else
-
-#include "assets/scenes/dungeons/ganontika/ganontika_scene.c"
-
-#endif

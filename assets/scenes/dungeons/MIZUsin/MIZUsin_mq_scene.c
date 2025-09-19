@@ -1,7 +1,4 @@
-#include "versions.h"
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_scene.h"
-
-#if PLATFORM_N64
 
 static SceneCmd* questHeaders[3];
 
@@ -46,9 +43,3 @@ static SceneCmd mq_header[] = {
 static SceneCmd* questHeaders[] = {
 #include "assets/scenes/dungeons/questHeadersScene.inc.c"
 };
-
-#else
-
-#include "assets/scenes/dungeons/MIZUsin/MIZUsin_scene.c"
-
-#endif

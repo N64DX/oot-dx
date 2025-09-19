@@ -221,10 +221,43 @@ s32 Scene_ExecuteCommands(PlayState* play, SceneCmd* sceneCmd) {
     return 0;
 }
 
+#include "z_scene_dungeon_entrances.c"
+
 BAD_RETURN(s32) Scene_CommandPlayerEntryList(PlayState* play, SceneCmd* cmd) {
-    ActorEntry* playerEntry = play->playerEntry =
-        (ActorEntry*)SEGMENTED_TO_VIRTUAL(cmd->playerEntryList.data) + play->spawnList[play->spawn].playerEntryIndex;
+    ActorEntry* playerEntry;
     s16 linkObjectId;
+
+    // Swap out dungeon entrances
+    switch (play->sceneId) {
+        case SCENE_DEKU_TREE:
+            playerEntry = play->playerEntry = Entrances_Deku_Tree_PlayerEntryList                          + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_DODONGOS_CAVERN:
+            playerEntry = play->playerEntry = Entrances_Dodongos_Cavern_PlayerEntryList                    + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_JABU_JABU:
+            playerEntry = play->playerEntry = Entrances_Jabu_Jabu_PlayerEntryList                          + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_FOREST_TEMPLE:
+            playerEntry = play->playerEntry = Entrances_Forest_Temple_PlayerEntryList                      + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_FIRE_TEMPLE:
+            playerEntry = play->playerEntry = Entrances_Fire_Temple_PlayerEntryList                        + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_WATER_TEMPLE:
+            playerEntry = play->playerEntry = Entrances_Water_Temple_PlayerEntryList                       + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_SHADOW_TEMPLE:
+            playerEntry = play->playerEntry = Entrances_Shadow_Temple_PlayerEntryList                      + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_SPIRIT_TEMPLE:
+            playerEntry = play->playerEntry = Entrances_Spirit_Temple_PlayerEntryList                      + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_ICE_CAVERN:
+            playerEntry = play->playerEntry = Entrances_Ice_Cavern_PlayerEntryList                         + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_BOTTOM_OF_THE_WELL:
+            playerEntry = play->playerEntry = Entrances_Bottom_Of_The_Well_PlayerEntryList                 + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_GERUDO_TRAINING_GROUND:
+            playerEntry = play->playerEntry = Entrances_Gerudos_Training_Ground_PlayerEntryList            + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_INSIDE_GANONS_CASTLE:
+            playerEntry = play->playerEntry = Entrances_Inside_Ganons_Castle_PlayerEntryList               + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_GANONS_TOWER:
+            playerEntry = play->playerEntry = Entrances_Ganons_Tower_PlayerEntryList                       + play->spawnList[play->spawn].playerEntryIndex; break;
+        default:
+            playerEntry = play->playerEntry = (ActorEntry*)SEGMENTED_TO_VIRTUAL(cmd->playerEntryList.data) + play->spawnList[play->spawn].playerEntryIndex; break;
+    }
 
     play->linkAgeOnLoad = ((void)0, gSaveContext.save.linkAge);
     R_IS_YOUNG_LINK = LINK_IS_CHILD && (CQ_IS_TIMESKIP || USE_YOUNG_LINK);
