@@ -2461,7 +2461,7 @@ void Message_Decode(PlayState* play) {
                         words = guy_c_words[!LINK_IS_CHILD];
                         break;
                     case MESSAGE_PLURAL_TOKENS:
-                        words = token_words[gSaveContext.save.info.inventory.gsTokens > 0];
+                        words = token_words[gSaveContext.save.info.inventory.gsTokens != 1];
                         break;
                     case MESSAGE_MASTER_SWORD:
                         words = sword_words[IS_CHILD_QUEST_AS_CHILD];
