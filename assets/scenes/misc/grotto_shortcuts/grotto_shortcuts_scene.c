@@ -32,7 +32,7 @@ ActorEntry grotto_shortcuts_sceneStartPositionList0x000088[] = {
     { ACTOR_PLAYER, { -203,   2,  798 }, { 0,      0, 0 }, 0x0DFF },
     { ACTOR_PLAYER, { 1211,   2, 1508 }, { 0, 0x8000, 0 }, 0x0DFF },
     { ACTOR_PLAYER, { 1231, 449,  801 }, { 0,      0, 0 }, 0x0DFF },
-    { ACTOR_PLAYER, {  627, 435, 1477 }, { 0, 0x8000, 0 }, 0x0DFF },
+    { ACTOR_PLAYER, {  627,   2, 1477 }, { 0, 0x8000, 0 }, 0x0DFF },
 };
 
 RomFile grotto_shortcuts_sceneRoomList0x000198[] = {

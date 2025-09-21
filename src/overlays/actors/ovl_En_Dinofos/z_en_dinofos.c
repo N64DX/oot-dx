@@ -940,6 +940,7 @@ void EnDinofos_BreatheFire(EnDinofos* this, PlayState* play) {
     f32 sin;
     f32 cos;
     s32 dimAlphaStep;
+    Player* player = GET_PLAYER(play);
 
     SkelAnime_Update(&this->skelAnime);
     Math_ScaledStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 0x800);
@@ -980,6 +981,9 @@ void EnDinofos_BreatheFire(EnDinofos* this, PlayState* play) {
     if (this->attackTimer != 0)
         this->attackTimer--;
     else EnDinofos_SetupEndBreatheFire(this, play);
+    
+    if (this->bodyAndFireCollider.base.atFlags & AT_HIT)
+        player->bodyIsBurning = true;
 }
 
 void EnDinofos_SetupEndBreatheFire(EnDinofos* this, PlayState* play) {

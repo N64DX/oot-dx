@@ -396,6 +396,9 @@ void Play_Init(GameState* thisx) {
     // save the base scene layer (before accounting for the special cases below) to use later for the transition type
     baseSceneLayer = gSaveContext.sceneLayer;
 
+    if (gSaveContext.save.entranceIndex == ENTR_LOST_WOODS_10 && R_QUEST_MODE != CHILD_QUEST)
+       gSaveContext.save.entranceIndex = ENTR_LOST_WOODS_6; 
+
     if (!IS_CUTSCENE_LAYER) {
         if (IS_CHILD_QUEST) {
             u8 sceneId = gEntranceTable[gSaveContext.save.entranceIndex].sceneId;

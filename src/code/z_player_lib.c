@@ -590,7 +590,7 @@ void Player_SetBootData(PlayState* play, Player* this) {
 
     currentBoots = this->currentBoots;
     if (currentBoots == PLAYER_BOOTS_KOKIRI) {
-        if (!LINK_IS_ADULT) {
+        if (!LINK_IS_ADULT_OR_TIMESKIP) {
             currentBoots = PLAYER_BOOTS_KOKIRI_CHILD;
         }
     } else if (currentBoots == PLAYER_BOOTS_IRON) {
