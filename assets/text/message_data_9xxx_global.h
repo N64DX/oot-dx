@@ -23,52 +23,26 @@ COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "!\n"
 
 DEFINE_MESSAGE(0x9001, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-ITEM_ICON(0x5B) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "勇者の盾" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
-COLOR(BLUE) "装備画面" COLOR(RED) "　" COLOR(DEFAULT) "で盾を選び\n"
-COLOR(BLUE) "[A]ボタン" COLOR(DEFAULT) "で装備しよう。"
-BOX_BREAK
-
-ITEM_ICON(0x5B) COLOR(LIGHTBLUE) "[R]ボタン" COLOR(DEFAULT) "でしゃがんで防御。\n"
-COLOR(LIGHTBLUE) "[Z]注目" COLOR(DEFAULT) "中に" COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) "を押すと、\n"
-"防御しながら移動できるぞ！"
+ITEM_ICON(0x5B) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "勇者の盾" COLOR(DEFAULT) "を入手！" QUICKTEXT_DISABLE "\n"
+COLOR(BLUE) "そうび画面" COLOR(DEFAULT) "に　切りかえて、\n"
+"カーソルで選んで　" COLOR(BLUE) "[A]" COLOR(DEFAULT) "でそうび。"
 ),
 MSG(
 ITEM_ICON(0x5B) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Hero's Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Switch to the " COLOR(BLUE) "Equipment \n"
-"Subscreen" COLOR(RED) " " COLOR(DEFAULT) "and select the\n"
-"shield. Press " COLOR(BLUE) "[A] " COLOR(DEFAULT) "to equip it."
-BOX_BREAK
-
-ITEM_ICON(0x5B) "Press " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " to crouch and\n"
-"defend. If you press " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " while \n"
-COLOR(LIGHTBLUE) "[Z] Targeting" COLOR(DEFAULT) ", you can move\n"
-"while defending."
+"Subscreen" COLOR(DEFAULT) "and select the\n"
+"shield, then equip it with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
 ),
 MSG(
-ITEM_ICON(0x5B) QUICKTEXT_ENABLE "Du hast den " COLOR(LIGHTBLUE) "Heldenschild" COLOR(DEFAULT) " erhalten!" QUICKTEXT_DISABLE "\n"
-"Wechsle zum " COLOR(BLUE) "Ausrüstungs-\n"
-"Bildschirm" COLOR(RED) " " COLOR(DEFAULT) "und wähle den\n"
-"Schild. Drücke " COLOR(BLUE) "[A] " COLOR(DEFAULT) ", um ihn auszurüsten."
-BOX_BREAK
-
-ITEM_ICON(0x5B) "Drücke " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) ", um dich zu\n"
-"ducken und zu verteidigen. Wenn du\n"
-COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " drückst, während du mit\n"
-COLOR(LIGHTBLUE) "[Z] anvisierst" COLOR(DEFAULT) ", kannst du dich\n"
-"beim Verteidigen bewegen."
+ITEM_ICON(0x5B) QUICKTEXT_ENABLE "Der " COLOR(LIGHTBLUE) "Heroenschild" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Gehe ins " COLOR(BLUE) "Ausrüstungs-Menü" COLOR(DEFAULT) ",\n"
+"um ihn mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) " auszuwählen."
 ),
 MSG(
-ITEM_ICON(0x5B) QUICKTEXT_ENABLE "Vous obtenez le " COLOR(LIGHTBLUE) "Bouclier Hylien" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
-"Allez à l’" COLOR(BLUE) "écran Équipement" COLOR(RED) " " COLOR(DEFAULT) "et\n"
-"sélectionnez le bouclier. Appuyez sur\n"
-COLOR(BLUE) "[A] " COLOR(DEFAULT) "pour l’équiper."
-BOX_BREAK
-
-ITEM_ICON(0x5B) "Appuyez sur " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " pour vous\n"
-"accroupir et vous défendre. En\n"
-"maintenant " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " pendant un\n"
-COLOR(LIGHTBLUE) "ciblage [Z]" COLOR(DEFAULT) ", vous pouvez vous\n"
-"déplacer en vous défendant."
+ITEM_ICON(0x5B) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(LIGHTBLUE) "Bouclier\n"
+"du Héros" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Sélectionnez-le à \n"
+"l'" COLOR(BLUE) "écran de l'Equipement" COLOR(DEFAULT) ", puis \n"
+"appuyez sur " COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour l'équiper."
 )
 )
 
@@ -111,9 +85,9 @@ COLOR(RED) "Hero's Sword" COLOR(DEFAULT) "! It is yours now!" QUICKTEXT_DISABLE 
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(0x5A) QUICKTEXT_ENABLE "Ein mächtiger Feind hat das\n"
-COLOR(RED) "Schwert des Helden" COLOR(DEFAULT) " hinterlassen! Es gehört nun dir!" QUICKTEXT_DISABLE "\n"
-"Dieses Schwert kann\n"
-"mächtige Strahlen abschießen!"
+COLOR(RED) "Heroenschwert" COLOR(DEFAULT) " hinterlassen! Es\n"
+"gehört nun dir!" QUICKTEXT_DISABLE " Dieses Schwert\n"
+"kann mächtige Strahlen schießen!"
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(0x5A) QUICKTEXT_ENABLE "Un puissant ennemi a laissé\n"
@@ -138,7 +112,7 @@ TWO_CHOICE
     "Don't buy" COLOR(DEFAULT)
 ),
 MSG(
-QUICKTEXT_ENABLE "Heldenschild   80 Rubine" QUICKTEXT_DISABLE "\n"
+QUICKTEXT_ENABLE "Heroenschild   80 Rubine" QUICKTEXT_DISABLE "\n"
 "\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Kaufen!\n"
@@ -256,9 +230,10 @@ COLOR(DEFAULT) "Once equipped, you can defend\n"
 "burn anymore!" QUICKTEXT_DISABLE PERSISTENT
 ),
 MSG(
-QUICKTEXT_ENABLE COLOR(RED) "Heldenschild   80 Rubine\n"
-COLOR(DEFAULT) "Einmal ausgerüstet kannst du mit " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " verteidigen.\n"
-"Dieser Metallschild brennt nicht mehr!" QUICKTEXT_DISABLE PERSISTENT
+QUICKTEXT_ENABLE COLOR(RED) "Heroenschild   80 Rubine\n"
+COLOR(DEFAULT) "Einmal ausgerüstet kannst du mit " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) "\n"
+"verteidigen. Dieser Metallschild brennt\n"
+"nicht mehr!" QUICKTEXT_DISABLE PERSISTENT
 ),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Bouclier du Héros   80 Rubis\n"

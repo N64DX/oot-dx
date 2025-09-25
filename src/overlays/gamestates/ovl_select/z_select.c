@@ -875,12 +875,12 @@ void MapSelect_PrintSaveMenu(MapSelectState* this, GfxPrint* printer) {
             GfxPrint_SetColor(printer, 255, 20, 20, 255);
         else GfxPrint_SetColor(printer, 200, 200, 55, 255);
 
-        GfxPrint_SetPos(printer, 1, i + 4);
+        GfxPrint_SetPos(printer, 3, i + 4);
         if (this->saveEntries[entry].number < 10)
             GfxPrint_Printf(printer, " %d:%s", this->saveEntries[entry].number, this->saveEntries[entry].name);
         else GfxPrint_Printf(printer, "%d:%s", this->saveEntries[entry].number, this->saveEntries[entry].name);
 
-        GfxPrint_SetPos(printer, 31, i + 4);
+        GfxPrint_SetPos(printer, 33, i + 4);
         GfxPrint_Printf(printer, "%s", MapSelect_GetEvent(this, this->saveEntries[entry].type, this->saveEntries[entry].flag));
     };
 }

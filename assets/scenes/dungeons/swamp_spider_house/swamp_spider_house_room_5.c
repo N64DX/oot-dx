@@ -21,24 +21,12 @@ SceneCmd swamp_spider_house_room_5Commands[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&swamp_spider_house_room_5RoomShapeCullable_000190),
-    SCENE_CMD_OBJECT_LIST(14, swamp_spider_house_room_5ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(2, swamp_spider_house_room_5ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(1, swamp_spider_house_room_5ActorEntry_000068),
     SCENE_CMD_END(),
 };
 
 s16 swamp_spider_house_room_5ObjectList_000040[] = {
-    OBJECT_ST,
-    OBJECT_DEKUBABA,
-    OBJECT_KANBAN,
-    OBJECT_DEKUNUTS,
-    OBJECT_SYOKUDAI,
-    OBJECT_KIBAKO2,
-    OBJECT_LADDER,
-    OBJECT_MAMENOKI,
-    OBJECT_YDAN_OBJECTS,
-    OBJECT_ZF,
-    OBJECT_BOMBIWA,
-    OBJECT_BUFFDEKU,
     OBJECT_HAMMERGEIST,
     OBJECT_GI_SWORD_HEROS,
 };
