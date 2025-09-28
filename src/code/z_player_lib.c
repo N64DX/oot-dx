@@ -1439,7 +1439,7 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                     swordEquipValue = 4;
                 
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
-                    if (this->currentShield == PLAYER_SHIELD_NONE && this->sheathType == PLAYER_MODELTYPE_SHEATH_18)
+                    if ( (this->currentShield == PLAYER_SHIELD_NONE && this->sheathType == PLAYER_MODELTYPE_SHEATH_18) || this->sheathType == PLAYER_MODELTYPE_SHEATH_16)
                         dLists = &gPlayerSheathedSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                     else if (this->currentShield == PLAYER_SHIELD_NONE)
                         dLists = &gPlayerSwordSheaths[IS_YOUNG_LINK][swordEquipValue - 1];
@@ -2089,7 +2089,7 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                 swordEquipValue = 4;
 
             if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
-                if (shieldEquipValue == EQUIP_VALUE_SHIELD_NONE && type == PLAYER_MODELTYPE_SHEATH_18)
+                if ( (shieldEquipValue == EQUIP_VALUE_SHIELD_NONE && type == PLAYER_MODELTYPE_SHEATH_18) || type == PLAYER_MODELTYPE_SHEATH_16)
                     *dList = gPlayerSheathedSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                 else if (shieldEquipValue == EQUIP_VALUE_SHIELD_NONE)
                     *dList = gPlayerSwordSheaths[IS_YOUNG_LINK][swordEquipValue - 1];

@@ -30,6 +30,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
 - **LeSéducteur:** Buff Scrub actor
 - **OoT Randomizer:** Key chest textures
+- **Skawo:** Font preloading, Kakariko Gate Guard fix
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
 - **Syeo & Trueffel:** Molmauk actor

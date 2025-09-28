@@ -4794,6 +4794,7 @@ void Message_Update(PlayState* play) {
                     gSaveContext.save.info.inventory.questItems ^= (4 << QUEST_HEART_PIECE_COUNT);
                     gSaveContext.save.info.playerData.healthCapacity += 0x10;
                     gSaveContext.save.info.playerData.health += 0x10;
+                    R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
                 }
                 if (msgCtx->ocarinaAction != OCARINA_ACTION_CHECK_NOWARP_DONE) {
                     if (sLastPlayedSong == OCARINA_SONG_SARIAS) {

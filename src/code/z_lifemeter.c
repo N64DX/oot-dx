@@ -499,7 +499,7 @@ void Health_DrawMeter(PlayState* play) {
         offsetX += HIRES_MULTIPLY(10.0f);
 
         // Go down one line after 10 hearts
-        if (heartIndex == MAX_HEARTS_ROW) {
+        if (heartIndex == 9 || heartIndex == 19) {
             offsetY += HIRES_MULTIPLY(10.0f);
             offsetX = 0.0f;
         }

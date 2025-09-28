@@ -517,12 +517,14 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                 if (gSaveContext.save.info.playerData.healthCapacity < 0x30) {
                     gSaveContext.save.info.playerData.healthCapacity = 0x30;
                 }
+                R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
             } else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) ||
                        CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
                 gSaveContext.save.info.playerData.healthCapacity += 0x10;
-                if (gSaveContext.save.info.playerData.healthCapacity >= (CHILD_QUEST ? 0x150 : 0x140)) {
-                    gSaveContext.save.info.playerData.healthCapacity = (CHILD_QUEST ? 0x150 : 0x140);
+                if (gSaveContext.save.info.playerData.healthCapacity >= 0x1E0) {
+                    gSaveContext.save.info.playerData.healthCapacity = 0x1E0;
                 }
+                R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
             }
             break;
 
