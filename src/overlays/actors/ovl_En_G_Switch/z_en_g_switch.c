@@ -155,8 +155,8 @@ void EnGSwitch_Init(Actor* thisx, PlayState* play) {
             this->colorIdx = Rand_ZeroFloat(2.99f);
             Collider_InitCylinder(play, &this->collider);
             Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
-            this->actor.scale.x = 0.25f;
-            this->actor.scale.y = 0.45f;
+            this->actor.scale.x = LINK_IS_CHILD ? 0.3125f : 0.25f;
+            this->actor.scale.y = LINK_IS_CHILD ? 0.55f   : 0.45f;
             this->actor.scale.z = 0.25f;
             this->collider.elem.acDmgInfo.dmgFlags = DMG_ARROW;
             this->objectId = OBJECT_TSUBO;
@@ -167,8 +167,8 @@ void EnGSwitch_Init(Actor* thisx, PlayState* play) {
                 PRINTF(VT_FGCOL(CYAN) T(" バンクおかしいしぞ！%d\n", " Bank is weird! %d\n") VT_RST "\n",
                        this->actor.params);
             }
-            this->collider.dim.radius = 24;
-            this->collider.dim.height = 74;
+            this->collider.dim.radius = LINK_IS_CHILD ? 30 : 24;
+            this->collider.dim.height = LINK_IS_CHILD ? 80 : 74;
             this->collider.dim.yShift = 0;
             this->actionFunc = EnGSwitch_WaitForObject;
             break;

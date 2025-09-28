@@ -19,6 +19,7 @@
 #include "play_state.h"
 #include "player.h"
 #include "save.h"
+#include "regs.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_oF1d_map/object_oF1d_map.h"
@@ -131,10 +132,16 @@ static EnGo2DataStruct2 D_80A481F8[14] = {
     { 28.0f, 0.01f, 6, 30.0f },  { 28.0f, 0.01f, 6, 30.0f },
 };
 
-static f32 sPlayerTrackingYOffsets[14][2] = {
-    { 80.0f, 80.0f }, { -10.0f, -10.0f }, { 800.0f, 800.0f }, { 0.0f, 0.0f },   { 20.0f, 40.0f },
-    { 20.0f, 20.0f }, { 20.0f, 20.0f },   { 20.0f, 20.0f },   { 20.0f, 20.0f }, { 20.0f, 20.0f },
-    { 20.0f, 20.0f }, { 20.0f, 20.0f },   { 20.0f, 20.0f },   { 20.0f, 20.0f },
+static f32 sPlayerTrackingYOffsets[2][14][2] = {
+    {
+        { 80.0f, 80.0f }, { -10.0f, 10.0f },  { 800.0f, 800.0f }, { 0.0f, 20.0f },  { 20.0f, 40.0f },
+        { 20.0f, 20.0f }, { 20.0f, 20.0f },   { 20.0f, 20.0f },   { 20.0f, 20.0f }, { 20.0f, 20.0f },
+        { 20.0f, 20.0f }, { 20.0f, 20.0f },   { 20.0f, 20.0f },   { 20.0f, 20.0f },
+    }, {
+        { 80.0f, 80.0f }, { -10.0f, -10.0f }, { 800.0f, 800.0f }, { 0.0f, 0.0f },   { 20.0f, 40.0f },
+        { 20.0f, 20.0f }, { 20.0f, 20.0f },   { 20.0f, 20.0f },   { 20.0f, 20.0f }, { 20.0f, 20.0f },
+        { 20.0f, 20.0f }, { 20.0f, 20.0f },   { 20.0f, 20.0f },   { 20.0f, 20.0f },
+    },
 };
 
 typedef enum EnGo2Animation {
@@ -414,7 +421,7 @@ s16 EnGo2_UpdateTalkStateGoronDmtRollingSmall(PlayState* play, EnGo2* this) {
 }
 
 u16 EnGo2_GetTextIdGoronDmtDcEntrance(PlayState* play, EnGo2* this) {
-    if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && LINK_IS_ADULT) {
+    if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && LINK_IS_ADULT_OR_TIMESKIP) {
         return 0x3043;
     } else if (CHECK_QUEST_ITEM(QUEST_GORON_RUBY)) {
         return 0x3027;
@@ -435,7 +442,7 @@ s16 EnGo2_UpdateTalkStateGoronDmtDcEntrance(PlayState* play, EnGo2* this) {
 }
 
 u16 EnGo2_GetTextIdGoronCityEntrance(PlayState* play, EnGo2* this) {
-    if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && LINK_IS_ADULT) {
+    if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && LINK_IS_ADULT_OR_TIMESKIP) {
         return 0x3043;
     } else if (CHECK_QUEST_ITEM(QUEST_GORON_RUBY)) {
         return 0x3027;
@@ -456,7 +463,7 @@ s16 EnGo2_UpdateTalkStateGoronCityEntrance(PlayState* play, EnGo2* this) {
 }
 
 u16 EnGo2_GetTextIdGoronCityIsland(PlayState* play, EnGo2* this) {
-    if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && LINK_IS_ADULT) {
+    if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && LINK_IS_ADULT_OR_TIMESKIP) {
         return 0x3043;
     } else if (CHECK_QUEST_ITEM(QUEST_GORON_RUBY)) {
         return 0x3067;
@@ -477,7 +484,7 @@ s16 EnGo2_UpdateTalkStateGoronCityIsland(PlayState* play, EnGo2* this) {
 }
 
 u16 EnGo2_GetTextIdGoronCityLowestFloor(PlayState* play, EnGo2* this) {
-    if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && LINK_IS_ADULT) {
+    if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && LINK_IS_ADULT_OR_TIMESKIP) {
         return 0x3043;
     } else if (CHECK_QUEST_ITEM(QUEST_GORON_RUBY)) {
         return 0x3027;
@@ -503,7 +510,7 @@ s16 EnGo2_UpdateTalkStateGoronCityLowestFloor(PlayState* play, EnGo2* this) {
 u16 EnGo2_GetTextIdGoronCityLink(PlayState* play, EnGo2* this) {
     if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE)) {
         return GET_INFTABLE(INFTABLE_10F) ? 0x3042 : 0x3041;
-    } else if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
+    } else if (IS_CHILD_QUEST ? GET_INFTABLE(INFTABLE_109) : CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
         return GET_INFTABLE(INFTABLE_10E) ? 0x3038 : 0x3037;
     } else if (GET_INFTABLE(INFTABLE_10C)) {
         this->unk_20C = 0;
@@ -519,9 +526,12 @@ s16 EnGo2_UpdateTalkStateGoronCityLink(PlayState* play, EnGo2* this) {
         case TEXT_STATE_CLOSING:
             switch (this->actor.textId) {
                 case 0x3036:
-                    EnGo2_GetItem(this, play, GI_TUNIC_GORON);
-                    this->actionFunc = EnGo2_SetupGetItem;
-                    return NPC_TALK_STATE_ACTION;
+                    if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON) || !IS_CHILD_QUEST) {
+                        EnGo2_GetItem(this, play, GI_TUNIC_GORON);
+                        this->actionFunc = EnGo2_SetupGetItem;
+                        return NPC_TALK_STATE_ACTION;
+                    }
+                    else SET_INFTABLE(INFTABLE_109);
                 case 0x3037:
                     SET_INFTABLE(INFTABLE_10E);
                     FALLTHROUGH;
@@ -599,7 +609,7 @@ s16 EnGo2_UpdateTalkStateGoronDmtBiggoron(PlayState* play, EnGo2* this) {
 #endif
             if (this->actor.textId == 0x305E) {
                 if (!gSaveContext.save.info.playerData.bgsFlag) {
-                    EnGo2_GetItem(this, play, GI_SWORD_BIGGORON);
+                    EnGo2_GetItem(this, play, IS_CHILD_QUEST_AS_CHILD ? GI_SWORD_GILDED : GI_SWORD_BIGGORON);
                     this->actionFunc = EnGo2_SetupGetItem;
                     return NPC_TALK_STATE_ACTION;
                 } else {
@@ -682,7 +692,7 @@ s16 EnGo2_UpdateTalkStateGoronFireGeneric(PlayState* play, EnGo2* this) {
 }
 
 u16 EnGo2_GetTextIdGoronCityStairwell(PlayState* play, EnGo2* this) {
-    return !LINK_IS_ADULT ? GET_INFTABLE(INFTABLE_E3) ? 0x3022 : 0x300E : 0x3043;
+    return !LINK_IS_ADULT_OR_TIMESKIP ? GET_INFTABLE(INFTABLE_E3) ? 0x3022 : 0x300E : 0x3043;
 }
 
 s16 EnGo2_UpdateTalkStateGoronCityStairwell(PlayState* play, EnGo2* this) {
@@ -710,7 +720,7 @@ s16 EnGo2_UpdateTalkStateGoronMarketBazaar(PlayState* play, EnGo2* this) {
 }
 
 u16 EnGo2_GetTextIdGoronCityLostWoods(PlayState* play, EnGo2* this) {
-    if (!LINK_IS_ADULT) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         if (Flags_GetSwitch(play, 0x1C)) {
             return 0x302F;
         } else {
@@ -734,7 +744,7 @@ s16 EnGo2_UpdateTalkStateGoronCityLostWoods(PlayState* play, EnGo2* this) {
 
 // Goron at base of DMT summit
 u16 EnGo2_GetTextIdGoronDmtFairyHint(PlayState* play, EnGo2* this) {
-    if (!LINK_IS_ADULT) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         return CHECK_QUEST_ITEM(QUEST_GORON_RUBY) ? 0x3065 : 0x3064;
     } else {
         return 0x3043;
@@ -1083,7 +1093,7 @@ void EnGo2_BiggoronSetTextId(EnGo2* this, PlayState* play, Player* player) {
             player->actor.textId = this->actor.textId;
 
         } else if (INV_CONTENT(ITEM_TRADE_ADULT) <= ITEM_BROKEN_GORONS_SWORD) {
-            if (Actor_GetPlayerExchangeItemId(play) == EXCH_ITEM_BROKEN_GORONS_SWORD) {
+            if (IS_CHILD_QUEST ? (Actor_GetPlayerExchangeItemId(play) == EXCH_ITEM_BROKEN_GORONS_SWORD && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) : (Actor_GetPlayerExchangeItemId(play) == EXCH_ITEM_BROKEN_GORONS_SWORD)) {
                 if (GET_INFTABLE(INFTABLE_B4)) {
                     textId = 0x3055;
                 } else {
@@ -1107,7 +1117,7 @@ void func_80A45288(EnGo2* this, PlayState* play) {
     if (this->actionFunc != EnGo2_GoronFireGenericAction) {
         this->interactInfo.trackPos = player->actor.world.pos;
         this->interactInfo.yOffset =
-            sPlayerTrackingYOffsets[PARAMS_GET_S(this->actor.params, 0, 5)][((void)0, gSaveContext.save.linkAge)];
+            sPlayerTrackingYOffsets[LINK_IS_CHILD ? 0 : 1][PARAMS_GET_S(this->actor.params, 0, 5)][((void)0, gSaveContext.save.linkAge)];
         Npc_TrackPoint(&this->actor, &this->interactInfo, 4, this->trackingMode);
     }
     if ((this->actionFunc != EnGo2_SetGetItem) && (this->isAwake == true)) {
@@ -1192,7 +1202,7 @@ s32 EnGo2_IsCameraModified(EnGo2* this, PlayState* play) {
         PARAMS_GET_S(this->actor.params, 0, 5) == GORON_DMT_BIGGORON ||
         PARAMS_GET_S(this->actor.params, 0, 5) == GORON_MARKET_BAZAAR) {
         return true;
-    } else if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
+    } else if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && (IS_CHILD_QUEST ? GET_INFTABLE(INFTABLE_109) : CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))) {
         return true;
     } else {
         return false;
@@ -1249,7 +1259,7 @@ void EnGo2_SelectGoronWakingUp(EnGo2* this) {
             EnGo2_BiggoronWakingUp(this);
             break;
         case GORON_CITY_LINK:
-            if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
+            if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && (IS_CHILD_QUEST ? GET_INFTABLE(INFTABLE_109) : CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))) {
                 EnGo2_WakingUp(this);
                 break;
             }
@@ -1579,13 +1589,13 @@ void EnGo2_Init(Actor* thisx, PlayState* play) {
         case GORON_CITY_LOWEST_FLOOR:
         case GORON_CITY_STAIRWELL:
         case GORON_CITY_LOST_WOODS:
-            if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && LINK_IS_ADULT) {
+            if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && LINK_IS_ADULT_OR_TIMESKIP) {
                 Actor_Kill(&this->actor);
             }
             this->actionFunc = EnGo2_CurledUp;
             break;
         case GORON_MARKET_BAZAAR:
-            if ((LINK_IS_ADULT) || !CHECK_QUEST_ITEM(QUEST_GORON_RUBY)) {
+            if ((LINK_IS_ADULT_OR_TIMESKIP) || !CHECK_QUEST_ITEM(QUEST_GORON_RUBY)) {
                 Actor_Kill(&this->actor);
             }
             EnGo2_GetItemAnimation(this, play);
@@ -1595,7 +1605,7 @@ void EnGo2_Init(Actor* thisx, PlayState* play) {
                 Path_CopyLastPoint(this->path, &this->actor.world.pos);
                 this->actor.home.pos = this->actor.world.pos;
                 if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) &&
-                    CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
+                    (IS_CHILD_QUEST ? GET_INFTABLE(INFTABLE_109) : CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))) {
                     EnGo2_GetItemAnimation(this, play);
                 } else {
                     this->actionFunc = EnGo2_CurledUp;
@@ -1837,6 +1847,7 @@ void EnGo2_SetGetItem(EnGo2* this, PlayState* play) {
                 EnGo2_GetItemAnimation(this, play);
                 return;
             case GI_SWORD_BIGGORON:
+            case GI_SWORD_GILDED:
                 gSaveContext.save.info.playerData.bgsFlag = true;
                 break;
             case GI_BOMB_BAG_30:

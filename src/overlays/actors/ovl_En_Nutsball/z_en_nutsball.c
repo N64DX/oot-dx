@@ -123,7 +123,7 @@ void func_80ABBBA8(EnNutsball* this, PlayState* play) {
         (this->collider.base.ocFlags1 & OC1_HIT)) {
         // Checking if the player is using a shield that reflects projectiles
         // And if so, reflects the projectile on impact
-        if ((player->currentShield == PLAYER_SHIELD_DEKU) ||
+        if ((player->currentShield == PLAYER_SHIELD_DEKU || player->currentShield == PLAYER_SHIELD_HEROS) ||
             ((player->currentShield == PLAYER_SHIELD_HYLIAN) && LINK_IS_ADULT)) {
             if ((this->collider.base.atFlags & AT_HIT) && (this->collider.base.atFlags & AT_TYPE_ENEMY) &&
                 (this->collider.base.atFlags & AT_BOUNCED)) {

@@ -8,7 +8,7 @@
 #include "sys_matrix.h"
 #include "ultra64.h"
 
-static SceneCmd* questHeaders[1];
+static SceneCmd* questHeaders[3];
 
 static SceneCmd start[] = {
 #include "assets/scenes/dungeons/start.inc.c"
@@ -22,6 +22,14 @@ static s16 mq_objects[] = {
 
 static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/MIZUsin/mq/headers/room22.inc.c"
+};
+
+static s16 cq_objects[] = {
+#include "assets/scenes/dungeons/MIZUsin/cq/objects/room22_obj.inc.c"
+};
+
+static SceneCmd cq_header[] = {
+#include "assets/scenes/dungeons/MIZUsin/cq/headers/room22.inc.c"
 };
 
 static SceneCmd* questHeaders[] = {

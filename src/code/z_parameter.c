@@ -749,7 +749,10 @@ void func_80083108(PlayState* play) {
                     } else {
                         gSaveContext.save.info.equips.buttonItems[0] = ITEM_BOW;
                         if (play->shootingGalleryStatus > 1) {
-                            if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
+                            if (IS_CHILD_QUEST) {
+                                if (gSaveContext.save.entranceIndex == ENTR_SHOOTING_GALLERY_1)
+                                    gSaveContext.save.info.equips.buttonItems[0] = player->heldItemId = ITEM_SLINGSHOT;
+                            } else if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
                                 gSaveContext.save.info.equips.buttonItems[0] = ITEM_SLINGSHOT;
                             }
 
@@ -1583,7 +1586,7 @@ void Interface_LoadItemIcon1(PlayState* play, u16 button) {
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (button * ITEM_ICON_SIZE),
-                      GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, 0,
+                      GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1171);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
@@ -1593,9 +1596,51 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_180, interfaceCtx->iconItemSegment + (button * ITEM_ICON_SIZE),
-                      GET_ITEM_ICON_VROM(gSaveContext.save.info.equips.buttonItems[button]), ITEM_ICON_SIZE, 0,
+                      GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(gSaveContext.save.info.equips.buttonItems[button])), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
+}
+
+u8 Interface_LoadItemIconChildQuest(u8 item) {
+    if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+        return ITEM_FISHING_POLE + 2;
+    else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
+        return ITEM_FISHING_POLE + 1;
+    else if (IS_CHILD_QUEST) {
+        if (item == ITEM_BROKEN_GORONS_SWORD)
+            return ITEM_FISHING_POLE + 15;
+        else if (LINK_IS_CHILD) {
+            if (item == ITEM_HOOKSHOT)
+                return ITEM_FISHING_POLE + 7;
+            else if (item == ITEM_LONGSHOT)
+                return ITEM_FISHING_POLE + 8;
+
+            else if (item == ITEM_BOW)
+                return ITEM_FISHING_POLE + 9;
+            else if (item == ITEM_BOW_FIRE)
+                return ITEM_FISHING_POLE + 10;
+            else if (item == ITEM_BOW_ICE)
+                return ITEM_FISHING_POLE + 11;
+            else if (item == ITEM_BOW_LIGHT)
+                return ITEM_FISHING_POLE + 12;
+
+            else if (item == ITEM_SWORD_MASTER)
+                return ITEM_FISHING_POLE + 4;
+            else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
+                return ITEM_FISHING_POLE + 5;
+            else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
+                return ITEM_FISHING_POLE + 6;
+            else if (item == ITEM_SHIELD_MIRROR)
+                return ITEM_FISHING_POLE + 3;
+            
+            else if (item == ITEM_STRENGTH_SILVER_GAUNTLETS)
+                return ITEM_FISHING_POLE + 13;
+            else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
+                return ITEM_FISHING_POLE + 14;
+        }
+    }
+
+    return item;
 }
 
 u8 Interface_GetItemFromDpad(u8 button) {
@@ -1754,8 +1799,17 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
 
         return ITEM_NONE;
+    } else if (item == ITEM_SWORD_HEROS) {
+        SET_HEROS_SWORD;
+        return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
+        return ITEM_NONE;
+    } else if (item == ITEM_SHIELD_HEROS) {
+        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        SET_HEROS_SHIELD;
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
+            Player_SetEquipmentData(play, GET_PLAYER(play));
         return ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI);
@@ -1842,6 +1896,9 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_GIANTS_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 2);
+        return ITEM_NONE;
+    } else if (item == ITEM_ROYAL_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
         return ITEM_NONE;
     } else if (item == ITEM_DEKU_STICK_UPGRADE_20) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -2032,6 +2089,7 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_HEART_CONTAINER) {
         gSaveContext.save.info.playerData.healthCapacity += 0x10;
         gSaveContext.save.info.playerData.health += 0x10;
+        R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
         return ITEM_NONE;
     } else if (item == ITEM_RECOVERY_HEART) {
         PRINTF(T("回復ハート回復ハート回復ハート\n", "Recovery Heart Recovery Heart Recovery Heart\n"));
@@ -2176,6 +2234,10 @@ u8 Item_Give(PlayState* play, u8 item) {
     PRINTF("Item_Register(%d)=%d  %d\n", slot, item, temp);
     INV_CONTENT(item) = item;
 
+    for (i=0; i<4; i++)
+        if (Interface_GetItemFromDpad(i) == item)
+                Interface_LoadItemIcon1(play, i+4);
+
     return temp;
 }
 
@@ -2210,6 +2272,10 @@ u8 Item_CheckObtainability(u8 item) {
         } else {
             return ITEM_NONE;
         }
+    } else if (item == ITEM_SHIELD_HEROS) {
+        return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
+    } else if (item == ITEM_SWORD_HEROS) {
+        return HAS_HEROS_SWORD ? item : ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI + EQUIP_INV_TUNIC_KOKIRI)) {
             return item;
@@ -2300,6 +2366,8 @@ u8 Item_CheckObtainability(u8 item) {
             }
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
+        return ITEM_NONE;
+    } else if (item == ITEM_ADULTS_WALLET || item == ITEM_GIANTS_WALLET || item == ITEM_ROYAL_WALLET) {
         return ITEM_NONE;
     }
 
@@ -2620,6 +2688,7 @@ s32 Health_ChangeBy(PlayState* play, s16 amount) {
 
 void Health_GiveHearts(s16 hearts) {
     gSaveContext.save.info.playerData.healthCapacity += hearts * 0x10;
+    R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
 }
 
 void Rupees_ChangeBy(s16 rupeeChange) {
@@ -3673,8 +3742,8 @@ void Interface_Draw(PlayState* play) {
     static s16 D_80125B1C[][3] = {
         { 0, 150, 0 }, { 100, 255, 0 }, { 255, 255, 255 }, { 0, 0, 0 }, { 255, 255, 255 },
     };
-    static s16 rupeeDigitsFirst[] = { 1, 0, 0 };
-    static s16 rupeeDigitsCount[] = { 2, 3, 3 };
+    static s16 rupeeDigitsFirst[] = { 1, 0, 0, 0 };
+    static s16 rupeeDigitsCount[] = { 2, 3, 3, 3 };
     static s16 spoilingItemEntrances[] = { ENTR_LOST_WOODS_2, ENTR_ZORAS_DOMAIN_3, ENTR_ZORAS_DOMAIN_3 };
     static f32 D_80125B54[] = { -40.0f, -35.0f }; // unused
     static s16 D_80125B5C[] = { 91, 91 };         // unused
@@ -3702,10 +3771,11 @@ void Interface_Draw(PlayState* play) {
     gSPSegment(OVERLAY_DISP++, 0x0B, interfaceCtx->mapSegment);
 
     if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) {
-        static u8 walletColors[][3] = {
+        static u8 walletColors[][4] = {
             { 200, 255, 100 },
             { 130, 130, 255 },
-            { 255, 100, 100 }
+            { 255, 100, 100 },
+            { 255, 165, 0   }
         };
         u8 curWallet = CUR_UPG_VALUE(UPG_WALLET);
 
@@ -4157,7 +4227,9 @@ void Interface_Draw(PlayState* play) {
                     svar1 = (gSaveContext.timerX[TIMER_ID_MAIN] - 26) / sTimerStateTimer;
                     gSaveContext.timerX[TIMER_ID_MAIN] -= svar1;
 
-                    if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                    if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+                        svar1 = (gSaveContext.timerY[TIMER_ID_MAIN] - 64) / sTimerStateTimer; // three rows of hearts
+                    } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
                         svar1 = (gSaveContext.timerY[TIMER_ID_MAIN] - 54) / sTimerStateTimer; // two rows of hearts
                     } else {
                         svar1 = (gSaveContext.timerY[TIMER_ID_MAIN] - 46) / sTimerStateTimer; // one row of hearts
@@ -4169,7 +4241,9 @@ void Interface_Draw(PlayState* play) {
                         sTimerStateTimer = 20;
                         gSaveContext.timerX[TIMER_ID_MAIN] = 26;
 
-                        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                        if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+                            gSaveContext.timerY[TIMER_ID_MAIN] = 64; // three rows of hearts
+                        } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 54; // two rows of hearts
                         } else {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 46; // one row of hearts
@@ -4186,7 +4260,9 @@ void Interface_Draw(PlayState* play) {
                 case TIMER_STATE_DOWN_TICK:
                     if ((gSaveContext.timerState == TIMER_STATE_ENV_HAZARD_TICK) ||
                         (gSaveContext.timerState == TIMER_STATE_DOWN_TICK)) {
-                        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                        if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+                            gSaveContext.timerY[TIMER_ID_MAIN] = 64; // three rows of hearts
+                        } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 54; // two rows of hearts
                         } else {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 46; // one row of hearts
@@ -4237,7 +4313,9 @@ void Interface_Draw(PlayState* play) {
                     svar1 = (gSaveContext.timerX[TIMER_ID_MAIN] - 26) / sTimerStateTimer;
                     gSaveContext.timerX[TIMER_ID_MAIN] -= svar1;
 
-                    if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                    if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+                        svar1 = (gSaveContext.timerY[TIMER_ID_MAIN] - 64) / sTimerStateTimer; // three rows of hearts
+                    } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
                         svar1 = (gSaveContext.timerY[TIMER_ID_MAIN] - 54) / sTimerStateTimer; // two rows of hearts
                     } else {
                         svar1 = (gSaveContext.timerY[TIMER_ID_MAIN] - 46) / sTimerStateTimer; // one row of hearts
@@ -4248,7 +4326,9 @@ void Interface_Draw(PlayState* play) {
                     if (sTimerStateTimer == 0) {
                         sTimerStateTimer = 20;
                         gSaveContext.timerX[TIMER_ID_MAIN] = 26;
-                        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                        if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+                            gSaveContext.timerY[TIMER_ID_MAIN] = 64; // three rows of hearts
+                        } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 54; // two rows of hearts
                         } else {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 46; // one row of hearts
@@ -4259,7 +4339,9 @@ void Interface_Draw(PlayState* play) {
                     FALLTHROUGH;
                 case TIMER_STATE_UP_TICK:
                     if (gSaveContext.timerState == TIMER_STATE_UP_TICK) {
-                        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                        if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+                            gSaveContext.timerY[TIMER_ID_MAIN] = 64; // three rows of hearts
+                        } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 54; // two rows of hearts
                         } else {
                             gSaveContext.timerY[TIMER_ID_MAIN] = 46; // one row of hearts
@@ -4343,7 +4425,10 @@ void Interface_Draw(PlayState* play) {
                                    ((void)0, gSaveContext.timerY[TIMER_ID_SUB]), gSaveContext.subTimerSeconds);
                             svar1 = (gSaveContext.timerX[TIMER_ID_SUB] - 26) / sSubTimerStateTimer;
                             gSaveContext.timerX[TIMER_ID_SUB] -= svar1;
-                            if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                            if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+                                // three rows of hearts
+                                svar1 = (gSaveContext.timerY[TIMER_ID_SUB] - 64) / sSubTimerStateTimer;
+                            } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
                                 // two rows of hearts
                                 svar1 = (gSaveContext.timerY[TIMER_ID_SUB] - 54) / sSubTimerStateTimer;
                             } else {
@@ -4357,7 +4442,9 @@ void Interface_Draw(PlayState* play) {
                                 sSubTimerStateTimer = 20;
                                 gSaveContext.timerX[TIMER_ID_SUB] = 26;
 
-                                if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                                if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+                                    gSaveContext.timerY[TIMER_ID_SUB] = 64; // three rows of hearts
+                                } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
                                     gSaveContext.timerY[TIMER_ID_SUB] = 54; // two rows of hearts
                                 } else {
                                     gSaveContext.timerY[TIMER_ID_SUB] = 46; // one row of hearts
@@ -4374,7 +4461,9 @@ void Interface_Draw(PlayState* play) {
                         case SUBTIMER_STATE_UP_TICK:
                             if ((gSaveContext.subTimerState == SUBTIMER_STATE_DOWN_TICK) ||
                                 (gSaveContext.subTimerState == SUBTIMER_STATE_UP_TICK)) {
-                                if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+                                if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+                                    gSaveContext.timerY[TIMER_ID_SUB] = 64; // three rows of hearts
+                                } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
                                     gSaveContext.timerY[TIMER_ID_SUB] = 54; // two rows of hearts
                                 } else {
                                     gSaveContext.timerY[TIMER_ID_SUB] = 46; // one row of hearts
@@ -4554,8 +4643,8 @@ void Interface_Update(PlayState* play) {
     s16 risingAlpha;
     u16 action;
 
-#if (OOT_PAL || OOT_NTSC_N64) && DEBUG_FEATURES
-    if (Message_GetState(&play->msgCtx) == 0) {
+#if (OOT_PAL || OOT_NTSC_N64)
+    if (Message_GetState(&play->msgCtx) == 0 && (DEBUG_FEATURES || gSaveContext.debugMode)) {
         Input* debugInput = &play->state.input[2];
 
         if (CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {
@@ -4822,6 +4911,7 @@ void Interface_Update(PlayState* play) {
         if (gSaveContext.save.info.playerData.isMagicAcquired && (gSaveContext.save.info.playerData.magicLevel == 0)) {
             gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.isDoubleMagicAcquired + 1;
             gSaveContext.magicState = MAGIC_STATE_STEP_CAPACITY;
+            R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
             PRINTF_COLOR_YELLOW();
             PRINTF(T("魔法スター─────ト！！！！！！！！！\n", "Magic Start!!!!!!!!!\n"));
             PRINTF("MAGIC_MAX=%d\n", gSaveContext.save.info.playerData.magicLevel);

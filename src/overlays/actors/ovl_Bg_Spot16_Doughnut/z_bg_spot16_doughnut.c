@@ -80,7 +80,7 @@ void BgSpot16Doughnut_Init(Actor* thisx, PlayState* play) {
                 break;
         }
         PRINTF(VT_FGCOL(CYAN) "%f" VT_RST "\n", this->actor.scale.x);
-        if (!LINK_IS_ADULT || GET_EVENTCHKINF(EVENTCHKINF_2F)) {
+        if (!LINK_IS_ADULT_OR_TIMESKIP || GET_EVENTCHKINF(EVENTCHKINF_2F)) {
             this->fireFlag &= ~1;
         } else {
             this->fireFlag |= 1;
@@ -130,6 +130,9 @@ void BgSpot16Doughnut_Draw(Actor* thisx, PlayState* play) {
     BgSpot16Doughnut* this = (BgSpot16Doughnut*)thisx;
     u32 scroll = play->gameplayFrames & 0xFFFF;
     s32 pad;
+    
+    if ( ((play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY || play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT || play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS)) && GET_ACTIVE_CAM(play)->bgCamIndex == 1)
+        return;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_bg_spot16_doughnut.c", 210);
 

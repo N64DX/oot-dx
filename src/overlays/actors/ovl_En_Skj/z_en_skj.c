@@ -452,6 +452,7 @@ void EnSkj_Init(Actor* thisx, PlayState* play2) {
             }
 
             this->actor.colChkInfo.damageTable = &sDamageTable;
+            Actor_SetGildedSwordDamageTaken(thisx);
             this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(10, ELITE_HP);
             Collider_InitCylinder(play, &this->collider);
             Collider_SetCylinderType1(play, &this->collider, &this->actor, &D_80B01678);

@@ -1,0 +1,9 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_HIDAN_OBJECTS, // 1
+    OBJECT_ST, // 2
+    OBJECT_BOX, // 3
+    OBJECT_GOROIWA, // 4
+    OBJECT_FZ, // 5
+    OBJECT_EFC_FLASH, // 6
+    OBJECT_FIREFLY, // 7
+

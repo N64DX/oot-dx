@@ -815,6 +815,7 @@ void EnSt_Init(Actor* thisx, PlayState* play) {
     Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, ENST_ANIM_0);
     this->blureIdx = EnSt_CreateBlureEffect(play);
     EnSt_InitColliders(this, play);
+    Actor_SetGildedSwordDamageTaken(thisx);
     if (thisx->params == 2) {
         this->actor.flags |= ACTOR_FLAG_REACT_TO_LENS;
     }

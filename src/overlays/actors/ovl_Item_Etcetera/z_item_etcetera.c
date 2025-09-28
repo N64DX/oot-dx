@@ -58,6 +58,7 @@ static s16 sObjectIds[] = {
     OBJECT_GI_RUPY,          // ITEM_ETC_RUPEE_PURPLE_CHEST_GAME
     OBJECT_GI_HEARTS,        // ITEM_ETC_HEART_PIECE_CHEST_GAME
     OBJECT_GI_KEY,           // ITEM_ETC_KEY_SMALL_CHEST_GAME
+    OBJECT_GI_SWORD_HEROS,   // ITEM_ETC_SWORD_HEROS
 };
 
 // Indices passed to the item table in z_draw.c
@@ -76,6 +77,7 @@ static s16 sDrawItemIndices[] = {
     GID_RUPEE_PURPLE,        // ITEM_ETC_RUPEE_PURPLE_CHEST_GAME
     GID_HEART_PIECE,         // ITEM_ETC_HEART_PIECE_CHEST_GAME
     GID_SMALL_KEY,           // ITEM_ETC_KEY_SMALL_CHEST_GAME
+    GID_SWORD_HEROS,         // ITEM_ETC_SWORD_HEROS
 };
 
 static s16 sGetItemIds[] = {
@@ -93,6 +95,7 @@ static s16 sGetItemIds[] = {
     GI_NONE,                // ITEM_ETC_RUPEE_PURPLE_CHEST_GAME
     GI_NONE,                // ITEM_ETC_HEART_PIECE_CHEST_GAME
     GI_NONE,                // ITEM_ETC_KEY_SMALL_CHEST_GAME
+    GI_SWORD_HEROS,         // ITEM_ETC_SWORD_HEROS
 };
 
 void ItemEtcetera_SetupAction(ItemEtcetera* this, ItemEtceteraActionFunc actionFunc) {
@@ -144,6 +147,10 @@ void ItemEtcetera_Init(Actor* thisx, PlayState* play) {
             this->futureActionFunc = func_80B85B28;
             this->drawFunc = ItemEtcetera_DrawThroughLens;
             this->actor.world.pos.y += 15.0f;
+            break;
+        case ITEM_ETC_SWORD_HEROS:
+            if (HAS_HEROS_SWORD)
+                Actor_Kill(&this->actor);
             break;
     }
 }

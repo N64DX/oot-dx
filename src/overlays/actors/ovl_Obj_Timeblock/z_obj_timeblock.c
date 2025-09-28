@@ -63,6 +63,7 @@ typedef struct ObjTimeblockSizeOptions {
 static ObjTimeblockSizeOptions sSizeOptions[] = {
     { 1.0, 60.0, 0x0018 },
     { 0.60, 40.0, 0x0019 },
+    { 0.675, 43.75, 0x0019 },
 };
 
 static f32 sRanges[] = { 60.0, 100.0, 140.0, 180.0, 220.0, 260.0, 300.0, 300.0 };
@@ -102,7 +103,7 @@ u32 ObjTimeblock_CalculateIsVisible(ObjTimeblock* this) {
 void ObjTimeblock_SpawnDemoEffect(ObjTimeblock* this, PlayState* play) {
     Actor_Spawn(&play->actorCtx, play, ACTOR_DEMO_EFFECT, this->dyna.actor.world.pos.x, this->dyna.actor.world.pos.y,
                 this->dyna.actor.world.pos.z, 0, 0, 0,
-                sSizeOptions[PARAMS_GET_U(this->dyna.actor.params, 8, 1)].demoEffectParams);
+                sSizeOptions[PARAMS_GET_U(this->dyna.actor.params, 8, 2)].demoEffectParams);
 }
 
 void ObjTimeblock_ToggleSwitchFlag(PlayState* play, s32 flag) {
@@ -126,7 +127,7 @@ void ObjTimeblock_Init(Actor* thisx, PlayState* play) {
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
 
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
-    Actor_SetScale(&this->dyna.actor, sSizeOptions[PARAMS_GET_U(this->dyna.actor.params, 8, 1)].scale);
+    Actor_SetScale(&this->dyna.actor, sSizeOptions[PARAMS_GET_U(this->dyna.actor.params, 8, 2)].scale);
 
     if (PARAMS_GET_U(this->dyna.actor.params, 6, 1)) {
         this->unk_177 = 0;
@@ -136,7 +137,7 @@ void ObjTimeblock_Init(Actor* thisx, PlayState* play) {
 
     this->songObserverFunc = ObjTimeblock_WaitForOcarina;
 
-    Actor_SetFocus(&this->dyna.actor, sSizeOptions[PARAMS_GET_U(this->dyna.actor.params, 8, 1)].height);
+    Actor_SetFocus(&this->dyna.actor, sSizeOptions[PARAMS_GET_U(this->dyna.actor.params, 8, 2)].height);
 
     this->unk_174 = (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6))) ? true : false;
     this->unk_175 = PARAMS_GET_U(this->dyna.actor.params, 15, 1) ? true : false;

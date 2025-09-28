@@ -1,0 +1,5 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_BWALL, // 1
+    OBJECT_ZF, // 2
+    OBJECT_GI_HEART, // 3
+

@@ -112,10 +112,10 @@ EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_GORON_CITY_0, 2, EVENTCHKINF_A6, gGoronCityIntroCs, true },
     { ENTR_TEMPLE_OF_TIME_0, 2, EVENTCHKINF_A7, gTempleOfTimeIntroCs, true },
     { ENTR_DEKU_TREE_0, 2, EVENTCHKINF_A8, gDekuTreeIntroCs, true },
-    { ENTR_HYRULE_FIELD_11, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldSouthEponaJumpCs, false },
-    { ENTR_HYRULE_FIELD_13, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldEastEponaJumpCs, false },
-    { ENTR_HYRULE_FIELD_12, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldWestEponaJumpCs, false },
-    { ENTR_HYRULE_FIELD_15, 0, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldGateEponaJumpCs, false },
+    { ENTR_HYRULE_FIELD_11, 2, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldSouthEponaJumpCs, false },
+    { ENTR_HYRULE_FIELD_13, 2, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldEastEponaJumpCs, false },
+    { ENTR_HYRULE_FIELD_12, 2, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldWestEponaJumpCs, false },
+    { ENTR_HYRULE_FIELD_15, 2, EVENTCHKINF_EPONA_OBTAINED, gHyruleFieldGateEponaJumpCs, false },
     { ENTR_HYRULE_FIELD_16, 1, EVENTCHKINF_A9, gHyruleFieldGetOoTCs, false },
     { ENTR_LAKE_HYLIA_0, 2, EVENTCHKINF_B1, gLakeHyliaIntroCs, true },
     { ENTR_GERUDO_VALLEY_0, 2, EVENTCHKINF_B2, gGerudoValleyIntroCs, true },
@@ -134,8 +134,8 @@ EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_INSIDE_GANONS_CASTLE_5, 2, EVENTCHKINF_BE, gFireBarrierCs, false },
     { ENTR_INSIDE_GANONS_CASTLE_6, 2, EVENTCHKINF_BF, gLightBarrierCs, false },
     { ENTR_INSIDE_GANONS_CASTLE_7, 2, EVENTCHKINF_AD, gSpiritBarrierCs, false },
-    { ENTR_SPIRIT_TEMPLE_BOSS_0, 0, EVENTCHKINF_C0, gSpiritBossNabooruKnuckleIntroCs, false },
-    { ENTR_GERUDOS_FORTRESS_17, 0, EVENTCHKINF_C7, gGerudoFortressFirstCaptureCs, false },
+    { ENTR_SPIRIT_TEMPLE_BOSS_0, 2, EVENTCHKINF_C0, gSpiritBossNabooruKnuckleIntroCs, false },
+    { ENTR_GERUDOS_FORTRESS_17, 2, EVENTCHKINF_C7, gGerudoFortressFirstCaptureCs, false },
     { ENTR_DEATH_MOUNTAIN_CRATER_1, 2, EVENTCHKINF_B9, gDeathMountainCraterIntroCs, true },
     { ENTR_KOKIRI_FOREST_12, 2, EVENTCHKINF_C6, gKokiriForestDekuSproutPart3Cs, false },
 };
@@ -682,7 +682,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 } else {
                     if (!IS_CUTSCENE_LAYER) {
                         if (!LINK_IS_ADULT) {
-                            play->linkAgeOnLoad = LINK_AGE_ADULT;
+                            play->linkAgeOnLoad = IS_CHILD_QUEST ? LINK_AGE_CHILD : LINK_AGE_ADULT;
                         } else {
                             play->linkAgeOnLoad = LINK_AGE_CHILD;
                         }
@@ -802,7 +802,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_CHAMBER_OF_SAGES_LIGHT_MEDALLION:
-                play->linkAgeOnLoad = LINK_AGE_ADULT;
+                play->linkAgeOnLoad = IS_CHILD_QUEST ? LINK_AGE_CHILD : LINK_AGE_ADULT;
                 play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 gSaveContext.save.cutsceneIndex = 0xFFF0;
@@ -895,7 +895,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_TEMPLE_OF_TIME_GET_LIGHT_ARROWS:
-                play->linkAgeOnLoad = LINK_AGE_ADULT;
+                play->linkAgeOnLoad = IS_CHILD_QUEST ? LINK_AGE_CHILD : LINK_AGE_ADULT;
                 play->nextEntranceIndex = ENTR_TEMPLE_OF_TIME_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 gSaveContext.save.cutsceneIndex = 0xFFFA;
@@ -1046,7 +1046,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_KOKIRI_FOREST_CREDITS_PART_1:
-                play->linkAgeOnLoad = LINK_AGE_ADULT;
+                play->linkAgeOnLoad = IS_CHILD_QUEST ? LINK_AGE_CHILD : LINK_AGE_ADULT;
                 play->nextEntranceIndex = ENTR_KOKIRI_FOREST_0;
                 gSaveContext.save.cutsceneIndex = 0xFFF6;
                 play->transitionTrigger = TRANS_TRIGGER_START;
@@ -1109,10 +1109,12 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_TEMPLE_OF_TIME_CREDITS:
-                gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_TUNIC_KOKIRI << (EQUIP_TYPE_TUNIC * 4);
-                Player_SetEquipmentData(play, player);
-                gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_BOOTS_KOKIRI << (EQUIP_TYPE_BOOTS * 4);
-                Player_SetEquipmentData(play, player);
+                if (!IS_CHILD_QUEST) {
+                    gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_TUNIC_KOKIRI << (EQUIP_TYPE_TUNIC * 4);
+                    Player_SetEquipmentData(play, player);
+                    gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_BOOTS_KOKIRI << (EQUIP_TYPE_BOOTS * 4);
+                    Player_SetEquipmentData(play, player);
+                }
                 play->linkAgeOnLoad = LINK_AGE_CHILD;
                 play->nextEntranceIndex = ENTR_TEMPLE_OF_TIME_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
@@ -1153,7 +1155,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_LON_LON_RANCH_CREDITS_PART_4:
-                play->linkAgeOnLoad = LINK_AGE_ADULT;
+                play->linkAgeOnLoad = IS_CHILD_QUEST ? LINK_AGE_CHILD : LINK_AGE_ADULT;
                 play->nextEntranceIndex = ENTR_LON_LON_RANCH_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 gSaveContext.save.cutsceneIndex = 0xFFF5;
@@ -1429,7 +1431,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
             case CS_DEST_HYRULE_FIELD_CREDITS_SKY:
                 gSaveContext.gameMode = GAMEMODE_END_CREDITS;
                 Audio_SetSfxBanksMute(0x6F);
-                play->linkAgeOnLoad = LINK_AGE_ADULT;
+                play->linkAgeOnLoad = IS_CHILD_QUEST ? LINK_AGE_CHILD : LINK_AGE_ADULT;
                 play->nextEntranceIndex = ENTR_HYRULE_FIELD_0;
                 gSaveContext.save.cutsceneIndex = 0xFFF7;
                 play->transitionTrigger = TRANS_TRIGGER_START;
@@ -2419,6 +2421,11 @@ void Cutscene_HandleEntranceTriggers(PlayState* play) {
 }
 
 void Cutscene_HandleConditionalTriggers(PlayState* play) {
+    bool has_medallions;
+    if (IS_CHILD_QUEST)
+        has_medallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT) && CHECK_QUEST_ITEM(QUEST_MEDALLION_LIGHT);
+    else has_medallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT);
+
     PRINTF("\ngame_info.mode=[%d] restart_flag", ((void)0, gSaveContext.respawnFlag));
 
     if ((gSaveContext.gameMode == GAMEMODE_NORMAL) && (gSaveContext.respawnFlag <= 0) &&
@@ -2427,7 +2434,7 @@ void Cutscene_HandleConditionalTriggers(PlayState* play) {
             Flags_SetEventChkInf(EVENTCHKINF_AC);
             gSaveContext.save.entranceIndex = ENTR_DESERT_COLOSSUS_0;
             gSaveContext.save.cutsceneIndex = 0xFFF0;
-        } else if ((gSaveContext.save.entranceIndex == ENTR_KAKARIKO_VILLAGE_0) && LINK_IS_ADULT &&
+        } else if ((gSaveContext.save.entranceIndex == ENTR_KAKARIKO_VILLAGE_0) && LINK_IS_ADULT_OR_TIMESKIP &&
                    GET_EVENTCHKINF(EVENTCHKINF_48) && GET_EVENTCHKINF(EVENTCHKINF_49) &&
                    GET_EVENTCHKINF(EVENTCHKINF_4A) && !Flags_GetEventChkInf(EVENTCHKINF_AA)) {
             Flags_SetEventChkInf(EVENTCHKINF_AA);
@@ -2437,8 +2444,8 @@ void Cutscene_HandleConditionalTriggers(PlayState* play) {
             Item_Give(play, ITEM_OCARINA_FAIRY);
             gSaveContext.save.entranceIndex = ENTR_LOST_WOODS_0;
             gSaveContext.save.cutsceneIndex = 0xFFF0;
-        } else if (CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) &&
-                   LINK_IS_ADULT && !Flags_GetEventChkInf(EVENTCHKINF_C4) &&
+        } else if (has_medallions &&
+                   LINK_IS_ADULT_OR_TIMESKIP && !Flags_GetEventChkInf(EVENTCHKINF_C4) &&
                    (gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId == SCENE_TEMPLE_OF_TIME)) {
             Flags_SetEventChkInf(EVENTCHKINF_C4);
             gSaveContext.save.entranceIndex = ENTR_TEMPLE_OF_TIME_0;

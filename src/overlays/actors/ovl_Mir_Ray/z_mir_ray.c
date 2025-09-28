@@ -19,6 +19,7 @@
 #include "light.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_mir_ray/object_mir_ray.h"
 
@@ -500,7 +501,7 @@ void MirRay_Draw(Actor* thisx, PlayState* play) {
             Matrix_Scale(1.0f, 1.0f, this->reflectIntensity * 5.0f, MTXMODE_APPLY);
             MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_mir_ray.c", 972);
             gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 255, 255, 150, (s32)(this->reflectIntensity * 100.0f) & 0xFF);
-            gSPDisplayList(POLY_XLU_DISP++, gShieldBeamGlowDL);
+            gSPDisplayList(POLY_XLU_DISP++, LINK_IS_CHILD ? gMajoraShieldBeamGlowDL : gShieldBeamGlowDL);
             MirRay_SetupReflectionPolys(this, play, reflection);
             MirRay_RemoveSimilarReflections(reflection);
             MirRay_ReflectedBeam(this, play, reflection);
@@ -523,7 +524,7 @@ void MirRay_Draw(Actor* thisx, PlayState* play) {
                     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_mir_ray.c", 1006);
                     gDPSetRenderMode(POLY_XLU_DISP++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2);
                     gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 255, 255, 150, reflection[0].opacity);
-                    gSPDisplayList(POLY_XLU_DISP++, gShieldBeamImageDL);
+                    gSPDisplayList(POLY_XLU_DISP++, LINK_IS_CHILD ? gMajoraShieldBeamImageDL : gShieldBeamImageDL);
                 }
             }
 

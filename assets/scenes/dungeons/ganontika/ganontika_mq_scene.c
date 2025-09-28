@@ -1,6 +1,6 @@
 #include "assets/scenes/dungeons/ganontika/ganontika_scene.h"
 
-static SceneCmd* questHeaders[1];
+static SceneCmd* questHeaders[3];
 
 static SceneCmd start[] = {
 #include "assets/scenes/dungeons/start.inc.c"
@@ -56,6 +56,16 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/ganontika/mq/scene/header.inc.c"
 };
 
+static s16 cq_exit_list[] = {
+#include "assets/scenes/dungeons/ganontika/cq/scene/exitList.inc.c"
+};
+
+static SceneCmd cq_header[] = {
+#include "assets/scenes/dungeons/ganontika/cq/scene/header.inc.c"
+};
+
 static SceneCmd* questHeaders[] = {
-#include "assets/scenes/dungeons/questHeaders.inc.c"
+    mq_header, // 0
+    NULL,      // 1
+    cq_header, // 2
 };

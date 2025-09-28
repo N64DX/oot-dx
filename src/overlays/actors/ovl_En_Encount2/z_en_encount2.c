@@ -61,7 +61,7 @@ void EnEncount2_Init(Actor* thisx, PlayState* play) {
         PRINTF(VT_FGCOL(GREEN) T("☆☆☆☆☆ デスマウンテンエンカウント２セットされました ☆☆☆☆☆ %d\n",
                                  "☆☆☆☆☆ Death Mountain Encount2 set ☆☆☆☆☆ %d\n") VT_RST,
                this->actor.params);
-        if (LINK_IS_ADULT && GET_EVENTCHKINF(EVENTCHKINF_49)) { // flag for having used fire temple blue warp
+        if (LINK_IS_ADULT_OR_TIMESKIP && GET_EVENTCHKINF(EVENTCHKINF_49)) { // flag for having used fire temple blue warp
             Actor_Kill(thisx);
         }
     } else {
@@ -212,7 +212,7 @@ void EnEncount2_SpawnRocks(EnEncount2* this, PlayState* play) {
             if (spawnerState == ENCOUNT2_ACTIVE_DEATH_MOUNTAIN) {
                 this->timerBetweenRockSpawns = 4;
                 spawnedRockType = FIRE_ROCK_SPAWNED_FALLING1;
-                if ((Rand_ZeroFloat(1.99f) < 1.0f) && !LINK_IS_ADULT) {
+                if ((Rand_ZeroFloat(1.99f) < 1.0f) && !LINK_IS_ADULT_OR_TIMESKIP) {
                     // rock spawn pos X, Z near player
                     tempVec2X = Rand_CenteredFloat(10.0f) + player->actor.world.pos.x;
                     tempVec2Z = Rand_CenteredFloat(10.0f) + player->actor.world.pos.z;

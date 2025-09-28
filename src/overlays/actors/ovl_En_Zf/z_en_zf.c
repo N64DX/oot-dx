@@ -315,6 +315,7 @@ void EnZf_Init(Actor* thisx, PlayState* play) {
     this->unk_3E0 = 0;
     thisx->colChkInfo.mass = MASS_HEAVY;
     thisx->colChkInfo.damageTable = &sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
 
     blureInit.p1StartColor[0] = blureInit.p1StartColor[1] = blureInit.p1StartColor[2] = blureInit.p1StartColor[3] =
         blureInit.p2StartColor[0] = blureInit.p2StartColor[1] = blureInit.p2StartColor[2] = blureInit.p1EndColor[0] =

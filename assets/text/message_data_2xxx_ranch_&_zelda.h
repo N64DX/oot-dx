@@ -43,8 +43,7 @@ SHIFT(36) "お礼を　言わなくちゃ！"
 BOX_BREAK
 
 UNSKIPPABLE SHIFT(12) "ありがとう　" NAME "！"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Thank you very much for the \n"
 "other day... I haven't even asked\n"
@@ -94,8 +93,7 @@ BOX_BREAK
 
 UNSKIPPABLE "Thank you! Thank you,\n"
 NAME "!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Vielen Dank nochmal für \n"
 "die Hilfe... Ich weiß nicht\n"
@@ -146,8 +144,7 @@ UNSKIPPABLE "Das alles haben wir Dir zu\n"
 BOX_BREAK
 
 UNSKIPPABLE "Vielen Dank, " NAME "!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Merci encore pour l'autre jour...\n"
 "Au fait...\n"
@@ -212,8 +209,7 @@ BOX_BREAK
 SHIFT(15) "エポナと　いっしょに　くれば、\n"
 SHIFT(39) "この牧場で　いつでも\n"
 COLOR(RED) "エポナのトレーニング" COLOR(DEFAULT) "、できるわヨ！"
-)
-,
+),
 MSG(
 "How is " COLOR(RED) "Epona " COLOR(DEFAULT) "doing?"
 BOX_BREAK
@@ -226,8 +222,7 @@ BOX_BREAK
 "Please come back to the ranch\n"
 "whenever you want to " COLOR(RED) "train \n"
 COLOR(DEFAULT) "Epona!"
-)
-,
+),
 MSG(
 "Wie geht es " COLOR(RED) "Epona" COLOR(DEFAULT) "?"
 BOX_BREAK
@@ -240,8 +235,7 @@ BOX_BREAK
 "Wann immer Du mit Epona \n"
 COLOR(RED) "trainieren" COLOR(DEFAULT) " möchtest, kannst Du \n"
 "gern zur Farm zurückkehren!"
-)
-,
+),
 MSG(
 "Comment se porte " COLOR(RED) "Epona" COLOR(DEFAULT) "?"
 BOX_BREAK
@@ -260,20 +254,17 @@ MSG(
 UNSKIPPABLE SHIFT(12) "エポナ　とっても　元気そう！\n"
 SHIFT(12) NAME "にも\n"
 SHIFT(12) "よく　なついているみたいだし。" TEXTID(0x2003)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Epona" COLOR(RED) " " COLOR(DEFAULT) "looks great!\n"
 "It looks like you were able\n"
 "to tame her, too!" TEXTID(0x2003)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Epona" COLOR(RED) " " COLOR(DEFAULT) "sieht prächtig aus!\n"
 "Es scheint Dir gelungen zu sein,\n"
 "sie zu zähmen!" TEXTID(0x2003)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Epona" COLOR(RED) " " COLOR(DEFAULT) "est en pleine forme!\n"
 "On dirait que tu as réussi à la \n"
@@ -297,8 +288,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "スタートする\n"
     "やめておく" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "How about trying your skill with\n"
 "Epona on an " COLOR(RED) "obstacle course" COLOR(DEFAULT) "?"
@@ -315,8 +305,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Let's go\n"
     "Don't do it" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Warum versuchst Du Dich nicht mit\n"
 "Epona an dem " COLOR(RED) "Hindernisparcours" COLOR(DEFAULT) "?"
@@ -333,8 +322,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Pourquoi ne pas mettre tes talents\n"
 "de cavalier à l'épreuve avec une\n"
@@ -364,8 +352,7 @@ BOX_BREAK
 
 SHIFT(6) "低いサクは　スピードをおさえて、\n"
 "高いサクは　スピードに乗せなきゃ！"
-)
-,
+),
 MSG(
 "Well, your time was " COLOR(RED) RACE_TIME COLOR(DEFAULT) ".\n"
 "You have to train harder!"
@@ -375,8 +362,7 @@ BOX_BREAK
 "accelerate to jump over low \n"
 "fences, but you do need to go\n"
 "fast to jump the high fences!"
-)
-,
+),
 MSG(
 "Nun, Deine Zeit war " COLOR(RED) RACE_TIME COLOR(DEFAULT) ".\n"
 "Nicht besonders gut..."
@@ -386,8 +372,7 @@ BOX_BREAK
 "beschleunigen, um über die hohen \n"
 "Hindernisse zu springen. Die\n"
 "niedrigen nimmt Epona auch so."
-)
-,
+),
 MSG(
 "Ton temps est de " COLOR(RED) RACE_TIME COLOR(DEFAULT) ".\n"
 "Il te faut plus d'entraînement!"
@@ -403,18 +388,15 @@ DEFINE_MESSAGE(0x2005, TEXTBOX_TYPE_NONE_NO_SHADOW, TEXTBOX_POS_MIDDLE,
 MSG(
 NAME "…　きこえますか？\n"
 "わたしです、ゼルダです！" FADE(60)
-)
-,
+),
 MSG(
 NAME "...can you hear me?\n"
 "It's me, Zelda..." FADE(60)
-)
-,
+),
 MSG(
 NAME ", kannst Du mich\n"
 "hören? Ich bin es, Zelda..." FADE(60)
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(9) NAME "... M'entends-tu?\n"
 SHIFT(48) "C'est moi...Zelda..." FADE(60)
@@ -432,8 +414,7 @@ BOX_BREAK
 
 SHIFT(24) "あんまり　気分が　いいから\n"
 SHIFT(15) "ミルクも　たっぷり　でるわ〜。" EVENT
-)
-,
+),
 MSG(
 SFX(NA_SE_EV_COW_CRY) "Moooooooooo!"
 BOX_BREAK
@@ -444,8 +425,7 @@ BOX_BREAK
 
 "That song makes me feel so good,\n"
 "I can produce a lot of milk!" EVENT
-)
-,
+),
 MSG(
 SFX(NA_SE_EV_COW_CRY) "Muuuuuuuuuuuuuuuuuuuuuuuuuuuuh!"
 BOX_BREAK
@@ -456,8 +436,7 @@ BOX_BREAK
 
 "Muh, nach diesem Lied könnte\n"
 "ich literweise Milch geben..." EVENT
-)
-,
+),
 MSG(
 SFX(NA_SE_EV_COW_CRY) "Meuuuuuuu!"
 BOX_BREAK
@@ -475,19 +454,16 @@ DEFINE_MESSAGE(0x2007, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(36) "あなたにも　あげるわ。\n"
 SHIFT(9) "とっても　元気になる　ミルクよ。" EVENT
-)
-,
+),
 MSG(
 "Have some of my refreshing and \n"
 "nutritious milk!" EVENT
-)
-,
+),
 MSG(
 "Hier, nimm etwas von der \n"
 "erfrischenden und nahrhaften \n"
 "Milch!" EVENT
-)
-,
+),
 MSG(
 "Prends donc un peu de mooooon \n"
 "déliceuuuuux lait!" EVENT
@@ -510,8 +486,7 @@ BOX_BREAK_DELAYED(60)
 
 SHIFT(33) "せめて　" COLOR(LIGHTBLUE) "このメロディ" COLOR(DEFAULT) "を\n"
 SHIFT(12) "オカリナに　こめて　送ります…" FADE(60)
-)
-,
+),
 MSG(
 NAME ", when you hold\n"
 "this Ocarina in your hand..."
@@ -526,8 +501,7 @@ BOX_BREAK_DELAYED(60)
 
 "At least I could leave you the \n"
 "Ocarina and " COLOR(LIGHTBLUE) "this melody" COLOR(DEFAULT) "..." FADE(60)
-)
-,
+),
 MSG(
 NAME ", nun, da Du die \n"
 "Okarina in Händen hältst..."
@@ -543,8 +517,7 @@ BOX_BREAK_DELAYED(60)
 "Zumindest konnte ich Dir die \n"
 "Okarina übergeben...\n"
 "Und diese " COLOR(LIGHTBLUE) "Melodie" COLOR(DEFAULT) "..." FADE(60)
-)
-,
+),
 MSG(
 NAME ", quand tu trouveras\n"
 "cet ocarina..."
@@ -567,22 +540,19 @@ MSG(
 UNSKIPPABLE SHIFT(81) "　さあ！\n"
 SHIFT(3) "時の神殿の　石板の前で、この歌を！\n"
 "トライフォースは　あなたが守って！"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Now, " NAME ".\n"
 "Play this melody in front of the\n"
 "altar in the Temple of Time.\n"
 "You must protect the Triforce!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Wohlan, " NAME ".\n"
 "Spiele diese Melodie in der\n"
 "Zitadelle der Zeit vor dem \n"
 "Zeitaltar!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Va, " NAME ".\n"
 "Entonne ce chant devant l'autel du\n"
@@ -608,8 +578,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(6) "うちのボーズの　お気に入りでね。\n"
 SHIFT(21) "その「キーなんとか」のお面、\n"
 SHIFT(27) "できたらで　いいんだが…" TEXTID(0x200B)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Wha-ha-ha-hah! Do you think \n"
 "you're in disguise, Mr. Hero?"
@@ -626,8 +595,7 @@ BOX_BREAK
 UNSKIPPABLE "He's my boy's favorite. That\n"
 "\"Kee...something...\" mask...\n"
 "If you don't mind..." TEXTID(0x200B)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Ha! Denkst Du wirklich, daß ich \n"
 "Dich nicht erkenne?"
@@ -644,8 +612,7 @@ BOX_BREAK
 UNSKIPPABLE "Mein Sohn ist ganz verrückt\n"
 "danach! \n"
 "Wie wäre es, wenn..." TEXTID(0x200B)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Wha-ha-ha-hah! Alors comme ça \n"
 "on s'déguise, p'tite tête?"
@@ -672,24 +639,21 @@ MSG(
 TWO_CHOICE
     COLOR(ADJUSTABLE) "はい\n"
     "いやだ" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Will you sell it to me?\n"
 "\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No way" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Würdest Du sie mir verkaufen?\n"
 "\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Marché conclu?\n"
 "\n"
@@ -704,21 +668,18 @@ MSG(
 SHIFT(15) "ム、わたしは　あきらめないよ。\n"
 SHIFT(9) "仕事がら、忍耐力は　あるからね。\n"
 SHIFT(42) "ハッ　ハッ　ハッ　ハ！" EVENT
-)
-,
+),
 MSG(
 "I won't give up! I have plenty of\n"
 "patience. I have to for this \n"
 "job!  Hah hah hah!" EVENT
-)
-,
+),
 MSG(
 "Schade, doch ich gebe nicht auf!\n"
 "Ich habe sehr viel Geduld. Sonst\n"
 "würde ich hier auch nicht den\n"
 "ganzen Tag herumstehen!" EVENT
-)
-,
+),
 MSG(
 "Je ne lâcherai pas le morceau!\n"
 "J'ai de la patience, tu sais!\n"
@@ -747,8 +708,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(12) "ぼーやにゃ　世話になったから、\n"
 SHIFT(6) "ウチのじまんの" COLOR(RED) "牛乳" COLOR(DEFAULT) "　やるだーよ。\n"
 SHIFT(6) "入れ物のビンは　オマケしとくだ。"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Mmmm...mumble...mumble...\n"
 "Huh? Yeah, I'm awake!"
@@ -768,8 +728,7 @@ BOX_BREAK
 UNSKIPPABLE "You took care of us, so I'm proud \n"
 "to give you this " COLOR(RED) "milk" COLOR(DEFAULT) "! You can \n"
 "keep the bottle for yourself."
-)
-,
+),
 MSG(
 UNSKIPPABLE "Gähn...\n"
 "Schon gut, ich bin wach..."
@@ -790,8 +749,7 @@ UNSKIPPABLE "Du hast uns sehr geholfen. \n"
 "Deshalb möchte ich, daß Du diese \n"
 COLOR(RED) "Milch" COLOR(DEFAULT) " an Dich nimmst. Du kannst\n"
 "auch die Flasche behalten!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Mmmm...(baille)...quoi?...\n"
 "Hein? Ouais, ouais. J'suis réveillé!"
@@ -823,8 +781,7 @@ BOX_BREAK
 SHIFT(63) "ん？　そうか…\n"
 SHIFT(36) "こどもには　読めんな。\n"
 SHIFT(60) "ハッハッハ！！"
-)
-,
+),
 MSG(
 "The " COLOR(RED) "road is closed " COLOR(DEFAULT) "beyond this\n"
 "point!\n"
@@ -835,8 +792,7 @@ BOX_BREAK
 "Eh? Oh, I see. You're just a kid,\n"
 "and you can't read yet. \n"
 "Ha ha hah!"
-)
-,
+),
 MSG(
 "Das Passieren ist " COLOR(RED) "nur mit \n"
 "königlicher Erlaubnis" COLOR(DEFAULT) " möglich!"
@@ -845,8 +801,7 @@ BOX_BREAK
 "Hast Du das Schild nicht gelesen?\n"
 "Oh, Du bist ja noch ein Kind,\n"
 "sicher kannst Du gar nicht lesen..."
-)
-,
+),
 MSG(
 "Au-delà de cette limite, la " COLOR(RED) "route \n"
 "est fermée" COLOR(DEFAULT) "!\n"
@@ -863,16 +818,13 @@ BOX_BREAK
 DEFINE_MESSAGE(0x200F, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(42) "そんなもの　いらん！"
-)
-,
+),
 MSG(
 "I don't want that!"
-)
-,
+),
 MSG(
 "Was soll ich damit?!"
-)
-,
+),
 MSG(
 "J'en veux pas d'ce machin!"
 )
@@ -898,8 +850,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(18) "まぁ　よかろう、通るが　よい！\n"
 SHIFT(15) "気をつけて　行けよ、勇者クン！\n"
 SHIFT(42) TEXT_SPEED(2) "ハーッハッハッハ" TEXT_SPEED(0) "！！" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Oh, this is...\n"
 "This is surely Princess Zelda's \n"
@@ -920,8 +871,7 @@ BOX_BREAK
 UNSKIPPABLE "OK, OK, all right.  You can go \n"
 "now... Just be careful, Mr. Hero!\n"
 TEXT_SPEED(1) QUICKTEXT_ENABLE "Wah" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "hah" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "ha" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "ha" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "hah!" QUICKTEXT_DISABLE TEXT_SPEED(0) EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Oh, das scheint...\n"
 "In der Tat, es ist Zeldas \n"
@@ -943,8 +893,7 @@ BOX_BREAK
 UNSKIPPABLE "Wie dem auch sei, Du kannst \n"
 "passieren, Zwergenheld!\n"
 TEXT_SPEED(1) "Hahaha!" TEXT_SPEED(0) EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Oh, n'est-ce pas...\n"
 "Mais si! C'est l'écriture de la\n"
@@ -973,20 +922,17 @@ MSG(
 SHIFT(54) "おや　勇者クン、\n"
 SHIFT(42) "おつとめ　ごくろう！\n"
 SHIFT(63) TEXT_SPEED(1) "ハッハッハ" TEXT_SPEED(0) "！"
-)
-,
+),
 MSG(
 "Oh, Mr. Hero!\n"
 "Thanks for all your hard work!\n"
 TEXT_SPEED(1) QUICKTEXT_ENABLE "Wah" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "ha" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "ha" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "hah" QUICKTEXT_DISABLE TEXT_SPEED(0) "!!"
-)
-,
+),
 MSG(
 "Ah, unser Held!\n"
 "Vielen Dank für Deine Bemühungen!\n"
 TEXT_SPEED(1) "Hahaha!" TEXT_SPEED(0) "!"
-)
-,
+),
 MSG(
 "Oh, le Preux Chevalier!\n"
 "Merci de sauver Hyrule!\n"
@@ -999,22 +945,19 @@ MSG(
 SHIFT(60) "すっご〜い！！\n"
 SHIFT(48) COLOR(RED) RACE_TIME COLOR(DEFAULT) "　よ！\n"
 SHIFT(21) "エポナと　息が　ピッタリね！"
-)
-,
+),
 MSG(
 "Wow! Great!\n"
 "Your time was " COLOR(RED) RACE_TIME COLOR(DEFAULT) "!\n"
 "You and Epona are a great\n"
 "team!"
-)
-,
+),
 MSG(
 "Wow! Nicht schlecht!\n"
 "Deine Zeit war " COLOR(RED) RACE_TIME COLOR(DEFAULT) "!\n"
 "Epona und Du, Ihr seid ein\n"
 "gutes Team!"
-)
-,
+),
 MSG(
 "Woah! Génial!\n"
 "Ton temps est de " COLOR(RED) RACE_TIME COLOR(DEFAULT) "!\n"
@@ -1028,21 +971,18 @@ MSG(
 SHIFT(42) "あら、ざんねんだわ。\n"
 SHIFT(21) "入れ物があれば　あなたにも\n"
 SHIFT(36) "あげられるんだけど…" EVENT
-)
-,
+),
 MSG(
 "Oh, that's too bad.\n"
 "If you had something to put it in,\n"
 "I could give some to you..." EVENT
-)
-,
+),
 MSG(
 "Oh, das ist schade...\n"
 "Du hast keine leere Flasche, sonst \n"
 "hätte ich Dir etwas von meiner \n"
 "Milch gegeben..." EVENT
-)
-,
+),
 MSG(
 "Ooooooh, quel doooommage.\n"
 "Si tu avais une bouteille, j'aurais \n"
@@ -1054,21 +994,18 @@ DEFINE_MESSAGE(0x2014, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 SHIFT(9) "オレは　馬の世話係の　" COLOR(RED) "インゴー" COLOR(DEFAULT) "。\n"
 SHIFT(15) "仕事のジャマだ、どきな　小僧！"
-)
-,
+),
 MSG(
 "I am " COLOR(RED) "Ingo" COLOR(DEFAULT) "--Mr. Ingo to you.\n"
 "I take care of these horses.\n"
 "You're in my way, so scram,\n"
 "kid!"
-)
-,
+),
 MSG(
 "Ich bin " COLOR(RED) "Basil" COLOR(DEFAULT) "... für Dich natürlich\n"
 "\"Herr Basil\". Du bist mir im Weg,\n"
 "Kleiner! Verschwinde!"
-)
-,
+),
 MSG(
 "Mon nom est " COLOR(RED) "Ingo" COLOR(DEFAULT) "--Monsieur Ingo.\n"
 "Je prends soin des chevaux.\n"
@@ -1118,8 +1055,7 @@ UNSKIPPABLE SHIFT(21) "仕方ないよな…　仕事だし…"
 BOX_BREAK
 
 UNSKIPPABLE SHIFT(75) "…はあ。" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "By the way, Mr. Hero..."
 BOX_BREAK
@@ -1173,8 +1109,7 @@ UNSKIPPABLE "Well, I have no choice, this is my \n"
 BOX_BREAK
 
 UNSKIPPABLE SHIFT(75) "...sigh..." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Ach, Herr Nachwuchsheld..."
 BOX_BREAK
@@ -1230,8 +1165,7 @@ UNSKIPPABLE "Wie gesagt, ich kann hier nicht \n"
 BOX_BREAK
 
 UNSKIPPABLE SHIFT(76) "Seufz..." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Au fait, Preux Chevalier..."
 BOX_BREAK
@@ -1284,8 +1218,7 @@ MSG(
 "ウチのボーズの　オミヤゲを　買いに\n"
 SHIFT(6) "町の　" COLOR(RED) "お面屋" COLOR(DEFAULT) "まで　行きたいなぁ…\n"
 SHIFT(75) "…はあ。"
-)
-,
+),
 MSG(
 "I wish I could go to the " COLOR(RED) "mask\n"
 "shop " COLOR(DEFAULT) "in town to buy a present for\n"
@@ -1293,8 +1226,7 @@ MSG(
 BOX_BREAK
 
 SHIFT(75) "...sigh..."
-)
-,
+),
 MSG(
 "Ich wünschte, ich könnte zum \n"
 COLOR(RED) "Maskenhändler" COLOR(DEFAULT) " gehen und meinem \n"
@@ -1302,8 +1234,7 @@ COLOR(RED) "Maskenhändler" COLOR(DEFAULT) " gehen und meinem \n"
 BOX_BREAK
 
 SHIFT(76) "Seufz..."
-)
-,
+),
 MSG(
 "J'aimerais tant pouvoir me rendre \n"
 "à la " COLOR(RED) "Foire aux Masques " COLOR(DEFAULT) "..."
@@ -1316,16 +1247,13 @@ SHIFT(75) "...pfff..."
 DEFINE_MESSAGE(0x2017, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(27) "だめだ…　息をしてない…"
-)
-,
+),
 MSG(
 "Oh no... He's not breathing..."
-)
-,
+),
 MSG(
 "Oh nein... Er atmet nicht mehr..."
-)
-,
+),
 MSG(
 "Il est bel et bien mort..."
 )
@@ -1334,16 +1262,13 @@ MSG(
 DEFINE_MESSAGE(0x2018, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(42) NAME "！？"
-)
-,
+),
 MSG(
 NAME "!?"
-)
-,
+),
 MSG(
 NAME "!?"
-)
-,
+),
 MSG(
 NAME "!?"
 )
@@ -1352,16 +1277,13 @@ NAME "!?"
 DEFINE_MESSAGE(0x2019, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE SHIFT(42) QUICKTEXT_ENABLE "ちっ…" QUICKTEXT_DISABLE "　逃がしたか！"
-)
-,
+),
 MSG(
 UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(41) "Arrrrgh!" QUICKTEXT_DISABLE " I lost her!"
-)
-,
+),
 MSG(
 UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(30) "Verdammt!" QUICKTEXT_DISABLE " Sie ist fort!"
-)
-,
+),
 MSG(
 UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(16) "Tssss...!" QUICKTEXT_DISABLE " Elle s'est échappée!"
 )
@@ -1370,18 +1292,15 @@ UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(16) "Tssss...!" QUICKTEXT_DISABLE " Elle s'es
 DEFINE_MESSAGE(0x201A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE SHIFT(57) "…そこの小僧！"
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(50) "You, over there! \n"
 SHIFT(60) QUICKTEXT_ENABLE "Little kid!" QUICKTEXT_DISABLE
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(74) "Du da! \n"
 SHIFT(57) QUICKTEXT_ENABLE "Kleiner Wicht!" QUICKTEXT_DISABLE
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(65) "Toi, là-bas!\n"
 SHIFT(65) QUICKTEXT_ENABLE "Moucheron!" QUICKTEXT_DISABLE
@@ -1393,22 +1312,19 @@ MSG(
 UNSKIPPABLE SHIFT(78) "フッ…\n"
 SHIFT(33) "やるのか、このオレと…\n"
 SHIFT(30) "面白い…　気に入ったぞ！"
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(58) TEXT_SPEED(10) QUICKTEXT_ENABLE "Heh" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "heh" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "heh" QUICKTEXT_DISABLE "..." TEXT_SPEED(0) "\n"
 SHIFT(28) "You want a piece of me?!\n"
 SHIFT(62) "Very funny!\n"
 SHIFT(42) "I like your attitude!"
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(65) TEXT_SPEED(10) QUICKTEXT_ENABLE "Ha" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "Ha" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "Ha" QUICKTEXT_DISABLE "..." TEXT_SPEED(0) "\n"
 SHIFT(58) "Du hast Mut!\n"
 SHIFT(23) "Doch Mut kann manchmal...\n"
 SHIFT(57) "...tödlich sein!"
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(67) TEXT_SPEED(10) QUICKTEXT_ENABLE "Ha" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "ha" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "ha" QUICKTEXT_DISABLE "..." TEXT_SPEED(0) "\n"
 SHIFT(26) "Tu cherches le contact?!\n"
@@ -1421,20 +1337,17 @@ DEFINE_MESSAGE(0x201C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE SHIFT(81) QUICKTEXT_ENABLE "小僧！" QUICKTEXT_DISABLE "\n"
 SHIFT(3) "オレの名を　おぼえておくがいい…"
-)
-,
+),
 MSG(
 UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(43) "Pathetic little fool!" QUICKTEXT_DISABLE "\n"
 SHIFT(20) "Do you realize who you are\n"
 SHIFT(57) "dealing with?!"
-)
-,
+),
 MSG(
 UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(54) "Armseliger Tropf!" QUICKTEXT_DISABLE "\n"
 SHIFT(50) "Weißt Du, wem Du \n"
 SHIFT(51) "gegenüberstehst?!"
-)
-,
+),
 MSG(
 UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(52) "Insecte ridicule!" QUICKTEXT_DISABLE "\n"
 SHIFT(25) "Sais-tu bien qui je suis?!"
@@ -1445,18 +1358,15 @@ DEFINE_MESSAGE(0x201D, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE SHIFT(24) "オレの名は　" COLOR(RED) "ガノンドロフ" COLOR(DEFAULT) "！\n"
 SHIFT(24) "世界の支配者となる者だ！！" QUICKTEXT_DISABLE
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(52) "I am " COLOR(RED) "Ganondorf" COLOR(DEFAULT) "!\n"
 QUICKTEXT_ENABLE SHIFT(10) "And soon, I will rule the world!" QUICKTEXT_DISABLE
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(45) "Ich bin " COLOR(RED) "Ganondorf" COLOR(DEFAULT) "!\n"
 QUICKTEXT_ENABLE SHIFT(30) "Der König der Gerudos!" QUICKTEXT_DISABLE
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(45) "Je suis " COLOR(RED) "Ganondorf" COLOR(DEFAULT) "!\n"
 QUICKTEXT_ENABLE SHIFT(4) "Et sous peu, le monde sera mien!" QUICKTEXT_DISABLE
@@ -1467,22 +1377,19 @@ DEFINE_MESSAGE(0x201E, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE SHIFT(33) "今　白馬を　見たはずだ。\n"
 "どっちへ行ったか　教えてもらおう！"
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(13) "You must have seen the white\n"
 SHIFT(18) "horse gallop past just now...\n"
 SHIFT(35) "Which way did it go?!\n"
 SHIFT(61) QUICKTEXT_ENABLE "Answer me!!" QUICKTEXT_DISABLE
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(34) "Du mußt das weiße Pferd\n"
 SHIFT(32) "gesehen haben! In welche\n"
 SHIFT(16) "Richtung sind sie entkommen?!\n"
 SHIFT(57) QUICKTEXT_ENABLE "Antworte mir!" QUICKTEXT_DISABLE
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(3) "Un destrier blanc vient de passer\n"
 SHIFT(46) "il y a un instant...\n"
@@ -1495,18 +1402,15 @@ DEFINE_MESSAGE(0x201F, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(45) "ちっ、時間がきたら\n"
 SHIFT(33) "出てってもらうからな！"
-)
-,
+),
 MSG(
 "Tsk tsk...When your time is\n"
 "up, I'll kick you out of here."
-)
-,
+),
 MSG(
 "Wenn die Zeit abgelaufen ist,\n"
 "sage ich Dir Bescheid..."
-)
-,
+),
 MSG(
 "Tsss... Bientôt je te ficherai\n"
 "tout ça dehors."
@@ -1518,20 +1422,17 @@ MSG(
 SHIFT(15) "これで　ボーズも　よろこぶよ。\n"
 SHIFT(42) "さすが　勇者クンだ！\n"
 SHIFT(63) "ハッハッハ！" EVENT
-)
-,
+),
 MSG(
 "My boy will be very happy with \n"
 "this! You really are Mr. Hero!\n"
 "Wha ha ha hah!" EVENT
-)
-,
+),
 MSG(
 "Mein Sohn wird sich sehr über die\n"
 "Maske freuen! Vielen Dank,\n"
 "mein Freund!" EVENT
-)
-,
+),
 MSG(
 "Mon gamin sera fou de joie!\n"
 "Tu es vraiment un Preux Chevalier!\n"
@@ -1548,8 +1449,7 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(27) "お面の代金　" COLOR(RED) "１０ルピー" COLOR(DEFAULT) "を\n"
 SHIFT(27) "お面屋へ　納めに　行こう。" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE SFX(NA_SE_SY_TRE_BOX_APPEAR) "You sold the 10-Rupee mask for \n"
 COLOR(RED) "15 Rupees" COLOR(DEFAULT) ". You earned a little\n"
@@ -1559,8 +1459,7 @@ BOX_BREAK
 UNSKIPPABLE "Let's go to the Mask Shop and\n"
 "pay back the mask price of \n"
 COLOR(RED) "10 Rupees" COLOR(DEFAULT) "." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE SFX(NA_SE_SY_TRE_BOX_APPEAR) "Du hast die Maske, für die Du\n"
 "10 Rubine bezahlen mußt, für " COLOR(RED) "15 \n"
@@ -1571,8 +1470,7 @@ BOX_BREAK
 UNSKIPPABLE "Geh nun zum Maskenhändler\n"
 "zurück und gib ihm seine\n"
 COLOR(RED) "10 Rubine" COLOR(DEFAULT) "." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE SFX(NA_SE_SY_TRE_BOX_APPEAR) "Vous vendez le masque pour\n"
 COLOR(RED) "15 Rubis" COLOR(DEFAULT) ". Vous gardez les\n"
@@ -1599,8 +1497,7 @@ BOX_BREAK
 SHIFT(18) "けど、ボクの　カワイイ顔じゃ\n"
 SHIFT(18) "ドキドキしないでしゅよね…\n"
 SHIFT(69) "やっぱり。"
-)
-,
+),
 MSG(
 "Little kids can't go on the \n"
 "\"" COLOR(RED) "Heart-Pounding Gravedigging\n"
@@ -1614,8 +1511,7 @@ BOX_BREAK
 
 "But with my cute face, I'm not\n"
 "heart-pounding at all, am I?"
-)
-,
+),
 MSG(
 "Kleine Kinder dürfen an der \n"
 COLOR(RED) "Grausigen Grabgrusel-Tour" COLOR(DEFAULT) "\n"
@@ -1629,8 +1525,7 @@ BOX_BREAK
 
 "Allerdings sehe ich nicht \n"
 "besonders grausig aus, oder?"
-)
-,
+),
 MSG(
 "\"" COLOR(RED) "l'Excursion du fossoyeur" COLOR(DEFAULT) "\" est \n"
 "interdite aux enfants."
@@ -1665,8 +1560,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "はい\n"
     "いやだ" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 QUICKTEXT_ENABLE "Gyaah!" QUICKTEXT_DISABLE " It's Dampé the \n"
 "gravekeeper!"
@@ -1685,8 +1579,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No way" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 QUICKTEXT_ENABLE "Oh Graus!" QUICKTEXT_DISABLE " Es ist Boris, der \n"
 "Totengräber!"
@@ -1705,8 +1598,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 QUICKTEXT_ENABLE "Gyaah!" QUICKTEXT_DISABLE " C'est Igor le fossoyeur!"
 BOX_BREAK
@@ -1730,18 +1622,15 @@ TWO_CHOICE
 DEFINE_MESSAGE(0x2024, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(15) "ちゃんと　お金　あるでしゅよ。"
-)
-,
+),
 MSG(
 "I really do have some money, you\n"
 "know."
-)
-,
+),
 MSG(
 "Ich habe auch Geld, ich kann\n"
 "sie bezahlen!"
-)
-,
+),
 MSG(
 "J'ai de l'argent tu sais..."
 )
@@ -1752,29 +1641,23 @@ MSG(
 SHIFT(15) "オ〜イ　ニイちゃん、時間だぜ！\n"
 SHIFT(45) "１０ルピーぽっちで\n"
 SHIFT(24) "ねばられちゃ　いい迷惑だ。" EVENT
-)
-,
-MSG(/* MISSING */)
-,
-MSG(/* MISSING */)
-,
+),
+MSG(/* MISSING */),
+MSG(/* MISSING */),
 MSG(/* MISSING */)
 )
 DEFINE_MESSAGE_NES(0x2025, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
-MSG(/* MISSING */)
-,
+MSG(/* MISSING */),
 MSG(
-"Hey! Time's up, young man!\n"
+"Hey! Time's up, young " AGE_LAD "!\n"
 "You only paid 10 Rupees!\n"
 "You've played around long enough!" EVENT
-)
-,
+),
 MSG(
 "Hey! Runter vom Pferd!\n"
 "Die Zeit ist abgelaufen!\n"
 "Du hast nur 10 Rubine gezahlt!" EVENT
-)
-,
+),
 MSG(
 "Hop là! C'est fini, mon ami!\n"
 "Tu n'as payé que 10 Rubis!\n"
@@ -1786,20 +1669,17 @@ DEFINE_MESSAGE(0x2026, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(9) "これで　ボクも、ダンペイでしゅ！\n"
 SHIFT(48) "はい、お金でしゅ！"
-)
-,
+),
 MSG(
 "With this mask, I'll be just like \n"
 "Dampé! \n"
 "Here's my money!"
-)
-,
+),
 MSG(
 "Mit dieser Maske sehe ich fast \n"
 "wie Boris aus! Cool! \n"
 "Hier ist das Geld!"
-)
-,
+),
 MSG(
 "Je vais être une terreur avec ce \n"
 "masque! Comme Igor, mon idole! \n"
@@ -1817,8 +1697,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(27) "お面の代金　" COLOR(RED) "３０ルピー" COLOR(DEFAULT) "を\n"
 SHIFT(51) "お面屋に　納めて\n"
 SHIFT(36) "次のお面を　借りよう！"
-)
-,
+),
 MSG(
 UNSKIPPABLE SFX(NA_SE_SY_TRE_BOX_APPEAR) "You sold the 30-Rupee mask to a\n"
 "kid for full price?! \n"
@@ -1829,8 +1708,7 @@ UNSKIPPABLE "Let's go back to the mask shop to\n"
 "pay " COLOR(RED) "30 Rupees " COLOR(DEFAULT) "for the mask. \n"
 "You can get the new mask \n"
 "model, too."
-)
-,
+),
 MSG(
 UNSKIPPABLE SFX(NA_SE_SY_TRE_BOX_APPEAR) "Du hast die Maske, die Dich\n"
 "30 Rubine gekostet hat, zum \n"
@@ -1841,8 +1719,7 @@ UNSKIPPABLE "Geh nun zurück zum \n"
 "Maskenhändler und zahl ihm seine\n"
 COLOR(RED) "30 Rubine " COLOR(DEFAULT) "zurück. Dabei kannst \n"
 "Du eine neue Maske leihen."
-)
-,
+),
 MSG(
 UNSKIPPABLE SFX(NA_SE_SY_TRE_BOX_APPEAR) "Vous vendez le masque à l'enfant\n"
 "au prix fort! Quel arnaqueur vous \n"
@@ -1860,18 +1737,15 @@ DEFINE_MESSAGE(0x2028, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(33) "穴ほるぞ〜　穴ほるぞ〜\n"
 SHIFT(24) "ダンペイしゃんだじょ〜！！"
-)
-,
+),
 MSG(
 "I'm gonna dig and dig! \n"
 "Just like Dampé!!"
-)
-,
+),
 MSG(
 "Ich fange jetzt zu graben an! \n"
 "Genau wie Boris!"
-)
-,
+),
 MSG(
 "Je vais creuser et creuser!\n"
 "Tout comme Igor!!"
@@ -1891,8 +1765,7 @@ SHIFT(6) "その足で　大地を　駆け抜けたい…"
 BOX_BREAK
 
 SHIFT(36) "そう、気分だけでもね。"
-)
-,
+),
 MSG(
 "In old times, I heard there were \n"
 "many wild rabbits in the land \n"
@@ -1907,8 +1780,7 @@ BOX_BREAK
 BOX_BREAK
 
 "Even if I can only pretend."
-)
-,
+),
 MSG(
 "Früher hoppelten noch viele Hasen\n"
 "durch die hylianische Steppe. Nun\n"
@@ -1923,8 +1795,7 @@ BOX_BREAK
 BOX_BREAK
 
 "Findest Du mich merkwürdig?"
-)
-,
+),
 MSG(
 "Du temps jadis, force lapins \n"
 "gambadaient de-ci de-là sur la\n"
@@ -1952,22 +1823,19 @@ MSG(
 SHIFT(9) "その　長い耳は、神の声を　聞く…\n"
 SHIFT(36) "おお、まさに　それこそ\n"
 SHIFT(27) "伝説の動物　ウサギの耳！！" TEXTID(0x202B)
-)
-,
+),
 MSG(
 "I bet with those long ears you \n"
 "can hear the voices... \n"
 "Oh, these are genuine rabbit\n"
 "ears from the animal of legend!" TEXTID(0x202B)
-)
-,
+),
 MSG(
 "Ich wette, mit diesen Ohren kannst \n"
 "Du die Stimmen hören... Das sind\n"
 "die Ohren, die der Große Kürbis\n"
 "prophezeit hat... Hoppeldihö..." TEXTID(0x202B)
-)
-,
+),
 MSG(
 "Oh.... Quelle jolies oreilles de...\n"
 QUICKTEXT_ENABLE "LAPIN???" QUICKTEXT_DISABLE "\n"
@@ -1982,24 +1850,21 @@ MSG(
 TWO_CHOICE
     COLOR(ADJUSTABLE) "はい\n"
     "いやだ" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "I don't care how expensive it is!\n"
 "Please sell it to me!\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No way" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Mir ist egal, wie teuer sie sind!\n"
 "Ich muß sie haben! Verkauf sie mir!\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Ton prix sera le mien!!!\n"
 "Je les veux. MAINTENANT!!\n"
@@ -2012,18 +1877,15 @@ TWO_CHOICE
 DEFINE_MESSAGE(0x202C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(21) "そう　言わず…　売ってくれ！"
-)
-,
+),
 MSG(
 "That's not the answer I wanted to \n"
 "hear!"
-)
-,
+),
 MSG(
 "Das ist nicht das, was ich hören \n"
 "wollte! Hoppeldinö!"
-)
-,
+),
 MSG(
 "Mauvaise réponse.\n"
 "Je les veux. Je les veux.\n"
@@ -2037,20 +1899,17 @@ MSG(
 SHIFT(9) "長年の夢、それは　野生への回帰！\n"
 SHIFT(30) "役者と　舞台…　そして今\n"
 SHIFT(27) "小道具が　そろったのだ！！" EVENT
-)
-,
+),
 MSG(
 "My long time dream! Returning to\n"
 "the wild life! Finally, the actor, \n"
 "stage and prop have been united!" EVENT
-)
-,
+),
 MSG(
 "Mein Traum geht in Erfüllung! Ich\n"
 "habe Hasenohren! Hoppeldihö!\n"
 "Füttert mich mit Möhren!" EVENT
-)
-,
+),
 MSG(
 "Enfin... Mon rêve se réalise.\n"
 "Je suis un petit lapin.\n"
@@ -2069,8 +1928,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(54) "もらった分から\n"
 SHIFT(15) "お面の代金　" COLOR(RED) "５０ルピー" COLOR(DEFAULT) "だけを　\n"
 SHIFT(27) "お面屋に　納めに　戻ろう。"
-)
-,
+),
 MSG(
 UNSKIPPABLE SFX(NA_SE_SY_TRE_BOX_APPEAR) "It's a 50-Rupee mask, but he paid\n"
 "you a crazy amount of money for\n"
@@ -2081,8 +1939,7 @@ BOX_BREAK
 UNSKIPPABLE "Go back to the Mask Shop and \n"
 "pay back just " COLOR(RED) "50 Rupees " COLOR(DEFAULT) "of this\n"
 "money."
-)
-,
+),
 MSG(
 UNSKIPPABLE SFX(NA_SE_SY_TRE_BOX_APPEAR) "Für die Maske hast Du 50\n"
 "Rubine bezahlt. Der durchgeknallte \n"
@@ -2093,8 +1950,7 @@ BOX_BREAK
 UNSKIPPABLE "Geh zurück zum Maskenhändler \n"
 "und gib ihm seine " COLOR(RED) "50 Rubine" COLOR(DEFAULT) " \n"
 "wieder."
-)
-,
+),
 MSG(
 UNSKIPPABLE SFX(NA_SE_SY_TRE_BOX_APPEAR) "Ce masque à 50 rubis a été\n"
 "vendu à un prix incroyable!"
@@ -2109,20 +1965,17 @@ DEFINE_MESSAGE(0x202F, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE SHIFT(36) "かばいだてする気か…\n"
 SHIFT(63) "いい度胸だ。"
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(14) "So, you think you can protect\n"
 SHIFT(54) "them from me...\n"
 SHIFT(40) "You've got guts, kid."
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(17) "Glaubst Du im Ernst, daß Du\n"
 SHIFT(15) "sie vor mir schützen kannst?\n"
 SHIFT(71) "Du Narr!"
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(16) "Tu crois que ton silence les \n"
 SHIFT(18) "protègera? Jeune impudent..."
@@ -2160,8 +2013,7 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(6) "そんなコトより…　ニイちゃんよ。\n"
 SHIFT(6) "ここにいる馬に　乗りたかねぇか？" TEXTID(0x2031)
-)
-,
+),
 MSG(
 UNSKIPPABLE "There are some people in Kakariko\n"
 "spreading rumors that I cheated\n"
@@ -2190,10 +2042,9 @@ UNSKIPPABLE "I will raise a fine horse and\n"
 "Ganondorf!"
 BOX_BREAK
 
-UNSKIPPABLE "Say, young man, do you want\n"
+UNSKIPPABLE "Say, young " AGE_LAD ", do you want\n"
 "to ride one of my fine horses?" TEXTID(0x2031)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Einige Leute verbreiten das \n"
 "Gerücht, ich hätte Talon um die\n"
@@ -2226,8 +2077,7 @@ BOX_BREAK
 
 UNSKIPPABLE "Sag mal, hättest Du nicht Lust, \n"
 "eines meiner Pferde zu reiten?" TEXTID(0x2031)
-)
-,
+),
 MSG(
 UNSKIPPABLE "On dit à Cocorico que j'ai fichu\n"
 "Talon à la porte du Ranch..."
@@ -2268,24 +2118,21 @@ COLOR(RED) "１０ルピー" COLOR(DEFAULT) "で　馬に乗れるぜ。\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "のる\n"
     "のらない" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Pay me " COLOR(RED) "10 Rupees " COLOR(DEFAULT) "and you can \n"
 "ride.\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ride\n"
     "Don't ride" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Für nur " COLOR(RED) "10 Rubine " COLOR(DEFAULT) "lasse ich \n"
 "Dich reiten.\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Reiten!\n"
     "Nicht reiten!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Donne-moi " COLOR(RED) "10 Rubis " COLOR(DEFAULT) "et tu pourras\n"
 "monter un de mes chevaux.\n"
@@ -2299,18 +2146,15 @@ DEFINE_MESSAGE(0x2032, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(69) "そうかい。\n"
 SHIFT(33) "じゃ、とっとと　帰んな！"
-)
-,
+),
 MSG(
 "All right then, scram \n"
 "ya little punk!"
-)
-,
+),
 MSG(
 "Na gut, dann verschwinde von \n"
 "meiner Farm!"
-)
-,
+),
 MSG(
 "Alors... Hors de ma vue, microbe!"
 )
@@ -2319,20 +2163,17 @@ MSG(
 DEFINE_MESSAGE(0x2033, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(12) "こづかいためて、出直して来な！"
-)
-,
+),
 MSG(
 "You don't have enough!\n"
 "Save your change and \n"
 "come back again!"
-)
-,
+),
 MSG(
 "Du hast zu wenig Rubine!\n"
 "Komm wieder, wenn Du ein bißchen \n"
 "mehr in der Tasche hast!"
-)
-,
+),
 MSG(
 "Tu n'as pas assez d'argent!\n"
 "Va bosser un peu et reviens me\n"
@@ -2346,24 +2187,21 @@ MSG(
 TWO_CHOICE
     COLOR(ADJUSTABLE) "きく\n"
     "きかない" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Do you want to hear how to ride?\n"
 "\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Listen\n"
     "Don't listen" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Soll ich Dir erklären, wie man \n"
 "reitet?\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Veux-tu savoir comment monter?\n"
 "\n"
@@ -2397,8 +2235,7 @@ BOX_BREAK
 SHIFT(63) "おりる時は、\n"
 SHIFT(9) "馬が　完全に止まってから　" COLOR(BLUE) "[A]" COLOR(DEFAULT) "だ。\n"
 SHIFT(36) "じゃ、楽しんでくんな。" EVENT
-)
-,
+),
 MSG(
 "Approach the horse quietly and \n"
 "stand by its side. Press " COLOR(BLUE) "[A]" COLOR(DEFAULT) " to \n"
@@ -2424,8 +2261,7 @@ BOX_BREAK
 "After the horse comes to a \n"
 "complete stop, press " COLOR(BLUE) "[A]" COLOR(DEFAULT) " to \n"
 "dismount. Now, have fun!" EVENT
-)
-,
+),
 MSG(
 "Nähere Dich dem Pferd langsam \n"
 "und stell Dich an seine Seite.\n"
@@ -2452,8 +2288,7 @@ BOX_BREAK
 "Um wieder abzusteigen, halte \n"
 "das Pferd an und drücke " COLOR(BLUE) "[A]" COLOR(DEFAULT) ".\n"
 "Viel Spaß beim Reiten!" EVENT
-)
-,
+),
 MSG(
 "Place-toi près du flanc du cheval \n"
 "et appuie sur " COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour le monter."
@@ -2492,8 +2327,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "つづける\n"
     "やめる" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "If you use " COLOR(LIGHTBLUE) "[Z] Targeting" COLOR(DEFAULT) ", you can \n"
 "talk to me from horseback."
@@ -2504,8 +2338,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "No, I want to ride.\n"
     "Yes, I'm done." COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Setzt Du die " COLOR(LIGHTBLUE) "Zielerfassung" COLOR(DEFAULT) " ein,\n"
 "kannst Du mit mir sprechen,\n"
@@ -2517,8 +2350,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Nein, ich will reiten!\n"
     "Ja, es ist genug!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Utilise la " COLOR(LIGHTBLUE) "Visée [Z] " COLOR(DEFAULT) "pour parler \n"
 "tout en montant ton cheval."
@@ -2539,19 +2371,17 @@ BOX_BREAK
 
 SHIFT(30) "そういや…　ニイちゃん、\n"
 SHIFT(9) "どっかで　見たことあるような…" TEXTID(0x2036)
-)
-,
+),
 MSG(
 "When you want to dismount, stop \n"
 "and press " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
 BOX_BREAK
 
-"Hey young man!\n"
+"Hey young " AGE_LAD "!\n"
 "Do I know you? I just felt as \n"
 "though I've seen you\n"
 "somewhere before..." TEXTID(0x2036)
-)
-,
+),
 MSG(
 "Willst Du absteigen, halte an und \n"
 "drücke " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
@@ -2560,8 +2390,7 @@ BOX_BREAK
 "Hab ich Dich nicht schon mal\n"
 "irgendwo gesehen? Du kommst mir\n"
 "so bekannt vor..." TEXTID(0x2036)
-)
-,
+),
 MSG(
 "Pour mettre pied à terre, \n"
 "arrête-toi puis appuie sur " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
@@ -2585,8 +2414,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "やる\n"
     "やらない" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "You're getting better!\n"
 "How about a little race with me?\n"
@@ -2599,8 +2427,7 @@ COLOR(RED) "50 Rupees" COLOR(DEFAULT) "?\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Do it\n"
     "Don't do it" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Du reitest nicht schlecht!\n"
 "Wie wäre es mit einem kleinen\n"
@@ -2613,8 +2440,7 @@ COLOR(RED) "50 Rubine" COLOR(DEFAULT) "?\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Tu t'améliores!\n"
 "Ca te dit une petite course\n"
@@ -2635,21 +2461,18 @@ MSG(
 SHIFT(63) "オイ　オイ…\n"
 SHIFT(12) "５０ルピーぽっちも　ねえのか？\n"
 "金のないヤツとは　勝負できね〜な！"
-)
-,
+),
 MSG(
 "Hey hey... What's the matter?\n"
 "Don't you have even 50 Rupees?!\n"
 "I don't want to race with someone\n"
 "so poor!"
-)
-,
+),
 MSG(
 "Übe lieber noch ein wenig!\n"
 "Dann kannst Du auch gegen \n"
 "mich antreten!"
-)
-,
+),
 MSG(
 "Hé hé...\n"
 "Tu n'as même pas 50 Rubis?!\n"
@@ -2673,8 +2496,7 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(72) "その馬…\n"
 SHIFT(33) "てめぇに　くれてやる！！" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(57) "Sh-" QUICKTEXT_ENABLE "shoooot!" QUICKTEXT_DISABLE
 BOX_BREAK
@@ -2686,8 +2508,7 @@ UNSKIPPABLE "If the great Ganondorf found out\n"
 BOX_BREAK
 
 UNSKIPPABLE "You can keep...the horse!!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(57) "Ver" QUICKTEXT_ENABLE "maledeit!" QUICKTEXT_DISABLE
 BOX_BREAK
@@ -2699,8 +2520,7 @@ UNSKIPPABLE "Ich hoffe nur, der mächtige\n"
 BOX_BREAK
 
 UNSKIPPABLE "...gehört das Pferd Dir!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(60) "Nooooooooon!"
 BOX_BREAK
@@ -2731,8 +2551,7 @@ SHIFT(27) "レースで　負けるなんて…"
 BOX_BREAK
 
 UNSKIPPABLE SHIFT(51) "ク、クッソ〜ッ！！" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "What's up with that horse?!\n"
 "Is that " COLOR(RED) "Epona" COLOR(DEFAULT) "?"
@@ -2745,8 +2564,7 @@ BOX_BREAK
 UNSKIPPABLE "I was going to present that horse\n"
 "to the great Ganondorf... But I bet\n"
 "it on the race and lost! Shooot!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Wie kann das sein?!\n"
 "Ist das wirklich " COLOR(RED) "Epona" COLOR(DEFAULT) "?"
@@ -2760,8 +2578,7 @@ UNSKIPPABLE "Ich wollte Epona dem mächtigen\n"
 "Ganondorf zum Geschenk machen!\n"
 "Nun habe ich sie beim Pferderennen \n"
 "verloren! Vermaledeit!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Yaaaah!!! Quelle est cette jument?\n"
 "Est-ce " COLOR(RED) "Epona" COLOR(DEFAULT) "?"
@@ -2789,8 +2606,7 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(54) "この　牧場からは\n"
 SHIFT(27) "出られねぇからなーっ！！！" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(54) "Hah ha hah!"
 BOX_BREAK
@@ -2803,8 +2619,7 @@ UNSKIPPABLE SHIFT(10) "However..."
 BOX_BREAK
 
 UNSKIPPABLE "I'll never let you leave this ranch!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(26) "Nun gut, so sei es denn!"
 BOX_BREAK
@@ -2818,8 +2633,7 @@ BOX_BREAK
 
 UNSKIPPABLE "Die Farm darfst Du mit ihr nicht \n"
 "verlassen!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE SHIFT(54) "Hah ha hah!"
 BOX_BREAK
@@ -2839,19 +2653,16 @@ DEFINE_MESSAGE(0x203D, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(30) "ヘヘヘ…　残念だったな。\n"
 SHIFT(24) "５０ルピーは　いただきだ。" EVENT
-)
-,
+),
 MSG(
 "Hee hee hee... Too bad for you!\n"
 "I get your 50 Rupees." EVENT
-)
-,
+),
 MSG(
 "Ha! Hattest Du wirklich gedacht,\n"
 "mich bezwingen zu können? \n"
 "Danke für die 50 Rubine." EVENT
-)
-,
+),
 MSG(
 "Hé hé hé hé... Dommage, petit!\n"
 "Je garde tes 50 Rubis." EVENT
@@ -2863,22 +2674,19 @@ MSG(
 SHIFT(63) "ハッハッハ！\n"
 SHIFT(27) "やっぱり、ガキは　ガキだ。\n"
 SHIFT(27) "ま、いつでも　遊びにきな。"
-)
-,
+),
 MSG(
 "Wah ha hah!\n"
 "You're just a kid, after all!\n"
 "Well, come back any time and we'll\n"
 "have some more fun..."
-)
-,
+),
 MSG(
 "Ha! Im ersten Rennen habe ich nur\n"
 "geblufft. Wie könnte ich gegen Dich\n"
 "verlieren? Komm wieder, wenn Du\n"
 "es erneut versuchen willst..."
-)
-,
+),
 MSG(
 "Wah ha hah!\n"
 "Tu n'es qu'un débutant, après tout!\n"
@@ -2908,8 +2716,7 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(12) "だから　ここの仕事は　いっつも\n"
 SHIFT(9) "ぜ〜んぶ　オレが　やってんだよ！" TEXTID(0x2040)
-)
-,
+),
 MSG(
 UNSKIPPABLE "What?  What are you doing \n"
 "hanging around here?\n"
@@ -2931,8 +2738,7 @@ BOX_BREAK
 
 UNSKIPPABLE "So, I'm doing all the work around\n"
 "here." TEXTID(0x2040)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Was?! Wer hat Dir erlaubt, Dich  \n"
 "hier herumzutreiben?\n"
@@ -2957,8 +2763,7 @@ BOX_BREAK
 UNSKIPPABLE "So ist es fast jeden Tag!\n"
 "Ich habe die ganze Arbeit\n"
 "am Hals!" TEXTID(0x2040)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Huh? Que fais-tu là? \n"
 "Sale môme, va!"
@@ -2987,18 +2792,15 @@ UNSKIPPABLE "Alors je me tape tout le boulot.\n"
 DEFINE_MESSAGE(0x2040, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(9) "あ〜あ　雇われ人は　ツラいよな。"
-)
-,
+),
 MSG(
 "Oh well...It's tough to be a\n"
 "working man."
-)
-,
+),
 MSG(
 "Seufz... Man hat es nicht leicht\n"
 "als rechtschaffener Arbeiter."
-)
-,
+),
 MSG(
 "Pfff...ça craint d'bosser!"
 )
@@ -3016,8 +2818,7 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(15) "へーっ、森の妖精のコなんダ…\n"
 SHIFT(27) "アタシ、牧場のコ　" COLOR(RED) "マロン" COLOR(DEFAULT) "。" TEXTID(0x2042)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Hey, your clothes! They're...\n"
 "different...\n"
@@ -3031,8 +2832,7 @@ BOX_BREAK
 UNSKIPPABLE "Ohh... You're a fairy boy from \n"
 "the forest! My name is " COLOR(RED) "Malon" COLOR(DEFAULT) "!\n"
 "My dad owns Lon Lon Ranch!" TEXTID(0x2042)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Wow! Deine Kleidung...\n"
 "Wo trägt man denn sowas...\n"
@@ -3047,8 +2847,7 @@ UNSKIPPABLE "Oh, Du bist ein Feen-Junge aus \n"
 "dem Wald! Ich bin " COLOR(RED) "Malon" COLOR(DEFAULT) ".\n"
 "Meinem Vater gehört die \n"
 "Lon Lon-Farm!" TEXTID(0x2042)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Hé! Tes vêtements! Ils sont...\n"
 "Différents...\n"
@@ -3070,20 +2869,17 @@ MSG(
 SHIFT(3) "マロンはネ、とーさん　まってるの。\n"
 SHIFT(9) "とーさん、お城に　牛乳　とどけに\n"
 SHIFT(9) "はいったまま　でてこないんダ…"
-)
-,
+),
 MSG(
 "Dad went to the castle to deliver\n"
 "some milk, and he hasn't come\n"
 "back yet..."
-)
-,
+),
 MSG(
 "Vater ist zum Schloß gegangen,\n"
 "um dort Milch abzuliefern, doch\n"
 "bisher kam er nicht zurück..."
-)
-,
+),
 MSG(
 "Papa est parti livrer du lait au\n"
 "Château mais il n'est toujours\n"
@@ -3109,8 +2905,7 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(45) "マロンが　だいじに\n"
 SHIFT(21) "あっためてたのよ。　フフフ！" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Are you going to the castle,\n"
 "fairy boy?\n"
@@ -3130,8 +2925,7 @@ BOX_BREAK
 UNSKIPPABLE "I've been incubating this\n"
 "egg very carefully...\n"
 "Tee hee!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Gehst Du zufällig auch zum\n"
 "Schloß? Wenn ja, tust Du mir einen \n"
@@ -3151,8 +2945,7 @@ BOX_BREAK
 UNSKIPPABLE "Bewahre es warm und sorgsam auf,\n"
 "Du wirst es gebrauchen können...\n"
 "Hihihi..." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Vas-tu au Château, garçon de la \n"
 "forêt? Peux-tu trouver mon " COLOR(RED) "père" COLOR(DEFAULT) "?"
@@ -3180,8 +2973,7 @@ BOX_BREAK
 
 SHIFT(33) "ほんと…　とーさんって\n"
 SHIFT(39) "こまったオトナよね。"
-)
-,
+),
 MSG(
 "Set the egg to " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to incubate it.\n"
 "Hee hee!"
@@ -3190,8 +2982,7 @@ BOX_BREAK
 "My dad is really troublesome,\n"
 "for an adult, isn't he?!\n"
 "Hee hee!"
-)
-,
+),
 MSG(
 "Lege das Ei auf " COLOR(YELLOW) "[C]" COLOR(DEFAULT) ", um es \n"
 "einzusetzen!"
@@ -3200,8 +2991,7 @@ BOX_BREAK
 "Für einen Erwachsenen ist mein \n"
 "Vater ganz schön anstrengend, \n"
 "oder? Hihihi..."
-)
-,
+),
 MSG(
 "Assigne l'oeuf à " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " pour le \n"
 "couver. Hi hi!"
@@ -3222,8 +3012,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(21) "グータラ牧場主の　おかげで\n"
 SHIFT(33) "ここの仕事は　いっつも\n"
 SHIFT(9) "ぜ〜んぶ　オレが　やってんだぜ！" TEXTID(0x2046)
-)
-,
+),
 MSG(
 UNSKIPPABLE "I can't believe that I, the great\n"
 COLOR(RED) "Ingo" COLOR(DEFAULT) ", am working on this dump of\n"
@@ -3233,8 +3022,7 @@ BOX_BREAK
 UNSKIPPABLE "Because the owner is so lazy, I\n"
 "always have to do all the work \n"
 "around here!" TEXTID(0x2046)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Manchmal glaube ich einfach nicht,\n"
 "daß ich, " COLOR(RED) "der fantastische Basil" COLOR(DEFAULT) ", \n"
@@ -3245,8 +3033,7 @@ BOX_BREAK
 UNSKIPPABLE "Weil der Farmbesitzer ein\n"
 "Faulpelz ist, muß ich die \n"
 "gesamte Arbeit erledigen!" TEXTID(0x2046)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Et dire que moi, le grand " COLOR(RED) "Ingo" COLOR(DEFAULT) ", \n"
 "travaille dans un ranch aussi nul!\n"
@@ -3264,20 +3051,17 @@ MSG(
 SHIFT(9) "なまけ者の　タロンのオヤジより\n"
 SHIFT(15) "この" COLOR(RED) "インゴー" COLOR(DEFAULT) "様の方が　牧場の\n"
 SHIFT(12) "オーナーにゃ　ふさわしいよナ。"
-)
-,
+),
 MSG(
 "I, the hard-working " COLOR(RED) "Ingo" COLOR(DEFAULT) ", should be \n"
 "in charge, not that lazy bum, \n"
 "Talon!"
-)
-,
+),
 MSG(
 "Ich, " COLOR(RED) "der einzigartige Basil" COLOR(DEFAULT) ", sollte \n"
 "diese Farm leiten und nicht der \n"
 "faule Talon!"
-)
-,
+),
 MSG(
 "Moi, le grand " COLOR(RED) "Ingo" COLOR(DEFAULT) ", devrait être le\n"
 "patron de ce ranch. Pas l'autre\n"
@@ -3308,8 +3092,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(54) "この　ウマなの。\n"
 SHIFT(36) COLOR(RED) "エポナ" COLOR(DEFAULT) "って　ゆーのよ。\n"
 SHIFT(51) "カワイイでしょ！"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Oh, it's the fairy boy again!"
 BOX_BREAK
@@ -3329,8 +3112,7 @@ BOX_BREAK
 
 UNSKIPPABLE "She's this horse. Her name is\n"
 COLOR(RED) "Epona" COLOR(DEFAULT) ". Isn't she cute?"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Ah, der Junge aus dem Wald!"
 BOX_BREAK
@@ -3351,8 +3133,7 @@ BOX_BREAK
 
 UNSKIPPABLE "Das Pferd hier heißt\n"
 COLOR(RED) "Epona" COLOR(DEFAULT) ". Süß, nicht wahr?"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Oh, revoilà le garçon de la forêt!\n"
 "Alors, tu as trouvé mon papa?\n"
@@ -3378,18 +3159,15 @@ DEFINE_MESSAGE(0x2048, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(33) "エポナ、妖精クンのこと\n"
 SHIFT(36) "こわがってるみたい…"
-)
-,
+),
 MSG(
 "It seems like Epona is afraid of \n"
 "you, fairy boy..."
-)
-,
+),
 MSG(
 "Wie es scheint, hat Epona Angst \n"
 "vor Dir..."
-)
-,
+),
 MSG(
 "On dirait qu'Epona a peur de toi,\n"
 "M. le garçon de la forêt..."
@@ -3401,19 +3179,16 @@ MSG(
 SHIFT(3) "この歌、おかーさんが　つくったの。\n"
 SHIFT(57) "いい歌でしょ？\n"
 SHIFT(6) "マロンといっしょに　歌いましょ！"
-)
-,
+),
 MSG(
 "My mother composed this song.  \n"
 "Isn't it nice?  Let's sing together."
-)
-,
+),
 MSG(
 "Dieses Lied hat meine Mutter \n"
 "geschrieben. Es ist wunderschön. \n"
 "Laß es uns zusammen singen!"
-)
-,
+),
 MSG(
 "Ma mère me chantait cette \n"
 "chanson. Elle est belle, non?\n"
@@ -3425,18 +3200,15 @@ DEFINE_MESSAGE(0x204A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(60) "エポナったら\n"
 SHIFT(18) "妖精クン　気に入ったみたい！"
-)
-,
+),
 MSG(
 "Oh, Epona!  She's grown fond of\n"
 "you, fairy boy."
-)
-,
+),
 MSG(
 "Oh, Epona! Sie hat an Dir Gefallen\n"
 "gefunden, Feen-Junge."
-)
-,
+),
 MSG(
 "Oh, Epona! Elle semble vous\n"
 "apprécier, M. le garçon de la forêt."
@@ -3446,16 +3218,13 @@ MSG(
 DEFINE_MESSAGE(0x204B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 TEXT_SPEED(2) "ＺＺＺＺＺＺＺＺＺＺＺＺＺＺＺ" TEXT_SPEED(0) "…"
-)
-,
+),
 MSG(
 TEXT_SPEED(2) "Z Z Z Z Z Z Z Z Z Z Z Z Z Z Z" TEXT_SPEED(0) "..."
-)
-,
+),
 MSG(
 TEXT_SPEED(2) "S C H N A R C H..." TEXT_SPEED(0)
-)
-,
+),
 MSG(
 TEXT_SPEED(2) "Z Z Z Z Z Z Z Z Z Z Z Z Z Z Z" TEXT_SPEED(0) "..."
 )
@@ -3494,8 +3263,7 @@ BOX_BREAK
 
 SHIFT(51) "だから　アタシ…\n"
 SHIFT(15) "なにも　してあげられないの…"
-)
-,
+),
 MSG(
 "Oh...a visitor!\n"
 "It's been a long time since we've\n"
@@ -3527,8 +3295,7 @@ BOX_BREAK
 
 "So...\n"
 "There's nothing I can do..."
-)
-,
+),
 MSG(
 "Oh... Ein Besucher!\n"
 "Es ist lange her, seit wir Besuch \n"
@@ -3561,8 +3328,7 @@ BOX_BREAK
 
 "Du siehst...\n"
 "Es gibt nichts, was ich tun kann..."
-)
-,
+),
 MSG(
 "Oh...de la visite!\n"
 "Les visiteurs se font rares\n"
@@ -3603,21 +3369,18 @@ MSG(
 SHIFT(45) "私より　速いヤツは\n"
 SHIFT(18) "もう　いないかも　しれない…\n"
 "ああ…　うれしいやら、悲しいやら…"
-)
-,
+),
 MSG(
 "I bet nobody is faster than I am \n"
 "now! But, I don't know if I \n"
 "should be happy or sad...."
-)
-,
+),
 MSG(
 "Ich wette, es gibt niemanden, der\n"
 "schneller als ich laufen kann... \n"
 "Das Problem dabei ist nur, daß\n"
 "ich nicht aufhören kann, zu laufen."
-)
-,
+),
 MSG(
 "Personne n'est aussi rapide que \n"
 "moi! Alors, résultat: j'm'ennuie."
@@ -3629,20 +3392,17 @@ MSG(
 TEXT_SPEED(1) "ＺＺＺＺＺＺＺＺＺＺＺＺＺＺＺ" TEXT_SPEED(0) "…\n"
 SHIFT(24) "や…　やめろ…　その歌を…\n"
 SHIFT(18) "オレは…　オレは…　ムニャ…"
-)
-,
+),
 MSG(
 TEXT_SPEED(2) "Z Z Z Z Z Z Z Z Z Z Z Z Z" TEXT_SPEED(0) "...\n"
 "S-stop that song...I...I...\n"
 "Mumble... mumble..."
-)
-,
+),
 MSG(
 TEXT_SPEED(2) "Zzzzzzzz..." TEXT_SPEED(0) "\n"
 "Ruhe... ich... muß...\n"
 "Kühe... Hühner..."
-)
-,
+),
 MSG(
 TEXT_SPEED(2) "Z Z Z Z Z Z Z Z Z Z Z Z Z" TEXT_SPEED(0) "...\n"
 "Arrête de chanter...\n"
@@ -3655,22 +3415,19 @@ MSG(
 UNSKIPPABLE SHIFT(36) "見るがいい、あの山を。\n"
 SHIFT(21) "あれが　炎の精霊石が　ある、\n"
 SHIFT(6) "ゴロン族の山…　" COLOR(RED) "デスマウンテン" COLOR(DEFAULT) "。"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Take a good look at that \n"
 "mountain. That is " COLOR(RED) "Death Mountain" COLOR(DEFAULT) ",\n"
 "home of the Gorons. They hold\n"
 "the Spiritual Stone of Fire."
-)
-,
+),
 MSG(
 UNSKIPPABLE "Richte Deine Augen gen Osten.\n"
 "Dies ist der " COLOR(RED) "Todesberg" COLOR(DEFAULT) ", das\n"
 "Reich der Goronen. Sie hüten \n"
 "den Heiligen Stein des Feuers."
-)
-,
+),
 MSG(
 UNSKIPPABLE "Regarde bien cette montagne.\n"
 "C'est le " COLOR(RED) "Mont du Péril" COLOR(DEFAULT) ", la demeure\n"
@@ -3683,18 +3440,15 @@ DEFINE_MESSAGE(0x2050, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(9) "アタシが　この歌を　歌ってるの、\n"
 SHIFT(12) "インゴーさんには　ナイショよ！"
-)
-,
+),
 MSG(
 "Please keep it secret from \n"
 "Mr. Ingo that I sing this song..."
-)
-,
+),
 MSG(
 "Bitte erzähl Basil nicht, daß \n"
 "ich dieses Lied singe..."
-)
-,
+),
 MSG(
 "Ne dis surtout pas à M. Ingo que\n"
 "je chante cette chanson..."
@@ -3719,8 +3473,7 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(39) "その歌　歌っていると\n"
 SHIFT(27) "あの頃を　思い出すんダ…" TEXTID(0x2052)
-)
-,
+),
 MSG(
 UNSKIPPABLE "You...\n"
 "Do you know my " COLOR(RED) "mother's song" COLOR(DEFAULT) "?"
@@ -3736,8 +3489,7 @@ BOX_BREAK
 
 UNSKIPPABLE "I can remember the good old days\n"
 "only while I sing the song. Also..." TEXTID(0x2052)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Du...\n"
 "Du kennst das Lied " COLOR(RED) "meiner Mutter" COLOR(DEFAULT) "?"
@@ -3754,8 +3506,7 @@ BOX_BREAK
 UNSKIPPABLE "Wenn ich es singe und die Augen \n"
 "dabei schließe, denke ich an\n"
 "vergangene Zeiten..." TEXTID(0x2052)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Tu...\n"
 "Tu connais la " COLOR(RED) "chanson de ma mère" COLOR(DEFAULT) "?"
@@ -3783,8 +3534,7 @@ SHIFT(3) "インゴーさん、手を焼いてたっけ…"
 BOX_BREAK
 
 SHIFT(75) "ウフフ！"
-)
-,
+),
 MSG(
 COLOR(RED) "Epona" COLOR(DEFAULT) " really liked that song...\n"
 "Only I could tame that horse...\n"
@@ -3792,8 +3542,7 @@ COLOR(RED) "Epona" COLOR(DEFAULT) " really liked that song...\n"
 BOX_BREAK
 
 "Hee hee hee!"
-)
-,
+),
 MSG(
 "Auch" COLOR(RED) " Epona" COLOR(DEFAULT) " liebte dieses Lied.\n"
 "Damit konnte ich sie zähmen.\n"
@@ -3801,8 +3550,7 @@ MSG(
 BOX_BREAK
 
 "Hihihi..."
-)
-,
+),
 MSG(
 COLOR(RED) "Epona" COLOR(DEFAULT) " était folle de cette chanson...\n"
 "J'étais la seule à pouvoir la \n"
@@ -3817,18 +3565,15 @@ BOX_BREAK
 DEFINE_MESSAGE(0x2053, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(6) "心の中を　見透かされそうな目だ。"
-)
-,
+),
 MSG(
 "This statue's one-eyed gaze \n"
 "pierces into your mind..."
-)
-,
+),
 MSG(
 "Die steinerne Statue scheint Dir \n"
 "etwas sagen zu wollen..."
-)
-,
+),
 MSG(
 "L'oeil de cette statue perce les\n"
 "mystères de votre esprit..."
@@ -3842,8 +3587,7 @@ SHIFT(15) "奇妙な石が　語りかけてくる…"
 BOX_BREAK
 
 SHIFT(21) "…こっそり　聞いた話だが…"
-)
-,
+),
 MSG(
 "Responding to your mask, this \n"
 "strange stone statue talks to \n"
@@ -3851,8 +3595,7 @@ MSG(
 BOX_BREAK
 
 "I overheard this..."
-)
-,
+),
 MSG(
 "Da Du nun die Maske trägst,\n"
 "beginnt die Statue mit Dir zu  \n"
@@ -3860,8 +3603,7 @@ MSG(
 BOX_BREAK
 
 "Höre ihre Worte..."
-)
-,
+),
 MSG(
 "Grâce à votre masque, cette \n"
 "étrange statue vous parle..."
@@ -3875,19 +3617,16 @@ DEFINE_MESSAGE(0x2055, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(21) "こんどは、こころいれかえて\n"
 SHIFT(45) "しごとするだーよ。"
-)
-,
+),
 MSG(
 "I'm gonna turn over a new leaf \n"
 "and work real hard from now on."
-)
-,
+),
 MSG(
 "Von nun an werde ich jeden Tag\n"
 "hart arbeiten. Das habe ich Malon\n"
 "versprochen!"
-)
-,
+),
 MSG(
 "J'ai pris de bonnes résolutions:\n"
 "Désormais je vais me mettre à \n"
@@ -3900,22 +3639,19 @@ MSG(
 SHIFT(54) "インゴーさん…\n"
 SHIFT(30) "きっと、魔がさしたのネ。\n"
 SHIFT(9) "ホントは　悪い人じゃないのヨ…"
-)
-,
+),
 MSG(
 "Mr. Ingo... He must have been \n"
 "tempted by evil powers.\n"
 "He's not really a bad person \n"
 "at all..."
-)
-,
+),
 MSG(
 "Basil... Mir scheint, er war von\n"
 "bösen Mächten besessen.\n"
 "Im Grunde ist er ein gutmütiger \n"
 "Mensch."
-)
-,
+),
 MSG(
 "M. Ingo... De sombres pouvoirs\n"
 "ont dû l'ensorceler...\n"
@@ -3928,20 +3664,17 @@ DEFINE_MESSAGE(0x2057, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(42) "ＺＺＺＺＺＺＺＺ…\n"
 "ムニャ…　雇われ人は　ツラいよな…"
-)
-,
+),
 MSG(
 "Z Z Z Z Z Z Z Z...\n"
 "Mumble... It's not easy to\n"
 "be a working man..."
-)
-,
+),
 MSG(
 "S C H N A R C H...\n"
 "Grummel... Wie schön, daß mir\n"
 "Talon vergeben hat..."
-)
-,
+),
 MSG(
 "Z Z Z Z Z Z Z Z...\n"
 "Mmmm... J'en ai marre de bosser..."
@@ -3954,24 +3687,21 @@ MSG(
 TWO_CHOICE
     COLOR(ADJUSTABLE) "やる\n"
     "やらない" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "It's been a while...\n"
 "Do you want to race?\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Es ist lange her...\n"
 "Lust auf ein Rennen?\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Bon alors...\n"
 "Tu veux faire la course?\n"
@@ -3985,18 +3715,15 @@ DEFINE_MESSAGE(0x2059, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(51) "気が　かわったら\n"
 SHIFT(48) "いつでも　どうぞ！"
-)
-,
+),
 MSG(
 "If you change your mind,\n"
 "come back anytime!"
-)
-,
+),
 MSG(
 "Falls Du Deine Meinung änderst,\n"
 "kannst Du jederzeit zurückkommen!"
-)
-,
+),
 MSG(
 "Si tu changes d'avis,\n"
 "reviens me voir!"
@@ -4007,18 +3734,15 @@ DEFINE_MESSAGE(0x205A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(69) "そうかい。\n"
 SHIFT(33) "じゃ、とっとと　帰んな！" EVENT
-)
-,
+),
 MSG(
 "All right then! Scram,\n"
 "ya little punk!" EVENT
-)
-,
+),
 MSG(
 "Na gut, dann verschwinde hier,\n"
 "Du grüner Wichtel!" EVENT
-)
-,
+),
 MSG(
 "Alors... Hors de ma vue, microbe!" EVENT
 )
@@ -4034,8 +3758,7 @@ COLOR(RED) "５０ルピー" COLOR(DEFAULT) "で　レースやるかい？\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "やる\n"
     "やらない" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Heh heh... Are you mad because \n"
 "you lost? If you're that upset,\n"
@@ -4047,8 +3770,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Race\n"
     "Don't race" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Du bist sauer, weil Du verloren\n"
 "hast? Kein Problem, wie wäre\n"
@@ -4060,8 +3782,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Hé hé... Tu m'en veux d'avoir \n"
 "gagné, hein? Dans ce cas je peux\n"
@@ -4080,16 +3801,13 @@ TWO_CHOICE
 DEFINE_MESSAGE(0x205C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(24) "まいどあり〜、ヘッヘッヘ！" EVENT
-)
-,
+),
 MSG(
 "Thank you so much. Heh heh!" EVENT
-)
-,
+),
 MSG(
 "Die Farm dankt, hehehe..." EVENT
-)
-,
+),
 MSG(
 "Merci beaucoup, Hé hé!" EVENT
 )
@@ -4100,22 +3818,19 @@ MSG(
 SHIFT(27) "これ以上　サービスしたら\n"
 SHIFT(18) "インゴーが　うるさいだーよ。\n"
 SHIFT(3) "これからは　フツーに　売るだーよ。"
-)
-,
+),
 MSG(
 "If I give ya more free of charge,\n"
 "Ingo will get mad at me. So I'd\n"
 "better sell it to you for the\n"
 "normal price."
-)
-,
+),
 MSG(
 "Wenn ich Dir noch mehr umsonst\n"
 "gebe, wird Basil ziemlich sauer\n"
 "werden. Deshalb verkaufe ich sie\n"
 "Dir zum regulären Preis."
-)
-,
+),
 MSG(
 "Ingo va me hurler dessus si je te\n"
 "donne ceci pour rien.\n"
@@ -4129,24 +3844,21 @@ MSG(
 TWO_CHOICE
     COLOR(ADJUSTABLE) "かう\n"
     "やめとく" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Wanna buy milk for " COLOR(RED) "30 Rupees" COLOR(DEFAULT) "?\n"
 "\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Buy\n"
     "Don't buy" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Möchtest für " COLOR(RED) "30 Rubine " COLOR(DEFAULT) "Milch\n"
 "kaufen?\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Veux-tu du lait pour " COLOR(RED) "30 Rubis" COLOR(DEFAULT) "?\n"
 "\n"
@@ -4161,21 +3873,18 @@ MSG(
 SHIFT(42) "どうも、こんにちは。\n"
 "馬の世話係をさせていただいてます\n"
 SHIFT(57) "インゴーです。"
-)
-,
+),
 MSG(
 "Hi there, how are you?\n"
 "I am Ingo. I feel so honored\n"
 "to be allowed to work here."
-)
-,
+),
 MSG(
 "Hallo! Wie geht's Dir?\n"
 "Sorry, wenn ich in letzter Zeit\n"
 "etwas merkwürdig war. Fühl Dich\n"
 "hier wie zu Hause!"
-)
-,
+),
 MSG(
 "Bien le bonjour mon bon monsieur!\n"
 "Mon nom est Ingo. Travailler ici\n"
@@ -4188,20 +3897,17 @@ MSG(
 UNSKIPPABLE SHIFT(45) "勇気ある　少年よ…\n"
 SHIFT(12) "我々は　この美しい　ハイラルを\n"
 SHIFT(42) "守らねばならない…"
-)
-,
+),
 MSG(
 UNSKIPPABLE "You brave lad...\n"
 "We must protect this beautiful\n"
 "land of Hyrule!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Du tapferer Jüngling...\n"
 "Wir müssen Hyrule vor der \n"
 "drohenden Apokalypse bewahren!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Petit...tu es courageux!\n"
 "Nous devons protéger cette belle\n"
@@ -4214,20 +3920,17 @@ MSG(
 UNSKIPPABLE SHIFT(27) "あら、カワイイ　オカリナ！\n"
 SHIFT(51) "その　オカリナで\n"
 SHIFT(30) "この歌、ふいてくれるの？"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Oh, cute ocarina!\n"
 "Are you going to play this song\n"
 "with that ocarina?"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Oh, eine hübsche Okarina!\n"
 "Wirst Du das Lied auf der \n"
 "Okarina spielen?"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Oh, le bel ocarina!\n"
 "Vas-tu jouer ma chanson avec ton\n"
@@ -4244,8 +3947,7 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(18) "村人たちに　話を　聞いてから\n"
 SHIFT(6) "デスマウンテンへ　向かうがいい。"
-)
-,
+),
 MSG(
 UNSKIPPABLE "At the foot of Death Mountain\n"
 "you will find my village, " COLOR(RED) "Kakariko" COLOR(DEFAULT) ".\n"
@@ -4256,8 +3958,7 @@ BOX_BREAK
 UNSKIPPABLE "You should talk to some of the\n"
 "villagers there before you go up\n"
 "Death Mountain."
-)
-,
+),
 MSG(
 UNSKIPPABLE "Am Fuße des Todesberges wirst\n"
 "Du" COLOR(RED) " Kakariko " COLOR(DEFAULT) "finden. Es ist die \n"
@@ -4268,8 +3969,7 @@ BOX_BREAK
 UNSKIPPABLE "Bevor Du zum Berg aufbrichst, \n"
 "solltest Du Dich mit einigen\n"
 "Bewohnern unterhalten."
-)
-,
+),
 MSG(
 UNSKIPPABLE "Au pied du Mont du Péril tu \n"
 "trouveras mon village natal, \n"
@@ -4296,8 +3996,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(36) "姫は、お前が　この城へ\n"
 SHIFT(6) "戻ってくるのを　待っておられる。\n"
 SHIFT(36) "それでは　たのんだぞ。"
-)
-,
+),
 MSG(
 UNSKIPPABLE "The song I just taught you has\n"
 "some mysterious power. Only \n"
@@ -4314,8 +4013,7 @@ UNSKIPPABLE "The Princess is waiting for you to \n"
 "return to the castle with the\n"
 "stones. All right. We're counting\n"
 "on you!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Das Lied, das ich Dich gelehrt\n"
 "habe, besitzt geheimnisvolle Kräfte.\n"
@@ -4332,8 +4030,7 @@ UNSKIPPABLE "Geh nun, die Prinzessin und ich \n"
 "warten auf Dich und die Heiligen\n"
 "Steine im Schloß! Enttäusche uns\n"
 "nicht!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "La mélodie que je t'ai enseignée\n"
 "possède d'étranges pouvoirs. Elle \n"
@@ -4366,8 +4063,7 @@ BOX_BREAK
 UNSKIPPABLE "お前は、この先　多くの　苦難に会う。\n"
 SHIFT(36) "それが　お前の　運命…\n"
 SHIFT(21) "それを　うらんでは　ならん。" TEXTID(0x2065)
-)
-,
+),
 MSG(
 UNSKIPPABLE QUICKTEXT_ENABLE "Hoo hoot!" QUICKTEXT_DISABLE "\n"
 NAME "...\n"
@@ -4383,8 +4079,7 @@ UNSKIPPABLE "You will encounter many hardships\n"
 "ahead... That is your fate. Don't \n"
 "feel discouraged, even during the\n"
 "toughest times!" TEXTID(0x2065)
-)
-,
+),
 MSG(
 UNSKIPPABLE QUICKTEXT_ENABLE "Sei willkommen!" QUICKTEXT_DISABLE "\n"
 "Bist Du bereit, " NAME "?"
@@ -4399,8 +4094,7 @@ UNSKIPPABLE "Das, was hinter Dir liegt, war\n"
 "ein Spaziergang im Vergleich zu\n"
 "dem, was Dich erwartet... Doch sei\n"
 "tapfer und verliere nie den Mut!" TEXTID(0x2065)
-)
-,
+),
 MSG(
 UNSKIPPABLE QUICKTEXT_ENABLE "Hou houuu!" QUICKTEXT_DISABLE "\n"
 NAME "...\n"
@@ -4440,8 +4134,7 @@ BOX_BREAK
 SHIFT(81) "もし、\n"
 SHIFT(12) "マップにある" COLOR(RED) "点が光って" COLOR(DEFAULT) "おれば\n"
 SHIFT(3) "そこが　お前の　進むべき場所じゃ。" TEXTID(0x2066)
-)
-,
+),
 MSG(
 "Go straight this way and you will\n"
 "see " COLOR(RED) "Hyrule Castle" COLOR(DEFAULT) "."
@@ -4464,8 +4157,7 @@ BOX_BREAK
 "On the " COLOR(RED) "Map Subscreen" COLOR(DEFAULT) ", you will\n"
 "also see a " COLOR(RED) "flashing dot" COLOR(DEFAULT) " showing\n"
 "you which way you should go next." TEXTID(0x2066)
-)
-,
+),
 MSG(
 "Folgst Du diesem Weg, so \n"
 "gelangst Du zum " COLOR(RED) "Schloß von Hyrule" COLOR(DEFAULT) ".\n"
@@ -4493,8 +4185,7 @@ BOX_BREAK
 "Du außerdem einen " COLOR(RED) "Hinweis" COLOR(DEFAULT) ", welchen\n"
 "Ort Du als nächsten aufsuchen \n"
 "solltest." TEXTID(0x2066)
-)
-,
+),
 MSG(
 "Va tout droit pour aller au\n"
 COLOR(RED) "Château d'Hyrule" COLOR(DEFAULT) "."
@@ -4526,24 +4217,21 @@ MSG(
 TWO_CHOICE
     COLOR(ADJUSTABLE) "いいえ\n"
     "はい" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Did you get all that?\n"
 "\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "No\n"
     "Yes" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Hast Du alles verstanden?\n"
 "\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Nein!\n"
     "Ja!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "M'as-tu bien compris?\n"
 "\n"
@@ -4558,18 +4246,15 @@ MSG(
 UNSKIPPABLE SHIFT(72) "それでは\n"
 SHIFT(3) "ワシは　ひと足先に　行くとしよう。\n"
 SHIFT(24) "待っておるぞ。　ホホ〜ッ！！"
-)
-,
+),
 MSG(
 UNSKIPPABLE "All right then, I'll see you around!\n"
 "Hoot hoot hoot ho!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "So sei es! Setze Deinen Weg nun \n"
 "fort! Wir sehen uns wieder..."
-)
-,
+),
 MSG(
 UNSKIPPABLE "Bonne chance brave petit!\n"
 "Et à la prochaine!\n"
@@ -4586,8 +4271,7 @@ BOX_BREAK_DELAYED(40)
 UNSKIPPABLE SHIFT(12) "お姫様は　この先の　お城の中…\n"
 "見張りの兵に　見つからぬようにな。\n"
 SHIFT(63) "ホッホ〜ッ。" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Hey, " NAME "! This way!"
 BOX_BREAK_DELAYED(40)
@@ -4596,8 +4280,7 @@ UNSKIPPABLE "The princess is inside the castle \n"
 "just ahead. Be careful not to get \n"
 "caught by the guards!\n"
 "Ho ho ho hoot!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE NAME "! Hier entlang!"
 BOX_BREAK_DELAYED(40)
@@ -4606,8 +4289,7 @@ UNSKIPPABLE "Die Prinzessin befindet sich \n"
 "im Schloß! Doch hüte Dich vor den \n"
 "Wachen. Sie dürfen Dich nicht\n"
 "sehen..." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Hé, " NAME "! Par ici!"
 BOX_BREAK_DELAYED(40)
@@ -4640,8 +4322,7 @@ BOX_BREAK
 SHIFT(18) "さて、城に　たどりつくまでに\n"
 SHIFT(30) "どんな　出会いが　お前を\n"
 SHIFT(24) "待っておるか、楽しみじゃ。" EVENT
-)
-,
+),
 MSG(
 "On this ground, time flows \n"
 "normally."
@@ -4658,8 +4339,7 @@ BOX_BREAK
 "Well, well, which way are you \n"
 "going to go now?\n"
 "Hoo hoo hoot!" EVENT
-)
-,
+),
 MSG(
 "Wisse, hier auf diesem Grund, \n"
 "nimmt die Zeit ihren gewohnten \n"
@@ -4678,8 +4358,7 @@ BOX_BREAK
 
 "Geh nun und hüte Dich vor den \n"
 "Wachen..." EVENT
-)
-,
+),
 MSG(
 "Par ici, le temps s'écoule\n"
 "normalement."
@@ -4707,24 +4386,21 @@ MSG(
 TWO_CHOICE
     COLOR(ADJUSTABLE) "はい\n"
     "いいえ" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Do you want to hear what I said \n"
 "again?\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Muß ich meine Worte wiederholen?\n"
 "\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Veux-tu que je répète tout ça?\n"
 "\n"
@@ -4739,19 +4415,16 @@ MSG(
 UNSKIPPABLE SHIFT(36) "ほぉう、頭のいい子だ。\n"
 SHIFT(30) "それでは　気をつけてな。\n"
 SHIFT(69) "ホホ〜ッ！"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Hoooo. You're a smart kid.\n"
 "Good luck, then. Hoo hoo."
-)
-,
+),
 MSG(
 UNSKIPPABLE "Du scheinst die Gabe der\n"
 "Weisheit zu besitzen...\n"
 "Viel Glück..."
-)
-,
+),
 MSG(
 UNSKIPPABLE "Houuu. T'es un malin, toi!\n"
 "Bonne chance mon garçon...\n"
@@ -4768,8 +4441,7 @@ BOX_BREAK
 SHIFT(36) "この先は　" COLOR(RED) "カカリコ村" COLOR(DEFAULT) "。\n"
 SHIFT(12) "ハイラルの姫には　会ったかの？\n"
 SHIFT(15) "まだなら　お城へ　行きなさい。" EVENT
-)
-,
+),
 MSG(
 "Hey, " NAME "! \n"
 "Wait a second, friend!"
@@ -4779,8 +4451,7 @@ BOX_BREAK
 COLOR(RED) "Kakariko Village" COLOR(DEFAULT) ". Have you seen \n"
 "the Princess of Hyrule? If not, \n"
 "I suggest you go to the castle." EVENT
-)
-,
+),
 MSG(
 "Sei willkommen, " NAME "! \n"
 "Halte ein, mein Freund!"
@@ -4790,8 +4461,7 @@ BOX_BREAK
 COLOR(RED) "Kakarikos" COLOR(DEFAULT) ". Hast Du die Prinzessin \n"
 "bereits besucht? Wenn nicht, so \n"
 "rate ich Dir, sie aufzusuchen." EVENT
-)
-,
+),
 MSG(
 "Hé, " NAME "! \n"
 "Attends une minute, l'ami!"
@@ -4820,8 +4490,7 @@ BOX_BREAK
 
 SHIFT(30) "この先は　" COLOR(RED) "カカリコの村" COLOR(DEFAULT) "。\n"
 SHIFT(27) "気をつけて　行くがよい…" EVENT
-)
-,
+),
 MSG(
 "Hey, " NAME "! \n"
 "Look over here!"
@@ -4830,8 +4499,7 @@ BOX_BREAK_DELAYED(40)
 UNSKIPPABLE "Beyond this point you'll find\n"
 COLOR(RED) "Kakariko Village" COLOR(DEFAULT) ". Watch your step!\n"
 "Hoot hoo!" EVENT
-)
-,
+),
 MSG(
 "Sei gegrüßt, " NAME "! \n"
 "Schau hierher!"
@@ -4840,8 +4508,7 @@ BOX_BREAK_DELAYED(40)
 UNSKIPPABLE "Du befindest Dich vor den Toren \n"
 COLOR(RED) "Kakarikos" COLOR(DEFAULT) ". Die Treppen führen\n"
 "Dich in die Stadt!" EVENT
-)
-,
+),
 MSG(
 "Hé, " NAME "! \n"
 "Par ici, mon tout petit!"
@@ -4858,21 +4525,18 @@ MSG(
 UNSKIPPABLE SHIFT(21) NAME "よ、これは\n"
 SHIFT(21) "お前にしか　できぬことだ。\n"
 SHIFT(21) "必ず　やりとげるのだよ。"
-)
-,
+),
 MSG(
 UNSKIPPABLE NAME ", you're the only\n"
 "one who can complete the quest\n"
 "ahead!\n"
 "You must do your best! Hoo!"
-)
-,
+),
 MSG(
 UNSKIPPABLE NAME "! Nur Du hast die\n"
 "Macht, den Lauf des Schicksals zu\n"
 "ändern!"
-)
-,
+),
 MSG(
 UNSKIPPABLE NAME ", sur tes minces \n"
 "épaules repose la destinée du\n"
@@ -4900,8 +4564,7 @@ BOX_BREAK
 SHIFT(54) "どこへ行くかは\n"
 SHIFT(30) "お前の自由じゃがのぉ…\n"
 SHIFT(63) "ホホホーッ。" EVENT
-)
-,
+),
 MSG(
 NAME "! Wait up, buddy!\n"
 "Hoo hoo!"
@@ -4920,8 +4583,7 @@ BOX_BREAK
 "Well, you're free to go anywhere\n"
 "you want!\n"
 "Ho ho ho...hooo!" EVENT
-)
-,
+),
 MSG(
 NAME "! Ich habe Dich \n"
 "erwartet! Wohin werden Dich Deine\n"
@@ -4942,8 +4604,7 @@ BOX_BREAK
 "Welchen Weg Du auch immer wählst,\n"
 "die Macht des Triforce möge Dich\n"
 "begleiten!" EVENT
-)
-,
+),
 MSG(
 NAME "!\n"
 "Ecoute donc mes sages paroles!\n"
@@ -4969,19 +4630,16 @@ MSG(
 UNSKIPPABLE SHIFT(39) "どんなに　つらくとも\n"
 SHIFT(33) "くじけるんじゃないよ。\n"
 SHIFT(69) "ホホ〜ッ！"
-)
-,
+),
 MSG(
 UNSKIPPABLE "No matter how hard it is, just\n"
 "don't get discouraged. Ho Ho Hoo!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Was auch immer das Schicksal Dir \n"
 "bescheren mag, laß Dich niemals \n"
 "entmutigen..."
-)
-,
+),
 MSG(
 UNSKIPPABLE "Reste courageux devant l'adversité.\n"
 "Hou Hou Houuu!"
@@ -5007,8 +4665,7 @@ BOX_BREAK
 SHIFT(27) "お前の行った場所は　全て\n"
 SHIFT(15) "書きしるされておるはずじゃ。\n"
 SHIFT(57) "ホッホホ〜ッ！" EVENT
-)
-,
+),
 MSG(
 "Beyond this point lies Lake Hylia.\n"
 "It is full of deep, pure water."
@@ -5029,8 +4686,7 @@ BOX_BREAK
 "All the places you have visited \n"
 "will be shown on the map. \n"
 "Ho hoo hoot!" EVENT
-)
-,
+),
 MSG(
 "Vor Dir liegt der Hylia-See.\n"
 "Sein Wasser ist rein und klar..."
@@ -5051,8 +4707,7 @@ BOX_BREAK
 "Alle Orte, an denen Du schon \n"
 "einmal warst, werden Dir auf der\n"
 "Karte angezeigt..." EVENT
-)
-,
+),
 MSG(
 "Dans cette direction s'étend les\n"
 "eaux riches et pures du Lac Hylia."
@@ -5078,16 +4733,13 @@ BOX_BREAK
 DEFINE_MESSAGE(0x2072, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE SHIFT(12) "そうか、気をつけていきなさい。"
-)
-,
+),
 MSG(
 UNSKIPPABLE "OK, be careful and go!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Geh nun!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Mène à bien ta quête, \n"
 "petit homme!"
@@ -5097,16 +4749,13 @@ UNSKIPPABLE "Mène à bien ta quête, \n"
 DEFINE_MESSAGE(0x2073, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE SHIFT(36) "あなたの　なまえは…？" COLOR(BLUE) EVENT COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "What is your name?" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Wie lautet Dein Name?" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Quel est ton nom?" EVENT
 )
@@ -5120,8 +4769,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(12) COLOR(ADJUSTABLE) NAME COLOR(DEFAULT) "…\n"
 SHIFT(18) "ふしぎ…\n"
 SHIFT(12) "なんだか　なつかしい　ひびき…" COLOR(BLUE) EVENT COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE TEXT_SPEED(1) "....." TEXT_SPEED(0)
 BOX_BREAK
@@ -5131,8 +4779,7 @@ BOX_BREAK
 
 UNSKIPPABLE "Strange...it sounds somehow... \n"
 "familiar." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE TEXT_SPEED(1) "Ich fühle etwas..." TEXT_SPEED(0)
 BOX_BREAK
@@ -5142,8 +4789,7 @@ BOX_BREAK
 
 UNSKIPPABLE "Seltsam... Er kommt mir so... \n"
 "vertraut vor." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE TEXT_SPEED(1) "....." TEXT_SPEED(0)
 BOX_BREAK
@@ -5164,8 +4810,7 @@ BOX_BREAK
 UNSKIPPABLE "いまから　この　ハイラル王家だけに\n"
 SHIFT(33) "伝わる　聖地のひみつを\n"
 SHIFT(30) "あなたに　お話しします。" COLOR(BLUE) EVENT COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "OK then, " NAME "..."
 BOX_BREAK
@@ -5174,8 +4819,7 @@ UNSKIPPABLE "I'm going to tell you the secret of\n"
 "the Sacred Realm that has been\n"
 "passed down by the Royal Family\n"
 "of Hyrule." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "So sei es, " NAME "..."
 BOX_BREAK
@@ -5184,8 +4828,7 @@ UNSKIPPABLE "Ich werde Dich nun in das\n"
 "Geheimnis des Heiligen Reiches\n"
 "einweihen, das seit Generationen\n"
 "von meiner Familie gehütet wird." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Ecoute-moi bien, " NAME "..."
 BOX_BREAK
@@ -5200,16 +4843,13 @@ UNSKIPPABLE "Je vais te révéler la légende du\n"
 DEFINE_MESSAGE(0x2076, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 SHIFT(45) COLOR(LIGHTBLUE) "時のオカリナ" COLOR(DEFAULT) "です！" COLOR(BLUE) EVENT COLOR(DEFAULT)
-)
-,
+),
 MSG(
 SHIFT(38) "The Ocarina of Time!" EVENT
-)
-,
+),
 MSG(
 SHIFT(35) "Die Okarina der Zeit!" EVENT
-)
-,
+),
 MSG(
 SHIFT(40) "L'Ocarina du Temps!" EVENT
 )
@@ -5221,24 +4861,21 @@ MSG(
 TWO_CHOICE
     COLOR(ADJUSTABLE) "はい\n"
     "いいえ" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Did you understand well the story\n"
 "I just told you?\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Hast Du die Geschichte, die ich\n"
 "Dir anvertraute, verstanden?\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "As-tu bien compris toute l'histoire?\n"
 "\n"
@@ -5262,8 +4899,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "はい\n"
     "やめとく" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "I was spying through this window\n"
 "just now..."
@@ -5280,8 +4916,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Ich habe gerade durch dieses\n"
 "Fenster hier geschaut..."
@@ -5298,8 +4933,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Je regardais par cette fenêtre..."
 BOX_BREAK
@@ -5332,8 +4966,7 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(9) "でも　わたしには　わかるのです！\n"
 SHIFT(33) "あの男の　悪しき心が…" COLOR(BLUE) EVENT COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE TEXT_SPEED(1) "........" TEXT_SPEED(0) "Yes."
 BOX_BREAK
@@ -5347,8 +4980,7 @@ BOX_BREAK
 
 UNSKIPPABLE "But...I can sense that man's evil\n"
 "intentions!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE TEXT_SPEED(1) "Ich weiß..." TEXT_SPEED(0) " Er ist es!"
 BOX_BREAK
@@ -5363,8 +4995,7 @@ BOX_BREAK
 
 UNSKIPPABLE "Doch glaube mir... Ich spüre die \n"
 "böse Aura dieses Mannes!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE TEXT_SPEED(1) "........" TEXT_SPEED(0) "Bien sûr!"
 BOX_BREAK
@@ -5395,8 +5026,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(39) "そして　ハイラルを…\n"
 SHIFT(27) "いえ、この世界そのものを\n"
 SHIFT(33) "わがものに　しようと…" COLOR(BLUE) EVENT COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "What Ganondorf is after must be \n"
 "nothing less than the " COLOR(RED) "Triforce \n"
@@ -5409,8 +5039,7 @@ BOX_BREAK
 
 UNSKIPPABLE "And, he wants to conquer Hyrule...\n"
 "no, the entire world!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Ganondorf hat es auf nichts\n"
 "anderes als das " COLOR(RED) "Triforce" COLOR(DEFAULT) " des \n"
@@ -5423,8 +5052,7 @@ BOX_BREAK
 UNSKIPPABLE "Um sein Ziel zu erreichen, muß\n"
 "er Hyrule, nein, die gesamte Welt\n"
 "unterwerfen!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Ganondorf est à la recherche de\n"
 "la " COLOR(RED) "Triforce " COLOR(DEFAULT) "du Saint Royaume.\n"
@@ -5447,19 +5075,16 @@ MSG(
 UNSKIPPABLE SHIFT(18) NAME "…\n"
 SHIFT(24) "今　ハイラルを　守れるのは\n"
 SHIFT(18) "わたしたちだけ　なのです！" COLOR(BLUE) EVENT COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE NAME "...now, we are the \n"
 "only ones who can protect Hyrule!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE NAME "... Wir sind die \n"
 "einzigen, die Ganondorfs Pläne\n"
 "durchkreuzen können!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE NAME "...\n"
 "Nous sommes les seuls en mesure\n"
@@ -5486,8 +5111,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(27) "ガノンドロフよりも　先に\n"
 SHIFT(15) "トライフォースを　手にいれて\n"
 SHIFT(24) "あの男を　たおしましょう！" COLOR(BLUE) EVENT COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "We must not let Ganondorf get\n"
 "the Triforce!"
@@ -5505,8 +5129,7 @@ BOX_BREAK
 UNSKIPPABLE "Let's get the Triforce before\n"
 "Ganondorf does, and then defeat \n"
 "him!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Wir müssen verhindern, daß \n"
 "Ganondorf in den Besitz des\n"
@@ -5527,8 +5150,7 @@ BOX_BREAK
 UNSKIPPABLE "Laß uns das Triforce suchen und\n"
 "mit dessen Kraft Ganondorf \n"
 "bezwingen!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Le vil Ganondorf ne doit JAMAIS\n"
 "mettre la main sur la Triforce!"
@@ -5555,21 +5177,18 @@ MSG(
 UNSKIPPABLE SHIFT(66) "それから…\n"
 SHIFT(18) "この" COLOR(RED) "手紙" COLOR(DEFAULT) "を　渡しておきます。\n"
 SHIFT(24) "きっと　役に立つはずです。" COLOR(BLUE) EVENT COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "One more thing...\n"
 "Take this " COLOR(RED) "letter" COLOR(DEFAULT) "...\n"
 "I'm sure it will be helpful to you." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Eines noch...\n"
 "Nimm diesen " COLOR(RED) "Brief " COLOR(DEFAULT) "an Dich.\n"
 "Ich bin sicher, Du wirst ihn \n"
 "brauchen können..." EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Encore une chose...\n"
 "Prends cette " COLOR(RED) "lettre" COLOR(DEFAULT) "...\n"
@@ -5617,8 +5236,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "はい\n"
     "いいえ" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Mumble...mumble...\n"
 "Huh? I'm awake already!"
@@ -5663,8 +5281,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Gähn...\n"
 "Was?! Bin ich schon wach?"
@@ -5709,8 +5326,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 UNSKIPPABLE "Mmm...zzz..mmm...hein?\n"
 "OK, j'suis réveillé maintenant!"
@@ -5783,8 +5399,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "はい\n"
     "いいえ" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Mumble...mumble...\n"
 "I'm up! I'm up!"
@@ -5814,8 +5429,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Gähn...\n"
 "Schon gut... Ich bin ja wach!"
@@ -5845,8 +5459,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Mmm...mmmm...quoi?\n"
 "OK, OK, j'suis réveillé!"
@@ -5886,8 +5499,7 @@ SHIFT(12) "スーパーコッコ　はいりま〜す！"
 BOX_BREAK
 
 SHIFT(72) "せ〜の！！" EVENT
-)
-,
+),
 MSG(
 "You have 30 seconds!\n"
 "All righty then, get ready.\n"
@@ -5895,8 +5507,7 @@ MSG(
 BOX_BREAK
 
 SHIFT(48) "START LOOKIN'!!" EVENT
-)
-,
+),
 MSG(
 "Du hast 30 Sekunden!\n"
 "Jetzt geht's los!\n"
@@ -5904,8 +5515,7 @@ MSG(
 BOX_BREAK
 
 SHIFT(66) "FINDE SIE!" EVENT
-)
-,
+),
 MSG(
 "Tu as 30 secondes!\n"
 "Prépare-toi...car voici...les...\n"
@@ -5927,8 +5537,7 @@ SHIFT(24) "いい　コッコちゃんたちだ。"
 BOX_BREAK
 
 SHIFT(12) "おまえたち　もどっといで〜っ！" EVENT
-)
-,
+),
 MSG(
 "Time's up!\n"
 "Too baaaaad!!"
@@ -5940,8 +5549,7 @@ BOX_BREAK
 BOX_BREAK
 
 "Come back to me, my babies!" EVENT
-)
-,
+),
 MSG(
 "Die Zeit ist um!\n"
 "Oh, wie schade!"
@@ -5953,8 +5561,7 @@ BOX_BREAK
 BOX_BREAK
 
 "Kommt zu Daddy, ihr Süßen!" EVENT
-)
-,
+),
 MSG(
 "Hop là! C'est fini!\n"
 "Dommaaaaage mon poussin!!"
@@ -5973,20 +5580,17 @@ MSG(
 SHIFT(18) "おっ！　そいつは　本物だーよ！\n"
 COLOR(LIGHTBLUE) COLOR(DEFAULT) SHIFT(42) "その調子　その調子！\n"
 SHIFT(54) "あと　" COLOR(RED) "２羽〜っ" COLOR(DEFAULT) "！" EVENT
-)
-,
+),
 MSG(
 "That's one of 'em!\n"
 "Keep it up! Keep it up!\n"
 COLOR(RED) "Two more" COLOR(DEFAULT) " to find!" EVENT
-)
-,
+),
 MSG(
 "Das ist eins von ihnen!\n"
 "Such weiter! Schnell!\n"
 COLOR(RED) "Zwei" COLOR(DEFAULT) " mußt Du noch finden!" EVENT
-)
-,
+),
 MSG(
 "En voilà une!\n"
 "Bien joué mon poussin!\n"
@@ -5999,20 +5603,17 @@ MSG(
 SHIFT(18) "あわわっ！　そいつも　本物だ！\n"
 COLOR(LIGHTBLUE) COLOR(DEFAULT) SHIFT(9) "だども　これからが　勝負だーよ。\n"
 SHIFT(39) "さあ！　あと　" COLOR(RED) "１羽〜っ" COLOR(DEFAULT) "！" EVENT
-)
-,
+),
 MSG(
 "There's another!\n"
 "All right, now, the moment of\n"
 "truth! " COLOR(RED) "One more" COLOR(DEFAULT) " to find!" EVENT
-)
-,
+),
 MSG(
 "Wieder eins!\n"
 "Jetzt kommt's drauf an! " COLOR(RED) "Eins" COLOR(DEFAULT) "\n"
 "fehlt noch!!" EVENT
-)
-,
+),
 MSG(
 "En voilà une autre!\n"
 "Le moment de vérité! \n"
@@ -6029,8 +5630,7 @@ BOX_BREAK
 
 SHIFT(33) "それで　ぜんぶ　だーよ！\n"
 SHIFT(48) "こっちへ　おいで。" EVENT
-)
-,
+),
 MSG(
 "Golly! I'll be darned!\n"
 "It's plum incredible!"
@@ -6039,8 +5639,7 @@ BOX_BREAK
 "That's the last one!\n"
 "You've found them all!\n"
 "Come on over here!" EVENT
-)
-,
+),
 MSG(
 "Wow! Unglaublich!\n"
 "Du hast ein gutes Gespür!"
@@ -6049,8 +5648,7 @@ BOX_BREAK
 "Du hast sie tatsächlich\n"
 "alle gefunden!\n"
 "Komm her zu mir!" EVENT
-)
-,
+),
 MSG(
 "Sacré nom d'une pipe en bois!\n"
 "J'en reste baba!"
@@ -6076,8 +5674,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "やる\n"
     "やめる" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Want to try again?"
 BOX_BREAK
@@ -6093,8 +5690,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Willst Du es nochmal versuchen?\n"
 "Ein junger Kerl wie Du hat doch\n"
@@ -6110,8 +5706,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Veux-tu jouer encore une fois?"
 BOX_BREAK
@@ -6141,8 +5736,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "はい\n"
     "いいえ" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Hey, you!\n"
 "You've got the talent to be one of\n"
@@ -6154,8 +5748,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Yes\n"
     "No" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Hey, Junge!\n"
 "Du hast das Zeug dazu, ein \n"
@@ -6168,8 +5761,7 @@ BOX_BREAK
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Ja!\n"
     "Nein!" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Mon p'tit gars...\n"
 "Tu as l'étoffe d'un éleveur de\n"
@@ -6199,8 +5791,7 @@ BOX_BREAK
 UNSKIPPABLE SHIFT(51) "のみおわっても、\n"
 SHIFT(30) "この" COLOR(RED) "ビン" COLOR(DEFAULT) "　持ってくれば、\n"
 SHIFT(30) "いつでも　買えるだーよ。" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Haw haw! I was just kidding! \n"
 "Just kidding! I think you're a little\n"
@@ -6217,8 +5808,7 @@ BOX_BREAK
 UNSKIPPABLE "After you drink it, you can \n"
 "bring back the " COLOR(RED) "bottle " COLOR(DEFAULT) "and buy a\n"
 "refill, anytime you want!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Hahaha, war doch nur Spaß!"
 BOX_BREAK
@@ -6233,8 +5823,7 @@ UNSKIPPABLE "Hast Du die " COLOR(RED) "Flasche" COLOR(DEFAULT) " geleert,\n"
 "kannst Du jederzeit zurückkommen\n"
 "und sie Dir gegen ein geringes\n"
 "Entgelt auffüllen lassen!" EVENT
-)
-,
+),
 MSG(
 UNSKIPPABLE "Ha ha! Je blaguais! \n"
 "T'es peut-être un peu jeune pour \n"
@@ -6261,8 +5850,7 @@ BOX_BREAK
 SHIFT(15) "おっきくなったら　この牧場で\n"
 SHIFT(45) "はたらかねえだか？\n"
 SHIFT(24) "いつでも　待ってるだーよ。" EVENT
-)
-,
+),
 MSG(
 "Hey pardner, you have an honest \n"
 "face!"
@@ -6272,8 +5860,7 @@ BOX_BREAK
 "come to work here, on this \n"
 "ranch? That's a standing offer!\n"
 "I'll be waiting for you." EVENT
-)
-,
+),
 MSG(
 "Hey Partner, Du bist echt in \n"
 "Ordnung!"
@@ -6283,8 +5870,7 @@ BOX_BREAK
 "könntest Du auf der Farm \n"
 "arbeiten...\n"
 "Wir warten auf Dich!" EVENT
-)
-,
+),
 MSG(
 "Hé l'ami... tu m'as l'air honnête et \n"
 "travailleur!"
@@ -6301,18 +5887,15 @@ DEFINE_MESSAGE(0x2089, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(51) "ほら、とれとれの\n"
 SHIFT(18) COLOR(RED) "ロンロン牛乳" COLOR(DEFAULT) "　持って行くだ！" EVENT
-)
-,
+),
 MSG(
 "Here you go! Take this super\n"
 "fresh " COLOR(RED) "Lon Lon Milk" COLOR(DEFAULT) "!" EVENT
-)
-,
+),
 MSG(
 "Hier, nimm diese leckere\n"
 COLOR(RED) "Lon Lon-Milch " COLOR(DEFAULT) "an Dich!" EVENT
-)
-,
+),
 MSG(
 "Voilà pour toi! Un bon litre de\n"
 COLOR(RED) "Lait de Lon Lon " COLOR(DEFAULT) "bien frais!" EVENT
@@ -6327,8 +5910,7 @@ BOX_BREAK
 SHIFT(81) "アラ？\n"
 SHIFT(51) "ざんねんだーよ。\n"
 SHIFT(24) "からのビンが　ないだーよ。"
-)
-,
+),
 MSG(
 "Here you are! Take some super\n"
 "fresh milk..."
@@ -6337,8 +5919,7 @@ BOX_BREAK
 "Oh? Too baaaaad!!\n"
 "You don't have an empty bottle,\n"
 "do you?"
-)
-,
+),
 MSG(
 "Hier! Nimm etwas von der\n"
 "frischen Milch..."
@@ -6347,8 +5928,7 @@ BOX_BREAK
 "Oh? Schade...\n"
 "Du hast leider keine leere\n"
 "Flasche, oder?"
-)
-,
+),
 MSG(
 "Voilà pour toi! \n"
 "Du lait bien frais...hein?..."
@@ -6382,8 +5962,7 @@ THREE_CHOICE
     COLOR(ADJUSTABLE) "ロンロン牛乳　　　３０ルピー\n"
     "コッコ当てゲーム　１０ルピー\n"
     "やめる" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Mumble...mumble...\n"
 "I'm awake!"
@@ -6409,8 +5988,7 @@ THREE_CHOICE
     COLOR(ADJUSTABLE) "Lon Lon Milk - 30 Rupees\n"
     "Cucco-findin' game - 10 Rupees\n"
     "Quit" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Gähn...\n"
 "Ich bin wach!"
@@ -6435,8 +6013,7 @@ THREE_CHOICE
     COLOR(ADJUSTABLE) "Lon Lon-Milch - 30 Rubine\n"
     "Super-Huhn-Suchen - 10 Rubine\n"
     "Zurück" COLOR(DEFAULT)
-)
-,
+),
 MSG(
 "Mmm...mmm...\n"
 "OK, OK, j'suis réveillé!"
@@ -6470,20 +6047,17 @@ MSG(
 QUICKTEXT_ENABLE SHIFT(66) COLOR(RED) "失格〜っ！！\n"
 COLOR(DEFAULT) SHIFT(24) "サクは　順番に　とばなきゃ\n"
 SHIFT(63) "ダメ！　ダメ！" QUICKTEXT_DISABLE FADE(60)
-)
-,
+),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "You failed!" COLOR(DEFAULT) "\n"
 "You have to jump over all the\n"
 "fences!" QUICKTEXT_DISABLE FADE(60)
-)
-,
+),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Du hast verloren!" COLOR(DEFAULT) "\n"
 "Du hättest über alle Hindernisse\n"
 "springen müssen!" QUICKTEXT_DISABLE FADE(60)
-)
-,
+),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Perdu!" COLOR(DEFAULT) "\n"
 "Tu dois sauter par-dessus tous les\n"
@@ -6494,16 +6068,13 @@ QUICKTEXT_ENABLE COLOR(RED) "Perdu!" COLOR(DEFAULT) "\n"
 DEFINE_MESSAGE(0x208D, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_TOP,
 MSG(
 QUICKTEXT_ENABLE SHIFT(69) COLOR(RED) "あと一周！" COLOR(DEFAULT) QUICKTEXT_DISABLE FADE(20)
-)
-,
+),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "One more lap!" COLOR(DEFAULT) QUICKTEXT_DISABLE FADE(20)
-)
-,
+),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Eine Runde noch!" COLOR(DEFAULT) QUICKTEXT_DISABLE FADE(20)
-)
-,
+),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Encore un tour!" COLOR(DEFAULT) QUICKTEXT_DISABLE FADE(20)
 )
@@ -6518,8 +6089,7 @@ BOX_BREAK
 
 SHIFT(33) "もう一度　挑戦するなら\n"
 SHIFT(24) "エポナに乗って　準備して！"
-)
-,
+),
 MSG(
 "Are you making sure to approach\n"
 "the fences head on? If you \n"
@@ -6529,8 +6099,7 @@ BOX_BREAK
 
 "If you want to try again, mount\n"
 "Epona and get ready!"
-)
-,
+),
 MSG(
 "Du mußt auf die Hindernisse \n"
 "frontal zureiten. Ist der Winkel zu \n"
@@ -6540,8 +6109,7 @@ BOX_BREAK
 "Wenn Du es erneut versuchen \n"
 "möchtest, steig auf und mach Dich \n"
 "bereit!"
-)
-,
+),
 MSG(
 "Es-tu sûr de t'y prendre\n"
 "correctement? Galope tout droit\n"
@@ -6567,8 +6135,7 @@ BOX_BREAK
 UNSKIPPABLE "ここで渡すには　ちょっと　重いから\n"
 SHIFT(30) "おウチに　届けておくわ。\n"
 SHIFT(24) "楽しみにしてて…　ウフフ！"
-)
-,
+),
 MSG(
 UNSKIPPABLE "You did it!\n"
 COLOR(RED) RACE_TIME COLOR(DEFAULT) " is the new course record!"
@@ -6582,8 +6149,7 @@ UNSKIPPABLE "The present is a little too heavy\n"
 "to give to you here, so I'll have it\n"
 "delivered to your house. Bet you\n"
 "can't wait to see it! Hee hee!"
-)
-,
+),
 MSG(
 UNSKIPPABLE "Du hast es geschafft!\n"
 COLOR(RED) RACE_TIME COLOR(DEFAULT) " ist neuer Parcours-Rekord!"
@@ -6597,8 +6163,7 @@ UNSKIPPABLE "Mein Präsent ist ein bißchen zu\n"
 "unhandlich, um es Dir hier geben zu\n"
 "können. Deshalb hab ich es direkt\n"
 "in Dein Haus liefern lassen! Hihihi..."
-)
-,
+),
 MSG(
 UNSKIPPABLE "Fantastique!\n"
 COLOR(RED) RACE_TIME COLOR(DEFAULT) " est le nouveau record!"
@@ -6625,8 +6190,7 @@ SHIFT(15) "記録更新できたら　アタシから\n"
 BOX_BREAK
 
 SHIFT(54) "じゃ、始めるヨ！" EVENT
-)
-,
+),
 MSG(
 "The record so far is " COLOR(RED) "50 seconds" COLOR(DEFAULT) ".\n"
 "Your best time is " COLOR(RED) HIGHSCORE(HS_HORSE_RACE) COLOR(DEFAULT) "."
@@ -6638,8 +6202,7 @@ BOX_BREAK
 BOX_BREAK
 
 "Let's get going!" EVENT
-)
-,
+),
 MSG(
 "Der bisherige Rekord beträgt \n"
 COLOR(RED) "50 Sekunden" COLOR(DEFAULT) ".\n"
@@ -6653,8 +6216,7 @@ BOX_BREAK
 BOX_BREAK
 
 "Los geht's!" EVENT
-)
-,
+),
 MSG(
 "Le record est de " COLOR(RED) "50 secondes" COLOR(DEFAULT) ".\n"
 "Ton meilleur temps est de " COLOR(RED) HIGHSCORE(HS_HORSE_RACE) COLOR(DEFAULT) "."
@@ -6676,20 +6238,17 @@ SHIFT(12) "どこまで　記録のばせるかしら？"
 BOX_BREAK
 
 SHIFT(54) "じゃ、始めるヨ！" EVENT
-)
-,
+),
 MSG(
 "Your best time is " COLOR(RED) HIGHSCORE(HS_HORSE_RACE) COLOR(DEFAULT) "!\n"
 "How fast can you go?!\n"
 "C'mon, let's get started!" EVENT
-)
-,
+),
 MSG(
 "Deine Bestzeit beträgt " COLOR(RED) HIGHSCORE(HS_HORSE_RACE) COLOR(DEFAULT) "!\n"
 "Kannst Du das noch unterbieten?\n"
 "Komm schon, versuch es!" EVENT
-)
-,
+),
 MSG(
 "Ton meilleur temps est de " COLOR(RED) HIGHSCORE(HS_HORSE_RACE) COLOR(DEFAULT) "!\n"
 "Peux-tu faire mieux que ça?\n"
@@ -6708,8 +6267,7 @@ SHIFT(15) "記録更新できたら　アタシから\n"
 BOX_BREAK
 
 SHIFT(54) "じゃ、始めるヨ！" EVENT
-)
-,
+),
 MSG(
 "The current record is " COLOR(RED) "50 seconds" COLOR(DEFAULT) ".\n"
 "First, try to beat this record!"
@@ -6721,8 +6279,7 @@ BOX_BREAK
 BOX_BREAK
 
 "All right, let's get started!" EVENT
-)
-,
+),
 MSG(
 "Der bisherige Rekord beträgt\n"
 COLOR(RED) "50 Sekunden" COLOR(DEFAULT) ". Brichst Du ihn, \n"
@@ -6734,8 +6291,7 @@ BOX_BREAK
 BOX_BREAK
 
 "Okay, es geht los!!" EVENT
-)
-,
+),
 MSG(
 "Le record actuel est " COLOR(RED) "50 secondes" COLOR(DEFAULT) ".\n"
 "Tente d'abord de battre ce temps!"

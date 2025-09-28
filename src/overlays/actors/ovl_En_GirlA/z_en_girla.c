@@ -40,6 +40,8 @@ s32 EnGirlA_CanBuy_BluePotion(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_Longsword(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_HylianShield(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_DekuShield(PlayState* play, EnGirlA* this);
+s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this);
+s32 EnGirlA_CanBuy_Wallet(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_GoronTunic(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_ZoraTunic(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_RecoveryHeart(PlayState* play, EnGirlA* this);
@@ -63,6 +65,7 @@ void EnGirlA_ItemGive_BottledItem(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_Longsword(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_HylianShield(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_DekuShield(PlayState* play, EnGirlA* this);
+void EnGirlA_ItemGive_HerosShield(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_GoronTunic(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_ZoraTunic(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_Health(PlayState* play, EnGirlA* this);
@@ -73,6 +76,7 @@ void EnGirlA_ItemGive_Unk20(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_DekuSeeds(PlayState* play, EnGirlA* this);
 void EnGirlA_BuyEvent_ShieldDiscount(PlayState* play, EnGirlA* this);
 void EnGirlA_BuyEvent_ObtainBombchuPack(PlayState* play, EnGirlA* this);
+void EnGirlA_BuyEvent_ObtainWallet(PlayState* play, EnGirlA* this);
 void EnGirlA_BuyEvent_GoronTunic(PlayState* play, EnGirlA* this);
 void EnGirlA_BuyEvent_ZoraTunic(PlayState* play, EnGirlA* this);
 
@@ -140,6 +144,10 @@ static char* sShopItemDescriptions[] = {
     T("爆弾×5       ", "Bombs x5      "),
     T("赤クスリ      ", "Red medicine  "),
     T("赤クスリ      ", "Red medicine  "),
+    T("勇者の盾      ", "Hero's Shield  "),
+    T("大人の財布      ", "Adult's Wallet  "),
+    T("巨人の財布      ", "Giant's Wallet  "),
+    T("王家の財布      ", "Royal Wallet  "),
 };
 #endif
 
@@ -314,7 +322,19 @@ static ShopItemEntry sShopItemEntries[] = {
       EnGirlA_CanBuy_RedPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount },
     /* SI_RED_POTION_R50 */
     { OBJECT_GI_LIQUID, GID_BOTTLE_POTION_RED, func_8002EBCC, 50, 1, 0x0065, 0x0063, GI_BOTTLE_POTION_RED,
-      EnGirlA_CanBuy_RedPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount }
+      EnGirlA_CanBuy_RedPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount },
+    /* SI_HEROS_SHIELD */
+    { OBJECT_GI_SHIELD_4, GID_SHIELD_HEROS, func_8002EBCC, 80, 1, 0x9008, 0x9004, GI_SHIELD_HEROS,
+      EnGirlA_CanBuy_HerosShield, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
+    /* SI_ROYAL_WALLET */
+    { OBJECT_GI_PURSE, GID_WALLET_ADULT, func_8002EBCC, 200, 1, 0x9009, 0x9005, GI_WALLET_ADULT,
+      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
+    /* SI_ROYAL_WALLET */
+    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x900A, 0x9006, GI_WALLET_GIANT,
+      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
+    /* SI_ROYAL_WALLET */
+    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x900B, 0x9007, GI_WALLET_ROYAL,
+      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
 };
 
 // Defines the Hylian Shield discount amount
@@ -326,6 +346,18 @@ void EnGirlA_SetupAction(EnGirlA* this, EnGirlAActionFunc func) {
 
 s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
     switch (this->actor.params) {
+        case SI_WALLET_ADULT:
+        case SI_WALLET_GIANT:
+        case SI_WALLET_ROYAL:
+            if (GET_ITEMGETINF(ITEMGETINF_BAZAAR_WALLET) || CUR_UPG_VALUE(UPG_WALLET) >= 3)
+                this->actor.params = SI_SOLD_OUT;
+            else if (CUR_UPG_VALUE(UPG_WALLET) == 0)
+                this->actor.params = SI_WALLET_ADULT;
+            else if (CUR_UPG_VALUE(UPG_WALLET) == 1)
+                this->actor.params = SI_WALLET_GIANT;
+            else if (CUR_UPG_VALUE(UPG_WALLET) == 2)
+                this->actor.params = SI_WALLET_ROYAL;
+            return true;
         case SI_MILK_BOTTLE:
             if (GET_ITEMGETINF(ITEMGETINF_TALON_BOTTLE)) {
                 this->actor.params = SI_RECOVERY_HEART;
@@ -575,8 +607,24 @@ s32 EnGirlA_CanBuy_DekuShield(PlayState* play, EnGirlA* this) {
     return CANBUY_RESULT_SUCCESS;
 }
 
+s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this) {
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS))
+        return CANBUY_RESULT_CANT_GET_NOW;
+    if (gSaveContext.save.info.playerData.rupees < this->basePrice)
+        return CANBUY_RESULT_NEED_RUPEES;
+    if (Item_CheckObtainability(ITEM_SHIELD_HEROS) == ITEM_NONE)
+        return CANBUY_RESULT_SUCCESS_FANFARE;
+    return CANBUY_RESULT_SUCCESS;
+}
+
+s32 EnGirlA_CanBuy_Wallet(PlayState* play, EnGirlA* this) {
+    if (gSaveContext.save.info.playerData.rupees < this->basePrice)
+        return CANBUY_RESULT_NEED_RUPEES;
+    return CANBUY_RESULT_SUCCESS_FANFARE;
+}
+
 s32 EnGirlA_CanBuy_GoronTunic(PlayState* play, EnGirlA* this) {
-    if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         return CANBUY_RESULT_CANT_GET_NOW;
     }
     if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
@@ -592,7 +640,7 @@ s32 EnGirlA_CanBuy_GoronTunic(PlayState* play, EnGirlA* this) {
 }
 
 s32 EnGirlA_CanBuy_ZoraTunic(PlayState* play, EnGirlA* this) {
-    if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         return CANBUY_RESULT_CANT_GET_NOW;
     }
     if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA)) {
@@ -783,6 +831,11 @@ void EnGirlA_ItemGive_DekuShield(PlayState* play, EnGirlA* this) {
     Rupees_ChangeBy(-this->basePrice);
 }
 
+void EnGirlA_ItemGive_HerosShield(PlayState* play, EnGirlA* this) {
+    Item_Give(play, ITEM_SHIELD_HEROS);
+    Rupees_ChangeBy(-this->basePrice);
+}
+
 void EnGirlA_ItemGive_GoronTunic(PlayState* play, EnGirlA* this) {
     Item_Give(play, ITEM_TUNIC_GORON);
     Rupees_ChangeBy(-this->basePrice);
@@ -899,6 +952,22 @@ void EnGirlA_BuyEvent_ObtainBombchuPack(PlayState* play, EnGirlA* this) {
             SET_ITEMGETINF(ITEMGETINF_05);
             break;
     }
+    Rupees_ChangeBy(-this->basePrice);
+}
+
+void EnGirlA_BuyEvent_ObtainWallet(PlayState* play, EnGirlA* this) {
+    switch (CUR_UPG_VALUE(UPG_WALLET)) {
+        case 0:
+            Item_Give(play, ITEM_ADULTS_WALLET);
+            break;
+        case 1:
+            Item_Give(play, ITEM_GIANTS_WALLET);
+            break;
+        default:
+            Item_Give(play, ITEM_ROYAL_WALLET);
+            break;
+    }
+    SET_ITEMGETINF(ITEMGETINF_BAZAAR_WALLET);
     Rupees_ChangeBy(-this->basePrice);
 }
 

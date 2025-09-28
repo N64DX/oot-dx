@@ -520,15 +520,15 @@ void Message_GrowTextbox(MessageContext* msgCtx) {
         0.6f, 0.75f, 0.9f, 1.0f, 1.05f, 1.1f, 1.05f, 1.0f,
     };
     f32 width =
-        R_TEXTBOX_WIDTH_TARGET * (sWidthCoefficients[msgCtx->stateTimer] + sWidthCoefficients[msgCtx->stateTimer]);
-    f32 height = R_TEXTBOX_HEIGHT_TARGET * sHeightCoefficients[msgCtx->stateTimer];
+        R_TEXTBOX_WIDTH_TARGET * (sWidthCoefficients[(u8)msgCtx->stateTimer] + sWidthCoefficients[(u8)msgCtx->stateTimer]);
+    f32 height = R_TEXTBOX_HEIGHT_TARGET * sHeightCoefficients[(u8)msgCtx->stateTimer];
     f32 texWidth =
-        R_TEXTBOX_TEXWIDTH_TARGET / (sWidthCoefficients[msgCtx->stateTimer] + sWidthCoefficients[msgCtx->stateTimer]);
-    f32 texHeight = R_TEXTBOX_TEXHEIGHT_TARGET / sHeightCoefficients[msgCtx->stateTimer];
+        R_TEXTBOX_TEXWIDTH_TARGET / (sWidthCoefficients[(u8)msgCtx->stateTimer] + sWidthCoefficients[(u8)msgCtx->stateTimer]);
+    f32 texHeight = R_TEXTBOX_TEXHEIGHT_TARGET / sHeightCoefficients[(u8)msgCtx->stateTimer];
 
     // Adjust y pos
     R_TEXTBOX_Y = R_TEXTBOX_Y_TARGET +
-                  (R_TEXTBOX_Y_TARGET - (s16)(R_TEXTBOX_Y_TARGET * sHeightCoefficients[msgCtx->stateTimer] + 0.5f)) / 2;
+                  (R_TEXTBOX_Y_TARGET - (s16)(R_TEXTBOX_Y_TARGET * sHeightCoefficients[(u8)msgCtx->stateTimer] + 0.5f)) / 2;
 
     msgCtx->textboxColorAlphaCurrent += msgCtx->textboxColorAlphaTarget / 8;
     msgCtx->stateTimer++;
@@ -1892,7 +1892,7 @@ void Message_LoadItemIcon(PlayState* play, u16 itemId, s16 y) {
         R_TEXTBOX_ICON_XPOS = R_TEXT_INIT_XPOS - sIconItem32XOffsets[gSaveContext.language];
         R_TEXTBOX_ICON_YPOS = y + ((44 - ITEM_ICON_HEIGHT) / 2);
         R_TEXTBOX_ICON_DIMENSION = ITEM_ICON_WIDTH; // assumes the image is square
-        DMA_REQUEST_SYNC(msgCtx->textboxSegment + MESSAGE_STATIC_TEX_SIZE, GET_ITEM_ICON_VROM(itemId), ITEM_ICON_SIZE,
+        DMA_REQUEST_SYNC(msgCtx->textboxSegment + MESSAGE_STATIC_TEX_SIZE, GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(itemId)), ITEM_ICON_SIZE,
                          "../z_message_PAL.c", 1473);
         PRINTF(T("アイテム32-0\n", "Item 32-0\n"));
     } else {
@@ -1906,6 +1906,43 @@ void Message_LoadItemIcon(PlayState* play, u16 itemId, s16 y) {
     msgCtx->msgBufPos++;
     msgCtx->choiceNum = 1;
 }
+
+#if !PLATFORM_IQUE
+static const char* sword_words[2][4] = {
+    { "マスターソード", "Master Sword", "Master-Schwert", "L'Epée de Légende" },
+    { "レイザーソード", "Razor Sword", "Elfenschwert", "Lame Rasoir" }
+};
+
+static const char* lad_words[2][4] = {
+    { "少年", "lad", "junge", "gars" },
+    { "男", "man", "mann", "homme" }
+};
+
+static const char* one_words[2][4] = {
+    { "子", "one", "kleiner", "petit" },
+    { "男", "man", "mann", "homme" }
+};
+
+static const char* boy_words[2][4] = {
+    { "男の子", "boy", "junge", "garçon" },
+    { "さん",  "mister", "herr", "monsieur" }
+};
+
+static const char* guy_words[2][4] = {
+    { "小さい子", "little guy", "kleiner kerl", "petit gars" },
+    { "さん", "mister", "herr", "monsieur" }
+};
+
+static const char* guy_c_words[2][4] = {
+    { "小さい子", "Little guy", "Kleiner kerl", "Petit gars" },
+    { "さん", "Mister", "Herr", "Monsieur" }
+};
+
+static const char* token_words[2][4] = {
+    { "しるし", "token", "Skulltula", "jeton" },
+    { "しるし", "tokens", "Skulltulas", "jetons" }
+};
+#endif
 
 void Message_Decode(PlayState* play) {
     MessageContext* msgCtx = &play->msgCtx;
@@ -2400,7 +2437,69 @@ void Message_Decode(PlayState* play) {
                     decodedBufPos++;
                 }
                 decodedBufPos--;
-            } else if (curChar == MESSAGE_MARATHON_TIME || curChar == MESSAGE_RACE_TIME) {
+            }
+#if !PLATFORM_IQUE
+            else if (curChar == MESSAGE_AGE_LAD || curChar == MESSAGE_AGE_ONE || curChar == MESSAGE_AGE_BOY || curChar == MESSAGE_AGE_GUY || curChar == MESSAGE_AGE_GUY_C || curChar == MESSAGE_PLURAL_TOKENS || curChar == MESSAGE_MASTER_SWORD) {
+                const char* word = NULL;
+                const char* const* words = NULL;
+                s8 len;
+
+                switch (curChar) {
+                    case MESSAGE_AGE_LAD:
+                        words = lad_words[!LINK_IS_CHILD];
+                        break;
+                    case MESSAGE_AGE_ONE:
+                        words = one_words[!LINK_IS_CHILD];
+                        break;
+                    case MESSAGE_AGE_BOY:
+                        words = boy_words[!LINK_IS_CHILD];
+                        break;
+                    case MESSAGE_AGE_GUY:
+                        words = guy_words[!LINK_IS_CHILD];
+                        break;
+                    case MESSAGE_AGE_GUY_C:
+                        words = guy_c_words[!LINK_IS_CHILD];
+                        break;
+                    case MESSAGE_PLURAL_TOKENS:
+                        words = token_words[gSaveContext.save.info.inventory.gsTokens != 1];
+                        break;
+                    case MESSAGE_MASTER_SWORD:
+                        words = sword_words[IS_CHILD_QUEST_AS_CHILD];
+                        break;
+                }
+                ASSERT(words != NULL, "words != null", "../message.c", 2444);
+
+                switch (gSaveContext.language) {
+#if OOT_NTSC
+                    case LANGUAGE_JPN:
+                        word = words[0];
+                        break;
+#endif
+                    case LANGUAGE_ENG:
+                        word = words[1];
+                        break;
+#if OOT_NTSC_N64 || OOT_PAL
+                    case LANGUAGE_GER:
+                        word = words[2];
+                        break;
+                    case LANGUAGE_FRA:
+                        word = words[3];
+                        break;
+#endif
+                }
+                ASSERT(word != NULL, "word != null", "../message.c", 2465);
+                len = strlen(word);
+
+                for (i=0; i<len; i++) {
+                    Font_LoadChar(font, word[i] - ' ', charTexIdx);
+                    charTexIdx += FONT_CHAR_TEX_SIZE;
+                    MSG_BUF_DECODED[decodedBufPos] = word[i];
+                    if (i < len - 1)
+                        decodedBufPos++;
+                }
+            }
+#endif
+            else if (curChar == MESSAGE_MARATHON_TIME || curChar == MESSAGE_RACE_TIME) {
                 // Convert the values of the appropriate timer to digits and add the
                 //  digits to the decoded buffer in place of the control character.
                 PRINTF(T("\nＥＶＥＮＴタイマー ＝ ", "\nEVENT timer = "));
@@ -2804,7 +2903,58 @@ void Message_OpenText(PlayState* play, u16 textId) {
     } else {
 #if OOT_NTSC_N64
         Language language = gSaveContext.language;
-        if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG && language != LANGUAGE_JPN) {
+
+        if (IS_CHILD_QUEST) {
+            switch (textId) {
+                case 0x0050: textId = 0x800D; break;
+                case 0x0051: textId = 0x800E; break;
+                case 0x00AA: textId = 0x800F; break;
+                case 0x00AB: textId = 0x8010; break;
+
+                case 0x015A: textId = 0x8119; break;
+
+                case 0x0220: textId = 0x8103; break;
+                case 0x0221: textId = 0x8104; break;
+                case 0x0237: textId = 0x8105; break;
+
+                case 0x1052: textId = 0x8100; break;
+                case 0x105D: textId = 0x8101; break;
+                case 0x1063: textId = 0x8109; break;
+                case 0x1064: textId = 0x810A; break;
+                case 0x1074: textId = 0x8102; break;
+
+                case 0x3039: textId = 0x8107; break;
+                case 0x304E: textId = 0x8106; break;
+                case 0x304F: textId = 0x811C; break;
+                case 0x3053: textId = 0x810B; break;
+                case 0x3054: textId = 0x810C; break;
+
+                case 0x403E: textId = 0x8108; break;
+                    
+                case 0x5003: textId = 0x811D; break;
+                case 0x5034: textId = 0x8120; break;
+                case 0x5035: textId = 0x8121; break;
+                case 0x507B: textId = 0x811E; break;
+
+                case 0x600C: textId = 0x8116; break;
+                case 0x601B: textId = 0x810D; break;
+                case 0x6024: textId = 0x811A; break;
+                case 0x6026: textId = 0x811B; break;
+                case 0x6035: textId = 0x8117; break;
+                case 0x6036: textId = 0x8115; break;
+                case 0x606E: textId = 0x810E; break;
+                case 0x6079: textId = 0x8118; break;
+
+                case 0x704F: textId = 0x810F; break;
+                case 0x7050: textId = 0x8110; break;
+                case 0x7051: textId = 0x8114; break;
+                case 0x7054: textId = 0x8111; break;
+                case 0x7074: textId = 0x8112; break;
+                case 0x7078: textId = 0x8113; break;
+                case 0x708B: textId = 0x811F; break;
+            }
+            Message_FindMessage(play, textId, language);
+        } else if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG && language != LANGUAGE_JPN) {
             language = LANGUAGE_ENG;
             Message_FindMessage(play, textId, language);
         }
@@ -4644,6 +4794,7 @@ void Message_Update(PlayState* play) {
                     gSaveContext.save.info.inventory.questItems ^= (4 << QUEST_HEART_PIECE_COUNT);
                     gSaveContext.save.info.playerData.healthCapacity += 0x10;
                     gSaveContext.save.info.playerData.health += 0x10;
+                    R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
                 }
                 if (msgCtx->ocarinaAction != OCARINA_ACTION_CHECK_NOWARP_DONE) {
                     if (sLastPlayedSong == OCARINA_SONG_SARIAS) {

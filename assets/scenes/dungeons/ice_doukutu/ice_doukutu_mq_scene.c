@@ -1,6 +1,6 @@
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene.h"
 
-static SceneCmd* questHeaders[1];
+static SceneCmd* questHeaders[3];
 
 static SceneCmd start[] = {
 #include "assets/scenes/dungeons/start.inc.c"
@@ -25,10 +25,10 @@ static SurfaceType mq_surface_types[] = {
 };
 
 static CollisionHeader mq_collision = {
-#if OOT_VERSION == NTSC_1_2
-#include "assets/scenes/dungeons/ice_doukutu/mq/scene/collision_us_rev2.inc.c"
-#elif OOT_NTSC
+#if OOT_VERSION <= NTSC_1_1
 #include "assets/scenes/dungeons/ice_doukutu/mq/scene/collision.inc.c"
+#elif OOT_VERSION == NTSC_1_2
+#include "assets/scenes/dungeons/ice_doukutu/mq/scene/collision_us_rev2.inc.c"
 #else
 #include "assets/scenes/dungeons/ice_doukutu/mq/scene/collision_pal.inc.c"
 #endif
@@ -63,5 +63,5 @@ static SceneCmd mq_header[] = {
 };
 
 static SceneCmd* questHeaders[] = {
-#include "assets/scenes/dungeons/questHeaders.inc.c"
+#include "assets/scenes/dungeons/questHeadersScene.inc.c"
 };

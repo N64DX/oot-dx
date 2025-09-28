@@ -14,7 +14,7 @@
 #include "save.h"
 
 #include "assets/objects/object_cs/object_cs.h"
-#include "assets/objects/object_link_child/object_link_child.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY)
 
@@ -145,7 +145,7 @@ void EnCs_Init(Actor* thisx, PlayState* play) {
 
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 19.0f);
 
-    SkelAnime_InitFlex(play, &this->skelAnime, &gGraveyardKidSkel, NULL, this->jointTable, this->morphTable, 16);
+    SkelAnime_InitFlex(play, &this->skelAnime, CQ_IS_TIMESKIP ? &gGraveyardKidSkel2 : &gGraveyardKidSkel, NULL, this->jointTable, this->morphTable, 16);
 
     Collider_InitCylinder(play, &this->collider);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
@@ -471,6 +471,9 @@ void EnCs_Draw(Actor* thisx, PlayState* play) {
         gGraveyardKidEyesOpenTex,
         gGraveyardKidEyesHalfTex,
         gGraveyardKidEyesClosedTex,
+        gGraveyardKidEyesOpen2Tex,
+        gGraveyardKidEyesHalf2Tex,
+        gGraveyardKidEyesClosed2Tex,
     };
     EnCs* this = (EnCs*)thisx;
     s32 pad;
@@ -478,13 +481,13 @@ void EnCs_Draw(Actor* thisx, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_en_cs.c", 968);
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
-    gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(eyeTextures[this->eyeIndex]));
+    gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(eyeTextures[this->eyeIndex + (3 * CQ_IS_TIMESKIP)]));
 
     SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount,
                           EnCs_OverrideLimbDraw, EnCs_PostLimbDraw, &this->actor);
 
     if (GET_ITEMGETINF(ITEMGETINF_3A)) {
-        s32 linkChildObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_LINK_CHILD);
+        s32 linkChildObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GAMEPLAY_KEEP);
 
         // Handle attaching the Spooky Mask to the boy's face
         if (linkChildObjectSlot >= 0) {

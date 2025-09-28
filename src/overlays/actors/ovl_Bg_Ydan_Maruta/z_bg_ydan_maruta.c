@@ -55,7 +55,7 @@ static ColliderTrisElementInit sTrisElementsInit[2] = {
         {
             ELEM_MATERIAL_UNK0,
             { 0x20000000, 0x00, 0x04 },
-            { 0x00000004, 0x00, 0x00 },
+            { 0x00000024, 0x00, 0x00 },
             ATELEM_ON | ATELEM_SFX_WOOD,
             ACELEM_ON,
             OCELEM_NONE,

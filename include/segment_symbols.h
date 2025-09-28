@@ -670,6 +670,20 @@ DECLARE_ROM_SEGMENT(spot20_room_0)
 
 DECLARE_ROM_SEGMENT(ganon_tou_room_0)
 
+DECLARE_ROM_SEGMENT(roadtolake_room_0)
+
+DECLARE_ROM_SEGMENT(roadtofortress_room_0)
+
+DECLARE_ROM_SEGMENT(grotto_shortcuts_room_0)
+DECLARE_ROM_SEGMENT(grotto_shortcuts_room_1)
+
+DECLARE_ROM_SEGMENT(swamp_spider_house_room_0)
+DECLARE_ROM_SEGMENT(swamp_spider_house_room_1)
+DECLARE_ROM_SEGMENT(swamp_spider_house_room_2)
+DECLARE_ROM_SEGMENT(swamp_spider_house_room_3)
+DECLARE_ROM_SEGMENT(swamp_spider_house_room_4)
+DECLARE_ROM_SEGMENT(swamp_spider_house_room_5)
+
 // Room symbols for compiling test scenes.
 // These are not wrapped in an `#if DEBUG_ASSETS` so that debug ROMs
 // can be built with DEBUG_ASSETS=0 (e.g. when DEBUG_FEATURES=0)

@@ -119,7 +119,7 @@ void EnWonderItem_Init(Actor* thisx, PlayState* play) {
         DMG_ARROW,
         DMG_HAMMER_SWING,
         DMG_EXPLOSIVE,
-        DMG_SLINGSHOT,
+        DMG_RANGED,
         DMG_BOOMERANG,
         DMG_HOOKSHOT,
     };
@@ -201,7 +201,7 @@ void EnWonderItem_Init(Actor* thisx, PlayState* play) {
         case WONDERITEM_BOMB_SOLDIER:
             Collider_InitCylinder(play, &this->collider);
             Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
-            this->collider.elem.acDmgInfo.dmgFlags = DMG_SLINGSHOT;
+            this->collider.elem.acDmgInfo.dmgFlags = DMG_RANGED;
             this->unkPos = this->actor.world.pos;
             this->collider.dim.radius = 35;
             this->collider.dim.height = 75;

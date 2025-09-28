@@ -27,9 +27,7 @@
 #define HEALTH_CAP offsetof(SaveContext, save.info.playerData.healthCapacity)
 #define QUEST offsetof(SaveContext, save.info.inventory.questItems)
 #define DEFENSE offsetof(SaveContext, save.info.inventory.defenseHearts)
-#if OOT_PAL
 #define HEALTH offsetof(SaveContext, save.info.playerData.health)
-#endif
 
 #define SLOT_OFFSET(index) (SRAM_HEADER_SIZE + 0x10 + (index * SLOT_SIZE))
 
@@ -446,6 +444,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
     PRINTF("SCENE_DATA_ID = %d   SceneNo = %d\n", gSaveContext.save.info.playerData.savedSceneId,
            ((void)0, gSaveContext.save.entranceIndex));
 
+    R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
+    R_QUEST_MODE    = QUEST_MODE;
+
     switch (gSaveContext.save.info.playerData.savedSceneId) {
         case SCENE_DEKU_TREE:
         case SCENE_DODONGOS_CAVERN:
@@ -461,7 +462,8 @@ void Sram_OpenSave(SramContext* sramCtx) {
         case SCENE_GERUDO_TRAINING_GROUND:
         case SCENE_THIEVES_HIDEOUT:
         case SCENE_INSIDE_GANONS_CASTLE:
-            gSaveContext.save.entranceIndex = sDungeonEntrances[gSaveContext.save.info.playerData.savedSceneId];
+            if (!RESUME_LAST_AREA)
+                gSaveContext.save.entranceIndex = sDungeonEntrances[gSaveContext.save.info.playerData.savedSceneId];
             break;
 
         case SCENE_DEKU_TREE_BOSS:
@@ -507,7 +509,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
         default:
             if (!RESUME_LAST_AREA) {
                 if (gSaveContext.save.info.playerData.savedSceneId != SCENE_LINKS_HOUSE)
-                    gSaveContext.save.entranceIndex = (LINK_AGE_IN_YEARS == YEARS_CHILD) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
+                    gSaveContext.save.entranceIndex = (!LINK_IS_ADULT_OR_TIMESKIP) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
                 else gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
             }
             break;
@@ -570,13 +572,11 @@ void Sram_OpenSave(SramContext* sramCtx) {
         }
     }
 
-    if (LINK_AGE_IN_YEARS == YEARS_ADULT && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)) {
+    if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER);
-#if OOT_VERSION >= NTSC_1_1
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
         gSaveContext.save.info.equips.equipment &= ~(0xF << (EQUIP_TYPE_SWORD * 4));
         gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_SWORD_MASTER << (EQUIP_TYPE_SWORD * 4);
-#endif
     }
 
     for (i = 0; i < ARRAY_COUNT(gSpoilingItems); i++) {
@@ -609,8 +609,8 @@ void Sram_OpenSave(SramContext* sramCtx) {
         gSaveContext.save.info.playerData.dpadItems[2][3] = gSaveContext.save.info.playerData.dpadItems[3][3] = SLOT_TUNICS;
     }
 
-    R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
-    R_QUEST_MODE    = QUEST_MODE;
+    if (IS_CHILD_QUEST)
+        gSaveContext.save.linkAge = LINK_AGE_CHILD;
 }
 
 void Sram_OpenSaveOptions(SramContext* sramCtx) {
@@ -870,15 +870,17 @@ void Sram_VerifyAndLoadAllSaves(FileSelectState* fileSelect, SramContext* sramCt
     MemCpy(&fileSelect->defense[1], sramCtx->readBuff + SLOT_OFFSET(1) + DEFENSE, sizeof(fileSelect->defense[0]));
     MemCpy(&fileSelect->defense[2], sramCtx->readBuff + SLOT_OFFSET(2) + DEFENSE, sizeof(fileSelect->defense[0]));
 
-#if OOT_PAL
     MemCpy(&fileSelect->health[0], sramCtx->readBuff + SLOT_OFFSET(0) + HEALTH, sizeof(fileSelect->health[0]));
     MemCpy(&fileSelect->health[1], sramCtx->readBuff + SLOT_OFFSET(1) + HEALTH, sizeof(fileSelect->health[0]));
     MemCpy(&fileSelect->health[2], sramCtx->readBuff + SLOT_OFFSET(2) + HEALTH, sizeof(fileSelect->health[0]));
-#endif
 
     MemCpy(&fileSelect->fileOptions[0], sramCtx->readBuff + SLOT_OFFSET(0) + offsetof(SaveContext, options), sizeof(fileSelect->fileOptions[0]));
     MemCpy(&fileSelect->fileOptions[1], sramCtx->readBuff + SLOT_OFFSET(1) + offsetof(SaveContext, options), sizeof(fileSelect->fileOptions[0]));
     MemCpy(&fileSelect->fileOptions[2], sramCtx->readBuff + SLOT_OFFSET(2) + offsetof(SaveContext, options), sizeof(fileSelect->fileOptions[0]));
+    
+    MemCpy(&fileSelect->questMode[0], sramCtx->readBuff + SLOT_OFFSET(0) + offsetof(SaveContext, save.info.questMode), sizeof(fileSelect->questMode[0]));
+    MemCpy(&fileSelect->questMode[1], sramCtx->readBuff + SLOT_OFFSET(1) + offsetof(SaveContext, save.info.questMode), sizeof(fileSelect->questMode[0]));
+    MemCpy(&fileSelect->questMode[2], sramCtx->readBuff + SLOT_OFFSET(2) + offsetof(SaveContext, save.info.questMode), sizeof(fileSelect->questMode[0]));
     
     for (i=0; i<3; i++)
         for (j=0; j<FILE_OPTIONS_SIZE; j++)
@@ -886,9 +888,7 @@ void Sram_VerifyAndLoadAllSaves(FileSelectState* fileSelect, SramContext* sramCt
 
     PRINTF("f_64dd=%d, %d, %d\n", fileSelect->n64ddFlags[0], fileSelect->n64ddFlags[1], fileSelect->n64ddFlags[2]);
     PRINTF("heart_status=%d, %d, %d\n", fileSelect->defense[0], fileSelect->defense[1], fileSelect->defense[2]);
-#if OOT_PAL
     PRINTF("now_life=%d, %d, %d\n", fileSelect->health[0], fileSelect->health[1], fileSelect->health[2]);
-#endif
 }
 
 void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
@@ -931,8 +931,6 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
 
 #if OOT_VERSION <= PAL_1_1
     gSaveContext.save.info.questMode = fileSelect->questMode[fileSelect->buttonIndex];
-    if (fileSelect->mirrorMode[fileSelect->buttonIndex] == true && !MIRROR_MODE)
-        SET_MIRROR_MODE;
 #else
     gSaveContext.save.info.questMode = 0;
 #endif
@@ -992,9 +990,7 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
     MemCpy(&fileSelect->n64ddFlags[gSaveContext.fileNum], sramCtx->readBuff + j + N64DD,
            sizeof(fileSelect->n64ddFlags[0]));
     MemCpy(&fileSelect->defense[gSaveContext.fileNum], sramCtx->readBuff + j + DEFENSE, sizeof(fileSelect->defense[0]));
-#if OOT_PAL
     MemCpy(&fileSelect->health[gSaveContext.fileNum], sramCtx->readBuff + j + HEALTH, sizeof(fileSelect->health[0]));
-#endif
 
     MemCpy(&fileSelect->fileOptions[gSaveContext.fileNum], sramCtx->readBuff + j + offsetof(SaveContext, options),    sizeof(fileSelect->fileOptions[0]));
 
@@ -1003,9 +999,7 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
 
     PRINTF("f_64dd[%d]=%d\n", gSaveContext.fileNum, fileSelect->n64ddFlags[gSaveContext.fileNum]);
     PRINTF("heart_status[%d]=%d\n", gSaveContext.fileNum, fileSelect->defense[gSaveContext.fileNum]);
-#if OOT_PAL
     PRINTF("now_life[%d]=%d\n", gSaveContext.fileNum, fileSelect->health[gSaveContext.fileNum]);
-#endif
 }
 
 void Sram_EraseSave(FileSelectState* fileSelect, SramContext* sramCtx) {
@@ -1059,10 +1053,8 @@ void Sram_CopySave(FileSelectState* fileSelect, SramContext* sramCtx) {
            sizeof(fileSelect->n64ddFlags[0]));
     MemCpy(&fileSelect->defense[fileSelect->copyDestFileIndex], sramCtx->readBuff + offset + DEFENSE,
            sizeof(fileSelect->defense[0]));
-#if OOT_PAL
     MemCpy(&fileSelect->health[fileSelect->copyDestFileIndex], (sramCtx->readBuff + offset) + HEALTH,
            sizeof(fileSelect->health[0]));
-#endif
 
     PRINTF("f_64dd[%d]=%d\n", gSaveContext.fileNum, fileSelect->n64ddFlags[gSaveContext.fileNum]);
     PRINTF("heart_status[%d]=%d\n", gSaveContext.fileNum, fileSelect->defense[gSaveContext.fileNum]);
@@ -1100,6 +1092,7 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
 
     gSaveContext.soundSetting = sramCtx->readBuff[SRAM_HEADER_SOUND] & 3;
     gSaveContext.zTargetSetting = sramCtx->readBuff[SRAM_HEADER_Z_TARGET] & 1;
+    gSaveContext.debugMode = sramCtx->readBuff[SRAM_HEADER_DEBUG_MODE] & 1;
 
 #if OOT_PAL || OOT_NTSC_N64
     gSaveContext.language = sramCtx->readBuff[SRAM_HEADER_LANGUAGE];
@@ -1145,7 +1138,7 @@ u8 HasDuplicateDpadItems(void) {
     for (col=0; col<4; col++)
         for (i=0; i<4; i++)
             for (j=i+1; j<4; j++)
-                if (gSaveContext.save.info.playerData.dpadItems[i][col] == gSaveContext.save.info.playerData.dpadItems[j][col])
+                if (gSaveContext.save.info.playerData.dpadItems[col][i] == gSaveContext.save.info.playerData.dpadItems[col][j])
                     return true;
     return false;
 }

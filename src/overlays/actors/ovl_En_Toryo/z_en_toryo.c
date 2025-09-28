@@ -108,17 +108,17 @@ void EnToryo_Init(Actor* thisx, PlayState* play) {
 
     switch (play->sceneId) {
         case SCENE_GERUDO_VALLEY:
-            if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
+            if (LINK_IS_ADULT_OR_TIMESKIP) {
                 this->stateFlags |= 1;
             }
             break;
         case SCENE_KAKARIKO_VILLAGE:
-            if ((LINK_AGE_IN_YEARS == YEARS_CHILD) && IS_DAY) {
+            if ((!LINK_IS_ADULT_OR_TIMESKIP) && IS_DAY) {
                 this->stateFlags |= 2;
             }
             break;
         case SCENE_KAKARIKO_CENTER_GUEST_HOUSE:
-            if ((LINK_AGE_IN_YEARS == YEARS_CHILD) && IS_NIGHT) {
+            if ((!LINK_IS_ADULT_OR_TIMESKIP) && IS_NIGHT) {
                 this->stateFlags |= 4;
             }
             break;
@@ -322,7 +322,7 @@ void EnToryo_HandleTalking(EnToryo* this, PlayState* play) {
             this->actor.parent = NULL;
             this->messageState = 5;
         } else {
-            Actor_OfferGetItem(&this->actor, play, GI_BROKEN_GORONS_SWORD, 100.0f, 10.0f);
+            Actor_OfferGetItem(&this->actor, play, IS_CHILD_QUEST ? GI_GOLD_DUST : GI_BROKEN_GORONS_SWORD, 100.0f, 10.0f);
         }
         return;
     }

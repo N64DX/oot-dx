@@ -261,6 +261,7 @@ void EnDekubaba_Init(Actor* thisx, PlayState* play) {
         }
 
         CollisionCheck_SetInfo(&this->actor.colChkInfo, &sBigDekuBabaDamageTable, &sColChkInfoInit);
+        Actor_SetGildedSwordDamageTaken(thisx);
         this->actor.colChkInfo.health = 4;
         this->actor.naviEnemyId = NAVI_ENEMY_BIG_DEKU_BABA;
         this->actor.attentionRangeType = ATTENTION_RANGE_2;
@@ -276,6 +277,7 @@ void EnDekubaba_Init(Actor* thisx, PlayState* play) {
         }
 
         CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDekuBabaDamageTable, &sColChkInfoInit);
+        Actor_SetGildedSwordDamageTaken(thisx);
         this->actor.naviEnemyId = NAVI_ENEMY_DEKU_BABA;
         this->actor.attentionRangeType = ATTENTION_RANGE_1;
     }

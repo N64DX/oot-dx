@@ -1,0 +1,8 @@
+    OBJECT_ICE_OBJECTS, // 0
+    OBJECT_BL, // 1
+    OBJECT_FIREFLY, // 2
+    OBJECT_ST, // 3
+    OBJECT_GI_SUTARU, // 4
+    OBJECT_TIMEBLOCK, // 5
+    OBJECT_EFC_TW, // 6
+

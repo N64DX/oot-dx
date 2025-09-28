@@ -575,3 +575,6 @@ u64 gMsgCharAAControlStickTex[TEX_LEN(u64, gMsgCharAAControlStickTex_WIDTH, gMsg
 #include "assets/textures/nes_font_static/gMsgCharAAControlStickTex.i4.inc.c"
 };
 
+u64 gMsgCharABControlPadTex[TEX_LEN(u64, gMsgCharABControlPadTex_WIDTH, gMsgCharABControlPadTex_HEIGHT, 4)] = {
+#include "assets/textures/nes_font_static/gMsgCharABControlPadTex.i4.inc.c"
+};

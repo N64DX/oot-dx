@@ -22,6 +22,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_bw/object_bw.h"
@@ -105,14 +106,14 @@ static ColliderCylinderInit sCylinderInit2 = {
 
 static DamageTable sDamageTable = {
     /* Deku nut      */ DMG_ENTRY(0, 0x1),
-    /* Deku stick    */ DMG_ENTRY(0, 0x0),
-    /* Slingshot     */ DMG_ENTRY(0, 0x0),
+    /* Deku stick    */ DMG_ENTRY(2, 0xF),
+    /* Slingshot     */ DMG_ENTRY(1, 0xF),
     /* Explosive     */ DMG_ENTRY(2, 0xF),
     /* Boomerang     */ DMG_ENTRY(0, 0x0),
     /* Normal arrow  */ DMG_ENTRY(2, 0xF),
     /* Hammer swing  */ DMG_ENTRY(2, 0xF),
     /* Hookshot      */ DMG_ENTRY(0, 0x1),
-    /* Kokiri sword  */ DMG_ENTRY(0, 0x0),
+    /* Kokiri sword  */ DMG_ENTRY(1, 0xF),
     /* Master sword  */ DMG_ENTRY(2, 0xF),
     /* Giant's Knife */ DMG_ENTRY(4, 0xF),
     /* Fire arrow    */ DMG_ENTRY(2, 0xF),
@@ -154,10 +155,9 @@ void EnBw_Init(Actor* thisx, PlayState* play) {
                    this->morphTable, TORCH_SLUG_LIMB_MAX);
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 40.0f);
     this->actor.colChkInfo.damageTable = &sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     this->actor.colChkInfo.health = 6;
-#if OOT_VERSION >= PAL_1_0
     this->actor.colChkInfo.mass = MASS_HEAVY;
-#endif
     this->actor.focus.pos = this->actor.world.pos;
     func_809CE9A8(this);
     this->color1.a = this->color1.r = 255;

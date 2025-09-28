@@ -81,6 +81,13 @@
 #include "assets/objects/object_gi_dekupouch/object_gi_dekupouch.h"
 #include "assets/objects/object_gi_rupy/object_gi_rupy.h"
 #include "assets/objects/object_gi_sword_1/object_gi_sword_1.h"
+#include "assets/objects/object_gi_shield_3_mm/object_gi_shield_3_mm.h"
+#include "assets/objects/object_gi_shield_4/object_gi_shield_4.h"
+#include "assets/objects/object_gi_sword_heros/object_gi_sword_heros.h"
+#include "assets/objects/object_gi_longsword_mm/object_gi_longsword_mm.h"
+#include "assets/objects/object_gi_hookshot_mm/object_gi_hookshot_mm.h"
+#include "assets/objects/object_gi_heros_bow/object_gi_heros_bow.h"
+#include "assets/objects/object_gi_gold_dust/object_gi_gold_dust.h"
 #include "assets/objects/object_st/object_st.h"
 
 // "Get Item" Model Draw Functions
@@ -372,6 +379,26 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawOpa0, { gGiKokiriSwordDL } },
     // GID_SKULL_TOKEN_2
     { GetItem_DrawSkullToken, { gSkulltulaTokenDL, gSkulltulaTokenFlameDL } },
+    // GID_SHIELD_MIRROR_MM,
+    { GetItem_DrawOpa0Xlu1, { gGiMirrorShieldMMDL } },
+    // GID_SHIELD_HEROS
+    { GetItem_DrawOpa0Xlu1, { gGiHerosShieldEmblemDL, gGiHerosShieldDL } },
+    // GID_SWORD_HEROS
+    { GetItem_DrawOpa0Xlu1, { gGiHerosSwordBladeHiltDL, gGiHerosSwordGuardDL } },
+    // GID_SWORD_SILVER
+    { GetItem_DrawOpa0, { gGiSilverSwordDL } },
+    // GID_SWORD_GILDED
+    { GetItem_DrawOpa0, { gGiGildedSwordDL } },
+    // GID_POWER_BRACELET
+    { GetItem_DrawOpa0, { gGiPowerBraceletDL } },
+    // GID_HOOKSHOT_MM
+	{ GetItem_DrawOpa0, { gGiHookshotMMDL } },
+    // GID_LONGSHOT_MM
+	{ GetItem_DrawOpa0, { gGiLongshotMMDL } },
+    // GID_HEROS_BOW
+	{ GetItem_DrawOpa0, { gGiHerosBowHandleDL, gGiHerosBowStringDL } },
+    // GID_GOLD_DUST
+	{ GetItem_DrawOpa0, { gGiGoldDustPowderDL } },
 };
 
 /**

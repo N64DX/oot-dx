@@ -1,6 +1,8 @@
 #include "file_select.h"
 #include "file_select_state.h"
 
+#include "libu64/gfxprint.h"
+#include "alloca.h"
 #include "array_count.h"
 #include "controller.h"
 #include "gfx.h"
@@ -580,7 +582,7 @@ s32 FileSelect_ApplyDiacriticToCharacter(GameState* thisx, s16 diacritic, s16 ch
     s16 i;
 
     if (diacritic == FILENAME_SPACE) {
-        for (i = 0; i < ARRAY_COUNTU(sRemoveDiacriticRangeOffset); i++) {
+        for (i = 0; i < (s16)ARRAY_COUNTU(sRemoveDiacriticRangeOffset); i++) {
             if (sRemoveDiacriticRangeMin[i] <= this->fileNames[this->buttonIndex][charIndex] &&
                 this->fileNames[this->buttonIndex][charIndex] <= sRemoveDiacriticRangeMax[i]) {
                 this->fileNames[this->buttonIndex][charIndex] += sRemoveDiacriticRangeOffset[i];
@@ -588,7 +590,7 @@ s32 FileSelect_ApplyDiacriticToCharacter(GameState* thisx, s16 diacritic, s16 ch
             }
         }
     } else if (diacritic == FILENAME_DAKUTEN) {
-        for (i = 0; i < ARRAY_COUNTU(sDakutenDiacriticRangeOffset); i++) {
+        for (i = 0; i < (s16)ARRAY_COUNTU(sDakutenDiacriticRangeOffset); i++) {
             if (sDakutenDiacriticRangeMin[i] <= this->fileNames[this->buttonIndex][charIndex] &&
                 this->fileNames[this->buttonIndex][charIndex] <= sDakutenDiacriticRangeMax[i]) {
                 this->fileNames[this->buttonIndex][charIndex] += sDakutenDiacriticRangeOffset[i];
@@ -596,7 +598,7 @@ s32 FileSelect_ApplyDiacriticToCharacter(GameState* thisx, s16 diacritic, s16 ch
             }
         }
     } else if (diacritic == FILENAME_HANDAKUTEN) {
-        for (i = 0; i < ARRAY_COUNTU(sHandakutenDiacriticRangeOffset); i++) {
+        for (i = 0; i < (s16)ARRAY_COUNTU(sHandakutenDiacriticRangeOffset); i++) {
             if (sHandakutenDiacriticRangeMin[i] <= this->fileNames[this->buttonIndex][charIndex] &&
                 this->fileNames[this->buttonIndex][charIndex] <= sHandakutenDiacriticRangeMax[i]) {
                 this->fileNames[this->buttonIndex][charIndex] += sHandakutenDiacriticRangeOffset[i];
@@ -628,6 +630,63 @@ s32 FileSelect_ApplyDiacriticToFilename(GameState* thisx, s16 diacritic) {
     }
     return true;
 }
+#endif
+
+#if OOT_VERSION <= PAL_1_1
+static const void* sQuestTextures[][2] = {
+    { gQuestOcarinaOfTimeTex, gLogoOcarinaOfTimeTex },
+    { gQuestMasterQuestTex,   gLogoMasterQuestTex   },
+    { gQuestUraQuestTex,      gLogoUraQuestTex      },
+    { gQuestChildQuestTex,    gLogoChildQuestTex    },
+};
+
+static const char* sQuestMessages[][4][2] = {
+    {
+        { "The original experience",        "" },
+        { "Harder arranged dungeons",       "" },
+        { "A beta version of Master Quest", "" },
+        { "Play as Young Link only",        "and discover new areas" },
+    }, {
+        { "Das originale Abenteuer",            "" },
+        { "Schwerere, neu gestaltete Dungeons", "" },
+        { "Eine Beta-Version von Master Quest", "" },
+        { "Spiele nur als junger Link",         "und entdecke neue Gebiete" },
+    }, {
+        { "L'experience originale",            "" },
+        { "Donjons plus difficiles",           "et remanies" },
+        { "Une version beta de Master Quest",  "" },
+        { "Incarnez uniquement le jeune Link", "et decouvrez de nouvelles zones" },
+    }, {
+        { "ｵﾘｼﾞﾅﾙﾀｲｹﾝ",        "" },
+        { "ﾑｽﾞｶｼｸﾅｯﾀﾀﾞﾝｼﾞｮﾝ",   "" },
+        { "ﾏｽﾀｰｸｴｽﾄﾉﾍﾞｰﾀﾊﾞﾝ",   "" },
+        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ", "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+    }
+};
+
+static const u8 sQuestMessagesOffset[][4][2] = {
+    {
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+    }, {
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 6,  6  },
+    }, {
+        { 8,  8  },
+        { 7,  13 },
+        { 7,  7  },
+        { 4,  5  },
+    }, {
+        { 14, 14 },
+        { 11, 11 },
+        { 10, 10 },
+        { 10, 11 },
+    }
+};
 #endif
 
 void FileSelect_DrawNameEntry(GameState* thisx) {
@@ -728,26 +787,29 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 
 #if OOT_VERSION <= PAL_1_1
     if (this->selectingQuestMode) {
-        void* textures[][2] = {
-            { gQuestOcarinaOfTimeTex, gLogoOcarinaOfTimeTex },
-            { gQuestMasterQuestTex,   gLogoMasterQuestTex   } 
-        };
         u16 x, y;
+        GfxPrint* printer;
 
-        x = 140;
-        y = 171;
-        gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
-        gDPLoadTextureBlock(POLY_OPA_DISP++, gMirrorModeTex, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        if (!this->mirrorMode[this->buttonIndex])
-            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 128, 128, 128, 255);
-        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 90) << 2)), HIRES_MULTIPLY(((y + 11) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1462)), HIRES_DIVIDE((1462)));
+        printer = alloca(sizeof(GfxPrint));
+        GfxPrint_Init(printer);
+        GfxPrint_Open(printer, POLY_OPA_DISP);
+
+        GfxPrint_SetPos(printer, sQuestMessagesOffset[gSaveContext.language][this->questMode[this->buttonIndex]][0], 2);
+        GfxPrint_SetColor(printer, 255, 255, 255, 255);
+        GfxPrint_Printf(printer, "%s", sQuestMessages[gSaveContext.language][this->questMode[this->buttonIndex]][0]);
+
+        GfxPrint_SetPos(printer, sQuestMessagesOffset[gSaveContext.language][this->questMode[this->buttonIndex]][1], 3);
+        GfxPrint_SetColor(printer, 255, 255, 255, 255);
+        GfxPrint_Printf(printer, "%s", sQuestMessages[gSaveContext.language][this->questMode[this->buttonIndex]][1]);
+        
+        POLY_OPA_DISP = GfxPrint_Close(printer);
+        GfxPrint_Destroy(printer);
 
         x = 160 - 64;
         y = 45;
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
-        FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)textures[this->questMode[this->buttonIndex]][1], 160, 160);
-        gDPLoadTextureBlock(POLY_OPA_DISP++, textures[this->questMode[this->buttonIndex]][0], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)sQuestTextures[this->questMode[this->buttonIndex]][1], 160, 160);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, sQuestTextures[this->questMode[this->buttonIndex]][0], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
         gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((x + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((y << 2)), HIRES_MULTIPLY(((x + WS_SHIFT_HALF + 128) << 2)), HIRES_MULTIPLY(((y + 16) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1024)), HIRES_DIVIDE((1024)));
 
         x = 48;
@@ -764,16 +826,16 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
             if (this->questMode[this->buttonIndex] <= 0)
                 this->questMode[this->buttonIndex] = QUEST_MAX;
             else this->questMode[this->buttonIndex]--;
+            if (this->questMode[this->buttonIndex] == URA_QUEST)
+                this->questMode[this->buttonIndex]--;
         }
         if (this->stickAdjX > 30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             if (this->questMode[this->buttonIndex] >= QUEST_MAX)
                 this->questMode[this->buttonIndex] = 0;
             else this->questMode[this->buttonIndex]++;
-        }
-        if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
-            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            this->mirrorMode[this->buttonIndex] = (this->mirrorMode[this->buttonIndex] ? false : true);
+            if (this->questMode[this->buttonIndex] == URA_QUEST)
+                this->questMode[this->buttonIndex]++;
         }
 
         if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
@@ -992,7 +1054,6 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 this->connectorAlpha[this->buttonIndex] = 255;
                                 Rumble_Request(300.0f, 180, 20, 100);
 #else
-                                this->mirrorMode[this->buttonIndex] = false;
                                 this->questMode[this->buttonIndex] = 0;
                                 this->selectingQuestMode = true;
 #endif
@@ -1511,6 +1572,24 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
     SramContext* sramCtx = &this->sramCtx;
     Input* input = &this->state.input[0];
+    
+    if (this->selectingOptionsMode) {
+        if (CHECK_BTN_ANY(input->press.button, BTN_B | BTN_L)) {
+            this->selectingOptionsMode = 0;
+            Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            //for (i=0; i<FILE_OPTIONS_SIZE; i++)
+            //    gSaveContext.options[i] = gFileOptions[gSaveContext.fileNum][i];
+            //Sram_WriteSaveOptions(&this->sramCtx);
+        }
+        FileSelectOptions_UpdateMenu(this);
+        return;
+    } else if (CHECK_BTN_ALL(input->press.button, BTN_L)) {
+        this->selectingOptionsMode = 1;
+        Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        //gSaveContext.fileNum = this->buttonIndex;
+        //Sram_OpenSaveOptions(&this->sramCtx);
+        FileSelectOptions_Reset(this);
+    }
 
     if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -1521,6 +1600,7 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
 #if OOT_PAL_N64 || OOT_NTSC_N64
         sramCtx->readBuff[2] = gSaveContext.language;
 #endif
+        sramCtx->readBuff[3] = gSaveContext.debugMode;
         PRINTF("ＳＡＶＥ");
         Sram_WriteSramHeader(sramCtx);
         PRINTF_COLOR_YELLOW();

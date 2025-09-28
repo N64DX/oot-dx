@@ -208,6 +208,7 @@ void EnFw_Init(Actor* thisx, PlayState* play) {
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, DamageTable_Get(0x10), &D_80A1FB94);
+    Actor_SetGildedSwordDamageTaken(thisx);
     Actor_SetScale(&this->actor, 0.01f);
     this->runDirection = -this->actor.params;
     this->actionFunc = EnFw_Bounce;

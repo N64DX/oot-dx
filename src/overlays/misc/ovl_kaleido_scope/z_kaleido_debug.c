@@ -10,6 +10,9 @@
 #include "translation.h"
 #include "play_state.h"
 #include "save.h"
+#include "actor.h"
+#include "player.h"
+#include "play_state.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
 
@@ -162,7 +165,7 @@ static u8 sMaxUpgradeValues[] = {
     /* UPG_BOMB_BAG    */ 3,
     /* UPG_STRENGTH    */ 3,
     /* UPG_SCALE       */ 2,
-    /* UPG_WALLET      */ 2,
+    /* UPG_WALLET      */ 3,
     /* UPG_BULLET_BAG  */ 3,
     /* UPG_DEKU_STICKS */ 3,
     /* UPG_DEKU_NUTS   */ 3,
@@ -514,12 +517,14 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                 if (gSaveContext.save.info.playerData.healthCapacity < 0x30) {
                     gSaveContext.save.info.playerData.healthCapacity = 0x30;
                 }
+                R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
             } else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) ||
                        CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
                 gSaveContext.save.info.playerData.healthCapacity += 0x10;
-                if (gSaveContext.save.info.playerData.healthCapacity >= 0x140) {
-                    gSaveContext.save.info.playerData.healthCapacity = 0x140;
+                if (gSaveContext.save.info.playerData.healthCapacity >= 0x1E0) {
+                    gSaveContext.save.info.playerData.healthCapacity = 0x1E0;
                 }
+                R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
             }
             break;
 
@@ -722,6 +727,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             }
                         }
                     } else {
+                        Player* player = GET_PLAYER(play);
                         i = curSection - SECTION_FIRST_EQUIPMENT; // 0 <= i < 4
                         if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                             gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG_ALT(i, 0);
@@ -734,6 +740,28 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         }
                         if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
                             gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG_ALT(i, 3);
+                        }
+
+                        if (i == 0) {
+                            if ( (CHECK_BTN_ALL(input->press.button, BTN_CLEFT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI) || (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_MASTER) || (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_BIGGORON)) {
+                                Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, PLAYER_SWORD_NONE);
+                                gSaveContext.save.info.equips.buttonItems[0] = ITEM_NONE;
+                                gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 1;
+                                Player_SetEquipmentData(play, player);
+                            }
+                        }
+                        else if (i == 1) {
+                            if ( (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)  && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU)   || (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && !HAS_HEROS_SHIELD) ||
+                                 (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_MIRROR) || (CHECK_BTN_ALL(input->press.button, BTN_CUP)   && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN &&  HAS_HEROS_SHIELD)) {
+                                Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, PLAYER_SHIELD_NONE);
+                                Player_SetEquipmentData(play, player);
+                            }
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                                if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS))
+                                    SET_HEROS_SHIELD;
+                                else CLEAR_HEROS_SHIELD;
+                                pauseCtx->was_in_debug = true;
+                            }
                         }
                     }
                     if (CHECK_BTN_ANY(input->press.button, BTN_CUP | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT))

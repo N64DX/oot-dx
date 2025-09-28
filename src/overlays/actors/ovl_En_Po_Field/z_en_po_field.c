@@ -188,6 +188,7 @@ void EnPoField_Init(Actor* thisx, PlayState* play) {
     Collider_InitCylinder(play, &this->flameCollider);
     Collider_SetCylinder(play, &this->flameCollider, &this->actor, &D_80AD70AC);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &D_80AD70D8);
+    Actor_SetGildedSwordDamageTaken(thisx);
     this->lightNode = LightContext_InsertLight(play, &play->lightCtx, &this->lightInfo);
     Lights_PointGlowSetInfo(&this->lightInfo, this->actor.home.pos.x, this->actor.home.pos.y, this->actor.home.pos.z,
                             255, 255, 255, 0);

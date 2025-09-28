@@ -1,0 +1,8 @@
+    OBJECT_HAKA_OBJECTS, // 0
+    OBJECT_HAKA_DOOR, // 1
+    OBJECT_HAKACH_OBJECTS, // 2
+    OBJECT_RD, // 3
+    OBJECT_BOX, // 4
+    OBJECT_EFC_FLASH, // 5
+    OBJECT_TRAP, // 6
+

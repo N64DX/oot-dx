@@ -11,6 +11,8 @@
 #include "player.h"
 #include "save.h"
 
+#include "assets/textures/icon_item_static/icon_item_static.h"
+
 void Interface_Destroy(PlayState* play) {
     Map_Destroy(play);
 }
@@ -24,6 +26,20 @@ void Interface_Init(PlayState* play) {
     u8 timerId;
     u8 item;
     u8 i;
+    
+    gItemIcons[ITEM_HOOKSHOT]                  = IS_CHILD_QUEST_AS_CHILD ? gItemIconHookshotMMTex        : gItemIconHookshotTex;
+    gItemIcons[ITEM_LONGSHOT]                  = IS_CHILD_QUEST_AS_CHILD ? gItemIconLongshotMMTex        : gItemIconLongshotTex;
+    gItemIcons[ITEM_BOW]                       = IS_CHILD_QUEST_AS_CHILD ? gItemIconHerosBowTex          : gItemIconBowTex;
+    gItemIcons[ITEM_BOW_FIRE]                  = IS_CHILD_QUEST_AS_CHILD ? gItemIconHerosBowFireTex      : gItemIconBowFireTex;
+    gItemIcons[ITEM_BOW_ICE]                   = IS_CHILD_QUEST_AS_CHILD ? gItemIconHerosBowIceTex       : gItemIconBowIceTex;
+    gItemIcons[ITEM_BOW_LIGHT]                 = IS_CHILD_QUEST_AS_CHILD ? gItemIconHerosBowLightTex     : gItemIconBowLightTex;
+    gItemIcons[ITEM_SWORD_MASTER]              = IS_CHILD_QUEST_AS_CHILD ? gItemIconSwordRazorTex        : gItemIconSwordMasterTex;
+    gItemIcons[ITEM_SWORD_BIGGORON]            = IS_CHILD_QUEST_AS_CHILD ? gItemIconSwordGildedTex       : gItemIconSwordBiggoronTex;
+    gItemIcons[ITEM_GIANTS_KNIFE]              = IS_CHILD_QUEST_AS_CHILD ? gItemIconBrokenGiantsKnifeTex : gItemIconBrokenGiantsKnifeTex;
+    gItemIcons[ITEM_SHIELD_MIRROR]             = IS_CHILD_QUEST_AS_CHILD ? gItemIconShieldMirrorMMTex    : gItemIconShieldMirrorTex;
+    gItemIcons[ITEM_STRENGTH_SILVER_GAUNTLETS] = IS_CHILD_QUEST_AS_CHILD ? gItemIconPowerBraceletTex     : gItemIconSilverGauntletsTex;
+    gItemIcons[ITEM_STRENGTH_GOLD_GAUNTLETS]   = IS_CHILD_QUEST_AS_CHILD ? gItemIconPowerBraceletsTex    : gItemIconGoldenGauntletsTex;
+    gItemIcons[ITEM_BROKEN_GORONS_SWORD]       = IS_CHILD_QUEST          ? gItemIconGoldDustTex          : gItemIconBrokenGoronsSwordTex;
 
     gSaveContext.sunsSongState = SUNSSONG_INACTIVE;
     gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
@@ -43,6 +59,7 @@ void Interface_Init(PlayState* play) {
     dpadAlphas[0] = dpadAlphas[1] = dpadAlphas[2] = dpadAlphas[3] = dpadAlphas[4] = 0;
     interfaceCtx->minimapAlpha = 0;
     interfaceCtx->unk_260 = 0;
+    R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
 
     parameterSize = (uintptr_t)_parameter_staticSegmentRomEnd - (uintptr_t)_parameter_staticSegmentRomStart;
 
@@ -145,7 +162,7 @@ void Interface_Init(PlayState* play) {
             item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
 
         if (item < 0xF0)
-            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(item), ITEM_ICON_SIZE, "../z_construct.c", 198);
+            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, "../z_construct.c", 198);
     }
 
     PRINTF("ＥＶＥＮＴ＝%d\n", ((void)0, gSaveContext.timerState));
@@ -173,7 +190,9 @@ void Interface_Init(PlayState* play) {
 
         gSaveContext.timerX[timerId] = 26;
 
-        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+        if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+            gSaveContext.timerY[timerId] = 62; // three rows of hearts
+        } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
             gSaveContext.timerY[timerId] = 54; // two rows of hearts
         } else {
             gSaveContext.timerY[timerId] = 46; // one row of hearts

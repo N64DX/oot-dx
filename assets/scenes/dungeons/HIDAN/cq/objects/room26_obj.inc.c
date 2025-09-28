@@ -1,0 +1,7 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_BOX, // 1
+    OBJECT_BDOOR, // 2
+    OBJECT_DU, // 3
+    OBJECT_OF1D_MAP, // 4
+    OBJECT_D_HSBLOCK, // 5
+

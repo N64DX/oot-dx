@@ -1,0 +1,7 @@
+    OBJECT_SPOT18_OBJ, // 0
+    OBJECT_BOMBF, // 1
+    OBJECT_BOMBIWA, // 2
+    OBJECT_GS, // 3
+    OBJECT_BOX, // 4
+    OBJECT_KIBAKO2, // 5
+    OBJECT_ST, // 6

@@ -1,0 +1,7 @@
+    OBJECT_MORI_TEX, // 0
+    OBJECT_MORI_OBJECTS, // 1
+    OBJECT_PO_SISTERS, // 2
+    OBJECT_BB, // 3
+    OBJECT_ST, // 4
+    OBJECT_SYOKUDAI, // 5
+

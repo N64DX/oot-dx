@@ -76,7 +76,7 @@ s32 func_808B1AE0(BgSpot09Obj* this, PlayState* play) {
 
     carpentersRescued = GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED();
 
-    if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
+    if (LINK_IS_ADULT_OR_TIMESKIP) {
         switch (this->dyna.actor.params) {
             case 0:
                 return 0;

@@ -157,7 +157,6 @@ u8 WeatherTag_CheckEnableWeatherEffect(EnWeatherTag* this, PlayState* play, u8 s
 #if OOT_VERSION < PAL_1_0
                     gInterruptSongOfStorms = false;
 #endif
-                    gWeatherMode = weatherMode;
                     if (play->envCtx.stormRequest == STORM_REQUEST_NONE) {
                         play->envCtx.changeSkyboxState = CHANGE_SKYBOX_REQUESTED;
                         play->envCtx.skyboxConfig = skyboxConfig;

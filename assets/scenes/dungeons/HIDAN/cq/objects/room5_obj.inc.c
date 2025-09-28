@@ -1,0 +1,10 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_BW, // 1
+    OBJECT_GOROIWA, // 2
+    OBJECT_BOX, // 3
+    OBJECT_OF1D_MAP, // 4
+    OBJECT_D_HSBLOCK, // 5
+    OBJECT_ST, // 6
+    OBJECT_GI_SUTARU, // 7
+    OBJECT_KA, // 8
+

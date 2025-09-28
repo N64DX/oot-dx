@@ -293,6 +293,12 @@ void ConsoleLogo_Init(GameState* thisx) {
 #endif
 
     Sram_Alloc(&this->state, &this->sramCtx);
+
+#if SKIP_N64_BOOT_LOGO && DEBUG_FEATURES
+    SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
+    return;
+#endif
+
     this->ult = 0;
     this->unk_1D4 = 0x14;
     this->coverAlpha = 255;

@@ -487,23 +487,15 @@ void ObjBean_Init(Actor* thisx, PlayState* play) {
     ObjBean* this = (ObjBean*)thisx;
 
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
-    if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
-        if (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6)) || (DEBUG_FEATURES && mREG(1) == 1)) {
+    
+    if (IS_CHILD_QUEST) {
+        if ( (GET_EVENTCHKINF(EVENTCHKINF_45) && IS_DAY && Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6))) || (this->dyna.actor.params & 0x20)) {
             path = PARAMS_GET_U(this->dyna.actor.params, 8, 5);
             if (path == 0x1F) {
-                PRINTF_COLOR_ERROR();
-                PRINTF(T("パスデータが無い？(%s %d)(arg_data %xH)\n", "No path data? (%s %d)(arg_data %xH)\n"),
-                       "../z_obj_bean.c", 909, this->dyna.actor.params);
-                PRINTF_RST();
                 Actor_Kill(&this->dyna.actor);
                 return;
             }
             if (play->pathList[path].count < 3) {
-                PRINTF_COLOR_ERROR();
-                PRINTF(T("パスデータ数が不正(%s %d)(arg_data %xH)\n",
-                         "Path data count is invalid (%s %d)(arg_data %xH)\n"),
-                       "../z_obj_bean.c", 921, this->dyna.actor.params);
-                PRINTF_RST();
                 Actor_Kill(&this->dyna.actor);
                 return;
             }
@@ -520,15 +512,48 @@ void ObjBean_Init(Actor* thisx, PlayState* play) {
             ActorShape_Init(&this->dyna.actor.shape, 0.0f, ActorShadow_DrawCircle, 8.8f);
             ObjBean_FindFloor(this, play);
             this->unk_1F6 = this->dyna.actor.home.rot.z & 3;
-        } else {
-            Actor_Kill(&this->dyna.actor);
-            return;
         }
-    } else if ((Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6)) != 0) ||
-               (DEBUG_FEATURES && mREG(1) == 1)) {
-        ObjBean_SetupWaitForWater(this);
+        else if (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6)) != 0)
+            ObjBean_SetupWaitForWater(this);
+        else ObjBean_SetupWaitForBean(this);
     } else {
-        ObjBean_SetupWaitForBean(this);
+        if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
+            if (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6)) || (DEBUG_FEATURES && mREG(1) == 1) || (this->dyna.actor.params & 0x20)) {
+                path = PARAMS_GET_U(this->dyna.actor.params, 8, 5);
+                if (path == 0x1F) {
+                    PRINTF_COLOR_ERROR();
+                    PRINTF(T("パスデータが無い？(%s %d)(arg_data %xH)\n", "No path data? (%s %d)(arg_data %xH)\n"), "../z_obj_bean.c", 909, this->dyna.actor.params);
+                    PRINTF_RST();
+                    Actor_Kill(&this->dyna.actor);
+                    return;
+                }
+                if (play->pathList[path].count < 3) {
+                    PRINTF_COLOR_ERROR();
+                    PRINTF(T("パスデータ数が不正(%s %d)(arg_data %xH)\n", "Path data count is invalid (%s %d)(arg_data %xH)\n"), "../z_obj_bean.c", 921, this->dyna.actor.params);
+                    PRINTF_RST();
+                    Actor_Kill(&this->dyna.actor);
+                    return;
+                }
+                ObjBean_SetupPathCount(this, play);
+                ObjBean_SetupPath(this, play);
+                ObjBean_Move(this);
+                ObjBean_SetupWaitForPlayer(this);
+
+                ObjBean_InitDynaPoly(this, play, &gMagicBeanPlatformCol, DYNA_TRANSFORM_POS | DYNA_TRANSFORM_ROT_Y);
+                this->stateFlags |= BEAN_STATE_DYNAPOLY_SET;
+                ObjBean_InitCollider(&this->dyna.actor, play);
+                this->stateFlags |= BEAN_STATE_COLLIDER_SET;
+
+                ActorShape_Init(&this->dyna.actor.shape, 0.0f, ActorShadow_DrawCircle, 8.8f);
+                ObjBean_FindFloor(this, play);
+                this->unk_1F6 = this->dyna.actor.home.rot.z & 3;
+            } else {
+                Actor_Kill(&this->dyna.actor);
+                return;
+            }
+        } else if ((Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6)) != 0) || (DEBUG_FEATURES && mREG(1) == 1))
+            ObjBean_SetupWaitForWater(this);
+        else ObjBean_SetupWaitForBean(this);
     }
     this->dyna.actor.world.rot.z = this->dyna.actor.home.rot.z = this->dyna.actor.shape.rot.z = 0;
     PRINTF(T("(魔法の豆の木リフト)(arg_data 0x%04x)\n", "(Magic beanstalk lift)(arg_data 0x%04x)\n"),

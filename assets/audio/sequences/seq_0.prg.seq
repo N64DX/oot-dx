@@ -14179,6 +14179,21 @@ CHAN_61BC:
 .array ARRAY_61BF
     .byte 105, 105
 
+.channel CHAN_LASH_KID
+ldptr       ARRAY_LASH_KID_SFX
+stptrtoseq  CHAN_611A + STSEQ_PTR_LDSEQ
+ldptr       ARRAY_LASH_KID_PITCH
+stptrtoseq  CHAN_6122 + STSEQ_PTR_LDSEQ
+rand        2
+jump        CHAN_6134
+
+.array ARRAY_LASH_KID_SFX
+    .byte SF0_EFFECT_32
+    .byte SF0_EFFECT_33
+
+.array ARRAY_LASH_KID_PITCH
+    .byte 110, 110
+
 .channel CHAN_61C1
 /* 0x61C1 [0xCE 0x61 0xD1          ] */ ldptr       ARRAY_61D1
 /* 0x61C4 [0xCF 0x61 0x1B          ] */ stptrtoseq  CHAN_611A + STSEQ_PTR_LDSEQ

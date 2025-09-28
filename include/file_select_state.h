@@ -40,7 +40,6 @@ typedef struct FileSelectState {
     /* 0x1C9F4 */ u8 n64ddFlag;
     /* 0x1C9F6 */ u16 deaths[3];
     /* 0x1C9FC */ u8 fileNames[3][8];
-    /* 0x1C9FC */ bool mirrorMode[3];
     /* 0x1C9FC */ u8 questMode[3];
     /* 0x1C9FC */ bool selectingQuestMode;
     /* 0x1C9FC */ bool selectingOptionsMode;
@@ -48,9 +47,7 @@ typedef struct FileSelectState {
     /* 0x1CA1C */ u32 questItems[3];
     /* 0x1CA28 */ s16 n64ddFlags[3];
     /* 0x1CA2E */ s8 defense[3];
-#if OOT_PAL
     /* 0x1CA32 */ u16 health[3];
-#endif
     /* 0x1CA32 */ u32 fileOptions[3][8];
     /* 0x1CA38 */ s16 buttonIndex;
     /* 0x1CA3A */ s16 confirmButtonIndex; // 0: yes, 1: quit

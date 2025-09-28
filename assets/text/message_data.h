@@ -1,22 +1,28 @@
 #include "versions.h"
 
 #if OOT_NTSC_N64
-#include "message_data_00xx_items.h"
-#include "message_data_01xx_navi.h"
-#include "message_data_02xx_doors.h"
-#include "message_data_03xx_signs.h"
-#include "message_data_04xx_gossip.h"
-#include "message_data_06xx_enemies.h"
-#include "message_data_08xx_songs.h"
-#include "message_data_1xxx_forest.h"
-#include "message_data_2xxx_ranch_&_zelda.h"
-#include "message_data_3xxx_mountain.h"
-#include "message_data_4xxx_lake.h"
-#include "message_data_5xxx_kakariko.h"
-#include "message_data_6xxx_valley.h"
-#include "message_data_7xxx_market_&_masks.h"
+    #include "message_data_00xx_items.h"
+    #include "message_data_01xx_navi.h"
+    #include "message_data_02xx_doors.h"
+    #include "message_data_03xx_signs.h"
+    #include "message_data_04xx_gossip.h"
+    #include "message_data_06xx_enemies.h"
+    #include "message_data_08xx_songs.h"
+    #include "message_data_1xxx_forest.h"
+    #include "message_data_2xxx_ranch_&_zelda.h"
+    #include "message_data_3xxx_mountain.h"
+    #include "message_data_4xxx_lake.h"
+    #include "message_data_5xxx_kakariko.h"
+    #include "message_data_6xxx_valley.h"
+    #include "message_data_7xxx_market_&_masks.h"
+    #include "message_data_8xxx_child_quest.h"
+    #include "message_data_9xxx_global.h"
 #else
-#include "text/message_data.h"
+    #include "text/message_data.h"
+    #if !PLATFORM_IQUE
+        #include "message_data_8xxx_child_quest.h"
+        #include "message_data_9xxx_global.h"
+    #endif
 #endif
 
 /*

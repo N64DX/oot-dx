@@ -2,24 +2,38 @@
 
 ## OoT-DX
 
-This is a modding fork of https://github.com/zeldaret/oot, which includes quality of life improvements, extended viewport options, alternative dungeon layouts and more.
+This is a modding fork of https://github.com/zeldaret/oot, which includes many QoL changes and improvements.
+
+**Features:**
+- Advanced debug features
+- Alternative dungeon layouts (Master Quest)
+- Child Quest (Experience the entirety of OoT as Young Link)
+- Difficulty settings
+- Extended viewport options (Widescreen 16:9, 21:9 and Hires modes)
+- Language options
+- Mirror mode
+- Quality of life improvements
 
 ### Credits
 
 **Brought to you by:**
-- Admentus
-- GhostlyDark
+- **Admentus:** Lead development
+- **GhostlyDark:** Ideas, quality assurance and co-development
 
 **Help and code snippets from:**
 - [Decomp Discord](https://discord.zelda.deco.mp)
 - [HackerOoT](https://github.com/HackerN64/HackerOoT)
+- [Hylian Modding Discord](http://discord.gg/qQqDsM8)
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
+- **LeSéducteur:** Buff Scrub actor
 - **OoT Randomizer:** Key chest textures
+- **Skawo:** Font preloading, Kakariko Gate Guard fix
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
+- **Syeo & Trueffel:** Molmauk actor
 
 ### Instructions
 

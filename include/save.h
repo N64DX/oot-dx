@@ -5,6 +5,7 @@
 #include "versions.h"
 #include "inventory.h"
 #include "z_math.h"
+#include "regs.h"
 
 typedef enum ZTargetSetting {
     /* 0 */ Z_TARGET_SETTING_SWITCH,
@@ -241,7 +242,7 @@ typedef struct SavePlayerData {
     /* 0x1A  0x0036 */ u16 swordHealth;
     /* 0x1C  0x0038 */ u16 naviTimer;
     /* 0x1E  0x003A */ u8 isMagicAcquired;
-    /* 0x1F  0x003B */ char unk_3B[0x01];
+    /* 0x1F  0x003B */ u8 equipmentUpgrades;
     /* 0x20  0x003C */ u8 isDoubleMagicAcquired;
     /* 0x21  0x003D */ u8 isDoubleDefenseAcquired;
     /* 0x22  0x003E */ u8 bgsFlag;
@@ -337,7 +338,7 @@ typedef struct SaveContext {
     /* 0x1408 */ char unk_1408[0x0001];
     /* 0x1409 */ u8 language; // NTSC 0: Japanese; 1: English | PAL 0: English; 1: German; 2: French (see enum `Language`)
     /* 0x140A */ u8 soundSetting; // 0: Stereo; 1: Mono; 2: Headset; 3: Surround (see enum `SoundSetting`)
-    /* 0x140B */ char unk_140B[0x0001];
+    /* 0x140B */ u8 debugMode;
     /* 0x140C */ u8 zTargetSetting; // 0: Switch; 1: Hold (see enum `ZTargetSetting`)
     /* 0x140E */ u16 forcedSeqId; // immediately start playing the sequence if set
     /* 0x1410 */ u8 cutsceneTransitionControl; // context dependent usage: can either trigger a delayed fade or control fill alpha
@@ -424,10 +425,18 @@ typedef enum LinkAge {
     /* 1 */ LINK_AGE_CHILD
 } LinkAge;
 
+#define SCENE_LAYER_GOTO(play, layer) (IS_CHILD_QUEST_AS_CHILD && !IS_CUTSCENE_LAYER ? !IS_DAY : layer)
+
 #define DPAD_BUTTON(button)      (gSaveContext.save.info.playerData.dpadItems[gSaveContext.save.linkAge + gSaveContext.save.info.playerData.dpadDualSet * 2][button])
 
 #define LINK_IS_ADULT (gSaveContext.save.linkAge == LINK_AGE_ADULT)
 #define LINK_IS_CHILD (gSaveContext.save.linkAge == LINK_AGE_CHILD)
+
+#define CQ_IS_TIMESKIP            (IS_CHILD_QUEST && GET_EVENTCHKINF(EVENTCHKINF_45))
+#define LINK_IS_ADULT_OR_TIMESKIP (LINK_IS_ADULT  || CQ_IS_TIMESKIP)
+#define IS_YOUNG_LINK             (R_IS_YOUNG_LINK)
+#define GET_LINK_MODEL            (IS_YOUNG_LINK ? 2 : gSaveContext.save.linkAge)
+#define IS_CHILD_QUEST_AS_CHILD   (IS_CHILD_QUEST && LINK_IS_CHILD)
 
 #define SET_MASK_AGE(val)       ((LINK_IS_ADULT) ? SET_MASK_ADULT(val) : SET_MASK_CHILD(val))
 #define GET_MASK_AGE()          ((LINK_IS_ADULT) ? GET_MASK_ADULT()    : GET_MASK_CHILD())
@@ -436,14 +445,31 @@ typedef enum LinkAge {
 #define SET_MASK_ADULT(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0x00FF) | (((val) & 0xFF) << 8)))
 #define SET_MASK_CHILD(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0xFF00) | ((val) & 0xFF)))
 
+#define SET_HEROS_SWORD       (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 0)
+#define HAS_HEROS_SWORD     (((gSaveContext.save.info.playerData.equipmentUpgrades >>   0) & 1) && IS_CHILD_QUEST_AS_CHILD)
+#define IS_HEROS_SWORD        (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SWORD_KOKIRI) && HAS_HEROS_SWORD)
+#define SET_HEROS_SHIELD      (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 1)
+#define CLEAR_HEROS_SHIELD    (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 1))
+#define TOGGLE_HEROS_SHIELD   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 1)
+#define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST_AS_CHILD)
+#define IS_HEROS_SHIELD       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (HAS_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) )
+
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17
 #define LINK_AGE_IN_YEARS (!LINK_IS_ADULT ? YEARS_CHILD : YEARS_ADULT)
 
 #define VANILLA_QUEST 0
 #define MASTER_QUEST  1
-#define QUEST_MAX     MASTER_QUEST
+#define URA_QUEST     2
+#define CHILD_QUEST   3
+
+#define QUEST_MAX     CHILD_QUEST
 #define QUEST_MODE    (gSaveContext.save.info.questMode & 127)
+
+#define IS_VANILLA_QUEST (R_QUEST_MODE == VANILLA_QUEST)
+#define IS_MASTER_QUEST  (R_QUEST_MODE == MASTER_QUEST)
+#define IS_URA_QUEST     (R_QUEST_MODE == URA_QUEST)
+#define IS_CHILD_QUEST   (R_QUEST_MODE == CHILD_QUEST)
 
 #define FILE_OPTIONS_SIZE 2
 extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
@@ -463,6 +489,8 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define UNINVERTED_AIMING           ((gFileOptions[gSaveContext.fileNum][0] >> 12) & 1)  // Bits: 12
 #define FIX_POWER_CROUCH_STAB       ((gFileOptions[gSaveContext.fileNum][0] >> 13) & 1)  // Bits: 13
 #define REFLECT_CHEST_CONTENTS      ((gFileOptions[gSaveContext.fileNum][0] >> 14) & 1)  // Bits: 14
+#define EASIER_FISHING              ((gFileOptions[gSaveContext.fileNum][0] >> 15) & 1)  // Bits: 15
+#define USE_YOUNG_LINK              ((gFileOptions[gSaveContext.fileNum][0] >> 16) & 1)  // Bits: 16
 #define HEALTH_RECOVERY             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gFileOptions[gSaveContext.fileNum][1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gFileOptions[gSaveContext.fileNum][1] >> 5)  & 7)  // Bits: 5-7
@@ -472,7 +500,6 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define STATIC_DARK_LINK_HP         ((gFileOptions[gSaveContext.fileNum][1] >> 15) & 1)  // Bits: 15
 #define NO_BOTTLED_FAIRIES          ((gFileOptions[gSaveContext.fileNum][1] >> 16) & 1)  // Bits: 16
 
-#define SET_MIRROR_MODE              (gFileOptions[gSaveContext.fileNum][0] ^=                                           (1 << 0))
 #define SET_HEALTH_RECOVERY(value)   (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(3 << 0))  | (((value) & 3) << 0))
 #define SET_DAMAGE_TAKEN(value)      (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 2))  | (((value) & 7) << 2))
 #define SET_MONSTER_HP(value)        (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 5))  | (((value) & 7) << 5))
@@ -751,7 +778,9 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 
 #define GET_ITEMGETINF(flag) (gSaveContext.save.info.itemGetInf[ITEMGETINF_INDEX(flag)] & ITEMGETINF_MASK(flag))
 #define SET_ITEMGETINF(flag) (gSaveContext.save.info.itemGetInf[ITEMGETINF_INDEX(flag)] |= ITEMGETINF_MASK(flag))
+#define CLEAR_ITEMGETINF(flag) (gSaveContext.save.info.infTable[ITEMGETINF_INDEX(flag)] &= ~ITEMGETINF_MASK(flag))
 
+#define ITEMGETINF_BAZAAR_WALLET 0x01
 #define ITEMGETINF_TALON_BOTTLE 0x02
 #define ITEMGETINF_03 0x03
 #define ITEMGETINF_04 0x04

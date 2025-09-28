@@ -66,6 +66,7 @@ typedef struct Warp2BlockSpawnData {
 static Warp2BlockSpawnData sSpawnData[] = {
     { 1.0f, 60.0f, 0x0018 },
     { 0.6f, 40.0f, 0x0019 },
+    { 0.675f, 43.75f, 0x0019 },
 };
 
 static f32 sDistances[] = { 60.0f, 100.0f, 140.0f, 180.0f, 220.0f, 260.0f, 300.0f, 300.0f };
@@ -83,11 +84,11 @@ static Color_RGB8 sColors[] = {
 
 void ObjWarp2block_Spawn(ObjWarp2block* this, PlayState* play) {
     Actor_Spawn(&play->actorCtx, play, ACTOR_DEMO_EFFECT, this->dyna.actor.world.pos.x, this->dyna.actor.world.pos.y,
-                this->dyna.actor.world.pos.z, 0, 0, 0, sSpawnData[PARAMS_GET_U(this->dyna.actor.params, 8, 1)].params);
+                this->dyna.actor.world.pos.z, 0, 0, 0, sSpawnData[PARAMS_GET_U(this->dyna.actor.params, 8, 2)].params);
 
     Actor_Spawn(&play->actorCtx, play, ACTOR_DEMO_EFFECT, this->dyna.actor.child->world.pos.x,
                 this->dyna.actor.child->world.pos.y, this->dyna.actor.child->world.pos.z, 0, 0, 0,
-                sSpawnData[PARAMS_GET_U(this->dyna.actor.child->params, 8, 1)].params);
+                sSpawnData[PARAMS_GET_U(this->dyna.actor.child->params, 8, 2)].params);
 }
 
 s32 func_80BA1ECC(ObjWarp2block* this, PlayState* play) {
@@ -219,9 +220,9 @@ void ObjWarp2block_Init(Actor* thisx, PlayState* play2) {
     this->dyna.actor.world.rot.z = this->dyna.actor.shape.rot.z = 0;
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
 
-    Actor_SetScale(&this->dyna.actor, sSpawnData[PARAMS_GET_U(this->dyna.actor.params, 8, 1)].scale);
+    Actor_SetScale(&this->dyna.actor, sSpawnData[PARAMS_GET_U(this->dyna.actor.params, 8, 2)].scale);
     this->func_168 = func_80BA2218;
-    Actor_SetFocus(&this->dyna.actor, sSpawnData[PARAMS_GET_U(this->dyna.actor.params, 8, 1)].focus);
+    Actor_SetFocus(&this->dyna.actor, sSpawnData[PARAMS_GET_U(this->dyna.actor.params, 8, 2)].focus);
 
     if (PARAMS_GET_U(this->dyna.actor.params, 15, 1)) {
         func_80BA24E8(this);

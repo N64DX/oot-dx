@@ -258,11 +258,13 @@ void EnSw_Init(Actor* thisx, PlayState* play) {
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, DamageTable_Get(0xE), &D_80B0F074);
+    Actor_SetGildedSwordDamageTaken(thisx);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     this->actor.scale.x = 0.02f;
 
     if (PARAMS_GET_S(thisx->params, 13, 3) == 0) {
-        this->actor.world.rot.x = 0;
+        if (thisx->params != 1)
+            this->actor.world.rot.x = 0;
         this->actor.world.rot.z = 0;
         thisx->shape.rot = this->actor.world.rot;
         this->unk_484.y = this->actor.world.pos.y;

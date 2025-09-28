@@ -1,0 +1,6 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_VM, // 1
+    OBJECT_HEAVY_OBJECT, // 2
+    OBJECT_TRAP, // 3
+    OBJECT_BB, // 4
+

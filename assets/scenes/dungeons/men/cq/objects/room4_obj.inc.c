@@ -1,0 +1,8 @@
+    OBJECT_MENKURI_OBJECTS, // 0
+    OBJECT_BOX, // 1
+    OBJECT_EFC_FLASH, // 2
+    OBJECT_FIREFLY, // 3
+    OBJECT_D_HSBLOCK, // 4
+    OBJECT_KA, // 5
+    OBJECT_GI_RUPY, // 6
+

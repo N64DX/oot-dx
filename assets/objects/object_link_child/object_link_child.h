@@ -23,8 +23,6 @@ extern u64 gLinkChildMouthHalfTex[TEX_LEN(u64, LINK_CHILD_MOUTH_TEX_WIDTH, LINK_
 extern u64 gLinkChildMouthOpenTex[TEX_LEN(u64, LINK_CHILD_MOUTH_TEX_WIDTH, LINK_CHILD_MOUTH_TEX_HEIGHT, 8)];
 extern u64 gLinkChildMouthSmileTex[TEX_LEN(u64, LINK_CHILD_MOUTH_TEX_WIDTH, LINK_CHILD_MOUTH_TEX_HEIGHT, 8)];
 
-extern Gfx gLinkChildLinkDekuStickDL[41];
-
 extern Gfx gLinkChildLeftHandNearDL[45];
 extern Gfx gLinkChildLeftFistNearDL[36];
 extern Gfx gLinkChildLeftFistAndKokiriSwordNearDL[81];
@@ -55,15 +53,83 @@ extern Gfx gLinkChildSlingshotStringDL[12];
 extern Gfx gLinkChildDekuShieldDL[42];
 extern Gfx gLinkChildDekuShieldWithMatrixDL[3];
 
-extern Gfx gLinkChildSkullMaskDL[70];
-extern Gfx gLinkChildSpookyMaskDL[30];
-extern Gfx gLinkChildKeatonMaskDL[50];
-extern Gfx gLinkChildMaskOfTruthDL[44];
-extern Gfx gLinkChildGoronMaskDL[70];
-extern Gfx gLinkChildZoraMaskDL[65];
-extern Gfx gLinkChildGerudoMaskDL[84];
-extern Gfx gLinkChildBunnyHoodDL[114];
-
 extern FlexSkeletonHeader gLinkChildSkel;
+
+
+
+// Hero's Sword
+extern Gfx gLinkChildLeftHandHoldingHerosSwordDL[];
+
+// Razor Sword
+extern Gfx gLinkChildLeftHandHoldingRazorSwordDL[];
+
+// Gilded Sword
+extern Gfx gLinkChildLeftHandHoldingSilverSwordDL[];
+extern Gfx gLinkChildLeftHandHoldingGoldenSwordDL[];
+
+// Sheaths
+extern Gfx gLinkChildSheathedKokiriSwordDL[];
+extern Gfx gLinkChildSheathedHerosSwordDL[];
+extern Gfx gLinkChildSheathedRazorSwordDL[];
+extern Gfx gLinkChildSheathedGildedSwordDL[];
+extern Gfx gLinkChildKokiriSwordSheathDL[];
+extern Gfx gLinkChildHerosSwordSheathDL[];
+extern Gfx gLinkChildKokiriHerosSheathDL[];
+extern Gfx gLinkChildRazorSwordSheathDL[];
+extern Gfx gLinkChildGildedSwordSheathDL[];
+
+// Shields With Sheathed Swords
+extern Gfx gLinkChildDekuShieldKokiriSwordSheathedDL[];
+extern Gfx gLinkChildDekuShieldHerosSwordSheathedDL[];
+extern Gfx gLinkChildDekuShieldRazorSwordSheathedDL[];
+extern Gfx gLinkChildDekuShieldGildedSwordSheathedDL[];
+extern Gfx gLinkChildHylianShieldKokiriSwordSheathedDL[];
+extern Gfx gLinkChildHylianShieldHerosSwordSheathedDL[];
+extern Gfx gLinkChildHylianShieldRazorSwordSheathedDL[];
+extern Gfx gLinkChildHylianShieldGildedSwordSheathedDL[];
+extern Gfx gLinkChildHylianShieldKokiriSwordSheathDL[];
+extern Gfx gLinkChildHylianShieldHerosSwordSheathDL[];
+extern Gfx gLinkChildHylianShieldRazorSwordSheathDL[];
+extern Gfx gLinkChildHylianShieldGildedSwordSheathDL[];
+extern Gfx gLinkChildHerosShieldKokiriSwordSheathedDL[];
+extern Gfx gLinkChildHerosShieldHerosSwordSheathedDL[];
+extern Gfx gLinkChildHerosShieldRazorSwordSheathedDL[];
+extern Gfx gLinkChildHerosShieldGildedSwordSheathedDL[];
+extern Gfx gLinkChildMirrorShieldKokiriSwordSheathedDL[];
+extern Gfx gLinkChildMirrorShieldHerosSwordSheathedDL[];
+extern Gfx gLinkChildMirrorShieldRazorSwordSheathedDL[];
+extern Gfx gLinkChildMirrorShieldGildedSwordSheathedDL[];
+
+// Hero's Shield
+extern Gfx gLinkChildHerosShieldDL[];
+extern Gfx gLinkChildHoldingHerosShieldDL[];
+extern Gfx gLinkChildHerosShieldWithMatrixDL[];
+
+// Mirror Shield
+extern Gfx gLinkChildMirrorShieldDL[];
+extern Gfx gLinkChildHoldingMirrorShieldDL[];
+extern Gfx gLinkChildMirrorShieldWithMatrixDL[];
+
+// Megaton Hammer
+extern Gfx gLinkChildLeftHandHoldingHammerNearDL[];
+
+// Hookshot
+extern Gfx gLinkChildRightHandHoldingHookshot[];
+extern Gfx gLinkChildRightHandHoldingHookshotNear[];
+extern Gfx gLinkChildRightHandHoldingHookshotNearDL[];
+extern Gfx gLinkChildRightHandHoldingHookshotFarDL[];
+
+// Bow
+extern Gfx gLinkChildRightHandHoldingBowNearDL[];
+extern Gfx gLinkChildRightHandHoldingBowFirstPersonDL[];
+extern Gfx gLinkChildBowStringDL[];
+
+// Power Bracelet
+extern Gfx gLinkChildPowerBraceletDL[];
+extern Gfx gLinkChildPowerBraceletsDL[];
+
+// Earring
+extern Gfx gLinkChildEarringsIronDL[];
+extern Gfx gLinkChildEarringsHoverDL[];
 
 #endif

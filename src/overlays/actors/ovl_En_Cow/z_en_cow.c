@@ -142,7 +142,7 @@ void EnCow_Init(Actor* thisx, PlayState* play) {
             this->actionFunc = EnCow_Idle;
 
             if (play->sceneId == SCENE_LINKS_HOUSE) {
-                if (!LINK_IS_ADULT) {
+                if (!LINK_IS_ADULT_OR_TIMESKIP) {
                     Actor_Kill(&this->actor);
                     return;
                 }

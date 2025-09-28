@@ -67,7 +67,7 @@ static ColliderJntSphElementInit sJntSphElementsInit[12] = {
         {
             ELEM_MATERIAL_UNK0,
             { 0xFFCFFFFF, 0x01, FLARE_DANCER_BODY_DMG },
-            { 0x00040088, 0x00, 0x00 },
+            { 0x00040098, 0x00, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_ON,

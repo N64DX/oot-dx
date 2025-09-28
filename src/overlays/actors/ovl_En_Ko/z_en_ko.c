@@ -178,7 +178,7 @@ static AnimationInfo sAnimationInfo[] = {
     { &gKokiriLiftingRockAnim, 1.0f, 0.0f, -1.0f, ANIMMODE_LOOP, -8.0f },
 };
 
-static u8 sOsAnimeLookup[13][5] = {
+static u8 sOsAnimeLookup[14][5] = {
     /* ENKO_TYPE_CHILD_0    */ { ENKO_ANIM_LIFTING_ROCK_NOMORPH, ENKO_ANIM_RECLINED_STANDING,
                                  ENKO_ANIM_RECLINED_STANDING, ENKO_ANIM_SITTING, ENKO_ANIM_PUNCHING_NOMORPH },
     /* ENKO_TYPE_CHILD_1    */
@@ -215,6 +215,7 @@ static u8 sOsAnimeLookup[13][5] = {
     /* ENKO_TYPE_CHILD_FADO */
     { ENKO_ANIM_IDLE_NOMORPH, ENKO_ANIM_IDLE_NOMORPH, ENKO_ANIM_IDLE_NOMORPH, ENKO_ANIM_IDLE_NOMORPH,
       ENKO_ANIM_IDLE_NOMORPH },
+    { ENKO_ANIM_STANDUP_1, ENKO_ANIM_STANDING_HAND_ON_CHEST, ENKO_ANIM_STANDUP_1, ENKO_ANIM_STANDING_HAND_ON_CHEST, ENKO_ANIM_STANDING_HAND_ON_CHEST },
 };
 
 typedef struct EnKoModelInfo {
@@ -522,7 +523,7 @@ u16 EnKo_GetTextId(PlayState* play, Actor* thisx) {
     if (textId != 0) {
         return textId;
     }
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT_OR_TIMESKIP) {
         return EnKo_GetTextIdAdult(play, thisx);
     }
     return EnKo_GetTextIdChild(play, thisx);
@@ -624,7 +625,7 @@ s16 EnKo_UpdateTalkState(PlayState* play, Actor* thisx) {
 s32 EnKo_GetForestQuestState(EnKo* this) {
     s32 result;
 
-    if (!LINK_IS_ADULT) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         // Obtained Zelda's Letter
         if (GET_EVENTCHKINF(EVENTCHKINF_40)) {
             return ENKO_FQS_CHILD_SARIA;
@@ -644,7 +645,8 @@ s32 EnKo_GetForestQuestState(EnKo* this) {
 }
 
 f32 func_80A97BC0(EnKo* this) {
-    f32 D_80A9A62C[13][5] = {
+    f32 D_80A9A62C[2][13][5] = {
+        {
         /* ENKO_TYPE_CHILD_0    */ { 0.0f, 0.0f, 0.0f, -30.0f, -20.0f },
         /* ENKO_TYPE_CHILD_1    */ { 0.0f, 0.0f, 0.0f, -20.0f, -10.0f },
         /* ENKO_TYPE_CHILD_2    */ { 0.0f, 0.0f, 0.0f, -30.0f, -20.0f },
@@ -658,12 +660,28 @@ f32 func_80A97BC0(EnKo* this) {
         /* ENKO_TYPE_CHILD_10   */ { 0.0f, 0.0f, 0.0f, -10.0f, -20.0f },
         /* ENKO_TYPE_CHILD_11   */ { -10.0f, -10.0f, -20.0f, -30.0f, -30.0f },
         /* ENKO_TYPE_CHILD_FADO */ { 0.0f, 0.0f, 0.0f, -20.0f, -20.0f },
+        },
+        {
+            {   0.0f,   0.0f,   0.0f, -10.0f,   0.0f },
+            {   0.0f,   0.0f,   0.0f,  0.0f,   10.0f },
+            {   0.0f,   0.0f,   0.0f, -10.0f,   0.0f },
+            { -10.0f,  10.0f,  10.0f,  10.0f, -10.0f },
+            {   0.0f,   0.0f,   0.0f,  10.0f,   0.0f },
+            {   0.0f,   0.0f,   0.0f,   0.0f,   0.0f },
+            {   0.0f,   0.0f,   0.0f,  10.0f,   0.0f },
+            {  10.0f,  10.0f,  10.0f, -40.0f,   0.0f },
+            { -10.0f, -10.0f, -20.0f, -10.0f, -10.0f },
+            { -10.0f, -10.0f, -10.0f, -20.0f, -20.0f },
+            {   0.0f,   0.0f,   0.0f,  10.0f,   0.0f },
+            { -10.0f, -10.0f, -20.0f, -10.0f, -10.0f },
+            {   0.0f,   0.0f,   0.0f,   0.0f,   0.0f },
+        }
     };
 
     if (LINK_IS_ADULT && ENKO_TYPE == ENKO_TYPE_CHILD_FADO) {
         return -20.0f;
     }
-    return D_80A9A62C[ENKO_TYPE][EnKo_GetForestQuestState(this)];
+    return D_80A9A62C[IS_CHILD_QUEST_AS_CHILD][ENKO_TYPE][EnKo_GetForestQuestState(this)];
 }
 
 u8 func_80A97C7C(EnKo* this) {
@@ -1024,7 +1042,7 @@ s32 EnKo_CanSpawn(EnKo* this, PlayState* play) {
             if (ENKO_TYPE >= ENKO_TYPE_CHILD_7 && ENKO_TYPE != ENKO_TYPE_CHILD_FADO) {
                 return false;
             }
-            if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && LINK_IS_ADULT) {
+            if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && LINK_IS_ADULT_OR_TIMESKIP) {
                 return false;
             }
             return true;
@@ -1035,7 +1053,7 @@ s32 EnKo_CanSpawn(EnKo* this, PlayState* play) {
                 return true;
             }
         case SCENE_TWINS_HOUSE:
-            if (LINK_IS_ADULT && !CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST)) {
+            if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST)) {
                 if (ENKO_TYPE != ENKO_TYPE_CHILD_1 && ENKO_TYPE != ENKO_TYPE_CHILD_9) {
                     return false;
                 } else {
@@ -1048,7 +1066,7 @@ s32 EnKo_CanSpawn(EnKo* this, PlayState* play) {
                 return true;
             }
         case SCENE_MIDOS_HOUSE:
-            if (LINK_IS_ADULT && !CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST)) {
+            if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST)) {
                 if (ENKO_TYPE != ENKO_TYPE_CHILD_0 && ENKO_TYPE != ENKO_TYPE_CHILD_4) {
                     return false;
                 } else {
@@ -1058,7 +1076,7 @@ s32 EnKo_CanSpawn(EnKo* this, PlayState* play) {
                 return false;
             }
         case SCENE_SARIAS_HOUSE:
-            if (LINK_IS_ADULT && !CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST)) {
+            if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST)) {
                 if (ENKO_TYPE != ENKO_TYPE_CHILD_6) {
                     return false;
                 } else {
@@ -1069,7 +1087,7 @@ s32 EnKo_CanSpawn(EnKo* this, PlayState* play) {
             }
 
         case SCENE_KOKIRI_SHOP:
-            if (LINK_IS_ADULT && !CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST)) {
+            if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST)) {
                 if (ENKO_TYPE != ENKO_TYPE_CHILD_5 && ENKO_TYPE != ENKO_TYPE_CHILD_10) {
                     return false;
                 } else {
@@ -1115,7 +1133,7 @@ void func_80A98CD8(EnKo* this) {
 
 // Used to fetch actor animation?
 s32 EnKo_GetForestQuestState2(EnKo* this) {
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT_OR_TIMESKIP) {
         return CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) ? ENKO_FQS_ADULT_SAVED : ENKO_FQS_ADULT_ENEMY;
     }
     if (CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD)) {
@@ -1211,7 +1229,7 @@ void func_80A99048(EnKo* this, PlayState* play) {
             this->collider.base.ocFlags1 |= 0x40;
         }
         this->forestQuestState = EnKo_GetForestQuestState2(this);
-        Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, sOsAnimeLookup[ENKO_TYPE][this->forestQuestState]);
+        Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, sOsAnimeLookup[ENKO_TYPE == 1 && IS_CHILD_QUEST_AS_CHILD ? 13 : ENKO_TYPE][this->forestQuestState]);
         Actor_SetScale(&this->actor, 0.01f);
         func_80A98CD8(this);
         this->modelAlpha = 0.0f;

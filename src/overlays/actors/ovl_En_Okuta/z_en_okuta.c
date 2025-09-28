@@ -143,6 +143,7 @@ void EnOkuta_Init(Actor* thisx, PlayState* play) {
         Collider_InitCylinder(play, &this->collider);
         Collider_SetCylinder(play, &this->collider, thisx, &sOctorockColliderInit);
         CollisionCheck_SetInfo(&thisx->colChkInfo, &sDamageTable, &sColChkInfoInit);
+        Actor_SetGildedSwordDamageTaken(thisx);
         this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
         if ((this->numShots == 0xFF) || (this->numShots == 0)) {
             this->numShots = 1;
@@ -499,7 +500,7 @@ void EnOkuta_ProjectileFly(EnOkuta* this, PlayState* play) {
     if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) ||
         (this->collider.base.atFlags & AT_HIT) || this->collider.base.acFlags & AC_HIT ||
         this->collider.base.ocFlags1 & OC1_HIT || this->actor.floorHeight == BGCHECK_Y_MIN) {
-        if ((player->currentShield == PLAYER_SHIELD_DEKU ||
+        if ((player->currentShield == PLAYER_SHIELD_DEKU || player->currentShield == PLAYER_SHIELD_HEROS ||
              (player->currentShield == PLAYER_SHIELD_HYLIAN && LINK_IS_ADULT)) &&
             this->collider.base.atFlags & AT_HIT && this->collider.base.atFlags & AT_TYPE_ENEMY &&
             this->collider.base.atFlags & AT_BOUNCED) {

@@ -74,7 +74,7 @@ void func_80B391CC(EnWonderTalk* this, PlayState* play) {
                 PRINTF(VT_FGCOL(MAGENTA) T("☆☆☆☆☆ 注目座標\t       \t☆☆☆☆☆ %f\n",
                                            "☆☆☆☆☆ Attention coordinates\t       \t☆☆☆☆☆ %f\n") VT_RST,
                        0.0f);
-                if (!LINK_IS_ADULT) {
+                if (!LINK_IS_ADULT_OR_TIMESKIP) {
                     this->actor.textId = 0x7040;
                     PRINTF(VT_FGCOL(GREEN) T(" ☆☆☆☆☆ こども ☆☆☆☆☆ \n", " ☆☆☆☆☆ Child ☆☆☆☆☆ \n") VT_RST);
                 } else {
@@ -198,7 +198,7 @@ void func_80B395F0(EnWonderTalk* this, PlayState* play) {
             case 2:
                 switch (play->msgCtx.choiceIndex) {
                     case 0:
-                        if (!LINK_IS_ADULT) {
+                        if (!LINK_IS_ADULT_OR_TIMESKIP) {
                             PRINTF(VT_FGCOL(GREEN) T(" ☆☆☆☆☆ まだコドモなの！ ☆☆☆☆☆ \n",
                                                      " ☆☆☆☆☆ I'm still a child! ☆☆☆☆☆ \n") VT_RST);
                             this->actor.textId = 0x5001;

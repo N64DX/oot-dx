@@ -213,7 +213,9 @@ s32 EnMa1_ShouldSpawn(EnMa1* this, PlayState* play) {
     }
 
     if ((this->actor.shape.rot.z == 3) && IS_DAY && GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE)) {
-        return true;
+        if (IS_CHILD_QUEST)
+            return !(GET_EVENTCHKINF(EVENTCHKINF_45) && CHECK_QUEST_ITEM(QUEST_SONG_EPONA));
+        else return true;
     }
 
     return false;

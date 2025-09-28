@@ -1,0 +1,12 @@
+    OBJECT_HAKA_OBJECTS, // 0
+    OBJECT_HAKA_DOOR, // 1
+    OBJECT_BOMBF, // 2
+    OBJECT_D_HSBLOCK, // 3
+    OBJECT_SK2, // 4
+    OBJECT_ST, // 5
+    OBJECT_GI_SUTARU, // 6
+    OBJECT_KA, // 7
+    OBJECT_EFC_TW, // 8
+    OBJECT_TIMEBLOCK, // 9
+    OBJECT_GI_HEART, // 10
+

@@ -44,6 +44,9 @@
 #else
 #include "assets/textures/title_static/title_static.h"
 #endif
+#if OOT_VERSION <= PAL_1_1
+#include "assets/textures/title_static/title_static_quest.h"
+#endif
 #include "assets/textures/parameter_static/parameter_static.h"
 
 #if OOT_PAL_N64
@@ -1199,16 +1202,12 @@ static void* sSaveXTextures[] = { gFileSelSaveXJPNTex, gFileSelSaveXENGTex };
 
 static s16 sNamePrimColors[2][3] = { { 255, 255, 255 }, { 100, 100, 100 } };
 
-#if !OOT_PAL_N64
-static void* sHeartTextures[] = { gHeartFullTex, gDefenseHeartFullTex };
-#else
 static void* sHeartTextures[][5] = {
     { gHeartEmptyTex, gHeartQuarterTex, gHeartHalfTex, gHeartThreeQuarterTex, gHeartFullTex },
     { gDefenseHeartEmptyTex, gDefenseHeartQuarterTex, gDefenseHeartHalfTex, gDefenseHeartThreeQuarterTex,
       gDefenseHeartFullTex },
 };
 static u8 sHeartTextureIndices[16] = { 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3 };
-#endif
 
 static s16 sHeartPrimColors[2][3] = { { 255, 70, 50 }, { 200, 0, 0 } };
 static s16 sHeartEnvColors[2][3] = { { 50, 40, 60 }, { 255, 255, 255 } };
@@ -1219,10 +1218,8 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
     s16 i;
     s16 j;
     s16 k;
-#if OOT_PAL_N64
     s16 health;
     s16 heartTextureIndex;
-#endif
     s16 heartType;
     s16 vtxOffset;
     s16 deathCountSplit[3];
@@ -1273,22 +1270,15 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
                        sHeartEnvColors[heartType][2], 255);
 
         k = this->healthCapacities[fileIndex] / 0x10;
-
-#if !OOT_PAL_N64
-        // draw hearts
-        for (vtxOffset = 0, j = 0; j < k; j++, vtxOffset += 4) {
-            gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[D_8081284C[fileIndex] + vtxOffset] + 0x30, 4, 0);
-            POLY_OPA_DISP = FileSelect_QuadTextureIA8(POLY_OPA_DISP, sHeartTextures[heartType], 0x10, 0x10, 0);
-        }
-#else
         health = this->health[fileIndex];
+        
         if (health <= 48) { // 3 hearts
             health = 48;
         }
         heartTextureIndex = 4;
 
         // draw hearts
-        for (vtxOffset = 0, j = 0; j < k; j++, vtxOffset += 4) {
+        for (vtxOffset = 0, j = 0; j < (k > 20 ? 20 : k); j++, vtxOffset += 4) {
             if (health < 16) {
                 if (health != 0) {
                     heartTextureIndex = sHeartTextureIndices[health];
@@ -1304,7 +1294,6 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
             POLY_OPA_DISP =
                 FileSelect_QuadTextureIA8(POLY_OPA_DISP, sHeartTextures[heartType][heartTextureIndex], 0x10, 0x10, 0);
         }
-#endif
 
         gDPPipeSync(POLY_OPA_DISP++);
 
@@ -1432,6 +1421,10 @@ static void* sActionButtonTextures[][4] = {
 static void* sOptionsButtonTextures[] = LANGUAGE_ARRAY(gFileSelOptionsButtonJPNTex, gFileSelOptionsButtonENGTex,
                                                        gFileSelOptionsButtonGERTex, gFileSelOptionsButtonENGTex);
 
+#if OOT_VERSION <= PAL_1_1
+static void* sQuestButtonTextures[] = { gFileSelQuestOcarinaOfTimeButtonTex, gFileSelQuestMasterQuestButtonTex, gFileSelQuestUraQuestButtonTex, gFileSelQuestChildQuestButtonTex };
+#endif
+
 /**
  * Draw most window contents including buttons, labels, and icons.
  * Does not include anything from the keyboard and settings windows.
@@ -1517,6 +1510,15 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
             gSP1Quadrangle(POLY_OPA_DISP++, 8, 10, 11, 9, 0);
         }
 
+#if OOT_VERSION <= PAL_1_1
+        else if (!this->n64ddFlags[i] && this->questMode[i] <= QUEST_MAX) {
+            // draw quest label
+            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, sWindowContentColors[isActive][0], sWindowContentColors[isActive][1], sWindowContentColors[isActive][2], this->connectorAlpha[i]);
+            gDPLoadTextureBlock(POLY_OPA_DISP++, sQuestButtonTextures[this->questMode[i]], G_IM_FMT_IA, G_IM_SIZ_16b, 44, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            gSP1Quadrangle(POLY_OPA_DISP++, 8, 10, 11, 9, 0);
+        }
+#endif
+
         // draw connectors
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, sWindowContentColors[isActive][0], sWindowContentColors[isActive][1],
                         sWindowContentColors[isActive][2], this->connectorAlpha[i]);
@@ -1528,6 +1530,10 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
         if (this->n64ddFlags[i]) {
             gSP1Quadrangle(POLY_OPA_DISP++, 16, 18, 19, 17, 0);
         }
+#if OOT_VERSION <= PAL_1_1
+        else if (this->nameAlpha[i] != 0 && this->questMode[i] <= QUEST_MAX)
+            gSP1Quadrangle(POLY_OPA_DISP++, 16, 18, 19, 17, 0);
+#endif
     }
 
     // draw file info
@@ -1704,7 +1710,7 @@ void FileSelect_ConfigModeDraw(GameState* thisx) {
     }
 
     // draw options menu
-    if ((this->configMode >= CM_MAIN_TO_OPTIONS) && (this->configMode <= CM_OPTIONS_TO_MAIN)) {
+    if ((this->configMode >= CM_MAIN_TO_OPTIONS) && (this->configMode <= CM_OPTIONS_TO_MAIN) && !this->selectingOptionsMode) {
         gDPPipeSync(POLY_OPA_DISP++);
         gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2],
@@ -1971,8 +1977,7 @@ void FileSelect_FadeOut(GameState* thisx) {
 void FileSelect_LoadGame(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
 
-#if DEBUG_FEATURES
-    if (this->buttonIndex == FS_BTN_SELECT_FILE_1) {
+    if (this->buttonIndex == FS_BTN_SELECT_FILE_1 && (DEBUG_FEATURES || gSaveContext.debugMode)) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.fileNum = this->buttonIndex;
@@ -1980,9 +1985,7 @@ void FileSelect_LoadGame(GameState* thisx) {
         gSaveContext.gameMode = GAMEMODE_NORMAL;
         SET_NEXT_GAMESTATE(&this->state, MapSelect_Init, MapSelectState);
         this->state.running = false;
-    } else
-#endif
-    {
+    } else {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.fileNum = this->buttonIndex;
@@ -2482,5 +2485,4 @@ void FileSelect_Init(GameState* thisx) {
     Audio_PlaySequenceWithSeqPlayerIO(SEQ_PLAYER_BGM_MAIN, NA_BGM_FILE_SELECT, 0, 7, 1);
 
     this->selectingQuestMode = this->selectingOptionsMode = false;
-    FileSelectOptions_Init(this);
 }

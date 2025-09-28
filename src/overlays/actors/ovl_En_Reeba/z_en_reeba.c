@@ -91,7 +91,7 @@ static DamageTable sDamageTable = {
     /* Master jump   */ DMG_ENTRY(4, LEEVER_DMG_REACT_OTHER),
     /* Unknown 1     */ DMG_ENTRY(0, LEEVER_DMG_REACT_UNK),
     /* Unblockable   */ DMG_ENTRY(0, LEEVER_DMG_REACT_NONE),
-    /* Hammer jump   */ DMG_ENTRY(0, LEEVER_DMG_REACT_NONE),
+    /* Hammer jump   */ DMG_ENTRY(4, LEEVER_DMG_REACT_OTHER),
     /* Unknown 2     */ DMG_ENTRY(0, LEEVER_DMG_REACT_NONE),
 };
 
@@ -160,6 +160,7 @@ void EnReeba_Init(Actor* thisx, PlayState* play) {
     this->actor.shape.yOffset = this->yOffsetTarget = this->scale * -27500.0f;
     ActorShape_Init(&this->actor.shape, this->actor.shape.yOffset, ActorShadow_DrawCircle, 0.0f);
     this->actor.colChkInfo.damageTable = &sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     Actor_UpdateBgCheckInfo(play, &this->actor, 35.0f, 60.0f, 60.0f,
                             UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2 | UPDBGCHECKINFO_FLAG_3 |
                                 UPDBGCHECKINFO_FLAG_4);

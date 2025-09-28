@@ -212,7 +212,7 @@ u16 EnIn_GetTextId(PlayState* play, Actor* thisx) {
     if (textId != 0) {
         return textId;
     }
-    if (!LINK_IS_ADULT) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP) {
         return EnIn_GetTextIdChild(play);
     } else {
         return EnIn_GetTextIdAdult(play);
@@ -380,7 +380,7 @@ void EnIn_ChangeAnim(EnIn* this, s32 index) {
 }
 
 s32 func_80A7975C(EnIn* this, PlayState* play) {
-    if (this->actor.params != 1 || this->actor.shape.rot.z != 1 || !LINK_IS_ADULT) {
+    if (this->actor.params != 1 || this->actor.shape.rot.z != 1 || !LINK_IS_ADULT_OR_TIMESKIP) {
         return 0;
     }
     this->animationIdx = 1;
@@ -392,15 +392,15 @@ s32 func_80A7975C(EnIn* this, PlayState* play) {
 }
 
 s32 EnIn_GetStartMode(EnIn* this, PlayState* play) {
-    if (play->sceneId == SCENE_LON_LON_RANCH && LINK_IS_CHILD && IS_DAY && this->actor.shape.rot.z == 1 &&
+    if (play->sceneId == SCENE_LON_LON_RANCH && !LINK_IS_ADULT_OR_TIMESKIP && IS_DAY && this->actor.shape.rot.z == 1 &&
         !GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE)) {
         return ENIN_START_MODE_1;
     }
-    if (play->sceneId == SCENE_STABLE && LINK_IS_CHILD && IS_DAY && this->actor.shape.rot.z == 3 &&
+    if (play->sceneId == SCENE_STABLE && !LINK_IS_ADULT_OR_TIMESKIP && IS_DAY && this->actor.shape.rot.z == 3 &&
         GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE)) {
         return ENIN_START_MODE_1;
     }
-    if (play->sceneId == SCENE_STABLE && LINK_IS_CHILD && IS_NIGHT) {
+    if (play->sceneId == SCENE_STABLE && !LINK_IS_ADULT_OR_TIMESKIP && IS_NIGHT) {
         if ((this->actor.shape.rot.z == 2) && !GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE)) {
             return ENIN_START_MODE_1;
         }
@@ -408,7 +408,7 @@ s32 EnIn_GetStartMode(EnIn* this, PlayState* play) {
             return ENIN_START_MODE_1;
         }
     }
-    if (play->sceneId == SCENE_LON_LON_RANCH && LINK_IS_ADULT && IS_DAY) {
+    if (play->sceneId == SCENE_LON_LON_RANCH && LINK_IS_ADULT_OR_TIMESKIP && IS_DAY) {
         if ((this->actor.shape.rot.z == 5) && !GET_EVENTCHKINF(EVENTCHKINF_EPONA_OBTAINED)) {
             return ENIN_START_MODE_2;
         }
@@ -416,7 +416,7 @@ s32 EnIn_GetStartMode(EnIn* this, PlayState* play) {
             return ENIN_START_MODE_4;
         }
     }
-    if (play->sceneId == SCENE_LON_LON_BUILDINGS && LINK_IS_ADULT && IS_NIGHT) {
+    if (play->sceneId == SCENE_LON_LON_BUILDINGS && LINK_IS_ADULT_OR_TIMESKIP && IS_NIGHT) {
         if (this->actor.shape.rot.z == 6 && !GET_EVENTCHKINF(EVENTCHKINF_EPONA_OBTAINED)) {
             return ENIN_START_MODE_3;
         }

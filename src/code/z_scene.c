@@ -15,6 +15,7 @@
 #include "player.h"
 #include "save.h"
 #include "scene.h"
+#include "gfx.h"
 
 SceneCmdHandlerFunc sSceneCmdHandlers[SCENE_CMD_ID_MAX];
 RomFile sNaviQuestHintFiles[];
@@ -220,14 +221,48 @@ s32 Scene_ExecuteCommands(PlayState* play, SceneCmd* sceneCmd) {
     return 0;
 }
 
+#include "z_scene_dungeon_entrances.c"
+
 BAD_RETURN(s32) Scene_CommandPlayerEntryList(PlayState* play, SceneCmd* cmd) {
-    ActorEntry* playerEntry = play->playerEntry =
-        (ActorEntry*)SEGMENTED_TO_VIRTUAL(cmd->playerEntryList.data) + play->spawnList[play->spawn].playerEntryIndex;
+    ActorEntry* playerEntry;
     s16 linkObjectId;
 
-    play->linkAgeOnLoad = ((void)0, gSaveContext.save.linkAge);
+    // Swap out dungeon entrances
+    switch (play->sceneId) {
+        case SCENE_DEKU_TREE:
+            playerEntry = play->playerEntry = Entrances_Deku_Tree_PlayerEntryList                          + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_DODONGOS_CAVERN:
+            playerEntry = play->playerEntry = Entrances_Dodongos_Cavern_PlayerEntryList                    + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_JABU_JABU:
+            playerEntry = play->playerEntry = Entrances_Jabu_Jabu_PlayerEntryList                          + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_FOREST_TEMPLE:
+            playerEntry = play->playerEntry = Entrances_Forest_Temple_PlayerEntryList                      + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_FIRE_TEMPLE:
+            playerEntry = play->playerEntry = Entrances_Fire_Temple_PlayerEntryList                        + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_WATER_TEMPLE:
+            playerEntry = play->playerEntry = Entrances_Water_Temple_PlayerEntryList                       + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_SHADOW_TEMPLE:
+            playerEntry = play->playerEntry = Entrances_Shadow_Temple_PlayerEntryList                      + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_SPIRIT_TEMPLE:
+            playerEntry = play->playerEntry = Entrances_Spirit_Temple_PlayerEntryList                      + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_ICE_CAVERN:
+            playerEntry = play->playerEntry = Entrances_Ice_Cavern_PlayerEntryList                         + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_BOTTOM_OF_THE_WELL:
+            playerEntry = play->playerEntry = Entrances_Bottom_Of_The_Well_PlayerEntryList                 + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_GERUDO_TRAINING_GROUND:
+            playerEntry = play->playerEntry = Entrances_Gerudos_Training_Ground_PlayerEntryList            + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_INSIDE_GANONS_CASTLE:
+            playerEntry = play->playerEntry = Entrances_Inside_Ganons_Castle_PlayerEntryList               + play->spawnList[play->spawn].playerEntryIndex; break;
+        case SCENE_GANONS_TOWER:
+            playerEntry = play->playerEntry = Entrances_Ganons_Tower_PlayerEntryList                       + play->spawnList[play->spawn].playerEntryIndex; break;
+        default:
+            playerEntry = play->playerEntry = (ActorEntry*)SEGMENTED_TO_VIRTUAL(cmd->playerEntryList.data) + play->spawnList[play->spawn].playerEntryIndex; break;
+    }
 
-    linkObjectId = gLinkObjectIds[((void)0, gSaveContext.save.linkAge)];
+    play->linkAgeOnLoad = ((void)0, gSaveContext.save.linkAge);
+    R_IS_YOUNG_LINK = LINK_IS_CHILD && (CQ_IS_TIMESKIP || USE_YOUNG_LINK);
+
+    linkObjectId = gLinkObjectIds[GET_LINK_MODEL];
 
     gActorOverlayTable[playerEntry->id].profile->objectId = linkObjectId;
     Object_SpawnPersistent(&play->objectCtx, linkObjectId);
@@ -301,7 +336,13 @@ BAD_RETURN(s32) Scene_CommandObjectList(PlayState* play, SceneCmd* cmd) {
     entry = &play->objectCtx.slots[i];
 
     while (i < play->objectCtx.numEntries) {
-        if (entry->id != *objectListEntry) {
+        s16 expectedId = *objectListEntry;
+
+        // Always swap horse → young horse if child Link
+        if (LINK_IS_CHILD && expectedId == OBJECT_HORSE)
+            expectedId = OBJECT_HORSE_YOUNG;
+
+        if (entry->id != expectedId) {
 
             invalidatedEntry = &play->objectCtx.slots[i];
             for (j = i; j < play->objectCtx.numEntries; j++) {
@@ -325,6 +366,9 @@ BAD_RETURN(s32) Scene_CommandObjectList(PlayState* play, SceneCmd* cmd) {
            "scene_info->object_bank.num <= OBJECT_EXCHANGE_BANK_MAX", "../z_scene.c", 705);
 
     while (k < cmd->objectList.length) {
+        if (LINK_IS_CHILD && *objectListEntry == OBJECT_HORSE)
+            *objectListEntry = OBJECT_HORSE_YOUNG;
+        
         nextPtr = func_800982FC(&play->objectCtx, i, *objectListEntry);
         if (i < (ARRAY_COUNT(play->objectCtx.slots) - 1)) {
             entries[i + 1].segment = nextPtr;
@@ -508,7 +552,7 @@ BAD_RETURN(s32) Scene_CommandMiscSettings(PlayState* play, SceneCmd* cmd) {
     gSaveContext.worldMapArea = cmd->miscSettings.area;
 
     if ((play->sceneId == SCENE_BAZAAR) || (play->sceneId == SCENE_SHOOTING_GALLERY)) {
-        if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
+        if (gSaveContext.save.entranceIndex == ENTR_BAZAAR_0 || gSaveContext.save.entranceIndex == ENTR_SHOOTING_GALLERY_0) {
             gSaveContext.worldMapArea = WORLD_MAP_AREA_KAKARIKO_VILLAGE;
         }
     }
@@ -526,7 +570,11 @@ BAD_RETURN(s32) Scene_CommandMiscSettings(PlayState* play, SceneCmd* cmd) {
 void Scene_SetTransitionForNextEntrance(PlayState* play) {
     s16 entranceIndex;
 
-    if (!IS_DAY) {
+    if (play->nextEntranceIndex > ENTR_DESERT_COLOSSUS_8_3)
+        entranceIndex = play->nextEntranceIndex;
+    else if (IS_CHILD_QUEST_AS_CHILD)
+        entranceIndex = play->nextEntranceIndex + (IS_DAY ? 0 : 1);
+    else if (!IS_DAY) {
         if (!LINK_IS_ADULT) {
             entranceIndex = play->nextEntranceIndex + 1;
         } else {
@@ -577,3 +625,32 @@ RomFile sNaviQuestHintFiles[] = {
     ROM_FILE(elf_message_field),
     ROM_FILE(elf_message_ydan),
 };
+
+void Scene_SetRenderModeXlu(PlayState* play, s32 index, u32 flags) {
+    static Gfx renderModeSetNoneDL[] = {
+        gsSPEndDisplayList(),
+    };
+    static Gfx renderModeSetXluSingleCycleDL[] = {
+        gsDPSetRenderMode(AA_EN | Z_CMP | IM_RD | CLR_ON_CVG | CVG_DST_WRAP | ZMODE_XLU | FORCE_BL | GBL_c1(G_BL_CLR_IN, G_BL_0, G_BL_CLR_IN, G_BL_1), G_RM_AA_ZB_XLU_SURF2),
+        gsSPEndDisplayList(),
+    };
+    static Gfx renderModeSetXluTwoCycleDL[] = {
+        gsDPSetRenderMode(AA_EN | Z_CMP | Z_UPD | IM_RD | CLR_ON_CVG | CVG_DST_WRAP | ZMODE_XLU | FORCE_BL | GBL_c1(G_BL_CLR_IN, G_BL_0, G_BL_CLR_IN, G_BL_1), AA_EN | Z_CMP | Z_UPD | IM_RD | CLR_ON_CVG | CVG_DST_WRAP | ZMODE_XLU | FORCE_BL | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
+        gsSPEndDisplayList(),
+    };
+    static Gfx* dLists[] = {
+        renderModeSetNoneDL,
+        renderModeSetXluSingleCycleDL,
+        renderModeSetXluTwoCycleDL,
+    };
+    Gfx* dList = dLists[index];
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene.c", 608);
+
+    if (flags & 1)
+        gSPSegment(POLY_OPA_DISP++, 0x0C, dList);
+    if (flags & 2)
+        gSPSegment(POLY_XLU_DISP++, 0x0C, dList);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene.c", 615);
+}

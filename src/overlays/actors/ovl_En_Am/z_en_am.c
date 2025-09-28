@@ -249,6 +249,7 @@ void EnAm_Init(Actor* thisx, PlayState* play) {
         Collider_SetQuad(play, &this->hitCollider, &this->dyna.actor, &sQuadInit);
         this->dyna.actor.colChkInfo.health = Actor_EnemyHealthMultiply(1, MONSTER_HP);
         this->dyna.actor.colChkInfo.damageTable = &sDamageTable;
+        Actor_SetGildedSwordDamageTaken(thisx);
         EnAm_SetupSleep(this);
         this->unk_258 = 0;
     }

@@ -65,9 +65,9 @@ static ColliderCylinderInitType1 sCylinderInit = {
 static DamageTable sDamageTable[] = {
     /* Deku nut      */ DMG_ENTRY(0, 0x0),
     /* Deku stick    */ DMG_ENTRY(0, 0x0),
-    /* Slingshot     */ DMG_ENTRY(0, 0x0),
+    /* Slingshot     */ DMG_ENTRY(1, 0xF),
     /* Explosive     */ DMG_ENTRY(2, 0xF),
-    /* Boomerang     */ DMG_ENTRY(0, 0x0),
+    /* Boomerang     */ DMG_ENTRY(1, 0x1),
     /* Normal arrow  */ DMG_ENTRY(2, 0xF),
     /* Hammer swing  */ DMG_ENTRY(2, 0xF),
     /* Hookshot      */ DMG_ENTRY(2, 0x1),
@@ -93,7 +93,7 @@ static DamageTable sDamageTable[] = {
     /* Master jump   */ DMG_ENTRY(4, 0xD),
     /* Unknown 1     */ DMG_ENTRY(0, 0x0),
     /* Unblockable   */ DMG_ENTRY(0, 0x0),
-    /* Hammer jump   */ DMG_ENTRY(0, 0x0),
+    /* Hammer jump   */ DMG_ENTRY(4, 0xD),
     /* Unknown 2     */ DMG_ENTRY(0, 0x0),
 };
 
@@ -123,6 +123,7 @@ void EnSb_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->actor.colChkInfo.damageTable = sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(2, MONSTER_HP);
     SkelAnime_InitFlex(play, &this->skelAnime, &object_sb_Skel_002BF0, &object_sb_Anim_000194, NULL, NULL, 0);
     Collider_InitCylinder(play, &this->collider);

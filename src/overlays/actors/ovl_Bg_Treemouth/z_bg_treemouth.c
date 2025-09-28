@@ -248,11 +248,7 @@ void BgTreemouth_Draw(Actor* thisx, PlayState* play) {
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
 
-#if OOT_VERSION < PAL_1_0
-    if (!IS_CUTSCENE_LAYER)
-#else
-    if (!IS_CUTSCENE_LAYER || LINK_IS_ADULT)
-#endif
+    if (!IS_CUTSCENE_LAYER || LINK_IS_ADULT_OR_TIMESKIP)
     {
         if (GET_EVENTCHKINF(EVENTCHKINF_07)) {
             alpha = 2150;

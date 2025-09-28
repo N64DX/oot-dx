@@ -123,7 +123,7 @@ void EnKakasi2_Destroy(Actor* thisx, PlayState* play) {
     EnKakasi2* this = (EnKakasi2*)thisx;
 
     Collider_DestroyCylinder(play, &this->collider);
-    //! @bug SkelAnime_Free is not called
+    SkelAnime_Free(&this->skelAnime, play); //! @bug SkelAnime_Free is not called
 }
 
 void func_80A90264(EnKakasi2* this, PlayState* play) {
@@ -151,7 +151,7 @@ void func_80A90264(EnKakasi2* this, PlayState* play) {
         this->actionFunc = func_80A904D8;
     } else if ((this->actor.xzDistToPlayer < this->maxSpawnDistance.x) &&
                (fabsf(player->actor.world.pos.y - this->actor.world.pos.y) < this->maxSpawnDistance.y) &&
-               GET_EVENTCHKINF(EVENTCHKINF_9C)) {
+               (IS_CHILD_QUEST ? true : GET_EVENTCHKINF(EVENTCHKINF_9C))) {
 
         this->unk_194 = 0;
         if (play->msgCtx.ocarinaMode == OCARINA_MODE_0B) {

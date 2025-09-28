@@ -1,0 +1,9 @@
+    OBJECT_DEMO_KEKKAI, // 0
+    OBJECT_TRAP, // 1
+    OBJECT_BOX, // 2
+    OBJECT_EFC_FLASH, // 3
+    OBJECT_AM, // 4
+    OBJECT_D_HSBLOCK, // 5
+    OBJECT_VM, // 6
+    OBJECT_GI_HEART, // 7
+

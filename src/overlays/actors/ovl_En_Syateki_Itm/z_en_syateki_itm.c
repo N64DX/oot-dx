@@ -135,7 +135,7 @@ void EnSyatekiItm_StartRound(EnSyatekiItm* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
 
     if (this->unkTimer == 0) {
-        if (LINK_IS_ADULT) {
+        if (IS_CHILD_QUEST ? gSaveContext.save.entranceIndex == ENTR_SHOOTING_GALLERY_0 : LINK_IS_ADULT) {
             for (i = 0, j = 0; i < SYATEKI_ROUND_MAX; i++) {
                 if (this->roundFlags[i]) {
                     j++;

@@ -4,7 +4,7 @@
 #include "ultra64.h"
 #include "object.h"
 
-s16 gLinkObjectIds[] = { OBJECT_LINK_BOY, OBJECT_LINK_CHILD };
+s16 gLinkObjectIds[] = { OBJECT_LINK_BOY, OBJECT_LINK_CHILD, OBJECT_LINK_YOUNG };
 
 u32 gObjectTableSize = ARRAY_COUNT(gObjectTable);
 

@@ -1,0 +1,6 @@
+    OBJECT_DDAN_OBJECTS, // 0
+    OBJECT_BWALL, // 1
+    OBJECT_FIREFLY, // 2
+    OBJECT_KUSA, // 3
+    OBJECT_DODOJR, // 4
+

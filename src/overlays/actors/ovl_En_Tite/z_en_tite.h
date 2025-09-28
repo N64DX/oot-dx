@@ -9,6 +9,7 @@ struct EnTite;
 typedef void (*EnTiteActionFunc)(struct EnTite*, struct PlayState*);
 
 typedef enum EnTiteType {
+    /* -3 */ TEKTITE_YELLOW = -3,
     /* -2 */ TEKTITE_BLUE = -2,
     /* -1 */ TEKTITE_RED
 } EnTiteType;

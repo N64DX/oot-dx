@@ -77,7 +77,7 @@ u16 gUpgradeCapacities[UPG_MAX][4] = {
     { 0, 20, 30, 40 },     // UPG_BOMB_BAG
     { 0, 0, 0, 0 },        // UPG_STRENGTH (unused)
     { 0, 0, 0, 0 },        // UPG_SCALE (unused)
-    { 99, 200, 500, 500 }, // UPG_WALLET
+    { 99, 200, 500, 999 }, // UPG_WALLET
     { 0, 30, 40, 50 },     // UPG_BULLET_BAG
     { 0, 10, 20, 30 },     // UPG_DEKU_STICKS
     { 0, 20, 30, 40 },     // UPG_DEKU_NUTS
@@ -301,8 +301,19 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
     if (equipValue) {
         equipValue >>= gEquipShifts[equipment];
 
-        gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
-        gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
+        if (equipment == EQUIP_TYPE_SHIELD) {
+            if (IS_HEROS_SHIELD) {
+                CLEAR_HEROS_SHIELD;
+                gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
+                gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(equipment, 3);
+            } else {
+                gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
+                gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
+            }
+        } else {
+            gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
+            gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
+        }
 
         if (equipment == EQUIP_TYPE_TUNIC) {
             gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_TUNIC_KOKIRI << (EQUIP_TYPE_TUNIC * 4);

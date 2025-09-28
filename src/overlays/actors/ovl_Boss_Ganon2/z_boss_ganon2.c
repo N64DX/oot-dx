@@ -1986,7 +1986,7 @@ void func_8090120C(BossGanon2* this, PlayState* play) {
             player->actor.shape.rot.y = -0x4000;
             player->actor.world.pos.z = 30.0f;
             if ((this->unk_398 == 20) || (this->unk_398 == 30) || (this->unk_398 == 65) || (this->unk_398 == 40)) {
-                Sfx_PlaySfxCentered(NA_SE_VO_LI_SWORD_N);
+                Sfx_PlaySfxCentered(LINK_IS_ADULT ? NA_SE_VO_LI_SWORD_N : NA_SE_VO_LI_SWORD_N_KID);
                 Sfx_PlaySfxCentered(NA_SE_IT_SWORD_SWING_HARD);
             }
             if ((this->unk_398 == 22) || (this->unk_398 == 35) || (this->unk_398 == 72) || (this->unk_398 == 45)) {
@@ -2223,6 +2223,7 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
     ColliderElement* acHitElem;
     s16 i;
     u8 phi_v1_2;
+    Player* player = GET_PLAYER(play);
 
     PRINTF("this->no_hit_time %d\n", this->unk_316);
     if (this->unk_316 != 0 || ((this->unk_334 == 0) && (this->actionFunc == func_80900890))) {
@@ -2275,7 +2276,7 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_MGANON_DAMAGE);
             Audio_StopSfxById(NA_SE_EN_MGANON_UNARI);
             phi_v1_2 = 1;
-            if (acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER)) {
+            if ( (acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER)) && player->heldItemAction == PLAYER_IA_SWORD_MASTER) {
                 if (acHitElem->atDmgInfo.dmgFlags & DMG_JUMP_MASTER) {
                     phi_v1_2 = 4;
                 } else {
@@ -3292,20 +3293,31 @@ void BossGanon2_DrawEffects(PlayState* play) {
             spA0.z = play->envCtx.dirLight1.params.dir.z;
             func_8002EABC(&effect->position, &play->view.eye, &spA0, play->state.gfxCtx);
             Matrix_Translate(effect->position.x, effect->position.y, effect->position.z, MTXMODE_NEW);
-            Matrix_Scale(0.03f, 0.03f, 0.03f, MTXMODE_APPLY);
+
+            if (IS_CHILD_QUEST_AS_CHILD) {
+                Matrix_Scale(0.02f, 0.02f, 0.02f, MTXMODE_APPLY);
+            } else {
+                Matrix_Scale(0.03f, 0.03f, 0.03f, MTXMODE_APPLY);
+            }
+
             Matrix_RotateY(effect->unk_38.z, MTXMODE_APPLY);
             Matrix_RotateX(effect->unk_38.y, MTXMODE_APPLY);
             MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_boss_ganon2.c", 6116);
             gSPSegment(POLY_OPA_DISP++, 0x08,
                        Gfx_TexScroll(play->state.gfxCtx, 0, 0 - (play->gameplayFrames & 0x7F), 32, 32));
-            gSPDisplayList(POLY_OPA_DISP++, gGanonMasterSwordDL);
+
+            if (IS_CHILD_QUEST_AS_CHILD) {
+                gSPDisplayList(POLY_OPA_DISP++, gGanonRazorSwordDL);
+            } else {
+                gSPDisplayList(POLY_OPA_DISP++, gGanonMasterSwordDL);
+            }
 
             if ((play->envCtx.lightSetting == 1) || (play->envCtx.lightSetting == 2)) {
                 alpha = (s16)(play->envCtx.lightBlend * 150.0f) + 50;
                 angle = M_PI / 5.0f;
             } else {
                 alpha = 100;
-                angle = M_PI / 2.0f;
+                angle = M_PI / (IS_CHILD_QUEST_AS_CHILD ? 5.0f : 2.0f);
             }
             gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 0, 0, 0, alpha);
             temp_f0 = effect->position.y - 1098.0f;

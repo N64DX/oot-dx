@@ -666,6 +666,7 @@ void BossVa_Init(Actor* thisx, PlayState* play2) {
                 Actor_Kill(&this->actor);
             } else {
                 this->actor.colChkInfo.damageTable = sDamageTable;
+                Actor_SetGildedSwordDamageTaken(thisx);
                 sPhase2Timer = 0xFFFF;
                 if (GET_EVENTCHKINF(EVENTCHKINF_BEGAN_BARINADE_BATTLE)) {
                     sCsState = INTRO_CALL_BARI;

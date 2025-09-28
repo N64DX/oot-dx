@@ -233,6 +233,7 @@ void EnIk_InitImpl(Actor* thisx, PlayState* play) {
     Collider_SetQuad(play, &this->axeCollider, thisx, &sQuadInit);
 
     thisx->colChkInfo.damageTable = &sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     thisx->colChkInfo.mass = MASS_HEAVY;
     this->isBreakingProp = false;
     thisx->colChkInfo.health = Actor_EnemyHealthMultiply(30, ELITE_HP);

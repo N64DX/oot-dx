@@ -1,0 +1,8 @@
+    OBJECT_ICE_OBJECTS, // 0
+    OBJECT_XC, // 1
+    OBJECT_FZ, // 2
+    OBJECT_BOX, // 3
+    OBJECT_TRAP, // 4
+    OBJECT_EFC_FLASH, // 5
+    OBJECT_GI_HEART, // 6
+

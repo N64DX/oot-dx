@@ -1161,9 +1161,8 @@ void KaleidoScope_SetupPageSwitch(PauseContext* pauseCtx, u8 pt) {
 
 void KaleidoScope_HandlePageToggles(PauseContext* pauseCtx, Input* input) {
     if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) && CHECK_BTN_ALL(input->rel.button, BTN_L) && !pressed_r && editor_timer < (60 / R_UPDATE_RATE)) {
-#if DEBUG_FEATURES
-        pauseCtx->debugState = PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPENING;
-#endif
+        if (DEBUG_FEATURES || gSaveContext.debugMode)
+            pauseCtx->debugState = PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPENING;
         return;
     }
     
@@ -2169,15 +2168,44 @@ void KaleidoScope_DrawInfoPanel(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
+static bool lastHylianShieldItem;
+
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
     u16 texIndex;
 
-    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) ||
+    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) || lastHylianShieldItem != IS_HEROS_SHIELD ||
         ((pauseCtx->pageIndex == PAUSE_MAP) && (pauseCtx->cursorSpecialPos != 0))) {
 
         pauseCtx->namedItem = pauseCtx->cursorItem[pauseCtx->pageIndex];
         texIndex = pauseCtx->namedItem;
+        lastHylianShieldItem = IS_HEROS_SHIELD;
+        
+        
+        if (IS_CHILD_QUEST_AS_CHILD) {
+            if (pauseCtx->pageIndex == PAUSE_ITEM) {
+                if (pauseCtx->namedItem == ITEM_BOW)
+                    texIndex = 0x59;
+                else if (pauseCtx->namedItem == ITEM_BROKEN_GORONS_SWORD)
+                    texIndex = 0x3A;
+            }
+            else if (pauseCtx->pageIndex == PAUSE_EQUIP) {
+                if (pauseCtx->namedItem == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
+                    texIndex = 0x58;
+                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER)
+                    texIndex = 0x77;
+                else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON && gSaveContext.save.info.playerData.bgsFlag)
+                    texIndex = 0x78;
+                else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON)
+                    texIndex = 0x73;
+                else if (pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+                    texIndex = 0x79;
+                else if (pauseCtx->namedItem == ITEM_STRENGTH_SILVER_GAUNTLETS)
+                    texIndex = 0x56;
+                else if (pauseCtx->namedItem == ITEM_STRENGTH_GOLD_GAUNTLETS)
+                    texIndex = 0x57;
+            }
+        }
 
         osCreateMesgQueue(&pauseCtx->loadQueue, &pauseCtx->loadMsg, 1);
 
@@ -3447,7 +3475,7 @@ void KaleidoScope_DrawGameOver(PlayState* play) {
     gDPLoadMultiBlock(POLY_OPA_DISP++, gGameOverP3Tex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0,
                       G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
                       G_TX_NOLOD);
-    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((VREG(87) + (WS_SHIFT_HALF + 128) << 2)), HIRES_MULTIPLY((VREG(88) << 2)), HIRES_MULTIPLY(((VREG(87) + WS_SHIFT_HALF + 192) << 2)),
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((VREG(87) + WS_SHIFT_HALF + 128) << 2)), HIRES_MULTIPLY((VREG(88) << 2)), HIRES_MULTIPLY(((VREG(87) + WS_SHIFT_HALF + 192) << 2)),
                         HIRES_MULTIPLY(((VREG(88) + 32) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
 
     CLOSE_DISPS(gfxCtx, "../z_kaleido_scope_PAL.c", 3169);
@@ -3740,6 +3768,8 @@ void KaleidoScope_Update(PlayState* play) {
 
     switch (pauseCtx->state) {
         case PAUSE_STATE_INIT:
+            lastHylianShieldItem = IS_HEROS_SHIELD;
+            pauseCtx->was_in_debug = false;
             D_808321A8[0] = gSaveContext.buttonStatus[0];
             D_808321A8[1] = gSaveContext.buttonStatus[1];
             D_808321A8[2] = gSaveContext.buttonStatus[2];
@@ -4111,7 +4141,7 @@ void KaleidoScope_Update(PlayState* play) {
             pauseCtx->tradeQuestMarker = TRADE_QUEST_MARKER_NONE;
 
             i = INV_CONTENT(ITEM_TRADE_ADULT);
-            if (LINK_AGE_IN_YEARS == YEARS_ADULT) {
+            if (LINK_IS_ADULT_OR_TIMESKIP) {
                 if ((i <= ITEM_POCKET_CUCCO) || (i == ITEM_ODD_MUSHROOM)) {
                     pauseCtx->tradeQuestMarker = WORLD_MAP_POINT_KAKARIKO_VILLAGE;
                 }

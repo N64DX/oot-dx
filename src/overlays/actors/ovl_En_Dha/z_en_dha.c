@@ -170,6 +170,7 @@ void EnDha_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->actor.colChkInfo.damageTable = &sDamageTable;
+    Actor_SetGildedSwordDamageTaken(thisx);
     SkelAnime_InitFlex(play, &this->skelAnime, &object_dh_Skel_000BD8, &object_dh_Anim_0015B0, this->jointTable,
                        this->morphTable, 4);
     ActorShape_Init(&this->actor.shape, 0, ActorShadow_DrawFeet, 90.0f);

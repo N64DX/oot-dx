@@ -1,0 +1,8 @@
+    OBJECT_DEKUBABA, // 0
+    OBJECT_GS, // 1
+    OBJECT_KANBAN, // 2
+    OBJECT_ST, // 3
+    OBJECT_OKUTA, // 4
+    OBJECT_DEKUNUTS, // 5
+    OBJECT_MAMENOKI, // 6
+

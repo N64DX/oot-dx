@@ -167,6 +167,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_36.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_37.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_38.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_39.o"
 #if OOT_VERSION >= PAL_1_0
     include "$(BUILD_DIR)/assets/audio/audiobank_padding.o"
 #endif
@@ -285,6 +286,8 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_108.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_109.prg.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_110.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_111.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_112.o"
 endseg
 
 beginseg
@@ -324,7 +327,6 @@ endseg
 
 beginseg
     name "icon_item_24_static"
-    compress
     include "$(BUILD_DIR)/assets/textures/icon_item_24_static/icon_item_24_static.o"
     number 9
 endseg
@@ -997,6 +999,8 @@ endseg
 #else
 #include "overlays_gc.inc"
 #endif
+
+#include "extra_overlays.inc"
 
 beginseg
     name "gameplay_keep"
@@ -3463,6 +3467,8 @@ beginseg
     number 6
 endseg
 
+#include "extra_objects.inc"
+
 beginseg
     name "g_pn_01"
     compress
@@ -3806,6 +3812,24 @@ beginseg
 endseg
 
 beginseg
+    name "g_pn_58"
+    compress
+    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_58.o"
+endseg
+
+beginseg
+    name "g_pn_59"
+    compress
+    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_59.o"
+endseg
+
+beginseg
+    name "g_pn_60"
+    compress
+    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_60.o"
+endseg
+
+beginseg
     name "z_select_static"
     compress
     include "$(BUILD_DIR)/assets/misc/z_select_static/z_select_static.o"
@@ -3826,6 +3850,9 @@ beginseg
     include "$(BUILD_DIR)/assets/textures/title_static/title_static_all.o"
 #else
     include "$(BUILD_DIR)/assets/textures/title_static/title_static.o"
+#endif
+#if OOT_VERSION <= PAL_1_1
+    include "$(BUILD_DIR)/assets/textures/title_static/title_static_quest.o"
 #endif
     number 1
 endseg
@@ -4241,3 +4268,5 @@ endseg
 #else
 #include "scenes_gc_ique.inc"
 #endif
+
+#include "extra_scenes.inc"

@@ -33,6 +33,11 @@ void FileSelectOptions_SetHP(FileSelectState* this, u8 index, u8 shift) {
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
+void FileSelectOptions_ToggleDebug(FileSelectState* this, u8 index, u8 shift) {
+    gSaveContext.debugMode ^= 1;
+    Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+}
+
 char* FileSelectOptions_GetOption(FileSelectState* this, u8 index, u8 shift) {
     return ((gFileOptions[gSaveContext.fileNum][index] >> shift) & 1) ? "On" : "Off";
 }
@@ -92,12 +97,16 @@ char* FileSelectOptions_GetHP(FileSelectState* this, u8 index, u8 shift) {
     }
 }
 
+char* FileSelectOptions_GetDebug(FileSelectState* this, u8 index, u8 shift) {
+    return gSaveContext.debugMode ? "On" : "Off";
+}
+
 static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Mirror Mode",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 0  },
     { 0, "Extended Draw Distance", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 1  },
     { 0, "No Letterboxing",        FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 2  },
     { 0, "Resume Last Area",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 3  },
-#if OOT_NTSC_N64
+#if !PLATFORM_IQUE
     { 0, "Disable Token Freeze",   FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 4  },
 #endif
     { 0, "Censor Fire Temple",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 5  },
@@ -110,6 +119,8 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 12 },
     { 0, "Fix Power Crouch Stab",  FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 13 },
     { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 14 },
+    { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 15 },
+    { 0, "Use MM Young Link",      FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 16 },
     { 0, "Damage Taken",           FileSelectOptions_SetDamageTaken,    FileSelectOptions_GetDamageTaken,    1, 0  },
     { 0, "Health Recovery",        FileSelectOptions_SetHealthRecovery, FileSelectOptions_GetHealthRecovery, 1, 2  },
     { 0, "Monster Health",         FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 5  },
@@ -118,6 +129,10 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Harder Enemies",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 14 },
     { 0, "Static Dark Link HP",    FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 15 },
     { 0, "No Bottled Fairies",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 16 },
+};
+
+static FileSelectOptionsEntry sGlobalOptionsEntries[] = {
+    { 0, "Debug Mode",            FileSelectOptions_ToggleDebug,        FileSelectOptions_GetDebug,          0, 0  },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {
@@ -250,9 +265,12 @@ void FileSelectOptions_Draw(FileSelectState* this) {
 
     GfxPrint_SetColor(&printer, 255, 155, 150, 255);
     GfxPrint_SetPos(&printer, 12, 2);
-    GfxPrint_Printf(&printer, "File %d Options", (gSaveContext.fileNum+1));
+    
+    if (this->configMode == CM_OPTIONS_MENU)
+        GfxPrint_Printf(&printer, "Global Options");
+    else GfxPrint_Printf(&printer, "File %d Options", (gSaveContext.fileNum+1));
 
-    for (i=0; i<20; i++) {
+    for (i=0; i<(this->count < 20 ? this->count : 20); i++) {
         GfxPrint_SetPos(&printer, SCREEN_MODE <= 1 ? 4 : 3, i + 4);
 
         title = (this->topDisplayedEntry + i + this->count) % this->count;
@@ -275,6 +293,8 @@ void FileSelectOptions_Draw(FileSelectState* this) {
 }
 
 void FileSelectOptions_Reset(FileSelectState* this) {
+    u8 i;
+    
     this->topDisplayedEntry = 0;
     this->currentEntry = 0;
     this->pageDownIndex = 0;
@@ -291,16 +311,15 @@ void FileSelectOptions_Reset(FileSelectState* this) {
         this->topDisplayedEntry = dREG(84);
         this->pageDownIndex = dREG(85);
     }
-}
-
-void FileSelectOptions_Init(FileSelectState* this) {
-    u8 i;
-
-    this->entries = sFileOptionsEntries;
-    this->count = ARRAY_COUNT(sFileOptionsEntries);
+    
+    if (this->configMode == CM_OPTIONS_MENU) {
+        this->entries = sGlobalOptionsEntries;
+        this->count = ARRAY_COUNT(sGlobalOptionsEntries);
+    } else {
+       this->entries = sFileOptionsEntries;
+        this->count = ARRAY_COUNT(sFileOptionsEntries); 
+    }
 
     for (i=1; i<=this->count; i++)
         this->entries[i-1].number = i;
-
-    FileSelectOptions_Reset(this);
 }

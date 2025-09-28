@@ -79,6 +79,7 @@ void func_80ACDDE8(EnPart* this, PlayState* play) {
         case 4:
         case 9:
         case 10:
+        case 20:
             this->timer += (s16)(Rand_ZeroOne() * 17.0f) + 5;
             FALLTHROUGH;
         case 2:
@@ -325,6 +326,10 @@ void EnPart_Draw(Actor* thisx, PlayState* play) {
         gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(object_tite_Tex_001B00));
         gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(object_tite_Tex_001F00));
         gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(object_tite_Tex_002100));
+    } else if ((thisx->params == 20) && (this->displayList == object_tite_DL_002FF0)) {
+        gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(object_tite_Tex_yellow_body));
+        gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(object_tite_Tex_yellow_eye));
+        gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(object_tite_Tex_yellow_leg));
     }
 
     if (this->displayList != NULL) {

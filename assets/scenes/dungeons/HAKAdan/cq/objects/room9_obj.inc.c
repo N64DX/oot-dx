@@ -1,0 +1,9 @@
+    OBJECT_HAKA_OBJECTS, // 0
+    OBJECT_HAKA_DOOR, // 1
+    OBJECT_VM, // 2
+    OBJECT_ST, // 3
+    OBJECT_TRAP, // 4
+    OBJECT_SK2, // 5
+    OBJECT_WALLMASTER, // 6
+    OBJECT_BB, // 7
+
