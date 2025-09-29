@@ -1,7 +1,7 @@
 #include "z_en_dodongo.h"
 #include "overlays/actors/ovl_En_Bom/z_en_bom.h"
 #include "overlays/actors/ovl_En_Bombf/z_en_bombf.h"
-#include "overlays/actors/ovl_En_Bom_chu/z_en_bom_chu.h"
+#include "overlays/actors/ovl_En_Bom_Chu/z_en_bom_chu.h"
 
 #include "libc64/qrand.h"
 #include "gfx.h"

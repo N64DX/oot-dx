@@ -203,7 +203,7 @@ static ColliderQuadInit sQuadInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xF7CFFFFF, 0x01, 0x04 },
+        { 0xF7CFFFFF, 0x00, 0x04 },
         { 0x00000000, 0x00, 0x00 },
         ATELEM_ON | ATELEM_SFX_NORMAL | ATELEM_UNK7,
         ACELEM_NONE,
@@ -981,6 +981,9 @@ void EnDinofos_BreatheFire(EnDinofos* this, PlayState* play) {
     if (this->attackTimer != 0)
         this->attackTimer--;
     else EnDinofos_SetupEndBreatheFire(this, play);
+    
+    if (this->bodyAndFireCollider.base.atFlags & AT_HIT)
+        player->bodyIsBurning = true;
 }
 
 void EnDinofos_SetupEndBreatheFire(EnDinofos* this, PlayState* play) {
