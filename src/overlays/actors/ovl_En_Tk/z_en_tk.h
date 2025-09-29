@@ -13,7 +13,6 @@ typedef struct EnTkEff {
     /* 0x0002 */ u8         timeTotal;
     /* 0x0004 */ f32        size;
     /* 0x0008 */ f32        growth;
-    /* 0x000C */ char       unk_C[0x8];
     /* 0x0014 */ Vec3f      pos;
     /* 0x0020 */ Vec3f      speed;
     /* 0x002C */ Vec3f      accel;
@@ -37,7 +36,6 @@ typedef struct EnTk {
     /* 0x021A */ s16        rewardTimer;
     /* 0x021C */ s16        actionCountdown;
     /* 0x021E */ s16        h_21E;
-    /* 0x0220 */ char       unk_220[0x2];
     /* 0x0222 */ s16        eyeTextureIdx;
     /* 0x0224 */ s16        blinkCountdown;
     /* 0x0226 */ s16        headRot;

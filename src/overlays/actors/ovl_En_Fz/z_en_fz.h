@@ -15,7 +15,6 @@ typedef struct EnFzEffect {
     /* 0x0004 */ Vec3f pos; // Random position within 20.0f of actor
     /* 0x0010 */ Vec3f velocity;
     /* 0x001C */ Vec3f accel;
-    /* 0x0028 */ char unk_28[0x4];
     /* 0x002C */ s16 primAlpha; // transparency in RGBA color system
     /* 0x002E */ s16 primAlphaState; // 0: increasing (more opaque) 1: decreasing (more transparent) 2: collision
     /* 0x0030 */ f32 xyScale;

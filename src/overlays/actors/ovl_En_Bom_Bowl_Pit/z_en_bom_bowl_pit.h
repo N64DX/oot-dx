@@ -32,7 +32,6 @@ typedef struct EnBomBowlPit {
     /* 0x01C8 */ Vec3f subCamAtMaxVelFrac;
     /* 0x01D4 */ Vec3f subCamAtVel;
     /* 0x01E0 */ EnExItem* exItem;
-    /* 0x01E4 */ char unk_1E4[0x3520];
 } EnBomBowlPit; // size = 0x3704
 
 #endif

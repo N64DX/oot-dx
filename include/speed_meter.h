@@ -7,7 +7,6 @@ struct GraphicsContext;
 struct GameState;
 
 typedef struct SpeedMeter {
-    /* 0x00 */ char unk_00[0x18];
     /* 0x18 */ s32 x; // Unused
     /* 0x1C */ s32 y;
 } SpeedMeter; // size = 0x20

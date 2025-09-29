@@ -85,7 +85,6 @@ typedef struct InterfaceContext {
     /* 0x0140 */ char   mapPalette[32];
     /* 0x0160 */ DmaRequest dmaRequest_160;
     /* 0x0180 */ DmaRequest dmaRequest_180;
-    /* 0x01A0 */ char   unk_1A0[0x20];
     /* 0x01C0 */ OSMesgQueue loadQueue;
     /* 0x01D8 */ OSMesg loadMsg;
     /* 0x01DC */ Viewport viewport;

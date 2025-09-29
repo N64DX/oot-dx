@@ -1074,7 +1074,6 @@ typedef struct Data4ReadOnlyData {
 
 typedef struct Data4ReadWriteData {
     /* 0x00 */ PosRot eyePosRot;
-    /* 0x14 */ char unk_14[0x8];
     /* 0x1C */ s16 fov;
     /* 0x1E */ s16 flags;
 } Data4ReadWriteData; // size = 0x20
@@ -1093,7 +1092,6 @@ typedef struct Unique1ReadOnlyData {
     /* 0x00 */ f32 yOffset;
     /* 0x04 */ f32 distMin;
     /* 0x08 */ f32 distMax;
-    /* 0x0C */ char unk_0C[4]; // unused
     /* 0x10 */ f32 fovTarget;
     /* 0x14 */ f32 atLERPScaleMax;
     /* 0x18 */ s16 pitchTarget;
@@ -1595,7 +1593,6 @@ typedef struct Camera {
     /* 0x12C */ s16 data2;
     /* 0x12E */ s16 data3;
     /* 0x130 */ s16 uid;
-    /* 0x132 */ char unk_132[2];
     /* 0x134 */ Vec3s inputDir;
     /* 0x13A */ Vec3s camDir;
     /* 0x140 */ s16 status;

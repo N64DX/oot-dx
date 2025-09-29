@@ -8,7 +8,6 @@ struct EnKanban;
 
 typedef struct EnKanban {
     /* 0x0000 */ Actor actor;
-    /* 0x014C */ char unk_14C[4];
     /* 0x0150 */ u8 frameCount;
     /* 0x0152 */ s16 airTimer;
     /* 0x0154 */ u8 actionState;

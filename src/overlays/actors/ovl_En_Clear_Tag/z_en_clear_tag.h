@@ -69,7 +69,6 @@ typedef struct EnClearTag {
     /* 0x01E4 */ Vec3f subCamEye;
     /* 0x01F0 */ Vec3f subCamAt;
     /* 0x01FC */ s16 cutsceneTimer;
-    /* 0x01FE */ char unk_1FE[0x06];
 } EnClearTag; // size = 0x0204
 
 #define CLEAR_TAG_EFFECT_COUNT 100

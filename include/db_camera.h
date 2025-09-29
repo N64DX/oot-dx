@@ -15,7 +15,6 @@ typedef struct DebugCamSub {
     /* 0x0008 */ s16 unk_08;
     /* 0x000A */ s16 unk_0A;
     /* 0x000C */ s32 unk_0C; // bool: indicates position vs lookAt?
-    /* 0x0010 */ char unk_10[0x14];
     /* 0x0024 */ CutsceneCameraPoint position[129];
     /* 0x0834 */ CutsceneCameraPoint lookAt[129];
     /* 0x1044 */ s16 demoCtrlMenu;
@@ -29,7 +28,6 @@ typedef struct DebugCam {
     /* 0x04 */ Vec3f at;
     /* 0x10 */ Vec3f eye;
     /* 0x1C */ Vec3f unk_1C;
-    /* 0x28 */ char unk_28[0xC];
     /* 0x34 */ s32 unk_34;
     /* 0x38 */ s32 unk_38;
     /* 0x3C */ s32 unk_3C; // bool
@@ -37,7 +35,6 @@ typedef struct DebugCam {
     /* 0x44 */ s32 unk_44;
     /* 0x48 */ f32 fov;
     /* 0x4C */ s16 roll;
-    /* 0x4E */ char unk_4E[0x2];
     /* 0x50 */ f32 rollDegrees;
     /* 0x54 */ Vec3f unk_54;
     /* 0x60 */ Vec3f unk_60;

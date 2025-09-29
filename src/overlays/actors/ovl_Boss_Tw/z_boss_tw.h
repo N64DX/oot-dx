@@ -138,7 +138,6 @@ typedef struct BossTw {
     /* 0x0000 */ Actor actor;
     /* 0x014C */ BossTwActionFunc actionFunc;
     /* 0x0150 */ s16 work[WORK_MAX];
-    /* 0x0168 */ char unused_170[0xE]; // Likely unused Work variables
     /* 0x0178 */ s16 timers[5];
     /* 0x0184 */ f32 workf[FWORK_MAX];
     /* 0x01D4 */ f32 fogR;
@@ -196,16 +195,12 @@ typedef struct BossTw {
     /* 0x05FE */ s16 csSfxTimer;
     /* 0x0600 */ Vec3f subCamEye;
     /* 0x060C */ Vec3f subCamAt;
-    /* 0x0618 */ char unused_618[0xC];
     /* 0x0624 */ Vec3f subCamEye2;
     /* 0x0630 */ Vec3f subCamAt2;
-    /* 0x063C */ char unused_63C[0x18];
     /* 0x0654 */ Vec3f subCamEyeVel;
     /* 0x0660 */ Vec3f subCamAtVel;
     /* 0x066C */ Vec3f subCamEyeNext;
-    /* 0x0678 */ char unused_678[0xC];
     /* 0x0684 */ Vec3f subCamAtNext;
-    /* 0x0690 */ char unused_690[0xC];
     /* 0x069C */ f32 subCamUpdateRate;
     /* 0x06A0 */ f32 subCamDistStep;
     /* 0x06A4 */ f32 subCamDist;

@@ -28,12 +28,10 @@ typedef struct FileSelectState {
 #endif
     /* 0x000B8 */ View view;
     /* 0x001E0 */ SramContext sramCtx;
-    /* 0x001E4 */ char unk_1E4[0x4];
     /* 0x001E8 */ SkyboxContext skyboxCtx;
     /* 0x00348 */ MessageContext msgCtx;
     /* 0x0E760 */ Font font;
     /* 0x1C8E8 */ EnvironmentContext envCtx;
-    /* 0x1C9E4 */ char unk_1C9E4[0x4];
     /* 0x1C9E8 */ Vtx* windowContentVtx;
     /* 0x1C9EC */ Vtx* keyboardVtx;
     /* 0x1C9F0 */ Vtx* nameEntryVtx;
@@ -57,7 +55,6 @@ typedef struct FileSelectState {
     /* 0x1CA42 */ s16 nextConfigMode;
     /* 0x1CA44 */ s16 selectMode;
     /* 0x1CA46 */ s16 selectedFileIndex;
-    /* 0x1CA48 */ char unk_1CA48[0x2];
     /* 0x1CA4A */ s16 fileNamesY[3];
     /* 0x1CA50 */ s16 actionTimer;
     /* 0x1CA52 */ s16 buttonYOffsets[6];

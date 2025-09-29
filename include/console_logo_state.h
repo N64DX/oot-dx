@@ -21,8 +21,7 @@ typedef struct ConsoleLogoState {
     /* 0x01DE */ s16 uls;
     /* 0x01E0 */ u8 unk_1E0;
     /* 0x01E1 */ u8 exit;
-    /* 0x01E2 */ char unk_1E2[0x06];
-} ConsoleLogoState; // size = 0x1E8
+} ConsoleLogoState; // size = 0x1E2
 
 void ConsoleLogo_Init(GameState* thisx);
 void ConsoleLogo_Destroy(GameState* thisx);

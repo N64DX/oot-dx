@@ -499,7 +499,6 @@ typedef struct CutsceneCameraMove {
 } CutsceneCameraMove; // size = 0xC
 
 typedef struct CutsceneContext {
-    /* 0x00 */ char  unk_00[0x4];
     /* 0x04 */ void* script;
     /* 0x08 */ u8 state;
     /* 0x0C */ f32 timer;

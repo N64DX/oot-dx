@@ -163,7 +163,6 @@ typedef struct PauseContext {
     /* 0x0134 */ u8* iconItemLangSegment;
     /* 0x0138 */ u8* nameSegment;
     /* 0x013C */ u8* playerSegment;
-    /* 0x0140 */ char unk_140[0x04];
     /* 0x0144 */ Vtx* itemPageVtx;
     /* 0x0148 */ Vtx* equipPageVtx;
     /* 0x014C */ Vtx* mapPageVtx;
@@ -171,13 +170,10 @@ typedef struct PauseContext {
     /* 0x0154 */ Vtx* infoPanelVtx;
     /* 0x0158 */ Vtx* itemVtx;
     /* 0x015C */ Vtx* equipVtx;
-    /* 0x0160 */ char unk_160[0x04];
     /* 0x0164 */ Vtx* questVtx;
     /* 0x0168 */ Vtx* cursorVtx;
     /* 0x016C */ Vtx* promptPageVtx; // Used by both the pause menu save prompt and the gameover prompt
-    /* 0x0170 */ char unk_170[0x24];
     /* 0x0194 */ struct OcarinaStaff* ocarinaStaff;
-    /* 0x0198 */ char unk_198[0x20];
     /* 0x01B8 */ OSMesgQueue loadQueue;
     /* 0x01D0 */ OSMesg loadMsg;
     /* 0x01D4 */ u16 state;
@@ -196,7 +192,6 @@ typedef struct PauseContext {
     /* 0x0204 */ f32 promptPitch; // Rotation of the prompt around its local horizontal/sideways axis. "angle_s"
     /* 0x0208 */ u16 alpha;
     /* 0x020A */ s16 pagesYOrigin1;
-    /* 0x020C */ char unk_20C[0x08];
     /* 0x0214 */ s16 stickAdjX;
     /* 0x0216 */ s16 stickAdjY;
     /* 0x0218 */ s16 cursorPoint[5]; // "cursor_point"

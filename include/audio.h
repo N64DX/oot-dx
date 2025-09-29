@@ -364,7 +364,6 @@ typedef struct SequencePlayer {
     /* 0x09C */ NotePool notePool;
     /* 0x0DC */ s32 skipTicks;
     /* 0x0E0 */ u32 scriptCounter;
-    /* 0x0E4 */ char unk_E4[0x74]; // unused struct members for sequence/sound font dma management, according to sm64 decomp
     /* 0x158 */ s8 seqScriptIO[8];
 } SequencePlayer; // size = 0x160
 
@@ -392,7 +391,6 @@ typedef struct AdsrState {
     /* 0x0C */ f32 fadeOutVel;
     /* 0x10 */ f32 current;
     /* 0x14 */ f32 target;
-    /* 0x18 */ char unk_18[4];
     /* 0x1C */ EnvelopePoint* envelope;
 } AdsrState; // size = 0x20
 
@@ -550,9 +548,7 @@ typedef struct NoteSynthesisState {
     /* 0x0C */ NoteSynthesisBuffers* synthesisBuffers;
     /* 0x10 */ s16 curVolLeft;
     /* 0x12 */ s16 curVolRight;
-    /* 0x14 */ char unk_14[0x6];
     /* 0x1A */ u8 combFilterNeedsInit;
-    /* 0x1C */ char unk_1C[0x4];
 } NoteSynthesisState; // size = 0x20
 
 typedef struct VibratoState {
@@ -626,7 +622,6 @@ typedef struct Note {
     /* 0x00 */ AudioListItem listItem;
     /* 0x10 */ NoteSynthesisState synthesisState;
     /* 0x30 */ NotePlaybackState playbackState;
-    /* 0xB8 */ char unk_B8[0x4];
     /* 0xBC */ u32 startSamplePos; // initial position/index to start processing s16 samples
     /* 0xC0 */ NoteSubEu noteSubEu;
 } Note; // size = 0xE0
@@ -722,7 +717,6 @@ typedef struct SampleCacheEntry {
     /* 0x00 */ s8 inUse;
     /* 0x01 */ s8 origMedium;
     /* 0x02 */ s8 sampleBankId;
-    /* 0x03 */ char unk_03[0x5];
     /* 0x08 */ u8* allocatedAddr;
     /* 0x0C */ void* sampleAddr;
     /* 0x10 */ u32 size;
@@ -874,26 +868,21 @@ typedef struct AudioTask {
     /* 0x00 */ OSTask task;
     /* 0x40 */ OSMesgQueue* msgQueue;
     /* 0x44 */ void* unk_44; // probably a message that gets unused.
-    /* 0x48 */ char unk_48[0x8];
 } AudioTask; // size = 0x50
 
 typedef struct AudioContext {
-    /* 0x0000 */ char unk_0000;
     /* 0x0001 */ s8 numSynthesisReverbs;
     /* 0x0002 */ u16 unk_2; // reads from audio spec unk_14, never used, always set to 0x7FFF
     /* 0x0004 */ u16 unk_4;
-    /* 0x0006 */ char unk_0006[0x0A];
     /* 0x0010 */ s16* curLoadedBook;
     /* 0x0014 */ NoteSubEu* noteSubsEu;
     /* 0x0018 */ SynthesisReverb synthesisReverbs[4];
-    /* 0x0B38 */ char unk_0B38[0x30];
     /* 0x0B68 */ Sample* usedSamples[128];
     /* 0x0D68 */ AudioPreloadReq preloadSampleStack[128];
     /* 0x1768 */ s32 numUsedSamples;
     /* 0x176C */ s32 preloadSampleStackTop;
     /* 0x1770 */ AudioAsyncLoad asyncLoads[0x10];
     /* 0x1CF0 */ OSMesgQueue asyncLoadUnkMediumQueue;
-    /* 0x1D08 */ char unk_1D08[0x40];
     /* 0x1D48 */ AudioAsyncLoad* curUnkMediumLoad;
     /* 0x1D4C */ u32 slowLoadPos;
     /* 0x1D50 */ AudioSlowLoad slowLoads[2];
@@ -929,7 +918,6 @@ typedef struct AudioContext {
     /* 0x2870 */ f32 unk_2870;
     /* 0x2874 */ s32 sampleDmaBufSize1;
     /* 0x2874 */ s32 sampleDmaBufSize2;
-    /* 0x287C */ char unk_287C[0x10];
     /* 0x288C */ s32 sampleDmaBufSize;
     /* 0x2890 */ s32 maxAudioCmds;
     /* 0x2894 */ s32 numNotes;
@@ -942,7 +930,6 @@ typedef struct AudioContext {
     /* 0x28AC */ Acmd* abiCmdBufs[2]; // Pointer to audio heap where the audio binary interface command lists (for the rsp) are stored. Two lists that alternate every frame
     /* 0x28B4 */ Acmd* curAbiCmdBuf; // Pointer to the currently active abiCmdBufs
     /* 0x28B8 */ AudioTask* curTask;
-    /* 0x28BC */ char unk_28BC[0x4];
     /* 0x28C0 */ AudioTask rspTask[2];
     /* 0x2960 */ f32 maxTempoTvTypeFactors; // tvType factors that impact maxTempo, in units of milliseconds/frame
     /* 0x2964 */ s32 refreshRate;
@@ -951,12 +938,10 @@ typedef struct AudioContext {
     /* 0x297C */ u32 audioRandom;
     /* 0x2980 */ s32 audioErrorFlags;
     /* 0x2984 */ volatile u32 resetTimer;
-    /* 0x2988 */ char unk_2988[0x8];
     /* 0x2990 */ AudioAllocPool sessionPool; // A sub-pool to main pool, contains all sub-pools and data that changes every audio reset
     /* 0x29A0 */ AudioAllocPool externalPool; // pool allocated externally to the audio heap. Never used in game
     /* 0x29B0 */ AudioAllocPool initPool;// A sub-pool to the main pool, contains all sub-pools and data that persists every audio reset
     /* 0x29C0 */ AudioAllocPool miscPool; // A sub-pool to the session pool.
-    /* 0x29D0 */ char unk_29D0[0x20]; // probably two unused pools
     /* 0x29F0 */ AudioAllocPool cachePool; // The common pool for cache entries
     /* 0x2A00 */ AudioAllocPool persistentCommonPool; // A sub-pool to the cache pool, contains caches for data stored persistently
     /* 0x2A10 */ AudioAllocPool temporaryCommonPool; // A sub-pool to the cache pool, contains caches for data stored temporarily
@@ -1010,7 +995,6 @@ typedef struct NoteSubAttributes {
     /* 0x03 */ Stereo stereo;
     /* 0x04 */ f32 frequency;
     /* 0x08 */ f32 velocity;
-    /* 0x0C */ char unk_0C[0x4];
     /* 0x10 */ s16* filter;
     /* 0x14 */ u8 combFilterSize;
     /* 0x16 */ u16 combFilterGain;

@@ -19,7 +19,6 @@ typedef struct GfxPool {
     /* 0x0FF08 */ Gfx overlayBuffer[0x400 + 0x900];
                   Gfx redrawBuffer[0x400 + 0x900];
     /* 0x11F08 */ Gfx workBuffer[0x80];
-    /* 0x11308 */ Gfx unusedBuffer[0x20];
     /* 0x12408 */ u16 tailMagic; // GFXPOOL_TAIL_MAGIC
 } GfxPool; // size = 0x12410
 
@@ -27,20 +26,15 @@ typedef struct GraphicsContext {
     /* 0x0000 */ Gfx* polyOpaBuffer; // Pointer to "Zelda 0"
     /* 0x0004 */ Gfx* polyXluBuffer; // Pointer to "Zelda 1"
     /* 0x0008 */ Gfx* redrawBuffer;  // Pointer to "Zelda 2"
-    /* 0x000C */ char unk_008[0x04]; // Unused, could this be pointers to "Zelda 2" / "Zelda 3"
     /* 0x0010 */ Gfx* overlayBuffer; // Pointer to "Zelda 4"
     /* 0x0014 */ u32 unk_014;
-    /* 0x0018 */ char unk_018[0x20];
     /* 0x0038 */ OSMesg msgBuff[0x08];
     /* 0x0058 */ OSMesgQueue* schedMsgQueue;
     /* 0x005C */ OSMesgQueue queue;
     /* 0x0078 */ OSScTask task;
-    /* 0x00E0 */ char unk_0E0[0xD0];
     /* 0x01B0 */ Gfx* workBuffer;
     /* 0x01B4 */ TwoHeadGfxArena work;
-    /* 0x01C4 */ char unk_01C4[0xC0];
     /* 0x0284 */ OSViMode* viMode;
-    /* 0x0288 */ char unk_0288[0x10]; // Unused, could this be Zelda 2/3 ?
     /* 0x0298 */ TwoHeadGfxArena redraw;
     /* 0x02A8 */ TwoHeadGfxArena overlay; // "Zelda 4"
     /* 0x02B8 */ TwoHeadGfxArena polyOpa; // "Zelda 0"
@@ -48,7 +42,6 @@ typedef struct GraphicsContext {
     /* 0x02D8 */ u32 gfxPoolIdx;
     /* 0x02DC */ u16* curFrameBuffer;
                  u16* redrawFramebuffer;
-    /* 0x02E0 */ char unk_2E0[0x04];
     /* 0x02E4 */ u32 viFeatures;
     /* 0x02E8 */ s32 fbIdx;
     /* 0x02EC */ void (*callback)(struct GraphicsContext*, void*);
@@ -57,7 +50,6 @@ typedef struct GraphicsContext {
     /* 0x02F4 */ f32 xScale;
     /* 0x02F8 */ f32 yScale;
 #endif
-    /* 0x02FC */ char unk_2FC[0x04];
 } GraphicsContext; // size = 0x300
 
 extern Gfx gEmptyDL[];

@@ -17,7 +17,6 @@ typedef struct EnBomBowlMan {
     /* 0x01D2 */ Vec3s morphTable[11];
     /* 0x0214 */ EnBomBowlManActionFunc actionFunc;
     /* 0x0218 */ Vec3s unk_218;
-    /* 0x021E */ char unk_21E[0x6];
     /* 0x0224 */ Vec3s unk_224;
     /* 0x022A */ s16 prizeRevealTimer;
     /* 0x022C */ s16 timer;

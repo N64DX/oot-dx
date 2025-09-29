@@ -109,7 +109,6 @@ extern volatile OSThread* gFaultFaultedThread;
 
 typedef struct FaultMgr {
     /* 0x000 */ OSThread thread;
-    /* 0x1B0 */ char unk_1B0[0x600];
     /* 0x7B0 */ OSMesgQueue queue;
     /* 0x7C8 */ OSMesg msg;
     /* 0x7CC */ u8 exit;
@@ -120,7 +119,6 @@ typedef struct FaultMgr {
     /* 0x7D4 */ void (*padCallback)(Input* inputs);
     /* 0x7D8 */ FaultClient* clients;
     /* 0x7DC */ FaultAddrConvClient* addrConvClients;
-    /* 0x7E0 */ char unk_7E0[0x4];
     /* 0x7E4 */ Input inputs[MAXCONTROLLERS];
     /* 0x844 */ u16* fb;
     /* 0x848 */ void* clientThreadSp;

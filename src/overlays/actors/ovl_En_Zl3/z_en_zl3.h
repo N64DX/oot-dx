@@ -22,17 +22,14 @@ typedef struct EnZl3 {
     /* 0x0248 */ s16 mouthTexIndex;
     /* 0x024C */ s32 action;
     /* 0x0250 */ s32 drawConfig;
-    /* 0x0254 */ char unk_254[0x4];
     /* 0x0258 */ s32 alpha;
     /* 0x025C */ s16 unk_25C[24];
     /* 0x028C */ s16 unk_28C[24];
     /* 0x02BC */ s16 unk_2BC[24];
     /* 0x02EC */ f32 unk_2EC;
     /* 0x02F0 */ s32 unk_2F0;
-    /* 0x02F4 */ char unk_2F4[0x4];
     /* 0x02F8 */ s32 unk_2F8;
     /* 0x02FC */ s32 unk_2FC;
-    /* 0x0300 */ char unk_300[0x8];
     /* 0x0308 */ s32 unk_308;
     /* 0x030C */ Path* unk_30C;
     /* 0x0310 */ s32 unk_310;

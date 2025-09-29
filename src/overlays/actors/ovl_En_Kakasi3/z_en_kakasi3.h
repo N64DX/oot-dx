@@ -22,7 +22,6 @@ typedef struct EnKakasi3 {
     /* 0x01A6 */ s16 unk_1A6;
     /* 0x01A8 */ s16 unk_1A8;
     /* 0x01AA */ s16 unk_1AA;
-    /* 0x01AC */ char unk_1AC[2];
     /* 0x01AE */ s16 unk_1AE;
     /* 0x01B0 */ Vec3s rot;
     /* 0x01B8 */ f32 unk_1B8;

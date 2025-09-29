@@ -38,7 +38,6 @@ typedef struct EnMb {
     /* 0x0334 */ s16 attack;
     /* 0x0338 */ Vec3f effSpawnPos;
     /* 0x0344 */ Vec3f waypointPos;
-    /* 0x0350 */ char unk_34A[0xC];
     /* 0x035C */ s8 waypoint;
     /* 0x035D */ s8 path;
     /* 0x035E */ s8 direction;

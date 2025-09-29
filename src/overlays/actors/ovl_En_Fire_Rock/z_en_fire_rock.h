@@ -23,7 +23,6 @@ typedef struct EnFireRock {
     /* 0x0000 */ Actor actor;
     /* 0x014C */ Vec3f angularVelocity;
     /* 0x0158 */ Vec3f rockRotation;
-    /* 0x0164 */ char unk164[0x4];
     /* 0x0168 */ EnFireRockActionFunc actionFunc;
     /* 0x016C */ f32 scale;
     /* 0x0170 */ Vec3f relativePos;
