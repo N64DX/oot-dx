@@ -68,7 +68,6 @@ typedef struct EffectBlureElement {
 } EffectBlureElement; // size = 0x18
 
 typedef struct EffectBlureInit1 {
-    /* 0x000 */ char unk_00[0x184];
     /* 0x184 */ u8 p1StartColor[4];
     /* 0x188 */ u8 p2StartColor[4];
     /* 0x18C */ u8 p1EndColor[4];
@@ -151,7 +150,6 @@ typedef struct EffectShieldParticle {
     /* 0x198 */ Color_RGBA8 primColorEnd;
     /* 0x19C */ Color_RGBA8 envColorEnd;
     /* 0x1A0 */ f32 deceleration;
-    /* 0x1A4 */ char unk_1A4[0x04];
     /* 0x1A8 */ f32 maxInitialSpeed;
     /* 0x1AC */ f32 lengthCutoff;
     /* 0x1B0 */ u8 duration;

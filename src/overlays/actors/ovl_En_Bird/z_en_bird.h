@@ -24,7 +24,6 @@ typedef struct EnBird {
     /* 0x01B8 */ f32 posYPhaseStep;
     /* 0x01BC */ f32 unk_1BC; // set but otherwise unused.
     /* 0x01C0 */ s16 rotYStep;
-    /* 0x01C2 */ char unk_1C2[0x1A];
 } EnBird; // size = 0x01DC
 
 #endif

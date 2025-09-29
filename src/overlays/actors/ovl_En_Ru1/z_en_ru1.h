@@ -25,7 +25,6 @@ typedef struct EnRu1 {
     /* 0x0268 */ s32 drawConfig;
     /* 0x026C */ f32 unk_26C;
     /* 0x0270 */ f32 unk_270;
-    /* 0x0274 */ char unk_274[0x4];
     /* 0x0278 */ DoorWarp1* blueWarp;
     /* 0x027C */ f32 unk_27C;
     /* 0x0280 */ s32 unk_280;
@@ -35,11 +34,8 @@ typedef struct EnRu1 {
     /* 0x0288 */ f32 unk_288;
     /* 0x028C */ BgBdanObjects* bigOctoPlatform;
     /* 0x0290 */ s32 unk_290;
-    /* 0x0294 */ char unk_294[0x4];
     /* 0x0298 */ s32 unk_298;
-    /* 0x029C */ char unk_29C[0x2];
     /* 0x029E */ s16 headTurnSpeed;
-    /* 0x02A0 */ char unk_2A0[0x4];
     /* 0x02A4 */ f32 unk_2A4;
     /* 0x02A8 */ s32 alpha;
     /* 0x02AC */ s16 headRotTimer;

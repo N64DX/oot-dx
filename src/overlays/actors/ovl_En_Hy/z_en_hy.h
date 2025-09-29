@@ -60,7 +60,6 @@ typedef struct EnHy {
     /* 0x0000 */ Actor actor;
     /* 0x014C */ SkelAnime skelAnime;
     /* 0x0190 */ EnHyActionFunc actionFunc;
-    /* 0x0194 */ char unk_194; // unused
     /* 0x0195 */ u8 pathReverse;
     /* 0x0196 */ s8 objectSlotHead;
     /* 0x0197 */ s8 objectSlotUpperSkel; // upper body limbs object, 7 < limb < 15 (always same as objectSlotLowerSkel),
@@ -71,7 +70,6 @@ typedef struct EnHy {
     /* 0x0210 */ struct Path* path;
     /* 0x0214 */ s8 waypoint;
     /* 0x0215 */ s8 playedSfx;
-    /* 0x0216 */ char unk_216[2]; // unused
     /* 0x0218 */ s16 curEyeIndex;
     /* 0x021A */ s16 nextEyeIndexTimer;
     /* 0x021C */ s16 fidgetTableY[ENHY_LIMB_MAX];

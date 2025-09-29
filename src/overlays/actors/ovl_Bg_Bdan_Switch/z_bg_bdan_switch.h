@@ -23,13 +23,11 @@ typedef struct BgBdanSwitch {
     /* 0x0188 */ ColliderJntSphElement colliderElements[1];
     /* 0x01C8 */ f32 unk_1C8;
     /* 0x01CC */ s16 unk_1CC;
-    /* 0x01CE */ char unk_1CE[0x2];
     /* 0x01D0 */ f32 unk_1D0;
     /* 0x01D4 */ f32 unk_1D4;
     /* 0x01D8 */ s16 unk_1D8;
     /* 0x01DA */ s16 unk_1DA;
     /* 0x01DC */ u8 unk_1DC;
-    /* 0x01DD */ char unk_1DD[0x3];
 } BgBdanSwitch; // size = 0x01E0
 
 #endif

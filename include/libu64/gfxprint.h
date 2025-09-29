@@ -13,7 +13,6 @@ typedef struct GfxPrint {
     /* 0x0E */ u8 baseY;
     /* 0x0F */ u8 flags;
     /* 0x10 */ Color_RGBA8_u32 color;
-    /* 0x14 */ char unk_14[0x1C]; // unused
 } GfxPrint; // size = 0x30
 
 #define GFX_CHAR_X_SPACING    8

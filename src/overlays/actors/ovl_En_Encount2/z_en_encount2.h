@@ -21,7 +21,6 @@ typedef struct EnEncount2Effect {
 typedef struct EnEncount2 {
     /* 0x0000 */ Actor actor;
     /* 0x014C */ EnEncount2ActionFunc actionFunc;
-    /* 0x0150 */ char unk150[0x4];
     /* 0x0154 */ s16 deathMountainSpawnerTimer;
     /* 0x0156 */ s16 timerBetweenRockSpawns;
     /* 0x0158 */ s16 numSpawnedRocks;
@@ -29,11 +28,8 @@ typedef struct EnEncount2 {
     /* 0x015C */ s16 collapseSpawnerInactive;
     /* 0x015E */ s16 effectSpawnTimer;
     /* 0x0160 */ f32 unk_160;
-    /* 0x0164 */ char unk164[0x4];
     /* 0x0168 */ f32 unk_168;
-    /* 0x016C */ char unk16C[0x4];
     /* 0x0178 */ f32 unk_170;
-    /* 0x0174 */ char unk174[0x4];
     /* 0x0178 */ s16 envEffectsTimer;
     /* 0x017C */ f32 unk_17C;
     /* 0x0180 */ u64 isQuaking;

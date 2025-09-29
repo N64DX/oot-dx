@@ -48,7 +48,6 @@ typedef struct EnBw {
     /* 0x0248 */ f32 unk_248;
     /* 0x024C */ f32 unk_24C;
     /* 0x0250 */ f32 unk_250;
-    /* 0x0254 */ char unk_254[4];
     /* 0x0258 */ f32 unk_258;
     /* 0x025C */ f32 unk_25C;
     /* 0x0260 */ f32 unk_260;

@@ -18,9 +18,7 @@ typedef struct EfcErupcEffect {
     /* 0x25 */ u8 animTimer;
     /* 0x28 */ Color_RGB8 color;
     /* 0x2C */ s16 alpha;
-    /* 0x30 */ char unk_2C[4];
     /* 0x34 */ f32 scale;
-    /* 0x38 */ char unk_34[8];
 } EfcErupcEffect; // size 0x3C
 
 typedef struct EfcErupc {

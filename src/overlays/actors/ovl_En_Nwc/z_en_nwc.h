@@ -15,14 +15,11 @@ typedef struct EnNwcChick {
     /* 0x01 */ u8 bgFlags;
     /* 0x04 */ f32 floorY;
     /* 0x08 */ Vec3f pos;
-    /* 0x14 */ char unk_14[8];
     /* 0x1C */ Vec3f lastPos;
-    /* 0x28 */ char unk_28[4];
     /* 0x2C */ f32 velY;
     /* 0x30 */ Vec3s rot;
     /* 0x36 */ u16 height;
     /* 0x38 */ struct CollisionPoly* floorPoly;
-    /* 0x3C */ char unk_3C[0x20];
 } EnNwcChick; // size = 0x5C
 
 typedef struct EnNwc {

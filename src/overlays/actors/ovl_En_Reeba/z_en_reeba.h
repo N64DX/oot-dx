@@ -13,7 +13,6 @@ typedef struct EnReeba {
     /* 0x014C */ SkelAnime skelanime;
     /* 0x0190 */ Vec3s jointTable[18];
     /* 0x01FC */ Vec3s morphTable[18];
-    /* 0x0268 */ char unk_268[0x4];
     /* 0x026C */ EnReebaActionFunc actionfunc;
     /* 0x0270 */ s16 bigLeeverTimer; // big Leever uses to close and make distance from Link.
     /* 0x0272 */ s16 moveTimer;

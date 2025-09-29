@@ -499,16 +499,13 @@ typedef struct ActorContextSceneFlags {
 
 typedef struct ActorContext {
     /* 0x000 */ u8 freezeFlashTimer;
-    /* 0x001 */ char unk_01[0x01];
     /* 0x002 */ u8 unk_02;
     /* 0x003 */ u8 lensActive;
-    /* 0x004 */ char unk_04[0x04];
     /* 0x008 */ u8 total; // total number of actors loaded
     /* 0x00C */ ActorListEntry actorLists[ACTORCAT_MAX];
     /* 0x06C */ Attention attention;
     /* 0x104 */ ActorContextSceneFlags flags;
     /* 0x128 */ TitleCardContext titleCtx;
-    /* 0x138 */ char unk_138[0x04];
     /* 0x13C */ void* absoluteSpace; // Space used to allocate actor overlays with alloc type ACTOROVL_ALLOC_ABSOLUTE
 } ActorContext; // size = 0x140
 

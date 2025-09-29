@@ -54,7 +54,6 @@ typedef struct EnAnubice {
     /* 0x0298 */ Vec3f home;
     /* 0x02A4 */ Vec3f knockbackRecoveryVelocity;
     /* 0x02B0 */ struct BgHidanCurtain* flameCircles[5];
-    /* 0x02C4 */ char unk_2C4[0x4]; // Possibly another element of flameCircles
     /* 0x02C8 */ ColliderCylinder collider;
 } EnAnubice; // size = 0x0314
 

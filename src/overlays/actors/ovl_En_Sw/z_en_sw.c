@@ -77,8 +77,6 @@ static AnimationInfo sAnimationInfo[] = {
     { &object_st_Anim_005B98, 1.0f, 0.0f, -1.0f, 0x01, -8.0f },
 };
 
-char D_80B0F630[0x80]; // unused
-
 void EnSw_CrossProduct(Vec3f* a, Vec3f* b, Vec3f* dst) {
     dst->x = (a->y * b->z) - (a->z * b->y);
     dst->y = (a->z * b->x) - (a->x * b->z);

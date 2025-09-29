@@ -107,7 +107,6 @@ typedef struct BossMo {
     /* 0x0F68 */ Vec3f subCamEye;
     /* 0x0F74 */ Vec3f subCamAt;
     /* 0x0F80 */ Vec3f subCamUp;
-    /* 0x0F8C */ char unk_F8C[0x18];
     /* 0x0FA4 */ Vec3f subCamEyeVel;
     /* 0x0FB0 */ Vec3f subCamAtVel;
     /* 0x0FBC */ Vec3f subCamEyeNext;
@@ -116,7 +115,6 @@ typedef struct BossMo {
     /* 0x0FE0 */ Vec3f subCamAtMaxVelFrac;
     /* 0x0FEC */ f32 subCamVelFactor;
     /* 0x0FF0 */ f32 subCamAccel;
-    /* 0x0FF4 */ char unk_FF4[8];
     /* 0x0FFC */ f32 subCamDist;
     /* 0x1000 */ f32 subCamSpeed;
     /* 0x1004 */ f32 subCamYaw;
@@ -126,7 +124,6 @@ typedef struct BossMo {
     /* 0x101C */ ColliderJntSph tentCollider;
     /* 0x103C */ ColliderJntSphElement tentColliderElements[19];
     /* 0x14FC */ ColliderCylinder coreCollider;
-    /* 0x1548 */ char unk_1548[0x44];
 } BossMo; // size = 0x158C
 
 #define BOSSMO_CORE -1

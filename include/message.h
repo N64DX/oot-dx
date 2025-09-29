@@ -137,9 +137,7 @@ typedef struct MessageContext {
     /* 0x0000 */ View view;
     /* 0x0128 */ Font font;
     /* 0xE2B0 */ u8* textboxSegment; // original name: "fukidashiSegment"
-    /* 0xE2B4 */ char unk_E2B4[0x4];
     /* 0xE2B8 */ struct OcarinaStaff* ocarinaStaff; // original name : "info"
-    /* 0xE2BC */ char unk_E2BC[0x3C];
     /* 0xE2F8 */ u16 textId;
     /* 0xE2FA */ u16 choiceTextId;
     /* 0xE2FC */ u8 textBoxProperties; // original name : "msg_disp_type"
@@ -178,7 +176,6 @@ typedef struct MessageContext {
     /* 0xE3F8 */ u8 textboxBackgroundBackColorIdx;
     /* 0xE3F8 */ u8 textboxBackgroundYOffsetIdx;
     /* 0xE3F8 */ u8 textboxBackgroundUnkArg; // unused, set by the textbox background control character arguments
-    /* 0xE3FC */ char unk_E3FC[0x2];
     /* 0xE3FE */ s16 textboxColorRed;
     /* 0xE400 */ s16 textboxColorGreen;
     /* 0xE402 */ s16 textboxColorBlue;

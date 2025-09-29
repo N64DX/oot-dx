@@ -14,7 +14,6 @@ typedef struct BgSpot02Objects {
     /* 0x0168 */ s16 timer;
     /* 0x016A */ u8 unk_16A;
     /* 0x016B */ u8 unk_16B;
-    /* 0x016C */ char unk_16C[4];
     /* 0x0170 */ u16 unk_170;
     /* 0x0172 */ u16 unk_172;
 } BgSpot02Objects; // size = 0x0174

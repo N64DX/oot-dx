@@ -20,13 +20,10 @@ typedef struct EnDaiku {
     /* 0x014C */ SkelAnime skelAnime;
     /* 0x0190 */ EnDaikuActionFunc actionFunc;
     /* 0x0194 */ ColliderCylinder collider;
-    /* 0x01E0 */ char unk_1E0[4];
     /* 0x01E4 */ s32 talkState;
-    /* 0x01E8 */ char unk_1E8[4];
     /* 0x01EC */ s32 waypoint;
     /* 0x01F0 */ f32 runSpeed;
     /* 0x01F4 */ s32 currentAnimIndex;
-    /* 0x01F8 */ char unk_1F8[4];
     /* 0x01FC */ s32 subCamActive;
     /* 0x0200 */ s32 escapeSubCamTimer;
     /* 0x0204 */ s32 subCamId;
