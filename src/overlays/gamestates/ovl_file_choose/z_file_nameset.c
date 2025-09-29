@@ -633,14 +633,14 @@ s32 FileSelect_ApplyDiacriticToFilename(GameState* thisx, s16 diacritic) {
 #endif
 
 #if OOT_VERSION <= PAL_1_1
-static const void* sQuestTextures[][2] = {
+static const void* sQuestTextures[QUEST_MAX+1][2] = {
     { gQuestOcarinaOfTimeTex, gLogoOcarinaOfTimeTex },
     { gQuestMasterQuestTex,   gLogoMasterQuestTex   },
     { gQuestUraQuestTex,      gLogoUraQuestTex      },
     { gQuestChildQuestTex,    gLogoChildQuestTex    },
 };
 
-static const char* sQuestMessages[][4][2] = {
+static const char* sQuestMessages[QUEST_MAX+1][4][2] = {
     {
         { "The original experience",        "" },
         { "Harder arranged dungeons",       "" },
@@ -823,19 +823,21 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 
         if (this->stickAdjX < -30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            if (this->questMode[this->buttonIndex] <= 0)
-                this->questMode[this->buttonIndex] = QUEST_MAX;
-            else this->questMode[this->buttonIndex]--;
-            if (this->questMode[this->buttonIndex] == URA_QUEST)
-                this->questMode[this->buttonIndex]--;
+            switch (this->questMode[this->buttonIndex]) {
+                case VANILLA_QUEST: this->questMode[this->buttonIndex] = CHILD_QUEST;   break;
+                case MASTER_QUEST:  this->questMode[this->buttonIndex] = VANILLA_QUEST; break;
+                case CHILD_QUEST:   this->questMode[this->buttonIndex] = MASTER_QUEST;  break;
+                default:            this->questMode[this->buttonIndex] = 0;             break;      
+            }
         }
         if (this->stickAdjX > 30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            if (this->questMode[this->buttonIndex] >= QUEST_MAX)
-                this->questMode[this->buttonIndex] = 0;
-            else this->questMode[this->buttonIndex]++;
-            if (this->questMode[this->buttonIndex] == URA_QUEST)
-                this->questMode[this->buttonIndex]++;
+            switch (this->questMode[this->buttonIndex]) {
+                case VANILLA_QUEST: this->questMode[this->buttonIndex] = MASTER_QUEST;  break;
+                case MASTER_QUEST:  this->questMode[this->buttonIndex] = CHILD_QUEST;   break;
+                case CHILD_QUEST:   this->questMode[this->buttonIndex] = VANILLA_QUEST; break;
+                default:            this->questMode[this->buttonIndex] = QUEST_MAX;     break;
+            }
         }
 
         if (CHECK_BTN_ALL(input->press.button, BTN_B)) {

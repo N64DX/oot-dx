@@ -835,21 +835,17 @@ void MapSelect_PrintMenu(MapSelectState* this, GfxPrint* printer) {
 
 #if OOT_VERSION <= PAL_1_1
     switch (this->questMode) {
-        case VANILLA_QUEST:
-            GfxPrint_Printf(printer, "Vanilla Quest");
-            break;
-        case MASTER_QUEST:
-            GfxPrint_Printf(printer, "Master Quest");
-            break;
-        case URA_QUEST:
-            GfxPrint_Printf(printer, "Ura Quest");
-            break;
-        case CHILD_QUEST:
-            GfxPrint_Printf(printer, "Child Quest");
-            break;
-        default:
-            GfxPrint_Printf(printer, "Quest:%d", this->questMode);
-            break;
+        case VANILLA_QUEST:       GfxPrint_Printf(printer, "Vanilla Quest");             break;
+        case MASTER_QUEST:        GfxPrint_Printf(printer, "Master Quest");              break;
+        case URA_QUEST:           GfxPrint_Printf(printer, "Ura Quest");                 break;
+        case CHILD_QUEST:         GfxPrint_Printf(printer, "Child Quest");               break;
+        case MASTER_CHILD_QUEST:  GfxPrint_Printf(printer, "Master Child Quest");        break;
+        case URA_CHILD_QUEST:     GfxPrint_Printf(printer, "Ura Child Quest");           break;
+        case DUNGEON_RUSH:        GfxPrint_Printf(printer, "Dungeon Rush");              break;
+        case MASTER_DUNGEON_RUSH: GfxPrint_Printf(printer, "Master Dungeon Rush");       break;
+        case URA_DUNGEON_RUSH:    GfxPrint_Printf(printer, "Ura Dungeon Rush");          break;
+        case BOSS_RUSH:           GfxPrint_Printf(printer, "Boss Rush");                 break;
+        default:                  GfxPrint_Printf(printer, "Quest:%d", this->questMode); break;
     }
 #endif
     
