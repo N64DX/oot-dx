@@ -1744,9 +1744,9 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
             if (Player_HoldsBrokenKnife(this)) {
                 D_80126080.x = 1500.0f;
-            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 0) { // Razor Sword
+            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 1) { // Razor Sword
                 D_80126080.x = 3000.0f;
-            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 2) { // Silver / Gilded Sword
+            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 3) { // Silver / Gilded Sword
                 D_80126080.x = 4000.0f;
             } else {
                 D_80126080.x = sMeleeWeaponLengths[Player_GetMeleeWeaponHeld(this)];
