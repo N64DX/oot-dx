@@ -49,9 +49,7 @@ typedef struct BossGanon2Effect {
     /* 0x04 */ Vec3f position;
     /* 0x10 */ Vec3f velocity;
     /* 0x1C */ Vec3f accel;
-    /* 0x28 */ char unk_28[0x6];
     /* 0x2E */ s16 unk_2E;
-    /* 0x30 */ char unk_30[0x4];
     /* 0x34 */ f32 scale;
     /* 0x38 */ Vec3f unk_38;
 } BossGanon2Effect; // size = 0x44

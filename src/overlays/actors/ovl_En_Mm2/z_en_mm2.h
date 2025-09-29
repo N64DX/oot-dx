@@ -14,7 +14,6 @@ typedef struct EnMm2 {
     /* 0x0190 */ EnMm2ActionFunc actionFunc;
     /* 0x0194 */ ColliderCylinder collider;
     /* 0x01E0 */ s32 mouthTexIndex;
-    /* 0x01E4 */ char unk_1E4[0x4];
     /* 0x01E8 */ Vec3s unk_1E8;
     /* 0x01EE */ Vec3s unk_1EE;
     /* 0x01F4 */ u16 unk_1F4;

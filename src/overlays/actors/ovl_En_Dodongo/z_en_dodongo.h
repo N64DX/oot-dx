@@ -19,9 +19,7 @@ typedef struct EnDodongo {
     /* 0x030E */ s16 retreatTimer;
     /* 0x0310 */ s16 tailSwipeSpeed;
     /* 0x0312 */ s16 iceTimer;
-    /* 0x0314 */ char unk_314[2];
     /* 0x0316 */ s16 rightFootStep;
-    /* 0x0318 */ char unk_318[4];
     /* 0x031C */ Vec3f leftFootPos;
     /* 0x0328 */ Vec3f rightFootPos;
     /* 0x0334 */ Vec3f mouthPos;

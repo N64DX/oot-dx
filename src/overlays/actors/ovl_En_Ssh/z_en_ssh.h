@@ -31,7 +31,6 @@ typedef struct EnSsh {
     /* 0x053C */ f32 colliderScale;
     /* 0x0540 */ f32 floorHeightOffset;
     /* 0x0544 */ Vec3f ceilingPos;
-    /* 0x0558 */ char unk_558[0x78];
     /* 0x05C8 */ s16 swayAngle;
     /* 0x05CA */ u16 stateFlags;
     /* 0x05CC */ u8 hitCount;

@@ -317,8 +317,7 @@ void EnExRuppy_Kill(EnExRuppy* this, PlayState* play) {
 
 typedef struct EnExRuppyParentActor {
     /* 0x000 */ Actor actor;
-    /* 0x14C */ char unk_14C[0x11A];
-    /* 0x226 */ s16 unk_226;
+    /* 0x14C */ s16 unk_226;
 } EnExRuppyParentActor; // Unclear what actor was intended to spawn this.
 
 void EnExRuppy_WaitToBlowUp(EnExRuppy* this, PlayState* play) {

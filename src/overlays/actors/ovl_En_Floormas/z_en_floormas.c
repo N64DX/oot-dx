@@ -536,7 +536,6 @@ void EnFloormas_Run(EnFloormas* this, PlayState* play) {
 }
 
 void EnFloormas_Turn(EnFloormas* this, PlayState* play) {
-    char pad[4];
     f32 sp30;
     f32 sp2C;
 

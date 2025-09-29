@@ -35,10 +35,8 @@ typedef struct EnSt {
     /* 0x03DD */ u8 teethR;
     /* 0x03DE */ u8 teethG;
     /* 0x03DF */ u8 teethB;
-    /* 0x03DD */ char unk_3E0[4];
     /* 0x03E4 */ Vec3f unusedPos;
     /* 0x03F0 */ Vec3f ceilingPos;
-    /* 0x03FC */ char unk_3FC[0x8];
     /* 0x0404 */ s32 blureIdx;
     /* 0x0408 */ f32 colliderScale;
     /* 0x040C */ f32 floorHeightOffset;

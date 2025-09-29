@@ -20,7 +20,6 @@ typedef struct EnKakasi {
     /* 0x01A4 */ s16 unk_1A4;
     /* 0x01A6 */ s16 unk_1A6;
     /* 0x01A8 */ s16 unk_1A8;
-    /* 0x01AA */ char unk_1AA[0x2];
     /* 0x01AC */ s16 unk_1AC;
     /* 0x01AE */ Vec3s rot;
     /* 0x01B4 */ f32 height;

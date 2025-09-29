@@ -137,7 +137,6 @@ typedef struct Room {
     /* 0x05 */ u8 lensMode;
     /* 0x08 */ RoomShape* roomShape; // original name: "ground_shape"
     /* 0x0C */ void* segment;
-    /* 0x10 */ char unk_10[0x4];
 } Room; // size = 0x14
 
 typedef struct RoomContext {

@@ -63,12 +63,10 @@ typedef struct BgDyYoseizo {
     /* 0x0324 */ f32 bobTimer;
     /* 0x0328 */ f32 heightOffset;
     /* 0x032C */ f32 frameCount;
-    /* 0x0330 */ char unk_330[4];
     /* 0x0334 */ Vec3s headRot;
     /* 0x033A */ Vec3s torsoRot;
     /* 0x0340 */ EnDyExtra* beam;
     /* 0x0344 */ EnExItem* item;
-    /* 0x0348 */ char unk_348[0x4C];
     /* 0x0394 */ BgDyYoseizoEffect effects[BG_DY_YOSEIZO_EFFECT_COUNT];
 } BgDyYoseizo; // size = 0x38B4
 

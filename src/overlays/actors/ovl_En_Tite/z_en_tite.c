@@ -919,7 +919,6 @@ void EnTite_CheckDamage(Actor* thisx, PlayState* play) {
 
 void EnTite_Update(Actor* thisx, PlayState* play) {
     EnTite* this = (EnTite*)thisx;
-    char pad[0x4];
     CollisionPoly* floorPoly;
     WaterBox* waterBox;
     f32 waterSurfaceY;

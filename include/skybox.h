@@ -48,7 +48,6 @@ typedef enum SkyboxDrawType {
 } SkyboxDrawType;
 
 typedef struct SkyboxContext {
-    /* 0x000 */ char unk_00[0x128];
     /* 0x128 */ void* staticSegments[2];
     /* 0x130 */ u16 (*palettes)[256];
     /* 0x134 */ Gfx (*dListBuf)[150];
@@ -56,7 +55,6 @@ typedef struct SkyboxContext {
     /* 0x13C */ Vtx* roomVtx;
     /* 0x140 */ s16 drawType;
     /* 0x144 */ Vec3f rot;
-    /* 0x150 */ char unk_150[0x10];
 } SkyboxContext; // size = 0x160
 
 typedef struct SkyboxFile {

@@ -39,7 +39,6 @@ typedef struct EnSyatekiNiw {
     /* 0x0264 */ f32 headRotXTarget;
     /* 0x0268 */ f32 rightWingRotXTarget;
     /* 0x026C */ f32 leftWingRotXTarget;
-    /* 0x0270 */ char unk_270[0x8];
     /* 0x0278 */ f32 rightWingRotYTarget;
     /* 0x027C */ f32 rightWingRotZTarget;
     /* 0x0284 */ f32 leftWingRotYTarget;

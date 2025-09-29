@@ -40,7 +40,6 @@ typedef struct BossDodongo {
     /* 0x01AC */ s16 unk_1AC;
     /* 0x01AE */ s16 unk_1AE;
     /* 0x01B0 */ s16 unk_1B0;
-    /* 0x01B2 */ char unk_1B2[0x2];
     /* 0x01B4 */ s16 subCamId;
     /* 0x01B6 */ s16 unk_1B6;
     /* 0x01B8 */ s16 playerYawInRange;
@@ -52,9 +51,7 @@ typedef struct BossDodongo {
     /* 0x01C4 */ s16 unk_1C4; // Some kind of angle
     /* 0x01C6 */ s16 unk_1C6;
     /* 0x01C8 */ s16 unk_1C8;
-    /* 0x01CA */ char unk_1CA[0x2];
     /* 0x01CC */ s16 unk_1CC;
-    /* 0x01CE */ char unk_1CE[0xC];
     /* 0x01DA */ s16 unk_1DA;
     /* 0x01DC */ s16 unk_1DC;
     /* 0x01DE */ s16 unk_1DE;
@@ -64,7 +61,6 @@ typedef struct BossDodongo {
     /* 0x01E4 */ f32 unk_1E4;
     /* 0x01E8 */ f32 unk_1E8;
     /* 0x01EC */ f32 unk_1EC;
-    /* 0x01F0 */ char unk_1F0[0x8];
     /* 0x01F8 */ f32 unk_1F8;
     /* 0x01FC */ f32 unk_1FC;
     /* 0x0200 */ f32 unk_200;
@@ -85,7 +81,6 @@ typedef struct BossDodongo {
     /* 0x023C */ f32 unk_23C;
     /* 0x0240 */ f32 unk_240;
     /* 0x0244 */ f32 unk_244;
-    /* 0x0248 */ char unk_248[0x14];
     /* 0x025C */ f32 unk_25C[50];
     /* 0x0324 */ f32 unk_324[50];
     /* 0x03EC */ Vec3f vec;

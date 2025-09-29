@@ -28,11 +28,8 @@ typedef struct EnSw {
     /* 0x0390 */ s16 unk_390;
     /* 0x0392 */ s16 unk_392;
     /* 0x0394 */ s16 unk_394;
-    /* 0x0396 */ char unk_396[0x42];
     /* 0x03D8 */ MtxF unk_3D8;
-    /* 0x0418 */ char unk_418[8];
     /* 0x0420 */ f32 unk_420;
-    /* 0x0424 */ char unk_424[0x8];
     /* 0x042C */ u8 unk_42C;
     /* 0x0430 */ struct CollisionPoly* unk_430;
     /* 0x0434 */ Vec3f unk_434;
@@ -46,7 +43,6 @@ typedef struct EnSw {
     /* 0x046C */ Vec3f unk_46C;
     /* 0x0478 */ Vec3f unk_478;
     /* 0x0484 */ Vec3f unk_484;
-    /* 0x0490 */ char unk_490[0x48];
 } EnSw; // size = 0x04D8
 
 #endif

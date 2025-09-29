@@ -87,7 +87,6 @@ typedef struct EnTest {
     /* 0x7D0 */ Vec3s headRot;
     /* 0x7D6 */ Vec3s headRotOffset;
     /* 0x7DC */ u8 unk_7DC;
-    /* 0x7DD */ char unk_7DD[0x1];
     /* 0x7DE */ u8 unk_7DE;
     /* 0x7E0 */ s16 iceTimer;
     /* 0x7E2 */ u8 lastDamageReaction;

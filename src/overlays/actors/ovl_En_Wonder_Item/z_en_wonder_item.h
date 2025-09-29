@@ -20,13 +20,10 @@ typedef struct EnWonderItem {
     /* 0x015E */ s16 tagFlags;
     /* 0x0160 */ s16 tagCount;
     /* 0x0162 */ s16 switchFlag;
-    /* 0x0164 */ char unk_164[4];
     /* 0x0168 */ s16 nextTag;
     /* 0x016A */ s16 timerMod;
     /* 0x016C */ Vec3f unkPos; // set to initial position by mode bomb soldier, then never used.
-    /* 0x0178 */ char unk_178[8];
     /* 0x0180 */ ColliderCylinder collider;
-    /* 0x01CC */ char unk_1CC[4];
 } EnWonderItem; // size = 0x01D0
 
 typedef enum EnWonderItemMode {
