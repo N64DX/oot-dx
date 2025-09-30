@@ -33,8 +33,6 @@ Gfx gNintendo64LogoDL[83] = {
 #endif
 };
 
-u8 nintendo_rogo_static_zeros_0029B8[8] = { 0 };
-
 u64 gNintendo64LogoDL_000029C0_Tex[TEX_LEN(u64, gNintendo64LogoDL_000029C0_Tex_WIDTH, gNintendo64LogoDL_000029C0_Tex_HEIGHT, 8)] = {
 #if OOT_VERSION == NTSC_1_0
 #include "build/pal-1.0/assets/textures/nintendo_rogo_static/gNintendo64LogoDL_000029C0_Tex.i8.inc.c"
@@ -43,3 +41,6 @@ u64 gNintendo64LogoDL_000029C0_Tex[TEX_LEN(u64, gNintendo64LogoDL_000029C0_Tex_W
 #endif
 };
 
+u64 gNintendo64ExpansionPakLogo[TEX_LEN(u64, 128, 128, 32)] = {
+#include "assets/textures/nintendo_rogo_static/gExpansionPakTex.rgba32.inc.c"
+};

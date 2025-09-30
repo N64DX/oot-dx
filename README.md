@@ -29,6 +29,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Aegiker:** Mirror mode concept
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
 - **LeSéducteur:** Buff Scrub actor
+- **Nicko (Airi):** DK64 Expansion Pak warning display
 - **OoT Randomizer:** Key chest textures
 - **Skawo:** Font preloading, Kakariko Gate Guard fix, Stalfos lag fix
 - **spaztron64:** Hires mode concept
