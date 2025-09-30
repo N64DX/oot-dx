@@ -72,25 +72,92 @@ baseroms/ntsc-1.0/baserom.z64
 
 #### 4. Setup the ROM and build process
 
-First, setup and build `pal-1.0`:
+Setup and build `pal-1.0` and `ntsc-1.0` subsequently:
 
 ```bash
-make setup -j VERSION=pal-1.0
-make -j VERSION=pal-1.0
+make setup -j VERSION=pal-1.0 && make setup -j VERSION=ntsc-1.0
+make -j VERSION=pal-1.0 && make -j VERSION=ntsc-1.0
 ```
 
-Build `ntsc-1.0`:
-
-```bash
-make setup -j
-make -j
-```
-
-You can also build a different ROM, e.g. `ique-cn`:
+After doing so, you may also build a different ROM, e.g. `ique-cn`:
 
 ```bash
 make setup -j VERSION=ique-cn
 make -j VERSION=ique-cn
+```
+
+To build a compressed ROM:
+
+```bash
+make compress -j VERSION=ntsc-1.0
+```
+
+#### 5. Advanced building notes
+
+Continue to build as much as possible if errors are encountered:
+
+```bash
+make -j -k VERSION=ntsc-1.0
+```
+
+Perform `clean` (remove build files of one ROM), `assetclean` (remove extracted files of one ROM) or `distclean` (remove all files inside the build, extracted and tools directories):
+
+```bash
+make clean VERSION=ntsc-1.0
+make assetclean VERSION=ntsc-1.0
+make distclean
+```
+
+Update and reset local git repository:
+
+```bash
+git fetch
+git reset --hard origin/master
+```
+
+Clean local git repository:
+
+```bash
+git clean -df
+```
+
+#### 6. Batch build
+
+Build all ROMs, which requires all `baseroms` to be present:
+
+```
+baseroms/ique-cn/baserom.z64
+baseroms/gc-us/baserom.z64
+baseroms/gc-us-mq/baserom.z64
+baseroms/gc-eu/baserom.z64
+baseroms/gc-eu-mq/baserom.z64
+baseroms/gc-eu-mq-dbg/baserom.z64
+baseroms/gc-jp/baserom.z64
+baseroms/gc-jp-ce/baserom.z64
+baseroms/gc-jp-mq/baserom.z64
+baseroms/ntsc-1.0/baserom.z64
+baseroms/ntsc-1.1/baserom.z64
+baseroms/ntsc-1.2/baserom.z64
+baseroms/pal-1.0/baserom.z64
+baseroms/pal-1.1/baserom.z64
+```
+
+Setup all:
+
+```bash
+make setup -j VERSION=pal-1.0 && make setup -j VERSION=ntsc-1.0 && make setup -j VERSION=gc-eu && make setup -j VERSION=gc-eu-mq && make setup -j VERSION=gc-eu-mq-dbg && make setup -j VERSION=gc-jp && make setup -j VERSION=gc-jp-ce && make setup -j VERSION=gc-jp-mq && make setup -j VERSION=gc-us && make setup -j VERSION=gc-us-mq && make setup -j VERSION=ique-cn && make setup -j VERSION=ntsc-1.1 && make setup -j VERSION=ntsc-1.2 && make setup -j VERSION=pal-1.1 -j
+```
+
+Build all:
+
+```bash
+make -j VERSION=pal-1.0 && make -j VERSION=ntsc-1.0 && make -j VERSION=gc-eu && make -j VERSION=gc-eu-mq && make -j VERSION=gc-eu-mq-dbg && make -j VERSION=gc-jp && make -j VERSION=gc-jp-ce && make -j VERSION=gc-jp-mq && make -j VERSION=gc-us && make -j VERSION=gc-us-mq && make -j VERSION=ique-cn && make -j VERSION=ntsc-1.1 && make -j VERSION=ntsc-1.2 && make -j VERSION=pal-1.1 -j
+```
+
+Compress all:
+
+```bash
+make compress -j VERSION=pal-1.0 && make compress -j VERSION=ntsc-1.0 && make compress -j VERSION=gc-eu && make compress -j VERSION=gc-eu-mq && make compress -j VERSION=gc-eu-mq-dbg && make compress -j VERSION=gc-jp && make compress -j VERSION=gc-jp-ce && make compress -j VERSION=gc-jp-mq && make compress -j VERSION=gc-us && make compress -j VERSION=gc-us-mq && make compress -j VERSION=ique-cn && make compress -j VERSION=ntsc-1.1 && make compress -j VERSION=ntsc-1.2 && make compress -j VERSION=pal-1.1 -j
 ```
 
 ## Original README
