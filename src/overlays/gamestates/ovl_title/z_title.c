@@ -105,6 +105,36 @@ void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
     *gfxP = gfx;
 }
 
+void ConsoleLogo_PrintExpansionPak(Gfx** gfxP) {
+    Gfx* gfx;
+    GfxPrint* printer;
+    
+    gfx = *gfxP;
+    gfx = Gfx_SetupDL_28(gfx);
+    printer = alloca(sizeof(GfxPrint));
+    GfxPrint_Init(printer);
+    GfxPrint_Open(printer, gfx);
+    
+    GfxPrint_SetColor(printer, 255, 255, 255, 255);
+    GfxPrint_SetPos(printer, 11, 19);
+    GfxPrint_Printf(printer, "N64 EXPANSION PAK");
+    GfxPrint_SetPos(printer, 13, 20);
+    GfxPrint_Printf(printer, "NOT INSTALLED");
+	
+    GfxPrint_SetPos(printer, 5, 22);
+    GfxPrint_Printf(printer, "THE N64 EXPANSION PAK ACCESSORY");  
+	GfxPrint_SetPos(printer, 5, 23);
+    GfxPrint_Printf(printer, "MUST BE INSTALLED IN THE N64 FOR");	
+	GfxPrint_SetPos(printer, 5, 24);
+    GfxPrint_Printf(printer, "THIS GAME. SEE THE N64 EXPANSION");
+	GfxPrint_SetPos(printer, 7, 25);
+    GfxPrint_Printf(printer, "PAK INSTRUCTION BOOKLET.");
+    
+    gfx = GfxPrint_Close(printer);
+    GfxPrint_Destroy(printer);
+    *gfxP = gfx;
+}
+
 void ConsoleLogo_Calc(ConsoleLogoState* this) {
     if ((this->coverAlpha == 0) && (this->visibleDuration != 0)) {
         this->unk_1D4--;
@@ -121,6 +151,21 @@ void ConsoleLogo_Calc(ConsoleLogoState* this) {
             this->coverAlpha = 255;
             this->exit = true;
         }
+    }
+    this->uls = this->ult & 0x7F;
+    this->ult++;
+}
+
+void ConsoleLogo_Calc_Jumper_Pack(ConsoleLogoState* this) {
+    if ((this->coverAlpha == 0) && (this->visibleDuration != 0)) {
+        this->visibleDuration--;
+        this->unk_1D4--;
+        if (this->unk_1D4 == 0)
+            this->unk_1D4 = 100;
+    } else {
+        this->coverAlpha += this->addAlpha;
+        if (this->coverAlpha <= 0)
+            this->coverAlpha = 0;
     }
     this->uls = this->ult & 0x7F;
     this->ult++;
@@ -208,21 +253,100 @@ void ConsoleLogo_Draw(ConsoleLogoState* this) {
     CLOSE_DISPS(this->state.gfxCtx, "../z_title.c", 483);
 }
 
+void ConsoleLogo_DrawQuestImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 centerY, u8* source, u32 width, u32 height) {
+    u8* curTexture;
+    s32 textureCount, rectLeft, rectTop, remainingSize, textureSize, i;
+    u32 textureHeight;
+
+    OPEN_DISPS(gfxCtx, "../z_title.c", UNK_LINE);
+
+    Gfx_SetupDL_56Opa(gfxCtx);
+
+    curTexture = source;
+    rectLeft = centerX - (width / 2);
+    rectTop = centerY - (height / 2);
+    remainingSize = (width * height) << 2;
+    textureHeight = 4096 / (width << 2);
+    textureSize = (width * textureHeight) << 2;
+    textureCount = remainingSize / textureSize;
+    if ((remainingSize % textureSize) != 0)
+        textureCount++;
+
+    gDPSetTileCustom(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, width - 1, textureHeight - 1, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    remainingSize -= textureSize;
+
+    for (i=0; i<textureCount; i++) {
+        gDPSetTextureImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, width, curTexture);
+        gDPLoadSync(POLY_OPA_DISP++);
+        gDPLoadTile(POLY_OPA_DISP++, G_TX_LOADTILE, 0, 0, (width - 1) << 2, (textureHeight - 1) << 2);
+        gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(((rectLeft + WS_SHIFT_HALF) << 2)), HIRES_MULTIPLY((rectTop << 2)), HIRES_MULTIPLY(((rectLeft + WS_SHIFT_HALF + (s32)width) << 2)), HIRES_MULTIPLY(((rectTop + textureHeight) << 2)), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
+        curTexture += textureSize;
+        rectTop += textureHeight;
+
+        if ((remainingSize - textureSize) < 0) {
+            if (remainingSize > 0) {
+                textureHeight = remainingSize / (s32)(width << 2);
+                remainingSize -= textureSize;
+                gDPSetTileCustom(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, width - 1, textureHeight - 1, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            }
+        } else remainingSize -= textureSize;
+    }
+
+    CLOSE_DISPS(gfxCtx, "../z_title.c", UNK_LINE);
+}
+
+void ConsoleLogo_Draw_Jumper_Pack(ConsoleLogoState* this) {
+    static s16 sTitleRotY = 0;
+    static Lights1 sTitleLights = gdSPDefLights1(100, 100, 100, 255, 255, 255, 69, 69, 69);
+
+    u16 y, idx;
+    Vec3f v1, v2, v3;
+
+    OPEN_DISPS(this->state.gfxCtx, "../z_title.c", 395);
+
+    v1.x = v1.y = v1.z = 0;
+    v2.x = -4949.148;
+    v2.y = 4002.5417;
+    v2.z = 1119.0837;
+    v3.x = v3.y = v3.z = 69;
+
+    func_8002EABC(&v1, &v2, &v3, this->state.gfxCtx);
+    gSPSetLights1(POLY_OPA_DISP++, sTitleLights);
+    ConsoleLogo_SetupView(this, 0, 150.0, 300.0);
+    Gfx_SetupDL_39Opa(this->state.gfxCtx);
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetCycleType(POLY_OPA_DISP++, G_CYC_2CYCLE);
+    gDPSetRenderMode(POLY_OPA_DISP++, G_RM_PASS, G_RM_CLD_SURF2);
+    gDPSetCombineLERP(POLY_OPA_DISP++, TEXEL1, PRIMITIVE, ENV_ALPHA, TEXEL0, 0, 0, 0, TEXEL0, PRIMITIVE, ENVIRONMENT, COMBINED, ENVIRONMENT, COMBINED, 0, PRIMITIVE, 0);
+    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
+    gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 256);
+    ConsoleLogo_DrawQuestImageRGBA32(this->state.gfxCtx, 160, 80, (u8*)gNintendo64ExpansionPakLogo, 128, 128);
+    Environment_FillScreen(this->state.gfxCtx, 0, 0, 0, (s16)this->coverAlpha, FILL_SCREEN_XLU);
+    sTitleRotY += 300;
+    CLOSE_DISPS(this->state.gfxCtx, "../z_title.c", 483);
+}
+
 void ConsoleLogo_Main(GameState* thisx) {
     ConsoleLogoState* this = (ConsoleLogoState*)thisx;
+    Gfx* gfx;
 
     OPEN_DISPS(this->state.gfxCtx, "../z_title.c", 494);
 
     gSPSegment(POLY_OPA_DISP++, 0, NULL);
     gSPSegment(POLY_OPA_DISP++, 1, this->staticSegment);
     Gfx_SetupFrame(this->state.gfxCtx, 0, 0, 0, 0);
-    ConsoleLogo_Calc(this);
-    ConsoleLogo_Draw(this);
 
-    if (1) {
-        Gfx* gfx = POLY_OPA_DISP;
-
+    if (osMemSize >= 0x800000) {
+        ConsoleLogo_Calc(this);
+        ConsoleLogo_Draw(this);
+        gfx = POLY_OPA_DISP;
         ConsoleLogo_PrintBuildInfo(&gfx);
+        POLY_OPA_DISP = gfx;
+    } else {
+        ConsoleLogo_Calc_Jumper_Pack(this);
+        ConsoleLogo_Draw_Jumper_Pack(this); 
+        gfx = POLY_OPA_DISP;
+        ConsoleLogo_PrintExpansionPak(&gfx);
         POLY_OPA_DISP = gfx;
     }
 
