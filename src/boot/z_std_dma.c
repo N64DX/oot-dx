@@ -26,9 +26,6 @@
 #include "carthandle.h"
 #include "fault.h"
 #include "idle.h"
-#if PLATFORM_IQUE
-#include "inflate.h"
-#endif
 #include "line_numbers.h"
 #if PLATFORM_N64
 #include "n64dd.h"
@@ -39,9 +36,7 @@
 #include "stackcheck.h"
 #include "terminal.h"
 #include "translation.h"
-#if !PLATFORM_IQUE
 #include "yaz0.h"
-#endif
 #include "dma.h"
 #include "thread.h"
 
@@ -455,11 +450,7 @@ void DmaMgr_ProcessRequest(DmaRequest* req) {
                 // in chunks. Restores the thread priority when done.
                 osSetThreadPri(NULL, THREAD_PRI_DMAMGR_LOW);
 
-#if !PLATFORM_IQUE
                 Yaz0_Decompress(romStart, ram, romSize);
-#else
-                gzip_decompress(romStart, ram, romSize);
-#endif
 
                 osSetThreadPri(NULL, THREAD_PRI_DMAMGR);
                 found = true;

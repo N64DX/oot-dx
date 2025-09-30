@@ -572,8 +572,6 @@ ifeq ($(PLATFORM),IQUE)
 # Some files are compiled with EGCS on iQue
 EGCS_O_FILES += $(BUILD_DIR)/src/boot/boot_main.o
 EGCS_O_FILES += $(BUILD_DIR)/src/boot/idle.o
-EGCS_O_FILES += $(BUILD_DIR)/src/boot/inflate.o
-EGCS_O_FILES += $(BUILD_DIR)/src/boot/is_debug_ique.o
 EGCS_O_FILES += $(BUILD_DIR)/src/boot/z_locale.o
 EGCS_O_FILES += $(BUILD_DIR)/src/boot/z_std_dma.o
 EGCS_O_FILES += $(BUILD_DIR)/src/code/z_actor.o
@@ -811,11 +809,11 @@ endif
 
 #### Various Recipes ####
 
+COMPRESS_ARGS := --format yaz0 --pad-to 0x4000 --fill-padding-bytes
+
 ifeq ($(PLATFORM),IQUE)
-  COMPRESS_ARGS := --format gzip --pad-to 0x4000
   CIC = 6102
 else
-  COMPRESS_ARGS := --format yaz0 --pad-to 0x4000 --fill-padding-bytes
   CIC = 6105
 endif
 
