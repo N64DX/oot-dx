@@ -431,7 +431,9 @@ endseg
 
 beginseg
     name "nes_font_static"
+#if !PLATFORM_IQUE
     compress
+#endif
     #if OOT_NTSC_N64
     include "$(BUILD_DIR)/assets/textures/nes_font_static/nes_font_static_all.o"
     #else
