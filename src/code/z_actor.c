@@ -834,16 +834,16 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
     s32 titleY1;
     s32 titleY2;
     s32 textureLanguageOffset;
-    u32 dsdx = HIRES_DIVIDE((1 << 10));
+    u32 dsdx = HIRES_DIVIDE(1 << 10);
     s32 s = 0;
 
     if (titleCtx->alpha != 0) {
         width = titleCtx->width;
         height = titleCtx->height;
         doubleWidth = width * 2;
-        titleX1 = HIRES_MULTIPLY((((titleCtx->x + WS_SHIFT_HALF) * 4) - (width * 2)));
+        titleX1 = HIRES_MULTIPLY(((titleCtx->x + WS_SHIFT_HALF) * 4) - (width * 2));
         titleX2 = titleX1 + HIRES_MULTIPLY((doubleWidth * 2)) - HIRES_MULTIPLY(4);
-        titleY1 = HIRES_MULTIPLY(((titleCtx->y * 4) - (height * 2)));
+        titleY1 = HIRES_MULTIPLY((titleCtx->y * 4) - (height * 2));
 
         OPEN_DISPS(play->state.gfxCtx, "../z_actor.c", 2824);
 
@@ -863,10 +863,10 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
             height = 0x1000 / width;
         }
 
-        titleY2 = titleY1 + HIRES_MULTIPLY((height * 4));
+        titleY2 = titleY1 + HIRES_MULTIPLY(height * 4);
 
         if (R_ENABLE_MIRROR == 1 && play->pauseCtx.state >= 2) {
-            dsdx = -HIRES_DIVIDE((1 << 10));
+            dsdx = -HIRES_DIVIDE(1 << 10);
             s = width << 5;
         }
 
@@ -880,7 +880,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
         gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY1, titleX2, titleY2 - 1, G_TX_RENDERTILE, s, 0, dsdx,
-                            HIRES_DIVIDE((1 << 10)));
+                            HIRES_DIVIDE(1 << 10));
 
         height = titleCtx->height - height;
 
@@ -890,8 +890,8 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                                 G_IM_SIZ_8b, width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                                 G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY2, titleX2, titleY2 + HIRES_MULTIPLY((height * 4)) - HIRES_MULTIPLY(1), G_TX_RENDERTILE,
-                                s, 0, dsdx, HIRES_DIVIDE((1 << 10)));
+            gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY2, titleX2, titleY2 + HIRES_MULTIPLY(height * 4) - HIRES_MULTIPLY(1), G_TX_RENDERTILE,
+                                s, 0, dsdx, HIRES_DIVIDE(1 << 10));
         }
 
         CLOSE_DISPS(play->state.gfxCtx, "../z_actor.c", 2880);
