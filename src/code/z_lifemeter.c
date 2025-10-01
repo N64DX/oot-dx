@@ -459,7 +459,7 @@ void Health_DrawMeter(PlayState* play) {
             heartCenterX = HIRES_MULTIPLY(30.0f) + offsetX;
             heartTexCoordPerPixel = 1.0f;
             heartTexCoordPerPixel /= 0.68f;
-            heartTexCoordPerPixel *= HIRES_DIVIDE((1 << 10));
+            heartTexCoordPerPixel *= HIRES_DIVIDE(1 << 10);
             halfHeartLength = 8.0f;
             halfHeartLength *= HIRES_MULTIPLY(0.68f);
             gSPTextureRectangle(OVERLAY_DISP++, (s32)((heartCenterX - halfHeartLength) * 4),

@@ -164,8 +164,8 @@
 #endif
 
 // Scaling macros
-#define HIRES_MULTIPLY(var) (var * HIRES_SCALE)
-#define HIRES_DIVIDE(var)   (var / HIRES_SCALE)
+#define HIRES_MULTIPLY(var) ((var) * HIRES_SCALE)
+#define HIRES_DIVIDE(var)   ((var) / HIRES_SCALE)
 
 // Beating heart position
 #define BEATING_HEART_PULSING_SIZE_X (((-130.0f) - WS_SHIFT_HALF) * HIRES_SCALE)
