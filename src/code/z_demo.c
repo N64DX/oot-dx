@@ -1830,12 +1830,10 @@ void Cutscene_ProcessScript(PlayState* play, CutsceneContext* csCtx, u8* script)
         return;
     }
 
-#if DEBUG_FEATURES
-    if (CHECK_BTN_ALL(play->state.input[0].press.button, BTN_DRIGHT)) {
+    if ( (DEBUG_FEATURES || gSaveContext.debugMode) && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_DRIGHT)) {
         csCtx->state = CS_STATE_STOP;
         return;
     }
-#endif
 
     for (i = 0; i < totalEntries; i++) {
         MemCpy(&cmdType, script, sizeof(cmdType));
