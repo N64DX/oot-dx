@@ -161,6 +161,20 @@ Compress all:
 make compress -j VERSION=pal-1.0 && make compress -j VERSION=ntsc-1.0 && make compress -j VERSION=gc-eu && make compress -j VERSION=gc-eu-mq && make compress -j VERSION=gc-eu-mq-dbg && make compress -j VERSION=gc-jp && make compress -j VERSION=gc-jp-ce && make compress -j VERSION=gc-jp-mq && make compress -j VERSION=gc-us && make compress -j VERSION=gc-us-mq && make compress -j VERSION=ique-cn && make compress -j VERSION=ntsc-1.1 && make compress -j VERSION=ntsc-1.2 && make compress -j VERSION=pal-1.1 -j
 ```
 
+#### 7. Debug features
+
+To activate a stripped down debug mode in release builds, go into the vanilla options menu in the file select screen and press L. This mode offers:
+- Gain control during a cutscene: Press `D-Pad Right`
+- Inventory editor: Press `L` in the inventory screen
+- Map select (warping): Press `L + R + Z` anywhere but the N64 logo
+- Save flag editing: Load a save file normally, open the map select and press `START`
+
+Alternatively, it's possible to build any ROM with virtually all debug features:
+
+```bash
+make -j VERSION=ntsc-1.0 DEBUG_FEATURES=1
+```
+
 ## Original README
 
 [![Build Status][jenkins-badge]][jenkins] [![Decompilation Progress][progress-badge]][progress] [![Contributors][contributors-badge]][contributors] [![Discord Channel][discord-badge]][discord]
