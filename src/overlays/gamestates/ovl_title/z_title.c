@@ -66,15 +66,15 @@ void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
 #endif
 
 #if HIRES && INTERLACED
-    char screenModeInfo[] = "Hires: 640x480i";
+    char screenModeInfo[] = "640x480i";
 #elif HIRES && !INTERLACED
-    char screenModeInfo[] = "Hires: 640x480p";
+    char screenModeInfo[] = "640x480p";
 #elif WIDESCREEN
-    char screenModeInfo[] = "WS: 424x240p";
+    char screenModeInfo[] = "424x240p";
 #elif ULTRA_WS
-    char screenModeInfo[] = "UWS: 576x240p";
+    char screenModeInfo[] = "576x240p";
 #else
-    char screenModeInfo[] = "Default: 320x240p";
+    char screenModeInfo[] = "320x240p";
 #endif
 
     Gfx* gfx;
@@ -86,20 +86,20 @@ void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
     GfxPrint_Init(printer);
     GfxPrint_Open(printer, gfx);
     GfxPrint_SetColor(printer, 125, 125, 255, 255);
-    GfxPrint_SetPos(printer, 7, 21);
+    GfxPrint_SetPos(printer, 8, 20);
     GfxPrint_Printf(printer, "OoT DX v%s", DX_VERSION);
     GfxPrint_SetColor(printer, 125, 255, 125, 255);
-    GfxPrint_SetPos(printer, 7, 23);
-    GfxPrint_Printf(printer, DEBUG_FEATURES ? "Build: Debug" : "Build: Release");
+    GfxPrint_SetPos(printer, 21, 20);
+    GfxPrint_Printf(printer, DEBUG_FEATURES ? "       Debug" : "     Release");
     GfxPrint_SetColor(printer, 255, 255, 125, 255);
-    GfxPrint_SetPos(printer, 22, 23);
+    GfxPrint_SetPos(printer, 21, 22);
     GfxPrint_Printf(printer, "%s", buildInfo);
     GfxPrint_SetColor(printer, 255, 125, 125, 255);
-    GfxPrint_SetPos(printer, 7, 25);
+    GfxPrint_SetPos(printer, 8, 22);
     GfxPrint_Printf(printer, "%s", screenModeInfo);
     GfxPrint_SetColor(printer, 255, 255, 255, 255);
-    GfxPrint_SetPos(printer, 26, 25);
-    GfxPrint_Printf(printer, WS_JPEG ? "JPEG: WS" : "JPEG: OG");
+    GfxPrint_SetPos(printer, 8, 25);
+    GfxPrint_Printf(printer, "By Admentus & GhostlyDark");
     gfx = GfxPrint_Close(printer);
     GfxPrint_Destroy(printer);
     *gfxP = gfx;
