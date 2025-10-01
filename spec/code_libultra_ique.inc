@@ -100,6 +100,15 @@
 #ifndef COMPILER_GCC
     include "$(BUILD_DIR)/src/libultra/bb/sa/common.o"
 #endif
+    include "$(BUILD_DIR)/src/libultra/os/settime.o"
+    include "$(BUILD_DIR)/src/libultra/io/pfsselectbank.o"
+    include "$(BUILD_DIR)/src/libultra/io/contramwrite.o"
+    include "$(BUILD_DIR)/src/libultra/io/pfsgetstatus.o"
+    include "$(BUILD_DIR)/src/libultra/io/contpfs.o"
+    include "$(BUILD_DIR)/src/libultra/libc/bcmp.o"
+    include "$(BUILD_DIR)/src/libultra/io/contramread.o"
+    include "$(BUILD_DIR)/src/libultra/io/crc.o"
+    include "$(BUILD_DIR)/src/libultra/io/pfsisplug.o"
     include "$(BUILD_DIR)/src/libultra/io/motor.o"
     include "$(BUILD_DIR)/src/libultra/os/afterprenmi.o"
     include "$(BUILD_DIR)/src/libultra/audio/drvrnew.o"
