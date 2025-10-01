@@ -533,7 +533,7 @@ void Minimap_Draw(PlayState* play) {
                                            G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
                     if (R_ENABLE_MIRROR == 1) {
-                        u16 x = WS_SHIFT_FULL + R_OW_MINIMAP_X + xOffset;
+                        u16 x = WS_SHIFT_FULL + R_OW_MINIMAP_X + (xOffset * 2);
                         gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(((x) << 2)), HIRES_MULTIPLY((R_OW_MINIMAP_Y << 2)), HIRES_MULTIPLY(((x + gMapData->owMinimapWidth[mapIndex]) << 2)), HIRES_MULTIPLY((((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[mapIndex]) << 2))),
                             G_TX_RENDERTILE, (gMapData->owMinimapWidth[mapIndex] - 1) << 5, 0, -HIRES_DIVIDE((1 << 10)), HIRES_DIVIDE((1 << 10)));
                     } else {
