@@ -335,14 +335,14 @@ typedef struct SaveContext {
     /* 0x1402 */ u16 mapIndex; // intended for maps/minimaps but commonly used as the dungeon index
     /* 0x1404 */ u16 minigameState;
     /* 0x1406 */ u16 minigameScore; // "yabusame_total"
-    /* 0x1408 */ char unk_1408[0x0001];
+    /* 0x1408 */ u8 skipLogo;
     /* 0x1409 */ u8 language; // NTSC 0: Japanese; 1: English | PAL 0: English; 1: German; 2: French (see enum `Language`)
     /* 0x140A */ u8 soundSetting; // 0: Stereo; 1: Mono; 2: Headset; 3: Surround (see enum `SoundSetting`)
     /* 0x140B */ u8 debugMode;
     /* 0x140C */ u8 zTargetSetting; // 0: Switch; 1: Hold (see enum `ZTargetSetting`)
     /* 0x140E */ u16 forcedSeqId; // immediately start playing the sequence if set
     /* 0x1410 */ u8 cutsceneTransitionControl; // context dependent usage: can either trigger a delayed fade or control fill alpha
-    /* 0x1411 */ char unk_1411[0x0001];
+    /* 0x1411 */ u8 screenMode;
     /* 0x1412 */ u16 nextCutsceneIndex;
     /* 0x1414 */ u8 cutsceneTrigger;
     /* 0x1415 */ u8 chamberCutsceneNum;

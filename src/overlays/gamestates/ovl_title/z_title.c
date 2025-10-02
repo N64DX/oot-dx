@@ -373,8 +373,6 @@ void ConsoleLogo_Destroy(GameState* thisx) {
     }
 #endif
 
-    Sram_InitSram(&this->state, &this->sramCtx);
-
 #if PLATFORM_N64
     func_800014E8();
 #endif
@@ -383,6 +381,10 @@ void ConsoleLogo_Destroy(GameState* thisx) {
 void ConsoleLogo_Init(GameState* thisx) {
     u32 size = (uintptr_t)_nintendo_rogo_staticSegmentRomEnd - (uintptr_t)_nintendo_rogo_staticSegmentRomStart;
     ConsoleLogoState* this = (ConsoleLogoState*)thisx;
+
+    gSaveContext.fileNum = 0xFF;
+    Sram_Alloc(&this->state, &this->sramCtx);
+    Sram_InitSram(&this->state, &this->sramCtx);
 
 #if PLATFORM_N64
     if ((D_80121210 != 0) && (D_80121211 != 0) && (D_80121212 == 0)) {
@@ -406,22 +408,10 @@ void ConsoleLogo_Init(GameState* thisx) {
     this->state.destroy = ConsoleLogo_Destroy;
     this->exit = false;
 
-#if OOT_VERSION < GC_US || PLATFORM_IQUE
-    if (!(gPadMgr.validCtrlrsMask & 1)) {
-        gSaveContext.fileNum = 0xFEDC;
-    } else {
-        gSaveContext.fileNum = 0xFF;
+    if (osMemSize >= 0x800000 && gSaveContext.skipLogo) {
+        SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
+        return;
     }
-#else
-    gSaveContext.fileNum = 0xFF;
-#endif
-
-    Sram_Alloc(&this->state, &this->sramCtx);
-
-#if SKIP_N64_BOOT_LOGO && DEBUG_FEATURES
-    SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
-    return;
-#endif
 
     this->ult = 0;
     this->unk_1D4 = 0x14;
