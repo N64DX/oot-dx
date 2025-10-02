@@ -1092,6 +1092,7 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
 
     gSaveContext.soundSetting = sramCtx->readBuff[SRAM_HEADER_SOUND] & 3;
     gSaveContext.zTargetSetting = sramCtx->readBuff[SRAM_HEADER_Z_TARGET] & 1;
+    gSaveContext.skipLogoSetting = sramCtx->readBuff[SRAM_HEADER_SKIP_LOGO] & 1;
     gSaveContext.debugMode = sramCtx->readBuff[SRAM_HEADER_DEBUG_MODE] & 1;
 
 #if OOT_PAL || OOT_NTSC_N64

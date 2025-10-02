@@ -33,7 +33,12 @@ void FileSelectOptions_SetHP(FileSelectState* this, u8 index, u8 shift) {
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileSelectOptions_ToggleDebug(FileSelectState* this, u8 index, u8 shift) {
+void FileSelectGlobalOptions_ToggleSkipLogo(FileSelectState* this, u8 index, u8 shift) {
+    gSaveContext.skipLogoSetting ^= 1;
+    Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+}
+
+void FileSelectGlobalOptions_ToggleDebugMode(FileSelectState* this, u8 index, u8 shift) {
     gSaveContext.debugMode ^= 1;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
@@ -77,7 +82,7 @@ char* FileSelectOptions_GetHealthRecovery(FileSelectState* this, u8 index, u8 sh
 }
 
 char* FileSelectOptions_GetHP(FileSelectState* this, u8 index, u8 shift) {
-    switch ((gFileOptions[gSaveContext.fileNum][index] >> shift)  & 7) {
+    switch ((gFileOptions[gSaveContext.fileNum][index] >> shift) & 7) {
         case 1:
             return "1.5x";
         case 2:
@@ -97,7 +102,11 @@ char* FileSelectOptions_GetHP(FileSelectState* this, u8 index, u8 shift) {
     }
 }
 
-char* FileSelectOptions_GetDebug(FileSelectState* this, u8 index, u8 shift) {
+char* FileSelectGlobalOptions_GetToggleSkipLogo(FileSelectState* this, u8 index, u8 shift) {
+    return gSaveContext.skipLogoSetting ? "On" : "Off";
+}
+
+char* FileSelectGlobalOptions_GetToggleDebugMode(FileSelectState* this, u8 index, u8 shift) {
     return gSaveContext.debugMode ? "On" : "Off";
 }
 
@@ -133,7 +142,8 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {
-    { 0, "Debug Mode",            FileSelectOptions_ToggleDebug,        FileSelectOptions_GetDebug,          0, 0  },
+    { 0, "Skip Logo",  FileSelectGlobalOptions_ToggleSkipLogo,  FileSelectGlobalOptions_GetToggleSkipLogo,  0, 0 },
+    { 0, "Debug Mode", FileSelectGlobalOptions_ToggleDebugMode, FileSelectGlobalOptions_GetToggleDebugMode, 0, 0 },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {

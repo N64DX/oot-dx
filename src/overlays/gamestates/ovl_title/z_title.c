@@ -373,8 +373,6 @@ void ConsoleLogo_Destroy(GameState* thisx) {
     }
 #endif
 
-    Sram_InitSram(&this->state, &this->sramCtx);
-
 #if PLATFORM_N64
     func_800014E8();
 #endif
@@ -417,11 +415,12 @@ void ConsoleLogo_Init(GameState* thisx) {
 #endif
 
     Sram_Alloc(&this->state, &this->sramCtx);
+    Sram_InitSram(&this->state, &this->sramCtx);
 
-#if SKIP_N64_BOOT_LOGO && DEBUG_FEATURES
-    SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
-    return;
-#endif
+    if (osMemSize >= 0x800000 && gSaveContext.skipLogoSetting) {
+        SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
+        return;
+    }
 
     this->ult = 0;
     this->unk_1D4 = 0x14;

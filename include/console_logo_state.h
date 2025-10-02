@@ -6,8 +6,6 @@
 #include "sram.h"
 #include "view.h"
 
-#define SKIP_N64_BOOT_LOGO 0
-
 typedef struct ConsoleLogoState {
     /* 0x0000 */ GameState state;
     /* 0x00A4 */ u8* staticSegment;
