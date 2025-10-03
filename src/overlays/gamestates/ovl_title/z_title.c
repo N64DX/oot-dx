@@ -417,7 +417,7 @@ void ConsoleLogo_Init(GameState* thisx) {
     Sram_Alloc(&this->state, &this->sramCtx);
     Sram_InitSram(&this->state, &this->sramCtx);
 
-    if (osMemSize >= 0x800000 && gSaveContext.skipLogoSetting) {
+    if (osMemSize >= 0x800000 && SKIP_LOGO) {
         SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
         return;
     }

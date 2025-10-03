@@ -1602,8 +1602,7 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
 #if OOT_PAL_N64 || OOT_NTSC_N64
         sramCtx->readBuff[2] = gSaveContext.language;
 #endif
-        sramCtx->readBuff[3] = gSaveContext.skipLogoSetting;
-        sramCtx->readBuff[4] = gSaveContext.debugMode;
+        sramCtx->readBuff[3] = gSaveContext.globalSettings;
         PRINTF("ＳＡＶＥ");
         Sram_WriteSramHeader(sramCtx);
         PRINTF_COLOR_YELLOW();
