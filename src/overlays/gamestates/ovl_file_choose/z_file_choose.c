@@ -1977,7 +1977,7 @@ void FileSelect_FadeOut(GameState* thisx) {
 void FileSelect_LoadGame(GameState* thisx) {
     FileSelectState* this = (FileSelectState*)thisx;
 
-    if (this->buttonIndex == FS_BTN_SELECT_FILE_1 && (DEBUG_FEATURES || gSaveContext.debugMode)) {
+    if (this->buttonIndex == FS_BTN_SELECT_FILE_1 && (DEBUG_FEATURES || DEBUG_MODE)) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.fileNum = this->buttonIndex;

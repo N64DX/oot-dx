@@ -338,7 +338,7 @@ typedef struct SaveContext {
     /* 0x1408 */ char unk_1408[0x0001];
     /* 0x1409 */ u8 language; // NTSC 0: Japanese; 1: English | PAL 0: English; 1: German; 2: French (see enum `Language`)
     /* 0x140A */ u8 soundSetting; // 0: Stereo; 1: Mono; 2: Headset; 3: Surround (see enum `SoundSetting`)
-    /* 0x140B */ u8 debugMode;
+    /* 0x140B */ u8 globalSettings;
     /* 0x140C */ u8 zTargetSetting; // 0: Switch; 1: Hold (see enum `ZTargetSetting`)
     /* 0x140E */ u16 forcedSeqId; // immediately start playing the sequence if set
     /* 0x1410 */ u8 cutsceneTransitionControl; // context dependent usage: can either trigger a delayed fade or control fill alpha
@@ -508,6 +508,9 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define HARDER_ENEMIES              ((gFileOptions[gSaveContext.fileNum][1] >> 14) & 1)  // Bits: 14
 #define STATIC_DARK_LINK_HP         ((gFileOptions[gSaveContext.fileNum][1] >> 15) & 1)  // Bits: 15
 #define NO_BOTTLED_FAIRIES          ((gFileOptions[gSaveContext.fileNum][1] >> 16) & 1)  // Bits: 16
+
+#define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
+#define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
 
 #define SET_HEALTH_RECOVERY(value)   (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(3 << 0))  | (((value) & 3) << 0))
 #define SET_DAMAGE_TAKEN(value)      (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 2))  | (((value) & 7) << 2))

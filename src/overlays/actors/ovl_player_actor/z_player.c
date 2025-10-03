@@ -15071,7 +15071,7 @@ void Player_Action_8084FBF4(Player* this, PlayState* play) {
 s32 Player_UpdateNoclip(Player* this, PlayState* play) {
     sControlInput = &play->state.input[0];
     
-    if (!DEBUG_FEATURES && !gSaveContext.debugMode)
+    if (!DEBUG_FEATURES && !DEBUG_MODE)
         return true;
 
     if (sNoclipTimer > 0 && !sNoclipEnabled)

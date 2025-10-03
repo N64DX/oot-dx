@@ -4644,7 +4644,7 @@ void Interface_Update(PlayState* play) {
     u16 action;
 
 #if (OOT_PAL || OOT_NTSC_N64)
-    if (Message_GetState(&play->msgCtx) == 0 && (DEBUG_FEATURES || gSaveContext.debugMode)) {
+    if (Message_GetState(&play->msgCtx) == 0 && (DEBUG_FEATURES || DEBUG_MODE)) {
         Input* debugInput = &play->state.input[2];
 
         if (CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {
