@@ -30,7 +30,7 @@ COLOR(BLUE) "そうび画面" COLOR(DEFAULT) "に　切りかえて、\n"
 MSG(
 ITEM_ICON(0x5B) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Hero's Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Switch to the " COLOR(BLUE) "Equipment \n"
-"Subscreen" COLOR(DEFAULT) "and select the\n"
+"Subscreen" COLOR(DEFAULT) " and select the\n"
 "shield, then equip it with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
 ),
 MSG(
