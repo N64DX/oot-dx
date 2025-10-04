@@ -1906,6 +1906,9 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         Inventory_ChangeUpgrade(UPG_DEKU_STICKS, 2);
         AMMO(ITEM_DEKU_STICK) = CAPACITY(UPG_DEKU_STICKS, 2);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_DEKU_STICK)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_DEKU_STICK_UPGRADE_30) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -1913,6 +1916,9 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         Inventory_ChangeUpgrade(UPG_DEKU_STICKS, 3);
         AMMO(ITEM_DEKU_STICK) = CAPACITY(UPG_DEKU_STICKS, 3);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_DEKU_STICK)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_DEKU_NUT_UPGRADE_30) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -1920,6 +1926,9 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         Inventory_ChangeUpgrade(UPG_DEKU_NUTS, 2);
         AMMO(ITEM_DEKU_NUT) = CAPACITY(UPG_DEKU_NUTS, 2);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_DEKU_NUT)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_DEKU_NUT_UPGRADE_40) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -1927,6 +1936,9 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         Inventory_ChangeUpgrade(UPG_DEKU_NUTS, 3);
         AMMO(ITEM_DEKU_NUT) = CAPACITY(UPG_DEKU_NUTS, 3);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_DEKU_NUT)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         INV_CONTENT(item) = item;
@@ -2222,11 +2234,17 @@ u8 Item_Give(PlayState* play, u8 item) {
                     } else {
                         gSaveContext.save.info.equips.buttonItems[i] = ITEM_NONE;
                     }
+                    for (i=0; i<4; i++)
+                        if (DPAD_BUTTON(i) == SLOT_TRADE_CHILD)
+                            Interface_LoadItemIcon1(play, i+4);
                     return ITEM_NONE;
                 }
             }
         }
 
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_TRADE_CHILD)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     }
 
