@@ -771,14 +771,10 @@ u64 gCBtnSymbolsTex[TEX_LEN(u64, gCBtnSymbolsTex_WIDTH, gCBtnSymbolsTex_HEIGHT, 
 #include "assets/textures/icon_item_static/gCBtnSymbolsTex.ia8.inc.c"
 };
 
-#define gNamePanelLeftTex_WIDTH 72
-#define gNamePanelLeftTex_HEIGHT 24
 u64 gNamePanelLeftTex[TEX_LEN(u64, gNamePanelLeftTex_WIDTH, gNamePanelLeftTex_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_static/gNamePanelLeftTex.ia8.inc.c"
 };
 
-#define gNamePanelRightTex_WIDTH 72
-#define gNamePanelRightTex_HEIGHT 24
 u64 gNamePanelRightTex[TEX_LEN(u64, gNamePanelRightTex_WIDTH, gNamePanelRightTex_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_static/gNamePanelRightTex.ia8.inc.c"
 };

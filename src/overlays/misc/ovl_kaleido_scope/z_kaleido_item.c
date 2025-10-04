@@ -10,6 +10,7 @@
 #include "translation.h"
 #include "play_state.h"
 #include "save.h"
+#include "player.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
 
@@ -387,6 +388,12 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
 
                 if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) && (pauseCtx->state == PAUSE_STATE_MAIN) &&
                     (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE)) {
+
+                    if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_TRADE_CHILD && GET_INFTABLE(INFTABLE_76) && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] >= ITEM_MASK_KEATON && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] <= ITEM_MASK_TRUTH) {
+                        KaleidoScope_HandleSwitchMask(play, pauseCtx, input);
+                        KaleidoScope_DrawSwapItemIcons(play, gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD], KaleidoScope_GetNextMask(), pauseCtx->alpha);
+                    }
+
                     if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
                             if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
@@ -895,6 +902,52 @@ void KaleidoScope_UpdateItemEquip(PlayState* play) {
         sEquipAnimTimer--;
         if (sEquipAnimTimer == 0) {
             pauseCtx->equipAnimAlpha = 255;
+        }
+    }
+}
+
+static u16 gSoldMaskCheck[7] = { ITEMGETINF_38, ITEMGETINF_39, ITEMGETINF_3A, ITEMGETINF_3F, ITEMGETINF_3F, ITEMGETINF_3F, ITEMGETINF_2A };
+
+u8 KaleidoScope_GetNextMask() {
+    u8 i;
+    u8 nextMask = gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] < ITEM_MASK_TRUTH ? gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] + 1 : ITEM_MASK_KEATON;
+
+    for (i=0; i<7; i++)
+        if (!GET_ITEMGETINF(gSoldMaskCheck[i]) && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] >= ITEM_MASK_KEATON + i)
+            return ITEM_MASK_KEATON;
+    return nextMask;
+}
+
+void KaleidoScope_UpdateTradeEquips(PlayState* play, u8 item, u8 slot) {
+    u8 i;
+    gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] = item;
+
+    for (i=0; i<3; i++) {
+        if (gSaveContext.save.info.equips.cButtonSlots[i] == slot) {
+            gSaveContext.save.info.equips.buttonItems[i + 1] = item;
+            Interface_LoadItemIcon1(play, i + 1);
+        }
+        if (gSaveContext.save.info.playerData.childEquips.cButtonSlots[i] == slot)
+            gSaveContext.save.info.playerData.childEquips.buttonItems[i + 1] = item;
+        if (gSaveContext.save.info.playerData.adultEquips.cButtonSlots[i] == slot)
+            gSaveContext.save.info.playerData.adultEquips.buttonItems[i + 1] = item;
+    }
+
+    for (i=0; i<4; i++)
+        if (DPAD_BUTTON(i) == slot)
+            Interface_LoadItemIcon1(play, i + 4);
+}
+
+void KaleidoScope_HandleSwitchMask(PlayState* play, PauseContext* pauseCtx, Input* input) {
+    if (CHECK_BTN_ANY(input->press.button, BTN_CUP)) {
+        u8 currentMask = Player_GetMask(play);
+        u8 nextMask = KaleidoScope_GetNextMask();
+
+        if (gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] != nextMask) {
+            KaleidoScope_UpdateTradeEquips(play, nextMask, pauseCtx->cursorPoint[PAUSE_ITEM]);
+            if (currentMask > 0 && nextMask >= ITEM_MASK_KEATON && nextMask <= ITEM_MASK_TRUTH)
+                currentMask = nextMask - ITEM_ZELDAS_LETTER;
+            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         }
     }
 }

@@ -47,6 +47,7 @@
 #include "assets/textures/icon_item_fra_static/icon_item_fra_static.h"
 #endif
 #include "assets/textures/icon_item_gameover_static/icon_item_gameover_static.h"
+#include "assets/textures/parameter_static/parameter_static.h"
 
 #pragma increment_block_number "gc-eu:0 gc-eu-mq:0 gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128" \
                                "ntsc-1.0:0 ntsc-1.1:0 ntsc-1.2:0 pal-1.0:0 pal-1.1:0"
@@ -4877,4 +4878,42 @@ void KaleidoScope_Update(PlayState* play) {
             PRINTF_RST();
             break;
     }
+}
+
+void KaleidoScope_DrawSwapItemIcons(PlayState* play, ItemID currItem, ItemID nextItem, u16 alpha) {
+    u16 x = 225;
+    u16 y = 205;
+    void* currIcon;
+    void* nextIcon;
+
+    if (currItem == nextItem) 
+        return;
+
+    if (currItem == ITEM_SHIELD_HEROS)
+        currIcon = gItemIconShieldHerosTex;
+    else currIcon = gItemIcons[currItem];
+
+    if (nextItem == ITEM_SHIELD_HEROS)
+        nextIcon = gItemIconShieldHerosTex;
+    else nextIcon = gItemIcons[nextItem];
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_kaleido_scope.c", 4900);
+    Gfx_SetupDL_42Opa(play->state.gfxCtx);
+    gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+
+    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 90, 100, 130, alpha);
+    gDPLoadTextureBlock(POLY_OPA_DISP++, gNamePanelLeftTex, G_IM_FMT_IA, G_IM_SIZ_8b, 72, 24, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((WS_SHIFT_FULL + x) << 2), HIRES_MULTIPLY(y << 2), HIRES_MULTIPLY((WS_SHIFT_FULL + x + 40) << 2), HIRES_MULTIPLY((y + 20) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1850), HIRES_DIVIDE(1230));
+    gDPLoadTextureBlock(POLY_OPA_DISP++, gNamePanelRightTex, G_IM_FMT_IA, G_IM_SIZ_8b, 72, 24, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((WS_SHIFT_FULL + x + 40) << 2), HIRES_MULTIPLY(y << 2), HIRES_MULTIPLY((WS_SHIFT_FULL + x + 40 + 40) << 2), HIRES_MULTIPLY((y + 20) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1850), HIRES_DIVIDE(1230));
+
+    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, alpha);
+    gDPLoadTextureBlock(POLY_OPA_DISP++, currIcon, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((WS_SHIFT_FULL + x + 16) << 2), HIRES_MULTIPLY((y + 3) << 2), HIRES_MULTIPLY((WS_SHIFT_FULL + x + 16 + 14) << 2), HIRES_MULTIPLY((y + 3 + 14) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(2340), HIRES_DIVIDE(2340));
+    gDPLoadTextureBlock(POLY_OPA_DISP++, gEmptyCRightArrowTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((WS_SHIFT_FULL + x + 28) << 2), HIRES_MULTIPLY((y - 2) << 2), HIRES_MULTIPLY((WS_SHIFT_FULL + x + 28 + 24) << 2), HIRES_MULTIPLY((y - 2 + 24) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1365), HIRES_DIVIDE(1365));
+    gDPLoadTextureBlock(POLY_OPA_DISP++, nextIcon, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((WS_SHIFT_FULL + x + 52) << 2), HIRES_MULTIPLY((y + 3) << 2), HIRES_MULTIPLY((WS_SHIFT_FULL + x + 52 + 14) << 2), HIRES_MULTIPLY((y + 3 + 14) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(2340), HIRES_DIVIDE(2340));
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope.c", 4918);
 }

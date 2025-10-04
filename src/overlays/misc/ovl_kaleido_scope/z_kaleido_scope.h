@@ -5,6 +5,7 @@
 #include "gfx.h"
 #include "inventory.h"
 #include "pause.h"
+#include "libu64/pad.h"
 
 struct PlayState;
 
@@ -241,5 +242,10 @@ void KaleidoScope_DrawCursor(struct PlayState* play, u16 pageIndex);
 void KaleidoScope_UpdateDungeonMap(struct PlayState* play);
 
 void PauseMapMark_Draw(struct PlayState* play);
+
+u8 KaleidoScope_GetNextMask(void);
+void KaleidoScope_UpdateTradeEquips(struct PlayState* play, u8 item, u8 slot);
+void KaleidoScope_HandleSwitchMask(struct PlayState* play, PauseContext* pauseCtx, Input* input);
+void KaleidoScope_DrawSwapItemIcons(struct PlayState* play, ItemID currItem, ItemID nextItem, u16 alpha);
 
 #endif
