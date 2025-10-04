@@ -217,4 +217,12 @@ extern Gfx gAButtonIconDL[11];
 extern Gfx gPromptCursorLeftDL[10];
 extern Gfx gPromptCursorRightDL[10];
 
+#define gNamePanelLeftTex_WIDTH 72
+#define gNamePanelLeftTex_HEIGHT 24
+extern u64 gNamePanelLeftTex[TEX_LEN(u64, gNamePanelLeftTex_WIDTH, gNamePanelLeftTex_HEIGHT, 8)];
+
+#define gNamePanelRightTex_WIDTH 72
+#define gNamePanelRightTex_HEIGHT 24
+extern u64 gNamePanelRightTex[TEX_LEN(u64, gNamePanelRightTex_WIDTH, gNamePanelRightTex_HEIGHT, 8)];
+
 #endif

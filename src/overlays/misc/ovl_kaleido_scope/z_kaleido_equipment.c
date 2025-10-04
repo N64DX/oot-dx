@@ -561,8 +561,10 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             sEquipTimer = 10;
         }
 
-        if (pauseCtx->cursorSpecialPos == 0 && cursorItem == ITEM_SHIELD_HYLIAN && (pauseCtx->state == PAUSE_STATE_MAIN) && pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE && CHECK_BTN_ALL(input->press.button, BTN_CUP) && IS_CHILD_QUEST) {
-            if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
+        if (pauseCtx->cursorSpecialPos == 0 && cursorItem == ITEM_SHIELD_HYLIAN && (pauseCtx->state == PAUSE_STATE_MAIN) && pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && IS_CHILD_QUEST) {
+            KaleidoScope_DrawSwapItemIcons(play, HAS_HEROS_SHIELD ? ITEM_SHIELD_HEROS : ITEM_SHIELD_HYLIAN , HAS_HEROS_SHIELD ? ITEM_SHIELD_HYLIAN : ITEM_SHIELD_HEROS, pauseCtx->alpha);
+
+            if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
                 Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                 TOGGLE_HEROS_SHIELD;
                 Player_SetEquipmentData(play, GET_PLAYER(play));
@@ -578,7 +580,9 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                         Interface_LoadItemIcon1(play, i);
                 }
             }
-        } else if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) &&
+        }
+
+        if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) &&
             (pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE) &&
             CHECK_BTN_ALL(input->press.button, BTN_A) && (pauseCtx->cursorX[PAUSE_EQUIP] != EQUIP_CURSOR_X_UPG)) {
 
