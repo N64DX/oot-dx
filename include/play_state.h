@@ -165,6 +165,8 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos);
 void Play_Init(GameState* thisx);
 void Play_Destroy(GameState* thisx);
 
+void Play_PrintHeapUsage(PlayState* play);
+
 #if DEBUG_FEATURES
 extern void* gDebugCutsceneScript;
 #endif

@@ -135,6 +135,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {
     { 0, "Skip Logo",  FileSelectGlobalOptions_ToggleOption, FileSelectGlobalOptions_GetOption, 0, 0 },
     { 0, "Debug Mode", FileSelectGlobalOptions_ToggleOption, FileSelectGlobalOptions_GetOption, 0, 1 },
+    { 0, "Show RAM",   FileSelectGlobalOptions_ToggleOption, FileSelectGlobalOptions_GetOption, 0, 2 },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {

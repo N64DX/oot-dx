@@ -48,6 +48,8 @@
 #include "segment_symbols.h"
 #include "save.h"
 #include "vis.h"
+#include "libu64/gfxprint.h"
+#include "alloca.h"
 
 #pragma increment_block_number "gc-eu:0 gc-eu-mq:0 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ique-cn:224" \
                                "ntsc-1.0:240 ntsc-1.1:240 ntsc-1.2:240 pal-1.0:240 pal-1.1:240"
@@ -1483,6 +1485,9 @@ Play_Draw_skip:
     Camera_Finish(GET_ACTIVE_CAM(this));
 
     CLOSE_DISPS(gfxCtx, "../z_play.c", 4508);
+
+    if (SHOW_RAM && !IS_PAUSED(&this->pauseCtx) && R_ENABLE_MIRROR == 0 && gSaveContext.gameMode == GAMEMODE_NORMAL)
+        Play_PrintHeapUsage(this);
 }
 
 void Play_Main(GameState* thisx) {
@@ -2059,4 +2064,79 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos) {
     } else {
         return false;
     }
+}
+
+#define MB (1024.0f * 1024.0f)
+
+u32 Play_GetObjectCtxUsage(PlayState* play) {
+    ObjectContext* ctx = &play->objectCtx;
+    uintptr_t poolStart = (uintptr_t)ctx->spaceStart;
+    uintptr_t poolEnd   = poolStart;
+    u8 i;
+    void* seg;
+    uintptr_t segAddr;
+    
+    if (ctx->numEntries == 0)
+        return 0;
+
+    // Iterate over all loaded objects
+    for (i=0; i < ctx->numEntries; i++) {
+        seg = ctx->slots[i].segment;
+        if (seg != NULL) {
+            segAddr = (uintptr_t)seg;
+            if (segAddr > poolEnd) // Track the highest used address
+                poolEnd = segAddr;
+        }
+    }
+
+    // Approximate used bytes: from pool start to highest loaded segment
+    return (u32)(poolEnd - poolStart);
+}
+
+void Play_PrintHeapUsage(PlayState* play) {
+    GfxPrint* printer;
+    ObjectContext* objectCtx = &play->objectCtx;
+    GameState* gameState = (GameState*)play;
+    u32 maxFree, free, alloc;
+    float usedMB, totalMB;
+    u8 x = 4;
+
+    const u32 reservedStatic = sizeof(gZBuffer) + sizeof(gGfxSPTaskOutputBuffer) + sizeof(gGfxSPTaskYieldBuffer) + sizeof(gGfxSPTaskStack) + sizeof(gGfxPools) + sizeof(gAudioHeap); // Known static memory regions
+    SystemArena_GetSizes(&maxFree, &free, &alloc); // Get memory info from the system arena
+
+    if (SCREEN_MODE == 2)
+        x = -4;
+    else if (SCREEN_MODE == 3)
+        x = -13;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_play.c", 2120);
+
+    printer = alloca(sizeof(GfxPrint));
+    GfxPrint_Init(printer);
+    GfxPrint_Open(printer, POLY_XLU_DISP);
+
+    GfxPrint_SetColor(printer, 255, 255, 255, 255);
+
+    usedMB  = (float)((alloc-free) / MB);
+    totalMB = (float)(alloc  / MB);
+    GfxPrint_SetPos(printer, x, 15);
+    if (usedMB == totalMB)
+        GfxPrint_Printf(printer, "ARENA: %.2fMB", usedMB);
+    else GfxPrint_Printf(printer, "ARENA: %.2f/%.2fMB", usedMB, totalMB);
+
+    usedMB  = (float)(Play_GetObjectCtxUsage(play) / MB);
+    totalMB = (float)(((uintptr_t)objectCtx->spaceEnd - (uintptr_t)objectCtx->spaceStart) / MB);
+    GfxPrint_SetPos(printer, x, 16);
+    if (fabsf(totalMB - (int)(totalMB + 0.5f)) < 0.001f)
+        GfxPrint_Printf(printer, "-OBJ:  %.2f/%.0fMB", usedMB, totalMB);
+    else GfxPrint_Printf(printer, "-OBJ:  %.2f/%.2fMB", usedMB, totalMB);
+
+    usedMB  = (float)(reservedStatic / MB);
+    GfxPrint_SetPos(printer, x, 17);
+    GfxPrint_Printf(printer, "STATIC:%.2fMB", usedMB);
+
+    POLY_XLU_DISP = GfxPrint_Close(printer);
+    GfxPrint_Destroy(printer);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_play.c", 2153);
 }

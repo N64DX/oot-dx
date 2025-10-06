@@ -511,6 +511,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
+#define SHOW_RAM                    ((gSaveContext.globalSettings >> 2) & 1)  // Bits: 2
 
 #define SET_HEALTH_RECOVERY(value)   (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(3 << 0))  | (((value) & 3) << 0))
 #define SET_DAMAGE_TAKEN(value)      (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 2))  | (((value) & 7) << 2))
