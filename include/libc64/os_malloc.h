@@ -31,6 +31,7 @@ typedef struct ArenaNode {
     /* 0x18 */ OSId threadId;
     /* 0x1C */ Arena* arena;
     /* 0x20 */ OSTime time;
+    /* 0x28 */ u8 unk_28[0x30-0x28]; // probably padding
 #endif
 } ArenaNode; // size = 0x30 (N64 and GC debug), size = 0x10 (GC retail)
 
