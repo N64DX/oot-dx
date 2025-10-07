@@ -805,7 +805,7 @@ endif
 
 
 .PHONY: all rom compress clean assetclean distclean venv setup disasm run
-.DEFAULT_GOAL := rom
+.DEFAULT_GOAL := all
 
 #### Various Recipes ####
 

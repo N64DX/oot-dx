@@ -87,12 +87,6 @@ make setup -j VERSION=ique-cn
 make -j VERSION=ique-cn
 ```
 
-To build a compressed ROM:
-
-```bash
-make compress -j VERSION=ntsc-1.0
-```
-
 #### 5. Advanced building notes
 
 Continue to build as much as possible if errors are encountered:
@@ -153,12 +147,6 @@ Build all:
 
 ```bash
 make -j VERSION=pal-1.0 && make -j VERSION=ntsc-1.0 && make -j VERSION=gc-eu && make -j VERSION=gc-eu-mq && make -j VERSION=gc-eu-mq-dbg && make -j VERSION=gc-jp && make -j VERSION=gc-jp-ce && make -j VERSION=gc-jp-mq && make -j VERSION=gc-us && make -j VERSION=gc-us-mq && make -j VERSION=ique-cn && make -j VERSION=ntsc-1.1 && make -j VERSION=ntsc-1.2 && make -j VERSION=pal-1.1 -j
-```
-
-Compress all:
-
-```bash
-make compress -j VERSION=pal-1.0 && make compress -j VERSION=ntsc-1.0 && make compress -j VERSION=gc-eu && make compress -j VERSION=gc-eu-mq && make compress -j VERSION=gc-eu-mq-dbg && make compress -j VERSION=gc-jp && make compress -j VERSION=gc-jp-ce && make compress -j VERSION=gc-jp-mq && make compress -j VERSION=gc-us && make compress -j VERSION=gc-us-mq && make compress -j VERSION=ique-cn && make compress -j VERSION=ntsc-1.1 && make compress -j VERSION=ntsc-1.2 && make compress -j VERSION=pal-1.1 -j
 ```
 
 #### 7. Debug features
