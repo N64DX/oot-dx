@@ -417,10 +417,8 @@ void ConsoleLogo_Init(GameState* thisx) {
     Sram_Alloc(&this->state, &this->sramCtx);
     Sram_InitSram(&this->state, &this->sramCtx);
 
-    if (osMemSize >= 0x800000 && SKIP_LOGO) {
-        SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
-        return;
-    }
+    if (osMemSize >= 0x800000 && SKIP_LOGO)
+        this->exit = true;
 
     this->ult = 0;
     this->unk_1D4 = 0x14;
