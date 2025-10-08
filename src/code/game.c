@@ -451,7 +451,8 @@ void GameState_Realloc(GameState* gameState, size_t size) {
     GameAlloc_Free(alloc, thaStart);
     PRINTF(T("ハイラル一時解放!!\n", "Hyrule temporarily released!!\n"));
     SystemArena_GetSizes(&systemMaxFree, &systemFree, &systemAlloc);
-    if ((systemMaxFree - 0x10) < size) {
+    size = ((systemMaxFree - sizeof(ArenaNode)) < size) ? 0 : size;
+    if (size == 0) {
         PRINTF("%c", BEL);
         PRINTF_COLOR_RED();
 
@@ -459,7 +460,7 @@ void GameState_Realloc(GameState* gameState, size_t size) {
                  "Not enough memory. Change Hyrule size to maximum possible value\n"));
         PRINTF("(hyral=%08x max=%08x free=%08x alloc=%08x)\n", size, systemMaxFree, systemFree, systemAlloc);
         PRINTF_RST();
-        size = systemMaxFree - 0x10;
+        size = systemMaxFree - sizeof(ArenaNode);
     }
 
     PRINTF(T("ハイラル再確保 サイズ＝%u バイト\n", "Hyrule reallocate size = %u bytes\n"), size);
