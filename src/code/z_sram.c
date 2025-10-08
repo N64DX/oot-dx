@@ -1103,17 +1103,6 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
     }
 #endif
 
-#if DEBUG_FEATURES
-    if (CHECK_BTN_ANY(gameState->input[2].cur.button, BTN_DRIGHT)) {
-        bzero(sramCtx->readBuff, SRAM_SIZE);
-        for (i = 0; i < CHECKSUM_SIZE; i++) {
-            sramCtx->readBuff[i] = i;
-        }
-        SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000), sramCtx->readBuff, SRAM_SIZE);
-        PRINTF(T("ＳＲＡＭ破壊！！！！！！\n", "SRAM destruction!!!!!!\n"));
-    }
-#endif
-
     PRINTF(T("ＧＯＯＤ！ＧＯＯＤ！ サイズ＝%d + %d ＝ %d\n", "GOOD! GOOD! Size = %d + %d = %d\n"), sizeof(SaveInfo), 4,
            sizeof(SaveInfo) + 4);
     PRINTF_COLOR_BLUE();
