@@ -308,7 +308,7 @@ void Play_Init(GameState* thisx) {
     SystemArena_Display();
 #endif
 
-    GameState_Realloc(&this->state, 4 * 1024 * 1024);
+    GameState_Realloc(&this->state, 0);
 
 #if PLATFORM_N64
     if ((B_80121220 != NULL) && (B_80121220->unk_10 != NULL)) {
