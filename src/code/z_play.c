@@ -2119,20 +2119,20 @@ void Play_PrintHeapUsage(PlayState* play) {
 
     usedMB  = (float)((alloc-free) / MB);
     totalMB = (float)(alloc  / MB);
-    GfxPrint_SetPos(printer, x, 15);
+    GfxPrint_SetPos(printer, x, 16);
     if (usedMB == totalMB)
         GfxPrint_Printf(printer, "ARENA: %.2fMB", usedMB);
     else GfxPrint_Printf(printer, "ARENA: %.2f/%.2fMB", usedMB, totalMB);
 
     usedMB  = (float)(Play_GetObjectCtxUsage(play) / MB);
     totalMB = (float)(((uintptr_t)objectCtx->spaceEnd - (uintptr_t)objectCtx->spaceStart) / MB);
-    GfxPrint_SetPos(printer, x, 16);
+    GfxPrint_SetPos(printer, x, 17);
     if (fabsf(totalMB - (int)(totalMB + 0.5f)) < 0.001f)
         GfxPrint_Printf(printer, "-OBJ:  %.2f/%.0fMB", usedMB, totalMB);
     else GfxPrint_Printf(printer, "-OBJ:  %.2f/%.2fMB", usedMB, totalMB);
 
     usedMB  = (float)(reservedStatic / MB);
-    GfxPrint_SetPos(printer, x, 17);
+    GfxPrint_SetPos(printer, x, 18);
     GfxPrint_Printf(printer, "STATIC:%.2fMB", usedMB);
 
     POLY_XLU_DISP = GfxPrint_Close(printer);
