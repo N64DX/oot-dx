@@ -749,6 +749,10 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                                 gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 1;
                                 Player_SetEquipmentData(play, player);
                             }
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) && !gSaveContext.save.info.playerData.bgsFlag) {
+                                gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE);
+                                gSaveContext.save.info.playerData.swordHealth = 8;
+                            }
                         }
                         else if (i == 1) {
                             if ( (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)  && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU)   || (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && !HAS_HEROS_SHIELD) ||
