@@ -2694,27 +2694,23 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     static const EquipmentSwapEntry equipments[] = {
         { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    LINK_AGE_CHILD },
         { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
         { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
     };
 
     u8 current    = gSaveContext.save.info.equips.buttonItems[0];
     u8 validCount = 0;
-    u8 validItems[3], validEquips[3], i, nextItem, nextEquip;
+    u8 validItems[4], validEquips[4], i, nextItem, nextEquip;
 
-    for (i=0; i<3; i++) {
+    if (current == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
+        current = ITEM_SWORD_HEROS;
+
+    for (i=0; i<4; i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
-
-        if (equipment->itemId == ITEM_SWORD_BIGGORON)
-            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE)) {
-                validItems[validCount]  = ITEM_GIANTS_KNIFE;
-                validEquips[validCount] = EQUIP_INV_SWORD_BROKENGIANTKNIFE;
-                validCount++;
-                continue;
-            }
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, equipment->equipId)) {
             validItems[validCount]  = equipment->itemId;
@@ -2739,6 +2735,15 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     nextItem  = validItems[i  % validCount];
     nextEquip = validEquips[i % validCount] + 1;
     if (current != nextItem) {
+        if (nextItem == ITEM_SWORD_BIGGORON && gSaveContext.save.info.playerData.swordHealth <= 0.0f && LINK_IS_ADULT)
+            nextItem = ITEM_GIANTS_KNIFE;
+        else if (nextItem == ITEM_SWORD_HEROS) {
+            SET_HEROS_SWORD;
+            nextItem = ITEM_SWORD_KOKIRI;
+        }
+        else if (nextItem == ITEM_SWORD_KOKIRI)
+            CLEAR_HEROS_SWORD;
+
         gSaveContext.save.info.equips.buttonItems[0] = nextItem;
         Interface_LoadItemIcon1(play, 0);
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SWORD, nextEquip);

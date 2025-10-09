@@ -446,8 +446,11 @@ typedef enum LinkAge {
 #define SET_MASK_CHILD(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0xFF00) | ((val) & 0xFF)))
 
 #define SET_HEROS_SWORD       (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 0)
+#define CLEAR_HEROS_SWORD     (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 0))
+#define TOGGLE_HEROS_SWORD    (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 0)
 #define HAS_HEROS_SWORD     (((gSaveContext.save.info.playerData.equipmentUpgrades >>   0) & 1) && IS_CHILD_QUEST_AS_CHILD)
-#define IS_HEROS_SWORD        (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SWORD_KOKIRI) && HAS_HEROS_SWORD)
+#define IS_HEROS_SWORD        (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS) && (HAS_HEROS_SWORD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)) )
+
 #define SET_HEROS_SHIELD      (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 1)
 #define CLEAR_HEROS_SHIELD    (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 1))
 #define TOGGLE_HEROS_SHIELD   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 1)
@@ -512,6 +515,8 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
 #define SHOW_RAM                    ((gSaveContext.globalSettings >> 2) & 1)  // Bits: 2
+
+#define MAX_SWORD_HEALTH 8
 
 #define SET_HEALTH_RECOVERY(value)   (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(3 << 0))  | (((value) & 3) << 0))
 #define SET_DAMAGE_TAKEN(value)      (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 2))  | (((value) & 7) << 2))

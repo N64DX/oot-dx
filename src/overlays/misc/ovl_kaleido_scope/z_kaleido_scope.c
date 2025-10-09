@@ -4891,10 +4891,14 @@ void KaleidoScope_DrawSwapItemIcons(PlayState* play, ItemID currItem, ItemID nex
 
     if (currItem == ITEM_SHIELD_HEROS)
         currIcon = gItemIconShieldHerosTex;
+    else if (currItem == ITEM_SWORD_HEROS)
+        currIcon = gItemIconSwordHerosTex;
     else currIcon = gItemIcons[currItem];
 
     if (nextItem == ITEM_SHIELD_HEROS)
         nextIcon = gItemIconShieldHerosTex;
+    else if (nextItem == ITEM_SWORD_HEROS)
+        nextIcon = gItemIconSwordHerosTex;
     else nextIcon = gItemIcons[nextItem];
 
     OPEN_DISPS(play->state.gfxCtx, "../z_kaleido_scope.c", 4900);

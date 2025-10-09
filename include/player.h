@@ -48,7 +48,8 @@ typedef enum PlayerSword {
     /* 1 */ PLAYER_SWORD_KOKIRI,
     /* 2 */ PLAYER_SWORD_MASTER,
     /* 3 */ PLAYER_SWORD_BIGGORON,
-    /* 4 */ PLAYER_SWORD_MAX
+    /* 4 */ PLAYER_SWORD_HEROS,
+    /* 5 */ PLAYER_SWORD_MAX
 } PlayerSword;
 
 typedef enum PlayerShield {

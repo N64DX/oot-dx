@@ -21,7 +21,7 @@ typedef enum EquipInvSword {
     /* 0 */ EQUIP_INV_SWORD_KOKIRI,
     /* 1 */ EQUIP_INV_SWORD_MASTER,
     /* 2 */ EQUIP_INV_SWORD_BIGGORON,
-    /* 3 */ EQUIP_INV_SWORD_BROKENGIANTKNIFE
+    /* 3 */ EQUIP_INV_SWORD_HEROS
 } EquipInvSword;
 
 typedef enum EquipInvShield {

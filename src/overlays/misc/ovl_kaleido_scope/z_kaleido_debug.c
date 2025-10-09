@@ -743,16 +743,21 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         }
 
                         if (i == 0) {
-                            if ( (CHECK_BTN_ALL(input->press.button, BTN_CLEFT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI) || (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_MASTER) || (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_BIGGORON)) {
+                            if ( (CHECK_BTN_ALL(input->press.button, BTN_CDOWN)  && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_MASTER)   || (CHECK_BTN_ALL(input->press.button, BTN_CLEFT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI && !HAS_HEROS_SWORD) ||
+                                 (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_BIGGORON) || (CHECK_BTN_ALL(input->press.button, BTN_CUP)   && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI &&  HAS_HEROS_SWORD)) {
                                 Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, PLAYER_SWORD_NONE);
                                 gSaveContext.save.info.equips.buttonItems[0] = ITEM_NONE;
                                 gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 1;
                                 Player_SetEquipmentData(play, player);
                             }
-                            if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) && !gSaveContext.save.info.playerData.bgsFlag) {
-                                gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE);
-                                gSaveContext.save.info.playerData.swordHealth = 8;
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                                if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS))
+                                    SET_HEROS_SWORD;
+                                else CLEAR_HEROS_SWORD;
+                                pauseCtx->was_in_debug = true;
                             }
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
+                                gSaveContext.save.info.playerData.swordHealth = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) ? MAX_SWORD_HEALTH : 0;
                         }
                         else if (i == 1) {
                             if ( (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)  && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU)   || (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && !HAS_HEROS_SHIELD) ||

@@ -1540,11 +1540,7 @@ void Interface_InitHorsebackArchery(PlayState* play) {
 void func_800849EC(PlayState* play) {
     u8 i;
 
-    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON);
-    gSaveContext.save.info.inventory.equipment ^=
-        OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE);
-
-    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE)) {
+    if (gSaveContext.save.info.playerData.swordHealth <= 0.0f) {
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_GIANTS_KNIFE;
     } else {
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_BIGGORON;
@@ -1779,13 +1775,10 @@ u8 Item_Give(PlayState* play, u8 item) {
             OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, item - ITEM_SWORD_KOKIRI + EQUIP_INV_SWORD_KOKIRI);
 
         if (item == ITEM_SWORD_BIGGORON) {
-            gSaveContext.save.info.playerData.swordHealth = 8;
+            gSaveContext.save.info.playerData.swordHealth = MAX_SWORD_HEALTH;
 
             if (ALL_EQUIP_VALUE(EQUIP_TYPE_SWORD) ==
-                ((1 << EQUIP_INV_SWORD_KOKIRI) | (1 << EQUIP_INV_SWORD_MASTER) | (1 << EQUIP_INV_SWORD_BIGGORON) |
-                 (1 << EQUIP_INV_SWORD_BROKENGIANTKNIFE))) {
-                gSaveContext.save.info.inventory.equipment ^=
-                    OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE);
+                ((1 << EQUIP_INV_SWORD_KOKIRI) | (1 << EQUIP_INV_SWORD_MASTER) | (1 << EQUIP_INV_SWORD_BIGGORON))) {
                 if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_GIANTS_KNIFE) {
                     gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_BIGGORON;
                     Interface_LoadItemIcon1(play, 0);
@@ -2293,7 +2286,7 @@ u8 Item_CheckObtainability(u8 item) {
     } else if (item == ITEM_SHIELD_HEROS) {
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
-        return HAS_HEROS_SWORD ? item : ITEM_NONE;
+        return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ? item : ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI + EQUIP_INV_TUNIC_KOKIRI)) {
             return item;

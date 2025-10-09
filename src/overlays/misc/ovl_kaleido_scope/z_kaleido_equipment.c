@@ -510,7 +510,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             (pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_VALUE_SWORD_BIGGORON)) {
             if (gSaveContext.save.info.playerData.bgsFlag) {
                 cursorItem = ITEM_HEART_PIECE_2;
-            } else if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE)) {
+            } else if (gSaveContext.save.info.playerData.swordHealth <= 0.0f) {
                 cursorItem = ITEM_GIANTS_KNIFE;
             }
         }
@@ -561,23 +561,49 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             sEquipTimer = 10;
         }
 
-        if (pauseCtx->cursorSpecialPos == 0 && cursorItem == ITEM_SHIELD_HYLIAN && (pauseCtx->state == PAUSE_STATE_MAIN) && pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && IS_CHILD_QUEST) {
-            KaleidoScope_DrawSwapItemIcons(play, HAS_HEROS_SHIELD ? ITEM_SHIELD_HEROS : ITEM_SHIELD_HYLIAN , HAS_HEROS_SHIELD ? ITEM_SHIELD_HYLIAN : ITEM_SHIELD_HEROS, pauseCtx->alpha);
+        if (pauseCtx->cursorSpecialPos == 0 && pauseCtx->state == PAUSE_STATE_MAIN && pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE && IS_CHILD_QUEST) {
+            if (cursorItem == ITEM_SWORD_KOKIRI && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) {
+                KaleidoScope_DrawSwapItemIcons(play, HAS_HEROS_SWORD ? ITEM_SWORD_HEROS : ITEM_SWORD_KOKIRI, HAS_HEROS_SWORD ? ITEM_SWORD_KOKIRI : ITEM_SWORD_HEROS, pauseCtx->alpha);
 
-            if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
-                Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-                TOGGLE_HEROS_SHIELD;
-                Player_SetEquipmentData(play, GET_PLAYER(play));
-                pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
-                sEquipTimer = 10;
+                if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                    Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    TOGGLE_HEROS_SWORD;
+                    Player_SetEquipmentData(play, GET_PLAYER(play));
+                    pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
+                    sEquipTimer = 10;
 
-                for (i=1; i<8; i++) {
-                    if (i<4) {
-                        if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SHIELDS)
+                    if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_KOKIRI)
+                        Interface_LoadItemIcon1(play, 0);
+
+                    for (i=1; i<8; i++) {
+                        if (i<4) {
+                            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                                Interface_LoadItemIcon1(play, i);
+                        }
+                        else if (Interface_GetItemFromDpad(i-4) == ITEM_SWORDS)
                             Interface_LoadItemIcon1(play, i);
                     }
-                    else if (Interface_GetItemFromDpad(i-4) == ITEM_SHIELDS)
-                        Interface_LoadItemIcon1(play, i);
+                }
+            }
+
+            if (cursorItem == ITEM_SHIELD_HYLIAN && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
+                KaleidoScope_DrawSwapItemIcons(play, HAS_HEROS_SHIELD ? ITEM_SHIELD_HEROS : ITEM_SHIELD_HYLIAN, HAS_HEROS_SHIELD ? ITEM_SHIELD_HYLIAN : ITEM_SHIELD_HEROS, pauseCtx->alpha);
+
+                if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                    Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    TOGGLE_HEROS_SHIELD;
+                    Player_SetEquipmentData(play, GET_PLAYER(play));
+                    pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
+                    sEquipTimer = 10;
+
+                    for (i=1; i<8; i++) {
+                        if (i<4) {
+                            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SHIELDS)
+                                Interface_LoadItemIcon1(play, i);
+                        }
+                        else if (Interface_GetItemFromDpad(i-4) == ITEM_SHIELDS)
+                            Interface_LoadItemIcon1(play, i);
+                    }
                 }
             }
         }
@@ -597,14 +623,14 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                     if ((pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_VALUE_SWORD_BIGGORON) &&
                         gSaveContext.save.info.playerData.bgsFlag) {
                         gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_BIGGORON;
-                        gSaveContext.save.info.playerData.swordHealth = 8;
+                        gSaveContext.save.info.playerData.swordHealth = MAX_SWORD_HEALTH;
                     } else {
                         if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_HEART_PIECE_2) {
                             gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_BIGGORON;
                         }
                         if ((gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_BIGGORON) &&
                             !gSaveContext.save.info.playerData.bgsFlag &&
-                            CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE)) {
+                            gSaveContext.save.info.playerData.swordHealth <= 0.0f) {
                             gSaveContext.save.info.equips.buttonItems[0] = ITEM_GIANTS_KNIFE;
                         }
                     }
@@ -806,7 +832,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             } else if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_BIGGORON && IS_CHILD_QUEST_AS_CHILD && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconSwordSilverTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if ((i == EQUIP_TYPE_SWORD) && (k == EQUIP_INV_SWORD_BIGGORON) &&
-                       (gBitFlags[bit + 1] & gSaveContext.save.info.inventory.equipment)) {
+                       (gSaveContext.save.info.playerData.swordHealth <= 0.0f && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON))) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconBrokenGiantsKnifeTex, ITEM_ICON_WIDTH,
                                                    ITEM_ICON_HEIGHT, point);
             } else if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_KOKIRI && IS_HEROS_SWORD) {
