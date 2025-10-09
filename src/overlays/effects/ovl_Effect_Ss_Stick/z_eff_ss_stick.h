@@ -7,6 +7,7 @@
 typedef struct EffectSsStickInitParams {
     /* 0x00 */ Vec3f pos;
     /* 0x0C */ s16 yaw;
-} EffectSsStickInitParams; // size = 0x10
+    /* 0x10 */ u8 isKnife;
+} EffectSsStickInitParams; // size = 0x11
 
 #endif

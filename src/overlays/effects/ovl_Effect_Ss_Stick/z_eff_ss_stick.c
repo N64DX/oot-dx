@@ -24,6 +24,8 @@ u32 EffectSsStick_Init(PlayState* play, u32 index, EffectSs* this, void* initPar
 void EffectSsStick_Draw(PlayState* play, u32 index, EffectSs* this);
 void EffectSsStick_Update(PlayState* play, u32 index, EffectSs* this);
 
+bool isKnife;
+
 EffectSsProfile Effect_Ss_Stick_Profile = {
     EFFECT_SS_STICK,
     EffectSsStick_Init,
@@ -33,9 +35,10 @@ u32 EffectSsStick_Init(PlayState* play, u32 index, EffectSs* this, void* initPar
     EffectSsStickInitParams* initParams = (EffectSsStickInitParams*)initParamsx;
 
     this->rObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GAMEPLAY_KEEP);
-    this->gfx = gLinkDekuStickDL;
     this->vec = this->pos = initParams->pos;
     this->rYaw = initParams->yaw;
+    isKnife = initParams->isKnife;
+    this->gfx = isKnife ? gLinkBrokenGiantsKnifeBladeDL : gLinkDekuStickDL;
     this->velocity.x = Math_SinS(initParams->yaw) * 6.0f;
     this->velocity.z = Math_CosS(initParams->yaw) * 6.0f;
     this->life = 20;
@@ -55,7 +58,7 @@ void EffectSsStick_Draw(PlayState* play, u32 index, EffectSs* this) {
 
     Matrix_Translate(this->pos.x, this->pos.y, this->pos.z, MTXMODE_NEW);
 
-    if (!LINK_IS_ADULT) {
+    if (!isKnife) {
         Matrix_Scale(0.01f, 0.0025f, 0.01f, MTXMODE_APPLY);
         Matrix_RotateZYX(0, this->rYaw, 0, MTXMODE_APPLY);
     } else {

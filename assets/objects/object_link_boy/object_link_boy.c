@@ -669,14 +669,6 @@ Gfx gLinkAdultBowStringDL[12] = {
 #include "assets/objects/object_link_boy/gLinkAdultBowStringDL.inc.c"
 };
 
-Vtx gLinkAdultBrokenGiantsKnifeBladeVtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultBrokenGiantsKnifeBladeVtx.inc.c"
-};
-
-Gfx gLinkAdultBrokenGiantsKnifeBladeDL[28] = {
-#include "assets/objects/object_link_boy/gLinkAdultBrokenGiantsKnifeBladeDL.inc.c"
-};
-
 // Near skeleton vertices and DLs
 
 Vtx gLinkAdultRightFootNearVtx[] = {

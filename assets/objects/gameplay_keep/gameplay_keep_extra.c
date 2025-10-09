@@ -237,7 +237,7 @@ Gfx gEffIceFragment2ModelDL[] = {
 
 
 
-// Deku stick
+// Deku stick & Broken Giant's Knife
 
 Vtx gLinkChildLinkDekuStickVtx[] = {
 #include "assets/objects/object_link_child/gLinkChildLinkDekuStickVtx.inc.c"
@@ -245,6 +245,14 @@ Vtx gLinkChildLinkDekuStickVtx[] = {
 
 Gfx gLinkDekuStickDL[41] = {
 #include "assets/objects/object_link_child/gLinkChildLinkDekuStickDL.inc.c"
+};
+
+Vtx gLinkAdultBrokenGiantsKnifeBladeVtx[] = {
+#include "assets/objects/object_link_boy/gLinkAdultBrokenGiantsKnifeBladeVtx.inc.c"
+};
+
+Gfx gLinkBrokenGiantsKnifeBladeDL[28] = {
+#include "assets/objects/object_link_boy/gLinkAdultBrokenGiantsKnifeBladeDL.inc.c"
 };
 
 

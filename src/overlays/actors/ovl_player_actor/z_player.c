@@ -9502,7 +9502,7 @@ void func_80842A88(PlayState* play, Player* this) {
 s32 func_80842AC4(PlayState* play, Player* this) {
     if ((this->heldItemAction == PLAYER_IA_DEKU_STICK) && (this->unk_85C > 0.5f)) {
         if (AMMO(ITEM_DEKU_STICK) != 0) {
-            EffectSsStick_Spawn(play, &this->bodyPartsPos[PLAYER_BODYPART_R_HAND], this->actor.shape.rot.y + 0x8000);
+            EffectSsStick_Spawn(play, &this->bodyPartsPos[PLAYER_BODYPART_R_HAND], this->actor.shape.rot.y + 0x8000, false);
             this->unk_85C = 0.5f;
             func_80842A88(play, this);
             Player_PlaySfx(this, NA_SE_IT_WOODSTICK_BROKEN);
@@ -9519,7 +9519,7 @@ s32 func_80842B7C(PlayState* play, Player* this) {
         if (!gSaveContext.save.info.playerData.bgsFlag && (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth > 0.0f :  gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
             if ((gSaveContext.save.info.playerData.swordHealth -= 1.0f) <= 0.0f) {
                 EffectSsStick_Spawn(play, &this->bodyPartsPos[PLAYER_BODYPART_R_HAND],
-                                    this->actor.shape.rot.y + 0x8000);
+                                    this->actor.shape.rot.y + 0x8000, true);
                 func_800849EC(play);
                 Player_PlaySfx(this, NA_SE_IT_MAJIN_SWORD_BROKEN);
             }

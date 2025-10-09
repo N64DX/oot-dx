@@ -61,7 +61,6 @@ extern Gfx gLinkAdultRightHandHoldingBowFirstPersonDL[158];
 extern Gfx gLinkAdultRightHandHoldingHookshotFarDL[196];
 extern Gfx gLinkAdultBottleDL[35];
 extern Gfx gLinkAdultBowStringDL[12];
-extern Gfx gLinkAdultBrokenGiantsKnifeBladeDL[28];
 
 extern Gfx gLinkAdultWaistNearDL[105];
 extern Gfx gLinkAdultRightShoulderNearDL[56];
