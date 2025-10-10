@@ -1540,7 +1540,7 @@ void Interface_InitHorsebackArchery(PlayState* play) {
 void func_800849EC(PlayState* play) {
     u8 i;
 
-    if (gSaveContext.save.info.playerData.swordHealth <= 0.0f) {
+    if (!gSaveContext.save.info.playerData.swordHealth) {
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_GIANTS_KNIFE;
     } else {
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_BIGGORON;

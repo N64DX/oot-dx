@@ -510,7 +510,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             (pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_VALUE_SWORD_BIGGORON)) {
             if (gSaveContext.save.info.playerData.bgsFlag) {
                 cursorItem = ITEM_HEART_PIECE_2;
-            } else if (gSaveContext.save.info.playerData.swordHealth <= 0.0f) {
+            } else if (!gSaveContext.save.info.playerData.swordHealth) {
                 cursorItem = ITEM_GIANTS_KNIFE;
             }
         }
@@ -630,7 +630,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                         }
                         if ((gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_BIGGORON) &&
                             !gSaveContext.save.info.playerData.bgsFlag &&
-                            gSaveContext.save.info.playerData.swordHealth <= 0.0f) {
+                            !gSaveContext.save.info.playerData.swordHealth) {
                             gSaveContext.save.info.equips.buttonItems[0] = ITEM_GIANTS_KNIFE;
                         }
                     }
@@ -832,7 +832,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             } else if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_BIGGORON && IS_CHILD_QUEST_AS_CHILD && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconSwordSilverTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if ((i == EQUIP_TYPE_SWORD) && (k == EQUIP_INV_SWORD_BIGGORON) &&
-                       (gSaveContext.save.info.playerData.swordHealth <= 0.0f && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON))) {
+                       (!gSaveContext.save.info.playerData.swordHealth && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON))) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconBrokenGiantsKnifeTex, ITEM_ICON_WIDTH,
                                                    ITEM_ICON_HEIGHT, point);
             } else if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_KOKIRI && IS_HEROS_SWORD) {

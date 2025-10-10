@@ -2508,7 +2508,7 @@ void func_80833A20(Player* this, s32 newMeleeWeaponState) {
 
     if (this->meleeWeaponState == 0) {
         if ((this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) &&
-            (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth > 0.0f : gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
+            (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth : gSaveContext.save.info.playerData.swordHealth)) {
             itemSfx = NA_SE_IT_HAMMER_SWING;
         } else {
             itemSfx = NA_SE_IT_SWORD_SWING;
@@ -2735,7 +2735,7 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     nextItem  = validItems[i  % validCount];
     nextEquip = validEquips[i % validCount] + 1;
     if (current != nextItem) {
-        if (nextItem == ITEM_SWORD_BIGGORON && gSaveContext.save.info.playerData.swordHealth <= 0.0f && LINK_IS_ADULT)
+        if (nextItem == ITEM_SWORD_BIGGORON && !gSaveContext.save.info.playerData.swordHealth && LINK_IS_ADULT)
             nextItem = ITEM_GIANTS_KNIFE;
         else if (nextItem == ITEM_SWORD_HEROS) {
             SET_HEROS_SWORD;
@@ -7042,7 +7042,7 @@ s32 Player_ActionHandler_8(Player* this, PlayState* play) {
         if (!(this->stateFlags1 & PLAYER_STATE1_SHIELDING) && (Player_GetMeleeWeaponHeld2(this) != 0) &&
             (this->unk_844 == 1) && (this->heldItemAction != PLAYER_IA_DEKU_STICK)) {
             if ((this->heldItemAction != PLAYER_IA_SWORD_BIGGORON) ||
-                (gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
+                (gSaveContext.save.info.playerData.swordHealth)) {
                 func_808377DC(play, this);
                 return 1;
             }
@@ -9516,8 +9516,8 @@ s32 func_80842AC4(PlayState* play, Player* this) {
 
 s32 func_80842B7C(PlayState* play, Player* this) {
     if (this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) {
-        if (!gSaveContext.save.info.playerData.bgsFlag && (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth > 0.0f :  gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
-            if ((gSaveContext.save.info.playerData.swordHealth -= 1.0f) <= 0.0f) {
+        if (!gSaveContext.save.info.playerData.bgsFlag && (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth : gSaveContext.save.info.playerData.swordHealth)) {
+            if (!(gSaveContext.save.info.playerData.swordHealth -= 1)) {
                 EffectSsStick_Spawn(play, &this->bodyPartsPos[PLAYER_BODYPART_R_HAND],
                                     this->actor.shape.rot.y + 0x8000, true);
                 func_800849EC(play);
