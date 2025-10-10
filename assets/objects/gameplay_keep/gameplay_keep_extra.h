@@ -24,6 +24,7 @@ extern Gfx gEffIceFragment2MaterialDL[];
 extern Gfx gEffIceFragment2ModelDL[];
 
 extern Gfx gLinkDekuStickDL[41];
+extern Gfx gLinkBrokenGiantsKnifeBladeDL[28];
 
 extern Gfx gLinkChildSkullMaskDL[70];
 extern Gfx gLinkChildSpookyMaskDL[30];

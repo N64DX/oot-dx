@@ -109,7 +109,7 @@ s32 func_80A3D7C8(void) {
             return 0;
         else if (!GET_EVENTCHKINF(EVENTCHKINF_49))
             return 2;
-        else if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) || CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE))
+        else if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) || !gSaveContext.save.info.playerData.swordHealth)
             return 1;
         else return 3;
     }
@@ -118,7 +118,7 @@ s32 func_80A3D7C8(void) {
         return 0;
     } else if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
         return 1;
-    } else if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE)) {
+    } else if (!gSaveContext.save.info.playerData.swordHealth) {
         return 2;
     } else {
         return 3;

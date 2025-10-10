@@ -900,7 +900,7 @@ s32 Player_HoldsTwoHandedWeapon(Player* this) {
 
 int Player_HoldsBrokenKnife(Player* this) {
     return (this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) &&
-           (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth <= 0.0f : gSaveContext.save.info.playerData.swordHealth <= 0.0f);
+           (IS_CHILD_QUEST ? LINK_IS_ADULT && !gSaveContext.save.info.playerData.swordHealth : !gSaveContext.save.info.playerData.swordHealth);
 }
 
 s32 Player_ActionToBottle(Player* this, s32 itemAction) {
@@ -1410,7 +1410,7 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                         *dLists = gPlayerSwords[IS_YOUNG_LINK][4];
                     else *dLists = gPlayerSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                 }
-            } else if ((sLeftHandType == PLAYER_MODELTYPE_LH_BGS) && (gSaveContext.save.info.playerData.swordHealth <= 0.0f)) {
+            } else if ((sLeftHandType == PLAYER_MODELTYPE_LH_BGS) && (!gSaveContext.save.info.playerData.swordHealth)) {
                 dLists += MAX_LINK_MODELS;
             }
 
@@ -2034,7 +2034,7 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
         if (limbIndex == PLAYER_LIMB_L_HAND) {
             type = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_LEFT_HAND];
             sLeftHandType = type;
-            if ((type == PLAYER_MODELTYPE_LH_BGS) && (gSaveContext.save.info.playerData.swordHealth <= 0.0f)) {
+            if ((type == PLAYER_MODELTYPE_LH_BGS) && (!gSaveContext.save.info.playerData.swordHealth)) {
                 dListOffset = MAX_LINK_MODELS;
             }
         } else if (limbIndex == PLAYER_LIMB_R_HAND) {

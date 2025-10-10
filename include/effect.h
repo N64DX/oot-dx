@@ -382,7 +382,7 @@ void EffectSsHahen_Spawn(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Ve
                          s16 objId, s16 life, Gfx* dList);
 void EffectSsHahen_SpawnBurst(struct PlayState* play, Vec3f* pos, f32 burstScale, s16 unused, s16 scale,
                               s16 randScaleRange, s16 count, s16 objId, s16 life, Gfx* dList);
-void EffectSsStick_Spawn(struct PlayState* play, Vec3f* pos, s16 yaw);
+void EffectSsStick_Spawn(struct PlayState* play, Vec3f* pos, s16 yaw, u8 isKnife);
 void EffectSsSibuki_Spawn(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 moveDelay,
                           s16 direction, s16 scale);
 void EffectSsSibuki_SpawnBurst(struct PlayState* play, Vec3f* pos);

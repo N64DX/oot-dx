@@ -2508,7 +2508,7 @@ void func_80833A20(Player* this, s32 newMeleeWeaponState) {
 
     if (this->meleeWeaponState == 0) {
         if ((this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) &&
-            (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth > 0.0f : gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
+            (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth : gSaveContext.save.info.playerData.swordHealth)) {
             itemSfx = NA_SE_IT_HAMMER_SWING;
         } else {
             itemSfx = NA_SE_IT_SWORD_SWING;
@@ -2694,27 +2694,23 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     static const EquipmentSwapEntry equipments[] = {
         { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    LINK_AGE_CHILD },
         { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
         { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
     };
 
     u8 current    = gSaveContext.save.info.equips.buttonItems[0];
     u8 validCount = 0;
-    u8 validItems[3], validEquips[3], i, nextItem, nextEquip;
+    u8 validItems[4], validEquips[4], i, nextItem, nextEquip;
 
-    for (i=0; i<3; i++) {
+    if (current == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
+        current = ITEM_SWORD_HEROS;
+
+    for (i=0; i<4; i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
-
-        if (equipment->itemId == ITEM_SWORD_BIGGORON)
-            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BROKENGIANTKNIFE)) {
-                validItems[validCount]  = ITEM_GIANTS_KNIFE;
-                validEquips[validCount] = EQUIP_INV_SWORD_BROKENGIANTKNIFE;
-                validCount++;
-                continue;
-            }
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, equipment->equipId)) {
             validItems[validCount]  = equipment->itemId;
@@ -2739,6 +2735,15 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     nextItem  = validItems[i  % validCount];
     nextEquip = validEquips[i % validCount] + 1;
     if (current != nextItem) {
+        if (nextItem == ITEM_SWORD_BIGGORON && !gSaveContext.save.info.playerData.swordHealth && LINK_IS_ADULT)
+            nextItem = ITEM_GIANTS_KNIFE;
+        else if (nextItem == ITEM_SWORD_HEROS) {
+            SET_HEROS_SWORD;
+            nextItem = ITEM_SWORD_KOKIRI;
+        }
+        else if (nextItem == ITEM_SWORD_KOKIRI)
+            CLEAR_HEROS_SWORD;
+
         gSaveContext.save.info.equips.buttonItems[0] = nextItem;
         Interface_LoadItemIcon1(play, 0);
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SWORD, nextEquip);
@@ -7037,7 +7042,7 @@ s32 Player_ActionHandler_8(Player* this, PlayState* play) {
         if (!(this->stateFlags1 & PLAYER_STATE1_SHIELDING) && (Player_GetMeleeWeaponHeld2(this) != 0) &&
             (this->unk_844 == 1) && (this->heldItemAction != PLAYER_IA_DEKU_STICK)) {
             if ((this->heldItemAction != PLAYER_IA_SWORD_BIGGORON) ||
-                (gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
+                (gSaveContext.save.info.playerData.swordHealth)) {
                 func_808377DC(play, this);
                 return 1;
             }
@@ -9497,7 +9502,7 @@ void func_80842A88(PlayState* play, Player* this) {
 s32 func_80842AC4(PlayState* play, Player* this) {
     if ((this->heldItemAction == PLAYER_IA_DEKU_STICK) && (this->unk_85C > 0.5f)) {
         if (AMMO(ITEM_DEKU_STICK) != 0) {
-            EffectSsStick_Spawn(play, &this->bodyPartsPos[PLAYER_BODYPART_R_HAND], this->actor.shape.rot.y + 0x8000);
+            EffectSsStick_Spawn(play, &this->bodyPartsPos[PLAYER_BODYPART_R_HAND], this->actor.shape.rot.y + 0x8000, false);
             this->unk_85C = 0.5f;
             func_80842A88(play, this);
             Player_PlaySfx(this, NA_SE_IT_WOODSTICK_BROKEN);
@@ -9511,10 +9516,10 @@ s32 func_80842AC4(PlayState* play, Player* this) {
 
 s32 func_80842B7C(PlayState* play, Player* this) {
     if (this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) {
-        if (!gSaveContext.save.info.playerData.bgsFlag && (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth > 0.0f :  gSaveContext.save.info.playerData.swordHealth > 0.0f)) {
-            if ((gSaveContext.save.info.playerData.swordHealth -= 1.0f) <= 0.0f) {
+        if (!gSaveContext.save.info.playerData.bgsFlag && (IS_CHILD_QUEST ? LINK_IS_ADULT && gSaveContext.save.info.playerData.swordHealth : gSaveContext.save.info.playerData.swordHealth)) {
+            if (!(gSaveContext.save.info.playerData.swordHealth -= 1)) {
                 EffectSsStick_Spawn(play, &this->bodyPartsPos[PLAYER_BODYPART_R_HAND],
-                                    this->actor.shape.rot.y + 0x8000);
+                                    this->actor.shape.rot.y + 0x8000, true);
                 func_800849EC(play);
                 Player_PlaySfx(this, NA_SE_IT_MAJIN_SWORD_BROKEN);
             }
