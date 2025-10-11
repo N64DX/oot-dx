@@ -1890,6 +1890,72 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                 s32 absYawDiff = ABS(yawDiff);
 
                 if ((getItemId != GI_NONE) || (player->getItemDirection < absYawDiff)) {
+                    if (getItemId == -GI_BULLET_BAG_40 || getItemId == -GI_BULLET_BAG_50) {
+                        if (CUR_UPG_VALUE(UPG_BULLET_BAG) == 0)
+                            getItemId = -GI_SLINGSHOT;
+                        else if (CUR_UPG_VALUE(UPG_BULLET_BAG) == 1)
+                            getItemId = -GI_BULLET_BAG_40;
+                        else if (CUR_UPG_VALUE(UPG_BULLET_BAG) >= 2)
+                            getItemId = -GI_BULLET_BAG_50;
+                    } else if (getItemId == -GI_QUIVER_40 || getItemId == -GI_QUIVER_50) {
+                        if (CUR_UPG_VALUE(UPG_QUIVER) == 0)
+                            getItemId = -GI_BOW;
+                        else if (CUR_UPG_VALUE(UPG_QUIVER) == 1)
+                            getItemId = -GI_QUIVER_40;
+                        else if (CUR_UPG_VALUE(UPG_QUIVER) >= 2)
+                            getItemId = -GI_QUIVER_50;
+                    } else if (getItemId == -GI_BOMB_BAG_20 || getItemId == -GI_BOMB_BAG_30 || getItemId == -GI_BOMB_BAG_40) {
+                        if (CUR_UPG_VALUE(UPG_BOMB_BAG) == 0)
+                            getItemId = -GI_BOMB_BAG_20;
+                        else if (CUR_UPG_VALUE(UPG_BOMB_BAG) == 1)
+                            getItemId = -GI_BOMB_BAG_30;
+                        else if (CUR_UPG_VALUE(UPG_BOMB_BAG) >= 2)
+                            getItemId = -GI_BOMB_BAG_40;
+                    } else if (getItemId == -GI_WALLET_ADULT || getItemId == -GI_WALLET_GIANT || getItemId == -GI_WALLET_ROYAL) {
+                        if (CUR_UPG_VALUE(UPG_WALLET) == 0)
+                            getItemId = -GI_WALLET_ADULT;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) == 1)
+                            getItemId = -GI_WALLET_GIANT;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) >= 2)
+                            getItemId = -GI_WALLET_ROYAL;
+                    } else if (getItemId == -GI_DEKU_STICK_UPGRADE_20 || getItemId == -GI_DEKU_STICK_UPGRADE_30) {
+                        if (CUR_UPG_VALUE(UPG_DEKU_STICKS) == 0)
+                            getItemId = -GI_DEKU_STICKS_1;
+                        else if (CUR_UPG_VALUE(UPG_DEKU_STICKS) == 1)
+                            getItemId = -GI_DEKU_STICK_UPGRADE_20;
+                        else if (CUR_UPG_VALUE(UPG_DEKU_STICKS) >= 2)
+                            getItemId = -GI_DEKU_STICK_UPGRADE_30;
+                    } else if (getItemId == -GI_DEKU_NUT_UPGRADE_30 || getItemId == -GI_DEKU_NUT_UPGRADE_40) {
+                        if (CUR_UPG_VALUE(UPG_DEKU_NUTS) == 0)
+                            getItemId = -GI_DEKU_NUTS_5;
+                        else if (CUR_UPG_VALUE(UPG_DEKU_NUTS) == 1)
+                            getItemId = -GI_DEKU_NUT_UPGRADE_30;
+                        else if (CUR_UPG_VALUE(UPG_DEKU_NUTS) >= 2)
+                            getItemId = -GI_DEKU_NUT_UPGRADE_40;
+                    } else if (getItemId == -GI_GORONS_BRACELET || getItemId == -GI_SILVER_GAUNTLETS || getItemId == -GI_GOLD_GAUNTLETS) {
+                        if (CUR_UPG_VALUE(UPG_STRENGTH) == 0)
+                            getItemId = -GI_GORONS_BRACELET;
+                        else if (CUR_UPG_VALUE(UPG_STRENGTH) == 1)
+                            getItemId = -GI_SILVER_GAUNTLETS;
+                        else if (CUR_UPG_VALUE(UPG_STRENGTH) >= 2)
+                            getItemId = -GI_GOLD_GAUNTLETS;
+                    } else if (getItemId == -GI_SCALE_SILVER || getItemId == -GI_SCALE_GOLDEN) {
+                        if (CUR_UPG_VALUE(UPG_SCALE) == 0)
+                            getItemId = -GI_SCALE_SILVER;
+                        else if (CUR_UPG_VALUE(UPG_SCALE) >= 1)
+                            getItemId = -GI_SCALE_GOLDEN;
+                    } else if (getItemId == -GI_OCARINA_FAIRY || getItemId == -GI_OCARINA_OF_TIME) {
+                        if (gSaveContext.save.info.inventory.items[SLOT_OCARINA] == ITEM_NONE)
+                            getItemId = -GI_OCARINA_FAIRY;
+                        else if (gSaveContext.save.info.inventory.items[SLOT_OCARINA] == ITEM_OCARINA_FAIRY || gSaveContext.save.info.inventory.items[SLOT_OCARINA] == ITEM_OCARINA_OF_TIME)
+                            getItemId = -GI_OCARINA_OF_TIME;
+                    } else if (getItemId == -GI_HOOKSHOT || getItemId == -GI_LONGSHOT) {
+                        if (gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] == ITEM_NONE)
+                            getItemId = -GI_HOOKSHOT;
+                        else if (gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] == ITEM_HOOKSHOT || gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] == ITEM_LONGSHOT)
+                            getItemId = -GI_LONGSHOT;
+                    }
+
                     if (IS_CHILD_QUEST_AS_CHILD) {
                         if (getItemId == -GI_SHIELD_MIRROR)
                             getItemId = -GI_SHIELD_MIRROR_MM;
