@@ -2068,7 +2068,7 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos) {
 
 #define MB (1024.0f * 1024.0f)
 
-u32 Play_GetObjectCtxUsage(PlayState* play) {
+u32 Play_GetObjectUsage(PlayState* play) {
     ObjectContext* ctx = &play->objectCtx;
     uintptr_t poolStart = (uintptr_t)ctx->spaceStart;
     uintptr_t poolEnd   = poolStart;
@@ -2091,6 +2091,16 @@ u32 Play_GetObjectCtxUsage(PlayState* play) {
 
     // Approximate used bytes: from pool start to highest loaded segment
     return (u32)(poolEnd - poolStart);
+}
+
+u32 Play_GetRoomUsage(PlayState* play) {
+    RomFile* room = &play->roomList.romFiles[play->roomCtx.curRoom.num];
+    return (room->vromEnd - room->vromStart);
+}
+
+u32 Play_GetSceneUsage(PlayState* play) {
+    RomFile* scene = &gSceneTable[play->sceneId].sceneFile;
+    return (scene->vromEnd - scene->vromStart);
 }
 
 void Play_PrintHeapUsage(PlayState* play) {
@@ -2124,15 +2134,20 @@ void Play_PrintHeapUsage(PlayState* play) {
         GfxPrint_Printf(printer, "ARENA: %.2fMB", usedMB);
     else GfxPrint_Printf(printer, "ARENA: %.2f/%.2fMB", usedMB, totalMB);
 
-    usedMB  = (float)(Play_GetObjectCtxUsage(play) / MB);
+    usedMB  = (float)(Play_GetObjectUsage(play) / MB);
     totalMB = (float)(((uintptr_t)objectCtx->spaceEnd - (uintptr_t)objectCtx->spaceStart) / MB);
     GfxPrint_SetPos(printer, x, 17);
     if (fabsf(totalMB - (int)(totalMB + 0.5f)) < 0.001f)
         GfxPrint_Printf(printer, "-OBJ:  %.2f/%.0fMB", usedMB, totalMB);
     else GfxPrint_Printf(printer, "-OBJ:  %.2f/%.2fMB", usedMB, totalMB);
 
-    usedMB  = (float)(reservedStatic / MB);
+    usedMB  = (float)(Play_GetRoomUsage(play) / MB);
+    totalMB = (float)(Play_GetSceneUsage(play) / MB);
     GfxPrint_SetPos(printer, x, 18);
+    GfxPrint_Printf(printer, "-SCENE:%.2f+%.2fMB", usedMB, totalMB);
+
+    usedMB  = (float)(reservedStatic / MB);
+    GfxPrint_SetPos(printer, x, 19);
     GfxPrint_Printf(printer, "STATIC:%.2fMB", usedMB);
 
     POLY_XLU_DISP = GfxPrint_Close(printer);
