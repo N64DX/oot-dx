@@ -2694,7 +2694,7 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     static const EquipmentSwapEntry equipments[] = {
         { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    LINK_AGE_CHILD },
+        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
         { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
         { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
     };
