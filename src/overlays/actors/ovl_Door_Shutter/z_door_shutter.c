@@ -621,6 +621,7 @@ void DoorShutter_Idle(DoorShutter* this, PlayState* play) {
             } else {
                 Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_CHAIN_KEY_UNLOCK_B);
             }
+            SET_AUTOSAVE(play);
         }
     } else {
         s32 doorDirection = DoorShutter_GetPlayerSide(this, play);
@@ -712,6 +713,7 @@ s32 DoorShutter_UpdateBarsClosed(DoorShutter* this, PlayState* play, f32 barsClo
                 Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_METALDOOR_CLOSE);
             } else {
                 Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_METALDOOR_OPEN);
+                SET_AUTOSAVE(play);
             }
         } else {
             if (barsClosedAmountTarget == 1.0f) {

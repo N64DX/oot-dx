@@ -118,7 +118,7 @@ typedef struct PlayState {
     /* 0x11E60 */ CollisionCheckContext colChkCtx;
     /* 0x120FC */ u16 cutsceneFlags[20];
     /* 0x12124 */ PreRender pauseBgPreRender;
-    /* 0x121C7 */ s8 unk_121C7;
+    /* 0x121C7 */ u8 autosave;
     /* 0x121C8 */ TransitionContext transitionCtx;
     /* 0x1241B */ u8 transitionMode; // "fbdemo_wipe_modem"
     /* 0x1241C */ TransitionFade transitionFadeFlash; // Transition fade instance which flashes screen, see R_TRANS_FADE_FLASH_ALPHA_STEP
@@ -130,6 +130,7 @@ extern Mtx D_01000000; // billboardMtx
 
 #define GET_ACTIVE_CAM(play) ((play)->cameraPtrs[(play)->activeCamId])
 #define GET_PLAYER(play) ((Player*)(play)->actorCtx.actorLists[ACTORCAT_PLAYER].head)
+#define SET_AUTOSAVE(play) (play->autosave = AUTOSAVE ? 1 : 0)
 
 void Play_SetViewpoint(PlayState* this, s16 viewpoint);
 s32 Play_CheckViewpoint(PlayState* this, s16 viewpoint);

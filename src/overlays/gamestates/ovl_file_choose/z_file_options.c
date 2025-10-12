@@ -122,6 +122,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 15 },
     { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 16 },
     { 0, "Use MM Young Link",      FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 17 },
+    { 0, "Autosave",               FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 18 },
     { 0, "Damage Taken",           FileSelectOptions_SetDamageTaken,    FileSelectOptions_GetDamageTaken,    1, 0  },
     { 0, "Health Recovery",        FileSelectOptions_SetHealthRecovery, FileSelectOptions_GetHealthRecovery, 1, 2  },
     { 0, "Monster Health",         FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 5  },

@@ -973,6 +973,7 @@ void EnItem00_Update(Actor* thisx, PlayState* play) {
             if (Actor_HasParent(&this->actor, play)) {
                 Flags_SetCollectible(play, this->collectibleFlag);
                 Actor_Kill(&this->actor);
+                SET_AUTOSAVE(play);
             }
             return;
     }

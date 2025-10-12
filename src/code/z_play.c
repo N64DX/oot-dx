@@ -1125,6 +1125,12 @@ skip:
     PLAY_LOG(3816);
     Environment_Update(this, &this->envCtx, &this->lightCtx, &this->pauseCtx, &this->msgCtx, &this->gameOverCtx,
                        this->state.gfxCtx);
+
+    if (this->autosave == 1 && !Player_InCsMode(this) && !IS_PAUSED(&this->pauseCtx) && !gDebugCamEnabled && AUTOSAVE) {
+        Play_SaveSceneFlags(this);
+        Sram_WriteSave(&this->sramCtx);
+        this->autosave = 0;
+    }
 }
 
 void Play_DrawOverlayElements(PlayState* this) {
@@ -1458,7 +1464,6 @@ void Play_Draw(PlayState* this) {
                 gTransitionTileState = TRANS_TILE_PROCESS;
             }
             OVERLAY_DISP = gfxP;
-            this->unk_121C7 = 2;
             R_GRAPH_TASKSET00_FLAGS |= 1;
             goto Play_Draw_skip;
         }
