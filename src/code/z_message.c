@@ -4370,40 +4370,6 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
 }
 
 #if DEBUG_FEATURES
-/**
- * If the s16 variable pointed to by `var` changes in value, a black bar and white box
- * are briefly drawn onto the screen. It can only watch one variable per build due to
- * the last value being saved in a static variable.
- */
-void Message_DrawDebugVariableChanged(s16* var, GraphicsContext* gfxCtx) {
-    static s16 sVarLastValue = 0;
-    static s16 sFillTimer = 0;
-    s32 pad;
-
-    OPEN_DISPS(gfxCtx, "../z_message_PAL.c", 3485);
-
-    if (sVarLastValue != *var) {
-        sVarLastValue = *var;
-        sFillTimer = 30;
-    }
-    if (sFillTimer != 0) {
-        sFillTimer--;
-        gDPPipeSync(POLY_OPA_DISP++);
-        gDPSetCycleType(POLY_OPA_DISP++, G_CYC_FILL);
-        gDPSetRenderMode(POLY_OPA_DISP++, G_RM_NOOP, G_RM_NOOP2);
-        gDPSetFillColor(POLY_OPA_DISP++, GPACK_RGBA5551(0, 0, 0, 1) << 0x10 | GPACK_RGBA5551(0, 0, 0, 1));
-        gDPFillRectangle(POLY_OPA_DISP++, 0, 110, SCREEN_WIDTH - 1, 150); // 40x319 black bar
-        gDPPipeSync(POLY_OPA_DISP++);
-        gDPPipeSync(POLY_OPA_DISP++);
-        gDPSetCycleType(POLY_OPA_DISP++, G_CYC_FILL);
-        gDPSetRenderMode(POLY_OPA_DISP++, G_RM_NOOP, G_RM_NOOP2);
-        gDPSetFillColor(POLY_OPA_DISP++, GPACK_RGBA5551(255, 255, 255, 1) << 0x10 | GPACK_RGBA5551(255, 255, 255, 1));
-        gDPFillRectangle(POLY_OPA_DISP++, 40, 120, 60, 140); // 20x20 white box
-        gDPPipeSync(POLY_OPA_DISP++);
-    }
-    CLOSE_DISPS(gfxCtx, "../z_message_PAL.c", 3513);
-}
-
 void Message_DrawDebugText(PlayState* play, Gfx** p) {
     s32 pad;
     GfxPrint printer;
@@ -4429,15 +4395,10 @@ void Message_Draw(PlayState* play) {
 #if OOT_VERSION < GC_US
     s32 pad;
 #endif
-#if DEBUG_FEATURES
-    s16 watchVar;
-#endif
 
     OPEN_DISPS(play->state.gfxCtx, "../z_message_PAL.c", 3554);
 
 #if DEBUG_FEATURES
-    watchVar = gSaveContext.save.info.scarecrowLongSongSet;
-    Message_DrawDebugVariableChanged(&watchVar, play->state.gfxCtx);
     if (BREG(0) != 0 && play->msgCtx.textId != 0) {
         plusOne = Gfx_Open(polyOpaP = POLY_OPA_DISP);
         gSPDisplayList(OVERLAY_DISP++, plusOne);
