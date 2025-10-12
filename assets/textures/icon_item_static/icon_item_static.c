@@ -836,3 +836,7 @@ Gfx gPromptCursorLeftDL[10] = {
 Gfx gPromptCursorRightDL[10] = {
 #include "assets/textures/icon_item_static/gPromptCursorRightDL.inc.c"
 };
+
+u64 gRightArrowTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gRightArrowTex.rgba32.inc.c"
+};

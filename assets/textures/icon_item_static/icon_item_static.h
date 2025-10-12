@@ -225,4 +225,6 @@ extern u64 gNamePanelLeftTex[TEX_LEN(u64, gNamePanelLeftTex_WIDTH, gNamePanelLef
 #define gNamePanelRightTex_HEIGHT 24
 extern u64 gNamePanelRightTex[TEX_LEN(u64, gNamePanelRightTex_WIDTH, gNamePanelRightTex_HEIGHT, 8)];
 
+extern u64 gRightArrowTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+
 #endif
