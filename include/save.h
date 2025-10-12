@@ -486,6 +486,8 @@ typedef enum LinkAge {
 extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 
 #define MIRROR_MODE                 ((gFileOptions[gSaveContext.fileNum][0] >> 0)  & 1)  // Bits: 0
+#define AUTOSAVE                    ((gFileOptions[gSaveContext.fileNum][0] >> 1)  & 1)  // Bits: 1
+#define AGONY_VISUAL_ICON           ((gFileOptions[gSaveContext.fileNum][0] >> 2)  & 1)  // Bits: 2
 #define EXTENDED_DRAW_DISTANCE      ((gFileOptions[gSaveContext.fileNum][0] >> 3)  & 1)  // Bits: 3
 #define NO_LETTERBOXING             ((gFileOptions[gSaveContext.fileNum][0] >> 4)  & 1)  // Bits: 4
 #define RESUME_LAST_AREA            ((gFileOptions[gSaveContext.fileNum][0] >> 5)  & 1)  // Bits: 5

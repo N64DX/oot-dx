@@ -47,6 +47,11 @@ typedef enum TransitionTileState {
     /* 3 */ TRANS_TILE_READY // The transition is ready, so will update and draw each frame
 } TransitionTileState;
 
+typedef enum SpecialIcon {
+    /* 0 */ SPECIAL_ICON_AUTOSAVE,
+    /* 1 */ SPECIAL_ICON_RUMBLE
+} SpecialIcon;
+
 typedef struct SceneSequences {
     /* 0x00 */ u8 seqId;
     /* 0x01 */ u8 natureAmbienceId;
@@ -118,18 +123,24 @@ typedef struct PlayState {
     /* 0x11E60 */ CollisionCheckContext colChkCtx;
     /* 0x120FC */ u16 cutsceneFlags[20];
     /* 0x12124 */ PreRender pauseBgPreRender;
-    /* 0x121C7 */ s8 unk_121C7;
+    /* 0x121C7 */ bool autosave;
     /* 0x121C8 */ TransitionContext transitionCtx;
     /* 0x1241B */ u8 transitionMode; // "fbdemo_wipe_modem"
     /* 0x1241C */ TransitionFade transitionFadeFlash; // Transition fade instance which flashes screen, see R_TRANS_FADE_FLASH_ALPHA_STEP
     /* 0x1242B */ u8 viewpoint; // toggleable camera setting by shops or player. Is also equal to the bgCamIndex + 1
     /* 0x1242C */ SceneTableEntry* loadedScene;
+    /* 0x12130 */ u8 specialIconAlpha;
+    /* 0x12131 */ bool specialIconUp;
+    /* 0x12132 */ s8 specialIconShake;
+    /* 0x12133 */ u8 specialIconCount;
+    /* 0x12134 */ u8 specialIconLast;
 } PlayState; // size = 0x12518
 
 extern Mtx D_01000000; // billboardMtx
 
 #define GET_ACTIVE_CAM(play) ((play)->cameraPtrs[(play)->activeCamId])
 #define GET_PLAYER(play) ((Player*)(play)->actorCtx.actorLists[ACTORCAT_PLAYER].head)
+#define SET_AUTOSAVE(play) (play->autosave = (AUTOSAVE ? true : false) )
 
 void Play_SetViewpoint(PlayState* this, s16 viewpoint);
 s32 Play_CheckViewpoint(PlayState* this, s16 viewpoint);

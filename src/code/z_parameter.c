@@ -1614,6 +1614,8 @@ u8 Interface_LoadItemIconChildQuest(u8 item) {
         return ITEM_FISHING_POLE + 2;
     else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
         return ITEM_FISHING_POLE + 1;
+    else if (item == ITEM_STONE_OF_AGONY)
+        return ITEM_FISHING_POLE + 16;
     else if (IS_CHILD_QUEST) {
         if (item == ITEM_BROKEN_GORONS_SWORD)
             return ITEM_FISHING_POLE + 15;
@@ -3851,6 +3853,80 @@ static void Interface_PrintHeapUsage(PlayState* this) {
     CLOSE_DISPS(this->state.gfxCtx, "../z_parameter.c", 3854);
 }
 
+static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfaceCtx) {
+    bool isRumble = play->specialIconLast == SPECIAL_ICON_RUMBLE;
+    u16 x = 26, y = 206 - 16;
+
+    if (play->specialIconAlpha >= 240) {
+        play->specialIconUp = false;
+        play->specialIconAlpha = 240;
+    } else if (play->specialIconAlpha == 0 && play->specialIconCount > 0) {
+        play->specialIconUp = true;
+        play->specialIconCount--;
+        if (play->specialIconCount == 0)
+            return;
+    }
+
+    if (play->specialIconUp) {
+        if (play->specialIconAlpha >= 240 - (4 - R_UPDATE_RATE) * 10)
+            play->specialIconAlpha = 240;
+        else play->specialIconAlpha += (4 - R_UPDATE_RATE) * 10;
+    } else {
+        if (play->specialIconAlpha <= (4 - R_UPDATE_RATE) * 10)
+            play->specialIconAlpha = 0;
+        else play->specialIconAlpha -= (4 - R_UPDATE_RATE) * 10;
+    }
+
+    if (isRumble) {
+        switch (play->specialIconAlpha) {
+            case 30:  play->specialIconShake =  0; break;
+            case 60:  play->specialIconShake =  1; break;
+            case 90:  play->specialIconShake =  0; break;
+            case 120: play->specialIconShake = -1; break;
+            case 150: play->specialIconShake =  0; break;
+            case 180: play->specialIconShake =  1; break;
+            case 210: play->specialIconShake =  0; break;
+            case 240: play->specialIconShake = -1; break;
+        }
+    }
+
+    switch (play->sceneId) {
+        case SCENE_FOREST_TEMPLE:
+        case SCENE_FIRE_TEMPLE:
+        case SCENE_WATER_TEMPLE:
+        case SCENE_SPIRIT_TEMPLE:
+        case SCENE_SHADOW_TEMPLE:
+        case SCENE_BOTTOM_OF_THE_WELL:
+        case SCENE_ICE_CAVERN:
+        case SCENE_GANONS_TOWER:
+        case SCENE_GERUDO_TRAINING_GROUND:
+        case SCENE_THIEVES_HIDEOUT:
+        case SCENE_INSIDE_GANONS_CASTLE:
+        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+        case SCENE_TREASURE_BOX_SHOP:
+            if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0)
+                y -= 16;
+    }
+
+    if (isRumble) {
+        x += play->specialIconShake;
+        y -= 6;
+    }
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3785);
+
+    Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+    gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, play->specialIconAlpha);
+    gDPPipeSync(OVERLAY_DISP++);
+
+    gDPLoadTextureBlock(OVERLAY_DISP++, interfaceCtx->iconItemSegment + 0x8000, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(x << 2), HIRES_MULTIPLY((y) << 2), HIRES_MULTIPLY((x + (isRumble ? 24 : 16)) << 2), HIRES_MULTIPLY((y + (isRumble ? 24 : 16)) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(isRumble ? 1366 : 2048), HIRES_DIVIDE(isRumble ? 1366 : 2048));
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3795);
+}
+
 void Interface_Draw(PlayState* play) {
     static s16 magicArrowEffectsR[] = { 255, 100, 255 };
     static s16 magicArrowEffectsG[] = { 0, 100, 255 };
@@ -3967,6 +4043,9 @@ void Interface_Draw(PlayState* play) {
             default:
                 break;
         }
+
+        if (play->specialIconCount > 0)
+            Interface_DrawSpecialIcon(play, interfaceCtx);
 
         // Rupee Counter
         gDPPipeSync(OVERLAY_DISP++);

@@ -476,6 +476,7 @@ void Play_Init(GameState* thisx) {
     this->unk_11E16 = 0xFF;
     this->bgCoverAlpha = 0;
     this->haltAllActors = false;
+    this->autosave = this->specialIconAlpha = this->specialIconUp = this->specialIconShake = this->specialIconCount = this->specialIconLast = 0;
 
     if (gSaveContext.gameMode != GAMEMODE_TITLE_SCREEN) {
         if (gSaveContext.nextTransitionType == TRANS_NEXT_TYPE_DEFAULT) {
@@ -1130,6 +1131,21 @@ skip:
     PLAY_LOG(3816);
     Environment_Update(this, &this->envCtx, &this->lightCtx, &this->pauseCtx, &this->msgCtx, &this->gameOverCtx,
                        this->state.gfxCtx);
+
+    if (this->autosave && !Player_InCsMode(this) && !IS_PAUSED(&this->pauseCtx) && !gDebugCamEnabled && this->msgCtx.msgMode == MSGMODE_NONE && gSaveContext.gameMode == GAMEMODE_NORMAL && this->gameOverCtx.state == GAMEOVER_INACTIVE && AUTOSAVE) {
+        Play_SaveSceneFlags(this);
+        gSaveContext.save.info.playerData.savedSceneId = this->sceneId;
+        Sram_WriteSave(&this->sramCtx);
+        this->autosave = false;
+        this->specialIconAlpha = 255;
+        this->specialIconCount = 2;
+
+        if (this->specialIconLast != SPECIAL_ICON_AUTOSAVE) {
+            InterfaceContext* interfaceCtx = &this->interfaceCtx;
+            this->specialIconLast = SPECIAL_ICON_AUTOSAVE;
+            DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (8 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(ITEM_OCARINA_OF_TIME), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1171);
+        }
+    }
 }
 
 void Play_DrawOverlayElements(PlayState* this) {
@@ -1475,7 +1491,6 @@ void Play_Draw(PlayState* this) {
                 gTransitionTileState = TRANS_TILE_PROCESS;
             }
             OVERLAY_DISP = gfxP;
-            this->unk_121C7 = 2;
             R_GRAPH_TASKSET00_FLAGS |= 1;
             goto Play_Draw_skip;
         }
