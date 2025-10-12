@@ -2,8 +2,9 @@
 #include "assets/scenes/overworld/spot03/spot03_scene.h"
 
 #if PLATFORM_N64
+#include "save.h"
 
-static SceneCmd* questHeaders[3];
+static SceneCmd* questHeaders[QUEST_MAX];
 
 static SceneCmd start[] = {
 #include "assets/scenes/overworld/start.inc.c"

@@ -7,4 +7,3 @@
     OBJECT_GI_SHIELD_1, // 6
     OBJECT_GI_SHIELD_2, // 7
     OBJECT_GI_CLOTHES, // 8
-

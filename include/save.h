@@ -465,21 +465,21 @@ typedef enum LinkAge {
 #define MASTER_QUEST        1
 #define URA_QUEST           2
 #define CHILD_QUEST         3
-#define MASTER_CHILD_QUEST  4
-#define URA_CHILD_QUEST     5
+#define CHILD_MASTER_QUEST  4
+#define CHILD_URA_QUEST     5
 #define DUNGEON_RUSH        6
-#define MASTER_DUNGEON_RUSH 7
-#define URA_DUNGEON_RUSH    8
+#define DUNGEON_MASTER_RUSH 7
+#define DUNGEON_URA_RUSH    8
 #define BOSS_RUSH           9
 
-#define QUEST_MAX   CHILD_QUEST
+#define QUEST_MAX   CHILD_MASTER_QUEST
 #define QUEST_MODE (gSaveContext.save.info.questMode & 15)
 
 #define IS_VANILLA_QUEST (R_QUEST_MODE % 3 == 0)
 #define IS_MASTER_QUEST  (R_QUEST_MODE % 3 == 1)
 #define IS_URA_QUEST     (R_QUEST_MODE % 3 == 2)
-#define IS_CHILD_QUEST   (R_QUEST_MODE >= CHILD_QUEST  && R_QUEST_MODE <= URA_CHILD_QUEST)
-#define IS_DUNGEON_RUSH  (R_QUEST_MODE >= DUNGEON_RUSH && R_QUEST_MODE <= URA_DUNGEON_RUSH)
+#define IS_CHILD_QUEST   (R_QUEST_MODE >= CHILD_QUEST  && R_QUEST_MODE <= CHILD_URA_QUEST)
+#define IS_DUNGEON_RUSH  (R_QUEST_MODE >= DUNGEON_RUSH && R_QUEST_MODE <= DUNGEON_URA_RUSH)
 #define IS_BOSS_RUSH     (R_QUEST_MODE == BOSS_RUSH)
 
 #define FILE_OPTIONS_SIZE 2

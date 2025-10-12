@@ -1,6 +1,7 @@
 #include "assets/scenes/dungeons/men/men_scene.h"
+#include "save.h"
 
-static SceneCmd* questHeaders[3];
+static SceneCmd* questHeaders[QUEST_MAX];
 
 static SceneCmd start[] = {
 #include "assets/scenes/dungeons/start.inc.c"
@@ -30,6 +31,14 @@ static ActorEntry cq_actors[] = {
 
 static SceneCmd cq_header[] = {
 #include "assets/scenes/dungeons/men/cq/headers/room3.inc.c"
+};
+
+static ActorEntry cmq_actors[] = {
+#include "assets/scenes/dungeons/men/cmq/actors/room3_actor.inc.c"
+};
+
+static SceneCmd cmq_header[] = {
+#include "assets/scenes/dungeons/men/cmq/headers/room3.inc.c"
 };
 
 static SceneCmd* questHeaders[] = {

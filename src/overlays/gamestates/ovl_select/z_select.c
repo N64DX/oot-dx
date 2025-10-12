@@ -839,11 +839,11 @@ void MapSelect_PrintMenu(MapSelectState* this, GfxPrint* printer) {
         case MASTER_QUEST:        GfxPrint_Printf(printer, "Master Quest");              break;
         case URA_QUEST:           GfxPrint_Printf(printer, "Ura Quest");                 break;
         case CHILD_QUEST:         GfxPrint_Printf(printer, "Child Quest");               break;
-        case MASTER_CHILD_QUEST:  GfxPrint_Printf(printer, "Master Child Quest");        break;
-        case URA_CHILD_QUEST:     GfxPrint_Printf(printer, "Ura Child Quest");           break;
+        case CHILD_MASTER_QUEST:  GfxPrint_Printf(printer, "Child MQ");                  break;
+        case CHILD_URA_QUEST:     GfxPrint_Printf(printer, "Child Ura");                 break;
         case DUNGEON_RUSH:        GfxPrint_Printf(printer, "Dungeon Rush");              break;
-        case MASTER_DUNGEON_RUSH: GfxPrint_Printf(printer, "Master Dungeon Rush");       break;
-        case URA_DUNGEON_RUSH:    GfxPrint_Printf(printer, "Ura Dungeon Rush");          break;
+        case DUNGEON_MASTER_RUSH: GfxPrint_Printf(printer, "Dungeon MQ Rush");           break;
+        case DUNGEON_URA_RUSH:    GfxPrint_Printf(printer, "Dungeon Ura Rush");          break;
         case BOSS_RUSH:           GfxPrint_Printf(printer, "Boss Rush");                 break;
         default:                  GfxPrint_Printf(printer, "Quest:%d", this->questMode); break;
     }

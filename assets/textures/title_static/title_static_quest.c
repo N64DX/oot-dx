@@ -18,3 +18,7 @@ u64 gFileSelQuestUraQuestButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gF
 u64 gFileSelQuestChildQuestButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)] = {
 #include "assets/textures/title_static/gFileSelQuestChildQuestButtonTex.ia16.inc.c"
 };
+
+u64 gFileSelQuestChildMasterQuestButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelQuestChildMasterQuestButtonTex.ia16.inc.c"
+};

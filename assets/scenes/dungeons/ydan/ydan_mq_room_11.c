@@ -1,6 +1,7 @@
 #include "assets/scenes/dungeons/ydan/ydan_scene.h"
+#include "save.h"
 
-static SceneCmd* questHeaders[3];
+static SceneCmd* questHeaders[QUEST_MAX];
 
 static SceneCmd start[] = {
 #include "assets/scenes/dungeons/start.inc.c"
@@ -22,6 +23,10 @@ static s16 cq_objects[] = {
 
 static SceneCmd cq_header[] = {
 #include "assets/scenes/dungeons/ydan/cq/headers/room11.inc.c"
+};
+
+static SceneCmd cmq_header[] = {
+#include "assets/scenes/dungeons/ydan/mq/headers/room11.inc.c"
 };
 
 static SceneCmd* questHeaders[] = {

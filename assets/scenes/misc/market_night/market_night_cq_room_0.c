@@ -1,6 +1,7 @@
 #include "assets/scenes/misc/market_night/market_night_scene.h"
+#include "save.h"
 
-static SceneCmd* questHeaders[3];
+static SceneCmd* questHeaders[QUEST_MAX];
 
 static SceneCmd start[] = {
 #include "assets/scenes/overworld/start.inc.c"

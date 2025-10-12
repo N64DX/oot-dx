@@ -1,6 +1,7 @@
 #include "assets/scenes/dungeons/HIDAN/HIDAN_scene.h"
+#include "save.h"
 
-static SceneCmd* questHeaders[3];
+static SceneCmd* questHeaders[QUEST_MAX];
 
 static SceneCmd start[] = {
 #include "assets/scenes/dungeons/start.inc.c"
@@ -30,6 +31,14 @@ static ActorEntry cq_actors[] = {
 
 static SceneCmd cq_header[] = {
 #include "assets/scenes/dungeons/HIDAN/cq/headers/room17.inc.c"
+};
+
+static s16 cmq_objects[] = {
+#include "assets/scenes/dungeons/HIDAN/cmq/objects/room17_obj.inc.c"
+};
+
+static SceneCmd cmq_header[] = {
+#include "assets/scenes/dungeons/HIDAN/cmq/headers/room17.inc.c"
 };
 
 static SceneCmd* questHeaders[] = {

@@ -371,6 +371,6 @@
          0x3B01, // params
     }, // 61
 
-    { ACTOR_OBJ_HSBLOCK, { -1238, 2660, -17 }, {  0x0000,  0x0000,  0x0000 }, 0xFF00, }, // 62: Prevent being stuck
-    { ACTOR_OBJ_HSBLOCK, { -1240, 2740,  60 }, {  0x0000,  0x0000,  0x0000 }, 0x1001, }, // 63: Prevent not being able to climb platform (0x11 Stone Spike Platform switch)
-    { ACTOR_OBJ_HSBLOCK, { -1240, 2740, -60 }, {  0x0000,  0x0000,  0x0000 }, 0x1001, }, // 64: Prevent not being able to climb platform (0x11 Stone Spike Platform switch)
+    { ACTOR_OBJ_HSBLOCK, { -1238, 2660, -17 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 62: Prevent being stuck
+    { ACTOR_OBJ_HSBLOCK, { -1240, 2740,  60 }, { 0x0000, 0x0000, 0x0000 }, 0x1001, }, // 63: Prevent not being able to climb platform (0x11 Stone Spike Platform switch)
+    { ACTOR_OBJ_HSBLOCK, { -1240, 2740, -60 }, { 0x0000, 0x0000, 0x0000 }, 0x1001, }, // 64: Prevent not being able to climb platform (0x11 Stone Spike Platform switch)
