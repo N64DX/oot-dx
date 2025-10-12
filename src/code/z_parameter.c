@@ -1560,8 +1560,7 @@ void func_800849EC(PlayState* play) {
     }
 }
 
-void Interface_LoadItemIcon1(PlayState* play, u16 button) {
-    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+u8 Interface_GetLoadItem(u16 button) {
     u8 item;
 
     if (button < 4)
@@ -1569,13 +1568,18 @@ void Interface_LoadItemIcon1(PlayState* play, u16 button) {
     else item = Interface_GetItemFromDpad(button-4);
 
     if (item == ITEM_SWORDS)
-        item = gSaveContext.save.info.equips.buttonItems[0];
+        return gSaveContext.save.info.equips.buttonItems[0];
     else if (item == ITEM_SHIELDS)
-        item = (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
+        return (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
     else if (item == ITEM_TUNICS)
-        item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+        return ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
     else if (item == ITEM_BOOTS)
-        item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
+        return ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
+}
+
+void Interface_LoadItemIcon1(PlayState* play, u16 button) {
+    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    u8 item = Interface_GetLoadItem(button);
 
     if (item >= 0xF0)
         return;
@@ -1589,10 +1593,14 @@ void Interface_LoadItemIcon1(PlayState* play, u16 button) {
 
 void Interface_LoadItemIcon2(PlayState* play, u16 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    u8 item = Interface_GetLoadItem(button);
+
+    if (item >= 0xF0)
+        return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_180, interfaceCtx->iconItemSegment + (button * ITEM_ICON_SIZE),
-                      GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(gSaveContext.save.info.equips.buttonItems[button])), ITEM_ICON_SIZE, 0,
+                      GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
@@ -1793,6 +1801,7 @@ u8 Item_Give(PlayState* play, u8 item) {
 
         return ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
+        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
         SET_HEROS_SWORD;
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {

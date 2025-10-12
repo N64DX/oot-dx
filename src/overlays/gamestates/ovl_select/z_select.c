@@ -56,6 +56,11 @@ void MapSelect_LoadRoom(u16 entrance, u8 roomNum, u8 maxRoomNum) {
 }
 
 void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
+    R_ENABLE_MIRROR = this->mirrorMode;
+#if OOT_VERSION <= PAL_1_1
+    R_QUEST_MODE = this->questMode;
+#endif
+
     PRINTF_COLOR_BLUE();
     PRINTF("\n\n\nＦＩＬＥ＿ＮＯ＝%x\n\n\n", gSaveContext.fileNum);
     PRINTF_RST();
@@ -109,11 +114,6 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     gSaveContext.natureAmbienceId = 0xFF;
     gSaveContext.showTitleCard = true;
     gWeatherMode = WEATHER_MODE_CLEAR;
-
-    R_ENABLE_MIRROR = this->mirrorMode;
-#if OOT_VERSION <= PAL_1_1
-    R_QUEST_MODE = this->questMode;
-#endif
 
     this->state.running = false;
     SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);
