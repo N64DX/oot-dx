@@ -244,6 +244,7 @@ void EnDoor_Idle(EnDoor* this, PlayState* play) {
             gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] -= 1;
             Flags_SetSwitch(play, ENDOOR_GET_LOCKED_SWITCH_FLAG(&this->actor));
             Actor_PlaySfx(&this->actor, NA_SE_EV_CHAIN_KEY_UNLOCK);
+            SET_AUTOSAVE(play);
         }
     } else if (!Player_InCsMode(play)) {
         if (fabsf(playerPosRelToDoor.y) < 20.0f && fabsf(playerPosRelToDoor.x) < 20.0f &&

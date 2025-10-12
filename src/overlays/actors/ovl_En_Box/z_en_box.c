@@ -441,6 +441,7 @@ void EnBox_WaitOpen(EnBox* this, PlayState* play) {
         }
         PRINTF("Actor_Environment_Tbox_On() %d\n", PARAMS_GET_U(this->dyna.actor.params, 0, 5));
         Flags_SetTreasure(play, PARAMS_GET_U(this->dyna.actor.params, 0, 5));
+        SET_AUTOSAVE(play);
     } else {
         player = GET_PLAYER(play);
         Actor_WorldToActorCoords(&this->dyna.actor, &sp4C, &player->actor.world.pos);

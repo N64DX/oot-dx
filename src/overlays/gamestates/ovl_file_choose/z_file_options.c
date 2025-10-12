@@ -103,6 +103,8 @@ char* FileSelectGlobalOptions_GetOption(FileSelectState* this, u8 index, u8 shif
 
 static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Mirror Mode",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 0  },
+    { 0, "Autosave",               FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 1  },
+    { 0, "Agony Visual Icon",      FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 2  },
     { 0, "Extended Draw Distance", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 3  },
     { 0, "No Letterboxing",        FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 4  },
     { 0, "Resume Last Area",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 5  },

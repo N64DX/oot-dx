@@ -113,6 +113,7 @@ void func_8099485C(DoorGerudo* this, PlayState* play) {
         gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] -= 1;
         Flags_SetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6));
         Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_CHAIN_KEY_UNLOCK);
+        SET_AUTOSAVE(play);
     } else {
         s32 direction = func_80994750(this, play);
 

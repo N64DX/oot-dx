@@ -422,6 +422,9 @@ u64 gItemIconGoldDustTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = 
 #include "assets/textures/icon_item_static/gItemIconGoldDustTex.rgba32.inc.c"
 };
 
+u64 gQuestIconStoneOfAgony32Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_WIDTH, 32)] = {
+#include "assets/textures/icon_item_static/gQuestIconStoneOfAgonyTex.rgba32.inc.c"
+};
 
 // Heart piece icons textures
 

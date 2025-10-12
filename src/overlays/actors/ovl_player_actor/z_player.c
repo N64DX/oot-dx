@@ -12129,7 +12129,7 @@ void Player_UpdateBodyBurn(PlayState* play, Player* this) {
     }
 }
 
-void Player_DetectRumbleSecrets(Player* this) {
+void Player_DetectRumbleSecrets(Player* this, PlayState* play) {
     if (CHECK_QUEST_ITEM(QUEST_STONE_OF_AGONY)) {
         f32 temp = 200000.0f - (this->closestSecretDistSq * 5.0f);
 
@@ -12141,6 +12141,16 @@ void Player_DetectRumbleSecrets(Player* this) {
         if (this->unk_6A0 > 4000000.0f) {
             this->unk_6A0 = 0.0f;
             Player_RequestRumble(this, 120, 20, 10, 0);
+            if (AGONY_VISUAL_ICON) {
+                if (play->specialIconLast != SPECIAL_ICON_RUMBLE) {
+                    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+                    play->specialIconLast = SPECIAL_ICON_RUMBLE;
+                    DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (8 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(ITEM_STONE_OF_AGONY)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1171);
+                }
+                if (play->specialIconCount == 0)
+                    play->specialIconCount++;
+                play->specialIconAlpha = 255;
+            }
         }
     }
 }
@@ -12490,7 +12500,7 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
                     this->fallStartHeight = this->actor.world.pos.y;
                 }
 
-                Player_DetectRumbleSecrets(this);
+                Player_DetectRumbleSecrets(this, play);
             }
         }
 
