@@ -597,7 +597,7 @@ void Play_Update(PlayState* this) {
     gSegments[5] = OS_K0_TO_PHYSICAL(this->objectCtx.slots[this->objectCtx.subKeepSlot].segment);
     gSegments[2] = OS_K0_TO_PHYSICAL(this->sceneSegment);
 
-    if (FrameAdvance_Update(&this->frameAdvCtx, &input[1])) {
+    if (FrameAdvance_Update(&this->frameAdvCtx, &input[0])) {
         if ((this->transitionMode == TRANS_MODE_OFF) && (this->transitionTrigger != TRANS_TRIGGER_OFF)) {
             this->transitionMode = TRANS_MODE_SETUP;
         }
