@@ -15,12 +15,12 @@ glabel aspMainDataEnd
 
 #if !PLATFORM_N64
 glabel gspF3DZEX2_NoN_PosLight_fifoTextStart
-    .incbin "incbin/gspF3DZEX2_NoN_PosLight_fifoText"
+    .incbin "assets/incbin/gspF3DZEX2_NoN_PosLight_fifoText"
 glabel gspF3DZEX2_NoN_PosLight_fifoTextEnd
 #endif
 
 glabel gspF3DZEX2_NoN_PosLight_fifoDataStart
-    .incbin "incbin/gspF3DZEX2_NoN_PosLight_fifoData"
+    .incbin "assets/incbin/gspF3DZEX2_NoN_PosLight_fifoData"
 glabel gspF3DZEX2_NoN_PosLight_fifoDataEnd
 
 glabel gspS2DEX2d_fifoDataStart

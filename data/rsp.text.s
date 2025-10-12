@@ -15,7 +15,7 @@ glabel aspMainTextEnd
 
 #if PLATFORM_N64
 glabel gspF3DZEX2_NoN_PosLight_fifoTextStart
-    .incbin "incbin/gspF3DZEX2_NoN_PosLight_fifoText"
+    .incbin "assets/incbin/gspF3DZEX2_NoN_PosLight_fifoText"
 glabel gspF3DZEX2_NoN_PosLight_fifoTextEnd
 #endif
 
