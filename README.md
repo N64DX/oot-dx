@@ -152,11 +152,12 @@ make -j VERSION=pal-1.0 && make -j VERSION=ntsc-1.0 && make -j VERSION=gc-eu && 
 #### 7. Debug features
 
 To activate a stripped down debug mode in release builds, go into the vanilla options menu in the file select screen and press L. This mode offers:
+- Change language: `L + D-Pad Left`
 - Frame advance: `L + D-Pad Down`
-- Gain control during a cutscene: `D-Pad Right`
-- Inventory editor: `L` in the inventory screen
-- Map select: `L + R + Z`
 - No clip: `L + D-Pad Right`
+- Gain control during a cutscene: `D-Pad Right`
+- Inventory editor: `L` (in pause screen)
+- Map select: `L + R + Z`
 - Save flag editing: Load a save file normally, open the map select and press `START`
 
 Alternatively, it's possible to build any ROM with virtually all debug features:
