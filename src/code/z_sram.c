@@ -307,9 +307,9 @@ static Inventory sDebugSaveInventory = {
     },
     // ammo
     {
-        50, // SLOT_DEKU_STICK
-        50, // SLOT_DEKU_NUT
-        10, // SLOT_BOMB
+        10, // SLOT_DEKU_STICK
+        20, // SLOT_DEKU_NUT
+        20, // SLOT_BOMB
         30, // SLOT_BOW
         1,  // SLOT_ARROW_FIRE
         1,  // SLOT_DINS_FIRE
