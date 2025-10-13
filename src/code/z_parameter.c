@@ -3601,26 +3601,26 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
             u8 x, y;
             switch (button-4) {
                 case 0:
-                    x = D_UP_BUTTON_X + 1;
-                    y = D_UP_BUTTON_Y + 8;
+                    x = D_UP_BUTTON_X;
+                    y = D_UP_BUTTON_Y + 6;
                     break;
                 case 1:
-                    x = D_RIGHT_BUTTON_X + 1;
-                    y = D_RIGHT_BUTTON_Y + 8;
+                    x = D_RIGHT_BUTTON_X;
+                    y = D_RIGHT_BUTTON_Y + 6;
                     break;
                 case 2:
-                    x = D_DOWN_BUTTON_X + 1;
-                    y = D_DOWN_BUTTON_Y + 8;
+                    x = D_DOWN_BUTTON_X;
+                    y = D_DOWN_BUTTON_Y + 6;
                     break;
                 default:
-                    x = D_LEFT_BUTTON_X + 1;
-                    y = D_LEFT_BUTTON_Y + 8;
+                    x = D_LEFT_BUTTON_X;
+                    y = D_LEFT_BUTTON_Y + 6;
                     break;
             }
 
             if (i != 0)
-                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, HIRES_MULTIPLY(x), HIRES_MULTIPLY(y), HIRES_MULTIPLY(4), HIRES_MULTIPLY(4), HIRES_DIVIDE(1 << 11), HIRES_DIVIDE(1 << 11));
-            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, HIRES_MULTIPLY(x + 3), HIRES_MULTIPLY(y), HIRES_MULTIPLY(4), HIRES_MULTIPLY(4), HIRES_DIVIDE(1 << 11), HIRES_DIVIDE(1 << 11));
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, HIRES_MULTIPLY(x), HIRES_MULTIPLY(y), HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, HIRES_MULTIPLY(x + 6), HIRES_MULTIPLY(y), HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
     }
 
@@ -4003,7 +4003,8 @@ void Interface_Draw(PlayState* play) {
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x4000 + (0x1000*svar1), 4+svar1);
             gDPPipeSync(OVERLAY_DISP++);
             gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
-            Interface_DrawAmmoCount(play, 4+svar1,  dpadAlphas[svar1+1]);
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[svar1+1] > 100 ? 100 : dpadAlphas[svar1+1]);
+            Interface_DrawAmmoCount(play, 4+svar1, dpadAlphas[svar1+1] > 100 ? 100 : dpadAlphas[svar1+1]);
         }
 
         // A Button
