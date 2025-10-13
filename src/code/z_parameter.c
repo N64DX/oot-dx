@@ -3752,6 +3752,45 @@ void func_8008A994(InterfaceContext* interfaceCtx) {
     View_ApplyOrthoToOverlay(&interfaceCtx->view);
 }
 
+static const u8 autoSaveAlpha[20] = { 0x00, 0x33, 0x66, 0x99, 0xCC, 0xFF, 0xFF, 0xFF, 0xFF, 0xE0, 0xC2, 0xA3, 0x85, 0x66, 0x44, 0x22, 0xA3, 0xC2, 0xE0 };
+
+void Interface_DrawAutoSave(PlayState* play, InterfaceContext* interfaceCtx) {
+    if (play->autosave > 2) {
+        u16 x = 26, y = 206 - 16;
+
+        switch (play->sceneId) {
+            case SCENE_FOREST_TEMPLE:
+            case SCENE_FIRE_TEMPLE:
+            case SCENE_WATER_TEMPLE:
+            case SCENE_SPIRIT_TEMPLE:
+            case SCENE_SHADOW_TEMPLE:
+            case SCENE_BOTTOM_OF_THE_WELL:
+            case SCENE_ICE_CAVERN:
+            case SCENE_GANONS_TOWER:
+            case SCENE_GERUDO_TRAINING_GROUND:
+            case SCENE_THIEVES_HIDEOUT:
+            case SCENE_INSIDE_GANONS_CASTLE:
+            case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+            case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+            case SCENE_TREASURE_BOX_SHOP:
+                if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0)
+                    y -= 16;
+        }
+        
+        OPEN_DISPS(play->state.gfxCtx, "../z_kaleido_scope.c", 4900);
+
+        Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+        gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, autoSaveAlpha[20 - play->autosave - 2]);
+        gDPPipeSync(OVERLAY_DISP++);
+
+        gDPLoadTextureBlock(OVERLAY_DISP++, interfaceCtx->iconItemSegment + 0x8000, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(x << 2), HIRES_MULTIPLY((y) << 2), HIRES_MULTIPLY((x + 16) << 2), HIRES_MULTIPLY((y + 16) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(2048), HIRES_DIVIDE(2048));
+
+        CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope.c", 4918);
+    }
+}
+
 void Interface_Draw(PlayState* play) {
     static s16 magicArrowEffectsR[] = { 255, 100, 255 };
     static s16 magicArrowEffectsG[] = { 0, 100, 255 };
@@ -3865,6 +3904,8 @@ void Interface_Draw(PlayState* play) {
             default:
                 break;
         }
+
+        Interface_DrawAutoSave(play, interfaceCtx);
 
         // Rupee Counter
         gDPPipeSync(OVERLAY_DISP++);

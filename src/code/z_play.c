@@ -471,6 +471,7 @@ void Play_Init(GameState* thisx) {
     this->unk_11E16 = 0xFF;
     this->bgCoverAlpha = 0;
     this->haltAllActors = false;
+    this->autosave = 0;
 
     if (gSaveContext.gameMode != GAMEMODE_TITLE_SCREEN) {
         if (gSaveContext.nextTransitionType == TRANS_NEXT_TYPE_DEFAULT) {
@@ -1129,8 +1130,12 @@ skip:
     if (this->autosave == 1 && !Player_InCsMode(this) && !IS_PAUSED(&this->pauseCtx) && !gDebugCamEnabled && AUTOSAVE) {
         Play_SaveSceneFlags(this);
         Sram_WriteSave(&this->sramCtx);
-        this->autosave = 0;
+        this->autosave = 22;
     }
+    if (this->autosave > 2)
+        this->autosave--;
+    else if (this->autosave == 2)
+        this->autosave = 0;
 }
 
 void Play_DrawOverlayElements(PlayState* this) {
