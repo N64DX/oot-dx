@@ -124,6 +124,9 @@ typedef struct PlayState {
     /* 0x1241C */ TransitionFade transitionFadeFlash; // Transition fade instance which flashes screen, see R_TRANS_FADE_FLASH_ALPHA_STEP
     /* 0x1242B */ u8 viewpoint; // toggleable camera setting by shops or player. Is also equal to the bgCamIndex + 1
     /* 0x1242C */ SceneTableEntry* loadedScene;
+    /* 0x12130 */ s8 autosaveTimer;
+    /* 0x12131 */ s8 agonyTimer;
+    /* 0x12131 */ u8 lastSpecialIcon;
 } PlayState; // size = 0x12518
 
 extern Mtx D_01000000; // billboardMtx
