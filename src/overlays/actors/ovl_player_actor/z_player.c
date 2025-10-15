@@ -12147,7 +12147,7 @@ void Player_DetectRumbleSecrets(Player* this, PlayState* play) {
                 DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (8 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(ITEM_STONE_OF_AGONY)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1171);
             }
             if (play->agonyTimer <= 1)
-                play->agonyTimer = 20;
+                play->agonyTimer = 60 / R_UPDATE_RATE;
         }
     }
 

@@ -3759,6 +3759,10 @@ static const s8 sSpecialIconXShift[20] = { -1,   -1,   1,    -1,   1,    -1,   1
 
 void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfaceCtx, s8 timer) {
     u16 x = 26, y = 206 - 16;
+    u8 maxTimer = 20 * R_UPDATE_RATE;
+    u8 index = ((maxTimer - timer) * (20 - 1)) / (maxTimer - 1);
+    if (index >= 20)
+        index = 19;
 
     switch (play->sceneId) {
         case SCENE_FOREST_TEMPLE:
@@ -3780,7 +3784,7 @@ void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfaceCtx, 
     }
 
     if (play->lastSpecialIcon) {
-        x += sSpecialIconXShift[20 - timer] - 2;
+        x += sSpecialIconXShift[index] - 2;
         y -= 6;
     }
 
@@ -3788,7 +3792,7 @@ void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfaceCtx, 
 
     Gfx_SetupDL_39Overlay(play->state.gfxCtx);
     gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, sSpecialIconAlpha[20 - timer]);
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, sSpecialIconAlpha[index]);
     gDPPipeSync(OVERLAY_DISP++);
 
     gDPLoadTextureBlock(OVERLAY_DISP++, interfaceCtx->iconItemSegment + 0x8000, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);

@@ -1131,7 +1131,7 @@ skip:
         Play_SaveSceneFlags(this);
         Sram_WriteSave(&this->sramCtx);
         this->autosave = false;
-        this->autosaveTimer = 20;
+        this->autosaveTimer = 60 / R_UPDATE_RATE;
 
         if (this->lastSpecialIcon) {
             InterfaceContext* interfaceCtx = &this->interfaceCtx;
