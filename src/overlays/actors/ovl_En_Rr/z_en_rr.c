@@ -705,6 +705,9 @@ void EnRr_Death(EnRr* this, PlayState* play) {
             case 2:
                 Item_DropCollectible(play, &dropPos, ITEM00_SHIELD_HYLIAN);
                 break;
+            case 4:
+                Item_DropCollectible(play, &dropPos, ITEM00_SHIELD_HEROS);
+                break;
         }
         switch (this->eatenTunic) {
             case 2:

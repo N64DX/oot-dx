@@ -503,6 +503,15 @@ void EnItem00_Init(Actor* thisx, PlayState* play) {
             shadowScale = 0.6f;
             this->actor.world.rot.x = 0x4000;
             break;
+        case ITEM00_SHIELD_HEROS:
+            this->actor.objectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GI_SHIELD_4);
+            Actor_SetObjectDependency(play, &this->actor);
+            Actor_SetScale(&this->actor, 0.5f);
+            this->scale = 0.5f;
+            yOffset = 0.0f;
+            shadowScale = 0.6f;
+            this->actor.world.rot.x = 0x4000;
+            break;
         case ITEM00_TUNIC_ZORA:
         case ITEM00_TUNIC_GORON:
             this->actor.objectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GI_CLOTHES);
@@ -594,6 +603,7 @@ void EnItem00_Init(Actor* thisx, PlayState* play) {
         case ITEM00_HEART_CONTAINER:
         case ITEM00_SHIELD_DEKU:
         case ITEM00_SHIELD_HYLIAN:
+        case ITEM00_SHIELD_HEROS:
         case ITEM00_TUNIC_ZORA:
         case ITEM00_TUNIC_GORON:
         case ITEM00_BOMBS_SPECIAL:
@@ -933,6 +943,9 @@ void EnItem00_Update(Actor* thisx, PlayState* play) {
         case ITEM00_SHIELD_HYLIAN:
             getItemId = GI_SHIELD_HYLIAN;
             break;
+        case ITEM00_SHIELD_HEROS:
+            getItemId = GI_SHIELD_HEROS;
+            break;
         case ITEM00_TUNIC_ZORA:
             getItemId = GI_TUNIC_ZORA;
             break;
@@ -1050,6 +1063,9 @@ void EnItem00_Draw(Actor* thisx, PlayState* play) {
                 break;
             case ITEM00_SHIELD_HYLIAN:
                 GetItem_Draw(play, GID_SHIELD_HYLIAN);
+                break;
+            case ITEM00_SHIELD_HEROS:
+                GetItem_Draw(play, GID_SHIELD_HEROS);
                 break;
             case ITEM00_TUNIC_ZORA:
                 GetItem_Draw(play, GID_TUNIC_ZORA);
