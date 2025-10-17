@@ -1,10 +1,6 @@
 #ifndef RESOLUTION_H
 #define RESOLUTION_H
 
-// @setting: Interlaced mode for 640x480 resolution
-// Hires works in progressive mode, but looks worse in native res
-#define INTERLACED true
-
 // @setting: SCREEN_MODE
 // 0: DEFAULT, 1: HIRES, 2: WIDE, 3: ULTRAWIDE
 #define SCREEN_MODE 0
@@ -166,9 +162,5 @@
 // Scaling macros
 #define HIRES_MULTIPLY(var) ((var) * HIRES_SCALE)
 #define HIRES_DIVIDE(var)   ((var) / HIRES_SCALE)
-
-// Beating heart position
-#define BEATING_HEART_PULSING_SIZE_X (((-130.0f) - WS_SHIFT_HALF) * HIRES_SCALE)
-#define BEATING_HEART_PULSING_SIZE_Y (94.5f * HIRES_SCALE)
 
 #endif

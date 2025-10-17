@@ -488,7 +488,7 @@ void Health_DrawMeter(PlayState* play) {
                 Mtx* matrix = GRAPH_ALLOC(gfxCtx, sizeof(Mtx));
                 Matrix_SetTranslateScaleMtx2(
                     matrix, HIRES_MULTIPLY(1.0f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY(1.0f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize),
-                    HIRES_MULTIPLY(1.0f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), BEATING_HEART_PULSING_SIZE_X + offsetX, BEATING_HEART_PULSING_SIZE_Y - offsetY, 0.0f);
+                    HIRES_MULTIPLY(1.0f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY((-130.0f) - WS_SHIFT_HALF) + offsetX, HIRES_MULTIPLY(94.5f) - offsetY, 0.0f);
                 gSPMatrix(OVERLAY_DISP++, matrix, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
                 gSPVertex(OVERLAY_DISP++, beatingHeartVtx, 4, 0);
                 gSP1Quadrangle(OVERLAY_DISP++, 0, 2, 3, 1, 0);

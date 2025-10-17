@@ -345,7 +345,7 @@ void GameState_Update(GameState* gameState) {
         gfxCtx->yScale = gViConfigYScale;
 
         if (SREG(63) == 6 || (SREG(63) == 2u && (u32)osTvType == OS_TV_NTSC)) {
-#if HIRES && INTERLACED
+#if HIRES
             gfxCtx->viMode = &osViModeNtscHan1;
 #else
             gfxCtx->viMode = &osViModeNtscLan1;
@@ -354,7 +354,7 @@ void GameState_Update(GameState* gameState) {
         }
 
         if (SREG(63) == 5 || (SREG(63) == 2u && (u32)osTvType == OS_TV_MPAL)) {
-#if HIRES && INTERLACED
+#if HIRES
             gfxCtx->viMode = &osViModeMpalHan1;
 #else
             gfxCtx->viMode = &osViModeMpalLan1;
@@ -363,7 +363,7 @@ void GameState_Update(GameState* gameState) {
         }
 
         if (SREG(63) == 4 || (SREG(63) == 2u && (u32)osTvType == OS_TV_PAL)) {
-#if HIRES && INTERLACED
+#if HIRES
             gfxCtx->viMode = &osViModePalHan1;
 #else
             gfxCtx->viMode = &osViModePalLan1;
@@ -372,7 +372,7 @@ void GameState_Update(GameState* gameState) {
         }
 
         if (SREG(63) == 3 || (SREG(63) == 2u && (u32)osTvType == OS_TV_PAL)) {
-#if HIRES && INTERLACED
+#if HIRES
             gfxCtx->viMode = &osViModeFpalHan1;
 #else
             gfxCtx->viMode = &osViModeFpalLan1;
