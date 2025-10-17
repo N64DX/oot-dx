@@ -65,10 +65,8 @@ void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
     char buildInfo[] = "     UNKNOWN";
 #endif
 
-#if HIRES && INTERLACED
+#if HIRES
     char screenModeInfo[] = "640x480i";
-#elif HIRES && !INTERLACED
-    char screenModeInfo[] = "640x480p";
 #elif WIDESCREEN
     char screenModeInfo[] = "424x240p";
 #elif ULTRA_WS
