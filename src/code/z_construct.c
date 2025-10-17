@@ -17,7 +17,7 @@ void Interface_Destroy(PlayState* play) {
     Map_Destroy(play);
 }
 
-#define ICON_ITEM_SEGMENT_SIZE (8 * ITEM_ICON_SIZE)
+#define ICON_ITEM_SEGMENT_SIZE (9 * ITEM_ICON_SIZE)
 
 void Interface_Init(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
@@ -136,6 +136,7 @@ void Interface_Init(PlayState* play) {
                      "../z_construct.c", 178);
 
     interfaceCtx->iconItemSegment = GAME_STATE_ALLOC(&play->state, ICON_ITEM_SEGMENT_SIZE, "../z_construct.c", 190);
+    DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (8 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(ITEM_OCARINA_OF_TIME), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_construct.c", 139);
 
     PRINTF(T("アイコンアイテム テクスチャ初期=%x\n", "Icon Item Texture Initialization = %x\n"),
            ICON_ITEM_SEGMENT_SIZE);

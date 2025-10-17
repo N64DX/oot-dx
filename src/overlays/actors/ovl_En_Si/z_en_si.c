@@ -111,6 +111,7 @@ void func_80AFB768(EnSi* this, PlayState* play) {
 #endif
                 Audio_PlayFanfare(NA_BGM_SMALL_ITEM_GET);
                 this->actionFunc = func_80AFB950;
+                SET_AUTOSAVE(play);
             } else {
                 Collider_UpdateCylinder(&this->actor, &this->collider);
                 CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
@@ -139,6 +140,7 @@ void func_80AFB89C(EnSi* this, PlayState* play) {
 #endif
         Audio_PlayFanfare(NA_BGM_SMALL_ITEM_GET);
         this->actionFunc = func_80AFB950;
+        SET_AUTOSAVE(play);
     }
 }
 
