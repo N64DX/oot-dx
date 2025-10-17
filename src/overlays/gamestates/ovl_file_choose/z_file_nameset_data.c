@@ -188,11 +188,4 @@ u64 gQuestUraQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = 
 #include "assets/overlays/ovl_file_choose/gQuestUraQuestTex.ia8.inc.c"
 };
 
-u64 gQuestChildQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestChildQuestTex.ia8.inc.c"
-};
-
-u64 gMirrorModeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gMirrorModeTex.ia8.inc.c"
-};
 #endif

@@ -637,35 +637,41 @@ static const void* sQuestTextures[QUEST_MAX+1][2] = {
     { gQuestOcarinaOfTimeTex, gLogoOcarinaOfTimeTex },
     { gQuestMasterQuestTex,   gLogoMasterQuestTex   },
     { gQuestUraQuestTex,      gLogoUraQuestTex      },
-    { gQuestChildQuestTex,    gLogoChildQuestTex    },
+    { gQuestOcarinaOfTimeTex, gLogoChildQuestTex    },
+    { gQuestMasterQuestTex,   gLogoChildQuestTex    },
 };
 
-static const char* sQuestMessages[QUEST_MAX+1][4][2] = {
+static const char* sQuestMessages[4][QUEST_MAX+1][2] = {
     {
         { "The original experience",        "" },
         { "Harder arranged dungeons",       "" },
         { "A beta version of Master Quest", "" },
+        { "Play as Young Link only",        "and discover new areas" },
         { "Play as Young Link only",        "and discover new areas" },
     }, {
         { "Das originale Abenteuer",            "" },
         { "Schwerere, neu gestaltete Dungeons", "" },
         { "Eine Beta-Version von Master Quest", "" },
         { "Spiele nur als junger Link",         "und entdecke neue Gebiete" },
+        { "Spiele nur als junger Link",         "und entdecke neue Gebiete" },
     }, {
         { "L'experience originale",            "" },
         { "Donjons plus difficiles",           "et remanies" },
         { "Une version beta de Master Quest",  "" },
+        { "Incarnez uniquement le jeune Link", "et decouvrez de nouvelles zones" },
         { "Incarnez uniquement le jeune Link", "et decouvrez de nouvelles zones" },
     }, {
         { "ｵﾘｼﾞﾅﾙﾀｲｹﾝ",        "" },
         { "ﾑｽﾞｶｼｸﾅｯﾀﾀﾞﾝｼﾞｮﾝ",   "" },
         { "ﾏｽﾀｰｸｴｽﾄﾉﾍﾞｰﾀﾊﾞﾝ",   "" },
         { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ", "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ", "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
     }
 };
 
-static const u8 sQuestMessagesOffset[][4][2] = {
+static const u8 sQuestMessagesOffset[4][QUEST_MAX+1][2] = {
     {
+        { 7,  7  },
         { 7,  7  },
         { 7,  7  },
         { 7,  7  },
@@ -675,15 +681,18 @@ static const u8 sQuestMessagesOffset[][4][2] = {
         { 7,  7  },
         { 7,  7  },
         { 6,  6  },
+        { 6,  6  },
     }, {
         { 8,  8  },
         { 7,  13 },
         { 7,  7  },
         { 4,  5  },
+        { 4,  5  },
     }, {
         { 14, 14 },
         { 11, 11 },
         { 10, 10 },
+        { 10, 11 },
         { 10, 11 },
     }
 };
@@ -824,19 +833,21 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         if (this->stickAdjX < -30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             switch (this->questMode[this->buttonIndex]) {
-                case VANILLA_QUEST: this->questMode[this->buttonIndex] = CHILD_QUEST;   break;
-                case MASTER_QUEST:  this->questMode[this->buttonIndex] = VANILLA_QUEST; break;
-                case CHILD_QUEST:   this->questMode[this->buttonIndex] = MASTER_QUEST;  break;
-                default:            this->questMode[this->buttonIndex] = 0;             break;      
+                case VANILLA_QUEST:      this->questMode[this->buttonIndex] = CHILD_MASTER_QUEST; break;
+                case MASTER_QUEST:       this->questMode[this->buttonIndex] = VANILLA_QUEST;      break;
+                case CHILD_QUEST:        this->questMode[this->buttonIndex] = MASTER_QUEST;       break;
+                case CHILD_MASTER_QUEST: this->questMode[this->buttonIndex] = CHILD_QUEST;        break;
+                default:                 this->questMode[this->buttonIndex] = 0;                  break;      
             }
         }
         if (this->stickAdjX > 30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             switch (this->questMode[this->buttonIndex]) {
-                case VANILLA_QUEST: this->questMode[this->buttonIndex] = MASTER_QUEST;  break;
-                case MASTER_QUEST:  this->questMode[this->buttonIndex] = CHILD_QUEST;   break;
-                case CHILD_QUEST:   this->questMode[this->buttonIndex] = VANILLA_QUEST; break;
-                default:            this->questMode[this->buttonIndex] = QUEST_MAX;     break;
+                case VANILLA_QUEST:      this->questMode[this->buttonIndex] = MASTER_QUEST;       break;
+                case MASTER_QUEST:       this->questMode[this->buttonIndex] = CHILD_QUEST;        break;
+                case CHILD_QUEST:        this->questMode[this->buttonIndex] = CHILD_MASTER_QUEST; break;
+                case CHILD_MASTER_QUEST: this->questMode[this->buttonIndex] = VANILLA_QUEST;      break;
+                default:                 this->questMode[this->buttonIndex] = QUEST_MAX;          break;
             }
         }
 

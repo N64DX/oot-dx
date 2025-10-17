@@ -1,0 +1,6 @@
+    OBJECT_HIDAN_OBJECTS, // 0
+    OBJECT_SYOKUDAI, // 1
+    OBJECT_BOX, // 2
+    OBJECT_D_HSBLOCK, // 3
+    OBJECT_ST, // 4
+    OBJECT_GI_SUTARU, // 5

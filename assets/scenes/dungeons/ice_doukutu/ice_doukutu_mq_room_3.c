@@ -1,6 +1,7 @@
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene.h"
+#include "save.h"
 
-static SceneCmd* questHeaders[3];
+static SceneCmd* questHeaders[QUEST_MAX];
 
 static SceneCmd start[] = {
 #include "assets/scenes/dungeons/start.inc.c"
@@ -30,6 +31,18 @@ static ActorEntry cq_actors[] = {
 
 static SceneCmd cq_header[] = {
 #include "assets/scenes/dungeons/ice_doukutu/cq/headers/room3.inc.c"
+};
+
+static s16 cmq_objects[] = {
+#include "assets/scenes/dungeons/ice_doukutu/cmq/objects/room3_obj.inc.c"
+};
+
+static ActorEntry cmq_actors[] = {
+#include "assets/scenes/dungeons/ice_doukutu/cmq/actors/room3_actor.inc.c"
+};
+
+static SceneCmd cmq_header[] = {
+#include "assets/scenes/dungeons/ice_doukutu/cmq/headers/room3.inc.c"
 };
 
 static SceneCmd* questHeaders[] = {

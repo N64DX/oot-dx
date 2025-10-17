@@ -1,6 +1,7 @@
 #include "assets/scenes/dungeons/ganontika/ganontika_scene.h"
+#include "save.h"
 
-static SceneCmd* questHeaders[3];
+static SceneCmd* questHeaders[QUEST_MAX];
 
 static SceneCmd start[] = {
 #include "assets/scenes/dungeons/start.inc.c"
@@ -64,8 +65,10 @@ static SceneCmd cq_header[] = {
 #include "assets/scenes/dungeons/ganontika/cq/scene/header.inc.c"
 };
 
+static SceneCmd cmq_header[] = {
+#include "assets/scenes/dungeons/ganontika/cmq/scene/header.inc.c"
+};
+
 static SceneCmd* questHeaders[] = {
-    mq_header, // 0
-    NULL,      // 1
-    cq_header, // 2
+#include "assets/scenes/dungeons/questHeaders.inc.c"
 };
