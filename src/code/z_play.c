@@ -1129,6 +1129,7 @@ skip:
 
     if (this->autosave && !Player_InCsMode(this) && !IS_PAUSED(&this->pauseCtx) && !gDebugCamEnabled && this->msgCtx.msgMode == MSGMODE_NONE && gSaveContext.gameMode == GAMEMODE_NORMAL && this->gameOverCtx.state == GAMEOVER_INACTIVE && AUTOSAVE) {
         Play_SaveSceneFlags(this);
+        gSaveContext.save.info.playerData.savedSceneId = this->sceneId;
         Sram_WriteSave(&this->sramCtx);
         this->autosave = false;
         this->autosaveTimer = 60 / R_UPDATE_RATE;
