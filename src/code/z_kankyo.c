@@ -1420,7 +1420,7 @@ void Environment_Update(PlayState* play, EnvironmentContext* envCtx, LightContex
 }
 
 void Environment_DrawSunAndMoon(PlayState* play) {
-    f32 alpha;
+    s32 alpha;
     f32 color;
     f32 y;
     f32 scale;
@@ -1453,14 +1453,8 @@ void Environment_DrawSunAndMoon(PlayState* play) {
         temp = y / 80.0f;
 
         alpha = temp * 255.0f;
-        if (alpha < 0.0f) {
-            alpha = 0.0f;
-        }
-        if (alpha > 255.0f) {
-            alpha = 255.0f;
-        }
-
-        alpha = 255.0f - alpha;
+        alpha = CLAMP(alpha, 0, 255);
+        alpha = 255 - alpha;
 
         color = temp;
         if (color < 0.0f) {
@@ -1478,6 +1472,7 @@ void Environment_DrawSunAndMoon(PlayState* play) {
         Matrix_Scale(scale, scale, scale, MTXMODE_APPLY);
         MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_kankyo.c", 2364);
         Gfx_SetupDL_54Opa(play->state.gfxCtx);
+        gDPSetRenderMode(POLY_OPA_DISP++, G_RM_FOG_PRIM_A, G_RM_XLU_SURF2);
         gSPDisplayList(POLY_OPA_DISP++, gSunDL);
 
         Matrix_Translate(play->view.eye.x - play->envCtx.sunPos.x, play->view.eye.y - play->envCtx.sunPos.y,
@@ -1494,9 +1489,8 @@ void Environment_DrawSunAndMoon(PlayState* play) {
 
         alpha = temp * 255.0f;
 
-        if (alpha > 0.0f) {
+        if (alpha > 0) {
             MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_kankyo.c", 2406);
-            Gfx_SetupDL_51Opa(play->state.gfxCtx);
             gDPPipeSync(POLY_OPA_DISP++);
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 240, 255, 180, alpha);
             gDPSetEnvColor(POLY_OPA_DISP++, 80, 70, 20, alpha);

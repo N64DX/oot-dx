@@ -682,6 +682,10 @@ void Player_SetModelsForHoldingShield(Player* this) {
             this->modelAnimType = PLAYER_ANIMTYPE_2;
             this->itemAction = -1;
         }
+    } else if (PULL_SWORD && this->itemAction == 0 && this->currentShield > 0 && !Player_IsChildWithHylianShield(this)) {
+        this->rightHandDLists = sPlayerDListGroups[this->rightHandType = PLAYER_MODELTYPE_RH_SHIELD] + GET_LINK_MODEL;
+        this->sheathDLists = sPlayerDListGroups[this->sheathType = PLAYER_MODELTYPE_SHEATH_16] + GET_LINK_MODEL;
+        this->modelAnimType = PLAYER_ANIMTYPE_2;
     }
 }
 
