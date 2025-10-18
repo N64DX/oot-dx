@@ -342,7 +342,7 @@ void Room_DrawBackground2D(Gfx** gfxP, void* tex, void* tlut, u16 width, u16 hei
     }
 
     if ((fmt == G_IM_FMT_RGBA) && !R_ROOM_BG2D_FORCE_SCALEBG) {
-#if HIRES || WS_JPEG
+#if HIRES || HIRES_PRO || WS_JPEG
         bg->s.frameW = JPEG_FRAME_W;
         bg->s.frameH = JPEG_FRAME_H;
         bg->s.scaleW = JPEG_SCALE_W;
