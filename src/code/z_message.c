@@ -498,16 +498,16 @@ void Message_DrawTextChar(PlayState* play, void* textureImage, Gfx** p) {
     // Draw drop shadow
     if (msgCtx->textBoxType != TEXTBOX_TYPE_NONE_NO_SHADOW) {
         gDPSetPrimColor(gfx++, 0, 0, 0, 0, 0, msgCtx->textColorAlpha);
-        gSPTextureRectangle(gfx++, HIRES_MULTIPLY((x + R_TEXT_DROP_SHADOW_OFFSET + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY((y + R_TEXT_DROP_SHADOW_OFFSET) << 2),
-                            HIRES_MULTIPLY((x + R_TEXT_DROP_SHADOW_OFFSET + WS_SHIFT_HALF + sCharTexSize) << 2),
-                            HIRES_MULTIPLY((y + R_TEXT_DROP_SHADOW_OFFSET + sCharTexSize) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(sCharTexScale),
+        gSPTextureRectangle(gfx++, HIRES_MULTIPLY((x + R_TEXT_DROP_SHADOW_OFFSET + WS_SHIFT_HALF) << 2) * SCALE_X, HIRES_MULTIPLY((y + R_TEXT_DROP_SHADOW_OFFSET) << 2),
+                            HIRES_MULTIPLY((x + R_TEXT_DROP_SHADOW_OFFSET + WS_SHIFT_HALF + sCharTexSize) << 2) * SCALE_X,
+                            HIRES_MULTIPLY((y + R_TEXT_DROP_SHADOW_OFFSET + sCharTexSize) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(sCharTexScale) / SCALE_X,
                             HIRES_DIVIDE(sCharTexScale));
     }
 
     gDPPipeSync(gfx++);
     gDPSetPrimColor(gfx++, 0, 0, msgCtx->textColorR, msgCtx->textColorG, msgCtx->textColorB, msgCtx->textColorAlpha);
-    gSPTextureRectangle(gfx++, HIRES_MULTIPLY((x + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(y << 2), HIRES_MULTIPLY((x + WS_SHIFT_HALF + sCharTexSize) << 2), HIRES_MULTIPLY((y + sCharTexSize) << 2), G_TX_RENDERTILE, 0, 0,
-                        HIRES_DIVIDE(sCharTexScale), HIRES_DIVIDE(sCharTexScale));
+    gSPTextureRectangle(gfx++, HIRES_MULTIPLY((x + WS_SHIFT_HALF) << 2) * SCALE_X, HIRES_MULTIPLY(y << 2), HIRES_MULTIPLY((x + WS_SHIFT_HALF + sCharTexSize) << 2) * SCALE_X, HIRES_MULTIPLY((y + sCharTexSize) << 2), G_TX_RENDERTILE, 0, 0,
+                        HIRES_DIVIDE(sCharTexScale) / SCALE_X, HIRES_DIVIDE(sCharTexScale));
     *p = gfx;
 }
 
@@ -987,8 +987,8 @@ void Message_DrawTextboxIcon(PlayState* play, Gfx** p, s16 x, s16 y) {
     sCharTexSize = 16.0f * ((f32)R_TEXT_CHAR_SCALE / 100.0f);
     sCharTexScale = 1024.0f / ((f32)R_TEXT_CHAR_SCALE / 100.0f);
 
-    gSPTextureRectangle(gfx++, HIRES_MULTIPLY((x + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(y << 2), HIRES_MULTIPLY((x + WS_SHIFT_HALF + sCharTexSize) << 2), HIRES_MULTIPLY((y + sCharTexSize) << 2), G_TX_RENDERTILE, 0, 0,
-                        HIRES_DIVIDE(sCharTexScale), HIRES_DIVIDE(sCharTexScale));
+    gSPTextureRectangle(gfx++, HIRES_MULTIPLY((x + WS_SHIFT_HALF) << 2) * SCALE_X, HIRES_MULTIPLY(y << 2), HIRES_MULTIPLY((x + WS_SHIFT_HALF + sCharTexSize) << 2) * SCALE_X, HIRES_MULTIPLY((y + sCharTexSize) << 2), G_TX_RENDERTILE, 0, 0,
+                        HIRES_DIVIDE(sCharTexScale) / SCALE_X, HIRES_DIVIDE(sCharTexScale));
 
     msgCtx->stateTimer++;
 
@@ -1172,9 +1172,9 @@ u16 Message_DrawItemIcon(PlayState* play, u16 itemId, Gfx** p, u16 i) {
                             ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                             G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     }
-    gSPTextureRectangle(gfx++, HIRES_MULTIPLY((msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(R_TEXTBOX_ICON_YPOS << 2),
-                        HIRES_MULTIPLY((msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + R_TEXTBOX_ICON_DIMENSION + WS_SHIFT_HALF) << 2),
-                        HIRES_MULTIPLY((R_TEXTBOX_ICON_YPOS + R_TEXTBOX_ICON_DIMENSION) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+    gSPTextureRectangle(gfx++, HIRES_MULTIPLY((msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + WS_SHIFT_HALF) << 2) * SCALE_X, HIRES_MULTIPLY(R_TEXTBOX_ICON_YPOS << 2),
+                        HIRES_MULTIPLY((msgCtx->textPosX + R_TEXTBOX_ICON_XPOS + R_TEXTBOX_ICON_DIMENSION + WS_SHIFT_HALF) << 2) * SCALE_X,
+                        HIRES_MULTIPLY((R_TEXTBOX_ICON_YPOS + R_TEXTBOX_ICON_DIMENSION) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
     gDPPipeSync(gfx++);
     gDPSetCombineLERP(gfx++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
 
@@ -3341,8 +3341,8 @@ void Message_DrawTextBox(PlayState* play, Gfx** p) {
     R_TEXTBOX_TEXHEIGHT = 442;
 #endif
 
-    gSPTextureRectangle(gfx++, HIRES_MULTIPLY((R_TEXTBOX_X + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(R_TEXTBOX_Y << 2), HIRES_MULTIPLY((R_TEXTBOX_X + WS_SHIFT_HALF + R_TEXTBOX_WIDTH) << 2),
-                        HIRES_MULTIPLY((R_TEXTBOX_Y + R_TEXTBOX_HEIGHT) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(R_TEXTBOX_TEXWIDTH << 1),
+    gSPTextureRectangle(gfx++, HIRES_MULTIPLY((R_TEXTBOX_X + WS_SHIFT_HALF) << 2) * SCALE_X, HIRES_MULTIPLY(R_TEXTBOX_Y << 2), HIRES_MULTIPLY((R_TEXTBOX_X + WS_SHIFT_HALF + R_TEXTBOX_WIDTH) << 2) * SCALE_X,
+                        HIRES_MULTIPLY((R_TEXTBOX_Y + R_TEXTBOX_HEIGHT) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(R_TEXTBOX_TEXWIDTH << 1) / SCALE_X,
                         HIRES_DIVIDE(R_TEXTBOX_TEXHEIGHT << 1));
 
     // Draw treble clef
@@ -3353,8 +3353,8 @@ void Message_DrawTextBox(PlayState* play, Gfx** p) {
         gDPSetPrimColor(gfx++, 0, 0, 255, 100, 0, 255);
         gDPLoadTextureBlock_4b(gfx++, gOcarinaTrebleClefTex, G_IM_FMT_I, 16, 32, 0, G_TX_MIRROR, G_TX_MIRROR,
                                G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(gfx++, HIRES_MULTIPLY((R_TEXTBOX_CLEF_XPOS + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(R_TEXTBOX_CLEF_YPOS << 2), HIRES_MULTIPLY((R_TEXTBOX_CLEF_XPOS + WS_SHIFT_HALF + 16) << 2),
-                            HIRES_MULTIPLY((R_TEXTBOX_CLEF_YPOS + 32) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+        gSPTextureRectangle(gfx++, HIRES_MULTIPLY((R_TEXTBOX_CLEF_XPOS + WS_SHIFT_HALF) << 2) * SCALE_X, HIRES_MULTIPLY(R_TEXTBOX_CLEF_YPOS << 2), HIRES_MULTIPLY((R_TEXTBOX_CLEF_XPOS + WS_SHIFT_HALF + 16) << 2) * SCALE_X,
+                            HIRES_MULTIPLY((R_TEXTBOX_CLEF_YPOS + 32) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
     }
 
     *p = gfx;
@@ -4318,11 +4318,11 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
                                         G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP,
                                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                    gSPTextureRectangle(gfx++, HIRES_MULTIPLY(notePosX << 2),
+                    gSPTextureRectangle(gfx++, HIRES_MULTIPLY(notePosX << 2) * SCALE_X,
                                         HIRES_MULTIPLY(R_OCARINA_BUTTONS_YPOS(gOcarinaSongButtons[g].buttonsIndex[i]) << 2),
-                                        HIRES_MULTIPLY((notePosX + 16) << 2),
+                                        HIRES_MULTIPLY((notePosX + 16) << 2) * SCALE_X,
                                         HIRES_MULTIPLY((R_OCARINA_BUTTONS_YPOS(gOcarinaSongButtons[g].buttonsIndex[i]) + 16) << 2),
-                                        G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                                        G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
                     notePosX += R_OCARINA_BUTTONS_XPOS_OFFSET;
                 }
             }
@@ -4357,10 +4357,10 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
                                         G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                                         G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                    gSPTextureRectangle(gfx++, HIRES_MULTIPLY(notePosX << 2), HIRES_MULTIPLY(R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) << 2),
-                                        HIRES_MULTIPLY((notePosX + 16) << 2),
+                    gSPTextureRectangle(gfx++, HIRES_MULTIPLY(notePosX << 2) * SCALE_X, HIRES_MULTIPLY(R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) << 2),
+                                        HIRES_MULTIPLY((notePosX + 16) << 2) * SCALE_X,
                                         HIRES_MULTIPLY((R_OCARINA_BUTTONS_YPOS(sOcarinaButtonIndexBuf[i]) + 16) << 2), G_TX_RENDERTILE,
-                                        0, 0, HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                                        0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
                     notePosX += R_OCARINA_BUTTONS_XPOS_OFFSET;
                 }
             }
