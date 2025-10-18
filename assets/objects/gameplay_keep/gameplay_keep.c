@@ -3896,7 +3896,7 @@ u64 gMoonTex[TEX_LEN(u64, gMoonTex_WIDTH, gMoonTex_HEIGHT, 8)] = {
 #include "assets/objects/gameplay_keep/gMoonTex.ia8.inc.c"
 };
 
-Gfx gMoonDL[14] = {
+Gfx gMoonDL[15] = {
 #include "assets/objects/gameplay_keep/gMoonDL.inc.c"
 };
 
