@@ -229,7 +229,12 @@ void func_800BC88C(PlayState* this) {
 }
 
 Gfx* Play_SetFog(PlayState* this, Gfx* gfx) {
-    return Gfx_SetFog2(gfx, this->lightCtx.fogColor[0], this->lightCtx.fogColor[1], this->lightCtx.fogColor[2], 0,
+    s32 fogA = 0;
+    if (this->skyboxId != SKYBOX_NONE && this->lightCtx.fogNear < 980) {
+        fogA = (255 * (1000 - this->lightCtx.fogNear) + 25) / 50;
+        fogA = CLAMP(fogA, 0, 255);
+    }
+    return Gfx_SetFog2(gfx, this->lightCtx.fogColor[0], this->lightCtx.fogColor[1], this->lightCtx.fogColor[2], fogA,
                        this->lightCtx.fogNear, 1000);
 }
 
@@ -1235,7 +1240,19 @@ void Play_Draw(PlayState* this) {
         else mirrorStatus = MIRROR_STATUS_PAUSE_BG;
     }
     else mirrorStatus = MIRROR_STATUS_OFF;
-    Gfx_SetupFrame(gfxCtx, 0, 0, 0, mirrorStatus);
+    
+    {
+        s32 clearFB = this->skyboxId == SKYBOX_NONE || this->skyboxId == SKYBOX_UNSET_1D || this->envCtx.skyboxDisabled; // Only clear the FB if there is no skybox or it is solid color
+        u8 clearR, clearG, clearB = 0; // For no skybox, black background
+
+        if (this->skyboxId == SKYBOX_UNSET_1D) { // Solid-color "skybox" matching fog color
+            clearR = this->lightCtx.fogColor[0];
+            clearG = this->lightCtx.fogColor[1];
+            clearB = this->lightCtx.fogColor[2];
+        }
+
+        Gfx_SetupFrame(gfxCtx, clearFB, clearR, clearG, clearB, mirrorStatus); // Clear the fb only if we aren't drawing a skybox, but always clear zb
+    }
 
     if (!DEBUG_FEATURES || (R_HREG_MODE != HREG_MODE_PLAY) || R_PLAY_RUN_DRAW) {
         POLY_OPA_DISP = Play_SetFog(this, POLY_OPA_DISP);
@@ -1331,14 +1348,14 @@ void Play_Draw(PlayState* this) {
         }
 
         if (!DEBUG_FEATURES || (R_HREG_MODE != HREG_MODE_PLAY) || R_PLAY_DRAW_SKYBOX) {
-            if (this->skyboxId && (this->skyboxId != SKYBOX_UNSET_1D) && !this->envCtx.skyboxDisabled) {
+            if (this->skyboxId != SKYBOX_NONE && (this->skyboxId != SKYBOX_UNSET_1D) && !this->envCtx.skyboxDisabled) {
                 if ((this->skyboxId == SKYBOX_NORMAL_SKY) || (this->skyboxId == SKYBOX_CUTSCENE_MAP)) {
                     Environment_UpdateSkybox(this->skyboxId, &this->envCtx, &this->skyboxCtx);
-                    Skybox_Draw(&this->skyboxCtx, gfxCtx, this->skyboxId, this->envCtx.skyboxBlend, this->view.eye.x,
-                                this->view.eye.y, this->view.eye.z);
+                    Skybox_Draw(&this->skyboxCtx, gfxCtx, &this->lightCtx, this->skyboxId, this->envCtx.skyboxBlend,
+                                this->view.eye.x, this->view.eye.y, this->view.eye.z);
                 } else if (this->skyboxCtx.drawType == SKYBOX_DRAW_128) {
-                    Skybox_Draw(&this->skyboxCtx, gfxCtx, this->skyboxId, 0, this->view.eye.x, this->view.eye.y,
-                                this->view.eye.z);
+                    Skybox_Draw(&this->skyboxCtx, gfxCtx, &this->lightCtx, this->skyboxId, 0, this->view.eye.x,
+                                this->view.eye.y, this->view.eye.z);
                 }
             }
         }
@@ -1387,7 +1404,7 @@ void Play_Draw(PlayState* this) {
                 Vec3f quakeOffset;
 
                 quakeOffset = Camera_GetQuakeOffset(GET_ACTIVE_CAM(this));
-                Skybox_Draw(&this->skyboxCtx, gfxCtx, this->skyboxId, 0, this->view.eye.x + quakeOffset.x,
+                Skybox_Draw(&this->skyboxCtx, gfxCtx, NULL, this->skyboxId, 0, this->view.eye.x + quakeOffset.x, // LightCtx arg is NULL here since this is responsible for prerendered backgrounds, in this case we don't want them to be affected by fog
                             this->view.eye.y + quakeOffset.y, this->view.eye.z + quakeOffset.z);
             }
         }
