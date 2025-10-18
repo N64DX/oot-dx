@@ -2,14 +2,15 @@
 #define RESOLUTION_H
 
 // @setting: SCREEN_MODE
-// 0: DEFAULT, 1: HIRES, 2: WIDE, 3: ULTRAWIDE
-#define SCREEN_MODE 0
+// 0: DEFAULT, 1: HIRES, 2: WIDE, 3: ULTRAWIDE, 4: PERFECT
+#define SCREEN_MODE 4
 
 // Derived from SCREEN_MODE
 #define DEFAULT    (SCREEN_MODE == 0 ? 1 : 0) // SCREEN_DEFAULT   (320x240)
 #define HIRES      (SCREEN_MODE == 1 ? 1 : 0) // SCREEN_HIRES     (640x480)
 #define WIDESCREEN (SCREEN_MODE == 2 ? 1 : 0) // SCREEN_WIDE      (424x240)
 #define ULTRA_WS   (SCREEN_MODE == 3 ? 1 : 0) // SCREEN_ULTRAWIDE (576x240)
+#define PERFECT    (SCREEN_MODE == 4 ? 1 : 0) // SCREEN_PERFECT   (640x240)
 
 // Include widescreen JPEGs that have been squished from 420x240 to 320x240
 // All screen modes can handle original and widescreen backgrounds
@@ -64,6 +65,7 @@
 #if HIRES
     #define SCREEN_WIDTH 640
     #define SCREEN_HEIGHT 480
+    #define SCALE_X 1
     #define ASPECT_RATIO (4.0f / 3.0f)
     #define C_BUTTON_EQUIP_1 660
     #define C_BUTTON_EQUIP_2 900
@@ -88,6 +90,7 @@
 #elif WIDESCREEN
     #define SCREEN_WIDTH 424
     #define SCREEN_HEIGHT 240
+    #define SCALE_X 1
     #define ASPECT_RATIO (16.0f / 9.0f)
     #define C_BUTTON_EQUIP_1 ((SCREEN_WIDTH - 320) * 5 + 660)
     #define C_BUTTON_EQUIP_2 ((SCREEN_WIDTH - 320) * 5 + 900)
@@ -112,6 +115,7 @@
 #elif ULTRA_WS
     #define SCREEN_WIDTH 576
     #define SCREEN_HEIGHT 240
+    #define SCALE_X 1
     #define ASPECT_RATIO 2.4f
     #define C_BUTTON_EQUIP_1 ((SCREEN_WIDTH - 320) * 5 + 660)
     #define C_BUTTON_EQUIP_2 ((SCREEN_WIDTH - 320) * 5 + 900)
@@ -133,9 +137,35 @@
     #define WS_SHIFT_FULL (SCREEN_WIDTH - 320)
     #define WS_SHIFT_HALF (WS_SHIFT_FULL / 2)
     #define WS_SHIFT_QUARTER (WS_SHIFT_FULL / 4)
+#elif PERFECT
+    #define SCREEN_WIDTH 640
+    #define SCREEN_HEIGHT 240
+    #define SCALE_X 2
+    #define ASPECT_RATIO (4.0f / 3.0f)
+    #define C_BUTTON_EQUIP_1 660
+    #define C_BUTTON_EQUIP_2 900
+    #define C_BUTTON_EQUIP_3 1140
+    #define FBDEMO_SHIFT 18
+    #define GFXPRINT_SHIFT 0
+    #define HIRES_SCALE 1
+    #define HIRES_PX_SHIFT 0
+    #define JPEG_FRAME_X JPEG_POS_DEFAULT
+    #define JPEG_FRAME_W (JPEG_WIDTH * 4)
+    #define JPEG_FRAME_H (240 * 4)
+    #define JPEG_SCALE_W JPEG_SCALE
+    #define JPEG_SCALE_H 1024
+    #define LULLABY_SHIFT 0
+    #define OCEFF_SHIFT 18
+    #define TITLE_SHIFT 0
+    #define WS_MIRROR_SHIFT 0
+    #define WS_PX_SHIFT 0
+    #define WS_SHIFT_FULL 0
+    #define WS_SHIFT_HALF 0
+    #define WS_SHIFT_QUARTER 0
 #else
     #define SCREEN_WIDTH 320
     #define SCREEN_HEIGHT 240
+    #define SCALE_X 1
     #define ASPECT_RATIO (4.0f / 3.0f)
     #define C_BUTTON_EQUIP_1 660
     #define C_BUTTON_EQUIP_2 900
