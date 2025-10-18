@@ -324,7 +324,7 @@ s32 View_ApplyPerspective(View* view) {
     LOG_UTILS_CHECK_NULL_POINTER("projection", projection, "../z_view.c", 616);
     view->projectionPtr = projection;
 
-    width = view->viewport.rightX - view->viewport.leftX;
+    width = (view->viewport.rightX - view->viewport.leftX) / SCALE_X;
     height = view->viewport.bottomY - view->viewport.topY;
     aspect = (f32)width / (f32)height;
 
@@ -433,7 +433,7 @@ s32 View_ApplyOrtho(View* view) {
     LOG_UTILS_CHECK_NULL_POINTER("projection", projection, "../z_view.c", 744);
     view->projectionPtr = projection;
 
-    guOrtho(projection, -(f32)gScreenWidth * 0.5f, (f32)gScreenWidth * 0.5f, -(f32)gScreenHeight * 0.5f,
+    guOrtho(projection, -(f32)gScreenWidth / SCALE_X * 0.5f, (f32)gScreenWidth / SCALE_X * 0.5f, -(f32)gScreenHeight * 0.5f,
             (f32)gScreenHeight * 0.5f, view->zNear, view->zFar, view->scale);
 
     view->projection = *projection;
@@ -470,7 +470,7 @@ s32 View_ApplyOrthoToOverlay(View* view) {
     LOG_UTILS_CHECK_NULL_POINTER("projection", projection, "../z_view.c", 791);
     view->projectionPtr = projection;
 
-    guOrtho(projection, -(f32)gScreenWidth * 0.5f, (f32)gScreenWidth * 0.5f, -(f32)gScreenHeight * 0.5f,
+    guOrtho(projection, -(f32)gScreenWidth / SCALE_X * 0.5f, (f32)gScreenWidth / SCALE_X * 0.5f, -(f32)gScreenHeight * 0.5f,
             (f32)gScreenHeight * 0.5f, view->zNear, view->zFar, view->scale);
 
     view->projection = *projection;
@@ -512,7 +512,7 @@ s32 View_ApplyPerspectiveToOverlay(View* view) {
     LOG_UTILS_CHECK_NULL_POINTER("projection", projection, "../z_view.c", 833);
     view->projectionPtr = projection;
 
-    width = view->viewport.rightX - view->viewport.leftX;
+    width = (view->viewport.rightX - view->viewport.leftX) / SCALE_X;
     height = view->viewport.bottomY - view->viewport.topY;
 
     aspect = (f32)width / (f32)height;
@@ -593,7 +593,7 @@ s32 View_ApplyTo(View* view, s32 mask, Gfx** gfxP) {
         LOG_UTILS_CHECK_NULL_POINTER("projection", projection, "../z_view.c", 921);
         view->projectionPtr = projection;
 
-        guOrtho(projection, -(f32)gScreenWidth * 0.5f, (f32)gScreenWidth * 0.5f, -(f32)gScreenHeight * 0.5f,
+        guOrtho(projection, -(f32)gScreenWidth / SCALE_X * 0.5f, (f32)gScreenWidth / SCALE_X * 0.5f, -(f32)gScreenHeight * 0.5f,
                 (f32)gScreenHeight * 0.5f, view->zNear, view->zFar, view->scale);
 
         view->projection = *projection;
@@ -604,7 +604,7 @@ s32 View_ApplyTo(View* view, s32 mask, Gfx** gfxP) {
         LOG_UTILS_CHECK_NULL_POINTER("projection", projection, "../z_view.c", 932);
         view->projectionPtr = projection;
 
-        width = view->viewport.rightX - view->viewport.leftX;
+        width = (view->viewport.rightX - view->viewport.leftX) / SCALE_X;
         height = view->viewport.bottomY - view->viewport.topY;
 
         guPerspective(projection, &view->normal, view->fovy, (f32)width / (f32)height, view->zNear, view->zFar,
