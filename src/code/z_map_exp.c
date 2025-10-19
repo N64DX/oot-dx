@@ -519,7 +519,7 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_ROAD_TO_LAKE_HYLIA:
             case SCENE_ROAD_TO_FORTRESS:
                 if (!R_MINIMAP_DISABLED) {
-                    s8 xOffset = gMapData->overworldXOffset[mapIndex];
+                    s8 xOffset = gMapData->overworldXOffset[mapIndex] / 2;
                     
                     Gfx_SetupDL_39Overlay(play->state.gfxCtx);
 
