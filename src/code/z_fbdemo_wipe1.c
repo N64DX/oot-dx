@@ -28,8 +28,8 @@ void TransitionWipe_Start(void* thisx) {
         this->texY = (s32)(153.0f * (1 << 2));
     }
 
-    guPerspective(&this->projection, &this->normal, 60.0f, ASPECT_RATIO, 10.0f, 12800.0f, 1.0f);
-    guLookAt(&this->lookAt, 0.0f, 0.0f, 400.0f - FBDEMO_SHIFT, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    guPerspective(&this->projection, &this->normal, 60.0f, (f32)(SCREEN_X) / (f32)(SCREEN_HEIGHT), 10.0f, 12800.0f, 1.0f);
+    guLookAt(&this->lookAt, 0.0f, 0.0f, 400.0f - ((f32)(WS_SHIFT_FULL) + 18.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 }
 
 void* TransitionWipe_Init(void* thisx) {

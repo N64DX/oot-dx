@@ -229,7 +229,7 @@ void KaleidoScope_DrawDigit(PlayState* play, s32 digit, s32 rectLeft, s32 rectTo
     gDPLoadTextureBlock(POLY_OPA_DISP++, ((u8*)gCounterDigit0Tex + (8 * 16 * digit)), G_IM_FMT_I, G_IM_SIZ_8b, 8, 16, 0,
                         G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
                         G_TX_NOLOD);
-    gSPTextureRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY((rectLeft + WS_SHIFT_HALF) << 2) * SCALE_X, HIRES_MULTIPLY(rectTop << 2), HIRES_MULTIPLY((rectLeft + 8 + WS_SHIFT_HALF) << 2) * SCALE_X, HIRES_MULTIPLY((rectTop + 16) << 2),
+    gSPTextureRectangle(POLY_OPA_DISP++, X_MULTIPLY(HIRES_MULTIPLY(rectLeft + WS_SHIFT_HALF)) << 2, HIRES_MULTIPLY(rectTop << 2), X_MULTIPLY(HIRES_MULTIPLY(rectLeft + 8 + WS_SHIFT_HALF)) << 2, HIRES_MULTIPLY((rectTop + 16) << 2),
                         G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_debug.c", 220);
