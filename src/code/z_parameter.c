@@ -3138,8 +3138,8 @@ void Magic_DrawMeter(PlayState* play) {
         gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0,
                             G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity) << 2) * SCALE_X, HIRES_MULTIPLY(magicMeterY << 2),
-                            HIRES_MULTIPLY((R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity + 8) << 2) * SCALE_X, HIRES_MULTIPLY((magicMeterY + 16) << 2),
+        gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity)) << 2, HIRES_MULTIPLY(magicMeterY << 2),
+                            X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity + 8)) << 2, HIRES_MULTIPLY((magicMeterY + 16) << 2),
                             G_TX_RENDERTILE, 256, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
 
         gDPPipeSync(OVERLAY_DISP++);
@@ -3155,8 +3155,8 @@ void Magic_DrawMeter(PlayState* play) {
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                  G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(R_MAGIC_FILL_X << 2) * SCALE_X, HIRES_MULTIPLY((magicMeterY + 3) << 2),
-                                HIRES_MULTIPLY((R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2) * SCALE_X,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X)) << 2, HIRES_MULTIPLY((magicMeterY + 3) << 2),
+                                X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic)) << 2,
                                 HIRES_MULTIPLY((magicMeterY + 10) << 2) - (HIRES_PX_SHIFT * 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
 
             // Fill the rest of the meter with the normal magic color
@@ -3164,8 +3164,8 @@ void Magic_DrawMeter(PlayState* play) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
                             interfaceCtx->magicAlpha);
 
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(R_MAGIC_FILL_X << 2) * SCALE_X, HIRES_MULTIPLY((magicMeterY + 3) << 2),
-                                HIRES_MULTIPLY((R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2) * SCALE_X, HIRES_MULTIPLY((magicMeterY + 10) << 2) - (HIRES_PX_SHIFT * 2),
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X)) << 2, HIRES_MULTIPLY((magicMeterY + 3) << 2),
+                                X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.magicTarget)) << 2, HIRES_MULTIPLY((magicMeterY + 10) << 2) - (HIRES_PX_SHIFT * 2),
                                 G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
         } else {
             // Fill the whole meter with the normal magic color
@@ -3176,8 +3176,8 @@ void Magic_DrawMeter(PlayState* play) {
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                  G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(R_MAGIC_FILL_X << 2) * SCALE_X, HIRES_MULTIPLY((magicMeterY + 3) << 2),
-                                HIRES_MULTIPLY((R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2) * SCALE_X,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X)) << 2, HIRES_MULTIPLY((magicMeterY + 3) << 2),
+                                X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic)) << 2,
                                 HIRES_MULTIPLY((magicMeterY + 10) << 2) - (HIRES_PX_SHIFT * 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
         }
     }
@@ -3324,7 +3324,7 @@ void Interface_DrawItemButtons(PlayState* play) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 192, 192, 192, dpadAlphas[0]);
         }
         gDPLoadTextureBlock(OVERLAY_DISP++, gDpadTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(dpad_x << 2) * SCALE_X, HIRES_MULTIPLY(dpad_y << 2), HIRES_MULTIPLY((dpad_x + 16) << 2) * SCALE_X, HIRES_MULTIPLY((dpad_y + 16) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(2 << 10) / SCALE_X, HIRES_DIVIDE(2 << 10));
+        gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(dpad_x)) << 2, HIRES_MULTIPLY(dpad_y << 2), X_MULTIPLY(HIRES_MULTIPLY(dpad_x + 16)) << 2, HIRES_MULTIPLY((dpad_y + 16) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(2 << 10) / SCALE_X, HIRES_DIVIDE(2 << 10));
     }
 
     // B Button Color & Texture
@@ -3341,22 +3341,22 @@ void Interface_DrawItemButtons(PlayState* play) {
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cLeftAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(R_ITEM_BTN_X(1) << 2) * SCALE_X, HIRES_MULTIPLY(R_ITEM_BTN_Y(1) << 2),
-                        HIRES_MULTIPLY((R_ITEM_BTN_X(1) + R_ITEM_BTN_WIDTH(1)) << 2) * SCALE_X, HIRES_MULTIPLY((R_ITEM_BTN_Y(1) + R_ITEM_BTN_WIDTH(1)) << 2),
+    gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(1))) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(1) << 2),
+                        X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(1) + R_ITEM_BTN_WIDTH(1))) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(1) + R_ITEM_BTN_WIDTH(1)) << 2),
                         G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1) / SCALE_X, HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1));
 
     // C-Down Button Color & Texture
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cDownAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(R_ITEM_BTN_X(2) << 2) * SCALE_X, HIRES_MULTIPLY(R_ITEM_BTN_Y(2) << 2),
-                        HIRES_MULTIPLY((R_ITEM_BTN_X(2) + R_ITEM_BTN_WIDTH(2)) << 2) * SCALE_X, HIRES_MULTIPLY((R_ITEM_BTN_Y(2) + R_ITEM_BTN_WIDTH(2)) << 2),
+    gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(2))) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(2) << 2),
+                        X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(2) + R_ITEM_BTN_WIDTH(2))) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(2) + R_ITEM_BTN_WIDTH(2)) << 2),
                         G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1) / SCALE_X, HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1));
 
     // C-Right Button Color & Texture
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cRightAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(R_ITEM_BTN_X(3) << 2) * SCALE_X, HIRES_MULTIPLY(R_ITEM_BTN_Y(3) << 2),
-                        HIRES_MULTIPLY((R_ITEM_BTN_X(3) + R_ITEM_BTN_WIDTH(3)) << 2) * SCALE_X, HIRES_MULTIPLY((R_ITEM_BTN_Y(3) + R_ITEM_BTN_WIDTH(3)) << 2),
+    gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(3))) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(3) << 2),
+                        X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(3) + R_ITEM_BTN_WIDTH(3))) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(3) + R_ITEM_BTN_WIDTH(3)) << 2),
                         G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(R_ITEM_BTN_DD(3) << 1) / SCALE_X, HIRES_DIVIDE(R_ITEM_BTN_DD(3) << 1));
 
     if (!IS_PAUSE_STATE_GAMEOVER(pauseCtx)) {
@@ -3367,15 +3367,15 @@ void Interface_DrawItemButtons(PlayState* play) {
                             interfaceCtx->startAlpha);
 
 #if (OOT_VERSION < PAL_1_0) && !OOT_NTSC_N64
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_START_BTN_X + WS_SHIFT_FULL) << 2) * SCALE_X, HIRES_MULTIPLY(R_START_BTN_Y << 2), HIRES_MULTIPLY((R_START_BTN_X + WS_SHIFT_FULL + 22) << 2) * SCALE_X,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_START_BTN_X + WS_SHIFT_FULL)) << 2, HIRES_MULTIPLY(R_START_BTN_Y << 2), X_MULTIPLY(HIRES_MULTIPLY(R_START_BTN_X + WS_SHIFT_FULL + 22)) << 2,
                                 HIRES_MULTIPLY((R_START_BTN_Y + 22) << 2), G_TX_RENDERTILE, 0, 0, (s32)(1.4277344 * HIRES_DIVIDE(1 << 10) / SCALE_X),
                                 (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #elif OOT_NTSC && !OOT_NTSC_N64
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((132 + WS_SHIFT_FULL) << 2) * SCALE_X, HIRES_MULTIPLY(17 << 2), HIRES_MULTIPLY((132 + WS_SHIFT_FULL + 22) << 2) * SCALE_X, HIRES_MULTIPLY((17 + 22) << 2), G_TX_RENDERTILE, 0,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(132 + WS_SHIFT_FULL)) << 2, HIRES_MULTIPLY(17 << 2), X_MULTIPLY(HIRES_MULTIPLY(132 + WS_SHIFT_FULL + 22)) << 2, HIRES_MULTIPLY((17 + 22) << 2), G_TX_RENDERTILE, 0,
                                 0, (s32)(1.4277344 * HIRES_DIVIDE(1 << 10) / SCALE_X), (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #else
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL) << 2) * SCALE_X, HIRES_MULTIPLY(17 << 2),
-                                HIRES_MULTIPLY((startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL + 22) << 2) * SCALE_X, HIRES_MULTIPLY((17 + 22) << 2), G_TX_RENDERTILE,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL)) << 2, HIRES_MULTIPLY(17 << 2),
+                                X_MULTIPLY(HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL + 22)) << 2, HIRES_MULTIPLY((17 + 22) << 2), G_TX_RENDERTILE,
                                 0, 0, (s32)(1.4277344 * HIRES_DIVIDE(1 << 10) / SCALE_X), (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #endif
 
@@ -3393,18 +3393,18 @@ void Interface_DrawItemButtons(PlayState* play) {
             R_START_LABEL_SCALE = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             R_START_LABEL_WIDTH = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             R_START_LABEL_HEIGHT = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL) << 2) * SCALE_X,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL)) << 2,
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language) << 2),
-                                HIRES_MULTIPLY((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + R_START_LABEL_WIDTH) << 2) * SCALE_X,
+                                X_MULTIPLY(HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + R_START_LABEL_WIDTH)) << 2,
                                 HIRES_MULTIPLY((R_START_LABEL_Y(gSaveContext.language) + R_START_LABEL_HEIGHT) << 2), G_TX_RENDERTILE,
                                 0, 0, HIRES_DIVIDE(R_START_LABEL_SCALE) / SCALE_X, HIRES_DIVIDE(R_START_LABEL_SCALE));
 #else
             texCoordScale = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             width = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             height = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL) << 2) * SCALE_X,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL)) << 2,
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language) << 2),
-                                HIRES_MULTIPLY((R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + width) << 2) * SCALE_X,
+                                X_MULTIPLY(HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + width)) << 2,
                                 HIRES_MULTIPLY((R_START_LABEL_Y(gSaveContext.language) + height) << 2), G_TX_RENDERTILE, 0, 0,
                                 HIRES_DIVIDE(texCoordScale) / SCALE_X, HIRES_DIVIDE(texCoordScale));
 #endif
@@ -3430,7 +3430,7 @@ void Interface_DrawItemButtons(PlayState* play) {
 
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), temp);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(R_C_UP_BTN_X << 2) * SCALE_X, HIRES_MULTIPLY(R_C_UP_BTN_Y << 2), HIRES_MULTIPLY((R_C_UP_BTN_X + 16) << 2) * SCALE_X,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_BTN_X)) << 2, HIRES_MULTIPLY(R_C_UP_BTN_Y << 2), X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_BTN_X + 16)) << 2,
                                 HIRES_MULTIPLY((R_C_UP_BTN_Y + 16) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(2 << 10) / SCALE_X, HIRES_DIVIDE(2 << 10));
             gDPPipeSync(OVERLAY_DISP++);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, temp);
@@ -3442,14 +3442,14 @@ void Interface_DrawItemButtons(PlayState* play) {
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, cUpLabelTextures[gSaveContext.language], G_IM_FMT_IA, 32, 8, 0,
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                    G_TX_NOLOD, G_TX_NOLOD);
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(R_C_UP_ICON_X << 2) * SCALE_X, HIRES_MULTIPLY(R_C_UP_ICON_Y << 2), HIRES_MULTIPLY((R_C_UP_ICON_X + 32) << 2) * SCALE_X,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_ICON_X)) << 2, HIRES_MULTIPLY(R_C_UP_ICON_Y << 2), X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_ICON_X + 32)) << 2,
                                 HIRES_MULTIPLY((R_C_UP_ICON_Y + 8) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
 #else
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, cUpLabelTextures[gSaveContext.language], G_IM_FMT_IA, 48, 16, 0,
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                    G_TX_NOLOD, G_TX_NOLOD);
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((R_C_UP_ICON_X - 8) << 2) * SCALE_X, HIRES_MULTIPLY((R_C_UP_ICON_Y - 4) << 2),
-                                HIRES_MULTIPLY((R_C_UP_ICON_X + 40) << 2) * SCALE_X, HIRES_MULTIPLY((R_C_UP_ICON_Y + 12) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_ICON_X - 8)) << 2, HIRES_MULTIPLY((R_C_UP_ICON_Y - 4) << 2),
+                                X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_ICON_X + 40)) << 2, HIRES_MULTIPLY((R_C_UP_ICON_Y + 12) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X,
                                 HIRES_DIVIDE(1 << 10));
 #endif
         }
@@ -3543,7 +3543,7 @@ void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
     gDPLoadTextureBlock(OVERLAY_DISP++, texture, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP,
                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((x + offset) << 2) * SCALE_X, HIRES_MULTIPLY((y + offset) << 2), HIRES_MULTIPLY((x + width + offset) << 2) * SCALE_X, HIRES_MULTIPLY((y + width + offset) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(dd << 1) / SCALE_X, HIRES_DIVIDE(dd << 1));
+    gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(x + offset)) << 2, HIRES_MULTIPLY((y + offset) << 2), X_MULTIPLY(HIRES_MULTIPLY(x + width + offset)) << 2, HIRES_MULTIPLY((y + width + offset) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(dd << 1) / SCALE_X, HIRES_DIVIDE(dd << 1));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3094);
 }
@@ -4128,9 +4128,9 @@ void Interface_Draw(PlayState* play) {
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
             R_B_LABEL_DD = (1 << 10) / (R_B_LABEL_SCALE(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(R_B_LABEL_X(gSaveContext.language) << 2) * SCALE_X,
+            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_B_LABEL_X(gSaveContext.language))) << 2,
                                 HIRES_MULTIPLY(R_B_LABEL_Y(gSaveContext.language) << 2),
-                                HIRES_MULTIPLY((R_B_LABEL_X(gSaveContext.language) + DO_ACTION_TEX_WIDTH) << 2) * SCALE_X,
+                                X_MULTIPLY(HIRES_MULTIPLY(R_B_LABEL_X(gSaveContext.language) + DO_ACTION_TEX_WIDTH)) << 2,
                                 HIRES_MULTIPLY((R_B_LABEL_Y(gSaveContext.language) + DO_ACTION_TEX_HEIGHT) << 2), G_TX_RENDERTILE, 0, 0,
                                 HIRES_DIVIDE(R_B_LABEL_DD) / SCALE_X, HIRES_DIVIDE(R_B_LABEL_DD));
         }
@@ -4291,7 +4291,7 @@ void Interface_Draw(PlayState* play) {
                             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->aAlpha);
                         }
 
-                        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(svar5 << 2) * SCALE_X, HIRES_MULTIPLY(ZREG(15) << 2), HIRES_MULTIPLY((svar5 + 16) << 2) * SCALE_X,
+                        gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(svar5)) << 2, HIRES_MULTIPLY(ZREG(15) << 2), X_MULTIPLY(HIRES_MULTIPLY(svar5 + 16)) << 2,
                                             HIRES_MULTIPLY((ZREG(15) + 16) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
                     }
                 }
@@ -4305,7 +4305,7 @@ void Interface_Draw(PlayState* play) {
                                     G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                     G_TX_NOLOD, G_TX_NOLOD);
 
-                gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((svar5 + 28) << 2) * SCALE_X, HIRES_MULTIPLY(ZREG(15) << 2), HIRES_MULTIPLY((svar5 + 52) << 2) * SCALE_X,
+                gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(svar5 + 28)) << 2, HIRES_MULTIPLY(ZREG(15) << 2), X_MULTIPLY(HIRES_MULTIPLY(svar5 + 52)) << 2,
                                     HIRES_MULTIPLY((ZREG(15) + 16) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
 
                 // Score Counter
