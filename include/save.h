@@ -472,15 +472,15 @@ typedef enum LinkAge {
 #define DUNGEON_URA_RUSH    8
 #define BOSS_RUSH           9
 
-#define QUEST_MAX   CHILD_MASTER_QUEST
-#define QUEST_MODE (gSaveContext.save.info.questMode & 15)
+#define QUEST_MAX           BOSS_RUSH
+#define QUEST_MODE          gSaveContext.save.info.questMode
 
-#define IS_VANILLA_QUEST (R_QUEST_MODE % 3 == 0)
-#define IS_MASTER_QUEST  (R_QUEST_MODE % 3 == 1)
-#define IS_URA_QUEST     (R_QUEST_MODE % 3 == 2)
-#define IS_CHILD_QUEST   (R_QUEST_MODE >= CHILD_QUEST  && R_QUEST_MODE <= CHILD_URA_QUEST)
-#define IS_DUNGEON_RUSH  (R_QUEST_MODE >= DUNGEON_RUSH && R_QUEST_MODE <= DUNGEON_URA_RUSH)
-#define IS_BOSS_RUSH     (R_QUEST_MODE == BOSS_RUSH)
+#define IS_VANILLA_QUEST    (R_QUEST_MODE % 3 == 0)
+#define IS_MASTER_QUEST     (R_QUEST_MODE % 3 == 1)
+#define IS_URA_QUEST        (R_QUEST_MODE % 3 == 2)
+#define IS_CHILD_QUEST      (R_QUEST_MODE >= CHILD_QUEST  && R_QUEST_MODE <= CHILD_URA_QUEST)
+#define IS_DUNGEON_RUSH     (R_QUEST_MODE >= DUNGEON_RUSH && R_QUEST_MODE <= DUNGEON_URA_RUSH)
+#define IS_BOSS_RUSH        (R_QUEST_MODE == BOSS_RUSH)
 
 #define FILE_OPTIONS_SIZE 2
 extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
