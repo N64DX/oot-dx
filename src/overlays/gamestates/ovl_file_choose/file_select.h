@@ -270,6 +270,13 @@ extern u64 gQuestOcarinaOfTimeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HE
 extern u64 gQuestMasterQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
 extern u64 gQuestUraQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
 extern u64 gQuestChildQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
+extern u64 gQuestChildMasterQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
+extern u64 gQuestChildUraQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
+extern u64 gQuestDungeonRushTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
+extern u64 gQuestDungeonMasterRushTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
+extern u64 gQuestDungeonUraRushTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
+extern u64 gQuestDungeonChildRushTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
+extern u64 gQuestBossRushTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
 
 extern u64 gMirrorModeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)];
 #endif
