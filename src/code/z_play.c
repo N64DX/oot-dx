@@ -48,8 +48,8 @@
 #include "segment_symbols.h"
 #include "save.h"
 #include "vis.h"
-#include "libu64/gfxprint.h"
-#include "alloca.h"
+
+#include "z_play_rush.c"
 
 #pragma increment_block_number "gc-eu:0 gc-eu-mq:0 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ique-cn:224" \
                                "ntsc-1.0:240 ntsc-1.1:240 ntsc-1.2:240 pal-1.0:240 pal-1.1:240"
@@ -421,8 +421,11 @@ void Play_Init(GameState* thisx) {
             gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_48) ? 3 : 2;
     }
 
+    Play_SetDungeonRushEntry(this);
     Play_SpawnScene(
-        this, gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, ((void)0, gSaveContext.sceneLayer))].sceneId, gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, ((void)0, gSaveContext.sceneLayer))].spawn);
+        this, gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, ((void)0, gSaveContext.sceneLayer))].sceneId,
+        gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, ((void)0, gSaveContext.sceneLayer))].spawn);
+    Play_SetDungeonRushProgress(this);
 
     PRINTF("\nSCENE_NO=%d COUNTER=%d\n", ((void)0, gSaveContext.save.entranceIndex), gSaveContext.sceneLayer);
 

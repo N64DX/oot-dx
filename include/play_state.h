@@ -134,6 +134,8 @@ typedef struct PlayState {
     /* 0x12132 */ s8 specialIconShake;
     /* 0x12133 */ u8 specialIconCount;
     /* 0x12134 */ u8 specialIconLast;
+    /* 0x12135 */ bool progressRush;
+    /* 0x12136 */ bool swapEquipment;
 } PlayState; // size = 0x12518
 
 extern Mtx D_01000000; // billboardMtx
@@ -172,6 +174,8 @@ void Play_TriggerRespawn(PlayState* this);
 int Play_CamIsNotFixed(PlayState* this);
 s32 func_800C0D34(PlayState* this, Actor* actor, s16* yaw);
 s32 func_800C0DB4(PlayState* this, Vec3f* pos);
+void Play_SetDungeonRushEntry(PlayState* this);
+void Play_SetDungeonRushProgress(PlayState* this);
 
 void Play_Init(GameState* thisx);
 void Play_Destroy(GameState* thisx);

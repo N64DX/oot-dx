@@ -1030,7 +1030,7 @@ endseg
 beginseg
     name "tokinoma_room_1"
     compress
-    include "$(BUILD_DIR)/assets/scenes/indoors/tokinoma/tokinoma_room_1.o"
+    include "$(BUILD_DIR)/assets/scenes/indoors/tokinoma/tokinoma_dr_room_1.o"
     number 3
 endseg
 

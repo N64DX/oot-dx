@@ -2,3 +2,9 @@
     NULL,      // 1
     cq_header, // 2
     cq_header, // 3
+    cq_header, // 4
+    NULL,      // 5
+    NULL,      // 6
+    NULL,      // 7
+    NULL,      // 8
+    NULL,      // 9
