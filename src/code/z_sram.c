@@ -399,6 +399,13 @@ void Sram_InitDebugSave(void) {
             Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, IS_CHILD_QUEST ? EQUIP_VALUE_SHIELD_HYLIAN : EQUIP_VALUE_SHIELD_DEKU);
         }
     }
+    
+    if (IS_DUNGEON_RUSH || IS_BOSS_RUSH) {
+        SET_EVENTCHKINF(EVENTCHKINF_OPENED_DOOR_OF_TIME);
+        SET_EVENTCHKINF(EVENTCHKINF_REVEALED_MASTER_SWORD);
+        SET_EVENTCHKINF(EVENTCHKINF_55);
+        SET_EVENTCHKINF(EVENTCHKINF_C5);
+    }
 
     gSaveContext.save.entranceIndex = ENTR_HYRULE_FIELD_0;
     gSaveContext.save.info.playerData.magicLevel = 0;
@@ -521,8 +528,29 @@ void Sram_OpenSave(SramContext* sramCtx) {
             break;
     }
 
-    if (SKIP_INTROS && gSaveContext.save.entranceIndex == ENTR_LINKS_HOUSE_0)
+    if ( (SKIP_INTROS || IS_DUNGEON_RUSH || IS_BOSS_RUSH) && gSaveContext.save.entranceIndex == ENTR_LINKS_HOUSE_0)
         gSaveContext.save.cutsceneIndex = 0;
+    if (IS_DUNGEON_RUSH || IS_BOSS_RUSH) {
+        SET_EVENTCHKINF(EVENTCHKINF_OPENED_DOOR_OF_TIME);
+        SET_EVENTCHKINF(EVENTCHKINF_REVEALED_MASTER_SWORD);
+        SET_EVENTCHKINF(EVENTCHKINF_55);
+        SET_EVENTCHKINF(EVENTCHKINF_C5);
+    }
+    if (IS_BOSS_RUSH) {
+        for (i=0; i<4; i++)
+            for (j=0; j<=4; j++)
+            gSaveContext.save.info.playerData.dpadItems[i][j] = 0;
+        for (i=SCENE_DEKU_TREE_BOSS; i<=SCENE_SHADOW_TEMPLE_BOSS; i++)
+            MemSet(&gSaveContext.save.info.sceneFlags[i], 0, sizeof(SavedSceneFlags));
+
+        gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
+        gSaveContext.save.info.equips = gSaveContext.save.info.playerData.adultEquips = gSaveContext.save.info.playerData.childEquips = sNewSaveEquips;
+        gSaveContext.save.info.inventory = sNewSaveInventory;
+        gSaveContext.save.info.playerData.healthCapacity = gSaveContext.save.info.playerData.health = 0x30;
+        gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = 0;
+        gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = gSaveContext.save.info.playerData.isDoubleDefenseAcquired = gSaveContext.save.info.playerData.bgsFlag = gSaveContext.save.info.playerData.dpadDualSet = false;
+        gSaveContext.save.info.playerData.equipmentUpgrades = 0;
+    }
 
     PRINTF("scene_no = %d\n", gSaveContext.save.entranceIndex);
     PRINTF_RST();

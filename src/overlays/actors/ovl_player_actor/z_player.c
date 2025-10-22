@@ -5644,6 +5644,31 @@ static u8 sReturnEntranceGroupIndices[] = {
     0,  // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
 };
 
+void Player_HandleDungeonRushExits(PlayState* play) {
+    if (IS_DUNGEON_RUSH) {
+        switch (play->sceneId) {
+            case SCENE_LINKS_HOUSE:
+            case SCENE_DEKU_TREE:            play->nextEntranceIndex = ENTR_DEKU_TREE_0;            break;
+            case SCENE_DODONGOS_CAVERN:      play->nextEntranceIndex = ENTR_DODONGOS_CAVERN_0;      break;
+            case SCENE_JABU_JABU:            play->nextEntranceIndex = ENTR_JABU_JABU_0;            break;
+            case SCENE_TEMPLE_OF_TIME:       play->nextEntranceIndex = ENTR_FOREST_TEMPLE_0;        break;
+            case SCENE_FOREST_TEMPLE:        play->nextEntranceIndex = ENTR_FOREST_TEMPLE_0;        break;
+            case SCENE_FIRE_TEMPLE:          play->nextEntranceIndex = ENTR_FIRE_TEMPLE_0;          break;
+            case SCENE_WATER_TEMPLE:         play->nextEntranceIndex = ENTR_WATER_TEMPLE_0;         break;
+            case SCENE_SHADOW_TEMPLE:        play->nextEntranceIndex = ENTR_SHADOW_TEMPLE_0;        break;
+            case SCENE_SPIRIT_TEMPLE:        play->nextEntranceIndex = ENTR_SPIRIT_TEMPLE_0;        break;
+            case SCENE_INSIDE_GANONS_CASTLE: play->nextEntranceIndex = ENTR_INSIDE_GANONS_CASTLE_0; break;
+        }
+    } else if (IS_BOSS_RUSH) {
+        switch (play->sceneId) {
+            case SCENE_LINKS_HOUSE:
+            case SCENE_DEKU_TREE_BOSS:       play->nextEntranceIndex = ENTR_DEKU_TREE_BOSS_0;       break;
+            case SCENE_DODONGOS_CAVERN_BOSS: play->nextEntranceIndex = ENTR_DODONGOS_CAVERN_BOSS_0; break;
+            case SCENE_TEMPLE_OF_TIME:       play->nextEntranceIndex = ENTR_FOREST_TEMPLE_BOSS_0;   break;
+        }
+    }
+}
+
 s32 Player_HandleExitsAndVoids(PlayState* play, Player* this, CollisionPoly* poly, u32 bgId) {
     s32 exitIndex;
     s32 temp;
@@ -5667,6 +5692,7 @@ s32 Player_HandleExitsAndVoids(PlayState* play, Player* this, CollisionPoly* pol
                 Scene_SetTransitionForNextEntrance(play);
             } else {
                 play->nextEntranceIndex = play->exitList[exitIndex - 1];
+                Player_HandleDungeonRushExits(play);
 
                 if (play->nextEntranceIndex == ENTR_RETURN_GROTTO) {
                     gSaveContext.respawnFlag = 2;
