@@ -50,6 +50,7 @@
 #include "play_state.h"
 #include "save.h"
 #include "skin_matrix.h"
+#include "memory_utils.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
@@ -5648,6 +5649,133 @@ static u8 sReturnEntranceGroupIndices[] = {
     0,  // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
 };
 
+static s16 sDungeonEntrances[] = {
+    ENTR_DEKU_TREE_0,                      // SCENE_DEKU_TREE
+    ENTR_DODONGOS_CAVERN_0,                // SCENE_DODONGOS_CAVERN
+    ENTR_JABU_JABU_0,                      // SCENE_JABU_JABU
+    ENTR_FOREST_TEMPLE_0,                  // SCENE_FOREST_TEMPLE
+    ENTR_FIRE_TEMPLE_0,                    // SCENE_FIRE_TEMPLE
+    ENTR_WATER_TEMPLE_0,                   // SCENE_WATER_TEMPLE
+    ENTR_SPIRIT_TEMPLE_0,                  // SCENE_SPIRIT_TEMPLE
+    ENTR_SHADOW_TEMPLE_0,                  // SCENE_SHADOW_TEMPLE
+    ENTR_BOTTOM_OF_THE_WELL_0,             // SCENE_BOTTOM_OF_THE_WELL
+    ENTR_ICE_CAVERN_0,                     // SCENE_ICE_CAVERN
+    ENTR_GANONS_TOWER_0,                   // SCENE_GANONS_TOWER
+    ENTR_GERUDO_TRAINING_GROUND_0,         // SCENE_GERUDO_TRAINING_GROUND
+    ENTR_THIEVES_HIDEOUT_0,                // SCENE_THIEVES_HIDEOUT
+    ENTR_INSIDE_GANONS_CASTLE_0,           // SCENE_INSIDE_GANONS_CASTLE
+};
+
+#define THIS_SCENE_FLAG gSaveContext.save.info.sceneFlags[play->sceneId]
+
+void Player_HandleDungeonRushExits(PlayState* play) {
+    if (IS_RUSH_QUEST) {
+        switch (play->nextEntranceIndex) {
+            case ENTR_KOKIRI_FOREST_3:
+                play->nextEntranceIndex = IS_BOSS_RUSH ? ENTR_DEKU_TREE_BOSS_0 : ENTR_DEKU_TREE_0;
+                play->progressRush = true;
+                break;
+
+            case ENTR_TEMPLE_OF_TIME_EXTERIOR_DAY_1:
+                play->nextEntranceIndex = IS_BOSS_RUSH ? ENTR_FOREST_TEMPLE_BOSS_0 : ENTR_FOREST_TEMPLE_0;
+                play->progressRush = true;
+                break;
+
+            case ENTR_HAUNTED_WASTELAND_1:
+                play->nextEntranceIndex = ENTR_DESERT_COLOSSUS_0;
+                break;
+
+            case ENTR_GANONS_TOWER_0:
+                play->nextEntranceIndex = ENTR_GANONS_TOWER_0;
+                play->progressRush = true;
+                break;
+
+            case ENTR_SPIRIT_TEMPLE_2:
+                if (CUR_UPG_VALUE(UPG_STRENGTH) >= PLAYER_STR_SILVER_G && !THIS_SCENE_FLAG.extra.exit) {
+                    play->nextEntranceIndex = ENTR_SPIRIT_TEMPLE_0;
+                    THIS_SCENE_FLAG.extra.exit = 1;
+                }
+                break;
+
+            case ENTR_KOKIRI_FOREST_1:
+            case ENTR_DEATH_MOUNTAIN_TRAIL_3:
+            case ENTR_ZORAS_FOUNTAIN_1:
+            case ENTR_SACRED_FOREST_MEADOW_1:
+            case ENTR_DEATH_MOUNTAIN_CRATER_2:
+            case ENTR_LAKE_HYLIA_2:
+            case ENTR_SHADOW_TEMPLE_0:
+            case ENTR_DESERT_COLOSSUS_1:
+            case ENTR_HYRULE_CASTLE_1:
+            case MAP_OUTSIDE_GANONS_CASTLE_1:
+                play->nextEntranceIndex = sDungeonEntrances[play->sceneId];
+                break;
+        }
+    }
+    if (IS_BOSS_RUSH) {
+        switch (play->nextEntranceIndex) {
+            case ENTR_DEKU_TREE_1:       play->nextEntranceIndex = ENTR_DEKU_TREE_BOSS_0;       break;
+            case ENTR_DODONGOS_CAVERN_1: play->nextEntranceIndex = ENTR_DODONGOS_CAVERN_BOSS_0; break;
+            
+        }
+    }
+
+    if (R_QUEST_MODE == DUNGEON_CHILD_RUSH && THIS_SCENE_FLAG.extra.quest < 1) {
+        u8 resetItem = ITEM_NONE;
+        u8 resetSlot = SLOT_NONE;
+        u8 i;
+
+        switch (play->nextEntranceIndex) {
+            case ENTR_DEKU_TREE_BOSS_0:       resetItem = ITEM_SLINGSHOT; resetSlot = SLOT_SLINGSHOT; break;
+            case ENTR_DODONGOS_CAVERN_BOSS_0: resetItem = ITEM_BOMB;      resetSlot = SLOT_BOMB;      break;
+            case ENTR_JABU_JABU_BOSS_0:       resetItem = ITEM_BOOMERANG; resetSlot = SLOT_BOOMERANG; break;
+            case ENTR_FOREST_TEMPLE_BOSS_0:   resetItem = ITEM_BOW;       resetSlot = SLOT_BOW;       break;
+            case ENTR_FIRE_TEMPLE_BOSS_0:     resetItem = ITEM_HAMMER;    resetSlot = SLOT_HAMMER;    break;
+            case ENTR_WATER_TEMPLE_BOSS_0:    resetItem = ITEM_LONGSHOT;  resetSlot = SLOT_HOOKSHOT;  break;
+            case ENTR_SHADOW_TEMPLE_BOSS_0:   resetItem = ITEM_BOOTS_HOVER;                           break;
+            case ENTR_SPIRIT_TEMPLE_BOSS_0:   resetItem = ITEM_SHIELD_MIRROR;                         break;
+            case ENTR_GANONS_TOWER_0:         resetItem = ITEM_STRENGTH_GOLD_GAUNTLETS;               break;
+        }
+        switch (play->nextEntranceIndex) {
+            case ENTR_DEKU_TREE_BOSS_0:
+            case ENTR_DODONGOS_CAVERN_BOSS_0:
+            case ENTR_JABU_JABU_BOSS_0:
+            case ENTR_FOREST_TEMPLE_BOSS_0:
+            case ENTR_FIRE_TEMPLE_BOSS_0:
+            case ENTR_WATER_TEMPLE_BOSS_0:
+            case ENTR_SHADOW_TEMPLE_BOSS_0:
+            case ENTR_SPIRIT_TEMPLE_BOSS_0:
+            case ENTR_GANONS_TOWER_0:
+                THIS_SCENE_FLAG.chest = THIS_SCENE_FLAG.swch = THIS_SCENE_FLAG.clear = THIS_SCENE_FLAG.collect = THIS_SCENE_FLAG.rooms = THIS_SCENE_FLAG.floors = play->actorCtx.flags.chest = play->actorCtx.flags.swch = play->actorCtx.flags.clear = play->actorCtx.flags.collect = 0;
+                THIS_SCENE_FLAG.extra.quest++;
+                play->nextEntranceIndex = sDungeonEntrances[play->sceneId];
+                gSaveContext.save.info.inventory.dungeonItems[play->sceneId] = gSaveContext.save.info.inventory.dungeonKeys[play->sceneId] = 0;
+                break;
+        }
+
+        if (resetItem == ITEM_SHIELD_MIRROR) {
+            gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR);
+            Inventory_ChangeUpgrade(UPG_STRENGTH, 1);
+        } else if (resetItem == ITEM_BOOTS_HOVER)
+            gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_BOOTS,  EQUIP_INV_BOOTS_HOVER);
+        else if (resetItem == ITEM_STRENGTH_GOLD_GAUNTLETS)
+            Inventory_ChangeUpgrade(UPG_STRENGTH, 2);
+        else if (resetItem != ITEM_NONE) {
+            for (i=1; i<4; i++)
+                if (gSaveContext.save.info.equips.buttonItems[i] == resetItem)
+                    gSaveContext.save.info.equips.cButtonSlots[i-1] = gSaveContext.save.info.equips.buttonItems[i] = ITEM_NONE;
+            for (i=0; i<4; i++)
+                if (DPAD_BUTTON(i) == resetSlot)
+                    DPAD_BUTTON(i) = SLOT_NONE;
+            gSaveContext.save.info.inventory.items[resetSlot] = SLOT_NONE;
+        }
+
+        if (resetItem == ITEM_SLINGSHOT)
+            Inventory_ChangeUpgrade(UPG_BULLET_BAG, 0);
+        else if (resetItem == ITEM_BOW)
+            Inventory_ChangeUpgrade(UPG_QUIVER, 0);
+    }
+}
+
 s32 Player_HandleExitsAndVoids(PlayState* play, Player* this, CollisionPoly* poly, u32 bgId) {
     s32 exitIndex;
     s32 temp;
@@ -5671,6 +5799,7 @@ s32 Player_HandleExitsAndVoids(PlayState* play, Player* this, CollisionPoly* pol
                 Scene_SetTransitionForNextEntrance(play);
             } else {
                 play->nextEntranceIndex = play->exitList[exitIndex - 1];
+                Player_HandleDungeonRushExits(play);
 
                 if (play->nextEntranceIndex == ENTR_RETURN_GROTTO) {
                     gSaveContext.respawnFlag = 2;

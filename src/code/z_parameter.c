@@ -31,6 +31,7 @@
 #include "buffers.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "assets/textures/parameter_static/parameter_static_quest.h"
 #include "assets/textures/icon_item_static/icon_item_static.h"
 
 #if OOT_NTSC_N64
@@ -2129,8 +2130,9 @@ u8 Item_Give(PlayState* play, u8 item) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
         return ITEM_NONE;
     } else if (item == ITEM_HEART_CONTAINER) {
-        gSaveContext.save.info.playerData.healthCapacity += 0x10;
-        gSaveContext.save.info.playerData.health += 0x10;
+        u8 increase = (IS_RUSH_QUEST && play->sceneId != SCENE_TEMPLE_OF_TIME) ? 0x20 : 0x10;
+        gSaveContext.save.info.playerData.healthCapacity += increase;
+        gSaveContext.save.info.playerData.health += increase;
         R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
         return ITEM_NONE;
     } else if (item == ITEM_RECOVERY_HEART) {
@@ -3948,8 +3950,8 @@ void Interface_Draw(PlayState* play) {
     static s16 magicArrowEffectsR[] = { 255, 100, 255 };
     static s16 magicArrowEffectsG[] = { 0, 100, 255 };
     static s16 magicArrowEffectsB[] = { 0, 255, 100 };
-    static s16 timerDigitLeftPos[] = { 16, 25, 34, 42, 51 };
-    static s16 sDigitWidths[] = { 9, 9, 8, 9, 9 };
+    static s16 timerDigitLeftPos[] = { 16, 25, 34, 42, 51, 60, 68, 77 };
+    static s16 sDigitWidths[] = { 9, 9, 8, 9, 9, 8, 9, 9 };
     // unused, most likely colors
     static s16 D_80125B1C[][3] = {
         { 0, 150, 0 }, { 100, 255, 0 }, { 255, 255, 255 }, { 0, 0, 0 }, { 255, 255, 255 },
@@ -3960,10 +3962,11 @@ void Interface_Draw(PlayState* play) {
     static f32 D_80125B54[] = { -40.0f, -35.0f }; // unused
     static s16 D_80125B5C[] = { 91, 91 };         // unused
     static s16 sTimerNextSecondTimer;
+    static s16 sPlaytimeNextSecondTimer = 0;
     static s16 sTimerStateTimer;
     static s16 sSubTimerNextSecondTimer;
     static s16 sSubTimerStateTimer;
-    static s16 sTimerDigits[5];
+    static s16 sTimerDigits[8];
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     PauseContext* pauseCtx = &play->pauseCtx;
     MessageContext* msgCtx = &play->msgCtx;
@@ -3974,6 +3977,7 @@ void Interface_Draw(PlayState* play) {
     s16 svar4;
     s16 svar5;
     s16 timerId;
+    u32 playtime;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3405);
 
@@ -4825,13 +4829,62 @@ void Interface_Draw(PlayState* play) {
                     }
                 }
 
-                for (svar1 = 0; svar1 < ARRAY_COUNT(sTimerDigits); svar1++) {
+                for (svar1 = 0; svar1 < 5; svar1++) {
                     OVERLAY_DISP =
                         Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sTimerDigits[svar1])), 8, 16,
                                       (((void)0, (X_HIRES_MULTIPLY(gSaveContext.timerX[timerId]))) + (X_HIRES_MULTIPLY(timerDigitLeftPos[svar1]))),
                                       ((void)0, HIRES_MULTIPLY(gSaveContext.timerY[timerId])), X_HIRES_MULTIPLY(sDigitWidths[svar1]), HIRES_MULTIPLY(VREG(42)),
                                       X_HIRES_DIVIDE(VREG(43) << 1), HIRES_DIVIDE(VREG(43) << 1));
                 }
+            }
+        }
+
+        if (IS_RUSH_QUEST) {
+            if ( (!IS_PAUSED(&play->pauseCtx) && msgCtx->msgMode == MSGMODE_NONE && !(player->stateFlags2 & PLAYER_STATE2_24) && play->transitionTrigger == TRANS_TRIGGER_OFF && play->transitionMode == TRANS_MODE_OFF && !Play_InCsMode(play) && play->gameOverCtx.state == GAMEOVER_INACTIVE) || sTextIsCredits) {
+                if (!sTextIsCredits) {
+                    sPlaytimeNextSecondTimer++;
+                    if (sPlaytimeNextSecondTimer == (4 - R_UPDATE_RATE) * 20) {
+                        sPlaytimeNextSecondTimer = 0;
+                        if (gSaveContext.save.info.playtime < UINT32_MAX)
+                            gSaveContext.save.info.playtime++;
+                    }
+                }
+
+                playtime = gSaveContext.save.info.playtime;
+                if (playtime > 359999)
+                    playtime = 359999;
+
+                sTimerDigits[7] = (playtime % 60) % 10;             // sec ones
+                sTimerDigits[6] = (playtime % 60) / 10;             // sec tens
+                sTimerDigits[5] = 10;                                                      // digit 10 is used as ':' (colon)
+                sTimerDigits[4] = ((playtime / 60) % 60) % 10;      // min ones
+                sTimerDigits[3] = ((playtime / 60) % 60) / 10;      // min tens
+                sTimerDigits[2] = 10;                                                      // digit 10 is used as ':' (colon)
+                sTimerDigits[1] = ((playtime / 3600) % 100) % 10;   // hr ones
+                sTimerDigits[0] = ((playtime / 3600) % 100) / 10;   // hr tens
+
+                // Clock Icon
+                gDPPipeSync(OVERLAY_DISP++);
+                gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gClockIconTex, 16, 16, HIRES_MULTIPLY(114 + WS_SHIFT_HALF), HIRES_MULTIPLY(206), HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+
+                // Quest Title
+                if (sTextIsCredits) {
+                    static void* sQuestButtonTextures[] = { gParameterQuestDungeonTex, gParameterQuestDungeonMasterRushTex, gParameterQuestDungeonUraRushTex, gParameterQuestDungeonChildRushTex, gParameterBossRushTex };
+                    gDPPipeSync(OVERLAY_DISP++);
+                    gDPLoadTextureBlock(OVERLAY_DISP++, sQuestButtonTextures[R_QUEST_MODE - DUNGEON_RUSH], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+                    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((97 + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(20 << 2), HIRES_MULTIPLY((225 + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(36 << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                }
+
+                // Timer Counter
+                gDPPipeSync(OVERLAY_DISP++);
+                gDPSetCombineLERP(OVERLAY_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
+                if (gSaveContext.cheated) {
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 0, 0, 255);
+                }
+                for (svar1=0; svar1<8; svar1++)
+                    OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sTimerDigits[svar1])), 8, 16, HIRES_MULTIPLY(114 + WS_SHIFT_HALF + timerDigitLeftPos[svar1]), HIRES_MULTIPLY(206), HIRES_MULTIPLY(sDigitWidths[svar1]), HIRES_MULTIPLY(VREG(42)), HIRES_DIVIDE(VREG(43) << 1), HIRES_DIVIDE(VREG(43) << 1));
             }
         }
     }

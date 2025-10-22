@@ -1467,7 +1467,8 @@ static void* sOptionsButtonTextures[] = LANGUAGE_ARRAY(gFileSelOptionsButtonJPNT
                                                        gFileSelOptionsButtonGERTex, gFileSelOptionsButtonENGTex);
 
 #if OOT_VERSION <= PAL_1_1
-static void* sQuestButtonTextures[QUEST_MAX+1] = { gFileSelQuestOcarinaOfTimeButtonTex, gFileSelQuestMasterQuestButtonTex, gFileSelQuestUraQuestButtonTex, gFileSelQuestChildQuestButtonTex, gFileSelQuestChildMasterQuestButtonTex };
+static void* sQuestButtonTextures[QUEST_MAX+1] = { gFileSelQuestOcarinaOfTimeButtonTex, gFileSelQuestMasterQuestButtonTex, gFileSelQuestUraQuestButtonTex, gFileSelQuestChildQuestButtonTex, gFileSelQuestChildMasterQuestButtonTex, gFileSelQuestChildUraQuestButtonTex,
+                                                   gFileSelQuestDungeonRushButtonTex, gFileSelQuestDungeonMasterRushButtonTex, gFileSelQuestDungeonUraRushButtonTex, gFileSelQuestDungeonChildRushButtonTex, gFileSelQuestBossRushButtonTex };
 #endif
 
 /**
