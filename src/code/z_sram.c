@@ -29,7 +29,7 @@
 #define DEFENSE offsetof(SaveContext, save.info.inventory.defenseHearts)
 #define HEALTH offsetof(SaveContext, save.info.playerData.health)
 
-#define SLOT_OFFSET(index) (SRAM_HEADER_SIZE + 0x10 + (index * SLOT_SIZE))
+#define SLOT_OFFSET(index) (SRAM_HEADER_SIZE + (index * SLOT_SIZE))
 
 #define SRAM_READ(addr, dramAddr, size) SsSram_ReadWrite(addr, dramAddr, size, OS_READ)
 #define SRAM_WRITE(addr, dramAddr, size) SsSram_ReadWrite(addr, dramAddr, size, OS_WRITE)
@@ -1099,7 +1099,7 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
 
     gSaveContext.soundSetting = sramCtx->readBuff[SRAM_HEADER_SOUND] & 3;
     gSaveContext.zTargetSetting = sramCtx->readBuff[SRAM_HEADER_Z_TARGET] & 1;
-    gSaveContext.globalSettings = sramCtx->readBuff[SRAM_HEADER_GLOBAL_SETTINGS] & 7;
+    gSaveContext.globalSettings = sramCtx->readBuff[SRAM_HEADER_GLOBAL_SETTINGS];
 
 #if OOT_PAL || OOT_NTSC_N64
     gSaveContext.language = sramCtx->readBuff[SRAM_HEADER_LANGUAGE];
