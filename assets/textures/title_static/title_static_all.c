@@ -19,6 +19,18 @@ u64 gFileSelFile3ButtonJPNTex[TEX_LEN(u64, gFileSelFile3ButtonJPNTex_WIDTH, gFil
 #include "assets/textures/title_static/gFileSelFile3ButtonJPNTex.ia16.inc.c"
 };
 
+u64 gFileSelFile4ButtonJPNTex[TEX_LEN(u64, gFileSelFile3ButtonJPNTex_WIDTH, gFileSelFile3ButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile4ButtonJPNTex.ia16.inc.c"
+};
+
+u64 gFileSelFile5ButtonJPNTex[TEX_LEN(u64, gFileSelFile3ButtonJPNTex_WIDTH, gFileSelFile3ButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile5ButtonJPNTex.ia16.inc.c"
+};
+
+u64 gFileSelFile6ButtonJPNTex[TEX_LEN(u64, gFileSelFile3ButtonJPNTex_WIDTH, gFileSelFile3ButtonJPNTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile6ButtonJPNTex.ia16.inc.c"
+};
+
 u64 gFileSelYesButtonJPNTex[TEX_LEN(u64, gFileSelYesButtonJPNTex_WIDTH, gFileSelYesButtonJPNTex_HEIGHT, 16)] = {
 #include "assets/textures/title_static/gFileSelYesButtonJPNTex.ia16.inc.c"
 };
@@ -511,6 +523,18 @@ u64 gFileSelFile3ButtonENGTex[TEX_LEN(u64, gFileSelFile3ButtonENGTex_WIDTH, gFil
 #include "assets/textures/title_static/gFileSelFile3ButtonENGTex.ia16.inc.c"
 };
 
+u64 gFileSelFile4ButtonENGTex[TEX_LEN(u64, gFileSelFile3ButtonENGTex_WIDTH, gFileSelFile3ButtonENGTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile4ButtonENGTex.ia16.inc.c"
+};
+
+u64 gFileSelFile5ButtonENGTex[TEX_LEN(u64, gFileSelFile3ButtonENGTex_WIDTH, gFileSelFile3ButtonENGTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile5ButtonENGTex.ia16.inc.c"
+};
+
+u64 gFileSelFile6ButtonENGTex[TEX_LEN(u64, gFileSelFile3ButtonENGTex_WIDTH, gFileSelFile3ButtonENGTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile6ButtonENGTex.ia16.inc.c"
+};
+
 u64 gFileSelYesButtonENGTex[TEX_LEN(u64, gFileSelYesButtonENGTex_WIDTH, gFileSelYesButtonENGTex_HEIGHT, 16)] = {
 #include "assets/textures/title_static/gFileSelYesButtonENGTex.ia16.inc.c"
 };
@@ -615,6 +639,18 @@ u64 gFileSelFile3ButtonGERTex[TEX_LEN(u64, gFileSelFile3ButtonGERTex_WIDTH, gFil
 #include "build/pal-1.0/assets/textures/title_static/gFileSelFile3ButtonGERTex.ia16.inc.c"
 };
 
+u64 gFileSelFile4ButtonGERTex[TEX_LEN(u64, gFileSelFile3ButtonGERTex_WIDTH, gFileSelFile3ButtonGERTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile4ButtonGERTex.ia16.inc.c"
+};
+
+u64 gFileSelFile5ButtonGERTex[TEX_LEN(u64, gFileSelFile3ButtonGERTex_WIDTH, gFileSelFile3ButtonGERTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile5ButtonGERTex.ia16.inc.c"
+};
+
+u64 gFileSelFile6ButtonGERTex[TEX_LEN(u64, gFileSelFile3ButtonGERTex_WIDTH, gFileSelFile3ButtonGERTex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile6ButtonGERTex.ia16.inc.c"
+};
+
 u64 gFileSelYesButtonGERTex[TEX_LEN(u64, gFileSelYesButtonGERTex_WIDTH, gFileSelYesButtonGERTex_HEIGHT, 16)] = {
 #include "build/pal-1.0/assets/textures/title_static/gFileSelYesButtonGERTex.ia16.inc.c"
 };
@@ -705,6 +741,18 @@ u64 gFileSelFile2ButtonFRATex[TEX_LEN(u64, gFileSelFile2ButtonFRATex_WIDTH, gFil
 
 u64 gFileSelFile3ButtonFRATex[TEX_LEN(u64, gFileSelFile3ButtonFRATex_WIDTH, gFileSelFile3ButtonFRATex_HEIGHT, 16)] = {
 #include "build/pal-1.0/assets/textures/title_static/gFileSelFile3ButtonFRATex.ia16.inc.c"
+};
+
+u64 gFileSelFile4ButtonFRATex[TEX_LEN(u64, gFileSelFile3ButtonFRATex_WIDTH, gFileSelFile3ButtonFRATex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile4ButtonFRATex.ia16.inc.c"
+};
+
+u64 gFileSelFile5ButtonFRATex[TEX_LEN(u64, gFileSelFile3ButtonFRATex_WIDTH, gFileSelFile3ButtonFRATex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile5ButtonFRATex.ia16.inc.c"
+};
+
+u64 gFileSelFile6ButtonFRATex[TEX_LEN(u64, gFileSelFile3ButtonFRATex_WIDTH, gFileSelFile3ButtonFRATex_HEIGHT, 16)] = {
+#include "assets/textures/title_static/gFileSelFile6ButtonFRATex.ia16.inc.c"
 };
 
 u64 gFileSelYesButtonFRATex[TEX_LEN(u64, gFileSelYesButtonFRATex_WIDTH, gFileSelYesButtonFRATex_HEIGHT, 16)] = {
