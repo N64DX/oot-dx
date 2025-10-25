@@ -3,9 +3,9 @@
 
 #include "z_math.h"
 
-// SCREEN_MODE
+// @setting: SCREEN_MODE
 // 0: DEFAULT, 1: HIRES, 2: WIDE, 3: ULTRAWIDE, 4: HIRES_PRO
-#define SCREEN_MODE 0 // @setting
+#define SCREEN_MODE 0
 
 // Derived from SCREEN_MODE
 #define DEFAULT    (SCREEN_MODE == 0 ? 1 : 0) // SCREEN_DEFAULT   (320x240)
@@ -13,17 +13,6 @@
 #define WIDESCREEN (SCREEN_MODE == 2 ? 1 : 0) // SCREEN_WIDE      (424x240)
 #define ULTRA_WS   (SCREEN_MODE == 3 ? 1 : 0) // SCREEN_ULTRAWIDE (576x240)
 #define HIRES_PRO  (SCREEN_MODE == 4 ? 1 : 0) // SCREEN_HIRES_PRO (640x240)
-
-// SCREEN_WIDTH
-// 320: Default (4:3), 424: Wide (16:9), 576: Ultrawide (21:9), 640: Hires Progressive (4:3)
-// This sets the framebuffer size, which can handle all screen modes (except for interlaced hires)
-#if HIRES
-    #define SCREEN_WIDTH  640
-    #define SCREEN_HEIGHT 480
-#else
-    #define SCREEN_WIDTH  320 // @setting
-    #define SCREEN_HEIGHT 240
-#endif
 
 // Target width
 #if HIRES
@@ -34,6 +23,17 @@
     #define SCREEN_X 576
 #else
     #define SCREEN_X 320
+#endif
+
+// @setting: SCREEN_WIDTH
+// Framebuffer size, which should match SCREEN_X in most cases
+// Other values will work, but an uneven SCALE_X can lead to visual inconsistencies
+#if HIRES
+    #define SCREEN_WIDTH  640
+    #define SCREEN_HEIGHT 480
+#else
+    #define SCREEN_WIDTH  SCREEN_X
+    #define SCREEN_HEIGHT 240
 #endif
 
 
@@ -67,7 +67,7 @@
 
 
 
-// WS_JPEG and widescreen definitions
+// @setting: WS_JPEG
 // Include widescreen JPEGs that have been squished from 420x240 to 320x240
 // All screen modes can handle original and widescreen backgrounds
 #if WIDESCREEN
@@ -75,21 +75,21 @@
     #define LULLABY_SHIFT   0
     #define OCEFF_SHIFT     80
     #define WS_MIRROR_SHIFT 16
-    #define WS_JPEG         1 // @setting
+    #define WS_JPEG         1
     #define WS_PX_SHIFT     1
 #elif ULTRA_WS
     #define GFXPRINT_SHIFT  13
     #define LULLABY_SHIFT   70
     #define OCEFF_SHIFT     155
     #define WS_MIRROR_SHIFT 8
-    #define WS_JPEG         1 // @setting
+    #define WS_JPEG         1
     #define WS_PX_SHIFT     1
 #else
     #define GFXPRINT_SHIFT  0
     #define LULLABY_SHIFT   0
     #define OCEFF_SHIFT     18
     #define WS_MIRROR_SHIFT 0
-    #define WS_JPEG         0 // @setting
+    #define WS_JPEG         0
     #define WS_PX_SHIFT     0
 #endif
 
