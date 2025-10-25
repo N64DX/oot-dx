@@ -335,7 +335,7 @@ typedef struct SaveContext {
     /* 0x1402 */ u16 mapIndex; // intended for maps/minimaps but commonly used as the dungeon index
     /* 0x1404 */ u16 minigameState;
     /* 0x1406 */ u16 minigameScore; // "yabusame_total"
-    /* 0x1408 */ char unk_1408[0x0001];
+    /* 0x1408 */ u8 extraSaveFiles;
     /* 0x1409 */ u8 language; // NTSC 0: Japanese; 1: English | PAL 0: English; 1: German; 2: French (see enum `Language`)
     /* 0x140A */ u8 soundSetting; // 0: Stereo; 1: Mono; 2: Headset; 3: Surround (see enum `SoundSetting`)
     /* 0x140B */ u8 globalSettings;
@@ -483,7 +483,8 @@ typedef enum LinkAge {
 #define IS_BOSS_RUSH     (R_QUEST_MODE == BOSS_RUSH)
 
 #define FILE_OPTIONS_SIZE 2
-extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
+#define FILE_SLOTS_SIZE   6
+extern u32 gFileOptions[FILE_SLOTS_SIZE][FILE_OPTIONS_SIZE];
 
 #define MIRROR_MODE                 ((gFileOptions[gSaveContext.fileNum][0] >> 0)  & 1)  // Bits: 0
 #define AUTOSAVE                    ((gFileOptions[gSaveContext.fileNum][0] >> 1)  & 1)  // Bits: 1
@@ -519,6 +520,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
 #define SHOW_RAM                    ((gSaveContext.globalSettings >> 2) & 1)  // Bits: 2
 #define SHOW_FPS                    ((gSaveContext.globalSettings >> 3) & 1)  // Bits: 3
+#define EXTRA_SAVE_SLOTS            ((gSaveContext.globalSettings >> 4) & 1)  // Bits: 4
 
 #define MAX_SWORD_HEALTH 8
 

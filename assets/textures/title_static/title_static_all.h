@@ -16,6 +16,9 @@ extern u64 gFileSelFile2ButtonJPNTex[TEX_LEN(u64, gFileSelFile2ButtonJPNTex_WIDT
 #define gFileSelFile3ButtonJPNTex_WIDTH 64
 #define gFileSelFile3ButtonJPNTex_HEIGHT 16
 extern u64 gFileSelFile3ButtonJPNTex[TEX_LEN(u64, gFileSelFile3ButtonJPNTex_WIDTH, gFileSelFile3ButtonJPNTex_HEIGHT, 16)];
+extern u64 gFileSelFile4ButtonJPNTex[TEX_LEN(u64, gFileSelFile3ButtonJPNTex_WIDTH, gFileSelFile3ButtonJPNTex_HEIGHT, 16)];
+extern u64 gFileSelFile5ButtonJPNTex[TEX_LEN(u64, gFileSelFile3ButtonJPNTex_WIDTH, gFileSelFile3ButtonJPNTex_HEIGHT, 16)];
+extern u64 gFileSelFile6ButtonJPNTex[TEX_LEN(u64, gFileSelFile3ButtonJPNTex_WIDTH, gFileSelFile3ButtonJPNTex_HEIGHT, 16)];
 #define gFileSelYesButtonJPNTex_WIDTH 64
 #define gFileSelYesButtonJPNTex_HEIGHT 16
 extern u64 gFileSelYesButtonJPNTex[TEX_LEN(u64, gFileSelYesButtonJPNTex_WIDTH, gFileSelYesButtonJPNTex_HEIGHT, 16)];
@@ -386,6 +389,9 @@ extern u64 gFileSelFile2ButtonENGTex[TEX_LEN(u64, gFileSelFile2ButtonENGTex_WIDT
 #define gFileSelFile3ButtonENGTex_WIDTH 64
 #define gFileSelFile3ButtonENGTex_HEIGHT 16
 extern u64 gFileSelFile3ButtonENGTex[TEX_LEN(u64, gFileSelFile3ButtonENGTex_WIDTH, gFileSelFile3ButtonENGTex_HEIGHT, 16)];
+extern u64 gFileSelFile4ButtonENGTex[TEX_LEN(u64, gFileSelFile3ButtonENGTex_WIDTH, gFileSelFile3ButtonENGTex_HEIGHT, 16)];
+extern u64 gFileSelFile5ButtonENGTex[TEX_LEN(u64, gFileSelFile3ButtonENGTex_WIDTH, gFileSelFile3ButtonENGTex_HEIGHT, 16)];
+extern u64 gFileSelFile6ButtonENGTex[TEX_LEN(u64, gFileSelFile3ButtonENGTex_WIDTH, gFileSelFile3ButtonENGTex_HEIGHT, 16)];
 #define gFileSelYesButtonENGTex_WIDTH 64
 #define gFileSelYesButtonENGTex_HEIGHT 16
 extern u64 gFileSelYesButtonENGTex[TEX_LEN(u64, gFileSelYesButtonENGTex_WIDTH, gFileSelYesButtonENGTex_HEIGHT, 16)];
@@ -464,6 +470,9 @@ extern u64 gFileSelFile2ButtonGERTex[TEX_LEN(u64, gFileSelFile2ButtonGERTex_WIDT
 #define gFileSelFile3ButtonGERTex_WIDTH 64
 #define gFileSelFile3ButtonGERTex_HEIGHT 16
 extern u64 gFileSelFile3ButtonGERTex[TEX_LEN(u64, gFileSelFile3ButtonGERTex_WIDTH, gFileSelFile3ButtonGERTex_HEIGHT, 16)];
+extern u64 gFileSelFile4ButtonGERTex[TEX_LEN(u64, gFileSelFile3ButtonGERTex_WIDTH, gFileSelFile3ButtonGERTex_HEIGHT, 16)];
+extern u64 gFileSelFile5ButtonGERTex[TEX_LEN(u64, gFileSelFile3ButtonGERTex_WIDTH, gFileSelFile3ButtonGERTex_HEIGHT, 16)];
+extern u64 gFileSelFile6ButtonGERTex[TEX_LEN(u64, gFileSelFile3ButtonGERTex_WIDTH, gFileSelFile3ButtonGERTex_HEIGHT, 16)];
 #define gFileSelYesButtonGERTex_WIDTH 64
 #define gFileSelYesButtonGERTex_HEIGHT 16
 extern u64 gFileSelYesButtonGERTex[TEX_LEN(u64, gFileSelYesButtonGERTex_WIDTH, gFileSelYesButtonGERTex_HEIGHT, 16)];
@@ -533,6 +542,9 @@ extern u64 gFileSelFile2ButtonFRATex[TEX_LEN(u64, gFileSelFile2ButtonFRATex_WIDT
 #define gFileSelFile3ButtonFRATex_WIDTH 64
 #define gFileSelFile3ButtonFRATex_HEIGHT 16
 extern u64 gFileSelFile3ButtonFRATex[TEX_LEN(u64, gFileSelFile3ButtonFRATex_WIDTH, gFileSelFile3ButtonFRATex_HEIGHT, 16)];
+extern u64 gFileSelFile4ButtonFRATex[TEX_LEN(u64, gFileSelFile3ButtonFRATex_WIDTH, gFileSelFile3ButtonFRATex_HEIGHT, 16)];
+extern u64 gFileSelFile5ButtonFRATex[TEX_LEN(u64, gFileSelFile3ButtonFRATex_WIDTH, gFileSelFile3ButtonFRATex_HEIGHT, 16)];
+extern u64 gFileSelFile6ButtonFRATex[TEX_LEN(u64, gFileSelFile3ButtonFRATex_WIDTH, gFileSelFile3ButtonFRATex_HEIGHT, 16)];
 #define gFileSelYesButtonFRATex_WIDTH 64
 #define gFileSelYesButtonFRATex_HEIGHT 16
 extern u64 gFileSelYesButtonFRATex[TEX_LEN(u64, gFileSelYesButtonFRATex_WIDTH, gFileSelYesButtonFRATex_HEIGHT, 16)];

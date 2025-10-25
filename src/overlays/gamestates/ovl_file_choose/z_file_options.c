@@ -38,6 +38,13 @@ void FileSelectGlobalOptions_ToggleOption(FileSelectState* this, u8 index, u8 sh
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
+void FileSelectGlobalOptions_ToggleSaveSlotsOption(FileSelectState* this, u8 index, u8 shift) {
+    gSaveContext.globalSettings ^= 1 << shift;
+    if (EXTRA_SAVE_SLOTS)
+        Sram_EraseBackupSaves(this, &this->sramCtx);
+    Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+}
+
 char* FileSelectOptions_GetOption(FileSelectState* this, u8 index, u8 shift) {
     return ((gFileOptions[gSaveContext.fileNum][index] >> shift) & 1) ? "On" : "Off";
 }
@@ -136,10 +143,11 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {
-    { 0, "Skip Logo",  FileSelectGlobalOptions_ToggleOption, FileSelectGlobalOptions_GetOption, 0, 0 },
-    { 0, "Debug Mode", FileSelectGlobalOptions_ToggleOption, FileSelectGlobalOptions_GetOption, 0, 1 },
-    { 0, "Show RAM",   FileSelectGlobalOptions_ToggleOption, FileSelectGlobalOptions_GetOption, 0, 2 },
-    { 0, "Show FPS",         FileSelectGlobalOptions_ToggleOption,  FileSelectGlobalOptions_GetOption, 0, 3 },
+    { 0, "Skip Logo",        FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 0 },
+    { 0, "Debug Mode",       FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 1 },
+    { 0, "Show RAM",         FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 2 },
+    { 0, "Show FPS",         FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 3 },
+    { 0, "Extra Save Slots", FileSelectGlobalOptions_ToggleSaveSlotsOption, FileSelectGlobalOptions_GetOption, 0, 4 },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {
@@ -292,6 +300,16 @@ void FileSelectOptions_Draw(FileSelectState* this) {
         GfxPrint_SetPos(&printer, SCREEN_MODE <= 1 ? 32 : 31, i + 4);
         GfxPrint_Printf(&printer, "%s", this->entries[title].getFunc(this, this->entries[title].index, this->entries[title].shift));
     };
+    
+    if (this->configMode == CM_OPTIONS_MENU && EXTRA_SAVE_SLOTS) {
+        GfxPrint_SetColor(&printer, 255, 20, 20, 255);
+        GfxPrint_SetPos(&printer, SCREEN_MODE <= 1 ? 12 : 11, 23);
+        GfxPrint_Printf(&printer, "!!! WARNING !!!");
+        GfxPrint_SetPos(&printer, SCREEN_MODE <= 1 ? 4 : 3, 25);
+        GfxPrint_Printf(&printer, "Extra save slots will be");
+        GfxPrint_SetPos(&printer, SCREEN_MODE <= 1 ? 4 : 3, 26);
+        GfxPrint_Printf(&printer, "erased when playing non-DX ROMs");
+    }
 
     POLY_OPA_DISP = GfxPrint_Close(&printer);
     GfxPrint_Destroy(&printer);
