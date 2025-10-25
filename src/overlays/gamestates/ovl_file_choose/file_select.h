@@ -18,6 +18,9 @@
      (GET_NEWF(sramCtx, slotNum, 3) == 'D') || \
      (GET_NEWF(sramCtx, slotNum, 4) == 'A') || \
      (GET_NEWF(sramCtx, slotNum, 5) == 'Z'))
+     
+#define NO_EMPTY_SLOTS   (!gSaveContext.extraSaveFiles &&  SLOT_OCCUPIED(sramCtx, 0) &&  SLOT_OCCUPIED(sramCtx, 1) &&  SLOT_OCCUPIED(sramCtx, 2)) || (gSaveContext.extraSaveFiles &&  SLOT_OCCUPIED(sramCtx, 3) &&  SLOT_OCCUPIED(sramCtx, 4) &&  SLOT_OCCUPIED(sramCtx, 5))
+#define ONLY_EMPTY_SLOTS (!gSaveContext.extraSaveFiles && !SLOT_OCCUPIED(sramCtx, 0) && !SLOT_OCCUPIED(sramCtx, 1) && !SLOT_OCCUPIED(sramCtx, 2)) || (gSaveContext.extraSaveFiles && !SLOT_OCCUPIED(sramCtx, 3) && !SLOT_OCCUPIED(sramCtx, 4) && !SLOT_OCCUPIED(sramCtx, 5))
 
 // Init mode: Loads saves from SRAM, handles initial language selection in PAL N64 versions
 // Config mode: Handles the bulk of the file select, various configuration tasks like picking a file, copy/erase, and the options menu
