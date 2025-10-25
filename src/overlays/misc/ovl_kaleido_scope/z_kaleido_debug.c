@@ -230,7 +230,7 @@ void KaleidoScope_DrawDigit(PlayState* play, s32 digit, s32 rectLeft, s32 rectTo
                         G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
                         G_TX_NOLOD);
     gSPTextureRectangle(POLY_OPA_DISP++, X_MULTIPLY(HIRES_MULTIPLY(rectLeft + WS_SHIFT_HALF)) << 2, HIRES_MULTIPLY(rectTop << 2), X_MULTIPLY(HIRES_MULTIPLY(rectLeft + 8 + WS_SHIFT_HALF)) << 2, HIRES_MULTIPLY((rectTop + 16) << 2),
-                        G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10) / SCALE_X, HIRES_DIVIDE(1 << 10));
+                        G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_debug.c", 220);
 }
@@ -263,7 +263,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
     gDPSetRenderMode(POLY_OPA_DISP++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
     gDPSetCombineMode(POLY_OPA_DISP++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 0, 0, 0, 220);
-    gDPFillRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(24 + WS_SHIFT_HALF) * SCALE_X, HIRES_MULTIPLY(12), HIRES_MULTIPLY(298 + WS_SHIFT_HALF) * SCALE_X, HIRES_MULTIPLY(228));
+    gDPFillRectangle(POLY_OPA_DISP++, X_MULTIPLY(HIRES_MULTIPLY(24 + WS_SHIFT_HALF)), HIRES_MULTIPLY(12), X_MULTIPLY(HIRES_MULTIPLY(298 + WS_SHIFT_HALF)), HIRES_MULTIPLY(228));
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetCombineLERP(POLY_OPA_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0,
                       PRIMITIVE, 0);
@@ -820,16 +820,16 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
 
     if (curSection == SECTION_RUPEES) {
         // 4 digit long box
-        gDPFillRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF - WS_PX_SHIFT) * SCALE_X, HIRES_MULTIPLY(sSectionPositions[curSection][1]),
-                         HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF + WS_PX_SHIFT + 45) * SCALE_X, HIRES_MULTIPLY(sSectionPositions[curSection][1] + 16));
+        gDPFillRectangle(POLY_OPA_DISP++, X_MULTIPLY(HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF - WS_PX_SHIFT)), HIRES_MULTIPLY(sSectionPositions[curSection][1]),
+                         X_MULTIPLY(HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF + WS_PX_SHIFT + 45)), HIRES_MULTIPLY(sSectionPositions[curSection][1] + 16));
     } else if ((curSection >= SECTION_FIRST_KEY_COUNT) || (curSection == SECTION_SKULL_TOKENS)) {
         // 1 digit long box
-        gDPFillRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF - 2) * SCALE_X, HIRES_MULTIPLY(sSectionPositions[curSection][1]),
-                         HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF + 14) * SCALE_X, HIRES_MULTIPLY(sSectionPositions[curSection][1] + 16));
+        gDPFillRectangle(POLY_OPA_DISP++, X_MULTIPLY(HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF - 2)), HIRES_MULTIPLY(sSectionPositions[curSection][1]),
+                         X_MULTIPLY(HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF + 14)), HIRES_MULTIPLY(sSectionPositions[curSection][1] + 16));
     } else {
         // 2 digit long box
-        gDPFillRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF - 4) * SCALE_X, HIRES_MULTIPLY(sSectionPositions[curSection][1]),
-                         HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF + 24) * SCALE_X, HIRES_MULTIPLY(sSectionPositions[curSection][1] + 16));
+        gDPFillRectangle(POLY_OPA_DISP++, X_MULTIPLY(HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF - 4)), HIRES_MULTIPLY(sSectionPositions[curSection][1]),
+                         X_MULTIPLY(HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF + 24)), HIRES_MULTIPLY(sSectionPositions[curSection][1] + 16));
     }
 
     // Handles exiting the inventory editor with the L button
