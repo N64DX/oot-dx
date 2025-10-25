@@ -13,6 +13,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - Language options
 - Mirror mode
 - Quality of life improvements
+- Toggle extra save slots with Z
 
 ### Credits
 

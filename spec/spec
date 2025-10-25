@@ -3849,6 +3849,7 @@ beginseg
 #else
     include "$(BUILD_DIR)/assets/textures/title_static/title_static.o"
 #endif
+    include "$(BUILD_DIR)/assets/textures/title_static/title_static_save.o"
 #if OOT_VERSION <= PAL_1_1
     include "$(BUILD_DIR)/assets/textures/title_static/title_static_quest.o"
 #endif

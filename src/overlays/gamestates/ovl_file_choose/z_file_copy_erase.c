@@ -101,7 +101,7 @@ void FileSelect_SelectCopySource(GameState* thisx) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
     } else if (CHECK_BTN_ANY(input->press.button, BTN_A | BTN_START)) {
-        if (SLOT_OCCUPIED(sramCtx, this->buttonIndex)) {
+        if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(this->buttonIndex))) {
             this->actionTimer = 8;
             this->selectedFileIndex = this->buttonIndex;
             this->configMode = CM_SETUP_COPY_DEST_1;
@@ -133,7 +133,7 @@ void FileSelect_SelectCopySource(GameState* thisx) {
         }
 
         if (this->buttonIndex != FS_BTN_COPY_QUIT) {
-            if (!SLOT_OCCUPIED(sramCtx, this->buttonIndex)) {
+            if (!SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(this->buttonIndex))) {
                 this->warningLabel = FS_WARNING_FILE_EMPTY;
                 this->warningButtonIndex = this->buttonIndex;
                 this->emptyFileTextAlpha = 255;
@@ -273,7 +273,7 @@ void FileSelect_SelectCopyDest(GameState* thisx) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
     } else if (CHECK_BTN_ANY(input->press.button, BTN_A | BTN_START)) {
-        if (!SLOT_OCCUPIED(sramCtx, this->buttonIndex)) {
+        if (!SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(this->buttonIndex))) {
             this->copyDestFileIndex = this->buttonIndex;
             this->nextTitleLabel = FS_TITLE_COPY_CONFIRM;
             this->actionTimer = 8;
@@ -318,7 +318,7 @@ void FileSelect_SelectCopyDest(GameState* thisx) {
         }
 
         if (this->buttonIndex != FS_BTN_COPY_QUIT) {
-            if (SLOT_OCCUPIED(sramCtx, this->buttonIndex)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(this->buttonIndex))) {
                 this->warningLabel = FS_WARNING_FILE_IN_USE;
                 this->warningButtonIndex = this->buttonIndex;
                 this->emptyFileTextAlpha = 255;
@@ -461,7 +461,7 @@ void FileSelect_SetupCopyConfirm1(GameState* thisx) {
         if ((i != this->copyDestFileIndex) && (i != this->selectedFileIndex)) {
             this->fileButtonAlpha[i] -= 25;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 this->nameBoxAlpha[i] = this->nameAlpha[i] = this->fileButtonAlpha[i];
                 this->connectorAlpha[i] -= 31;
             }
@@ -480,7 +480,7 @@ void FileSelect_SetupCopyConfirm1(GameState* thisx) {
             array = this->fileButtonAlpha;
             array[i] -= 25;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 s16* nameBoxAlpha = this->nameBoxAlpha;
                 s16* nameAlpha = this->nameAlpha;
                 s16* fileButtonAlpha = this->fileButtonAlpha;
@@ -603,7 +603,7 @@ void FileSelect_ReturnToCopyDest(GameState* thisx) {
         if ((i != this->copyDestFileIndex) && (i != this->selectedFileIndex)) {
             this->fileButtonAlpha[i] += 25;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 this->nameBoxAlpha[i] = this->nameAlpha[i] = this->fileButtonAlpha[i];
                 this->connectorAlpha[i] += 31;
             }
@@ -623,7 +623,7 @@ void FileSelect_ReturnToCopyDest(GameState* thisx) {
             array = this->fileButtonAlpha;
             array[i] += 25;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 s16* nameBoxAlpha = this->nameBoxAlpha;
                 s16* nameAlpha = this->nameAlpha;
                 s16* fileButtonAlpha = this->fileButtonAlpha;
@@ -858,7 +858,7 @@ void FileSelect_CopyAnim5(GameState* thisx) {
         if (i != this->buttonIndex) {
             this->fileButtonAlpha[i] += 25;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 this->nameBoxAlpha[i] = this->nameAlpha[i] = this->fileButtonAlpha[i];
                 this->connectorAlpha[i] += 31;
             }
@@ -870,7 +870,7 @@ void FileSelect_CopyAnim5(GameState* thisx) {
             array = this->fileButtonAlpha;
             array[i] += 25;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 s16* nameBoxAlpha = this->nameBoxAlpha;
                 s16* nameAlpha = this->nameAlpha;
                 s16* fileButtonAlpha = this->fileButtonAlpha;
@@ -906,7 +906,7 @@ void FileSelect_CopyAnim5(GameState* thisx) {
             this->fileButtonAlpha[i] = 200;
             this->nameBoxAlpha[i] = this->nameAlpha[i] = this->connectorAlpha[i] = 0;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 this->nameBoxAlpha[i] = this->nameAlpha[i] = this->fileButtonAlpha[i];
                 this->connectorAlpha[i] = 255;
             }
@@ -922,7 +922,7 @@ void FileSelect_CopyAnim5(GameState* thisx) {
             array = this->connectorAlpha;
             array[i] = 0;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 s16* nameBoxAlpha = this->nameBoxAlpha;
                 s16* nameAlpha = this->nameAlpha;
                 s16* fileButtonAlpha = this->fileButtonAlpha;
@@ -1157,7 +1157,7 @@ void FileSelect_EraseSelect(GameState* thisx) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
     } else if (CHECK_BTN_ANY(input->press.button, BTN_A | BTN_START)) {
-        if (SLOT_OCCUPIED(sramCtx, this->buttonIndex)) {
+        if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(this->buttonIndex))) {
             this->actionTimer = 8;
             this->selectedFileIndex = this->buttonIndex;
             this->configMode = CM_SETUP_ERASE_CONFIRM_1;
@@ -1187,7 +1187,7 @@ void FileSelect_EraseSelect(GameState* thisx) {
         }
 
         if (this->buttonIndex != FS_BTN_ERASE_QUIT) {
-            if (!SLOT_OCCUPIED(sramCtx, this->buttonIndex)) {
+            if (!SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(this->buttonIndex))) {
                 this->warningLabel = FS_WARNING_FILE_EMPTY;
                 this->warningButtonIndex = this->buttonIndex;
                 this->emptyFileTextAlpha = 255;
@@ -1219,7 +1219,7 @@ void FileSelect_SetupEraseConfirm1(GameState* thisx) {
         if (i != this->buttonIndex) {
             this->fileButtonAlpha[i] -= 25;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 this->nameBoxAlpha[i] = this->nameAlpha[i] = this->fileButtonAlpha[i];
                 this->connectorAlpha[i] -= 31;
             }
@@ -1233,7 +1233,7 @@ void FileSelect_SetupEraseConfirm1(GameState* thisx) {
             array = this->fileButtonAlpha;
             array[i] -= 25;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 s16* nameBoxAlpha = this->nameBoxAlpha;
                 s16* nameAlpha = this->nameAlpha;
                 s16* fileButtonAlpha = this->fileButtonAlpha;
@@ -1286,7 +1286,7 @@ void FileSelect_SetupEraseConfirm1(GameState* thisx) {
             if (i != this->buttonIndex) {
                 this->fileButtonAlpha[i] = 0;
 
-                if (SLOT_OCCUPIED(sramCtx, i)) {
+                if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                     this->nameBoxAlpha[i] = this->nameAlpha[i] = this->fileButtonAlpha[i];
                     this->connectorAlpha[i] = 0;
                 }
@@ -1300,7 +1300,7 @@ void FileSelect_SetupEraseConfirm1(GameState* thisx) {
                 array = this->fileButtonAlpha;
                 array[i] = 0;
 
-                if (SLOT_OCCUPIED(sramCtx, i)) {
+                if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                     s16* nameBoxAlpha = this->nameBoxAlpha;
                     s16* nameAlpha = this->nameAlpha;
                     s16* fileButtonAlpha = this->fileButtonAlpha;
@@ -1485,7 +1485,7 @@ void FileSelect_ExitToEraseSelect2(GameState* thisx) {
         if (i != this->buttonIndex) {
             this->fileButtonAlpha[i] += 25;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 this->nameBoxAlpha[i] = this->nameAlpha[i] = this->fileButtonAlpha[i];
                 this->connectorAlpha[i] += 31;
             }
@@ -1497,7 +1497,7 @@ void FileSelect_ExitToEraseSelect2(GameState* thisx) {
             array = this->fileButtonAlpha;
             array[i] += 25;
 
-            if (SLOT_OCCUPIED(sramCtx, i)) {
+            if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
                 s16* nameBoxAlpha = this->nameBoxAlpha;
                 s16* nameAlpha = this->nameAlpha;
                 s16* fileButtonAlpha = this->fileButtonAlpha;
@@ -1686,7 +1686,7 @@ void FileSelect_EraseAnim3(GameState* thisx) {
     for (i = 0; i < 3; i++) {
         this->fileButtonAlpha[i] += 25;
 
-        if (SLOT_OCCUPIED(sramCtx, i)) {
+        if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
             this->nameBoxAlpha[i] = this->nameAlpha[i] = this->fileButtonAlpha[i];
             this->connectorAlpha[i] += 31;
         }
@@ -1696,7 +1696,7 @@ void FileSelect_EraseAnim3(GameState* thisx) {
         array = this->fileButtonAlpha;
         array[i] += 25;
 
-        if (SLOT_OCCUPIED(sramCtx, i)) {
+        if (SLOT_OCCUPIED(sramCtx, CURRENT_SLOT(i))) {
             s16* nameBoxAlpha = this->nameBoxAlpha;
             s16* nameAlpha = this->nameAlpha;
             s16* fileButtonAlpha = this->fileButtonAlpha;

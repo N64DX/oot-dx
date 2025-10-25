@@ -8,6 +8,7 @@
 #include "skybox.h"
 #include "sram.h"
 #include "view.h"
+#include "save.h"
 
 typedef struct FileSelectOptionsEntry {
     /* 0x00 */ u8 number;
@@ -36,17 +37,17 @@ typedef struct FileSelectState {
     /* 0x1C9EC */ Vtx* keyboardVtx;
     /* 0x1C9F0 */ Vtx* nameEntryVtx;
     /* 0x1C9F4 */ u8 n64ddFlag;
-    /* 0x1C9F6 */ u16 deaths[3];
-    /* 0x1C9FC */ u8 fileNames[3][8];
-    /* 0x1C9FC */ u8 questMode[3];
+    /* 0x1C9F6 */ u16 deaths[FILE_SLOTS_SIZE];
+    /* 0x1C9FC */ u8 fileNames[FILE_SLOTS_SIZE][8];
+    /* 0x1C9FC */ u8 questMode[FILE_SLOTS_SIZE];
     /* 0x1C9FC */ bool selectingQuestMode;
     /* 0x1C9FC */ bool selectingOptionsMode;
-    /* 0x1CA14 */ u16 healthCapacities[3];
-    /* 0x1CA1C */ u32 questItems[3];
-    /* 0x1CA28 */ s16 n64ddFlags[3];
-    /* 0x1CA2E */ s8 defense[3];
-    /* 0x1CA32 */ u16 health[3];
-    /* 0x1CA32 */ u32 fileOptions[3][8];
+    /* 0x1CA14 */ u16 healthCapacities[FILE_SLOTS_SIZE];
+    /* 0x1CA1C */ u32 questItems[FILE_SLOTS_SIZE];
+    /* 0x1CA28 */ s16 n64ddFlags[FILE_SLOTS_SIZE];
+    /* 0x1CA2E */ s8 defense[FILE_SLOTS_SIZE];
+    /* 0x1CA32 */ u16 health[FILE_SLOTS_SIZE];
+    /* 0x1CA32 */ u32 fileOptions[FILE_SLOTS_SIZE][8];
     /* 0x1CA38 */ s16 buttonIndex;
     /* 0x1CA3A */ s16 confirmButtonIndex; // 0: yes, 1: quit
     /* 0x1CA3C */ s16 menuMode;
@@ -97,6 +98,7 @@ typedef struct FileSelectState {
     /* 0x1CAD2 */ s16 kbdY;
     /* 0x1CAD4 */ s16 newFileNameCharCount;
     /* 0x1CAD6 */ s16 unk_1CAD6[5];
+    /* 0x1CA72 */ bool doRefresh;
 
     /* 0x01D0 */ s32 count;
     /* 0x01D4 */ FileSelectOptionsEntry* entries;
@@ -113,6 +115,7 @@ typedef struct FileSelectState {
 
 void FileSelect_Init(GameState* thisx);
 void FileSelect_Destroy(GameState* thisx);
+void FileSelect_ResetDisplay(FileSelectState* thisx, SramContext* sramCtx);
 
 void FileSelectOptions_Reset(FileSelectState* thisx);
 void FileSelectOptions_Init(FileSelectState* thisx);
