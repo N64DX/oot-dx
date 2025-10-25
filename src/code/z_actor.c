@@ -424,8 +424,8 @@ void Attention_Draw(Attention* attention, PlayState* play) {
 
         Actor_ProjectPos(play, &attention->reticlePos, &projectedPos, &invW);
 
-        projectedPos.x = ((SCREEN_WIDTH / SCALE_X / 2) * (projectedPos.x * invW)) * projectdPosScale * (R_ENABLE_MIRROR == 1 ? -1 : 1);
-        projectedPos.x = CLAMP(projectedPos.x, -SCREEN_WIDTH / SCALE_X, SCREEN_WIDTH / SCALE_X);
+        projectedPos.x = ((SCREEN_X / 2) * (projectedPos.x * invW)) * projectdPosScale * (R_ENABLE_MIRROR == 1 ? -1 : 1);
+        projectedPos.x = CLAMP(projectedPos.x, -SCREEN_X, SCREEN_X);
 
         projectedPos.y = ((SCREEN_HEIGHT / 2) * (projectedPos.y * invW)) * projectdPosScale;
         projectedPos.y = CLAMP(projectedPos.y, -SCREEN_HEIGHT, SCREEN_HEIGHT);
@@ -834,7 +834,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
     s32 titleY1;
     s32 titleY2;
     s32 textureLanguageOffset;
-    s32 dsdx = HIRES_DIVIDE(1 << 10) / SCALE_X;
+    s32 dsdx = X_DIVIDE(HIRES_DIVIDE(1 << 10));
     s32 s = 0;
 
     if (titleCtx->alpha != 0) {
@@ -866,7 +866,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         titleY2 = titleY1 + (height * 4);
 
         if (R_ENABLE_MIRROR == 1 && play->pauseCtx.state >= 2) {
-            dsdx = -HIRES_DIVIDE(1 << 10) / SCALE_X;
+            dsdx = -X_DIVIDE(HIRES_DIVIDE(1 << 10));
             s = width << 5;
         }
 

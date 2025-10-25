@@ -184,7 +184,7 @@ void GameState_DrawInputDisplay(u16 input, Gfx** gfxP) {
         if (input & (1 << i)) {
             gDPSetFillColor(gfx++, (sInpDispBtnColors[i] << 0x10) | sInpDispBtnColors[i]);
             k = i + 1;
-            gDPFillRectangle(gfx++, HIRES_MULTIPLY((j * 4) + 226 + WS_SHIFT_FULL) * SCALE_X, HIRES_MULTIPLY(220), HIRES_MULTIPLY((k * 4) + 225 + WS_SHIFT_FULL) * SCALE_X, HIRES_MULTIPLY(223));
+            gDPFillRectangle(gfx++, X_MULTIPLY(HIRES_MULTIPLY((j * 4) + 226 + WS_SHIFT_FULL)), HIRES_MULTIPLY(220), X_MULTIPLY(HIRES_MULTIPLY((k * 4) + 225 + WS_SHIFT_FULL)), HIRES_MULTIPLY(223));
             gDPPipeSync(gfx++);
         }
     }

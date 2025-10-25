@@ -1,6 +1,8 @@
 #ifndef RESOLUTION_H
 #define RESOLUTION_H
 
+#include "z_math.h"
+
 // SCREEN_MODE
 // 0: DEFAULT, 1: HIRES, 2: WIDE, 3: ULTRAWIDE, 4: HIRES_PRO
 #define SCREEN_MODE 0 // @setting
@@ -43,7 +45,8 @@
 // Scaling macros
 #define HIRES_MULTIPLY(var) ((var) * HIRES_SCALE)
 #define HIRES_DIVIDE(var)   ((var) / HIRES_SCALE)
-#define X_MULTIPLY(var)     (u16)((var) * SCALE_X)
+#define X_MULTIPLY(var)     ROUND((var) * SCALE_X)
+#define X_DIVIDE(var)       ROUND((var) / SCALE_X)
 
 
 
