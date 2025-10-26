@@ -28,7 +28,11 @@
 // @setting: SCREEN_WIDTH
 // Framebuffer size, which should match SCREEN_X in most cases
 // Other values will work, but an uneven SCALE_X can lead to visual inconsistencies
-#define SCREEN_WIDTH SCREEN_X
+#if HIRES_PRO
+    #define SCREEN_WIDTH 640
+#else
+    #define SCREEN_WIDTH SCREEN_X
+#endif
 
 // SCREEN_HEIGHT
 #if HIRES
@@ -52,10 +56,10 @@
 
 
 // Hires shifts
-#if HIRES || HIRES_PRO
-    #define HIRES_PX_SHIFT  1
+#if HIRES
+    #define HIRES_PX_SHIFT 1
 #else
-    #define HIRES_PX_SHIFT  0
+    #define HIRES_PX_SHIFT 0
 #endif
 
 // Widescreen shifts
