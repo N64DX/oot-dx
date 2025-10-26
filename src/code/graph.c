@@ -32,6 +32,7 @@
 
 #define GFXPOOL_HEAD_MAGIC 0x1234
 #define GFXPOOL_TAIL_MAGIC 0x5678
+#define SECONDS_PER_CYCLE 0.00000002133f
 
 #pragma increment_block_number "gc-eu:0 gc-eu-mq:0 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ique-cn:128" \
                                "ntsc-1.0:224 ntsc-1.1:224 ntsc-1.2:224 pal-1.0:224 pal-1.1:224"
@@ -45,6 +46,11 @@ OSTime sGraphPrevUpdateEndTime;
  * The time at which the previous graphics task was scheduled to run.
  */
 OSTime sGraphPrevTaskTimeStart;
+
+void calculate_frameTime_from_OSTime(OSTime diff){
+	gFrameTime += diff * SECONDS_PER_CYCLE;
+	gFrames++;
+}
 
 #if DEBUG_FEATURES
 FaultClient sGraphFaultClient;
@@ -519,7 +525,17 @@ void Graph_ThreadEntry(void* arg0) {
         GameState_Init(gameState, ovl->init, &gfxCtx);
 
         while (GameState_IsRunning(gameState)) {
+            OSTime newTime = osGetTime();
             Graph_Update(&gfxCtx, gameState);
+            if (SHOW_FPS) {
+                calculate_frameTime_from_OSTime(newTime - gLastOSTime);
+                if(gFrameTime >= 1.0f){
+                    gFPS = gFrames;
+                    gFrames = 0;
+                    gFrameTime -= 1.0f;
+                }
+                gLastOSTime = newTime;
+            }
         }
 
         nextOvl = Graph_GetNextGameState(gameState);

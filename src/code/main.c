@@ -16,6 +16,11 @@ extern struct Scheduler gScheduler;
 extern struct PadMgr gPadMgr;
 extern struct IrqMgr gIrqMgr;
 
+OSTime gLastOSTime = 0;
+float gFrameTime = 0.0f;
+u16 gFrames = 0;
+u16 gFPS = 0;
+
 #include "libc64/malloc.h"
 #include "libu64/rcp_utils.h"
 #include "libu64/runtime.h"

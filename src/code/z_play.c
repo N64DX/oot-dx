@@ -1485,9 +1485,6 @@ Play_Draw_skip:
     Camera_Finish(GET_ACTIVE_CAM(this));
 
     CLOSE_DISPS(gfxCtx, "../z_play.c", 4508);
-
-    if (SHOW_RAM && !IS_PAUSED(&this->pauseCtx) && R_ENABLE_MIRROR == 0 && gSaveContext.gameMode == GAMEMODE_NORMAL)
-        Play_PrintHeapUsage(this);
 }
 
 void Play_Main(GameState* thisx) {
@@ -2064,91 +2061,4 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos) {
     } else {
         return false;
     }
-}
-
-#define MB (1024.0f * 1024.0f)
-
-u32 Play_GetObjectUsage(PlayState* play) {
-    ObjectContext* ctx = &play->objectCtx;
-    uintptr_t poolStart = (uintptr_t)ctx->spaceStart;
-    uintptr_t poolEnd   = poolStart;
-    u8 i;
-    void* seg;
-    uintptr_t segAddr;
-    
-    if (ctx->numEntries == 0)
-        return 0;
-
-    // Iterate over all loaded objects
-    for (i=0; i < ctx->numEntries; i++) {
-        seg = ctx->slots[i].segment;
-        if (seg != NULL) {
-            segAddr = (uintptr_t)seg;
-            if (segAddr > poolEnd) // Track the highest used address
-                poolEnd = segAddr;
-        }
-    }
-
-    // Approximate used bytes: from pool start to highest loaded segment
-    return (u32)(poolEnd - poolStart);
-}
-
-u32 Play_GetRoomUsage(PlayState* play) {
-    RomFile* room = &play->roomList.romFiles[play->roomCtx.curRoom.num];
-    return (room->vromEnd - room->vromStart);
-}
-
-u32 Play_GetSceneUsage(PlayState* play) {
-    RomFile* scene = &gSceneTable[play->sceneId].sceneFile;
-    return (scene->vromEnd - scene->vromStart);
-}
-
-void Play_PrintHeapUsage(PlayState* play) {
-    GfxPrint* printer;
-    ObjectContext* objectCtx = &play->objectCtx;
-    GameState* gameState = (GameState*)play;
-    u32 maxFree, free, alloc;
-    float usedMB;
-    u8 x = 4;
-
-    const u32 reservedStatic = sizeof(gZBuffer) + sizeof(gGfxSPTaskOutputBuffer) + sizeof(gGfxSPTaskYieldBuffer) + sizeof(gGfxSPTaskStack) + sizeof(gGfxPools) + sizeof(gAudioHeap); // Known static memory regions
-    SystemArena_GetSizes(&maxFree, &free, &alloc); // Get memory info from the system arena
-
-    if (SCREEN_MODE == 2)
-        x = -4;
-    else if (SCREEN_MODE == 3)
-        x = -13;
-
-    OPEN_DISPS(play->state.gfxCtx, "../z_play.c", 2120);
-
-    printer = alloca(sizeof(GfxPrint));
-    GfxPrint_Init(printer);
-    GfxPrint_Open(printer, POLY_XLU_DISP);
-
-    GfxPrint_SetColor(printer, 255, 255, 255, 255);
-
-    usedMB  = (float)((alloc-free) / MB);
-    GfxPrint_SetPos(printer, x, 16);
-    GfxPrint_Printf(printer, "ARENA: %.2f", usedMB);
-
-    usedMB  = (float)(Play_GetObjectUsage(play) / MB);
-    GfxPrint_SetPos(printer, x, 17);
-    GfxPrint_Printf(printer, "-OBJ:  %.2f", usedMB);
-
-    usedMB = (float)(Play_GetSceneUsage(play) / MB);
-    GfxPrint_SetPos(printer, x, 18);
-    GfxPrint_Printf(printer, "-SCENE:%.2f", usedMB);
-    
-    usedMB  = (float)(Play_GetRoomUsage(play) / MB);
-    GfxPrint_SetPos(printer, x, 19);
-    GfxPrint_Printf(printer, "-ROOM: %.2f", usedMB);
-
-    usedMB  = (float)(reservedStatic / MB);
-    GfxPrint_SetPos(printer, x, 20);
-    GfxPrint_Printf(printer, "STATIC:%.2f", usedMB);
-
-    POLY_XLU_DISP = GfxPrint_Close(printer);
-    GfxPrint_Destroy(printer);
-
-    CLOSE_DISPS(play->state.gfxCtx, "../z_play.c", 2153);
 }
