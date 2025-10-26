@@ -79,21 +79,18 @@
     #define GFXPRINT_SHIFT  6
     #define LULLABY_SHIFT   0
     #define OCEFF_SHIFT     80
-    #define WS_MIRROR_SHIFT 16
     #define WS_JPEG         1
     #define WS_PX_SHIFT     1
 #elif ULTRA_WS
     #define GFXPRINT_SHIFT  13
     #define LULLABY_SHIFT   70
     #define OCEFF_SHIFT     155
-    #define WS_MIRROR_SHIFT 8
     #define WS_JPEG         1
     #define WS_PX_SHIFT     1
 #else
     #define GFXPRINT_SHIFT  0
     #define LULLABY_SHIFT   0
     #define OCEFF_SHIFT     18
-    #define WS_MIRROR_SHIFT 0
     #define WS_JPEG         0
     #define WS_PX_SHIFT     0
 #endif
