@@ -515,6 +515,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
 #define SHOW_RAM                    ((gSaveContext.globalSettings >> 2) & 1)  // Bits: 2
+#define SHOW_FPS                    ((gSaveContext.globalSettings >> 3) & 1)  // Bits: 3
 
 #define MAX_SWORD_HEALTH 8
 

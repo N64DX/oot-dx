@@ -11,4 +11,9 @@ extern u64 gGfxSPTaskStack[SP_DRAM_STACK_SIZE64]; // 0x400 bytes
 extern GfxPool gGfxPools[2]; // 0x24820 bytes
 extern u8 gAudioHeap[0x38000]; // 0x38000 bytes
 
+extern OSTime gLastOSTime;
+extern float gFrameTime;
+extern u16 gFrames;
+extern u16 gFPS;
+
 #endif

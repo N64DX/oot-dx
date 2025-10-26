@@ -25,6 +25,10 @@
 #include "play_state.h"
 #include "player.h"
 #include "save.h"
+#include "libc64/malloc.h"
+#include "libu64/gfxprint.h"
+#include "alloca.h"
+#include "buffers.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
 #include "assets/textures/icon_item_static/icon_item_static.h"
@@ -3752,6 +3756,101 @@ void func_8008A994(InterfaceContext* interfaceCtx) {
     View_ApplyOrthoToOverlay(&interfaceCtx->view);
 }
 
+#define MB (1024.0f * 1024.0f)
+
+static u32 Interface_GetObjectUsage(PlayState* this) {
+    ObjectContext* ctx = &this->objectCtx;
+    uintptr_t poolStart = (uintptr_t)ctx->spaceStart;
+    uintptr_t poolEnd   = poolStart;
+    u8 i;
+    void* seg;
+    uintptr_t segAddr;
+    
+    if (ctx->numEntries == 0)
+        return 0;
+
+    // Iterate over all loaded objects
+    for (i=0; i < ctx->numEntries; i++) {
+        seg = ctx->slots[i].segment;
+        if (seg != NULL) {
+            segAddr = (uintptr_t)seg;
+            if (segAddr > poolEnd) // Track the highest used address
+                poolEnd = segAddr;
+        }
+    }
+
+    return (u32)(poolEnd - poolStart); // Approximate used bytes: from pool start to highest loaded segment
+}
+
+static u32 Interface_GetRoomUsage(PlayState* this) {
+    RomFile* room = &this->roomList.romFiles[this->roomCtx.curRoom.num];
+    return (room->vromEnd - room->vromStart);
+}
+
+static u32 Interface_GetSceneUsage(PlayState* this) {
+    RomFile* scene = &gSceneTable[this->sceneId].sceneFile;
+    return (scene->vromEnd - scene->vromStart);
+}
+
+static void Interface_PrintHeapUsage(PlayState* this) {
+    GfxPrint* printer;
+    ObjectContext* objectCtx = &this->objectCtx;
+    GameState* gameState = (GameState*)this;
+    u32 maxFree, free, alloc;
+    float usedMB;
+    u8 x = 4;
+
+    const u32 reservedStatic = sizeof(gZBuffer) + sizeof(gGfxSPTaskOutputBuffer) + sizeof(gGfxSPTaskYieldBuffer) + sizeof(gGfxSPTaskStack) + sizeof(gGfxPools) + sizeof(gAudioHeap); // Known static memory regions
+    SystemArena_GetSizes(&maxFree, &free, &alloc); // Get memory info from the system arena
+
+    if (SCREEN_MODE == 2)
+        x = -4;
+    else if (SCREEN_MODE == 3)
+        x = -13;
+
+    OPEN_DISPS(this->state.gfxCtx, "../z_parameter.c", 3816);
+
+    printer = alloca(sizeof(GfxPrint));
+    GfxPrint_Init(printer);
+    GfxPrint_Open(printer, POLY_XLU_DISP);
+
+    GfxPrint_SetColor(printer, 255, 255, 255, 255);
+
+    if (SHOW_FPS) {
+        GfxPrint_SetPos(printer, x, 16);
+        GfxPrint_Printf(printer, SHOW_RAM ? "FPS:   %d" : "FPS: %d", gFPS);
+    }
+
+    if (SHOW_RAM) {
+        u8 y = SHOW_FPS ? 17 : 16;
+
+        usedMB  = (float)((alloc-free) / MB);
+        GfxPrint_SetPos(printer, x, y);
+        GfxPrint_Printf(printer, "ARENA: %.2f", usedMB);
+
+        usedMB  = (float)(Interface_GetObjectUsage(this) / MB);
+        GfxPrint_SetPos(printer, x, y+1);
+        GfxPrint_Printf(printer, "-OBJ:  %.2f", usedMB);
+
+        usedMB = (float)(Interface_GetSceneUsage(this) / MB);
+        GfxPrint_SetPos(printer, x, y+2);
+        GfxPrint_Printf(printer, "-SCENE:%.2f", usedMB);
+        
+        usedMB  = (float)(Interface_GetRoomUsage(this) / MB);
+        GfxPrint_SetPos(printer, x, y+3);
+        GfxPrint_Printf(printer, "-ROOM: %.2f", usedMB);
+
+        usedMB  = (float)(reservedStatic / MB);
+        GfxPrint_SetPos(printer, x, y+4);
+        GfxPrint_Printf(printer, "STATIC:%.2f", usedMB);
+    }
+
+    POLY_XLU_DISP = GfxPrint_Close(printer);
+    GfxPrint_Destroy(printer);
+
+    CLOSE_DISPS(this->state.gfxCtx, "../z_parameter.c", 3854);
+}
+
 void Interface_Draw(PlayState* play) {
     static s16 magicArrowEffectsR[] = { 255, 100, 255 };
     static s16 magicArrowEffectsG[] = { 0, 100, 255 };
@@ -3802,6 +3901,9 @@ void Interface_Draw(PlayState* play) {
         Interface_InitVertices(play);
         func_8008A994(interfaceCtx);
         Health_DrawMeter(play);
+
+        if (!IS_PAUSED(&play->pauseCtx) && R_ENABLE_MIRROR == 0 && (SHOW_RAM || SHOW_FPS))
+            Interface_PrintHeapUsage(play);
 
         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
 
