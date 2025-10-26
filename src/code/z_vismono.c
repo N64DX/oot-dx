@@ -21,8 +21,7 @@
 #define VISMONO_CFBFRAG_HEIGHT ((TMEM_SIZE / 2) / (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES))
 
 // Maximum size of the dlist written by `VisMono_DesaturateDList`.
-// `VisMono_DesaturateDList` consistently uses `VISMONO_DLSIZE - 2` double words, so this can be 2 less.
-#define VISMONO_DLSIZE (3 + SCREEN_HEIGHT / VISMONO_CFBFRAG_HEIGHT * (7 + 2 + 2 + 3) + 2 + 2)
+#define VISMONO_DLSIZE (1 + SCREEN_HEIGHT / VISMONO_CFBFRAG_HEIGHT * (7 + 2 + 2 + 3) + 2 + 2)
 
 // How much each color component contributes to the desaturated result.
 // These coefficients are close to what the YUV color space defines Y (luminance) as:
