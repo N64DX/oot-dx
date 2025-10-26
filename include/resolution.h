@@ -28,11 +28,12 @@
 // @setting: SCREEN_WIDTH
 // Framebuffer size, which should match SCREEN_X in most cases
 // Other values will work, but an uneven SCALE_X can lead to visual inconsistencies
+#define SCREEN_WIDTH SCREEN_X
+
+// SCREEN_HEIGHT
 #if HIRES
-    #define SCREEN_WIDTH  640
     #define SCREEN_HEIGHT 480
 #else
-    #define SCREEN_WIDTH  SCREEN_X
     #define SCREEN_HEIGHT 240
 #endif
 
