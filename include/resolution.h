@@ -10,7 +10,7 @@
 // Derived from SCREEN_MODE
 #define DEFAULT    (SCREEN_MODE == 0 ? 1 : 0) // SCREEN_DEFAULT   (320x240)
 #define HIRES      (SCREEN_MODE == 1 ? 1 : 0) // SCREEN_HIRES     (640x480)
-#define WIDESCREEN (SCREEN_MODE == 2 ? 1 : 0) // SCREEN_WIDE      (424x240)
+#define WIDESCREEN (SCREEN_MODE == 2 ? 1 : 0) // SCREEN_WIDE      (432x240)
 #define ULTRA_WS   (SCREEN_MODE == 3 ? 1 : 0) // SCREEN_ULTRAWIDE (576x240)
 #define HIRES_PRO  (SCREEN_MODE == 4 ? 1 : 0) // SCREEN_HIRES_PRO (640x240)
 
@@ -18,7 +18,7 @@
 #if HIRES
     #define SCREEN_X 640
 #elif WIDESCREEN
-    #define SCREEN_X 424
+    #define SCREEN_X 432
 #elif ULTRA_WS
     #define SCREEN_X 576
 #else
@@ -100,8 +100,8 @@
 
 // Derived from WS_JPEG
 #if WS_JPEG
-    #define JPEG_SCALE 775
-    #define JPEG_WIDTH 424
+    #define JPEG_SCALE 760
+    #define JPEG_WIDTH 432
 #else
     #define JPEG_SCALE 1024
     #define JPEG_WIDTH 320
