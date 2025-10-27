@@ -1590,17 +1590,12 @@ void FileSelect_UpdateOptionsMenu(GameState* thisx) {
         if (CHECK_BTN_ANY(input->press.button, BTN_B | BTN_L)) {
             this->selectingOptionsMode = 0;
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            //for (i=0; i<FILE_OPTIONS_SIZE; i++)
-            //    gSaveContext.options[i] = gFileOptions[gSaveContext.fileNum][i];
-            //Sram_WriteSaveOptions(&this->sramCtx);
         }
         FileSelectOptions_UpdateMenu(this);
         return;
     } else if (CHECK_BTN_ALL(input->press.button, BTN_L)) {
         this->selectingOptionsMode = 1;
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-        //gSaveContext.fileNum = this->buttonIndex;
-        //Sram_OpenSaveOptions(&this->sramCtx);
         FileSelectOptions_Reset(this);
     }
 
