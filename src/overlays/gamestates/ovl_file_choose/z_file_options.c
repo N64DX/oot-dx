@@ -9,27 +9,20 @@
 #include "save.h"
 #include "regs.h"
 
+#define SET_OPTION(option, shift, max) (option = (option & ~(max << shift)) | (((((option >> shift) & max) + 1) & max) << shift))
+
 void FileSelectOptions_ToggleOption(FileSelectState* this, u8 index, u8 shift) {
-    gFileOptions[gSaveContext.fileNum][index] ^= 1 << shift;
+    this->fileOptions[gSaveContext.fileNum][index] ^= 1 << shift;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileSelectOptions_SetDamageTaken(FileSelectState* this, u8 index, u8 shift) {
-    SET_DAMAGE_TAKEN((DAMAGE_TAKEN + 1));
+void FileSelectOptions_SetOptionMax3(FileSelectState* this, u8 index, u8 shift) {
+    SET_OPTION(this->fileOptions[gSaveContext.fileNum][index], shift, 3);
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileSelectOptions_SetHealthRecovery(FileSelectState* this, u8 index, u8 shift) {
-    SET_HEALTH_RECOVERY((HEALTH_RECOVERY + 1));
-    Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-}
-
-void FileSelectOptions_SetHP(FileSelectState* this, u8 index, u8 shift) {
-    if (shift == 5)
-        SET_MONSTER_HP((MONSTER_HP + 1));
-    else if (shift == 8)
-        SET_ELITE_HP((ELITE_HP + 1));
-    else SET_BOSS_HP((BOSS_HP + 1));
+void FileSelectOptions_SetOptionMax7(FileSelectState* this, u8 index, u8 shift) {
+    SET_OPTION(this->fileOptions[gSaveContext.fileNum][index], shift, 7);
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
@@ -46,11 +39,24 @@ void FileSelectGlobalOptions_ToggleSaveSlotsOption(FileSelectState* this, u8 ind
 }
 
 char* FileSelectOptions_GetOption(FileSelectState* this, u8 index, u8 shift) {
-    return ((gFileOptions[gSaveContext.fileNum][index] >> shift) & 1) ? "On" : "Off";
+    return ((this->fileOptions[gSaveContext.fileNum][index] >> shift) & 1) ? "On" : "Off";
+}
+
+char* FileSelectOptions_GetHealthRecovery(FileSelectState* this, u8 index, u8 shift) {
+    switch ((this->fileOptions[gSaveContext.fileNum][index] >> shift) & 3) {
+        case 1:
+            return "1/2x";
+        case 2:
+            return "1/4x";
+        case 3:
+            return "0x";
+        default:
+            return "1x";
+    }
 }
 
 char* FileSelectOptions_GetDamageTaken(FileSelectState* this, u8 index, u8 shift) {
-    switch (DAMAGE_TAKEN) {
+    switch ((this->fileOptions[gSaveContext.fileNum][index] >> shift) & 7) {
         case 1:
             return "2x";
         case 2:
@@ -70,21 +76,8 @@ char* FileSelectOptions_GetDamageTaken(FileSelectState* this, u8 index, u8 shift
     }
 }
 
-char* FileSelectOptions_GetHealthRecovery(FileSelectState* this, u8 index, u8 shift) {
-    switch (HEALTH_RECOVERY) {
-        case 1:
-            return "1/2x";
-        case 2:
-            return "1/4x";
-        case 3:
-            return "0x";
-        default:
-            return "1x";
-    }
-}
-
 char* FileSelectOptions_GetHP(FileSelectState* this, u8 index, u8 shift) {
-    switch ((gFileOptions[gSaveContext.fileNum][index] >> shift) & 7) {
+    switch ((this->fileOptions[gSaveContext.fileNum][index] >> shift) & 7) {
         case 1:
             return "1.5x";
         case 2:
@@ -109,37 +102,37 @@ char* FileSelectGlobalOptions_GetOption(FileSelectState* this, u8 index, u8 shif
 }
 
 static FileSelectOptionsEntry sFileOptionsEntries[] = {
-    { 0, "Mirror Mode",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 0  },
-    { 0, "Autosave",               FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 1  },
-    { 0, "Agony Visual Icon",      FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 2  },
-    { 0, "Extended Draw Distance", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 3  },
-    { 0, "No Letterboxing",        FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 4  },
-    { 0, "Resume Last Area",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 5  },
+    { 0, "Mirror Mode",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 0  },
+    { 0, "Autosave",               FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 1  },
+    { 0, "Agony Visual Icon",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 2  },
+    { 0, "Extended Draw Distance", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 3  },
+    { 0, "No Letterboxing",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 4  },
+    { 0, "Resume Last Area",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 5  },
 #if !PLATFORM_IQUE
-    { 0, "Disable Token Freeze",   FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 6  },
+    { 0, "Disable Token Freeze",   FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 6  },
 #endif
-    { 0, "Censor Fire Temple",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 7  },
-    { 0, "Skip Intros",            FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 8  },
-    { 0, "No Owl",                 FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 9  },
-    { 0, "Instant Put Away",       FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 10 },
-    { 0, "Pull Sword Out",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 11 },
-    { 0, "Shield In Front",        FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 12 },
-    { 0, "No Disruptive Text",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 13 },
-    { 0, "Bow Aiming Reticle",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 14 },
-    { 0, "No Low Health Beep",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 15 },
-    { 0, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 16 },
-    { 0, "Fix Power Crouch Stab",  FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 17 },
-    { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 18 },
-    { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 19 },
-    { 0, "Use MM Young Link",      FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         0, 20 },
-    { 0, "Health Recovery",        FileSelectOptions_SetHealthRecovery, FileSelectOptions_GetHealthRecovery, 1, 0  },
-    { 0, "Damage Taken",           FileSelectOptions_SetDamageTaken,    FileSelectOptions_GetDamageTaken,    1, 2  },
-    { 0, "Monster Health",         FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 5  },
-    { 0, "Elite Monster Health",   FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 8  },
-    { 0, "Boss Health",            FileSelectOptions_SetHP,             FileSelectOptions_GetHP,             1, 11 },
-    { 0, "Harder Enemies",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 14 },
-    { 0, "Static Dark Link HP",    FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 15 },
-    { 0, "No Bottled Fairies",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 16 },
+    { 0, "Censor Fire Temple",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 7  },
+    { 0, "Skip Intros",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 8  },
+    { 0, "No Owl",                 FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 9  },
+    { 0, "Instant Put Away",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 10 },
+    { 0, "Pull Sword Out",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 11 },
+    { 0, "Shield In Front",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 12 },
+    { 0, "No Disruptive Text",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 13 },
+    { 0, "Bow Aiming Reticle",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 14 },
+    { 0, "No Low Health Beep",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 15 },
+    { 0, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 16 },
+    { 0, "Fix Power Crouch Stab",  FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 17 },
+    { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 18 },
+    { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 19 },
+    { 0, "Use MM Young Link",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 20 },
+    { 0, "Health Recovery",        FileSelectOptions_SetOptionMax3, FileSelectOptions_GetHealthRecovery, 1, 0  },
+    { 0, "Damage Taken",           FileSelectOptions_SetOptionMax7, FileSelectOptions_GetDamageTaken,    1, 2  },
+    { 0, "Monster Health",         FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 5  },
+    { 0, "Elite Monster Health",   FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 8  },
+    { 0, "Boss Health",            FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 11 },
+    { 0, "Harder Enemies",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 14 },
+    { 0, "Static Dark Link HP",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 15 },
+    { 0, "No Bottled Fairies",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 16 },
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {
