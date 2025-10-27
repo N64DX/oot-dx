@@ -1880,9 +1880,7 @@ void FileSelect_ConfirmFile(GameState* thisx) {
         if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
             this->selectingOptionsMode = 0;
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            for (i=0; i<FILE_OPTIONS_SIZE; i++)
-                gSaveContext.options[i] = gFileOptions[gSaveContext.fileNum][i];
-            Sram_WriteSaveOptions(&this->sramCtx);
+            Sram_WriteSaveOptions(this, &this->sramCtx);
         }
         FileSelectOptions_UpdateMenu(this);
     } else if (CHECK_BTN_ALL(input->press.button, BTN_START) || (CHECK_BTN_ALL(input->press.button, BTN_A))) {
@@ -2026,6 +2024,7 @@ void FileSelect_LoadGame(GameState* thisx) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.fileNum = CURRENT_SLOT(this->buttonIndex);
+        MemCpy(&gSaveContext.options, this->fileOptions[gSaveContext.fileNum], sizeof(gSaveContext.options));
         Sram_OpenSave(&this->sramCtx);
         gSaveContext.gameMode = GAMEMODE_NORMAL;
         SET_NEXT_GAMESTATE(&this->state, MapSelect_Init, MapSelectState);
@@ -2034,6 +2033,7 @@ void FileSelect_LoadGame(GameState* thisx) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.fileNum = CURRENT_SLOT(this->buttonIndex);
+        MemCpy(&gSaveContext.options, this->fileOptions[gSaveContext.fileNum], sizeof(gSaveContext.options));
         Sram_OpenSave(&this->sramCtx);
         gSaveContext.gameMode = GAMEMODE_NORMAL;
         SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);

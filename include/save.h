@@ -482,39 +482,37 @@ typedef enum LinkAge {
 #define IS_DUNGEON_RUSH  (R_QUEST_MODE >= DUNGEON_RUSH && R_QUEST_MODE <= DUNGEON_URA_RUSH)
 #define IS_BOSS_RUSH     (R_QUEST_MODE == BOSS_RUSH)
 
-#define FILE_OPTIONS_SIZE 2
-#define FILE_SLOTS_SIZE   6
-extern u32 gFileOptions[FILE_SLOTS_SIZE][FILE_OPTIONS_SIZE];
+#define FILE_SLOTS_SIZE 6
 
-#define MIRROR_MODE                 ((gFileOptions[gSaveContext.fileNum][0] >> 0)  & 1)  // Bits: 0
-#define AUTOSAVE                    ((gFileOptions[gSaveContext.fileNum][0] >> 1)  & 1)  // Bits: 1
-#define AGONY_VISUAL_ICON           ((gFileOptions[gSaveContext.fileNum][0] >> 2)  & 1)  // Bits: 2
-#define EXTENDED_DRAW_DISTANCE      ((gFileOptions[gSaveContext.fileNum][0] >> 3)  & 1)  // Bits: 3
-#define NO_LETTERBOXING             ((gFileOptions[gSaveContext.fileNum][0] >> 4)  & 1)  // Bits: 4
-#define RESUME_LAST_AREA            ((gFileOptions[gSaveContext.fileNum][0] >> 5)  & 1)  // Bits: 5
-#define DISABLE_TOKEN_FREEZE        ((gFileOptions[gSaveContext.fileNum][0] >> 6)  & 1)  // Bits: 6
-#define CENSOR_FIRE_TEMPLE          ((gFileOptions[gSaveContext.fileNum][0] >> 7)  & 1)  // Bits: 7
-#define SKIP_INTROS                 ((gFileOptions[gSaveContext.fileNum][0] >> 8)  & 1)  // Bits: 8
-#define NO_OWL                      ((gFileOptions[gSaveContext.fileNum][0] >> 9)  & 1)  // Bits: 9
-#define INSTANT_PUTAWAY             ((gFileOptions[gSaveContext.fileNum][0] >> 10) & 1)  // Bits: 10
-#define PULL_SWORD                  ((gFileOptions[gSaveContext.fileNum][0] >> 11) & 1)  // Bits: 11
-#define SHIELD_IN_FRONT             ((gFileOptions[gSaveContext.fileNum][0] >> 12) & 1)  // Bits: 12
-#define NO_DISRUPTIVE_TEXT          ((gFileOptions[gSaveContext.fileNum][0] >> 13) & 1)  // Bits: 13
-#define BOW_AIMING_RETICLE          ((gFileOptions[gSaveContext.fileNum][0] >> 14) & 1)  // Bits: 14
-#define NO_LOW_HEALTH_BEEP          ((gFileOptions[gSaveContext.fileNum][0] >> 15) & 1)  // Bits: 15
-#define UNINVERTED_AIMING           ((gFileOptions[gSaveContext.fileNum][0] >> 16) & 1)  // Bits: 16
-#define FIX_POWER_CROUCH_STAB       ((gFileOptions[gSaveContext.fileNum][0] >> 17) & 1)  // Bits: 17
-#define REFLECT_CHEST_CONTENTS      ((gFileOptions[gSaveContext.fileNum][0] >> 18) & 1)  // Bits: 18
-#define EASIER_FISHING              ((gFileOptions[gSaveContext.fileNum][0] >> 19) & 1)  // Bits: 19
-#define USE_YOUNG_LINK              ((gFileOptions[gSaveContext.fileNum][0] >> 20) & 1)  // Bits: 20
-#define HEALTH_RECOVERY             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
-#define DAMAGE_TAKEN                ((gFileOptions[gSaveContext.fileNum][1] >> 2)  & 7)  // Bits: 2-4
-#define MONSTER_HP                  ((gFileOptions[gSaveContext.fileNum][1] >> 5)  & 7)  // Bits: 5-7
-#define ELITE_HP                    ((gFileOptions[gSaveContext.fileNum][1] >> 8)  & 7)  // Bits: 8-10
-#define BOSS_HP                     ((gFileOptions[gSaveContext.fileNum][1] >> 11) & 7)  // Bits: 11-13
-#define HARDER_ENEMIES              ((gFileOptions[gSaveContext.fileNum][1] >> 14) & 1)  // Bits: 14
-#define STATIC_DARK_LINK_HP         ((gFileOptions[gSaveContext.fileNum][1] >> 15) & 1)  // Bits: 15
-#define NO_BOTTLED_FAIRIES          ((gFileOptions[gSaveContext.fileNum][1] >> 16) & 1)  // Bits: 16
+#define MIRROR_MODE                 ((gSaveContext.options[0] >> 0)  & 1)  // Bits: 0
+#define AUTOSAVE                    ((gSaveContext.options[0] >> 1)  & 1)  // Bits: 1
+#define AGONY_VISUAL_ICON           ((gSaveContext.options[0] >> 2)  & 1)  // Bits: 2
+#define EXTENDED_DRAW_DISTANCE      ((gSaveContext.options[0] >> 3)  & 1)  // Bits: 3
+#define NO_LETTERBOXING             ((gSaveContext.options[0] >> 4)  & 1)  // Bits: 4
+#define RESUME_LAST_AREA            ((gSaveContext.options[0] >> 5)  & 1)  // Bits: 5
+#define DISABLE_TOKEN_FREEZE        ((gSaveContext.options[0] >> 6)  & 1)  // Bits: 6
+#define CENSOR_FIRE_TEMPLE          ((gSaveContext.options[0] >> 7)  & 1)  // Bits: 7
+#define SKIP_INTROS                 ((gSaveContext.options[0] >> 8)  & 1)  // Bits: 8
+#define NO_OWL                      ((gSaveContext.options[0] >> 9)  & 1)  // Bits: 9
+#define INSTANT_PUTAWAY             ((gSaveContext.options[0] >> 10) & 1)  // Bits: 10
+#define PULL_SWORD                  ((gSaveContext.options[0] >> 11) & 1)  // Bits: 11
+#define SHIELD_IN_FRONT             ((gSaveContext.options[0] >> 12) & 1)  // Bits: 12
+#define NO_DISRUPTIVE_TEXT          ((gSaveContext.options[0] >> 13) & 1)  // Bits: 13
+#define BOW_AIMING_RETICLE          ((gSaveContext.options[0] >> 14) & 1)  // Bits: 14
+#define NO_LOW_HEALTH_BEEP          ((gSaveContext.options[0] >> 15) & 1)  // Bits: 15
+#define UNINVERTED_AIMING           ((gSaveContext.options[0] >> 16) & 1)  // Bits: 16
+#define FIX_POWER_CROUCH_STAB       ((gSaveContext.options[0] >> 17) & 1)  // Bits: 17
+#define REFLECT_CHEST_CONTENTS      ((gSaveContext.options[0] >> 18) & 1)  // Bits: 18
+#define EASIER_FISHING              ((gSaveContext.options[0] >> 19) & 1)  // Bits: 19
+#define USE_YOUNG_LINK              ((gSaveContext.options[0] >> 20) & 1)  // Bits: 20
+#define HEALTH_RECOVERY             ((gSaveContext.options[1] >> 0)  & 3)  // Bits: 0-1
+#define DAMAGE_TAKEN                ((gSaveContext.options[1] >> 2)  & 7)  // Bits: 2-4
+#define MONSTER_HP                  ((gSaveContext.options[1] >> 5)  & 7)  // Bits: 5-7
+#define ELITE_HP                    ((gSaveContext.options[1] >> 8)  & 7)  // Bits: 8-10
+#define BOSS_HP                     ((gSaveContext.options[1] >> 11) & 7)  // Bits: 11-13
+#define HARDER_ENEMIES              ((gSaveContext.options[1] >> 14) & 1)  // Bits: 14
+#define STATIC_DARK_LINK_HP         ((gSaveContext.options[1] >> 15) & 1)  // Bits: 15
+#define NO_BOTTLED_FAIRIES          ((gSaveContext.options[1] >> 16) & 1)  // Bits: 16
 
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
@@ -523,12 +521,6 @@ extern u32 gFileOptions[FILE_SLOTS_SIZE][FILE_OPTIONS_SIZE];
 #define EXTRA_SAVE_SLOTS            ((gSaveContext.globalSettings >> 4) & 1)  // Bits: 4
 
 #define MAX_SWORD_HEALTH 8
-
-#define SET_HEALTH_RECOVERY(value)   (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(3 << 0))  | (((value) & 3) << 0))
-#define SET_DAMAGE_TAKEN(value)      (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 2))  | (((value) & 7) << 2))
-#define SET_MONSTER_HP(value)        (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 5))  | (((value) & 7) << 5))
-#define SET_ELITE_HP(value)          (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 8))  | (((value) & 7) << 8))
-#define SET_BOSS_HP(value)           (gFileOptions[gSaveContext.fileNum][1]  = (gFileOptions[gSaveContext.fileNum][1] & ~(7 << 11)) | (((value) & 7) << 11))
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)

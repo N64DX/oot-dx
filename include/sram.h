@@ -29,7 +29,7 @@ void Sram_InitDebugSave(void);
 void Sram_OpenSave(SramContext* sramCtx);
 void Sram_OpenSaveOptions(SramContext* sramCtx);
 void Sram_WriteSave(SramContext* sramCtx);
-void Sram_WriteSaveOptions(SramContext* sramCtx);
+void Sram_WriteSaveOptions(struct FileSelectState* fileSelect, SramContext* sramCtx);
 void Sram_VerifyAndLoadAllSaves(struct FileSelectState* fileSelect, SramContext* sramCtx);
 void Sram_InitSave(struct FileSelectState* fileSelect, SramContext* sramCtx);
 void Sram_EraseSave(struct FileSelectState* fileSelect, SramContext* sramCtx);

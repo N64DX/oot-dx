@@ -47,7 +47,7 @@ typedef struct FileSelectState {
     /* 0x1CA28 */ s16 n64ddFlags[FILE_SLOTS_SIZE];
     /* 0x1CA2E */ s8 defense[FILE_SLOTS_SIZE];
     /* 0x1CA32 */ u16 health[FILE_SLOTS_SIZE];
-    /* 0x1CA32 */ u32 fileOptions[FILE_SLOTS_SIZE][8];
+    /* 0x1CA32 */ u32 fileOptions[FILE_SLOTS_SIZE][sizeof(gSaveContext.options)];
     /* 0x1CA38 */ s16 buttonIndex;
     /* 0x1CA3A */ s16 confirmButtonIndex; // 0: yes, 1: quit
     /* 0x1CA3C */ s16 menuMode;
