@@ -195,20 +195,3 @@ void VisMono_Draw(VisMono* this, Gfx** gfxP) {
     *gfxP = gfx;
 #endif
 }
-
-void VisMono_DrawOld(VisMono* this) {
-#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
-    UNUSED_NDEBUG Gfx* dListEnd;
-
-    if (this->tlut == NULL) {
-        this->tlut = SYSTEM_ARENA_MALLOC(256 * G_IM_SIZ_16b_BYTES, "../z_vismono.c", 283);
-        VisMono_DesaturateTLUT(this, this->tlut);
-    }
-
-    if (this->dList == NULL) {
-        this->dList = SYSTEM_ARENA_MALLOC(VISMONO_DLSIZE * sizeof(Gfx), "../z_vismono.c", 289);
-        dListEnd = VisMono_DesaturateDList(this, this->dList);
-        ASSERT(dListEnd <= this->dList + VISMONO_DLSIZE, "glistp_end <= this->mono_dl + DLSIZE", "../z_vismono.c", 292);
-    }
-#endif
-}
