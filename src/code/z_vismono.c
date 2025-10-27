@@ -35,7 +35,7 @@
 extern u16 D_0F000000[];
 
 void VisMono_Init(VisMono* this) {
-#if SCREEN_WIDTH < (TMEM_SIZE / 2 / 4)
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     bzero(this, sizeof(VisMono));
     this->vis.type = 0;
     this->vis.scissorType = VIS_NO_SETSCISSOR;
@@ -51,13 +51,13 @@ void VisMono_Init(VisMono* this) {
 }
 
 void VisMono_Destroy(VisMono* this) {
-#if SCREEN_WIDTH < (TMEM_SIZE / 2 / 4)
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     SYSTEM_ARENA_FREE(this->dList, "../z_vismono.c", 137);
 #endif
 }
 
 void VisMono_DesaturateTLUT(VisMono* this, u16* tlut) {
-#if SCREEN_WIDTH < (TMEM_SIZE / 2 / 4)
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     s32 i;
 
     for (i = 0; i < 256; i++) {
@@ -80,7 +80,7 @@ void VisMono_DesaturateTLUT(VisMono* this, u16* tlut) {
 }
 
 Gfx* VisMono_DesaturateDList(VisMono* this, Gfx* gfx) {
-#if SCREEN_WIDTH < (TMEM_SIZE / 2 / 4)
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     s32 y;
     s32 height = VISMONO_CFBFRAG_HEIGHT;
     u16* cfbFrag = D_0F000000;
@@ -149,7 +149,7 @@ Gfx* VisMono_DesaturateDList(VisMono* this, Gfx* gfx) {
 }
 
 void VisMono_Draw(VisMono* this, Gfx** gfxP) {
-#if SCREEN_WIDTH < (TMEM_SIZE / 2 / 4)
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     Gfx* gfx = *gfxP;
     u16* tlut;
     Gfx* dList;
@@ -197,7 +197,7 @@ void VisMono_Draw(VisMono* this, Gfx** gfxP) {
 }
 
 void VisMono_DrawOld(VisMono* this) {
-#if SCREEN_WIDTH < (TMEM_SIZE / 2 / 4)
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     UNUSED_NDEBUG Gfx* dListEnd;
 
     if (this->tlut == NULL) {
