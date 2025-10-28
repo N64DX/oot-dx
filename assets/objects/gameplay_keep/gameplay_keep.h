@@ -1344,7 +1344,7 @@ extern Gfx gHoverBootsCircleDL[26];
 #define gMoonTex_WIDTH 64
 #define gMoonTex_HEIGHT 64
 extern u64 gMoonTex[TEX_LEN(u64, gMoonTex_WIDTH, gMoonTex_HEIGHT, 8)];
-extern Gfx gMoonDL[15];
+extern Gfx gMoonDL[14];
 extern Vtx gMoonVtx[];
 #define gUnknownCircle6Tex_WIDTH 32
 #define gUnknownCircle6Tex_HEIGHT 32
