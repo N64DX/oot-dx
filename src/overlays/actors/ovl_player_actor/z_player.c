@@ -3372,7 +3372,7 @@ s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play) {
     if (LinkAnimation_Update(play, &this->upperSkelAnime) ||
         ((Player_ItemToItemAction(this->heldItemId) == this->heldItemAction) &&
          (sUseHeldItem =
-              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !PULL_SWORD))))) {
+              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && this->heldItemAction <= PLAYER_IA_SWORD_BIGGORON)))))) {
         Player_SetUpperActionFunc(this, sItemActionUpdateFuncs[this->heldItemAction]);
         this->unk_834 = 0;
         this->idleType = PLAYER_IDLE_DEFAULT;
