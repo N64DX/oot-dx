@@ -36,7 +36,6 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
 - **Syeo & Trueffel:** Molmauk actor
-- **Thar0:** Full-screen fill rectangle optimizations
 
 ### Instructions
 

@@ -9,7 +9,6 @@
 
 struct GameState;
 struct GraphicsContext;
-struct LightContext;
 
 typedef enum SkyboxId {
     /* 0x00 */ SKYBOX_NONE,
@@ -67,7 +66,8 @@ extern SkyboxFile gNormalSkyFiles[];
 
 void Skybox_Init(struct GameState* state, SkyboxContext* skyboxCtx, s16 skyboxId);
 Mtx* Skybox_UpdateMatrix(SkyboxContext* skyboxCtx, f32 x, f32 y, f32 z);
-void Skybox_Draw(SkyboxContext* skyboxCtx, struct GraphicsContext* gfxCtx, struct LightContext* lightCtx, s16 skyboxId, s16 blend, f32 x, f32 y, f32 z);
+void Skybox_Draw(SkyboxContext* skyboxCtx, struct GraphicsContext* gfxCtx, s16 skyboxId, s16 blend, f32 x, f32 y,
+                 f32 z);
 void Skybox_Update(SkyboxContext* skyboxCtx);
 
 #endif
