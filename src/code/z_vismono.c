@@ -35,7 +35,7 @@
 extern u16 D_0F000000[];
 
 void VisMono_Init(VisMono* this) {
-#if !HIRES && !ULTRA_WS
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     bzero(this, sizeof(VisMono));
     this->vis.type = 0;
     this->vis.scissorType = VIS_NO_SETSCISSOR;
@@ -51,13 +51,13 @@ void VisMono_Init(VisMono* this) {
 }
 
 void VisMono_Destroy(VisMono* this) {
-#if !HIRES && !ULTRA_WS
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     SYSTEM_ARENA_FREE(this->dList, "../z_vismono.c", 137);
 #endif
 }
 
 void VisMono_DesaturateTLUT(VisMono* this, u16* tlut) {
-#if !HIRES && !ULTRA_WS
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     s32 i;
 
     for (i = 0; i < 256; i++) {
@@ -80,7 +80,7 @@ void VisMono_DesaturateTLUT(VisMono* this, u16* tlut) {
 }
 
 Gfx* VisMono_DesaturateDList(VisMono* this, Gfx* gfx) {
-#if !HIRES && !ULTRA_WS
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     s32 y;
     s32 height = VISMONO_CFBFRAG_HEIGHT;
     u16* cfbFrag = D_0F000000;
@@ -149,7 +149,7 @@ Gfx* VisMono_DesaturateDList(VisMono* this, Gfx* gfx) {
 }
 
 void VisMono_Draw(VisMono* this, Gfx** gfxP) {
-#if !HIRES && !ULTRA_WS
+#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     Gfx* gfx = *gfxP;
     u16* tlut;
     Gfx* dList;
@@ -193,22 +193,5 @@ void VisMono_Draw(VisMono* this, Gfx** gfxP) {
     gDPPipeSync(gfx++);
 
     *gfxP = gfx;
-#endif
-}
-
-void VisMono_DrawOld(VisMono* this) {
-#if !HIRES && !ULTRA_WS
-    UNUSED_NDEBUG Gfx* dListEnd;
-
-    if (this->tlut == NULL) {
-        this->tlut = SYSTEM_ARENA_MALLOC(256 * G_IM_SIZ_16b_BYTES, "../z_vismono.c", 283);
-        VisMono_DesaturateTLUT(this, this->tlut);
-    }
-
-    if (this->dList == NULL) {
-        this->dList = SYSTEM_ARENA_MALLOC(VISMONO_DLSIZE * sizeof(Gfx), "../z_vismono.c", 289);
-        dListEnd = VisMono_DesaturateDList(this, this->dList);
-        ASSERT(dListEnd <= this->dList + VISMONO_DLSIZE, "glistp_end <= this->mono_dl + DLSIZE", "../z_vismono.c", 292);
-    }
 #endif
 }
