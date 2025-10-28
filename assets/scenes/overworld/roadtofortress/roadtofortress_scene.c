@@ -178,7 +178,7 @@ Vec3s roadtofortressCsCameraPoints_000528[] = {
 };
 
 BgCamInfo roadtofortressCollisionHeader_002824CamDataList[] = {
-    { 0x0001, 0, NULL },
+    { CAM_SET_NORMAL0, 0, NULL },
 };
 
 SurfaceType roadtofortressCollisionHeader_002824SurfaceType[] = {
