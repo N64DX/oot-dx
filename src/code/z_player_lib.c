@@ -489,8 +489,8 @@ Gfx* sPlayerRightHandHookshotDLs[MAX_LINK_MODELS] = {
 
 Gfx* sPlayerRightHandHookshotFirstPersonDLs[MAX_LINK_MODELS] = {
     gLinkAdultRightHandHoldingHookshotFarDL,
-    gLinkChildRightHandHoldingHookshotNearDL,
-    gLinkYoungRightHandHoldingHookshotNearDL,
+    gLinkChildRightHandHoldingHookshotFarDL,
+    gLinkYoungRightHandHoldingHookshotFarDL,
 };
 
 Gfx* sPlayerLeftHandHammerDLs[MAX_LINK_MODELS] = {
