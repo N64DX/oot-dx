@@ -108,8 +108,8 @@ EnvLightSettings roadtolake_sceneLightSettings0x0000E0[] = {
 };
 
 BgCamInfo roadtolake_sceneCollisionHeader_0026F8CamDataList[] = {
-    { 0x0001, 0, NULL },
-    { 0x0000, 0, NULL },
+    { CAM_SET_NORMAL0, 0, NULL },
+    { CAM_SET_NONE,    0, NULL },
 };
 
 SurfaceType roadtolake_sceneCollisionHeader_0026F8SurfaceType[] = {

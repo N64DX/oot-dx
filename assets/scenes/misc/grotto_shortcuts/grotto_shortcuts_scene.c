@@ -99,9 +99,9 @@ u8 grotto_shortcuts_scene_possiblePadding_000938[] = {
 };
 
 BgCamInfo grotto_shortcuts_sceneCollisionHeader_00AC9CCamDataList[] = {
-    { 0x0011, 0, NULL },
-    { 0x0032, 0, NULL },
-    { 0x0043, 0, NULL },
+    { CAM_SET_DUNGEON0, 0, NULL },
+    { CAM_SET_DUNGEON2, 0, NULL },
+    { CAM_SET_NORMAL0,  0, NULL },
 };
 
 SurfaceType grotto_shortcuts_sceneCollisionHeader_00AC9CSurfaceType[] = {
