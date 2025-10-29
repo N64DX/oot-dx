@@ -421,8 +421,10 @@ void Play_Init(GameState* thisx) {
             gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_48) ? 3 : 2;
     }
 
+    Play_SetDungeonRushEntry(this);
     Play_SpawnScene(
         this, gEntranceTable[gSaveContext.save.entranceIndex + SCENE_LAYER_GOTO(this, gSaveContext.sceneLayer)].sceneId, gEntranceTable[gSaveContext.save.entranceIndex + SCENE_LAYER_GOTO(this, gSaveContext.sceneLayer)].spawn);
+    Play_SetDungeonRushProgress(this);
 
     PRINTF("\nSCENE_NO=%d COUNTER=%d\n", ((void)0, gSaveContext.save.entranceIndex), gSaveContext.sceneLayer);
 
@@ -2075,5 +2077,269 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos) {
         return true;
     } else {
         return false;
+    }
+}
+
+void Play_SetDungeonRushEntry(PlayState* play) {
+    if (gSaveContext.gameMode != GAMEMODE_END_CREDITS) {
+        if (IS_DUNGEON_RUSH) {
+            switch (gEntranceTable[gSaveContext.save.entranceIndex].sceneId) {
+                case SCENE_LINKS_HOUSE:
+                case SCENE_DEKU_TREE:
+                case SCENE_DEKU_TREE_BOSS:
+                case SCENE_DODONGOS_CAVERN:
+                case SCENE_DODONGOS_CAVERN_BOSS:
+                case SCENE_JABU_JABU:
+                case SCENE_JABU_JABU_BOSS:
+                    gSaveContext.save.linkAge = LINK_AGE_CHILD;
+                    break;
+
+                case SCENE_TEMPLE_OF_TIME:
+                case SCENE_FOREST_TEMPLE:
+                case SCENE_FOREST_TEMPLE_BOSS:
+                case SCENE_FIRE_TEMPLE:
+                case SCENE_FIRE_TEMPLE_BOSS:
+                case SCENE_WATER_TEMPLE:
+                case SCENE_WATER_TEMPLE_BOSS:
+                case SCENE_SHADOW_TEMPLE:
+                case SCENE_SHADOW_TEMPLE_BOSS:
+                case SCENE_SPIRIT_TEMPLE:
+                case SCENE_SPIRIT_TEMPLE_BOSS:
+                case SCENE_INSIDE_GANONS_CASTLE:
+                case SCENE_GANONS_TOWER:
+                case SCENE_GANONDORF_BOSS:
+                case SCENE_GANON_BOSS:
+                case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+                case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+                case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
+                    gSaveContext.save.linkAge = LINK_AGE_ADULT;
+                    break;
+
+                case SCENE_HYRULE_FIELD:
+                    if (gSaveContext.sceneLayer == SCENE_LAYER_CUTSCENE_FIRST + 7)
+                        break;
+                    else {
+                        gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
+                        gSaveContext.save.linkAge = LINK_AGE_CHILD;
+                    }
+
+                default:
+                    gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
+                    gSaveContext.save.linkAge = LINK_AGE_CHILD;
+            }
+        } else if (IS_BOSS_RUSH) {
+            switch (gEntranceTable[gSaveContext.save.entranceIndex].sceneId) {
+                case SCENE_LINKS_HOUSE:
+                case SCENE_DEKU_TREE_BOSS:
+                case SCENE_DODONGOS_CAVERN_BOSS:
+                case SCENE_JABU_JABU_BOSS:
+                    gSaveContext.save.linkAge = LINK_AGE_CHILD;
+                    break;
+
+                case SCENE_TEMPLE_OF_TIME:
+                case SCENE_FOREST_TEMPLE_BOSS:
+                case SCENE_FIRE_TEMPLE_BOSS:
+                case SCENE_WATER_TEMPLE_BOSS:
+                case SCENE_SHADOW_TEMPLE_BOSS:
+                case SCENE_SPIRIT_TEMPLE_BOSS:
+                case SCENE_GANONDORF_BOSS:
+                case SCENE_GANON_BOSS:
+                case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+                case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+                case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
+                    gSaveContext.save.linkAge = LINK_AGE_ADULT;
+                    break;
+
+                case SCENE_HYRULE_FIELD:
+                    if (gSaveContext.sceneLayer == SCENE_LAYER_CUTSCENE_FIRST + 7)
+                        break;
+                    else {
+                        gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
+                        gSaveContext.save.linkAge = LINK_AGE_CHILD;
+                    }
+
+                default:
+                    gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
+                    gSaveContext.save.linkAge = LINK_AGE_CHILD;
+            }
+        }
+    }
+}
+
+void Play_SetDungeonRushProgress(PlayState* play) {
+    if (IS_BOSS_RUSH) {
+        switch (play->sceneId) {
+            case SCENE_SPIRIT_TEMPLE_BOSS:
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR);
+                break;
+            
+            case SCENE_SHADOW_TEMPLE_BOSS:
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER);
+                break;
+            
+            case SCENE_WATER_TEMPLE_BOSS:
+                if (gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] != ITEM_LONGSHOT)
+                    gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] = ITEM_HOOKSHOT;
+                break;
+            
+            case SCENE_FIRE_TEMPLE_BOSS:
+                gSaveContext.save.info.inventory.items[SLOT_HAMMER] = ITEM_HAMMER;
+                break;
+            
+            case SCENE_FOREST_TEMPLE_BOSS:
+                gSaveContext.save.info.inventory.items[SLOT_BOW] = ITEM_BOW;
+                if (CUR_UPG_VALUE(UPG_QUIVER) < 1)
+                    Inventory_ChangeUpgrade(UPG_QUIVER, 1);
+                break;
+            
+            case SCENE_JABU_JABU_BOSS:
+                gSaveContext.save.info.inventory.items[SLOT_BOOMERANG] = ITEM_BOOMERANG;
+                break;
+            
+            case SCENE_DODONGOS_CAVERN_BOSS:
+                gSaveContext.save.info.inventory.items[SLOT_BOMB] = ITEM_BOMB;
+                if (CUR_UPG_VALUE(UPG_BOMB_BAG) < 1)
+                    Inventory_ChangeUpgrade(UPG_BOMB_BAG, 1);
+                break;
+            
+            case SCENE_DEKU_TREE_BOSS:
+                gSaveContext.save.info.inventory.items[SLOT_SLINGSHOT] = ITEM_SLINGSHOT;
+                if (CUR_UPG_VALUE(UPG_BULLET_BAG) < 1)
+                    Inventory_ChangeUpgrade(UPG_BULLET_BAG, 1);
+                break;
+        }
+    }
+    
+    if (IS_DUNGEON_RUSH || IS_BOSS_RUSH) {
+        switch (play->sceneId) {
+            case SCENE_INSIDE_GANONS_CASTLE:
+            case SCENE_GANONDORF_BOSS:
+            case SCENE_GANON_BOSS:
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_SPIRIT - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR);
+                gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
+                if (CUR_UPG_VALUE(UPG_STRENGTH) < 2)
+                    Inventory_ChangeUpgrade(UPG_STRENGTH, 2);
+                FALLTHROUGH;
+
+            case SCENE_SPIRIT_TEMPLE:
+            case SCENE_SPIRIT_TEMPLE_BOSS:
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_SHADOW - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER);
+                gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE] = ITEM_ARROW_ICE;
+                gSaveContext.save.info.inventory.items[SLOT_NAYRUS_LOVE] = ITEM_NAYRUS_LOVE;
+                FALLTHROUGH;
+
+            case SCENE_SHADOW_TEMPLE:
+            case SCENE_SHADOW_TEMPLE_BOSS:
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_WATER - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
+                gSaveContext.save.info.inventory.items[SLOT_LENS_OF_TRUTH] = ITEM_LENS_OF_TRUTH;
+                if (gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] != ITEM_LONGSHOT)
+                    gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] = ITEM_HOOKSHOT;
+                FALLTHROUGH;
+
+            case SCENE_WATER_TEMPLE:
+            case SCENE_WATER_TEMPLE_BOSS:
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_FIRE - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON);
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON);
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA);
+                gSaveContext.save.info.playerData.bgsFlag = true;
+                gSaveContext.save.info.playerData.swordHealth = 8;
+                gSaveContext.save.info.inventory.items[SLOT_HAMMER] = ITEM_HAMMER;
+                if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_4] == ITEM_NONE)
+                    gSaveContext.save.info.inventory.items[SLOT_BOTTLE_4] = ITEM_BOTTLE_EMPTY;
+                FALLTHROUGH;
+
+            case SCENE_FIRE_TEMPLE:
+            case SCENE_FIRE_TEMPLE_BOSS:
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_FOREST - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_STORMS - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON);
+                gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
+                gSaveContext.save.info.inventory.items[SLOT_BOW] = ITEM_BOW;
+                if (gSaveContext.save.info.playerData.magicLevel < 2) {
+                    gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = true;
+                    gSaveContext.magicFillTarget = gSaveContext.save.info.playerData.magic = 0x60;
+                    gSaveContext.magicCapacity = gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = 0;
+                }
+                if (CUR_UPG_VALUE(UPG_QUIVER) < 1)
+                    Inventory_ChangeUpgrade(UPG_QUIVER, 1);
+                if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] == ITEM_NONE)
+                    gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] = ITEM_BOTTLE_EMPTY;
+                FALLTHROUGH;
+
+            case SCENE_FOREST_TEMPLE:
+            case SCENE_FOREST_TEMPLE_BOSS:
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_LIGHT - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
+                if (gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] != ITEM_HOOKSHOT && gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] != ITEM_LONGSHOT)
+                    gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] = ITEM_HOOKSHOT;
+                if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_2] == ITEM_NONE)
+                    gSaveContext.save.info.inventory.items[SLOT_BOTTLE_2] = ITEM_BOTTLE_EMPTY;
+                FALLTHROUGH;
+
+            case SCENE_TEMPLE_OF_TIME:
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_ZORA_SAPPHIRE - ITEM_KOKIRI_EMERALD + QUEST_KOKIRI_EMERALD];
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_TIME - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
+                gSaveContext.save.info.inventory.items[SLOT_BOOMERANG] = ITEM_BOOMERANG;
+                if (gSaveContext.save.info.inventory.items[SLOT_OCARINA] != ITEM_OCARINA_OF_TIME)
+                    gSaveContext.save.info.inventory.items[SLOT_OCARINA] = ITEM_OCARINA_OF_TIME;
+                if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER);
+                    if (LINK_IS_ADULT) {
+                        Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_MASTER);
+                        Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_HYLIAN);
+                    }
+                }
+                FALLTHROUGH;
+
+            case SCENE_JABU_JABU:
+            case SCENE_JABU_JABU_BOSS:
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_GORON_RUBY - ITEM_KOKIRI_EMERALD + QUEST_KOKIRI_EMERALD];
+                gSaveContext.save.info.inventory.items[SLOT_BOMB] = ITEM_BOMB;
+                gSaveContext.save.info.inventory.items[SLOT_DINS_FIRE] = ITEM_DINS_FIRE;
+                gSaveContext.save.info.inventory.items[SLOT_FARORES_WIND] = ITEM_FARORES_WIND;
+                if (gSaveContext.save.info.playerData.magicLevel < 1) {
+                    gSaveContext.save.info.playerData.isMagicAcquired = true;
+                    gSaveContext.magicFillTarget = gSaveContext.save.info.playerData.magic = 0x30;
+                    gSaveContext.magicCapacity = gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = 0;
+                }
+                if (CUR_UPG_VALUE(UPG_BOMB_BAG) < 1)
+                    Inventory_ChangeUpgrade(UPG_BOMB_BAG, 1);
+                if (CUR_UPG_VALUE(UPG_SCALE) < 1)
+                    Inventory_ChangeUpgrade(UPG_SCALE, 1);
+                FALLTHROUGH;
+
+            case SCENE_DODONGOS_CAVERN:
+            case SCENE_DODONGOS_CAVERN_BOSS:
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_KOKIRI_EMERALD - ITEM_KOKIRI_EMERALD + QUEST_KOKIRI_EMERALD];
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_LULLABY - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_EPONA - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_SARIA - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_SUN - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN);
+                gSaveContext.save.info.inventory.items[SLOT_SLINGSHOT] = ITEM_SLINGSHOT;
+                if (CUR_UPG_VALUE(UPG_BULLET_BAG) < 1)
+                    Inventory_ChangeUpgrade(UPG_BULLET_BAG, 1);
+                if (CUR_UPG_VALUE(UPG_STRENGTH) < 1)
+                    Inventory_ChangeUpgrade(UPG_STRENGTH, 1);
+                if (gSaveContext.save.info.inventory.items[SLOT_OCARINA] != ITEM_OCARINA_FAIRY && gSaveContext.save.info.inventory.items[SLOT_OCARINA] != ITEM_OCARINA_OF_TIME)
+                    gSaveContext.save.info.inventory.items[SLOT_OCARINA] = ITEM_OCARINA_FAIRY;
+                if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_1] == ITEM_NONE)
+                    gSaveContext.save.info.inventory.items[SLOT_BOTTLE_1] = ITEM_BOTTLE_EMPTY;
+                FALLTHROUGH;
+
+            case SCENE_DEKU_TREE:
+            case SCENE_DEKU_TREE_BOSS:
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU);
+                if (!CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI);
+                    if (LINK_IS_CHILD) {
+                        Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_MASTER);
+                        Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_DEKU);
+                    }
+                }
+                break;
+        }
     }
 }
