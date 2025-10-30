@@ -32,7 +32,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Nicko (Airi):** DK64 Expansion Pak warning display
 - **Nokaubure:** autosave concept
 - **OoT Randomizer:** Key chest textures
-- **Skawo:** Font preloading, Kakariko Gate Guard fix, Stalfos lag fix
+- **Skawo:** Font preloading, Fixes: Kakariko Gate Guard, Stalfos lag, Ingo text
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
 - **Syeo & Trueffel:** Molmauk actor
