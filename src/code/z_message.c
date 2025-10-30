@@ -2879,13 +2879,6 @@ void Message_OpenText(PlayState* play, u16 textId) {
     }
     msgCtx->textId = textId;
 
-    if (textId == 0x2030) { // Talking to Ingo as adult in Lon Lon Ranch for the first time before freeing Epona
-        PRINTF_COLOR_YELLOW();
-        PRINTF("？？？？？？？？？？？？？？？？  z_message.c  ？？？？？？？？？？？？？？？？？？\n");
-        PRINTF_RST();
-        gSaveContext.eventInf[0] = gSaveContext.eventInf[1] = gSaveContext.eventInf[2] = gSaveContext.eventInf[3] = 0;
-    }
-
     if (sTextIsCredits) {
         Message_FindCreditsMessage(play, textId);
         msgCtx->msgLength = font->msgLength;
