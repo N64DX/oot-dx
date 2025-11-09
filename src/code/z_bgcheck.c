@@ -1584,14 +1584,14 @@ void BgCheck_Allocate(CollisionContext* colCtx, PlayState* play, CollisionHeader
         colCtx->subdivAmount.y = 2;
         colCtx->subdivAmount.z = 2;
     } else if (BgCheck_IsSpotScene(play) == true) {
-        colCtx->memSize = 0xF000;
+        colCtx->memSize = 0x20000;
         PRINTF(T("/* BGCheck Spot用サイズ %dbyte */\n", "/* BGCheck Spot Size %dbyte */\n"), 0xF000);
         colCtx->dyna.polyNodesMax = 1000;
         colCtx->dyna.polyListMax = 512;
         colCtx->dyna.vtxListMax = 512;
-        colCtx->subdivAmount.x = 16;
+        colCtx->subdivAmount.x = 25;
         colCtx->subdivAmount.y = 4;
-        colCtx->subdivAmount.z = 16;
+        colCtx->subdivAmount.z = 25;
     } else {
         if (BgCheck_TryGetCustomMemsize(play->sceneId, &customMemSize)) {
             colCtx->memSize = customMemSize;
@@ -1614,9 +1614,10 @@ void BgCheck_Allocate(CollisionContext* colCtx, PlayState* play, CollisionHeader
             }
         }
         if (!useCustomSubdivisions) {
-            colCtx->subdivAmount.x = 16;
+            colCtx->memSize = 0x20000;
+            colCtx->subdivAmount.x = 25;
             colCtx->subdivAmount.y = 4;
-            colCtx->subdivAmount.z = 16;
+            colCtx->subdivAmount.z = 25;
         }
     }
     colCtx->lookupTbl = THA_AllocTailAlign(&play->state.tha,
