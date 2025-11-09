@@ -800,7 +800,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 
 #define GET_ITEMGETINF(flag) (gSaveContext.save.info.itemGetInf[ITEMGETINF_INDEX(flag)] & ITEMGETINF_MASK(flag))
 #define SET_ITEMGETINF(flag) (gSaveContext.save.info.itemGetInf[ITEMGETINF_INDEX(flag)] |= ITEMGETINF_MASK(flag))
-#define CLEAR_ITEMGETINF(flag) (gSaveContext.save.info.infTable[ITEMGETINF_INDEX(flag)] &= ~ITEMGETINF_MASK(flag))
+#define CLEAR_ITEMGETINF(flag) (gSaveContext.save.info.itemGetInf[ITEMGETINF_INDEX(flag)] &= ~ITEMGETINF_MASK(flag))
 
 #define ITEMGETINF_BAZAAR_WALLET 0x01
 #define ITEMGETINF_TALON_BOTTLE 0x02
