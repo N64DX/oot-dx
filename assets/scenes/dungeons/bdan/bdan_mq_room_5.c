@@ -1,10 +1,10 @@
 #include "assets/scenes/dungeons/bdan/bdan_scene.h"
 #include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_bdan_room5[QUEST_MAX];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_bdan_room5),
 };
 
 #include "assets/scenes/dungeons/bdan/bdan_room_5.c"
@@ -41,6 +41,6 @@ static SceneCmd cmq_header[] = {
 #include "assets/scenes/dungeons/bdan/cmq/headers/room5.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_bdan_room5[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };

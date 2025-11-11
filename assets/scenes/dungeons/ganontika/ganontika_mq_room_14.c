@@ -1,10 +1,10 @@
 #include "assets/scenes/dungeons/ganontika/ganontika_scene.h"
 #include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_ganontika_room14[QUEST_MAX];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_ganontika_room14),
 };
 
 #include "assets/scenes/dungeons/ganontika/ganontika_room_14.c"
@@ -41,6 +41,6 @@ static SceneCmd cmq_header[] = {
 #include "assets/scenes/dungeons/ganontika/cmq/headers/room14.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_ganontika_room14[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };

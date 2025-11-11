@@ -1,10 +1,10 @@
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_scene.h"
 #include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_jyasinzou_room4[QUEST_MAX];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_jyasinzou_room4),
 };
 
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_4.c"
@@ -37,6 +37,6 @@ static SceneCmd cmq_header[] = {
 #include "assets/scenes/dungeons/jyasinzou/mq/headers/room4.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_jyasinzou_room4[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };
