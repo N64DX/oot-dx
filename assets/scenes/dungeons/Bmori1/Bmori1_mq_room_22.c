@@ -1,10 +1,10 @@
 #include "assets/scenes/dungeons/Bmori1/Bmori1_scene.h"
 #include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_Bmori1_room22[QUEST_MAX];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_Bmori1_room22),
 };
 
 #include "assets/scenes/dungeons/Bmori1/Bmori1_room_22.c"
@@ -29,6 +29,6 @@ static SceneCmd cmq_header[] = {
 #include "assets/scenes/dungeons/Bmori1/mq/headers/room22.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_Bmori1_room22[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };

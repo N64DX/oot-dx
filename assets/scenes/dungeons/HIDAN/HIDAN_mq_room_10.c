@@ -1,10 +1,10 @@
 #include "assets/scenes/dungeons/HIDAN/HIDAN_scene.h"
 #include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_HIDAN_room10[QUEST_MAX];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_HIDAN_room10),
 };
 
 #include "assets/scenes/dungeons/HIDAN/HIDAN_room_10.c"
@@ -41,6 +41,6 @@ static SceneCmd cmq_header[] = {
 #include "assets/scenes/dungeons/HIDAN/cmq/headers/room10.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_HIDAN_room10[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };
