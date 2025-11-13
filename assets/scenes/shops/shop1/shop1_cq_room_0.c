@@ -1,7 +1,6 @@
 #include "assets/scenes/shops/shop1/shop1_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_shop1_room0[QUEST_MAX];
+extern SceneCmd* questHeaders_shop1_room0[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_shop1_room0),

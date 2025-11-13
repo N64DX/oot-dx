@@ -1,8 +1,7 @@
 #include "assets/scenes/overworld/spot07/spot07_scene.h"
-#include "save.h"
 #include "versions.h"
 
-extern SceneCmd* questHeaders_spot07_scene[QUEST_MAX];
+extern SceneCmd* questHeaders_spot07_scene[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_spot07_scene),

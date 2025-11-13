@@ -1,7 +1,6 @@
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_jyasinzou_room26[QUEST_MAX];
+extern SceneCmd* questHeaders_jyasinzou_room26[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_jyasinzou_room26),

@@ -1,7 +1,6 @@
 #include "assets/scenes/dungeons/Bmori1/Bmori1_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_Bmori1_scene[QUEST_MAX];
+extern SceneCmd* questHeaders_Bmori1_scene[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_Bmori1_scene),

@@ -1,7 +1,6 @@
 #include "assets/scenes/dungeons/HIDAN/HIDAN_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_HIDAN_scene[QUEST_MAX];
+extern SceneCmd* questHeaders_HIDAN_scene[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_HIDAN_scene),

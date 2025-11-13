@@ -1,7 +1,6 @@
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_ice_doukutu_room3[QUEST_MAX];
+extern SceneCmd* questHeaders_ice_doukutu_room3[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_ice_doukutu_room3),

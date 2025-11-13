@@ -1,7 +1,6 @@
 #include "assets/scenes/dungeons/ddan/ddan_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_ddan_scene[QUEST_MAX];
+extern SceneCmd* questHeaders_ddan_scene[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_ddan_scene),
