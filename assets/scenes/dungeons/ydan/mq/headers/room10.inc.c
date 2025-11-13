@@ -3,6 +3,6 @@
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&ydan_room_10_03000130_RoomShapeCullable),
-    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(ydan_room_10_03000040_ObjectList), ydan_room_10_03000040_ObjectList),
-    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(ydan_room_10_03000058_ActorEntryList), ydan_room_10_03000058_ActorEntryList),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(mq_objects), mq_objects),
+    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(mq_actors), mq_actors),
     SCENE_CMD_END(),
