@@ -1,7 +1,6 @@
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_HAKAdan_room21[QUEST_MAX];
+extern SceneCmd* questHeaders_HAKAdan_room21[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_HAKAdan_room21),

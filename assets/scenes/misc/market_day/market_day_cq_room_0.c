@@ -1,7 +1,6 @@
 #include "assets/scenes/misc/market_day/market_day_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_market_day_room0[QUEST_MAX];
+extern SceneCmd* questHeaders_market_day_room0[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_market_day_room0),

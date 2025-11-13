@@ -1,7 +1,6 @@
 #include "assets/scenes/indoors/hakasitarelay/hakasitarelay_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_hakasitarelay_room6[QUEST_MAX];
+extern SceneCmd* questHeaders_hakasitarelay_room6[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_hakasitarelay_room6),

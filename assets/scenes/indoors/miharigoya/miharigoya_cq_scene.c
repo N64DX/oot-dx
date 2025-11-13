@@ -1,7 +1,6 @@
 #include "assets/scenes/indoors/miharigoya/miharigoya_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_miharigoya_scene[QUEST_MAX];
+extern SceneCmd* questHeaders_miharigoya_scene[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_miharigoya_scene),

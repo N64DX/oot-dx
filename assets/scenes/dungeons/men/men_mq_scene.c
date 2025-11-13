@@ -1,7 +1,6 @@
 #include "assets/scenes/dungeons/men/men_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_men_scene[QUEST_MAX];
+extern SceneCmd* questHeaders_men_scene[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_men_scene),

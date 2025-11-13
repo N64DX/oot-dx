@@ -2,7 +2,7 @@
 #include "save.h"
 #include "versions.h"
 
-extern SceneCmd* questHeaders_ice_doukutu_scene[QUEST_MAX];
+extern SceneCmd* questHeaders_ice_doukutu_scene[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_ice_doukutu_scene),

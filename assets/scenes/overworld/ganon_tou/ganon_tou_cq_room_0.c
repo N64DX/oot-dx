@@ -1,7 +1,6 @@
 #include "assets/scenes/overworld/ganon_tou/ganon_tou_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_ganon_tou_room0[QUEST_MAX];
+extern SceneCmd* questHeaders_ganon_tou_room0[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_ganon_tou_room0),

@@ -1,7 +1,6 @@
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_scene.h"
-#include "save.h"
 
-extern SceneCmd* questHeaders_MIZUsin_room6[QUEST_MAX];
+extern SceneCmd* questHeaders_MIZUsin_room6[];
 
 static SceneCmd start[] = {
     SCENE_CMD_QUEST_HEADER_LIST(questHeaders_MIZUsin_room6),
