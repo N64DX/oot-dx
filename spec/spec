@@ -3810,24 +3810,6 @@ beginseg
 endseg
 
 beginseg
-    name "g_pn_58"
-    compress
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_58.o"
-endseg
-
-beginseg
-    name "g_pn_59"
-    compress
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_59.o"
-endseg
-
-beginseg
-    name "g_pn_60"
-    compress
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_60.o"
-endseg
-
-beginseg
     name "z_select_static"
     compress
     include "$(BUILD_DIR)/assets/misc/z_select_static/z_select_static.o"
@@ -3860,6 +3842,7 @@ beginseg
     name "parameter_static"
     compress
     include "$(BUILD_DIR)/assets/textures/parameter_static/parameter_static.o"
+    include "$(BUILD_DIR)/assets/textures/parameter_static/parameter_static_all.o"
     number 2
 endseg
 

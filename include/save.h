@@ -475,6 +475,8 @@ typedef enum LinkAge {
 #define QUEST_MAX   CHILD_MASTER_QUEST
 #define QUEST_MODE (gSaveContext.save.info.questMode & 15)
 
+#define USE_TITLE_CARDS     (((TITLE_CARDS || (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST)) && !PLATFORM_IQUE))
+
 #define IS_VANILLA_QUEST (R_QUEST_MODE % 3 == 0)
 #define IS_MASTER_QUEST  (R_QUEST_MODE % 3 == 1)
 #define IS_URA_QUEST     (R_QUEST_MODE % 3 == 2)
@@ -505,6 +507,7 @@ typedef enum LinkAge {
 #define REFLECT_CHEST_CONTENTS      ((gSaveContext.options[0] >> 18) & 1)  // Bits: 18
 #define EASIER_FISHING              ((gSaveContext.options[0] >> 19) & 1)  // Bits: 19
 #define USE_YOUNG_LINK              ((gSaveContext.options[0] >> 20) & 1)  // Bits: 20
+#define TITLE_CARDS                 ((gSaveContext.options[0] >> 23) & 1)  // Bits: 23
 #define HEALTH_RECOVERY             ((gSaveContext.options[1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gSaveContext.options[1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gSaveContext.options[1] >> 5)  & 7)  // Bits: 5-7

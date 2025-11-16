@@ -26,6 +26,7 @@
 #include "save.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "assets/textures/parameter_static/parameter_static_all.h"
 
 #pragma increment_block_number "gc-eu:0 gc-eu-mq:0 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ntsc-1.0:32" \
                                "ntsc-1.1:32 ntsc-1.2:32 pal-1.0:0 pal-1.1:0"
@@ -365,6 +366,110 @@ s16 sOcarinaButtonCPrimG;
 s16 sOcarinaButtonCEnvR;
 s16 sOcarinaButtonCEnvB;
 s16 sOcarinaButtonCEnvG;
+
+void Message_DrawText(PlayState* play, Gfx** gfxP);
+void Message_DrawTextWide(PlayState* play, Gfx** gfxP);
+void Message_OpenText(PlayState* play, u16 textId);
+void Message_Decode(PlayState* play);
+
+static u16 titleCardPrevHudVisibility = HUD_VISIBILITY_ALL;
+
+void Message_SetTitleCardInfo(struct PlayState* play, TitleCardInfo* info) {
+    if (info == NULL)
+        PRINTF("TitleCardInfo is NULL!\n");
+    play->msgCtx.titleCardInfo = info;
+}
+
+void Message_DrawSceneTitleCard(PlayState* play, Gfx** gfxP) {
+    MessageContext* msgCtx = &play->msgCtx;
+
+    if (msgCtx->titleCardInfo != NULL) {
+        Color_RGBA8* rgba = &msgCtx->titleCardInfo->rgba;
+        Gfx* gfx = *gfxP;
+        Gfx_SetupDL_39Ptr(&gfx);
+
+        gDPSetCombineLERP(gfx++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+        gDPSetTextureFilter(gfx++, G_TF_BILERP);
+        gDPSetAlphaDither(gfx++, G_AD_NOTPATTERN);
+        gDPSetPrimColor(gfx++, 0, 0, 0, 0, 0, msgCtx->textboxColorAlphaCurrent);
+        gDPSetEnvColor(gfx++, rgba->r, rgba->g, rgba->b, rgba->a);
+        gDPLoadTextureBlock(gfx++, gSceneTitleCardGradientTex, G_IM_FMT_I, G_IM_SIZ_8b, 64, 1, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 6, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(gfx++, 0, msgCtx->titleCardInfo->gradientWidth << 2, SCREEN_WIDTH << 2, (msgCtx->titleCardInfo->gradientWidth + msgCtx->titleCardInfo->gradientHeight) << 2, G_TX_RENDERTILE, 0, 0, 200, 1 << 10);
+        gDPPipeSync(gfx++);
+        gDPSetCombineLERP(gfx++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
+        gDPSetEnvColor(gfx++, 0, 0, 0, 255);
+
+#if OOT_NTSC 
+        if (gSaveContext.language == LANGUAGE_JPN)
+            Message_DrawTextWide(play, &gfx);
+        else
+#endif
+            Message_DrawText(play, &gfx);
+        *gfxP = gfx++;
+    }
+}
+
+void Message_DisplaySceneTitleCard(PlayState* play) {
+    MessageContext* msgCtx = &play->msgCtx;
+    TitleCardInfo* info = msgCtx->titleCardInfo;
+
+    if (info != NULL) {
+        msgCtx->msgLength = 0;
+        Message_OpenText(play, info->textId);
+        Message_Decode(play);
+        msgCtx->msgMode = MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND;
+        msgCtx->textDelayTimer = info->textDelayTimer;
+        msgCtx->textboxColorAlphaCurrent = msgCtx->textboxColorAlphaTarget = msgCtx->textColorAlpha = 0;
+        msgCtx->stateTimer = info->duration;
+    }
+}
+
+s32 Message_TitleCardClear(PlayState* play) {
+    play->msgCtx.stateTimer = 0;
+    if (play->msgCtx.msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND && play->msgCtx.msgMode < MSGMODE_SCENE_TITLE_CARD_FADE_OUT_TEXT)
+        play->msgCtx.msgMode = MSGMODE_SCENE_TITLE_CARD_FADE_OUT_TEXT;
+    return true;
+}
+
+bool Message_HasSceneTitleCardMessage(PlayState* play, u16 textId) {
+    MessageTableEntry* messageTableEntry;
+    const char** languageSegmentTable;
+
+#if OOT_NTSC
+    if (gSaveContext.language == LANGUAGE_JPN || gSaveContext.language == LANGUAGE_ENG) {
+        messageTableEntry = (gSaveContext.language == LANGUAGE_JPN) ? sJpnMessageEntryTablePtr : sNesMessageEntryTablePtr;
+#else
+    if (gSaveContext.language == LANGUAGE_ENG) {
+        messageTableEntry = sNesMessageEntryTablePtr;
+#endif
+
+        while (messageTableEntry->textId < 0xA200) {
+            if (messageTableEntry->textId == textId)
+                return true;
+            messageTableEntry++;
+        }
+    }
+#if OOT_NTSC_N64 || OOT_PAL
+    else {
+        messageTableEntry = sNesMessageEntryTablePtr;
+
+        if (gSaveContext.language == LANGUAGE_GER)
+            languageSegmentTable = sGerMessageEntryTablePtr;
+        else if (gSaveContext.language == LANGUAGE_FRA)
+            languageSegmentTable = sFraMessageEntryTablePtr;
+        else return false;
+
+        while (messageTableEntry->textId < 0xA200) {
+            if (messageTableEntry->textId == textId)
+                return true;
+            messageTableEntry++;
+            languageSegmentTable++;
+        }
+    }
+#endif
+
+    return false;
+}
 
 void Message_ResetOcarinaNoteState(void) {
     R_OCARINA_BUTTONS_YPOS(0) = 189;
@@ -1261,8 +1366,13 @@ void Message_DrawTextWide(PlayState* play, Gfx** gfxP) {
     u16 charTexIdx;
     Gfx* gfx = *gfxP;
 
-    msgCtx->textPosX = R_TEXT_INIT_XPOS;
-    msgCtx->textPosY = R_TEXT_INIT_YPOS;
+    if (msgCtx->msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND && msgCtx->msgMode <= MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND && msgCtx->titleCardInfo != NULL) {
+        msgCtx->textPosX = msgCtx->titleCardInfo->textPos.x;
+        msgCtx->textPosY = msgCtx->titleCardInfo->textPos.y;
+    } else {
+        msgCtx->textPosX = R_TEXT_INIT_XPOS;
+        msgCtx->textPosY = R_TEXT_INIT_YPOS;
+    }
 
     if (msgCtx->textBoxType == TEXTBOX_TYPE_NONE_NO_SHADOW) {
         msgCtx->textColorR = msgCtx->textColorG = msgCtx->textColorB = 0;
@@ -1583,11 +1693,14 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
     Font* font = &play->msgCtx.font;
     Gfx* gfx = *gfxP;
 
-    msgCtx->textPosX = R_TEXT_INIT_XPOS;
-    if (!sTextIsCredits) {
-        msgCtx->textPosY = R_TEXT_INIT_YPOS;
+    if (msgCtx->msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND && msgCtx->msgMode <= MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND && msgCtx->titleCardInfo != NULL) {
+        msgCtx->textPosX = msgCtx->titleCardInfo->textPos.x;
+        msgCtx->textPosY = msgCtx->titleCardInfo->textPos.y;
     } else {
-        msgCtx->textPosY = YREG(1);
+        msgCtx->textPosX = R_TEXT_INIT_XPOS;
+        if (!sTextIsCredits)
+            msgCtx->textPosY = R_TEXT_INIT_YPOS;
+        else msgCtx->textPosY = YREG(1);
     }
 
     if (msgCtx->textBoxType == TEXTBOX_TYPE_NONE_NO_SHADOW) {
@@ -4286,6 +4399,13 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
             case MSGMODE_TEXT_CLOSING:
             case MSGMODE_PAUSED:
                 break;
+            case MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND:
+            case MSGMODE_SCENE_TITLE_CARD_FADE_IN_TEXT:
+            case MSGMODE_SCENE_TITLE_CARD_DISPLAYING:
+            case MSGMODE_SCENE_TITLE_CARD_FADE_OUT_TEXT:
+            case MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND:
+                Message_DrawSceneTitleCard(play, &gfx);
+                break;
             case MSGMODE_UNK_20:
             default:
                 msgCtx->msgMode = MSGMODE_TEXT_DISPLAYING;
@@ -4771,6 +4891,54 @@ void Message_Update(PlayState* play) {
                 PRINTF("OCARINA_MODE=%d   chk_ocarina_no=%d\n", play->msgCtx.ocarinaMode, msgCtx->unk_E3F2);
                 break;
             case MSGMODE_PAUSED:
+                break;
+            case MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND:
+                if (msgCtx->titleCardInfo != NULL) {
+                    msgCtx->textboxColorAlphaCurrent += msgCtx->titleCardInfo->alphaFadeInIncr;
+                    if (msgCtx->textboxColorAlphaCurrent >= 255) {
+                        msgCtx->textboxColorAlphaCurrent = 255;
+                        msgCtx->msgMode = MSGMODE_SCENE_TITLE_CARD_FADE_IN_TEXT;
+                    }
+                    if (gSaveContext.save.cutsceneIndex == 0xFFEF)
+                        Interface_ChangeHudVisibilityMode(msgCtx->titleCardInfo->nextHudVisibility);
+                }
+                break;
+            case MSGMODE_SCENE_TITLE_CARD_FADE_IN_TEXT:
+                if (msgCtx->titleCardInfo != NULL) {
+                    msgCtx->textColorAlpha += msgCtx->titleCardInfo->alphaFadeInIncr;
+                    if (msgCtx->textColorAlpha >= 255) {
+                        msgCtx->textColorAlpha = 255;
+                        msgCtx->msgMode = MSGMODE_SCENE_TITLE_CARD_DISPLAYING;
+                    }
+                }
+                break;
+            case MSGMODE_SCENE_TITLE_CARD_DISPLAYING:
+                msgCtx->stateTimer--;
+                if (msgCtx->stateTimer == 0)
+                    msgCtx->msgMode = MSGMODE_SCENE_TITLE_CARD_FADE_OUT_TEXT;
+                break;
+            case MSGMODE_SCENE_TITLE_CARD_FADE_OUT_TEXT:
+                if (msgCtx->titleCardInfo != NULL) {
+                    msgCtx->textColorAlpha -= msgCtx->titleCardInfo->alphaFadeOutIncr;
+                    if (msgCtx->textColorAlpha <= 0) {
+                        msgCtx->textColorAlpha = 0;
+                        msgCtx->msgMode = MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND;
+                    }
+                }
+                break;
+            case MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND:
+                if (msgCtx->titleCardInfo != NULL) {
+                    msgCtx->textboxColorAlphaCurrent -= msgCtx->titleCardInfo->alphaFadeOutIncr;
+                    if (msgCtx->textboxColorAlphaCurrent <= 0) {
+                        msgCtx->textboxColorAlphaCurrent = 0;
+                        msgCtx->textColorAlpha = 255;
+                        msgCtx->msgLength = 0;
+                        msgCtx->msgMode = MSGMODE_NONE;
+                        msgCtx->stateTimer = 0;
+                        if (gSaveContext.save.cutsceneIndex == 0xFFEF)
+                            Interface_ChangeHudVisibilityMode(titleCardPrevHudVisibility);
+                    }
+                }
                 break;
             default:
                 msgCtx->lastOcarinaButtonIndex = OCARINA_BTN_INVALID;

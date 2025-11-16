@@ -72,6 +72,8 @@ UNK_TYPE D_8012D1F4 = 0; // unused
 
 Input* D_8012D1F8 = NULL;
 
+static TitleCardInfo sDefaultTitleCard = { 0xA000, { 140, 40, 160, 255 }, HUD_VISIBILITY_NOTHING, 30, 0, { 25, 67 }, 60, 28, 40, 30 };
+
 void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn);
 
 // This macro prints the number "1" with a file and line number if R_ENABLE_PLAY_LOGS is enabled.
@@ -297,7 +299,7 @@ void Play_Init(GameState* thisx) {
     s32 playerStartBgCamIndex;
     s32 i;
     u8 baseSceneLayer;
-    s32 pad[2];
+    gSaveContext.showTitleCard = true;
 
     if (gSaveContext.save.entranceIndex == ENTR_LOAD_OPENING) {
         gSaveContext.save.entranceIndex = 0;
@@ -1677,12 +1679,41 @@ void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn) {
     this->sceneId = sceneId;
     this->sceneDrawConfig = scene->drawConfig;
 
-    if (this->sceneId == SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 1)
+    if (sceneId == SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 1)
         R_ENABLE_MIRROR = 2;
-    else if (this->sceneId != SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 2)
+    else if (sceneId != SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 2)
         R_ENABLE_MIRROR = 1;
 
     PRINTF("\nSCENE SIZE %fK\n", (scene->sceneFile.vromEnd - scene->sceneFile.vromStart) / 1024.0f);
+
+    if (USE_TITLE_CARDS) {
+        u16 textId = sceneId;
+        this->msgCtx.titleCardInfo = &sDefaultTitleCard;
+
+        if (sceneId == SCENE_MARKET_ENTRANCE_NIGHT || sceneId == SCENE_MARKET_ENTRANCE_RUINS)
+            textId = SCENE_MARKET_ENTRANCE_DAY;
+        else if (sceneId == SCENE_BACK_ALLEY_NIGHT)
+            textId = SCENE_BACK_ALLEY_DAY;
+        else if (sceneId == SCENE_MARKET_NIGHT || sceneId == SCENE_MARKET_RUINS)
+            textId = SCENE_MARKET_DAY;
+        else if (sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT || sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS)
+            textId = SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY;
+        else if (sceneId == SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS)
+            textId = SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC;
+        else if (sceneId == SCENE_GRAVE_WITH_FAIRYS_FOUNTAIN)
+            textId = SCENE_REDEAD_GRAVE;
+        else if (sceneId == SCENE_CASTLE_COURTYARD_GUARDS_NIGHT)
+            textId = SCENE_CASTLE_COURTYARD_GUARDS_DAY;
+        else if (sceneId == SCENE_GROTTO_SHORTCUTS)
+            textId = SCENE_GROTTOS;
+        else if (gSaveContext.save.entranceIndex == ENTR_WINDMILL_AND_DAMPES_GRAVE_0 || gSaveContext.save.entranceIndex == ENTR_LON_LON_BUILDINGS_1 || (sceneId == SCENE_MARKET_GUARD_HOUSE && gSaveContext.sceneLayer >= 2 && gSaveContext.sceneLayer <= 3) )
+            textId += 0x100;
+        textId += 0xA000;
+
+        if (!Message_HasSceneTitleCardMessage(this, textId))
+            this->msgCtx.titleCardInfo = NULL;
+        else this->msgCtx.titleCardInfo->textId = textId;
+    }
 
 #if PLATFORM_N64
     if ((B_80121220 != NULL) && (scene->unk_12 > 0)) {

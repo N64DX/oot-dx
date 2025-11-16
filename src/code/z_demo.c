@@ -389,8 +389,9 @@ void CutsceneCmd_Misc(PlayState* play, CutsceneContext* csCtx, CsCmdMisc* cmd) {
 
         case CS_MISC_SHOW_TITLE_CARD:
             if (isFirstFrame) {
-                TitleCard_InitPlaceName(play, &play->actorCtx.titleCtx, player->giObjectSegment, 160, 120,
-                                        PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 20);
+                if (USE_TITLE_CARDS)
+                    Message_DisplaySceneTitleCard(play);
+                else TitleCard_InitPlaceName(play, &play->actorCtx.titleCtx, player->giObjectSegment, 160, 120, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 20);
             }
             break;
 
@@ -2413,8 +2414,15 @@ void Cutscene_HandleEntranceTriggers(PlayState* play) {
             Cutscene_SetScript(play, entranceCutscene->script);
             gSaveContext.cutsceneTrigger = 2;
             gSaveContext.showTitleCard = false;
-            break;
+            return;
         }
+    }
+
+    if ( (gSaveContext.respawnFlag == 0 || gSaveContext.respawnFlag == -2) && USE_TITLE_CARDS) {
+        u16 flags = gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + ((void)0, gSaveContext.sceneLayer)].field;
+        if (!IS_CUTSCENE_LAYER && (flags & ENTRANCE_INFO_DISPLAY_TITLE_CARD_FLAG) && gSaveContext.showTitleCard)
+            Message_DisplaySceneTitleCard(play);
+        gSaveContext.showTitleCard = true;
     }
 }
 
