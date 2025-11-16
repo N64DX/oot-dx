@@ -17,11 +17,13 @@
     #include "message_data_7xxx_market_&_masks.h"
     #include "message_data_8xxx_child_quest.h"
     #include "message_data_9xxx_global.h"
+    #include "message_data_Axxx_title_cards.h"
 #else
     #include "text/message_data.h"
     #if !PLATFORM_IQUE
         #include "message_data_8xxx_child_quest.h"
         #include "message_data_9xxx_global.h"
+        #include "message_data_Axxx_title_cards.h"
     #endif
 #endif
 
