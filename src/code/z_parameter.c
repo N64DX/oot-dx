@@ -4848,7 +4848,7 @@ void Interface_Update(PlayState* play) {
     if (Message_GetState(&play->msgCtx) == 0 && (DEBUG_FEATURES || DEBUG_MODE)) {
         Input* debugInput = &play->state.input[0];
 
-        if (CHECK_BTN_ALL(debugInput->press.button, BTN_L | BTN_DLEFT)) {
+        if (CHECK_BTN_ALL(debugInput->cur.button, BTN_L) && CHECK_BTN_ALL(debugInput->press.button, BTN_DLEFT)) {
             gSaveContext.language++;
             if (gSaveContext.language >= LANGUAGE_MAX)
                 gSaveContext.language = 0;
