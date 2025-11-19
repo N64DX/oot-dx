@@ -338,6 +338,7 @@ beginseg
     name "icon_item_dungeon_static"
     compress
     include "$(BUILD_DIR)/assets/textures/icon_item_dungeon_static/icon_item_dungeon_static.o"
+    include "$(BUILD_DIR)/assets/textures/icon_item_dungeon_static/icon_item_dungeon_static_all.o"
     number 12
 endseg
 
@@ -3860,6 +3861,7 @@ beginseg
     name "parameter_static"
     compress
     include "$(BUILD_DIR)/assets/textures/parameter_static/parameter_static.o"
+    include "$(BUILD_DIR)/assets/textures/parameter_static/parameter_static_all.o"
     number 2
 endseg
 

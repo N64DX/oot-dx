@@ -10,6 +10,7 @@
 #include "save.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "assets/textures/parameter_static/parameter_static_all.h"
 
 static s16 sHeartsPrimColors[3][3] = {
     { HEARTS_PRIM_R, HEARTS_PRIM_G, HEARTS_PRIM_B },
@@ -296,6 +297,13 @@ static void* sHeartTextures[] = {
     gHeartThreeQuarterTex, gHeartThreeQuarterTex, gHeartThreeQuarterTex, gHeartThreeQuarterTex,
 };
 
+static void* sMMHeartTextures[] = {
+    gMMHeartFullTex,         gMMHeartQuarterTex,      gMMHeartQuarterTex,      gMMHeartQuarterTex,
+    gMMHeartQuarterTex,      gMMHeartQuarterTex,      gMMHeartHalfTex,         gMMHeartHalfTex,
+    gMMHeartHalfTex,         gMMHeartHalfTex,         gMMHeartHalfTex,         gMMHeartThreeQuarterTex,
+    gMMHeartThreeQuarterTex, gMMHeartThreeQuarterTex, gMMHeartThreeQuarterTex, gMMHeartThreeQuarterTex,
+};
+
 static void* sHeartDDTextures[] = {
     gDefenseHeartFullTex,         gDefenseHeartQuarterTex,      gDefenseHeartQuarterTex,
     gDefenseHeartQuarterTex,      gDefenseHeartQuarterTex,      gDefenseHeartQuarterTex,
@@ -380,9 +388,9 @@ void Health_DrawMeter(PlayState* play) {
             }
 
             if (heartIndex < fullHeartCount) {
-                heartBgImg = gHeartFullTex;
+                heartBgImg = USE_MM_HUD ? gMMHeartFullTex : gHeartFullTex;
             } else if (heartIndex == fullHeartCount) {
-                heartBgImg = sHeartTextures[curHeartFraction];
+                heartBgImg = USE_MM_HUD ? sMMHeartTextures[curHeartFraction] : sHeartTextures[curHeartFraction];
             } else {
                 heartBgImg = gHeartEmptyTex;
             }
