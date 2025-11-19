@@ -44,7 +44,7 @@ ActorEntry roadtolake_sceneStartPositionList0x000088[] = {
 };
 
 TransitionActorEntry roadtolake_sceneTransitionActorList_0000B8[] = {
-    { 0, 255, 0, 255, ACTOR_EN_DOOR, 3032, -72, 3363, 0xA000, 0x0281 },
+    { 0, 255, 0, 255, ACTOR_EN_DOOR, 3032, -72, 3363, 0xA000, 0x02BD },
 };
 
 RomFile roadtolake_sceneRoomList0x0000C8[] = {
