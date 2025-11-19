@@ -9,6 +9,7 @@
 #include "save.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "assets/textures/parameter_static/parameter_static_all.h"
 
 typedef struct PauseMapMarkInfo {
     /* 0x00 */ void* texture;
@@ -27,6 +28,11 @@ typedef struct PauseMapMarkInfo {
 
 static PauseMapMarkInfo sMapMarkInfoTable[] = {
     { gMapChestIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 32, 32, 1 << 10, 1 << 10 },
+    { gMapBossIconTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 32, 32, 1 << 10, 1 << 10 },
+};
+
+static PauseMapMarkInfo sMapMarkMMInfoTable[] = {
+    { gMMMapChestIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 32, 32, 1 << 10, 1 << 10 },
     { gMapBossIconTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 32, 32, 1 << 10, 1 << 10 },
 };
 
@@ -136,7 +142,7 @@ void PauseMapMark_DrawForDungeon(PlayState* play) {
             }
 
             if (display) {
-                markInfo = &sMapMarkInfoTable[mapMarkData->markType];
+                markInfo = USE_MM_HUD ? &sMapMarkMMInfoTable[mapMarkData->markType] : &sMapMarkInfoTable[mapMarkData->markType];
 
                 gDPPipeSync(POLY_OPA_DISP++);
                 gDPLoadTextureBlock_Runtime(POLY_OPA_DISP++, markInfo->texture, markInfo->imageFormat,
