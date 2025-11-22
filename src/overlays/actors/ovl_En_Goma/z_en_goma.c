@@ -50,7 +50,8 @@ void EnGoma_ChasePlayer(EnGoma* this, PlayState* play);
 void EnGoma_Stunned(EnGoma* this, PlayState* play);
 void EnGoma_LookAtPlayer(EnGoma* this, PlayState* play);
 void EnGoma_UpdateHit(EnGoma* this, PlayState* play);
-void EnGoma_Debris(EnGoma* this, PlayState* play);
+void EnGoma_Debris(Actor* thisx, PlayState* play);
+void EnGoma_DrawDebris(Actor* thisx, PlayState* play);
 void EnGoma_SpawnHatchDebris(EnGoma* this, PlayState* play2);
 void EnGoma_BossLimb(EnGoma* this, PlayState* play);
 
@@ -131,6 +132,7 @@ static InitChainEntry sInitChain[] = {
 void EnGoma_Init(Actor* thisx, PlayState* play) {
     EnGoma* this = (EnGoma*)thisx;
     s16 params;
+    u8 i;
 
     this->eggTimer = Rand_ZeroOne() * 200.0f;
     Actor_ProcessInitChain(&this->actor, sInitChain);
@@ -145,19 +147,25 @@ void EnGoma_Init(Actor* thisx, PlayState* play) {
         this->actionTimer = this->actor.params + 150;
         this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
     } else if (params >= 10) { // Debris when hatching
-        this->actor.gravity = -1.3f;
+        EnGoma_DebrisActor* debrisVars;
         this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
-        this->actionTimer = 50;
-        this->gomaType = ENGOMA_HATCH_DEBRIS;
-        this->eggScale = 1.0f;
-        this->actor.velocity.y = Rand_ZeroOne() * 5.0f + 5.0f;
-        this->actionFunc = EnGoma_Debris;
-        this->actor.speed = Rand_ZeroOne() * 2.3f + 1.5f;
-        this->actionTimer = 30;
-        this->actor.scale.x = Rand_ZeroOne() * 0.005f + 0.01f;
-        this->actor.scale.y = Rand_ZeroOne() * 0.005f + 0.01f;
-        this->actor.scale.z = Rand_ZeroOne() * 0.005f + 0.01f;
-        ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 0.0f);
+        this->actor.update = EnGoma_Debris;
+        this->actor.draw = EnGoma_DrawDebris;
+        this->actor.colChkInfo.health = 30;
+        debrisVars = (EnGoma_DebrisActor*)this;
+
+        for (i=0; i<15; i++) {
+            EnGomaDebris* curDebris = &debrisVars->debris[i];
+            curDebris->pos.x = Rand_CenteredFloat(10.0f) + this->actor.world.pos.x;
+            curDebris->pos.y = Rand_CenteredFloat(10.0f) + this->actor.world.pos.y;
+            curDebris->pos.z = Rand_CenteredFloat(10.0f) + this->actor.world.pos.z;
+            curDebris->rotY = Rand_CenteredFloat(0x10000 - 0.01f);
+            curDebris->velocityY = Rand_ZeroOne() * 5.0f + 5.0f;
+            curDebris->scale.x = Rand_ZeroOne() * 0.005f + 0.01f;
+            curDebris->scale.y = Rand_ZeroOne() * 0.005f + 0.01f;
+            curDebris->scale.z = Rand_ZeroOne() * 0.005f + 0.01f;
+            curDebris->speedXZ = Rand_ZeroOne() * 2.3f + 1.5f;
+        }
     } else { // Egg
         ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 40.0f);
         SkelAnime_Init(play, &this->skelanime, &gObjectGolSkel, &gObjectGolStandAnim, this->jointTable,
@@ -437,7 +445,7 @@ void EnGoma_Dead(EnGoma* this, PlayState* play) {
     }
 
     if (this->actionTimer == 0 && Math_SmoothStepToF(&this->actor.scale.y, 0.0f, 0.5f, 0.00225f, 0.00001f) <= 0.001f) {
-        if (this->actor.params < 6) {
+        if (this->actor.params < 6 && this->actor.parent != NULL) {
             BossGoma* parent = (BossGoma*)this->actor.parent;
 
             parent->childrenGohmaState[this->actor.params] = -1;
@@ -682,7 +690,7 @@ void EnGoma_UpdateHit(EnGoma* this, PlayState* play) {
                 }
             } else {
                 // die if still an egg
-                if (this->actor.params <= 5) { //! BossGoma only has 3 children
+                if (this->actor.params <= 5 && this->actor.parent != NULL) { //! BossGoma only has 3 children
                     BossGoma* parent = (BossGoma*)this->actor.parent;
 
                     parent->childrenGohmaState[this->actor.params] = -1;
@@ -849,11 +857,6 @@ void EnGoma_Draw(Actor* thisx, PlayState* play) {
             Matrix_Pop();
             break;
 
-        case ENGOMA_HATCH_DEBRIS:
-            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_goma.c", 2107);
-            gSPDisplayList(POLY_OPA_DISP++, gBrownFragmentDL);
-            break;
-
         case ENGOMA_BOSSLIMB:
             if (this->bossLimbDL != NULL) {
                 gSPSegment(POLY_OPA_DISP++, 0x08, EnGoma_NoBackfaceCullingDlist(play->state.gfxCtx));
@@ -865,11 +868,48 @@ void EnGoma_Draw(Actor* thisx, PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_en_goma.c", 2119);
 }
 
-void EnGoma_Debris(EnGoma* this, PlayState* play) {
-    this->actor.shape.rot.y += 2500;
-    this->actor.shape.rot.x += 3500;
-    if (this->actionTimer == 0) {
+void EnGoma_DrawDebris(Actor* thisx, PlayState* play) {
+    EnGoma_DebrisActor* debrisVars = (EnGoma_DebrisActor*)thisx;
+    EnGomaDebris* curDebris;
+    u8 i;
+    
+    OPEN_DISPS(play->state.gfxCtx, "../z_en_goma.c", __LINE__);
+    for (i=0; i<15; i++) {
+        Gfx_SetupDL_25Opa(play->state.gfxCtx);
+        curDebris = &debrisVars->debris[i];
+        Matrix_Push();
+        Matrix_Translate(curDebris->pos.x,curDebris->pos.y,curDebris->pos.z, MTXMODE_NEW);
+        Matrix_Scale(curDebris->scale.x, curDebris->scale.y, curDebris->scale.z, MTXMODE_APPLY);
+        Matrix_RotateY(BINANG_TO_RAD_ALT(curDebris->rotY), MTXMODE_APPLY);
+        Matrix_RotateX(BINANG_TO_RAD_ALT(curDebris->rotX), MTXMODE_APPLY);
+        MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_goma.c", 2107);
+        gSPDisplayList(POLY_OPA_DISP++, gBrownFragmentDL);
+        Matrix_Pop();
+    }
+    CLOSE_DISPS(play->state.gfxCtx, "../z_en_goma.c", __LINE__);
+}
+
+void EnGoma_Debris(Actor* thisx, PlayState* play) {
+    EnGoma* this = (EnGoma*)thisx;
+    EnGoma_DebrisActor* debrisVars = (EnGoma_DebrisActor*)thisx;
+    u8 i;
+    f32 velocityX, velocityZ, speedRate;
+
+    this->actor.colChkInfo.health--;
+    if (this->actor.colChkInfo.health == 0)
         Actor_Kill(&this->actor);
+
+    for (i=0; i<15; i++) {
+        EnGomaDebris* curDebris = &debrisVars->debris[i];
+        curDebris->velocityY = CLAMP_MIN(curDebris->velocityY-1.3f,-20.0f);
+        velocityX = Math_SinS(curDebris->rotY) * curDebris->speedXZ;
+        velocityZ = Math_CosS(curDebris->rotY) * curDebris->speedXZ;
+        curDebris->rotY += 2500;
+        curDebris->rotX += 3500;
+        speedRate = R_UPDATE_RATE * 0.5f;
+        curDebris->pos.x += (velocityX * speedRate);
+        curDebris->pos.y += (curDebris->velocityY * speedRate);
+        curDebris->pos.z += (velocityZ * speedRate);
     }
 }
 
@@ -883,12 +923,8 @@ void EnGoma_SpawnHatchDebris(EnGoma* this, PlayState* play2) {
         SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 40, NA_SE_EN_GOMA_EGG2);
     }
 
-    for (i = 0; i < 15; i++) {
-        Actor_SpawnAsChild(
-            &play->actorCtx, &this->actor, play, ACTOR_EN_GOMA, Rand_CenteredFloat(10.0f) + this->actor.world.pos.x,
-            Rand_CenteredFloat(10.0f) + this->actor.world.pos.y + 15.0f,
-            Rand_CenteredFloat(10.0f) + this->actor.world.pos.z, 0, Rand_CenteredFloat(0x10000 - 0.01f), 0, i + 10);
-    }
+    Actor_Spawn(&play->actorCtx, play, ACTOR_EN_GOMA, this->actor.world.pos.x, this->actor.world.pos.y + 15.0f, this->actor.world.pos.z, 0, 0, 0, 10);
+    
 }
 
 void EnGoma_BossLimb(EnGoma* this, PlayState* play) {
