@@ -468,3 +468,72 @@ Vtx gLinkChildBunnyHoodVtx[] = {
 Gfx gLinkChildBunnyHoodDL[114] = {
 #include "assets/objects/object_link_child/gLinkChildBunnyHoodDL.inc.c"
 };
+
+// MM Bottle
+
+static u64 gMMBottleContentsTex[] = {
+#include "assets/objects/gameplay_keep/gMMBottleContentsTex.i8.inc.c"
+};
+
+static u64 gMMBottleGlassTex[] = {
+#include "assets/objects/gameplay_keep/gMMBottleGlassTex.i8.inc.c"
+};
+
+static Vtx gMMBottleVtx[] = {
+#include "assets/objects/gameplay_keep/gMMbottleVtx.inc.c"
+};
+
+Gfx gMMBottleContentsDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, ENVIRONMENT, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gMMBottleContentsTex, G_IM_FMT_I, G_IM_SIZ_8b, 16, 32, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(gMMBottleVtx, 13, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(4, 5, 0, 0, 5, 3, 0, 0),
+    gsSP2Triangles(4, 0, 2, 0, 6, 7, 4, 0),
+    gsSP2Triangles(7, 8, 4, 0, 4, 2, 6, 0),
+    gsSP2Triangles(9, 7, 6, 0, 9, 10, 7, 0),
+    gsSP2Triangles(2, 10, 9, 0, 2, 11, 10, 0),
+    gsSP2Triangles(2, 9, 6, 0, 11, 7, 10, 0),
+    gsSP2Triangles(11, 8, 7, 0, 11, 12, 8, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gMMBottleGlassDL[] = {
+    gsSPTexture(0x0BB8, 0x0BB8, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, SHADE, TEXEL0, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, PRIMITIVE, SHADE, COMBINED, 0, 0, 0, COMBINED),
+    gsDPSetPrimColor(0, 0xFF, 170, 240, 255, 255),
+    gsDPSetEnvColor(128, 128, 128, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gMMBottleGlassTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 2, 3),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
+    gsSPVertex(&gMMBottleVtx[13], 10, 0),
+    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
+    gsSP2Triangles(2, 3, 4, 0, 3, 5, 4, 0),
+    gsSP2Triangles(6, 1, 0, 0, 6, 7, 1, 0),
+    gsSP2Triangles(8, 9, 5, 0, 9, 4, 5, 0),
+    gsSP2Triangles(8, 7, 9, 0, 7, 6, 9, 0),
+    gsSPTexture(0x0640, 0x08FC, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsSPVertex(&gMMBottleVtx[23], 19, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(4, 5, 0, 0, 5, 6, 0, 0),
+    gsSP2Triangles(7, 8, 4, 0, 8, 5, 4, 0),
+    gsSP2Triangles(9, 8, 7, 0, 9, 10, 8, 0),
+    gsSP2Triangles(2, 10, 9, 0, 2, 1, 10, 0),
+    gsSP2Triangles(11, 12, 13, 0, 11, 14, 12, 0),
+    gsSP2Triangles(15, 16, 11, 0, 16, 14, 11, 0),
+    gsSP2Triangles(8, 17, 15, 0, 17, 16, 15, 0),
+    gsSP2Triangles(10, 18, 8, 0, 18, 17, 8, 0),
+    gsSP2Triangles(13, 18, 10, 0, 13, 12, 18, 0),
+    gsSP2Triangles(12, 16, 18, 0, 12, 14, 16, 0),
+    gsSP1Triangle(16, 17, 18, 0),
+    gsSPEndDisplayList(),
+};

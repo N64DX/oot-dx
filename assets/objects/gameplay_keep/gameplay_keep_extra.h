@@ -35,4 +35,7 @@ extern Gfx gLinkChildZoraMaskDL[65];
 extern Gfx gLinkChildGerudoMaskDL[84];
 extern Gfx gLinkChildBunnyHoodDL[114];
 
+extern Gfx gMMBottleContentsDL[];
+extern Gfx gMMBottleGlassDL[];
+
 #endif
