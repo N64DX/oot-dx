@@ -133,6 +133,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Harder Enemies",         FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 14 },
     { 0, "Static Dark Link HP",    FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 15 },
     { 0, "No Bottled Fairies",     FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 16 },
+    { 0, "No Item Drops",          FileSelectOptions_ToggleOption,      FileSelectOptions_GetOption,         1, 17 },
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {

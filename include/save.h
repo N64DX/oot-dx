@@ -514,6 +514,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define HARDER_ENEMIES              ((gFileOptions[gSaveContext.fileNum][1] >> 14) & 1)  // Bits: 14
 #define STATIC_DARK_LINK_HP         ((gFileOptions[gSaveContext.fileNum][1] >> 15) & 1)  // Bits: 15
 #define NO_BOTTLED_FAIRIES          ((gFileOptions[gSaveContext.fileNum][1] >> 16) & 1)  // Bits: 16
+#define NO_ITEM_DROPS               ((gFileOptions[gSaveContext.fileNum][1] >> 17) & 1)  // Bits: 17
 
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
