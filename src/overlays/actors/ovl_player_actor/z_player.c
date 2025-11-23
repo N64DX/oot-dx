@@ -2495,6 +2495,9 @@ void Player_InitItemAction(PlayState* play, Player* this, s8 itemAction) {
     this->heldItemAction = this->itemAction = itemAction;
     this->modelGroup = this->nextModelGroup;
 
+    if (itemAction >= PLAYER_IA_BOTTLE && itemAction <= PLAYER_IA_BOTTLE_FAIRY)
+        this->bottleAction = itemAction;
+
 #if OOT_VERSION >= NTSC_1_1
     this->stateFlags1 &= ~(PLAYER_STATE1_3 | PLAYER_STATE1_USING_BOOMERANG);
 #endif
@@ -4028,7 +4031,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
                     ((itemAction >= PLAYER_IA_BOTTLE_POTION_RED) && (itemAction <= PLAYER_IA_BOTTLE_FAIRY))) {
                     TitleCard_Clear(play, &play->actorCtx.titleCtx);
                     this->unk_6AD = 4;
-                    this->itemAction = itemAction;
+                    this->itemAction = this->itemAction = this->bottleAction = itemAction;
                 }
             } else if ((itemAction != this->heldItemAction) ||
                        ((this->heldActor == NULL) && (Player_ActionToExplosive(this, itemAction) >= 0))) {
