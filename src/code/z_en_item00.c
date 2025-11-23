@@ -1170,6 +1170,11 @@ void EnItem00_DrawHeartPiece(EnItem00* this, PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_en_item00.c", 1673);
 }
 
+static bool is_tunic_item(s16 dropId)     { return (dropId == ITEM00_TUNIC_ZORA  || dropId == ITEM00_TUNIC_GORON); }
+static bool is_shield_item(s16 dropId)    { return (dropId == ITEM00_SHIELD_DEKU || dropId == ITEM00_SHIELD_HYLIAN || dropId == ITEM00_SHIELD_HEROS); }
+static bool is_rupee_item(s16 dropId)     { return (dropId == ITEM00_RUPEE_GREEN || dropId == ITEM00_RUPEE_BLUE    || dropId == ITEM00_RUPEE_RED || dropId == ITEM00_RUPEE_ORANGE || dropId == ITEM00_RUPEE_PURPLE); }
+static bool is_special_item(s16 dropId)   { return (is_tunic_item(dropId)        || is_shield_item(dropId)         || is_rupee_item(dropId)      || dropId == ITEM00_HEART_PIECE  || dropId == ITEM00_HEART_CONTAINER || dropId == ITEM00_SMALL_KEY || dropId == ITEM00_SMALL_KEY); }
+
 /**
  * Converts a given drop type ID based on link's current age, health and owned items.
  * Returns a new drop type ID or -1 to cancel the drop.
@@ -1201,6 +1206,13 @@ s16 func_8001F404(s16 dropId) {
     if (dropId == ITEM00_RECOVERY_HEART &&
         gSaveContext.save.info.playerData.healthCapacity == gSaveContext.save.info.playerData.health) {
         return ITEM00_RUPEE_GREEN;
+    }
+
+    if (NO_ITEM_DROPS) {
+        if (dropId == ITEM00_RECOVERY_HEART)
+            return ITEM00_RUPEE_GREEN;
+        if (!is_special_item(dropId))
+            return -1;
     }
 
     return dropId;
@@ -1373,6 +1385,14 @@ void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnP
         } else {
             return;
         }
+    }
+
+    if (NO_ITEM_DROPS) {
+        if (dropId == ITEM00_RECOVERY_HEART) {
+            dropId = ITEM00_RUPEE_GREEN;
+            params = dropTableIndex = 0;
+        } else if (!is_special_item(dropId))
+            return;
     }
 
     if (dropId != ITEM00_NONE) {
