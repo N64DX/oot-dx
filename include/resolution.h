@@ -77,18 +77,21 @@
 // All screen modes can handle original and widescreen backgrounds
 #if WIDESCREEN
     #define GFXPRINT_SHIFT  6
+    #define RAMPRINT_SHIFT  8
     #define LULLABY_SHIFT   0
     #define OCEFF_SHIFT     80
     #define WS_JPEG         1
     #define WS_PX_SHIFT     1
 #elif ULTRA_WS
     #define GFXPRINT_SHIFT  13
+    #define RAMPRINT_SHIFT  17
     #define LULLABY_SHIFT   70
     #define OCEFF_SHIFT     155
     #define WS_JPEG         1
     #define WS_PX_SHIFT     1
 #else
     #define GFXPRINT_SHIFT  0
+    #define RAMPRINT_SHIFT  0
     #define LULLABY_SHIFT   0
     #define OCEFF_SHIFT     18
     #define WS_JPEG         0

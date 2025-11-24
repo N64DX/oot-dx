@@ -3800,15 +3800,10 @@ static void Interface_PrintHeapUsage(PlayState* this) {
     GameState* gameState = (GameState*)this;
     u32 maxFree, free, alloc;
     float usedMB;
-    u8 x = 4;
+    u8 x = 4 - RAMPRINT_SHIFT;
 
     const u32 reservedStatic = sizeof(gZBuffer) + sizeof(gGfxSPTaskOutputBuffer) + sizeof(gGfxSPTaskYieldBuffer) + sizeof(gGfxSPTaskStack) + sizeof(gGfxPools) + sizeof(gAudioHeap); // Known static memory regions
     SystemArena_GetSizes(&maxFree, &free, &alloc); // Get memory info from the system arena
-
-    if (SCREEN_MODE == 2)
-        x = -4;
-    else if (SCREEN_MODE == 3)
-        x = -13;
 
     OPEN_DISPS(this->state.gfxCtx, "../z_parameter.c", 3816);
 
