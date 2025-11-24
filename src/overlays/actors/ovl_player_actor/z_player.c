@@ -6172,7 +6172,12 @@ s32 func_8083A4A8(Player* this, PlayState* play) {
     yawDiff = this->yaw - this->actor.shape.rot.y;
 
     if ((ABS(yawDiff) < 0x1000) && (this->speedXZ > 4.0f)) {
-        anim = &gPlayerAnim_link_normal_run_jump;
+        f32 r = JUMP_ANIMATIONS && this->heldActor == NULL ? Rand_ZeroOne() : 1.0f;
+        if (r < 0.25f)
+            anim = &gPlayerAnim_link_normal_newroll_jump_20f;
+        else if (r < 0.5f)
+            anim = &gPlayerAnim_link_normal_newside_jump_20f;
+        else anim = &gPlayerAnim_link_normal_run_jump;
     } else {
         anim = &gPlayerAnim_link_normal_jump;
     }

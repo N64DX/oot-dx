@@ -35,4 +35,9 @@ extern Gfx gLinkChildZoraMaskDL[65];
 extern Gfx gLinkChildGerudoMaskDL[84];
 extern Gfx gLinkChildBunnyHoodDL[114];
 
+extern LinkAnimationHeader gPlayerAnim_link_normal_newroll_jump_20f;
+extern LinkAnimationHeader gPlayerAnim_link_normal_newroll_jump_end_20f;
+extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_20f;
+extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_end_20f;
+
 #endif
