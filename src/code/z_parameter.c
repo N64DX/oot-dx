@@ -4871,7 +4871,7 @@ void Interface_Draw(PlayState* play) {
 
                 // Quest Title
                 if (sTextIsCredits) {
-                    static void* sQuestButtonTextures[] = { gParameterQuestDungeonTex, gParameterQuestDungeonMasterRushTex, gParameterQuestDungeonUraRushTex, gParameterQuestDungeonChildRushTex, gParameterBossRushTex };
+                    static void* sQuestButtonTextures[] = { gQuestDungeonRushTex, gQuestDungeonMasterRushTex, gQuestDungeonUraRushTex, gQuestDungeonChildRushTex, gQuestBossRushTex };
                     gDPPipeSync(OVERLAY_DISP++);
                     gDPLoadTextureBlock(OVERLAY_DISP++, sQuestButtonTextures[R_QUEST_MODE - DUNGEON_RUSH], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
                     gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY((97 + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(20 << 2), HIRES_MULTIPLY((225 + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(36 << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
