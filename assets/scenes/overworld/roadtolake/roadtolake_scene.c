@@ -911,7 +911,7 @@ TransitionActorEntry roadtolake_sceneTransitionActorList_timeskip[] = {
 };
 
 u64 roadtolake_sceneTex_002730[] = {
-#include "assets/scenes/overworld/roadtolake/roadtolake_sceneTex_002730_Tex.rgba16.inc.c"
+#include "build/pal-1.0/assets/scenes/overworld/spot00/spot00_room_0_03000520_RoomShapeCullable_0300052C_CullableEntries_03014E28_DL_00020838_Tex.rgba16.inc.c"
 };
 
 u64 roadtolake_sceneTex_002F30[] = {
@@ -923,7 +923,7 @@ u64 roadtolake_sceneTex_003730[] = {
 };
 
 u64 roadtolake_sceneTex_003B30[] = {
-#include "assets/scenes/overworld/roadtolake/roadtolake_sceneTex_003B30_Tex.rgba16.inc.c"
+#include "build/pal-1.0/assets/scenes/overworld/spot00/spot00_room_0_03000520_RoomShapeCullable_0300052C_CullableEntries_0300CEB8_DL_000260B8_Tex.rgba16.inc.c"
 };
 
 u64 roadtolake_sceneTex_003F30[] = {
