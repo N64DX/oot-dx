@@ -176,48 +176,4 @@ u64 gLogoChildQuestTex[TEX_LEN(u64, gLogoWidth_WIDTH, gLogoWidth_HEIGHT, 32)] = 
 #include "assets/overlays/ovl_file_choose/gLogoChildQuestTex.rgba32.inc.c"
 };
 
-u64 gQuestOcarinaOfTimeTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestOcarinaOfTimeTex.ia8.inc.c"
-};
-
-u64 gQuestMasterQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestMasterQuestTex.ia8.inc.c"
-};
-
-u64 gQuestUraQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestUraQuestTex.ia8.inc.c"
-};
-
-u64 gQuestChildQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestChildQuestTex.ia8.inc.c"
-};
-
-u64 gQuestChildMasterQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestChildMasterQuestTex.ia8.inc.c"
-};
-
-u64 gQuestChildUraQuestTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestChildUraQuestTex.ia8.inc.c"
-};
-
-u64 gQuestDungeonRushTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestDungeonRushTex.ia8.inc.c"
-};
-
-u64 gQuestDungeonMasterRushTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestDungeonMasterRushTex.ia8.inc.c"
-};
-
-u64 gQuestDungeonUraRushTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestDungeonUraRushTex.ia8.inc.c"
-};
-
-u64 gQuestDungeonChildRushTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestDungeonChildRushTex.ia8.inc.c"
-};
-
-u64 gQuestBossRushTex[TEX_LEN(u64, gQuestTitle_WIDTH, gQuestTitle_HEIGHT, 8)] = {
-#include "assets/overlays/ovl_file_choose/gQuestBossRushTex.ia8.inc.c"
-};
-
 #endif

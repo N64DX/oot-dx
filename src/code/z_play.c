@@ -2153,6 +2153,8 @@ void Play_SetDungeonRushEntry(PlayState* this) {
 }
 
 void Play_SetDungeonRushProgress(PlayState* this) {
+    u8 i;
+
     if (!this->progressRush)
         return;
     this->progressRush = false;
@@ -2176,6 +2178,9 @@ void Play_SetDungeonRushProgress(PlayState* this) {
 
             case ENTR_WATER_TEMPLE_BOSS_0:
                 gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] = ITEM_LONGSHOT;
+                for (i=0; i<4; i++)
+                    if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_HOOKSHOT)
+                        gSaveContext.save.info.equips.buttonItems[i] = ITEM_LONGSHOT;
                 break;
 
             case ENTR_FIRE_TEMPLE_BOSS_0:
@@ -2272,6 +2277,9 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER);
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN);
                 gSaveContext.save.info.inventory.items[SLOT_OCARINA] = ITEM_OCARINA_OF_TIME;
+                for (i=0; i<4; i++)
+                    if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_OCARINA_FAIRY)
+                        gSaveContext.save.info.equips.buttonItems[i] = ITEM_OCARINA_OF_TIME;
                 if (IS_CHILD_QUEST) {
                     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS);
                     Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_MASTER);

@@ -26,6 +26,9 @@
 #else
 #include "assets/textures/title_static/title_static.h"
 #endif
+#if OOT_VERSION <= PAL_1_1
+#include "assets/textures/parameter_static/parameter_static_quest.h"
+#endif
 
 void FileSelect_DrawCharacter(GraphicsContext* gfxCtx, void* texture, s16 vtx) {
     OPEN_DISPS(gfxCtx, "../z_file_nameset_PAL.c", 110);
