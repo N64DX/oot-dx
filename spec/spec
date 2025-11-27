@@ -163,7 +163,8 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_36.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_37.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_38.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_39.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_39_26.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_40_25.o"
 #if OOT_VERSION >= PAL_1_0
     include "$(BUILD_DIR)/assets/audio/audiobank_padding.o"
 #endif
@@ -281,9 +282,12 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_107.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_108.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_109.prg.o"
-    include "$(BUILD_DIR)/assets/audio/sequences/seq_110.o"
-    include "$(BUILD_DIR)/assets/audio/sequences/seq_111.o"
-    include "$(BUILD_DIR)/assets/audio/sequences/seq_112.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_110_fire_temple_censored.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_111_miniboss.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_112_cavern.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_113_sacred_cove.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_114_tal_tal_heights.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_115_kolima_forest.o"
 endseg
 
 beginseg
