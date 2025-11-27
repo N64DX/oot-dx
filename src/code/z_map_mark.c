@@ -16,6 +16,7 @@
 #include "save.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "assets/textures/parameter_static/parameter_static_all.h"
 
 typedef struct MapMarkInfo {
     /* 0x00 */ void* texture;
@@ -43,6 +44,11 @@ typedef struct MapMarkDataOverlay {
 MapMarkInfo sMapMarkInfoTable[] = {
     { gMapChestIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 32, 32, 1 << 10, 1 << 10 }, // Chest Icon
     { gMapBossIconTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 32, 32, 1 << 10, 1 << 10 },     // Boss Skull Icon
+};
+
+MapMarkInfo sMapMarkMMInfoTable[] = {
+    { gMMMapChestIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 32, 32, 1 << 10, 1 << 10 }, // Chest Icon
+    { gMapBossIconTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 32, 32, 1 << 10, 1 << 10 },       // Boss Skull Icon
 };
 
 static MapMarkDataOverlay sMapMarkDataOvl = {
@@ -138,7 +144,7 @@ void MapMark_DrawForDungeon(PlayState* play) {
         markPoint = &mapMarkIconData->points[0];
         for (i = 0; i < mapMarkIconData->count; i++) {
             if ((mapMarkIconData->markType != MAP_MARK_CHEST) || !Flags_GetTreasure(play, markPoint->chestFlag)) {
-                markInfo = &sMapMarkInfoTable[mapMarkIconData->markType];
+                markInfo = USE_MM_HUD ? &sMapMarkMMInfoTable[mapMarkIconData->markType] : &sMapMarkInfoTable[mapMarkIconData->markType];
                 markPointX = R_ENABLE_MIRROR == 1 ? gMapData->dungeonXOffset[dungeon][interfaceCtx->mapRoomNum] + MAP_I_TEX_WIDTH - markPoint->x - (markInfo->textureWidth  * 1.0f) : markPoint->x;
 
                 gDPPipeSync(OVERLAY_DISP++);

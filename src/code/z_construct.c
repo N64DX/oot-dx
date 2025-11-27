@@ -219,21 +219,51 @@ void Interface_Init(PlayState* play) {
 
     interfaceCtx->unk_23C = interfaceCtx->unk_242 = 0;
 
-    R_ITEM_BTN_X(0) = B_BUTTON_X;
-
-    R_B_BTN_COLOR(0) = B_BUTTON_R;
-    R_B_BTN_COLOR(1) = B_BUTTON_G;
-    R_B_BTN_COLOR(2) = B_BUTTON_B;
-
-    R_ITEM_ICON_X(0) = B_BUTTON_X;
-    R_ITEM_AMMO_X(0) = B_BUTTON_X + 2;
-
-    R_A_BTN_X = A_BUTTON_X;
-    R_A_ICON_X = A_BUTTON_X;
-
-    R_A_BTN_COLOR(0) = A_BUTTON_R;
-    R_A_BTN_COLOR(1) = A_BUTTON_G;
-    R_A_BTN_COLOR(2) = A_BUTTON_B;
+    if (USE_MM_HUD) {
+        R_ITEM_BTN_X(0)  = R_ITEM_ICON_X(0) = B_MM_BUTTON_X;
+        R_ITEM_AMMO_X(0) = B_MM_BUTTON_X + 2;
+#if OOT_PAL || OOT_NTSC_N64
+        R_B_LABEL_X(0)   = B_MM_BUTTON_X - 10;
+        R_B_LABEL_X(1)   = B_MM_BUTTON_X - 9;
+#else
+        R_B_LABEL_X(0)   = B_MM_BUTTON_X - 9;
+        R_B_LABEL_X(1)   = B_MM_BUTTON_X - 12;
+#endif
+        R_B_LABEL_X(2)   = B_MM_BUTTON_X - 11;
+        R_B_LABEL_X(3)   = B_MM_BUTTON_X - 10;
+        R_A_BTN_X        = R_A_ICON_X = A_MM_BUTTON_X;
+        R_A_BTN_Y        = R_A_ICON_Y = A_MM_BUTTON_Y;
+        R_B_BTN_COLOR(0) = B_MM_BUTTON_R;
+        R_B_BTN_COLOR(1) = B_MM_BUTTON_G;
+        R_B_BTN_COLOR(2) = B_MM_BUTTON_B;
+        R_A_BTN_COLOR(0) = A_MM_BUTTON_R;
+        R_A_BTN_COLOR(1) = A_MM_BUTTON_G;
+        R_A_BTN_COLOR(2) = A_MM_BUTTON_B;
+        R_C_BTN_COLOR(1) = 240;
+    } else {
+        R_ITEM_BTN_X(0)  = R_ITEM_ICON_X(0) = B_BUTTON_X;
+        R_ITEM_AMMO_X(0) = B_BUTTON_X + 2;
+#if OOT_PAL || OOT_NTSC_N64
+        R_B_LABEL_X(0)   = B_BUTTON_X - 10;
+        R_B_LABEL_X(1)   = B_BUTTON_X - 9;
+#else
+        R_B_LABEL_X(0)   = B_BUTTON_X - 9;
+        R_B_LABEL_X(1)   = B_BUTTON_X - 12;
+#endif
+        R_B_LABEL_X(2)   = B_BUTTON_X - 11;
+        R_B_LABEL_X(3)   = B_BUTTON_X - 10;
+        R_A_BTN_X        = R_A_ICON_X = A_BUTTON_X;
+        R_A_BTN_Y        = R_A_ICON_Y = A_BUTTON_Y;
+        R_B_BTN_COLOR(0) = B_BUTTON_R;
+        R_B_BTN_COLOR(1) = B_BUTTON_G;
+        R_B_BTN_COLOR(2) = B_BUTTON_B;
+        R_ITEM_ICON_X(0) = B_BUTTON_X;
+        R_ITEM_AMMO_X(0) = B_BUTTON_X + 2;
+        R_A_BTN_COLOR(0) = A_BUTTON_R;
+        R_A_BTN_COLOR(1) = A_BUTTON_G;
+        R_A_BTN_COLOR(2) = A_BUTTON_B;
+        R_C_BTN_COLOR(1) = 160;
+    }
 }
 
 #define TEXTBOX_SEGMENT_SIZE \

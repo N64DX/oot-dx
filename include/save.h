@@ -506,6 +506,7 @@ extern u32 gFileOptions[3][FILE_OPTIONS_SIZE];
 #define REFLECT_CHEST_CONTENTS      ((gFileOptions[gSaveContext.fileNum][0] >> 18) & 1)  // Bits: 18
 #define EASIER_FISHING              ((gFileOptions[gSaveContext.fileNum][0] >> 19) & 1)  // Bits: 19
 #define USE_YOUNG_LINK              ((gFileOptions[gSaveContext.fileNum][0] >> 20) & 1)  // Bits: 20
+#define USE_MM_HUD                  ((gFileOptions[gSaveContext.fileNum][0] >> 24) & 1)  // Bits: 24
 #define HEALTH_RECOVERY             ((gFileOptions[gSaveContext.fileNum][1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gFileOptions[gSaveContext.fileNum][1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gFileOptions[gSaveContext.fileNum][1] >> 5)  & 7)  // Bits: 5-7
