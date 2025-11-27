@@ -435,8 +435,21 @@
     <Sample Name="SAMPLE_0_432" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample432.aifc"/>
     <Sample Name="SAMPLE_0_433" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample433.aifc"/>
     <Sample Name="SAMPLE_0_434" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample434.aifc"/>
+    <Sample Name="SAMPLE_0_435" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample435.aifc"/>
+    <Sample Name="SAMPLE_0_586" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample586.aifc"/>
     <Sample Name="SAMPLE_0_615" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample615.aifc"/>
     <Sample Name="SAMPLE_0_616" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample616.aifc"/>
     <Sample Name="SAMPLE_0_617" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample617.aifc"/>
     <Sample Name="SAMPLE_0_619" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample619.aifc"/>
+    <Sample Name="SAMPLE_0_648" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample648.aifc"/>
+    <Sample Name="SAMPLE_0_649" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample649.aifc"/>
+    <Sample Name="SAMPLE_0_WOODFALL_378" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample378.aifc"/>
+    <Sample Name="SAMPLE_0_WOODFALL_624" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample624.aifc"/>
+    <Sample Name="SAMPLE_0_WOODFALL_625" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample625.aifc"/>
+    <Sample Name="SAMPLE_0_WOODFALL_626" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample626.aifc"/>
+    <Sample Name="SAMPLE_0_WOODFALL_627" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample627.aifc"/>
+    <Sample Name="SAMPLE_0_WOODFALL_628" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample628.aifc"/>
+    <Sample Name="SAMPLE_0_WOODFALL_629" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample629.aifc"/>
+    <Sample Name="SAMPLE_0_WOODFALL_630" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample630.aifc"/>
+    <Sample Name="SAMPLE_0_WOODFALL_631" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample631.aifc"/>
 </SampleBank>

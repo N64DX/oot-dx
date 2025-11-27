@@ -1,4 +1,4 @@
-<Soundfont Name="Soundfont_39" Index="39" Medium="MEDIUM_CART" CachePolicy="CACHE_LOAD_TEMPORARY" SampleBank="$(BUILD_DIR)/assets/audio/samplebanks/SampleBank_0.xml" Indirect="1" LoopsHaveFrames="true">
+<Soundfont Name="Soundfont_39_26" Index="39" Medium="MEDIUM_CART" CachePolicy="CACHE_LOAD_TEMPORARY" SampleBank="$(BUILD_DIR)/assets/audio/samplebanks/SampleBank_0.xml" Indirect="1">
     <Envelopes>
         <Envelope Name="Env0" Release="113">
             <Point Delay="2" Arg="32700"/>
@@ -22,10 +22,10 @@
         </Envelope>
     </Envelopes>
     <Samples>
-        <Sample Name="SAMPLE_0_615" Cached="true"/>
-        <Sample Name="SAMPLE_0_617" Cached="true"/>
-        <Sample Name="SAMPLE_0_616" Cached="true"/>
-        <Sample Name="SAMPLE_0_619" Cached="true"/>
+        <Sample Name="SAMPLE_0_615"/>
+        <Sample Name="SAMPLE_0_617"/>
+        <Sample Name="SAMPLE_0_616"/>
+        <Sample Name="SAMPLE_0_619"/>
     </Samples>
     <Instruments>
         <Instrument ProgramNumber="0" Name="INST_0" Envelope="Env0" Sample="SAMPLE_0_615"/>

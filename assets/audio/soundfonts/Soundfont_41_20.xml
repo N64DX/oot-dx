@@ -1,0 +1,48 @@
+<Soundfont Name="Soundfont_41_20" Index="41" Medium="MEDIUM_CART" CachePolicy="CACHE_LOAD_TEMPORARY" SampleBank="$(BUILD_DIR)/assets/audio/samplebanks/SampleBank_0.xml" Indirect="1">
+    <Envelopes>
+        <Envelope Name="Env0" Release="248">
+            <Point Delay="2" Arg="32700"/>
+            <Point Delay="1" Arg="32700"/>
+            <Point Delay="32700" Arg="29430"/>
+        </Envelope>
+        <Envelope Name="Env1" Release="98">
+            <Point Delay="2" Arg="32700"/>
+            <Point Delay="1" Arg="32700"/>
+            <Point Delay="32700" Arg="29430"/>
+        </Envelope>
+        <Envelope Name="Env2" Release="4">
+            <Point Delay="2" Arg="32700"/>
+            <Point Delay="1" Arg="32700"/>
+            <Point Delay="32700" Arg="29430"/>
+        </Envelope>
+        <Envelope Name="Env3" Release="241">
+            <Point Delay="2" Arg="32700"/>
+            <Point Delay="1" Arg="32700"/>
+            <Point Delay="32700" Arg="29430"/>
+        </Envelope>
+        <Envelope Name="Env4" Release="223">
+            <Point Delay="2" Arg="32700"/>
+            <Point Delay="1" Arg="32700"/>
+            <Point Delay="32700" Arg="29430"/>
+        </Envelope>
+    </Envelopes>
+    <Samples>
+        <Sample Name="SAMPLE_0_WOODFALL_624"/>
+        <Sample Name="SAMPLE_0_WOODFALL_625"/>
+        <Sample Name="SAMPLE_0_WOODFALL_626"/>
+        <Sample Name="SAMPLE_0_WOODFALL_627"/>
+        <Sample Name="SAMPLE_0_WOODFALL_378"/>
+        <Sample Name="SAMPLE_0_WOODFALL_628"/>
+        <Sample Name="SAMPLE_0_WOODFALL_629"/>
+        <Sample Name="SAMPLE_0_WOODFALL_630"/>
+        <Sample Name="SAMPLE_0_WOODFALL_631"/>
+    </Samples>
+    <Instruments>
+        <Instrument ProgramNumber="0" Name="INST_0" Envelope="Env0" Sample="SAMPLE_0_WOODFALL_624" RangeHi="B4" SampleHi="SAMPLE_0_WOODFALL_625"/>
+        <Instrument ProgramNumber="1" Name="INST_1" Envelope="Env0" Sample="SAMPLE_0_WOODFALL_627" RangeLo="C4" SampleLo="SAMPLE_0_WOODFALL_626"/>
+        <Instrument ProgramNumber="2" Name="INST_2" Envelope="Env1" Sample="SAMPLE_0_WOODFALL_378"/>
+        <Instrument ProgramNumber="3" Name="INST_3" Envelope="Env2" Sample="SAMPLE_0_WOODFALL_628"/>
+        <Instrument ProgramNumber="4" Name="INST_4" Envelope="Env3" Sample="SAMPLE_0_WOODFALL_630" RangeLo="DF4" SampleLo="SAMPLE_0_WOODFALL_629"/>
+        <Instrument ProgramNumber="5" Name="INST_5" Envelope="Env4" Sample="SAMPLE_0_WOODFALL_631"/>
+    </Instruments>
+</Soundfont>

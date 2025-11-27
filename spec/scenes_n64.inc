@@ -225,7 +225,7 @@ endseg
 beginseg
     name "spot05_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/spot05/spot05_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/spot05/spot05_cq_scene.o"
     number 2
 endseg
 
@@ -449,7 +449,7 @@ endseg
 beginseg
     name "spot16_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/spot16/spot16_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/spot16/spot16_cq_scene.o"
     number 2
 endseg
 
