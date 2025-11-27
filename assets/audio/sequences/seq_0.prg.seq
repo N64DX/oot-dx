@@ -14180,19 +14180,22 @@ CHAN_61BC:
     .byte 105, 105
 
 .channel CHAN_LASH_KID
-ldptr       ARRAY_LASH_KID_SFX
-stptrtoseq  CHAN_611A + STSEQ_PTR_LDSEQ
-ldptr       ARRAY_LASH_KID_PITCH
-stptrtoseq  CHAN_6122 + STSEQ_PTR_LDSEQ
-rand        2
-jump        CHAN_6134
+    ldlayer     0, LAYER_LASH_KID
+    end
+.layer LAYER_LASH_KID
+    transpose   2
+    instr       FONTANY_INSTR_SFX
+    notedv      (SF0_EFFECT_LASH_KID - 2 * 64), 0, 100
+    end
 
-.array ARRAY_LASH_KID_SFX
-    .byte SF0_EFFECT_32
-    .byte SF0_EFFECT_33
-
-.array ARRAY_LASH_KID_PITCH
-    .byte 110, 110
+.channel CHAN_LASH_KID2
+    ldlayer     0, LAYER_LASH_KID2
+    end
+.layer LAYER_LASH_KID2
+    transpose   2
+    instr       FONTANY_INSTR_SFX
+    notedv      (SF0_EFFECT_LASH_KID2 - 2 * 64), 0, 100
+    end
 
 .channel CHAN_61C1
 /* 0x61C1 [0xCE 0x61 0xD1          ] */ ldptr       ARRAY_61D1

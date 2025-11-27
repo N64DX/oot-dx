@@ -542,6 +542,8 @@ static u16 D_8085361C[] = {
     NA_SE_VO_LI_FALL_L,
 };
 
+static u16 gLashKidSfx[] = { NA_SE_VO_LI_LASH_KID, NA_SE_VO_LI_LASH_KID2 };
+
 static GetItemEntry sGetItemTable[] = {
     // GI_BOMBS_5
     GET_ITEM(ITEM_BOMBS_5, OBJECT_GI_BOMB_1, GID_BOMB, 0x32, 0x59, CHEST_ANIM_SHORT),
@@ -4130,7 +4132,9 @@ s32 Player_UpdateUpperBody(Player* this, PlayState* play) {
         this->actor.bgCheckFlags &= ~BGCHECKFLAG_GROUND;
         this->hoverBootsTimer = 0;
         this->unk_6AE_rotFlags |= UNK6AE_ROT_FOCUS_X | UNK6AE_ROT_FOCUS_Y | UNK6AE_ROT_UPPER_X;
-        Player_PlayVoiceSfx(this, NA_SE_VO_LI_LASH);
+        if (LINK_IS_CHILD)
+            Player_PlaySfx(this, gLashKidSfx[(u8)(Rand_ZeroOne() * 2)]);
+        else Player_PlayVoiceSfx(this, NA_SE_VO_LI_LASH);
         return true;
     }
 
@@ -13906,7 +13910,9 @@ void Player_Action_8084CC98(Player* this, PlayState* play) {
                 if (this->upperSkelAnime.animation == &gPlayerAnim_link_uma_stop_muti) {
                     if (LinkAnimation_OnFrame(&this->upperSkelAnime, 23.0f)) {
                         Player_PlaySfx(this, NA_SE_IT_LASH);
-                        Player_PlayVoiceSfx(this, NA_SE_VO_LI_LASH);
+                        if (LINK_IS_CHILD)
+                            Player_PlaySfx(this, gLashKidSfx[(u8)(Rand_ZeroOne() * 2)]);
+                        else Player_PlayVoiceSfx(this, NA_SE_VO_LI_LASH);
                     }
 
                     AnimTaskQueue_AddCopy(play, this->skelAnime.limbCount, this->skelAnime.jointTable,
@@ -13914,7 +13920,9 @@ void Player_Action_8084CC98(Player* this, PlayState* play) {
                 } else {
                     if (LinkAnimation_OnFrame(&this->upperSkelAnime, 10.0f)) {
                         Player_PlaySfx(this, NA_SE_IT_LASH);
-                        Player_PlayVoiceSfx(this, NA_SE_VO_LI_LASH);
+                        if (LINK_IS_CHILD)
+                            Player_PlaySfx(this, gLashKidSfx[(u8)(Rand_ZeroOne() * 2)]);
+                        else Player_PlayVoiceSfx(this, NA_SE_VO_LI_LASH);
                     }
 
                     AnimTaskQueue_AddCopyUsingMap(play, this->skelAnime.limbCount, this->skelAnime.jointTable,
