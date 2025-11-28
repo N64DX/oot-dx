@@ -2147,3 +2147,29 @@ COLOR(LIGHTBLUE) "Cet Esprit ne disparaît pas si tu\n"
 "apparemment..." COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
+
+DEFINE_MESSAGE(0x065D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(80) "プチブリン\n"
+SHIFT(70) COLOR(LIGHTBLUE) "サイフを守れ！\n"
+SHIFT(10) "ルピーは取られるが　危なくない。" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Miniblin\n"
+COLOR(LIGHTBLUE) "Keep your wallet tight and be careful\n"
+"you don't get robbed!\n"
+"They are annoying but pose no danger." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Petiblin\n"
+COLOR(LIGHTBLUE) "Halte deinen Geldbeutel fest und pass\n"
+"auf, dass du nicht ausgeraubt wirst!\n"
+"Sie sind lästig, aber ungefährlich." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Miniblin\n"
+COLOR(LIGHTBLUE) "Garde bien ta bourse et fais attention\n"
+"à ne pas te faire voler!\n"
+"Ils sont pénibles mais inoffensifs." COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)

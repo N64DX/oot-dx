@@ -21,8 +21,8 @@ SceneCmd swamp_spider_house_room_2Commands[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&swamp_spider_house_room_2RoomShapeCullable_0001B0),
-    SCENE_CMD_OBJECT_LIST(12, swamp_spider_house_room_2ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(11, swamp_spider_house_room_2ActorEntry_000068),
+    SCENE_CMD_OBJECT_LIST(13, swamp_spider_house_room_2ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(14, swamp_spider_house_room_2ActorEntry_000068),
     SCENE_CMD_END(),
 };
 
@@ -39,6 +39,7 @@ s16 swamp_spider_house_room_2ObjectList_000040[] = {
     OBJECT_ZF,
     OBJECT_BOMBIWA,
     OBJECT_BUFFDEKU,
+    OBJECT_MINIBLIN,
 };
 
 ActorEntry swamp_spider_house_room_2ActorEntry_000068[] = {
@@ -53,6 +54,9 @@ ActorEntry swamp_spider_house_room_2ActorEntry_000068[] = {
     { ACTOR_OBJ_TSUBO,   {  330, 180, -1590 }, { 0,   0,      0    }, 0x0000, },
     { ACTOR_OBJ_KIBAKO2, { -301, 180, -1299 }, { 0xB, 0,      0x31 }, 0x00FF, },
     { ACTOR_OBJ_KIBAKO2, { -241, 180, -1299 }, { 0xB, 0,      0x32 }, 0x00FF, },
+    { ACTOR_EN_MINIBLIN, {  0,   0,   -1400 }, { 0,   0x1000, 0    }, 0x0000, },
+    { ACTOR_EN_MINIBLIN, {  100, 0,   -1500 }, { 0,   0xC000, 0    }, 0x0000, },
+    { ACTOR_EN_MINIBLIN, { -100, 0,   -1500 }, { 0,   0x4000, 0    }, 0x0000, },
 };
 
 RoomShapeCullable swamp_spider_house_room_2RoomShapeCullable_0001B0 = { 

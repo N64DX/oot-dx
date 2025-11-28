@@ -88,3 +88,10 @@ beginseg
     include "$(BUILD_DIR)/assets/objects/object_hammergeist/object_hammergeist.o"
     number 6
 endseg
+
+beginseg
+    name "object_miniblin"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_miniblin/object_miniblin.o"
+    number 6
+endseg

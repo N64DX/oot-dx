@@ -405,6 +405,7 @@ typedef enum NaviEnemy {
     /* 0x5A */ NAVI_ENEMY_BIG_POE,
     /* 0x5B */ NAVI_ENEMY_TWINROVA,
     /* 0x5C */ NAVI_ENEMY_POE_WASTELAND,
+    /* 0x5D */ NAVI_ENEMY_MINIBLIN,
     /* 0xFF */ NAVI_ENEMY_NONE = 0xFF
 } NaviEnemy;
 
