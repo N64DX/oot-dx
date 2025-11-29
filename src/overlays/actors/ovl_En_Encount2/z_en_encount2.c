@@ -87,6 +87,9 @@ void EnEncount2_Wait(EnEncount2* this, PlayState* play) {
             (player->actor.world.pos.z > -3600.0f)) {
             spawnerState = ENCOUNT2_ACTIVE_DEATH_MOUNTAIN;
         }
+    } else if (play->sceneId == SCENE_ANCIENT_HOLLOW) {
+        if (!this->collapseSpawnerInactive)
+            spawnerState = ENCOUNT2_ACTIVE_GANONS_TOWER;
     } else if ((this->actor.xzDistToPlayer < 700.0f) && (Flags_GetSwitch(play, 0x37))) {
         s16 sceneId = play->sceneId;
 
@@ -167,6 +170,11 @@ void EnEncount2_SpawnRocks(EnEncount2* this, PlayState* play) {
         }
 
         Actor_PlaySfx(&this->actor, NA_SE_EV_VOLCANO - SFX_FLAG);
+    } else if (play->sceneId == SCENE_ANCIENT_HOLLOW) {
+        if (!this->collapseSpawnerInactive) {
+            maxRocks = 4;
+            spawnerState = ENCOUNT2_ACTIVE_GANONS_TOWER;
+        }
     } else if ((this->actor.xzDistToPlayer < 700.0f) && (Flags_GetSwitch(play, 0x37) != 0)) {
         s16 sceneId = play->sceneId;
 

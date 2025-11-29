@@ -2452,6 +2452,51 @@ UNSKIPPABLE "Il est arrivé ici comme une fleur\n"
 )
 )
 
+DEFINE_MESSAGE(0x8122, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hi hi hi... What am I?\n"
+"Show me proof of your map and\n"
+"compass if you want to reach the\n"
+"sealed evil below."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8123, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hi hi hi... Well done.\n"
+"You will need this if you want to\n"
+"reach the sealed evil below."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8124, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hoo hoo!"
+BOX_BREAK_DELAYED(40)
+
+UNSKIPPABLE "You defeated the ancient evil\n"
+"dwelling in the Ancient Hollow,\n"
+"did you not?"
+BOX_BREAK
+
+UNSKIPPABLE "To help you on your quest, I may\n"
+"have something for you."
+BOX_BREAK
+
+UNSKIPPABLE "One of my sacred feathers, may\n"
+"it aid you in your quest."
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x8125, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
@@ -2576,4 +2621,3 @@ BOX_BREAK
 "A la prochaine, " QUICKTEXT_ENABLE "limace!" QUICKTEXT_DISABLE EVENT
 )
 )
-

@@ -545,6 +545,10 @@ void DoorWarp1_ChildWarpOut(DoorWarp1* this, PlayState* play) {
         } else if (play->sceneId == SCENE_JABU_JABU_BOSS) {
             play->nextEntranceIndex = ENTR_ZORAS_FOUNTAIN_0;
             gSaveContext.nextCutsceneIndex = 0;
+        } else if (play->sceneId == SCENE_ANCIENT_HOLLOW) {
+            Flags_SetEventChkInf(EVENTCHKINF_EXITED_HYPER_GOHMA);
+            play->nextEntranceIndex = ENTR_FORBIDDEN_WOODS_5;
+            gSaveContext.nextCutsceneIndex = 0;
         }
         PRINTF(T("\n\n\nおわりおわり", "\n\n\nThe end The end"));
         play->transitionTrigger = TRANS_TRIGGER_START;
