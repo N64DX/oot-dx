@@ -37,7 +37,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **gh0st:** Open hand z-targeting animation to idle fix
 - **Kenton M:** Roc's Feather concept
 - **Nicko (Airi):** DK64 Expansion Pak warning display
-- **Nokaubure:** autosave concept, Gohma debris, ISG fix
+- **Nokaubure:** autosave concept, Gohma debris, ISG fix, Teleporter
 - **OoT Randomizer:** Key chest textures
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures

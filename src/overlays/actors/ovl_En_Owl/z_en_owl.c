@@ -52,6 +52,7 @@ void func_80ACB3E0(EnOwl* this, PlayState* play);
 void EnOwl_WaitLWPreSaria(EnOwl* this, PlayState* play);
 void EnOwl_WaitLWPostSaria(EnOwl* this, PlayState* play);
 void EnOwl_WaitForbiddenWoods(EnOwl* this, PlayState* play);
+void EnOwl_WaitGanonsCastle(EnOwl* this, PlayState* play);
 void func_80ACD4D4(EnOwl* this, PlayState* play);
 void func_80ACD130(EnOwl* this, PlayState* play, s32 idx);
 void func_80ACBAB8(EnOwl* this, PlayState* play);
@@ -80,7 +81,8 @@ typedef enum EnOwlType {
     /* 0x0A */ OWL_DESERT_COLOSSUS,
     /* 0x0B */ OWL_LOST_WOODS_PRESARIA,
     /* 0x0C */ OWL_LOST_WOODS_POSTSARIA,
-    /* 0x0D */ OWL_FORBIDDEN_WOODS
+    /* 0x0D */ OWL_FORBIDDEN_WOODS,
+    /* 0x0E */ OWL_GANONS_CASTLE
 } EnOwlType;
 
 typedef enum EnOwlMessageChoice {
@@ -132,6 +134,7 @@ void EnOwl_Init(Actor* thisx, PlayState* play) {
     ColliderCylinder* collider;
     s32 owlType;
     s32 switchFlag;
+    bool hasMedallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT) && CHECK_QUEST_ITEM(QUEST_MEDALLION_LIGHT);
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     ActorShape_Init(&this->actor.shape, 0, ActorShadow_DrawCircle, 36.0f);
@@ -269,6 +272,15 @@ void EnOwl_Init(Actor* thisx, PlayState* play) {
                 return;
             }
             this->actionFunc = EnOwl_WaitForbiddenWoods;
+            break;
+        case OWL_GANONS_CASTLE:
+            if (HAS_GOLDEN_FEATHER || !hasMedallions) {
+                 // spoken with the owl or didn't get all medallions yet
+                PRINTF(T("フクロウ退避\n", "Owl evacuation\n"));
+                Actor_Kill(&this->actor);
+                return;
+            }
+            this->actionFunc = EnOwl_WaitGanonsCastle;
             break;
         default:
             // Outside kokiri forest
@@ -773,6 +785,35 @@ void EnOwl_WaitLWPostSaria(EnOwl* this, PlayState* play) {
     if (EnOwl_CheckInitTalk(this, play, 0x10C4, 360.0f, 0)) {
         Audio_PlayFanfare(NA_BGM_OWL);
         this->actionFunc = func_80ACB680;
+    }
+}
+
+void EnOwl_AfterTalkGanonsCastle2(EnOwl* this, PlayState* play) {
+    this->actionFlags |= 2;
+    func_80ACA71C(this);
+    SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_FANFARE, 0);
+    this->actor.flags &= ~ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED;
+    func_80ACA62C(this, play);
+}
+
+void EnOwl_AfterTalkGanonsCastle(EnOwl* this, PlayState* play) {
+    if (Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
+        if (!Actor_HasParent(&this->actor, play))
+            Actor_OfferGetItem(&this->actor, play, GI_GOLDEN_FEATHER, 1000.0f, 1000.0f);
+
+        if (Actor_HasParent(&this->actor, play)) {
+            this->actor.parent = NULL;
+            this->actionFunc = EnOwl_AfterTalkGanonsCastle2;
+        }
+    }
+}
+
+void EnOwl_WaitGanonsCastle(EnOwl* this, PlayState* play) {
+    EnOwl_LookAtLink(this, play);
+
+    if (EnOwl_CheckInitTalk(this, play, 0x8128, 360.0f, 0)) {
+        Audio_PlayFanfare(NA_BGM_OWL);
+        this->actionFunc = EnOwl_AfterTalkGanonsCastle;
     }
 }
 

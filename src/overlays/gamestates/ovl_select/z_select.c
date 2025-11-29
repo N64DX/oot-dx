@@ -109,6 +109,8 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         MapSelect_LoadRoom(DBG_GANONS_TOWER_0, this->roomNum, 9);
     else if (entranceIndex == ENTR_ANCIENT_HOLLOW_0)
         MapSelect_LoadRoom(DBG_ANCIENT_HOLLOW_0, this->roomNum, 14);
+    else if (entranceIndex == ENTR_WOODFALL_TEMPLE_0)
+        MapSelect_LoadRoom(DBG_WOODFALL_TEMPLE_0, this->roomNum, 12);
 
     gSaveContext.respawnFlag = 0;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
@@ -468,19 +470,23 @@ static MapSelectEntry sMapSelectEntries[] = {
 #if PLATFORM_N64
     { "116:" T(GFXP_HIRAGANA "ﾀﾞｲﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain R2"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_1 },
     { "117:" T(GFXP_HIRAGANA "ﾀﾞｲﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain R3"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_2 },
-    { "118:" T(GFXP_HIRAGANA "ﾏﾎｳｾｷ ﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain G2"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_1 },
-    { "119:" T(GFXP_HIRAGANA "ﾏﾎｳｾｷ ﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain G3"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_2 },
-    { "120:" T(GFXP_HIRAGANA "ｳｨﾝﾄﾞﾐﾙ", "Windmill"), MapSelect_LoadGame, ENTR_WINDMILL_AND_DAMPES_GRAVE_1 },
-    { "121:" T(GFXP_HIRAGANA "ｶﾞﾉﾝｼﾞｮｳﾉｿﾄ", "Outside Ganon's Castle"), MapSelect_LoadGame, MAP_OUTSIDE_GANONS_CASTLE_0 },
-    { "122:" T(GFXP_HIRAGANA "ﾚｲｸﾊｲﾘｱﾐﾁ", "Lake Hylia Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_LAKE_HYLIA_0 },
-    { "123:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Fortress Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_FORTRESS_0 },
-    { "124:" T(GFXP_HIRAGANA "ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Webbed Shrine"), MapSelect_LoadGame, ENTR_SWAMP_SPIDER_HOUSE_0 },
-    { "125:" T(GFXP_HIRAGANA "古代樹", "Forbidden Woods"), MapSelect_LoadGame, ENTR_FORBIDDEN_WOODS_0 },
-    { "126:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
-    { "127:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
-    { "128:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
-    { "129:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
-    { "130:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss"), MapSelect_LoadGame, ENTR_BESITU_0 },
+    { "118:" T(GFXP_HIRAGANA "ﾀﾞｲﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain R4"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_3 },
+    { "119:" T(GFXP_HIRAGANA "ﾏﾎｳｾｷ ﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain G2"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_1 },
+    { "120:" T(GFXP_HIRAGANA "ﾏﾎｳｾｷ ﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain G3"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_2 },
+    { "121:" T(GFXP_HIRAGANA "ｳｨﾝﾄﾞﾐﾙ", "Windmill"), MapSelect_LoadGame, ENTR_WINDMILL_AND_DAMPES_GRAVE_1 },
+    { "122:" T(GFXP_HIRAGANA "ｶﾞﾉﾝｼﾞｮｳﾉｿﾄ", "Outside Ganon's Castle"), MapSelect_LoadGame, MAP_OUTSIDE_GANONS_CASTLE_0 },
+    { "123:" T(GFXP_HIRAGANA "ﾚｲｸﾊｲﾘｱﾐﾁ", "Lake Hylia Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_LAKE_HYLIA_0 },
+    { "124:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Fortress Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_FORTRESS_0 },
+    { "125:" T(GFXP_HIRAGANA "ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Webbed Shrine"), MapSelect_LoadGame, ENTR_SWAMP_SPIDER_HOUSE_0 },
+    { "126:" T(GFXP_HIRAGANA "古代樹", "Forbidden Woods"), MapSelect_LoadGame, ENTR_FORBIDDEN_WOODS_0 },
+    { "127:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
+    { "128:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall"), MapSelect_LoadGame, ENTR_WOODFALL_0 },
+    { "129:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
+    { "130:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
+    { "131:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
+    { "132:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
+    { "133:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
+    { "134:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss"), MapSelect_LoadGame, ENTR_BESITU_0 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };
@@ -519,6 +525,8 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Shadow Attacks Kakariko",  SHADOW,                     EVENTCHKINF_AA                           },
     { 0, "Fast Windmill",            EVENT,                      EVENTCHKINF_65                           },
     { 0, "Drained Well",             WELL,                       EVENTCHKINF_DRAINED_WELL                 },
+    { 0, "Purified Woodfall Temple", EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE     },
+    { 0, "Purified Woodfall",        EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL            },
     { 0, "Sheik Reveal",             EVENT,                      EVENTCHKINF_C4                           },
     { 0, "Rainbow Bridge",           EVENT,                      EVENTCHKINF_CREATED_RAINBOW_BRIDGE       },
     { 0, "Killed Gohma",             SCENE_DEKU_TREE_BOSS,       1,                                       },
@@ -531,6 +539,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Killed Nabooru",           NABOORU,                    5                                        },
     { 0, "Killed Twinrova",          SCENE_SPIRIT_TEMPLE_BOSS,   3                                        },
     { 0, "Killed Hyper Gohma",       SCENE_ANCIENT_HOLLOW,       13                                       },
+    { 0, "Killed King Deku",         SCENE_WOODFALL_TEMPLE_BOSS, 1                                        },
     { 0, "Completed Mask Quest",     MASK,                       ITEMGETINF_3F,                           },
     { 0, "Got Bottle Cucco Lady",    ITEM,                       ITEMGETINF_0C,                           },
     { 0, "Got Pocket Egg",           ITEM,                       ITEMGETINF_2C,                           },

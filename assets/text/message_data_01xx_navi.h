@@ -286,6 +286,69 @@ COLOR(DEFAULT) UNSKIPPABLE COLOR(LIGHTBLUE) "Observe bien l'" COLOR(BLUE) "icôn
 )
 )
 
+DEFINE_MESSAGE(0x0109, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE SHIFT(54) COLOR(LIGHTBLUE) "気をつけろ…\n"
+SHIFT(10) "ここには強い邪悪な気配を感じる。" COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Be careful...\n"
+"I sense a lot of evil here." COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Sei auf der Hut...\n"
+"Ich spüre hier sehr viel Böses." COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Attention...\n"
+"Le mal est parmi nous!\n"
+"Je le sens..." COLOR(DEFAULT)
+)
+)
+
+DEFINE_MESSAGE(0x010A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE SHIFT(10) COLOR(LIGHTBLUE) "ずいぶん軽そうだな。\n"
+SHIFT(10) "ぼさっとしてないで\n"
+SHIFT(10) "[A]でつかんで　[Control-Pad]で\n"
+SHIFT(10) "動かしてみろ！" COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "This looks pretty light.\n"
+"You should be able to move it.\n"
+"Press [A] to grab it and use [Control-Pad]\n"
+"to move it!" COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Der sieht nicht allzu schwer aus."
+"Steh hier nicht rum! Drücke [A],"
+"um zuzupacken. Bewege ihn mit"
+"Hilfe von [Control-Pad]!" COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Ce truc a l'air assez léger.\n"
+"Mets-toi devant et appuie sur [A]\n"
+"pour l'attraper. Utilise ensuite [Control-Pad]\n"
+"pour le déplacer!" COLOR(DEFAULT)
+)
+)
+
+DEFINE_MESSAGE(0x010B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE SHIFT(24) COLOR(LIGHTBLUE) "このたいまつは、まだ温かい…" COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "This torch is still warm..." COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Diese Fackel ist noch nicht\n"
+"vollständig erkaltet..." COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Cette torche est encore chaude..." COLOR(DEFAULT)
+)
+)
+
 DEFINE_MESSAGE(0x010C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE SHIFT(54) COLOR(LIGHTBLUE) "水に入ってから\n"
@@ -310,6 +373,57 @@ UNSKIPPABLE COLOR(LIGHTBLUE) "Une fois dans l'eau, tu pourras\n"
 "Je parie que tu y trouveras \n"
 "quelque chose!" COLOR(DEFAULT)
 )
+)
+
+DEFINE_MESSAGE(0x010D, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE SHIFT(54) COLOR(LIGHTBLUE) "あれは何だと思う？\n"
+SHIFT(54) "中央の" COLOR(RED) "灰" COLOR(LIGHTBLUE) "は　まだ\n"
+SHIFT(54) "新しく見える…" COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "What do you think that is?\n"
+"The " COLOR(RED) "ashes " COLOR(LIGHTBLUE) "in the center of it still\n"
+"look fresh..." COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE)"Was denkst du, was das ist? Die\n"
+COLOR(RED) "Asche" COLOR(LIGHTBLUE) " in der Mitte sieht noch\n"
+"ziemlich frisch aus..." COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE)"Ben alors, c'est quoi ça, hein?\n"
+"Les " COLOR(RED) "cendres" COLOR(LIGHTBLUE) " ont l'air encore\n"
+"chaudes..." COLOR(DEFAULT)
+)
+)
+
+DEFINE_MESSAGE(0x010E, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE SHIFT(54) COLOR(LIGHTBLUE) "気づいたか？\n"
+SHIFT(24) "このたいまつ　まだ温かいぞ。" COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Did you notice it?\n"
+"This torch is still warm, too." COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Hast du es bemerkt?\n"
+"Diese Fackel ist noch warm." COLOR(DEFAULT)
+),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Tu l’as remarqué ?\n"
+"Cette torche est encore chaude." COLOR(DEFAULT)
+)
+)
+
+DEFINE_MESSAGE(0x010F, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Hey! " NAME "... Is that...?"
+),
+MSG(),
+MSG()
 )
 
 DEFINE_MESSAGE(0x0114, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,

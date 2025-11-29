@@ -116,9 +116,9 @@
 /* 0x68 */ DEFINE_SCENE(swamp_spider_house_scene, none, SCENE_SWAMP_SPIDER_HOUSE, SDC_DEFAULT, 0, 0)
 /* 0x69 */ DEFINE_SCENE(old_lost_woods_scene, none, SCENE_FORBIDDEN_WOODS, SDC_FORBIDDEN_WOODS, 0, 0)
 /* 0x6A */ DEFINE_SCENE(fairy_deku_tree_scene, none, SCENE_ANCIENT_HOLLOW, SDC_ANCIENT_HOLLOW, 0, 0)
-/* 0x6B */ DEFINE_SCENE(fairy_deku_tree_scene, none, SCENE_WOODFALL_TEMPLE, SDC_DEFAULT, 0, 0)
-/* 0x6C */ DEFINE_SCENE(fairy_deku_tree_scene, none, SCENE_WOODFALL_TEMPLE_BOSS, SDC_DEFAULT, 0, 0)
-/* 0x6D */ DEFINE_SCENE(fairy_deku_tree_scene, none, SCENE_WOODFALL, SDC_DEFAULT, 0, 0)
+/* 0x6B */ DEFINE_SCENE(woodfall_temple_scene, none, SCENE_WOODFALL_TEMPLE, SDC_WOODFALL_TEMPLE, 0, 0)
+/* 0x6C */ DEFINE_SCENE(woodfall_temple_boss_scene, none, SCENE_WOODFALL_TEMPLE_BOSS, SDC_WOODFALL_TEMPLE, 0, 0)
+/* 0x6D */ DEFINE_SCENE(woodfall_scene, none, SCENE_WOODFALL, SDC_WOODFALL, 0, 0)
 /* 0x6E */ DEFINE_SCENE(besitu_scene, none, SCENE_BESITU, SDC_BESITU, 0, 0)
 
 // 0x7B (124th scene) = gSaveContext.save.info.sceneFlags MAX

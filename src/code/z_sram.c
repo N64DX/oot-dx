@@ -566,6 +566,12 @@ void Sram_OpenSave(SramContext* sramCtx) {
             gSaveContext.save.entranceIndex = ENTR_ANCIENT_HOLLOW_0;
             break;
 
+        case SCENE_WOODFALL_TEMPLE:
+        case SCENE_WOODFALL_TEMPLE_BOSS:
+            if (gSaveContext.save.entranceIndex == ENTR_WOODFALL_TEMPLE_0)
+                gSaveContext.save.entranceIndex = ENTR_WOODFALL_TEMPLE_0;
+            break;
+
         case SCENE_BESITU:
             if (IS_CHILD_QUEST)
                 gSaveContext.save.entranceIndex = ENTR_FORBIDDEN_WOODS_6;
@@ -665,7 +671,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
         }
     }
 
-    if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)) {
+    if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER) && !(IS_CHILD_QUEST && GET_EVENTCHKINF(EVENTCHKINF_PURIFIED_WOODFALL) && !HAS_MASTER_SWORD)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER);
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
         gSaveContext.save.info.equips.equipment &= ~(0xF << (EQUIP_TYPE_SWORD * 4));

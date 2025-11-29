@@ -53,7 +53,7 @@ Spawn old_lost_woods_sceneEntranceList0x0000A8[] = {
 };
 
 u16 old_lost_woods_sceneExitList0x0000B4[] = {
-    ENTR_FORBIDDEN_WOODS_1,
+    ENTR_WOODFALL_0,
     ENTR_FORBIDDEN_WOODS_0,
     ENTR_ANCIENT_HOLLOW_0,
     ENTR_LOST_WOODS_10,
