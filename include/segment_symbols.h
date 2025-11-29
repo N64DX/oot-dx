@@ -684,6 +684,21 @@ DECLARE_ROM_SEGMENT(swamp_spider_house_room_3)
 DECLARE_ROM_SEGMENT(swamp_spider_house_room_4)
 DECLARE_ROM_SEGMENT(swamp_spider_house_room_5)
 
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_0)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_1)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_2)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_3)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_4)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_5)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_6)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_7)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_8)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_9)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_10)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_11)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_12)
+DECLARE_ROM_SEGMENT(fairy_deku_tree_room_13)
+
 // Room symbols for compiling test scenes.
 // These are not wrapped in an `#if DEBUG_ASSETS` so that debug ROMs
 // can be built with DEBUG_ASSETS=0 (e.g. when DEBUG_FEATURES=0)

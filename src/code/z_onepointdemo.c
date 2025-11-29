@@ -1473,6 +1473,42 @@ s32 OnePointCutscene_SetInfo(PlayState* play, s16 subCamId, s16 csId, Actor* act
             break;
         }
 
+        case 3041: {
+            static OnePointCsFull D_8012151C_2[2] = {
+                {
+                    ONEPOINT_CS_ACTION(ONEPOINT_CS_ACTION_ID_15, false, false),
+                    ONEPOINT_CS_INIT_FIELD_PLAYER_CS(PLAYER_CSACTION_1),
+                    0x0101,
+                    29,
+                    0,
+                    60.0f,
+                    1.0f,
+                    { 1043.0f, 120.0f, -1073.0f },
+                    { 1118.0f, 270.0f, -543.0f  },
+                },
+                { 
+                    0x12,
+                    ONEPOINT_CS_INIT_FIELD_NONE,
+                    0x0000,
+                    1,
+                    0,
+                    60.0f,
+                    1.0f,
+                    { -1.0f, -1.0f, -1.0f },
+                    { -1.0f, -1.0f, -1.0f },
+                },
+            };
+
+            Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_8);
+            D_8012151C_2[0].timerInit = timer - 1;
+
+            csInfo->keyFrames = D_8012151C_2;
+            csInfo->keyFrameCount = ARRAY_COUNT(D_8012151C_2);
+
+            Play_InitCameraDataUsingPlayer(play, subCamId, player, CAM_SET_CS_C);
+            break;
+        }
+
         case 3020: {
             static OnePointCsFull D_8012156C[2] = {
                 {

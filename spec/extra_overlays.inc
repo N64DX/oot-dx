@@ -34,6 +34,20 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Bg_Ydan_Hasi2"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ydan_Hasi2/z_bg_ydan_hasi2.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ydan_Hasi2/ovl_Bg_Ydan_Hasi2_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Ydan_Maruta2"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ydan_Maruta2/z_bg_ydan_maruta2.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ydan_Maruta2/ovl_Bg_Ydan_Maruta2_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Horse_Young"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Young/z_en_horse_young.o"

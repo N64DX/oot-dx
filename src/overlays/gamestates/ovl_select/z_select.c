@@ -472,9 +472,10 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "122:" T(GFXP_HIRAGANA "ﾚｲｸﾊｲﾘｱﾐﾁ", "Lake Hylia Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_LAKE_HYLIA_0 },
     { "123:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Fortress Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_FORTRESS_0 },
     { "124:" T(GFXP_HIRAGANA "ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Skulltula Cavern"), MapSelect_LoadGame, ENTR_SWAMP_SPIDER_HOUSE_0 },
-    { "125:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
-    { "126:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
-    { "127:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
+    { "125:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
+    { "126:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
+    { "127:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
+    { "128:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };

@@ -265,6 +265,8 @@ void func_808528C8(PlayState* play, Player* this, CsCmdActorCue* cue);
 void func_80852944(PlayState* play, Player* this, CsCmdActorCue* cue);
 void func_808529D0(PlayState* play, Player* this, CsCmdActorCue* cue);
 void func_80852C50(PlayState* play, Player* this, CsCmdActorCue* cue);
+void PlayerCs_InitDekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue);
+void PlayerCs_DekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue);
 int Player_IsDroppingFish(PlayState* play);
 s32 Player_StartFishing(PlayState* play);
 s32 func_80852F38(PlayState* play, Player* this);
@@ -15697,6 +15699,7 @@ static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX] = {
     { 3, &gPlayerAnim_link_demo_kenmiru1 },              // PLAYER_CSACTION_100
     { 3, &gPlayerAnim_link_demo_kenmiru2 },              // PLAYER_CSACTION_101
     { 3, &gPlayerAnim_link_demo_kenmiru2_modori },       // PLAYER_CSACTION_102
+    { -1, &PlayerCs_InitDekuWalk },                      // PLAYER_CSACTION_103
 };
 
 static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
@@ -15807,6 +15810,7 @@ static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
     { 12, &gPlayerAnim_link_demo_kenmiru1_wait },  // PLAYER_CSACTION_100
     { 12, &gPlayerAnim_link_demo_kenmiru2_wait },  // PLAYER_CSACTION_101
     { 12, &gPlayerAnim_demo_link_nwait },          // PLAYER_CSACTION_102
+    { -1, PlayerCs_DekuWalk },                     // PLAYER_CSACTION_103
 };
 
 void Player_AnimChangeOnceMorphZeroRootYawSpeed(PlayState* play, Player* this, LinkAnimationHeader* anim) {
@@ -16071,6 +16075,29 @@ void func_80851828(PlayState* play, Player* this, CsCmdActorCue* cue) {
     if (this->av2.actionVar2 > 20) {
         this->csAction = PLAYER_CSACTION_11;
     }
+}
+
+void PlayerCs_InitDekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
+    this->actor.world.rot.y = this->actor.shape.rot.y = 0x2000;
+    this->unk_450.x = 635.0f;
+    this->unk_450.y = 1400.0f;
+    this->unk_450.z = 633.0f;
+    this->speedXZ = 5.5f;
+    this->av2.actionVar2 = 0;
+}
+
+void PlayerCs_DekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
+    f32 speed = 5.5f;
+
+    this->av2.actionVar2++;
+
+    if (this->av2.actionVar2 >= 22 && this->av2.actionVar2 >= 25)
+        this->actor.world.rot.y = this->actor.shape.rot.y = 0x2000;
+
+    func_80845BA0(play, this, &speed, 10);
+
+    if (this->av2.actionVar2 == 24)
+        Player_SetCsAction(play, NULL, 9);
 }
 
 void func_808518DC(PlayState* play, Player* this, CsCmdActorCue* cue) {
