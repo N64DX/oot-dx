@@ -2451,3 +2451,26 @@ UNSKIPPABLE "Il est arrivé ici comme une fleur\n"
 "complètement dingue!"
 )
 )
+
+DEFINE_MESSAGE(0x8122, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hi hi hi... What am I?\n"
+"Show me proof of your map and\n"
+"compass if you want to reach the\n"
+"sealed evil below."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8123, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hi hi hi... Well done.\n"
+"You will need this if you want to\n"
+"reach the sealed evil below."
+),
+MSG(),
+MSG()
+)

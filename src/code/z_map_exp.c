@@ -290,6 +290,9 @@ void Map_Init(PlayState* play) {
     ASSERT(interfaceCtx->mapSegment != NULL, "parameter->mapSegment != NULL", "../z_map_exp.c", 459);
 
     switch (play->sceneId) {
+        case SCENE_ANCIENT_HOLLOW:
+            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = 0x11;
+            break;
         case SCENE_HYRULE_FIELD:
         case SCENE_KAKARIKO_VILLAGE:
         case SCENE_GRAVEYARD:

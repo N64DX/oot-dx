@@ -509,6 +509,10 @@ void Sram_OpenSave(SramContext* sramCtx) {
             gSaveContext.save.entranceIndex = ENTR_GANONS_TOWER_0;
             break;
 
+        case SCENE_ANCIENT_HOLLOW:
+            gSaveContext.save.entranceIndex = ENTR_ANCIENT_HOLLOW_0;
+            break;
+
         default:
             if (!RESUME_LAST_AREA) {
                 if (gSaveContext.save.info.playerData.savedSceneId != SCENE_LINKS_HOUSE)

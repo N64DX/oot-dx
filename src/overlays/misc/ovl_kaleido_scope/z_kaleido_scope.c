@@ -3840,6 +3840,7 @@ void KaleidoScope_Update(PlayState* play) {
                 case SCENE_WATER_TEMPLE_BOSS:
                 case SCENE_SPIRIT_TEMPLE_BOSS:
                 case SCENE_SHADOW_TEMPLE_BOSS:
+                case SCENE_ANCIENT_HOLLOW:
                     sInDungeonScene = true;
                     size2 = (uintptr_t)_icon_item_dungeon_staticSegmentRomEnd -
                             (uintptr_t)_icon_item_dungeon_staticSegmentRomStart;

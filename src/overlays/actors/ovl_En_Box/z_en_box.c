@@ -445,6 +445,11 @@ void EnBox_WaitOpen(EnBox* this, PlayState* play) {
     } else {
         player = GET_PLAYER(play);
         Actor_WorldToActorCoords(&this->dyna.actor, &sp4C, &player->actor.world.pos);
+
+        if (this->type == ENBOX_TYPE_DECORATED_BIG && play->sceneId == SCENE_ANCIENT_HOLLOW)
+            if (!CHECK_DUNGEON_ITEM(DUNGEON_MAP, gSaveContext.mapIndex) || !CHECK_DUNGEON_ITEM(DUNGEON_COMPASS, gSaveContext.mapIndex))
+                return;
+
         if (sp4C.z > -50.0f && sp4C.z < 0.0f && fabsf(sp4C.y) < 10.0f && fabsf(sp4C.x) < 20.0f &&
             Player_IsFacingActor(&this->dyna.actor, 0x3000, play)) {
             Actor_OfferGetItemNearby(&this->dyna.actor, play, -PARAMS_GET_U(this->dyna.actor.params, 5, 7));

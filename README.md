@@ -25,6 +25,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [Decomp Discord](https://discord.zelda.deco.mp)
 - [HackerOoT](https://github.com/HackerN64/HackerOoT)
 - [Hylian Modding Discord](http://discord.gg/qQqDsM8)
+- [Zelda Spaceworld ´97 Experience](https://github.com/z64proto/sw97)
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
@@ -40,6 +41,10 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **LeSéducteur:** Buff Scrub
 - **Syeo & Trueffel:** Miniblin, Molmauk
 - **Zelda Spaceworld ´97 Experience:** Zol
+
+**Scenes:**
+- Old Lost Woods from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Forbidden Woods
+- Fairy Deku Tree from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Ancient Hollow
 
 ### Instructions
 

@@ -13,6 +13,34 @@ beginseg
 endseg
 
 beginseg
+    name "object_bridge_piece"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_bridge_piece/object_bridge_piece.o"
+    number 6
+endseg
+
+beginseg
+    name "object_deku_platforms"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_deku_platforms/object_deku_platforms.o"
+    number 6
+endseg
+
+beginseg
+    name "object_deku_door"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_deku_door/object_deku_door.o"
+    number 6
+endseg
+
+beginseg
+    name "object_lost_woods"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_lost_woods/object_lost_woods.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_gold_dust"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_gold_dust/object_gi_gold_dust.o"
