@@ -363,3 +363,4 @@ Gfx gPotFragmentDL[18] = {
 #include "assets/objects/gameplay_dangeon_keep/gPotFragmentDL.inc.c"
 };
 
+#include "gameplay_dangeon_keep_extra.c"

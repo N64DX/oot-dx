@@ -696,6 +696,18 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 }
                 break;
 
+            case CS_DEST_WOODFALL_TEMPLE_FROM_MASTER_SWORD:
+                play->nextEntranceIndex = ENTR_WOODFALL_TEMPLE_2;
+                play->transitionTrigger = TRANS_TRIGGER_START;
+                play->transitionType = TRANS_TYPE_FADE_WHITE;
+                break;
+
+            case CS_DEST_WOODFALL_TEMPLE_AFTER_CHAMBER_OF_SAGES:
+                play->nextEntranceIndex = ENTR_WOODFALL_TEMPLE_1;
+                play->transitionTrigger = TRANS_TRIGGER_START;
+                play->transitionType = TRANS_TYPE_FADE_BLACK;
+                break;
+
             case CS_DEST_GERUDO_VALLEY_DIN_PART_2:
                 play->nextEntranceIndex = ENTR_GERUDO_VALLEY_0;
                 gSaveContext.save.cutsceneIndex = 0xFFF0;
@@ -862,6 +874,13 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_WHITE;
                 gSaveContext.chamberCutsceneNum = CHAMBER_CS_WATER;
+                break;
+
+            case CS_DEST_CHAMBER_OF_SAGES_WOODFALL_TEMPLE:
+                play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
+                play->transitionTrigger = TRANS_TRIGGER_START;
+                play->transitionType = TRANS_TYPE_FADE_WHITE;
+                gSaveContext.chamberCutsceneNum = CHAMBER_CS_WOODFALL;
                 break;
 
             case CS_DEST_HYRULE_FIELD_FLASHBACK:

@@ -2621,3 +2621,111 @@ BOX_BREAK
 "A la prochaine, " QUICKTEXT_ENABLE "limace!" QUICKTEXT_DISABLE EVENT
 )
 )
+
+DEFINE_MESSAGE(0x8128, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hoo hoo!"
+BOX_BREAK_DELAYED(40)
+
+UNSKIPPABLE "Well done, young hero.\n"
+"I see you're prepared to take down\n"
+"the evil that has haunted Hyrule\n"
+"for seven years."
+BOX_BREAK
+
+UNSKIPPABLE "Let me assist you one final time on\n"
+"your journey. Take one of my feathers.\n"
+"It should assist you on your final\n"
+"task at hand."
+BOX_BREAK
+
+UNSKIPPABLE "I should warn you though. The evil\n"
+"you're about to face is no easy feat.\n"
+"But there's a legendary sword hidden\n"
+"deep in the Lost Woods."
+BOX_BREAK
+
+UNSKIPPABLE "Should you obtain it, it will greatly\n"
+"assist you in your final fight.\n"
+"Look deep into the Forbidden Woods\n"
+"to the path near the fallen tree log."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8200, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Thank you...\n"
+"Because of you, the curse on\n"
+"Woodfall has been lifted..."
+BOX_BREAK
+
+UNSKIPPABLE "As the Forest Temple sage " COLOR(ADJUSTABLE) "Saria" COLOR(DEFAULT) ",\n"
+"I thank you from the bottom of\n"
+"my heart..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8201, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Do not be startled that your\n"
+"legendary Razor Sword is gone..."
+BOX_BREAK
+
+UNSKIPPABLE "It is time..."
+BOX_BREAK_DELAYED(30)
+
+UNSKIPPABLE "It has been resting now deep within\n"
+"the sanctum of Woodfall Temple,\n"
+"fully restoring it's true power."
+BOX_BREAK
+
+UNSKIPPABLE "And with it's true power you will\n"
+"be able to vanquish the evil that\n"
+"has haunted Hyrule for seven years."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8202, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "It is my final gift to you..."
+BOX_BREAK
+
+UNSKIPPABLE "When you awaken, take back your\n"
+"awakened sword from the sanctum..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8203, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_MASTER) QUICKTEXT_ENABLE "The " COLOR(RED) "Razor Sword" COLOR(DEFAULT) " has awoken\n"
+"as the " COLOR(RED) "Master Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Seek it out and reclaim it in\n"
+"the Woodfall Temple sanctum!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8204, TEXTBOX_TYPE_NONE_NO_SHADOW, TEXTBOX_POS_MIDDLE,
+MSG(),
+MSG(
+UNSKIPPABLE SHIFT(30) "No matter what happens...\n"
+SHIFT(35) "remember that I always...\n"
+SHIFT(55) "be your friend...\n" FADE(80)
+),
+MSG(),
+MSG()
+)

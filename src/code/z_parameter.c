@@ -159,6 +159,8 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_SWAMP_SPIDER_HOUSE, 0x00, 0x00, 0x00 },
     { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
     { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x00 },
+    { SCENE_WOODFALL_TEMPLE, 0x00, 0x00, 0x1C },
+    { SCENE_WOODFALL_TEMPLE_BOSS, 0x00, 0x00, 0x1C },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
 
@@ -4392,6 +4394,7 @@ void Interface_Draw(PlayState* play) {
             case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
             case SCENE_TREASURE_BOX_SHOP:
             case SCENE_ANCIENT_HOLLOW:
+            case SCENE_WOODFALL_TEMPLE:
                 if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0) {
                     u16 posX, posY;
                     if (SHIELD_DURABILITY && !IS_PAUSED(&play->pauseCtx) && GET_PLAYER(play)->currentShield > PLAYER_SHIELD_NONE) {

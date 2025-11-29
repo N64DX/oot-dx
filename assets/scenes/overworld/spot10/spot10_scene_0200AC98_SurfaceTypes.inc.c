@@ -814,3 +814,27 @@
             ),
         }, // data
     }, // 33
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 3,
+                /* exitIndex */ 12,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 7,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_FAST,
+                CONVEYOR_DIRECTION_FROM_BINANG(0xC000),
+                /* unk27 */ false
+            ),
+        }, // data
+    }, // 34

@@ -394,7 +394,7 @@ static s8 D_80910638;
 
 s16 BossGanon2_CalculateHealth(s16 health) {
     if (IS_CHILD_QUEST)
-        return health; // * 3;
+        return health * 3;
     if (isHyper)
         return health * 1.5;
     return health;

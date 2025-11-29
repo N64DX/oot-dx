@@ -32,6 +32,7 @@ void func_808BB0AC(BgTokiSwd* this, PlayState* play);
 void func_808BB128(BgTokiSwd* this, PlayState* play);
 
 extern CutsceneData gPullMasterSwordCs[];
+extern CutsceneData gPullMasterSwordWoodfallCs[];
 extern CutsceneData gPlaceMasterSwordCs[];
 extern CutsceneData gRevealMasterSwordCs[];
 
@@ -81,14 +82,16 @@ void BgTokiSwd_Init(Actor* thisx, PlayState* play) {
     s32 pad;
     BgTokiSwd* this = (BgTokiSwd*)thisx;
     
-    if (IS_BOSS_RUSH || IS_DUNGEON_RUSH)
+    if (IS_BOSS_RUSH || IS_DUNGEON_RUSH || (this->actor.params != MASTER_SWORD_TEMPLE_OF_TIME && HAS_MASTER_SWORD)) {
         Actor_Kill(&this->actor);
+        return;
+    }
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
-    this->actor.shape.yOffset = 800.0f;
+    this->actor.shape.yOffset = this->actor.params != MASTER_SWORD_TEMPLE_OF_TIME ? -200.0f : 800.0f;
     BgTokiSwd_SetupAction(this, func_808BAF40);
 
-    if (LINK_IS_ADULT || (CQ_IS_TIMESKIP && gSaveContext.sceneLayer != 5)) {
+    if ((LINK_IS_ADULT || (CQ_IS_TIMESKIP && gSaveContext.sceneLayer != 5)) && thisx->params == MASTER_SWORD_TEMPLE_OF_TIME) {
         this->actor.draw = NULL;
     }
 
@@ -109,18 +112,28 @@ void BgTokiSwd_Destroy(Actor* thisx, PlayState* play) {
 }
 
 void func_808BAF40(BgTokiSwd* this, PlayState* play) {
-    if (!GET_EVENTCHKINF(EVENTCHKINF_REVEALED_MASTER_SWORD) && !IS_CUTSCENE_LAYER &&
+    if (!GET_EVENTCHKINF(EVENTCHKINF_REVEALED_MASTER_SWORD) && !IS_CUTSCENE_LAYER && this->actor.params == MASTER_SWORD_TEMPLE_OF_TIME &&
         Actor_IsFacingAndNearPlayer(&this->actor, 800.0f, 0x7530) && !Play_InCsMode(play)) {
         SET_EVENTCHKINF(EVENTCHKINF_REVEALED_MASTER_SWORD);
         play->csCtx.script = gRevealMasterSwordCs;
         gSaveContext.cutsceneTrigger = 1;
     }
 
-    if ((IS_CHILD_QUEST ? (!CQ_IS_TIMESKIP || gSaveContext.sceneLayer == 5) : (!LINK_IS_ADULT || GET_EVENTCHKINF(EVENTCHKINF_55)))) {
+    if ((IS_CHILD_QUEST ? (!CQ_IS_TIMESKIP || gSaveContext.sceneLayer == 5 || this->actor.params != MASTER_SWORD_TEMPLE_OF_TIME) : (!LINK_IS_ADULT || GET_EVENTCHKINF(EVENTCHKINF_55)))) {
         if (Actor_HasParent(&this->actor, play)) {
             if (!LINK_IS_ADULT) {
-                Item_Give(play, ITEM_SWORD_MASTER);
-                play->csCtx.script = gPullMasterSwordCs;
+                if (this->actor.params != MASTER_SWORD_TEMPLE_OF_TIME) {
+                    this->actor.shape.yOffset = 800.0f;
+                    SET_MASTER_SWORD;
+                    Item_Give(play, ITEM_SWORD_MASTER);
+                    Flags_SetSwitch(play, this->actor.params);
+                    play->csCtx.script = gPullMasterSwordWoodfallCs;
+                }
+                else {
+                    Item_Give(play, ITEM_SWORD_MASTER);
+                    play->csCtx.script = gPullMasterSwordCs;
+                }
+                
             } else {
                 play->csCtx.script = gPlaceMasterSwordCs;
             }

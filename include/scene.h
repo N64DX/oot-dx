@@ -401,7 +401,9 @@ typedef enum SceneDrawConfig {
     /* 52 */ SDC_INSIDE_GANONS_CASTLE_COLLAPSE,
     /* 53 */ SDC_FORBIDDEN_WOODS,
     /* 54 */ SDC_ANCIENT_HOLLOW,
-    /* 55 */ SDC_MAX
+    /* 55 */ SDC_WOODFALL_TEMPLE,
+    /* 56 */ SDC_WOODFALL,
+    /* 57 */ SDC_MAX
 } SceneDrawConfig;
 
 typedef void (*SceneDrawConfigFunc)(struct PlayState*);

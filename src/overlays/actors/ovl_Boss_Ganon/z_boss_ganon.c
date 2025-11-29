@@ -396,7 +396,7 @@ void BossGanonEff_SpawnBlackDot(PlayState* play, Vec3f* pos, f32 scale) {
 
 s16 BossGanon_CalculateHealth(s16 health) {
     if (IS_CHILD_QUEST)
-        return health; // * 3;
+        return health * 3;
     return health;
 }
 
