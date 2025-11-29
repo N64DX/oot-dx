@@ -42,3 +42,11 @@
         10, // playerEntryIndex
         2, // room
     }, // 10
+    {
+        11, // playerEntryIndex
+        8, // room
+    }, // 11
+    {
+        12, // playerEntryIndex
+        1, // room
+    }, // 12

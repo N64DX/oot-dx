@@ -561,6 +561,7 @@ beginseg
     include "$(BUILD_DIR)/src/code/z_env_flags.o"
     include "$(BUILD_DIR)/src/code/z_fcurve_data.o"
     include "$(BUILD_DIR)/src/code/z_fcurve_data_skelanime.o"
+    include "$(BUILD_DIR)/src/code/z_fireobj.o"
     include "$(BUILD_DIR)/src/code/z_game_dlftbls.o"
     include "$(BUILD_DIR)/src/code/z_horse.o"
     include "$(BUILD_DIR)/src/code/z_jpeg.o"

@@ -216,6 +216,132 @@ beginseg
 endseg
 
 beginseg
+    name "woodfall_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "woodfall_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "woodfall_temple_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_1.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_2"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_3"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_3.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_4"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_5"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_5.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_6"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_6.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_7"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_7.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_8"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_8.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_9"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_9.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_10"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_10.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_11"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_room_12"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_12.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_boss_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple_boss/woodfall_temple_boss_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "woodfall_temple_boss_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple_boss/woodfall_temple_boss_room_0.o"
+    number 3
+endseg
+
+beginseg
     name "besitu_scene"
     include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_scene.o"
     number 2

@@ -1578,3 +1578,15 @@ COLOR(LIGHTBLUE) "Fermé pour une durée indéterminée.\n"
 "En attendant le retour des mauvais esprits." COLOR(DEFAULT)
 )
 )
+
+DEFINE_MESSAGE(0x023E, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+COLOR(LIGHTBLUE) "Prove yourself worthy.\n"
+"Complete the trials of the forest\n"
+"without relying on the use of\n"
+"magic items." COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)

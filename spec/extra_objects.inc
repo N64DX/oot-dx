@@ -20,6 +20,55 @@ beginseg
 endseg
 
 beginseg
+    name "object_mtoride"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_mtoride/object_mtoride.o"
+    number 6
+endseg
+
+beginseg
+    name "object_wood_pillar"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_wood_pillar/object_wood_pillar.o"
+    number 6
+endseg
+
+beginseg
+    name "object_dekucity_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_dekucity_obj/object_dekucity_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_numa_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_numa_obj/object_numa_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_raillift"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_raillift/object_raillift.o"
+    number 6
+endseg
+
+beginseg
+    name "object_dkjail_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_dkjail_obj/object_dkjail_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_bg_teleporter"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_bg_teleporter/object_bg_teleporter.o"
+    number 6
+endseg
+
+beginseg
     name "object_bridge_piece"
     compress
     include "$(BUILD_DIR)/assets/objects/object_bridge_piece/object_bridge_piece.o"

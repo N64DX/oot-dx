@@ -7236,6 +7236,74 @@ LAYER_3077:
 /* 0x30B6 [0x60 0x64 0x4B          ] */ notedv      PITCH_F3, 100, 75
 /* 0x30B9 [0xFF                    ] */ end
 
+.channel CHAN_EV_FLOWERPETAL_MOVE
+/* 0x3FDE [0x88 0x3F 0xE7          ] */ ldlayer     0, LAYER_EV_FLOWERPETAL_MOVE_2
+/* 0x3FE1 [0x89 0x3F 0xE5          ] */ ldlayer     1, LAYER_EV_FLOWERPETAL_MOVE_1
+/* 0x3FE4 [0xFF                    ] */ end
+
+.layer LAYER_EV_FLOWERPETAL_MOVE_1
+/* 0x3FE5 [0xC2 0x3C               ] */ transpose   60
+.layer LAYER_EV_FLOWERPETAL_MOVE_2
+/* 0x3FE7 [0xC6 0x42               ] */ instr       SF0_INST_66
+/* 0x3FE9 [0xC7 0x01 0x03 0x28     ] */ portamento  0x01, PITCH_C1, 40
+/* 0x3FED [0x4F 0xFF 0xBC 0x64     ] */ notedv      PITCH_C2, 32700, 100
+/* 0x3FF1 [0xFF                    ] */ end
+
+.channel CHAN_EV_FLOWERPETAL_STOP
+/* 0x3FF2 [0x88 0x3F 0xF9          ] */ ldlayer     0, LAYER_EV_FLOWERPETAL_STOP_1
+/* 0x3FF5 [0x89 0x39 0xBB          ] */ ldlayer     1, LAYER_EV_FLOWERPETAL_STOP_2
+/* 0x3FF8 [0xFF                    ] */ end
+
+.layer LAYER_EV_FLOWERPETAL_STOP_1
+/* 0x3FF9 [0xC6 0x4D               ] */ instr       SF0_INST_77
+/* 0x3FFB [0xCF 0xDD               ] */ releaserate 221
+/* 0x3FFD [0xC7 0x81 0x37 0xFF     ] */ portamento  0x81, PITCH_E5, 255
+/* 0x4001 [0x55 0x34 0x30          ] */ notedv      PITCH_GF2, 52, 48
+/* 0x4004 [0xFF                    ] */ end
+
+.layer LAYER_EV_FLOWERPETAL_STOP_2
+/* 0x39BB [0xC6 0x3F               ] */ instr       SF0_INST_63
+/* 0x39BD [0xCB 0xC0 0x34 0xEB     ] */ env         ENVELOPE_C034, 235
+/* 0x39C1 [0x5B 0x04 0x64          ] */ notedv      PITCH_C3, 4, 100
+/* 0x39C4 [0x56 0x08 0x64          ] */ notedv      PITCH_G2, 8, 100
+/* 0x39C7 [0xFF                    ] */ end
+
+.channel CHAN_EV_FLOWER_ROLLING
+/* 0x4005 [0x8A 0x40 0x0B          ] */ ldlayer     2, LAYER_EV_FLOWER_ROLLING_1
+/* 0x4008 [0xFB 0x32 0x7F          ] */ jump        CHAN_EV_ROLL_STAND
+
+.layer LAYER_EV_FLOWER_ROLLING_1
+/* 0x400B [0xC6 0x42               ] */ instr       SF0_INST_66
+/* 0x400D [0xC2 0x30               ] */ transpose   48
+/* 0x400F [0xC4                    ] */ legato
+LAYER_EV_FLOWER_ROLLING_2:
+/* 0x4010 [0x4F 0xFF 0xBC 0x64     ] */ notedv      PITCH_C2, 32700, 100
+/* 0x4014 [0xF4 0xFA               ] */ rjump       LAYER_EV_FLOWER_ROLLING_2
+
+.channel CHAN_EV_ROLL_STAND
+/* 0x327F [0x88 0x32 0x96          ] */ ldlayer     0, LAYER_3296
+/* 0x3282 [0x89 0x32 0x8A          ] */ ldlayer     1, LAYER_328A
+/* 0x3285 [0xD7 0xDC               ] */ vibfreq     220
+/* 0x3287 [0xD8 0x35               ] */ vibdepth    53
+/* 0x3289 [0xFF                    ] */ end
+
+.layer LAYER_3296
+/* 0x3296 [0xC2 0xEE               ] */ transpose   -18
+/* 0x3298 [0xC6 0x34               ] */ instr       SF0_INST_52
+/* 0x329A [0xCB 0xC0 0x00 0xF7     ] */ env         ENVELOPE_C000, 247
+/* 0x329E [0xC4                    ] */ legato
+LAYER_329F:
+/* 0x329F [0x5E 0x60 0x5A          ] */ notedv      PITCH_EF3, 96, 90
+/* 0x32A2 [0xF4 0xFB               ] */ rjump       LAYER_329F
+
+.layer LAYER_328A
+/* 0x328A [0xC6 0x4A               ] */ instr       SF0_INST_74
+/* 0x328C [0xCB 0xC0 0x00 0xF7     ] */ env         ENVELOPE_C000, 247
+/* 0x3290 [0xC4                    ] */ legato
+LAYER_3291:
+/* 0x3291 [0x4C 0x60 0x6C          ] */ notedv      PITCH_A1, 96, 108
+/* 0x3294 [0xF4 0xFB               ] */ rjump       LAYER_3291
+
 .filter FILTER_30C0
     filter 0, 0, 0, 0, 0, 0, 0, 0
 
@@ -15809,6 +15877,15 @@ ENVELOPE_6A6C:
 .envelope ENVELOPE_C4DC
     point 1, 5000
     point 50, 32700
+    hang
+
+.envelope ENVELOPE_C034
+    point 6, 32700
+    hang
+
+.envelope ENVELOPE_C000
+    point 30, 10000
+    point 30, 32700
     hang
 
 SEQ_0_END:

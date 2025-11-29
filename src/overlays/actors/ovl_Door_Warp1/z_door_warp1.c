@@ -549,6 +549,16 @@ void DoorWarp1_ChildWarpOut(DoorWarp1* this, PlayState* play) {
             Flags_SetEventChkInf(EVENTCHKINF_EXITED_HYPER_GOHMA);
             play->nextEntranceIndex = ENTR_FORBIDDEN_WOODS_5;
             gSaveContext.nextCutsceneIndex = 0;
+        } else if (play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS) {
+            if (!Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL)) {
+                Flags_SetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL);
+                play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
+                gSaveContext.chamberCutsceneNum = CHAMBER_CS_WOODFALL;
+                Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_MASTER);
+                gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
+                Inventory_DeleteEquipment(play, EQUIP_TYPE_SWORD);
+            } else play->nextEntranceIndex = ENTR_WOODFALL_TEMPLE_1;
+            gSaveContext.nextCutsceneIndex = 0;
         } else if (play->sceneId == SCENE_BESITU) {
             play->nextEntranceIndex = ENTR_FORBIDDEN_WOODS_6;
             gSaveContext.nextCutsceneIndex = 0;
