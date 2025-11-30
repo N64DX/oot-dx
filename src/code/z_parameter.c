@@ -4184,8 +4184,8 @@ void Interface_Draw(PlayState* play) {
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x4000 + (0x1000*svar1), 4+svar1);
             gDPPipeSync(OVERLAY_DISP++);
             gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[svar1+1] > 100 ? 100 : dpadAlphas[svar1+1]);
-            Interface_DrawAmmoCount(play, 4+svar1, dpadAlphas[svar1+1] > 100 ? 100 : dpadAlphas[svar1+1]);
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[svar1+1] > 200 ? 200 : dpadAlphas[svar1+1]);
+            Interface_DrawAmmoCount(play, 4+svar1, dpadAlphas[svar1+1] > 200 ? 200 : dpadAlphas[svar1+1]);
         }
 
         // A Button
