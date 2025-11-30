@@ -48,10 +48,12 @@
 #define SCALE_X     ((f32)(SCREEN_WIDTH) / (f32)(SCREEN_X))
 
 // Scaling macros
-#define HIRES_MULTIPLY(var) ((var) * HIRES_SCALE)
-#define HIRES_DIVIDE(var)   ((var) / HIRES_SCALE)
-#define X_MULTIPLY(var)     ROUND((var) * SCALE_X)
-#define X_DIVIDE(var)       ROUND((var) / SCALE_X)
+#define HIRES_MULTIPLY(var)   ((var) * HIRES_SCALE)
+#define HIRES_DIVIDE(var)     ((var) / HIRES_SCALE)
+#define X_MULTIPLY(var)       ROUND((var) * SCALE_X)
+#define X_DIVIDE(var)         ROUND((var) / SCALE_X)
+#define X_HIRES_MULTIPLY(var) ROUND((var) * HIRES_SCALE * SCALE_X)
+#define X_HIRES_DIVIDE(var)   ROUND((var) / HIRES_SCALE / SCALE_X)
 
 
 

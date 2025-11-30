@@ -242,7 +242,7 @@ void ConsoleLogo_Draw(ConsoleLogoState* this) {
                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
         gDPSetTileSize(POLY_OPA_DISP++, 1, this->uls, (this->ult & 0x7F) - (idx << 2), 0, 0);
-        gSPTextureRectangle(POLY_OPA_DISP++, X_MULTIPLY(HIRES_MULTIPLY(WS_SHIFT_HALF + 97)) << 2, HIRES_MULTIPLY(y << 2), X_MULTIPLY(HIRES_MULTIPLY(WS_SHIFT_HALF + 289)) << 2, HIRES_MULTIPLY((y + 2) << 2), G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)),
+        gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_HALF + 97) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(WS_SHIFT_HALF + 289) << 2, HIRES_MULTIPLY((y + 2) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10),
                             HIRES_DIVIDE(1 << 10));
     }
 
@@ -279,7 +279,7 @@ void ConsoleLogo_DrawQuestImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 
         gDPSetTextureImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, width, curTexture);
         gDPLoadSync(POLY_OPA_DISP++);
         gDPLoadTile(POLY_OPA_DISP++, G_TX_LOADTILE, 0, 0, (width - 1) << 2, (textureHeight - 1) << 2);
-        gSPTextureRectangle(POLY_OPA_DISP++, X_MULTIPLY(HIRES_MULTIPLY(rectLeft + WS_SHIFT_HALF)) << 2, HIRES_MULTIPLY(rectTop << 2), X_MULTIPLY(HIRES_MULTIPLY(rectLeft + WS_SHIFT_HALF + (s32)width)) << 2, HIRES_MULTIPLY((rectTop + textureHeight) << 2), G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+        gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(rectLeft + WS_SHIFT_HALF) << 2, HIRES_MULTIPLY(rectTop << 2), X_HIRES_MULTIPLY(rectLeft + WS_SHIFT_HALF + (s32)width) << 2, HIRES_MULTIPLY((rectTop + textureHeight) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         curTexture += textureSize;
         rectTop += textureHeight;
 

@@ -3129,18 +3129,18 @@ void Magic_DrawMeter(PlayState* play) {
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
         gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
 
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8, 16, X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_METER_X)), HIRES_MULTIPLY(magicMeterY), X_MULTIPLY(HIRES_MULTIPLY(8)), HIRES_MULTIPLY(16),
-                                     X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8, 16, X_HIRES_MULTIPLY(R_MAGIC_METER_X), HIRES_MULTIPLY(magicMeterY), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16),
+                                     X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_METER_X + 8)), HIRES_MULTIPLY(magicMeterY),
-                                     X_MULTIPLY(HIRES_MULTIPLY(gSaveContext.magicCapacity)), HIRES_MULTIPLY(16) - HIRES_PX_SHIFT, X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_HIRES_MULTIPLY(R_MAGIC_METER_X + 8), HIRES_MULTIPLY(magicMeterY),
+                                     X_HIRES_MULTIPLY(gSaveContext.magicCapacity), HIRES_MULTIPLY(16) - HIRES_PX_SHIFT, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
         gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0,
                             G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-        gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity)) << 2, HIRES_MULTIPLY(magicMeterY) << 2,
-                            X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity + 8)) << 2, HIRES_MULTIPLY((magicMeterY + 16)) << 2,
-                            G_TX_RENDERTILE, 256, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity) << 2, HIRES_MULTIPLY(magicMeterY) << 2,
+                            X_HIRES_MULTIPLY(R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity + 8) << 2, HIRES_MULTIPLY((magicMeterY + 16)) << 2,
+                            G_TX_RENDERTILE, 256, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
         gDPPipeSync(OVERLAY_DISP++);
         gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE, PRIMITIVE,
@@ -3155,18 +3155,18 @@ void Magic_DrawMeter(PlayState* play) {
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                  G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X)) << 2, HIRES_MULTIPLY((magicMeterY + 3)) << 2,
-                                X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic)) << 2,
-                                (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY((magicMeterY + 3)) << 2,
+                                X_HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2,
+                                (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
             // Fill the rest of the meter with the normal magic color
             gDPPipeSync(OVERLAY_DISP++);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
                             interfaceCtx->magicAlpha);
 
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X)) << 2, HIRES_MULTIPLY((magicMeterY + 3)) << 2,
-                                X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.magicTarget)) << 2, (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2,
-                                G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY((magicMeterY + 3)) << 2,
+                                X_HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2, (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2,
+                                G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         } else {
             // Fill the whole meter with the normal magic color
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
@@ -3176,9 +3176,9 @@ void Magic_DrawMeter(PlayState* play) {
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                  G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X)) << 2, HIRES_MULTIPLY((magicMeterY + 3)) << 2,
-                                X_MULTIPLY(HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic)) << 2,
-                                (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY((magicMeterY + 3)) << 2,
+                                X_HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2,
+                                (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
     }
 
@@ -3324,7 +3324,7 @@ void Interface_DrawItemButtons(PlayState* play) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 192, 192, 192, dpadAlphas[0]);
         }
         gDPLoadTextureBlock(OVERLAY_DISP++, gDpadTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(dpad_x)) << 2, HIRES_MULTIPLY(dpad_y) << 2, X_MULTIPLY(HIRES_MULTIPLY(dpad_x + 16)) << 2, HIRES_MULTIPLY(dpad_y + 16) << 2, G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(2 << 10)), HIRES_DIVIDE(2 << 10));
+        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(dpad_x) << 2, HIRES_MULTIPLY(dpad_y) << 2, X_HIRES_MULTIPLY(dpad_x + 16) << 2, HIRES_MULTIPLY(dpad_y + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2 << 10), HIRES_DIVIDE(2 << 10));
     }
 
     // B Button Color & Texture
@@ -3334,30 +3334,30 @@ void Interface_DrawItemButtons(PlayState* play) {
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_B_BTN_COLOR(0), R_B_BTN_COLOR(1), R_B_BTN_COLOR(2), interfaceCtx->bAlpha);
     gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
     OVERLAY_DISP =
-        Gfx_TextureIA8(OVERLAY_DISP, gButtonBackgroundTex, 32, 32, X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(0))), HIRES_MULTIPLY(R_ITEM_BTN_Y(0)),
-                       X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0))), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), X_DIVIDE(HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1)), HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1));
+        Gfx_TextureIA8(OVERLAY_DISP, gButtonBackgroundTex, 32, 32, X_HIRES_MULTIPLY(R_ITEM_BTN_X(0)), HIRES_MULTIPLY(R_ITEM_BTN_Y(0)),
+                       X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1));
 
     // C-Left Button Color & Texture
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cLeftAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(1))) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(1)) << 2,
-                        X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(1) + R_ITEM_BTN_WIDTH(1))) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(1) + R_ITEM_BTN_WIDTH(1))) << 2,
-                        G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1)), HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1));
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_ITEM_BTN_X(1)) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(1)) << 2,
+                        X_HIRES_MULTIPLY(R_ITEM_BTN_X(1) + R_ITEM_BTN_WIDTH(1)) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(1) + R_ITEM_BTN_WIDTH(1))) << 2,
+                        G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1));
 
     // C-Down Button Color & Texture
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cDownAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(2))) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(2)) << 2,
-                        X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(2) + R_ITEM_BTN_WIDTH(2))) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(2) + R_ITEM_BTN_WIDTH(2))) << 2,
-                        G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1)), HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1));
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_ITEM_BTN_X(2)) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(2)) << 2,
+                        X_HIRES_MULTIPLY(R_ITEM_BTN_X(2) + R_ITEM_BTN_WIDTH(2)) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(2) + R_ITEM_BTN_WIDTH(2))) << 2,
+                        G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1));
 
     // C-Right Button Color & Texture
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                     interfaceCtx->cRightAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(3))) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(3)) << 2,
-                        X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(3) + R_ITEM_BTN_WIDTH(3))) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(3) + R_ITEM_BTN_WIDTH(3))) << 2,
-                        G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(R_ITEM_BTN_DD(3) << 1)), HIRES_DIVIDE(R_ITEM_BTN_DD(3) << 1));
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_ITEM_BTN_X(3)) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(3)) << 2,
+                        X_HIRES_MULTIPLY(R_ITEM_BTN_X(3) + R_ITEM_BTN_WIDTH(3)) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(3) + R_ITEM_BTN_WIDTH(3))) << 2,
+                        G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(R_ITEM_BTN_DD(3) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(3) << 1));
 
     if (!IS_PAUSE_STATE_GAMEOVER(pauseCtx)) {
         if (IS_PAUSED(&play->pauseCtx)) {
@@ -3367,16 +3367,16 @@ void Interface_DrawItemButtons(PlayState* play) {
                             interfaceCtx->startAlpha);
 
 #if (OOT_VERSION < PAL_1_0) && !OOT_NTSC_N64
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_START_BTN_X + WS_SHIFT_FULL)) << 2, HIRES_MULTIPLY(R_START_BTN_Y) << 2, X_MULTIPLY(HIRES_MULTIPLY(R_START_BTN_X + WS_SHIFT_FULL + 22)) << 2,
-                                HIRES_MULTIPLY(R_START_BTN_Y + 22) << 2, G_TX_RENDERTILE, 0, 0, (s32)(1.4277344 * X_DIVIDE(HIRES_DIVIDE(1 << 10))),
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_START_BTN_X + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(R_START_BTN_Y) << 2, X_HIRES_MULTIPLY(R_START_BTN_X + WS_SHIFT_FULL + 22) << 2,
+                                HIRES_MULTIPLY(R_START_BTN_Y + 22) << 2, G_TX_RENDERTILE, 0, 0, (s32)(1.4277344 * X_HIRES_DIVIDE(1 << 10),
                                 (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #elif OOT_NTSC && !OOT_NTSC_N64
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(132 + WS_SHIFT_FULL)) << 2, HIRES_MULTIPLY(17 << 2), X_MULTIPLY(HIRES_MULTIPLY(132 + WS_SHIFT_FULL + 22)) << 2, HIRES_MULTIPLY((17 + 22) << 2), G_TX_RENDERTILE, 0,
-                                0, (s32)(1.4277344 * X_DIVIDE(HIRES_DIVIDE(1 << 10))), (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(132 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(17 << 2), X_HIRES_MULTIPLY(132 + WS_SHIFT_FULL + 22) << 2, HIRES_MULTIPLY((17 + 22) << 2), G_TX_RENDERTILE, 0,
+                                0, (s32)(1.4277344 * X_HIRES_DIVIDE(1 << 10), (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #else
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL)) << 2, HIRES_MULTIPLY(17) << 2,
-                                X_MULTIPLY(HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL + 22)) << 2, HIRES_MULTIPLY((17 + 22)) << 2, G_TX_RENDERTILE,
-                                0, 0, (s32)(1.4277344 * X_DIVIDE(HIRES_DIVIDE(1 << 10))), (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(17) << 2,
+                                X_HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL + 22) << 2, HIRES_MULTIPLY((17 + 22)) << 2, G_TX_RENDERTILE,
+                                0, 0, (s32)(1.4277344 * X_HIRES_DIVIDE(1 << 10)), (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #endif
 
             gDPPipeSync(OVERLAY_DISP++);
@@ -3393,20 +3393,20 @@ void Interface_DrawItemButtons(PlayState* play) {
             R_START_LABEL_SCALE = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             R_START_LABEL_WIDTH = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             R_START_LABEL_HEIGHT = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL)) << 2,
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL) << 2,
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language) << 2),
-                                X_MULTIPLY(HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + R_START_LABEL_WIDTH)) << 2,
+                                X_HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + R_START_LABEL_WIDTH) << 2,
                                 HIRES_MULTIPLY((R_START_LABEL_Y(gSaveContext.language) + R_START_LABEL_HEIGHT) << 2), G_TX_RENDERTILE,
-                                0, 0, X_DIVIDE(HIRES_DIVIDE(R_START_LABEL_SCALE)), HIRES_DIVIDE(R_START_LABEL_SCALE));
+                                0, 0, X_HIRES_DIVIDE(R_START_LABEL_SCALE), HIRES_DIVIDE(R_START_LABEL_SCALE));
 #else
             texCoordScale = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             width = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
             height = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL)) << 2,
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL) << 2,
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language)) << 2,
-                                X_MULTIPLY(HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + width)) << 2,
+                                X_HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + width) << 2,
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language) + height) << 2, G_TX_RENDERTILE, 0, 0,
-                                X_DIVIDE(HIRES_DIVIDE(texCoordScale)), HIRES_DIVIDE(texCoordScale));
+                                X_HIRES_DIVIDE(texCoordScale), HIRES_DIVIDE(texCoordScale));
 #endif
         }
     }
@@ -3430,8 +3430,8 @@ void Interface_DrawItemButtons(PlayState* play) {
 
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), temp);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_BTN_X)) << 2, HIRES_MULTIPLY(R_C_UP_BTN_Y) << 2, X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_BTN_X + 16)) << 2,
-                                HIRES_MULTIPLY(R_C_UP_BTN_Y + 16) << 2, G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(2 << 10)), HIRES_DIVIDE(2 << 10));
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_C_UP_BTN_X) << 2, HIRES_MULTIPLY(R_C_UP_BTN_Y) << 2, X_HIRES_MULTIPLY(R_C_UP_BTN_X + 16) << 2,
+                                HIRES_MULTIPLY(R_C_UP_BTN_Y + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2 << 10), HIRES_DIVIDE(2 << 10));
             gDPPipeSync(OVERLAY_DISP++);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, temp);
             gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 0);
@@ -3442,14 +3442,14 @@ void Interface_DrawItemButtons(PlayState* play) {
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, cUpLabelTextures[gSaveContext.language], G_IM_FMT_IA, 32, 8, 0,
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                    G_TX_NOLOD, G_TX_NOLOD);
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_ICON_X)) << 2, HIRES_MULTIPLY(R_C_UP_ICON_Y) << 2, X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_ICON_X + 32)) << 2,
-                                HIRES_MULTIPLY(R_C_UP_ICON_Y + 8) << 2, G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_C_UP_ICON_X) << 2, HIRES_MULTIPLY(R_C_UP_ICON_Y) << 2, X_HIRES_MULTIPLY(R_C_UP_ICON_X + 32) << 2,
+                                HIRES_MULTIPLY(R_C_UP_ICON_Y + 8) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 #else
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, cUpLabelTextures[gSaveContext.language], G_IM_FMT_IA, 48, 16, 0,
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                    G_TX_NOLOD, G_TX_NOLOD);
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_ICON_X - 8)) << 2, HIRES_MULTIPLY(R_C_UP_ICON_Y - 4) << 2,
-                                X_MULTIPLY(HIRES_MULTIPLY(R_C_UP_ICON_X + 40)) << 2, HIRES_MULTIPLY(R_C_UP_ICON_Y + 12) << 2, G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)),
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_C_UP_ICON_X - 8) << 2, HIRES_MULTIPLY(R_C_UP_ICON_Y - 4) << 2,
+                                X_HIRES_MULTIPLY(R_C_UP_ICON_X + 40) << 2, HIRES_MULTIPLY(R_C_UP_ICON_Y + 12) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10),
                                 HIRES_DIVIDE(1 << 10));
 #endif
         }
@@ -3478,8 +3478,8 @@ void Interface_DrawItemButtons(PlayState* play) {
             }
 
             OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gButtonBackgroundTex + ((32 * 32) * (temp + 1))), 32, 32,
-                                          X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_X(temp))), HIRES_MULTIPLY(R_ITEM_BTN_Y(temp)), X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(temp))),
-                                          HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(temp)), X_DIVIDE(HIRES_DIVIDE(R_ITEM_BTN_DD(temp) << 1)), HIRES_DIVIDE(R_ITEM_BTN_DD(temp) << 1));
+                                          X_HIRES_MULTIPLY(R_ITEM_BTN_X(temp)), HIRES_MULTIPLY(R_ITEM_BTN_Y(temp)), X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(temp)),
+                                          HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(temp)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(temp) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(temp) << 1));
         }
     }
 
@@ -3543,7 +3543,7 @@ void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
     gDPLoadTextureBlock(OVERLAY_DISP++, texture, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP,
                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-    gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(x + offset)) << 2, HIRES_MULTIPLY(y + offset) << 2, X_MULTIPLY(HIRES_MULTIPLY(x + width + offset)) << 2, HIRES_MULTIPLY(y + width + offset) << 2, G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(dd << 1)), HIRES_DIVIDE(dd << 1));
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(x + offset) << 2, HIRES_MULTIPLY(y + offset) << 2, X_HIRES_MULTIPLY(x + width + offset) << 2, HIRES_MULTIPLY(y + width + offset) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(dd << 1), HIRES_DIVIDE(dd << 1));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3094);
 }
@@ -3600,8 +3600,8 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
 
         if (button < 4) {
             if (i != 0)
-                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_AMMO_X(button))), HIRES_MULTIPLY(R_ITEM_AMMO_Y(button)), X_MULTIPLY(HIRES_MULTIPLY(8)), HIRES_MULTIPLY(8), X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
-            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, X_MULTIPLY(HIRES_MULTIPLY(R_ITEM_AMMO_X(button) + 6)), HIRES_MULTIPLY(R_ITEM_AMMO_Y(button)), X_MULTIPLY(HIRES_MULTIPLY(8)), HIRES_MULTIPLY(8), X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, X_HIRES_MULTIPLY(R_ITEM_AMMO_X(button)), HIRES_MULTIPLY(R_ITEM_AMMO_Y(button)), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, X_HIRES_MULTIPLY(R_ITEM_AMMO_X(button) + 6), HIRES_MULTIPLY(R_ITEM_AMMO_Y(button)), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
         else {
             u8 x, y;
@@ -3625,8 +3625,8 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
             }
 
             if (i != 0)
-                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, X_MULTIPLY(HIRES_MULTIPLY(x)), HIRES_MULTIPLY(y), X_MULTIPLY(HIRES_MULTIPLY(8)), HIRES_MULTIPLY(8), X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
-            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, X_MULTIPLY(HIRES_MULTIPLY(x + 6)), HIRES_MULTIPLY(y), X_MULTIPLY(HIRES_MULTIPLY(8)), HIRES_MULTIPLY(8), X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * i)), 8, 8, X_HIRES_MULTIPLY(x), HIRES_MULTIPLY(y), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, ((u8*)gAmmoDigit0Tex + ((8 * 8) * ammo)), 8, 8, X_HIRES_MULTIPLY(x + 6), HIRES_MULTIPLY(y), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(8), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
     }
 
@@ -3981,7 +3981,7 @@ void Interface_Draw(PlayState* play) {
         // Rupee Icon
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, walletColors[curWallet][0], walletColors[curWallet][1], walletColors[curWallet][2], interfaceCtx->magicAlpha);
         gDPSetEnvColor(OVERLAY_DISP++, 0, 80, 0, 255);
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gRupeeCounterIconTex, 16, 16, X_MULTIPLY(HIRES_MULTIPLY(26)), HIRES_MULTIPLY(206), X_MULTIPLY(HIRES_MULTIPLY(16)), HIRES_MULTIPLY(16), X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gRupeeCounterIconTex, 16, 16, X_HIRES_MULTIPLY(26), HIRES_MULTIPLY(206), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
         switch (play->sceneId) {
             case SCENE_FOREST_TEMPLE:
@@ -4003,8 +4003,8 @@ void Interface_Draw(PlayState* play) {
                     gDPPipeSync(OVERLAY_DISP++);
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 230, 255, interfaceCtx->magicAlpha);
                     gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 20, 255);
-                    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gSmallKeyCounterIconTex, 16, 16, X_MULTIPLY(HIRES_MULTIPLY(26)), HIRES_MULTIPLY(190), X_MULTIPLY(HIRES_MULTIPLY(16)), HIRES_MULTIPLY(16),
-                                                 X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gSmallKeyCounterIconTex, 16, 16, X_HIRES_MULTIPLY(26), HIRES_MULTIPLY(190), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(16),
+                                                 X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
                     // Small Key Counter
                     gDPPipeSync(OVERLAY_DISP++);
@@ -4021,18 +4021,18 @@ void Interface_Draw(PlayState* play) {
                         interfaceCtx->counterDigits[3] -= 10;
                     }
 
-                    svar3 = X_MULTIPLY(HIRES_MULTIPLY(42));
+                    svar3 = X_HIRES_MULTIPLY(42);
 
                     if (interfaceCtx->counterDigits[2] != 0) {
                         OVERLAY_DISP = Gfx_TextureI8(
                             OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[2])), 8, 16,
-                            svar3, HIRES_MULTIPLY(190), X_MULTIPLY(HIRES_MULTIPLY(8)), HIRES_MULTIPLY(16), X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                            svar3, HIRES_MULTIPLY(190), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
                         svar3 += HIRES_MULTIPLY(8);
                     }
 
                     OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP,
                                                  ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[3])),
-                                                 8, 16, svar3, HIRES_MULTIPLY(190), X_MULTIPLY(HIRES_MULTIPLY(8)), HIRES_MULTIPLY(16), X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                                                 8, 16, svar3, HIRES_MULTIPLY(190), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
                 }
                 break;
             default:
@@ -4076,10 +4076,10 @@ void Interface_Draw(PlayState* play) {
         svar2 = rupeeDigitsFirst[CUR_UPG_VALUE(UPG_WALLET)];
         svar4 = rupeeDigitsCount[CUR_UPG_VALUE(UPG_WALLET)];
 
-        for (svar1 = 0, svar3 = X_MULTIPLY(HIRES_MULTIPLY(42)); svar1 < svar4; svar1++, svar2++, svar3 += X_MULTIPLY(HIRES_MULTIPLY(8))) {
+        for (svar1 = 0, svar3 = X_HIRES_MULTIPLY(42); svar1 < svar4; svar1++, svar2++, svar3 += X_HIRES_MULTIPLY(8)) {
             OVERLAY_DISP =
                 Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[svar2])), 8,
-                              16, svar3, HIRES_MULTIPLY(206), X_MULTIPLY(HIRES_MULTIPLY(8)), HIRES_MULTIPLY(16), X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                              16, svar3, HIRES_MULTIPLY(206), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
 
         Magic_DrawMeter(play);
@@ -4123,11 +4123,11 @@ void Interface_Draw(PlayState* play) {
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
             R_B_LABEL_DD = (1 << 10) / (R_B_LABEL_SCALE(gSaveContext.language) / 100.0f);
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(R_B_LABEL_X(gSaveContext.language))) << 2,
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_B_LABEL_X(gSaveContext.language)) << 2,
                                 HIRES_MULTIPLY(R_B_LABEL_Y(gSaveContext.language) << 2),
-                                X_MULTIPLY(HIRES_MULTIPLY(R_B_LABEL_X(gSaveContext.language) + DO_ACTION_TEX_WIDTH)) << 2,
+                                X_HIRES_MULTIPLY(R_B_LABEL_X(gSaveContext.language) + DO_ACTION_TEX_WIDTH) << 2,
                                 HIRES_MULTIPLY((R_B_LABEL_Y(gSaveContext.language) + DO_ACTION_TEX_HEIGHT) << 2), G_TX_RENDERTILE, 0, 0,
-                                X_DIVIDE(HIRES_DIVIDE(R_B_LABEL_DD)), HIRES_DIVIDE(R_B_LABEL_DD));
+                                X_HIRES_DIVIDE(R_B_LABEL_DD), HIRES_DIVIDE(R_B_LABEL_DD));
         }
 
         gDPPipeSync(OVERLAY_DISP++);
@@ -4185,14 +4185,14 @@ void Interface_Draw(PlayState* play) {
 
         // A Button
         Gfx_SetupDL_42Overlay(play->state.gfxCtx);
-        func_8008A8B8(play, HIRES_MULTIPLY(R_A_BTN_Y), HIRES_MULTIPLY(R_A_BTN_Y + 45), X_MULTIPLY(HIRES_MULTIPLY(R_A_BTN_X)), X_MULTIPLY(HIRES_MULTIPLY(R_A_BTN_X + 45)));
+        func_8008A8B8(play, HIRES_MULTIPLY(R_A_BTN_Y), HIRES_MULTIPLY(R_A_BTN_Y + 45), X_HIRES_MULTIPLY(R_A_BTN_X), X_HIRES_MULTIPLY(R_A_BTN_X + 45));
         gSPClearGeometryMode(OVERLAY_DISP++, G_CULL_BOTH);
         gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_A_BTN_COLOR(0), R_A_BTN_COLOR(1), R_A_BTN_COLOR(2),
                         interfaceCtx->aAlpha);
         Interface_DrawActionButton(play);
         gDPPipeSync(OVERLAY_DISP++);
-        func_8008A8B8(play, HIRES_MULTIPLY(R_A_ICON_Y), HIRES_MULTIPLY(R_A_ICON_Y + 45), X_MULTIPLY(HIRES_MULTIPLY(R_A_ICON_X)), X_MULTIPLY(HIRES_MULTIPLY(R_A_ICON_X + 45)));
+        func_8008A8B8(play, HIRES_MULTIPLY(R_A_ICON_Y), HIRES_MULTIPLY(R_A_ICON_Y + 45), X_HIRES_MULTIPLY(R_A_ICON_X), X_HIRES_MULTIPLY(R_A_ICON_X + 45));
         gSPSetGeometryMode(OVERLAY_DISP++, G_CULL_BACK);
         gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0,
                           PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
@@ -4286,8 +4286,8 @@ void Interface_Draw(PlayState* play) {
                             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->aAlpha);
                         }
 
-                        gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(svar5)) << 2, HIRES_MULTIPLY(ZREG(15) << 2), X_MULTIPLY(HIRES_MULTIPLY(svar5 + 16)) << 2,
-                                            HIRES_MULTIPLY((ZREG(15) + 16) << 2), G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(svar5) << 2, HIRES_MULTIPLY(ZREG(15) << 2), X_HIRES_MULTIPLY(svar5 + 16) << 2,
+                                            HIRES_MULTIPLY((ZREG(15) + 16) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
                     }
                 }
             } else {
@@ -4300,8 +4300,8 @@ void Interface_Draw(PlayState* play) {
                                     G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                     G_TX_NOLOD, G_TX_NOLOD);
 
-                gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(svar5 + 28)) << 2, HIRES_MULTIPLY(ZREG(15) << 2), X_MULTIPLY(HIRES_MULTIPLY(svar5 + 52)) << 2,
-                                    HIRES_MULTIPLY((ZREG(15) + 16) << 2), G_TX_RENDERTILE, 0, 0, X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(svar5 + 28) << 2, HIRES_MULTIPLY(ZREG(15) << 2), X_HIRES_MULTIPLY(svar5 + 52) << 2,
+                                    HIRES_MULTIPLY((ZREG(15) + 16) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
                 // Score Counter
                 gDPPipeSync(OVERLAY_DISP++);
@@ -4313,8 +4313,8 @@ void Interface_Draw(PlayState* play) {
                 for (svar1 = svar2 = 0; svar1 < 4; svar1++) {
                     if (sHBAScoreDigits[svar1] != 0 || (svar2 != 0) || (svar1 >= 3)) {
                         OVERLAY_DISP = Gfx_TextureI8(
-                            OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sHBAScoreDigits[svar1])), 8, 16, X_MULTIPLY(HIRES_MULTIPLY(svar5)),
-                            HIRES_MULTIPLY(ZREG(15) - 2), X_MULTIPLY(HIRES_MULTIPLY(sDigitWidths[0])), HIRES_MULTIPLY(VREG(42)), X_DIVIDE(HIRES_DIVIDE(VREG(43) << 1)), HIRES_DIVIDE(VREG(43) << 1));
+                            OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sHBAScoreDigits[svar1])), 8, 16, X_HIRES_MULTIPLY(svar5),
+                            HIRES_MULTIPLY(ZREG(15) - 2), X_HIRES_MULTIPLY(sDigitWidths[0]), HIRES_MULTIPLY(VREG(42)), X_HIRES_DIVIDE(VREG(43) << 1), HIRES_DIVIDE(VREG(43) << 1));
                         svar5 += 9;
                         svar2++;
                     }
@@ -4779,8 +4779,8 @@ void Interface_Draw(PlayState* play) {
                 gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
                 gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 0);
                 OVERLAY_DISP =
-                    Gfx_TextureIA8(OVERLAY_DISP, gClockIconTex, 16, 16, ((void)0, X_MULTIPLY(HIRES_MULTIPLY(gSaveContext.timerX[timerId]))),
-                                   (((void)0, HIRES_MULTIPLY(gSaveContext.timerY[timerId]) + 2)), X_MULTIPLY(HIRES_MULTIPLY(16)), HIRES_MULTIPLY(16), X_DIVIDE(HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                    Gfx_TextureIA8(OVERLAY_DISP, gClockIconTex, 16, 16, ((void)0, X_HIRES_MULTIPLY(gSaveContext.timerX[timerId])),
+                                   (((void)0, HIRES_MULTIPLY(gSaveContext.timerY[timerId]) + 2)), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
                 // Timer Counter
                 gDPPipeSync(OVERLAY_DISP++);
@@ -4806,9 +4806,9 @@ void Interface_Draw(PlayState* play) {
                 for (svar1 = 0; svar1 < ARRAY_COUNT(sTimerDigits); svar1++) {
                     OVERLAY_DISP =
                         Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sTimerDigits[svar1])), 8, 16,
-                                      (((void)0, (X_MULTIPLY(HIRES_MULTIPLY(gSaveContext.timerX[timerId])))) + (X_MULTIPLY(HIRES_MULTIPLY(timerDigitLeftPos[svar1])))),
-                                      ((void)0, HIRES_MULTIPLY(gSaveContext.timerY[timerId])), X_MULTIPLY(HIRES_MULTIPLY(sDigitWidths[svar1])), HIRES_MULTIPLY(VREG(42)),
-                                      X_DIVIDE(HIRES_DIVIDE(VREG(43) << 1)), HIRES_DIVIDE(VREG(43) << 1));
+                                      (((void)0, (X_HIRES_MULTIPLY(gSaveContext.timerX[timerId]))) + (X_HIRES_MULTIPLY(timerDigitLeftPos[svar1]))),
+                                      ((void)0, HIRES_MULTIPLY(gSaveContext.timerY[timerId])), X_HIRES_MULTIPLY(sDigitWidths[svar1]), HIRES_MULTIPLY(VREG(42)),
+                                      X_HIRES_DIVIDE(VREG(43) << 1), HIRES_DIVIDE(VREG(43) << 1));
                 }
             }
         }

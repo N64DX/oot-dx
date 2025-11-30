@@ -834,7 +834,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
     s32 titleY1;
     s32 titleY2;
     s32 textureLanguageOffset;
-    s32 dsdx = X_DIVIDE(HIRES_DIVIDE(1 << 10));
+    s32 dsdx = X_HIRES_DIVIDE(1 << 10);
     s32 s = 0;
 
     if (titleCtx->alpha != 0) {
@@ -866,7 +866,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         titleY2 = titleY1 + (height * 4);
 
         if (R_ENABLE_MIRROR == 1 && play->pauseCtx.state >= 2) {
-            dsdx = -X_DIVIDE(HIRES_DIVIDE(1 << 10));
+            dsdx = -X_HIRES_DIVIDE(1 << 10);
             s = width << 5;
         }
 
@@ -879,7 +879,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                             width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-        gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(titleX1)), HIRES_MULTIPLY(titleY1), X_MULTIPLY(HIRES_MULTIPLY(titleX2)), HIRES_MULTIPLY(titleY2 - 1), G_TX_RENDERTILE, s, 0, dsdx,
+        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(titleX1), HIRES_MULTIPLY(titleY1), X_HIRES_MULTIPLY(titleX2), HIRES_MULTIPLY(titleY2 - 1), G_TX_RENDERTILE, s, 0, dsdx,
                             HIRES_DIVIDE(1 << 10));
 
         height = titleCtx->height - height;
@@ -890,7 +890,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                                 G_IM_SIZ_8b, width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                                 G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, X_MULTIPLY(HIRES_MULTIPLY(titleX1)), HIRES_MULTIPLY(titleY2), X_MULTIPLY(HIRES_MULTIPLY(titleX2)), HIRES_MULTIPLY(titleY2 + (height * 4) - 1), G_TX_RENDERTILE,
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(titleX1), HIRES_MULTIPLY(titleY2), X_HIRES_MULTIPLY(titleX2), HIRES_MULTIPLY(titleY2 + (height * 4) - 1), G_TX_RENDERTILE,
                                 s, 0, dsdx, HIRES_DIVIDE(1 << 10));
         }
 
