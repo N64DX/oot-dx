@@ -158,6 +158,7 @@ u8 sPrevSeqMode = 0;
 f32 sAudioEnemyDist = 0.0f;
 s8 sAudioEnemyVol = 127;
 u16 sPrevMainBgmSeqId = NA_BGM_DISABLED;
+u16 sPrevMainBgmSeqIdFromFanfare = NA_BGM_DISABLED;
 
 #define SEQ_RESUME_POINT_NONE 0xC0
 u8 sSeqResumePoint = 0;
@@ -3283,8 +3284,32 @@ void Audio_PlaySceneSequence(u16 seqId) {
     }
 }
 
+typedef struct {
+    u8 volume;
+    u16 seqId;
+} SeqWithVolume;
+
+static SeqWithVolume seqsWithVolume[] = {
+    0x7F, NA_BGM_SACRED_COVE,
+    0x6F, NA_BGM_TAL_TAL_HEIGHTS,
+    0x5F, NA_BGM_KOLIMA_FOREST
+};
+
 void Audio_UpdateSceneSequenceResumePoint(void) {
     u16 seqId = Audio_GetActiveSeqId(SEQ_PLAYER_BGM_MAIN);
+    u16 fanfareId = Audio_GetActiveSeqId(SEQ_PLAYER_FANFARE);
+    u8 i;
+
+    for (i=0; i<ARRAY_COUNT(seqsWithVolume); i++) {
+        if (seqId == NA_BGM_DISABLED && fanfareId == NA_BGM_DISABLED && sPrevMainBgmSeqIdFromFanfare == seqsWithVolume[i].seqId && sFanfareStartTimer == 0) {
+            Audio_PlaySceneSequence(sPrevMainBgmSeqIdFromFanfare);
+            sPrevMainBgmSeqIdFromFanfare = NA_BGM_DISABLED;
+            break;
+        } else if (seqId == seqsWithVolume[i].seqId && gActiveSeqs[SEQ_PLAYER_BGM_MAIN].volScales[VOL_SCALE_INDEX_BGM_MAIN] > seqsWithVolume[i].volume) {
+            Audio_SetVolumeScale(SEQ_PLAYER_BGM_MAIN, VOL_SCALE_INDEX_BGM_MAIN, seqsWithVolume[i].volume, 0);
+            break;
+        }
+    }
 
     if ((seqId != NA_BGM_DISABLED) && (sSeqFlags[seqId & 0xFF & 0xFF] & SEQ_FLAG_RESUME)) {
         if (sSeqResumePoint != SEQ_RESUME_POINT_NONE) {
@@ -3436,6 +3461,7 @@ void Audio_PlayFanfare(u16 seqId) {
     u8* requestedFontId;
 
     curSeqId = Audio_GetActiveSeqId(SEQ_PLAYER_FANFARE);
+    sPrevMainBgmSeqIdFromFanfare = Audio_GetActiveSeqId(SEQ_PLAYER_BGM_MAIN);
 
     curFontId = AudioThread_GetFontsForSequence(curSeqId & 0xFF, &outNumFonts);
     requestedFontId = AudioThread_GetFontsForSequence(seqId & 0xFF, &outNumFonts);
