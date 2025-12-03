@@ -23,3 +23,11 @@ static SceneCmd cq_header[] = {
 SceneCmd* questHeaders_spot05_scene[] = {
 #include "assets/scenes/overworld/questHeaders.inc.c"
 };
+
+CutsceneData gMeadowMinuetCsCQ[] = {
+#include "assets/scenes/overworld/spot05/cq/cutscene/gMeadowMinuetCs.csdata.inc.c"
+};
+
+CutsceneData gMeadowSariasSongCsCQ[] = {
+#include "assets/scenes/overworld/spot05/cq/cutscene/gMeadowSariasSongCs.csdata.inc.c"
+};

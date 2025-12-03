@@ -29,6 +29,7 @@
 
 #include "assets/objects/object_xc/object_xc.h"
 #include "assets/scenes/overworld/spot05/spot05_scene.h"
+#include "assets/scenes/overworld/spot05/spot05_cq_scene.h"
 #include "assets/scenes/overworld/spot17/spot17_scene.h"
 #include "assets/scenes/indoors/tokinoma/tokinoma_scene.h"
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene.h"
@@ -324,7 +325,7 @@ s32 EnXc_MinuetCS(EnXc* this, PlayState* play) {
             if (!Play_InCsMode(play)) {
                 s32 pad;
 
-                play->csCtx.script = SEGMENTED_TO_VIRTUAL(gMeadowMinuetCs);
+                play->csCtx.script = SEGMENTED_TO_VIRTUAL(IS_CHILD_QUEST ? gMeadowMinuetCsCQ : gMeadowMinuetCs);
                 gSaveContext.cutsceneTrigger = 1;
                 SET_EVENTCHKINF(EVENTCHKINF_50);
                 Item_Give(play, ITEM_SONG_MINUET);
