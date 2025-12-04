@@ -3292,6 +3292,7 @@ typedef struct {
 static SeqWithVolume seqsWithVolume[] = {
     0x7F, NA_BGM_SACRED_COVE,
     0x6F, NA_BGM_TAL_TAL_HEIGHTS,
+    0x6F, NA_BGM_MYSTERY_FOREST,
     0x5F, NA_BGM_KOLIMA_FOREST
 };
 

@@ -287,7 +287,8 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_112_cavern.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_113_sacred_cove.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_114_tal_tal_heights.o"
-    include "$(BUILD_DIR)/assets/audio/sequences/seq_115_kolima_forest.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_115_mysterious_forest.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_116_kolima_forest.o"
 endseg
 
 beginseg

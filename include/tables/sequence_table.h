@@ -135,4 +135,5 @@ DEFINE_SEQUENCE    (Sequence_111,       NA_BGM_MINI_BOSS2,       MEDIUM_CART, CA
 DEFINE_SEQUENCE    (Sequence_112,       NA_BGM_CAVERN,           MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME_PREV | SEQ_FLAG_ENEMY  ) // cavern
 DEFINE_SEQUENCE    (Sequence_113,       NA_BGM_SACRED_COVE,      MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME                        ) // sacred_cove
 DEFINE_SEQUENCE    (Sequence_114,       NA_BGM_TAL_TAL_HEIGHTS,  MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME                        ) // tal_tal_heights
-DEFINE_SEQUENCE    (Sequence_115,       NA_BGM_KOLIMA_FOREST,    MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME                        ) // kolima_forest
+DEFINE_SEQUENCE    (Sequence_115,       NA_BGM_MYSTERY_FOREST,   MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME                        ) // mysterious_forest
+DEFINE_SEQUENCE    (Sequence_116,       NA_BGM_KOLIMA_FOREST,    MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME                        ) // kolima_forest

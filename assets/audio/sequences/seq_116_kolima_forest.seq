@@ -1,8 +1,8 @@
 #include "aseq.h"
 #include "Soundfont_40_25.h"
 
-.startseq Sequence_115
+.startseq Sequence_116
 
 .incbin "aseq/kolima_forest.aseq"
 
-.endseq Sequence_115
+.endseq Sequence_116

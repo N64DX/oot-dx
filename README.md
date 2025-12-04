@@ -42,6 +42,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 **Music tracks:**
 - "Sacred Grove" from "Twilight Princess" by ZeldaBoy14
 - "Tal Tal Height" from "Link's Awakening DX" by NewSoupVi
+- "Mysterious Forest" from "A Link to the Past" by Fish_waffle64
 - "Kolima Forest" from "Golden Sun" by Asra
 
 ### Instructions
