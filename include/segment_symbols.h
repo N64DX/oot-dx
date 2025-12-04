@@ -674,6 +674,8 @@ DECLARE_ROM_SEGMENT(roadtolake_room_0)
 
 DECLARE_ROM_SEGMENT(roadtofortress_room_0)
 
+DECLARE_ROM_SEGMENT(old_lost_woods_room_0)
+
 DECLARE_ROM_SEGMENT(grotto_shortcuts_room_0)
 DECLARE_ROM_SEGMENT(grotto_shortcuts_room_1)
 

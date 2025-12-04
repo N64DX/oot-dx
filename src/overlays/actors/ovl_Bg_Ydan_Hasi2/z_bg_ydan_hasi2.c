@@ -51,7 +51,7 @@ void BgYdanHasi2_Init(Actor* thisx, PlayState* play) {
     BgYdanHasi2* this = (BgYdanHasi2*)thisx;
     CollisionHeader* colHeader = NULL;
 
-    DynaPolyActor_Init(&this->dyna, DYNA_TRANSFORM_POS);
+    DynaPolyActor_Init(&this->dyna, 1);
     CollisionHeader_GetVirtual(&gBridgePieceCollision_collisionHeader, &colHeader);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
 

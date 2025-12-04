@@ -48,6 +48,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Obj_Lost_Woods"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Lost_Woods/z_obj_lost_woods.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Lost_Woods/ovl_Obj_Lost_Woods_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Horse_Young"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Horse_Young/z_en_horse_young.o"

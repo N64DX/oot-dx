@@ -24,7 +24,7 @@ SceneCmd fairy_deku_tree_sceneCommands[] = {
     SCENE_CMD_SPAWN_LIST(2, fairy_deku_tree_sceneStartPositionList0x000058),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NONE, 0, LIGHT_MODE_SETTINGS),
     SCENE_CMD_EXIT_LIST(fairy_deku_tree_sceneExitList0x00026C),
-    SCENE_CMD_ENV_LIGHT_SETTINGS(4, fairy_deku_tree_sceneLightSettings0x000270),
+    SCENE_CMD_ENV_LIGHT_SETTINGS(6, fairy_deku_tree_sceneLightSettings0x000270),
     SCENE_CMD_END(),
 };
 
@@ -83,7 +83,7 @@ Spawn fairy_deku_tree_sceneEntranceList0x000268[] = {
 };
 
 u16 fairy_deku_tree_sceneExitList0x00026C[] = {
-    ENTR_KOKIRI_FOREST_1,
+    ENTR_FORBIDDEN_WOODS_2,
 };
 
 EnvLightSettings fairy_deku_tree_sceneLightSettings0x000270[] = {

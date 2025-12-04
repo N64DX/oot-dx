@@ -42,7 +42,8 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Zelda Spaceworld ´97 Experience:** Zol
 
 **Scenes:**
-- Deku Tree from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Ancient Tree
+- Old Lost Woods from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Forbidden Woods
+- Fairy Deku Tree from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Ancient Hollow
 
 ### Instructions
 

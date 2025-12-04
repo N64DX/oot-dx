@@ -93,6 +93,8 @@ void Scene_DrawConfigBesitu(PlayState* play);
 void Scene_DrawConfigFishingPond(PlayState* play);
 void Scene_DrawConfigGanonsTowerCollapseInterior(PlayState* play);
 void Scene_DrawConfigInsideGanonsCastleCollapse(PlayState* play);
+void Scene_DrawConfigForbiddenWoods(PlayState* play);
+void Scene_DrawConfigAncientHollow(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -203,6 +205,8 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigFishingPond,                 // SDC_FISHING_POND
     Scene_DrawConfigGanonsTowerCollapseInterior, // SDC_GANONS_TOWER_COLLAPSE_INTERIOR
     Scene_DrawConfigInsideGanonsCastleCollapse,  // SDC_INSIDE_GANONS_CASTLE_COLLAPSE
+    Scene_DrawConfigForbiddenWoods,              // SDC_FORBIDDEN_WOODS
+    Scene_DrawConfigAncientHollow,               // SDC_ANCIENT_HOLLOW
 };
 
 void Scene_Draw(PlayState* play) {
@@ -1709,6 +1713,38 @@ void Scene_DrawConfigBesitu(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
 }
 
+void Scene_DrawConfigForbiddenWoods(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 3)  % 128, 32, 32, 1, 0, (gameplayFrames * 3)  % 128, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 10) % 128, 32, 32, 1, 0, (gameplayFrames * 10) % 128, 32, 32));
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+}
+
+void Scene_DrawConfigAncientHollow(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 512, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 1
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 256, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 2
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 256, 0, 64, 32, 1, 0, (gameplayFrames * 2) % 128, 64, 32)); // Boss Room Fog
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
+
+    CLOSE_DISPS(globalCtx->state.gfxCtx, "../z_scene_table.c", 7893);
+}
+
 #if !PLATFORM_N64 // Scene_Draw is at beginning of file in N64 versions
 
 SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
@@ -1765,6 +1801,8 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigFishingPond,                 // SDC_FISHING_POND
     Scene_DrawConfigGanonsTowerCollapseInterior, // SDC_GANONS_TOWER_COLLAPSE_INTERIOR
     Scene_DrawConfigInsideGanonsCastleCollapse,  // SDC_INSIDE_GANONS_CASTLE_COLLAPSE
+    Scene_DrawConfigForbiddenWoods,              // SDC_FORBIDDEN_WOODS
+    Scene_DrawConfigAncientHollow,               // SDC_ANCIENT_HOLLOW
 };
 
 void Scene_Draw(PlayState* play) {

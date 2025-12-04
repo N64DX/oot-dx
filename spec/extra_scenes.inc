@@ -27,6 +27,20 @@ beginseg
 endseg
 
 beginseg
+    name "old_lost_woods_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/old_lost_woods/old_lost_woods_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "old_lost_woods_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/old_lost_woods/old_lost_woods_room_0.o"
+    number 3
+endseg
+
+beginseg
     name "grotto_shortcuts_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_scene.o"
