@@ -116,7 +116,7 @@ static DamageTable sDamageTable[] = {
 };
 
 static InitChainEntry sInitChain[] = {
-    ICHAIN_S8(naviEnemyId, 69, ICHAIN_CONTINUE),
+    ICHAIN_S8(naviEnemyId, 0x5E, ICHAIN_CONTINUE),
     ICHAIN_F32(lockOnArrowOffset, 2000, ICHAIN_CONTINUE),
     ICHAIN_F32(minVelocityY, 65496, ICHAIN_CONTINUE),
     ICHAIN_F32_DIV1000(gravity, 64536, ICHAIN_STOP),
@@ -155,11 +155,8 @@ void EnSlim_Init(Actor* thisx, struct PlayState* play) {
     if (this->actor.params == TEKSLIM_BLUE) {
         this->unk_2DC |= 0x40; // Don't use the actor engine's ripple spawning code
         thisx->colChkInfo.health = Actor_EnemyHealthMultiply(4, MONSTER_HP);
-        thisx->naviEnemyId += 1;
     }
-    this->actor.naviEnemyId = NAVI_ENEMY_ZOL;
     EnSlim_SetupIdle(this);
-
     this->deformationCounter = 0;
 }
 
@@ -607,7 +604,6 @@ void EnSlim_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** limbDList,
 void EnSlim_Draw(Actor* thisx, struct PlayState* play) {
     EnSlim* this = (EnSlim*)thisx;
     Mtx* mtx;
-
     GraphicsContext* gfxCtx = play->state.gfxCtx;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_slime.c", 910);
@@ -622,8 +618,9 @@ void EnSlim_Draw(Actor* thisx, struct PlayState* play) {
     Matrix_RotateX(thisx->shape.rot.x * (M_PI / 32768), MTXMODE_APPLY);
     Matrix_RotateZ(thisx->shape.rot.z * (M_PI / 32768), MTXMODE_APPLY);
     Matrix_Scale(thisx->scale.x * slimeDeformation[this->deformationCounter][0], thisx->scale.y * slimeDeformation[this->deformationCounter][1], thisx->scale.z * slimeDeformation[this->deformationCounter][2], MTXMODE_APPLY);
-    MATRIX_TO_MTX(mtx, "../z_en_oA2_inMetamol.c", 602);
-    gSPMatrix(POLY_XLU_DISP++, mtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    mtx = MATRIX_FINALIZE(play->state.gfxCtx, "../z_en_slim.c", 623);
+    gDPSetEnvColor(POLY_XLU_DISP++, 0, 100, 255, 255);
+    gSPMatrix(POLY_XLU_DISP++, mtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
     func_8002ED80(&this->actor, play, 1); // setup XLU hilite in segment 0x07
     gSPDisplayList(POLY_XLU_DISP++, slimeDList);
