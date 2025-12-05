@@ -422,4 +422,5 @@
 /* 0x019C */ DEFINE_OBJECT(object_dinofos, OBJECT_DINOFOS)
 /* 0x019D */ DEFINE_OBJECT(object_buffdeku, OBJECT_BUFFDEKU)
 /* 0x019E */ DEFINE_OBJECT(object_hammergeist, OBJECT_HAMMERGEIST)
-/* 0x01A2 */ DEFINE_OBJECT(object_miniblin, OBJECT_MINIBLIN)
+/* 0x01A3 */ DEFINE_OBJECT(object_miniblin, OBJECT_MINIBLIN)
+/* 0x01A4 */ DEFINE_OBJECT(object_slime, OBJECT_SLIME)

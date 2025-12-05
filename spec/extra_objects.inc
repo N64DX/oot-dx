@@ -95,3 +95,10 @@ beginseg
     include "$(BUILD_DIR)/assets/objects/object_miniblin/object_miniblin.o"
     number 6
 endseg
+
+beginseg
+    name "object_slime"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_slime/object_slime.o"
+    number 6
+endseg

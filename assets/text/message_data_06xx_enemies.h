@@ -2173,3 +2173,29 @@ COLOR(LIGHTBLUE) "Garde bien ta bourse et fais attention\n"
 "Ils sont pénibles mais inoffensifs." COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
+
+DEFINE_MESSAGE(0x065E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(95) "ゾル\n"
+SHIFT(40) COLOR(LIGHTBLUE) "跳ねる生きたスライム。\n"
+SHIFT(20) "体は柔らかく、簡単に切れる。" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Zol\n"
+COLOR(LIGHTBLUE) "It's a blob of living slime that bounces\n"
+"toward you. It's body is soft,\n"
+"so you easily slice through it." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Zol\n"
+COLOR(LIGHTBLUE) "Ein Klumpen lebendigen Schleims, er\n"
+"rollt auf dich zu. Körper weich,\n"
+"so kannst du ihn leicht zerschneiden." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Zol\n"
+COLOR(LIGHTBLUE) "C'est une masse de slime vivant qui\n"
+"bondit vers toi. Son corps est mou,\n"
+"tu peux facilement le trancher." COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)

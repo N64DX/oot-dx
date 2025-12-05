@@ -225,7 +225,7 @@ void EnMiniblin_Init(Actor* thisx, struct PlayState* play) {
     EnMiniblin_ChangeEyes(this, MINIBLIN_EYES_NORMAL);
     thisx->attentionRangeType = 4;
     thisx->gravity = -1.0f;
-    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     this->actor.naviEnemyId = NAVI_ENEMY_MINIBLIN;
 
     //this->bombActor = NULL;

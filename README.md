@@ -38,6 +38,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 **Actors and objects:**
 - **LeSéducteur:** Buff Scrub
 - **Syeo & Trueffel:** Miniblin, Molmauk
+- **Zelda Spaceworld ´97 Experience:** Zol
 
 ### Instructions
 
