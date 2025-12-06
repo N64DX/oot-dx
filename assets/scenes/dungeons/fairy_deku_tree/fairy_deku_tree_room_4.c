@@ -23,7 +23,7 @@ SceneCmd fairy_deku_tree_room_4Commands[] = {
 
 s16 fairy_deku_tree_room_4ObjectList0x000038[] = {
     OBJECT_BOX,
-    OBJECT_TORCH2,
+    OBJECT_SYOKUDAI,
     OBJECT_YDAN_OBJECTS,
     OBJECT_GOL,
     OBJECT_ST,
@@ -32,13 +32,13 @@ s16 fairy_deku_tree_room_4ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_4ActorList0x000048[] = {
-    { ACTOR_OBJ_SYOKUDAI, -1, 1000, -6, 0, 0, 0, 0x0BFF },
-    { ACTOR_OBJ_SYOKUDAI, -1, 1000, -152, 0, 0, 0, 0x04C6 },
-    { ACTOR_OBJ_SYOKUDAI, 121, 1000, 104, 0, 0, 0, 0x04C6 },
-    { ACTOR_OBJ_SYOKUDAI, -123, 1000, 104, 0, 0, 0, 0x04C6 },
-    { ACTOR_EN_DEKUBABA, -266, 1000, -72, 0, 0, 0, 0x0001 },
-    { ACTOR_EN_DEKUBABA, -7, 1000, 301, 0, 0, 0, 0x0001 },
-    { ACTOR_EN_DEKUBABA, 22, 1000, -340, 0, 0, 0, 0x0000 },
+    { ACTOR_OBJ_SYOKUDAI, {   -1, 1000,   -6 }, { 0, 0, 0 }, 0x27FF },
+    { ACTOR_OBJ_SYOKUDAI, {   -1, 1000, -152 }, { 0, 0, 0 }, 0x10C6 },
+    { ACTOR_OBJ_SYOKUDAI, {  121, 1000,  104 }, { 0, 0, 0 }, 0x10C6 },
+    { ACTOR_OBJ_SYOKUDAI, { -123, 1000,  104 }, { 0, 0, 0 }, 0x10C6 },
+    { ACTOR_EN_DEKUBABA,  { -266, 1000,  -72 }, { 0, 0, 0 }, 0x0001 },
+    { ACTOR_EN_DEKUBABA,  {   -7, 1000,  301 }, { 0, 0, 0 }, 0x0001 },
+    { ACTOR_EN_DEKUBABA,  {   22, 1000, -340 }, { 0, 0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_4MeshHeader0x0000C0 = {

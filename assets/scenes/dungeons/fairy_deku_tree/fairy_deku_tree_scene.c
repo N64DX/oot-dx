@@ -21,7 +21,7 @@ SceneCmd fairy_deku_tree_sceneCommands[] = {
     SCENE_CMD_COL_HEADER(&fairy_deku_tree_sceneCollisionHeader0x00EA9C),
     SCENE_CMD_ENTRANCE_LIST(fairy_deku_tree_sceneEntranceList0x000268),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_DUNGEON, OBJECT_GAMEPLAY_DANGEON_KEEP),
-    SCENE_CMD_SPAWN_LIST(2, fairy_deku_tree_sceneStartPositionList0x000058),
+    SCENE_CMD_SPAWN_LIST(16, fairy_deku_tree_sceneStartPositionList0x000058),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NONE, 0, LIGHT_MODE_SETTINGS),
     SCENE_CMD_EXIT_LIST(fairy_deku_tree_sceneExitList0x00026C),
     SCENE_CMD_ENV_LIGHT_SETTINGS(6, fairy_deku_tree_sceneLightSettings0x000270),
@@ -29,8 +29,22 @@ SceneCmd fairy_deku_tree_sceneCommands[] = {
 };
 
 ActorEntry fairy_deku_tree_sceneStartPositionList0x000058[] = {
-    { ACTOR_PLAYER, 4, 0, 1125, 0, 32767, 0, 0x0FFF },
-    { ACTOR_PLAYER, 626, -640, 1114, 0, -21845, 0, 0x0FFF },
+    { ACTOR_PLAYER, {    4,    0, 1125 }, { 0, 0x8000, 0 }, 0x0FFF }, // Entrance
+    { ACTOR_PLAYER, {  626, -640, 1114 }, { 0, 0xAAAB, 0 }, 0x0FFF }, // Pre-Boss Room
+    { ACTOR_PLAYER, {    4,    0, 1125 }, { 0, 0x8000, 0 }, 0x0FFF }, // Debug warp room 0
+    { ACTOR_PLAYER, {    0,    0, -500 }, { 0,      0, 0 }, 0x0FFF }, // Debug warp room 1
+    { ACTOR_PLAYER, { -250,  520,  250 }, { 0, 0x6000, 0 }, 0x0FFF }, // Debug warp room 2
+    { ACTOR_PLAYER, {    0,  720,  350 }, { 0, 0x8000, 0 }, 0x0FFF }, // Debug warp room 3
+    { ACTOR_PLAYER, { -250, 1000,  250 }, { 0, 0x6000, 0 }, 0x0FFF }, // Debug warp room 4
+    { ACTOR_PLAYER, {  250, 1480, -250 }, { 0, 0xE000, 0 }, 0x0FFF }, // Debug warp room 5
+    { ACTOR_PLAYER, { 1200,  160,    0 }, { 0, 0x4000, 0 }, 0x0FFF }, // Debug warp room 6
+    { ACTOR_PLAYER, { -850,  520,  850 }, { 0, 0XE000, 0 }, 0x0FFF }, // Debug warp room 7
+    { ACTOR_PLAYER, { 1220,  760,    0 }, { 0, 0x4000, 0 }, 0x0FFF }, // Debug warp room 8
+    { ACTOR_PLAYER, {  850, 1080,  850 }, { 0, 0x2000, 0 }, 0x0FFF }, // Debug warp room 9
+    { ACTOR_PLAYER, { -850, 1320,  850 }, { 0, 0xE000, 0 }, 0x0FFF }, // Debug warp room 10
+    { ACTOR_PLAYER, { 1425, 1400,  650 }, { 0, 0x6000, 0 }, 0x0FFF }, // Debug warp room 11
+    { ACTOR_PLAYER, {  626, -640, 1114 }, { 0, 0xAAAB, 0 }, 0x0FFF }, // Debug warp room 12
+    { ACTOR_PLAYER, {  300, -640,  710 }, { 0, 0x8D00, 0 }, 0x0FFF }, // Debug warp room 13
 };
 
 TransitionActorEntry fairy_deku_tree_sceneTransitionActorList0x000078[] = {
@@ -78,8 +92,22 @@ RomFile fairy_deku_tree_sceneRoomList0x0001F8[] = {
 };
 
 Spawn fairy_deku_tree_sceneEntranceList0x000268[] = {
-    { 0x00, 0x00 }, 
-    { 0x01, 0x0C }, 
+    { 0x00, 0x00 }, // Entrance
+    { 0x01, 0x0C }, // Pre-Boss Room
+    { 0x02, 0x00 }, // Debug warp room 0
+    { 0x03, 0x01 }, // Debug warp room 1
+    { 0x04, 0x02 }, // Debug warp room 2
+    { 0x05, 0x03 }, // Debug warp room 3
+    { 0x06, 0x04 }, // Debug warp room 4
+    { 0x07, 0x05 }, // Debug warp room 5
+    { 0x08, 0x06 }, // Debug warp room 6
+    { 0x09, 0x07 }, // Debug warp room 7
+    { 0x0A, 0x08 }, // Debug warp room 8
+    { 0x0B, 0x09 }, // Debug warp room 9
+    { 0x0C, 0x0A }, // Debug warp room 10
+    { 0x0D, 0x0B }, // Debug warp room 11
+    { 0x0E, 0x0C }, // Debug warp room 12
+    { 0x0F, 0x0D }, // Debug warp room 13
 };
 
 u16 fairy_deku_tree_sceneExitList0x00026C[] = {

@@ -23,7 +23,7 @@ SceneCmd fairy_deku_tree_room_9Commands[] = {
 
 s16 fairy_deku_tree_room_9ObjectList0x000038[] = {
     OBJECT_BOX,
-    OBJECT_TORCH2,
+    OBJECT_SYOKUDAI,
     OBJECT_YDAN_OBJECTS,
     OBJECT_GOL,
     OBJECT_ST,

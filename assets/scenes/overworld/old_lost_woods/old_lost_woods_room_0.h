@@ -5,8 +5,11 @@
 #include "scene.h"
 #include "ultra64.h"
 
+extern SceneCmd old_lost_woods_room_0Commands[];
+extern SceneCmd* old_lost_woods_room_0AlternateHeaders[];
 extern s16 old_lost_woods_room_0ObjectList0x000040[];
 extern ActorEntry old_lost_woods_room_0ActorList0x000048[];
+extern SceneCmd old_lost_woods_room_0Set_timeskip[];
 extern RoomShapeCullable old_lost_woods_room_0MeshHeader0x0008D0;
 extern RoomShapeCullableEntry old_lost_woods_room_0MeshDListEntry0x0008DC[9];
 extern Gfx old_lost_woods_room_0Dlist0x001C60[];

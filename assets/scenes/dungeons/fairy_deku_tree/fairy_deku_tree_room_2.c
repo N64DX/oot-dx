@@ -23,7 +23,7 @@ SceneCmd fairy_deku_tree_room_2Commands[] = {
 
 s16 fairy_deku_tree_room_2ObjectList0x000038[] = {
     OBJECT_BOX,
-    OBJECT_TORCH2,
+    OBJECT_SYOKUDAI,
     OBJECT_YDAN_OBJECTS,
     OBJECT_GOL,
     OBJECT_ST,
@@ -512,7 +512,7 @@ Gfx fairy_deku_tree_room_2Dlist0x001610[] = {
     gsSP2Triangles(17, 18, 19, 0, 20, 21, 22, 0),
     gsSP2Triangles(23, 24, 25, 0, 26, 27, 28, 0),
     gsSP1Triangle(29, 30, 31, 0),
-    gsSPVertex(&fairy_deku_tree_room_2Vtx_000D20[31], 8, 0),
+    gsSPVertex(&fairy_deku_tree_room_2Vtx_000D20[0], 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 3, 5, 0, 6, 5, 7, 0),
     gsDPPipeSync(),
@@ -530,7 +530,7 @@ Gfx fairy_deku_tree_room_2Dlist0x001610[] = {
     gsSP2Triangles(20, 22, 21, 0, 23, 24, 25, 0),
     gsSP2Triangles(23, 25, 26, 0, 27, 28, 29, 0),
     gsSP1Triangle(27, 29, 30, 0),
-    gsSPVertex(&fairy_deku_tree_room_2Vtx_000DD0[0], 19, 0),
+    gsSPVertex(&fairy_deku_tree_room_2Vtx_000DD0[31], 19, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSP2Triangles(8, 9, 10, 0, 9, 11, 10, 0),
