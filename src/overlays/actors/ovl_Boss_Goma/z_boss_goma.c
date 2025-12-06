@@ -82,6 +82,11 @@ void BossGoma_FloorMain(BossGoma* this, PlayState* play);
 void BossGoma_WallClimb(BossGoma* this, PlayState* play);
 void BossGoma_CeilingMoveToCenter(BossGoma* this, PlayState* play);
 void BossGoma_SpawnChildGohma(BossGoma* this, PlayState* play, s16 i);
+Actor* BossGoma_SpawnLizalfos(BossGoma* this, PlayState* play);
+
+static u8 lizalfosCount;
+static Actor* spawnedLizalfos[3];
+static bool isHyper;
 
 ActorProfile Boss_Goma_Profile = {
     /**/ ACTOR_BOSS_GOMA,
@@ -254,6 +259,165 @@ static ColliderJntSphInit sColliderJntSphInit = {
     sColliderJntSphElementsInit,
 };
 
+static ColliderJntSphElementInit sColliderJntSphElementsHyperInit[13] = {
+    {
+        {
+            ELEM_MATERIAL_UNK3,
+            { 0xFFCFFFFF, 0x00, 0x20 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_EYE, { { 0, 0, 1200 }, 20 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x20 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_TAIL4, { { 0, 0, 0 }, 20 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x20 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_TAIL3, { { 0, 0, 0 }, 15 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x20 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_TAIL2, { { 0, 0, 0 }, 12 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x20 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_TAIL1, { { 0, 0, 0 }, 25 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x20 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_R_FEET, { { 0, 0, 0 }, 30 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x20 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_R_SHIN, { { 0, 0, 0 }, 15 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x20 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_R_THIGH_SHELL, { { 0, 0, 0 }, 15 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x08 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_L_ANTENNA_CLAW, { { 0, 0, 0 }, 20 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x08 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_R_ANTENNA_CLAW, { { 0, 0, 0 }, 20 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x08 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_L_FEET, { { 0, 0, 0 }, 30 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x08 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_L_SHIN, { { 0, 0, 0 }, 15 }, 100 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x08 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { BOSSGOMA_LIMB_L_THIGH_SHELL, { { 0, 0, 0 }, 15 }, 100 },
+    },
+};
+
+static ColliderJntSphInit sColliderJntSphHyperInit = {
+    {
+        COL_MATERIAL_HIT3,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_ON | AC_TYPE_PLAYER,
+        OC1_ON | OC1_TYPE_PLAYER,
+        OC2_TYPE_1,
+        COLSHAPE_JNTSPH,
+    },
+    13,
+    sColliderJntSphElementsHyperInit,
+};
+
 static u8 sClearPixelTableFirstPass[16 * 16] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00,
     0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01, 0x01, 0x01,
@@ -387,11 +551,14 @@ void BossGoma_Init(Actor* thisx, PlayState* play) {
     this->unusedInitZ = this->actor.world.pos.z;
     this->actor.world.pos.y = -300.0f; // ceiling
     this->actor.gravity = 0.0f;
+    isHyper = thisx->params == GHOMA_HYPER;
     BossGoma_SetupEncounter(this, play);
-    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(10, BOSS_HP);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(isHyper ? 30 : 10, BOSS_HP);
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
     Collider_InitJntSph(play, &this->collider);
-    Collider_SetJntSph(play, &this->collider, &this->actor, &sColliderJntSphInit, this->colliderElements);
+    Collider_SetJntSph(play, &this->collider, &this->actor, isHyper ? &sColliderJntSphHyperInit : &sColliderJntSphInit, this->colliderElements);
+    lizalfosCount = 0;
+    spawnedLizalfos[0] = spawnedLizalfos[1] = spawnedLizalfos[2] = NULL;
 
     if (Flags_GetClear(play, play->roomCtx.curRoom.num)) {
         Actor_Kill(&this->actor);
@@ -443,6 +610,13 @@ void BossGoma_SetupDefeated(BossGoma* this, PlayState* play) {
     this->actor.shape.shadowScale = 0.0f;
     SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 1);
     Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_DEAD);
+
+    if (spawnedLizalfos[0] != NULL)
+        Actor_Kill(spawnedLizalfos[0]);
+    if (spawnedLizalfos[1] != NULL)
+        Actor_Kill(spawnedLizalfos[1]);
+    if (spawnedLizalfos[2] != NULL)
+        Actor_Kill(spawnedLizalfos[2]);
 }
 
 /**
@@ -716,7 +890,7 @@ void BossGoma_Encounter(BossGoma* this, PlayState* play) {
             // entrance of the boss room
             if (fabsf(player->actor.world.pos.x - 150.0f) < 60.0f &&
                 fabsf(player->actor.world.pos.z - 350.0f) < 60.0f) {
-                if (GET_EVENTCHKINF(EVENTCHKINF_BEGAN_GOHMA_BATTLE)) {
+                if (GET_EVENTCHKINF(isHyper ? EVENTCHKINF_BEGAN_HYPER_GOHMA_BATTLE : EVENTCHKINF_BEGAN_GOHMA_BATTLE)) {
                     BossGoma_SetupEncounterState4(this, play);
                     Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_DOOR_SHUTTER, 164.72f, -480.0f,
                                        397.68002f, 0, -0x705C, 0, DOORSHUTTER_PARAMS(SHUTTER_GOHMA_BLOCK, 0));
@@ -819,7 +993,7 @@ void BossGoma_Encounter(BossGoma* this, PlayState* play) {
                 this->eyeLidBottomRotX = this->eyeLidTopRotX = this->eyeIrisRotX = this->eyeIrisRotY = 0;
             } else {
                 this->lookedAtFrames = 0;
-                BossGoma_UpdateCeilingMovement(this, play, 0.0f, -5.0f, true);
+                BossGoma_UpdateCeilingMovement(this, play, 0.0f, isHyper ? -10.0f : -5.0f, true);
             }
 
             if (this->lookedAtFrames > 15) {
@@ -883,7 +1057,7 @@ void BossGoma_Encounter(BossGoma* this, PlayState* play) {
                 SkelAnime_Update(&this->skelanime);
                 Math_ApproachZeroF(&this->actor.speed, 1.0f, 2.0f);
             } else {
-                BossGoma_UpdateCeilingMovement(this, play, 0.0f, -7.5f, false);
+                BossGoma_UpdateCeilingMovement(this, play, 0.0f, isHyper ? -15.0f : -7.5f, false);
             }
 
             if (this->framesUntilNextAction == 0) {
@@ -954,7 +1128,7 @@ void BossGoma_Encounter(BossGoma* this, PlayState* play) {
             if (Animation_OnFrame(&this->skelanime, 40.0f)) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_CRY1);
 
-                if (!GET_EVENTCHKINF(EVENTCHKINF_BEGAN_GOHMA_BATTLE)) {
+                if (!GET_EVENTCHKINF(isHyper ? EVENTCHKINF_BEGAN_HYPER_GOHMA_BATTLE : EVENTCHKINF_BEGAN_GOHMA_BATTLE)) {
 #if OOT_NTSC_N64
                     TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gGohmaTitleCardTex : gGohmaTitleCardPalTex), 160, 180, 128, 40);
 #else
@@ -964,7 +1138,7 @@ void BossGoma_Encounter(BossGoma* this, PlayState* play) {
                 }
 
                 SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_BOSS);
-                SET_EVENTCHKINF(EVENTCHKINF_BEGAN_GOHMA_BATTLE);
+                SET_EVENTCHKINF(isHyper ? EVENTCHKINF_BEGAN_HYPER_GOHMA_BATTLE : EVENTCHKINF_BEGAN_GOHMA_BATTLE);
             }
 
             if (Animation_OnFrame(&this->skelanime, this->currentAnimFrameCount)) {
@@ -1001,7 +1175,7 @@ void BossGoma_Encounter(BossGoma* this, PlayState* play) {
                 this->subCamId = SUB_CAM_ID_DONE;
                 BossGoma_SetupFloorMain(this);
                 this->disableGameplayLogic = false;
-                this->patienceTimer = 200;
+                this->patienceTimer = isHyper ? 100 : 200;
                 Cutscene_StopManual(play, &play->csCtx);
                 Player_SetCsActionWithHaltedActors(play, &this->actor, PLAYER_CSACTION_7);
             }
@@ -1302,7 +1476,7 @@ void BossGoma_FloorAttackPosture(BossGoma* this, PlayState* play) {
     }
 
     if (Animation_OnFrame(&this->skelanime, Animation_GetLastFrame(&gGohmaPrepareAttackAnim))) {
-        if (this->actor.xzDistToPlayer < 250.0f) {
+        if (this->actor.xzDistToPlayer < isHyper ? 500.0f : 250.0f) {
             BossGoma_SetupFloorPrepareAttack(this);
         } else {
             BossGoma_SetupFloorMain(this);
@@ -1411,9 +1585,9 @@ void BossGoma_FloorLandStruckDown(BossGoma* this, PlayState* play) {
 
     if (Animation_OnFrame(&this->skelanime, this->currentAnimFrameCount)) {
         BossGoma_SetupFloorStunned(this);
-        this->sfxFaintTimer = 92;
+        this->sfxFaintTimer = isHyper ? 46 : 92;
         this->patienceTimer = 0;
-        this->framesUntilNextAction = 150;
+        this->framesUntilNextAction = isHyper ? 75 : 150;
     }
 
     Actor_SpawnFloorDustRing(play, &this->actor, &this->actor.world.pos, 55.0f, 4, 8.0f, 500, 10, true);
@@ -1428,7 +1602,7 @@ void BossGoma_FloorLand(BossGoma* this, PlayState* play) {
 
     if (Animation_OnFrame(&this->skelanime, this->currentAnimFrameCount)) {
         BossGoma_SetupFloorIdle(this);
-        this->patienceTimer = 200;
+        this->patienceTimer = isHyper ? 100 : 200;
     }
 }
 
@@ -1436,7 +1610,7 @@ void BossGoma_FloorLand(BossGoma* this, PlayState* play) {
  * Gohma is stunned and vulnerable. It can only be damaged during this action.
  */
 void BossGoma_FloorStunned(BossGoma* this, PlayState* play) {
-    if (this->sfxFaintTimer <= 90) {
+    if (this->sfxFaintTimer <= (isHyper ? 45 : 90)) {
         Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_FAINT - 0x800);
     }
     SkelAnime_Update(&this->skelanime);
@@ -1449,7 +1623,7 @@ void BossGoma_FloorStunned(BossGoma* this, PlayState* play) {
 
     if (this->framesUntilNextAction == 0) {
         BossGoma_SetupFloorMain(this);
-        if (this->patienceTimer == 0 && this->actor.xzDistToPlayer < 130.0f) {
+        if (this->patienceTimer == 0 && this->actor.xzDistToPlayer < isHyper ? 260.0f : 130.0f) {
             this->timer = 20;
         }
     }
@@ -1648,16 +1822,16 @@ void BossGoma_FloorMain(BossGoma* this, PlayState* play) {
         if (this->patienceTimer != 0) {
             this->patienceTimer--;
 
-            if (this->actor.xzDistToPlayer < 150.0f) {
+            if (this->actor.xzDistToPlayer < isHyper ? 300.0f : 150.0f) {
                 BossGoma_SetupFloorAttackPosture(this);
             }
 
-            Math_ApproachF(&this->actor.speed, 10.0f / 3.0f, 0.5f, 2.0f);
+            Math_ApproachF(&this->actor.speed, (isHyper ? 20.0f : 10.0f) / 3.0f, 0.5f, 2.0f);
             Math_ApproachS(&this->actor.world.rot.y, rot, 5, 0x3E8);
         } else {
             if (this->timer != 0) {
                 // move away from the player, walking backwards
-                Math_ApproachF(&this->actor.speed, -10.0f, 0.5f, 2.0f);
+                Math_ApproachF(&this->actor.speed, isHyper ? -20.0f : -10.0f, 0.5f, 2.0f);
                 this->skelanime.playSpeed = -3.0f;
                 if (this->timer == 1) {
                     this->actor.speed = 0.0f;
@@ -1715,7 +1889,7 @@ void BossGoma_CeilingMoveToCenter(BossGoma* this, PlayState* play) {
     s16 angle;
     s16 absDiff;
 
-    BossGoma_UpdateCeilingMovement(this, play, 0.0f, -5.0f, true);
+    BossGoma_UpdateCeilingMovement(this, play, 0.0f, isHyper ? -10.0f : -5.0f, true);
 
     if (this->frameCount % 64 == 0) {
         Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_CRY2);
@@ -1860,6 +2034,13 @@ void BossGoma_UpdateHit(BossGoma* this, PlayState* play) {
             } else if (this->actionFunc == BossGoma_FloorStunned &&
                        (damage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags)) != 0) {
                 this->actor.colChkInfo.health -= damage;
+                if (isHyper) {
+                    if ( (this->actor.colChkInfo.health < Actor_EnemyHealthMultiply(25, BOSS_HP) && lizalfosCount == 0) || (this->actor.colChkInfo.health < Actor_EnemyHealthMultiply(17, BOSS_HP) && lizalfosCount == 1) || (this->actor.colChkInfo.health < Actor_EnemyHealthMultiply(10, BOSS_HP) && lizalfosCount == 2) ) {
+                        spawnedLizalfos[lizalfosCount] = BossGoma_SpawnLizalfos(this, play);
+                        lizalfosCount++;
+                    }
+                }
+                    
 
                 if ((s8)this->actor.colChkInfo.health > 0) {
                     Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_DAM1);
@@ -1877,12 +2058,12 @@ void BossGoma_UpdateHit(BossGoma* this, PlayState* play) {
                 Audio_StopSfxById(NA_SE_EN_GOMA_CRY1);
                 this->invincibilityFrames = 10;
                 BossGoma_SetupFloorStunned(this);
-                this->sfxFaintTimer = 100;
+                this->sfxFaintTimer = isHyper ? 50 : 100;
 
                 if (acHitElem->atDmgInfo.dmgFlags & DMG_DEKU_NUT) {
-                    this->framesUntilNextAction = 40;
+                    this->framesUntilNextAction = isHyper ? 20 : 40;
                 } else {
-                    this->framesUntilNextAction = 90;
+                    this->framesUntilNextAction = isHyper ? 45 : 90;
                 }
 
                 this->timer = 4;
@@ -2178,4 +2359,33 @@ void BossGoma_SpawnChildGohma(BossGoma* this, PlayState* play, s16 i) {
                        this->lastTailLimbWorldPos.y - 50.0f, this->lastTailLimbWorldPos.z, 0, i * (0x10000 / 3), 0, i);
 
     this->childrenGohmaState[i] = 1;
+}
+
+Actor* BossGoma_SpawnLizalfos(BossGoma* this, PlayState* play) {
+    Vec3f spawnCoords;
+    f32 r;
+    if (play->sceneId != SCENE_ANCIENT_HOLLOW)
+        return NULL;
+
+    r = Rand_ZeroOne() * 1.0f;
+    spawnCoords.y = -640.0f;
+
+    if (r < 0.2f) {
+        spawnCoords.x =  350.0f;
+        spawnCoords.z = -600.0f;
+    } else if (r < 0.4f) {
+        spawnCoords.x = -350.0f;
+        spawnCoords.z = -600.0f;
+    } else if (r < 0.6f) {
+        spawnCoords.x =  350.0f;
+        spawnCoords.z =    0.0f;
+    } else if (r < 0.8f) {
+        spawnCoords.x = -150.0f;
+        spawnCoords.z =  200.0f;
+    } else {
+        spawnCoords.x = -550.0f;
+        spawnCoords.z = -200.0f;
+    }
+
+    return Actor_Spawn(&play->actorCtx, play, ACTOR_EN_ZF, spawnCoords.x, spawnCoords.y, spawnCoords.z, 0, 0, 0, 0xFFFF);
 }

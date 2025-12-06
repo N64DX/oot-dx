@@ -17,7 +17,7 @@ SceneCmd old_lost_woods_room_0Commands[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader0x0008D0),
     SCENE_CMD_OBJECT_LIST(5, old_lost_woods_room_0ObjectList0x000040),
-    SCENE_CMD_ACTOR_LIST(135, old_lost_woods_room_0ActorList0x000048),
+    SCENE_CMD_ACTOR_LIST(138, old_lost_woods_room_0ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -33,7 +33,10 @@ ActorEntry old_lost_woods_room_0ActorList0x000048[] = {
     { ACTOR_EN_RIVER_SOUND, {  -195, 193, -3014 }, {      0,      0,      0 }, 0x0001 },
     { ACTOR_EN_A_OBJ,       {  -322, 189,  -240 }, {      0, 0xE000,      0 }, 0x4A09 },
     { ACTOR_OBJ_BOMBIWA,    {   373, 209,    76 }, {      0,      0,      0 }, 0x0008 },
-    { ACTOR_OBJ_BOMBIWA,    {   856, 183, -1546 }, {      0,      0,      0 }, 0x0008 },
+    { ACTOR_OBJ_BOMBIWA,    {   856, 183, -1546 }, {      0,      0,      0 }, 0x0009 },
+    { ACTOR_EN_ISHI,        {  2063, 170,  3295 }, {      0,      0,      0 }, 0x5001 },
+    { ACTOR_EN_ISHI,        {  2004, 170,  3324 }, {      0,      0,      0 }, 0x6001 },
+    { ACTOR_EN_ISHI,        {  1993, 170,  3395 }, {      0,      0,      0 }, 0x7001 },
     { ACTOR_EN_TEST,        { -1666, 283,  -243 }, {      0, 0xC000,      0 }, 0x0003 },
     { ACTOR_EN_TEST,        {  -430, 218, -1325 }, {      0, 0xD556,      0 }, 0x0003 },
     { ACTOR_EN_TEST,        {   -69, 210, -2021 }, {      0,      0,      0 }, 0x0003 },

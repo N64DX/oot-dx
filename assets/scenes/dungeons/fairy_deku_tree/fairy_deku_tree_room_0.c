@@ -16,8 +16,8 @@ SceneCmd fairy_deku_tree_room_0Commands[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&fairy_deku_tree_room_0MeshHeader0x000150),
-    SCENE_CMD_OBJECT_LIST(8, fairy_deku_tree_room_0ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(15, fairy_deku_tree_room_0ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(11, fairy_deku_tree_room_0ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(16, fairy_deku_tree_room_0ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -30,6 +30,9 @@ s16 fairy_deku_tree_room_0ObjectList0x000038[] = {
     OBJECT_TP,
     OBJECT_DEKUBABA,
     OBJECT_BRIDGE_PIECE,
+    OBJECT_FA,
+    OBJECT_KW1,
+    OBJECT_OS_ANIME,
 };
 
 ActorEntry fairy_deku_tree_room_0ActorList0x000048[] = {
@@ -50,6 +53,7 @@ ActorEntry fairy_deku_tree_room_0ActorList0x000048[] = {
  // { ACTOR_OBJ_SWITCH,    {  690,    0,  200 }, { 0,      0, 0 }, 0x002B },
     { ACTOR_OBJ_SWITCH,    { 1112,  971,   -4 }, { 0, 0xC000, 0 }, 0x0502 },
     { ACTOR_EN_BOX,        {  640, 1400,  750 }, { 0, 0xE000, 0 }, 0x5847 },
+    { ACTOR_EN_KO,         {   55, 1680,   50 }, { 0, 0x2000, 0 }, 0x000C },
 };
 
 RoomShapeCullable fairy_deku_tree_room_0MeshHeader0x000150 = {

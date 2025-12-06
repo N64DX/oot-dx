@@ -17,7 +17,7 @@ SceneCmd fairy_deku_tree_room_6Commands[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&fairy_deku_tree_room_6MeshHeader0x000100),
     SCENE_CMD_OBJECT_LIST(8, fairy_deku_tree_room_6ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(11, fairy_deku_tree_room_6ActorList0x000048),
+    SCENE_CMD_ACTOR_LIST(12, fairy_deku_tree_room_6ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -33,17 +33,18 @@ s16 fairy_deku_tree_room_6ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_6ActorList0x000048[] = {
-    { ACTOR_OBJ_SWITCH,      { 1583, 160,  -248 }, { 0, 0x1555, 0 }, 0x1F00 },
-    { ACTOR_EN_BOX,          { 1113, 200, -1178 }, { 0, 0x5FFF, 0 }, 0x50E3 },
-    { ACTOR_EN_DEKUBABA,     { 1392, 160,  -131 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,     { 1395, 160,  -309 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,     {  480, 240, -1429 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,     {   72, 240, -1508 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_BOX,          {   65, 240, -1645 }, { 0, 0x7FFF, 0 }, 0x5044 },
-    { ACTOR_EN_DEKUBABA,     {  196, 240, -1580 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,     {  291, 240, -1684 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,     {  420, 240, -1286 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_YDAN_MARUTA2, { 1141,  80, -1078 }, { 0, 0x905C, 0 }, 0x001F },
+    { ACTOR_OBJ_SWITCH,      { 1583, 160,  -248 }, { 0, 0x1555,    0 }, 0x1F00 },
+    { ACTOR_OBJ_SWITCH,      { 1238, 350, -1235 }, { 0, 0xE000,    0 }, 0x2002 },
+    { ACTOR_EN_BOX,          { 1113, 200, -1178 }, { 0, 0x5FFF, 0x20 }, 0xBFA3 },
+    { ACTOR_EN_DEKUBABA,     { 1392, 160,  -131 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     { 1395, 160,  -309 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     {  480, 240, -1429 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     {   72, 240, -1508 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_BOX,          {   65, 240, -1645 }, { 0, 0x7FFF,    0 }, 0x50E4 },
+    { ACTOR_EN_DEKUBABA,     {  196, 240, -1580 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     {  291, 240, -1684 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     {  420, 240, -1286 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_BG_YDAN_MARUTA2, { 1141,  80, -1078 }, { 0, 0x905C,    0 }, 0x001F },
 };
 
 RoomShapeCullable fairy_deku_tree_room_6MeshHeader0x000100 = {

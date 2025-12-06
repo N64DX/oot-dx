@@ -2451,3 +2451,56 @@ UNSKIPPABLE "Il est arrivé ici comme une fleur\n"
 "complètement dingue!"
 )
 )
+
+DEFINE_MESSAGE(0x8122, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE SHIFT(10) "ヒヒヒ……　ワタシは何者かな？\n"
+BOX_BREAK
+
+UNSKIPPABLE SHIFT(11) "地図とコンパスを持っていると\n"
+SHIFT(0) "証明してみな。そうすれば、この下に\n"
+SHIFT(17) "封じられた邪悪へ行けるぞ。"
+),
+MSG(
+UNSKIPPABLE "Hi hi hi... What am I?\n"
+"Show me proof of your map and\n"
+"compass if you want to reach the\n"
+"sealed evil below."
+),
+MSG(
+UNSKIPPABLE "Hihihi... Was bin ich?\n"
+"Zeig mir, dass du Karte und Kompass\n"
+"besitzt, wenn du zu dem Bösen willst,\n"
+"das hier unten versiegelt ist."
+),
+MSG(
+UNSKIPPABLE "Hi hi hi... Qui suis-je?\n"
+"Prouve-moi que tu as la carte et la\n"
+"boussole si tu veux atteindre le mal\n"
+"scellé sous ces lieux."
+)
+)
+
+DEFINE_MESSAGE(0x8123, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE SHIFT(21) "ヒヒヒ……　よくできたな。\n"
+SHIFT(15) "この下の邪悪へ行きたいなら、\n"
+SHIFT(35) "これが必要になるぞ。"
+),
+MSG(
+UNSKIPPABLE "Hi hi hi... Well done.\n"
+"You will need this if you want to\n"
+"reach the sealed evil below."
+),
+MSG(
+UNSKIPPABLE "Hihihi... Gut gemacht.\n"
+"Du wirst das hier brauchen, wenn du\n"
+"zu dem Bösen willst, das hier unten\n"
+"versiegelt ist."
+),
+MSG(
+UNSKIPPABLE "Hi hi hi... Bien joué.\n"
+"Tu auras besoin de ceci si tu veux\n"
+"atteindre le mal scellé sous ces lieux."
+)
+)

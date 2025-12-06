@@ -32,7 +32,7 @@ s16 fairy_deku_tree_room_8ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_8ActorList0x000048[] = {
-    { ACTOR_EN_BOX, 2001, 760, -9, 0, -16384, 0, 0x0026 },
+    { ACTOR_EN_BOX, { 2001, 760, -9 }, { 0, 0x4000, 0 }, 0x0806 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_8MeshHeader0x000060 = {
