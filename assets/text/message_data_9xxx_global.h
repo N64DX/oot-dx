@@ -28,7 +28,7 @@ COLOR(BLUE) "そうび画面" COLOR(DEFAULT) "に　切りかえて、\n"
 "カーソルで選んで　" COLOR(BLUE) "[A]" COLOR(DEFAULT) "でそうび。"
 ),
 MSG(
-ITEM_ICON(0x5B) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Hero's Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+ITEM_ICON(0x5D) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Hero's Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Switch to the " COLOR(BLUE) "Equipment \n"
 "Subscreen" COLOR(DEFAULT) " and select the\n"
 "shield, then equip it with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
@@ -71,6 +71,28 @@ UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "Vous recevez la " CO
 )
 
 DEFINE_MESSAGE(0x9003, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+ITEM_ICON(0x5A) QUICKTEXT_ENABLE "You found the " COLOR(LIGHTBLUE) "Roc's Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to leap into the air,\n"
+"as light as a feather!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9004, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+ITEM_ICON(0x5B) QUICKTEXT_ENABLE "You found the " COLOR(LIGHTBLUE) "Golden Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to leap into the air.\n"
+"This feather is even stronger!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9003, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE ITEM_ICON(0x5A)
 QUICKTEXT_ENABLE "強敵が残した\n"
@@ -78,7 +100,7 @@ COLOR(RED) "勇者の剣" COLOR(DEFAULT) "！　あなたの物です！" QUICKT
 "この剣は強力なビームを\n放つことができます！"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5A) QUICKTEXT_ENABLE "A powerful foe left behind a\n"
+UNSKIPPABLE ITEM_ICON(0x5C) QUICKTEXT_ENABLE "A powerful foe left behind a\n"
 COLOR(RED) "Hero's Sword" COLOR(DEFAULT) "! It is yours now!" QUICKTEXT_DISABLE "\n"
 "This sword is capable of\n"
 "shooting powerful beams!"

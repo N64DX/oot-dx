@@ -222,6 +222,36 @@ void* gItemIcons[] = {
     gOcarinaBtnIconCLeftTex,  // ITEM_INVALID_5
     gOcarinaBtnIconCRightTex, // ITEM_INVALID_6
     gOcarinaBtnIconATex,      // ITEM_INVALID_7
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    gItemIconRocsFeatherTex,
+    gItemIconGoldenFeatherTex,
+    gItemIconShieldHerosTex,
+    gItemIconSwordHerosTex,
 };
 
 // Used to map item IDs to inventory slots

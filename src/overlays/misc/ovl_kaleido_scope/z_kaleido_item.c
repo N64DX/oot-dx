@@ -393,6 +393,12 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                         KaleidoScope_HandleSwitchMask(play, pauseCtx, input);
                         KaleidoScope_DrawSwapItemIcons(play, gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD], KaleidoScope_GetNextMask(), pauseCtx->alpha);
                     }
+                    if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_MAGIC_BEAN && HAS_MAGIC_BEANS && HAS_ROCS_FEATHER) {
+                        u8 currItem = gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN;
+                        u8 nextItem = currItem == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN;
+                        KaleidoScope_HandleSwitchFeather(play, pauseCtx, input);
+                        KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
+                    }
 
                     if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
@@ -567,7 +573,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                       ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
 
     for (i = 0; i < 15; i++) {
-        if ((gAmmoItems[i] != ITEM_NONE) && (gSaveContext.save.info.inventory.items[i] != ITEM_NONE)) {
+        if ((gAmmoItems[i] != ITEM_NONE) && (gSaveContext.save.info.inventory.items[i] != ITEM_NONE) && (gSaveContext.save.info.inventory.items[i] == gAmmoItems[i])) {
             KaleidoScope_DrawAmmoCount(pauseCtx, play->state.gfxCtx, gSaveContext.save.info.inventory.items[i]);
         }
     }
@@ -949,5 +955,12 @@ void KaleidoScope_HandleSwitchMask(PlayState* play, PauseContext* pauseCtx, Inpu
                 currentMask = nextMask - ITEM_ZELDAS_LETTER;
             Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         }
+    }
+}
+
+void KaleidoScope_HandleSwitchFeather(PlayState* play, PauseContext* pauseCtx, Input* input) {
+    if (CHECK_BTN_ANY(input->press.button, BTN_CUP)) {
+        gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = (gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN);
+        Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
     }
 }

@@ -29,6 +29,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
+- **Kenton M:** Roc's Feather concept
 - **Nicko (Airi):** DK64 Expansion Pak warning display
 - **Nokaubure:** autosave concept, Gohma debris
 - **OoT Randomizer:** Key chest textures

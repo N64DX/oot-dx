@@ -1954,6 +1954,8 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                             getItemId = -GI_HOOKSHOT;
                         else if (gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] == ITEM_HOOKSHOT || gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] == ITEM_LONGSHOT)
                             getItemId = -GI_LONGSHOT;
+                    } else if (getItemId == -GI_ROCS_FEATHER || getItemId == -GI_GOLDEN_FEATHER) {
+                        getItemId = (HAS_ROCS_FEATHER || gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_ROCS_FEATHER) ? -GI_GOLDEN_FEATHER : -GI_ROCS_FEATHER;
                     }
 
                     if (IS_CHILD_QUEST_AS_CHILD) {
