@@ -133,4 +133,7 @@ extern Gfx gLinkYoungEarringsHoverDL[];
 // Amulet of Magic
 extern Gfx gLinkYoungAmuletOfEnergyDL[];
 
+// Great Fairy's Sword
+extern Gfx gLinkYoungGreatFairysSwordDL[];
+
 #endif

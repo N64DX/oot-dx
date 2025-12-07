@@ -941,6 +941,13 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_SCALE_SILVER
     AGE_REQ_NONE,  // ITEM_SCALE_GOLDEN
     AGE_REQ_ADULT, // ITEM_GIANTS_KNIFE
+    AGE_REQ_NONE,  // ITEM_ADULTS_WALLET,
+    AGE_REQ_NONE,  // ITEM_GIANTS_WALLET,
+    AGE_REQ_NONE,  // ITEM_DEKU_SEEDS,
+    AGE_REQ_NONE,  // ITEM_FISHING_POLE,
+    AGE_REQ_NONE,  // ITEM_SWORD_FAIRIES,
+    AGE_REQ_NONE,  // ITEM_ROCS_FEATHER,
+    AGE_REQ_NONE,  // ITEM_GOLDEN_FEATHER,
 };
 
 u8 gAreaGsFlags[] = {
@@ -2182,32 +2189,31 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
         texIndex = pauseCtx->namedItem;
         lastHylianShieldItem = IS_HEROS_SHIELD;
 
-        if (pauseCtx->pageIndex == PAUSE_ITEM && pauseCtx->namedItem == ITEM_ROCS_FEATHER)
-            texIndex = 0x38;
-        else if (pauseCtx->pageIndex == PAUSE_ITEM && pauseCtx->namedItem == ITEM_GOLDEN_FEATHER)
-            texIndex = 0x39;
-        else if (IS_CHILD_QUEST_AS_CHILD) {
+        if (pauseCtx->namedItem >= ITEM_SONG_MINUET)
+            texIndex -= ITEM_SONG_MINUET - ITEM_MASTER_WALLET;
+
+        if (IS_CHILD_QUEST_AS_CHILD) {
             if (pauseCtx->pageIndex == PAUSE_ITEM) {
                 if (pauseCtx->namedItem == ITEM_BOW)
-                    texIndex = 0x59;
+                    texIndex = ITEM_FISHING_POLE;
                 else if (pauseCtx->namedItem == ITEM_BROKEN_GORONS_SWORD)
-                    texIndex = 0x3A;
+                    texIndex = ITEM_DEKU_SEEDS;
             }
             else if (pauseCtx->pageIndex == PAUSE_EQUIP) {
                 if (pauseCtx->namedItem == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
-                    texIndex = 0x58;
-                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER)
-                    texIndex = 0x77;
-                else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON && gSaveContext.save.info.playerData.bgsFlag)
-                    texIndex = 0x78;
-                else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON)
-                    texIndex = 0x73;
+                    texIndex = ITEM_SWORD_HEROS;
                 else if (pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-                    texIndex = 0x79;
+                    texIndex = ITEM_SHIELD_HEROS;
+                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER)
+                    texIndex = ITEM_BOW_FIRE;
+                else if (pauseCtx->namedItem == ITEM_HEART_PIECE_2) // Biggoron Sword
+                    texIndex = ITEM_BOW_LIGHT;
+                else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON)
+                    texIndex = ITEM_BOW_ICE;
                 else if (pauseCtx->namedItem == ITEM_STRENGTH_SILVER_GAUNTLETS)
-                    texIndex = 0x56;
+                    texIndex = ITEM_ADULTS_WALLET;
                 else if (pauseCtx->namedItem == ITEM_STRENGTH_GOLD_GAUNTLETS)
-                    texIndex = 0x57;
+                    texIndex = ITEM_GIANTS_WALLET;
             }
         }
 
@@ -2238,17 +2244,17 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                 PRINTF("zoom_name=%d\n", pauseCtx->namedItem);
 
                 if (gSaveContext.language) { // != LANGUAGE_JPN for NTSC versions, LANGUAGE_ENG for PAL versions
-                    texIndex += 123;
+                    texIndex += ITEM_SMALL_KEY;
                 }
 
 #if OOT_PAL || OOT_NTSC_N64
                 if (gSaveContext.language == LANGUAGE_FRA) {
-                    texIndex += 123;
+                    texIndex += ITEM_SMALL_KEY;
                 }
 #endif
 #if OOT_NTSC_N64
                 if (gSaveContext.language == LANGUAGE_JPN)
-                    texIndex += 123 * 2;
+                    texIndex += ITEM_SMALL_KEY * 2;
 #endif
 
                 PRINTF("J_N=%d  point=%d\n", gSaveContext.language, texIndex);

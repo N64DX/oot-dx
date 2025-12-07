@@ -23,23 +23,23 @@ COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "!\n"
 
 DEFINE_MESSAGE(0x9001, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-ITEM_ICON(0x5E) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "勇者の盾" COLOR(DEFAULT) "を入手！" QUICKTEXT_DISABLE "\n"
+ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "勇者の盾" COLOR(DEFAULT) "を入手！" QUICKTEXT_DISABLE "\n"
 COLOR(BLUE) "そうび画面" COLOR(DEFAULT) "に　切りかえて、\n"
 "カーソルで選んで　" COLOR(BLUE) "[A]" COLOR(DEFAULT) "でそうび。"
 ),
 MSG(
-ITEM_ICON(0x5E) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Hero's Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Hero's Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Switch to the " COLOR(BLUE) "Equipment \n"
 "Subscreen" COLOR(DEFAULT) " and select the\n"
 "shield, then equip it with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
 ),
 MSG(
-ITEM_ICON(0x5E) QUICKTEXT_ENABLE "Der " COLOR(LIGHTBLUE) "Heroenschild" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE "Der " COLOR(LIGHTBLUE) "Heroenschild" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Gehe ins " COLOR(BLUE) "Ausrüstungs-Menü" COLOR(DEFAULT) ",\n"
 "um ihn mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) " auszuwählen."
 ),
 MSG(
-ITEM_ICON(0x5E) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(LIGHTBLUE) "Bouclier\n"
+ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(LIGHTBLUE) "Bouclier\n"
 "du Héros" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Sélectionnez-le à \n"
 "l'" COLOR(BLUE) "écran de l'Equipement" COLOR(DEFAULT) ", puis \n"
 "appuyez sur " COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour l'équiper."
@@ -73,7 +73,7 @@ UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "Vous recevez la " CO
 DEFINE_MESSAGE(0x9003, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-ITEM_ICON(0x5B) QUICKTEXT_ENABLE "You got the " COLOR(LIGHTBLUE) "Roc's Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+ITEM_ICON(ITEM_ROCS_FEATHER) QUICKTEXT_ENABLE "You got the " COLOR(LIGHTBLUE) "Roc's Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to leap into the air,\n"
 "as light as a feather!"
 ),
@@ -84,7 +84,7 @@ MSG()
 DEFINE_MESSAGE(0x9004, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-ITEM_ICON(0x5C) QUICKTEXT_ENABLE "You found the " COLOR(LIGHTBLUE) "Golden Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+ITEM_ICON(ITEM_GOLDEN_FEATHER) QUICKTEXT_ENABLE "You found the " COLOR(LIGHTBLUE) "Golden Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to leap into the air.\n"
 "This feather is even stronger!"
 ),
@@ -94,25 +94,25 @@ MSG()
 
 DEFINE_MESSAGE(0x9003, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5D)
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS)
 QUICKTEXT_ENABLE "強敵が残した\n"
 COLOR(RED) "勇者の剣" COLOR(DEFAULT) "！　あなたの物です！" QUICKTEXT_DISABLE "\n"
 "この剣は強力なビームを\n放つことができます！"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5D) QUICKTEXT_ENABLE "A powerful foe left behind a\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS) QUICKTEXT_ENABLE "A powerful foe left behind a\n"
 COLOR(RED) "Hero's Sword" COLOR(DEFAULT) "! It is yours now!" QUICKTEXT_DISABLE "\n"
 "This sword is capable of\n"
 "shooting powerful beams!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5D) QUICKTEXT_ENABLE "Ein mächtiger Feind hat das\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS) QUICKTEXT_ENABLE "Ein mächtiger Feind hat das\n"
 COLOR(RED) "Heroenschwert" COLOR(DEFAULT) " hinterlassen! Es\n"
 "gehört nun dir!" QUICKTEXT_DISABLE " Dieses Schwert\n"
 "kann mächtige Strahlen schießen!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5D) QUICKTEXT_ENABLE "Un puissant ennemi a laissé\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS) QUICKTEXT_ENABLE "Un puissant ennemi a laissé\n"
 COLOR(RED) "l’Épée du Héros" COLOR(DEFAULT) "! Elle est à toi maintenant!" QUICKTEXT_DISABLE "\n"
 "Cette épée est capable de\n"
 "lancer de puissants rayons!"
@@ -267,10 +267,25 @@ COLOR(DEFAULT) "Une fois équipé, tu peux te défendre\n"
 DEFINE_MESSAGE(0x9009, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-ITEM_ICON(0x5A) QUICKTEXT_ENABLE "You got the " COLOR(LIGHTBLUE) "Amulet of Energy" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+ITEM_ICON(ITEM_AMULET_OF_ENERGY) QUICKTEXT_ENABLE "You got the " COLOR(LIGHTBLUE) "Amulet of Energy" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "It grants you special power\n"
 "that enhances your tunics\n"
 "at the cost of energy!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x900A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+ITEM_ICON(ITEM_SWORD_FAIRYS) QUICKTEXT_ENABLE "You got the " COLOR(RED) "Great Fairy's Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Set it to " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "to use it."
+BOX_BREAK
+
+"With black roses etched into it,\n"
+"the Great Fairy's Sword is the\n"
+"most powerful of all blades."
 ),
 MSG(),
 MSG()

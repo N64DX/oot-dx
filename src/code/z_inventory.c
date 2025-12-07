@@ -178,6 +178,16 @@ void* gItemIcons[] = {
     gItemIconGiantsWalletTex,      // ITEM_GIANTS_WALLET
     gItemIconDekuSeedsTex,         // ITEM_DEKU_SEEDS
     gItemIconFishingPoleTex,       // ITEM_FISHING_POLE
+    gItemIconGreatFairysSwordTex,  // ITEM_SWORD_FAIRYS
+    gItemIconRocsFeatherTex,       // ITEM_ROCS_FEATHER
+    gItemIconGoldenFeatherTex,     // ITEM_GOLDEN_FEATHER
+    gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
+    gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
+    gItemIconAmuletOfEnergyTex,    // ITEM_AMULET_OF_ENERGY
+    gItemIconGiantsWalletTex,      // ITEM_MASTER_WALLET
+    gItemIconGiantsWalletTex,      // ITEM_ROYAL_WALLET
+    gItemIconGiantsWalletTex,      // ITEM_TYCOON_WALLET
+    gItemIconGiantsWalletTex,      // ITEM_BOTTOMLESS_WALLET
     // icon_item_static 16x24 ia8
     gSongNoteTex, // ITEM_SONG_MINUET
     gSongNoteTex, // ITEM_SONG_BOLERO
@@ -222,36 +232,6 @@ void* gItemIcons[] = {
     gOcarinaBtnIconCLeftTex,  // ITEM_INVALID_5
     gOcarinaBtnIconCRightTex, // ITEM_INVALID_6
     gOcarinaBtnIconATex,      // ITEM_INVALID_7
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    gItemIconRocsFeatherTex,
-    gItemIconGoldenFeatherTex,
-    gItemIconShieldHerosTex,
-    gItemIconSwordHerosTex,
 };
 
 // Used to map item IDs to inventory slots

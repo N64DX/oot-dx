@@ -26,6 +26,8 @@ typedef void (*ColChkApplyFunc)(PlayState*, CollisionCheckContext*, Collider*);
 typedef void (*ColChkVsFunc)(PlayState*, CollisionCheckContext*, Collider*, Collider*);
 typedef s32 (*ColChkLineFunc)(PlayState*, CollisionCheckContext*, Collider*, Vec3f*, Vec3f*);
 
+static u8 lastItemAction;
+
 #define SAC_ENABLE (1 << 0)
 
 #if DEBUG_FEATURES
@@ -1694,6 +1696,7 @@ void CollisionCheck_HitEffects(PlayState* play, Collider* atCol, ColliderElement
             if (atElem->atElemFlags & ATELEM_HIT)
                 if (atElem->atHit != NULL && atElem->atHit->actor != NULL) {
                     atElem->atHit->actor->colChkInfo.dmgFlags = atElem->atDmgInfo.dmgFlags;
+                    lastItemAction = = atElem->atHit->actor->colChkInfo.itemAction = player->itemAction;
                     if (player->currentTunic == PLAYER_TUNIC_ZORA && (atElem->atHit->actor->category == ACTORCAT_ENEMY || atElem->atHit->actor->category == ACTORCAT_BOSS))
                         if (atElem->atDmgInfo.dmgFlags == DMG_SLASH_KOKIRI || atElem->atDmgInfo.dmgFlags == DMG_SLASH_MASTER || atElem->atDmgInfo.dmgFlags == DMG_SLASH_GIANT)
                             atElem->atDmgInfo.dmgFlags = Player_UseSpecialPower(play, player, 30, 8, false, SPECIAL_POWER_STRENGTHEN_SWORD, atElem->atDmgInfo.dmgFlags);
@@ -3028,7 +3031,7 @@ void CollisionCheck_OC(PlayState* play, CollisionCheckContext* colChkCtx) {
  */
 void CollisionCheck_InitInfo(CollisionCheckInfo* info) {
     static CollisionCheckInfo init = {
-        NULL, { 0.0f, 0.0f, 0.0f }, 10, 10, 0, 50, 8, 0, 0, 0, 0, 0,
+        NULL, { 0.0f, 0.0f, 0.0f }, 10, 10, 0, 50, 8, 0, 0, 0, 0, 0, 0,
     };
 
     *info = init;
@@ -3744,11 +3747,11 @@ u8 CollisionCheck_GetSwordDamage(s32 dmgFlags) {
     } else if (dmgFlags & (DMG_HAMMER_JUMP | DMG_JUMP_MASTER)) {
         damage = 4;
     } else if (dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT)) {
-        if (IS_CHILD_QUEST_AS_CHILD)
+        if (IS_CHILD_QUEST_AS_CHILD && lastItemAction != PLAYER_IA_SWORD_FAIRYS)
             damage = gSaveContext.save.info.playerData.bgsFlag ? 3 : 2;
         else damage = 4;
     } else if (dmgFlags & DMG_JUMP_GIANT) {
-        if (IS_CHILD_QUEST_AS_CHILD)
+        if (IS_CHILD_QUEST_AS_CHILD && lastItemAction != PLAYER_IA_SWORD_FAIRYS)
             damage = gSaveContext.save.info.playerData.bgsFlag ? 6 : 4;
         else damage = 8;
     }

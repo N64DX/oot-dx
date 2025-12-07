@@ -106,7 +106,9 @@ typedef union HasObtainedItems {
         u8 magicBeans     : 1;
         u8 feather        : 2;
         u8 amuletOfEnergy : 1;
-        u8 unk            : 4;
+        u8 hammer         : 1;
+        u8 fairysSword    : 1;
+        u8 unk            : 2;
     };
     u8 items;
 } HasObtainedItems; // size = 0x5E

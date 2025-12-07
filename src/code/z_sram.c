@@ -372,6 +372,8 @@ void Sram_InitDebugSave(void) {
         SET_HEROS_SHIELD;
         SET_MAGIC_BEANS;
         SET_ROCS_FEATHER;
+        SET_HAMMER;
+        SET_FAIRYS_SWORD;
     }
 
     gSaveContext.save.info.horseData.sceneId = SCENE_HYRULE_FIELD;
@@ -621,6 +623,8 @@ void Sram_OpenSave(SramContext* sramCtx) {
 
     if (INV_CONTENT(ITEM_MAGIC_BEAN) == ITEM_MAGIC_BEAN)
         SET_MAGIC_BEANS;
+    if (INV_CONTENT(ITEM_HAMMER) == ITEM_HAMMER)
+        SET_HAMMER;
 }
 
 void Sram_OpenSaveOptions(SramContext* sramCtx) {

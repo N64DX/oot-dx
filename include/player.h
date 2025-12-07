@@ -182,7 +182,8 @@ typedef enum PlayerItemAction {
     /* 0x40 */ PLAYER_IA_MASK_GERUDO,
     /* 0x41 */ PLAYER_IA_MASK_TRUTH,
     /* 0x42 */ PLAYER_IA_LENS_OF_TRUTH,
-    /* 0x43 */ PLAYER_IA_MAX
+    /* 0x43 */ PLAYER_IA_SWORD_FAIRYS,
+    /* 0x44 */ PLAYER_IA_MAX
 } PlayerItemAction;
 
 typedef enum PlayerLimb {
@@ -335,7 +336,8 @@ typedef enum PlayerModelGroup {
     /* 0x0D */ PLAYER_MODELGROUP_OOT, // ocarina of time
     /* 0x0E */ PLAYER_MODELGROUP_BOTTLE, // bottles (drawn separately)
     /* 0x0F */ PLAYER_MODELGROUP_SWORD, // hold sword and no shield, even if one is equipped
-    /* 0x10 */ PLAYER_MODELGROUP_MAX
+    /* 0x10 */ PLAYER_MODELGROUP_SWORD_FAIRYS,
+    /* 0x11 */ PLAYER_MODELGROUP_MAX
 } PlayerModelGroup;
 
 typedef enum PlayerModelGroupEntry {
@@ -373,7 +375,8 @@ typedef enum PlayerModelType {
     /* 0x13 */ PLAYER_MODELTYPE_SHEATH_19, // empty sheath and shield on back?
     // waist
     /* 0x14 */ PLAYER_MODELTYPE_WAIST,
-    /* 0x15 */ PLAYER_MODELTYPE_MAX,
+    /* 0x15 */ PLAYER_MODELTYPE_LH_SWORD_FAIRYS,
+    /* 0x16 */ PLAYER_MODELTYPE_MAX,
     /* 0xFF */ PLAYER_MODELTYPE_RH_FF = 0xFF // disable shield collider, cutscene-specific
 } PlayerModelType;
 

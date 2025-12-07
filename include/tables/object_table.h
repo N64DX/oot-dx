@@ -418,6 +418,7 @@
 /* 0x019C */ DEFINE_OBJECT(object_gi_pendant, OBJECT_GI_PENDANT)
 /* 0x0197 */ DEFINE_OBJECT(object_gi_sword_heros, OBJECT_GI_SWORD_HEROS)
 /* 0x0198 */ DEFINE_OBJECT(object_gi_longsword_mm, OBJECT_GI_LONGSWORD_MM)
+/* 0x0199 */ DEFINE_OBJECT(object_gi_sword_4_mm, OBJECT_GI_SWORD_4_MM)
 /* 0x0199 */ DEFINE_OBJECT(object_gi_shield_3_mm, OBJECT_GI_SHIELD_3_MM)
 /* 0x019A */ DEFINE_OBJECT(object_gi_shield_4, OBJECT_GI_SHIELD_4)
 /* 0x019B */ DEFINE_OBJECT(object_horse_young, OBJECT_HORSE_YOUNG)
