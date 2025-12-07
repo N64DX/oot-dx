@@ -263,7 +263,7 @@ void FileSelectOptions_Draw(FileSelectState* this) {
     gDPSetRenderMode(POLY_OPA_DISP++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
     gDPSetCombineMode(POLY_OPA_DISP++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 0, 0, 0, 220);
-    gDPFillRectangle(POLY_OPA_DISP++, HIRES_MULTIPLY(24 + WS_SHIFT_HALF), HIRES_MULTIPLY(12), HIRES_MULTIPLY(298 + WS_SHIFT_HALF), HIRES_MULTIPLY(228));
+    gDPFillRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(24 + WS_SHIFT_HALF), HIRES_MULTIPLY(12), X_HIRES_MULTIPLY(298 + WS_SHIFT_HALF), HIRES_MULTIPLY(228));
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetCombineLERP(POLY_OPA_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
 
@@ -278,7 +278,7 @@ void FileSelectOptions_Draw(FileSelectState* this) {
     else GfxPrint_Printf(&printer, "File %d Options", (gSaveContext.fileNum+1));
 
     for (i=0; i<(this->count < 20 ? this->count : 20); i++) {
-        GfxPrint_SetPos(&printer, SCREEN_MODE <= 1 ? 4 : 3, i + 4);
+        GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, i + 4);
 
         title = (this->topDisplayedEntry + i + this->count) % this->count;
         if (title == this->currentEntry)
@@ -289,7 +289,7 @@ void FileSelectOptions_Draw(FileSelectState* this) {
             GfxPrint_Printf(&printer, " %d: %s", this->entries[title].number, this->entries[title].name);
         else GfxPrint_Printf(&printer, "%d: %s", this->entries[title].number, this->entries[title].name);
 
-        GfxPrint_SetPos(&printer, SCREEN_MODE <= 1 ? 32 : 31, i + 4);
+        GfxPrint_SetPos(&printer, 32 - WS_PX_SHIFT, i + 4);
         GfxPrint_Printf(&printer, "%s", this->entries[title].getFunc(this, this->entries[title].index, this->entries[title].shift));
     };
 

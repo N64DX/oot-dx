@@ -462,11 +462,11 @@ void Health_DrawMeter(PlayState* play) {
             heartTexCoordPerPixel *= HIRES_DIVIDE(1 << 10);
             halfHeartLength = 8.0f;
             halfHeartLength *= HIRES_MULTIPLY(0.68f);
-            gSPTextureRectangle(OVERLAY_DISP++, (s32)((heartCenterX - halfHeartLength) * 4),
+            gSPTextureRectangle(OVERLAY_DISP++, (s32)(X_MULTIPLY((heartCenterX - halfHeartLength) * 4)),
                                 (s32)((heartCenterY - halfHeartLength) * 4),
-                                (s32)((heartCenterX + halfHeartLength) * 4),
+                                (s32)(X_MULTIPLY((heartCenterX + halfHeartLength) * 4)),
                                 (s32)((heartCenterY + halfHeartLength) * 4), G_TX_RENDERTILE, 0, 0,
-                                (s32)heartTexCoordPerPixel, (s32)heartTexCoordPerPixel);
+                                (s32)(X_DIVIDE(heartTexCoordPerPixel)), (s32)heartTexCoordPerPixel);
         } else {
             if ((ddHeartCountMinusOne < 0) || (heartIndex > ddHeartCountMinusOne)) {
                 if (curCombineModeSet != 2) {
