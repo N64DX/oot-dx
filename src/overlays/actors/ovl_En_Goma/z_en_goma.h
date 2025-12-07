@@ -43,12 +43,22 @@ typedef enum EnGomaLimb {
     /* 24 */ GOMA_LIMB_MAX
 } EnGomaLimb;
 
+typedef struct EnGomaDebris {
+    Vec3f pos;
+    s16 rotX;
+    s16 rotY;
+    f32 speedXZ;
+    f32 velocityY;
+    Vec3f scale;
+} EnGomaDebris; // size = 0x24
+
 typedef struct EnGoma {
     /* 0x000 */ Actor actor;
     /* 0x14C */ SkelAnime skelanime;
     /* 0x190 */ Vec3s jointTable[24];
     /* 0x220 */ Vec3s morphTable[24];
-    /* 0x2B0 */ EnGomaActionFunc actionFunc;
+    /* 0x30C */ ColliderCylinder colliderCylinder1;
+    /* 0x358 */ ColliderCylinder colliderCylinder2;
     /* 0x2B4 */ s16 slopePitch;
     /* 0x2B6 */ s16 slopeRoll;
     /* 0x2B8 */ s16 gomaType;
@@ -61,7 +71,6 @@ typedef struct EnGoma {
     /* 0x2C6 */ s16 playerDetectionTimer;
     /* 0x2C8 */ s16 spawnNum; // some debug spawn ID
     /* 0x2CA */ s16 invincibilityTimer;
-    /* 0x2CC */ s16 actionTimer;
     /* 0x2D0 */ f32 eggScale;
     /* 0x2D4 */ f32 eggPitch;
     /* 0x2D8 */ f32 eggSquishAngle;
@@ -73,8 +82,13 @@ typedef struct EnGoma {
     /* 0x2F8 */ s16 stunTimer;
     /* 0x2FC */ Vec3f shieldKnockbackVel;
     /* 0x308 */ Gfx* bossLimbDL; // set by z_boss_goma
-    /* 0x30C */ ColliderCylinder colliderCylinder1;
-    /* 0x358 */ ColliderCylinder colliderCylinder2;
+    /* 0x2B0 */ EnGomaActionFunc actionFunc;
+    /* 0x2CC */ s16 actionTimer;
 } EnGoma; // size = 0x03A4
+
+typedef struct EnGoma_DebrisActor {
+    /* 0x000 */ Actor actor;
+    /* 0x14C */ EnGomaDebris debris[15];
+} EnGoma_DebrisActor; // size = 0x0368
 
 #endif

@@ -30,7 +30,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
 - **LeSéducteur:** Buff Scrub actor
 - **Nicko (Airi):** DK64 Expansion Pak warning display
-- **Nokaubure:** autosave concept
+- **Nokaubure:** autosave concept, Gohma debris
 - **OoT Randomizer:** Key chest textures
 - **Skawo:** Font preloading, Fixes: Kakariko Gate Guard, Stalfos lag, Ingo text
 - **spaztron64:** Hires mode concept
