@@ -25,6 +25,7 @@
 #include "sram.h"
 #include "transition.h"
 #include "view.h"
+#include "player.h"
 
 union Color_RGBA8_u32;
 struct Path;
@@ -51,6 +52,13 @@ typedef enum SpecialIcon {
     /* 0 */ SPECIAL_ICON_AUTOSAVE,
     /* 1 */ SPECIAL_ICON_RUMBLE
 } SpecialIcon;
+
+typedef enum SpecialPowerType {
+    /* 0 */ SPECIAL_POWER_REDUCE_DAMAGE,
+    /* 1 */ SPECIAL_POWER_STRENGTHEN_SWORD,
+    /* 2 */ SPECIAL_POWER_MAGIC_REGEN,
+    /* 3 */ SPECIAL_POWER_HEALTH_REGEN
+} SpecialPowerType;
 
 typedef struct SceneSequences {
     /* 0x00 */ u8 seqId;
@@ -134,6 +142,7 @@ typedef struct PlayState {
     /* 0x12132 */ s8 specialIconShake;
     /* 0x12133 */ u8 specialIconCount;
     /* 0x12134 */ u8 specialIconLast;
+    /* 0x12137 */ u8 specialPowerTimer;
 } PlayState; // size = 0x12518
 
 extern Mtx D_01000000; // billboardMtx
@@ -172,6 +181,7 @@ void Play_TriggerRespawn(PlayState* this);
 int Play_CamIsNotFixed(PlayState* this);
 s32 func_800C0D34(PlayState* this, Actor* actor, s16* yaw);
 s32 func_800C0DB4(PlayState* this, Vec3f* pos);
+u32 Player_UseSpecialPower(struct PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, u32 amount);
 u8 Player_GetMaxEnergy(void);
 bool Player_HasEnergyUnlocked(void);
 

@@ -798,6 +798,8 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_BULLET_BAG_50, OBJECT_GI_DEKUPOUCH, GID_BULLET_BAG_50, 0x6C, 0x80, CHEST_ANIM_LONG),
     // GI_ICE_TRAP
     GET_ITEM_NONE,
+    // GI_AMULET_OF_ENERGY
+    GET_ITEM(ITEM_AMULET_OF_ENERGY, OBJECT_GI_PENDANT, GID_AMULET_OF_ENERGY, 0x9004, 0x80, CHEST_ANIM_LONG),
     // GI_ROCS_FEATHER
     GET_ITEM(ITEM_ROCS_FEATHER, OBJECT_GI_FEATHER, GID_ROCS_FEATHER, 0x9003, 0x80, CHEST_ANIM_LONG),
     // GI_GOLDEN_FEATHER
@@ -3150,7 +3152,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 EffectSsGSplash_Spawn(play, &effectsPos, NULL, NULL, 0, 150);
                 this->stateFlags2 &= ~(PLAYER_STATE2_19);
                 Player_PlaySfx(this, NA_SE_PL_SKIP);
-                gSaveContext.energy -= item == ITEM_ROCS_FEATHER ? 15 : 10;
+                gSaveContext.save.info.energy -= item == (ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy * 5);
             }
         }
     }
@@ -5067,6 +5069,10 @@ void Player_SetInvulnerability(Player* this, s32 timer) {
  * @return false if player is out of health
  */
 s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
+    if ((this->invincibilityTimer != 0) || (this->actor.category != ACTORCAT_PLAYER)) {
+        return true;
+    }
+
     switch (DAMAGE_TAKEN) {
         case 1:
             damage *= 2;
@@ -5090,9 +5096,13 @@ s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
             damage /= 4;
             break;
     }
-    
-    if ((this->invincibilityTimer != 0) || (this->actor.category != ACTORCAT_PLAYER)) {
-        return true;
+
+    if (damage < 0) {
+        if (this->currentTunic == PLAYER_TUNIC_KOKIRI) {
+            if (gSaveContext.save.info.playerData.isMagicAcquired && gSaveContext.save.info.playerData.magic < gSaveContext.save.info.playerData.magicLevel * MAGIC_NORMAL_METER)
+                Player_UseSpecialPower(play, this, 15, 2, NA_SE_SY_HP_RECOVER, SPECIAL_POWER_MAGIC_REGEN, 3);
+        } else if (this->currentTunic == PLAYER_TUNIC_GORON)
+            damage = Player_UseSpecialPower(play, this, 25, 5, false, SPECIAL_POWER_REDUCE_DAMAGE, damage);
     }
 
     return Health_ChangeBy(play, damage);

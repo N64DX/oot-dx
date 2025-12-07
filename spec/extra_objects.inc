@@ -41,6 +41,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_gi_pendant"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_pendant/object_gi_pendant.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_sword_heros"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_sword_heros/object_gi_sword_heros.o"

@@ -103,9 +103,10 @@ typedef struct Inventory {
 
 typedef union HasObtainedItems {
     struct {
-        u8 magicBeans : 1;
-        u8 feather    : 2;
-        u8 unk        : 5;
+        u8 magicBeans     : 1;
+        u8 feather        : 2;
+        u8 amuletOfEnergy : 1;
+        u8 unk            : 4;
     };
     u8 items;
 } HasObtainedItems; // size = 0x5E
@@ -473,6 +474,8 @@ typedef enum LinkAge {
 #define HAS_ROCS_FEATHER      (gSaveContext.save.info.hasObtainedItems.feather > 0)
 #define SET_GOLDEN_FEATHER    (gSaveContext.save.info.hasObtainedItems.feather = 2)
 #define HAS_GOLDEN_FEATHER    (gSaveContext.save.info.hasObtainedItems.feather > 1)
+#define SET_AMULET_OF_ENERGY  (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy = 1)
+#define HAS_AMULET_OF_ENERGY  (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy)
 
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17

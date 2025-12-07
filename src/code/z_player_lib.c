@@ -1113,9 +1113,9 @@ Gfx* sBootDListGroups[][2] = {
     { gLinkAdultLeftHoverBootDL, gLinkAdultRightHoverBootDL }, // PLAYER_BOOTS_HOVER
 };
 
-Gfx* sLinkChildEquipmentDListGroups[][5] = {
-    { gLinkChildEarringsIronDL, gLinkChildEarringsHoverDL, gLinkChildGoronBraceletDL, gLinkChildPowerBraceletDL, gLinkChildPowerBraceletsDL },
-    { gLinkYoungEarringsIronDL, gLinkYoungEarringsHoverDL, gLinkYoungGoronBraceletDL, gLinkYoungPowerBraceletDL, gLinkYoungPowerBraceletsDL },
+Gfx* sLinkChildEquipmentDListGroups[][6] = {
+    { gLinkChildEarringsIronDL, gLinkChildEarringsHoverDL, gLinkChildGoronBraceletDL, gLinkChildPowerBraceletDL, gLinkChildPowerBraceletsDL, gLinkChildAmuletOfEnergyDL },
+    { gLinkYoungEarringsIronDL, gLinkYoungEarringsHoverDL, gLinkYoungGoronBraceletDL, gLinkYoungPowerBraceletDL, gLinkYoungPowerBraceletsDL, gLinkYoungAmuletOfEnergyDL },
 };
 
 void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dListCount, s32 lod, s32 tunic, s32 boots,
@@ -1195,6 +1195,9 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
             }
             if (boots == PLAYER_BOOTS_IRON || boots == PLAYER_BOOTS_HOVER) {
                 gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][boots - 1]);
+            }
+            if (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy) {
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][5]);
             }
         } else if (Player_GetStrength() > PLAYER_STR_NONE) {
             gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][2]);
