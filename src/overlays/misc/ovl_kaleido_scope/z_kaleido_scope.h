@@ -245,6 +245,7 @@ u8 KaleidoScope_GetNextMask(void);
 void KaleidoScope_UpdateTradeEquips(struct PlayState* play, u8 item, u8 slot);
 void KaleidoScope_HandleSwitchMask(struct PlayState* play, PauseContext* pauseCtx, Input* input);
 void KaleidoScope_HandleSwitchFeather(struct PlayState* play, PauseContext* pauseCtx, Input* input);
+void KaleidoScope_HandleSwitchFairysSword(struct PlayState* play, PauseContext* pauseCtx, Input* input);
 void KaleidoScope_DrawSwapItemIcons(struct PlayState* play, ItemID currItem, ItemID nextItem, u16 alpha);
 
 #endif

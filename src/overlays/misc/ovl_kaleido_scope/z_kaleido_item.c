@@ -401,6 +401,12 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                         KaleidoScope_HandleSwitchFeather(play, pauseCtx, input);
                         KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
                     }
+                    if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_HAMMER && HAS_HAMMER && HAS_FAIRYS_SWORD) {
+                        u8 currItem = gSaveContext.save.info.inventory.items[SLOT_HAMMER] == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER;
+                        u8 nextItem = currItem == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER;
+                        KaleidoScope_HandleSwitchFairysSword(play, pauseCtx, input);
+                        KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
+                    }
 
                     if (FIX_USEFUL_GLITCHES && pauseCtx->mainState != PAUSE_MAIN_STATE_IDLE)
                         canSelectItem = false;;
@@ -972,6 +978,18 @@ void KaleidoScope_HandleSwitchFeather(PlayState* play, PauseContext* pauseCtx, I
         gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = (gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
+                Interface_LoadItemIcon1(play, i+4);
+        Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    }
+}
+
+void KaleidoScope_HandleSwitchFairysSword(PlayState* play, PauseContext* pauseCtx, Input* input) {
+    u8 i;
+
+    if (CHECK_BTN_ANY(input->press.button, BTN_CUP)) {
+        gSaveContext.save.info.inventory.items[SLOT_HAMMER] = (gSaveContext.save.info.inventory.items[SLOT_HAMMER] == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_HAMMER)
                 Interface_LoadItemIcon1(play, i+4);
         Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
     }

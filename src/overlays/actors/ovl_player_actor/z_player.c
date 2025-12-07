@@ -806,6 +806,8 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_ROCS_FEATHER, OBJECT_GI_FEATHER, GID_ROCS_FEATHER, 0x9003, 0x80, CHEST_ANIM_LONG),
     // GI_GOLDEN_FEATHER
     GET_ITEM(ITEM_GOLDEN_FEATHER, OBJECT_GI_FEATHER, GID_GOLDEN_FEATHER, 0x9004, 0x80, CHEST_ANIM_LONG),
+    // GI_SWORD_FAIRYS
+    GET_ITEM(ITEM_SWORD_FAIRYS, OBJECT_GI_SWORD_4_MM, GID_SWORD_FAIRYS, 0x900A, 0x80, CHEST_ANIM_LONG),
     // GI_SHIELD_MIRROR_MM
     GET_ITEM(ITEM_SHIELD_MIRROR, OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, 0x8003, 0x80, CHEST_ANIM_LONG),
     // GI_SHIELD_HEROS
@@ -1404,6 +1406,35 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_KOKIRI,        // ITEM_SWORD_KOKIRI
     PLAYER_IA_SWORD_MASTER,        // ITEM_SWORD_MASTER
     PLAYER_IA_SWORD_BIGGORON,      // ITEM_SWORD_BIGGORON
+    PLAYER_IA_NONE,                // ITEM_SHIELD_DEKU,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_HYLIAN,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_MIRROR,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_KOKIRI,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_GORON,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_ZORA,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_KOKIRI,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_IRON,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_HOVER,
+    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_30,
+    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_40,
+    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_50,
+    PLAYER_IA_NONE,                // ITEM_QUIVER_30,
+    PLAYER_IA_NONE,                // ITEM_QUIVER_40,
+    PLAYER_IA_NONE,                // ITEM_QUIVER_50,
+    PLAYER_IA_NONE,                // ITEM_BOMB_BAG_20,
+    PLAYER_IA_NONE,                // ITEM_BOMB_BAG_30,
+    PLAYER_IA_NONE,                // ITEM_BOMB_BAG_40,
+    PLAYER_IA_NONE,                // ITEM_STRENGTH_GORONS_BRACELET,
+    PLAYER_IA_NONE,                // ITEM_STRENGTH_SILVER_GAUNTLETS,
+    PLAYER_IA_NONE,                // ITEM_STRENGTH_GOLD_GAUNTLETS,
+    PLAYER_IA_NONE,                // ITEM_SCALE_SILVER,
+    PLAYER_IA_NONE,                // ITEM_SCALE_GOLDEN,
+    PLAYER_IA_NONE,                // ITEM_GIANTS_KNIFE,
+    PLAYER_IA_NONE,                // ITEM_ADULTS_WALLET,
+    PLAYER_IA_NONE,                // ITEM_GIANTS_WALLET,
+    PLAYER_IA_NONE,                // ITEM_DEKU_SEEDS,
+    PLAYER_IA_NONE,                // ITEM_FISHING_POLE,
+    PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
 };
 
 static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
@@ -1474,6 +1505,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     func_8083485C,                 // PLAYER_IA_MASK_GERUDO
     func_8083485C,                 // PLAYER_IA_MASK_TRUTH
     func_8083485C,                 // PLAYER_IA_LENS_OF_TRUTH
+    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_FAIRYS
 };
 
 static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
@@ -1544,6 +1576,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_MASK_GERUDO
     Player_InitDefaultIA,        // PLAYER_IA_MASK_TRUTH
     Player_InitDefaultIA,        // PLAYER_IA_LENS_OF_TRUTH
+    Player_InitDefaultIA,        // PLAYER_IA_SWORD_FAIRYS
 };
 
 typedef enum ItemChangeType {
@@ -3064,7 +3097,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     }
 
     if (!(this->stateFlags1 & (PLAYER_STATE1_CARRYING_ACTOR | PLAYER_STATE1_29)) && !func_8008F128(this)) {
-        if (this->itemAction >= PLAYER_IA_FISHING_POLE) {
+        if (this->itemAction >= PLAYER_IA_FISHING_POLE && this->itemAction != PLAYER_IA_SWORD_FAIRYS) {
             if (!Player_ItemIsInUse(this, B_BTN_ITEM) && !Player_ItemIsInUse(this, C_BTN_ITEM(0)) &&
                 !Player_ItemIsInUse(this, C_BTN_ITEM(1)) && !Player_ItemIsInUse(this, C_BTN_ITEM(2)) &&
                 !Player_ItemIsInUse(this, Interface_GetItemFromDpad(0)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(1)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(2)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(3)) ) {
@@ -4059,7 +4092,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
                 } else {
                     Sfx_PlaySfxCentered(NA_SE_SY_ERROR);
                 }
-            } else if (itemAction >= PLAYER_IA_MASK_KEATON) {
+            } else if (itemAction >= PLAYER_IA_MASK_KEATON && itemAction != PLAYER_IA_SWORD_FAIRYS) {
                 // Handle wearable masks
                 if (this->currentMask != PLAYER_MASK_NONE) {
                     this->currentMask = PLAYER_MASK_NONE;
@@ -4070,7 +4103,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
 
                 func_808328EC(this, NA_SE_PL_CHANGE_ARMS);
             } else if (((itemAction >= PLAYER_IA_OCARINA_FAIRY) && (itemAction <= PLAYER_IA_OCARINA_OF_TIME)) ||
-                       (itemAction >= PLAYER_IA_BOTTLE_FISH)) {
+                       (itemAction >= PLAYER_IA_BOTTLE_FISH && itemAction != PLAYER_IA_SWORD_FAIRYS)) {
                 // Handle "cutscene items"
                 if (!Player_CheckHostileLockOn(this) ||
                     ((itemAction >= PLAYER_IA_BOTTLE_POTION_RED) && (itemAction <= PLAYER_IA_BOTTLE_FAIRY))) {
@@ -4838,6 +4871,10 @@ s32 Player_TryActionInterrupt(PlayState* play, Player* this, SkelAnime* skelAnim
 }
 
 void func_80837530(PlayState* play, Player* this, s32 arg2) {
+    u8 meleeWeapon = Player_GetMeleeWeaponHeld(this);
+    if (meleeWeapon == 6)
+        meleeWeapon = 2;
+
     if (arg2 != 0) {
         this->unk_858 = 0.0f;
     } else {
@@ -4849,7 +4886,7 @@ void func_80837530(PlayState* play, Player* this, s32 arg2) {
     if (this->actor.category == ACTORCAT_PLAYER) {
         Actor_Spawn(&play->actorCtx, play, ACTOR_EN_M_THUNDER, this->bodyPartsPos[PLAYER_BODYPART_WAIST].x,
                     this->bodyPartsPos[PLAYER_BODYPART_WAIST].y, this->bodyPartsPos[PLAYER_BODYPART_WAIST].z, 0, 0, 0,
-                    Player_GetMeleeWeaponHeld(this) | arg2);
+                    meleeWeapon | arg2);
     }
 }
 
@@ -4994,7 +5031,7 @@ void func_80837918(Player* this, s32 quadIndex, u32 dmgFlags) {
 
 static u32 D_80854488[][2] = {
     { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT },
-    { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP },
+    { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT },
 };
 
 void func_80837948(PlayState* play, Player* this, s32 arg2) {

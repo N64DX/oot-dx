@@ -1724,7 +1724,7 @@ void Interface_LoadItemIcon1(PlayState* play, u16 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     u8 item = Interface_GetLoadItem(button);
 
-    if (item >= 0xF0)
+    if (item >= ITEM_SWORD_CS)
         return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
@@ -1738,7 +1738,7 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     u8 item = Interface_GetLoadItem(button);
 
-    if (item >= 0xF0)
+    if (item >= ITEM_SWORD_CS)
         return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
@@ -1749,49 +1749,40 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
 }
 
 u8 Interface_LoadItemIconChildQuest(u8 item) {
-    if (item == ITEM_AMULET_OF_ENERGY)
-        return ITEM_FISHING_POLE + 1;
-    else if (item == ITEM_ROCS_FEATHER)
-        return ITEM_FISHING_POLE + 2;
-    else if (item == ITEM_GOLDEN_FEATHER)
-        return ITEM_FISHING_POLE + 3;
-    else if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-        return ITEM_FISHING_POLE + 5;
+    if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+        return ITEM_SHIELD_HEROS;
     else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
-        return ITEM_FISHING_POLE + 4;
+        return ITEM_SWORD_HEROS;
+
     else if (item == ITEM_STONE_OF_AGONY)
-        return ITEM_FISHING_POLE + 19;
+        return ITEM_AMULET_OF_ENERGY + 14;
+
     else if (IS_CHILD_QUEST) {
         if (item == ITEM_BROKEN_GORONS_SWORD)
-            return ITEM_FISHING_POLE + 18;
+            return ITEM_AMULET_OF_ENERGY + 13;
         else if (LINK_IS_CHILD) {
-            if (item == ITEM_HOOKSHOT)
-                return ITEM_FISHING_POLE + 10;
-            else if (item == ITEM_LONGSHOT)
-                return ITEM_FISHING_POLE + 11;
-
-            else if (item == ITEM_BOW)
-                return ITEM_FISHING_POLE + 12;
-            else if (item == ITEM_BOW_FIRE)
-                return ITEM_FISHING_POLE + 13;
-            else if (item == ITEM_BOW_ICE)
-                return ITEM_FISHING_POLE + 14;
-            else if (item == ITEM_BOW_LIGHT)
-                return ITEM_FISHING_POLE + 15;
-
-            else if (item == ITEM_SWORD_MASTER)
-                return ITEM_FISHING_POLE + 7;
-            else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
-                return ITEM_FISHING_POLE + 8;
+            if (item == ITEM_SHIELD_MIRROR)
+                return ITEM_AMULET_OF_ENERGY + 1;
+            if (item == ITEM_SWORD_MASTER)
+                return ITEM_AMULET_OF_ENERGY + 2;
             else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
-                return ITEM_FISHING_POLE + 9;
-            else if (item == ITEM_SHIELD_MIRROR)
-                return ITEM_FISHING_POLE + 6;
-            
+                return ITEM_AMULET_OF_ENERGY + (!gSaveContext.save.info.playerData.bgsFlag ? 3 : 4);
+            if (item == ITEM_HOOKSHOT)
+                return ITEM_AMULET_OF_ENERGY + 5;
+            else if (item == ITEM_LONGSHOT)
+                return ITEM_AMULET_OF_ENERGY + 6;
+            else if (item == ITEM_BOW)
+                return ITEM_AMULET_OF_ENERGY + 7;
+            else if (item == ITEM_BOW_FIRE)
+                return ITEM_AMULET_OF_ENERGY + 8;
+            else if (item == ITEM_BOW_ICE)
+                return ITEM_AMULET_OF_ENERGY + 9;
+            else if (item == ITEM_BOW_LIGHT)
+                return ITEM_AMULET_OF_ENERGY + 10;
             else if (item == ITEM_STRENGTH_SILVER_GAUNTLETS)
-                return ITEM_FISHING_POLE + 16;
+                return ITEM_AMULET_OF_ENERGY + 11;
             else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
-                return ITEM_FISHING_POLE + 17;
+                return ITEM_AMULET_OF_ENERGY + 12;
         }
     }
 
@@ -2281,6 +2272,17 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_AMULET_OF_ENERGY) {
         gSaveContext.save.info.hasObtainedItems.amuletOfEnergy = 1;
         return ITEM_NONE;
+    } else if (item == ITEM_HAMMER) {
+        INV_CONTENT(ITEM_HAMMER) = item;
+        SET_HAMMER;
+        return ITEM_NONE;
+    } else if (item == ITEM_SWORD_FAIRYS) {
+        INV_CONTENT(ITEM_HAMMER) = item;
+        SET_FAIRYS_SWORD;
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_HAMMER)
+                Interface_LoadItemIcon1(play, i+4);
+        return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
         return ITEM_NONE;
@@ -2574,7 +2576,7 @@ u8 Item_CheckObtainability(u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_ADULTS_WALLET || item == ITEM_GIANTS_WALLET || item == ITEM_ROYAL_WALLET) {
         return ITEM_NONE;
-    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY) {
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS) {
         return ITEM_NONE;
     }
 
@@ -3651,7 +3653,7 @@ void Interface_DrawItemButtons(PlayState* play) {
 
     // Empty C Button Arrows
     for (temp = 1; temp < 4; temp++) {
-        if (gSaveContext.save.info.equips.buttonItems[temp] > 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[temp] > ITEM_SWORD_CS) {
             if (temp == 1) {
                 gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                                 interfaceCtx->cLeftAlpha);
@@ -4461,7 +4463,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Left Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[1] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[1] < ITEM_SWORD_CS) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cLeftAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x1000, 1);
@@ -4474,7 +4476,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Down Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[2] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[2] < ITEM_SWORD_CS) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cDownAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x2000, 2);
@@ -4487,7 +4489,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Right Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[3] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[3] < ITEM_SWORD_CS) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cRightAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x3000, 3);
@@ -4498,7 +4500,7 @@ void Interface_Draw(PlayState* play) {
         }
 
         for (svar1=0; svar1<4; svar1++) {
-            if (Interface_GetItemFromDpad(svar1) >= 0xF0)
+            if (Interface_GetItemFromDpad(svar1) >= ITEM_SWORD_CS)
                 continue;
 
             // D-Pad Button Icon & Ammo Count

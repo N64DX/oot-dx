@@ -221,6 +221,7 @@ u8 sActionModelGroups[PLAYER_IA_MAX] = {
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_MASK_GERUDO
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_MASK_TRUTH
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_LENS_OF_TRUTH
+    PLAYER_MODELGROUP_SWORD_FAIRYS,     // PLAYER_IA_SWORD_FAIRYS
 };
 
 typedef struct EnvHazardTextTriggerEntry {
@@ -284,6 +285,9 @@ u8 gPlayerModelTypes[PLAYER_MODELGROUP_MAX][PLAYER_MODELGROUPENTRY_MAX] = {
       PLAYER_MODELTYPE_WAIST },
     /* PLAYER_MODELGROUP_SWORD */
     { PLAYER_ANIMTYPE_0, PLAYER_MODELTYPE_LH_SWORD, PLAYER_MODELTYPE_RH_OPEN, PLAYER_MODELTYPE_SHEATH_19,
+      PLAYER_MODELTYPE_WAIST },
+    /* PLAYER_MODELGROUP_SWORD_FAIRYS */
+    { PLAYER_ANIMTYPE_3, PLAYER_MODELTYPE_LH_SWORD_FAIRYS, PLAYER_MODELTYPE_RH_CLOSED, PLAYER_MODELTYPE_SHEATH_18,
       PLAYER_MODELTYPE_WAIST },
 };
 
@@ -499,6 +503,12 @@ Gfx* sPlayerLeftHandHammerDLs[MAX_LINK_MODELS] = {
     gLinkYoungLeftHandHoldingHammerNearDL,
 };
 
+Gfx* sPlayerLeftHandSwordFairysDL[MAX_LINK_MODELS] = {
+    gLinkAdultGreatFairysSwordDL,
+    gLinkChildGreatFairysSwordDL,
+    gLinkYoungGreatFairysSwordDL,
+};
+
 Gfx* gPlayerLeftHandBoomerangDLs[MAX_LINK_MODELS] = {
     gLinkAdultLeftHandNearDL,
     gLinkChildLeftFistAndBoomerangNearDL,
@@ -564,6 +574,7 @@ Gfx** sPlayerDListGroups[PLAYER_MODELTYPE_MAX] = {
     D_80125D28,                       // PLAYER_MODELTYPE_SHEATH_18
     D_80125D88,                       // PLAYER_MODELTYPE_SHEATH_19
     sPlayerWaistDLs,                  // PLAYER_MODELTYPE_WAIST
+    sPlayerLeftHandSwordFairysDL,     // PLAYER_MODELTYPE_LH_SWORD_FAIRYS
 };
 
 Gfx gCullBackDList[] = {
@@ -883,7 +894,9 @@ int func_8008F128(Player* this) {
 s32 Player_ActionToMeleeWeapon(s32 itemAction) {
     s32 meleeWeapon = itemAction - PLAYER_IA_FISHING_POLE;
 
-    if ((meleeWeapon > 0) && (meleeWeapon < 6)) {
+    if (itemAction == PLAYER_IA_SWORD_FAIRYS) {
+        return 6;
+    } if ((meleeWeapon > 0) && (meleeWeapon < 6)) {
         return meleeWeapon;
     } else {
         return 0;
@@ -895,7 +908,7 @@ s32 Player_GetMeleeWeaponHeld(Player* this) {
 }
 
 s32 Player_HoldsTwoHandedWeapon(Player* this) {
-    if ((this->heldItemAction >= PLAYER_IA_SWORD_BIGGORON) && (this->heldItemAction <= PLAYER_IA_HAMMER)) {
+    if ((this->heldItemAction >= PLAYER_IA_SWORD_BIGGORON && this->heldItemAction <= PLAYER_IA_HAMMER) || this->heldItemAction == PLAYER_IA_SWORD_FAIRYS) {
         return (LINK_IS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) ? 0 : 1;
     } else {
         return 0;
@@ -1677,6 +1690,7 @@ f32 sMeleeWeaponLengths[] = {
     5500.0f, // Biggoron's Sword
     0.0f,    // Deku Stick
     2500.0f, // Hammer
+    5500.0f, // Great Fairy's Sword
 };
 
 Gfx* sBottleDLists[] = { gLinkAdultBottleDL, gLinkChildBottleDL, gLinkYoungBottleDL };

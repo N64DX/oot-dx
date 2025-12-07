@@ -161,7 +161,7 @@ void Interface_Init(PlayState* play) {
         else if (item == ITEM_BOOTS)
             item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
 
-        if (item < 0xF0)
+        if (item < ITEM_SWORD_CS)
             DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, "../z_construct.c", 198);
     }
 
