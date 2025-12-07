@@ -1,10 +1,9 @@
 #include "assets/scenes/indoors/miharigoya/miharigoya_scene.h"
-#include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_miharigoya_scene[];
 
 static SceneCmd start[] = {
-#include "assets/scenes/overworld/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_miharigoya_scene),
 };
 
 #include "assets/scenes/indoors/miharigoya/miharigoya_scene.c"
@@ -25,6 +24,6 @@ static SceneCmd cq_header[] = {
 #include "assets/scenes/indoors/miharigoya/cq/scene/header.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_miharigoya_scene[] = {
 #include "assets/scenes/overworld/questHeaders.inc.c"
 };

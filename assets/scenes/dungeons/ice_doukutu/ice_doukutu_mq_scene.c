@@ -1,10 +1,11 @@
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene.h"
 #include "save.h"
+#include "versions.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_ice_doukutu_scene[];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_ice_doukutu_scene),
 };
 
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene.c"
@@ -63,6 +64,6 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/ice_doukutu/mq/scene/header.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_ice_doukutu_scene[] = {
 #include "assets/scenes/dungeons/questHeadersScene.inc.c"
 };

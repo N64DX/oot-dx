@@ -403,7 +403,7 @@ void Play_Init(GameState* thisx) {
 
     if (!IS_CUTSCENE_LAYER) {
         if (IS_CHILD_QUEST) {
-            u8 sceneId = gEntranceTable[gSaveContext.save.entranceIndex].sceneId;
+            u8 sceneId = gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId;
             if (GET_EVENTCHKINF(EVENTCHKINF_45)) {
                 if (sceneId == SCENE_KOKIRI_FOREST) 
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_48) ? 3 : 2;
@@ -415,14 +415,15 @@ void Play_Init(GameState* thisx) {
                     gSaveContext.sceneLayer += 2;
             } else if (sceneId == SCENE_HYRULE_FIELD)
                 gSaveContext.sceneLayer = CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD) && CHECK_QUEST_ITEM(QUEST_GORON_RUBY) && CHECK_QUEST_ITEM(QUEST_ZORA_SAPPHIRE);
-        } else if (gEntranceTable[gSaveContext.save.entranceIndex].sceneId == SCENE_HYRULE_FIELD && !LINK_IS_ADULT)
+        } else if (gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId == SCENE_HYRULE_FIELD && !LINK_IS_ADULT)
             gSaveContext.sceneLayer = CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD) && CHECK_QUEST_ITEM(QUEST_GORON_RUBY) && CHECK_QUEST_ITEM(QUEST_ZORA_SAPPHIRE);
-        else if (gEntranceTable[gSaveContext.save.entranceIndex].sceneId == SCENE_KOKIRI_FOREST && LINK_IS_ADULT)
+        else if (gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId == SCENE_KOKIRI_FOREST && LINK_IS_ADULT)
             gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_48) ? 3 : 2;
     }
 
     Play_SpawnScene(
-        this, gEntranceTable[gSaveContext.save.entranceIndex + SCENE_LAYER_GOTO(this, gSaveContext.sceneLayer)].sceneId, gEntranceTable[gSaveContext.save.entranceIndex + SCENE_LAYER_GOTO(this, gSaveContext.sceneLayer)].spawn);
+        this, gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, ((void)0, gSaveContext.sceneLayer))].sceneId,
+        gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, ((void)0, gSaveContext.sceneLayer))].spawn);
 
     PRINTF("\nSCENE_NO=%d COUNTER=%d\n", ((void)0, gSaveContext.save.entranceIndex), gSaveContext.sceneLayer);
 
@@ -471,12 +472,13 @@ void Play_Init(GameState* thisx) {
     this->unk_11E16 = 0xFF;
     this->bgCoverAlpha = 0;
     this->haltAllActors = false;
-    this->autosave = this->specialIconAlpha = this->specialIconUp = this->specialIconShake = this->specialIconCount = this->specialIconLast = 0;
+    this->specialIconAlpha = this->specialIconShake = this->specialIconCount = this->specialIconLast = 0;
+    this->autosave = this->specialIconUp = false;
 
     if (gSaveContext.gameMode != GAMEMODE_TITLE_SCREEN) {
         if (gSaveContext.nextTransitionType == TRANS_NEXT_TYPE_DEFAULT) {
             this->transitionType = ENTRANCE_INFO_END_TRANS_TYPE(
-                gEntranceTable[gSaveContext.save.entranceIndex + SCENE_LAYER_GOTO(this, baseSceneLayer)].field);
+                gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, baseSceneLayer)].field);
         } else {
             this->transitionType = gSaveContext.nextTransitionType;
             gSaveContext.nextTransitionType = TRANS_NEXT_TYPE_DEFAULT;
@@ -638,7 +640,7 @@ void Play_Update(PlayState* this) {
                         }
 
                         // fade out bgm if "continue bgm" flag is not set
-                        if (!(gEntranceTable[this->nextEntranceIndex + SCENE_LAYER_GOTO(this, sceneLayer)].field &
+                        if (!(gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, sceneLayer)].field &
                               ENTRANCE_INFO_CONTINUE_BGM_FLAG)) {
                             PRINTF(T("\n\n\nサウンドイニシャル来ました。111", "\n\n\nSound initialized. 111"));
                             if ((this->transitionType < TRANS_TYPE_MAX) && !Environment_IsForcedSequenceDisabled()) {

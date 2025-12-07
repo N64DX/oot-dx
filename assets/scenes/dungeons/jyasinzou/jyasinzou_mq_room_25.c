@@ -1,10 +1,9 @@
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_scene.h"
-#include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_jyasinzou_room25[];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_jyasinzou_room25),
 };
 
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_room_25.c"
@@ -21,22 +20,9 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/jyasinzou/mq/headers/room25.inc.c"
 };
 
-static s16 cq_objects[] = {
-#include "assets/scenes/dungeons/jyasinzou/cq/objects/room25_obj.inc.c"
-};
+#define cq_header  NULL
+#define cmq_header mq_header
 
-static ActorEntry cq_actors[] = {
-#include "assets/scenes/dungeons/jyasinzou/cq/actors/room25_actor.inc.c"
-};
-
-static SceneCmd cq_header[] = {
-#include "assets/scenes/dungeons/jyasinzou/cq/headers/room25.inc.c"
-};
-
-static SceneCmd cmq_header[] = {
-#include "assets/scenes/dungeons/jyasinzou/mq/headers/room25.inc.c"
-};
-
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_jyasinzou_room25[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };

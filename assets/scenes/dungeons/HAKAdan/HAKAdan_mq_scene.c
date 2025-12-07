@@ -1,10 +1,9 @@
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_scene.h"
-#include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_HAKAdan_scene[];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_HAKAdan_scene),
 };
 
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_scene.c"
@@ -29,6 +28,6 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/HAKAdan/mq/scene/header.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_HAKAdan_scene[] = {
 #include "assets/scenes/dungeons/questHeadersScene.inc.c"
 };

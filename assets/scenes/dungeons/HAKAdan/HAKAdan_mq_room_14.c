@@ -1,11 +1,10 @@
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_14.h"
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_scene.h"
-#include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_HAKAdan_room14[];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_HAKAdan_room14),
 };
 
 #include "assets/scenes/dungeons/HAKAdan/HAKAdan_room_14.c"
@@ -22,22 +21,9 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/HAKAdan/mq/headers/room14.inc.c"
 };
 
-static s16 cq_objects[] = {
-#include "assets/scenes/dungeons/HAKAdan/cq/objects/room14_obj.inc.c"
-};
+#define cq_header  NULL
+#define cmq_header mq_header
 
-static ActorEntry cq_actors[] = {
-#include "assets/scenes/dungeons/HAKAdan/cq/actors/room14_actor.inc.c"
-};
-
-static SceneCmd cq_header[] = {
-#include "assets/scenes/dungeons/HAKAdan/cq/headers/room14.inc.c"
-};
-
-static SceneCmd cmq_header[] = {
-#include "assets/scenes/dungeons/HAKAdan/mq/headers/room14.inc.c"
-};
-
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_HAKAdan_room14[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };

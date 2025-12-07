@@ -1,10 +1,9 @@
 #include "assets/scenes/dungeons/ganontika/ganontika_scene.h"
-#include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_ganontika_room13[];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_ganontika_room13),
 };
 
 #include "assets/scenes/dungeons/ganontika/ganontika_room_13.c"
@@ -21,22 +20,9 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/ganontika/mq/headers/room13.inc.c"
 };
 
-static s16 cq_objects[] = {
-#include "assets/scenes/dungeons/ganontika/cq/objects/room13_obj.inc.c"
-};
+#define cq_header  NULL
+#define cmq_header mq_header
 
-static ActorEntry cq_actors[] = {
-#include "assets/scenes/dungeons/ganontika/cq/actors/room13_actor.inc.c"
-};
-
-static SceneCmd cq_header[] = {
-#include "assets/scenes/dungeons/ganontika/cq/headers/room13.inc.c"
-};
-
-static SceneCmd cmq_header[] = {
-#include "assets/scenes/dungeons/ganontika/mq/headers/room13.inc.c"
-};
-
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_ganontika_room13[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };

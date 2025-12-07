@@ -1,10 +1,9 @@
 #include "assets/scenes/overworld/spot10/spot10_scene.h"
-#include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_spot10_room1[];
 
 static SceneCmd start[] = {
-#include "assets/scenes/overworld/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_spot10_room1),
 };
 
 #include "assets/scenes/overworld/spot10/spot10_room_1.c"
@@ -29,6 +28,6 @@ static SceneCmd cq_header[] = {
 #include "assets/scenes/overworld/spot10/cq/headers/room1.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_spot10_room1[] = {
 #include "assets/scenes/overworld/questHeaders.inc.c"
 };
