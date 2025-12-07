@@ -87,7 +87,9 @@
 #include "assets/objects/object_gi_longsword_mm/object_gi_longsword_mm.h"
 #include "assets/objects/object_gi_hookshot_mm/object_gi_hookshot_mm.h"
 #include "assets/objects/object_gi_heros_bow/object_gi_heros_bow.h"
+#include "assets/objects/object_gi_feather/object_gi_feather.h"
 #include "assets/objects/object_gi_gold_dust/object_gi_gold_dust.h"
+
 #include "assets/objects/object_st/object_st.h"
 
 // "Get Item" Model Draw Functions
@@ -397,6 +399,10 @@ DrawItemTableEntry sDrawItemTable[] = {
 	{ GetItem_DrawOpa0, { gGiLongshotMMDL } },
     // GID_HEROS_BOW
 	{ GetItem_DrawOpa0, { gGiHerosBowHandleDL, gGiHerosBowStringDL } },
+    // GID_ROCS_FEATHER
+    { GetItem_DrawOpa0, { gGiRocsFeatherDL } },
+    // GID_GOLDEN_FEATHER
+    { GetItem_DrawOpa0, { gGiGoldenFeatherDL } },
     // GID_GOLD_DUST
 	{ GetItem_DrawOpa0, { gGiGoldDustPowderDL } },
 };

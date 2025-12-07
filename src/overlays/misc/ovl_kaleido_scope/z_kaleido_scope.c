@@ -2181,9 +2181,12 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
         pauseCtx->namedItem = pauseCtx->cursorItem[pauseCtx->pageIndex];
         texIndex = pauseCtx->namedItem;
         lastHylianShieldItem = IS_HEROS_SHIELD;
-        
-        
-        if (IS_CHILD_QUEST_AS_CHILD) {
+
+        if (pauseCtx->pageIndex == PAUSE_ITEM && pauseCtx->namedItem == ITEM_ROCS_FEATHER)
+            texIndex = 0x38;
+        else if (pauseCtx->pageIndex == PAUSE_ITEM && pauseCtx->namedItem == ITEM_GOLDEN_FEATHER)
+            texIndex = 0x39;
+        else if (IS_CHILD_QUEST_AS_CHILD) {
             if (pauseCtx->pageIndex == PAUSE_ITEM) {
                 if (pauseCtx->namedItem == ITEM_BOW)
                     texIndex = 0x59;
@@ -4883,24 +4886,9 @@ void KaleidoScope_Update(PlayState* play) {
 void KaleidoScope_DrawSwapItemIcons(PlayState* play, ItemID currItem, ItemID nextItem, u16 alpha) {
     u16 x = 225;
     u16 y = 205;
-    void* currIcon;
-    void* nextIcon;
 
     if (currItem == nextItem) 
         return;
-
-    if (currItem == ITEM_SHIELD_HEROS)
-        currIcon = gItemIconShieldHerosTex;
-    else if (currItem == ITEM_SWORD_HEROS)
-        currIcon = gItemIconSwordHerosTex;
-    else currIcon = gItemIcons[currItem];
-
-    if (nextItem == ITEM_SHIELD_HEROS)
-        nextIcon = gItemIconShieldHerosTex;
-    else if (nextItem == ITEM_SWORD_HEROS)
-        nextIcon = gItemIconSwordHerosTex;
-    else nextIcon = gItemIcons[nextItem];
-
     OPEN_DISPS(play->state.gfxCtx, "../z_kaleido_scope.c", 4900);
     Gfx_SetupDL_39Overlay(play->state.gfxCtx);
     gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
@@ -4912,11 +4900,11 @@ void KaleidoScope_DrawSwapItemIcons(PlayState* play, ItemID currItem, ItemID nex
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 40) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 40 + 40) << 2, HIRES_MULTIPLY((y + 20) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1850), HIRES_DIVIDE(1230));
 
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, alpha);
-    gDPLoadTextureBlock(OVERLAY_DISP++, currIcon, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadTextureBlock(OVERLAY_DISP++, gItemIcons[currItem], G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 16) << 2, HIRES_MULTIPLY((y + 3) << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 16 + 14) << 2, HIRES_MULTIPLY((y + 3 + 14) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2340), HIRES_DIVIDE(2340));
     gDPLoadTextureBlock(OVERLAY_DISP++, gRightArrowTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_WIDTH, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 28) << 2, HIRES_MULTIPLY((y - 2) << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 28 + 24) << 2, HIRES_MULTIPLY((y - 2 + 24) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1365), HIRES_DIVIDE(1365));
-    gDPLoadTextureBlock(OVERLAY_DISP++, nextIcon, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadTextureBlock(OVERLAY_DISP++, gItemIcons[nextItem], G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 52) << 2, HIRES_MULTIPLY((y + 3) << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 52 + 14) << 2, HIRES_MULTIPLY((y + 3 + 14) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2340), HIRES_DIVIDE(2340));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope.c", 4918);

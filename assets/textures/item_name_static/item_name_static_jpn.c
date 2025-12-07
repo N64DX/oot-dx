@@ -222,12 +222,12 @@ u64 gClaimCheckItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 #include "assets/textures/item_name_static/gClaimCheckItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gUnusedWindMedallionItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gUnusedWindMedallionItemNameJPNTex.ia4.inc.c"
+u64 gRocsFeatherItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gRocsFeatherItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gUnusedFireMedallionItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gUnusedFireMedallionItemNameJPNTex.ia4.inc.c"
+u64 gGoldenFeatherItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGoldenFeatherItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gGoldDustItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
