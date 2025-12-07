@@ -222,12 +222,12 @@ u64 gClaimCheckItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 #include "build/pal-1.0/assets/textures/item_name_static/gClaimCheckItemNameGERTex.ia4.inc.c"
 };
 
-u64 gUnusedWindMedallionItemName2JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gUnusedWindMedallionItemName2JPNTex.ia4.inc.c"
+u64 gRocsFeatherItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gRocsFeatherItemNameGERTex.ia4.inc.c"
 };
 
-u64 gUnusedFireMedallionItemName2JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gUnusedFireMedallionItemName2JPNTex.ia4.inc.c"
+u64 gGoldenFeatherItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGoldenFeatherItemNameGERTex.ia4.inc.c"
 };
 
 u64 gGoldDustItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
