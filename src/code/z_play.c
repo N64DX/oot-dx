@@ -2117,3 +2117,6 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos) {
         return false;
     }
 }
+
+u8   Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 100; }
+bool Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || gSaveContext.save.info.isEnhancedSpinAcquired; }

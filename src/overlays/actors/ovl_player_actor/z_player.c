@@ -3143,7 +3143,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             this->heldItemButton = i;
             Player_UseItem(play, this, item);
         } else if (featherUseCount < MAX_FEATHER_USES) {
-            if ( ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f && item == ITEM_ROCS_FEATHER) || item == ITEM_GOLDEN_FEATHER) {
+            if ( ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f && item == ITEM_ROCS_FEATHER && gSaveContext.save.info.energy >= 15) || (item == ITEM_GOLDEN_FEATHER && gSaveContext.save.info.energy >= 10)) {
                 Vec3f effectsPos = this->actor.home.pos;
                 featherUseCount++;
                 func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, 7.15f, play, NA_SE_VO_LI_SWORD_N);
@@ -3155,6 +3155,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 EffectSsGSplash_Spawn(play, &effectsPos, NULL, NULL, 0, 150);
                 this->stateFlags2 &= ~(PLAYER_STATE2_19);
                 Player_PlaySfx(this, NA_SE_PL_SKIP);
+                gSaveContext.energy -= item == ITEM_ROCS_FEATHER ? 15 : 10;
             }
         }
     }

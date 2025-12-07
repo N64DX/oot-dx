@@ -13,5 +13,7 @@ extern u64 gMMButtonBackgroundTex[TEX_LEN(u64, gButtonBackgroundTex_WIDTH, gButt
 extern u64 gMMSmallKeyCounterIconTex[TEX_LEN(u64, gSmallKeyCounterIconTex_WIDTH, gSmallKeyCounterIconTex_HEIGHT, 8)];
 extern u64 gMMRupeeCounterIconTex[TEX_LEN(u64, gRupeeCounterIconTex_WIDTH, gRupeeCounterIconTex_HEIGHT, 8)];
 extern u64 gMMMapChestIconTex[TEX_LEN(u64, gMapChestIconTex_WIDTH, gMapChestIconTex_HEIGHT, 16)];
+extern u64 gEnergyWheelTex[];
+extern u64 gEnergyWheelMaskTex[];
 
 #endif

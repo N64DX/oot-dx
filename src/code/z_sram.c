@@ -191,6 +191,7 @@ void Sram_InitNewSave(void) {
     gSaveContext.save.totalDays = 0;
     gSaveContext.save.bgsDayCount = 0;
     gSaveContext.cheated = 0;
+    gSaveContext.save.info.energy = 0;
 
     gSaveContext.save.info.playerData = sNewSavePlayerData;
     gSaveContext.save.info.equips = sNewSaveEquips;
@@ -441,6 +442,7 @@ void Sram_InitDebugSave(void) {
     gSaveContext.save.info.playerData.magicLevel = 0;
     gSaveContext.save.info.sceneFlags[SCENE_WATER_TEMPLE].swch = 0x40000000;
     gSaveContext.cheated = 1;
+    gSaveContext.save.info.energy = 0;
 }
 
 static s16 sDungeonEntrances[] = {

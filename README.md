@@ -38,7 +38,8 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **OoT Randomizer:** Key chest textures
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
-- **Yanis002:** MM Title Cards
+- **thinedave & Aegiker:** Energy (stamina) wheel
+¨- **Yanis002:** MM Title Cards
 
 **Features & fixes by Skawo:**
 - Font preloading
