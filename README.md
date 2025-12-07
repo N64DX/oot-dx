@@ -32,6 +32,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Aegiker:** Mirror mode concept
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
 - **gh0st:** Open hand z-targeting animation to idle fix
+- **Kenton M:** Roc's Feather concept
 - **Nicko (Airi):** DK64 Expansion Pak warning display
 - **Nokaubure:** autosave concept, Gohma debris, ISG fix
 - **OoT Randomizer:** Key chest textures

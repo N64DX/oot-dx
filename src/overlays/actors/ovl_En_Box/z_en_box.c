@@ -570,14 +570,58 @@ void EnBox_Update(Actor* thisx, PlayState* play) {
     }
 }
 
+bool EnBox_IsItem(s16 item) {
+    switch (item) {
+        case GI_SLINGSHOT:
+        case GI_BOW:
+        case GI_BOOMERANG:
+        case GI_HOOKSHOT:
+        case GI_LONGSHOT:
+        case GI_LENS_OF_TRUTH:
+        case GI_HAMMER:
+        case GI_BOTTLE_EMPTY:
+        case GI_SWORD_KOKIRI:
+        case GI_SWORD_HEROS:
+        case GI_SWORD_KNIFE:
+        case GI_SWORD_BIGGORON:
+        case GI_SHIELD_DEKU:
+        case GI_SHIELD_HYLIAN:
+        case GI_SHIELD_HEROS:
+        case GI_SHIELD_MIRROR:
+        case GI_BOOTS_IRON:
+        case GI_BOOTS_HOVER:
+        case GI_SILVER_GAUNTLETS:
+        case GI_GOLD_GAUNTLETS:
+        case GI_ARROW_FIRE:
+        case GI_ARROW_ICE:
+        case GI_ARROW_LIGHT:
+        case GI_BOMB_BAG_20:
+        case GI_BOMB_BAG_30:
+        case GI_BOMB_BAG_40:
+        case GI_WALLET_ADULT:
+        case GI_WALLET_GIANT:
+        case GI_WALLET_MASTER:
+        case GI_OCARINA_FAIRY:
+        case GI_OCARINA_OF_TIME:
+        case GI_SCALE_SILVER:
+        case GI_SCALE_GOLDEN:
+        case GI_TUNIC_GORON:
+        case GI_TUNIC_ZORA:
+        case GI_ROCS_FEATHER:
+        case GI_GOLDEN_FEATHER:
+            return true;
+        default:
+            return false;
+    }
+}
+
 void EnBox_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx, Gfx** gfx) {
     EnBox* this = (EnBox*)thisx;
     s32 pad;
     u8 i = this->giItem > 0 ? this->giItem : PARAMS_GET_U(this->dyna.actor.params, 5, 7);
     bool is_key = i == GI_SMALL_KEY;
     bool is_dungeon_item = i == GI_COMPASS || i == GI_DUNGEON_MAP;
-    bool is_item = i == GI_BOW || i == GI_SLINGSHOT || i == GI_BOOMERANG || i == GI_HOOKSHOT || i == GI_LONGSHOT || i == GI_LENS_OF_TRUTH || i == GI_HAMMER || i == GI_BOTTLE_EMPTY || i == GI_SWORD_KOKIRI  || i == GI_SWORD_HEROS || i == GI_SWORD_KNIFE || i == GI_SWORD_BIGGORON || i == GI_SHIELD_DEKU || i == GI_SHIELD_HYLIAN || i == GI_SHIELD_MIRROR || i == GI_SHIELD_HEROS || i == GI_BOOTS_IRON || i == GI_BOOTS_HOVER ||
-        i == GI_SILVER_GAUNTLETS || i == GI_GOLD_GAUNTLETS || i == GI_ARROW_FIRE || i == GI_ARROW_ICE || i == GI_ARROW_LIGHT || i == GI_ARROW_LIGHT || i == GI_BOMB_BAG_20 || i == GI_BOMB_BAG_30 || i == GI_BOMB_BAG_40 || i == GI_OCARINA_FAIRY || i == GI_OCARINA_OF_TIME || i == GI_SCALE_SILVER || i == GI_SCALE_GOLDEN || i == GI_TUNIC_GORON || i == GI_TUNIC_ZORA;
+    bool is_item = EnBox_IsItem(i);
 
     if (limbIndex == 1) {
         MATRIX_FINALIZE_AND_LOAD((*gfx)++, play->state.gfxCtx, "../z_en_box.c", 1492);

@@ -58,10 +58,12 @@
 // This is called "adjusted" for now.
 #define PLAYER_ANIM_ADJUSTED_SPEED (2.0f / 3.0f)
 
+#define MAX_FEATHER_USES 1
+
 typedef struct GetItemEntry {
     /* 0x00 */ u8 itemId;
     /* 0x01 */ u8 field; // various bit-packed data
-    /* 0x02 */ s8 gi;    // defines the draw id and chest opening animation
+    /* 0x02 */ s16 gi;   // defines the draw id and chest opening animation
     /* 0x03 */ u16 textId;
     /* 0x05 */ u16 objectId;
 } GetItemEntry; // size = 0x07
@@ -274,6 +276,7 @@ s32 Player_TryCsAction(PlayState* play, Actor* actor, s32 csAction);
 void func_80853080(Player* this, PlayState* play);
 s32 Player_InflictDamage(PlayState* play, s32 damage);
 void Player_StartTalking(PlayState* play, Actor* actor);
+void func_80838940(Player* this, LinkAnimationHeader* anim, f32 arg2, PlayState* play, u16 sfxId);
 
 void Player_Action_80840450(Player* this, PlayState* play);
 void Player_Action_808407CC(Player* this, PlayState* play);
@@ -536,6 +539,8 @@ static s32 sWorldYawToTouchedWall = 0;
 static s16 sFloorShapePitch = 0;
 static s32 sUseHeldItem = false; // When true, the current held item is used. Is reset to false every frame.
 static s32 sHeldItemButtonIsHeldDown = false; // Indicates if the button for the current held item is held down.
+static u8 featherUseCount = 0;
+static u8 featherGroundTimer = 0;
 
 static u16 D_8085361C[] = {
     NA_SE_VO_LI_SWEAT,
@@ -795,6 +800,10 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_BULLET_BAG_50, OBJECT_GI_DEKUPOUCH, GID_BULLET_BAG_50, 0x6C, 0x80, CHEST_ANIM_LONG),
     // GI_ICE_TRAP
     GET_ITEM_NONE,
+    // GI_ROCS_FEATHER
+    GET_ITEM(ITEM_ROCS_FEATHER, OBJECT_GI_FEATHER, GID_ROCS_FEATHER, 0x9003, 0x80, CHEST_ANIM_LONG),
+    // GI_GOLDEN_FEATHER
+    GET_ITEM(ITEM_GOLDEN_FEATHER, OBJECT_GI_FEATHER, GID_GOLDEN_FEATHER, 0x9004, 0x80, CHEST_ANIM_LONG),
     // GI_SHIELD_MIRROR_MM
     GET_ITEM(ITEM_SHIELD_MIRROR, OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, 0x8003, 0x80, CHEST_ANIM_LONG),
     // GI_SHIELD_HEROS
@@ -809,7 +818,7 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_STRENGTH_SILVER_GAUNTLETS, OBJECT_GI_BRACELET, GID_POWER_BRACELET, 0x8007, 0x80, CHEST_ANIM_LONG),
     // GI_POWER_BRACELETS
 	GET_ITEM(ITEM_STRENGTH_GOLD_GAUNTLETS, OBJECT_GI_BRACELET, GID_POWER_BRACELET, 0x8008, 0x80, CHEST_ANIM_LONG),
-    // GI_HOOKSHOT_M
+    // GI_HOOKSHOT_MM
 	GET_ITEM(ITEM_HOOKSHOT, OBJECT_GI_HOOKSHOT_MM, GID_HOOKSHOT_MM, 0x36, 0x80, CHEST_ANIM_LONG),
     // GI_LONGSHOT_MM
 	GET_ITEM(ITEM_LONGSHOT, OBJECT_GI_HOOKSHOT_MM, GID_LONGSHOT_MM, 0x4F, 0x80, CHEST_ANIM_LONG),
@@ -3032,6 +3041,14 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     Interface_ChangeDpadSet(play);
     ArrowCycleHandle(this, play);
 
+    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+        if (featherGroundTimer <= 3)
+                featherGroundTimer++;
+    } else featherGroundTimer = 0;
+
+    if (featherGroundTimer >= 3)
+            featherUseCount = 0;
+
     if (this->currentMask != PLAYER_MASK_NONE) {
         maskItemAction = this->currentMask - 1 + PLAYER_IA_MASK_KEATON;
 
@@ -3122,9 +3139,23 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                         Interface_LoadItemIcon1(play, i);
                 }
             }
-        } else {
+        } else if (item != ITEM_ROCS_FEATHER && item != ITEM_GOLDEN_FEATHER) {
             this->heldItemButton = i;
             Player_UseItem(play, this, item);
+        } else if (featherUseCount < MAX_FEATHER_USES) {
+            if ( ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f && item == ITEM_ROCS_FEATHER) || item == ITEM_GOLDEN_FEATHER) {
+                Vec3f effectsPos = this->actor.home.pos;
+                featherUseCount++;
+                func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, 7.15f, play, NA_SE_VO_LI_SWORD_N);
+                this->av2.actionVar2 = 1;
+                this->speedXZ = 5.0f;
+                this->actor.world.rot.y = this->yaw = this->actor.shape.rot.y;
+                effectsPos.y += 3;
+                EffectSsGRipple_Spawn(play, &effectsPos, 200, 300, 1);
+                EffectSsGSplash_Spawn(play, &effectsPos, NULL, NULL, 0, 150);
+                this->stateFlags2 &= ~(PLAYER_STATE2_19);
+                Player_PlaySfx(this, NA_SE_PL_SKIP);
+            }
         }
     }
 }

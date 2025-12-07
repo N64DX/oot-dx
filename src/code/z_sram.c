@@ -405,6 +405,8 @@ void Sram_InitDebugSave(void) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
         SET_HEROS_SWORD;
         SET_HEROS_SHIELD;
+        SET_MAGIC_BEANS;
+        SET_ROCS_FEATHER;
     }
 
     gSaveContext.save.info.horseData.sceneId = SCENE_HYRULE_FIELD;
@@ -683,6 +685,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
 
     if (IS_CHILD_QUEST)
         gSaveContext.save.linkAge = LINK_AGE_CHILD;
+
+    if (INV_CONTENT(ITEM_MAGIC_BEAN) == ITEM_MAGIC_BEAN)
+        SET_MAGIC_BEANS;
 
     // Cheating
     if (DAMAGE_TAKEN == 7 || MONSTER_HP == 7 || ELITE_HP == 7 || BOSS_HP == 7 || DEBUG_MODE || DEBUG_FEATURES)
