@@ -1693,6 +1693,7 @@ void CollisionCheck_HitEffects(PlayState* play, Collider* atCol, ColliderElement
         if (atCol->actor != NULL)
             if (atElem->atElemFlags & ATELEM_HIT)
                 if (atElem->atHit != NULL && atElem->atHit->actor != NULL) {
+                    atElem->atHit->actor->colChkInfo.dmgFlags = atElem->atDmgInfo.dmgFlags;
                     if (player->currentTunic == PLAYER_TUNIC_ZORA && (atElem->atHit->actor->category == ACTORCAT_ENEMY || atElem->atHit->actor->category == ACTORCAT_BOSS))
                         if (atElem->atDmgInfo.dmgFlags == DMG_SLASH_KOKIRI || atElem->atDmgInfo.dmgFlags == DMG_SLASH_MASTER || atElem->atDmgInfo.dmgFlags == DMG_SLASH_GIANT)
                             atElem->atDmgInfo.dmgFlags = Player_UseSpecialPower(play, player, 30, 8, false, SPECIAL_POWER_STRENGTHEN_SWORD, atElem->atDmgInfo.dmgFlags);
@@ -3027,7 +3028,7 @@ void CollisionCheck_OC(PlayState* play, CollisionCheckContext* colChkCtx) {
  */
 void CollisionCheck_InitInfo(CollisionCheckInfo* info) {
     static CollisionCheckInfo init = {
-        NULL, { 0.0f, 0.0f, 0.0f }, 10, 10, 0, 50, 8, 0, 0, 0, 0,
+        NULL, { 0.0f, 0.0f, 0.0f }, 10, 10, 0, 50, 8, 0, 0, 0, 0, 0,
     };
 
     *info = init;
@@ -3740,10 +3741,16 @@ u8 CollisionCheck_GetSwordDamage(s32 dmgFlags) {
         damage = 1;
     } else if (dmgFlags & (DMG_JUMP_KOKIRI | DMG_SPIN_MASTER | DMG_SLASH_MASTER | DMG_HAMMER_SWING | DMG_DEKU_STICK)) {
         damage = 2;
-    } else if (dmgFlags & (DMG_HAMMER_JUMP | DMG_JUMP_MASTER | DMG_SPIN_GIANT | DMG_SLASH_GIANT)) {
-        damage = (IS_CHILD_QUEST_AS_CHILD && (dmgFlags & DMG_SPIN_GIANT | DMG_SLASH_GIANT)) ? 3 : 4;
+    } else if (dmgFlags & (DMG_HAMMER_JUMP | DMG_JUMP_MASTER)) {
+        damage = 4;
+    } else if (dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT)) {
+        if (IS_CHILD_QUEST_AS_CHILD)
+            damage = gSaveContext.save.info.playerData.bgsFlag ? 3 : 2;
+        else damage = 4;
     } else if (dmgFlags & DMG_JUMP_GIANT) {
-        damage = (IS_CHILD_QUEST_AS_CHILD && (dmgFlags & DMG_JUMP_GIANT)) ? 6 : 8;
+        if (IS_CHILD_QUEST_AS_CHILD)
+            damage = gSaveContext.save.info.playerData.bgsFlag ? 6 : 4;
+        else damage = 8;
     }
 
 #if DEBUG_FEATURES

@@ -123,7 +123,6 @@ void EnSb_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->actor.colChkInfo.damageTable = sDamageTable;
-    Actor_SetGildedSwordDamageTaken(thisx);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(2, MONSTER_HP);
     SkelAnime_InitFlex(play, &this->skelAnime, &object_sb_Skel_002BF0, &object_sb_Anim_000194, NULL, NULL, 0);
     Collider_InitCylinder(play, &this->collider);

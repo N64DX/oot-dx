@@ -115,7 +115,6 @@ void EnKarebaba_Init(Actor* thisx, PlayState* play) {
     Collider_SetCylinder(play, &this->headCollider, &this->actor, &sHeadColliderInit);
     Collider_UpdateCylinder(&this->actor, &this->headCollider);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, DamageTable_Get(1), &sColCheckInfoInit);
-    Actor_SetGildedSwordDamageTaken(thisx);
 
     this->boundFloor = NULL;
 

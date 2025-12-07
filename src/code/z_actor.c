@@ -4832,10 +4832,20 @@ u8 func_800355E4(PlayState* play, Collider* collider) {
 }
 
 u8 Actor_ApplyDamage(Actor* actor) {
-    if (actor->colChkInfo.health <= actor->colChkInfo.damage) {
+    u8 damage = actor->colChkInfo.damage;
+    s32 dmgFlags = actor->colChkInfo.dmgFlags;
+    
+    if (IS_CHILD_QUEST_AS_CHILD) {
+        if (damage == 4 && dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT))
+            damage = gSaveContext.save.info.playerData.bgsFlag ? 3 : 2;
+        else if (damage == 8 && dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT))
+            damage = gSaveContext.save.info.playerData.bgsFlag ? 6 : 4;
+    }
+    
+    if (actor->colChkInfo.health <= damage) {
         actor->colChkInfo.health = 0;
     } else {
-        actor->colChkInfo.health -= actor->colChkInfo.damage;
+        actor->colChkInfo.health -= damage;
     }
 
     return actor->colChkInfo.health;
@@ -6435,14 +6445,6 @@ u16 Actor_EnemyHealthMultiply(u16 health, u8 type) {
             return health /= 2;
         default:
             return health;
-    }
-}
-
-void Actor_SetGildedSwordDamageTaken(Actor* thisx) {
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
     }
 }
 

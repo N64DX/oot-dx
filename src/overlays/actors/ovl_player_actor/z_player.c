@@ -5017,8 +5017,6 @@ void func_80837948(PlayState* play, Player* this, s32 arg2) {
         temp = 1;
     } else {
         temp = Player_GetMeleeWeaponHeld(this) - 1;
-        if (IS_CHILD_QUEST_AS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON && !gSaveContext.save.info.playerData.bgsFlag)
-            temp = 0;
     }
 
     if ((arg2 >= PLAYER_MWA_FLIPSLASH_START) && (arg2 <= PLAYER_MWA_JUMPSLASH_FINISH)) {

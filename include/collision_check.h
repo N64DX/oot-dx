@@ -467,7 +467,8 @@ typedef struct CollisionCheckInfo {
     /* 0x19 */ u8 damageReaction; // Stores what reaction should occur after being hit
     /* 0x1A */ u8 atHitEffect; // Stores what effect should occur when AT connects with an AC
     /* 0x1B */ u8 acHitEffect; // Stores what effect should occur when AC is touched by an AT
-} CollisionCheckInfo; // size = 0x1C
+    /* 0x1C */ s32 dmgFlags; // Stores the last damage flags being hit with
+} CollisionCheckInfo; // size = 0x20
 
 DamageTable* DamageTable_Get(s32 index);
 void DamageTable_Clear(DamageTable* table);

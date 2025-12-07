@@ -176,7 +176,6 @@ void EnFz_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->actor.colChkInfo.damageTable = &sDamageTable;
-    Actor_SetGildedSwordDamageTaken(thisx);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(6, MONSTER_HP);
 
     Collider_InitCylinder(play, &this->collider1);
