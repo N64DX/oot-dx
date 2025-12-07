@@ -279,7 +279,8 @@ typedef struct SaveInfo {
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
     /* 0x0F18  0x0F34 */ char unk_F34[0x04];
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
-    /* 0x0F20  0x0F3C */ char unk_F3C[0x4];
+    /* 0x0F18  0x0F33 */ char unk_F34[0x03];
+    /* 0x0F33  0x0F34 */ u8 energy;
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
     /* 0x1285  0x12A1 */ char unk_12A1[0x24];

@@ -172,6 +172,8 @@ void Play_TriggerRespawn(PlayState* this);
 int Play_CamIsNotFixed(PlayState* this);
 s32 func_800C0D34(PlayState* this, Actor* actor, s16* yaw);
 s32 func_800C0DB4(PlayState* this, Vec3f* pos);
+u8 Player_GetMaxEnergy(void);
+bool Player_HasEnergyUnlocked(void);
 
 void Play_Init(GameState* thisx);
 void Play_Destroy(GameState* thisx);

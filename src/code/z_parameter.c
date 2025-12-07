@@ -23,6 +23,7 @@
 #include "horse.h"
 #include "ocarina.h"
 #include "play_state.h"
+#include "z_lib.h"
 #include "player.h"
 #include "save.h"
 #include "libc64/malloc.h"
@@ -31,6 +32,7 @@
 #include "buffers.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "assets/textures/parameter_static/parameter_static_all.h"
 #include "assets/textures/icon_item_static/icon_item_static.h"
 
 #if OOT_NTSC_N64
@@ -177,6 +179,10 @@ u8 sNoclipTimer = 0;
 static u8 shielded = 0;
 static u16 dpad_x;
 static u16 dpad_y;
+
+static s16 curEnergy = 0;
+static u8 energyHideTimer = 0;
+static u8 energyRefillTimer = 0;
 
 static s16 sExtraItemBases[] = {
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_5
@@ -3963,6 +3969,83 @@ static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfa
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3795);
 }
 
+void Energy_Draw(PlayState* play) {
+    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    MessageContext* msgCtx = &play->msgCtx;
+    Player* player = GET_PLAYER(play);
+    s16 clamped, rectLeft, rectTop, rectWidth = 16, rectHeight = 16;
+    Vec3f screenPos, playerPos;
+    f32 lerp;
+    u8 alpha;
+
+    if (IS_PAUSED(&play->pauseCtx) || !CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) || play->transitionTrigger != TRANS_TRIGGER_OFF || play->gameOverCtx.state != GAMEOVER_INACTIVE || play->transitionMode != TRANS_MODE_OFF || (play->csCtx.state != CS_STATE_IDLE &&  Player_InCsMode(play)))
+        return;
+
+    Math_SmoothStepToS(&curEnergy, gSaveContext.save.info.energy, 1, 3, 0);
+
+    if (curEnergy < Player_GetMaxEnergy() && Player_GetMaxEnergy() != 0)
+        energyHideTimer = (60 / R_UPDATE_RATE);
+    else if (energyHideTimer > 0)
+        energyHideTimer--;
+
+    if (energyHideTimer == 0)
+        return;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 5551);
+
+    gSPSegment(OVERLAY_DISP++, 0x02, interfaceCtx->parameterSegment);
+    Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+
+    playerPos = player->actor.world.pos;
+    playerPos.y += 45.0f;
+    Play_GetScreenPos(play, &playerPos, &screenPos);
+    rectLeft = (u16)screenPos.x + 20;
+    rectTop = (u16)screenPos.y;
+
+    // Draw energy wheel shadow
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, 255);
+    gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+    OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, gEnergyWheelTex, 16, 16, rectLeft, rectTop, rectWidth, rectHeight, (1 << 10), (1 << 10));
+
+    // Draw energy wheel background
+    gDPPipeSync(OVERLAY_DISP++);
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 11, 11, 11, 180);
+    gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+    OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, gEnergyWheelTex, 16, 16, rectLeft, rectTop, rectWidth, rectHeight, (1 << 10), (1 << 10));
+
+    // Draw energy wheel foreground
+    clamped = CLAMP(curEnergy, 0, Player_GetMaxEnergy());
+    lerp = (f32)clamped / (f32)Player_GetMaxEnergy();
+    alpha = 255 - (u8)(lerp * 255.0f);
+
+    gDPPipeSync(OVERLAY_DISP++);
+    gDPSetCycleType(OVERLAY_DISP++, G_CYC_2CYCLE);
+    gDPSetCombineLERP(OVERLAY_DISP++, TEXEL1, 0, PRIMITIVE, 0, 0, 0, 0, TEXEL0, 0, 0, 0, COMBINED, 0, 0, 0, TEXEL0);
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 0, 255);
+    gDPSetAlphaCompare(OVERLAY_DISP++, G_AC_THRESHOLD); 
+    gDPSetBlendColor(OVERLAY_DISP++, 255, 255, 255, alpha);
+    gDPLoadMultiBlock(OVERLAY_DISP++, gEnergyWheelMaskTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadMultiBlock(OVERLAY_DISP++, gEnergyWheelTex, 0x0100, 1, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(rectLeft << 2), HIRES_MULTIPLY(rectTop << 2), X_HIRES_MULTIPLY((rectLeft + rectWidth) << 2), HIRES_MULTIPLY((rectTop + rectHeight) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+    gDPSetAlphaCompare(OVERLAY_DISP++, G_AC_NONE);
+    gDPSetBlendColor(OVERLAY_DISP++, 0, 0, 0, 0);
+    gDPSetCycleType(OVERLAY_DISP++, G_CYC_1CYCLE);
+    
+    CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 5591);
+}
+
+void Energy_Update(PlayState* play) {
+    if (!Player_HasEnergyUnlocked())
+        return;
+
+    if (energyRefillTimer > 0)
+        energyRefillTimer--;
+    else if (gSaveContext.save.info.energy < Player_GetMaxEnergy()) {
+        energyRefillTimer = (60 / R_UPDATE_RATE) / 3;
+        gSaveContext.save.info.energy++;
+    }
+}
+
 void Interface_Draw(PlayState* play) {
     static s16 magicArrowEffectsR[] = { 255, 100, 255 };
     static s16 magicArrowEffectsG[] = { 0, 100, 255 };
@@ -4124,6 +4207,7 @@ void Interface_Draw(PlayState* play) {
         }
 
         Magic_DrawMeter(play);
+        Energy_Draw(play);
         Minimap_Draw(play);
 
         if ((R_PAUSE_BG_PRERENDER_STATE != PAUSE_BG_PRERENDER_PROCESS) &&
@@ -5153,6 +5237,7 @@ void Interface_Update(PlayState* play) {
         }
 
         Magic_Update(play);
+        Energy_Update(play);
     }
 
     if (gSaveContext.timerState == TIMER_STATE_OFF) {
