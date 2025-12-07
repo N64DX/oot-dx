@@ -414,6 +414,7 @@
 /* 0x0194 */ DEFINE_OBJECT(object_gi_gold_dust, OBJECT_GI_GOLD_DUST)
 /* 0x0195 */ DEFINE_OBJECT(object_gi_heros_bow, OBJECT_GI_HEROS_BOW)
 /* 0x0196 */ DEFINE_OBJECT(object_gi_hookshot_mm, OBJECT_GI_HOOKSHOT_MM)
+/* 0x019B */ DEFINE_OBJECT(object_gi_feather, OBJECT_GI_FEATHER)
 /* 0x0197 */ DEFINE_OBJECT(object_gi_sword_heros, OBJECT_GI_SWORD_HEROS)
 /* 0x0198 */ DEFINE_OBJECT(object_gi_longsword_mm, OBJECT_GI_LONGSWORD_MM)
 /* 0x0199 */ DEFINE_OBJECT(object_gi_shield_3_mm, OBJECT_GI_SHIELD_3_MM)
