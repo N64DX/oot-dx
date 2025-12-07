@@ -73,6 +73,7 @@ UNK_TYPE D_8012D1F4 = 0; // unused
 Input* D_8012D1F8 = NULL;
 
 static TitleCardInfo sDefaultTitleCard = { 0xA000, { 140, 40, 160, 255 }, HUD_VISIBILITY_NOTHING, 30, 0, 25, 67, 60, 28, 40, 30 };
+static u8 specialPowerTimer = 80;
 
 void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn);
 
@@ -2118,5 +2119,42 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos) {
     }
 }
 
-u8   Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 100; }
-bool Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || gSaveContext.save.info.isEnhancedSpinAcquired; }
+/**
+ * Use a special power (usually a tunic power) through the Amulet of Energy at the cost of energy
+ */
+u32 Player_UseSpecialPower(PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, u32 amount) {
+    if (Player_InBlockingCsMode(this, player) || !gSaveContext.save.info.hasObtainedItems.amuletOfEnergy)
+        return amount;
+    if (gSaveContext.save.info.energy < cost || this->specialPowerTimer > 0)
+        return amount;
+
+    gSaveContext.save.info.energy -= cost;
+    this->specialPowerTimer = (60 / R_UPDATE_RATE) * cooldown;
+    
+    if (type == SPECIAL_POWER_MAGIC_REGEN) {
+        gSaveContext.save.info.playerData.magic += amount;
+        if (gSaveContext.save.info.playerData.magic > gSaveContext.save.info.playerData.magicLevel * MAGIC_NORMAL_METER)
+            gSaveContext.save.info.playerData.magic = gSaveContext.save.info.playerData.magicLevel * MAGIC_NORMAL_METER;
+    } else if (type == SPECIAL_POWER_HEALTH_REGEN) {
+        gSaveContext.save.info.playerData.health += amount;
+        if (gSaveContext.save.info.playerData.health > gSaveContext.save.info.playerData.healthCapacity)
+            gSaveContext.save.info.playerData.health = gSaveContext.save.info.playerData.healthCapacity;
+    } else if (type == SPECIAL_POWER_REDUCE_DAMAGE) {
+        return (amount / 2);
+    } else if (type == SPECIAL_POWER_STRENGTHEN_SWORD) {
+        if (amount == DMG_SLASH_KOKIRI)
+            return DMG_JUMP_KOKIRI;
+        if (amount == DMG_SLASH_MASTER)
+            return DMG_JUMP_MASTER;
+        if (amount == DMG_SLASH_GIANT)
+            return DMG_JUMP_GIANT;
+    }
+
+    if (sfx != false)
+        Audio_PlaySfxGeneral(sfx, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+
+    return amount;
+}
+
+u8   Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 50 + HAS_AMULET_OF_ENERGY * 50; }
+bool Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || HAS_AMULET_OF_ENERGY || gSaveContext.save.info.isEnhancedSpinAcquired; }

@@ -3929,3 +3929,36 @@ Gfx gLinkYoungEarringsHoverDL[] = {
     gsSP2Triangles(4,  3,  6,  0, 0,  7,  1,  0),
     gsSPEndDisplayList(),
 };
+
+
+
+// Amulet of Energy
+
+static u64 gLinkYoungAmuletOfEnergyTex[] = {
+#include "assets/objects/object_link_child/other/amulet_of_energy.rgba16.inc.c"
+};
+
+static Vtx amulet_of_energy_vtx[] = {
+#include "assets/objects/object_link_child/other/amulet_of_energy.vtx.inc"
+};
+
+Gfx gLinkYoungAmuletOfEnergyDL[] = {
+    gsSPMatrix(0x0D000440, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
+    gsDPLoadTextureBlock(gLinkYoungAmuletOfEnergyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPVertex(&amulet_of_energy_vtx, 15, 0),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsDPPipeSync(),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(3, 4, 0, 0, 4, 3, 5, 0),
+    gsSP2Triangles(6, 5, 3, 0, 7, 1, 8, 0),
+    gsSP2Triangles(1, 0, 8, 0, 9, 10, 11, 0),
+    gsSP2Triangles(9, 11, 12, 0, 3, 13, 6, 0),
+    gsSP2Triangles(13, 3, 14, 0, 10, 14, 3, 0),
+    gsSP2Triangles(3, 2, 10, 0, 2, 11, 10, 0),
+    gsSPEndDisplayList(),
+};

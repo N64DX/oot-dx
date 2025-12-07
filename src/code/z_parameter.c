@@ -1749,47 +1749,49 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
 }
 
 u8 Interface_LoadItemIconChildQuest(u8 item) {
-    if (item == ITEM_ROCS_FEATHER)
+    if (item == ITEM_AMULET_OF_ENERGY)
         return ITEM_FISHING_POLE + 1;
-    else if (item == ITEM_GOLDEN_FEATHER)
+    else if (item == ITEM_ROCS_FEATHER)
         return ITEM_FISHING_POLE + 2;
-    else if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-        return ITEM_FISHING_POLE + 4;
-    else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
+    else if (item == ITEM_GOLDEN_FEATHER)
         return ITEM_FISHING_POLE + 3;
+    else if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+        return ITEM_FISHING_POLE + 5;
+    else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
+        return ITEM_FISHING_POLE + 4;
     else if (item == ITEM_STONE_OF_AGONY)
-        return ITEM_FISHING_POLE + 18;
+        return ITEM_FISHING_POLE + 19;
     else if (IS_CHILD_QUEST) {
         if (item == ITEM_BROKEN_GORONS_SWORD)
-            return ITEM_FISHING_POLE + 17;
+            return ITEM_FISHING_POLE + 18;
         else if (LINK_IS_CHILD) {
             if (item == ITEM_HOOKSHOT)
-                return ITEM_FISHING_POLE + 9;
-            else if (item == ITEM_LONGSHOT)
                 return ITEM_FISHING_POLE + 10;
+            else if (item == ITEM_LONGSHOT)
+                return ITEM_FISHING_POLE + 11;
 
             else if (item == ITEM_BOW)
-                return ITEM_FISHING_POLE + 11;
-            else if (item == ITEM_BOW_FIRE)
                 return ITEM_FISHING_POLE + 12;
-            else if (item == ITEM_BOW_ICE)
+            else if (item == ITEM_BOW_FIRE)
                 return ITEM_FISHING_POLE + 13;
-            else if (item == ITEM_BOW_LIGHT)
+            else if (item == ITEM_BOW_ICE)
                 return ITEM_FISHING_POLE + 14;
+            else if (item == ITEM_BOW_LIGHT)
+                return ITEM_FISHING_POLE + 15;
 
             else if (item == ITEM_SWORD_MASTER)
-                return ITEM_FISHING_POLE + 6;
-            else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
                 return ITEM_FISHING_POLE + 7;
-            else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
+            else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
                 return ITEM_FISHING_POLE + 8;
+            else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
+                return ITEM_FISHING_POLE + 9;
             else if (item == ITEM_SHIELD_MIRROR)
-                return ITEM_FISHING_POLE + 5;
+                return ITEM_FISHING_POLE + 6;
             
             else if (item == ITEM_STRENGTH_SILVER_GAUNTLETS)
-                return ITEM_FISHING_POLE + 15;
-            else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
                 return ITEM_FISHING_POLE + 16;
+            else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
+                return ITEM_FISHING_POLE + 17;
         }
     }
 
@@ -2276,6 +2278,9 @@ u8 Item_Give(PlayState* play, u8 item) {
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
         return ITEM_NONE;
+    } else if (item == ITEM_AMULET_OF_ENERGY) {
+        gSaveContext.save.info.hasObtainedItems.amuletOfEnergy = 1;
+        return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
         return ITEM_NONE;
@@ -2569,7 +2574,7 @@ u8 Item_CheckObtainability(u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_ADULTS_WALLET || item == ITEM_GIANTS_WALLET || item == ITEM_ROYAL_WALLET) {
         return ITEM_NONE;
-    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER) {
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY) {
         return ITEM_NONE;
     }
 
@@ -4195,6 +4200,9 @@ void Energy_Draw(PlayState* play) {
 }
 
 void Energy_Update(PlayState* play) {
+    if (play->specialPowerTimer > 0)
+        play->specialPowerTimer--;
+
     if (!Player_HasEnergyUnlocked())
         return;
 

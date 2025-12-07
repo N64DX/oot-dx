@@ -362,6 +362,10 @@ u64 gItemIconFishingPoleTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)]
 #include "assets/textures/icon_item_static/gItemIconFishingPoleTex.rgba32.inc.c"
 };
 
+u64 gItemIconAmuletOfEnergyTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconAmuletOfEnergyTex.rgba32.inc.c"
+};
+
 u64 gItemIconRocsFeatherTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
 #include "assets/textures/icon_item_static/gItemIconRocsFeatherTex.rgba32.inc.c"
 };

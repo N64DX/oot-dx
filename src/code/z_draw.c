@@ -87,6 +87,7 @@
 #include "assets/objects/object_gi_sword_3_mm/object_gi_sword_3_mm.h"
 #include "assets/objects/object_gi_hookshot_mm/object_gi_hookshot_mm.h"
 #include "assets/objects/object_gi_heros_bow/object_gi_heros_bow.h"
+#include "assets/objects/object_gi_pendant/object_gi_pendant.h"
 #include "assets/objects/object_gi_feather/object_gi_feather.h"
 #include "assets/objects/object_gi_gold_dust/object_gi_gold_dust.h"
 #include "assets/objects/object_st/object_st.h"
@@ -398,6 +399,8 @@ DrawItemTableEntry sDrawItemTable[] = {
 	{ GetItem_DrawOpa0, { gGiLongshotMMDL } },
     // GID_HEROS_BOW
 	{ GetItem_DrawOpa0, { gGiHerosBowHandleDL, gGiHerosBowStringDL } },
+    // GID_AMULET_OF_ENERGY
+    { GetItem_DrawOpa0Xlu1, { gGiPendantDL } },
     // GID_ROCS_FEATHER
     { GetItem_DrawOpa0, { gGiRocsFeatherDL } },
     // GID_GOLDEN_FEATHER

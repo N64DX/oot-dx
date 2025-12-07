@@ -12,6 +12,7 @@
 #include "frame_advance.h"
 #include "zelda_arena.h"
 #include "play_state.h"
+#include "player.h"
 #include "save.h"
 
 #include "overlays/effects/ovl_Effect_Ss_HitMark/z_eff_ss_hitmark.h"
@@ -1686,7 +1687,16 @@ void CollisionCheck_HitEffects(PlayState* play, Collider* atCol, ColliderElement
         return;
     }
     if (acCol->actor != NULL) {
+        Player* player = GET_PLAYER(play);
         sBloodFuncs[sHitInfo[acCol->colMaterial].blood](play, acCol, hitPos);
+
+        if (atCol->actor != NULL)
+            if (atElem->atElemFlags & ATELEM_HIT)
+                if (atElem->atHit != NULL && atElem->atHit->actor != NULL) {
+                    if (player->currentTunic == PLAYER_TUNIC_ZORA && (atElem->atHit->actor->category == ACTORCAT_ENEMY || atElem->atHit->actor->category == ACTORCAT_BOSS))
+                        if (atElem->atDmgInfo.dmgFlags == DMG_SLASH_KOKIRI || atElem->atDmgInfo.dmgFlags == DMG_SLASH_MASTER || atElem->atDmgInfo.dmgFlags == DMG_SLASH_GIANT)
+                            atElem->atDmgInfo.dmgFlags = Player_UseSpecialPower(play, player, 30, 8, false, SPECIAL_POWER_STRENGTHEN_SWORD, atElem->atDmgInfo.dmgFlags);
+                }
     }
     if (acCol->actor != NULL) {
         if (sHitInfo[acCol->colMaterial].effect == HIT_SOLID) {

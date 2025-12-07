@@ -54,6 +54,13 @@ typedef enum SpecialIcon {
     /* 2 */ SPECIAL_ICON_RUMBLE
 } SpecialIcon;
 
+typedef enum SpecialPowerType {
+    /* 0 */ SPECIAL_POWER_REDUCE_DAMAGE,
+    /* 1 */ SPECIAL_POWER_STRENGTHEN_SWORD,
+    /* 2 */ SPECIAL_POWER_MAGIC_REGEN,
+    /* 3 */ SPECIAL_POWER_HEALTH_REGEN
+} SpecialPowerType;
+
 typedef enum AutoSaveState {
     /* 0 */ AUTOSAVE_RESET,
     /* 8 */ AUTOSAVE_ON = 8,
@@ -144,6 +151,7 @@ typedef struct PlayState {
     /* 0x12134 */ u8 specialIconLast;
     /* 0x12135 */ bool progressRush;
     /* 0x12136 */ bool swapEquipment;
+    /* 0x12137 */ u8 specialPowerTimer;
 } PlayState; // size = 0x12518
 
 extern Mtx D_01000000; // billboardMtx
@@ -184,6 +192,7 @@ s32 func_800C0D34(PlayState* this, Actor* actor, s16* yaw);
 s32 func_800C0DB4(PlayState* this, Vec3f* pos);
 void Play_SetDungeonRushEntry(PlayState* this);
 void Play_SetDungeonRushProgress(PlayState* this);
+u32 Player_UseSpecialPower(struct PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, u32 amount);
 u8 Player_GetMaxEnergy(void);
 bool Player_HasEnergyUnlocked(void);
 
