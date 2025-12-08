@@ -923,7 +923,7 @@ u64 roadtolake_sceneTex_003730[] = {
 };
 
 u64 roadtolake_sceneTex_003B30[] = {
-#include "build/pal-1.0/assets/scenes/overworld/spot00/spot00_room_0_03000520_RoomShapeCullable_0300052C_CullableEntries_0300CEB8_DL_000260B8_Tex.rgba16.inc.c"
+#include "assets/scenes/overworld/roadtolake/roadtolake_sceneTex_003B30.ci8.inc.c"
 };
 
 u64 roadtolake_sceneTex_003F30[] = {
