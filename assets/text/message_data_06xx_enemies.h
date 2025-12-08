@@ -2147,3 +2147,55 @@ COLOR(LIGHTBLUE) "Cet Esprit ne disparaît pas si tu\n"
 "apparemment..." COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
+
+DEFINE_MESSAGE(0x065D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(80) "プチブリン\n"
+SHIFT(70) COLOR(LIGHTBLUE) "サイフを守れ！\n"
+SHIFT(10) "ルピーは取られるが　危なくない。" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Miniblin\n"
+COLOR(LIGHTBLUE) "Keep your wallet tight and be careful\n"
+"you don't get robbed!\n"
+"They are annoying but pose no danger." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Petiblin\n"
+COLOR(LIGHTBLUE) "Halte deinen Geldbeutel fest und pass\n"
+"auf, dass du nicht ausgeraubt wirst!\n"
+"Sie sind lästig, aber ungefährlich." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Miniblin\n"
+COLOR(LIGHTBLUE) "Garde bien ta bourse et fais attention\n"
+"à ne pas te faire voler!\n"
+"Ils sont pénibles mais inoffensifs." COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)
+
+DEFINE_MESSAGE(0x065E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(95) "ゾル\n"
+SHIFT(40) COLOR(LIGHTBLUE) "跳ねる生きたスライム。\n"
+SHIFT(20) "体は柔らかく、簡単に切れる。" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Zol\n"
+COLOR(LIGHTBLUE) "It's a blob of living slime that bounces\n"
+"toward you. It's body is soft,\n"
+"so you easily slice through it." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Zol\n"
+COLOR(LIGHTBLUE) "Ein Klumpen lebendigen Schleims, er\n"
+"rollt auf dich zu. Körper weich,\n"
+"so kannst du ihn leicht zerschneiden." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Zol\n"
+COLOR(LIGHTBLUE) "C'est une masse de slime vivant qui\n"
+"bondit vers toi. Son corps est mou,\n"
+"tu peux facilement le trancher." COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)

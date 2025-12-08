@@ -234,6 +234,15 @@ void EnPeehat_Init(Actor* thisx, PlayState* play) {
     this->actor.cullingVolumeScale = 800.0f;
     this->actor.cullingVolumeDownward = 1800.0f;
     switch (this->actor.params) {
+        case PEAHAT_TYPE_GROUNDED_LARVA:
+            EnPeehat_Ground_SetStateGround(this);
+            this->actor.scale.x = this->actor.scale.z = 0.006f;
+            this->actor.scale.y = 0.003f;
+            this->colliderCylinder.dim.radius = 25;
+            this->colliderCylinder.dim.height = 15;
+            this->colliderCylinder.dim.yShift = -5;
+            this->actor.naviEnemyId = NAVI_ENEMY_PEAHAT_LARVA;
+            this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(3, MONSTER_HP);
         case PEAHAT_TYPE_GROUNDED:
             EnPeehat_Ground_SetStateGround(this);
             break;

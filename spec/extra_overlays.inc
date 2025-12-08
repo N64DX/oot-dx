@@ -60,3 +60,17 @@ beginseg
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Hammergeist/z_en_hammergeist.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Hammergeist/ovl_En_Hammergeist_reloc.o"
 endseg
+
+beginseg
+    name "ovl_En_Miniblin"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Miniblin/z_en_miniblin.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Miniblin/ovl_En_Miniblin_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Slim"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Slim/z_en_slim.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Slim/ovl_En_Slim_reloc.o"
+endseg

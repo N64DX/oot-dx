@@ -5,6 +5,7 @@
 #include "actor.h"
 
 typedef enum PeahatType {
+    /* -2 */ PEAHAT_TYPE_GROUNDED_LARVA = -2,
     /* -1 */ PEAHAT_TYPE_GROUNDED = -1,
     /*  0 */ PEAHAT_TYPE_FLYING = 0,
     /*  1 */ PEAHAT_TYPE_LARVA = 1
