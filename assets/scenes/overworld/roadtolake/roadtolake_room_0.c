@@ -320,7 +320,7 @@ Gfx roadtolake_room_0DL_001C38[] = {
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsDPLoadTLUT_pal256(roadtolake_sceneTLUT_007950),
-    gsDPLoadTextureBlock(roadtolake_sceneTex_003B30, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(roadtolake_sceneTex_003B30, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 197, 197, 159, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(roadtolake_room_0Vtx_001B78, 4, 0),
