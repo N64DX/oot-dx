@@ -1808,26 +1808,44 @@ u8 Item_Give(PlayState* play, u8 item) {
             gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_SWORD_MASTER << (EQUIP_TYPE_SWORD * 4);
             Interface_LoadItemIcon1(play, 0);
         }
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_SWORDS)
+                Interface_LoadItemIcon1(play, i+4);
 
         return ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
         SET_HEROS_SWORD;
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_SWORDS)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_SHIELDS)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_SHIELD_HEROS) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
         SET_HEROS_SHIELD;
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
             Player_SetEquipmentData(play, GET_PLAYER(play));
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_SHIELDS)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_TUNICS || DPAD_BUTTON(i) == SLOT_TUNIC_GORON || DPAD_BUTTON(i) == SLOT_TUNIC_ZORA)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_HOVER)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_BOOTS, item - ITEM_BOOTS_KOKIRI);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_BOOTS || DPAD_BUTTON(i) == SLOT_BOOTS_IRON || DPAD_BUTTON(i) == SLOT_BOOTS_HOVER)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if ((item == ITEM_DUNGEON_BOSS_KEY) || (item == ITEM_DUNGEON_COMPASS) || (item == ITEM_DUNGEON_MAP)) {
         gSaveContext.save.info.inventory.dungeonItems[gSaveContext.mapIndex] |= gBitFlags[item - ITEM_DUNGEON_BOSS_KEY];
