@@ -154,6 +154,8 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_ROAD_TO_LAKE_HYLIA, 0x00, 0x00, 0x00 },
     { SCENE_ROAD_TO_FORTRESS, 0x00, 0x00, 0x00 },
     { SCENE_SWAMP_SPIDER_HOUSE, 0x00, 0x00, 0x00 },
+    { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
+    { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x00 },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
 
@@ -4002,6 +4004,7 @@ void Interface_Draw(PlayState* play) {
             case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
             case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
             case SCENE_TREASURE_BOX_SHOP:
+            case SCENE_ANCIENT_HOLLOW:
                 if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0) {
                     // Small Key Icon
                     gDPPipeSync(OVERLAY_DISP++);

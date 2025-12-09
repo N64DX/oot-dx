@@ -344,6 +344,7 @@ static DoorShutterBossDoorInfo sBossDoorInfo[] = {
     { SCENE_GANONS_TOWER, SCENE_GANONDORF_BOSS, DOORSHUTTER_BOSSDOORTEX_GANON },
     { SCENE_FOREST_TEMPLE, SCENE_FOREST_TEMPLE_BOSS, DOORSHUTTER_BOSSDOORTEX_FOREST },
     { SCENE_SPIRIT_TEMPLE, SCENE_SPIRIT_TEMPLE_BOSS, DOORSHUTTER_BOSSDOORTEX_SPIRIT },
+    { SCENE_ANCIENT_HOLLOW, SCENE_ANCIENT_HOLLOW, DOORSHUTTER_BOSSDOORTEX_FOREST },
     { -1, -1, DOORSHUTTER_BOSSDOORTEX_0 },
 };
 
@@ -454,6 +455,8 @@ void DoorShutter_Init(Actor* thisx, PlayState* play2) {
                 break;
             }
         }
+        if (play->sceneId == SCENE_ANCIENT_HOLLOW)
+            this->dyna.actor.scale.y = 0.61f;
         this->bossDoorTexIndex = bossDoorInfo->texIndex;
     } else { // DOORSHUTTER_STYLE_PHANTOM_GANON, DOORSHUTTER_STYLE_GOHMA_BLOCK
         this->dyna.actor.room = -1;

@@ -686,7 +686,7 @@ void EnZf_DropIn(EnZf* this, PlayState* play) {
     if (this->unk_3F0 != 0) {
         if (this->actor.params != ENZF_TYPE_LIZALFOS_LONE) {
             this->unk_3F0--;
-        } else if (this->actor.xzDistToPlayer <= 160.0f) {
+        } else if (this->actor.xzDistToPlayer <= (play->sceneId == SCENE_ANCIENT_HOLLOW) ? 1000.0f : 160.0f) {
             this->unk_3F0 = 0;
             this->actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_CRY);

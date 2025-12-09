@@ -150,4 +150,9 @@ typedef struct BossGoma {
     /* 0x07DC */ ColliderJntSphElement colliderElements[13];
 } BossGoma; // size = 0x0B1C
 
+typedef enum BossGomaType {
+    /* -2 */ GHOMA_HYPER = -2,
+    /* -1 */ GHOMA_NORMAL
+} BossGomaType;
+
 #endif
