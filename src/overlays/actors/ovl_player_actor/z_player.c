@@ -5692,7 +5692,7 @@ void Player_HandleDungeonRushExits(PlayState* play) {
 
             case ENTR_SPIRIT_TEMPLE_2:
                 if (CUR_UPG_VALUE(UPG_STRENGTH) >= PLAYER_STR_SILVER_G && !THIS_SCENE_FLAG.extra.exit) {
-                    play->nextEntranceIndex = ENTR_SPIRIT_TEMPLE_0;
+                    play->nextEntranceIndex = ENTR_SPIRIT_TEMPLE_DR;
                     THIS_SCENE_FLAG.extra.exit = 1;
                 }
                 break;
@@ -5704,10 +5704,13 @@ void Player_HandleDungeonRushExits(PlayState* play) {
             case ENTR_DEATH_MOUNTAIN_CRATER_2:
             case ENTR_LAKE_HYLIA_2:
             case ENTR_SHADOW_TEMPLE_0:
-            case ENTR_DESERT_COLOSSUS_1:
             case ENTR_HYRULE_CASTLE_1:
             case MAP_OUTSIDE_GANONS_CASTLE_1:
                 play->nextEntranceIndex = sDungeonEntrances[play->sceneId];
+                break;
+
+            case ENTR_DESERT_COLOSSUS_1:
+                play->nextEntranceIndex = ENTR_SPIRIT_TEMPLE_DR;
                 break;
         }
     }
@@ -14434,7 +14437,7 @@ s32 func_8084DFF4(PlayState* play, Player* this) {
         }
     } else {
         if (Message_GetState(&play->msgCtx) == TEXT_STATE_CLOSING) {
-            if (play->sceneId == SCENE_DESERT_COLOSSUS && (this->getItemId == GI_GORONS_BRACELET || this->getItemId == GI_SILVER_GAUNTLETS || this->getItemId == GI_GOLD_GAUNTLETS || this->getItemId == GI_POWER_BRACELET || this->getItemId == GI_POWER_BRACELETS) ) {
+            if (play->sceneId == SCENE_DESERT_COLOSSUS && !IS_RUSH_QUEST && (this->getItemId == GI_GORONS_BRACELET || this->getItemId == GI_SILVER_GAUNTLETS || this->getItemId == GI_GOLD_GAUNTLETS || this->getItemId == GI_POWER_BRACELET || this->getItemId == GI_POWER_BRACELETS) ) {
                 play->nextEntranceIndex = ENTR_DESERT_COLOSSUS_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 gSaveContext.nextCutsceneIndex = 0xFFF1;

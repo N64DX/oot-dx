@@ -155,6 +155,11 @@ void EnOwl_Init(Actor* thisx, PlayState* play) {
     PRINTF(VT_FGCOL(CYAN) T(" 会話フクロウ %4x no = %d, sv = %d\n", " conversation owl %4x no = %d, sv = %d\n") VT_RST,
            this->actor.params, owlType, switchFlag);
 
+    if (IS_RUSH_QUEST) {
+        Actor_Kill(&this->actor);
+        return;
+    }
+
     if ((owlType != OWL_DEFAULT) && (switchFlag < 0x20) && Flags_GetSwitch(play, switchFlag)) {
         PRINTF(T("savebitでフクロウ退避\n", "Save owl with savebit\n"));
         Actor_Kill(&this->actor);

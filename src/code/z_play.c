@@ -2082,7 +2082,7 @@ void Play_SetDungeonRushEntry(PlayState* this) {
     u8 currentAge = gSaveContext.save.linkAge;
     u8 newAge     = currentAge;
     
-    if (sTextIsCredits || IS_CUTSCENE_LAYER || !IS_RUSH_QUEST)
+    if (R_BEATEN_RUSH_MODE || IS_CUTSCENE_LAYER || !IS_RUSH_QUEST)
         return;
 
     switch (gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId) {
@@ -2122,15 +2122,24 @@ void Play_SetDungeonRushEntry(PlayState* this) {
         case SCENE_SPIRIT_TEMPLE_BOSS:
         case SCENE_GANONDORF_BOSS:
         case SCENE_GANON_BOSS:
+            newAge = LINK_AGE_ADULT;
+            break;
+
         case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
         case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
         case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
+            if (IS_BOSS_RUSH) {
+                gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
+                newAge = LINK_AGE_CHILD;
+                break;
+            }
             newAge = LINK_AGE_ADULT;
             break;
 
         case SCENE_SPIRIT_TEMPLE:
             if (IS_DUNGEON_RUSH) {
-                newAge = CUR_UPG_VALUE(UPG_STRENGTH) >= PLAYER_STR_SILVER_G ? LINK_AGE_ADULT : LINK_AGE_CHILD;
+                if (gSaveContext.save.entranceIndex == ENTR_SPIRIT_TEMPLE_DR)
+                    newAge = !gSaveContext.save.linkAge;
                 break;
             }
             FALLTHROUGH;
@@ -2245,7 +2254,8 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA);
                 gSaveContext.save.info.playerData.bgsFlag = true;
                 gSaveContext.save.info.playerData.swordHealth = 8;
-                gSaveContext.save.info.inventory.items[SLOT_BOTTLE_4] = ITEM_BOTTLE_EMPTY;
+                if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_4] == ITEM_NONE)
+                    gSaveContext.save.info.inventory.items[SLOT_BOTTLE_4] = ITEM_BOTTLE_FAIRY;
                 break;
 
             case ENTR_FIRE_TEMPLE_0:
@@ -2257,7 +2267,8 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = true;
                 gSaveContext.magicFillTarget = gSaveContext.save.info.playerData.magic = 0x60;
                 gSaveContext.magicCapacity = gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = 0;
-                gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] = ITEM_BOTTLE_EMPTY;
+                if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] == ITEM_NONE)
+                    gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] = ITEM_BOTTLE_FAIRY;
                 if (IS_CHILD_QUEST) {
                     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS);
                     SET_HEROS_SWORD;
@@ -2268,7 +2279,8 @@ void Play_SetDungeonRushProgress(PlayState* this) {
             case ENTR_FOREST_TEMPLE_BOSS_0:
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_LIGHT - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
                 gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] = ITEM_HOOKSHOT;
-                gSaveContext.save.info.inventory.items[SLOT_BOTTLE_2] = ITEM_BOTTLE_EMPTY;
+                if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_2] == ITEM_NONE)
+                    gSaveContext.save.info.inventory.items[SLOT_BOTTLE_2] = ITEM_BOTTLE_FAIRY;
                 break;
 
             case ENTR_TEMPLE_OF_TIME_0:
@@ -2311,7 +2323,8 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN);
                 Inventory_ChangeUpgrade(UPG_STRENGTH, 1);
                 gSaveContext.save.info.inventory.items[SLOT_OCARINA] = ITEM_OCARINA_FAIRY;
-                gSaveContext.save.info.inventory.items[SLOT_BOTTLE_1] = ITEM_BOTTLE_EMPTY;
+                if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_1] == ITEM_NONE)
+                    gSaveContext.save.info.inventory.items[SLOT_BOTTLE_1] = ITEM_BOTTLE_FAIRY;
                 break;
 
             case ENTR_DEKU_TREE_0:
