@@ -4822,8 +4822,8 @@ void Interface_Draw(PlayState* play) {
         }
 
         if (IS_RUSH_QUEST) {
-            if ( (!IS_PAUSED(&play->pauseCtx) && msgCtx->msgMode == MSGMODE_NONE && !(player->stateFlags2 & PLAYER_STATE2_24) && play->transitionTrigger == TRANS_TRIGGER_OFF && play->transitionMode == TRANS_MODE_OFF && !Play_InCsMode(play) && play->gameOverCtx.state == GAMEOVER_INACTIVE) || sTextIsCredits) {
-                if (!sTextIsCredits) {
+            if ( (!IS_PAUSED(&play->pauseCtx) && msgCtx->msgMode == MSGMODE_NONE && !(player->stateFlags2 & PLAYER_STATE2_24) && play->transitionTrigger == TRANS_TRIGGER_OFF && play->transitionMode == TRANS_MODE_OFF && !Play_InCsMode(play) && play->gameOverCtx.state == GAMEOVER_INACTIVE) || R_BEATEN_RUSH_MODE) {
+                if (!R_BEATEN_RUSH_MODE) {
                     sPlaytimeNextSecondTimer++;
                     if (sPlaytimeNextSecondTimer == (4 - R_UPDATE_RATE) * 20) {
                         sPlaytimeNextSecondTimer = 0;
@@ -4852,7 +4852,7 @@ void Interface_Draw(PlayState* play) {
                 OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gClockIconTex, 16, 16, HIRES_MULTIPLY(114 + WS_SHIFT_HALF), HIRES_MULTIPLY(206), HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
                 // Quest Title
-                if (sTextIsCredits) {
+                if (R_BEATEN_RUSH_MODE) {
                     static void* sQuestButtonTextures[] = { gQuestDungeonRushTex, gQuestDungeonMasterRushTex, gQuestDungeonUraRushTex, gQuestDungeonChildRushTex, gQuestBossRushTex };
                     gDPPipeSync(OVERLAY_DISP++);
                     gDPLoadTextureBlock(OVERLAY_DISP++, sQuestButtonTextures[R_QUEST_MODE - DUNGEON_RUSH], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);

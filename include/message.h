@@ -201,6 +201,5 @@ void Message_SetTables(void);
 void Message_Init(struct PlayState* play);
 
 extern s16 gOcarinaSongItemMap[];
-extern s16 sTextIsCredits;
 
 #endif

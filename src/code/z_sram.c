@@ -190,6 +190,7 @@ void Sram_InitNewSave(void) {
     bzero(&gSaveContext.save.info, sizeof(SaveInfo));
     gSaveContext.save.totalDays = 0;
     gSaveContext.save.bgsDayCount = 0;
+    gSaveContext.cheated = 0;
 
     gSaveContext.save.info.playerData = sNewSavePlayerData;
     gSaveContext.save.info.equips = sNewSaveEquips;
@@ -356,6 +357,27 @@ void Sram_SetRushQuestFlags(void) {
     SET_EVENTCHKINF(EVENTCHKINF_C4);
     SET_EVENTCHKINF(EVENTCHKINF_C5);
     SET_EVENTCHKINF(EVENTCHKINF_AC);
+
+    SET_EVENTCHKINF(EVENTCHKINF_A7);
+    SET_EVENTCHKINF(EVENTCHKINF_A8);
+    SET_EVENTCHKINF(EVENTCHKINF_B0);
+    SET_EVENTCHKINF(EVENTCHKINF_B5);
+    SET_INFTABLE(INFTABLE_11A);
+    gSaveContext.save.info.sceneFlags[SCENE_WATER_TEMPLE].swch |= 0x10000;
+
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_GOHMA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_KING_DODONGO_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_BARINADE_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_PHANTOM_GANON_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_VOLVAGIA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_MORPHA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_BONGO_BONGO_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_3B);
+    SET_EVENTCHKINF(EVENTCHKINF_C0);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_TWINROVA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_GANONDORF_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_HYPER_GOHMA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_C7);
 }
 
 /**
@@ -463,8 +485,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
     PRINTF("SCENE_DATA_ID = %d   SceneNo = %d\n", gSaveContext.save.info.playerData.savedSceneId,
            ((void)0, gSaveContext.save.entranceIndex));
 
-    R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
-    R_QUEST_MODE    = QUEST_MODE;
+    R_BEATEN_RUSH_MODE = 0;
+    R_ENABLE_MIRROR    = MIRROR_MODE ? 1 : 0;
+    R_QUEST_MODE       = QUEST_MODE;
 
     switch (gSaveContext.save.info.playerData.savedSceneId) {
         case SCENE_DEKU_TREE:
