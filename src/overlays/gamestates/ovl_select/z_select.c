@@ -114,6 +114,7 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     gSaveContext.natureAmbienceId = 0xFF;
     gSaveContext.showTitleCard = true;
     gWeatherMode = WEATHER_MODE_CLEAR;
+    gSaveContext.cheated = 1;
 
     this->state.running = false;
     SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);
@@ -844,6 +845,7 @@ void MapSelect_PrintMenu(MapSelectState* this, GfxPrint* printer) {
         case DUNGEON_RUSH:        GfxPrint_Printf(printer, "Dungeon Rush");              break;
         case DUNGEON_MASTER_RUSH: GfxPrint_Printf(printer, "Dungeon MQ Rush");           break;
         case DUNGEON_URA_RUSH:    GfxPrint_Printf(printer, "Dungeon Ura Rush");          break;
+        case DUNGEON_CHILD_RUSH:  GfxPrint_Printf(printer, "Dungeon CQ Rush");           break;
         case BOSS_RUSH:           GfxPrint_Printf(printer, "Boss Rush");                 break;
         default:                  GfxPrint_Printf(printer, "Quest:%d", this->questMode); break;
     }

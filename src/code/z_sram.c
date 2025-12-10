@@ -190,6 +190,7 @@ void Sram_InitNewSave(void) {
     bzero(&gSaveContext.save.info, sizeof(SaveInfo));
     gSaveContext.save.totalDays = 0;
     gSaveContext.save.bgsDayCount = 0;
+    gSaveContext.cheated = 0;
 
     gSaveContext.save.info.playerData = sNewSavePlayerData;
     gSaveContext.save.info.equips = sNewSaveEquips;
@@ -345,6 +346,40 @@ static Inventory sDebugSaveInventory = {
 
 static Checksum sDebugSaveChecksum = { 0 };
 
+void Sram_SetRushQuestFlags(void) {
+    if (!IS_RUSH_QUEST)
+        return;
+
+    SET_EVENTCHKINF(EVENTCHKINF_OPENED_DOOR_OF_TIME);
+    SET_EVENTCHKINF(EVENTCHKINF_REVEALED_MASTER_SWORD);
+    SET_EVENTCHKINF(EVENTCHKINF_37);
+    SET_EVENTCHKINF(EVENTCHKINF_55);
+    SET_EVENTCHKINF(EVENTCHKINF_C4);
+    SET_EVENTCHKINF(EVENTCHKINF_C5);
+    SET_EVENTCHKINF(EVENTCHKINF_AC);
+
+    SET_EVENTCHKINF(EVENTCHKINF_A7);
+    SET_EVENTCHKINF(EVENTCHKINF_A8);
+    SET_EVENTCHKINF(EVENTCHKINF_B0);
+    SET_EVENTCHKINF(EVENTCHKINF_B5);
+    SET_INFTABLE(INFTABLE_11A);
+    gSaveContext.save.info.sceneFlags[SCENE_WATER_TEMPLE].swch |= 0x10000;
+
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_GOHMA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_KING_DODONGO_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_BARINADE_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_PHANTOM_GANON_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_VOLVAGIA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_MORPHA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_BONGO_BONGO_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_3B);
+    SET_EVENTCHKINF(EVENTCHKINF_C0);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_TWINROVA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_GANONDORF_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_HYPER_GOHMA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_C7);
+}
+
 /**
  *  Initialize debug save. This is also used on the Title Screen
  *  This save has a mostly full inventory with 10 hearts and single magic.
@@ -398,9 +433,11 @@ void Sram_InitDebugSave(void) {
         }
     }
 
+    Sram_SetRushQuestFlags();
     gSaveContext.save.entranceIndex = ENTR_HYRULE_FIELD_0;
     gSaveContext.save.info.playerData.magicLevel = 0;
     gSaveContext.save.info.sceneFlags[SCENE_WATER_TEMPLE].swch = 0x40000000;
+    gSaveContext.cheated = 1;
 }
 
 static s16 sDungeonEntrances[] = {
@@ -448,8 +485,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
     PRINTF("SCENE_DATA_ID = %d   SceneNo = %d\n", gSaveContext.save.info.playerData.savedSceneId,
            ((void)0, gSaveContext.save.entranceIndex));
 
-    R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
-    R_QUEST_MODE    = QUEST_MODE;
+    R_BEATEN_RUSH_MODE = 0;
+    R_ENABLE_MIRROR    = MIRROR_MODE ? 1 : 0;
+    R_QUEST_MODE       = QUEST_MODE;
 
     switch (gSaveContext.save.info.playerData.savedSceneId) {
         case SCENE_DEKU_TREE:
@@ -518,8 +556,27 @@ void Sram_OpenSave(SramContext* sramCtx) {
             break;
     }
 
-    if (SKIP_INTROS && gSaveContext.save.entranceIndex == ENTR_LINKS_HOUSE_0)
+    if ( (SKIP_INTROS || IS_RUSH_QUEST) && gSaveContext.save.entranceIndex == ENTR_LINKS_HOUSE_0)
         gSaveContext.save.cutsceneIndex = 0;
+
+    Sram_SetRushQuestFlags();
+    if (IS_BOSS_RUSH) {
+        for (i=0; i<4; i++)
+            for (j=0; j<4; j++)
+                gSaveContext.save.info.playerData.dpadItems[i][j] = 0;
+        for (i=SCENE_DEKU_TREE_BOSS; i<=SCENE_SHADOW_TEMPLE_BOSS; i++)
+            MemSet(&gSaveContext.save.info.sceneFlags[i], 0, sizeof(SavedSceneFlags));
+
+        gSaveContext.cheated = 0;
+        gSaveContext.save.info.playtime = 0;
+        gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
+        gSaveContext.save.info.equips = gSaveContext.save.info.playerData.adultEquips = gSaveContext.save.info.playerData.childEquips = sNewSaveEquips;
+        gSaveContext.save.info.inventory = sNewSaveInventory;
+        gSaveContext.save.info.playerData.healthCapacity = gSaveContext.save.info.playerData.health = 0x30;
+        gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = 0;
+        gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = gSaveContext.save.info.playerData.isDoubleDefenseAcquired = gSaveContext.save.info.playerData.bgsFlag = gSaveContext.save.info.playerData.dpadDualSet = false;
+        gSaveContext.save.info.playerData.equipmentUpgrades = 0;
+    }
 
     PRINTF("scene_no = %d\n", gSaveContext.save.entranceIndex);
     PRINTF_RST();
@@ -614,6 +671,10 @@ void Sram_OpenSave(SramContext* sramCtx) {
 
     if (IS_CHILD_QUEST)
         gSaveContext.save.linkAge = LINK_AGE_CHILD;
+
+    // Cheating
+    if (DAMAGE_TAKEN == 7 || MONSTER_HP == 7 || ELITE_HP == 7 || BOSS_HP == 7 || DEBUG_MODE || DEBUG_FEATURES)
+        gSaveContext.cheated = 1;
 }
 
 void Sram_OpenSaveOptions(SramContext* sramCtx) {

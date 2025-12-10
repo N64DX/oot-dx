@@ -26,6 +26,9 @@
 #else
 #include "assets/textures/title_static/title_static.h"
 #endif
+#if OOT_VERSION <= PAL_1_1
+#include "assets/textures/parameter_static/parameter_static_quest.h"
+#endif
 
 void FileSelect_DrawCharacter(GraphicsContext* gfxCtx, void* texture, s16 vtx) {
     OPEN_DISPS(gfxCtx, "../z_file_nameset_PAL.c", 110);
@@ -634,11 +637,17 @@ s32 FileSelect_ApplyDiacriticToFilename(GameState* thisx, s16 diacritic) {
 
 #if OOT_VERSION <= PAL_1_1
 static const void* sQuestTextures[QUEST_MAX+1][2] = {
-    { gQuestOcarinaOfTimeTex, gLogoOcarinaOfTimeTex },
-    { gQuestMasterQuestTex,   gLogoMasterQuestTex   },
-    { gQuestUraQuestTex,      gLogoUraQuestTex      },
-    { gQuestOcarinaOfTimeTex, gLogoChildQuestTex    },
-    { gQuestMasterQuestTex,   gLogoChildQuestTex    },
+    { gQuestOcarinaOfTimeTex,     gLogoOcarinaOfTimeTex },
+    { gQuestMasterQuestTex,       gLogoMasterQuestTex   },
+    { gQuestUraQuestTex,          gLogoUraQuestTex      },
+    { gQuestChildQuestTex,        gLogoChildQuestTex    },
+    { gQuestChildMasterQuestTex,  gLogoChildQuestTex    },
+    { gQuestChildUraQuestTex,     gLogoChildQuestTex    },
+    { gQuestDungeonRushTex,       gLogoOcarinaOfTimeTex },
+    { gQuestDungeonMasterRushTex, gLogoMasterQuestTex   },
+    { gQuestDungeonUraRushTex,    gLogoUraQuestTex      },
+    { gQuestDungeonChildRushTex,  gLogoChildQuestTex    },
+    { gQuestBossRushTex,          gLogoOcarinaOfTimeTex },
 };
 
 static const char* sQuestMessages[4][QUEST_MAX+1][2] = {
@@ -648,24 +657,49 @@ static const char* sQuestMessages[4][QUEST_MAX+1][2] = {
         { "A beta version of Master Quest", "" },
         { "Play as Young Link only",        "and discover new areas" },
         { "Play as Young Link only",        "and discover new areas" },
+        { "Play as Young Link only",        "and discover new areas" },
+        { "Race through all dungeons",      "and set the best time"  },
+        { "Race through all dungeons",      "and set the best time"  },
+        { "Race through all dungeons",      "and set the best time"  },
+        { "Race through all dungeons",      "and set the best time"  },
+        { "Race through all bosses",        "and set the best time"  },
     }, {
         { "Das originale Abenteuer",            "" },
-        { "Schwerere, neu gestaltete Dungeons", "" },
-        { "Eine Beta-Version von Master Quest", "" },
-        { "Spiele nur als junger Link",         "und entdecke neue Gebiete" },
-        { "Spiele nur als junger Link",         "und entdecke neue Gebiete" },
+        { "Schwerere, neu gestaltete",          "Dungeons" },
+        { "Eine Beta-Version von",              "Master Quest" },
+        { "Spiele nur als junger Link",         "und entdecke neue Gebiete"   },
+        { "Spiele nur als junger Link",         "und entdecke neue Gebiete"   },
+        { "Spiele nur als junger Link",         "und entdecke neue Gebiete"   },
+        { "Renne durch alle Dungeons",          "und stelle die Bestzeit auf" },
+        { "Renne durch alle Dungeons",          "und stelle die Bestzeit auf" },
+        { "Renne durch alle Dungeons",          "und stelle die Bestzeit auf" },
+        { "Renne durch alle Dungeons",          "und stelle die Bestzeit auf" },
+        { "Kämpfe gegen alle Bosse",            "und stell die Bestzeit auf"  },
+        
     }, {
         { "L'experience originale",            "" },
         { "Donjons plus difficiles",           "et remanies" },
         { "Une version beta de Master Quest",  "" },
         { "Incarnez uniquement le jeune Link", "et decouvrez de nouvelles zones" },
         { "Incarnez uniquement le jeune Link", "et decouvrez de nouvelles zones" },
+        { "Incarnez uniquement le jeune Link", "et decouvrez de nouvelles zones" },
+        { "Parcours tous les donjons",         "et bats le meilleur temps"       },
+        { "Parcours tous les donjons",         "et bats le meilleur temps"       },
+        { "Parcours tous les donjons",         "et bats le meilleur temps"       },
+        { "Parcours tous les donjons",         "et bats le meilleur temps"       },
+        { "Affronte tous les boss",            "et bats le meilleur temps"       },
     }, {
-        { "ｵﾘｼﾞﾅﾙﾀｲｹﾝ",        "" },
-        { "ﾑｽﾞｶｼｸﾅｯﾀﾀﾞﾝｼﾞｮﾝ",   "" },
-        { "ﾏｽﾀｰｸｴｽﾄﾉﾍﾞｰﾀﾊﾞﾝ",   "" },
-        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ", "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
-        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ", "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+        { "ｵﾘｼﾞﾅﾙﾀｲｹﾝ",           "" },
+        { "ﾑｽﾞｶｼｸﾅｯﾀﾀﾞﾝｼﾞｮﾝ",      "" },
+        { "ﾏｽﾀｰｸｴｽﾄﾉﾍﾞｰﾀﾊﾞﾝ",      "" },
+        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ",    "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ",    "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ",    "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+        { "ｽﾍﾞﾃﾉﾀﾞﾝｼﾞｮﾝｦｶｹﾇｹﾃ",    "ﾍﾞｽﾄﾀｲﾑｦﾒｻﾞｿｳ"    },
+        { "ｽﾍﾞﾃﾉﾀﾞﾝｼﾞｮﾝｦｶｹﾇｹﾃ",    "ﾍﾞｽﾄﾀｲﾑｦﾒｻﾞｿｳ"    },
+        { "ｽﾍﾞﾃﾉﾀﾞﾝｼﾞｮﾝｦｶｹﾇｹﾃ",    "ﾍﾞｽﾄﾀｲﾑｦﾒｻﾞｿｳ"    },
+        { "ｽﾍﾞﾃﾉﾀﾞﾝｼﾞｮﾝｦｶｹﾇｹﾃ",    "ﾍﾞｽﾄﾀｲﾑｦﾒｻﾞｿｳ"    },
+        { "ｽﾍﾞﾃﾉﾎﾞｽﾄﾀﾀｶｲ",        "ﾍﾞｽﾄﾀｲﾑｦﾒｻﾞｿｳ"    },
     }
 };
 
@@ -676,10 +710,22 @@ static const u8 sQuestMessagesOffset[4][QUEST_MAX+1][2] = {
         { 7,  7  },
         { 7,  7  },
         { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
     }, {
         { 7,  7  },
         { 7,  7  },
         { 7,  7  },
+        { 6,  6  },
+        { 6,  6  },
+        { 6,  6  },
+        { 6,  6  },
+        { 6,  6  },
+        { 6,  6  },
         { 6,  6  },
         { 6,  6  },
     }, {
@@ -688,12 +734,24 @@ static const u8 sQuestMessagesOffset[4][QUEST_MAX+1][2] = {
         { 7,  7  },
         { 4,  5  },
         { 4,  5  },
+        { 4,  5  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
     }, {
         { 14, 14 },
         { 11, 11 },
         { 10, 10 },
         { 10, 11 },
         { 10, 11 },
+        { 10, 11 },
+        { 9,  12 },
+        { 9,  12 },
+        { 9,  12 },
+        { 9,  12 },
+        { 9,  12 },
     }
 };
 #endif
@@ -833,21 +891,28 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         if (this->stickAdjX < -30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             switch (this->questMode[CURRENT_SLOT(this->buttonIndex)]) {
-                case VANILLA_QUEST:      this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_MASTER_QUEST; break;
-                case MASTER_QUEST:       this->questMode[CURRENT_SLOT(this->buttonIndex)] = VANILLA_QUEST;      break;
-                case CHILD_QUEST:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = MASTER_QUEST;       break;
-                case CHILD_MASTER_QUEST: this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_QUEST;        break;
-                default:                 this->questMode[CURRENT_SLOT(this->buttonIndex)] = 0;                  break;                  
+                case VANILLA_QUEST:       this->questMode[CURRENT_SLOT(this->buttonIndex)] = BOSS_RUSH;           break;
+                case MASTER_QUEST:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = VANILLA_QUEST;       break;
+                case CHILD_QUEST:         this->questMode[CURRENT_SLOT(this->buttonIndex)] = MASTER_QUEST;        break;
+                case CHILD_MASTER_QUEST:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_QUEST;         break;
+                case DUNGEON_RUSH:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_MASTER_QUEST ; break;
+                case DUNGEON_MASTER_RUSH: this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_RUSH;        break;
+                case DUNGEON_CHILD_RUSH:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_MASTER_RUSH; break;
+                case BOSS_RUSH:           this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_CHILD_RUSH;  break;
+                default:                  this->questMode[CURRENT_SLOT(this->buttonIndex)] = 0;                   break;      
             }
-        }
-        if (this->stickAdjX > 30) {
+        } else if (this->stickAdjX > 30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             switch (this->questMode[CURRENT_SLOT(this->buttonIndex)]) {
-                case VANILLA_QUEST:      this->questMode[CURRENT_SLOT(this->buttonIndex)] = MASTER_QUEST;       break;
-                case MASTER_QUEST:       this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_QUEST;        break;
-                case CHILD_QUEST:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_MASTER_QUEST; break;
-                case CHILD_MASTER_QUEST: this->questMode[CURRENT_SLOT(this->buttonIndex)] = VANILLA_QUEST;      break;
-                default:                 this->questMode[CURRENT_SLOT(this->buttonIndex)] = QUEST_MAX;          break;
+                case VANILLA_QUEST:       this->questMode[CURRENT_SLOT(this->buttonIndex)] = MASTER_QUEST;        break;
+                case MASTER_QUEST:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_QUEST;         break;
+                case CHILD_QUEST:         this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_MASTER_QUEST;  break;
+                case CHILD_MASTER_QUEST:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_RUSH;        break;
+                case DUNGEON_RUSH:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_MASTER_RUSH; break;
+                case DUNGEON_MASTER_RUSH: this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_CHILD_RUSH;  break;
+                case DUNGEON_CHILD_RUSH:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = BOSS_RUSH;           break;
+                case BOSS_RUSH:           this->questMode[CURRENT_SLOT(this->buttonIndex)] = VANILLA_QUEST;       break;
+                default:                  this->questMode[CURRENT_SLOT(this->buttonIndex)] = QUEST_MAX;           break;
             }
         }
 

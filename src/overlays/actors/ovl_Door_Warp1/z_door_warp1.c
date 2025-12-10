@@ -434,7 +434,7 @@ void DoorWarp1_WarpAppear(DoorWarp1* this, PlayState* play) {
         }
         if (this->unk_1B0 < 230) {
             this->unk_1B0 += 4;
-        } else if (this->actor.params == WARP_BLUE_RUTO) {
+        } else if (this->actor.params == WARP_BLUE_RUTO && !IS_RUSH_QUEST) {
             DoorWarp1_SetupAction(this, DoorWarp1_RutoWarpIdle);
         } else if (this->actor.params != WARP_SAGES && this->actor.params != WARP_YELLOW) {
             DoorWarp1_SetupAction(this, DoorWarp1_ChildWarpIdle);
@@ -514,7 +514,14 @@ void DoorWarp1_ChildWarpOut(DoorWarp1* this, PlayState* play) {
                  "\n\n\nThe time has come, so it's over. fade_direction=[%d]"),
                play->transitionTrigger, TRANS_TRIGGER_START);
 
-        if (play->sceneId == SCENE_DODONGOS_CAVERN_BOSS) {
+        if (IS_DUNGEON_RUSH || IS_BOSS_RUSH) {
+            switch (play->sceneId) {
+                case SCENE_DEKU_TREE_BOSS:       play->nextEntranceIndex = IS_DUNGEON_RUSH ? ENTR_DODONGOS_CAVERN_0 : ENTR_DODONGOS_CAVERN_BOSS_0; break; 
+                case SCENE_DODONGOS_CAVERN_BOSS: play->nextEntranceIndex = IS_DUNGEON_RUSH ? ENTR_JABU_JABU_0       : ENTR_JABU_JABU_BOSS_0;       break;
+                case SCENE_JABU_JABU_BOSS:       play->nextEntranceIndex = ENTR_TEMPLE_OF_TIME_0;                                                  break;
+            }
+            play->progressRush = true;
+        } else if (play->sceneId == SCENE_DODONGOS_CAVERN_BOSS) {
             if (!Flags_GetEventChkInf(EVENTCHKINF_25)) {
                 Flags_SetEventChkInf(EVENTCHKINF_25);
                 Item_Give(play, ITEM_GORON_RUBY);
@@ -723,7 +730,16 @@ void DoorWarp1_AdultWarpOut(DoorWarp1* this, PlayState* play) {
     this->warpTimer++;
 
     if (this->warpTimer > sWarpTimerTarget && gSaveContext.nextCutsceneIndex == 0xFFEF) {
-        if (play->sceneId == SCENE_FOREST_TEMPLE_BOSS) {
+        if (IS_DUNGEON_RUSH || IS_BOSS_RUSH) {
+            switch (play->sceneId) {
+                case SCENE_FOREST_TEMPLE_BOSS: play->nextEntranceIndex = IS_DUNGEON_RUSH ? ENTR_FIRE_TEMPLE_0          : ENTR_FIRE_TEMPLE_BOSS_0;   break; 
+                case SCENE_FIRE_TEMPLE_BOSS:   play->nextEntranceIndex = IS_DUNGEON_RUSH ? ENTR_WATER_TEMPLE_0         : ENTR_WATER_TEMPLE_BOSS_0;  break;
+                case SCENE_WATER_TEMPLE_BOSS:  play->nextEntranceIndex = IS_DUNGEON_RUSH ? ENTR_SHADOW_TEMPLE_0        : ENTR_SHADOW_TEMPLE_BOSS_0; break;
+                case SCENE_SHADOW_TEMPLE_BOSS: play->nextEntranceIndex = IS_DUNGEON_RUSH ? ENTR_SPIRIT_TEMPLE_0        : ENTR_SPIRIT_TEMPLE_BOSS_0; break;
+                case SCENE_SPIRIT_TEMPLE_BOSS: play->nextEntranceIndex = IS_DUNGEON_RUSH ? ENTR_INSIDE_GANONS_CASTLE_0 : ENTR_GANONDORF_BOSS_0;     break;
+            }
+            play->progressRush = true;
+        } else if (play->sceneId == SCENE_FOREST_TEMPLE_BOSS) {
             if (!GET_EVENTCHKINF(EVENTCHKINF_48)) {
                 SET_EVENTCHKINF(EVENTCHKINF_48);
                 Item_Give(play, ITEM_MEDALLION_FOREST);
