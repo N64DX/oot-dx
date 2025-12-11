@@ -505,6 +505,7 @@ typedef enum LinkAge {
 #define REFLECT_CHEST_CONTENTS      ((gSaveContext.options[0] >> 18) & 1)  // Bits: 18
 #define EASIER_FISHING              ((gSaveContext.options[0] >> 19) & 1)  // Bits: 19
 #define USE_YOUNG_LINK              ((gSaveContext.options[0] >> 20) & 1)  // Bits: 20
+#define NO_JUMP_SPEED_LIMIT         ((gSaveContext.options[0] >> 25) & 1)  // Bits: 25
 #define HEALTH_RECOVERY             ((gSaveContext.options[1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gSaveContext.options[1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gSaveContext.options[1] >> 5)  & 7)  // Bits: 5-7
