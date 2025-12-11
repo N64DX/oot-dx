@@ -435,8 +435,12 @@
     <Sample Name="SAMPLE_0_432" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample432.aifc"/>
     <Sample Name="SAMPLE_0_433" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample433.aifc"/>
     <Sample Name="SAMPLE_0_434" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample434.aifc"/>
+    <Sample Name="SAMPLE_0_435" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample435.aifc"/>
+    <Sample Name="SAMPLE_0_586" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample586.aifc"/>
     <Sample Name="SAMPLE_0_615" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample615.aifc"/>
     <Sample Name="SAMPLE_0_616" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample616.aifc"/>
     <Sample Name="SAMPLE_0_617" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample617.aifc"/>
     <Sample Name="SAMPLE_0_619" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample619.aifc"/>
+    <Sample Name="SAMPLE_0_648" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample648.aifc"/>
+    <Sample Name="SAMPLE_0_649" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample649.aifc"/>
 </SampleBank>

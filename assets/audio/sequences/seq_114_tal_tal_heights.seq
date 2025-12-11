@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_3.h"
+
+.startseq Sequence_114
+
+.incbin "aseq/tal_tal_heights.aseq"
+
+.endseq Sequence_114
