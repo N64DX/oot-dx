@@ -576,6 +576,24 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         if (AMMO(gAmmoItems[i]) < 0) {
                             AMMO(gAmmoItems[i]) = 0;
                         }
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN)) {
+                        if (i != INV_CONTENT(gAmmoItems[i]))
+                            INV_CONTENT(gAmmoItems[i]) = gAmmoItems[i];
+
+                        if (gAmmoItems[i] == ITEM_DEKU_STICK)
+                            AMMO(gAmmoItems[i]) = CUR_CAPACITY(UPG_DEKU_STICKS);
+                        else if (gAmmoItems[i] == ITEM_DEKU_NUT)
+                            AMMO(gAmmoItems[i]) = CUR_CAPACITY(UPG_DEKU_NUTS);
+                        else if (gAmmoItems[i] == ITEM_BOMB)
+                            AMMO(gAmmoItems[i]) = CUR_CAPACITY(UPG_BOMB_BAG);
+                        else if (gAmmoItems[i] == ITEM_BOW)
+                            AMMO(gAmmoItems[i]) = CUR_CAPACITY(UPG_QUIVER);
+                        else if (gAmmoItems[i] == ITEM_SLINGSHOT)
+                            AMMO(gAmmoItems[i]) = CUR_CAPACITY(UPG_BULLET_BAG);
+                        else if (gAmmoItems[i] == ITEM_BOMBCHU)
+                            AMMO(gAmmoItems[i]) = 50;
+                        else if (gAmmoItems[i] == ITEM_MAGIC_BEAN)
+                            AMMO(gAmmoItems[i]) = 15;
                     }
                 } else if (i == SLOT_OCARINA) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
