@@ -14305,7 +14305,7 @@ s32 func_8084DFF4(PlayState* play, Player* this) {
         }
     } else {
         if (Message_GetState(&play->msgCtx) == TEXT_STATE_CLOSING) {
-            if (play->sceneId == SCENE_DESERT_COLOSSUS && (this->getItemId == GI_SILVER_GAUNTLETS || this->getItemId == GI_POWER_BRACELET) ) {
+            if (play->sceneId == SCENE_DESERT_COLOSSUS && (this->getItemId == GI_GORONS_BRACELET || this->getItemId == GI_SILVER_GAUNTLETS || this->getItemId == GI_GOLD_GAUNTLETS || this->getItemId == GI_POWER_BRACELET || this->getItemId == GI_POWER_BRACELETS) ) {
                 play->nextEntranceIndex = ENTR_DESERT_COLOSSUS_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 gSaveContext.nextCutsceneIndex = 0xFFF1;
