@@ -35,6 +35,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Skawo:** Font preloading, Fixes: Kakariko Gate Guard, Stalfos lag, Ingo text
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
+- **Yanis002:** MM Title Cards
 
 **Actors and objects:**
 - **LeSéducteur:** Buff Scrub

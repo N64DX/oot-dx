@@ -156,6 +156,8 @@ typedef struct struct_80854B18 {
 
 static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX];
 
+extern s32 Message_TitleCardClear(PlayState* play);
+
 void Player_InitItemAction(PlayState* play, Player* this, s8 itemAction);
 
 void Player_InitDefaultIA(PlayState* play, Player* this);
@@ -3955,6 +3957,12 @@ void Player_DestroyHookshot(Player* this) {
     }
 }
 
+s32 Player_TitleCardClear(PlayState* play) {
+    if (USE_TITLE_CARDS)
+        return Message_TitleCardClear(play);
+    else return TitleCard_Clear(play, &play->actorCtx.titleCtx);
+}
+
 void Player_UseItem(PlayState* play, Player* this, s32 item) {
     s8 itemAction;
     s32 temp;
@@ -4026,7 +4034,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
                 // Handle "cutscene items"
                 if (!Player_CheckHostileLockOn(this) ||
                     ((itemAction >= PLAYER_IA_BOTTLE_POTION_RED) && (itemAction <= PLAYER_IA_BOTTLE_FAIRY))) {
-                    TitleCard_Clear(play, &play->actorCtx.titleCtx);
+                    Player_TitleCardClear(play);
                     this->unk_6AD = 4;
                     this->itemAction = itemAction;
                 }
@@ -7813,7 +7821,7 @@ s32 Player_ActionHandler_2(Player* this, PlayState* play) {
     Actor* interactedActor;
 
     if (DEBUG_iREG_67 ||
-        (((interactedActor = this->interactRangeActor) != NULL) && TitleCard_Clear(play, &play->actorCtx.titleCtx))) {
+        (((interactedActor = this->interactRangeActor) != NULL) && Player_TitleCardClear(play))) {
         if (DEBUG_iREG_67 || (this->getItemId > GI_NONE)) {
             if (DEBUG_iREG_67) {
                 this->getItemId = iREG(68);
@@ -11281,7 +11289,7 @@ void Player_Init(Actor* thisx, PlayState* play2) {
         }
     }
 
-    if ((respawnFlag == 0) || (respawnFlag < -1)) {
+    if ((respawnFlag == 0 || respawnFlag < -1) && !USE_TITLE_CARDS) {
         titleFileSize = scene->titleFile.vromEnd - scene->titleFile.vromStart;
 
         if ((titleFileSize != 0) && gSaveContext.showTitleCard) {

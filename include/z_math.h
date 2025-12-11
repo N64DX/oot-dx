@@ -15,6 +15,10 @@ typedef struct Vec2f {
     f32 x, y;
 } Vec2f; // size = 0x08
 
+typedef struct Vec2s {
+    s16 x, y;
+} Vec2s; // size = 0x04
+
 typedef struct Vec3f {
     f32 x, y, z;
 } Vec3f; // size = 0x0C

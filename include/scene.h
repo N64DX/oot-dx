@@ -8,6 +8,7 @@
 #include "light.h"
 #include "z_math.h"
 #include "path.h"
+#include "color.h"
 
 #include "command_macros_base.h"
 
@@ -225,6 +226,25 @@ typedef struct SCmdMiscSettings {
     /* 0x04 */ u32 area;
 } SCmdMiscSettings;
 
+typedef struct SCmdTitleCard {
+    /* 0x0 */ u8 code;
+    /* 0x1 */ u8 data1;
+    /* 0x4 */ void* segment;
+} SCmdTitleCard; // size = 0x8
+
+typedef struct TitleCardInfo {
+    u16 textId;
+    Color_RGBA8 rgba;
+    u8 nextHudVisibility;
+    u8 duration;
+    u8 textDelayTimer;
+    Vec2s textPos;
+    u8 gradientWidth;
+    u8 gradientHeight;
+    u8 alphaFadeOutIncr;
+    u8 alphaFadeInIncr;
+} TitleCardInfo;
+
 typedef union SceneCmd {
     SCmdBase              base;
     SCmdPlayerEntryList   playerEntryList;
@@ -253,6 +273,7 @@ typedef union SceneCmd {
     SCmdMiscSettings      miscSettings;
     SCmdAltHeaders        altHeaders;
     SCmdAltHeaders        questHeaders;
+    SCmdTitleCard         titleCard;
 } SceneCmd; // size = 0x8
 
 typedef BAD_RETURN(s32) (*SceneCmdHandlerFunc)(struct PlayState*, SceneCmd*);
@@ -428,7 +449,8 @@ typedef enum SceneCommandTypeID {
     /* 0x18 */ SCENE_CMD_ID_ALTERNATE_HEADER_LIST,
     /* 0x19 */ SCENE_CMD_ID_MISC_SETTINGS,
     /* 0x1A */ SCENE_CMD_ID_QUEST_HEADER_LIST,
-    /* 0x1B */ SCENE_CMD_ID_MAX
+    /* 0x1B */ SCENE_CMD_ID_TITLE_CARD,
+    /* 0x1C */ SCENE_CMD_ID_MAX
 } SceneCommandTypeID;
 
 #define SCENE_CMD_SPAWN_LIST(numSpawns, spawnList) \
@@ -512,6 +534,9 @@ typedef enum SceneCommandTypeID {
 
 #define SCENE_CMD_QUEST_HEADER_LIST(questHeaderList) \
     { SCENE_CMD_ID_QUEST_HEADER_LIST, 0, CMD_PTR(questHeaderList) }
+
+#define SCENE_CMD_TITLE_CARD(titleCardInfo) \
+    { SCENE_CMD_ID_TITLE_CARD, 0, CMD_PTR(titleCardInfo) }
 
 s32 Scene_ExecuteCommands(struct PlayState* play, SceneCmd* sceneCmd);
 void Scene_ResetTransitionActorList(struct GameState* state, TransitionActorList* transitionActors);
