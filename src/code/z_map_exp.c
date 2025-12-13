@@ -544,10 +544,9 @@ void Minimap_Draw(PlayState* play) {
                     if (((play->sceneId != SCENE_KAKARIKO_VILLAGE) && (play->sceneId != SCENE_KOKIRI_FOREST) &&
                          (play->sceneId != SCENE_ZORAS_FOUNTAIN)) ||
                         (LINK_AGE_IN_YEARS != YEARS_ADULT)) {
-                        if ((gMapData->owEntranceFlag[sEntranceIconMapIndex] != 0xFFFF) ||
-                            ((gMapData->owEntranceFlag[sEntranceIconMapIndex] != 0xFFFF) &&
+                        if ((gMapData->owEntranceFlag[sEntranceIconMapIndex] != 0xFFFF) &&
                              (gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] &
-                              gBitFlags[gMapData->owEntranceFlag[mapIndex]]))) {
+                              gBitFlags[gMapData->owEntranceFlag[mapIndex]])) {
                             s16 newX = gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (R_ENABLE_MIRROR == 1 ? (((xOffset + R_OW_MINIMAP_X + (gMapData->owMinimapWidth[mapIndex] / 2)) - (gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (8 / 2))) * 2 + (8 / 2) - 2) : 0);
 
                             gDPLoadTextureBlock(OVERLAY_DISP++, gMapDungeonEntranceIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b,
