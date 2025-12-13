@@ -1614,43 +1614,47 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
 }
 
 u8 Interface_LoadItemIconChildQuest(u8 item) {
-    if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-        return ITEM_FISHING_POLE + 2;
-    else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
+    if (item == ITEM_ROCS_FEATHER)
         return ITEM_FISHING_POLE + 1;
+    else if (item == ITEM_GOLDEN_FEATHER)
+        return ITEM_FISHING_POLE + 2;
+    else if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+        return ITEM_FISHING_POLE + 4;
+    else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
+        return ITEM_FISHING_POLE + 3;
     else if (item == ITEM_STONE_OF_AGONY)
-        return ITEM_FISHING_POLE + 16;
+        return ITEM_FISHING_POLE + 18;
     else if (IS_CHILD_QUEST) {
         if (item == ITEM_BROKEN_GORONS_SWORD)
-            return ITEM_FISHING_POLE + 15;
+            return ITEM_FISHING_POLE + 17;
         else if (LINK_IS_CHILD) {
             if (item == ITEM_HOOKSHOT)
-                return ITEM_FISHING_POLE + 7;
+                return ITEM_FISHING_POLE + 9;
             else if (item == ITEM_LONGSHOT)
-                return ITEM_FISHING_POLE + 8;
+                return ITEM_FISHING_POLE + 10;
 
             else if (item == ITEM_BOW)
-                return ITEM_FISHING_POLE + 9;
-            else if (item == ITEM_BOW_FIRE)
-                return ITEM_FISHING_POLE + 10;
-            else if (item == ITEM_BOW_ICE)
                 return ITEM_FISHING_POLE + 11;
-            else if (item == ITEM_BOW_LIGHT)
+            else if (item == ITEM_BOW_FIRE)
                 return ITEM_FISHING_POLE + 12;
+            else if (item == ITEM_BOW_ICE)
+                return ITEM_FISHING_POLE + 13;
+            else if (item == ITEM_BOW_LIGHT)
+                return ITEM_FISHING_POLE + 14;
 
             else if (item == ITEM_SWORD_MASTER)
-                return ITEM_FISHING_POLE + 4;
-            else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
-                return ITEM_FISHING_POLE + 5;
-            else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
                 return ITEM_FISHING_POLE + 6;
+            else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
+                return ITEM_FISHING_POLE + 7;
+            else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
+                return ITEM_FISHING_POLE + 8;
             else if (item == ITEM_SHIELD_MIRROR)
-                return ITEM_FISHING_POLE + 3;
+                return ITEM_FISHING_POLE + 5;
             
             else if (item == ITEM_STRENGTH_SILVER_GAUNTLETS)
-                return ITEM_FISHING_POLE + 13;
+                return ITEM_FISHING_POLE + 15;
             else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
-                return ITEM_FISHING_POLE + 14;
+                return ITEM_FISHING_POLE + 16;
         }
     }
 
@@ -2124,6 +2128,11 @@ u8 Item_Give(PlayState* play, u8 item) {
             AMMO(ITEM_MAGIC_BEAN)++;
             BEANS_BOUGHT++;
         }
+        SET_MAGIC_BEANS;
+        return ITEM_NONE;
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER) {
+        gSaveContext.save.info.hasObtainedItems.feather = (item == ITEM_ROCS_FEATHER) ? 1 : 2;
+        INV_CONTENT(ITEM_MAGIC_BEAN) = item;
         return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
@@ -2416,6 +2425,8 @@ u8 Item_CheckObtainability(u8 item) {
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
     } else if (item == ITEM_ADULTS_WALLET || item == ITEM_GIANTS_WALLET || item == ITEM_ROYAL_WALLET) {
+        return ITEM_NONE;
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER) {
         return ITEM_NONE;
     }
 

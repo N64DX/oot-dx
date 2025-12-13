@@ -317,13 +317,15 @@ typedef enum ItemID {
     /* 0x99 */ ITEM_DEKU_STICK_UPGRADE_30,
     /* 0x9A */ ITEM_DEKU_NUT_UPGRADE_30,
     /* 0x9B */ ITEM_DEKU_NUT_UPGRADE_40,
-    /* 0x9C */ ITEM_SHIELD_HEROS,
-    /* 0x9D */ ITEM_SWORD_HEROS,
-    /* 0x9E */ ITEM_ROYAL_WALLET,
-    /* 0x9C */ ITEM_SWORDS,
-    /* 0x9D */ ITEM_SHIELDS,
-    /* 0x9E */ ITEM_TUNICS,
-    /* 0x9F */ ITEM_BOOTS,
+    /* 0x9C */ ITEM_ROCS_FEATHER,
+    /* 0x9D */ ITEM_GOLDEN_FEATHER,
+    /* 0x9E */ ITEM_SHIELD_HEROS,
+    /* 0x9F */ ITEM_SWORD_HEROS,
+    /* 0xA0 */ ITEM_ROYAL_WALLET,
+    /* 0xA1 */ ITEM_SWORDS,
+    /* 0xA2 */ ITEM_SHIELDS,
+    /* 0xA3 */ ITEM_TUNICS,
+    /* 0xA4 */ ITEM_BOOTS,
     /* 0xFC */ ITEM_SWORD_CS = 0xFC,
     /* 0xFE */ ITEM_NONE_FE = 0xFE,
     /* 0xFF */ ITEM_NONE = 0xFF
@@ -459,19 +461,21 @@ typedef enum GetItemID {
     /* 0x7A */ GI_DEKU_NUT_UPGRADE_40,
     /* 0x7B */ GI_BULLET_BAG_50,
     /* 0x7C */ GI_ICE_TRAP, // freezes link when opened from a chest
-    /* 0x7D */ GI_SHIELD_MIRROR_MM,
-    /* 0x7E */ GI_SHIELD_HEROS,
-    /* 0x7F */ GI_SWORD_HEROS,
-    /* 0x80 */ GI_SWORD_SILVER,
-    /* 0x81 */ GI_SWORD_GILDED,
-    /* 0x82 */ GI_POWER_BRACELET,
-    /* 0x83 */ GI_POWER_BRACELETS,
-    /* 0x84 */ GI_HOOKSHOT_MM,
-    /* 0x85 */ GI_LONGSHOT_MM,
-    /* 0x86 */ GI_HEROS_BOW,
-    /* 0x87 */ GI_GOLD_DUST,
-    /* 0x88 */ GI_WALLET_ROYAL,
-    /* 0x89 */ GI_MAX
+    /* 0x7D */ GI_ROCS_FEATHER,
+    /* 0x7E */ GI_GOLDEN_FEATHER,
+    /* 0x7F */ GI_SHIELD_MIRROR_MM,
+    /* 0x80 */ GI_SHIELD_HEROS,
+    /* 0x81 */ GI_SWORD_HEROS,
+    /* 0x82 */ GI_SWORD_SILVER,
+    /* 0x83 */ GI_SWORD_GILDED,
+    /* 0x84 */ GI_POWER_BRACELET,
+    /* 0x85 */ GI_POWER_BRACELETS,
+    /* 0x86 */ GI_HOOKSHOT_MM,
+    /* 0x87 */ GI_LONGSHOT_MM,
+    /* 0x88 */ GI_HEROS_BOW,
+    /* 0x89 */ GI_GOLD_DUST,
+    /* 0x8A */ GI_WALLET_ROYAL,
+    /* 0x8B */ GI_MAX
 } GetItemID;
 
 typedef enum GetItemDrawID {
@@ -602,7 +606,9 @@ typedef enum GetItemDrawID {
     /* 0x7C */ GID_LONGSHOT_MM,
     /* 0x7D */ GID_HEROS_BOW,
     /* 0x7E */ GID_GOLD_DUST,
-    /* 0x7E */ GID_MAX
+    /* 0x7F */ GID_ROCS_FEATHER,
+    /* 0x80 */ GID_GOLDEN_FEATHER,
+    /* 0x81 */ GID_MAX
 } GetItemDrawID;
 
 typedef enum ExchangeItemID {

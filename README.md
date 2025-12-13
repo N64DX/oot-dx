@@ -28,6 +28,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
+- **aMannus:** Roc's Feather concept (based on Indigo)
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
 - **Nicko (Airi):** DK64 Expansion Pak warning display
 - **Nokaubure:** autosave concept, Gohma debris

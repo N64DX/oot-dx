@@ -806,6 +806,7 @@ typedef struct Player {
     /* 0x0152 */ u8 heldItemId; // Item id for the item currently used
     /* 0x0153 */ s8 prevBoots; // previous boots from `PlayerBoots`
     /* 0x0154 */ s8 itemAction; // the difference between this and heldItemAction is unclear
+    /* 0x0156 */ s8 rocUseCount;
     /* 0x0158 */ u8 modelGroup;
     /* 0x0159 */ u8 nextModelGroup;
     /* 0x015A */ s8 itemChangeType;
@@ -927,7 +928,7 @@ typedef struct Player {
     /* 0x0858 */ f32 unk_858;
     /* 0x085C */ f32 unk_85C; // stick length among other things (TODO: probably part of an "fwork" array)
     /* 0x0860 */ s16 unk_860; // stick flame timer among other things
-    /* 0x0862 */ s8 unk_862; // get item draw ID + 1
+    /* 0x0862 */ s16 unk_862; // get item draw ID + 1
     /* 0x0864 */ f32 unk_864;
     /* 0x0868 */ f32 unk_868;
     /* 0x086C */ f32 unk_86C;

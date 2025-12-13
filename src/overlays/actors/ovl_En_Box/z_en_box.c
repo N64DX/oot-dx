@@ -573,7 +573,7 @@ void EnBox_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot,
     bool is_key = i == GI_SMALL_KEY;
     bool is_dungeon_item = i == GI_COMPASS || i == GI_DUNGEON_MAP;
     bool is_item = i == GI_BOW || i == GI_SLINGSHOT || i == GI_BOOMERANG || i == GI_HOOKSHOT || i == GI_LONGSHOT || i == GI_LENS_OF_TRUTH || i == GI_HAMMER || i == GI_BOTTLE_EMPTY || i == GI_SWORD_KOKIRI  || i == GI_SWORD_HEROS || i == GI_SWORD_KNIFE || i == GI_SWORD_BIGGORON || i == GI_SHIELD_DEKU || i == GI_SHIELD_HYLIAN || i == GI_SHIELD_MIRROR || i == GI_SHIELD_HEROS || i == GI_BOOTS_IRON || i == GI_BOOTS_HOVER ||
-        i == GI_SILVER_GAUNTLETS || i == GI_GOLD_GAUNTLETS || i == GI_ARROW_FIRE || i == GI_ARROW_ICE || i == GI_ARROW_LIGHT || i == GI_ARROW_LIGHT || i == GI_BOMB_BAG_20 || i == GI_BOMB_BAG_30 || i == GI_BOMB_BAG_40 || i == GI_OCARINA_FAIRY || i == GI_OCARINA_OF_TIME || i == GI_SCALE_SILVER || i == GI_SCALE_GOLDEN || i == GI_TUNIC_GORON || i == GI_TUNIC_ZORA;
+        i == GI_SILVER_GAUNTLETS || i == GI_GOLD_GAUNTLETS || i == GI_ARROW_FIRE || i == GI_ARROW_ICE || i == GI_ARROW_LIGHT || i == GI_ARROW_LIGHT || i == GI_BOMB_BAG_20 || i == GI_BOMB_BAG_30 || i == GI_BOMB_BAG_40 || i == GI_OCARINA_FAIRY || i == GI_OCARINA_OF_TIME || i == GI_SCALE_SILVER || i == GI_SCALE_GOLDEN || i == GI_TUNIC_GORON || i == GI_TUNIC_ZORA || i == GI_ROCS_FEATHER  || i == GI_GOLDEN_FEATHER;
 
     if (limbIndex == 1) {
         MATRIX_FINALIZE_AND_LOAD((*gfx)++, play->state.gfxCtx, "../z_en_box.c", 1492);

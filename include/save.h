@@ -101,6 +101,15 @@ typedef struct Inventory {
     /* 0x5C */ s16 gsTokens;
 } Inventory; // size = 0x5E
 
+typedef union {
+    struct {
+        u8 magicBeans : 1;
+        u8 feather    : 2;
+        u8 unk        : 5;
+    };
+    u8 items;
+} HasObtainedItems; // size = 0x5E
+
 typedef struct Checksum {
     /* 0x00 */ u16 value;
 } Checksum; // size = 0x02
@@ -276,7 +285,7 @@ typedef struct SaveInfo {
     /* 0x1285  0x12A1 */ char unk_12A1[0x24];
     /* 0x12A9  0x12C5 */ u8 scarecrowSpawnSongSet;
     /* 0x12AA  0x12C6 */ u8 scarecrowSpawnSong[0x80];
-    /* 0x132A  0x1346 */ char unk_1346[0x01];
+    /* 0x132A  0x1346 */ HasObtainedItems hasObtainedItems;
     /* 0x13CB  0x1347 */ u8 questMode;
     /* 0x132C  0x1348 */ HorseData horseData;
     /* 0x1336  0x1352 */ Checksum checksum; // "check_sum"
@@ -456,6 +465,13 @@ typedef enum LinkAge {
 #define TOGGLE_HEROS_SHIELD   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 1)
 #define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SHIELD       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (HAS_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) )
+
+#define SET_MAGIC_BEANS       (gSaveContext.save.info.hasObtainedItems.magicBeans = 1)
+#define HAS_MAGIC_BEANS       (gSaveContext.save.info.hasObtainedItems.magicBeans)
+#define SET_ROCS_FEATHER      (gSaveContext.save.info.hasObtainedItems.feather = 1)
+#define HAS_ROCS_FEATHER      (gSaveContext.save.info.hasObtainedItems.feather > 0)
+#define SET_GOLDEN_FEATHER    (gSaveContext.save.info.hasObtainedItems.feather = 2)
+#define HAS_GOLDEN_FEATHER    (gSaveContext.save.info.hasObtainedItems.feather > 1)
 
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17
