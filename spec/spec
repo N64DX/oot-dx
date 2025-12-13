@@ -309,6 +309,7 @@ beginseg
 #if OOT_NTSC
 #endif
     include "$(BUILD_DIR)/assets/misc/link_animetion/link_animetion.o"
+    include "$(BUILD_DIR)/assets/misc/link_animetion/link_animetion_extra.o"
     number 7
 endseg
 
