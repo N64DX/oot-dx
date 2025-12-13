@@ -2122,7 +2122,6 @@ u8 Item_Give(PlayState* play, u8 item) {
             BEANS_BOUGHT = 1;
         } else {
             AMMO(ITEM_MAGIC_BEAN)++;
-            BEANS_BOUGHT++;
         }
         return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
