@@ -44,7 +44,9 @@ typedef enum DebugSection {
     /* 0x67 */ SECTION_HEART_PIECES,
     /* 0x68 */ SECTION_BGS,
     /* 0x69 */ SECTION_FEATHER,
-    /* 0x6A */ SECTION_MAX
+    /* 0x6A */ SECTION_ENHANCED_SPIN,
+    /* 0x6B */ SECTION_AMULET_OF_ENERGY,
+    /* 0x6C */ SECTION_MAX
 } DebugSection;
 
 // Positions of each input section in the editor
@@ -168,6 +170,8 @@ static u16 sSectionPositions[SECTION_MAX][2] = {
 
     { 78, 204 }, // SECTION_BGS
     { 90, 204 }, // SECTION_FEATHER
+    { 102, 204 }, // SECTION_ENHANCED_SPIN
+    { 114, 204 }, // SECTION_AMULET_OF_ENERGY
 };
 
 // First section of each row in the editor (starting from the top)
@@ -483,6 +487,12 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
     // Feather
     KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.feather, 90, 204);
 
+    // Enhanced Spin
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.isEnhancedSpinAcquired, 102, 204);
+
+    // Amulet of Energy
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.amuletOfEnergy, 114, 204);
+
     // Handles navigating the menu to different sections with the D-Pad
     // When the same direction is held, registers the input periodically based on a timer
     if (dBtnInput == prevDBtnInput) {
@@ -509,10 +519,10 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
         curSection = sRowFirstSections[curRow];
     } else if (CHECK_BTN_ANY(dBtnInput, BTN_DLEFT)) {
         if (--curSection < SECTION_RUPEES) {
-            curSection = SECTION_FEATHER;
+            curSection = SECTION_AMULET_OF_ENERGY;
         }
     } else if (CHECK_BTN_ANY(dBtnInput, BTN_DRIGHT)) {
-        if (++curSection > SECTION_FEATHER) {
+        if (++curSection > SECTION_AMULET_OF_ENERGY) {
             curSection = SECTION_RUPEES;
         }
     }
@@ -924,6 +934,12 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = (gSaveContext.save.info.hasObtainedItems.feather == 1) ? ITEM_ROCS_FEATHER : ITEM_GOLDEN_FEATHER;
                         else gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = gSaveContext.save.info.hasObtainedItems.magicBeans ? ITEM_MAGIC_BEAN : ITEM_NONE;
                     }
+                } else if (curSection == SECTION_ENHANCED_SPIN) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
+                        gSaveContext.save.info.isEnhancedSpinAcquired ^= 1;
+                } else if (curSection == SECTION_AMULET_OF_ENERGY) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
+                        gSaveContext.save.info.hasObtainedItems.amuletOfEnergy ^= 1;
                 } else if (curSection < SECTION_HEART_PIECES) {
                     i = curSection - SECTION_FIRST_MEDALLION;
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
