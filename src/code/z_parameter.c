@@ -2116,14 +2116,9 @@ u8 Item_Give(PlayState* play, u8 item) {
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_MAGIC_BEAN) {
-        if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
+        if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE)
             INV_CONTENT(item) = item;
-            AMMO(ITEM_MAGIC_BEAN) = 1;
-            BEANS_BOUGHT = 1;
-        } else {
-            AMMO(ITEM_MAGIC_BEAN)++;
-            BEANS_BOUGHT++;
-        }
+        AMMO(ITEM_MAGIC_BEAN)++;
         return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
