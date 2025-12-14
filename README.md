@@ -32,9 +32,15 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Nicko (Airi):** DK64 Expansion Pak warning display
 - **Nokaubure:** autosave concept, Gohma debris
 - **OoT Randomizer:** Key chest textures
-- **Skawo:** Font preloading, Fixes: Kakariko Gate Guard, Stalfos lag, Ingo text
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
+
+**Features & fixes by Skawo:**
+- Font preloading
+- Kakariko Gate Guard Dialogue
+- Stalfos break parts lag
+- Ingo Ranch text breaking Running Man timer
+- Spirit Temple room texture alpha blending fix
 
 **Actors and objects:**
 - **LeSéducteur:** Buff Scrub
