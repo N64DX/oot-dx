@@ -6,4 +6,3 @@
     OBJECT_ST, // 5
     OBJECT_GI_SUTARU, // 6
     OBJECT_BDOOR, // 7
-

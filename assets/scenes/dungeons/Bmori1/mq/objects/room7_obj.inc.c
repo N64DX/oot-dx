@@ -12,4 +12,3 @@
     OBJECT_GI_SUTARU, // 11
     OBJECT_TIMEBLOCK, // 12
     OBJECT_EFC_TW, // 13
-

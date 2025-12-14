@@ -20,18 +20,7 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/Bmori1/mq/headers/room2.inc.c"
 };
 
-static s16 cq_objects[] = {
-#include "assets/scenes/dungeons/Bmori1/cq/objects/room2_obj.inc.c"
-};
-
-static ActorEntry cq_actors[] = {
-#include "assets/scenes/dungeons/Bmori1/cq/actors/room2_actor.inc.c"
-};
-
-static SceneCmd cq_header[] = {
-#include "assets/scenes/dungeons/Bmori1/cq/headers/room2.inc.c"
-};
-
+#define cq_header  NULL
 #define cmq_header mq_header
 
 SceneCmd* questHeaders_Bmori1_room2[] = {

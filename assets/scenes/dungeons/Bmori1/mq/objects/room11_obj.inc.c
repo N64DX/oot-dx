@@ -9,4 +9,3 @@
     OBJECT_MORI_HINERI1A, // 8
     OBJECT_GI_HEART, // 9
     OBJECT_D_HSBLOCK, // 10
-

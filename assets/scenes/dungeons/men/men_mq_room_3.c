@@ -20,15 +20,8 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/men/mq/headers/room3.inc.c"
 };
 
-static ActorEntry cmq_actors[] = {
-#include "assets/scenes/dungeons/men/cmq/actors/room3_actor.inc.c"
-};
-
-static SceneCmd cmq_header[] = {
-#include "assets/scenes/dungeons/men/cmq/headers/room3.inc.c"
-};
-
-#define cq_header NULL
+#define cq_header  NULL
+#define cmq_header mq_header
 
 SceneCmd* questHeaders_men_room3[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"

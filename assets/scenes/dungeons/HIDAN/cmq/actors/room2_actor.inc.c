@@ -101,9 +101,8 @@
          0x5847, // params
     }, // 16
 
-    { ACTOR_OBJ_HSBLOCK,      { -882,  -50,   220 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 17: Hookshot targets to get out near the entrance
-    { ACTOR_OBJ_HSBLOCK,      { -735,   40,   145 }, { 0x0000, 0x2600, 0x0000 }, 0xFF00, }, // 18
-    { ACTOR_OBJ_HSBLOCK,      { -1060, -130, -40  }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 19: Hookshot target to prevent being stuck in the center
+    { ACTOR_BG_LADDER,        { -730,   17,   120 }, { 0x0000, 0xE800, 0x0000 }, 0xFF00, }, // 17: Ladder to get out near the entrance
+    { ACTOR_BG_LADDER,        { -770,  -82,   237 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 18
+    { ACTOR_BG_LADDER,        { -957,  -151,  0   }, { 0x0000, 0xC000, 0x0000 }, 0xFF00, }, // 19: Ladder to prevent being stuck in the center
     { ACTOR_BG_GND_DARKMEIRO, { -1208,  200,  0   }, { 0x0000, 0x0000, 0x0000 }, 0x0E01, }, // 20: Clear blocks for reaching the boss door (0x0E Stone Spike Platform switch)
     { ACTOR_BG_GND_DARKMEIRO, {  -840,  200,  0   }, { 0x0000, 0x0000, 0x0000 }, 0x0E01, }, // 21
-    { ACTOR_OBJ_HSBLOCK,      { -1239,  240, -659 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 22: Hookshot target for reaching highest ground

@@ -12,4 +12,3 @@
     OBJECT_GOROIWA, // 11
     OBJECT_EFC_FLASH, // 12
     OBJECT_GI_HEART, // 13
-

@@ -20,15 +20,8 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/ganontika/mq/headers/room14.inc.c"
 };
 
-static ActorEntry cmq_actors[] = {
-#include "assets/scenes/dungeons/ganontika/cmq/actors/room14_actor.inc.c"
-};
-
-static SceneCmd cmq_header[] = {
-#include "assets/scenes/dungeons/ganontika/cmq/headers/room14.inc.c"
-};
-
-#define cq_header NULL
+#define cq_header  NULL
+#define cmq_header mq_header
 
 SceneCmd* questHeaders_ganontika_room14[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"

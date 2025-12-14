@@ -20,29 +20,8 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/ganontika/mq/headers/room3.inc.c"
 };
 
-static s16 cq_objects[] = {
-#include "assets/scenes/dungeons/ganontika/cq/objects/room3_obj.inc.c"
-};
-
-static ActorEntry cq_actors[] = {
-#include "assets/scenes/dungeons/ganontika/cq/actors/room3_actor.inc.c"
-};
-
-static SceneCmd cq_header[] = {
-#include "assets/scenes/dungeons/ganontika/cq/headers/room3.inc.c"
-};
-
-static s16 cmq_objects[] = {
-#include "assets/scenes/dungeons/ganontika/cmq/objects/room3_obj.inc.c"
-};
-
-static ActorEntry cmq_actors[] = {
-#include "assets/scenes/dungeons/ganontika/cmq/actors/room3_actor.inc.c"
-};
-
-static SceneCmd cmq_header[] = {
-#include "assets/scenes/dungeons/ganontika/cmq/headers/room3.inc.c"
-};
+#define cq_header  NULL
+#define cmq_header mq_header
 
 SceneCmd* questHeaders_ganontika_room3[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"

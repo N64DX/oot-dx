@@ -7,4 +7,3 @@
     OBJECT_OKUTA, // 6
     OBJECT_DEKUBABA, // 7
     OBJECT_GI_HEART, // 8
-

@@ -32,10 +32,6 @@ static SceneCmd cq_header[] = {
 #include "assets/scenes/dungeons/HAKAdan/cq/headers/room10.inc.c"
 };
 
-static s16 cmq_objects[] = {
-#include "assets/scenes/dungeons/HAKAdan/cmq/objects/room10_obj.inc.c"
-};
-
 static ActorEntry cmq_actors[] = {
 #include "assets/scenes/dungeons/HAKAdan/cmq/actors/room10_actor.inc.c"
 };

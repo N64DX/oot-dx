@@ -2,7 +2,7 @@
         ACTOR_OBJ_OSHIHIKI,
         {    961,  -1343,   3685 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
-        -0x0FE /* 0xFF02 */, // params
+        0xFF01, // params
     }, // 0
     {
         ACTOR_EN_SW,
@@ -88,5 +88,3 @@
         {  0x0000, -0x4000,  0x0000 }, // rot
          0x5886, // params
     }, // 14
-
-    { ACTOR_OBJ_HSBLOCK, { 275, -1395, 3735 }, { 0x0000, 0x0000, 0x0000 }, 0xFF00, }, // 15: Hookshot target to get onto the push block
