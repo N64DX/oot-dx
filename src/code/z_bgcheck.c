@@ -1499,32 +1499,6 @@ s32 BgCheck_IsSpotScene(PlayState* play) {
     return false;
 }
 
-typedef struct BgCheckSceneMemEntry {
-    s16 sceneId;
-    u32 memSize;
-} BgCheckSceneMemEntry;
-
-/**
- * Get custom scene memSize
- */
-s32 BgCheck_TryGetCustomMemsize(s32 sceneId, u32* memSize) {
-    static BgCheckSceneMemEntry sceneMemList[] = {
-        { SCENE_HYRULE_FIELD, 0xB798 },         { SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR, 0x78C8 },
-        { SCENE_GANON_BOSS, 0x70C8 },           { SCENE_SPIRIT_TEMPLE_BOSS, 0xACC8 },
-        { SCENE_CHAMBER_OF_THE_SAGES, 0x70C8 }, { SCENE_SPIRIT_TEMPLE, 0x16CC8 },
-        { SCENE_FIRE_TEMPLE, 0x198C8 },         { SCENE_GANONDORF_BOSS, 0x84C8 },
-    };
-    s32 i;
-
-    for (i = 0; i < ARRAY_COUNT(sceneMemList); i++) {
-        if (sceneId == sceneMemList[i].sceneId) {
-            *memSize = sceneMemList[i].memSize;
-            return true;
-        }
-    }
-    return false;
-}
-
 /**
  * Compute subdivLength for scene mesh lookup, for a single dimension
  */
@@ -1541,17 +1515,16 @@ void BgCheck_SetSubdivisionDimension(f32 min, s32 subdivAmount, f32* max, f32* s
 typedef struct BgCheckSceneSubdivisionEntry {
     s16 sceneId;
     Vec3s subdivAmount;
-    s32 nodeListMax; // if -1, dynamically compute max nodes
 } BgCheckSceneSubdivisionEntry;
+
+static const BgCheckSceneSubdivisionEntry sceneSubdivisionList[] = {
+    { SCENE_FOREST_TEMPLE, { 38, 1, 38 } },
+};
 
 /**
  * Allocate CollisionContext
  */
 void BgCheck_Allocate(CollisionContext* colCtx, PlayState* play, CollisionHeader* colHeader) {
-    static BgCheckSceneSubdivisionEntry sceneSubdivisionList[] = {
-        { SCENE_SHADOW_TEMPLE, { 23, 7, 14 }, -1 },
-        { SCENE_FOREST_TEMPLE, { 38, 1, 38 }, -1 },
-    };
     u32 tblMax;
     u32 memSize;
     UNUSED_NDEBUG u32 lookupTblMemSize;
@@ -1567,57 +1540,21 @@ void BgCheck_Allocate(CollisionContext* colCtx, PlayState* play, CollisionHeader
     PRINTF(T("/*---------------- BGCheck バッファーメモリサイズ -------------*/\n",
              "/*---------------- BGCheck Buffer Memory Size -------------*/\n"));
 
-    if ((R_SCENE_CAM_TYPE == SCENE_CAM_TYPE_FIXED_SHOP_VIEWPOINT) ||
-        (R_SCENE_CAM_TYPE == SCENE_CAM_TYPE_FIXED_TOGGLE_VIEWPOINT) || (R_SCENE_CAM_TYPE == SCENE_CAM_TYPE_FIXED) ||
-        (R_SCENE_CAM_TYPE == SCENE_CAM_TYPE_FIXED_MARKET)) {
-        if (play->sceneId == SCENE_STABLE) {
-            PRINTF(T("/* BGCheck LonLonサイズ %dbyte */\n", "/* BGCheck LonLon Size %dbyte */\n"), 0x3520);
-            colCtx->memSize = 0x3520;
-        } else {
-            PRINTF(T("/* BGCheck ミニサイズ %dbyte */\n", "/* BGCheck Mini Size %dbyte */\n"), 0x4E20);
-            colCtx->memSize = 0x4E20;
-        }
-        colCtx->dyna.polyNodesMax = 500;
-        colCtx->dyna.polyListMax = 256;
-        colCtx->dyna.vtxListMax = 256;
-        colCtx->subdivAmount.x = 2;
-        colCtx->subdivAmount.y = 2;
-        colCtx->subdivAmount.z = 2;
-    } else if (BgCheck_IsSpotScene(play) == true) {
-        colCtx->memSize = 0x20000;
-        PRINTF(T("/* BGCheck Spot用サイズ %dbyte */\n", "/* BGCheck Spot Size %dbyte */\n"), 0xF000);
-        colCtx->dyna.polyNodesMax = 1000;
-        colCtx->dyna.polyListMax = 512;
-        colCtx->dyna.vtxListMax = 512;
-        colCtx->subdivAmount.x = 25;
-        colCtx->subdivAmount.y = 4;
-        colCtx->subdivAmount.z = 25;
-    } else {
-        if (BgCheck_TryGetCustomMemsize(play->sceneId, &customMemSize)) {
-            colCtx->memSize = customMemSize;
-        } else {
-            colCtx->memSize = 0x1CC00;
-        }
-        PRINTF(T("/* BGCheck ノーマルサイズ %dbyte  */\n", "/* BGCheck Normal Size %dbyte  */\n"), colCtx->memSize);
-        colCtx->dyna.polyNodesMax = 1000;
-        colCtx->dyna.polyListMax = 512;
-        colCtx->dyna.vtxListMax = 512;
-        useCustomSubdivisions = false;
+    colCtx->memSize = 0x2B000;
+    PRINTF(T("/* BGCheck ノーマルサイズ %dbyte  */\n", "/* BGCheck Normal Size %dbyte  */\n"), colCtx->memSize);
+    colCtx->dyna.polyNodesMax = 1000;
+    colCtx->dyna.polyListMax = 512;
+    colCtx->dyna.vtxListMax = 512;
+    colCtx->subdivAmount.x = 25;
+    colCtx->subdivAmount.y = 8;
+    colCtx->subdivAmount.z = 25;
 
-        for (i = 0; i < ARRAY_COUNT(sceneSubdivisionList); i++) {
-            if (play->sceneId == sceneSubdivisionList[i].sceneId) {
-                colCtx->subdivAmount.x = sceneSubdivisionList[i].subdivAmount.x;
-                colCtx->subdivAmount.y = sceneSubdivisionList[i].subdivAmount.y;
-                colCtx->subdivAmount.z = sceneSubdivisionList[i].subdivAmount.z;
-                useCustomSubdivisions = true;
-                customNodeListMax = sceneSubdivisionList[i].nodeListMax;
-            }
-        }
-        if (!useCustomSubdivisions) {
-            colCtx->memSize = 0x20000;
-            colCtx->subdivAmount.x = 25;
-            colCtx->subdivAmount.y = 4;
-            colCtx->subdivAmount.z = 25;
+    for (i=0; i<ARRAY_COUNT(sceneSubdivisionList); i++) {
+        if (play->sceneId == sceneSubdivisionList[i].sceneId) {
+            colCtx->subdivAmount.x = sceneSubdivisionList[i].subdivAmount.x;
+            colCtx->subdivAmount.y = sceneSubdivisionList[i].subdivAmount.y;
+            colCtx->subdivAmount.z = sceneSubdivisionList[i].subdivAmount.z;
+            break;
         }
     }
     colCtx->lookupTbl = THA_AllocTailAlign(&play->state.tha,
