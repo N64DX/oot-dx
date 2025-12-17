@@ -83,6 +83,13 @@ typedef struct {
         u8 requiredAge;
 } EquipmentSwapEntry;
 
+typedef struct {
+        u8 itemId;
+        u8 equipId;
+        u8 equipSlot;
+        u8 requiredAge;
+} SwordSwapEntry;
+
 typedef struct ItemEquips {
     /* 0x00 */ u8 buttonItems[4];
     /* 0x04 */ u8 cButtonSlots[3];

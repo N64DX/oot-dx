@@ -2703,12 +2703,12 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
 
     u8 current    = gSaveContext.save.info.equips.buttonItems[0];
     u8 validCount = 0;
-    u8 validItems[4], validEquips[4], i, nextItem, nextEquip;
+    u8 validItems[ARRAY_COUNT(equipments)], validEquips[ARRAY_COUNT(equipments)], i, nextItem, nextEquip;
 
     if (current == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
         current = ITEM_SWORD_HEROS;
 
-    for (i=0; i<4; i++) {
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
@@ -2716,7 +2716,7 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, equipment->equipId)) {
             validItems[validCount]  = equipment->itemId;
-            validEquips[validCount] = equipment->equipId;
+            validEquips[validCount] = equipment->equipSlot;
             validCount++;
         }
     }
@@ -2762,9 +2762,9 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
 
     u8 current    = this->currentShield;
     u8 validCount = 0;
-    u8 validItems[4], i, nextItem;
+    u8 validItems[ARRAY_COUNT(equipments)], i, nextItem;
     
-    for (i=0; i<4; i++) {
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
@@ -2808,9 +2808,9 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
 
     u8 current    = TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
     u8 validCount = 0;
-    u8 validItems[3], i, nextItem;
+    u8 validItems[ARRAY_COUNT(equipments)], i, nextItem;
 
-    for (i=0; i<3; i++) {
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
@@ -2845,9 +2845,9 @@ void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
 
     u8 current    = BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
     u8 validCount = 0;
-    u8 validItems[3], i, nextItem;
+    u8 validItems[ARRAY_COUNT(equipments)], i, nextItem;
 
-    for (i=0; i<3; i++) {
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)

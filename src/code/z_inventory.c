@@ -303,7 +303,7 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
         equipValue >>= gEquipShifts[equipment];
 
         if (equipment == EQUIP_TYPE_SHIELD) {
-            if (IS_HEROS_SHIELD) {
+            if (IS_HEROS_SHIELD && equipValue == 2) {
                 CLEAR_HEROS_SHIELD;
                 gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
                 gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(equipment, 3);
