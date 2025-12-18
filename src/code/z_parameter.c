@@ -1083,8 +1083,7 @@ void func_80083108(PlayState* play) {
 
                 if (interfaceCtx->restrictions.tradeItems != 0) {
                     for (i = 1; i < 4; i++) {
-                        if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
-                            (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) {
+                        if ( (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_ZELDAS_LETTER) || (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_SOLD_OUT && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK) || gSaveContext.save.info.equips.buttonItems[i] == ITEM_MAGIC_BEAN) {
                             if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                                 sp28 = true;
                             }
@@ -1093,15 +1092,14 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) {
+                        if ( (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_ZELDAS_LETTER) || (Interface_GetItemFromDpad(i) >= ITEM_SOLD_OUT && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) || Interface_GetItemFromDpad(i) == ITEM_MAGIC_BEAN) {
                             if (dpadStatus[i] == BTN_ENABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_DISABLED;
                         }
                 } else if (interfaceCtx->restrictions.tradeItems == 0) {
                     for (i = 1; i < 4; i++) {
-                        if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
-                            (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) {
+                        if ( (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_ZELDAS_LETTER) || (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_SOLD_OUT && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK) || gSaveContext.save.info.equips.buttonItems[i] == ITEM_MAGIC_BEAN)  {
                             if (gSaveContext.buttonStatus[i] == BTN_DISABLED) {
                                 sp28 = true;
                             }
@@ -1110,7 +1108,37 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) {
+                        if ( (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_ZELDAS_LETTER) || (Interface_GetItemFromDpad(i) >= ITEM_SOLD_OUT && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) || Interface_GetItemFromDpad(i) == ITEM_MAGIC_BEAN) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
+                }
+
+                if (interfaceCtx->restrictions.masks != 0) {
+                    for (i=1; i<4; i++) {
+                        if (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_MASK_KEATON && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_MASK_TRUTH) {
+                            if (gSaveContext.buttonStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            gSaveContext.buttonStatus[i] = BTN_DISABLED;
+                        }
+                    }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_MASK_KEATON && Interface_GetItemFromDpad(i) <= ITEM_MASK_TRUTH) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
+                } else if (interfaceCtx->restrictions.masks == 0) {
+                    for (i=1; i<4; i++) {
+                        if (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_MASK_KEATON && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_MASK_TRUTH) {
+                            if (gSaveContext.buttonStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            gSaveContext.buttonStatus[i] = BTN_ENABLED;
+                        }
+                    }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_MASK_KEATON && Interface_GetItemFromDpad(i) <= ITEM_MASK_TRUTH) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_ENABLED;
@@ -1307,6 +1335,7 @@ void func_80083108(PlayState* play) {
                             (gSaveContext.save.info.equips.buttonItems[i] != ITEM_NAYRUS_LOVE) &&
                             (gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_FAIRY) &&
                             (gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_OF_TIME) &&
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_MAGIC_BEAN) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
@@ -1358,6 +1387,7 @@ void Interface_SetSceneRestrictions(PlayState* play) {
     interfaceCtx->restrictions.ocarina = 0;
     interfaceCtx->restrictions.hookshot = 0;
     interfaceCtx->restrictions.tradeItems = 0;
+    interfaceCtx->restrictions.masks = 0;
     interfaceCtx->restrictions.bottles = 0;
     interfaceCtx->restrictions.aButton = 0;
     interfaceCtx->restrictions.bButton = 0;
@@ -1374,7 +1404,8 @@ void Interface_SetSceneRestrictions(PlayState* play) {
             interfaceCtx->restrictions.bButton = (sRestrictionFlags[i].flags1 & 0x30) >> 4;
             interfaceCtx->restrictions.aButton = (sRestrictionFlags[i].flags1 & 0x0C) >> 2;
             interfaceCtx->restrictions.bottles = (sRestrictionFlags[i].flags1 & 0x03) >> 0;
-            interfaceCtx->restrictions.tradeItems = (sRestrictionFlags[i].flags2 & 0xC0) >> 6;
+            interfaceCtx->restrictions.tradeItems = (sRestrictionFlags[i].flags2 & 0x40) != 0;
+            interfaceCtx->restrictions.masks = (sRestrictionFlags[i].flags2 & 0x80) != 0;
             interfaceCtx->restrictions.hookshot = (sRestrictionFlags[i].flags2 & 0x30) >> 4;
             interfaceCtx->restrictions.ocarina = (sRestrictionFlags[i].flags2 & 0x0C) >> 2;
             interfaceCtx->restrictions.warpSongs = (sRestrictionFlags[i].flags2 & 0x03) >> 0;
@@ -1401,7 +1432,7 @@ void Interface_SetSceneRestrictions(PlayState* play) {
         i++;
     } while (sRestrictionFlags[i].sceneId != 0xFF);
     
-    if (!interfaceCtx->restrictions.tradeItems)
+    if (interfaceCtx->restrictions.masks == 0)
         GET_PLAYER(play)->currentMask = GET_MASK_AGE();
 }
 
