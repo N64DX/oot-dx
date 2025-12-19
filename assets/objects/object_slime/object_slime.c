@@ -1,6 +1,6 @@
 #include "object_slime.h"
 
- static u64 slimeTexture[] = {
+static u64 slimeTexture[] = {
 #include "assets/objects/object_slime/slime_texture.rgba16.inc.c"
 };
 
@@ -42,7 +42,7 @@ Gfx slimeDList[] = {
     gsDPSetPrimColor(0, 0, 100, 100, 0, 0),
     gsSPBranchLessZraw(slimeSubDList, 0x00, 700),
     gsDPSetPrimColor(0, 0, 100, 100, 100, 0),
-    gsSPBranchLessZraw(slimeSubDList, 0x00, 800),
+    gsSPBranchLessZraw(slimeSubDList, 0x00, 2000),
     gsSPEndDisplayList(),
 };
 
