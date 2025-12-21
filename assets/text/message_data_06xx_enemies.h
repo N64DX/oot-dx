@@ -2200,6 +2200,27 @@ COLOR(LIGHTBLUE) "C'est une masse de slime vivant qui\n"
 )
 )
 
+DEFINE_MESSAGE(0x065F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(60) "エレキキース\n"
+SHIFT(21) COLOR(LIGHTBLUE) "突っ込んでくる前に倒して！" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Electric Keese\n"
+COLOR(LIGHTBLUE) "Destroy it before it flies into\n"
+"you!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Ein Elektroflatterer!\n"
+COLOR(LIGHTBLUE) "Zerstöre diese eiskalten Widerlinge,\n"
+"bevor sie Dich einfrieren können!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Saigneur électrique\n"
+COLOR(LIGHTBLUE) "Détruis-le avant qu'il ne t'attaque!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)
+
 DEFINE_MESSAGE(0x0660, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(
 QUICKTEXT_ENABLE SHIFT(100) "獣\n"
