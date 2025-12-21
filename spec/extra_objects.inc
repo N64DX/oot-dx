@@ -132,6 +132,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_beast"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_beast/object_beast.o"
+    number 6
+endseg
+
+beginseg
     name "object_ganon_ladder"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ganon_ladder/object_ganon_ladder.o"
