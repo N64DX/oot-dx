@@ -74,3 +74,10 @@ beginseg
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Slim/z_en_slim.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Slim/ovl_En_Slim_reloc.o"
 endseg
+
+beginseg
+    name "ovl_En_Beast"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Beast/z_en_beast.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Beast/ovl_En_Beast_reloc.o"
+endseg

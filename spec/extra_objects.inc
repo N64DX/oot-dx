@@ -102,3 +102,10 @@ beginseg
     include "$(BUILD_DIR)/assets/objects/object_slime/object_slime.o"
     number 6
 endseg
+
+beginseg
+    name "object_beast"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_beast/object_beast.o"
+    number 6
+endseg
