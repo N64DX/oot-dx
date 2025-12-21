@@ -2199,3 +2199,26 @@ COLOR(LIGHTBLUE) "C'est une masse de slime vivant qui\n"
 "tu peux facilement le trancher." COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
+
+DEFINE_MESSAGE(0x0660, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(100) "獣\n"
+SHIFT(75) COLOR(LIGHTBLUE) "危険な獣で\n"
+SHIFT(50) "襲いかかってくる！" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Beast\n"
+COLOR(LIGHTBLUE) "A dangerous beast that lashes out\n"
+"at you!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Bestie\n"
+COLOR(LIGHTBLUE) "Eine gefährliche Bestie die nach dir\n"
+"ausschlägt!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Bête\n"
+COLOR(LIGHTBLUE) "Une bête dangereuse qui se jette\n"
+"sur toi!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)

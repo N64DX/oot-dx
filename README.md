@@ -25,6 +25,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [Decomp Discord](https://discord.zelda.deco.mp)
 - [HackerOoT](https://github.com/HackerN64/HackerOoT)
 - [Hylian Modding Discord](http://discord.gg/qQqDsM8)
+- [Curse of Moonlight](https://github.com/Javarooster-png/curseofmoonlight)
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
@@ -39,6 +40,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 **Actors and objects:**
 - **LeSéducteur:** Buff Scrub
 - **Syeo & Trueffel:** Miniblin, Molmauk
+- **Sunset Tides Interactive:** Beast
 - **Zelda Spaceworld ´97 Experience:** Zol
 
 ### Instructions
