@@ -1,17 +1,19 @@
 /*
  * File: z_en_firefly.c
  * Overlay: ovl_En_Firefly
- * Description: Keese (Normal, Fire, Ice)
+ * Description: Keese (Normal, Fire, Ice, Electric)
  */
 
 #include "z_en_firefly.h"
 #include "overlays/actors/ovl_Obj_Syokudai/z_obj_syokudai.h"
+#include "overlays/effects/ovl_Effect_Ss_Fhg_Flash/z_eff_ss_fhg_flash.h"
 
 #include "libc64/qrand.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "ichain.h"
 #include "rand.h"
+#include "segmented_address.h"
 #include "sfx.h"
 #include "sys_matrix.h"
 #include "versions.h"
@@ -23,6 +25,7 @@
 #include "save.h"
 
 #include "assets/objects/object_firefly/object_firefly.h"
+#include "assets/objects/object_firefly/object_firefly_extra.h"
 
 #define FLAGS \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_IGNORE_QUAKE)
@@ -48,7 +51,8 @@ void EnFirefly_DisturbDiveAttack(EnFirefly* this, PlayState* play);
 typedef enum KeeseAuraType {
     /* 0 */ KEESE_AURA_NONE,
     /* 1 */ KEESE_AURA_FIRE,
-    /* 2 */ KEESE_AURA_ICE
+    /* 2 */ KEESE_AURA_ICE,
+    /* 3 */ KEESE_AURA_ELECTRIC
 } KeeseAuraType;
 
 ActorProfile En_Firefly_Profile = {
@@ -77,6 +81,20 @@ static ColliderJntSphElementInit sJntSphElementsInit[1] = {
     },
 };
 
+static ColliderJntSphElementInit sJntSphElementsElectricInit[1] = {
+    {
+        {
+            ELEM_MATERIAL_UNK0,
+            { 0xFFCFFFFF, 0x01, 0x18 },
+            { 0xFFCFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_HARD,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { 1, { { 0, 1000, 0 }, 15 }, 100 },
+    },
+};
+
 static ColliderJntSphInit sJntSphInit = {
     {
         COL_MATERIAL_HIT3,
@@ -88,6 +106,19 @@ static ColliderJntSphInit sJntSphInit = {
     },
     1,
     sJntSphElementsInit,
+};
+
+static ColliderJntSphInit sJntSphElectricInit = {
+    {
+        COL_MATERIAL_HIT3,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_ON | AC_TYPE_PLAYER,
+        OC1_ON | OC1_TYPE_ALL,
+        OC2_TYPE_1,
+        COLSHAPE_JNTSPH,
+    },
+    1,
+    sJntSphElementsElectricInit,
 };
 
 static CollisionCheckInfoInit sColChkInfoInit = { 1, 10, 10, 30 };
@@ -141,12 +172,16 @@ void EnFirefly_Extinguish(EnFirefly* this) {
     this->actor.naviEnemyId = NAVI_ENEMY_KEESE;
 }
 
-void EnFirefly_Ignite(EnFirefly* this) {
-    if (this->actor.params == KEESE_ICE_FLY) {
+void EnFirefly_Ignite(EnFirefly* this, PlayState* play) {
+    if (this->actor.params == KEESE_ELECTRIC_FLY)
+        Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
+
+    if (this->actor.params == KEESE_ICE_FLY || this->actor.params == KEESE_ELECTRIC_FLY) {
         this->actor.params = KEESE_FIRE_FLY;
     } else {
         this->actor.params -= 2;
     }
+
     this->collider.elements[0].base.atDmgInfo.effect = 1; // Fire
     this->auraType = KEESE_AURA_FIRE;
     this->onFire = true;
@@ -160,7 +195,9 @@ void EnFirefly_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 25.0f);
     SkelAnime_Init(play, &this->skelAnime, &gKeeseSkeleton, &gKeeseFlyAnim, this->jointTable, this->morphTable, 28);
     Collider_InitJntSph(play, &this->collider);
-    Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
+    if (this->actor.params == KEESE_ELECTRIC_FLY)
+        Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphElectricInit, this->colliderElements);
+    else Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
     Actor_SetGildedSwordDamageTaken(thisx);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
@@ -195,6 +232,9 @@ void EnFirefly_Init(Actor* thisx, PlayState* play) {
         if (this->actor.params == KEESE_ICE_FLY) {
             this->collider.elements[0].base.atDmgInfo.effect = 2; // Ice
             this->actor.naviEnemyId = NAVI_ENEMY_ICE_KEESE;
+        } else if (this->actor.params == KEESE_ELECTRIC_FLY) {
+            this->collider.elements[0].base.atDmgInfo.effect = 3; // Electric
+            this->actor.naviEnemyId = NAVI_ENEMY_ELECTRIC_KEESE;
         } else {
             this->collider.elements[0].base.atDmgInfo.effect = 0; // Nothing
             this->actor.naviEnemyId = NAVI_ENEMY_KEESE;
@@ -204,6 +244,8 @@ void EnFirefly_Init(Actor* thisx, PlayState* play) {
 
         if (this->actor.params == KEESE_ICE_FLY) {
             this->auraType = KEESE_AURA_ICE;
+        } else if (this->actor.params == KEESE_ELECTRIC_FLY) {
+            this->auraType = KEESE_AURA_ELECTRIC;
         } else {
             this->auraType = KEESE_AURA_NONE;
         }
@@ -377,7 +419,7 @@ s32 EnFirefly_SeekTorch(EnFirefly* this, PlayState* play) {
         flamePos.y = closestTorch->actor.world.pos.y + 52.0f + 15.0f;
         flamePos.z = closestTorch->actor.world.pos.z;
         if (Actor_WorldDistXYZToPoint(&this->actor, &flamePos) < 15.0f) {
-            EnFirefly_Ignite(this);
+            EnFirefly_Ignite(this, play);
             return 1;
         } else {
             Math_ScaledStepToS(&this->actor.shape.rot.y, Actor_WorldYawTowardActor(&this->actor, &closestTorch->actor),
@@ -400,7 +442,7 @@ void EnFirefly_FlyIdle(EnFirefly* this, PlayState* play) {
     }
     skelanimeUpdated = Animation_OnFrame(&this->skelAnime, 0.0f);
     this->actor.speed = (Rand_ZeroOne() * 1.5f) + 1.5f;
-    if (this->onFire || (this->actor.params == KEESE_ICE_FLY) ||
+    if (this->onFire || (this->actor.params == KEESE_ICE_FLY) || (this->actor.params == KEESE_ELECTRIC_FLY) ||
         ((EnFirefly_ReturnToPerch(this, play) == 0) && (EnFirefly_SeekTorch(this, play) == 0))) {
         if (skelanimeUpdated) {
             rand = Rand_ZeroOne();
@@ -573,6 +615,8 @@ void EnFirefly_Stunned(EnFirefly* this, PlayState* play) {
             this->auraType = KEESE_AURA_FIRE;
         } else if (this->actor.params == KEESE_ICE_FLY) {
             this->auraType = KEESE_AURA_ICE;
+        } else if (this->actor.params == KEESE_ELECTRIC_FLY) {
+            this->auraType = KEESE_AURA_ELECTRIC;
         }
         EnFirefly_SetupFlyIdle(this);
     }
@@ -662,13 +706,13 @@ void EnFirefly_UpdateDamage(EnFirefly* this, PlayState* play) {
             damageReaction = this->actor.colChkInfo.damageReaction;
 
             if (damageReaction == 2) { // Din's Fire
-                if (this->actor.params == KEESE_ICE_FLY) {
+                if (this->actor.params == KEESE_ICE_FLY || this->actor.params == KEESE_ELECTRIC_FLY) {
                     this->actor.colChkInfo.health = 0;
                     Enemy_StartFinishingBlow(play, &this->actor);
                     EnFirefly_Combust(this, play);
                     EnFirefly_SetupFall(this);
                 } else if (!this->onFire) {
-                    EnFirefly_Ignite(this);
+                    EnFirefly_Ignite(this, play);
                     if (this->actionFunc == EnFirefly_Perch) {
                         EnFirefly_SetupFlyIdle(this);
                     }
@@ -684,7 +728,7 @@ void EnFirefly_UpdateDamage(EnFirefly* this, PlayState* play) {
                     EnFirefly_SetupStunned(this);
                 }
             } else { // Fire Arrows
-                if ((damageReaction == 0xF) && (this->actor.params == KEESE_ICE_FLY)) {
+                if ((damageReaction == 0xF) && (this->actor.params == KEESE_ICE_FLY || this->actor.params == KEESE_ELECTRIC_FLY)) {
                     EnFirefly_Combust(this, play);
                 }
                 EnFirefly_SetupFall(this);
@@ -831,6 +875,36 @@ void EnFirefly_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* 
     }
 }
 
+void EnFirefly_UpdateBodyShock(Actor* thisx, PlayState* play) {
+    EnFirefly* this = (EnFirefly*)thisx;
+    Vec3f effectPos;
+    s16 effectYaw;
+    static Color_RGBA8 primColor = { 255, 255, 255, 255 };
+    static Color_RGBA8 envColor = { 200, 255, 255, 255 };
+    u8 r = (u8)Rand_ZeroFloat(4.0f);
+    
+    if (this->shockTimer == 0)
+        this->shockTimer = Rand_S16Offset(8, 9);
+    else this->shockTimer--;
+
+    if (((this->shockTimer + (r * 2)) % 4) == 0) {
+        effectYaw = (s16)Rand_CenteredFloat(12288.0f) + (r * 0x4000) + 0x2000;
+        effectPos.x = Rand_CenteredFloat(5.0f) + this->actor.world.pos.x;
+        effectPos.y = (Rand_ZeroOne() * 5.0f) + this->actor.world.pos.y + 2.5f;
+        effectPos.z = Rand_CenteredFloat(5.0f) + this->actor.world.pos.z;
+        EffectSsLightning_Spawn(play, &effectPos, &primColor, &envColor, 15, effectYaw, 4, 1);
+    }
+}
+
+void* bodyTextures[4][2] = {
+    { gKeeseBodyTex,  gElectricKeeseBodyTex  },
+    { gKeeseTalonTex, gElectricKeeseTalonTex },
+    { gKeeseWingTex,  gElectricKeeseWingTex  },
+    { gKeeseEarTex,   gElectricKeeseEarTex   },
+};
+
+#define IS_ELECTRIC (this->actor.params == KEESE_ELECTRIC_FLY) ? 1 : 0
+
 void EnFirefly_Draw(Actor* thisx, PlayState* play) {
     EnFirefly* this = (EnFirefly*)thisx;
 
@@ -842,6 +916,14 @@ void EnFirefly_Draw(Actor* thisx, PlayState* play) {
     } else {
         gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 255);
     }
+
+    gSPSegment(POLY_OPA_DISP++, 0x8, SEGMENTED_TO_VIRTUAL(bodyTextures[0][IS_ELECTRIC]));
+    gSPSegment(POLY_OPA_DISP++, 0x9, SEGMENTED_TO_VIRTUAL(bodyTextures[1][IS_ELECTRIC]));
+    gSPSegment(POLY_OPA_DISP++, 0xA, SEGMENTED_TO_VIRTUAL(bodyTextures[2][IS_ELECTRIC]));
+    gSPSegment(POLY_OPA_DISP++, 0xB, SEGMENTED_TO_VIRTUAL(bodyTextures[3][IS_ELECTRIC]));
+
+    if (this->auraType == KEESE_AURA_ELECTRIC)
+        EnFirefly_UpdateBodyShock(thisx, play);
 
     POLY_OPA_DISP = SkelAnime_Draw(play, this->skelAnime.skeleton, this->skelAnime.jointTable,
                                    EnFirefly_OverrideLimbDraw, EnFirefly_PostLimbDraw, &this->actor, POLY_OPA_DISP);
@@ -859,6 +941,14 @@ void EnFirefly_DrawInvisible(Actor* thisx, PlayState* play) {
     } else {
         gDPSetEnvColor(POLY_XLU_DISP++, 0, 0, 0, 255);
     }
+
+    if (this->auraType == KEESE_AURA_ELECTRIC)
+        EnFirefly_UpdateBodyShock(thisx, play);
+
+    gSPSegment(POLY_XLU_DISP++, 0x8, SEGMENTED_TO_VIRTUAL(bodyTextures[0][IS_ELECTRIC]));
+    gSPSegment(POLY_XLU_DISP++, 0x9, SEGMENTED_TO_VIRTUAL(bodyTextures[1][IS_ELECTRIC]));
+    gSPSegment(POLY_XLU_DISP++, 0xA, SEGMENTED_TO_VIRTUAL(bodyTextures[2][IS_ELECTRIC]));
+    gSPSegment(POLY_XLU_DISP++, 0xB, SEGMENTED_TO_VIRTUAL(bodyTextures[3][IS_ELECTRIC]));
 
     POLY_XLU_DISP = SkelAnime_Draw(play, this->skelAnime.skeleton, this->skelAnime.jointTable,
                                    EnFirefly_OverrideLimbDraw, EnFirefly_PostLimbDraw, this, POLY_XLU_DISP);
