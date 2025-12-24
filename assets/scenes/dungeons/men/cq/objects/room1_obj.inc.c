@@ -1,7 +1,0 @@
-    OBJECT_MENKURI_OBJECTS, // 0
-    OBJECT_BOX, // 1
-    OBJECT_EFC_FLASH, // 2
-    OBJECT_SK2, // 3
-    OBJECT_GOROIWA, // 4
-    OBJECT_TRAP, // 5
-

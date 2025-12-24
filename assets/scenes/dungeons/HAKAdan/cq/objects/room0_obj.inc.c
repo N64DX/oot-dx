@@ -1,4 +1,0 @@
-    OBJECT_HAKA_OBJECTS, // 0
-    OBJECT_HAKA_DOOR, // 1
-    OBJECT_BOX, // 2
-
