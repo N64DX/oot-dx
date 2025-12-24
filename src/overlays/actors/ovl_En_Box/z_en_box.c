@@ -601,6 +601,9 @@ bool EnBox_IsItem(s16 item) {
         case GI_WALLET_ADULT:
         case GI_WALLET_GIANT:
         case GI_WALLET_MASTER:
+        case GI_WALLET_ROYAL:
+        case GI_WALLET_TYCOON:
+        case GI_WALLET_BOTTOMLESS:
         case GI_OCARINA_FAIRY:
         case GI_OCARINA_OF_TIME:
         case GI_SCALE_SILVER:

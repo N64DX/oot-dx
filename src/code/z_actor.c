@@ -1950,13 +1950,19 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                             getItemId = -GI_BOMB_BAG_30;
                         else if (CUR_UPG_VALUE(UPG_BOMB_BAG) >= 2)
                             getItemId = -GI_BOMB_BAG_40;
-                    } else if (getItemId == -GI_WALLET_ADULT || getItemId == -GI_WALLET_GIANT || getItemId == -GI_WALLET_ROYAL) {
-                        if (CUR_UPG_VALUE(UPG_WALLET) == 0)
-                            getItemId = -GI_WALLET_ADULT;
+                    } else if (getItemId == -GI_WALLET_ADULT || getItemId == -GI_WALLET_GIANT || getItemId == -GI_WALLET_MASTER || getItemId == -GI_WALLET_ROYAL || getItemId == -GI_WALLET_TYCOON || getItemId == -GI_WALLET_BOTTOMLESS) {
+                        if (CUR_UPG_VALUE(UPG_WALLET2) >= 2)
+                            getItemId = -GI_WALLET_BOTTOMLESS;
+                        else if (CUR_UPG_VALUE(UPG_WALLET2) == 1)
+                            getItemId = -GI_WALLET_TYCOON;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) == 3)
+                            getItemId = -GI_WALLET_ROYAL;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) == 2)
+                            getItemId = -GI_WALLET_MASTER;
                         else if (CUR_UPG_VALUE(UPG_WALLET) == 1)
                             getItemId = -GI_WALLET_GIANT;
-                        else if (CUR_UPG_VALUE(UPG_WALLET) >= 2)
-                            getItemId = -GI_WALLET_ROYAL;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) == 0)
+                            getItemId = -GI_WALLET_ADULT;
                     } else if (getItemId == -GI_DEKU_STICK_UPGRADE_20 || getItemId == -GI_DEKU_STICK_UPGRADE_30) {
                         if (CUR_UPG_VALUE(UPG_DEKU_STICKS) == 0)
                             getItemId = -GI_DEKU_STICKS_1;

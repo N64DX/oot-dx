@@ -2055,12 +2055,27 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_ADULTS_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 1);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
         return ITEM_NONE;
     } else if (item == ITEM_GIANTS_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 2);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+        return ITEM_NONE;
+    } else if (item == ITEM_MASTER_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
         return ITEM_NONE;
     } else if (item == ITEM_ROYAL_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 1);
+        return ITEM_NONE;
+    } else if (item == ITEM_TYCOON_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 2);
+        return ITEM_NONE;
+    } else if (item == ITEM_BOTTOMLESS_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 3);
         return ITEM_NONE;
     } else if (item == ITEM_DEKU_STICK_UPGRADE_20) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -2521,7 +2536,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_DEKU_STICK_UPGRADE_20) && (item <= ITEM_DEKU_NUT_UPGRADE_40)) {
         return ITEM_NONE;
-    } else if ((item >= ITEM_BOMB_BAG_30) && (item <= ITEM_GIANTS_WALLET)) {
+    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_GIANTS_WALLET) || (item >= ITEM_MASTER_WALLET && item <= ITEM_BOTTOMLESS_WALLET)) {
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         return ITEM_NONE;
@@ -4226,8 +4241,8 @@ void Interface_Draw(PlayState* play) {
     static s16 D_80125B1C[][3] = {
         { 0, 150, 0 }, { 100, 255, 0 }, { 255, 255, 255 }, { 0, 0, 0 }, { 255, 255, 255 },
     };
-    static s16 rupeeDigitsFirst[] = { 1, 0, 0, 0 };
-    static s16 rupeeDigitsCount[] = { 2, 3, 3, 3 };
+    static s16 rupeeDigitsFirst[] = { 2, 1, 1, 1, 0, 0, 0 };
+    static s16 rupeeDigitsCount[] = { 2, 3, 3, 3, 4, 4, 4 };
     static s16 spoilingItemEntrances[] = { ENTR_LOST_WOODS_2, ENTR_ZORAS_DOMAIN_3, ENTR_ZORAS_DOMAIN_3 };
     static f32 D_80125B54[] = { -40.0f, -35.0f }; // unused
     static s16 D_80125B5C[] = { 91, 91 };         // unused
@@ -4257,13 +4272,17 @@ void Interface_Draw(PlayState* play) {
     gSPSegment(OVERLAY_DISP++, 0x0B, interfaceCtx->mapSegment);
 
     if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) {
-        static u8 walletColors[][4] = {
-            { 200, 255, 100 },
-            { 130, 130, 255 },
-            { 255, 100, 100 },
-            { 255, 165, 0   }
+        static u8 walletColors[][7] = {
+            { 200, 255, 100 }, // Default
+            { 130, 130, 255 }, // Adult
+            { 255, 100, 100 }, // Giant
+            { 255, 165, 0   }, // Master
+            { 255, 165, 0   }, // Royal
+            { 255, 165, 0   }, // Tycoon
+            { 255, 165, 0   }, // Bottomless
         };
-        u8 curWallet = CUR_UPG_VALUE(UPG_WALLET);
+        u8 curWallet = CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2);
+        s16 curCapacity = (CUR_UPG_VALUE(UPG_WALLET2) > 0) ? CUR_CAPACITY(UPG_WALLET2) : CUR_CAPACITY(UPG_WALLET);
 
         Interface_InitVertices(play);
         func_8008A994(interfaceCtx);
@@ -4362,21 +4381,27 @@ void Interface_Draw(PlayState* play) {
         gDPSetCombineLERP(OVERLAY_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0,
                           PRIMITIVE, 0);
 
-        interfaceCtx->counterDigits[0] = interfaceCtx->counterDigits[1] = 0;
-        interfaceCtx->counterDigits[2] = gSaveContext.save.info.playerData.rupees;
 
-        if ((interfaceCtx->counterDigits[2] > 9999) || (interfaceCtx->counterDigits[2] < 0)) {
-            interfaceCtx->counterDigits[2] &= 0xDDD;
+        interfaceCtx->counterDigits[0] = interfaceCtx->counterDigits[1] = interfaceCtx->counterDigits[2] = 0;
+        interfaceCtx->counterDigits[3] = gSaveContext.save.info.playerData.rupees;
+        if ((interfaceCtx->counterDigits[3] > 9999) || (interfaceCtx->counterDigits[3] < 0)) {
+            interfaceCtx->counterDigits[3] &= 0xDDD;
         }
 
-        while (interfaceCtx->counterDigits[2] >= 100) {
+        interfaceCtx->counterDigits[3] = gSaveContext.save.info.playerData.rupees;
+        while (interfaceCtx->counterDigits[3] >= 1000) {
             interfaceCtx->counterDigits[0]++;
-            interfaceCtx->counterDigits[2] -= 100;
+            interfaceCtx->counterDigits[3] -= 1000;
         }
 
-        while (interfaceCtx->counterDigits[2] >= 10) {
+        while (interfaceCtx->counterDigits[3] >= 100) {
             interfaceCtx->counterDigits[1]++;
-            interfaceCtx->counterDigits[2] -= 10;
+            interfaceCtx->counterDigits[3] -= 100;
+        }
+
+        while (interfaceCtx->counterDigits[3] >= 10) {
+            interfaceCtx->counterDigits[2]++;
+            interfaceCtx->counterDigits[3] -= 10;
         }
 
         svar2 = rupeeDigitsFirst[CUR_UPG_VALUE(UPG_WALLET)];
@@ -5392,15 +5417,16 @@ void Interface_Update(PlayState* play) {
         !Play_InCsMode(play)) {}
 
     if (gSaveContext.rupeeAccumulator != 0) {
+        s16 curCapacity = (CUR_UPG_VALUE(UPG_WALLET2) > 0) ? CUR_CAPACITY(UPG_WALLET2) : CUR_CAPACITY(UPG_WALLET);
         if (gSaveContext.rupeeAccumulator > 0) {
-            if (gSaveContext.save.info.playerData.rupees < CUR_CAPACITY(UPG_WALLET)) {
+            if (gSaveContext.save.info.playerData.rupees < curCapacity) {
                 gSaveContext.rupeeAccumulator--;
                 gSaveContext.save.info.playerData.rupees++;
                 Audio_PlaySfxGeneral(NA_SE_SY_RUPY_COUNT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             } else {
                 PRINTF(T("ルピー数ＭＡＸ = %d\n", "Rupee Amount MAX = %d\n"), CUR_CAPACITY(UPG_WALLET));
-                gSaveContext.save.info.playerData.rupees = CUR_CAPACITY(UPG_WALLET);
+                gSaveContext.save.info.playerData.rupees = curCapacity;
                 gSaveContext.rupeeAccumulator = 0;
             }
         } else if (gSaveContext.save.info.playerData.rupees != 0) {

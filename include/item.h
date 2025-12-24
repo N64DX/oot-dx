@@ -86,7 +86,8 @@ typedef enum UpgradeType {
     /* 0x05 */ UPG_BULLET_BAG,
     /* 0x06 */ UPG_DEKU_STICKS,
     /* 0x07 */ UPG_DEKU_NUTS,
-    /* 0x08 */ UPG_MAX
+    /* 0x08 */ UPG_WALLET2,
+    /* 0x09 */ UPG_MAX
 } UpgradeType;
 
 typedef enum QuestItem {
@@ -481,8 +482,11 @@ typedef enum GetItemID {
     /* 0x89 */ GI_LONGSHOT_MM,
     /* 0x8A */ GI_HEROS_BOW,
     /* 0x8B */ GI_GOLD_DUST,
-    /* 0x8C */ GI_WALLET_ROYAL,
-    /* 0x8D */ GI_MAX
+    /* 0x8C */ GI_WALLET_MASTER,
+    /* 0x8D */ GI_WALLET_ROYAL,
+    /* 0x8E */ GI_WALLET_TYCOON,
+    /* 0x8F */ GI_WALLET_BOTTOMLESS,
+    /* 0x90 */ GI_MAX
 } GetItemID;
 
 typedef enum GetItemDrawID {

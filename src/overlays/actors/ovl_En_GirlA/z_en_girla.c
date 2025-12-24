@@ -92,65 +92,6 @@ ActorProfile En_GirlA_Profile = {
     /**/ NULL,
 };
 
-#if DEBUG_FEATURES
-static char* sShopItemDescriptions[] = {
-    T("デクの実×5   ", "Deku nuts x5  "),
-    T("矢×30        ", "Arrows x30    "),
-    T("矢×50        ", "Arrows x50    "),
-    T("爆弾×5       ", "Bombs x5      "),
-    T("デクの実×10  ", "Deku nuts x10 "),
-    T("デクの棒      ", "Deku stick    "),
-    T("爆弾×10      ", "Bombs x10     "),
-    T("さかな        ", "Fish          "),
-    T("赤クスリ      ", "Red medicine  "),
-    T("緑クスリ      ", "Green medicine"),
-    T("青クスリ      ", "Blue medicine "),
-    T("巨人のナイフ  ", "Giant's knife "),
-    T("ハイリアの盾  ", "Hylian shield "),
-    T("デクの盾      ", "Deku shield   "),
-    T("ゴロンの服    ", "Goron clothing"),
-    T("ゾ─ラの服    ", "Zora's clothes"),
-    T("回復のハート  ", "Heart of recovery"),
-    T("ロンロン牛乳  ", "Lon Lon milk  "),
-    T("鶏の卵        ", "Chicken egg   "),
-    T("インゴー牛乳  ", "Ingo milk     "),
-    T("インゴー卵    ", "Ingo egg      "),
-    T("もだえ石      ", "Writhing stone"),
-    T("大人の財布    ", "Adult wallet  "),
-    T("ハートの欠片  ", "Piece of heart"),
-    T("ボムチュウ    ", "Bombchu       "),
-    T("ボムチュウ    ", "Bombchu       "),
-    T("ボムチュウ    ", "Bombchu       "),
-    T("ボムチュウ    ", "Bombchu       "),
-    T("ボムチュウ    ", "Bombchu       "),
-    T("デクのタネ    ", "Deku seeds    "),
-    T("キータンのお面", "Keaton mask   "),
-    T("こわそなお面  ", "Scary mask    "),
-    T("ドクロのお面  ", "Skull mask    "),
-    T("ウサギずきん  ", "Rabbit hood   "),
-    T("まことの仮面  ", "True mask     "),
-    T("ゾーラのお面  ", "Zora's mask   "),
-    T("ゴロンのお面  ", "Goron mask    "),
-    T("ゲルドのお面  ", "Gerudo mask   "),
-    "ＳＯＬＤＯＵＴ",
-    T("炎            ", "Flame         "),
-    T("虫            ", "Insect        "),
-    T("チョウチョ    ", "Butterfly     "),
-    T("ポウ          ", "Poe           "),
-    T("妖精の魂      ", "Fairy soul    "),
-    T("矢×10        ", "Arrows x10    "),
-    T("爆弾×20      ", "Bombs x20     "),
-    T("爆弾×30      ", "Bombs x30     "),
-    T("爆弾×5       ", "Bombs x5      "),
-    T("赤クスリ      ", "Red medicine  "),
-    T("赤クスリ      ", "Red medicine  "),
-    T("勇者の盾      ", "Hero's Shield  "),
-    T("大人の財布      ", "Adult's Wallet  "),
-    T("巨人の財布      ", "Giant's Wallet  "),
-    T("王家の財布      ", "Royal Wallet  "),
-};
-#endif
-
 static s16 sMaskShopItems[8] = {
     ITEM_MASK_KEATON, ITEM_MASK_SPOOKY, ITEM_MASK_SKULL, ITEM_MASK_BUNNY_HOOD,
     ITEM_MASK_TRUTH,  ITEM_MASK_ZORA,   ITEM_MASK_GORON, ITEM_MASK_GERUDO,
@@ -324,16 +265,25 @@ static ShopItemEntry sShopItemEntries[] = {
     { OBJECT_GI_LIQUID, GID_BOTTLE_POTION_RED, func_8002EBCC, 50, 1, 0x0065, 0x0063, GI_BOTTLE_POTION_RED,
       EnGirlA_CanBuy_RedPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount },
     /* SI_HEROS_SHIELD */
-    { OBJECT_GI_SHIELD_1_MM, GID_SHIELD_HEROS, func_8002EBCC, 80, 1, 0x9008, 0x9004, GI_SHIELD_HEROS,
+    { OBJECT_GI_SHIELD_1_MM, GID_SHIELD_HEROS, func_8002EBCC, 80, 1, 0x9201, 0x9101, GI_SHIELD_HEROS,
       EnGirlA_CanBuy_HerosShield, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_ROYAL_WALLET */
-    { OBJECT_GI_PURSE, GID_WALLET_ADULT, func_8002EBCC, 200, 1, 0x9009, 0x9005, GI_WALLET_ADULT,
+    /* SI_MASTER_WALLET */
+    { OBJECT_GI_PURSE, GID_WALLET_ADULT, func_8002EBCC, 200, 1, 0x9203, 0x9103, GI_WALLET_ADULT,
       EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
-    /* SI_ROYAL_WALLET */
-    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x900A, 0x9006, GI_WALLET_GIANT,
+    /* SI_GIANT_WALLET */
+    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x9204, 0x9104, GI_WALLET_GIANT,
       EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
-    /* SI_ROYAL_WALLET */
-    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x900B, 0x9007, GI_WALLET_ROYAL,
+    /* SI_MASTER_WALLET */
+    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x9205, 0x9105, GI_WALLET_MASTER,
+      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
+      /* SI_ROYAL_WALLET */
+    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x9206, 0x9106, GI_WALLET_ROYAL,
+      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
+      /* SI_TYCOON_WALLET */
+    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x9207, 0x9107, GI_WALLET_TYCOON,
+      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
+    /* SI_BOTTOMLESS_WALLET */
+    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x9208, 0x9108, GI_WALLET_BOTTOMLESS,
       EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
 };
 
@@ -348,15 +298,24 @@ s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
     switch (this->actor.params) {
         case SI_WALLET_ADULT:
         case SI_WALLET_GIANT:
+        case SI_WALLET_MASTER:
         case SI_WALLET_ROYAL:
-            if (GET_ITEMGETINF(ITEMGETINF_BAZAAR_WALLET) || CUR_UPG_VALUE(UPG_WALLET) >= 3)
+        case SI_WALLET_TYCOON:
+        case SI_WALLET_BOTTOMLESS:
+            if (GET_ITEMGETINF(ITEMGETINF_BAZAAR_WALLET) || CUR_UPG_VALUE(UPG_WALLET2) >= 3)
                 this->actor.params = SI_SOLD_OUT;
-            else if (CUR_UPG_VALUE(UPG_WALLET) == 0)
-                this->actor.params = SI_WALLET_ADULT;
+            else if (CUR_UPG_VALUE(UPG_WALLET2) == 2)
+                this->actor.params = SI_WALLET_BOTTOMLESS;
+            else if (CUR_UPG_VALUE(UPG_WALLET2) == 1)
+                this->actor.params = SI_WALLET_TYCOON;
+            else if (CUR_UPG_VALUE(UPG_WALLET) == 3)
+                this->actor.params = SI_WALLET_ROYAL;
+            else if (CUR_UPG_VALUE(UPG_WALLET) == 2)
+                this->actor.params = SI_WALLET_MASTER;
             else if (CUR_UPG_VALUE(UPG_WALLET) == 1)
                 this->actor.params = SI_WALLET_GIANT;
-            else if (CUR_UPG_VALUE(UPG_WALLET) == 2)
-                this->actor.params = SI_WALLET_ROYAL;
+            else if (CUR_UPG_VALUE(UPG_WALLET) == 0)
+                this->actor.params = SI_WALLET_ADULT;
             return true;
         case SI_MILK_BOTTLE:
             if (GET_ITEMGETINF(ITEMGETINF_TALON_BOTTLE)) {
@@ -419,7 +378,7 @@ s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
 void EnGirlA_InitItem(EnGirlA* this, PlayState* play) {
     s16 params = this->actor.params;
 
-    PRINTF(T("%s(%2d)初期設定\n", "%s(%2d) Initial setup\n"), sShopItemDescriptions[params], params);
+    PRINTF(T("%s(%2d)初期設定\n", "%s(%2d) Initial setup\n"), params);
 
     if ((params >= SI_MAX) && (params < 0)) {
         Actor_Kill(&this->actor);
@@ -436,7 +395,7 @@ void EnGirlA_InitItem(EnGirlA* this, PlayState* play) {
     if (this->requiredObjectSlot < 0) {
         Actor_Kill(&this->actor);
         PRINTF_COLOR_ERROR();
-        PRINTF(T("バンクが無いよ！！(%s)\n", "There is no bank!! (%s)\n"), sShopItemDescriptions[params]);
+        PRINTF(T("バンクが無いよ！！(%s)\n", "There is no bank!! (%s)\n"), params);
         PRINTF_RST();
         ASSERT(0, "0", "../z_en_girlA.c", 1434);
         return;
@@ -451,7 +410,7 @@ void EnGirlA_Init(Actor* thisx, PlayState* play) {
 
     EnGirlA_TryChangeShopItem(this);
     EnGirlA_InitItem(this, play);
-    PRINTF(T("%s(%2d)初期設定\n", "%s(%2d) Initial setup\n"), sShopItemDescriptions[this->actor.params],
+    PRINTF(T("%s(%2d)初期設定\n", "%s(%2d) Initial setup\n"), this->actor.params,
            this->actor.params);
 }
 
@@ -1137,7 +1096,7 @@ void EnGirlA_WaitForObject(EnGirlA* this, PlayState* play) {
         this->itemCount = itemEntry->count;
         this->hiliteFunc = itemEntry->hiliteFunc;
         this->giDrawId = itemEntry->giDrawId;
-        PRINTF("%s(%2d)\n", sShopItemDescriptions[params], params);
+        PRINTF("%s(%2d)\n", params);
         this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
         Actor_SetScale(&this->actor, 0.25f);
         this->actor.shape.yOffset = 24.0f;

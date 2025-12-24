@@ -165,7 +165,7 @@ static u8 sMaxUpgradeValues[] = {
     /* UPG_BOMB_BAG    */ 3,
     /* UPG_STRENGTH    */ 3,
     /* UPG_SCALE       */ 2,
-    /* UPG_WALLET      */ 3,
+    /* UPG_WALLET      */ 6,
     /* UPG_BULLET_BAG  */ 3,
     /* UPG_DEKU_STICKS */ 3,
     /* UPG_DEKU_NUTS   */ 3,
@@ -378,7 +378,9 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
 
     // Upgrades
     for (digitBuf[1] = 78, i = 0; i < 8; i++, digitBuf[1] += 12) {
-        KaleidoScope_DrawDigit(play, CUR_UPG_VALUE(i), digitBuf[1], 115);
+        if (i == 4)
+            KaleidoScope_DrawDigit(play, CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2), digitBuf[1], 115);
+        else KaleidoScope_DrawDigit(play, CUR_UPG_VALUE(i), digitBuf[1], 115);
     }
 
     // Equipment
@@ -735,12 +737,66 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                     if ((curSection >= SECTION_FIRST_UPGRADE) && (curSection <= SECTION_LAST_UPGRADE)) {
                         if (CHECK_BTN_ALL(input->press.button, BTN_CUP) ||
                             CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
-                            if (CUR_UPG_VALUE(i) != 0) {
+                            if (i == 4) {
+                                switch (CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2)) {
+                                    case 1:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 0);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 2:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 1);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 3:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 2);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 4:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 5:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 1);
+                                        break;
+                                    case 6:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 2);
+                                        break;
+                                }
+                            } else if (CUR_UPG_VALUE(i) != 0) {
                                 Inventory_ChangeUpgrade(i, CUR_UPG_VALUE(i) - 1);
                             }
                         } else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) ||
                                    CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
-                            if (CUR_UPG_VALUE(i) < sMaxUpgradeValues[i]) {
+                            if (i == 4) {
+                                switch (CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2)) {
+                                    case 0:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 1);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 1:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 2);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 2:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 3:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 1);
+                                        break;
+                                    case 4:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 2);
+                                        break;
+                                    case 5:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 3);
+                                        break;
+                                }
+                            } else if (CUR_UPG_VALUE(i) < sMaxUpgradeValues[i]) {
                                 Inventory_ChangeUpgrade(i, CUR_UPG_VALUE(i) + 1);
                             }
                         }
