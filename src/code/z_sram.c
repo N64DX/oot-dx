@@ -490,6 +490,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
     R_ENABLE_MIRROR    = MIRROR_MODE ? 1 : 0;
     R_QUEST_MODE       = QUEST_MODE;
 
+    lastEntranceIndex = gSaveContext.save.entranceIndex;
     switch (gSaveContext.save.info.playerData.savedSceneId) {
         case SCENE_DEKU_TREE:
         case SCENE_DODONGOS_CAVERN:
@@ -562,6 +563,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
             }
             break;
     }
+
+    if (DEBUG_MODE)
+        gSaveContext.save.entranceIndex = lastEntranceIndex;
 
     if ( (SKIP_INTROS || IS_RUSH_QUEST) && gSaveContext.save.entranceIndex == ENTR_LINKS_HOUSE_0)
         gSaveContext.save.cutsceneIndex = 0;
