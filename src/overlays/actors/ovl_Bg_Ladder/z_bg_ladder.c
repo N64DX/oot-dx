@@ -140,7 +140,6 @@ void BgLadder_Update(Actor* thisx, PlayState* play) {
 
 void BgLadder_Draw(Actor* thisx, PlayState* play) {
     BgLadder* this = (BgLadder*)thisx;
-    Gfx* gfx;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_bg_ladder.c", 145);
 

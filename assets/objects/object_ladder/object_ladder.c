@@ -14,7 +14,6 @@ Gfx gWoodenLadder12RungDL[] = {
     gsDPPipeSync(),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    gsSPDisplayList(0x0C000010),
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gWoodenLadderTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
@@ -72,7 +71,6 @@ Gfx gWoodenLadder16RungDL[] = {
     gsDPPipeSync(),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    gsSPDisplayList(0x0C000010),
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gWoodenLadderTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
@@ -121,10 +119,6 @@ CollisionHeader gWoodenLadder16RungCol = {
     0, NULL
 };
 
-u8 object_ladder_possiblePadding_000434[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 Vtx object_ladderVtx_000440[] = {
 #include "assets/objects/object_ladder/object_ladderVtx_000440.vtx.inc"
 };
@@ -134,7 +128,6 @@ Gfx gWoodenLadder20RungDL[] = {
     gsDPPipeSync(),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    gsSPDisplayList(0x0C000010),
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gWoodenLadderTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
@@ -192,7 +185,6 @@ Gfx gWoodenLadder24RungDL[] = {
     gsDPPipeSync(),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    gsSPDisplayList(0x0C000010),
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gWoodenLadderTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),

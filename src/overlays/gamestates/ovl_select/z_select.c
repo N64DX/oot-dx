@@ -506,6 +506,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Cleansed Kokiri Forest",   EVENT,                      EVENTCHKINF_48                           },
     { 0, "Cleansed Death Mountain",  EVENT,                      EVENTCHKINF_49                           },
     { 0, "Cleansed Lake Hylia",      EVENT,                      EVENTCHKINF_4A                           },
+    { 0, "Talked Darunia in Temple", INFTABLE,                   INFTABLE_11A                             },
     { 0, "Death Mountain Erupted",   EVENT,                      EVENTCHKINF_2F                           },
     { 0, "Unfrozen King Zora",       INFTABLE,                   INFTABLE_138                             },
     { 0, "Restored Lake Hylia",      EVENT,                      EVENTCHKINF_RESTORED_LAKE_HYLIA          },
