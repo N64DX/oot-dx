@@ -836,6 +836,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
     s32 textureLanguageOffset;
     s32 dsdx = X_HIRES_DIVIDE(1 << 10);
     s32 s = 0;
+    s16 byteStride;
 
     if (titleCtx->alpha != 0) {
         width = titleCtx->width;
@@ -882,11 +883,12 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(titleX1), HIRES_MULTIPLY(titleY1), X_HIRES_MULTIPLY(titleX2), HIRES_MULTIPLY(titleY2 - 1), G_TX_RENDERTILE, s, 0, dsdx,
                             HIRES_DIVIDE(1 << 10));
 
+        byteStride = width * height;
         height = titleCtx->height - height;
 
         // If texture is bigger than 0x1000, display the rest
         if (height > 0) {
-            gDPLoadTextureBlock(OVERLAY_DISP++, (u8*)titleCtx->texture + 0x1000 + textureLanguageOffset, G_IM_FMT_IA,
+            gDPLoadTextureBlock(OVERLAY_DISP++, (u8*)titleCtx->texture + byteStride + textureLanguageOffset, G_IM_FMT_IA,
                                 G_IM_SIZ_8b, width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                                 G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
