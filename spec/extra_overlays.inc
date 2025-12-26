@@ -74,3 +74,17 @@ beginseg
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Slim/z_en_slim.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Slim/ovl_En_Slim_reloc.o"
 endseg
+
+beginseg
+    name "ovl_Bg_Ganon_Ladder"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ganon_Ladder/z_bg_ganon_ladder.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ganon_Ladder/ovl_Bg_Ganon_Ladder_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Ganon_Sword"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Ganon_Sword/z_en_ganon_sword.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Ganon_Sword/ovl_En_Ganon_Sword_reloc.o"
+endseg

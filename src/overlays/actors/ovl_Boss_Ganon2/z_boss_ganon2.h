@@ -140,4 +140,9 @@ typedef struct BossGanon2 {
     /* 0x0864 */ ColliderJntSphElement unk_864[2];
 } BossGanon2; // size = 0x08E4
 
+typedef enum BossGanon2Type {
+    /* -2 */ GANON_HYPER = -2,
+    /* -1 */ GANON_NORMAL
+} BossGanon2Type;
+
 #endif

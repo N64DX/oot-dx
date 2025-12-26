@@ -235,4 +235,24 @@ static ColliderJntSphInit sJntSphInit = {
     sJntSphElementsInit,
 };
 
+static ColliderQuadInit sBiteQuadInit = {
+    {
+        COL_MATERIAL_HIT7,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_NONE,
+        OC1_NONE,
+        OC2_NONE,
+        COLSHAPE_QUAD,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0xFFCFFFFF, 0x00, 4 },
+        { 0x00000000, 0x00, 0x00 },
+        ATELEM_ON,
+        ACELEM_NONE,
+        OCELEM_NONE,
+    },
+    { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } },
+};
+
 static Vec3f sUnkZeroVec = { 0.0f, 0.0f, 0.0f };

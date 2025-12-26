@@ -2451,3 +2451,36 @@ UNSKIPPABLE "Il est arrivé ici comme une fleur\n"
 "complètement dingue!"
 )
 )
+
+DEFINE_MESSAGE(0x8125, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Arghh...! You...!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8126, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "You've got guts, kid.\n"
+"I'll give you that."
+BOX_BREAK
+
+UNSKIPPABLE "You remind me of my former self.\n"
+"It's a pity is that you chose defiance.\n"
+"Obedience would have spared you\n"
+"from the fate that awaits you."
+BOX_BREAK
+
+UNSKIPPABLE "Even if your soul and bones are\n"
+"shattered into a thousand pieces,\n"
+"you shall submit to me...\n"
+BOX_BREAK
+
+UNSKIPPABLE "Now... Your power belongs to me!"
+),
+MSG(),
+MSG()
+)

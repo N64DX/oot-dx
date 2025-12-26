@@ -2507,7 +2507,7 @@ endseg
 beginseg
     name "ddan_boss_room_1"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/ddan_boss/ddan_boss_room_1.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/ddan_boss/ddan_boss_mq_room_1.o"
     number 3
 endseg
 
@@ -2654,14 +2654,14 @@ endseg
 beginseg
     name "ganon_boss_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/ganon_boss/ganon_boss_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/ganon_boss/ganon_boss_mq_scene.o"
     number 2
 endseg
 
 beginseg
     name "ganon_boss_room_0"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/ganon_boss/ganon_boss_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/ganon_boss/ganon_boss_mq_room_0.o"
     number 3
 endseg
 
@@ -2682,7 +2682,7 @@ endseg
 beginseg
     name "jyasinboss_room_1"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/jyasinboss/jyasinboss_room_1.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/jyasinboss/jyasinboss_mq_room_1.o"
     number 3
 endseg
 
@@ -3368,7 +3368,7 @@ endseg
 beginseg
     name "ganon_demo_room_0"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/ganon_demo/ganon_demo_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/dungeons/ganon_demo/ganon_demo_mq_room_0.o"
     number 3
 endseg
 

@@ -1,0 +1,7 @@
+    OBJECT_JYA_DOOR, // 0
+    OBJECT_BDOOR, // 1
+    OBJECT_TR, // 2
+    OBJECT_EFC_FLASH, // 3
+    OBJECT_IK, // 4
+    OBJECT_NB, // 5
+    OBJECT_JYA_IRON, // 6

@@ -424,3 +424,4 @@
 /* 0x019E */ DEFINE_OBJECT(object_hammergeist, OBJECT_HAMMERGEIST)
 /* 0x01A3 */ DEFINE_OBJECT(object_miniblin, OBJECT_MINIBLIN)
 /* 0x01A4 */ DEFINE_OBJECT(object_slime, OBJECT_SLIME)
+/* 0x01A8 */ DEFINE_OBJECT(object_ganon_ladder, OBJECT_GANON_LADDER)

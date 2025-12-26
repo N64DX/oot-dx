@@ -6,3 +6,7 @@
 u64 gGohmaTitleCardPalTex[] = {
 #include "assets/objects/object_goma/gohma_title_card_pal.ia8.inc.c"
 };
+
+u64 gHyperGohmaTitleCardPalTex[] = {
+#include "assets/objects/object_goma/hyper_gohma_title_card_pal.ia8.inc.c"
+};

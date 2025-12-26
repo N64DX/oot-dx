@@ -1,0 +1,27 @@
+#ifndef OBJECT_GANON_ANIME2_EXTRA_H
+#define OBJECT_GANON_ANIME2_EXTRA_H
+
+#include "animation.h"
+#include "ultra64.h"
+
+extern AnimationHeader SwordPhaseSlashrightAnim;
+extern AnimationHeader SwordPhaseSwingdownleftAnim;
+extern AnimationHeader SwordPhaseThrowAnim;
+extern AnimationHeader SwordPhaseThrustAnim;
+extern AnimationHeader SwordPhaseWalkAnim;
+extern AnimationHeader SwordPhase3swingsAnim;
+extern AnimationHeader SwordPhaseBlock1Anim;
+extern AnimationHeader SwordPhaseBlock2Anim;
+extern AnimationHeader SwordPhaseBlock3Anim;
+extern AnimationHeader SwordPhaseCatchAnim;
+extern AnimationHeader SwordPhaseCutscenerecoverAnim;
+extern AnimationHeader SwordPhaseGrappleAnim;
+extern AnimationHeader SwordPhaseIdleAnim;
+extern AnimationHeader SwordPhaseKickAnim;
+extern AnimationHeader SwordPhasePullAnim;
+extern AnimationHeader SwordPhasePullidleAnim;
+extern AnimationHeader SwordPhaseSlamAnim;
+extern AnimationHeader SwordPhaseSlamgetupAnim;
+extern AnimationHeader SwordPhaseSlamloopAnim;
+
+#endif

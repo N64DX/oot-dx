@@ -1,0 +1,3 @@
+    { SURFACETYPE0(0, 0, 0x00, 0, 0x00, 0x00, 0, 0), SURFACETYPE1(0x02, 0x00, 31, 32, 0, 0, 0, 0) },
+    { SURFACETYPE0(0, 0, 0x00, 0, 0x00, 0x00, 0, 0), SURFACETYPE1(0x02, 0x00, 31, 32, 1, 0, 0, 0) },
+    { SURFACETYPE0(1, 0, 0x00, 0, 0x00, 0x00, 0, 0), SURFACETYPE1(0x02, 0x00, 31, 32, 0, 0, 0, 0) },

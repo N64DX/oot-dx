@@ -563,4 +563,6 @@ s32 CollisionCheck_CylSideVsLineSeg(f32 radius, f32 height, f32 offset, Vec3f* a
                                     Vec3f* itemProjPos, Vec3f* out1, Vec3f* out2);
 u8 CollisionCheck_GetSwordDamage(s32 dmgFlags);
 
+#define BLENDERU_TO_ZU(x, y, z, scale) {x * scale, z * scale, (-y) * scale}
+
 #endif

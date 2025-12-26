@@ -30,6 +30,7 @@
 
 #include "assets/scenes/dungeons/jyasinboss/jyasinboss_scene.h"
 #include "assets/objects/object_ik/object_ik.h"
+#include "assets/objects/object_ik/object_ik_extra.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -86,6 +87,11 @@ void EnIk_Die(EnIk* this, PlayState* play);
 void EnIk_HandleCsCues(EnIk* this, PlayState* play);
 void EnIk_ChangeToEnemy(EnIk* this, PlayState* play);
 void EnIk_StartDefeatCutscene(Actor* thisx, PlayState* play);
+
+void EnIk_DecideSlam(EnIk* this);
+void EnIk_SlamAction(EnIk* this, PlayState* play);
+void EnIk_DecideSpin(EnIk* this);
+void EnIk_SpinAction(EnIk* this, PlayState* play);
 
 static ColliderCylinderInit sCylinderInit = {
     {
@@ -232,6 +238,8 @@ void EnIk_InitImpl(Actor* thisx, PlayState* play) {
     Collider_InitQuad(play, &this->axeCollider);
     Collider_SetQuad(play, &this->axeCollider, thisx, &sQuadInit);
 
+    this->hasWalked = false;
+
     thisx->colChkInfo.damageTable = &sDamageTable;
     Actor_SetGildedSwordDamageTaken(thisx);
     thisx->colChkInfo.mass = MASS_HEAVY;
@@ -240,6 +248,10 @@ void EnIk_InitImpl(Actor* thisx, PlayState* play) {
     thisx->gravity = -1.0f;
     this->switchFlag = IK_GET_SWITCH_FLAG(thisx);
     thisx->params = IK_GET_ARMOR_TYPE(thisx);
+
+    this->isHyper = thisx->params >= IK_TYPE_NABOORU_HYPER;
+    if (thisx->params >= IK_TYPE_NABOORU_HYPER)
+        thisx->params -= IK_TYPE_NABOORU_HYPER;
 
     if (thisx->params == IK_TYPE_NABOORU) {
         thisx->colChkInfo.health += Actor_EnemyHealthMultiply(20, ELITE_HP);
@@ -357,13 +369,19 @@ void EnIk_Idle(EnIk* this, PlayState* play) {
 
     if ((ABS(yawDiff) <= detectionThreshold) && (this->actor.xzDistToPlayer < 100.0f) &&
         (ABS(this->actor.yDistToPlayer) < 150.0f)) {
-        if ((play->gameplayFrames & 1)) {
+        if (Rand_Next() % 3 == 0 && this->isHyper) {
+            EnIk_DecideSlam(this);
+        } else if ((play->gameplayFrames & 1)) {
             EnIk_SetupVerticalAttack(this);
         } else {
             EnIk_SetupDoubleHorizontalAttack(this);
         }
-    } else if ((ABS(yawDiff) <= 0x4000) && (ABS(this->actor.yDistToPlayer) < 150.0f)) {
+    } else if ((ABS(yawDiff) <= 0x4000) && (ABS(this->actor.yDistToPlayer) < 150.0f) && !this->isHyper) {
         EnIk_SetupWalkOrRun(this);
+    } else if ((this->actor.xzDistToPlayer < 150.0f || !this->hasWalked) && this->isHyper) {
+        EnIk_SetupWalkOrRun(this);
+    } else if (Rand_Next()%1 == 0 && this->isHyper) {
+        EnIk_DecideSpin(this);
     } else {
         EnIk_SetupWalkOrRun(this);
     }
@@ -379,11 +397,13 @@ void EnIk_SetupWalkOrRun(EnIk* this) {
         Animation_Change(&this->skelAnime, &gIronKnuckleWalkAnim, 1.0f, 0.0f,
                          Animation_GetLastFrame(&gIronKnuckleWalkAnim), ANIMMODE_LOOP, -4.0f);
         this->actor.speed = 0.9f;
+        this->hasWalked = true;
     } else {
         Animation_Change(&this->skelAnime, &gIronKnuckleRunAnim, 1.0f, 0.0f,
                          Animation_GetLastFrame(&gIronKnuckleRunAnim), ANIMMODE_LOOP, -4.0f);
         Actor_PlaySfx(&this->actor, NA_SE_EN_IRONNACK_DASH);
         this->actor.speed = 2.5f;
+        this->hasWalked = true;
     }
 
     this->actor.world.rot.y = this->actor.shape.rot.y;
@@ -424,7 +444,9 @@ void EnIk_WalkOrRun(EnIk* this, PlayState* play) {
 
     if ((ABS(yawDiff) <= temp_t0) && (this->actor.xzDistToPlayer < 100.0f)) {
         if (ABS(this->actor.yDistToPlayer) < 150.0f) {
-            if (play->gameplayFrames & 1) {
+            if (Rand_Next() % 3 == 0 && this->isHyper) {
+                EnIk_DecideSlam(this);
+            } else if (play->gameplayFrames & 1) {
                 EnIk_SetupVerticalAttack(this);
             } else {
                 EnIk_SetupDoubleHorizontalAttack(this);
@@ -465,6 +487,106 @@ void EnIk_SetupVerticalAttack(EnIk* this) {
     this->actor.speed = 0.0f;
     Animation_Change(&this->skelAnime, &gIronKnuckleVerticalAttackAnim, 1.5f, 0.0f, endFrame, ANIMMODE_ONCE, -4.0f);
     EnIk_SetupAction(this, EnIk_VerticalAttack);
+}
+
+void EnIk_DecideSpin(EnIk* this) {
+    f32 frames = Animation_GetLastFrame(&gIronKnuckleSpinattackAnim);
+
+    this->unk_2FF = 1;
+    this->unk_2F8 = 6;
+    this->actor.speed = 0.0f;
+    Animation_Change(&this->skelAnime, &gIronKnuckleSpinattackAnim, 1.0f, 0.0f, frames, ANIMMODE_ONCE, -4.0f);
+    EnIk_SetupAction(this, EnIk_SpinAction);
+}
+
+void EnIk_SpinAction(EnIk* this, PlayState* play) {
+    Vec3f sp2C;
+    Player* player = GET_PLAYER(play);
+
+    if (this->skelAnime.curFrame == 2.0f)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_IRONNACK_DASH);
+    else if (this->skelAnime.curFrame == 14.0f)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_IRONNACK_SWING_AXE);
+    else if (this->skelAnime.curFrame == 17.0f || this->skelAnime.curFrame == 25.0f)
+        Actor_PlaySfx(&this->actor, NA_SE_IT_SWORD_SWING_HARD);
+
+
+    if ((this->skelAnime.curFrame >= 14.0f) && (this->skelAnime.curFrame <= 31.0f)) {
+        this->unk_2FE = 1; //damage state
+        Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 3, 0x5DC, 0);
+        this->actor.shape.rot.y = this->actor.world.rot.y;
+        this->actor.speed = 15.0f;
+    } else {
+        this->unk_2FE = 0;
+        Math_StepToF(&this->actor.speed, 0.0f, 5.0f);
+    }
+
+    if (SkelAnime_Update(&this->skelAnime))
+        EnIk_SetupWalkOrRun(this);
+}
+
+void EnIk_DecideSlam(EnIk* this) {
+    f32 frames = Animation_GetLastFrame(&gIronKnuckleHammerSlamAnimObject_ik_anim_001c28Anim);
+
+    this->unk_2FF = 1;
+    this->unk_2F8 = 6;
+    this->actor.speed = 0.0f;
+    Animation_Change(&this->skelAnime, &gIronKnuckleHammerSlamAnimObject_ik_anim_001c28Anim, 1.0f, 0.0f, frames, ANIMMODE_ONCE, -4.0f);
+    EnIk_SetupAction(this, EnIk_SlamAction);
+}
+
+void EnIk_SpawnDust(PlayState* play, Vec3f* pos) {
+    static Vec3f velocity = { 0.0f, 0.0f, 0.0f };
+    static Vec3f accel = { 0.0f, 0.3f, 0.0f };
+    Vec3f randPos;
+    s32 i;
+    s16 angle = 0;
+
+    for (i = 0; i < 32; i++) {
+        angle += 0x4E20;
+        randPos.x = pos->x + (47.0f * (Rand_ZeroOne() * 0.5f + 0.5f)) * Math_SinS(angle);
+        randPos.y = pos->y + (Rand_ZeroOne() - 0.5f) * 40.0f;
+        randPos.z = pos->z + ((47.0f * (Rand_ZeroOne() * 0.5f + 0.5f))) * Math_CosS(angle);
+        func_800286CC(play, &randPos, &velocity, &accel, (s16)(Rand_ZeroOne() * 30.0f) + 200, 80);
+        func_800286CC(play, &randPos, &velocity, &accel, (s16)(Rand_ZeroOne() * 20.0f) + 160, 80);
+    }
+}
+
+void EnIk_SlamAction(EnIk* this, PlayState* play) {
+    Vec3f sp2C;
+    Player* player = GET_PLAYER(play);
+
+    if (this->skelAnime.curFrame == 5.0f)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_IRONNACK_DASH);
+    else if (this->skelAnime.curFrame == 34.0f)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_IRONNACK_SWING_AXE);
+    else if (this->skelAnime.curFrame == 49.0f || this->skelAnime.curFrame == 54.0f)
+        Actor_PlaySfx(&this->actor, NA_SE_IT_SWORD_SWING_HARD);
+    else if (this->skelAnime.curFrame == 36.0f) {
+        sp2C.x = this->actor.world.pos.x + Math_SinS(this->actor.shape.rot.y + 0x6A4) * 70.0f;
+        sp2C.z = this->actor.world.pos.z + Math_CosS(this->actor.shape.rot.y + 0x6A4) * 70.0f;
+        sp2C.y = this->actor.world.pos.y;
+        Actor_PlaySfx(&this->actor, NA_SE_EN_IRONNACK_HIT_GND);
+        Camera_RequestQuake(&play->mainCamera, 2, 25, 30);
+        Rumble_Request(this->actor.xzDistToPlayer, 255, 20, 150);
+        CollisionCheck_SpawnShieldParticles(play, &sp2C);
+        EnIk_SpawnDust(play, &sp2C);
+    }
+
+    if ((this->skelAnime.curFrame > 34.0f) && (this->skelAnime.curFrame < 40.0f))
+        this->unk_2FE = 1; //damage state
+    else this->unk_2FE = 0;
+
+    if (this->unk_2FE == 1 && this->actor.xzDistToPlayer < 150.0f && player->invincibilityTimer < 1) {
+        play->damagePlayer(play, -45);
+        player->invincibilityTimer = 20;
+        Actor_SetPlayerKnockbackLarge(play, &this->actor, 20.0f, this->actor.yawTowardsPlayer, 2.0f, 0);
+        Actor_PlaySfx(&player->actor, NA_SE_PL_BODY_HIT);
+        this->unk_2FE = 0;
+    }
+
+    if (SkelAnime_Update(&this->skelAnime))
+        EnIk_SetupWalkOrRun(this);
 }
 
 void EnIk_VerticalAttack(EnIk* this, PlayState* play) {
