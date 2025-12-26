@@ -25,6 +25,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [Decomp Discord](https://discord.zelda.deco.mp)
 - [HackerOoT](https://github.com/HackerN64/HackerOoT)
 - [Hylian Modding Discord](http://discord.gg/qQqDsM8)
+- [Demon's Quest](https://github.com/thinedave/ocarina-demonsquest-source)
 - [Darunia's Joy](https://github.com/DaruniasJoy/OoT-Custom-Sequences)
 - [MMR Music Repo](https://mega.nz/folder/4g1xHbwL#pzE9l2KBs-kwCJJr6E6IKQ)
 
@@ -52,6 +53,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 **Actors and objects:**
 - **LeSéducteur:** Buff Scrub
 - **Syeo & Trueffel:** Miniblin, Molmauk
+- **thinedave & Aegiker:** Harder King Dodongo, Iron Knuckle & Ganondorf
 - **Zelda Spaceworld ´97 Experience:** Zol
 
 **Music tracks:**

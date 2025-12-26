@@ -1135,6 +1135,7 @@ beginseg
     name "object_kingdodongo"
     compress
     include "$(BUILD_DIR)/assets/objects/object_kingdodongo/object_kingdodongo.o"
+    include "$(BUILD_DIR)/assets/objects/object_kingdodongo/object_kingdodongo_extra.o"
 #if OOT_NTSC_N64
     include "$(BUILD_DIR)/assets/objects/object_kingdodongo/object_kingdodongo_title_card.o"
 #endif
@@ -2256,6 +2257,7 @@ beginseg
     name "object_ganon"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ganon/object_ganon.o"
+    include "$(BUILD_DIR)/assets/objects/object_ganon/object_ganon_extra.o"
 #if OOT_NTSC_N64
     include "$(BUILD_DIR)/assets/objects/object_ganon/object_ganon_title_card.o"
 #endif
@@ -2500,6 +2502,7 @@ beginseg
     name "object_ik"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ik/object_ik.o"
+    include "$(BUILD_DIR)/assets/objects/object_ik/object_ik_extra.o"
     number 6
 endseg
 
@@ -3322,6 +3325,7 @@ beginseg
     name "object_ganon_anime2"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ganon_anime2/object_ganon_anime2.o"
+    include "$(BUILD_DIR)/assets/objects/object_ganon_anime2/object_ganon_anime2_extra.o"
     number 6
 endseg
 
