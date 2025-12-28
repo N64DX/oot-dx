@@ -56,7 +56,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **LeSéducteur:** Buff Scrub
 - **Syeo & Trueffel:** Miniblin, Molmauk
 - **Sunset Tides Interactive:** Beast
-- **thinedave & Aegiker:** Harder King Dodongo, Iron Knuckle & Ganondorf
+- **thinedave & Aegiker:** Harder Mad Scrub, Biri, King Dodongo, Iron Knuckle & Ganondorf
 - **Zelda Spaceworld ´97 Experience:** Zol
 
 **Music tracks:**

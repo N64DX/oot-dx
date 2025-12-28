@@ -7,6 +7,7 @@
 #include "z_en_dekunuts.h"
 #include "overlays/effects/ovl_Effect_Ss_Hahen/z_eff_ss_hahen.h"
 
+#include "libc64/qrand.h"
 #include "ichain.h"
 #include "sfx.h"
 #include "sys_matrix.h"
@@ -14,9 +15,11 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
+#include "player.h"
 #include "save.h"
 
 #include "assets/objects/object_dekunuts/object_dekunuts.h"
+#include "assets/objects/object_dekunuts/object_dekunuts_extra.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE)
 
@@ -39,6 +42,8 @@ void EnDekunuts_Gasp(EnDekunuts* this, PlayState* play);
 void EnDekunuts_BeDamaged(EnDekunuts* this, PlayState* play);
 void EnDekunuts_BeStunned(EnDekunuts* this, PlayState* play);
 void EnDekunuts_Die(EnDekunuts* this, PlayState* play);
+void EnDekunuts_SetupSpin(EnDekunuts* this, PlayState* play);
+void EnDekunuts_Spin(EnDekunuts* this, PlayState* play);
 
 ActorProfile En_Dekunuts_Profile = {
     /**/ ACTOR_EN_DEKUNUTS,
@@ -70,6 +75,26 @@ static ColliderCylinderInit sCylinderInit = {
         OCELEM_ON,
     },
     { 18, 32, 0, { 0, 0, 0 } },
+};
+
+static ColliderCylinderInit sCylinderInitDmg = {
+    {
+        COL_MATERIAL_HIT6,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_NONE,
+        OC1_NONE,
+        OC2_NONE,
+        COLSHAPE_CYLINDER,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0xFFCFFFFF, 0x00, 0x08 },
+        { 0x00000000, 0x00, 0x00 },
+        ATELEM_ON | ATELEM_SFX_WOOD,
+        ACELEM_NONE,
+        OCELEM_NONE,
+    },
+    { 60, 32, 0, { 0, 0, 0 } },
 };
 
 static CollisionCheckInfoInit sColChkInfoInit = { 1, 18, 32, MASS_IMMOVABLE };
@@ -129,6 +154,10 @@ void EnDekunuts_Init(Actor* thisx, PlayState* play) {
         Collider_InitCylinder(play, &this->collider);
         Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
         CollisionCheck_SetInfo(&thisx->colChkInfo, &sDamageTable, &sColChkInfoInit);
+        if (HARDER_ENEMIES) {
+            Collider_InitCylinder(play, &this->attackCollider);
+            Collider_SetCylinder(play, &this->attackCollider, &this->actor, &sCylinderInitDmg);
+        }
         this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
         this->shotsPerRound = PARAMS_GET_U(thisx->params, 8, 8);
         thisx->params &= 0xFF;
@@ -146,6 +175,9 @@ void EnDekunuts_Init(Actor* thisx, PlayState* play) {
 
 void EnDekunuts_Destroy(Actor* thisx, PlayState* play) {
     EnDekunuts* this = (EnDekunuts*)thisx;
+
+    if (HARDER_ENEMIES)
+        Collider_DestroyCylinder(play, &this->attackCollider);
 
     if (this->actor.params != DEKUNUTS_FLOWER) {
         Collider_DestroyCylinder(play, &this->collider);
@@ -211,6 +243,7 @@ void EnDekunuts_SetupRun(EnDekunuts* this) {
     this->playWalkSfx = false;
     this->collider.base.acFlags |= AC_ON;
     this->actionFunc = EnDekunuts_Run;
+    this->nextSpin = (u8)IRANDOM_RANGE(10, 20);
 }
 
 void EnDekunuts_SetupGasp(EnDekunuts* this) {
@@ -261,6 +294,40 @@ void EnDekunuts_SetupDie(EnDekunuts* this) {
     this->actionFunc = EnDekunuts_Die;
     this->actor.speed = 0.0f;
     Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_DEAD);
+}
+
+void EnDekunuts_SetupSpin(EnDekunuts* this, PlayState* play) {
+    Animation_PlayOnce(&this->skelAnime, &gDekuNutsSkelSpinAnim);
+    this->actionFunc = EnDekunuts_Spin;
+    this->actor.speed = 0.0f;
+    Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 5);
+    Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_UP);
+    this->actor.world.rot.y = this->actor.yawTowardsPlayer;
+    this->attackCollider.base.atFlags &= ~AT_HIT;
+}
+
+void EnDekunuts_Spin(EnDekunuts* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+
+    f32 curFrame = this->skelAnime.curFrame;
+
+    if(curFrame == 5.0f)
+        Actor_PlaySfx(&this->actor, NA_SE_IT_MASTER_SWORD_SWING);
+
+    if(curFrame >= 5.0f)
+        Math_StepToAngleS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 255);
+
+    if (curFrame >= 5.0f && curFrame <= 16.0f) {
+        f32 frac = CLAMP((curFrame - 12) * 0.25, 0.0f, 1.0f);
+        this->actor.speed = F32_LERP(15.0f, 0.0f, frac);
+        if (!(this->attackCollider.base.atFlags & AT_HIT))
+            CollisionCheck_SetAT(play, &play->colChkCtx, &this->attackCollider.base);
+    }
+
+    if (curFrame > 16.0f)
+        this->actor.speed = 0.0f;
+    if (SkelAnime_Update(&this->skelAnime))
+        EnDekunuts_SetupRun(this);
 }
 
 void EnDekunuts_Wait(EnDekunuts* this, PlayState* play) {
@@ -386,6 +453,12 @@ void EnDekunuts_Run(EnDekunuts* this, PlayState* play) {
         this->playWalkSfx = true;
     }
 
+    this->nextSpin--;
+    if (((this->actor.xzDistToPlayer <= 300.0f && this->nextSpin <= 0) || this->actor.xzDistToPlayer <= 70.0f) && HARDER_ENEMIES) {
+        EnDekunuts_SetupSpin(this, play);
+        return;
+    }
+
     Math_StepToF(&this->actor.speed, 7.5f, 1.0f);
     if (Math_SmoothStepToS(&this->actor.world.rot.y, this->runDirection, 1, 0xE38, 0xB6) == 0) {
         if (this->actor.bgCheckFlags & BGCHECKFLAG_WATER) {
@@ -509,6 +582,8 @@ void EnDekunuts_Update(Actor* thisx, PlayState* play) {
                                 UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2 | UPDBGCHECKINFO_FLAG_3 |
                                     UPDBGCHECKINFO_FLAG_4);
         Collider_UpdateCylinder(&this->actor, &this->collider);
+        if (HARDER_ENEMIES)
+            Collider_UpdateCylinder(&this->actor, &this->attackCollider);
         if (this->collider.base.acFlags & AC_ON) {
             CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
         }

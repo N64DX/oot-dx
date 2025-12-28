@@ -4154,7 +4154,7 @@ s32 Actor_IsLockedOn(PlayState* play, Actor* actor) {
     if ((player->stateFlags1 & PLAYER_STATE1_HOSTILE_LOCK_ON) && actor->isLockedOn) {
         return true;
     } else {
-        return false;
+        return HARDER_ENEMIES;
     }
 }
 

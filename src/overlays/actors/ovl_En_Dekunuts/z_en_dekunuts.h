@@ -20,6 +20,8 @@ typedef struct EnDekunuts {
     /* 0x019C */ Vec3s jointTable[25];
     /* 0x0232 */ Vec3s morphTable[25];
     /* 0x02C8 */ ColliderCylinder collider;
-} EnDekunuts; // size = 0x0314
+    /* 0x0314 */ ColliderCylinder attackCollider;
+    /* 0x0360 */ u8 nextSpin;
+} EnDekunuts; // size = 0x0361
 
 #endif
