@@ -22,8 +22,8 @@ extern u64 gOcarinaofTimeDesignTex[TEX_LEN(u64, gOcarinaofTimeDesignTex_WIDTH, g
 #define gBottleGlassTex_WIDTH 16
 #define gBottleGlassTex_HEIGHT 16
 extern u64 gBottleGlassTex[TEX_LEN(u64, gBottleGlassTex_WIDTH, gBottleGlassTex_HEIGHT, 16)];
-#define gDekuStickTex_WIDTH 8
-#define gDekuStickTex_HEIGHT 8
+#define gDekuStickTex_WIDTH 16
+#define gDekuStickTex_HEIGHT 16
 extern u64 gDekuStickTex[TEX_LEN(u64, gDekuStickTex_WIDTH, gDekuStickTex_HEIGHT, 8)];
 #define gLinkHairTex_WIDTH 16
 #define gLinkHairTex_HEIGHT 16
