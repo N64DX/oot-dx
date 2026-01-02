@@ -452,4 +452,14 @@
     <Sample Name="SAMPLE_0_WOODFALL_629" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample629.aifc"/>
     <Sample Name="SAMPLE_0_WOODFALL_630" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample630.aifc"/>
     <Sample Name="SAMPLE_0_WOODFALL_631" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample631.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_442" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample442.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_443" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample443.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_444" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample444.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_445" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample445.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_446" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample446.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_447" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample447.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_448" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample448.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_449" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample449.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_450" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample450.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_451" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample451.aifc"/>
 </SampleBank>

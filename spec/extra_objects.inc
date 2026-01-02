@@ -138,6 +138,12 @@ beginseg
     number 6
 endseg
 
+name "object_stalm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_stalm/object_stalm.o"
+    number 6
+endseg
+
 beginseg
     name "object_ganon_ladder"
     compress

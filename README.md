@@ -52,6 +52,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - Kakariko Thunderstorm Weather fix
 
 **Actors and objects:**
+- **GrandLovania**: Stalmaster
 - **LeSéducteur:** Buff Scrub
 - **Syeo & Trueffel:** Miniblin, Molmauk
 - **Sunset Tides Interactive:** Beast

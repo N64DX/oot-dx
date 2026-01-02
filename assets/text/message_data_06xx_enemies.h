@@ -2243,3 +2243,29 @@ COLOR(LIGHTBLUE) "Une bête dangereuse qui se jette\n"
 "sur toi!" COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
+
+DEFINE_MESSAGE(0x0661, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(100) "スタルマスタ\n"
+SHIFT(75) COLOR(LIGHTBLUE) "金の鎧と四本の腕を持つ\n"
+SHIFT(50) "うわさのスタルフォス。爆破せよ！\n" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Stalmaster\n"
+COLOR(LIGHTBLUE) "Is this the rumored Stalfos in\n"
+"gold armor with four hands?\n"
+"Try to " COLOR(DEFAULT) "blow it up" COLOR(LIGHTBLUE) "!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Stalmeister\n"
+COLOR(LIGHTBLUE) "Ist das der sagenhafte Stalfos\n"
+"in goldener Rüstung mit vier Armen?\n"
+COLOR(DEFAULT) "Spreng ihn in die Luft!" COLOR(LIGHTBLUE) "!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Maître Stalfon\n"
+COLOR(LIGHTBLUE) "Serait-ce le Stalfos légendaire\n"
+"à l’armure dorée et aux quatre bras?\n"
+COLOR(DEFAULT) "Fais-le exploser" COLOR(LIGHTBLUE) "!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)

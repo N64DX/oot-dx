@@ -14923,6 +14923,96 @@ LAYER_6576:
 .array ARRAY_65AA
     .byte 100, 95, 105
 
+.channel CHAN_STAL_442
+    ldlayer     0, LAYER_STAL_442
+    end
+
+.layer LAYER_STAL_442
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_0, 0, 100
+    end
+
+.channel CHAN_STAL_443
+    ldlayer     0, LAYER_STAL_443
+    end
+
+.layer LAYER_STAL_443
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_1, 0, 100
+    end
+
+.channel CHAN_STAL_444
+    ldlayer     0, LAYER_STAL_444
+    end
+
+.layer LAYER_STAL_444
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_2, 0, 100
+    end
+
+.channel CHAN_STAL_445
+    ldlayer     0, LAYER_STAL_445
+    end
+
+.layer LAYER_STAL_445
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_3, 0, 100
+    end
+
+.channel CHAN_STAL_446
+    ldlayer     0, LAYER_STAL_446
+    end
+
+.layer LAYER_STAL_446
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_4, 0, 100
+    end
+
+.channel CHAN_STAL_447
+    ldlayer     0, LAYER_STAL_447
+    end
+
+.layer LAYER_STAL_447
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_5, 0, 100
+    end
+
+.channel CHAN_STAL_448
+    ldlayer     0, LAYER_STAL_448
+    end
+
+.layer LAYER_STAL_448
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_6, 0, 100
+    end
+
+.channel CHAN_STAL_449
+    ldlayer     0, LAYER_STAL_449
+    end
+
+.layer LAYER_STAL_449
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_7, 0, 100
+    end
+
+.channel CHAN_STAL_450
+    ldlayer     0, LAYER_STAL_450
+    end
+
+.layer LAYER_STAL_450
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_8, 0, 100
+    end
+
+.channel CHAN_STAL_451
+    ldlayer     0, LAYER_STAL_451
+    end
+
+.layer LAYER_STAL_451
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_9, 0, 100
+    end
+
 .balign 16
 
 .filter FILTER_65B0
