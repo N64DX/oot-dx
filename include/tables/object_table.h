@@ -425,3 +425,4 @@
 /* 0x01A3 */ DEFINE_OBJECT(object_miniblin, OBJECT_MINIBLIN)
 /* 0x01A4 */ DEFINE_OBJECT(object_slime, OBJECT_SLIME)
 /* 0x01A7 */ DEFINE_OBJECT(object_beast, OBJECT_BEAST)
+/* 0x01A9 */ DEFINE_OBJECT(object_stalm, OBJECT_STALM)

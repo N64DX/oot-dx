@@ -38,6 +38,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Syeo:** Deluxe chest textures
 
 **Actors and objects:**
+- **GrandLovania**: Stalmaster
 - **LeSéducteur:** Buff Scrub
 - **Syeo & Trueffel:** Miniblin, Molmauk
 - **Sunset Tides Interactive:** Beast

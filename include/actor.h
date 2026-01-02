@@ -409,6 +409,7 @@ typedef enum NaviEnemy {
     /* 0x5E */ NAVI_ENEMY_ZOL,
     /* 0x5F */ NAVI_ENEMY_ELECTRIC_KEESE,
     /* 0x60 */ NAVI_ENEMY_BEAST,
+    /* 0x61 */ NAVI_ENEMY_STALMASTER,
     /* 0xFF */ NAVI_ENEMY_NONE = 0xFF
 } NaviEnemy;
 

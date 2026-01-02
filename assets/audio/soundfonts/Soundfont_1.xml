@@ -1,0 +1,236 @@
+<Soundfont Name="Soundfont_1" Index="1" Medium="MEDIUM_CART" CachePolicy="CACHE_LOAD_PERMANENT" SampleBank="$(BUILD_DIR)/assets/audio/samplebanks/SampleBank_0.xml">
+    <Envelopes>
+        <Envelope Name="Env0" Release="251">
+            <Point Delay="1" Arg="0"/>
+            <Point Delay="1" Arg="32700"/>
+            <Point Delay="32700" Arg="32700"/>
+        </Envelope>
+    </Envelopes>
+    <Samples>
+        <Sample Name="SAMPLE_0_262"/>
+        <Sample Name="SAMPLE_0_256"/>
+        <Sample Name="SAMPLE_0_263"/>
+        <Sample Name="SAMPLE_0_264"/>
+        <Sample Name="SAMPLE_0_265"/>
+        <Sample Name="SAMPLE_0_266"/>
+        <Sample Name="SAMPLE_0_267"/>
+        <Sample Name="SAMPLE_0_268"/>
+        <Sample Name="SAMPLE_0_269"/>
+        <Sample Name="SAMPLE_0_270"/>
+        <Sample Name="SAMPLE_0_271"/>
+        <Sample Name="SAMPLE_0_272"/>
+        <Sample Name="SAMPLE_0_273"/>
+        <Sample Name="SAMPLE_0_274"/>
+        <Sample Name="SAMPLE_0_275"/>
+        <Sample Name="SAMPLE_0_276"/>
+        <Sample Name="SAMPLE_0_277"/>
+        <Sample Name="SAMPLE_0_278"/>
+        <Sample Name="SAMPLE_0_279"/>
+        <Sample Name="SAMPLE_0_280"/>
+        <Sample Name="SAMPLE_0_281"/>
+        <Sample Name="SAMPLE_0_282"/>
+        <Sample Name="SAMPLE_0_283"/>
+        <Sample Name="SAMPLE_0_284"/>
+        <Sample Name="SAMPLE_0_285"/>
+        <Sample Name="SAMPLE_0_286"/>
+        <Sample Name="SAMPLE_0_258"/>
+        <Sample Name="SAMPLE_0_287"/>
+        <Sample Name="SAMPLE_0_288"/>
+        <Sample Name="SAMPLE_0_259"/>
+        <Sample Name="SAMPLE_0_289"/>
+        <Sample Name="SAMPLE_0_290"/>
+        <Sample Name="SAMPLE_0_291"/>
+        <Sample Name="SAMPLE_0_292"/>
+        <Sample Name="SAMPLE_0_257"/>
+        <Sample Name="SAMPLE_0_293"/>
+        <Sample Name="SAMPLE_0_294"/>
+        <Sample Name="SAMPLE_0_295"/>
+        <Sample Name="SAMPLE_0_296"/>
+        <Sample Name="SAMPLE_0_297"/>
+        <Sample Name="SAMPLE_0_298"/>
+        <Sample Name="SAMPLE_0_299"/>
+        <Sample Name="SAMPLE_0_300"/>
+        <Sample Name="SAMPLE_0_301"/>
+        <Sample Name="SAMPLE_0_302"/>
+        <Sample Name="SAMPLE_0_303"/>
+        <Sample Name="SAMPLE_0_304"/>
+        <Sample Name="SAMPLE_0_305"/>
+        <Sample Name="SAMPLE_0_306"/>
+        <Sample Name="SAMPLE_0_307"/>
+        <Sample Name="SAMPLE_0_308"/>
+        <Sample Name="SAMPLE_0_309"/>
+        <Sample Name="SAMPLE_0_310"/>
+        <Sample Name="SAMPLE_0_311"/>
+        <Sample Name="SAMPLE_0_312"/>
+        <Sample Name="SAMPLE_0_313"/>
+        <Sample Name="SAMPLE_0_314"/>
+        <Sample Name="SAMPLE_0_315"/>
+        <Sample Name="SAMPLE_0_316"/>
+        <Sample Name="SAMPLE_0_317"/>
+        <Sample Name="SAMPLE_0_318"/>
+        <Sample Name="SAMPLE_0_319"/>
+        <Sample Name="SAMPLE_0_320"/>
+        <Sample Name="SAMPLE_0_321"/>
+        <Sample Name="SAMPLE_0_322"/>
+        <Sample Name="SAMPLE_0_323"/>
+        <Sample Name="SAMPLE_0_324"/>
+        <Sample Name="SAMPLE_0_325"/>
+        <Sample Name="SAMPLE_0_326"/>
+        <Sample Name="SAMPLE_0_327"/>
+        <Sample Name="SAMPLE_0_328"/>
+        <Sample Name="SAMPLE_0_329"/>
+        <Sample Name="SAMPLE_0_330"/>
+        <Sample Name="SAMPLE_0_331"/>
+        <Sample Name="SAMPLE_0_332"/>
+        <Sample Name="SAMPLE_0_333"/>
+        <Sample Name="SAMPLE_0_334"/>
+        <Sample Name="SAMPLE_0_335"/>
+        <Sample Name="SAMPLE_0_336"/>
+        <Sample Name="SAMPLE_0_337"/>
+        <Sample Name="SAMPLE_0_338"/>
+        <Sample Name="SAMPLE_0_339"/>
+        <Sample Name="SAMPLE_0_340"/>
+        <Sample Name="SAMPLE_0_341"/>
+        <Sample Name="SAMPLE_0_342"/>
+        <Sample Name="SAMPLE_0_343"/>
+        <Sample Name="SAMPLE_0_255"/>
+        <Sample Name="SAMPLE_0_254"/>
+        <Sample Name="SAMPLE_0_344"/>
+        <Sample Name="SAMPLE_0_345"/>
+        <Sample Name="SAMPLE_0_346"/>
+        <Sample Name="SAMPLE_0_347"/>
+        <Sample Name="SAMPLE_0_348"/>
+        <Sample Name="SAMPLE_0_38"/>
+        <Sample Name="SAMPLE_0_24"/>
+        <Sample Name="SAMPLE_0_79"/>
+        <Sample Name="SAMPLE_0_72"/>
+        <Sample Name="SAMPLE_0_94"/>
+        <Sample Name="SAMPLE_0_17"/>
+        <Sample Name="SAMPLE_0_349"/>
+        <Sample Name="SAMPLE_0_33"/>
+        <Sample Name="SAMPLE_0_105"/>
+        <Sample Name="SAMPLE_0_19"/>
+        <Sample Name="SAMPLE_0_STAL_442"/>
+        <Sample Name="SAMPLE_0_STAL_443"/>
+        <Sample Name="SAMPLE_0_STAL_444"/>
+        <Sample Name="SAMPLE_0_STAL_445"/>
+        <Sample Name="SAMPLE_0_STAL_446"/>
+        <Sample Name="SAMPLE_0_STAL_447"/>
+        <Sample Name="SAMPLE_0_STAL_448"/>
+        <Sample Name="SAMPLE_0_STAL_449"/>
+        <Sample Name="SAMPLE_0_STAL_450"/>
+        <Sample Name="SAMPLE_0_STAL_451"/>
+    </Samples>
+    <Effects>
+        <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
+        <Effect Name="EFFECT_1" Sample="SAMPLE_0_300"/>
+        <Effect Name="EFFECT_2" Sample="SAMPLE_0_301"/>
+        <Effect Name="EFFECT_3" Sample="SAMPLE_0_302"/>
+        <Effect Name="EFFECT_4" Sample="SAMPLE_0_303"/>
+        <Effect Name="EFFECT_5" Sample="SAMPLE_0_304"/>
+        <Effect Name="EFFECT_6" Sample="SAMPLE_0_306"/>
+        <Effect Name="EFFECT_7" Sample="SAMPLE_0_307"/>
+        <Effect Name="EFFECT_8" Sample="SAMPLE_0_308"/>
+        <Effect Name="EFFECT_9" Sample="SAMPLE_0_309"/>
+        <Effect Name="EFFECT_10" Sample="SAMPLE_0_310"/>
+        <Effect Name="EFFECT_11" Sample="SAMPLE_0_311"/>
+        <Effect Name="EFFECT_12" Sample="SAMPLE_0_313"/>
+        <Effect Name="EFFECT_13" Sample="SAMPLE_0_314"/>
+        <Effect Name="EFFECT_14" Sample="SAMPLE_0_315"/>
+        <Effect Name="EFFECT_15" Sample="SAMPLE_0_316"/>
+        <Effect Name="EFFECT_16" Sample="SAMPLE_0_317"/>
+        <Effect Name="EFFECT_17" Sample="SAMPLE_0_318"/>
+        <Effect Name="EFFECT_18" Sample="SAMPLE_0_319"/>
+        <Effect Name="EFFECT_19" Sample="SAMPLE_0_322"/>
+        <Effect Name="EFFECT_20" Sample="SAMPLE_0_324"/>
+        <Effect Name="EFFECT_21" Sample="SAMPLE_0_325"/>
+        <Effect Name="EFFECT_22" Sample="SAMPLE_0_323"/>
+        <Effect Name="EFFECT_23" Sample="SAMPLE_0_327"/>
+        <Effect Name="EFFECT_24" Sample="SAMPLE_0_328"/>
+        <Effect Name="EFFECT_25" Sample="SAMPLE_0_329"/>
+        <Effect Name="EFFECT_26" Sample="SAMPLE_0_330"/>
+        <Effect Name="EFFECT_27" Sample="SAMPLE_0_331"/>
+        <Effect Name="EFFECT_28" Sample="SAMPLE_0_332"/>
+        <Effect Name="EFFECT_29" Sample="SAMPLE_0_333"/>
+        <Effect Name="EFFECT_30" Sample="SAMPLE_0_334"/>
+        <Effect Name="EFFECT_31" Sample="SAMPLE_0_335"/>
+        <Effect Name="EFFECT_32" Sample="SAMPLE_0_336"/>
+        <Effect Name="EFFECT_33" Sample="SAMPLE_0_337"/>
+        <Effect Name="EFFECT_34" Sample="SAMPLE_0_338"/>
+        <Effect Name="EFFECT_35" Sample="SAMPLE_0_339"/>
+        <Effect Name="EFFECT_36" Sample="SAMPLE_0_340"/>
+        <Effect Name="EFFECT_37" Sample="SAMPLE_0_341"/>
+        <Effect Name="EFFECT_38" Sample="SAMPLE_0_342"/>
+        <Effect Name="EFFECT_39" Sample="SAMPLE_0_326"/>
+        <Effect Name="EFFECT_40" Sample="SAMPLE_0_343"/>
+        <Effect Name="EFFECT_STAL_0" Sample="SAMPLE_0_STAL_442"/>
+        <Effect Name="EFFECT_STAL_1" Sample="SAMPLE_0_STAL_443"/>
+        <Effect Name="EFFECT_STAL_2" Sample="SAMPLE_0_STAL_444"/>
+        <Effect Name="EFFECT_STAL_3" Sample="SAMPLE_0_STAL_445"/>
+        <Effect Name="EFFECT_STAL_4" Sample="SAMPLE_0_STAL_446"/>
+        <Effect Name="EFFECT_STAL_5" Sample="SAMPLE_0_STAL_447"/>
+        <Effect Name="EFFECT_STAL_6" Sample="SAMPLE_0_STAL_448"/>
+        <Effect Name="EFFECT_STAL_7" Sample="SAMPLE_0_STAL_449"/>
+        <Effect Name="EFFECT_STAL_8" Sample="SAMPLE_0_STAL_450"/>
+        <Effect Name="EFFECT_STAL_9" Sample="SAMPLE_0_STAL_451"/>
+    </Effects>
+    <Drums>
+        <Drum/>
+    </Drums>
+    <Instruments>
+        <Instrument ProgramNumber="0" Name="INST_0" Envelope="Env0" Sample="SAMPLE_0_262"/>
+        <Instrument ProgramNumber="1" Name="INST_1" Envelope="Env0" Sample="SAMPLE_0_255"/>
+        <Instrument ProgramNumber="2" Name="INST_2" Envelope="Env0" Sample="SAMPLE_0_254"/>
+        <Instrument ProgramNumber="18" Name="INST_18" Envelope="Env0" Sample="SAMPLE_0_256"/>
+        <Instrument ProgramNumber="19" Name="INST_19" Envelope="Env0" Sample="SAMPLE_0_263"/>
+        <Instrument ProgramNumber="20" Name="INST_20" Envelope="Env0" Sample="SAMPLE_0_264" RangeHi="B5" SampleHi="SAMPLE_0_257"/>
+        <Instrument ProgramNumber="3" Name="INST_3" Envelope="Env0" Sample="SAMPLE_0_344"/>
+        <Instrument ProgramNumber="4" Name="INST_4" Envelope="Env0" Sample="SAMPLE_0_265"/>
+        <Instrument ProgramNumber="5" Name="INST_5" Envelope="Env0" Sample="SAMPLE_0_266"/>
+        <Instrument ProgramNumber="6" Name="INST_6" Envelope="Env0" Sample="SAMPLE_0_267"/>
+        <Instrument ProgramNumber="7" Name="INST_7" Envelope="Env0" Sample="SAMPLE_0_345"/>
+        <Instrument ProgramNumber="11" Name="INST_11" Envelope="Env0" Sample="SAMPLE_0_346"/>
+        <Instrument ProgramNumber="8" Name="INST_8" Envelope="Env0" Sample="SAMPLE_0_268"/>
+        <Instrument ProgramNumber="9" Name="INST_9" Envelope="Env0" Sample="SAMPLE_0_269"/>
+        <Instrument ProgramNumber="10" Name="INST_10" Envelope="Env0" Sample="SAMPLE_0_270"/>
+        <Instrument ProgramNumber="23" Name="INST_23" Envelope="Env0" Sample="SAMPLE_0_271"/>
+        <Instrument ProgramNumber="12" Name="INST_12" Envelope="Env0" Sample="SAMPLE_0_272"/>
+        <Instrument ProgramNumber="13" Name="INST_13" Envelope="Env0" Sample="SAMPLE_0_273"/>
+        <Instrument ProgramNumber="15" Name="INST_15" Envelope="Env0" Sample="SAMPLE_0_274" RangeHi="B5" SampleHi="SAMPLE_0_275"/>
+        <Instrument ProgramNumber="14" Name="INST_14" Envelope="Env0" Sample="SAMPLE_0_276"/>
+        <Instrument ProgramNumber="16" Name="INST_16" Envelope="Env0" Sample="SAMPLE_0_277"/>
+        <Instrument ProgramNumber="17" Name="INST_17" Envelope="Env0" Sample="SAMPLE_0_278"/>
+        <Instrument ProgramNumber="25" Name="INST_25" Envelope="Env0" Sample="SAMPLE_0_279"/>
+        <Instrument ProgramNumber="26" Name="INST_26" Envelope="Env0" Sample="SAMPLE_0_280"/>
+        <Instrument ProgramNumber="27" Name="INST_27" Envelope="Env0" Sample="SAMPLE_0_281"/>
+        <Instrument ProgramNumber="28" Name="INST_28" Envelope="Env0" Sample="SAMPLE_0_282"/>
+        <Instrument ProgramNumber="21" Name="INST_21" Envelope="Env0" Sample="SAMPLE_0_283"/>
+        <Instrument ProgramNumber="24" Name="INST_24" Envelope="Env0" Sample="SAMPLE_0_285" RangeHi="B5" SampleHi="SAMPLE_0_284"/>
+        <Instrument ProgramNumber="29" Name="INST_29" Envelope="Env0" Sample="SAMPLE_0_286"/>
+        <Instrument ProgramNumber="30" Name="INST_30" Envelope="Env0" Sample="SAMPLE_0_258"/>
+        <Instrument ProgramNumber="31" Name="INST_31" Envelope="Env0" Sample="SAMPLE_0_287"/>
+        <Instrument ProgramNumber="32" Name="INST_32" Envelope="Env0" Sample="SAMPLE_0_288"/>
+        <Instrument ProgramNumber="33" Name="INST_33" Envelope="Env0" Sample="SAMPLE_0_259"/>
+        <Instrument ProgramNumber="34" Name="INST_34" Envelope="Env0" Sample="SAMPLE_0_289"/>
+        <Instrument ProgramNumber="35" Name="INST_35" Envelope="Env0" Sample="SAMPLE_0_290"/>
+        <Instrument ProgramNumber="36" Name="INST_36" Envelope="Env0" Sample="SAMPLE_0_291"/>
+        <Instrument ProgramNumber="37" Name="INST_37" Envelope="Env0" Sample="SAMPLE_0_292"/>
+        <Instrument ProgramNumber="41" Name="INST_41" Envelope="Env0" Sample="SAMPLE_0_293"/>
+        <Instrument ProgramNumber="42" Name="INST_42" Envelope="Env0" Sample="SAMPLE_0_294" RangeHi="B5" SampleHi="SAMPLE_0_298"/>
+        <Instrument ProgramNumber="43" Name="INST_43" Envelope="Env0" Sample="SAMPLE_0_347"/>
+        <Instrument ProgramNumber="45" Name="INST_45" Envelope="Env0" Sample="SAMPLE_0_295" RangeHi="B5" SampleHi="SAMPLE_0_312"/>
+        <Instrument ProgramNumber="46" Name="INST_46" Envelope="Env0" Sample="SAMPLE_0_296" RangeHi="B5" SampleHi="SAMPLE_0_297"/>
+        <Instrument ProgramNumber="48" Name="INST_48" Envelope="Env0" Sample="SAMPLE_0_320" RangeHi="B5" SampleHi="SAMPLE_0_321"/>
+        <Instrument ProgramNumber="50" Name="INST_50" Envelope="Env0" Sample="SAMPLE_0_305" RangeHi="B5" SampleHi="SAMPLE_0_348"/>
+        <Instrument ProgramNumber="38" Name="INST_38" Envelope="Env0" Sample="SAMPLE_0_38"/>
+        <Instrument ProgramNumber="39" Name="INST_39" Envelope="Env0" Sample="SAMPLE_0_24"/>
+        <Instrument ProgramNumber="40" Name="INST_40" Envelope="Env0" Sample="SAMPLE_0_72" RangeHi="B5" SampleHi="SAMPLE_0_79" BaseNoteHi="C0"/>
+        <Instrument ProgramNumber="44" Name="INST_44" Envelope="Env0" Sample="SAMPLE_0_94"/>
+        <Instrument ProgramNumber="22" Name="INST_22" Envelope="Env0" Sample="SAMPLE_0_17"/>
+        <Instrument ProgramNumber="47" Name="INST_47" Envelope="Env0" Sample="SAMPLE_0_349" RangeHi="B5" SampleHi="SAMPLE_0_33" SampleRateHi="16000" BaseNoteHi="C0"/>
+        <Instrument ProgramNumber="49" Name="INST_49" Envelope="Env0" Sample="SAMPLE_0_105" RangeHi="B5" SampleHi="SAMPLE_0_19" BaseNoteHi="C0"/>
+    </Instruments>
+    <MatchPadding>
+        0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3
+    </MatchPadding>
+</Soundfont>
