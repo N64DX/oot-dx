@@ -1182,10 +1182,7 @@ void EnBb_CollisionCheck(EnBb* this, PlayState* play) {
                 FALLTHROUGH;
             case 5:
                 this->fireIceTimer = 0x30;
-                //! @bug
-                //! Setting fireIceTimer here without calling Actor_SetColorFilter causes a crash if the bubble is
-                //! killed in a single hit by an attack with damage effect 5 or 7 while actor updating is halted. Using
-                //! Din's Fire on a white bubble will do just that. The mechanism is complex and described below.
+                Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 12);
                 goto block_15;
             case 6:
                 this->actor.freezeTimer = this->collider.elements[0].base.acHitElem->atDmgInfo.damage;
@@ -1222,11 +1219,6 @@ void EnBb_CollisionCheck(EnBb* this, PlayState* play) {
                         EnBb_KillFlameTrail(this);
                     }
                     EnBb_SetupDeath(this, play);
-                    //! @bug
-                    //! Because Din's Fire kills the bubble in a single hit, Actor_SetColorFilter is never called and
-                    //! colorFilterParams is never set. And because Din's Fire halts updating during its cutscene,
-                    //! EnBb_Death doesn't kill the bubble on the next frame like it should. This combines with
-                    //! the bug in EnBb_Draw below to crash the game.
                 } else if ((this->actor.params == ENBB_WHITE) &&
                            ((this->action == BB_WHITE) || (this->action == BB_STUNNED))) {
                     Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 12);
