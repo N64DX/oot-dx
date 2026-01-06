@@ -679,6 +679,27 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             gSaveContext.save.info.inventory.items[i]--;
                         }
                     }
+                } else if (i == SLOT_HAMMER) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                        Inventory_DeleteItem(ITEM_HAMMER, SLOT(ITEM_HAMMER));
+                        gSaveContext.save.info.hasObtainedItems.hammer = gSaveContext.save.info.hasObtainedItems.fairysSword = 0;
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
+                        if (gSaveContext.save.info.inventory.items[i] == ITEM_NONE) {
+                            gSaveContext.save.info.inventory.items[i] = ITEM_HAMMER;
+                            gSaveContext.save.info.hasObtainedItems.hammer = 1;
+                        } else if (gSaveContext.save.info.inventory.items[i] == ITEM_HAMMER) {
+                            gSaveContext.save.info.inventory.items[i] = ITEM_SWORD_FAIRYS;
+                            gSaveContext.save.info.hasObtainedItems.fairysSword = 1;
+                        }
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                        if (gSaveContext.save.info.inventory.items[i] == ITEM_NONE) {
+                            gSaveContext.save.info.inventory.items[i] = ITEM_SWORD_FAIRYS;
+                            gSaveContext.save.info.hasObtainedItems.fairysSword = 1;
+                        } else if (gSaveContext.save.info.inventory.items[i] == ITEM_SWORD_FAIRYS) {
+                            gSaveContext.save.info.inventory.items[i] = ITEM_HAMMER;
+                            gSaveContext.save.info.hasObtainedItems.hammer = 1;
+                        }
+                    }
                 } else if (i == SLOT_TRADE_ADULT) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
                         Inventory_DeleteItem(ITEM_POCKET_EGG, SLOT(ITEM_POCKET_EGG));
