@@ -95,3 +95,15 @@ beginseg
     include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_5.o"
     number 3
 endseg
+
+beginseg
+    name "besitu_scene"
+    include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "besitu_room_0"
+    include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_room_0.o"
+    number 3
+endseg
