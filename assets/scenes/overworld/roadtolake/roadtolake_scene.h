@@ -1,5 +1,5 @@
 #ifndef ROADTOLAKE_SCENE_H
-#define ROADTOLAKE_SCENE_H 1
+#define ROADTOLAKE_SCENE_H
 
 #include "bgcheck.h"
 #include "cutscene.h"

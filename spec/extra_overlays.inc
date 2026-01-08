@@ -27,6 +27,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Obj_HsStump"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_HsStump/z_obj_hsstump.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_HsStump/ovl_Obj_HsStump_reloc.o"
+endseg
+
+beginseg
     name "ovl_Bg_Ladder"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ladder/z_bg_ladder.o"

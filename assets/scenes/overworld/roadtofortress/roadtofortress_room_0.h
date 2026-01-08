@@ -1,11 +1,11 @@
 #ifndef ROADTOFORTRESS_ROOM_0_H
-#define ROADTOFORTRESS_ROOM_0_H 1
+#define ROADTOFORTRESS_ROOM_0_H
 
 #include "room.h"
 #include "scene.h"
 #include "ultra64.h"
 
-extern SceneCmd roadtofortress_room_0Commands[];
+extern SceneCmd roadtofortress_room_0[];
 extern s16 roadtofortress_room_0ObjectList_000040[];
 extern ActorEntry roadtofortress_room_0ActorEntry_000064[];
 extern RoomShapeCullable roadtofortress_room_0RoomShapeCullable_000550;
