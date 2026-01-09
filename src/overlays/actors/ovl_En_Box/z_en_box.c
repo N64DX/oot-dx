@@ -133,6 +133,7 @@ void EnBox_Init(Actor* thisx, PlayState* play2) {
     this->iceSmokeTimer = 0;
     this->unk_1FB = ENBOX_STATE_0;
     this->dyna.actor.gravity = -5.5f;
+    this->giItem = this->dyna.actor.world.rot.x & 0xFF;
     this->switchFlag = this->dyna.actor.world.rot.z;
     this->dyna.actor.minVelocityY = -50.0f;
 
@@ -188,6 +189,7 @@ void EnBox_Init(Actor* thisx, PlayState* play2) {
     }
 
     this->dyna.actor.world.rot.y += 0x8000;
+    this->dyna.actor.home.rot.x = this->dyna.actor.world.rot.x = this->dyna.actor.shape.rot.x = 0;
     this->dyna.actor.home.rot.z = this->dyna.actor.world.rot.z = this->dyna.actor.shape.rot.z = 0;
 
     //! @bug Flex skeleton is used as normal skeleton
@@ -447,7 +449,9 @@ void EnBox_WaitOpen(EnBox* this, PlayState* play) {
         Actor_WorldToActorCoords(&this->dyna.actor, &sp4C, &player->actor.world.pos);
         if (sp4C.z > -50.0f && sp4C.z < 0.0f && fabsf(sp4C.y) < 10.0f && fabsf(sp4C.x) < 20.0f &&
             Player_IsFacingActor(&this->dyna.actor, 0x3000, play)) {
-            Actor_OfferGetItemNearby(&this->dyna.actor, play, -PARAMS_GET_U(this->dyna.actor.params, 5, 7));
+            if (this->giItem > 0)
+                Actor_OfferGetItemNearby(&this->dyna.actor, play, -this->giItem);
+            else Actor_OfferGetItemNearby(&this->dyna.actor, play, -PARAMS_GET_U(this->dyna.actor.params, 5, 7));
         }
         if (Flags_GetTreasure(play, PARAMS_GET_U(this->dyna.actor.params, 0, 5))) {
             EnBox_SetupAction(this, EnBox_Open);
@@ -569,7 +573,7 @@ void EnBox_Update(Actor* thisx, PlayState* play) {
 void EnBox_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx, Gfx** gfx) {
     EnBox* this = (EnBox*)thisx;
     s32 pad;
-    u8 i = PARAMS_GET_U(this->dyna.actor.params, 5, 7);
+    u8 i = this->giItem > 0 ? this->giItem : PARAMS_GET_U(this->dyna.actor.params, 5, 7);
     bool is_key = i == GI_SMALL_KEY;
     bool is_dungeon_item = i == GI_COMPASS || i == GI_DUNGEON_MAP;
     bool is_item = i == GI_BOW || i == GI_SLINGSHOT || i == GI_BOOMERANG || i == GI_HOOKSHOT || i == GI_LONGSHOT || i == GI_LENS_OF_TRUTH || i == GI_HAMMER || i == GI_BOTTLE_EMPTY || i == GI_SWORD_KOKIRI  || i == GI_SWORD_HEROS || i == GI_SWORD_KNIFE || i == GI_SWORD_BIGGORON || i == GI_SHIELD_DEKU || i == GI_SHIELD_HYLIAN || i == GI_SHIELD_MIRROR || i == GI_SHIELD_HEROS || i == GI_BOOTS_IRON || i == GI_BOOTS_HOVER ||
