@@ -2169,20 +2169,23 @@ void KaleidoScope_DrawInfoPanel(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
-static bool lastHylianShieldItem;
+static bool lastItem[2];
 
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
     u16 texIndex;
+    bool isNewItem = false;
 
-    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) || lastHylianShieldItem != IS_HEROS_SHIELD ||
+    for (texIndex=0; texIndex<ARRAY_COUNT(lastItem); texIndex++)
+        if (!lastItem[texIndex])
+            isNewItem = true;
+
+    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) || isNewItem ||
         ((pauseCtx->pageIndex == PAUSE_MAP) && (pauseCtx->cursorSpecialPos != 0))) {
 
         pauseCtx->namedItem = pauseCtx->cursorItem[pauseCtx->pageIndex];
         texIndex = pauseCtx->namedItem;
-        lastHylianShieldItem = IS_HEROS_SHIELD;
-        
-        
+
         if (IS_CHILD_QUEST_AS_CHILD) {
             if (pauseCtx->pageIndex == PAUSE_ITEM) {
                 if (pauseCtx->namedItem == ITEM_BOW)
@@ -3769,7 +3772,8 @@ void KaleidoScope_Update(PlayState* play) {
 
     switch (pauseCtx->state) {
         case PAUSE_STATE_INIT:
-            lastHylianShieldItem = IS_HEROS_SHIELD;
+            lastItem[0] = IS_HEROS_SWORD;
+            lastItem[1] = IS_HEROS_SHIELD;
             pauseCtx->was_in_debug = false;
             D_808321A8[0] = gSaveContext.buttonStatus[0];
             D_808321A8[1] = gSaveContext.buttonStatus[1];
