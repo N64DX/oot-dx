@@ -58,7 +58,7 @@ static s16 sObjectIds[] = {
     OBJECT_GI_RUPY,          // ITEM_ETC_RUPEE_PURPLE_CHEST_GAME
     OBJECT_GI_HEARTS,        // ITEM_ETC_HEART_PIECE_CHEST_GAME
     OBJECT_GI_KEY,           // ITEM_ETC_KEY_SMALL_CHEST_GAME
-    OBJECT_GI_SWORD_HEROS,   // ITEM_ETC_SWORD_HEROS
+    OBJECT_GI_SWORD_1_MM,    // ITEM_ETC_SWORD_HEROS
 };
 
 // Indices passed to the item table in z_draw.c

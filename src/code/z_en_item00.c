@@ -504,7 +504,7 @@ void EnItem00_Init(Actor* thisx, PlayState* play) {
             this->actor.world.rot.x = 0x4000;
             break;
         case ITEM00_SHIELD_HEROS:
-            this->actor.objectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GI_SHIELD_4);
+            this->actor.objectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GI_SHIELD_1_MM);
             Actor_SetObjectDependency(play, &this->actor);
             Actor_SetScale(&this->actor, 0.5f);
             this->scale = 0.5f;

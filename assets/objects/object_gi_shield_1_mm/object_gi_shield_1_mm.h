@@ -1,5 +1,5 @@
-#ifndef OBJECT_GI_SHIELD_4_H
-#define OBJECT_GI_SHIELD_4_H
+#ifndef OBJECT_GI_SHIELD_1_MM_H
+#define OBJECT_GI_SHIELD_1_MM_H
 
 #include "ultra64.h"
 

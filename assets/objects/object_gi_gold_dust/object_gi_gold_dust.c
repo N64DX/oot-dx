@@ -1,5 +1,4 @@
 #include "object_gi_gold_dust.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #include "gfx.h"
 
@@ -8,11 +7,11 @@ Vtx object_gi_gold_dustVtx[] = {
 };
 
 u64 gGiGoldDustPowderClothTex[] = {
-#include "assets/objects/object_gi_gold_dust/gi_gold_dust_powder_cloth.i8.inc.c"
+#include "assets/objects/object_gi_gold_dust/gGiGoldDustPowderClothTex.i8.inc.c"
 };
 
 u64 gGiGoldDustPowderContentTex[] = {
-#include "assets/objects/object_gi_gold_dust/gi_gold_dust_powder_content.i4.inc.c"
+#include "assets/objects/object_gi_gold_dust/gGiGoldDustPowderContentTex.i4.inc.c"
 };
 
 Gfx gGiGoldDustPowderDL[] = {

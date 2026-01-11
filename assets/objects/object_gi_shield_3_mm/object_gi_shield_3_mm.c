@@ -1,26 +1,25 @@
 #include "object_gi_shield_3_mm.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #include "gfx.h"
 
-Vtx object_gi_shield_3Vtx[] = {
-#include "assets/objects/object_gi_shield_3_mm/object_gi_shield_3Vtx.inc.c"
+Vtx object_gi_shield_3_mmVtx[] = {
+#include "assets/objects/object_gi_shield_3_mm/object_gi_shield_3_mmVtx.inc.c"
 };
 
 u64 gGiMirrorShieldHandleTex[] = {
-#include "assets/objects/object_gi_shield_3_mm/gi_mirror_shield_handle.i4.inc.c"
+#include "assets/objects/object_gi_shield_3_mm/gGiMirrorShieldHandleTex.i4.inc.c"
 };
 
 u64 gGiMirrorShieldFaceSymbolTex[] = {
-#include "assets/objects/object_gi_shield_3_mm/gi_mirror_shield_face_symbol.i8.inc.c"
+#include "assets/objects/object_gi_shield_3_mm/gGiMirrorShieldFaceSymbolTex.i8.inc.c"
 };
 
 u64 gGiMirrorShieldFaceBackgroundTex[] = {
-#include "assets/objects/object_gi_shield_3_mm/gi_mirror_shield_face_background.i8.inc.c"
+#include "assets/objects/object_gi_shield_3_mm/gGiMirrorShieldFaceBackgroundTex.i8.inc.c"
 };
 
 u64 gGiMirrorShieldPatternTex[] = {
-#include "assets/objects/object_gi_shield_3_mm/gi_mirror_shield_pattern.i4.inc.c"
+#include "assets/objects/object_gi_shield_3_mm/gGiMirrorShieldPatternTex.i4.inc.c"
 };
 
 Gfx gGiMirrorShieldMMDL[] = {
@@ -33,7 +32,7 @@ Gfx gGiMirrorShieldMMDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gGiMirrorShieldFaceBackgroundTex, G_IM_FMT_I, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(object_gi_shield_3Vtx, 11, 0),
+    gsSPVertex(object_gi_shield_3_mmVtx, 11, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 4, 0),
     gsSP2Triangles(1, 5, 6, 0, 1, 7, 8, 0),
     gsSP2Triangles(4, 2, 1, 0, 1, 9, 3, 0),
@@ -44,7 +43,7 @@ Gfx gGiMirrorShieldMMDL[] = {
     gsDPSetPrimColor(0, 0xFF, 60, 10, 0, 255),
     gsDPSetEnvColor(155, 155, 0, 255),
     gsDPLoadTextureBlock_4b(gGiMirrorShieldPatternTex, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 1),
-    gsSPVertex(&object_gi_shield_3Vtx[11], 22, 0),
+    gsSPVertex(&object_gi_shield_3_mmVtx[11], 22, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
     gsSP2Triangles(4, 5, 6, 0, 5, 7, 6, 0),
     gsSP2Triangles(4, 8, 5, 0, 8, 9, 5, 0),
@@ -58,7 +57,7 @@ Gfx gGiMirrorShieldMMDL[] = {
     gsSPTexture(0x07D0, 0x0BB8, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),
     gsDPLoadTextureBlock_4b(gGiMirrorShieldPatternTex, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 2),
-    gsSPVertex(&object_gi_shield_3Vtx[33], 11, 0),
+    gsSPVertex(&object_gi_shield_3_mmVtx[33], 11, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 1, 0),
     gsSP2Triangles(5, 6, 1, 0, 7, 8, 1, 0),
     gsSP2Triangles(1, 0, 3, 0, 4, 9, 1, 0),
@@ -72,7 +71,7 @@ Gfx gGiMirrorShieldMMDL[] = {
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gGiMirrorShieldFaceSymbolTex, G_IM_FMT_I, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_shield_3Vtx[44], 11, 0),
+    gsSPVertex(&object_gi_shield_3_mmVtx[44], 11, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 0, 4, 0),
     gsSP2Triangles(5, 0, 6, 0, 7, 0, 8, 0),
     gsSP2Triangles(0, 5, 8, 0, 7, 9, 0, 0),
@@ -86,7 +85,7 @@ Gfx gGiMirrorShieldMMDL[] = {
     gsDPPipeSync(),
     gsDPLoadTextureBlock_4b(gGiMirrorShieldHandleTex, G_IM_FMT_I, 32, 32, 15, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_shield_3Vtx[55], 16, 0),
+    gsSPVertex(&object_gi_shield_3_mmVtx[55], 16, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(2, 3, 4, 0, 4, 5, 2, 0),
     gsSP2Triangles(6, 5, 4, 0, 7, 6, 4, 0),
@@ -100,7 +99,7 @@ Gfx gGiMirrorShieldMMDL[] = {
     gsDPSetEnvColor(20, 0, 0, 255),
     gsDPLoadTextureBlock_4b(gGiMirrorShieldPatternTex, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 15),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_shield_3Vtx[71], 32, 0),
+    gsSPVertex(&object_gi_shield_3_mmVtx[71], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(3, 4, 5, 0, 0, 3, 5, 0),
     gsSP2Triangles(6, 7, 5, 0, 4, 6, 5, 0),
@@ -121,7 +120,7 @@ Gfx gGiMirrorShieldMMDL[] = {
     gsSP2Triangles(30, 27, 28, 0, 30, 26, 27, 0),
     gsSP2Triangles(30, 29, 31, 0, 30, 28, 29, 0),
     gsSP2Triangles(29, 25, 31, 0, 25, 24, 31, 0),
-    gsSPVertex(&object_gi_shield_3Vtx[103], 16, 0),
+    gsSPVertex(&object_gi_shield_3_mmVtx[103], 16, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(3, 4, 5, 0, 0, 3, 5, 0),
     gsSP2Triangles(6, 7, 5, 0, 4, 6, 5, 0),
@@ -132,5 +131,9 @@ Gfx gGiMirrorShieldMMDL[] = {
     gsSP2Triangles(14, 11, 12, 0, 14, 10, 11, 0),
     gsSP2Triangles(14, 13, 15, 0, 14, 12, 13, 0),
     gsSP2Triangles(13, 9, 15, 0, 9, 8, 15, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gGiMirrorShieldEmptyMMDL[] = {
     gsSPEndDisplayList(),
 };

@@ -324,7 +324,7 @@ static ShopItemEntry sShopItemEntries[] = {
     { OBJECT_GI_LIQUID, GID_BOTTLE_POTION_RED, func_8002EBCC, 50, 1, 0x0065, 0x0063, GI_BOTTLE_POTION_RED,
       EnGirlA_CanBuy_RedPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount },
     /* SI_HEROS_SHIELD */
-    { OBJECT_GI_SHIELD_4, GID_SHIELD_HEROS, func_8002EBCC, 80, 1, 0x9008, 0x9004, GI_SHIELD_HEROS,
+    { OBJECT_GI_SHIELD_1_MM, GID_SHIELD_HEROS, func_8002EBCC, 80, 1, 0x9008, 0x9004, GI_SHIELD_HEROS,
       EnGirlA_CanBuy_HerosShield, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
     /* SI_ROYAL_WALLET */
     { OBJECT_GI_PURSE, GID_WALLET_ADULT, func_8002EBCC, 200, 1, 0x9009, 0x9005, GI_WALLET_ADULT,

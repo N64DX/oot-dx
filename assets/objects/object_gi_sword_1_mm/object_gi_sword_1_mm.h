@@ -1,5 +1,5 @@
-#ifndef OBJECT_GI_SWORD_HEROS_H
-#define OBJECT_GI_SWORD_HEROS_H 1
+#ifndef OBJECT_GI_SWORD_1_MM_H
+#define OBJECT_GI_SWORD_1_MM_H
 
 #include "ultra64.h"
 
