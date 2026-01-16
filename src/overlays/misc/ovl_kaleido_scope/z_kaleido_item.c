@@ -383,6 +383,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
             }
 
             if (cursorItem != PAUSE_ITEM_NONE) {
+                bool canSelectItem = true;
                 index = cursorSlot * 4; // required to match?
                 KaleidoScope_SetCursorPos(pauseCtx, index, pauseCtx->itemVtx);
 
@@ -394,7 +395,10 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                         KaleidoScope_DrawSwapItemIcons(play, gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD], KaleidoScope_GetNextMask(), pauseCtx->alpha);
                     }
 
-                    if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
+                    if (FIX_USEFUL_GLITCHES && pauseCtx->mainState != PAUSE_MAIN_STATE_IDLE)
+                        canSelectItem = false;;
+
+                    if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT) && canSelectItem) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
                             if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                                 pauseCtx->equipTargetCBtn = 0;
@@ -439,7 +443,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                         }
                     }
-                    else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT)) {
+                    else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && canSelectItem) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
                             u8 button;
 

@@ -3983,6 +3983,9 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
              ((itemAction == PLAYER_IA_HOOKSHOT) || (itemAction == PLAYER_IA_LONGSHOT))) ||
              ((this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && itemAction >= PLAYER_IA_MASK_KEATON && itemAction <= PLAYER_IA_MASK_TRUTH)) {
 
+            if (!(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && itemAction >= PLAYER_IA_BOTTLE && itemAction <= PLAYER_IA_ZELDAS_LETTER && FIX_USEFUL_GLITCHES)
+                return;
+
             if ((play->bombchuBowlingStatus == 0) &&
                 (((itemAction == PLAYER_IA_DEKU_STICK) && (AMMO(ITEM_DEKU_STICK) == 0)) ||
                  ((itemAction == PLAYER_IA_MAGIC_BEAN) && (AMMO(ITEM_MAGIC_BEAN) == 0)) ||
@@ -8041,6 +8044,8 @@ s32 Player_ActionHandler_2(Player* this, PlayState* play) {
             }
 
             if ((this->heldActor == NULL) || Player_HoldsHookshot(this)) {
+                if (FIX_USEFUL_GLITCHES)
+                    this->meleeWeaponState = 0;
                 if ((interactedActor->id == ACTOR_BG_TOKI_SWD) && LINK_IS_ADULT) {
                     s32 sp24 = this->itemAction;
 
@@ -9612,7 +9617,7 @@ s32 func_808428D8(Player* this, PlayState* play) {
         this->meleeWeaponAnimation = PLAYER_MWA_STAB_1H;
         this->yaw = this->actor.shape.rot.y + this->upperLimbRot.y;
 
-        if (FIX_POWER_CROUCH_STAB) {
+        if (FIX_USEFUL_GLITCHES) {
             if (Player_HoldsBrokenKnife(this))
                 swordId = 1;
             else swordId = Player_GetMeleeWeaponHeld2(this) - 1;
@@ -10801,6 +10806,9 @@ void Player_Action_80845668(Player* this, PlayState* play) {
 void Player_Action_WaitForPutAway(Player* this, PlayState* play) {
     this->stateFlags2 |= PLAYER_STATE2_5 | PLAYER_STATE2_6;
     LinkAnimation_Update(play, &this->skelAnime);
+
+    if (FIX_USEFUL_GLITCHES)
+        this->meleeWeaponState = 0;
 
     // Wait for the held item put away process to complete.
     // Determining if the put away process is complete is a bit complicated:
@@ -13328,6 +13336,9 @@ void Player_Action_Talk(Player* this, PlayState* play) {
         this->textboxBtnCooldownTimer = 10;
         return;
     }
+
+    if (FIX_USEFUL_GLITCHES)
+        this->meleeWeaponState = 0;
 
     if (this->stateFlags1 & PLAYER_STATE1_23) {
         Player_Action_8084CC98(this, play);

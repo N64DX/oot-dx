@@ -2552,12 +2552,15 @@ s32 Inventory_HasSpecificBottle(u8 bottleItem) {
 
 void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
     u8 i;
-    
+
     PRINTF("item_no=%x,  c_no=%x,  Pt=%x  Item_Register=%x\n", item, button,
            gSaveContext.save.info.equips.cButtonSlots[button - 1],
            gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button - 1]]);
 
     if (button >= 4) {
+        if (FIX_USEFUL_GLITCHES && GET_PLAYER(play)->heldItemAction == PLAYER_IA_BOTTLE && gSaveContext.save.info.inventory.items[DPAD_BUTTON(button-4)] != ITEM_BOTTLE_EMPTY)
+            return;
+
         if (gSaveContext.save.info.inventory.items[DPAD_BUTTON(button-4)] == ITEM_BOTTLE_MILK_FULL && item == ITEM_BOTTLE_EMPTY)
             item = ITEM_BOTTLE_MILK_HALF;
         
@@ -2573,6 +2576,9 @@ void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
         
         return;
     }
+
+    if (FIX_USEFUL_GLITCHES && GET_PLAYER(play)->heldItemAction == PLAYER_IA_BOTTLE && gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button-1]] != ITEM_BOTTLE_EMPTY)
+        return;
 
     // Special case to only empty half of a Lon Lon Milk Bottle
     if ((gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button - 1]] ==
@@ -4525,7 +4531,7 @@ void Interface_Draw(PlayState* play) {
                 case TIMER_STATE_ENV_HAZARD_INIT:
                     sTimerStateTimer = 20;
                     sTimerNextSecondTimer = 20;
-                    gSaveContext.timerSeconds = gSaveContext.save.info.playerData.health >> 1;
+                    gSaveContext.timerSeconds = gSaveContext.save.info.playerData.health <= 1 ? 1 : (gSaveContext.save.info.playerData.health >> 1);
                     gSaveContext.timerState = TIMER_STATE_ENV_HAZARD_PREVIEW;
                     break;
 
@@ -5309,7 +5315,7 @@ void Interface_Update(PlayState* play) {
         if (((sEnvHazard == PLAYER_ENV_HAZARD_HOTROOM) || (sEnvHazard == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) ||
              (sEnvHazard == PLAYER_ENV_HAZARD_UNDERWATER_FREE)) &&
 
-            ((gSaveContext.save.info.playerData.health >> 1) != 0)) {
+            (((gSaveContext.save.info.playerData.health >> 1) != 0 && !FIX_USEFUL_GLITCHES) || FIX_USEFUL_GLITCHES)) {
             gSaveContext.timerState = TIMER_STATE_ENV_HAZARD_INIT;
             gSaveContext.timerX[TIMER_ID_MAIN] = 140 + WS_SHIFT_HALF;
             gSaveContext.timerY[TIMER_ID_MAIN] = 80;
