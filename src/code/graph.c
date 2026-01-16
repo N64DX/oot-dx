@@ -201,7 +201,7 @@ void Graph_Init(GraphicsContext* gfxCtx) {
     gfxCtx->viMode = NULL;
 
 #if OOT_VERSION < PAL_1_0
-    gfxCtx->viFeatures = 0;
+    gfxCtx->viFeatures = OS_VI_GAMMA_OFF | OS_VI_DITHER_FILTER_OFF;
 #else
     gfxCtx->viFeatures = gViConfigFeatures;
     gfxCtx->xScale = gViConfigXScale;
