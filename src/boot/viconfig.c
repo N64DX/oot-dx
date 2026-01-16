@@ -5,7 +5,7 @@
 s8 D_80009430 = 1;
 vu8 gViConfigBlack = true;
 u8 gViConfigAdditionalScanLines = 0;
-u32 gViConfigFeatures = OS_VI_DITHER_FILTER_ON | OS_VI_GAMMA_OFF;
+u32 gViConfigFeatures = OS_VI_DITHER_FILTER_OFF | OS_VI_GAMMA_OFF;
 f32 gViConfigXScale = 1.0;
 f32 gViConfigYScale = 1.0;
 

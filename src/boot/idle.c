@@ -87,7 +87,7 @@ void Idle_ThreadEntry(void* arg) {
     osCreateViManager(OS_PRIORITY_VIMGR);
 
 #if OOT_VERSION >= PAL_1_0
-    gViConfigFeatures = OS_VI_GAMMA_OFF | OS_VI_DITHER_FILTER_ON;
+    gViConfigFeatures = OS_VI_GAMMA_OFF | OS_VI_DITHER_FILTER_OFF;
     gViConfigXScale = 1.0f;
     gViConfigYScale = 1.0f;
 #endif
