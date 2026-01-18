@@ -400,14 +400,14 @@ endseg
 beginseg
     name "spot12_room_0"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/spot12/spot12_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/spot12/spot12_cq_room_0.o"
     number 3
 endseg
 
 beginseg
     name "spot12_room_1"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/spot12/spot12_room_1.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/spot12/spot12_cq_room_1.o"
     number 3
 endseg
 
