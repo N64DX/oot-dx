@@ -796,6 +796,15 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             showAltQuiverSlot ^= 1;
         }
+    } else if (cursorSlot == 12 && CUR_UPG_VALUE(UPG_SCALE) > 0 && gSaveContext.save.info.hasObtainedItems.amuletOfEnergy) {
+        u8 currItem =  showAltScalesSlot ? ITEM_AMULET_OF_ENERGY : sChildUpgradeItemBases[3] + CUR_UPG_VALUE(UPG_SCALE) - 1;
+        u8 nextItem = !showAltScalesSlot ? ITEM_AMULET_OF_ENERGY : sChildUpgradeItemBases[3] + CUR_UPG_VALUE(UPG_SCALE) - 1;
+        KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
+
+        if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            showAltScalesSlot ^= 1;
+        }
     }
 
     // for each row
@@ -805,7 +814,9 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
         // Draw upgrade `i`
         // EQUIP_QUAD_UPG_BULLETBAG_QUIVER, EQUIP_QUAD_UPG_BOMB_BAG, EQUIP_QUAD_UPG_STRENGTH, EQUIP_QUAD_UPG_SCALE
 
-        if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
+        if (i == 3 && cursorSlot == 12 && showAltScalesSlot)
+            KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIcons[ITEM_AMULET_OF_ENERGY], ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0);
+        else if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
             u8 index = i;
             if (index == 0) {
                 if (IS_CHILD_QUEST && CUR_UPG_VALUE(UPG_QUIVER) > 0)
