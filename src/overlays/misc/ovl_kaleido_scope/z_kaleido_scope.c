@@ -90,6 +90,7 @@ typedef enum {
 
 static u8 editor_timer = 0;
 static bool pressed_r = false;
+bool showAltQuiverSlot = false;
 
 #if OOT_NTSC
 
@@ -2169,7 +2170,7 @@ void KaleidoScope_DrawInfoPanel(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
-static bool lastItem[2];
+static bool lastItem[3];
 
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
@@ -2185,6 +2186,12 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
 
         pauseCtx->namedItem = pauseCtx->cursorItem[pauseCtx->pageIndex];
         texIndex = pauseCtx->namedItem;
+
+        if (pauseCtx->pageIndex == PAUSE_EQUIP && showAltQuiverSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 0) {
+            if (LINK_IS_ADULT || (IS_CHILD_QUEST && CUR_UPG_VALUE(UPG_QUIVER) > 0))
+                texIndex = ITEM_BULLET_BAG_30 + CUR_UPG_VALUE(UPG_BULLET_BAG) - 1;
+            else texIndex = ITEM_QUIVER_30 + CUR_UPG_VALUE(UPG_QUIVER) - 1;
+        }
 
         if (IS_CHILD_QUEST_AS_CHILD) {
             if (pauseCtx->pageIndex == PAUSE_ITEM) {
@@ -3774,6 +3781,7 @@ void KaleidoScope_Update(PlayState* play) {
         case PAUSE_STATE_INIT:
             lastItem[0] = IS_HEROS_SWORD;
             lastItem[1] = IS_HEROS_SHIELD;
+            lastItem[2] = showAltQuiverSlot;
             pauseCtx->was_in_debug = false;
             D_808321A8[0] = gSaveContext.buttonStatus[0];
             D_808321A8[1] = gSaveContext.buttonStatus[1];
