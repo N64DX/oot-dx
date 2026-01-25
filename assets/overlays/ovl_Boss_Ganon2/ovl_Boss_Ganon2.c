@@ -1,5 +1,5 @@
 #include "ovl_Boss_Ganon2.h"
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #include "gfx.h"
 #include "sys_matrix.h"
