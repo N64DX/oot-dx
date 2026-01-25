@@ -3394,7 +3394,7 @@ void Interface_DrawItemButtons(PlayState* play) {
                                 (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #elif OOT_NTSC && !OOT_NTSC_N64
             gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(132 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(17 << 2), X_HIRES_MULTIPLY(132 + WS_SHIFT_FULL + 22) << 2, HIRES_MULTIPLY((17 + 22) << 2), G_TX_RENDERTILE, 0,
-                                0, (s32)(1.4277344 * X_HIRES_DIVIDE(1 << 10), (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
+                                0, (s32)(1.4277344 * X_HIRES_DIVIDE(1 << 10)), (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #else
             gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(17) << 2,
                                 X_HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL + 22) << 2, HIRES_MULTIPLY((17 + 22)) << 2, G_TX_RENDERTILE,
