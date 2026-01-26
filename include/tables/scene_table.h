@@ -116,9 +116,10 @@
 /* 0x68 */ DEFINE_SCENE(swamp_spider_house_scene, g_pn_60, SCENE_SWAMP_SPIDER_HOUSE, SDC_DEFAULT, 0, 0)
 /* 0x69 */ DEFINE_SCENE(old_lost_woods_scene, none, SCENE_FORBIDDEN_WOODS, SDC_FORBIDDEN_WOODS, 0, 0)
 /* 0x6A */ DEFINE_SCENE(fairy_deku_tree_scene, none, SCENE_ANCIENT_HOLLOW, SDC_ANCIENT_HOLLOW, 0, 0)
+/* 0x6B */ DEFINE_SCENE(besitu_scene, none, SCENE_BESITU, SDC_BESITU, 0, 0)
+
 #if DEBUG_ASSETS
 /* 0x65 */ DEFINE_SCENE(test01_scene, none, SCENE_TEST01, SDC_CALM_WATER, 0, 0)
-/* 0x66 */ DEFINE_SCENE(besitu_scene, none, SCENE_BESITU, SDC_BESITU, 0, 0)
 /* 0x67 */ DEFINE_SCENE(depth_test_scene, none, SCENE_DEPTH_TEST, SDC_DEFAULT, 0, 0)
 /* 0x68 */ DEFINE_SCENE(syotes_scene, none, SCENE_SYOTES, SDC_DEFAULT, 0, 0)
 /* 0x69 */ DEFINE_SCENE(syotes2_scene, none, SCENE_SYOTES2, SDC_DEFAULT, 0, 0)
