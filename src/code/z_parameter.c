@@ -1748,44 +1748,45 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
 
+typedef bool (*ItemCondition)(void);
+typedef struct ChildQuestIcons {
+    u8 item;
+    ItemCondition condition;
+    u8 icon;
+} ChildQuestIcons;
+
+static bool IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD; }
+static bool IsHerosShield(void)   { return IS_HEROS_SHIELD;         }
+static bool IsHerosSword(void)    { return IS_HEROS_SWORD;          }
+static bool IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
+static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
+
+#define LAST_ITEM_ICON ITEM_AMULET_OF_ENERGY
+static ChildQuestIcons sChildQuestIcons[] = {
+    { ITEM_SHIELD_HYLIAN,             IsHerosShield, ITEM_SHIELD_HEROS   },
+    { ITEM_SWORD_HEROS,               IsHerosSword,  ITEM_SWORD_HEROS    },
+    { ITEM_SHIELD_MIRROR,             IsChildQuest,  LAST_ITEM_ICON + 1  },
+    { ITEM_SWORD_MASTER,              IsChildQuest,  LAST_ITEM_ICON + 2  },
+    { ITEM_SWORD_BIGGORON,            IsSilverSword, LAST_ITEM_ICON + 3  },
+    { ITEM_SWORD_BIGGORON,            IsGildedSword, LAST_ITEM_ICON + 4  },
+    { ITEM_HOOKSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 5  },
+    { ITEM_LONGSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 6  },
+    { ITEM_BOW,                       IsChildQuest,  LAST_ITEM_ICON + 7  },
+    { ITEM_BOW_FIRE,                  IsChildQuest,  LAST_ITEM_ICON + 8  },
+    { ITEM_BOW_ICE,                   IsChildQuest,  LAST_ITEM_ICON + 9  },
+    { ITEM_BOW_LIGHT,                 IsChildQuest,  LAST_ITEM_ICON + 10 },
+    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,  LAST_ITEM_ICON + 11 },
+    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,  LAST_ITEM_ICON + 12 },
+    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,  LAST_ITEM_ICON + 13 },
+    { ITEM_STONE_OF_AGONY,            NULL,          LAST_ITEM_ICON + 14 },
+};
+#undef LAST_ITEM_ICON
+
 u8 Interface_LoadItemIconChildQuest(u8 item) {
-    if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-        return ITEM_SHIELD_HEROS;
-    else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
-        return ITEM_SWORD_HEROS;
-
-    else if (item == ITEM_STONE_OF_AGONY)
-        return ITEM_AMULET_OF_ENERGY + 14;
-
-    else if (IS_CHILD_QUEST) {
-        if (item == ITEM_BROKEN_GORONS_SWORD)
-            return ITEM_AMULET_OF_ENERGY + 13;
-        else if (LINK_IS_CHILD) {
-            if (item == ITEM_SHIELD_MIRROR)
-                return ITEM_AMULET_OF_ENERGY + 1;
-            if (item == ITEM_SWORD_MASTER)
-                return ITEM_AMULET_OF_ENERGY + 2;
-            else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
-                return ITEM_AMULET_OF_ENERGY + (!gSaveContext.save.info.playerData.bgsFlag ? 3 : 4);
-            if (item == ITEM_HOOKSHOT)
-                return ITEM_AMULET_OF_ENERGY + 5;
-            else if (item == ITEM_LONGSHOT)
-                return ITEM_AMULET_OF_ENERGY + 6;
-            else if (item == ITEM_BOW)
-                return ITEM_AMULET_OF_ENERGY + 7;
-            else if (item == ITEM_BOW_FIRE)
-                return ITEM_AMULET_OF_ENERGY + 8;
-            else if (item == ITEM_BOW_ICE)
-                return ITEM_AMULET_OF_ENERGY + 9;
-            else if (item == ITEM_BOW_LIGHT)
-                return ITEM_AMULET_OF_ENERGY + 10;
-            else if (item == ITEM_STRENGTH_SILVER_GAUNTLETS)
-                return ITEM_AMULET_OF_ENERGY + 11;
-            else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
-                return ITEM_AMULET_OF_ENERGY + 12;
-        }
-    }
-
+    u8 i;
+    for (i=0; i<ARRAY_COUNT(sChildQuestIcons); i++)
+        if (item == sChildQuestIcons[i].item && (sChildQuestIcons[i].condition == NULL || sChildQuestIcons[i].condition()))
+            return sChildQuestIcons[i].icon;
     return item;
 }
 

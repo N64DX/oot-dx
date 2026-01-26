@@ -90,6 +90,8 @@ typedef enum {
 
 static u8 editor_timer = 0;
 static bool pressed_r = false;
+bool showAltQuiverSlot = false;
+bool showAltScalesSlot = false;
 
 #if OOT_NTSC
 
@@ -945,7 +947,7 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_GIANTS_WALLET,
     AGE_REQ_NONE,  // ITEM_DEKU_SEEDS,
     AGE_REQ_NONE,  // ITEM_FISHING_POLE,
-    AGE_REQ_NONE,  // ITEM_SWORD_FAIRIES,
+    AGE_REQ_NONE,  // ITEM_SWORD_FAIRYS,
     AGE_REQ_NONE,  // ITEM_ROCS_FEATHER,
     AGE_REQ_NONE,  // ITEM_GOLDEN_FEATHER,
 };
@@ -2176,21 +2178,34 @@ void KaleidoScope_DrawInfoPanel(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
-static bool lastHylianShieldItem;
+static bool lastItem[4];
 
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
     u16 texIndex;
+    bool isNewItem = false;
 
-    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) || lastHylianShieldItem != IS_HEROS_SHIELD ||
+    for (texIndex=0; texIndex<ARRAY_COUNT(lastItem); texIndex++)
+        if (!lastItem[texIndex])
+            isNewItem = true;
+
+    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) || isNewItem ||
         ((pauseCtx->pageIndex == PAUSE_MAP) && (pauseCtx->cursorSpecialPos != 0))) {
 
         pauseCtx->namedItem = pauseCtx->cursorItem[pauseCtx->pageIndex];
         texIndex = pauseCtx->namedItem;
-        lastHylianShieldItem = IS_HEROS_SHIELD;
 
         if (pauseCtx->namedItem >= ITEM_SONG_MINUET)
             texIndex -= ITEM_SONG_MINUET - ITEM_MASTER_WALLET;
+
+        if (pauseCtx->pageIndex == PAUSE_EQUIP) {
+            if (showAltQuiverSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 0) {
+                if (LINK_IS_ADULT || (IS_CHILD_QUEST && CUR_UPG_VALUE(UPG_QUIVER) > 0))
+                    texIndex = ITEM_BULLET_BAG_30 + CUR_UPG_VALUE(UPG_BULLET_BAG) - 1;
+                else texIndex = ITEM_QUIVER_30 + CUR_UPG_VALUE(UPG_QUIVER) - 1;
+            } else if (showAltScalesSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 12)
+                texIndex = ITEM_AMULET_OF_ENERGY;
+        }
 
         if (IS_CHILD_QUEST_AS_CHILD) {
             if (pauseCtx->pageIndex == PAUSE_ITEM) {
@@ -3778,7 +3793,10 @@ void KaleidoScope_Update(PlayState* play) {
 
     switch (pauseCtx->state) {
         case PAUSE_STATE_INIT:
-            lastHylianShieldItem = IS_HEROS_SHIELD;
+            lastItem[0] = IS_HEROS_SWORD;
+            lastItem[1] = IS_HEROS_SHIELD;
+            lastItem[2] = showAltQuiverSlot;
+            lastItem[3] = showAltScalesSlot;
             pauseCtx->was_in_debug = false;
             D_808321A8[0] = gSaveContext.buttonStatus[0];
             D_808321A8[1] = gSaveContext.buttonStatus[1];

@@ -41,6 +41,11 @@ void Interface_Init(PlayState* play) {
     gItemIcons[ITEM_STRENGTH_GOLD_GAUNTLETS]   = IS_CHILD_QUEST_AS_CHILD ? gItemIconPowerBraceletsTex    : gItemIconGoldenGauntletsTex;
     gItemIcons[ITEM_BROKEN_GORONS_SWORD]       = IS_CHILD_QUEST          ? gItemIconGoldDustTex          : gItemIconBrokenGoronsSwordTex;
 
+    if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_BIGGORON && !gSaveContext.save.info.playerData.swordHealth && LINK_IS_ADULT)
+        gSaveContext.save.info.equips.buttonItems[0] = ITEM_GIANTS_KNIFE;
+    else if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_GIANTS_KNIFE && IS_CHILD_QUEST_AS_CHILD)
+        gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_BIGGORON;
+
     gSaveContext.sunsSongState = SUNSSONG_INACTIVE;
     gSaveContext.nextHudVisibilityMode = gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
 

@@ -25,10 +25,11 @@ static u8 sChildUpgrades[] = {
     UPG_QUIVER,     // EQUIP_QUAD_UPG_BULLETBAG_QUIVER
 };
 static u8 sAdultUpgrades[] = {
-    UPG_QUIVER,   // EQUIP_QUAD_UPG_BULLETBAG_QUIVER
-    UPG_BOMB_BAG, // EQUIP_QUAD_UPG_BOMB_BAG
-    UPG_STRENGTH, // EQUIP_QUAD_UPG_STRENGTH
-    UPG_SCALE,    // EQUIP_QUAD_UPG_SCALE
+    UPG_QUIVER,     // EQUIP_QUAD_UPG_BULLETBAG_QUIVER
+    UPG_BOMB_BAG,   // EQUIP_QUAD_UPG_BOMB_BAG
+    UPG_STRENGTH,   // EQUIP_QUAD_UPG_STRENGTH
+    UPG_SCALE,      // EQUIP_QUAD_UPG_SCALE
+    UPG_BULLET_BAG, // EQUIP_QUAD_UPG_BULLETBAG_QUIVER
 };
 
 static u8 sChildUpgradeItemBases[] = {
@@ -43,6 +44,7 @@ static u8 sAdultUpgradeItemBases[] = {
     ITEM_BOMB_BAG_20,              // EQUIP_QUAD_UPG_BOMB_BAG
     ITEM_STRENGTH_GORONS_BRACELET, // EQUIP_QUAD_UPG_STRENGTH
     ITEM_SCALE_SILVER,             // EQUIP_QUAD_UPG_SCALE
+    ITEM_BULLET_BAG_30,            // EQUIP_QUAD_UPG_BULLETBAG_QUIVER
 };
 
 static u8 sUpgradeItemOffsets[] = {
@@ -504,7 +506,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             (pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_VALUE_SWORD_BIGGORON)) {
             if (gSaveContext.save.info.playerData.bgsFlag) {
                 cursorItem = ITEM_HEART_PIECE_2;
-            } else if (!gSaveContext.save.info.playerData.swordHealth) {
+            } else if (!gSaveContext.save.info.playerData.swordHealth && LINK_IS_ADULT) {
                 cursorItem = ITEM_GIANTS_KNIFE;
             }
         }
@@ -795,6 +797,32 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
     gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, pauseCtx->alpha);
 
+    if (cursorSlot == 0 && CUR_UPG_VALUE(UPG_BULLET_BAG) > 0 && CUR_UPG_VALUE(UPG_QUIVER) > 0) {
+        u8 itemIndex     = LINK_IS_CHILD  ? (IS_CHILD_QUEST && CUR_UPG_VALUE(UPG_QUIVER) > 0 ? 4 : 0) : 4;
+        u8 nextItemIndex = itemIndex == 4 ? 0 : 4;
+
+        if (showAltQuiverSlot) {
+            itemIndex = nextItemIndex;
+            nextItemIndex = itemIndex == 4 ? 0 : 4;
+        }
+
+        KaleidoScope_DrawSwapItemIcons(play, sChildUpgradeItemBases[itemIndex] + CUR_UPG_VALUE(sChildUpgrades[itemIndex]) - 1, sChildUpgradeItemBases[nextItemIndex] + CUR_UPG_VALUE(sChildUpgrades[nextItemIndex]) - 1, pauseCtx->alpha);
+
+        if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            showAltQuiverSlot ^= 1;
+        }
+    } else if (cursorSlot == 12 && CUR_UPG_VALUE(UPG_SCALE) > 0 && gSaveContext.save.info.hasObtainedItems.amuletOfEnergy) {
+        u8 currItem =  showAltScalesSlot ? ITEM_AMULET_OF_ENERGY : sChildUpgradeItemBases[3] + CUR_UPG_VALUE(UPG_SCALE) - 1;
+        u8 nextItem = !showAltScalesSlot ? ITEM_AMULET_OF_ENERGY : sChildUpgradeItemBases[3] + CUR_UPG_VALUE(UPG_SCALE) - 1;
+        KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
+
+        if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            showAltScalesSlot ^= 1;
+        }
+    }
+
     // for each row
     for (rowStart = 0, j = 0, temp = 0, i = 0; i < 4; i++, rowStart += 4, j += 4 * 4) {
         gSPVertex(POLY_OPA_DISP++, &pauseCtx->equipVtx[j], 4 * 4, 0);
@@ -802,10 +830,15 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
         // Draw upgrade `i`
         // EQUIP_QUAD_UPG_BULLETBAG_QUIVER, EQUIP_QUAD_UPG_BOMB_BAG, EQUIP_QUAD_UPG_STRENGTH, EQUIP_QUAD_UPG_SCALE
 
-        if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
+        if (i == 3 && cursorSlot == 12 && showAltScalesSlot)
+            KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIcons[ITEM_AMULET_OF_ENERGY], ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0);
+        else if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
             u8 index = i;
-            if (IS_CHILD_QUEST && index == 0 && CUR_UPG_VALUE(UPG_QUIVER) > 0)
-                index = 4;
+            if (index == 0) {
+                if (IS_CHILD_QUEST && CUR_UPG_VALUE(UPG_QUIVER) > 0)
+                    index = showAltQuiverSlot ? 0 : 4;
+                else index = showAltQuiverSlot ? 4 : 0;
+            }
             point = CUR_UPG_VALUE(sChildUpgrades[index]);
 
             if (((u32)point != 0) && (CUR_UPG_VALUE(sChildUpgrades[index]) != 0)) {
@@ -819,8 +852,11 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                     play->state.gfxCtx, gItemIcons[sChildUpgradeItemBases[i] + CUR_UPG_VALUE(sChildUpgrades[i]) - 1],
                     ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0);
             } else if (CUR_UPG_VALUE(sAdultUpgrades[i]) != 0) {
+                u8 index = i;
+                if (index == 0 && showAltQuiverSlot)
+                    index = 4;
                 KaleidoScope_DrawQuadTextureRGBA32(
-                    play->state.gfxCtx, gItemIcons[sAdultUpgradeItemBases[i] + CUR_UPG_VALUE(sAdultUpgrades[i]) - 1],
+                    play->state.gfxCtx, gItemIcons[sAdultUpgradeItemBases[index] + CUR_UPG_VALUE(sAdultUpgrades[index]) - 1],
                     ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0);
             }
         }
