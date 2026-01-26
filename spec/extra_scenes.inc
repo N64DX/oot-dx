@@ -214,3 +214,15 @@ beginseg
     include "$(BUILD_DIR)/assets/scenes/dungeons/fairy_deku_tree/fairy_deku_tree_room_13.o"
     number 3
 endseg
+
+beginseg
+    name "besitu_scene"
+    include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "besitu_room_0"
+    include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_room_0.o"
+    number 3
+endseg

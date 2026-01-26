@@ -292,7 +292,6 @@ typedef enum SceneID {
 #if !DEBUG_ASSETS
 // Debug-only scenes
 #define SCENE_TEST01        0x65
-#define SCENE_BESITU        0x66
 #define SCENE_DEPTH_TEST    0x67
 #define SCENE_SYOTES        0x68
 #define SCENE_SYOTES2       0x69
