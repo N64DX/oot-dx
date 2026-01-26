@@ -20,11 +20,17 @@
 #include "save.h"
 #include "resolution.h"
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "assets/textures/nes_font_static/nes_font_static.h"
+#include "assets/textures/icon_item_static/icon_item_static.h"
 
+#include "assets/textures/title_static/title_static_save.h"
 #if OOT_NTSC_N64
 #include "assets/textures/title_static/title_static_all.h"
 #else
 #include "assets/textures/title_static/title_static.h"
+#endif
+#if OOT_VERSION <= PAL_1_1
+#include "assets/textures/parameter_static/parameter_static_quest.h"
 #endif
 
 void FileSelect_DrawCharacter(GraphicsContext* gfxCtx, void* texture, s16 vtx) {
@@ -634,11 +640,17 @@ s32 FileSelect_ApplyDiacriticToFilename(GameState* thisx, s16 diacritic) {
 
 #if OOT_VERSION <= PAL_1_1
 static const void* sQuestTextures[QUEST_MAX+1][2] = {
-    { gQuestOcarinaOfTimeTex, gLogoOcarinaOfTimeTex },
-    { gQuestMasterQuestTex,   gLogoMasterQuestTex   },
-    { gQuestUraQuestTex,      gLogoUraQuestTex      },
-    { gQuestOcarinaOfTimeTex, gLogoChildQuestTex    },
-    { gQuestMasterQuestTex,   gLogoChildQuestTex    },
+    { gQuestOcarinaOfTimeTex,     gLogoOcarinaOfTimeTex },
+    { gQuestMasterQuestTex,       gLogoMasterQuestTex   },
+    { gQuestUraQuestTex,          gLogoUraQuestTex      },
+    { gQuestChildQuestTex,        gLogoChildQuestTex    },
+    { gQuestChildMasterQuestTex,  gLogoChildQuestTex    },
+    { gQuestChildUraQuestTex,     gLogoChildQuestTex    },
+    { gQuestDungeonRushTex,       gLogoOcarinaOfTimeTex },
+    { gQuestDungeonMasterRushTex, gLogoMasterQuestTex   },
+    { gQuestDungeonUraRushTex,    gLogoUraQuestTex      },
+    { gQuestDungeonChildRushTex,  gLogoChildQuestTex    },
+    { gQuestBossRushTex,          gLogoOcarinaOfTimeTex },
 };
 
 static const char* sQuestMessages[4][QUEST_MAX+1][2] = {
@@ -648,24 +660,49 @@ static const char* sQuestMessages[4][QUEST_MAX+1][2] = {
         { "A beta version of Master Quest", "" },
         { "Play as Young Link only",        "and discover new areas" },
         { "Play as Young Link only",        "and discover new areas" },
+        { "Play as Young Link only",        "and discover new areas" },
+        { "Race through all dungeons",      "and set the best time"  },
+        { "Race through all dungeons",      "and set the best time"  },
+        { "Race through all dungeons",      "and set the best time"  },
+        { "Race through all dungeons",      "and set the best time"  },
+        { "Race through all bosses",        "and set the best time"  },
     }, {
         { "Das originale Abenteuer",            "" },
-        { "Schwerere, neu gestaltete Dungeons", "" },
-        { "Eine Beta-Version von Master Quest", "" },
-        { "Spiele nur als junger Link",         "und entdecke neue Gebiete" },
-        { "Spiele nur als junger Link",         "und entdecke neue Gebiete" },
+        { "Schwerere, neu gestaltete",          "Dungeons" },
+        { "Eine Beta-Version von",              "Master Quest" },
+        { "Spiele nur als junger Link",         "und entdecke neue Gebiete"   },
+        { "Spiele nur als junger Link",         "und entdecke neue Gebiete"   },
+        { "Spiele nur als junger Link",         "und entdecke neue Gebiete"   },
+        { "Renne durch alle Dungeons",          "und stelle die Bestzeit auf" },
+        { "Renne durch alle Dungeons",          "und stelle die Bestzeit auf" },
+        { "Renne durch alle Dungeons",          "und stelle die Bestzeit auf" },
+        { "Renne durch alle Dungeons",          "und stelle die Bestzeit auf" },
+        { "Kämpfe gegen alle Bosse",            "und stell die Bestzeit auf"  },
+        
     }, {
         { "L'experience originale",            "" },
         { "Donjons plus difficiles",           "et remanies" },
         { "Une version beta de Master Quest",  "" },
         { "Incarnez uniquement le jeune Link", "et decouvrez de nouvelles zones" },
         { "Incarnez uniquement le jeune Link", "et decouvrez de nouvelles zones" },
+        { "Incarnez uniquement le jeune Link", "et decouvrez de nouvelles zones" },
+        { "Parcours tous les donjons",         "et bats le meilleur temps"       },
+        { "Parcours tous les donjons",         "et bats le meilleur temps"       },
+        { "Parcours tous les donjons",         "et bats le meilleur temps"       },
+        { "Parcours tous les donjons",         "et bats le meilleur temps"       },
+        { "Affronte tous les boss",            "et bats le meilleur temps"       },
     }, {
-        { "ｵﾘｼﾞﾅﾙﾀｲｹﾝ",        "" },
-        { "ﾑｽﾞｶｼｸﾅｯﾀﾀﾞﾝｼﾞｮﾝ",   "" },
-        { "ﾏｽﾀｰｸｴｽﾄﾉﾍﾞｰﾀﾊﾞﾝ",   "" },
-        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ", "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
-        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ", "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+        { "ｵﾘｼﾞﾅﾙﾀｲｹﾝ",           "" },
+        { "ﾑｽﾞｶｼｸﾅｯﾀﾀﾞﾝｼﾞｮﾝ",      "" },
+        { "ﾏｽﾀｰｸｴｽﾄﾉﾍﾞｰﾀﾊﾞﾝ",      "" },
+        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ",    "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ",    "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+        { "ｺﾄﾞﾓﾘﾝｸﾀﾞｹﾃﾞﾎﾞｳｹﾝｼ",    "ｱﾀﾗｼｲｴﾘｱｦﾊｯｹﾝｼﾖｳ" },
+        { "ｽﾍﾞﾃﾉﾀﾞﾝｼﾞｮﾝｦｶｹﾇｹﾃ",    "ﾍﾞｽﾄﾀｲﾑｦﾒｻﾞｿｳ"    },
+        { "ｽﾍﾞﾃﾉﾀﾞﾝｼﾞｮﾝｦｶｹﾇｹﾃ",    "ﾍﾞｽﾄﾀｲﾑｦﾒｻﾞｿｳ"    },
+        { "ｽﾍﾞﾃﾉﾀﾞﾝｼﾞｮﾝｦｶｹﾇｹﾃ",    "ﾍﾞｽﾄﾀｲﾑｦﾒｻﾞｿｳ"    },
+        { "ｽﾍﾞﾃﾉﾀﾞﾝｼﾞｮﾝｦｶｹﾇｹﾃ",    "ﾍﾞｽﾄﾀｲﾑｦﾒｻﾞｿｳ"    },
+        { "ｽﾍﾞﾃﾉﾎﾞｽﾄﾀﾀｶｲ",        "ﾍﾞｽﾄﾀｲﾑｦﾒｻﾞｿｳ"    },
     }
 };
 
@@ -676,10 +713,22 @@ static const u8 sQuestMessagesOffset[4][QUEST_MAX+1][2] = {
         { 7,  7  },
         { 7,  7  },
         { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
     }, {
         { 7,  7  },
         { 7,  7  },
         { 7,  7  },
+        { 6,  6  },
+        { 6,  6  },
+        { 6,  6  },
+        { 6,  6  },
+        { 6,  6  },
+        { 6,  6  },
         { 6,  6  },
         { 6,  6  },
     }, {
@@ -688,12 +737,24 @@ static const u8 sQuestMessagesOffset[4][QUEST_MAX+1][2] = {
         { 7,  7  },
         { 4,  5  },
         { 4,  5  },
+        { 4,  5  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
+        { 7,  7  },
     }, {
         { 14, 14 },
         { 11, 11 },
         { 10, 10 },
         { 10, 11 },
         { 10, 11 },
+        { 10, 11 },
+        { 9,  12 },
+        { 9,  12 },
+        { 9,  12 },
+        { 9,  12 },
+        { 9,  12 },
     }
 };
 #endif
@@ -819,7 +880,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
         FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)sQuestTextures[this->questMode[CURRENT_SLOT(this->buttonIndex)]][1], 160, 160);
         gDPLoadTextureBlock(POLY_OPA_DISP++, sQuestTextures[this->questMode[CURRENT_SLOT(this->buttonIndex)]][0], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(x + WS_SHIFT_HALF) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(x + WS_SHIFT_HALF + 128) << 2, HIRES_MULTIPLY((y + 16) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1024), X_HIRES_DIVIDE(1024));
+        gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(x + WS_SHIFT_HALF) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(x + WS_SHIFT_HALF + 128) << 2, HIRES_MULTIPLY((y + 16) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));
 
         x = 48;
         y = 115;
@@ -833,21 +894,28 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         if (this->stickAdjX < -30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             switch (this->questMode[CURRENT_SLOT(this->buttonIndex)]) {
-                case VANILLA_QUEST:      this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_MASTER_QUEST; break;
-                case MASTER_QUEST:       this->questMode[CURRENT_SLOT(this->buttonIndex)] = VANILLA_QUEST;      break;
-                case CHILD_QUEST:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = MASTER_QUEST;       break;
-                case CHILD_MASTER_QUEST: this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_QUEST;        break;
-                default:                 this->questMode[CURRENT_SLOT(this->buttonIndex)] = 0;                  break;                  
+                case VANILLA_QUEST:       this->questMode[CURRENT_SLOT(this->buttonIndex)] = BOSS_RUSH;           break;
+                case MASTER_QUEST:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = VANILLA_QUEST;       break;
+                case CHILD_QUEST:         this->questMode[CURRENT_SLOT(this->buttonIndex)] = MASTER_QUEST;        break;
+                case CHILD_MASTER_QUEST:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_QUEST;         break;
+                case DUNGEON_RUSH:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_MASTER_QUEST ; break;
+                case DUNGEON_MASTER_RUSH: this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_RUSH;        break;
+                case DUNGEON_CHILD_RUSH:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_MASTER_RUSH; break;
+                case BOSS_RUSH:           this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_CHILD_RUSH;  break;
+                default:                  this->questMode[CURRENT_SLOT(this->buttonIndex)] = 0;                   break;      
             }
-        }
-        if (this->stickAdjX > 30) {
+        } else if (this->stickAdjX > 30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             switch (this->questMode[CURRENT_SLOT(this->buttonIndex)]) {
-                case VANILLA_QUEST:      this->questMode[CURRENT_SLOT(this->buttonIndex)] = MASTER_QUEST;       break;
-                case MASTER_QUEST:       this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_QUEST;        break;
-                case CHILD_QUEST:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_MASTER_QUEST; break;
-                case CHILD_MASTER_QUEST: this->questMode[CURRENT_SLOT(this->buttonIndex)] = VANILLA_QUEST;      break;
-                default:                 this->questMode[CURRENT_SLOT(this->buttonIndex)] = QUEST_MAX;          break;
+                case VANILLA_QUEST:       this->questMode[CURRENT_SLOT(this->buttonIndex)] = MASTER_QUEST;        break;
+                case MASTER_QUEST:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_QUEST;         break;
+                case CHILD_QUEST:         this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_MASTER_QUEST;  break;
+                case CHILD_MASTER_QUEST:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_RUSH;        break;
+                case DUNGEON_RUSH:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_MASTER_RUSH; break;
+                case DUNGEON_MASTER_RUSH: this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_CHILD_RUSH;  break;
+                case DUNGEON_CHILD_RUSH:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = BOSS_RUSH;           break;
+                case BOSS_RUSH:           this->questMode[CURRENT_SLOT(this->buttonIndex)] = VANILLA_QUEST;       break;
+                default:                  this->questMode[CURRENT_SLOT(this->buttonIndex)] = QUEST_MAX;           break;
             }
         }
 
@@ -1744,6 +1812,7 @@ static OptionsMenuTextureInfo sOptionsMenuHeaders[] = {
     { { gFileSelSOUNDENGTex, gFileSelSOUNDENGTex, gFileSelSOUNDFRATex, gFileSelSOUNDENGTex }, 64, 16 },
     { { gFileSelZTargetingENGTex, gFileSelZTargetingGERTex, gFileSelZTargetingFRATex, gFileSelZTargetingJPNTex }, 64, 16 },
     { { gFileSelLanguageENGTex, gFileSelLanguageGERTex, gFileSelLanguageFRATex, gFileSelLanguageENGTex }, 64, 16 },
+    { { gFileSelMoreOptionsENGTex, gFileSelMoreOptionsGERTex, gFileSelMoreOptionsFRATex, gFileSelMoreOptionsJPNTex }, 128, 16 },
 };
 
 static OptionsMenuTextureInfo sOptionsMenuSettings[] = {
@@ -1773,6 +1842,7 @@ static OptionsMenuTextureInfo sOptionsMenuHeaders[] = {
     { { gFileSelSOUNDENGTex, gFileSelSOUNDENGTex }, 64, 16 },
     { { gFileSelZTargetingJPNTex, gFileSelZTargetingENGTex }, 64, 16 },
     { { gFileSelCheckBrightnessJPNTex, gFileSelCheckBrightnessENGTex }, 96, 16 },
+     { { gFileSelMoreOptionsJPNTex, gFileSelMoreOptionsENGTex }, 128, 16 },
 };
 
 static OptionsMenuTextureInfo sOptionsMenuSettings[] = {
@@ -1818,6 +1888,7 @@ static OptionsMenuTextureInfo sOptionsMenuHeaders[] = {
     { { gFileSelZTargetingENGTex, gFileSelZTargetingGERTex, gFileSelZTargetingFRATex }, 64, 16 },
     { { gFileSelCheckBrightnessENGTex, gFileSelCheckBrightnessGERTex, gFileSelCheckBrightnessFRATex }, 128, 16 },
     { { gFileSelLanguageENGTex, gFileSelLanguageGERTex, gFileSelLanguageFRATex }, 64, 16 },
+    { { gFileSelMoreOptionsENGTex, gFileSelMoreOptionsGERTex, gFileSelMoreOptionsFRATex }, 128, 16 },
 };
 
 static OptionsMenuTextureInfo sOptionsMenuSettings[] = {
@@ -2209,6 +2280,14 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
     gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
     Matrix_Pop();
 #endif
+
+    // Draw Extra Options label
+    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->titleAlpha[0]);
+                    
+    gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelLButtonTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(30) << 2, HIRES_MULTIPLY(208 << 2), X_HIRES_MULTIPLY(30 + 16) << 2, HIRES_MULTIPLY(208 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2048), HIRES_DIVIDE(2048));
+    gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[4].texture[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[4]), OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[4]), 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(48) << 2, HIRES_MULTIPLY(209 << 2), X_HIRES_MULTIPLY(48 + OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[4])) << 2, HIRES_MULTIPLY(209 + OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[4])) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));
 
     CLOSE_DISPS(this->state.gfxCtx, "../z_file_nameset_PAL.c", 1040);
 }

@@ -143,7 +143,6 @@ void EnOkuta_Init(Actor* thisx, PlayState* play) {
         Collider_InitCylinder(play, &this->collider);
         Collider_SetCylinder(play, &this->collider, thisx, &sOctorockColliderInit);
         CollisionCheck_SetInfo(&thisx->colChkInfo, &sDamageTable, &sColChkInfoInit);
-        Actor_SetGildedSwordDamageTaken(thisx);
         this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
         if ((this->numShots == 0xFF) || (this->numShots == 0)) {
             this->numShots = 1;

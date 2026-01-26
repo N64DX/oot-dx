@@ -90,6 +90,8 @@ typedef enum {
 
 static u8 editor_timer = 0;
 static bool pressed_r = false;
+bool showAltQuiverSlot = false;
+bool showAltScalesSlot = false;
 
 #if OOT_NTSC
 
@@ -941,6 +943,13 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_SCALE_SILVER
     AGE_REQ_NONE,  // ITEM_SCALE_GOLDEN
     AGE_REQ_ADULT, // ITEM_GIANTS_KNIFE
+    AGE_REQ_NONE,  // ITEM_ADULTS_WALLET,
+    AGE_REQ_NONE,  // ITEM_GIANTS_WALLET,
+    AGE_REQ_NONE,  // ITEM_DEKU_SEEDS,
+    AGE_REQ_NONE,  // ITEM_FISHING_POLE,
+    AGE_REQ_NONE,  // ITEM_SWORD_FAIRYS,
+    AGE_REQ_NONE,  // ITEM_ROCS_FEATHER,
+    AGE_REQ_NONE,  // ITEM_GOLDEN_FEATHER,
 };
 
 u8 gAreaGsFlags[] = {
@@ -2169,42 +2178,57 @@ void KaleidoScope_DrawInfoPanel(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
-static bool lastHylianShieldItem;
+static bool lastItem[4];
 
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
     u16 texIndex;
+    bool isNewItem = false;
 
-    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) || lastHylianShieldItem != IS_HEROS_SHIELD ||
+    for (texIndex=0; texIndex<ARRAY_COUNT(lastItem); texIndex++)
+        if (!lastItem[texIndex])
+            isNewItem = true;
+
+    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) || isNewItem ||
         ((pauseCtx->pageIndex == PAUSE_MAP) && (pauseCtx->cursorSpecialPos != 0))) {
 
         pauseCtx->namedItem = pauseCtx->cursorItem[pauseCtx->pageIndex];
         texIndex = pauseCtx->namedItem;
-        lastHylianShieldItem = IS_HEROS_SHIELD;
-        
-        
+
+        if (pauseCtx->namedItem >= ITEM_SONG_MINUET)
+            texIndex -= ITEM_SONG_MINUET - ITEM_MASTER_WALLET;
+
+        if (pauseCtx->pageIndex == PAUSE_EQUIP) {
+            if (showAltQuiverSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 0) {
+                if (LINK_IS_ADULT || (IS_CHILD_QUEST && CUR_UPG_VALUE(UPG_QUIVER) > 0))
+                    texIndex = ITEM_BULLET_BAG_30 + CUR_UPG_VALUE(UPG_BULLET_BAG) - 1;
+                else texIndex = ITEM_QUIVER_30 + CUR_UPG_VALUE(UPG_QUIVER) - 1;
+            } else if (showAltScalesSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 12)
+                texIndex = ITEM_AMULET_OF_ENERGY;
+        }
+
         if (IS_CHILD_QUEST_AS_CHILD) {
             if (pauseCtx->pageIndex == PAUSE_ITEM) {
                 if (pauseCtx->namedItem == ITEM_BOW)
-                    texIndex = 0x59;
+                    texIndex = ITEM_FISHING_POLE;
                 else if (pauseCtx->namedItem == ITEM_BROKEN_GORONS_SWORD)
-                    texIndex = 0x3A;
+                    texIndex = ITEM_DEKU_SEEDS;
             }
             else if (pauseCtx->pageIndex == PAUSE_EQUIP) {
                 if (pauseCtx->namedItem == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
-                    texIndex = 0x58;
-                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER)
-                    texIndex = 0x77;
-                else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON && gSaveContext.save.info.playerData.bgsFlag)
-                    texIndex = 0x78;
-                else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON)
-                    texIndex = 0x73;
+                    texIndex = ITEM_SWORD_HEROS;
                 else if (pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-                    texIndex = 0x79;
+                    texIndex = ITEM_SHIELD_HEROS;
+                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_RAZOR_SWORD)
+                    texIndex = ITEM_BOW_FIRE;
+                else if (pauseCtx->namedItem == ITEM_HEART_PIECE_2) // Biggoron Sword
+                    texIndex = ITEM_BOW_LIGHT;
+                else if (pauseCtx->namedItem == ITEM_SWORD_BIGGORON)
+                    texIndex = ITEM_BOW_ICE;
                 else if (pauseCtx->namedItem == ITEM_STRENGTH_SILVER_GAUNTLETS)
-                    texIndex = 0x56;
+                    texIndex = ITEM_ADULTS_WALLET;
                 else if (pauseCtx->namedItem == ITEM_STRENGTH_GOLD_GAUNTLETS)
-                    texIndex = 0x57;
+                    texIndex = ITEM_GIANTS_WALLET;
             }
         }
 
@@ -2235,17 +2259,17 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                 PRINTF("zoom_name=%d\n", pauseCtx->namedItem);
 
                 if (gSaveContext.language) { // != LANGUAGE_JPN for NTSC versions, LANGUAGE_ENG for PAL versions
-                    texIndex += 123;
+                    texIndex += ITEM_SMALL_KEY;
                 }
 
 #if OOT_PAL || OOT_NTSC_N64
                 if (gSaveContext.language == LANGUAGE_FRA) {
-                    texIndex += 123;
+                    texIndex += ITEM_SMALL_KEY;
                 }
 #endif
 #if OOT_NTSC_N64
                 if (gSaveContext.language == LANGUAGE_JPN)
-                    texIndex += 123 * 2;
+                    texIndex += ITEM_SMALL_KEY * 2;
 #endif
 
                 PRINTF("J_N=%d  point=%d\n", gSaveContext.language, texIndex);
@@ -3769,7 +3793,10 @@ void KaleidoScope_Update(PlayState* play) {
 
     switch (pauseCtx->state) {
         case PAUSE_STATE_INIT:
-            lastHylianShieldItem = IS_HEROS_SHIELD;
+            lastItem[0] = IS_HEROS_SWORD;
+            lastItem[1] = IS_HEROS_SHIELD;
+            lastItem[2] = showAltQuiverSlot;
+            lastItem[3] = showAltScalesSlot;
             pauseCtx->was_in_debug = false;
             D_808321A8[0] = gSaveContext.buttonStatus[0];
             D_808321A8[1] = gSaveContext.buttonStatus[1];
@@ -3840,6 +3867,9 @@ void KaleidoScope_Update(PlayState* play) {
                 case SCENE_WATER_TEMPLE_BOSS:
                 case SCENE_SPIRIT_TEMPLE_BOSS:
                 case SCENE_SHADOW_TEMPLE_BOSS:
+                case SCENE_ANCIENT_HOLLOW:
+                case SCENE_WOODFALL_TEMPLE:
+                case SCENE_WOODFALL_TEMPLE_BOSS:
                     sInDungeonScene = true;
                     size2 = (uintptr_t)_icon_item_dungeon_staticSegmentRomEnd -
                             (uintptr_t)_icon_item_dungeon_staticSegmentRomStart;
@@ -4883,24 +4913,9 @@ void KaleidoScope_Update(PlayState* play) {
 void KaleidoScope_DrawSwapItemIcons(PlayState* play, ItemID currItem, ItemID nextItem, u16 alpha) {
     u16 x = 225;
     u16 y = 205;
-    void* currIcon;
-    void* nextIcon;
 
     if (currItem == nextItem) 
         return;
-
-    if (currItem == ITEM_SHIELD_HEROS)
-        currIcon = gItemIconShieldHerosTex;
-    else if (currItem == ITEM_SWORD_HEROS)
-        currIcon = gItemIconSwordHerosTex;
-    else currIcon = gItemIcons[currItem];
-
-    if (nextItem == ITEM_SHIELD_HEROS)
-        nextIcon = gItemIconShieldHerosTex;
-    else if (nextItem == ITEM_SWORD_HEROS)
-        nextIcon = gItemIconSwordHerosTex;
-    else nextIcon = gItemIcons[nextItem];
-
     OPEN_DISPS(play->state.gfxCtx, "../z_kaleido_scope.c", 4900);
     Gfx_SetupDL_39Overlay(play->state.gfxCtx);
     gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
@@ -4912,11 +4927,11 @@ void KaleidoScope_DrawSwapItemIcons(PlayState* play, ItemID currItem, ItemID nex
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 40) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 40 + 40) << 2, HIRES_MULTIPLY((y + 20) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1850), HIRES_DIVIDE(1230));
 
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, alpha);
-    gDPLoadTextureBlock(OVERLAY_DISP++, currIcon, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadTextureBlock(OVERLAY_DISP++, gItemIcons[currItem], G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 16) << 2, HIRES_MULTIPLY((y + 3) << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 16 + 14) << 2, HIRES_MULTIPLY((y + 3 + 14) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2340), HIRES_DIVIDE(2340));
     gDPLoadTextureBlock(OVERLAY_DISP++, gRightArrowTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_WIDTH, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 28) << 2, HIRES_MULTIPLY((y - 2) << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 28 + 24) << 2, HIRES_MULTIPLY((y - 2 + 24) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1365), HIRES_DIVIDE(1365));
-    gDPLoadTextureBlock(OVERLAY_DISP++, nextIcon, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadTextureBlock(OVERLAY_DISP++, gItemIcons[nextItem], G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 52) << 2, HIRES_MULTIPLY((y + 3) << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 52 + 14) << 2, HIRES_MULTIPLY((y + 3 + 14) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2340), HIRES_DIVIDE(2340));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope.c", 4918);

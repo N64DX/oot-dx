@@ -133,6 +133,7 @@ void EnBox_Init(Actor* thisx, PlayState* play2) {
     this->iceSmokeTimer = 0;
     this->unk_1FB = ENBOX_STATE_0;
     this->dyna.actor.gravity = -5.5f;
+    this->giItem = this->dyna.actor.world.rot.x & 0xFF;
     this->switchFlag = this->dyna.actor.world.rot.z;
     this->dyna.actor.minVelocityY = -50.0f;
 
@@ -188,6 +189,7 @@ void EnBox_Init(Actor* thisx, PlayState* play2) {
     }
 
     this->dyna.actor.world.rot.y += 0x8000;
+    this->dyna.actor.home.rot.x = this->dyna.actor.world.rot.x = this->dyna.actor.shape.rot.x = 0;
     this->dyna.actor.home.rot.z = this->dyna.actor.world.rot.z = this->dyna.actor.shape.rot.z = 0;
 
     //! @bug Flex skeleton is used as normal skeleton
@@ -445,9 +447,16 @@ void EnBox_WaitOpen(EnBox* this, PlayState* play) {
     } else {
         player = GET_PLAYER(play);
         Actor_WorldToActorCoords(&this->dyna.actor, &sp4C, &player->actor.world.pos);
+
+        if (this->type == ENBOX_TYPE_DECORATED_BIG && play->sceneId == SCENE_ANCIENT_HOLLOW)
+            if (!CHECK_DUNGEON_ITEM(DUNGEON_MAP, gSaveContext.mapIndex) || !CHECK_DUNGEON_ITEM(DUNGEON_COMPASS, gSaveContext.mapIndex))
+                return;
+
         if (sp4C.z > -50.0f && sp4C.z < 0.0f && fabsf(sp4C.y) < 10.0f && fabsf(sp4C.x) < 20.0f &&
             Player_IsFacingActor(&this->dyna.actor, 0x3000, play)) {
-            Actor_OfferGetItemNearby(&this->dyna.actor, play, -PARAMS_GET_U(this->dyna.actor.params, 5, 7));
+            if (this->giItem > 0)
+                Actor_OfferGetItemNearby(&this->dyna.actor, play, -this->giItem);
+            else Actor_OfferGetItemNearby(&this->dyna.actor, play, -PARAMS_GET_U(this->dyna.actor.params, 5, 7));
         }
         if (Flags_GetTreasure(play, PARAMS_GET_U(this->dyna.actor.params, 0, 5))) {
             EnBox_SetupAction(this, EnBox_Open);
@@ -566,14 +575,63 @@ void EnBox_Update(Actor* thisx, PlayState* play) {
     }
 }
 
+bool EnBox_IsItem(s16 item) {
+    switch (item) {
+        case GI_SLINGSHOT:
+        case GI_BOW:
+        case GI_BOOMERANG:
+        case GI_HOOKSHOT:
+        case GI_LONGSHOT:
+        case GI_LENS_OF_TRUTH:
+        case GI_HAMMER:
+        case GI_BOTTLE_EMPTY:
+        case GI_SWORD_KOKIRI:
+        case GI_SWORD_HEROS:
+        case GI_SWORD_KNIFE:
+        case GI_SWORD_BIGGORON:
+        case GI_SHIELD_DEKU:
+        case GI_SHIELD_HYLIAN:
+        case GI_SHIELD_HEROS:
+        case GI_SHIELD_MIRROR:
+        case GI_BOOTS_IRON:
+        case GI_BOOTS_HOVER:
+        case GI_SILVER_GAUNTLETS:
+        case GI_GOLD_GAUNTLETS:
+        case GI_ARROW_FIRE:
+        case GI_ARROW_ICE:
+        case GI_ARROW_LIGHT:
+        case GI_BOMB_BAG_20:
+        case GI_BOMB_BAG_30:
+        case GI_BOMB_BAG_40:
+        case GI_WALLET_ADULT:
+        case GI_WALLET_GIANT:
+        case GI_WALLET_MASTER:
+        case GI_WALLET_ROYAL:
+        case GI_WALLET_TYCOON:
+        case GI_WALLET_BOTTOMLESS:
+        case GI_OCARINA_FAIRY:
+        case GI_OCARINA_OF_TIME:
+        case GI_SCALE_SILVER:
+        case GI_SCALE_GOLDEN:
+        case GI_TUNIC_GORON:
+        case GI_TUNIC_ZORA:
+        case GI_AMULET_OF_ENERGY:
+        case GI_ROCS_FEATHER:
+        case GI_GOLDEN_FEATHER:
+        case GI_SWORD_FAIRYS:
+            return true;
+        default:
+            return false;
+    }
+}
+
 void EnBox_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx, Gfx** gfx) {
     EnBox* this = (EnBox*)thisx;
     s32 pad;
-    u8 i = PARAMS_GET_U(this->dyna.actor.params, 5, 7);
+    u8 i = this->giItem > 0 ? this->giItem : PARAMS_GET_U(this->dyna.actor.params, 5, 7);
     bool is_key = i == GI_SMALL_KEY;
     bool is_dungeon_item = i == GI_COMPASS || i == GI_DUNGEON_MAP;
-    bool is_item = i == GI_BOW || i == GI_SLINGSHOT || i == GI_BOOMERANG || i == GI_HOOKSHOT || i == GI_LONGSHOT || i == GI_LENS_OF_TRUTH || i == GI_HAMMER || i == GI_BOTTLE_EMPTY || i == GI_SWORD_KOKIRI  || i == GI_SWORD_HEROS || i == GI_SWORD_KNIFE || i == GI_SWORD_BIGGORON || i == GI_SHIELD_DEKU || i == GI_SHIELD_HYLIAN || i == GI_SHIELD_MIRROR || i == GI_SHIELD_HEROS || i == GI_BOOTS_IRON || i == GI_BOOTS_HOVER ||
-        i == GI_SILVER_GAUNTLETS || i == GI_GOLD_GAUNTLETS || i == GI_ARROW_FIRE || i == GI_ARROW_ICE || i == GI_ARROW_LIGHT || i == GI_ARROW_LIGHT || i == GI_BOMB_BAG_20 || i == GI_BOMB_BAG_30 || i == GI_BOMB_BAG_40 || i == GI_OCARINA_FAIRY || i == GI_OCARINA_OF_TIME || i == GI_SCALE_SILVER || i == GI_SCALE_GOLDEN || i == GI_TUNIC_GORON || i == GI_TUNIC_ZORA;
+    bool is_item = EnBox_IsItem(i);
 
     if (limbIndex == 1) {
         MATRIX_FINALIZE_AND_LOAD((*gfx)++, play->state.gfxCtx, "../z_en_box.c", 1492);

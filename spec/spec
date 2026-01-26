@@ -163,7 +163,10 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_36.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_37.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_38.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_39.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_39_26.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_40_25.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_41_20.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_42_28.o"
 #if OOT_VERSION >= PAL_1_0
     include "$(BUILD_DIR)/assets/audio/audiobank_padding.o"
 #endif
@@ -281,9 +284,17 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_107.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_108.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_109.prg.o"
-    include "$(BUILD_DIR)/assets/audio/sequences/seq_110.o"
-    include "$(BUILD_DIR)/assets/audio/sequences/seq_111.o"
-    include "$(BUILD_DIR)/assets/audio/sequences/seq_112.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_110_fire_temple_censored.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_111_miniboss.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_112_cavern.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_113_sacred_cove.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_114_tal_tal_heights.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_115_mysterious_forest.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_116_kolima_forest.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_117_koloktos.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_118_woodfall_temple.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_119_boss2.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_120_swamp_region.o"
 endseg
 
 beginseg
@@ -309,6 +320,7 @@ beginseg
 #if OOT_NTSC
 #endif
     include "$(BUILD_DIR)/assets/misc/link_animetion/link_animetion.o"
+    include "$(BUILD_DIR)/assets/misc/link_animetion/link_animetion_extra.o"
     number 7
 endseg
 
@@ -338,6 +350,7 @@ beginseg
     name "icon_item_dungeon_static"
     compress
     include "$(BUILD_DIR)/assets/textures/icon_item_dungeon_static/icon_item_dungeon_static.o"
+    include "$(BUILD_DIR)/assets/textures/icon_item_dungeon_static/icon_item_dungeon_static_all.o"
     number 12
 endseg
 
@@ -548,6 +561,7 @@ beginseg
     include "$(BUILD_DIR)/src/code/z_env_flags.o"
     include "$(BUILD_DIR)/src/code/z_fcurve_data.o"
     include "$(BUILD_DIR)/src/code/z_fcurve_data_skelanime.o"
+    include "$(BUILD_DIR)/src/code/z_fireobj.o"
     include "$(BUILD_DIR)/src/code/z_game_dlftbls.o"
     include "$(BUILD_DIR)/src/code/z_horse.o"
     include "$(BUILD_DIR)/src/code/z_jpeg.o"
@@ -1080,6 +1094,7 @@ beginseg
     name "object_firefly"
     compress
     include "$(BUILD_DIR)/assets/objects/object_firefly/object_firefly.o"
+    include "$(BUILD_DIR)/assets/objects/object_firefly/object_firefly_extra.o"
     number 6
 endseg
 
@@ -1101,6 +1116,7 @@ beginseg
     name "object_tite"
     compress
     include "$(BUILD_DIR)/assets/objects/object_tite/object_tite.o"
+    include "$(BUILD_DIR)/assets/objects/object_tite/object_tite_extra.o"
     number 6
 endseg
 
@@ -1122,6 +1138,7 @@ beginseg
     name "object_kingdodongo"
     compress
     include "$(BUILD_DIR)/assets/objects/object_kingdodongo/object_kingdodongo.o"
+    include "$(BUILD_DIR)/assets/objects/object_kingdodongo/object_kingdodongo_extra.o"
 #if OOT_NTSC_N64
     include "$(BUILD_DIR)/assets/objects/object_kingdodongo/object_kingdodongo_title_card.o"
 #endif
@@ -1146,6 +1163,7 @@ beginseg
     name "object_goma"
     compress
     include "$(BUILD_DIR)/assets/objects/object_goma/object_goma.o"
+    include "$(BUILD_DIR)/assets/objects/object_goma/object_goma_extra.o"
 #if OOT_NTSC_N64
     include "$(BUILD_DIR)/assets/objects/object_goma/object_goma_title_card.o"
 #endif
@@ -1191,6 +1209,7 @@ beginseg
     name "object_bl"
     compress
     include "$(BUILD_DIR)/assets/objects/object_bl/object_bl.o"
+    include "$(BUILD_DIR)/assets/objects/object_bl/object_bl_extra.o"
     number 6
 endseg
 
@@ -1366,6 +1385,7 @@ beginseg
     name "object_dekunuts"
     compress
     include "$(BUILD_DIR)/assets/objects/object_dekunuts/object_dekunuts.o"
+    include "$(BUILD_DIR)/assets/objects/object_dekunuts/object_dekunuts_extra.o"
     number 6
 endseg
 
@@ -1757,6 +1777,7 @@ beginseg
     name "object_rd"
     compress
     include "$(BUILD_DIR)/assets/objects/object_rd/object_rd.o"
+    include "$(BUILD_DIR)/assets/objects/object_rd/object_rd_dance.o"
     number 6
 endseg
 
@@ -2242,6 +2263,7 @@ beginseg
     name "object_ganon"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ganon/object_ganon.o"
+    include "$(BUILD_DIR)/assets/objects/object_ganon/object_ganon_extra.o"
 #if OOT_NTSC_N64
     include "$(BUILD_DIR)/assets/objects/object_ganon/object_ganon_title_card.o"
 #endif
@@ -2486,6 +2508,7 @@ beginseg
     name "object_ik"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ik/object_ik.o"
+    include "$(BUILD_DIR)/assets/objects/object_ik/object_ik_extra.o"
     number 6
 endseg
 
@@ -3308,6 +3331,7 @@ beginseg
     name "object_ganon_anime2"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ganon_anime2/object_ganon_anime2.o"
+    include "$(BUILD_DIR)/assets/objects/object_ganon_anime2/object_ganon_anime2_extra.o"
     number 6
 endseg
 
@@ -3810,24 +3834,6 @@ beginseg
 endseg
 
 beginseg
-    name "g_pn_58"
-    compress
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_58.o"
-endseg
-
-beginseg
-    name "g_pn_59"
-    compress
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_59.o"
-endseg
-
-beginseg
-    name "g_pn_60"
-    compress
-    include "$(BUILD_DIR)/assets/textures/place_title_cards/g_pn_60.o"
-endseg
-
-beginseg
     name "z_select_static"
     compress
     include "$(BUILD_DIR)/assets/misc/z_select_static/z_select_static.o"
@@ -3860,6 +3866,8 @@ beginseg
     name "parameter_static"
     compress
     include "$(BUILD_DIR)/assets/textures/parameter_static/parameter_static.o"
+    include "$(BUILD_DIR)/assets/textures/parameter_static/parameter_static_all.o"
+    include "$(BUILD_DIR)/assets/textures/parameter_static/parameter_static_quest.o"
     number 2
 endseg
 

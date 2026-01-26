@@ -160,7 +160,6 @@ void EnReeba_Init(Actor* thisx, PlayState* play) {
     this->actor.shape.yOffset = this->yOffsetTarget = this->scale * -27500.0f;
     ActorShape_Init(&this->actor.shape, this->actor.shape.yOffset, ActorShadow_DrawCircle, 0.0f);
     this->actor.colChkInfo.damageTable = &sDamageTable;
-    Actor_SetGildedSwordDamageTaken(thisx);
     Actor_UpdateBgCheckInfo(play, &this->actor, 35.0f, 60.0f, 60.0f,
                             UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2 | UPDBGCHECKINFO_FLAG_3 |
                                 UPDBGCHECKINFO_FLAG_4);
@@ -286,7 +285,7 @@ void EnReeba_Move(EnReeba* this, PlayState* play) {
 
     surfaceType = SurfaceType_GetFloorType(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId);
 
-    if ((surfaceType != FLOOR_TYPE_4) && (surfaceType != FLOOR_TYPE_7)) {
+    if ((surfaceType != FLOOR_TYPE_4 && surfaceType != FLOOR_TYPE_7) || Player_GetMask(play) == PLAYER_MASK_SKULL) {
         this->actor.speed = 0.0f;
         this->actionfunc = EnReeba_SetupSink;
     } else if ((this->moveTimer == 0) || (this->actor.xzDistToPlayer < 30.0f) ||
@@ -318,7 +317,7 @@ void EnReeba_MoveBig(EnReeba* this, PlayState* play) {
     surfaceType = SurfaceType_GetFloorType(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId);
 
     if (((surfaceType != FLOOR_TYPE_4) && (surfaceType != FLOOR_TYPE_7)) || (this->actor.xzDistToPlayer > 400.0f) ||
-        (this->actor.bgCheckFlags & BGCHECKFLAG_WALL)) {
+        (this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || Player_GetMask(play) == PLAYER_MASK_SKULL) {
         this->actionfunc = EnReeba_SetupSink;
     } else {
         if ((this->actor.xzDistToPlayer < 70.0f) && (this->bigLeeverTimer == 0)) {

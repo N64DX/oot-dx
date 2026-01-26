@@ -1467,7 +1467,8 @@ static void* sOptionsButtonTextures[] = LANGUAGE_ARRAY(gFileSelOptionsButtonJPNT
                                                        gFileSelOptionsButtonGERTex, gFileSelOptionsButtonENGTex);
 
 #if OOT_VERSION <= PAL_1_1
-static void* sQuestButtonTextures[QUEST_MAX+1] = { gFileSelQuestOcarinaOfTimeButtonTex, gFileSelQuestMasterQuestButtonTex, gFileSelQuestUraQuestButtonTex, gFileSelQuestChildQuestButtonTex, gFileSelQuestChildMasterQuestButtonTex };
+static void* sQuestButtonTextures[QUEST_MAX+1] = { gFileSelQuestOcarinaOfTimeButtonTex, gFileSelQuestMasterQuestButtonTex, gFileSelQuestUraQuestButtonTex, gFileSelQuestChildQuestButtonTex, gFileSelQuestChildMasterQuestButtonTex, gFileSelQuestChildUraQuestButtonTex,
+                                                   gFileSelQuestDungeonRushButtonTex, gFileSelQuestDungeonMasterRushButtonTex, gFileSelQuestDungeonUraRushButtonTex, gFileSelQuestDungeonChildRushButtonTex, gFileSelQuestBossRushButtonTex };
 #endif
 
 /**
@@ -2024,7 +2025,7 @@ void FileSelect_LoadGame(GameState* thisx) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.fileNum = CURRENT_SLOT(this->buttonIndex);
-        MemCpy(&gSaveContext.options, this->fileOptions[gSaveContext.fileNum], sizeof(gSaveContext.options));
+        MemCpy(&gSaveContext.options, &this->fileOptions[gSaveContext.fileNum], sizeof(gSaveContext.options));
         Sram_OpenSave(&this->sramCtx);
         gSaveContext.gameMode = GAMEMODE_NORMAL;
         SET_NEXT_GAMESTATE(&this->state, MapSelect_Init, MapSelectState);
@@ -2033,7 +2034,7 @@ void FileSelect_LoadGame(GameState* thisx) {
         Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         gSaveContext.fileNum = CURRENT_SLOT(this->buttonIndex);
-        MemCpy(&gSaveContext.options, this->fileOptions[gSaveContext.fileNum], sizeof(gSaveContext.options));
+        MemCpy(&gSaveContext.options, &this->fileOptions[gSaveContext.fileNum], sizeof(gSaveContext.options));
         Sram_OpenSave(&this->sramCtx);
         gSaveContext.gameMode = GAMEMODE_NORMAL;
         SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);

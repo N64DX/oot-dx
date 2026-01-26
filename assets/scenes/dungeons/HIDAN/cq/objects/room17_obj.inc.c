@@ -1,4 +1,0 @@
-    OBJECT_HIDAN_OBJECTS, // 0
-    OBJECT_OF1D_MAP, // 1
-    OBJECT_BOX, // 2
-

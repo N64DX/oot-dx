@@ -337,7 +337,6 @@ void EnDodongo_Init(Actor* thisx, PlayState* play) {
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(4, MONSTER_HP);
     this->actor.colChkInfo.mass = MASS_HEAVY;
     this->actor.colChkInfo.damageTable = &sDamageTable;
-    Actor_SetGildedSwordDamageTaken(thisx);
     Collider_InitQuad(play, &this->colliderAT);
     Collider_InitTris(play, &this->colliderHard);
     Collider_InitJntSph(play, &this->bodyCollider);
@@ -488,7 +487,7 @@ void EnDodongo_SwallowBomb(EnDodongo* this, PlayState* play) {
     }
 
     if ((s32)this->skelAnime.curFrame == 28) {
-        Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_J_EAT);
+        Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_M_EAT);
         if (this->actor.child != NULL) {
             Actor_Kill(this->actor.child);
             this->actor.child = NULL;

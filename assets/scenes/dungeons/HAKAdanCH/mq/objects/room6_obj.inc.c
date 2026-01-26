@@ -5,4 +5,3 @@
     OBJECT_ST, // 4
     OBJECT_GI_KEY, // 5
     OBJECT_GI_SUTARU, // 6
-

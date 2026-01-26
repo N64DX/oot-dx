@@ -37,6 +37,7 @@
 #include "assets/scenes/dungeons/jyasinzou/jyasinzou_scene.h"
 #include "assets/scenes/dungeons/men/men_scene.h"
 #include "assets/scenes/dungeons/ydan/ydan_scene.h"
+#include "assets/scenes/dungeons/fairy_deku_tree/fairy_deku_tree_scene.h"
 
 #include "overlays/actors/ovl_Bg_Dodoago/z_bg_dodoago.h"
 
@@ -93,6 +94,10 @@ void Scene_DrawConfigBesitu(PlayState* play);
 void Scene_DrawConfigFishingPond(PlayState* play);
 void Scene_DrawConfigGanonsTowerCollapseInterior(PlayState* play);
 void Scene_DrawConfigInsideGanonsCastleCollapse(PlayState* play);
+void Scene_DrawConfigForbiddenWoods(PlayState* play);
+void Scene_DrawConfigAncientHollow(PlayState* play);
+void Scene_DrawConfigWoodfallTemple(PlayState* play);
+void Scene_DrawConfigWoodfall(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -203,6 +208,10 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigFishingPond,                 // SDC_FISHING_POND
     Scene_DrawConfigGanonsTowerCollapseInterior, // SDC_GANONS_TOWER_COLLAPSE_INTERIOR
     Scene_DrawConfigInsideGanonsCastleCollapse,  // SDC_INSIDE_GANONS_CASTLE_COLLAPSE
+    Scene_DrawConfigForbiddenWoods,              // SDC_FORBIDDEN_WOODS
+    Scene_DrawConfigAncientHollow,               // SDC_ANCIENT_HOLLOW
+    Scene_DrawConfigWoodfallTemple,              // SDC_WOODFALL_TEMPLE
+    Scene_DrawConfigWoodfall,                    // SDC_WOODFALL_TEMPLE
 };
 
 void Scene_Draw(PlayState* play) {
@@ -1070,6 +1079,9 @@ void* sSpiritTempleEntranceTextures[] = {
 void Scene_DrawConfigSpiritTemple(PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 6752);
 
+    gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 127);
+    gDPSetEnvColor(POLY_XLU_DISP++, 0, 0, 0, 127);
+
     gSPSegment(POLY_XLU_DISP++, 0x08,
                SEGMENTED_TO_VIRTUAL(sSpiritTempleEntranceTextures[((void)0, gSaveContext.save.nightFlag)]));
 
@@ -1709,6 +1721,90 @@ void Scene_DrawConfigBesitu(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
 }
 
+void Scene_DrawConfigForbiddenWoods(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 3)  % 128, 32, 32, 1, 0, (gameplayFrames * 3)  % 128, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 10) % 128, 32, 32, 1, 0, (gameplayFrames * 10) % 128, 32, 32));
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+}
+
+void* sAncientHollowEntranceTextures[] = {
+    gAncientHollowDayEntranceTex,
+    gAncientHollowNightEntranceTex,
+};
+
+void Scene_DrawConfigAncientHollow(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 512, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 1
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 256, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 2
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 256, 0, 64, 32, 1, 0, (gameplayFrames * 2) % 128, 64, 32)); // Boss Room Fog
+    gSPSegment(POLY_OPA_DISP++, 0x0B, SEGMENTED_TO_VIRTUAL(sAncientHollowEntranceTextures[((void)0, gSaveContext.save.nightFlag)]));
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    if (gSaveContext.save.nightFlag) {
+        gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 255);
+    } else {
+        gDPSetEnvColor(POLY_OPA_DISP++, 255, 255, 255, 255);
+    }
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    if (gSaveContext.save.nightFlag) {
+        gDPSetEnvColor(POLY_XLU_DISP++, 90, 90, 90, 90);
+    } else {
+        gDPSetEnvColor(POLY_XLU_DISP++, 255, 255, 255, 128);
+    }
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+}
+
+void Scene_DrawConfigWoodfallTemple(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+}
+
+void Scene_DrawConfigWoodfall(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
+    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+}
+
 #if !PLATFORM_N64 // Scene_Draw is at beginning of file in N64 versions
 
 SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
@@ -1765,6 +1861,8 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigFishingPond,                 // SDC_FISHING_POND
     Scene_DrawConfigGanonsTowerCollapseInterior, // SDC_GANONS_TOWER_COLLAPSE_INTERIOR
     Scene_DrawConfigInsideGanonsCastleCollapse,  // SDC_INSIDE_GANONS_CASTLE_COLLAPSE
+    Scene_DrawConfigForbiddenWoods,              // SDC_FORBIDDEN_WOODS
+    Scene_DrawConfigAncientHollow,               // SDC_ANCIENT_HOLLOW
 };
 
 void Scene_Draw(PlayState* play) {

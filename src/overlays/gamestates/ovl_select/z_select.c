@@ -107,6 +107,10 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         MapSelect_LoadRoom(DBG_INSIDE_GANONS_CASTLE_0, this->roomNum, 20);
     else if (entranceIndex == ENTR_GANONS_TOWER_0)
         MapSelect_LoadRoom(DBG_GANONS_TOWER_0, this->roomNum, 9);
+    else if (entranceIndex == ENTR_ANCIENT_HOLLOW_0)
+        MapSelect_LoadRoom(DBG_ANCIENT_HOLLOW_0, this->roomNum, 14);
+    else if (entranceIndex == ENTR_WOODFALL_TEMPLE_0)
+        MapSelect_LoadRoom(DBG_WOODFALL_TEMPLE_0, this->roomNum, 12);
 
     gSaveContext.respawnFlag = 0;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
@@ -114,6 +118,7 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     gSaveContext.natureAmbienceId = 0xFF;
     gSaveContext.showTitleCard = true;
     gWeatherMode = WEATHER_MODE_CLEAR;
+    gSaveContext.cheated = 1;
 
     this->state.running = false;
     SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);
@@ -471,10 +476,13 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "121:" T(GFXP_HIRAGANA "ｶﾞﾉﾝｼﾞｮｳﾉｿﾄ", "Outside Ganon's Castle"), MapSelect_LoadGame, MAP_OUTSIDE_GANONS_CASTLE_0 },
     { "122:" T(GFXP_HIRAGANA "ﾚｲｸﾊｲﾘｱﾐﾁ", "Lake Hylia Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_LAKE_HYLIA_0 },
     { "123:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Fortress Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_FORTRESS_0 },
-    { "124:" T(GFXP_HIRAGANA "ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Skulltula Cavern"), MapSelect_LoadGame, ENTR_SWAMP_SPIDER_HOUSE_0 },
-    { "125:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
-    { "126:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
-    { "127:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
+    { "124:" T(GFXP_HIRAGANA "ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Webbed Shrine"), MapSelect_LoadGame, ENTR_SWAMP_SPIDER_HOUSE_0 },
+    { "125:" T(GFXP_HIRAGANA "古代樹", "Forbidden Woods"), MapSelect_LoadGame, ENTR_FORBIDDEN_WOODS_0 },
+    { "126:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
+    { "127:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
+    { "128:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
+    { "129:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
+    { "130:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss"), MapSelect_LoadGame, ENTR_BESITU_0 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };
@@ -506,6 +514,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Cleansed Kokiri Forest",   EVENT,                      EVENTCHKINF_48                           },
     { 0, "Cleansed Death Mountain",  EVENT,                      EVENTCHKINF_49                           },
     { 0, "Cleansed Lake Hylia",      EVENT,                      EVENTCHKINF_4A                           },
+    { 0, "Talked Darunia in Temple", INFTABLE,                   INFTABLE_11A                             },
     { 0, "Death Mountain Erupted",   EVENT,                      EVENTCHKINF_2F                           },
     { 0, "Unfrozen King Zora",       INFTABLE,                   INFTABLE_138                             },
     { 0, "Restored Lake Hylia",      EVENT,                      EVENTCHKINF_RESTORED_LAKE_HYLIA          },
@@ -523,6 +532,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Killed Bongo Bongo",       SCENE_SHADOW_TEMPLE_BOSS,   1                                        },
     { 0, "Killed Nabooru",           NABOORU,                    5                                        },
     { 0, "Killed Twinrova",          SCENE_SPIRIT_TEMPLE_BOSS,   3                                        },
+    { 0, "Killed Hyper Gohma",       SCENE_ANCIENT_HOLLOW,       13                                       },
     { 0, "Completed Mask Quest",     MASK,                       ITEMGETINF_3F,                           },
     { 0, "Got Bottle Cucco Lady",    ITEM,                       ITEMGETINF_0C,                           },
     { 0, "Got Pocket Egg",           ITEM,                       ITEMGETINF_2C,                           },
@@ -844,6 +854,7 @@ void MapSelect_PrintMenu(MapSelectState* this, GfxPrint* printer) {
         case DUNGEON_RUSH:        GfxPrint_Printf(printer, "Dungeon Rush");              break;
         case DUNGEON_MASTER_RUSH: GfxPrint_Printf(printer, "Dungeon MQ Rush");           break;
         case DUNGEON_URA_RUSH:    GfxPrint_Printf(printer, "Dungeon Ura Rush");          break;
+        case DUNGEON_CHILD_RUSH:  GfxPrint_Printf(printer, "Dungeon CQ Rush");           break;
         case BOSS_RUSH:           GfxPrint_Printf(printer, "Boss Rush");                 break;
         default:                  GfxPrint_Printf(printer, "Quest:%d", this->questMode); break;
     }

@@ -1,5 +1,5 @@
 #ifndef ROADTOLAKE_ROOM_0_H
-#define ROADTOLAKE_ROOM_0_H 1
+#define ROADTOLAKE_ROOM_0_H
 
 #include "room.h"
 #include "scene.h"

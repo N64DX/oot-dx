@@ -6,9 +6,86 @@ beginseg
 endseg
 
 beginseg
+    name "object_hsstump"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_hsstump/object_hsstump.o"
+    number 6
+endseg
+
+beginseg
     name "object_ladder"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ladder/object_ladder.o"
+    number 6
+endseg
+
+beginseg
+    name "object_mtoride"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_mtoride/object_mtoride.o"
+    number 6
+endseg
+
+beginseg
+    name "object_wood_pillar"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_wood_pillar/object_wood_pillar.o"
+    number 6
+endseg
+
+beginseg
+    name "object_numa_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_numa_obj/object_numa_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_raillift"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_raillift/object_raillift.o"
+    number 6
+endseg
+
+beginseg
+    name "object_dkjail_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_dkjail_obj/object_dkjail_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_bg_teleporter"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_bg_teleporter/object_bg_teleporter.o"
+    number 6
+endseg
+
+beginseg
+    name "object_bridge_piece"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_bridge_piece/object_bridge_piece.o"
+    number 6
+endseg
+
+beginseg
+    name "object_deku_platforms"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_deku_platforms/object_deku_platforms.o"
+    number 6
+endseg
+
+beginseg
+    name "object_deku_door"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_deku_door/object_deku_door.o"
+    number 6
+endseg
+
+beginseg
+    name "object_lost_woods"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_lost_woods/object_lost_woods.o"
     number 6
 endseg
 
@@ -34,16 +111,44 @@ beginseg
 endseg
 
 beginseg
-    name "object_gi_sword_heros"
+    name "object_gi_feather"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_sword_heros/object_gi_sword_heros.o"
+    include "$(BUILD_DIR)/assets/objects/object_gi_feather/object_gi_feather.o"
     number 6
 endseg
 
 beginseg
-    name "object_gi_longsword_mm"
+    name "object_gi_pendant"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_longsword_mm/object_gi_longsword_mm.o"
+    include "$(BUILD_DIR)/assets/objects/object_gi_pendant/object_gi_pendant.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_sword_1_mm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_sword_1_mm/object_gi_sword_1_mm.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_sword_3_mm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_sword_3_mm/object_gi_sword_3_mm.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_sword_4_mm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_sword_4_mm/object_gi_sword_4_mm.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_shield_1_mm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_shield_1_mm/object_gi_shield_1_mm.o"
     number 6
 endseg
 
@@ -55,16 +160,16 @@ beginseg
 endseg
 
 beginseg
-    name "object_gi_shield_4"
+    name "object_horse_young"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_shield_4/object_gi_shield_4.o"
+    include "$(BUILD_DIR)/assets/objects/object_horse_young/object_horse_young.o"
     number 6
 endseg
 
 beginseg
-    name "object_horse_young"
+    name "object_raf"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_horse_young/object_horse_young.o"
+    include "$(BUILD_DIR)/assets/objects/object_raf/object_raf.o"
     number 6
 endseg
 
@@ -100,5 +205,47 @@ beginseg
     name "object_slime"
     compress
     include "$(BUILD_DIR)/assets/objects/object_slime/object_slime.o"
+    number 6
+endseg
+
+beginseg
+    name "object_beast"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_beast/object_beast.o"
+    number 6
+endseg
+
+beginseg
+    name "object_mkk"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_mkk/object_mkk.o"
+    number 6
+endseg
+
+beginseg
+    name "object_grasshopper"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_grasshopper/object_grasshopper.o"
+    number 6
+endseg
+
+beginseg
+    name "object_tl"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_tl/object_tl.o"
+    number 6
+endseg
+
+beginseg
+    name "object_stalm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_stalm/object_stalm.o"
+    number 6
+endseg
+
+beginseg
+    name "object_ganon_ladder"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_ganon_ladder/object_ganon_ladder.o"
     number 6
 endseg

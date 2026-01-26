@@ -60,7 +60,7 @@ RoomShapeCullableEntry swamp_spider_house_room_0RoomShapeCullableEntry_0000CC[8]
     { {      0,    360,     60 },    300, swamp_spider_house_room_0DL_000C00, NULL },
     { {      0,    120,    -53 },    114, swamp_spider_house_room_0DL_0016F8, NULL },
     { {      0,    240,    120 },    360, swamp_spider_house_room_0DL_001A10, NULL },
-    { {      0,    240,      0 },    294, swamp_spider_house_room_0DL_001DB8, NULL },
+    { {      0,    240,      0 },    194, swamp_spider_house_room_0DL_001DB8, NULL },
     { {      0,    240,     60 },    324, swamp_spider_house_room_0DL_000940, NULL },
 };
 

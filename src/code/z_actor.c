@@ -37,6 +37,8 @@
 #include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.h"
 #include "assets/objects/object_bdoor/object_bdoor.h"
 
+#include "assets/textures/parameter_static/parameter_static.h"
+
 #pragma increment_block_number "gc-eu:128 gc-eu-mq:128 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ntsc-1.0:0" \
                                "ntsc-1.1:0 ntsc-1.2:0 pal-1.0:0 pal-1.1:0"
 
@@ -287,6 +289,35 @@ void Actor_ProjectPos(PlayState* play, Vec3f* src, Vec3f* xyzDest, f32* cappedIn
     }
 }
 
+static void TargetHealth_Draw(PlayState* play, Vec3f* pos, s16 health, s16 maxHealth) {
+    s16 x = (s16)(160.0 + pos->x) + 32;
+    s16 y = (s16)(120.0 - pos->y) - 32;
+    u8 width = 50;
+    u8 height = 8;
+
+    if (maxHealth == 0)
+        return;
+    if (health < 0)
+        health = 0;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_actor.c", 2029);
+    Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
+    gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
+
+    // Lost Health
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 128, 0, 0, 255);
+    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, x << 2, (y + 3) << 2, (x + width) << 2, (y + height) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+    // Left Health
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 0, 0, 255);
+    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, x << 2, (y + 3) << 2, (x + (width * health / maxHealth)) << 2, (y + height) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_actor.c", 2158);
+}
+
 typedef struct AttentionColor {
     /* 0x00 */ Color_RGBA8 primary;   // Used for Navi's inner color, lock-on arrow, and lock-on reticle
     /* 0x04 */ Color_RGBA8 secondary; // Used for Navi's outer color
@@ -471,6 +502,9 @@ void Attention_Draw(Attention* attention, PlayState* play) {
                         gSPDisplayList(OVERLAY_DISP++, gLockOnReticleTriangleDL);
                         Matrix_Pop();
                     }
+                    
+                    if (actor != NULL && (play->actorCtx.lensActive || player->currentMask == PLAYER_MASK_TRUTH))
+                        TargetHealth_Draw(play, &projectedPos, actor->colChkInfo.health, actor->maxHealth);
                 }
 
                 alpha -= 255 / ARRAY_COUNT(attention->lockOnReticles);
@@ -836,6 +870,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
     s32 textureLanguageOffset;
     s32 dsdx = X_HIRES_DIVIDE(1 << 10);
     s32 s = 0;
+    s16 byteStride;
 
     if (titleCtx->alpha != 0) {
         width = titleCtx->width;
@@ -882,11 +917,12 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(titleX1), HIRES_MULTIPLY(titleY1), X_HIRES_MULTIPLY(titleX2), HIRES_MULTIPLY(titleY2 - 1), G_TX_RENDERTILE, s, 0, dsdx,
                             HIRES_DIVIDE(1 << 10));
 
+        byteStride = width * height;
         height = titleCtx->height - height;
 
         // If texture is bigger than 0x1000, display the rest
         if (height > 0) {
-            gDPLoadTextureBlock(OVERLAY_DISP++, (u8*)titleCtx->texture + 0x1000 + textureLanguageOffset, G_IM_FMT_IA,
+            gDPLoadTextureBlock(OVERLAY_DISP++, (u8*)titleCtx->texture + byteStride + textureLanguageOffset, G_IM_FMT_IA,
                                 G_IM_SIZ_8b, width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                                 G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
@@ -973,6 +1009,9 @@ void Actor_Init(Actor* actor, PlayState* play) {
         Actor_SetObjectDependency(play, actor);
         actor->init(actor, play);
         actor->init = NULL;
+        if (actor->colChkInfo.health > 0 && (actor->category == ACTORCAT_ENEMY || ACTORCAT_BOSS))
+            actor->maxHealth = actor->colChkInfo.health;
+        else actor->maxHealth = 0;
     }
 }
 
@@ -1911,13 +1950,19 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                             getItemId = -GI_BOMB_BAG_30;
                         else if (CUR_UPG_VALUE(UPG_BOMB_BAG) >= 2)
                             getItemId = -GI_BOMB_BAG_40;
-                    } else if (getItemId == -GI_WALLET_ADULT || getItemId == -GI_WALLET_GIANT || getItemId == -GI_WALLET_ROYAL) {
-                        if (CUR_UPG_VALUE(UPG_WALLET) == 0)
-                            getItemId = -GI_WALLET_ADULT;
+                    } else if (getItemId == -GI_WALLET_ADULT || getItemId == -GI_WALLET_GIANT || getItemId == -GI_WALLET_MASTER || getItemId == -GI_WALLET_ROYAL || getItemId == -GI_WALLET_TYCOON || getItemId == -GI_WALLET_BOTTOMLESS) {
+                        if (CUR_UPG_VALUE(UPG_WALLET2) >= 2)
+                            getItemId = -GI_WALLET_BOTTOMLESS;
+                        else if (CUR_UPG_VALUE(UPG_WALLET2) == 1)
+                            getItemId = -GI_WALLET_TYCOON;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) == 3)
+                            getItemId = -GI_WALLET_ROYAL;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) == 2)
+                            getItemId = -GI_WALLET_MASTER;
                         else if (CUR_UPG_VALUE(UPG_WALLET) == 1)
                             getItemId = -GI_WALLET_GIANT;
-                        else if (CUR_UPG_VALUE(UPG_WALLET) >= 2)
-                            getItemId = -GI_WALLET_ROYAL;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) == 0)
+                            getItemId = -GI_WALLET_ADULT;
                     } else if (getItemId == -GI_DEKU_STICK_UPGRADE_20 || getItemId == -GI_DEKU_STICK_UPGRADE_30) {
                         if (CUR_UPG_VALUE(UPG_DEKU_STICKS) == 0)
                             getItemId = -GI_DEKU_STICKS_1;
@@ -1954,6 +1999,8 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                             getItemId = -GI_HOOKSHOT;
                         else if (gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] == ITEM_HOOKSHOT || gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] == ITEM_LONGSHOT)
                             getItemId = -GI_LONGSHOT;
+                    } else if (getItemId == -GI_ROCS_FEATHER || getItemId == -GI_GOLDEN_FEATHER) {
+                        getItemId = (HAS_ROCS_FEATHER || gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_ROCS_FEATHER) ? -GI_GOLDEN_FEATHER : -GI_ROCS_FEATHER;
                     }
 
                     if (IS_CHILD_QUEST_AS_CHILD) {
@@ -2559,6 +2606,9 @@ void Actor_UpdateAll(PlayState* play, ActorContext* actorCtx) {
                     Actor_SetObjectDependency(play, actor);
                     actor->init(actor, play);
                     actor->init = NULL;
+                    if (actor->colChkInfo.health > 0 && (actor->category == ACTORCAT_ENEMY || ACTORCAT_BOSS))
+                        actor->maxHealth = actor->colChkInfo.health;
+                    else actor->maxHealth = 0;
                 }
                 actor = actor->next;
             } else if (!Object_IsLoaded(&play->objectCtx, actor->objectSlot)) {
@@ -4104,7 +4154,7 @@ s32 Actor_IsLockedOn(PlayState* play, Actor* actor) {
     if ((player->stateFlags1 & PLAYER_STATE1_HOSTILE_LOCK_ON) && actor->isLockedOn) {
         return true;
     } else {
-        return false;
+        return HARDER_ENEMIES;
     }
 }
 
@@ -4814,6 +4864,10 @@ Gfx D_80116280[] = {
     gsSPEndDisplayList(),
 };
 
+Gfx D_801AEFA0[] = {
+    gsSPEndDisplayList(),
+};
+
 void func_800355B8(PlayState* play, Vec3f* pos) {
     func_8003555C(play, pos, &D_80116268, &D_80116274);
 }
@@ -4830,10 +4884,37 @@ u8 func_800355E4(PlayState* play, Collider* collider) {
 }
 
 u8 Actor_ApplyDamage(Actor* actor) {
-    if (actor->colChkInfo.health <= actor->colChkInfo.damage) {
+    u8 damage = actor->colChkInfo.damage;
+    s32 dmgFlags = actor->colChkInfo.dmgFlags;
+
+    if (IS_CHILD_QUEST_AS_CHILD && actor->colChkInfo.itemAction != PLAYER_IA_SWORD_FAIRYS) {
+        if (damage == 4 && dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT))
+            damage = gSaveContext.save.info.playerData.bgsFlag ? 3 : 2;
+        else if (damage == 8 && dmgFlags & (DMG_JUMP_GIANT | DMG_SPIN_GIANT | DMG_SLASH_GIANT))
+            damage = gSaveContext.save.info.playerData.bgsFlag ? 6 : 4;
+    }
+
+    if (SHIELD_DURABILITY && damage > 0 && dmgFlags & (DMG_SLASH_KOKIRI | DMG_JUMP_KOKIRI | DMG_SPIN_KOKIRI) && actor->colChkInfo.itemAction == PLAYER_IA_SWORD_KOKIRI && IS_HEROS_SWORD) {
+        u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
+        if (IS_HEROS_SHIELD && shield == 2)
+            shield = 4;
+        if (shield != PLAYER_SHIELD_NONE) {
+            u8* currentDurability = &gSaveContext.save.info.shieldDurability[shield - 1];
+            if (shield == PLAYER_SHIELD_DEKU)
+                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_DEKU)   ? MAX_DURABILITY_SHIELD_DEKU   : *currentDurability + 3;
+            else if (shield == PLAYER_SHIELD_HYLIAN)
+                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_HYLIAN) ? MAX_DURABILITY_SHIELD_HYLIAN : *currentDurability + 3;
+            else if (shield == PLAYER_SHIELD_MIRROR)
+                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_MIRROR) ? MAX_DURABILITY_SHIELD_MIRROR : *currentDurability + 3;
+            else if (shield == PLAYER_SHIELD_HEROS)
+                *currentDurability = (*currentDurability + 3> MAX_DURABILITY_SHIELD_HEROS)   ? MAX_DURABILITY_SHIELD_HEROS  : *currentDurability + 3;
+        }
+    }
+
+    if (actor->colChkInfo.health <= damage) {
         actor->colChkInfo.health = 0;
     } else {
-        actor->colChkInfo.health -= actor->colChkInfo.damage;
+        actor->colChkInfo.health -= damage;
     }
 
     return actor->colChkInfo.health;
@@ -4970,6 +5051,12 @@ void func_800359B8(Actor* actor, s16 arg1, Vec3s* arg2) {
         sp24 = (-(floorPolyNormalX * sp2C) - (floorPolyNormalZ * sp30));
         arg2->z = -RAD_TO_BINANG(Math_FAtan2F(sp24 * floorPolyNormalY, 1.0f));
     }
+}
+
+void func_800BE568(Actor* actor, ColliderJntSph* sph) {
+    if (sph->elements[0].base.acHitElem->atDmgInfo.dmgFlags & (DMG_ARROW_NORMAL | DMG_ARROW_FIRE | DMG_ARROW_ICE | DMG_ARROW_LIGHT))
+        actor->world.rot.y = sph->base.ac->shape.rot.y;
+    else actor->world.rot.y = Actor_WorldYawTowardActor(sph->base.ac, actor);
 }
 
 void func_80035B18(PlayState* play, Actor* actor, u16 textId) {
@@ -6433,14 +6520,6 @@ u16 Actor_EnemyHealthMultiply(u16 health, u8 type) {
             return health /= 2;
         default:
             return health;
-    }
-}
-
-void Actor_SetGildedSwordDamageTaken(Actor* thisx) {
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
     }
 }
 

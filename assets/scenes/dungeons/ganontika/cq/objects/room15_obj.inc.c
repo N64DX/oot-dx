@@ -1,7 +1,0 @@
-    OBJECT_DEMO_KEKKAI, // 0
-    OBJECT_HIDAN_OBJECTS, // 1
-    OBJECT_GI_MEDAL, // 2
-    OBJECT_DEMO_6K, // 3
-    OBJECT_DU, // 4
-    OBJECT_WARP2, // 5
-

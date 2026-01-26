@@ -81,42 +81,42 @@ static ColliderJntSphInit sJntSphInit = {
 };
 
 static DamageTable sDamageTable[] = {
-    /* Deku nut      */ DMG_ENTRY(1, 0x1),
-    /* Deku stick    */ DMG_ENTRY(1, 0x0),
+    /* Deku nut      */ DMG_ENTRY(0, 0x1),
+    /* Deku stick    */ DMG_ENTRY(2, 0x0),
     /* Slingshot     */ DMG_ENTRY(1, 0x0),
-    /* Explosive     */ DMG_ENTRY(1, 0x0),
-    /* Boomerang     */ DMG_ENTRY(1, 0x1),
-    /* Normal arrow  */ DMG_ENTRY(1, 0x0),
-    /* Hammer swing  */ DMG_ENTRY(1, 0x0),
-    /* Hookshot      */ DMG_ENTRY(1, 0x1),
+    /* Explosive     */ DMG_ENTRY(2, 0x0),
+    /* Boomerang     */ DMG_ENTRY(0, 0x1),
+    /* Normal arrow  */ DMG_ENTRY(2, 0x0),
+    /* Hammer swing  */ DMG_ENTRY(2, 0x0),
+    /* Hookshot      */ DMG_ENTRY(0, 0x1),
     /* Kokiri sword  */ DMG_ENTRY(1, 0x0),
-    /* Master sword  */ DMG_ENTRY(1, 0x0),
-    /* Giant's Knife */ DMG_ENTRY(1, 0x0),
-    /* Fire arrow    */ DMG_ENTRY(1, 0x0),
-    /* Ice arrow     */ DMG_ENTRY(1, 0xF),
-    /* Light arrow   */ DMG_ENTRY(1, 0x0),
-    /* Unk arrow 1   */ DMG_ENTRY(1, 0x0),
-    /* Unk arrow 2   */ DMG_ENTRY(1, 0x0),
-    /* Unk arrow 3   */ DMG_ENTRY(1, 0x0),
-    /* Fire magic    */ DMG_ENTRY(1, 0xE),
-    /* Ice magic     */ DMG_ENTRY(1, 0xF),
-    /* Light magic   */ DMG_ENTRY(1, 0xE),
-    /* Shield        */ DMG_ENTRY(1, 0x0),
-    /* Mirror Ray    */ DMG_ENTRY(1, 0x0),
+    /* Master sword  */ DMG_ENTRY(2, 0x0),
+    /* Giant's Knife */ DMG_ENTRY(4, 0x0),
+    /* Fire arrow    */ DMG_ENTRY(2, 0x0),
+    /* Ice arrow     */ DMG_ENTRY(4, 0xF),
+    /* Light arrow   */ DMG_ENTRY(2, 0x0),
+    /* Unk arrow 1   */ DMG_ENTRY(2, 0x0),
+    /* Unk arrow 2   */ DMG_ENTRY(2, 0x0),
+    /* Unk arrow 3   */ DMG_ENTRY(2, 0x0),
+    /* Fire magic    */ DMG_ENTRY(0, 0xE),
+    /* Ice magic     */ DMG_ENTRY(3, 0xF),
+    /* Light magic   */ DMG_ENTRY(0, 0xE),
+    /* Shield        */ DMG_ENTRY(0, 0x0),
+    /* Mirror Ray    */ DMG_ENTRY(0, 0x0),
     /* Kokiri spin   */ DMG_ENTRY(1, 0x0),
-    /* Giant spin    */ DMG_ENTRY(1, 0x0),
-    /* Master spin   */ DMG_ENTRY(1, 0x0),
-    /* Kokiri jump   */ DMG_ENTRY(1, 0x0),
-    /* Giant jump    */ DMG_ENTRY(1, 0x0),
-    /* Master jump   */ DMG_ENTRY(1, 0x0),
-    /* Unknown 1     */ DMG_ENTRY(1, 0x0),
-    /* Unblockable   */ DMG_ENTRY(1, 0x0),
-    /* Hammer jump   */ DMG_ENTRY(1, 0x0),
-    /* Unknown 2     */ DMG_ENTRY(1, 0x0),
+    /* Giant spin    */ DMG_ENTRY(4, 0x0),
+    /* Master spin   */ DMG_ENTRY(2, 0x0),
+    /* Kokiri jump   */ DMG_ENTRY(2, 0x0),
+    /* Giant jump    */ DMG_ENTRY(8, 0x0),
+    /* Master jump   */ DMG_ENTRY(4, 0x0),
+    /* Unknown 1     */ DMG_ENTRY(0, 0x0),
+    /* Unblockable   */ DMG_ENTRY(0, 0x0),
+    /* Hammer jump   */ DMG_ENTRY(4, 0x0),
+    /* Unknown 2     */ DMG_ENTRY(0, 0x0),
 };
 
 static InitChainEntry sInitChain[] = {
-    ICHAIN_S8(naviEnemyId, 0x5E, ICHAIN_CONTINUE),
+    ICHAIN_S8(naviEnemyId, NAVI_ENEMY_ZOL, ICHAIN_CONTINUE),
     ICHAIN_F32(lockOnArrowOffset, 2000, ICHAIN_CONTINUE),
     ICHAIN_F32(minVelocityY, 65496, ICHAIN_CONTINUE),
     ICHAIN_F32_DIV1000(gravity, 64536, ICHAIN_STOP),
@@ -606,7 +606,7 @@ void EnSlim_Draw(Actor* thisx, struct PlayState* play) {
     Mtx* mtx;
     GraphicsContext* gfxCtx = play->state.gfxCtx;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_slime.c", 910);
+    OPEN_DISPS(play->state.gfxCtx, "../z_en_slime.c", 910);
 
     func_80093C80(play);
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
@@ -626,7 +626,7 @@ void EnSlim_Draw(Actor* thisx, struct PlayState* play) {
     gSPDisplayList(POLY_XLU_DISP++, slimeDList);
     Matrix_Pop();
 
-    CLOSE_DISPS(play->state.gfxCtx, "../z_slime.c", 910);
+    CLOSE_DISPS(play->state.gfxCtx, "../z_en_slime.c", 910);
 
     Collider_UpdateSpheres(0, &this->collider); // why is this in the draw function??
 }

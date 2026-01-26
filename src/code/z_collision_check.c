@@ -12,6 +12,7 @@
 #include "frame_advance.h"
 #include "zelda_arena.h"
 #include "play_state.h"
+#include "player.h"
 #include "save.h"
 
 #include "overlays/effects/ovl_Effect_Ss_HitMark/z_eff_ss_hitmark.h"
@@ -24,6 +25,8 @@ typedef s32 (*ColChkResetFunc)(PlayState*, Collider*);
 typedef void (*ColChkApplyFunc)(PlayState*, CollisionCheckContext*, Collider*);
 typedef void (*ColChkVsFunc)(PlayState*, CollisionCheckContext*, Collider*, Collider*);
 typedef s32 (*ColChkLineFunc)(PlayState*, CollisionCheckContext*, Collider*, Vec3f*, Vec3f*);
+
+static u8 lastItemAction;
 
 #define SAC_ENABLE (1 << 0)
 
@@ -1686,7 +1689,18 @@ void CollisionCheck_HitEffects(PlayState* play, Collider* atCol, ColliderElement
         return;
     }
     if (acCol->actor != NULL) {
+        Player* player = GET_PLAYER(play);
         sBloodFuncs[sHitInfo[acCol->colMaterial].blood](play, acCol, hitPos);
+
+        if (atCol->actor != NULL)
+            if (atElem->atElemFlags & ATELEM_HIT)
+                if (atElem->atHit != NULL && atElem->atHit->actor != NULL) {
+                    atElem->atHit->actor->colChkInfo.dmgFlags = atElem->atDmgInfo.dmgFlags;
+                    lastItemAction = atElem->atHit->actor->colChkInfo.itemAction = player->itemAction;
+                    if (player->currentTunic == PLAYER_TUNIC_ZORA && (atElem->atHit->actor->category == ACTORCAT_ENEMY || atElem->atHit->actor->category == ACTORCAT_BOSS))
+                        if (atElem->atDmgInfo.dmgFlags == DMG_SLASH_KOKIRI || atElem->atDmgInfo.dmgFlags == DMG_SLASH_MASTER || atElem->atDmgInfo.dmgFlags == DMG_SLASH_GIANT)
+                            atElem->atDmgInfo.dmgFlags = Player_UseSpecialPower(play, player, 30, 8, false, SPECIAL_POWER_STRENGTHEN_SWORD, atElem->atDmgInfo.dmgFlags);
+                }
     }
     if (acCol->actor != NULL) {
         if (sHitInfo[acCol->colMaterial].effect == HIT_SOLID) {
@@ -3017,7 +3031,7 @@ void CollisionCheck_OC(PlayState* play, CollisionCheckContext* colChkCtx) {
  */
 void CollisionCheck_InitInfo(CollisionCheckInfo* info) {
     static CollisionCheckInfo init = {
-        NULL, { 0.0f, 0.0f, 0.0f }, 10, 10, 0, 50, 8, 0, 0, 0, 0,
+        NULL, { 0.0f, 0.0f, 0.0f }, 10, 10, 0, 50, 8, 0, 0, 0, 0, 0, 0,
     };
 
     *info = init;
@@ -3113,6 +3127,8 @@ void CollisionCheck_ApplyDamage(PlayState* play, CollisionCheckContext* colChkCt
     }
     if (!(col->acFlags & AC_HARD)) {
         col->actor->colChkInfo.damage += damage;
+        if (damage > 0)
+            GET_PLAYER(play)->shieldDamage = (damage * 10 + 15) / 16;
     }
 }
 
@@ -3730,10 +3746,16 @@ u8 CollisionCheck_GetSwordDamage(s32 dmgFlags) {
         damage = 1;
     } else if (dmgFlags & (DMG_JUMP_KOKIRI | DMG_SPIN_MASTER | DMG_SLASH_MASTER | DMG_HAMMER_SWING | DMG_DEKU_STICK)) {
         damage = 2;
-    } else if (dmgFlags & (DMG_HAMMER_JUMP | DMG_JUMP_MASTER | DMG_SPIN_GIANT | DMG_SLASH_GIANT)) {
-        damage = (IS_CHILD_QUEST_AS_CHILD && (dmgFlags & DMG_SPIN_GIANT | DMG_SLASH_GIANT)) ? 3 : 4;
+    } else if (dmgFlags & (DMG_HAMMER_JUMP | DMG_JUMP_MASTER)) {
+        damage = 4;
+    } else if (dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT)) {
+        if (IS_CHILD_QUEST_AS_CHILD && lastItemAction != PLAYER_IA_SWORD_FAIRYS)
+            damage = gSaveContext.save.info.playerData.bgsFlag ? 3 : 2;
+        else damage = 4;
     } else if (dmgFlags & DMG_JUMP_GIANT) {
-        damage = (IS_CHILD_QUEST_AS_CHILD && (dmgFlags & DMG_JUMP_GIANT)) ? 6 : 8;
+        if (IS_CHILD_QUEST_AS_CHILD && lastItemAction != PLAYER_IA_SWORD_FAIRYS)
+            damage = gSaveContext.save.info.playerData.bgsFlag ? 6 : 4;
+        else damage = 8;
     }
 
 #if DEBUG_FEATURES

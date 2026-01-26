@@ -22,6 +22,7 @@
 #include "save.h"
 
 #include "assets/objects/object_rd/object_rd.h"
+#include "assets/objects/object_rd/object_rd_dance.h"
 
 #define FLAGS                                                                                 \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | \
@@ -32,7 +33,16 @@ void EnRd_Destroy(Actor* thisx, PlayState* play);
 void EnRd_Update(Actor* thisx, PlayState* play);
 void EnRd_Draw(Actor* thisx, PlayState* play);
 
+s32 EnRd_ShouldNotDance(PlayState* play);
 void EnRd_SetupIdle(EnRd* this);
+void EnRd_SetupSquattingDance(EnRd* this);
+void EnRd_SquattingDance(EnRd* this, PlayState* play);
+void EnRd_SetupClappingDance(EnRd* this);
+void EnRd_ClappingDance(EnRd* this, PlayState* play);
+void EnRd_EndClappingOrSquattingDanceWhenPlayerIsClose(EnRd* this, PlayState* play);
+void EnRd_SetupPirouette(EnRd* this);
+void EnRd_Pirouette(EnRd* this, PlayState* play);
+void EnRd_EndPirouetteWhenPlayerIsClose(EnRd* this, PlayState* play);
 void EnRd_SetupRiseFromCoffin(EnRd* this);
 void EnRd_SetupWalkToHome(EnRd* this, PlayState* play);
 void EnRd_SetupWalkToParent(EnRd* this);
@@ -65,7 +75,10 @@ typedef enum EnRdAction {
     /*  8 */ REDEAD_ACTION_GRAB,
     /*  9 */ REDEAD_ACTION_DAMAGED,
     /* 10 */ REDEAD_ACTION_DEAD,
-    /* 11 */ REDEAD_ACTION_RISE_FROM_COFFIN
+    /* 11 */ REDEAD_ACTION_RISE_FROM_COFFIN,
+    /* 12 */ REDEAD_ACTION_SQUATTING_DANCE,
+    /* 13 */ REDEAD_ACTION_CLAPPING_DANCE,
+    /* 14 */ REDEAD_ACTION_PIROUETTE
 } EnRdAction;
 
 typedef enum EnRdGrabState {
@@ -168,7 +181,6 @@ void EnRd_Init(Actor* thisx, PlayState* play) {
     Actor_ProcessInitChain(thisx, sInitChain);
     this->actor.attentionRangeType = ATTENTION_RANGE_0;
     this->actor.colChkInfo.damageTable = &sDamageTable;
-    Actor_SetGildedSwordDamageTaken(thisx);
     ActorShape_Init(&thisx->shape, 0.0f, NULL, 0.0f);
     this->upperBodyYRotation = this->headYRotation = 0;
     this->actor.focus.pos = thisx->world.pos;
@@ -198,7 +210,16 @@ void EnRd_Init(Actor* thisx, PlayState* play) {
     Collider_SetCylinder(play, &this->collider, thisx, &sCylinderInit);
 
     if (this->actor.params >= REDEAD_TYPE_GIBDO) {
-        EnRd_SetupIdle(this);
+        f32 r = Rand_ZeroOne();
+        if (r <= 0.33f)
+            this->setupDanceFunc = EnRd_SetupSquattingDance;
+        else if (r <= 0.66f)
+            this->setupDanceFunc = EnRd_SetupClappingDance;
+        else this->setupDanceFunc = EnRd_SetupPirouette;
+
+        if (!EnRd_ShouldNotDance(play))
+            this->setupDanceFunc(this);
+        else EnRd_SetupIdle(this);
     } else {
         EnRd_SetupRiseFromCoffin(this);
     }
@@ -248,6 +269,24 @@ void EnRd_UpdateMourningTarget(PlayState* play, Actor* thisx, s32 shouldMourn) {
 
         enemyIterator = enemyIterator->next;
     }
+}
+
+/**
+ * Returns true if the various dancing Redead types *should not* be dancing and returns false if they *should* be dancing. The non-dancing Redeads do not call this function in the final game and thus don't care about what mask the player has equipped.
+ */
+s32 EnRd_ShouldNotDance(PlayState* play) {
+    if (Player_GetMask(play) == PLAYER_MASK_SPOOKY)
+        return false;
+    return true;
+}
+
+/**
+ * If the Redead/Gibdo is a dancing Redead; if it isn't already dancing; if it isn't stunned, taking damage, dead, or currently grabbing the player; and if the player is wearing the appropriate mask, this function will make the Redead start dancing.
+ */
+void EnRd_SetupDanceIfConditionsMet(EnRd* this, PlayState* play) {
+    if (this->actor.params >= REDEAD_TYPE_GIBDO && this->actionFunc != EnRd_SquattingDance && this->actionFunc != EnRd_ClappingDance && this->actionFunc != EnRd_Pirouette && this->actionFunc != EnRd_Stunned && this->actionFunc != EnRd_Grab && this->actionFunc != EnRd_Damaged && this->actionFunc != EnRd_Dead)
+        if (!EnRd_ShouldNotDance(play))
+            this->setupDanceFunc(this);
 }
 
 void EnRd_SetupIdle(EnRd* this) {
@@ -314,6 +353,137 @@ void EnRd_Idle(EnRd* this, PlayState* play) {
 
     if ((play->gameplayFrames & 0x5F) == 0) {
         Actor_PlaySfx(&this->actor, NA_SE_EN_REDEAD_CRY);
+    }
+}
+
+void EnRd_SetupSquattingDance(EnRd* this) {
+    Animation_MorphToLoop(&this->skelAnime, &gGibdoRedeadSquattingDanceAnim, -6.0f);
+    this->action = REDEAD_ACTION_SQUATTING_DANCE;
+    this->animationJudderTimer = (Rand_ZeroOne() * 10.0f) + 5.0f;
+    this->danceEndTimer = 0;
+    this->actor.speed = 0.0f;
+    this->actor.world.rot.y = this->actor.shape.rot.y;
+    this->actionFunc = EnRd_SquattingDance;
+}
+
+void EnRd_SquattingDance(EnRd* this, PlayState* play) {
+    SkelAnime_Update(&this->skelAnime);
+    Math_SmoothStepToS(&this->headYRotation, 0, 1, 0x64, 0);
+    Math_SmoothStepToS(&this->torsoRotY, 0, 1, 0x64, 0);
+
+    if (this->isMourning)
+        EnRd_SetupAttemptPlayerFreeze(this);
+
+    this->isMourning = false;
+    if (this->actor.xzDistToPlayer <= 150.0f && EnRd_ShouldNotDance(play) && func_8002DDE4(play)) {
+        Animation_Change(&this->skelAnime, &gGibdoRedeadLookBackAnim, 0.0f, 0.0f, 19.0f, ANIMMODE_ONCE, -10.0f);
+        this->actionFunc = EnRd_EndClappingOrSquattingDanceWhenPlayerIsClose;
+    }
+
+    if (EnRd_ShouldNotDance(play))
+        EnRd_SetupIdle(this);
+
+    if ((play->gameplayFrames & 0x5F) == 0)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_REDEAD_CRY);
+}
+
+void EnRd_SetupClappingDance(EnRd* this) {
+    Animation_MorphToLoop(&this->skelAnime, &gGibdoRedeadClappingDanceAnim, -6.0f);
+    this->action = REDEAD_ACTION_CLAPPING_DANCE;
+    this->animationJudderTimer = (Rand_ZeroOne() * 10.0f) + 5.0f;
+    this->danceEndTimer = 0;
+    this->actor.speed = 0.0f;
+    this->actor.world.rot.y = this->actor.shape.rot.y;
+    this->actionFunc = EnRd_ClappingDance;
+}
+
+void EnRd_ClappingDance(EnRd* this, PlayState* play) {
+    SkelAnime_Update(&this->skelAnime);
+    Math_SmoothStepToS(&this->headYRotation, 0, 1, 0x64, 0);
+    Math_SmoothStepToS(&this->torsoRotY, 0, 1, 0x64, 0);
+
+    if (this->isMourning)
+        EnRd_SetupAttemptPlayerFreeze(this);
+
+    this->isMourning = false;
+    if (this->actor.xzDistToPlayer <= 150.0f && EnRd_ShouldNotDance(play) && func_8002DDE4(play)) {
+        Animation_Change(&this->skelAnime, &gGibdoRedeadLookBackAnim, 0.0f, 0.0f, 19.0f, ANIMMODE_ONCE, -10.0f);
+        this->actionFunc = EnRd_EndClappingOrSquattingDanceWhenPlayerIsClose;
+    }
+
+    if (EnRd_ShouldNotDance(play))
+        EnRd_SetupIdle(this);
+
+    if ((play->gameplayFrames & 0x5F) == 0)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_REDEAD_CRY);
+}
+
+void EnRd_EndClappingOrSquattingDanceWhenPlayerIsClose(EnRd* this, PlayState* play) {
+    SkelAnime_Update(&this->skelAnime);
+    if ((play->gameplayFrames & 0x5F) == 0)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_REDEAD_CRY);
+
+    this->danceEndTimer++;
+    if (this->danceEndTimer > 10) {
+        if (this->actor.params != REDEAD_TYPE_CRYING && !this->isMourning)
+            EnRd_SetupAttemptPlayerFreeze(this);
+        else EnRd_SetupStandUp(this);
+        this->danceEndTimer = 0;
+    }
+}
+
+void EnRd_SetupPirouette(EnRd* this) {
+    Animation_MorphToLoop(&this->skelAnime, &gGibdoRedeadPirouetteAnim, -6.0f);
+    this->action = REDEAD_ACTION_PIROUETTE;
+    this->animationJudderTimer = (Rand_ZeroOne() * 10.0f) + 5.0f;
+    this->pirouetteAngularVelocity = 0x1112;
+    this->actor.speed = 0.0f;
+    this->actor.world.rot.y = this->actor.shape.rot.y;
+    this->actionFunc = EnRd_Pirouette;
+}
+
+void EnRd_Pirouette(EnRd* this, PlayState* play) {
+    SkelAnime_Update(&this->skelAnime);
+    Math_SmoothStepToS(&this->headYRotation, 0, 1, 0x64, 0);
+    Math_SmoothStepToS(&this->torsoRotY, 0, 1, 0x64, 0);
+
+    if (this->isMourning)
+        EnRd_SetupAttemptPlayerFreeze(this);
+
+    this->isMourning = false;
+    if ((this->actor.xzDistToPlayer <= 150.0f) && EnRd_ShouldNotDance(play) && func_8002DDE4(play))
+        this->actionFunc = EnRd_EndPirouetteWhenPlayerIsClose;
+
+    if (EnRd_ShouldNotDance(play))
+        EnRd_SetupIdle(this);
+
+    if ((play->gameplayFrames & 0x5F) == 0)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_REDEAD_CRY);
+
+    if (Animation_OnFrame(&this->skelAnime, this->skelAnime.endFrame))
+        this->pirouetteAngularVelocity = 0x1112;
+    else if (Animation_OnFrame(&this->skelAnime, 15.0f))
+        this->pirouetteAngularVelocity = 0x199A;
+
+    this->actor.world.rot.y -= this->pirouetteAngularVelocity;
+    this->actor.shape.rot.y = this->actor.world.rot.y;
+}
+
+void EnRd_EndPirouetteWhenPlayerIsClose(EnRd* this, PlayState* play) {
+    SkelAnime_Update(&this->skelAnime);
+    if ((play->gameplayFrames & 0x5F) == 0)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_REDEAD_CRY);
+
+    this->actor.world.rot.y -= this->pirouetteAngularVelocity;
+    this->actor.shape.rot.y = this->actor.world.rot.y;
+
+    this->pirouetteAngularVelocity -= 0x64;
+    if ((this->pirouetteAngularVelocity < 0x834) && (this->pirouetteAngularVelocity >= 0x7D0))
+        Animation_Change(&this->skelAnime, &gGibdoRedeadLookBackAnim, 0.0f, 0.0f, 19.0f, ANIMMODE_ONCE, -10.0f);
+    else if (this->pirouetteAngularVelocity < 0x3E8) {
+        if (this->actor.params != REDEAD_TYPE_CRYING && !this->isMourning)
+            EnRd_SetupAttemptPlayerFreeze(this);
+        else EnRd_SetupStandUp(this);
     }
 }
 
@@ -921,6 +1091,8 @@ void EnRd_Update(Actor* thisx, PlayState* play) {
             CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
         }
     }
+
+    EnRd_SetupDanceIfConditionsMet(this, play);
 }
 
 s32 EnRd_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, void* thisx, Gfx** gfx) {

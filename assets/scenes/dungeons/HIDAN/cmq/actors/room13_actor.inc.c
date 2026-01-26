@@ -65,5 +65,4 @@
          0x5845, // params
     }, // 10
 
-    { ACTOR_OBJ_SYOKUDAI, { -2488, 4680, 227 }, {  0x0000,  0x0000,  0x0000 }, 0x3CC1, }, // 11: Extra hookshot target on the east side
-    { ACTOR_OBJ_SYOKUDAI, { -1800, 4620, 600 }, {  0x0000,  0x0000,  0x0000 }, 0x3CC1, }, // 12
+    { ACTOR_OBJ_HSBLOCK, { -1800, 4620, 600 }, { 0x0000, 0x0000, 0x0000 }, 0x3CC1, }, // 11

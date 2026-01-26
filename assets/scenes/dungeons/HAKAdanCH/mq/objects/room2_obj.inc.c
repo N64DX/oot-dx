@@ -6,4 +6,3 @@
     OBJECT_ST, // 5
     OBJECT_SYOKUDAI, // 6
     OBJECT_POH, // 7
-

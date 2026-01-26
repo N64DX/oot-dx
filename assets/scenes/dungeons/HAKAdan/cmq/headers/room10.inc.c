@@ -3,6 +3,6 @@
     SCENE_CMD_SKYBOX_DISABLES(false /* skybox enabled */, false /* sun/moon enabled */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0xFF /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&HAKAdan_room_10_03000150_RoomShapeNormal),
-    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(cmq_objects), cmq_objects),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(mq_objects), mq_objects),
     SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(cmq_actors), cmq_actors),
     SCENE_CMD_END(),

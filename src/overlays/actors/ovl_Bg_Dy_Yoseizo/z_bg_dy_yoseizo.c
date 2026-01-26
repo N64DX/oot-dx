@@ -29,6 +29,7 @@
 #include "assets/objects/object_dy_obj/object_dy_obj.h"
 #include "assets/scenes/indoors/yousei_izumi_yoko/yousei_izumi_yoko_scene.h"
 #include "assets/scenes/indoors/daiyousei_izumi/daiyousei_izumi_scene.h"
+#include "assets/scenes/indoors/daiyousei_izumi/daiyousei_izumi_cutscenes_scene.h"
 
 #if OOT_VERSION < NTSC_1_1
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_DRAW_CULLING_DISABLED)
@@ -39,7 +40,8 @@
 typedef enum BgDyYoseizoRewardType {
     /* 0 */ FAIRY_UPGRADE_MAGIC,
     /* 1 */ FAIRY_UPGRADE_DOUBLE_MAGIC,
-    /* 2 */ FAIRY_UPGRADE_DOUBLE_DEFENSE
+    /* 2 */ FAIRY_UPGRADE_DOUBLE_DEFENSE,
+    /* 3 */ FAIRY_UPGRADE_GREAT_QUICK_SPIN
 } BgDyYoseizoRewardType;
 
 typedef enum BgDyYoseizoSpellType {
@@ -296,6 +298,12 @@ void BgDyYoseizo_ChooseType(BgDyYoseizo* this, PlayState* play) {
                     givingReward = true;
                 }
                 break;
+            case FAIRY_UPGRADE_GREAT_QUICK_SPIN:
+                if (!gSaveContext.save.info.isEnhancedSpinAcquired) {
+                    this->givingSpell = true;
+                    givingReward = true;
+                }
+                break;
         }
     }
 
@@ -328,6 +336,10 @@ void BgDyYoseizo_ChooseType(BgDyYoseizo* this, PlayState* play) {
                         break;
                     case FAIRY_UPGRADE_DOUBLE_DEFENSE:
                         play->csCtx.script = SEGMENTED_TO_VIRTUAL(gGreatFairyDoubleDefenseCs);
+                        gSaveContext.cutsceneTrigger = 1;
+                        break;
+                    case FAIRY_UPGRADE_GREAT_QUICK_SPIN:
+                        play->csCtx.script = SEGMENTED_TO_VIRTUAL(gGreatFairyGreatQuickSpinCs);
                         gSaveContext.cutsceneTrigger = 1;
                         break;
                 }
@@ -786,7 +798,9 @@ void BgDyYoseizo_Give_Reward(BgDyYoseizo* this, PlayState* play) {
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_HEARTS_MAGIC);
                 break;
             case FAIRY_UPGRADE_DOUBLE_DEFENSE:
-                gSaveContext.save.info.playerData.isDoubleDefenseAcquired = true;
+                if (this->fountainType == FAIRY_UPGRADE_GREAT_QUICK_SPIN)
+                    gSaveContext.save.info.isEnhancedSpinAcquired = true;
+                else gSaveContext.save.info.playerData.isDoubleDefenseAcquired = true;
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_HEARTS_MAGIC);
                 break;
         }

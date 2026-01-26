@@ -42,6 +42,7 @@ u32 gUpgradeMasks[UPG_MAX] = {
     0x0001C000, // UPG_BULLET_BAG
     0x000E0000, // UPG_DEKU_STICKS
     0x00700000, // UPG_DEKU_NUTS
+    0x01800000, // UPG_WALLET2
 };
 u32 gUpgradeNegMasks[UPG_MAX] = {
     ~0x00000007, // UPG_QUIVER
@@ -52,6 +53,7 @@ u32 gUpgradeNegMasks[UPG_MAX] = {
     ~0x0001C000, // UPG_BULLET_BAG
     ~0x000E0000, // UPG_DEKU_STICKS
     ~0x00700000, // UPG_DEKU_NUTS
+    ~0x01800000, // UPG_DEKU_NUTS
 };
 
 u8 gEquipShifts[EQUIP_TYPE_MAX] = {
@@ -70,6 +72,7 @@ u8 gUpgradeShifts[UPG_MAX] = {
     14, // UPG_BULLET_BAG
     17, // UPG_DEKU_STICKS
     20, // UPG_DEKU_NUTS
+    23, // UPG_WALLET2
 };
 
 u16 gUpgradeCapacities[UPG_MAX][4] = {
@@ -81,6 +84,7 @@ u16 gUpgradeCapacities[UPG_MAX][4] = {
     { 0, 30, 40, 50 },     // UPG_BULLET_BAG
     { 0, 10, 20, 30 },     // UPG_DEKU_STICKS
     { 0, 20, 30, 40 },     // UPG_DEKU_NUTS
+    { 0, 2000, 5000, 9999 }, // UPG_WALLET2
 };
 
 u32 gGsFlagsMasks[] = { 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000 };
@@ -178,6 +182,16 @@ void* gItemIcons[] = {
     gItemIconGiantsWalletTex,      // ITEM_GIANTS_WALLET
     gItemIconDekuSeedsTex,         // ITEM_DEKU_SEEDS
     gItemIconFishingPoleTex,       // ITEM_FISHING_POLE
+    gItemIconGreatFairysSwordTex,  // ITEM_SWORD_FAIRYS
+    gItemIconRocsFeatherTex,       // ITEM_ROCS_FEATHER
+    gItemIconGoldenFeatherTex,     // ITEM_GOLDEN_FEATHER
+    gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
+    gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
+    gItemIconAmuletOfEnergyTex,    // ITEM_AMULET_OF_ENERGY
+    gItemIconGiantsWalletTex,      // ITEM_MASTER_WALLET
+    gItemIconGiantsWalletTex,      // ITEM_ROYAL_WALLET
+    gItemIconGiantsWalletTex,      // ITEM_TYCOON_WALLET
+    gItemIconGiantsWalletTex,      // ITEM_BOTTOMLESS_WALLET
     // icon_item_static 16x24 ia8
     gSongNoteTex, // ITEM_SONG_MINUET
     gSongNoteTex, // ITEM_SONG_BOLERO
@@ -289,6 +303,27 @@ void Inventory_ChangeEquipment(s16 equipment, u16 value) {
     gSaveContext.save.info.equips.equipment |= value << gEquipShifts[equipment];
 }
 
+void Inventory_ChangeEquipmentWithIcon(PlayState* play, s16 equipment, u16 value) {
+    Inventory_ChangeEquipment(equipment, value);
+
+    if (equipment == EQUIP_TYPE_SHIELD) {
+        u8 shieldItem;
+        InterfaceContext* interfaceCtx = &play->interfaceCtx;
+        
+        if (value == PLAYER_SHIELD_DEKU)
+            shieldItem = ITEM_SHIELD_DEKU;
+        else if (value == PLAYER_SHIELD_HYLIAN)
+            shieldItem = ITEM_SHIELD_HYLIAN;
+        else if (value == PLAYER_SHIELD_MIRROR)
+            shieldItem = ITEM_SHIELD_MIRROR;
+        else if (value == PLAYER_SHIELD_HEROS)
+            shieldItem = ITEM_SHIELD_HEROS;
+        else shieldItem = ITEM_NONE;
+
+        DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(shieldItem)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __LINE__);
+    }
+}
+
 u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
     Player* player = GET_PLAYER(play);
     s32 pad;
@@ -303,7 +338,7 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
         equipValue >>= gEquipShifts[equipment];
 
         if (equipment == EQUIP_TYPE_SHIELD) {
-            if (IS_HEROS_SHIELD) {
+            if (IS_HEROS_SHIELD && equipValue == 2) {
                 CLEAR_HEROS_SHIELD;
                 gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
                 gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(equipment, 3);

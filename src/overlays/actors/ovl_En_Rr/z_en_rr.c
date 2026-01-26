@@ -190,7 +190,6 @@ void EnRr_Init(Actor* thisx, PlayState* play2) {
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->actor.colChkInfo.damageTable = &sDamageTable;
-    Actor_SetGildedSwordDamageTaken(thisx);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(4, MONSTER_HP);
     Collider_InitCylinder(play, &this->collider1);
     Collider_SetCylinderType1(play, &this->collider1, &this->actor, &sCylinderInit1);
@@ -372,7 +371,7 @@ void EnRr_SetupDamage(EnRr* this) {
         this->bodySegs[i].scaleTarget.x = this->bodySegs[i].scaleTarget.z = 1.0f;
     }
     this->actionFunc = EnRr_Damage;
-    Actor_PlaySfx(&this->actor, NA_SE_EN_LIKE_DAMAGE);
+    Actor_PlaySfx(&this->actor, NA_SE_EN_RIVA_DAMAGE);
 }
 
 void EnRr_SetupApproach(EnRr* this) {

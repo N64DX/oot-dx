@@ -509,7 +509,10 @@ BAD_RETURN(s32) Scene_CommandAlternateHeaderList(PlayState* play, SceneCmd* cmd)
 
 BAD_RETURN(s32) Scene_CommandQuestHeaderList(PlayState* play, SceneCmd* cmd) {
     if (R_QUEST_MODE > 0) {
-       SceneCmd* questHeader = ((SceneCmd**)SEGMENTED_TO_VIRTUAL(cmd->questHeaders.data))[R_QUEST_MODE - 1];
+        SceneCmd* questHeader = ((SceneCmd**)SEGMENTED_TO_VIRTUAL(cmd->questHeaders.data))[R_QUEST_MODE - 1];
+        if (R_QUEST_MODE == DUNGEON_CHILD_RUSH && gSaveContext.save.info.sceneFlags[play->sceneId].extra.quest == 1)
+            questHeader = ((SceneCmd**)SEGMENTED_TO_VIRTUAL(cmd->questHeaders.data))[CHILD_MASTER_QUEST - 1];
+
         if (questHeader != NULL) {
             Scene_ExecuteCommands(play, SEGMENTED_TO_VIRTUAL(questHeader));
             (cmd + 1)->base.code = SCENE_CMD_ID_END;
@@ -566,6 +569,10 @@ void Scene_SetTransitionForNextEntrance(PlayState* play) {
     play->transitionType = ENTRANCE_INFO_START_TRANS_TYPE(gEntranceTable[entranceIndex].field);
 }
 
+void Scene_CommandTitleCard(PlayState* play, SceneCmd* cmd) {
+    Message_SetTitleCardInfo(play, SEGMENTED_TO_VIRTUAL(cmd->titleCard.segment));
+}
+
 SceneCmdHandlerFunc sSceneCmdHandlers[SCENE_CMD_ID_MAX] = {
     Scene_CommandPlayerEntryList,          // SCENE_CMD_ID_SPAWN_LIST
     Scene_CommandActorEntryList,           // SCENE_CMD_ID_ACTOR_LIST
@@ -594,6 +601,7 @@ SceneCmdHandlerFunc sSceneCmdHandlers[SCENE_CMD_ID_MAX] = {
     Scene_CommandAlternateHeaderList,      // SCENE_CMD_ID_ALTERNATE_HEADER_LIST
     Scene_CommandMiscSettings,             // SCENE_CMD_ID_MISC_SETTINGS
     Scene_CommandQuestHeaderList,          // SCENE_CMD_ID_QUEST_HEADER_LIST
+    Scene_CommandTitleCard,                // SCENE_CMD_ID_TITLE_CARD
 };
 
 RomFile sNaviQuestHintFiles[] = {

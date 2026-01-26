@@ -67,4 +67,6 @@ extern Gfx gLinkAdultRightShoulderNearDL[56];
 
 extern FlexSkeletonHeader gLinkAdultSkel;
 
+extern Gfx gLinkAdultGreatFairysSwordDL[];
+
 #endif

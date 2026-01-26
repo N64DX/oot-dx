@@ -1,5 +1,5 @@
 #include "gameplay_keep.h"
-#include "extracted/ntsc-1.0/assets/misc/link_animetion/link_animetion.h"
+#include "assets/misc/link_animetion/link_animetion.h"
 
 #include "array_count.h"
 #include "camera.h"
@@ -2728,28 +2728,28 @@ u64 gWoodenDoorTex[TEX_LEN(u64, gWoodenDoorTex_WIDTH, gWoodenDoorTex_HEIGHT, 16)
 #include "assets/objects/gameplay_keep/gWoodenDoorTex.rgba16.inc.c"
 };
 
-StandardLimb gDoorSkel_04010408_Limbs_040103D8_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gDoorSkel_04010408_Limbs_040103D8_StandardLimb.inc.c"
+StandardLimb gDoorSkel_0400FF68_Limbs_0400FF38_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gDoorSkel_0400FF68_Limbs_0400FF38_StandardLimb.inc.c"
 };
 
-StandardLimb gDoorSkel_04010408_Limbs_040103E4_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gDoorSkel_04010408_Limbs_040103E4_StandardLimb.inc.c"
+StandardLimb gDoorSkel_0400FF68_Limbs_0400FF44_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gDoorSkel_0400FF68_Limbs_0400FF44_StandardLimb.inc.c"
 };
 
-StandardLimb gDoorSkel_04010408_Limbs_040103F0_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gDoorSkel_04010408_Limbs_040103F0_StandardLimb.inc.c"
+StandardLimb gDoorSkel_0400FF68_Limbs_0400FF50_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gDoorSkel_0400FF68_Limbs_0400FF50_StandardLimb.inc.c"
 };
 
-StandardLimb gDoorSkel_04010408_Limbs_040103FC_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gDoorSkel_04010408_Limbs_040103FC_StandardLimb.inc.c"
+StandardLimb gDoorSkel_0400FF68_Limbs_0400FF5C_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gDoorSkel_0400FF68_Limbs_0400FF5C_StandardLimb.inc.c"
 };
 
-void* gDoorSkel_04010408_Limbs[] = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gDoorSkel_04010408_Limbs.inc.c"
+void* gDoorSkel_0400FF68_Limbs[] = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gDoorSkel_0400FF68_Limbs.inc.c"
 };
 
 SkeletonHeader gDoorSkel = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gDoorSkel.inc.c"
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gDoorSkel.inc.c"
 };
 
 s16 gDoorAdultOpeningRightFrameData[] = {
@@ -2928,68 +2928,68 @@ Vtx gGlowCircleSmallVtx[] = {
 #include "assets/objects/gameplay_keep/gGlowCircleSmallVtx.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E08_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E08_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_04016968_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_04016968_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E14_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E14_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_04016974_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_04016974_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E20_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E20_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_04016980_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_04016980_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E2C_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E2C_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_0401698C_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_0401698C_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E38_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E38_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_04016998_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_04016998_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E44_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E44_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_040169A4_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_040169A4_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E50_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E50_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_040169B0_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_040169B0_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E5C_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E5C_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_040169BC_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_040169BC_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E68_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E68_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_040169C8_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_040169C8_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E74_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E74_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_040169D4_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_040169D4_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E80_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E80_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_040169E0_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_040169E0_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E8C_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E8C_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_040169EC_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_040169EC_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016E98_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016E98_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_040169F8_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_040169F8_StandardLimb.inc.c"
 };
 
-StandardLimb gFairySkel_04016EB0_Limbs_04016EA4_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs_04016EA4_StandardLimb.inc.c"
+StandardLimb gFairySkel_04016A10_Limbs_04016A04_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs_04016A04_StandardLimb.inc.c"
 };
 
-void* gFairySkel_04016EB0_Limbs[] = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel_04016EB0_Limbs.inc.c"
+void* gFairySkel_04016A10_Limbs[] = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel_04016A10_Limbs.inc.c"
 };
 
 SkeletonHeader gFairySkel = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFairySkel.inc.c"
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFairySkel.inc.c"
 };
 
 u64 gUnknownCircle3Tex[TEX_LEN(u64, gUnknownCircle3Tex_WIDTH, gUnknownCircle3Tex_HEIGHT, 4)] = {
@@ -3032,28 +3032,28 @@ AnimationHeader gFishOutOfWaterAnim = {
 #include "assets/objects/gameplay_keep/gFishOutOfWaterAnim.inc.c"
 };
 
-Vtx gameplay_keep_Vtx_018AB0[] = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gameplay_keep_Vtx_018AB0.inc.c"
+Vtx gameplay_keep_Vtx_018610[] = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gameplay_keep_Vtx_018610.inc.c"
 };
 
-Vtx gameplay_keep_Vtx_018AF0[] = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gameplay_keep_Vtx_018AF0.inc.c"
+Vtx gameplay_keep_Vtx_018650[] = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gameplay_keep_Vtx_018650.inc.c"
 };
 
-Vtx gameplay_keep_Vtx_018BF0[] = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gameplay_keep_Vtx_018BF0.inc.c"
+Vtx gameplay_keep_Vtx_018750[] = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gameplay_keep_Vtx_018750.inc.c"
 };
 
-Gfx gFishSkel_04019468_Limbs_0401945C_StandardLimb_04018D50_DL[20] = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel_04019468_Limbs_0401945C_StandardLimb_04018D50_DL.inc.c"
+Gfx gFishSkel_04018FC8_Limbs_04018FBC_StandardLimb_040188B0_DL[20] = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel_04018FC8_Limbs_04018FBC_StandardLimb_040188B0_DL.inc.c"
 };
 
-Gfx gFishSkel_04019468_Limbs_04019450_StandardLimb_04018DF0_DL[35] = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel_04019468_Limbs_04019450_StandardLimb_04018DF0_DL.inc.c"
+Gfx gFishSkel_04018FC8_Limbs_04018FB0_StandardLimb_04018950_DL[35] = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel_04018FC8_Limbs_04018FB0_StandardLimb_04018950_DL.inc.c"
 };
 
-Gfx gFishSkel_04019468_Limbs_04019438_StandardLimb_04018F08_DL[35] = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel_04019468_Limbs_04019438_StandardLimb_04018F08_DL.inc.c"
+Gfx gFishSkel_04018FC8_Limbs_04018F98_StandardLimb_04018A68_DL[35] = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel_04018FC8_Limbs_04018F98_StandardLimb_04018A68_DL.inc.c"
 };
 
 u64 gFishTailTex[TEX_LEN(u64, gFishTailTex_WIDTH, gFishTailTex_HEIGHT, 16)] = {
@@ -3064,36 +3064,36 @@ u64 gFishBodyTex[TEX_LEN(u64, gFishBodyTex_WIDTH, gFishBodyTex_HEIGHT, 16)] = {
 #include "assets/objects/gameplay_keep/gFishBodyTex.rgba16.inc.c"
 };
 
-StandardLimb gFishSkel_04019468_Limbs_04019420_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel_04019468_Limbs_04019420_StandardLimb.inc.c"
+StandardLimb gFishSkel_04018FC8_Limbs_04018F80_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel_04018FC8_Limbs_04018F80_StandardLimb.inc.c"
 };
 
-StandardLimb gFishSkel_04019468_Limbs_0401942C_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel_04019468_Limbs_0401942C_StandardLimb.inc.c"
+StandardLimb gFishSkel_04018FC8_Limbs_04018F8C_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel_04018FC8_Limbs_04018F8C_StandardLimb.inc.c"
 };
 
-StandardLimb gFishSkel_04019468_Limbs_04019438_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel_04019468_Limbs_04019438_StandardLimb.inc.c"
+StandardLimb gFishSkel_04018FC8_Limbs_04018F98_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel_04018FC8_Limbs_04018F98_StandardLimb.inc.c"
 };
 
-StandardLimb gFishSkel_04019468_Limbs_04019444_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel_04019468_Limbs_04019444_StandardLimb.inc.c"
+StandardLimb gFishSkel_04018FC8_Limbs_04018FA4_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel_04018FC8_Limbs_04018FA4_StandardLimb.inc.c"
 };
 
-StandardLimb gFishSkel_04019468_Limbs_04019450_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel_04019468_Limbs_04019450_StandardLimb.inc.c"
+StandardLimb gFishSkel_04018FC8_Limbs_04018FB0_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel_04018FC8_Limbs_04018FB0_StandardLimb.inc.c"
 };
 
-StandardLimb gFishSkel_04019468_Limbs_0401945C_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel_04019468_Limbs_0401945C_StandardLimb.inc.c"
+StandardLimb gFishSkel_04018FC8_Limbs_04018FBC_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel_04018FC8_Limbs_04018FBC_StandardLimb.inc.c"
 };
 
-void* gFishSkel_04019468_Limbs[] = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel_04019468_Limbs.inc.c"
+void* gFishSkel_04018FC8_Limbs[] = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel_04018FC8_Limbs.inc.c"
 };
 
 FlexSkeletonHeader gFishSkel = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gFishSkel.inc.c"
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gFishSkel.inc.c"
 };
 
 s16 gFishInWaterFrameData[] = {
@@ -3720,104 +3720,104 @@ u64 gBugLegTex[TEX_LEN(u64, gBugLegTex_WIDTH, gBugLegTex_HEIGHT, 16)] = {
 #include "assets/objects/gameplay_keep/gBugLegTex.rgba16.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_040358C0_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_040358C0_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035420_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035420_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_040358CC_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_040358CC_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_0403542C_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_0403542C_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_040358D8_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_040358D8_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035438_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035438_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_040358E4_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_040358E4_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035444_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035444_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_040358F0_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_040358F0_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035450_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035450_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_040358FC_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_040358FC_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_0403545C_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_0403545C_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_04035908_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_04035908_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035468_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035468_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_04035914_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_04035914_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035474_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035474_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_04035920_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_04035920_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035480_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035480_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_0403592C_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_0403592C_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_0403548C_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_0403548C_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_04035938_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_04035938_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035498_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035498_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_04035944_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_04035944_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_040354A4_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_040354A4_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_04035950_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_04035950_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_040354B0_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_040354B0_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_0403595C_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_0403595C_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_040354BC_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_040354BC_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_04035968_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_04035968_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_040354C8_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_040354C8_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_04035974_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_04035974_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_040354D4_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_040354D4_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_04035980_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_04035980_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_040354E0_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_040354E0_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_0403598C_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_0403598C_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_040354EC_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_040354EC_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_04035998_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_04035998_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_040354F8_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_040354F8_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_040359A4_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_040359A4_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035504_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035504_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_040359B0_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_040359B0_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035510_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035510_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_040359BC_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_040359BC_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_0403551C_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_0403551C_StandardLimb.inc.c"
 };
 
-StandardLimb gBugSkel_040359D4_Limbs_040359C8_StandardLimb = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs_040359C8_StandardLimb.inc.c"
+StandardLimb gBugSkel_04035534_Limbs_04035528_StandardLimb = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs_04035528_StandardLimb.inc.c"
 };
 
-void* gBugSkel_040359D4_Limbs[] = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel_040359D4_Limbs.inc.c"
+void* gBugSkel_04035534_Limbs[] = {
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel_04035534_Limbs.inc.c"
 };
 
 SkeletonHeader gBugSkel = {
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gBugSkel.inc.c"
+#include "extracted/pal-1.0/assets/objects/gameplay_keep/gBugSkel.inc.c"
 };
 
 Vtx gCuttableShrubStalkVtx[] = {

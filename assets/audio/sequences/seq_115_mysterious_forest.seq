@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_3.h"
+
+.startseq Sequence_115
+
+.incbin "aseq/mysterious_forest.aseq"
+
+.endseq Sequence_115

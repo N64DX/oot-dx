@@ -7236,6 +7236,74 @@ LAYER_3077:
 /* 0x30B6 [0x60 0x64 0x4B          ] */ notedv      PITCH_F3, 100, 75
 /* 0x30B9 [0xFF                    ] */ end
 
+.channel CHAN_EV_FLOWERPETAL_MOVE
+/* 0x3FDE [0x88 0x3F 0xE7          ] */ ldlayer     0, LAYER_EV_FLOWERPETAL_MOVE_2
+/* 0x3FE1 [0x89 0x3F 0xE5          ] */ ldlayer     1, LAYER_EV_FLOWERPETAL_MOVE_1
+/* 0x3FE4 [0xFF                    ] */ end
+
+.layer LAYER_EV_FLOWERPETAL_MOVE_1
+/* 0x3FE5 [0xC2 0x3C               ] */ transpose   60
+.layer LAYER_EV_FLOWERPETAL_MOVE_2
+/* 0x3FE7 [0xC6 0x42               ] */ instr       SF0_INST_66
+/* 0x3FE9 [0xC7 0x01 0x03 0x28     ] */ portamento  0x01, PITCH_C1, 40
+/* 0x3FED [0x4F 0xFF 0xBC 0x64     ] */ notedv      PITCH_C2, 32700, 100
+/* 0x3FF1 [0xFF                    ] */ end
+
+.channel CHAN_EV_FLOWERPETAL_STOP
+/* 0x3FF2 [0x88 0x3F 0xF9          ] */ ldlayer     0, LAYER_EV_FLOWERPETAL_STOP_1
+/* 0x3FF5 [0x89 0x39 0xBB          ] */ ldlayer     1, LAYER_EV_FLOWERPETAL_STOP_2
+/* 0x3FF8 [0xFF                    ] */ end
+
+.layer LAYER_EV_FLOWERPETAL_STOP_1
+/* 0x3FF9 [0xC6 0x4D               ] */ instr       SF0_INST_77
+/* 0x3FFB [0xCF 0xDD               ] */ releaserate 221
+/* 0x3FFD [0xC7 0x81 0x37 0xFF     ] */ portamento  0x81, PITCH_E5, 255
+/* 0x4001 [0x55 0x34 0x30          ] */ notedv      PITCH_GF2, 52, 48
+/* 0x4004 [0xFF                    ] */ end
+
+.layer LAYER_EV_FLOWERPETAL_STOP_2
+/* 0x39BB [0xC6 0x3F               ] */ instr       SF0_INST_63
+/* 0x39BD [0xCB 0xC0 0x34 0xEB     ] */ env         ENVELOPE_C034, 235
+/* 0x39C1 [0x5B 0x04 0x64          ] */ notedv      PITCH_C3, 4, 100
+/* 0x39C4 [0x56 0x08 0x64          ] */ notedv      PITCH_G2, 8, 100
+/* 0x39C7 [0xFF                    ] */ end
+
+.channel CHAN_EV_FLOWER_ROLLING
+/* 0x4005 [0x8A 0x40 0x0B          ] */ ldlayer     2, LAYER_EV_FLOWER_ROLLING_1
+/* 0x4008 [0xFB 0x32 0x7F          ] */ jump        CHAN_EV_ROLL_STAND
+
+.layer LAYER_EV_FLOWER_ROLLING_1
+/* 0x400B [0xC6 0x42               ] */ instr       SF0_INST_66
+/* 0x400D [0xC2 0x30               ] */ transpose   48
+/* 0x400F [0xC4                    ] */ legato
+LAYER_EV_FLOWER_ROLLING_2:
+/* 0x4010 [0x4F 0xFF 0xBC 0x64     ] */ notedv      PITCH_C2, 32700, 100
+/* 0x4014 [0xF4 0xFA               ] */ rjump       LAYER_EV_FLOWER_ROLLING_2
+
+.channel CHAN_EV_ROLL_STAND
+/* 0x327F [0x88 0x32 0x96          ] */ ldlayer     0, LAYER_3296
+/* 0x3282 [0x89 0x32 0x8A          ] */ ldlayer     1, LAYER_328A
+/* 0x3285 [0xD7 0xDC               ] */ vibfreq     220
+/* 0x3287 [0xD8 0x35               ] */ vibdepth    53
+/* 0x3289 [0xFF                    ] */ end
+
+.layer LAYER_3296
+/* 0x3296 [0xC2 0xEE               ] */ transpose   -18
+/* 0x3298 [0xC6 0x34               ] */ instr       SF0_INST_52
+/* 0x329A [0xCB 0xC0 0x00 0xF7     ] */ env         ENVELOPE_C000, 247
+/* 0x329E [0xC4                    ] */ legato
+LAYER_329F:
+/* 0x329F [0x5E 0x60 0x5A          ] */ notedv      PITCH_EF3, 96, 90
+/* 0x32A2 [0xF4 0xFB               ] */ rjump       LAYER_329F
+
+.layer LAYER_328A
+/* 0x328A [0xC6 0x4A               ] */ instr       SF0_INST_74
+/* 0x328C [0xCB 0xC0 0x00 0xF7     ] */ env         ENVELOPE_C000, 247
+/* 0x3290 [0xC4                    ] */ legato
+LAYER_3291:
+/* 0x3291 [0x4C 0x60 0x6C          ] */ notedv      PITCH_A1, 96, 108
+/* 0x3294 [0xF4 0xFB               ] */ rjump       LAYER_3291
+
 .filter FILTER_30C0
     filter 0, 0, 0, 0, 0, 0, 0, 0
 
@@ -14923,6 +14991,403 @@ LAYER_6576:
 .array ARRAY_65AA
     .byte 100, 95, 105
 
+.channel CHAN_EN_STAL_DMGED
+    ldlayer     0, LAYER_EN_STAL_DMGED
+    end
+
+.layer LAYER_EN_STAL_DMGED
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_1, 0, 100
+    end
+
+.channel CHAN_EN_STAL_GATHER
+    ldlayer     0, LAYER_EN_STAL_GATHER
+    end
+
+.layer LAYER_EN_STAL_GATHER
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_2, 0, 100
+    end
+
+.channel CHAN_EN_STAL_DIE
+    ldlayer     0, LAYER_EN_STAL_DIE
+    end
+
+.layer LAYER_EN_STAL_DIE
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_3, 0, 100
+    end
+
+.channel CHAN_EN_STAL_PICK
+    ldlayer     0, LAYER_EN_STAL_PICK
+    end
+
+.layer LAYER_EN_STAL_PICK
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_4, 0, 100
+    end
+
+.channel CHAN_EN_STAL_REPLACE
+    ldlayer     0, LAYER_EN_STAL_REPLACE
+    end
+
+.layer LAYER_EN_STAL_REPLACE
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_5, 0, 100
+    end
+
+.channel CHAN_EN_STAL_SCREECH
+    ldlayer     0, LAYER_EN_STAL_SCREECH
+    end
+
+.layer LAYER_EN_STAL_SCREECH
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_6, 0, 100
+    end
+
+.channel CHAN_EN_STAL_STEP
+    ldlayer     0, LAYER_EN_STAL_STEP
+    end
+
+.layer LAYER_EN_STAL_STEP
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_7, 0, 100
+    end
+
+.channel CHAN_EN_STAL_SWING
+    ldlayer     0, LAYER_EN_STAL_SWING
+    end
+
+.layer LAYER_EN_STAL_SWING
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_8, 0, 100
+    end
+
+.channel CHAN_EN_STAL_TELEGRAPH
+    ldlayer     0, LAYER_EN_STAL_TELEGRAPH
+    end
+
+.layer LAYER_EN_STAL_TELEGRAPH
+    instr       FONTANY_INSTR_SFX
+    notedv      SF1_EFFECT_STAL_9, 0, 100
+    end
+
+.channel CHAN_EN_KUROSUKE_MOVE
+/* 0x6D6C [0x88 0x6D 0x74          ] */ ldlayer     0, LAYER_EN_KUROSUKE_MOVE
+/* 0x6D6F [0xD7 0x50               ] */ vibfreq     80
+/* 0x6D71 [0xD8 0x40               ] */ vibdepth    64
+/* 0x6D73 [0xFF                    ] */ end
+
+.layer LAYER_EN_KUROSUKE_MOVE
+/* 0x6D74 [0xC6 0x48               ] */ instr       SF1_INST_51
+/* 0x6D76 [0xC4                    ] */ legato
+LAYER_6D77:
+/* 0x6D77 [0x69 0xF5 0x30 0x46     ] */ notedv      PITCH_D4, 30000, 70
+/* 0x6D7B [0xF4 0xFA               ] */ rjump       LAYER_6D77
+/* 0x6D7D [0xFF                    ] */ end
+
+.channel CHAN_EN_KUROSUKE_ATTACK
+/* 0x6D7E [0xC1 0x38               ] */ instr       SF1_INST_52
+/* 0x6D80 [0x88 0x6D 0x84          ] */ ldlayer     0, LAYER_EN_KUROSUKE_ATTACK
+/* 0x6D83 [0xFF                    ] */ end
+
+.layer LAYER_EN_KUROSUKE_ATTACK
+/* 0x6D84 [0xC7 0x85 0x35 0xFF     ] */ portamento  0x85, PITCH_D5, 255
+/* 0x6D88 [0x79 0x08 0x64          ] */ notedv      PITCH_GF5, 8, 100
+/* 0x6D8B [0x7C 0x10 0x64          ] */ notedv      PITCH_A5, 16, 100
+/* 0x6D8E [0xFF                    ] */ end
+
+.channel CHAN_EN_BATTA_FLY
+/* 0x6E36 [0xC1 0x03               ] */ instr       SF1_INST_24
+/* 0x6E38 [0x88 0x6E 0x40          ] */ ldlayer     0, LAYER_6E40
+/* 0x6E3B [0xD7 0x50               ] */ vibfreq     80
+/* 0x6E3D [0xD8 0x40               ] */ vibdepth    64
+/* 0x6E3F [0xFF                    ] */ end
+
+.layer LAYER_6E40
+/* 0x6E40 [0xC4                    ] */ legato
+LAYER_6E41:
+/* 0x6E41 [0x63 0xF5 0x30 0x64     ] */ notedv      PITCH_AF3, 30000, 100
+/* 0x6E45 [0xF4 0xFA               ] */ rjump       LAYER_6E41
+
+.channel CHAN_EN_BATTA_DAMAGE
+/* 0x6E47 [0x88 0x6E 0x52          ] */ ldlayer     0, LAYER_EN_BATTA_DAMAGE
+/* 0x6E4D [0xD7 0x80               ] */ vibfreq     128
+/* 0x6E4F [0xD8 0x60               ] */ vibdepth    96
+/* 0x6E51 [0xFF                    ] */ end
+
+.layer LAYER_EN_BATTA_DAMAGE
+/* 0x6E52 [0xC6 0x07               ] */ instr       SF1_INST_53
+/* 0x6E54 [0xC7 0x81 0x2E 0x60     ] */ portamento  0x81, PITCH_G4, 96
+/* 0x6E58 [0x7E 0x16 0x64          ] */ notedv      PITCH_B5, 22, 100
+/* 0x6E5B [0xC7 0x81 0x37 0xCF     ] */ portamento  0x81, PITCH_E5, 207
+/* 0x6E5F [0x72 0x60 0x64          ] */ notedv      PITCH_B4, 96, 100
+/* 0x6E62 [0xFF                    ] */ end
+
+.channel CHAN_EN_BATTA_DEAD
+/* 0x6E63 [0x88 0x6E 0x6E          ] */ ldlayer     0, LAYER_EN_BATTA_DEAD
+/* 0x6E69 [0xD7 0x80               ] */ vibfreq     128
+/* 0x6E6B [0xD8 0x60               ] */ vibdepth    96
+/* 0x6E6D [0xFF                    ] */ end
+
+.layer LAYER_EN_BATTA_DEAD
+/* 0x6E6E [0xC6 0x38               ] */ instr       SF1_INST_52
+/* 0x6E70 [0xC7 0x81 0x29 0xA0     ] */ portamento  0x81, PITCH_D4, 160
+/* 0x6E74 [0x7A 0x40 0x64          ] */ notedv      PITCH_G5, 64, 100
+/* 0x6E77 [0xC7 0x81 0x32 0xCF     ] */ portamento  0x81, PITCH_B4, 207
+/* 0x6E7B [0x64 0x80 0xA0 0x64     ] */ notedv      PITCH_A3, 160, 100
+/* 0x6E7F [0xFF                    ] */ end
+
+.channel CHAN_EN_BATTA_ATTACK
+/* 0x6E80 [0xC1 0x2F               ] */ instr       SF1_INST_54
+/* 0x6E82 [0x88 0x6E 0x8A          ] */ ldlayer     0, LAYER_EN_BATTA_ATTACK
+/* 0x6E85 [0xD7 0xC0               ] */ vibfreq     192
+/* 0x6E87 [0xD8 0xA0               ] */ vibdepth    160
+/* 0x6E89 [0xFF                    ] */ end
+
+.layer LAYER_EN_BATTA_ATTACK
+/* 0x6E8A [0x6B 0x78 0x64          ] */ notedv      PITCH_E4, 120, 100
+/* 0x6E8D [0xFF                    ] */ end
+
+.channel CHAN_EN_PAMET_VOICE
+/* 0x6FA9 [0xED 0x07               ] */ gain        7
+/* 0x6FAB [0xC1 0x5C               ] */ instr       SF1_INST_55
+/* 0x6FAD [0x88 0x6F 0xB1          ] */ ldlayer     0, LAYER_EN_PAMET_VOICE
+/* 0x6FB0 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_VOICE
+/* 0x6FB1 [0x67 0x3E 0x7F          ] */ notedv      PITCH_C4, 62, 127
+/* 0x6FB4 [0xFF                    ] */ end
+
+.channel CHAN_EN_PAMET_WALK
+/* 0x6FB5 [0xED 0x10               ] */ gain        16
+/* 0x6FB7 [0xD7 0x64               ] */ vibfreq     100
+/* 0x6FB9 [0xD8 0x7F               ] */ vibdepth    127
+/* 0x6FBB [0x88 0x6F 0xC2          ] */ ldlayer     0, LAYER_EN_PAMET_WALK_1
+/* 0x6FBE [0x89 0x6F 0xC8          ] */ ldlayer     1, LAYER_EN_PAMET_WALK_2
+/* 0x6FC1 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_WALK_1
+/* 0x6FC2 [0xC6 0x0B               ] */ instr       SF1_INST_4
+/* 0x6FC4 [0x59 0x13 0x34          ] */ notedv      PITCH_BF2, 19, 52
+/* 0x6FC7 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_WALK_2
+/* 0x6FC8 [0xC6 0x14               ] */ instr       SF1_INST_14
+/* 0x6FCA [0x48 0x0F 0x64          ] */ notedv      PITCH_F1, 15, 100
+/* 0x6FCD [0xFF                    ] */ end
+
+.channel CHAN_EN_PAMET_ROLL
+/* 0x6FCE [0xC1 0x22               ] */ instr       SF1_INST_33
+/* 0x6FD0 [0x88 0x6F 0xD7          ] */ ldlayer     0, LAYER_EN_PAMET_ROLL
+/* 0x6FD3 [0xDA 0xC3 0xB4          ] */ env         ENVELOPE_C3B4
+/* 0x6FD6 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_ROLL
+/* 0x6FD7 [0x79 0x06 0x50          ] */ notedv      PITCH_GF5, 6, 80
+/* 0x6FDA [0x7B 0x06 0x50          ] */ notedv      PITCH_AF5, 6, 80
+/* 0x6FDD [0x7D 0x06 0x50          ] */ notedv      PITCH_BF5, 6, 80
+/* 0x6FE0 [0x7B 0x06 0x50          ] */ notedv      PITCH_AF5, 6, 80
+/* 0x6FE3 [0xF4 0xF2               ] */ rjump       LAYER_EN_PAMET_ROLL
+
+.channel CHAN_EN_PAMET_REVERSE
+/* 0x6FE5 [0xED 0x07               ] */ gain        7
+/* 0x6FE7 [0x88 0x6F 0xF2          ] */ ldlayer     0, LAYER_EN_PAMET_REVERSE_1
+/* 0x6FEA [0x89 0x70 0x01          ] */ ldlayer     1, LAYER_EN_PAMET_REVERSE_2
+/* 0x6FED [0xD7 0xE0               ] */ vibfreq     224
+/* 0x6FEF [0xD8 0x60               ] */ vibdepth    96
+/* 0x6FF1 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_REVERSE_1
+/* 0x6FF5 [0xC6 0x5C               ] */ instr       SF1_INST_55
+/* 0x6FF7 [0x67 0x0A 0x7F          ] */ notedv      PITCH_C4, 10, 127
+/* 0x6FFA [0x68 0x08 0x7F          ] */ notedv      PITCH_DF4, 8, 127
+/* 0x6FFD [0x6A 0x0A 0x7F          ] */ notedv      PITCH_EF4, 10, 127
+/* 0x7000 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_REVERSE_2
+/* 0x7004 [0xC6 0x38               ] */ instr       SF1_INST_52
+/* 0x7006 [0x5E 0x34 0x64          ] */ notedv      PITCH_EF3, 52, 100
+/* 0x7009 [0xFF                    ] */ end
+
+.channel CHAN_EN_PAMET_ROAR
+/* 0x700A [0xED 0x07               ] */ gain        7
+/* 0x700C [0xC1 0x5D               ] */ instr       SF1_INST_56
+/* 0x700E [0x88 0x70 0x12          ] */ ldlayer     0, LAYER_EN_PAMET_ROAR
+/* 0x7011 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_ROAR
+/* 0x7012 [0x67 0x42 0x7F          ] */ notedv      PITCH_C4, 66, 127
+/* 0x7015 [0xFF                    ] */ end
+
+.channel CHAN_EN_PAMET_WAKEUP
+/* 0x7016 [0xED 0x07               ] */ gain        7
+/* 0x7018 [0xC1 0x5D               ] */ instr       SF1_INST_56
+/* 0x701A [0x88 0x70 0x1E          ] */ ldlayer     0, LAYER_EN_PAMET_WAKEUP
+/* 0x701D [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_WAKEUP
+/* 0x701E [0x67 0x54 0x7F          ] */ notedv      PITCH_C4, 84, 127
+/* 0x7021 [0xFF                    ] */ end
+
+.channel CHAN_EN_PAMET_DAMAGE
+/* 0x7041 [0xED 0x07               ] */ gain        7
+/* 0x7043 [0x88 0x70 0x4E          ] */ ldlayer     0, LAYER_EN_PAMET_DAMAGE_1
+/* 0x7046 [0x89 0x83 0x37          ] */ ldlayer     1, LAYER_EN_PAMET_DAMAGE_2
+/* 0x7049 [0xD7 0x64               ] */ vibfreq     100
+/* 0x704B [0xD8 0x64               ] */ vibdepth    100
+/* 0x704D [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_DAMAGE_1
+/* 0x704E [0xC6 0x5C               ] */ instr       SF1_INST_55
+/* 0x7050 [0xC2 0x03               ] */ transpose   3
+/* 0x7052 [0x67 0x07 0x7F          ] */ notedv      PITCH_C4, 7, 127
+/* 0x7055 [0x6C 0x05 0x7F          ] */ notedv      PITCH_F4, 5, 127
+/* 0x7058 [0x6B 0x04 0x7F          ] */ notedv      PITCH_E4, 4, 127
+/* 0x705B [0x6A 0x0F 0x7F          ] */ notedv      PITCH_EF4, 15, 127
+/* 0x705E [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_DAMAGE_2
+/* 0x833D [0xC6 0x7E               ] */ instr       FONTANY_INSTR_SFX
+/* 0x833F [0x46 0x00 0x64          ] */ notedv      SF1_EFFECT_39, 0, 100
+/* 0x8342 [0xFF                    ] */ end
+
+.channel CHAN_EN_PAMET_DEAD
+/* 0x705F [0xED 0x07               ] */ gain        7
+/* 0x7061 [0xD7 0x4E               ] */ vibfreq     78
+/* 0x7063 [0xD8 0x4E               ] */ vibdepth    78
+/* 0x7065 [0x88 0x70 0x7F          ] */ ldlayer     0, LAYER_EN_PAMET_DEAD_2
+/* 0x7068 [0x8B 0x70 0x83          ] */ ldlayer     3, LAYER_EN_PAMET_DEAD_3
+/* 0x706B [0x89 0x70 0x92          ] */ ldlayer     1, LAYER_EN_PAMET_DEAD_4
+/* 0x706E [0x8A 0x83 0x37          ] */ ldlayer     2, LAYER_EN_PAMET_DAMAGE_2
+/* 0x7071 [0xCC 0x05               ] */ ldi         5
+/* 0x7073 [0xFC 0x00 0x48          ] */ call        CHAN_0048
+/* 0x7076 [0x89 0x70 0x7A          ] */ ldlayer     1, LAYER_EN_PAMET_DEAD_1
+/* 0x7079 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_DEAD_1
+/* 0x707A [0xC2 0xF4               ] */ transpose   -12
+/* 0x707C [0xFB 0x70 0x83          ] */ jump        LAYER_EN_PAMET_DEAD_3
+
+.layer LAYER_EN_PAMET_DEAD_2
+/* 0x707F [0xC0 0x14               ] */ ldelay      20
+/* 0x7081 [0xC2 0xFD               ] */ transpose   -3
+.layer LAYER_EN_PAMET_DEAD_3
+/* 0x7083 [0xC6 0x5D               ] */ instr       SF1_INST_56
+/* 0x7085 [0xCB 0xC5 0x80 0xFA     ] */ env         ENVELOPE_C580, 250
+/* 0x7089 [0xC7 0x85 0x25 0xFF     ] */ portamento  0x85, PITCH_BF3, 255
+/* 0x708D [0x56 0x81 0x90 0x7F     ] */ notedv      PITCH_G2, 400, 127
+/* 0x7091 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_DEAD_4
+/* 0x7092 [0xC6 0x5C               ] */ instr       SF1_INST_55
+/* 0x7094 [0xC2 0x03               ] */ transpose   3
+/* 0x7096 [0x67 0x07 0x7F          ] */ notedv      PITCH_C4, 7, 127
+/* 0x7099 [0x6C 0x05 0x7F          ] */ notedv      PITCH_F4, 5, 127
+/* 0x709C [0x6B 0x04 0x7F          ] */ notedv      PITCH_E4, 4, 127
+/* 0x709F [0x6A 0x0F 0x7F          ] */ notedv      PITCH_EF4, 15, 127
+/* 0x70A2 [0xFF                    ] */ end
+
+.channel CHAN_EN_PAMET_CUTTER_ON
+/* 0x7022 [0xCC 0x37               ] */ ldi         55
+/* 0x7024 [0xC7 0x00 0x80 0xDF     ] */ stseq       0, LAYER_EN_PAMET_CUTTER_ON_2 + STSEQ_NOTEDV_VELOCITY_2
+/* 0x7028 [0x88 0x80 0xD0          ] */ ldlayer     0, LAYER_EN_PAMET_CUTTER_ON_1
+/* 0x702B [0xCC 0x0F               ] */ ldi         15
+/* 0x702D [0xFC 0x00 0x48          ] */ call        CHAN_0048
+/* 0x7030 [0x89 0x7B 0x77          ] */ ldlayer     1, LAYER_EN_PAMET_CUTTER_ON_3
+/* 0x7033 [0x8A 0x91 0xA5          ] */ ldlayer     2, LAYER_EN_PAMET_CUTTER_ON_4
+/* 0x7036 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_CUTTER_ON_1
+/* 0x80D3 [0xC6 0x6D               ] */ instr       SF1_INST_57
+/* 0x80D5 [0xCB 0xC4 0xDC 0xFF     ] */ env         ENVELOPE_C4DC, 255
+/* 0x80D9 [0xC7 0x85 0x36 0x50     ] */ portamento  0x85, PITCH_EF5, 80
+LAYER_EN_PAMET_CUTTER_ON_2:
+/* 0x80DD [0x6A 0x43 0x64          ] */ notedv      PITCH_EF4, 67, 100
+/* 0x80E0 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_CUTTER_ON_3
+/* 0x7B7A [0xC6 0x72               ] */ instr       SF1_INST_58
+/* 0x7B7C [0x67 0x28 0x7F          ] */ notedv      PITCH_C4, 40, 127
+/* 0x7B7F [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_CUTTER_ON_4
+/* 0x91A5 [0xC6 0x17               ] */ instr       SF1_INST_59
+/* 0x91A7 [0x62 0x05 0x64          ] */ notedv      PITCH_G3, 5, 100
+/* 0x91AA [0x62 0x05 0x64          ] */ notedv      PITCH_G3, 5, 100
+/* 0x91AD [0xFF                    ] */ end
+
+.channel CHAN_EN_PAMET_CUTTER_OFF
+/* 0x7037 [0xCC 0x40               ] */ ldi         64
+/* 0x7039 [0xC7 0x00 0x80 0xEF     ] */ stseq       0, LAYER_EN_PAMET_CUTTER_OFF_2 + STSEQ_NOTEDV_VELOCITY_2
+/* 0x703D [0x88 0x80 0xE7          ] */ ldlayer     0, LAYER_EN_PAMET_CUTTER_OFF_1
+/* 0x7040 [0xFF                    ] */ end
+
+.layer LAYER_EN_PAMET_CUTTER_OFF_1
+/* 0x80E7 [0xC6 0x6D               ] */ instr       SF1_INST_57
+/* 0x80E9 [0xCB 0xC4 0xDC 0xFF     ] */ env         ENVELOPE_C4DC, 255
+LAYER_EN_PAMET_CUTTER_OFF_2:
+/* 0x80ED [0x6C 0x43 0x64          ] */ notedv      PITCH_F4, 67, 100
+/* 0x80F0 [0xFF                    ] */ end
+
+.channel CHAN_EN_EYEGOLE_ATTACK
+/* 0x5D84 [0x88 0x5D 0x88          ] */ ldlayer     0, LAYER_EN_EYEGOLE_ATTACK
+/* 0x5D87 [0xFF                    ] */ end
+
+.layer LAYER_EN_EYEGOLE_ATTACK
+/* 0x5D88 [0xC6 0x0D               ] */ instr       SF1_INST_6
+/* 0x5D8A [0xCB 0xC3 0x44 0xFA     ] */ env         ENVELOPE_C344, 250
+/* 0x5D8E [0xC7 0x81 0x24 0x40     ] */ portamento  0x81, PITCH_A3, 64
+/* 0x5D92 [0x5D 0x1E 0x64          ] */ notedv      PITCH_D3, 30, 100
+/* 0x5D95 [0xFF                    ] */ end
+
+.channel CHAN_EN_SUISEN_DRINK
+/* 0x5F76 [0xC1 0x18               ] */ instr       SF1_INST_20
+/* 0x5F78 [0x88 0x5F 0x81          ] */ ldlayer     0, LAYER_EN_SUISEN_DRINK_1
+/* 0x5F7B [0x89 0x5F 0x83          ] */ ldlayer     1, LAYER_EN_SUISEN_DRINK_2
+/* 0x5F7E [0xED 0x18               ] */ gain        24
+/* 0x5F80 [0xFF                    ] */ end
+
+.layer LAYER_EN_SUISEN_DRINK_1
+/* 0x5F81 [0xC2 0xFE               ] */ transpose   -2
+.layer LAYER_EN_SUISEN_DRINK_2
+/* 0x5F83 [0x5B 0x46 0x64          ] */ notedv      PITCH_C3, 70, 100
+/* 0x5F86 [0xFF                    ] */ end
+
+.channel CHAN_EN_SUISEN_EAT
+/* 0x6A7D [0x88 0x6A 0x81          ] */ ldlayer     0, LAYER_EN_SUISEN_EAT
+/* 0x6A80 [0xFF                    ] */ end
+
+.layer LAYER_EN_SUISEN_EAT
+/* 0x6A81 [0xC6 0x32               ] */ instr       SF1_INST_60
+/* 0x6A83 [0x69 0x60 0x64          ] */ notedv      PITCH_D4, 96, 100
+/* 0x6A86 [0xFF                    ] */ end
+
+.channel CHAN_EN_SUISEN_DEAD
+/* 0x6A87 [0x88 0x6A 0x95          ] */ ldlayer     0, LAYER_EN_SUISEN_DEAD_1
+/* 0x6A8A [0x89 0x6A 0xA7          ] */ ldlayer     1, LAYER_EN_SUISEN_DEAD_2
+/* 0x6A8D [0x8A 0x83 0x37          ] */ ldlayer     2, LAYER_EN_PAMET_DAMAGE_2
+/* 0x6A90 [0xD7 0x80               ] */ vibfreq     128
+/* 0x6A92 [0xD8 0xC0               ] */ vibdepth    192
+/* 0x6A94 [0xFF                    ] */ end
+
+.layer LAYER_EN_SUISEN_DEAD_1
+/* 0x6A95 [0xC6 0x0A               ] */ instr       SF1_INST_61
+/* 0x6A97 [0xC7 0x81 0x22 0xFF     ] */ portamento  0x81, PITCH_G3, 255
+/* 0x6A9B [0x69 0x30 0x64          ] */ notedv      PITCH_D4, 48, 100
+/* 0x6A9E [0xC7 0x81 0x27 0xFF     ] */ portamento  0x81, PITCH_C4, 255
+/* 0x6AA2 [0x61 0x80 0xC0 0x64     ] */ notedv      PITCH_GF3, 192, 100
+/* 0x6AA6 [0xFF                    ] */ end
+
+.layer LAYER_EN_SUISEN_DEAD_2
+/* 0x6AA7 [0xC6 0x11               ] */ instr       SF1_INST_62
+/* 0x6AA9 [0xC4                    ] */ legato
+/* 0x6AAA [0xC7 0x81 0x27 0x40     ] */ portamento  0x81, PITCH_C4, 64
+/* 0x6AAE [0x6E 0x20 0x50          ] */ notedv      PITCH_G4, 32, 80
+/* 0x6AB1 [0xC7 0x81 0x2C 0xFF     ] */ portamento  0x81, PITCH_F4, 255
+/* 0x6AB5 [0x60 0x60 0x50          ] */ notedv      PITCH_F3, 96, 80
+/* 0x6AB8 [0xFF                    ] */ end
+
 .balign 16
 
 .filter FILTER_65B0
@@ -15389,6 +15854,38 @@ ENVELOPE_6A6C:
 
 .envelope ENVELOPE_6A7C
     point 1, 32700
+    hang
+
+.envelope ENVELOPE_C3B4
+    point 1, 32700
+    point 15, 32700
+    point 2, 1000
+    hang
+
+.envelope ENVELOPE_C580
+    point 1, 32700
+    point 100, 32700
+    point 110, 18500
+    hang
+
+.envelope ENVELOPE_C344
+    point 1, 32700
+    point 50, 32700
+    point 25, 16000
+    hang
+
+.envelope ENVELOPE_C4DC
+    point 1, 5000
+    point 50, 32700
+    hang
+
+.envelope ENVELOPE_C034
+    point 6, 32700
+    hang
+
+.envelope ENVELOPE_C000
+    point 30, 10000
+    point 30, 32700
     hang
 
 SEQ_0_END:

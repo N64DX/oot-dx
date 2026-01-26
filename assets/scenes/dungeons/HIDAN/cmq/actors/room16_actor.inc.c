@@ -107,6 +107,5 @@
         -0x001 /* 0xFFFF */, // params
     }, // 17
 
-    { ACTOR_OBJ_HSBLOCK, { 1446, 3040, -549 }, {  0x0000,  0xBF68,  0x0000 }, 0xFF02, }, // 18: Hookshot targets for reaching the upper Boulder Maze area and the Fire Wall Maze respectively
-    { ACTOR_OBJ_HSBLOCK, { 354 , 3039,  110 }, {  0x0000,  0x4000,  0x0000 }, 0xFF02, }, // 19
-    { ACTOR_OBJ_HSBLOCK, { 1237, 3019,  149 }, {  0x0000,  0xE09C,  0x0000 }, 0xFF02, }, // 19: Hookshot target for reaching crates
+    { ACTOR_OBJ_HSBLOCK, { 354 , 3039, 110 }, { 0x0000, 0x4000, 0x0000 }, 0xFF02, }, // 18: Hookshot target for reaching the Fire Wall Maze
+    { ACTOR_OBJ_HSBLOCK, { 1237, 3019, 149 }, { 0x0000, 0xE09C, 0x0000 }, 0xFF02, }, // 19: Hookshot target for reaching crates

@@ -1,6 +1,10 @@
 #ifndef GAMEPLAY_KEEP_EXTRA_H
 #define GAMEPLAY_KEEP_EXTRA_H
 
+#include "tex_len.h"
+
+extern u64 gDropFeatherTex[TEX_LEN(u64, 32, 32, 16)];
+
 extern Gfx gLinkHookshotChainDL[23];
 extern Gfx gLinkOcarinaHookshotTipDL[22];
 extern Gfx gLinkMajoraHookshotTipDL[];
@@ -34,5 +38,20 @@ extern Gfx gLinkChildGoronMaskDL[70];
 extern Gfx gLinkChildZoraMaskDL[65];
 extern Gfx gLinkChildGerudoMaskDL[84];
 extern Gfx gLinkChildBunnyHoodDL[114];
+
+extern Gfx gMMBottleContentsDL[];
+extern Gfx gMMBottleGlassDL[];
+
+extern LinkAnimationHeader gPlayerAnim_link_normal_newroll_jump_20f;
+extern LinkAnimationHeader gPlayerAnim_link_normal_newroll_jump_end_20f;
+extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_20f;
+extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_end_20f;
+
+#define gFieldBeehiveTex_WIDTH 32
+#define gFieldBeehiveTex_HEIGHT 32
+#define gFieldBeehiveFragmentTex_WIDTH 16
+#define gFieldBeehiveFragmentTex_HEIGHT 16
+extern Gfx gFieldBeehiveDL[44];
+extern Gfx gFieldBeehiveFragmentDL[18];
 
 #endif

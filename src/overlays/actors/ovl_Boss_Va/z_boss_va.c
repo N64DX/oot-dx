@@ -418,7 +418,6 @@ static s16 sDoorState;
 static u8 sPhase3StopMoving;
 static Vec3s sZapperRot;
 static u16 sPhase2Timer;
-static s8 sPhase4HP;
 
 void BossVa_SetupAction(BossVa* this, BossVaActionFunc func) {
     this->actionFunc = func;
@@ -611,6 +610,7 @@ void BossVa_Init(Actor* thisx, PlayState* play2) {
     Actor_SetScale(&this->actor, 0.1f);
     this->actor.attentionRangeType = ATTENTION_RANGE_5;
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
+    this->actor.colChkInfo.health = 0;
 
     switch (this->actor.params) {
         case BOSSVA_BODY:
@@ -666,7 +666,6 @@ void BossVa_Init(Actor* thisx, PlayState* play2) {
                 Actor_Kill(&this->actor);
             } else {
                 this->actor.colChkInfo.damageTable = sDamageTable;
-                Actor_SetGildedSwordDamageTaken(thisx);
                 sPhase2Timer = 0xFFFF;
                 if (GET_EVENTCHKINF(EVENTCHKINF_BEGAN_BARINADE_BATTLE)) {
                     sCsState = INTRO_CALL_BARI;
@@ -1376,7 +1375,7 @@ void BossVa_SetupBodyPhase4(BossVa* this, PlayState* play) {
     this->actor.world.rot.y = this->actor.yawTowardsPlayer;
     this->timer2 = (s16)(Rand_ZeroOne() * 150.0f) + 300;
     sBodyState = 1;
-    sPhase4HP = Actor_EnemyHealthMultiply(4, BOSS_HP);;
+    this->actor.colChkInfo.health = this->actor.maxHealth = Actor_EnemyHealthMultiply(4, BOSS_HP);
     if (this->actor.shape.yOffset != 0.0f) {
         this->timer = -30;
     }
@@ -1414,11 +1413,11 @@ void BossVa_BodyPhase4(BossVa* this, PlayState* play) {
                     this->actor.world.rot.y = this->actor.yawTowardsPlayer;
                     Actor_PlaySfx(&this->actor, NA_SE_EN_BALINADE_DAMAGE);
                     Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 12);
-                    sPhase4HP -= this->actor.colChkInfo.damage;
-                    if (sPhase4HP <= 0) {
+                    this->actor.colChkInfo.health -= this->actor.colChkInfo.damage;
+                    if (this->actor.colChkInfo.health <= 0) {
                         this->timer = 0;
                         sFightPhase++;
-                        sPhase4HP += Actor_EnemyHealthMultiply(3, BOSS_HP);;
+                        this->actor.colChkInfo.health = this->actor.maxHealth = Actor_EnemyHealthMultiply(3, BOSS_HP);
                         if (sFightPhase >= PHASE_DEATH) {
                             BossVa_SetupBodyDeath(this, play);
                             Enemy_StartFinishingBlow(play, &this->actor);

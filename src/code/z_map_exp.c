@@ -290,6 +290,13 @@ void Map_Init(PlayState* play) {
     ASSERT(interfaceCtx->mapSegment != NULL, "parameter->mapSegment != NULL", "../z_map_exp.c", 459);
 
     switch (play->sceneId) {
+        case SCENE_ANCIENT_HOLLOW:
+            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = 0x11;
+            break;
+        case SCENE_WOODFALL_TEMPLE:
+        case SCENE_WOODFALL_TEMPLE_BOSS:
+            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = 0x12;
+            break;
         case SCENE_HYRULE_FIELD:
         case SCENE_KAKARIKO_VILLAGE:
         case SCENE_GRAVEYARD:
@@ -370,7 +377,9 @@ void Map_Init(PlayState* play) {
 void Minimap_DrawCompassIcons(PlayState* play) {
     s32 pad;
     Player* player = GET_PLAYER(play);
-    s16 tempX, tempZ, mapWidth, mapStartPosX, mirrorOffset, tempXOffset;
+    s16 tempX, tempZ, mirrorOffset, tempXOffset;
+    s16 mapWidth = 0;
+    s16 mapStartPosX = 0;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_map_exp.c", 565);
 
@@ -544,10 +553,9 @@ void Minimap_Draw(PlayState* play) {
                     if (((play->sceneId != SCENE_KAKARIKO_VILLAGE) && (play->sceneId != SCENE_KOKIRI_FOREST) &&
                          (play->sceneId != SCENE_ZORAS_FOUNTAIN)) ||
                         (LINK_AGE_IN_YEARS != YEARS_ADULT)) {
-                        if ((gMapData->owEntranceFlag[sEntranceIconMapIndex] != 0xFFFF) ||
-                            ((gMapData->owEntranceFlag[sEntranceIconMapIndex] != 0xFFFF) &&
+                        if ((gMapData->owEntranceFlag[sEntranceIconMapIndex] != 0xFFFF) &&
                              (gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] &
-                              gBitFlags[gMapData->owEntranceFlag[mapIndex]]))) {
+                              gBitFlags[gMapData->owEntranceFlag[mapIndex]])) {
                             s16 newX = gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (R_ENABLE_MIRROR == 1 ? (((xOffset + R_OW_MINIMAP_X + (gMapData->owMinimapWidth[mapIndex] / 2)) - (gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (8 / 2))) * 2 + (8 / 2) - 2) : 0);
 
                             gDPLoadTextureBlock(OVERLAY_DISP++, gMapDungeonEntranceIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b,

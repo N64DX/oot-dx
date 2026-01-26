@@ -1,22 +1,21 @@
-#include "object_gi_sword_2.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "object_gi_sword_2_mm.h"
 
 #include "gfx.h"
 
-Vtx object_gi_sword_2Vtx[] = {
-#include "assets/objects/object_gi_sword_2/object_gi_sword_2Vtx.inc.c"
+Vtx object_gi_sword_2_mmVtx[] = {
+#include "assets/objects/object_gi_sword_2/object_gi_sword_2_mmVtx.inc.c"
 };
 
 u64 gGiRazorSwordHiltTex[] = {
-#include "assets/objects/object_gi_sword_2/gi_razor_sword_hilt.rgba16.inc.c"
+#include "assets/objects/object_gi_sword_2/gGiRazorSwordHiltTex.rgba16.inc.c"
 };
 
 u64 gGiRazorSwordBladeTex[] = {
-#include "assets/objects/object_gi_sword_2/gi_razor_sword_blade.rgba16.inc.c"
+#include "assets/objects/object_gi_sword_2/gGiRazorSwordBladeTex.rgba16.inc.c"
 };
 
 u64 gGiRazorSwordSpotTex[] = {
-#include "assets/objects/object_gi_sword_2/gi_razor_sword_spot.i8.inc.c"
+#include "assets/objects/object_gi_sword_2/gGiRazorSwordSpotTex.i8.inc.c"
 };
 
 Gfx gGiRazorSwordDL[] = {
@@ -29,7 +28,7 @@ Gfx gGiRazorSwordDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gGiRazorSwordSpotTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 3, 2),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(object_gi_sword_2Vtx, 20, 0),
+    gsSPVertex(object_gi_sword_2_mmVtx, 20, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 0, 2, 0, 5, 6, 7, 0),
     gsSP2Triangles(5, 7, 3, 0, 2, 3, 7, 0),
@@ -46,7 +45,7 @@ Gfx gGiRazorSwordDL[] = {
     gsDPSetPrimColor(0, 0xFF, 0, 85, 255, 255),
     gsDPSetEnvColor(255, 255, 160, 255),
     gsDPLoadTextureBlock(gGiRazorSwordSpotTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 3, 2),
-    gsSPVertex(&object_gi_sword_2Vtx[20], 12, 0),
+    gsSPVertex(&object_gi_sword_2_mmVtx[20], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(3, 4, 0, 0, 5, 6, 7, 0),
     gsSP2Triangles(7, 8, 5, 0, 9, 10, 5, 0),
@@ -58,7 +57,7 @@ Gfx gGiRazorSwordDL[] = {
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     gsDPLoadTextureBlock(gGiRazorSwordSpotTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 3, 2),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_sword_2Vtx[32], 12, 0),
+    gsSPVertex(&object_gi_sword_2_mmVtx[32], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
     gsSP2Triangles(4, 5, 6, 0, 6, 7, 4, 0),
     gsSP2Triangles(8, 9, 10, 0, 11, 10, 9, 0),
@@ -67,7 +66,7 @@ Gfx gGiRazorSwordDL[] = {
     gsDPSetPrimColor(0, 0xFF, 60, 60, 128, 255),
     gsDPSetEnvColor(0, 0, 60, 255),
     gsDPLoadTextureBlock(gGiRazorSwordSpotTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, 3),
-    gsSPVertex(&object_gi_sword_2Vtx[44], 18, 0),
+    gsSPVertex(&object_gi_sword_2_mmVtx[44], 18, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 6, 8, 0),
@@ -78,13 +77,13 @@ Gfx gGiRazorSwordDL[] = {
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gGiRazorSwordSpotTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_sword_2Vtx[62], 10, 0),
+    gsSPVertex(&object_gi_sword_2_mmVtx[62], 10, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 4, 3, 0),
     gsSPTexture(0x0BB8, 0x0514, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gGiRazorSwordSpotTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 3, 2),
-    gsSPVertex(&object_gi_sword_2Vtx[72], 16, 0),
+    gsSPVertex(&object_gi_sword_2_mmVtx[72], 16, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 4, 0),
     gsSP2Triangles(5, 6, 7, 0, 8, 9, 10, 0),
     gsSP2Triangles(2, 11, 12, 0, 13, 11, 3, 0),
@@ -97,14 +96,14 @@ Gfx gGiRazorSwordDL[] = {
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gGiRazorSwordBladeTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_sword_2Vtx[88], 12, 0),
+    gsSPVertex(&object_gi_sword_2_mmVtx[88], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(2, 4, 5, 0, 4, 6, 5, 0),
     gsSP2Triangles(7, 6, 4, 0, 7, 8, 9, 0),
     gsSP2Triangles(10, 3, 11, 0, 2, 1, 11, 0),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gGiRazorSwordHiltTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_gi_sword_2Vtx[100], 32, 0),
+    gsSPVertex(&object_gi_sword_2_mmVtx[100], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
@@ -113,7 +112,7 @@ Gfx gGiRazorSwordDL[] = {
     gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
     gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
     gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
-    gsSPVertex(&object_gi_sword_2Vtx[132], 32, 0),
+    gsSPVertex(&object_gi_sword_2_mmVtx[132], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
@@ -122,7 +121,7 @@ Gfx gGiRazorSwordDL[] = {
     gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
     gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
     gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
-    gsSPVertex(&object_gi_sword_2Vtx[164], 28, 0),
+    gsSPVertex(&object_gi_sword_2_mmVtx[164], 28, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),

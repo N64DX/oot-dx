@@ -62,13 +62,13 @@
         ACTOR_OBJ_TIMEBLOCK,
         {    640,    390,  -2680 }, // pos
         {  0x0000,  0x2000,  0x0000 }, // rot
-         0x2823, // params
+         0xA823, // params
     }, // 10
     {
         ACTOR_OBJ_TIMEBLOCK,
         {   1733,    383,  -2536 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
-         0xB924, // params
+         0x3924, // params
     }, // 11
     {
         ACTOR_BG_MORI_IDOMIZU,
@@ -86,17 +86,17 @@
         ACTOR_OBJ_TIMEBLOCK,
         {   1733,    323,  -2596 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
-         0x3927, // params
+         0xB927, // params
     }, // 14
     {
         ACTOR_OBJ_TIMEBLOCK,
         {   1733,    463,  -2666 }, // pos
         {  0x0000,  0x0000,  0x0000 }, // rot
-         0x3928, // params
+         0xB928, // params
     }, // 15
     {
         ACTOR_OBJ_TIMEBLOCK,
         {    776,    390,  -2543 }, // pos
         {  0x0000,  0x2000,  0x0000 }, // rot
-         0xA829, // params
+         0x2829, // params
     }, // 16

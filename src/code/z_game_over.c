@@ -111,6 +111,19 @@ void GameOver_Update(PlayState* play) {
             sGameOverTimer--;
 
             if (sGameOverTimer == 0) {
+                if (gSaveContext.save.entranceIndex == ENTR_BESITU_0)
+                    gSaveContext.save.entranceIndex = ENTR_FORBIDDEN_WOODS_6;
+                if (AUTOSAVE) {
+                    play->nextEntranceIndex = gSaveContext.save.entranceIndex;
+                    play->transitionTrigger = TRANS_TRIGGER_START;
+                    play->transitionType = TRANS_TYPE_FADE_BLACK;
+                    gSaveContext.save.info.playerData.health = 0x30;
+                    gameOverCtx->state = gSaveContext.healthAccumulator = gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = gSaveContext.magicState = gSaveContext.prevMagicState = 0;
+                    gSaveContext.save.info.playerData.deaths += gSaveContext.save.info.playerData.deaths >= 999 ? 0 : 1;
+                    Rumble_Reset();
+                    SET_AUTOSAVE(play);
+                    return;
+                }
                 play->pauseCtx.state = PAUSE_STATE_GAME_OVER_START;
                 gameOverCtx->state++;
                 Rumble_Reset();

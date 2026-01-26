@@ -26,6 +26,7 @@
 #include "save.h"
 
 #include "assets/objects/object_tite/object_tite.h"
+#include "assets/objects/object_tite/object_tite_extra.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -201,7 +202,6 @@ void EnTite_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&thisx->shape, -200.0f, ActorShadow_DrawCircle, 70.0f);
     this->flipState = TEKTITE_INITIAL;
     thisx->colChkInfo.damageTable = sDamageTable;
-    Actor_SetGildedSwordDamageTaken(thisx);
     this->actionVar1 = 0;
     this->bodyBreak.val = BODYBREAK_STATUS_FINISHED;
     thisx->focus.pos = thisx->world.pos;

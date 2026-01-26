@@ -23,24 +23,31 @@ typedef enum DebugSection {
     /* 0x03 */ SECTION_FIRST_INVENTORY_SLOT,
     /* 0x1A */ SECTION_LAST_INVENTORY_SLOT = 0x1A,
     /* 0x1B */ SECTION_FIRST_KEY_COUNT,
-    /* 0x2B */ SECTION_LAST_KEY_COUNT = 0x2B,
-    /* 0x2C */ SECTION_FIRST_UPGRADE,
-    /* 0x33 */ SECTION_LAST_UPGRADE = 0x33,
-    /* 0x34 */ SECTION_FIRST_EQUIPMENT,
-    /* 0x37 */ SECTION_LAST_EQUIPMENT = 0x37,
-    /* 0x38 */ SECTION_FIRST_DUNGEON_ITEMS,
-    /* 0x43 */ SECTION_LAST_DUNGEON_ITEMS = 0x43,
-    /* 0x44 */ SECTION_FIRST_MEDALLION,
-    /* 0x49 */ SECTION_LAST_MEDALLION = 0x49,
-    /* 0x4A */ SECTION_FIRST_SONG,
-    /* 0x55 */ SECTION_LAST_SONG = 0x55,
-    /* 0x56 */ SECTION_FIRST_SPIRITUAL_STONE,
-    /* 0x58 */ SECTION_LAST_SPIRITUAL_STONE = 0x58,
-    /* 0x59 */ SECTION_STONE_OF_AGONY,
-    /* 0x5A */ SECTION_GERUDO_CARD,
-    /* 0x5B */ SECTION_SKULL_TOKENS,
-    /* 0x5C */ SECTION_HEART_PIECES,
-    /* 0x5D */ SECTION_MAX
+    /* 0x2B */ SECTION_LAST_KEY_COUNT = 0x2D,
+    /* 0x2E */ SECTION_FIRST_UPGRADE,
+    /* 0x35 */ SECTION_LAST_UPGRADE = 0x35,
+    /* 0x36 */ SECTION_FIRST_EQUIPMENT,
+    /* 0x39 */ SECTION_LAST_EQUIPMENT = 0x39,
+    /* 0x3A */ SECTION_FIRST_DUNGEON_ITEMS,
+    /* 0x4C */ SECTION_LAST_DUNGEON_ITEMS = 0x4C,
+    /* 0x4D */ SECTION_FIRST_MEDALLION,
+    /* 0x52 */ SECTION_LAST_MEDALLION = 0x52,
+    /* 0x53 */ SECTION_FIRST_SONG,
+    /* 0x5E */ SECTION_LAST_SONG = 0x5E,
+    /* 0x5F */ SECTION_FIRST_SPIRITUAL_STONE,
+    /* 0x61 */ SECTION_LAST_SPIRITUAL_STONE = 0x61,
+    /* 0x62 */ SECTION_STONE_OF_AGONY,
+    /* 0x63 */ SECTION_GERUDO_CARD,
+    /* 0x64 */ SECTION_MAGIC,
+    /* 0x65 */ SECTION_DOUBLE_DEFENSE,
+    /* 0x66 */ SECTION_SKULL_TOKENS,
+    /* 0x67 */ SECTION_HEART_PIECES,
+    /* 0x68 */ SECTION_BGS,
+    /* 0x69 */ SECTION_MASTER_SWORD,
+    /* 0x6A */ SECTION_FEATHER,
+    /* 0x6B */ SECTION_ENHANCED_SPIN,
+    /* 0x6C */ SECTION_AMULET_OF_ENERGY,
+    /* 0x6D */ SECTION_MAX
 } DebugSection;
 
 // Positions of each input section in the editor
@@ -93,7 +100,9 @@ static u16 sSectionPositions[SECTION_MAX][2] = {
     { 208, 98 },
     { 218, 98 },
     { 228, 98 },
-    { 238, 98 }, // SECTION_LAST_KEY_COUNT
+    { 238, 98 },
+    { 248, 98 },
+    { 258, 98 }, // SECTION_LAST_KEY_COUNT
 
     { 78, 115 }, // SECTION_FIRST_UPGRADE
     { 90, 115 },
@@ -110,17 +119,24 @@ static u16 sSectionPositions[SECTION_MAX][2] = {
     { 238, 115 }, // SECTION_LAST_EQUIPMENT
 
     { 78, 132 }, // SECTION_FIRST_DUNGEON_ITEMS
-    { 90, 132 },
-    { 102, 132 },
-    { 114, 132 },
-    { 126, 132 },
+    { 88, 132 },
+    { 98, 132 },
+    { 108, 132 },
+    { 118, 132 },
+    { 128, 132 },
     { 138, 132 },
-    { 150, 132 },
-    { 162, 132 },
-    { 174, 132 },
-    { 186, 132 },
+    { 148, 132 },
+    { 158, 132 },
+    { 168, 132 },
+    { 178, 132 },
+    { 188, 132 },
     { 198, 132 },
-    { 210, 132 }, // SECTION_LAST_DUNGEON_ITEMS
+    { 208, 132 },
+    { 218, 132 },
+    { 228, 132 },
+    { 238, 132 },
+    { 248, 132 },
+    { 258, 132 }, // SECTION_LAST_DUNGEON_ITEMS
 
     { 78, 149 }, // SECTION_FIRST_MEDALLION
     { 90, 149 },
@@ -148,8 +164,16 @@ static u16 sSectionPositions[SECTION_MAX][2] = {
 
     { 78, 185 },  // SECTION_STONE_OF_AGONY
     { 90, 185 },  // SECTION_GERUDO_CARD
+    { 102, 185 }, // SECTION_MAGIC
+    { 114, 185 }, // SECTION_DOUBLE_DEFENSE
     { 145, 185 }, // SECTION_SKULL_TOKENS
     { 210, 185 }, // SECTION_HEART_PIECES
+
+    { 78, 204 }, // SECTION_BGS
+    { 90, 204 }, // SECTION_MASTER_SWORD
+    { 102, 204 }, // SECTION_FEATHER
+    { 114, 204 }, // SECTION_ENHANCED_SPIN
+    { 126, 204 }, // SECTION_AMULET_OF_ENERGY
 };
 
 // First section of each row in the editor (starting from the top)
@@ -165,7 +189,7 @@ static u8 sMaxUpgradeValues[] = {
     /* UPG_BOMB_BAG    */ 3,
     /* UPG_STRENGTH    */ 3,
     /* UPG_SCALE       */ 2,
-    /* UPG_WALLET      */ 3,
+    /* UPG_WALLET      */ 6,
     /* UPG_BULLET_BAG  */ 3,
     /* UPG_DEKU_STICKS */ 3,
     /* UPG_DEKU_NUTS   */ 3,
@@ -218,6 +242,8 @@ void KaleidoScope_DrawInventoryEditorText(Gfx** gfxP) {
     GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ｶｹﾗ", "PoH" )); // "Gold Token"
     GfxPrint_SetPos(&printer, 28 - WS_PX_SHIFT, 24);
     GfxPrint_Printf(&printer, "%s", "/4");
+    GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 26);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ｱｯﾌﾟ", "Upgr" )); // "Upgrades"
 
     *gfxP = GfxPrint_Close(&printer);
     GfxPrint_Destroy(&printer);
@@ -360,7 +386,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
     }
 
     // Keys
-    for (digitBuf[1] = 78, i = 0; i < 17; i++) {
+    for (digitBuf[1] = 78, i = 0; i < 19; i++) {
         digitBuf[2] = 0;
 
         if ((digitBuf[3] = gSaveContext.save.info.inventory.dungeonKeys[i]) >= 0) {
@@ -378,7 +404,9 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
 
     // Upgrades
     for (digitBuf[1] = 78, i = 0; i < 8; i++, digitBuf[1] += 12) {
-        KaleidoScope_DrawDigit(play, CUR_UPG_VALUE(i), digitBuf[1], 115);
+        if (i == 4)
+            KaleidoScope_DrawDigit(play, CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2), digitBuf[1], 115);
+        else KaleidoScope_DrawDigit(play, CUR_UPG_VALUE(i), digitBuf[1], 115);
     }
 
     // Equipment
@@ -387,7 +415,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
     }
 
     // Dungeon Items
-    for (digitBuf[1] = 78, i = 0; i < 12; i++, digitBuf[1] += 12) {
+    for (digitBuf[1] = 78, i = 0; i < 19; i++, digitBuf[1] += 10) {
         digitBuf[2] = gSaveContext.save.info.inventory.dungeonItems[i] & gEquipMasks[0];
         KaleidoScope_DrawDigit(play, digitBuf[2], digitBuf[1], 132);
     }
@@ -428,6 +456,12 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
         KaleidoScope_DrawDigit(play, digitBuf[2], digitBuf[1], 185);
     }
 
+    // Magic & Double Magic
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.playerData.isMagicAcquired + gSaveContext.save.info.playerData.isDoubleMagicAcquired, 102, 185);
+
+    // Double Defense
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.playerData.isDoubleDefenseAcquired, 114, 185);
+
     // GS Tokens
     digitBuf[3] = gSaveContext.save.info.inventory.gsTokens;
     digitBuf[1] = 0;
@@ -450,6 +484,21 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
     KaleidoScope_DrawDigit(
         play, ((gSaveContext.save.info.inventory.questItems & 0xF0000000) & 0xF0000000) >> QUEST_HEART_PIECE_COUNT, 210,
         185);
+
+    // Biggoron Sword
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.playerData.bgsFlag, 78, 204);
+
+    // Master Sword
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.masterSword, 90, 204);
+
+    // Feather
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.feather, 102, 204);
+
+    // Enhanced Spin
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.isEnhancedSpinAcquired, 114, 204);
+
+    // Amulet of Energy
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.amuletOfEnergy, 126, 204);
 
     // Handles navigating the menu to different sections with the D-Pad
     // When the same direction is held, registers the input periodically based on a timer
@@ -477,10 +526,10 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
         curSection = sRowFirstSections[curRow];
     } else if (CHECK_BTN_ANY(dBtnInput, BTN_DLEFT)) {
         if (--curSection < SECTION_RUPEES) {
-            curSection = SECTION_HEART_PIECES;
+            curSection = SECTION_AMULET_OF_ENERGY;
         }
     } else if (CHECK_BTN_ANY(dBtnInput, BTN_DRIGHT)) {
-        if (++curSection > SECTION_HEART_PIECES) {
+        if (++curSection > SECTION_AMULET_OF_ENERGY) {
             curSection = SECTION_RUPEES;
         }
     }
@@ -561,11 +610,15 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
                         Inventory_DeleteItem(gAmmoItems[i], SLOT(gAmmoItems[i]));
                         AMMO(gAmmoItems[i]) = 0;
+                        if (gAmmoItems[i] == ITEM_MAGIC_BEAN)
+                            gSaveContext.save.info.hasObtainedItems.magicBeans = 0;
                     }
 
                     if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                         if (i != INV_CONTENT(gAmmoItems[i])) {
                             INV_CONTENT(gAmmoItems[i]) = gAmmoItems[i];
+                            if (gAmmoItems[i] == ITEM_MAGIC_BEAN)
+                                gSaveContext.save.info.hasObtainedItems.magicBeans = 1;
                         }
                         AMMO(gAmmoItems[i])++;
                         if (AMMO(gAmmoItems[i]) > 99) {
@@ -592,8 +645,10 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             AMMO(gAmmoItems[i]) = CUR_CAPACITY(UPG_BULLET_BAG);
                         else if (gAmmoItems[i] == ITEM_BOMBCHU)
                             AMMO(gAmmoItems[i]) = 50;
-                        else if (gAmmoItems[i] == ITEM_MAGIC_BEAN)
+                        else if (gAmmoItems[i] == ITEM_MAGIC_BEAN) {
                             AMMO(gAmmoItems[i]) = 15;
+                            gSaveContext.save.info.hasObtainedItems.magicBeans = 1;
+                        }
                     }
                 } else if (i == SLOT_OCARINA) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
@@ -629,6 +684,27 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         } else if ((gSaveContext.save.info.inventory.items[i] > ITEM_HOOKSHOT) &&
                                    (gSaveContext.save.info.inventory.items[i] <= ITEM_LONGSHOT)) {
                             gSaveContext.save.info.inventory.items[i]--;
+                        }
+                    }
+                } else if (i == SLOT_HAMMER) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                        Inventory_DeleteItem(ITEM_HAMMER, SLOT(ITEM_HAMMER));
+                        gSaveContext.save.info.hasObtainedItems.hammer = gSaveContext.save.info.hasObtainedItems.fairysSword = 0;
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
+                        if (gSaveContext.save.info.inventory.items[i] == ITEM_NONE) {
+                            gSaveContext.save.info.inventory.items[i] = ITEM_HAMMER;
+                            gSaveContext.save.info.hasObtainedItems.hammer = 1;
+                        } else if (gSaveContext.save.info.inventory.items[i] == ITEM_HAMMER) {
+                            gSaveContext.save.info.inventory.items[i] = ITEM_SWORD_FAIRYS;
+                            gSaveContext.save.info.hasObtainedItems.fairysSword = 1;
+                        }
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                        if (gSaveContext.save.info.inventory.items[i] == ITEM_NONE) {
+                            gSaveContext.save.info.inventory.items[i] = ITEM_SWORD_FAIRYS;
+                            gSaveContext.save.info.hasObtainedItems.fairysSword = 1;
+                        } else if (gSaveContext.save.info.inventory.items[i] == ITEM_SWORD_FAIRYS) {
+                            gSaveContext.save.info.inventory.items[i] = ITEM_HAMMER;
+                            gSaveContext.save.info.hasObtainedItems.hammer = 1;
                         }
                     }
                 } else if (i == SLOT_TRADE_ADULT) {
@@ -735,12 +811,66 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                     if ((curSection >= SECTION_FIRST_UPGRADE) && (curSection <= SECTION_LAST_UPGRADE)) {
                         if (CHECK_BTN_ALL(input->press.button, BTN_CUP) ||
                             CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
-                            if (CUR_UPG_VALUE(i) != 0) {
+                            if (i == 4) {
+                                switch (CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2)) {
+                                    case 1:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 0);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 2:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 1);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 3:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 2);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 4:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 5:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 1);
+                                        break;
+                                    case 6:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 2);
+                                        break;
+                                }
+                            } else if (CUR_UPG_VALUE(i) != 0) {
                                 Inventory_ChangeUpgrade(i, CUR_UPG_VALUE(i) - 1);
                             }
                         } else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) ||
                                    CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
-                            if (CUR_UPG_VALUE(i) < sMaxUpgradeValues[i]) {
+                            if (i == 4) {
+                                switch (CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2)) {
+                                    case 0:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 1);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 1:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 2);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 2:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+                                        break;
+                                    case 3:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 1);
+                                        break;
+                                    case 4:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 2);
+                                        break;
+                                    case 5:
+                                        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+                                        Inventory_ChangeUpgrade(UPG_WALLET2, 3);
+                                        break;
+                                }
+                            } else if (CUR_UPG_VALUE(i) < sMaxUpgradeValues[i]) {
                                 Inventory_ChangeUpgrade(i, CUR_UPG_VALUE(i) + 1);
                             }
                         }
@@ -778,6 +908,15 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                                 gSaveContext.save.info.playerData.swordHealth = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) ? MAX_SWORD_HEALTH : 0;
                         }
                         else if (i == 1) {
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
+                                gSaveContext.save.info.shieldDurability[0] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)   ? MAX_DURABILITY_SHIELD_DEKU   : 0;
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
+                                gSaveContext.save.info.shieldDurability[1] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) ? MAX_DURABILITY_SHIELD_HYLIAN : 0;
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
+                                gSaveContext.save.info.shieldDurability[2] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR) ? MAX_DURABILITY_SHIELD_MIRROR : 0;
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CUP))
+                                gSaveContext.save.info.shieldDurability[3] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)  ? MAX_DURABILITY_SHIELD_HEROS  : 0;
+
                             if ( (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)  && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU)   || (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && !HAS_HEROS_SHIELD) ||
                                  (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_MIRROR) || (CHECK_BTN_ALL(input->press.button, BTN_CUP)   && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN &&  HAS_HEROS_SHIELD)) {
                                 Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, PLAYER_SHIELD_NONE);
@@ -808,11 +947,9 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                 } else if (curSection == SECTION_SKULL_TOKENS) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                         gSaveContext.save.info.inventory.gsTokens++;
-#if PLATFORM_N64
                         if (gSaveContext.save.info.inventory.gsTokens >= 100) {
                             gSaveContext.save.info.inventory.gsTokens = 100;
                         }
-#endif
                     } else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) ||
                                CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
                         gSaveContext.save.info.inventory.gsTokens--;
@@ -820,6 +957,89 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             gSaveContext.save.info.inventory.gsTokens = 0;
                         }
                     }
+                } else if (curSection == SECTION_MAGIC) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                        if (!gSaveContext.save.info.playerData.isMagicAcquired) { // Downgrade to normal magic
+                            gSaveContext.save.info.playerData.isMagicAcquired = true;
+                            gSaveContext.save.info.playerData.isDoubleMagicAcquired = false;
+                            gSaveContext.save.info.playerData.magic = MAGIC_NORMAL_METER;
+                            gSaveContext.save.info.playerData.magicLevel = 0;
+                        } else if (!gSaveContext.save.info.playerData.isDoubleMagicAcquired) { // Upgrade to double magic
+                            gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = true;
+                            gSaveContext.save.info.playerData.magic = MAGIC_DOUBLE_METER;
+                            gSaveContext.save.info.playerData.magicLevel = 0;
+                        } 
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
+                        if (gSaveContext.save.info.playerData.isDoubleMagicAcquired) { // Downgrade to normal magic
+                            gSaveContext.save.info.playerData.isMagicAcquired = true;
+                            gSaveContext.save.info.playerData.isDoubleMagicAcquired = false;
+                            gSaveContext.save.info.playerData.magic = MAGIC_NORMAL_METER;
+                            gSaveContext.save.info.playerData.magicLevel = 0;
+                        } else if (gSaveContext.save.info.playerData.isMagicAcquired) {
+                            gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = false;
+                            gSaveContext.save.info.playerData.magic = gSaveContext.save.info.playerData.magicLevel = 0;
+                        }
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN)) {
+                        if (!gSaveContext.save.info.playerData.isDoubleMagicAcquired) {
+                            gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = true;
+                            gSaveContext.save.info.playerData.magic = MAGIC_DOUBLE_METER;
+                            gSaveContext.save.info.playerData.magicLevel = 0;
+                        }
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                        if (gSaveContext.save.info.playerData.isMagicAcquired) {
+                            gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = false;
+                            gSaveContext.save.info.playerData.magic = gSaveContext.save.info.playerData.magicLevel = 0;
+                        }
+                    }
+
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                        if (gSaveContext.save.info.playerData.isMagicAcquired && gSaveContext.save.info.playerData.magicLevel == 0) { // Prepare to step `magicCapacity` to full capacity
+                            gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.isDoubleMagicAcquired + 1;
+                            gSaveContext.magicFillTarget = gSaveContext.save.info.playerData.magic;
+                            gSaveContext.save.info.playerData.magic = 0;
+                            gSaveContext.magicState = MAGIC_STATE_STEP_CAPACITY;
+                        }
+                    }
+                } else if (curSection == SECTION_DOUBLE_DEFENSE) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                        gSaveContext.save.info.playerData.isDoubleDefenseAcquired ^= 1;
+                        if (!gSaveContext.save.info.playerData.isDoubleDefenseAcquired)
+                            gSaveContext.save.info.inventory.defenseHearts = 0;
+                        else gSaveContext.save.info.inventory.defenseHearts = 20;
+                    }
+                } else if (curSection == SECTION_BGS) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                        gSaveContext.save.info.playerData.bgsFlag ^= 1;
+                        for (j=0; j<8; j++)
+                            Interface_LoadItemIcon1(play, j);
+                    }
+                } else if (curSection == SECTION_MASTER_SWORD) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                        gSaveContext.save.info.hasObtainedItems.masterSword ^= 1;
+                        for (j=0; j<8; j++)
+                            Interface_LoadItemIcon1(play, j);
+                    }
+                } else if (curSection == SECTION_FEATHER) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && gSaveContext.save.info.hasObtainedItems.feather < 2)
+                        gSaveContext.save.info.hasObtainedItems.feather++;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT) && gSaveContext.save.info.hasObtainedItems.feather > 0)
+                        gSaveContext.save.info.hasObtainedItems.feather--;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CUP))
+                        gSaveContext.save.info.hasObtainedItems.feather = 0;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
+                        gSaveContext.save.info.hasObtainedItems.feather = 2;
+
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                        if (gSaveContext.save.info.hasObtainedItems.feather > 0)
+                            gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = (gSaveContext.save.info.hasObtainedItems.feather == 1) ? ITEM_ROCS_FEATHER : ITEM_GOLDEN_FEATHER;
+                        else gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = gSaveContext.save.info.hasObtainedItems.magicBeans ? ITEM_MAGIC_BEAN : ITEM_NONE;
+                    }
+                } else if (curSection == SECTION_ENHANCED_SPIN) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
+                        gSaveContext.save.info.isEnhancedSpinAcquired ^= 1;
+                } else if (curSection == SECTION_AMULET_OF_ENERGY) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
+                        gSaveContext.save.info.hasObtainedItems.amuletOfEnergy ^= 1;
                 } else if (curSection < SECTION_HEART_PIECES) {
                     i = curSection - SECTION_FIRST_MEDALLION;
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
@@ -840,7 +1060,11 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
         // 4 digit long box
         gDPFillRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF - WS_PX_SHIFT), HIRES_MULTIPLY(sSectionPositions[curSection][1]),
                          X_HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF + WS_PX_SHIFT + 45), HIRES_MULTIPLY(sSectionPositions[curSection][1] + 16));
-    } else if ((curSection >= SECTION_FIRST_KEY_COUNT) || (curSection == SECTION_SKULL_TOKENS)) {
+    } else if (curSection == SECTION_SKULL_TOKENS) {
+        // 3 digit long box
+        gDPFillRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF - 2), HIRES_MULTIPLY(sSectionPositions[curSection][1]),
+                         X_HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF + 34), HIRES_MULTIPLY(sSectionPositions[curSection][1] + 16));
+    } else if ((curSection >= SECTION_FIRST_KEY_COUNT)) {
         // 1 digit long box
         gDPFillRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF - 2), HIRES_MULTIPLY(sSectionPositions[curSection][1]),
                          X_HIRES_MULTIPLY(sSectionPositions[curSection][0] + WS_SHIFT_HALF + 14), HIRES_MULTIPLY(sSectionPositions[curSection][1] + 16));

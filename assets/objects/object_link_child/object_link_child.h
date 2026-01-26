@@ -67,38 +67,48 @@ extern Gfx gLinkChildLeftHandHoldingRazorSwordDL[];
 extern Gfx gLinkChildLeftHandHoldingSilverSwordDL[];
 extern Gfx gLinkChildLeftHandHoldingGoldenSwordDL[];
 
+// Master Sword
+extern Gfx gLinkChildLeftHandHoldingMasterSwordDL2[];
+
 // Sheaths
 extern Gfx gLinkChildSheathedKokiriSwordDL[];
 extern Gfx gLinkChildSheathedHerosSwordDL[];
 extern Gfx gLinkChildSheathedRazorSwordDL[];
 extern Gfx gLinkChildSheathedGildedSwordDL[];
+extern Gfx gLinkChildSheathedMasterSwordDL[];
 extern Gfx gLinkChildKokiriSwordSheathDL[];
 extern Gfx gLinkChildHerosSwordSheathDL[];
 extern Gfx gLinkChildKokiriHerosSheathDL[];
 extern Gfx gLinkChildRazorSwordSheathDL[];
 extern Gfx gLinkChildGildedSwordSheathDL[];
+extern Gfx gLinkChildMasterSwordSheathDL[];
 
 // Shields With Sheathed Swords
 extern Gfx gLinkChildDekuShieldKokiriSwordSheathedDL[];
 extern Gfx gLinkChildDekuShieldHerosSwordSheathedDL[];
 extern Gfx gLinkChildDekuShieldRazorSwordSheathedDL[];
 extern Gfx gLinkChildDekuShieldGildedSwordSheathedDL[];
+extern Gfx gLinkChildDekuShieldMasterSwordSheathedDL[];
 extern Gfx gLinkChildHylianShieldKokiriSwordSheathedDL[];
 extern Gfx gLinkChildHylianShieldHerosSwordSheathedDL[];
 extern Gfx gLinkChildHylianShieldRazorSwordSheathedDL[];
 extern Gfx gLinkChildHylianShieldGildedSwordSheathedDL[];
+extern Gfx gLinkChildHylianShieldMasterSwordSheathedDL[];
 extern Gfx gLinkChildHylianShieldKokiriSwordSheathDL[];
 extern Gfx gLinkChildHylianShieldHerosSwordSheathDL[];
 extern Gfx gLinkChildHylianShieldRazorSwordSheathDL[];
 extern Gfx gLinkChildHylianShieldGildedSwordSheathDL[];
+extern Gfx gLinkChildHylianShieldMasterSwordSheathDL[];
 extern Gfx gLinkChildHerosShieldKokiriSwordSheathedDL[];
 extern Gfx gLinkChildHerosShieldHerosSwordSheathedDL[];
 extern Gfx gLinkChildHerosShieldRazorSwordSheathedDL[];
 extern Gfx gLinkChildHerosShieldGildedSwordSheathedDL[];
+extern Gfx gLinkChildHerosShieldMasterSwordSheathedDL[];
 extern Gfx gLinkChildMirrorShieldKokiriSwordSheathedDL[];
 extern Gfx gLinkChildMirrorShieldHerosSwordSheathedDL[];
 extern Gfx gLinkChildMirrorShieldRazorSwordSheathedDL[];
 extern Gfx gLinkChildMirrorShieldGildedSwordSheathedDL[];
+extern Gfx gLinkChildMirrorShieldMasterSwordSheathedDL[];
 
 // Hero's Shield
 extern Gfx gLinkChildHerosShieldDL[];
@@ -131,5 +141,15 @@ extern Gfx gLinkChildPowerBraceletsDL[];
 // Earring
 extern Gfx gLinkChildEarringsIronDL[];
 extern Gfx gLinkChildEarringsHoverDL[];
+
+// Boots
+extern Gfx gLinkChildIronBootsDL[];
+extern Gfx gLinkChildHoverBootsDL[];
+
+// Amulet of Energy
+extern Gfx gLinkChildAmuletOfEnergyDL[];
+
+// Great Fairy's Sword
+extern Gfx gLinkChildGreatFairysSwordDL[];
 
 #endif

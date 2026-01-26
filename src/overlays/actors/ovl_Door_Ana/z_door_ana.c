@@ -65,7 +65,7 @@ static s16 sGrottoEntrances[] = {
     ENTR_FAIRYS_FOUNTAIN_0, ENTR_GROTTOS_0,  ENTR_GROTTOS_1,  ENTR_GROTTOS_2,  ENTR_GROTTOS_3,
     ENTR_GROTTOS_4,         ENTR_GROTTOS_5,  ENTR_GROTTOS_6,  ENTR_GROTTOS_7,  ENTR_GROTTOS_8,
     ENTR_GROTTOS_9,         ENTR_GROTTOS_10, ENTR_GROTTOS_11, ENTR_GROTTOS_12, ENTR_GROTTOS_13,
-    ENTR_GROTTO_SHORTCUTS_0, ENTR_GROTTO_SHORTCUTS_1, ENTR_GROTTO_SHORTCUTS_2, ENTR_GROTTO_SHORTCUTS_3, ENTR_GROTTO_SHORTCUTS_4
+    ENTR_GROTTO_SHORTCUTS_0, ENTR_GROTTO_SHORTCUTS_1, ENTR_GROTTO_SHORTCUTS_2, ENTR_GROTTO_SHORTCUTS_3, ENTR_GROTTO_SHORTCUTS_4, ENTR_BESITU_0
 };
 
 void DoorAna_SetupAction(DoorAna* this, DoorAnaActionFunc actionFunc) {
@@ -74,6 +74,11 @@ void DoorAna_SetupAction(DoorAna* this, DoorAnaActionFunc actionFunc) {
 
 void DoorAna_Init(Actor* thisx, PlayState* play) {
     DoorAna* this = (DoorAna*)thisx;
+
+    if (IS_RUSH_QUEST) {
+        Actor_Kill(&this->actor);
+        return;
+    }
 
     this->actor.shape.rot.z = 0;
     this->actor.shape.rot.y = this->actor.shape.rot.z;

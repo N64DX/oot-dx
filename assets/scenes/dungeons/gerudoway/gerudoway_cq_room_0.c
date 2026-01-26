@@ -1,10 +1,9 @@
 #include "assets/scenes/dungeons/gerudoway/gerudoway_scene.h"
-#include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_gerudoway_room0[];
 
 static SceneCmd start[] = {
-#include "assets/scenes/overworld/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_gerudoway_room0),
 };
 
 #include "assets/scenes/dungeons/gerudoway/gerudoway_room_0.c"
@@ -17,6 +16,6 @@ static SceneCmd cq_header[] = {
 #include "assets/scenes/dungeons/gerudoway/cq/headers/room0.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_gerudoway_room0[] = {
 #include "assets/scenes/overworld/questHeaders.inc.c"
 };

@@ -1,5 +1,4 @@
 #include "object_gi_heros_bow.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #include "gfx.h"
 
@@ -8,11 +7,11 @@ Vtx object_gi_bowVtx[] = {
 };
 
 u64 gGiBowHandleTex[] = {
-#include "assets/objects/object_gi_heros_bow/gi_bow_handle.i8.inc.c"
+#include "assets/objects/object_gi_heros_bow/gGiBowHandleTex.i8.inc.c"
 };
 
 u64 gGiBowStringTex[] = {
-#include "assets/objects/object_gi_heros_bow/gi_bow_string.i8.inc.c"
+#include "assets/objects/object_gi_heros_bow/gGiBowStringTex.i8.inc.c"
 };
 
 Gfx gGiHerosBowHandleDL[] = {

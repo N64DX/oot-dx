@@ -23,6 +23,7 @@
 #include "horse.h"
 #include "ocarina.h"
 #include "play_state.h"
+#include "z_lib.h"
 #include "player.h"
 #include "save.h"
 #include "libc64/malloc.h"
@@ -31,6 +32,8 @@
 #include "buffers.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "assets/textures/parameter_static/parameter_static_all.h"
+#include "assets/textures/parameter_static/parameter_static_quest.h"
 #include "assets/textures/icon_item_static/icon_item_static.h"
 
 #if OOT_NTSC_N64
@@ -154,6 +157,10 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_ROAD_TO_LAKE_HYLIA, 0x00, 0x00, 0x00 },
     { SCENE_ROAD_TO_FORTRESS, 0x00, 0x00, 0x00 },
     { SCENE_SWAMP_SPIDER_HOUSE, 0x00, 0x00, 0x00 },
+    { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
+    { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x00 },
+    { SCENE_WOODFALL_TEMPLE, 0x00, 0x00, 0x1C },
+    { SCENE_WOODFALL_TEMPLE_BOSS, 0x00, 0x00, 0x1C },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
 
@@ -170,13 +177,19 @@ static s16 sMagicBorderR = 255;
 static s16 sMagicBorderG = 255;
 static s16 sMagicBorderB = 255;
 
-bool dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
+u8 dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
 u8 dpadAlphas[] = { 0, 0, 0, 0, 0 };
 bool switchedDualSet = false;
 u8 sNoclipTimer = 0;
 static u8 shielded = 0;
 static u16 dpad_x;
 static u16 dpad_y;
+
+static s16 curEnergy = 0;
+static u8 energyHideTimer = 0;
+static u8 energyRefillTimer = 0;
+static bool drawKeys = false;
+static bool drawShieldDurability = false;
 
 static s16 sExtraItemBases[] = {
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_5
@@ -723,6 +736,8 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
     }
 }
 
+#define CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) (msgCtx->msgMode == MSGMODE_NONE || (msgCtx->msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND && msgCtx->msgMode <= MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND))
+
 void func_80083108(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     Player* player = GET_PLAYER(play);
@@ -796,8 +811,6 @@ void func_80083108(PlayState* play) {
                     Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_A_B_MINIMAP);
                 }
             }
-        } else if (play->sceneId == SCENE_CHAMBER_OF_THE_SAGES) {
-            Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_NOTHING);
         } else if (play->sceneId == SCENE_FISHING_POND) {
             // should likely be set to true
             gSaveContext.forceRisingButtonAlphas = 2;
@@ -835,7 +848,7 @@ void func_80083108(PlayState* play) {
                 dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_DISABLED;
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
             }
-        } else if (msgCtx->msgMode == MSGMODE_NONE) {
+        } else if (CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx)) {
             if ((Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) &&
                 (Player_GetEnvironmentalHazard(play) <= PLAYER_ENV_HAZARD_UNDERWATER_FREE)) {
                 if (gSaveContext.buttonStatus[0] != BTN_DISABLED) {
@@ -1079,8 +1092,7 @@ void func_80083108(PlayState* play) {
 
                 if (interfaceCtx->restrictions.tradeItems != 0) {
                     for (i = 1; i < 4; i++) {
-                        if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
-                            (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) {
+                        if ( (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_ZELDAS_LETTER) || (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_SOLD_OUT && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK) || gSaveContext.save.info.equips.buttonItems[i] == ITEM_MAGIC_BEAN) {
                             if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                                 sp28 = true;
                             }
@@ -1089,15 +1101,14 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) {
+                        if ( (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_ZELDAS_LETTER) || (Interface_GetItemFromDpad(i) >= ITEM_SOLD_OUT && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) || Interface_GetItemFromDpad(i) == ITEM_MAGIC_BEAN) {
                             if (dpadStatus[i] == BTN_ENABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_DISABLED;
                         }
                 } else if (interfaceCtx->restrictions.tradeItems == 0) {
                     for (i = 1; i < 4; i++) {
-                        if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
-                            (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) {
+                        if ( (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_ZELDAS_LETTER) || (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_SOLD_OUT && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK) || gSaveContext.save.info.equips.buttonItems[i] == ITEM_MAGIC_BEAN)  {
                             if (gSaveContext.buttonStatus[i] == BTN_DISABLED) {
                                 sp28 = true;
                             }
@@ -1106,7 +1117,37 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) {
+                        if ( (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_ZELDAS_LETTER) || (Interface_GetItemFromDpad(i) >= ITEM_SOLD_OUT && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) || Interface_GetItemFromDpad(i) == ITEM_MAGIC_BEAN) {
+                            if (dpadStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_ENABLED;
+                        }
+                }
+
+                if (interfaceCtx->restrictions.masks != 0) {
+                    for (i=1; i<4; i++) {
+                        if (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_MASK_KEATON && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_MASK_TRUTH) {
+                            if (gSaveContext.buttonStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            gSaveContext.buttonStatus[i] = BTN_DISABLED;
+                        }
+                    }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_MASK_KEATON && Interface_GetItemFromDpad(i) <= ITEM_MASK_TRUTH) {
+                            if (dpadStatus[i] == BTN_ENABLED)
+                                sp28 = true;
+                            dpadStatus[i] = BTN_DISABLED;
+                        }
+                } else if (interfaceCtx->restrictions.masks == 0) {
+                    for (i=1; i<4; i++) {
+                        if (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_MASK_KEATON && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_MASK_TRUTH) {
+                            if (gSaveContext.buttonStatus[i] == BTN_DISABLED)
+                                sp28 = true;
+                            gSaveContext.buttonStatus[i] = BTN_ENABLED;
+                        }
+                    }
+                    for (i=0; i<4; i++)
+                        if (Interface_GetItemFromDpad(i) >= ITEM_MASK_KEATON && Interface_GetItemFromDpad(i) <= ITEM_MASK_TRUTH) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_ENABLED;
@@ -1256,6 +1297,38 @@ void func_80083108(PlayState* play) {
                         }
                 }
 
+                if (interfaceCtx->restrictions.all == 0) {
+                    if (interfaceCtx->restrictions.magicBow != 0) {
+                        for (i=1; i<4; i++) {
+                            if (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOW_FIRE && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOW_LIGHT) {
+                                if (gSaveContext.buttonStatus[i] == BTN_ENABLED)
+                                    sp28 = true;
+                                gSaveContext.buttonStatus[i] = BTN_DISABLED;
+                            }
+                        }
+                        for (i=0; i<4; i++)
+                            if (Interface_GetItemFromDpad(i) >= ITEM_BOW_FIRE && Interface_GetItemFromDpad(i) <= ITEM_BOW_LIGHT) {
+                                if (dpadStatus[i] == BTN_ENABLED)
+                                    sp28 = true;
+                                dpadStatus[i] = BTN_DISABLED;
+                            }
+                    } else if (interfaceCtx->restrictions.magicBow == 0) {
+                        for (i=1; i<4; i++) {
+                            if (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOW_FIRE && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOW_LIGHT) {
+                                if (gSaveContext.buttonStatus[i] == BTN_DISABLED)
+                                    sp28 = true;
+                                gSaveContext.buttonStatus[i] = BTN_ENABLED;
+                            }
+                        }
+                        for (i=0; i<4; i++)
+                            if (Interface_GetItemFromDpad(i) >= ITEM_BOW_FIRE && Interface_GetItemFromDpad(i) <= ITEM_BOW_LIGHT) {
+                                if (dpadStatus[i] == BTN_DISABLED)
+                                    sp28 = true;
+                                dpadStatus[i] = BTN_ENABLED;
+                            }
+                    }
+                }
+
                 if (interfaceCtx->restrictions.all != 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_FAIRY) &&
@@ -1303,6 +1376,9 @@ void func_80083108(PlayState* play) {
                             (gSaveContext.save.info.equips.buttonItems[i] != ITEM_NAYRUS_LOVE) &&
                             (gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_FAIRY) &&
                             (gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_OF_TIME) &&
+                            (gSaveContext.save.info.equips.buttonItems[i] != ITEM_MAGIC_BEAN) &&
+                            !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOW_FIRE) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOW_LIGHT)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
@@ -1317,6 +1393,7 @@ void func_80083108(PlayState* play) {
                     for (i=0; i<4; i++)
                         if (Interface_GetItemFromDpad(i) != ITEM_DINS_FIRE     && Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT        &&   Interface_GetItemFromDpad(i) != ITEM_LONGSHOT     && Interface_GetItemFromDpad(i) != ITEM_FARORES_WIND && Interface_GetItemFromDpad(i) != ITEM_NAYRUS_LOVE &&
                             Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE)  &&
+                          !(Interface_GetItemFromDpad(i) >= ITEM_BOW_FIRE      && Interface_GetItemFromDpad(i) <= ITEM_BOW_LIGHT)      &&
                           !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
@@ -1348,12 +1425,14 @@ void Interface_SetSceneRestrictions(PlayState* play) {
 
     interfaceCtx->restrictions.all = 0;
     interfaceCtx->restrictions.dinsNayrus = 0;
+    interfaceCtx->restrictions.magicBow = 0;
     interfaceCtx->restrictions.farores = 0;
     interfaceCtx->restrictions.sunsSong = 0;
     interfaceCtx->restrictions.warpSongs = 0;
     interfaceCtx->restrictions.ocarina = 0;
     interfaceCtx->restrictions.hookshot = 0;
     interfaceCtx->restrictions.tradeItems = 0;
+    interfaceCtx->restrictions.masks = 0;
     interfaceCtx->restrictions.bottles = 0;
     interfaceCtx->restrictions.aButton = 0;
     interfaceCtx->restrictions.bButton = 0;
@@ -1370,13 +1449,15 @@ void Interface_SetSceneRestrictions(PlayState* play) {
             interfaceCtx->restrictions.bButton = (sRestrictionFlags[i].flags1 & 0x30) >> 4;
             interfaceCtx->restrictions.aButton = (sRestrictionFlags[i].flags1 & 0x0C) >> 2;
             interfaceCtx->restrictions.bottles = (sRestrictionFlags[i].flags1 & 0x03) >> 0;
-            interfaceCtx->restrictions.tradeItems = (sRestrictionFlags[i].flags2 & 0xC0) >> 6;
+            interfaceCtx->restrictions.tradeItems = (sRestrictionFlags[i].flags2 & 0x40) != 0;
+            interfaceCtx->restrictions.masks = (sRestrictionFlags[i].flags2 & 0x80) != 0;
             interfaceCtx->restrictions.hookshot = (sRestrictionFlags[i].flags2 & 0x30) >> 4;
             interfaceCtx->restrictions.ocarina = (sRestrictionFlags[i].flags2 & 0x0C) >> 2;
             interfaceCtx->restrictions.warpSongs = (sRestrictionFlags[i].flags2 & 0x03) >> 0;
             interfaceCtx->restrictions.sunsSong = (sRestrictionFlags[i].flags3 & 0xC0) >> 6;
             interfaceCtx->restrictions.farores = (sRestrictionFlags[i].flags3 & 0x30) >> 4;
             interfaceCtx->restrictions.dinsNayrus = (sRestrictionFlags[i].flags3 & 0x0C) >> 2;
+            interfaceCtx->restrictions.magicBow = (sRestrictionFlags[i].flags3 & 0x08) != 0;
             interfaceCtx->restrictions.all = (sRestrictionFlags[i].flags3 & 0x03) >> 0;
 
             PRINTF_COLOR_YELLOW();
@@ -1397,7 +1478,7 @@ void Interface_SetSceneRestrictions(PlayState* play) {
         i++;
     } while (sRestrictionFlags[i].sceneId != 0xFF);
     
-    if (!interfaceCtx->restrictions.tradeItems)
+    if (interfaceCtx->restrictions.masks == 0)
         GET_PLAYER(play)->currentMask = GET_MASK_AGE();
 }
 
@@ -1410,6 +1491,63 @@ Gfx* Gfx_TextureIA8(Gfx* displayListHead, void* texture, s16 textureWidth, s16 t
     gSPTextureRectangle(displayListHead++, rectLeft << 2, rectTop << 2, (rectLeft + rectWidth) << 2,
                         (rectTop + rectHeight) << 2, G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
 
+    return displayListHead;
+}
+
+Gfx* Gfx_DrawTexRectIA8_DropShadow(Gfx* displayListHead, void* texture, s16 textureWidth, s16 textureHeight, s16 rectLeft, s16 rectTop, s16 rectWidth, s16 rectHeight, u16 dsdx, u16 dtdy, s16 r, s16 g, s16 b, s16 a) {
+    if (USE_MM_HUD) {
+        s16 dropShadowAlpha = a;
+        if (a > 100)
+            dropShadowAlpha = 100;
+        
+        gDPPipeSync(displayListHead++);
+        gDPSetPrimColor(displayListHead++, 0, 0, 0, 0, 0, dropShadowAlpha);
+        gDPLoadTextureBlock(displayListHead++, texture, G_IM_FMT_IA, G_IM_SIZ_8b, textureWidth, textureHeight, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(displayListHead++, (rectLeft + 2) * 4, (rectTop + 2) * 4, (rectLeft + rectWidth + 2) * 4, (rectTop + rectHeight + 2) * 4, G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
+    } else {
+        gDPLoadTextureBlock(displayListHead++, texture, G_IM_FMT_IA, G_IM_SIZ_8b, textureWidth, textureHeight, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    }
+
+    gDPPipeSync(displayListHead++);
+    gDPSetPrimColor(displayListHead++, 0, 0, r, g, b, a);
+    gSPTextureRectangle(displayListHead++, rectLeft << 2, rectTop << 2, (rectLeft + rectWidth) << 2, (rectTop + rectHeight) << 2, G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
+    return displayListHead;
+}
+
+Gfx* Gfx_DrawRect_DropShadow(Gfx* displayListHead, s16 rectLeft, s16 rectTop, s16 rectWidth, s16 rectHeight, u16 dsdx, u16 dtdy, s16 r, s16 g, s16 b, s16 a) {
+    if (USE_MM_HUD) {
+        s16 dropShadowAlpha = a;
+        if (a > 100)
+            dropShadowAlpha = 100;
+
+        gDPPipeSync(displayListHead++);
+        gDPSetPrimColor(displayListHead++, 0, 0, 0, 0, 0, dropShadowAlpha);
+        gSPTextureRectangle(displayListHead++, (rectLeft + 2) << 2, (rectTop + 2) << 2, (rectLeft + rectWidth + 2) << 2, (rectTop + rectHeight + 2) << 2, G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
+    }
+
+    gDPPipeSync(displayListHead++);
+    gDPSetPrimColor(displayListHead++, 0, 0, r, g, b, a);
+    gSPTextureRectangle(displayListHead++, rectLeft << 2, rectTop << 2, (rectLeft + rectWidth) << 2, (rectTop + rectHeight) << 2,  G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
+    return displayListHead;
+}
+
+Gfx* Gfx_DrawTexRectIA8_DropShadowOffset(Gfx* displayListHead, void* texture, s16 textureWidth, s16 textureHeight, s16 rectLeft, s16 rectTop, s16 rectWidth, s16 rectHeight, u16 dsdx, u16 dtdy, s16 r, s16 g, s16 b, s16 a, s32 masks, s32 rects) {
+    if (USE_MM_HUD) {
+        s16 dropShadowAlpha = a;
+        if (a > 100)
+            dropShadowAlpha = 100;
+
+        gDPPipeSync(displayListHead++);
+        gDPSetPrimColor(displayListHead++, 0, 0, 0, 0, 0, dropShadowAlpha);
+        gDPLoadTextureBlock(displayListHead++, texture, G_IM_FMT_IA, G_IM_SIZ_8b, textureWidth, textureHeight, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, masks, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(displayListHead++, (rectLeft + 2) * 4, (rectTop + 2) * 4, (rectLeft + rectWidth + 2) * 4, (rectTop + rectHeight + 2) * 4, G_TX_RENDERTILE, rects, 0, dsdx, dtdy);
+    } else {
+        gDPLoadTextureBlock(displayListHead++, texture, G_IM_FMT_IA, G_IM_SIZ_8b, textureWidth, textureHeight, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, masks, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    }
+    
+    gDPPipeSync(displayListHead++);
+    gDPSetPrimColor(displayListHead++, 0, 0, r, g, b, a);
+    gSPTextureRectangle(displayListHead++, rectLeft * 4, rectTop * 4, (rectLeft + rectWidth) * 4, (rectTop + rectHeight) * 4, G_TX_RENDERTILE, rects, 0, dsdx, dtdy);
     return displayListHead;
 }
 
@@ -1583,13 +1721,14 @@ u8 Interface_GetLoadItem(u16 button) {
         return ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
     else if (item == ITEM_BOOTS)
         return ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
+    return item;
 }
 
 void Interface_LoadItemIcon1(PlayState* play, u16 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     u8 item = Interface_GetLoadItem(button);
 
-    if (item >= 0xF0)
+    if (item >= ITEM_SWORD_CS)
         return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
@@ -1603,7 +1742,7 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     u8 item = Interface_GetLoadItem(button);
 
-    if (item >= 0xF0)
+    if (item >= ITEM_SWORD_CS)
         return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
@@ -1613,47 +1752,46 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
 
+typedef bool (*ItemCondition)(void);
+typedef struct ChildQuestIcons {
+    u8 item;
+    ItemCondition condition;
+    u8 icon;
+} ChildQuestIcons;
+
+static bool IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                               }
+static bool IsHerosShield(void)   { return IS_HEROS_SHIELD;                                                       }
+static bool IsHerosSword(void)    { return IS_HEROS_SWORD;                                                        }
+static bool IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                            }
+static bool IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
+static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
+
+#define LAST_ITEM_ICON ITEM_AMULET_OF_ENERGY
+static ChildQuestIcons sChildQuestIcons[] = {
+    { ITEM_SHIELD_HYLIAN,             IsHerosShield, ITEM_SHIELD_HEROS   },
+    { ITEM_SWORD_KOKIRI ,             IsHerosSword,  ITEM_SWORD_HEROS    },
+    { ITEM_SHIELD_MIRROR,             IsChildQuest,  LAST_ITEM_ICON + 1  },
+    { ITEM_SWORD_MASTER,              IsRazorSword,  LAST_ITEM_ICON + 2  },
+    { ITEM_SWORD_BIGGORON,            IsSilverSword, LAST_ITEM_ICON + 3  },
+    { ITEM_SWORD_BIGGORON,            IsGildedSword, LAST_ITEM_ICON + 4  },
+    { ITEM_HOOKSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 5  },
+    { ITEM_LONGSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 6  },
+    { ITEM_BOW,                       IsChildQuest,  LAST_ITEM_ICON + 7  },
+    { ITEM_BOW_FIRE,                  IsChildQuest,  LAST_ITEM_ICON + 8  },
+    { ITEM_BOW_ICE,                   IsChildQuest,  LAST_ITEM_ICON + 9  },
+    { ITEM_BOW_LIGHT,                 IsChildQuest,  LAST_ITEM_ICON + 10 },
+    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,  LAST_ITEM_ICON + 11 },
+    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,  LAST_ITEM_ICON + 12 },
+    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,  LAST_ITEM_ICON + 13 },
+    { ITEM_STONE_OF_AGONY,            NULL,          LAST_ITEM_ICON + 14 },
+};
+#undef LAST_ITEM_ICON
+
 u8 Interface_LoadItemIconChildQuest(u8 item) {
-    if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-        return ITEM_FISHING_POLE + 2;
-    else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
-        return ITEM_FISHING_POLE + 1;
-    else if (item == ITEM_STONE_OF_AGONY)
-        return ITEM_FISHING_POLE + 16;
-    else if (IS_CHILD_QUEST) {
-        if (item == ITEM_BROKEN_GORONS_SWORD)
-            return ITEM_FISHING_POLE + 15;
-        else if (LINK_IS_CHILD) {
-            if (item == ITEM_HOOKSHOT)
-                return ITEM_FISHING_POLE + 7;
-            else if (item == ITEM_LONGSHOT)
-                return ITEM_FISHING_POLE + 8;
-
-            else if (item == ITEM_BOW)
-                return ITEM_FISHING_POLE + 9;
-            else if (item == ITEM_BOW_FIRE)
-                return ITEM_FISHING_POLE + 10;
-            else if (item == ITEM_BOW_ICE)
-                return ITEM_FISHING_POLE + 11;
-            else if (item == ITEM_BOW_LIGHT)
-                return ITEM_FISHING_POLE + 12;
-
-            else if (item == ITEM_SWORD_MASTER)
-                return ITEM_FISHING_POLE + 4;
-            else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
-                return ITEM_FISHING_POLE + 5;
-            else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
-                return ITEM_FISHING_POLE + 6;
-            else if (item == ITEM_SHIELD_MIRROR)
-                return ITEM_FISHING_POLE + 3;
-            
-            else if (item == ITEM_STRENGTH_SILVER_GAUNTLETS)
-                return ITEM_FISHING_POLE + 13;
-            else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
-                return ITEM_FISHING_POLE + 14;
-        }
-    }
-
+    u8 i;
+    for (i=0; i<ARRAY_COUNT(sChildQuestIcons); i++)
+        if (item == sChildQuestIcons[i].item && (sChildQuestIcons[i].condition == NULL || sChildQuestIcons[i].condition()))
+            return sChildQuestIcons[i].icon;
     return item;
 }
 
@@ -1808,26 +1946,41 @@ u8 Item_Give(PlayState* play, u8 item) {
             gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_SWORD_MASTER << (EQUIP_TYPE_SWORD * 4);
             Interface_LoadItemIcon1(play, 0);
         }
-        for (i=0; i<4; i++)
+        for (i=0; i<4; i++) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                Interface_LoadItemIcon1(play, i);
             if (DPAD_BUTTON(i) == SLOT_SWORDS)
                 Interface_LoadItemIcon1(play, i+4);
+        }
 
         return ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
         SET_HEROS_SWORD;
-        for (i=0; i<4; i++)
+        if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_KOKIRI)
+            Interface_LoadItemIcon1(play, 0);
+        for (i=0; i<4; i++) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                Interface_LoadItemIcon1(play, i);
             if (DPAD_BUTTON(i) == SLOT_SWORDS)
                 Interface_LoadItemIcon1(play, i+4);
+        }
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
+        if (item == ITEM_SHIELD_DEKU)
+            gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
+        else if (item == ITEM_SHIELD_HYLIAN)
+            gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
+        else if (item == ITEM_SHIELD_MIRROR)
+            gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_SHIELD_HEROS) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
         SET_HEROS_SHIELD;
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
             Player_SetEquipmentData(play, GET_PLAYER(play));
@@ -1923,12 +2076,27 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_ADULTS_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 1);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
         return ITEM_NONE;
     } else if (item == ITEM_GIANTS_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 2);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+        return ITEM_NONE;
+    } else if (item == ITEM_MASTER_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
         return ITEM_NONE;
     } else if (item == ITEM_ROYAL_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 1);
+        return ITEM_NONE;
+    } else if (item == ITEM_TYCOON_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 2);
+        return ITEM_NONE;
+    } else if (item == ITEM_BOTTOMLESS_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 3);
         return ITEM_NONE;
     } else if (item == ITEM_DEKU_STICK_UPGRADE_20) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -2116,21 +2284,45 @@ u8 Item_Give(PlayState* play, u8 item) {
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_MAGIC_BEAN) {
-        if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
+        if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE)
             INV_CONTENT(item) = item;
-            AMMO(ITEM_MAGIC_BEAN) = 1;
-            BEANS_BOUGHT = 1;
-        } else {
-            AMMO(ITEM_MAGIC_BEAN)++;
-            BEANS_BOUGHT++;
+        AMMO(ITEM_MAGIC_BEAN)++;
+        SET_MAGIC_BEANS;
+        return ITEM_NONE;
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER) {
+        for (i=0; i<4; i++) {
+            if (item == ITEM_GOLDEN_FEATHER && gSaveContext.save.info.equips.buttonItems[i] == ITEM_ROCS_FEATHER) {
+                gSaveContext.save.info.equips.buttonItems[i] = item;
+                Interface_LoadItemIcon1(play, i);
+            }
         }
+        gSaveContext.save.info.hasObtainedItems.feather = (item == ITEM_ROCS_FEATHER) ? 1 : 2;
+        INV_CONTENT(ITEM_MAGIC_BEAN) = item;
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
+                Interface_LoadItemIcon1(play, i+4);
+        return ITEM_NONE;
+    } else if (item == ITEM_AMULET_OF_ENERGY) {
+        gSaveContext.save.info.hasObtainedItems.amuletOfEnergy = 1;
+        return ITEM_NONE;
+    } else if (item == ITEM_HAMMER) {
+        INV_CONTENT(ITEM_HAMMER) = item;
+        SET_HAMMER;
+        return ITEM_NONE;
+    } else if (item == ITEM_SWORD_FAIRYS) {
+        INV_CONTENT(ITEM_HAMMER) = item;
+        SET_FAIRYS_SWORD;
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_HAMMER)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
         return ITEM_NONE;
     } else if (item == ITEM_HEART_CONTAINER) {
-        gSaveContext.save.info.playerData.healthCapacity += 0x10;
-        gSaveContext.save.info.playerData.health += 0x10;
+        u8 increase = (IS_RUSH_QUEST && play->sceneId != SCENE_TEMPLE_OF_TIME) ? 0x20 : 0x10;
+        gSaveContext.save.info.playerData.healthCapacity += increase;
+        gSaveContext.save.info.playerData.health += increase;
         R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
         return ITEM_NONE;
     } else if (item == ITEM_RECOVERY_HEART) {
@@ -2315,12 +2507,16 @@ u8 Item_CheckObtainability(u8 item) {
             return ITEM_NONE;
         }
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
+        if ( (item == ITEM_SHIELD_DEKU && gSaveContext.save.info.shieldDurability[0] < MAX_DURABILITY_SHIELD_DEKU) || (item == ITEM_SHIELD_HYLIAN && gSaveContext.save.info.shieldDurability[1] < MAX_DURABILITY_SHIELD_HYLIAN) || (item == ITEM_SHIELD_MIRROR && gSaveContext.save.info.shieldDurability[2] < MAX_DURABILITY_SHIELD_DEKU) )
+            return ITEM_NONE;
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU + EQUIP_INV_SHIELD_DEKU)) {
             return item;
         } else {
             return ITEM_NONE;
         }
     } else if (item == ITEM_SHIELD_HEROS) {
+        if (item == ITEM_SHIELD_HEROS && gSaveContext.save.info.shieldDurability[3] < MAX_DURABILITY_SHIELD_HEROS)
+            return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ? item : ITEM_NONE;
@@ -2362,7 +2558,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_DEKU_STICK_UPGRADE_20) && (item <= ITEM_DEKU_NUT_UPGRADE_40)) {
         return ITEM_NONE;
-    } else if ((item >= ITEM_BOMB_BAG_30) && (item <= ITEM_GIANTS_WALLET)) {
+    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_GIANTS_WALLET) || (item >= ITEM_MASTER_WALLET && item <= ITEM_BOTTOMLESS_WALLET)) {
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         return ITEM_NONE;
@@ -2415,7 +2611,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if (item == ITEM_ADULTS_WALLET || item == ITEM_GIANTS_WALLET || item == ITEM_ROYAL_WALLET) {
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS) {
         return ITEM_NONE;
     }
 
@@ -2496,6 +2692,9 @@ void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
            gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button - 1]]);
 
     if (button >= 4) {
+        if (FIX_USEFUL_GLITCHES && GET_PLAYER(play)->heldItemAction == PLAYER_IA_BOTTLE && gSaveContext.save.info.inventory.items[DPAD_BUTTON(button-4)] != ITEM_BOTTLE_EMPTY)
+            return;
+
         if (gSaveContext.save.info.inventory.items[DPAD_BUTTON(button-4)] == ITEM_BOTTLE_MILK_FULL && item == ITEM_BOTTLE_EMPTY)
             item = ITEM_BOTTLE_MILK_HALF;
         
@@ -2511,6 +2710,9 @@ void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
         
         return;
     }
+
+    if (FIX_USEFUL_GLITCHES && GET_PLAYER(play)->heldItemAction == PLAYER_IA_BOTTLE && gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button-1]] != ITEM_BOTTLE_EMPTY)
+        return;
 
     // Special case to only empty half of a Lon Lon Milk Bottle
     if ((gSaveContext.save.info.inventory.items[gSaveContext.save.info.equips.cButtonSlots[button - 1]] ==
@@ -3051,7 +3253,7 @@ void Magic_Update(PlayState* play) {
 
         case MAGIC_STATE_CONSUME_LENS:
             // Slowly consume magic while lens is on
-            if (!IS_PAUSED(&play->pauseCtx) && (msgCtx->msgMode == MSGMODE_NONE) &&
+            if (!IS_PAUSED(&play->pauseCtx) && CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) &&
                 (play->gameOverCtx.state == GAMEOVER_INACTIVE) && (play->transitionTrigger == TRANS_TRIGGER_OFF) &&
                 (play->transitionMode == TRANS_MODE_OFF) && !Play_InCsMode(play)) {
                 if ((gSaveContext.save.info.playerData.magic == 0) ||
@@ -3148,21 +3350,15 @@ void Magic_DrawMeter(PlayState* play) {
 
         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
 
+        OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(      OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(R_MAGIC_METER_X),                                  HIRES_MULTIPLY(magicMeterY), X_HIRES_MULTIPLY(8),                                     HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10),
+                       sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
+        OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(      OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_HIRES_MULTIPLY(R_MAGIC_METER_X + 8),                              HIRES_MULTIPLY(magicMeterY), X_HIRES_MULTIPLY(((void)0, gSaveContext.magicCapacity)), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10),
+                       sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
+        OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadowOffset(OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity), HIRES_MULTIPLY(magicMeterY), X_HIRES_MULTIPLY(8),                                     HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10),
+                       sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha, 3, 0x100);
+
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
         gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
-
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8, 16, X_HIRES_MULTIPLY(R_MAGIC_METER_X), HIRES_MULTIPLY(magicMeterY), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16),
-                                     X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
-
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_HIRES_MULTIPLY(R_MAGIC_METER_X + 8), HIRES_MULTIPLY(magicMeterY),
-                                     X_HIRES_MULTIPLY(gSaveContext.magicCapacity), HIRES_MULTIPLY(16) - HIRES_PX_SHIFT, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
-
-        gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0,
-                            G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-
-        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity) << 2, HIRES_MULTIPLY(magicMeterY) << 2,
-                            X_HIRES_MULTIPLY(R_MAGIC_METER_X + 8 + gSaveContext.magicCapacity + 8) << 2, HIRES_MULTIPLY((magicMeterY + 16)) << 2,
-                            G_TX_RENDERTILE, 256, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
         gDPPipeSync(OVERLAY_DISP++);
         gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE, PRIMITIVE,
@@ -3177,16 +3373,16 @@ void Magic_DrawMeter(PlayState* play) {
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                  G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY((magicMeterY + 3)) << 2,
-                                X_HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2,
-                                (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY(magicMeterY + 3) << 2,
+                                X_HIRES_MULTIPLY((R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2),
+                                HIRES_MULTIPLY((magicMeterY + 10) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
             // Fill the rest of the meter with the normal magic color
             gDPPipeSync(OVERLAY_DISP++);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
                             interfaceCtx->magicAlpha);
 
-            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY((magicMeterY + 3)) << 2,
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY(magicMeterY + 3) << 2,
                                 X_HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2, (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2,
                                 G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         } else {
@@ -3198,9 +3394,9 @@ void Magic_DrawMeter(PlayState* play) {
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
                                  G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY((magicMeterY + 3)) << 2,
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY(magicMeterY + 3) << 2,
                                 X_HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2,
-                                (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                                HIRES_MULTIPLY((magicMeterY + 10) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
     }
 
@@ -3316,6 +3512,7 @@ void Interface_DrawItemButtons(PlayState* play) {
 #elif OOT_VERSION >= PAL_1_0
     static s16 startButtonLeftPos[] = { 132, 130, 130 };
 #endif
+    u8 startButtonLeftMMShift = USE_MM_HUD ? 4 : 0;
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     Player* player = GET_PLAYER(play);
     PauseContext* pauseCtx = &play->pauseCtx;
@@ -3325,6 +3522,7 @@ void Interface_DrawItemButtons(PlayState* play) {
     s16 width;
     s16 height;
 #endif
+    void* hudTexture = USE_MM_HUD ? gMMButtonBackgroundTex : gButtonBackgroundTex;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 2900);
 
@@ -3350,54 +3548,55 @@ void Interface_DrawItemButtons(PlayState* play) {
     }
 
     // B Button Color & Texture
-    // Also loads the Item Button Texture reused by other buttons afterwards
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_B_BTN_COLOR(0), R_B_BTN_COLOR(1), R_B_BTN_COLOR(2), interfaceCtx->bAlpha);
     gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+
     OVERLAY_DISP =
-        Gfx_TextureIA8(OVERLAY_DISP, gButtonBackgroundTex, 32, 32, X_HIRES_MULTIPLY(R_ITEM_BTN_X(0)), HIRES_MULTIPLY(R_ITEM_BTN_Y(0)),
-                       X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1));
-
-    // C-Left Button Color & Texture
+        Gfx_DrawTexRectIA8_DropShadow(OVERLAY_DISP, hudTexture, 32, 32, X_HIRES_MULTIPLY(R_ITEM_BTN_X(0)), HIRES_MULTIPLY(R_ITEM_BTN_Y(0)),
+                       X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1), R_B_BTN_COLOR(0), R_B_BTN_COLOR(1), R_B_BTN_COLOR(2), interfaceCtx->bAlpha);
     gDPPipeSync(OVERLAY_DISP++);
-    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
-                    interfaceCtx->cLeftAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_ITEM_BTN_X(1)) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(1)) << 2,
-                        X_HIRES_MULTIPLY(R_ITEM_BTN_X(1) + R_ITEM_BTN_WIDTH(1)) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(1) + R_ITEM_BTN_WIDTH(1))) << 2,
-                        G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1));
 
-    // C-Down Button Color & Texture
-    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
-                    interfaceCtx->cDownAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_ITEM_BTN_X(2)) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(2)) << 2,
-                        X_HIRES_MULTIPLY(R_ITEM_BTN_X(2) + R_ITEM_BTN_WIDTH(2)) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(2) + R_ITEM_BTN_WIDTH(2))) << 2,
-                        G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1));
-
-    // C-Right Button Color & Texture
-    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
-                    interfaceCtx->cRightAlpha);
-    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_ITEM_BTN_X(3)) << 2, HIRES_MULTIPLY(R_ITEM_BTN_Y(3)) << 2,
-                        X_HIRES_MULTIPLY(R_ITEM_BTN_X(3) + R_ITEM_BTN_WIDTH(3)) << 2, HIRES_MULTIPLY((R_ITEM_BTN_Y(3) + R_ITEM_BTN_WIDTH(3))) << 2,
-                        G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(R_ITEM_BTN_DD(3) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(3) << 1));
+    // C Buttons Color & Texture
+    OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(R_ITEM_BTN_X(1)), HIRES_MULTIPLY(R_ITEM_BTN_Y(1)), X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(1)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(1)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1),
+                       R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), interfaceCtx->cLeftAlpha);
+    OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(R_ITEM_BTN_X(2)), HIRES_MULTIPLY(R_ITEM_BTN_Y(2)), X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(2)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(2)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1),
+                       R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), interfaceCtx->cDownAlpha);
+    OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(R_ITEM_BTN_X(3)), HIRES_MULTIPLY(R_ITEM_BTN_Y(3)), X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(3)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(3)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(3) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(3) << 1),
+                       R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), interfaceCtx->cRightAlpha);
 
     if (!IS_PAUSE_STATE_GAMEOVER(pauseCtx)) {
         if (IS_PAUSED(&play->pauseCtx)) {
+            u8 rgb[3];
+            if (USE_MM_HUD) {
+                rgb[0] = START_MM_BUTTON_R; rgb[1] = START_MM_BUTTON_G; rgb[2] = START_MM_BUTTON_B;
+            } else {
+                rgb[0] = START_BUTTON_R;    rgb[1] = START_BUTTON_G;    rgb[2] = START_BUTTON_B;
+            }
+
+#if (OOT_VERSION < PAL_1_0) && !OOT_NTSC_N64
+            OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, (R_START_BTN_X + startButtonLeftMMShift + WS_SHIFT_FULL), R_START_BTN_Y, 22, 22, (s32)(1.4277344f * (1 << 10)), (s32)(1.4277344f * (1 << 10)), rgb[0], rgb[1], rgb[2], interfaceCtx->startAlpha);
+#elif OOT_NTSC && !OOT_NTSC_N64
+            OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, (132 + startButtonLeftMMShift + WS_SHIFT_FULL), R_START_BTN_Y, 22, 22, (s32)(1.4277344f * (1 << 10)), (s32)(1.4277344f * (1 << 10)), rgb[0], rgb[1], rgb[2], interfaceCtx->startAlpha);
+#else
+            OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, (startButtonLeftPos[gSaveContext.language] + startButtonLeftMMShift + WS_SHIFT_FULL), R_START_BTN_Y, 22, 22, (s32)(1.4277344f * (1 << 10)), (s32)(1.4277344f * (1 << 10)), rgb[0], rgb[1], rgb[2], interfaceCtx->startAlpha);
+#endif
+
             // Start Button Texture, Color & Label
             gDPPipeSync(OVERLAY_DISP++);
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, START_BUTTON_R, START_BUTTON_G, START_BUTTON_B,
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, rgb[0], rgb[1], rgb[2],
                             interfaceCtx->startAlpha);
 
 #if (OOT_VERSION < PAL_1_0) && !OOT_NTSC_N64
-            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_START_BTN_X + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(R_START_BTN_Y) << 2, X_HIRES_MULTIPLY(R_START_BTN_X + WS_SHIFT_FULL + 22) << 2,
-                                HIRES_MULTIPLY(R_START_BTN_Y + 22) << 2, G_TX_RENDERTILE, 0, 0, (s32)(1.4277344 * X_HIRES_DIVIDE(1 << 10),
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY((R_START_BTN_X + startButtonLeftMMShift + WS_SHIFT_FULL) << 2), HIRES_MULTIPLY(R_START_BTN_Y << 2), X_HIRES_MULTIPLY((R_START_BTN_X + startButtonLeftMMShift + WS_SHIFT_FULL + 22) << 2),
+                                HIRES_MULTIPLY((R_START_BTN_Y + 22) << 2), G_TX_RENDERTILE, 0, 0, (s32)(1.4277344 * X_HIRES_DIVIDE(1 << 10)),
                                 (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #elif OOT_NTSC && !OOT_NTSC_N64
-            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(132 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(17 << 2), X_HIRES_MULTIPLY(132 + WS_SHIFT_FULL + 22) << 2, HIRES_MULTIPLY((17 + 22) << 2), G_TX_RENDERTILE, 0,
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY((132 + startButtonLeftMMShift + WS_SHIFT_FULL) << 2), HIRES_MULTIPLY(17 << 2), X_HIRES_MULTIPLY((132 + startButtonLeftMMShift + WS_SHIFT_FULL + 22) << 2), HIRES_MULTIPLY((17 + 22) << 2), G_TX_RENDERTILE, 0,
                                 0, (s32)(1.4277344 * X_HIRES_DIVIDE(1 << 10)), (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #else
-            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(17) << 2,
-                                X_HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + WS_SHIFT_FULL + 22) << 2, HIRES_MULTIPLY((17 + 22)) << 2, G_TX_RENDERTILE,
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY((startButtonLeftPos[gSaveContext.language] + startButtonLeftMMShift + WS_SHIFT_FULL) << 2), HIRES_MULTIPLY(17 << 2),
+                                X_HIRES_MULTIPLY((startButtonLeftPos[gSaveContext.language] + startButtonLeftMMShift + WS_SHIFT_FULL + 22) << 2), HIRES_MULTIPLY((17 + 22) << 2), G_TX_RENDERTILE,
                                 0, 0, (s32)(1.4277344 * X_HIRES_DIVIDE(1 << 10)), (s32)(1.4277344 * HIRES_DIVIDE(1 << 10)));
 #endif
 
@@ -3450,6 +3649,8 @@ void Interface_DrawItemButtons(PlayState* play) {
                 temp = interfaceCtx->healthAlpha;
             }
 
+            OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, R_C_UP_BTN_X, R_C_UP_BTN_Y, 16, 16, 2 << 10, 2 << 10, 255, 240, 0, temp);
+
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), temp);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
             gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_C_UP_BTN_X) << 2, HIRES_MULTIPLY(R_C_UP_BTN_Y) << 2, X_HIRES_MULTIPLY(R_C_UP_BTN_X + 16) << 2,
@@ -3487,7 +3688,7 @@ void Interface_DrawItemButtons(PlayState* play) {
 
     // Empty C Button Arrows
     for (temp = 1; temp < 4; temp++) {
-        if (gSaveContext.save.info.equips.buttonItems[temp] > 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[temp] > ITEM_SWORD_CS) {
             if (temp == 1) {
                 gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                                 interfaceCtx->cLeftAlpha);
@@ -3665,9 +3866,35 @@ void Interface_DrawActionButton(PlayState* play) {
     Matrix_RotateX(interfaceCtx->unk_1F4 / 10000.0f, MTXMODE_APPLY);
 
     MATRIX_FINALIZE_AND_LOAD(OVERLAY_DISP++, play->state.gfxCtx, "../z_parameter.c", 3177);
+
+    if (USE_MM_HUD) {
+        Vtx* dropShadowVtx = GRAPH_ALLOC(play->state.gfxCtx, 4 * sizeof(Vtx));
+        u8 alpha = interfaceCtx->aAlpha;
+        if (alpha > 100)
+            alpha = 100;
+
+        dropShadowVtx[0].v.ob[0] = dropShadowVtx[2].v.ob[0] = interfaceCtx->actionVtx[2].v.ob[0] + 2;
+        dropShadowVtx[1].v.ob[0] = dropShadowVtx[3].v.ob[0] = dropShadowVtx[0].v.ob[0] + 28;
+        dropShadowVtx[0].v.ob[1] = dropShadowVtx[1].v.ob[1] = interfaceCtx->actionVtx[1].v.ob[1] - 2;
+        dropShadowVtx[2].v.ob[1] = dropShadowVtx[3].v.ob[1] = dropShadowVtx[0].v.ob[1] - 28;
+        dropShadowVtx[0].v.ob[2] = dropShadowVtx[0 + 1].v.ob[2] = dropShadowVtx[0 + 2].v.ob[2] = dropShadowVtx[0 + 3].v.ob[2] = 0;
+        dropShadowVtx[0].v.flag = dropShadowVtx[0 + 1].v.flag = dropShadowVtx[0 + 2].v.flag = dropShadowVtx[0 + 3].v.flag = 0;
+        dropShadowVtx[0].v.tc[0] = dropShadowVtx[0].v.tc[1] = dropShadowVtx[0 + 1].v.tc[1] = dropShadowVtx[0 + 2].v.tc[0] = 0;
+        dropShadowVtx[0 + 1].v.tc[0] = dropShadowVtx[0 + 2].v.tc[1] = dropShadowVtx[0 + 3].v.tc[0] = dropShadowVtx[0 + 3].v.tc[1] = 1024;
+        dropShadowVtx[0].v.cn[0] = dropShadowVtx[0 + 1].v.cn[0] = dropShadowVtx[0 + 2].v.cn[0] = dropShadowVtx[0 + 3].v.cn[0] = dropShadowVtx[0].v.cn[1] = dropShadowVtx[0 + 1].v.cn[1] =
+        dropShadowVtx[0 + 2].v.cn[1] = dropShadowVtx[0 + 3].v.cn[1] = dropShadowVtx[0].v.cn[2] = dropShadowVtx[0 + 1].v.cn[2] = dropShadowVtx[0 + 2].v.cn[2] = dropShadowVtx[0 + 3].v.cn[2] = 255;
+        dropShadowVtx[0].v.cn[3] = dropShadowVtx[0 + 1].v.cn[3] = dropShadowVtx[0 + 2].v.cn[3] = dropShadowVtx[0 + 3].v.cn[3] = 255;
+
+        gSPVertex(OVERLAY_DISP++, &dropShadowVtx[0], 4, 0);
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, alpha);
+        gDPLoadTextureBlock(OVERLAY_DISP++, gButtonBackgroundTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSP1Quadrangle(OVERLAY_DISP++, 0, 2, 3, 1, 0);
+    }
+
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_A_BTN_COLOR(0), R_A_BTN_COLOR(1), R_A_BTN_COLOR(2), interfaceCtx->aAlpha);
     gSPVertex(OVERLAY_DISP++, &interfaceCtx->actionVtx[0], 4, 0);
 
-    gDPLoadTextureBlock(OVERLAY_DISP++, gButtonBackgroundTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0,
+    gDPLoadTextureBlock(OVERLAY_DISP++, USE_MM_HUD ? gMMButtonBackgroundTex : gButtonBackgroundTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0,
                         G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
                         G_TX_NOLOD);
 
@@ -3872,7 +4099,7 @@ static void Interface_PrintHeapUsage(PlayState* this) {
 
 static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfaceCtx) {
     bool isRumble = play->specialIconLast == SPECIAL_ICON_RUMBLE;
-    u16 x = 26, y = 206 - 16;
+    u16 x = 26, y = 190;
 
     if (play->specialIconAlpha >= 240) {
         play->specialIconUp = false;
@@ -3907,24 +4134,8 @@ static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfa
         }
     }
 
-    switch (play->sceneId) {
-        case SCENE_FOREST_TEMPLE:
-        case SCENE_FIRE_TEMPLE:
-        case SCENE_WATER_TEMPLE:
-        case SCENE_SPIRIT_TEMPLE:
-        case SCENE_SHADOW_TEMPLE:
-        case SCENE_BOTTOM_OF_THE_WELL:
-        case SCENE_ICE_CAVERN:
-        case SCENE_GANONS_TOWER:
-        case SCENE_GERUDO_TRAINING_GROUND:
-        case SCENE_THIEVES_HIDEOUT:
-        case SCENE_INSIDE_GANONS_CASTLE:
-        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
-        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
-        case SCENE_TREASURE_BOX_SHOP:
-            if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0)
-                y -= 16;
-    }
+    if (drawKeys || drawShieldDurability)
+        y -= 16;
 
     if (isRumble) {
         x += play->specialIconShake;
@@ -3944,26 +4155,178 @@ static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfa
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3795);
 }
 
+void Energy_Draw(PlayState* play) {
+    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    MessageContext* msgCtx = &play->msgCtx;
+    Player* player = GET_PLAYER(play);
+    s16 clamped, rectLeft, rectTop, rectWidth = 16, rectHeight = 16;
+    Vec3f screenPos, playerPos;
+    f32 lerp;
+    u8 alpha;
+
+    if (IS_PAUSED(&play->pauseCtx) || !CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) || play->transitionTrigger != TRANS_TRIGGER_OFF || play->gameOverCtx.state != GAMEOVER_INACTIVE || play->transitionMode != TRANS_MODE_OFF || (play->csCtx.state != CS_STATE_IDLE && Player_InCsMode(play)))
+        return;
+
+    Math_SmoothStepToS(&curEnergy, gSaveContext.save.info.energy, 1, 3, 0);
+
+    if (curEnergy < Player_GetMaxEnergy() && Player_GetMaxEnergy() != 0)
+        energyHideTimer = (60 / R_UPDATE_RATE);
+    else if (energyHideTimer > 0)
+        energyHideTimer--;
+
+    if (energyHideTimer == 0)
+        return;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 5551);
+
+    gSPSegment(OVERLAY_DISP++, 0x02, interfaceCtx->parameterSegment);
+    Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+
+    playerPos = player->actor.world.pos;
+    playerPos.y += 45.0f;
+    Play_GetScreenPos(play, &playerPos, &screenPos);
+    rectLeft = (u16)screenPos.x + 20;
+    rectTop = (u16)screenPos.y;
+
+    // Draw energy wheel shadow
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, 255);
+    gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+    OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, gEnergyWheelTex, 16, 16, rectLeft, rectTop, rectWidth, rectHeight, (1 << 10), (1 << 10));
+
+    // Draw energy wheel background
+    gDPPipeSync(OVERLAY_DISP++);
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 11, 11, 11, 180);
+    gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+    OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, gEnergyWheelTex, 16, 16, rectLeft, rectTop, rectWidth, rectHeight, (1 << 10), (1 << 10));
+
+    // Draw energy wheel foreground
+    clamped = CLAMP(curEnergy, 0, Player_GetMaxEnergy());
+    lerp = (f32)clamped / (f32)Player_GetMaxEnergy();
+    alpha = 255 - (u8)(lerp * 255.0f);
+
+    gDPPipeSync(OVERLAY_DISP++);
+    gDPSetCycleType(OVERLAY_DISP++, G_CYC_2CYCLE);
+    gDPSetCombineLERP(OVERLAY_DISP++, TEXEL1, 0, PRIMITIVE, 0, 0, 0, 0, TEXEL0, 0, 0, 0, COMBINED, 0, 0, 0, TEXEL0);
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 0, 255);
+    gDPSetAlphaCompare(OVERLAY_DISP++, G_AC_THRESHOLD); 
+    gDPSetBlendColor(OVERLAY_DISP++, 255, 255, 255, alpha);
+    gDPLoadMultiBlock(OVERLAY_DISP++, gEnergyWheelMaskTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadMultiBlock(OVERLAY_DISP++, gEnergyWheelTex, 0x0100, 1, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(rectLeft << 2), HIRES_MULTIPLY(rectTop << 2), X_HIRES_MULTIPLY((rectLeft + rectWidth) << 2), HIRES_MULTIPLY((rectTop + rectHeight) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+    gDPSetAlphaCompare(OVERLAY_DISP++, G_AC_NONE);
+    gDPSetBlendColor(OVERLAY_DISP++, 0, 0, 0, 0);
+    gDPSetCycleType(OVERLAY_DISP++, G_CYC_1CYCLE);
+    
+    CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 5591);
+}
+
+void Energy_Update(PlayState* play) {
+    if (play->specialPowerTimer > 0)
+        play->specialPowerTimer--;
+
+    if (!Player_HasEnergyUnlocked())
+        return;
+
+    if (energyRefillTimer > 0)
+        energyRefillTimer--;
+    else if (gSaveContext.save.info.energy < Player_GetMaxEnergy()) {
+        energyRefillTimer = (60 / R_UPDATE_RATE) / 3;
+        gSaveContext.save.info.energy++;
+    }
+}
+
+void Durability_DrawMeter(PlayState* play) {
+    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    u8 capacity, durability;
+    u8 shield = GET_PLAYER(play)->currentShield;
+    u16 meterY = 190;
+    u16 meterX = 26;
+    f32 scaleDivide;
+
+    if (!SHIELD_DURABILITY || shield == PLAYER_SHIELD_NONE || IS_PAUSED(&play->pauseCtx)) {
+        drawShieldDurability = false;
+        return;
+    }
+
+    switch (shield) {
+        case PLAYER_SHIELD_DEKU:
+            durability = gSaveContext.save.info.shieldDurability[0];
+            capacity = MAX_DURABILITY_SHIELD_DEKU;
+            scaleDivide = 3.5f;
+            break;
+
+        case PLAYER_SHIELD_HYLIAN:
+            durability = gSaveContext.save.info.shieldDurability[1];
+            capacity = MAX_DURABILITY_SHIELD_HYLIAN;
+            scaleDivide = 5.0f;
+            break;
+
+        case PLAYER_SHIELD_MIRROR:
+            durability = gSaveContext.save.info.shieldDurability[2];
+            capacity = MAX_DURABILITY_SHIELD_MIRROR;
+            scaleDivide = 2.5f;
+            break;
+        
+        case PLAYER_SHIELD_HEROS:
+            durability = gSaveContext.save.info.shieldDurability[3];
+            capacity = MAX_DURABILITY_SHIELD_HEROS;
+            scaleDivide = 5.0f;
+            break;
+    }
+
+    durability /= scaleDivide;
+    capacity   /= scaleDivide;
+    drawShieldDurability = true;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+    gDPSetEnvColor(OVERLAY_DISP++, 100, 255, 255, 255);
+    gDPLoadTextureBlock(OVERLAY_DISP++, interfaceCtx->iconItemSegment + 0x9000, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX) << 2, HIRES_MULTIPLY(meterY) << 2, X_HIRES_MULTIPLY(meterX + 16) << 2, HIRES_MULTIPLY(meterY + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2048), X_HIRES_DIVIDE(2048));
+
+    gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
+    meterX += 14;
+    
+    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(meterX),     HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(8),        HIRES_MULTIPLY(16), 1 << 10, 1 << 10);
+    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_HIRES_MULTIPLY(meterX + 8), HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(capacity), HIRES_MULTIPLY(16), 1 << 10, 1 << 10);
+
+    gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX + capacity + 8) << 2, HIRES_MULTIPLY(meterY + 2) << 2, X_HIRES_MULTIPLY(meterX + capacity + 16) << 2, HIRES_MULTIPLY(meterY + 2 + 16) << 2, G_TX_RENDERTILE, 256, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+
+    gDPPipeSync(OVERLAY_DISP++);
+    gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE);
+    gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 150, 0, interfaceCtx->magicAlpha);
+    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX + 8) << 2, HIRES_MULTIPLY(meterY + 2 + 3) << 2, X_HIRES_MULTIPLY(meterX + 8 + durability) << 2, HIRES_MULTIPLY(meterY + 2 + 10) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
 void Interface_Draw(PlayState* play) {
     static s16 magicArrowEffectsR[] = { 255, 100, 255 };
     static s16 magicArrowEffectsG[] = { 0, 100, 255 };
     static s16 magicArrowEffectsB[] = { 0, 255, 100 };
-    static s16 timerDigitLeftPos[] = { 16, 25, 34, 42, 51 };
-    static s16 sDigitWidths[] = { 9, 9, 8, 9, 9 };
+    static s16 timerDigitLeftPos[] = { 16, 25, 34, 42, 51, 60, 68, 77 };
+    static s16 sDigitWidths[] = { 9, 9, 8, 9, 9, 8, 9, 9 };
     // unused, most likely colors
     static s16 D_80125B1C[][3] = {
         { 0, 150, 0 }, { 100, 255, 0 }, { 255, 255, 255 }, { 0, 0, 0 }, { 255, 255, 255 },
     };
-    static s16 rupeeDigitsFirst[] = { 1, 0, 0, 0 };
-    static s16 rupeeDigitsCount[] = { 2, 3, 3, 3 };
+    static s16 rupeeDigitsFirst[] = { 2, 1, 1, 1, 0, 0, 0 };
+    static s16 rupeeDigitsCount[] = { 2, 3, 3, 3, 4, 4, 4 };
     static s16 spoilingItemEntrances[] = { ENTR_LOST_WOODS_2, ENTR_ZORAS_DOMAIN_3, ENTR_ZORAS_DOMAIN_3 };
     static f32 D_80125B54[] = { -40.0f, -35.0f }; // unused
     static s16 D_80125B5C[] = { 91, 91 };         // unused
     static s16 sTimerNextSecondTimer;
+    static s16 sPlaytimeNextSecondTimer = 0;
     static s16 sTimerStateTimer;
     static s16 sSubTimerNextSecondTimer;
     static s16 sSubTimerStateTimer;
-    static s16 sTimerDigits[5];
+    static s16 sTimerDigits[8];
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     PauseContext* pauseCtx = &play->pauseCtx;
     MessageContext* msgCtx = &play->msgCtx;
@@ -3974,6 +4337,7 @@ void Interface_Draw(PlayState* play) {
     s16 svar4;
     s16 svar5;
     s16 timerId;
+    u32 playtime;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3405);
 
@@ -3982,14 +4346,27 @@ void Interface_Draw(PlayState* play) {
     gSPSegment(OVERLAY_DISP++, 0x08, interfaceCtx->iconItemSegment);
     gSPSegment(OVERLAY_DISP++, 0x0B, interfaceCtx->mapSegment);
 
+    // Stop Cutscene
+    if (IS_CUTSCENE_LAYER && play->specialIconAlpha > 0) {
+        Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
+        gDPSetEnvColor(OVERLAY_DISP++, 255, 255, 255, 255);
+        gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(185) << 2, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL + 48) << 2, HIRES_MULTIPLY(185 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+    }
+
     if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) {
-        static u8 walletColors[][4] = {
-            { 200, 255, 100 },
-            { 130, 130, 255 },
-            { 255, 100, 100 },
-            { 255, 165, 0   }
+        static u8 walletColors[][7] = {
+            { 200, 255, 100 }, // Default
+            { 130, 130, 255 }, // Adult
+            { 255, 100, 100 }, // Giant
+            { 255, 239, 0   }, // Master
+            { 255, 255, 227 }, // Royal
+            { 255, 165, 0   }, // Tycoon
+            { 255, 29,  206 }, // Bottomless
         };
-        u8 curWallet = CUR_UPG_VALUE(UPG_WALLET);
+        u8 curWallet = CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2);
+        s16 curCapacity = (CUR_UPG_VALUE(UPG_WALLET2) > 0) ? CUR_CAPACITY(UPG_WALLET2) : CUR_CAPACITY(UPG_WALLET);
 
         Interface_InitVertices(play);
         func_8008A994(interfaceCtx);
@@ -4003,7 +4380,7 @@ void Interface_Draw(PlayState* play) {
         // Rupee Icon
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, walletColors[curWallet][0], walletColors[curWallet][1], walletColors[curWallet][2], interfaceCtx->magicAlpha);
         gDPSetEnvColor(OVERLAY_DISP++, 0, 80, 0, 255);
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gRupeeCounterIconTex, 16, 16, X_HIRES_MULTIPLY(26), HIRES_MULTIPLY(206), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, USE_MM_HUD ? gMMRupeeCounterIconTex : gRupeeCounterIconTex, 16, 16, X_HIRES_MULTIPLY(26), HIRES_MULTIPLY(206), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
         switch (play->sceneId) {
             case SCENE_FOREST_TEMPLE:
@@ -4020,17 +4397,27 @@ void Interface_Draw(PlayState* play) {
             case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
             case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
             case SCENE_TREASURE_BOX_SHOP:
+            case SCENE_ANCIENT_HOLLOW:
+            case SCENE_WOODFALL_TEMPLE:
                 if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0) {
+                    u16 posX, posY;
+                    if (SHIELD_DURABILITY && !IS_PAUSED(&play->pauseCtx) && GET_PLAYER(play)->currentShield > PLAYER_SHIELD_NONE) {
+                        posX = 46 + rupeeDigitsCount[curWallet] * 8;
+                        posY = 206;
+                    } else {
+                        posX = 26;
+                        posY = 190;
+                    }
+
                     // Small Key Icon
                     gDPPipeSync(OVERLAY_DISP++);
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 230, 255, interfaceCtx->magicAlpha);
                     gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 20, 255);
-                    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gSmallKeyCounterIconTex, 16, 16, X_HIRES_MULTIPLY(26), HIRES_MULTIPLY(190), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(16),
-                                                 X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, USE_MM_HUD ? gMMSmallKeyCounterIconTex : gSmallKeyCounterIconTex, 16, 16, X_HIRES_MULTIPLY(posX), HIRES_MULTIPLY(posY), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(16),
+                                                  X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
                     // Small Key Counter
                     gDPPipeSync(OVERLAY_DISP++);
-                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
                     gDPSetCombineLERP(OVERLAY_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE,
                                       TEXEL0, 0, PRIMITIVE, 0);
 
@@ -4043,21 +4430,40 @@ void Interface_Draw(PlayState* play) {
                         interfaceCtx->counterDigits[3] -= 10;
                     }
 
-                    svar3 = X_HIRES_MULTIPLY(42);
+                    svar3 = posX + 16;
+                    drawKeys = true;
 
                     if (interfaceCtx->counterDigits[2] != 0) {
-                        OVERLAY_DISP = Gfx_TextureI8(
-                            OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[2])), 8, 16,
-                            svar3, HIRES_MULTIPLY(190), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
-                        svar3 += HIRES_MULTIPLY(8);
+                        if (USE_MM_HUD) {
+                            gDPPipeSync(OVERLAY_DISP++);
+                            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->magicAlpha);
+                            OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[2])), 8, 16, X_HIRES_MULTIPLY(svar3 + 1), HIRES_MULTIPLY(posY + 1), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                            gDPPipeSync(OVERLAY_DISP++);
+                            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+                            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(svar3 << 2), HIRES_MULTIPLY(posY << 2), X_HIRES_MULTIPLY((svar3 + 8) << 2), HIRES_MULTIPLY((posY + 16) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                        } else {
+                            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+                            OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[2])), 8, 16, X_HIRES_MULTIPLY(svar3), HIRES_MULTIPLY(posY), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                        }
+                        svar3 += 8;
                     }
 
-                    OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP,
-                                                 ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[3])),
-                                                 8, 16, svar3, HIRES_MULTIPLY(190), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
-                }
+                    if (USE_MM_HUD) {
+                        gDPPipeSync(OVERLAY_DISP++);
+                        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->magicAlpha);
+                        OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[3])), 8, 16, X_HIRES_MULTIPLY(svar3 + 1), HIRES_MULTIPLY(posY + 1), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                        gDPPipeSync(OVERLAY_DISP++);
+                        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+                        gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(svar3 << 2), X_HIRES_MULTIPLY(posY << 2), HIRES_MULTIPLY((svar3 + 8) << 2), X_HIRES_MULTIPLY((posY + 16) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                    }
+                    else {
+                        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+                        OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[3])), 8, 16, X_HIRES_MULTIPLY(svar3), HIRES_MULTIPLY(posY), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                    }
+                } else drawKeys = false;
                 break;
             default:
+                drawKeys = false;
                 break;
         }
 
@@ -4066,45 +4472,67 @@ void Interface_Draw(PlayState* play) {
 
         // Rupee Counter
         gDPPipeSync(OVERLAY_DISP++);
-
-        if (gSaveContext.save.info.playerData.rupees == CUR_CAPACITY(UPG_WALLET)) {
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 120, 255, 0, interfaceCtx->magicAlpha);
-        } else if (gSaveContext.save.info.playerData.rupees != 0) {
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
-        } else {
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 100, 100, 100, interfaceCtx->magicAlpha);
-        }
-
         gDPSetCombineLERP(OVERLAY_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0,
                           PRIMITIVE, 0);
 
-        interfaceCtx->counterDigits[0] = interfaceCtx->counterDigits[1] = 0;
-        interfaceCtx->counterDigits[2] = gSaveContext.save.info.playerData.rupees;
 
-        if ((interfaceCtx->counterDigits[2] > 9999) || (interfaceCtx->counterDigits[2] < 0)) {
-            interfaceCtx->counterDigits[2] &= 0xDDD;
+        interfaceCtx->counterDigits[0] = interfaceCtx->counterDigits[1] = interfaceCtx->counterDigits[2] = 0;
+        interfaceCtx->counterDigits[3] = gSaveContext.save.info.playerData.rupees;
+        if ((interfaceCtx->counterDigits[3] > 9999) || (interfaceCtx->counterDigits[3] < 0)) {
+            interfaceCtx->counterDigits[3] &= 0xDDD;
         }
 
-        while (interfaceCtx->counterDigits[2] >= 100) {
+        interfaceCtx->counterDigits[3] = gSaveContext.save.info.playerData.rupees;
+        while (interfaceCtx->counterDigits[3] >= 1000) {
             interfaceCtx->counterDigits[0]++;
-            interfaceCtx->counterDigits[2] -= 100;
+            interfaceCtx->counterDigits[3] -= 1000;
         }
 
-        while (interfaceCtx->counterDigits[2] >= 10) {
+        while (interfaceCtx->counterDigits[3] >= 100) {
             interfaceCtx->counterDigits[1]++;
-            interfaceCtx->counterDigits[2] -= 10;
+            interfaceCtx->counterDigits[3] -= 100;
         }
 
-        svar2 = rupeeDigitsFirst[CUR_UPG_VALUE(UPG_WALLET)];
-        svar4 = rupeeDigitsCount[CUR_UPG_VALUE(UPG_WALLET)];
+        while (interfaceCtx->counterDigits[3] >= 10) {
+            interfaceCtx->counterDigits[2]++;
+            interfaceCtx->counterDigits[3] -= 10;
+        }
 
-        for (svar1 = 0, svar3 = X_HIRES_MULTIPLY(42); svar1 < svar4; svar1++, svar2++, svar3 += X_HIRES_MULTIPLY(8)) {
-            OVERLAY_DISP =
-                Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[svar2])), 8,
-                              16, svar3, HIRES_MULTIPLY(206), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+        svar2 = rupeeDigitsFirst[curWallet];
+        svar4 = rupeeDigitsCount[curWallet];
+
+        for (svar1 = 0, svar3 = 42; svar1 < svar4; svar1++, svar2++, svar3 += 8) {
+            if (USE_MM_HUD) {
+                gDPPipeSync(OVERLAY_DISP++);
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->magicAlpha);
+                OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[svar2])), 8, 16, X_HIRES_MULTIPLY(svar3 + 1), HIRES_MULTIPLY(207), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                gDPPipeSync(OVERLAY_DISP++);
+
+                if (gSaveContext.save.info.playerData.rupees == curCapacity) {
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 120, 255, 0, interfaceCtx->magicAlpha);
+                } else if (gSaveContext.save.info.playerData.rupees != 0) {
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+                } else {
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 100, 100, 100, interfaceCtx->magicAlpha);
+                }
+
+                gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(svar3 * 4), HIRES_MULTIPLY(206 << 2), X_HIRES_MULTIPLY((svar3 + 8) * 4), HIRES_MULTIPLY(222 << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+            } else {
+                if (gSaveContext.save.info.playerData.rupees == curCapacity) {
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 120, 255, 0, interfaceCtx->magicAlpha);
+                } else if (gSaveContext.save.info.playerData.rupees != 0) {
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+                } else {
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 100, 100, 100, interfaceCtx->magicAlpha);
+                }
+
+                OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[svar2])), 8, 16, X_HIRES_MULTIPLY(svar3), HIRES_MULTIPLY(206), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+            }
         }
 
         Magic_DrawMeter(play);
+        Energy_Draw(play);
+        Durability_DrawMeter(play);
         Minimap_Draw(play);
 
         if ((R_PAUSE_BG_PRERENDER_STATE != PAUSE_BG_PRERENDER_PROCESS) &&
@@ -4155,7 +4583,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Left Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[1] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[1] < ITEM_SWORD_CS) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cLeftAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x1000, 1);
@@ -4168,7 +4596,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Down Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[2] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[2] < ITEM_SWORD_CS) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cDownAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x2000, 2);
@@ -4181,7 +4609,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Right Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[3] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[3] < ITEM_SWORD_CS) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cRightAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x3000, 3);
@@ -4192,7 +4620,7 @@ void Interface_Draw(PlayState* play) {
         }
 
         for (svar1=0; svar1<4; svar1++) {
-            if (Interface_GetItemFromDpad(svar1) >= 0xF0)
+            if (Interface_GetItemFromDpad(svar1) >= ITEM_SWORD_CS)
                 continue;
 
             // D-Pad Button Icon & Ammo Count
@@ -4210,8 +4638,6 @@ void Interface_Draw(PlayState* play) {
         func_8008A8B8(play, HIRES_MULTIPLY(R_A_BTN_Y), HIRES_MULTIPLY(R_A_BTN_Y + 45), X_HIRES_MULTIPLY(R_A_BTN_X), X_HIRES_MULTIPLY(R_A_BTN_X + 45));
         gSPClearGeometryMode(OVERLAY_DISP++, G_CULL_BOTH);
         gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_A_BTN_COLOR(0), R_A_BTN_COLOR(1), R_A_BTN_COLOR(2),
-                        interfaceCtx->aAlpha);
         Interface_DrawActionButton(play);
         gDPPipeSync(OVERLAY_DISP++);
         func_8008A8B8(play, HIRES_MULTIPLY(R_A_ICON_Y), HIRES_MULTIPLY(R_A_ICON_Y + 45), X_HIRES_MULTIPLY(R_A_ICON_X), X_HIRES_MULTIPLY(R_A_ICON_X + 45));
@@ -4394,7 +4820,7 @@ void Interface_Draw(PlayState* play) {
         }
 
         if (!IS_PAUSED(&play->pauseCtx) && (play->gameOverCtx.state == GAMEOVER_INACTIVE) &&
-            (msgCtx->msgMode == MSGMODE_NONE) && !(player->stateFlags2 & PLAYER_STATE2_24) &&
+            CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) && !(player->stateFlags2 & PLAYER_STATE2_24) &&
             (play->transitionTrigger == TRANS_TRIGGER_OFF) && (play->transitionMode == TRANS_MODE_OFF) &&
             !Play_InCsMode(play) && (gSaveContext.minigameState != 1) && (play->shootingGalleryStatus <= 1) &&
             !((play->sceneId == SCENE_BOMBCHU_BOWLING_ALLEY) && Flags_GetSwitch(play, 0x38))) {
@@ -4405,7 +4831,7 @@ void Interface_Draw(PlayState* play) {
                 case TIMER_STATE_ENV_HAZARD_INIT:
                     sTimerStateTimer = 20;
                     sTimerNextSecondTimer = 20;
-                    gSaveContext.timerSeconds = gSaveContext.save.info.playerData.health >> 1;
+                    gSaveContext.timerSeconds = gSaveContext.save.info.playerData.health <= 1 ? 1 : (gSaveContext.save.info.playerData.health >> 1);
                     gSaveContext.timerState = TIMER_STATE_ENV_HAZARD_PREVIEW;
                     break;
 
@@ -4825,13 +5251,62 @@ void Interface_Draw(PlayState* play) {
                     }
                 }
 
-                for (svar1 = 0; svar1 < ARRAY_COUNT(sTimerDigits); svar1++) {
+                for (svar1 = 0; svar1 < 5; svar1++) {
                     OVERLAY_DISP =
                         Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sTimerDigits[svar1])), 8, 16,
                                       (((void)0, (X_HIRES_MULTIPLY(gSaveContext.timerX[timerId]))) + (X_HIRES_MULTIPLY(timerDigitLeftPos[svar1]))),
                                       ((void)0, HIRES_MULTIPLY(gSaveContext.timerY[timerId])), X_HIRES_MULTIPLY(sDigitWidths[svar1]), HIRES_MULTIPLY(VREG(42)),
                                       X_HIRES_DIVIDE(VREG(43) << 1), HIRES_DIVIDE(VREG(43) << 1));
                 }
+            }
+        }
+
+        if (IS_RUSH_QUEST) {
+            if ( (!IS_PAUSED(&play->pauseCtx) && CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) && !(player->stateFlags2 & PLAYER_STATE2_24) && play->transitionTrigger == TRANS_TRIGGER_OFF && play->transitionMode == TRANS_MODE_OFF && !Play_InCsMode(play) && play->gameOverCtx.state == GAMEOVER_INACTIVE) || R_BEATEN_RUSH_MODE) {
+                if (!R_BEATEN_RUSH_MODE) {
+                    sPlaytimeNextSecondTimer++;
+                    if (sPlaytimeNextSecondTimer == (4 - R_UPDATE_RATE) * 20) {
+                        sPlaytimeNextSecondTimer = 0;
+                        if (gSaveContext.save.info.playtime < UINT32_MAX)
+                            gSaveContext.save.info.playtime++;
+                    }
+                }
+
+                playtime = gSaveContext.save.info.playtime;
+                if (playtime > 359999)
+                    playtime = 359999;
+
+                sTimerDigits[7] = (playtime % 60) % 10;             // sec ones
+                sTimerDigits[6] = (playtime % 60) / 10;             // sec tens
+                sTimerDigits[5] = 10;                                                      // digit 10 is used as ':' (colon)
+                sTimerDigits[4] = ((playtime / 60) % 60) % 10;      // min ones
+                sTimerDigits[3] = ((playtime / 60) % 60) / 10;      // min tens
+                sTimerDigits[2] = 10;                                                      // digit 10 is used as ':' (colon)
+                sTimerDigits[1] = ((playtime / 3600) % 100) % 10;   // hr ones
+                sTimerDigits[0] = ((playtime / 3600) % 100) / 10;   // hr tens
+
+                // Clock Icon
+                gDPPipeSync(OVERLAY_DISP++);
+                gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
+                OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gClockIconTex, 16, 16, X_HIRES_MULTIPLY(114 + WS_SHIFT_HALF), HIRES_MULTIPLY(206), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+
+                // Quest Title
+                if (R_BEATEN_RUSH_MODE) {
+                    static void* sQuestButtonTextures[] = { gQuestDungeonRushTex, gQuestDungeonMasterRushTex, gQuestDungeonUraRushTex, gQuestDungeonChildRushTex, gQuestBossRushTex };
+                    gDPPipeSync(OVERLAY_DISP++);
+                    gDPLoadTextureBlock(OVERLAY_DISP++, sQuestButtonTextures[R_QUEST_MODE - DUNGEON_RUSH], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+                    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY((97 + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(20 << 2), X_HIRES_MULTIPLY((225 + WS_SHIFT_HALF) << 2), HIRES_MULTIPLY(36 << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                }
+
+                // Timer Counter
+                gDPPipeSync(OVERLAY_DISP++);
+                gDPSetCombineLERP(OVERLAY_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
+                if (gSaveContext.cheated) {
+                    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 0, 0, 255);
+                }
+                for (svar1=0; svar1<8; svar1++)
+                    OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * sTimerDigits[svar1])), 8, 16, X_HIRES_MULTIPLY(114 + WS_SHIFT_HALF + timerDigitLeftPos[svar1]), HIRES_MULTIPLY(206), X_HIRES_MULTIPLY(sDigitWidths[svar1]), HIRES_MULTIPLY(VREG(42)), X_HIRES_DIVIDE(VREG(43) << 1), HIRES_DIVIDE(VREG(43) << 1));
             }
         }
     }
@@ -4881,7 +5356,7 @@ void Interface_Update(PlayState* play) {
     if (!IS_PAUSED(&play->pauseCtx)) {
         if ((gSaveContext.minigameState == 1) || !IS_CUTSCENE_LAYER ||
             ((play->sceneId == SCENE_LON_LON_RANCH) && (gSaveContext.sceneLayer == 4))) {
-            if ((msgCtx->msgMode == MSGMODE_NONE) ||
+            if (CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) ||
                 ((msgCtx->msgMode != MSGMODE_NONE) && (play->sceneId == SCENE_BOMBCHU_BOWLING_ALLEY))) {
                 if (play->gameOverCtx.state == GAMEOVER_INACTIVE) {
                     func_80083108(play);
@@ -5037,15 +5512,16 @@ void Interface_Update(PlayState* play) {
         !Play_InCsMode(play)) {}
 
     if (gSaveContext.rupeeAccumulator != 0) {
+        s16 curCapacity = (CUR_UPG_VALUE(UPG_WALLET2) > 0) ? CUR_CAPACITY(UPG_WALLET2) : CUR_CAPACITY(UPG_WALLET);
         if (gSaveContext.rupeeAccumulator > 0) {
-            if (gSaveContext.save.info.playerData.rupees < CUR_CAPACITY(UPG_WALLET)) {
+            if (gSaveContext.save.info.playerData.rupees < curCapacity) {
                 gSaveContext.rupeeAccumulator--;
                 gSaveContext.save.info.playerData.rupees++;
                 Audio_PlaySfxGeneral(NA_SE_SY_RUPY_COUNT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             } else {
                 PRINTF(T("ルピー数ＭＡＸ = %d\n", "Rupee Amount MAX = %d\n"), CUR_CAPACITY(UPG_WALLET));
-                gSaveContext.save.info.playerData.rupees = CUR_CAPACITY(UPG_WALLET);
+                gSaveContext.save.info.playerData.rupees = curCapacity;
                 gSaveContext.rupeeAccumulator = 0;
             }
         } else if (gSaveContext.save.info.playerData.rupees != 0) {
@@ -5116,7 +5592,7 @@ void Interface_Update(PlayState* play) {
     WREG(7) = interfaceCtx->unk_1F4;
 
     // Update Magic
-    if (!IS_PAUSED(&play->pauseCtx) && (msgCtx->msgMode == MSGMODE_NONE) &&
+    if (!IS_PAUSED(&play->pauseCtx) && CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) &&
         (play->transitionTrigger == TRANS_TRIGGER_OFF) && (play->gameOverCtx.state == GAMEOVER_INACTIVE) &&
         (play->transitionMode == TRANS_MODE_OFF) && ((play->csCtx.state == CS_STATE_IDLE) || !Player_InCsMode(play))) {
 
@@ -5134,13 +5610,14 @@ void Interface_Update(PlayState* play) {
         }
 
         Magic_Update(play);
+        Energy_Update(play);
     }
 
     if (gSaveContext.timerState == TIMER_STATE_OFF) {
         if (((sEnvHazard == PLAYER_ENV_HAZARD_HOTROOM) || (sEnvHazard == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) ||
              (sEnvHazard == PLAYER_ENV_HAZARD_UNDERWATER_FREE)) &&
 
-            ((gSaveContext.save.info.playerData.health >> 1) != 0)) {
+            (((gSaveContext.save.info.playerData.health >> 1) != 0 && !FIX_USEFUL_GLITCHES) || FIX_USEFUL_GLITCHES)) {
             gSaveContext.timerState = TIMER_STATE_ENV_HAZARD_INIT;
             gSaveContext.timerX[TIMER_ID_MAIN] = 140 + WS_SHIFT_HALF;
             gSaveContext.timerY[TIMER_ID_MAIN] = 80;

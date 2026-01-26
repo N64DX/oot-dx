@@ -150,7 +150,7 @@ void EnMs_Talk(EnMs* this, PlayState* play) {
 
 void EnMs_Sell(EnMs* this, PlayState* play) {
     if (Actor_HasParent(&this->actor, play)) {
-        Rupees_ChangeBy(-sPrices[BEANS_BOUGHT]);
+        Rupees_ChangeBy(-sPrices[BEANS_BOUGHT++]);
         this->actor.parent = NULL;
         this->actionFunc = EnMs_TalkAfterPurchase;
     } else {

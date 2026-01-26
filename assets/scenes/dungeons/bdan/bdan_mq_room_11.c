@@ -1,10 +1,9 @@
 #include "assets/scenes/dungeons/bdan/bdan_scene.h"
-#include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_bdan_room11[];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_bdan_room11),
 };
 
 #include "assets/scenes/dungeons/bdan/bdan_room_11.c"
@@ -21,18 +20,6 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/bdan/mq/headers/room11.inc.c"
 };
 
-static s16 cq_objects[] = {
-#include "assets/scenes/dungeons/bdan/cq/objects/room11_obj.inc.c"
-};
-
-static ActorEntry cq_actors[] = {
-#include "assets/scenes/dungeons/bdan/cq/actors/room11_actor.inc.c"
-};
-
-static SceneCmd cq_header[] = {
-#include "assets/scenes/dungeons/bdan/cq/headers/room11.inc.c"
-};
-
 static s16 cmq_objects[] = {
 #include "assets/scenes/dungeons/bdan/cmq/objects/room11_obj.inc.c"
 };
@@ -41,6 +28,8 @@ static SceneCmd cmq_header[] = {
 #include "assets/scenes/dungeons/bdan/cmq/headers/room11.inc.c"
 };
 
-static SceneCmd* questHeaders[] = {
+#define cq_header NULL
+
+SceneCmd* questHeaders_bdan_room11[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };

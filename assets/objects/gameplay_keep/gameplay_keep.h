@@ -775,12 +775,12 @@ extern StandardLimb gDoorSkel_04010408_Limbs_040103F0_StandardLimb;
 extern StandardLimb gDoorSkel_04010408_Limbs_040103FC_StandardLimb;
 extern void* gDoorSkel_04010408_Limbs[];
 typedef enum gDoorSkelLimb {
-    /*  0 */ LIMB_GAMEPLAY_KEEP_010418_NONE,
-    /*  1 */ LIMB_GAMEPLAY_KEEP_0103D8,
-    /*  2 */ LIMB_GAMEPLAY_KEEP_0103E4,
-    /*  3 */ LIMB_GAMEPLAY_KEEP_0103F0,
-    /*  4 */ LIMB_GAMEPLAY_KEEP_0103FC,
-    /*  5 */ LIMB_GAMEPLAY_KEEP_010418_MAX
+    /*  0 */ LIMB_GAMEPLAY_KEEP_00FF78_NONE,
+    /*  1 */ LIMB_GAMEPLAY_KEEP_00FF38,
+    /*  2 */ LIMB_GAMEPLAY_KEEP_00FF44,
+    /*  3 */ LIMB_GAMEPLAY_KEEP_00FF50,
+    /*  4 */ LIMB_GAMEPLAY_KEEP_00FF5C,
+    /*  5 */ LIMB_GAMEPLAY_KEEP_00FF78_MAX
 } gDoorSkelLimb;
 extern SkeletonHeader gDoorSkel;
 extern s16 gDoorAdultOpeningRightFrameData[];
@@ -843,38 +843,38 @@ extern Gfx gGlowCircleTextureLoadDL[8];
 extern Gfx gGlowCircleDL[4];
 extern Gfx gGlowCircleSmallDL[45];
 extern Vtx gGlowCircleSmallVtx[];
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E08_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E14_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E20_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E2C_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E38_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E44_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E50_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E5C_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E68_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E74_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E80_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E8C_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016E98_StandardLimb;
-extern StandardLimb gFairySkel_04016EB0_Limbs_04016EA4_StandardLimb;
-extern void* gFairySkel_04016EB0_Limbs[];
+extern StandardLimb gFairySkel_04016A10_Limbs_04016968_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_04016974_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_04016980_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_0401698C_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_04016998_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_040169A4_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_040169B0_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_040169BC_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_040169C8_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_040169D4_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_040169E0_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_040169EC_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_040169F8_StandardLimb;
+extern StandardLimb gFairySkel_04016A10_Limbs_04016A04_StandardLimb;
+extern void* gFairySkel_04016A10_Limbs[];
 typedef enum gFairySkelLimb {
-    /*  0 */ LIMB_GAMEPLAY_KEEP_016EE8_NONE,
-    /*  1 */ LIMB_GAMEPLAY_KEEP_016E08,
-    /*  2 */ LIMB_GAMEPLAY_KEEP_016E14,
-    /*  3 */ LIMB_GAMEPLAY_KEEP_016E20,
-    /*  4 */ LIMB_GAMEPLAY_KEEP_016E2C,
-    /*  5 */ LIMB_GAMEPLAY_KEEP_016E38,
-    /*  6 */ LIMB_GAMEPLAY_KEEP_016E44,
-    /*  7 */ LIMB_GAMEPLAY_KEEP_016E50,
-    /*  8 */ LIMB_GAMEPLAY_KEEP_016E5C,
-    /*  9 */ LIMB_GAMEPLAY_KEEP_016E68,
-    /* 10 */ LIMB_GAMEPLAY_KEEP_016E74,
-    /* 11 */ LIMB_GAMEPLAY_KEEP_016E80,
-    /* 12 */ LIMB_GAMEPLAY_KEEP_016E8C,
-    /* 13 */ LIMB_GAMEPLAY_KEEP_016E98,
-    /* 14 */ LIMB_GAMEPLAY_KEEP_016EA4,
-    /* 15 */ LIMB_GAMEPLAY_KEEP_016EE8_MAX
+    /*  0 */ LIMB_GAMEPLAY_KEEP_016A48_NONE,
+    /*  1 */ LIMB_GAMEPLAY_KEEP_016968,
+    /*  2 */ LIMB_GAMEPLAY_KEEP_016974,
+    /*  3 */ LIMB_GAMEPLAY_KEEP_016980,
+    /*  4 */ LIMB_GAMEPLAY_KEEP_01698C,
+    /*  5 */ LIMB_GAMEPLAY_KEEP_016998,
+    /*  6 */ LIMB_GAMEPLAY_KEEP_0169A4,
+    /*  7 */ LIMB_GAMEPLAY_KEEP_0169B0,
+    /*  8 */ LIMB_GAMEPLAY_KEEP_0169BC,
+    /*  9 */ LIMB_GAMEPLAY_KEEP_0169C8,
+    /* 10 */ LIMB_GAMEPLAY_KEEP_0169D4,
+    /* 11 */ LIMB_GAMEPLAY_KEEP_0169E0,
+    /* 12 */ LIMB_GAMEPLAY_KEEP_0169EC,
+    /* 13 */ LIMB_GAMEPLAY_KEEP_0169F8,
+    /* 14 */ LIMB_GAMEPLAY_KEEP_016A04,
+    /* 15 */ LIMB_GAMEPLAY_KEEP_016A48_MAX
 } gFairySkelLimb;
 extern SkeletonHeader gFairySkel;
 #define gUnknownCircle3Tex_WIDTH 16
@@ -897,34 +897,34 @@ extern Gfx gEffFireCircleDL[30];
 extern s16 gFishOutOfWaterFrameData[];
 extern JointIndex gFishOutOfWaterJointIndices[];
 extern AnimationHeader gFishOutOfWaterAnim;
-extern Vtx gameplay_keep_Vtx_018AB0[];
-extern Vtx gameplay_keep_Vtx_018AF0[];
-extern Vtx gameplay_keep_Vtx_018BF0[];
-extern Gfx gFishSkel_04019468_Limbs_0401945C_StandardLimb_04018D50_DL[20];
-extern Gfx gFishSkel_04019468_Limbs_04019450_StandardLimb_04018DF0_DL[35];
-extern Gfx gFishSkel_04019468_Limbs_04019438_StandardLimb_04018F08_DL[35];
+extern Vtx gameplay_keep_Vtx_018610[];
+extern Vtx gameplay_keep_Vtx_018650[];
+extern Vtx gameplay_keep_Vtx_018750[];
+extern Gfx gFishSkel_04018FC8_Limbs_04018FBC_StandardLimb_040188B0_DL[20];
+extern Gfx gFishSkel_04018FC8_Limbs_04018FB0_StandardLimb_04018950_DL[35];
+extern Gfx gFishSkel_04018FC8_Limbs_04018F98_StandardLimb_04018A68_DL[35];
 #define gFishTailTex_WIDTH 16
 #define gFishTailTex_HEIGHT 16
 extern u64 gFishTailTex[TEX_LEN(u64, gFishTailTex_WIDTH, gFishTailTex_HEIGHT, 16)];
 #define gFishBodyTex_WIDTH 32
 #define gFishBodyTex_HEIGHT 8
 extern u64 gFishBodyTex[TEX_LEN(u64, gFishBodyTex_WIDTH, gFishBodyTex_HEIGHT, 16)];
-extern StandardLimb gFishSkel_04019468_Limbs_04019420_StandardLimb;
-extern StandardLimb gFishSkel_04019468_Limbs_0401942C_StandardLimb;
-extern StandardLimb gFishSkel_04019468_Limbs_04019438_StandardLimb;
-extern StandardLimb gFishSkel_04019468_Limbs_04019444_StandardLimb;
-extern StandardLimb gFishSkel_04019468_Limbs_04019450_StandardLimb;
-extern StandardLimb gFishSkel_04019468_Limbs_0401945C_StandardLimb;
-extern void* gFishSkel_04019468_Limbs[];
+extern StandardLimb gFishSkel_04018FC8_Limbs_04018F80_StandardLimb;
+extern StandardLimb gFishSkel_04018FC8_Limbs_04018F8C_StandardLimb;
+extern StandardLimb gFishSkel_04018FC8_Limbs_04018F98_StandardLimb;
+extern StandardLimb gFishSkel_04018FC8_Limbs_04018FA4_StandardLimb;
+extern StandardLimb gFishSkel_04018FC8_Limbs_04018FB0_StandardLimb;
+extern StandardLimb gFishSkel_04018FC8_Limbs_04018FBC_StandardLimb;
+extern void* gFishSkel_04018FC8_Limbs[];
 typedef enum gFishSkelLimb {
-    /*  0 */ LIMB_GAMEPLAY_KEEP_019480_NONE,
-    /*  1 */ LIMB_GAMEPLAY_KEEP_019420,
-    /*  2 */ LIMB_GAMEPLAY_KEEP_01942C,
-    /*  3 */ LIMB_GAMEPLAY_KEEP_019438,
-    /*  4 */ LIMB_GAMEPLAY_KEEP_019444,
-    /*  5 */ LIMB_GAMEPLAY_KEEP_019450,
-    /*  6 */ LIMB_GAMEPLAY_KEEP_01945C,
-    /*  7 */ LIMB_GAMEPLAY_KEEP_019480_MAX
+    /*  0 */ LIMB_GAMEPLAY_KEEP_018FE0_NONE,
+    /*  1 */ LIMB_GAMEPLAY_KEEP_018F80,
+    /*  2 */ LIMB_GAMEPLAY_KEEP_018F8C,
+    /*  3 */ LIMB_GAMEPLAY_KEEP_018F98,
+    /*  4 */ LIMB_GAMEPLAY_KEEP_018FA4,
+    /*  5 */ LIMB_GAMEPLAY_KEEP_018FB0,
+    /*  6 */ LIMB_GAMEPLAY_KEEP_018FBC,
+    /*  7 */ LIMB_GAMEPLAY_KEEP_018FE0_MAX
 } gFishSkelLimb;
 extern FlexSkeletonHeader gFishSkel;
 extern s16 gFishInWaterFrameData[];
@@ -1257,56 +1257,56 @@ extern u64 gBugBodyTex[TEX_LEN(u64, gBugBodyTex_WIDTH, gBugBodyTex_HEIGHT, 16)];
 #define gBugLegTex_WIDTH 8
 #define gBugLegTex_HEIGHT 16
 extern u64 gBugLegTex[TEX_LEN(u64, gBugLegTex_WIDTH, gBugLegTex_HEIGHT, 16)];
-extern StandardLimb gBugSkel_040359D4_Limbs_040358C0_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_040358CC_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_040358D8_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_040358E4_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_040358F0_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_040358FC_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_04035908_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_04035914_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_04035920_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_0403592C_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_04035938_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_04035944_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_04035950_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_0403595C_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_04035968_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_04035974_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_04035980_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_0403598C_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_04035998_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_040359A4_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_040359B0_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_040359BC_StandardLimb;
-extern StandardLimb gBugSkel_040359D4_Limbs_040359C8_StandardLimb;
-extern void* gBugSkel_040359D4_Limbs[];
+extern StandardLimb gBugSkel_04035534_Limbs_04035420_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_0403542C_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_04035438_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_04035444_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_04035450_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_0403545C_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_04035468_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_04035474_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_04035480_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_0403548C_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_04035498_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_040354A4_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_040354B0_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_040354BC_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_040354C8_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_040354D4_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_040354E0_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_040354EC_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_040354F8_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_04035504_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_04035510_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_0403551C_StandardLimb;
+extern StandardLimb gBugSkel_04035534_Limbs_04035528_StandardLimb;
+extern void* gBugSkel_04035534_Limbs[];
 typedef enum gBugSkelLimb {
-    /*  0 */ LIMB_GAMEPLAY_KEEP_035A30_NONE,
-    /*  1 */ LIMB_GAMEPLAY_KEEP_0358C0,
-    /*  2 */ LIMB_GAMEPLAY_KEEP_0358CC,
-    /*  3 */ LIMB_GAMEPLAY_KEEP_0358D8,
-    /*  4 */ LIMB_GAMEPLAY_KEEP_0358E4,
-    /*  5 */ LIMB_GAMEPLAY_KEEP_0358F0,
-    /*  6 */ LIMB_GAMEPLAY_KEEP_0358FC,
-    /*  7 */ LIMB_GAMEPLAY_KEEP_035908,
-    /*  8 */ LIMB_GAMEPLAY_KEEP_035914,
-    /*  9 */ LIMB_GAMEPLAY_KEEP_035920,
-    /* 10 */ LIMB_GAMEPLAY_KEEP_03592C,
-    /* 11 */ LIMB_GAMEPLAY_KEEP_035938,
-    /* 12 */ LIMB_GAMEPLAY_KEEP_035944,
-    /* 13 */ LIMB_GAMEPLAY_KEEP_035950,
-    /* 14 */ LIMB_GAMEPLAY_KEEP_03595C,
-    /* 15 */ LIMB_GAMEPLAY_KEEP_035968,
-    /* 16 */ LIMB_GAMEPLAY_KEEP_035974,
-    /* 17 */ LIMB_GAMEPLAY_KEEP_035980,
-    /* 18 */ LIMB_GAMEPLAY_KEEP_03598C,
-    /* 19 */ LIMB_GAMEPLAY_KEEP_035998,
-    /* 20 */ LIMB_GAMEPLAY_KEEP_0359A4,
-    /* 21 */ LIMB_GAMEPLAY_KEEP_0359B0,
-    /* 22 */ LIMB_GAMEPLAY_KEEP_0359BC,
-    /* 23 */ LIMB_GAMEPLAY_KEEP_0359C8,
-    /* 24 */ LIMB_GAMEPLAY_KEEP_035A30_MAX
+    /*  0 */ LIMB_GAMEPLAY_KEEP_035590_NONE,
+    /*  1 */ LIMB_GAMEPLAY_KEEP_035420,
+    /*  2 */ LIMB_GAMEPLAY_KEEP_03542C,
+    /*  3 */ LIMB_GAMEPLAY_KEEP_035438,
+    /*  4 */ LIMB_GAMEPLAY_KEEP_035444,
+    /*  5 */ LIMB_GAMEPLAY_KEEP_035450,
+    /*  6 */ LIMB_GAMEPLAY_KEEP_03545C,
+    /*  7 */ LIMB_GAMEPLAY_KEEP_035468,
+    /*  8 */ LIMB_GAMEPLAY_KEEP_035474,
+    /*  9 */ LIMB_GAMEPLAY_KEEP_035480,
+    /* 10 */ LIMB_GAMEPLAY_KEEP_03548C,
+    /* 11 */ LIMB_GAMEPLAY_KEEP_035498,
+    /* 12 */ LIMB_GAMEPLAY_KEEP_0354A4,
+    /* 13 */ LIMB_GAMEPLAY_KEEP_0354B0,
+    /* 14 */ LIMB_GAMEPLAY_KEEP_0354BC,
+    /* 15 */ LIMB_GAMEPLAY_KEEP_0354C8,
+    /* 16 */ LIMB_GAMEPLAY_KEEP_0354D4,
+    /* 17 */ LIMB_GAMEPLAY_KEEP_0354E0,
+    /* 18 */ LIMB_GAMEPLAY_KEEP_0354EC,
+    /* 19 */ LIMB_GAMEPLAY_KEEP_0354F8,
+    /* 20 */ LIMB_GAMEPLAY_KEEP_035504,
+    /* 21 */ LIMB_GAMEPLAY_KEEP_035510,
+    /* 22 */ LIMB_GAMEPLAY_KEEP_03551C,
+    /* 23 */ LIMB_GAMEPLAY_KEEP_035528,
+    /* 24 */ LIMB_GAMEPLAY_KEEP_035590_MAX
 } gBugSkelLimb;
 extern SkeletonHeader gBugSkel;
 extern Vtx gCuttableShrubStalkVtx[];

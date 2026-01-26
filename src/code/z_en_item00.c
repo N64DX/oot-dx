@@ -20,6 +20,7 @@
 #include "save.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #pragma increment_block_number "gc-eu:128 gc-eu-mq:128 gc-eu-mq-dbg:0 gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128" \
                                "gc-us-mq:128 ique-cn:128 ntsc-1.0:128 ntsc-1.2:128"
@@ -90,6 +91,7 @@ static void* sItemDropTex[] = {
     gDropRecoveryHeartTex, gDropBombTex,       gDropArrows1Tex,   gDropArrows2Tex,
     gDropArrows3Tex,       gDropBombTex,       gDropDekuNutTex,   gDropDekuStickTex,
     gDropMagicLargeTex,    gDropMagicSmallTex, gDropDekuSeedsTex, gDropKeySmallTex,
+    gDropFeatherTex
 };
 
 static u8 sItemDropIds[] = {
@@ -395,11 +397,17 @@ void EnItem00_Init(Actor* thisx, PlayState* play) {
     s16 spawnParam8000 = PARAMS_GET_NOSHIFT(this->actor.params, 15, 1);
     s32 pad1;
 
+    this->respawnTimer = 0;
     this->collectibleFlag = PARAMS_GET_S(this->actor.params, 8, 6);
 
     this->actor.params &= 0xFF;
 
-    if (Flags_GetCollectible(play, this->collectibleFlag)) {
+    if (Flags_GetCollectible(play, this->collectibleFlag) && this->actor.params != ITEM00_FEATHER) {
+        Actor_Kill(&this->actor);
+        return;
+    }
+
+    if (this->actor.params == ITEM00_FEATHER && !HAS_GOLDEN_FEATHER) {
         Actor_Kill(&this->actor);
         return;
     }
@@ -504,7 +512,7 @@ void EnItem00_Init(Actor* thisx, PlayState* play) {
             this->actor.world.rot.x = 0x4000;
             break;
         case ITEM00_SHIELD_HEROS:
-            this->actor.objectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GI_SHIELD_4);
+            this->actor.objectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GI_SHIELD_1_MM);
             Actor_SetObjectDependency(play, &this->actor);
             Actor_SetScale(&this->actor, 0.5f);
             this->scale = 0.5f;
@@ -521,6 +529,11 @@ void EnItem00_Init(Actor* thisx, PlayState* play) {
             yOffset = 0.0f;
             shadowScale = 0.6f;
             this->actor.world.rot.x = 0x4000;
+            break;
+        case ITEM00_FEATHER:
+            Actor_SetScale(&this->actor, 0.03f);
+            this->scale = 0.03f;
+            yOffset = 320.0f;
             break;
     }
 
@@ -607,6 +620,7 @@ void EnItem00_Init(Actor* thisx, PlayState* play) {
         case ITEM00_TUNIC_ZORA:
         case ITEM00_TUNIC_GORON:
         case ITEM00_BOMBS_SPECIAL:
+        case ITEM00_FEATHER:
             break;
     }
 
@@ -798,9 +812,20 @@ void EnItem00_Update(Actor* thisx, PlayState* play) {
     u32* temp;
     EnItem00* this = (EnItem00*)thisx;
     s32 pad;
+    Player* player = GET_PLAYER(play);
+
+    if (this->respawnTimer > SECONDS(4))
+        this->respawnHoverTimer = this->respawnTimer - SECONDS(4);
+    else this->respawnHoverTimer = 0;
 
     if (this->despawnTimer > 0) {
         this->despawnTimer--;
+    }
+
+    if (this->respawnTimer > 0) {
+        this->respawnTimer--;
+        if (this->respawnHoverTimer == 0)
+            this->actor.world.pos = this->actor.home.pos;
     }
 
     if ((this->despawnTimer > 0) && (this->despawnTimer < 41) && (this->unk_154 <= 0)) {
@@ -872,6 +897,16 @@ void EnItem00_Update(Actor* thisx, PlayState* play) {
     }
 
     if (play->gameOverCtx.state != GAMEOVER_INACTIVE) {
+        return;
+    }
+
+    if (this->respawnTimer != 0) {
+        if (this->respawnHoverTimer > 0) {
+            this->actor.world.pos = player->actor.world.pos;
+            this->actor.world.pos.y += 40.0f + Math_SinS(this->respawnHoverTimer * 15000) * (this->respawnHoverTimer * 0.3f);
+            if (LINK_IS_ADULT)
+                this->actor.world.pos.y += 20.0f;
+        }
         return;
     }
 
@@ -954,6 +989,12 @@ void EnItem00_Update(Actor* thisx, PlayState* play) {
             break;
         case ITEM00_BOMBS_SPECIAL:
             break;
+        case ITEM00_FEATHER:
+            if (player->featherUseCount > 0)
+                player->featherUseCount--;
+            this->respawnTimer = SECONDS(5);
+            Audio_PlaySfxGeneral(NA_SE_SY_GET_ITEM, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            return;
     }
 
     params = &this->actor.params;
@@ -1057,6 +1098,7 @@ void EnItem00_Draw(Actor* thisx, PlayState* play) {
             case ITEM00_MAGIC_SMALL:
             case ITEM00_SEEDS:
             case ITEM00_SMALL_KEY:
+            case ITEM00_FEATHER:
                 EnItem00_DrawCollectible(this, play);
                 break;
             case ITEM00_SHIELD_DEKU:
@@ -1113,11 +1155,16 @@ void EnItem00_DrawRupee(EnItem00* this, PlayState* play) {
 void EnItem00_DrawCollectible(EnItem00* this, PlayState* play) {
     s32 texIndex = this->actor.params - 3;
 
+    if (this->respawnTimer > 0 && this->respawnHoverTimer == 0)
+        return;
+
     OPEN_DISPS(play->state.gfxCtx, "../z_en_item00.c", 1594);
 
     POLY_OPA_DISP = Play_SetFog(play, POLY_OPA_DISP);
 
-    if (this->actor.params == ITEM00_BOMBS_SPECIAL) {
+    if (this->actor.params == ITEM00_FEATHER) {
+        texIndex = 12;
+    } else if (this->actor.params == ITEM00_BOMBS_SPECIAL) {
         texIndex = 1;
     } else if (this->actor.params >= ITEM00_ARROWS_SMALL) {
         texIndex -= 3;
@@ -1170,6 +1217,11 @@ void EnItem00_DrawHeartPiece(EnItem00* this, PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_en_item00.c", 1673);
 }
 
+static bool is_tunic_item(s16 dropId)     { return (dropId == ITEM00_TUNIC_ZORA  || dropId == ITEM00_TUNIC_GORON); }
+static bool is_shield_item(s16 dropId)    { return (dropId == ITEM00_SHIELD_DEKU || dropId == ITEM00_SHIELD_HYLIAN || dropId == ITEM00_SHIELD_HEROS); }
+static bool is_rupee_item(s16 dropId)     { return (dropId == ITEM00_RUPEE_GREEN || dropId == ITEM00_RUPEE_BLUE    || dropId == ITEM00_RUPEE_RED || dropId == ITEM00_RUPEE_ORANGE || dropId == ITEM00_RUPEE_PURPLE); }
+static bool is_special_item(s16 dropId)   { return (is_tunic_item(dropId)        || is_shield_item(dropId)         || is_rupee_item(dropId)      || dropId == ITEM00_HEART_PIECE  || dropId == ITEM00_HEART_CONTAINER || dropId == ITEM00_SMALL_KEY || dropId == ITEM00_SMALL_KEY); }
+
 /**
  * Converts a given drop type ID based on link's current age, health and owned items.
  * Returns a new drop type ID or -1 to cancel the drop.
@@ -1201,6 +1253,13 @@ s16 func_8001F404(s16 dropId) {
     if (dropId == ITEM00_RECOVERY_HEART &&
         gSaveContext.save.info.playerData.healthCapacity == gSaveContext.save.info.playerData.health) {
         return ITEM00_RUPEE_GREEN;
+    }
+
+    if (NO_ITEM_DROPS) {
+        if (dropId == ITEM00_RECOVERY_HEART)
+            return ITEM00_RUPEE_GREEN;
+        if (!is_special_item(dropId))
+            return -1;
     }
 
     return dropId;
@@ -1373,6 +1432,14 @@ void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnP
         } else {
             return;
         }
+    }
+
+    if (NO_ITEM_DROPS) {
+        if (dropId == ITEM00_RECOVERY_HEART) {
+            dropId = ITEM00_RUPEE_GREEN;
+            params = dropTableIndex = 0;
+        } else if (!is_special_item(dropId))
+            return;
     }
 
     if (dropId != ITEM00_NONE) {

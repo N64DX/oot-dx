@@ -435,7 +435,7 @@ void BossFd2_BreatheFire(BossFd2* this, PlayState* play) {
         if (this->skelAnime.curFrame == 25.0f) {
             play->envCtx.lightBlend = 0.0f;
         }
-        Actor_PlaySfx(&this->actor, NA_SE_EN_VALVAISA_FIRE - SFX_FLAG);
+        Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_FIRE - SFX_FLAG);
         if (this->skelAnime.curFrame > 50) {
             breathOpacity = (70.0f - this->skelAnime.curFrame) * 12.0f;
         } else {
@@ -708,7 +708,7 @@ void BossFd2_Death(BossFd2* this, PlayState* play) {
             if ((this->work[FD2_HOLE_COUNTER] == 1) || (this->work[FD2_HOLE_COUNTER] == 40)) {
                 this->work[FD2_SCREAM_TIMER] = 20;
                 if (this->work[FD2_HOLE_COUNTER] == 40) {
-                    Audio_StopSfxById(NA_SE_EN_VALVAISA_DEAD);
+                    Audio_StopSfxById(NA_SE_EN_GOMA_DEAD);
                 }
 
                 Actor_PlaySfx(&this->actor, NA_SE_EN_VALVAISA_DAMAGE2);
@@ -908,7 +908,7 @@ void BossFd2_CollisionCheck(BossFd2* this, PlayState* play) {
                 this->work[FD2_DAMAGE_FLASH_TIMER] = 10;
                 this->work[FD2_INVINC_TIMER] = 30000;
                 SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 1);
-                Actor_PlaySfx(&this->actor, NA_SE_EN_VALVAISA_DEAD);
+                Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_DEAD);
                 Enemy_StartFinishingBlow(play, &this->actor);
             } else if (damage) {
                 BossFd2_SetupDamaged(this, play);

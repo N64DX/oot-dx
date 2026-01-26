@@ -308,7 +308,6 @@ void EnDinofos_Init(Actor* thisx, PlayState* play) {
     Collider_SetJntSph(play, &this->bodyAndFireCollider, &this->actor, &sJntSphInit, this->bodyAndFireColliderElements);
     Collider_SetQuad(play, &this->knifeCollider, &this->actor, &sQuadInit);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
-    Actor_SetGildedSwordDamageTaken(thisx);
     SkelAnime_InitFlex(play, &this->skelAnime, &gDinolfosSkel, &gDinolfosIdleAnim, this->jointTable, this->morphTable, DINOLFOS_LIMB_MAX);
 
     this->envColorAlpha = 255;
@@ -328,7 +327,7 @@ void EnDinofos_Init(Actor* thisx, PlayState* play) {
     this->switchFlag = PARAMS_GET_U(thisx->params, 8, 8);
     getAggressive = false;
 
-    if (this->switchFlag != 0xFF) {
+    if (this->switchFlag <= 0x3F) {
         if (Flags_GetSwitch(play, this->switchFlag))
             Actor_Kill(thisx);
     }
@@ -1014,7 +1013,7 @@ void EnDinofos_Die(EnDinofos* this, PlayState* play) {
             Actor_ChangeCategory(play, &play->actorCtx, &this->actor, ACTORCAT_PROP);
 
         if (envColorAlpha <= 0) {
-            if (this->switchFlag != 0xFF && sNumAlive == 0)
+            if (this->switchFlag <= 0x3F && sNumAlive == 0)
                 Flags_SetSwitch(play, this->switchFlag);
             
             Actor_Kill(&this->actor);
@@ -1144,7 +1143,6 @@ bool EnDinofos_UpdateDamage(EnDinofos* this, PlayState* play) {
             this->drawDmgEffAlpha = 4.0f;
             this->drawDmgEffScale = 0.55f;
             this->drawDmgEffType = ACTOR_DRAW_DMGEFF_LIGHT_ORBS;
-            Actor_Spawn(&play->actorCtx, play, ACTOR_EN_CLEAR_TAG, this->bodyAndFireCollider.elements[i].base.acDmgInfo.hitPos.x, this->bodyAndFireCollider.elements[i].base.acDmgInfo.hitPos.y, this->bodyAndFireCollider.elements[i].base.acDmgInfo.hitPos.z, 0, 0, 0, CLEAR_TAG_PARAMS(CLEAR_TAG_LARGE_LIGHT_RAYS));
         }
         EnDinofos_SetupDamaged(this, i);
         return true;

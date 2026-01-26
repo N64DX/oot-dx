@@ -2619,6 +2619,7 @@ beginseg
     name "daiyousei_izumi_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/indoors/daiyousei_izumi/daiyousei_izumi_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/indoors/daiyousei_izumi/daiyousei_izumi_cutscenes_scene.o"
     number 2
 endseg
 
@@ -3489,20 +3490,6 @@ beginseg
     include "$(BUILD_DIR)/assets/scenes/dungeons/ganon_demo/ganon_demo_room_0.o"
     number 3
 endseg
-
-#if DEBUG_ASSETS
-beginseg
-    name "besitu_scene"
-    include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "besitu_room_0"
-    include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_room_0.o"
-    number 3
-endseg
-#endif
 
 beginseg
     name "face_shop_scene"

@@ -1,5 +1,5 @@
 #ifndef GROTTO_SHORTCUTS_SCENE_H
-#define GROTTO_SHORTCUTS_SCENE_H 1
+#define GROTTO_SHORTCUTS_SCENE_H
 
 #include "bgcheck.h"
 #include "cutscene.h"

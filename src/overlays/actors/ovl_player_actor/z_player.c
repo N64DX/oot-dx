@@ -58,10 +58,12 @@
 // This is called "adjusted" for now.
 #define PLAYER_ANIM_ADJUSTED_SPEED (2.0f / 3.0f)
 
+#define MAX_FEATHER_USES 1
+
 typedef struct GetItemEntry {
     /* 0x00 */ u8 itemId;
     /* 0x01 */ u8 field; // various bit-packed data
-    /* 0x02 */ s8 gi;    // defines the draw id and chest opening animation
+    /* 0x02 */ s16 gi;   // defines the draw id and chest opening animation
     /* 0x03 */ u16 textId;
     /* 0x05 */ u16 objectId;
 } GetItemEntry; // size = 0x07
@@ -155,6 +157,8 @@ typedef struct struct_80854B18 {
 } struct_80854B18; // size = 0x08
 
 static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX];
+
+extern s32 Message_TitleCardClear(PlayState* play);
 
 void Player_InitItemAction(PlayState* play, Player* this, s8 itemAction);
 
@@ -265,6 +269,8 @@ void func_808528C8(PlayState* play, Player* this, CsCmdActorCue* cue);
 void func_80852944(PlayState* play, Player* this, CsCmdActorCue* cue);
 void func_808529D0(PlayState* play, Player* this, CsCmdActorCue* cue);
 void func_80852C50(PlayState* play, Player* this, CsCmdActorCue* cue);
+void PlayerCs_InitDekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue);
+void PlayerCs_DekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue);
 int Player_IsDroppingFish(PlayState* play);
 s32 Player_StartFishing(PlayState* play);
 s32 func_80852F38(PlayState* play, Player* this);
@@ -272,6 +278,7 @@ s32 Player_TryCsAction(PlayState* play, Actor* actor, s32 csAction);
 void func_80853080(Player* this, PlayState* play);
 s32 Player_InflictDamage(PlayState* play, s32 damage);
 void Player_StartTalking(PlayState* play, Actor* actor);
+void func_80838940(Player* this, LinkAnimationHeader* anim, f32 arg2, PlayState* play, u16 sfxId);
 
 void Player_Action_80840450(Player* this, PlayState* play);
 void Player_Action_808407CC(Player* this, PlayState* play);
@@ -534,6 +541,14 @@ static s32 sWorldYawToTouchedWall = 0;
 static s16 sFloorShapePitch = 0;
 static s32 sUseHeldItem = false; // When true, the current held item is used. Is reset to false every frame.
 static s32 sHeldItemButtonIsHeldDown = false; // Indicates if the button for the current held item is held down.
+static u8 featherGroundTimer = 0;
+static u8 mirrorShieldRestoreTimer = 0;
+static u8 shieldDamageTimer = 0;
+static u8 Player_PerfectTime = 0;
+static s8 Player_PerfectResetTimer = 0;
+static bool Player_HasPerfected = false;
+static bool Player_CanPerfect = true;
+static bool Player_WasShieldUp = false;
 
 static u16 D_8085361C[] = {
     NA_SE_VO_LI_SWEAT,
@@ -793,21 +808,29 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_BULLET_BAG_50, OBJECT_GI_DEKUPOUCH, GID_BULLET_BAG_50, 0x6C, 0x80, CHEST_ANIM_LONG),
     // GI_ICE_TRAP
     GET_ITEM_NONE,
+    // GI_AMULET_OF_ENERGY
+    GET_ITEM(ITEM_AMULET_OF_ENERGY, OBJECT_GI_PENDANT, GID_AMULET_OF_ENERGY, 0x9009, 0x80, CHEST_ANIM_LONG),
+    // GI_ROCS_FEATHER
+    GET_ITEM(ITEM_ROCS_FEATHER, OBJECT_GI_FEATHER, GID_ROCS_FEATHER, 0x9003, 0x80, CHEST_ANIM_LONG),
+    // GI_GOLDEN_FEATHER
+    GET_ITEM(ITEM_GOLDEN_FEATHER, OBJECT_GI_FEATHER, GID_GOLDEN_FEATHER, 0x9004, 0x80, CHEST_ANIM_LONG),
+    // GI_SWORD_FAIRYS
+    GET_ITEM(ITEM_SWORD_FAIRYS, OBJECT_GI_SWORD_4_MM, GID_SWORD_FAIRYS, 0x900A, 0x80, CHEST_ANIM_LONG),
     // GI_SHIELD_MIRROR_MM
     GET_ITEM(ITEM_SHIELD_MIRROR, OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, 0x8003, 0x80, CHEST_ANIM_LONG),
     // GI_SHIELD_HEROS
-    GET_ITEM(ITEM_SHIELD_HEROS, OBJECT_GI_SHIELD_4, GID_SHIELD_HEROS, 0x9001, 0xA0, CHEST_ANIM_SHORT),
+    GET_ITEM(ITEM_SHIELD_HEROS, OBJECT_GI_SHIELD_1_MM, GID_SHIELD_HEROS, 0x9001, 0xA0, CHEST_ANIM_SHORT),
     // GI_SWORD_HEROS
-	GET_ITEM(ITEM_SWORD_HEROS, OBJECT_GI_SWORD_HEROS, GID_SWORD_HEROS, 0x9003, 0x80, CHEST_ANIM_LONG),
+	GET_ITEM(ITEM_SWORD_HEROS, OBJECT_GI_SWORD_1_MM, GID_SWORD_HEROS, 0x9002, 0x80, CHEST_ANIM_LONG),
     // GI_SWORD_SILVER
-    GET_ITEM(ITEM_SWORD_BIGGORON, OBJECT_GI_LONGSWORD_MM, GID_SWORD_SILVER, 0x8004, 0x80, CHEST_ANIM_LONG),
+    GET_ITEM(ITEM_SWORD_BIGGORON, OBJECT_GI_SWORD_3_MM, GID_SWORD_SILVER, 0x8004, 0x80, CHEST_ANIM_LONG),
     // GI_SWORD_GILDED
-    GET_ITEM(ITEM_SWORD_BIGGORON, OBJECT_GI_LONGSWORD_MM, GID_SWORD_GILDED, 0x8005, 0x80, CHEST_ANIM_LONG),
+    GET_ITEM(ITEM_SWORD_BIGGORON, OBJECT_GI_SWORD_3_MM, GID_SWORD_GILDED, 0x8005, 0x80, CHEST_ANIM_LONG),
     // GI_POWER_BRACELET
 	GET_ITEM(ITEM_STRENGTH_SILVER_GAUNTLETS, OBJECT_GI_BRACELET, GID_POWER_BRACELET, 0x8007, 0x80, CHEST_ANIM_LONG),
     // GI_POWER_BRACELETS
 	GET_ITEM(ITEM_STRENGTH_GOLD_GAUNTLETS, OBJECT_GI_BRACELET, GID_POWER_BRACELET, 0x8008, 0x80, CHEST_ANIM_LONG),
-    // GI_HOOKSHOT_M
+    // GI_HOOKSHOT_MM
 	GET_ITEM(ITEM_HOOKSHOT, OBJECT_GI_HOOKSHOT_MM, GID_HOOKSHOT_MM, 0x36, 0x80, CHEST_ANIM_LONG),
     // GI_LONGSHOT_MM
 	GET_ITEM(ITEM_LONGSHOT, OBJECT_GI_HOOKSHOT_MM, GID_LONGSHOT_MM, 0x4F, 0x80, CHEST_ANIM_LONG),
@@ -815,8 +838,14 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_BOW, OBJECT_GI_HEROS_BOW, GID_HEROS_BOW, 0x8009, 0x80, CHEST_ANIM_LONG),
     // GI_GOLD_DUST
 	GET_ITEM(ITEM_BROKEN_GORONS_SWORD, OBJECT_GI_GOLD_DUST, GID_GOLD_DUST, 0x800A, 0x80, CHEST_ANIM_LONG),
+    // GI_WALLET_MASTER
+	GET_ITEM(ITEM_MASTER_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9005, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_ROYAL
-	GET_ITEM(ITEM_ROYAL_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9002, 0x80, CHEST_ANIM_LONG),
+	GET_ITEM(ITEM_ROYAL_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9006, 0x80, CHEST_ANIM_LONG),
+    // GI_WALLET_TYCOON
+	GET_ITEM(ITEM_TYCOON_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9007, 0x80, CHEST_ANIM_LONG),
+    // GI_WALLET_BOTTOMLESS
+	GET_ITEM(ITEM_BOTTOMLESS_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9008, 0x80, CHEST_ANIM_LONG),
 };
 
 #define GET_PLAYER_ANIM(group, type) D_80853914[group * PLAYER_ANIMTYPE_MAX + type]
@@ -1391,6 +1420,35 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_KOKIRI,        // ITEM_SWORD_KOKIRI
     PLAYER_IA_SWORD_MASTER,        // ITEM_SWORD_MASTER
     PLAYER_IA_SWORD_BIGGORON,      // ITEM_SWORD_BIGGORON
+    PLAYER_IA_NONE,                // ITEM_SHIELD_DEKU,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_HYLIAN,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_MIRROR,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_KOKIRI,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_GORON,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_ZORA,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_KOKIRI,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_IRON,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_HOVER,
+    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_30,
+    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_40,
+    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_50,
+    PLAYER_IA_NONE,                // ITEM_QUIVER_30,
+    PLAYER_IA_NONE,                // ITEM_QUIVER_40,
+    PLAYER_IA_NONE,                // ITEM_QUIVER_50,
+    PLAYER_IA_NONE,                // ITEM_BOMB_BAG_20,
+    PLAYER_IA_NONE,                // ITEM_BOMB_BAG_30,
+    PLAYER_IA_NONE,                // ITEM_BOMB_BAG_40,
+    PLAYER_IA_NONE,                // ITEM_STRENGTH_GORONS_BRACELET,
+    PLAYER_IA_NONE,                // ITEM_STRENGTH_SILVER_GAUNTLETS,
+    PLAYER_IA_NONE,                // ITEM_STRENGTH_GOLD_GAUNTLETS,
+    PLAYER_IA_NONE,                // ITEM_SCALE_SILVER,
+    PLAYER_IA_NONE,                // ITEM_SCALE_GOLDEN,
+    PLAYER_IA_NONE,                // ITEM_GIANTS_KNIFE,
+    PLAYER_IA_NONE,                // ITEM_ADULTS_WALLET,
+    PLAYER_IA_NONE,                // ITEM_GIANTS_WALLET,
+    PLAYER_IA_NONE,                // ITEM_DEKU_SEEDS,
+    PLAYER_IA_NONE,                // ITEM_FISHING_POLE,
+    PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
 };
 
 static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
@@ -1461,6 +1519,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     func_8083485C,                 // PLAYER_IA_MASK_GERUDO
     func_8083485C,                 // PLAYER_IA_MASK_TRUTH
     func_8083485C,                 // PLAYER_IA_LENS_OF_TRUTH
+    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_FAIRYS
 };
 
 static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
@@ -1531,6 +1590,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_MASK_GERUDO
     Player_InitDefaultIA,        // PLAYER_IA_MASK_TRUTH
     Player_InitDefaultIA,        // PLAYER_IA_LENS_OF_TRUTH
+    Player_InitDefaultIA,        // PLAYER_IA_SWORD_FAIRYS
 };
 
 typedef enum ItemChangeType {
@@ -2495,6 +2555,9 @@ void Player_InitItemAction(PlayState* play, Player* this, s8 itemAction) {
     this->heldItemAction = this->itemAction = itemAction;
     this->modelGroup = this->nextModelGroup;
 
+    if (itemAction >= PLAYER_IA_BOTTLE && itemAction <= PLAYER_IA_BOTTLE_FAIRY)
+        this->bottleAction = itemAction;
+
 #if OOT_VERSION >= NTSC_1_1
     this->stateFlags1 &= ~(PLAYER_STATE1_3 | PLAYER_STATE1_USING_BOOMERANG);
 #endif
@@ -2675,8 +2738,8 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
 
     if (equipType == EQUIP_TYPE_SHIELD && nextEquip == PLAYER_SHIELD_HEROS)
-        Inventory_ChangeEquipment(equipType, PLAYER_SHIELD_HYLIAN);
-    else Inventory_ChangeEquipment(equipType, nextEquip);
+        Inventory_ChangeEquipmentWithIcon(play, equipType, PLAYER_SHIELD_HYLIAN);
+    else Inventory_ChangeEquipmentWithIcon(play, equipType, nextEquip);
     Player_SetEquipmentData(play, this);
     Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
 
@@ -2694,29 +2757,29 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 }
 
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
-    static const EquipmentSwapEntry equipments[] = {
-        { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
-        { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
+    static const SwordSwapEntry equipments[] = {
+        { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
+        { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
     };
 
     u8 current    = gSaveContext.save.info.equips.buttonItems[0];
     u8 validCount = 0;
-    u8 validItems[4], validEquips[4], i, nextItem, nextEquip;
+    u8 validItems[ARRAY_COUNT(equipments)], validEquips[ARRAY_COUNT(equipments)], i, nextItem, nextEquip;
 
     if (current == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
         current = ITEM_SWORD_HEROS;
 
-    for (i=0; i<4; i++) {
-        const EquipmentSwapEntry* equipment = &equipments[i];
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
+        const SwordSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, equipment->equipId)) {
             validItems[validCount]  = equipment->itemId;
-            validEquips[validCount] = equipment->equipId;
+            validEquips[validCount] = equipment->equipSlot;
             validCount++;
         }
     }
@@ -2724,15 +2787,11 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     if (validCount == 0)
         return;
 
-    if (current == PLAYER_SWORD_NONE)
-        nextItem = validItems[0];
-    else {
-        for (i=0; i<validCount; i++)
-            if (validItems[i] == current) {
-                i = (i + 1) % validCount;
-                break;
-            }
-    }
+    for (i=0; i<validCount; i++)
+        if (validItems[i] == current) {
+            i = (i + 1) % validCount;
+            break;
+        }
 
     nextItem  = validItems[i  % validCount];
     nextEquip = validEquips[i % validCount] + 1;
@@ -2762,12 +2821,14 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
 
     u8 current    = this->currentShield;
     u8 validCount = 0;
-    u8 validItems[4], i, nextItem;
+    u8 validItems[ARRAY_COUNT(equipments)], i, nextItem;
     
-    for (i=0; i<4; i++) {
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
+            continue;
+        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && gSaveContext.save.info.mirrorShieldIsBroken)
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
@@ -2779,15 +2840,11 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
     if (validCount == 0)
         return;
 
-    if (current == PLAYER_SHIELD_NONE)
-        nextItem = validItems[0];
-    else {
-        for (i=0; i<validCount; i++)
-            if (validItems[i] == current) {
-                i = (i + 1) % validCount;
-                break;
-            }
-    }
+    for (i=0; i<validCount; i++)
+        if (validItems[i] == current) {
+            i = (i + 1) % validCount;
+            break;
+        }
 
     nextItem = validItems[i % validCount];
     if (current != nextItem) {
@@ -2808,9 +2865,9 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
 
     u8 current    = TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
     u8 validCount = 0;
-    u8 validItems[3], i, nextItem;
+    u8 validItems[ARRAY_COUNT(equipments)], i, nextItem;
 
-    for (i=0; i<3; i++) {
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
@@ -2845,9 +2902,9 @@ void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
 
     u8 current    = BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
     u8 validCount = 0;
-    u8 validItems[3], i, nextItem;
+    u8 validItems[ARRAY_COUNT(equipments)], i, nextItem;
 
-    for (i=0; i<3; i++) {
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
@@ -2948,7 +3005,7 @@ static void ArrowCycleHandle(Player* player, PlayState* play) {
     const ArrowInfo *curInfo, *nextInfo;
     u8 item;
 
-    if (player->stateFlags1 & PLAYER_STATE1_26)
+    if ( (player->stateFlags1 & PLAYER_STATE1_26) || play->interfaceCtx.restrictions.magicBow != 0)
         return;
 
     if (gArrowCycleState.frameDelay >= 1) {
@@ -3027,6 +3084,14 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     Interface_ChangeDpadSet(play);
     ArrowCycleHandle(this, play);
 
+    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+        if (featherGroundTimer <= 3)
+                featherGroundTimer++;
+    } else featherGroundTimer = 0;
+
+    if (featherGroundTimer >= 3)
+            this->featherUseCount = 0;
+
     if (this->currentMask != PLAYER_MASK_NONE) {
         maskItemAction = this->currentMask - 1 + PLAYER_IA_MASK_KEATON;
 
@@ -3040,7 +3105,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     }
 
     if (!(this->stateFlags1 & (PLAYER_STATE1_CARRYING_ACTOR | PLAYER_STATE1_29)) && !func_8008F128(this)) {
-        if (this->itemAction >= PLAYER_IA_FISHING_POLE) {
+        if (this->itemAction >= PLAYER_IA_FISHING_POLE && this->itemAction != PLAYER_IA_SWORD_FAIRYS) {
             if (!Player_ItemIsInUse(this, B_BTN_ITEM) && !Player_ItemIsInUse(this, C_BTN_ITEM(0)) &&
                 !Player_ItemIsInUse(this, C_BTN_ITEM(1)) && !Player_ItemIsInUse(this, C_BTN_ITEM(2)) &&
                 !Player_ItemIsInUse(this, Interface_GetItemFromDpad(0)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(1)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(2)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(3)) ) {
@@ -3117,9 +3182,24 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                         Interface_LoadItemIcon1(play, i);
                 }
             }
-        } else {
+        } else if (item != ITEM_ROCS_FEATHER && item != ITEM_GOLDEN_FEATHER) {
             this->heldItemButton = i;
             Player_UseItem(play, this, item);
+        } else if (this->featherUseCount < MAX_FEATHER_USES) {
+            if ( ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f && item == ITEM_ROCS_FEATHER && gSaveContext.save.info.energy >= 15) || (item == ITEM_GOLDEN_FEATHER && gSaveContext.save.info.energy >= 10)) {
+                Vec3f effectsPos = this->actor.home.pos;
+                this->featherUseCount++;
+                func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, 7.15f, play, NA_SE_VO_LI_SWORD_N);
+                this->av2.actionVar2 = 1;
+                this->speedXZ = 5.0f;
+                this->actor.world.rot.y = this->yaw = this->actor.shape.rot.y;
+                effectsPos.y += 3;
+                EffectSsGRipple_Spawn(play, &effectsPos, 200, 300, 1);
+                EffectSsGSplash_Spawn(play, &effectsPos, NULL, NULL, 0, 150);
+                this->stateFlags2 &= ~(PLAYER_STATE2_19);
+                Player_PlaySfx(this, NA_SE_PL_SKIP);
+                gSaveContext.save.info.energy -= item == (ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy * 5);
+            }
         }
     }
 }
@@ -3374,7 +3454,7 @@ s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play) {
     if (LinkAnimation_Update(play, &this->upperSkelAnime) ||
         ((Player_ItemToItemAction(this->heldItemId) == this->heldItemAction) &&
          (sUseHeldItem =
-              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && this->heldItemAction <= PLAYER_IA_SWORD_BIGGORON)))))) {
+              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && (this->heldItemAction <= PLAYER_IA_SWORD_BIGGORON))))))) {
         Player_SetUpperActionFunc(this, sItemActionUpdateFuncs[this->heldItemAction]);
         this->unk_834 = 0;
         this->idleType = PLAYER_IDLE_DEFAULT;
@@ -3955,6 +4035,12 @@ void Player_DestroyHookshot(Player* this) {
     }
 }
 
+s32 Player_TitleCardClear(PlayState* play) {
+    if (USE_TITLE_CARDS)
+        return Message_TitleCardClear(play);
+    else return TitleCard_Clear(play, &play->actorCtx.titleCtx);
+}
+
 void Player_UseItem(PlayState* play, Player* this, s32 item) {
     s8 itemAction;
     s32 temp;
@@ -3971,6 +4057,9 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
             ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) &&
              ((itemAction == PLAYER_IA_HOOKSHOT) || (itemAction == PLAYER_IA_LONGSHOT))) ||
              ((this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && itemAction >= PLAYER_IA_MASK_KEATON && itemAction <= PLAYER_IA_MASK_TRUTH)) {
+
+            if (!(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && itemAction >= PLAYER_IA_BOTTLE && itemAction <= PLAYER_IA_ZELDAS_LETTER && FIX_USEFUL_GLITCHES)
+                return;
 
             if ((play->bombchuBowlingStatus == 0) &&
                 (((itemAction == PLAYER_IA_DEKU_STICK) && (AMMO(ITEM_DEKU_STICK) == 0)) ||
@@ -4011,7 +4100,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
                 } else {
                     Sfx_PlaySfxCentered(NA_SE_SY_ERROR);
                 }
-            } else if (itemAction >= PLAYER_IA_MASK_KEATON) {
+            } else if (itemAction >= PLAYER_IA_MASK_KEATON && itemAction != PLAYER_IA_SWORD_FAIRYS) {
                 // Handle wearable masks
                 if (this->currentMask != PLAYER_MASK_NONE) {
                     this->currentMask = PLAYER_MASK_NONE;
@@ -4022,13 +4111,13 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
 
                 func_808328EC(this, NA_SE_PL_CHANGE_ARMS);
             } else if (((itemAction >= PLAYER_IA_OCARINA_FAIRY) && (itemAction <= PLAYER_IA_OCARINA_OF_TIME)) ||
-                       (itemAction >= PLAYER_IA_BOTTLE_FISH)) {
+                       (itemAction >= PLAYER_IA_BOTTLE_FISH && itemAction != PLAYER_IA_SWORD_FAIRYS)) {
                 // Handle "cutscene items"
                 if (!Player_CheckHostileLockOn(this) ||
                     ((itemAction >= PLAYER_IA_BOTTLE_POTION_RED) && (itemAction <= PLAYER_IA_BOTTLE_FAIRY))) {
-                    TitleCard_Clear(play, &play->actorCtx.titleCtx);
+                    Player_TitleCardClear(play);
                     this->unk_6AD = 4;
-                    this->itemAction = itemAction;
+                    this->itemAction = this->bottleAction = itemAction;
                 }
             } else if ((itemAction != this->heldItemAction) ||
                        ((this->heldActor == NULL) && (Player_ActionToExplosive(this, itemAction) >= 0))) {
@@ -4790,6 +4879,10 @@ s32 Player_TryActionInterrupt(PlayState* play, Player* this, SkelAnime* skelAnim
 }
 
 void func_80837530(PlayState* play, Player* this, s32 arg2) {
+    u8 meleeWeapon = Player_GetMeleeWeaponHeld(this);
+    if (meleeWeapon == 6)
+        meleeWeapon = 4;
+
     if (arg2 != 0) {
         this->unk_858 = 0.0f;
     } else {
@@ -4801,7 +4894,7 @@ void func_80837530(PlayState* play, Player* this, s32 arg2) {
     if (this->actor.category == ACTORCAT_PLAYER) {
         Actor_Spawn(&play->actorCtx, play, ACTOR_EN_M_THUNDER, this->bodyPartsPos[PLAYER_BODYPART_WAIST].x,
                     this->bodyPartsPos[PLAYER_BODYPART_WAIST].y, this->bodyPartsPos[PLAYER_BODYPART_WAIST].z, 0, 0, 0,
-                    Player_GetMeleeWeaponHeld(this) | arg2);
+                    meleeWeapon | arg2);
     }
 }
 
@@ -4946,7 +5039,7 @@ void func_80837918(Player* this, s32 quadIndex, u32 dmgFlags) {
 
 static u32 D_80854488[][2] = {
     { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT },
-    { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP },
+    { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT },
 };
 
 void func_80837948(PlayState* play, Player* this, s32 arg2) {
@@ -4983,8 +5076,6 @@ void func_80837948(PlayState* play, Player* this, s32 arg2) {
         temp = 1;
     } else {
         temp = Player_GetMeleeWeaponHeld(this) - 1;
-        if (IS_CHILD_QUEST_AS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON && !gSaveContext.save.info.playerData.bgsFlag)
-            temp = 0;
     }
 
     if ((arg2 >= PLAYER_MWA_FLIPSLASH_START) && (arg2 <= PLAYER_MWA_JUMPSLASH_FINISH)) {
@@ -5035,6 +5126,10 @@ void Player_SetInvulnerability(Player* this, s32 timer) {
  * @return false if player is out of health
  */
 s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
+    if ((this->invincibilityTimer != 0) || (this->actor.category != ACTORCAT_PLAYER)) {
+        return true;
+    }
+
     switch (DAMAGE_TAKEN) {
         case 1:
             damage *= 2;
@@ -5058,9 +5153,13 @@ s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
             damage /= 4;
             break;
     }
-    
-    if ((this->invincibilityTimer != 0) || (this->actor.category != ACTORCAT_PLAYER)) {
-        return true;
+
+    if (damage < 0) {
+        if (this->currentTunic == PLAYER_TUNIC_KOKIRI) {
+            if (gSaveContext.save.info.playerData.isMagicAcquired && gSaveContext.save.info.playerData.magic < gSaveContext.save.info.playerData.magicLevel * MAGIC_NORMAL_METER)
+                Player_UseSpecialPower(play, this, 15, 2, NA_SE_SY_HP_RECOVER, SPECIAL_POWER_MAGIC_REGEN, 3);
+        } else if (this->currentTunic == PLAYER_TUNIC_GORON)
+            damage = Player_UseSpecialPower(play, this, 25, 5, false, SPECIAL_POWER_REDUCE_DAMAGE, damage);
     }
 
     return Health_ChangeBy(play, damage);
@@ -5277,6 +5376,34 @@ void func_808382BC(Player* this) {
     }
 }
 
+void Player_CheckShieldDurability(Player* this, PlayState* play) {
+    if ( ( (this->shieldDamage > 0 && this->currentShield > PLAYER_SHIELD_NONE && SHIELD_DURABILITY) || (this->shieldDamage > 10 && this->currentShield == PLAYER_SHIELD_DEKU && IS_CHILD_QUEST) ) && shieldDamageTimer == 0) {
+        u8* currentDurability = &gSaveContext.save.info.shieldDurability[this->currentShield - 1];
+        shieldDamageTimer = SECONDS(0.5);
+
+        if (Player_PerfectTime > 0) {
+            Player_PlaySfx(this, NA_SE_IT_EXPLOSION_LIGHT);
+            this->shieldDamage = 0;
+            return;
+        }
+
+        this->shieldDamage = CLAMP_MAX(this->shieldDamage, 15);
+        *currentDurability -= CLAMP_MAX(this->shieldDamage, *currentDurability);
+        this->shieldDamage = 0;
+
+        if (*currentDurability == 0) {
+            Audio_PlaySfxGeneral(NA_SE_IT_MAJIN_SWORD_BROKEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            if (this->currentShield == PLAYER_SHIELD_MIRROR) {
+                Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
+                Player_SetEquipmentData(play, this);
+                gSaveContext.save.info.mirrorShieldIsBroken = true;
+            }
+            else Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
+            Message_StartTextbox(play, 0x305F, NULL);
+        }
+    }
+}
+
 s32 func_808382DC(Player* this, PlayState* play) {
     s32 pad;
     s32 sp68 = false;
@@ -5344,14 +5471,11 @@ s32 func_808382DC(Player* this, PlayState* play) {
         } else {
             sp64 = (this->shieldQuad.base.acFlags & AC_BOUNCED) != 0;
 
-            //! @bug The second set of conditions here seems intended as a way for Link to "block" hits by rolling.
-            // However, `Collider.atFlags` is a byte so the flag check at the end is incorrect and cannot work.
-            // Additionally, `Collider.atHit` can never be set while already colliding as AC, so it's also bugged.
-            // This behavior was later fixed in MM, most likely by removing both the `atHit` and `atFlags` checks.
             if (sp64 || ((this->invincibilityTimer < 0) && (this->cylinder.base.acFlags & AC_HIT) &&
-                         (this->cylinder.elem.atHit != NULL) && (this->cylinder.elem.atHit->atFlags & 0x20000000))) {
+                         (this->cylinder.elem.acHitElem != NULL) && this->cylinder.elem.acHitElem->atDmgInfo.dmgFlags != DMG_UNBLOCKABLE)) {
 
                 Player_RequestRumble(this, 180, 20, 100, 0);
+                Player_CheckShieldDurability(this, play);
 
                 if (!Player_IsChildWithHylianShield(this)) {
                     if (this->invincibilityTimer >= 0) {
@@ -5422,6 +5546,14 @@ s32 func_808382DC(Player* this, PlayState* play) {
             } else {
                 static u8 D_808544F4[] = { 120, 60 };
                 s32 sp48 = func_80838144(sFloorType);
+
+                if (this->swimmingInPoisonWater && this->floorTypeTimer >= SECONDS(1.5) && Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_SWIMMING) {
+                    this->swimmingInPoisonWater = false;
+                    this->floorTypeTimer = 0;
+                    this->actor.colChkInfo.damage = 4;
+                    func_80837C0C(play, this, PLAYER_HIT_RESPONSE_NONE, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
+                } else if (Player_GetEnvironmentalHazard(play) < PLAYER_ENV_HAZARD_SWIMMING)
+                    this->swimmingInPoisonWater = false;
 
                 if (((this->actor.wallPoly != NULL) &&
                      func_80042108(&play->colCtx, this->actor.wallPoly, this->actor.wallBgId)) ||
@@ -5613,40 +5745,171 @@ static s16 sReturnEntranceGroupData[] = {
     /*  0 */ ENTR_DEATH_MOUNTAIN_TRAIL_4,  // from Magic Fairy Fountain
     /*  1 */ ENTR_DEATH_MOUNTAIN_CRATER_3, // from Double Magic Fairy Fountain
     /*  2 */ MAP_OUTSIDE_GANONS_CASTLE_2,  // from Double Defense Fairy Fountain (as adult)
+    /*  3 */ ENTR_WOODFALL_2,              // from Great Quick Spin Fairy Fountain
 
     // ENTR_RETURN_2
-    /*  3 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
-    /*  4 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
+    /*  4 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
+    /*  5 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
 
     // ENTR_RETURN_BAZAAR
-    /*  5 */ ENTR_KAKARIKO_VILLAGE_3,
-    /*  6 */ ENTR_MARKET_DAY_6,
+    /*  6 */ ENTR_KAKARIKO_VILLAGE_3,
+    /*  7 */ ENTR_MARKET_DAY_6,
 
     // ENTR_RETURN_4
-    /*  7 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
-    /*  8 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
+    /*  8 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
+    /*  9 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
 
     // ENTR_RETURN_SHOOTING_GALLERY
-    /*  9 */ ENTR_KAKARIKO_VILLAGE_10,
-    /* 10 */ ENTR_MARKET_DAY_8,
+    /* 10 */ ENTR_KAKARIKO_VILLAGE_10,
+    /* 11 */ ENTR_MARKET_DAY_8,
 
     // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    /* 11 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
-    /* 12 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
-    /* 13 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
+    /* 12 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
+    /* 13 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
+    /* 14 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
 };
 
 /**
  * The values are indices into `sReturnEntranceGroupData` marking the start of each group
  */
 static u8 sReturnEntranceGroupIndices[] = {
-    11, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    9,  // ENTR_RETURN_SHOOTING_GALLERY
-    3,  // ENTR_RETURN_2
-    5,  // ENTR_RETURN_BAZAAR
-    7,  // ENTR_RETURN_4
+    12, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
+    10, // ENTR_RETURN_SHOOTING_GALLERY
+    4,  // ENTR_RETURN_2
+    6,  // ENTR_RETURN_BAZAAR
+    8,  // ENTR_RETURN_4
     0,  // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
 };
+
+static s16 sDungeonEntrances[] = {
+    ENTR_DEKU_TREE_0,                      // SCENE_DEKU_TREE
+    ENTR_DODONGOS_CAVERN_0,                // SCENE_DODONGOS_CAVERN
+    ENTR_JABU_JABU_0,                      // SCENE_JABU_JABU
+    ENTR_FOREST_TEMPLE_0,                  // SCENE_FOREST_TEMPLE
+    ENTR_FIRE_TEMPLE_0,                    // SCENE_FIRE_TEMPLE
+    ENTR_WATER_TEMPLE_0,                   // SCENE_WATER_TEMPLE
+    ENTR_SPIRIT_TEMPLE_0,                  // SCENE_SPIRIT_TEMPLE
+    ENTR_SHADOW_TEMPLE_0,                  // SCENE_SHADOW_TEMPLE
+    ENTR_BOTTOM_OF_THE_WELL_0,             // SCENE_BOTTOM_OF_THE_WELL
+    ENTR_ICE_CAVERN_0,                     // SCENE_ICE_CAVERN
+    ENTR_GANONS_TOWER_0,                   // SCENE_GANONS_TOWER
+    ENTR_GERUDO_TRAINING_GROUND_0,         // SCENE_GERUDO_TRAINING_GROUND
+    ENTR_THIEVES_HIDEOUT_0,                // SCENE_THIEVES_HIDEOUT
+    ENTR_INSIDE_GANONS_CASTLE_0,           // SCENE_INSIDE_GANONS_CASTLE
+};
+
+#define THIS_SCENE_FLAG gSaveContext.save.info.sceneFlags[play->sceneId]
+
+void Player_HandleDungeonRushExits(PlayState* play) {
+    if (IS_RUSH_QUEST) {
+        switch (play->nextEntranceIndex) {
+            case ENTR_KOKIRI_FOREST_3:
+                play->nextEntranceIndex = IS_BOSS_RUSH ? ENTR_DEKU_TREE_BOSS_0 : ENTR_DEKU_TREE_0;
+                play->progressRush = true;
+                break;
+
+            case ENTR_TEMPLE_OF_TIME_EXTERIOR_DAY_1:
+                play->nextEntranceIndex = IS_BOSS_RUSH ? ENTR_FOREST_TEMPLE_BOSS_0 : ENTR_FOREST_TEMPLE_0;
+                play->progressRush = true;
+                break;
+
+            case ENTR_HAUNTED_WASTELAND_1:
+                play->nextEntranceIndex = ENTR_DESERT_COLOSSUS_0;
+                break;
+
+            case ENTR_GANONS_TOWER_0:
+                play->nextEntranceIndex = ENTR_GANONS_TOWER_0;
+                play->progressRush = true;
+                break;
+
+            case ENTR_SPIRIT_TEMPLE_2:
+                if (CUR_UPG_VALUE(UPG_STRENGTH) >= PLAYER_STR_SILVER_G && !THIS_SCENE_FLAG.extra.exit) {
+                    play->nextEntranceIndex = ENTR_SPIRIT_TEMPLE_DR;
+                    THIS_SCENE_FLAG.extra.exit = 1;
+                }
+                break;
+
+            case ENTR_KOKIRI_FOREST_1:
+            case ENTR_DEATH_MOUNTAIN_TRAIL_3:
+            case ENTR_ZORAS_FOUNTAIN_1:
+            case ENTR_SACRED_FOREST_MEADOW_1:
+            case ENTR_DEATH_MOUNTAIN_CRATER_2:
+            case ENTR_LAKE_HYLIA_2:
+            case ENTR_SHADOW_TEMPLE_0:
+            case ENTR_HYRULE_CASTLE_1:
+            case MAP_OUTSIDE_GANONS_CASTLE_1:
+                play->nextEntranceIndex = sDungeonEntrances[play->sceneId];
+                break;
+
+            case ENTR_DESERT_COLOSSUS_1:
+                play->nextEntranceIndex = ENTR_SPIRIT_TEMPLE_DR;
+                break;
+        }
+    }
+    if (IS_BOSS_RUSH) {
+        switch (play->nextEntranceIndex) {
+            case ENTR_DEKU_TREE_1:       play->nextEntranceIndex = ENTR_DEKU_TREE_BOSS_0;       break;
+            case ENTR_DODONGOS_CAVERN_1: play->nextEntranceIndex = ENTR_DODONGOS_CAVERN_BOSS_0; break;
+            
+        }
+    }
+
+    if (R_QUEST_MODE == DUNGEON_CHILD_RUSH && THIS_SCENE_FLAG.extra.quest < 1) {
+        u8 resetItem = ITEM_NONE;
+        u8 resetSlot = SLOT_NONE;
+        u8 i;
+
+        switch (play->nextEntranceIndex) {
+            case ENTR_DEKU_TREE_BOSS_0:       resetItem = ITEM_SLINGSHOT; resetSlot = SLOT_SLINGSHOT; break;
+            case ENTR_DODONGOS_CAVERN_BOSS_0: resetItem = ITEM_BOMB;      resetSlot = SLOT_BOMB;      break;
+            case ENTR_JABU_JABU_BOSS_0:       resetItem = ITEM_BOOMERANG; resetSlot = SLOT_BOOMERANG; break;
+            case ENTR_FOREST_TEMPLE_BOSS_0:   resetItem = ITEM_BOW;       resetSlot = SLOT_BOW;       break;
+            case ENTR_FIRE_TEMPLE_BOSS_0:     resetItem = ITEM_HAMMER;    resetSlot = SLOT_HAMMER;    break;
+            case ENTR_WATER_TEMPLE_BOSS_0:    resetItem = ITEM_LONGSHOT;  resetSlot = SLOT_HOOKSHOT;  break;
+            case ENTR_SHADOW_TEMPLE_BOSS_0:   resetItem = ITEM_BOOTS_HOVER;                           break;
+            case ENTR_SPIRIT_TEMPLE_BOSS_0:   resetItem = ITEM_SHIELD_MIRROR;                         break;
+            case ENTR_GANONS_TOWER_0:         resetItem = ITEM_STRENGTH_GOLD_GAUNTLETS;               break;
+        }
+        switch (play->nextEntranceIndex) {
+            case ENTR_DEKU_TREE_BOSS_0:
+            case ENTR_DODONGOS_CAVERN_BOSS_0:
+            case ENTR_JABU_JABU_BOSS_0:
+            case ENTR_FOREST_TEMPLE_BOSS_0:
+            case ENTR_FIRE_TEMPLE_BOSS_0:
+            case ENTR_WATER_TEMPLE_BOSS_0:
+            case ENTR_SHADOW_TEMPLE_BOSS_0:
+            case ENTR_SPIRIT_TEMPLE_BOSS_0:
+            case ENTR_GANONS_TOWER_0:
+                THIS_SCENE_FLAG.chest = THIS_SCENE_FLAG.swch = THIS_SCENE_FLAG.clear = THIS_SCENE_FLAG.collect = THIS_SCENE_FLAG.rooms = THIS_SCENE_FLAG.floors = play->actorCtx.flags.chest = play->actorCtx.flags.swch = play->actorCtx.flags.clear = play->actorCtx.flags.collect = 0;
+                THIS_SCENE_FLAG.extra.quest++;
+                play->nextEntranceIndex = sDungeonEntrances[play->sceneId];
+                gSaveContext.save.info.inventory.dungeonItems[play->sceneId] = gSaveContext.save.info.inventory.dungeonKeys[play->sceneId] = 0;
+                break;
+        }
+
+        if (resetItem == ITEM_SHIELD_MIRROR) {
+            gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR);
+            Inventory_ChangeUpgrade(UPG_STRENGTH, 1);
+        } else if (resetItem == ITEM_BOOTS_HOVER)
+            gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_BOOTS,  EQUIP_INV_BOOTS_HOVER);
+        else if (resetItem == ITEM_STRENGTH_GOLD_GAUNTLETS)
+            Inventory_ChangeUpgrade(UPG_STRENGTH, 2);
+        else if (resetItem != ITEM_NONE) {
+            for (i=1; i<4; i++)
+                if (gSaveContext.save.info.equips.buttonItems[i] == resetItem)
+                    gSaveContext.save.info.equips.cButtonSlots[i-1] = gSaveContext.save.info.equips.buttonItems[i] = ITEM_NONE;
+            for (i=0; i<4; i++)
+                if (DPAD_BUTTON(i) == resetSlot)
+                    DPAD_BUTTON(i) = SLOT_NONE;
+            gSaveContext.save.info.inventory.items[resetSlot] = SLOT_NONE;
+        }
+
+        if (resetItem == ITEM_SLINGSHOT)
+            Inventory_ChangeUpgrade(UPG_BULLET_BAG, 0);
+        else if (resetItem == ITEM_BOW)
+            Inventory_ChangeUpgrade(UPG_QUIVER, 0);
+    }
+}
 
 s32 Player_HandleExitsAndVoids(PlayState* play, Player* this, CollisionPoly* poly, u32 bgId) {
     s32 exitIndex;
@@ -5671,6 +5934,7 @@ s32 Player_HandleExitsAndVoids(PlayState* play, Player* this, CollisionPoly* pol
                 Scene_SetTransitionForNextEntrance(play);
             } else {
                 play->nextEntranceIndex = play->exitList[exitIndex - 1];
+                Player_HandleDungeonRushExits(play);
 
                 if (play->nextEntranceIndex == ENTR_RETURN_GROTTO) {
                     gSaveContext.respawnFlag = 2;
@@ -6172,7 +6436,12 @@ s32 func_8083A4A8(Player* this, PlayState* play) {
     yawDiff = this->yaw - this->actor.shape.rot.y;
 
     if ((ABS(yawDiff) < 0x1000) && (this->speedXZ > 4.0f)) {
-        anim = &gPlayerAnim_link_normal_run_jump;
+        f32 r = JUMP_ANIMATIONS && this->heldActor == NULL ? Rand_ZeroOne() : 1.0f;
+        if (r < 0.25f)
+            anim = &gPlayerAnim_link_normal_newroll_jump_20f;
+        else if (r < 0.5f)
+            anim = &gPlayerAnim_link_normal_newside_jump_20f;
+        else anim = &gPlayerAnim_link_normal_run_jump;
     } else {
         anim = &gPlayerAnim_link_normal_jump;
     }
@@ -7261,11 +7530,11 @@ void func_8083CE0C(Player* this, PlayState* play) {
 
     Player_SetupAction(play, this, Player_Action_Idle, 1);
 
-    if (this->unk_870 < 0.5f) {
-        anim = GET_PLAYER_ANIM(PLAYER_ANIMGROUP_waitR2wait, this->modelAnimType);
-    } else {
-        anim = GET_PLAYER_ANIM(PLAYER_ANIMGROUP_waitL2wait, this->modelAnimType);
-    }
+    if (sRightHandType != PLAYER_MODELTYPE_RH_OPEN) { // Right hand is used
+        if (this->unk_870 < 0.5f)
+            anim = GET_PLAYER_ANIM(PLAYER_ANIMGROUP_waitR2wait, this->modelAnimType);
+        else anim = GET_PLAYER_ANIM(PLAYER_ANIMGROUP_waitL2wait, this->modelAnimType);
+    } else anim = Player_GetIdleAnim(this); // Right hand is empty - use neutral animation
     Player_AnimPlayOnce(play, this, anim);
 
     this->yaw = this->actor.shape.rot.y;
@@ -7273,7 +7542,9 @@ void func_8083CE0C(Player* this, PlayState* play) {
 
 void func_8083CEAC(Player* this, PlayState* play) {
     Player_SetupAction(play, this, Player_Action_80840450, 1);
-    Player_AnimChangeOnceMorph(play, this, GET_PLAYER_ANIM(PLAYER_ANIMGROUP_wait2waitR, this->modelAnimType));
+    if (this->unk_870 < 0.5f) // Use a very short transition to the final Z-targeting animation
+        Player_AnimChangeOnceMorph(play, this, func_808334E4(this));
+    else Player_AnimChangeOnceMorph(play, this, func_80833528(this));
     this->av2.actionVar2 = 1;
 }
 
@@ -7648,7 +7919,7 @@ void func_8083DF68(Player* this, f32 arg1, s16 arg2) {
 void func_8083DFE0(Player* this, f32* arg1, s16* arg2) {
     s16 yawDiff = this->yaw - *arg2;
 
-    if (this->meleeWeaponState == 0) {
+    if (this->meleeWeaponState == 0 && !NO_JUMP_SPEED_LIMIT) {
         this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
     }
 
@@ -7813,7 +8084,7 @@ s32 Player_ActionHandler_2(Player* this, PlayState* play) {
     Actor* interactedActor;
 
     if (DEBUG_iREG_67 ||
-        (((interactedActor = this->interactRangeActor) != NULL) && TitleCard_Clear(play, &play->actorCtx.titleCtx))) {
+        (((interactedActor = this->interactRangeActor) != NULL) && Player_TitleCardClear(play))) {
         if (DEBUG_iREG_67 || (this->getItemId > GI_NONE)) {
             if (DEBUG_iREG_67) {
                 this->getItemId = iREG(68);
@@ -7892,6 +8163,8 @@ s32 Player_ActionHandler_2(Player* this, PlayState* play) {
             }
 
             if ((this->heldActor == NULL) || Player_HoldsHookshot(this)) {
+                if (FIX_USEFUL_GLITCHES)
+                    this->meleeWeaponState = 0;
                 if ((interactedActor->id == ACTOR_BG_TOKI_SWD) && LINK_IS_ADULT) {
                     s32 sp24 = this->itemAction;
 
@@ -9463,7 +9736,7 @@ s32 func_808428D8(Player* this, PlayState* play) {
         this->meleeWeaponAnimation = PLAYER_MWA_STAB_1H;
         this->yaw = this->actor.shape.rot.y + this->upperLimbRot.y;
 
-        if (FIX_POWER_CROUCH_STAB) {
+        if (FIX_USEFUL_GLITCHES) {
             if (Player_HoldsBrokenKnife(this))
                 swordId = 1;
             else swordId = Player_GetMeleeWeaponHeld2(this) - 1;
@@ -10087,6 +10360,13 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
 
         LinkAnimation_Update(play, &this->skelAnime);
 
+        if (this->skelAnime.animation == &gPlayerAnim_link_normal_newside_jump_20f && !(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) { // Lock the newside_jump animation on its last frame until Link touches the ground
+            if (this->skelAnime.curFrame >= this->skelAnime.endFrame) {
+                this->skelAnime.curFrame = this->skelAnime.endFrame;
+                this->skelAnime.playSpeed = 0.0f;
+            }
+        }
+
         if (!(this->stateFlags2 & PLAYER_STATE2_19)) {
             func_8083DFE0(this, &speedTarget, &yawTarget);
         }
@@ -10096,8 +10376,9 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
         if (((this->stateFlags2 & PLAYER_STATE2_19) && (this->av1.actionVar1 == 2)) || !func_8083BBA0(this, play)) {
             if (this->actor.velocity.y < 0.0f) {
                 if (this->av2.actionVar2 >= 0) {
-                    if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || (this->av2.actionVar2 == 0) ||
-                        (this->fallDistance > 0)) {
+                    // Do not change the animation if it's newside_jump and Link hasn't touched the ground
+                    if (((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || (this->av2.actionVar2 == 0) ||
+                        (this->fallDistance > 0)) && this->skelAnime.animation != &gPlayerAnim_link_normal_newside_jump_20f) {
                         if ((sYDistToFloor > 800.0f) || (this->stateFlags1 & PLAYER_STATE1_2)) {
                             func_80843E14(this, NA_SE_VO_LI_FALL_S);
                             this->stateFlags1 &= ~PLAYER_STATE1_2;
@@ -10151,6 +10432,10 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
             }
         } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_run_jump) {
             anim = &gPlayerAnim_link_normal_run_jump_end;
+        } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_newroll_jump_20f) {
+            anim = &gPlayerAnim_link_normal_newroll_jump_end_20f;
+        } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_newside_jump_20f) {
+            anim = &gPlayerAnim_link_normal_newside_jump_end_20f;
         } else if (Player_CheckHostileLockOn(this)) {
             anim = &gPlayerAnim_link_anchor_landingR;
             func_80833C3C(this);
@@ -10641,6 +10926,9 @@ void Player_Action_WaitForPutAway(Player* this, PlayState* play) {
     this->stateFlags2 |= PLAYER_STATE2_5 | PLAYER_STATE2_6;
     LinkAnimation_Update(play, &this->skelAnime);
 
+    if (FIX_USEFUL_GLITCHES)
+        this->meleeWeaponState = 0;
+
     // Wait for the held item put away process to complete.
     // Determining if the put away process is complete is a bit complicated:
     // `Player_UpdateUpperBody` will only return false if the current UpperAction returns false.
@@ -11066,8 +11354,25 @@ void Player_PutSwordInHand(PlayState* play, Player* this, s32 playSfx) {
     static u8 sSwordItemIds[] = { ITEM_SWORD_MASTER, ITEM_SWORD_KOKIRI };
     s32 swordItemId = sSwordItemIds[(void)0, gSaveContext.save.linkAge];
     s32 swordItemAction = sItemActions[swordItemId];
-    
-    if (IS_CHILD_QUEST_AS_CHILD) {
+    u8 i;
+
+    if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+        Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, PLAYER_SWORD_MASTER);
+        gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
+        Interface_LoadItemIcon1(play, 0);
+        for (i=1; i<8; i++) {
+            if (i<4) {
+                if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                    Interface_LoadItemIcon1(play, i);
+            }
+            else {
+                if (DPAD_BUTTON(i-4) == SLOT_SWORDS)
+                    Interface_LoadItemIcon1(play, i);
+            }
+        }
+        swordItemId = ITEM_SWORD_MASTER;
+        swordItemAction = sItemActions[swordItemId];
+    } else if (IS_CHILD_QUEST_AS_CHILD) {
         swordItemId = this->currentSwordItemId;
         swordItemAction = sItemActions[swordItemId];
         if (swordItemId <= -1) { swordItemId = this->currentSwordItemId = -1; }
@@ -11088,7 +11393,16 @@ void Player_PutSwordInHand(PlayState* play, Player* this, s32 playSfx) {
 }
 
 void Player_StartMode_TimeTravel(PlayState* play, Player* this) {
-    static Vec3f sPedestalPos = { -1.0f, 69.0f, 20.0f };
+    static Vec3f sPedestalPos;
+    if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+        sPedestalPos.x = -2000.0f;
+        sPedestalPos.y = LINK_IS_CHILD ? -12.0f : 0.0f;
+        sPedestalPos.z = -80.0f;
+    } else {
+        sPedestalPos.x = -1.0f;
+        sPedestalPos.y = 69.0f;
+        sPedestalPos.z = 20.0f;
+    }
 
     Player_SetupAction(play, this, Player_Action_TimeTravelEnd, 0);
     this->stateFlags1 |= PLAYER_STATE1_29;
@@ -11098,14 +11412,14 @@ void Player_StartMode_TimeTravel(PlayState* play, Player* this) {
 
     // The start frame and end frame are both set to 0 so that that the animation is frozen.
     // `Player_Action_TimeTravelEnd` will play the animation after `animDelayTimer` completes.
-    LinkAnimation_Change(play, &this->skelAnime, this->ageProperties->timeTravelEndAnim, 2.0f / 3.0f, 0.0f, 0.0f,
+    LinkAnimation_Change(play, &this->skelAnime, play->sceneId == SCENE_WOODFALL_TEMPLE ? &gPlayerAnim_link_demo_return_to_past : this->ageProperties->timeTravelEndAnim, 2.0f / 3.0f, 0.0f, 0.0f,
                          ANIMMODE_ONCE, 0.0f);
     Player_StartAnimMovement(play, this,
                              PLAYER_ANIM_MOVEMENT_RESET_BY_AGE | ANIM_FLAG_UPDATE_XZ | ANIM_FLAG_UPDATE_Y |
                                  ANIM_FLAG_DISABLE_CHILD_ROOT_ADJUSTMENT | ANIM_FLAG_ENABLE_MOVEMENT |
                                  ANIM_FLAG_OVERRIDE_MOVEMENT);
 
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT || play->sceneId == SCENE_WOODFALL_TEMPLE) {
         Player_PutSwordInHand(play, this, false);
     }
 
@@ -11281,7 +11595,7 @@ void Player_Init(Actor* thisx, PlayState* play2) {
         }
     }
 
-    if ((respawnFlag == 0) || (respawnFlag < -1)) {
+    if ((respawnFlag == 0 || respawnFlag < -1) && !USE_TITLE_CARDS) {
         titleFileSize = scene->titleFile.vromEnd - scene->titleFile.vromStart;
 
         if ((titleFileSize != 0) && gSaveContext.showTitleCard) {
@@ -12257,6 +12571,55 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
     s32 pad;
 
     sControlInput = input;
+    
+    // Perfect Shield Block
+    if (SHIELD_DURABILITY) {
+        if (play->shootingGalleryStatus == 0 && this->currentShield > PLAYER_SHIELD_NONE) {
+            if (CHECK_BTN_ALL(sControlInput->cur.button, BTN_R)) {
+                Player_WasShieldUp = true;
+
+                if (Player_PerfectTime == 0 && Player_CanPerfect && !Player_HasPerfected) {
+                    Player_PerfectTime = 4;
+                    Player_CanPerfect = false;
+                    Player_HasPerfected = true;
+                    Player_PerfectResetTimer = -1;
+                }
+            } else {
+                if (Player_WasShieldUp) {
+                    Player_WasShieldUp = false;
+                    Player_PerfectResetTimer = 5;
+                }
+            }
+        }
+
+        if (!Player_CanPerfect && Player_PerfectTime > 0)
+            Player_PerfectTime--;
+        else if (Player_PerfectTime == 0 && !Player_CanPerfect)
+            Player_CanPerfect = true;
+
+        if (Player_HasPerfected && Player_PerfectResetTimer > 0)
+            Player_PerfectResetTimer--;
+        else if (Player_HasPerfected && Player_PerfectResetTimer == 0)
+            Player_HasPerfected = false;
+    }
+
+    if (shieldDamageTimer > 0)
+        shieldDamageTimer--;
+    if (SHIELD_DURABILITY && !(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
+        if ( (gSaveContext.save.info.shieldDurability[2] < MAX_DURABILITY_SHIELD_MIRROR && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.mirrorShieldIsBroken) {
+            if (mirrorShieldRestoreTimer < SECONDS(2))
+                mirrorShieldRestoreTimer++;
+            else {
+                mirrorShieldRestoreTimer = 0;
+                gSaveContext.save.info.shieldDurability[2]++;
+                if (gSaveContext.save.info.shieldDurability[2] >= 60 && gSaveContext.save.info.mirrorShieldIsBroken) {
+                    gSaveContext.save.info.mirrorShieldIsBroken = false;
+                    Message_StartTextbox(play, 0x9303, NULL);
+                    gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
+                }
+            }
+        } else mirrorShieldRestoreTimer = 0;
+    }
 
     if (this->actor.category == ACTORCAT_PLAYER && R_ENABLE_MIRROR == 1)
         sControlInput->rel.stick_x = -sControlInput->rel.stick_x;
@@ -12674,6 +13037,7 @@ void Player_Update(Actor* thisx, PlayState* play) {
     s32 dogParams;
     s32 pad;
     Input input;
+    MessageContext* msgCtx = &play->msgCtx;
 
     if (!Player_UpdateNoclip(this, play)) {
         goto skip_update;
@@ -12974,22 +13338,23 @@ s16 func_8084ABD8(PlayState* play, Player* this, s32 arg2, s16 arg3) {
 void func_8084AEEC(Player* this, f32* arg1, f32 arg2, s16 arg3) {
     f32 temp1;
     f32 temp2;
+    f32 limitIncrease = (this->currentMask == PLAYER_MASK_ZORA && func_808332B8(this)) ? 1.5f : 1.0f;
 
     temp1 = this->skelAnime.curFrame - 10.0f;
 
-    temp2 = (R_RUN_SPEED_LIMIT / 100.0f) * 0.8f;
+    temp2 = (R_RUN_SPEED_LIMIT / 100.0f) * 0.8f * limitIncrease;
     if (*arg1 > temp2) {
         *arg1 = temp2;
     }
 
-    if ((0.0f < temp1) && (temp1 < 10.0f)) {
+    if ((0.0f < temp1) && (temp1 < (10.0f * limitIncrease))) {
         temp1 *= 6.0f;
     } else {
         temp1 = 0.0f;
         arg2 = 0.0f;
     }
 
-    Math_AsymStepToF(arg1, arg2 * 0.8f, temp1, (fabsf(*arg1) * 0.02f) + 0.05f);
+    Math_AsymStepToF(arg1, arg2 * 0.8f * limitIncrease, temp1, (fabsf(*arg1) * 0.02f) + 0.05f);
     Math_ScaledStepToS(&this->yaw, arg3, 1600);
 }
 
@@ -13166,6 +13531,9 @@ void Player_Action_Talk(Player* this, PlayState* play) {
         this->textboxBtnCooldownTimer = 10;
         return;
     }
+
+    if (FIX_USEFUL_GLITCHES)
+        this->meleeWeaponState = 0;
 
     if (this->stateFlags1 & PLAYER_STATE1_23) {
         Player_Action_8084CC98(this, play);
@@ -14063,6 +14431,7 @@ void Player_Action_8084D610(Player* this, PlayState* play) {
                 Player_PlayLandingSfx(this);
             }
         } else {
+
             Player_GetMovementSpeedAndYaw(this, &speedTarget, &yawTarget, SPEED_MODE_LINEAR, play);
 
             if (speedTarget != 0.0f) {
@@ -14305,7 +14674,7 @@ s32 func_8084DFF4(PlayState* play, Player* this) {
         }
     } else {
         if (Message_GetState(&play->msgCtx) == TEXT_STATE_CLOSING) {
-            if (play->sceneId == SCENE_DESERT_COLOSSUS && (this->getItemId == GI_GORONS_BRACELET || this->getItemId == GI_SILVER_GAUNTLETS || this->getItemId == GI_GOLD_GAUNTLETS || this->getItemId == GI_POWER_BRACELET || this->getItemId == GI_POWER_BRACELETS) ) {
+            if (play->sceneId == SCENE_DESERT_COLOSSUS && !IS_RUSH_QUEST && (this->getItemId == GI_GORONS_BRACELET || this->getItemId == GI_SILVER_GAUNTLETS || this->getItemId == GI_GOLD_GAUNTLETS || this->getItemId == GI_POWER_BRACELET || this->getItemId == GI_POWER_BRACELETS) ) {
                 play->nextEntranceIndex = ENTR_DESERT_COLOSSUS_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 gSaveContext.nextCutsceneIndex = 0xFFF1;
@@ -14550,26 +14919,21 @@ void Player_Action_TimeTravelEnd(Player* this, PlayState* play) {
             return;
         }
 
-#if OOT_VERSION < PAL_1_0
-        if (!LINK_IS_ADULT && LinkAnimation_OnFrame(&this->skelAnime, 5.0f)) {
-            // There is a jump sound when leaving the pedestal, but no landing sound when hitting the floor.
-            // This is fixed in PAL 1.0 and above.
-            Player_PlayVoiceSfx(this, NA_SE_VO_LI_AUTO_JUMP);
-        } else if (LINK_IS_ADULT) {
-            func_8084E988(this);
-        }
-#else
         if (!LINK_IS_ADULT) {
-            static AnimSfxEntry sJumpOffPedestalAnimSfxList[] = {
-                { NA_SE_VO_LI_AUTO_JUMP, ANIMSFX_DATA(ANIMSFX_TYPE_VOICE, 5) },
-                { 0, -ANIMSFX_DATA(ANIMSFX_TYPE_LANDING, 15) },
-            };
+            if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+                if (LinkAnimation_OnFrame(&this->skelAnime, 60.0f))
+                    Player_PlayVoiceSfx(this, NA_SE_VO_LI_SWORD_N);
+            } else {
+                static AnimSfxEntry sJumpOffPedestalAnimSfxList[] = {
+                    { NA_SE_VO_LI_AUTO_JUMP, ANIMSFX_DATA(ANIMSFX_TYPE_VOICE, 5) },
+                    { 0, -ANIMSFX_DATA(ANIMSFX_TYPE_LANDING, 15) },
+                };
 
-            Player_ProcessAnimSfxList(this, sJumpOffPedestalAnimSfxList);
+                Player_ProcessAnimSfxList(this, sJumpOffPedestalAnimSfxList);
+            }
         } else {
             func_8084E988(this);
         }
-#endif
     }
 }
 
@@ -15697,6 +16061,7 @@ static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX] = {
     { 3, &gPlayerAnim_link_demo_kenmiru1 },              // PLAYER_CSACTION_100
     { 3, &gPlayerAnim_link_demo_kenmiru2 },              // PLAYER_CSACTION_101
     { 3, &gPlayerAnim_link_demo_kenmiru2_modori },       // PLAYER_CSACTION_102
+    { -1, &PlayerCs_InitDekuWalk },                      // PLAYER_CSACTION_103
 };
 
 static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
@@ -15807,6 +16172,7 @@ static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
     { 12, &gPlayerAnim_link_demo_kenmiru1_wait },  // PLAYER_CSACTION_100
     { 12, &gPlayerAnim_link_demo_kenmiru2_wait },  // PLAYER_CSACTION_101
     { 12, &gPlayerAnim_demo_link_nwait },          // PLAYER_CSACTION_102
+    { -1, PlayerCs_DekuWalk },                     // PLAYER_CSACTION_103
 };
 
 void Player_AnimChangeOnceMorphZeroRootYawSpeed(PlayState* play, Player* this, LinkAnimationHeader* anim) {
@@ -16073,6 +16439,29 @@ void func_80851828(PlayState* play, Player* this, CsCmdActorCue* cue) {
     }
 }
 
+void PlayerCs_InitDekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
+    this->actor.world.rot.y = this->actor.shape.rot.y = 0x2000;
+    this->unk_450.x = 635.0f;
+    this->unk_450.y = 1400.0f;
+    this->unk_450.z = 633.0f;
+    this->speedXZ = 5.5f;
+    this->av2.actionVar2 = 0;
+}
+
+void PlayerCs_DekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
+    f32 speed = 5.5f;
+
+    this->av2.actionVar2++;
+
+    if (this->av2.actionVar2 >= 22 && this->av2.actionVar2 >= 25)
+        this->actor.world.rot.y = this->actor.shape.rot.y = 0x2000;
+
+    func_80845BA0(play, this, &speed, 10);
+
+    if (this->av2.actionVar2 == 24)
+        Player_SetCsAction(play, NULL, 9);
+}
+
 void func_808518DC(PlayState* play, Player* this, CsCmdActorCue* cue) {
     func_8083CEAC(this, play);
 }
@@ -16107,7 +16496,16 @@ static LinkAnimationHeader* D_80855190[] = {
 };
 
 void func_808519EC(PlayState* play, Player* this, CsCmdActorCue* cue) {
-    static Vec3f sPedestalPos = { -1.0f, 70.0f, 20.0f };
+    static Vec3f sPedestalPos;
+    if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+        sPedestalPos.x = -2000.0f;
+        sPedestalPos.y = 8.0f;
+        sPedestalPos.z = -80.0f;
+    } else {
+        sPedestalPos.x = -1.0f;
+        sPedestalPos.y = 70.0f;
+        sPedestalPos.z = 20.0f;
+    }
 
     Math_Vec3f_Copy(&this->actor.world.pos, &sPedestalPos);
     this->actor.shape.rot.y = -0x8000;

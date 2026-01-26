@@ -48,8 +48,8 @@
 #include "segment_symbols.h"
 #include "save.h"
 #include "vis.h"
-#include "libu64/gfxprint.h"
-#include "alloca.h"
+
+#include "z_play_rush.c"
 
 #pragma increment_block_number "gc-eu:0 gc-eu-mq:0 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ique-cn:224" \
                                "ntsc-1.0:240 ntsc-1.1:240 ntsc-1.2:240 pal-1.0:240 pal-1.1:240"
@@ -71,6 +71,9 @@ UNK_TYPE D_8012D1F4 = 0; // unused
 #endif
 
 Input* D_8012D1F8 = NULL;
+
+static TitleCardInfo sDefaultTitleCard = { 0xA000, { 140, 40, 160, 255 }, HUD_VISIBILITY_NOTHING, 30, 0, 25, 67, 60, 28, 40, 30 };
+static u8 specialPowerTimer = 80;
 
 void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn);
 
@@ -297,7 +300,7 @@ void Play_Init(GameState* thisx) {
     s32 playerStartBgCamIndex;
     s32 i;
     u8 baseSceneLayer;
-    s32 pad[2];
+    gSaveContext.showTitleCard = true;
 
     if (gSaveContext.save.entranceIndex == ENTR_LOAD_OPENING) {
         gSaveContext.save.entranceIndex = 0;
@@ -353,7 +356,7 @@ void Play_Init(GameState* thisx) {
     Cutscene_InitContext(this, &this->csCtx);
     
 #if OOT_NTSC_N64
-    if (gSaveContext.language != LANGUAGE_JPN && gSaveContext.gameMode == GAMEMODE_NORMAL)
+    if ( (gSaveContext.language != LANGUAGE_JPN && gSaveContext.gameMode == GAMEMODE_NORMAL) || gSaveContext.gameMode == GAMEMODE_END_CREDITS)
         DMA_REQUEST_SYNC(this->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
 #endif
 
@@ -403,7 +406,7 @@ void Play_Init(GameState* thisx) {
 
     if (!IS_CUTSCENE_LAYER) {
         if (IS_CHILD_QUEST) {
-            u8 sceneId = gEntranceTable[gSaveContext.save.entranceIndex].sceneId;
+            u8 sceneId = gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId;
             if (GET_EVENTCHKINF(EVENTCHKINF_45)) {
                 if (sceneId == SCENE_KOKIRI_FOREST) 
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_48) ? 3 : 2;
@@ -415,14 +418,17 @@ void Play_Init(GameState* thisx) {
                     gSaveContext.sceneLayer += 2;
             } else if (sceneId == SCENE_HYRULE_FIELD)
                 gSaveContext.sceneLayer = CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD) && CHECK_QUEST_ITEM(QUEST_GORON_RUBY) && CHECK_QUEST_ITEM(QUEST_ZORA_SAPPHIRE);
-        } else if (gEntranceTable[gSaveContext.save.entranceIndex].sceneId == SCENE_HYRULE_FIELD && !LINK_IS_ADULT)
+        } else if (gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId == SCENE_HYRULE_FIELD && !LINK_IS_ADULT)
             gSaveContext.sceneLayer = CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD) && CHECK_QUEST_ITEM(QUEST_GORON_RUBY) && CHECK_QUEST_ITEM(QUEST_ZORA_SAPPHIRE);
-        else if (gEntranceTable[gSaveContext.save.entranceIndex].sceneId == SCENE_KOKIRI_FOREST && LINK_IS_ADULT)
+        else if (gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId == SCENE_KOKIRI_FOREST && LINK_IS_ADULT)
             gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_48) ? 3 : 2;
     }
 
+    Play_SetDungeonRushEntry(this);
     Play_SpawnScene(
-        this, gEntranceTable[gSaveContext.save.entranceIndex + SCENE_LAYER_GOTO(this, gSaveContext.sceneLayer)].sceneId, gEntranceTable[gSaveContext.save.entranceIndex + SCENE_LAYER_GOTO(this, gSaveContext.sceneLayer)].spawn);
+        this, gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, ((void)0, gSaveContext.sceneLayer))].sceneId,
+        gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, ((void)0, gSaveContext.sceneLayer))].spawn);
+    Play_SetDungeonRushProgress(this);
 
     PRINTF("\nSCENE_NO=%d COUNTER=%d\n", ((void)0, gSaveContext.save.entranceIndex), gSaveContext.sceneLayer);
 
@@ -471,12 +477,16 @@ void Play_Init(GameState* thisx) {
     this->unk_11E16 = 0xFF;
     this->bgCoverAlpha = 0;
     this->haltAllActors = false;
-    this->autosave = this->specialIconAlpha = this->specialIconUp = this->specialIconShake = this->specialIconCount = this->specialIconLast = 0;
+    this->specialIconAlpha = this->specialIconShake = this->specialIconCount = this->specialIconLast = 0;
+    this->specialIconUp = false;
+
+    if (this->autosave != AUTOSAVE_ON && this->autosave != AUTOSAVE_OFF)
+        this->autosave = AUTOSAVE_RESET;
 
     if (gSaveContext.gameMode != GAMEMODE_TITLE_SCREEN) {
         if (gSaveContext.nextTransitionType == TRANS_NEXT_TYPE_DEFAULT) {
             this->transitionType = ENTRANCE_INFO_END_TRANS_TYPE(
-                gEntranceTable[gSaveContext.save.entranceIndex + SCENE_LAYER_GOTO(this, baseSceneLayer)].field);
+                gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, baseSceneLayer)].field);
         } else {
             this->transitionType = gSaveContext.nextTransitionType;
             gSaveContext.nextTransitionType = TRANS_NEXT_TYPE_DEFAULT;
@@ -638,7 +648,7 @@ void Play_Update(PlayState* this) {
                         }
 
                         // fade out bgm if "continue bgm" flag is not set
-                        if (!(gEntranceTable[this->nextEntranceIndex + SCENE_LAYER_GOTO(this, sceneLayer)].field &
+                        if (!(gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, sceneLayer)].field &
                               ENTRANCE_INFO_CONTINUE_BGM_FLAG)) {
                             PRINTF(T("\n\n\nサウンドイニシャル来ました。111", "\n\n\nSound initialized. 111"));
                             if ((this->transitionType < TRANS_TYPE_MAX) && !Environment_IsForcedSequenceDisabled()) {
@@ -1127,11 +1137,11 @@ skip:
     Environment_Update(this, &this->envCtx, &this->lightCtx, &this->pauseCtx, &this->msgCtx, &this->gameOverCtx,
                        this->state.gfxCtx);
 
-    if (this->autosave && !Player_InCsMode(this) && !IS_PAUSED(&this->pauseCtx) && !gDebugCamEnabled && this->msgCtx.msgMode == MSGMODE_NONE && gSaveContext.gameMode == GAMEMODE_NORMAL && this->gameOverCtx.state == GAMEOVER_INACTIVE && AUTOSAVE) {
+    if (this->autosave == AUTOSAVE_ON && !Player_InCsMode(this) && !IS_PAUSED(&this->pauseCtx) && !gDebugCamEnabled && this->msgCtx.msgMode == MSGMODE_NONE && gSaveContext.gameMode == GAMEMODE_NORMAL && this->gameOverCtx.state == GAMEOVER_INACTIVE && AUTOSAVE) {
         Play_SaveSceneFlags(this);
         gSaveContext.save.info.playerData.savedSceneId = this->sceneId;
         Sram_WriteSave(&this->sramCtx);
-        this->autosave = false;
+        this->autosave = AUTOSAVE_OFF;
         this->specialIconAlpha = 255;
         this->specialIconCount = 2;
 
@@ -1677,12 +1687,43 @@ void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn) {
     this->sceneId = sceneId;
     this->sceneDrawConfig = scene->drawConfig;
 
-    if (this->sceneId == SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 1)
+    if (sceneId == SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 1)
         R_ENABLE_MIRROR = 2;
-    else if (this->sceneId != SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 2)
+    else if (sceneId != SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 2)
         R_ENABLE_MIRROR = 1;
 
     PRINTF("\nSCENE SIZE %fK\n", (scene->sceneFile.vromEnd - scene->sceneFile.vromStart) / 1024.0f);
+
+    if (USE_TITLE_CARDS) {
+        u16 textId = sceneId;
+
+        if (sceneId == SCENE_MARKET_ENTRANCE_NIGHT || sceneId == SCENE_MARKET_ENTRANCE_RUINS)
+            textId = SCENE_MARKET_ENTRANCE_DAY;
+        else if (sceneId == SCENE_BACK_ALLEY_NIGHT)
+            textId = SCENE_BACK_ALLEY_DAY;
+        else if (sceneId == SCENE_MARKET_NIGHT || sceneId == SCENE_MARKET_RUINS)
+            textId = SCENE_MARKET_DAY;
+        else if (sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT || sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS)
+            textId = SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY;
+        else if (sceneId == SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS)
+            textId = SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC;
+        else if (sceneId == SCENE_GRAVE_WITH_FAIRYS_FOUNTAIN)
+            textId = SCENE_REDEAD_GRAVE;
+        else if (sceneId == SCENE_CASTLE_COURTYARD_GUARDS_NIGHT)
+            textId = SCENE_CASTLE_COURTYARD_GUARDS_DAY;
+        else if (sceneId == SCENE_GROTTO_SHORTCUTS)
+            textId = SCENE_GROTTOS;
+        else if (gSaveContext.save.entranceIndex == ENTR_WINDMILL_AND_DAMPES_GRAVE_0 || gSaveContext.save.entranceIndex == ENTR_LON_LON_BUILDINGS_1 || (sceneId == SCENE_MARKET_GUARD_HOUSE && gSaveContext.sceneLayer >= 2 && gSaveContext.sceneLayer <= 3) )
+            textId += 0x100;
+        textId += 0xA000;
+
+        if (!Message_HasSceneTitleCardMessage(this, textId))
+            this->msgCtx.titleCardInfo = NULL;
+        else {
+            this->msgCtx.titleCardInfo = &sDefaultTitleCard;
+            this->msgCtx.titleCardInfo->textId = textId;
+        }
+    }
 
 #if PLATFORM_N64
     if ((B_80121220 != NULL) && (scene->unk_12 > 0)) {
@@ -2077,3 +2118,43 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos) {
         return false;
     }
 }
+
+/**
+ * Use a special power (usually a tunic power) through the Amulet of Energy at the cost of energy
+ */
+u32 Player_UseSpecialPower(PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, u32 amount) {
+    if (Player_InBlockingCsMode(this, player) || !gSaveContext.save.info.hasObtainedItems.amuletOfEnergy)
+        return amount;
+    if (gSaveContext.save.info.energy < cost || this->specialPowerTimer > 0)
+        return amount;
+
+    gSaveContext.save.info.energy -= cost;
+    this->specialPowerTimer = (60 / R_UPDATE_RATE) * cooldown;
+    
+    if (type == SPECIAL_POWER_MAGIC_REGEN) {
+        gSaveContext.save.info.playerData.magic += amount;
+        if (gSaveContext.save.info.playerData.magic > gSaveContext.save.info.playerData.magicLevel * MAGIC_NORMAL_METER)
+            gSaveContext.save.info.playerData.magic = gSaveContext.save.info.playerData.magicLevel * MAGIC_NORMAL_METER;
+    } else if (type == SPECIAL_POWER_HEALTH_REGEN) {
+        gSaveContext.save.info.playerData.health += amount;
+        if (gSaveContext.save.info.playerData.health > gSaveContext.save.info.playerData.healthCapacity)
+            gSaveContext.save.info.playerData.health = gSaveContext.save.info.playerData.healthCapacity;
+    } else if (type == SPECIAL_POWER_REDUCE_DAMAGE) {
+        return (amount / 2);
+    } else if (type == SPECIAL_POWER_STRENGTHEN_SWORD) {
+        if (amount == DMG_SLASH_KOKIRI)
+            return DMG_JUMP_KOKIRI;
+        if (amount == DMG_SLASH_MASTER)
+            return DMG_JUMP_MASTER;
+        if (amount == DMG_SLASH_GIANT)
+            return DMG_JUMP_GIANT;
+    }
+
+    if (sfx != false)
+        Audio_PlaySfxGeneral(sfx, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+
+    return amount;
+}
+
+u8   Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 50 + HAS_AMULET_OF_ENERGY * 50; }
+bool Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || HAS_AMULET_OF_ENERGY || gSaveContext.save.info.isEnhancedSpinAcquired; }

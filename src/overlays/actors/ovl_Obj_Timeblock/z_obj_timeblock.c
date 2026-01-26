@@ -87,7 +87,7 @@ u32 ObjTimeblock_CalculateIsVisible(ObjTimeblock* this) {
         } else {
             u8 temp = PARAMS_GET_U(this->dyna.actor.params, 15, 1) ? true : false;
 
-            if (this->unk_177 == 1) {
+            if (this->unk_177 == 1 || (IS_CHILD_QUEST && LINK_IS_CHILD)) {
                 return this->unk_174 ^ temp;
             } else {
                 u8 linkIsChild = (LINK_AGE_IN_YEARS == YEARS_CHILD) ? true : false;

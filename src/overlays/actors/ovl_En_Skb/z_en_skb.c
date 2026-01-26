@@ -173,7 +173,6 @@ void EnSkb_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->actor.colChkInfo.damageTable = &sDamageTable;
-    Actor_SetGildedSwordDamageTaken(thisx);
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 0.0f);
     this->actor.focus.pos = this->actor.world.pos;
     this->actor.colChkInfo.mass = MASS_HEAVY;
@@ -212,8 +211,8 @@ void EnSkb_Destroy(Actor* thisx, PlayState* play) {
     Collider_DestroyJntSph(play, &this->collider);
 }
 
-void EnSkb_DecideNextAction(EnSkb* this) {
-    if (IS_DAY) {
+void EnSkb_DecideNextAction(EnSkb* this, PlayState* play) {
+    if (IS_DAY || Player_GetMask(play) == PLAYER_MASK_SKULL) {
         EnSkb_SetupDespawn(this);
     } else if (Actor_IsFacingPlayer(&this->actor, 0x11C7) &&
                (this->actor.xzDistToPlayer < (60.0f + (this->actor.params * 6.0f)))) {
@@ -244,7 +243,7 @@ void EnSkb_RiseFromGround(EnSkb* this, PlayState* play) {
         EnSkb_SpawnDebris(play, this, &this->actor.world.pos);
     }
     if (SkelAnime_Update(&this->skelAnime) && (0.0f == this->actor.shape.yOffset)) {
-        EnSkb_DecideNextAction(this);
+        EnSkb_DecideNextAction(this, play);
     }
 }
 
@@ -310,7 +309,7 @@ void EnSkb_WalkForward(EnSkb* this, PlayState* play) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_STALKID_WALK);
         }
     }
-    if (Math_Vec3f_DistXZ(&this->actor.home.pos, &player->actor.world.pos) > 800.0f || IS_DAY) {
+    if (Math_Vec3f_DistXZ(&this->actor.home.pos, &player->actor.world.pos) > 800.0f || IS_DAY || Player_GetMask(play) == PLAYER_MASK_SKULL) {
         EnSkb_SetupDespawn(this);
     } else if (Actor_IsFacingPlayer(&this->actor, 0x11C7) &&
                (this->actor.xzDistToPlayer < (60.0f + (this->actor.params * 6.0f)))) {
@@ -341,7 +340,7 @@ void EnSkb_Attack(EnSkb* this, PlayState* play) {
         this->collider.base.atFlags &= ~(AT_HIT | AT_BOUNCED);
         EnSkb_SetupRecoil(this);
     } else if (SkelAnime_Update(&this->skelAnime)) {
-        EnSkb_DecideNextAction(this);
+        EnSkb_DecideNextAction(this, play);
     }
 }
 
@@ -356,7 +355,7 @@ void EnSkb_SetupRecoil(EnSkb* this) {
 
 void EnSkb_Recoil(EnSkb* this, PlayState* play) {
     if (SkelAnime_Update(&this->skelAnime)) {
-        EnSkb_DecideNextAction(this);
+        EnSkb_DecideNextAction(this, play);
     }
 }
 
@@ -383,7 +382,7 @@ void EnSkb_Stunned(EnSkb* this, PlayState* play) {
         if (this->actor.colChkInfo.health == 0) {
             EnSkb_SetupDeath(this, play);
         } else {
-            EnSkb_DecideNextAction(this);
+            EnSkb_DecideNextAction(this, play);
         }
     }
 }
@@ -419,7 +418,7 @@ void EnSkb_TakeDamage(EnSkb* this, PlayState* play) {
 
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0x1194, 0);
         if (SkelAnime_Update(&this->skelAnime) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) {
-            EnSkb_DecideNextAction(this);
+            EnSkb_DecideNextAction(this, play);
         }
     }
 }

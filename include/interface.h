@@ -5,6 +5,7 @@
 #include "ultra64.h"
 #include "dma.h"
 #include "view.h"
+#include "gfx.h"
 
 struct PlayState;
 
@@ -146,6 +147,8 @@ typedef struct InterfaceContext {
         /* 0x026B */ u8    farores;    // "m_wind"
         /* 0x026C */ u8    dinsNayrus; // "m_magic"; din's fire and nayru's love
         /* 0x026D */ u8    all;        // "another"; enables all item restrictions
+        /* 0x026E */ u8    masks;      // "c_mask"
+        /* 0x026F */ u8    magicBow;   // "m_bow"
     }                   restrictions;
 } InterfaceContext; // size = 0x270
 
@@ -154,6 +157,8 @@ typedef struct InterfaceContext {
  */
 #define A_BUTTON_X 186 + WS_SHIFT_FULL
 #define A_BUTTON_Y 9
+#define A_MM_BUTTON_X 190 + WS_SHIFT_FULL
+#define A_MM_BUTTON_Y 23
 
 #if !PLATFORM_GC
 #define A_BUTTON_R 90
@@ -164,9 +169,14 @@ typedef struct InterfaceContext {
 #define A_BUTTON_G 200
 #define A_BUTTON_B 50
 #endif
+#define A_MM_BUTTON_R 100
+#define A_MM_BUTTON_G 200
+#define A_MM_BUTTON_B 255
 
 #define B_BUTTON_X 160 + WS_SHIFT_FULL
 #define B_BUTTON_Y 17
+#define B_MM_BUTTON_X 167 + WS_SHIFT_FULL
+#define B_MM_BUTTON_Y 17
 
 #if !PLATFORM_GC
 #define B_BUTTON_R 0
@@ -177,6 +187,9 @@ typedef struct InterfaceContext {
 #define B_BUTTON_G 30
 #define B_BUTTON_B 30
 #endif
+#define B_MM_BUTTON_R 100
+#define B_MM_BUTTON_G 255
+#define B_MM_BUTTON_B 120
 
 #define C_LEFT_BUTTON_X 227 + WS_SHIFT_FULL
 #define C_LEFT_BUTTON_Y 18
@@ -208,6 +221,9 @@ typedef struct InterfaceContext {
 #define START_BUTTON_G 120
 #define START_BUTTON_B 120
 #endif
+#define START_MM_BUTTON_R 255
+#define START_MM_BUTTON_G 130
+#define START_MM_BUTTON_B 60
 
 /**
  * These are the colors for the hearts in the interface. The prim color is the red color of the heart
@@ -292,9 +308,11 @@ void Interface_Destroy(struct PlayState* play);
 void Interface_Init(struct PlayState* play);
 void Interface_ChangeDpadSet(struct PlayState* play);
 
+extern Gfx* Gfx_TextureIA8(Gfx* displayListHead, void* texture, s16 textureWidth, s16 textureHeight, s16 rectLeft, s16 rectTop, s16 rectWidth, s16 rectHeight, u16 dsdx, u16 dtdy);
+
 extern s16 gSpoilingItems[3];
 extern s16 gSpoilingItemReverts[3];
-extern bool dpadStatus[4];
+extern u8 dpadStatus[4];
 extern u8 dpadAlphas[5];
 extern bool switchedDualSet;
 extern u8 sNoclipTimer;

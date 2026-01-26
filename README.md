@@ -25,21 +25,46 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [Decomp Discord](https://discord.zelda.deco.mp)
 - [HackerOoT](https://github.com/HackerN64/HackerOoT)
 - [Hylian Modding Discord](http://discord.gg/qQqDsM8)
+- [Zelda Spaceworld ´97 Experience](https://github.com/z64proto/sw97)
+- [Curse of Moonlight](https://github.com/Javarooster-png/curseofmoonlight)
+- [Demon's Quest](https://github.com/thinedave/ocarina-demonsquest-source)
+- [Darunia's Joy](https://github.com/DaruniasJoy/OoT-Custom-Sequences)
+- [MMR Music Repo](https://mega.nz/folder/4g1xHbwL#pzE9l2KBs-kwCJJr6E6IKQ)
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
+- **gh0st:** Open hand z-targeting animation to idle fix
+- **Kenton M:** Roc's Feather concept
 - **Nicko (Airi):** DK64 Expansion Pak warning display
-- **Nokaubure:** autosave concept, Gohma debris
+- **Nokaubure:** autosave concept, Gohma debris, ISG fix
 - **OoT Randomizer:** Key chest textures
-- **Skawo:** Font preloading, Fixes: Kakariko Gate Guard, Stalfos lag, Ingo text
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
+- **thinedave & Aegiker:** Energy (stamina) wheel
+
+**Features & fixes by Skawo:**
+- Font preloading
+- Kakariko Gate Guard Dialogue
+- Stalfos break parts lag
+- Ingo Ranch text breaking Running Man timer
+- Spirit Temple room texture alpha blending fix
+- Kakariko Thunderstorm Weather fix
 
 **Actors and objects:**
+- **GrandLovania**: Stalmaster
 - **LeSéducteur:** Buff Scrub
 - **Syeo & Trueffel:** Miniblin, Molmauk
+- **Sunset Tides Interactive:** Beast
+- **thinedave & Aegiker:** Harder Mad Scrub, Biri, King Dodongo, Iron Knuckle & Ganondorf
 - **Zelda Spaceworld ´97 Experience:** Zol
+
+**Music tracks:**
+- "Kolima Forest" from "Golden Sun" by Asra
+- "Koloktos" from Skyward Sword by Zeraphyr
+- "Mysterious Forest" from "A Link to the Past" by Fish_waffle64
+- "Sacred Grove" from "Twilight Princess" by ZeldaBoy14
+- "Tal Tal Height" from "Link's Awakening DX" by NewSoupVi
 
 ### Instructions
 

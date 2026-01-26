@@ -246,20 +246,18 @@ void EnSth_GivePlayerItem(EnSth* this, PlayState* play) {
     switch (this->actor.params) {
         case 1:
         case 3:
-            switch (CUR_UPG_VALUE(UPG_WALLET)) {
-                case 0:
-                    getItemId = GI_WALLET_ADULT;
-                    break;
-
-                case 1:
-                    getItemId = GI_WALLET_GIANT;
-                    break;
-
-                default:
-                    getItemId = GI_WALLET_ROYAL;
-                    break;
-            }
-            break;
+            if (CUR_UPG_VALUE(UPG_WALLET2) >= 2)
+                getItemId = GI_WALLET_BOTTOMLESS;
+            else if (CUR_UPG_VALUE(UPG_WALLET2) == 1)
+                getItemId = GI_WALLET_TYCOON;
+            else if (CUR_UPG_VALUE(UPG_WALLET) == 3)
+                getItemId = GI_WALLET_ROYAL;
+            else if (CUR_UPG_VALUE(UPG_WALLET) == 2)
+                getItemId = GI_WALLET_MASTER;
+            else if (CUR_UPG_VALUE(UPG_WALLET) == 1)
+                getItemId = GI_WALLET_GIANT;
+            else if (CUR_UPG_VALUE(UPG_WALLET) == 0)
+                getItemId = GI_WALLET_ADULT;
     }
 
     Actor_OfferGetItem(&this->actor, play, getItemId, 10000.0f, 50.0f);

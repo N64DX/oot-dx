@@ -190,6 +190,8 @@ void Sram_InitNewSave(void) {
     bzero(&gSaveContext.save.info, sizeof(SaveInfo));
     gSaveContext.save.totalDays = 0;
     gSaveContext.save.bgsDayCount = 0;
+    gSaveContext.cheated = 0;
+    gSaveContext.save.info.energy = 0;
 
     gSaveContext.save.info.playerData = sNewSavePlayerData;
     gSaveContext.save.info.equips = sNewSaveEquips;
@@ -345,6 +347,41 @@ static Inventory sDebugSaveInventory = {
 
 static Checksum sDebugSaveChecksum = { 0 };
 
+void Sram_SetRushQuestFlags(void) {
+    if (!IS_RUSH_QUEST)
+        return;
+
+    SET_EVENTCHKINF(EVENTCHKINF_OPENED_DOOR_OF_TIME);
+    SET_EVENTCHKINF(EVENTCHKINF_REVEALED_MASTER_SWORD);
+    SET_EVENTCHKINF(EVENTCHKINF_37);
+    SET_EVENTCHKINF(EVENTCHKINF_55);
+    SET_EVENTCHKINF(EVENTCHKINF_C4);
+    SET_EVENTCHKINF(EVENTCHKINF_C5);
+    SET_EVENTCHKINF(EVENTCHKINF_AC);
+
+    SET_EVENTCHKINF(EVENTCHKINF_A7);
+    SET_EVENTCHKINF(EVENTCHKINF_A8);
+    SET_EVENTCHKINF(EVENTCHKINF_B0);
+    SET_EVENTCHKINF(EVENTCHKINF_B5);
+    SET_EVENTCHKINF(EVENTCHKINF_95);
+    SET_INFTABLE(INFTABLE_11A);
+    gSaveContext.save.info.sceneFlags[SCENE_WATER_TEMPLE].swch |= 0x10000;
+
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_GOHMA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_KING_DODONGO_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_BARINADE_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_PHANTOM_GANON_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_VOLVAGIA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_MORPHA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_BONGO_BONGO_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_3B);
+    SET_EVENTCHKINF(EVENTCHKINF_C0);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_TWINROVA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_GANONDORF_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_BEGAN_HYPER_GOHMA_BATTLE);
+    SET_EVENTCHKINF(EVENTCHKINF_C7);
+}
+
 /**
  *  Initialize debug save. This is also used on the Title Screen
  *  This save has a mostly full inventory with 10 hearts and single magic.
@@ -369,6 +406,10 @@ void Sram_InitDebugSave(void) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
         SET_HEROS_SWORD;
         SET_HEROS_SHIELD;
+        SET_MAGIC_BEANS;
+        SET_ROCS_FEATHER;
+        SET_HAMMER;
+        SET_FAIRYS_SWORD;
     }
 
     gSaveContext.save.info.horseData.sceneId = SCENE_HYRULE_FIELD;
@@ -398,9 +439,17 @@ void Sram_InitDebugSave(void) {
         }
     }
 
+    gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
+    gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
+    gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
+    gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
+
+    Sram_SetRushQuestFlags();
     gSaveContext.save.entranceIndex = ENTR_HYRULE_FIELD_0;
     gSaveContext.save.info.playerData.magicLevel = 0;
     gSaveContext.save.info.sceneFlags[SCENE_WATER_TEMPLE].swch = 0x40000000;
+    gSaveContext.cheated = 1;
+    gSaveContext.save.info.energy = 0;
 }
 
 static s16 sDungeonEntrances[] = {
@@ -436,6 +485,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
     u16 i;
     u16 j;
     u8* ptr;
+    u16 lastEntranceIndex;
 
     PRINTF(T("個人Ｆｉｌｅ作成\n", "Create personal file\n"));
     i = gSramSlotOffsets[gSaveContext.fileNum];
@@ -448,9 +498,11 @@ void Sram_OpenSave(SramContext* sramCtx) {
     PRINTF("SCENE_DATA_ID = %d   SceneNo = %d\n", gSaveContext.save.info.playerData.savedSceneId,
            ((void)0, gSaveContext.save.entranceIndex));
 
-    R_ENABLE_MIRROR = MIRROR_MODE ? 1 : 0;
-    R_QUEST_MODE    = QUEST_MODE;
+    R_BEATEN_RUSH_MODE = 0;
+    R_ENABLE_MIRROR    = MIRROR_MODE ? 1 : 0;
+    R_QUEST_MODE       = QUEST_MODE;
 
+    lastEntranceIndex = gSaveContext.save.entranceIndex;
     switch (gSaveContext.save.info.playerData.savedSceneId) {
         case SCENE_DEKU_TREE:
         case SCENE_DODONGOS_CAVERN:
@@ -509,6 +561,27 @@ void Sram_OpenSave(SramContext* sramCtx) {
             gSaveContext.save.entranceIndex = ENTR_GANONS_TOWER_0;
             break;
 
+        case SCENE_ANCIENT_HOLLOW:
+            gSaveContext.save.entranceIndex = ENTR_ANCIENT_HOLLOW_0;
+            break;
+
+        case SCENE_WOODFALL_TEMPLE:
+        case SCENE_WOODFALL_TEMPLE_BOSS:
+            if (gSaveContext.save.entranceIndex == ENTR_WOODFALL_TEMPLE_0)
+                gSaveContext.save.entranceIndex = ENTR_WOODFALL_TEMPLE_0;
+            break;
+
+        case SCENE_BESITU:
+            if (IS_CHILD_QUEST)
+                gSaveContext.save.entranceIndex = ENTR_FORBIDDEN_WOODS_6;
+            break;
+
+        case SCENE_DESERT_COLOSSUS:
+            if (IS_RUSH_QUEST) {
+                gSaveContext.save.entranceIndex = ENTR_SPIRIT_TEMPLE_0;
+                break;
+            }
+
         default:
             if (!RESUME_LAST_AREA) {
                 if (gSaveContext.save.info.playerData.savedSceneId != SCENE_LINKS_HOUSE)
@@ -518,8 +591,30 @@ void Sram_OpenSave(SramContext* sramCtx) {
             break;
     }
 
-    if (SKIP_INTROS && gSaveContext.save.entranceIndex == ENTR_LINKS_HOUSE_0)
+    if (DEBUG_MODE)
+        gSaveContext.save.entranceIndex = lastEntranceIndex;
+
+    if ( (SKIP_INTROS || IS_RUSH_QUEST) && gSaveContext.save.entranceIndex == ENTR_LINKS_HOUSE_0)
         gSaveContext.save.cutsceneIndex = 0;
+
+    Sram_SetRushQuestFlags();
+    if (IS_BOSS_RUSH) {
+        for (i=0; i<4; i++)
+            for (j=0; j<4; j++)
+                gSaveContext.save.info.playerData.dpadItems[i][j] = 0;
+        for (i=SCENE_DEKU_TREE_BOSS; i<=SCENE_SHADOW_TEMPLE_BOSS; i++)
+            MemSet(&gSaveContext.save.info.sceneFlags[i], 0, sizeof(SavedSceneFlags));
+
+        gSaveContext.cheated = 0;
+        gSaveContext.save.info.playtime = 0;
+        gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
+        gSaveContext.save.info.equips = gSaveContext.save.info.playerData.adultEquips = gSaveContext.save.info.playerData.childEquips = sNewSaveEquips;
+        gSaveContext.save.info.inventory = sNewSaveInventory;
+        gSaveContext.save.info.playerData.healthCapacity = gSaveContext.save.info.playerData.health = 0x30;
+        gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = 0;
+        gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = gSaveContext.save.info.playerData.isDoubleDefenseAcquired = gSaveContext.save.info.playerData.bgsFlag = gSaveContext.save.info.playerData.dpadDualSet = false;
+        gSaveContext.save.info.playerData.equipmentUpgrades = 0;
+    }
 
     PRINTF("scene_no = %d\n", gSaveContext.save.entranceIndex);
     PRINTF_RST();
@@ -575,7 +670,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
         }
     }
 
-    if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)) {
+    if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER) && !(IS_CHILD_QUEST && GET_EVENTCHKINF(EVENTCHKINF_PURIFIED_WOODFALL) && !HAS_MASTER_SWORD)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER);
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
         gSaveContext.save.info.equips.equipment &= ~(0xF << (EQUIP_TYPE_SWORD * 4));
@@ -614,6 +709,24 @@ void Sram_OpenSave(SramContext* sramCtx) {
 
     if (IS_CHILD_QUEST)
         gSaveContext.save.linkAge = LINK_AGE_CHILD;
+
+    if (INV_CONTENT(ITEM_MAGIC_BEAN) == ITEM_MAGIC_BEAN)
+        SET_MAGIC_BEANS;
+    if (INV_CONTENT(ITEM_HAMMER) == ITEM_HAMMER)
+        SET_HAMMER;
+
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)   && (gSaveContext.save.info.shieldDurability[0] == 0 || gSaveContext.save.info.shieldDurability[0] >= MAX_DURABILITY_SHIELD_DEKU))
+        gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) && (gSaveContext.save.info.shieldDurability[1] == 0 || gSaveContext.save.info.shieldDurability[1] >= MAX_DURABILITY_SHIELD_HYLIAN))
+        gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR) && (gSaveContext.save.info.shieldDurability[2] == 0 || gSaveContext.save.info.shieldDurability[2] >= MAX_DURABILITY_SHIELD_MIRROR) && !gSaveContext.save.info.mirrorShieldIsBroken)
+        gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)  && (gSaveContext.save.info.shieldDurability[3] == 0 || gSaveContext.save.info.shieldDurability[3] >= MAX_DURABILITY_SHIELD_HEROS))
+        gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
+
+    // Cheating
+    if (DAMAGE_TAKEN == 7 || MONSTER_HP == 7 || ELITE_HP == 7 || BOSS_HP == 7 || DEBUG_MODE || DEBUG_FEATURES)
+        gSaveContext.cheated = 1;
 }
 
 void Sram_OpenSaveOptions(SramContext* sramCtx) {
@@ -629,6 +742,9 @@ void Sram_WriteSave(SramContext* sramCtx) {
     u16 checksum;
     u16 j;
     u16* ptr;
+
+    if (gSaveContext.fileNum == 0xFF)
+        return;
 
     gSaveContext.save.info.checksum.value = 0;
 

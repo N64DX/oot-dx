@@ -1,5 +1,5 @@
 #ifndef SWAMP_SPIDER_HOUSE_SCENE_H
-#define SWAMP_SPIDER_HOUSE_SCENE_H 1
+#define SWAMP_SPIDER_HOUSE_SCENE_H
 
 #include "bgcheck.h"
 #include "cutscene.h"

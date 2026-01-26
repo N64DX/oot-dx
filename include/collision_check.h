@@ -441,14 +441,14 @@ typedef struct DamageTable {
 } DamageTable;
 
 typedef struct CollisionCheckInfoInit {
-    /* 0x00 */ u16 health;
+    /* 0x00 */ s16 health;
     /* 0x02 */ s16 cylRadius;
     /* 0x04 */ s16 cylHeight;
     /* 0x06 */ u8 mass;
 } CollisionCheckInfoInit;
 
 typedef struct CollisionCheckInfoInit2 {
-    /* 0x00 */ u16 health;
+    /* 0x00 */ s16 health;
     /* 0x02 */ s16 cylRadius;
     /* 0x04 */ s16 cylHeight;
     /* 0x06 */ s16 cylYShift;
@@ -462,12 +462,14 @@ typedef struct CollisionCheckInfo {
     /* 0x12 */ s16 cylHeight; // Used for various purposes
     /* 0x14 */ s16 cylYShift; // Unused. Purpose inferred from Cylinder16 and CollisionCheck_CylSideVsLineSeg
     /* 0x16 */ u8 mass; // Used to compute displacement for OC collisions
-    /* 0x17 */ u16 health; // Note: some actors may use their own health variable instead of this one
+    /* 0x17 */ s16 health; // Note: some actors may use their own health variable instead of this one
     /* 0x18 */ u8 damage; // Amount to decrement health by
     /* 0x19 */ u8 damageReaction; // Stores what reaction should occur after being hit
     /* 0x1A */ u8 atHitEffect; // Stores what effect should occur when AT connects with an AC
     /* 0x1B */ u8 acHitEffect; // Stores what effect should occur when AC is touched by an AT
-} CollisionCheckInfo; // size = 0x1C
+    /* 0x1C */ s32 dmgFlags; // Stores the last damage flags being hit with
+    /* 0x20 */ u8 itemAction; // Stores the last item action being hit with
+} CollisionCheckInfo; // size = 0x21
 
 DamageTable* DamageTable_Get(s32 index);
 void DamageTable_Clear(DamageTable* table);
@@ -533,6 +535,7 @@ s32 CollisionCheck_SetAC_SAC(struct PlayState* play, CollisionCheckContext* colC
 s32 CollisionCheck_SetOC(struct PlayState* play, CollisionCheckContext* colChkCtx, Collider* collider);
 s32 CollisionCheck_SetOC_SAC(struct PlayState* play, CollisionCheckContext* colChkCtx, Collider* collider, s32 index);
 s32 CollisionCheck_SetOCLine(struct PlayState* play, CollisionCheckContext* colChkCtx, OcLine* collider);
+void CollisionCheck_GreenBlood(struct PlayState* play, Collider* collider, Vec3f* v);
 void CollisionCheck_BlueBlood(struct PlayState* play, Collider* collider, Vec3f* v);
 void CollisionCheck_AT(struct PlayState* play, CollisionCheckContext* colChkCtx);
 void CollisionCheck_OC(struct PlayState* play, CollisionCheckContext* colChkCtx);
@@ -562,5 +565,7 @@ void CollisionCheck_SpawnShieldParticlesWood(struct PlayState* play, Vec3f* v, V
 s32 CollisionCheck_CylSideVsLineSeg(f32 radius, f32 height, f32 offset, Vec3f* actorPos, Vec3f* itemPos,
                                     Vec3f* itemProjPos, Vec3f* out1, Vec3f* out2);
 u8 CollisionCheck_GetSwordDamage(s32 dmgFlags);
+
+#define BLENDERU_TO_ZU(x, y, z, scale) {x * scale, z * scale, (-y) * scale}
 
 #endif

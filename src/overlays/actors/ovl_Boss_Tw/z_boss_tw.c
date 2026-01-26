@@ -516,7 +516,7 @@ void BossTw_Init(Actor* thisx, PlayState* play2) {
 
     Actor_SetScale(&this->actor, 2.5 * 0.01f);
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
-    this->actor.colChkInfo.health = 0;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(4, BOSS_HP);
     Collider_InitCylinder(play, &this->collider);
 
     if (!sTwInitialized) {
@@ -1344,7 +1344,8 @@ void BossTw_ShootBeam(BossTw* this, PlayState* play) {
             BossTw_SetupHitByBeam(otherTw, play);
             Actor_PlaySfx(&otherTw->actor, NA_SE_EN_TWINROBA_DAMAGE_VOICE);
             play->envCtx.lightBlend = 1.0f;
-            otherTw->actor.colChkInfo.health++;
+            this->actor.colChkInfo.health--;
+            otherTw->actor.colChkInfo.health--;
         }
     }
 }
@@ -1507,7 +1508,7 @@ void BossTw_SetupWait(BossTw* this, PlayState* play) {
 void BossTw_Wait(BossTw* this, PlayState* play) {
     if ((this->actor.params == TW_TWINROVA) && (sKoumePtr->actionFunc == BossTw_FlyTo) &&
         (sKotakePtr->actionFunc == BossTw_FlyTo) &&
-        ((sKoumePtr->actor.colChkInfo.health + sKotakePtr->actor.colChkInfo.health) >= Actor_EnemyHealthMultiply(4, BOSS_HP))) {
+        ((sKoumePtr->actor.colChkInfo.health <= 0 || sKotakePtr->actor.colChkInfo.health <= 0))) {
 
         BossTw_TwinrovaSetupMergeCS(this, play);
         BossTw_SetupMergeCS(sKotakePtr, play);

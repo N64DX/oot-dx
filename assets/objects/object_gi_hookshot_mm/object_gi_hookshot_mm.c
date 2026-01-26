@@ -1,18 +1,17 @@
 #include "object_gi_hookshot_mm.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #include "gfx.h"
 
-Vtx object_gi_hookshotVtx[] = {
-#include "assets/objects/object_gi_hookshot_mm/object_gi_hookshotVtx.inc.c"
+Vtx object_gi_hookshot_mmVtx[] = {
+#include "assets/objects/object_gi_hookshot_mm/object_gi_hookshot_mmVtx.inc.c"
 };
 
 u64 gGiHookshot1Tex[] = {
-#include "assets/objects/object_gi_hookshot_mm/gi_hookshot_1.i8.inc.c"
+#include "assets/objects/object_gi_hookshot_mm/gGiHookshot1Tex.i8.inc.c"
 };
 
 u64 gGiHookshot2Tex[] = {
-#include "assets/objects/object_gi_hookshot_mm/gi_hookshot_2.i4.inc.c"
+#include "assets/objects/object_gi_hookshot_mm/gGiHookshot2Tex.i4.inc.c"
 };
 
 Gfx gGiHookshotMMDL[] = {
@@ -26,7 +25,7 @@ Gfx gGiHookshotMMDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock_4b(gGiHookshot2Tex, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_hookshotVtx[137], 24, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[137], 24, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 0, 2, 9, 0),
     gsSP2Triangles(3, 5, 10, 0, 11, 12, 13, 0),
@@ -39,7 +38,7 @@ Gfx gGiHookshotMMDL[] = {
     gsDPSetEnvColor(76, 55, 0, 255),
     gsDPLoadTextureBlock(gGiHookshot1Tex, G_IM_FMT_I, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_hookshotVtx[127], 10, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[127], 10, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 4, 0),
     gsSP2Triangles(2, 5, 0, 0, 4, 6, 3, 0),
     gsSP2Triangles(1, 7, 2, 0, 3, 7, 1, 0),
@@ -51,7 +50,7 @@ Gfx gGiHookshotMMDL[] = {
     gsDPSetEnvColor(0, 0, 0, 255),
     gsDPLoadTextureBlock(gGiHookshot1Tex, G_IM_FMT_I, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 2, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_hookshotVtx[90], 32, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[90], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 8, 7, 9, 0),
     gsSP2Triangles(7, 6, 10, 0, 7, 10, 11, 0),
@@ -67,14 +66,14 @@ Gfx gGiHookshotMMDL[] = {
     gsSP2Triangles(26, 27, 19, 0, 28, 0, 29, 0),
     gsSP2Triangles(0, 2, 29, 0, 28, 29, 30, 0),
     gsSP2Triangles(30, 29, 31, 0, 31, 29, 2, 0),
-    gsSPVertex(&object_gi_hookshotVtx[122], 5, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[122], 5, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 0, 4, 0),
     
     gsDPPipeSync(),
     gsDPSetPrimColor(0, 0xFF, 195, 195, 0, 255),
     gsDPSetEnvColor(65, 30, 0, 255),
     gsDPLoadTextureBlock_4b(gGiHookshot2Tex, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 2),
-    gsSPVertex(&object_gi_hookshotVtx[71], 19, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[71], 19, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 0, 0),
     gsSP2Triangles(9, 10, 0, 0, 9, 11, 12, 0),
@@ -94,7 +93,7 @@ Gfx gGiHookshotMMDL[] = {
     gsDPPipeSync(),
     gsDPSetEnvColor(65, 65, 0, 255),
     gsDPLoadTextureBlock_4b(gGiHookshot2Tex, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 2),
-    gsSPVertex(object_gi_hookshotVtx, 32, 0),
+    gsSPVertex(object_gi_hookshot_mmVtx, 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 0, 3, 0),
     gsSP2Triangles(4, 1, 5, 0, 1, 3, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 7, 9, 8, 0),
@@ -108,7 +107,7 @@ Gfx gGiHookshotMMDL[] = {
     gsSP2Triangles(21, 0, 2, 0, 25, 26, 27, 0),
     gsSP2Triangles(28, 25, 29, 0, 29, 25, 27, 0),
     gsSP2Triangles(30, 31, 17, 0, 31, 18, 17, 0),
-    gsSPVertex(&object_gi_hookshotVtx[32], 32, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[32], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(2, 1, 4, 0, 1, 5, 4, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
@@ -122,7 +121,7 @@ Gfx gGiHookshotMMDL[] = {
     gsSP2Triangles(1, 27, 30, 0, 1, 30, 5, 0),
     gsSP2Triangles(28, 31, 29, 0, 31, 28, 13, 0),
     gsSP1Triangle(15, 31, 13, 0),
-    gsSPVertex(&object_gi_hookshotVtx[64], 7, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[64], 7, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP1Triangle(6, 5, 4, 0),
     
@@ -140,7 +139,7 @@ Gfx gGiLongshotMMDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock_4b(gGiHookshot2Tex, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_hookshotVtx[137], 24, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[137], 24, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 0, 2, 9, 0),
     gsSP2Triangles(3, 5, 10, 0, 11, 12, 13, 0),
@@ -153,7 +152,7 @@ Gfx gGiLongshotMMDL[] = {
     gsDPSetEnvColor(76, 55, 0, 255),
     gsDPLoadTextureBlock(gGiHookshot1Tex, G_IM_FMT_I, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_hookshotVtx[127], 10, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[127], 10, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 4, 0),
     gsSP2Triangles(2, 5, 0, 0, 4, 6, 3, 0),
     gsSP2Triangles(1, 7, 2, 0, 3, 7, 1, 0),
@@ -165,7 +164,7 @@ Gfx gGiLongshotMMDL[] = {
     gsDPSetEnvColor(0, 0, 0, 255),
     gsDPLoadTextureBlock(gGiHookshot1Tex, G_IM_FMT_I, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 2, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH),
-    gsSPVertex(&object_gi_hookshotVtx[90], 32, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[90], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 8, 7, 9, 0),
     gsSP2Triangles(7, 6, 10, 0, 7, 10, 11, 0),
@@ -181,14 +180,14 @@ Gfx gGiLongshotMMDL[] = {
     gsSP2Triangles(26, 27, 19, 0, 28, 0, 29, 0),
     gsSP2Triangles(0, 2, 29, 0, 28, 29, 30, 0),
     gsSP2Triangles(30, 29, 31, 0, 31, 29, 2, 0),
-    gsSPVertex(&object_gi_hookshotVtx[122], 5, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[122], 5, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 0, 4, 0),
     
     gsDPPipeSync(),
     gsDPSetPrimColor(0, 0xFF, 255, 215, 0, 255),
     gsDPSetEnvColor(65, 30, 0, 255),
     gsDPLoadTextureBlock_4b(gGiHookshot2Tex, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 2),
-    gsSPVertex(&object_gi_hookshotVtx[71], 19, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[71], 19, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 0, 0),
     gsSP2Triangles(9, 10, 0, 0, 9, 11, 12, 0),
@@ -208,7 +207,7 @@ Gfx gGiLongshotMMDL[] = {
     gsDPPipeSync(),
     gsDPSetEnvColor(65, 65, 0, 255),
     gsDPLoadTextureBlock_4b(gGiHookshot2Tex, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, 2),
-    gsSPVertex(object_gi_hookshotVtx, 32, 0),
+    gsSPVertex(object_gi_hookshot_mmVtx, 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 0, 3, 0),
     gsSP2Triangles(4, 1, 5, 0, 1, 3, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 7, 9, 8, 0),
@@ -222,7 +221,7 @@ Gfx gGiLongshotMMDL[] = {
     gsSP2Triangles(21, 0, 2, 0, 25, 26, 27, 0),
     gsSP2Triangles(28, 25, 29, 0, 29, 25, 27, 0),
     gsSP2Triangles(30, 31, 17, 0, 31, 18, 17, 0),
-    gsSPVertex(&object_gi_hookshotVtx[32], 32, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[32], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(2, 1, 4, 0, 1, 5, 4, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
@@ -236,7 +235,7 @@ Gfx gGiLongshotMMDL[] = {
     gsSP2Triangles(1, 27, 30, 0, 1, 30, 5, 0),
     gsSP2Triangles(28, 31, 29, 0, 31, 28, 13, 0),
     gsSP1Triangle(15, 31, 13, 0),
-    gsSPVertex(&object_gi_hookshotVtx[64], 7, 0),
+    gsSPVertex(&object_gi_hookshot_mmVtx[64], 7, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP1Triangle(6, 5, 4, 0),
     

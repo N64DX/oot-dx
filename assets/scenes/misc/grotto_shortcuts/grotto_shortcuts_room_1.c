@@ -28,9 +28,9 @@ s16 grotto_shortcuts_room_1ObjectList_000040[] = {
 };
 
 ActorEntry grotto_shortcuts_room_1ActorEntry_000048[] = {
-    { ACTOR_EN_DINOFOS, { 513, 0, 1019 }, { 0,      0x0011, 0 }, 0x0000 },
-    { ACTOR_EN_DINOFOS, { 741, 0,  858 }, { 0,      0,      0 }, 0x0000 },
-    { ACTOR_EN_BOX,     { 615, 0,  786 }, { 0x000A, 0x8000, 0 }, 0x17C0 },
+    { ACTOR_EN_DINOFOS, { 513, 0, 1019 }, { 0,         0, 0 }, 0x0000 },
+    { ACTOR_EN_DINOFOS, { 741, 0,  858 }, { 0,         0, 0 }, 0x0000 },
+    { ACTOR_EN_BOX,     { 615, 0,  786 }, { 0x3E, 0x8000, 0 }, 0x1000 },
 };
 
 RoomShapeCullable grotto_shortcuts_room_1RoomShapeCullable_000080 = { 

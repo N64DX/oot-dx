@@ -121,10 +121,17 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Bow Aiming Reticle",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 14 },
     { 0, "No Low Health Beep",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 15 },
     { 0, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 16 },
-    { 0, "Fix Power Crouch Stab",  FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 17 },
+    { 0, "Fix Useful Glitches",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 17 },
     { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 18 },
     { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 19 },
     { 0, "Use MM Young Link",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 20 },
+    { 0, "Jump Animations",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 21 },
+    { 0, "Use MM Bottles",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 22 },
+#if !PLATFORM_IQUE
+    { 0, "Use MM Title Cards",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 23 },
+#endif
+    { 0, "Use MM HUD",             FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 24 },
+    { 0, "No Jump Speed Limit",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 25 },
     { 0, "Health Recovery",        FileSelectOptions_SetOptionMax3, FileSelectOptions_GetHealthRecovery, 1, 0  },
     { 0, "Damage Taken",           FileSelectOptions_SetOptionMax7, FileSelectOptions_GetDamageTaken,    1, 2  },
     { 0, "Monster Health",         FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 5  },
@@ -133,6 +140,8 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Harder Enemies",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 14 },
     { 0, "Static Dark Link HP",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 15 },
     { 0, "No Bottled Fairies",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 16 },
+    { 0, "No Item Drops",          FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 17 },
+    { 0, "Shield Durability",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 18 },
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {

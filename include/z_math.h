@@ -94,6 +94,9 @@ typedef VecSphGeo VecSph;
 // Pitch is 0 along the xz-plane (horizon)
 typedef VecSphGeo VecGeo;
 
+extern Vec3f gZeroVec3f;
+extern Vec3s gZeroVec3s;
+
 /**
  * Macros
  */

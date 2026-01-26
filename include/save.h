@@ -83,6 +83,13 @@ typedef struct {
         u8 requiredAge;
 } EquipmentSwapEntry;
 
+typedef struct {
+        u8 itemId;
+        u8 equipId;
+        u8 equipSlot;
+        u8 requiredAge;
+} SwordSwapEntry;
+
 typedef struct ItemEquips {
     /* 0x00 */ u8 buttonItems[4];
     /* 0x04 */ u8 cButtonSlots[3];
@@ -101,16 +108,35 @@ typedef struct Inventory {
     /* 0x5C */ s16 gsTokens;
 } Inventory; // size = 0x5E
 
+typedef union HasObtainedItems {
+    struct {
+        u8 magicBeans     : 1;
+        u8 feather        : 2;
+        u8 amuletOfEnergy : 1;
+        u8 hammer         : 1;
+        u8 fairysSword    : 1;
+        u8 masterSword    : 1;
+        u8 unk            : 1;
+    };
+    u8 items;
+} HasObtainedItems; // size = 0x5E
+
 typedef struct Checksum {
     /* 0x00 */ u16 value;
 } Checksum; // size = 0x02
+
+typedef struct ExtraSavedSceneFlag {
+    u32 quest : 2;
+    u32 exit  : 1;
+    u32 unk   : 29;
+} ExtraSavedSceneFlag; // size = 0x4
 
 typedef struct SavedSceneFlags {
     /* 0x00 */ u32 chest;
     /* 0x04 */ u32 swch;
     /* 0x08 */ u32 clear;
     /* 0x0C */ u32 collect;
-    /* 0x10 */ u32 unk;
+    /* 0x10 */ ExtraSavedSceneFlag extra;
     /* 0x14 */ u32 rooms;
     /* 0x18 */ u32 floors;
 } SavedSceneFlags; // size = 0x1C
@@ -263,20 +289,23 @@ typedef struct SaveInfo {
     /* 0x00B8  0x00D4 */ SavedSceneFlags sceneFlags[124];
     /* 0x0E48  0x0E64 */ FaroresWindData fw[2];
     /* 0x0E80  0x0E9C */ s32 gsFlags[6];
-    /* 0x0E98  0x0EB4 */ char unk_EB4[0x4];
+    /* 0x0E98  0x0EB4 */ u32 playtime;
     /* 0x0E9C  0x0EB8 */ s32 highScores[7];
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
-    /* 0x0F18  0x0F34 */ char unk_F34[0x04];
+    /* 0x0F18  0x0F34 */ char unk_F34[0x01];
+    /* 0x0F19  0x0F35 */ u8 mirrorShieldIsBroken;
+    /* 0x0F1A  0x0F36 */ u8 isEnhancedSpinAcquired;
+    /* 0x0F1B  0x0F37 */ u8 energy;
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
-    /* 0x0F20  0x0F3C */ char unk_F3C[0x4];
+    /* 0x0F20  0x0F3C */ u8 shieldDurability[4];
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
     /* 0x1285  0x12A1 */ char unk_12A1[0x24];
     /* 0x12A9  0x12C5 */ u8 scarecrowSpawnSongSet;
     /* 0x12AA  0x12C6 */ u8 scarecrowSpawnSong[0x80];
-    /* 0x132A  0x1346 */ char unk_1346[0x01];
+    /* 0x132A  0x1346 */ HasObtainedItems hasObtainedItems;
     /* 0x13CB  0x1347 */ u8 questMode;
     /* 0x132C  0x1348 */ HorseData horseData;
     /* 0x1336  0x1352 */ Checksum checksum; // "check_sum"
@@ -303,7 +332,7 @@ typedef struct SaveContext {
     /* 0x1368 */ RespawnData respawn[RESPAWN_MODE_MAX]; // "restart_data"
     /* 0x13BC */ f32 entranceSpeed;
     /* 0x13C0 */ u16 entranceSound;
-    /* 0x13C2 */ char unk_13C2[0x0001];
+    /* 0x13C2 */ u8 cheated;
     /* 0x13C3 */ u8 retainWeatherMode;
     /* 0x13C4 */ s16 dogParams;
     /* 0x13C6 */ u8 envHazardTextTriggerFlags;
@@ -371,7 +400,8 @@ typedef enum ChamberCutsceneNum {
     /* 2 */ CHAMBER_CS_WATER,
     /* 3 */ CHAMBER_CS_SPIRIT,
     /* 4 */ CHAMBER_CS_SHADOW,
-    /* 5 */ CHAMBER_CS_LIGHT
+    /* 5 */ CHAMBER_CS_LIGHT,
+    /* 6 */ CHAMBER_CS_WOODFALL
 } ChamberCutsceneNum;
 
 typedef enum HighScores {
@@ -450,12 +480,28 @@ typedef enum LinkAge {
 #define TOGGLE_HEROS_SWORD    (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 0)
 #define HAS_HEROS_SWORD     (((gSaveContext.save.info.playerData.equipmentUpgrades >>   0) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SWORD        (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS) && (HAS_HEROS_SWORD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)) )
+#define IS_RAZOR_SWORD       (!gSaveContext.save.info.hasObtainedItems.masterSword && IS_CHILD_QUEST_AS_CHILD)
 
 #define SET_HEROS_SHIELD      (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 1)
 #define CLEAR_HEROS_SHIELD    (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 1))
 #define TOGGLE_HEROS_SHIELD   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 1)
 #define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SHIELD       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (HAS_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) )
+
+#define SET_MAGIC_BEANS       (gSaveContext.save.info.hasObtainedItems.magicBeans = 1)
+#define HAS_MAGIC_BEANS       (gSaveContext.save.info.hasObtainedItems.magicBeans)
+#define SET_ROCS_FEATHER      (gSaveContext.save.info.hasObtainedItems.feather = 1)
+#define HAS_ROCS_FEATHER      (gSaveContext.save.info.hasObtainedItems.feather > 0)
+#define SET_GOLDEN_FEATHER    (gSaveContext.save.info.hasObtainedItems.feather = 2)
+#define HAS_GOLDEN_FEATHER    (gSaveContext.save.info.hasObtainedItems.feather > 1)
+#define SET_AMULET_OF_ENERGY  (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy = 1)
+#define HAS_AMULET_OF_ENERGY  (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy)
+#define SET_HAMMER            (gSaveContext.save.info.hasObtainedItems.hammer = 1)
+#define HAS_HAMMER            (gSaveContext.save.info.hasObtainedItems.hammer)
+#define SET_FAIRYS_SWORD      (gSaveContext.save.info.hasObtainedItems.fairysSword = 1)
+#define HAS_FAIRYS_SWORD      (gSaveContext.save.info.hasObtainedItems.fairysSword)
+#define SET_MASTER_SWORD      (gSaveContext.save.info.hasObtainedItems.masterSword = 1)
+#define HAS_MASTER_SWORD      (gSaveContext.save.info.hasObtainedItems.masterSword)
 
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17
@@ -470,17 +516,26 @@ typedef enum LinkAge {
 #define DUNGEON_RUSH        6
 #define DUNGEON_MASTER_RUSH 7
 #define DUNGEON_URA_RUSH    8
-#define BOSS_RUSH           9
+#define DUNGEON_CHILD_RUSH  9
+#define BOSS_RUSH           10
 
-#define QUEST_MAX   CHILD_MASTER_QUEST
-#define QUEST_MODE (gSaveContext.save.info.questMode & 15)
+#define QUEST_MAX           BOSS_RUSH
+#define QUEST_MODE          (gSaveContext.save.info.questMode & 15)
 
-#define IS_VANILLA_QUEST (R_QUEST_MODE % 3 == 0)
-#define IS_MASTER_QUEST  (R_QUEST_MODE % 3 == 1)
-#define IS_URA_QUEST     (R_QUEST_MODE % 3 == 2)
-#define IS_CHILD_QUEST   (R_QUEST_MODE >= CHILD_QUEST  && R_QUEST_MODE <= CHILD_URA_QUEST)
-#define IS_DUNGEON_RUSH  (R_QUEST_MODE >= DUNGEON_RUSH && R_QUEST_MODE <= DUNGEON_URA_RUSH)
-#define IS_BOSS_RUSH     (R_QUEST_MODE == BOSS_RUSH)
+#define USE_TITLE_CARDS     (((TITLE_CARDS || (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST)) && !PLATFORM_IQUE))
+
+#define IS_VANILLA_QUEST    (R_QUEST_MODE % 3 == 0)
+#define IS_MASTER_QUEST     (R_QUEST_MODE % 3 == 1)
+#define IS_URA_QUEST        (R_QUEST_MODE % 3 == 2)
+#define IS_CHILD_QUEST      ( (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST) || R_QUEST_MODE == DUNGEON_CHILD_RUSH)
+#define IS_DUNGEON_RUSH     ((R_QUEST_MODE >= DUNGEON_RUSH && R_QUEST_MODE <= DUNGEON_CHILD_RUSH))
+#define IS_BOSS_RUSH        (R_QUEST_MODE == BOSS_RUSH)
+#define IS_RUSH_QUEST       (IS_DUNGEON_RUSH || IS_BOSS_RUSH)
+
+#define MAX_DURABILITY_SHIELD_DEKU      100
+#define MAX_DURABILITY_SHIELD_HYLIAN    255
+#define MAX_DURABILITY_SHIELD_MIRROR    50
+#define MAX_DURABILITY_SHIELD_HEROS     255
 
 #define FILE_SLOTS_SIZE 6
 
@@ -501,10 +556,15 @@ typedef enum LinkAge {
 #define BOW_AIMING_RETICLE          ((gSaveContext.options[0] >> 14) & 1)  // Bits: 14
 #define NO_LOW_HEALTH_BEEP          ((gSaveContext.options[0] >> 15) & 1)  // Bits: 15
 #define UNINVERTED_AIMING           ((gSaveContext.options[0] >> 16) & 1)  // Bits: 16
-#define FIX_POWER_CROUCH_STAB       ((gSaveContext.options[0] >> 17) & 1)  // Bits: 17
+#define FIX_USEFUL_GLITCHES         ((gSaveContext.options[0] >> 17) & 1)  // Bits: 17
 #define REFLECT_CHEST_CONTENTS      ((gSaveContext.options[0] >> 18) & 1)  // Bits: 18
 #define EASIER_FISHING              ((gSaveContext.options[0] >> 19) & 1)  // Bits: 19
 #define USE_YOUNG_LINK              ((gSaveContext.options[0] >> 20) & 1)  // Bits: 20
+#define JUMP_ANIMATIONS             ((gSaveContext.options[0] >> 21) & 1)  // Bits: 21
+#define USE_MM_BOTTLES              ((gSaveContext.options[0] >> 22) & 1)  // Bits: 22
+#define TITLE_CARDS                 ((gSaveContext.options[0] >> 23) & 1)  // Bits: 23
+#define USE_MM_HUD                  ((gSaveContext.options[0] >> 24) & 1)  // Bits: 24
+#define NO_JUMP_SPEED_LIMIT         ((gSaveContext.options[0] >> 25) & 1)  // Bits: 25
 #define HEALTH_RECOVERY             ((gSaveContext.options[1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gSaveContext.options[1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gSaveContext.options[1] >> 5)  & 7)  // Bits: 5-7
@@ -513,6 +573,8 @@ typedef enum LinkAge {
 #define HARDER_ENEMIES              ((gSaveContext.options[1] >> 14) & 1)  // Bits: 14
 #define STATIC_DARK_LINK_HP         ((gSaveContext.options[1] >> 15) & 1)  // Bits: 15
 #define NO_BOTTLED_FAIRIES          ((gSaveContext.options[1] >> 16) & 1)  // Bits: 16
+#define NO_ITEM_DROPS               ((gSaveContext.options[1] >> 17) & 1)  // Bits: 17
+#define SHIELD_DURABILITY           ((gSaveContext.options[1] >> 18) & 1)  // Bits: 18
 
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
@@ -623,6 +685,7 @@ typedef enum LinkAge {
 #define EVENTCHKINF_21 0x21
 #define EVENTCHKINF_22 0x22
 #define EVENTCHKINF_23 0x23
+#define EVENTCHKINF_EXITED_HYPER_GOHMA 0x24
 #define EVENTCHKINF_25 0x25
 #define EVENTCHKINF_2A 0x2A
 #define EVENTCHKINF_2B 0x2B
@@ -659,6 +722,7 @@ typedef enum LinkAge {
 #define EVENTCHKINF_50 0x50
 #define EVENTCHKINF_51 0x51
 #define EVENTCHKINF_52 0x52
+#define EVENTCHKINF_PURIFIED_WOODFALL 0x53
 #define EVENTCHKINF_54 0x54
 #define EVENTCHKINF_55 0x55
 #define EVENTCHKINF_59 0x59
@@ -666,6 +730,7 @@ typedef enum LinkAge {
 #define EVENTCHKINF_5B 0x5B
 #define EVENTCHKINF_5C 0x5C
 #define EVENTCHKINF_65 0x65
+#define EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE 0x66
 #define EVENTCHKINF_DRAINED_WELL 0x67
 #define EVENTCHKINF_68 0x68
 #define EVENTCHKINF_RESTORED_LAKE_HYLIA 0x69
@@ -686,6 +751,8 @@ typedef enum LinkAge {
 #define EVENTCHKINF_BEGAN_BARINADE_BATTLE 0x76
 #define EVENTCHKINF_BEGAN_BONGO_BONGO_BATTLE 0x77
 #define EVENTCHKINF_BEGAN_GANONDORF_BATTLE 0x78
+#define EVENTCHKINF_BEGAN_HYPER_GOHMA_BATTLE 0x79
+#define EVENTCHKINF_BEGAN_KING_DEKU_BATTLE 0x7A
 #define EVENTCHKINF_80 0x80
 #define EVENTCHKINF_82 0x82
 #define EVENTCHKINF_PAID_BACK_KEATON_MASK 0x8C

@@ -361,7 +361,6 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
             case ENBB_BLUE:
                 thisx->naviEnemyId = NAVI_ENEMY_BLUE_BUBBLE;
                 thisx->colChkInfo.damageTable = &sDamageTableBlueGreen;
-                Actor_SetGildedSwordDamageTaken(thisx);
                 this->flamePrimBlue = this->flameEnvColor.b = 255;
                 thisx->world.pos.y += 50.0f;
                 EnBb_SetupBlue(this);
@@ -370,7 +369,6 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
             case ENBB_RED:
                 thisx->naviEnemyId = NAVI_ENEMY_RED_BUBBLE;
                 thisx->colChkInfo.damageTable = &sDamageTableRed;
-                Actor_SetGildedSwordDamageTaken(thisx);
                 this->flameEnvColor.r = 255;
                 this->collider.elements[0].base.atDmgInfo.effect = 1;
                 EnBb_SetupRed(play, this);
@@ -378,7 +376,6 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
             case ENBB_WHITE:
                 thisx->naviEnemyId = NAVI_ENEMY_WHITE_BUBBLE;
                 thisx->colChkInfo.damageTable = &sDamageTableWhite;
-                Actor_SetGildedSwordDamageTaken(thisx);
                 this->path = this->actionState;
                 blureInit.p1StartColor[0] = blureInit.p1StartColor[1] = blureInit.p1StartColor[2] =
                     blureInit.p1StartColor[3] = blureInit.p2StartColor[0] = blureInit.p2StartColor[1] =
@@ -407,7 +404,6 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
                 thisx->naviEnemyId = NAVI_ENEMY_GREEN_BUBBLE;
                 this->bobSize = (this->actionState & 0xF) * 20.0f;
                 thisx->colChkInfo.damageTable = &sDamageTableBlueGreen;
-                Actor_SetGildedSwordDamageTaken(thisx);
                 this->flameEnvColor.g = 255;
                 thisx->colChkInfo.health = 1;
 
@@ -873,7 +869,7 @@ void EnBb_Red(EnBb* this, PlayState* play) {
         if (((s32)this->skelAnime.curFrame == 0) || ((s32)this->skelAnime.curFrame == 5)) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_BUBLE_MOUTH);
         }
-        Actor_PlaySfx(&this->actor, NA_SE_EN_BUBLEFALL_FIRE - SFX_FLAG);
+        Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_J_FIRE - SFX_FLAG);
     }
 }
 
@@ -1182,10 +1178,7 @@ void EnBb_CollisionCheck(EnBb* this, PlayState* play) {
                 FALLTHROUGH;
             case 5:
                 this->fireIceTimer = 0x30;
-                //! @bug
-                //! Setting fireIceTimer here without calling Actor_SetColorFilter causes a crash if the bubble is
-                //! killed in a single hit by an attack with damage effect 5 or 7 while actor updating is halted. Using
-                //! Din's Fire on a white bubble will do just that. The mechanism is complex and described below.
+                Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 12);
                 goto block_15;
             case 6:
                 this->actor.freezeTimer = this->collider.elements[0].base.acHitElem->atDmgInfo.damage;
@@ -1222,11 +1215,6 @@ void EnBb_CollisionCheck(EnBb* this, PlayState* play) {
                         EnBb_KillFlameTrail(this);
                     }
                     EnBb_SetupDeath(this, play);
-                    //! @bug
-                    //! Because Din's Fire kills the bubble in a single hit, Actor_SetColorFilter is never called and
-                    //! colorFilterParams is never set. And because Din's Fire halts updating during its cutscene,
-                    //! EnBb_Death doesn't kill the bubble on the next frame like it should. This combines with
-                    //! the bug in EnBb_Draw below to crash the game.
                 } else if ((this->actor.params == ENBB_WHITE) &&
                            ((this->action == BB_WHITE) || (this->action == BB_STUNNED))) {
                     Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 12);

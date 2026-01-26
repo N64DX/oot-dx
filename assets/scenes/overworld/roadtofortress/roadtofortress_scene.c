@@ -14,46 +14,46 @@
 #include "stdbool.h"
 #include "ultra64.h"
 
-SceneCmd roadtofortressCommands[] = {
+SceneCmd roadtofortress_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_GERUDO_VALLEY),
-    SCENE_CMD_ROOM_LIST(1, roadtofortressRoomList0x0000D0),
+    SCENE_CMD_ROOM_LIST(1, roadtofortress_sceneRoomList0x0000D0),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 0),
-    SCENE_CMD_COL_HEADER(&roadtofortressCollisionHeader_002824),
-    SCENE_CMD_ENTRANCE_LIST(roadtofortressEntranceList0x0000D8),
+    SCENE_CMD_COL_HEADER(&roadtofortress_sceneCollisionHeader_002824),
+    SCENE_CMD_ENTRANCE_LIST(roadtofortress_sceneEntranceList0x0000D8),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),
-    SCENE_CMD_PATH_LIST(roadtofortressPathway_0003F0),
-    SCENE_CMD_SPAWN_LIST(4, roadtofortressStartPositionList0x000090),
+    SCENE_CMD_PATH_LIST(roadtofortress_scenePathway_0003F0),
+    SCENE_CMD_SPAWN_LIST(4, roadtofortress_sceneStartPositionList0x000090),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 0, LIGHT_MODE_TIME),
-    SCENE_CMD_EXIT_LIST(roadtofortressExitList_0000E0),
-    SCENE_CMD_ENV_LIGHT_SETTINGS(28, roadtofortressLightSettings0x0000E8),
+    SCENE_CMD_EXIT_LIST(roadtofortress_sceneExitList_0000E0),
+    SCENE_CMD_ENV_LIGHT_SETTINGS(28, roadtofortress_sceneLightSettings0x0000E8),
     SCENE_CMD_END(),
 };
 
-ActorEntry roadtofortressStartPositionList0x000090[] = {
+ActorEntry roadtofortress_sceneStartPositionList0x000090[] = {
     { ACTOR_PLAYER, {  -3006,      0,   -305 }, { 0, 0x2800, 0 }, 0x0FFF },
-    { ACTOR_PLAYER, {   5154,    575,   -240 }, { 0, 0xC300, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {   1234,    340,  -2297 }, { 0, 0xDD00, 0 }, 0x0FFF },
+    { ACTOR_PLAYER, {   5154,    575,   -240 }, { 0, 0xC300, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {   1670,    200,    -94 }, { 0, 0xC000, 0 }, 0x04FF },
 };
 
-RomFile roadtofortressRoomList0x0000D0[] = {
+RomFile roadtofortress_sceneRoomList0x0000D0[] = {
     { (uintptr_t)_roadtofortress_room_0SegmentRomStart, (uintptr_t)_roadtofortress_room_0SegmentRomEnd },
 };
 
-Spawn roadtofortressEntranceList0x0000D8[] = {
+Spawn roadtofortress_sceneEntranceList0x0000D8[] = {
     { 0x00, 0x00 },
     { 0x01, 0x00 },
     { 0x02, 0x00 },
     { 0x03, 0x00 },
 };
 
-u16 roadtofortressExitList_0000E0[] = {
+u16 roadtofortress_sceneExitList_0000E0[] = {
     ENTR_GERUDO_VALLEY_3,
-    ENTR_GERUDOS_FORTRESS_0,
     ENTR_OUTSIDE_GANONS_CASTLE_0_2,
+    ENTR_GERUDOS_FORTRESS_0,
 };
 
-EnvLightSettings roadtofortressLightSettings0x0000E8[] = {
+EnvLightSettings roadtofortress_sceneLightSettings0x0000E8[] = {
     { 0x46, 0x2F, 0x24, 0x45, 0x45, 0x45, 0xBC, 0xA8, 0x7C, 0xBB, 0xBB, 0xBB, 0x46, 0x41, 0x3A, 0x86, 0x67, 0x63,
     0x07E2, 0x3200 },
     { 0x5D, 0x47, 0x51, 0x45, 0x45, 0x45, 0xFF, 0xF5, 0xB2, 0xBB, 0xBB, 0xBB, 0x32, 0x23, 0x14, 0x82, 0x8C, 0x96,
@@ -112,7 +112,7 @@ EnvLightSettings roadtofortressLightSettings0x0000E8[] = {
     0x1F69, 0x3200 },
 };
 
-Vec3s roadtofortressPathwayList_000350[] = {
+Vec3s roadtofortress_scenePathwayList_000350[] = {
     {  -3970,      0,   -762 },
     {  -2749,      0,    -79 },
     {  -1549,     10,   -683 },
@@ -127,7 +127,7 @@ Vec3s roadtofortressPathwayList_000350[] = {
     {   1309,    200,    488 },
 };
 
-Vec3s roadtofortressPathwayList_000398[] = {
+Vec3s roadtofortress_scenePathwayList_000398[] = {
     {   3775,   1462,  -1171 },
     {   3711,   1383,  -1095 },
     {   3640,    567,   -976 },
@@ -137,7 +137,7 @@ Vec3s roadtofortressPathwayList_000398[] = {
     {   2547,    475,   -334 },
 };
 
-Vec3s roadtofortressPathwayList_0003C4[] = {
+Vec3s roadtofortress_scenePathwayList_0003C4[] = {
     {   4443,   1464,     45 },
     {   4446,   1472,      9 },
     {   4408,    575,    -54 },
@@ -147,13 +147,13 @@ Vec3s roadtofortressPathwayList_0003C4[] = {
     {   3199,    519,  -1093 },
 };
 
-Path roadtofortressPathway_0003F0[] = {
-    { ARRAY_COUNT(roadtofortressPathwayList_000350), roadtofortressPathwayList_000350 },
-    { ARRAY_COUNT(roadtofortressPathwayList_000398), roadtofortressPathwayList_000398 },
-    { ARRAY_COUNT(roadtofortressPathwayList_0003C4), roadtofortressPathwayList_0003C4 },
+Path roadtofortress_scenePathway_0003F0[] = {
+    { ARRAY_COUNT(roadtofortress_scenePathwayList_000350), roadtofortress_scenePathwayList_000350 },
+    { ARRAY_COUNT(roadtofortress_scenePathwayList_000398), roadtofortress_scenePathwayList_000398 },
+    { ARRAY_COUNT(roadtofortress_scenePathwayList_0003C4), roadtofortress_scenePathwayList_0003C4 },
 };
 
-Vec3s roadtofortressCsCameraPoints_000528[] = {
+Vec3s roadtofortress_sceneCsCameraPoints_000528[] = {
     {   2073,    469,   -503 },
     {  -4005, -16202,      0 },
     {     -1,     -1,     -1 },
@@ -177,18 +177,18 @@ Vec3s roadtofortressCsCameraPoints_000528[] = {
     {     -1,     -1,     -1 },
 };
 
-BgCamInfo roadtofortressCollisionHeader_002824CamDataList[] = {
+BgCamInfo roadtofortress_sceneCollisionHeader_002824CamDataList[] = {
     { CAM_SET_NORMAL0, 0, NULL },
 };
 
-SurfaceType roadtofortressCollisionHeader_002824SurfaceType[] = {
-    {0x00000000, 0x000017C0},   {0x24000000, 0x000017C0},   {0x24000000, 0x000017C2},   {0xA4000000, 0x000017C0},
+SurfaceType roadtofortress_sceneCollisionHeader_002824SurfaceType[] = {
+    {0x00000000, 0x000017C0},   {0x24000000, 0x000017C0},   {0x24000000, 0x000017C2},   {0x24000000, 0x000017C0},
     {0xA4000000, 0x000017C2},   {0xA4200000, 0x000017C0},   {0xA4200000, 0x000017C2},   {0x00000000, 0x000017C2},
     {0x00000000, 0x000017C8},   {0x00000200, 0x01CC17C8},   {0xA4000000, 0x000017D2},   {0x00000100, 0x054C17C2},
     {0x00000300, 0x026C17C0},
 };
 
-CollisionPoly roadtofortressCollisionHeader_002824Polygons[] = {
+CollisionPoly roadtofortress_sceneCollisionHeader_002824Polygons[] = {
     {0x0000, 0x0000, 0x0001, 0x0002, 0x02EB, 0x0000, 0x7FF6, 0x0470},
     {0x0000, 0x0000, 0x0002, 0x0003, 0x02EB, 0x0000, 0x7FF6, 0x0470},
     {0x0001, 0x0004, 0x0005, 0x0006, 0xE05D, 0x5080, 0xA1A6, 0xFE1E},
@@ -625,7 +625,7 @@ CollisionPoly roadtofortressCollisionHeader_002824Polygons[] = {
     {0x000C, 0x0118, 0x211A, 0x0119, 0xF01B, 0x7D73, 0x13D4, 0x00C2},
 };
 
-Vec3s roadtofortressCollisionHeader_002824Vertices[] = {
+Vec3s roadtofortress_sceneCollisionHeader_002824Vertices[] = {
     {   2800,   1225,  -1200 },
     {   2054,   1275,  -1183 },
     {   2054,    475,  -1183 },
@@ -911,13 +911,13 @@ Vec3s roadtofortressCollisionHeader_002824Vertices[] = {
     {   1190,    341,  -2458 },
 };
 
-CollisionHeader roadtofortressCollisionHeader_002824 = { 
+CollisionHeader roadtofortress_sceneCollisionHeader_002824 = { 
     { -4800, -11, -3262 },
     { 7309, 1775, 914 },
-    ARRAY_COUNT(roadtofortressCollisionHeader_002824Vertices), roadtofortressCollisionHeader_002824Vertices,
-    ARRAY_COUNT(roadtofortressCollisionHeader_002824Polygons), roadtofortressCollisionHeader_002824Polygons,
-    roadtofortressCollisionHeader_002824SurfaceType,
-    roadtofortressCollisionHeader_002824CamDataList,
+    ARRAY_COUNT(roadtofortress_sceneCollisionHeader_002824Vertices), roadtofortress_sceneCollisionHeader_002824Vertices,
+    ARRAY_COUNT(roadtofortress_sceneCollisionHeader_002824Polygons), roadtofortress_sceneCollisionHeader_002824Polygons,
+    roadtofortress_sceneCollisionHeader_002824SurfaceType,
+    roadtofortress_sceneCollisionHeader_002824CamDataList,
     0, NULL
 };
 

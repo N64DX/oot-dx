@@ -26,6 +26,7 @@
 #include "save.h"
 
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "assets/textures/parameter_static/parameter_static_all.h"
 
 #pragma increment_block_number "gc-eu:0 gc-eu-mq:0 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ntsc-1.0:32" \
                                "ntsc-1.1:32 ntsc-1.2:32 pal-1.0:0 pal-1.1:0"
@@ -151,6 +152,8 @@ s16 sHasSunsSong = false;
 s16 sMessageHasSetSfx = false;
 
 u16 sOcarinaSongBitFlags = 0; // ocarina bit flags
+
+bool setTempEnglish = false;
 
 #if OOT_NTSC_N64
 
@@ -365,6 +368,110 @@ s16 sOcarinaButtonCPrimG;
 s16 sOcarinaButtonCEnvR;
 s16 sOcarinaButtonCEnvB;
 s16 sOcarinaButtonCEnvG;
+
+void Message_DrawText(PlayState* play, Gfx** gfxP);
+void Message_DrawTextWide(PlayState* play, Gfx** gfxP);
+void Message_OpenText(PlayState* play, u16 textId);
+void Message_Decode(PlayState* play);
+
+static u16 titleCardPrevHudVisibility = HUD_VISIBILITY_ALL;
+
+void Message_SetTitleCardInfo(struct PlayState* play, TitleCardInfo* info) {
+    if (info == NULL)
+        PRINTF("TitleCardInfo is NULL!\n");
+    play->msgCtx.titleCardInfo = info;
+}
+
+void Message_DrawSceneTitleCard(PlayState* play, Gfx** gfxP) {
+    MessageContext* msgCtx = &play->msgCtx;
+
+    if (msgCtx->titleCardInfo != NULL) {
+        Color_RGBA8* rgba = &msgCtx->titleCardInfo->rgba;
+        Gfx* gfx = *gfxP;
+        Gfx_SetupDL_39Ptr(&gfx);
+
+        gDPSetCombineLERP(gfx++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+        gDPSetTextureFilter(gfx++, G_TF_BILERP);
+        gDPSetAlphaDither(gfx++, G_AD_NOTPATTERN);
+        gDPSetPrimColor(gfx++, 0, 0, 0, 0, 0, msgCtx->textboxColorAlphaCurrent);
+        gDPSetEnvColor(gfx++, rgba->r, rgba->g, rgba->b, rgba->a);
+        gDPLoadTextureBlock(gfx++, gSceneTitleCardGradientTex, G_IM_FMT_I, G_IM_SIZ_8b, 64, 1, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 6, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(gfx++, 0, msgCtx->titleCardInfo->gradientWidth << 2, SCREEN_WIDTH << 2, (msgCtx->titleCardInfo->gradientWidth + msgCtx->titleCardInfo->gradientHeight) << 2, G_TX_RENDERTILE, 0, 0, 200, 1 << 10);
+        gDPPipeSync(gfx++);
+        gDPSetCombineLERP(gfx++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
+        gDPSetEnvColor(gfx++, 0, 0, 0, 255);
+
+#if OOT_NTSC 
+        if (gSaveContext.language == LANGUAGE_JPN)
+            Message_DrawTextWide(play, &gfx);
+        else
+#endif
+            Message_DrawText(play, &gfx);
+        *gfxP = gfx++;
+    }
+}
+
+void Message_DisplaySceneTitleCard(PlayState* play) {
+    MessageContext* msgCtx = &play->msgCtx;
+    TitleCardInfo* info = msgCtx->titleCardInfo;
+
+    if (info != NULL) {
+        msgCtx->msgLength = 0;
+        Message_OpenText(play, info->textId);
+        Message_Decode(play);
+        msgCtx->msgMode = MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND;
+        msgCtx->textDelayTimer = info->textDelayTimer;
+        msgCtx->textboxColorAlphaCurrent = msgCtx->textboxColorAlphaTarget = msgCtx->textColorAlpha = 0;
+        msgCtx->stateTimer = info->duration;
+    }
+}
+
+s32 Message_TitleCardClear(PlayState* play) {
+    play->msgCtx.stateTimer = 0;
+    if (play->msgCtx.msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND && play->msgCtx.msgMode < MSGMODE_SCENE_TITLE_CARD_FADE_OUT_TEXT)
+        play->msgCtx.msgMode = MSGMODE_SCENE_TITLE_CARD_FADE_OUT_TEXT;
+    return true;
+}
+
+bool Message_HasSceneTitleCardMessage(PlayState* play, u16 textId) {
+    MessageTableEntry* messageTableEntry;
+    const char** languageSegmentTable;
+
+#if OOT_NTSC
+    if (gSaveContext.language == LANGUAGE_JPN || gSaveContext.language == LANGUAGE_ENG) {
+        messageTableEntry = (gSaveContext.language == LANGUAGE_JPN) ? sJpnMessageEntryTablePtr : sNesMessageEntryTablePtr;
+#else
+    if (gSaveContext.language == LANGUAGE_ENG) {
+        messageTableEntry = sNesMessageEntryTablePtr;
+#endif
+
+        while (messageTableEntry->textId < 0xA200) {
+            if (messageTableEntry->textId == textId)
+                return true;
+            messageTableEntry++;
+        }
+    }
+#if OOT_NTSC_N64 || OOT_PAL
+    else {
+        messageTableEntry = sNesMessageEntryTablePtr;
+
+        if (gSaveContext.language == LANGUAGE_GER)
+            languageSegmentTable = sGerMessageEntryTablePtr;
+        else if (gSaveContext.language == LANGUAGE_FRA)
+            languageSegmentTable = sFraMessageEntryTablePtr;
+        else return false;
+
+        while (messageTableEntry->textId < 0xA200) {
+            if (messageTableEntry->textId == textId)
+                return true;
+            messageTableEntry++;
+            languageSegmentTable++;
+        }
+    }
+#endif
+
+    return false;
+}
 
 void Message_ResetOcarinaNoteState(void) {
     R_OCARINA_BUTTONS_YPOS(0) = 189;
@@ -1261,8 +1368,13 @@ void Message_DrawTextWide(PlayState* play, Gfx** gfxP) {
     u16 charTexIdx;
     Gfx* gfx = *gfxP;
 
-    msgCtx->textPosX = R_TEXT_INIT_XPOS;
-    msgCtx->textPosY = R_TEXT_INIT_YPOS;
+    if (msgCtx->msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND && msgCtx->msgMode <= MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND && msgCtx->titleCardInfo != NULL) {
+        msgCtx->textPosX = msgCtx->titleCardInfo->textPosX;
+        msgCtx->textPosY = msgCtx->titleCardInfo->textPosY;
+    } else {
+        msgCtx->textPosX = R_TEXT_INIT_XPOS;
+        msgCtx->textPosY = R_TEXT_INIT_YPOS;
+    }
 
     if (msgCtx->textBoxType == TEXTBOX_TYPE_NONE_NO_SHADOW) {
         msgCtx->textColorR = msgCtx->textColorG = msgCtx->textColorB = 0;
@@ -1583,11 +1695,14 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
     Font* font = &play->msgCtx.font;
     Gfx* gfx = *gfxP;
 
-    msgCtx->textPosX = R_TEXT_INIT_XPOS;
-    if (!sTextIsCredits) {
-        msgCtx->textPosY = R_TEXT_INIT_YPOS;
+    if (msgCtx->msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND && msgCtx->msgMode <= MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND && msgCtx->titleCardInfo != NULL) {
+        msgCtx->textPosX = msgCtx->titleCardInfo->textPosX;
+        msgCtx->textPosY = msgCtx->titleCardInfo->textPosY;
     } else {
-        msgCtx->textPosY = YREG(1);
+        msgCtx->textPosX = R_TEXT_INIT_XPOS;
+        if (!sTextIsCredits)
+            msgCtx->textPosY = R_TEXT_INIT_YPOS;
+        else msgCtx->textPosY = YREG(1);
     }
 
     if (msgCtx->textBoxType == TEXTBOX_TYPE_NONE_NO_SHADOW) {
@@ -1892,7 +2007,7 @@ void Message_LoadItemIcon(PlayState* play, u16 itemId, s16 y) {
         R_TEXTBOX_ICON_XPOS = R_TEXT_INIT_XPOS - sIconItem32XOffsets[gSaveContext.language];
         R_TEXTBOX_ICON_YPOS = y + ((44 - ITEM_ICON_HEIGHT) / 2);
         R_TEXTBOX_ICON_DIMENSION = ITEM_ICON_WIDTH; // assumes the image is square
-        DMA_REQUEST_SYNC(msgCtx->textboxSegment + MESSAGE_STATIC_TEX_SIZE, GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(itemId)), ITEM_ICON_SIZE,
+        DMA_REQUEST_SYNC(msgCtx->textboxSegment + MESSAGE_STATIC_TEX_SIZE, GET_ITEM_ICON_VROM(play->sceneId == SCENE_CHAMBER_OF_THE_SAGES ? itemId : Interface_LoadItemIconChildQuest(itemId)), ITEM_ICON_SIZE,
                          "../z_message_PAL.c", 1473);
         PRINTF(T("アイテム32-0\n", "Item 32-0\n"));
     } else {
@@ -1970,7 +2085,7 @@ void Message_Decode(PlayState* play) {
     sTextFade = false;
 
 #if OOT_NTSC
-    if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits) {
+    if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits && !setTempEnglish) {
         // Japanese text (NTSC only)
         for (;;) {
             curCharWide = MSG_BUF_DECODED_WIDE[decodedBufPos] = MSG_BUF_WIDE[msgCtx->msgBufPos];
@@ -2845,7 +2960,7 @@ void Message_OpenText(PlayState* play, u16 textId) {
         R_TEXT_INIT_XPOS = 20;
         YREG(1) = 48;
 #if OOT_NTSC
-    } else if (gSaveContext.language == LANGUAGE_JPN) {
+    } else if (gSaveContext.language == LANGUAGE_JPN && !setTempEnglish) {
         R_TEXT_CHAR_SCALE = 88;
         R_TEXT_LINE_SPACING = 18;
         R_TEXT_INIT_XPOS = 50;
@@ -2946,8 +3061,14 @@ void Message_OpenText(PlayState* play, u16 textId) {
                 case 0x7078: textId = 0x8113; break;
                 case 0x708B: textId = 0x811F; break;
             }
-            Message_FindMessage(play, textId, language);
-        } else if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG && language != LANGUAGE_JPN) {
+        }
+
+        if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG) {
+            if (language == LANGUAGE_JPN) {
+                DMA_REQUEST_SYNC(play->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
+                gSaveContext.language = LANGUAGE_ENG;
+                setTempEnglish = true;
+            }
             language = LANGUAGE_ENG;
             Message_FindMessage(play, textId, language);
         }
@@ -3114,6 +3235,13 @@ void Message_ContinueTextbox(PlayState* play, u16 textId) {
     PRINTF_COLOR_GREEN();
     PRINTF(T("めっせーじ＝%x  message->msg_data\n", "Message=%x  message->msg_data\n"), textId, msgCtx->msgLength);
     PRINTF_RST();
+
+    if (setTempEnglish) {
+        setTempEnglish = false;
+#if OOT_NTSC_N64
+        gSaveContext.language = LANGUAGE_JPN;
+#endif
+    }
 
     msgCtx->msgLength = 0;
     Message_OpenText(play, textId);
@@ -3360,7 +3488,7 @@ void Message_SetView(View* view) {
 
 #if OOT_NTSC
 #define DRAW_TEXT(play, gfx, isCredits)                                                         \
-    ((gSaveContext.language == LANGUAGE_JPN) && !(isCredits)) ? Message_DrawTextWide(play, gfx) \
+    ((gSaveContext.language == LANGUAGE_JPN) && !(isCredits && !setTempEnglish)) ? Message_DrawTextWide(play, gfx) \
                                                               : Message_DrawText(play, gfx)
 #else
 #define DRAW_TEXT(play, gfx, isCredits) Message_DrawText(play, gfx)
@@ -4286,6 +4414,13 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
             case MSGMODE_TEXT_CLOSING:
             case MSGMODE_PAUSED:
                 break;
+            case MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND:
+            case MSGMODE_SCENE_TITLE_CARD_FADE_IN_TEXT:
+            case MSGMODE_SCENE_TITLE_CARD_DISPLAYING:
+            case MSGMODE_SCENE_TITLE_CARD_FADE_OUT_TEXT:
+            case MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND:
+                Message_DrawSceneTitleCard(play, &gfx);
+                break;
             case MSGMODE_UNK_20:
             default:
                 msgCtx->msgMode = MSGMODE_TEXT_DISPLAYING;
@@ -4554,7 +4689,7 @@ void Message_Update(PlayState* play) {
 #if OOT_NTSC && !PLATFORM_IQUE
                     R_TEXTBOX_X_TARGET = sTextboxXPositions[var];
                     R_TEXTBOX_END_YPOS = sTextboxEndIconYOffset[var] + R_TEXTBOX_Y_TARGET;
-                    if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits) {
+                    if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits && !setTempEnglish) {
                         R_TEXT_CHOICE_YPOS(0) = R_TEXTBOX_Y_TARGET + 7;
                         R_TEXT_CHOICE_YPOS(1) = R_TEXTBOX_Y_TARGET + 25;
                         R_TEXT_CHOICE_YPOS(2) = R_TEXTBOX_Y_TARGET + 43;
@@ -4683,7 +4818,7 @@ void Message_Update(PlayState* play) {
                             Audio_PlaySfxGeneral(NA_SE_SY_MESSAGE_PASS, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 #if OOT_NTSC
-                            if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits) {
+                            if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits && !setTempEnglish) {
                                 Message_ContinueTextbox(play, MSG_BUF_DECODED_WIDE[msgCtx->textDrawPos]);
                             } else {
                                 Message_ContinueTextbox(play, sNextTextId);
@@ -4733,6 +4868,14 @@ void Message_Update(PlayState* play) {
                     }
                 }
                 PRINTF_RST();
+
+                if (setTempEnglish) {
+                    setTempEnglish = false;
+#if OOT_NTSC_N64
+                    gSaveContext.language = LANGUAGE_JPN;
+#endif
+                }
+
                 msgCtx->msgLength = 0;
                 msgCtx->msgMode = MSGMODE_NONE;
                 interfaceCtx->unk_1FA = interfaceCtx->unk_1FC = 0;
@@ -4771,6 +4914,54 @@ void Message_Update(PlayState* play) {
                 PRINTF("OCARINA_MODE=%d   chk_ocarina_no=%d\n", play->msgCtx.ocarinaMode, msgCtx->unk_E3F2);
                 break;
             case MSGMODE_PAUSED:
+                break;
+            case MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND:
+                if (msgCtx->titleCardInfo != NULL) {
+                    msgCtx->textboxColorAlphaCurrent += msgCtx->titleCardInfo->alphaFadeInIncr;
+                    if (msgCtx->textboxColorAlphaCurrent >= 255) {
+                        msgCtx->textboxColorAlphaCurrent = 255;
+                        msgCtx->msgMode = MSGMODE_SCENE_TITLE_CARD_FADE_IN_TEXT;
+                    }
+                    if (gSaveContext.save.cutsceneIndex == 0xFFEF)
+                        Interface_ChangeHudVisibilityMode(msgCtx->titleCardInfo->nextHudVisibility);
+                }
+                break;
+            case MSGMODE_SCENE_TITLE_CARD_FADE_IN_TEXT:
+                if (msgCtx->titleCardInfo != NULL) {
+                    msgCtx->textColorAlpha += msgCtx->titleCardInfo->alphaFadeInIncr;
+                    if (msgCtx->textColorAlpha >= 255) {
+                        msgCtx->textColorAlpha = 255;
+                        msgCtx->msgMode = MSGMODE_SCENE_TITLE_CARD_DISPLAYING;
+                    }
+                }
+                break;
+            case MSGMODE_SCENE_TITLE_CARD_DISPLAYING:
+                msgCtx->stateTimer--;
+                if (msgCtx->stateTimer == 0)
+                    msgCtx->msgMode = MSGMODE_SCENE_TITLE_CARD_FADE_OUT_TEXT;
+                break;
+            case MSGMODE_SCENE_TITLE_CARD_FADE_OUT_TEXT:
+                if (msgCtx->titleCardInfo != NULL) {
+                    msgCtx->textColorAlpha -= msgCtx->titleCardInfo->alphaFadeOutIncr;
+                    if (msgCtx->textColorAlpha <= 0) {
+                        msgCtx->textColorAlpha = 0;
+                        msgCtx->msgMode = MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND;
+                    }
+                }
+                break;
+            case MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND:
+                if (msgCtx->titleCardInfo != NULL) {
+                    msgCtx->textboxColorAlphaCurrent -= msgCtx->titleCardInfo->alphaFadeOutIncr;
+                    if (msgCtx->textboxColorAlphaCurrent <= 0) {
+                        msgCtx->textboxColorAlphaCurrent = 0;
+                        msgCtx->textColorAlpha = 255;
+                        msgCtx->msgLength = 0;
+                        msgCtx->msgMode = MSGMODE_NONE;
+                        msgCtx->stateTimer = 0;
+                        if (gSaveContext.save.cutsceneIndex == 0xFFEF)
+                            Interface_ChangeHudVisibilityMode(titleCardPrevHudVisibility);
+                    }
+                }
                 break;
             default:
                 msgCtx->lastOcarinaButtonIndex = OCARINA_BTN_INVALID;

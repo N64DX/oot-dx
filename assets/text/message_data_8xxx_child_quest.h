@@ -2451,3 +2451,281 @@ UNSKIPPABLE "Il est arrivé ici comme une fleur\n"
 "complètement dingue!"
 )
 )
+
+DEFINE_MESSAGE(0x8122, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hi hi hi... What am I?\n"
+"Show me proof of your map and\n"
+"compass if you want to reach the\n"
+"sealed evil below."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8123, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hi hi hi... Well done.\n"
+"You will need this if you want to\n"
+"reach the sealed evil below."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8124, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hoo hoo!"
+BOX_BREAK_DELAYED(40)
+
+UNSKIPPABLE "You defeated the ancient evil\n"
+"dwelling in the Ancient Hollow,\n"
+"did you not?"
+BOX_BREAK
+
+UNSKIPPABLE "To help you on your quest, I may\n"
+"have something for you."
+BOX_BREAK
+
+UNSKIPPABLE "One of my sacred feathers, may\n"
+"it aid you in your quest."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8125, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Arghh...! You...!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8126, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "You've got guts, kid.\n"
+"I'll give you that."
+BOX_BREAK
+
+UNSKIPPABLE "You remind me of my former self.\n"
+"It's a pity is that you chose defiance.\n"
+"Obedience would have spared you\n"
+"from the fate that awaits you."
+BOX_BREAK
+
+UNSKIPPABLE "Even if your soul and bones are\n"
+"shattered into a thousand pieces,\n"
+"you shall submit to me...\n"
+BOX_BREAK
+
+UNSKIPPABLE "Now... Your power belongs to me!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8127, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_TOP,
+MSG(
+SHIFT(51) TEXT_SPEED(1) "ハア　ハア　ハア" TEXT_SPEED(0) "。"
+BOX_BREAK
+
+SHIFT(45) "ふっ　ふっ　ふ〜っ。\n"
+SHIFT(33) "キミ、なかなか　やるな。"
+BOX_BREAK
+
+SHIFT(9) "だが　私の走りには　かなうまい。\n"
+SHIFT(6) "キミのタイムは　" COLOR(RED) MARATHON_TIME COLOR(DEFAULT) "だ。\n"
+SHIFT(30) "でも　１秒差で　私の勝ち。"
+BOX_BREAK
+
+SHIFT(51) "ふう　ふう　ふう。\n"
+SHIFT(33) "ま、また　挑戦しなさい。"
+BOX_BREAK
+
+SHIFT(66) "ふう　ふう。\n"
+SHIFT(60) "では　" QUICKTEXT_ENABLE "さらば！" QUICKTEXT_DISABLE EVENT
+),
+MSG(
+TEXT_SPEED(1) QUICKTEXT_ENABLE "Huff..." QUICKTEXT_DISABLE QUICKTEXT_ENABLE "puff..." QUICKTEXT_DISABLE QUICKTEXT_ENABLE "huff..." QUICKTEXT_DISABLE TEXT_SPEED(0)
+BOX_BREAK
+
+"Huff...huff...whew!\n"
+"You did quite well!"
+BOX_BREAK
+
+"But you couldn't beat me!\n"
+"Your time was " COLOR(RED) MARATHON_TIME COLOR(DEFAULT) ", but I\n"
+"just beat you by one second!"
+BOX_BREAK
+
+"Huff...huff... \n"
+"You'll have to challenge me\n"
+"again sometime!"
+BOX_BREAK
+
+"But since you did so well, It would\n"
+"not feel right not to leave you with\n"
+"a small kind of reward. Huff...huff...\n"
+"You did better than expected, kid."
+BOX_BREAK
+
+"Huff...huff...\n"
+QUICKTEXT_ENABLE "Good-bye, then!" QUICKTEXT_DISABLE EVENT
+),
+MSG(
+TEXT_SPEED(1) QUICKTEXT_ENABLE "Keuch..." QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "Pust..." QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "Hust..." QUICKTEXT_DISABLE TEXT_SPEED(0)
+BOX_BREAK
+
+"Keuch... Pust... Wow!\n"
+"Das war sehr gut!"
+BOX_BREAK
+
+"Doch Du hast mich noch nicht\n"
+"geschlagen!\n"
+"Deine Bestzeit war " COLOR(RED) MARATHON_TIME COLOR(DEFAULT) ", aber\n"
+"ich war eine Sekunde schneller!"
+BOX_BREAK
+
+"Keuch... Hust... \n"
+"Versuche es irgendwann noch\n"
+"einmal!"
+BOX_BREAK
+
+"Keuch... Pust...\n"
+QUICKTEXT_ENABLE "Mach's mal gut!" QUICKTEXT_DISABLE EVENT
+),
+MSG(
+TEXT_SPEED(1) QUICKTEXT_ENABLE "Heuff..." QUICKTEXT_DISABLE QUICKTEXT_ENABLE "peuff..." QUICKTEXT_DISABLE QUICKTEXT_ENABLE "heuff..." QUICKTEXT_DISABLE TEXT_SPEED(0)
+BOX_BREAK
+
+"Woah! Tu as fait très fort!"
+BOX_BREAK
+
+"Maaaaaiiiis...je suis le vainqueur! \n"
+"Ton temps est de " COLOR(RED) MARATHON_TIME COLOR(DEFAULT) ".\n"
+"Je t'ai battu d'une seconde!"
+BOX_BREAK
+
+"Heuff...heuff... \n"
+"N'hésite pas à me défier une \n"
+"nouvelle fois! Quand tu veux!"
+BOX_BREAK
+
+"Heuff...heuff...\n"
+"A la prochaine, " QUICKTEXT_ENABLE "limace!" QUICKTEXT_DISABLE EVENT
+)
+)
+
+DEFINE_MESSAGE(0x8128, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hoo hoo!"
+BOX_BREAK_DELAYED(40)
+
+UNSKIPPABLE "Well done, young hero.\n"
+"I see you're prepared to take down\n"
+"the evil that has haunted Hyrule\n"
+"for seven years."
+BOX_BREAK
+
+UNSKIPPABLE "Let me assist you one final time on\n"
+"your journey. Take one of my feathers.\n"
+"It should assist you on your final\n"
+"task at hand."
+BOX_BREAK
+
+UNSKIPPABLE "I should warn you though. The evil\n"
+"you're about to face is no easy feat.\n"
+"But there's a legendary sword hidden\n"
+"deep in the Lost Woods."
+BOX_BREAK
+
+UNSKIPPABLE "Should you obtain it, it will greatly\n"
+"assist you in your final fight.\n"
+"Look deep into the Forbidden Woods\n"
+"to the path near the fallen tree log."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8200, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Thank you...\n"
+"Because of you, the curse on\n"
+"Woodfall has been lifted..."
+BOX_BREAK
+
+UNSKIPPABLE "As the Forest Temple sage " COLOR(ADJUSTABLE) "Saria" COLOR(DEFAULT) ",\n"
+"I thank you from the bottom of\n"
+"my heart..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8201, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Do not be startled that your\n"
+"legendary Razor Sword is gone..."
+BOX_BREAK
+
+UNSKIPPABLE "It is time..."
+BOX_BREAK_DELAYED(30)
+
+UNSKIPPABLE "It has been resting now deep within\n"
+"the sanctum of Woodfall Temple,\n"
+"fully restoring it's true power."
+BOX_BREAK
+
+UNSKIPPABLE "And with it's true power you will\n"
+"be able to vanquish the evil that\n"
+"has haunted Hyrule for seven years."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8202, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "It is my final gift to you..."
+BOX_BREAK
+
+UNSKIPPABLE "When you awaken, take back your\n"
+"awakened sword from the sanctum..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8203, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_MASTER) QUICKTEXT_ENABLE "The " COLOR(RED) "Razor Sword" COLOR(DEFAULT) " has awoken\n"
+"as the " COLOR(RED) "Master Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Seek it out and reclaim it in\n"
+"the Woodfall Temple sanctum!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8204, TEXTBOX_TYPE_NONE_NO_SHADOW, TEXTBOX_POS_MIDDLE,
+MSG(),
+MSG(
+UNSKIPPABLE SHIFT(30) "No matter what happens...\n"
+SHIFT(35) "remember that I always...\n"
+SHIFT(55) "be your friend...\n" FADE(80)
+),
+MSG(),
+MSG()
+)

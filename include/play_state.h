@@ -25,6 +25,7 @@
 #include "sram.h"
 #include "transition.h"
 #include "view.h"
+#include "player.h"
 
 union Color_RGBA8_u32;
 struct Path;
@@ -48,9 +49,23 @@ typedef enum TransitionTileState {
 } TransitionTileState;
 
 typedef enum SpecialIcon {
-    /* 0 */ SPECIAL_ICON_AUTOSAVE,
-    /* 1 */ SPECIAL_ICON_RUMBLE
+    /* 0 */ SPECIAL_ICON_OFF,
+    /* 1 */ SPECIAL_ICON_AUTOSAVE,
+    /* 2 */ SPECIAL_ICON_RUMBLE
 } SpecialIcon;
+
+typedef enum SpecialPowerType {
+    /* 0 */ SPECIAL_POWER_REDUCE_DAMAGE,
+    /* 1 */ SPECIAL_POWER_STRENGTHEN_SWORD,
+    /* 2 */ SPECIAL_POWER_MAGIC_REGEN,
+    /* 3 */ SPECIAL_POWER_HEALTH_REGEN
+} SpecialPowerType;
+
+typedef enum AutoSaveState {
+    /* 0 */ AUTOSAVE_RESET,
+    /* 8 */ AUTOSAVE_ON = 8,
+    /* 9 */ AUTOSAVE_OFF
+} AutoSaveSate;
 
 typedef struct SceneSequences {
     /* 0x00 */ u8 seqId;
@@ -123,7 +138,7 @@ typedef struct PlayState {
     /* 0x11E60 */ CollisionCheckContext colChkCtx;
     /* 0x120FC */ u16 cutsceneFlags[20];
     /* 0x12124 */ PreRender pauseBgPreRender;
-    /* 0x121C7 */ bool autosave;
+    /* 0x121C7 */ u8 autosave;
     /* 0x121C8 */ TransitionContext transitionCtx;
     /* 0x1241B */ u8 transitionMode; // "fbdemo_wipe_modem"
     /* 0x1241C */ TransitionFade transitionFadeFlash; // Transition fade instance which flashes screen, see R_TRANS_FADE_FLASH_ALPHA_STEP
@@ -134,13 +149,18 @@ typedef struct PlayState {
     /* 0x12132 */ s8 specialIconShake;
     /* 0x12133 */ u8 specialIconCount;
     /* 0x12134 */ u8 specialIconLast;
+    /* 0x12135 */ bool progressRush;
+    /* 0x12136 */ bool swapEquipment;
+    /* 0x12137 */ u8 specialPowerTimer;
 } PlayState; // size = 0x12518
 
 extern Mtx D_01000000; // billboardMtx
 
 #define GET_ACTIVE_CAM(play) ((play)->cameraPtrs[(play)->activeCamId])
 #define GET_PLAYER(play) ((Player*)(play)->actorCtx.actorLists[ACTORCAT_PLAYER].head)
-#define SET_AUTOSAVE(play) (play->autosave = (AUTOSAVE ? true : false) )
+#define SET_AUTOSAVE(play) (play->autosave = (AUTOSAVE ? AUTOSAVE_ON : AUTOSAVE_RESET) )
+#define ONE_SEC (60 / R_UPDATE_RATE)
+#define SECONDS(seconds) (ONE_SEC * seconds)
 
 void Play_SetViewpoint(PlayState* this, s16 viewpoint);
 s32 Play_CheckViewpoint(PlayState* this, s16 viewpoint);
@@ -172,6 +192,11 @@ void Play_TriggerRespawn(PlayState* this);
 int Play_CamIsNotFixed(PlayState* this);
 s32 func_800C0D34(PlayState* this, Actor* actor, s16* yaw);
 s32 func_800C0DB4(PlayState* this, Vec3f* pos);
+void Play_SetDungeonRushEntry(PlayState* this);
+void Play_SetDungeonRushProgress(PlayState* this);
+u32 Player_UseSpecialPower(struct PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, u32 amount);
+u8 Player_GetMaxEnergy(void);
+bool Player_HasEnergyUnlocked(void);
 
 void Play_Init(GameState* thisx);
 void Play_Destroy(GameState* thisx);

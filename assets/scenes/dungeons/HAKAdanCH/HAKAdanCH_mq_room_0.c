@@ -1,10 +1,9 @@
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_scene.h"
-#include "save.h"
 
-static SceneCmd* questHeaders[QUEST_MAX];
+extern SceneCmd* questHeaders_HAKAdanCH_room0[];
 
 static SceneCmd start[] = {
-#include "assets/scenes/dungeons/start.inc.c"
+    SCENE_CMD_QUEST_HEADER_LIST(questHeaders_HAKAdanCH_room0),
 };
 
 #include "assets/scenes/dungeons/HAKAdanCH/HAKAdanCH_room_0.c"
@@ -33,10 +32,8 @@ static SceneCmd cq_header[] = {
 #include "assets/scenes/dungeons/HAKAdanCH/cq/headers/room0.inc.c"
 };
 
-static SceneCmd cmq_header[] = {
-#include "assets/scenes/dungeons/HAKAdanCH/mq/headers/room0.inc.c"
-};
+#define cmq_header mq_header
 
-static SceneCmd* questHeaders[] = {
+SceneCmd* questHeaders_HAKAdanCH_room0[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"
 };

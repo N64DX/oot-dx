@@ -23,23 +23,23 @@ COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "!\n"
 
 DEFINE_MESSAGE(0x9001, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-ITEM_ICON(0x5B) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "勇者の盾" COLOR(DEFAULT) "を入手！" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "勇者の盾" COLOR(DEFAULT) "を入手！" QUICKTEXT_DISABLE "\n"
 COLOR(BLUE) "そうび画面" COLOR(DEFAULT) "に　切りかえて、\n"
 "カーソルで選んで　" COLOR(BLUE) "[A]" COLOR(DEFAULT) "でそうび。"
 ),
 MSG(
-ITEM_ICON(0x5B) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Hero's Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Hero's Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Switch to the " COLOR(BLUE) "Equipment \n"
 "Subscreen" COLOR(DEFAULT) " and select the\n"
 "shield, then equip it with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
 ),
 MSG(
-ITEM_ICON(0x5B) QUICKTEXT_ENABLE "Der " COLOR(LIGHTBLUE) "Heroenschild" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE "Der " COLOR(LIGHTBLUE) "Heroenschild" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Gehe ins " COLOR(BLUE) "Ausrüstungs-Menü" COLOR(DEFAULT) ",\n"
 "um ihn mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) " auszuwählen."
 ),
 MSG(
-ITEM_ICON(0x5B) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(LIGHTBLUE) "Bouclier\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(LIGHTBLUE) "Bouclier\n"
 "du Héros" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Sélectionnez-le à \n"
 "l'" COLOR(BLUE) "écran de l'Equipement" COLOR(DEFAULT) ", puis \n"
 "appuyez sur " COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour l'équiper."
@@ -48,56 +48,125 @@ ITEM_ICON(0x5B) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(LIGHTBLUE) "Bouclier\n
 
 DEFINE_MESSAGE(0x9002, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE COLOR(BLUE) "王家のサイフ" COLOR(DEFAULT) "を　手に入れた！" QUICKTEXT_DISABLE "\n"
-"でっかい　でっかい　巨大サイフ。\n"
-COLOR(YELLOW) "９９９ルピー" COLOR(DEFAULT) "まで　持てるゾ！"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Royal Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"What a gigantic wallet! Now \n"
-"you can carry up to " COLOR(YELLOW) "999" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "Die " COLOR(BLUE) "Königsbörse" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Welch eine gigantische Geldbörse!\n"
-"Jetzt kannst Du sogar \n"
-COLOR(YELLOW) "999 Rubine" COLOR(DEFAULT) " tragen!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "Vous recevez la " COLOR(BLUE) "Bourse de \n"
-"Royale" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Elle peut contenir\n"
-"jusqu'à " COLOR(YELLOW) "999" COLOR(DEFAULT) " " COLOR(YELLOW) "Rubis" COLOR(DEFAULT) "."
-)
-)
-
-DEFINE_MESSAGE(0x9003, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(
-UNSKIPPABLE ITEM_ICON(0x5A)
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS)
 QUICKTEXT_ENABLE "強敵が残した\n"
 COLOR(RED) "勇者の剣" COLOR(DEFAULT) "！　あなたの物です！" QUICKTEXT_DISABLE "\n"
 "この剣は強力なビームを\n放つことができます！"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5A) QUICKTEXT_ENABLE "A powerful foe left behind a\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS) QUICKTEXT_ENABLE "A powerful foe left behind a\n"
 COLOR(RED) "Hero's Sword" COLOR(DEFAULT) "! It is yours now!" QUICKTEXT_DISABLE "\n"
 "This sword is capable of\n"
 "shooting powerful beams!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5A) QUICKTEXT_ENABLE "Ein mächtiger Feind hat das\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS) QUICKTEXT_ENABLE "Ein mächtiger Feind hat das\n"
 COLOR(RED) "Heroenschwert" COLOR(DEFAULT) " hinterlassen! Es\n"
 "gehört nun dir!" QUICKTEXT_DISABLE " Dieses Schwert\n"
 "kann mächtige Strahlen schießen!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5A) QUICKTEXT_ENABLE "Un puissant ennemi a laissé\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS) QUICKTEXT_ENABLE "Un puissant ennemi a laissé\n"
 COLOR(RED) "l’Épée du Héros" COLOR(DEFAULT) "! Elle est à toi maintenant!" QUICKTEXT_DISABLE "\n"
 "Cette épée est capable de\n"
 "lancer de puissants rayons!"
 )
 )
 
-DEFINE_MESSAGE(0x9004, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9003, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_ROCS_FEATHER) QUICKTEXT_ENABLE "You got the " COLOR(LIGHTBLUE) "Roc's Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to leap into the air,\n"
+"as light as a feather!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9004, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GOLDEN_FEATHER) QUICKTEXT_ENABLE "You found the " COLOR(LIGHTBLUE) "Golden Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to leap into the air.\n"
+"This feather is even stronger!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9005, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Master Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"What a worthy wallet! Now\n"
+"you can carry up to " COLOR(YELLOW) "999" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9006, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Royal Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"What a fancy wallet! Now you\n"
+"can carry up to " COLOR(YELLOW) "2000" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9007, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Tycoon's Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"What a gigantic wallet! Now you\n"
+"can carry up to " COLOR(YELLOW) "5000" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9008, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Bottomless Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"What a endless wallet! Now you\n"
+"can carry up to " COLOR(YELLOW) "9999" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9009, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_AMULET_OF_ENERGY) QUICKTEXT_ENABLE "You got the " COLOR(LIGHTBLUE) "Amulet of Energy" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"It grants you special power\n"
+"that enhances your tunics\n"
+"at the cost of energy!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x900A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_FAIRYS) QUICKTEXT_ENABLE "You got the " COLOR(RED) "Great Fairy's Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Set it to " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "to use it."
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_FAIRYS) "With black roses etched into it,\n"
+"the Great Fairy's Sword is the\n"
+"most powerful of all blades."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9101, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE "勇者の盾（たて）　８０ルピー" QUICKTEXT_DISABLE "\n"
 TWO_CHOICE
@@ -127,7 +196,7 @@ TWO_CHOICE
 )
 )
 
-DEFINE_MESSAGE(0x9005, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9103, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE "を手に入れた　２００ルピー" QUICKTEXT_DISABLE "\n"
 TWO_CHOICE
@@ -157,7 +226,7 @@ TWO_CHOICE
 )
 )
 
-DEFINE_MESSAGE(0x9006, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9104, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE "巨人のサイフ　２００ルピー" QUICKTEXT_DISABLE "\n"
 TWO_CHOICE
@@ -187,13 +256,21 @@ TWO_CHOICE
 )
 )
 
-DEFINE_MESSAGE(0x9007, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9105, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
 MSG(
-QUICKTEXT_ENABLE "王家のサイフ　２００ルピー" QUICKTEXT_DISABLE "\n"
+QUICKTEXT_ENABLE "Master Wallet   200 Rupees" QUICKTEXT_DISABLE "\n"
+"\n"
 TWO_CHOICE
-    COLOR(ADJUSTABLE) "かう\n"
-    "やめとく" COLOR(DEFAULT)
+    COLOR(ADJUSTABLE) "Buy\n"
+    "Don't buy" COLOR(DEFAULT)
 ),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9106, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
 MSG(
 QUICKTEXT_ENABLE "Royal Wallet   200 Rupees" QUICKTEXT_DISABLE "\n"
 "\n"
@@ -201,23 +278,37 @@ TWO_CHOICE
     COLOR(ADJUSTABLE) "Buy\n"
     "Don't buy" COLOR(DEFAULT)
 ),
-MSG(
-QUICKTEXT_ENABLE "Königsbörse   200 Rubine" QUICKTEXT_DISABLE "\n"
-"\n"
-TWO_CHOICE
-    COLOR(ADJUSTABLE) "Kaufen!\n"
-    "Nicht kaufen!" COLOR(DEFAULT)
-),
-MSG(
-QUICKTEXT_ENABLE "Bourse de Royale   200 Rubis" QUICKTEXT_DISABLE "\n"
-"\n"
-TWO_CHOICE
-    COLOR(ADJUSTABLE) "Acheter\n"
-    "Ne pas acheter" COLOR(DEFAULT)
-)
+MSG(),
+MSG()
 )
 
-DEFINE_MESSAGE(0x9008, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9107, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Tycoon's Wallet   200 Rupees" QUICKTEXT_DISABLE "\n"
+"\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Buy\n"
+    "Don't buy" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9108, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Bottomless Wallet   200 Rupees" QUICKTEXT_DISABLE "\n"
+"\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Buy\n"
+    "Don't buy" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9201, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "勇者の盾　８０ルピー\n"
 COLOR(DEFAULT) "装備すると　" COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) "　で防御できるよ。\n"
@@ -242,83 +333,158 @@ COLOR(DEFAULT) "Une fois équipé, tu peux te défendre\n"
 )
 )
 
-DEFINE_MESSAGE(0x9009, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
-MSG(
-QUICKTEXT_ENABLE COLOR(RED) "を手に入れた　２００ルピー\n"
-COLOR(DEFAULT) "大きなお金持ちのための\n"
-"大きめの財布だよ。\n"
-"この財布は最大２００ルピーまで入る！" QUICKTEXT_DISABLE PERSISTENT
-),
+DEFINE_MESSAGE(0x9203, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Adult's Wallet   200 Rupees\n"
 COLOR(DEFAULT) "An adult-sized wallet meant for\n"
 "big spenders.\n"
 "This wallet holds up to 200 Rupees!" QUICKTEXT_DISABLE PERSISTENT
 ),
-MSG(
-QUICKTEXT_ENABLE COLOR(RED) "Große Börse   200 Rubine\n"
-COLOR(DEFAULT) "Eine große Geldbörse für\n"
-"große Ausgaben.\n"
-"Diese Börse kann bis zu 200 Rubine halten!" QUICKTEXT_DISABLE PERSISTENT
-),
-MSG(
-QUICKTEXT_ENABLE COLOR(RED) "Grande Bourse   200 Rubis\n"
-COLOR(DEFAULT) "Un portefeuille de taille adulte\n"
-"pour les gros dépensiers.\n"
-"Ce portefeuille peut contenir jusqu'à 200 rubis !" QUICKTEXT_DISABLE PERSISTENT
-)
+MSG(),
+MSG()
 )
 
-DEFINE_MESSAGE(0x900A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
-MSG(
-QUICKTEXT_ENABLE COLOR(RED) "巨人のサイフ　２００ルピー\n"
-COLOR(DEFAULT) "お金持ちのための\n"
-"巨大な財布だよ。\n"
-"この財布は最大５００ルピーまで入る！" QUICKTEXT_DISABLE PERSISTENT
-),
+DEFINE_MESSAGE(0x9204, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Giant's Wallet   200 Rupees\n"
 COLOR(DEFAULT) "A giant-sized wallet meant for\n"
 "rich people.\n"
 "This wallet holds up to 500 Rupees!" QUICKTEXT_DISABLE PERSISTENT
 ),
-MSG(
-QUICKTEXT_ENABLE COLOR(RED) "Riesenbörse   200 Rubine\n"
-COLOR(DEFAULT) "Eine riesige Geldbörse für\n"
-"reiche Leute.\n"
-"Diese Börse kann bis zu 500 Rubine halten!" QUICKTEXT_DISABLE PERSISTENT
-),
-MSG(
-QUICKTEXT_ENABLE COLOR(RED) "Bourse de Géant   200 Rubis\n"
-COLOR(DEFAULT) "Un portefeuille géant\n"
-"pour les gens riches.\n"
-"Ce portefeuille peut contenir jusqu'à 500 rubis !" QUICKTEXT_DISABLE PERSISTENT
-)
+MSG(),
+MSG()
 )
 
-DEFINE_MESSAGE(0x900B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9205, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
 MSG(
-QUICKTEXT_ENABLE COLOR(RED) "王家のサイフ　２００ルピー\n"
-COLOR(DEFAULT) "ハイリアの中でも\n"
-"最も裕福な人のための財布。\n"
-"この財布は最大９９９ルピーまで入る！" QUICKTEXT_DISABLE PERSISTENT
+QUICKTEXT_ENABLE COLOR(RED) "Master Wallet   200 Rupees\n"
+COLOR(DEFAULT) "A master-sized wallet meant for\n"
+"only the Master of Time.\n"
+"This wallet holds up to 999 Rupees!" QUICKTEXT_DISABLE PERSISTENT
 ),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9206, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "Royal Wallet   200 Rupees\n"
 COLOR(DEFAULT) "A royal-sized wallet meant for\n"
+"those living in luxery.\n"
+"This wallet holds up to 2000 Rupees!" QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9207, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(RED) "Tycoon's Wallet   200 Rupees\n"
+COLOR(DEFAULT) "A tycoon-sized wallet meant for\n"
 "only the wealthiest among Hylians.\n"
-"This wallet holds up to 999 Rupees!" QUICKTEXT_DISABLE PERSISTENT
+"This wallet holds up to 5000 Rupees!" QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9208, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(RED) "Bottomless Wallet   200 Rupees\n"
+COLOR(DEFAULT) "A bottomless wallet that never\n"
+"seems to run out of money.\n"
+"This wallet holds up to 9999 Rupees!" QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9209, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(RED) "Deku Shield Repair   30 Rupees\n"
+COLOR(DEFAULT) "Have your shield repaired\n"
+"at a discount" QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x920A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(RED) "Hylian Shield Repair   60 Rupees\n"
+COLOR(DEFAULT) "Have your shield repaired\n"
+"at a discount" QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x920B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(RED) "Hero's Shield Repair   60 Rupees\n"
+COLOR(DEFAULT) "Have your shield repaired\n"
+"at a discount" QUICKTEXT_DISABLE PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9300, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Welcome " NAME "!\n"
+"I am the Great Fairy of Strength!"
+BOX_BREAK
+
+UNSKIPPABLE "I'm going to enhance your \n"
+COLOR(LIGHTBLUE) "Quick Spin" COLOR(DEFAULT) " skill."
+BOX_BREAK
+
+UNSKIPPABLE "Receive it now!"),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9301, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE QUICKTEXT_ENABLE "Your " COLOR(LIGHTBLUE) "Quick Spin" COLOR(DEFAULT) " skill is enhanced!" QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9302, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Your Quick Spin skill has been \n"
+"enhanced! Your quick spins are\n"
+"now " COLOR(RED) "fully charged" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9303, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(
+SHIFT(12) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "あなたの " COLOR(DEFAULT) "ミラーシールド" COLOR(LIGHTBLUE) " が元に戻ったよ！" COLOR(DEFAULT) QUICKTEXT_DISABLE FADE(60)
 ),
 MSG(
-QUICKTEXT_ENABLE COLOR(RED) "Königsbörse   200 Rubine\n"
-COLOR(DEFAULT) "Eine königliche Börse für\n"
-"die Reichsten unter den Hylians.\n"
-"Diese Börse kann bis zu 999 Rubine halten!" QUICKTEXT_DISABLE PERSISTENT
+QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "Your " COLOR(DEFAULT) "Mirror Shield" COLOR(LIGHTBLUE) " has been restored!" COLOR(DEFAULT) QUICKTEXT_DISABLE FADE(60)
 ),
 MSG(
-QUICKTEXT_ENABLE COLOR(RED) "Bourse de Royale   200 Rubis\n"
-COLOR(DEFAULT) "Un portefeuille royal réservé\n"
-"aux plus riches des Hyliens.\n"
-"Ce portefeuille peut contenir jusqu'à 999 rubis !" QUICKTEXT_DISABLE PERSISTENT
+QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "Dein " COLOR(DEFAULT) "Spiegelschild" COLOR(LIGHTBLUE) " wurde wiederhergestellt!" COLOR(DEFAULT) QUICKTEXT_DISABLE FADE(60)
+),
+MSG(
+QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "Votre " COLOR(DEFAULT) "Bouclier miroir" COLOR(LIGHTBLUE) " a été restauré !" COLOR(DEFAULT) QUICKTEXT_DISABLE FADE(60)
 )
 )

@@ -76,6 +76,11 @@ void BossGanon2_UpdateEffects(BossGanon2* this, PlayState* play);
 void BossGanon2_DrawEffects(PlayState* play);
 void BossGanon2_GenShadowTexture(void* shadowTexture, BossGanon2* this, PlayState* play);
 void BossGanon2_DrawShadowTexture(void* shadowTexture, BossGanon2* this, PlayState* play);
+Actor* BossGanon2_SpawnStalfos(PlayState* play);
+
+static bool isHyper;
+static u16 stalfosTimer;
+static Actor* spawnedStalfos[2];
 
 ActorProfile Boss_Ganon2_Profile = {
     /**/ ACTOR_BOSS_GANON2,
@@ -325,6 +330,44 @@ static ColliderJntSphInit sJntSphInit2 = {
     sJntSphElementsInit2,
 };
 
+static ColliderJntSphElementInit sJntSphElementsHyperInit2[] = {
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x50 },
+            { 0xFFDFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { 15, { { 0, 0, 0 }, 45 }, 150 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK2,
+            { 0xFFCFFFFF, 0x00, 0x50 },
+            { 0xFFDFFFFF, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_ON,
+            OCELEM_ON,
+        },
+        { 16, { { 0, 0, 0 }, 45 }, 150 },
+    },
+};
+
+static ColliderJntSphInit sJntSphHyperInit2 = {
+    {
+        COL_MATERIAL_METAL,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_ON | AC_TYPE_PLAYER,
+        OC1_ON | OC1_TYPE_PLAYER,
+        OC2_TYPE_1,
+        COLSHAPE_JNTSPH,
+    },
+    ARRAY_COUNT(sJntSphElementsHyperInit2),
+    sJntSphElementsHyperInit2,
+};
+
 static Vec3f D_8090EB20;
 
 static EnZl3* sZelda;
@@ -442,17 +485,20 @@ void BossGanon2_Init(Actor* thisx, PlayState* play) {
         sEffects[i].type = 0;
     }
 
+    isHyper = thisx->params == GANON_HYPER;
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
-    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(30, BOSS_HP);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(isHyper ? 45 : 30, BOSS_HP);
     Collider_InitJntSph(play, &this->unk_424);
     Collider_SetJntSph(play, &this->unk_424, &this->actor, &sJntSphInit1, this->unk_464);
     Collider_InitJntSph(play, &this->unk_444);
-    Collider_SetJntSph(play, &this->unk_444, &this->actor, &sJntSphInit2, this->unk_864);
+    Collider_SetJntSph(play, &this->unk_444, &this->actor, isHyper ? &sJntSphHyperInit2 : &sJntSphInit2, this->unk_864);
     BossGanon2_SetObjectSegment(this, play, OBJECT_GANON, false);
     SkelAnime_InitFlex(play, &this->skelAnime, &gGanondorfSkel, NULL, NULL, NULL, 0);
     func_808FD5C4(this, play);
     this->actor.naviEnemyId = NAVI_ENEMY_GANON;
     this->actor.gravity = 0.0f;
+    spawnedStalfos[0] = spawnedStalfos[1] = NULL;
+    stalfosTimer = 0;
 }
 
 void BossGanon2_Destroy(Actor* thisx, PlayState* play) {
@@ -1376,7 +1422,7 @@ void func_808FFEBC(BossGanon2* this, PlayState* play) {
     }
 
     SkelAnime_Update(&this->skelAnime);
-    Math_ApproachZeroF(&this->actor.speed, 0.5f, 1.0f);
+    Math_ApproachZeroF(&this->actor.speed, isHyper ? 0.2f : 0.5f, 1.0f);
 
     if (this->unk_1A2[0] == 0) {
         func_809002CC(this, play);
@@ -1398,7 +1444,7 @@ void func_808FFFE0(BossGanon2* this, PlayState* play) {
     s16 target;
 
     SkelAnime_Update(&this->skelAnime);
-    Math_ApproachZeroF(&this->actor.speed, 0.5f, 1.0f);
+    Math_ApproachZeroF(&this->actor.speed, isHyper ? 0.2f : 0.5f, 1.0f);
 
     if (this->unk_1A2[0] == 0) {
         func_809002CC(this, play);
@@ -1422,7 +1468,7 @@ void func_809000A0(BossGanon2* this, PlayState* play) {
 
 void func_80900104(BossGanon2* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
-    Math_ApproachZeroF(&this->actor.speed, 0.5f, 1.0f);
+    Math_ApproachZeroF(&this->actor.speed, isHyper ? 0.2f : 0.5f, 1.0f);
 
     switch (this->unk_1AC) {
         case 0:
@@ -1455,7 +1501,7 @@ void func_80900210(BossGanon2* this, PlayState* play) {
 
 void func_8090026C(BossGanon2* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
-    Math_ApproachZeroF(&this->actor.speed, 0.5f, 2.0f);
+    Math_ApproachZeroF(&this->actor.speed, isHyper ? 0.2f : 0.5f, 2.0f);
 
     if (Animation_OnFrame(&this->skelAnime, this->unk_194)) {
         func_809002CC(this, play);
@@ -1508,7 +1554,7 @@ void func_80900344(BossGanon2* this, PlayState* play) {
     }
 
     SkelAnime_Update(&this->skelAnime);
-    Math_ApproachF(&this->actor.speed, phi_f0, 0.5f, 1.0f);
+    Math_ApproachF(&this->actor.speed, phi_f0 * (isHyper ? 1.5f : 1.0f), 0.5f, 1.0f);
 
     if (this->unk_1A2[0] == 0) {
         func_808FFDB0(this, play);
@@ -1552,7 +1598,7 @@ void func_80900650(BossGanon2* this, PlayState* play) {
         this->unk_312 = 2;
     }
 
-    Math_ApproachZeroF(&this->actor.speed, 0.5f, 1.0f);
+    Math_ApproachZeroF(&this->actor.speed, isHyper ? 0.2f : 0.5f, 1.0f);
 
     if (Animation_OnFrame(&this->skelAnime, this->unk_194)) {
         this->unk_311 = 1 - this->unk_311;
@@ -1732,14 +1778,14 @@ void func_80900890(BossGanon2* this, PlayState* play) {
             if (Animation_OnFrame(&this->skelAnime, this->unk_194)) {
                 func_808FFDB0(this, play);
                 if (this->unk_334 == 0) {
-                    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(25, BOSS_HP);
+                    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(isHyper ? 38 : 25, BOSS_HP);
                 }
                 this->unk_336 = 1;
             }
             break;
     }
 
-    Math_ApproachZeroF(&this->actor.speed, 0.5f, 1.0f);
+    Math_ApproachZeroF(&this->actor.speed, isHyper ? 0.2f : 0.5f, 1.0f);
 }
 
 void func_80901020(BossGanon2* this, PlayState* play) {
@@ -1750,6 +1796,12 @@ void func_80901020(BossGanon2* this, PlayState* play) {
     this->unk_39C = 0;
     Actor_PlaySfx(&this->actor, NA_SE_EN_MGANON_DEAD1);
     this->unk_314 = 4;
+
+    if (spawnedStalfos[0] != NULL)
+        Actor_Kill(spawnedStalfos[0]);
+    if (spawnedStalfos[1] != NULL)
+        Actor_Kill(spawnedStalfos[1]);
+    spawnedStalfos[0] = spawnedStalfos[1] = NULL;
 }
 
 void func_8090109C(BossGanon2* this, PlayState* play) {
@@ -2249,7 +2301,7 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
                     Audio_StopSfxById(NA_SE_EN_MGANON_UNARI);
                     this->actor.colChkInfo.health -= 2;
                     health = this->actor.colChkInfo.health;
-                    if (health <= Actor_EnemyHealthMultiply(20, BOSS_HP) && this->unk_334 == 0) {
+                    if (health <= Actor_EnemyHealthMultiply(isHyper ? 30 : 20, BOSS_HP) && this->unk_334 == 0) {
                         func_80900818(this, play);
                     } else {
                         if (health <= 0) {
@@ -2283,7 +2335,17 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
             }
             this->actor.colChkInfo.health -= phi_v1_2;
             health = this->actor.colChkInfo.health;
-            if ((health <= Actor_EnemyHealthMultiply(20, BOSS_HP)) && (this->unk_334 == 0)) {
+
+            if (this->unk_334 != 0) {
+                for (i=0; i<ARRAY_COUNT(spawnedStalfos); i++) {
+                    if (spawnedStalfos[i] == NULL && stalfosTimer == 0) {
+                        spawnedStalfos[i] = BossGanon2_SpawnStalfos(play);
+                        stalfosTimer = (60 / R_UPDATE_RATE) * 40;
+                    }
+                }
+            }
+
+            if ((health <= Actor_EnemyHealthMultiply(isHyper ? 30 : 20, BOSS_HP)) && (this->unk_334 == 0)) {
                 func_80900818(this, play);
             } else if ((health <= 0) && (phi_v1_2 >= 2)) {
                 func_80901020(this, play);
@@ -2535,6 +2597,14 @@ void BossGanon2_Update(Actor* thisx, PlayState* play) {
     }
     this->unk_388 += 0.15f;
     BossGanon2_UpdateEffects(this, play);
+
+    if (isHyper) {
+        if (stalfosTimer > 0)
+            stalfosTimer--;
+        for (i=0; i<ARRAY_COUNT(spawnedStalfos); i++)
+            if (spawnedStalfos[i] != NULL && spawnedStalfos[i]->update == NULL)
+                spawnedStalfos[i] = NULL;
+    }
 }
 
 static s16 D_80907080 = 0;
@@ -3284,6 +3354,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
             f32 temp_f0;
             f32 angle;
             s32 pad;
+            bool isRazorSword = IS_RAZOR_SWORD;
 
             Gfx_SetupDL_25Xlu(play->state.gfxCtx);
             spA0.x = play->envCtx.dirLight1.params.dir.x;
@@ -3292,7 +3363,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
             func_8002EABC(&effect->position, &play->view.eye, &spA0, play->state.gfxCtx);
             Matrix_Translate(effect->position.x, effect->position.y, effect->position.z, MTXMODE_NEW);
 
-            if (IS_CHILD_QUEST_AS_CHILD) {
+            if (isRazorSword) {
                 Matrix_Scale(0.02f, 0.02f, 0.02f, MTXMODE_APPLY);
             } else {
                 Matrix_Scale(0.03f, 0.03f, 0.03f, MTXMODE_APPLY);
@@ -3304,7 +3375,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
             gSPSegment(POLY_OPA_DISP++, 0x08,
                        Gfx_TexScroll(play->state.gfxCtx, 0, 0 - (play->gameplayFrames & 0x7F), 32, 32));
 
-            if (IS_CHILD_QUEST_AS_CHILD) {
+            if (isRazorSword) {
                 gSPDisplayList(POLY_OPA_DISP++, gGanonRazorSwordDL);
             } else {
                 gSPDisplayList(POLY_OPA_DISP++, gGanonMasterSwordDL);
@@ -3315,7 +3386,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
                 angle = M_PI / 5.0f;
             } else {
                 alpha = 100;
-                angle = M_PI / (IS_CHILD_QUEST_AS_CHILD ? 5.0f : 2.0f);
+                angle = M_PI / (isRazorSword ? 5.0f : 2.0f);
             }
             gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 0, 0, 0, alpha);
             temp_f0 = effect->position.y - 1098.0f;
@@ -3473,6 +3544,17 @@ void BossGanon2_DrawShadowTexture(void* shadowTexture, BossGanon2* this, PlaySta
     gSPDisplayList(POLY_OPA_DISP++, gGanonShadowModelDL);
 
     CLOSE_DISPS(gfxCtx, "../z_boss_ganon2.c", 6479);
+}
+
+Actor* BossGanon2_SpawnStalfos(PlayState* play) {
+    Player* player = GET_PLAYER(play);
+    Vec3f spawnCoords;
+
+    spawnCoords.x = player->actor.world.pos.x + (Rand_ZeroOne() - 0.5f) * 50.0f;
+    spawnCoords.y = player->actor.world.pos.y + 20.0f;
+    spawnCoords.z = player->actor.world.pos.z + (Rand_ZeroOne() - 0.5f) * 50.0f;
+
+    return Actor_Spawn(&play->actorCtx, play, ACTOR_EN_TEST, spawnCoords.x, spawnCoords.y, spawnCoords.z, 0, 0, 0, 0x0003);
 }
 
 // padding
