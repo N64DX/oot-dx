@@ -881,6 +881,8 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                                                    ITEM_ICON_HEIGHT, point);
             } else if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_KOKIRI && IS_HEROS_SWORD) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconSwordHerosTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
+            } else if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_MASTER && !HAS_MASTER_SWORD) {
+                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconSwordRazorTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if (i == EQUIP_TYPE_SHIELD && k == EQUIP_INV_SHIELD_HYLIAN && IS_HEROS_SHIELD) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconShieldHerosTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if (gBitFlags[bit] & gSaveContext.save.info.inventory.equipment) {

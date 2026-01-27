@@ -108,7 +108,8 @@ typedef union HasObtainedItems {
         u8 amuletOfEnergy : 1;
         u8 hammer         : 1;
         u8 fairysSword    : 1;
-        u8 unk            : 2;
+        u8 masterSword    : 1;
+        u8 unk            : 1;
     };
     u8 items;
 } HasObtainedItems; // size = 0x5E
@@ -484,6 +485,12 @@ typedef enum LinkAge {
 #define HAS_GOLDEN_FEATHER    (gSaveContext.save.info.hasObtainedItems.feather > 1)
 #define SET_AMULET_OF_ENERGY  (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy = 1)
 #define HAS_AMULET_OF_ENERGY  (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy)
+#define SET_HAMMER            (gSaveContext.save.info.hasObtainedItems.hammer = 1)
+#define HAS_HAMMER            (gSaveContext.save.info.hasObtainedItems.hammer)
+#define SET_FAIRYS_SWORD      (gSaveContext.save.info.hasObtainedItems.fairysSword = 1)
+#define HAS_FAIRYS_SWORD      (gSaveContext.save.info.hasObtainedItems.fairysSword)
+#define SET_MASTER_SWORD      (gSaveContext.save.info.hasObtainedItems.masterSword = 1)
+#define HAS_MASTER_SWORD      (gSaveContext.save.info.hasObtainedItems.masterSword)
 
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17

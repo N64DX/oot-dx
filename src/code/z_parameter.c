@@ -1755,18 +1755,19 @@ typedef struct ChildQuestIcons {
     u8 icon;
 } ChildQuestIcons;
 
-static bool IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD; }
-static bool IsHerosShield(void)   { return IS_HEROS_SHIELD;         }
-static bool IsHerosSword(void)    { return IS_HEROS_SWORD;          }
+static bool IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                               }
+static bool IsHerosShield(void)   { return IS_HEROS_SHIELD;                                                       }
+static bool IsHerosSword(void)    { return IS_HEROS_SWORD;                                                        }
+static bool IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD && !HAS_MASTER_SWORD;                          }
 static bool IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
 static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
 
 #define LAST_ITEM_ICON ITEM_AMULET_OF_ENERGY
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_HYLIAN,             IsHerosShield, ITEM_SHIELD_HEROS   },
-    { ITEM_SWORD_HEROS,               IsHerosSword,  ITEM_SWORD_HEROS    },
+    { ITEM_SWORD_KOKIRI ,             IsHerosSword,  ITEM_SWORD_HEROS    },
     { ITEM_SHIELD_MIRROR,             IsChildQuest,  LAST_ITEM_ICON + 1  },
-    { ITEM_SWORD_MASTER,              IsChildQuest,  LAST_ITEM_ICON + 2  },
+    { ITEM_SWORD_MASTER,              IsRazorSword,  LAST_ITEM_ICON + 2  },
     { ITEM_SWORD_BIGGORON,            IsSilverSword, LAST_ITEM_ICON + 3  },
     { ITEM_SWORD_BIGGORON,            IsGildedSword, LAST_ITEM_ICON + 4  },
     { ITEM_HOOKSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 5  },

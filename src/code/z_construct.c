@@ -33,7 +33,6 @@ void Interface_Init(PlayState* play) {
     gItemIcons[ITEM_BOW_FIRE]                  = IS_CHILD_QUEST_AS_CHILD ? gItemIconHerosBowFireTex      : gItemIconBowFireTex;
     gItemIcons[ITEM_BOW_ICE]                   = IS_CHILD_QUEST_AS_CHILD ? gItemIconHerosBowIceTex       : gItemIconBowIceTex;
     gItemIcons[ITEM_BOW_LIGHT]                 = IS_CHILD_QUEST_AS_CHILD ? gItemIconHerosBowLightTex     : gItemIconBowLightTex;
-    gItemIcons[ITEM_SWORD_MASTER]              = IS_CHILD_QUEST_AS_CHILD ? gItemIconSwordRazorTex        : gItemIconSwordMasterTex;
     gItemIcons[ITEM_SWORD_BIGGORON]            = IS_CHILD_QUEST_AS_CHILD ? gItemIconSwordGildedTex       : gItemIconSwordBiggoronTex;
     gItemIcons[ITEM_GIANTS_KNIFE]              = IS_CHILD_QUEST_AS_CHILD ? gItemIconBrokenGiantsKnifeTex : gItemIconBrokenGiantsKnifeTex;
     gItemIcons[ITEM_SHIELD_MIRROR]             = IS_CHILD_QUEST_AS_CHILD ? gItemIconShieldMirrorMMTex    : gItemIconShieldMirrorTex;

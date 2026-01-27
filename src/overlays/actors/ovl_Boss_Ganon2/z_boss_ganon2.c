@@ -3284,6 +3284,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
             f32 temp_f0;
             f32 angle;
             s32 pad;
+            bool isRazorSword = IS_CHILD_QUEST_AS_CHILD && !HAS_MASTER_SWORD;
 
             Gfx_SetupDL_25Xlu(play->state.gfxCtx);
             spA0.x = play->envCtx.dirLight1.params.dir.x;
@@ -3292,7 +3293,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
             func_8002EABC(&effect->position, &play->view.eye, &spA0, play->state.gfxCtx);
             Matrix_Translate(effect->position.x, effect->position.y, effect->position.z, MTXMODE_NEW);
 
-            if (IS_CHILD_QUEST_AS_CHILD) {
+            if (isRazorSword) {
                 Matrix_Scale(0.02f, 0.02f, 0.02f, MTXMODE_APPLY);
             } else {
                 Matrix_Scale(0.03f, 0.03f, 0.03f, MTXMODE_APPLY);
@@ -3304,7 +3305,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
             gSPSegment(POLY_OPA_DISP++, 0x08,
                        Gfx_TexScroll(play->state.gfxCtx, 0, 0 - (play->gameplayFrames & 0x7F), 32, 32));
 
-            if (IS_CHILD_QUEST_AS_CHILD) {
+            if (isRazorSword) {
                 gSPDisplayList(POLY_OPA_DISP++, gGanonRazorSwordDL);
             } else {
                 gSPDisplayList(POLY_OPA_DISP++, gGanonMasterSwordDL);
@@ -3315,7 +3316,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
                 angle = M_PI / 5.0f;
             } else {
                 alpha = 100;
-                angle = M_PI / (IS_CHILD_QUEST_AS_CHILD ? 5.0f : 2.0f);
+                angle = M_PI / (isRazorSword ? 5.0f : 2.0f);
             }
             gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 0, 0, 0, alpha);
             temp_f0 = effect->position.y - 1098.0f;

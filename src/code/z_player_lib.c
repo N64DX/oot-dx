@@ -389,33 +389,35 @@ Gfx* gPlayerShields[][4] = {
 };
 
 
-Gfx* gPlayerSheathedSwordsWithShields[][4][5] = {
+Gfx* gPlayerSheathedSwordsWithShields[][5][5] = {
     {
         { gLinkChildDekuShieldKokiriSwordSheathedDL, gLinkChildHylianShieldKokiriSwordSheathedDL, gLinkChildMirrorShieldKokiriSwordSheathedDL, gLinkChildHerosShieldKokiriSwordSheathedDL, gLinkChildHylianShieldKokiriSwordSheathDL },
         { gLinkChildDekuShieldRazorSwordSheathedDL,  gLinkChildHylianShieldRazorSwordSheathedDL,  gLinkChildMirrorShieldRazorSwordSheathedDL,  gLinkChildHerosShieldRazorSwordSheathedDL,  gLinkChildHylianShieldRazorSwordSheathDL  },
         { gLinkChildDekuShieldGildedSwordSheathedDL, gLinkChildHylianShieldGildedSwordSheathedDL, gLinkChildMirrorShieldGildedSwordSheathedDL, gLinkChildHerosShieldGildedSwordSheathedDL, gLinkChildHylianShieldGildedSwordSheathDL },
         { gLinkChildDekuShieldHerosSwordSheathedDL,  gLinkChildHylianShieldHerosSwordSheathedDL,  gLinkChildMirrorShieldHerosSwordSheathedDL,  gLinkChildHerosShieldHerosSwordSheathedDL,  gLinkChildHylianShieldHerosSwordSheathDL  },
+        { gLinkChildDekuShieldMasterSwordSheathedDL, gLinkChildHylianShieldMasterSwordSheathedDL, gLinkChildMirrorShieldMasterSwordSheathedDL, gLinkChildHerosShieldMasterSwordSheathedDL, gLinkChildHylianShieldMasterSwordSheathDL  },
     }, {
         { gLinkYoungDekuShieldKokiriSwordSheathedDL, gLinkYoungHylianShieldKokiriSwordSheathedDL, gLinkYoungMirrorShieldKokiriSwordSheathedDL, gLinkYoungHerosShieldKokiriSwordSheathedDL, gLinkYoungHylianShieldKokiriSwordSheathDL },
         { gLinkYoungDekuShieldRazorSwordSheathedDL,  gLinkYoungHylianShieldRazorSwordSheathedDL,  gLinkYoungMirrorShieldRazorSwordSheathedDL,  gLinkYoungHerosShieldRazorSwordSheathedDL,  gLinkYoungHylianShieldRazorSwordSheathDL  },
         { gLinkYoungDekuShieldGildedSwordSheathedDL, gLinkYoungHylianShieldGildedSwordSheathedDL, gLinkYoungMirrorShieldGildedSwordSheathedDL, gLinkYoungHerosShieldGildedSwordSheathedDL, gLinkYoungHylianShieldGildedSwordSheathDL },
         { gLinkYoungDekuShieldHerosSwordSheathedDL,  gLinkYoungHylianShieldHerosSwordSheathedDL,  gLinkYoungMirrorShieldHerosSwordSheathedDL,  gLinkYoungHerosShieldHerosSwordSheathedDL,  gLinkYoungHylianShieldHerosSwordSheathDL  },
+        { gLinkYoungDekuShieldMasterSwordSheathedDL, gLinkYoungHylianShieldMasterSwordSheathedDL, gLinkYoungMirrorShieldMasterSwordSheathedDL, gLinkYoungHerosShieldMasterSwordSheathedDL, gLinkYoungHylianShieldMasterSwordSheathDL  },
     }
 };
 
-Gfx* gPlayerSheathedSwords[][4] = {
-    { gLinkChildSheathedKokiriSwordDL, gLinkChildSheathedRazorSwordDL, gLinkChildSheathedGildedSwordDL, gLinkChildSheathedHerosSwordDL },
-    { gLinkYoungSheathedKokiriSwordDL, gLinkYoungSheathedRazorSwordDL, gLinkYoungSheathedGildedSwordDL, gLinkYoungSheathedHerosSwordDL },
+Gfx* gPlayerSheathedSwords[][5] = {
+    { gLinkChildSheathedKokiriSwordDL, gLinkChildSheathedRazorSwordDL, gLinkChildSheathedGildedSwordDL, gLinkChildSheathedHerosSwordDL, gLinkChildSheathedMasterSwordDL },
+    { gLinkYoungSheathedKokiriSwordDL, gLinkYoungSheathedRazorSwordDL, gLinkYoungSheathedGildedSwordDL, gLinkYoungSheathedHerosSwordDL, gLinkYoungSheathedMasterSwordDL },
 };
 
-Gfx* gPlayerSwordSheaths[][4] = {
-    { gLinkChildKokiriSwordSheathDL, gLinkChildRazorSwordSheathDL, gLinkChildGildedSwordSheathDL, gLinkChildHerosSwordSheathDL },
-    { gLinkYoungKokiriSwordSheathDL, gLinkYoungRazorSwordSheathDL, gLinkYoungGildedSwordSheathDL, gLinkYoungHerosSwordSheathDL },
+Gfx* gPlayerSwordSheaths[][5] = {
+    { gLinkChildKokiriSwordSheathDL, gLinkChildRazorSwordSheathDL, gLinkChildGildedSwordSheathDL, gLinkChildHerosSwordSheathDL, gLinkChildMasterSwordSheathDL },
+    { gLinkYoungKokiriSwordSheathDL, gLinkYoungRazorSwordSheathDL, gLinkYoungGildedSwordSheathDL, gLinkYoungHerosSwordSheathDL, gLinkYoungMasterSwordSheathDL },
 };
 
-Gfx* gPlayerSwords[][5] = {
-    { gLinkChildLeftFistAndKokiriSwordNearDL, gLinkChildLeftHandHoldingRazorSwordDL, gLinkChildLeftHandHoldingSilverSwordDL, gLinkChildLeftHandHoldingGoldenSwordDL, gLinkChildLeftHandHoldingHerosSwordDL },
-    { gLinkYoungLeftFistAndKokiriSwordNearDL, gLinkYoungLeftHandHoldingRazorSwordDL, gLinkYoungLeftHandHoldingSilverSwordDL, gLinkYoungLeftHandHoldingGoldenSwordDL, gLinkYoungLeftHandHoldingHerosSwordDL },
+Gfx* gPlayerSwords[][6] = {
+    { gLinkChildLeftFistAndKokiriSwordNearDL, gLinkChildLeftHandHoldingRazorSwordDL, gLinkChildLeftHandHoldingSilverSwordDL, gLinkChildLeftHandHoldingGoldenSwordDL, gLinkChildLeftHandHoldingHerosSwordDL, gLinkChildLeftHandHoldingMasterSwordDL2 },
+    { gLinkYoungLeftFistAndKokiriSwordNearDL, gLinkYoungLeftHandHoldingRazorSwordDL, gLinkYoungLeftHandHoldingSilverSwordDL, gLinkYoungLeftHandHoldingGoldenSwordDL, gLinkYoungLeftHandHoldingHerosSwordDL, gLinkYoungLeftHandHoldingMasterSwordDL2 },
 };
 
 // Identical to `sPlayerLeftHandSwordDLs` and unused
@@ -1428,6 +1430,8 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                         *dLists = gPlayerSwords[IS_YOUNG_LINK][3];
                     else if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                         *dLists = gPlayerSwords[IS_YOUNG_LINK][4];
+                    else if (HAS_MASTER_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+                        *dLists = gPlayerSwords[IS_YOUNG_LINK][5];
                     else *dLists = gPlayerSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                 }
             } else if ((sLeftHandType == PLAYER_MODELTYPE_LH_BGS) && (!gSaveContext.save.info.playerData.swordHealth)) {
@@ -1457,6 +1461,8 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                 EquipValueSword swordEquipValue = CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD);
                 if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                     swordEquipValue = 4;
+                else if (HAS_MASTER_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+                    swordEquipValue = 5;
                 
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
                     if ( (this->currentShield == PLAYER_SHIELD_NONE && this->sheathType == PLAYER_MODELTYPE_SHEATH_18) || this->sheathType == PLAYER_MODELTYPE_SHEATH_16)
@@ -1765,7 +1771,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
             if (Player_HoldsBrokenKnife(this)) {
                 D_80126080.x = 1500.0f;
-            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 1) { // Razor Sword
+            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 1 && !HAS_MASTER_SWORD) { // Razor Sword
                 D_80126080.x = 3000.0f;
             } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 3) { // Silver / Gilded Sword
                 D_80126080.x = 4000.0f;
@@ -2093,6 +2099,8 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                 *dList = gPlayerSwords[IS_YOUNG_LINK][3];
             else if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][4];
+            else if (HAS_MASTER_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+                *dList = gPlayerSwords[IS_YOUNG_LINK][5];
             else if (swordEquipValue != EQUIP_VALUE_SWORD_NONE)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][swordEquipValue - 1];
         }
@@ -2111,6 +2119,8 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
             if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                 swordEquipValue = 4;
+            else if (HAS_MASTER_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+                swordEquipValue = 5;
 
             if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
                 if ( (shieldEquipValue == EQUIP_VALUE_SHIELD_NONE && type == PLAYER_MODELTYPE_SHEATH_18) || type == PLAYER_MODELTYPE_SHEATH_16)

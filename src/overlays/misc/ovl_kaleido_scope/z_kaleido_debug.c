@@ -43,10 +43,11 @@ typedef enum DebugSection {
     /* 0x66 */ SECTION_SKULL_TOKENS,
     /* 0x67 */ SECTION_HEART_PIECES,
     /* 0x68 */ SECTION_BGS,
-    /* 0x69 */ SECTION_FEATHER,
-    /* 0x6A */ SECTION_ENHANCED_SPIN,
-    /* 0x6B */ SECTION_AMULET_OF_ENERGY,
-    /* 0x6C */ SECTION_MAX
+    /* 0x69 */ SECTION_MASTER_SWORD,
+    /* 0x6A */ SECTION_FEATHER,
+    /* 0x6B */ SECTION_ENHANCED_SPIN,
+    /* 0x6C */ SECTION_AMULET_OF_ENERGY,
+    /* 0x6D */ SECTION_MAX
 } DebugSection;
 
 // Positions of each input section in the editor
@@ -169,9 +170,10 @@ static u16 sSectionPositions[SECTION_MAX][2] = {
     { 210, 185 }, // SECTION_HEART_PIECES
 
     { 78, 204 }, // SECTION_BGS
-    { 90, 204 }, // SECTION_FEATHER
-    { 102, 204 }, // SECTION_ENHANCED_SPIN
-    { 114, 204 }, // SECTION_AMULET_OF_ENERGY
+    { 90, 204 }, // SECTION_MASTER_SWORD
+    { 102, 204 }, // SECTION_FEATHER
+    { 114, 204 }, // SECTION_ENHANCED_SPIN
+    { 126, 204 }, // SECTION_AMULET_OF_ENERGY
 };
 
 // First section of each row in the editor (starting from the top)
@@ -486,14 +488,17 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
     // Biggoron Sword
     KaleidoScope_DrawDigit(play, gSaveContext.save.info.playerData.bgsFlag, 78, 204);
 
+    // Master Sword
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.masterSword, 90, 204);
+
     // Feather
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.feather, 90, 204);
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.feather, 102, 204);
 
     // Enhanced Spin
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.isEnhancedSpinAcquired, 102, 204);
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.isEnhancedSpinAcquired, 114, 204);
 
     // Amulet of Energy
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.amuletOfEnergy, 114, 204);
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.amuletOfEnergy, 126, 204);
 
     // Handles navigating the menu to different sections with the D-Pad
     // When the same direction is held, registers the input periodically based on a timer
@@ -996,6 +1001,12 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                 } else if (curSection == SECTION_BGS) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
                         gSaveContext.save.info.playerData.bgsFlag ^= 1;
+                } else if (curSection == SECTION_MASTER_SWORD) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                        gSaveContext.save.info.hasObtainedItems.masterSword ^= 1;
+                        for (j=0; j<8; j++)
+                            Interface_LoadItemIcon1(play, j);
+                    }
                 } else if (curSection == SECTION_FEATHER) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && gSaveContext.save.info.hasObtainedItems.feather < 2)
                         gSaveContext.save.info.hasObtainedItems.feather++;

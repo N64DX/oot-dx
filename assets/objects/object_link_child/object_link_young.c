@@ -2701,6 +2701,108 @@ Gfx gLinkYoungLeftHandHoldingGoldenSwordDL[] = {
 
 
 
+// Master Sword
+
+static u64 master_sword_tlut_tex[] = {
+#include "assets/objects/object_link_boy/gLinkAdultTLUT4.tlut.rgba16.inc.c"
+};
+
+static u64 master_sword_sheath_tex[] = {
+#include "assets/objects/object_link_boy/gLinkAdultSheathTex.ci8.tlut_gLinkAdultTLUT4.inc.c"
+};
+
+static u64 master_sword_band_sheath_tex[] = {
+#include "assets/objects/object_link_boy/gLinkAdultSheathBandTex.ci8.tlut_gLinkAdultTLUT4.inc.c"
+};
+
+static Vtx master_sword_2_vtx[] = {
+#include "assets/objects/object_link_boy/gLinkAdultLeftHandHoldingMasterSwordNearVtx.inc.c"
+};
+
+static Vtx master_sword_sheath_vtx[] = {
+#include "assets/objects/object_link_boy/gLinkAdultMasterSwordAndSheathNearVtx.inc.c"
+};
+
+static Gfx gMasterSwordHandleDL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(gLinkYoungMasterSwordPommelTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(gLinkYoungSwordsTLUT),
+    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsSPVertex(&master_sword_2_vtx[54], 19, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 4, 0),
+    gsSP2Triangles(0, 4, 5, 0, 1, 0, 6, 0),
+    gsSP2Triangles(7, 8, 9, 0, 7, 9, 10, 0),
+    gsSP2Triangles(8, 7, 11, 0, 7, 10, 12, 0),
+    gsSP2Triangles(13, 14, 15, 0, 16, 17, 18, 0),
+
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gLinkYoungMasterSwordGuardTex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&master_sword_2_vtx[73], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(1, 0, 4, 0, 4, 5, 6, 0),
+    gsSP2Triangles(6, 5, 7, 0, 8, 9, 10, 0),
+    gsSP2Triangles(11, 5, 10, 0, 8, 10, 5, 0),
+    gsSP2Triangles(12, 13, 14, 0, 14, 15, 16, 0),
+    gsSP2Triangles(17, 18, 19, 0, 20, 21, 22, 0),
+    gsSP2Triangles(1, 23, 24, 0, 25, 26, 24, 0),
+    gsSP2Triangles(27, 17, 19, 0, 28, 29, 13, 0),
+    gsSP2Triangles(21, 20, 15, 0, 15, 20, 30, 0),
+    gsSP2Triangles(15, 30, 16, 0, 13, 12, 18, 0),
+    gsSPVertex(&master_sword_2_vtx[104], 18, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 2, 6, 3, 0),
+    gsSP2Triangles(7, 8, 4, 0, 9, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 11, 10, 12, 0),
+    gsSP2Triangles(11, 12, 14, 0, 15, 16, 17, 0),
+
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gLinkYoungMasterSwordEmblemTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&master_sword_2_vtx[122], 14, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 6, 9, 7, 0),
+    gsSP2Triangles(10, 11, 12, 0, 12, 11, 13, 0),
+
+    gsSPEndDisplayList(),
+};
+
+static Gfx gMasterSwordBladeDL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0x07D0, 0x09C4, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(gHilite1Tex, G_IM_FMT_RGBA, G_IM_SIZ_16b, gHilite1Tex_WIDTH, gHilite1Tex_HEIGHT, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, 15),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPSetGeometryMode(G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPDisplayList(0x0C000000),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsSPVertex(&master_sword_2_vtx[0], 3, 0),
+    gsSP1Triangle(0, 1, 2, 0),
+    gsSPVertex(&master_sword_2_vtx[3], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
+    gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 27, 28, 29, 0),
+    gsSP1Triangle(2, 30, 0, 0),
+    gsSPVertex(&master_sword_2_vtx[34], 20, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
+    gsSP2Triangles(15, 18, 16, 0, 19, 11, 10, 0),
+    gsSPEndDisplayList(),    
+};
+
+Gfx gLinkYoungLeftHandHoldingMasterSwordDL2[] = {
+    gsSPDisplayList(gLinkYoungLeftHandNearDL),
+    gsSPDisplayList(gMasterSwordHandleDL),
+    gsSPBranchList(gMasterSwordBladeDL),
+};
+
+
+
 // Sheaths
 
 static Vtx heros_sword_sheath_vtx[] = {
@@ -2713,13 +2815,6 @@ static Vtx razor_sword_sheath_vtx[] = {
 
 static Vtx gilded_sword_sheath_vtx[] = {
 #include "assets/objects/object_link_child/swords/gilded_sword_sheath.vtx.inc"
-};
-
-static Mtx gSheathedHerosSwordMtx = { 
-    65536      , 0          , 1          , 0          , 
-    0          , 65536      , -37814493  , -2097151   , 
-    0          , 0          , 0          , 0          , 
-    0          , 0          , 0          , 0          , 
 };
 
 static Mtx gSheathedRazorSwordMtx = { 
@@ -2745,7 +2840,7 @@ Gfx gLinkYoungSheathedKokiriSwordDL[] = {
 
 Gfx gLinkYoungSheathedHerosSwordDL[] = {
     gsSPDisplayList(gLinkYoungHerosSwordSheathDL),
-    gsSPMatrix(&gSheathedHerosSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPMatrix(&gSheathedGildedSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPDisplayList(gHerosSwordHandleDL),
     gsSPPopMatrix(G_MTX_MODELVIEW),
     gsSPEndDisplayList(),
@@ -2763,6 +2858,14 @@ Gfx gLinkYoungSheathedGildedSwordDL[] = {
     gsSPDisplayList(gLinkYoungGildedSwordSheathDL),
     gsSPMatrix(&gSheathedGildedSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPDisplayList(gGildedSwordHandleDL),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
+    gsSPEndDisplayList(),
+};
+
+Gfx gLinkYoungSheathedMasterSwordDL[] = {
+    gsSPDisplayList(gLinkYoungMasterSwordSheathDL),
+    gsSPMatrix(&gSheathedGildedSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPDisplayList(gMasterSwordHandleDL),
     gsSPPopMatrix(G_MTX_MODELVIEW),
     gsSPEndDisplayList(),
 };
@@ -2903,6 +3006,32 @@ Gfx gLinkYoungGildedSwordSheathDL[] = {
     gsSPEndDisplayList(),
 };
 
+Gfx gLinkYoungMasterSwordSheathDL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(master_sword_sheath_tex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(master_sword_tlut_tex),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
+    gsSPDisplayList(0x0C000000),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsSPVertex(&master_sword_sheath_vtx[0], 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 1, 7, 0, 8, 9, 5, 0),
+    gsSP2Triangles(2, 1, 10, 0, 10, 1, 6, 0),
+    gsSP2Triangles(11, 8, 5, 0, 11, 5, 4, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(master_sword_band_sheath_tex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&master_sword_sheath_vtx[12], 10, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 5, 0, 5, 7, 3, 0),
+    gsSP2Triangles(8, 1, 0, 0, 8, 9, 1, 0),
+    gsSPEndDisplayList(),
+};
+
 
 
 // Shields With Sheaths
@@ -2927,6 +3056,11 @@ Gfx gLinkYoungDekuShieldGildedSwordSheathedDL[] = {
     gsSPBranchList(gLinkYoungDekuShieldWithMatrixDL),
 };
 
+Gfx gLinkYoungDekuShieldMasterSwordSheathedDL[] = {
+    gsSPDisplayList(gLinkYoungSheathedMasterSwordDL),
+    gsSPBranchList(gLinkYoungDekuShieldWithMatrixDL),
+};
+
 Gfx gLinkYoungHylianShieldKokiriSwordSheathedDL[] = {
     gsSPDisplayList(gLinkYoungSheathedKokiriSwordDL),
     gsSPBranchList(gLinkYoungHylianShieldAndSheathNearDL),
@@ -2944,6 +3078,11 @@ Gfx gLinkYoungHylianShieldRazorSwordSheathedDL[] = {
 
 Gfx gLinkYoungHylianShieldGildedSwordSheathedDL[] = {
     gsSPDisplayList(gLinkYoungSheathedGildedSwordDL),
+    gsSPBranchList(gLinkYoungHylianShieldAndSheathNearDL),
+};
+
+Gfx gLinkYoungHylianShieldMasterSwordSheathedDL[] = {
+    gsSPDisplayList(gLinkYoungSheathedMasterSwordDL),
     gsSPBranchList(gLinkYoungHylianShieldAndSheathNearDL),
 };
 
@@ -2967,6 +3106,10 @@ Gfx gLinkYoungHylianShieldGildedSwordSheathDL[] = {
     gsSPBranchList(gLinkYoungHylianShieldAndSheathNearDL),
 };
 
+Gfx gLinkYoungHylianShieldMasterSwordSheathDL[] = {
+    gsSPDisplayList(gLinkYoungMasterSwordSheathDL),
+    gsSPBranchList(gLinkYoungHylianShieldAndSheathNearDL),
+};
 
 Gfx gLinkYoungHerosShieldKokiriSwordSheathedDL[] = {
     gsSPDisplayList(gLinkYoungSheathedKokiriSwordDL),
@@ -2988,6 +3131,11 @@ Gfx gLinkYoungHerosShieldGildedSwordSheathedDL[] = {
     gsSPBranchList(gLinkYoungHerosShieldWithMatrixDL),
 };
 
+Gfx gLinkYoungHerosShieldMasterSwordSheathedDL[] = {
+    gsSPDisplayList(gLinkYoungSheathedMasterSwordDL),
+    gsSPBranchList(gLinkYoungHerosShieldWithMatrixDL),
+};
+
 Gfx gLinkYoungMirrorShieldKokiriSwordSheathedDL[] = {
     gsSPDisplayList(gLinkYoungSheathedKokiriSwordDL),
     gsSPBranchList(gLinkYoungMirrorShieldWithMatrixDL),
@@ -3005,6 +3153,11 @@ Gfx gLinkYoungMirrorShieldRazorSwordSheathedDL[] = {
 
 Gfx gLinkYoungMirrorShieldGildedSwordSheathedDL[] = {
     gsSPDisplayList(gLinkYoungSheathedGildedSwordDL),
+    gsSPBranchList(gLinkYoungMirrorShieldWithMatrixDL),
+};
+
+Gfx gLinkYoungMirrorShieldMasterSwordSheathedDL[] = {
+    gsSPDisplayList(gLinkYoungSheathedMasterSwordDL),
     gsSPBranchList(gLinkYoungMirrorShieldWithMatrixDL),
 };
 
