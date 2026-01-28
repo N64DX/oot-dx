@@ -1129,8 +1129,8 @@ Gfx* sBootDListGroups[][2] = {
 };
 
 Gfx* sLinkChildEquipmentDListGroups[][6] = {
-    { gLinkChildEarringsIronDL, gLinkChildEarringsHoverDL, gLinkChildGoronBraceletDL, gLinkChildPowerBraceletDL, gLinkChildPowerBraceletsDL, gLinkChildAmuletOfEnergyDL },
-    { gLinkYoungEarringsIronDL, gLinkYoungEarringsHoverDL, gLinkYoungGoronBraceletDL, gLinkYoungPowerBraceletDL, gLinkYoungPowerBraceletsDL, gLinkYoungAmuletOfEnergyDL },
+    { gLinkChildIronBootsDL, gLinkChildHoverBootsDL, gLinkChildGoronBraceletDL, gLinkChildPowerBraceletDL, gLinkChildPowerBraceletsDL, gLinkChildAmuletOfEnergyDL },
+    { gLinkYoungIronBootsDL, gLinkYoungHoverBootsDL, gLinkYoungGoronBraceletDL, gLinkYoungPowerBraceletDL, gLinkYoungPowerBraceletsDL, gLinkYoungAmuletOfEnergyDL },
 };
 
 void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dListCount, s32 lod, s32 tunic, s32 boots,

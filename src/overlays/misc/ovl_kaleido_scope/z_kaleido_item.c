@@ -384,8 +384,8 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
 
             if (cursorItem != PAUSE_ITEM_NONE) {
                 bool canSelectItem = true;
-                index = cursorSlot * 4; // required to match?
                 u8 currItem, nextItem;
+                index = cursorSlot * 4; // required to match?
                 KaleidoScope_SetCursorPos(pauseCtx, index, pauseCtx->itemVtx);
 
                 if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) && (pauseCtx->state == PAUSE_STATE_MAIN) &&
@@ -396,14 +396,14 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                         KaleidoScope_DrawSwapItemIcons(play, gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD], KaleidoScope_GetNextMask(), pauseCtx->alpha);
                     }
                     if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_MAGIC_BEAN && HAS_MAGIC_BEANS && HAS_ROCS_FEATHER) {
-                        u8 currItem = gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN;
-                        u8 nextItem = currItem == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN;
+                        currItem = gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN;
+                        nextItem = currItem == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN;
                         KaleidoScope_HandleSwitchFeather(play, pauseCtx, input);
                         KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
                     }
                     if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_HAMMER && HAS_HAMMER && HAS_FAIRYS_SWORD) {
-                        u8 currItem = gSaveContext.save.info.inventory.items[SLOT_HAMMER] == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER;
-                        u8 nextItem = currItem == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER;
+                        currItem = gSaveContext.save.info.inventory.items[SLOT_HAMMER] == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER;
+                        nextItem = currItem == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER;
                         KaleidoScope_HandleSwitchFairysSword(play, pauseCtx, input);
                         KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
                     }

@@ -142,6 +142,10 @@ extern Gfx gLinkChildPowerBraceletsDL[];
 extern Gfx gLinkChildEarringsIronDL[];
 extern Gfx gLinkChildEarringsHoverDL[];
 
+// Boots
+extern Gfx gLinkChildIronBootsDL[];
+extern Gfx gLinkChildHoverBootsDL[];
+
 // Amulet of Energy
 extern Gfx gLinkChildAmuletOfEnergyDL[];
 
