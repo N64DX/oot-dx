@@ -2474,3 +2474,25 @@ UNSKIPPABLE "Hi hi hi... Well done.\n"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x8124, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Hoo hoo!"
+BOX_BREAK_DELAYED(40)
+
+UNSKIPPABLE "You defeated the ancient evil\n"
+"dwelling in the Ancient Hollow,\n"
+"did you not?"
+BOX_BREAK
+
+UNSKIPPABLE "To help you on your quest, I may\n"
+"have something for you."
+BOX_BREAK
+
+UNSKIPPABLE "One of my sacred feathers, may\n"
+"it aid you in your quest."
+),
+MSG(),
+MSG()
+)
