@@ -51,6 +51,7 @@ void EnOwl_WaitDeathMountainShortcut(EnOwl* this, PlayState* play);
 void func_80ACB3E0(EnOwl* this, PlayState* play);
 void EnOwl_WaitLWPreSaria(EnOwl* this, PlayState* play);
 void EnOwl_WaitLWPostSaria(EnOwl* this, PlayState* play);
+void EnOwl_WaitForbiddenWoods(EnOwl* this, PlayState* play);
 void func_80ACD4D4(EnOwl* this, PlayState* play);
 void func_80ACD130(EnOwl* this, PlayState* play, s32 idx);
 void func_80ACBAB8(EnOwl* this, PlayState* play);
@@ -78,7 +79,8 @@ typedef enum EnOwlType {
     /* 0x09 */ OWL_DEATH_MOUNTAIN2,
     /* 0x0A */ OWL_DESERT_COLOSSUS,
     /* 0x0B */ OWL_LOST_WOODS_PRESARIA,
-    /* 0x0C */ OWL_LOST_WOODS_POSTSARIA
+    /* 0x0C */ OWL_LOST_WOODS_POSTSARIA,
+    /* 0x0D */ OWL_FORBIDDEN_WOODS
 } EnOwlType;
 
 typedef enum EnOwlMessageChoice {
@@ -258,6 +260,15 @@ void EnOwl_Init(Actor* thisx, PlayState* play) {
                 return;
             }
             this->actionFunc = EnOwl_WaitLWPostSaria;
+            break;
+        case OWL_FORBIDDEN_WOODS:
+            if (GET_EVENTCHKINF(EVENTCHKINF_TALKED_FORBIDDEN_WOODS_OWL) || !GET_EVENTCHKINF(EVENTCHKINF_EXITED_HYPER_GOHMA)) {
+                 // spoken with the owl or didn't exited from Hyper Gohma yet
+                PRINTF(T("フクロウ退避\n", "Owl evacuation\n"));
+                Actor_Kill(&this->actor);
+                return;
+            }
+            this->actionFunc = EnOwl_WaitForbiddenWoods;
             break;
         default:
             // Outside kokiri forest
@@ -762,6 +773,36 @@ void EnOwl_WaitLWPostSaria(EnOwl* this, PlayState* play) {
     if (EnOwl_CheckInitTalk(this, play, 0x10C4, 360.0f, 0)) {
         Audio_PlayFanfare(NA_BGM_OWL);
         this->actionFunc = func_80ACB680;
+    }
+}
+
+void EnOwl_AfterTalkForbiddenWoods2(EnOwl* this, PlayState* play) {
+    this->actionFlags |= 2;
+    func_80ACA71C(this);
+    SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_FANFARE, 0);
+    this->actor.flags &= ~ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED;
+    func_80ACA62C(this, play);
+}
+
+void EnOwl_AfterTalkForbiddenWoods(EnOwl* this, PlayState* play) {
+    if (Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
+        if (!Actor_HasParent(&this->actor, play))
+            Actor_OfferGetItem(&this->actor, play, GI_ROCS_FEATHER, 1000.0f, 1000.0f);
+
+        if (Actor_HasParent(&this->actor, play)) {
+            this->actor.parent = NULL;
+            this->actionFunc = EnOwl_AfterTalkForbiddenWoods2;
+        }
+    }
+}
+
+void EnOwl_WaitForbiddenWoods(EnOwl* this, PlayState* play) {
+    EnOwl_LookAtLink(this, play);
+
+    if (EnOwl_CheckInitTalk(this, play, 0x8124, 360.0f, 0)) {
+        Audio_PlayFanfare(NA_BGM_OWL);
+        this->actionFunc = EnOwl_AfterTalkForbiddenWoods;
+        SET_EVENTCHKINF(EVENTCHKINF_TALKED_FORBIDDEN_WOODS_OWL);
     }
 }
 
