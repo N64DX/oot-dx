@@ -384,6 +384,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
 
             if (cursorItem != PAUSE_ITEM_NONE) {
                 index = cursorSlot * 4; // required to match?
+                u8 currItem, nextItem;
                 KaleidoScope_SetCursorPos(pauseCtx, index, pauseCtx->itemVtx);
 
                 if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) && (pauseCtx->state == PAUSE_STATE_MAIN) &&
@@ -404,35 +405,32 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                 pauseCtx->equipTargetCBtn = 2;
                             }
 
-                            pauseCtx->equipTargetItem = cursorItem;
-                            pauseCtx->equipTargetSlot = cursorSlot;
-                            pauseCtx->mainState = PAUSE_MAIN_STATE_3;
-                            pauseCtx->equipAnimX = pauseCtx->itemVtx[index].v.ob[0] * 10;
-                            pauseCtx->equipAnimY = pauseCtx->itemVtx[index].v.ob[1] * 10;
-                            pauseCtx->equipAnimAlpha = 255;
-                            sEquipAnimTimer = 0;
-                            sEquipState = 3;
-                            sEquipMoveTimer = 10;
-                            if ((pauseCtx->equipTargetItem == ITEM_ARROW_FIRE) ||
-                                (pauseCtx->equipTargetItem == ITEM_ARROW_ICE) ||
-                                (pauseCtx->equipTargetItem == ITEM_ARROW_LIGHT)) {
-                                index = 0;
-                                if (pauseCtx->equipTargetItem == ITEM_ARROW_ICE) {
-                                    index = 1;
-                                }
-                                if (pauseCtx->equipTargetItem == ITEM_ARROW_LIGHT) {
-                                    index = 2;
-                                }
-                                Audio_PlaySfxGeneral(NA_SE_SY_SET_FIRE_ARROW + index, &gSfxDefaultPos, 4,
-                                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-                                                     &gSfxDefaultReverb);
-                                pauseCtx->equipTargetItem = 0xBF + index;
-                                sEquipState = 0;
-                                pauseCtx->equipAnimAlpha = 0;
-                                sEquipMoveTimer = 6;
+                            currItem = gSaveContext.save.info.equips.buttonItems[pauseCtx->equipTargetCBtn + 1];
+                            if (cursorItem == currItem || (cursorItem == ITEM_ARROW_FIRE && currItem == ITEM_BOW_FIRE) || (cursorItem == ITEM_ARROW_ICE && currItem == ITEM_BOW_ICE) || (cursorItem == ITEM_ARROW_LIGHT && currItem == ITEM_BOW_LIGHT) ) {
+                                gSaveContext.save.info.equips.buttonItems[pauseCtx->equipTargetCBtn + 1] = gSaveContext.save.info.equips.cButtonSlots[pauseCtx->equipTargetCBtn] = ITEM_NONE;
+                                Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                             } else {
-                                Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                                pauseCtx->equipTargetItem = cursorItem;
+                                pauseCtx->equipTargetSlot = cursorSlot;
+                                pauseCtx->mainState = PAUSE_MAIN_STATE_3;
+                                pauseCtx->equipAnimX = pauseCtx->itemVtx[index].v.ob[0] * 10;
+                                pauseCtx->equipAnimY = pauseCtx->itemVtx[index].v.ob[1] * 10;
+                                pauseCtx->equipAnimAlpha = 255;
+                                sEquipAnimTimer = 0;
+                                sEquipState = 3;
+                                sEquipMoveTimer = 10;
+                                if (pauseCtx->equipTargetItem == ITEM_ARROW_FIRE || pauseCtx->equipTargetItem == ITEM_ARROW_ICE || pauseCtx->equipTargetItem == ITEM_ARROW_LIGHT) {
+                                    index = 0;
+                                    if (pauseCtx->equipTargetItem == ITEM_ARROW_ICE)
+                                        index = 1;
+                                    if (pauseCtx->equipTargetItem == ITEM_ARROW_LIGHT)
+                                        index = 2;
+                                    Audio_PlaySfxGeneral(NA_SE_SY_SET_FIRE_ARROW + index, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                                    pauseCtx->equipTargetItem = 0xBF + index;
+                                    sEquipState = 0;
+                                    pauseCtx->equipAnimAlpha = 0;
+                                    sEquipMoveTimer = 6;
+                                } else Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                             }
                         } else {
                             Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -462,9 +460,14 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                 }
                             }
 
-                            DPAD_BUTTON(button) = cursorSlot;
-                            Interface_LoadItemIcon1(play, button+4);
-                            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                            if (DPAD_BUTTON(button) == cursorSlot) {
+                                DPAD_BUTTON(button) = SLOT_NONE;
+                                Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                            } else {
+                                DPAD_BUTTON(button) = cursorSlot;
+                                Interface_LoadItemIcon1(play, button+4);
+                                Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                            }
                         }
                         else Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                     }
