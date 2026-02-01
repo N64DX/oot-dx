@@ -262,7 +262,7 @@ void EnOwl_Init(Actor* thisx, PlayState* play) {
             this->actionFunc = EnOwl_WaitLWPostSaria;
             break;
         case OWL_FORBIDDEN_WOODS:
-            if (GET_EVENTCHKINF(EVENTCHKINF_TALKED_FORBIDDEN_WOODS_OWL) || !GET_EVENTCHKINF(EVENTCHKINF_EXITED_HYPER_GOHMA)) {
+            if (HAS_ROCS_FEATHER || !GET_EVENTCHKINF(EVENTCHKINF_EXITED_HYPER_GOHMA)) {
                  // spoken with the owl or didn't exited from Hyper Gohma yet
                 PRINTF(T("フクロウ退避\n", "Owl evacuation\n"));
                 Actor_Kill(&this->actor);
@@ -802,7 +802,6 @@ void EnOwl_WaitForbiddenWoods(EnOwl* this, PlayState* play) {
     if (EnOwl_CheckInitTalk(this, play, 0x8124, 360.0f, 0)) {
         Audio_PlayFanfare(NA_BGM_OWL);
         this->actionFunc = EnOwl_AfterTalkForbiddenWoods;
-        SET_EVENTCHKINF(EVENTCHKINF_TALKED_FORBIDDEN_WOODS_OWL);
     }
 }
 

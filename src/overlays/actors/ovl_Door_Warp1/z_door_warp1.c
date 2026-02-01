@@ -549,6 +549,9 @@ void DoorWarp1_ChildWarpOut(DoorWarp1* this, PlayState* play) {
             Flags_SetEventChkInf(EVENTCHKINF_EXITED_HYPER_GOHMA);
             play->nextEntranceIndex = ENTR_FORBIDDEN_WOODS_5;
             gSaveContext.nextCutsceneIndex = 0;
+        } else if (play->sceneId == SCENE_BESITU) {
+            play->nextEntranceIndex = ENTR_FORBIDDEN_WOODS_6;
+            gSaveContext.nextCutsceneIndex = 0;
         }
         PRINTF(T("\n\n\nおわりおわり", "\n\n\nThe end The end"));
         play->transitionTrigger = TRANS_TRIGGER_START;
