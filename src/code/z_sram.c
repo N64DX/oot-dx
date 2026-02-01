@@ -513,6 +513,11 @@ void Sram_OpenSave(SramContext* sramCtx) {
             gSaveContext.save.entranceIndex = ENTR_ANCIENT_HOLLOW_0;
             break;
 
+        case SCENE_BESITU:
+            if (IS_CHILD_QUEST)
+                gSaveContext.save.entranceIndex = ENTR_FORBIDDEN_WOODS_6;
+            break;
+
         default:
             if (!RESUME_LAST_AREA) {
                 if (gSaveContext.save.info.playerData.savedSceneId != SCENE_LINKS_HOUSE)

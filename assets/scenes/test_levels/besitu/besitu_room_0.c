@@ -26,8 +26,8 @@ static SceneCmd cq_header[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 255),
     SCENE_CMD_ROOM_SHAPE(&besitu_room_0RoomShapeNormal_000030),
-    SCENE_CMD_OBJECT_LIST(1, besitu_cq_room_0ObjectList),
-    SCENE_CMD_ACTOR_LIST(1, besitu_cq_room_0ActorList),
+    SCENE_CMD_OBJECT_LIST(3, besitu_cq_room_0ObjectList),
+    SCENE_CMD_ACTOR_LIST(2, besitu_cq_room_0ActorList),
     SCENE_CMD_END(),
 };
 
@@ -37,10 +37,13 @@ SceneCmd* questHeaders_besitu_room0[] = {
 
 s16 besitu_cq_room_0ObjectList[] = {
     OBJECT_STALM,
+    OBJECT_BOX,
+    OBJECT_WARP1,
 };
 
 ActorEntry besitu_cq_room_0ActorList[] = {
-    { ACTOR_EN_STALM, { 0, 0, 0 }, { 0, 0, 0 }, 0x0001 },
+    { ACTOR_EN_STALM, { 0, 0,    0 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_EN_BOX,   { 0, 0, -430 }, { 0, 0x8000, 0 }, 0xB7C0 },
 };
 
 RoomShapeNormal besitu_room_0RoomShapeNormal_000030 = { 

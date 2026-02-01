@@ -26,13 +26,13 @@
 
 #define THIS ((BgYdanMaruta2*)thisx)
 
-void BgYdanMaruta2_Init(Actor* thisx, PlayState* play);
-void BgYdanMaruta2_Destroy(Actor* thisx, PlayState* play);
-void BgYdanMaruta2_Update(Actor* thisx, PlayState* play);
-void BgYdanMaruta2_Draw(Actor* thisx, PlayState* play);
+void BgYdanMaruta2_Init(Actor* thisx, struct PlayState* play);
+void BgYdanMaruta2_Destroy(Actor* thisx, struct PlayState* play);
+void BgYdanMaruta2_Update(Actor* thisx, struct PlayState* play);
+void BgYdanMaruta2_Draw(Actor* thisx, struct PlayState* play);
 
-void BgYdanMaruta2_Wait(BgYdanMaruta2* this, PlayState* play);
-void BgYdanHasi_Rise(BgYdanMaruta2* this, PlayState* play);
+void BgYdanMaruta2_Wait(BgYdanMaruta2* this, struct PlayState* play);
+void BgYdanHasi_Rise(BgYdanMaruta2* this, struct PlayState* play);
 
 ActorProfile Bg_Ydan_Maruta2_Profile = {
     ACTOR_BG_YDAN_MARUTA2,

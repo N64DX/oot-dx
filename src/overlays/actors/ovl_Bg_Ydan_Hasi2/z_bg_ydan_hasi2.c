@@ -22,18 +22,18 @@
 
 #define FLAGS 0x00000030
 
-void BgYdanHasi2_Init(Actor* thisx, PlayState* play);
-void BgYdanHasi2_Destroy(Actor* thisx, PlayState* play);
-void BgYdanHasi2_Update(Actor* thisx, PlayState* play);
-void BgYdanHasi2_Draw(Actor* thisx, PlayState* play);
+void BgYdanHasi2_Init(Actor* thisx, struct PlayState* play);
+void BgYdanHasi2_Destroy(Actor* thisx, struct PlayState* play);
+void BgYdanHasi2_Update(Actor* thisx, struct PlayState* play);
+void BgYdanHasi2_Draw(Actor* thisx, struct PlayState* play);
 
-void BgYdanHasi2_WaitForCs(BgYdanHasi2* this, PlayState* play);
-void BgYdanHasi2_StartCs(BgYdanHasi2* this, PlayState* play);
-void BgYdanHasi2_Shake(BgYdanHasi2* this, PlayState* play);
-void BgYdanHasi2_Fall(BgYdanHasi2* this, PlayState* play);
-void BgYdanHasi2_Land(BgYdanHasi2* this, PlayState* play);
-void BgYdanHasi2_Finish(BgYdanHasi2* this, PlayState* play);
-void BgYdanHasi2_DoNothing(BgYdanHasi2* this, PlayState* play);
+void BgYdanHasi2_WaitForCs(BgYdanHasi2* this, struct PlayState* play);
+void BgYdanHasi2_StartCs(BgYdanHasi2* this, struct PlayState* play);
+void BgYdanHasi2_Shake(BgYdanHasi2* this, struct PlayState* play);
+void BgYdanHasi2_Fall(BgYdanHasi2* this, struct PlayState* play);
+void BgYdanHasi2_Land(BgYdanHasi2* this, struct PlayState* play);
+void BgYdanHasi2_Finish(BgYdanHasi2* this, struct PlayState* play);
+void BgYdanHasi2_DoNothing(BgYdanHasi2* this, struct PlayState* play);
 
 ActorProfile Bg_Ydan_Hasi2_Profile = {
     ACTOR_BG_YDAN_HASI2,

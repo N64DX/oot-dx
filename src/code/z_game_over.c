@@ -111,6 +111,8 @@ void GameOver_Update(PlayState* play) {
             sGameOverTimer--;
 
             if (sGameOverTimer == 0) {
+                if (gSaveContext.save.entranceIndex == ENTR_BESITU_0)
+                    gSaveContext.save.entranceIndex = ENTR_FORBIDDEN_WOODS_6;
                 play->pauseCtx.state = PAUSE_STATE_GAME_OVER_START;
                 gameOverCtx->state++;
                 Rumble_Reset();
