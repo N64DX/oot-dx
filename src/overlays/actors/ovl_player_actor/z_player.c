@@ -539,7 +539,6 @@ static s32 sWorldYawToTouchedWall = 0;
 static s16 sFloorShapePitch = 0;
 static s32 sUseHeldItem = false; // When true, the current held item is used. Is reset to false every frame.
 static s32 sHeldItemButtonIsHeldDown = false; // Indicates if the button for the current held item is held down.
-static u8 featherUseCount = 0;
 static u8 featherGroundTimer = 0;
 
 static u16 D_8085361C[] = {
@@ -836,7 +835,7 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_ROYAL_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9006, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_TYCOON
 	GET_ITEM(ITEM_TYCOON_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9007, 0x80, CHEST_ANIM_LONG),
-    // GI_WALLET_BOTTEMLESS
+    // GI_WALLET_BOTTOMLESS
 	GET_ITEM(ITEM_BOTTOMLESS_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9008, 0x80, CHEST_ANIM_LONG),
 };
 
@@ -3088,7 +3087,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     } else featherGroundTimer = 0;
 
     if (featherGroundTimer >= 3)
-            featherUseCount = 0;
+            this->featherUseCount = 0;
 
     if (this->currentMask != PLAYER_MASK_NONE) {
         maskItemAction = this->currentMask - 1 + PLAYER_IA_MASK_KEATON;
@@ -3183,10 +3182,10 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
         } else if (item != ITEM_ROCS_FEATHER && item != ITEM_GOLDEN_FEATHER) {
             this->heldItemButton = i;
             Player_UseItem(play, this, item);
-        } else if (featherUseCount < MAX_FEATHER_USES) {
+        } else if (this->featherUseCount < MAX_FEATHER_USES) {
             if ( ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f && item == ITEM_ROCS_FEATHER && gSaveContext.save.info.energy >= 15) || (item == ITEM_GOLDEN_FEATHER && gSaveContext.save.info.energy >= 10)) {
                 Vec3f effectsPos = this->actor.home.pos;
-                featherUseCount++;
+                this->featherUseCount++;
                 func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, 7.15f, play, NA_SE_VO_LI_SWORD_N);
                 this->av2.actionVar2 = 1;
                 this->speedXZ = 5.0f;

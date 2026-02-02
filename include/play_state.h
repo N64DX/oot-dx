@@ -159,6 +159,8 @@ extern Mtx D_01000000; // billboardMtx
 #define GET_ACTIVE_CAM(play) ((play)->cameraPtrs[(play)->activeCamId])
 #define GET_PLAYER(play) ((Player*)(play)->actorCtx.actorLists[ACTORCAT_PLAYER].head)
 #define SET_AUTOSAVE(play) (play->autosave = (AUTOSAVE ? AUTOSAVE_ON : AUTOSAVE_RESET) )
+#define ONE_SEC (60 / R_UPDATE_RATE)
+#define SECONDS(seconds) (ONE_SEC * seconds)
 
 void Play_SetViewpoint(PlayState* this, s16 viewpoint);
 s32 Play_CheckViewpoint(PlayState* this, s16 viewpoint);

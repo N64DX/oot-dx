@@ -810,6 +810,7 @@ typedef struct Player {
     /* 0x0153 */ s8 prevBoots; // previous boots from `PlayerBoots`
     /* 0x0154 */ s8 itemAction; // the difference between this and heldItemAction is unclear
     /* 0x0155 */ s8 bottleAction;
+    /* 0x0156 */ s8 featherUseCount;
     /* 0x0158 */ u8 modelGroup;
     /* 0x0159 */ u8 nextModelGroup;
     /* 0x015A */ s8 itemChangeType;

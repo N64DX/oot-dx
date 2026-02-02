@@ -32,7 +32,8 @@ typedef enum Item00Type {
     /* 0x18 */ ITEM00_TUNIC_GORON,
     /* 0x19 */ ITEM00_BOMBS_SPECIAL,
     /* 0x1A */ ITEM00_SHIELD_HEROS,
-    /* 0x1B */ ITEM00_MAX,
+    /* 0x1B */ ITEM00_FEATHER,
+    /* 0x1C */ ITEM00_MAX,
     /* 0xFF */ ITEM00_NONE = 0xFF
 } Item00Type;
 
@@ -51,7 +52,9 @@ typedef struct EnItem00 {
     /* 0x15A */ s16 despawnTimer;
     /* 0x15C */ f32 scale;
     /* 0x160 */ ColliderCylinder collider;
-} EnItem00; // size = 0x1AC
+    /* 0x1AC */ s16 respawnTimer;
+    /* 0x1AE */ s16 respawnHoverTimer;
+} EnItem00; // size = 0x1B0
 
 EnItem00* Item_DropCollectible(struct PlayState* play, Vec3f* spawnPos, s16 params);
 EnItem00* Item_DropCollectible2(struct PlayState* play, Vec3f* spawnPos, s16 params);
