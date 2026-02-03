@@ -15013,6 +15013,31 @@ LAYER_6576:
     notedv      SF1_EFFECT_STAL_9, 0, 100
     end
 
+.channel CHAN_KUROSUKE_MOVE
+/* 0x6D6C [0x88 0x6D 0x74          ] */ ldlayer     0, LAYER_KUROSUKE_MOVE
+/* 0x6D6F [0xD7 0x50               ] */ vibfreq     80
+/* 0x6D71 [0xD8 0x40               ] */ vibdepth    64
+/* 0x6D73 [0xFF                    ] */ end
+
+.layer LAYER_KUROSUKE_MOVE
+/* 0x6D74 [0xC6 0x48               ] */ instr       SF1_INST_72
+/* 0x6D76 [0xC4                    ] */ legato
+LAYER_6D77:
+/* 0x6D77 [0x69 0xF5 0x30 0x46     ] */ notedv      PITCH_D4, 30000, 70
+/* 0x6D7B [0xF4 0xFA               ] */ rjump       LAYER_6D77
+/* 0x6D7D [0xFF                    ] */ end
+
+.channel CHAN_KUROSUKE_ATTACK
+/* 0x6D7E [0xC1 0x38               ] */ instr       SF1_INST_56
+/* 0x6D80 [0x88 0x6D 0x84          ] */ ldlayer     0, LAYER_KUROSUKE_ATTACK
+/* 0x6D83 [0xFF                    ] */ end
+
+.layer LAYER_KUROSUKE_ATTACK
+/* 0x6D84 [0xC7 0x85 0x35 0xFF     ] */ portamento  0x85, PITCH_D5, 255
+/* 0x6D88 [0x79 0x08 0x64          ] */ notedv      PITCH_GF5, 8, 100
+/* 0x6D8B [0x7C 0x10 0x64          ] */ notedv      PITCH_A5, 16, 100
+/* 0x6D8E [0xFF                    ] */ end
+
 .balign 16
 
 .filter FILTER_65B0

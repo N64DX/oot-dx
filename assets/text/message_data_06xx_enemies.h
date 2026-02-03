@@ -2269,3 +2269,27 @@ COLOR(LIGHTBLUE) "Serait-ce le Stalfos légendaire\n"
 COLOR(DEFAULT) "Fais-le exploser" COLOR(LIGHTBLUE) "!" COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
+
+DEFINE_MESSAGE(0x0662, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "White Boe\n"
+COLOR(LIGHTBLUE) "Stay calm and attack it!\n"
+"They come in groups, but individually,\n"
+"pose no real danger." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0663, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Black Boe\n"
+COLOR(LIGHTBLUE) "Stay calm and attack it!\n"
+"They come in groups, but individually,\n"
+"pose no real danger." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)

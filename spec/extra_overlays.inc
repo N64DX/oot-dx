@@ -90,6 +90,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Mkk"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Mkk/z_en_mkk.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Mkk/ovl_En_Mkk_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Stalm"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Stalm/z_en_stalm.o"

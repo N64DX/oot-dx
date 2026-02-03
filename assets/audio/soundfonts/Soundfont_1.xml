@@ -120,6 +120,8 @@
         <Sample Name="SAMPLE_0_STAL_449"/>
         <Sample Name="SAMPLE_0_STAL_450"/>
         <Sample Name="SAMPLE_0_STAL_451"/>
+        <Sample Name="SAMPLE_0_MMK_1"/>
+        <Sample Name="SAMPLE_0_MMK_2"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
@@ -229,6 +231,8 @@
         <Instrument ProgramNumber="22" Name="INST_22" Envelope="Env0" Sample="SAMPLE_0_17"/>
         <Instrument ProgramNumber="47" Name="INST_47" Envelope="Env0" Sample="SAMPLE_0_349" RangeHi="B5" SampleHi="SAMPLE_0_33" SampleRateHi="16000" BaseNoteHi="C0"/>
         <Instrument ProgramNumber="49" Name="INST_49" Envelope="Env0" Sample="SAMPLE_0_105" RangeHi="B5" SampleHi="SAMPLE_0_19" BaseNoteHi="C0"/>
+        <Instrument ProgramNumber="72" Name="INST_72" Envelope="Env0" Sample="SAMPLE_0_MMK_1"/>
+        <Instrument ProgramNumber="56" Name="INST_56" Envelope="Env0" Sample="SAMPLE_0_MMK_2"/>
     </Instruments>
     <MatchPadding>
         0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3

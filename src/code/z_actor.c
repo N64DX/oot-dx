@@ -5049,6 +5049,12 @@ void func_800359B8(Actor* actor, s16 arg1, Vec3s* arg2) {
     }
 }
 
+void func_800BE568(Actor* actor, ColliderJntSph* sph) {
+    if (sph->elements[0].base.acHitElem->atDmgInfo.dmgFlags & (DMG_ARROW_NORMAL | DMG_ARROW_FIRE | DMG_ARROW_ICE | DMG_ARROW_LIGHT))
+        actor->world.rot.y = sph->base.ac->shape.rot.y;
+    else actor->world.rot.y = Actor_WorldYawTowardActor(sph->base.ac, actor);
+}
+
 void func_80035B18(PlayState* play, Actor* actor, u16 textId) {
     Message_ContinueTextbox(play, textId);
     actor->textId = textId;
