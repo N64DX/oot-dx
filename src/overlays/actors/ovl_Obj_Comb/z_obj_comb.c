@@ -17,7 +17,7 @@
 #include "effect.h"
 #include "play_state.h"
 
-#include "assets/objects/gameplay_field_keep/gameplay_field_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #define FLAGS 0
 
@@ -35,7 +35,7 @@ ActorProfile Obj_Comb_Profile = {
     /**/ ACTOR_OBJ_COMB,
     /**/ ACTORCAT_PROP,
     /**/ FLAGS,
-    /**/ OBJECT_GAMEPLAY_FIELD_KEEP,
+    /**/ OBJECT_GAMEPLAY_KEEP,
     /**/ sizeof(ObjComb),
     /**/ ObjComb_Init,
     /**/ ObjComb_Destroy,
