@@ -436,7 +436,7 @@ void Fault_WaitForInput(void) {
 }
 
 void Fault_DrawRec(s32 x, s32 y, s32 w, s32 h, u16 color) {
-    Fault_DrawRecImpl(x, y, x + w - 1, y + h - 1, color);
+    Fault_DrawRecImpl(x, y, x + X_MULTIPLY(w) + WS_SHIFT_FULL - 1, y + HIRES_MULTIPLY(h) - 1, color);
 }
 
 void Fault_FillScreenBlack(void) {

@@ -142,7 +142,7 @@ void Fault_DrawRec(s32 x, s32 y, s32 w, s32 h, u16 color) {
 }
 
 void Fault_DrawRecBlack(s32 x, s32 y, s32 w, s32 h) {
-    Fault_DrawRec(x, y, w, h, GPACK_RGBA5551(0, 0, 0, 1));
+    Fault_DrawRec(x, y, X_MULTIPLY(w) + WS_SHIFT_FULL, HIRES_MULTIPLY(h), GPACK_RGBA5551(0, 0, 0, 1));
 }
 
 void Fault_DrawCharImpl(s32 x, s32 y, char c) {
@@ -175,7 +175,7 @@ void Fault_DrawCharImpl(s32 x, s32 y, char c) {
 }
 
 void Fault_DrawChar(s32 x, s32 y, u8 c) {
-    Fault_DrawCharImpl(x, y, c);
+    Fault_DrawCharImpl(x + WS_SHIFT_HALF, y, c);
 }
 
 void Fault_DrawCornerRec(u16 color) {
