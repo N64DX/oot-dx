@@ -110,18 +110,20 @@
         <Sample Name="SAMPLE_0_33"/>
         <Sample Name="SAMPLE_0_105"/>
         <Sample Name="SAMPLE_0_19"/>
-        <Sample Name="SAMPLE_0_STAL_442"/>
-        <Sample Name="SAMPLE_0_STAL_443"/>
-        <Sample Name="SAMPLE_0_STAL_444"/>
-        <Sample Name="SAMPLE_0_STAL_445"/>
-        <Sample Name="SAMPLE_0_STAL_446"/>
-        <Sample Name="SAMPLE_0_STAL_447"/>
-        <Sample Name="SAMPLE_0_STAL_448"/>
-        <Sample Name="SAMPLE_0_STAL_449"/>
-        <Sample Name="SAMPLE_0_STAL_450"/>
-        <Sample Name="SAMPLE_0_STAL_451"/>
-        <Sample Name="SAMPLE_0_MMK_1"/>
-        <Sample Name="SAMPLE_0_MMK_2"/>
+        <Sample Name="SAMPLE_0_STAL_1"/>
+        <Sample Name="SAMPLE_0_STAL_2"/>
+        <Sample Name="SAMPLE_0_STAL_3"/>
+        <Sample Name="SAMPLE_0_STAL_4"/>
+        <Sample Name="SAMPLE_0_STAL_5"/>
+        <Sample Name="SAMPLE_0_STAL_6"/>
+        <Sample Name="SAMPLE_0_STAL_7"/>
+        <Sample Name="SAMPLE_0_STAL_8"/>
+        <Sample Name="SAMPLE_0_STAL_9"/>
+        <Sample Name="SAMPLE_0_BOE_1"/>
+        <Sample Name="SAMPLE_0_BOE_2"/>
+        <Sample Name="SAMPLE_0_DRAGONFLY_1"/>
+        <Sample Name="SAMPLE_0_DRAGONFLY_2"/>
+        <Sample Name="SAMPLE_0_DRAGONFLY_3"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
@@ -165,16 +167,16 @@
         <Effect Name="EFFECT_38" Sample="SAMPLE_0_342"/>
         <Effect Name="EFFECT_39" Sample="SAMPLE_0_326"/>
         <Effect Name="EFFECT_40" Sample="SAMPLE_0_343"/>
-        <Effect Name="EFFECT_STAL_0" Sample="SAMPLE_0_STAL_442"/>
-        <Effect Name="EFFECT_STAL_1" Sample="SAMPLE_0_STAL_443"/>
-        <Effect Name="EFFECT_STAL_2" Sample="SAMPLE_0_STAL_444"/>
-        <Effect Name="EFFECT_STAL_3" Sample="SAMPLE_0_STAL_445"/>
-        <Effect Name="EFFECT_STAL_4" Sample="SAMPLE_0_STAL_446"/>
-        <Effect Name="EFFECT_STAL_5" Sample="SAMPLE_0_STAL_447"/>
-        <Effect Name="EFFECT_STAL_6" Sample="SAMPLE_0_STAL_448"/>
-        <Effect Name="EFFECT_STAL_7" Sample="SAMPLE_0_STAL_449"/>
-        <Effect Name="EFFECT_STAL_8" Sample="SAMPLE_0_STAL_450"/>
-        <Effect Name="EFFECT_STAL_9" Sample="SAMPLE_0_STAL_451"/>
+        <Effect Name="EFFECT_STAL_1" Sample="SAMPLE_0_STAL_1"/>
+        <Effect Name="EFFECT_STAL_2" Sample="SAMPLE_0_STAL_2"/>
+        <Effect Name="EFFECT_STAL_3" Sample="SAMPLE_0_STAL_3"/>
+        <Effect Name="EFFECT_STAL_4" Sample="SAMPLE_0_STAL_4"/>
+        <Effect Name="EFFECT_STAL_5" Sample="SAMPLE_0_STAL_5"/>
+        <Effect Name="EFFECT_STAL_6" Sample="SAMPLE_0_STAL_6"/>
+        <Effect Name="EFFECT_STAL_7" Sample="SAMPLE_0_STAL_7"/>
+        <Effect Name="EFFECT_STAL_8" Sample="SAMPLE_0_STAL_8"/>
+        <Effect Name="EFFECT_STAL_9" Sample="SAMPLE_0_STAL_9"/>
+        <Effect Name="EFFECT_DUMMY"  Sample="SAMPLE_0_299"/>
     </Effects>
     <Drums>
         <Drum/>
@@ -231,8 +233,11 @@
         <Instrument ProgramNumber="22" Name="INST_22" Envelope="Env0" Sample="SAMPLE_0_17"/>
         <Instrument ProgramNumber="47" Name="INST_47" Envelope="Env0" Sample="SAMPLE_0_349" RangeHi="B5" SampleHi="SAMPLE_0_33" SampleRateHi="16000" BaseNoteHi="C0"/>
         <Instrument ProgramNumber="49" Name="INST_49" Envelope="Env0" Sample="SAMPLE_0_105" RangeHi="B5" SampleHi="SAMPLE_0_19" BaseNoteHi="C0"/>
-        <Instrument ProgramNumber="72" Name="INST_72" Envelope="Env0" Sample="SAMPLE_0_MMK_1"/>
-        <Instrument ProgramNumber="56" Name="INST_56" Envelope="Env0" Sample="SAMPLE_0_MMK_2"/>
+        <Instrument ProgramNumber="72" Name="INST_72" Envelope="Env0" Sample="SAMPLE_0_BOE_1"/>
+        <Instrument ProgramNumber="56" Name="INST_56" Envelope="Env0" Sample="SAMPLE_0_BOE_2"/>
+        <Instrument ProgramNumber="57" Name="INST_57" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_1"/>
+        <Instrument ProgramNumber="53" Name="INST_53" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_2"/>
+        <Instrument ProgramNumber="54" Name="INST_54" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_3"/>
     </Instruments>
     <MatchPadding>
         0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3

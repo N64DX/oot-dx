@@ -14923,92 +14923,83 @@ LAYER_6576:
 .array ARRAY_65AA
     .byte 100, 95, 105
 
-.channel CHAN_STAL_442
-    ldlayer     0, LAYER_STAL_442
+.channel CHAN_STAL_DMGED
+    ldlayer     0, LAYER_STAL_DMGED
     end
 
-.layer LAYER_STAL_442
-    instr       FONTANY_INSTR_SFX
-    notedv      SF1_EFFECT_STAL_0, 0, 100
-    end
-
-.channel CHAN_STAL_443
-    ldlayer     0, LAYER_STAL_443
-    end
-
-.layer LAYER_STAL_443
+.layer LAYER_STAL_DMGED
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_1, 0, 100
     end
 
-.channel CHAN_STAL_444
-    ldlayer     0, LAYER_STAL_444
+.channel CHAN_STAL_GATHER
+    ldlayer     0, LAYER_STAL_GATHER
     end
 
-.layer LAYER_STAL_444
+.layer LAYER_STAL_GATHER
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_2, 0, 100
     end
 
-.channel CHAN_STAL_445
-    ldlayer     0, LAYER_STAL_445
+.channel CHAN_STAL_DIE
+    ldlayer     0, LAYER_STAL_DIE
     end
 
-.layer LAYER_STAL_445
+.layer LAYER_STAL_DIE
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_3, 0, 100
     end
 
-.channel CHAN_STAL_446
-    ldlayer     0, LAYER_STAL_446
+.channel CHAN_STAL_PICK
+    ldlayer     0, LAYER_STAL_PICK
     end
 
-.layer LAYER_STAL_446
+.layer LAYER_STAL_PICK
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_4, 0, 100
     end
 
-.channel CHAN_STAL_447
-    ldlayer     0, LAYER_STAL_447
+.channel CHAN_STAL_REPLACE
+    ldlayer     0, LAYER_STAL_REPLACE
     end
 
-.layer LAYER_STAL_447
+.layer LAYER_STAL_REPLACE
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_5, 0, 100
     end
 
-.channel CHAN_STAL_448
-    ldlayer     0, LAYER_STAL_448
+.channel CHAN_STAL_SCREECH
+    ldlayer     0, LAYER_STAL_SCREECH
     end
 
-.layer LAYER_STAL_448
+.layer LAYER_STAL_SCREECH
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_6, 0, 100
     end
 
-.channel CHAN_STAL_449
-    ldlayer     0, LAYER_STAL_449
+.channel CHAN_STAL_STEP
+    ldlayer     0, LAYER_STAL_STEP
     end
 
-.layer LAYER_STAL_449
+.layer LAYER_STAL_STEP
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_7, 0, 100
     end
 
-.channel CHAN_STAL_450
-    ldlayer     0, LAYER_STAL_450
+.channel CHAN_STAL_SWING
+    ldlayer     0, LAYER_STAL_SWING
     end
 
-.layer LAYER_STAL_450
+.layer LAYER_STAL_SWING
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_8, 0, 100
     end
 
-.channel CHAN_STAL_451
-    ldlayer     0, LAYER_STAL_451
+.channel CHAN_STAL_TELEGRAPH
+    ldlayer     0, LAYER_STAL_TELEGRAPH
     end
 
-.layer LAYER_STAL_451
+.layer LAYER_STAL_TELEGRAPH
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_9, 0, 100
     end
@@ -15037,6 +15028,58 @@ LAYER_6D77:
 /* 0x6D88 [0x79 0x08 0x64          ] */ notedv      PITCH_GF5, 8, 100
 /* 0x6D8B [0x7C 0x10 0x64          ] */ notedv      PITCH_A5, 16, 100
 /* 0x6D8E [0xFF                    ] */ end
+
+.channel CHAN_EN_BATTA_FLY
+/* 0x6E36 [0xC1 0x03               ] */ instr       SF1_INST_53
+/* 0x6E38 [0x88 0x6E 0x40          ] */ ldlayer     0, LAYER_6E40
+/* 0x6E3B [0xD7 0x50               ] */ vibfreq     80
+/* 0x6E3D [0xD8 0x40               ] */ vibdepth    64
+/* 0x6E3F [0xFF                    ] */ end
+
+.layer LAYER_6E40
+/* 0x6E40 [0xC4                    ] */ legato
+LAYER_6E41:
+/* 0x6E41 [0x63 0xF5 0x30 0x64     ] */ notedv      PITCH_AF3, 30000, 100
+/* 0x6E45 [0xF4 0xFA               ] */ rjump       LAYER_6E41
+
+.channel CHAN_EN_BATTA_DAMAGE
+/* 0x6E47 [0x88 0x6E 0x52          ] */ ldlayer     0, LAYER_6E52
+/* 0x6E4D [0xD7 0x80               ] */ vibfreq     128
+/* 0x6E4F [0xD8 0x60               ] */ vibdepth    96
+/* 0x6E51 [0xFF                    ] */ end
+
+.layer LAYER_6E52
+/* 0x6E52 [0xC6 0x07               ] */ instr       SF1_INST_57
+/* 0x6E54 [0xC7 0x81 0x2E 0x60     ] */ portamento  0x81, PITCH_G4, 96
+/* 0x6E58 [0x7E 0x16 0x64          ] */ notedv      PITCH_B5, 22, 100
+/* 0x6E5B [0xC7 0x81 0x37 0xCF     ] */ portamento  0x81, PITCH_E5, 207
+/* 0x6E5F [0x72 0x60 0x64          ] */ notedv      PITCH_B4, 96, 100
+/* 0x6E62 [0xFF                    ] */ end
+
+.channel CHAN_EN_BATTA_DEAD
+/* 0x6E63 [0x88 0x6E 0x6E          ] */ ldlayer     0, LAYER_6E6E
+/* 0x6E69 [0xD7 0x80               ] */ vibfreq     128
+/* 0x6E6B [0xD8 0x60               ] */ vibdepth    96
+/* 0x6E6D [0xFF                    ] */ end
+
+.layer LAYER_6E6E
+/* 0x6E6E [0xC6 0x38               ] */ instr       SF1_INST_56
+/* 0x6E70 [0xC7 0x81 0x29 0xA0     ] */ portamento  0x81, PITCH_D4, 160
+/* 0x6E74 [0x7A 0x40 0x64          ] */ notedv      PITCH_G5, 64, 100
+/* 0x6E77 [0xC7 0x81 0x32 0xCF     ] */ portamento  0x81, PITCH_B4, 207
+/* 0x6E7B [0x64 0x80 0xA0 0x64     ] */ notedv      PITCH_A3, 160, 100
+/* 0x6E7F [0xFF                    ] */ end
+
+.channel CHAN_EN_BATTA_ATTACK
+/* 0x6E80 [0xC1 0x2F               ] */ instr       SF1_INST_54
+/* 0x6E82 [0x88 0x6E 0x8A          ] */ ldlayer     0, LAYER_6E8A
+/* 0x6E85 [0xD7 0xC0               ] */ vibfreq     192
+/* 0x6E87 [0xD8 0xA0               ] */ vibdepth    160
+/* 0x6E89 [0xFF                    ] */ end
+
+.layer LAYER_6E8A
+/* 0x6E8A [0x6B 0x78 0x64          ] */ notedv      PITCH_E4, 120, 100
+/* 0x6E8D [0xFF                    ] */ end
 
 .balign 16
 

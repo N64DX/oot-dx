@@ -1056,7 +1056,7 @@ void EnStalmaster_SecondPhase(EnStalmaster* this, struct PlayState* play) {
             else if (Animation_OnFrame(&this->skelAnime, 28.0f))
                 Actor_PlaySfx(&this->actor, NA_SE_EN_STAL_PICK);
             else if (Animation_OnFrame(&this->skelAnime, 43.0f))
-                Actor_PlaySfx(&this->actor, NA_SE_EN_STAL_BUILDUP);
+                Actor_PlaySfx(&this->actor, NA_SE_EN_STAL_GATHER);
 
             if (Animation_OnFrame(&this->skelAnime, 62.0f)) {
                 if (this->flags.miniboss) {

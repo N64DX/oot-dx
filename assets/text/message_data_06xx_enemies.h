@@ -2293,3 +2293,14 @@ COLOR(LIGHTBLUE) "Stay calm and attack it!\n"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x0664, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Dragonfly\n"
+"As long as you stay away from\n"
+"its tail, it poses no danger."
+),
+MSG(),
+MSG()
+)

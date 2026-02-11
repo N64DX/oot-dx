@@ -97,6 +97,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Grasshopper"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Grasshopper/z_en_grasshopper.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Grasshopper/ovl_En_Grasshopper_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Stalm"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Stalm/z_en_stalm.o"

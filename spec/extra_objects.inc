@@ -146,6 +146,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_grasshopper"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_grasshopper/object_grasshopper.o"
+    number 6
+endseg
+
+beginseg
     name "object_stalm"
     compress
     include "$(BUILD_DIR)/assets/objects/object_stalm/object_stalm.o"
