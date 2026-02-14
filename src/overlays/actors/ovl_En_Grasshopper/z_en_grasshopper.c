@@ -491,7 +491,6 @@ void EnGrasshopper_RoamInCircles(EnGrasshopper* this, PlayState* play) {
     f32 diffZ;
     f32 targetSpeed;
     s16 rotationSpeed;
-    s32 pad;
     Vec3f collisionCheckPos;
     Player* player = GET_PLAYER(play);
 
@@ -614,7 +613,6 @@ void EnGrasshopper_Bounced(EnGrasshopper* this, PlayState* play) {
 }
 
 void EnGrasshopper_SetupApproachPlayer(EnGrasshopper* this, PlayState* play) {
-    s32 pad;
     Player* player = GET_PLAYER(play);
 
     this->timer = 50;

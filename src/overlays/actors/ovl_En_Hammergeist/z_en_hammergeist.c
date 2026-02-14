@@ -275,6 +275,8 @@ static DamageTable sDamageTable[] = {
 
 static CollisionCheckInfoInit2 sColChkInit = { 20, 35, 55, 0, MASS_HEAVY };
 
+static s8 sNumAlive = 0;
+
 void EnHammergeist_SetupAction(EnHammergeist* this, EnHammergeistActionFunc actionFunc) {
     this->actionFunc = actionFunc;
 }
@@ -411,6 +413,8 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
             Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 5.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_SWORD_HEROS);
         Actor_Kill(thisx);
     }
+
+    sNumAlive++;
 }
 
 void EnHammergeist_Destroy(Actor* thisx, PlayState* play) {
@@ -422,7 +426,7 @@ void EnHammergeist_Destroy(Actor* thisx, PlayState* play) {
     Collider_DestroyCylinder(play, &this->hammerRightCollider);
     Collider_DestroyJntSph(play, &this->explosionCollider);
 
-    if (this->switchFlag != 0xFF)
+    if (this->switchFlag != 0xFF && sNumAlive == 0)
         func_800F5B58();
 }
 
@@ -642,11 +646,13 @@ void EnHammergeist_CheckDamage(EnHammergeist* this, PlayState* play) {
             EnHammergeist_SetupStunned(this, play);
         }
 
-        if (this->actor.colChkInfo.health == 0)
+        if (this->actor.colChkInfo.health == 0) {
             EnHammergeist_SetupDie(this, play);
+            sNumAlive--;
+        }
     }
-    if ((this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && this->actionFunc != EnHammergeist_Die)
-        EnHammergeist_SetupDie(this, play); // Currently, the Hammergeist dies if he falls into a water box
+  //if ((this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && this->actionFunc != EnHammergeist_Die)
+  //    EnHammergeist_SetupDie(this, play); // Currently, the Hammergeist dies if he falls into a water box
 }
 
 void EnHammergeist_SetupDoNothing(EnHammergeist* this, PlayState* play) {
@@ -774,7 +780,7 @@ void EnHammergeist_Die(EnHammergeist* this, PlayState* play) {
             this->alpha -= 5;
     if (SkelAnime_Update(&this->skelAnime))
         if (DECR(this->fireTimer) == 0 && this->actor.colorFilterTimer == 0) {
-            if (this->switchFlag != 0xFF)
+            if (this->switchFlag != 0xFF && sNumAlive == 0)
                 Flags_SetSwitch(play, this->switchFlag);
             if (this->reward == HAMMERGEIST_REWARD_HEROS_SWORD && !HAS_HEROS_SWORD)
                 Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 5.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_SWORD_HEROS);

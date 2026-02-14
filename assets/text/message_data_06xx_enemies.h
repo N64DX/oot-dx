@@ -2276,7 +2276,7 @@ MSG(
 QUICKTEXT_ENABLE "White Boe\n"
 COLOR(LIGHTBLUE) "Stay calm and attack it!\n"
 "They come in groups, but individually,\n"
-"pose no real danger." QUICKTEXT_DISABLE
+"pose no real danger." COLOR(DEFAULT) QUICKTEXT_DISABLE
 ),
 MSG(),
 MSG()
@@ -2288,7 +2288,7 @@ MSG(
 QUICKTEXT_ENABLE "Black Boe\n"
 COLOR(LIGHTBLUE) "Stay calm and attack it!\n"
 "They come in groups, but individually,\n"
-"pose no real danger." QUICKTEXT_DISABLE
+"pose no real danger." COLOR(DEFAULT) QUICKTEXT_DISABLE
 ),
 MSG(),
 MSG()
@@ -2298,8 +2298,8 @@ DEFINE_MESSAGE(0x0664, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
 QUICKTEXT_ENABLE "Dragonfly\n"
-"As long as you stay away from\n"
-"its tail, it poses no danger."
+COLOR(LIGHTBLUE) "As long as you stay away from\n"
+"its tail, it poses no danger." COLOR(DEFAULT) QUICKTEXT_DISABLE
 ),
 MSG(),
 MSG()
