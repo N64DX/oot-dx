@@ -123,7 +123,8 @@
         <Sample Name="SAMPLE_0_BOE_2"/>
         <Sample Name="SAMPLE_0_DRAGONFLY_1"/>
         <Sample Name="SAMPLE_0_DRAGONFLY_2"/>
-        <Sample Name="SAMPLE_0_DRAGONFLY_3"/>
+        <Sample Name="SAMPLE_0_SNAPPER_1"/>
+        <Sample Name="SAMPLE_0_SNAPPER_2"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
@@ -236,8 +237,9 @@
         <Instrument ProgramNumber="72" Name="INST_72" Envelope="Env0" Sample="SAMPLE_0_BOE_1"/>
         <Instrument ProgramNumber="56" Name="INST_56" Envelope="Env0" Sample="SAMPLE_0_BOE_2"/>
         <Instrument ProgramNumber="57" Name="INST_57" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_1"/>
-        <Instrument ProgramNumber="53" Name="INST_53" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_2"/>
-        <Instrument ProgramNumber="54" Name="INST_54" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_3"/>
+        <Instrument ProgramNumber="54" Name="INST_58" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_2"/>
+        <Instrument ProgramNumber="92" Name="INST_92" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_1"/>
+        <Instrument ProgramNumber="93" Name="INST_93" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_2"/>
     </Instruments>
     <MatchPadding>
         0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3

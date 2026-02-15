@@ -414,6 +414,7 @@ typedef enum NaviEnemy {
     /* 0x62 */ NAVI_ENEMY_WHITE_BOE,
     /* 0x63 */ NAVI_ENEMY_BLACK_BOE,
     /* 0x64 */ NAVI_ENEMY_DRAGONFLY,
+    /* 0x65 */ NAVI_ENEMY_SNAPPER,
     /* 0xFF */ NAVI_ENEMY_NONE = 0xFF
 } NaviEnemy;
 

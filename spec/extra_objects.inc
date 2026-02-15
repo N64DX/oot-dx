@@ -153,6 +153,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_tl"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_tl/object_tl.o"
+    number 6
+endseg
+
+beginseg
     name "object_stalm"
     compress
     include "$(BUILD_DIR)/assets/objects/object_stalm/object_stalm.o"

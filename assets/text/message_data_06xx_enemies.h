@@ -2304,3 +2304,15 @@ COLOR(LIGHTBLUE) "As long as you stay away from\n"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x0665, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Snapper\n"
+COLOR(LIGHTBLUE) "! The way these\n"
+"things move, they never expose\n"
+"the weak part of their body!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)

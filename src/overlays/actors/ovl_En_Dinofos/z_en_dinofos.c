@@ -1143,7 +1143,6 @@ bool EnDinofos_UpdateDamage(EnDinofos* this, PlayState* play) {
             this->drawDmgEffAlpha = 4.0f;
             this->drawDmgEffScale = 0.55f;
             this->drawDmgEffType = ACTOR_DRAW_DMGEFF_LIGHT_ORBS;
-            Actor_Spawn(&play->actorCtx, play, ACTOR_EN_CLEAR_TAG, this->bodyAndFireCollider.elements[i].base.acDmgInfo.hitPos.x, this->bodyAndFireCollider.elements[i].base.acDmgInfo.hitPos.y, this->bodyAndFireCollider.elements[i].base.acDmgInfo.hitPos.z, 0, 0, 0, CLEAR_TAG_PARAMS(CLEAR_TAG_LARGE_LIGHT_RAYS));
         }
         EnDinofos_SetupDamaged(this, i);
         return true;

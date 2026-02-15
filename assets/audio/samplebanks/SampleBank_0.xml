@@ -465,5 +465,6 @@
     <Sample Name="SAMPLE_0_BOE_2"        Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Boe_Sample2.half.aifc"/>
     <Sample Name="SAMPLE_0_DRAGONFLY_1"  Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Dragonfly_Sample1.half.aifc"/>
     <Sample Name="SAMPLE_0_DRAGONFLY_2"  Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Dragonfly_Sample2.half.aifc"/>
-    <Sample Name="SAMPLE_0_DRAGONFLY_3"  Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Dragonfly_Sample3.half.aifc"/>
+    <Sample Name="SAMPLE_0_SNAPPER_1"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snapper_Sample1.aifc"/>
+    <Sample Name="SAMPLE_0_SNAPPER_2"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snapper_Sample2.aifc"/>
 </SampleBank>
