@@ -26,7 +26,7 @@
 #include "play_state.h"
 #include "save.h"
 
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_0x55DB0.h"
 #include "assets/objects/object_bv/object_bv.h"
 #if OOT_NTSC_N64
 #include "assets/objects/object_bv/object_bv_title_card.h"

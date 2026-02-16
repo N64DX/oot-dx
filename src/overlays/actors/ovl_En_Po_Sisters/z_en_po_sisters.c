@@ -24,7 +24,7 @@
 #include "player.h"
 #include "save.h"
 
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/eff_fire.h"
 #include "assets/objects/object_po_sisters/object_po_sisters.h"
 
 #define FLAGS                                                                                 \

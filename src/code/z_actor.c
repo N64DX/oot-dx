@@ -34,6 +34,15 @@
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
+
+#include "assets/objects/gameplay_keep/shadow_circle.h"
+#include "assets/objects/gameplay_keep/shadow_horse.h"
+#include "assets/objects/gameplay_keep/shadow_foot.h"
+#include "assets/objects/gameplay_keep/lock_on_reticle.h"
+#include "assets/objects/gameplay_keep/lock_on_arrow.h"
+#include "assets/objects/gameplay_keep/eff_flash.h"
+#include "assets/objects/gameplay_keep/lens_mask_tex.h"
+
 #include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.h"
 #include "assets/objects/object_bdoor/object_bdoor.h"
 

@@ -30,7 +30,7 @@
 #include "player.h"
 #include "save.h"
 
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/dust_textures.h"
 #include "assets/objects/object_fd/object_fd.h"
 #if OOT_NTSC_N64
 #include "assets/objects/object_fd/object_fd_title_card.h"
