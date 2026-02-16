@@ -435,7 +435,7 @@ void BossFd2_BreatheFire(BossFd2* this, PlayState* play) {
         if (this->skelAnime.curFrame == 25.0f) {
             play->envCtx.lightBlend = 0.0f;
         }
-        Actor_PlaySfx(&this->actor, NA_SE_EN_VALVAISA_FIRE - SFX_FLAG);
+        Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_FIRE - SFX_FLAG);
         if (this->skelAnime.curFrame > 50) {
             breathOpacity = (70.0f - this->skelAnime.curFrame) * 12.0f;
         } else {

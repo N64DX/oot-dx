@@ -15220,6 +15220,48 @@ LAYER_6E41:
 /* 0x709F [0x6A 0x0F 0x7F          ] */ notedv      PITCH_EF4, 15, 127
 /* 0x70A2 [0xFF                    ] */ end
 
+.channel CHAN_EN_PAMET_CUTTER_ON
+/* 0x7022 [0xCC 0x37               ] */ ldi         55
+/* 0x7024 [0xC7 0x00 0x80 0xDF     ] */ stseq       0, LAYER_80DD + STSEQ_NOTEDV_VELOCITY_2
+/* 0x7028 [0x88 0x80 0xD0          ] */ ldlayer     0, LAYER_80D0
+/* 0x702B [0xCC 0x0F               ] */ ldi         15
+/* 0x702D [0xFC 0x00 0x48          ] */ call        CHAN_0048
+/* 0x7030 [0x89 0x7B 0x77          ] */ ldlayer     1, LAYER_7B77
+/* 0x7033 [0x8A 0x91 0xA5          ] */ ldlayer     2, LAYER_91A5
+/* 0x7036 [0xFF                    ] */ end
+
+.layer LAYER_80D0
+/* 0x80D3 [0xC6 0x6D               ] */ instr       SF1_INST_109
+/* 0x80D5 [0xCB 0xC4 0xDC 0xFF     ] */ env         ENVELOPE_C4DC, 255
+/* 0x80D9 [0xC7 0x85 0x36 0x50     ] */ portamento  0x85, PITCH_EF5, 80
+LAYER_80DD:
+/* 0x80DD [0x6A 0x43 0x64          ] */ notedv      PITCH_EF4, 67, 100
+/* 0x80E0 [0xFF                    ] */ end
+
+.layer LAYER_7B77
+/* 0x7B7A [0xC6 0x72               ] */ instr       SF1_INST_114
+/* 0x7B7C [0x67 0x28 0x7F          ] */ notedv      PITCH_C4, 40, 127
+/* 0x7B7F [0xFF                    ] */ end
+
+.layer LAYER_91A5
+/* 0x91A5 [0xC6 0x17               ] */ instr       SF1_INST_115
+/* 0x91A7 [0x62 0x05 0x64          ] */ notedv      PITCH_G3, 5, 100
+/* 0x91AA [0x62 0x05 0x64          ] */ notedv      PITCH_G3, 5, 100
+/* 0x91AD [0xFF                    ] */ end
+
+.channel CHAN_EN_PAMET_CUTTER_OFF
+/* 0x7037 [0xCC 0x40               ] */ ldi         64
+/* 0x7039 [0xC7 0x00 0x80 0xEF     ] */ stseq       0, LAYER_80ED + STSEQ_NOTEDV_VELOCITY_2
+/* 0x703D [0x88 0x80 0xE7          ] */ ldlayer     0, LAYER_80E7
+/* 0x7040 [0xFF                    ] */ end
+
+.layer LAYER_80E7
+/* 0x80E7 [0xC6 0x6D               ] */ instr       SF1_INST_109
+/* 0x80E9 [0xCB 0xC4 0xDC 0xFF     ] */ env         ENVELOPE_C4DC, 255
+LAYER_80ED:
+/* 0x80ED [0x6C 0x43 0x64          ] */ notedv      PITCH_F4, 67, 100
+/* 0x80F0 [0xFF                    ] */ end
+
 .channel CHAN_EN_EYEGOLE_ATTACK
 /* 0x5D84 [0x88 0x5D 0x88          ] */ ldlayer     0, LAYER_5D88
 /* 0x5D87 [0xFF                    ] */ end
@@ -15715,6 +15757,11 @@ ENVELOPE_6A6C:
     point 1, 32700
     point 50, 32700
     point 25, 16000
+    hang
+
+.envelope ENVELOPE_C4DC
+    point 1, 5000
+    point 50, 32700
     hang
 
 SEQ_0_END:

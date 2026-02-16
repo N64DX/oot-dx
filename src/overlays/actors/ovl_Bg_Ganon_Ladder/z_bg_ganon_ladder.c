@@ -14,7 +14,7 @@
 #include "sys_matrix.h"
 #include "play_state.h"
 
-#define FLAGS ACTOR_FLAG_ATTENTION_ENABLED
+#define FLAGS 0
 
 void BgGanonLadder_Init(Actor* thisx, PlayState* play);
 void BgGanonLadder_Destroy(Actor* thisx, PlayState* play);

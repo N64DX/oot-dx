@@ -71,15 +71,15 @@ typedef enum {
 } EnKameEyeTexture;
 
 ActorProfile En_Kame_Profile = {
-    ACTOR_EN_KAME,
-    ACTORCAT_ENEMY,
-    FLAGS,
-    OBJECT_TL,
-    sizeof(EnKame),
-    EnKame_Init,
-    EnKame_Destroy,
-    EnKame_Update,
-    EnKame_Draw,
+    /**/ ACTOR_EN_KAME,
+    /**/ ACTORCAT_ENEMY,
+    /**/ FLAGS,
+    /**/ OBJECT_TL,
+    /**/ sizeof(EnKame),
+    /**/ EnKame_Init,
+    /**/ EnKame_Destroy,
+    /**/ EnKame_Update,
+    /**/ EnKame_Draw,
 };
 
 static ColliderCylinderInit sCylinderInit = {
@@ -277,8 +277,8 @@ void EnKame_Walk(EnKame* this, PlayState* play) {
     this->timer--;
     if (this->timer == 0)
         EnKame_SetupIdle(this);
-    //else if (Animation_OnFrame(&this->snapperSkelAnime, 0.0f) || Animation_OnFrame(&this->snapperSkelAnime, 15.0f))
-    //    Actor_PlaySfx(&this->actor, NA_SE_EN_PAMET_WALK);
+    else if (Animation_OnFrame(&this->snapperSkelAnime, 0.0f) || Animation_OnFrame(&this->snapperSkelAnime, 15.0f))
+        Actor_PlaySfx(&this->actor, NA_SE_EN_PAMET_WALK);
 }
 
 void EnKame_SetupRetreatIntoShell(EnKame* this) {
@@ -289,8 +289,8 @@ void EnKame_SetupRetreatIntoShell(EnKame* this) {
     this->actor.speed = 0.0f;
 
     // If the Snapper recently played this same sound effect while it was idle, don't play it again.
-    //if (this->voiceTimer == 0)
-    //    Actor_PlaySfx(&this->actor, NA_SE_EN_PAMET_VOICE);
+    if (this->voiceTimer == 0)
+            Actor_PlaySfx(&this->actor, NA_SE_EN_PAMET_VOICE);
 
     this->actionFunc = EnKame_RetreatIntoShell;
 }
@@ -349,8 +349,8 @@ void EnKame_ProcessAttackEffects(EnKame* this, PlayState* play) {
         }
     }
 
-    //if (this->angularVelocityY > 0x1200)
-    //    Actor_PlaySfx_Flagged(&this->actor, NA_SE_EN_PAMET_ROLL - SFX_FLAG);
+    if (this->angularVelocityY > 0x1200)
+        Actor_PlaySfx_Flagged(&this->actor, NA_SE_EN_PAMET_ROLL - SFX_FLAG);
 }
 
 void EnKame_SetupPrepareToAttack(EnKame* this) {
@@ -365,7 +365,7 @@ void EnKame_SetupPrepareToAttack(EnKame* this) {
         EnKame_SetAttackSpeed(this);
         this->timer = 15;
         this->actor.speed = 0.0f;
-        Actor_PlaySfx(&this->actor, NA_SE_EV_SPINE_TRAP_MOVE);
+        Actor_PlaySfx(&this->actor, NA_SE_EN_PAMET_CUTTER_ON);
         // As stated above, we could tell this was the first phase of the Snapper's attack because it hadn't changed its draw function to the "spiked" version yet. However, we won't be able to check the draw function in the future, because we just changed it; we need some other way to tell which phase of
         // the attack the Snapper is in. Setting the targetPos's y-position here to something less than the home's y-position will be used as a signal in future functions to indicate this is the first phase of the attack. Nothing looks at the y-position of the targetPos, so we can use it however we want,
         // and during the second phase of the attack, the Snapper's home position is copied into targetPos, including the y-position; the targetPos's y-position will *only* differ from the home's y-position during the first phase of the attack due to the code below.
@@ -448,7 +448,7 @@ void EnKame_Attack(EnKame* this, PlayState* play) {
     if (Math_ScaledStepToS(&this->angularVelocityY, this->targetAngularVelocityY, (s32)(this->angularVelocityY * 0.09f) + 45)) {
         if (this->targetAngularVelocityY == 0) {
             if (this->spikesScale >= 1.0f)
-                Actor_PlaySfx(&this->actor, NA_SE_EV_SPINE_TRAP_MOVE);
+                Actor_PlaySfx(&this->actor, NA_SE_EN_PAMET_CUTTER_OFF);
 
             this->spikesScale -= 0.1f;
             this->collider.base.atFlags &= ~AT_ON;

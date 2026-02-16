@@ -125,6 +125,9 @@
         <Sample Name="SAMPLE_0_DRAGONFLY_2"/>
         <Sample Name="SAMPLE_0_SNAPPER_1"/>
         <Sample Name="SAMPLE_0_SNAPPER_2"/>
+        <Sample Name="SAMPLE_0_SNAPPER_3"/>
+        <Sample Name="SAMPLE_0_SNAPPER_4"/>
+        <Sample Name="SAMPLE_0_SNAPPER_5"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
@@ -240,6 +243,9 @@
         <Instrument ProgramNumber="54" Name="INST_58" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_2"/>
         <Instrument ProgramNumber="92" Name="INST_92" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_1"/>
         <Instrument ProgramNumber="93" Name="INST_93" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_2"/>
+        <Instrument ProgramNumber="109" Name="INST_109" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_3"/>
+        <Instrument ProgramNumber="114" Name="INST_114" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_4"/>
+        <Instrument ProgramNumber="115" Name="INST_115" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_5"/>
     </Instruments>
     <MatchPadding>
         0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3

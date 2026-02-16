@@ -874,7 +874,7 @@ void EnGrasshopper_Fall(EnGrasshopper* this, PlayState* play) {
             EffectSsDeadDb_Spawn(play, &firePos, &sFireVelocityAndAccel[i], &sFireVelocityAndAccel[i], 100, 0, 255, 255, 255, 255, 0, 0, 255, 0, 9, false);
         }
 
-        //SoundSource_PlaySfxEachFrameAtFixedWorldPos(play, &this->actor.world.pos, 10, NA_SE_EN_COMMON_EXTINCT_LEV - SFX_FLAG);
+        Actor_PlaySfx(&this->actor, NA_SE_EN_EXTINCT - SFX_FLAG);
         Item_DropCollectibleRandom(play, NULL, &this->actor.world.pos, 0x60);
         Actor_Kill(&this->actor);
     }

@@ -768,7 +768,7 @@ void EnHammergeist_SetupDie(EnHammergeist* this, PlayState* play) {
     Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 80);
     this->fireTimer = 40;
     Enemy_StartFinishingBlow(play, &this->actor);
-    Actor_PlaySfx(&this->actor, NA_SE_EN_ANUBIS_FIRE);
+    Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_J_FIRE);
     EnHammergeist_ChangeAnimation(this, HAMMERGEIST_ANIMATION_DIE);
     EnHammergeist_SetupAction(this, EnHammergeist_Die);
 }
