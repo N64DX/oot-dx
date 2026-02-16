@@ -1,7 +1,7 @@
 #ifndef GAMEPLAY_KEEP_H
 #define GAMEPLAY_KEEP_H
 
-// HEAD
+// HEAD @conflict
 #include "animation.h"
 #include "bgcheck.h"
 #include "tex_len.h"
