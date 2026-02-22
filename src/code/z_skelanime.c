@@ -14,6 +14,8 @@
 #include "animation_legacy.h"
 #include "play_state.h"
 
+#include "assets/objects/gameplay_keep/gameplay_keep.h"
+
 #define ANIM_INTERP 1
 
 s32 LinkAnimation_Loop(PlayState* play, SkelAnime* skelAnime);
@@ -1069,7 +1071,7 @@ void AnimTask_ActorMovement(PlayState* play, AnimTaskData* data) {
     Actor* actor = task->actor;
     Vec3f diff;
 
-    SkelAnime_UpdateTranslation(task->skelAnime, &diff, actor->shape.rot.y, (actor->category == ACTORCAT_PLAYER && R_ENABLE_MIRROR == 1) ? -1 : 1);
+    SkelAnime_UpdateTranslation(task->skelAnime, &diff, actor->shape.rot.y, (actor->category == ACTORCAT_PLAYER && R_ENABLE_MIRROR == 1 && !(GET_PLAYER(play)->stateFlags1 & PLAYER_STATE1_21)) ? -1 : 1);
 
     actor->world.pos.x += diff.x * actor->scale.x;
     actor->world.pos.y += diff.y * actor->scale.y * task->diffScaleY;
@@ -1850,12 +1852,13 @@ void SkelAnime_UpdateTranslation(SkelAnime* skelAnime, Vec3f* diff, s16 angle, s
     f32 z;
     f32 sin;
     f32 cos;
+    bool isClimbing = skelAnime->animation == &gPlayerAnim_clink_normal_climb_upL || skelAnime->animation == &gPlayerAnim_clink_normal_climb_upR;
 
     // If `ANIM_FLAG_UPDATE_XZ` behaved as expected, it would also be checked here
     if (skelAnime->movementFlags & ANIM_FLAG_ADJUST_STARTING_POS) {
         diff->x = diff->z = 0.0f;
     } else {
-        x = mirror * skelAnime->jointTable[0].x;
+        x = (isClimbing ? 1 : mirror) * skelAnime->jointTable[0].x;
         z = skelAnime->jointTable[0].z;
         sin = Math_SinS(angle);
         cos = Math_CosS(angle);
@@ -1872,7 +1875,7 @@ void SkelAnime_UpdateTranslation(SkelAnime* skelAnime, Vec3f* diff, s16 angle, s
 
     skelAnime->prevRot = angle;
 
-    skelAnime->prevTransl.x = mirror * skelAnime->jointTable[0].x;
+    skelAnime->prevTransl.x = (isClimbing ? 1 : mirror) * skelAnime->jointTable[0].x;
     skelAnime->jointTable[0].x = skelAnime->baseTransl.x;
 
     skelAnime->prevTransl.z = skelAnime->jointTable[0].z;
