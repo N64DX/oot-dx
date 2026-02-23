@@ -3284,7 +3284,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
             f32 temp_f0;
             f32 angle;
             s32 pad;
-            bool isRazorSword = IS_CHILD_QUEST_AS_CHILD && !HAS_MASTER_SWORD;
+            bool isRazorSword = IS_RAZOR_SWORD;
 
             Gfx_SetupDL_25Xlu(play->state.gfxCtx);
             spA0.x = play->envCtx.dirLight1.params.dir.x;

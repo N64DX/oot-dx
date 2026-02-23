@@ -470,6 +470,7 @@ typedef enum LinkAge {
 #define TOGGLE_HEROS_SWORD    (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 0)
 #define HAS_HEROS_SWORD     (((gSaveContext.save.info.playerData.equipmentUpgrades >>   0) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SWORD        (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS) && (HAS_HEROS_SWORD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)) )
+#define IS_RAZOR_SWORD       (!gSaveContext.save.info.hasObtainedItems.masterSword && IS_CHILD_QUEST_AS_CHILD)
 
 #define SET_HEROS_SHIELD      (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 1)
 #define CLEAR_HEROS_SHIELD    (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 1))

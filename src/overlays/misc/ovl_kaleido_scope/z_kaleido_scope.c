@@ -2219,7 +2219,7 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                     texIndex = ITEM_SWORD_HEROS;
                 else if (pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
                     texIndex = ITEM_SHIELD_HEROS;
-                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && !HAS_MASTER_SWORD)
+                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_RAZOR_SWORD)
                     texIndex = ITEM_BOW_FIRE;
                 else if (pauseCtx->namedItem == ITEM_HEART_PIECE_2) // Biggoron Sword
                     texIndex = ITEM_BOW_LIGHT;

@@ -1758,7 +1758,7 @@ typedef struct ChildQuestIcons {
 static bool IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                               }
 static bool IsHerosShield(void)   { return IS_HEROS_SHIELD;                                                       }
 static bool IsHerosSword(void)    { return IS_HEROS_SWORD;                                                        }
-static bool IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD && !HAS_MASTER_SWORD;                          }
+static bool IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                            }
 static bool IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
 static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
 
@@ -1942,17 +1942,25 @@ u8 Item_Give(PlayState* play, u8 item) {
             gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_SWORD_MASTER << (EQUIP_TYPE_SWORD * 4);
             Interface_LoadItemIcon1(play, 0);
         }
-        for (i=0; i<4; i++)
+        for (i=0; i<4; i++) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                Interface_LoadItemIcon1(play, i);
             if (DPAD_BUTTON(i) == SLOT_SWORDS)
                 Interface_LoadItemIcon1(play, i+4);
+        }
 
         return ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
         SET_HEROS_SWORD;
-        for (i=0; i<4; i++)
+        if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_KOKIRI)
+            Interface_LoadItemIcon1(play, 0);
+        for (i=0; i<4; i++) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                Interface_LoadItemIcon1(play, i);
             if (DPAD_BUTTON(i) == SLOT_SWORDS)
                 Interface_LoadItemIcon1(play, i+4);
+        }
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
