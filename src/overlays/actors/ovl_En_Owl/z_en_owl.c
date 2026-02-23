@@ -174,7 +174,7 @@ void EnOwl_Init(Actor* thisx, PlayState* play) {
             case OWL_LAKE_HYLIA:
             case OWL_ZORA_RIVER:
             case OWL_LOST_WOODS_PRESARIA:
-            default:
+            case OWL_LOST_WOODS_POSTSARIA:
                 Actor_Kill(&this->actor);
                 return;
         }
