@@ -1609,6 +1609,8 @@ extern u64 gEffSpark3Tex[TEX_LEN(u64, gEffSpark3Tex_WIDTH, gEffSpark3Tex_HEIGHT,
 #define gEffSpark4Tex_HEIGHT 32
 extern u64 gEffSpark4Tex[TEX_LEN(u64, gEffSpark4Tex_WIDTH, gEffSpark4Tex_HEIGHT, 4)];
 // =======
+#include "versions.h"
+
 #include "hilite_textures.h"
 #include "link_textures.h"
 #include "player_pause_joint_tables.h"
@@ -1625,13 +1627,13 @@ extern u64 gEffSpark4Tex[TEX_LEN(u64, gEffSpark4Tex_WIDTH, gEffSpark4Tex_HEIGHT,
 #include "eff_fragments_1.h"
 #include "boomerang.h"
 #include "compass_arrow.h"
-#if OOT_REGION != REGION_EU
+#if OOT_NTSC
 #include "gameplay_keep_ntsc_0xC880.h"
 #endif
 #include "lock_on_arrow.h"
 #include "hilite3_tex.h"
 #include "eff_fragments_2_model.h"
-#if OOT_REGION != REGION_EU
+#if OOT_NTSC
 #include "gameplay_keep_ntsc_0xCE60.h"
 #endif
 #include "shopkeeper_controls_tex.h"
@@ -1679,7 +1681,7 @@ extern u64 gEffSpark4Tex[TEX_LEN(u64, gEffSpark4Tex_WIDTH, gEffSpark4Tex_HEIGHT,
 #include "hover_boots_circle.h"
 #include "moon.h"
 #include "gameplay_keep_0x38FB0.h"
-#if OOT_REGION != REGION_EU
+#if OOT_NTSC
 #include "gameplay_keep_ntsc_0x39850.h"
 #include "unused_bomb_icon_model_ntsc.h"
 #include "unused_heart_icon_model_ntsc.h"
@@ -1702,28 +1704,28 @@ extern u64 gEffSpark4Tex[TEX_LEN(u64, gEffSpark4Tex_WIDTH, gEffSpark4Tex_HEIGHT,
 #include "gameplay_keep_0x3AC30.h"
 #include "heart_piece_interior_model.h"
 #include "gameplay_keep_0x3B1E0.h"
-#if OOT_REGION != REGION_EU
+#if OOT_NTSC
 #include "gameplay_keep_ntsc_0x3C610.h"
 #include "unused_heart_container_icon_model_ntsc.h"
 #endif
 #include "rectangular_sign_model.h"
 #include "directional_sign_model.h"
 #include "gameplay_keep_0x3C870.h"
-#if OOT_REGION != REGION_EU
+#if OOT_NTSC
 #include "gameplay_keep_ntsc_0x3FD80.h"
 #endif
 #include "drop_recovery_heart_tex.h"
-#if OOT_REGION != REGION_EU
+#if OOT_NTSC
 #include "unused_heart_piece_icon_tex_ntsc.h"
 #endif
 #include "item_drop_dl.h"
 #include "gameplay_keep_0x3F140.h"
 #include "rupee.h"
-#if OOT_REGION != REGION_EU
+#if OOT_NTSC
 #include "item_drops_ntsc.h"
 #endif
 #include "rupee_light_red_tex.h"
-#if OOT_REGION != REGION_EU
+#if OOT_NTSC
 #include "gameplay_keep_ntsc_0x46A40.h"
 #endif
 #include "gameplay_keep_0x42530.h"
