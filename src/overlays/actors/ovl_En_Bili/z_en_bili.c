@@ -516,7 +516,7 @@ void EnBili_DischargeLightning(EnBili* this, PlayState* play) {
 }
 
 void EnBili_Climb(EnBili* this, PlayState* play) {
-    s32 skelAnimeUpdate = SkelAnime_Update(&this->skelAnime);
+    s32 animFinished = SkelAnime_Update(&this->skelAnime);
     f32 curFrame = this->skelAnime.curFrame;
 
     if (Animation_OnFrame(&this->skelAnime, 9.0f)) {
@@ -528,7 +528,7 @@ void EnBili_Climb(EnBili* this, PlayState* play) {
                        5.0f);
     }
 
-    if (skelAnimeUpdate) {
+    if (animFinished) {
         EnBili_SetupSetNewHomeHeight(this);
     }
 }
