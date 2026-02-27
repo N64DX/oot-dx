@@ -401,7 +401,7 @@ DrawItemTableEntry sDrawItemTable[] = {
     // GID_HEROS_BOW
 	{ GetItem_DrawOpa0, { gGiHerosBowHandleDL, gGiHerosBowStringDL } },
     // GID_AMULET_OF_ENERGY
-    { GetItem_DrawOpa0Xlu1, { gGiPendantDL } },
+    { GetItem_DrawOpa0Xlu1, { gGiPendantDL, gGiPendantEmptyDL } },
     // GID_ROCS_FEATHER
     { GetItem_DrawOpa0, { gGiRocsFeatherDL } },
     // GID_GOLDEN_FEATHER

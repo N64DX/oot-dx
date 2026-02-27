@@ -139,3 +139,7 @@ Gfx gGiPendantDL[] = {
     gsSP2Triangles(0, 4, 5, 0, 0, 5, 1, 0),
     gsSPEndDisplayList(),
 };
+
+Gfx gGiPendantEmptyDL[] = {
+    gsSPEndDisplayList(),
+};

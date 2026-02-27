@@ -915,17 +915,6 @@ void EnGirlA_BuyEvent_ObtainBombchuPack(PlayState* play, EnGirlA* this) {
 }
 
 void EnGirlA_BuyEvent_ObtainWallet(PlayState* play, EnGirlA* this) {
-    switch (CUR_UPG_VALUE(UPG_WALLET)) {
-        case 0:
-            Item_Give(play, ITEM_ADULTS_WALLET);
-            break;
-        case 1:
-            Item_Give(play, ITEM_GIANTS_WALLET);
-            break;
-        default:
-            Item_Give(play, ITEM_ROYAL_WALLET);
-            break;
-    }
     SET_ITEMGETINF(ITEMGETINF_BAZAAR_WALLET);
     Rupees_ChangeBy(-this->basePrice);
 }

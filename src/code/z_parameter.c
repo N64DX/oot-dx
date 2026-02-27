@@ -4286,10 +4286,10 @@ void Interface_Draw(PlayState* play) {
             { 200, 255, 100 }, // Default
             { 130, 130, 255 }, // Adult
             { 255, 100, 100 }, // Giant
-            { 255, 165, 0   }, // Master
-            { 255, 165, 0   }, // Royal
+            { 255, 239, 0   }, // Master
+            { 255, 255, 227 }, // Royal
             { 255, 165, 0   }, // Tycoon
-            { 255, 165, 0   }, // Bottomless
+            { 255, 29,  206 }, // Bottomless
         };
         u8 curWallet = CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2);
         s16 curCapacity = (CUR_UPG_VALUE(UPG_WALLET2) > 0) ? CUR_CAPACITY(UPG_WALLET2) : CUR_CAPACITY(UPG_WALLET);

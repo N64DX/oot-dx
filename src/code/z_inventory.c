@@ -84,7 +84,7 @@ u16 gUpgradeCapacities[UPG_MAX][4] = {
     { 0, 30, 40, 50 },     // UPG_BULLET_BAG
     { 0, 10, 20, 30 },     // UPG_DEKU_STICKS
     { 0, 20, 30, 40 },     // UPG_DEKU_NUTS
-    { 2000, 5000, 9999 },  // UPG_WALLET2
+    { 0, 2000, 5000, 9999 }, // UPG_WALLET2
 };
 
 u32 gGsFlagsMasks[] = { 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000 };
