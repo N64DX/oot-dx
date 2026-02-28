@@ -651,7 +651,7 @@ void EnGrasshopper_ApproachPlayer(EnGrasshopper* this, PlayState* play) {
                 splashPos.x += Rand_CenteredFloat(20.0f);
                 splashPos.z += Rand_CenteredFloat(20.0f);
                 EffectSsGSplash_Spawn(play, &splashPos, NULL, NULL, 0, (((s32)Rand_ZeroOne() * 100) + 400));
-                //SoundSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 50, NA_SE_EV_BOMB_DROP_WATER);
+                SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 50, NA_SE_EV_BOMB_DROP_WATER);
             }
         }
         else this->splashCount = 0;
@@ -695,7 +695,7 @@ void EnGrasshopper_Attack(EnGrasshopper* this, PlayState* play) {
                 splashPos.x += Rand_CenteredFloat(20.0f);
                 splashPos.z += Rand_CenteredFloat(20.0f);
                 EffectSsGSplash_Spawn(play, &splashPos, NULL, NULL, 0, ((s32)Rand_ZeroOne() * 100) + 400);
-                //SoundSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 50, NA_SE_EV_BOMB_DROP_WATER);
+                SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 50, NA_SE_EV_BOMB_DROP_WATER);
             }
         }
         else this->splashCount = 0;
@@ -846,7 +846,7 @@ void EnGrasshopper_Fall(EnGrasshopper* this, PlayState* play) {
                 EffectSsGSplash_Spawn(play, &splashPos, NULL, NULL, 0, (((s32)Rand_ZeroOne() * 100) + 400));
             }
 
-            //SoundSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 50, NA_SE_EV_BOMB_DROP_WATER);
+            SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 50, NA_SE_EV_BOMB_DROP_WATER);
             isUnderWater = true;
         }
     }

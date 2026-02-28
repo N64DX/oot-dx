@@ -535,6 +535,7 @@ s32 CollisionCheck_SetAC_SAC(struct PlayState* play, CollisionCheckContext* colC
 s32 CollisionCheck_SetOC(struct PlayState* play, CollisionCheckContext* colChkCtx, Collider* collider);
 s32 CollisionCheck_SetOC_SAC(struct PlayState* play, CollisionCheckContext* colChkCtx, Collider* collider, s32 index);
 s32 CollisionCheck_SetOCLine(struct PlayState* play, CollisionCheckContext* colChkCtx, OcLine* collider);
+void CollisionCheck_GreenBlood(struct PlayState* play, Collider* collider, Vec3f* v);
 void CollisionCheck_BlueBlood(struct PlayState* play, Collider* collider, Vec3f* v);
 void CollisionCheck_AT(struct PlayState* play, CollisionCheckContext* colChkCtx);
 void CollisionCheck_OC(struct PlayState* play, CollisionCheckContext* colChkCtx);

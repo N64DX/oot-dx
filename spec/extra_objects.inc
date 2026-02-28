@@ -97,6 +97,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_raf"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_raf/object_raf.o"
+    number 6
+endseg
+
+beginseg
     name "object_dinofos"
     compress
     number 6

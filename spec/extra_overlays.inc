@@ -55,6 +55,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Raf"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Raf/z_en_raf.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Raf/ovl_En_Raf_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Dinofos"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Dinofos/z_en_dinofos.o"

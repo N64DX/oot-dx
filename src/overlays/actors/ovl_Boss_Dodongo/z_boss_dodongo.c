@@ -627,15 +627,15 @@ void BossDodongo_Bite(BossDodongo* this, PlayState* play) {
         switch (curFrame) {
             case 16:
                 play->damagePlayer(play, -2);
-                Actor_PlaySfx(&player->actor, NA_SE_VO_LI_DAMAGE_S_KID);
+                Actor_PlaySfx(&player->actor, LINK_IS_ADULT ? NA_SE_VO_LI_DAMAGE_S : NA_SE_VO_LI_DAMAGE_S_KID);
                 break;
             case 22:
                 play->damagePlayer(play, -2);
-                Actor_PlaySfx(&player->actor, NA_SE_VO_LI_DAMAGE_S_KID);
+                Actor_PlaySfx(&player->actor, LINK_IS_ADULT ? NA_SE_VO_LI_DAMAGE_S : NA_SE_VO_LI_DAMAGE_S_KID);
                 break;
             case 30:
                 play->damagePlayer(play, -2);
-                Actor_PlaySfx(&player->actor, NA_SE_VO_LI_DAMAGE_S_KID);
+                Actor_PlaySfx(&player->actor, LINK_IS_ADULT ? NA_SE_VO_LI_DAMAGE_S : NA_SE_VO_LI_DAMAGE_S_KID);
                 break;
             default: break;
         }
