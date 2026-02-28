@@ -1288,6 +1288,38 @@ void func_80083108(PlayState* play) {
                         }
                 }
 
+                if (interfaceCtx->restrictions.all == 0) {
+                    if (interfaceCtx->restrictions.magicBow != 0) {
+                        for (i=1; i<4; i++) {
+                            if (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOW_FIRE && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOW_LIGHT) {
+                                if (gSaveContext.buttonStatus[i] == BTN_ENABLED)
+                                    sp28 = true;
+                                gSaveContext.buttonStatus[i] = BTN_DISABLED;
+                            }
+                        }
+                        for (i=0; i<4; i++)
+                            if (Interface_GetItemFromDpad(i) >= ITEM_BOW_FIRE && Interface_GetItemFromDpad(i) <= ITEM_BOW_LIGHT) {
+                                if (dpadStatus[i] == BTN_ENABLED)
+                                    sp28 = true;
+                                dpadStatus[i] = BTN_DISABLED;
+                            }
+                    } else if (interfaceCtx->restrictions.magicBow == 0) {
+                        for (i=1; i<4; i++) {
+                            if (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOW_FIRE && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOW_LIGHT) {
+                                if (gSaveContext.buttonStatus[i] == BTN_DISABLED)
+                                    sp28 = true;
+                                gSaveContext.buttonStatus[i] = BTN_ENABLED;
+                            }
+                        }
+                        for (i=0; i<4; i++)
+                            if (Interface_GetItemFromDpad(i) >= ITEM_BOW_FIRE && Interface_GetItemFromDpad(i) <= ITEM_BOW_LIGHT) {
+                                if (dpadStatus[i] == BTN_DISABLED)
+                                    sp28 = true;
+                                dpadStatus[i] = BTN_ENABLED;
+                            }
+                    }
+                }
+
                 if (interfaceCtx->restrictions.all != 0) {
                     for (i = 1; i < 4; i++) {
                         if ((gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_FAIRY) &&
@@ -1336,6 +1368,8 @@ void func_80083108(PlayState* play) {
                             (gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_FAIRY) &&
                             (gSaveContext.save.info.equips.buttonItems[i] != ITEM_OCARINA_OF_TIME) &&
                             (gSaveContext.save.info.equips.buttonItems[i] != ITEM_MAGIC_BEAN) &&
+                            !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOW_FIRE) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOW_LIGHT)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
@@ -1350,6 +1384,7 @@ void func_80083108(PlayState* play) {
                     for (i=0; i<4; i++)
                         if (Interface_GetItemFromDpad(i) != ITEM_DINS_FIRE     && Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT        &&   Interface_GetItemFromDpad(i) != ITEM_LONGSHOT     && Interface_GetItemFromDpad(i) != ITEM_FARORES_WIND && Interface_GetItemFromDpad(i) != ITEM_NAYRUS_LOVE &&
                             Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE)  &&
+                          !(Interface_GetItemFromDpad(i) >= ITEM_BOW_FIRE      && Interface_GetItemFromDpad(i) <= ITEM_BOW_LIGHT)      &&
                           !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
@@ -1381,6 +1416,7 @@ void Interface_SetSceneRestrictions(PlayState* play) {
 
     interfaceCtx->restrictions.all = 0;
     interfaceCtx->restrictions.dinsNayrus = 0;
+    interfaceCtx->restrictions.magicBow = 0;
     interfaceCtx->restrictions.farores = 0;
     interfaceCtx->restrictions.sunsSong = 0;
     interfaceCtx->restrictions.warpSongs = 0;
@@ -1412,6 +1448,7 @@ void Interface_SetSceneRestrictions(PlayState* play) {
             interfaceCtx->restrictions.sunsSong = (sRestrictionFlags[i].flags3 & 0xC0) >> 6;
             interfaceCtx->restrictions.farores = (sRestrictionFlags[i].flags3 & 0x30) >> 4;
             interfaceCtx->restrictions.dinsNayrus = (sRestrictionFlags[i].flags3 & 0x0C) >> 2;
+            interfaceCtx->restrictions.magicBow = (sRestrictionFlags[i].flags3 & 0x08) != 0;
             interfaceCtx->restrictions.all = (sRestrictionFlags[i].flags3 & 0x03) >> 0;
 
             PRINTF_COLOR_YELLOW();

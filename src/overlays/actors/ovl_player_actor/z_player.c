@@ -2953,7 +2953,7 @@ static void ArrowCycleHandle(Player* player, PlayState* play) {
     const ArrowInfo *curInfo, *nextInfo;
     u8 item;
 
-    if (player->stateFlags1 & PLAYER_STATE1_26)
+    if ( (player->stateFlags1 & PLAYER_STATE1_26) || play->interfaceCtx.restrictions.magicBow != 0)
         return;
 
     if (gArrowCycleState.frameDelay >= 1) {
