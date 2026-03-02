@@ -353,7 +353,7 @@ void Play_Init(GameState* thisx) {
     Cutscene_InitContext(this, &this->csCtx);
     
 #if OOT_NTSC_N64
-    if (gSaveContext.language != LANGUAGE_JPN && gSaveContext.gameMode == GAMEMODE_NORMAL)
+    if ( (gSaveContext.language != LANGUAGE_JPN && gSaveContext.gameMode == GAMEMODE_NORMAL) || gSaveContext.gameMode == GAMEMODE_END_CREDITS)
         DMA_REQUEST_SYNC(this->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
 #endif
 
