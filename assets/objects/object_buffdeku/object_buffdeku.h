@@ -106,6 +106,9 @@ extern AnimationHeader BuffDekuSkelSpinAnim;
 extern AnimationHeader BuffDekuSkelDeathAnim;
 extern AnimationHeader BuffDekuSkelPanicAnim;
 
+extern u64 gKingDekuTitleCardTex[];
+extern u64 gKingDekuTitleCardPalTex[];
+
 #define BUFFDEKUSKEL_ROOT_POS_LIMB 0
 #define BUFFDEKUSKEL_ROOT_ROT_LIMB 1
 #define BUFFDEKUSKEL_TORSO_LIMB 2
@@ -127,4 +130,3 @@ extern AnimationHeader BuffDekuSkelPanicAnim;
 #define BUFFDEKUSKEL_NUM_LIMBS 18
 
 #endif
-

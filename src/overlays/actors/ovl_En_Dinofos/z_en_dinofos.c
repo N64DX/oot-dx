@@ -327,7 +327,7 @@ void EnDinofos_Init(Actor* thisx, PlayState* play) {
     this->switchFlag = PARAMS_GET_U(thisx->params, 8, 8);
     getAggressive = false;
 
-    if (this->switchFlag != 0xFF) {
+    if (this->switchFlag <= 0x3F) {
         if (Flags_GetSwitch(play, this->switchFlag))
             Actor_Kill(thisx);
     }
@@ -1013,7 +1013,7 @@ void EnDinofos_Die(EnDinofos* this, PlayState* play) {
             Actor_ChangeCategory(play, &play->actorCtx, &this->actor, ACTORCAT_PROP);
 
         if (envColorAlpha <= 0) {
-            if (this->switchFlag != 0xFF && sNumAlive == 0)
+            if (this->switchFlag <= 0x3F && sNumAlive == 0)
                 Flags_SetSwitch(play, this->switchFlag);
             
             Actor_Kill(&this->actor);

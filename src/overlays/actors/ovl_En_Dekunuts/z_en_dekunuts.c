@@ -20,6 +20,7 @@
 
 #include "assets/objects/object_dekunuts/object_dekunuts.h"
 #include "assets/objects/object_dekunuts/object_dekunuts_extra.h"
+#include "overlays/actors/ovl_Door_Warp1/z_door_warp1.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE)
 
@@ -143,6 +144,17 @@ static InitChainEntry sInitChain[] = {
 void EnDekunuts_Init(Actor* thisx, PlayState* play) {
     EnDekunuts* this = (EnDekunuts*)thisx;
     s32 pad;
+
+    if (play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS) {
+        Actor_SetScale(thisx, 0.02f);
+        this->actor.flags |= ACTOR_FLAG_DRAW_CULLING_DISABLED;
+        if (Flags_GetClear(play, 1)) {
+            Actor_Kill(&this->actor);
+            Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_DOOR_WARP1, 0.0f, 0.0f, 0.0f, 0, 0, 0, WARP_DUNGEON_CHILD);
+            Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_B_HEART, 100.0f, 0.0f, 0.0f, 0, 0, 0, 0);
+            return;
+        }
+    }
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     if (thisx->params == DEKUNUTS_FLOWER) {

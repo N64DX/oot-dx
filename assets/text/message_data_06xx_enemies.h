@@ -2309,10 +2309,34 @@ DEFINE_MESSAGE(0x0665, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
 QUICKTEXT_ENABLE "Snapper\n"
-COLOR(LIGHTBLUE) "! The way these\n"
-"things move, they never expose\n"
-"the weak part of their body!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+COLOR(LIGHTBLUE) "The way these things move, they\n"
+"never expose the weak part of\n"
+"their body!" COLOR(DEFAULT) QUICKTEXT_DISABLE
 ),
 MSG(),
 MSG()
+)
+
+DEFINE_MESSAGE(0x0666, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(60) "デクの王\n"
+COLOR(LIGHTBLUE) "気をつけろ　とても強そうだ！\n"
+"でも　火に弱そうだ…" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "King Deku\n"
+COLOR(LIGHTBLUE) "Watch out, he looks really strong!\n"
+"He looks weak to fire though..." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Das ist King Deku!\n"
+COLOR(LIGHTBLUE) "Pass auf, er sieht sehr stark aus!\n"
+"Doch Feuer scheint seine Schwäche\n"
+"zu sein..." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "King Deku\n"
+COLOR(LIGHTBLUE) "Attention, il a l’air très fort!\n"
+"Mais il semble faible face au feu..." COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
 )

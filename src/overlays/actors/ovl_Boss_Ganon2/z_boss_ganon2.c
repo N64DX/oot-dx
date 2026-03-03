@@ -334,7 +334,7 @@ static ColliderJntSphElementInit sJntSphElementsHyperInit2[] = {
     {
         {
             ELEM_MATERIAL_UNK2,
-            { 0xFFCFFFFF, 0x00, 0x50 },
+            { 0xFFCFFFFF, 0x00, 0x60 },
             { 0xFFDFFFFF, 0x00, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
@@ -345,7 +345,7 @@ static ColliderJntSphElementInit sJntSphElementsHyperInit2[] = {
     {
         {
             ELEM_MATERIAL_UNK2,
-            { 0xFFCFFFFF, 0x00, 0x50 },
+            { 0xFFCFFFFF, 0x00, 0x60 },
             { 0xFFDFFFFF, 0x00, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
@@ -391,6 +391,14 @@ static Vec3f D_809105D8[4];
 static Vec3f D_80910608[4];
 
 static s8 D_80910638;
+
+s16 BossGanon2_CalculateHealth(s16 health) {
+    if (IS_CHILD_QUEST)
+        return health * 3;
+    if (isHyper)
+        return health * 1.5;
+    return health;
+}
 
 void BossGanon2_InitRand(s32 seedInit0, s32 seedInit1, s32 seedInit2) {
     sSeed1 = seedInit0;
@@ -487,7 +495,7 @@ void BossGanon2_Init(Actor* thisx, PlayState* play) {
 
     isHyper = thisx->params == GANON_HYPER;
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
-    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(isHyper ? 45 : 30, BOSS_HP);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(BossGanon2_CalculateHealth(30), BOSS_HP);
     Collider_InitJntSph(play, &this->unk_424);
     Collider_SetJntSph(play, &this->unk_424, &this->actor, &sJntSphInit1, this->unk_464);
     Collider_InitJntSph(play, &this->unk_444);
@@ -1778,7 +1786,7 @@ void func_80900890(BossGanon2* this, PlayState* play) {
             if (Animation_OnFrame(&this->skelAnime, this->unk_194)) {
                 func_808FFDB0(this, play);
                 if (this->unk_334 == 0) {
-                    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(isHyper ? 38 : 25, BOSS_HP);
+                    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(BossGanon2_CalculateHealth(25), BOSS_HP);
                 }
                 this->unk_336 = 1;
             }
@@ -2299,9 +2307,11 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
                     this->unk_342 = 5;
                     Actor_PlaySfx(&this->actor, NA_SE_EN_MGANON_DAMAGE);
                     Audio_StopSfxById(NA_SE_EN_MGANON_UNARI);
-                    this->actor.colChkInfo.health -= 2;
+                    if (IS_CHILD_QUEST && HAS_MASTER_SWORD)
+                        this->actor.colChkInfo.health -= 6;
+                    else this->actor.colChkInfo.health -= 2;
                     health = this->actor.colChkInfo.health;
-                    if (health <= Actor_EnemyHealthMultiply(isHyper ? 30 : 20, BOSS_HP) && this->unk_334 == 0) {
+                    if (health <= Actor_EnemyHealthMultiply(BossGanon2_CalculateHealth(20), BOSS_HP) && this->unk_334 == 0) {
                         func_80900818(this, play);
                     } else {
                         if (health <= 0) {
@@ -2332,6 +2342,8 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
                 } else {
                     phi_v1_2 = 2;
                 }
+                if (IS_CHILD_QUEST && HAS_MASTER_SWORD)
+                    phi_v1_2 *= 6;
             }
             this->actor.colChkInfo.health -= phi_v1_2;
             health = this->actor.colChkInfo.health;
@@ -2345,7 +2357,7 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
                 }
             }
 
-            if ((health <= Actor_EnemyHealthMultiply(isHyper ? 30 : 20, BOSS_HP)) && (this->unk_334 == 0)) {
+            if ((health <= Actor_EnemyHealthMultiply(BossGanon2_CalculateHealth(20), BOSS_HP)) && (this->unk_334 == 0)) {
                 func_80900818(this, play);
             } else if ((health <= 0) && (phi_v1_2 >= 2)) {
                 func_80901020(this, play);

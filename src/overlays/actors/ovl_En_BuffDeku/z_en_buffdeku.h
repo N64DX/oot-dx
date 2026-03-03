@@ -25,6 +25,8 @@ typedef struct EnBuffDeku {
     Vec3f bodyPartsPos[8];
     ColliderJntSph colliderSpheres;
     ColliderJntSphElement colliderSpheresElements[4];
+    s8 subCamId;
+    u8 dekuStickCooldownTimer;
 } EnBuffDeku;
 
 #endif

@@ -406,7 +406,7 @@ Gfx mat_ganon_boss_room_0DL_005E50_mesh_001_f3dlite_material_062_layerOpaque[] =
 	gsSPEndDisplayList(),
 };
 
-Gfx ganon_boss_room_0DL_005E50_mesh_001[] = {
+Gfx gGanonBossPillarDL[] = {
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsSPVertex(ganon_boss_room_0DL_005E50_mesh_001_ganon_boss_room_0DL_005E50_mesh_001_mesh_layer_Opaque_vtx_cull + 0, 8, 0),
 	gsSPSetGeometryMode(G_LIGHTING),

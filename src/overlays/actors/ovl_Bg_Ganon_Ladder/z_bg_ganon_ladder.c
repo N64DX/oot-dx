@@ -183,6 +183,6 @@ void BgGanonLadder_Draw(Actor* thisx, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_bg_ganon_ladder.c", 177);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_bg_ganon_ladder.c", 181);
-    gSPDisplayList(POLY_OPA_DISP++, ganon_boss_room_0DL_005E50_mesh_001);
+    gSPDisplayList(POLY_OPA_DISP++, gGanonBossPillarDL);
     CLOSE_DISPS(play->state.gfxCtx, "../z_bg_ganon_ladder.c", 181);
 }

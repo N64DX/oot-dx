@@ -209,7 +209,7 @@ static DamageTable sDamageTable = {
 void EnIk_Destroy(Actor* thisx, PlayState* play) {
     EnIk* this = (EnIk*)thisx;
 
-    if (Actor_FindNearby(play, &this->actor, ACTOR_EN_IK, ACTORCAT_ENEMY, 8000.0f) == NULL) {
+    if (Actor_FindNearby(play, &this->actor, ACTOR_EN_IK, ACTORCAT_ENEMY, 8000.0f) == NULL && this->switchFlag != 0xFF) {
         func_800F5B58();
     }
 
@@ -333,13 +333,14 @@ void EnIk_SetupStandUp(EnIk* this) {
 void EnIk_StandUp(EnIk* this, PlayState* play) {
     Vec3f sparksPos;
 
-    if (this->bodyCollider.base.acFlags & AC_HIT) {
+    if ( (this->bodyCollider.base.acFlags & AC_HIT) || play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS) {
         sparksPos = this->actor.world.pos;
         Actor_PlaySfx(&this->actor, NA_SE_EN_IRONNACK_ARMOR_HIT);
         sparksPos.y += 30.0f;
         func_8003424C(play, &sparksPos);
         this->skelAnime.playSpeed = 1.0f;
-        func_800F5ACC(NA_BGM_MINI_BOSS);
+        if (this->switchFlag != 0xFF)
+            func_800F5ACC(NA_BGM_MINI_BOSS);
     }
 
     if (this->skelAnime.curFrame == 5.0f) {

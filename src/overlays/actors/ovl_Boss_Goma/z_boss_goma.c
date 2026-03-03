@@ -1135,11 +1135,10 @@ void BossGoma_Encounter(BossGoma* this, PlayState* play) {
                 if (isHyper) {
                     if (!GET_EVENTCHKINF(EVENTCHKINF_BEGAN_HYPER_GOHMA_BATTLE)) {
 #if OOT_NTSC_N64
-                        if (gSaveContext.language != LANGUAGE_JPN)
-                            TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gHyperGohmaTitleCardPalTex), 160, 180, 192, 40);
-                        else
+                        TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gHyperGohmaTitleCardTex : gHyperGohmaTitleCardPalTex), 172, 180, 192, 40);
+#else
+                        TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gHyperGohmaTitleCardTex), 172, 180, 192, 40);
 #endif
-                            TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gGohmaTitleCardTex), 160, 180, 128, 40);
                     }
                 } else if (!GET_EVENTCHKINF(EVENTCHKINF_BEGAN_GOHMA_BATTLE)) {
 #if OOT_NTSC_N64

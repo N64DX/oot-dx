@@ -394,6 +394,12 @@ void BossGanonEff_SpawnBlackDot(PlayState* play, Vec3f* pos, f32 scale) {
     }
 }
 
+s16 BossGanon_CalculateHealth(s16 health) {
+    if (IS_CHILD_QUEST)
+        return health * 3;
+    return health;
+}
+
 void BossGanon_SetColliderPos(Vec3f* pos, ColliderCylinder* collider) {
     collider->dim.pos.x = pos->x;
     collider->dim.pos.y = pos->y;
@@ -442,7 +448,7 @@ void BossGanon_Init(Actor* thisx, PlayState* play2) {
         }
 
         sGanondorf = this;
-        thisx->colChkInfo.health = Actor_EnemyHealthMultiply(40, BOSS_HP);
+        thisx->colChkInfo.health = Actor_EnemyHealthMultiply(BossGanon_CalculateHealth(40), BOSS_HP);
         Actor_ProcessInitChain(thisx, sInitChain);
         ActorShape_Init(&thisx->shape, 0, NULL, 0);
         Actor_SetScale(thisx, 0.01f);
@@ -672,7 +678,7 @@ void BossGanon_IntroCutscene(BossGanon* this, PlayState* play) {
                 BossGanon_SetIntroCsCamera(this, 11);
                 this->unk_198 = 2;
                 this->timers[2] = 110;
-                gSaveContext.healthAccumulator = 0x140;
+                gSaveContext.healthAccumulator = gSaveContext.save.info.playerData.healthCapacity;
                 SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0);
             } else {
                 this->useOpenHand = true;
@@ -887,7 +893,7 @@ void BossGanon_IntroCutscene(BossGanon* this, PlayState* play) {
             }
 
             if (this->csTimer == 25) {
-                gSaveContext.healthAccumulator = 0x140;
+                gSaveContext.healthAccumulator = gSaveContext.save.info.playerData.healthCapacity;
             }
 
             if (this->csTimer == 100) {
@@ -2321,7 +2327,7 @@ void BossGanon_Wait(BossGanon* this, PlayState* play) {
         } else if ((this->timers[0] == 0) && !(player->stateFlags1 & PLAYER_STATE1_13)) {
             this->timers[0] = (s16)Rand_ZeroFloat(30.0f) + 30;
 
-            if ((s8)this->actor.colChkInfo.health >= Actor_EnemyHealthMultiply(20, BOSS_HP)) {
+            if ((s8)this->actor.colChkInfo.health >= Actor_EnemyHealthMultiply(BossGanon_CalculateHealth(20), BOSS_HP)) {
                 BossGanon_SetupChargeLightBall(this, play);
             } else if (Rand_ZeroOne() >= 0.5f) {
                 if ((Rand_ZeroOne() >= 0.5f) || (this->actor.xzDistToPlayer > 350.0f)) {
@@ -2816,6 +2822,8 @@ void BossGanon_UpdateDamage(BossGanon* this, PlayState* play) {
         } else if (this->swordPhase) {
             this->unk_2D4 = 4;
             if (!this->invincible && this->damageCooldown == 0 && this->actor.colChkInfo.damage > 0 && (u8)IRANDOM_RANGE(0, 3) > 0) {
+                if (IS_CHILD_QUEST && acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER) && HAS_MASTER_SWORD)
+                    this->actor.colChkInfo.damage *= 3;
                 Actor_ApplyDamage(&this->actor);
                 this->damageCooldown = (60 / R_UPDATE_RATE) / 4;
                 if (this->actor.colChkInfo.health == 0) {
@@ -2853,6 +2861,8 @@ void BossGanon_UpdateDamage(BossGanon* this, PlayState* play) {
                     damage = 2;
                 } else {
                     hitWithSword = true;
+                    if (IS_CHILD_QUEST && acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER) && HAS_MASTER_SWORD)
+                        damage *= 3;
                 }
 
                 if (((s8)this->actor.colChkInfo.health >= 3) || hitWithSword) {
