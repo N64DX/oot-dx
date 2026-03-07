@@ -4886,7 +4886,7 @@ u8 Actor_ApplyDamage(Actor* actor) {
     if (IS_CHILD_QUEST_AS_CHILD && actor->colChkInfo.itemAction != PLAYER_IA_SWORD_FAIRYS) {
         if (damage == 4 && dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT))
             damage = gSaveContext.save.info.playerData.bgsFlag ? 3 : 2;
-        else if (damage == 8 && dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT))
+        else if (damage == 8 && dmgFlags & (DMG_JUMP_GIANT | DMG_SPIN_GIANT | DMG_SLASH_GIANT))
             damage = gSaveContext.save.info.playerData.bgsFlag ? 6 : 4;
     }
     

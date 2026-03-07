@@ -4878,7 +4878,7 @@ s32 Player_TryActionInterrupt(PlayState* play, Player* this, SkelAnime* skelAnim
 void func_80837530(PlayState* play, Player* this, s32 arg2) {
     u8 meleeWeapon = Player_GetMeleeWeaponHeld(this);
     if (meleeWeapon == 6)
-        meleeWeapon = 2;
+        meleeWeapon = 4;
 
     if (arg2 != 0) {
         this->unk_858 = 0.0f;
@@ -5709,38 +5709,39 @@ static s16 sReturnEntranceGroupData[] = {
     /*  0 */ ENTR_DEATH_MOUNTAIN_TRAIL_4,  // from Magic Fairy Fountain
     /*  1 */ ENTR_DEATH_MOUNTAIN_CRATER_3, // from Double Magic Fairy Fountain
     /*  2 */ MAP_OUTSIDE_GANONS_CASTLE_2,  // from Double Defense Fairy Fountain (as adult)
+    /*  3 */ ENTR_WOODFALL_2,              // from Great Quick Spin Fairy Fountain
 
     // ENTR_RETURN_2
-    /*  3 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
-    /*  4 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
+    /*  4 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
+    /*  5 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
 
     // ENTR_RETURN_BAZAAR
-    /*  5 */ ENTR_KAKARIKO_VILLAGE_3,
-    /*  6 */ ENTR_MARKET_DAY_6,
+    /*  6 */ ENTR_KAKARIKO_VILLAGE_3,
+    /*  7 */ ENTR_MARKET_DAY_6,
 
     // ENTR_RETURN_4
-    /*  7 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
-    /*  8 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
+    /*  8 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
+    /*  9 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
 
     // ENTR_RETURN_SHOOTING_GALLERY
-    /*  9 */ ENTR_KAKARIKO_VILLAGE_10,
-    /* 10 */ ENTR_MARKET_DAY_8,
+    /* 10 */ ENTR_KAKARIKO_VILLAGE_10,
+    /* 11 */ ENTR_MARKET_DAY_8,
 
     // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    /* 11 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
-    /* 12 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
-    /* 13 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
+    /* 12 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
+    /* 13 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
+    /* 14 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
 };
 
 /**
  * The values are indices into `sReturnEntranceGroupData` marking the start of each group
  */
 static u8 sReturnEntranceGroupIndices[] = {
-    11, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    9,  // ENTR_RETURN_SHOOTING_GALLERY
-    3,  // ENTR_RETURN_2
-    5,  // ENTR_RETURN_BAZAAR
-    7,  // ENTR_RETURN_4
+    12, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
+    10, // ENTR_RETURN_SHOOTING_GALLERY
+    4,  // ENTR_RETURN_2
+    6,  // ENTR_RETURN_BAZAAR
+    8,  // ENTR_RETURN_4
     0,  // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
 };
 

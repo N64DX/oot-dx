@@ -999,8 +999,11 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         else gSaveContext.save.info.inventory.defenseHearts = 20;
                     }
                 } else if (curSection == SECTION_BGS) {
-                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
                         gSaveContext.save.info.playerData.bgsFlag ^= 1;
+                        for (j=0; j<8; j++)
+                            Interface_LoadItemIcon1(play, j);
+                    }
                 } else if (curSection == SECTION_MASTER_SWORD) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
                         gSaveContext.save.info.hasObtainedItems.masterSword ^= 1;

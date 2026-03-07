@@ -58,8 +58,8 @@ static ColliderCylinderInit D_80AA0420 = {
     { 200, 200, 0, { 0, 0, 0 } },
 };
 
-static u32 D_80AA044C[] = { DMG_SPIN_MASTER, DMG_SPIN_KOKIRI, DMG_SPIN_GIANT };
-static u32 D_80AA0458[] = { DMG_JUMP_MASTER, DMG_JUMP_KOKIRI, DMG_JUMP_GIANT };
+static u32 D_80AA044C[] = { DMG_SPIN_MASTER, DMG_SPIN_KOKIRI, DMG_SPIN_GIANT, DMG_SPIN_GIANT };
+static u32 D_80AA0458[] = { DMG_JUMP_MASTER, DMG_JUMP_KOKIRI, DMG_JUMP_GIANT, DMG_JUMP_GIANT };
 
 typedef enum {
     /* 0 */ ENMTHUNDER_SUBTYPE_SPIN_GREAT,
@@ -114,7 +114,20 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
         this->unk_1CA = 1;
         this->collider.elem.atDmgInfo.dmgFlags = D_80AA044C[this->unk_1C7];
         this->unk_1C6 = 1;
-        this->unk_1C9 = ((this->unk_1C7 == 1) ? 2 : 4);
+        switch (this->unk_1C7) {
+            case 1: // Kokiri Sword
+                this->unk_1C9 = 2;
+                break;
+            case 0: // Razor Sword / Master Sword
+                this->unk_1C9 = IS_CHILD_QUEST_AS_CHILD ? (!HAS_MASTER_SWORD ? 2 : 3) : 4;
+                break;
+            case 2: // Gilded Sword / Giant's Knife
+                this->unk_1C9 = IS_CHILD_QUEST_AS_CHILD ? 3 : 4;
+                break;
+            case 3: // Great Fairy's Sword
+                this->unk_1C9 = 4;
+                break;
+        }
 
         if (HAS_HEROS_SWORD && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI) {
             this->unk_1C6 += ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT;
@@ -126,6 +139,7 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
                 gSaveContext.save.info.energy -= 30;
                 this->collider.elem.atDmgInfo.dmgFlags = D_80AA0458[this->unk_1C7];
                 this->unk_1C6 = 0;
+                this->unk_1C9 *= 2;
             }
             func_80A9EFE0(this, func_80A9F9B4);
             this->unk_1C4 = 8;
@@ -224,16 +238,31 @@ void func_80A9F408(EnMThunder* this, PlayState* play) {
             if (PARAMS_GET_S(this->actor.params, 8, 8)) {
                 gSaveContext.magicState = MAGIC_STATE_CONSUME_SETUP;
             }
+
+            switch (this->unk_1C7) {
+                case 1: // Kokiri Sword
+                    this->unk_1C9 = 2;
+                    break;
+                case 0: // Razor Sword / Master Sword
+                    this->unk_1C9 = IS_CHILD_QUEST_AS_CHILD ? (!HAS_MASTER_SWORD ? 2 : 3) : 4;
+                    break;
+                case 2: // Gilded Sword / Giant's Knife
+                    this->unk_1C9 = IS_CHILD_QUEST_AS_CHILD ? 3 : 4;
+                    break;
+                case 3: // Great Fairy's Sword
+                    this->unk_1C9 = 4;
+                    break;
+            }
+
             if (player->unk_858 < 0.85f) {
                 this->collider.elem.atDmgInfo.dmgFlags = D_80AA044C[this->unk_1C7];
                 this->unk_1C6 = 1;
-                this->unk_1C9 = ((this->unk_1C7 == 1) ? 2 : 4);
             } else {
                 this->collider.elem.atDmgInfo.dmgFlags = D_80AA0458[this->unk_1C7];
                 this->unk_1C6 = 0;
-                this->unk_1C9 = ((this->unk_1C7 == 1) ? 4 : 8);
+                this->unk_1C9 *= 2;
             }
-            
+
             if (HAS_HEROS_SWORD && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI) {
                 this->unk_1C6 += ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT;
                 func_80A9EFE0(this, EnMThunder_SwordBeam_Attack);
@@ -464,7 +493,7 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
             Matrix_RotateX(16384.0f, MTXMODE_APPLY);
             break;
         case 0:
-            if (LINK_IS_ADULT) { // Master Sword
+            if (LINK_IS_ADULT || (IS_CHILD_QUEST_AS_CHILD && HAS_MASTER_SWORD)) { // Master Sword
                 Matrix_Translate(0.0f, 300.0f, -100.0f, MTXMODE_APPLY);
                 Matrix_Scale(-1.2f, -1.0f, -0.7f, MTXMODE_APPLY);
                 Matrix_RotateX(16384.0f, MTXMODE_APPLY);
@@ -484,6 +513,11 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
                 Matrix_Scale(-1.2f, -1.0f, -0.7f, MTXMODE_APPLY);
                 Matrix_RotateX(16384.0f, MTXMODE_APPLY);
             }
+            break;
+        case 3:
+            Matrix_Translate(200.0f, 350.0f, 0.0f, MTXMODE_APPLY);
+            Matrix_Scale(-1.8f, -1.4f, -0.7f, MTXMODE_APPLY);
+            Matrix_RotateX(16384.0f, MTXMODE_APPLY);
             break;
     }
 

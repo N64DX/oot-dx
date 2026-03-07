@@ -404,3 +404,39 @@ COLOR(DEFAULT) "A bottomless wallet that never\n"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x9209, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Welcome " NAME "!\n"
+"I am the Great Fairy of Strength!"
+BOX_BREAK
+
+UNSKIPPABLE "I'm going to enhance your \n"
+COLOR(LIGHTBLUE) "Quick Spin" COLOR(DEFAULT) " skill."
+BOX_BREAK
+
+UNSKIPPABLE "Receive it now!"),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x920A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE QUICKTEXT_ENABLE "Your " COLOR(LIGHTBLUE) "Quick Spin" COLOR(DEFAULT) " skill is enhanced!" QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x920B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Your Quick Spin skill has been \n"
+"enhanced! Your quick spins are\n"
+"now " COLOR(RED) "fully charged" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
