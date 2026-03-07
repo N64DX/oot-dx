@@ -128,6 +128,9 @@
         <Sample Name="SAMPLE_0_SNAPPER_3"/>
         <Sample Name="SAMPLE_0_SNAPPER_4"/>
         <Sample Name="SAMPLE_0_SNAPPER_5"/>
+        <Sample Name="SAMPLE_0_LILYPAD_1"/>
+        <Sample Name="SAMPLE_0_LILYPAD_2"/>
+        <Sample Name="SAMPLE_0_LILYPAD_3"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
@@ -237,15 +240,18 @@
         <Instrument ProgramNumber="22" Name="INST_22" Envelope="Env0" Sample="SAMPLE_0_17"/>
         <Instrument ProgramNumber="47" Name="INST_47" Envelope="Env0" Sample="SAMPLE_0_349" RangeHi="B5" SampleHi="SAMPLE_0_33" SampleRateHi="16000" BaseNoteHi="C0"/>
         <Instrument ProgramNumber="49" Name="INST_49" Envelope="Env0" Sample="SAMPLE_0_105" RangeHi="B5" SampleHi="SAMPLE_0_19" BaseNoteHi="C0"/>
-        <Instrument ProgramNumber="72" Name="INST_72" Envelope="Env0" Sample="SAMPLE_0_BOE_1"/>
-        <Instrument ProgramNumber="56" Name="INST_56" Envelope="Env0" Sample="SAMPLE_0_BOE_2"/>
-        <Instrument ProgramNumber="57" Name="INST_57" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_1"/>
-        <Instrument ProgramNumber="54" Name="INST_58" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_2"/>
-        <Instrument ProgramNumber="92" Name="INST_92" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_1"/>
-        <Instrument ProgramNumber="93" Name="INST_93" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_2"/>
-        <Instrument ProgramNumber="109" Name="INST_109" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_3"/>
-        <Instrument ProgramNumber="114" Name="INST_114" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_4"/>
-        <Instrument ProgramNumber="115" Name="INST_115" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_5"/>
+        <Instrument ProgramNumber="51" Name="INST_51" Envelope="Env0" Sample="SAMPLE_0_BOE_1"/>
+        <Instrument ProgramNumber="52" Name="INST_52" Envelope="Env0" Sample="SAMPLE_0_BOE_2"/>
+        <Instrument ProgramNumber="53" Name="INST_53" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_1"/>
+        <Instrument ProgramNumber="54" Name="INST_54" Envelope="Env0" Sample="SAMPLE_0_DRAGONFLY_2"/>
+        <Instrument ProgramNumber="55" Name="INST_55" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_1"/>
+        <Instrument ProgramNumber="56" Name="INST_56" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_2"/>
+        <Instrument ProgramNumber="57" Name="INST_57" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_3"/>
+        <Instrument ProgramNumber="58" Name="INST_58" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_4"/>
+        <Instrument ProgramNumber="59" Name="INST_59" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_5"/>
+        <Instrument ProgramNumber="60" Name="INST_60" Envelope="Env0" Sample="SAMPLE_0_LILYPAD_1"/>
+        <Instrument ProgramNumber="61" Name="INST_61" Envelope="Env0" Sample="SAMPLE_0_LILYPAD_2"/>
+        <Instrument ProgramNumber="62" Name="INST_62" Envelope="Env0" Sample="SAMPLE_0_LILYPAD_3"/>
     </Instruments>
     <MatchPadding>
         0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3

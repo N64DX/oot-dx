@@ -1,7 +1,7 @@
-#include "object_bl_extra.h"
+#include "object_goma_extra.h"
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 
-Vtx object_BiriVtx_1[8] = {
+Vtx object_GomaVtx_1[8] = {
 	{{ {-643, -547, 0}, 0, {0, 0}, {0, 0, 0, 0} }},
 	{{ {-643, -547, 700}, 0, {0, 0}, {0, 0, 0, 0} }},
 	{{ {-643, 676, 700}, 0, {0, 0}, {0, 0, 0, 0} }},
@@ -12,7 +12,7 @@ Vtx object_BiriVtx_1[8] = {
 	{{ {643, 676, 0}, 0, {0, 0}, {0, 0, 0, 0} }},
 };
 
-Vtx object_BiriVtx_2[20] = {
+Vtx object_GomaVtx_2[20] = {
 	{{ {0, 533, 0}, 0, {600, -536}, {74, 101, 235, 255} }},
 	{{ {0, 676, 700}, 0, {733, 4574}, {74, 101, 235, 255} }},
 	{{ {643, 209, 700}, 0, {885, 4276}, {74, 101, 235, 255} }},
@@ -35,9 +35,9 @@ Vtx object_BiriVtx_2[20] = {
 	{{ {0, 533, 0}, 0, {600, -536}, {182, 101, 235, 255} }},
 };
 
-Gfx gBiriBeam[] = {
+Gfx gGomaBeam[] = {
 	gsSPClearGeometryMode(G_LIGHTING),
-	gsSPVertex(object_BiriVtx_1, 8, 0),
+	gsSPVertex(object_GomaVtx_1, 8, 0),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPCullDisplayList(0, 7),
 
@@ -54,7 +54,7 @@ Gfx gBiriBeam[] = {
 	gsDPSetTileSize(0, 0, 0, 252, 602),
 	gsSPDisplayList(0x8000000),
 
-    gsSPVertex(object_BiriVtx_2, 20, 0),
+    gsSPVertex(object_GomaVtx_2, 20, 0),
 	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
 	gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
 	gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),

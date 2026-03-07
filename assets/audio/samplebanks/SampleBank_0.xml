@@ -470,4 +470,7 @@
     <Sample Name="SAMPLE_0_SNAPPER_3"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snapper_Sample3.aifc"/>
     <Sample Name="SAMPLE_0_SNAPPER_4"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snapper_Sample4.half.aifc"/>
     <Sample Name="SAMPLE_0_SNAPPER_5"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snapper_Sample5.half.aifc"/>
+    <Sample Name="SAMPLE_0_LILYPAD_1"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Lilypad_Sample1.half.aifc"/>
+    <Sample Name="SAMPLE_0_LILYPAD_2"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Lilypad_Sample2.half.aifc"/>
+    <Sample Name="SAMPLE_0_LILYPAD_3"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Lilypad_Sample3.half.aifc"/>
 </SampleBank>

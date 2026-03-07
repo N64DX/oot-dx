@@ -148,7 +148,16 @@ typedef struct BossGoma {
     /* 0x0758 */ u8 deadLimbsState[100]; // only 85/90 first indices actually used
     /* 0x07BC */ ColliderJntSph collider;
     /* 0x07DC */ ColliderJntSphElement colliderElements[13];
-} BossGoma; // size = 0x0B1C
+    /* 0x0B1C */ ColliderQuad beamCollider;
+    /* 0x0B68 */ Vec3f beamPos1;
+    /* 0x0B74 */ Vec3f beamPos2;
+    /* 0x0B80 */ Vec3f beamPos3;
+    /* 0x0B8C */ Vec3f beamScale;
+    /* 0x0B98 */ Vec3s beamRot;
+    /* 0x0BA4 */ s16 beamTexScroll;
+    /* 0x0BA6 */ u8 beamTimer;
+    /* 0x0BA7 */ u8 beamCount;
+} BossGoma; // size = 0x0BA8
 
 typedef enum BossGomaType {
     /* -2 */ GHOMA_HYPER = -2,

@@ -752,7 +752,6 @@ void EnGrasshopper_SetupDamaged(EnGrasshopper* this, PlayState* play) {
 
     EnGrasshopper_ChangeAnim(this, DRAGONFLY_ANIM_DAMAGE);
     this->actor.speed = 0.0f;
-    this->actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
     this->approachSpeed = 0.0f;
     this->collider.elements[1].base.atElemFlags &= ~(ATELEM_ON | ATELEM_SFX_WOOD);
     Matrix_RotateY(this->actor.yawTowardsPlayer, MTXMODE_NEW);
@@ -785,6 +784,7 @@ void EnGrasshopper_SetupDead(EnGrasshopper* this, PlayState* play) {
     if (((this->drawDmgEffType == ACTOR_DRAW_DMGEFF_FROZEN_SFX) || (this->drawDmgEffType == ACTOR_DRAW_DMGEFF_FROZEN_NO_SFX)) && (this->drawDmgEffTimer == 0))
         this->drawDmgEffType = ACTOR_DRAW_DMGEFF_FIRE;
 
+    this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
     Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 25);
     Enemy_StartFinishingBlow(play, &this->actor);
     Actor_PlaySfx(&this->actor, NA_SE_EN_BATTA_DEAD);

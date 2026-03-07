@@ -371,7 +371,7 @@ void EnRr_SetupDamage(EnRr* this) {
         this->bodySegs[i].scaleTarget.x = this->bodySegs[i].scaleTarget.z = 1.0f;
     }
     this->actionFunc = EnRr_Damage;
-    Actor_PlaySfx(&this->actor, NA_SE_EN_LIKE_DAMAGE);
+    Actor_PlaySfx(&this->actor, NA_SE_EN_RIVA_DAMAGE);
 }
 
 void EnRr_SetupApproach(EnRr* this) {

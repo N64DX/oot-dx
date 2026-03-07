@@ -206,7 +206,7 @@ void EnBili_SetupFloatIdle(EnBili* this) {
     this->collider.base.atFlags |= AT_ON;
     this->collider.base.acFlags |= AC_ON;
     this->actionFunc = EnBili_FloatIdle;
-    this->beamTimer = (u8)IRANDOM_RANGE(20, 100);
+    this->beamTimer = (u8)IRANDOM_RANGE(40, 150);
 }
 
 /**
@@ -405,7 +405,7 @@ void EnBili_SetupPrepareBeam(EnBili* this, PlayState* play) {
 }
 
 void EnBili_PrepareBeam(EnBili* this, PlayState* play) {
-    if(this->beamTimer <= 0) {
+    if (this->beamTimer == 0) {
         EnBili_SetupBeam(this, play);
         return;
     }
@@ -435,7 +435,7 @@ void EnBili_Beam(EnBili* this, PlayState* play) {
 
     if (this->beamTimer == 10)
         Actor_PlaySfx(&this->actor, NA_SE_EN_BALINADE_THUNDER);
-    if(!(this->beamCollider.base.atFlags & AT_HIT) && this->beamTimer > 5)
+    if (!(this->beamCollider.base.atFlags & AT_HIT) && this->beamTimer > 5)
         CollisionCheck_SetAT(play, &play->colChkCtx, &this->beamCollider.base);
     this->beamTimer--;
 }
@@ -457,12 +457,12 @@ void EnBili_FloatIdle(EnBili* this, PlayState* play) {
         this->timer = 32;
     }
 
-    if(this->beamTimer > 0)
+    if (this->beamTimer > 0)
         this->beamTimer--;
 
-    if(!sBiliBeaming && this->beamTimer == 0 && this->actor.xzDistToPlayer > 160.0f && this->actor.xzDistToPlayer < 400.0f && fabsf(this->actor.yDistToPlayer) < 60.0f && HARDER_ENEMIES) {
+    if (!sBiliBeaming && this->beamTimer == 0 && this->actor.xzDistToPlayer > 160.0f && this->actor.xzDistToPlayer < 400.0f && fabsf(this->actor.yDistToPlayer) < 60.0f && HARDER_ENEMIES) {
         sBiliBeaming = true;
-        this->beamCount = (u8)IRANDOM_RANGE(2, 5);
+        this->beamCount = (u8)IRANDOM_RANGE(1, 2);
         EnBili_SetupPrepareBeam(this, play);
     } else if ((this->actor.xzDistToPlayer < 160.0f) && (fabsf(this->actor.yDistToPlayer) < 45.0f)) {
         EnBili_SetupApproachPlayer(this);
@@ -880,9 +880,6 @@ static void* sTentaclesTextures[] = {
 static Vec3f D_80B2EAF8 = { 0.0f, 0.0f, 0.0f };
 static Vec3f D_80B2EB10 = { -500.0f, 0.0f, 0.0f };
 static Vec3f D_80B2EB1C = { 0.0f, 0.0f, 0.0f };
-static Vec3f D_80B2EB28 = { 0.0f, 0.0f, 1600.0f };
-static Vec3f D_80B2EB64 = { 500.0f, 0.0f, 0.0f };
-static Vec3f D_80B2EB70 = { -500.0f, 0.0f, 0.0f };
 
 void EnBili_HandleBeamLogic(EnBili* this, PlayState* play) {
     Vec3f posResult;
@@ -913,10 +910,6 @@ void EnBili_HandleBeamLogic(EnBili* this, PlayState* play) {
     this->beamPos3 = posResult;
 
     if (this->beamScale.z != 0.0f) {
-        if (this->actor.scale.y > 0.01f)
-            dist = 70.0f;
-        else dist = 100.0f;
-
         this->beamCollider.dim.quad[0].x = this->actor.world.pos.x + 10.0f;
         this->beamCollider.dim.quad[0].y = this->actor.world.pos.y;
         this->beamCollider.dim.quad[0].z = this->actor.world.pos.z + 10.0f;

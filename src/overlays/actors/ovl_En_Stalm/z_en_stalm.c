@@ -659,6 +659,7 @@ void EnStalmaster_Introduction(EnStalmaster* this, PlayState* play) {
                 this->subCamId = Play_CreateSubCamera(play);
                 Play_ChangeCameraStatus(play, CAM_ID_MAIN, CAM_STAT_WAIT);
                 Play_ChangeCameraStatus(play, this->subCamId, CAM_STAT_ACTIVE);
+                Player_SetCsAction(play, &player->actor, PLAYER_CSACTION_19);
                 this->subCamFov = 85;
                 Actor_ChangeCategory(play, &play->actorCtx, &this->actor, ACTORCAT_BOSS);
             }
@@ -688,6 +689,7 @@ void EnStalmaster_Introduction(EnStalmaster* this, PlayState* play) {
                     Play_ChangeCameraStatus(play, CAM_ID_MAIN, CAM_STAT_ACTIVE);
                     Play_ChangeCameraStatus(play, this->subCamId, CAM_STAT_WAIT);
                     this->subCamId = SUB_CAM_ID_DONE;
+                    Player_SetCsAction(play, &player->actor, PLAYER_CSACTION_7);
                 }
                 Actor_ChangeCategory(play, &play->actorCtx, &this->actor, ACTORCAT_ENEMY);
                 this->actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
@@ -1315,12 +1317,10 @@ void EnStalmaster_Update(Actor* thisx, struct PlayState* play) {
     EnStalmaster* this = (EnStalmaster*)thisx;
 
     Player* player = GET_PLAYER(play);
-    static Vec3f sShadowScale = { 0.85f, 0.85f, 0.85f };
 
     this->actionFunc(this, play);
-    func_80033C30(&this->actor.world.pos, &sShadowScale, 255, play);
     SkelAnime_Update(&this->skelAnime);
-    
+
     EnStalmaster_UpdateCollisions(this, play);
     EnStalmaster_UpdateTorsoRot(this, play);
     EnStalmaster_UpdateEffects(this, play);
@@ -1365,7 +1365,7 @@ void EnStalmaster_Destroy(Actor* thisx, struct PlayState* play) {
 
 s32 EnStalmaster_OverrideLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, Vec3f* pos, Vec3s* rot, void* thisx) {
     EnStalmaster* this = (void*)thisx;
-    
+
     if (limbIndex == STALMASTER_LIMB_HEAD) {
         if (!this->sStalmasterParts[STALMASTER_LIMB_HEAD].invisible)
             *dl = NULL;
@@ -1562,6 +1562,8 @@ void EnStalmaster_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, 
 void EnStalmaster_Draw(Actor* thisx, struct PlayState* play) {
     EnStalmaster* this = (EnStalmaster*)thisx;
 
+    static Vec3f sShadowScale = { 0.85f, 0.85f, 0.85f };
+
     OPEN_DISPS(play->state.gfxCtx, "../z_en_stalm.c", 1540);
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
@@ -1571,6 +1573,7 @@ void EnStalmaster_Draw(Actor* thisx, struct PlayState* play) {
     }
 
 	SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount, EnStalmaster_OverrideLimbDraw, EnStalmaster_PostLimbDraw, this);
+    func_80033C30(&this->actor.world.pos, &sShadowScale, 255, play);
 
     POLY_OPA_DISP = Play_SetFog(play, POLY_OPA_DISP);
 
@@ -1585,7 +1588,7 @@ void EnStalmaster_DrawEffects(EnStalmaster* this, struct PlayState* play) {
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     Matrix_Push();
 
-    for (i = 0; i < ARRAY_COUNT(this->sStalmasterEffects); i++) {
+    for (i=0; i<ARRAY_COUNT(this->sStalmasterEffects); i++) {
         StalmasterParts* effect = &this->sStalmasterEffects[i];
 
         if (effect->type == STALMASTER_EFFECT_NONE)

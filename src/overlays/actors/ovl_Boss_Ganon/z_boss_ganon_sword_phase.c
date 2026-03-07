@@ -703,7 +703,7 @@ void BossGanon_SwordPhasePull(BossGanon* this, PlayState* play) {
     } else {
         if (this->pulleyTimer < 255) this->pulleyTimer++;
 
-        switch(this->pulleyTimer) {
+        switch (this->pulleyTimer) {
             case 10:
                 if (Math_Vec3f_DistXZ(&this->beamPos2, &player->actor.world.pos) <= 60.0f) {
                     this->grabbedLink = true;

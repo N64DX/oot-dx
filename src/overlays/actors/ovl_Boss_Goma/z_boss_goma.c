@@ -32,6 +32,7 @@
 #include "save.h"
 
 #include "assets/objects/object_goma/object_goma.h"
+#include "assets/objects/object_goma/object_goma_extra.h"
 #include "assets/objects/object_goma/object_goma_title_card.h"
 
 #define FLAGS                                                                                 \
@@ -81,6 +82,11 @@ void BossGoma_WallClimb(BossGoma* this, PlayState* play);
 void BossGoma_CeilingMoveToCenter(BossGoma* this, PlayState* play);
 void BossGoma_SpawnChildGohma(BossGoma* this, PlayState* play, s16 i);
 Actor* BossGoma_SpawnLizalfos(BossGoma* this, PlayState* play);
+
+void BossGoma_SetupPrepareBeam(BossGoma* this, PlayState* play);
+void BossGoma_PrepareBeam(BossGoma* this, PlayState* play);
+void BossGoma_SetupBeam(BossGoma* this, PlayState* play);
+void BossGoma_Beam(BossGoma* this, PlayState* play);
 
 static bool isHyper;
 static u8 lizalfosCount;
@@ -418,6 +424,28 @@ static ColliderJntSphInit sColliderJntSphHyperInit = {
     sColliderJntSphElementsHyperInit,
 };
 
+static ColliderQuadInit sBeamQuadInit = {
+    {
+        COL_MATERIAL_HIT8,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_NONE,
+        OC1_NONE,
+        OC2_NONE,
+        COLSHAPE_QUAD,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0xFFCFFFFF, 0x03, 0x0C },
+        { 0x00000000, 0x00, 0x00 },
+        ATELEM_ON | ATELEM_SFX_NORMAL | ATELEM_UNK7,
+        ACELEM_NONE,
+        OCELEM_NONE,
+    },
+    { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } },
+};
+
+static bool sGomaBeaming = false;
+
 static u8 sClearPixelTableFirstPass[16 * 16] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00,
     0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01, 0x01, 0x01,
@@ -546,8 +574,11 @@ void BossGoma_Init(Actor* thisx, PlayState* play) {
     Animation_PlayLoop(&this->skelanime, &gGohmaIdleCrouchedAnim);
     this->actor.shape.rot.x = -0x8000; // upside-down
     isHyper = thisx->params == GHOMA_HYPER;
-    if (isHyper)
+    if (isHyper) {
         Actor_SetScale(thisx, 0.015f);
+        Collider_InitQuad(play, &this->beamCollider);
+        Collider_SetQuad(play, &this->beamCollider, thisx, &sBeamQuadInit);
+    }
     this->eyeIrisScaleX = 1.0f;
     this->eyeIrisScaleY = 1.0f;
     this->unusedInitX = this->actor.world.pos.x;
@@ -562,6 +593,7 @@ void BossGoma_Init(Actor* thisx, PlayState* play) {
     lizalfosCount = 0;
     spawnedLizalfos[0] = spawnedLizalfos[1] = spawnedLizalfos[2] = spawnedRocks = NULL;
     stunHitsLeft = isHyper ? 1 : 0;
+    sGomaBeaming = false;
 
     if (Flags_GetClear(play, play->roomCtx.curRoom.num)) {
         Actor_Kill(&this->actor);
@@ -592,8 +624,12 @@ void BossGoma_PlayEffectsAndSfx(BossGoma* this, PlayState* play, s16 arg2, s16 a
 void BossGoma_Destroy(Actor* thisx, PlayState* play) {
     BossGoma* this = (BossGoma*)thisx;
 
+    sGomaBeaming = false;
+
     SkelAnime_Free(&this->skelanime, play);
     Collider_DestroyJntSph(play, &this->collider);
+    if (isHyper)
+        Collider_DestroyQuad(play, &this->beamCollider);
 }
 
 /**
@@ -1187,7 +1223,7 @@ void BossGoma_Encounter(BossGoma* this, PlayState* play) {
                 this->subCamId = SUB_CAM_ID_DONE;
                 BossGoma_SetupFloorMain(this);
                 this->disableGameplayLogic = false;
-                this->patienceTimer = isHyper ? 100 : 200;
+                this->patienceTimer = isHyper ? 500 : 200;
                 Cutscene_StopManual(play, &play->csCtx);
                 Player_SetCsActionWithHaltedActors(play, &this->actor, PLAYER_CSACTION_7);
                 if (isHyper)
@@ -1508,8 +1544,14 @@ void BossGoma_FloorPrepareAttack(BossGoma* this, PlayState* play) {
     SkelAnime_Update(&this->skelanime);
 
     if (this->framesUntilNextAction == 0) {
-        BossGoma_SetupFloorAttack(this);
-        Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_CRY1);
+        if (!sGomaBeaming && isHyper && Rand_ZeroOne() < 0.6f) {
+            sGomaBeaming = true;
+            this->beamCount = (u8)IRANDOM_RANGE(2, 5);
+            BossGoma_SetupPrepareBeam(this, play);
+        } else {
+            BossGoma_SetupFloorAttack(this);
+            Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_CRY1);
+        }
     }
 
     this->eyeState = EYESTATE_IRIS_FOLLOW_NO_IFRAMES;
@@ -1616,7 +1658,7 @@ void BossGoma_FloorLand(BossGoma* this, PlayState* play) {
 
     if (Animation_OnFrame(&this->skelanime, this->currentAnimFrameCount)) {
         BossGoma_SetupFloorIdle(this);
-        this->patienceTimer = isHyper ? 100 : 200;
+        this->patienceTimer = isHyper ? 500 : 200;
     }
 }
 
@@ -1759,6 +1801,9 @@ void BossGoma_FloorIdle(BossGoma* this, PlayState* play) {
     SkelAnime_Update(&this->skelanime);
     Math_ApproachZeroF(&this->actor.speed, 0.5f, 2.0f);
     Math_ApproachS(&this->actor.shape.rot.x, 0, 2, 0xBB8);
+
+    if (this->beamTimer > 0)
+        this->beamTimer--;
 
     if (this->framesUntilNextAction == 0) {
         BossGoma_SetupFloorMain(this);
@@ -2157,6 +2202,7 @@ void BossGoma_Update(Actor* thisx, PlayState* play) {
     this->eyeState = EYESTATE_IRIS_FOLLOW_BONUS_IFRAMES;
     this->actionFunc(this, play);
     this->actor.shape.rot.y = this->actor.world.rot.y;
+    this->beamTexScroll += 96;
 
     if (!this->doNotMoveThisFrame) {
         Actor_MoveXZGravity(&this->actor);
@@ -2186,7 +2232,76 @@ void BossGoma_Update(Actor* thisx, PlayState* play) {
     if (this->actionFunc != BossGoma_FloorStunned && this->actionFunc != BossGoma_FloorDamaged &&
         (this->actionFunc != BossGoma_FloorMain || this->timer == 0)) {
         CollisionCheck_SetAT(play, &play->colChkCtx, &this->collider.base);
+    } else if (this->actionFunc != BossGoma_FloorStunned && isHyper) {
+        CollisionCheck_SetAT(play, &play->colChkCtx, &this->collider.base);
     }
+}
+
+static Vec3f D_80B2EAF8 = { 0.0f, 0.0f, 0.0f };
+static Vec3f D_80B2EB10 = { -500.0f, 0.0f, 0.0f };
+static Vec3f D_80B2EB1C = { 0.0f, 0.0f, 0.0f };
+
+void BossGoma_HandleBeamLogic(BossGoma* this, PlayState* play) {
+    Vec3f posResult;
+    CollisionPoly* poly = NULL;
+    Vec3f sp80 = D_80B2EAF8;
+    Vec3f sp68 = D_80B2EB10;
+    Vec3f playerPos = this->beamPos2;
+    s32 bgId;
+    f32 dist;
+    f32 offset = 8000.0f;
+    Player* player = GET_PLAYER(play);
+
+    Matrix_MultVec3f(&D_80B2EB1C, &this->beamPos1);
+    this->beamScale.x = 0.24f;
+    this->beamScale.y = 0.24f;
+    playerPos.y += 20.0f;
+
+    dist = Math_Vec3f_DistXYZ(&this->beamPos1, &playerPos);
+    this->beamScale.z = dist;
+
+    this->beamRot.y = Math_Vec3f_Yaw(&this->beamPos1, &playerPos);
+    this->beamRot.x = Math_Vec3f_Pitch(&this->beamPos1, &playerPos);
+
+    sp80.z = (this->beamScale.z + 500.0f) * (this->actor.scale.y * 10000.0f);
+    Matrix_MultVec3f(&sp80, &this->beamPos3);
+
+    BgCheck_EntityLineTest1(&play->colCtx, &this->beamPos1, &playerPos, &posResult, &poly, true, true, false, true, &bgId);
+   
+    this->beamPos3 = posResult;
+
+    if (this->beamScale.z != 0.0f) {
+        this->beamCollider.dim.quad[0].x = this->actor.world.pos.x + 10.0f + offset;
+        this->beamCollider.dim.quad[0].y = this->actor.world.pos.y + offset;
+        this->beamCollider.dim.quad[0].z = this->actor.world.pos.z + 10.0f + offset;
+
+        this->beamCollider.dim.quad[1].x = this->actor.world.pos.x - 10.0f - offset;
+        this->beamCollider.dim.quad[1].y = this->actor.world.pos.y - offset;
+        this->beamCollider.dim.quad[1].z = this->actor.world.pos.z - 10.0f - offset;
+
+        this->beamCollider.dim.quad[2].x = this->beamPos2.x + 10.0f + offset;
+        this->beamCollider.dim.quad[2].y = this->beamPos2.y + offset;
+        this->beamCollider.dim.quad[2].z = this->beamPos2.z + 10.0f + offset;
+
+        this->beamCollider.dim.quad[3].x = this->beamPos2.x - 10.0f - offset;
+        this->beamCollider.dim.quad[3].y = this->beamPos2.y - offset;
+        this->beamCollider.dim.quad[3].z = this->beamPos2.z - 10.0f - offset;
+
+        Collider_SetQuadVertices(&this->beamCollider, &this->beamCollider.dim.quad[0], &this->beamCollider.dim.quad[1], &this->beamCollider.dim.quad[2], &this->beamCollider.dim.quad[3]);
+    }
+}
+
+void BossGoma_DrawBeam(BossGoma* this, PlayState* play, Vec3f* pos, Vec3s* rot, Vec3f* scale, u8 r, u8 g, u8 b, u8 a, s16 texScroll) {
+    OPEN_DISPS(play->state.gfxCtx, __FILE_, __LINE__);
+    Gfx_SetupDL_25Xlu(play->state.gfxCtx);
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TexScroll(play->state.gfxCtx, 0, texScroll, 0, 0));
+    Matrix_Translate(pos->x, pos->y, pos->z, MTXMODE_NEW);
+    Matrix_RotateZYX(rot->x, rot->y, rot->z, MTXMODE_APPLY);
+    Matrix_Scale(scale->x * 0.1f, scale->x * 0.1f, scale->z * 0.00145f, MTXMODE_APPLY);
+    MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
+    gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, r, g, b, a);
+    gSPDisplayList(POLY_XLU_DISP++, gGomaBeam);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE_, __LINE__);
 }
 
 s32 BossGoma_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, void* thisx) {
@@ -2326,6 +2441,29 @@ void BossGoma_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* r
         }
     }
 
+    if (limbIndex == BOSSGOMA_LIMB_EYE && this->beamTimer > 0 && (this->actionFunc == BossGoma_PrepareBeam || this->actionFunc == BossGoma_Beam)) {
+        u8 r, g, b, a;
+        s16 texScroll;
+
+        BossGoma_HandleBeamLogic(this, play);
+
+        r = 150;
+        g = 200;
+        b = 255;
+        a = (u8)F32_LERP(0, 255, (f32)this->beamTimer * 0.1f);
+        texScroll = this->beamTexScroll;
+
+        if (this->actionFunc == BossGoma_PrepareBeam) {
+            r = 255;
+            g = 100;
+            b = 100;
+            a = (u8)F32_LERP(255, 0, (f32)this->beamTimer * 0.1f);
+            texScroll = 0;
+        }
+
+        BossGoma_DrawBeam(this, play, &this->beamPos1, &this->beamRot, &this->beamScale, r, g, b, a, texScroll);
+    }
+
     Collider_UpdateSpheres(limbIndex, &this->collider);
 }
 
@@ -2408,4 +2546,63 @@ Actor* BossGoma_SpawnLizalfos(BossGoma* this, PlayState* play) {
     }
 
     return Actor_Spawn(&play->actorCtx, play, ACTOR_EN_ZF, spawnCoords.x, spawnCoords.y, spawnCoords.z, 0, 0, 0, 0xFFFF);
+}
+
+void BossGoma_SetupPrepareBeam(BossGoma* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+
+    Vec3f posResult;
+    CollisionPoly* poly;
+    s32 bgId;
+
+    Vec3f playerPos = player->actor.world.pos;
+    playerPos.y += 20;
+
+    if (BgCheck_CameraLineTest1(&play->colCtx, &this->actor.world.pos, &playerPos, &posResult, &poly, true, true, false, true, &bgId))
+        return;
+
+    Actor_PlaySfx(&this->actor, NA_SE_EN_BIMOS_AIM);
+
+    this->beamPos2 = player->actor.world.pos;
+    this->beamPos2.x += player->actor.velocity.x * 20;
+    this->beamPos2.z += player->actor.velocity.z * 20;
+
+    this->beamTimer = 10;
+    this->actionFunc = BossGoma_PrepareBeam;
+}
+
+void BossGoma_PrepareBeam(BossGoma* this, PlayState* play) {
+    if (this->beamTimer == 0) {
+        BossGoma_SetupBeam(this, play);
+        return;
+    }
+    this->beamTimer--;
+}
+
+void BossGoma_SetupBeam(BossGoma* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+
+    this->actionFunc = BossGoma_Beam;
+    this->beamTimer = 10;
+    this->beamCollider.base.atFlags &= ~AT_HIT;
+}
+
+void BossGoma_Beam(BossGoma* this, PlayState* play) {
+    if (this->beamTimer <= 0) {
+        this->beamCount--;
+
+        if (this->beamCount > 0)
+            BossGoma_SetupPrepareBeam(this, play);
+        else {
+            sGomaBeaming = false;
+            BossGoma_SetupFloorIdle(this);
+        }
+        return;
+    }
+
+    if (this->beamTimer == 10)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_BALINADE_THUNDER);
+    if (!(this->beamCollider.base.atFlags & AT_HIT) && this->beamTimer > 5)
+        CollisionCheck_SetAT(play, &play->colChkCtx, &this->beamCollider.base);
+    this->beamTimer--;
 }

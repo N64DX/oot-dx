@@ -260,14 +260,12 @@ void EnBuffDeku_Init(Actor* thisx, PlayState* play) {
     isHyper = play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS;
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
-	this->timer = 0;
-    this->panicTest = false;
-    this->playerHit = false;
+	this->dekuStickCooldownTimer = this->attackCooldownTimer = this->timer = 0;
+    this->panicTest = this->playerHit = this->onFire = false;
     this->actor.gravity = -1.0f;
-    this->onFire = false;
     this->actor.naviEnemyId = isHyper ? NAVI_ENEMY_KING_DEKU : NAVI_ENEMY_BUFF_SCRUB;
     this->dekuStickCooldownTimer = 0;
-    
+
     if ((this->actor.params & 0x20))
          this->switchFlag = this->actor.params & 0x1F;
     else this->switchFlag = 0xFF;
@@ -332,6 +330,7 @@ void EnBuffDeku_ColliderCheck(EnBuffDeku* this, PlayState* play) {
         this->colliderBody.base.acFlags &= ~AC_HIT;
         if (this->actor.colChkInfo.damageReaction == 2) { // Fire damage
             this->actor.colChkInfo.health--;
+            this->attackCooldownTimer = SECONDS(2);
             if (this->actor.colChkInfo.health == 0) // Death
                 EnBuffDeku_SetupDeath(this, play);
             else {
@@ -385,6 +384,8 @@ void EnBuffDeku_Update(Actor* thisx, PlayState* play) {
 
     if (this->dekuStickCooldownTimer > 0)
         this->dekuStickCooldownTimer--;
+    if (this->attackCooldownTimer > 0)
+        this->attackCooldownTimer--;
 }
 
 void EnBuffDeku_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx) {
@@ -547,7 +548,6 @@ void EnBuffDeku_SetupBehaviour(EnBuffDeku* this) {
 }
 
 void EnBuffDeku_Behaviour(EnBuffDeku* this, PlayState* play) {
-
 	SkelAnime_Update(&this->skelAnime);
     
     if ( ABS((s16) this->actor.yawTowardsPlayer - this->actor.world.rot.y) > 0x4000 ) {
@@ -568,6 +568,9 @@ void EnBuffDeku_Behaviour(EnBuffDeku* this, PlayState* play) {
 }
 
 void EnBuffDeku_SetupPunch(EnBuffDeku* this) {
+    if (this->attackCooldownTimer > 0)
+        return;
+
     Animation_MorphToPlayOnce(&this->skelAnime, &BuffDekuSkelPunchAnim, -3.0f);
     this->actor.speed = 0.5f;
     this->actionFunc = EnBuffDeku_Punch;
@@ -723,6 +726,7 @@ void EnBuffDeku_Panic(EnBuffDeku* this, PlayState* play) {
     if (Player_IsBurningStickInRange(play, &this->actor.world.pos, 70.0f, 50.0f) != 0 && this->dekuStickCooldownTimer == 0) {
         this->dekuStickCooldownTimer = ONE_SEC;
         this->actor.colChkInfo.health--;
+        this->attackCooldownTimer = SECONDS(2);
         if (this->actor.colChkInfo.health == 0) // Death
             EnBuffDeku_SetupDeath(this, play);
         else {

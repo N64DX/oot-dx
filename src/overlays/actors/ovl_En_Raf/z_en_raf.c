@@ -360,7 +360,7 @@ void EnRaf_Idle(EnRaf* this, PlayState* play) {
 void EnRaf_SetupGrab(EnRaf* this) {
     EnRaf_ChangeAnim(this, CARNIVOROUS_LILY_ANIM_CLOSE);
     this->petalScaleType = CARNIVOROUS_LILY_PETAL_SCALE_TYPE_GRAB;
-    //Actor_PlaySfx(&this->dyna.actor, NA_SE_EN_SUISEN_DRINK);
+    Actor_PlaySfx(&this->dyna.actor, NA_SE_EN_SUISEN_DRINK);
     this->action = CARNIVOROUS_LILY_ACTION_GRAB;
     this->actionFunc = EnRaf_Grab;
 }
@@ -421,7 +421,7 @@ void EnRaf_Chew(EnRaf* this, PlayState* play) {
     if (curFrame >= this->animEndFrame) {
         this->chewCount++;
 
-        //Actor_PlaySfx(&this->dyna.actor, NA_SE_EN_SUISEN_EAT);
+        Actor_PlaySfx(&this->dyna.actor, NA_SE_EN_SUISEN_EAT);
         switch (this->grabTarget) {
             case CARNIVOROUS_LILY_GRAB_TARGET_PLAYER:
                 play->damagePlayer(play, -2);
@@ -477,7 +477,7 @@ void EnRaf_Throw(EnRaf* this, PlayState* play) {
     if (Animation_OnFrame(&this->skelAnime, 10.0f)) {
         player->actor.freezeTimer = 0;
         player->actor.parent = NULL;
-        //Actor_PlaySfx(&this->dyna.actor, NA_SE_EN_SUISEN_THROW);
+        Actor_PlaySfx(&this->dyna.actor, NA_SE_EN_NUTS_THROW);
         Actor_SetPlayerKnockbackLarge(play, &this->dyna.actor, 3.0f, this->playerRotYWhenGrabbed + 0x8000, 10.0f, 0);
     } else if (curFrame < 10.0f)
         player->actor.freezeTimer = 10;
@@ -504,7 +504,7 @@ void EnRaf_Explode(EnRaf* this, PlayState* play) {
     explosionPos.y += 10.0f;
     //Actor_Spawn(&play->actorCtx, play, ACTOR_EN_CLEAR_TAG, explosionPos.x, explosionPos.y, explosionPos.z, 0, 0, 0, CLEAR_TAG_PARAMS(CLEAR_TAG_SMALL_EXPLOSION));
     Actor_PlaySfx(&this->dyna.actor, NA_SE_IT_BOMB_EXPLOSION);
-    //Actor_PlaySfx(&this->dyna.actor, NA_SE_EN_SUISEN_DEAD);
+    Actor_PlaySfx(&this->dyna.actor, NA_SE_EN_SUISEN_DEAD);
 
     this->petalScaleType = CARNIVOROUS_LILY_PETAL_SCALE_TYPE_DEAD;
     for (i=0; i<30; i++) {
@@ -680,7 +680,7 @@ void EnRaf_Update(Actor* thisx, PlayState* play) {
         if ((this->heightDiffFromPlayer > -0.1f) && !this->isCurrentlyInRidingMovingState) {
             this->heightDiffFromPlayer = -20.0f;
             this->isCurrentlyInRidingMovingState = true;
-            //Actor_PlaySfx(&this->dyna.actor, NA_SE_EN_COMMON_WATER_MID);
+            Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_OUT_OF_WATER);
         }
     } else this->isCurrentlyInRidingMovingState = false;
 

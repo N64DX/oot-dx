@@ -27,6 +27,7 @@ typedef struct EnBuffDeku {
     ColliderJntSphElement colliderSpheresElements[4];
     s8 subCamId;
     u8 dekuStickCooldownTimer;
+    u8 attackCooldownTimer;
 } EnBuffDeku;
 
 #endif

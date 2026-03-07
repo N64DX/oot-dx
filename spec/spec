@@ -1162,6 +1162,7 @@ beginseg
     name "object_goma"
     compress
     include "$(BUILD_DIR)/assets/objects/object_goma/object_goma.o"
+    include "$(BUILD_DIR)/assets/objects/object_goma/object_goma_extra.o"
 #if OOT_NTSC_N64
     include "$(BUILD_DIR)/assets/objects/object_goma/object_goma_title_card.o"
 #endif

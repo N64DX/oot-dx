@@ -1809,7 +1809,7 @@ void BossMo_CoreCollisionCheck(BossMo* this, PlayState* play) {
 
                 this->actor.world.rot.y = this->actor.yawTowardsPlayer + 0x8000;
                 this->work[MO_CORE_DMG_FLASH_TIMER] = 15;
-                Actor_PlaySfx(&this->actor, NA_SE_EN_MOFER_CORE_DAMAGE);
+                Actor_PlaySfx(&this->actor, NA_SE_EN_VALVAISA_DAMAGE1);
                 this->actor.colChkInfo.health -= damage;
                 this->hitCount++;
                 if ((s8)this->actor.colChkInfo.health <= 0) {
