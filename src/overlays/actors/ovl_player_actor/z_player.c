@@ -13105,22 +13105,23 @@ s16 func_8084ABD8(PlayState* play, Player* this, s32 arg2, s16 arg3) {
 void func_8084AEEC(Player* this, f32* arg1, f32 arg2, s16 arg3) {
     f32 temp1;
     f32 temp2;
+    f32 limitIncrease = (this->currentMask == PLAYER_MASK_ZORA && func_808332B8(this)) ? 1.5f : 1.0f;
 
     temp1 = this->skelAnime.curFrame - 10.0f;
 
-    temp2 = (R_RUN_SPEED_LIMIT / 100.0f) * 0.8f;
+    temp2 = (R_RUN_SPEED_LIMIT / 100.0f) * 0.8f * limitIncrease;
     if (*arg1 > temp2) {
         *arg1 = temp2;
     }
 
-    if ((0.0f < temp1) && (temp1 < 10.0f)) {
+    if ((0.0f < temp1) && (temp1 < (10.0f * limitIncrease))) {
         temp1 *= 6.0f;
     } else {
         temp1 = 0.0f;
         arg2 = 0.0f;
     }
 
-    Math_AsymStepToF(arg1, arg2 * 0.8f, temp1, (fabsf(*arg1) * 0.02f) + 0.05f);
+    Math_AsymStepToF(arg1, arg2 * 0.8f * limitIncrease, temp1, (fabsf(*arg1) * 0.02f) + 0.05f);
     Math_ScaledStepToS(&this->yaw, arg3, 1600);
 }
 
