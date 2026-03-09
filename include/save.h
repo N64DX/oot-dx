@@ -83,6 +83,13 @@ typedef struct {
         u8 requiredAge;
 } EquipmentSwapEntry;
 
+typedef struct {
+        u8 itemId;
+        u8 equipId;
+        u8 equipSlot;
+        u8 requiredAge;
+} SwordSwapEntry;
+
 typedef struct ItemEquips {
     /* 0x00 */ u8 buttonItems[4];
     /* 0x04 */ u8 cButtonSlots[3];
@@ -287,11 +294,11 @@ typedef struct SaveInfo {
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
-    /* 0x0F18  0x0F34 */ char unk_F34[0x04];
-    /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
-    /* 0x0F18  0x0F33 */ char unk_F34[0x02];
+    /* 0x0F18  0x0F32 */ char unk_F34[0x02];
     /* 0x0F32  0x0F33 */ u8 isEnhancedSpinAcquired;
     /* 0x0F33  0x0F34 */ u8 energy;
+    /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
+    /* 0x0F20  0x0F3C */ char unk_F3C[0x4];
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
     /* 0x1285  0x12A1 */ char unk_12A1[0x24];

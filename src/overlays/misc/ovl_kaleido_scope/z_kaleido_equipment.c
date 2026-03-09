@@ -636,8 +636,8 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                         }
 
                         Interface_LoadItemIcon1(play, 0);
-                        Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                     }
+                    Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                 }
 
                 for (i=1; i<8; i++) {
