@@ -184,6 +184,8 @@ static u16 dpad_y;
 static s16 curEnergy = 0;
 static u8 energyHideTimer = 0;
 static u8 energyRefillTimer = 0;
+static bool drawKeys = false;
+static bool drawShieldDurability = false;
 
 static s16 sExtraItemBases[] = {
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_5
@@ -1964,12 +1966,19 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
+        if (item == ITEM_SHIELD_DEKU)
+            gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
+        else if (item == ITEM_SHIELD_HYLIAN)
+            gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
+        else if (item == ITEM_SHIELD_MIRROR)
+            gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_SHIELD_HEROS) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
         SET_HEROS_SHIELD;
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
             Player_SetEquipmentData(play, GET_PLAYER(play));
@@ -2499,12 +2508,16 @@ u8 Item_CheckObtainability(u8 item) {
             return ITEM_NONE;
         }
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
+        if ( (item == ITEM_SHIELD_DEKU && gSaveContext.save.info.shieldDurability[0] < MAX_DURABILITY_SHIELD_DEKU) || (item == ITEM_SHIELD_HYLIAN && gSaveContext.save.info.shieldDurability[1] < MAX_DURABILITY_SHIELD_HYLIAN) || (item == ITEM_SHIELD_MIRROR && gSaveContext.save.info.shieldDurability[2] < MAX_DURABILITY_SHIELD_DEKU) )
+            return ITEM_NONE;
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU + EQUIP_INV_SHIELD_DEKU)) {
             return item;
         } else {
             return ITEM_NONE;
         }
     } else if (item == ITEM_SHIELD_HEROS) {
+        if (item == ITEM_SHIELD_HEROS && gSaveContext.save.info.shieldDurability[3] < MAX_DURABILITY_SHIELD_HEROS)
+            return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ? item : ITEM_NONE;
@@ -4089,7 +4102,7 @@ static void Interface_PrintHeapUsage(PlayState* this) {
 
 static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfaceCtx) {
     bool isRumble = play->specialIconLast == SPECIAL_ICON_RUMBLE;
-    u16 x = 26, y = 206 - 16;
+    u16 x = 26, y = 190;
 
     if (play->specialIconAlpha >= 240) {
         play->specialIconUp = false;
@@ -4124,24 +4137,8 @@ static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfa
         }
     }
 
-    switch (play->sceneId) {
-        case SCENE_FOREST_TEMPLE:
-        case SCENE_FIRE_TEMPLE:
-        case SCENE_WATER_TEMPLE:
-        case SCENE_SPIRIT_TEMPLE:
-        case SCENE_SHADOW_TEMPLE:
-        case SCENE_BOTTOM_OF_THE_WELL:
-        case SCENE_ICE_CAVERN:
-        case SCENE_GANONS_TOWER:
-        case SCENE_GERUDO_TRAINING_GROUND:
-        case SCENE_THIEVES_HIDEOUT:
-        case SCENE_INSIDE_GANONS_CASTLE:
-        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
-        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
-        case SCENE_TREASURE_BOX_SHOP:
-            if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0)
-                y -= 16;
-    }
+    if (drawKeys || drawShieldDurability)
+        y -= 16;
 
     if (isRumble) {
         x += play->specialIconShake;
@@ -4241,6 +4238,77 @@ void Energy_Update(PlayState* play) {
     }
 }
 
+void Durability_DrawMeter(PlayState* play) {
+    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    u8 capacity, durability;
+    u8 shield = GET_PLAYER(play)->currentShield;
+    u16 meterY = 190;
+    u16 meterX = 26;
+    f32 scaleDivide;
+
+    if (!SHIELD_DURABILITY || shield == PLAYER_SHIELD_NONE || IS_PAUSED(&play->pauseCtx)) {
+        drawShieldDurability = false;
+        return;
+    }
+
+    switch (shield) {
+        case PLAYER_SHIELD_DEKU:
+            durability = gSaveContext.save.info.shieldDurability[0];
+            capacity = MAX_DURABILITY_SHIELD_DEKU;
+            scaleDivide = 3.5f;
+            break;
+
+        case PLAYER_SHIELD_HYLIAN:
+            durability = gSaveContext.save.info.shieldDurability[1];
+            capacity = MAX_DURABILITY_SHIELD_HYLIAN;
+            scaleDivide = 5.0f;
+            break;
+
+        case PLAYER_SHIELD_MIRROR:
+            durability = gSaveContext.save.info.shieldDurability[2];
+            capacity = MAX_DURABILITY_SHIELD_MIRROR;
+            scaleDivide = 2.5f;
+            break;
+        
+        case PLAYER_SHIELD_HEROS:
+            durability = gSaveContext.save.info.shieldDurability[3];
+            capacity = MAX_DURABILITY_SHIELD_HEROS;
+            scaleDivide = 5.0f;
+            break;
+    }
+
+    durability /= scaleDivide;
+    capacity   /= scaleDivide;
+    drawShieldDurability = true;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+    gDPSetEnvColor(OVERLAY_DISP++, 100, 255, 255, 255);
+    gDPLoadTextureBlock(OVERLAY_DISP++, interfaceCtx->iconItemSegment + 0x9000, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX) << 2, HIRES_MULTIPLY(meterY) << 2, X_HIRES_MULTIPLY(meterX + 16) << 2, HIRES_MULTIPLY(meterY + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2048), X_HIRES_DIVIDE(2048));
+
+    gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
+    meterX += 14;
+    
+    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(meterX),     HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(8),        HIRES_MULTIPLY(16), 1 << 10, 1 << 10);
+    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_HIRES_MULTIPLY(meterX + 8), HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(capacity), HIRES_MULTIPLY(16), 1 << 10, 1 << 10);
+
+    gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX + capacity + 8) << 2, HIRES_MULTIPLY(meterY + 2) << 2, X_HIRES_MULTIPLY(meterX + capacity + 16) << 2, HIRES_MULTIPLY(meterY + 2 + 16) << 2, G_TX_RENDERTILE, 256, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+
+    gDPPipeSync(OVERLAY_DISP++);
+    gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE);
+    gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 150, 0, interfaceCtx->magicAlpha);
+    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX + 8) << 2, HIRES_MULTIPLY(meterY + 2 + 3) << 2, X_HIRES_MULTIPLY(meterX + 8 + durability) << 2, HIRES_MULTIPLY(meterY + 2 + 10) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
 void Interface_Draw(PlayState* play) {
     static s16 magicArrowEffectsR[] = { 255, 100, 255 };
     static s16 magicArrowEffectsG[] = { 0, 100, 255 };
@@ -4324,8 +4392,14 @@ void Interface_Draw(PlayState* play) {
             case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
             case SCENE_TREASURE_BOX_SHOP:
                 if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0) {
-                    u16 posX = 26;
-                    u16 posY = 190;
+                    u16 posX, posY;
+                    if (SHIELD_DURABILITY && !IS_PAUSED(&play->pauseCtx) && GET_PLAYER(play)->currentShield > PLAYER_SHIELD_NONE) {
+                        posX = 46 + rupeeDigitsCount[curWallet] * 8;
+                        posY = 206;
+                    } else {
+                        posX = 26;
+                        posY = 190;
+                    }
 
                     // Small Key Icon
                     gDPPipeSync(OVERLAY_DISP++);
@@ -4349,6 +4423,7 @@ void Interface_Draw(PlayState* play) {
                     }
 
                     svar3 = posX + 16;
+                    drawKeys = true;
 
                     if (interfaceCtx->counterDigits[2] != 0) {
                         if (USE_MM_HUD) {
@@ -4377,9 +4452,10 @@ void Interface_Draw(PlayState* play) {
                         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
                         OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[3])), 8, 16, X_HIRES_MULTIPLY(svar3), HIRES_MULTIPLY(posY), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
                     }
-                }
+                } else drawKeys = false;
                 break;
             default:
+                drawKeys = false;
                 break;
         }
 
@@ -4414,8 +4490,8 @@ void Interface_Draw(PlayState* play) {
             interfaceCtx->counterDigits[3] -= 10;
         }
 
-        svar2 = rupeeDigitsFirst[CUR_UPG_VALUE(UPG_WALLET)];
-        svar4 = rupeeDigitsCount[CUR_UPG_VALUE(UPG_WALLET)];
+        svar2 = rupeeDigitsFirst[curWallet];
+        svar4 = rupeeDigitsCount[curWallet];
 
         for (svar1 = 0, svar3 = 42; svar1 < svar4; svar1++, svar2++, svar3 += 8) {
             if (USE_MM_HUD) {
@@ -4448,6 +4524,7 @@ void Interface_Draw(PlayState* play) {
 
         Magic_DrawMeter(play);
         Energy_Draw(play);
+        Durability_DrawMeter(play);
         Minimap_Draw(play);
 
         if ((R_PAUSE_BG_PRERENDER_STATE != PAUSE_BG_PRERENDER_PROCESS) &&

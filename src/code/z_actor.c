@@ -4882,14 +4882,31 @@ u8 func_800355E4(PlayState* play, Collider* collider) {
 u8 Actor_ApplyDamage(Actor* actor) {
     u8 damage = actor->colChkInfo.damage;
     s32 dmgFlags = actor->colChkInfo.dmgFlags;
-    
+
     if (IS_CHILD_QUEST_AS_CHILD && actor->colChkInfo.itemAction != PLAYER_IA_SWORD_FAIRYS) {
         if (damage == 4 && dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT))
             damage = gSaveContext.save.info.playerData.bgsFlag ? 3 : 2;
         else if (damage == 8 && dmgFlags & (DMG_JUMP_GIANT | DMG_SPIN_GIANT | DMG_SLASH_GIANT))
             damage = gSaveContext.save.info.playerData.bgsFlag ? 6 : 4;
     }
-    
+
+    if (SHIELD_DURABILITY && damage > 0 && dmgFlags & (DMG_SLASH_KOKIRI | DMG_JUMP_KOKIRI | DMG_SPIN_KOKIRI) && actor->colChkInfo.itemAction == PLAYER_IA_SWORD_KOKIRI && IS_HEROS_SWORD) {
+        u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
+        if (IS_HEROS_SHIELD && shield == 2)
+            shield = 4;
+        if (shield != PLAYER_SHIELD_NONE) {
+            u8* currentDurability = &gSaveContext.save.info.shieldDurability[shield - 1];
+            if (shield == PLAYER_SHIELD_DEKU)
+                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_DEKU)   ? MAX_DURABILITY_SHIELD_DEKU   : *currentDurability + 3;
+            else if (shield == PLAYER_SHIELD_HYLIAN)
+                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_HYLIAN) ? MAX_DURABILITY_SHIELD_HYLIAN : *currentDurability + 3;
+            else if (shield == PLAYER_SHIELD_MIRROR)
+                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_MIRROR) ? MAX_DURABILITY_SHIELD_MIRROR : *currentDurability + 3;
+            else if (shield == PLAYER_SHIELD_HEROS)
+                *currentDurability = (*currentDurability + 3> MAX_DURABILITY_SHIELD_HEROS)   ? MAX_DURABILITY_SHIELD_HEROS  : *currentDurability + 3;
+        }
+    }
+
     if (actor->colChkInfo.health <= damage) {
         actor->colChkInfo.health = 0;
     } else {

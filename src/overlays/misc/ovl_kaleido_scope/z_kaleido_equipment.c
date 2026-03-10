@@ -586,11 +586,17 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 KaleidoScope_DrawSwapItemIcons(play, HAS_HEROS_SHIELD ? ITEM_SHIELD_HEROS : ITEM_SHIELD_HYLIAN, HAS_HEROS_SHIELD ? ITEM_SHIELD_HYLIAN : ITEM_SHIELD_HEROS, pauseCtx->alpha);
 
                 if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                    Player *player = GET_PLAYER(play);
                     Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                     TOGGLE_HEROS_SHIELD;
-                    Player_SetEquipmentData(play, GET_PLAYER(play));
+                    Player_SetEquipmentData(play, player);
                     pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
                     sEquipTimer = 10;
+
+                    if (player->currentShield == PLAYER_SHIELD_HYLIAN)
+                        DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(ITEM_SHIELD_HYLIAN)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __LINE__);
+                    else if (player->currentShield == PLAYER_SHIELD_HEROS)
+                        DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(ITEM_SHIELD_HEROS)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __LINE__);
 
                     for (i=1; i<8; i++) {
                         if (i<4) {
@@ -612,14 +618,14 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 u8 item;
 
                 if ( (pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_TYPE_SWORD && pauseCtx->cursorX[PAUSE_EQUIP] == CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) || (pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_TYPE_SHIELD && pauseCtx->cursorX[PAUSE_EQUIP] == CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) ) {
-                    Inventory_ChangeEquipment(pauseCtx->cursorY[PAUSE_EQUIP], 0);
+                    Inventory_ChangeEquipmentWithIcon(play, pauseCtx->cursorY[PAUSE_EQUIP], 0);
                     if (pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_TYPE_SWORD) {
                         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 1;
                         gSaveContext.save.info.equips.buttonItems[0] = ITEM_NONE;
                     }
                     Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                 } else {
-                    Inventory_ChangeEquipment(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP]);
+                    Inventory_ChangeEquipmentWithIcon(play, pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP]);
 
                     if (pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_TYPE_SWORD) {
                         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;

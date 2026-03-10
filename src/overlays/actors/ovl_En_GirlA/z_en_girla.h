@@ -93,7 +93,10 @@ typedef enum EnGirlAShopItem {
     /* 0x36 */ SI_WALLET_ROYAL,
     /* 0x37 */ SI_WALLET_TYCOON,
     /* 0x38 */ SI_WALLET_BOTTOMLESS,
-    /* 0x39 */ SI_MAX
+    /* 0x39 */ SI_DEKU_SHIELD_REPAIR,
+    /* 0x3A */ SI_HYLIAN_SHIELD_REPAIR,
+    /* 0x3B */ SI_HEROS_SHIELD_REPAIR,
+    /* 0x3C */ SI_MAX
 } EnGirlAShopItem;
 
 typedef enum EnGirlACanBuyResult {

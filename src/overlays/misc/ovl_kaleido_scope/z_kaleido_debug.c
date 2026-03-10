@@ -908,6 +908,15 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                                 gSaveContext.save.info.playerData.swordHealth = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) ? MAX_SWORD_HEALTH : 0;
                         }
                         else if (i == 1) {
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
+                                gSaveContext.save.info.shieldDurability[0] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)   ? MAX_DURABILITY_SHIELD_DEKU   : 0;
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
+                                gSaveContext.save.info.shieldDurability[1] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) ? MAX_DURABILITY_SHIELD_HYLIAN : 0;
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
+                                gSaveContext.save.info.shieldDurability[2] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR) ? MAX_DURABILITY_SHIELD_MIRROR : 0;
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CUP))
+                                gSaveContext.save.info.shieldDurability[3] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)  ? MAX_DURABILITY_SHIELD_HEROS  : 0;
+
                             if ( (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)  && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU)   || (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && !HAS_HEROS_SHIELD) ||
                                  (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_MIRROR) || (CHECK_BTN_ALL(input->press.button, BTN_CUP)   && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN &&  HAS_HEROS_SHIELD)) {
                                 Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, PLAYER_SHIELD_NONE);

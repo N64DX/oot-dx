@@ -41,6 +41,7 @@ s32 EnGirlA_CanBuy_Longsword(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_HylianShield(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_DekuShield(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this);
+s32 EnGirlA_CanBuy_ShieldRepair(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_Wallet(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_GoronTunic(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_ZoraTunic(PlayState* play, EnGirlA* this);
@@ -285,6 +286,15 @@ static ShopItemEntry sShopItemEntries[] = {
     /* SI_BOTTOMLESS_WALLET */
     { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x9208, 0x9108, GI_WALLET_BOTTOMLESS,
       EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
+    /* SI_DEKU_SHIELD_REPAIR */
+    { OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, func_8002EBCC, 30, 1, 0x9209, 0x0089, GI_SHIELD_DEKU,
+      EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_DekuShield, EnGirlA_BuyEvent_ShieldDiscount },
+    /* SI_HYLIAN_SHIELD_REPAIR */
+    { OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, func_8002EBCC, 60, 1, 0x920A, 0x0092, GI_SHIELD_HYLIAN,
+      EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HylianShield, EnGirlA_BuyEvent_ShieldDiscount },
+     /* SI_HEROS_SHIELD_REPAIR */
+    { OBJECT_GI_SHIELD_1_MM, GID_SHIELD_HEROS, func_8002EBCC, 60, 1, 0x920B, 0x9101, GI_SHIELD_HEROS,
+      EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
 };
 
 // Defines the Hylian Shield discount amount
@@ -296,6 +306,27 @@ void EnGirlA_SetupAction(EnGirlA* this, EnGirlAActionFunc func) {
 
 s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
     switch (this->actor.params) {
+        case SI_DEKU_SHIELD:
+        case SI_DEKU_SHIELD_REPAIR:
+            if (SHIELD_DURABILITY) {
+                this->actor.params = gSaveContext.save.info.shieldDurability[0] < MAX_DURABILITY_SHIELD_DEKU ? SI_DEKU_SHIELD_REPAIR : SI_DEKU_SHIELD;
+                return true;
+            }
+            break;
+        case SI_HYLIAN_SHIELD:
+        case SI_HYLIAN_SHIELD_REPAIR:
+            if (SHIELD_DURABILITY) {
+                this->actor.params = gSaveContext.save.info.shieldDurability[1] < MAX_DURABILITY_SHIELD_HYLIAN ? SI_HYLIAN_SHIELD_REPAIR : SI_HYLIAN_SHIELD;
+                return true;
+            }
+            break;
+        case SI_HEROS_SHIELD:
+        case SI_HEROS_SHIELD_REPAIR:
+            if (SHIELD_DURABILITY) {
+                this->actor.params = gSaveContext.save.info.shieldDurability[3] < MAX_DURABILITY_SHIELD_HEROS ? SI_HEROS_SHIELD_REPAIR : SI_HEROS_SHIELD;
+                return true;
+            }
+            break;
         case SI_WALLET_ADULT:
         case SI_WALLET_GIANT:
         case SI_WALLET_MASTER:
@@ -574,6 +605,12 @@ s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this) {
     if (Item_CheckObtainability(ITEM_SHIELD_HEROS) == ITEM_NONE)
         return CANBUY_RESULT_SUCCESS_FANFARE;
     return CANBUY_RESULT_SUCCESS;
+}
+
+s32 EnGirlA_CanBuy_ShieldRepair(PlayState* play, EnGirlA* this) {
+    if (gSaveContext.save.info.playerData.rupees < this->basePrice)
+        return CANBUY_RESULT_NEED_RUPEES;
+    return CANBUY_RESULT_SUCCESS_FANFARE;
 }
 
 s32 EnGirlA_CanBuy_Wallet(PlayState* play, EnGirlA* this) {

@@ -17,7 +17,7 @@ void Interface_Destroy(PlayState* play) {
     Map_Destroy(play);
 }
 
-#define ICON_ITEM_SEGMENT_SIZE (9 * ITEM_ICON_SIZE)
+#define ICON_ITEM_SEGMENT_SIZE (10 * ITEM_ICON_SIZE)
 
 void Interface_Init(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
@@ -159,7 +159,7 @@ void Interface_Init(PlayState* play) {
         if (item == ITEM_SWORDS)
             item = gSaveContext.save.info.equips.buttonItems[0];
         else if (item == ITEM_SHIELDS)
-            item = (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
+            item = (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) - 1);
         else if (item == ITEM_TUNICS)
             item = ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
         else if (item == ITEM_BOOTS)
@@ -168,6 +168,17 @@ void Interface_Init(PlayState* play) {
         if (item < ITEM_SWORD_CS)
             DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, "../z_construct.c", 198);
     }
+
+    if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_DEKU)
+        item = ITEM_SHIELD_DEKU;
+    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_HYLIAN)
+        item = ITEM_SHIELD_HYLIAN;
+    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_MIRROR)
+        item = ITEM_SHIELD_MIRROR;
+    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_HEROS)
+        item = ITEM_SHIELD_HEROS;
+    else item = ITEM_NONE;
+    DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __FILE__);
 
     PRINTF("ＥＶＥＮＴ＝%d\n", ((void)0, gSaveContext.timerState));
 

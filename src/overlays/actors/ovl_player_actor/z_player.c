@@ -540,6 +540,14 @@ static s16 sFloorShapePitch = 0;
 static s32 sUseHeldItem = false; // When true, the current held item is used. Is reset to false every frame.
 static s32 sHeldItemButtonIsHeldDown = false; // Indicates if the button for the current held item is held down.
 static u8 featherGroundTimer = 0;
+static u8 mirrorShieldRestoreTimer = 0;
+static u8 shieldDamageTimer = 0;
+static bool mirrorShieldHasBroken = false;
+static u8 Player_PerfectTime = 0;
+static s8 Player_PerfectResetTimer = 0;
+static bool Player_HasPerfected = false;
+static bool Player_CanPerfect = true;
+static bool Player_WasShieldUp = false;
 
 static u16 D_8085361C[] = {
     NA_SE_VO_LI_SWEAT,
@@ -2729,8 +2737,8 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
 
     if (equipType == EQUIP_TYPE_SHIELD && nextEquip == PLAYER_SHIELD_HEROS)
-        Inventory_ChangeEquipment(equipType, PLAYER_SHIELD_HYLIAN);
-    else Inventory_ChangeEquipment(equipType, nextEquip);
+        Inventory_ChangeEquipmentWithIcon(play, equipType, PLAYER_SHIELD_HYLIAN);
+    else Inventory_ChangeEquipmentWithIcon(play, equipType, nextEquip);
     Player_SetEquipmentData(play, this);
     Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
 
@@ -2819,6 +2827,8 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
+        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && gSaveContext.save.info.mirrorShieldIsBroken)
+            continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
             validItems[validCount] = equipment->itemId;
@@ -2839,7 +2849,7 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
     if (current != nextItem) {
         if (nextItem == PLAYER_SHIELD_HEROS)
             SET_HEROS_SHIELD;
-        else if (nextItem == PLAYER_SHIELD_HYLIAN )
+        else if (nextItem == PLAYER_SHIELD_HYLIAN)
             CLEAR_HEROS_SHIELD;
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SHIELD, nextItem);
     }
@@ -5365,6 +5375,34 @@ void func_808382BC(Player* this) {
     }
 }
 
+void Player_CheckShieldDurability(Player* this, PlayState* play) {
+    if ( ( (this->shieldDamage > 0 && this->currentShield > PLAYER_SHIELD_NONE && SHIELD_DURABILITY) || (this->shieldDamage > 10 && this->currentShield == PLAYER_SHIELD_DEKU && IS_CHILD_QUEST) ) && shieldDamageTimer == 0) {
+        u8* currentDurability = &gSaveContext.save.info.shieldDurability[this->currentShield - 1];
+        shieldDamageTimer = SECONDS(0.5);
+
+        if (Player_PerfectTime > 0) {
+            Player_PlaySfx(this, NA_SE_IT_EXPLOSION_LIGHT);
+            this->shieldDamage = 0;
+            return;
+        }
+
+        this->shieldDamage = CLAMP_MAX(this->shieldDamage, 15);
+        *currentDurability -= CLAMP_MAX(this->shieldDamage, *currentDurability);
+        this->shieldDamage = 0;
+
+        if (*currentDurability == 0) {
+            Audio_PlaySfxGeneral(NA_SE_IT_MAJIN_SWORD_BROKEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            if (this->currentShield == PLAYER_SHIELD_MIRROR) {
+                Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
+                Player_SetEquipmentData(play, this);
+                gSaveContext.save.info.mirrorShieldIsBroken = true;
+            }
+            else Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
+            Message_StartTextbox(play, 0x305F, NULL);
+        }
+    }
+}
+
 s32 func_808382DC(Player* this, PlayState* play) {
     s32 pad;
     s32 sp68 = false;
@@ -5437,9 +5475,10 @@ s32 func_808382DC(Player* this, PlayState* play) {
             // Additionally, `Collider.atHit` can never be set while already colliding as AC, so it's also bugged.
             // This behavior was later fixed in MM, most likely by removing both the `atHit` and `atFlags` checks.
             if (sp64 || ((this->invincibilityTimer < 0) && (this->cylinder.base.acFlags & AC_HIT) &&
-                         (this->cylinder.elem.atHit != NULL) && (this->cylinder.elem.atHit->atFlags & 0x20000000))) {
+                         (this->cylinder.elem.acHitElem != NULL) && this->cylinder.elem.acHitElem->atDmgInfo.dmgFlags != DMG_UNBLOCKABLE)) {
 
                 Player_RequestRumble(this, 180, 20, 100, 0);
+                Player_CheckShieldDurability(this, play);
 
                 if (!Player_IsChildWithHylianShield(this)) {
                     if (this->invincibilityTimer >= 0) {
@@ -12501,6 +12540,55 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
     s32 pad;
 
     sControlInput = input;
+
+    // Perfect Shield Block
+    if (SHIELD_DURABILITY) {
+        if (play->shootingGalleryStatus == 0 && this->currentShield > PLAYER_SHIELD_NONE) {
+            if (CHECK_BTN_ALL(sControlInput->cur.button, BTN_R)) {
+                Player_WasShieldUp = true;
+
+                if (Player_PerfectTime == 0 && Player_CanPerfect && !Player_HasPerfected) {
+                    Player_PerfectTime = 4;
+                    Player_CanPerfect = false;
+                    Player_HasPerfected = true;
+                    Player_PerfectResetTimer = -1;
+                }
+            } else {
+                if (Player_WasShieldUp) {
+                    Player_WasShieldUp = false;
+                    Player_PerfectResetTimer = 5;
+                }
+            }
+        }
+
+        if (!Player_CanPerfect && Player_PerfectTime > 0)
+            Player_PerfectTime--;
+        else if (Player_PerfectTime == 0 && !Player_CanPerfect)
+            Player_CanPerfect = true;
+
+        if (Player_HasPerfected && Player_PerfectResetTimer > 0)
+            Player_PerfectResetTimer--;
+        else if (Player_HasPerfected && Player_PerfectResetTimer == 0)
+            Player_HasPerfected = false;
+    }
+    
+    if (shieldDamageTimer > 0)
+        shieldDamageTimer--;
+    if (SHIELD_DURABILITY && !(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
+        if ( (gSaveContext.save.info.shieldDurability[2] < MAX_DURABILITY_SHIELD_MIRROR && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.mirrorShieldIsBroken) {
+            if (mirrorShieldRestoreTimer < SECONDS(2))
+                mirrorShieldRestoreTimer++;
+            else {
+                mirrorShieldRestoreTimer = 0;
+                gSaveContext.save.info.shieldDurability[2]++;
+                if (gSaveContext.save.info.shieldDurability[2] >= 60 && gSaveContext.save.info.mirrorShieldIsBroken) {
+                    gSaveContext.save.info.mirrorShieldIsBroken = false;
+                    Message_StartTextbox(play, 0x9303, NULL);
+                    gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
+                }
+            }
+        } else mirrorShieldRestoreTimer = 0;
+    }
 
     if (this->actor.category == ACTORCAT_PLAYER && R_ENABLE_MIRROR == 1)
         sControlInput->rel.stick_x = -sControlInput->rel.stick_x;

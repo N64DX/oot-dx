@@ -294,11 +294,12 @@ typedef struct SaveInfo {
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
-    /* 0x0F18  0x0F32 */ char unk_F34[0x02];
-    /* 0x0F32  0x0F33 */ u8 isEnhancedSpinAcquired;
-    /* 0x0F33  0x0F34 */ u8 energy;
+    /* 0x0F18  0x0F34 */ char unk_F34[0x01];
+    /* 0x0F19  0x0F35 */ u8 mirrorShieldIsBroken;
+    /* 0x0F1A  0x0F36 */ u8 isEnhancedSpinAcquired;
+    /* 0x0F1B  0x0F37 */ u8 energy;
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
-    /* 0x0F20  0x0F3C */ char unk_F3C[0x4];
+    /* 0x0F20  0x0F3C */ u8 shieldDurability[4];
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
     /* 0x1285  0x12A1 */ char unk_12A1[0x24];
@@ -530,6 +531,11 @@ typedef enum LinkAge {
 #define IS_BOSS_RUSH        (R_QUEST_MODE == BOSS_RUSH)
 #define IS_RUSH_QUEST       (IS_DUNGEON_RUSH || IS_BOSS_RUSH)
 
+#define MAX_DURABILITY_SHIELD_DEKU      100
+#define MAX_DURABILITY_SHIELD_HYLIAN    255
+#define MAX_DURABILITY_SHIELD_MIRROR    50
+#define MAX_DURABILITY_SHIELD_HEROS     255
+
 #define FILE_SLOTS_SIZE 6
 
 #define MIRROR_MODE                 ((gSaveContext.options[0] >> 0)  & 1)  // Bits: 0
@@ -566,6 +572,7 @@ typedef enum LinkAge {
 #define STATIC_DARK_LINK_HP         ((gSaveContext.options[1] >> 15) & 1)  // Bits: 15
 #define NO_BOTTLED_FAIRIES          ((gSaveContext.options[1] >> 16) & 1)  // Bits: 16
 #define NO_ITEM_DROPS               ((gSaveContext.options[1] >> 17) & 1)  // Bits: 17
+#define SHIELD_DURABILITY           ((gSaveContext.options[1] >> 18) & 1)  // Bits: 18
 
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
