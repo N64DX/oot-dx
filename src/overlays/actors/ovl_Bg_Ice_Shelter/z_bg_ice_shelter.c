@@ -17,6 +17,7 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
+#include "save.h"
 
 #include "assets/objects/object_ice_objects/object_ice_objects.h"
 
@@ -342,6 +343,24 @@ void BgIceShelter_SetupIdle(BgIceShelter* this) {
 }
 
 /**
+ * "Blue Fire Arrows": If hit by an Ice Arrow, melt the red ice (copied from the default blue fire function below).
+ */
+void Bg_IceShelter_MeltOnIceArrowHit(BgIceShelter* this, ColliderCylinder cylinder, s16 type, PlayState* play) {
+    if (cylinder.base.acFlags & AC_HIT) {
+        cylinder.base.acFlags &= ~AC_HIT;
+        if (cylinder.base.ac != NULL && cylinder.base.ac->id == ACTOR_EN_ARROW) {
+            if (cylinder.base.ac->child != NULL && cylinder.base.ac->child->id == ACTOR_ARROW_ICE) {
+                if (type == RED_ICE_KING_ZORA)
+                    if (this->dyna.actor.parent != NULL)
+                        this->dyna.actor.parent->freezeTimer = 50;
+                BgIceShelter_SetupMelt(this);
+                Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_ICE_MELT);
+            }
+        }
+    }
+}
+
+/**
  * Checks for collision with blue fire. Also used to freeze King Zora's actor.
  */
 void BgIceShelter_Idle(BgIceShelter* this, PlayState* play) {
@@ -353,6 +372,12 @@ void BgIceShelter_Idle(BgIceShelter* this, PlayState* play) {
         if (this->dyna.actor.parent != NULL) {
             this->dyna.actor.parent->freezeTimer = 10000;
         }
+    }
+
+    // Check both cylinders for an Ice Arrow hit when playing Child Quest
+    if (IS_CHILD_QUEST) {
+        Bg_IceShelter_MeltOnIceArrowHit(this, this->cylinder1, type, play);
+        Bg_IceShelter_MeltOnIceArrowHit(this, this->cylinder2, type, play);
     }
 
     // Detect blue fire
