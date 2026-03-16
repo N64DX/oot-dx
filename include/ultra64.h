@@ -40,12 +40,6 @@
 #include "ultra64/ucode.h"
 #include "ultra64/version.h"
 
-#ifdef __sgi
-#ifndef inline
-#define inline __inline
-#endif
-#endif
-
 union uObjBg;
 
 void __osPiCreateAccessQueue(void);
