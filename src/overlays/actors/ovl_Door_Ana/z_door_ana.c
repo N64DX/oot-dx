@@ -75,6 +75,11 @@ void DoorAna_SetupAction(DoorAna* this, DoorAnaActionFunc actionFunc) {
 void DoorAna_Init(Actor* thisx, PlayState* play) {
     DoorAna* this = (DoorAna*)thisx;
 
+    if (IS_RUSH_QUEST) {
+        Actor_Kill(&this->actor);
+        return;
+    }
+
     this->actor.shape.rot.z = 0;
     this->actor.shape.rot.y = this->actor.shape.rot.z;
     // init block for grottos that are initially "hidden" (require explosives/hammer/song of storms to open)

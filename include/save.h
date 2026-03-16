@@ -105,12 +105,18 @@ typedef struct Checksum {
     /* 0x00 */ u16 value;
 } Checksum; // size = 0x02
 
+typedef struct ExtraSavedSceneFlag {
+    u32 quest : 2;
+    u32 exit  : 1;
+    u32 unk   : 29;
+} ExtraSavedSceneFlag; // size = 0x4
+
 typedef struct SavedSceneFlags {
     /* 0x00 */ u32 chest;
     /* 0x04 */ u32 swch;
     /* 0x08 */ u32 clear;
     /* 0x0C */ u32 collect;
-    /* 0x10 */ u32 unk;
+    /* 0x10 */ ExtraSavedSceneFlag extra;
     /* 0x14 */ u32 rooms;
     /* 0x18 */ u32 floors;
 } SavedSceneFlags; // size = 0x1C
@@ -263,7 +269,7 @@ typedef struct SaveInfo {
     /* 0x00B8  0x00D4 */ SavedSceneFlags sceneFlags[124];
     /* 0x0E48  0x0E64 */ FaroresWindData fw[2];
     /* 0x0E80  0x0E9C */ s32 gsFlags[6];
-    /* 0x0E98  0x0EB4 */ char unk_EB4[0x4];
+    /* 0x0E98  0x0EB4 */ u32 playtime;
     /* 0x0E9C  0x0EB8 */ s32 highScores[7];
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
@@ -303,7 +309,7 @@ typedef struct SaveContext {
     /* 0x1368 */ RespawnData respawn[RESPAWN_MODE_MAX]; // "restart_data"
     /* 0x13BC */ f32 entranceSpeed;
     /* 0x13C0 */ u16 entranceSound;
-    /* 0x13C2 */ char unk_13C2[0x0001];
+    /* 0x13C2 */ u8 cheated;
     /* 0x13C3 */ u8 retainWeatherMode;
     /* 0x13C4 */ s16 dogParams;
     /* 0x13C6 */ u8 envHazardTextTriggerFlags;
@@ -470,17 +476,19 @@ typedef enum LinkAge {
 #define DUNGEON_RUSH        6
 #define DUNGEON_MASTER_RUSH 7
 #define DUNGEON_URA_RUSH    8
-#define BOSS_RUSH           9
+#define DUNGEON_CHILD_RUSH  9
+#define BOSS_RUSH           10
 
-#define QUEST_MAX   CHILD_MASTER_QUEST
-#define QUEST_MODE (gSaveContext.save.info.questMode & 15)
+#define QUEST_MAX           BOSS_RUSH
+#define QUEST_MODE          gSaveContext.save.info.questMode
 
-#define IS_VANILLA_QUEST (R_QUEST_MODE % 3 == 0)
-#define IS_MASTER_QUEST  (R_QUEST_MODE % 3 == 1)
-#define IS_URA_QUEST     (R_QUEST_MODE % 3 == 2)
-#define IS_CHILD_QUEST   (R_QUEST_MODE >= CHILD_QUEST  && R_QUEST_MODE <= CHILD_URA_QUEST)
-#define IS_DUNGEON_RUSH  (R_QUEST_MODE >= DUNGEON_RUSH && R_QUEST_MODE <= DUNGEON_URA_RUSH)
-#define IS_BOSS_RUSH     (R_QUEST_MODE == BOSS_RUSH)
+#define IS_VANILLA_QUEST    (R_QUEST_MODE % 3 == 0)
+#define IS_MASTER_QUEST     (R_QUEST_MODE % 3 == 1)
+#define IS_URA_QUEST        (R_QUEST_MODE % 3 == 2)
+#define IS_CHILD_QUEST      ( (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST) || R_QUEST_MODE == DUNGEON_CHILD_RUSH)
+#define IS_DUNGEON_RUSH     ((R_QUEST_MODE >= DUNGEON_RUSH && R_QUEST_MODE <= DUNGEON_CHILD_RUSH))
+#define IS_BOSS_RUSH        (R_QUEST_MODE == BOSS_RUSH)
+#define IS_RUSH_QUEST       (IS_DUNGEON_RUSH || IS_BOSS_RUSH)
 
 #define FILE_SLOTS_SIZE 6
 
@@ -686,6 +694,7 @@ typedef enum LinkAge {
 #define EVENTCHKINF_BEGAN_BARINADE_BATTLE 0x76
 #define EVENTCHKINF_BEGAN_BONGO_BONGO_BATTLE 0x77
 #define EVENTCHKINF_BEGAN_GANONDORF_BATTLE 0x78
+#define EVENTCHKINF_BEGAN_HYPER_GOHMA_BATTLE 0x79
 #define EVENTCHKINF_80 0x80
 #define EVENTCHKINF_82 0x82
 #define EVENTCHKINF_PAID_BACK_KEATON_MASK 0x8C

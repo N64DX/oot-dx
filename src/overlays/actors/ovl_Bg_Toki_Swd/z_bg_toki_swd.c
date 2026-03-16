@@ -80,6 +80,9 @@ void BgTokiSwd_SetupAction(BgTokiSwd* this, BgTokiSwdActionFunc actionFunc) {
 void BgTokiSwd_Init(Actor* thisx, PlayState* play) {
     s32 pad;
     BgTokiSwd* this = (BgTokiSwd*)thisx;
+    
+    if (IS_BOSS_RUSH || IS_DUNGEON_RUSH)
+        Actor_Kill(&this->actor);
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->actor.shape.yOffset = 800.0f;

@@ -789,10 +789,21 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_CUTSCENE_MAP_GANONDORF_DEFEATED_CREDITS:
-                play->nextEntranceIndex = ENTR_CUTSCENE_MAP_0;
-                play->transitionTrigger = TRANS_TRIGGER_START;
-                gSaveContext.save.cutsceneIndex = 0xFFF8;
-                play->transitionType = TRANS_TYPE_FADE_WHITE;
+                if (!IS_RUSH_QUEST) {
+                    play->nextEntranceIndex = ENTR_CUTSCENE_MAP_0;
+                    play->transitionTrigger = TRANS_TRIGGER_START;
+                    gSaveContext.save.cutsceneIndex = 0xFFF8;
+                    play->transitionType = TRANS_TYPE_FADE_WHITE;
+                } else {
+                    R_BEATEN_RUSH_MODE = 1;
+                    Audio_SetSfxBanksMute(0x6F);
+                    play->linkAgeOnLoad = LINK_AGE_CHILD;
+                    play->nextEntranceIndex = ENTR_CASTLE_COURTYARD_ZELDA_0;
+                    play->transitionTrigger = TRANS_TRIGGER_START;
+                    gSaveContext.save.cutsceneIndex = 0xFFF0;
+                    play->transitionType = TRANS_TYPE_FADE_BLACK;
+                    gSaveContext.nextTransitionType = TRANS_TYPE_FADE_BLACK;
+                }
                 break;
 
             case CS_DEST_JABU_JABU:

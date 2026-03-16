@@ -11,5 +11,11 @@ extern u64 gFileSelQuestMasterQuestButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex
 extern u64 gFileSelQuestUraQuestButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)];
 extern u64 gFileSelQuestChildQuestButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)];
 extern u64 gFileSelQuestChildMasterQuestButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)];
+extern u64 gFileSelQuestChildUraQuestButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)];
+extern u64 gFileSelQuestDungeonRushButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)]; 
+extern u64 gFileSelQuestDungeonMasterRushButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)];
+extern u64 gFileSelQuestDungeonUraRushButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)];
+extern u64 gFileSelQuestDungeonChildRushButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)];
+extern u64 gFileSelQuestBossRushButtonTex[TEX_LEN(u64, gFileSelQuestButtonTex_WIDTH, gFileSelQuestButtonTex_HEIGHT, 16)];
 
 #endif

@@ -14,6 +14,7 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
+#include "save.h"
 
 #include "assets/objects/object_spot11_obj/object_spot11_obj.h"
 #include "assets/objects/gameplay_field_keep/gameplay_field_keep.h"
@@ -122,7 +123,7 @@ void BgSpot11Bakudankabe_Init(Actor* thisx, PlayState* play) {
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, 0);
-    if (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6))) {
+    if (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6)) && !IS_RUSH_QUEST) {
         Actor_Kill(&this->dyna.actor);
         return;
     }
@@ -143,7 +144,7 @@ void BgSpot11Bakudankabe_Destroy(Actor* thisx, PlayState* play) {
 void BgSpot11Bakudankabe_Update(Actor* thisx, PlayState* play) {
     BgSpot11Bakudankabe* this = (BgSpot11Bakudankabe*)thisx;
 
-    if (this->collider.base.acFlags & AC_HIT) {
+    if ((this->collider.base.acFlags & AC_HIT) && !IS_RUSH_QUEST) {
         func_808B2218(this, play);
         Flags_SetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6));
         SfxSource_PlaySfxAtFixedWorldPos(play, &D_808B2738, 40, NA_SE_EV_WALL_BROKEN);
