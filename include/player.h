@@ -1045,6 +1045,9 @@ extern Gfx* gPlayerLeftHandBoomerangDLs[];
 extern Gfx gCullBackDList[];
 extern Gfx gCullFrontDList[];
 
+extern s32 sLeftHandType;
+extern s32 sRightHandType;
+
 // object_table.c
 extern s16 gLinkObjectIds[MAX_LINK_MODELS];
 

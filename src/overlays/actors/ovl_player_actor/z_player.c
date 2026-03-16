@@ -7392,11 +7392,11 @@ void func_8083CE0C(Player* this, PlayState* play) {
 
     Player_SetupAction(play, this, Player_Action_Idle, 1);
 
-    if (this->unk_870 < 0.5f) {
-        anim = GET_PLAYER_ANIM(PLAYER_ANIMGROUP_waitR2wait, this->modelAnimType);
-    } else {
-        anim = GET_PLAYER_ANIM(PLAYER_ANIMGROUP_waitL2wait, this->modelAnimType);
-    }
+    if (sRightHandType != PLAYER_MODELTYPE_RH_OPEN) { // Right hand is used
+        if (this->unk_870 < 0.5f)
+            anim = GET_PLAYER_ANIM(PLAYER_ANIMGROUP_waitR2wait, this->modelAnimType);
+        else anim = GET_PLAYER_ANIM(PLAYER_ANIMGROUP_waitL2wait, this->modelAnimType);
+    } else anim = Player_GetIdleAnim(this); // Right hand is empty - use neutral animation
     Player_AnimPlayOnce(play, this, anim);
 
     this->yaw = this->actor.shape.rot.y;
@@ -7404,7 +7404,9 @@ void func_8083CE0C(Player* this, PlayState* play) {
 
 void func_8083CEAC(Player* this, PlayState* play) {
     Player_SetupAction(play, this, Player_Action_80840450, 1);
-    Player_AnimChangeOnceMorph(play, this, GET_PLAYER_ANIM(PLAYER_ANIMGROUP_wait2waitR, this->modelAnimType));
+    if (this->unk_870 < 0.5f) // Use a very short transition to the final Z-targeting animation
+        Player_AnimChangeOnceMorph(play, this, func_808334E4(this));
+    else Player_AnimChangeOnceMorph(play, this, func_80833528(this));
     this->av2.actionVar2 = 1;
 }
 
