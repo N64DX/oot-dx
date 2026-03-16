@@ -1,5 +1,5 @@
-#ifndef OBJECT_GI_SWORD_3_H
-#define OBJECT_GI_SWORD_3_H 1
+#ifndef OBJECT_GI_SWORD_MM_3_H
+#define OBJECT_GI_SWORD_MM_3_H
 
 #include "ultra64.h"
 

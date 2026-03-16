@@ -82,9 +82,9 @@
 #include "assets/objects/object_gi_rupy/object_gi_rupy.h"
 #include "assets/objects/object_gi_sword_1/object_gi_sword_1.h"
 #include "assets/objects/object_gi_shield_3_mm/object_gi_shield_3_mm.h"
-#include "assets/objects/object_gi_shield_4/object_gi_shield_4.h"
-#include "assets/objects/object_gi_sword_heros/object_gi_sword_heros.h"
-#include "assets/objects/object_gi_longsword_mm/object_gi_longsword_mm.h"
+#include "assets/objects/object_gi_shield_1_mm/object_gi_shield_1_mm.h"
+#include "assets/objects/object_gi_sword_1_mm/object_gi_sword_1_mm.h"
+#include "assets/objects/object_gi_sword_3_mm/object_gi_sword_3_mm.h"
 #include "assets/objects/object_gi_hookshot_mm/object_gi_hookshot_mm.h"
 #include "assets/objects/object_gi_heros_bow/object_gi_heros_bow.h"
 #include "assets/objects/object_gi_gold_dust/object_gi_gold_dust.h"
@@ -380,7 +380,7 @@ DrawItemTableEntry sDrawItemTable[] = {
     // GID_SKULL_TOKEN_2
     { GetItem_DrawSkullToken, { gSkulltulaTokenDL, gSkulltulaTokenFlameDL } },
     // GID_SHIELD_MIRROR_MM,
-    { GetItem_DrawOpa0Xlu1, { gGiMirrorShieldMMDL } },
+    { GetItem_DrawMirrorShield, { gGiMirrorShieldMMDL, gGiMirrorShieldEmptyMMDL } },
     // GID_SHIELD_HEROS
     { GetItem_DrawOpa0Xlu1, { gGiHerosShieldEmblemDL, gGiHerosShieldDL } },
     // GID_SWORD_HEROS

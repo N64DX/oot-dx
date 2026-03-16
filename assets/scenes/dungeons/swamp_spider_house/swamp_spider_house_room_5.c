@@ -28,7 +28,7 @@ SceneCmd swamp_spider_house_room_5Commands[] = {
 
 s16 swamp_spider_house_room_5ObjectList_000040[] = {
     OBJECT_HAMMERGEIST,
-    OBJECT_GI_SWORD_HEROS,
+    OBJECT_GI_SWORD_1_MM,
 };
 
 ActorEntry swamp_spider_house_room_5ActorEntry_000068[] = {
