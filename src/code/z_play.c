@@ -475,7 +475,10 @@ void Play_Init(GameState* thisx) {
     this->bgCoverAlpha = 0;
     this->haltAllActors = false;
     this->specialIconAlpha = this->specialIconShake = this->specialIconCount = this->specialIconLast = 0;
-    this->autosave = this->specialIconUp = false;
+    this->specialIconUp = false;
+
+    if (this->autosave != AUTOSAVE_ON && this->autosave != AUTOSAVE_OFF)
+        this->autosave = AUTOSAVE_RESET;
 
     if (gSaveContext.gameMode != GAMEMODE_TITLE_SCREEN) {
         if (gSaveContext.nextTransitionType == TRANS_NEXT_TYPE_DEFAULT) {
@@ -1131,11 +1134,11 @@ skip:
     Environment_Update(this, &this->envCtx, &this->lightCtx, &this->pauseCtx, &this->msgCtx, &this->gameOverCtx,
                        this->state.gfxCtx);
 
-    if (this->autosave && !Player_InCsMode(this) && !IS_PAUSED(&this->pauseCtx) && !gDebugCamEnabled && this->msgCtx.msgMode == MSGMODE_NONE && gSaveContext.gameMode == GAMEMODE_NORMAL && this->gameOverCtx.state == GAMEOVER_INACTIVE && AUTOSAVE) {
+    if (this->autosave == AUTOSAVE_ON && !Player_InCsMode(this) && !IS_PAUSED(&this->pauseCtx) && !gDebugCamEnabled && this->msgCtx.msgMode == MSGMODE_NONE && gSaveContext.gameMode == GAMEMODE_NORMAL && this->gameOverCtx.state == GAMEOVER_INACTIVE && AUTOSAVE) {
         Play_SaveSceneFlags(this);
         gSaveContext.save.info.playerData.savedSceneId = this->sceneId;
         Sram_WriteSave(&this->sramCtx);
-        this->autosave = false;
+        this->autosave = AUTOSAVE_OFF;
         this->specialIconAlpha = 255;
         this->specialIconCount = 2;
 
