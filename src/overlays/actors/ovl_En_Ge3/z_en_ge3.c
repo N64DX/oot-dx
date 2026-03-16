@@ -11,7 +11,6 @@
 #include "gfx_setupdl.h"
 #include "segmented_address.h"
 #include "sys_matrix.h"
-#include "versions.h"
 #include "z_lib.h"
 #include "item.h"
 #include "play_state.h"
@@ -249,7 +248,6 @@ s32 EnGe3_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* p
         // Turn head
         case GELDB_LIMB_HEAD:
             rot->x += this->headRot.y;
-#if OOT_VERSION >= PAL_1_1
             FALLTHROUGH;
         default:
             // This is a hack to fix a bug present before PAL 1.1, where the actor's clothes can change color
@@ -274,7 +272,6 @@ s32 EnGe3_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* p
                     break;
             }
             CLOSE_DISPS(play->state.gfxCtx, "../z_en_ge3.c", 566);
-#endif
             break;
     }
     return false;
