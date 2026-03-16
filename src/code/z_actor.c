@@ -37,6 +37,8 @@
 #include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.h"
 #include "assets/objects/object_bdoor/object_bdoor.h"
 
+#include "assets/textures/parameter_static/parameter_static.h"
+
 #pragma increment_block_number "gc-eu:128 gc-eu-mq:128 gc-jp:0 gc-jp-ce:0 gc-jp-mq:0 gc-us:0 gc-us-mq:0 ntsc-1.0:0" \
                                "ntsc-1.1:0 ntsc-1.2:0 pal-1.0:0 pal-1.1:0"
 
@@ -287,6 +289,35 @@ void Actor_ProjectPos(PlayState* play, Vec3f* src, Vec3f* xyzDest, f32* cappedIn
     }
 }
 
+static void TargetHealth_Draw(PlayState* play, Vec3f* pos, s16 health, s16 maxHealth) {
+    s16 x = (s16)(160.0 + pos->x) + 32;
+    s16 y = (s16)(120.0 - pos->y) - 32;
+    u8 width = 50;
+    u8 height = 8;
+
+    if (maxHealth == 0)
+        return;
+    if (health < 0)
+        health = 0;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_actor.c", 2029);
+    Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
+    gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
+
+    // Lost Health
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 128, 0, 0, 255);
+    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, x << 2, (y + 3) << 2, (x + width) << 2, (y + height) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+    // Left Health
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 0, 0, 255);
+    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, x << 2, (y + 3) << 2, (x + (width * health / maxHealth)) << 2, (y + height) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_actor.c", 2158);
+}
+
 typedef struct AttentionColor {
     /* 0x00 */ Color_RGBA8 primary;   // Used for Navi's inner color, lock-on arrow, and lock-on reticle
     /* 0x04 */ Color_RGBA8 secondary; // Used for Navi's outer color
@@ -471,6 +502,9 @@ void Attention_Draw(Attention* attention, PlayState* play) {
                         gSPDisplayList(OVERLAY_DISP++, gLockOnReticleTriangleDL);
                         Matrix_Pop();
                     }
+                    
+                    if (actor != NULL && (play->actorCtx.lensActive || player->currentMask == PLAYER_MASK_TRUTH))
+                        TargetHealth_Draw(play, &projectedPos, actor->colChkInfo.health, actor->maxHealth);
                 }
 
                 alpha -= 255 / ARRAY_COUNT(attention->lockOnReticles);
@@ -973,6 +1007,9 @@ void Actor_Init(Actor* actor, PlayState* play) {
         Actor_SetObjectDependency(play, actor);
         actor->init(actor, play);
         actor->init = NULL;
+        if (actor->colChkInfo.health > 0 && (actor->category == ACTORCAT_ENEMY || ACTORCAT_BOSS))
+            actor->maxHealth = actor->colChkInfo.health;
+        else actor->maxHealth = 0;
     }
 }
 
@@ -2559,6 +2596,9 @@ void Actor_UpdateAll(PlayState* play, ActorContext* actorCtx) {
                     Actor_SetObjectDependency(play, actor);
                     actor->init(actor, play);
                     actor->init = NULL;
+                    if (actor->colChkInfo.health > 0 && (actor->category == ACTORCAT_ENEMY || ACTORCAT_BOSS))
+                        actor->maxHealth = actor->colChkInfo.health;
+                    else actor->maxHealth = 0;
                 }
                 actor = actor->next;
             } else if (!Object_IsLoaded(&play->objectCtx, actor->objectSlot)) {
