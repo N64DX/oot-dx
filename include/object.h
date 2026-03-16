@@ -21,7 +21,7 @@ typedef struct ObjectContext {
     /* 0x0009 */ u8 numPersistentEntries; // amount of entries that won't be reused when loading a new object list (when loading a new room)
     /* 0x000A */ u8 mainKeepSlot; // "gameplay_keep" slot
     /* 0x000B */ u8 subKeepSlot; // "gameplay_field_keep" or "gameplay_dangeon_keep" slot
-    /* 0x000C */ ObjectEntry slots[19];
+    /* 0x000C */ ObjectEntry slots[20];
 } ObjectContext; // size = 0x518
 
 #define DEFINE_OBJECT(_0, enum) enum,
