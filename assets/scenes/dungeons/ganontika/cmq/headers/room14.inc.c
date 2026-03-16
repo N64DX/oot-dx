@@ -3,6 +3,6 @@
     SCENE_CMD_SKYBOX_DISABLES(false /* skybox enabled */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&ganontika_room_14_030001A0_RoomShapeCullable),
-    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(cq_objects), cq_objects),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(mq_objects), mq_objects),
     SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(cmq_actors), cmq_actors),
     SCENE_CMD_END(),

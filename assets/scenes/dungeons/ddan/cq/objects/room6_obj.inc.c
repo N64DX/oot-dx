@@ -1,4 +1,0 @@
-    OBJECT_DDAN_OBJECTS, // 0
-    OBJECT_BWALL, // 1
-    OBJECT_SHOPNUTS, // 2
-

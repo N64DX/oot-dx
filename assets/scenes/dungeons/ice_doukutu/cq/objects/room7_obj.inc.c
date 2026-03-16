@@ -1,6 +1,0 @@
-    OBJECT_ICE_OBJECTS, // 0
-    OBJECT_XC, // 1
-    OBJECT_BOX, // 2
-    OBJECT_EFC_FLASH, // 3
-    OBJECT_WF, // 4
-
