@@ -877,7 +877,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
         FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)sQuestTextures[this->questMode[CURRENT_SLOT(this->buttonIndex)]][1], 160, 160);
         gDPLoadTextureBlock(POLY_OPA_DISP++, sQuestTextures[this->questMode[CURRENT_SLOT(this->buttonIndex)]][0], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(x + WS_SHIFT_HALF) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(x + WS_SHIFT_HALF + 128) << 2, HIRES_MULTIPLY((y + 16) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1024), X_HIRES_DIVIDE(1024));
+        gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(x + WS_SHIFT_HALF) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(x + WS_SHIFT_HALF + 128) << 2, HIRES_MULTIPLY((y + 16) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));
 
         x = 48;
         y = 115;
