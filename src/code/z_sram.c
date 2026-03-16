@@ -698,6 +698,9 @@ void Sram_WriteSave(SramContext* sramCtx) {
     u16 j;
     u16* ptr;
 
+    if (gSaveContext.fileNum == 0xFF)
+        return;
+
     gSaveContext.save.info.checksum.value = 0;
 
     ptr = (u16*)&gSaveContext;
