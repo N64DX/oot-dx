@@ -474,6 +474,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
     u16 i;
     u16 j;
     u8* ptr;
+    u16 lastEntranceIndex;
 
     PRINTF(T("個人Ｆｉｌｅ作成\n", "Create personal file\n"));
     i = gSramSlotOffsets[gSaveContext.fileNum];
