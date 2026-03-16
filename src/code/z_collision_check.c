@@ -1696,7 +1696,7 @@ void CollisionCheck_HitEffects(PlayState* play, Collider* atCol, ColliderElement
             if (atElem->atElemFlags & ATELEM_HIT)
                 if (atElem->atHit != NULL && atElem->atHit->actor != NULL) {
                     atElem->atHit->actor->colChkInfo.dmgFlags = atElem->atDmgInfo.dmgFlags;
-                    lastItemAction = = atElem->atHit->actor->colChkInfo.itemAction = player->itemAction;
+                    lastItemAction = atElem->atHit->actor->colChkInfo.itemAction = player->itemAction;
                     if (player->currentTunic == PLAYER_TUNIC_ZORA && (atElem->atHit->actor->category == ACTORCAT_ENEMY || atElem->atHit->actor->category == ACTORCAT_BOSS))
                         if (atElem->atDmgInfo.dmgFlags == DMG_SLASH_KOKIRI || atElem->atDmgInfo.dmgFlags == DMG_SLASH_MASTER || atElem->atDmgInfo.dmgFlags == DMG_SLASH_GIANT)
                             atElem->atDmgInfo.dmgFlags = Player_UseSpecialPower(play, player, 30, 8, false, SPECIAL_POWER_STRENGTHEN_SWORD, atElem->atDmgInfo.dmgFlags);

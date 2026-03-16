@@ -610,8 +610,12 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
                         Inventory_DeleteItem(gAmmoItems[i], SLOT(gAmmoItems[i]));
                         AMMO(gAmmoItems[i]) = 0;
-                        if (gAmmoItems[i] == ITEM_MAGIC_BEAN)
+                        if (gAmmoItems[i] == ITEM_MAGIC_BEAN) {
                             gSaveContext.save.info.hasObtainedItems.magicBeans = 0;
+                            if (HAS_ROCS_FEATHER)
+                                gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER;
+                            else gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = ITEM_NONE;
+                        }
                     }
 
                     if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
@@ -1020,18 +1024,18 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             Interface_LoadItemIcon1(play, j);
                     }
                 } else if (curSection == SECTION_FEATHER) {
-                    if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && gSaveContext.save.info.hasObtainedItems.feather < 2)
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && !HAS_GOLDEN_FEATHER)
                         gSaveContext.save.info.hasObtainedItems.feather++;
-                    else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT) && gSaveContext.save.info.hasObtainedItems.feather > 0)
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT) && HAS_ROCS_FEATHER)
                         gSaveContext.save.info.hasObtainedItems.feather--;
                     else if (CHECK_BTN_ALL(input->press.button, BTN_CUP))
                         gSaveContext.save.info.hasObtainedItems.feather = 0;
                     else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
-                        gSaveContext.save.info.hasObtainedItems.feather = 2;
+                        SET_GOLDEN_FEATHER;
 
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
-                        if (gSaveContext.save.info.hasObtainedItems.feather > 0)
-                            gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = (gSaveContext.save.info.hasObtainedItems.feather == 1) ? ITEM_ROCS_FEATHER : ITEM_GOLDEN_FEATHER;
+                        if (HAS_ROCS_FEATHER)
+                            gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER;
                         else gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = gSaveContext.save.info.hasObtainedItems.magicBeans ? ITEM_MAGIC_BEAN : ITEM_NONE;
                     }
                 } else if (curSection == SECTION_ENHANCED_SPIN) {

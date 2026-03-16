@@ -542,7 +542,6 @@ static s32 sHeldItemButtonIsHeldDown = false; // Indicates if the button for the
 static u8 featherGroundTimer = 0;
 static u8 mirrorShieldRestoreTimer = 0;
 static u8 shieldDamageTimer = 0;
-static bool mirrorShieldHasBroken = false;
 static u8 Player_PerfectTime = 0;
 static s8 Player_PerfectResetTimer = 0;
 static bool Player_HasPerfected = false;
@@ -2756,11 +2755,11 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 }
 
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
-    static const EquipmentSwapEntry equipments[] = {
-        { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
-        { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
+    static const SwordSwapEntry equipments[] = {
+        { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
+        { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
     };
 
     u8 current    = gSaveContext.save.info.equips.buttonItems[0];
@@ -2771,7 +2770,7 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
         current = ITEM_SWORD_HEROS;
 
     for (i=0; i<ARRAY_COUNT(equipments); i++) {
-        const EquipmentSwapEntry* equipment = &equipments[i];
+        const SwordSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
@@ -4116,7 +4115,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
                     ((itemAction >= PLAYER_IA_BOTTLE_POTION_RED) && (itemAction <= PLAYER_IA_BOTTLE_FAIRY))) {
                     Player_TitleCardClear(play);
                     this->unk_6AD = 4;
-                    this->itemAction = this->itemAction = this->bottleAction = itemAction;
+                    this->itemAction = this->bottleAction = itemAction;
                 }
             } else if ((itemAction != this->heldItemAction) ||
                        ((this->heldActor == NULL) && (Player_ActionToExplosive(this, itemAction) >= 0))) {
@@ -5475,7 +5474,7 @@ s32 func_808382DC(Player* this, PlayState* play) {
             // Additionally, `Collider.atHit` can never be set while already colliding as AC, so it's also bugged.
             // This behavior was later fixed in MM, most likely by removing both the `atHit` and `atFlags` checks.
             if (sp64 || ((this->invincibilityTimer < 0) && (this->cylinder.base.acFlags & AC_HIT) &&
-                         (this->cylinder.elem.acHitElem != NULL) && this->cylinder.elem.acHitElem->atDmgInfo.dmgFlags != DMG_UNBLOCKABLE)) {
+                         (this->cylinder.elem.atHit != NULL) && (this->cylinder.elem.atHit->atFlags & 0x20000000))) {
 
                 Player_RequestRumble(this, 180, 20, 100, 0);
                 Player_CheckShieldDurability(this, play);
@@ -5740,39 +5739,38 @@ static s16 sReturnEntranceGroupData[] = {
     /*  0 */ ENTR_DEATH_MOUNTAIN_TRAIL_4,  // from Magic Fairy Fountain
     /*  1 */ ENTR_DEATH_MOUNTAIN_CRATER_3, // from Double Magic Fairy Fountain
     /*  2 */ MAP_OUTSIDE_GANONS_CASTLE_2,  // from Double Defense Fairy Fountain (as adult)
-    /*  3 */ ENTR_WOODFALL_2,              // from Great Quick Spin Fairy Fountain
 
     // ENTR_RETURN_2
-    /*  4 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
-    /*  5 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
+    /*  3 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
+    /*  4 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
 
     // ENTR_RETURN_BAZAAR
-    /*  6 */ ENTR_KAKARIKO_VILLAGE_3,
-    /*  7 */ ENTR_MARKET_DAY_6,
+    /*  5 */ ENTR_KAKARIKO_VILLAGE_3,
+    /*  6 */ ENTR_MARKET_DAY_6,
 
     // ENTR_RETURN_4
-    /*  8 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
-    /*  9 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
+    /*  7 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
+    /*  8 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
 
     // ENTR_RETURN_SHOOTING_GALLERY
-    /* 10 */ ENTR_KAKARIKO_VILLAGE_10,
-    /* 11 */ ENTR_MARKET_DAY_8,
+    /*  9 */ ENTR_KAKARIKO_VILLAGE_10,
+    /* 10 */ ENTR_MARKET_DAY_8,
 
     // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    /* 12 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
-    /* 13 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
-    /* 14 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
+    /* 11 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
+    /* 12 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
+    /* 13 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
 };
 
 /**
  * The values are indices into `sReturnEntranceGroupData` marking the start of each group
  */
 static u8 sReturnEntranceGroupIndices[] = {
-    12, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    10, // ENTR_RETURN_SHOOTING_GALLERY
-    4,  // ENTR_RETURN_2
-    6,  // ENTR_RETURN_BAZAAR
-    8,  // ENTR_RETURN_4
+    11, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
+    9,  // ENTR_RETURN_SHOOTING_GALLERY
+    3,  // ENTR_RETURN_2
+    5,  // ENTR_RETURN_BAZAAR
+    7,  // ENTR_RETURN_4
     0,  // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
 };
 
@@ -10361,7 +10359,7 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
                 this->skelAnime.playSpeed = 0.0f;
             }
         }
- 
+
         if (!(this->stateFlags2 & PLAYER_STATE2_19)) {
             func_8083DFE0(this, &speedTarget, &yawTarget);
         }
@@ -10429,7 +10427,7 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
             anim = &gPlayerAnim_link_normal_run_jump_end;
         } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_newroll_jump_20f) {
             anim = &gPlayerAnim_link_normal_newroll_jump_end_20f;
-        } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_newside_jump_20f && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) {
+        } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_newside_jump_20f) {
             anim = &gPlayerAnim_link_normal_newside_jump_end_20f;
         } else if (Player_CheckHostileLockOn(this)) {
             anim = &gPlayerAnim_link_anchor_landingR;
@@ -12571,7 +12569,7 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
         else if (Player_HasPerfected && Player_PerfectResetTimer == 0)
             Player_HasPerfected = false;
     }
-    
+
     if (shieldDamageTimer > 0)
         shieldDamageTimer--;
     if (SHIELD_DURABILITY && !(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {

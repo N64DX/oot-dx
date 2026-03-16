@@ -409,7 +409,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                     }
 
                     if (FIX_USEFUL_GLITCHES && pauseCtx->mainState != PAUSE_MAIN_STATE_IDLE)
-                        canSelectItem = false;;
+                        canSelectItem = false;
 
                     if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT) && canSelectItem) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {

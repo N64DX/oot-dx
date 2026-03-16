@@ -2285,7 +2285,6 @@ u8 Item_Give(PlayState* play, u8 item) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
             INV_CONTENT(item) = item;
             AMMO(ITEM_MAGIC_BEAN) = 1;
-            BEANS_BOUGHT = 1;
         } else {
             AMMO(ITEM_MAGIC_BEAN)++;
         }
@@ -2302,6 +2301,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         INV_CONTENT(ITEM_MAGIC_BEAN) = item;
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_AMULET_OF_ENERGY) {
         gSaveContext.save.info.hasObtainedItems.amuletOfEnergy = 1;
@@ -2611,8 +2611,6 @@ u8 Item_CheckObtainability(u8 item) {
             }
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
-        return ITEM_NONE;
-    } else if (item == ITEM_ADULTS_WALLET || item == ITEM_GIANTS_WALLET || item == ITEM_ROYAL_WALLET) {
         return ITEM_NONE;
     } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS) {
         return ITEM_NONE;
@@ -4167,7 +4165,7 @@ void Energy_Draw(PlayState* play) {
     f32 lerp;
     u8 alpha;
 
-    if (IS_PAUSED(&play->pauseCtx) || !CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) || play->transitionTrigger != TRANS_TRIGGER_OFF || play->gameOverCtx.state != GAMEOVER_INACTIVE || play->transitionMode != TRANS_MODE_OFF || (play->csCtx.state != CS_STATE_IDLE &&  Player_InCsMode(play)))
+    if (IS_PAUSED(&play->pauseCtx) || !CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) || play->transitionTrigger != TRANS_TRIGGER_OFF || play->gameOverCtx.state != GAMEOVER_INACTIVE || play->transitionMode != TRANS_MODE_OFF || (play->csCtx.state != CS_STATE_IDLE && Player_InCsMode(play)))
         return;
 
     Math_SmoothStepToS(&curEnergy, gSaveContext.save.info.energy, 1, 3, 0);
@@ -4500,7 +4498,7 @@ void Interface_Draw(PlayState* play) {
                 OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[svar2])), 8, 16, X_HIRES_MULTIPLY(svar3 + 1), HIRES_MULTIPLY(207), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
                 gDPPipeSync(OVERLAY_DISP++);
 
-                if (gSaveContext.save.info.playerData.rupees == CUR_CAPACITY(UPG_WALLET)) {
+                if (gSaveContext.save.info.playerData.rupees == curCapacity) {
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 120, 255, 0, interfaceCtx->magicAlpha);
                 } else if (gSaveContext.save.info.playerData.rupees != 0) {
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
@@ -4510,7 +4508,7 @@ void Interface_Draw(PlayState* play) {
 
                 gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(svar3 * 4), HIRES_MULTIPLY(206 << 2), X_HIRES_MULTIPLY((svar3 + 8) * 4), HIRES_MULTIPLY(222 << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
             } else {
-                if (gSaveContext.save.info.playerData.rupees == CUR_CAPACITY(UPG_WALLET)) {
+                if (gSaveContext.save.info.playerData.rupees == curCapacity) {
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 120, 255, 0, interfaceCtx->magicAlpha);
                 } else if (gSaveContext.save.info.playerData.rupees != 0) {
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
@@ -5254,7 +5252,7 @@ void Interface_Draw(PlayState* play) {
         }
 
         if (IS_RUSH_QUEST) {
-            if ( (!IS_PAUSED(&play->pauseCtx) && msgCtx->msgMode == MSGMODE_NONE && !(player->stateFlags2 & PLAYER_STATE2_24) && play->transitionTrigger == TRANS_TRIGGER_OFF && play->transitionMode == TRANS_MODE_OFF && !Play_InCsMode(play) && play->gameOverCtx.state == GAMEOVER_INACTIVE) || R_BEATEN_RUSH_MODE) {
+            if ( (!IS_PAUSED(&play->pauseCtx) && CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) && !(player->stateFlags2 & PLAYER_STATE2_24) && play->transitionTrigger == TRANS_TRIGGER_OFF && play->transitionMode == TRANS_MODE_OFF && !Play_InCsMode(play) && play->gameOverCtx.state == GAMEOVER_INACTIVE) || R_BEATEN_RUSH_MODE) {
                 if (!R_BEATEN_RUSH_MODE) {
                     sPlaytimeNextSecondTimer++;
                     if (sPlaytimeNextSecondTimer == (4 - R_UPDATE_RATE) * 20) {

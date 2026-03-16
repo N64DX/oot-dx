@@ -655,9 +655,6 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                         Interface_LoadItemIcon1(play, i);
                 }
 
-                Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-
                 // Wait 10 frames before accepting input again
                 pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
                 sEquipTimer = 10;
@@ -714,7 +711,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                                 Interface_LoadItemIcon1(play, j);
                                 break;
                             }
-                        
+
                         if (gSaveContext.save.info.equips.buttonItems[i] == temp) {
                             gSaveContext.save.info.equips.buttonItems[i] = gSaveContext.save.info.equips.cButtonSlots[i-1] = ITEM_NONE;
                              Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -836,7 +833,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
         // Draw upgrade `i`
         // EQUIP_QUAD_UPG_BULLETBAG_QUIVER, EQUIP_QUAD_UPG_BOMB_BAG, EQUIP_QUAD_UPG_STRENGTH, EQUIP_QUAD_UPG_SCALE
 
-        if (i == 3 && cursorSlot == 12 && showAltScalesSlot)
+        if (i == 3 && showAltScalesSlot)
             KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIcons[ITEM_AMULET_OF_ENERGY], ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0);
         else if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
             u8 index = i;

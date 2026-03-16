@@ -287,13 +287,13 @@ static ShopItemEntry sShopItemEntries[] = {
     { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 200, 1, 0x9208, 0x9108, GI_WALLET_BOTTOMLESS,
       EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
     /* SI_DEKU_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, func_8002EBCC, 30, 1, 0x9209, 0x0089, GI_SHIELD_DEKU,
+    { OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, func_8002EBCC, 30, 1, 0x9209, 0x920C, GI_SHIELD_DEKU,
       EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_DekuShield, EnGirlA_BuyEvent_ShieldDiscount },
     /* SI_HYLIAN_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, func_8002EBCC, 60, 1, 0x920A, 0x0092, GI_SHIELD_HYLIAN,
+    { OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, func_8002EBCC, 60, 1, 0x920A, 0x920D, GI_SHIELD_HYLIAN,
       EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HylianShield, EnGirlA_BuyEvent_ShieldDiscount },
      /* SI_HEROS_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_1_MM, GID_SHIELD_HEROS, func_8002EBCC, 60, 1, 0x920B, 0x9101, GI_SHIELD_HEROS,
+    { OBJECT_GI_SHIELD_1_MM, GID_SHIELD_HEROS, func_8002EBCC, 60, 1, 0x920B, 0x920E, GI_SHIELD_HEROS,
       EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
 };
 
@@ -308,21 +308,21 @@ s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
     switch (this->actor.params) {
         case SI_DEKU_SHIELD:
         case SI_DEKU_SHIELD_REPAIR:
-            if (SHIELD_DURABILITY) {
+            if (SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
                 this->actor.params = gSaveContext.save.info.shieldDurability[0] < MAX_DURABILITY_SHIELD_DEKU ? SI_DEKU_SHIELD_REPAIR : SI_DEKU_SHIELD;
                 return true;
             }
             break;
         case SI_HYLIAN_SHIELD:
         case SI_HYLIAN_SHIELD_REPAIR:
-            if (SHIELD_DURABILITY) {
+            if (SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) {
                 this->actor.params = gSaveContext.save.info.shieldDurability[1] < MAX_DURABILITY_SHIELD_HYLIAN ? SI_HYLIAN_SHIELD_REPAIR : SI_HYLIAN_SHIELD;
                 return true;
             }
             break;
         case SI_HEROS_SHIELD:
         case SI_HEROS_SHIELD_REPAIR:
-            if (SHIELD_DURABILITY) {
+            if (SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
                 this->actor.params = gSaveContext.save.info.shieldDurability[3] < MAX_DURABILITY_SHIELD_HEROS ? SI_HEROS_SHIELD_REPAIR : SI_HEROS_SHIELD;
                 return true;
             }
