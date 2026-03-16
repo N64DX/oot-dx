@@ -69,16 +69,16 @@ beginseg
 endseg
 
 beginseg
-    name "object_gi_shield_1_mm"
+    name "object_gi_sword_4_mm"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_shield_1_mm/object_gi_shield_1_mm.o"
+    include "$(BUILD_DIR)/assets/objects/object_gi_sword_4_mm/object_gi_sword_4_mm.o"
     number 6
 endseg
 
 beginseg
-    name "object_gi_sword_4_mm"
+    name "object_gi_shield_1_mm"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_gi_sword_4_mm/object_gi_sword_4_mm.o"
+    include "$(BUILD_DIR)/assets/objects/object_gi_shield_1_mm/object_gi_shield_1_mm.o"
     number 6
 endseg
 

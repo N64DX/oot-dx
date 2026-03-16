@@ -264,7 +264,6 @@ void EnBuffDeku_Init(Actor* thisx, PlayState* play) {
     this->panicTest = this->playerHit = this->onFire = false;
     this->actor.gravity = -1.0f;
     this->actor.naviEnemyId = isHyper ? NAVI_ENEMY_KING_DEKU : NAVI_ENEMY_BUFF_SCRUB;
-    this->dekuStickCooldownTimer = 0;
 
     if ((this->actor.params & 0x20))
          this->switchFlag = this->actor.params & 0x1F;

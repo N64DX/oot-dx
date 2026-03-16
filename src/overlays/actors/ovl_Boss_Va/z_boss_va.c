@@ -1413,7 +1413,7 @@ void BossVa_BodyPhase4(BossVa* this, PlayState* play) {
                     this->actor.world.rot.y = this->actor.yawTowardsPlayer;
                     Actor_PlaySfx(&this->actor, NA_SE_EN_BALINADE_DAMAGE);
                     Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 12);
-                    this->actor.colChkInfo.health -= this->actor.colChkInfo.damage;
+                    Actor_ApplyDamage(&this->actor);
                     if (this->actor.colChkInfo.health <= 0) {
                         this->timer = 0;
                         sFightPhase++;

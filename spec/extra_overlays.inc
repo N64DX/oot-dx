@@ -99,8 +99,8 @@ endseg
 beginseg
     name "ovl_En_Beast"
     compress
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ganon_Ladder/z_bg_ganon_ladder.o"
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ganon_Ladder/ovl_Bg_Ganon_Ladder_reloc.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Beast/z_en_beast.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Beast/ovl_En_Beast_reloc.o"
 endseg
 
 beginseg
