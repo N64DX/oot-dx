@@ -25,6 +25,7 @@
 #include "sram.h"
 #include "transition.h"
 #include "view.h"
+#include "player.h"
 
 union Color_RGBA8_u32;
 struct Path;
