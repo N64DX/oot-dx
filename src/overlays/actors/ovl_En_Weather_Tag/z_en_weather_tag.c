@@ -58,6 +58,26 @@ void EnWeatherTag_SetupAction(EnWeatherTag* this, EnWeatherTagActionFunc actionF
 }
 
 void EnWeatherTag_Destroy(Actor* thisx, PlayState* play) {
+    EnWeatherTag* this = (EnWeatherTag*)thisx;
+
+    if (PARAMS_GET_U(this->actor.params, 0, 4) == EN_WEATHER_TAG_TYPE_THUNDERSTORM_KAKARIKO) {
+        Environment_StopStormNatureAmbience(play);
+        play->envCtx.lightningState = LIGHTNING_LAST;
+        play->envCtx.precipitation[PRECIP_RAIN_MAX] = 0;
+
+        gInterruptSongOfStorms = false;
+        gWeatherMode = WEATHER_MODE_CLEAR;
+        play->envCtx.changeSkyboxState = CHANGE_SKYBOX_REQUESTED;
+        play->envCtx.skyboxConfig = 1;
+        play->envCtx.changeSkyboxNextConfig = 0;
+        play->envCtx.changeSkyboxTimer = 100;
+        play->envCtx.changeLightEnabled = true;
+        play->envCtx.lightConfig = 4;
+        play->envCtx.changeLightNextConfig = 0;
+        gLightConfigAfterUnderwater = 0;
+        play->envCtx.changeDuration = 100;
+        play->envCtx.changeLightTimer = play->envCtx.changeDuration;              
+    }
 }
 
 void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
@@ -157,6 +177,7 @@ u8 WeatherTag_CheckEnableWeatherEffect(EnWeatherTag* this, PlayState* play, u8 s
 #if OOT_VERSION < PAL_1_0
                     gInterruptSongOfStorms = false;
 #endif
+                    gWeatherMode = weatherMode;
                     if (play->envCtx.stormRequest == STORM_REQUEST_NONE) {
                         play->envCtx.changeSkyboxState = CHANGE_SKYBOX_REQUESTED;
                         play->envCtx.skyboxConfig = skyboxConfig;

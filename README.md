@@ -41,6 +41,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - Stalfos break parts lag
 - Ingo Ranch text breaking Running Man timer
 - Spirit Temple room texture alpha blending fix
+- Kakariko Thunderstorm Weather fix
 
 **Actors and objects:**
 - **LeSéducteur:** Buff Scrub
