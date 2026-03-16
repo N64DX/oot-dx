@@ -152,6 +152,8 @@ s16 sMessageHasSetSfx = false;
 
 u16 sOcarinaSongBitFlags = 0; // ocarina bit flags
 
+bool setTempEnglish = false;
+
 #if OOT_NTSC_N64
 
 MessageTableEntry sJpnMessageEntryTable[] = {
@@ -1970,7 +1972,7 @@ void Message_Decode(PlayState* play) {
     sTextFade = false;
 
 #if OOT_NTSC
-    if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits) {
+    if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits && !setTempEnglish) {
         // Japanese text (NTSC only)
         for (;;) {
             curCharWide = MSG_BUF_DECODED_WIDE[decodedBufPos] = MSG_BUF_WIDE[msgCtx->msgBufPos];
@@ -2845,7 +2847,7 @@ void Message_OpenText(PlayState* play, u16 textId) {
         R_TEXT_INIT_XPOS = 20;
         YREG(1) = 48;
 #if OOT_NTSC
-    } else if (gSaveContext.language == LANGUAGE_JPN) {
+    } else if (gSaveContext.language == LANGUAGE_JPN && !setTempEnglish) {
         R_TEXT_CHAR_SCALE = 88;
         R_TEXT_LINE_SPACING = 18;
         R_TEXT_INIT_XPOS = 50;
@@ -2946,8 +2948,14 @@ void Message_OpenText(PlayState* play, u16 textId) {
                 case 0x7078: textId = 0x8113; break;
                 case 0x708B: textId = 0x811F; break;
             }
-            Message_FindMessage(play, textId, language);
-        } else if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG && language != LANGUAGE_JPN) {
+        }
+
+        if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG) {
+            if (language == LANGUAGE_JPN) {
+                DMA_REQUEST_SYNC(play->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
+                gSaveContext.language = LANGUAGE_ENG;
+                setTempEnglish = true;
+            }
             language = LANGUAGE_ENG;
             Message_FindMessage(play, textId, language);
         }
@@ -3114,6 +3122,13 @@ void Message_ContinueTextbox(PlayState* play, u16 textId) {
     PRINTF_COLOR_GREEN();
     PRINTF(T("めっせーじ＝%x  message->msg_data\n", "Message=%x  message->msg_data\n"), textId, msgCtx->msgLength);
     PRINTF_RST();
+
+    if (setTempEnglish) {
+        setTempEnglish = false;
+#if OOT_NTSC_N64
+        gSaveContext.language = LANGUAGE_JPN;
+#endif
+    }
 
     msgCtx->msgLength = 0;
     Message_OpenText(play, textId);
@@ -3360,7 +3375,7 @@ void Message_SetView(View* view) {
 
 #if OOT_NTSC
 #define DRAW_TEXT(play, gfx, isCredits)                                                         \
-    ((gSaveContext.language == LANGUAGE_JPN) && !(isCredits)) ? Message_DrawTextWide(play, gfx) \
+    ((gSaveContext.language == LANGUAGE_JPN) && !(isCredits && !setTempEnglish)) ? Message_DrawTextWide(play, gfx) \
                                                               : Message_DrawText(play, gfx)
 #else
 #define DRAW_TEXT(play, gfx, isCredits) Message_DrawText(play, gfx)
@@ -4554,7 +4569,7 @@ void Message_Update(PlayState* play) {
 #if OOT_NTSC && !PLATFORM_IQUE
                     R_TEXTBOX_X_TARGET = sTextboxXPositions[var];
                     R_TEXTBOX_END_YPOS = sTextboxEndIconYOffset[var] + R_TEXTBOX_Y_TARGET;
-                    if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits) {
+                    if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits && !setTempEnglish) {
                         R_TEXT_CHOICE_YPOS(0) = R_TEXTBOX_Y_TARGET + 7;
                         R_TEXT_CHOICE_YPOS(1) = R_TEXTBOX_Y_TARGET + 25;
                         R_TEXT_CHOICE_YPOS(2) = R_TEXTBOX_Y_TARGET + 43;
@@ -4683,7 +4698,7 @@ void Message_Update(PlayState* play) {
                             Audio_PlaySfxGeneral(NA_SE_SY_MESSAGE_PASS, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                                  &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 #if OOT_NTSC
-                            if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits) {
+                            if (gSaveContext.language == LANGUAGE_JPN && !sTextIsCredits && !setTempEnglish) {
                                 Message_ContinueTextbox(play, MSG_BUF_DECODED_WIDE[msgCtx->textDrawPos]);
                             } else {
                                 Message_ContinueTextbox(play, sNextTextId);
@@ -4733,6 +4748,14 @@ void Message_Update(PlayState* play) {
                     }
                 }
                 PRINTF_RST();
+
+                if (setTempEnglish) {
+                    setTempEnglish = false;
+#if OOT_NTSC_N64
+                    gSaveContext.language = LANGUAGE_JPN;
+#endif
+                }
+
                 msgCtx->msgLength = 0;
                 msgCtx->msgMode = MSGMODE_NONE;
                 interfaceCtx->unk_1FA = interfaceCtx->unk_1FC = 0;
