@@ -1,5 +1,5 @@
 #include "object_demo_kekkai.h"
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #include "array_count.h"
 #include "camera.h"

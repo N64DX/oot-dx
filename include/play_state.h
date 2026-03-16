@@ -49,8 +49,9 @@ typedef enum TransitionTileState {
 } TransitionTileState;
 
 typedef enum SpecialIcon {
-    /* 0 */ SPECIAL_ICON_AUTOSAVE,
-    /* 1 */ SPECIAL_ICON_RUMBLE
+    /* 0 */ SPECIAL_ICON_OFF,
+    /* 1 */ SPECIAL_ICON_AUTOSAVE,
+    /* 2 */ SPECIAL_ICON_RUMBLE
 } SpecialIcon;
 
 typedef struct SceneSequences {
