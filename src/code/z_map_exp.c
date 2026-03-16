@@ -370,7 +370,9 @@ void Map_Init(PlayState* play) {
 void Minimap_DrawCompassIcons(PlayState* play) {
     s32 pad;
     Player* player = GET_PLAYER(play);
-    s16 tempX, tempZ, mapWidth, mapStartPosX, mirrorOffset, tempXOffset;
+    s16 tempX, tempZ, mirrorOffset, tempXOffset;
+    s16 mapWidth = 0;
+    s16 mapStartPosX = 0;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_map_exp.c", 565);
 
