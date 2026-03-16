@@ -170,7 +170,7 @@ static s16 sMagicBorderR = 255;
 static s16 sMagicBorderG = 255;
 static s16 sMagicBorderB = 255;
 
-bool dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
+u8 dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
 u8 dpadAlphas[] = { 0, 0, 0, 0, 0 };
 bool switchedDualSet = false;
 u8 sNoclipTimer = 0;
@@ -1583,6 +1583,7 @@ u8 Interface_GetLoadItem(u16 button) {
         return ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
     else if (item == ITEM_BOOTS)
         return ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
+    return item;
 }
 
 void Interface_LoadItemIcon1(PlayState* play, u16 button) {
