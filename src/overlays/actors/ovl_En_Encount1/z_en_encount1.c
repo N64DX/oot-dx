@@ -118,6 +118,9 @@ void EnEncount1_SpawnLeevers(EnEncount1* this, PlayState* play) {
     this->outOfRangeTimer = 0;
     spawnPos = this->actor.world.pos;
 
+    if (player->currentMask == PLAYER_MASK_SKULL)
+        return;
+
     if ((this->timer == 0) && (play->csCtx.state == CS_STATE_IDLE) && (this->curNumSpawn <= this->maxCurSpawns) &&
         (this->curNumSpawn < 5)) {
         floorType = SurfaceType_GetFloorType(&play->colCtx, player->actor.floorPoly, player->actor.floorBgId);
@@ -193,6 +196,9 @@ void EnEncount1_SpawnTektites(EnEncount1* this, PlayState* play) {
     Vec3f spawnPos;
     f32 floorY;
 
+    if (player->currentMask == PLAYER_MASK_SKULL)
+        return;
+
     if (this->timer == 0) {
         this->timer = 10;
         if ((fabsf(player->actor.world.pos.y - this->actor.world.pos.y) > 100.0f) ||
@@ -242,7 +248,7 @@ void EnEncount1_SpawnStalchildOrWolfos(EnEncount1* this, PlayState* play) {
             this->outOfRangeTimer++;
             return;
         }
-    } else if (IS_DAY || (Player_GetMask(play) == PLAYER_MASK_BUNNY)) {
+    } else if (IS_DAY || (Player_GetMask(play) == PLAYER_MASK_BUNNY) || player->currentMask == PLAYER_MASK_SKULL) {
         this->killCount = 0;
         return;
     }

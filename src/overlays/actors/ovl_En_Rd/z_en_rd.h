@@ -7,6 +7,7 @@
 struct EnRd;
 
 typedef void (*EnRdActionFunc)(struct EnRd*, struct PlayState*);
+typedef void (*EnRdSetupDanceFunc)(struct EnRd*);
 
 #define REDEAD_GET_RDFLAGS(thisx) PARAMS_GET_S((thisx)->params, 8, 8)
 
@@ -74,6 +75,13 @@ typedef struct EnRd {
     /* 0x031C */ u8 damageReaction;
     /* 0x031D */ u8 unk_31D; // related to player->unk_845
     /* 0x0320 */ ColliderCylinder collider;
-} EnRd; // size = 0x036C
+    /* 0x036C */ union {
+                    s16 danceEndTimer;
+                    s16 pirouetteAngularVelocity;
+                };
+    /* 0x036E */ EnRdSetupDanceFunc setupDanceFunc;
+    /* 0x0370 */ s16 torsoRotY;
+    /* 0x0372 */ s16 animationJudderTimer;
+} EnRd; // size = 0x0374
 
 #endif

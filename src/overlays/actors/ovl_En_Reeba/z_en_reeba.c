@@ -286,7 +286,7 @@ void EnReeba_Move(EnReeba* this, PlayState* play) {
 
     surfaceType = SurfaceType_GetFloorType(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId);
 
-    if ((surfaceType != FLOOR_TYPE_4) && (surfaceType != FLOOR_TYPE_7)) {
+    if ((surfaceType != FLOOR_TYPE_4 && surfaceType != FLOOR_TYPE_7) || Player_GetMask(play) == PLAYER_MASK_SKULL) {
         this->actor.speed = 0.0f;
         this->actionfunc = EnReeba_SetupSink;
     } else if ((this->moveTimer == 0) || (this->actor.xzDistToPlayer < 30.0f) ||
@@ -318,7 +318,7 @@ void EnReeba_MoveBig(EnReeba* this, PlayState* play) {
     surfaceType = SurfaceType_GetFloorType(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId);
 
     if (((surfaceType != FLOOR_TYPE_4) && (surfaceType != FLOOR_TYPE_7)) || (this->actor.xzDistToPlayer > 400.0f) ||
-        (this->actor.bgCheckFlags & BGCHECKFLAG_WALL)) {
+        (this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || Player_GetMask(play) == PLAYER_MASK_SKULL) {
         this->actionfunc = EnReeba_SetupSink;
     } else {
         if ((this->actor.xzDistToPlayer < 70.0f) && (this->bigLeeverTimer == 0)) {
