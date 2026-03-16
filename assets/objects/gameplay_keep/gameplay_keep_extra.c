@@ -468,3 +468,29 @@ Vtx gLinkChildBunnyHoodVtx[] = {
 Gfx gLinkChildBunnyHoodDL[114] = {
 #include "assets/objects/object_link_child/gLinkChildBunnyHoodDL.inc.c"
 };
+
+// Beehive
+
+u64 gFieldBeehiveTex[TEX_LEN(u64, gFieldBeehiveTex_WIDTH, gFieldBeehiveTex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_field_keep/gFieldBeehiveTex.rgba16.inc.c"
+};
+
+u64 gFieldBeehiveFragmentTex[TEX_LEN(u64, gFieldBeehiveFragmentTex_WIDTH, gFieldBeehiveFragmentTex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentTex.rgba16.inc.c"
+};
+
+Vtx gFieldBeehiveDL_05009100_Vtx_fused_[] = {
+#include "assets/objects/gameplay_field_keep/gFieldBeehiveDL_05009100_Vtx_fused_.inc.c"
+};
+
+Vtx gFieldBeehiveFragmentDL_05009910_Vtx[] = {
+#include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentDL_05009910_Vtx.inc.c"
+};
+
+Gfx gFieldBeehiveDL[44] = {
+#include "assets/objects/gameplay_field_keep/gFieldBeehiveDL.inc.c"
+};
+
+Gfx gFieldBeehiveFragmentDL[18] = {
+#include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentDL.inc.c"
+};

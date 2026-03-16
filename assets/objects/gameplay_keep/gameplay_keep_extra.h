@@ -35,4 +35,11 @@ extern Gfx gLinkChildZoraMaskDL[65];
 extern Gfx gLinkChildGerudoMaskDL[84];
 extern Gfx gLinkChildBunnyHoodDL[114];
 
+#define gFieldBeehiveTex_WIDTH 32
+#define gFieldBeehiveTex_HEIGHT 32
+#define gFieldBeehiveFragmentTex_WIDTH 16
+#define gFieldBeehiveFragmentTex_HEIGHT 16
+extern Gfx gFieldBeehiveDL[44];
+extern Gfx gFieldBeehiveFragmentDL[18];
+
 #endif
