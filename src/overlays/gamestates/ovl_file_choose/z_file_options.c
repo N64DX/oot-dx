@@ -126,6 +126,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 19 },
     { 0, "Use MM Young Link",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 20 },
     { 0, "Jump Animations",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 21 },
+    { 0, "Use MM Bottles",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 22 },
 #if !PLATFORM_IQUE
     { 0, "Use MM Title Cards",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 23 },
 #endif
