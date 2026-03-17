@@ -6,6 +6,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_hsstump"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_hsstump/object_hsstump.o"
+    number 6
+endseg
+
+beginseg
     name "object_ladder"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ladder/object_ladder.o"

@@ -25,6 +25,7 @@
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
 typedef enum DrawbridgeType {
+    /* -2 */ DT_DRAWBRIDGE_VALLEY = -2,
     /* -1 */ DT_DRAWBRIDGE = -1,
     /*  0 */ DT_CHAIN_1,
     /*  1 */ DT_CHAIN_2
@@ -35,6 +36,7 @@ void BgSpot00Hanebasi_Destroy(Actor* thisx, PlayState* play);
 void BgSpot00Hanebasi_Update(Actor* thisx, PlayState* play);
 void BgSpot00Hanebasi_Draw(Actor* thisx, PlayState* play);
 
+void BgSpot00Hanebasi_DrawbridgeValleyWait(BgSpot00Hanebasi* this, PlayState* play);
 void BgSpot00Hanebasi_DrawbridgeWait(BgSpot00Hanebasi* this, PlayState* play);
 void BgSpot00Hanebasi_DrawbridgeRiseAndFall(BgSpot00Hanebasi* this, PlayState* play);
 void BgSpot00Hanebasi_SetTorchLightInfo(BgSpot00Hanebasi* this, PlayState* play);
@@ -70,6 +72,8 @@ void BgSpot00Hanebasi_Init(Actor* thisx, PlayState* play) {
     DynaPolyActor_Init(&this->dyna, DYNA_TRANSFORM_POS);
 
     if (this->dyna.actor.params == DT_DRAWBRIDGE) {
+        CollisionHeader_GetVirtual(&gHyruleFieldCastleDrawbridgeHorseBlockedCol, &colHeader);
+    } else if (this->dyna.actor.params == DT_DRAWBRIDGE_VALLEY) {
         CollisionHeader_GetVirtual(&gHyruleFieldCastleDrawbridgeCol, &colHeader);
     } else {
         CollisionHeader_GetVirtual(&gHyruleFieldCastleDrawbridgeChainsCol, &colHeader);
@@ -122,6 +126,8 @@ void BgSpot00Hanebasi_Init(Actor* thisx, PlayState* play) {
         }
 
         this->actionFunc = BgSpot00Hanebasi_SetTorchLightInfo;
+    } else if (this->dyna.actor.params == DT_DRAWBRIDGE_VALLEY) {
+        this->actionFunc = BgSpot00Hanebasi_DrawbridgeValleyWait;
     } else {
         this->actionFunc = BgSpot00Hanebasi_SetTorchLightInfo;
     }
@@ -143,6 +149,8 @@ void BgSpot00Hanebasi_Destroy(Actor* thisx, PlayState* play) {
     }
 }
 
+void BgSpot00Hanebasi_DrawbridgeValleyWait(BgSpot00Hanebasi* this, PlayState* play) {}
+
 void BgSpot00Hanebasi_DrawbridgeWait(BgSpot00Hanebasi* this, PlayState* play) {
     BgSpot00Hanebasi* child = (BgSpot00Hanebasi*)this->dyna.actor.child;
 
@@ -151,11 +159,11 @@ void BgSpot00Hanebasi_DrawbridgeWait(BgSpot00Hanebasi* this, PlayState* play) {
         return;
     }
 
-    if ((this->dyna.actor.shape.rot.x != 0) && (CutsceneFlags_Get(play, 0) || (!IS_CUTSCENE_LAYER && (IS_DAY || (CQ_IS_TIMESKIP && GET_EVENTCHKINF(EVENTCHKINF_EPONA_OBTAINED) && gSaveContext.save.info.horseData.sceneId == SCENE_HYRULE_FIELD)) ))) {
+    if ((this->dyna.actor.shape.rot.x != 0) && (CutsceneFlags_Get(play, 0) || (!IS_CUTSCENE_LAYER && IS_DAY))) {
         this->actionFunc = BgSpot00Hanebasi_DrawbridgeRiseAndFall;
         this->destAngle = 0;
         child->destAngle = 0;
-    } else if ((this->dyna.actor.shape.rot.x == 0) && !IS_CUTSCENE_LAYER && !IS_DAY && (!CQ_IS_TIMESKIP || !GET_EVENTCHKINF(EVENTCHKINF_EPONA_OBTAINED) || gSaveContext.save.info.horseData.sceneId != SCENE_HYRULE_FIELD) ) {
+    } else if ((this->dyna.actor.shape.rot.x == 0) && !IS_CUTSCENE_LAYER && !IS_DAY) {
         this->actionFunc = BgSpot00Hanebasi_DrawbridgeRiseAndFall;
         this->destAngle = -0x4000;
         child->destAngle = -0xFE0;
@@ -324,6 +332,8 @@ void BgSpot00Hanebasi_Draw(Actor* thisx, PlayState* play) {
                 sTorchFlameScale = 0.0f;
             }
         }
+    } else if (thisx->params == DT_DRAWBRIDGE_VALLEY) {
+        gSPDisplayList(POLY_OPA_DISP++, gHyruleFieldCastleDrawbridgeDL);
     } else {
         gSPDisplayList(POLY_OPA_DISP++, gHyruleFieldCastleDrawbridgeChainsDL);
     }

@@ -10,6 +10,9 @@
 #pragma increment_block_number "gc-eu:76 gc-eu-mq:76 gc-jp:76 gc-jp-ce:76 gc-jp-mq:76 gc-us:76 gc-us-mq:76 ique-cn:66" \
                                "ntsc-1.0:64 ntsc-1.1:64 ntsc-1.2:64 pal-1.0:64 pal-1.1:64"
 
+Vec3f gZeroVec3f = { 0.0f, 0.0f, 0.0f };
+Vec3s gZeroVec3s = { 0, 0, 0 };
+
 s32 Math3D_LineVsLineClosestTwoPoints(Vec3f* lineAPointA, Vec3f* lineAPointB, Vec3f* lineBPointA, Vec3f* lineBPointB,
                                       Vec3f* lineAClosestToB, Vec3f* lineBClosestToA);
 s32 Math3D_TriLineIntersect(Vec3f* v0, Vec3f* v1, Vec3f* v2, f32 nx, f32 ny, f32 nz, f32 originDist, Vec3f* linePointA,

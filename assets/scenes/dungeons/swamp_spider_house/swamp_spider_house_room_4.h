@@ -1,5 +1,5 @@
 #ifndef SWAMP_SPIDER_HOUSE_ROOM_4_H
-#define SWAMP_SPIDER_HOUSE_ROOM_4_H 1
+#define SWAMP_SPIDER_HOUSE_ROOM_4_H
 
 #include "room.h"
 #include "scene.h"

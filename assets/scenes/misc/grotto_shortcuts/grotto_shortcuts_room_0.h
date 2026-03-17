@@ -1,5 +1,5 @@
 #ifndef GROTTO_SHORTCUTS_ROOM_0_H
-#define GROTTO_SHORTCUTS_ROOM_0_H 1
+#define GROTTO_SHORTCUTS_ROOM_0_H
 
 #include "room.h"
 #include "scene.h"

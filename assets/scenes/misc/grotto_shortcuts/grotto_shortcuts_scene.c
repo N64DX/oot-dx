@@ -14,7 +14,7 @@
 #include "ultra64.h"
 
 SceneCmd grotto_shortcuts_sceneCommands[] = {
-    SCENE_CMD_SOUND_SETTINGS(4, 19, 28),
+    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_INSIDE_DEKU_TREE),
     SCENE_CMD_ROOM_LIST(2, grotto_shortcuts_sceneRoomList0x000198),
     SCENE_CMD_MISC_SETTINGS(0x00, 0x00000016),
     SCENE_CMD_COL_HEADER(&grotto_shortcuts_sceneCollisionHeader_00AC9C),
