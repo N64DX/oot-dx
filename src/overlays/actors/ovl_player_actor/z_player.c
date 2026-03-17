@@ -6311,7 +6311,12 @@ s32 func_8083A4A8(Player* this, PlayState* play) {
     yawDiff = this->yaw - this->actor.shape.rot.y;
 
     if ((ABS(yawDiff) < 0x1000) && (this->speedXZ > 4.0f)) {
-        anim = &gPlayerAnim_link_normal_run_jump;
+        f32 r = JUMP_ANIMATIONS && this->heldActor == NULL ? Rand_ZeroOne() : 1.0f;
+        if (r < 0.25f)
+            anim = &gPlayerAnim_link_normal_newroll_jump_20f;
+        else if (r < 0.5f)
+            anim = &gPlayerAnim_link_normal_newside_jump_20f;
+        else anim = &gPlayerAnim_link_normal_run_jump;
     } else {
         anim = &gPlayerAnim_link_normal_jump;
     }
@@ -10228,6 +10233,13 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
 
         LinkAnimation_Update(play, &this->skelAnime);
 
+        if (this->skelAnime.animation == &gPlayerAnim_link_normal_newside_jump_20f && !(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) { // Lock the newside_jump animation on its last frame until Link touches the ground
+            if (this->skelAnime.curFrame >= this->skelAnime.endFrame) {
+                this->skelAnime.curFrame = this->skelAnime.endFrame;
+                this->skelAnime.playSpeed = 0.0f;
+            }
+        }
+ 
         if (!(this->stateFlags2 & PLAYER_STATE2_19)) {
             func_8083DFE0(this, &speedTarget, &yawTarget);
         }
@@ -10237,8 +10249,9 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
         if (((this->stateFlags2 & PLAYER_STATE2_19) && (this->av1.actionVar1 == 2)) || !func_8083BBA0(this, play)) {
             if (this->actor.velocity.y < 0.0f) {
                 if (this->av2.actionVar2 >= 0) {
-                    if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || (this->av2.actionVar2 == 0) ||
-                        (this->fallDistance > 0)) {
+                    // Do not change the animation if it's newside_jump and Link hasn't touched the ground
+                    if (((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || (this->av2.actionVar2 == 0) ||
+                        (this->fallDistance > 0)) && this->skelAnime.animation != &gPlayerAnim_link_normal_newside_jump_20f) {
                         if ((sYDistToFloor > 800.0f) || (this->stateFlags1 & PLAYER_STATE1_2)) {
                             func_80843E14(this, NA_SE_VO_LI_FALL_S);
                             this->stateFlags1 &= ~PLAYER_STATE1_2;
@@ -10292,6 +10305,10 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
             }
         } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_run_jump) {
             anim = &gPlayerAnim_link_normal_run_jump_end;
+        } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_newroll_jump_20f) {
+            anim = &gPlayerAnim_link_normal_newroll_jump_end_20f;
+        } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_newside_jump_20f && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) {
+            anim = &gPlayerAnim_link_normal_newside_jump_end_20f;
         } else if (Player_CheckHostileLockOn(this)) {
             anim = &gPlayerAnim_link_anchor_landingR;
             func_80833C3C(this);
