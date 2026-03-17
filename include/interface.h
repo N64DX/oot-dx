@@ -147,6 +147,8 @@ typedef struct InterfaceContext {
         /* 0x026B */ u8    farores;    // "m_wind"
         /* 0x026C */ u8    dinsNayrus; // "m_magic"; din's fire and nayru's love
         /* 0x026D */ u8    all;        // "another"; enables all item restrictions
+        /* 0x026E */ u8    masks;      // "c_mask"
+        /* 0x026F */ u8    magicBow;   // "m_bow"
     }                   restrictions;
 } InterfaceContext; // size = 0x270
 
