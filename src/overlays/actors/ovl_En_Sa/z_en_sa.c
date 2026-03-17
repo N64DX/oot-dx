@@ -15,6 +15,9 @@
 #include "assets/objects/object_sa/object_sa.h"
 #include "assets/scenes/overworld/spot04/spot04_scene.h"
 #include "assets/scenes/overworld/spot05/spot05_scene.h"
+#if PLATFORM_N64
+#include "assets/scenes/overworld/spot05/spot05_cq_scene.h"
+#endif
 
 #define FLAGS                                                                                  \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY | ACTOR_FLAG_UPDATE_CULLING_DISABLED | \
@@ -639,7 +642,11 @@ void func_80AF683C(EnSa* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
 
     if (!(player->actor.world.pos.z >= -2220.0f) && !Play_InCsMode(play)) {
+#if PLATFORM_N64
+        play->csCtx.script = SEGMENTED_TO_VIRTUAL(IS_CHILD_QUEST ? gMeadowSariasSongCsCQ : gMeadowSariasSongCs);
+#else
         play->csCtx.script = SEGMENTED_TO_VIRTUAL(gMeadowSariasSongCs);
+#endif
         gSaveContext.cutsceneTrigger = 1;
         this->actionFunc = func_80AF68E4;
     }

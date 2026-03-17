@@ -133,3 +133,11 @@ DEFINE_SEQUENCE    (Sequence_109,       NA_BGM_CUTSCENE_EFFECTS, MEDIUM_CART, CA
 DEFINE_SEQUENCE    (Sequence_110,       NA_BGM_FIRE_TEMPLE_ALT,  MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // fire_temple_censored
 DEFINE_SEQUENCE    (Sequence_111,       NA_BGM_MINI_BOSS2,       MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_NO_AMBIENCE | SEQ_FLAG_RESTORE) // mini_boss2
 DEFINE_SEQUENCE    (Sequence_112,       NA_BGM_CAVERN,           MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME_PREV | SEQ_FLAG_ENEMY  ) // cavern
+DEFINE_SEQUENCE    (Sequence_113,       NA_BGM_SACRED_COVE,      MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME                        ) // sacred_cove
+DEFINE_SEQUENCE    (Sequence_114,       NA_BGM_TAL_TAL_HEIGHTS,  MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME                        ) // tal_tal_heights
+DEFINE_SEQUENCE    (Sequence_115,       NA_BGM_MYSTERY_FOREST,   MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME                        ) // mysterious_forest
+DEFINE_SEQUENCE    (Sequence_116,       NA_BGM_KOLIMA_FOREST,    MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME                        ) // kolima_forest
+DEFINE_SEQUENCE    (Sequence_117,       NA_BGM_KOLOKTOS,         MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME                        ) // koloktos
+DEFINE_SEQUENCE    (Sequence_118,       NA_BGM_WOODFALL_TEMPLE,  MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // woodfall_temple
+DEFINE_SEQUENCE    (Sequence_119,       NA_BGM_BOSS2,            MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // boss2
+DEFINE_SEQUENCE    (Sequence_120,       NA_BGM_SWAMP_REGION,     MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // swamp_region

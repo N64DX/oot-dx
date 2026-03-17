@@ -1,0 +1,40 @@
+<Soundfont Name="Soundfont_42_28" Index="42" Medium="MEDIUM_CART" CachePolicy="CACHE_LOAD_TEMPORARY" SampleBank="$(BUILD_DIR)/assets/audio/samplebanks/SampleBank_0.xml" Indirect="1">
+    <Envelopes>
+        <Envelope Name="Env0" Release="174">
+            <Point Delay="2" Arg="32700"/>
+            <Point Delay="298" Arg="0"/>
+            <Point Delay="1" Arg="0"/>
+        </Envelope>
+        <Envelope Name="Env1" Release="239">
+            <Point Delay="2" Arg="32700"/>
+            <Point Delay="1" Arg="32700"/>
+            <Point Delay="32700" Arg="29430"/>
+        </Envelope>
+        <Envelope Name="Env2" Release="235">
+            <Point Delay="2" Arg="32700"/>
+            <Point Delay="1" Arg="32700"/>
+            <Point Delay="32700" Arg="29430"/>
+        </Envelope>
+    </Envelopes>
+    <Samples>
+        <Sample Name="SAMPLE_0_403"/>
+        <Sample Name="SAMPLE_0_404"/>
+        <Sample Name="SAMPLE_0_382"/>
+        <Sample Name="SAMPLE_0_648"/>
+        <Sample Name="SAMPLE_0_381"/>
+        <Sample Name="SAMPLE_0_119"/>
+        <Sample Name="SAMPLE_0_387"/>
+        <Sample Name="SAMPLE_0_372"/>
+        <Sample Name="SAMPLE_0_373"/>
+        <Sample Name="SAMPLE_0_374"/>
+    </Samples>
+    <Instruments>
+        <Instrument ProgramNumber="0" Name="INST_0" Envelope="Env0" Sample="SAMPLE_0_404" RangeLo="G3" SampleLo="SAMPLE_0_403"/>
+        <Instrument ProgramNumber="2" Name="INST_2" Envelope="Env1" Sample="SAMPLE_0_648" RangeLo="EF4" SampleLo="SAMPLE_0_382"/>
+        <Instrument ProgramNumber="3" Name="INST_3" Envelope="Env1" Sample="SAMPLE_0_381"/>
+        <Instrument ProgramNumber="6" Name="INST_6" Envelope="Env1" Sample="SAMPLE_0_119"/>
+        <Instrument ProgramNumber="7" Name="INST_7" Envelope="Env1" Sample="SAMPLE_0_387"/>
+        <Instrument ProgramNumber="10" Name="INST_10" Envelope="Env2" Sample="SAMPLE_0_373" RangeLo="EF3" SampleLo="SAMPLE_0_372" RangeHi="DF4" SampleHi="SAMPLE_0_374"/>
+        <Instrument ProgramNumber="11" Name="INST_11" Envelope="Env2" Sample="SAMPLE_0_374" RangeLo="EF3" SampleLo="SAMPLE_0_372" RangeHi="DF4" SampleHi="SAMPLE_0_374"/>
+    </Instruments>
+</Soundfont>

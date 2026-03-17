@@ -25,6 +25,8 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [Decomp Discord](https://discord.zelda.deco.mp)
 - [HackerOoT](https://github.com/HackerN64/HackerOoT)
 - [Hylian Modding Discord](http://discord.gg/qQqDsM8)
+- [Darunia's Joy](https://github.com/DaruniasJoy/OoT-Custom-Sequences)
+- [MMR Music Repo](https://mega.nz/folder/4g1xHbwL#pzE9l2KBs-kwCJJr6E6IKQ)
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
@@ -49,6 +51,13 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **LeSéducteur:** Buff Scrub
 - **Syeo & Trueffel:** Miniblin, Molmauk
 - **Zelda Spaceworld ´97 Experience:** Zol
+
+**Music tracks:**
+- "Kolima Forest" from "Golden Sun" by Asra
+- "Koloktos" from Skyward Sword by Zeraphyr
+- "Mysterious Forest" from "A Link to the Past" by Fish_waffle64
+- "Sacred Grove" from "Twilight Princess" by ZeldaBoy14
+- "Tal Tal Height" from "Link's Awakening DX" by NewSoupVi
 
 ### Instructions
 

@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_3.h"
+
+.startseq Sequence_117
+
+.incbin "aseq/koloktos.aseq"
+
+.endseq Sequence_117

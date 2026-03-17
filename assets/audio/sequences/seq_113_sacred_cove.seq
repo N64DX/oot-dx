@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_34.h"
+
+.startseq Sequence_113
+
+.incbin "aseq/sacred_cove.aseq"
+
+.endseq Sequence_113
