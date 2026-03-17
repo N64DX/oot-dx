@@ -121,7 +121,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Bow Aiming Reticle",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 14 },
     { 0, "No Low Health Beep",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 15 },
     { 0, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 16 },
-    { 0, "Fix Power Crouch Stab",  FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 17 },
+    { 0, "Fix Useful Glitches",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 17 },
     { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 18 },
     { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 19 },
     { 0, "Use MM Young Link",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 20 },

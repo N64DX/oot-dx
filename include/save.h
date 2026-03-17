@@ -511,7 +511,7 @@ typedef enum LinkAge {
 #define BOW_AIMING_RETICLE          ((gSaveContext.options[0] >> 14) & 1)  // Bits: 14
 #define NO_LOW_HEALTH_BEEP          ((gSaveContext.options[0] >> 15) & 1)  // Bits: 15
 #define UNINVERTED_AIMING           ((gSaveContext.options[0] >> 16) & 1)  // Bits: 16
-#define FIX_POWER_CROUCH_STAB       ((gSaveContext.options[0] >> 17) & 1)  // Bits: 17
+#define FIX_USEFUL_GLITCHES         ((gSaveContext.options[0] >> 17) & 1)  // Bits: 17
 #define REFLECT_CHEST_CONTENTS      ((gSaveContext.options[0] >> 18) & 1)  // Bits: 18
 #define EASIER_FISHING              ((gSaveContext.options[0] >> 19) & 1)  // Bits: 19
 #define USE_YOUNG_LINK              ((gSaveContext.options[0] >> 20) & 1)  // Bits: 20
