@@ -128,6 +128,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
 #if !PLATFORM_IQUE
     { 0, "Use MM Title Cards",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 23 },
 #endif
+    { 0, "Use MM HUD",             FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 24 },
     { 0, "Health Recovery",        FileSelectOptions_SetOptionMax3, FileSelectOptions_GetHealthRecovery, 1, 0  },
     { 0, "Damage Taken",           FileSelectOptions_SetOptionMax7, FileSelectOptions_GetDamageTaken,    1, 2  },
     { 0, "Monster Health",         FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 5  },

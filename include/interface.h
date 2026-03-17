@@ -155,6 +155,8 @@ typedef struct InterfaceContext {
  */
 #define A_BUTTON_X 186 + WS_SHIFT_FULL
 #define A_BUTTON_Y 9
+#define A_MM_BUTTON_X 190 + WS_SHIFT_FULL
+#define A_MM_BUTTON_Y 23
 
 #if !PLATFORM_GC
 #define A_BUTTON_R 90
@@ -165,9 +167,14 @@ typedef struct InterfaceContext {
 #define A_BUTTON_G 200
 #define A_BUTTON_B 50
 #endif
+#define A_MM_BUTTON_R 100
+#define A_MM_BUTTON_G 200
+#define A_MM_BUTTON_B 255
 
 #define B_BUTTON_X 160 + WS_SHIFT_FULL
 #define B_BUTTON_Y 17
+#define B_MM_BUTTON_X 167 + WS_SHIFT_FULL
+#define B_MM_BUTTON_Y 17
 
 #if !PLATFORM_GC
 #define B_BUTTON_R 0
@@ -178,6 +185,9 @@ typedef struct InterfaceContext {
 #define B_BUTTON_G 30
 #define B_BUTTON_B 30
 #endif
+#define B_MM_BUTTON_R 100
+#define B_MM_BUTTON_G 255
+#define B_MM_BUTTON_B 120
 
 #define C_LEFT_BUTTON_X 227 + WS_SHIFT_FULL
 #define C_LEFT_BUTTON_Y 18
@@ -209,6 +219,9 @@ typedef struct InterfaceContext {
 #define START_BUTTON_G 120
 #define START_BUTTON_B 120
 #endif
+#define START_MM_BUTTON_R 255
+#define START_MM_BUTTON_G 130
+#define START_MM_BUTTON_B 60
 
 /**
  * These are the colors for the hearts in the interface. The prim color is the red color of the heart
