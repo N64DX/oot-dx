@@ -1,6 +1,5 @@
 #include "nes_font_static_all.h"
 
-
 u64 gMsgChar20SpaceTex[TEX_LEN(u64, gMsgChar20SpaceTex_WIDTH, gMsgChar20SpaceTex_HEIGHT, 4)] = {
 #include "assets/textures/nes_font_static/gMsgChar20SpaceTex.i4.inc.c"
 };
