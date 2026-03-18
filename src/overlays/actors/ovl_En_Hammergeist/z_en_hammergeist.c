@@ -403,7 +403,6 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
     EnHammergeist_ChangeFace(this, HAMMERGEIST_FACE_NORMAL);
 
     EnHammergeist_InitAndSetCollision(this, play);
-    Actor_SetGildedSwordDamageTaken(thisx);
     SkelAnime_InitFlex(play, &this->skelAnime, &gHammergeistSkel, NULL, this->jointTable, this->morphTable, GHAMMERGEISTSKEL_NUM_LIMBS);
     EnHammergeist_SetupDoNothing(this, play);
 

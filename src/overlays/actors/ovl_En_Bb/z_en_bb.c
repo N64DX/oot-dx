@@ -361,7 +361,6 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
             case ENBB_BLUE:
                 thisx->naviEnemyId = NAVI_ENEMY_BLUE_BUBBLE;
                 thisx->colChkInfo.damageTable = &sDamageTableBlueGreen;
-                Actor_SetGildedSwordDamageTaken(thisx);
                 this->flamePrimBlue = this->flameEnvColor.b = 255;
                 thisx->world.pos.y += 50.0f;
                 EnBb_SetupBlue(this);
@@ -370,7 +369,6 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
             case ENBB_RED:
                 thisx->naviEnemyId = NAVI_ENEMY_RED_BUBBLE;
                 thisx->colChkInfo.damageTable = &sDamageTableRed;
-                Actor_SetGildedSwordDamageTaken(thisx);
                 this->flameEnvColor.r = 255;
                 this->collider.elements[0].base.atDmgInfo.effect = 1;
                 EnBb_SetupRed(play, this);
@@ -378,7 +376,6 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
             case ENBB_WHITE:
                 thisx->naviEnemyId = NAVI_ENEMY_WHITE_BUBBLE;
                 thisx->colChkInfo.damageTable = &sDamageTableWhite;
-                Actor_SetGildedSwordDamageTaken(thisx);
                 this->path = this->actionState;
                 blureInit.p1StartColor[0] = blureInit.p1StartColor[1] = blureInit.p1StartColor[2] =
                     blureInit.p1StartColor[3] = blureInit.p2StartColor[0] = blureInit.p2StartColor[1] =
@@ -407,7 +404,6 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
                 thisx->naviEnemyId = NAVI_ENEMY_GREEN_BUBBLE;
                 this->bobSize = (this->actionState & 0xF) * 20.0f;
                 thisx->colChkInfo.damageTable = &sDamageTableBlueGreen;
-                Actor_SetGildedSwordDamageTaken(thisx);
                 this->flameEnvColor.g = 255;
                 thisx->colChkInfo.health = 1;
 

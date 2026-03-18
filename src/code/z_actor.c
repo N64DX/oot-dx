@@ -1950,13 +1950,19 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                             getItemId = -GI_BOMB_BAG_30;
                         else if (CUR_UPG_VALUE(UPG_BOMB_BAG) >= 2)
                             getItemId = -GI_BOMB_BAG_40;
-                    } else if (getItemId == -GI_WALLET_ADULT || getItemId == -GI_WALLET_GIANT || getItemId == -GI_WALLET_ROYAL) {
-                        if (CUR_UPG_VALUE(UPG_WALLET) == 0)
-                            getItemId = -GI_WALLET_ADULT;
+                    } else if (getItemId == -GI_WALLET_ADULT || getItemId == -GI_WALLET_GIANT || getItemId == -GI_WALLET_MASTER || getItemId == -GI_WALLET_ROYAL || getItemId == -GI_WALLET_TYCOON || getItemId == -GI_WALLET_BOTTOMLESS) {
+                        if (CUR_UPG_VALUE(UPG_WALLET2) >= 2)
+                            getItemId = -GI_WALLET_BOTTOMLESS;
+                        else if (CUR_UPG_VALUE(UPG_WALLET2) == 1)
+                            getItemId = -GI_WALLET_TYCOON;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) == 3)
+                            getItemId = -GI_WALLET_ROYAL;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) == 2)
+                            getItemId = -GI_WALLET_MASTER;
                         else if (CUR_UPG_VALUE(UPG_WALLET) == 1)
                             getItemId = -GI_WALLET_GIANT;
-                        else if (CUR_UPG_VALUE(UPG_WALLET) >= 2)
-                            getItemId = -GI_WALLET_ROYAL;
+                        else if (CUR_UPG_VALUE(UPG_WALLET) == 0)
+                            getItemId = -GI_WALLET_ADULT;
                     } else if (getItemId == -GI_DEKU_STICK_UPGRADE_20 || getItemId == -GI_DEKU_STICK_UPGRADE_30) {
                         if (CUR_UPG_VALUE(UPG_DEKU_STICKS) == 0)
                             getItemId = -GI_DEKU_STICKS_1;
@@ -1993,6 +1999,8 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                             getItemId = -GI_HOOKSHOT;
                         else if (gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] == ITEM_HOOKSHOT || gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] == ITEM_LONGSHOT)
                             getItemId = -GI_LONGSHOT;
+                    } else if (getItemId == -GI_ROCS_FEATHER || getItemId == -GI_GOLDEN_FEATHER) {
+                        getItemId = (HAS_ROCS_FEATHER || gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_ROCS_FEATHER) ? -GI_GOLDEN_FEATHER : -GI_ROCS_FEATHER;
                     }
 
                     if (IS_CHILD_QUEST_AS_CHILD) {
@@ -4872,10 +4880,37 @@ u8 func_800355E4(PlayState* play, Collider* collider) {
 }
 
 u8 Actor_ApplyDamage(Actor* actor) {
-    if (actor->colChkInfo.health <= actor->colChkInfo.damage) {
+    u8 damage = actor->colChkInfo.damage;
+    s32 dmgFlags = actor->colChkInfo.dmgFlags;
+
+    if (IS_CHILD_QUEST_AS_CHILD && actor->colChkInfo.itemAction != PLAYER_IA_SWORD_FAIRYS) {
+        if (damage == 4 && dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT))
+            damage = gSaveContext.save.info.playerData.bgsFlag ? 3 : 2;
+        else if (damage == 8 && dmgFlags & (DMG_JUMP_GIANT | DMG_SPIN_GIANT | DMG_SLASH_GIANT))
+            damage = gSaveContext.save.info.playerData.bgsFlag ? 6 : 4;
+    }
+
+    if (SHIELD_DURABILITY && damage > 0 && dmgFlags & (DMG_SLASH_KOKIRI | DMG_JUMP_KOKIRI | DMG_SPIN_KOKIRI) && actor->colChkInfo.itemAction == PLAYER_IA_SWORD_KOKIRI && IS_HEROS_SWORD) {
+        u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
+        if (IS_HEROS_SHIELD && shield == 2)
+            shield = 4;
+        if (shield != PLAYER_SHIELD_NONE) {
+            u8* currentDurability = &gSaveContext.save.info.shieldDurability[shield - 1];
+            if (shield == PLAYER_SHIELD_DEKU)
+                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_DEKU)   ? MAX_DURABILITY_SHIELD_DEKU   : *currentDurability + 3;
+            else if (shield == PLAYER_SHIELD_HYLIAN)
+                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_HYLIAN) ? MAX_DURABILITY_SHIELD_HYLIAN : *currentDurability + 3;
+            else if (shield == PLAYER_SHIELD_MIRROR)
+                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_MIRROR) ? MAX_DURABILITY_SHIELD_MIRROR : *currentDurability + 3;
+            else if (shield == PLAYER_SHIELD_HEROS)
+                *currentDurability = (*currentDurability + 3> MAX_DURABILITY_SHIELD_HEROS)   ? MAX_DURABILITY_SHIELD_HEROS  : *currentDurability + 3;
+        }
+    }
+
+    if (actor->colChkInfo.health <= damage) {
         actor->colChkInfo.health = 0;
     } else {
-        actor->colChkInfo.health -= actor->colChkInfo.damage;
+        actor->colChkInfo.health -= damage;
     }
 
     return actor->colChkInfo.health;
@@ -6475,14 +6510,6 @@ u16 Actor_EnemyHealthMultiply(u16 health, u8 type) {
             return health /= 2;
         default:
             return health;
-    }
-}
-
-void Actor_SetGildedSwordDamageTaken(Actor* thisx) {
-    if (IS_CHILD_QUEST_AS_CHILD) {
-        thisx->colChkInfo.damageTable->table[10] = (thisx->colChkInfo.damageTable->table[10] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[23] = (thisx->colChkInfo.damageTable->table[23] & 0xF0) | 3;
-        thisx->colChkInfo.damageTable->table[26] = (thisx->colChkInfo.damageTable->table[26] & 0xF0) | 6;
     }
 }
 

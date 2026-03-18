@@ -191,6 +191,7 @@ void Sram_InitNewSave(void) {
     gSaveContext.save.totalDays = 0;
     gSaveContext.save.bgsDayCount = 0;
     gSaveContext.cheated = 0;
+    gSaveContext.save.info.energy = 0;
 
     gSaveContext.save.info.playerData = sNewSavePlayerData;
     gSaveContext.save.info.equips = sNewSaveEquips;
@@ -405,6 +406,10 @@ void Sram_InitDebugSave(void) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
         SET_HEROS_SWORD;
         SET_HEROS_SHIELD;
+        SET_MAGIC_BEANS;
+        SET_ROCS_FEATHER;
+        SET_HAMMER;
+        SET_FAIRYS_SWORD;
     }
 
     gSaveContext.save.info.horseData.sceneId = SCENE_HYRULE_FIELD;
@@ -434,11 +439,17 @@ void Sram_InitDebugSave(void) {
         }
     }
 
+    gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
+    gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
+    gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
+    gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
+
     Sram_SetRushQuestFlags();
     gSaveContext.save.entranceIndex = ENTR_HYRULE_FIELD_0;
     gSaveContext.save.info.playerData.magicLevel = 0;
     gSaveContext.save.info.sceneFlags[SCENE_WATER_TEMPLE].swch = 0x40000000;
     gSaveContext.cheated = 1;
+    gSaveContext.save.info.energy = 0;
 }
 
 static s16 sDungeonEntrances[] = {
@@ -683,6 +694,20 @@ void Sram_OpenSave(SramContext* sramCtx) {
 
     if (IS_CHILD_QUEST)
         gSaveContext.save.linkAge = LINK_AGE_CHILD;
+
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)   && (gSaveContext.save.info.shieldDurability[0] == 0 || gSaveContext.save.info.shieldDurability[0] >= MAX_DURABILITY_SHIELD_DEKU))
+        gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) && (gSaveContext.save.info.shieldDurability[1] == 0 || gSaveContext.save.info.shieldDurability[1] >= MAX_DURABILITY_SHIELD_HYLIAN))
+        gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR) && (gSaveContext.save.info.shieldDurability[2] == 0 || gSaveContext.save.info.shieldDurability[2] >= MAX_DURABILITY_SHIELD_MIRROR) && !gSaveContext.save.info.mirrorShieldIsBroken)
+        gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)  && (gSaveContext.save.info.shieldDurability[3] == 0 || gSaveContext.save.info.shieldDurability[3] >= MAX_DURABILITY_SHIELD_HEROS))
+        gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
+
+    if (INV_CONTENT(ITEM_MAGIC_BEAN) == ITEM_MAGIC_BEAN)
+        SET_MAGIC_BEANS;
+    if (INV_CONTENT(ITEM_HAMMER) == ITEM_HAMMER)
+        SET_HAMMER;
 
     // Cheating
     if (DAMAGE_TAKEN == 7 || MONSTER_HP == 7 || ELITE_HP == 7 || BOSS_HP == 7 || DEBUG_MODE || DEBUG_FEATURES)

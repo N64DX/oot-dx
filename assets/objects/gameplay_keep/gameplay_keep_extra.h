@@ -1,6 +1,10 @@
 #ifndef GAMEPLAY_KEEP_EXTRA_H
 #define GAMEPLAY_KEEP_EXTRA_H
 
+#include "tex_len.h"
+
+extern u64 gDropFeatherTex[TEX_LEN(u64, 32, 32, 16)];
+
 extern Gfx gLinkHookshotChainDL[23];
 extern Gfx gLinkOcarinaHookshotTipDL[22];
 extern Gfx gLinkMajoraHookshotTipDL[];

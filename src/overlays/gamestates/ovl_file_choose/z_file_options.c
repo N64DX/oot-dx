@@ -140,6 +140,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { 0, "Static Dark Link HP",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 15 },
     { 0, "No Bottled Fairies",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 16 },
     { 0, "No Item Drops",          FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 17 },
+    { 0, "Shield Durability",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 18 },
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {

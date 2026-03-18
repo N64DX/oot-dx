@@ -58,10 +58,12 @@
 // This is called "adjusted" for now.
 #define PLAYER_ANIM_ADJUSTED_SPEED (2.0f / 3.0f)
 
+#define MAX_FEATHER_USES 1
+
 typedef struct GetItemEntry {
     /* 0x00 */ u8 itemId;
     /* 0x01 */ u8 field; // various bit-packed data
-    /* 0x02 */ s8 gi;    // defines the draw id and chest opening animation
+    /* 0x02 */ s16 gi;   // defines the draw id and chest opening animation
     /* 0x03 */ u16 textId;
     /* 0x05 */ u16 objectId;
 } GetItemEntry; // size = 0x07
@@ -274,6 +276,7 @@ s32 Player_TryCsAction(PlayState* play, Actor* actor, s32 csAction);
 void func_80853080(Player* this, PlayState* play);
 s32 Player_InflictDamage(PlayState* play, s32 damage);
 void Player_StartTalking(PlayState* play, Actor* actor);
+void func_80838940(Player* this, LinkAnimationHeader* anim, f32 arg2, PlayState* play, u16 sfxId);
 
 void Player_Action_80840450(Player* this, PlayState* play);
 void Player_Action_808407CC(Player* this, PlayState* play);
@@ -536,6 +539,14 @@ static s32 sWorldYawToTouchedWall = 0;
 static s16 sFloorShapePitch = 0;
 static s32 sUseHeldItem = false; // When true, the current held item is used. Is reset to false every frame.
 static s32 sHeldItemButtonIsHeldDown = false; // Indicates if the button for the current held item is held down.
+static u8 featherGroundTimer = 0;
+static u8 mirrorShieldRestoreTimer = 0;
+static u8 shieldDamageTimer = 0;
+static u8 Player_PerfectTime = 0;
+static s8 Player_PerfectResetTimer = 0;
+static bool Player_HasPerfected = false;
+static bool Player_CanPerfect = true;
+static bool Player_WasShieldUp = false;
 
 static u16 D_8085361C[] = {
     NA_SE_VO_LI_SWEAT,
@@ -795,6 +806,14 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_BULLET_BAG_50, OBJECT_GI_DEKUPOUCH, GID_BULLET_BAG_50, 0x6C, 0x80, CHEST_ANIM_LONG),
     // GI_ICE_TRAP
     GET_ITEM_NONE,
+    // GI_AMULET_OF_ENERGY
+    GET_ITEM(ITEM_AMULET_OF_ENERGY, OBJECT_GI_PENDANT, GID_AMULET_OF_ENERGY, 0x9009, 0x80, CHEST_ANIM_LONG),
+    // GI_ROCS_FEATHER
+    GET_ITEM(ITEM_ROCS_FEATHER, OBJECT_GI_FEATHER, GID_ROCS_FEATHER, 0x9003, 0x80, CHEST_ANIM_LONG),
+    // GI_GOLDEN_FEATHER
+    GET_ITEM(ITEM_GOLDEN_FEATHER, OBJECT_GI_FEATHER, GID_GOLDEN_FEATHER, 0x9004, 0x80, CHEST_ANIM_LONG),
+    // GI_SWORD_FAIRYS
+    GET_ITEM(ITEM_SWORD_FAIRYS, OBJECT_GI_SWORD_4_MM, GID_SWORD_FAIRYS, 0x900A, 0x80, CHEST_ANIM_LONG),
     // GI_SHIELD_MIRROR_MM
     GET_ITEM(ITEM_SHIELD_MIRROR, OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, 0x8003, 0x80, CHEST_ANIM_LONG),
     // GI_SHIELD_HEROS
@@ -809,7 +828,7 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_STRENGTH_SILVER_GAUNTLETS, OBJECT_GI_BRACELET, GID_POWER_BRACELET, 0x8007, 0x80, CHEST_ANIM_LONG),
     // GI_POWER_BRACELETS
 	GET_ITEM(ITEM_STRENGTH_GOLD_GAUNTLETS, OBJECT_GI_BRACELET, GID_POWER_BRACELET, 0x8008, 0x80, CHEST_ANIM_LONG),
-    // GI_HOOKSHOT_M
+    // GI_HOOKSHOT_MM
 	GET_ITEM(ITEM_HOOKSHOT, OBJECT_GI_HOOKSHOT_MM, GID_HOOKSHOT_MM, 0x36, 0x80, CHEST_ANIM_LONG),
     // GI_LONGSHOT_MM
 	GET_ITEM(ITEM_LONGSHOT, OBJECT_GI_HOOKSHOT_MM, GID_LONGSHOT_MM, 0x4F, 0x80, CHEST_ANIM_LONG),
@@ -817,8 +836,14 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_BOW, OBJECT_GI_HEROS_BOW, GID_HEROS_BOW, 0x8009, 0x80, CHEST_ANIM_LONG),
     // GI_GOLD_DUST
 	GET_ITEM(ITEM_BROKEN_GORONS_SWORD, OBJECT_GI_GOLD_DUST, GID_GOLD_DUST, 0x800A, 0x80, CHEST_ANIM_LONG),
+    // GI_WALLET_MASTER
+	GET_ITEM(ITEM_MASTER_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9005, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_ROYAL
-	GET_ITEM(ITEM_ROYAL_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9002, 0x80, CHEST_ANIM_LONG),
+	GET_ITEM(ITEM_ROYAL_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9006, 0x80, CHEST_ANIM_LONG),
+    // GI_WALLET_TYCOON
+	GET_ITEM(ITEM_TYCOON_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9007, 0x80, CHEST_ANIM_LONG),
+    // GI_WALLET_BOTTOMLESS
+	GET_ITEM(ITEM_BOTTOMLESS_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9008, 0x80, CHEST_ANIM_LONG),
 };
 
 #define GET_PLAYER_ANIM(group, type) D_80853914[group * PLAYER_ANIMTYPE_MAX + type]
@@ -1393,6 +1418,35 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_KOKIRI,        // ITEM_SWORD_KOKIRI
     PLAYER_IA_SWORD_MASTER,        // ITEM_SWORD_MASTER
     PLAYER_IA_SWORD_BIGGORON,      // ITEM_SWORD_BIGGORON
+    PLAYER_IA_NONE,                // ITEM_SHIELD_DEKU,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_HYLIAN,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_MIRROR,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_KOKIRI,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_GORON,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_ZORA,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_KOKIRI,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_IRON,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_HOVER,
+    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_30,
+    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_40,
+    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_50,
+    PLAYER_IA_NONE,                // ITEM_QUIVER_30,
+    PLAYER_IA_NONE,                // ITEM_QUIVER_40,
+    PLAYER_IA_NONE,                // ITEM_QUIVER_50,
+    PLAYER_IA_NONE,                // ITEM_BOMB_BAG_20,
+    PLAYER_IA_NONE,                // ITEM_BOMB_BAG_30,
+    PLAYER_IA_NONE,                // ITEM_BOMB_BAG_40,
+    PLAYER_IA_NONE,                // ITEM_STRENGTH_GORONS_BRACELET,
+    PLAYER_IA_NONE,                // ITEM_STRENGTH_SILVER_GAUNTLETS,
+    PLAYER_IA_NONE,                // ITEM_STRENGTH_GOLD_GAUNTLETS,
+    PLAYER_IA_NONE,                // ITEM_SCALE_SILVER,
+    PLAYER_IA_NONE,                // ITEM_SCALE_GOLDEN,
+    PLAYER_IA_NONE,                // ITEM_GIANTS_KNIFE,
+    PLAYER_IA_NONE,                // ITEM_ADULTS_WALLET,
+    PLAYER_IA_NONE,                // ITEM_GIANTS_WALLET,
+    PLAYER_IA_NONE,                // ITEM_DEKU_SEEDS,
+    PLAYER_IA_NONE,                // ITEM_FISHING_POLE,
+    PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
 };
 
 static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
@@ -1463,6 +1517,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     func_8083485C,                 // PLAYER_IA_MASK_GERUDO
     func_8083485C,                 // PLAYER_IA_MASK_TRUTH
     func_8083485C,                 // PLAYER_IA_LENS_OF_TRUTH
+    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_FAIRYS
 };
 
 static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
@@ -1533,6 +1588,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_MASK_GERUDO
     Player_InitDefaultIA,        // PLAYER_IA_MASK_TRUTH
     Player_InitDefaultIA,        // PLAYER_IA_LENS_OF_TRUTH
+    Player_InitDefaultIA,        // PLAYER_IA_SWORD_FAIRYS
 };
 
 typedef enum ItemChangeType {
@@ -2680,8 +2736,8 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
 
     if (equipType == EQUIP_TYPE_SHIELD && nextEquip == PLAYER_SHIELD_HEROS)
-        Inventory_ChangeEquipment(equipType, PLAYER_SHIELD_HYLIAN);
-    else Inventory_ChangeEquipment(equipType, nextEquip);
+        Inventory_ChangeEquipmentWithIcon(play, equipType, PLAYER_SHIELD_HYLIAN);
+    else Inventory_ChangeEquipmentWithIcon(play, equipType, nextEquip);
     Player_SetEquipmentData(play, this);
     Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
 
@@ -2699,29 +2755,29 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 }
 
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
-    static const EquipmentSwapEntry equipments[] = {
-        { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
-        { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
+    static const SwordSwapEntry equipments[] = {
+        { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
+        { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
     };
 
     u8 current    = gSaveContext.save.info.equips.buttonItems[0];
     u8 validCount = 0;
-    u8 validItems[4], validEquips[4], i, nextItem, nextEquip;
+    u8 validItems[ARRAY_COUNT(equipments)], validEquips[ARRAY_COUNT(equipments)], i, nextItem, nextEquip;
 
     if (current == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
         current = ITEM_SWORD_HEROS;
 
-    for (i=0; i<4; i++) {
-        const EquipmentSwapEntry* equipment = &equipments[i];
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
+        const SwordSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, equipment->equipId)) {
             validItems[validCount]  = equipment->itemId;
-            validEquips[validCount] = equipment->equipId;
+            validEquips[validCount] = equipment->equipSlot;
             validCount++;
         }
     }
@@ -2729,15 +2785,11 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     if (validCount == 0)
         return;
 
-    if (current == PLAYER_SWORD_NONE)
-        nextItem = validItems[0];
-    else {
-        for (i=0; i<validCount; i++)
-            if (validItems[i] == current) {
-                i = (i + 1) % validCount;
-                break;
-            }
-    }
+    for (i=0; i<validCount; i++)
+        if (validItems[i] == current) {
+            i = (i + 1) % validCount;
+            break;
+        }
 
     nextItem  = validItems[i  % validCount];
     nextEquip = validEquips[i % validCount] + 1;
@@ -2767,12 +2819,14 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
 
     u8 current    = this->currentShield;
     u8 validCount = 0;
-    u8 validItems[4], i, nextItem;
+    u8 validItems[ARRAY_COUNT(equipments)], i, nextItem;
     
-    for (i=0; i<4; i++) {
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
+            continue;
+        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && gSaveContext.save.info.mirrorShieldIsBroken)
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
@@ -2784,21 +2838,17 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
     if (validCount == 0)
         return;
 
-    if (current == PLAYER_SHIELD_NONE)
-        nextItem = validItems[0];
-    else {
-        for (i=0; i<validCount; i++)
-            if (validItems[i] == current) {
-                i = (i + 1) % validCount;
-                break;
-            }
-    }
+    for (i=0; i<validCount; i++)
+        if (validItems[i] == current) {
+            i = (i + 1) % validCount;
+            break;
+        }
 
     nextItem = validItems[i % validCount];
     if (current != nextItem) {
         if (nextItem == PLAYER_SHIELD_HEROS)
             SET_HEROS_SHIELD;
-        else if (nextItem == PLAYER_SHIELD_HYLIAN )
+        else if (nextItem == PLAYER_SHIELD_HYLIAN)
             CLEAR_HEROS_SHIELD;
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SHIELD, nextItem);
     }
@@ -2813,9 +2863,9 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
 
     u8 current    = TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
     u8 validCount = 0;
-    u8 validItems[3], i, nextItem;
+    u8 validItems[ARRAY_COUNT(equipments)], i, nextItem;
 
-    for (i=0; i<3; i++) {
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
@@ -2850,9 +2900,9 @@ void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
 
     u8 current    = BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
     u8 validCount = 0;
-    u8 validItems[3], i, nextItem;
+    u8 validItems[ARRAY_COUNT(equipments)], i, nextItem;
 
-    for (i=0; i<3; i++) {
+    for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const EquipmentSwapEntry* equipment = &equipments[i];
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
@@ -3032,6 +3082,14 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     Interface_ChangeDpadSet(play);
     ArrowCycleHandle(this, play);
 
+    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+        if (featherGroundTimer <= 3)
+                featherGroundTimer++;
+    } else featherGroundTimer = 0;
+
+    if (featherGroundTimer >= 3)
+            this->featherUseCount = 0;
+
     if (this->currentMask != PLAYER_MASK_NONE) {
         maskItemAction = this->currentMask - 1 + PLAYER_IA_MASK_KEATON;
 
@@ -3045,7 +3103,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     }
 
     if (!(this->stateFlags1 & (PLAYER_STATE1_CARRYING_ACTOR | PLAYER_STATE1_29)) && !func_8008F128(this)) {
-        if (this->itemAction >= PLAYER_IA_FISHING_POLE) {
+        if (this->itemAction >= PLAYER_IA_FISHING_POLE && this->itemAction != PLAYER_IA_SWORD_FAIRYS) {
             if (!Player_ItemIsInUse(this, B_BTN_ITEM) && !Player_ItemIsInUse(this, C_BTN_ITEM(0)) &&
                 !Player_ItemIsInUse(this, C_BTN_ITEM(1)) && !Player_ItemIsInUse(this, C_BTN_ITEM(2)) &&
                 !Player_ItemIsInUse(this, Interface_GetItemFromDpad(0)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(1)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(2)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(3)) ) {
@@ -3122,9 +3180,24 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                         Interface_LoadItemIcon1(play, i);
                 }
             }
-        } else {
+        } else if (item != ITEM_ROCS_FEATHER && item != ITEM_GOLDEN_FEATHER) {
             this->heldItemButton = i;
             Player_UseItem(play, this, item);
+        } else if (this->featherUseCount < MAX_FEATHER_USES) {
+            if ( ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f && item == ITEM_ROCS_FEATHER && gSaveContext.save.info.energy >= 15) || (item == ITEM_GOLDEN_FEATHER && gSaveContext.save.info.energy >= 10)) {
+                Vec3f effectsPos = this->actor.home.pos;
+                this->featherUseCount++;
+                func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, 7.15f, play, NA_SE_VO_LI_SWORD_N);
+                this->av2.actionVar2 = 1;
+                this->speedXZ = 5.0f;
+                this->actor.world.rot.y = this->yaw = this->actor.shape.rot.y;
+                effectsPos.y += 3;
+                EffectSsGRipple_Spawn(play, &effectsPos, 200, 300, 1);
+                EffectSsGSplash_Spawn(play, &effectsPos, NULL, NULL, 0, 150);
+                this->stateFlags2 &= ~(PLAYER_STATE2_19);
+                Player_PlaySfx(this, NA_SE_PL_SKIP);
+                gSaveContext.save.info.energy -= item == (ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy * 5);
+            }
         }
     }
 }
@@ -4025,7 +4098,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
                 } else {
                     Sfx_PlaySfxCentered(NA_SE_SY_ERROR);
                 }
-            } else if (itemAction >= PLAYER_IA_MASK_KEATON) {
+            } else if (itemAction >= PLAYER_IA_MASK_KEATON && itemAction != PLAYER_IA_SWORD_FAIRYS) {
                 // Handle wearable masks
                 if (this->currentMask != PLAYER_MASK_NONE) {
                     this->currentMask = PLAYER_MASK_NONE;
@@ -4036,13 +4109,13 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
 
                 func_808328EC(this, NA_SE_PL_CHANGE_ARMS);
             } else if (((itemAction >= PLAYER_IA_OCARINA_FAIRY) && (itemAction <= PLAYER_IA_OCARINA_OF_TIME)) ||
-                       (itemAction >= PLAYER_IA_BOTTLE_FISH)) {
+                       (itemAction >= PLAYER_IA_BOTTLE_FISH && itemAction != PLAYER_IA_SWORD_FAIRYS)) {
                 // Handle "cutscene items"
                 if (!Player_CheckHostileLockOn(this) ||
                     ((itemAction >= PLAYER_IA_BOTTLE_POTION_RED) && (itemAction <= PLAYER_IA_BOTTLE_FAIRY))) {
                     Player_TitleCardClear(play);
                     this->unk_6AD = 4;
-                    this->itemAction = this->itemAction = this->bottleAction = itemAction;
+                    this->itemAction = this->bottleAction = itemAction;
                 }
             } else if ((itemAction != this->heldItemAction) ||
                        ((this->heldActor == NULL) && (Player_ActionToExplosive(this, itemAction) >= 0))) {
@@ -4804,6 +4877,10 @@ s32 Player_TryActionInterrupt(PlayState* play, Player* this, SkelAnime* skelAnim
 }
 
 void func_80837530(PlayState* play, Player* this, s32 arg2) {
+    u8 meleeWeapon = Player_GetMeleeWeaponHeld(this);
+    if (meleeWeapon == 6)
+        meleeWeapon = 4;
+
     if (arg2 != 0) {
         this->unk_858 = 0.0f;
     } else {
@@ -4815,7 +4892,7 @@ void func_80837530(PlayState* play, Player* this, s32 arg2) {
     if (this->actor.category == ACTORCAT_PLAYER) {
         Actor_Spawn(&play->actorCtx, play, ACTOR_EN_M_THUNDER, this->bodyPartsPos[PLAYER_BODYPART_WAIST].x,
                     this->bodyPartsPos[PLAYER_BODYPART_WAIST].y, this->bodyPartsPos[PLAYER_BODYPART_WAIST].z, 0, 0, 0,
-                    Player_GetMeleeWeaponHeld(this) | arg2);
+                    meleeWeapon | arg2);
     }
 }
 
@@ -4960,7 +5037,7 @@ void func_80837918(Player* this, s32 quadIndex, u32 dmgFlags) {
 
 static u32 D_80854488[][2] = {
     { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT },
-    { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP },
+    { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT },
 };
 
 void func_80837948(PlayState* play, Player* this, s32 arg2) {
@@ -4997,8 +5074,6 @@ void func_80837948(PlayState* play, Player* this, s32 arg2) {
         temp = 1;
     } else {
         temp = Player_GetMeleeWeaponHeld(this) - 1;
-        if (IS_CHILD_QUEST_AS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON && !gSaveContext.save.info.playerData.bgsFlag)
-            temp = 0;
     }
 
     if ((arg2 >= PLAYER_MWA_FLIPSLASH_START) && (arg2 <= PLAYER_MWA_JUMPSLASH_FINISH)) {
@@ -5049,6 +5124,10 @@ void Player_SetInvulnerability(Player* this, s32 timer) {
  * @return false if player is out of health
  */
 s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
+    if ((this->invincibilityTimer != 0) || (this->actor.category != ACTORCAT_PLAYER)) {
+        return true;
+    }
+
     switch (DAMAGE_TAKEN) {
         case 1:
             damage *= 2;
@@ -5072,9 +5151,13 @@ s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
             damage /= 4;
             break;
     }
-    
-    if ((this->invincibilityTimer != 0) || (this->actor.category != ACTORCAT_PLAYER)) {
-        return true;
+
+    if (damage < 0) {
+        if (this->currentTunic == PLAYER_TUNIC_KOKIRI) {
+            if (gSaveContext.save.info.playerData.isMagicAcquired && gSaveContext.save.info.playerData.magic < gSaveContext.save.info.playerData.magicLevel * MAGIC_NORMAL_METER)
+                Player_UseSpecialPower(play, this, 15, 2, NA_SE_SY_HP_RECOVER, SPECIAL_POWER_MAGIC_REGEN, 3);
+        } else if (this->currentTunic == PLAYER_TUNIC_GORON)
+            damage = Player_UseSpecialPower(play, this, 25, 5, false, SPECIAL_POWER_REDUCE_DAMAGE, damage);
     }
 
     return Health_ChangeBy(play, damage);
@@ -5291,6 +5374,34 @@ void func_808382BC(Player* this) {
     }
 }
 
+void Player_CheckShieldDurability(Player* this, PlayState* play) {
+    if ( ( (this->shieldDamage > 0 && this->currentShield > PLAYER_SHIELD_NONE && SHIELD_DURABILITY) || (this->shieldDamage > 10 && this->currentShield == PLAYER_SHIELD_DEKU && IS_CHILD_QUEST) ) && shieldDamageTimer == 0) {
+        u8* currentDurability = &gSaveContext.save.info.shieldDurability[this->currentShield - 1];
+        shieldDamageTimer = SECONDS(0.5);
+
+        if (Player_PerfectTime > 0) {
+            Player_PlaySfx(this, NA_SE_IT_EXPLOSION_LIGHT);
+            this->shieldDamage = 0;
+            return;
+        }
+
+        this->shieldDamage = CLAMP_MAX(this->shieldDamage, 15);
+        *currentDurability -= CLAMP_MAX(this->shieldDamage, *currentDurability);
+        this->shieldDamage = 0;
+
+        if (*currentDurability == 0) {
+            Audio_PlaySfxGeneral(NA_SE_IT_MAJIN_SWORD_BROKEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            if (this->currentShield == PLAYER_SHIELD_MIRROR) {
+                Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
+                Player_SetEquipmentData(play, this);
+                gSaveContext.save.info.mirrorShieldIsBroken = true;
+            }
+            else Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
+            Message_StartTextbox(play, 0x305F, NULL);
+        }
+    }
+}
+
 s32 func_808382DC(Player* this, PlayState* play) {
     s32 pad;
     s32 sp68 = false;
@@ -5366,6 +5477,7 @@ s32 func_808382DC(Player* this, PlayState* play) {
                          (this->cylinder.elem.atHit != NULL) && (this->cylinder.elem.atHit->atFlags & 0x20000000))) {
 
                 Player_RequestRumble(this, 180, 20, 100, 0);
+                Player_CheckShieldDurability(this, play);
 
                 if (!Player_IsChildWithHylianShield(this)) {
                     if (this->invincibilityTimer >= 0) {
@@ -10247,7 +10359,7 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
                 this->skelAnime.playSpeed = 0.0f;
             }
         }
- 
+
         if (!(this->stateFlags2 & PLAYER_STATE2_19)) {
             func_8083DFE0(this, &speedTarget, &yawTarget);
         }
@@ -10315,7 +10427,7 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
             anim = &gPlayerAnim_link_normal_run_jump_end;
         } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_newroll_jump_20f) {
             anim = &gPlayerAnim_link_normal_newroll_jump_end_20f;
-        } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_newside_jump_20f && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) {
+        } else if (this->skelAnime.animation == &gPlayerAnim_link_normal_newside_jump_20f) {
             anim = &gPlayerAnim_link_normal_newside_jump_end_20f;
         } else if (Player_CheckHostileLockOn(this)) {
             anim = &gPlayerAnim_link_anchor_landingR;
@@ -12426,6 +12538,55 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
     s32 pad;
 
     sControlInput = input;
+
+    // Perfect Shield Block
+    if (SHIELD_DURABILITY) {
+        if (play->shootingGalleryStatus == 0 && this->currentShield > PLAYER_SHIELD_NONE) {
+            if (CHECK_BTN_ALL(sControlInput->cur.button, BTN_R)) {
+                Player_WasShieldUp = true;
+
+                if (Player_PerfectTime == 0 && Player_CanPerfect && !Player_HasPerfected) {
+                    Player_PerfectTime = 4;
+                    Player_CanPerfect = false;
+                    Player_HasPerfected = true;
+                    Player_PerfectResetTimer = -1;
+                }
+            } else {
+                if (Player_WasShieldUp) {
+                    Player_WasShieldUp = false;
+                    Player_PerfectResetTimer = 5;
+                }
+            }
+        }
+
+        if (!Player_CanPerfect && Player_PerfectTime > 0)
+            Player_PerfectTime--;
+        else if (Player_PerfectTime == 0 && !Player_CanPerfect)
+            Player_CanPerfect = true;
+
+        if (Player_HasPerfected && Player_PerfectResetTimer > 0)
+            Player_PerfectResetTimer--;
+        else if (Player_HasPerfected && Player_PerfectResetTimer == 0)
+            Player_HasPerfected = false;
+    }
+
+    if (shieldDamageTimer > 0)
+        shieldDamageTimer--;
+    if (SHIELD_DURABILITY && !(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
+        if ( (gSaveContext.save.info.shieldDurability[2] < MAX_DURABILITY_SHIELD_MIRROR && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.mirrorShieldIsBroken) {
+            if (mirrorShieldRestoreTimer < SECONDS(2))
+                mirrorShieldRestoreTimer++;
+            else {
+                mirrorShieldRestoreTimer = 0;
+                gSaveContext.save.info.shieldDurability[2]++;
+                if (gSaveContext.save.info.shieldDurability[2] >= 60 && gSaveContext.save.info.mirrorShieldIsBroken) {
+                    gSaveContext.save.info.mirrorShieldIsBroken = false;
+                    Message_StartTextbox(play, 0x9303, NULL);
+                    gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
+                }
+            }
+        } else mirrorShieldRestoreTimer = 0;
+    }
 
     if (this->actor.category == ACTORCAT_PLAYER && R_ENABLE_MIRROR == 1)
         sControlInput->rel.stick_x = -sControlInput->rel.stick_x;

@@ -384,6 +384,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
 
             if (cursorItem != PAUSE_ITEM_NONE) {
                 bool canSelectItem = true;
+                u8 currItem, nextItem;
                 index = cursorSlot * 4; // required to match?
                 KaleidoScope_SetCursorPos(pauseCtx, index, pauseCtx->itemVtx);
 
@@ -394,9 +395,21 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                         KaleidoScope_HandleSwitchMask(play, pauseCtx, input);
                         KaleidoScope_DrawSwapItemIcons(play, gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD], KaleidoScope_GetNextMask(), pauseCtx->alpha);
                     }
+                    if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_MAGIC_BEAN && HAS_MAGIC_BEANS && HAS_ROCS_FEATHER) {
+                        currItem = gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN;
+                        nextItem = currItem == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN;
+                        KaleidoScope_HandleSwitchFeather(play, pauseCtx, input);
+                        KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
+                    }
+                    if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_HAMMER && HAS_HAMMER && HAS_FAIRYS_SWORD) {
+                        currItem = gSaveContext.save.info.inventory.items[SLOT_HAMMER] == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER;
+                        nextItem = currItem == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER;
+                        KaleidoScope_HandleSwitchFairysSword(play, pauseCtx, input);
+                        KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
+                    }
 
                     if (FIX_USEFUL_GLITCHES && pauseCtx->mainState != PAUSE_MAIN_STATE_IDLE)
-                        canSelectItem = false;;
+                        canSelectItem = false;
 
                     if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT) && canSelectItem) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
@@ -408,35 +421,32 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                 pauseCtx->equipTargetCBtn = 2;
                             }
 
-                            pauseCtx->equipTargetItem = cursorItem;
-                            pauseCtx->equipTargetSlot = cursorSlot;
-                            pauseCtx->mainState = PAUSE_MAIN_STATE_3;
-                            pauseCtx->equipAnimX = pauseCtx->itemVtx[index].v.ob[0] * 10;
-                            pauseCtx->equipAnimY = pauseCtx->itemVtx[index].v.ob[1] * 10;
-                            pauseCtx->equipAnimAlpha = 255;
-                            sEquipAnimTimer = 0;
-                            sEquipState = 3;
-                            sEquipMoveTimer = 10;
-                            if ((pauseCtx->equipTargetItem == ITEM_ARROW_FIRE) ||
-                                (pauseCtx->equipTargetItem == ITEM_ARROW_ICE) ||
-                                (pauseCtx->equipTargetItem == ITEM_ARROW_LIGHT)) {
-                                index = 0;
-                                if (pauseCtx->equipTargetItem == ITEM_ARROW_ICE) {
-                                    index = 1;
-                                }
-                                if (pauseCtx->equipTargetItem == ITEM_ARROW_LIGHT) {
-                                    index = 2;
-                                }
-                                Audio_PlaySfxGeneral(NA_SE_SY_SET_FIRE_ARROW + index, &gSfxDefaultPos, 4,
-                                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-                                                     &gSfxDefaultReverb);
-                                pauseCtx->equipTargetItem = 0xBF + index;
-                                sEquipState = 0;
-                                pauseCtx->equipAnimAlpha = 0;
-                                sEquipMoveTimer = 6;
+                            currItem = gSaveContext.save.info.equips.buttonItems[pauseCtx->equipTargetCBtn + 1];
+                            if (cursorItem == currItem || (cursorItem == ITEM_ARROW_FIRE && currItem == ITEM_BOW_FIRE) || (cursorItem == ITEM_ARROW_ICE && currItem == ITEM_BOW_ICE) || (cursorItem == ITEM_ARROW_LIGHT && currItem == ITEM_BOW_LIGHT) ) {
+                                gSaveContext.save.info.equips.buttonItems[pauseCtx->equipTargetCBtn + 1] = gSaveContext.save.info.equips.cButtonSlots[pauseCtx->equipTargetCBtn] = ITEM_NONE;
+                                Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                             } else {
-                                Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                                pauseCtx->equipTargetItem = cursorItem;
+                                pauseCtx->equipTargetSlot = cursorSlot;
+                                pauseCtx->mainState = PAUSE_MAIN_STATE_3;
+                                pauseCtx->equipAnimX = pauseCtx->itemVtx[index].v.ob[0] * 10;
+                                pauseCtx->equipAnimY = pauseCtx->itemVtx[index].v.ob[1] * 10;
+                                pauseCtx->equipAnimAlpha = 255;
+                                sEquipAnimTimer = 0;
+                                sEquipState = 3;
+                                sEquipMoveTimer = 10;
+                                if (pauseCtx->equipTargetItem == ITEM_ARROW_FIRE || pauseCtx->equipTargetItem == ITEM_ARROW_ICE || pauseCtx->equipTargetItem == ITEM_ARROW_LIGHT) {
+                                    index = 0;
+                                    if (pauseCtx->equipTargetItem == ITEM_ARROW_ICE)
+                                        index = 1;
+                                    if (pauseCtx->equipTargetItem == ITEM_ARROW_LIGHT)
+                                        index = 2;
+                                    Audio_PlaySfxGeneral(NA_SE_SY_SET_FIRE_ARROW + index, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                                    pauseCtx->equipTargetItem = 0xBF + index;
+                                    sEquipState = 0;
+                                    pauseCtx->equipAnimAlpha = 0;
+                                    sEquipMoveTimer = 6;
+                                } else Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                             }
                         } else {
                             Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -466,9 +476,14 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                 }
                             }
 
-                            DPAD_BUTTON(button) = cursorSlot;
-                            Interface_LoadItemIcon1(play, button+4);
-                            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                            if (DPAD_BUTTON(button) == cursorSlot) {
+                                DPAD_BUTTON(button) = SLOT_NONE;
+                                Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                            } else {
+                                DPAD_BUTTON(button) = cursorSlot;
+                                Interface_LoadItemIcon1(play, button+4);
+                                Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                            }
                         }
                         else Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                     }
@@ -571,7 +586,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                       ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
 
     for (i = 0; i < 15; i++) {
-        if ((gAmmoItems[i] != ITEM_NONE) && (gSaveContext.save.info.inventory.items[i] != ITEM_NONE)) {
+        if ((gAmmoItems[i] != ITEM_NONE) && (gSaveContext.save.info.inventory.items[i] != ITEM_NONE) && (gSaveContext.save.info.inventory.items[i] == gAmmoItems[i])) {
             KaleidoScope_DrawAmmoCount(pauseCtx, play->state.gfxCtx, gSaveContext.save.info.inventory.items[i]);
         }
     }
@@ -953,5 +968,29 @@ void KaleidoScope_HandleSwitchMask(PlayState* play, PauseContext* pauseCtx, Inpu
                 currentMask = nextMask - ITEM_ZELDAS_LETTER;
             Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         }
+    }
+}
+
+void KaleidoScope_HandleSwitchFeather(PlayState* play, PauseContext* pauseCtx, Input* input) {
+    u8 i;
+
+    if (CHECK_BTN_ANY(input->press.button, BTN_CUP)) {
+        gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = (gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
+                Interface_LoadItemIcon1(play, i+4);
+        Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    }
+}
+
+void KaleidoScope_HandleSwitchFairysSword(PlayState* play, PauseContext* pauseCtx, Input* input) {
+    u8 i;
+
+    if (CHECK_BTN_ANY(input->press.button, BTN_CUP)) {
+        gSaveContext.save.info.inventory.items[SLOT_HAMMER] = (gSaveContext.save.info.inventory.items[SLOT_HAMMER] == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_HAMMER)
+                Interface_LoadItemIcon1(play, i+4);
+        Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
     }
 }

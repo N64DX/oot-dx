@@ -7,6 +7,7 @@
 struct PlayState;
 
 void Inventory_ChangeEquipment(s16 equipment, u16 value);
+void Inventory_ChangeEquipmentWithIcon(struct PlayState* play, s16 equipment, u16 value);
 u8 Inventory_DeleteEquipment(struct PlayState* play, s16 equipment);
 void Inventory_ChangeUpgrade(s16 upgrade, s16 value);
 
@@ -19,7 +20,7 @@ extern u8 gUpgradeShifts[UPG_MAX];
 extern u16 gUpgradeCapacities[UPG_MAX][4];
 extern u32 gGsFlagsMasks[4];
 extern u32 gGsFlagsShifts[4];
-extern void* gItemIcons[0x82];
+extern void* gItemIcons[0x8C];
 extern u8 gItemSlots[56];
 
 #endif

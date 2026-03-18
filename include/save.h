@@ -83,6 +83,13 @@ typedef struct {
         u8 requiredAge;
 } EquipmentSwapEntry;
 
+typedef struct {
+        u8 itemId;
+        u8 equipId;
+        u8 equipSlot;
+        u8 requiredAge;
+} SwordSwapEntry;
+
 typedef struct ItemEquips {
     /* 0x00 */ u8 buttonItems[4];
     /* 0x04 */ u8 cButtonSlots[3];
@@ -100,6 +107,19 @@ typedef struct Inventory {
     /* 0x5B */ s8 defenseHearts;
     /* 0x5C */ s16 gsTokens;
 } Inventory; // size = 0x5E
+
+typedef union HasObtainedItems {
+    struct {
+        u8 magicBeans     : 1;
+        u8 feather        : 2;
+        u8 amuletOfEnergy : 1;
+        u8 hammer         : 1;
+        u8 fairysSword    : 1;
+        u8 masterSword    : 1;
+        u8 unk            : 1;
+    };
+    u8 items;
+} HasObtainedItems; // size = 0x5E
 
 typedef struct Checksum {
     /* 0x00 */ u16 value;
@@ -274,15 +294,18 @@ typedef struct SaveInfo {
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
-    /* 0x0F18  0x0F34 */ char unk_F34[0x04];
+    /* 0x0F18  0x0F34 */ char unk_F34[0x01];
+    /* 0x0F19  0x0F35 */ u8 mirrorShieldIsBroken;
+    /* 0x0F1A  0x0F36 */ u8 isEnhancedSpinAcquired;
+    /* 0x0F1B  0x0F37 */ u8 energy;
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
-    /* 0x0F20  0x0F3C */ char unk_F3C[0x4];
+    /* 0x0F20  0x0F3C */ u8 shieldDurability[4];
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
     /* 0x1285  0x12A1 */ char unk_12A1[0x24];
     /* 0x12A9  0x12C5 */ u8 scarecrowSpawnSongSet;
     /* 0x12AA  0x12C6 */ u8 scarecrowSpawnSong[0x80];
-    /* 0x132A  0x1346 */ char unk_1346[0x01];
+    /* 0x132A  0x1346 */ HasObtainedItems hasObtainedItems;
     /* 0x13CB  0x1347 */ u8 questMode;
     /* 0x132C  0x1348 */ HorseData horseData;
     /* 0x1336  0x1352 */ Checksum checksum; // "check_sum"
@@ -456,12 +479,28 @@ typedef enum LinkAge {
 #define TOGGLE_HEROS_SWORD    (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 0)
 #define HAS_HEROS_SWORD     (((gSaveContext.save.info.playerData.equipmentUpgrades >>   0) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SWORD        (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS) && (HAS_HEROS_SWORD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)) )
+#define IS_RAZOR_SWORD       (!gSaveContext.save.info.hasObtainedItems.masterSword && IS_CHILD_QUEST_AS_CHILD)
 
 #define SET_HEROS_SHIELD      (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 1)
 #define CLEAR_HEROS_SHIELD    (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 1))
 #define TOGGLE_HEROS_SHIELD   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 1)
 #define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SHIELD       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (HAS_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) )
+
+#define SET_MAGIC_BEANS       (gSaveContext.save.info.hasObtainedItems.magicBeans = 1)
+#define HAS_MAGIC_BEANS       (gSaveContext.save.info.hasObtainedItems.magicBeans)
+#define SET_ROCS_FEATHER      (gSaveContext.save.info.hasObtainedItems.feather = 1)
+#define HAS_ROCS_FEATHER      (gSaveContext.save.info.hasObtainedItems.feather > 0)
+#define SET_GOLDEN_FEATHER    (gSaveContext.save.info.hasObtainedItems.feather = 2)
+#define HAS_GOLDEN_FEATHER    (gSaveContext.save.info.hasObtainedItems.feather > 1)
+#define SET_AMULET_OF_ENERGY  (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy = 1)
+#define HAS_AMULET_OF_ENERGY  (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy)
+#define SET_HAMMER            (gSaveContext.save.info.hasObtainedItems.hammer = 1)
+#define HAS_HAMMER            (gSaveContext.save.info.hasObtainedItems.hammer)
+#define SET_FAIRYS_SWORD      (gSaveContext.save.info.hasObtainedItems.fairysSword = 1)
+#define HAS_FAIRYS_SWORD      (gSaveContext.save.info.hasObtainedItems.fairysSword)
+#define SET_MASTER_SWORD      (gSaveContext.save.info.hasObtainedItems.masterSword = 1)
+#define HAS_MASTER_SWORD      (gSaveContext.save.info.hasObtainedItems.masterSword)
 
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17
@@ -491,6 +530,11 @@ typedef enum LinkAge {
 #define IS_DUNGEON_RUSH     ((R_QUEST_MODE >= DUNGEON_RUSH && R_QUEST_MODE <= DUNGEON_CHILD_RUSH))
 #define IS_BOSS_RUSH        (R_QUEST_MODE == BOSS_RUSH)
 #define IS_RUSH_QUEST       (IS_DUNGEON_RUSH || IS_BOSS_RUSH)
+
+#define MAX_DURABILITY_SHIELD_DEKU      100
+#define MAX_DURABILITY_SHIELD_HYLIAN    255
+#define MAX_DURABILITY_SHIELD_MIRROR    50
+#define MAX_DURABILITY_SHIELD_HEROS     255
 
 #define FILE_SLOTS_SIZE 6
 
@@ -528,6 +572,7 @@ typedef enum LinkAge {
 #define STATIC_DARK_LINK_HP         ((gSaveContext.options[1] >> 15) & 1)  // Bits: 15
 #define NO_BOTTLED_FAIRIES          ((gSaveContext.options[1] >> 16) & 1)  // Bits: 16
 #define NO_ITEM_DROPS               ((gSaveContext.options[1] >> 17) & 1)  // Bits: 17
+#define SHIELD_DURABILITY           ((gSaveContext.options[1] >> 18) & 1)  // Bits: 18
 
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1

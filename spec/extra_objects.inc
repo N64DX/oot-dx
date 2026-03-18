@@ -41,6 +41,20 @@ beginseg
 endseg
 
 beginseg
+    name "object_gi_feather"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_feather/object_gi_feather.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_pendant"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_pendant/object_gi_pendant.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_sword_1_mm"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_sword_1_mm/object_gi_sword_1_mm.o"
@@ -58,6 +72,13 @@ beginseg
     name "object_gi_shield_1_mm"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_shield_1_mm/object_gi_shield_1_mm.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_sword_4_mm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_sword_4_mm/object_gi_sword_4_mm.o"
     number 6
 endseg
 

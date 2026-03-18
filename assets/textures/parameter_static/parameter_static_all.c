@@ -36,3 +36,11 @@ u64 gMMRupeeCounterIconTex[TEX_LEN(u64, gRupeeCounterIconTex_WIDTH, gRupeeCounte
 u64 gMMMapChestIconTex[TEX_LEN(u64, gMapChestIconTex_WIDTH, gMapChestIconTex_HEIGHT, 16)] = {
 #include "assets/textures/parameter_static/gMMMapChestIconTex.rgba16.inc.c"
 };
+
+u64 gEnergyWheelTex[] = {
+#include "assets/textures/parameter_static/gEnergyWheelTex.i8.inc.c"
+};
+
+u64 gEnergyWheelMaskTex[] = {
+#include "assets/textures/parameter_static/gEnergyWheelMaskTex.i8.inc.c"
+};

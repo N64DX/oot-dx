@@ -308,7 +308,6 @@ void EnDinofos_Init(Actor* thisx, PlayState* play) {
     Collider_SetJntSph(play, &this->bodyAndFireCollider, &this->actor, &sJntSphInit, this->bodyAndFireColliderElements);
     Collider_SetQuad(play, &this->knifeCollider, &this->actor, &sQuadInit);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
-    Actor_SetGildedSwordDamageTaken(thisx);
     SkelAnime_InitFlex(play, &this->skelAnime, &gDinolfosSkel, &gDinolfosIdleAnim, this->jointTable, this->morphTable, DINOLFOS_LIMB_MAX);
 
     this->envColorAlpha = 255;

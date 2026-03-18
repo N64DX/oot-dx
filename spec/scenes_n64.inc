@@ -2312,6 +2312,7 @@ beginseg
     name "daiyousei_izumi_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/indoors/daiyousei_izumi/daiyousei_izumi_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/indoors/daiyousei_izumi/daiyousei_izumi_cutscenes_scene.o"
     number 2
 endseg
 

@@ -182,7 +182,8 @@ typedef enum PlayerItemAction {
     /* 0x40 */ PLAYER_IA_MASK_GERUDO,
     /* 0x41 */ PLAYER_IA_MASK_TRUTH,
     /* 0x42 */ PLAYER_IA_LENS_OF_TRUTH,
-    /* 0x43 */ PLAYER_IA_MAX
+    /* 0x43 */ PLAYER_IA_SWORD_FAIRYS,
+    /* 0x44 */ PLAYER_IA_MAX
 } PlayerItemAction;
 
 typedef enum PlayerLimb {
@@ -335,7 +336,8 @@ typedef enum PlayerModelGroup {
     /* 0x0D */ PLAYER_MODELGROUP_OOT, // ocarina of time
     /* 0x0E */ PLAYER_MODELGROUP_BOTTLE, // bottles (drawn separately)
     /* 0x0F */ PLAYER_MODELGROUP_SWORD, // hold sword and no shield, even if one is equipped
-    /* 0x10 */ PLAYER_MODELGROUP_MAX
+    /* 0x10 */ PLAYER_MODELGROUP_SWORD_FAIRYS,
+    /* 0x11 */ PLAYER_MODELGROUP_MAX
 } PlayerModelGroup;
 
 typedef enum PlayerModelGroupEntry {
@@ -373,7 +375,8 @@ typedef enum PlayerModelType {
     /* 0x13 */ PLAYER_MODELTYPE_SHEATH_19, // empty sheath and shield on back?
     // waist
     /* 0x14 */ PLAYER_MODELTYPE_WAIST,
-    /* 0x15 */ PLAYER_MODELTYPE_MAX,
+    /* 0x15 */ PLAYER_MODELTYPE_LH_SWORD_FAIRYS,
+    /* 0x16 */ PLAYER_MODELTYPE_MAX,
     /* 0xFF */ PLAYER_MODELTYPE_RH_FF = 0xFF // disable shield collider, cutscene-specific
 } PlayerModelType;
 
@@ -807,6 +810,7 @@ typedef struct Player {
     /* 0x0153 */ s8 prevBoots; // previous boots from `PlayerBoots`
     /* 0x0154 */ s8 itemAction; // the difference between this and heldItemAction is unclear
     /* 0x0155 */ s8 bottleAction;
+    /* 0x0156 */ s8 featherUseCount;
     /* 0x0158 */ u8 modelGroup;
     /* 0x0159 */ u8 nextModelGroup;
     /* 0x015A */ s8 itemChangeType;
@@ -928,7 +932,7 @@ typedef struct Player {
     /* 0x0858 */ f32 unk_858;
     /* 0x085C */ f32 unk_85C; // stick length among other things (TODO: probably part of an "fwork" array)
     /* 0x0860 */ s16 unk_860; // stick flame timer among other things
-    /* 0x0862 */ s8 unk_862; // get item draw ID + 1
+    /* 0x0862 */ s16 unk_862; // get item draw ID + 1
     /* 0x0864 */ f32 unk_864;
     /* 0x0868 */ f32 unk_868;
     /* 0x086C */ f32 unk_86C;
@@ -980,7 +984,8 @@ typedef struct Player {
     /* 0x0A86 */ s8 unk_A86;
     /* 0x0A87 */ u8 unk_A87;
     /* 0x0A88 */ Vec3f unk_A88; // previous body part 0 position
-} Player; // size = 0xA94
+    /* 0x0A94 */ u8 shieldDamage;
+} Player; // size = 0xA98
 
 // z_player_lib.c
 void Player_SetBootData(struct PlayState* play, Player* this);

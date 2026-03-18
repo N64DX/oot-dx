@@ -23,6 +23,7 @@
 #include "horse.h"
 #include "ocarina.h"
 #include "play_state.h"
+#include "z_lib.h"
 #include "player.h"
 #include "save.h"
 #include "libc64/malloc.h"
@@ -179,6 +180,12 @@ u8 sNoclipTimer = 0;
 static u8 shielded = 0;
 static u16 dpad_x;
 static u16 dpad_y;
+
+static s16 curEnergy = 0;
+static u8 energyHideTimer = 0;
+static u8 energyRefillTimer = 0;
+static bool drawKeys = false;
+static bool drawShieldDurability = false;
 
 static s16 sExtraItemBases[] = {
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_5
@@ -1719,7 +1726,7 @@ void Interface_LoadItemIcon1(PlayState* play, u16 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     u8 item = Interface_GetLoadItem(button);
 
-    if (item >= 0xF0)
+    if (item >= ITEM_SWORD_CS)
         return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
@@ -1733,7 +1740,7 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     u8 item = Interface_GetLoadItem(button);
 
-    if (item >= 0xF0)
+    if (item >= ITEM_SWORD_CS)
         return;
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
@@ -1743,47 +1750,46 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
 
+typedef bool (*ItemCondition)(void);
+typedef struct ChildQuestIcons {
+    u8 item;
+    ItemCondition condition;
+    u8 icon;
+} ChildQuestIcons;
+
+static bool IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                               }
+static bool IsHerosShield(void)   { return IS_HEROS_SHIELD;                                                       }
+static bool IsHerosSword(void)    { return IS_HEROS_SWORD;                                                        }
+static bool IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                            }
+static bool IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
+static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
+
+#define LAST_ITEM_ICON ITEM_AMULET_OF_ENERGY
+static ChildQuestIcons sChildQuestIcons[] = {
+    { ITEM_SHIELD_HYLIAN,             IsHerosShield, ITEM_SHIELD_HEROS   },
+    { ITEM_SWORD_KOKIRI ,             IsHerosSword,  ITEM_SWORD_HEROS    },
+    { ITEM_SHIELD_MIRROR,             IsChildQuest,  LAST_ITEM_ICON + 1  },
+    { ITEM_SWORD_MASTER,              IsRazorSword,  LAST_ITEM_ICON + 2  },
+    { ITEM_SWORD_BIGGORON,            IsSilverSword, LAST_ITEM_ICON + 3  },
+    { ITEM_SWORD_BIGGORON,            IsGildedSword, LAST_ITEM_ICON + 4  },
+    { ITEM_HOOKSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 5  },
+    { ITEM_LONGSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 6  },
+    { ITEM_BOW,                       IsChildQuest,  LAST_ITEM_ICON + 7  },
+    { ITEM_BOW_FIRE,                  IsChildQuest,  LAST_ITEM_ICON + 8  },
+    { ITEM_BOW_ICE,                   IsChildQuest,  LAST_ITEM_ICON + 9  },
+    { ITEM_BOW_LIGHT,                 IsChildQuest,  LAST_ITEM_ICON + 10 },
+    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,  LAST_ITEM_ICON + 11 },
+    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,  LAST_ITEM_ICON + 12 },
+    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,  LAST_ITEM_ICON + 13 },
+    { ITEM_STONE_OF_AGONY,            NULL,          LAST_ITEM_ICON + 14 },
+};
+#undef LAST_ITEM_ICON
+
 u8 Interface_LoadItemIconChildQuest(u8 item) {
-    if (item == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-        return ITEM_FISHING_POLE + 2;
-    else if (item == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
-        return ITEM_FISHING_POLE + 1;
-    else if (item == ITEM_STONE_OF_AGONY)
-        return ITEM_FISHING_POLE + 16;
-    else if (IS_CHILD_QUEST) {
-        if (item == ITEM_BROKEN_GORONS_SWORD)
-            return ITEM_FISHING_POLE + 15;
-        else if (LINK_IS_CHILD) {
-            if (item == ITEM_HOOKSHOT)
-                return ITEM_FISHING_POLE + 7;
-            else if (item == ITEM_LONGSHOT)
-                return ITEM_FISHING_POLE + 8;
-
-            else if (item == ITEM_BOW)
-                return ITEM_FISHING_POLE + 9;
-            else if (item == ITEM_BOW_FIRE)
-                return ITEM_FISHING_POLE + 10;
-            else if (item == ITEM_BOW_ICE)
-                return ITEM_FISHING_POLE + 11;
-            else if (item == ITEM_BOW_LIGHT)
-                return ITEM_FISHING_POLE + 12;
-
-            else if (item == ITEM_SWORD_MASTER)
-                return ITEM_FISHING_POLE + 4;
-            else if ( (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE) && !gSaveContext.save.info.playerData.bgsFlag)
-                return ITEM_FISHING_POLE + 5;
-            else if (item == ITEM_SWORD_BIGGORON || item == ITEM_GIANTS_KNIFE)
-                return ITEM_FISHING_POLE + 6;
-            else if (item == ITEM_SHIELD_MIRROR)
-                return ITEM_FISHING_POLE + 3;
-            
-            else if (item == ITEM_STRENGTH_SILVER_GAUNTLETS)
-                return ITEM_FISHING_POLE + 13;
-            else if (item == ITEM_STRENGTH_GOLD_GAUNTLETS)
-                return ITEM_FISHING_POLE + 14;
-        }
-    }
-
+    u8 i;
+    for (i=0; i<ARRAY_COUNT(sChildQuestIcons); i++)
+        if (item == sChildQuestIcons[i].item && (sChildQuestIcons[i].condition == NULL || sChildQuestIcons[i].condition()))
+            return sChildQuestIcons[i].icon;
     return item;
 }
 
@@ -1938,26 +1944,41 @@ u8 Item_Give(PlayState* play, u8 item) {
             gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_SWORD_MASTER << (EQUIP_TYPE_SWORD * 4);
             Interface_LoadItemIcon1(play, 0);
         }
-        for (i=0; i<4; i++)
+        for (i=0; i<4; i++) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                Interface_LoadItemIcon1(play, i);
             if (DPAD_BUTTON(i) == SLOT_SWORDS)
                 Interface_LoadItemIcon1(play, i+4);
+        }
 
         return ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
         SET_HEROS_SWORD;
-        for (i=0; i<4; i++)
+        if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_KOKIRI)
+            Interface_LoadItemIcon1(play, 0);
+        for (i=0; i<4; i++) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                Interface_LoadItemIcon1(play, i);
             if (DPAD_BUTTON(i) == SLOT_SWORDS)
                 Interface_LoadItemIcon1(play, i+4);
+        }
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
+        if (item == ITEM_SHIELD_DEKU)
+            gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
+        else if (item == ITEM_SHIELD_HYLIAN)
+            gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
+        else if (item == ITEM_SHIELD_MIRROR)
+            gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_SHIELD_HEROS) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
         SET_HEROS_SHIELD;
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
             Player_SetEquipmentData(play, GET_PLAYER(play));
@@ -2053,12 +2074,27 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_ADULTS_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 1);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
         return ITEM_NONE;
     } else if (item == ITEM_GIANTS_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 2);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
+        return ITEM_NONE;
+    } else if (item == ITEM_MASTER_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 0);
         return ITEM_NONE;
     } else if (item == ITEM_ROYAL_WALLET) {
         Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 1);
+        return ITEM_NONE;
+    } else if (item == ITEM_TYCOON_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 2);
+        return ITEM_NONE;
+    } else if (item == ITEM_BOTTOMLESS_WALLET) {
+        Inventory_ChangeUpgrade(UPG_WALLET, 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, 3);
         return ITEM_NONE;
     } else if (item == ITEM_DEKU_STICK_UPGRADE_20) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
@@ -2249,10 +2285,37 @@ u8 Item_Give(PlayState* play, u8 item) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE) {
             INV_CONTENT(item) = item;
             AMMO(ITEM_MAGIC_BEAN) = 1;
-            BEANS_BOUGHT = 1;
         } else {
             AMMO(ITEM_MAGIC_BEAN)++;
         }
+        SET_MAGIC_BEANS;
+        return ITEM_NONE;
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER) {
+        for (i=0; i<4; i++) {
+            if (item == ITEM_GOLDEN_FEATHER && gSaveContext.save.info.equips.buttonItems[i] == ITEM_ROCS_FEATHER) {
+                gSaveContext.save.info.equips.buttonItems[i] = item;
+                Interface_LoadItemIcon1(play, i);
+            }
+        }
+        gSaveContext.save.info.hasObtainedItems.feather = (item == ITEM_ROCS_FEATHER) ? 1 : 2;
+        INV_CONTENT(ITEM_MAGIC_BEAN) = item;
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
+                Interface_LoadItemIcon1(play, i+4);
+        return ITEM_NONE;
+    } else if (item == ITEM_AMULET_OF_ENERGY) {
+        gSaveContext.save.info.hasObtainedItems.amuletOfEnergy = 1;
+        return ITEM_NONE;
+    } else if (item == ITEM_HAMMER) {
+        INV_CONTENT(ITEM_HAMMER) = item;
+        SET_HAMMER;
+        return ITEM_NONE;
+    } else if (item == ITEM_SWORD_FAIRYS) {
+        INV_CONTENT(ITEM_HAMMER) = item;
+        SET_FAIRYS_SWORD;
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_HAMMER)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
@@ -2445,12 +2508,16 @@ u8 Item_CheckObtainability(u8 item) {
             return ITEM_NONE;
         }
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
+        if ( (item == ITEM_SHIELD_DEKU && gSaveContext.save.info.shieldDurability[0] < MAX_DURABILITY_SHIELD_DEKU) || (item == ITEM_SHIELD_HYLIAN && gSaveContext.save.info.shieldDurability[1] < MAX_DURABILITY_SHIELD_HYLIAN) || (item == ITEM_SHIELD_MIRROR && gSaveContext.save.info.shieldDurability[2] < MAX_DURABILITY_SHIELD_DEKU) )
+            return ITEM_NONE;
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU + EQUIP_INV_SHIELD_DEKU)) {
             return item;
         } else {
             return ITEM_NONE;
         }
     } else if (item == ITEM_SHIELD_HEROS) {
+        if (item == ITEM_SHIELD_HEROS && gSaveContext.save.info.shieldDurability[3] < MAX_DURABILITY_SHIELD_HEROS)
+            return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ? item : ITEM_NONE;
@@ -2492,7 +2559,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_DEKU_STICK_UPGRADE_20) && (item <= ITEM_DEKU_NUT_UPGRADE_40)) {
         return ITEM_NONE;
-    } else if ((item >= ITEM_BOMB_BAG_30) && (item <= ITEM_GIANTS_WALLET)) {
+    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_GIANTS_WALLET) || (item >= ITEM_MASTER_WALLET && item <= ITEM_BOTTOMLESS_WALLET)) {
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         return ITEM_NONE;
@@ -2545,7 +2612,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if (item == ITEM_ADULTS_WALLET || item == ITEM_GIANTS_WALLET || item == ITEM_ROYAL_WALLET) {
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS) {
         return ITEM_NONE;
     }
 
@@ -3622,7 +3689,7 @@ void Interface_DrawItemButtons(PlayState* play) {
 
     // Empty C Button Arrows
     for (temp = 1; temp < 4; temp++) {
-        if (gSaveContext.save.info.equips.buttonItems[temp] > 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[temp] > ITEM_SWORD_CS) {
             if (temp == 1) {
                 gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2),
                                 interfaceCtx->cLeftAlpha);
@@ -4033,7 +4100,7 @@ static void Interface_PrintHeapUsage(PlayState* this) {
 
 static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfaceCtx) {
     bool isRumble = play->specialIconLast == SPECIAL_ICON_RUMBLE;
-    u16 x = 26, y = 206 - 16;
+    u16 x = 26, y = 190;
 
     if (play->specialIconAlpha >= 240) {
         play->specialIconUp = false;
@@ -4068,24 +4135,8 @@ static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfa
         }
     }
 
-    switch (play->sceneId) {
-        case SCENE_FOREST_TEMPLE:
-        case SCENE_FIRE_TEMPLE:
-        case SCENE_WATER_TEMPLE:
-        case SCENE_SPIRIT_TEMPLE:
-        case SCENE_SHADOW_TEMPLE:
-        case SCENE_BOTTOM_OF_THE_WELL:
-        case SCENE_ICE_CAVERN:
-        case SCENE_GANONS_TOWER:
-        case SCENE_GERUDO_TRAINING_GROUND:
-        case SCENE_THIEVES_HIDEOUT:
-        case SCENE_INSIDE_GANONS_CASTLE:
-        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
-        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
-        case SCENE_TREASURE_BOX_SHOP:
-            if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0)
-                y -= 16;
-    }
+    if (drawKeys || drawShieldDurability)
+        y -= 16;
 
     if (isRumble) {
         x += play->specialIconShake;
@@ -4105,6 +4156,157 @@ static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfa
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3795);
 }
 
+void Energy_Draw(PlayState* play) {
+    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    MessageContext* msgCtx = &play->msgCtx;
+    Player* player = GET_PLAYER(play);
+    s16 clamped, rectLeft, rectTop, rectWidth = 16, rectHeight = 16;
+    Vec3f screenPos, playerPos;
+    f32 lerp;
+    u8 alpha;
+
+    if (IS_PAUSED(&play->pauseCtx) || !CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) || play->transitionTrigger != TRANS_TRIGGER_OFF || play->gameOverCtx.state != GAMEOVER_INACTIVE || play->transitionMode != TRANS_MODE_OFF || (play->csCtx.state != CS_STATE_IDLE && Player_InCsMode(play)))
+        return;
+
+    Math_SmoothStepToS(&curEnergy, gSaveContext.save.info.energy, 1, 3, 0);
+
+    if (curEnergy < Player_GetMaxEnergy() && Player_GetMaxEnergy() != 0)
+        energyHideTimer = (60 / R_UPDATE_RATE);
+    else if (energyHideTimer > 0)
+        energyHideTimer--;
+
+    if (energyHideTimer == 0)
+        return;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 5551);
+
+    gSPSegment(OVERLAY_DISP++, 0x02, interfaceCtx->parameterSegment);
+    Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+
+    playerPos = player->actor.world.pos;
+    playerPos.y += 45.0f;
+    Play_GetScreenPos(play, &playerPos, &screenPos);
+    rectLeft = (u16)screenPos.x + 20;
+    rectTop = (u16)screenPos.y;
+
+    // Draw energy wheel shadow
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, 255);
+    gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+    OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, gEnergyWheelTex, 16, 16, rectLeft, rectTop, rectWidth, rectHeight, (1 << 10), (1 << 10));
+
+    // Draw energy wheel background
+    gDPPipeSync(OVERLAY_DISP++);
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 11, 11, 11, 180);
+    gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+    OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, gEnergyWheelTex, 16, 16, rectLeft, rectTop, rectWidth, rectHeight, (1 << 10), (1 << 10));
+
+    // Draw energy wheel foreground
+    clamped = CLAMP(curEnergy, 0, Player_GetMaxEnergy());
+    lerp = (f32)clamped / (f32)Player_GetMaxEnergy();
+    alpha = 255 - (u8)(lerp * 255.0f);
+
+    gDPPipeSync(OVERLAY_DISP++);
+    gDPSetCycleType(OVERLAY_DISP++, G_CYC_2CYCLE);
+    gDPSetCombineLERP(OVERLAY_DISP++, TEXEL1, 0, PRIMITIVE, 0, 0, 0, 0, TEXEL0, 0, 0, 0, COMBINED, 0, 0, 0, TEXEL0);
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 0, 255);
+    gDPSetAlphaCompare(OVERLAY_DISP++, G_AC_THRESHOLD); 
+    gDPSetBlendColor(OVERLAY_DISP++, 255, 255, 255, alpha);
+    gDPLoadMultiBlock(OVERLAY_DISP++, gEnergyWheelMaskTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadMultiBlock(OVERLAY_DISP++, gEnergyWheelTex, 0x0100, 1, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(rectLeft << 2), HIRES_MULTIPLY(rectTop << 2), X_HIRES_MULTIPLY((rectLeft + rectWidth) << 2), HIRES_MULTIPLY((rectTop + rectHeight) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+    gDPSetAlphaCompare(OVERLAY_DISP++, G_AC_NONE);
+    gDPSetBlendColor(OVERLAY_DISP++, 0, 0, 0, 0);
+    gDPSetCycleType(OVERLAY_DISP++, G_CYC_1CYCLE);
+    
+    CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 5591);
+}
+
+void Energy_Update(PlayState* play) {
+    if (play->specialPowerTimer > 0)
+        play->specialPowerTimer--;
+
+    if (!Player_HasEnergyUnlocked())
+        return;
+
+    if (energyRefillTimer > 0)
+        energyRefillTimer--;
+    else if (gSaveContext.save.info.energy < Player_GetMaxEnergy()) {
+        energyRefillTimer = (60 / R_UPDATE_RATE) / 3;
+        gSaveContext.save.info.energy++;
+    }
+}
+
+void Durability_DrawMeter(PlayState* play) {
+    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    u8 capacity, durability;
+    u8 shield = GET_PLAYER(play)->currentShield;
+    u16 meterY = 190;
+    u16 meterX = 26;
+    f32 scaleDivide;
+
+    if (!SHIELD_DURABILITY || shield == PLAYER_SHIELD_NONE || IS_PAUSED(&play->pauseCtx)) {
+        drawShieldDurability = false;
+        return;
+    }
+
+    switch (shield) {
+        case PLAYER_SHIELD_DEKU:
+            durability = gSaveContext.save.info.shieldDurability[0];
+            capacity = MAX_DURABILITY_SHIELD_DEKU;
+            scaleDivide = 3.5f;
+            break;
+
+        case PLAYER_SHIELD_HYLIAN:
+            durability = gSaveContext.save.info.shieldDurability[1];
+            capacity = MAX_DURABILITY_SHIELD_HYLIAN;
+            scaleDivide = 5.0f;
+            break;
+
+        case PLAYER_SHIELD_MIRROR:
+            durability = gSaveContext.save.info.shieldDurability[2];
+            capacity = MAX_DURABILITY_SHIELD_MIRROR;
+            scaleDivide = 2.5f;
+            break;
+        
+        case PLAYER_SHIELD_HEROS:
+            durability = gSaveContext.save.info.shieldDurability[3];
+            capacity = MAX_DURABILITY_SHIELD_HEROS;
+            scaleDivide = 5.0f;
+            break;
+    }
+
+    durability /= scaleDivide;
+    capacity   /= scaleDivide;
+    drawShieldDurability = true;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+    gDPSetEnvColor(OVERLAY_DISP++, 100, 255, 255, 255);
+    gDPLoadTextureBlock(OVERLAY_DISP++, interfaceCtx->iconItemSegment + 0x9000, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX) << 2, HIRES_MULTIPLY(meterY) << 2, X_HIRES_MULTIPLY(meterX + 16) << 2, HIRES_MULTIPLY(meterY + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2048), X_HIRES_DIVIDE(2048));
+
+    gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
+    meterX += 14;
+    
+    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(meterX),     HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(8),        HIRES_MULTIPLY(16), 1 << 10, 1 << 10);
+    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_HIRES_MULTIPLY(meterX + 8), HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(capacity), HIRES_MULTIPLY(16), 1 << 10, 1 << 10);
+
+    gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX + capacity + 8) << 2, HIRES_MULTIPLY(meterY + 2) << 2, X_HIRES_MULTIPLY(meterX + capacity + 16) << 2, HIRES_MULTIPLY(meterY + 2 + 16) << 2, G_TX_RENDERTILE, 256, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+
+    gDPPipeSync(OVERLAY_DISP++);
+    gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE);
+    gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+
+    gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 150, 0, interfaceCtx->magicAlpha);
+    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX + 8) << 2, HIRES_MULTIPLY(meterY + 2 + 3) << 2, X_HIRES_MULTIPLY(meterX + 8 + durability) << 2, HIRES_MULTIPLY(meterY + 2 + 10) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
 void Interface_Draw(PlayState* play) {
     static s16 magicArrowEffectsR[] = { 255, 100, 255 };
     static s16 magicArrowEffectsG[] = { 0, 100, 255 };
@@ -4115,8 +4317,8 @@ void Interface_Draw(PlayState* play) {
     static s16 D_80125B1C[][3] = {
         { 0, 150, 0 }, { 100, 255, 0 }, { 255, 255, 255 }, { 0, 0, 0 }, { 255, 255, 255 },
     };
-    static s16 rupeeDigitsFirst[] = { 1, 0, 0, 0 };
-    static s16 rupeeDigitsCount[] = { 2, 3, 3, 3 };
+    static s16 rupeeDigitsFirst[] = { 2, 1, 1, 1, 0, 0, 0 };
+    static s16 rupeeDigitsCount[] = { 2, 3, 3, 3, 4, 4, 4 };
     static s16 spoilingItemEntrances[] = { ENTR_LOST_WOODS_2, ENTR_ZORAS_DOMAIN_3, ENTR_ZORAS_DOMAIN_3 };
     static f32 D_80125B54[] = { -40.0f, -35.0f }; // unused
     static s16 D_80125B5C[] = { 91, 91 };         // unused
@@ -4146,13 +4348,17 @@ void Interface_Draw(PlayState* play) {
     gSPSegment(OVERLAY_DISP++, 0x0B, interfaceCtx->mapSegment);
 
     if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) {
-        static u8 walletColors[][4] = {
-            { 200, 255, 100 },
-            { 130, 130, 255 },
-            { 255, 100, 100 },
-            { 255, 165, 0   }
+        static u8 walletColors[][7] = {
+            { 200, 255, 100 }, // Default
+            { 130, 130, 255 }, // Adult
+            { 255, 100, 100 }, // Giant
+            { 255, 239, 0   }, // Master
+            { 255, 255, 227 }, // Royal
+            { 255, 165, 0   }, // Tycoon
+            { 255, 29,  206 }, // Bottomless
         };
-        u8 curWallet = CUR_UPG_VALUE(UPG_WALLET);
+        u8 curWallet = CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2);
+        s16 curCapacity = (CUR_UPG_VALUE(UPG_WALLET2) > 0) ? CUR_CAPACITY(UPG_WALLET2) : CUR_CAPACITY(UPG_WALLET);
 
         Interface_InitVertices(play);
         func_8008A994(interfaceCtx);
@@ -4184,8 +4390,14 @@ void Interface_Draw(PlayState* play) {
             case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
             case SCENE_TREASURE_BOX_SHOP:
                 if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0) {
-                    u16 posX = 26;
-                    u16 posY = 190;
+                    u16 posX, posY;
+                    if (SHIELD_DURABILITY && !IS_PAUSED(&play->pauseCtx) && GET_PLAYER(play)->currentShield > PLAYER_SHIELD_NONE) {
+                        posX = 46 + rupeeDigitsCount[curWallet] * 8;
+                        posY = 206;
+                    } else {
+                        posX = 26;
+                        posY = 190;
+                    }
 
                     // Small Key Icon
                     gDPPipeSync(OVERLAY_DISP++);
@@ -4209,6 +4421,7 @@ void Interface_Draw(PlayState* play) {
                     }
 
                     svar3 = posX + 16;
+                    drawKeys = true;
 
                     if (interfaceCtx->counterDigits[2] != 0) {
                         if (USE_MM_HUD) {
@@ -4237,9 +4450,10 @@ void Interface_Draw(PlayState* play) {
                         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
                         OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[3])), 8, 16, X_HIRES_MULTIPLY(svar3), HIRES_MULTIPLY(posY), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
                     }
-                }
+                } else drawKeys = false;
                 break;
             default:
+                drawKeys = false;
                 break;
         }
 
@@ -4251,25 +4465,31 @@ void Interface_Draw(PlayState* play) {
         gDPSetCombineLERP(OVERLAY_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0,
                           PRIMITIVE, 0);
 
-        interfaceCtx->counterDigits[0] = interfaceCtx->counterDigits[1] = 0;
-        interfaceCtx->counterDigits[2] = gSaveContext.save.info.playerData.rupees;
 
-        if ((interfaceCtx->counterDigits[2] > 9999) || (interfaceCtx->counterDigits[2] < 0)) {
-            interfaceCtx->counterDigits[2] &= 0xDDD;
+        interfaceCtx->counterDigits[0] = interfaceCtx->counterDigits[1] = interfaceCtx->counterDigits[2] = 0;
+        interfaceCtx->counterDigits[3] = gSaveContext.save.info.playerData.rupees;
+        if ((interfaceCtx->counterDigits[3] > 9999) || (interfaceCtx->counterDigits[3] < 0)) {
+            interfaceCtx->counterDigits[3] &= 0xDDD;
         }
 
-        while (interfaceCtx->counterDigits[2] >= 100) {
+        interfaceCtx->counterDigits[3] = gSaveContext.save.info.playerData.rupees;
+        while (interfaceCtx->counterDigits[3] >= 1000) {
             interfaceCtx->counterDigits[0]++;
-            interfaceCtx->counterDigits[2] -= 100;
+            interfaceCtx->counterDigits[3] -= 1000;
         }
 
-        while (interfaceCtx->counterDigits[2] >= 10) {
+        while (interfaceCtx->counterDigits[3] >= 100) {
             interfaceCtx->counterDigits[1]++;
-            interfaceCtx->counterDigits[2] -= 10;
+            interfaceCtx->counterDigits[3] -= 100;
         }
 
-        svar2 = rupeeDigitsFirst[CUR_UPG_VALUE(UPG_WALLET)];
-        svar4 = rupeeDigitsCount[CUR_UPG_VALUE(UPG_WALLET)];
+        while (interfaceCtx->counterDigits[3] >= 10) {
+            interfaceCtx->counterDigits[2]++;
+            interfaceCtx->counterDigits[3] -= 10;
+        }
+
+        svar2 = rupeeDigitsFirst[curWallet];
+        svar4 = rupeeDigitsCount[curWallet];
 
         for (svar1 = 0, svar3 = 42; svar1 < svar4; svar1++, svar2++, svar3 += 8) {
             if (USE_MM_HUD) {
@@ -4278,7 +4498,7 @@ void Interface_Draw(PlayState* play) {
                 OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, ((u8*)gCounterDigit0Tex + (8 * 16 * interfaceCtx->counterDigits[svar2])), 8, 16, X_HIRES_MULTIPLY(svar3 + 1), HIRES_MULTIPLY(207), X_HIRES_MULTIPLY(8), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
                 gDPPipeSync(OVERLAY_DISP++);
 
-                if (gSaveContext.save.info.playerData.rupees == CUR_CAPACITY(UPG_WALLET)) {
+                if (gSaveContext.save.info.playerData.rupees == curCapacity) {
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 120, 255, 0, interfaceCtx->magicAlpha);
                 } else if (gSaveContext.save.info.playerData.rupees != 0) {
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
@@ -4288,7 +4508,7 @@ void Interface_Draw(PlayState* play) {
 
                 gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(svar3 * 4), HIRES_MULTIPLY(206 << 2), X_HIRES_MULTIPLY((svar3 + 8) * 4), HIRES_MULTIPLY(222 << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
             } else {
-                if (gSaveContext.save.info.playerData.rupees == CUR_CAPACITY(UPG_WALLET)) {
+                if (gSaveContext.save.info.playerData.rupees == curCapacity) {
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 120, 255, 0, interfaceCtx->magicAlpha);
                 } else if (gSaveContext.save.info.playerData.rupees != 0) {
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
@@ -4301,6 +4521,8 @@ void Interface_Draw(PlayState* play) {
         }
 
         Magic_DrawMeter(play);
+        Energy_Draw(play);
+        Durability_DrawMeter(play);
         Minimap_Draw(play);
 
         if ((R_PAUSE_BG_PRERENDER_STATE != PAUSE_BG_PRERENDER_PROCESS) &&
@@ -4351,7 +4573,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Left Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[1] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[1] < ITEM_SWORD_CS) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cLeftAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x1000, 1);
@@ -4364,7 +4586,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Down Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[2] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[2] < ITEM_SWORD_CS) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cDownAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x2000, 2);
@@ -4377,7 +4599,7 @@ void Interface_Draw(PlayState* play) {
         gDPPipeSync(OVERLAY_DISP++);
 
         // C-Right Button Icon & Ammo Count
-        if (gSaveContext.save.info.equips.buttonItems[3] < 0xF0) {
+        if (gSaveContext.save.info.equips.buttonItems[3] < ITEM_SWORD_CS) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->cRightAlpha);
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM);
             Interface_DrawItemIconTexture(play, interfaceCtx->iconItemSegment + 0x3000, 3);
@@ -4388,7 +4610,7 @@ void Interface_Draw(PlayState* play) {
         }
 
         for (svar1=0; svar1<4; svar1++) {
-            if (Interface_GetItemFromDpad(svar1) >= 0xF0)
+            if (Interface_GetItemFromDpad(svar1) >= ITEM_SWORD_CS)
                 continue;
 
             // D-Pad Button Icon & Ammo Count
@@ -5030,7 +5252,7 @@ void Interface_Draw(PlayState* play) {
         }
 
         if (IS_RUSH_QUEST) {
-            if ( (!IS_PAUSED(&play->pauseCtx) && msgCtx->msgMode == MSGMODE_NONE && !(player->stateFlags2 & PLAYER_STATE2_24) && play->transitionTrigger == TRANS_TRIGGER_OFF && play->transitionMode == TRANS_MODE_OFF && !Play_InCsMode(play) && play->gameOverCtx.state == GAMEOVER_INACTIVE) || R_BEATEN_RUSH_MODE) {
+            if ( (!IS_PAUSED(&play->pauseCtx) && CHECK_MSGMODE_FOR_ITEM_RESTRICTIONS(msgCtx) && !(player->stateFlags2 & PLAYER_STATE2_24) && play->transitionTrigger == TRANS_TRIGGER_OFF && play->transitionMode == TRANS_MODE_OFF && !Play_InCsMode(play) && play->gameOverCtx.state == GAMEOVER_INACTIVE) || R_BEATEN_RUSH_MODE) {
                 if (!R_BEATEN_RUSH_MODE) {
                     sPlaytimeNextSecondTimer++;
                     if (sPlaytimeNextSecondTimer == (4 - R_UPDATE_RATE) * 20) {
@@ -5280,15 +5502,16 @@ void Interface_Update(PlayState* play) {
         !Play_InCsMode(play)) {}
 
     if (gSaveContext.rupeeAccumulator != 0) {
+        s16 curCapacity = (CUR_UPG_VALUE(UPG_WALLET2) > 0) ? CUR_CAPACITY(UPG_WALLET2) : CUR_CAPACITY(UPG_WALLET);
         if (gSaveContext.rupeeAccumulator > 0) {
-            if (gSaveContext.save.info.playerData.rupees < CUR_CAPACITY(UPG_WALLET)) {
+            if (gSaveContext.save.info.playerData.rupees < curCapacity) {
                 gSaveContext.rupeeAccumulator--;
                 gSaveContext.save.info.playerData.rupees++;
                 Audio_PlaySfxGeneral(NA_SE_SY_RUPY_COUNT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             } else {
                 PRINTF(T("ルピー数ＭＡＸ = %d\n", "Rupee Amount MAX = %d\n"), CUR_CAPACITY(UPG_WALLET));
-                gSaveContext.save.info.playerData.rupees = CUR_CAPACITY(UPG_WALLET);
+                gSaveContext.save.info.playerData.rupees = curCapacity;
                 gSaveContext.rupeeAccumulator = 0;
             }
         } else if (gSaveContext.save.info.playerData.rupees != 0) {
@@ -5377,6 +5600,7 @@ void Interface_Update(PlayState* play) {
         }
 
         Magic_Update(play);
+        Energy_Update(play);
     }
 
     if (gSaveContext.timerState == TIMER_STATE_OFF) {

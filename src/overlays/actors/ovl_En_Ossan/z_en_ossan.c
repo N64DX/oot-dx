@@ -267,7 +267,7 @@ static ShopItem sShopkeeperStores[][8] = {
 
     { { SI_HEROS_SHIELD, 50, 52, -20 },
       { SI_BOMBS_5_R25, 50, 76, -20 },
-      { SI_WALLET_ROYAL, 80, 52, -3 },
+      { SI_WALLET_ADULT, 80, 52, -3 },
       { SI_DEKU_NUTS_5, 80, 76, -3 },
       { SI_ARROWS_10, -50, 52, -20 },
       { SI_ARROWS_50, -50, 76, -20 },
@@ -342,7 +342,8 @@ static EnOssanGetGirlAParamsFunc sShopItemReplaceFunc[] = {
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
-    ShopItemDisp_Default,   ShopItemDisp_Default,
+    ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
+    ShopItemDisp_Default,
 };
 
 static InitChainEntry sInitChain[] = {

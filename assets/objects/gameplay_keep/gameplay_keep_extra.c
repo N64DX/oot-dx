@@ -1,6 +1,10 @@
 #include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 #include "assets/misc/link_animetion/link_animetion_extra.h"
 
+u64 gDropFeatherTex[TEX_LEN(u64, 32, 32, 16)] = {
+#include "assets/objects/gameplay_keep/gDropFeatherTex.rgba16.inc.c"
+};
+
 Vtx gLinkAdultHookshotChainVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotChainVtx.inc.c"
 };
