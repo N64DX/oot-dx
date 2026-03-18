@@ -10,4 +10,3 @@
     OBJECT_OKUTA, // 9
     OBJECT_GI_HEART, // 10
     OBJECT_GI_SUTARU, // 11
-

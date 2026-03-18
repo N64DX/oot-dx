@@ -20,15 +20,8 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/HIDAN/mq/headers/room0.inc.c"
 };
 
-static ActorEntry cmq_actors[] = {
-#include "assets/scenes/dungeons/HIDAN/cmq/actors/room0_actor.inc.c"
-};
-
-static SceneCmd cmq_header[] = {
-#include "assets/scenes/dungeons/HIDAN/cmq/headers/room0.inc.c"
-};
-
-#define cq_header NULL
+#define cq_header  NULL
+#define cmq_header mq_header
 
 SceneCmd* questHeaders_HIDAN_room0[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"

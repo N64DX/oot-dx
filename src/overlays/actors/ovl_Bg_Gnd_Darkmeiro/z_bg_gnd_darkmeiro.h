@@ -23,10 +23,12 @@ typedef enum DarkmeiroType {
                                            disappear 64 frames after their switch flag is cleared.
                                            Clear blocks with flag 0x3F are always on.             */
 
-    /* 2 */ DARKMEIRO_BLOCK_TIMER       /* A block timer with switch flag N reacts to switch flags N+1
+    /* 2 */ DARKMEIRO_BLOCK_TIMER,      /* A block timer with switch flag N reacts to switch flags N+1
                                            and N+2 being set, setting its own switch flag and a timer
                                            for 304 frames. There are separate timers for N+1 and N+2,
                                            and the timer sets flag N if either timer is above 64 frames. */
+
+    /* 3 */ DARKMEIRO_WIDE_CLEAR_BLOCK
 } DarkmeiroType;
 
 #endif

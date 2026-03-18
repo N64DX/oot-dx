@@ -6,4 +6,3 @@
     OBJECT_ST, // 5
     OBJECT_WALLMASTER, // 6
     OBJECT_RD, // 7
-

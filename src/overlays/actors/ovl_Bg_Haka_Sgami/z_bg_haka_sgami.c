@@ -12,6 +12,7 @@
 #include "effect.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_haka_objects/object_haka_objects.h"
 #include "assets/objects/object_ice_objects/object_ice_objects.h"
@@ -251,7 +252,7 @@ void BgHakaSgami_Spin(BgHakaSgami* this, PlayState* play) {
         for (j = 0; j < 3; j++) {
             scytheVertices[j].x = this->actor.world.pos.x + elementInit->dim.vtx[j].z * actorRotYSin +
                                   elementInit->dim.vtx[j].x * actorRotYCos;
-            scytheVertices[j].y = this->actor.world.pos.y + elementInit->dim.vtx[j].y;
+            scytheVertices[j].y = this->actor.world.pos.y + elementInit->dim.vtx[j].y - ( (LINK_IS_CHILD && this->actor.params == SCYTHE_TRAP_SHADOW_TEMPLE) * 20);
             scytheVertices[j].z = this->actor.world.pos.z + elementInit->dim.vtx[j].z * actorRotYCos -
                                   elementInit->dim.vtx[j].x * actorRotYSin;
         }

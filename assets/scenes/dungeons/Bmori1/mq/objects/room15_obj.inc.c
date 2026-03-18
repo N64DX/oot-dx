@@ -4,4 +4,3 @@
     OBJECT_SYOKUDAI, // 3
     OBJECT_BB, // 4
     OBJECT_ST, // 5
-
