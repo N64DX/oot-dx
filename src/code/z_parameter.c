@@ -809,8 +809,6 @@ void func_80083108(PlayState* play) {
                     Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_A_B_MINIMAP);
                 }
             }
-        } else if (play->sceneId == SCENE_CHAMBER_OF_THE_SAGES) {
-            Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_NOTHING);
         } else if (play->sceneId == SCENE_FISHING_POND) {
             // should likely be set to true
             gSaveContext.forceRisingButtonAlphas = 2;
@@ -4348,6 +4346,15 @@ void Interface_Draw(PlayState* play) {
     gSPSegment(OVERLAY_DISP++, 0x07, interfaceCtx->doActionSegment);
     gSPSegment(OVERLAY_DISP++, 0x08, interfaceCtx->iconItemSegment);
     gSPSegment(OVERLAY_DISP++, 0x0B, interfaceCtx->mapSegment);
+
+    // Stop Cutscene
+    if (IS_CUTSCENE_LAYER && play->specialIconAlpha > 0) {
+        Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
+        gDPSetEnvColor(OVERLAY_DISP++, 255, 255, 255, 255);
+        gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(185) << 2, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL + 48) << 2, HIRES_MULTIPLY(185 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+    }
 
     if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) {
         static u8 walletColors[][7] = {

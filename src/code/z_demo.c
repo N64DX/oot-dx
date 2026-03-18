@@ -27,6 +27,7 @@
 #include "cutscene_flags.h"
 #include "ocarina.h"
 #include "play_state.h"
+#include "interface.h"
 #include "player.h"
 #include "save.h"
 
@@ -591,6 +592,7 @@ void CutsceneCmd_SetTime(PlayState* play, CutsceneContext* csCtx, CsCmdTime* cmd
 void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDestination* cmd) {
     Player* player = GET_PLAYER(play);
     s32 titleDemoSkipped = false;
+    bool doCutsceneSkip = false;
 
     if ((gSaveContext.gameMode != GAMEMODE_NORMAL) && (gSaveContext.gameMode != GAMEMODE_END_CREDITS) &&
         (play->sceneId != SCENE_HYRULE_FIELD) && (csCtx->curFrame > 20) &&
@@ -603,9 +605,17 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
         titleDemoSkipped = true;
     }
 
-    if ((csCtx->curFrame == cmd->startFrame) || titleDemoSkipped ||
-        (DEBUG_FEATURES && (csCtx->curFrame > 20) && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_START) &&
-         (gSaveContext.fileNum != 0xFEDC))) {
+    if (play->specialIconAlpha > 0)
+        play->specialIconAlpha--;
+    if (csCtx->curFrame > 20 && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_START) && gSaveContext.fileNum != 0xFEDC && gSaveContext.gameMode == GAMEMODE_NORMAL) {
+        if (play->specialIconAlpha == 0) {
+            play->specialIconAlpha = SECONDS(3);
+            Interface_LoadActionLabelB(play, DO_ACTION_NEXT);
+        }
+        else doCutsceneSkip = true;
+    }
+
+    if (csCtx->curFrame == cmd->startFrame || titleDemoSkipped || doCutsceneSkip) {
         csCtx->state = CS_STATE_RUN_UNSTOPPABLE;
         Audio_SetCutsceneFlag(0);
         gSaveContext.cutsceneTransitionControl = 1;
@@ -915,6 +925,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_LAKE_HYLIA_FROM_LAKE_RESTORED:
+                SET_EVENTCHKINF(EVENTCHKINF_RESTORED_LAKE_HYLIA);
                 play->nextEntranceIndex = ENTR_LAKE_HYLIA_5;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK;
@@ -928,6 +939,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_WINDMILL_FROM_WELL_DRAINED:
+                SET_EVENTCHKINF(EVENTCHKINF_DRAINED_WELL);
                 play->nextEntranceIndex = ENTR_WINDMILL_AND_DAMPES_GRAVE_2;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK_FAST;
@@ -991,6 +1003,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_HYRULE_FIELD_FROM_SONG_OF_TIME:
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_TIME - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
                 play->nextEntranceIndex = ENTR_HYRULE_FIELD_16;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_WHITE;
