@@ -19,9 +19,11 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
+#include "player.h"
 #include "save.h"
 
 #include "assets/objects/object_bl/object_bl.h"
+#include "assets/objects/object_bl/object_bl_extra.h"
 
 #define FLAGS \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_IGNORE_QUAKE | ACTOR_FLAG_CAN_ATTACH_TO_ARROW)
@@ -44,6 +46,11 @@ void EnBili_Burnt(EnBili* this, PlayState* play);
 void EnBili_Die(EnBili* this, PlayState* play);
 void EnBili_Stunned(EnBili* this, PlayState* play);
 void EnBili_Frozen(EnBili* this, PlayState* play);
+
+void EnBili_SetupPrepareBeam(EnBili* this, PlayState* play);
+void EnBili_PrepareBeam(EnBili* this, PlayState* play);
+void EnBili_SetupBeam(EnBili* this, PlayState* play);
+void EnBili_Beam(EnBili* this, PlayState* play);
 
 ActorProfile En_Bili_Profile = {
     /**/ ACTOR_EN_BILI,
@@ -78,6 +85,28 @@ static ColliderCylinderInit sCylinderInit = {
 };
 
 static CollisionCheckInfoInit2 sColChkInfoInit = { 1, 9, 28, -20, 30 };
+
+static ColliderQuadInit sBeamQuadInit = {
+    {
+        COL_MATERIAL_HIT8,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_NONE,
+        OC1_NONE,
+        OC2_NONE,
+        COLSHAPE_QUAD,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0xFFCFFFFF, 0x03, 0x08 },
+        { 0x00000000, 0x00, 0x00 },
+        ATELEM_ON | ATELEM_SFX_NORMAL | ATELEM_UNK7,
+        ACELEM_NONE,
+        OCELEM_NONE,
+    },
+    { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } },
+};
+
+static bool sBiliBeaming = false;
 
 typedef enum BiriDamageReaction {
     /* 0x0 */ BIRI_DMG_REACT_NONE,
@@ -138,6 +167,12 @@ void EnBili_Init(Actor* thisx, PlayState* play) {
                    EN_BILI_LIMB_MAX);
     Collider_InitCylinder(play, &this->collider);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
+
+    if (HARDER_ENEMIES) {
+        Collider_InitQuad(play, &this->beamCollider);
+        Collider_SetQuad(play, &this->beamCollider, thisx, &sBeamQuadInit);
+    }
+
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     this->playFlySfx = false;
@@ -152,7 +187,11 @@ void EnBili_Init(Actor* thisx, PlayState* play) {
 void EnBili_Destroy(Actor* thisx, PlayState* play) {
     EnBili* this = (EnBili*)thisx;
 
+    sBiliBeaming = false;
+
     Collider_DestroyCylinder(play, &this->collider);
+    if (HARDER_ENEMIES)
+        Collider_DestroyQuad(play, &this->beamCollider);
 }
 
 // Setup Action Functions
@@ -167,6 +206,7 @@ void EnBili_SetupFloatIdle(EnBili* this) {
     this->collider.base.atFlags |= AT_ON;
     this->collider.base.acFlags |= AC_ON;
     this->actionFunc = EnBili_FloatIdle;
+    this->beamTimer = (u8)IRANDOM_RANGE(40, 150);
 }
 
 /**
@@ -341,6 +381,65 @@ void EnBili_UpdateFloating(EnBili* this) {
 
 // Action functions
 
+void EnBili_SetupPrepareBeam(EnBili* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+
+    Vec3f posResult;
+    CollisionPoly* poly;
+    s32 bgId;
+
+    Vec3f playerPos = player->actor.world.pos;
+    playerPos.y += 20;
+
+    if (BgCheck_CameraLineTest1(&play->colCtx, &this->actor.world.pos, &playerPos, &posResult, &poly, true, true, false, true, &bgId))
+        return;
+
+    Actor_PlaySfx(&this->actor, NA_SE_EN_BIMOS_AIM);
+
+    this->beamPos2 = player->actor.world.pos;
+    this->beamPos2.x += player->actor.velocity.x * 20;
+    this->beamPos2.z += player->actor.velocity.z * 20;
+
+    this->beamTimer = 10;
+    this->actionFunc = EnBili_PrepareBeam;
+}
+
+void EnBili_PrepareBeam(EnBili* this, PlayState* play) {
+    if (this->beamTimer == 0) {
+        EnBili_SetupBeam(this, play);
+        return;
+    }
+    this->beamTimer--;
+}
+
+void EnBili_SetupBeam(EnBili* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+
+    this->actionFunc = EnBili_Beam;
+    this->beamTimer = 10;
+    this->beamCollider.base.atFlags &= ~AT_HIT;
+}
+
+void EnBili_Beam(EnBili* this, PlayState* play) {
+    if (this->beamTimer <= 0) {
+        this->beamCount--;
+
+        if (this->beamCount > 0)
+            EnBili_SetupPrepareBeam(this, play);
+        else {
+            sBiliBeaming = false;
+            EnBili_SetupFloatIdle(this);
+        }
+        return;
+    }
+
+    if (this->beamTimer == 10)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_BALINADE_THUNDER);
+    if (!(this->beamCollider.base.atFlags & AT_HIT) && this->beamTimer > 5)
+        CollisionCheck_SetAT(play, &play->colChkCtx, &this->beamCollider.base);
+    this->beamTimer--;
+}
+
 void EnBili_FloatIdle(EnBili* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
@@ -358,7 +457,14 @@ void EnBili_FloatIdle(EnBili* this, PlayState* play) {
         this->timer = 32;
     }
 
-    if ((this->actor.xzDistToPlayer < 160.0f) && (fabsf(this->actor.yDistToPlayer) < 45.0f)) {
+    if (this->beamTimer > 0)
+        this->beamTimer--;
+
+    if (!sBiliBeaming && this->beamTimer == 0 && this->actor.xzDistToPlayer > 160.0f && this->actor.xzDistToPlayer < 400.0f && fabsf(this->actor.yDistToPlayer) < 60.0f && HARDER_ENEMIES) {
+        sBiliBeaming = true;
+        this->beamCount = (u8)IRANDOM_RANGE(1, 2);
+        EnBili_SetupPrepareBeam(this, play);
+    } else if ((this->actor.xzDistToPlayer < 160.0f) && (fabsf(this->actor.yDistToPlayer) < 45.0f)) {
         EnBili_SetupApproachPlayer(this);
     }
 }
@@ -628,6 +734,8 @@ void EnBili_Update(Actor* thisx, PlayState* play2) {
     EnBili_UpdateDamage(this, play);
     this->actionFunc(this, play);
 
+    this->beamTexScroll += 96;
+
     if (this->actionFunc != EnBili_Die) {
         EnBili_UpdateTentaclesIndex(this);
         if (Animation_OnFrame(&this->skelAnime, 9.0f)) {
@@ -769,6 +877,72 @@ static void* sTentaclesTextures[] = {
     gBiriTentacles4Tex, gBiriTentacles5Tex, gBiriTentacles6Tex, gBiriTentacles7Tex,
 };
 
+static Vec3f D_80B2EAF8 = { 0.0f, 0.0f, 0.0f };
+static Vec3f D_80B2EB10 = { -500.0f, 0.0f, 0.0f };
+static Vec3f D_80B2EB1C = { 0.0f, 0.0f, 0.0f };
+
+void EnBili_HandleBeamLogic(EnBili* this, PlayState* play) {
+    Vec3f posResult;
+    CollisionPoly* poly = NULL;
+    Vec3f sp80 = D_80B2EAF8;
+    Vec3f sp68 = D_80B2EB10;
+    Vec3f playerPos = this->beamPos2;
+    s32 bgId;
+    f32 dist;
+    Player* player = GET_PLAYER(play);
+
+    Matrix_MultVec3f(&D_80B2EB1C, &this->beamPos1);
+    this->beamScale.x = 0.08f;
+    this->beamScale.y = 0.08f;
+    playerPos.y += 20.0f;
+
+    dist = Math_Vec3f_DistXYZ(&this->beamPos1, &playerPos);
+    this->beamScale.z = dist;
+
+    this->beamRot.y = Math_Vec3f_Yaw(&this->beamPos1, &playerPos);
+    this->beamRot.x = Math_Vec3f_Pitch(&this->beamPos1, &playerPos);
+
+    sp80.z = (this->beamScale.z + 500.0f) * (this->actor.scale.y * 10000.0f);
+    Matrix_MultVec3f(&sp80, &this->beamPos3);
+
+    BgCheck_EntityLineTest1(&play->colCtx, &this->beamPos1, &playerPos, &posResult, &poly, true, true, false, true, &bgId);
+   
+    this->beamPos3 = posResult;
+
+    if (this->beamScale.z != 0.0f) {
+        this->beamCollider.dim.quad[0].x = this->actor.world.pos.x + 10.0f;
+        this->beamCollider.dim.quad[0].y = this->actor.world.pos.y;
+        this->beamCollider.dim.quad[0].z = this->actor.world.pos.z + 10.0f;
+
+        this->beamCollider.dim.quad[1].x = this->actor.world.pos.x - 10.0f;
+        this->beamCollider.dim.quad[1].y = this->actor.world.pos.y;
+        this->beamCollider.dim.quad[1].z = this->actor.world.pos.z - 10.0f;
+
+        this->beamCollider.dim.quad[2].x = this->beamPos2.x + 10.0f;
+        this->beamCollider.dim.quad[2].y = this->beamPos2.y;
+        this->beamCollider.dim.quad[2].z = this->beamPos2.z + 10.0f;
+
+        this->beamCollider.dim.quad[3].x = this->beamPos2.x - 10.0f;
+        this->beamCollider.dim.quad[3].y = this->beamPos2.y;
+        this->beamCollider.dim.quad[3].z = this->beamPos2.z - 10.0f;
+
+        Collider_SetQuadVertices(&this->beamCollider, &this->beamCollider.dim.quad[0], &this->beamCollider.dim.quad[1], &this->beamCollider.dim.quad[2], &this->beamCollider.dim.quad[3]);
+    }
+}
+
+void EnBili_DrawBeam(EnBili* this, PlayState* play, Vec3f* pos, Vec3s* rot, Vec3f* scale, u8 r, u8 g, u8 b, u8 a, s16 texScroll) {
+    OPEN_DISPS(play->state.gfxCtx, "../z_en_bili.c", 942);
+    Gfx_SetupDL_25Xlu(play->state.gfxCtx);
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TexScroll(play->state.gfxCtx, 0, texScroll, 0, 0));
+    Matrix_Translate(pos->x, pos->y, pos->z, MTXMODE_NEW);
+    Matrix_RotateZYX(rot->x, rot->y, rot->z, MTXMODE_APPLY);
+    Matrix_Scale(scale->x * 0.1f, scale->x * 0.1f, scale->z * 0.00145f, MTXMODE_APPLY);
+    MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_en_bili.c", 948);
+    gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, r, g, b, a);
+    gSPDisplayList(POLY_XLU_DISP++, gBiriBeam);
+    CLOSE_DISPS(play->state.gfxCtx, "../z_en_bili.c", 951);
+}
+
 #include "assets/overlays/ovl_En_Bili/ovl_En_Bili.c"
 
 void EnBili_Draw(Actor* thisx, PlayState* play) {
@@ -790,4 +964,27 @@ void EnBili_Draw(Actor* thisx, PlayState* play) {
     POLY_XLU_DISP = SkelAnime_Draw(play, this->skelAnime.skeleton, this->skelAnime.jointTable, EnBili_OverrideLimbDraw,
                                    NULL, this, POLY_XLU_DISP);
     CLOSE_DISPS(play->state.gfxCtx, "../z_en_bili.c", 1552);
+    
+    if (this->beamTimer > 0 && (this->actionFunc == EnBili_PrepareBeam || this->actionFunc == EnBili_Beam)) {
+        u8 r, g, b, a;
+        s16 texScroll;
+
+        EnBili_HandleBeamLogic(this, play);
+
+        r = 150;
+        g = 200;
+        b = 255;
+        a = (u8)F32_LERP(0, 255, (f32)this->beamTimer * 0.1f);
+        texScroll = this->beamTexScroll;
+
+        if (this->actionFunc == EnBili_PrepareBeam) {
+            r = 255;
+            g = 100;
+            b = 100;
+            a = (u8)F32_LERP(255, 0, (f32)this->beamTimer * 0.1f);
+            texScroll = 0;
+        }
+
+        EnBili_DrawBeam(this, play, &this->beamPos1, &this->beamRot, &this->beamScale, r, g, b, a, texScroll);
+    }
 }

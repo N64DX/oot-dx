@@ -463,6 +463,132 @@ void SkelAnime_DrawFlexOpa(PlayState* play, void** skeleton, Vec3s* jointTable, 
     CLOSE_DISPS(play->state.gfxCtx, "../z_skelanime.c", 1347);
 }
 
+void SkelAnime_DrawTransformFlexLimbOpa(PlayState* play, s32 limbIndex, void** skeleton, Vec3s* jointTable, OverrideLimbDrawOpa overrideLimbDraw, PostLimbDrawOpa postLimbDraw, TransformLimbDrawOpa transformLimbDraw, Actor* actor, Mtx** mtx) {
+    StandardLimb* limb;
+    Gfx* newDList;
+    Gfx* limbDList;
+    Vec3f pos;
+    Vec3s rot;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_skelanime.c", 473);
+
+    Matrix_Push();
+
+    limb = SEGMENTED_TO_VIRTUAL(skeleton[limbIndex]);
+    limbIndex++;
+
+    rot = jointTable[limbIndex];
+    pos.x = limb->jointPos.x;
+    pos.y = limb->jointPos.y;
+    pos.z = limb->jointPos.z;
+
+    newDList = limbDList = limb->dList;
+
+    if ((overrideLimbDraw == NULL) || !overrideLimbDraw(play, limbIndex, &newDList, &pos, &rot, actor)) {
+        Matrix_TranslateRotateZYX(&pos, &rot);
+        Matrix_Push();
+
+        transformLimbDraw(play, limbIndex, actor);
+
+        if (newDList != NULL) {
+            Gfx* gfx = POLY_OPA_DISP;
+
+            gSPMatrix(&gfx[0], Matrix_ToMtx(*mtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPDisplayList(&gfx[1], newDList);
+            POLY_OPA_DISP = &gfx[2];
+            (*mtx)++;
+        } else {
+            if (limbDList != NULL) {
+                Matrix_ToMtx(*mtx);
+                (*mtx)++;
+            }
+        }
+        Matrix_Pop();
+    }
+
+    if (postLimbDraw != NULL)
+        postLimbDraw(play, limbIndex, &limbDList, &rot, actor);
+
+    if (limb->child != LIMB_DONE)
+        SkelAnime_DrawTransformFlexLimbOpa(play, limb->child, skeleton, jointTable, overrideLimbDraw, postLimbDraw, transformLimbDraw, actor, mtx);
+
+    Matrix_Pop();
+
+    if (limb->sibling != LIMB_DONE)
+        SkelAnime_DrawTransformFlexLimbOpa(play, limb->sibling, skeleton, jointTable, overrideLimbDraw, postLimbDraw, transformLimbDraw, actor, mtx);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_skelanime.c", 520);
+}
+
+/**
+ * Draw all limbs of type `StandardLimb` in a given flexible skeleton to the polyOpa buffer
+ * Limbs in a flexible skeleton have meshes that can stretch to line up with other limbs.
+ * An array of matrices is dynamically allocated so each limb can access any transform to ensure its meshes line up.
+ *
+ * Also makes use of a `TransformLimbDraw`, which transforms limbs based on world coordinates, as opposed to local limb
+ * coordinates.
+ * Note that the `TransformLimbDraw` does not have a NULL check, so must be provided even if empty.
+ */
+void SkelAnime_DrawTransformFlexOpa(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dListCount, OverrideLimbDrawOpa overrideLimbDraw, PostLimbDrawOpa postLimbDraw, TransformLimbDrawOpa transformLimbDraw, Actor* actor) {
+    StandardLimb* rootLimb;
+    s32 pad;
+    Gfx* newDList;
+    Gfx* limbDList;
+    Vec3f pos;
+    Vec3s rot;
+    Mtx* mtx;
+
+    if (skeleton == NULL)
+        return;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_skelanime.c", 487);
+
+    mtx = GRAPH_ALLOC(play->state.gfxCtx, dListCount * sizeof(Mtx));
+
+    gSPSegment(POLY_OPA_DISP++, 0x0D, mtx);
+
+    Matrix_Push();
+
+    rootLimb = SEGMENTED_TO_VIRTUAL(skeleton[0]);
+
+    pos.x = jointTable[0].x;
+    pos.y = jointTable[0].y;
+    pos.z = jointTable[0].z;
+    rot = jointTable[1];
+
+    newDList = limbDList = rootLimb->dList;
+
+    if (overrideLimbDraw == NULL || !overrideLimbDraw(play, 1, &newDList, &pos, &rot, actor)) {
+        Matrix_TranslateRotateZYX(&pos, &rot);
+        Matrix_Push();
+
+        transformLimbDraw(play, 1, actor);
+
+        if (newDList != NULL) {
+            Gfx* gfx = POLY_OPA_DISP;
+
+            gSPMatrix(&gfx[0], Matrix_ToMtx(mtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPDisplayList(&gfx[1], newDList);
+            POLY_OPA_DISP = &gfx[2];
+            mtx++;
+        } else {
+            if (limbDList != NULL)
+                Matrix_ToMtx(mtx++);
+        }
+        Matrix_Pop();
+    }
+
+    if (postLimbDraw != NULL)
+        postLimbDraw(play, 1, &limbDList, &rot, actor);
+
+    if (rootLimb->child != LIMB_DONE)
+        SkelAnime_DrawTransformFlexLimbOpa(play, rootLimb->child, skeleton, jointTable, overrideLimbDraw, postLimbDraw, transformLimbDraw, actor, &mtx);
+
+    Matrix_Pop();
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_skelanime.c", 532);
+}
+
 /**
  * Copies frame data from the frame data table, indexed by the joint index table.
  * Indices below limit are copied from that entry in the static frame data table.

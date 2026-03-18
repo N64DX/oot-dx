@@ -48,6 +48,20 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Tanron1"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Tanron1/z_en_tanron1.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Tanron1/ovl_En_Tanron1_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Raf"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Raf/z_en_raf.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Raf/ovl_En_Raf_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Dinofos"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Dinofos/z_en_dinofos.o"
@@ -80,4 +94,53 @@ beginseg
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Slim/z_en_slim.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Slim/ovl_En_Slim_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Beast"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Beast/z_en_beast.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Beast/ovl_En_Beast_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Mkk"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Mkk/z_en_mkk.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Mkk/ovl_En_Mkk_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Grasshopper"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Grasshopper/z_en_grasshopper.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Grasshopper/ovl_En_Grasshopper_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Kame"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Kame/z_en_kame.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Kame/ovl_En_Kame_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Stalm"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Stalm/z_en_stalm.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Stalm/ovl_En_Stalm_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Ganon_Ladder"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ganon_Ladder/z_bg_ganon_ladder.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ganon_Ladder/ovl_Bg_Ganon_Ladder_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Ganon_Sword"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Ganon_Sword/z_en_ganon_sword.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Ganon_Sword/ovl_En_Ganon_Sword_reloc.o"
 endseg

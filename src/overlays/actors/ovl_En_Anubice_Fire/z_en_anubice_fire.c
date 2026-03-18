@@ -150,7 +150,7 @@ void func_809B27D8(EnAnubiceFire* this, PlayState* play) {
             pos.z = this->actor.world.pos.z;
             EffectSsKiraKira_SpawnDispersed(play, &pos, &velocity, &accel, &primColor, &envColor, scale, life);
         }
-        Actor_PlaySfx(&this->actor, NA_SE_EN_ANUBIS_FIRE - SFX_FLAG);
+        Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_J_FIRE - SFX_FLAG);
     }
 }
 

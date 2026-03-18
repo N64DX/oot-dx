@@ -869,7 +869,7 @@ void EnBb_Red(EnBb* this, PlayState* play) {
         if (((s32)this->skelAnime.curFrame == 0) || ((s32)this->skelAnime.curFrame == 5)) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_BUBLE_MOUTH);
         }
-        Actor_PlaySfx(&this->actor, NA_SE_EN_BUBLEFALL_FIRE - SFX_FLAG);
+        Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_J_FIRE - SFX_FLAG);
     }
 }
 

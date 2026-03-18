@@ -4154,7 +4154,7 @@ s32 Actor_IsLockedOn(PlayState* play, Actor* actor) {
     if ((player->stateFlags1 & PLAYER_STATE1_HOSTILE_LOCK_ON) && actor->isLockedOn) {
         return true;
     } else {
-        return false;
+        return HARDER_ENEMIES;
     }
 }
 
@@ -5047,6 +5047,12 @@ void func_800359B8(Actor* actor, s16 arg1, Vec3s* arg2) {
         sp24 = (-(floorPolyNormalX * sp2C) - (floorPolyNormalZ * sp30));
         arg2->z = -RAD_TO_BINANG(Math_FAtan2F(sp24 * floorPolyNormalY, 1.0f));
     }
+}
+
+void func_800BE568(Actor* actor, ColliderJntSph* sph) {
+    if (sph->elements[0].base.acHitElem->atDmgInfo.dmgFlags & (DMG_ARROW_NORMAL | DMG_ARROW_FIRE | DMG_ARROW_ICE | DMG_ARROW_LIGHT))
+        actor->world.rot.y = sph->base.ac->shape.rot.y;
+    else actor->world.rot.y = Actor_WorldYawTowardActor(sph->base.ac, actor);
 }
 
 void func_80035B18(PlayState* play, Actor* actor, u16 textId) {

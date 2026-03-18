@@ -452,4 +452,25 @@
     <Sample Name="SAMPLE_0_WOODFALL_629" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample629.aifc"/>
     <Sample Name="SAMPLE_0_WOODFALL_630" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample630.aifc"/>
     <Sample Name="SAMPLE_0_WOODFALL_631" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample631.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_1"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample1.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_2"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample2.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_3"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample3.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_4"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample4.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_5"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample5.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_6"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample6.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_7"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample7.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_8"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample8.aifc"/>
+    <Sample Name="SAMPLE_0_STAL_9"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample9.aifc"/>
+    <Sample Name="SAMPLE_0_BOE_1"        Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Boe_Sample1.half.aifc"/>
+    <Sample Name="SAMPLE_0_BOE_2"        Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Boe_Sample2.half.aifc"/>
+    <Sample Name="SAMPLE_0_DRAGONFLY_1"  Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Dragonfly_Sample1.half.aifc"/>
+    <Sample Name="SAMPLE_0_DRAGONFLY_2"  Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Dragonfly_Sample2.half.aifc"/>
+    <Sample Name="SAMPLE_0_SNAPPER_1"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snapper_Sample1.aifc"/>
+    <Sample Name="SAMPLE_0_SNAPPER_2"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snapper_Sample2.aifc"/>
+    <Sample Name="SAMPLE_0_SNAPPER_3"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snapper_Sample3.aifc"/>
+    <Sample Name="SAMPLE_0_SNAPPER_4"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snapper_Sample4.half.aifc"/>
+    <Sample Name="SAMPLE_0_SNAPPER_5"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snapper_Sample5.half.aifc"/>
+    <Sample Name="SAMPLE_0_LILYPAD_1"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Lilypad_Sample1.half.aifc"/>
+    <Sample Name="SAMPLE_0_LILYPAD_2"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Lilypad_Sample2.half.aifc"/>
+    <Sample Name="SAMPLE_0_LILYPAD_3"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Lilypad_Sample3.half.aifc"/>
 </SampleBank>

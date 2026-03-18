@@ -408,6 +408,14 @@ typedef enum NaviEnemy {
     /* 0x5C */ NAVI_ENEMY_POE_WASTELAND,
     /* 0x5D */ NAVI_ENEMY_MINIBLIN,
     /* 0x5E */ NAVI_ENEMY_ZOL,
+    /* 0x5F */ NAVI_ENEMY_ELECTRIC_KEESE,
+    /* 0x60 */ NAVI_ENEMY_BEAST,
+    /* 0x61 */ NAVI_ENEMY_STALMASTER,
+    /* 0x62 */ NAVI_ENEMY_WHITE_BOE,
+    /* 0x63 */ NAVI_ENEMY_BLACK_BOE,
+    /* 0x64 */ NAVI_ENEMY_DRAGONFLY,
+    /* 0x65 */ NAVI_ENEMY_SNAPPER,
+    /* 0x66 */ NAVI_ENEMY_KING_DEKU,
     /* 0xFF */ NAVI_ENEMY_NONE = 0xFF
 } NaviEnemy;
 
@@ -614,6 +622,7 @@ typedef struct NpcInteractInfo {
 #define TRANSITION_ACTOR_PARAMS_INDEX_SHIFT 10
 #define GET_TRANSITION_ACTOR_INDEX(actor) PARAMS_GET_NOMASK((u16)(actor)->params, 10)
 
+extern Gfx D_80115FF0[];
 extern Gfx D_80116280[];
 
 void ActorShape_Init(ActorShape* shape, f32 yOffset, ActorShadowFunc shadowDraw, f32 shadowScale);
@@ -802,6 +811,7 @@ void func_80035844(Vec3f* arg0, Vec3f* arg1, Vec3s* arg2, s32 arg3);
 Actor* func_800358DC(Actor* actor, Vec3f* spawnPos, Vec3s* spawnRot, f32* arg3, s32 timer, s16* unused,
                      struct PlayState* play, s16 params, Gfx* dList);
 void func_800359B8(Actor* actor, s16 arg1, Vec3s* arg2);
+void func_800BE568(Actor* actor, ColliderJntSph* sph);
 s32 Flags_GetEventChkInf(s32 flag);
 void Flags_SetEventChkInf(s32 flag);
 s32 Flags_GetInfTable(s32 flag);

@@ -2409,3 +2409,11 @@ JointIndex BuffDekuSkelPanicAnimJointIndices[18] = {
 };
 
 AnimationHeader BuffDekuSkelPanicAnim = { { 6 }, BuffDekuSkelPanicAnimFrameData, BuffDekuSkelPanicAnimJointIndices, 13 };
+
+u64 gKingDekuTitleCardTex[] = {
+#include "assets/objects/object_buffdeku/king_deku_title_card.ia8.inc.c"
+};
+
+u64 gKingDekuTitleCardPalTex[] = {
+#include "assets/objects/object_buffdeku/king_deku_title_card_pal.ia8.inc.c"
+};

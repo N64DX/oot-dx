@@ -22,14 +22,16 @@ typedef struct EnFirefly {
     /* 0x0310 */ f32 maxAltitude;
     /* 0x0314 */ ColliderJntSph collider;
     /* 0x0344 */ ColliderJntSphElement colliderElements[1];
-} EnFirefly; // size = 0x0374
+    /* 0x0374 */ u8 shockTimer;
+} EnFirefly; // size = 0x0375
 
 typedef enum KeeseType {
     /* 0 */ KEESE_FIRE_FLY,
     /* 1 */ KEESE_FIRE_PERCH,
     /* 2 */ KEESE_NORMAL_FLY,
     /* 3 */ KEESE_NORMAL_PERCH,
-    /* 4 */ KEESE_ICE_FLY
+    /* 4 */ KEESE_ICE_FLY,
+    /* 5 */ KEESE_ELECTRIC_FLY
 } KeeseType;
 
 #endif

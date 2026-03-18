@@ -483,7 +483,7 @@ void EnTest_WaitAbove(EnTest* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
     this->actor.world.pos.y = this->actor.home.pos.y + 150.0f;
 
-    if ((this->actor.xzDistToPlayer < 200.0f) && (ABS(this->actor.yDistToPlayer) < 450.0f)) {
+    if ((this->actor.xzDistToPlayer < 200.0f && (ABS(this->actor.yDistToPlayer) < 450.0f)) || play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS) {
         EnTest_SetupAction(this, EnTest_Fall);
         this->actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
         this->actor.shape.rot.y = this->actor.world.rot.y = this->actor.yawTowardsPlayer;

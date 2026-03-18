@@ -20,6 +20,7 @@
 #include "player.h"
 
 #include "assets/objects/object_tite/object_tite.h"
+#include "assets/objects/object_tite/object_tite_extra.h"
 #include "assets/objects/object_ik/object_ik.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED

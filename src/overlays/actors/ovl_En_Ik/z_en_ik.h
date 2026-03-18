@@ -16,7 +16,11 @@ typedef enum EnIkType {
     /* 0 */ IK_TYPE_NABOORU,
     /* 1 */ IK_TYPE_SILVER,
     /* 2 */ IK_TYPE_BLACK,
-    /* 3 */ IK_TYPE_WHITE
+    /* 3 */ IK_TYPE_WHITE,
+    /* 4 */ IK_TYPE_NABOORU_HYPER,
+    /* 5 */ IK_TYPE_SILVER_HYPER,
+    /* 6 */ IK_TYPE_BLACK_HYPER,
+    /* 7 */ IK_TYPE_WHITE_HYPER
 } EnIkType;
 
 typedef enum IronKnuckleLimb {
@@ -115,6 +119,8 @@ typedef struct EnIk {
     /* 0x04CC */ s32 csDrawMode;
     /* 0x04D0 */ u32 cueId;
     /* 0x04D4 */ s32 isAxeSummoned;
-} EnIk; // size = 0x04DC
+    /* 0x04DC */ bool hasWalked;
+    /* 0x04DD */ bool isHyper;
+} EnIk; // size = 0x04DE
 
 #endif

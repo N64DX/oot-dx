@@ -2199,3 +2199,144 @@ COLOR(LIGHTBLUE) "C'est une masse de slime vivant qui\n"
 "tu peux facilement le trancher." COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
+
+DEFINE_MESSAGE(0x065F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(60) "エレキキース\n"
+SHIFT(21) COLOR(LIGHTBLUE) "突っ込んでくる前に倒して！" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Electric Keese\n"
+COLOR(LIGHTBLUE) "Destroy it before it flies into\n"
+"you!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Ein Elektroflatterer!\n"
+COLOR(LIGHTBLUE) "Zerstöre diese eiskalten Widerlinge,\n"
+"bevor sie Dich einfrieren können!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Saigneur électrique\n"
+COLOR(LIGHTBLUE) "Détruis-le avant qu'il ne t'attaque!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)
+
+DEFINE_MESSAGE(0x0660, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(100) "獣\n"
+SHIFT(75) COLOR(LIGHTBLUE) "危険な獣で\n"
+SHIFT(50) "襲いかかってくる！" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Beast\n"
+COLOR(LIGHTBLUE) "A dangerous beast that lashes out\n"
+"at you!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Bestie\n"
+COLOR(LIGHTBLUE) "Eine gefährliche Bestie die nach dir\n"
+"ausschlägt!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Bête\n"
+COLOR(LIGHTBLUE) "Une bête dangereuse qui se jette\n"
+"sur toi!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)
+
+DEFINE_MESSAGE(0x0661, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(100) "スタルマスタ\n"
+SHIFT(75) COLOR(LIGHTBLUE) "金の鎧と四本の腕を持つ\n"
+SHIFT(50) "うわさのスタルフォス。爆破せよ！\n" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Stalmaster\n"
+COLOR(LIGHTBLUE) "Is this the rumored Stalfos in\n"
+"gold armor with four hands?\n"
+"Try to " COLOR(DEFAULT) "blow it up" COLOR(LIGHTBLUE) "!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Stalmeister\n"
+COLOR(LIGHTBLUE) "Ist das der sagenhafte Stalfos\n"
+"in goldener Rüstung mit vier Armen?\n"
+COLOR(DEFAULT) "Spreng ihn in die Luft!" COLOR(LIGHTBLUE) "!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Maître Stalfon\n"
+COLOR(LIGHTBLUE) "Serait-ce le Stalfos légendaire\n"
+"à l’armure dorée et aux quatre bras?\n"
+COLOR(DEFAULT) "Fais-le exploser" COLOR(LIGHTBLUE) "!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)
+
+DEFINE_MESSAGE(0x0662, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "White Boe\n"
+COLOR(LIGHTBLUE) "Stay calm and attack it!\n"
+"They come in groups, but individually,\n"
+"pose no real danger." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0663, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Black Boe\n"
+COLOR(LIGHTBLUE) "Stay calm and attack it!\n"
+"They come in groups, but individually,\n"
+"pose no real danger." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0664, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Dragonfly\n"
+COLOR(LIGHTBLUE) "As long as you stay away from\n"
+"its tail, it poses no danger." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0665, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "Snapper\n"
+COLOR(LIGHTBLUE) "The way these things move, they\n"
+"never expose the weak part of\n"
+"their body!" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0666, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(60) "デクの王\n"
+COLOR(LIGHTBLUE) "気をつけろ　とても強そうだ！\n"
+"でも　火に弱そうだ…" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "King Deku\n"
+COLOR(LIGHTBLUE) "Watch out, he looks really strong!\n"
+"He looks weak to fire though..." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Das ist King Deku!\n"
+COLOR(LIGHTBLUE) "Pass auf, er sieht sehr stark aus!\n"
+"Doch Feuer scheint seine Schwäche\n"
+"zu sein..." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "King Deku\n"
+COLOR(LIGHTBLUE) "Attention, il a l’air très fort!\n"
+"Mais il semble faible face au feu..." COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)

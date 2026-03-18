@@ -535,6 +535,7 @@ s32 CollisionCheck_SetAC_SAC(struct PlayState* play, CollisionCheckContext* colC
 s32 CollisionCheck_SetOC(struct PlayState* play, CollisionCheckContext* colChkCtx, Collider* collider);
 s32 CollisionCheck_SetOC_SAC(struct PlayState* play, CollisionCheckContext* colChkCtx, Collider* collider, s32 index);
 s32 CollisionCheck_SetOCLine(struct PlayState* play, CollisionCheckContext* colChkCtx, OcLine* collider);
+void CollisionCheck_GreenBlood(struct PlayState* play, Collider* collider, Vec3f* v);
 void CollisionCheck_BlueBlood(struct PlayState* play, Collider* collider, Vec3f* v);
 void CollisionCheck_AT(struct PlayState* play, CollisionCheckContext* colChkCtx);
 void CollisionCheck_OC(struct PlayState* play, CollisionCheckContext* colChkCtx);
@@ -564,5 +565,7 @@ void CollisionCheck_SpawnShieldParticlesWood(struct PlayState* play, Vec3f* v, V
 s32 CollisionCheck_CylSideVsLineSeg(f32 radius, f32 height, f32 offset, Vec3f* actorPos, Vec3f* itemPos,
                                     Vec3f* itemProjPos, Vec3f* out1, Vec3f* out2);
 u8 CollisionCheck_GetSwordDamage(s32 dmgFlags);
+
+#define BLENDERU_TO_ZU(x, y, z, scale) {x * scale, z * scale, (-y) * scale}
 
 #endif
