@@ -212,6 +212,5 @@ void Message_DisplaySceneTitleCard(struct PlayState* play);
 bool Message_HasSceneTitleCardMessage(struct PlayState* play, u16 textId);
 
 extern s16 gOcarinaSongItemMap[];
-extern s16 sTextIsCredits;
 
 #endif
