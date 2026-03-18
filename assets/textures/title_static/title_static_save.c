@@ -53,4 +53,29 @@ u64 gFileSelFile5ButtonFRATex[TEX_LEN(u64, gFileSelFileButtonTex_WIDTH, gFileSel
 u64 gFileSelFile6ButtonFRATex[TEX_LEN(u64, gFileSelFileButtonTex_WIDTH, gFileSelFileButtonTex_HEIGHT, 16)] = {
 #include "assets/textures/title_static/gFileSelFile6ButtonFRATex.ia16.inc.c"
 };
+
+u64 gFileSelMoreOptionsENGTex[TEX_LEN(u64, 128, 16, 8)] = {
+#include "assets/textures/title_static/gFileSelMoreOptionsENGTex.ia8.inc.c"
+};
+
+#if OOT_NTSC
+u64 gFileSelMoreOptionsJPNTex[TEX_LEN(u64, 128, 16, 8)] = {
+#include "assets/textures/title_static/gFileSelMoreOptionsJPNTex.ia8.inc.c"
+};
+#endif
+
+#if OOT_NTSC_N64 || OOT_PAL
+u64 gFileSelMoreOptionsGERTex[TEX_LEN(u64, 128, 16, 8)] = {
+#include "assets/textures/title_static/gFileSelMoreOptionsGERTex.ia8.inc.c"
+};
+
+u64 gFileSelMoreOptionsFRATex[TEX_LEN(u64, 128, 16, 8)] = {
+#include "assets/textures/title_static/gFileSelMoreOptionsFRATex.ia8.inc.c"
+};
+#endif
+
+u64 gFileSelLButtonTex[TEX_LEN(u64, 32, 32, 32)] = {
+#include "assets/textures/title_static/gFileSelLButtonTex.rgba32.inc.c"
+};
+
 #endif

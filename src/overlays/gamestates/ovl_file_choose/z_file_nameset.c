@@ -21,6 +21,7 @@
 #include "resolution.h"
 #include "assets/textures/parameter_static/parameter_static.h"
 
+#include "assets/textures/title_static/title_static_save.h"
 #if OOT_NTSC_N64
 #include "assets/textures/title_static/title_static_all.h"
 #else
@@ -1809,6 +1810,7 @@ static OptionsMenuTextureInfo sOptionsMenuHeaders[] = {
     { { gFileSelSOUNDENGTex, gFileSelSOUNDENGTex, gFileSelSOUNDFRATex, gFileSelSOUNDENGTex }, 64, 16 },
     { { gFileSelZTargetingENGTex, gFileSelZTargetingGERTex, gFileSelZTargetingFRATex, gFileSelZTargetingJPNTex }, 64, 16 },
     { { gFileSelLanguageENGTex, gFileSelLanguageGERTex, gFileSelLanguageFRATex, gFileSelLanguageENGTex }, 64, 16 },
+    { { gFileSelMoreOptionsENGTex, gFileSelMoreOptionsGERTex, gFileSelMoreOptionsFRATex, gFileSelMoreOptionsJPNTex }, 128, 16 },
 };
 
 static OptionsMenuTextureInfo sOptionsMenuSettings[] = {
@@ -1838,6 +1840,7 @@ static OptionsMenuTextureInfo sOptionsMenuHeaders[] = {
     { { gFileSelSOUNDENGTex, gFileSelSOUNDENGTex }, 64, 16 },
     { { gFileSelZTargetingJPNTex, gFileSelZTargetingENGTex }, 64, 16 },
     { { gFileSelCheckBrightnessJPNTex, gFileSelCheckBrightnessENGTex }, 96, 16 },
+     { { gFileSelMoreOptionsJPNTex, gFileSelMoreOptionsENGTex }, 128, 16 },
 };
 
 static OptionsMenuTextureInfo sOptionsMenuSettings[] = {
@@ -1883,6 +1886,7 @@ static OptionsMenuTextureInfo sOptionsMenuHeaders[] = {
     { { gFileSelZTargetingENGTex, gFileSelZTargetingGERTex, gFileSelZTargetingFRATex }, 64, 16 },
     { { gFileSelCheckBrightnessENGTex, gFileSelCheckBrightnessGERTex, gFileSelCheckBrightnessFRATex }, 128, 16 },
     { { gFileSelLanguageENGTex, gFileSelLanguageGERTex, gFileSelLanguageFRATex }, 64, 16 },
+    { { gFileSelMoreOptionsENGTex, gFileSelMoreOptionsGERTex, gFileSelMoreOptionsFRATex }, 128, 16 },
 };
 
 static OptionsMenuTextureInfo sOptionsMenuSettings[] = {
@@ -2274,6 +2278,14 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
     gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
     Matrix_Pop();
 #endif
+
+    // Draw Extra Options label
+    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->titleAlpha[0]);
+                    
+    gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelLButtonTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(30) << 2, HIRES_MULTIPLY(208 << 2), X_HIRES_MULTIPLY(30 + 16) << 2, HIRES_MULTIPLY(208 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2048), HIRES_DIVIDE(2048));
+    gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[4].texture[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[4]), OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[4]), 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(48) << 2, HIRES_MULTIPLY(209 << 2), X_HIRES_MULTIPLY(48 + OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[4])) << 2, HIRES_MULTIPLY(209 + OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[4])) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));
 
     CLOSE_DISPS(this->state.gfxCtx, "../z_file_nameset_PAL.c", 1040);
 }

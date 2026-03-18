@@ -28,4 +28,17 @@ extern u64 gFileSelFile5ButtonFRATex[TEX_LEN(u64, gFileSelFileButtonTex_WIDTH, g
 extern u64 gFileSelFile6ButtonFRATex[TEX_LEN(u64, gFileSelFileButtonTex_WIDTH, gFileSelFileButtonTex_HEIGHT, 16)];
 #endif
 
+extern u64 gFileSelMoreOptionsENGTex[TEX_LEN(u64, 128, 16, 8)];
+
+#if OOT_NTSC
+extern u64 gFileSelMoreOptionsJPNTex[TEX_LEN(u64, 128, 16, 8)];
+#endif
+
+#if OOT_NTSC_N64 || OOT_PAL
+extern u64 gFileSelMoreOptionsGERTex[TEX_LEN(u64, 128, 16, 8)];
+extern u64 gFileSelMoreOptionsFRATex[TEX_LEN(u64, 128, 16, 8)];
+#endif
+
+extern u64 gFileSelLButtonTex[TEX_LEN(u64, 32, 32, 32)];
+
 #endif
