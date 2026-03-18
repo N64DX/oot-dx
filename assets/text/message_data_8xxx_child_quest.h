@@ -2484,3 +2484,96 @@ UNSKIPPABLE "Now... Your power belongs to me!"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x8127, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_TOP,
+MSG(
+SHIFT(51) TEXT_SPEED(1) "ハア　ハア　ハア" TEXT_SPEED(0) "。"
+BOX_BREAK
+
+SHIFT(45) "ふっ　ふっ　ふ〜っ。\n"
+SHIFT(33) "キミ、なかなか　やるな。"
+BOX_BREAK
+
+SHIFT(9) "だが　私の走りには　かなうまい。\n"
+SHIFT(6) "キミのタイムは　" COLOR(RED) MARATHON_TIME COLOR(DEFAULT) "だ。\n"
+SHIFT(30) "でも　１秒差で　私の勝ち。"
+BOX_BREAK
+
+SHIFT(51) "ふう　ふう　ふう。\n"
+SHIFT(33) "ま、また　挑戦しなさい。"
+BOX_BREAK
+
+SHIFT(66) "ふう　ふう。\n"
+SHIFT(60) "では　" QUICKTEXT_ENABLE "さらば！" QUICKTEXT_DISABLE EVENT
+),
+MSG(
+TEXT_SPEED(1) QUICKTEXT_ENABLE "Huff..." QUICKTEXT_DISABLE QUICKTEXT_ENABLE "puff..." QUICKTEXT_DISABLE QUICKTEXT_ENABLE "huff..." QUICKTEXT_DISABLE TEXT_SPEED(0)
+BOX_BREAK
+
+"Huff...huff...whew!\n"
+"You did quite well!"
+BOX_BREAK
+
+"But you couldn't beat me!\n"
+"Your time was " COLOR(RED) MARATHON_TIME COLOR(DEFAULT) ", but I\n"
+"just beat you by one second!"
+BOX_BREAK
+
+"Huff...huff... \n"
+"You'll have to challenge me\n"
+"again sometime!"
+BOX_BREAK
+
+"But since you did so well, It would\n"
+"not feel right not to leave you with\n"
+"a small kind of reward. Huff...huff...\n"
+"You did better than expected, kid."
+BOX_BREAK
+
+"Huff...huff...\n"
+QUICKTEXT_ENABLE "Good-bye, then!" QUICKTEXT_DISABLE EVENT
+),
+MSG(
+TEXT_SPEED(1) QUICKTEXT_ENABLE "Keuch..." QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "Pust..." QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "Hust..." QUICKTEXT_DISABLE TEXT_SPEED(0)
+BOX_BREAK
+
+"Keuch... Pust... Wow!\n"
+"Das war sehr gut!"
+BOX_BREAK
+
+"Doch Du hast mich noch nicht\n"
+"geschlagen!\n"
+"Deine Bestzeit war " COLOR(RED) MARATHON_TIME COLOR(DEFAULT) ", aber\n"
+"ich war eine Sekunde schneller!"
+BOX_BREAK
+
+"Keuch... Hust... \n"
+"Versuche es irgendwann noch\n"
+"einmal!"
+BOX_BREAK
+
+"Keuch... Pust...\n"
+QUICKTEXT_ENABLE "Mach's mal gut!" QUICKTEXT_DISABLE EVENT
+),
+MSG(
+TEXT_SPEED(1) QUICKTEXT_ENABLE "Heuff..." QUICKTEXT_DISABLE QUICKTEXT_ENABLE "peuff..." QUICKTEXT_DISABLE QUICKTEXT_ENABLE "heuff..." QUICKTEXT_DISABLE TEXT_SPEED(0)
+BOX_BREAK
+
+"Woah! Tu as fait très fort!"
+BOX_BREAK
+
+"Maaaaaiiiis...je suis le vainqueur! \n"
+"Ton temps est de " COLOR(RED) MARATHON_TIME COLOR(DEFAULT) ".\n"
+"Je t'ai battu d'une seconde!"
+BOX_BREAK
+
+"Heuff...heuff... \n"
+"N'hésite pas à me défier une \n"
+"nouvelle fois! Quand tu veux!"
+BOX_BREAK
+
+"Heuff...heuff...\n"
+"A la prochaine, " QUICKTEXT_ENABLE "limace!" QUICKTEXT_DISABLE EVENT
+)
+)
+

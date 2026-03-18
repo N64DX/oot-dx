@@ -45,8 +45,11 @@ void EnMm2_Draw(Actor* thisx, PlayState* play);
 void func_80AAF3C0(EnMm2* this, PlayState* play);
 void func_80AAF57C(EnMm2* this, PlayState* play);
 void func_80AAF668(EnMm2* this, PlayState* play);
+void EnMM2_GiveItem(EnMm2* this, PlayState* play);
 s32 EnMm2_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, void* thisx);
 void EnMm2_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx);
+
+static bool beatenRace = false;
 
 ActorProfile En_Mm2_Profile = {
     /**/ ACTOR_EN_MM2,
@@ -158,7 +161,7 @@ void EnMm2_Init(Actor* thisx, PlayState* play2) {
         func_80AAEF70(this, play);
         this->actionFunc = func_80AAF57C;
     }
-    if (!LINK_IS_ADULT) {
+    if (!LINK_IS_ADULT && !IS_CHILD_QUEST) {
         Actor_Kill(&this->actor);
     }
     if (this->actor.params == 1) {
@@ -205,9 +208,24 @@ void func_80AAF330(EnMm2* this, PlayState* play) {
         this->mouthTexIndex = RM2_MOUTH_OPEN;
         if (!(this->unk_1F4 & 2)) {
             Message_CloseTextbox(play);
+            if (beatenRace)
+                this->actionFunc = EnMM2_GiveItem;
         }
         gSaveContext.subTimerState = SUBTIMER_STATE_OFF;
         CLEAR_EVENTINF(EVENTINF_MARATHON_ACTIVE);
+    }
+}
+
+void EnMM2_GiveItem(EnMm2* this, PlayState* play) {
+    if (Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
+        if (!Actor_HasParent(&this->actor, play))
+            Actor_OfferGetItem(&this->actor, play, GI_AMULET_OF_ENERGY, 1000.0f, 1000.0f);
+
+        if (Actor_HasParent(&this->actor, play)) {
+            this->actor.parent = NULL;
+            this->actionFunc = func_80AAF2BC;
+            beatenRace = false;
+        }
     }
 }
 
@@ -283,7 +301,10 @@ void func_80AAF668(EnMm2* this, PlayState* play) {
     this->actor.shape.rot.y = this->actor.world.rot.y;
     SkelAnime_Update(&this->skelAnime);
     if (((void)0, gSaveContext.subTimerSeconds) < HIGH_SCORE(HS_MARATHON)) {
-        this->actor.textId = 0x6085;
+        if (!gSaveContext.save.info.hasObtainedItems.amuletOfEnergy && IS_CHILD_QUEST) {
+            this->actor.textId = 0x8127;
+            beatenRace = true;
+        } else this->actor.textId = 0x6085;
     } else {
         this->actor.textId = 0x6084;
     }
