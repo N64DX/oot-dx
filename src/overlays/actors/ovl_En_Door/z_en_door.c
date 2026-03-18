@@ -25,6 +25,7 @@
 #include "assets/objects/object_hidan_objects/object_hidan_objects.h"
 #include "assets/objects/object_mizu_objects/object_mizu_objects.h"
 #include "assets/objects/object_haka_door/object_haka_door.h"
+#include "assets/objects/object_deku_door/object_deku_door.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -70,8 +71,9 @@ typedef enum EnDoorDListIndex {
     /* 1 */ DOOR_DL_FIRE_TEMPLE,
     /* 2 */ DOOR_DL_WATER_TEMPLE,
     /* 3 */ DOOR_DL_SHADOW,
-    /* 4 */ DOOR_DL_DEFAULT_FIELD_KEEP,
-    /* 5 */ DOOR_DL_MAX
+    /* 4 */ DOOR_DL_ANCIENT_HOLLOW,
+    /* 5 */ DOOR_DL_DEFAULT_FIELD_KEEP,
+    /* 6 */ DOOR_DL_MAX
 } EnDoorDListIndex;
 
 /**
@@ -82,6 +84,7 @@ static EnDoorInfo sDoorInfo[] = {
     { SCENE_WATER_TEMPLE, DOOR_DL_WATER_TEMPLE, OBJECT_MIZU_OBJECTS },
     { SCENE_SHADOW_TEMPLE, DOOR_DL_SHADOW, OBJECT_HAKA_DOOR },
     { SCENE_BOTTOM_OF_THE_WELL, DOOR_DL_SHADOW, OBJECT_HAKA_DOOR },
+    { SCENE_ANCIENT_HOLLOW, DOOR_DL_ANCIENT_HOLLOW, OBJECT_DEKU_DOOR },
     // KEEP objects should remain last and in this order
     { -1, DOOR_DL_DEFAULT, OBJECT_GAMEPLAY_KEEP },
     { -1, DOOR_DL_DEFAULT_FIELD_KEEP, OBJECT_GAMEPLAY_FIELD_KEEP },
@@ -118,6 +121,7 @@ static Gfx* sDoorDLists[DOOR_DL_MAX][2] = {
     { gFireTempleDoorWithHandleLeftDL, gFireTempleDoorWithHandleRightDL }, // DOOR_DL_FIRE_TEMPLE
     { gWaterTempleDoorLeftDL, gWaterTempleDoorRightDL },                   // DOOR_DL_WATER_TEMPLE
     { gShadowDoorLeftDL, gShadowDoorRightDL },                             // DOOR_DL_SHADOW
+    { gDekuBossDoorLeftDL, gDekuBossDoorRightDL },                         // DOOR_DL_ANCIENT_HOLLOW
     { gFieldDoorLeftDL, gFieldDoorRightDL },                               // DOOR_DL_DEFAULT_FIELD_KEEP
 };
 

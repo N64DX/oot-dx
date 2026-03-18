@@ -25,6 +25,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [Decomp Discord](https://discord.zelda.deco.mp)
 - [HackerOoT](https://github.com/HackerN64/HackerOoT)
 - [Hylian Modding Discord](http://discord.gg/qQqDsM8)
+- [Zelda Spaceworld ´97 Experience](https://github.com/z64proto/sw97)
 - [Curse of Moonlight](https://github.com/Javarooster-png/curseofmoonlight)
 - [Demon's Quest](https://github.com/thinedave/ocarina-demonsquest-source)
 - [Darunia's Joy](https://github.com/DaruniasJoy/OoT-Custom-Sequences)
@@ -65,6 +66,10 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - "Mysterious Forest" from "A Link to the Past" by Fish_waffle64
 - "Sacred Grove" from "Twilight Princess" by ZeldaBoy14
 - "Tal Tal Height" from "Link's Awakening DX" by NewSoupVi
+
+**Scenes:**
+- Old Lost Woods from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Forbidden Woods
+- Fairy Deku Tree from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Ancient Hollow
 
 ### Instructions
 

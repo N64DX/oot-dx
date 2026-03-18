@@ -47,7 +47,7 @@ ActorEntry swamp_spider_house_sceneStartPositionList0x000088[] = {
 };
 
 TransitionActorEntry swamp_spider_house_sceneTransitionActorList_000098[] = {
-    { 1, 255, 0, 255, ACTOR_DOOR_SHUTTER,  0,   120, -150,  0x0,    0x0040 },
+    { 1, 255, 0, 255, ACTOR_DOOR_SHUTTER,  0,   120, -150,  0x0,    0x00BF },
     { 2, 255, 1, 255, ACTOR_DOOR_SHUTTER,  0,   0,   -1230, 0x0,    0x003F },
     { 3, 255, 1, 255, ACTOR_DOOR_SHUTTER, -390, 0,   -420,  0x4000, 0x003F },
     { 1, 255, 3, 255, ACTOR_DOOR_SHUTTER, -390, 300, -690,  0xC000, 0x003F },
@@ -72,7 +72,7 @@ Spawn swamp_spider_house_sceneEntranceList0x000148[] = {
 };
 
 u16 swamp_spider_house_sceneExitList_00014C[] = {
-    ENTR_LOST_WOODS_10,
+    ENTR_FORBIDDEN_WOODS_4,
 };
 
 EnvLightSettings swamp_spider_house_sceneLightSettings0x000150[] = {
