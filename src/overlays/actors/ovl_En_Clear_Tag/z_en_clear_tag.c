@@ -12,6 +12,7 @@
 #include "z_lib.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #define FLAGS                                                                                 \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | \
@@ -268,7 +269,7 @@ void EnClearTag_Init(Actor* thisx, PlayState* play) {
         this->actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
         this->actor.attentionRangeType = ATTENTION_RANGE_5;
         Collider_SetCylinder(play, &this->collider, &this->actor, &sArwingCylinderInit);
-        this->actor.colChkInfo.health = 3;
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(3, MONSTER_HP);
 
         // Update the Arwing to play the intro cutscene.
         if (this->actor.params == CLEAR_TAG_CUTSCENE_ARWING) {

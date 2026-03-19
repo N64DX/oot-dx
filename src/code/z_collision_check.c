@@ -3127,9 +3127,10 @@ void CollisionCheck_ApplyDamage(PlayState* play, CollisionCheckContext* colChkCt
     }
     if (!(col->acFlags & AC_HARD)) {
         col->actor->colChkInfo.damage += damage;
-        if (damage > 0)
-            GET_PLAYER(play)->shieldDamage = (damage * 10 + 15) / 16;
     }
+
+    if (damage > 0)
+        GET_PLAYER(play)->shieldDamage = (damage * 10 + 15) / 16;
 }
 
 /**

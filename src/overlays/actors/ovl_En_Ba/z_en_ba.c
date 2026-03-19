@@ -130,7 +130,7 @@ void EnBa_Init(Actor* thisx, PlayState* play) {
         ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 48.0f);
         Actor_SetScale(&this->actor, 0.01f);
         EnBa_SetupIdle(this);
-        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(4, MONSTER_HP);;
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(4, MONSTER_HP);
         this->actor.colChkInfo.mass = MASS_HEAVY;
         Collider_InitJntSph(play, &this->collider);
         Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);

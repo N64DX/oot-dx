@@ -630,7 +630,7 @@ void func_808FD5F4(BossGanon2* this, PlayState* play) {
                 sZelda->unk_3C8 = 2;
                 Player_SetCsActionWithHaltedActors(play, &this->actor, PLAYER_CSACTION_79);
             }
-            this->subCamEye.x = 930.0f;
+            this->subCamEye.x = LINK_IS_ADULT ? 930.0f : 880.0f;
             this->subCamEye.y = 1129.0f;
             this->subCamEye.z = -181.0f;
             this->subCamAt.x = player->actor.world.pos.x;

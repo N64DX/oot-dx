@@ -2738,7 +2738,7 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
 
     if (equipType == EQUIP_TYPE_SHIELD && nextEquip == PLAYER_SHIELD_HEROS)
-        Inventory_ChangeEquipmentWithIcon(play, equipType, PLAYER_SHIELD_HYLIAN);
+        Inventory_ChangeEquipmentWithIcon(play, equipType, EQUIP_VALUE_SHIELD_HYLIAN);
     else Inventory_ChangeEquipmentWithIcon(play, equipType, nextEquip);
     Player_SetEquipmentData(play, this);
     Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
@@ -5159,7 +5159,7 @@ s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
             if (gSaveContext.save.info.playerData.isMagicAcquired && gSaveContext.save.info.playerData.magic < gSaveContext.save.info.playerData.magicLevel * MAGIC_NORMAL_METER)
                 Player_UseSpecialPower(play, this, 15, 2, NA_SE_SY_HP_RECOVER, SPECIAL_POWER_MAGIC_REGEN, 3);
         } else if (this->currentTunic == PLAYER_TUNIC_GORON)
-            damage = Player_UseSpecialPower(play, this, 25, 5, false, SPECIAL_POWER_REDUCE_DAMAGE, damage);
+            damage = Player_UseSpecialPower(play, this, 30, 10, false, SPECIAL_POWER_REDUCE_DAMAGE, damage);
     }
 
     return Health_ChangeBy(play, damage);

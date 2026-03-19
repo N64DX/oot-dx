@@ -814,6 +814,12 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_CHAMBER_OF_SAGES_LIGHT_MEDALLION:
+                if (IS_CHILD_QUEST && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)) {
+                    gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
+                    gSaveContext.save.info.equips.equipment &= (u16) ~(0xF << (EQUIP_TYPE_SWORD * 4));
+                    gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_SWORD_MASTER << (EQUIP_TYPE_SWORD * 4);
+                    Interface_LoadItemIcon1(play, 0);
+                }
                 play->linkAgeOnLoad = IS_CHILD_QUEST ? LINK_AGE_CHILD : LINK_AGE_ADULT;
                 play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
