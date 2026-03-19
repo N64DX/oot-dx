@@ -248,7 +248,7 @@ void EnIk_InitImpl(Actor* thisx, PlayState* play) {
     this->switchFlag = IK_GET_SWITCH_FLAG(thisx);
     thisx->params = IK_GET_ARMOR_TYPE(thisx);
 
-    this->isHyper = thisx->params >= IK_TYPE_NABOORU_HYPER;
+    this->isHyper = thisx->params >= IK_TYPE_NABOORU_HYPER || HARDER_ENEMIES;
     if (thisx->params >= IK_TYPE_NABOORU_HYPER)
         thisx->params -= IK_TYPE_NABOORU_HYPER;
 
@@ -364,7 +364,7 @@ void EnIk_SetupIdle(EnIk* this) {
 }
 
 void EnIk_Idle(EnIk* this, PlayState* play) {
-    s32 detectionThreshold = (this->armorStatusFlag == 0 && !HARDER_ENEMIES) ? 0xAAA : 0x3FFC;
+    s32 detectionThreshold = (this->armorStatusFlag == 0 && !this->isHyper) ? 0xAAA : 0x3FFC;
     s16 yawDiff = this->actor.yawTowardsPlayer - this->actor.shape.rot.y;
 
     if ((ABS(yawDiff) <= detectionThreshold) && (this->actor.xzDistToPlayer < 100.0f) &&
@@ -393,7 +393,7 @@ void EnIk_Idle(EnIk* this, PlayState* play) {
 void EnIk_SetupWalkOrRun(EnIk* this) {
     this->unk_2F8 = 5;
 
-    if (this->armorStatusFlag == 0 && !HARDER_ENEMIES) {
+    if (this->armorStatusFlag == 0 && !this->isHyper) {
         Animation_Change(&this->skelAnime, &gIronKnuckleWalkAnim, 1.0f, 0.0f,
                          Animation_GetLastFrame(&gIronKnuckleWalkAnim), ANIMMODE_LOOP, -4.0f);
         this->actor.speed = 0.9f;
@@ -418,7 +418,7 @@ void EnIk_WalkOrRun(EnIk* this, PlayState* play) {
     s16 footstepFrame2;
     s16 stepVal;
 
-    if (this->armorStatusFlag == 0 && !HARDER_ENEMIES) {
+    if (this->armorStatusFlag == 0 && !this->isHyper) {
         temp_t0 = 0xAAA;
         stepVal = 0x320;
         footstepFrame1 = 0;

@@ -2140,7 +2140,7 @@ u32 Player_UseSpecialPower(PlayState* this, Player* player, u8 cost, u8 cooldown
         if (gSaveContext.save.info.playerData.health > gSaveContext.save.info.playerData.healthCapacity)
             gSaveContext.save.info.playerData.health = gSaveContext.save.info.playerData.healthCapacity;
     } else if (type == SPECIAL_POWER_REDUCE_DAMAGE) {
-        return (amount / 2);
+        return (amount * 0.75);
     } else if (type == SPECIAL_POWER_STRENGTHEN_SWORD) {
         if (amount == DMG_SLASH_KOKIRI)
             return DMG_JUMP_KOKIRI;

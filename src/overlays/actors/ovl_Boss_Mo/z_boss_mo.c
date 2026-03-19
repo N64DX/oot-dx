@@ -378,7 +378,7 @@ void BossMo_Init(Actor* thisx, PlayState* play2) {
         this->actor.world.pos.y = MO_WATER_LEVEL(play) + 50.0f;
         this->fwork[MO_TENT_SWING_SIZE_X] = 5.0f;
         this->drawActor = true;
-        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(20, BOSS_HP);;
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(20, BOSS_HP);
         this->actor.colChkInfo.mass = 0;
         this->actor.params = 0;
         Actor_SetScale(&this->actor, 0.01f);

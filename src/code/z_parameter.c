@@ -1940,7 +1940,7 @@ u8 Item_Give(PlayState* play, u8 item) {
                     Interface_LoadItemIcon1(play, 0);
                 }
             }
-        } else if (item == ITEM_SWORD_MASTER) {
+        } else if (item == ITEM_SWORD_MASTER && (!IS_CHILD_QUEST || play->sceneId == SCENE_GANON_BOSS)) {
             gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
             gSaveContext.save.info.equips.equipment &= (u16) ~(0xF << (EQUIP_TYPE_SWORD * 4));
             gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_SWORD_MASTER << (EQUIP_TYPE_SWORD * 4);
@@ -4173,7 +4173,7 @@ void Energy_Draw(PlayState* play) {
     Math_SmoothStepToS(&curEnergy, gSaveContext.save.info.energy, 1, 3, 0);
 
     if (curEnergy < Player_GetMaxEnergy() && Player_GetMaxEnergy() != 0)
-        energyHideTimer = (60 / R_UPDATE_RATE);
+        energyHideTimer = ONE_SEC;
     else if (energyHideTimer > 0)
         energyHideTimer--;
 
@@ -4233,7 +4233,7 @@ void Energy_Update(PlayState* play) {
     if (energyRefillTimer > 0)
         energyRefillTimer--;
     else if (gSaveContext.save.info.energy < Player_GetMaxEnergy()) {
-        energyRefillTimer = (60 / R_UPDATE_RATE) / 3;
+        energyRefillTimer = SECONDS(0.5);
         gSaveContext.save.info.energy++;
     }
 }

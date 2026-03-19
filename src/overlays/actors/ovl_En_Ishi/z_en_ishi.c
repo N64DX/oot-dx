@@ -28,6 +28,7 @@
 #include "play_state.h"
 
 #include "assets/objects/gameplay_field_keep/gameplay_field_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #define FLAGS ACTOR_FLAG_THROW_ONLY
 
@@ -54,7 +55,7 @@ ActorProfile En_Ishi_Profile = {
     /**/ ACTOR_EN_ISHI,
     /**/ ACTORCAT_PROP,
     /**/ FLAGS,
-    /**/ OBJECT_GAMEPLAY_FIELD_KEEP,
+    /**/ OBJECT_GAMEPLAY_KEEP,
     /**/ sizeof(EnIshi),
     /**/ EnIshi_Init,
     /**/ EnIshi_Destroy,

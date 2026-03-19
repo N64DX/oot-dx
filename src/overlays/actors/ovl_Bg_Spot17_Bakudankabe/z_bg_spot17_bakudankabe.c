@@ -19,6 +19,7 @@
 
 #include "assets/objects/object_spot17_obj/object_spot17_obj.h"
 #include "assets/objects/gameplay_field_keep/gameplay_field_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #define FLAGS 0
 

@@ -54,4 +54,8 @@ extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_end_20f;
 extern Gfx gFieldBeehiveDL[44];
 extern Gfx gFieldBeehiveFragmentDL[18];
 
+#define gFieldKakeraTex_WIDTH 32
+#define gFieldKakeraTex_HEIGHT 32
+extern Gfx gFieldKakeraDL[23];
+
 #endif

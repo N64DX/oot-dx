@@ -16,6 +16,7 @@
 #include "play_state.h"
 
 #include "assets/objects/gameplay_field_keep/gameplay_field_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 #include "assets/objects/object_spot08_obj/object_spot08_obj.h"
 
 #define FLAGS ACTOR_FLAG_IGNORE_POINT_LIGHTS
