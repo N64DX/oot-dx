@@ -28321,7 +28321,7 @@
         -2254, // dist
     }, // 2022
     {
-        17, // type
+        34, // type
         {
             COLPOLY_VTX(1204, 0), // 0
             COLPOLY_VTX(1203, COLPOLY_IS_FLOOR_CONVEYOR), // 1

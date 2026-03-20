@@ -5,6 +5,6 @@
     SCENE_CMD_TIME_SETTINGS(0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_WIND_SETTINGS(0, 0, 15, 50),
     SCENE_CMD_ROOM_SHAPE(&ganon_tou_room_0_03000140_RoomShapeNormal),
-    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(ganon_tou_room_0_03000060_ObjectList), ganon_tou_room_0_03000060_ObjectList),
-    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(ganon_tou_room_0_03000070_ActorEntryList), ganon_tou_room_0_03000070_ActorEntryList),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(cq_objects), cq_objects),
+    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(cq_actors), cq_actors),
     SCENE_CMD_END(),

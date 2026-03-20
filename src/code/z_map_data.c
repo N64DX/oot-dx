@@ -1,7 +1,7 @@
 #include "map.h"
 #include "save.h"
 
-static u8 sFloorTexIndexOffset[18][8] = {
+static u8 sFloorTexIndexOffset[19][8] = {
     { 0, 0, 0, 0, 2, 4, 6, 8 }, { 0, 0, 0, 0, 0, 0, 0, 2 },
     { 0, 0, 0, 0, 0, 0, 0, 2 }, { 0, 0, 0, 0, 0, 2, 4, 6 },
     { 0, 0, 0, 0, 2, 4, 6, 8 }, { 0, 0, 0, 0, 0, 2, 4, 6 },
@@ -11,10 +11,11 @@ static u8 sFloorTexIndexOffset[18][8] = {
     { 0 },                      { 0 },
     { 0 },                      { 0 },
     { 0 },                      { 0, 0, 2, 4, 6, 8, 10, 12 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
 };
 
-static u8 sBossFloor[18] = {
-    7, 7, 6, 7, 7, 4, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7,
+static u8 sBossFloor[19] = {
+    7, 7, 6, 7, 7, 4, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0,
 };
 
 static u8 sRoomPalette[10][32] = {
@@ -326,7 +327,7 @@ static u8 sSwitchToRoom[10][51] = {
     { 255 },
 };
 
-static u8 sFloorID[18][8] = {
+static u8 sFloorID[19][8] = {
     /* clang-format off */
     {    0,    0,    0, F_3F, F_2F, F_1F, F_B1, F_B2 },
     {    0,    0,    0,    0,    0,    0, F_2F, F_1F },
@@ -346,6 +347,7 @@ static u8 sFloorID[18][8] = {
     {    0,    0,    0,    0,    0,    0,    0,    0 },
     {    0,    0,    0,    0,    0,    0,    0,    0 },
     {    0, F_6F, F_5F, F_4F, F_3F, F_2F, F_1F, F_B1 },
+    {    0,    0,    0,    0,   0 ,    0,    0,    0 },
 }; /* clang-format on */
 
 /* Y coord of big skull icon on map screen, relative to center of screen.

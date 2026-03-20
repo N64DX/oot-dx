@@ -14,4 +14,8 @@ typedef struct BgTokiSwd {
     /* 0x0150 */ ColliderCylinder collider;
 } BgTokiSwd; // size = 0x019C
 
+typedef enum BgTokiSwdType {
+    /* -1 */ MASTER_SWORD_TEMPLE_OF_TIME = -1
+} BgTokiSwdType;
+
 #endif

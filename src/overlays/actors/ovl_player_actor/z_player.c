@@ -5551,6 +5551,14 @@ s32 func_808382DC(Player* this, PlayState* play) {
                 static u8 D_808544F4[] = { 120, 60 };
                 s32 sp48 = func_80838144(sFloorType);
 
+                if (this->swimmingInPoisonWater && this->floorTypeTimer >= SECONDS(1.5) && Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_SWIMMING) {
+                    this->swimmingInPoisonWater = false;
+                    this->floorTypeTimer = 0;
+                    this->actor.colChkInfo.damage = 4;
+                    func_80837C0C(play, this, PLAYER_HIT_RESPONSE_NONE, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
+                } else if (Player_GetEnvironmentalHazard(play) < PLAYER_ENV_HAZARD_SWIMMING)
+                    this->swimmingInPoisonWater = false;
+
                 if (((this->actor.wallPoly != NULL) &&
                      func_80042108(&play->colCtx, this->actor.wallPoly, this->actor.wallBgId)) ||
                     ((sp48 >= 0) && func_80042108(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId) &&
@@ -5741,38 +5749,39 @@ static s16 sReturnEntranceGroupData[] = {
     /*  0 */ ENTR_DEATH_MOUNTAIN_TRAIL_4,  // from Magic Fairy Fountain
     /*  1 */ ENTR_DEATH_MOUNTAIN_CRATER_3, // from Double Magic Fairy Fountain
     /*  2 */ MAP_OUTSIDE_GANONS_CASTLE_2,  // from Double Defense Fairy Fountain (as adult)
+    /*  3 */ ENTR_WOODFALL_2,              // from Great Quick Spin Fairy Fountain
 
     // ENTR_RETURN_2
-    /*  3 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
-    /*  4 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
+    /*  4 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
+    /*  5 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
 
     // ENTR_RETURN_BAZAAR
-    /*  5 */ ENTR_KAKARIKO_VILLAGE_3,
-    /*  6 */ ENTR_MARKET_DAY_6,
+    /*  6 */ ENTR_KAKARIKO_VILLAGE_3,
+    /*  7 */ ENTR_MARKET_DAY_6,
 
     // ENTR_RETURN_4
-    /*  7 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
-    /*  8 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
+    /*  8 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
+    /*  9 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
 
     // ENTR_RETURN_SHOOTING_GALLERY
-    /*  9 */ ENTR_KAKARIKO_VILLAGE_10,
-    /* 10 */ ENTR_MARKET_DAY_8,
+    /* 10 */ ENTR_KAKARIKO_VILLAGE_10,
+    /* 11 */ ENTR_MARKET_DAY_8,
 
     // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    /* 11 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
-    /* 12 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
-    /* 13 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
+    /* 12 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
+    /* 13 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
+    /* 14 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
 };
 
 /**
  * The values are indices into `sReturnEntranceGroupData` marking the start of each group
  */
 static u8 sReturnEntranceGroupIndices[] = {
-    11, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    9,  // ENTR_RETURN_SHOOTING_GALLERY
-    3,  // ENTR_RETURN_2
-    5,  // ENTR_RETURN_BAZAAR
-    7,  // ENTR_RETURN_4
+    12, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
+    10, // ENTR_RETURN_SHOOTING_GALLERY
+    4,  // ENTR_RETURN_2
+    6,  // ENTR_RETURN_BAZAAR
+    8,  // ENTR_RETURN_4
     0,  // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
 };
 
@@ -11349,8 +11358,25 @@ void Player_PutSwordInHand(PlayState* play, Player* this, s32 playSfx) {
     static u8 sSwordItemIds[] = { ITEM_SWORD_MASTER, ITEM_SWORD_KOKIRI };
     s32 swordItemId = sSwordItemIds[(void)0, gSaveContext.save.linkAge];
     s32 swordItemAction = sItemActions[swordItemId];
-    
-    if (IS_CHILD_QUEST_AS_CHILD) {
+    u8 i;
+
+    if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+        Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_MASTER);
+        gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
+        Interface_LoadItemIcon1(play, 0);
+        for (i=1; i<8; i++) {
+            if (i<4) {
+                if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                    Interface_LoadItemIcon1(play, i);
+            }
+            else {
+                if (DPAD_BUTTON(i-4) == SLOT_SWORDS)
+                    Interface_LoadItemIcon1(play, i);
+            }
+        }
+        swordItemId = ITEM_SWORD_MASTER;
+        swordItemAction = sItemActions[swordItemId];
+    } else if (IS_CHILD_QUEST_AS_CHILD) {
         swordItemId = this->currentSwordItemId;
         swordItemAction = sItemActions[swordItemId];
         if (swordItemId <= -1) { swordItemId = this->currentSwordItemId = -1; }
@@ -11371,7 +11397,16 @@ void Player_PutSwordInHand(PlayState* play, Player* this, s32 playSfx) {
 }
 
 void Player_StartMode_TimeTravel(PlayState* play, Player* this) {
-    static Vec3f sPedestalPos = { -1.0f, 69.0f, 20.0f };
+    static Vec3f sPedestalPos;
+    if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+        sPedestalPos.x = -2000.0f;
+        sPedestalPos.y = LINK_IS_CHILD ? -12.0f : 0.0f;
+        sPedestalPos.z = -80.0f;
+    } else {
+        sPedestalPos.x = -1.0f;
+        sPedestalPos.y = 69.0f;
+        sPedestalPos.z = 20.0f;
+    }
 
     Player_SetupAction(play, this, Player_Action_TimeTravelEnd, 0);
     this->stateFlags1 |= PLAYER_STATE1_29;
@@ -11381,14 +11416,14 @@ void Player_StartMode_TimeTravel(PlayState* play, Player* this) {
 
     // The start frame and end frame are both set to 0 so that that the animation is frozen.
     // `Player_Action_TimeTravelEnd` will play the animation after `animDelayTimer` completes.
-    LinkAnimation_Change(play, &this->skelAnime, this->ageProperties->timeTravelEndAnim, 2.0f / 3.0f, 0.0f, 0.0f,
+    LinkAnimation_Change(play, &this->skelAnime, play->sceneId == SCENE_WOODFALL_TEMPLE ? &gPlayerAnim_link_demo_return_to_past : this->ageProperties->timeTravelEndAnim, 2.0f / 3.0f, 0.0f, 0.0f,
                          ANIMMODE_ONCE, 0.0f);
     Player_StartAnimMovement(play, this,
                              PLAYER_ANIM_MOVEMENT_RESET_BY_AGE | ANIM_FLAG_UPDATE_XZ | ANIM_FLAG_UPDATE_Y |
                                  ANIM_FLAG_DISABLE_CHILD_ROOT_ADJUSTMENT | ANIM_FLAG_ENABLE_MOVEMENT |
                                  ANIM_FLAG_OVERRIDE_MOVEMENT);
 
-    if (LINK_IS_ADULT) {
+    if (LINK_IS_ADULT || play->sceneId == SCENE_WOODFALL_TEMPLE) {
         Player_PutSwordInHand(play, this, false);
     }
 
@@ -14886,26 +14921,21 @@ void Player_Action_TimeTravelEnd(Player* this, PlayState* play) {
             return;
         }
 
-#if OOT_VERSION < PAL_1_0
-        if (!LINK_IS_ADULT && LinkAnimation_OnFrame(&this->skelAnime, 5.0f)) {
-            // There is a jump sound when leaving the pedestal, but no landing sound when hitting the floor.
-            // This is fixed in PAL 1.0 and above.
-            Player_PlayVoiceSfx(this, NA_SE_VO_LI_AUTO_JUMP);
-        } else if (LINK_IS_ADULT) {
-            func_8084E988(this);
-        }
-#else
         if (!LINK_IS_ADULT) {
-            static AnimSfxEntry sJumpOffPedestalAnimSfxList[] = {
-                { NA_SE_VO_LI_AUTO_JUMP, ANIMSFX_DATA(ANIMSFX_TYPE_VOICE, 5) },
-                { 0, -ANIMSFX_DATA(ANIMSFX_TYPE_LANDING, 15) },
-            };
+            if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+                if (LinkAnimation_OnFrame(&this->skelAnime, 60.0f))
+                    Player_PlayVoiceSfx(this, NA_SE_VO_LI_SWORD_N);
+            } else {
+                static AnimSfxEntry sJumpOffPedestalAnimSfxList[] = {
+                    { NA_SE_VO_LI_AUTO_JUMP, ANIMSFX_DATA(ANIMSFX_TYPE_VOICE, 5) },
+                    { 0, -ANIMSFX_DATA(ANIMSFX_TYPE_LANDING, 15) },
+                };
 
-            Player_ProcessAnimSfxList(this, sJumpOffPedestalAnimSfxList);
+                Player_ProcessAnimSfxList(this, sJumpOffPedestalAnimSfxList);
+            }
         } else {
             func_8084E988(this);
         }
-#endif
     }
 }
 
@@ -16468,7 +16498,16 @@ static LinkAnimationHeader* D_80855190[] = {
 };
 
 void func_808519EC(PlayState* play, Player* this, CsCmdActorCue* cue) {
-    static Vec3f sPedestalPos = { -1.0f, 70.0f, 20.0f };
+    static Vec3f sPedestalPos;
+    if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+        sPedestalPos.x = -2000.0f;
+        sPedestalPos.y = 8.0f;
+        sPedestalPos.z = -80.0f;
+    } else {
+        sPedestalPos.x = -1.0f;
+        sPedestalPos.y = 70.0f;
+        sPedestalPos.z = 20.0f;
+    }
 
     Math_Vec3f_Copy(&this->actor.world.pos, &sPedestalPos);
     this->actor.shape.rot.y = -0x8000;
