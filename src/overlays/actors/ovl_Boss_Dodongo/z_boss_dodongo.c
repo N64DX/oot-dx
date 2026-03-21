@@ -714,7 +714,7 @@ void BossDodongo_Explode(BossDodongo* this, PlayState* play) {
         Actor_PlaySfx(&this->actor, NA_SE_IT_BOMB_EXPLOSION);
         Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_DAMAGE);
         Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
-        this->health -= 2;
+        this->health -= Actor_EnemyHealthCheckMultiply(2);
         this->smallDodongoTimer = 0;
 
         // make sure not to die from the bomb explosion

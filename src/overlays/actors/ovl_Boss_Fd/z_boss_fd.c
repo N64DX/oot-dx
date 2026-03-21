@@ -1320,12 +1320,12 @@ void BossFd_CollisionCheck(BossFd* this, PlayState* play) {
     if (headColliderElem->base.acElemFlags & ACELEM_HIT) {
         headColliderElem->base.acElemFlags &= ~ACELEM_HIT;
         acHitElem = headColliderElem->base.acHitElem;
-        this->actor.colChkInfo.health -= 2;
+        this->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(2);
         if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_ICE) {
-            this->actor.colChkInfo.health -= 2;
+            this->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(2);
         }
-        if ((s8)this->actor.colChkInfo.health <= 2) {
-            this->actor.colChkInfo.health = 2;
+        if (this->actor.colChkInfo.health <= Actor_EnemyHealthCheckMultiply(2)) {
+            this->actor.colChkInfo.health = Actor_EnemyHealthCheckMultiply(2);
         }
         this->work[BFD_DAMAGE_FLASH_TIMER] = 10;
         this->work[BFD_INVINC_TIMER] = 20;
