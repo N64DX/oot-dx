@@ -582,6 +582,7 @@ typedef struct NotePlaybackState {
     /* 0x6C */ VibratoState vibratoState;
 } NotePlaybackState; // size = 0x88
 
+// JAudio: "commonch"
 typedef struct NoteSubEu {
     struct {
         /* 0x00 */ volatile u8 enabled : 1;
@@ -618,6 +619,7 @@ typedef struct NoteSubEu {
     /* 0x18 */ char pad_18[0x8];
 } NoteSubEu; // size = 0x20
 
+// JAudio: "channel"
 typedef struct Note {
     /* 0x00 */ AudioListItem listItem;
     /* 0x10 */ NoteSynthesisState synthesisState;
@@ -731,12 +733,14 @@ typedef struct AudioSampleCache {
     /* 0x290 */ s32 numEntries;
 } AudioSampleCache; // size = 0x294
 
+// JAudio: Persistent <-> "stay"
 typedef struct AudioPersistentCache {
     /* 0x00*/ u32 numEntries;
     /* 0x04*/ AudioAllocPool pool;
     /* 0x14*/ AudioCacheEntry entries[16];
 } AudioPersistentCache; // size = 0xD4
 
+// JAudio: Temporary <-> "auto"
 typedef struct AudioTemporaryCache {
     /* 0x00*/ u32 nextSide;
     /* 0x04*/ AudioAllocPool pool;
