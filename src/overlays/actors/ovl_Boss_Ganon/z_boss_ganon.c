@@ -2328,7 +2328,7 @@ void BossGanon_Wait(BossGanon* this, PlayState* play) {
         } else if ((this->timers[0] == 0) && !(player->stateFlags1 & PLAYER_STATE1_13)) {
             this->timers[0] = (s16)Rand_ZeroFloat(30.0f) + 30;
 
-            if ((s8)this->actor.colChkInfo.health >= Actor_EnemyHealthMultiply(BossGanon_CalculateHealth(20), BOSS_HP)) {
+            if (this->actor.colChkInfo.health >= Actor_EnemyHealthMultiply(BossGanon_CalculateHealth(20), BOSS_HP)) {
                 BossGanon_SetupChargeLightBall(this, play);
             } else if (Rand_ZeroOne() >= 0.5f) {
                 if ((Rand_ZeroOne() >= 0.5f) || (this->actor.xzDistToPlayer > 350.0f)) {
@@ -2859,14 +2859,14 @@ void BossGanon_UpdateDamage(BossGanon* this, PlayState* play) {
                 damage = flags = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags);
 
                 if (flags == 0) {
-                    damage = 2;
+                    damage = Actor_EnemyHealthCheckMultiply(2);
                 } else {
                     hitWithSword = true;
                     if (IS_CHILD_QUEST && acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER) && HAS_MASTER_SWORD)
                         damage *= 3;
                 }
 
-                if (((s8)this->actor.colChkInfo.health >= 3) || hitWithSword) {
+                if ((this->actor.colChkInfo.health >= Actor_EnemyHealthCheckMultiply(3)) || hitWithSword) {
                     this->actor.colChkInfo.health -= damage;
                 }
 

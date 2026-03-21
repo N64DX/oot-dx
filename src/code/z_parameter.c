@@ -4224,8 +4224,8 @@ void Energy_Draw(PlayState* play) {
 }
 
 void Energy_Update(PlayState* play) {
-    if (play->specialPowerTimer > 0)
-        play->specialPowerTimer--;
+    if (R_SPECIAL_POWER_TIMER > 0)
+        R_SPECIAL_POWER_TIMER--;
 
     if (!Player_HasEnergyUnlocked())
         return;

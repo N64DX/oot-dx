@@ -1344,8 +1344,8 @@ void BossTw_ShootBeam(BossTw* this, PlayState* play) {
             BossTw_SetupHitByBeam(otherTw, play);
             Actor_PlaySfx(&otherTw->actor, NA_SE_EN_TWINROBA_DAMAGE_VOICE);
             play->envCtx.lightBlend = 1.0f;
-            this->actor.colChkInfo.health--;
-            otherTw->actor.colChkInfo.health--;
+            this->actor.colChkInfo.health -= DAMAGE_MULTIPLY;
+            otherTw->actor.colChkInfo.health -= DAMAGE_MULTIPLY;
         }
     }
 }
@@ -3151,7 +3151,7 @@ void BossTw_TwinrovaUpdate(Actor* thisx, PlayState* play2) {
             }
 
             if (!(acHitElem->atDmgInfo.dmgFlags & DMG_HOOKSHOT)) {
-                if (((s8)this->actor.colChkInfo.health < 3) && !swordDamage) {
+                if ((this->actor.colChkInfo.health < Actor_EnemyHealthCheckMultiply(3)) && !swordDamage) {
                     damage = 0;
                 }
 
@@ -5153,7 +5153,7 @@ void BossTw_TwinrovaChargeBlast(BossTw* this, PlayState* play) {
     Math_ApproachS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 5, 0x1000);
 
     if (Animation_OnFrame(&this->skelAnime, this->workf[ANIM_SW_TGT])) {
-        if ((s8)this->actor.colChkInfo.health < Actor_EnemyHealthMultiply(10, BOSS_HP)) {
+        if (this->actor.colChkInfo.health < Actor_EnemyHealthMultiply(10, BOSS_HP)) {
             sTwinrovaBlastType = Rand_ZeroFloat(1.99f);
         } else {
             if (++sFixedBlatSeq >= 4) {
@@ -5271,7 +5271,7 @@ void BossTw_TwinrovaDamage(BossTw* this, PlayState* play, u8 damage) {
             this->actor.colChkInfo.health = 0;
         }
 
-        if ((s8)this->actor.colChkInfo.health <= 0) {
+        if (this->actor.colChkInfo.health <= 0) {
             BossTw_TwinrovaSetupDeathCS(this, play);
             Enemy_StartFinishingBlow(play, &this->actor);
             Actor_PlaySfx(&this->actor, NA_SE_EN_TWINROBA_YOUNG_DEAD);
