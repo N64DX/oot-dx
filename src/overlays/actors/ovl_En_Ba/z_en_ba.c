@@ -471,7 +471,7 @@ void EnBa_Update(Actor* thisx, PlayState* play) {
 
     if ((this->actor.params < EN_BA_DEAD_BLOB) && (this->collider.base.acFlags & AC_HIT)) {
         this->collider.base.acFlags &= ~AC_HIT;
-        this->actor.colChkInfo.health--;
+        this->actor.colChkInfo.health -= DAMAGE_MULTIPLY;
         if (this->actor.colChkInfo.health == 0) {
             func_809B75A0(this, play);
         } else {

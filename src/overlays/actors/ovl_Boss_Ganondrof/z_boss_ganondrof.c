@@ -1256,7 +1256,7 @@ void BossGanondrof_CollisionCheck(BossGanondrof* this, PlayState* play) {
         this->bodyCollider.base.acFlags &= ~AC_HIT;
     } else {
         acHit = this->bodyCollider.base.acFlags & AC_HIT;
-        if ((acHit && ((s8)this->actor.colChkInfo.health > 0)) || (this->returnCount != 0)) {
+        if ((acHit && (this->actor.colChkInfo.health > 0)) || (this->returnCount != 0)) {
             if (acHit) {
                 this->bodyCollider.base.acFlags &= ~AC_HIT;
                 acHitElem = this->bodyCollider.elem.acHitElem;
@@ -1277,11 +1277,11 @@ void BossGanondrof_CollisionCheck(BossGanondrof* this, PlayState* play) {
                         }
                         dmg = CollisionCheck_GetSwordDamage(dmgFlags);
                         (dmg == 0) ? (dmg = 2) : (canKill = true);
-                        if (((s8)this->actor.colChkInfo.health > 2) || canKill) {
+                        if ((this->actor.colChkInfo.health > Actor_EnemyHealthCheckMultiply(2)) || canKill) {
                             this->actor.colChkInfo.health -= dmg;
                         }
 
-                        if ((s8)this->actor.colChkInfo.health <= 0) {
+                        if (this->actor.colChkInfo.health <= 0) {
                             BossGanondrof_SetupDeath(this, play);
                             Enemy_StartFinishingBlow(play, &this->actor);
                             return;
@@ -1299,7 +1299,7 @@ void BossGanondrof_CollisionCheck(BossGanondrof* this, PlayState* play) {
                 }
             } else if (acHit && (acHitElem->atDmgInfo.dmgFlags & DMG_RANGED)) {
                 this->work[GND_INVINC_TIMER] = 10;
-                this->actor.colChkInfo.health -= 2;
+                this->actor.colChkInfo.health -= (acHitElem->atDmgInfo.dmgFlags & DMG_SLINGSHOT) ? Actor_EnemyHealthCheckMultiply(1) : Actor_EnemyHealthCheckMultiply(2);
                 horse->hitTimer = 20;
                 Actor_PlaySfx(&this->actor, NA_SE_EN_FANTOM_DAMAGE);
             }

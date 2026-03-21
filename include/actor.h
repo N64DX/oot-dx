@@ -11,6 +11,8 @@
 
 #define INVISIBLE_ACTOR_MAX 20
 
+#define DAMAGE_MULTIPLY 10
+
 #define MASS_IMMOVABLE 0xFF // Cannot be pushed by OC colliders
 #define MASS_HEAVY 0xFE // Can only be pushed by OC colliders from actors with IMMOVABLE or HEAVY mass.
 
@@ -805,6 +807,8 @@ void func_8003555C(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* a
 void func_800355B8(struct PlayState* play, Vec3f* pos);
 u8 func_800355E4(struct PlayState* play, Collider* collider);
 u8 Actor_ApplyDamage(Actor* actor);
+u8 Actor_AdjustSwordDamage(f32 damage, s32 dmgFlags, u8 itemAction);
+void Actor_RestoreShieldDurability(u8 damage, s32 dmgFlags, u8 itemAction);
 void Actor_SetDropFlag(Actor* actor, ColliderElement* elem, s32 freezeFlag);
 void Actor_SetDropFlagJntSph(Actor* actor, ColliderJntSph* jntSph, s32 freezeFlag);
 void func_80035844(Vec3f* arg0, Vec3f* arg1, Vec3s* arg2, s32 arg3);
@@ -821,6 +825,7 @@ s32 func_80037D98(struct PlayState* play, Actor* actor, s32 arg2, s32* arg3);
 s32 Actor_TrackPlayer(struct PlayState* play, Actor* actor, Vec3s* headRot, Vec3s* torsoRot, Vec3f focusPos);
 
 u16 Actor_EnemyHealthMultiply(u16 health, u8 type);
+u16 Actor_EnemyHealthCheckMultiply(u16 health);
 bool Actor_ZeldaFledDialogue(void);
 bool Actor_OtherIsTargeted(struct PlayState* play, Actor* actor);
 void Actor_DrawDamageEffects(struct PlayState* play, Actor* actor, Vec3f bodyPartsPos[], s16 bodyPartsCount, f32 effectScale, f32 frozenSteamScale, f32 effectAlpha, u8 type);
