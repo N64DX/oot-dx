@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_9.h"
+
+.startseq Sequence_122
+
+.incbin "aseq/lake_hylia.aseq"
+
+.endseq Sequence_122

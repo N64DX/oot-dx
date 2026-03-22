@@ -72,99 +72,6 @@ ActorProfile En_Syateki_Man_Profile = {
     /**/ EnSyatekiMan_Draw,
 };
 
-#if DEBUG_FEATURES
-static u16 sBgmList[] = {
-    NA_BGM_GENERAL_SFX,
-    NA_BGM_NATURE_AMBIENCE,
-    NA_BGM_FIELD_LOGIC,
-    NA_BGM_DUNGEON,
-    NA_BGM_KAKARIKO_ADULT,
-    NA_BGM_FIELD_LOGIC,
-    NA_BGM_KAKARIKO_ADULT,
-    NA_BGM_ENEMY,
-    NA_BGM_ENEMY,
-    NA_BGM_ENEMY | 0x800,
-    NA_BGM_BOSS,
-    NA_BGM_INSIDE_DEKU_TREE,
-    NA_BGM_MARKET,
-    NA_BGM_TITLE,
-    NA_BGM_LINK_HOUSE,
-    NA_BGM_GAME_OVER,
-    NA_BGM_BOSS_CLEAR,
-    NA_BGM_ITEM_GET | 0x900,
-    NA_BGM_OPENING_GANON,
-    NA_BGM_HEART_GET | 0x900,
-    NA_BGM_OCA_LIGHT,
-    NA_BGM_JABU_JABU,
-    NA_BGM_KAKARIKO_KID,
-    NA_BGM_GREAT_FAIRY,
-    NA_BGM_ZELDA_THEME,
-    NA_BGM_FIRE_TEMPLE,
-    NA_BGM_OPEN_TRE_BOX | 0x900,
-    NA_BGM_FOREST_TEMPLE,
-    NA_BGM_COURTYARD,
-    NA_BGM_GANON_TOWER,
-    NA_BGM_LONLON,
-    NA_BGM_GORON_CITY,
-    NA_BGM_SPIRITUAL_STONE,
-    NA_BGM_OCA_BOLERO,
-    NA_BGM_OCA_MINUET,
-    NA_BGM_OCA_SERENADE,
-    NA_BGM_OCA_REQUIEM,
-    NA_BGM_OCA_NOCTURNE,
-    NA_BGM_MINI_BOSS,
-    NA_BGM_SMALL_ITEM_GET,
-    NA_BGM_TEMPLE_OF_TIME,
-    NA_BGM_EVENT_CLEAR,
-    NA_BGM_KOKIRI,
-    NA_BGM_OCA_FAIRY_GET,
-    NA_BGM_SARIA_THEME,
-    NA_BGM_SPIRIT_TEMPLE,
-    NA_BGM_HORSE,
-    NA_BGM_HORSE_GOAL,
-    NA_BGM_INGO,
-    NA_BGM_MEDALLION_GET,
-    NA_BGM_OCA_SARIA,
-    NA_BGM_OCA_EPONA,
-    NA_BGM_OCA_ZELDA,
-    NA_BGM_OCA_SUNS,
-    NA_BGM_OCA_TIME,
-    NA_BGM_OCA_STORM,
-    NA_BGM_NAVI_OPENING,
-    NA_BGM_DEKU_TREE_CS,
-    NA_BGM_WINDMILL,
-    NA_BGM_HYRULE_CS,
-    NA_BGM_MINI_GAME,
-    NA_BGM_SHEIK,
-    NA_BGM_ZORA_DOMAIN,
-    NA_BGM_APPEAR,
-    NA_BGM_ADULT_LINK,
-    NA_BGM_MASTER_SWORD,
-    NA_BGM_INTRO_GANON,
-    NA_BGM_SHOP,
-    NA_BGM_CHAMBER_OF_SAGES,
-    NA_BGM_FILE_SELECT,
-    NA_BGM_ICE_CAVERN,
-    NA_BGM_DOOR_OF_TIME,
-    NA_BGM_OWL,
-    NA_BGM_SHADOW_TEMPLE,
-    NA_BGM_WATER_TEMPLE,
-    NA_BGM_BRIDGE_TO_GANONS,
-    NA_BGM_CUTSCENE_EFFECTS,
-    NA_BGM_OCARINA_OF_TIME,
-    NA_BGM_OCARINA_OF_TIME,
-    NA_BGM_GERUDO_VALLEY,
-    NA_BGM_POTION_SHOP,
-    NA_BGM_KOTAKE_KOUME,
-    NA_BGM_CUTSCENE_EFFECTS,
-    NA_BGM_ESCAPE,
-    NA_BGM_UNDERGROUND,
-    NA_BGM_GANONDORF_BOSS,
-    NA_BGM_GANON_BOSS,
-    NA_BGM_END_DEMO,
-};
-#endif
-
 static s16 sTextIds[] = { 0x2B, 0x2E, 0xC8, 0x2D };
 
 static s16 sTextBoxCount[] = { TEXT_STATE_CHOICE, TEXT_STATE_EVENT, TEXT_STATE_EVENT, TEXT_STATE_EVENT };
@@ -487,10 +394,6 @@ void EnSyatekiMan_Update(Actor* thisx, PlayState* play) {
     }
     this->actionFunc(this, play);
 
-#if DEBUG_FEATURES
-    EnSyatekiMan_SetBgm();
-#endif
-
     this->blinkFunc(this);
     this->actor.focus.pos.y = 70.0f;
     Actor_SetFocus(&this->actor, 70.0f);
@@ -524,12 +427,3 @@ void EnSyatekiMan_Draw(Actor* thisx, PlayState* play) {
     SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount,
                           EnSyatekiMan_OverrideLimbDraw, NULL, this);
 }
-
-#if DEBUG_FEATURES
-void EnSyatekiMan_SetBgm(void) {
-    if (BREG(80)) {
-        BREG(80) = false;
-        SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, sBgmList[BREG(81)]);
-    }
-}
-#endif

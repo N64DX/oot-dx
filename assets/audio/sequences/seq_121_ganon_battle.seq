@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_3.h"
+
+.startseq Sequence_121
+
+.incbin "aseq/ganon_battle.aseq"
+
+.endseq Sequence_121
