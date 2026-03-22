@@ -247,18 +247,6 @@ Gfx gSilverRockFragmentsDL[28] = {
 #include "assets/objects/gameplay_field_keep/gSilverRockFragmentsDL.inc.c"
 };
 
-Vtx gFieldKakeraDL_0500A6D0_Vtx[] = {
-#include "assets/objects/gameplay_field_keep/gFieldKakeraDL_0500A6D0_Vtx.inc.c"
-};
-
-Gfx gFieldKakeraDL[23] = {
-#include "assets/objects/gameplay_field_keep/gFieldKakeraDL.inc.c"
-};
-
-u64 gFieldKakeraTex[TEX_LEN(u64, gFieldKakeraTex_WIDTH, gFieldKakeraTex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_field_keep/gFieldKakeraTex.rgba16.inc.c"
-};
-
 u64 gFieldBushTex[TEX_LEN(u64, gFieldBushTex_WIDTH, gFieldBushTex_HEIGHT, 16)] = {
 #include "assets/objects/gameplay_field_keep/gFieldBushTex.rgba16.inc.c"
 };
