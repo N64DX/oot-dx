@@ -2621,3 +2621,34 @@ BOX_BREAK
 "A la prochaine, " QUICKTEXT_ENABLE "limace!" QUICKTEXT_DISABLE EVENT
 )
 )
+
+DEFINE_MESSAGE(0x8129, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+UNSKIPPABLE "Interesting..."
+BOX_BREAK
+
+UNSKIPPABLE "You have earned " COLOR(RED) "300 points" COLOR(DEFAULT) "!"
+BOX_BREAK
+
+UNSKIPPABLE "Young " AGE_LAD ", you are a promising\n"
+COLOR(RED) "Ghost Hunter" COLOR(DEFAULT) "!"
+BOX_BREAK
+
+UNSKIPPABLE "Is that what you expected me to\n"
+"say? Heh heh heh!"
+BOX_BREAK
+
+UNSKIPPABLE "Because of you, I have decent\n"
+"inventory of " COLOR(RED) "Big Poes" COLOR(DEFAULT) ", but I could\n"
+"still use some more ghosts to buy\n"
+"from you."
+BOX_BREAK
+
+UNSKIPPABLE "In the meantime, let me offer\n"
+"you a small reward for your efforts.\n"
+"Heh heh."
+),
+MSG(),
+MSG()
+)
