@@ -141,3 +141,5 @@ DEFINE_SEQUENCE    (Sequence_117,       NA_BGM_KOLOKTOS,         MEDIUM_CART, CA
 DEFINE_SEQUENCE    (Sequence_118,       NA_BGM_WOODFALL_TEMPLE,  MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // woodfall_temple
 DEFINE_SEQUENCE    (Sequence_119,       NA_BGM_BOSS2,            MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // boss2
 DEFINE_SEQUENCE    (Sequence_120,       NA_BGM_SWAMP_REGION,     MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // swamp_region
+DEFINE_SEQUENCE    (Sequence_121,       NA_BGM_GANON_BATTLE,     MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // ganon_battle
+DEFINE_SEQUENCE    (Sequence_122,       NA_BGM_LAKE_HYLIA,       MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME | SEQ_FLAG_ENEMY       ) // lake_hylia

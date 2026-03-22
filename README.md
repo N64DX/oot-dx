@@ -62,10 +62,12 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 
 **Music tracks:**
 - "Kolima Forest" from "Golden Sun" by Asra
-- "Koloktos" from Skyward Sword by Zeraphyr
+- "Ganon Battle" from "A Link to the Past" by Fish_waffle64
 - "Mysterious Forest" from "A Link to the Past" by Fish_waffle64
-- "Sacred Grove" from "Twilight Princess" by ZeldaBoy14
+- "Lake Hylia" from "Twilight Princess" by Liam
 - "Tal Tal Height" from "Link's Awakening DX" by NewSoupVi
+- "Sacred Grove" from "Twilight Princess" by ZeldaBoy14
+- "Koloktos" from Skyward Sword by Zeraphyr
 
 **Scenes:**
 - Old Lost Woods from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Forbidden Woods
