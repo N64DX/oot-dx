@@ -20,8 +20,29 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/MIZUsin/mq/headers/room10.inc.c"
 };
 
-#define cq_header  NULL
-#define cmq_header mq_header
+static s16 cq_objects[] = {
+#include "assets/scenes/dungeons/MIZUsin/cq/objects/room10_obj.inc.c"
+};
+
+static ActorEntry cq_actors[] = {
+#include "assets/scenes/dungeons/MIZUsin/cq/actors/room10_actor.inc.c"
+};
+
+static SceneCmd cq_header[] = {
+#include "assets/scenes/dungeons/MIZUsin/cq/headers/room10.inc.c"
+};
+
+static s16 cmq_objects[] = {
+#include "assets/scenes/dungeons/MIZUsin/cmq/objects/room10_obj.inc.c"
+};
+
+static ActorEntry cmq_actors[] = {
+#include "assets/scenes/dungeons/MIZUsin/cmq/actors/room10_actor.inc.c"
+};
+
+static SceneCmd cmq_header[] = {
+#include "assets/scenes/dungeons/MIZUsin/cmq/headers/room10.inc.c"
+};
 
 SceneCmd* questHeaders_MIZUsin_room10[] = {
 #include "assets/scenes/dungeons/questHeaders.inc.c"

@@ -305,6 +305,9 @@ void BgSpot00Hanebasi_Draw(Actor* thisx, PlayState* play) {
     Vec3f basePos = { 158.0f, 10.0f, 400.0f };
     Vec3f newPos;
 
+    if (play->sceneId == SCENE_WATER_TEMPLE)
+        return;
+
     OPEN_DISPS(play->state.gfxCtx, "../z_bg_spot00_hanebasi.c", 698);
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
