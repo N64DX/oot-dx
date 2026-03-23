@@ -162,7 +162,7 @@ void EnfHG_Intro(EnfHG* this, PlayState* play) {
                 }
                 if (this->timers[0] == 51) {
                     Actor_PlaySfx(this->actor.child, NA_SE_EV_SPEAR_FENCE);
-                    SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_BOSS);
+                    SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, IS_CHILD_QUEST ? NA_BGM_GANON_BATTLE : NA_BGM_BOSS);
                 }
                 if (this->timers[0] == 0) {
                     EnfHG_SetupApproach(this, play, Rand_ZeroOne() * 5.99f);
@@ -317,7 +317,7 @@ void EnfHG_Intro(EnfHG* this, PlayState* play) {
                 Sfx_PlaySfxAtPos(&audioVec, NA_SE_EN_FANTOM_ST_LAUGH);
             }
             if (this->timers[0] == 20) {
-                SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_BOSS);
+                SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, IS_CHILD_QUEST ? NA_BGM_GANON_BATTLE : NA_BGM_BOSS);
             }
             if (this->timers[0] == 2) {
                 this->subCamVelFactor = 0.0f;
