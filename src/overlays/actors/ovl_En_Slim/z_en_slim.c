@@ -143,7 +143,6 @@ void EnSlim_Init(Actor* thisx, struct PlayState* play) {
     ActorShape_Init(&thisx->shape, -200.0f, ActorShadow_DrawCircle, 35.0f);
     this->flipState = TEKSLIM_INITIAL;
     thisx->colChkInfo.damageTable = sDamageTable;
-    this->actionVar1 = 0; // value immediately overwritten in SetupIdle
     this->bodyBreak.val = 0;
     thisx->focus.pos = thisx->world.pos;
     thisx->focus.pos.y += 20.0f;
@@ -270,7 +269,7 @@ void EnSlim_CustomJumpAtPlayer(EnSlim* this, struct PlayState* play) {
         this->deformationCounter = 0;
         EnSlim_SetupIdle(this);
     }
-    if (this->actor.colChkInfo.health == 1 && slimeDeformation[this->deformationCounter][1] < 0.55f)
+    if (this->actor.colChkInfo.health <= DAMAGE_MULTIPLY * 1 && slimeDeformation[this->deformationCounter][1] < 0.55f)
         EnSlim_SetupDeathCry(this);
 }
 
@@ -282,7 +281,7 @@ void EnSlim_SetupAttack(EnSlim* this) {
 
 void EnSlim_SetupTurnTowardPlayer(EnSlim* this) {
     this->action = TEKSLIM_TURN_TOWARD_PLAYER;
-    if ((this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND | BGCHECKFLAG_GROUND_TOUCH)) || ((this->actor.params == TEKSLIM_BLUE) && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER))) {
+    if ((this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND | BGCHECKFLAG_GROUND_TOUCH)) || (this->actor.params == TEKSLIM_BLUE && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER))) {
         if (this->actor.velocity.y <= 0.0f) {
             this->actor.gravity = 0.0f;
             this->actor.velocity.y = 0.0f;
@@ -296,14 +295,14 @@ void EnSlim_TurnTowardPlayer(EnSlim* this, struct PlayState* play) {
     s16 angleToPlayer;
     s16 turnVelocity;
 
-    if (((this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND | BGCHECKFLAG_GROUND_TOUCH)) || ((this->actor.params == TEKSLIM_BLUE) && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER))) &&
+    if (((this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND | BGCHECKFLAG_GROUND_TOUCH)) || (this->actor.params == TEKSLIM_BLUE && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER))) &&
         (this->actor.velocity.y <= 0.0f)) {
         this->actor.gravity = 0.0f;
         this->actor.velocity.y = 0.0f;
         this->actor.speed = 0.0f;
     }
     
-    if ((this->actor.params == TEKSLIM_BLUE) && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER)) // Calculate turn velocity and animation speed based on angle to player
+    if (this->actor.params == TEKSLIM_BLUE && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER)) // Calculate turn velocity and animation speed based on angle to player
         this->actor.world.pos.y += this->actor.depthInWater;
     angleToPlayer = Actor_WorldYawTowardActor(&this->actor, &GET_PLAYER(play)->actor) - this->actor.world.rot.y;
     if (angleToPlayer > 0) {
@@ -315,10 +314,10 @@ void EnSlim_TurnTowardPlayer(EnSlim* this, struct PlayState* play) {
     }
 
     this->actor.shape.rot.y = this->actor.world.rot.y;
-    if ((this->actor.xzDistToPlayer > 300.0f) && (this->actor.yDistToPlayer > 80.0f)) // Idle if player is far enough away from the tekslim, move or attack if almost facing player
+    if (this->actor.xzDistToPlayer > 300.0f && this->actor.yDistToPlayer > 80.0f) // Idle if player is far enough away from the tekslim, move or attack if almost facing player
         EnSlim_SetupIdle(this);
     else if (Actor_IsFacingPlayer(&this->actor, 3640)) {
-        if ((this->actor.xzDistToPlayer <= 180.0f) && (this->actor.yDistToPlayer <= 80.0f))
+        if (this->actor.xzDistToPlayer <= 180.0f && this->actor.yDistToPlayer <= 80.0f)
             EnSlim_SetupAttack(this);
         else EnSlim_SetupMoveTowardPlayer(this);
     }
@@ -424,7 +423,7 @@ void EnSlim_Stunned(EnSlim* this, struct PlayState* play) {
     }
 
     angleToPlayer = this->actor.yawTowardsPlayer - this->actor.shape.rot.y;
-    if (((this->actor.colorFilterTimer == 0) && (this->actor.speed == 0.0f)) && ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) || ((this->actor.params == TEKSLIM_BLUE) && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER)))) { // Decide on next action based on health, flip state and player distance
+    if ((this->actor.colorFilterTimer == 0 && this->actor.speed == 0.0f) && ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) || (this->actor.params == TEKSLIM_BLUE && this->actor.bgCheckFlags & BGCHECKFLAG_WATER))) { // Decide on next action based on health, flip state and player distance
         this->actor.world.rot.y = this->actor.shape.rot.y;
         if (this->actor.colChkInfo.health == 0) {
             EnSlim_SetupDeathCry(this);
@@ -511,12 +510,12 @@ void EnSlim_Update(Actor* thisx, struct PlayState* play) {
     CollisionPoly* floorPoly;
     WaterBox* waterBox;
     f32 waterSurfaceY;
-    f32 multiplier = 1.0f;
+    f32 multiplier;
 
     if (MONSTER_HP == 1)
         multiplier = 1.5f;
     else if (MONSTER_HP == 2)
-        multiplier = 2.0;
+        multiplier = 2.0f;
     else if (MONSTER_HP == 3)
         multiplier = 2.5f;
     else if (MONSTER_HP == 4)
@@ -527,6 +526,8 @@ void EnSlim_Update(Actor* thisx, struct PlayState* play) {
         multiplier = 5.0f;
     else if (MONSTER_HP == 7)
         multiplier = 0.5f;
+    else multiplier = 1.0f;
+    multiplier *= DAMAGE_MULTIPLY;
 
     this->colliderItem.dim.scale = (this->actor.colChkInfo.health / multiplier);
 
@@ -606,7 +607,7 @@ void EnSlim_Draw(Actor* thisx, struct PlayState* play) {
     Mtx* mtx;
     GraphicsContext* gfxCtx = play->state.gfxCtx;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_en_slime.c", 910);
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
     func_80093C80(play);
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
@@ -626,7 +627,7 @@ void EnSlim_Draw(Actor* thisx, struct PlayState* play) {
     gSPDisplayList(POLY_XLU_DISP++, slimeDList);
     Matrix_Pop();
 
-    CLOSE_DISPS(play->state.gfxCtx, "../z_en_slime.c", 910);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
     Collider_UpdateSpheres(0, &this->collider); // why is this in the draw function??
 }
