@@ -100,11 +100,6 @@ extern Vtx gSilverRockDL_0500A1F8_Vtx[];
 extern Gfx gSilverRockDL[34];
 extern Vtx gSilverRockFragmentsDL_0500A4C8_Vtx[];
 extern Gfx gSilverRockFragmentsDL[28];
-extern Vtx gFieldKakeraDL_0500A6D0_Vtx[];
-extern Gfx gFieldKakeraDL[23];
-#define gFieldKakeraTex_WIDTH 32
-#define gFieldKakeraTex_HEIGHT 32
-extern u64 gFieldKakeraTex[TEX_LEN(u64, gFieldKakeraTex_WIDTH, gFieldKakeraTex_HEIGHT, 16)];
 #define gFieldBushTex_WIDTH 32
 #define gFieldBushTex_HEIGHT 32
 extern u64 gFieldBushTex[TEX_LEN(u64, gFieldBushTex_WIDTH, gFieldBushTex_HEIGHT, 16)];

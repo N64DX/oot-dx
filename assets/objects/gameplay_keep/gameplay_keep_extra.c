@@ -586,3 +586,17 @@ Gfx gFieldBeehiveDL[44] = {
 Gfx gFieldBeehiveFragmentDL[18] = {
 #include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentDL.inc.c"
 };
+
+// Liftable Rock
+
+Vtx gFieldKakeraDL_0500A6D0_Vtx[] = {
+#include "assets/objects/gameplay_field_keep/gFieldKakeraDL_0500A6D0_Vtx.inc.c"
+};
+
+u64 gFieldKakeraTex[TEX_LEN(u64, gFieldKakeraTex_WIDTH, gFieldKakeraTex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_field_keep/gFieldKakeraTex.rgba16.inc.c"
+};
+
+Gfx gFieldKakeraDL[23] = {
+#include "assets/objects/gameplay_field_keep/gFieldKakeraDL.inc.c"
+};
