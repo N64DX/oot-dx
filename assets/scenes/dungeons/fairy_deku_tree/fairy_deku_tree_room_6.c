@@ -35,7 +35,7 @@ s16 fairy_deku_tree_room_6ObjectList0x000038[] = {
 ActorEntry fairy_deku_tree_room_6ActorList0x000048[] = {
     { ACTOR_OBJ_SWITCH,      { 1583, 160,  -248 }, { 0, 0x1555,    0 }, 0x2000 },
     { ACTOR_OBJ_SWITCH,      { 1238, 350, -1235 }, { 0, 0xE000,    0 }, 0x1F02 },
-    { ACTOR_EN_BOX,          { 1113, 200, -1178 }, { 0, 0x5FFF, 0x1F }, 0xB8A3 },
+    { ACTOR_EN_BOX,          { 1113, 200, -1178 }, { 0, 0x5FFF, 0x1F }, 0x8843 },
     { ACTOR_EN_DEKUBABA,     { 1392, 160,  -131 }, { 0,      0,    0 }, 0x0000 },
     { ACTOR_EN_DEKUBABA,     { 1395, 160,  -309 }, { 0,      0,    0 }, 0x0000 },
     { ACTOR_EN_DEKUBABA,     {  480, 240, -1429 }, { 0,      0,    0 }, 0x0000 },

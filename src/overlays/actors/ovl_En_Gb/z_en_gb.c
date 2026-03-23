@@ -350,7 +350,7 @@ void func_80A2FA50(EnGb* this, PlayState* play) {
         Player_UpdateBottleHeld(play, GET_PLAYER(play), ITEM_BOTTLE_EMPTY, PLAYER_IA_BOTTLE);
         Rupees_ChangeBy(50);
         HIGH_SCORE(HS_POE_POINTS) += 100;
-        if (HIGH_SCORE(HS_POE_POINTS) != 1000) {
+        if (HIGH_SCORE(HS_POE_POINTS) != 1000 && (!IS_CHILD_QUEST || HIGH_SCORE(HS_POE_POINTS) != 300)) {
             if (HIGH_SCORE(HS_POE_POINTS) > 1100) {
                 HIGH_SCORE(HS_POE_POINTS) = 1100;
             }
@@ -359,16 +359,32 @@ void func_80A2FA50(EnGb* this, PlayState* play) {
             Player* player = GET_PLAYER(play);
 
             player->exchangeItemId = EXCH_ITEM_NONE;
-            this->textId = 0x70F8;
+            this->textId = HIGH_SCORE(HS_POE_POINTS) == 300 ? 0x8129 : 0x70F8;
             Message_ContinueTextbox(play, this->textId);
             this->actionFunc = func_80A2FB40;
         }
     }
 }
 
+u8 EnGb_PointsReward(void) {
+    if (!IS_CHILD_QUEST || HIGH_SCORE(HS_POE_POINTS) == 300)
+        return GI_BOTTLE_EMPTY;
+    if (CUR_UPG_VALUE(UPG_WALLET2) >= 2)
+        return GI_WALLET_BOTTOMLESS;
+    if (CUR_UPG_VALUE(UPG_WALLET2) == 1)
+        return GI_WALLET_TYCOON;
+    if (CUR_UPG_VALUE(UPG_WALLET) == 3)
+        return GI_WALLET_ROYAL;
+    if (CUR_UPG_VALUE(UPG_WALLET) == 2)
+        return GI_WALLET_MASTER;
+    if (CUR_UPG_VALUE(UPG_WALLET) == 1)
+        return GI_WALLET_GIANT;
+    return GI_WALLET_ADULT;
+}
+
 void func_80A2FB40(EnGb* this, PlayState* play) {
     if (Message_GetState(&play->msgCtx) == TEXT_STATE_DONE && Message_ShouldAdvance(play)) {
-        Actor_OfferGetItem(&this->dyna.actor, play, GI_BOTTLE_EMPTY, 100.0f, 10.0f);
+        Actor_OfferGetItem(&this->dyna.actor, play, EnGb_PointsReward(), 100.0f, 10.0f);
         this->actionFunc = func_80A2FBB0;
     }
 }
@@ -378,7 +394,7 @@ void func_80A2FBB0(EnGb* this, PlayState* play) {
         this->dyna.actor.parent = NULL;
         this->actionFunc = func_80A2FC0C;
     } else {
-        Actor_OfferGetItem(&this->dyna.actor, play, GI_BOTTLE_EMPTY, 100.0f, 10.0f);
+        Actor_OfferGetItem(&this->dyna.actor, play, EnGb_PointsReward(), 100.0f, 10.0f);
     }
 }
 
