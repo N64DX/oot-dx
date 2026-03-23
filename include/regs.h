@@ -274,6 +274,7 @@ struct PlayState;
 #define R_USE_DEBUG_CUTSCENE                     dREG(95)
 
 #define R_BEATEN_RUSH_MODE                       dREG(94)
+#define R_SPECIAL_POWER_TIMER                    dREG(95)
 #define R_IS_YOUNG_LINK                          HREG(77)
 #define R_ENABLE_MIRROR                          HREG(78)
 #define R_QUEST_MODE                             HREG(79)

@@ -405,7 +405,7 @@ void EnVm_CheckHealth(EnVm* this, PlayState* play) {
     EnBom* bomb;
 
     if (Actor_GetCollidedExplosive(play, &this->colliderCylinder.base) != NULL) {
-        this->actor.colChkInfo.health--;
+        this->actor.colChkInfo.health -= DAMAGE_MULTIPLY;
         PRINTF("hp down %d\n", this->actor.colChkInfo.health);
     } else {
         if (!(this->colliderQuad2.base.acFlags & AC_HIT) || this->unk_21C == 2) {

@@ -2308,8 +2308,8 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
                     Actor_PlaySfx(&this->actor, NA_SE_EN_MGANON_DAMAGE);
                     Audio_StopSfxById(NA_SE_EN_MGANON_UNARI);
                     if (IS_CHILD_QUEST && HAS_MASTER_SWORD)
-                        this->actor.colChkInfo.health -= 6;
-                    else this->actor.colChkInfo.health -= 2;
+                        this->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(6);
+                    else this->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(2);
                     health = this->actor.colChkInfo.health;
                     if (health <= Actor_EnemyHealthMultiply(BossGanon2_CalculateHealth(20), BOSS_HP) && this->unk_334 == 0) {
                         func_80900818(this, play);
@@ -2335,12 +2335,12 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
             this->unk_342 = 5;
             Actor_PlaySfx(&this->actor, NA_SE_EN_MGANON_DAMAGE);
             Audio_StopSfxById(NA_SE_EN_MGANON_UNARI);
-            phi_v1_2 = 1;
+            phi_v1_2 = Actor_EnemyHealthCheckMultiply(1);
             if ( (acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER)) && player->heldItemAction == PLAYER_IA_SWORD_MASTER) {
                 if (acHitElem->atDmgInfo.dmgFlags & DMG_JUMP_MASTER) {
-                    phi_v1_2 = 4;
+                    phi_v1_2 = Actor_EnemyHealthCheckMultiply(4);
                 } else {
-                    phi_v1_2 = 2;
+                    phi_v1_2 = Actor_EnemyHealthCheckMultiply(2);
                 }
                 if (IS_CHILD_QUEST && HAS_MASTER_SWORD)
                     phi_v1_2 *= 6;
@@ -2359,7 +2359,7 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
 
             if ((health <= Actor_EnemyHealthMultiply(BossGanon2_CalculateHealth(20), BOSS_HP)) && (this->unk_334 == 0)) {
                 func_80900818(this, play);
-            } else if ((health <= 0) && (phi_v1_2 >= 2)) {
+            } else if ((health <= 0) && (phi_v1_2 >= Actor_EnemyHealthCheckMultiply(2))) {
                 func_80901020(this, play);
             } else {
                 if (health <= 0) {

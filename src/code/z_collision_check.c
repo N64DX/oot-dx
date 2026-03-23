@@ -1697,9 +1697,6 @@ void CollisionCheck_HitEffects(PlayState* play, Collider* atCol, ColliderElement
                 if (atElem->atHit != NULL && atElem->atHit->actor != NULL) {
                     atElem->atHit->actor->colChkInfo.dmgFlags = atElem->atDmgInfo.dmgFlags;
                     lastItemAction = atElem->atHit->actor->colChkInfo.itemAction = player->itemAction;
-                    if (player->currentTunic == PLAYER_TUNIC_ZORA && (atElem->atHit->actor->category == ACTORCAT_ENEMY || atElem->atHit->actor->category == ACTORCAT_BOSS))
-                        if (atElem->atDmgInfo.dmgFlags == DMG_SLASH_KOKIRI || atElem->atDmgInfo.dmgFlags == DMG_SLASH_MASTER || atElem->atDmgInfo.dmgFlags == DMG_SLASH_GIANT)
-                            atElem->atDmgInfo.dmgFlags = Player_UseSpecialPower(play, player, 30, 8, false, SPECIAL_POWER_STRENGTHEN_SWORD, atElem->atDmgInfo.dmgFlags);
                 }
     }
     if (acCol->actor != NULL) {
@@ -3743,21 +3740,8 @@ s32 CollisionCheck_CylSideVsLineSeg(f32 radius, f32 height, f32 offset, Vec3f* a
 u8 CollisionCheck_GetSwordDamage(s32 dmgFlags) {
     u8 damage = 0;
 
-    if (dmgFlags & (DMG_SPIN_KOKIRI | DMG_SLASH_KOKIRI)) {
-        damage = 1;
-    } else if (dmgFlags & (DMG_JUMP_KOKIRI | DMG_SPIN_MASTER | DMG_SLASH_MASTER | DMG_HAMMER_SWING | DMG_DEKU_STICK)) {
-        damage = 2;
-    } else if (dmgFlags & (DMG_HAMMER_JUMP | DMG_JUMP_MASTER)) {
-        damage = 4;
-    } else if (dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT)) {
-        if (IS_CHILD_QUEST_AS_CHILD && lastItemAction != PLAYER_IA_SWORD_FAIRYS)
-            damage = gSaveContext.save.info.playerData.bgsFlag ? 3 : 2;
-        else damage = 4;
-    } else if (dmgFlags & DMG_JUMP_GIANT) {
-        if (IS_CHILD_QUEST_AS_CHILD && lastItemAction != PLAYER_IA_SWORD_FAIRYS)
-            damage = gSaveContext.save.info.playerData.bgsFlag ? 6 : 4;
-        else damage = 8;
-    }
+    damage = Actor_AdjustSwordDamage(damage, dmgFlags, lastItemAction);
+    Actor_RestoreShieldDurability(damage, dmgFlags, lastItemAction);
 
 #if DEBUG_FEATURES
     KREG(7) = damage;
