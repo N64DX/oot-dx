@@ -2828,7 +2828,6 @@ void BossGanon_UpdateDamage(BossGanon* this, PlayState* play) {
                     if (IS_CHILD_QUEST && HAS_MASTER_SWORD && this->actor.colChkInfo.itemAction == PLAYER_IA_SWORD_MASTER)
                         this->actor.colChkInfo.damage *= 4;
                     Actor_ApplyDamage(&this->actor);
-                    gSaveContext.save.info.playerData.rupees = this->actor.colChkInfo.health;
                     this->damageCooldown = SECONDS(0.5);
                     if (this->actor.colChkInfo.health == 0) {
                         BossGanon_SetupDeathCutscene(this, play);
