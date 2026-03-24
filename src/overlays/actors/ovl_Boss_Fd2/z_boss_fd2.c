@@ -857,7 +857,7 @@ void BossFd2_CollisionCheck(BossFd2* this, PlayState* play) {
         if (!bossFd->faceExposed) {
             if (acHitElem->atDmgInfo.dmgFlags & DMG_HAMMER) {
                 bossFd->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(2);
-                if (bossFd->actor.colChkInfo.health <= Actor_EnemyHealthCheckMultiply(2)) {
+                if ((s16)bossFd->actor.colChkInfo.health <= Actor_EnemyHealthCheckMultiply(2)) {
                     bossFd->actor.colChkInfo.health = 1;
                 }
                 bossFd->faceExposed = true;
@@ -894,7 +894,7 @@ void BossFd2_CollisionCheck(BossFd2* this, PlayState* play) {
             if (acHitElem->atDmgInfo.dmgFlags & DMG_HOOKSHOT) {
                 damage = 0;
             }
-            if ((bossFd->actor.colChkInfo.health > Actor_EnemyHealthCheckMultiply(2)) || canKill) {
+            if (((s16)bossFd->actor.colChkInfo.health > Actor_EnemyHealthCheckMultiply(2)) || canKill) {
                 bossFd->actor.colChkInfo.health -= damage;
                 PRINTF_COLOR_GREEN();
                 PRINTF("damage   %d\n", damage);

@@ -1324,7 +1324,7 @@ void BossFd_CollisionCheck(BossFd* this, PlayState* play) {
         if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_ICE) {
             this->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(2);
         }
-        if (this->actor.colChkInfo.health <= Actor_EnemyHealthCheckMultiply(2)) {
+        if ((s16)this->actor.colChkInfo.health <= Actor_EnemyHealthCheckMultiply(2)) {
             this->actor.colChkInfo.health = Actor_EnemyHealthCheckMultiply(2);
         }
         this->work[BFD_DAMAGE_FLASH_TIMER] = 10;

@@ -392,7 +392,8 @@ static Vec3f D_80910608[4];
 
 static s8 D_80910638;
 
-s16 BossGanon2_CalculateHealth(s16 health) {
+u16 BossGanon2_HealthMultiply(u16 health) {
+    health = Actor_EnemyHealthMultiply(health, BOSS_HP);
     if (IS_CHILD_QUEST)
         return health; // * 3;
     if (isHyper)
@@ -495,7 +496,7 @@ void BossGanon2_Init(Actor* thisx, PlayState* play) {
 
     isHyper = thisx->params == GANON_HYPER;
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
-    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(BossGanon2_CalculateHealth(30), BOSS_HP);
+    this->actor.colChkInfo.health = BossGanon2_HealthMultiply(30);
     Collider_InitJntSph(play, &this->unk_424);
     Collider_SetJntSph(play, &this->unk_424, &this->actor, &sJntSphInit1, this->unk_464);
     Collider_InitJntSph(play, &this->unk_444);
@@ -1786,7 +1787,7 @@ void func_80900890(BossGanon2* this, PlayState* play) {
             if (Animation_OnFrame(&this->skelAnime, this->unk_194)) {
                 func_808FFDB0(this, play);
                 if (this->unk_334 == 0) {
-                    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(BossGanon2_CalculateHealth(25), BOSS_HP);
+                    this->actor.colChkInfo.health = BossGanon2_HealthMultiply(25);
                 }
                 this->unk_336 = 1;
             }
@@ -2277,7 +2278,7 @@ void func_80902348(BossGanon2* this, PlayState* play) {
 }
 
 void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
-    s8 health;
+    s16 health;
     ColliderElement* acHitElem;
     s16 i;
     u8 phi_v1_2;
@@ -2302,16 +2303,14 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
                     Actor_PlaySfx(&this->actor, NA_SE_EN_MGANON_DAMAGE);
                     Audio_StopSfxById(NA_SE_EN_MGANON_UNARI);
                 } else if ((this->actionFunc == func_80900890) &&
-                           (acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER))) {
+                           (acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER)) && player->heldItemAction == PLAYER_IA_SWORD_MASTER) {
                     this->unk_316 = 60;
                     this->unk_342 = 5;
                     Actor_PlaySfx(&this->actor, NA_SE_EN_MGANON_DAMAGE);
                     Audio_StopSfxById(NA_SE_EN_MGANON_UNARI);
-                    if (IS_CHILD_QUEST && HAS_MASTER_SWORD)
-                        this->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(6);
-                    else this->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(2);
+                    this->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(IS_CHILD_QUEST && HAS_MASTER_SWORD ? 6 : 2);
                     health = this->actor.colChkInfo.health;
-                    if (health <= Actor_EnemyHealthMultiply(BossGanon2_CalculateHealth(20), BOSS_HP) && this->unk_334 == 0) {
+                    if (health <= this->actor.maxHealth - Actor_EnemyHealthCheckMultiply(10) && this->unk_334 == 0) {
                         func_80900818(this, play);
                     } else {
                         if (health <= 0) {
@@ -2338,12 +2337,10 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
             phi_v1_2 = Actor_EnemyHealthCheckMultiply(1);
             if ( (acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER)) && player->heldItemAction == PLAYER_IA_SWORD_MASTER) {
                 if (acHitElem->atDmgInfo.dmgFlags & DMG_JUMP_MASTER) {
-                    phi_v1_2 = Actor_EnemyHealthCheckMultiply(4);
+                    phi_v1_2 = Actor_EnemyHealthCheckMultiply(IS_CHILD_QUEST && HAS_MASTER_SWORD ? 12 : 4);
                 } else {
-                    phi_v1_2 = Actor_EnemyHealthCheckMultiply(2);
+                    phi_v1_2 = Actor_EnemyHealthCheckMultiply(IS_CHILD_QUEST && HAS_MASTER_SWORD ? 6 : 2);
                 }
-                if (IS_CHILD_QUEST && HAS_MASTER_SWORD)
-                    phi_v1_2 *= 6;
             }
             this->actor.colChkInfo.health -= phi_v1_2;
             health = this->actor.colChkInfo.health;
@@ -2357,7 +2354,7 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
                 }
             }
 
-            if ((health <= Actor_EnemyHealthMultiply(BossGanon2_CalculateHealth(20), BOSS_HP)) && (this->unk_334 == 0)) {
+            if ((health <= this->actor.maxHealth - Actor_EnemyHealthCheckMultiply(10)) && (this->unk_334 == 0)) {
                 func_80900818(this, play);
             } else if ((health <= 0) && (phi_v1_2 >= Actor_EnemyHealthCheckMultiply(2))) {
                 func_80901020(this, play);

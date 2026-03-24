@@ -2101,7 +2101,7 @@ void BossGoma_UpdateHit(BossGoma* this, PlayState* play) {
                 }
                     
 
-                if (this->actor.colChkInfo.health > 0) {
+                if ((s16)this->actor.colChkInfo.health > 0) {
                     Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_DAM1);
                     BossGoma_SetupFloorDamaged(this);
                     EffectSsSibuki_SpawnBurst(play, &this->actor.focus.pos);

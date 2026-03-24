@@ -3740,8 +3740,18 @@ s32 CollisionCheck_CylSideVsLineSeg(f32 radius, f32 height, f32 offset, Vec3f* a
 u8 CollisionCheck_GetSwordDamage(s32 dmgFlags) {
     u8 damage = 0;
 
-    damage = Actor_AdjustSwordDamage(damage, dmgFlags, lastItemAction);
-    Actor_RestoreShieldDurability(damage, dmgFlags, lastItemAction);
+    if (dmgFlags & (DMG_SPIN_KOKIRI | DMG_SLASH_KOKIRI)) {
+        damage = 1;
+    } else if (dmgFlags & (DMG_JUMP_KOKIRI | DMG_SPIN_MASTER | DMG_SLASH_MASTER | DMG_HAMMER_SWING | DMG_DEKU_STICK)) {
+        damage = 2;
+    } else if (dmgFlags & (DMG_HAMMER_JUMP | DMG_JUMP_MASTER | DMG_SPIN_GIANT | DMG_SLASH_GIANT)) {
+        damage = 4;
+    } else if (dmgFlags & DMG_JUMP_GIANT) {
+        damage = 8;
+    }
+
+    damage = Actor_AdjustDealtDamage(damage, dmgFlags, lastItemAction);
+    Actor_RestoreShieldDurability(dmgFlags);
 
 #if DEBUG_FEATURES
     KREG(7) = damage;

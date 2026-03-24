@@ -1256,7 +1256,7 @@ void BossGanondrof_CollisionCheck(BossGanondrof* this, PlayState* play) {
         this->bodyCollider.base.acFlags &= ~AC_HIT;
     } else {
         acHit = this->bodyCollider.base.acFlags & AC_HIT;
-        if ((acHit && (this->actor.colChkInfo.health > 0)) || (this->returnCount != 0)) {
+        if ((acHit && ((s16)this->actor.colChkInfo.health > 0)) || (this->returnCount != 0)) {
             if (acHit) {
                 this->bodyCollider.base.acFlags &= ~AC_HIT;
                 acHitElem = this->bodyCollider.elem.acHitElem;
@@ -1277,11 +1277,11 @@ void BossGanondrof_CollisionCheck(BossGanondrof* this, PlayState* play) {
                         }
                         dmg = CollisionCheck_GetSwordDamage(dmgFlags);
                         (dmg == 0) ? (dmg = 2) : (canKill = true);
-                        if ((this->actor.colChkInfo.health > Actor_EnemyHealthCheckMultiply(2)) || canKill) {
+                        if (((s16)this->actor.colChkInfo.health > Actor_EnemyHealthCheckMultiply(2)) || canKill) {
                             this->actor.colChkInfo.health -= dmg;
                         }
 
-                        if (this->actor.colChkInfo.health <= 0) {
+                        if ((s16)this->actor.colChkInfo.health <= 0) {
                             BossGanondrof_SetupDeath(this, play);
                             Enemy_StartFinishingBlow(play, &this->actor);
                             return;

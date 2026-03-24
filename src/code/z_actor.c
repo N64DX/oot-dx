@@ -4869,8 +4869,8 @@ u8 Actor_ApplyDamage(Actor* actor) {
     s32 dmgFlags = actor->colChkInfo.dmgFlags;
 
     if (damage > 0) {
-        damage = Actor_AdjustSwordDamage(damage, dmgFlags, actor->colChkInfo.itemAction);
-        Actor_RestoreShieldDurability(damage, dmgFlags, actor->colChkInfo.itemAction);
+        damage = Actor_AdjustDealtDamage(damage, dmgFlags, actor->colChkInfo.itemAction);
+        Actor_RestoreShieldDurability(dmgFlags);
     }
 
     if (actor->colChkInfo.health <= damage) {
@@ -4882,23 +4882,12 @@ u8 Actor_ApplyDamage(Actor* actor) {
     return actor->colChkInfo.health;
 }
 
-u8 Actor_AdjustSwordDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
-    if (dmgFlags & (DMG_SPIN_KOKIRI | DMG_SLASH_KOKIRI)) {
-        damage = (IS_CHILD_QUEST_AS_CHILD && IS_HEROS_SWORD) ? 1.5 : 1;
-    } else if (dmgFlags & (DMG_JUMP_KOKIRI)) {
-        damage = (IS_CHILD_QUEST_AS_CHILD && IS_HEROS_SWORD) ? 3 : 2;
-    } else if (dmgFlags & (DMG_SPIN_MASTER | DMG_SLASH_MASTER | DMG_HAMMER_SWING | DMG_DEKU_STICK)) {
-        damage = 2;
-    } else if (dmgFlags & (DMG_HAMMER_JUMP | DMG_JUMP_MASTER)) {
-        damage = 4;
-    } else if (dmgFlags & (DMG_SPIN_GIANT | DMG_SLASH_GIANT)) {
-        if (IS_CHILD_QUEST_AS_CHILD && itemAction != PLAYER_IA_SWORD_FAIRYS)
-            damage = gSaveContext.save.info.playerData.bgsFlag ? 3 : 2;
-        else damage = 4;
-    } else if (dmgFlags & DMG_JUMP_GIANT) {
-        if (IS_CHILD_QUEST_AS_CHILD && itemAction != PLAYER_IA_SWORD_FAIRYS)
-            damage = gSaveContext.save.info.playerData.bgsFlag ? 6 : 4;
-        else damage = 8;
+u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
+    if (IS_CHILD_QUEST_AS_CHILD) {
+        if (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && IS_HEROS_SWORD)
+            damage *= 1.5;
+        else if (dmgFlags & (DMG_SLASH_GIANT | DMG_SPIN_GIANT | DMG_JUMP_GIANT) && itemAction == PLAYER_IA_SWORD_BIGGORON)
+            damage *= gSaveContext.save.info.playerData.bgsFlag ? 0.75 : 0.5;
     }
 
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SLASH_MASTER | DMG_SLASH_GIANT)) && gSaveContext.save.info.hasObtainedItems.amuletOfEnergy && R_SPECIAL_POWER_TIMER == 0 && gSaveContext.save.info.energy >= 30) {
@@ -4910,8 +4899,8 @@ u8 Actor_AdjustSwordDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
     return (u8)(damage * DAMAGE_MULTIPLY);
 }
 
-void Actor_RestoreShieldDurability(u8 damage, s32 dmgFlags, u8 itemAction) {
-    if (SHIELD_DURABILITY && dmgFlags & (DMG_SLASH_KOKIRI | DMG_JUMP_KOKIRI | DMG_SPIN_KOKIRI) && itemAction == PLAYER_IA_SWORD_KOKIRI && IS_HEROS_SWORD) {
+void Actor_RestoreShieldDurability(s32 dmgFlags) {
+    if (SHIELD_DURABILITY && dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && IS_HEROS_SWORD) {
         u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
         if (IS_HEROS_SHIELD && shield == 2)
             shield = 4;

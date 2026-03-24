@@ -394,9 +394,10 @@ void BossGanonEff_SpawnBlackDot(PlayState* play, Vec3f* pos, f32 scale) {
     }
 }
 
-s16 BossGanon_CalculateHealth(s16 health) {
+u16 BossGanon_HealthMultiply(u16 health) {
+    health = Actor_EnemyHealthMultiply(health, BOSS_HP);
     if (IS_CHILD_QUEST)
-        return health; // * 3;
+        return health * 3;
     return health;
 }
 
@@ -448,7 +449,7 @@ void BossGanon_Init(Actor* thisx, PlayState* play2) {
         }
 
         sGanondorf = this;
-        thisx->colChkInfo.health = Actor_EnemyHealthMultiply(BossGanon_CalculateHealth(40), BOSS_HP);
+        thisx->colChkInfo.health = BossGanon_HealthMultiply(40);
         Actor_ProcessInitChain(thisx, sInitChain);
         ActorShape_Init(&thisx->shape, 0, NULL, 0);
         Actor_SetScale(thisx, 0.01f);
@@ -2328,7 +2329,7 @@ void BossGanon_Wait(BossGanon* this, PlayState* play) {
         } else if ((this->timers[0] == 0) && !(player->stateFlags1 & PLAYER_STATE1_13)) {
             this->timers[0] = (s16)Rand_ZeroFloat(30.0f) + 30;
 
-            if (this->actor.colChkInfo.health >= Actor_EnemyHealthMultiply(BossGanon_CalculateHealth(20), BOSS_HP)) {
+            if ((s16)this->actor.colChkInfo.health >= BossGanon_HealthMultiply(20)) {
                 BossGanon_SetupChargeLightBall(this, play);
             } else if (Rand_ZeroOne() >= 0.5f) {
                 if ((Rand_ZeroOne() >= 0.5f) || (this->actor.xzDistToPlayer > 350.0f)) {
@@ -2822,22 +2823,25 @@ void BossGanon_UpdateDamage(BossGanon* this, PlayState* play) {
             }
         } else if (this->swordPhase) {
             this->unk_2D4 = 4;
-            if (!this->invincible && this->damageCooldown == 0 && this->actor.colChkInfo.damage > 0 && (u8)IRANDOM_RANGE(0, 3) > 0) {
-                if (IS_CHILD_QUEST && acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER) && HAS_MASTER_SWORD)
-                    this->actor.colChkInfo.damage *= 3;
-                Actor_ApplyDamage(&this->actor);
-                this->damageCooldown = (60 / R_UPDATE_RATE) / 4;
-                if (this->actor.colChkInfo.health == 0) {
-                    BossGanon_SetupDeathCutscene(this, play);
-                    Actor_PlaySfx(&this->actor, NA_SE_EN_GANON_DEAD);
-                    Actor_PlaySfx(&this->actor, NA_SE_EN_GANON_DD_THUNDER);
-                    Sfx_PlaySfxAtPos(&sZeroVec, NA_SE_EN_LAST_DAMAGE);
-                    SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 1);
-                    this->screenFlashTimer = 4;
-                    this->useOpenHand = false;
-                } else {
-                    Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 5);
-                    Actor_PlaySfx(&this->actor, NA_SE_EN_GANON_CUTBODY);
+            if (!this->invincible && this->actor.colChkInfo.damage > 0 && (u8)IRANDOM_RANGE(0, 3) > 0) {
+                if (this->damageCooldown == 0) {
+                    if (IS_CHILD_QUEST && HAS_MASTER_SWORD && this->actor.colChkInfo.itemAction == PLAYER_IA_SWORD_MASTER)
+                        this->actor.colChkInfo.damage *= 4;
+                    Actor_ApplyDamage(&this->actor);
+                    gSaveContext.save.info.playerData.rupees = this->actor.colChkInfo.health;
+                    this->damageCooldown = SECONDS(0.5);
+                    if (this->actor.colChkInfo.health == 0) {
+                        BossGanon_SetupDeathCutscene(this, play);
+                        Actor_PlaySfx(&this->actor, NA_SE_EN_GANON_DEAD);
+                        Actor_PlaySfx(&this->actor, NA_SE_EN_GANON_DD_THUNDER);
+                        Sfx_PlaySfxAtPos(&sZeroVec, NA_SE_EN_LAST_DAMAGE);
+                        SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 1);
+                        this->screenFlashTimer = 4;
+                        this->useOpenHand = false;
+                    } else {
+                        Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 5);
+                        Actor_PlaySfx(&this->actor, NA_SE_EN_GANON_CUTBODY);
+                    }
                 }
             } else if (this->swordDl && this->actionFunc != BossGanon_SwordPhaseThrow)
                 BossGanon_SetupSwordPhaseBlock(this, play);
@@ -2862,11 +2866,11 @@ void BossGanon_UpdateDamage(BossGanon* this, PlayState* play) {
                     damage = Actor_EnemyHealthCheckMultiply(2);
                 } else {
                     hitWithSword = true;
-                    if (IS_CHILD_QUEST && acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER) && HAS_MASTER_SWORD)
+                    if (IS_CHILD_QUEST && HAS_MASTER_SWORD && this->actor.colChkInfo.itemAction == PLAYER_IA_SWORD_MASTER)
                         damage *= 3;
                 }
 
-                if ((this->actor.colChkInfo.health >= Actor_EnemyHealthCheckMultiply(3)) || hitWithSword) {
+                if (((s16)this->actor.colChkInfo.health >= Actor_EnemyHealthCheckMultiply(3)) || hitWithSword) {
                     this->actor.colChkInfo.health -= damage;
                 }
 

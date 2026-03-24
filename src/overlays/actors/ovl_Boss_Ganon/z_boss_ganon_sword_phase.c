@@ -168,7 +168,7 @@ void BossGanon_SwordPhaseCutscene(BossGanon* this, PlayState* play) {
             this->csState = 1;
             this->csTimer = 0;
             this->useOpenHand = true;
-            this->actor.colChkInfo.health = this->actor.maxHealth = Actor_EnemyHealthMultiply(BossGanon_CalculateHealth(200), BOSS_HP);
+            this->actor.colChkInfo.health = this->actor.maxHealth = BossGanon_HealthMultiply(200);
             this->actor.colChkInfo.damageTable = &sDamageTable;
             FALLTHROUGH;
         case 1:
