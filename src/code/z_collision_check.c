@@ -3126,7 +3126,7 @@ void CollisionCheck_ApplyDamage(PlayState* play, CollisionCheckContext* colChkCt
         col->actor->colChkInfo.damage += damage;
     }
 
-    if (damage > 0)
+    if (damage > 0 && !(play->sceneId == SCENE_SPIRIT_TEMPLE_BOSS && play->roomCtx.curRoom.num == 3 && Player_HasMirrorShieldEquipped(play)))
         GET_PLAYER(play)->shieldDamage = (damage * 10 + 15) / 16;
 }
 
