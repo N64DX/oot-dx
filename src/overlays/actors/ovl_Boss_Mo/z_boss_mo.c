@@ -976,7 +976,7 @@ void BossMo_Tentacle(BossMo* this, PlayState* play) {
                     break;
                 }
             }
-            if ((this == sMorphaTent1) && (sMorphaCore->hitCount >= Actor_EnemyHealthMultiply(3, BOSS_HP)) && (sMorphaTent2 == NULL)) {
+            if ((this == sMorphaTent1) && (sMorphaCore->hitCount >= Actor_EnemyHealthMultiply(3, BOSS_HP) / DAMAGE_MULTIPLY) && (sMorphaTent2 == NULL)) {
                 sMorphaTent2 =
                     (BossMo*)Actor_Spawn(&play->actorCtx, play, ACTOR_BOSS_MO, this->actor.world.pos.x,
                                          this->actor.world.pos.y, this->actor.world.pos.z, 0, 0, 0, BOSSMO_TENTACLE);
@@ -1812,7 +1812,7 @@ void BossMo_CoreCollisionCheck(BossMo* this, PlayState* play) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_VALVAISA_DAMAGE1);
                 this->actor.colChkInfo.health -= damage;
                 this->hitCount++;
-                if (this->actor.colChkInfo.health <= 0) {
+                if ((s16)this->actor.colChkInfo.health <= 0) {
                     if (((sMorphaTent1->subCamId == SUB_CAM_ID_DONE) && (sMorphaTent2 == NULL)) ||
                         ((sMorphaTent1->subCamId == SUB_CAM_ID_DONE) && (sMorphaTent2 != NULL) &&
                          (sMorphaTent2->subCamId == SUB_CAM_ID_DONE))) {

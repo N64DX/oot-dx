@@ -269,7 +269,7 @@ void EnSlim_CustomJumpAtPlayer(EnSlim* this, struct PlayState* play) {
         this->deformationCounter = 0;
         EnSlim_SetupIdle(this);
     }
-    if (this->actor.colChkInfo.health <= DAMAGE_MULTIPLY * 1 && slimeDeformation[this->deformationCounter][1] < 0.55f)
+    if (this->actor.colChkInfo.health <= Actor_EnemyHealthCheckMultiply(1) && slimeDeformation[this->deformationCounter][1] < 0.55f)
         EnSlim_SetupDeathCry(this);
 }
 

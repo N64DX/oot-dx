@@ -353,7 +353,7 @@ void EnGoma_SetupHurt(EnGoma* this, PlayState* play) {
                      Animation_GetLastFrame(&gObjectGolDamagedAnim), ANIMMODE_ONCE, -2.0f);
     this->actionFunc = EnGoma_Hurt;
 
-    if (this->actor.colChkInfo.health <= 0) {
+    if ((s16)this->actor.colChkInfo.health <= 0) {
         this->actionTimer = 5;
         Enemy_StartFinishingBlow(play, &this->actor);
     } else {
@@ -377,7 +377,7 @@ void EnGoma_Hurt(EnGoma* this, PlayState* play) {
     }
 
     if (this->actionTimer == 0) {
-        if (this->actor.colChkInfo.health <= 0) {
+        if ((s16)this->actor.colChkInfo.health <= 0) {
             EnGoma_SetupDie(this);
         } else {
             EnGoma_SetupFlee(this);
@@ -650,7 +650,7 @@ void EnGoma_UpdateHit(EnGoma* this, PlayState* play) {
             this->actor.velocity.y = 0.0f;
         }
 
-        if ((this->colliderCylinder2.base.acFlags & AC_HIT) && this->actor.colChkInfo.health > 0) {
+        if ((this->colliderCylinder2.base.acFlags & AC_HIT) && (s16)this->actor.colChkInfo.health > 0) {
             acHitElem = this->colliderCylinder2.elem.acHitElem;
             this->colliderCylinder2.base.acFlags &= ~AC_HIT;
 
