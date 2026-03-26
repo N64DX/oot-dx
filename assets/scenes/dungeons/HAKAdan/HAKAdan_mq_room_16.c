@@ -20,7 +20,18 @@ static SceneCmd mq_header[] = {
 #include "assets/scenes/dungeons/HAKAdan/mq/headers/room16.inc.c"
 };
 
-#define cq_header  NULL
+static s16 cq_objects[] = {
+#include "assets/scenes/dungeons/HAKAdan/cq/objects/room16_obj.inc.c"
+};
+
+static ActorEntry cq_actors[] = {
+#include "assets/scenes/dungeons/HAKAdan/cq/actors/room16_actor.inc.c"
+};
+
+static SceneCmd cq_header[] = {
+#include "assets/scenes/dungeons/HAKAdan/cq/headers/room16.inc.c"
+};
+
 #define cmq_header mq_header
 
 SceneCmd* questHeaders_HAKAdan_room16[] = {

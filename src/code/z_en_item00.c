@@ -879,7 +879,7 @@ void EnItem00_Update(Actor* thisx, PlayState* play) {
     Collider_UpdateCylinder(&this->actor, &this->collider);
     CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
 
-    if ((this->actor.params == ITEM00_SHIELD_DEKU) || (this->actor.params == ITEM00_SHIELD_HYLIAN) ||
+    if ((this->actor.params == ITEM00_SHIELD_DEKU) || (this->actor.params == ITEM00_SHIELD_HYLIAN) || (this->actor.params == ITEM00_SHIELD_HEROS) ||
         (this->actor.params == ITEM00_TUNIC_ZORA) || (this->actor.params == ITEM00_TUNIC_GORON)) {
         this->actor.shape.yOffset = Math_CosS(this->actor.shape.rot.x) * 37.0f;
         this->actor.shape.yOffset = ABS(this->actor.shape.yOffset);
@@ -1009,6 +1009,7 @@ void EnItem00_Update(Actor* thisx, PlayState* play) {
         case ITEM00_SMALL_KEY:
         case ITEM00_SHIELD_DEKU:
         case ITEM00_SHIELD_HYLIAN:
+        case ITEM00_SHIELD_HEROS:
         case ITEM00_TUNIC_ZORA:
         case ITEM00_TUNIC_GORON:
             if (Actor_HasParent(&this->actor, play)) {
