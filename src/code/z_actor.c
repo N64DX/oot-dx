@@ -2003,6 +2003,15 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                         getItemId = (HAS_ROCS_FEATHER || gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_ROCS_FEATHER) ? -GI_GOLDEN_FEATHER : -GI_ROCS_FEATHER;
                     }
 
+                    if (getItemId == -GI_SHIELD_DEKU)
+                        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_DEKU] = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
+                    else if (getItemId == -GI_SHIELD_HYLIAN)
+                        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_HYLIAN] = Player_GetMaxShieldDurability(PLAYER_SHIELD_HYLIAN);
+                    else if (getItemId == -GI_SHIELD_MIRROR)
+                        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_MIRROR] = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
+                    else if (getItemId == -GI_SHIELD_HEROS)
+                        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_HEROS] = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
+
                     if (IS_CHILD_QUEST_AS_CHILD) {
                         if (getItemId == -GI_SHIELD_MIRROR)
                             getItemId = -GI_SHIELD_MIRROR_MM;
@@ -4906,14 +4915,7 @@ void Actor_RestoreShieldDurability(s32 dmgFlags) {
             shield = 4;
         if (shield != PLAYER_SHIELD_NONE) {
             u8* currentDurability = &gSaveContext.save.info.shieldDurability[shield - 1];
-            if (shield == PLAYER_SHIELD_DEKU)
-                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_DEKU)   ? MAX_DURABILITY_SHIELD_DEKU   : *currentDurability + 3;
-            else if (shield == PLAYER_SHIELD_HYLIAN)
-                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_HYLIAN) ? MAX_DURABILITY_SHIELD_HYLIAN : *currentDurability + 3;
-            else if (shield == PLAYER_SHIELD_MIRROR)
-                *currentDurability = (*currentDurability + 3 > MAX_DURABILITY_SHIELD_MIRROR) ? MAX_DURABILITY_SHIELD_MIRROR : *currentDurability + 3;
-            else if (shield == PLAYER_SHIELD_HEROS)
-                *currentDurability = (*currentDurability + 3> MAX_DURABILITY_SHIELD_HEROS)   ? MAX_DURABILITY_SHIELD_HEROS  : *currentDurability + 3;
+            *currentDurability = *currentDurability + 3 > Player_GetMaxShieldDurability(shield) ? Player_GetMaxShieldDurability(shield) : *currentDurability + 3;
         }
     }
 }

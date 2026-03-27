@@ -1968,19 +1968,12 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
-        if (item == ITEM_SHIELD_DEKU)
-            gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
-        else if (item == ITEM_SHIELD_HYLIAN)
-            gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
-        else if (item == ITEM_SHIELD_MIRROR)
-            gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_SHIELD_HEROS) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
-        gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
         SET_HEROS_SHIELD;
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
             Player_SetEquipmentData(play, GET_PLAYER(play));

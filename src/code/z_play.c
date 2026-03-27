@@ -2148,5 +2148,17 @@ u32 Player_UseSpecialPower(PlayState* this, Player* player, u8 cost, u8 cooldown
     return amount;
 }
 
+u8 Player_GetMaxShieldDurability(u8 shield) {
+    if (shield == PLAYER_SHIELD_DEKU)
+        return MAX_DURABILITY_SHIELD_DEKU;
+    else if (shield == PLAYER_SHIELD_HYLIAN)
+        return MAX_DURABILITY_SHIELD_HYLIAN;
+    else if (shield == PLAYER_SHIELD_MIRROR)
+        return MAX_DURABILITY_SHIELD_MIRROR;
+    else if (shield == PLAYER_SHIELD_HEROS)
+        return MAX_DURABILITY_SHIELD_HEROS;
+    return 0;
+}
+
 u8   Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 50 + HAS_AMULET_OF_ENERGY * 50; }
 bool Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || HAS_AMULET_OF_ENERGY || gSaveContext.save.info.isEnhancedSpinAcquired; }

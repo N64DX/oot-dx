@@ -82,7 +82,7 @@
 #include "assets/objects/object_gi_rupy/object_gi_rupy.h"
 #include "assets/objects/object_gi_sword_1/object_gi_sword_1.h"
 #include "assets/objects/object_gi_shield_3_mm/object_gi_shield_3_mm.h"
-#include "assets/objects/object_gi_shield_1_mm/object_gi_shield_1_mm.h"
+#include "assets/objects/object_gi_shield_2_mm/object_gi_shield_2_mm.h"
 #include "assets/objects/object_gi_sword_1_mm/object_gi_sword_1_mm.h"
 #include "assets/objects/object_gi_sword_3_mm/object_gi_sword_3_mm.h"
 #include "assets/objects/object_gi_hookshot_mm/object_gi_hookshot_mm.h"
