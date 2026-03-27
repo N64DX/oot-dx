@@ -6,4 +6,4 @@
     OBJECT_GI_CLOTHES, // 5
     OBJECT_FZ, // 6
     OBJECT_GI_SHIELD_1, // 7
-    OBJECT_GI_SHIELD_1_MM, // 8
+    OBJECT_GI_SHIELD_2_MM, // 8

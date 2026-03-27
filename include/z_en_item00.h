@@ -33,6 +33,9 @@ typedef enum Item00Type {
     /* 0x19 */ ITEM00_BOMBS_SPECIAL,
     /* 0x1A */ ITEM00_SHIELD_HEROS,
     /* 0x1B */ ITEM00_FEATHER,
+    /* 0x1B */ ITEM00_SHIELD_DEKU_STOLEN,
+    /* 0x1B */ ITEM00_SHIELD_HYLIAN_STOLEN,
+    /* 0x1B */ ITEM00_SHIELD_HEROS_STOLEN,
     /* 0x1C */ ITEM00_MAX,
     /* 0xFF */ ITEM00_NONE = 0xFF
 } Item00Type;

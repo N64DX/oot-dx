@@ -266,7 +266,7 @@ static ShopItemEntry sShopItemEntries[] = {
     { OBJECT_GI_LIQUID, GID_BOTTLE_POTION_RED, func_8002EBCC, 50, 1, 0x0065, 0x0063, GI_BOTTLE_POTION_RED,
       EnGirlA_CanBuy_RedPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount },
     /* SI_HEROS_SHIELD */
-    { OBJECT_GI_SHIELD_1_MM, GID_SHIELD_HEROS, func_8002EBCC, 80, 1, 0x9201, 0x9101, GI_SHIELD_HEROS,
+    { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, func_8002EBCC, 80, 1, 0x9201, 0x9101, GI_SHIELD_HEROS,
       EnGirlA_CanBuy_HerosShield, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
     /* SI_WALLET_ADULT */
     { OBJECT_GI_PURSE, GID_WALLET_ADULT, func_8002EBCC, 300, 1, 0x9203, 0x9103, GI_WALLET_ADULT,
@@ -293,7 +293,7 @@ static ShopItemEntry sShopItemEntries[] = {
     { OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, func_8002EBCC, 60, 1, 0x920A, 0x920D, GI_SHIELD_HYLIAN,
       EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HylianShield, EnGirlA_BuyEvent_ShieldDiscount },
      /* SI_HEROS_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_1_MM, GID_SHIELD_HEROS, func_8002EBCC, 60, 1, 0x920B, 0x920E, GI_SHIELD_HEROS,
+    { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, func_8002EBCC, 60, 1, 0x920B, 0x920E, GI_SHIELD_HEROS,
       EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
 };
 
@@ -819,16 +819,19 @@ void EnGirlA_ItemGive_Longsword(PlayState* play, EnGirlA* this) {
 
 void EnGirlA_ItemGive_HylianShield(PlayState* play, EnGirlA* this) {
     Item_Give(play, ITEM_SHIELD_HYLIAN);
+    gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_HYLIAN] = MAX_DURABILITY_SHIELD_HYLIAN;
     Rupees_ChangeBy(-this->basePrice);
 }
 
 void EnGirlA_ItemGive_DekuShield(PlayState* play, EnGirlA* this) {
     Item_Give(play, ITEM_SHIELD_DEKU);
+    gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_DEKU] = MAX_DURABILITY_SHIELD_DEKU;
     Rupees_ChangeBy(-this->basePrice);
 }
 
 void EnGirlA_ItemGive_HerosShield(PlayState* play, EnGirlA* this) {
     Item_Give(play, ITEM_SHIELD_HEROS);
+    gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_HEROS] = MAX_DURABILITY_SHIELD_HEROS;
     Rupees_ChangeBy(-this->basePrice);
 }
 

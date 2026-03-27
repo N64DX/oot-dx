@@ -699,13 +699,13 @@ void EnRr_Death(EnRr* this, PlayState* play) {
         dropPos.z = this->actor.world.pos.z;
         switch (this->eatenShield) {
             case 1:
-                Item_DropCollectible(play, &dropPos, ITEM00_SHIELD_DEKU);
+                Item_DropCollectible(play, &dropPos, ITEM00_SHIELD_DEKU_STOLEN);
                 break;
             case 2:
-                Item_DropCollectible(play, &dropPos, ITEM00_SHIELD_HYLIAN);
+                Item_DropCollectible(play, &dropPos, ITEM00_SHIELD_HYLIAN_STOLEN);
                 break;
             case 4:
-                Item_DropCollectible(play, &dropPos, ITEM00_SHIELD_HEROS);
+                Item_DropCollectible(play, &dropPos, ITEM00_SHIELD_HEROS_STOLEN);
                 break;
         }
         switch (this->eatenTunic) {

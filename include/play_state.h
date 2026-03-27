@@ -194,6 +194,7 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos);
 void Play_SetDungeonRushEntry(PlayState* this);
 void Play_SetDungeonRushProgress(PlayState* this);
 u32 Player_UseSpecialPower(struct PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, s32 amount);
+u8 Player_GetMaxShieldDurability(u8 shield);
 u8 Player_GetMaxEnergy(void);
 bool Player_HasEnergyUnlocked(void);
 

@@ -819,7 +819,7 @@ static GetItemEntry sGetItemTable[] = {
     // GI_SHIELD_MIRROR_MM
     GET_ITEM(ITEM_SHIELD_MIRROR, OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, 0x8003, 0x80, CHEST_ANIM_LONG),
     // GI_SHIELD_HEROS
-    GET_ITEM(ITEM_SHIELD_HEROS, OBJECT_GI_SHIELD_1_MM, GID_SHIELD_HEROS, 0x9001, 0xA0, CHEST_ANIM_SHORT),
+    GET_ITEM(ITEM_SHIELD_HEROS, OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, 0x9001, 0xA0, CHEST_ANIM_SHORT),
     // GI_SWORD_HEROS
 	GET_ITEM(ITEM_SWORD_HEROS, OBJECT_GI_SWORD_1_MM, GID_SWORD_HEROS, 0x9002, 0x80, CHEST_ANIM_LONG),
     // GI_SWORD_SILVER
@@ -5349,6 +5349,7 @@ void func_8083819C(Player* this, PlayState* play) {
         Actor_Spawn(&play->actorCtx, play, IS_YOUNG_LINK ? ACTOR_ITEM_SHIELD_YOUNG : ACTOR_ITEM_SHIELD, this->actor.world.pos.x, this->actor.world.pos.y,
                     this->actor.world.pos.z, 0, 0, 0, 1);
         Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
+        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_DEKU] = MAX_DURABILITY_SHIELD_DEKU;
         Message_StartTextbox(play, 0x305F, NULL);
     }
 }

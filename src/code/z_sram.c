@@ -17,6 +17,7 @@
 #include "scene.h"
 #include "ss_sram.h"
 #include "regs.h"
+#include "play_state.h"
 
 #define SLOT_SIZE (sizeof(SaveContext))
 #define CHECKSUM_SIZE (sizeof(Save) / 2)
@@ -704,14 +705,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
     if (IS_CHILD_QUEST)
         gSaveContext.save.linkAge = LINK_AGE_CHILD;
 
-    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)   && (gSaveContext.save.info.shieldDurability[0] == 0 || gSaveContext.save.info.shieldDurability[0] >= MAX_DURABILITY_SHIELD_DEKU))
-        gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
-    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) && (gSaveContext.save.info.shieldDurability[1] == 0 || gSaveContext.save.info.shieldDurability[1] >= MAX_DURABILITY_SHIELD_HYLIAN))
-        gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
-    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR) && (gSaveContext.save.info.shieldDurability[2] == 0 || gSaveContext.save.info.shieldDurability[2] >= MAX_DURABILITY_SHIELD_MIRROR) && !gSaveContext.save.info.mirrorShieldIsBroken)
-        gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
-    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)  && (gSaveContext.save.info.shieldDurability[3] == 0 || gSaveContext.save.info.shieldDurability[3] >= MAX_DURABILITY_SHIELD_HEROS))
-        gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
+    for (i=0; i<4; i++)
+        if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, i) && (gSaveContext.save.info.shieldDurability[i] == 0 || gSaveContext.save.info.shieldDurability[i] >= Player_GetMaxShieldDurability(i+1)) && ( (i == 3 && !gSaveContext.save.info.mirrorShieldIsBroken) || i != 3) )
+            gSaveContext.save.info.shieldDurability[i] = Player_GetMaxShieldDurability(i+1);
 
     if (INV_CONTENT(ITEM_MAGIC_BEAN) == ITEM_MAGIC_BEAN)
         SET_MAGIC_BEANS;
