@@ -87,6 +87,7 @@ static u32 D_80990108 = 0;
 #endif
 
 #include "z_demo_sa_cutscene_data.inc.c"
+#include "z_demo_sa_woodfall_cutscene_data.inc.c"
 
 static DemoSaActionFunc sActionFuncs[] = {
     func_8098EBB8, func_8098EBD8, func_8098EBF8, func_8098EC28, func_8098EC60, func_8098EC94, func_8098ECCC,
@@ -271,6 +272,14 @@ void func_8098E960(DemoSa* this, PlayState* play) {
     s32 pad[2];
     Player* player;
 
+    if (gSaveContext.chamberCutsceneNum == CHAMBER_CS_WOODFALL && !IS_CUTSCENE_LAYER) {
+        player = GET_PLAYER(play);
+        this->action = 1;
+        play->csCtx.script = gWoodfallTempleCs;
+        gSaveContext.cutsceneTrigger = 2;
+        player->actor.world.rot.y = player->actor.shape.rot.y = this->actor.world.rot.y + 0x8000;
+    }
+
     if ((gSaveContext.chamberCutsceneNum == CHAMBER_CS_FOREST) && !IS_CUTSCENE_LAYER) {
         player = GET_PLAYER(play);
         this->action = 1;
@@ -325,7 +334,7 @@ void func_8098EB00(DemoSa* this, s32 arg1) {
 void func_8098EB6C(DemoSa* this, PlayState* play) {
     CsCmdActorCue* cue;
 
-    if (play->csCtx.state != CS_STATE_IDLE) {
+    if (play->csCtx.state != CS_STATE_IDLE && gSaveContext.chamberCutsceneNum != CHAMBER_CS_WOODFALL) {
         cue = play->csCtx.actorCues[6];
 
         if ((cue != NULL) && (cue->id == 2)) {

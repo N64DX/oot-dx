@@ -1,0 +1,708 @@
+#include "woodfall_temple_room_2.h"
+#include "woodfall_temple_scene.h"
+
+#include "actor.h"
+#include "array_count.h"
+#include "gfx.h"
+#include "object.h"
+#include "sequence.h"
+#include "skybox.h"
+#include "sys_matrix.h"
+#include "ultra64.h"
+
+SceneCmd woodfall_temple_room_2Commands[] = {
+    SCENE_CMD_ECHO_SETTINGS(7),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
+    SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
+    SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_2RoomShapeCullable_000260),
+    SCENE_CMD_OBJECT_LIST(13, woodfall_temple_room_2ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(28, woodfall_temple_room_2ActorEntry_00006C),
+    SCENE_CMD_END(),
+};
+
+s16 woodfall_temple_room_2ObjectList_000040[] = {
+    OBJECT_NUMA_OBJ,
+    OBJECT_BDOOR,
+    OBJECT_KUSA,
+    OBJECT_BOX,
+    OBJECT_SYOKUDAI,
+    OBJECT_LADDER,
+    OBJECT_RAF,
+    OBJECT_KUSA,
+    OBJECT_RAILLIFT,
+    OBJECT_MKK,
+    OBJECT_GRASSHOPPER,
+    OBJECT_ST,
+    OBJECT_DEKUBABA,
+};
+
+ActorEntry woodfall_temple_room_2ActorEntry_00006C[] = {
+    { ACTOR_EN_ITEM00,    {  275, -1150, 2000 }, {      0,      0,    0 }, 0x001B },
+    { ACTOR_EN_ITEM00,    {  350, -1125, 1600 }, {      0,      0,    0 }, 0x001B },
+    { ACTOR_EN_ITEM00,    {  350, -1125, 1500 }, {      0,      0,    0 }, 0x001B },
+    { ACTOR_OBJ_RAILLIFT, {  350, -1150, 1100 }, {      0,      0, 0x19 }, 0x8008 },
+    { ACTOR_EN_ST,        { -120,  -850,  930 }, {      0,      0,    0 }, 0x003F },
+    { ACTOR_EN_ST,        {  120,  -850,  930 }, {      0,      0,    0 }, 0x003F },
+    { ACTOR_EN_MKK,       {  549, -1485, 2070 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       {  629, -1485, 2118 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       {  549, -1485, 2198 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       {  315, -1485, 1710 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       {  330, -1485, 1770 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       {  600, -1485, 1290 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       {  645, -1485, 1305 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       { -382, -1485, 1104 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       { -454, -1485, 1120 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       { -491, -1485, 1206 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       { -555, -1485, 1665 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_EN_MKK,       { -600, -1485, 1755 }, {      0,      0,    0 }, 0x7800 },
+    { ACTOR_OBJ_SYOKUDAI, { -120, -1185,  855 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 0x3F
+    { ACTOR_OBJ_SYOKUDAI, {  120, -1185,  855 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 0x3F
+    { ACTOR_OBJ_TSUBO,    {  120, -1185, 2100 }, {      0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
+    { ACTOR_EN_KUSA,      {  -90, -1485, 1770 }, {      0, 0xAF80,    0 }, 0x0002 },
+    { ACTOR_EN_KUSA,      {  -45, -1485, 1680 }, {      0, 0x4180,    0 }, 0x0002 },
+    { ACTOR_EN_KUSA,      { -120, -1185,  930 }, {      0,      0,    0 }, 0x2202 },
+    { ACTOR_EN_KUSA,      {  120, -1185,  930 }, {      0,      0,    0 }, 0x2302 },
+    { ACTOR_EN_KUSA,      { -105, -1485, 1695 }, {      0, 0x7800,    0 }, 0x0002 },
+    { ACTOR_EN_BOX,       {  465, -1155, 1890 }, {    0x2, 0x4000,    0 }, 0x5018 }, // Chest flag: 0x18, Deku Nuts
+    { ACTOR_OBJ_COMB,     {  -91, -1083, 1611 }, { 0xA200, 0x9580,    0 }, 0xFF02 },
+};
+
+RoomShapeCullable woodfall_temple_room_2RoomShapeCullable_000260 = { 
+    2, 12,
+    woodfall_temple_room_2RoomShapeCullableEntry_00026C,
+    woodfall_temple_room_2RoomShapeCullableEntry_00026C + ARRAY_COUNTU(woodfall_temple_room_2RoomShapeCullableEntry_00026C)
+};
+
+RoomShapeCullableEntry woodfall_temple_room_2RoomShapeCullableEntry_00026C[12] = {
+    { {      0,  -1330,   2160 },    220, woodfall_temple_room_2DL_004588, NULL },
+    { {     93,  -1035,   1615 },    832, woodfall_temple_room_2DL_0021C8, NULL },
+    { {     65,  -1200,   1637 },    552, woodfall_temple_room_2DL_004A38, NULL },
+    { {      0,  -1215,    855 },    338, woodfall_temple_room_2DL_000900, NULL },
+    { {      0,  -1485,   1500 },   1020, woodfall_temple_room_2DL_000ED8, NULL },
+    { {      0,  -1335,   2100 },    260, woodfall_temple_room_2DL_002C00, NULL },
+    { {   -690,  -1035,   1500 },    876, woodfall_temple_room_2DL_0031E8, NULL },
+    { {    690,  -1035,   1500 },    876, woodfall_temple_room_2DL_003638, NULL },
+    { {      0,   -585,   1500 },   1020, woodfall_temple_room_2DL_003918, NULL },
+    { {      0,  -1035,   2250 },    824, woodfall_temple_room_2DL_003BE8, NULL },
+    { {      0,  -1035,    750 },    824, woodfall_temple_room_2DL_003E98, NULL },
+    { {      0,  -1065,   2550 },    336, woodfall_temple_room_2DL_0041D0, NULL },
+};
+
+s32 woodfall_temple_room_2_terminatorMaybe_00032C = { 0x01000000 };
+
+Vtx woodfall_temple_room_2Vtx_000330[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_000330.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_000900[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_000330[85], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_013C90, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_000330, 30, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 6, 0, 8, 6, 5, 0),
+    gsSP2Triangles(7, 1, 0, 0, 7, 0, 4, 0),
+    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
+    gsSP2Triangles(14, 15, 16, 0, 14, 16, 17, 0),
+    gsSP2Triangles(13, 17, 16, 0, 13, 16, 10, 0),
+    gsSP2Triangles(12, 11, 18, 0, 12, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(20, 23, 24, 0, 25, 26, 27, 0),
+    gsSP2Triangles(25, 27, 28, 0, 25, 28, 29, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_014490, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_000330[30], 18, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
+    gsSP2Triangles(7, 9, 10, 0, 11, 12, 6, 0),
+    gsSP2Triangles(11, 6, 13, 0, 14, 15, 16, 0),
+    gsSP2Triangles(14, 16, 17, 0, 5, 13, 6, 0),
+    gsSP2Triangles(4, 6, 0, 0, 4, 0, 2, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016190, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_000330[48], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_000330[52], 13, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 3, 2, 0, 4, 2, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
+    gsSP2Triangles(10, 11, 9, 0, 10, 9, 12, 0),
+    gsSP2Triangles(5, 2, 11, 0, 5, 11, 10, 0),
+    gsSP2Triangles(2, 1, 7, 0, 2, 7, 6, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_000330[65], 20, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 13, 15, 14, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_000C98[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_000C98.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_000ED8[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_000C98[28], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_015090, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_000C98, 28, 0),
+    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
+    gsSP2Triangles(4, 5, 6, 0, 5, 7, 6, 0),
+    gsSP2Triangles(8, 9, 10, 0, 9, 11, 10, 0),
+    gsSP2Triangles(12, 13, 14, 0, 13, 15, 14, 0),
+    gsSP2Triangles(3, 16, 2, 0, 3, 17, 16, 0),
+    gsSP2Triangles(18, 12, 19, 0, 12, 14, 19, 0),
+    gsSP2Triangles(11, 20, 21, 0, 11, 9, 20, 0),
+    gsSP2Triangles(22, 7, 23, 0, 22, 6, 7, 0),
+    gsSP2Triangles(11, 21, 10, 0, 21, 24, 10, 0),
+    gsSP2Triangles(23, 5, 25, 0, 23, 7, 5, 0),
+    gsSP2Triangles(12, 18, 13, 0, 18, 26, 13, 0),
+    gsSP2Triangles(3, 1, 17, 0, 1, 27, 17, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_001008[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_001008.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_0021C8[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_001008[276], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_015590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_001008, 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 1, 0, 4, 1, 0, 0),
+    gsSP2Triangles(6, 7, 5, 0, 6, 5, 4, 0),
+    gsSP2Triangles(8, 9, 7, 0, 8, 7, 6, 0),
+    gsSP2Triangles(10, 11, 9, 0, 10, 9, 8, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 13, 0, 16, 13, 12, 0),
+    gsSP2Triangles(18, 19, 17, 0, 18, 17, 16, 0),
+    gsSP2Triangles(20, 21, 19, 0, 20, 19, 18, 0),
+    gsSP2Triangles(22, 23, 21, 0, 22, 21, 20, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(27, 26, 28, 0, 27, 28, 29, 0),
+    gsSP2Triangles(29, 28, 30, 0, 29, 30, 31, 0),
+    gsSPVertex(&woodfall_temple_room_2Vtx_001008[32], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(3, 2, 4, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
+    gsSP2Triangles(9, 8, 10, 0, 9, 10, 11, 0),
+    gsSP2Triangles(11, 10, 12, 0, 11, 12, 13, 0),
+    gsSP2Triangles(13, 12, 14, 0, 13, 14, 15, 0),
+    gsSP2Triangles(15, 16, 17, 0, 15, 14, 16, 0),
+    gsSP2Triangles(18, 19, 20, 0, 18, 20, 21, 0),
+    gsSP2Triangles(22, 23, 19, 0, 22, 19, 18, 0),
+    gsSP2Triangles(24, 25, 23, 0, 24, 23, 22, 0),
+    gsSP2Triangles(26, 27, 25, 0, 26, 25, 24, 0),
+    gsSP2Triangles(28, 29, 27, 0, 28, 27, 26, 0),
+    gsSPVertex(&woodfall_temple_room_2Vtx_001008[62], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 1, 0, 4, 1, 0, 0),
+    gsSP2Triangles(6, 7, 5, 0, 6, 5, 4, 0),
+    gsSP2Triangles(8, 9, 7, 0, 8, 7, 6, 0),
+    gsSP2Triangles(10, 11, 9, 0, 10, 9, 8, 0),
+    gsSP2Triangles(12, 9, 11, 0, 12, 11, 13, 0),
+    gsSP2Triangles(14, 7, 9, 0, 14, 9, 12, 0),
+    gsSP2Triangles(15, 5, 7, 0, 15, 7, 14, 0),
+    gsSP2Triangles(16, 1, 5, 0, 16, 5, 15, 0),
+    gsSP2Triangles(17, 2, 1, 0, 17, 1, 16, 0),
+    gsSP2Triangles(18, 19, 20, 0, 18, 20, 21, 0),
+    gsSP2Triangles(21, 20, 22, 0, 21, 22, 23, 0),
+    gsSP2Triangles(23, 22, 24, 0, 23, 24, 25, 0),
+    gsSP2Triangles(25, 24, 26, 0, 25, 26, 27, 0),
+    gsSP2Triangles(27, 26, 28, 0, 27, 28, 29, 0),
+    gsSPVertex(&woodfall_temple_room_2Vtx_001008[92], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(3, 2, 4, 0, 3, 4, 5, 0),
+    gsSP2Triangles(5, 4, 6, 0, 5, 6, 7, 0),
+    gsSP2Triangles(7, 6, 8, 0, 7, 8, 9, 0),
+    gsSP2Triangles(9, 8, 10, 0, 9, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(14, 16, 17, 0, 14, 17, 18, 0),
+    gsSP2Triangles(17, 19, 18, 0, 20, 18, 19, 0),
+    gsSP2Triangles(17, 16, 21, 0, 17, 21, 22, 0),
+    gsSP2Triangles(19, 17, 22, 0, 19, 22, 23, 0),
+    gsSP2Triangles(22, 21, 24, 0, 22, 24, 25, 0),
+    gsSP2Triangles(25, 24, 26, 0, 24, 27, 26, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&woodfall_temple_room_2Vtx_001008[124], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(2, 4, 5, 0, 2, 5, 6, 0),
+    gsSP2Triangles(3, 2, 6, 0, 3, 6, 7, 0),
+    gsSP2Triangles(6, 8, 9, 0, 6, 9, 10, 0),
+    gsSP2Triangles(7, 6, 10, 0, 7, 10, 11, 0),
+    gsSP2Triangles(10, 12, 13, 0, 10, 13, 14, 0),
+    gsSP2Triangles(11, 10, 14, 0, 11, 14, 15, 0),
+    gsSP2Triangles(14, 13, 16, 0, 14, 16, 17, 0),
+    gsSP2Triangles(15, 14, 17, 0, 15, 17, 18, 0),
+    gsSP2Triangles(19, 20, 21, 0, 19, 21, 22, 0),
+    gsSP2Triangles(23, 24, 20, 0, 23, 20, 19, 0),
+    gsSP2Triangles(25, 26, 27, 0, 25, 28, 26, 0),
+    gsSP1Triangle(29, 30, 31, 0),
+    gsSPVertex(&woodfall_temple_room_2Vtx_001008[156], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(3, 5, 0, 0, 6, 7, 4, 0),
+    gsSP2Triangles(6, 4, 3, 0, 8, 9, 7, 0),
+    gsSP2Triangles(8, 7, 6, 0, 10, 11, 9, 0),
+    gsSP2Triangles(10, 9, 8, 0, 12, 13, 14, 0),
+    gsSP2Triangles(12, 14, 15, 0, 15, 14, 16, 0),
+    gsSP2Triangles(15, 16, 17, 0, 17, 16, 18, 0),
+    gsSP2Triangles(17, 18, 19, 0, 19, 18, 20, 0),
+    gsSP2Triangles(19, 20, 21, 0, 21, 20, 22, 0),
+    gsSP2Triangles(21, 22, 23, 0, 24, 25, 26, 0),
+    gsSP2Triangles(24, 26, 27, 0, 28, 29, 24, 0),
+    gsSP2Triangles(29, 25, 24, 0, 30, 31, 28, 0),
+    gsSP1Triangle(31, 29, 28, 0),
+    gsSPVertex(&woodfall_temple_room_2Vtx_001008[188], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 1, 0, 4, 1, 0, 0),
+    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
+    gsSP2Triangles(9, 8, 10, 0, 9, 10, 11, 0),
+    gsSP2Triangles(11, 10, 12, 0, 11, 12, 13, 0),
+    gsSP2Triangles(13, 12, 14, 0, 13, 14, 15, 0),
+    gsSP2Triangles(15, 14, 16, 0, 15, 16, 17, 0),
+    gsSP2Triangles(18, 19, 20, 0, 21, 19, 22, 0),
+    gsSP2Triangles(21, 22, 23, 0, 23, 22, 24, 0),
+    gsSP2Triangles(23, 24, 25, 0, 25, 24, 26, 0),
+    gsSP2Triangles(27, 28, 29, 0, 27, 29, 30, 0),
+    gsSPVertex(&woodfall_temple_room_2Vtx_001008[219], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 1, 0, 4, 1, 0, 0),
+    gsSP2Triangles(6, 7, 5, 0, 6, 5, 4, 0),
+    gsSP2Triangles(8, 9, 7, 0, 8, 7, 6, 0),
+    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
+    gsSP2Triangles(14, 10, 13, 0, 14, 13, 15, 0),
+    gsSP2Triangles(13, 12, 16, 0, 13, 16, 17, 0),
+    gsSP2Triangles(15, 13, 17, 0, 15, 17, 18, 0),
+    gsSP2Triangles(17, 19, 20, 0, 17, 20, 21, 0),
+    gsSP2Triangles(18, 17, 21, 0, 18, 21, 22, 0),
+    gsSP2Triangles(21, 23, 24, 0, 21, 24, 25, 0),
+    gsSP2Triangles(22, 21, 25, 0, 22, 25, 26, 0),
+    gsSP2Triangles(25, 24, 27, 0, 25, 27, 28, 0),
+    gsSP2Triangles(26, 25, 28, 0, 26, 28, 29, 0),
+    gsSPVertex(&woodfall_temple_room_2Vtx_001008[249], 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 1, 0, 4, 1, 0, 0),
+    gsSP2Triangles(6, 7, 5, 0, 6, 5, 4, 0),
+    gsSP2Triangles(8, 9, 7, 0, 8, 7, 6, 0),
+    gsSP2Triangles(10, 11, 9, 0, 10, 9, 8, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_room_2Tex_0054C0, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_001008[261], 15, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(0, 3, 4, 0, 5, 6, 7, 0),
+    gsSP2Triangles(5, 7, 8, 0, 5, 8, 9, 0),
+    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
+    gsSP1Triangle(10, 13, 14, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_0026E0[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_0026E0.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_002C00[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_0026E0[74], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_014C90, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 64, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_0026E0, 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_015090, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_0026E0[4], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_0026E0[8], 24, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(3, 2, 20, 0, 3, 20, 21, 0),
+    gsSP2Triangles(22, 1, 0, 0, 22, 0, 23, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_0026E0[32], 28, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
+    gsSP2Triangles(7, 9, 10, 0, 4, 6, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_room_2Tex_0068C0, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_0026E0[60], 14, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(3, 4, 5, 0, 3, 5, 6, 0),
+    gsSP2Triangles(6, 5, 7, 0, 6, 7, 8, 0),
+    gsSP2Triangles(8, 7, 9, 0, 8, 9, 10, 0),
+    gsSP2Triangles(10, 9, 4, 0, 10, 4, 3, 0),
+    gsSP2Triangles(3, 2, 11, 0, 3, 11, 12, 0),
+    gsSP2Triangles(12, 11, 13, 0, 12, 13, 8, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_002F68[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_002F68.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_0031E8[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_002F68[32], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_014C90, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 64, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_002F68, 5, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
+    gsSP2Triangles(2, 1, 4, 0, 3, 2, 4, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_002F68[5], 27, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
+    gsSP2Triangles(3, 2, 4, 0, 5, 3, 6, 0),
+    gsSP2Triangles(3, 4, 6, 0, 1, 0, 7, 0),
+    gsSP2Triangles(1, 7, 8, 0, 9, 10, 11, 0),
+    gsSP2Triangles(9, 11, 12, 0, 12, 11, 2, 0),
+    gsSP2Triangles(12, 2, 1, 0, 10, 9, 6, 0),
+    gsSP2Triangles(10, 6, 4, 0, 13, 12, 1, 0),
+    gsSP2Triangles(13, 1, 14, 0, 15, 8, 16, 0),
+    gsSP2Triangles(17, 14, 15, 0, 17, 18, 13, 0),
+    gsSP2Triangles(18, 16, 19, 0, 18, 15, 16, 0),
+    gsSP2Triangles(18, 17, 15, 0, 13, 18, 19, 0),
+    gsSP2Triangles(20, 21, 5, 0, 20, 5, 22, 0),
+    gsSP2Triangles(23, 24, 25, 0, 23, 25, 9, 0),
+    gsSP2Triangles(20, 26, 24, 0, 25, 26, 22, 0),
+    gsSP2Triangles(26, 25, 24, 0, 26, 20, 22, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_0033B8[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_0033B8.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_003638[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_0033B8[32], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_014C90, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 64, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_0033B8, 5, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(1, 4, 2, 0, 1, 3, 4, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_0033B8[5], 27, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 2, 0),
+    gsSP2Triangles(5, 2, 1, 0, 0, 6, 1, 0),
+    gsSP2Triangles(4, 7, 0, 0, 6, 8, 9, 0),
+    gsSP2Triangles(6, 9, 5, 0, 10, 11, 12, 0),
+    gsSP2Triangles(10, 12, 13, 0, 8, 14, 15, 0),
+    gsSP2Triangles(8, 15, 9, 0, 9, 15, 13, 0),
+    gsSP2Triangles(9, 13, 12, 0, 7, 16, 17, 0),
+    gsSP2Triangles(7, 17, 8, 0, 11, 10, 18, 0),
+    gsSP2Triangles(11, 18, 19, 0, 10, 14, 17, 0),
+    gsSP2Triangles(10, 17, 18, 0, 12, 20, 21, 0),
+    gsSP2Triangles(12, 21, 22, 0, 23, 19, 24, 0),
+    gsSP2Triangles(23, 24, 25, 0, 3, 2, 5, 0),
+    gsSP2Triangles(4, 0, 2, 0, 14, 8, 17, 0),
+    gsSP2Triangles(23, 25, 26, 0, 21, 20, 26, 0),
+    gsSP2Triangles(23, 26, 20, 0, 21, 26, 25, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_003808[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_003808.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_003918[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_003808[9], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_015D90, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_003808, 9, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(2, 4, 5, 0, 2, 5, 3, 0),
+    gsSP2Triangles(6, 0, 3, 0, 6, 3, 7, 0),
+    gsSP2Triangles(3, 5, 8, 0, 3, 8, 7, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_003A08[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_003A08.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_003BE8[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_003A08[22], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_003A08, 22, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 2, 4, 0),
+    gsSP2Triangles(3, 4, 5, 0, 6, 4, 7, 0),
+    gsSP2Triangles(6, 5, 4, 0, 3, 0, 2, 0),
+    gsSP2Triangles(7, 8, 9, 0, 1, 10, 11, 0),
+    gsSP2Triangles(12, 13, 4, 0, 2, 14, 15, 0),
+    gsSP2Triangles(13, 16, 7, 0, 13, 7, 4, 0),
+    gsSP2Triangles(14, 2, 1, 0, 14, 1, 17, 0),
+    gsSP2Triangles(6, 18, 5, 0, 0, 3, 19, 0),
+    gsSP2Triangles(18, 6, 9, 0, 18, 9, 20, 0),
+    gsSP2Triangles(0, 19, 21, 0, 0, 21, 10, 0),
+    gsSP2Triangles(5, 18, 19, 0, 5, 19, 3, 0),
+    gsSP2Triangles(7, 9, 6, 0, 10, 1, 0, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_003D18[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_003D18.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_003E98[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_003D18[16], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_003D18, 16, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 0, 0),
+    gsSP2Triangles(3, 0, 5, 0, 6, 4, 7, 0),
+    gsSP2Triangles(4, 3, 7, 0, 0, 2, 5, 0),
+    gsSP2Triangles(8, 9, 6, 0, 10, 11, 1, 0),
+    gsSP2Triangles(3, 12, 7, 0, 13, 5, 2, 0),
+    gsSP2Triangles(14, 8, 7, 0, 14, 7, 12, 0),
+    gsSP2Triangles(11, 15, 13, 0, 11, 13, 2, 0),
+    gsSP2Triangles(5, 13, 12, 0, 5, 12, 3, 0),
+    gsSP2Triangles(7, 8, 6, 0, 2, 1, 11, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_003FB0[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_003FB0.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_0041D0[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_003FB0[26], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_room_2Tex_0053C0, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_003FB0, 6, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(0, 3, 4, 0, 0, 4, 5, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_015D90, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_003FB0[6], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_room_2Tex_005CC0, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_003FB0[10], 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(7, 6, 8, 0, 7, 8, 9, 0),
+    gsSP2Triangles(3, 2, 10, 0, 3, 10, 11, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&woodfall_temple_room_2Vtx_003FB0[22], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_004448[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_004448.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_004588[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_004448[12], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
+    gsDPLoadTextureBlock(woodfall_temple_room_2Tex_0064C0, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_FOG),
+    gsSPClearGeometryMode(G_CULL_BOTH | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_004448, 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
+    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
+    gsSP2Triangles(10, 6, 9, 0, 10, 9, 11, 0),
+    gsSPEndDisplayList(),
+};
+
+Vtx woodfall_temple_room_2Vtx_004678[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Vtx_004678.vtx.inc"
+};
+
+Gfx woodfall_temple_room_2DL_004A38[] = {
+    gsSPVertex(&woodfall_temple_room_2Vtx_004678[52], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineMode(G_CC_MODULATEIA_PRIM, G_CC_PASS2),
+    gsDPSetPrimColor(0, 0xFF, 255, 255, 0, 25),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(woodfall_temple_room_2Tex_004BC0, G_IM_FMT_IA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(woodfall_temple_room_2Vtx_004678, 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&woodfall_temple_room_2Vtx_004678[32], 20, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 9, 0, 12, 9, 8, 0),
+    gsSP2Triangles(14, 15, 13, 0, 14, 13, 12, 0),
+    gsSP2Triangles(11, 10, 16, 0, 11, 16, 17, 0),
+    gsSP2Triangles(17, 16, 18, 0, 17, 18, 19, 0),
+    gsSPEndDisplayList(),
+};
+
+u64 woodfall_temple_room_2Tex_004BC0[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Tex_004BC0.ia16.inc.c"
+};
+
+u64 woodfall_temple_room_2Tex_0053C0[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Tex_0053C0.ci8.inc.c"
+};
+
+u64 woodfall_temple_room_2Tex_0054C0[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Tex_0054C0.ci8.inc.c"
+};
+
+u64 woodfall_temple_room_2Tex_005CC0[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Tex_005CC0.ci8.inc.c"
+};
+
+u64 woodfall_temple_room_2Tex_0064C0[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Tex_0064C0.ci8.inc.c"
+};
+
+u64 woodfall_temple_room_2Tex_0068C0[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_2Tex_0068C0.ci8.inc.c"
+};

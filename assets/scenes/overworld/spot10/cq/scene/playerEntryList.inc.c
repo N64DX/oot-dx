@@ -64,3 +64,15 @@
         {  0x0000,  0x4000,  0x0000 }, // rot
          0x0FFF, // params
     }, // 10
+    {
+        ACTOR_PLAYER,
+        {    500,      0,   -2400 }, // pos
+        {  0x0000,  0x4000,  0x0000 }, // rot
+         0x0FFF, // params
+    }, // 11
+    {
+        ACTOR_PLAYER,
+        {    800,      0,   300 }, // pos
+        {  0x0000,  0x8000,  0x0000 }, // rot
+         0x0FFF, // params
+    }, // 12

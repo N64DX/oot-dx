@@ -41,6 +41,34 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Dm_Char01"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Dm_Char01/z_dm_char01.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Dm_Char01/ovl_Dm_Char01_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Wood_Pillar"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Wood_Pillar/z_bg_wood_pillar.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Wood_Pillar/ovl_Bg_Wood_Pillar_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Door_Spiral"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Door_Spiral/z_door_spiral.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Door_Spiral/ovl_Door_Spiral_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Teleporter"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Teleporter/z_bg_teleporter.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Teleporter/ovl_Bg_Teleporter_reloc.o"
+endseg
+
+beginseg
     name "ovl_Bg_Ydan_Hasi2"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ydan_Hasi2/z_bg_ydan_hasi2.o"
@@ -59,6 +87,41 @@ beginseg
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Lost_Woods/z_obj_lost_woods.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Lost_Woods/ovl_Obj_Lost_Woods_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Purify"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Purify/z_obj_purify.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Purify/ovl_Obj_Purify_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Raillift"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Raillift/z_obj_raillift.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Raillift/ovl_Obj_Raillift_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Dkjail_Ivy"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Dkjail_Ivy/z_bg_dkjail_ivy.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Dkjail_Ivy/ovl_Bg_Dkjail_Ivy_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Numa_Hana"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Numa_Hana/z_bg_numa_hana.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Numa_Hana/ovl_Bg_Numa_Hana_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Pzlblock"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Pzlblock/z_obj_pzlblock.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Pzlblock/ovl_Obj_Pzlblock_reloc.o"
 endseg
 
 beginseg

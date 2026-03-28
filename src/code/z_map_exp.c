@@ -293,6 +293,10 @@ void Map_Init(PlayState* play) {
         case SCENE_ANCIENT_HOLLOW:
             mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = 0x11;
             break;
+        case SCENE_WOODFALL_TEMPLE:
+        case SCENE_WOODFALL_TEMPLE_BOSS:
+            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = 0x12;
+            break;
         case SCENE_HYRULE_FIELD:
         case SCENE_KAKARIKO_VILLAGE:
         case SCENE_GRAVEYARD:

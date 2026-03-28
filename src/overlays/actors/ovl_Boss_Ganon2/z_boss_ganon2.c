@@ -395,7 +395,7 @@ static s8 D_80910638;
 u16 BossGanon2_HealthMultiply(u16 health) {
     health = Actor_EnemyHealthMultiply(health, BOSS_HP);
     if (IS_CHILD_QUEST)
-        return health; // * 3;
+        return health * 3;
     if (isHyper)
         return health * 1.5;
     return health;
