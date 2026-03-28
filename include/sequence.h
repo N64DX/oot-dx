@@ -10,8 +10,8 @@ typedef enum {
 #include "tables/sequence_table.h"
     NA_BGM_MAX,
 
-    NA_BGM_NO_MUSIC = 0x7F,
-    NA_BGM_NATURE_SFX_RAIN = 0x80,
+    NA_BGM_NO_MUSIC = 0xFFFD,
+    NA_BGM_NATURE_SFX_RAIN = 0xFFFE,
     NA_BGM_DISABLED = 0xFFFF
 } NA_BGM;
 #undef DEFINE_SEQUENCE

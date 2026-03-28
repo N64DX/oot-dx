@@ -319,7 +319,7 @@ typedef enum SceneID {
      & (ENTRANCE_INFO_START_TRANS_TYPE_MASK >> ENTRANCE_INFO_START_TRANS_TYPE_SHIFT))
 
 typedef struct EntranceInfo {
-    /* 0x00 */ s8  sceneId;
+    /* 0x00 */ u8  sceneId;
     /* 0x01 */ s8  spawn;
     /* 0x02 */ u16 field;
 } EntranceInfo; // size = 0x4

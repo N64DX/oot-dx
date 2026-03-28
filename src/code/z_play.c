@@ -1993,8 +1993,12 @@ s16 func_800C09D8(PlayState* this, s16 camId, s16 uid) {
 }
 
 void Play_SaveSceneFlags(PlayState* this) {
-    SavedSceneFlags* savedSceneFlags = &gSaveContext.save.info.sceneFlags[this->sceneId];
+    SavedSceneFlags* savedSceneFlags;
 
+    if (this->sceneId >= ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        return;
+
+    savedSceneFlags = &gSaveContext.save.info.sceneFlags[this->sceneId];
     savedSceneFlags->chest = this->actorCtx.flags.chest;
     savedSceneFlags->swch = this->actorCtx.flags.swch;
     savedSceneFlags->clear = this->actorCtx.flags.clear;
