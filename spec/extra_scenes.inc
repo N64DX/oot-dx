@@ -1,14 +1,14 @@
 beginseg
-    name "roadtolake_scene"
+    name "road_to_swamp_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/roadtolake/roadtolake_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/road_to_swamp/road_to_swamp_scene.o"
     number 2
 endseg
 
 beginseg
-    name "roadtolake_room_0"
+    name "road_to_swamp_room_0"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/roadtolake/roadtolake_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/road_to_swamp/road_to_swamp_room_0.o"
     number 3
 endseg
 
@@ -23,6 +23,55 @@ beginseg
     name "roadtofortress_room_0"
     compress
     include "$(BUILD_DIR)/assets/scenes/overworld/roadtofortress/roadtofortress_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "milk_road_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/milk_road/milk_road_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "milk_road_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/milk_road/milk_road_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "mountain_village_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/mountain_village/mountain_village_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "mountain_village_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/mountain_village/mountain_village_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "mountain_village_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/mountain_village/mountain_village_room_1.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "woodfall_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_room_0.o"
     number 3
 endseg
 
@@ -216,20 +265,6 @@ beginseg
 endseg
 
 beginseg
-    name "woodfall_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "woodfall_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_room_0.o"
-    number 3
-endseg
-
-beginseg
     name "woodfall_temple_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_scene.o"
@@ -338,6 +373,18 @@ beginseg
     name "woodfall_temple_boss_room_0"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple_boss/woodfall_temple_boss_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "mountain_smithy_scene"
+    include "$(BUILD_DIR)/assets/scenes/indoors/mountain_smithy/mountain_smithy_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "mountain_smithy_room_0"
+    include "$(BUILD_DIR)/assets/scenes/indoors/mountain_smithy/mountain_smithy_room_0.o"
     number 3
 endseg
 

@@ -53,11 +53,11 @@ Spawn old_lost_woods_sceneEntranceList0x0000A8[] = {
 };
 
 u16 old_lost_woods_sceneExitList0x0000B4[] = {
-    ENTR_WOODFALL_0,
-    ENTR_FORBIDDEN_WOODS_0,
+    ENTR_PATH_TO_WOODFALL_0,
+    ENTR_SPRING_LAKE_4,
     ENTR_ANCIENT_HOLLOW_0,
     ENTR_LOST_WOODS_10,
-    ENTR_SWAMP_SPIDER_HOUSE_0,
+    ENTR_WEBBED_SHRINE_0,
 };
 
 EnvLightSettings old_lost_woods_sceneLightSettings0x0000C0[] = {

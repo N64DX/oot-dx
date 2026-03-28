@@ -52,9 +52,9 @@ u16 grotto_shortcuts_sceneExitList_000234[] = {
     ENTR_RETURN_GROTTO,
     0,
     ENTR_KOKIRI_FOREST_13,
-    ENTR_ROAD_TO_LAKE_HYLIA_3,
+    ENTR_PATH_TO_WOODFALL_3,
     ENTR_KOKIRI_FOREST_14,
-    ENTR_ROAD_TO_FORTRESS_3,
+    ENTR_PATH_TO_FORTRESS_3,
     0,
     0,
 };

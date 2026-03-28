@@ -98,6 +98,8 @@ void Scene_DrawConfigForbiddenWoods(PlayState* play);
 void Scene_DrawConfigAncientHollow(PlayState* play);
 void Scene_DrawConfigWoodfallTemple(PlayState* play);
 void Scene_DrawConfigWoodfall(PlayState* play);
+void Scene_DrawConfigSpringLake(PlayState* play);
+void Scene_DrawConfigSpringLakeSmithy(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -212,6 +214,8 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigAncientHollow,               // SDC_ANCIENT_HOLLOW
     Scene_DrawConfigWoodfallTemple,              // SDC_WOODFALL_TEMPLE
     Scene_DrawConfigWoodfall,                    // SDC_WOODFALL_TEMPLE
+    Scene_DrawConfigSpringLake,                  // SDC_SPRING_LAKE
+    Scene_DrawConfigSpringLakeSmithy,            // SDC_SPRING_LAKE_SMITHY
 };
 
 void Scene_Draw(PlayState* play) {
@@ -1800,6 +1804,43 @@ void Scene_DrawConfigWoodfall(PlayState* play) {
     gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
     gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
     gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+}
+
+void Scene_DrawConfigSpringLake(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32)); // Chimney matrix effect 
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          0,                           32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 1
+    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 1)  % 128, 32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 2
+    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 10) % 128, 32, 128, 1, 0,                    (gameplayFrames * 7)  % 128, 32, 128)); // Waterfall
+    gSPSegment(POLY_XLU_DISP++, 0x0C, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 10) % 128, 64,  64, 1, 0,                    (gameplayFrames * 10) % 128, 64,  64)); // Chimney fog
+    gSPSegment(POLY_XLU_DISP++, 0x0D, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 1)  % 128, 32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Chimney fire
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+}
+
+void Scene_DrawConfigSpringLakeSmithy(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32)); // Shining metal
 
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);

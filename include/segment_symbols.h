@@ -670,9 +670,16 @@ DECLARE_ROM_SEGMENT(spot20_room_0)
 
 DECLARE_ROM_SEGMENT(ganon_tou_room_0)
 
-DECLARE_ROM_SEGMENT(roadtolake_room_0)
+DECLARE_ROM_SEGMENT(road_to_swamp_room_0)
 
 DECLARE_ROM_SEGMENT(roadtofortress_room_0)
+
+DECLARE_ROM_SEGMENT(milk_road_room_0)
+
+DECLARE_ROM_SEGMENT(mountain_village_room_0)
+DECLARE_ROM_SEGMENT(mountain_village_room_1)
+
+DECLARE_ROM_SEGMENT(woodfall_room_0)
 
 DECLARE_ROM_SEGMENT(old_lost_woods_room_0)
 
@@ -701,8 +708,6 @@ DECLARE_ROM_SEGMENT(fairy_deku_tree_room_11)
 DECLARE_ROM_SEGMENT(fairy_deku_tree_room_12)
 DECLARE_ROM_SEGMENT(fairy_deku_tree_room_13)
 
-DECLARE_ROM_SEGMENT(woodfall_room_0)
-
 DECLARE_ROM_SEGMENT(woodfall_temple_room_0)
 DECLARE_ROM_SEGMENT(woodfall_temple_room_1)
 DECLARE_ROM_SEGMENT(woodfall_temple_room_2)
@@ -718,6 +723,8 @@ DECLARE_ROM_SEGMENT(woodfall_temple_room_11)
 DECLARE_ROM_SEGMENT(woodfall_temple_room_12)
 
 DECLARE_ROM_SEGMENT(woodfall_temple_boss_room_0)
+
+DECLARE_ROM_SEGMENT(mountain_smithy_room_0)
 
 // Room symbols for compiling test scenes.
 // These are not wrapped in an `#if DEBUG_ASSETS` so that debug ROMs

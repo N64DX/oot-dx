@@ -297,6 +297,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_120_swamp_region.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_121_ganon_battle.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_122_lake_hylia.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_123_termina_field.o"
 endseg
 
 beginseg
