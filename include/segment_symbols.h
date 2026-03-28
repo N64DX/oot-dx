@@ -670,9 +670,14 @@ DECLARE_ROM_SEGMENT(spot20_room_0)
 
 DECLARE_ROM_SEGMENT(ganon_tou_room_0)
 
-DECLARE_ROM_SEGMENT(roadtolake_room_0)
+DECLARE_ROM_SEGMENT(road_to_swamp_room_0)
 
 DECLARE_ROM_SEGMENT(roadtofortress_room_0)
+
+DECLARE_ROM_SEGMENT(milk_road_room_0)
+
+DECLARE_ROM_SEGMENT(mountain_village_room_0)
+DECLARE_ROM_SEGMENT(mountain_village_room_1)
 
 DECLARE_ROM_SEGMENT(old_lost_woods_room_0)
 

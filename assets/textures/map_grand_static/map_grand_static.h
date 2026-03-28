@@ -76,11 +76,5 @@ extern u64 gGerudoValleyWithBrokenBridgeMinimapTex[TEX_LEN(u64, gGerudoValleyWit
 #define gGerudosFortressMinimapTex_WIDTH 80
 #define gGerudosFortressMinimapTex_HEIGHT 85
 extern u64 gGerudosFortressMinimapTex[TEX_LEN(u64, gGerudosFortressMinimapTex_WIDTH, gGerudosFortressMinimapTex_HEIGHT, 4)];
-#define gRoadToLakeHyliaMInimapTex_WIDTH 64
-#define gRoadToLakeHyliaMInimapTex_HEIGHT 76
-extern u64 gRoadToLakeHyliaMInimapTex[TEX_LEN(u64, gRoadToLakeHyliaMInimapTex_WIDTH, gRoadToLakeHyliaMInimapTex_HEIGHT, 4)];
-#define gRoadtoFortressMinimapTex_WIDTH 80
-#define gRoadtoFortressMinimapTex_HEIGHT 27
-extern u64 gRoadtoFortressMinimapTex[TEX_LEN(u64, gRoadtoFortressMinimapTex_WIDTH, gRoadtoFortressMinimapTex_HEIGHT, 4)];
 
 #endif

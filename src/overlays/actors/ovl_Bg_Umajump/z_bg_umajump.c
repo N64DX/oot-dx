@@ -43,8 +43,11 @@ void BgUmaJump_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
     DynaPolyActor_Init(&this->dyna, 0);
-    CollisionHeader_GetVirtual(&gJumpableHorseFenceCol, &colHeader);
+    CollisionHeader_GetVirtual(this->dyna.actor.params == -2 ? &gJumpableBigHorseFenceCol : &gJumpableHorseFenceCol, &colHeader);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
+
+    if (this->dyna.actor.params == -2)
+        Actor_SetScale(thisx, 0.125f);
 
     if (this->dyna.actor.params == 1) {
         if (!(Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || R_DEBUG_FORCE_EPONA_OBTAINED)) {
