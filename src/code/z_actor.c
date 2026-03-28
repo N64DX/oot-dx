@@ -2489,7 +2489,8 @@ void Actor_InitContext(PlayState* play, ActorContext* actorCtx, ActorEntry* play
     SavedSceneFlags* savedSceneFlags;
     s32 i;
 
-    savedSceneFlags = &gSaveContext.save.info.sceneFlags[play->sceneId];
+    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        savedSceneFlags = &gSaveContext.save.info.sceneFlags[play->sceneId];
 
     bzero(actorCtx, sizeof(ActorContext));
 
