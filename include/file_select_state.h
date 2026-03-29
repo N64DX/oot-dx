@@ -17,6 +17,7 @@ typedef struct FileSelectOptionsEntry {
     /* 0x0C */ char* (*getFunc) (struct FileSelectState*, u8, u8);
     /* 0x10 */ u8 index;
     /* 0x11 */ u8 shift;
+    /* 0x12 */ bool showOnChildQuest;
 } FileSelectOptionsEntry; // size = 0x12
 
 typedef struct FileSelectState {
