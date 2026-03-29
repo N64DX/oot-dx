@@ -5,4 +5,3 @@
     OBJECT_KW1, // 4
     OBJECT_OS_ANIME, // 5
     OBJECT_ST, // 6
-
