@@ -750,3 +750,15 @@ MSG(
 "forêt et a survécu!"
 )
 )
+
+DEFINE_MESSAGE(0x0421, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"They say there's a blacksmith down\n"
+"the road that reforges your shield for\n"
+"more durability. But only if you have\n"
+"the Shield Durability option enabled."
+),
+MSG(),
+MSG()
+)

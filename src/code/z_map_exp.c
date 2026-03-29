@@ -129,24 +129,25 @@ void Map_InitData(PlayState* play, s16 room) {
         case SCENE_GORON_CITY:
         case SCENE_LON_LON_RANCH:
         case SCENE_OUTSIDE_GANONS_CASTLE:
-        case SCENE_ROAD_TO_LAKE_HYLIA:
+        case SCENE_MILK_ROAD:
+        case SCENE_ROAD_TO_SWAMP:
         case SCENE_ROAD_TO_FORTRESS:
             extendedMapIndex = mapIndex;
             if (play->sceneId == SCENE_GRAVEYARD) {
                 if (CHECK_QUEST_ITEM(QUEST_SONG_NOCTURNE)) {
-                    extendedMapIndex = 0x14 + 2;
+                    extendedMapIndex = 0x14 + 3;
                 }
             } else if (play->sceneId == SCENE_LAKE_HYLIA) {
                 if ((LINK_IS_ADULT_OR_TIMESKIP) && !CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER)) {
-                    extendedMapIndex = 0x15 + 2;
+                    extendedMapIndex = 0x15 + 3;
                 }
             } else if (play->sceneId == SCENE_GERUDO_VALLEY) {
                 if ((LINK_IS_ADULT_OR_TIMESKIP) && !GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED()) {
-                    extendedMapIndex = 0x16 + 2;
+                    extendedMapIndex = 0x16 + 3;
                 }
             } else if (play->sceneId == SCENE_GERUDOS_FORTRESS) {
                 if (GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED()) {
-                    extendedMapIndex = 0x17 + 2;
+                    extendedMapIndex = 0x17 + 3;
                 }
             }
             PRINTF_COLOR_BLUE();
@@ -317,7 +318,8 @@ void Map_Init(PlayState* play) {
         case SCENE_GORON_CITY:
         case SCENE_LON_LON_RANCH:
         case SCENE_OUTSIDE_GANONS_CASTLE:
-        case SCENE_ROAD_TO_LAKE_HYLIA:
+        case SCENE_MILK_ROAD:
+        case SCENE_ROAD_TO_SWAMP:
         case SCENE_ROAD_TO_FORTRESS:
             mapIndex = play->sceneId - SCENE_HYRULE_FIELD;
             R_MAP_INDEX = gSaveContext.mapIndex = mapIndex;
@@ -392,7 +394,7 @@ void Minimap_DrawCompassIcons(PlayState* play) {
         gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
         gDPSetCombineMode(OVERLAY_DISP++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
 
-        if (play->sceneId >= SCENE_HYRULE_FIELD && play->sceneId <= SCENE_ROAD_TO_FORTRESS) { // Overworld
+        if (play->sceneId >= SCENE_HYRULE_FIELD && play->sceneId < SCENE_GROTTO_SHORTCUTS) { // Overworld
             mapStartPosX = R_OW_MINIMAP_X + WS_SHIFT_HALF + (gMapData->overworldXOffset[R_MAP_INDEX]/2);
             mapWidth = gMapData->owMinimapWidth[R_MAP_INDEX];
         } else if (play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_ICE_CAVERN) { // Dungeons
@@ -525,7 +527,8 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_GORON_CITY:
             case SCENE_LON_LON_RANCH:
             case SCENE_OUTSIDE_GANONS_CASTLE:
-            case SCENE_ROAD_TO_LAKE_HYLIA:
+            case SCENE_MILK_ROAD:
+            case SCENE_ROAD_TO_SWAMP:
             case SCENE_ROAD_TO_FORTRESS:
                 if (!R_MINIMAP_DISABLED) {
                     s8 xOffset = gMapData->overworldXOffset[mapIndex] / 2;

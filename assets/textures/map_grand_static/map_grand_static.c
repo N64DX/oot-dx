@@ -98,13 +98,14 @@ u64 gGerudosFortressMinimapTex[TEX_LEN(u64, gGerudosFortressMinimapTex_WIDTH, gG
 #include "assets/textures/map_grand_static/gGerudosFortressMinimapTex.ia4.inc.c"
 };
 
-u64 gRoadToLakeHyliaMInimapTex[TEX_LEN(u64, gRoadToLakeHyliaMInimapTex_WIDTH, gRoadToLakeHyliaMInimapTex_HEIGHT, 4)] = {
-#include "assets/textures/map_grand_static/gRoadToLakeHyliaMInimapTex.ia4.inc.c"
+u64 gPathToSwampMinimapTex[TEX_LEN(u64, 64, 76, 4)] = {
+#include "assets/textures/map_grand_static/gPathToSwampMinimapTex.ia4.inc.c"
 };
 
-u64 gRoadtoFortressMinimapTex[TEX_LEN(u64, gRoadtoFortressMinimapTex_WIDTH, gRoadtoFortressMinimapTex_HEIGHT, 4)] = {
-#include "assets/textures/map_grand_static/gRoadtoFortressMinimapTex.ia4.inc.c"
+u64 gPathtoGerudosFortressMinimapTex[TEX_LEN(u64, 80, 27, 4)] = {
+#include "assets/textures/map_grand_static/gPathtoGerudosFortressMinimapTex.ia4.inc.c"
 };
 
-u8 map_grand_static_zeros_00E348[8] = { 0 };
-
+u64 gMilkRoadMinimapTex[TEX_LEN(u64, 80, 23, 4)] = {
+#include "assets/textures/map_grand_static/gMilkRoadMinimapTex.ia4.inc.c"
+};
