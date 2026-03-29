@@ -102,53 +102,53 @@ char* FileSelectGlobalOptions_GetOption(FileSelectState* this, u8 index, u8 shif
 }
 
 static FileSelectOptionsEntry sFileOptionsEntries[] = {
-    { 0, "Mirror Mode",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 0  },
-    { 0, "Autosave",               FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 1  },
-    { 0, "Agony Visual Icon",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 2  },
-    { 0, "Extended Draw Distance", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 3  },
-    { 0, "No Letterboxing",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 4  },
-    { 0, "Resume Last Area",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 5  },
+    { 0, "Mirror Mode",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 0,  true  },
+    { 0, "Autosave",               FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 1,  true  },
+    { 0, "Agony Visual Icon",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 2,  true  },
+    { 0, "Extended Draw Distance", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 3,  true  },
+    { 0, "No Letterboxing",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 4,  true  },
+    { 0, "Resume Last Area",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 5,  true  },
 #if !PLATFORM_IQUE
-    { 0, "Disable Token Freeze",   FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 6  },
+    { 0, "Disable Token Freeze",   FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 6,  true  },
 #endif
-    { 0, "Censor Fire Temple",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 7  },
-    { 0, "Skip Intros",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 8  },
-    { 0, "No Owl",                 FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 9  },
-    { 0, "Instant Put Away",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 10 },
-    { 0, "Pull Sword Out",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 11 },
-    { 0, "Shield In Front",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 12 },
-    { 0, "No Disruptive Text",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 13 },
-    { 0, "Bow Aiming Reticle",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 14 },
-    { 0, "No Low Health Beep",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 15 },
-    { 0, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 16 },
-    { 0, "Fix Useful Glitches",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 17 },
-    { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 18 },
-    { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 19 },
-    { 0, "Use MM Young Link",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 20 },
-    { 0, "Jump Animations",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 21 },
-    { 0, "Use MM Bottles",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 22 },
+    { 0, "Censor Fire Temple",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 7,  true  },
+    { 0, "Skip Intros",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 8,  true  },
+    { 0, "No Owl",                 FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 9,  true  },
+    { 0, "Instant Put Away",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 10, true  },
+    { 0, "Pull Sword Out",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 11, true  },
+    { 0, "Shield In Front",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 12, true  },
+    { 0, "No Disruptive Text",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 13, true  },
+    { 0, "Bow Aiming Reticle",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 14, true  },
+    { 0, "No Low Health Beep",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 15, true  },
+    { 0, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 16, true  },
+    { 0, "Fix Useful Glitches",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 17, true  },
+    { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 18, true  },
+    { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 19, true  },
+    { 0, "Use MM Young Link",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 20, true  },
+    { 0, "Jump Animations",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 21, true  },
+    { 0, "Use MM Bottles",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 22, true  },
 #if !PLATFORM_IQUE
-    { 0, "Use MM Title Cards",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 23 },
+    { 0, "Use MM Title Cards",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 23, false },
 #endif
-    { 0, "Use MM HUD",             FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 24 },
-    { 0, "Health Recovery",        FileSelectOptions_SetOptionMax3, FileSelectOptions_GetHealthRecovery, 1, 0  },
-    { 0, "Damage Taken",           FileSelectOptions_SetOptionMax7, FileSelectOptions_GetDamageTaken,    1, 2  },
-    { 0, "Monster Health",         FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 5  },
-    { 0, "Elite Monster Health",   FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 8  },
-    { 0, "Boss Health",            FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 11 },
-    { 0, "Harder Enemies",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 14 },
-    { 0, "Static Dark Link HP",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 15 },
-    { 0, "No Bottled Fairies",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 16 },
-    { 0, "No Item Drops",          FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 17 },
-    { 0, "Shield Durability",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 18 },
+    { 0, "Use MM HUD",             FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         0, 24, true  },
+    { 0, "Health Recovery",        FileSelectOptions_SetOptionMax3, FileSelectOptions_GetHealthRecovery, 1, 0,  true  },
+    { 0, "Damage Taken",           FileSelectOptions_SetOptionMax7, FileSelectOptions_GetDamageTaken,    1, 2,  true  },
+    { 0, "Monster Health",         FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 5,  true  },
+    { 0, "Elite Monster Health",   FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 8,  true  },
+    { 0, "Boss Health",            FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,             1, 11, true  },
+    { 0, "Harder Enemies",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 14, true  },
+    { 0, "Static Dark Link HP",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 15, true  },
+    { 0, "No Bottled Fairies",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 16, true  },
+    { 0, "No Item Drops",          FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 17, true  },
+    { 0, "Shield Durability",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,         1, 18, true  },
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {
-    { 0, "Skip Logo",        FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 0 },
-    { 0, "Debug Mode",       FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 1 },
-    { 0, "Show RAM",         FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 2 },
-    { 0, "Show FPS",         FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 3 },
-    { 0, "Extra Save Slots", FileSelectGlobalOptions_ToggleSaveSlotsOption, FileSelectGlobalOptions_GetOption, 0, 4 },
+    { 0, "Skip Logo",        FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 0, true },
+    { 0, "Debug Mode",       FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 1, true },
+    { 0, "Show RAM",         FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 2, true },
+    { 0, "Show FPS",         FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 3, true },
+    { 0, "Extra Save Slots", FileSelectGlobalOptions_ToggleSaveSlotsOption, FileSelectGlobalOptions_GetOption, 0, 4, true },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {
@@ -321,9 +321,11 @@ void FileSelectOptions_Draw(FileSelectState* this) {
     CLOSE_DISPS(gfxCtx, "../z_options.c", 1037);
 }
 
+static FileSelectOptionsEntry sFileOptionsBuffer[ARRAY_COUNT(sFileOptionsEntries)];
+
 void FileSelectOptions_Reset(FileSelectState* this) {
     u8 i;
-    
+
     this->topDisplayedEntry = 0;
     this->currentEntry = 0;
     this->pageDownIndex = 0;
@@ -340,13 +342,21 @@ void FileSelectOptions_Reset(FileSelectState* this) {
         this->topDisplayedEntry = dREG(84);
         this->pageDownIndex = dREG(85);
     }
-    
+
     if (this->configMode == CM_OPTIONS_MENU) {
         this->entries = sGlobalOptionsEntries;
         this->count = ARRAY_COUNT(sGlobalOptionsEntries);
     } else {
-       this->entries = sFileOptionsEntries;
-        this->count = ARRAY_COUNT(sFileOptionsEntries); 
+        u8 questMode = this->questMode[CURRENT_SLOT(this->buttonIndex)];
+        bool isChildQuestMode = (questMode == CHILD_QUEST || questMode == CHILD_MASTER_QUEST ||  questMode == CHILD_URA_QUEST || questMode == DUNGEON_CHILD_RUSH);
+        this->entries = sFileOptionsBuffer;
+        this->count = 0;
+
+        for (i=0; i<ARRAY_COUNT(sFileOptionsEntries); i++) {
+            if (!sFileOptionsEntries[i].showOnChildQuest && isChildQuestMode)
+                continue;
+            this->entries[this->count++] = sFileOptionsEntries[i];
+        }
     }
 
     for (i=1; i<=this->count; i++)
