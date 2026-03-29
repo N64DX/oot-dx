@@ -1,5 +1,5 @@
 #ifndef OBJECT_GOMA_TITLE_CARD_H
-#define OBJECT_GOMA_TITLE_CARD_H 1
+#define OBJECT_GOMA_TITLE_CARD_H
 
 #include "ultra64.h"
 
