@@ -5,4 +5,3 @@
     OBJECT_OKUTA, // 4
     OBJECT_DEKUNUTS, // 5
     OBJECT_MAMENOKI, // 6
-

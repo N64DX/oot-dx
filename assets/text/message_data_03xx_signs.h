@@ -1826,3 +1826,38 @@ QUICKTEXT_ENABLE SHIFT(45) "Dernier avertissement:\n"
 SHIFT(35) COLOR(RED) "Fais demi-tour maintenant." COLOR(DEFAULT)
 )
 )
+
+DEFINE_MESSAGE(0x034F, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(PURPLE) "About Shield Durability\n" COLOR(DEFAULT)
+COLOR(RED) "Shield Durability" COLOR(DEFAULT) " is an optional\n"
+"mechanic found in your save file\n"
+"options." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "When enabled, your shields take\n"
+"damage when blocking attacks.\n"
+"When the durability meter is depleted\n"
+"your shield breaks and is gone." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE COLOR(PURPLE) "About Perfect Block\n" COLOR(DEFAULT)
+"You can avoid taking shield damage\n"
+"when you block an attack at the\n"
+"precise time it hits your shield." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE COLOR(PURPLE) "About Repairing\n" COLOR(DEFAULT)
+"Repairing a shield from a shop is\n"
+"cheaper than buying it." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE COLOR(PURPLE) "About the Blacksmith\n" COLOR(DEFAULT)
+"Visit the blacksmith to reforge your\n"
+"shields for more durability, but only\n"
+"if " COLOR(RED) "Shield Durability" COLOR(DEFAULT) " is enabled." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)

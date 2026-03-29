@@ -2,7 +2,11 @@
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
     SCENE_CMD_SKYBOX_DISABLES(false /* skybox enabled */, false /* sun/moon enabled */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
+#if OOT_VERSION <= NTSC_1_1
     SCENE_CMD_ROOM_SHAPE(&spot04_room_1_03000120_RoomShapeNormal),
+#else
+    SCENE_CMD_ROOM_SHAPE(&spot04_room_1_03000120_RoomShapeCullable),
+#endif
     SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(cq_objects_header3), cq_objects_header3),
     SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(cq_actors_header3), cq_actors_header3),
     SCENE_CMD_END(),
