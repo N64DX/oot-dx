@@ -153,7 +153,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
             case ENTR_GANONS_TOWER_0:
             case ENTR_GANONDORF_BOSS_0:
                 gSaveContext.save.info.playerData.isDoubleDefenseAcquired = true;
-                gSaveContext.save.info.inventory.defenseHearts = 20;
+                gSaveContext.save.info.inventory.defenseHearts = 30;
                 break;
 
             case ENTR_INSIDE_GANONS_CASTLE_0:

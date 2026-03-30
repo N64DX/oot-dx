@@ -566,14 +566,12 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                 if (gSaveContext.save.info.playerData.healthCapacity < 0x30) {
                     gSaveContext.save.info.playerData.healthCapacity = 0x30;
                 }
-                R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
             } else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) ||
                        CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
                 gSaveContext.save.info.playerData.healthCapacity += 0x10;
                 if (gSaveContext.save.info.playerData.healthCapacity >= 0x1E0) {
                     gSaveContext.save.info.playerData.healthCapacity = 0x1E0;
                 }
-                R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
             }
             break;
 
@@ -1009,7 +1007,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         gSaveContext.save.info.playerData.isDoubleDefenseAcquired ^= 1;
                         if (!gSaveContext.save.info.playerData.isDoubleDefenseAcquired)
                             gSaveContext.save.info.inventory.defenseHearts = 0;
-                        else gSaveContext.save.info.inventory.defenseHearts = 20;
+                        else gSaveContext.save.info.inventory.defenseHearts = 30;
                     }
                 } else if (curSection == SECTION_BGS) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {

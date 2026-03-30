@@ -63,7 +63,6 @@ void Interface_Init(PlayState* play) {
     dpadAlphas[0] = dpadAlphas[1] = dpadAlphas[2] = dpadAlphas[3] = dpadAlphas[4] = 0;
     interfaceCtx->minimapAlpha = 0;
     interfaceCtx->unk_260 = 0;
-    R_MAGIC_METER_Y_LOWER = (gSaveContext.save.info.playerData.healthCapacity > 0x140) ? 52 : 42;
 
     parameterSize = (uintptr_t)_parameter_staticSegmentRomEnd - (uintptr_t)_parameter_staticSegmentRomStart;
 
@@ -205,9 +204,7 @@ void Interface_Init(PlayState* play) {
 
         gSaveContext.timerX[timerId] = 26;
 
-        if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
-            gSaveContext.timerY[timerId] = 62; // three rows of hearts
-        } else if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
+        if (gSaveContext.save.info.playerData.healthCapacity > 0xA0) {
             gSaveContext.timerY[timerId] = 54; // two rows of hearts
         } else {
             gSaveContext.timerY[timerId] = 46; // one row of hearts
