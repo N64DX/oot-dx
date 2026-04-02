@@ -467,7 +467,7 @@ void Health_DrawMeter(PlayState* play) {
             heartCenterX = HIRES_MULTIPLY(30.0f) + offsetX;
             heartTexCoordPerPixel = 1.0f;
             heartTexCoordPerPixel /= 0.68f;
-            heartTexCoordPerPixel *= HIRES_DIVIDE(1 << 10);
+            heartTexCoordPerPixel *= HIRES_DIVIDE(gSaveContext.save.info.playerData.healthCapacity <= 0x140 ? 1 << 10 : 1280);
             halfHeartLength = 8.0f;
             halfHeartLength *= HIRES_MULTIPLY(0.68f);
             gSPTextureRectangle(OVERLAY_DISP++, (s32)(X_MULTIPLY((heartCenterX - halfHeartLength) * 4)),
@@ -494,9 +494,11 @@ void Health_DrawMeter(PlayState* play) {
 
             {
                 Mtx* matrix = GRAPH_ALLOC(gfxCtx, sizeof(Mtx));
-                Matrix_SetTranslateScaleMtx2(
-                    matrix, HIRES_MULTIPLY(1.0f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY(1.0f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize),
-                    HIRES_MULTIPLY(1.0f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY((-130.0f) - WS_SHIFT_HALF) + offsetX, HIRES_MULTIPLY(94.5f) - offsetY, 0.0f);
+                if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
+                    Matrix_SetTranslateScaleMtx2(matrix, HIRES_MULTIPLY(0.75f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY(0.75f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY(0.75f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY((-131.0f) - WS_SHIFT_HALF) + offsetX, HIRES_MULTIPLY(94.5f) - offsetY, 0.0f);
+                } else {
+                    Matrix_SetTranslateScaleMtx2(matrix, HIRES_MULTIPLY(1.0f)  - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY(1.0f)  - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY(1.0f)  - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY((-130.0f) - WS_SHIFT_HALF) + offsetX, HIRES_MULTIPLY(94.5f) - offsetY, 0.0f);
+                }
                 gSPMatrix(OVERLAY_DISP++, matrix, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
                 gSPVertex(OVERLAY_DISP++, beatingHeartVtx, 4, 0);
                 gSP1Quadrangle(OVERLAY_DISP++, 0, 2, 3, 1, 0);
@@ -508,7 +510,7 @@ void Health_DrawMeter(PlayState* play) {
 
         // Go down one line after 10 hearts
         if (heartIndex == 9 || heartIndex == 19) {
-            offsetY += HIRES_MULTIPLY(10.0f);
+            offsetY += HIRES_MULTIPLY(gSaveContext.save.info.playerData.healthCapacity <= 0x140 ? 10.0f : 6.5f);
             offsetX = 0.0f;
         }
     }

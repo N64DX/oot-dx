@@ -859,7 +859,7 @@ void BgDyYoseizo_Give_Reward(BgDyYoseizo* this, PlayState* play) {
     }
 
     if (this->giveDefenseHearts) {
-        if (gSaveContext.save.info.inventory.defenseHearts < 20) {
+        if (gSaveContext.save.info.inventory.defenseHearts < 30) {
             gSaveContext.save.info.inventory.defenseHearts++;
         }
     }
