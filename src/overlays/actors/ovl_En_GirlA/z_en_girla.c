@@ -42,6 +42,7 @@ s32 EnGirlA_CanBuy_HylianShield(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_DekuShield(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_ShieldRepair(PlayState* play, EnGirlA* this);
+s32 EnGirlA_CanBuy_ShieldUpgrade(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_Wallet(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_GoronTunic(PlayState* play, EnGirlA* this);
 s32 EnGirlA_CanBuy_ZoraTunic(PlayState* play, EnGirlA* this);
@@ -67,6 +68,7 @@ void EnGirlA_ItemGive_Longsword(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_HylianShield(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_DekuShield(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_HerosShield(PlayState* play, EnGirlA* this);
+void EnGirlA_ItemGive_MirrorShield(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_GoronTunic(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_ZoraTunic(PlayState* play, EnGirlA* this);
 void EnGirlA_ItemGive_Health(PlayState* play, EnGirlA* this);
@@ -78,6 +80,7 @@ void EnGirlA_ItemGive_DekuSeeds(PlayState* play, EnGirlA* this);
 void EnGirlA_BuyEvent_ShieldDiscount(PlayState* play, EnGirlA* this);
 void EnGirlA_BuyEvent_ObtainBombchuPack(PlayState* play, EnGirlA* this);
 void EnGirlA_BuyEvent_ObtainWallet(PlayState* play, EnGirlA* this);
+void EnGirlA_BuyEvent_ObtainShieldUpgrade(PlayState* play, EnGirlA* this);
 void EnGirlA_BuyEvent_GoronTunic(PlayState* play, EnGirlA* this);
 void EnGirlA_BuyEvent_ZoraTunic(PlayState* play, EnGirlA* this);
 
@@ -287,14 +290,29 @@ static ShopItemEntry sShopItemEntries[] = {
     { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 300, 1, 0x9208, 0x9108, GI_WALLET_BOTTOMLESS,
       EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
     /* SI_DEKU_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, func_8002EBCC, 30, 1, 0x9209, 0x920C, GI_SHIELD_DEKU,
+    { OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, func_8002EBCC, 30, 1, 0x9209, 0x920D, GI_SHIELD_DEKU,
       EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_DekuShield, EnGirlA_BuyEvent_ShieldDiscount },
     /* SI_HYLIAN_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, func_8002EBCC, 60, 1, 0x920A, 0x920D, GI_SHIELD_HYLIAN,
+    { OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, func_8002EBCC, 60, 1, 0x920A, 0x920E, GI_SHIELD_HYLIAN,
       EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HylianShield, EnGirlA_BuyEvent_ShieldDiscount },
-     /* SI_HEROS_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, func_8002EBCC, 60, 1, 0x920B, 0x920E, GI_SHIELD_HEROS,
+    /* SI_MIRROR_SHIELD_REPAIR */
+    { OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, func_8002EBCC, 80, 1, 0x920B, 0x920F, GI_SHIELD_MIRROR_MM,
+      EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_MirrorShield, EnGirlA_BuyEvent_ShieldDiscount },
+    /* SI_HEROS_SHIELD_REPAIR */
+    { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, func_8002EBCC, 60, 1, 0x920C, 0x9210, GI_SHIELD_HEROS,
       EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
+    /* SI_DEKU_SHIELD_UPGRADE */
+    { OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, func_8002EBCC, 50, 1, 0x9211, 0x9215, GI_SHIELD_DEKU_UPGRADE,
+      EnGirlA_CanBuy_ShieldUpgrade, NULL, EnGirlA_BuyEvent_ObtainShieldUpgrade },
+    /* SI_HYLIAN_SHIELD_UPGRADE */
+    { OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, func_8002EBCC, 100, 1, 0x9212, 0x9216, GI_SHIELD_HYLIAN_UPGRADE,
+      EnGirlA_CanBuy_ShieldUpgrade, NULL, EnGirlA_BuyEvent_ObtainShieldUpgrade },
+    /* SI_MIRROR_SHIELD_UPGRADE */
+    { OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, func_8002EBCC, 400, 1, 0x9213, 0x9217, GI_SHIELD_MIRROR_UPGRADE,
+      EnGirlA_CanBuy_ShieldUpgrade, NULL, EnGirlA_BuyEvent_ObtainShieldUpgrade },
+    /* SI_HEROS_SHIELD_UPGRADE */
+    { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, func_8002EBCC, 200, 1, 0x9214, 0x9218, GI_SHIELD_HEROS_UPGRADE,
+      EnGirlA_CanBuy_ShieldUpgrade, NULL, EnGirlA_BuyEvent_ObtainShieldUpgrade },
 };
 
 // Defines the Hylian Shield discount amount
@@ -304,26 +322,51 @@ void EnGirlA_SetupAction(EnGirlA* this, EnGirlAActionFunc func) {
     this->actionFunc = func;
 }
 
+static bool EnGirlA_CanBuy_ShieldUpgradeCheck(u8 shield) {
+    if (gSaveContext.save.info.shields[shield].upgrade >= 3)
+        return false;
+    if (gSaveContext.save.info.shields[shield].upgrade >= 2 && (!GET_EVENTCHKINF(EVENTCHKINF_45) || !GET_EVENTCHKINF(EVENTCHKINF_RESTORED_LAKE_HYLIA)))
+        return false;
+    if (gSaveContext.save.info.shields[shield].upgrade >= 1 && !GET_EVENTCHKINF(EVENTCHKINF_45))
+        return false;
+    return true;
+}
+
 s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
     switch (this->actor.params) {
         case SI_DEKU_SHIELD:
-        case SI_DEKU_SHIELD_REPAIR:
             if (SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
-                this->actor.params = gSaveContext.save.info.shieldDurability[0] < MAX_DURABILITY_SHIELD_DEKU ? SI_DEKU_SHIELD_REPAIR : SI_DEKU_SHIELD;
+                this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU) ? SI_DEKU_SHIELD_REPAIR : SI_DEKU_SHIELD;
                 return true;
             }
             break;
         case SI_HYLIAN_SHIELD:
-        case SI_HYLIAN_SHIELD_REPAIR:
             if (SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) {
-                this->actor.params = gSaveContext.save.info.shieldDurability[1] < MAX_DURABILITY_SHIELD_HYLIAN ? SI_HYLIAN_SHIELD_REPAIR : SI_HYLIAN_SHIELD;
+                this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HYLIAN) ? SI_HYLIAN_SHIELD_REPAIR : SI_HYLIAN_SHIELD;
                 return true;
             }
             break;
         case SI_HEROS_SHIELD:
-        case SI_HEROS_SHIELD_REPAIR:
             if (SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
-                this->actor.params = gSaveContext.save.info.shieldDurability[3] < MAX_DURABILITY_SHIELD_HEROS ? SI_HEROS_SHIELD_REPAIR : SI_HEROS_SHIELD;
+                this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS) ? SI_HEROS_SHIELD_REPAIR : SI_HEROS_SHIELD;
+                return true;
+            }
+            break;
+        case SI_DEKU_SHIELD_REPAIR:
+        case SI_HYLIAN_SHIELD_REPAIR:
+        case SI_HEROS_SHIELD_REPAIR:
+        case SI_MIRROR_SHIELD_REPAIR:
+            if (!SHIELD_DURABILITY || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, this->actor.params - SI_DEKU_SHIELD_REPAIR)) {
+                this->actor.params = SI_SOLD_OUT;
+                return true;
+            }
+            break;
+        case SI_DEKU_SHIELD_UPGRADE:
+        case SI_HYLIAN_SHIELD_UPGRADE:
+        case SI_HEROS_SHIELD_UPGRADE:
+        case SI_MIRROR_SHIELD_UPGRADE:
+            if (!SHIELD_DURABILITY || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, this->actor.params - SI_DEKU_SHIELD_UPGRADE) || !EnGirlA_CanBuy_ShieldUpgradeCheck(this->actor.params - SI_DEKU_SHIELD_UPGRADE)) {
+                this->actor.params = SI_SOLD_OUT;
                 return true;
             }
             break;
@@ -608,7 +651,18 @@ s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this) {
 }
 
 s32 EnGirlA_CanBuy_ShieldRepair(PlayState* play, EnGirlA* this) {
+    u8 index = this->actor.params - SI_DEKU_SHIELD_REPAIR;
+    if (gSaveContext.save.info.shields[index].durability >= Player_GetMaxShieldDurability(index+1))
+        return CANBUY_RESULT_CANT_GET_NOW;
     if (gSaveContext.save.info.playerData.rupees < this->basePrice)
+        return CANBUY_RESULT_NEED_RUPEES;
+    return CANBUY_RESULT_SUCCESS_FANFARE;
+}
+
+s32 EnGirlA_CanBuy_ShieldUpgrade(PlayState* play, EnGirlA* this) {
+    u8 index   = this->actor.params - SI_DEKU_SHIELD_UPGRADE;
+    u8 upgrade = gSaveContext.save.info.shields[index].upgrade;
+    if (gSaveContext.save.info.playerData.rupees < Player_MaxShieldDurabilityPrices[index][upgrade])
         return CANBUY_RESULT_NEED_RUPEES;
     return CANBUY_RESULT_SUCCESS_FANFARE;
 }
@@ -819,19 +873,22 @@ void EnGirlA_ItemGive_Longsword(PlayState* play, EnGirlA* this) {
 
 void EnGirlA_ItemGive_HylianShield(PlayState* play, EnGirlA* this) {
     Item_Give(play, ITEM_SHIELD_HYLIAN);
-    gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_HYLIAN] = MAX_DURABILITY_SHIELD_HYLIAN;
     Rupees_ChangeBy(-this->basePrice);
 }
 
 void EnGirlA_ItemGive_DekuShield(PlayState* play, EnGirlA* this) {
     Item_Give(play, ITEM_SHIELD_DEKU);
-    gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_DEKU] = MAX_DURABILITY_SHIELD_DEKU;
     Rupees_ChangeBy(-this->basePrice);
 }
 
 void EnGirlA_ItemGive_HerosShield(PlayState* play, EnGirlA* this) {
     Item_Give(play, ITEM_SHIELD_HEROS);
-    gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_HEROS] = MAX_DURABILITY_SHIELD_HEROS;
+    Rupees_ChangeBy(-this->basePrice);
+}
+
+void EnGirlA_ItemGive_MirrorShield(PlayState* play, EnGirlA* this) {
+    Item_Give(play, ITEM_SHIELD_MIRROR);
+    gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
     Rupees_ChangeBy(-this->basePrice);
 }
 
@@ -907,6 +964,24 @@ void EnGirlA_ItemGive_BottledItem(PlayState* play, EnGirlA* this) {
 }
 
 void EnGirlA_BuyEvent_ShieldDiscount(PlayState* play, EnGirlA* this) {
+    switch (this->actor.params) {
+        case SI_DEKU_SHIELD:
+        case SI_DEKU_SHIELD_REPAIR:
+            gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
+            break;
+        case SI_HYLIAN_SHIELD:
+        case SI_HYLIAN_SHIELD_REPAIR:
+            gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HYLIAN);
+            break;
+        case SI_MIRROR_SHIELD_REPAIR:
+            gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
+            break;
+        case SI_HEROS_SHIELD:
+        case SI_HEROS_SHIELD_REPAIR:
+            gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
+            break;
+    }
+    
     if (this->actor.params == SI_HYLIAN_SHIELD) {
         if (GET_INFTABLE(INFTABLE_76)) {
             Rupees_ChangeBy(-(this->basePrice - sShieldDiscounts[(s32)Rand_ZeroFloat(7.9f)]));
@@ -957,6 +1032,12 @@ void EnGirlA_BuyEvent_ObtainBombchuPack(PlayState* play, EnGirlA* this) {
 void EnGirlA_BuyEvent_ObtainWallet(PlayState* play, EnGirlA* this) {
     SET_ITEMGETINF(ITEMGETINF_BAZAAR_WALLET);
     Rupees_ChangeBy(-this->basePrice);
+}
+
+void EnGirlA_BuyEvent_ObtainShieldUpgrade(PlayState* play, EnGirlA* this) {
+    u8 index   = this->actor.params - SI_DEKU_SHIELD_UPGRADE;
+    u8 upgrade = gSaveContext.save.info.shields[index].upgrade;
+    Rupees_ChangeBy(-Player_MaxShieldDurabilityPrices[index][upgrade]);
 }
 
 void EnGirlA_Noop(EnGirlA* this, PlayState* play) {

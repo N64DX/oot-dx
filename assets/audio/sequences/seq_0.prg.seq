@@ -14265,6 +14265,24 @@ CHAN_61BC:
     notedv      (SF0_EFFECT_LASH_KID2 - 2 * 64), 0, 100
     end
 
+.channel CHAN_VO_GABORA_1
+    ldlayer     0, LAYER_VO_GABORA_1
+    end
+.layer LAYER_VO_GABORA_1
+    transpose   2
+    instr       FONTANY_INSTR_SFX
+    notedv      (SF0_EFFECT_GABORA_1 - 2 * 64), 0, 100
+    end
+
+.channel CHAN_VO_GABORA_2
+    ldlayer     0, LAYER_VO_GABORA_2
+    end
+.layer LAYER_VO_GABORA_2
+    transpose   2
+    instr       FONTANY_INSTR_SFX
+    notedv      (SF0_EFFECT_GABORA_2 - 2 * 64), 0, 100
+    end
+
 .channel CHAN_61C1
 /* 0x61C1 [0xCE 0x61 0xD1          ] */ ldptr       ARRAY_61D1
 /* 0x61C4 [0xCF 0x61 0x1B          ] */ stptrtoseq  CHAN_611A + STSEQ_PTR_LDSEQ

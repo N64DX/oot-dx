@@ -98,7 +98,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
 
             case ENTR_SPIRIT_TEMPLE_BOSS_0:
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR);
-                gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
+                gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
                 Inventory_ChangeUpgrade(UPG_STRENGTH, 2);
                 break;
 
@@ -165,7 +165,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                     SET_GOLDEN_FEATHER;
                     SET_MASTER_SWORD;
                     gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = ITEM_GOLDEN_FEATHER;
-                    gSaveContext.save.info.isEnhancedSpinAcquired = true;
+                    gSaveContext.save.info.obtainedSkills.enhancedSpin = true;
                     for (i=0; i<4; i++) {
                         if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_ROCS_FEATHER) {
                             gSaveContext.save.info.equips.buttonItems[i] = ITEM_GOLDEN_FEATHER;
@@ -237,7 +237,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_TIME - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER);
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN);
-                gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
+                gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HYLIAN);
                 gSaveContext.save.info.inventory.items[SLOT_OCARINA] = ITEM_OCARINA_OF_TIME;
                 for (i=0; i<4; i++)
                     if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_OCARINA_FAIRY)
@@ -246,7 +246,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS);
                     Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_MASTER);
                     Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_HYLIAN);
-                    gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
+                    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
                     gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
                     gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
                     SET_HEROS_SHIELD;
@@ -273,7 +273,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_SUN - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN);
                 Inventory_ChangeUpgrade(UPG_STRENGTH, 1);
-                gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
+                gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HYLIAN);
                 gSaveContext.save.info.inventory.items[SLOT_OCARINA] = ITEM_OCARINA_FAIRY;
                 if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_1] == ITEM_NONE)
                     gSaveContext.save.info.inventory.items[SLOT_BOTTLE_1] = ITEM_BOTTLE_FAIRY;
@@ -285,7 +285,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI);
                 Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_KOKIRI);
                 Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_DEKU);
-                gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
+                gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
                 gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_KOKIRI;
                 gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
                 break;

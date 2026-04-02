@@ -2004,13 +2004,13 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                     }
 
                     if (getItemId == -GI_SHIELD_DEKU)
-                        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_DEKU] = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
+                        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
                     else if (getItemId == -GI_SHIELD_HYLIAN)
-                        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_HYLIAN] = Player_GetMaxShieldDurability(PLAYER_SHIELD_HYLIAN);
+                        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HYLIAN);
                     else if (getItemId == -GI_SHIELD_MIRROR)
-                        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_MIRROR] = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
+                        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
                     else if (getItemId == -GI_SHIELD_HEROS)
-                        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_HEROS] = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
+                        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
 
                     if (IS_CHILD_QUEST_AS_CHILD) {
                         if (getItemId == -GI_SHIELD_MIRROR)
@@ -4909,13 +4909,13 @@ u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
 }
 
 void Actor_RestoreShieldDurability(s32 dmgFlags) {
-    if (SHIELD_DURABILITY && dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && IS_HEROS_SWORD) {
+    if (SHIELD_DURABILITY && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && IS_HEROS_SWORD)) {
         u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
         if (IS_HEROS_SHIELD && shield == 2)
             shield = 4;
         if (shield != PLAYER_SHIELD_NONE) {
-            u8* currentDurability = &gSaveContext.save.info.shieldDurability[shield - 1];
-            *currentDurability = *currentDurability + 3 > Player_GetMaxShieldDurability(shield) ? Player_GetMaxShieldDurability(shield) : *currentDurability + 3;
+            ShieldDurability* sh = &gSaveContext.save.info.shields[shield - 1];
+            sh->durability = sh->durability + 3 > Player_GetMaxShieldDurability(shield) ? Player_GetMaxShieldDurability(shield) : sh->durability + 3;
         }
     }
 }

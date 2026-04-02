@@ -1985,6 +1985,14 @@ u8 Item_Give(PlayState* play, u8 item) {
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
+    } else if (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) {
+        u8 index = item - ITEM_SHIELD_DEKU_UPGRADE;
+        if (gSaveContext.save.info.shields[index].upgrade < 8)
+            gSaveContext.save.info.shields[index].upgrade++;
+        gSaveContext.save.info.shields[index].durability = Player_GetMaxShieldDurability(index+1);
+        if (item == ITEM_SHIELD_HEROS_UPGRADE)
+            gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
+        return ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI);
         for (i=0; i<4; i++)
@@ -2506,7 +2514,7 @@ u8 Item_CheckObtainability(u8 item) {
             return ITEM_NONE;
         }
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
-        if ( (item == ITEM_SHIELD_DEKU && gSaveContext.save.info.shieldDurability[0] < MAX_DURABILITY_SHIELD_DEKU) || (item == ITEM_SHIELD_HYLIAN && gSaveContext.save.info.shieldDurability[1] < MAX_DURABILITY_SHIELD_HYLIAN) || (item == ITEM_SHIELD_MIRROR && gSaveContext.save.info.shieldDurability[2] < MAX_DURABILITY_SHIELD_DEKU) )
+        if (gSaveContext.save.info.shields[item - ITEM_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(item - ITEM_SHIELD_DEKU + 1))
             return ITEM_NONE;
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU + EQUIP_INV_SHIELD_DEKU)) {
             return item;
@@ -2514,7 +2522,7 @@ u8 Item_CheckObtainability(u8 item) {
             return ITEM_NONE;
         }
     } else if (item == ITEM_SHIELD_HEROS) {
-        if (item == ITEM_SHIELD_HEROS && gSaveContext.save.info.shieldDurability[3] < MAX_DURABILITY_SHIELD_HEROS)
+        if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS))
             return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
@@ -2611,6 +2619,8 @@ u8 Item_CheckObtainability(u8 item) {
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
     } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS) {
+        return ITEM_NONE;
+    } else if (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) {
         return ITEM_NONE;
     }
 
@@ -4235,8 +4245,9 @@ void Energy_Update(PlayState* play) {
 
 void Durability_DrawMeter(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
-    u8 capacity, durability;
+    u16 capacity, durability;
     u8 shield = GET_PLAYER(play)->currentShield;
+    u8 upgrade;
     u16 meterY = 190;
     u16 meterX = 26;
     f32 scaleDivide;
@@ -4246,29 +4257,22 @@ void Durability_DrawMeter(PlayState* play) {
         return;
     }
 
+    durability = gSaveContext.save.info.shields[shield-1].durability;
+    capacity = Player_GetMaxShieldDurability(shield);
+    upgrade = gSaveContext.save.info.shields[shield-1].upgrade;
+
     switch (shield) {
         case PLAYER_SHIELD_DEKU:
-            durability = gSaveContext.save.info.shieldDurability[0];
-            capacity = MAX_DURABILITY_SHIELD_DEKU;
-            scaleDivide = 3.5f;
+            scaleDivide = 2.67f + upgrade * 0.33f;
             break;
-
         case PLAYER_SHIELD_HYLIAN:
-            durability = gSaveContext.save.info.shieldDurability[1];
-            capacity = MAX_DURABILITY_SHIELD_HYLIAN;
-            scaleDivide = 5.0f;
+            scaleDivide = 8.0f + upgrade;
             break;
-
         case PLAYER_SHIELD_MIRROR:
-            durability = gSaveContext.save.info.shieldDurability[2];
-            capacity = MAX_DURABILITY_SHIELD_MIRROR;
-            scaleDivide = 2.5f;
+            scaleDivide = 1.33f + upgrade * 0.167f;
             break;
-        
         case PLAYER_SHIELD_HEROS:
-            durability = gSaveContext.save.info.shieldDurability[3];
-            capacity = MAX_DURABILITY_SHIELD_HEROS;
-            scaleDivide = 5.0f;
+            scaleDivide = 8.0f + upgrade;
             break;
     }
 

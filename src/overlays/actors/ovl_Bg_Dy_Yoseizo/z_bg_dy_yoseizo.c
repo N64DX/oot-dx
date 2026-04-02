@@ -299,7 +299,7 @@ void BgDyYoseizo_ChooseType(BgDyYoseizo* this, PlayState* play) {
                 }
                 break;
             case FAIRY_UPGRADE_GREAT_QUICK_SPIN:
-                if (!gSaveContext.save.info.isEnhancedSpinAcquired) {
+                if (!gSaveContext.save.info.obtainedSkills.enhancedSpin) {
                     this->givingSpell = true;
                     givingReward = true;
                 }
@@ -799,7 +799,7 @@ void BgDyYoseizo_Give_Reward(BgDyYoseizo* this, PlayState* play) {
                 break;
             case FAIRY_UPGRADE_DOUBLE_DEFENSE:
                 if (this->fountainType == FAIRY_UPGRADE_GREAT_QUICK_SPIN)
-                    gSaveContext.save.info.isEnhancedSpinAcquired = true;
+                    gSaveContext.save.info.obtainedSkills.enhancedSpin = true;
                 else gSaveContext.save.info.playerData.isDoubleDefenseAcquired = true;
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_HEARTS_MAGIC);
                 break;

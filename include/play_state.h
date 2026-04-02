@@ -194,7 +194,7 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos);
 void Play_SetDungeonRushEntry(PlayState* this);
 void Play_SetDungeonRushProgress(PlayState* this);
 u32 Player_UseSpecialPower(struct PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, s32 amount);
-u8 Player_GetMaxShieldDurability(u8 shield);
+u16 Player_GetMaxShieldDurability(u8 shield);
 u8 Player_GetMaxEnergy(void);
 bool Player_HasEnergyUnlocked(void);
 
@@ -209,5 +209,8 @@ extern TransitionTile gTransitionTile;
 extern s32 gTransitionTileState;
 extern struct VisMono gPlayVisMono;
 extern union Color_RGBA8_u32 gVisMonoColor;
+
+extern u16 Player_MaxShieldDurabilityPrices[4][8];
+extern u16 Player_MaxShieldDurabilityValues[4][8];
 
 #endif

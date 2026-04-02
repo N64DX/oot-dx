@@ -123,7 +123,7 @@ s32 Play_CheckViewpoint(PlayState* this, s16 viewpoint) {
 void Play_SetShopBrowsingViewpoint(PlayState* this) {
     PRINTF("Game_play_shop_pr_vr_switch_set()\n");
 
-    if (R_SCENE_CAM_TYPE == SCENE_CAM_TYPE_FIXED_SHOP_VIEWPOINT) {
+    if (R_SCENE_CAM_TYPE == SCENE_CAM_TYPE_FIXED_SHOP_VIEWPOINT || this->sceneId == SCENE_SPRING_LAKE_SMITHY) {
         this->viewpoint = VIEWPOINT_PIVOT;
     }
 }
@@ -2150,17 +2150,25 @@ u32 Player_UseSpecialPower(PlayState* this, Player* player, u8 cost, u8 cooldown
     return amount;
 }
 
-u8 Player_GetMaxShieldDurability(u8 shield) {
-    if (shield == PLAYER_SHIELD_DEKU)
-        return MAX_DURABILITY_SHIELD_DEKU;
-    else if (shield == PLAYER_SHIELD_HYLIAN)
-        return MAX_DURABILITY_SHIELD_HYLIAN;
-    else if (shield == PLAYER_SHIELD_MIRROR)
-        return MAX_DURABILITY_SHIELD_MIRROR;
-    else if (shield == PLAYER_SHIELD_HEROS)
-        return MAX_DURABILITY_SHIELD_HEROS;
+u16 Player_MaxShieldDurabilityPrices[4][8] = {
+    {  50, 100,  150,  200,  250,  300,  350,  400 }, // Deku Shield
+    { 100, 200,  300,  400,  500,  600,  700,  800 }, // Hylian Shield
+    { 400, 800, 1200, 1600, 2000, 2400, 2800, 3200 }, // Mirror Shield
+    { 200, 400,  600,  800, 1000, 1200, 1400, 1600 }, // Hero's Shield
+};
+
+u16 Player_MaxShieldDurabilityValues[4][8] = {
+    { 50,  100, 150, 200, 250, 300,  350,  400 }, // Deku Shield
+    { 150, 300, 450, 600, 750, 900, 1050, 1200 }, // Hylian Shield
+    { 25,   50,  75, 100, 125, 150,  175,  200 }, // Mirror Shield
+    { 150, 300, 450, 600, 750, 900, 1050, 1200 }, // Hero's Shield
+};
+
+u16 Player_GetMaxShieldDurability(u8 shield) {
+    if (shield > PLAYER_SHIELD_NONE)
+        return Player_MaxShieldDurabilityValues[shield-1][gSaveContext.save.info.shields[shield-1].upgrade];
     return 0;
 }
 
 u8   Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 50 + HAS_AMULET_OF_ENERGY * 50; }
-bool Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || HAS_AMULET_OF_ENERGY || gSaveContext.save.info.isEnhancedSpinAcquired; }
+bool Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || HAS_AMULET_OF_ENERGY || gSaveContext.save.info.obtainedSkills.enhancedSpin; }

@@ -21,11 +21,12 @@ typedef struct SaveSelectEntry {
 } SaveSelectEntry; // size = 0x11
 
 typedef enum FlagType {
-    /* F7 */ EVENT = 0xF7,
-    /* F8 */ ITEM,
-    /* F9 */ INFTABLE,
-    /* FA */ SCENE_CLEAR,
-    /* FB */ CARPENTERS,
+    /* F6 */ EVENT = 0xF6,
+    /* F7 */ ITEM,
+    /* F8 */ INFTABLE,
+    /* F9 */ SCENE_CLEAR,
+    /* FA */ CARPENTERS,
+    /* FB */ BLACKSMITH,
     /* FC */ NABOORU,
     /* FD */ MASK,
     /* FE */ WELL,

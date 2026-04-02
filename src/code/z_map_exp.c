@@ -137,19 +137,19 @@ void Map_InitData(PlayState* play, s16 room) {
             extendedMapIndex = mapIndex;
             if (play->sceneId == SCENE_GRAVEYARD) {
                 if (CHECK_QUEST_ITEM(QUEST_SONG_NOCTURNE)) {
-                    extendedMapIndex = 0x14 + 4;
+                    extendedMapIndex = 0x14 + 5;
                 }
             } else if (play->sceneId == SCENE_LAKE_HYLIA) {
                 if ((LINK_IS_ADULT_OR_TIMESKIP) && !CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER)) {
-                    extendedMapIndex = 0x15 + 4;
+                    extendedMapIndex = 0x15 + 5;
                 }
             } else if (play->sceneId == SCENE_GERUDO_VALLEY) {
                 if ((LINK_IS_ADULT_OR_TIMESKIP) && !GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED()) {
-                    extendedMapIndex = 0x16 + 4;
+                    extendedMapIndex = 0x16 + 5;
                 }
             } else if (play->sceneId == SCENE_GERUDOS_FORTRESS) {
                 if (GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED()) {
-                    extendedMapIndex = 0x17 + 4;
+                    extendedMapIndex = 0x17 + 5;
                 }
             }
             PRINTF_COLOR_BLUE();

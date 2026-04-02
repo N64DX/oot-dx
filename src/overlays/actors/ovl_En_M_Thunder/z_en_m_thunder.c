@@ -135,7 +135,7 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
             this->unk_1C4 = 1;
             this->unk_1C9 = 12;
         } else {
-            if (Player_HasEnergyUnlocked() && gSaveContext.save.info.isEnhancedSpinAcquired && gSaveContext.save.info.energy > 30) {
+            if (Player_HasEnergyUnlocked() && gSaveContext.save.info.obtainedSkills.enhancedSpin && gSaveContext.save.info.energy > 30) {
                 gSaveContext.save.info.energy -= 30;
                 this->collider.elem.atDmgInfo.dmgFlags = D_80AA0458[this->unk_1C7];
                 this->unk_1C6 = 0;

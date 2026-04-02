@@ -174,6 +174,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_kgy"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_kgy/object_kgy.o"
+    number 6
+endseg
+
+beginseg
     name "object_raf"
     compress
     include "$(BUILD_DIR)/assets/objects/object_raf/object_raf.o"

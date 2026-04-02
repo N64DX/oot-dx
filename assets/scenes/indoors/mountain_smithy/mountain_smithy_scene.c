@@ -14,7 +14,7 @@
 #include "stdbool.h"
 #include "ultra64.h"
 
-SceneCmd mountain_smithy_sceneCommands[] = {
+SceneCmd mountain_smithy_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(5, NATURE_ID_NONE, NA_BGM_SHOP),
     SCENE_CMD_ROOM_LIST(1, mountain_smithy_sceneRoomList0x0000A0),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, mountain_smithy_sceneTransitionActorList_000090),
@@ -55,12 +55,114 @@ EnvLightSettings mountain_smithy_sceneLightSettings0x0000B0[] = {
     { 0x28, 0x28, 0x46, 0x45, 0x45, 0x45, 0x14, 0x14, 0x23, 0xBB, 0xBB, 0xBB, 0x32, 0x32, 0x64, 0x00, 0x00, 0x1E, 0x07E0, 0x3200 },
 };
 
+Vec3s mountain_smithy_sceneBgCamList_BgCamFuncData[] = {
+    { 20,     60, 60 },
+    {  0, -32768,  0 },
+    { -1,     -1, -1 },
+};
+
 BgCamInfo mountain_smithy_sceneCollisionHeader_0008DCCamDataList[] = {
-    { 0x003F, 0, NULL },
+    { CAM_SET_NORMAL0,             0, NULL },
+    { CAM_SET_PIVOT_SHOP_BROWSING, 3, &mountain_smithy_sceneBgCamList_BgCamFuncData[0] },
 };
 
 SurfaceType mountain_smithy_sceneCollisionHeader_0008DCSurfaceType[] = {
-    {0x00000000, 0x00001002}, {0x00000100, 0x00001002}, {0x00000000, 0x0000100A}, {0x00000000, 0x00001000},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_STONE,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 2,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        }, // data
+    }, // 0
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_STONE,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 2,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        }, // data
+    }, // 1
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 2,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        }, // data
+    }, // 2
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_DIRT,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 2,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        }, // data
+    }, // 3
 };
 
 CollisionPoly mountain_smithy_sceneCollisionHeader_0008DCPolygons[] = {
@@ -218,10 +320,6 @@ CollisionHeader mountain_smithy_sceneCollisionHeader_0008DC = {
     0, NULL
 };
 
-u8 mountain_smithy_scene_possiblePadding_000908[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-};
-
 u64 mountain_smithy_sceneTex_000910[] = {
 #include "assets/scenes/indoors/mountain_smithy/mountain_smithy_sceneTex_000910.rgba16.inc.c"
 };
@@ -325,4 +423,3 @@ u64 mountain_smithy_sceneTLUT_0075D0[] = {
 u64 mountain_smithy_sceneTLUT_0077D0[] = {
 #include "assets/scenes/indoors/mountain_smithy/mountain_smithy_sceneTLUT_0077D0.rgba16.inc.c"
 };
-

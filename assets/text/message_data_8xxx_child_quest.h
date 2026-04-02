@@ -322,6 +322,18 @@ COLOR(DEFAULT) "Créé par les Zoras, cet habit\n"
 )
 )
 
+DEFINE_MESSAGE(0x8011, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"We opened a new shop over here\n"
+"in Kakariko Village. We got some new\n"
+"goods to sell in this branch. I hope\n"
+"you be a steady customer for us!" EVENT
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x8100, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(57) "おニイちゃん、\n"
@@ -2756,6 +2768,97 @@ MSG(
 UNSKIPPABLE SHIFT(30) "No matter what happens...\n"
 SHIFT(35) "remember that I always...\n"
 SHIFT(55) "be your friend...\n" FADE(80)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8300, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO01) "Ugo-oh! Ugo ugo!\n"
+"Welcome to our humble blacksmith.\n"
+"We offer shield upgrades and repairs\n"
+"here! Only the best quality!" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8301, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO01) "Ugo-oh! Ugo, ugo!\n"
+"Hey! I remember you from all those\n"
+"years ago! I be more than happy to\n"
+"work on your shields again." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8302, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO01) "Ugoh ugo ugo!\n"
+"Good work on restoring Lake Hylia.\n"
+"Now that the lake is restored again\n"
+"I can provide some more upgrades." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8303, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO01) "Ugoh-ugo-ugo!\n"
+"Welcome back again to our humble\n"
+"blacksmith. Anything we can supply\n"
+"you with today??" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8304, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO01) "Ugoh-ugo-ugo!\n"
+"Welcome back again to our humble\n"
+"blacksmith. Anything we can supply\n"
+"you with today??"
+BOX_BREAK
+
+"..."
+BOX_BREAK
+
+"Your shields already happen to be\n"
+"indestructible.\n"
+"What do you even need me for?" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8305, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO00) "Ugoh-ooooh!!!\n"
+"What shield would you like me\n"
+"to repair or upgrade for you today?" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8306, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO00) "Ugoh-ooooh!!!\n"
+"Your shields already happen to be\n"
+"indestructible.\n"
+"What do you even need me for?" EVENT
 ),
 MSG(),
 MSG()

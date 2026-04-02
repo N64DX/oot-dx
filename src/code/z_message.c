@@ -2654,6 +2654,42 @@ void Message_Decode(PlayState* play) {
                         MSG_BUF_DECODED[decodedBufPos] = '"';
                     }
                 }
+            } else if (curChar == MESSAGE_SHIELD_UPGRADE_LEVEL) {
+                u8 digit = gSaveContext.save.info.shields[msgCtx->textId - 0x9019].upgrade + 1;
+                Font_LoadChar(font, digit + '0' - ' ', charTexIdx);
+                MSG_BUF_DECODED[decodedBufPos] = digit + '0';
+                charTexIdx += FONT_CHAR_TEX_SIZE;
+            } else if (curChar == MESSAGE_SHIELD_UPGRADE_PRICE) {
+                u8 index      = msgCtx->textId - 0x9211;
+                u8 upgrade    = gSaveContext.save.info.shields[index].upgrade;
+                digits[0]     = digits[1] = digits[2] = 0;
+                digits[3]     = Player_MaxShieldDurabilityPrices[index][upgrade];
+
+                while (digits[3] >= 1000) {
+                    digits[0]++;
+                    digits[3] -= 1000;
+                }
+                while (digits[3] >= 100) {
+                    digits[1]++;
+                    digits[3] -= 100;
+                }
+                while (digits[3] >= 10) {
+                    digits[2]++;
+                    digits[3] -= 10;
+                }
+
+                loadChar = false;
+                for (i=0; i<4; i++) {
+                    if (i == 3 || digits[i] != 0)
+                        loadChar = true;
+                    if (loadChar) {
+                        Font_LoadChar(font, digits[i] + '0' - ' ', charTexIdx);
+                        MSG_BUF_DECODED[decodedBufPos] = digits[i] + '0';
+                        charTexIdx += FONT_CHAR_TEX_SIZE;
+                        decodedBufPos++;
+                    }
+                }
+                decodedBufPos--;
             } else if (curChar == MESSAGE_POINTS) {
                 // Convert the values of the current minigame score to digits and
                 //  add the digits to the decoded buffer in place of the control character.

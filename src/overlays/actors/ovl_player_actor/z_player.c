@@ -846,6 +846,14 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_TYCOON_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9007, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_BOTTOMLESS
 	GET_ITEM(ITEM_BOTTOMLESS_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9008, 0x80, CHEST_ANIM_LONG),
+    // GI_SHIELD_DEKU_UPGRADE
+	GET_ITEM(ITEM_SHIELD_DEKU_UPGRADE, OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, 0x9019, 0x80, CHEST_ANIM_LONG),
+    // GI_SHIELD_HYLIAN_UPGRADE
+	GET_ITEM(ITEM_SHIELD_HYLIAN_UPGRADE, OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, 0x901A, 0x80, CHEST_ANIM_LONG),
+    // GI_SHIELD_MIRROR_UPGRADE
+	GET_ITEM(ITEM_SHIELD_MIRROR_UPGRADE, OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, 0x901B, 0x80, CHEST_ANIM_LONG),
+    // GI_SHIELD_HEROS_UPGRADE
+	GET_ITEM(ITEM_SHIELD_HEROS_UPGRADE, OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, 0x901C, 0x80, CHEST_ANIM_LONG),
 };
 
 #define GET_PLAYER_ANIM(group, type) D_80853914[group * PLAYER_ANIMTYPE_MAX + type]
@@ -2828,7 +2836,7 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
-        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && gSaveContext.save.info.mirrorShieldIsBroken)
+        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken)
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
@@ -5354,7 +5362,7 @@ void func_8083819C(Player* this, PlayState* play) {
         Actor_Spawn(&play->actorCtx, play, IS_YOUNG_LINK ? ACTOR_ITEM_SHIELD_YOUNG : ACTOR_ITEM_SHIELD, this->actor.world.pos.x, this->actor.world.pos.y,
                     this->actor.world.pos.z, 0, 0, 0, 1);
         Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
-        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_DEKU] = MAX_DURABILITY_SHIELD_DEKU;
+        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
         Message_StartTextbox(play, 0x305F, NULL);
     }
 }
@@ -5383,8 +5391,8 @@ void func_808382BC(Player* this) {
 }
 
 void Player_CheckShieldDurability(Player* this, PlayState* play) {
-    if ( ( (this->shieldDamage > 0 && this->currentShield > PLAYER_SHIELD_NONE && SHIELD_DURABILITY) || (this->shieldDamage > 10 && this->currentShield == PLAYER_SHIELD_DEKU && IS_CHILD_QUEST) ) && shieldDamageTimer == 0) {
-        u8* currentDurability = &gSaveContext.save.info.shieldDurability[this->currentShield - 1];
+    if ( ( (this->shieldDamage > 0 && this->currentShield > PLAYER_SHIELD_NONE && SHIELD_DURABILITY) || (this->shieldDamage > 0x10 && this->currentShield == PLAYER_SHIELD_DEKU && IS_CHILD_QUEST) ) && shieldDamageTimer == 0) {
+        ShieldDurability* shield = &gSaveContext.save.info.shields[this->currentShield - 1];
         shieldDamageTimer = SECONDS(0.5);
 
         if (Player_PerfectTime > 0) {
@@ -5393,16 +5401,16 @@ void Player_CheckShieldDurability(Player* this, PlayState* play) {
             return;
         }
 
-        this->shieldDamage = CLAMP_MAX(this->shieldDamage, 15);
-        *currentDurability -= CLAMP_MAX(this->shieldDamage, *currentDurability);
+        this->shieldDamage = CLAMP_MAX(this->shieldDamage, 0x30);
+        shield->durability -= CLAMP_MAX(this->shieldDamage, shield->durability);
         this->shieldDamage = 0;
 
-        if (*currentDurability == 0) {
+        if (shield->durability == 0) {
             Audio_PlaySfxGeneral(NA_SE_IT_MAJIN_SWORD_BROKEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             if (this->currentShield == PLAYER_SHIELD_MIRROR) {
                 Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
                 Player_SetEquipmentData(play, this);
-                gSaveContext.save.info.mirrorShieldIsBroken = true;
+                gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = true;
             }
             else Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
             Message_StartTextbox(play, 0x305F, NULL);
@@ -12616,16 +12624,16 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
     if (shieldDamageTimer > 0)
         shieldDamageTimer--;
     if (SHIELD_DURABILITY && !(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
-        if ( (gSaveContext.save.info.shieldDurability[2] < MAX_DURABILITY_SHIELD_MIRROR && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.mirrorShieldIsBroken) {
+        if ( (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR) && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
             if (mirrorShieldRestoreTimer < SECONDS(2))
                 mirrorShieldRestoreTimer++;
             else {
                 mirrorShieldRestoreTimer = 0;
-                gSaveContext.save.info.shieldDurability[2]++;
-                if (gSaveContext.save.info.shieldDurability[2] >= 60 && gSaveContext.save.info.mirrorShieldIsBroken) {
-                    gSaveContext.save.info.mirrorShieldIsBroken = false;
+                gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability++;
+                if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability >= 60 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
+                    gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
                     Message_StartTextbox(play, 0x9303, NULL);
-                    gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
+                    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
                 }
             }
         } else mirrorShieldRestoreTimer = 0;
