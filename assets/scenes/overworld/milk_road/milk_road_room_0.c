@@ -103,48 +103,48 @@ Vtx milk_road_room_0Vtx_003070[] = {
 #include "assets/scenes/overworld/milk_road/milk_road_room_0Vtx_003070.vtx.inc"
 };
 
-static u64 scene_texture_08_Tex_000800[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_sceneTex_007850.rgba16.inc.c"
+static u64 scene_texture_08_Tex_000000[] = {
+#include "assets/misc/scene_texture_08/tex_000000.rgba16.inc.c"
 };
 
 static u64 scene_texture_08_Tex_001000[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_001000.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_001000.rgba16.inc.c"
 };
 
 static u64 scene_texture_08_Tex_001800[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_001800.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_001800.rgba16.inc.c"
 };
 
 static u64 scene_texture_08_Tex_002800[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_002800.i4.inc.c"
+#include "assets/misc/scene_texture_08/tex_002800.i4.inc.c"
 };
 
 static u64 scene_texture_08_Tex_003400[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_sceneTex_007050.ia8.inc.c"
+#include "assets/misc/scene_texture_08/Tex_003400.ia8.inc.c"
 };
 
 static u64 scene_texture_08_Tex_004000[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_sceneTex_006850.ia8.inc.c"
+#include "assets/misc/scene_texture_08/tex_004000.ia8.inc.c"
 };
 
 static u64 scene_texture_08_Tex_004800[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_004800.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_004800.rgba16.inc.c"
 };
 
 static u64 scene_texture_08_Tex_005000[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_005000.ia4.inc.c"
+#include "assets/misc/scene_texture_08/tex_005000.ia4.inc.c"
 };
 
 static u64 scene_texture_08_Tex_006000[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_006000.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_006000.rgba16.inc.c"
 };
 
 static u64 scene_texture_08_Tex_006800[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_006800.ia4.inc.c"
+#include "assets/misc/scene_texture_08/tex_006800.ia4.inc.c"
 };
 
 static u64 scene_texture_08_Tex_007000[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_007000.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_007000.rgba16.inc.c"
 };
 
 Gfx milk_road_room_0DL_000940[] = {
@@ -439,7 +439,7 @@ Gfx milk_road_room_0DL_002B20[] = {
     gsDPSetPrimColor(0, 0x0F, 193, 193, 163, 165),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
     gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(scene_texture_08_Tex_000800, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(scene_texture_08_Tex_000000, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPLoadMultiBlock(scene_texture_08_Tex_004000, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(milk_road_room_0Vtx_002A60, 4, 0),
@@ -456,7 +456,7 @@ Gfx milk_road_room_0DL_002ED0[] = {
     gsDPSetPrimColor(0, 0x0F, 193, 193, 163, 165),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
     gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(scene_texture_08_Tex_000800, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(scene_texture_08_Tex_000000, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPLoadMultiBlock(scene_texture_08_Tex_003400, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, 15),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(milk_road_room_0Vtx_002BF0, 32, 0),

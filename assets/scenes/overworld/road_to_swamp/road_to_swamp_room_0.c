@@ -225,47 +225,47 @@ Vtx road_to_swamp_room_0Vtx_005BB0[] = {
 };
 
 static u64 scene_texture_08_Tex_000000[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_000000.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_000000.rgba16.inc.c"
 };
 
 static u64 scene_texture_08_Tex_001000[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_001000.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_001000.rgba16.inc.c"
 };
 
 static u64 scene_texture_08_Tex_001800[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_001800.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_001800.rgba16.inc.c"
 };
 
 static u64 scene_texture_08_Tex_002800[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_002800.i4.inc.c"
+#include "assets/misc/scene_texture_08/tex_002800.i4.inc.c"
 };
 
 static u64 scene_texture_08_Tex_003000[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_sceneTex_007050.ia8.inc.c"
+#include "assets/misc/scene_texture_08/tex_003000.ia4.inc.c"
 };
 
 static u64 scene_texture_08_Tex_004000[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_sceneTex_006850.ia8.inc.c"
+#include "assets/misc/scene_texture_08/tex_004000.ia8.inc.c"
 };
 
 static u64 scene_texture_08_Tex_004800[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_004800.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_004800.rgba16.inc.c"
 };
 
 static u64 scene_texture_08_Tex_005000[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_005000.ia4.inc.c"
+#include "assets/misc/scene_texture_08/tex_005000.ia4.inc.c"
 };
 
 static u64 scene_texture_08_Tex_006000[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_006000.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_006000.rgba16.inc.c"
 };
 
 static u64 scene_texture_08_Tex_006800[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_006800.ia4.inc.c"
+#include "assets/misc/scene_texture_08/tex_006800.ia4.inc.c"
 };
 
 static u64 scene_texture_08_Tex_007000[] = {
-#include "assets/scenes/overworld/road_to_swamp/scene_texture_08/tex_007000.rgba16.inc.c"
+#include "assets/misc/scene_texture_08/tex_007000.rgba16.inc.c"
 };
 
 Gfx road_to_swamp_room_0DL_000CF8[] = {

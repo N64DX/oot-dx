@@ -138,7 +138,7 @@ void EnSlim_SetupAction(EnSlim* this, EnSlimActionFunc actionFunc) {
     this->actionFunc = actionFunc;
 }
 
-void EnSlim_Init(Actor* thisx, struct PlayState* play) {
+void EnSlim_Init(Actor* thisx, PlayState* play) {
     EnSlim* this = (EnSlim*)thisx;
 
     Actor_ProcessInitChain(thisx, sInitChain);
@@ -164,7 +164,7 @@ void EnSlim_Init(Actor* thisx, struct PlayState* play) {
     Actor_SetScale(&this->actor, zolScale * (this->actor.colChkInfo.health / EnSlim_DamageMultiplier()));
 }
 
-void EnSlim_Destroy(Actor* thisx, struct PlayState* play) {
+void EnSlim_Destroy(Actor* thisx, PlayState* play) {
     EnSlim* this = (EnSlim*)thisx;
 
     Collider_DestroyJntSph(play, &this->collider);
@@ -177,7 +177,7 @@ void EnSlim_SetupIdle(EnSlim* this) {
     EnSlim_SetupAction(this, EnSlim_Idle);
 }
 
-void EnSlim_Idle(EnSlim* this, struct PlayState* play) {
+void EnSlim_Idle(EnSlim* this, PlayState* play) {
     Math_SmoothStepToF(&this->actor.speed, 0.0f, 1.0f, 0.5f, 0.0f);
     if (this->actor.params == TEKSLIM_BLUE) {
         if (this->actor.bgCheckFlags & BGCHECKFLAG_WATER) { // Float on water surface
@@ -256,7 +256,7 @@ static f32 slimeDeformation[118][4] = {
     { 1.010700, 0.992200, 1.010600, 0.000000 },    { 1.000300, 1.000000, 1.000300, 0.000000 },
 };
 
-void EnSlim_CustomJumpAtPlayer(EnSlim* this, struct PlayState* play) {
+void EnSlim_CustomJumpAtPlayer(EnSlim* this, PlayState* play) {
     s16 angleToPlayer;
     s16 turnVelocity;
 
@@ -296,7 +296,7 @@ void EnSlim_SetupTurnTowardPlayer(EnSlim* this) {
     EnSlim_SetupAction(this, EnSlim_TurnTowardPlayer);
 }
 
-void EnSlim_TurnTowardPlayer(EnSlim* this, struct PlayState* play) {
+void EnSlim_TurnTowardPlayer(EnSlim* this, PlayState* play) {
     s16 angleToPlayer;
     s16 turnVelocity;
 
@@ -345,7 +345,7 @@ void EnSlim_SetupRecoil(EnSlim* this) {
 /**
  * After tekslim hits or gets hit, recoils backwards and slides a bit upon landing
  */
-void EnSlim_Recoil(EnSlim* this, struct PlayState* play) {
+void EnSlim_Recoil(EnSlim* this, PlayState* play) {
     s16 angleToPlayer;
 
     
@@ -387,6 +387,26 @@ void EnSlim_Recoil(EnSlim* this, struct PlayState* play) {
     //    SkelAnime_Update(&this->skelAnime);
 }
 
+void EnSlim_SplitOrDie(Actor* thisx, PlayState* play) {
+    EnSlim* this = (EnSlim*)thisx;
+
+    if (thisx->colChkInfo.health == 0)
+        EnSlim_SetupDeathCry(this);
+    else if (thisx->colChkInfo.health <= thisx->maxHealth/2 && !this->hasSplit) {
+        EnSlim* childSlime;
+        Actor_PlaySfx(thisx, NA_SE_EN_AWA_BREAK);
+        EnSlim_SetupRecoil(this);
+        childSlime = (EnSlim*)Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_EN_SLIM, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, thisx->world.rot.x, thisx->world.rot.y, thisx->world.rot.z, thisx->params);
+        this->hasSplit = true;
+
+        if (childSlime != NULL) {
+            childSlime->actor.colChkInfo.health = thisx->colChkInfo.health;
+            Actor_SetScale((Actor*)childSlime, zolScale * (childSlime->actor.colChkInfo.health / EnSlim_DamageMultiplier()));
+            childSlime->hasSplit = true;
+        }
+    }
+}
+
 void EnSlim_SetupStunned(EnSlim* this) {
     this->action = TEKSLIM_STUNNED;
     this->actor.speed = -6.0f;
@@ -400,7 +420,7 @@ void EnSlim_SetupStunned(EnSlim* this) {
 /**
  * stunned or frozen
  */
-void EnSlim_Stunned(EnSlim* this, struct PlayState* play) {
+void EnSlim_Stunned(EnSlim* this, PlayState* play) {
     s16 angleToPlayer;
 
     Math_SmoothStepToF(&this->actor.speed, 0.0f, 1.0f, 0.5f, 0.0f);
@@ -430,10 +450,9 @@ void EnSlim_Stunned(EnSlim* this, struct PlayState* play) {
     angleToPlayer = this->actor.yawTowardsPlayer - this->actor.shape.rot.y;
     if ((this->actor.colorFilterTimer == 0 && this->actor.speed == 0.0f) && ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) || (this->actor.params == TEKSLIM_BLUE && this->actor.bgCheckFlags & BGCHECKFLAG_WATER))) { // Decide on next action based on health, flip state and player distance
         this->actor.world.rot.y = this->actor.shape.rot.y;
-        if (this->actor.colChkInfo.health == 0) {
-            EnSlim_SetupDeathCry(this);
+        EnSlim_SplitOrDie((Actor*)this, play);
+        if (this->actor.colChkInfo.health == 0)
             return;
-        }
 
         Actor_SetScale(&this->actor, zolScale * (this->actor.colChkInfo.health / EnSlim_DamageMultiplier()));
         if (((this->actor.xzDistToPlayer > 300.0f) && (this->actor.yDistToPlayer > 80.0f) && (ABS(this->actor.shape.rot.x) < 4000) && (ABS(this->actor.shape.rot.z) < 4000)) && ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) || ((this->actor.params == TEKSLIM_BLUE) && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER))))
@@ -454,7 +473,7 @@ void EnSlim_SetupDeathCry(EnSlim* this) {
 /**
  * First frame of death. Scream in pain and allocate memory for EnPart data
  */
-void EnSlim_DeathCry(EnSlim* this, struct PlayState* play) {
+void EnSlim_DeathCry(EnSlim* this, PlayState* play) {
     EffectSsDeadSound_SpawnStationary(play, &this->actor.projectedPos, NA_SE_EN_AWA_BREAK, true, DEADSOUND_REPEAT_MODE_OFF, 40);
     this->action = TEKSLIM_FALL_APART;
     EnSlim_SetupAction(this, EnSlim_FallApart);
@@ -464,7 +483,7 @@ void EnSlim_DeathCry(EnSlim* this, struct PlayState* play) {
 /**
  * Spawn EnPart and drop items
  */
-void EnSlim_FallApart(EnSlim* this, struct PlayState* play) {
+void EnSlim_FallApart(EnSlim* this, PlayState* play) {
     if (1 || BodyBreak_SpawnParts(&this->actor, &this->bodyBreak, play, (this->actor.params + 0xB))) {
         if (this->actor.params == TEKSLIM_BLUE)
             Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xE0);
@@ -473,7 +492,7 @@ void EnSlim_FallApart(EnSlim* this, struct PlayState* play) {
     }
 }
 
-void EnSlim_CheckDamage(Actor* thisx, struct PlayState* play) {
+void EnSlim_CheckDamage(Actor* thisx, PlayState* play) {
     EnSlim* this = (EnSlim*)thisx;
 
     if ((this->collider.base.acFlags & AC_HIT) && (this->action >= TEKSLIM_IDLE)) {
@@ -493,27 +512,13 @@ void EnSlim_CheckDamage(Actor* thisx, struct PlayState* play) {
                     Actor_ApplyDamage(thisx);
                     Actor_SetScale(&this->actor, zolScale * (thisx->colChkInfo.health / EnSlim_DamageMultiplier()));
                 }
-                if (thisx->colChkInfo.health == 0)
-                    EnSlim_SetupDeathCry(this);
-                else if (thisx->colChkInfo.health <= thisx->maxHealth/2 && !this->hasSplit) {
-                    EnSlim* childSlime;
-                    Actor_PlaySfx(thisx, NA_SE_EN_AWA_BREAK);
-                    EnSlim_SetupRecoil(this);
-                    childSlime = (EnSlim*)Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_EN_SLIM, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, thisx->world.rot.x, thisx->world.rot.y, thisx->world.rot.z, thisx->params);
-                    this->hasSplit = true;
-
-                    if (childSlime != NULL) {
-                        childSlime->actor.colChkInfo.health = thisx->colChkInfo.health;
-                        Actor_SetScale((Actor*)childSlime, zolScale * (childSlime->actor.colChkInfo.health / EnSlim_DamageMultiplier()));
-                        childSlime->hasSplit = true;
-                    }
-                }
+                EnSlim_SplitOrDie(thisx, play);
             }
         }
     }
 }
 
-void EnSlim_Update(Actor* thisx, struct PlayState* play) {
+void EnSlim_Update(Actor* thisx, PlayState* play) {
     EnSlim* this = (EnSlim*)thisx;
     char pad[0x4];
     CollisionPoly* floorPoly;
@@ -574,7 +579,7 @@ void EnSlim_Update(Actor* thisx, struct PlayState* play) {
 /**
  * Get the locations where the tekslim feet are rendered
  */
-void EnSlim_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** limbDList, Vec3s* rot, void* thisx) {
+void EnSlim_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** limbDList, Vec3s* rot, void* thisx) {
     EnSlim* this = (EnSlim*)thisx;
     switch (limbIndex) {
         case 8:
@@ -593,7 +598,7 @@ void EnSlim_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** limbDList,
     BodyBreak_SetInfo(&this->bodyBreak, limbIndex, 0, 24, 24, limbDList, BODYBREAK_OBJECT_SLOT_DEFAULT);
 }
 
-void EnSlim_Draw(Actor* thisx, struct PlayState* play) {
+void EnSlim_Draw(Actor* thisx, PlayState* play) {
     EnSlim* this = (EnSlim*)thisx;
     Mtx* mtx;
     GraphicsContext* gfxCtx = play->state.gfxCtx;

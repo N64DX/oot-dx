@@ -160,6 +160,18 @@ Vtx roadtofortress_room_0Vtx_0048D8[] = {
 #include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_0048D8.vtx.inc"
 };
 
+static u64 scene_texture_08_Tex_000000[] = {
+#include "assets/misc/scene_texture_08/tex_000000.rgba16.inc.c"
+};
+
+static u64 scene_texture_08_Tex_003400[] = {
+#include "assets/misc/scene_texture_08/tex_003400.ia8.inc.c"
+};
+
+static u64 scene_texture_08_Tex_004000[] = {
+#include "assets/misc/scene_texture_08/tex_004000.ia8.inc.c"
+};
+
 Gfx roadtofortress_room_0DL_0013D8[] = {
     gsSPVertex(&roadtofortress_room_0Vtx_000658[208], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -579,8 +591,8 @@ Gfx roadtofortress_room_0DL_0041E0[] = {
     gsDPSetPrimColor(0, 0xFF, 255, 255, 255, 160),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
     gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(roadtofortress_sceneTex_007850, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, G_TX_NOLOD),
-    gsDPLoadMultiBlock(roadtofortress_sceneTex_007050, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(scene_texture_08_Tex_000000, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, G_TX_NOLOD),
+    gsDPLoadMultiBlock(scene_texture_08_Tex_003400, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(roadtofortress_room_0Vtx_004080, 14, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
@@ -598,8 +610,8 @@ Gfx roadtofortress_room_0DL_0043C0[] = {
     gsDPSetPrimColor(0, 0xFF, 255, 255, 255, 160),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
     gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(roadtofortress_sceneTex_007850, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, G_TX_NOLOD),
-    gsDPLoadMultiBlock(roadtofortress_sceneTex_006850, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(scene_texture_08_Tex_000000, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, G_TX_NOLOD),
+    gsDPLoadMultiBlock(scene_texture_08_Tex_004000, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(roadtofortress_room_0Vtx_0042C0, 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),

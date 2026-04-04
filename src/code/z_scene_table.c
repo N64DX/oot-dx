@@ -100,6 +100,7 @@ void Scene_DrawConfigWoodfallTemple(PlayState* play);
 void Scene_DrawConfigWoodfall(PlayState* play);
 void Scene_DrawConfigSpringLake(PlayState* play);
 void Scene_DrawConfigSpringLakeSmithy(PlayState* play);
+void Scene_DrawConfigPathToGoronVillage(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -216,6 +217,7 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigWoodfall,                    // SDC_WOODFALL_TEMPLE
     Scene_DrawConfigSpringLake,                  // SDC_SPRING_LAKE
     Scene_DrawConfigSpringLakeSmithy,            // SDC_SPRING_LAKE_SMITHY
+    Scene_DrawConfigPathToGoronVillage,          // SDC_PATH_TO_GORON_VILLAGE
 };
 
 void Scene_Draw(PlayState* play) {
@@ -1841,6 +1843,24 @@ void Scene_DrawConfigSpringLakeSmithy(PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
 
     gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32)); // Shining metal
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+}
+
+void Scene_DrawConfigPathToGoronVillage(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0,                           64,  64, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 1
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0,                           32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 2
+    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, 0,                           32,  32)); // Water 3
 
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);

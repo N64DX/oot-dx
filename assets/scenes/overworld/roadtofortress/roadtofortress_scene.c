@@ -891,18 +891,6 @@ u64 roadtofortress_sceneTex_005850[] = {
 #include "assets/scenes/overworld/roadtofortress/roadtofortress_sceneTex_005850.i4.inc.c"
 };
 
-u64 roadtofortress_sceneTex_006850[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_sceneTex_006850.ia8.inc.c"
-};
-
-u64 roadtofortress_sceneTex_007050[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_sceneTex_007050.ia8.inc.c"
-};
-
-u64 roadtofortress_sceneTex_007850[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_sceneTex_007850.rgba16.inc.c"
-};
-
 u64 roadtofortress_sceneTLUT_008050[] = {
 #include "assets/scenes/overworld/roadtofortress/roadtofortress_sceneTex_004050.tlut.rgba16.inc.c"
 };

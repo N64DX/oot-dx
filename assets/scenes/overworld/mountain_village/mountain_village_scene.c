@@ -59,7 +59,7 @@ Spawn mountain_village_sceneEntranceList0x00016C[] = {
 u16 mountain_village_sceneExitList_000180[] = {
     ENTR_PATH_TO_LAKE_HYLIA_3,
     ENTR_SPRING_LAKE_SMITHY_0,
-    ENTR_SPRING_LAKE_2,
+    ENTR_PATH_TO_GORON_VILLAGE_0,
     ENTR_SPRING_LAKE_3,
     ENTR_FORBIDDEN_WOODS_1,
 };
@@ -1844,25 +1844,25 @@ u64 mountain_village_sceneTLUT_006E60[] = {
 };
 
 u64 mountain_village_scene04Tex_000000[] = {
-#include "assets/scenes/overworld/mountain_village/scene_texture_04/tex_000000.rgba16.inc.c"
-};
-
-u64 mountain_village_scene04Tex_004A00[] = {
-#include "assets/scenes/overworld/mountain_village/scene_texture_04/tex_004A00.rgba16.inc.c"
+#include "assets/misc/scene_texture_04/tex_000000.rgba16.inc.c"
 };
 
 u64 mountain_village_scene04Tex_001000[] = {
-#include "assets/scenes/overworld/mountain_village/scene_texture_04/tex_001000.rgba16.inc.c"
+#include "assets/misc/scene_texture_04/tex_001000.rgba16.inc.c"
 };
 
 u64 mountain_village_scene04Tex_003000[] = {
-#include "assets/scenes/overworld/mountain_village/scene_texture_04/tex_003000.i4.inc.c"
+#include "assets/misc/scene_texture_04/tex_003000.i4.inc.c"
 };
 
 u64 mountain_village_scene04Tex_003800[] = {
-#include "assets/scenes/overworld/mountain_village/scene_texture_04/tex_003800.i4.inc.c"
+#include "assets/misc/scene_texture_04/tex_003800.i4.inc.c"
 };
 
 u64 mountain_village_scene04Tex_004000[] = {
-#include "assets/scenes/overworld/mountain_village/scene_texture_04/tex_004000.i4.inc.c"
+#include "assets/misc/scene_texture_04/tex_004000.i4.inc.c"
+};
+
+u64 mountain_village_scene04Tex_004200[] = {
+#include "assets/misc//scene_texture_04/tex_004200.rgba16.inc.c"
 };

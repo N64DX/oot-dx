@@ -23,10 +23,10 @@ extern CollisionHeader mountain_village_sceneCollisionHeader_0058E8;
 extern u64 mountain_village_sceneTex_006A60[];
 extern u64 mountain_village_sceneTLUT_006E60[];
 extern u64 mountain_village_scene04Tex_000000[];
-extern u64 mountain_village_scene04Tex_004A00[];
 extern u64 mountain_village_scene04Tex_001000[];
 extern u64 mountain_village_scene04Tex_003000[];
 extern u64 mountain_village_scene04Tex_003800[];
 extern u64 mountain_village_scene04Tex_004000[];
+extern u64 mountain_village_scene04Tex_004200[];
 
 #endif

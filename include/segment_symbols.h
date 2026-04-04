@@ -681,6 +681,8 @@ DECLARE_ROM_SEGMENT(mountain_village_room_1)
 
 DECLARE_ROM_SEGMENT(woodfall_room_0)
 
+DECLARE_ROM_SEGMENT(path_to_goron_village_room_0)
+
 DECLARE_ROM_SEGMENT(old_lost_woods_room_0)
 
 DECLARE_ROM_SEGMENT(grotto_shortcuts_room_0)

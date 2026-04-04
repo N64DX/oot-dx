@@ -99,8 +99,8 @@ ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_EN_ITEM00,      {    79,  -30,   807 }, {    0,      0,  0 }, 0x0902 }, // Collect: 09
     { ACTOR_OBJ_TSUBO,      {   510,  363,   700 }, {    0,      0,  0 }, 0x3913 }, // Collect: 1C
     { ACTOR_EN_GS,          {  -805,    4,  1346 }, {    0, 0x63F0,  0 }, 0xFF23 },
-    { ACTOR_BG_UMAJUMP,     {  1940,   13,   850 }, {    0, 0x32C8,  0 }, 0xFFFE },
     { ACTOR_EN_RIVER_SOUND, { -1217,   16,   450 }, {    0,      0,  0 }, 0x0003 },
+    { ACTOR_BG_UMAJUMP,     {  1940,   13,   850 }, {    0, 0x32C8,  0 }, 0xFFFE },
 };
 
 RoomShapeCullable mountain_village_room_0RoomShapeCullable_0003D0 = { 
@@ -552,7 +552,7 @@ Gfx mountain_village_room_0DL_0010D8[] = {
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock_4b(mountain_village_scene04Tex_004000, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 15, 15),
-    gsDPLoadMultiBlock(mountain_village_scene04Tex_004A00, 0x0040, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 3, 3),
+    gsDPLoadMultiBlock(mountain_village_scene04Tex_004200, 0x0040, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 3, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(mountain_village_room_0Vtx_000A78, 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),

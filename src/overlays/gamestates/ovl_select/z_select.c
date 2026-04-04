@@ -492,6 +492,7 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "123:" T(GFXP_HIRAGANA "ﾚｲｸﾊｲﾘｱﾐﾁ", "Path to Lake Hylia"), MapSelect_LoadGame, ENTR_PATH_TO_LAKE_HYLIA_0 },
     { "124:" T(GFXP_HIRAGANA "ｽﾌﾟﾘﾝｸﾞﾚｲｸ", "Spring Lake"), MapSelect_LoadGame, ENTR_SPRING_LAKE_0 },
     { "125:" T(GFXP_HIRAGANA "ｽﾌﾟﾘﾝｸﾞﾚｲｸﾉｶｼﾞﾔ", "Spring Lake Smithy"), MapSelect_LoadGame, ENTR_SPRING_LAKE_SMITHY_0 },
+    { "125:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉｻﾄﾍﾉﾐﾁ", "Path to Goron Village"), MapSelect_LoadGame, ENTR_PATH_TO_GORON_VILLAGE_0 },
     { "126:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙ ﾄﾚｲﾙ", "Path to Woodfall"), MapSelect_LoadGame, ENTR_PATH_TO_WOODFALL_0 },
     { "127:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Path to Gerudo's Fortress"), MapSelect_LoadGame, ENTR_PATH_TO_FORTRESS_0 },
     { "128:" T(GFXP_HIRAGANA "ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Webbed Shrine"), MapSelect_LoadGame, ENTR_WEBBED_SHRINE_0 },

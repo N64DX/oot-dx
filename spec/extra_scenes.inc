@@ -62,6 +62,20 @@ beginseg
 endseg
 
 beginseg
+    name "path_to_goron_village_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/path_to_goron_village/path_to_goron_village_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "path_to_goron_village_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/path_to_goron_village/path_to_goron_village_room_0.o"
+    number 3
+endseg
+
+beginseg
     name "woodfall_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_scene.o"
