@@ -685,8 +685,11 @@ DECLARE_ROM_SEGMENT(path_to_goron_village_room_0)
 
 DECLARE_ROM_SEGMENT(old_lost_woods_room_0)
 
-DECLARE_ROM_SEGMENT(grotto_shortcuts_room_0)
-DECLARE_ROM_SEGMENT(grotto_shortcuts_room_1)
+DECLARE_ROM_SEGMENT(grottos2_room_6)
+DECLARE_ROM_SEGMENT(grottos2_room_7)
+DECLARE_ROM_SEGMENT(grottos2_room_8)
+DECLARE_ROM_SEGMENT(grottos2_room_10)
+DECLARE_ROM_SEGMENT(grottos2_room_13)
 
 DECLARE_ROM_SEGMENT(swamp_spider_house_room_0)
 DECLARE_ROM_SEGMENT(swamp_spider_house_room_1)

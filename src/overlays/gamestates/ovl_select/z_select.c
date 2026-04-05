@@ -501,10 +501,11 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "131:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall"), MapSelect_LoadGame, ENTR_WOODFALL_0 },
     { "132:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
     { "133:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
-    { "134:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
-    { "135:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
-    { "136:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
-    { "137:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss"), MapSelect_LoadGame, ENTR_BESITU_0 },
+    { "134:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTOS2_0 },
+    { "135:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTOS2_2 },
+    { "136:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
+    { "137:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
+    { "138:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };

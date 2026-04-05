@@ -19,6 +19,7 @@ SceneCmd mountain_village_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_TERMINA_FIELD),
     SCENE_CMD_ROOM_LIST(2, mountain_village_sceneRoomList0x00015C),
     SCENE_CMD_TRANSITION_ACTOR_LIST(3, mountain_village_sceneTransitionActorList_00012C),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 6),
     SCENE_CMD_COL_HEADER(&mountain_village_sceneCollisionHeader_0058E8),
     SCENE_CMD_ENTRANCE_LIST(mountain_village_sceneEntranceList0x00016C),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),

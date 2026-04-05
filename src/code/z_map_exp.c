@@ -134,22 +134,23 @@ void Map_InitData(PlayState* play, s16 room) {
         case SCENE_PATH_TO_LAKE_HYLIA:
         case SCENE_SPRING_LAKE:
         case SCENE_WOODFALL:
+        case SCENE_PATH_TO_GORON_VILLAGE:
             extendedMapIndex = mapIndex;
             if (play->sceneId == SCENE_GRAVEYARD) {
                 if (CHECK_QUEST_ITEM(QUEST_SONG_NOCTURNE)) {
-                    extendedMapIndex = 0x14 + 5;
+                    extendedMapIndex = 0x14 + SCENE_GROTTOS2 - SCENE_PATH_TO_WOODFALL;
                 }
             } else if (play->sceneId == SCENE_LAKE_HYLIA) {
                 if ((LINK_IS_ADULT_OR_TIMESKIP) && !CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER)) {
-                    extendedMapIndex = 0x15 + 5;
+                    extendedMapIndex = 0x15 + SCENE_GROTTOS2 - SCENE_PATH_TO_WOODFALL;
                 }
             } else if (play->sceneId == SCENE_GERUDO_VALLEY) {
                 if ((LINK_IS_ADULT_OR_TIMESKIP) && !GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED()) {
-                    extendedMapIndex = 0x16 + 5;
+                    extendedMapIndex = 0x16 + SCENE_GROTTOS2 - SCENE_PATH_TO_WOODFALL;
                 }
             } else if (play->sceneId == SCENE_GERUDOS_FORTRESS) {
                 if (GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED()) {
-                    extendedMapIndex = 0x17 + 5;
+                    extendedMapIndex = 0x17 + SCENE_GROTTOS2 - SCENE_PATH_TO_WOODFALL;
                 }
             }
             PRINTF_COLOR_BLUE();
@@ -325,6 +326,7 @@ void Map_Init(PlayState* play) {
         case SCENE_PATH_TO_LAKE_HYLIA:
         case SCENE_SPRING_LAKE:
         case SCENE_WOODFALL:
+        case SCENE_PATH_TO_GORON_VILLAGE:
             mapIndex = play->sceneId - SCENE_HYRULE_FIELD;
             R_MAP_INDEX = gSaveContext.mapIndex = mapIndex;
             R_COMPASS_SCALE_X = gMapData->owCompassInfo[mapIndex][0];
@@ -398,7 +400,7 @@ void Minimap_DrawCompassIcons(PlayState* play) {
         gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
         gDPSetCombineMode(OVERLAY_DISP++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
 
-        if (play->sceneId >= SCENE_HYRULE_FIELD && play->sceneId < SCENE_GROTTO_SHORTCUTS) { // Overworld
+        if (play->sceneId >= SCENE_HYRULE_FIELD && play->sceneId < SCENE_GROTTOS2) { // Overworld
             mapStartPosX = R_OW_MINIMAP_X + WS_SHIFT_HALF + (gMapData->overworldXOffset[R_MAP_INDEX]/2);
             mapWidth = gMapData->owMinimapWidth[R_MAP_INDEX];
         } else if (play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_ICE_CAVERN) { // Dungeons
@@ -536,6 +538,7 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_PATH_TO_LAKE_HYLIA:
             case SCENE_SPRING_LAKE:
             case SCENE_WOODFALL:
+            case SCENE_PATH_TO_GORON_VILLAGE:
                 if (!R_MINIMAP_DISABLED) {
                     s8 xOffset = gMapData->overworldXOffset[mapIndex] / 2;
                     

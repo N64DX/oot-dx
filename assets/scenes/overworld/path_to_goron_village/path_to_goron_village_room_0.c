@@ -16,59 +16,54 @@ SceneCmd path_to_goron_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&path_to_goron_village_room_0RoomShapeCullable_000240),
-    //SCENE_CMD_OBJECT_LIST(13, path_to_goron_village_room_0ObjectList_000040),
-    //SCENE_CMD_ACTOR_LIST(30, path_to_goron_village_room_0ActorEntry_00005C),
+    SCENE_CMD_OBJECT_LIST(10, path_to_goron_village_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(21, path_to_goron_village_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
 
-/*s16 path_to_goron_village_room_0ObjectList_000040[] = {
+s16 path_to_goron_village_room_0ObjectList_000040[] = {
+    OBJECT_HORSE,
     OBJECT_FIREFLY,
     OBJECT_TITE,
     OBJECT_WOOD02,
-    OBJECT_BAL,
-    OBJECT_LODMOON,
     OBJECT_BOMBIWA,
-    OBJECT_GK,
+  //OBJECT_GK,
     OBJECT_CROW,
-    OBJECT_PR,
     OBJECT_WF,
     OBJECT_BOX,
     OBJECT_KANBAN,
     OBJECT_KA,
-};*/
+};
 
-/*ActorEntry path_to_goron_village_room_0ActorEntry_00005C[] = {
-    { ACTOR_EN_WF | 0x6000,       {   -435,    139,    105 }, { SPAWN_ROT_FLAGS(  0X5, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0xFF00 },
-    { ACTOR_EN_WF | 0x6000,       {    769,    195,     76 }, { SPAWN_ROT_FLAGS(  0X5, 0x0007), SPAWN_ROT_FLAGS(0X115, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0xFF00 },
-    { ACTOR_EN_TITE,              {  -1334,    200,    822 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0xFFFE },
-    { ACTOR_EN_BAL,               {     66,    350,   -303 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x000B), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0002 },
-    { ACTOR_EN_KAKASI | 0x6000,   {   -749,    560,   -654 }, { SPAWN_ROT_FLAGS(  0X6, 0x0007), SPAWN_ROT_FLAGS(    0, 0x0011), SPAWN_ROT_FLAGS(  0X1, 0x007F) }, 0x2800 },
-    { ACTOR_EN_CROW,              {   -152,    511,   -662 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0000 },
-    { ACTOR_EN_CROW,              {    419,    259,    269 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0000 },
-    { ACTOR_EN_WOOD02 | 0x2000,   {   -475,    139,     67 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0xFF02 },
-    { ACTOR_EN_WOOD02 | 0x2000,   {    667,    195,   -112 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0xFF02 },
-    { ACTOR_EN_WOOD02 | 0x2000,   {  -1284,    320,    104 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0xFF02 },
-    { ACTOR_EN_KANBAN,            {  -1209,    440,   -700 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS( 0X17, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x001A },
-    { ACTOR_OBJ_GRASS_UNIT,       {  -1423,    200,   1043 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0601 },
-    { ACTOR_EN_FALL,              {  -3070,   9500,   7374 }, { SPAWN_ROT_FLAGS( 0X32, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x037F },
-    { ACTOR_EN_BOX | 0x6000,      {    248,   -200,  -1396 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(0X133, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x5080 },
-    { ACTOR_EN_ITEM00,            {    671,   -200,   -746 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0101 },
-    { ACTOR_EN_ITEM00,            {   -300,   -200,   -650 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0201 },
-    { ACTOR_EN_ITEM00,            {    566,   -200,    855 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0301 },
-    { ACTOR_EN_TEST4,             {  -2667,    200,   1020 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x0009), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x1460 },
-    { ACTOR_EN_ITEM00,            {   1287,   -200,   -168 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0401 },
-    { ACTOR_EN_BOX | 0x6000,      {   -172,   -200,    847 }, { SPAWN_ROT_FLAGS(  0X7, 0x0007), SPAWN_ROT_FLAGS( 0XB4, 0x000E), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0186 },
-    { ACTOR_EN_GK,                {   -897,    560,   -615 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x000F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x1401 },
-    { ACTOR_EN_ENCOUNT1 | 0xE000, {    247,   -145,  -1401 }, { SPAWN_ROT_FLAGS( 0XA0, 0x0007), SPAWN_ROT_FLAGS(  0X1, 0x007F), SPAWN_ROT_FLAGS( 0X1E, 0x007F) }, 0x1842 },
-    { ACTOR_OBJ_HUGEBOMBIWA,      {   -759,    560,   -923 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS( 0X1B, 0x000C), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0014 },
-    { ACTOR_DOOR_ANA | 0x2000,    {  -1309,    320,    142 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS( 0X44, 0x000D), SPAWN_ROT_FLAGS(  0X4, 0x007F) }, 0x0299 },
-    { ACTOR_EN_ISHI,              {  -1326,    320,    172 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0060 },
-    { ACTOR_EN_ISHI,              {  -1349,    320,    114 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0060 },
-    { ACTOR_EN_ISHI,              {  -1264,    320,    161 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS(    0, 0x007F), SPAWN_ROT_FLAGS(    0, 0x007F) }, 0x0080 },
-    { ACTOR_EN_ENCOUNT1 | 0xE000, {    258,    -95,  -1383 }, { SPAWN_ROT_FLAGS( 0XB4, 0x0007), SPAWN_ROT_FLAGS(  0X1, 0x007F), SPAWN_ROT_FLAGS( 0X1E, 0x007F) }, 0x1841 },
-    { ACTOR_EN_ENCOUNT1 | 0xE000, {    256,   -145,  -1411 }, { SPAWN_ROT_FLAGS( 0XA0, 0x0007), SPAWN_ROT_FLAGS(  0X1, 0x007F), SPAWN_ROT_FLAGS( 0X1E, 0x007F) }, 0x1843 },
-    { ACTOR_DOOR_ANA | 0x2000,    {    589,    195,     53 }, { SPAWN_ROT_FLAGS(    0, 0x0007), SPAWN_ROT_FLAGS( 0XF0, 0x0012), SPAWN_ROT_FLAGS(  0X5, 0x007F) }, 0x00FF },
-};*/
+ActorEntry path_to_goron_village_room_0ActorEntry_00005C[] = {
+  //{ ACTOR_EN_GK,           {   -897,    560,   -615 }, {    0,      0,    0 }, 0x1401 },
+  //{ ACTOR_OBJ_GRASS_UNIT,  {  -1423,    200,   1043 }, {    0,      0,    0 }, 0x0601 },
+  //{ ACTOR_OBJ_HUGEBOMBIWA, {   -759,    560,   -923 }, {    0,   0x1B,    0 }, 0x0014 },
+    { ACTOR_EN_KAKASI2,      {   -749,    560,   -654 }, {    0,      0,   14 }, 0x053E }, // Switch: 3E
+    { ACTOR_EN_KANBAN,       {  -1209,    440,   -700 }, {    0, 0x105B,    0 }, 0x0055 },
+    { ACTOR_EN_TITE,         {  -1334,    200,    822 }, {    0,      0,    0 }, 0xFFFE },
+    { ACTOR_EN_CROW,         {   -152,    511,   -662 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_CROW,         {    419,    259,    269 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_WF,           {   -435,    139,    105 }, {    0,      0,    0 }, 0xFF00 },
+    { ACTOR_EN_WF,           {    769,    195,     76 }, {    0, 0xC4FA,    0 }, 0xFF00 },
+    { ACTOR_EN_WOOD02,       {   -475,    139,     67 }, {    0,      0,    0 }, 0xFF02 },
+    { ACTOR_EN_WOOD02,       {    667,    195,   -112 }, {    0,      0,    0 }, 0xFF02 },
+    { ACTOR_EN_WOOD02,       {  -1284,    320,    104 }, {    0,      0,    0 }, 0xFF02 },
+    { ACTOR_EN_ITEM00,       {    671,   -200,   -746 }, {    0,      0,    0 }, 0x0101 }, // Collect: 01
+    { ACTOR_EN_ITEM00,       {   -300,   -200,   -650 }, {    0,      0,    0 }, 0x0201 }, // Collect: 02
+    { ACTOR_EN_ITEM00,       {    566,   -200,    855 }, {    0,      0,    0 }, 0x0301 }, // Collect: 03
+    { ACTOR_EN_ITEM00,       {   1287,   -200,   -168 }, {    0,      0,    0 }, 0x0401 }, // Collect: 04
+    { ACTOR_EN_ISHI,         {  -1326,    320,    172 }, {    0,      0,    0 }, 0x0210 },
+    { ACTOR_EN_ISHI,         {  -1349,    320,    114 }, {    0,      0,    0 }, 0x0200 },
+    { ACTOR_EN_ISHI,         {  -1264,    320,    161 }, {    0,      0,    0 }, 0x0200 },
+  //{ ACTOR_EN_ENCOUNT1,     {    247,   -145,  -1401 }, {  160,      1,   30 }, 0x1842 },
+  //{ ACTOR_EN_ENCOUNT1,     {    258,    -95,  -1383 }, {  180,      1,   30 }, 0x1841 },
+  //{ ACTOR_EN_ENCOUNT1,     {    256,   -145,  -1411 }, {  160,      1,   30 }, 0x1843 },
+    { ACTOR_DOOR_ANA,        {  -1309,    320,    142 }, {    0, 0x305B,    4 }, 0x0041 }, // Chest: 01
+    { ACTOR_DOOR_ANA,        {    589,    195,     53 }, {    0, 0xAAAB,   19 }, 0x0000 },
+    { ACTOR_EN_BOX,          {    248,   -200,  -1396 }, { 0x55, 0xDA50,    0 }, 0x5000 }, // Chest: 00
+    { ACTOR_EN_BOX,          {   -172,   -200,    847 }, { 0x3E, 0x8000,    0 }, 0x0006 }, // Chest: 06
+};
 
 RoomShapeCullable path_to_goron_village_room_0RoomShapeCullable_000240 = { 
     2, 19,

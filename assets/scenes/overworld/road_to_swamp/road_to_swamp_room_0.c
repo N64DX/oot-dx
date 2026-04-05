@@ -240,8 +240,8 @@ static u64 scene_texture_08_Tex_002800[] = {
 #include "assets/misc/scene_texture_08/tex_002800.i4.inc.c"
 };
 
-static u64 scene_texture_08_Tex_003000[] = {
-#include "assets/misc/scene_texture_08/tex_003000.ia4.inc.c"
+static u64 scene_texture_08_Tex_003400[] = {
+#include "assets/misc/scene_texture_08/tex_003400.ia8.inc.c"
 };
 
 static u64 scene_texture_08_Tex_004000[] = {
@@ -875,7 +875,7 @@ Gfx road_to_swamp_room_0DL_005850[] = {
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(scene_texture_08_Tex_000000, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadMultiBlock(scene_texture_08_Tex_003000, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 15, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadMultiBlock(scene_texture_08_Tex_003400, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 15, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(road_to_swamp_room_0Vtx_005710, 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),

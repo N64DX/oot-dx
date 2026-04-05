@@ -1,5 +1,5 @@
 #ifndef PATH_TO_GORON_VILLAGE_SCENE_H
-#define PATH_TO_GORON_VILLAGE_SCENE_H 1
+#define PATH_TO_GORON_VILLAGE_SCENE_H
 
 #include "bgcheck.h"
 #include "cutscene.h"

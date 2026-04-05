@@ -20,7 +20,7 @@ SceneCmd old_lost_woods_sceneCommands[] = {
     SCENE_CMD_COL_HEADER(&old_lost_woods_sceneCollisionHeader0x0068D4),
     SCENE_CMD_ENTRANCE_LIST(old_lost_woods_sceneEntranceList0x0000A8),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),
-    SCENE_CMD_SPAWN_LIST(7, old_lost_woods_sceneStartPositionList0x000050),
+    SCENE_CMD_SPAWN_LIST(6, old_lost_woods_sceneStartPositionList0x000050),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_UNSET_1D, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(old_lost_woods_sceneExitList0x0000B4),
     SCENE_CMD_ENV_LIGHT_SETTINGS(5, old_lost_woods_sceneLightSettings0x0000C0),
@@ -34,7 +34,6 @@ ActorEntry old_lost_woods_sceneStartPositionList0x000050[] = {
     { ACTOR_PLAYER, {  -554, 228, -1602 }, { 0, 0x2AAA, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {  3221, 200,  -283 }, { 0, 0xC000, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {  1650, 459, -2000 }, { 0, 0xC000, 0 }, 0x0200 },
-    { ACTOR_PLAYER, {  1980, 160,  1410 }, { 0, 0xC000, 0 }, 0x0200 },
 };
 
 RomFile old_lost_woods_sceneRoomList0x0000A0[] = {
@@ -49,7 +48,6 @@ Spawn old_lost_woods_sceneEntranceList0x0000A8[] = {
     { 0x03, 0x00 },
     { 0x04, 0x00 },
     { 0x05, 0x00 },
-    { 0x06, 0x00 },
 };
 
 u16 old_lost_woods_sceneExitList0x0000B4[] = {

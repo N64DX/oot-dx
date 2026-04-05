@@ -117,3 +117,7 @@ u64 gMountainVillageMinimapTex[TEX_LEN(u64, 80, 60, 4)] = {
 u64 gWoodfallMinimapTex[TEX_LEN(u64, 80, 74, 4)] = {
 #include "assets/textures/map_grand_static/gWoodfallMinimapTex.ia4.inc.c"
 };
+
+u64 gPathToGoronVillageMinimapTex[TEX_LEN(u64, 80, 54, 4)] = {
+#include "assets/textures/map_grand_static/gPathToGoronVillageMinimapTex.ia4.inc.c"
+};

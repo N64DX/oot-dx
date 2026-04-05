@@ -17,6 +17,7 @@
 SceneCmd path_to_goron_village_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_TERMINA_FIELD),
     SCENE_CMD_ROOM_LIST(1, path_to_goron_village_sceneRoomList0x0000B8),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 6),
     SCENE_CMD_COL_HEADER(&path_to_goron_village_sceneCollisionHeader_003598),
     SCENE_CMD_ENTRANCE_LIST(path_to_goron_village_sceneEntranceList0x0000C0),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),

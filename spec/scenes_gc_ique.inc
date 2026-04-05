@@ -3491,6 +3491,20 @@ beginseg
     number 3
 endseg
 
+#if DEBUG_ASSETS
+beginseg
+    name "besitu_scene"
+    include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "besitu_room_0"
+    include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_room_0.o"
+    number 3
+endseg
+#endif
+
 beginseg
     name "face_shop_scene"
     compress

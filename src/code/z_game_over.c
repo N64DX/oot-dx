@@ -111,8 +111,6 @@ void GameOver_Update(PlayState* play) {
             sGameOverTimer--;
 
             if (sGameOverTimer == 0) {
-                if (gSaveContext.save.entranceIndex == ENTR_BESITU_0)
-                    gSaveContext.save.entranceIndex = ENTR_FORBIDDEN_WOODS_6;
                 if (AUTOSAVE) {
                     play->nextEntranceIndex = gSaveContext.save.entranceIndex;
                     play->transitionTrigger = TRANS_TRIGGER_START;

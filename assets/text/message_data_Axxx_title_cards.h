@@ -568,8 +568,8 @@ DEFINE_MESSAGE(0xA068, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA069, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("ゴロンの里への道"),
     MSG("Path to Goron Village"),
-    MSG("Camino al pueblo goron"),
-    MSG("Route de village goron")
+    MSG("Weg zum Goronendorf"),
+    MSG("Chemin vers le Village Goron")
 )
 
 DEFINE_MESSAGE(0xA06B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,

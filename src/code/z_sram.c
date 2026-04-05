@@ -573,11 +573,6 @@ void Sram_OpenSave(SramContext* sramCtx) {
                 gSaveContext.save.entranceIndex = ENTR_WOODFALL_TEMPLE_0;
             break;
 
-        case SCENE_BESITU:
-            if (IS_CHILD_QUEST)
-                gSaveContext.save.entranceIndex = ENTR_FORBIDDEN_WOODS_6;
-            break;
-
         case SCENE_DESERT_COLOSSUS:
             if (IS_RUSH_QUEST) {
                 gSaveContext.save.entranceIndex = ENTR_SPIRIT_TEMPLE_0;

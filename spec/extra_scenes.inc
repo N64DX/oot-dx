@@ -104,23 +104,44 @@ beginseg
 endseg
 
 beginseg
-    name "grotto_shortcuts_scene"
+    name "grottos2_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_scene.o"
     number 2
 endseg
 
 beginseg
-    name "grotto_shortcuts_room_0"
+    name "grottos2_room_6"
     compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_6.o"
     number 3
 endseg
 
 beginseg
-    name "grotto_shortcuts_room_1"
+    name "grottos2_room_7"
     compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grotto_shortcuts/grotto_shortcuts_room_1.o"
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_7.o"
+    number 3
+endseg
+
+beginseg
+    name "grottos2_room_8"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_8.o"
+    number 3
+endseg
+
+beginseg
+    name "grottos2_room_10"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_10.o"
+    number 3
+endseg
+
+beginseg
+    name "grottos2_room_13"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_13.o"
     number 3
 endseg
 
@@ -399,17 +420,5 @@ endseg
 beginseg
     name "mountain_smithy_room_0"
     include "$(BUILD_DIR)/assets/scenes/indoors/mountain_smithy/mountain_smithy_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "besitu_scene"
-    include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "besitu_room_0"
-    include "$(BUILD_DIR)/assets/scenes/test_levels/besitu/besitu_room_0.o"
     number 3
 endseg

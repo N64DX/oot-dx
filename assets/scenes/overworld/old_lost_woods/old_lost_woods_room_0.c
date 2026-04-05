@@ -351,7 +351,7 @@ ActorEntry old_lost_woods_room_0ActorList_timeskip[] = {
     { ACTOR_OBJ_LOST_WOODS, {  -396,  215,  -965 }, {      0, 0x5555,      0 }, 0x0023 },
     { ACTOR_OBJ_LOST_WOODS, {  3000,    0,  4300 }, {      0,      0,      0 }, 0x0019 },
     { ACTOR_EN_OWL,         {  1875,  640, -1800 }, {      0,      0,      0 }, 0x037F },
-    { ACTOR_DOOR_ANA,       {  2175,  160,  1425 }, {      0,      0,     19 }, 0x0000 },
+    { ACTOR_DOOR_ANA,       {  2175,  160,  1425 }, {      0,      0,     20 }, 0x0000 },
     { ACTOR_OBJ_MURE,       {  2175,  188,  1425 }, {      0,      0,      0 }, 0x5324 },
     { ACTOR_OBJ_PURIFY,     { -3000, -250,  -100 }, {      0, 0xC000,      0 }, 0x0003 },
 };

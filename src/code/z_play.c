@@ -1710,7 +1710,7 @@ void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn) {
             textId = SCENE_REDEAD_GRAVE;
         else if (sceneId == SCENE_CASTLE_COURTYARD_GUARDS_NIGHT)
             textId = SCENE_CASTLE_COURTYARD_GUARDS_DAY;
-        else if (sceneId == SCENE_GROTTO_SHORTCUTS)
+        else if (sceneId == SCENE_GROTTOS2)
             textId = SCENE_GROTTOS;
         else if (gSaveContext.save.entranceIndex == ENTR_WINDMILL_AND_DAMPES_GRAVE_0 || gSaveContext.save.entranceIndex == ENTR_LON_LON_BUILDINGS_1 || (sceneId == SCENE_MARKET_GUARD_HOUSE && gSaveContext.sceneLayer >= 2 && gSaveContext.sceneLayer <= 3) )
             textId += 0x100;
