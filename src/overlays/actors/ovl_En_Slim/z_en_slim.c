@@ -495,7 +495,7 @@ void EnSlim_CheckDamage(Actor* thisx, struct PlayState* play) {
                     childSlime = Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_EN_SLIM, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, thisx->world.rot.x, thisx->world.rot.y, thisx->world.rot.z, thisx->params);
 
                     if (childSlime != NULL) {
-                        childSlime->colChkInfo.health = Actor_EnemyHealthMultiply(thisx->colChkInfo.health, MONSTER_HP);
+                        childSlime->colChkInfo.health = thisx->colChkInfo.health;
                         Actor_SetScale(childSlime, 0.0075f);
                     }
                 }
