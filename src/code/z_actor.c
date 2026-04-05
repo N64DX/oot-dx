@@ -290,7 +290,7 @@ void Actor_ProjectPos(PlayState* play, Vec3f* src, Vec3f* xyzDest, f32* cappedIn
 }
 
 static void TargetHealth_Draw(PlayState* play, Vec3f* pos, s16 health, s16 maxHealth) {
-    s16 x = (s16)(160.0 + pos->x) + 32;
+    s16 x = (s16)(WS_SHIFT_HALF + 108.0 + pos->x) + 32;
     s16 y = (s16)(120.0 - pos->y) - 32;
     u8 width = 50;
     u8 height = 8;
