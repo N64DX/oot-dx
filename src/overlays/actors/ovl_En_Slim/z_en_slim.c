@@ -41,6 +41,8 @@ void EnSlim_Stunned(EnSlim* this, struct PlayState* play);
 void EnSlim_DeathCry(EnSlim* this, struct PlayState* play);
 void EnSlim_FallApart(EnSlim* this, struct PlayState* play);
 
+f32 EnSlim_DamageMultiplier(void);
+
 ActorProfile En_Slim_Profile = {
     ACTOR_EN_SLIM,
     ACTORCAT_ENEMY,
@@ -124,6 +126,8 @@ static InitChainEntry sInitChain[] = {
 
 static Vec3f sFootOffset = { 2800.0f, -200.0f, 0.0f }; // Some kind of offset for the position of each tekslim foot
 
+static f32 zolScale = 0.0075f;
+
 static Vec3f sIceChunks[12] = { // Relative positions to spawn ice chunks when tekslim is frozen
     { 20.0f, 20.0f, 0.0f },   { 10.0f, 40.0f, 10.0f },   { -10.0f, 40.0f, 10.0f }, { -20.0f, 20.0f, 0.0f },
     { 10.0f, 40.0f, -10.0f }, { -10.0f, 40.0f, -10.0f }, { 0.0f, 20.0f, -20.0f },  { 10.0f, 0.0f, 10.0f },
@@ -139,7 +143,6 @@ void EnSlim_Init(Actor* thisx, struct PlayState* play) {
 
     Actor_ProcessInitChain(thisx, sInitChain);
     thisx->attentionRangeType = 3;
-    Actor_SetScale(&this->actor, 0.0075f * 2.0f);
     ActorShape_Init(&thisx->shape, -200.0f, ActorShadow_DrawCircle, 35.0f);
     this->flipState = TEKSLIM_INITIAL;
     thisx->colChkInfo.damageTable = sDamageTable;
@@ -157,6 +160,8 @@ void EnSlim_Init(Actor* thisx, struct PlayState* play) {
     }
     EnSlim_SetupIdle(this);
     this->deformationCounter = 0;
+    this->hasSplit = false;
+    Actor_SetScale(&this->actor, zolScale * (this->actor.colChkInfo.health / EnSlim_DamageMultiplier()));
 }
 
 void EnSlim_Destroy(Actor* thisx, struct PlayState* play) {
@@ -427,7 +432,11 @@ void EnSlim_Stunned(EnSlim* this, struct PlayState* play) {
         this->actor.world.rot.y = this->actor.shape.rot.y;
         if (this->actor.colChkInfo.health == 0) {
             EnSlim_SetupDeathCry(this);
-        } else if (((this->actor.xzDistToPlayer > 300.0f) && (this->actor.yDistToPlayer > 80.0f) && (ABS(this->actor.shape.rot.x) < 4000) && (ABS(this->actor.shape.rot.z) < 4000)) && ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) || ((this->actor.params == TEKSLIM_BLUE) && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER))))
+            return;
+        }
+
+        Actor_SetScale(&this->actor, zolScale * (this->actor.colChkInfo.health / EnSlim_DamageMultiplier()));
+        if (((this->actor.xzDistToPlayer > 300.0f) && (this->actor.yDistToPlayer > 80.0f) && (ABS(this->actor.shape.rot.x) < 4000) && (ABS(this->actor.shape.rot.z) < 4000)) && ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) || ((this->actor.params == TEKSLIM_BLUE) && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER))))
             EnSlim_SetupIdle(this);
         else if ((this->actor.xzDistToPlayer < 180.0f) && (this->actor.yDistToPlayer <= 80.0f) && (ABS(angleToPlayer) <= 6000))
             EnSlim_SetupAttack(this);
@@ -472,8 +481,7 @@ void EnSlim_CheckDamage(Actor* thisx, struct PlayState* play) {
         if (thisx->colChkInfo.damageReaction != 0xE) { // Immune to fire magic
             this->damageEffect = thisx->colChkInfo.damageReaction;
             Actor_SetDropFlag(thisx, &this->collider.elements[0].base, 0);
-            // Stun if Tekslim hit by nut, boomerang, hookshot, ice arrow or ice magic
-            if ((thisx->colChkInfo.damageReaction == 1) || (thisx->colChkInfo.damageReaction == 0xF)) {
+            if ((thisx->colChkInfo.damageReaction == 1) || (thisx->colChkInfo.damageReaction == 0xF)) { // Stun if Tekslim hit by nut, boomerang, hookshot, ice arrow or ice magic
                 if (this->action != TEKSLIM_STUNNED) {
                     Actor_SetColorFilter(thisx, 0, 0x78, 0, 0x50);
                     Actor_ApplyDamage(thisx);
@@ -483,20 +491,21 @@ void EnSlim_CheckDamage(Actor* thisx, struct PlayState* play) {
                 if ((thisx->colorFilterTimer == 0) || ((thisx->colorFilterParams & 0x4000) == 0)) {
                     Actor_SetColorFilter(thisx, 0x4000, 0xFF, 0, 8);
                     Actor_ApplyDamage(thisx);
-                    osSyncPrintf("damage detected, setting scale\n");
-                    Actor_SetScale(&this->actor, 0.0075f);
+                    Actor_SetScale(&this->actor, zolScale * (thisx->colChkInfo.health / EnSlim_DamageMultiplier()));
                 }
                 if (thisx->colChkInfo.health == 0)
                     EnSlim_SetupDeathCry(this);
-                else {
-                    Actor* childSlime;
+                else if (thisx->colChkInfo.health <= thisx->maxHealth/2 && !this->hasSplit) {
+                    EnSlim* childSlime;
                     Actor_PlaySfx(thisx, NA_SE_EN_AWA_BREAK);
                     EnSlim_SetupRecoil(this);
-                    childSlime = Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_EN_SLIM, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, thisx->world.rot.x, thisx->world.rot.y, thisx->world.rot.z, thisx->params);
+                    childSlime = (EnSlim*)Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_EN_SLIM, thisx->world.pos.x, thisx->world.pos.y, thisx->world.pos.z, thisx->world.rot.x, thisx->world.rot.y, thisx->world.rot.z, thisx->params);
+                    this->hasSplit = true;
 
                     if (childSlime != NULL) {
-                        childSlime->colChkInfo.health = thisx->colChkInfo.health;
-                        Actor_SetScale(childSlime, 0.0075f);
+                        childSlime->actor.colChkInfo.health = thisx->colChkInfo.health;
+                        Actor_SetScale((Actor*)childSlime, zolScale * (childSlime->actor.colChkInfo.health / EnSlim_DamageMultiplier()));
+                        childSlime->hasSplit = true;
                     }
                 }
             }
@@ -510,26 +519,8 @@ void EnSlim_Update(Actor* thisx, struct PlayState* play) {
     CollisionPoly* floorPoly;
     WaterBox* waterBox;
     f32 waterSurfaceY;
-    f32 multiplier;
 
-    if (MONSTER_HP == 1)
-        multiplier = 1.5f;
-    else if (MONSTER_HP == 2)
-        multiplier = 2.0f;
-    else if (MONSTER_HP == 3)
-        multiplier = 2.5f;
-    else if (MONSTER_HP == 4)
-        multiplier = 3.0f;
-    else if (MONSTER_HP == 5)
-        multiplier = 4.0f;
-    else if (MONSTER_HP == 6)
-        multiplier = 5.0f;
-    else if (MONSTER_HP == 7)
-        multiplier = 0.5f;
-    else multiplier = 1.0f;
-    multiplier *= DAMAGE_MULTIPLY;
-
-    this->colliderItem.dim.scale = (this->actor.colChkInfo.health / multiplier);
+    this->colliderItem.dim.scale = (this->actor.colChkInfo.health / EnSlim_DamageMultiplier());
 
     EnSlim_CheckDamage(thisx, play);
     if (thisx->colChkInfo.damageReaction != 0xE) { // Stay still if hit by immunity damage type this frame
@@ -630,4 +621,27 @@ void EnSlim_Draw(Actor* thisx, struct PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
     Collider_UpdateSpheres(0, &this->collider); // why is this in the draw function??
+}
+
+f32 EnSlim_DamageMultiplier(void) {
+    f32 multiplier;
+
+    if (MONSTER_HP == 1)
+        multiplier = 1.5f;
+    else if (MONSTER_HP == 2)
+        multiplier = 2.0f;
+    else if (MONSTER_HP == 3)
+        multiplier = 2.5f;
+    else if (MONSTER_HP == 4)
+        multiplier = 3.0f;
+    else if (MONSTER_HP == 5)
+        multiplier = 4.0f;
+    else if (MONSTER_HP == 6)
+        multiplier = 5.0f;
+    else if (MONSTER_HP == 7)
+        multiplier = 0.5f;
+    else multiplier = 1.0f;
+
+    multiplier *= DAMAGE_MULTIPLY;
+    return multiplier;
 }
