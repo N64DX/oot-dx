@@ -1731,8 +1731,8 @@ void Scene_DrawConfigForbiddenWoods(PlayState* play) {
 
     gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 10) % 128, 32, 32, 1, 0, (gameplayFrames * 10) % 128, 32, 32));
     gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 3)  % 128, 32, 32, 1, 0, (gameplayFrames * 3)  % 128, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, 0, 32, 32, 1, 0, -gameplayFrames, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, gameplayFrames, 64, 64, 1, 0, -gameplayFrames, 64, 64));
+    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, 0, 32, 32, 1, 0, -gameplayFrames, 32, 32));
+    gSPSegment(POLY_OPA_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, gameplayFrames, 64, 64, 1, 0, -gameplayFrames, 64, 64));
 
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
