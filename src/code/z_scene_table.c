@@ -1741,51 +1741,6 @@ void Scene_DrawConfigForbiddenWoods(PlayState* play) {
     gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
-    
-    
-    
-    
-    /*u32 gameplayFrames;
-    Gfx* displayListHead;
-
-    displayListHead = GRAPH_ALLOC(play->state.gfxCtx, 3 * sizeof(Gfx));
-
-    gameplayFrames = play->gameplayFrames;
-    gSPSegment(POLY_XLU_DISP++, 0x08,
-               Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128,
-                                (gameplayFrames * 3) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 3) % 128,
-                                32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x09,
-               Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128,
-                                (gameplayFrames * 10) % 128, 32, 32, 1, gameplayFrames % 128,
-                                (gameplayFrames * 10) % 128, 32, 32));
-
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
-
-    gDPPipeSync(POLY_XLU_DISP++);
-    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
-
-    gSPSegment(POLY_XLU_DISP++, 0x0A, displayListHead);
-
-    if ((gSaveContext.save.dayTime > CLOCK_TIME(7, 0)) && (gSaveContext.save.dayTime <= CLOCK_TIME(18, 30))) {
-        gSPEndDisplayList(displayListHead++);
-    } else {
-        if (gSaveContext.save.dayTime > CLOCK_TIME(18, 30)) {
-            if (play->roomCtx.drawParams[0] != 255) {
-                Math_StepToS(&play->roomCtx.drawParams[0], 255, 5);
-            }
-        } else if (gSaveContext.save.dayTime >= CLOCK_TIME(6, 0)) {
-            if (play->roomCtx.drawParams[0] != 0) {
-                Math_StepToS(&play->roomCtx.drawParams[0], 0, 10);
-            }
-        }
-
-        gDPSetPrimColor(displayListHead++, 0, 0, 255, 255, 255, play->roomCtx.drawParams[0]);
-        gSPDisplayList(displayListHead++, spot00_room_0DL_012B20);
-        gSPEndDisplayList(displayListHead++);
-    }*/
-    
 }
 
 void* sAncientHollowEntranceTextures[] = {
