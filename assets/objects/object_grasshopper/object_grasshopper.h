@@ -104,4 +104,5 @@ extern AnimationHeader gDragonflyLowerTailAnim;
 extern s16 sDragonflyHoverAnimFrameData[];
 extern JointIndex sDragonflyHoverAnimJointIndices[];
 extern AnimationHeader gDragonflyHoverAnim;
+
 #endif
