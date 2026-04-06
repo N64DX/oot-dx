@@ -47,7 +47,7 @@ Spawn path_to_goron_village_sceneEntranceList0x0000C0[] = {
 
 u16 path_to_goron_village_sceneExitList_0000C8[] = {
     ENTR_SPRING_LAKE_2,
-    ENTR_PATH_TO_GORON_VILLAGE_1,
+    ENTR_GORON_VILLAGE_0,
     ENTR_PATH_TO_GORON_VILLAGE_2,
 };
 

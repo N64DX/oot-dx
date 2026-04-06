@@ -16455,22 +16455,38 @@ void func_80851828(PlayState* play, Player* this, CsCmdActorCue* cue) {
     }
 }
 
+static u8 dekuWalkArrIndex;
+static DekuWalkRoutes dekuWalkRoutes[] = {
+    { { 635.0f,  1400.0f,   633.0f }, 5.5f, 0x2000 },
+    { { 2800.0f, -200.0f, -1430.0f }, 5.0f, 0x4950 },
+};
+
 void PlayerCs_InitDekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
-    this->actor.world.rot.y = this->actor.shape.rot.y = 0x2000;
-    this->unk_450.x = 635.0f;
-    this->unk_450.y = 1400.0f;
-    this->unk_450.z = 633.0f;
-    this->speedXZ = 5.5f;
+    switch(play->sceneId) {
+        case SCENE_GORON_VILLAGE:
+            dekuWalkArrIndex = 1;
+            break;
+        case SCENE_ANCIENT_HOLLOW:
+        default:
+            dekuWalkArrIndex = 0;
+            break;
+    }
+    
+    this->actor.world.rot.y = this->actor.shape.rot.y = dekuWalkRoutes[dekuWalkArrIndex].yaw;
+    this->unk_450.x = dekuWalkRoutes[dekuWalkArrIndex].pos.x;
+    this->unk_450.y = dekuWalkRoutes[dekuWalkArrIndex].pos.y;
+    this->unk_450.z = dekuWalkRoutes[dekuWalkArrIndex].pos.z;
+    this->speedXZ = dekuWalkRoutes[dekuWalkArrIndex].speed;
     this->av2.actionVar2 = 0;
 }
 
 void PlayerCs_DekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
-    f32 speed = 5.5f;
+    f32 speed = dekuWalkRoutes[dekuWalkArrIndex].speed;
 
     this->av2.actionVar2++;
 
     if (this->av2.actionVar2 >= 22 && this->av2.actionVar2 >= 25)
-        this->actor.world.rot.y = this->actor.shape.rot.y = 0x2000;
+        this->actor.world.rot.y = this->actor.shape.rot.y = dekuWalkRoutes[dekuWalkArrIndex].yaw;
 
     func_80845BA0(play, this, &speed, 10);
 

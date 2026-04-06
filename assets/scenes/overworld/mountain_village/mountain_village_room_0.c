@@ -18,7 +18,7 @@ SceneCmd mountain_village_room_0[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_0003D0),
     SCENE_CMD_OBJECT_LIST(11, mountain_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(39, mountain_village_room_0ActorEntry_000074),
+    SCENE_CMD_ACTOR_LIST(41, mountain_village_room_0ActorEntry_000074),
     SCENE_CMD_END(),
 };
 
@@ -62,6 +62,8 @@ ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_OBJ_HAMISHI,    {  2070,   14,   860 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
     { ACTOR_OBJ_HAMISHI,    {  2050,   14,   940 }, {    0,      0,  0 }, 0x0005 }, // Switch: 05
     { ACTOR_OBJ_HAMISHI,    {  2020,   14,  1020 }, {    0,      0,  0 }, 0x0006 }, // Switch: 06
+    { ACTOR_OBJ_HAMISHI,    { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0007 }, // Switch: 07
+    { ACTOR_OBJ_HAMISHI,    {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0008 }, // Switch: 08
     { ACTOR_EN_ISHI,        {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,        {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,        {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },
@@ -141,7 +143,7 @@ SceneCmd mountain_village_room_0Set_timeskip[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_0003D0),
     SCENE_CMD_OBJECT_LIST(11, mountain_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(40, mountain_village_room_0ActorEntry_timeskip),
+    SCENE_CMD_ACTOR_LIST(42, mountain_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
 
@@ -161,6 +163,8 @@ ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_OBJ_HAMISHI,    {  2070,   14,   860 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
     { ACTOR_OBJ_HAMISHI,    {  2050,   14,   940 }, {    0,      0,  0 }, 0x0005 }, // Switch: 05
     { ACTOR_OBJ_HAMISHI,    {  2020,   14,  1020 }, {    0,      0,  0 }, 0x0006 }, // Switch: 06
+    { ACTOR_OBJ_HAMISHI,    { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0007 }, // Switch: 07
+    { ACTOR_OBJ_HAMISHI,    {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0008 }, // Switch: 08
     { ACTOR_EN_ISHI,        {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,        {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,        {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },

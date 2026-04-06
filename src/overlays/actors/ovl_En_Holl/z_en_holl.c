@@ -105,6 +105,7 @@ static EnHollActionFunc sActionFuncs[] = {
     EnHoll_HorizontalInvisible,         // ENHOLL_H_INVISIBLE
     EnHoll_VerticalBgCover,             // ENHOLL_V_BGCOVER
     EnHoll_HorizontalInvisible,         // ENHOLL_H_INVISIBLE_NARROW
+    EnHoll_HorizontalVisibleNarrow,     // ENHOLL_H_SCENE_CHANGER
 };
 
 static InitChainEntry sInitChain[] = {
@@ -125,7 +126,7 @@ void EnHoll_ChooseAction(EnHoll* this) {
     s32 type = ENHOLL_GET_TYPE(&this->actor);
 
     EnHoll_SetupAction(this, sActionFuncs[type]);
-    if (type != ENHOLL_H_VISIBLE_NARROW) {
+    if (type != ENHOLL_H_VISIBLE_NARROW && type != ENHOLL_H_SCENE_CHANGER) {
         this->actor.draw = NULL;
     } else {
         this->planeAlpha = 255;
@@ -209,6 +210,12 @@ void EnHoll_HorizontalVisibleNarrow(EnHoll* this, PlayState* play) {
                 EnHoll_SwapRooms(play);
                 Room_FinishRoomChange(play, &play->roomCtx);
             }
+        } else if (ENHOLL_GET_TYPE(&this->actor) == ENHOLL_H_SCENE_CHANGER) {
+            play->nextEntranceIndex = play->exitList[ENHOLL_GET_SWITCH_FLAG(&this->actor)];
+            gSaveContext.retainWeatherMode = true;
+            Scene_SetTransitionForNextEntrance(play);
+            play->transitionTrigger = TRANS_TRIGGER_START;
+            Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_103);
         } else {
             this->actor.room = play->transitionActors.list[transitionActorIndex].sides[this->side ^ 1].room;
             if (play->roomCtx.prevRoom.num < 0) {

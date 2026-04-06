@@ -103,6 +103,7 @@ void Scene_DrawConfigSpringLakeSmithy(PlayState* play);
 void Scene_DrawConfigPathToGoronVillage(PlayState* play);
 void Scene_DrawConfigGrottos2(PlayState* play);
 void Scene_DrawConfigPathToWoodfall(PlayState* play);
+void Scene_DrawConfigGoronVillage(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -222,6 +223,7 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigPathToGoronVillage,          // SDC_PATH_TO_GORON_VILLAGE
     Scene_DrawConfigGrottos2,                    // SDC_GROTTOS2
     Scene_DrawConfigPathToWoodfall,              // SDC_PATH_TO_WOODFALL
+    Scene_DrawConfigGoronVillage,                // SDC_GORON_VILLAGE
 };
 
 void Scene_Draw(PlayState* play) {
@@ -1908,6 +1910,24 @@ void Scene_DrawConfigPathToWoodfall(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
 }
 
+void Scene_DrawConfigGoronVillage(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0,  (gameplayFrames * 1), 0, 32,  32, 1, -(gameplayFrames * 1), -(gameplayFrames * 1), 32,  32));
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0,  (gameplayFrames * 1), 0, 32,  32, 1,  (gameplayFrames * 1), 0,                     32,  32));
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, -(gameplayFrames * 2), 0, 128, 64, 1, -(gameplayFrames * 3), 0,                     128, 64));
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+}
+
 #if !PLATFORM_N64 // Scene_Draw is at beginning of file in N64 versions
 
 SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
@@ -1973,6 +1993,7 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigPathToGoronVillage,          // SDC_PATH_TO_GORON_VILLAGE
     Scene_DrawConfigGrottos2,                    // SDC_GROTTOS2
     Scene_DrawConfigPathToWoodfall,              // SDC_PATH_TO_WOODFALL
+    Scene_DrawConfigGoronVillage,                // SDC_GORON_VILLAGE
 };
 
 void Scene_Draw(PlayState* play) {

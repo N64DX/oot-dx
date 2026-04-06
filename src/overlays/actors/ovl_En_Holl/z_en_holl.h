@@ -30,7 +30,8 @@ typedef enum EnHollType {
     /* 3 */ ENHOLL_H_BGCOVER_SWITCHFLAG, // Enabled if a switch flag is set. Used in Dampe's race.
     /* 4 */ ENHOLL_H_INVISIBLE,
     /* 5 */ ENHOLL_V_BGCOVER,
-    /* 6 */ ENHOLL_H_INVISIBLE_NARROW
+    /* 6 */ ENHOLL_H_INVISIBLE_NARROW,
+    /* 7 */ ENHOLL_H_SCENE_CHANGER
 } EnHollType;
 
 struct EnHoll;

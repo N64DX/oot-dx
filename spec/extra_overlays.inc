@@ -41,6 +41,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Obj_Visiblock"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Visiblock/z_obj_visiblock.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Visiblock/ovl_Obj_Visiblock_reloc.o"
+endseg
+
+beginseg
     name "ovl_Dm_Char01"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Dm_Char01/z_dm_char01.o"
@@ -227,4 +234,11 @@ beginseg
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Ganon_Sword/z_en_ganon_sword.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Ganon_Sword/ovl_En_Ganon_Sword_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Go3"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Go3/z_en_go3.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Go3/ovl_En_Go3_reloc.o"
 endseg

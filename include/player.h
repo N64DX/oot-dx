@@ -549,8 +549,8 @@ typedef enum PlayerCsAction {
     /* 0x64 */ PLAYER_CSACTION_100,
     /* 0x65 */ PLAYER_CSACTION_101,
     /* 0x66 */ PLAYER_CSACTION_102,
-    /* 0x66 */ PLAYER_CSACTION_103,
-    /* 0x67 */ PLAYER_CSACTION_MAX
+    /* 0x67 */ PLAYER_CSACTION_103,
+    /* 0x68 */ PLAYER_CSACTION_MAX
 } PlayerCsAction;
 
 typedef enum PlayerCueId {
@@ -701,6 +701,12 @@ typedef struct PlayerAgeProperties {
     /* 0xC4 */ LinkAnimationHeader* unk_C4[2];
     /* 0xCC */ LinkAnimationHeader* unk_CC[2];
 } PlayerAgeProperties; // size = 0xD4
+
+typedef struct DekuWalkRoutes {
+    /* 0x00 */ Vec3f pos;
+    /* 0x0C */ f32 speed;
+    /* 0x10 */ u16 yaw;
+} DekuWalkRoutes; // size = 0x14
 
 typedef struct WeaponInfo {
     /* 0x00 */ s32 active;

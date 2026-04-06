@@ -409,7 +409,8 @@ typedef enum SceneDrawConfig {
     /* 59 */ SDC_PATH_TO_GORON_VILLAGE,
     /* 5A */ SDC_GROTTOS2,
     /* 5B */ SDC_PATH_TO_WOODFALL,
-    /* 5C */ SDC_MAX
+    /* 5C */ SDC_GORON_VILLAGE,
+    /* 5D */ SDC_MAX
 } SceneDrawConfig;
 
 typedef void (*SceneDrawConfigFunc)(struct PlayState*);

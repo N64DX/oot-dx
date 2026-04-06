@@ -2863,3 +2863,40 @@ SFX(NA_SE_VO_GAVO00) "Ugoh-ooooh!!!\n"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x8400, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"It's chilly here outside...\n"
+"I was send to be on guard duty to\n"
+"look for help."
+BOX_BREAK
+
+"Oh? You haven't heard about it?"
+BOX_BREAK
+
+"The mines in out fair shrine have\n"
+"been infested by monsters, and we\n"
+"really could use a capable hero."
+BOX_BREAK
+
+"If you think you're up to the task...\n"
+"Let me open the door for you.\n"
+"We welcome any visitors after all,\n"
+"hero or not."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8401, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I opened the door for you.\n"
+"Welcome inside!\n"
+"Please visit the elder if you are\n"
+"interested in going into the mines."
+),
+MSG(),
+MSG()
+)

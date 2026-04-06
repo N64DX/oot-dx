@@ -49,7 +49,7 @@ ActorProfile Bg_Ice_Shelter_Profile = {
     /**/ BgIceShelter_Draw,
 };
 
-static f32 sRedIceScales[] = { 0.1f, 0.06f, 0.1f, 0.1f, 0.25f };
+static f32 sRedIceScales[] = { 0.1f, 0.06f, 0.1f, 0.1f, 0.25f, 0.15f };
 
 static Color_RGBA8 sSteamPrimColor = { 250, 250, 250, 255 };
 static Color_RGBA8 sSteamEnvColor = { 180, 180, 180, 255 };
@@ -94,18 +94,38 @@ static ColliderCylinderInit sCylinderInit2 = {
     { 0, 0, 0, { 0, 0, 0 } },
 };
 
+static ColliderCylinderInit sIceArrowCylinderInit = {
+    {
+        COL_MATERIAL_NONE,
+        AT_NONE,
+        AC_ON | AC_TYPE_OTHER | AC_TYPE_PLAYER,
+        OC1_ON | OC1_TYPE_ALL,
+        OC2_TYPE_2,
+        COLSHAPE_CYLINDER,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0x00000000, 0x00, 0x00 },
+        { 0xFFCFFFFF, 0x00, 0x00 },
+        ATELEM_NONE,
+        ACELEM_ON,
+        OCELEM_ON,
+    },
+    { 0, 0, 0, { 0, 0, 0 } },
+};
+
 /**
  * Initializes either one or both cylinder colliders, depending on the actor's type.
  */
 void BgIceShelter_InitColliders(BgIceShelter* this, PlayState* play) {
-    static s16 cylinderRadii[] = { 47, 33, 44, 41, 100 };
-    static s16 cylinderHeights[] = { 80, 54, 90, 60, 200 };
+    static s16 cylinderRadii[] = { 47, 33, 44, 41, 100, 61 };
+    static s16 cylinderHeights[] = { 80, 54, 90, 60, 200, 90 };
     s32 pad;
     s32 type = BGICESHELTER_GET_TYPE(&this->dyna.actor);
 
     // All types use at least one collider in order to detect blue fire
     Collider_InitCylinder(play, &this->cylinder1);
-    Collider_SetCylinder(play, &this->cylinder1, &this->dyna.actor, &sCylinderInit1);
+    Collider_SetCylinder(play, &this->cylinder1, &this->dyna.actor, IS_CHILD_QUEST ? &sIceArrowCylinderInit : &sCylinderInit1);
     Collider_UpdateCylinder(&this->dyna.actor, &this->cylinder1);
 
     this->cylinder1.dim.radius = cylinderRadii[type];
@@ -187,6 +207,7 @@ void BgIceShelter_Init(Actor* thisx, PlayState* play) {
             BgIceShelter_InitDynaPoly(this, play, &gRedIcePlatformCol, 0);
             break;
         case RED_ICE_WALL:
+        case PURPLE_ICE_WALL:
             BgIceShelter_InitDynaPoly(this, play, &gRedIceWallCol, 0);
             break;
     }
@@ -214,6 +235,7 @@ void BgIceShelter_Destroy(Actor* thisx, PlayState* play) {
     switch (BGICESHELTER_GET_TYPE(&this->dyna.actor)) {
         case RED_ICE_PLATFORM:
         case RED_ICE_WALL:
+        case PURPLE_ICE_WALL:
             DynaPoly_DeleteBgActor(play, &play->colCtx.dyna, this->dyna.bgId);
             break;
 
@@ -384,7 +406,7 @@ void BgIceShelter_Idle(BgIceShelter* this, PlayState* play) {
     if (this->cylinder1.base.acFlags & AC_HIT) {
         this->cylinder1.base.acFlags &= ~AC_HIT;
 
-        if ((this->cylinder1.base.ac != NULL) && (this->cylinder1.base.ac->id == ACTOR_EN_ICE_HONO)) {
+        if ((this->cylinder1.base.ac != NULL) && (this->cylinder1.base.ac->id == ACTOR_EN_ICE_HONO) && type != PURPLE_ICE_WALL) {
             if (type == RED_ICE_KING_ZORA) {
                 if (this->dyna.actor.parent != NULL) {
                     this->dyna.actor.parent->freezeTimer = 50;
@@ -416,12 +438,12 @@ void BgIceShelter_SetupMelt(BgIceShelter* this) {
 /**
  * Values added to the ice block's height every frame while it's melting.
  */
-static f32 sMeltingRates[] = { -0.0015f, -0.0009f, -0.0016f, -0.0016f, -0.00375f };
+static f32 sMeltingRates[] = { -0.0015f, -0.0009f, -0.0016f, -0.0016f, -0.00375f, -0.0016f };
 
 /**
  * Values used to scale and position the steam effects so they match the ice block's size.
  */
-static f32 sSteamEffectScales[] = { 1.0f, 0.6f, 1.2f, 1.0f, 1.8f };
+static f32 sSteamEffectScales[] = { 1.0f, 0.6f, 1.2f, 1.0f, 1.8f, 1.2f };
 
 /**
  * Functions used to spawn steam effects at the base of the red ice.
@@ -429,7 +451,7 @@ static f32 sSteamEffectScales[] = { 1.0f, 0.6f, 1.2f, 1.0f, 1.8f };
 static void (*sSteamSpawnFuncs[])(BgIceShelter* this, PlayState* play, f32 particleSpawningChance,
                                   f32 steamEffectScale) = {
     BgIceShelter_SpawnSteamAround, BgIceShelter_SpawnSteamAround, BgIceShelter_SpawnSteamAround,
-    BgIceShelter_SpawnSteamAlong,  BgIceShelter_SpawnSteamAround,
+    BgIceShelter_SpawnSteamAlong,  BgIceShelter_SpawnSteamAround, BgIceShelter_SpawnSteamAlong,
 };
 
 /**
@@ -533,6 +555,10 @@ void BgIceShelter_Draw(Actor* thisx, PlayState* play2) {
 
         case RED_ICE_WALL:
             gSPDisplayList(POLY_XLU_DISP++, gRedIceWallDL);
+            break;
+
+        case PURPLE_ICE_WALL:
+            gSPDisplayList(POLY_XLU_DISP++, gPurpleIceWallDL);
             break;
     }
 
