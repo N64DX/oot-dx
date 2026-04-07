@@ -2292,7 +2292,7 @@ void BossGoma_HandleBeamLogic(BossGoma* this, PlayState* play) {
 }
 
 void BossGoma_DrawBeam(BossGoma* this, PlayState* play, Vec3f* pos, Vec3s* rot, Vec3f* scale, u8 r, u8 g, u8 b, u8 a, s16 texScroll) {
-    OPEN_DISPS(play->state.gfxCtx, __FILE_, __LINE__);
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
     gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TexScroll(play->state.gfxCtx, 0, texScroll, 0, 0));
     Matrix_Translate(pos->x, pos->y, pos->z, MTXMODE_NEW);
@@ -2301,7 +2301,7 @@ void BossGoma_DrawBeam(BossGoma* this, PlayState* play, Vec3f* pos, Vec3s* rot, 
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
     gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, r, g, b, a);
     gSPDisplayList(POLY_XLU_DISP++, gGomaBeam);
-    CLOSE_DISPS(play->state.gfxCtx, __FILE_, __LINE__);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
 
 s32 BossGoma_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, void* thisx) {

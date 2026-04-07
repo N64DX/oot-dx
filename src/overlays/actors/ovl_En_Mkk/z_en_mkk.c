@@ -554,8 +554,9 @@ void EnMkk_Draw(Actor* thisx, PlayState* play) {
             gSPDisplayList(&gfx[5], modelInfo->endDL);
             POLY_XLU_DISP = &gfx[6];
         }
+
+        CLOSE_DISPS(play->state.gfxCtx, "../z_en_mkk.c", 531);
     }
-    CLOSE_DISPS(play->state.gfxCtx, "../z_en_mkk.c", 531);
 }
 
 void func_80A4F4C8(Actor* thisx, PlayState* play) {
