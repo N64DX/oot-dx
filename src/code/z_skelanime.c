@@ -493,13 +493,21 @@ void SkelAnime_DrawTransformFlexLimbOpa(PlayState* play, s32 limbIndex, void** s
         if (newDList != NULL) {
             Gfx* gfx = POLY_OPA_DISP;
 
+#if DEBUG_FEATURES
+            gSPMatrix(&gfx[0], Matrix_ToMtx(*mtx, "../z_skelanime.c", 497), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+#else
             gSPMatrix(&gfx[0], Matrix_ToMtx(*mtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+#endif
             gSPDisplayList(&gfx[1], newDList);
             POLY_OPA_DISP = &gfx[2];
             (*mtx)++;
         } else {
             if (limbDList != NULL) {
+#if DEBUG_FEATURES
+                Matrix_ToMtx(*mtx, "../z_skelanime.c", 507);
+#else
                 Matrix_ToMtx(*mtx);
+#endif
                 (*mtx)++;
             }
         }
@@ -567,13 +575,21 @@ void SkelAnime_DrawTransformFlexOpa(PlayState* play, void** skeleton, Vec3s* joi
         if (newDList != NULL) {
             Gfx* gfx = POLY_OPA_DISP;
 
+#if DEBUG_FEATURES
+            gSPMatrix(&gfx[0], Matrix_ToMtx(mtx, "../z_skelanime.c", 579), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+#else
             gSPMatrix(&gfx[0], Matrix_ToMtx(mtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+#endif
             gSPDisplayList(&gfx[1], newDList);
             POLY_OPA_DISP = &gfx[2];
             mtx++;
         } else {
             if (limbDList != NULL)
+#if DEBUG_FEATURES
+                Matrix_ToMtx(mtx++, "../z_skelanime.c", 589);
+#else
                 Matrix_ToMtx(mtx++);
+#endif
         }
         Matrix_Pop();
     }

@@ -177,7 +177,7 @@ void Interface_Init(PlayState* play) {
     else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_HEROS)
         item = ITEM_SHIELD_HEROS;
     else item = ITEM_NONE;
-    DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __FILE__);
+    DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __LINE__);
 
     PRINTF("ＥＶＥＮＴ＝%d\n", ((void)0, gSaveContext.timerState));
 
