@@ -2145,6 +2145,9 @@ u8 Item_Give(PlayState* play, u8 item) {
             if (DPAD_BUTTON(i) == SLOT_DEKU_NUT)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
+    } else if (item == ITEM_BOOTS_UPGRADE) {
+        gSaveContext.save.info.obtainedSkills.furtherJump = 1;
+        return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         INV_CONTENT(item) = item;
         for (i = 1; i < 4; i++) {
@@ -2620,7 +2623,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS) {
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS || item == ITEM_BOOTS_UPGRADE) {
         return ITEM_NONE;
     } else if (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) {
         return ITEM_NONE;
@@ -3045,6 +3048,9 @@ s32 Magic_RequestChange(PlayState* play, s16 amount, s16 type) {
         return false;
     }
 
+    if (gSaveContext.save.info.obtainedSkills.halfMagicCost && type != MAGIC_ADD)
+        amount /= 2;
+
     if ((type != MAGIC_ADD) && (gSaveContext.save.info.playerData.magic - amount) < 0) {
         if (gSaveContext.magicCapacity != 0) {
             Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -3092,7 +3098,7 @@ s32 Magic_RequestChange(PlayState* play, s16 amount, s16 type) {
         case MAGIC_CONSUME_LENS:
             if (gSaveContext.magicState == MAGIC_STATE_IDLE) {
                 if (gSaveContext.save.info.playerData.magic != 0) {
-                    interfaceCtx->lensMagicConsumptionTimer = 80;
+                    interfaceCtx->lensMagicConsumptionTimer = gSaveContext.save.info.obtainedSkills.halfMagicCost ? 160 : 80;
                     gSaveContext.magicState = MAGIC_STATE_CONSUME_LENS;
                     return true;
                 } else {
@@ -3207,7 +3213,7 @@ void Magic_Update(PlayState* play) {
 
         case MAGIC_STATE_CONSUME:
             // Consume magic until target is reached or no more magic is available
-            gSaveContext.save.info.playerData.magic -= 2;
+            gSaveContext.save.info.playerData.magic -= gSaveContext.save.info.obtainedSkills.halfMagicCost ? 1 : 2;
             if (gSaveContext.save.info.playerData.magic <= 0) {
                 gSaveContext.save.info.playerData.magic = 0;
                 gSaveContext.magicState = MAGIC_STATE_METER_FLASH_1;
@@ -3286,7 +3292,7 @@ void Magic_Update(PlayState* play) {
                 interfaceCtx->lensMagicConsumptionTimer--;
                 if (interfaceCtx->lensMagicConsumptionTimer == 0) {
                     gSaveContext.save.info.playerData.magic--;
-                    interfaceCtx->lensMagicConsumptionTimer = 80;
+                    interfaceCtx->lensMagicConsumptionTimer = gSaveContext.save.info.obtainedSkills.halfMagicCost ? 160 : 80;
                 }
             }
 
@@ -3389,16 +3395,23 @@ void Magic_DrawMeter(PlayState* play) {
 
             // Fill the rest of the meter with the normal magic color
             gDPPipeSync(OVERLAY_DISP++);
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
-                            interfaceCtx->magicAlpha);
+            
+            if (gSaveContext.save.info.obtainedSkills.halfMagicCost) {
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 200, interfaceCtx->magicAlpha);
+            } else {
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2), interfaceCtx->magicAlpha);
+            }
 
             gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY(magicMeterY + 3) << 2,
                                 X_HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2, (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2,
                                 G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         } else {
             // Fill the whole meter with the normal magic color
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
-                            interfaceCtx->magicAlpha);
+            if (gSaveContext.save.info.obtainedSkills.halfMagicCost) {
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 200, interfaceCtx->magicAlpha);
+            } else {
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2), interfaceCtx->magicAlpha);
+            }
 
             gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 8, 0,
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,

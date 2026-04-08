@@ -41,6 +41,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Bg_Icefloe"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Icefloe/z_bg_icefloe.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Icefloe/ovl_Bg_Icefloe_reloc.o"
+endseg
+
+beginseg
     name "ovl_Obj_Visiblock"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Visiblock/z_obj_visiblock.o"

@@ -22,6 +22,12 @@ typedef struct EnGm {
     /* 0x02C0 */ s16 blinkTimer;
     /* 0x02C2 */ u8 eyeTexIndex;
     /* 0x02C4 */ Vec3f talkPos;
-} EnGm; // size = 0x02D0
+    /* 0x02D0 */ u8 type;
+} EnGm; // size = 0x02D4
+
+typedef enum EnGmType {
+    /* 0 */ MEDIGORON_GORON_CITY,
+    /* 1 */ MEDIGORON_GORON_VILLAGE
+} EnGmType;
 
 #endif

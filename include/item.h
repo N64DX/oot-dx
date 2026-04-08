@@ -328,10 +328,11 @@ typedef enum ItemID {
     /* 0xA3 */ ITEM_DEKU_STICK_UPGRADE_30,
     /* 0xA4 */ ITEM_DEKU_NUT_UPGRADE_30,
     /* 0xA5 */ ITEM_DEKU_NUT_UPGRADE_40,
-    /* 0xA6 */ ITEM_SHIELD_DEKU_UPGRADE,
-    /* 0xA7 */ ITEM_SHIELD_HYLIAN_UPGRADE,
-    /* 0xA8 */ ITEM_SHIELD_MIRROR_UPGRADE,
-    /* 0xA9 */ ITEM_SHIELD_HEROS_UPGRADE,
+    /* 0xA6 */ ITEM_BOOTS_UPGRADE,
+    /* 0xA7 */ ITEM_SHIELD_DEKU_UPGRADE,
+    /* 0xA8 */ ITEM_SHIELD_HYLIAN_UPGRADE,
+    /* 0xA9 */ ITEM_SHIELD_MIRROR_UPGRADE,
+    /* 0xAA */ ITEM_SHIELD_HEROS_UPGRADE,
     /* 0xF0 */ ITEM_SWORDS = 0xF0,
     /* 0xF1 */ ITEM_SHIELDS,
     /* 0xF2 */ ITEM_TUNICS,
@@ -486,15 +487,16 @@ typedef enum GetItemID {
     /* 0x89 */ GI_LONGSHOT_MM,
     /* 0x8A */ GI_HEROS_BOW,
     /* 0x8B */ GI_GOLD_DUST,
-    /* 0x8C */ GI_WALLET_MASTER,
-    /* 0x8D */ GI_WALLET_ROYAL,
-    /* 0x8E */ GI_WALLET_TYCOON,
-    /* 0x8F */ GI_WALLET_BOTTOMLESS,
-    /* 0x90 */ GI_SHIELD_DEKU_UPGRADE,
-    /* 0x91 */ GI_SHIELD_HYLIAN_UPGRADE,
-    /* 0x92 */ GI_SHIELD_MIRROR_UPGRADE,
-    /* 0x93 */ GI_SHIELD_HEROS_UPGRADE,
-    /* 0x94 */ GI_MAX
+    /* 0x8C */ GI_BOOTS_UPGRADE,
+    /* 0x8D */ GI_WALLET_MASTER,
+    /* 0x8E */ GI_WALLET_ROYAL,
+    /* 0x8F */ GI_WALLET_TYCOON,
+    /* 0x90 */ GI_WALLET_BOTTOMLESS,
+    /* 0x91 */ GI_SHIELD_DEKU_UPGRADE,
+    /* 0x92 */ GI_SHIELD_HYLIAN_UPGRADE,
+    /* 0x93 */ GI_SHIELD_MIRROR_UPGRADE,
+    /* 0x94 */ GI_SHIELD_HEROS_UPGRADE,
+    /* 0x95 */ GI_MAX
 } GetItemID;
 
 typedef enum GetItemDrawID {
@@ -629,7 +631,8 @@ typedef enum GetItemDrawID {
     /* 0x80 */ GID_GOLDEN_FEATHER,
     /* 0x81 */ GID_SWORD_FAIRYS,
     /* 0x82 */ GID_GOLD_DUST,
-    /* 0x83 */ GID_MAX
+    /* 0x83 */ GID_BOOTS_KOKIRI,
+    /* 0x84 */ GID_MAX
 } GetItemDrawID;
 
 typedef enum ExchangeItemID {

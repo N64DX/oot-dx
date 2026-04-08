@@ -345,7 +345,7 @@ u16 EnGo3_GoronFireGenericGetTextId(EnGo3* this) {
 }
 
 u16 EnGo3_GetTextIdGoronVillageDoor(PlayState* play, EnGo3* this) {
-    if (GET_INFTABLE(INFTABLE_GORON_VILLAGE_DOOR_OPENED))
+    if (GET_INFTABLE(INFTABLE_GORON_SHRINE_DOOR_OPENED))
         return 0x8401;
     return 0x8400;
 }
@@ -353,7 +353,7 @@ u16 EnGo3_GetTextIdGoronVillageDoor(PlayState* play, EnGo3* this) {
 s16 EnGo3_UpdateTalkStateGoronVillageDoor(PlayState* play, EnGo3* this) {
     if (Message_GetState(&play->msgCtx) == TEXT_STATE_CLOSING) {
         if (this->actor.textId == 0x8400)
-            SET_INFTABLE(INFTABLE_GORON_VILLAGE_DOOR_OPENED);
+            SET_INFTABLE(INFTABLE_GORON_SHRINE_DOOR_OPENED);
         return NPC_TALK_STATE_IDLE;
     }
     else return NPC_TALK_STATE_TALKING;

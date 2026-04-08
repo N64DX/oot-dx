@@ -20,6 +20,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_icefloe"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_icefloe/object_icefloe.o"
+    number 6
+endseg
+
+beginseg
     name "object_mtoride"
     compress
     include "$(BUILD_DIR)/assets/objects/object_mtoride/object_mtoride.o"

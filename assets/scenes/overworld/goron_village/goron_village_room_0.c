@@ -17,7 +17,7 @@ SceneCmd goron_village_room_0[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&goron_village_room_0RoomShapeCullable_0000F0),
     SCENE_CMD_OBJECT_LIST(12, goron_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(16, goron_village_room_0ActorEntry_00005C),
+    SCENE_CMD_ACTOR_LIST(17, goron_village_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
 
@@ -37,22 +37,23 @@ s16 goron_village_room_0ObjectList_00004C[] = {
 };
 
 ActorEntry goron_village_room_0ActorEntry_00005C[] = {
-    { ACTOR_EN_KANBAN,          {  -982, -200,   171 }, { 0, 0x1111, 0 }, 0x0056 },
-    { ACTOR_EN_KANBAN,          {  1241, -200,  -741 }, { 0, 0xA4FA, 0 }, 0x0057 },
-    { ACTOR_EN_KANBAN,          {  -942, -200, -1866 }, { 0, 0xFDDE, 0 }, 0x0058 },
-    { ACTOR_EN_ITEM00,          {   211,  120,   665 }, { 0,      0, 0 }, 0x1E06 },
-    { ACTOR_EN_SHOPNUTS,        {   165, -200,   488 }, { 0, 0x8BFC, 0 }, 0x0004 },
-    { ACTOR_BG_SPOT00_HANEBASI, {  2515, -210, -1515 }, { 0, 0x0BB8, 0 }, 0xFFFD },
-    { ACTOR_OBJ_VISIBLOCK,      {  1410, -250,  -930 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_OBJ_VISIBLOCK,      {  1650, -217,  -930 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_OBJ_VISIBLOCK,      {  1890, -217,  -930 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_OBJ_VISIBLOCK,      {  1890, -217, -1140 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_OBJ_VISIBLOCK,      {  2130, -217, -1140 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_OBJ_VISIBLOCK,      {  2130, -217, -1350 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_OBJ_VISIBLOCK,      {  2350, -265, -1350 }, { 0, 0x05DC, 0 }, 0x0000 },
-    { ACTOR_BG_ICE_SHELTER,     { -1130, -140, -2050 }, { 0,      0, 0 }, 0x0508 }, // Switch: 08
-    { ACTOR_BG_SPOT18_SHUTTER,  {  -850, -200,    72 }, { 0, 0x0FA0, 0 }, 0x0000 }, // Switch: 07
-    { ACTOR_EN_GO3,             {  -665, -200,    50 }, { 0, 0x0FA0, 0 }, 0x0000 },
+    { ACTOR_EN_KANBAN,          {  -982, -200,   171 }, {      0, 0x1111,      0 }, 0x0056 },
+    { ACTOR_EN_KANBAN,          {  1241, -200,  -741 }, {      0, 0xA4FA,      0 }, 0x0057 },
+    { ACTOR_EN_KANBAN,          {  -942, -200, -1866 }, {      0, 0xFDDE,      0 }, 0x0058 },
+    { ACTOR_EN_ITEM00,          {   211,  120,   665 }, {      0,      0,      0 }, 0x1E06 },
+    { ACTOR_EN_SHOPNUTS,        {   165, -200,   488 }, {      0, 0x8BFC,      0 }, 0x0004 },
+    { ACTOR_BG_SPOT00_HANEBASI, {  2515, -210, -1515 }, {      0, 0x0BB8,      0 }, 0xFFFD },
+    { ACTOR_BG_SPOT00_HANEBASI, {  2550,    0, -1480 }, { 0x4000, 0xC374, 0x4000 }, 0xFFFD },
+    { ACTOR_BG_SPOT00_HANEBASI, {  2620,    0, -1220 }, { 0x4000, 0xDECC, 0x4000 }, 0xFFFD },
+    { ACTOR_OBJ_VISIBLOCK,      {  1410, -250,  -930 }, {      0,      0,      0 }, 0x0000 },
+    { ACTOR_OBJ_VISIBLOCK,      {  1650, -160,  -880 }, {      0,      0,      0 }, 0x0000 },
+    { ACTOR_OBJ_VISIBLOCK,      {  1890, -200, -1140 }, {      0,      0,      0 }, 0x0000 },
+    { ACTOR_OBJ_VISIBLOCK,      {  2130, -230, -1350 }, {      0,      0,      0 }, 0x0000 },
+    { ACTOR_OBJ_VISIBLOCK,      {  2350, -265, -1350 }, {      0, 0x05DC,      0 }, 0x0000 },
+    { ACTOR_BG_ICE_SHELTER,     { -1130, -140, -2050 }, {      0,      0,      0 }, 0x0508 }, // Switch: 08
+    { ACTOR_BG_ICE_SHELTER,     {  2585, -200, -1345 }, {      0, 0xC950,      0 }, 0x0509 }, // Switch: 09
+    { ACTOR_BG_SPOT18_SHUTTER,  {  -850, -200,    72 }, {      0, 0x0FA0,      0 }, 0x0000 },
+    { ACTOR_EN_GO3,             {  -665, -200,    50 }, {      0, 0x0FA0,      0 }, 0x0000 },
 };
 
 RoomShapeCullable goron_village_room_0RoomShapeCullable_0000F0 = { 

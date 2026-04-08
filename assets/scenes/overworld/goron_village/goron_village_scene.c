@@ -58,7 +58,7 @@ Spawn goron_village_sceneEntranceList0x000104[] = {
 u16 goron_village_sceneExitList_000110[] = {
     ENTR_PATH_TO_GORON_VILLAGE_1,
     ENTR_GORON_VILLAGE_1,
-    ENTR_GORON_VILLAGE_2,
+    ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_4,
     ENTR_GORON_VILLAGE_3,
 };
 
@@ -390,20 +390,20 @@ SurfaceType goron_village_sceneCollisionHeader_004DC4SurfaceType[] = {
             /* echo */ 10,
             /* canHookshot */ false,
             CONVEYOR_SPEED_FAST,
-            CONVEYOR_DIRECTION_FROM_BINANG(0x39),
+            CONVEYOR_DIRECTION_FROM_BINANG(0xE400),
             /* unk27 */ false
         ),
     } }, // 12
     { {
         SURFACETYPE0(
             /* bgCamIndex */ 0,
-            /* exitIndex */ 3,
+            /* exitIndex */ 2,
             FLOOR_TYPE_0,
             /* unk18 */ 0,
             WALL_TYPE_0,
             FLOOR_PROPERTY_0,
             /* isSoft */ false,
-            /* isHorseBlocked */ false
+            /* isHorseBlocked */ true
         ),
         SURFACETYPE1(
             SURFACE_MATERIAL_DIRT,
@@ -412,7 +412,7 @@ SurfaceType goron_village_sceneCollisionHeader_004DC4SurfaceType[] = {
             /* echo */ 10,
             /* canHookshot */ false,
             CONVEYOR_SPEED_FAST,
-            CONVEYOR_DIRECTION_FROM_BINANG(0x24),
+            CONVEYOR_DIRECTION_FROM_BINANG(/*0x24*/ 0x9000),
             /* unk27 */ false
         ),
     } }, // 13

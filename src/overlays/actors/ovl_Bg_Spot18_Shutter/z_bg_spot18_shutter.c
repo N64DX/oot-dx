@@ -10,6 +10,7 @@
 #include "one_point_cutscene.h"
 #include "sfx.h"
 #include "z_lib.h"
+#include "array_count.h"
 #include "play_state.h"
 #include "save.h"
 
@@ -28,6 +29,13 @@ void func_808B9618(BgSpot18Shutter* this, PlayState* play);
 void func_808B9698(BgSpot18Shutter* this, PlayState* play);
 void func_808B971C(BgSpot18Shutter* this, PlayState* play);
 
+typedef struct BgSpot18ShutterInfo {
+    /* 0x00 */ u16 sceneId;
+    /* 0x04 */ u32 flag;
+    /* 0x08 */ f32 scaleX;
+    /* 0x0C */ f32 scaleY;
+} BgSpot18ShutterInfo; // size = 0x10
+
 ActorProfile Bg_Spot18_Shutter_Profile = {
     /**/ ACTOR_BG_SPOT18_SHUTTER,
     /**/ ACTORCAT_PROP,
@@ -44,18 +52,46 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_VEC3F_DIV1000(scale, 100, ICHAIN_STOP),
 };
 
+BgSpot18ShutterInfo sBgSpot18ShutterInfo[] = {
+    {
+        SCENE_GORON_CITY,
+        INFTABLE_109,
+        1.0f,
+        1.0f,
+        
+    }, {
+        SCENE_GORON_VILLAGE,
+        INFTABLE_GORON_SHRINE_DOOR_OPENED,
+        1.0f,
+        1.0f,
+    }, {
+        SCENE_SPRING_LAKE,
+        INFTABLE_SECRET_SHRINE_DOOR_OPENED,
+        1.5f,
+        1.0f,
+    },
+};
+
 void BgSpot18Shutter_Init(Actor* thisx, PlayState* play) {
     s32 pad;
     BgSpot18Shutter* this = (BgSpot18Shutter*)thisx;
     s32 param = PARAMS_GET_U(this->dyna.actor.params, 8, 1);
     CollisionHeader* colHeader = NULL;
 
+    for (this->index=0; this->index<ARRAY_COUNT(sBgSpot18ShutterInfo); this->index++) {
+        if (play->sceneId == sBgSpot18ShutterInfo[this->index].sceneId)
+            break;
+    }
+
     DynaPolyActor_Init(&this->dyna, 0);
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
 
+    thisx->scale.x *= sBgSpot18ShutterInfo[this->index].scaleX;
+    thisx->scale.y *= sBgSpot18ShutterInfo[this->index].scaleY;
+
     if (param == 0) {
         if (LINK_IS_ADULT_OR_TIMESKIP) {
-            if ( (GET_INFTABLE(INFTABLE_109) && play->sceneId == SCENE_GORON_CITY) || (GET_INFTABLE(INFTABLE_GORON_VILLAGE_DOOR_OPENED) && play->sceneId == SCENE_GORON_VILLAGE) ) {
+            if (GET_INFTABLE(sBgSpot18ShutterInfo[this->index].flag)) {
                 this->actionFunc = func_808B95AC;
                 this->dyna.actor.world.pos.y += 180.0f;
             } else {
@@ -70,7 +106,7 @@ void BgSpot18Shutter_Init(Actor* thisx, PlayState* play) {
             }
         }
     } else {
-        if ( (GET_INFTABLE(INFTABLE_109) && play->sceneId == SCENE_GORON_CITY) || (GET_INFTABLE(INFTABLE_GORON_VILLAGE_DOOR_OPENED) && play->sceneId == SCENE_GORON_VILLAGE) ) {
+        if (GET_INFTABLE(sBgSpot18ShutterInfo[this->index].flag)) {
             this->dyna.actor.world.pos.x += 125.0f * Math_CosS(this->dyna.actor.world.rot.y);
             this->dyna.actor.world.pos.z -= 125.0f * Math_SinS(this->dyna.actor.world.rot.y);
             this->actionFunc = func_808B95AC;
@@ -101,7 +137,7 @@ void func_808B95B8(BgSpot18Shutter* this, PlayState* play) {
 }
 
 void func_808B9618(BgSpot18Shutter* this, PlayState* play) {
-    if ( (GET_INFTABLE(INFTABLE_109) && play->sceneId == SCENE_GORON_CITY) || (GET_INFTABLE(INFTABLE_GORON_VILLAGE_DOOR_OPENED) && play->sceneId == SCENE_GORON_VILLAGE) ) {
+    if (GET_INFTABLE(sBgSpot18ShutterInfo[this->index].flag)) {
         Actor_SetFocus(&this->dyna.actor, 70.0f);
         if (PARAMS_GET_U(this->dyna.actor.params, 8, 1) == 0) {
             this->actionFunc = func_808B9698;

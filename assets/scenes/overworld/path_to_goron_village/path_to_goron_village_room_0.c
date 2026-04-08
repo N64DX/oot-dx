@@ -16,13 +16,14 @@ SceneCmd path_to_goron_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&path_to_goron_village_room_0RoomShapeCullable_000240),
-    SCENE_CMD_OBJECT_LIST(10, path_to_goron_village_room_0ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(11, path_to_goron_village_room_0ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(21, path_to_goron_village_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
 
 s16 path_to_goron_village_room_0ObjectList_000040[] = {
     OBJECT_HORSE,
+    OBJECT_ICEFLOE,
     OBJECT_FIREFLY,
     OBJECT_TITE,
     OBJECT_WOOD02,

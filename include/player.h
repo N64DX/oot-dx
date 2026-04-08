@@ -706,6 +706,7 @@ typedef struct DekuWalkRoutes {
     /* 0x00 */ Vec3f pos;
     /* 0x0C */ f32 speed;
     /* 0x10 */ u16 yaw;
+    /* 0x12 */ u16 sceneId;
 } DekuWalkRoutes; // size = 0x14
 
 typedef struct WeaponInfo {

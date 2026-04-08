@@ -17,8 +17,8 @@ SceneCmd mountain_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_0003D0),
-    SCENE_CMD_OBJECT_LIST(11, mountain_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(41, mountain_village_room_0ActorEntry_000074),
+    SCENE_CMD_OBJECT_LIST(13, mountain_village_room_0ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(42, mountain_village_room_0ActorEntry_000074),
     SCENE_CMD_END(),
 };
 
@@ -30,9 +30,11 @@ SceneCmd* mountain_village_room_0AlternateHeaders[] = {
 
 s16 mountain_village_room_0ObjectList_00004C[] = {
     OBJECT_HORSE,
+    OBJECT_ICEFLOE,
+    OBJECT_SPOT18_OBJ,
     OBJECT_SYOKUDAI,
   //OBJECT_FLOWERPOT,
-  //OBJECT_FR,
+    OBJECT_FR,
   //OBJECT_GOROIWA,
     OBJECT_MKK,
     OBJECT_CROW,
@@ -43,51 +45,51 @@ s16 mountain_village_room_0ObjectList_00004C[] = {
     OBJECT_BOMBIWA,
     OBJECT_TSUBO,
     OBJECT_KA,
-    OBJECT_UMAJUMP,
 };
 
 ActorEntry mountain_village_room_0ActorEntry_000074[] = {
-    { ACTOR_EN_KAKASI2,     {   510,  363,   900 }, {    0,      0, 14 }, 0x053E }, // Switch: 3E
-    { ACTOR_EN_CROW,        {   311,  943,   272 }, {    0,      0,  0 }, 0x0000 },
-    { ACTOR_OBJ_SYOKUDAI,   {  -818,    8,  -170 }, {    0,   0x15,  0 }, 0x243F }, // Switch: 3F
-    { ACTOR_OBJ_COMB,       {  1025,  271,   695 }, {    0, 0xFE0C,  0 }, 0x0081 },
-    { ACTOR_EN_ITEM00,      {    79,  -30,   807 }, {    0,      0,  0 }, 0x0902 }, // Collect: 09
-    { ACTOR_OBJ_TSUBO,      {   510,  363,   700 }, {    0,      0,  0 }, 0x3914 }, // Collect: 1C
-    { ACTOR_EN_GS,          {  -805,    4,  1346 }, {    0, 0x63F0,  0 }, 0xFF23 },
-    { ACTOR_EN_RIVER_SOUND, { -1217,   16,   450 }, {    0,      0,  0 }, 0x0003 },
-    { ACTOR_OBJ_HAMISHI,    {   146,  -30,   831 }, {    0,      0,  0 }, 0x0000 }, // Switch: 00
-    { ACTOR_OBJ_HAMISHI,    {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
-    { ACTOR_OBJ_HAMISHI,    {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
-    { ACTOR_OBJ_HAMISHI,    {  2100,   13,   780 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
-    { ACTOR_OBJ_HAMISHI,    {  2070,   14,   860 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
-    { ACTOR_OBJ_HAMISHI,    {  2050,   14,   940 }, {    0,      0,  0 }, 0x0005 }, // Switch: 05
-    { ACTOR_OBJ_HAMISHI,    {  2020,   14,  1020 }, {    0,      0,  0 }, 0x0006 }, // Switch: 06
-    { ACTOR_OBJ_HAMISHI,    { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0007 }, // Switch: 07
-    { ACTOR_OBJ_HAMISHI,    {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0008 }, // Switch: 08
-    { ACTOR_EN_ISHI,        {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
-    { ACTOR_EN_ISHI,        {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
-    { ACTOR_EN_ISHI,        {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_EN_ISHI,        {   686,  -14,   808 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_EN_ISHI,        {   656,  -20,   936 }, {    0,      0,  0 }, 0x0300 },
-    { ACTOR_EN_ISHI,        {   705,  -18,   973 }, {    0,      0,  0 }, 0x0300 },
-    { ACTOR_EN_ISHI,        {   626,  -20,   892 }, {    0,      0,  0 }, 0x0300 },
-    { ACTOR_EN_KANBAN,      {   -46,  -25,   723 }, {    0, 0xC000,  0 }, 0x0050 }, // Signpost to Blacksmith 
-    { ACTOR_EN_KANBAN,      {  -421,    8,   336 }, {    0, 0x0A8C,  0 }, 0x0051 }, // Signpost near bridge
-    { ACTOR_EN_KANBAN,      {  1761,   15,   986 }, {    0, 0x7A24,  0 }, 0x0052 }, // Signpost towards Goron Caves
-    { ACTOR_EN_KANBAN,      { -1064,    8,   -79 }, {    0, 0x32C8,  0 }, 0x0053 }, // Signpost towards Forbidden Woods
-    { ACTOR_EN_KANBAN,      {   345,    8,  -305 }, {    0,      0,  0 }, 0x0054 }, // Signpost to across the water 
-    { ACTOR_EN_KUSA,        {  -279,  -66,  1379 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_EN_KUSA,        {  -203,  -47,  1155 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_EN_KUSA,        {  -545,   -8,  1069 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_EN_KUSA,        {   781,  -28,  1139 }, {    0,      0,  0 }, 0x1F00 },
-    { ACTOR_OBJ_MURE2,      {   267,  -29,   402 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_OBJ_MURE2,      {    86,   -9,   145 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_OBJ_MURE2,      {   365,  -18,   165 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_OBJ_MURE,       {   292,   50,   230 }, {    0,      0,  0 }, 0x4324 },
-    { ACTOR_OBJ_MURE,       {  -319,    0,  1279 }, {    0,      0,  0 }, 0x5324 },
-    { ACTOR_OBJ_MURE,       {   327,  -30,  -637 }, {    0,      0,  0 }, 0x3322 },
-    { ACTOR_OBJ_MURE,       {  -971,  -30,   457 }, {    0,      0,  0 }, 0x6322 },
-    { ACTOR_BG_UMAJUMP,     {  1940,   13,   850 }, {    0, 0x32C8,  0 }, 0xFFFE },
+    { ACTOR_EN_KAKASI2,        {   510,  363,   900 }, {    0,      0, 14 }, 0x053E }, // Switch: 3E
+    { ACTOR_EN_CROW,           {   311,  943,   272 }, {    0,      0,  0 }, 0x0000 },
+    { ACTOR_OBJ_SYOKUDAI,      {  -818,    8,  -170 }, {    0, 0x1770,  0 }, 0x243F },
+    { ACTOR_OBJ_SYOKUDAI,      {   800, 1408, -1400 }, {    0, 0xEC78,  0 }, 0x205F }, // Switch: 1F
+    { ACTOR_OBJ_COMB,          {  1025,  271,   695 }, {    0, 0xFE0C,  0 }, 0x0081 },
+    { ACTOR_EN_ITEM00,         {    79,  -30,   807 }, {    0,      0,  0 }, 0x0902 }, // Collect: 09
+    { ACTOR_OBJ_TSUBO,         {   510,  363,   700 }, {    0,      0,  0 }, 0x3914 }, // Collect: 1C
+    { ACTOR_EN_GS,             {  -805,    4,  1346 }, {    0, 0x63F0,  0 }, 0xFF23 },
+    { ACTOR_EN_RIVER_SOUND,    { -1217,   16,   450 }, {    0,      0,  0 }, 0x0003 },
+    { ACTOR_OBJ_HAMISHI,       {   146,  -30,   831 }, {    0,      0,  0 }, 0x0000 }, // Switch: 00
+    { ACTOR_OBJ_HAMISHI,       {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
+    { ACTOR_OBJ_HAMISHI,       {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
+    { ACTOR_OBJ_HAMISHI,       {  2100,   13,   780 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
+    { ACTOR_OBJ_HAMISHI,       {  2070,   14,   860 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
+    { ACTOR_OBJ_HAMISHI,       {  2050,   14,   940 }, {    0,      0,  0 }, 0x0005 }, // Switch: 05
+    { ACTOR_OBJ_HAMISHI,       {  2020,   14,  1020 }, {    0,      0,  0 }, 0x0006 }, // Switch: 06
+    { ACTOR_OBJ_HAMISHI,       { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0007 }, // Switch: 07
+    { ACTOR_OBJ_HAMISHI,       {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0008 }, // Switch: 08
+    { ACTOR_EN_ISHI,           {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
+    { ACTOR_EN_ISHI,           {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
+    { ACTOR_EN_ISHI,           {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_EN_ISHI,           {   686,  -14,   808 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_EN_ISHI,           {   656,  -20,   936 }, {    0,      0,  0 }, 0x0300 },
+    { ACTOR_EN_ISHI,           {   705,  -18,   973 }, {    0,      0,  0 }, 0x0300 },
+    { ACTOR_EN_ISHI,           {   626,  -20,   892 }, {    0,      0,  0 }, 0x0300 },
+    { ACTOR_EN_KANBAN,         {   -46,  -25,   723 }, {    0, 0xC000,  0 }, 0x0050 }, // Signpost to Blacksmith 
+    { ACTOR_EN_KANBAN,         {  -421,    8,   336 }, {    0, 0x0A8C,  0 }, 0x0051 }, // Signpost near bridge
+    { ACTOR_EN_KANBAN,         {  1761,   15,   986 }, {    0, 0x7A24,  0 }, 0x0052 }, // Signpost towards Goron Caves
+    { ACTOR_EN_KANBAN,         { -1064,    8,   -79 }, {    0, 0x32C8,  0 }, 0x0053 }, // Signpost towards Forbidden Woods
+    { ACTOR_EN_KANBAN,         {   345,    8,  -305 }, {    0,      0,  0 }, 0x0054 }, // Signpost to across the water 
+    { ACTOR_EN_KUSA,           {  -279,  -66,  1379 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_EN_KUSA,           {  -203,  -47,  1155 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_EN_KUSA,           {  -545,   -8,  1069 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_EN_KUSA,           {   781,  -28,  1139 }, {    0,      0,  0 }, 0x1F00 },
+    { ACTOR_OBJ_MURE2,         {   267,  -29,   402 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_OBJ_MURE2,         {    86,   -9,   145 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_OBJ_MURE2,         {   365,  -18,   165 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_OBJ_MURE,          {   292,   50,   230 }, {    0,      0,  0 }, 0x4324 },
+    { ACTOR_OBJ_MURE,          {  -319,    0,  1279 }, {    0,      0,  0 }, 0x5324 },
+    { ACTOR_OBJ_MURE,          {   327,  -30,  -637 }, {    0,      0,  0 }, 0x3322 },
+    { ACTOR_OBJ_MURE,          {  -971,  -30,   457 }, {    0,      0,  0 }, 0x6322 },
+    { ACTOR_BG_SPOT18_SHUTTER, {   470, 1408, -1575 }, {    0, 0xF830,  0 }, 0x0000 },
 };
 
 RoomShapeCullable mountain_village_room_0RoomShapeCullable_0003D0 = { 
@@ -142,69 +144,69 @@ SceneCmd mountain_village_room_0Set_timeskip[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_0003D0),
-    SCENE_CMD_OBJECT_LIST(11, mountain_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(42, mountain_village_room_0ActorEntry_timeskip),
+    SCENE_CMD_OBJECT_LIST(13, mountain_village_room_0ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(48, mountain_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
 
 ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
-    { ACTOR_EN_KAKASI2,     {   510,  363,   900 }, {    0,      0, 14 }, 0x053E }, // Switch: 3E
-    { ACTOR_EN_CROW,        {   311,  943,   272 }, {    0,      0,  0 }, 0x0000 },
-    { ACTOR_OBJ_SYOKUDAI,   {  -818,    8,  -170 }, {    0,   0x15,  0 }, 0x243F }, // Switch: 3F
-    { ACTOR_OBJ_COMB,       {  1025,  271,   695 }, {    0, 0xFE0C,  0 }, 0x0081 },
-    { ACTOR_EN_ITEM00,      {    79,  -30,   807 }, {    0,      0,  0 }, 0x0902 }, // Collect: 09
-    { ACTOR_OBJ_TSUBO,      {   510,  363,   700 }, {    0,      0,  0 }, 0x3914 }, // Collect: 1C
-    { ACTOR_EN_GS,          {  -805,    4,  1346 }, {    0, 0x63F0,  0 }, 0xFF23 },
-    { ACTOR_EN_RIVER_SOUND, { -1217,   16,   450 }, {    0,      0,  0 }, 0x0003 },
-    { ACTOR_OBJ_HAMISHI,    {   146,  -30,   831 }, {    0,      0,  0 }, 0x0000 }, // Switch: 00
-    { ACTOR_OBJ_HAMISHI,    {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
-    { ACTOR_OBJ_HAMISHI,    {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
-    { ACTOR_OBJ_HAMISHI,    {  2100,   13,   780 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
-    { ACTOR_OBJ_HAMISHI,    {  2070,   14,   860 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
-    { ACTOR_OBJ_HAMISHI,    {  2050,   14,   940 }, {    0,      0,  0 }, 0x0005 }, // Switch: 05
-    { ACTOR_OBJ_HAMISHI,    {  2020,   14,  1020 }, {    0,      0,  0 }, 0x0006 }, // Switch: 06
-    { ACTOR_OBJ_HAMISHI,    { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0007 }, // Switch: 07
-    { ACTOR_OBJ_HAMISHI,    {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0008 }, // Switch: 08
-    { ACTOR_EN_ISHI,        {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
-    { ACTOR_EN_ISHI,        {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
-    { ACTOR_EN_ISHI,        {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_EN_ISHI,        {   686,  -14,   808 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_EN_ISHI,        {   656,  -20,   936 }, {    0,      0,  0 }, 0x0300 },
-    { ACTOR_EN_ISHI,        {   705,  -18,   973 }, {    0,      0,  0 }, 0x0300 },
-    { ACTOR_EN_ISHI,        {   626,  -20,   892 }, {    0,      0,  0 }, 0x0300 },
-    { ACTOR_EN_KANBAN,      {   -46,  -25,   723 }, {    0, 0xC000,  0 }, 0x0050 }, // Signpost to Blacksmith 
-    { ACTOR_EN_KANBAN,      {  -421,    8,   336 }, {    0, 0x0A8C,  0 }, 0x0051 }, // Signpost near bridge
-    { ACTOR_EN_KANBAN,      {  1761,   15,   986 }, {    0, 0x7A24,  0 }, 0x0052 }, // Signpost towards Goron Caves
-    { ACTOR_EN_KANBAN,      { -1064,    8,   -79 }, {    0, 0x32C8,  0 }, 0x0053 }, // Signpost towards Forbidden Woods
-    { ACTOR_EN_KANBAN,      {   345,    8,  -305 }, {    0,      0,  0 }, 0x0054 }, // Signpost to across the water 
-    { ACTOR_EN_KUSA,        {  -279,  -66,  1379 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_EN_KUSA,        {  -203,  -47,  1155 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_EN_KUSA,        {  -545,   -8,  1069 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_EN_KUSA,        {   781,  -28,  1139 }, {    0,      0,  0 }, 0x1F00 },
-    { ACTOR_OBJ_MURE2,      {   267,  -29,   402 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_OBJ_MURE2,      {    86,   -9,   145 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_OBJ_MURE2,      {   365,  -18,   165 }, {    0,      0,  0 }, 0x0200 },
-    { ACTOR_OBJ_MURE,       {   292,   50,   230 }, {    0,      0,  0 }, 0x4324 },
-    { ACTOR_OBJ_MURE,       {  -319,    0,  1279 }, {    0,      0,  0 }, 0x5324 },
-    { ACTOR_OBJ_MURE,       {   327,  -30,  -637 }, {    0,      0,  0 }, 0x3322 },
-    { ACTOR_OBJ_MURE,       {  -971,  -30,   457 }, {    0,      0,  0 }, 0x6322 },
-    { ACTOR_BG_UMAJUMP,     {  1940,   13,   850 }, {    0, 0x32C8,  0 }, 0xFFFE },
-    { ACTOR_EN_BOX,         { -1425,    8,   376 }, { 0x3E, 0xADF8,  0 }, 0x4000 }, // Chest: 00
- 
-  //{ ACTOR_EN_BEE,         {   219,   13,    71 }, {    0,      0,  0 }, 0x0000 },
-  //{ ACTOR_EN_BEE,         {  -471,  -10,  1228 }, {    0,      0,  0 }, 0x0000 },
-  //{ ACTOR_OBJ_FLOWERPOT   {    87,   71,   720 }, {    0,   0xB4,  0 }, 0x0C0A },
-  //{ ACTOR_OBJ_FLOWERPOT,  {    87,   71,   880 }, {    0,      0,  0 }, 0x0D0A },
-  //{ ACTOR_EN_MINIFROG,    {  -805,    1,   917 }, {    0,   0x4B,  0 }, 0x00F0 },
-  //{ ACTOR_EN_MINIFROG,    {  -844,    1,   836 }, {    0,   0x52,  0 }, 0x00F1 },
-  //{ ACTOR_EN_MINIFROG,    {  -844,    1,   996 }, {    0,   0x60,  0 }, 0x00F2 },
-  //{ ACTOR_EN_MINIFROG,    {  -884,    1,   915 }, {    0,   0x52,  0 }, 0x00F3 },
-  //{ ACTOR_EN_MINIFROG,    {  -933,    1,   964 }, {    0,   0x63,  0 }, 0x00F4 },
-  //{ ACTOR_OBJ_SNOWBALL2,  {  -881,    8,    84 }, {    0,      0,  0 }, 0x250A },
-  //{ ACTOR_OBJ_SNOWBALL2,  {  -470,    8,  -224 }, {    0,      0,  0 }, 0x2915 },
-  //{ ACTOR_OBJ_SNOWBALL2,  {  -384,    8,  -259 }, {    0,      0,  0 }, 0x2A1F },
-  //{ ACTOR_OBJ_SNOWBALL2,  {  -417,    8,   -51 }, {    0,      0,  0 }, 0x2B10 },
-  //{ ACTOR_OBJ_SNOWBALL2,  {  -751,    8,  -197 }, {    0,      0,  0 }, 0x2C0F },
+    { ACTOR_EN_KAKASI2,        {   510,  363,   900 }, {    0,      0, 14 }, 0x053E }, // Switch: 3E
+    { ACTOR_EN_CROW,           {   311,  943,   272 }, {    0,      0,  0 }, 0x0000 },
+    { ACTOR_OBJ_SYOKUDAI,      {  -818,    8,  -170 }, {    0, 0x1770,  0 }, 0x243F },
+    { ACTOR_OBJ_SYOKUDAI,      {   800, 1408, -1400 }, {    0, 0xEC78,  0 }, 0x205F }, // Switch: 1F
+    { ACTOR_OBJ_COMB,          {  1025,  271,   695 }, {    0, 0xFE0C,  0 }, 0x0081 },
+    { ACTOR_EN_ITEM00,         {    79,  -30,   807 }, {    0,      0,  0 }, 0x0902 }, // Collect: 09
+    { ACTOR_OBJ_TSUBO,         {   510,  363,   700 }, {    0,      0,  0 }, 0x3914 }, // Collect: 1C
+    { ACTOR_EN_GS,             {  -805,    4,  1346 }, {    0, 0x63F0,  0 }, 0xFF23 },
+    { ACTOR_EN_RIVER_SOUND,    { -1217,   16,   450 }, {    0,      0,  0 }, 0x0003 },
+    { ACTOR_OBJ_HAMISHI,       {   146,  -30,   831 }, {    0,      0,  0 }, 0x0000 }, // Switch: 00
+    { ACTOR_OBJ_HAMISHI,       {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
+    { ACTOR_OBJ_HAMISHI,       {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
+    { ACTOR_OBJ_HAMISHI,       {  2100,   13,   780 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
+    { ACTOR_OBJ_HAMISHI,       {  2070,   14,   860 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
+    { ACTOR_OBJ_HAMISHI,       {  2050,   14,   940 }, {    0,      0,  0 }, 0x0005 }, // Switch: 05
+    { ACTOR_OBJ_HAMISHI,       {  2020,   14,  1020 }, {    0,      0,  0 }, 0x0006 }, // Switch: 06
+    { ACTOR_OBJ_HAMISHI,       { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0007 }, // Switch: 07
+    { ACTOR_OBJ_HAMISHI,       {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0008 }, // Switch: 08
+    { ACTOR_EN_ISHI,           {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
+    { ACTOR_EN_ISHI,           {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
+    { ACTOR_EN_ISHI,           {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_EN_ISHI,           {   686,  -14,   808 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_EN_ISHI,           {   656,  -20,   936 }, {    0,      0,  0 }, 0x0300 },
+    { ACTOR_EN_ISHI,           {   705,  -18,   973 }, {    0,      0,  0 }, 0x0300 },
+    { ACTOR_EN_ISHI,           {   626,  -20,   892 }, {    0,      0,  0 }, 0x0300 },
+    { ACTOR_EN_KANBAN,         {   -46,  -25,   723 }, {    0, 0xC000,  0 }, 0x0050 }, // Signpost to Blacksmith 
+    { ACTOR_EN_KANBAN,         {  -421,    8,   336 }, {    0, 0x0A8C,  0 }, 0x0051 }, // Signpost near bridge
+    { ACTOR_EN_KANBAN,         {  1761,   15,   986 }, {    0, 0x7A24,  0 }, 0x0052 }, // Signpost towards Goron Caves
+    { ACTOR_EN_KANBAN,         { -1064,    8,   -79 }, {    0, 0x32C8,  0 }, 0x0053 }, // Signpost towards Forbidden Woods
+    { ACTOR_EN_KANBAN,         {   345,    8,  -305 }, {    0,      0,  0 }, 0x0054 }, // Signpost to across the water 
+    { ACTOR_EN_KUSA,           {  -279,  -66,  1379 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_EN_KUSA,           {  -203,  -47,  1155 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_EN_KUSA,           {  -545,   -8,  1069 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_EN_KUSA,           {   781,  -28,  1139 }, {    0,      0,  0 }, 0x1F00 },
+    { ACTOR_OBJ_MURE2,         {   267,  -29,   402 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_OBJ_MURE2,         {    86,   -9,   145 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_OBJ_MURE2,         {   365,  -18,   165 }, {    0,      0,  0 }, 0x0200 },
+    { ACTOR_OBJ_MURE,          {   292,   50,   230 }, {    0,      0,  0 }, 0x4324 },
+    { ACTOR_OBJ_MURE,          {  -319,    0,  1279 }, {    0,      0,  0 }, 0x5324 },
+    { ACTOR_OBJ_MURE,          {   327,  -30,  -637 }, {    0,      0,  0 }, 0x3322 },
+    { ACTOR_OBJ_MURE,          {  -971,  -30,   457 }, {    0,      0,  0 }, 0x6322 },
+    { ACTOR_BG_SPOT18_SHUTTER, {   470, 1408, -1575 }, {    0, 0xF830,  0 }, 0x0000 },
+    { ACTOR_EN_BOX,            { -1425,    8,   376 }, { 0x3E, 0xADF8,  0 }, 0x4000 }, // Chest: 00
+  //{ ACTOR_EN_BEE,            {   219,   13,    71 }, {    0,      0,  0 }, 0x0000 },
+  //{ ACTOR_EN_BEE,            {  -471,  -10,  1228 }, {    0,      0,  0 }, 0x0000 },
+  //{ ACTOR_OBJ_FLOWERPOT      {    87,   71,   720 }, {    0,   0xB4,  0 }, 0x0C0A },
+  //{ ACTOR_OBJ_FLOWERPOT,     {    87,   71,   880 }, {    0,      0,  0 }, 0x0D0A },
+    { ACTOR_EN_FR,             {  -805,    1,   917 }, {    0, 0x4B00,  0 }, 0x0001 },
+    { ACTOR_EN_FR,             {  -844,    1,   836 }, {    0, 0x5200,  0 }, 0x0002 },
+    { ACTOR_EN_FR,             {  -844,    1,   996 }, {    0, 0x6000,  0 }, 0x0003 },
+    { ACTOR_EN_FR,             {  -884,    1,   915 }, {    0, 0x5200,  0 }, 0x0004 },
+    { ACTOR_EN_FR,             {  -933,    1,   964 }, {    0, 0x6300,  0 }, 0x0005 },
+  //{ ACTOR_OBJ_SNOWBALL2,     {  -881,    8,    84 }, {    0,      0,  0 }, 0x250A },
+  //{ ACTOR_OBJ_SNOWBALL2,     {  -470,    8,  -224 }, {    0,      0,  0 }, 0x2915 },
+  //{ ACTOR_OBJ_SNOWBALL2,     {  -384,    8,  -259 }, {    0,      0,  0 }, 0x2A1F },
+  //{ ACTOR_OBJ_SNOWBALL2,     {  -417,    8,   -51 }, {    0,      0,  0 }, 0x2B10 },
+  //{ ACTOR_OBJ_SNOWBALL2,     {  -751,    8,  -197 }, {    0,      0,  0 }, 0x2C0F },
 };
 
 s32 mountain_village_room_0_terminatorMaybe_00061C = { 0x01000000 };

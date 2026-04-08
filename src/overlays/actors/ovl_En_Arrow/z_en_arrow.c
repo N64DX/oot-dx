@@ -255,6 +255,54 @@ void EnArrow_CarryActor(EnArrow* this, PlayState* play) {
     }
 }
 
+void EnArrow_WaterBoxCollision(EnArrow* this, PlayState* play) {
+    WaterBox* waterBox;
+    f32 y = this->actor.world.pos.y;
+    Vec3f sp44;
+    f32 temp;
+
+    if (WaterBox_GetSurface1(play, &play->colCtx, this->actor.world.pos.x, this->actor.world.pos.z, &y, &waterBox) && this->actor.world.pos.y < y && !(this->actor.bgCheckFlags & BGCHECKFLAG_WATER)) {
+        this->actor.bgCheckFlags |= BGCHECKFLAG_WATER;
+
+        Math_Vec3f_Diff(&this->actor.world.pos, &this->actor.home.pos, &sp44);
+
+        if (sp44.y != 0.0f) {
+            temp = sqrtf(SQ(sp44.x) + SQ(sp44.z));
+            if (temp != 0.0f) {
+                temp = (((y - this->actor.home.pos.y) / sp44.y) * temp) / temp;
+            }
+            sp44.x = this->actor.home.pos.x + (sp44.x * temp);
+            sp44.y = y;
+            sp44.z = this->actor.home.pos.z + (sp44.z * temp);
+            EffectSsGSplash_Spawn(play, &sp44, NULL, NULL, 0, 300);
+        }
+
+        Actor_PlaySfx(&this->actor, NA_SE_EV_DIVE_INTO_WATER_L);
+
+        EffectSsGRipple_Spawn(play, &sp44, 100, 500, 0);
+        EffectSsGRipple_Spawn(play, &sp44, 100, 500, 4);
+        EffectSsGRipple_Spawn(play, &sp44, 100, 500, 8);
+
+        if (this->actor.params == ARROW_ICE || this->actor.params == ARROW_FIRE) {
+            if (this->actor.params == ARROW_ICE && func_809B4640 != this->actionFunc) {
+                Actor_Spawn(&play->actorCtx, play, ACTOR_BG_ICEFLOE, sp44.x, sp44.y, sp44.z, 0, 0, 0, 300);
+                Actor_Kill(&this->actor);
+                return;
+            }
+
+            this->actor.params = ARROW_NORMAL;
+            this->collider.elem.atDmgInfo.dmgFlags = DMG_ARROW_NORMAL;
+
+            if (this->actor.child != NULL) {
+                Actor_Kill(this->actor.child);
+                return;
+            }
+
+            Magic_Reset(play);
+        }
+    }
+}
+
 void EnArrow_Fly(EnArrow* this, PlayState* play) {
     CollisionPoly* hitPoly;
     s32 bgId;
@@ -339,6 +387,8 @@ void EnArrow_Fly(EnArrow* this, PlayState* play) {
             }
         }
     } else {
+        EnArrow_WaterBoxCollision(this, play);
+
         Math_Vec3f_Copy(&this->unk_210, &this->actor.world.pos);
         Actor_MoveXZGravity(&this->actor);
 
@@ -396,6 +446,7 @@ void func_809B45E0(EnArrow* this, PlayState* play) {
 void func_809B4640(EnArrow* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
     Actor_MoveXZGravity(&this->actor);
+    EnArrow_WaterBoxCollision(this, play);
 
     if (DECR(this->timer) == 0) {
         Actor_Kill(&this->actor);

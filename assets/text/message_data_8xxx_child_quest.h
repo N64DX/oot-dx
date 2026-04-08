@@ -2900,3 +2900,37 @@ MSG(
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x8402, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I am known as Hyrule's best cobbler\n"
+"And I happened to craft a pair of\n"
+"boots that let you jump further.\n"
+"How about it..." TEXTID(0x8403)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8403, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"How about buying these boots for \n"
+"600 Rupees?\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Buy\n"
+    "Don't buy" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8404, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Do these boots fit you well?"
+),
+MSG(),
+MSG()
+)

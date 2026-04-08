@@ -4,7 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-//#include "assets/objects/object_visiblock/object_visiblock.h"
 #include "assets/objects/object_ice_objects/object_ice_objects.h"
 
 struct ObjVisiblock;

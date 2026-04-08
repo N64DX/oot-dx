@@ -11,6 +11,7 @@ typedef void (*BgSpot18ShutterActionFunc)(struct BgSpot18Shutter*, struct PlaySt
 typedef struct BgSpot18Shutter {
     /* 0x0000 */ DynaPolyActor dyna;
     /* 0x0164 */ BgSpot18ShutterActionFunc actionFunc;
-} BgSpot18Shutter; // size = 0x0168
+    /* 0x0168 */ u8 index;
+} BgSpot18Shutter; // size = 0x016C
 
 #endif

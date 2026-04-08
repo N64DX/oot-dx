@@ -6527,6 +6527,16 @@ LAYER_2C4E:
 /* 0x2C4E [0x4F 0x81 0x90 0x69     ] */ notedv      PITCH_C2, FRAMERATE_CONST(400, 480), 105
 /* 0x2C52 [0xF4 0xFA               ] */ rjump       LAYER_2C4E
 
+.channel CHAN_EV_ICE_FREEZE2
+/* 0x2C38 [0x88 0x2C 0x47          ] */ ldlayer     0, LAYER_EV_ICE_FREEZE2
+/* 0x2C3E [0xFF                    ] */ end
+
+.layer LAYER_EV_ICE_FREEZE2
+/* 0x2C47 [0xC6 0x0F               ] */ instr       SF0_INST_15
+/* 0x2C49 [0xC4                    ] */ legato
+/* 0x2C4A [0xC7 0x81 0x20 0xFF     ] */ portamento  0x81, PITCH_F3, 255
+/* 0x2C4E [0x4F 0x81 0x90 0x69     ] */ notedv      PITCH_C2, FRAMERATE_CONST(400, 480), 105
+
 .channel CHAN_2C54
 /* 0x2C54 [0x89 0x2C 0x62          ] */ ldlayer     1, LAYER_2C62
 /* 0x2C57 [0xCC 0x58               ] */ ldi         (ASEQ_OP_LAYER_NOTEDV | PITCH_A2)

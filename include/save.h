@@ -125,7 +125,9 @@ typedef union ObtainedSkills {
     struct {
         u8 enhancedSpin      : 1;
         u8 perfectBlockBoost : 1;
-        u8 unk               : 6;
+        u8 halfMagicCost     : 1;
+        u8 furtherJump       : 1;
+        u8 unk               : 4;
     };
     u8 skills;
 } ObtainedSkills; // size = 0x1
@@ -1035,7 +1037,9 @@ typedef enum LinkAge {
 #define INFTABLE_113 0x113
 #define INFTABLE_11A 0x11A
 #define INFTABLE_11E 0x11E
-#define INFTABLE_GORON_VILLAGE_DOOR_OPENED 0x11F
+#define INFTABLE_GORON_SHRINE_DOOR_OPENED 0x11F
+#define INFTABLE_GORON_MINES_DOOR_OPENED 0x120
+#define INFTABLE_SECRET_SHRINE_DOOR_OPENED 0x121
 #define INFTABLE_124 0x124
 #define INFTABLE_129 0x129
 #define INFTABLE_12A 0x12A

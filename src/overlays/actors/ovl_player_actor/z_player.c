@@ -550,6 +550,12 @@ static bool Player_HasPerfected = false;
 static bool Player_CanPerfect = true;
 static bool Player_WasShieldUp = false;
 
+static u8 dekuWalkArrIndex;
+static DekuWalkRoutes dekuWalkRoutes[] = {
+    { { 635.0f,  1400.0f,   633.0f }, 5.5f, 0x2000, SCENE_ANCIENT_HOLLOW },
+    { { 2800.0f, -200.0f, -1430.0f }, 5.0f, 0x4950, SCENE_GORON_VILLAGE  },
+};
+
 static u16 D_8085361C[] = {
     NA_SE_VO_LI_SWEAT,
     NA_SE_VO_LI_SNEEZE,
@@ -838,6 +844,8 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_BOW, OBJECT_GI_HEROS_BOW, GID_HEROS_BOW, 0x8009, 0x80, CHEST_ANIM_LONG),
     // GI_GOLD_DUST
 	GET_ITEM(ITEM_BROKEN_GORONS_SWORD, OBJECT_GI_GOLD_DUST, GID_GOLD_DUST, 0x800A, 0x80, CHEST_ANIM_LONG),
+    // GI_BOOTS_UPGRADE
+	GET_ITEM(ITEM_BOOTS_UPGRADE, OBJECT_GI_BOOTS_2, GID_BOOTS_KOKIRI, 0x901D, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_MASTER
 	GET_ITEM(ITEM_MASTER_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9005, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_ROYAL
@@ -5764,38 +5772,39 @@ static s16 sReturnEntranceGroupData[] = {
     /*  1 */ ENTR_DEATH_MOUNTAIN_CRATER_3, // from Double Magic Fairy Fountain
     /*  2 */ MAP_OUTSIDE_GANONS_CASTLE_2,  // from Double Defense Fairy Fountain (as adult)
     /*  3 */ ENTR_WOODFALL_2,              // from Great Quick Spin Fairy Fountain
+    /*  4 */ ENTR_GORON_VILLAGE_2,         // from Half Magic Cost Fairy Fountain
 
     // ENTR_RETURN_2
-    /*  4 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
-    /*  5 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
+    /*  5 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
+    /*  6 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
 
     // ENTR_RETURN_BAZAAR
-    /*  6 */ ENTR_KAKARIKO_VILLAGE_3,
-    /*  7 */ ENTR_MARKET_DAY_6,
+    /*  7 */ ENTR_KAKARIKO_VILLAGE_3,
+    /*  8 */ ENTR_MARKET_DAY_6,
 
     // ENTR_RETURN_4
-    /*  8 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
-    /*  9 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
+    /*  9 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
+    /* 10 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
 
     // ENTR_RETURN_SHOOTING_GALLERY
-    /* 10 */ ENTR_KAKARIKO_VILLAGE_10,
-    /* 11 */ ENTR_MARKET_DAY_8,
+    /* 11 */ ENTR_KAKARIKO_VILLAGE_10,
+    /* 12 */ ENTR_MARKET_DAY_8,
 
     // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    /* 12 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
-    /* 13 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
-    /* 14 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
+    /* 13 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
+    /* 14 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
+    /* 15 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
 };
 
 /**
  * The values are indices into `sReturnEntranceGroupData` marking the start of each group
  */
 static u8 sReturnEntranceGroupIndices[] = {
-    12, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    10, // ENTR_RETURN_SHOOTING_GALLERY
-    4,  // ENTR_RETURN_2
-    6,  // ENTR_RETURN_BAZAAR
-    8,  // ENTR_RETURN_4
+    13, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
+    11, // ENTR_RETURN_SHOOTING_GALLERY
+    5,  // ENTR_RETURN_2
+    7,  // ENTR_RETURN_BAZAAR
+    9,  // ENTR_RETURN_4
     0,  // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
 };
 
@@ -7937,7 +7946,7 @@ void func_8083DF68(Player* this, f32 arg1, s16 arg2) {
 void func_8083DFE0(Player* this, f32* arg1, s16* arg2) {
     s16 yawDiff = this->yaw - *arg2;
 
-    if (this->meleeWeaponState == 0) {
+    if (this->meleeWeaponState == 0 && !(gSaveContext.save.info.obtainedSkills.furtherJump && (this->currentBoots == PLAYER_BOOTS_KOKIRI || this->currentBoots == PLAYER_BOOTS_KOKIRI_CHILD))) {
         this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
     }
 
@@ -12632,7 +12641,7 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
                 gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability++;
                 if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability >= 60 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
                     gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
-                    Message_StartTextbox(play, 0x9303, NULL);
+                    Message_StartTextbox(play, 0x9306, NULL);
                     gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
                 }
             }
@@ -16455,23 +16464,11 @@ void func_80851828(PlayState* play, Player* this, CsCmdActorCue* cue) {
     }
 }
 
-static u8 dekuWalkArrIndex;
-static DekuWalkRoutes dekuWalkRoutes[] = {
-    { { 635.0f,  1400.0f,   633.0f }, 5.5f, 0x2000 },
-    { { 2800.0f, -200.0f, -1430.0f }, 5.0f, 0x4950 },
-};
-
 void PlayerCs_InitDekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
-    switch(play->sceneId) {
-        case SCENE_GORON_VILLAGE:
-            dekuWalkArrIndex = 1;
+    for (dekuWalkArrIndex=0; dekuWalkArrIndex<ARRAY_COUNT(dekuWalkRoutes); dekuWalkArrIndex++)
+        if (play->sceneId == dekuWalkRoutes[dekuWalkArrIndex].sceneId)
             break;
-        case SCENE_ANCIENT_HOLLOW:
-        default:
-            dekuWalkArrIndex = 0;
-            break;
-    }
-    
+
     this->actor.world.rot.y = this->actor.shape.rot.y = dekuWalkRoutes[dekuWalkArrIndex].yaw;
     this->unk_450.x = dekuWalkRoutes[dekuWalkArrIndex].pos.x;
     this->unk_450.y = dekuWalkRoutes[dekuWalkArrIndex].pos.y;

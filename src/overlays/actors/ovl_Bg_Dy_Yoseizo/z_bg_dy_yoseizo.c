@@ -41,7 +41,8 @@ typedef enum BgDyYoseizoRewardType {
     /* 0 */ FAIRY_UPGRADE_MAGIC,
     /* 1 */ FAIRY_UPGRADE_DOUBLE_MAGIC,
     /* 2 */ FAIRY_UPGRADE_DOUBLE_DEFENSE,
-    /* 3 */ FAIRY_UPGRADE_GREAT_QUICK_SPIN
+    /* 3 */ FAIRY_UPGRADE_GREAT_QUICK_SPIN,
+    /* 4 */ FAIRY_UPGRADE_HALF_MAGIC_COST
 } BgDyYoseizoRewardType;
 
 typedef enum BgDyYoseizoSpellType {
@@ -304,6 +305,12 @@ void BgDyYoseizo_ChooseType(BgDyYoseizo* this, PlayState* play) {
                     givingReward = true;
                 }
                 break;
+            case FAIRY_UPGRADE_HALF_MAGIC_COST:
+                if (!gSaveContext.save.info.obtainedSkills.halfMagicCost) {
+                    this->givingSpell = true;
+                    givingReward = true;
+                }
+                break;
         }
     }
 
@@ -340,6 +347,10 @@ void BgDyYoseizo_ChooseType(BgDyYoseizo* this, PlayState* play) {
                         break;
                     case FAIRY_UPGRADE_GREAT_QUICK_SPIN:
                         play->csCtx.script = SEGMENTED_TO_VIRTUAL(gGreatFairyGreatQuickSpinCs);
+                        gSaveContext.cutsceneTrigger = 1;
+                        break;
+                    case FAIRY_UPGRADE_HALF_MAGIC_COST:
+                        play->csCtx.script = SEGMENTED_TO_VIRTUAL(gGreatFairyHalfMagicCostCs);
                         gSaveContext.cutsceneTrigger = 1;
                         break;
                 }
@@ -800,6 +811,8 @@ void BgDyYoseizo_Give_Reward(BgDyYoseizo* this, PlayState* play) {
             case FAIRY_UPGRADE_DOUBLE_DEFENSE:
                 if (this->fountainType == FAIRY_UPGRADE_GREAT_QUICK_SPIN)
                     gSaveContext.save.info.obtainedSkills.enhancedSpin = true;
+                else if (this->fountainType == FAIRY_UPGRADE_HALF_MAGIC_COST)
+                    gSaveContext.save.info.obtainedSkills.halfMagicCost = true;
                 else gSaveContext.save.info.playerData.isDoubleDefenseAcquired = true;
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_HEARTS_MAGIC);
                 break;

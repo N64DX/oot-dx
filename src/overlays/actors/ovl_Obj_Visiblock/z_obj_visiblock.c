@@ -42,7 +42,7 @@ void ObjVisiblock_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
     DynaPolyActor_Init(&this->dyna, 0);
-    CollisionHeader_GetVirtual(/*&gLensOfTruthPlatformCol*/&object_ice_objects_Col_0003F0, &colHeader);
+    CollisionHeader_GetVirtual(&object_ice_objects_Col_0003F0, &colHeader);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
     
 }
@@ -54,5 +54,5 @@ void ObjVisiblock_Destroy(Actor* thisx, PlayState* play) {
 }
 
 void ObjVisiblock_Draw(Actor* thisx, PlayState* play) {
-    Gfx_DrawDListXlu(play, /*gLensOfTruthPlatformDL*/object_ice_objects_DL_000190);
+    Gfx_DrawDListXlu(play, object_ice_objects_DL_000190);
 }
