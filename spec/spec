@@ -1816,7 +1816,15 @@ endseg
 beginseg
     name "object_ta"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_ta/object_ta.o"
+    include "$(BUILD_DIR)/assets/objects/object_ta/gTalonSitSleepingAnim.o"
+    include "$(BUILD_DIR)/assets/objects/object_ta/gTalonStandAnim.o"
+    include "$(BUILD_DIR)/assets/objects/object_ta/gTalonSkel.o"
+    include "$(BUILD_DIR)/assets/objects/object_ta/gTalonSitHandsUpAnim.o"
+    include "$(BUILD_DIR)/assets/objects/object_ta/gTalonSitWakeUpAnim.o"
+    include "$(BUILD_DIR)/assets/objects/object_ta/gTalonRunAnim.o"
+    include "$(BUILD_DIR)/assets/objects/object_ta/gTalonSleepAnim.o"
+    include "$(BUILD_DIR)/assets/objects/object_ta/gTalonRunTransitionAnim.o"
+    include "$(BUILD_DIR)/assets/objects/object_ta/gTalonWakeUpAnim.o"
     number 6
 endseg
 
@@ -2012,7 +2020,10 @@ endseg
 beginseg
     name "object_syokudai"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_syokudai/object_syokudai.o"
+    include "$(BUILD_DIR)/assets/objects/object_syokudai/gGoldenTorchDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_syokudai/gWoodenTorchDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_syokudai/gTimedTorchDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_syokudai/textures.o"
     number 6
 endseg
 
@@ -2096,7 +2107,10 @@ endseg
 beginseg
     name "object_spot17_obj"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_spot17_obj/object_spot17_obj.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot17_obj/bombable_wall_dls.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot17_obj/gCraterBombableWallCol.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot17_obj/gCraterSmokeConeDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot17_obj/gCraterBombableWallCracksTex.o"
     number 6
 endseg
 
@@ -2218,7 +2232,8 @@ endseg
 beginseg
     name "object_spot16_obj"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_spot16_obj/object_spot16_obj.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot16_obj/gDodongosCavernRockDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot16_obj/gDeathMountainRingDL.o"
     number 6
 endseg
 
@@ -2515,7 +2530,11 @@ endseg
 beginseg
     name "object_spot15_obj"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_spot15_obj/object_spot15_obj.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot15_obj/gLonLonMilkCrateDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot15_obj/gLonLonMilkCrateCol.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot15_obj/gLonLonCorralFenceDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot15_obj/gLonLonCorralFenceCol.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot15_obj/textures.o"
     number 6
 endseg
 
@@ -3651,7 +3670,8 @@ endseg
 beginseg
     name "object_timeblock"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_timeblock/object_timeblock.o"
+    include "$(BUILD_DIR)/assets/objects/object_timeblock/gSongOfTimeBlockDL.o"
+    include "$(BUILD_DIR)/assets/objects/object_timeblock/gSongOfTimeBlockCol.o"
     number 6
 endseg
 
