@@ -22,7 +22,6 @@
 #include "z_en_item00.h"
 #include "save.h"
 
-#include "overlays/actors/ovl_En_Clear_Tag/z_en_clear_tag.h"
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
@@ -252,7 +251,7 @@ static ColliderJntSphElementInit sJntSphElementsInit[2] = {
     {
         {
             ELEM_MATERIAL_UNK2,
-            { 0xF7CFFFFF, 0x07, 0x04 },
+            { 0xF7CFFFFF, 0x07, 0x18 },
             { 0xF7CFFFFF, 0x00, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,

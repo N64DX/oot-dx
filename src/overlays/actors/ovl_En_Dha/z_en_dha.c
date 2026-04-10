@@ -272,7 +272,7 @@ void EnDha_Wait(EnDha* this, PlayState* play) {
 #endif
 
             if (this->actor.home.rot.z != 0) {
-                Actor_PlaySfx(&this->actor, NA_SE_EN_DEADHAND_HAND_AT);
+                Actor_PlaySfx(&this->actor, NA_SE_EN_SHADEST_FLY_ATTACK);
                 this->actor.home.rot.z = 0;
             }
         }

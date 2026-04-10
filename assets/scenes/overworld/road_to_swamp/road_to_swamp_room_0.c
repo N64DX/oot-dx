@@ -18,8 +18,8 @@ SceneCmd road_to_swamp_room_0[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_WIND_SETTINGS(80, 80, 80, 0),
     SCENE_CMD_ROOM_SHAPE(&road_to_swamp_room_0RoomShapeCullable_000370),
-    SCENE_CMD_OBJECT_LIST(5, road_to_swamp_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(23, road_to_swamp_room_0ActorEntry_00005C),
+    SCENE_CMD_OBJECT_LIST(7, road_to_swamp_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(26, road_to_swamp_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
 
@@ -31,36 +31,41 @@ SceneCmd* road_to_swamp_room_0AlternateHeaders[] = {
 
 s16 road_to_swamp_room_0ObjectList_000040[] = {
     OBJECT_FIREFLY,
+    OBJECT_FLOWERPOT,
+    OBJECT_WOOD02,
     OBJECT_WF,
     OBJECT_DEKUBABA,
-    OBJECT_WOOD02,
+    OBJECT_GS,
     OBJECT_DEKUCITY_OBJ,
 };
 
 ActorEntry road_to_swamp_room_0ActorEntry_00005C[] = {
-    { ACTOR_EN_FIREFLY,  { 2072,   22, 2551 }, { 0,      0, 0 }, 0x0002 },
-    { ACTOR_EN_FIREFLY,  {  383,  160, 2059 }, { 0, 0x5A00, 0 }, 0x0002 },
-    { ACTOR_EN_FIREFLY,  {  426,   63, 2066 }, { 0, 0x2180, 0 }, 0x0002 },
-    { ACTOR_EN_DEKUBABA, { 2465, -182, 2480 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA, { 2520, -182, 2874 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_ITEM00,   {  600, -236, 3456 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   {  544, -224, 2616 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   {  720, -181, 1656 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   {  176, -178,  532 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   {  392, -181, 1252 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   { 1145, -182, 2289 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   { 1624, -182, 2531 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   { 2206, -182, 2721 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_WOOD02,   { 1674, -182, 2322 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_WOOD02,   { 1264, -182, 2146 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_WOOD02,   { 1898, -182, 2583 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_WOOD02,   { 2323, -182, 2657 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_WOOD02,   { 1443, -182, 2342 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_WOOD02,   { 2166, -182, 2491 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_ITEM00,   {  401,  143, 2068 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_KUSA,     { 2734,  -28, 3399 }, { 0,      0, 0 }, 0x0200 },
-    { ACTOR_EN_KUSA,     { 2757,  -28, 3443 }, { 0,      0, 0 }, 0x0200 },
-    { ACTOR_OBJ_PURIFY,  {  500, -200, 2500 }, { 0,      0, 0 }, 0x0003 },
+    { ACTOR_EN_FIREFLY,    { 2072,   22, 2551 }, { 0,      0, 0 }, 0x0002 },
+    { ACTOR_EN_FIREFLY,    {  383,  160, 2059 }, { 0, 0x5A00, 0 }, 0x0002 },
+    { ACTOR_EN_FIREFLY,    {  426,   63, 2066 }, { 0, 0x2180, 0 }, 0x0002 },
+    { ACTOR_EN_DEKUBABA,   { 2465, -182, 2480 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,   { 2520, -182, 2874 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_ITEM00,     {  600, -236, 3456 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     {  544, -224, 2616 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     {  720, -181, 1656 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     {  176, -178,  532 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     {  392, -181, 1252 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     { 1145, -182, 2289 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     { 1624, -182, 2531 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     { 2206, -182, 2721 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_WOOD02,     { 1674, -182, 2322 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_WOOD02,     { 1264, -182, 2146 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_WOOD02,     { 1898, -182, 2583 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_WOOD02,     { 2323, -182, 2657 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_WOOD02,     { 1443, -182, 2342 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_WOOD02,     { 2166, -182, 2491 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_ITEM00,     {  401,  143, 2068 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_KUSA,       { 2734,  -28, 3399 }, { 0,      0, 0 }, 0x0200 },
+    { ACTOR_EN_KUSA,       { 2757,  -28, 3443 }, { 0,      0, 0 }, 0x0200 },
+    { ACTOR_OBJ_FLOWERPOT, { 2955,  -72, 3376 }, { 0, 0xB400, 0 }, 0x4000 }, // Collect: 20, Green Rupee
+    { ACTOR_OBJ_FLOWERPOT, { 3043,  -72, 3287 }, { 0, 0xB400, 0 }, 0x4400 }, // Collect: 22, Green Rupee
+    { ACTOR_EN_GS,         { 1907, -182, 2392 }, { 0, 0xE000, 0 }, 0xFF24 },
+    { ACTOR_OBJ_PURIFY,    {  500, -200, 2500 }, { 0,      0, 0 }, 0x0003 },
 };
 
 RoomShapeCullable road_to_swamp_room_0RoomShapeCullable_000370 = { 
@@ -70,12 +75,12 @@ RoomShapeCullable road_to_swamp_room_0RoomShapeCullable_000370 = {
 };
 
 RoomShapeCullableEntry road_to_swamp_room_0RoomShapeCullableEntry_00037C[16] = {
-    { {    303,    -47,   1811 },   2044, road_to_swamp_room_0DL_0052B0, NULL },
+    { {    303,    -47,   1811 },   2544, road_to_swamp_room_0DL_0052B0, NULL },
     { {   2878,    -32,   3228 },    350, road_to_swamp_room_0DL_003B78, NULL },
     { {   1434,     37,   1811 },   3026, road_to_swamp_room_0DL_000CF8, NULL },
     { {   1371,    -69,   1434 },   2550, road_to_swamp_room_0DL_001678, NULL },
     { {    242,   -156,   3499 },    946, road_to_swamp_room_0DL_001A68, NULL },
-    { {    346,   -165,   2853 },    964, road_to_swamp_room_0DL_005460, NULL },
+    { {    346,   -165,   2853 },    464, road_to_swamp_room_0DL_005460, NULL },
     { {   1119,   -141,   2062 },   1910, NULL, road_to_swamp_room_0DL_005FF0 },
     { {    381,      5,   2054 },    220, road_to_swamp_room_0DL_0046E8, NULL },
     { {    368,    217,   2039 },    428, road_to_swamp_room_0DL_003FC0, NULL },
@@ -95,51 +100,46 @@ SceneCmd road_to_swamp_room_0Set_timeskip[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_WIND_SETTINGS(80, 80, 80, 0),
     SCENE_CMD_ROOM_SHAPE(&road_to_swamp_room_0RoomShapeCullable_000370),
-    SCENE_CMD_OBJECT_LIST(5, road_to_swamp_room_0ObjectList_timeskip),
-    SCENE_CMD_ACTOR_LIST(31, road_to_swamp_room_0ActorEntry_timeskip),
+    SCENE_CMD_OBJECT_LIST(7, road_to_swamp_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(34, road_to_swamp_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
 
-s16 road_to_swamp_room_0ObjectList_timeskip[] = {
-    OBJECT_FIREFLY,
-    OBJECT_WF,
-    OBJECT_DEKUBABA,
-    OBJECT_WOOD02,
-    OBJECT_DEKUCITY_OBJ,
-};
-
 ActorEntry road_to_swamp_room_0ActorEntry_timeskip[] = {
-    { ACTOR_EN_WF,       {  251, -195, 2452 }, { 0,      0, 0 }, 0xFF00 },
-    { ACTOR_EN_WF,       {  221, -182, 1529 }, { 0,      0, 0 }, 0xFF00 },
-    { ACTOR_EN_WF,       {  648, -236, 3123 }, { 0,      0, 0 }, 0xFF00 },
-    { ACTOR_EN_WF,       {  330, -181,  916 }, { 0,      0, 0 }, 0xFF00 },
-    { ACTOR_EN_WF,       {  732, -181, 2093 }, { 0,      0, 0 }, 0xFF00 },
-    { ACTOR_EN_FIREFLY,  { 2072,   22, 2551 }, { 0,      0, 0 }, 0x0002 },
-    { ACTOR_EN_FIREFLY,  {  383,  160, 2059 }, { 0, 0x5A00, 0 }, 0x0002 },
-    { ACTOR_EN_FIREFLY,  {  426,   63, 2066 }, { 0, 0x2180, 0 }, 0x0002 },
-    { ACTOR_EN_DEKUBABA, { 2465, -182, 2480 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA, { 2520, -182, 2874 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_ITEM00,   {  600, -236, 3456 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   {  544, -224, 2616 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   {  720, -181, 1656 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   {  176, -178,  532 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   {  392, -181, 1252 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   { 1145, -182, 2289 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   { 1624, -182, 2531 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_ITEM00,   { 2206, -182, 2721 }, { 0,      0, 0 }, 0x3F00 },
-    { ACTOR_EN_WOOD02,   { 1674, -182, 2322 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_WOOD02,   { 1264, -182, 2146 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_WOOD02,   { 1898, -182, 2583 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_WOOD02,   { 2323, -182, 2657 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_WOOD02,   { 1443, -182, 2342 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_WOOD02,   { 2166, -182, 2491 }, { 0, 0x5A00, 0 }, 0x0200 },
-    { ACTOR_EN_ITEM00,   {  401,  143, 2068 }, { 0, 0x5A00, 0 }, 0x0106 },
-    { ACTOR_DOOR_ANA,    {  104, -182, 2202 }, { 0, 0xB80, 15 }, 0x0000 },
-    { ACTOR_OBJ_MURE2,   {  104, -182, 2202 }, { 0, 0xB80,  0 }, 0x0202 },
-    { ACTOR_EN_KUSA,     { 2734,  -28, 3399 }, { 0,      0, 0 }, 0x0200 },
-    { ACTOR_EN_KUSA,     { 2757,  -28, 3443 }, { 0,      0, 0 }, 0x0200 },
-    { ACTOR_EN_A_OBJ,    {  980, -182, 2136 }, { 0, 0xEC80, 0 }, 0x2C0A },
-    { ACTOR_OBJ_PURIFY,  {  500, -200, 2500 }, { 0,      0, 0 }, 0x0003 },
+    { ACTOR_EN_WF,         {  251, -195, 2452 }, { 0,      0, 0 }, 0xFF00 },
+    { ACTOR_EN_WF,         {  221, -182, 1529 }, { 0,      0, 0 }, 0xFF00 },
+    { ACTOR_EN_WF,         {  648, -236, 3123 }, { 0,      0, 0 }, 0xFF00 },
+    { ACTOR_EN_WF,         {  330, -181,  916 }, { 0,      0, 0 }, 0xFF00 },
+    { ACTOR_EN_WF,         {  732, -181, 2093 }, { 0,      0, 0 }, 0xFF00 },
+    { ACTOR_EN_FIREFLY,    { 2072,   22, 2551 }, { 0,      0, 0 }, 0x0002 },
+    { ACTOR_EN_FIREFLY,    {  383,  160, 2059 }, { 0, 0x5A00, 0 }, 0x0002 },
+    { ACTOR_EN_FIREFLY,    {  426,   63, 2066 }, { 0, 0x2180, 0 }, 0x0002 },
+    { ACTOR_EN_DEKUBABA,   { 2465, -182, 2480 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,   { 2520, -182, 2874 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_ITEM00,     {  600, -236, 3456 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     {  544, -224, 2616 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     {  720, -181, 1656 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     {  176, -178,  532 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     {  392, -181, 1252 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     { 1145, -182, 2289 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     { 1624, -182, 2531 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_ITEM00,     { 2206, -182, 2721 }, { 0,      0, 0 }, 0x3F00 },
+    { ACTOR_EN_WOOD02,     { 1674, -182, 2322 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_WOOD02,     { 1264, -182, 2146 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_WOOD02,     { 1898, -182, 2583 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_WOOD02,     { 2323, -182, 2657 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_WOOD02,     { 1443, -182, 2342 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_WOOD02,     { 2166, -182, 2491 }, { 0, 0x5A00, 0 }, 0x0200 },
+    { ACTOR_EN_ITEM00,     {  401,  143, 2068 }, { 0, 0x5A00, 0 }, 0x0106 },
+    { ACTOR_DOOR_ANA,      {  104, -182, 2202 }, { 0, 0xB80, 15 }, 0x0000 },
+    { ACTOR_OBJ_MURE2,     {  104, -182, 2202 }, { 0, 0xB80,  0 }, 0x0202 },
+    { ACTOR_EN_KUSA,       { 2734,  -28, 3399 }, { 0,      0, 0 }, 0x0200 },
+    { ACTOR_EN_KUSA,       { 2757,  -28, 3443 }, { 0,      0, 0 }, 0x0200 },
+    { ACTOR_EN_A_OBJ,      {  980, -182, 2136 }, { 0, 0xEC80, 0 }, 0x2C0A },
+    { ACTOR_OBJ_FLOWERPOT, { 2955,  -72, 3376 }, { 0, 0xB400, 0 }, 0x4000 }, // Collect: 20, Green Rupee
+    { ACTOR_OBJ_FLOWERPOT, { 3043,  -72, 3287 }, { 0, 0xB400, 0 }, 0x4400 }, // Collect: 22, Green Rupee
+    { ACTOR_EN_GS,         { 1907, -182, 2392 }, { 0, 0xE000, 0 }, 0xFF24 },
+    { ACTOR_OBJ_PURIFY,    {  500, -200, 2500 }, { 0,      0, 0 }, 0x0003 },
 };
 
 s32 road_to_swamp_room_0_terminatorMaybe_00047C = { 0x01000000 };
@@ -439,7 +439,7 @@ Gfx road_to_swamp_room_0DL_001C38[] = {
     gsSPEndDisplayList(),
 };
 
-Gfx road_to_swamp_room_0DL_0023B0[] = {
+Gfx road_to_swamp_room_0DL_0023B0_1[] = {
     gsSPVertex(&road_to_swamp_room_0Vtx_001D08[16], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
@@ -461,7 +461,10 @@ Gfx road_to_swamp_room_0DL_0023B0[] = {
     gsSP2Triangles(10, 9, 12, 0, 10, 13, 11, 0),
     gsSP2Triangles(13, 14, 15, 0, 11, 13, 15, 0),
     gsSP2Triangles(15, 14, 8, 0, 15, 8, 11, 0),
-
+    gsSPEndDisplayList(),
+};
+    
+Gfx road_to_swamp_room_0DL_0023B0_2[] = {
     gsSPVertex(&road_to_swamp_room_0Vtx_001FC0[34], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
@@ -486,7 +489,12 @@ Gfx road_to_swamp_room_0DL_0023B0[] = {
     gsSP2Triangles(17, 27, 28, 0, 17, 27, 29, 0),
     gsSPVertex(&road_to_swamp_room_0Vtx_001FC0[30], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 1, 3, 0),
+    gsSPEndDisplayList(),
+};
 
+Gfx road_to_swamp_room_0DL_0023B0[] = {
+    gsSPDisplayList(road_to_swamp_room_0DL_0023B0_1),
+    gsSPDisplayList(road_to_swamp_room_0DL_0023B0_2),
     gsSPEndDisplayList(),
 };
 

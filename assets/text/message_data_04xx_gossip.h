@@ -769,13 +769,24 @@ MSG(
 "They say there is an ancient Stalfos\n"
 "master locked up in a cave far into\n"
 "this region.\n"
-"Supposedly it guards a secret power."
+"Supposedly it guards a treasure."
 ),
 MSG(),
 MSG()
 )
 
 DEFINE_MESSAGE(0x0423, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"They say that when all five frogs\n"
+"are reunited in Spring Lake that\n"
+"something good will happen."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0424, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
 "They say there are hidden shortcuts\n"

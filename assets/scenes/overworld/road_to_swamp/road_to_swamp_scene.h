@@ -19,11 +19,6 @@ extern RomFile road_to_swamp_sceneRoomList0x0000C8[];
 extern Spawn road_to_swamp_sceneEntranceList0x0000D0[];
 extern u16 road_to_swamp_sceneExitList_0000D8[];
 extern EnvLightSettings road_to_swamp_sceneLightSettings0x0000E0[];
-extern BgCamInfo road_to_swamp_sceneCollisionHeader_0026F8CamDataList[];
-extern SurfaceType road_to_swamp_sceneCollisionHeader_0026F8SurfaceType[];
-extern CollisionPoly road_to_swamp_sceneCollisionHeader_0026F8Polygons[];
-extern Vec3s road_to_swamp_sceneCollisionHeader_0026F8Vertices[];
-extern WaterBox road_to_swamp_sceneCollisionHeader_0026F8WaterBoxes[];
 extern CollisionHeader road_to_swamp_sceneCollisionHeader_0026F8;
 
 extern SceneCmd road_to_swamp_sceneSet_timeskip[];

@@ -6,7 +6,6 @@
  */
 
 #include "z_en_stalm.h"
-#include "overlays/actors/ovl_En_Clear_Tag/z_en_clear_tag.h"
 
 #include "array_count.h"
 #include "gfx_setupdl.h"

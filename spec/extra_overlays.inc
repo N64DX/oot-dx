@@ -34,6 +34,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Obj_Flowerpot"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Flowerpot/z_obj_flowerpot.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Flowerpot/ovl_Obj_Flowerpot_reloc.o"
+endseg
+
+beginseg
     name "ovl_Bg_Ladder"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ladder/z_bg_ladder.o"
@@ -206,6 +213,13 @@ beginseg
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Mkk/z_en_mkk.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Mkk/ovl_En_Mkk_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Bee"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Bee/z_en_bee.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Bee/ovl_En_Bee_reloc.o"
 endseg
 
 beginseg

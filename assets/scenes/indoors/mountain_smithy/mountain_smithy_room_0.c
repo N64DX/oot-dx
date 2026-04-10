@@ -16,15 +16,15 @@ SceneCmd mountain_smithy_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&mountain_smithy_room_0RoomShapeCullable_0000F0),
-    SCENE_CMD_OBJECT_LIST(7, mountain_smithy_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(5, mountain_smithy_room_0ActorEntry_000048),
+    SCENE_CMD_OBJECT_LIST(8, mountain_smithy_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(7, mountain_smithy_room_0ActorEntry_000048),
     SCENE_CMD_END(),
 };
 
 s16 mountain_smithy_room_0ObjectList_000040[] = {
     //OBJECT_KBT,
     OBJECT_KGY,
-    //OBJECT_FLOWERPOT,
+    OBJECT_FLOWERPOT,
     OBJECT_SHOP_DUNGEN,
     OBJECT_GI_SHIELD_1,
     OBJECT_GI_SHIELD_2,
@@ -41,8 +41,8 @@ ActorEntry mountain_smithy_room_0ActorEntry_000048[] = {
     { ACTOR_EN_LIGHT,      { -157, 152,   2 }, { 0,      0, 0 }, 0x1824 },
     { ACTOR_EN_LIGHT,      {  -90,  21,  -4 }, { 0,      0, 0 }, 0x1824 },
     { ACTOR_EN_LIGHT,      {  -89,   1,  11 }, { 0,      0, 0 }, 0x182C },
-  //{ ACTOR_OBJ_FLOWERPOT, {   53, -15, 309 }, { 0,      0, 0 }, 0x010A },
-  //{ ACTOR_OBJ_FLOWERPOT, {  -54, -15, 309 }, { 0,      0, 0 }, 0x020A },
+    { ACTOR_OBJ_FLOWERPOT, {   53, -15, 309 }, { 0,      0, 0 }, 0x4000 }, // Collect: 20, Green Rupee
+    { ACTOR_OBJ_FLOWERPOT, {  -54, -15, 309 }, { 0,      0, 0 }, 0x4400 }, // Collect: 22, Green Rupee
 };
 
 RoomShapeCullable mountain_smithy_room_0RoomShapeCullable_0000F0 = { 

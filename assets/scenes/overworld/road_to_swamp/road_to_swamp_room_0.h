@@ -12,7 +12,6 @@ extern ActorEntry road_to_swamp_room_0ActorEntry_00005C[];
 extern RoomShapeCullable road_to_swamp_room_0RoomShapeCullable_000370;
 extern RoomShapeCullableEntry road_to_swamp_room_0RoomShapeCullableEntry_00037C[16];
 extern SceneCmd road_to_swamp_room_0Set_timeskip[];
-extern s16 road_to_swamp_room_0ObjectList_timeskip[];
 extern ActorEntry road_to_swamp_room_0ActorEntry_timeskip[];
 extern s32 road_to_swamp_room_0_terminatorMaybe_00047C;
 

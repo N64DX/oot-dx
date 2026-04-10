@@ -338,7 +338,7 @@ void EnFr_Update(Actor* thisx, PlayState* play) {
         this->isJumpingToFrogSong = false;
         this->songIndex = FROG_NO_SONG;
         this->unusedButterflyActor = NULL;
-        if (play->sceneId == SCENE_SPRING_LAKE)
+        if (play->sceneId != SCENE_ZORAS_RIVER)
             EnFr_DrawActive(this);
         else {
             EnFr_OrientUnderwater(this);
@@ -540,7 +540,7 @@ void EnFr_JumpingBackIntoWater(EnFr* this, PlayState* play) {
         Animation_Change(&this->skelAnime, &object_fr_Anim_001534, 1.0f, 0.0f,
                          Animation_GetLastFrame(&object_fr_Anim_001534), ANIMMODE_LOOP, 0.0f);
         this->actionFunc = EnFr_SetupJumpingOutOfWater;
-        if (play->sceneId != SCENE_SPRING_LAKE)
+        if (play->sceneId == SCENE_ZORAS_RIVER)
             EnFr_DrawIdle(this);
         this->isDeactivating = true;
         EnFr_OrientUnderwater(this);
@@ -611,7 +611,7 @@ void EnFr_UpdateActive(Actor* thisx, PlayState* play) {
         Actor_SetFocus(&this->actor, 10.0f);
         this->blinkFunc(this);
         this->actionFunc(this, play);
-        if (play->sceneId != SCENE_SPRING_LAKE) {
+        if (play->sceneId == SCENE_ZORAS_RIVER) {
             EnFr_IsDivingIntoWater(this, play);
             EnFr_DivingIntoWater(this, play);
         }

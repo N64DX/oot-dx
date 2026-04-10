@@ -13,6 +13,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_flowerpot"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_flowerpot/object_flowerpot.o"
+    number 6
+endseg
+
+beginseg
     name "object_ladder"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ladder/object_ladder.o"
@@ -240,6 +247,13 @@ beginseg
     name "object_mkk"
     compress
     include "$(BUILD_DIR)/assets/objects/object_mkk/object_mkk.o"
+    number 6
+endseg
+
+beginseg
+    name "object_bee"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_bee/object_bee.o"
     number 6
 endseg
 

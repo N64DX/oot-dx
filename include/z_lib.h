@@ -20,6 +20,7 @@ s32 Math_AsymStepToF(f32* pValue, f32 target, f32 incrStep, f32 decrStep);
 void Lib_GetControlStickData(f32* outMagnitude, s16* outAngle, Input* input);
 s16 Rand_S16Offset(s16 base, s16 range);
 void Math_Vec3f_Copy(Vec3f* dest, Vec3f* src);
+void Math_Vec3s_Copy(Vec3s* dest, Vec3s* src);
 void Math_Vec3s_ToVec3f(Vec3f* dest, Vec3s* src);
 void Math_Vec3f_Sum(Vec3f* a, Vec3f* b, Vec3f* dest);
 void Math_Vec3f_Diff(Vec3f* a, Vec3f* b, Vec3f* dest);

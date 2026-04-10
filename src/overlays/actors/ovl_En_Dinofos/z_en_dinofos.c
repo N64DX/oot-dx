@@ -5,7 +5,6 @@
  */
 
 #include "z_en_dinofos.h"
-#include "overlays/actors/ovl_En_Clear_Tag/z_en_clear_tag.h"
 
 #include "libc64/qrand.h"
 #include "segmented_address.h"
