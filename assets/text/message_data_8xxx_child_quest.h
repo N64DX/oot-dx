@@ -2934,3 +2934,162 @@ MSG(
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x8405, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Excuse me, sir.\n"
+"Would you mind lending me\n"
+"your aid?"
+BOX_BREAK
+
+UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Never seen a talking frog before?\n"
+"I suppose there's a first time for\n"
+"everything..."
+BOX_BREAK
+
+UNSKIPPABLE "My friends are missing.\n"
+"Would you mind find them for me?\n"
+"We're having a dinner party."
+BOX_BREAK
+
+UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Much appreciated."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8406, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "My friends are still missing.\n"
+"Would you mind rounding them up\n"
+"for me?\n"
+"We're having a dinner party."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8407, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "Thank you for bring all of my\n"
+"friends back here."
+BOX_BREAK
+
+UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Oh wait... I almost forget. Here.\n"
+"This is for you."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8408, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Dinner is almost ready guys."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8409, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Our friend is looking for us?\n"
+"And he's making us dinner?"
+BOX_BREAK
+
+UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Ok... I'll go there in just a second.\n"
+"I just wanna enjoy the view for a\n"
+"while longer..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x840A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "I just wanna enjoy the view for a\n"
+"while longer..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x840B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "I am bored."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x840C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "I am feeling a bit peckish.\n"
+"When is dinner ready?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x840D, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "I forgot...\n"
+"Why are we here again?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x840E, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Can I go back already?\n"
+"I liked my chilling spot."
+),
+MSG(),
+MSG()
+)

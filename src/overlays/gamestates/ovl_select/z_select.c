@@ -167,6 +167,24 @@ void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
                 SET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA);
             }
             break;
+        case FROG:
+            if (GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_1) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_2) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_3) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_4)) {
+                CLEAR_EVENTCHKINF(EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_1);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_2);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_3);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_4);
+                CLEAR_ITEMGETINF(ITEMGETINF_GOT_FROG_HIDE_AND_SEEK_REWARD);
+            }
+            else {
+                SET_EVENTCHKINF(EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK);
+                SET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_1);
+                SET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_2);
+                SET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_3);
+                SET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_4);
+                SET_ITEMGETINF(ITEMGETINF_GOT_FROG_HIDE_AND_SEEK_REWARD);
+            }
+            break;
         case NABOORU:
             if (!GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE)) {
                 SET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE);
@@ -256,6 +274,8 @@ char* MapSelect_GetEvent(MapSelectState* this, u8 type, u16 flag) {
             return (GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED)) ? "On" : "Off";
         case BLACKSMITH:
             return (GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA)) ? "On" : "Off";
+        case FROG:
+            return (GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_1) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_2) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_3) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_4)) ? "On" : "Off";
         case NABOORU:
             return (GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE) && GET_EVENTCHKINF(EVENTCHKINF_3B) && GET_EVENTCHKINF(EVENTCHKINF_C0) && (gSaveContext.save.info.sceneFlags[SCENE_SPIRIT_TEMPLE_BOSS].swch &= (1 << flag))) ? "On" : "Off";
         default:
@@ -567,6 +587,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Killed Hyper Gohma",       SCENE_ANCIENT_HOLLOW,       13                                       },
     { 0, "Killed King Deku",         SCENE_WOODFALL_TEMPLE_BOSS, 1                                        },
     { 0, "Completed Mask Quest",     MASK,                       ITEMGETINF_3F,                           },
+    { 0, "Completed Frog Quest",     FROG,                       0,                                       },
     { 0, "Got Bottle Cucco Lady",    ITEM,                       ITEMGETINF_0C,                           },
     { 0, "Got Pocket Egg",           ITEM,                       ITEMGETINF_2C,                           },
     { 0, "Got Cojiro",               ITEM,                       ITEMGETINF_2E,                           },

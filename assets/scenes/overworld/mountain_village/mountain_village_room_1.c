@@ -17,7 +17,7 @@ SceneCmd mountain_village_room_1[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_1RoomShapeCullable_000210),
     SCENE_CMD_OBJECT_LIST(16, mountain_village_room_1ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(32, mountain_village_room_1ActorEntry_000074),
+    SCENE_CMD_ACTOR_LIST(33, mountain_village_room_1ActorEntry_000074),
     SCENE_CMD_END(),
 };
 
@@ -65,6 +65,7 @@ ActorEntry mountain_village_room_1ActorEntry_000074[] = {
     { ACTOR_EN_MKK,      { 3671,  952,  -624 }, { 0,      0, 0 }, 0xFA01 },
     { ACTOR_DOOR_ANA,    { 2406, 1168, -1197 }, { 0,      0, 0 }, 0x0041 }, // Chest: 01 (Generic Grotto: Gold Rupee)
     { ACTOR_EN_GS,       { 3685,  837, -1101 }, { 0, 0x47D0, 0 }, 0xFF22 },
+    { ACTOR_EN_FR,       { 2300, 1168, -1200 }, { 0,      0, 0 }, 0x0022 }, // Blue
     { ACTOR_OBJ_HSBLOCK, { 2230,  141,  -170 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
     { ACTOR_OBJ_HSBLOCK, { 2700,  291,  -170 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
     { ACTOR_OBJ_HSBLOCK, { 2950,  411,  -170 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F

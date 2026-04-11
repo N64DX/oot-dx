@@ -16,8 +16,8 @@ SceneCmd goron_village_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&goron_village_room_1RoomShapeCullable_0000A0),
-    SCENE_CMD_OBJECT_LIST(12, goron_village_room_1ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(6, goron_village_room_1ActorEntry_00005C),
+    SCENE_CMD_OBJECT_LIST(14, goron_village_room_1ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(7, goron_village_room_1ActorEntry_00005C),
     SCENE_CMD_END(),
 };
 
@@ -34,6 +34,8 @@ s16 goron_village_room_1ObjectList_00004C[] = {
     OBJECT_GI_HEART,
     OBJECT_KIBAKO2,
     OBJECT_KA,
+    OBJECT_MAMENOKI,
+    OBJECT_FR,
 };
 
 ActorEntry goron_village_room_1ActorEntry_00005C[] = {
@@ -43,6 +45,7 @@ ActorEntry goron_village_room_1ActorEntry_00005C[] = {
     { ACTOR_OBJ_HSBLOCK, { -1070, -200, -2340 }, { 0,      0,  0 }, 0x0000 },
     { ACTOR_OBJ_HSBLOCK, { -1070, -320, -2580 }, { 0,      0,  0 }, 0x0000 },
     { ACTOR_OBJ_HSBLOCK, { -1070, -440, -2820 }, { 0,      0,  0 }, 0x0000 },
+    { ACTOR_EN_FR,       { -1225, -500, -3300 }, { 0, 0x2000,  0 }, 0x0024 }, // Purple
 };
 
 RoomShapeCullable goron_village_room_1RoomShapeCullable_0000A0 = { 

@@ -10,6 +10,12 @@ struct EnFr;
 typedef void (*EnFrActionFunc)(struct EnFr*, struct PlayState*);
 typedef void (*EnFrBlinkFunc)(struct EnFr*);
 
+typedef enum FrogRegionType {
+    /* 0 */ FROG_ZORAS_RIVER,
+    /* 1 */ FROG_SPRING_LAKE,
+    /* 2 */ FROG_HIDDEN
+} FrogRegionType;
+
 typedef enum FrogType {
     /* 0 */ FROG_YELLOW,   // Middle
     /* 1 */ FROG_BLUE,     // Front Left
@@ -28,6 +34,14 @@ typedef enum FrogSongType {
     /* 6 */ FROG_CHOIR_SONG,
     /* 7 */ FROG_NO_SONG
 } FrogSongType;
+
+typedef struct FrogHideInfo {
+    /* 0x02 */ u16 hiddenTextId;
+    /* 0x04 */ u16 foundTextId;
+    /* 0x06 */ u16 lakeTextId;
+    /* 0x08 */ u32 flag;
+    /* 0x08 */ f32 talkRange;
+} FrogHideInfo; // size = 0x0xC
 
 typedef struct EnFr {
     /* 0x0000 */ Actor actor;
@@ -67,6 +81,7 @@ typedef struct EnFr {
     /* 0x03AA */ s16 xyAngleButterfly; // Butterfly Travels along random angles in the x-y plane
     /* 0x03AC */ Vec3f posButterfly; // Position/Coordinates of the Butterfly
     /* 0x03B8 */ Vec3f posButterflyLight; // Used in Lights_PointNoGlowSetInfo()
-} EnFr; // size = 0x03C4
+    /* 0x03C4 */ u8 regionType;
+} EnFr; // size = 0x03C8
 
 #endif

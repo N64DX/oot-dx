@@ -202,11 +202,11 @@ ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_EN_BEE,            {  -471,  -10,  1228 }, {    0,      0,  0 }, 0x0020 },
     { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   720 }, {    0, 0xB400,  0 }, 0x4000 }, // Collect: 20, Green Rupee
     { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   880 }, {    0,      0,  0 }, 0x4400 }, // Collect: 22, Green Rupee
-    { ACTOR_EN_FR,             {  -805,    1,   917 }, {    0, 0x4B00,  0 }, 0x0001 },
-    { ACTOR_EN_FR,             {  -844,    1,   836 }, {    0, 0x5200,  0 }, 0x0002 },
-    { ACTOR_EN_FR,             {  -844,    1,   996 }, {    0, 0x6000,  0 }, 0x0003 },
-    { ACTOR_EN_FR,             {  -884,    1,   915 }, {    0, 0x5200,  0 }, 0x0004 },
-    { ACTOR_EN_FR,             {  -933,    1,   964 }, {    0, 0x6300,  0 }, 0x0005 },
+    { ACTOR_EN_FR,             {  -805,    0,   917 }, {    0, 0x3900,  0 }, 0x0011 }, // Yellow
+    { ACTOR_EN_FR,             {  -844,    0,   836 }, {    0, 0x3E00,  0 }, 0x0012 }, // Blue
+    { ACTOR_EN_FR,             {  -844,    0,   996 }, {    0, 0x4E00,  0 }, 0x0013 }, // Red
+    { ACTOR_EN_FR,             {  -884,    0,   915 }, {    0, 0x4000,  0 }, 0x0014 }, // Purple
+    { ACTOR_EN_FR,             {  -933,    0,   964 }, {    0, 0x4C00,  0 }, 0x0015 }, // White
   //{ ACTOR_OBJ_SNOWBALL2,     {  -881,    8,    84 }, {    0,      0,  0 }, 0x250A },
   //{ ACTOR_OBJ_SNOWBALL2,     {  -470,    8,  -224 }, {    0,      0,  0 }, 0x2915 },
   //{ ACTOR_OBJ_SNOWBALL2,     {  -384,    8,  -259 }, {    0,      0,  0 }, 0x2A1F },

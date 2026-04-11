@@ -39,6 +39,7 @@ void EnFr_UpdateActive(Actor* thisx, PlayState* play);
 void EnFr_Draw(Actor* thisx, PlayState* play);
 
 // Animation Functions
+void EnFr_SetupTalkDialogue(EnFr* this, PlayState* play);
 void EnFr_SetupJumpingOutOfWater(EnFr* this, PlayState* play);
 void EnFr_JumpingOutOfWater(EnFr* this, PlayState* play);
 void EnFr_OrientOnLogSpot(EnFr* this, PlayState* play);
@@ -237,6 +238,15 @@ static u8 sOcarinaNotes[] = {
     OCARINA_BTN_A, OCARINA_BTN_C_DOWN, OCARINA_BTN_C_RIGHT, OCARINA_BTN_C_LEFT, OCARINA_BTN_C_UP,
 };
 
+static FrogHideInfo sFrogHideInfo[] = {
+    {      0,      0,      0,                        0, 100.0f },
+    {      0,      0,      0,                        0, 120.0f },
+    { 0x8409, 0x840A, 0x840B, EVENTCHKINF_FOUND_FROG_1, 140.0f },
+    { 0x8409, 0x840A, 0x840C, EVENTCHKINF_FOUND_FROG_2, 120.0f },
+    { 0x8409, 0x840A, 0x840D, EVENTCHKINF_FOUND_FROG_3, 250.0f },
+    { 0x8409, 0x840A, 0x840E, EVENTCHKINF_FOUND_FROG_4, 275.0f },
+};
+
 void EnFr_OrientUnderwater(EnFr* this) {
     Vec3f vec1;
     Vec3f vec2;
@@ -257,6 +267,23 @@ void EnFr_OrientUnderwater(EnFr* this) {
 
 void EnFr_Init(Actor* thisx, PlayState* play) {
     EnFr* this = (EnFr*)thisx;
+
+    this->regionType = (this->actor.params >> 4) & 0xF;
+    this->actor.params = this->actor.params & 0xF;
+
+    if (this->actor.params > 1 && ( (this->regionType == FROG_SPRING_LAKE && !GET_EVENTCHKINF(sFrogHideInfo[this->actor.params].flag)) || (this->regionType == FROG_HIDDEN && (GET_EVENTCHKINF(sFrogHideInfo[this->actor.params].flag) || !GET_EVENTCHKINF(EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK))) ) )
+        Actor_Kill(&this->actor);
+    if (this->regionType != FROG_ZORAS_RIVER) {
+        if (this->actor.params == 1) {
+            if (GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_1) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_2) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_3) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_4))
+                this->actor.textId = GET_ITEMGETINF(ITEMGETINF_GOT_FROG_HIDE_AND_SEEK_REWARD) ? 0x8408 : 0x8407;
+            else this->actor.textId = GET_EVENTCHKINF(EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK) ? 0x8406 : 0x8405;
+        } else {
+            if (this->regionType == FROG_SPRING_LAKE)
+                this->actor.textId = sFrogHideInfo[this->actor.params].lakeTextId;
+            else this->actor.textId = GET_EVENTCHKINF(sFrogHideInfo[this->actor.params].flag) ? sFrogHideInfo[this->actor.params].foundTextId : sFrogHideInfo[this->actor.params].hiddenTextId;
+        }
+    }
 
     if (this->actor.params == 0) {
         this->actor.destroy = NULL;
@@ -331,18 +358,19 @@ void EnFr_Update(Actor* thisx, PlayState* play) {
         this->isBelowWaterSurfacePrevious = this->isBelowWaterSurfaceCurrent = false;
         this->isJumpingUp = false;
         this->posLogSpot = this->actor.world.pos;
-        this->actionFunc = EnFr_SetupJumpingOutOfWater;
         this->isDeactivating = false;
         this->growingScaleIndex = 0;
         this->isActive = false;
         this->isJumpingToFrogSong = false;
         this->songIndex = FROG_NO_SONG;
         this->unusedButterflyActor = NULL;
-        if (play->sceneId != SCENE_ZORAS_RIVER)
+        if (this->regionType != FROG_ZORAS_RIVER) {
             EnFr_DrawActive(this);
-        else {
+            this->actionFunc = EnFr_SetupTalkDialogue;
+        } else {
             EnFr_OrientUnderwater(this);
             EnFr_DrawIdle(this);
+            this->actionFunc = EnFr_SetupJumpingOutOfWater;
         }
         this->actor.update = EnFr_UpdateActive;
         this->isButterflyDrawn = false;
@@ -350,7 +378,8 @@ void EnFr_Update(Actor* thisx, PlayState* play) {
         this->posButterflyLight.x = this->posButterfly.x = this->posLogSpot.x;
         this->posButterflyLight.y = this->posButterfly.y = this->posLogSpot.y + 50.0f;
         this->posButterflyLight.z = this->posButterfly.z = this->posLogSpot.z;
-        this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
+        if (this->regionType == FROG_ZORAS_RIVER)
+            this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
     }
 }
 
@@ -427,6 +456,45 @@ void EnFr_DecrementBlinkTimerUpdate(EnFr* this) {
         this->eyeTexIndex = 1;
         this->blinkTimer = 1;
     }
+}
+
+s32 EnFr_StartTalkDialogue(EnFr* this, PlayState* play, EnFrActionFunc actionFunc) {
+    Player* player = GET_PLAYER(play);
+
+    if (Actor_TalkOfferAccepted(&this->actor, play)) {
+        this->actionFunc = actionFunc;
+        return 1;
+    }
+
+    if (ABS((s16)(this->actor.yawTowardsPlayer - this->actor.shape.rot.y)) < 0x2151 && this->actor.xzDistToPlayer < sFrogHideInfo[this->actor.params].talkRange && ( (player->focusActor != NULL && this->actor.isLockedOn) || player->focusActor == NULL) )
+        Actor_OfferTalk(&this->actor, play, sFrogHideInfo[this->actor.params].talkRange);
+    return 0;
+}
+
+void EnFr_EndTalkDialogue(EnFr* this, PlayState* play) {
+    if (Actor_TextboxIsClosing(&this->actor, play)) {
+        if (this->actor.params == 1) {
+            if (this->actor.textId == 0x8405) {
+                SET_EVENTCHKINF(EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK);
+                this->actor.textId = 0x8406;
+            } else if (this->actor.textId == 0x8407) {
+                Actor_OfferGetItem(&this->actor, play, GI_HEART_PIECE, 415.0f, 10.0f);
+                SET_ITEMGETINF(ITEMGETINF_GOT_FROG_HIDE_AND_SEEK_REWARD);
+                this->actor.textId = 0x8408;
+            }
+        }
+
+        if (this->regionType == FROG_HIDDEN && !GET_EVENTCHKINF(sFrogHideInfo[this->actor.params].flag)) {
+            SET_EVENTCHKINF(sFrogHideInfo[this->actor.params].flag);
+            this->actor.textId = sFrogHideInfo[this->actor.params].foundTextId;
+        }
+
+        this->actionFunc = EnFr_SetupTalkDialogue;
+    }
+}
+
+void EnFr_SetupTalkDialogue(EnFr* this, PlayState* play) {
+     EnFr_StartTalkDialogue(this, play, EnFr_EndTalkDialogue);
 }
 
 void EnFr_SetupJumpingOutOfWater(EnFr* this, PlayState* play) {
@@ -540,7 +608,7 @@ void EnFr_JumpingBackIntoWater(EnFr* this, PlayState* play) {
         Animation_Change(&this->skelAnime, &object_fr_Anim_001534, 1.0f, 0.0f,
                          Animation_GetLastFrame(&object_fr_Anim_001534), ANIMMODE_LOOP, 0.0f);
         this->actionFunc = EnFr_SetupJumpingOutOfWater;
-        if (play->sceneId == SCENE_ZORAS_RIVER)
+        if (this->regionType == FROG_ZORAS_RIVER)
             EnFr_DrawIdle(this);
         this->isDeactivating = true;
         EnFr_OrientUnderwater(this);
@@ -611,7 +679,7 @@ void EnFr_UpdateActive(Actor* thisx, PlayState* play) {
         Actor_SetFocus(&this->actor, 10.0f);
         this->blinkFunc(this);
         this->actionFunc(this, play);
-        if (play->sceneId == SCENE_ZORAS_RIVER) {
+        if (this->regionType == FROG_ZORAS_RIVER) {
             EnFr_IsDivingIntoWater(this, play);
             EnFr_DivingIntoWater(this, play);
         }
@@ -972,7 +1040,7 @@ void EnFr_SetReward(EnFr* this, PlayState* play) {
     songIndex = this->songIndex;
     this->actionFunc = EnFr_Deactivate;
     this->reward = GI_NONE;
-    if ((songIndex >= FROG_ZL) && (songIndex <= FROG_SOT)) {
+    if (songIndex <= FROG_SOT) {
         if (!FROG_HAS_SONG_BEEN_PLAYED(songIndex)) {
             FROG_SET_SONG_PLAYED(songIndex);
             this->reward = GI_RUPEE_PURPLE;

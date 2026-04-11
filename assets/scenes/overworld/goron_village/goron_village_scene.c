@@ -97,8 +97,15 @@ Vec3s goron_village_scenePathwayList_00032C[] = {
     {  -1863,    242,    950 },
 };
 
+Vec3s goron_village_scenePathwayList_magic_bean[] = {
+    {    250,   -200,    450 },
+    {    250,    120,    450 },
+    {    250,   -200,    450 },
+};
+
 Path goron_village_scenePathway_00034C[] = {
-    { ARRAY_COUNT(goron_village_scenePathwayList_00032C), goron_village_scenePathwayList_00032C },
+    { ARRAY_COUNT(goron_village_scenePathwayList_00032C),     goron_village_scenePathwayList_00032C     },
+    { ARRAY_COUNT(goron_village_scenePathwayList_magic_bean), goron_village_scenePathwayList_magic_bean },
 };
 
 BgCamInfo goron_village_sceneCollisionHeader_004DC4CamDataList[] = {

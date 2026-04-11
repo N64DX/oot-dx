@@ -16,8 +16,8 @@ SceneCmd path_to_goron_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&path_to_goron_village_room_0RoomShapeCullable_000240),
-    SCENE_CMD_OBJECT_LIST(11, path_to_goron_village_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(21, path_to_goron_village_room_0ActorEntry_00005C),
+    SCENE_CMD_OBJECT_LIST(12, path_to_goron_village_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(22, path_to_goron_village_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
 
@@ -34,6 +34,7 @@ s16 path_to_goron_village_room_0ObjectList_000040[] = {
     OBJECT_BOX,
     OBJECT_KANBAN,
     OBJECT_KA,
+    OBJECT_FR,
 };
 
 ActorEntry path_to_goron_village_room_0ActorEntry_00005C[] = {
@@ -64,6 +65,7 @@ ActorEntry path_to_goron_village_room_0ActorEntry_00005C[] = {
     { ACTOR_DOOR_ANA,        {    589,    195,     53 }, {    0, 0xAAAB,   19 }, 0x0000 },
     { ACTOR_EN_BOX,          {    248,   -200,  -1396 }, { 0x55, 0xDA50,    0 }, 0x5000 }, // Chest: 00
     { ACTOR_EN_BOX,          {   -172,   -200,    847 }, { 0x3E, 0x8000,    0 }, 0x0006 }, // Chest: 06
+    { ACTOR_EN_FR,           {     60,   -200,   -440 }, {    0, 0x8000,    0 }, 0x0023 }, // Red
 };
 
 RoomShapeCullable path_to_goron_village_room_0RoomShapeCullable_000240 = { 

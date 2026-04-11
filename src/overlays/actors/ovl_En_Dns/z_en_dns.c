@@ -45,6 +45,7 @@ void EnDns_PayForBombs(EnDns* this);
 void EnDns_PayForArrows(EnDns* this);
 void EnDns_PayForDekuStickUpgrade(EnDns* this);
 void EnDns_PayForDekuNutUpgrade(EnDns* this);
+void EnDns_PayForMagicBean(EnDns* this);
 
 void EnDns_SetupIdle(EnDns* this, PlayState* play);
 void EnDns_Idle(EnDns* this, PlayState* play);
@@ -89,24 +90,8 @@ static ColliderCylinderInitType1 sCylinderInit = {
 };
 
 static u16 sStartingTextIds[] = {
-    0x10A0, 0x10A1, 0x10A2, 0x10CA, 0x10CB, 0x10CC, 0x10CD, 0x10CE, 0x10CF, 0x10DC, 0x10DD,
+    0x10A0, 0x10A1, 0x10A2, 0x10CA, 0x10CB, 0x10CC, 0x10CD, 0x10CE, 0x10CF, 0x10DC, 0x10DD, 0x9307,
 };
-
-#if DEBUG_FEATURES
-static char* sItemDebugTxt[] = {
-    T("デクの実売り            ", "Deku Nuts               "),
-    T("デクの棒売り            ", "Deku Sticks             "),
-    T("ハートの欠片売り        ", "Piece of Heart          "),
-    T("デクの種売り            ", "Deku Seeds              "),
-    T("デクの盾売り            ", "Deku Shield             "),
-    T("バクダン売り            ", "Bombs                   "),
-    T("矢売り                  ", "Arrows                  "),
-    T("赤のくすり売り          ", "Red Potion              "),
-    T("緑のくすり売り          ", "Green Potion            "),
-    T("デクの棒持てる数を増やす", "Deku Stick Upgrade      "),
-    T("デクの実持てる数を増やす", "Deku Nut Upgrade        "),
-};
-#endif
 
 static DnsItemEntry sItemDekuNuts = { 20, 5, GI_DEKU_NUTS_5_2, EnDns_CanBuyDekuNuts, EnDns_PayForDekuNuts };
 static DnsItemEntry sItemDekuSticks = { 15, 1, GI_DEKU_STICKS_1, EnDns_CanBuyDekuSticks, EnDns_PayPrice };
@@ -122,10 +107,11 @@ static DnsItemEntry sItemDekuStickUpgrade = { 40, 1, GI_DEKU_STICK_UPGRADE_20, E
                                               EnDns_PayForDekuStickUpgrade };
 static DnsItemEntry sItemDekuNutUpgrade = { 40, 1, GI_DEKU_NUT_UPGRADE_30, EnDns_CanBuyPrice,
                                             EnDns_PayForDekuNutUpgrade };
+static DnsItemEntry sItemDekuMagicBean = { 50, 1, GI_MAGIC_BEAN, EnDns_CanBuyPrice, EnDns_PayForMagicBean };
 
 static DnsItemEntry* sItemEntries[] = {
     &sItemDekuNuts, &sItemDekuSticks, &sItemHeartPiece,  &sItemDekuSeeds,        &sItemDekuShield,     &sItemBombs,
-    &sItemArrows,   &sItemRedPotion,  &sItemGreenPotion, &sItemDekuStickUpgrade, &sItemDekuNutUpgrade,
+    &sItemArrows,   &sItemRedPotion,  &sItemGreenPotion, &sItemDekuStickUpgrade, &sItemDekuNutUpgrade, &sItemDekuMagicBean,
 };
 
 static InitChainEntry sInitChain[] = {
@@ -152,12 +138,12 @@ void EnDns_Init(Actor* thisx, PlayState* play) {
     }
 
     // Sell Seeds instead of Arrows if Link is child
-    if ((DNS_GET_TYPE(&this->actor) == DNS_TYPE_ARROWS_30) && (LINK_AGE_IN_YEARS == YEARS_CHILD)) {
+    if ((DNS_GET_TYPE(&this->actor) == DNS_TYPE_ARROWS_30) && (LINK_AGE_IN_YEARS == YEARS_CHILD && !IS_CHILD_QUEST)) {
         DNS_GET_TYPE(&this->actor) = DNS_TYPE_DEKU_SEEDS_30;
     }
 
     PRINTF(VT_FGCOL(GREEN) T("◆◆◆ 売りナッツ『%s』 ◆◆◆", "◆◆◆ Selling nuts『%s』 ◆◆◆") VT_RST "\n",
-           sItemDebugTxt[DNS_GET_TYPE(&this->actor)]);
+           DNS_GET_TYPE(&this->actor));
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
 
@@ -345,6 +331,11 @@ void EnDns_PayForDekuStickUpgrade(EnDns* this) {
 
 void EnDns_PayForDekuNutUpgrade(EnDns* this) {
     SET_INFTABLE(INFTABLE_HAS_DEKU_NUT_UPGRADE);
+    Rupees_ChangeBy(-this->dnsItemEntry->itemPrice);
+}
+
+void EnDns_PayForMagicBean(EnDns* this) {
+    SET_ITEMGETINF(ITEMGETINF_DEKU_MAGIC_BEAN);
     Rupees_ChangeBy(-this->dnsItemEntry->itemPrice);
 }
 

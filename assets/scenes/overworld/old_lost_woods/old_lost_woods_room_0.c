@@ -17,7 +17,7 @@ SceneCmd old_lost_woods_room_0Commands[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader0x0008D0),
-    SCENE_CMD_OBJECT_LIST(8, old_lost_woods_room_0ObjectList0x000040),
+    SCENE_CMD_OBJECT_LIST(10, old_lost_woods_room_0ObjectList0x000040),
     SCENE_CMD_ACTOR_LIST(140, old_lost_woods_room_0ActorList0x000048),
     SCENE_CMD_END(),
 };
@@ -38,6 +38,7 @@ s16 old_lost_woods_room_0ObjectList0x000040[] = {
     OBJECT_WOOD02,
     OBJECT_OWL,
     OBJECT_DEKUCITY_OBJ,
+    OBJECT_FR,
 };
 
 ActorEntry old_lost_woods_room_0ActorList0x000048[] = {
@@ -208,8 +209,8 @@ SceneCmd old_lost_woods_room_0Set_timeskip[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader0x0008D0),
-    SCENE_CMD_OBJECT_LIST(7, old_lost_woods_room_0ObjectList0x000040),
-    SCENE_CMD_ACTOR_LIST(140, old_lost_woods_room_0ActorList_timeskip),
+    SCENE_CMD_OBJECT_LIST(10, old_lost_woods_room_0ObjectList0x000040),
+    SCENE_CMD_ACTOR_LIST(141, old_lost_woods_room_0ActorList_timeskip),
     SCENE_CMD_END(),
 };
 
@@ -354,6 +355,7 @@ ActorEntry old_lost_woods_room_0ActorList_timeskip[] = {
     { ACTOR_DOOR_ANA,       {  2175,  160,  1425 }, {      0,      0,     20 }, 0x0000 },
     { ACTOR_OBJ_MURE,       {  2175,  188,  1425 }, {      0,      0,      0 }, 0x5324 },
     { ACTOR_OBJ_PURIFY,     { -3000, -250,  -100 }, {      0, 0xC000,      0 }, 0x0003 },
+    { ACTOR_EN_FR,          { -1000,  438, -3100 }, {      0,      0,      0 }, 0x0025 }, // White
 };
 
 static s32 terminatorMaybe = { 0x01000000 };
