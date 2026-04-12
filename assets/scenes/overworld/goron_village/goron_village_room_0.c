@@ -17,7 +17,7 @@ SceneCmd goron_village_room_0[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&goron_village_room_0RoomShapeCullable_0000F0),
     SCENE_CMD_OBJECT_LIST(14, goron_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(18, goron_village_room_0ActorEntry_00005C),
+    SCENE_CMD_ACTOR_LIST(19, goron_village_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
 
@@ -56,7 +56,8 @@ ActorEntry goron_village_room_0ActorEntry_00005C[] = {
     { ACTOR_BG_ICE_SHELTER,     {  2585, -200, -1345 }, {      0, 0xC950,      0 }, 0x0509 }, // Switch: 09
     { ACTOR_BG_SPOT18_SHUTTER,  {  -850, -200,    72 }, {      0, 0x0FA0,      0 }, 0x0000 },
     { ACTOR_OBJ_BEAN,           {   250, -200,   450 }, {      0,      0,      0 }, 0x010A }, // Switch: 0A
-    { ACTOR_EN_GO3,             {  -665, -200,    50 }, {      0, 0x0FA0,      0 }, 0x0000 },
+    { ACTOR_EN_GO3,             {  -665, -200,    50 }, {      0, 0x0FA0,      0 }, 0x0001 },
+    { ACTOR_EN_WEATHER_TAG,     {   400,  200,  1000 }, {      0,      0,      0 }, 0x2008 },
 };
 
 RoomShapeCullable goron_village_room_0RoomShapeCullable_0000F0 = { 

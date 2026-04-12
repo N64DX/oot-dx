@@ -65,6 +65,11 @@ BgSpot18ShutterInfo sBgSpot18ShutterInfo[] = {
         1.0f,
         1.0f,
     }, {
+        SCENE_GORON_SHRINE,
+        INFTABLE_GORON_MINES_DOOR_OPENED,
+        0.5f,
+        0.6f,
+    }, {
         SCENE_SPRING_LAKE,
         INFTABLE_SECRET_SHRINE_DOOR_OPENED,
         1.5f,

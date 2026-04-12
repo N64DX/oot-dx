@@ -2165,8 +2165,11 @@ u16 Player_MaxShieldDurabilityValues[4][8] = {
 };
 
 u16 Player_GetMaxShieldDurability(u8 shield) {
-    if (shield > PLAYER_SHIELD_NONE)
-        return Player_MaxShieldDurabilityValues[shield-1][gSaveContext.save.info.shields[shield-1].upgrade];
+    if (shield > PLAYER_SHIELD_NONE) {
+        if (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST)
+            return Player_MaxShieldDurabilityValues[shield-1][gSaveContext.save.info.shields[shield-1].upgrade];
+        return Player_MaxShieldDurabilityValues[shield-1][2];
+    }
     return 0;
 }
 

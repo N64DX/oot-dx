@@ -10,38 +10,9 @@ struct EnGo3;
 typedef void (*EnGo3ActionFunc)(struct EnGo3*, struct PlayState*);
 
 typedef enum GoronType {
-    /* 0x00 */ GORON_VILLAGE_DOOR,
-
-    /* 0x00 */ GORON_CITY_ROLLING_BIG,
-    /* 0x01 */ GORON_CITY_LINK,
-    /* 0x02 */ GORON_DMT_BIGGORON,
-    /* 0x03 */ GORON_FIRE_GENERIC,
-    /* 0x04 */ GORON_DMT_BOMB_FLOWER,
-    /* 0x05 */ GORON_DMT_ROLLING_SMALL,
-    /* 0x06 */ GORON_DMT_DC_ENTRANCE,
-    /* 0x07 */ GORON_CITY_ENTRANCE,
-    /* 0x08 */ GORON_CITY_ISLAND,
-    /* 0x09 */ GORON_CITY_LOWEST_FLOOR,
-    /* 0x0A */ GORON_CITY_STAIRWELL,
-    /* 0x0B */ GORON_CITY_LOST_WOODS,
-    /* 0x0C */ GORON_DMT_FAIRY_HINT,
-    /* 0x0D */ GORON_MARKET_BAZAAR
+    /* 0x00 */ GORON_SHRINE_GENERIC,
+    /* 0x01 */ GORON_VILLAGE_DOOR
 } GoronType;
-
-// WIP fire temple type docs
-// /* 0x00 */ UNUSED
-// /* 0x01 */ GORON_FIRE_LAVA_ROOM_OPEN
-// /* 0x02 */ GORON_FIRE_LAVA_ROOM_BOMB
-// /* 0x03 */ GORON_FIRE_MAZE_LOWER
-// /* 0x04 */ GORON_FIRE_MAZE_SHORTCUT
-// /* 0x05 */ GORON_FIRE_MAZE_SIDE_ROOM
-// /* 0x06 */ GORON_FIRE_BOSS_KEY
-// /* 0x07 */ GORON_FIRE_BOSS_KEY
-// /* 0x08 */ GORON_FIRE_NEAR_BOSS
-// /* 0x09 */ GORON_FIRE_BOSS_KEY
-// /* 0x0A */ GORON_FIRE_MAZE_UPPER,
-// /* 0x0B */ GORON_FIRE_HIGHEST
-
 
 typedef struct EnGo3DataStruct1 {
     s16 unused;
@@ -75,12 +46,10 @@ typedef struct EnGo3 {
     /* 0x0190 */ EnGo3ActionFunc actionFunc;
     /* 0x0194 */ NpcInteractInfo interactInfo;
     /* 0x01BC */ ColliderCylinder collider;
-    /* 0x0208 */ struct Path* path;
     /* 0x020C */ u8 unk_20C; // counter for GORON_CITY_LINK animation
     /* 0x020D */ u8 dialogState;
     /* 0x020E */ u8 reverse;
     /* 0x020F */ u8 isAwake; // Conditional
-    /* 0x0210 */ s8 waypoint;
     /* 0x0211 */ u8 unk_211; // Conditional
     // goron link: 0 - rolling, 1 - frozen
     // biggoron: 0 - give eyedrops, 1 - applying eyedrops, 2 - getting claimcheck
@@ -89,7 +58,6 @@ typedef struct EnGo3 {
     /* 0x0213 */ u8 eyeMouthTexState; // 0, 1, 2, 3
     /* 0x0214 */ u8 eyeTexIndex;
     /* 0x0215 */ u8 mouthTexIndex;
-    /* 0x0216 */ u8 unk_216; // Set to z rotation, checked by waypoint
     /* 0x0218 */ f32 interactRange;
     /* 0x0220 */ f32 alpha; // Set to 0, used by func_80A45360, smoothed to this->actor.shape.shadowAlpha from either 0 or 255.0f
     /* 0x0224 */ s16 blinkTimer;
@@ -106,6 +74,8 @@ typedef struct EnGo3 {
     /* 0x0594 */ s32 getItemId;
     /* 0x059A */ s16 subCamId;
     /* 0x059C */ s16 unk_59C;
+    /* 0x059E */ u8 type;
+    /* 0x059F */ u8 textType;
 } EnGo3; // size = 0x05A0
 
 #endif

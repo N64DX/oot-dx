@@ -3093,3 +3093,51 @@ UNSKIPPABLE "Can I go back already?\n"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x8430, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I would love to welcome you into\n"
+"our fair Goron Shrine, but we're\n"
+"dealing with bit of an issue here.\n"
+"You should go speak with the Elder."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8431, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"This door leads to the Goron Mines.\n"
+"I would stay out of it if I were you.\n"
+"You need the Elder's approval to go\n"
+"inside."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8432, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"The Elder is in the room behind me.\n"
+"I wouldn't trouble him if I were you.\n"
+"We got enough problems as it is\n"
+"already."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8433, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"We sealed off the Goron Mines.\n"
+"Dangerous monsters suddenly started\n"
+"infesting the mines, and many gave\n"
+"their lives defending it."
+),
+MSG(),
+MSG()
+)

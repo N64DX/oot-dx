@@ -39,13 +39,13 @@ s16 goron_village_room_1ObjectList_00004C[] = {
 };
 
 ActorEntry goron_village_room_1ActorEntry_00005C[] = {
-    { ACTOR_EN_GM,       { -1145, -500, -3689 }, { 0,      0,  0 }, 0x0108 }, // Unlocks on switch: 08
-    { ACTOR_EN_KAKASI2,  { -1194, -140, -2365 }, { 0,      0, 14 }, 0x053E }, // Switch: 3E
-    { ACTOR_OBJ_KIBAKO2, { -1184, -500, -3051 }, { 0, 0x4000,  0 }, 0x7F3F },
-    { ACTOR_OBJ_HSBLOCK, { -1070, -200, -2340 }, { 0,      0,  0 }, 0x0000 },
-    { ACTOR_OBJ_HSBLOCK, { -1070, -320, -2580 }, { 0,      0,  0 }, 0x0000 },
-    { ACTOR_OBJ_HSBLOCK, { -1070, -440, -2820 }, { 0,      0,  0 }, 0x0000 },
-    { ACTOR_EN_FR,       { -1225, -500, -3300 }, { 0, 0x2000,  0 }, 0x0024 }, // Purple
+    { ACTOR_EN_GM,          { -1145, -500, -3689 }, { 0,      0,  0 }, 0x0108 }, // Unlocks on switch: 08
+    { ACTOR_EN_KAKASI2,     { -1194, -140, -2365 }, { 0,      0, 14 }, 0x053E }, // Switch: 3E
+    { ACTOR_OBJ_KIBAKO2,    { -1184, -500, -3051 }, { 0, 0x4000,  0 }, 0x7F3F },
+    { ACTOR_OBJ_HSBLOCK,    { -1070, -200, -2340 }, { 0,      0,  0 }, 0x0000 },
+    { ACTOR_OBJ_HSBLOCK,    { -1070, -320, -2580 }, { 0,      0,  0 }, 0x0000 },
+    { ACTOR_OBJ_HSBLOCK,    { -1070, -440, -2820 }, { 0,      0,  0 }, 0x0000 },
+    { ACTOR_EN_FR,          { -1225, -500, -3300 }, { 0, 0x2000,  0 }, 0x0025 }, // Purple
 };
 
 RoomShapeCullable goron_village_room_1RoomShapeCullable_0000A0 = { 

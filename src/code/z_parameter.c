@@ -161,6 +161,7 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_WOODFALL, 0x00, 0x00, 0x00 },
     { SCENE_PATH_TO_GORON_VILLAGE, 0x00, 0x00, 0x00 },
     { SCENE_GORON_VILLAGE, 0x00, 0x00, 0x00 },
+    { SCENE_GORON_SHRINE, 0x00, 0x00, 0x00 },
     { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
     { SCENE_WEBBED_SHRINE, 0x00, 0x00, 0x00 },
     { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x00 },
@@ -538,6 +539,14 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 case SCENE_GORON_CITY:
                 case SCENE_LON_LON_RANCH:
                 case SCENE_OUTSIDE_GANONS_CASTLE:
+                case SCENE_PATH_TO_WOODFALL:
+                case SCENE_PATH_TO_FORTRESS:
+                case SCENE_PATH_TO_LAKE_HYLIA:
+                case SCENE_SPRING_LAKE:
+                case SCENE_WOODFALL:
+                case SCENE_PATH_TO_GORON_VILLAGE:
+                case SCENE_GORON_VILLAGE:
+                case SCENE_GORON_SHRINE:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {
@@ -5433,6 +5442,14 @@ void Interface_Update(PlayState* play) {
                 case SCENE_GORON_CITY:
                 case SCENE_LON_LON_RANCH:
                 case SCENE_OUTSIDE_GANONS_CASTLE:
+                case SCENE_PATH_TO_WOODFALL:
+                case SCENE_PATH_TO_FORTRESS:
+                case SCENE_PATH_TO_LAKE_HYLIA:
+                case SCENE_SPRING_LAKE:
+                case SCENE_WOODFALL:
+                case SCENE_PATH_TO_GORON_VILLAGE:
+                case SCENE_GORON_VILLAGE:
+                case SCENE_GORON_SHRINE:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {

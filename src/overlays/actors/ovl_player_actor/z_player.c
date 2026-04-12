@@ -11647,8 +11647,10 @@ void Player_Init(Actor* thisx, PlayState* play2) {
 
     gSaveContext.respawn[RESPAWN_MODE_DOWN].data = 1;
 
-    if (play->sceneId <= SCENE_INSIDE_GANONS_CASTLE_COLLAPSE) {
+    if (play->sceneId <= SCENE_INSIDE_GANONS_CASTLE && play->sceneId != SCENE_GANONS_TOWER && play->sceneId != SCENE_THIEVES_HIDEOUT) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[play->sceneId];
+    } else if (play->sceneId == SCENE_GORON_MINES) {
+        gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AC_SHIFT];
     }
 
     startMode = PLAYER_GET_START_MODE(thisx);

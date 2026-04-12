@@ -97,6 +97,27 @@ beginseg
 endseg
 
 beginseg
+    name "goron_shrine_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/goron_shrine/goron_shrine_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "goron_shrine_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/goron_shrine/goron_shrine_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "goron_shrine_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/goron_shrine/goron_shrine_room_1.o"
+    number 3
+endseg
+
+beginseg
     name "woodfall_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_scene.o"

@@ -25,7 +25,7 @@ SceneCmd goron_village_scene[] = {
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PATH_LIST(goron_village_scenePathway_00034C),
     SCENE_CMD_SPAWN_LIST(4, goron_village_sceneStartPositionList0x000094),
-    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 1, LIGHT_MODE_TIME),
+    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(goron_village_sceneExitList_000110),
     SCENE_CMD_ENV_LIGHT_SETTINGS(24, goron_village_sceneLightSettings0x00011C),
     SCENE_CMD_END(),
@@ -57,7 +57,7 @@ Spawn goron_village_sceneEntranceList0x000104[] = {
 
 u16 goron_village_sceneExitList_000110[] = {
     ENTR_PATH_TO_GORON_VILLAGE_1,
-    ENTR_GORON_VILLAGE_1,
+    ENTR_GORON_SHRINE_0,
     ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_4,
     ENTR_GORON_VILLAGE_3,
 };

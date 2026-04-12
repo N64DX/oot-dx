@@ -23,6 +23,7 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play);
 void EnWeatherTag_Destroy(Actor* thisx, PlayState* play);
 void EnWeatherTag_Update(Actor* thisx, PlayState* play);
 
+u8 WeatherTag_CheckEnableWeatherEffect(EnWeatherTag* this, PlayState* play, u8 skyboxConfig, u8 changeSkyboxNextConfig, u8 lightConfig, u8 changeLightNextConfig, u16 changeDuration, u8 weatherMode);
 void EnWeatherTag_DisabledCloudyHyruleMarket(EnWeatherTag* this, PlayState* play);
 void EnWeatherTag_EnabledCloudyHyruleMarket(EnWeatherTag* this, PlayState* play);
 void EnWeatherTag_DisabledCloudyLonLonRanch(EnWeatherTag* this, PlayState* play);
@@ -38,6 +39,8 @@ void EnWeatherTag_EnabledCloudyRainThunderKakariko(EnWeatherTag* this, PlayState
 void EnWeatherTag_SetSandstormIntensity(EnWeatherTag* this, PlayState* play);
 void EnWeatherTag_DisabledRainThunder(EnWeatherTag* this, PlayState* play);
 void EnWeatherTag_EnabledRainThunder(EnWeatherTag* this, PlayState* play);
+void EnWeatherTag_DisabledRainThunderGoronVillage(EnWeatherTag* this, PlayState* play);
+void EnWeatherTag_EnabledRainThunderGoronVillage(EnWeatherTag* this, PlayState* play);
 
 #define WEATHER_TAG_RANGE100(x) ((x >> 8) * 100.0f)
 
@@ -53,26 +56,37 @@ ActorProfile En_Weather_Tag_Profile = {
     /**/ NULL,
 };
 
+static u16 lastEntranceIndex = 0xFFFF;
+
 void EnWeatherTag_SetupAction(EnWeatherTag* this, EnWeatherTagActionFunc actionFunc) {
     this->actionFunc = actionFunc;
 }
 
 void EnWeatherTag_Destroy(Actor* thisx, PlayState* play) {
     EnWeatherTag* this = (EnWeatherTag*)thisx;
+    u8 type = PARAMS_GET_U(this->actor.params, 0, 4);
 
     if (this->killedOnInit)
         return;
 
-    if (PARAMS_GET_U(this->actor.params, 0, 4) == EN_WEATHER_TAG_TYPE_THUNDERSTORM_KAKARIKO) {
+    if (type == EN_WEATHER_TAG_TYPE_THUNDERSTORM_GORON_VILLAGE) {
+        if (lastEntranceIndex != gSaveContext.save.entranceIndex) {
+            play->envCtx.lightConfig = 2;
+            play->envCtx.changeSkyboxTimer = play->envCtx.changeDuration = 100;
+            Environment_StopStormNatureAmbience(play);
+            play->envCtx.lightningState = LIGHTNING_LAST;
+            play->envCtx.precipitation[PRECIP_RAIN_MAX] = 0;
+        } else return;
+    } else if (type == EN_WEATHER_TAG_TYPE_THUNDERSTORM_KAKARIKO) {
         play->envCtx.lightConfig = 4;        
         play->envCtx.changeSkyboxTimer = play->envCtx.changeDuration = 100;
         Environment_StopStormNatureAmbience(play);
         play->envCtx.lightningState = LIGHTNING_LAST;
         play->envCtx.precipitation[PRECIP_RAIN_MAX] = 0;
-    } else if (PARAMS_GET_U(this->actor.params, 0, 4) == EN_WEATHER_TAG_TYPE_CLOUDY_MARKET) {
+    } else if (type == EN_WEATHER_TAG_TYPE_CLOUDY_MARKET) {
         play->envCtx.lightConfig = 3;
         play->envCtx.changeSkyboxTimer = play->envCtx.changeDuration = 60;
-    } else if (PARAMS_GET_U(this->actor.params, 0, 4) == EN_WEATHER_TAG_TYPE_CLOUDY_DEATH_MOUNTAIN || PARAMS_GET_U(this->actor.params, 0, 4) == EN_WEATHER_TAG_TYPE_SNOW_ZORAS_DOMAIN) {
+    } else if (type == EN_WEATHER_TAG_TYPE_CLOUDY_DEATH_MOUNTAIN || type == EN_WEATHER_TAG_TYPE_SNOW_ZORAS_DOMAIN) {
         play->envCtx.lightConfig = 2;
         play->envCtx.changeSkyboxTimer = play->envCtx.changeDuration = 60;
     } else {
@@ -169,7 +183,20 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
 
             EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledRainThunder);
             break;
+        case EN_WEATHER_TAG_TYPE_THUNDERSTORM_GORON_VILLAGE:
+            if (GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES)) {
+                Actor_Kill(&this->actor);
+                this->killedOnInit = true;
+            }
+            if (lastEntranceIndex != gSaveContext.save.entranceIndex) {
+                Environment_PlayStormNatureAmbience(play);
+                WeatherTag_CheckEnableWeatherEffect(this, play, 0, 1, 0, 3, 60, WEATHER_MODE_CLOUDY_CONFIG3);
+            }
+            EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledRainThunderGoronVillage);
+            break;
     }
+
+    lastEntranceIndex = gSaveContext.save.entranceIndex;
 }
 
 u8 WeatherTag_CheckEnableWeatherEffect(EnWeatherTag* this, PlayState* play, u8 skyboxConfig, u8 changeSkyboxNextConfig,
@@ -369,6 +396,27 @@ void EnWeatherTag_EnabledRainThunder(EnWeatherTag* this, PlayState* play) {
         play->envCtx.precipitation[PRECIP_RAIN_MAX] = 0;
         play->envCtx.precipitation[PRECIP_RAIN_CUR] = 10;
         EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledRainThunder);
+    }
+}
+
+void EnWeatherTag_DisabledRainThunderGoronVillage(EnWeatherTag* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+
+    if (Actor_WorldDistXZToActor(&player->actor, &this->actor) < WEATHER_TAG_RANGE100(this->actor.params)) {
+        play->envCtx.lightningState = LIGHTNING_ON;
+        play->envCtx.precipitation[PRECIP_RAIN_MAX] = 25;
+        EnWeatherTag_SetupAction(this, EnWeatherTag_EnabledRainThunderGoronVillage);
+    }
+}
+
+void EnWeatherTag_EnabledRainThunderGoronVillage(EnWeatherTag* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+
+    if ((WEATHER_TAG_RANGE100(this->actor.params) + 10.0f) < Actor_WorldDistXZToActor(&player->actor, &this->actor)) {
+        play->envCtx.lightningState = LIGHTNING_LAST;
+        play->envCtx.precipitation[PRECIP_RAIN_MAX] = 0;
+        play->envCtx.precipitation[PRECIP_RAIN_CUR] = 10;
+        EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledRainThunderGoronVillage);
     }
 }
 

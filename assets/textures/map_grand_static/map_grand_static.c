@@ -125,3 +125,7 @@ u64 gPathToGoronVillageMinimapTex[TEX_LEN(u64, 80, 54, 4)] = {
 u64 gGoronVillageMinimapTex[TEX_LEN(u64, 80, 47, 4)] = {
 #include "assets/textures/map_grand_static/gGoronVillageMinimapTex.ia4.inc.c"
 };
+
+u64 gGoronShrineMinimapTex[TEX_LEN(u64, 80, 60, 4)] = {
+#include "assets/textures/map_grand_static/gGoronShrineMinimapTex.ia4.inc.c"
+};
