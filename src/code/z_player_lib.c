@@ -1208,11 +1208,11 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
             if (strengthUpgrade >= PLAYER_STR_BRACELET) {
                 gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][strengthUpgrade + 1]);
             }
+            if (gSaveContext.save.info.obtainedItems.amuletOfEnergy) {
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][5]);
+            }
             if (boots == PLAYER_BOOTS_IRON || boots == PLAYER_BOOTS_HOVER) {
                 gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][boots - 1]);
-            }
-            if (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy) {
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][5]);
             }
         } else if (Player_GetStrength() > PLAYER_STR_NONE) {
             gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][2]);
