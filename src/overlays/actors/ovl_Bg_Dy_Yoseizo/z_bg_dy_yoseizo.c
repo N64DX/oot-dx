@@ -854,7 +854,7 @@ void BgDyYoseizo_Give_Reward(BgDyYoseizo* this, PlayState* play) {
         this->item = NULL;
     }
 
-    if ((play->sceneId == SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC) && (play->csCtx.actorCues[0]->id == 18)) {
+    if ((play->sceneId == SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC) && (play->csCtx.actorCues[0]->id == 18) && this->fountainType == FAIRY_UPGRADE_DOUBLE_DEFENSE) {
         this->giveDefenseHearts = true;
     }
 
