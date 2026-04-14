@@ -263,3 +263,10 @@ beginseg
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Go3/z_en_go3.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Go3/ovl_En_Go3_reloc.o"
 endseg
+
+beginseg
+    name "ovl_En_Jg"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Jg/z_en_jg.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Jg/ovl_En_Jg_reloc.o"
+endseg

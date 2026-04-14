@@ -306,7 +306,7 @@ void func_80A3DF00(EnGm* this, PlayState* play) {
 
 void func_80A3DF60(EnGm* this, PlayState* play) {
     if ((Message_GetState(&play->msgCtx) == TEXT_STATE_DONE) && Message_ShouldAdvance(play)) {
-        Rupees_ChangeBy(-200);
+        Rupees_ChangeBy(-prices[this->type]);
         this->actionFunc = func_80A3DC44;
     }
 }

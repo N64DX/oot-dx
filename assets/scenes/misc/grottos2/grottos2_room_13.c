@@ -28,7 +28,7 @@ s16 grottos2_room_13ObjectList_000040[] = {
 
 ActorEntry grottos2_room_13ActorEntry_000048[] = {
     { ACTOR_EN_STALM, { 5200, -20, 600 }, {    0, 0x8000, 0 }, 0x0001 }, // Switch: 00
-    { ACTOR_EN_BOX,   { 2400, -20, 100 }, { 0x3E, 0x8000, 0 }, 0xB000 },
+    { ACTOR_EN_BOX,   { 5200, -20, 100 }, { 0x3E, 0x8000, 0 }, 0xB000 },
 };
 
 RoomShapeCullable grottos2_room_13RoomShapeCullable_000090 = { 

@@ -241,10 +241,10 @@ static u8 sOcarinaNotes[] = {
 static FrogHideInfo sFrogHideInfo[] = {
     {      0,      0,      0,                        0, 100.0f },
     {      0,      0,      0,                        0, 120.0f },
-    { 0x8409, 0x840A, 0x840B, EVENTCHKINF_FOUND_FROG_1, 140.0f },
-    { 0x8409, 0x840A, 0x840C, EVENTCHKINF_FOUND_FROG_2, 120.0f },
-    { 0x8409, 0x840A, 0x840D, EVENTCHKINF_FOUND_FROG_3, 250.0f },
-    { 0x8409, 0x840A, 0x840E, EVENTCHKINF_FOUND_FROG_4, 275.0f },
+    { 0x84A4, 0x84A5, 0x84A6, EVENTCHKINF_FOUND_FROG_1, 140.0f },
+    { 0x84A4, 0x84A5, 0x84A7, EVENTCHKINF_FOUND_FROG_2, 120.0f },
+    { 0x84A4, 0x84A5, 0x84A8, EVENTCHKINF_FOUND_FROG_3, 250.0f },
+    { 0x84A4, 0x84A5, 0x84A9, EVENTCHKINF_FOUND_FROG_4, 275.0f },
 };
 
 void EnFr_OrientUnderwater(EnFr* this) {
@@ -276,8 +276,8 @@ void EnFr_Init(Actor* thisx, PlayState* play) {
     if (this->regionType != FROG_ZORAS_RIVER) {
         if (this->actor.params == 1) {
             if (GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_1) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_2) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_3) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_4))
-                this->actor.textId = GET_ITEMGETINF(ITEMGETINF_GOT_FROG_HIDE_AND_SEEK_REWARD) ? 0x8408 : 0x8407;
-            else this->actor.textId = GET_EVENTCHKINF(EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK) ? 0x8406 : 0x8405;
+                this->actor.textId = GET_ITEMGETINF(ITEMGETINF_GOT_FROG_HIDE_AND_SEEK_REWARD) ? 0x84A3 : 0x84A2;
+            else this->actor.textId = GET_EVENTCHKINF(EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK) ? 0x84A1 : 0x84A0;
         } else {
             if (this->regionType == FROG_SPRING_LAKE)
                 this->actor.textId = sFrogHideInfo[this->actor.params].lakeTextId;
@@ -474,13 +474,13 @@ s32 EnFr_StartTalkDialogue(EnFr* this, PlayState* play, EnFrActionFunc actionFun
 void EnFr_EndTalkDialogue(EnFr* this, PlayState* play) {
     if (Actor_TextboxIsClosing(&this->actor, play)) {
         if (this->actor.params == 1) {
-            if (this->actor.textId == 0x8405) {
+            if (this->actor.textId == 0x84A0) {
                 SET_EVENTCHKINF(EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK);
-                this->actor.textId = 0x8406;
-            } else if (this->actor.textId == 0x8407) {
+                this->actor.textId = 0x84A1;
+            } else if (this->actor.textId == 0x84A2) {
                 Actor_OfferGetItem(&this->actor, play, GI_HEART_PIECE, 415.0f, 10.0f);
                 SET_ITEMGETINF(ITEMGETINF_GOT_FROG_HIDE_AND_SEEK_REWARD);
-                this->actor.textId = 0x8408;
+                this->actor.textId = 0x84A3;
             }
         }
 

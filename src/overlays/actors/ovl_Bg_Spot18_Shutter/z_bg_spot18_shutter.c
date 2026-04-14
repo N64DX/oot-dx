@@ -58,7 +58,11 @@ BgSpot18ShutterInfo sBgSpot18ShutterInfo[] = {
         INFTABLE_109,
         1.0f,
         1.0f,
-        
+    }, {
+        SCENE_PATH_TO_GORON_VILLAGE,
+        INFTABLE_STONE_TOWER_DOOR_OPENED,
+        1.5f,
+        1.0f,
     }, {
         SCENE_GORON_VILLAGE,
         INFTABLE_GORON_SHRINE_DOOR_OPENED,

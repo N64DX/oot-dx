@@ -17,8 +17,8 @@ SceneCmd goron_shrine_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&goron_shrine_room_1RoomShapeCullable_0000F0),
-    SCENE_CMD_OBJECT_LIST(4, goron_shrine_room_1ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(5, goron_shrine_room_1ActorEntry_000058),
+    SCENE_CMD_OBJECT_LIST(6, goron_shrine_room_1ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(6, goron_shrine_room_1ActorEntry_000058),
     SCENE_CMD_END(),
 };
 
@@ -35,17 +35,20 @@ s16 goron_shrine_room_1ObjectList_00004C[] = {
     OBJECT_SYOKUDAI,
   //OBJECT_OBJ_CHAN,
     OBJECT_TSUBO,
+    OBJECT_JG,
+    OBJECT_BOX,
 };
 
 ActorEntry goron_shrine_room_1ActorEntry_000058[] = {
-  //{ ACTOR_EN_GO,        { -1723, -134, -115 }, { 0, 0x3C, 0 }, 0x7F87 },
-  //{ ACTOR_EN_S_GORO,    { -1552, -133,   74 }, { 0, 0x49, 0 }, 0x0002 },
-  //{ ACTOR_EN_GK,        { -1780, -114,  -12 }, { 0, 0x5A, 0 }, 0x1400 },
-    { ACTOR_OBJ_SYOKUDAI, { -1505, -134, -140 }, { 0,    0, 0 }, 0x2400 },
-    { ACTOR_OBJ_SYOKUDAI, { -1505, -134,  125 }, { 0,    0, 0 }, 0x2400 },
-    { ACTOR_OBJ_TSUBO,    { -1568, -134, -172 }, { 0,    0, 0 }, 0x5701 }, // Collect: 2B
-    { ACTOR_OBJ_TSUBO,    { -1624, -134, -172 }, { 0,    0, 0 }, 0x5901 }, // Collect: 2C
-    { ACTOR_OBJ_TSUBO,    { -1680, -134, -172 }, { 0,    0, 0 }, 0x5B01 }, // Collect: 2D
+  //{ ACTOR_EN_GO3,       { -1723, -134, -115 }, { 0,   0x3C, 0 }, 0x7F87 },
+  //{ ACTOR_EN_GO3,       { -1552, -133,   74 }, { 0,   0x49, 0 }, 0x0002 },
+  //{ ACTOR_EN_GK,        { -1780, -114,  -12 }, { 0,   0x5A, 0 }, 0x1400 },
+    { ACTOR_EN_JG,        { -1690, -133,    0 }, { 0, 0x4000, 0 }, 0x0000 },
+    { ACTOR_OBJ_SYOKUDAI, { -1505, -134, -140 }, { 0,      0, 0 }, 0x2400 },
+    { ACTOR_OBJ_SYOKUDAI, { -1505, -134,  125 }, { 0,      0, 0 }, 0x2400 },
+    { ACTOR_OBJ_TSUBO,    { -1568, -134, -172 }, { 0,      0, 0 }, 0x5701 }, // Collect: 2B
+    { ACTOR_OBJ_TSUBO,    { -1624, -134, -172 }, { 0,      0, 0 }, 0x5901 }, // Collect: 2C
+    { ACTOR_OBJ_TSUBO,    { -1680, -134, -172 }, { 0,      0, 0 }, 0x5B01 }, // Collect: 2D
 };
 
 RoomShapeCullable goron_shrine_room_1RoomShapeCullable_0000F0 = { 
