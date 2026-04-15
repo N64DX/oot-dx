@@ -291,7 +291,7 @@ u16 EnGo3_GetTextId(PlayState* play, Actor* thisx) {
         return textId;
     else {
         switch (this->type) {
-            case GORON_SHRINE_GENERIC:
+            case GORON_GENERIC:
                 return EnGo3_GetTextIdGoronShrineGeneric(play, this);
             case GORON_VILLAGE_DOOR:
                 return EnGo3_GetTextIdGoronVillageDoor(play, this);
@@ -303,7 +303,7 @@ u16 EnGo3_GetTextId(PlayState* play, Actor* thisx) {
 s16 EnGo3_UpdateTalkState(PlayState* play, Actor* thisx) {
     EnGo3* this = (EnGo3*)thisx;
     switch (this->type) {
-        case GORON_SHRINE_GENERIC:
+        case GORON_GENERIC:
             if (Message_GetState(&play->msgCtx) == TEXT_STATE_CLOSING)
                 return NPC_TALK_STATE_IDLE;
             return NPC_TALK_STATE_TALKING;
@@ -662,6 +662,9 @@ void EnGo3_Draw(Actor* thisx, PlayState* play) {
     EnGo3* this = (EnGo3*)thisx;
     void* eyeTextures[] = { gGoronCsEyeClosed2Tex, gGoronCsEyeOpenTex, gGoronCsEyeHalfTex, gGoronCsEyeClosedTex };
     void* mouthTextures[] = { gGoronCsMouthNeutralTex, gGoronCsMouthSmileTex };
+
+    if (play->sceneId == SCENE_SPRING_LAKE && this->actor.xzDistToPlayer > 1000.0f)
+        return;
 
     EnGo3_UpdateEffects(this);
     Matrix_Push();

@@ -120,7 +120,7 @@ static u64 scene_texture_08_Tex_002800[] = {
 };
 
 static u64 scene_texture_08_Tex_003400[] = {
-#include "assets/misc/scene_texture_08/Tex_003400.ia8.inc.c"
+#include "assets/misc/scene_texture_08/tex_003400.ia8.inc.c"
 };
 
 static u64 scene_texture_08_Tex_004000[] = {

@@ -11,38 +11,30 @@
 #include "ultra64.h"
 
 SceneCmd goron_shrine_room_1[] = {
-  //SCENE_CMD_ALTERNATE_HEADER_LIST(goron_shrine_room_1AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(4),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&goron_shrine_room_1RoomShapeCullable_0000F0),
-    SCENE_CMD_OBJECT_LIST(6, goron_shrine_room_1ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(6, goron_shrine_room_1ActorEntry_000058),
+    SCENE_CMD_OBJECT_LIST(8, goron_shrine_room_1ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(8, goron_shrine_room_1ActorEntry_000058),
     SCENE_CMD_END(),
 };
-
-/*SceneCmd* goron_shrine_room_1AlternateHeaders[] = {
-    NULL,
-    NULL,
-    goron_shrine_room_1Set_cleansed,
-};*/
 
 s16 goron_shrine_room_1ObjectList_00004C[] = {
     OBJECT_SPOT18_OBJ,
     OBJECT_OF1D_MAP,
-  //OBJECT_GK,
     OBJECT_SYOKUDAI,
-  //OBJECT_OBJ_CHAN,
     OBJECT_TSUBO,
     OBJECT_JG,
     OBJECT_BOX,
+    OBJECT_KIBAKO2,
+    OBJECT_FR,
 };
 
 ActorEntry goron_shrine_room_1ActorEntry_000058[] = {
-  //{ ACTOR_EN_GO3,       { -1723, -134, -115 }, { 0,   0x3C, 0 }, 0x7F87 },
-  //{ ACTOR_EN_GO3,       { -1552, -133,   74 }, { 0,   0x49, 0 }, 0x0002 },
-  //{ ACTOR_EN_GK,        { -1780, -114,  -12 }, { 0,   0x5A, 0 }, 0x1400 },
+    { ACTOR_EN_GO3,       { -1723, -134, -115 }, { 0, 0x2AAB, 0 }, 0x0040 },
+    { ACTOR_EN_GO3,       { -1552, -133,   74 }, { 0, 0xB3E9, 0 }, 0x0050 },
     { ACTOR_EN_JG,        { -1690, -133,    0 }, { 0, 0x4000, 0 }, 0x0000 },
     { ACTOR_OBJ_SYOKUDAI, { -1505, -134, -140 }, { 0,      0, 0 }, 0x2400 },
     { ACTOR_OBJ_SYOKUDAI, { -1505, -134,  125 }, { 0,      0, 0 }, 0x2400 },
@@ -80,34 +72,6 @@ RoomShapeCullableEntry goron_shrine_room_1RoomShapeCullableEntry_0000FC[18] = {
 };
 
 s32 goron_shrine_room_1_terminatorMaybe_00021C = { 0x01000000 };
-
-/*SceneCmd goron_shrine_room_1Set_cleansed[] = {
-    SCENE_CMD_ECHO_SETTINGS(4),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
-    SCENE_CMD_SKYBOX_DISABLES(false, false),
-    SCENE_CMD_TIME_SETTINGS(255, 255, 10),
-    SCENE_CMD_ROOM_SHAPE(&goron_shrine_room_1RoomShapeCullable_0000F0),
-    SCENE_CMD_OBJECT_LIST(3, goron_shrine_room_1ObjectList_cleansed),
-    SCENE_CMD_ACTOR_LIST(5, goron_shrine_room_1ActorEntry_cleansed),
-    SCENE_CMD_END(),
-};
-
-s16 goron_shrine_room_1ObjectList_cleansed[] = {
-    OBJECT_OF1D_MAP,
-    OBJECT_SYOKUDAI,
-  //OBJECT_OBJ_CHAN,
-    OBJECT_TSUBO,
-  //OBJECT_JG,
-  //OBJECT_TAISOU,
-};
-
-ActorEntry goron_shrine_room_1ActorEntry_cleansed[] = {
-    { ACTOR_OBJ_SYOKUDAI, { -1505, -134, -140 }, { 0, 0x2D, 0 }, 0x0400 },
-    { ACTOR_OBJ_SYOKUDAI, { -1505, -134,  125 }, { 0, 0x2D, 0 }, 0x0400 },
-    { ACTOR_OBJ_TSUBO,    { -1568, -134, -172 }, { 0,    0, 0 }, 0xC119 },
-    { ACTOR_OBJ_TSUBO,    { -1624, -134, -172 }, { 0,    0, 0 }, 0xC319 },
-    { ACTOR_OBJ_TSUBO,    { -1680, -134, -172 }, { 0,    0, 0 }, 0xC50F },
-};*/
 
 Vtx goron_shrine_room_1Vtx_0002D0[] = {
 #include "assets/scenes/overworld/goron_shrine/goron_shrine_room_1Vtx_0002D0.vtx.inc"

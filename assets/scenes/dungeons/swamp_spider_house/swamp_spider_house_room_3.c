@@ -16,7 +16,7 @@ SceneCmd swamp_spider_house_room_3[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&swamp_spider_house_room_3RoomShapeCullable_0001A0),
-    SCENE_CMD_OBJECT_LIST(12, swamp_spider_house_room_3ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(13, swamp_spider_house_room_3ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(17, swamp_spider_house_room_3ActorEntry_000068),
     SCENE_CMD_END(),
 };
@@ -34,26 +34,27 @@ s16 swamp_spider_house_room_3ObjectList_000040[] = {
     OBJECT_ZF,
     OBJECT_BOMBIWA,
     OBJECT_BUFFDEKU,
+    OBJECT_FR,
 };
 
 ActorEntry swamp_spider_house_room_3ActorEntry_000068[] = {
-    { ACTOR_EN_SW,        { -475, 110, -190 }, { 0, 0x8000, 0 }, 0x0000, },
-    { ACTOR_EN_SW,        { -475, 200, -190 }, { 0, 0x8000, 0 }, 0x0000, },
-    { ACTOR_EN_ZF,        { -820,   0, -800 }, { 0, 0x6000, 0 }, 0x00FE, },
-    { ACTOR_OBJ_KIBAKO2,  { -876,   0, -210 }, { 0, 0x4000, 0 }, 0xFFFF, },
-    { ACTOR_OBJ_KIBAKO2,  { -876,   0, -509 }, { 0, 0x4000, 0 }, 0xFFFF, },
-    { ACTOR_OBJ_KIBAKO2,  { -870,   0, -876 }, { 0, 0,      0 }, 0xFFFF, },
-    { ACTOR_OBJ_KIBAKO2,  { -828,   0, -210 }, { 0, 0x4000, 0 }, 0xFFFF, },
-    { ACTOR_OBJ_KIBAKO2,  { -810,   0, -876 }, { 0, 0,      0 }, 0xFFFF, },
-    { ACTOR_OBJ_KIBAKO2,  { -690,   0, -876 }, { 0, 0,      0 }, 0xFFFF, },
-    { ACTOR_OBJ_KIBAKO2,  { -876,   0, -270 }, { 0, 0x4000, 0 }, 0xFFFF, },
-    { ACTOR_OBJ_KIBAKO2,  { -750,   0, -876 }, { 0, 0,      0 }, 0xFFFF, },
-    { ACTOR_OBJ_TSUBO,    { -871, 300, -872 }, { 0, 0,      0 }, 0x0001, },
-    { ACTOR_OBJ_TSUBO,    { -809, 300, -870 }, { 0, 0,      0 }, 0x0001, },
-    { ACTOR_OBJ_SYOKUDAI, { -870, 300, -209 }, { 0, 0,      0 }, 0x243F, },
-    { ACTOR_OBJ_SYOKUDAI, { -450, 300, -870 }, { 0, 0,      0 }, 0x243F, },
-    { ACTOR_OBJ_BOMBIWA,  { -470,   0, -200 }, { 0, 0,      0 }, 0x000E, },
-    { ACTOR_OBJ_BEAN,     { -480,   0, -830 }, { 0, 0x8000, 0 }, 0x0320, },
+    { ACTOR_EN_SW,        { -475, 110, -190 }, { 0, 0x8000, 0 }, 0x0000 },
+    { ACTOR_EN_SW,        { -475, 200, -190 }, { 0, 0x8000, 0 }, 0x0000 },
+    { ACTOR_EN_ZF,        { -820,   0, -800 }, { 0, 0x6000, 0 }, 0x00FE },
+    { ACTOR_OBJ_KIBAKO3,  { -876,   0, -210 }, { 0, 0x4000, 0 }, 0x0222 }, // Blue: 2 (Ancient Hollow & Forbidden Woods)
+    { ACTOR_OBJ_KIBAKO2,  { -876,   0, -509 }, { 0, 0x4000, 0 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO2,  { -870,   0, -876 }, { 0, 0,      0 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO2,  { -828,   0, -210 }, { 0, 0x4000, 0 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO2,  { -810,   0, -876 }, { 0, 0,      0 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO2,  { -690,   0, -876 }, { 0, 0,      0 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO2,  { -876,   0, -270 }, { 0, 0x4000, 0 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO2,  { -750,   0, -876 }, { 0, 0,      0 }, 0xFFFF },
+    { ACTOR_OBJ_TSUBO,    { -871, 300, -872 }, { 0, 0,      0 }, 0x0001 },
+    { ACTOR_OBJ_TSUBO,    { -809, 300, -870 }, { 0, 0,      0 }, 0x0001 },
+    { ACTOR_OBJ_SYOKUDAI, { -870, 300, -209 }, { 0, 0,      0 }, 0x243F },
+    { ACTOR_OBJ_SYOKUDAI, { -450, 300, -870 }, { 0, 0,      0 }, 0x243F },
+    { ACTOR_OBJ_BOMBIWA,  { -470,   0, -200 }, { 0, 0,      0 }, 0x000E },
+    { ACTOR_OBJ_BEAN,     { -480,   0, -830 }, { 0, 0x8000, 0 }, 0x0320 },
 };
 
 RoomShapeCullable swamp_spider_house_room_3RoomShapeCullable_0001A0 = { 

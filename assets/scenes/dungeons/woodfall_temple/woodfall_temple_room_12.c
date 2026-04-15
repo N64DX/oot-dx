@@ -16,7 +16,7 @@ SceneCmd woodfall_temple_room_12Commands[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_12RoomShapeCullable_000070),
-    SCENE_CMD_OBJECT_LIST(13, woodfall_temple_room_12ObjectList_000038),
+    SCENE_CMD_OBJECT_LIST(16, woodfall_temple_room_12ObjectList_000038),
     SCENE_CMD_END(),
 };
 
@@ -34,6 +34,9 @@ s16 woodfall_temple_room_12ObjectList_000038[] = {
     OBJECT_GRASSHOPPER,
     OBJECT_ST,
     OBJECT_DEKUBABA,
+    OBJECT_KIBAKO2,
+    OBJECT_FR,
+    OBJECT_BG_TELEPORTER,
 };
 
 RoomShapeCullable woodfall_temple_room_12RoomShapeCullable_000070 = { 

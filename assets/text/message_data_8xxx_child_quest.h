@@ -3003,6 +3003,52 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x8434, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Oh Elder... What should we do?\n"
+"We can't go on like this anymore.\n"
+"Why did it had to happen!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8435, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"These monsters in the mines are\n"
+"a serious problem for us.\n"
+"It's causing heavy storms in the area."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8436, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"We Gorons locked up this place\n"
+"a long time ago.\n"
+"Even if we wanted to open it for you,\n"
+"we don't know how anymore."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8437, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Since we uhh...lost the key to here.\n"
+"I heard there's supposedly a sort of\n"
+"explosive so powerful it can blast\n"
+"open any door..."
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x84A0, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
@@ -3051,8 +3097,8 @@ MSG()
 DEFINE_MESSAGE(0x84A2, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "Thank you for bring all of my\n"
-"friends back here."
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "Thank you for bringing\n"
+"my friends back here."
 BOX_BREAK
 
 UNSKIPPABLE "..."
@@ -3111,7 +3157,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x84A6, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x84B0, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
@@ -3123,7 +3169,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x84A7, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x84B1, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
@@ -3136,7 +3182,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x84A8, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x84B2, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
@@ -3149,7 +3195,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x84A9, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x84B3, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."

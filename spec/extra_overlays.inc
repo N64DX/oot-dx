@@ -41,6 +41,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Obj_Kibako3"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Kibako3/z_obj_kibako3.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Kibako3/ovl_Obj_Kibako3_reloc.o"
+endseg
+
+beginseg
     name "ovl_Bg_Ladder"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ladder/z_bg_ladder.o"

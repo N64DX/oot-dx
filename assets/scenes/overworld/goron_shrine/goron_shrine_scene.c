@@ -16,7 +16,6 @@
 #include "ultra64.h"
 
 SceneCmd goron_shrine_scene[] = {
-  //SCENE_CMD_ALTERNATE_HEADER_LIST(goron_shrine_sceneAlternateHeaders),
     SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_GORON_CITY),
     SCENE_CMD_ROOM_LIST(2, goron_shrine_sceneRoomList0x0000D4),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, goron_shrine_sceneTransitionActorList_0000C4),
@@ -30,12 +29,6 @@ SceneCmd goron_shrine_scene[] = {
     SCENE_CMD_ENV_LIGHT_SETTINGS(4, goron_shrine_sceneLightSettings0x0000F0),
     SCENE_CMD_END(),
 };
-
-/*SceneCmd* goron_shrine_sceneAlternateHeaders[] = {
-    NULL,
-    NULL,
-    goron_shrine_sceneSet_cleansed,
-};*/
 
 ActorEntry goron_shrine_sceneStartPositionList0x000094[] = {
     { ACTOR_PLAYER, { 664, -299, -596 }, { 0, 0xEC78, 0 }, 0x0FFF },
@@ -2147,28 +2140,6 @@ CollisionHeader goron_shrine_sceneCollisionHeader_005B84 = {
     goron_shrine_sceneCollisionHeader_005B84CamDataList,
     0, NULL
 };
-
-/*SceneCmd goron_shrine_sceneSet_cleansed[] = {
-    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_GORON_CITY),
-    SCENE_CMD_ROOM_LIST(2, goron_shrine_sceneRoomList0x0000D4),
-    SCENE_CMD_TRANSITION_ACTOR_LIST(1, goron_shrine_sceneTransitionActorList_0000C4),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 6),
-    SCENE_CMD_COL_HEADER(&goron_shrine_sceneCollisionHeader_005B84),
-    SCENE_CMD_ENTRANCE_LIST(goron_shrine_sceneEntranceList0x0000E4),
-    SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
-    SCENE_CMD_SPAWN_LIST(2, goron_shrine_sceneStartPositionList0x000094),
-    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NONE, 1, LIGHT_MODE_SETTINGS),
-    SCENE_CMD_EXIT_LIST(goron_shrine_sceneExitList_0000EC),
-    SCENE_CMD_ENV_LIGHT_SETTINGS(4, goron_shrine_sceneLightSettings_cleansed),
-    SCENE_CMD_END(),
-};
-
-EnvLightSettings goron_shrine_sceneLightSettings_cleansed[] = {
-    { 0x6E, 0x6E, 0x50, 0x00, 0x78, 0x00, 0x3C, 0x3C, 0xFF, 0x00, 0x88, 0x00, 0x1E, 0x1E, 0xFF, 0x3C, 0x96, 0xE6, 0x7BD7, 0x3200 },
-    { 0x82, 0x6E, 0x50, 0x45, 0x45, 0x45, 0x3C, 0x3C, 0xFF, 0xBB, 0xBB, 0xBB, 0x1E, 0x1E, 0xFF, 0x3C, 0x96, 0xE6, 0x7BBE, 0x3200 },
-    { 0x50, 0x46, 0x34, 0x41, 0x64, 0x00, 0xF0, 0xBE, 0x8C, 0x00, 0x88, 0x00, 0x14, 0x14, 0x3C, 0x5A, 0x5A, 0x82, 0x3FDF, 0x3200 },
-    { 0x50, 0x46, 0x34, 0x41, 0x64, 0x00, 0xF0, 0xBE, 0x8C, 0x00, 0x88, 0x00, 0x14, 0x14, 0x3C, 0x5A, 0x5A, 0x82, 0x3FCA, 0x3200 },
-};*/
 
 u64 goron_shrine_sceneTex_006BC0[] = {
 #include "assets/scenes/overworld/goron_shrine/goron_shrine_sceneTex_006BC0.i4.inc.c"

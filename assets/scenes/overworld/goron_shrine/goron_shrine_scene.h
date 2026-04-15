@@ -21,9 +21,6 @@ extern u16 goron_shrine_sceneExitList_0000EC[];
 extern EnvLightSettings goron_shrine_sceneLightSettings0x0000F0[];
 extern CollisionHeader goron_shrine_sceneCollisionHeader_005B84;
 
-extern SceneCmd goron_shrine_sceneSet_cleansed[];
-extern EnvLightSettings goron_shrine_sceneLightSettings_cleansed[];
-
 extern u64 goron_shrine_sceneTex_006BC0[];
 extern u64 goron_shrine_sceneTex_0073C0[];
 extern u64 goron_shrine_sceneTex_007BC0[];

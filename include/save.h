@@ -140,6 +140,17 @@ typedef union ShieldDurability {
     u16 shieldDurability;
 } ShieldDurability; // size = 0x2
 
+typedef union FrogQuest {
+    struct {
+        u32 found      : 20;
+        u32 completed  : 5;
+        u32 reward     : 3;
+        u32 started    : 1;
+        u32 unk        : 3;
+    };
+    u32 quest;
+} FrogQuest; // size = 0x2
+
 typedef struct Checksum {
     /* 0x00 */ u16 value;
 } Checksum; // size = 0x02
@@ -316,7 +327,7 @@ typedef struct SaveInfo {
     /* 0x0F18  0x0F34 */ char unk_F34[0x03];
     /* 0x0F1B  0x0F37 */ u8 energy;
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
-    /* 0x0F20  0x0F3C */ char unk_F3C[0x4];
+    /* 0x0F20  0x0F3C */ FrogQuest frogQuest;
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
     /* 0x1285  0x12A1 */ char unk_12A1[0x1B];
@@ -850,11 +861,6 @@ typedef enum LinkAge {
 #define EVENTCHKINF_C8 0xC8
 #define EVENTCHKINF_C9 0xC9
 
-#define EVENTCHKINF_FOUND_FROG_1 0xCA
-#define EVENTCHKINF_FOUND_FROG_2 0xCD
-#define EVENTCHKINF_FOUND_FROG_3 0xCE
-#define EVENTCHKINF_FOUND_FROG_4 0xCF
-
 // EVENTCHKINF 0xD0-0xD6
 #define EVENTCHKINF_INDEX_SONGS_FOR_FROGS EVENTCHKINF_INDEX(EVENTCHKINF_SONGS_FOR_FROGS_CHOIR)
 #define EVENTCHKINF_SONGS_FOR_FROGS_CHOIR  0xD0
@@ -864,8 +870,6 @@ typedef enum LinkAge {
 #define EVENTCHKINF_SONGS_FOR_FROGS_SARIA  0xD4
 #define EVENTCHKINF_SONGS_FOR_FROGS_SOT    0xD5
 #define EVENTCHKINF_SONGS_FOR_FROGS_STORMS 0xD6
-
-#define EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK 0xD7
 
 // EVENTCHKINF 0xDA-0xDE
 #define EVENTCHKINF_INDEX_SKULLTULA_REWARD 0xD
@@ -887,7 +891,6 @@ typedef enum LinkAge {
 #define SET_ITEMGETINF(flag) (gSaveContext.save.info.itemGetInf[ITEMGETINF_INDEX(flag)] |= ITEMGETINF_MASK(flag))
 #define CLEAR_ITEMGETINF(flag) (gSaveContext.save.info.itemGetInf[ITEMGETINF_INDEX(flag)] &= ~ITEMGETINF_MASK(flag))
 
-#define ITEMGETINF_GOT_FROG_HIDE_AND_SEEK_REWARD 0x00
 #define ITEMGETINF_BAZAAR_WALLET 0x01
 #define ITEMGETINF_TALON_BOTTLE 0x02
 #define ITEMGETINF_03 0x03

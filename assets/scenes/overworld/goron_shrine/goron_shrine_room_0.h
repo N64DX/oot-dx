@@ -13,10 +13,6 @@ extern RoomShapeCullable goron_shrine_room_0RoomShapeCullable_000310;
 extern RoomShapeCullableEntry goron_shrine_room_0RoomShapeCullableEntry_00031C[18];
 extern s32 goron_shrine_room_0_terminatorMaybe_00043C;
 
-extern SceneCmd goron_shrine_room_0Set_cleansed[];
-extern s16 goron_shrine_room_0ObjectList_cleansed[];
-extern ActorEntry goron_shrine_room_0ActorEntry_cleansed[];
-
 extern Gfx goron_shrine_room_0DL_000CE0[];
 extern Gfx goron_shrine_room_0DL_001420[];
 extern Gfx goron_shrine_room_0DL_003350[];

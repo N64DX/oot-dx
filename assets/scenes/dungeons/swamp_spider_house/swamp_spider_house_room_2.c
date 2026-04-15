@@ -38,20 +38,20 @@ s16 swamp_spider_house_room_2ObjectList_000040[] = {
 };
 
 ActorEntry swamp_spider_house_room_2ActorEntry_000068[] = {
-    { ACTOR_OBJ_BEAN,    { -270, 180, -1617 }, { 0,   0,      0    }, 0x0020, },
-    { ACTOR_OBJ_SWITCH,  {  329, 180, -1289 }, { 0,   0,      0    }, 0x0D00, },
-    { ACTOR_BG_LADDER,   { -180, 0,   -1410 }, { 0,   0x4000, 0    }, 0x0D00, },
-    { ACTOR_OBJ_TSUBO,   { -30,  20,  -1650 }, { 0,   0,      0    }, 0x0003, },
-    { ACTOR_OBJ_TSUBO,   {  30,  20,  -1650 }, { 0,   0,      0    }, 0x0003, },
-    { ACTOR_OBJ_TSUBO,   {  330, 180, -1651 }, { 0,   0,      0    }, 0x0000, },
-    { ACTOR_OBJ_TSUBO,   {  330, 180, -1470 }, { 0,   0,      0    }, 0x0000, },
-    { ACTOR_OBJ_TSUBO,   {  330, 180, -1531 }, { 0,   0,      0    }, 0x0000, },
-    { ACTOR_OBJ_TSUBO,   {  330, 180, -1590 }, { 0,   0,      0    }, 0x0000, },
-    { ACTOR_OBJ_KIBAKO2, { -301, 180, -1299 }, { 0xB, 0,      0x31 }, 0xFFFF, },
-    { ACTOR_OBJ_KIBAKO2, { -241, 180, -1299 }, { 0xB, 0,      0x32 }, 0xFFFF, },
-    { ACTOR_EN_MINIBLIN, {  0,   0,   -1400 }, { 0,   0x1000, 0    }, 0x0000, },
-    { ACTOR_EN_MINIBLIN, {  100, 0,   -1500 }, { 0,   0xC000, 0    }, 0x0000, },
-    { ACTOR_EN_MINIBLIN, { -100, 0,   -1500 }, { 0,   0x4000, 0    }, 0x0000, },
+    { ACTOR_OBJ_BEAN,    { -270, 180, -1617 }, { 0,   0,      0    }, 0x0020 },
+    { ACTOR_OBJ_SWITCH,  {  329, 180, -1289 }, { 0,   0,      0    }, 0x0D00 },
+    { ACTOR_BG_LADDER,   { -180, 0,   -1410 }, { 0,   0x4000, 0    }, 0x0D00 },
+    { ACTOR_OBJ_TSUBO,   { -30,  20,  -1650 }, { 0,   0,      0    }, 0x0003 },
+    { ACTOR_OBJ_TSUBO,   {  30,  20,  -1650 }, { 0,   0,      0    }, 0x0003 },
+    { ACTOR_OBJ_TSUBO,   {  330, 180, -1651 }, { 0,   0,      0    }, 0x0000 },
+    { ACTOR_OBJ_TSUBO,   {  330, 180, -1470 }, { 0,   0,      0    }, 0x0000 },
+    { ACTOR_OBJ_TSUBO,   {  330, 180, -1531 }, { 0,   0,      0    }, 0x0000 },
+    { ACTOR_OBJ_TSUBO,   {  330, 180, -1590 }, { 0,   0,      0    }, 0x0000 },
+    { ACTOR_OBJ_KIBAKO2, { -301, 180, -1299 }, { 0xB, 0,      0x31 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO2, { -241, 180, -1299 }, { 0xB, 0,      0x32 }, 0xFFFF },
+    { ACTOR_EN_MINIBLIN, {  0,   0,   -1400 }, { 0,   0x1000, 0    }, 0x0000 },
+    { ACTOR_EN_MINIBLIN, {  100, 0,   -1500 }, { 0,   0xC000, 0    }, 0x0000 },
+    { ACTOR_EN_MINIBLIN, { -100, 0,   -1500 }, { 0,   0x4000, 0    }, 0x0000 },
 };
 
 RoomShapeCullable swamp_spider_house_room_2RoomShapeCullable_0001B0 = { 

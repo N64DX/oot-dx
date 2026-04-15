@@ -10,7 +10,7 @@ struct EnGo3;
 typedef void (*EnGo3ActionFunc)(struct EnGo3*, struct PlayState*);
 
 typedef enum GoronType {
-    /* 0x00 */ GORON_SHRINE_GENERIC,
+    /* 0x00 */ GORON_GENERIC,
     /* 0x01 */ GORON_VILLAGE_DOOR
 } GoronType;
 

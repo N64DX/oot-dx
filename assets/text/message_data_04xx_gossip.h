@@ -778,9 +778,14 @@ MSG()
 DEFINE_MESSAGE(0x0423, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-"They say that when all five frogs\n"
-"are reunited in Spring Lake that\n"
-"something good will happen."
+"They say that when all five frog\n"
+"groups are reunited in Spring Lake\n"
+"that something good will happen."
+BOX_BREAK
+
+"There are frog groups in:\n"
+"Spring Lake, Goron Mines, Woodfall,\n"
+"Forbidden Woods and Stone Tower."
 ),
 MSG(),
 MSG()

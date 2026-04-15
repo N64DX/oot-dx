@@ -10552,7 +10552,7 @@ void Player_Action_Roll(Player* this, PlayState* play) {
                     } else if (this->actor.wallBgId != BGCHECK_SCENE) {
                         wallPolyActor = DynaPoly_GetActor(&play->colCtx, this->actor.wallBgId);
 
-                        if ((wallPolyActor != NULL) && (wallPolyActor->actor.id == ACTOR_OBJ_KIBAKO2)) {
+                        if ((wallPolyActor != NULL) && (wallPolyActor->actor.id == ACTOR_OBJ_KIBAKO2 || wallPolyActor->actor.id == ACTOR_OBJ_KIBAKO3)) {
                             // The OBJ_KIBAKO2 actor uses home z rotation as a flag to signal that it has been
                             // bonked into and should break.
                             wallPolyActor->actor.home.rot.z = 1;
@@ -12623,7 +12623,7 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
                     gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability++;
                     if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability >= 60 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
                         gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
-                        Message_StartTextbox(play, 0x9306, NULL);
+                        Message_StartTextbox(play, 0x9400, NULL);
                         gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
                     }
                 }

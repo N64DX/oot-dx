@@ -355,7 +355,7 @@ ActorEntry old_lost_woods_room_0ActorList_timeskip[] = {
     { ACTOR_DOOR_ANA,       {  2175,  160,  1425 }, {      0,      0,     20 }, 0x0000 },
     { ACTOR_OBJ_MURE,       {  2175,  188,  1425 }, {      0,      0,      0 }, 0x5324 },
     { ACTOR_OBJ_PURIFY,     { -3000, -250,  -100 }, {      0, 0xC000,      0 }, 0x0003 },
-    { ACTOR_EN_FR,          { -1000,  438, -3100 }, {      0,      0,      0 }, 0x0025 }, // White
+    { ACTOR_EN_FR,          { -1000,  438, -3100 }, {      0,      0,      0 }, 0x0212 }, // Blue: 1 (Ancient Hollow & Forbidden Woods)
 };
 
 static s32 terminatorMaybe = { 0x01000000 };

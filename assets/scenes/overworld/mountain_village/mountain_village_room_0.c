@@ -17,8 +17,8 @@ SceneCmd mountain_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_0003D0),
-    SCENE_CMD_OBJECT_LIST(16, mountain_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(46, mountain_village_room_0ActorEntry_000074),
+    SCENE_CMD_OBJECT_LIST(17, mountain_village_room_0ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(42, mountain_village_room_0ActorEntry_000074),
     SCENE_CMD_END(),
 };
 
@@ -32,10 +32,10 @@ s16 mountain_village_room_0ObjectList_00004C[] = {
     OBJECT_HORSE,
     OBJECT_ICEFLOE,
     OBJECT_SPOT18_OBJ,
+    OBJECT_OF1D_MAP,
     OBJECT_SYOKUDAI,
     OBJECT_FLOWERPOT,
     OBJECT_FR,
-  //OBJECT_GOROIWA,
     OBJECT_MKK,
     OBJECT_CROW,
     OBJECT_BEE,
@@ -50,7 +50,6 @@ s16 mountain_village_room_0ObjectList_00004C[] = {
 
 ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_EN_KAKASI2,        {   510,  363,   900 }, {    0,      0, 14 }, 0x053E }, // Switch: 3E
-    { ACTOR_EN_CROW,           {   311,  943,   272 }, {    0,      0,  0 }, 0x0000 },
     { ACTOR_OBJ_SYOKUDAI,      {  -818,    8,  -170 }, {    0, 0x1770,  0 }, 0x243F },
     { ACTOR_OBJ_SYOKUDAI,      {   800, 1408, -1400 }, {    0, 0xEC78,  0 }, 0x205F }, // Switch: 1F
     { ACTOR_OBJ_COMB,          {  1025,  271,   695 }, {    0, 0xFE0C,  0 }, 0x0081 },
@@ -59,15 +58,11 @@ ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_EN_GS,             {  -805,    4,  1346 }, {    0, 0x63F0,  0 }, 0xFF23 },
     { ACTOR_EN_RIVER_SOUND,    { -1217,   16,   450 }, {    0,      0,  0 }, 0x0003 },
     { ACTOR_BG_SPOT18_SHUTTER, {   470, 1408, -1575 }, {    0, 0xF830,  0 }, 0x0000 },
-    { ACTOR_OBJ_HAMISHI,       {   146,  -30,   831 }, {    0,      0,  0 }, 0x0000 }, // Switch: 00
+    { ACTOR_OBJ_HAMISHI,       {   146,  -30,   831 }, {    0,      0,  0 }, 0x0200 }, // Switch: 00
     { ACTOR_OBJ_HAMISHI,       {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
     { ACTOR_OBJ_HAMISHI,       {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
-    { ACTOR_OBJ_HAMISHI,       {  2100,   13,   780 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
-    { ACTOR_OBJ_HAMISHI,       {  2070,   14,   860 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
-    { ACTOR_OBJ_HAMISHI,       {  2050,   14,   940 }, {    0,      0,  0 }, 0x0005 }, // Switch: 05
-    { ACTOR_OBJ_HAMISHI,       {  2020,   14,  1020 }, {    0,      0,  0 }, 0x0006 }, // Switch: 06
-    { ACTOR_OBJ_HAMISHI,       { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0007 }, // Switch: 07
-    { ACTOR_OBJ_HAMISHI,       {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0008 }, // Switch: 08
+    { ACTOR_OBJ_HAMISHI,       { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
+    { ACTOR_OBJ_HAMISHI,       {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
     { ACTOR_EN_ISHI,           {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,           {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,           {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },
@@ -91,21 +86,22 @@ ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_OBJ_MURE,          {  -319,    0,  1279 }, {    0,      0,  0 }, 0x5324 },
     { ACTOR_OBJ_MURE,          {   327,  -30,  -637 }, {    0,      0,  0 }, 0x3322 },
     { ACTOR_OBJ_MURE,          {  -971,  -30,   457 }, {    0,      0,  0 }, 0x6322 },
-    { ACTOR_EN_BEE,            {   219,   13,    71 }, {    0,      0,  0 }, 0x0000 },
-    { ACTOR_EN_BEE,            {  -471,  -10,  1228 }, {    0,      0,  0 }, 0x0000 },
     { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   720 }, {    0,   0xB4,  0 }, 0x4000 }, // Collect: 20, Green Rupee
     { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   880 }, {    0,      0,  0 }, 0x4400 }, // Collect: 22, Green Rupee
+    { ACTOR_EN_CROW,           {   311,  943,   272 }, {    0,      0,  0 }, 0x0000 },
+    { ACTOR_EN_BEE,            {   219,   13,    71 }, {    0,      0,  0 }, 0x0000 },
+    { ACTOR_EN_BEE,            {  -471,  -10,  1228 }, {    0,      0,  0 }, 0x0000 },
     
 };
 
 RoomShapeCullable mountain_village_room_0RoomShapeCullable_0003D0 = { 
-    2, 36,
+    2, 35,
     mountain_village_room_0RoomShapeCullableEntry_0003DC,
     mountain_village_room_0RoomShapeCullableEntry_0003DC +
     ARRAY_COUNTU(mountain_village_room_0RoomShapeCullableEntry_0003DC)
 };
 
-RoomShapeCullableEntry mountain_village_room_0RoomShapeCullableEntry_0003DC[36] = {
+RoomShapeCullableEntry mountain_village_room_0RoomShapeCullableEntry_0003DC[35] = {
     { {  -1030,    -54,    727 },    566, mountain_village_room_0DL_0035E0, NULL },
     { {    303,   -100,   -334 },   1334, mountain_village_room_0DL_003D68, NULL },
     { {    455,    718,  -1095 },    754, mountain_village_room_0DL_00E9D0, NULL },
@@ -125,7 +121,6 @@ RoomShapeCullableEntry mountain_village_room_0RoomShapeCullableEntry_0003DC[36] 
     { {   1355,     30,   1240 },   4148, mountain_village_room_0DL_0010D8, NULL },
     { {    541,    -67,    846 },   1530, mountain_village_room_0DL_0019D0, NULL },
     { {    835,    -73,   1320 },   1368, mountain_village_room_0DL_00EC88, NULL },
-    { {    341,    -51,    917 },   1202, mountain_village_room_0DL_00EF90, NULL },
     { {    578,    718,  -1491 },    962, mountain_village_room_0DL_001DE0, NULL },
     { {   1249,    883,   1027 },   3946, mountain_village_room_0DL_002E40, NULL },
     { {     56,   1263,    259 },   2452, mountain_village_room_0DL_0046D8, NULL },
@@ -149,15 +144,14 @@ SceneCmd mountain_village_room_0Set_timeskip[] = {
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
-    SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_0003D0),
-    SCENE_CMD_OBJECT_LIST(16, mountain_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(52, mountain_village_room_0ActorEntry_timeskip),
+    SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_timeskip),
+    SCENE_CMD_OBJECT_LIST(17, mountain_village_room_0ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(64, mountain_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
 
 ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_EN_KAKASI2,        {   510,  363,   900 }, {    0,      0, 14 }, 0x053E }, // Switch: 3E
-    { ACTOR_EN_CROW,           {   311,  943,   272 }, {    0,      0,  0 }, 0x0000 },
     { ACTOR_OBJ_SYOKUDAI,      {  -818,    8,  -170 }, {    0, 0x1770,  0 }, 0x243F },
     { ACTOR_OBJ_SYOKUDAI,      {   800, 1408, -1400 }, {    0, 0xEC78,  0 }, 0x205F }, // Switch: 1F
     { ACTOR_OBJ_COMB,          {  1025,  271,   695 }, {    0, 0xFE0C,  0 }, 0x0081 },
@@ -169,12 +163,8 @@ ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_OBJ_HAMISHI,       {   146,  -30,   831 }, {    0,      0,  0 }, 0x0000 }, // Switch: 00
     { ACTOR_OBJ_HAMISHI,       {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
     { ACTOR_OBJ_HAMISHI,       {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
-    { ACTOR_OBJ_HAMISHI,       {  2100,   13,   780 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
-    { ACTOR_OBJ_HAMISHI,       {  2070,   14,   860 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
-    { ACTOR_OBJ_HAMISHI,       {  2050,   14,   940 }, {    0,      0,  0 }, 0x0005 }, // Switch: 05
-    { ACTOR_OBJ_HAMISHI,       {  2020,   14,  1020 }, {    0,      0,  0 }, 0x0006 }, // Switch: 06
-    { ACTOR_OBJ_HAMISHI,       { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0007 }, // Switch: 07
-    { ACTOR_OBJ_HAMISHI,       {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0008 }, // Switch: 08
+    { ACTOR_OBJ_HAMISHI,       { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
+    { ACTOR_OBJ_HAMISHI,       {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
     { ACTOR_EN_ISHI,           {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,           {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,           {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },
@@ -198,21 +188,79 @@ ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_OBJ_MURE,          {  -319,    0,  1279 }, {    0,      0,  0 }, 0x5324 },
     { ACTOR_OBJ_MURE,          {   327,  -30,  -637 }, {    0,      0,  0 }, 0x3322 },
     { ACTOR_OBJ_MURE,          {  -971,  -30,   457 }, {    0,      0,  0 }, 0x6322 },
-    { ACTOR_EN_BEE,            {   219,   13,    71 }, {    0,      0,  0 }, 0x0020 },
-    { ACTOR_EN_BEE,            {  -471,  -10,  1228 }, {    0,      0,  0 }, 0x0020 },
     { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   720 }, {    0, 0xB400,  0 }, 0x4000 }, // Collect: 20, Green Rupee
     { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   880 }, {    0,      0,  0 }, 0x4400 }, // Collect: 22, Green Rupee
-    { ACTOR_EN_FR,             {  -805,    0,   917 }, {    0, 0x3900,  0 }, 0x0011 }, // Yellow
-    { ACTOR_EN_FR,             {  -844,    0,   836 }, {    0, 0x3E00,  0 }, 0x0012 }, // Blue
-    { ACTOR_EN_FR,             {  -844,    0,   996 }, {    0, 0x4E00,  0 }, 0x0013 }, // Red
-    { ACTOR_EN_FR,             {  -884,    0,   915 }, {    0, 0x4000,  0 }, 0x0014 }, // Purple
-    { ACTOR_EN_FR,             {  -933,    0,   964 }, {    0, 0x4C00,  0 }, 0x0015 }, // White
-  //{ ACTOR_OBJ_SNOWBALL2,     {  -881,    8,    84 }, {    0,      0,  0 }, 0x250A },
-  //{ ACTOR_OBJ_SNOWBALL2,     {  -470,    8,  -224 }, {    0,      0,  0 }, 0x2915 },
-  //{ ACTOR_OBJ_SNOWBALL2,     {  -384,    8,  -259 }, {    0,      0,  0 }, 0x2A1F },
-  //{ ACTOR_OBJ_SNOWBALL2,     {  -417,    8,   -51 }, {    0,      0,  0 }, 0x2B10 },
-  //{ ACTOR_OBJ_SNOWBALL2,     {  -751,    8,  -197 }, {    0,      0,  0 }, 0x2C0F },
+    { ACTOR_EN_BEE,            {   219,   13,    71 }, {    0,      0,  0 }, 0x0020 },
+    { ACTOR_EN_GO3,            {   615, 1408, -1438 }, {    0, 0xEE39,  0 }, 0x0060 },
+    { ACTOR_EN_GO3,            {   693, 1408, -1407 }, {    0, 0xEE39,  0 }, 0x0070 },
     { ACTOR_EN_BOX,            { -1425,    8,   376 }, { 0x3E, 0xADF8,  0 }, 0x4000 }, // Chest: 00
+    { ACTOR_EN_FR,             {  -844,       -5,   836       }, {    0, 0x3900,  0 }, 0x0300 }, // Master Frog
+    { ACTOR_EN_FR,             {  -805,       -5,   917       }, {    0, 0x3E00,  0 }, 0x0121 }, // Yellow (Spring Lake)
+    { ACTOR_EN_FR,             {  -844,       -5,   996       }, {    0, 0x4E00,  0 }, 0x0131 }, // Yellow (Spring Lake)
+    { ACTOR_EN_FR,             {  -884,       -5,   915       }, {    0, 0x4000,  0 }, 0x0141 }, // Yellow (Spring Lake)
+    { ACTOR_EN_FR,             {  -933,       -5,   964       }, {    0, 0x4C00,  0 }, 0x0151 }, // Yellow (Spring Lake)
+    { ACTOR_EN_FR,             {  -805,       -5,   917 - 250 }, {    0, 0x3E00,  0 }, 0x0112 }, // Blue   (Ancient Hollow & Forbidden Woods)
+    { ACTOR_EN_FR,             {  -844,       -5,   996 - 250 }, {    0, 0x4E00,  0 }, 0x0122 }, // Blue   (Ancient Hollow & Forbidden Woods)
+    { ACTOR_EN_FR,             {  -884,       -5,   915 - 250 }, {    0, 0x4000,  0 }, 0x0132 }, // Blue   (Ancient Hollow & Forbidden Woods)
+    { ACTOR_EN_FR,             {  -933,       -5,   964 - 250 }, {    0, 0x4C00,  0 }, 0x0142 }, // Blue   (Ancient Hollow & Forbidden Woods)
+    { ACTOR_EN_FR,             {  -805,       -5,   917 - 400 }, {    0, 0x3E00,  0 }, 0x0113 }, // Red    (Goron Mines)
+    { ACTOR_EN_FR,             {  -844,       -5,   996 - 400 }, {    0, 0x4E00,  0 }, 0x0123 }, // Red    (Goron Mines)
+    { ACTOR_EN_FR,             {  -884,       -5,   915 - 400 }, {    0, 0x4000,  0 }, 0x0133 }, // Red    (Goron Mines) 
+    { ACTOR_EN_FR,             {  -933,       -5,   964 - 400 }, {    0, 0x4C00,  0 }, 0x0143 }, // Red    (Goron Mines) 
+    { ACTOR_EN_FR,             {  -805 - 200, -5,   917       }, {    0, 0x3E00,  0 }, 0x0114 }, // Purple (Woodfall)
+    { ACTOR_EN_FR,             {  -844 - 200, -5,   996       }, {    0, 0x4E00,  0 }, 0x0124 }, // Purple (Woodfall)
+    { ACTOR_EN_FR,             {  -884 - 200, -5,   915       }, {    0, 0x4000,  0 }, 0x0134 }, // Purple (Woodfall)
+    { ACTOR_EN_FR,             {  -933 - 200, -5,   964       }, {    0, 0x4C00,  0 }, 0x0144 }, // Purple (Woodfall)
+    { ACTOR_EN_FR,             {  -805 - 200, -5,   917 - 200 }, {    0, 0x3E00,  0 }, 0x0115 }, // White  (Stone Tower)
+    { ACTOR_EN_FR,             {  -844 - 200, -5,   996 - 200 }, {    0, 0x4E00,  0 }, 0x0125 }, // White  (Stone Tower)
+    { ACTOR_EN_FR,             {  -884 - 200, -5,   915 - 200 }, {    0, 0x4000,  0 }, 0x0135 }, // White  (Stone Tower)
+    { ACTOR_EN_FR,             {  -933 - 200, -5,   964 - 200 }, {    0, 0x4C00,  0 }, 0x0145 }, // White  (Stone Tower)
+};
+
+RoomShapeCullable mountain_village_room_0RoomShapeCullable_timeskip = { 
+    2, 36,
+    mountain_village_room_0RoomShapeCullableEntry_timeskip,
+    mountain_village_room_0RoomShapeCullableEntry_timeskip +
+    ARRAY_COUNTU(mountain_village_room_0RoomShapeCullableEntry_timeskip)
+};
+
+RoomShapeCullableEntry mountain_village_room_0RoomShapeCullableEntry_timeskip[36] = {
+    { {  -1030,    -54,    727 },    566, mountain_village_room_0DL_0035E0, NULL },
+    { {    303,   -100,   -334 },   1334, mountain_village_room_0DL_003D68, NULL },
+    { {    455,    718,  -1095 },    754, mountain_village_room_0DL_00E9D0, NULL },
+    { {    455,    718,  -1095 },    754, mountain_village_room_0DL_00E4B8, NULL },
+    { {    403,    948,    811 },    260, mountain_village_room_0DL_00CF88, mountain_village_room_0DL_01BBF0 },
+    { {   -873,     -5,    913 },    116, mountain_village_room_0DL_00CDA0, NULL },
+    { {   -873,     -5,    913 },   1116, mountain_village_room_0DL_00CDB0, NULL },
+    { {   -593,     36,    289 },    122, mountain_village_room_0DL_006A90, NULL },
+    { {    465,   1503,  -1562 },    164, mountain_village_room_0DL_007380, NULL },
+    { {   1190,    808,   -587 },   1156, mountain_village_room_0DL_0075F0, NULL },
+    { {    400,    814,   -581 },   1612, mountain_village_room_0DL_00CA08, NULL },
+    { {    407,    479,    800 },    146, mountain_village_room_0DL_00C810, NULL },
+    { {    751,   1408,  -1535 },    546, mountain_village_room_0DL_00EAE0, NULL },
+    { {    -81,    -32,    727 },    834, mountain_village_room_0DL_00DFC8, NULL },
+    { {    118,    227,    800 },    290, mountain_village_room_0DL_00A900, NULL },
+    { {    381,    205,    800 },    282, mountain_village_room_0DL_00B3C0, NULL },
+    { {     43,     -7,     86 },   1590, NULL, mountain_village_room_0DL_01B548 },
+    { {   1355,     30,   1240 },   4148, mountain_village_room_0DL_0010D8, NULL },
+    { {    541,    -67,    846 },   1530, mountain_village_room_0DL_0019D0, NULL },
+    { {    835,    -73,   1320 },   1368, mountain_village_room_0DL_00EC88, NULL },
+    { {    578,    718,  -1491 },    962, mountain_village_room_0DL_001DE0, NULL },
+    { {   1249,    883,   1027 },   3946, mountain_village_room_0DL_002E40, NULL },
+    { {     56,   1263,    259 },   2452, mountain_village_room_0DL_0046D8, NULL },
+    { {    169,    892,    399 },   2280, mountain_village_room_0DL_004D30, NULL },
+    { {   1046,    788,   -928 },   1444, mountain_village_room_0DL_005198, NULL },
+    { {    -43,     16,    802 },    110, mountain_village_room_0DL_005E00, NULL },
+    { {   1065,    607,    695 },    610, mountain_village_room_0DL_007E30, NULL },
+    { {   -453,    475,     39 },    500, mountain_village_room_0DL_008578, NULL },
+    { {   -669,    432,   1229 },    466, mountain_village_room_0DL_008C88, NULL },
+    { {    357,    434,   1261 },    500, mountain_village_room_0DL_0093F8, NULL },
+    { {    935,    414,   -133 },    438, mountain_village_room_0DL_009B40, NULL },
+    { {    317,    281,    800 },    202, mountain_village_room_0DL_009C58, NULL },
+    { {  -1376,    443,    413 },    512, NULL, mountain_village_room_0DL_01B830 },
+    { {    174,    323,    800 },    238, mountain_village_room_0DL_00B650, NULL },
+    { {    393,    339,    800 },    454, mountain_village_room_0DL_00C108, NULL },
+    { {    394,    259,    800 },    286, mountain_village_room_0DL_00C5A8, NULL },
 };
 
 s32 mountain_village_room_0_terminatorMaybe_00061C = { 0x01000000 };
@@ -387,10 +435,6 @@ Vtx mountain_village_room_0Vtx_00EB88[] = {
 #include "assets/scenes/overworld/mountain_village/mountain_village_room_0Vtx_00EB88.vtx.inc"
 };
 
-Vtx mountain_village_room_0Vtx_00ED30[] = {
-#include "assets/scenes/overworld/mountain_village/mountain_village_room_0Vtx_00ED30.vtx.inc"
-};
-
 Vtx mountain_village_room_0Vtx_01B348[] = {
 #include "assets/scenes/overworld/mountain_village/mountain_village_room_0Vtx_01B348.vtx.inc"
 };
@@ -417,10 +461,6 @@ u64 mountain_village_room_0Tex_0101C8[] = {
 
 u64 mountain_village_room_0Tex_0109C8[] = {
 #include "assets/scenes/overworld/mountain_village/mountain_village_room_0Tex_0109C8.rgba16.inc.c"
-};
-
-u64 mountain_village_room_0Tex_0111C8[] = {
-#include "assets/scenes/overworld/mountain_village/mountain_village_room_0Tex_0111C8.ia8.inc.c"
 };
 
 u64 mountain_village_room_0Tex_0119C8[] = {
@@ -548,11 +588,23 @@ Gfx mountain_village_room_0DL_0010D8[] = {
     gsDPSetPrimColor(0, 0xAF, 255, 255, 255, 255),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     gsDPSetTextureLUT(G_TT_NONE),
+
     gsDPLoadTextureBlock_4b(mountain_village_scene04Tex_004000, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 15, 15),
     gsDPLoadMultiBlock(mountain_village_scene04Tex_004200, 0x0040, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 3, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(mountain_village_room_0Vtx_000A78, 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP1Triangle(0, 1, 2, 0),
+    gsSPVertex(&mountain_village_room_0Vtx_000A78[32], 32, 0),
+    gsSP2Triangles(27, 28, 29, 0, 28, 30, 29, 0),
+    gsSPVertex(&mountain_village_room_0Vtx_000A78[63], 31, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(11, 13, 14, 0, 11, 14, 15, 0),
+    gsSP2Triangles(11, 15, 16, 0, 16, 15, 17, 0),
+    gsSP2Triangles(11, 12, 13, 0, 16, 17, 18, 0),
+
+    gsDPLoadTextureBlock(mountain_village_room_0Tex_0109C8, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 15, 15),
+    gsDPLoadMultiBlock(mountain_village_room_0Tex_0101C8, 0x0100, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 3, 3),
+    gsSPVertex(mountain_village_room_0Vtx_000A78, 32, 0),
     gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
     gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
     gsSP2Triangles(14, 15, 16, 0, 17, 18, 19, 0),
@@ -561,7 +613,7 @@ Gfx mountain_village_room_0DL_0010D8[] = {
     gsSP2Triangles(24, 23, 22, 0, 25, 26, 20, 0),
     gsSP2Triangles(25, 20, 27, 0, 28, 29, 25, 0),
     gsSP2Triangles(28, 25, 27, 0, 30, 29, 28, 0),
-    gsSP1Triangle(30, 31, 29, 0),
+    gsSP2Triangles(30, 31, 29, 0, 3, 4, 5, 0),
     gsSPVertex(&mountain_village_room_0Vtx_000A78[32], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 5, 6, 0, 0, 5, 1, 0),
@@ -571,19 +623,15 @@ Gfx mountain_village_room_0DL_0010D8[] = {
     gsSP2Triangles(13, 14, 15, 0, 16, 17, 18, 0),
     gsSP2Triangles(19, 20, 21, 0, 19, 22, 23, 0),
     gsSP2Triangles(19, 23, 24, 0, 23, 25, 26, 0),
-    gsSP2Triangles(23, 26, 24, 0, 27, 28, 29, 0),
-    gsSP1Triangle(28, 30, 29, 0),
+    gsSP1Triangle(23, 26, 24, 0),
     gsSPVertex(&mountain_village_room_0Vtx_000A78[63], 31, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 5, 7, 6, 0),
     gsSP2Triangles(7, 8, 6, 0, 8, 9, 6, 0),
-    gsSP2Triangles(8, 10, 9, 0, 11, 12, 13, 0),
-    gsSP2Triangles(11, 13, 14, 0, 11, 14, 15, 0),
-    gsSP2Triangles(11, 15, 16, 0, 16, 15, 17, 0),
-    gsSP2Triangles(16, 17, 18, 0, 19, 20, 21, 0),
     gsSP2Triangles(19, 21, 22, 0, 23, 19, 22, 0),
     gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
-    gsSP1Triangle(28, 29, 30, 0),
+    gsSP2Triangles(19, 20, 21, 0, 28, 29, 30, 0),
+    gsSP1Triangle(8, 10, 9, 0),
+
     gsSPEndDisplayList(),
 };
 
@@ -1801,7 +1849,7 @@ Gfx mountain_village_room_0DL_00CA08[] = {
 };
 
 Gfx mountain_village_room_0DL_00CDA0[] = {
-    gsSPVertex(&mountain_village_room_0Vtx_00CAC0[20], 8, 0),
+    gsSPVertex(&mountain_village_room_0Vtx_00CAC0[100], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),
@@ -1819,6 +1867,45 @@ Gfx mountain_village_room_0DL_00CDA0[] = {
     gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
     gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
     gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx mountain_village_room_0DL_00CDB0[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(mountain_village_sceneTLUT_006E60),
+    gsDPLoadTextureBlock(mountain_village_room_0Tex_01A8C8, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+
+    gsSPVertex(&mountain_village_room_0Vtx_00CAC0[20], 20, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+
+    gsSPVertex(&mountain_village_room_0Vtx_00CAC0[40], 20, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+
+    gsSPVertex(&mountain_village_room_0Vtx_00CAC0[60], 20, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+
+    gsSPVertex(&mountain_village_room_0Vtx_00CAC0[80], 20, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+
     gsSPEndDisplayList(),
 };
 
@@ -2024,36 +2111,8 @@ Gfx mountain_village_room_0DL_00EC88[] = {
     gsDPLoadTextureBlock(mountain_village_room_0Tex_0198C8, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(mountain_village_room_0Vtx_00EB88, 8, 0),
+    gsSPVertex(mountain_village_room_0Vtx_00EB88, 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx mountain_village_room_0DL_00EF90[] = {
-    gsSPVertex(&mountain_village_room_0Vtx_00ED30[30], 8, 0),
-    gsSPCullDisplayList(0, 7),
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, TEXEL1, TEXEL0, 0, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, 0, COMBINED),
-    gsDPSetPrimColor(0, 0x7D, 255, 255, 255, 255),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(mountain_village_room_0Tex_0111C8, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadMultiBlock_4b(mountain_village_scene04Tex_004000, 0x0100, 1, G_IM_FMT_I, 32, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 15, 15),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(mountain_village_room_0Vtx_00ED30, 30, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
-    gsSP2Triangles(2, 4, 5, 0, 2, 5, 6, 0),
-    gsSP2Triangles(3, 2, 7, 0, 8, 9, 10, 0),
-    gsSP2Triangles(9, 11, 12, 0, 9, 13, 11, 0),
-    gsSP2Triangles(9, 14, 13, 0, 9, 15, 14, 0),
-    gsSP2Triangles(8, 16, 9, 0, 16, 17, 9, 0),
-    gsSP2Triangles(17, 18, 9, 0, 18, 19, 9, 0),
-    gsSP2Triangles(20, 15, 9, 0, 21, 22, 23, 0),
-    gsSP2Triangles(23, 22, 24, 0, 23, 24, 25, 0),
-    gsSP2Triangles(23, 25, 26, 0, 23, 26, 27, 0),
-    gsSP1Triangle(28, 23, 29, 0),
     gsSPEndDisplayList(),
 };
 

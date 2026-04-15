@@ -168,21 +168,15 @@ void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
             }
             break;
         case FROG:
-            if (GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_1) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_2) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_3) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_4)) {
-                CLEAR_EVENTCHKINF(EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_1);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_2);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_3);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_4);
-                CLEAR_ITEMGETINF(ITEMGETINF_GOT_FROG_HIDE_AND_SEEK_REWARD);
+            if (gSaveContext.save.info.frogQuest.quest != 0) {
+                gSaveContext.save.info.frogQuest.found = 0;
+                gSaveContext.save.info.frogQuest.completed = 0;
+                gSaveContext.save.info.frogQuest.reward = 0;
+                gSaveContext.save.info.frogQuest.started = 0;
             }
             else {
-                SET_EVENTCHKINF(EVENTCHKINF_STARTED_FROG_HIDE_AND_SEEK);
-                SET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_1);
-                SET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_2);
-                SET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_3);
-                SET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_4);
-                SET_ITEMGETINF(ITEMGETINF_GOT_FROG_HIDE_AND_SEEK_REWARD);
+                gSaveContext.save.info.frogQuest.found = 0xFFFFF;
+                gSaveContext.save.info.frogQuest.started = 1;
             }
             break;
         case NABOORU:
@@ -275,7 +269,7 @@ char* MapSelect_GetEvent(MapSelectState* this, u8 type, u16 flag) {
         case BLACKSMITH:
             return (GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA)) ? "On" : "Off";
         case FROG:
-            return (GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_1) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_2) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_3) && GET_EVENTCHKINF(EVENTCHKINF_FOUND_FROG_4)) ? "On" : "Off";
+            return (gSaveContext.save.info.frogQuest.quest != 0) ? "On" : "Off";
         case NABOORU:
             return (GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE) && GET_EVENTCHKINF(EVENTCHKINF_3B) && GET_EVENTCHKINF(EVENTCHKINF_C0) && (gSaveContext.save.info.sceneFlags[SCENE_SPIRIT_TEMPLE_BOSS].swch &= (1 << flag))) ? "On" : "Off";
         default:

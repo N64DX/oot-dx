@@ -10,10 +10,14 @@ extern SceneCmd* mountain_village_room_0AlternateHeaders[];
 extern s16 mountain_village_room_0ObjectList_00004C[];
 extern ActorEntry mountain_village_room_0ActorEntry_000074[];
 extern RoomShapeCullable mountain_village_room_0RoomShapeCullable_0003D0;
-extern RoomShapeCullableEntry mountain_village_room_0RoomShapeCullableEntry_0003DC[36];
+extern RoomShapeCullableEntry mountain_village_room_0RoomShapeCullableEntry_0003DC[35];
+
 extern SceneCmd mountain_village_room_0Set_timeskip[];
 extern s16 mountain_village_room_0ObjectList_timeskip[];
 extern ActorEntry mountain_village_room_0ActorEntry_timeskip[];
+extern RoomShapeCullable mountain_village_room_0RoomShapeCullable_timeskip;
+extern RoomShapeCullableEntry mountain_village_room_0RoomShapeCullableEntry_timeskip[36];
+
 extern s32 mountain_village_room_0_terminatorMaybe_00061C;
 
 extern Gfx mountain_village_room_0DL_0010D8[];
@@ -43,13 +47,13 @@ extern Gfx mountain_village_room_0DL_00C5A8[];
 extern Gfx mountain_village_room_0DL_00C810[];
 extern Gfx mountain_village_room_0DL_00CA08[];
 extern Gfx mountain_village_room_0DL_00CDA0[];
+extern Gfx mountain_village_room_0DL_00CDB0[];
 extern Gfx mountain_village_room_0DL_00CF88[];
 extern Gfx mountain_village_room_0DL_00DFC8[];
 extern Gfx mountain_village_room_0DL_00E4B8[];
 extern Gfx mountain_village_room_0DL_00E9D0[];
 extern Gfx mountain_village_room_0DL_00EAE0[];
 extern Gfx mountain_village_room_0DL_00EC88[];
-extern Gfx mountain_village_room_0DL_00EF90[];
 extern Gfx mountain_village_room_0DL_01B548[];
 extern Gfx mountain_village_room_0DL_01B830[];
 extern Gfx mountain_village_room_0DL_01BBF0[];

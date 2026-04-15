@@ -37,9 +37,9 @@ s16 swamp_spider_house_room_0ObjectList_000040[] = {
 };
 
 ActorEntry swamp_spider_house_room_0ActorEntry_000068[] = {
-    { ACTOR_EN_ST,       {    0, 300,  20 }, { 0, 0, 0 }, 0x0001, },
-    { ACTOR_EN_KAREBABA, { -190, 120, -75 }, { 0, 0, 0 }, 0x0000, },
-    { ACTOR_EN_KAREBABA, {  190, 120, -75 }, { 0, 0, 0 }, 0x0000, },
+    { ACTOR_EN_ST,       {    0, 300,  20 }, { 0, 0, 0 }, 0x0001 },
+    { ACTOR_EN_KAREBABA, { -190, 120, -75 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_KAREBABA, {  190, 120, -75 }, { 0, 0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable swamp_spider_house_room_0RoomShapeCullable_0000C0 = { 

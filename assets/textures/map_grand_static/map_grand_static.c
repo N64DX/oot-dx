@@ -102,8 +102,8 @@ u64 gRoadToSwampMinimapTex[TEX_LEN(u64, 64, 76, 4)] = {
 #include "assets/textures/map_grand_static/gRoadToSwampMinimapTex.ia4.inc.c"
 };
 
-u64 gRoadtoIkanaValleyMinimapTex[TEX_LEN(u64, 80, 27, 4)] = {
-#include "assets/textures/map_grand_static/gRoadtoIkanaValleyMinimapTex.ia4.inc.c"
+u64 gRoadToIkanaValleyMinimapTex[TEX_LEN(u64, 80, 27, 4)] = {
+#include "assets/textures/map_grand_static/gRoadToIkanaValleyMinimapTex.ia4.inc.c"
 };
 
 u64 gMilkRoadMinimapTex[TEX_LEN(u64, 80, 23, 4)] = {
