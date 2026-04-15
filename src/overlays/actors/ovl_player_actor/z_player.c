@@ -5399,30 +5399,35 @@ void func_808382BC(Player* this) {
 }
 
 void Player_CheckShieldDurability(Player* this, PlayState* play) {
-    if ( ( (this->shieldDamage > 0 && this->currentShield > PLAYER_SHIELD_NONE && SHIELD_DURABILITY) || (this->shieldDamage > 0x10 && this->currentShield == PLAYER_SHIELD_DEKU && IS_CHILD_QUEST) ) && shieldDamageTimer == 0) {
+    if (this->shieldDamage > 0 && this->currentShield > PLAYER_SHIELD_NONE && shieldDamageTimer == 0) {
         ShieldDurability* shield = &gSaveContext.save.info.shields[this->currentShield - 1];
         shieldDamageTimer = SECONDS(0.5);
 
-        if (Player_PerfectTime > 0) {
+        if (Player_PerfectTime > 0 && (SHIELD_DURABILITY || gSaveContext.save.info.obtainedSkills.perfectBlockBoost)) {
             Player_PlaySfx(this, NA_SE_IT_EXPLOSION_LIGHT);
+            if (gSaveContext.save.info.obtainedSkills.perfectBlockBoost)
+                R_PERFECT_BLOCK_BOOST_TIMER = SECONDS(3);
             this->shieldDamage = 0;
             return;
         }
 
-        this->shieldDamage = CLAMP_MAX(this->shieldDamage, 0x30);
-        shield->durability -= CLAMP_MAX(this->shieldDamage, shield->durability);
-        this->shieldDamage = 0;
-
-        if (shield->durability == 0) {
-            Audio_PlaySfxGeneral(NA_SE_IT_MAJIN_SWORD_BROKEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            if (this->currentShield == PLAYER_SHIELD_MIRROR) {
-                Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
-                Player_SetEquipmentData(play, this);
-                gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = true;
+        if (SHIELD_DURABILITY || (this->shieldDamage > 0x10 && this->currentShield == PLAYER_SHIELD_DEKU && IS_CHILD_QUEST) ) {
+            this->shieldDamage = CLAMP_MAX(this->shieldDamage, 0x30);
+            shield->durability -= CLAMP_MAX(this->shieldDamage, shield->durability);
+            
+            if (shield->durability == 0) {
+                Audio_PlaySfxGeneral(NA_SE_IT_MAJIN_SWORD_BROKEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                if (this->currentShield == PLAYER_SHIELD_MIRROR) {
+                    Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
+                    Player_SetEquipmentData(play, this);
+                    gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = true;
+                }
+                else Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
+                    Message_StartTextbox(play, 0x305F, NULL);
             }
-            else Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
-            Message_StartTextbox(play, 0x305F, NULL);
         }
+
+        this->shieldDamage = 0;
     }
 }
 
@@ -12601,8 +12606,31 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
 
     sControlInput = input;
 
-    // Perfect Shield Block
+    if (R_PERFECT_BLOCK_BOOST_TIMER > 0)
+        R_PERFECT_BLOCK_BOOST_TIMER--;
+    if (shieldDamageTimer > 0)
+        shieldDamageTimer--;
+
+    
     if (SHIELD_DURABILITY) {
+        // Restore Mirror Shield
+        if (!(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
+            if ( (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR) && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
+                if (mirrorShieldRestoreTimer < SECONDS(2))
+                    mirrorShieldRestoreTimer++;
+                else {
+                    mirrorShieldRestoreTimer = 0;
+                    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability++;
+                    if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability >= 60 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
+                        gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
+                        Message_StartTextbox(play, 0x9306, NULL);
+                        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
+                    }
+                }
+            } else mirrorShieldRestoreTimer = 0;
+        }
+
+        // Perfect Shield Block
         if (play->shootingGalleryStatus == 0 && this->currentShield > PLAYER_SHIELD_NONE) {
             if (CHECK_BTN_ALL(sControlInput->cur.button, BTN_R)) {
                 Player_WasShieldUp = true;
@@ -12630,24 +12658,6 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
             Player_PerfectResetTimer--;
         else if (Player_HasPerfected && Player_PerfectResetTimer == 0)
             Player_HasPerfected = false;
-    }
-
-    if (shieldDamageTimer > 0)
-        shieldDamageTimer--;
-    if (SHIELD_DURABILITY && !(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
-        if ( (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR) && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
-            if (mirrorShieldRestoreTimer < SECONDS(2))
-                mirrorShieldRestoreTimer++;
-            else {
-                mirrorShieldRestoreTimer = 0;
-                gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability++;
-                if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability >= 60 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
-                    gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
-                    Message_StartTextbox(play, 0x9306, NULL);
-                    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
-                }
-            }
-        } else mirrorShieldRestoreTimer = 0;
     }
 
     if (this->actor.category == ACTORCAT_PLAYER && R_ENABLE_MIRROR == 1)

@@ -476,7 +476,7 @@ void Play_Init(GameState* thisx) {
     this->unk_11E16 = 0xFF;
     this->bgCoverAlpha = 0;
     this->haltAllActors = false;
-    this->specialIconAlpha = this->specialIconShake = this->specialIconCount = this->specialIconLast = 0;
+    this->specialIconAlpha = this->specialIconShake = this->specialIconCount = this->specialIconLast = R_PERFECT_BLOCK_BOOST_TIMER = 0;
     this->specialIconUp = false;
 
     if (this->autosave != AUTOSAVE_ON && this->autosave != AUTOSAVE_OFF)
