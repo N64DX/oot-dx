@@ -4899,7 +4899,7 @@ u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
             damage *= gSaveContext.save.info.playerData.bgsFlag ? 0.75 : 0.5;
     }
 
-    if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SLASH_MASTER | DMG_SLASH_GIANT)) && gSaveContext.save.info.hasObtainedItems.amuletOfEnergy && R_SPECIAL_POWER_TIMER == 0 && gSaveContext.save.info.energy >= 30) {
+    if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SLASH_MASTER | DMG_SLASH_GIANT)) && gSaveContext.save.info.obtainedItems.amuletOfEnergy && R_SPECIAL_POWER_TIMER == 0 && gSaveContext.save.info.energy >= 30) {
         gSaveContext.save.info.energy -= 30;
         R_SPECIAL_POWER_TIMER = SECONDS(8);
         damage *= 1.5;

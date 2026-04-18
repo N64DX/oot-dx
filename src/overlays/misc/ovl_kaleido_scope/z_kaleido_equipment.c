@@ -815,7 +815,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             showAltQuiverSlot ^= 1;
         }
-    } else if (cursorSlot == 12 && CUR_UPG_VALUE(UPG_SCALE) > 0 && gSaveContext.save.info.hasObtainedItems.amuletOfEnergy) {
+    } else if (cursorSlot == 12 && CUR_UPG_VALUE(UPG_SCALE) > 0 && gSaveContext.save.info.obtainedItems.amuletOfEnergy) {
         u8 currItem =  showAltScalesSlot ? ITEM_AMULET_OF_ENERGY : sChildUpgradeItemBases[3] + CUR_UPG_VALUE(UPG_SCALE) - 1;
         u8 nextItem = !showAltScalesSlot ? ITEM_AMULET_OF_ENERGY : sChildUpgradeItemBases[3] + CUR_UPG_VALUE(UPG_SCALE) - 1;
         KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);

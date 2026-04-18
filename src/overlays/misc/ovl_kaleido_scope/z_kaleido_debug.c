@@ -489,16 +489,16 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
     KaleidoScope_DrawDigit(play, gSaveContext.save.info.playerData.bgsFlag, 78, 204);
 
     // Master Sword
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.masterSword, 90, 204);
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.obtainedItems.masterSword, 90, 204);
 
     // Feather
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.feather, 102, 204);
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.obtainedItems.feather, 102, 204);
 
     // Enhanced Spin
     KaleidoScope_DrawDigit(play, gSaveContext.save.info.isEnhancedSpinAcquired, 114, 204);
 
     // Amulet of Energy
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.hasObtainedItems.amuletOfEnergy, 126, 204);
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.obtainedItems.amuletOfEnergy, 126, 204);
 
     // Handles navigating the menu to different sections with the D-Pad
     // When the same direction is held, registers the input periodically based on a timer
@@ -609,7 +609,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         Inventory_DeleteItem(gAmmoItems[i], SLOT(gAmmoItems[i]));
                         AMMO(gAmmoItems[i]) = 0;
                         if (gAmmoItems[i] == ITEM_MAGIC_BEAN) {
-                            gSaveContext.save.info.hasObtainedItems.magicBeans = 0;
+                            gSaveContext.save.info.obtainedItems.magicBeans = 0;
                             if (HAS_ROCS_FEATHER)
                                 gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER;
                             else gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = ITEM_NONE;
@@ -620,7 +620,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         if (i != INV_CONTENT(gAmmoItems[i])) {
                             INV_CONTENT(gAmmoItems[i]) = gAmmoItems[i];
                             if (gAmmoItems[i] == ITEM_MAGIC_BEAN)
-                                gSaveContext.save.info.hasObtainedItems.magicBeans = 1;
+                                gSaveContext.save.info.obtainedItems.magicBeans = 1;
                         }
                         AMMO(gAmmoItems[i])++;
                         if (AMMO(gAmmoItems[i]) > 99) {
@@ -649,7 +649,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             AMMO(gAmmoItems[i]) = 50;
                         else if (gAmmoItems[i] == ITEM_MAGIC_BEAN) {
                             AMMO(gAmmoItems[i]) = 15;
-                            gSaveContext.save.info.hasObtainedItems.magicBeans = 1;
+                            gSaveContext.save.info.obtainedItems.magicBeans = 1;
                         }
                     }
                 } else if (i == SLOT_OCARINA) {
@@ -691,22 +691,22 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                 } else if (i == SLOT_HAMMER) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
                         Inventory_DeleteItem(ITEM_HAMMER, SLOT(ITEM_HAMMER));
-                        gSaveContext.save.info.hasObtainedItems.hammer = gSaveContext.save.info.hasObtainedItems.fairysSword = 0;
+                        gSaveContext.save.info.obtainedItems.hammer = gSaveContext.save.info.obtainedItems.fairysSword = 0;
                     } else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                         if (gSaveContext.save.info.inventory.items[i] == ITEM_NONE) {
                             gSaveContext.save.info.inventory.items[i] = ITEM_HAMMER;
-                            gSaveContext.save.info.hasObtainedItems.hammer = 1;
+                            gSaveContext.save.info.obtainedItems.hammer = 1;
                         } else if (gSaveContext.save.info.inventory.items[i] == ITEM_HAMMER) {
                             gSaveContext.save.info.inventory.items[i] = ITEM_SWORD_FAIRYS;
-                            gSaveContext.save.info.hasObtainedItems.fairysSword = 1;
+                            gSaveContext.save.info.obtainedItems.fairysSword = 1;
                         }
                     } else if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
                         if (gSaveContext.save.info.inventory.items[i] == ITEM_NONE) {
                             gSaveContext.save.info.inventory.items[i] = ITEM_SWORD_FAIRYS;
-                            gSaveContext.save.info.hasObtainedItems.fairysSword = 1;
+                            gSaveContext.save.info.obtainedItems.fairysSword = 1;
                         } else if (gSaveContext.save.info.inventory.items[i] == ITEM_SWORD_FAIRYS) {
                             gSaveContext.save.info.inventory.items[i] = ITEM_HAMMER;
-                            gSaveContext.save.info.hasObtainedItems.hammer = 1;
+                            gSaveContext.save.info.obtainedItems.hammer = 1;
                         }
                     }
                 } else if (i == SLOT_TRADE_ADULT) {
@@ -1017,31 +1017,31 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                     }
                 } else if (curSection == SECTION_MASTER_SWORD) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
-                        gSaveContext.save.info.hasObtainedItems.masterSword ^= 1;
+                        gSaveContext.save.info.obtainedItems.masterSword ^= 1;
                         for (j=0; j<8; j++)
                             Interface_LoadItemIcon1(play, j);
                     }
                 } else if (curSection == SECTION_FEATHER) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && !HAS_GOLDEN_FEATHER)
-                        gSaveContext.save.info.hasObtainedItems.feather++;
+                        gSaveContext.save.info.obtainedItems.feather++;
                     else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT) && HAS_ROCS_FEATHER)
-                        gSaveContext.save.info.hasObtainedItems.feather--;
+                        gSaveContext.save.info.obtainedItems.feather--;
                     else if (CHECK_BTN_ALL(input->press.button, BTN_CUP))
-                        gSaveContext.save.info.hasObtainedItems.feather = 0;
+                        gSaveContext.save.info.obtainedItems.feather = 0;
                     else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
                         SET_GOLDEN_FEATHER;
 
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
                         if (HAS_ROCS_FEATHER)
                             gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER;
-                        else gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = gSaveContext.save.info.hasObtainedItems.magicBeans ? ITEM_MAGIC_BEAN : ITEM_NONE;
+                        else gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = gSaveContext.save.info.obtainedItems.magicBeans ? ITEM_MAGIC_BEAN : ITEM_NONE;
                     }
                 } else if (curSection == SECTION_ENHANCED_SPIN) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
                         gSaveContext.save.info.isEnhancedSpinAcquired ^= 1;
                 } else if (curSection == SECTION_AMULET_OF_ENERGY) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
-                        gSaveContext.save.info.hasObtainedItems.amuletOfEnergy ^= 1;
+                        gSaveContext.save.info.obtainedItems.amuletOfEnergy ^= 1;
                 } else if (curSection < SECTION_HEART_PIECES) {
                     i = curSection - SECTION_FIRST_MEDALLION;
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
