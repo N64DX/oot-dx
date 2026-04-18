@@ -2292,14 +2292,14 @@ u8 Item_Give(PlayState* play, u8 item) {
                 Interface_LoadItemIcon1(play, i);
             }
         }
-        gSaveContext.save.info.hasObtainedItems.feather = (item == ITEM_ROCS_FEATHER) ? 1 : 2;
+        gSaveContext.save.info.obtainedItems.feather = (item == ITEM_ROCS_FEATHER) ? 1 : 2;
         INV_CONTENT(ITEM_MAGIC_BEAN) = item;
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_AMULET_OF_ENERGY) {
-        gSaveContext.save.info.hasObtainedItems.amuletOfEnergy = 1;
+        gSaveContext.save.info.obtainedItems.amuletOfEnergy = 1;
         return ITEM_NONE;
     } else if (item == ITEM_HAMMER) {
         INV_CONTENT(ITEM_HAMMER) = item;

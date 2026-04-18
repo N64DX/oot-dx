@@ -301,7 +301,7 @@ void func_80AAF668(EnMm2* this, PlayState* play) {
     this->actor.shape.rot.y = this->actor.world.rot.y;
     SkelAnime_Update(&this->skelAnime);
     if (((void)0, gSaveContext.subTimerSeconds) < HIGH_SCORE(HS_MARATHON)) {
-        if (!gSaveContext.save.info.hasObtainedItems.amuletOfEnergy && IS_CHILD_QUEST) {
+        if (!gSaveContext.save.info.obtainedItems.amuletOfEnergy && IS_CHILD_QUEST) {
             this->actor.textId = 0x8127;
             beatenRace = true;
         } else this->actor.textId = 0x6085;
