@@ -527,3 +527,37 @@ MSG(
 QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "Votre " COLOR(DEFAULT) "Bouclier miroir" COLOR(LIGHTBLUE) " a été restauré !" COLOR(DEFAULT) QUICKTEXT_DISABLE FADE(60)
 )
 )
+
+DEFINE_MESSAGE(0x94B0, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"I'm sorry...\n"
+"That Tunic is just for display. \n"
+"The design for it isn't ready yet.\n"
+"Come back in a few years." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x94B1, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I already told you!\n"
+"That tunic isn't for sale!\n"
+"Ohhh... I'm so hungry!" PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x94B2, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I already told you!\n"
+"That tunic isn't for sale!\n"
+"Ohhh... I could go for a swim..." PERSISTENT
+),
+MSG(),
+MSG()
+)
