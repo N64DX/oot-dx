@@ -101,6 +101,7 @@ void EnOssan_State_SelectMilkBottle(EnOssan* this, PlayState* play2, Player* pla
 void EnOssan_State_SelectWeirdEgg(EnOssan* this, PlayState* play2, Player* player);
 void EnOssan_State_SelectUnimplementedItem(EnOssan* this, PlayState* play, Player* player);
 void EnOssan_State_SelectBombs(EnOssan* this, PlayState* play, Player* player);
+void EnOssan_State_SelectTunic(EnOssan* this, PlayState* play, Player* player);
 void EnOssan_State_CantGetItem(EnOssan* this, PlayState* play, Player* player);
 void EnOssan_State_GiveItemWithFanfare(EnOssan* this, PlayState* play, Player* player);
 void EnOssan_State_ItemPurchased(EnOssan* this, PlayState* play, Player* player);
@@ -128,6 +129,8 @@ s32 EnOssan_TakeItemOffShelf(EnOssan* this);
 s32 EnOssan_ReturnItemToShelf(EnOssan* this);
 void EnOssan_ResetItemPosition(EnOssan* this);
 void EnOssan_SetStateGiveDiscountDialog(PlayState* play, EnOssan* this);
+
+static u8 itemIndex = 0;
 
 #define CURSOR_INVALID 0xFF
 
@@ -395,6 +398,7 @@ static EnOssanStateFunc sStateFunc[] = {
     EnOssan_State_SelectMaskItem,
     EnOssan_State_LendMaskOfTruth,
     EnOssan_State_GiveDiscountDialog,
+    EnOssan_State_SelectTunic,
 };
 
 void EnOssan_SetupAction(EnOssan* this, EnOssanActionFunc actionFunc) {
@@ -1160,6 +1164,7 @@ s32 EnOssan_HasPlayerSelectedItem(PlayState* play, EnOssan* this, Input* input) 
             Message_ContinueTextbox(play, this->shelfSlots[this->cursorIndex]->itemBuyPromptTextId);
             this->stickLeftPrompt.isEnabled = false;
             this->stickRightPrompt.isEnabled = false;
+            itemIndex = selectedItem->actor.params;
             switch (selectedItem->actor.params) {
                 case SI_KEATON_MASK:
                 case SI_SPOOKY_MASK:
@@ -1197,6 +1202,12 @@ s32 EnOssan_HasPlayerSelectedItem(PlayState* play, EnOssan* this, Input* input) 
                     Sfx_PlaySfxCentered(NA_SE_SY_DECIDE);
                     this->drawCursor = 0;
                     this->stateFlag = OSSAN_STATE_SELECT_ITEM_BOMBS;
+                    return true;
+                case SI_GORON_TUNIC:
+                case SI_ZORA_TUNIC:
+                    Sfx_PlaySfxCentered(NA_SE_SY_DECIDE);
+                    this->drawCursor = 0;
+                    this->stateFlag = OSSAN_STATE_SELECT_ITEM_TUNIC;
                     return true;
                 default:
                     Sfx_PlaySfxCentered(NA_SE_SY_DECIDE);
@@ -1356,7 +1367,9 @@ void EnOssan_State_DisplayOnlyBombDialog(EnOssan* this, PlayState* play, Player*
     }
     EnOssan_UpdateCameraDirection(this, play, this->cameraFaceAngle);
     if (this->cameraFaceAngle == 0.0f) {
-        Message_ContinueTextbox(play, 0x3010);
+        if (itemIndex == SI_GORON_TUNIC || itemIndex == SI_ZORA_TUNIC)
+            Message_ContinueTextbox(play, 0x94B0);
+        else Message_ContinueTextbox(play, 0x3010);
         this->stateFlag = OSSAN_STATE_WAIT_FOR_DISPLAY_ONLY_BOMB_DIALOG;
     }
 }
@@ -1522,6 +1535,23 @@ void EnOssan_BuyGoronCityBombs(PlayState* play, EnOssan* this) {
     }
 }
 
+void EnOssan_BuyTunic(PlayState* play, EnOssan* this) {
+    if (!IS_CHILD_QUEST || GET_EVENTCHKINF(EVENTCHKINF_45) || LINK_IS_ADULT)
+        EnOssan_HandleCanBuyItem(play, this);
+    else {
+        if (itemIndex == SI_GORON_TUNIC && GET_INFTABLE(INFTABLE_TRIED_BUYING_GORON_TUNIC))
+            EnOssan_SetStateCantGetItem(play, this, 0x94B1);
+        else if (itemIndex == SI_ZORA_TUNIC && GET_INFTABLE(INFTABLE_TRIED_BUYING_ZORA_TUNIC))
+            EnOssan_SetStateCantGetItem(play, this, 0x94B2);
+        else {
+            this->stickLeftPrompt.isEnabled = false;
+            this->stickRightPrompt.isEnabled = false;
+            this->drawCursor = 0;
+            this->stateFlag = OSSAN_STATE_DISPLAY_ONLY_BOMB_DIALOG;
+        }
+    }
+}
+
 void EnOssan_State_ItemSelected(EnOssan* this, PlayState* play2, Player* player) {
     PlayState* play = play2; // Necessary for OKs
 
@@ -1611,6 +1641,23 @@ void EnOssan_State_SelectBombs(EnOssan* this, PlayState* play, Player* player) {
         switch (play->msgCtx.choiceIndex) {
             case 0:
                 EnOssan_BuyGoronCityBombs(play, this);
+                break;
+            case 1:
+                this->stateFlag = this->tempStateFlag;
+                Message_ContinueTextbox(play, this->shelfSlots[this->cursorIndex]->actor.textId);
+                break;
+        }
+    }
+}
+
+void EnOssan_State_SelectTunic(EnOssan* this, PlayState* play, Player* player) {
+    if (!EnOssan_TakeItemOffShelf(this))
+        return;
+
+    if (Message_GetState(&play->msgCtx) == TEXT_STATE_CHOICE && !EnOssan_TestCancelOption(this, play, &play->state.input[0]) && Message_ShouldAdvance(play)) {
+        switch (play->msgCtx.choiceIndex) {
+            case 0:
+                EnOssan_BuyTunic(play, this);
                 break;
             case 1:
                 this->stateFlag = this->tempStateFlag;
@@ -1773,7 +1820,11 @@ void EnOssan_State_ContinueShoppingPrompt(EnOssan* this, PlayState* play, Player
 
 void EnOssan_State_WaitForDisplayOnlyBombDialog(EnOssan* this, PlayState* play, Player* player) {
     if (Message_GetState(&play->msgCtx) == TEXT_STATE_EVENT && Message_ShouldAdvance(play)) {
-        SET_INFTABLE(INFTABLE_FC);
+        if (itemIndex == SI_GORON_TUNIC)
+            SET_INFTABLE(INFTABLE_TRIED_BUYING_GORON_TUNIC);
+        else if (itemIndex == SI_ZORA_TUNIC)
+            SET_INFTABLE(INFTABLE_TRIED_BUYING_ZORA_TUNIC);
+        else SET_INFTABLE(INFTABLE_FC);
         EnOssan_StartShopping(play, this);
     }
 }

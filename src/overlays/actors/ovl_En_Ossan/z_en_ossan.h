@@ -122,7 +122,8 @@ typedef enum EnOssanState {
     /* 23 */ OSSAN_STATE_QUICK_BUY,
     /* 24 */ OSSAN_STATE_SELECT_ITEM_MASK,
     /* 25 */ OSSAN_STATE_LEND_MASK_OF_TRUTH, // First time all masks are sold
-    /* 26 */ OSSAN_STATE_DISCOUNT_DIALOG     // Hylian Shield Discount
+    /* 26 */ OSSAN_STATE_DISCOUNT_DIALOG,    // Hylian Shield Discount
+    /* 27 */ OSSAN_STATE_SELECT_ITEM_TUNIC
 } EnOssanState;
 
 typedef enum EnOssanHappyMaskState {
