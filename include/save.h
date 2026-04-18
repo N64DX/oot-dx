@@ -108,7 +108,7 @@ typedef struct Inventory {
     /* 0x5C */ s16 gsTokens;
 } Inventory; // size = 0x5E
 
-typedef union ObtainedItems; {
+typedef union ObtainedItems {
     struct {
         u8 magicBeans     : 1;
         u8 feather        : 2;
