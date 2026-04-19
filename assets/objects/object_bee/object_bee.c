@@ -7,19 +7,19 @@ Vtx object_beeVtx_000070[] = {
 };
 
 u64 gBeeWingTLUT[] = {
-#include "assets/objects/object_bee/bee_wing_tlut.rgba16.inc.c"
+#include "assets/objects/object_bee/bee_wing.tlut.rgba16.inc.c"
 };
 
 u64 gBeeHeadTLUT[] = {
-#include "assets/objects/object_bee/bee_head_tlut.rgba16.inc.c"
+#include "assets/objects/object_bee/bee_head.tlut.rgba16.inc.c"
 };
 
 u64 gBeeBodyTLUT[] = {
-#include "assets/objects/object_bee/bee_body_tlut.rgba16.inc.c"
+#include "assets/objects/object_bee/bee_body.tlut.rgba16.inc.c"
 };
 
 u64 gBeeAntennaeTLUT[] = {
-#include "assets/objects/object_bee/bee_antennae_tlut.rgba16.inc.c"
+#include "assets/objects/object_bee/bee_antennae.tlut.rgba16.inc.c"
 };
 
 u64 gBeeWingTex[] = {

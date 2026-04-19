@@ -356,7 +356,7 @@ u64 goron_village_room_0Tex_014AF0[] = {
 };
 
 u64 goron_village_room_0TLUT_0152F0[] = {
-#include "assets/scenes/overworld/goron_village/goron_village_room_0TLUT_0152F0.rgba16.inc.c"
+#include "assets/scenes/overworld/goron_village/goron_village_room_0Tex_0126F0.tlut.rgba16.inc.c"
 };
 
 u64 goron_village_room_0Tex_0156E8[] = {

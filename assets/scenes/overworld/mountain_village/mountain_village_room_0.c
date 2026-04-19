@@ -17,7 +17,7 @@ SceneCmd mountain_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_0003D0),
-    SCENE_CMD_OBJECT_LIST(17, mountain_village_room_0ObjectList_00004C),
+    SCENE_CMD_OBJECT_LIST(14, mountain_village_room_0ObjectList_00004C),
     SCENE_CMD_ACTOR_LIST(42, mountain_village_room_0ActorEntry_000074),
     SCENE_CMD_END(),
 };
@@ -32,20 +32,17 @@ s16 mountain_village_room_0ObjectList_00004C[] = {
     OBJECT_HORSE,
     OBJECT_ICEFLOE,
     OBJECT_SPOT18_OBJ,
-    OBJECT_OF1D_MAP,
     OBJECT_SYOKUDAI,
     OBJECT_FLOWERPOT,
-    OBJECT_FR,
     OBJECT_MKK,
-    OBJECT_CROW,
     OBJECT_BEE,
     OBJECT_KANBAN,
     OBJECT_GS,
     OBJECT_BOX,
-    OBJECT_BOMBIWA,
     OBJECT_TSUBO,
     OBJECT_KA,
-    OBJECT_D_HSBLOCK,
+    OBJECT_CROW,
+    OBJECT_BOMBIWA,
 };
 
 ActorEntry mountain_village_room_0ActorEntry_000074[] = {
@@ -61,8 +58,8 @@ ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_OBJ_HAMISHI,       {   146,  -30,   831 }, {    0,      0,  0 }, 0x0200 }, // Switch: 00
     { ACTOR_OBJ_HAMISHI,       {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
     { ACTOR_OBJ_HAMISHI,       {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
-    { ACTOR_OBJ_HAMISHI,       { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
-    { ACTOR_OBJ_HAMISHI,       {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
+    { ACTOR_OBJ_BOMBIWA,       { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
+    { ACTOR_OBJ_BOMBIWA,       {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
     { ACTOR_EN_ISHI,           {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,           {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,           {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },
@@ -145,9 +142,26 @@ SceneCmd mountain_village_room_0Set_timeskip[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_timeskip),
-    SCENE_CMD_OBJECT_LIST(17, mountain_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(64, mountain_village_room_0ActorEntry_timeskip),
+    SCENE_CMD_OBJECT_LIST(14, mountain_village_room_0ObjectList_timeskip),
+    SCENE_CMD_ACTOR_LIST(62, mountain_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
+};
+
+s16 mountain_village_room_0ObjectList_timeskip[] = {
+    OBJECT_HORSE,
+    OBJECT_ICEFLOE,
+    OBJECT_SPOT18_OBJ,
+    OBJECT_SYOKUDAI,
+    OBJECT_FLOWERPOT,
+    OBJECT_MKK,
+    OBJECT_BEE,
+    OBJECT_KANBAN,
+    OBJECT_GS,
+    OBJECT_BOX,
+    OBJECT_TSUBO,
+    OBJECT_KA,
+    OBJECT_FR,
+    OBJECT_OF1D_MAP,
 };
 
 ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
@@ -163,8 +177,6 @@ ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_OBJ_HAMISHI,       {   146,  -30,   831 }, {    0,      0,  0 }, 0x0000 }, // Switch: 00
     { ACTOR_OBJ_HAMISHI,       {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
     { ACTOR_OBJ_HAMISHI,       {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
-    { ACTOR_OBJ_HAMISHI,       { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
-    { ACTOR_OBJ_HAMISHI,       {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
     { ACTOR_EN_ISHI,           {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,           {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,           {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },

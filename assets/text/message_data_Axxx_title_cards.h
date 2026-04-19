@@ -615,13 +615,20 @@ DEFINE_MESSAGE(0xA070, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 )
 
 DEFINE_MESSAGE(0xA071, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("ゴロン鉱山"),
+    MSG("Goron Mines"),
+    MSG("Mine der Goronen"),
+    MSG("Mine Goron")
+)
+
+DEFINE_MESSAGE(0xA072, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("ウッドフォールの神殿"),
     MSG("Woodfall Temple"),
     MSG("Dämmerwald Tempel"),
     MSG("Temple de Bois-Cascade")
 )
 
-DEFINE_MESSAGE(0xA073, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA074, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("スプリングレイクの鍛冶屋"),
     MSG("Spring Lake Smithy"),
     MSG("Schmiedewerkstatt"),

@@ -2152,5 +2152,5 @@ u64 goron_village_sceneTex_006100[] = {
 };
 
 u64 goron_village_sceneTLUT_006500[] = {
-#include "assets/scenes/overworld/goron_village/goron_village_sceneTLUT_006500.rgba16.inc.c"
+#include "assets/scenes/overworld/goron_village/goron_village_sceneTex_005900.tlut.rgba16.inc.c"
 };

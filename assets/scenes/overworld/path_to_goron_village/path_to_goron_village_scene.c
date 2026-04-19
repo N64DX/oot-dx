@@ -1553,5 +1553,5 @@ u64 path_to_goron_village_sceneTex_0078D0[] = {
 };
 
 u64 path_to_goron_village_sceneTLUT_0088D0[] = {
-#include "assets/scenes/overworld/path_to_goron_village/path_to_goron_village_sceneTLUT_0088D0.rgba16.inc.c"
+#include "assets/scenes/overworld/path_to_goron_village/path_to_goron_village_sceneTex_006DD0.tlut.rgba16.inc.c"
 };

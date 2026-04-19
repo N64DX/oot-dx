@@ -2698,7 +2698,7 @@ u64 mountain_village_sceneTex_006A60[] = {
 };
 
 u64 mountain_village_sceneTLUT_006E60[] = {
-#include "assets/scenes/overworld/mountain_village/mountain_village_sceneTLUT_006E60.rgba16.inc.c"
+#include "assets/scenes/overworld/mountain_village/mountain_village_sceneTex_006A60.tlut.rgba16.inc.c"
 };
 
 u64 mountain_village_scene04Tex_000000[] = {
