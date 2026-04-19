@@ -61,8 +61,8 @@ static ColliderJntSphElementInit sJntSphElementsInit[1] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xF7CFFFFF, 0x00, 0x0C },
-            { 0xF7CFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, 0x00, 0x0C },
+            { 0xFFCFFFFF, 0x00, 0x00 },
             ATELEM_ON | ATELEM_SFX_HARD,
             ACELEM_ON,
             OCELEM_ON,
