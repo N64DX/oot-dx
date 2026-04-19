@@ -119,7 +119,7 @@ typedef union ObtainedItems {
         u8 unk            : 1;
     };
     u8 items;
-} ObtainedItems; // size = 0x5E
+} ObtainedItems; // size = 0x1
 
 typedef struct Checksum {
     /* 0x00 */ u16 value;

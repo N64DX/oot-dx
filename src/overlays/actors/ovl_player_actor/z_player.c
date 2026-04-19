@@ -3198,7 +3198,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 EffectSsGSplash_Spawn(play, &effectsPos, NULL, NULL, 0, 150);
                 this->stateFlags2 &= ~(PLAYER_STATE2_19);
                 Player_PlaySfx(this, NA_SE_PL_SKIP);
-                gSaveContext.save.info.energy -= item == (ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.hasObtainedItems.amuletOfEnergy * 5);
+                gSaveContext.save.info.energy -= item == (ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.obtainedItems.amuletOfEnergy * 5);
             }
         }
     }
