@@ -2122,7 +2122,7 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos) {
  * Use a special power (usually a tunic power) through the Amulet of Energy at the cost of energy
  */
 u32 Player_UseSpecialPower(PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, s32 amount) {
-    if (Player_InBlockingCsMode(this, player) || !gSaveContext.save.info.hasObtainedItems.amuletOfEnergy)
+    if (Player_InBlockingCsMode(this, player) || !gSaveContext.save.info.obtainedItems.amuletOfEnergy)
         return amount;
     if (gSaveContext.save.info.energy < cost || R_SPECIAL_POWER_TIMER > 0)
         return amount;
