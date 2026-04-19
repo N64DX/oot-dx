@@ -568,7 +568,7 @@ DEFINE_MESSAGE(0xA069, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA06A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("古代の空洞"),
     MSG("Ancient Hollow"),
-    MSG("Uralter Höhle"),
+    MSG("Uralter Hohlraum"),
     MSG("Creux Antique")
 )
 

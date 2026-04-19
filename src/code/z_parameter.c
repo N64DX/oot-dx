@@ -156,6 +156,7 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_GROTTO_SHORTCUTS, 0x00, 0x00, 0xD0 },
     { SCENE_ROAD_TO_LAKE_HYLIA, 0x00, 0x00, 0x00 },
     { SCENE_ROAD_TO_FORTRESS, 0x00, 0x00, 0x00 },
+    { SCENE_WOODFALL, 0x00, 0x00, 0x00 },
     { SCENE_SWAMP_SPIDER_HOUSE, 0x00, 0x00, 0x00 },
     { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
     { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x00 },
@@ -4282,19 +4283,17 @@ void Durability_DrawMeter(PlayState* play) {
 
     gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
     meterX += 14;
-    
-    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(meterX),     HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(8),        HIRES_MULTIPLY(16), 1 << 10, 1 << 10);
-    OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_HIRES_MULTIPLY(meterX + 8), HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(capacity), HIRES_MULTIPLY(16), 1 << 10, 1 << 10);
 
-    gDPLoadTextureBlock(OVERLAY_DISP++, gMagicMeterEndTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-    gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX + capacity + 8) << 2, HIRES_MULTIPLY(meterY + 2) << 2, X_HIRES_MULTIPLY(meterX + capacity + 16) << 2, HIRES_MULTIPLY(meterY + 2 + 16) << 2, G_TX_RENDERTILE, 256, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+    OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(      OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(meterX),                HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(8),        HIRES_MULTIPLY(16), 1 << 10, 1 << 10, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
+    OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(      OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_HIRES_MULTIPLY(meterX + 8),            HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(capacity), HIRES_MULTIPLY(16), 1 << 10, 1 << 10, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
+    OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadowOffset(OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(meterX + capacity + 8), HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(8),        HIRES_MULTIPLY(16), 1 << 10, 1 << 10, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha, 3, 0x100);
 
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE);
     gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
 
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 200, 150, 0, interfaceCtx->magicAlpha);
-    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(meterX + 8) << 2, HIRES_MULTIPLY(meterY + 2 + 3) << 2, X_HIRES_MULTIPLY(meterX + 8 + durability) << 2, HIRES_MULTIPLY(meterY + 2 + 10) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
 
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);

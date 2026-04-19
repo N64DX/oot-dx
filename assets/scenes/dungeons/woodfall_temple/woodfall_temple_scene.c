@@ -30,18 +30,18 @@ ActorEntry woodfall_temple_sceneStartPositionList0x000098[] = {
     { ACTOR_PLAYER, {  -2000,      0,    200 }, { 0, 0x8000, 0 }, 0x02FF }, // Boss Exit
     { ACTOR_PLAYER, {  -2000,      0,    -60 }, { 0, 0x8000, 0 }, 0x01FF }, // Master Sword
     { ACTOR_PLAYER, {  -2000,      0,    360 }, { 0, 0x8000, 0 }, 0x0FFF }, // Exit Entrance
-    { ACTOR_PLAYER, {      0,  -1185,   -890 }, { 0, 0x8000, 0 }, 0x0FFF }, // Debug warp room 0
-    { ACTOR_PLAYER, {      0,  -1185,    650 }, { 0, 0x8000, 0 }, 0x0FFF }, // Debug warp room 1
-    { ACTOR_PLAYER, {      0,  -1185,   2370 }, { 0, 0x8000, 0 }, 0x0FFF }, // Debug warp room 2
-    { ACTOR_PLAYER, {   -800,  -1485,      0 }, { 0, 0xC000, 0 }, 0x0FFF }, // Debug warp room 3
-    { ACTOR_PLAYER, {  -1110,  -1485,    700 }, { 0, 0x0000, 0 }, 0x0FFF }, // Debug warp room 4
-    { ACTOR_PLAYER, {    800,  -1485,      0 }, { 0, 0x4000, 0 }, 0x0FFF }, // Debug warp room 5
-    { ACTOR_PLAYER, {   1950,  -1425,      0 }, { 0, 0x4000, 0 }, 0x0FFF }, // Debug warp room 6
-    { ACTOR_PLAYER, {   1230,  -1185,    800 }, { 0, 0x0000, 0 }, 0x0FFF }, // Debug warp room 7
-    { ACTOR_PLAYER, {   1230,  -1185,   -800 }, { 0, 0x8000, 0 }, 0x0FFF }, // Debug warp room 8
-    { ACTOR_PLAYER, {  -1065,      0,   -800 }, { 0, 0x0000, 0 }, 0x0FFF }, // Debug warp room 9
-    { ACTOR_PLAYER, {   -630,      0,    120 }, { 0, 0x4000, 0 }, 0x0FFF }, // Debug warp room 10
-    { ACTOR_PLAYER, {  -2000,      0,    360 }, { 0, 0x8000, 0 }, 0x0FFF }, // Debug warp room 11
+    { ACTOR_PLAYER, {      0,  -1185,   -890 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 0
+    { ACTOR_PLAYER, {      0,  -1185,    650 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 1
+    { ACTOR_PLAYER, {      0,  -1185,   2370 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 2
+    { ACTOR_PLAYER, {   -800,  -1485,      0 }, { 0, 0xC000, 0 }, 0x0DFF }, // Debug warp room 3
+    { ACTOR_PLAYER, {  -1110,  -1485,    700 }, { 0, 0x0000, 0 }, 0x0DFF }, // Debug warp room 4
+    { ACTOR_PLAYER, {    800,  -1485,      0 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 5
+    { ACTOR_PLAYER, {   1950,  -1425,      0 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 6
+    { ACTOR_PLAYER, {   1230,  -1185,    800 }, { 0, 0x0000, 0 }, 0x0DFF }, // Debug warp room 7
+    { ACTOR_PLAYER, {   1230,  -1185,   -800 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 8
+    { ACTOR_PLAYER, {  -1065,      0,   -800 }, { 0, 0x0000, 0 }, 0x0DFF }, // Debug warp room 9
+    { ACTOR_PLAYER, {   -630,      0,    120 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 10
+    { ACTOR_PLAYER, {  -2000,      0,    360 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 11
 };
 
 TransitionActorEntry woodfall_temple_sceneTransitionActorList_0000C8[] = {
