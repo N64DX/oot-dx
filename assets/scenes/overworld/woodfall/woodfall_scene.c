@@ -17,7 +17,7 @@ SceneCmd woodfall_sceneCommands[] = {
     SCENE_CMD_ENTRANCE_LIST(woodfall_sceneEntranceList0x0000F0),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PATH_LIST(woodfall_scenePathway),
-    SCENE_CMD_SPAWN_LIST(5, woodfall_sceneStartPositionList0x000098),
+    SCENE_CMD_SPAWN_LIST(4, woodfall_sceneStartPositionList0x000098),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(woodfall_sceneExitList_0000FC),
     SCENE_CMD_ENV_LIGHT_SETTINGS(24, woodfall_sceneLightSettings0x000104),
@@ -29,7 +29,6 @@ ActorEntry woodfall_sceneStartPositionList0x000098[] = {
     { ACTOR_PLAYER, {    6, 204,   255 }, { 0,      0, 0 }, 0x0DFF },
     { ACTOR_PLAYER, { 1155, 202,  1746 }, { 0, 0x9800, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {   15,  70,  -430 }, { 0, 0x8000, 0 }, 0x0DFF },
-    { ACTOR_PLAYER, {    1, 200,  1094 }, { 0,      0, 0 }, 0x06FF },
 };
 
 RomFile woodfall_sceneRoomList0x0000E8[] = {
@@ -41,7 +40,6 @@ Spawn woodfall_sceneEntranceList0x0000F0[] = {
     { 0x01, 0x00 },
     { 0x02, 0x00 },
     { 0x03, 0x00 },
-    { 0x04, 0x00 },
 };
 
 u16 woodfall_sceneExitList_0000FC[] = {

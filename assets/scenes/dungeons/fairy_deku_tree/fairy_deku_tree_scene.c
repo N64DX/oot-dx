@@ -31,20 +31,20 @@ SceneCmd fairy_deku_tree_sceneCommands[] = {
 ActorEntry fairy_deku_tree_sceneStartPositionList0x000058[] = {
     { ACTOR_PLAYER, {    4,    0, 1125 }, { 0, 0x8000, 0 }, 0x0FFF }, // Entrance
     { ACTOR_PLAYER, {  626, -640, 1114 }, { 0, 0xAAAB, 0 }, 0x0FFF }, // Pre-Boss Room
-    { ACTOR_PLAYER, {    4,    0, 1125 }, { 0, 0x8000, 0 }, 0x0FFF }, // Debug warp room 0
-    { ACTOR_PLAYER, {    0,    0, -500 }, { 0,      0, 0 }, 0x0FFF }, // Debug warp room 1
-    { ACTOR_PLAYER, { -250,  520,  250 }, { 0, 0x6000, 0 }, 0x0FFF }, // Debug warp room 2
-    { ACTOR_PLAYER, {    0,  720,  350 }, { 0, 0x8000, 0 }, 0x0FFF }, // Debug warp room 3
-    { ACTOR_PLAYER, { -250, 1000,  250 }, { 0, 0x6000, 0 }, 0x0FFF }, // Debug warp room 4
-    { ACTOR_PLAYER, {  250, 1480, -250 }, { 0, 0xE000, 0 }, 0x0FFF }, // Debug warp room 5
-    { ACTOR_PLAYER, { 1200,  160,    0 }, { 0, 0x4000, 0 }, 0x0FFF }, // Debug warp room 6
-    { ACTOR_PLAYER, { -850,  520,  850 }, { 0, 0XE000, 0 }, 0x0FFF }, // Debug warp room 7
-    { ACTOR_PLAYER, { 1220,  760,    0 }, { 0, 0x4000, 0 }, 0x0FFF }, // Debug warp room 8
-    { ACTOR_PLAYER, {  850, 1080,  850 }, { 0, 0x2000, 0 }, 0x0FFF }, // Debug warp room 9
-    { ACTOR_PLAYER, { -850, 1320,  850 }, { 0, 0xE000, 0 }, 0x0FFF }, // Debug warp room 10
-    { ACTOR_PLAYER, { 1425, 1400,  650 }, { 0, 0x6000, 0 }, 0x0FFF }, // Debug warp room 11
-    { ACTOR_PLAYER, {  626, -640, 1114 }, { 0, 0xAAAB, 0 }, 0x0FFF }, // Debug warp room 12
-    { ACTOR_PLAYER, {  300, -640,  710 }, { 0, 0x8D00, 0 }, 0x0FFF }, // Debug warp room 13
+    { ACTOR_PLAYER, {    4,    0, 1125 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 0
+    { ACTOR_PLAYER, {    0,    0, -500 }, { 0,      0, 0 }, 0x0DFF }, // Debug warp room 1
+    { ACTOR_PLAYER, { -250,  520,  250 }, { 0, 0x6000, 0 }, 0x0DFF }, // Debug warp room 2
+    { ACTOR_PLAYER, {    0,  720,  350 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 3
+    { ACTOR_PLAYER, { -250, 1000,  250 }, { 0, 0x6000, 0 }, 0x0DFF }, // Debug warp room 4
+    { ACTOR_PLAYER, {  250, 1480, -250 }, { 0, 0xE000, 0 }, 0x0DFF }, // Debug warp room 5
+    { ACTOR_PLAYER, { 1200,  160,    0 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 6
+    { ACTOR_PLAYER, { -850,  520,  850 }, { 0, 0XE000, 0 }, 0x0DFF }, // Debug warp room 7
+    { ACTOR_PLAYER, { 1220,  760,    0 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 8
+    { ACTOR_PLAYER, {  850, 1080,  850 }, { 0, 0x2000, 0 }, 0x0DFF }, // Debug warp room 9
+    { ACTOR_PLAYER, { -850, 1320,  850 }, { 0, 0xE000, 0 }, 0x0DFF }, // Debug warp room 10
+    { ACTOR_PLAYER, { 1425, 1400,  650 }, { 0, 0x6000, 0 }, 0x0DFF }, // Debug warp room 11
+    { ACTOR_PLAYER, {  626, -640, 1114 }, { 0, 0xAAAB, 0 }, 0x0DFF }, // Debug warp room 12
+    { ACTOR_PLAYER, {  300, -640,  710 }, { 0, 0x8D00, 0 }, 0x0DFF }, // Debug warp room 13
 };
 
 TransitionActorEntry fairy_deku_tree_sceneTransitionActorList0x000078[] = {
