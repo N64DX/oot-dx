@@ -12,7 +12,7 @@ u64 object_hsstump_Tex_0005A0[] = {
 };
 
 u64 object_hsstump_TLUT_0007A0[] = {
-#include "assets/objects/object_hsstump/tlut_0007A0.rgba16.inc.c"
+#include "assets/objects/object_hsstump/tex_0007C0.tlut.rgba16.inc.c"
 };
 
 u64 object_hsstump_Tex_0007C0[] = {
