@@ -245,7 +245,7 @@ Gfx woodfall_temple_room_6DL_001330[] = {
     gsSP2Triangles(16, 12, 15, 0, 16, 15, 17, 0),
     gsDPPipeSync(),
     gsDPLoadTLUT_pal256(woodfall_temple_sceneTLUT_017190),
-    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016590, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(woodfall_temple_sceneTex_016990, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPVertex(&woodfall_temple_room_6Vtx_001130[20], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSPEndDisplayList(),
