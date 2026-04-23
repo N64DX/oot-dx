@@ -212,6 +212,7 @@ void EnFw_Init(Actor* thisx, PlayState* play) {
     this->runDirection = -this->actor.params;
     this->actionFunc = EnFw_Bounce;
     this->actor.gravity = -1.0f;
+    this->actor.colChkInfo.health = Actor_EnemyHealthCheckMultiply(this->actor.colChkInfo.health);
 }
 
 void EnFw_Destroy(Actor* thisx, PlayState* play) {

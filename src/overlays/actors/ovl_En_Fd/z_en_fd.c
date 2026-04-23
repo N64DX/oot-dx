@@ -238,10 +238,10 @@ s32 EnFd_SpawnCore(EnFd* this, PlayState* play) {
         return false;
     }
 
-    this->actor.child->colChkInfo.health = this->actor.colChkInfo.health % 8;
+    this->actor.child->colChkInfo.health = this->actor.colChkInfo.health % Actor_EnemyHealthCheckMultiply(8);
 
     if (this->actor.child->colChkInfo.health == 0) {
-        this->actor.child->colChkInfo.health = 8;
+        this->actor.child->colChkInfo.health = Actor_EnemyHealthCheckMultiply(8);
     }
 
     if (ACTOR_FLAGS_CHECK_ALL(&this->actor, ACTOR_FLAG_HOOKSHOT_ATTACHED)) {
@@ -484,6 +484,7 @@ void EnFd_Init(Actor* thisx, PlayState* play) {
     this->runDir = Rand_ZeroOne() < 0.5f ? -1 : 1;
     this->actor.naviEnemyId = NAVI_ENEMY_FLARE_DANCER;
     this->actionFunc = EnFd_Reappear;
+    this->actor.colChkInfo.health = Actor_EnemyHealthCheckMultiply(this->actor.colChkInfo.health);
 }
 
 void EnFd_Destroy(Actor* thisx, PlayState* play) {
@@ -795,7 +796,7 @@ void EnFd_Draw(Actor* thisx, PlayState* play) {
     Matrix_Pop();
     if (this->actionFunc != EnFd_Reappear && !(this->fadeAlpha < 0.9f)) {
         Gfx_SetupDL_25Xlu(play->state.gfxCtx);
-        clampedHealth = CLAMP(thisx->colChkInfo.health - 1, 0, 23) / 8;
+        clampedHealth = CLAMP((thisx->colChkInfo.health / DAMAGE_MULTIPLY) - 1, 0, 23) / 8;
         gDPSetPrimColor(POLY_XLU_DISP++, 0, 128, primColors[clampedHealth].r, primColors[clampedHealth].g,
                         primColors[clampedHealth].b, (u8)this->fadeAlpha);
         gDPSetEnvColor(POLY_XLU_DISP++, envColors[clampedHealth].r, envColors[clampedHealth].g,
