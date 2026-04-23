@@ -89,6 +89,7 @@ DECLARE_SEGMENT(staff_message_data_static)
 DECLARE_ROM_SEGMENT(staff_message_data_static)
 
 DECLARE_ROM_SEGMENT(map_grand_static)
+DECLARE_ROM_SEGMENT(map_grand2_static)
 DECLARE_ROM_SEGMENT(map_i_static)
 DECLARE_ROM_SEGMENT(map_48x85_static)
 

@@ -4283,7 +4283,7 @@ void Durability_DrawMeter(PlayState* play) {
 
     durability = gSaveContext.save.info.shields[shield-1].durability;
     capacity = Player_GetMaxShieldDurability(shield);
-    upgrade = gSaveContext.save.info.shields[shield-1].upgrade;
+    upgrade = (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST) ? gSaveContext.save.info.shields[shield-1].upgrade : 2;
 
     switch (shield) {
         case PLAYER_SHIELD_DEKU:

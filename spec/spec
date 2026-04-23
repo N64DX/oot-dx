@@ -498,6 +498,12 @@ beginseg
     number 11
 endseg
 
+beginseg
+    name "map_grand2_static"
+    include "$(BUILD_DIR)/assets/textures/map_grand2_static/map_grand2_static.o"
+    number 11
+endseg
+
 #if PLATFORM_N64
 beginseg
     name "map_i_static"

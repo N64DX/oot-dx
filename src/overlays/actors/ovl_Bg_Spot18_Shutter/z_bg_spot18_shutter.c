@@ -29,8 +29,16 @@ void func_808B9618(BgSpot18Shutter* this, PlayState* play);
 void func_808B9698(BgSpot18Shutter* this, PlayState* play);
 void func_808B971C(BgSpot18Shutter* this, PlayState* play);
 
+typedef enum BgSpot18ShutterDirection {
+    /* 0x0 */ BG_SPOT18_SHUTTER_UP,
+    /* 0x1 */ BG_SPOT18_SHUTTER_RIGHT,
+    /* 0x2 */ BG_SPOT18_SHUTTER_DOWN,
+    /* 0x3 */ BG_SPOT18_SHUTTER_LEFT
+} BgSpot18ShutterDirection;
+
 typedef struct BgSpot18ShutterInfo {
     /* 0x00 */ u16 sceneId;
+    /* 0x02 */ u8 direction;
     /* 0x04 */ u32 flag;
     /* 0x08 */ f32 scaleX;
     /* 0x0C */ f32 scaleY;
@@ -55,31 +63,53 @@ static InitChainEntry sInitChain[] = {
 BgSpot18ShutterInfo sBgSpot18ShutterInfo[] = {
     {
         SCENE_GORON_CITY,
+        BG_SPOT18_SHUTTER_UP,
         INFTABLE_109,
         1.0f,
         1.0f,
     }, {
         SCENE_PATH_TO_GORON_VILLAGE,
+        BG_SPOT18_SHUTTER_UP,
         INFTABLE_STONE_TOWER_DOOR_OPENED,
         1.5f,
         1.0f,
     }, {
         SCENE_GORON_VILLAGE,
+        BG_SPOT18_SHUTTER_UP,
         INFTABLE_GORON_SHRINE_DOOR_OPENED,
         1.0f,
         1.0f,
     }, {
         SCENE_GORON_SHRINE,
+        BG_SPOT18_SHUTTER_DOWN,
         INFTABLE_GORON_MINES_DOOR_OPENED,
         0.5f,
         0.6f,
     }, {
         SCENE_SPRING_LAKE,
+        BG_SPOT18_SHUTTER_UP,
         INFTABLE_SECRET_SHRINE_DOOR_OPENED,
         1.5f,
         1.0f,
     },
 };
+
+void BgSpot18Shutter_Move(BgSpot18Shutter* this) {
+    switch (sBgSpot18ShutterInfo[this->index].direction) {
+        case BG_SPOT18_SHUTTER_UP:
+            this->dyna.actor.world.pos.y += 180.0f;
+            break;
+        case BG_SPOT18_SHUTTER_DOWN:
+            this->dyna.actor.world.pos.y -= 180.0f;
+            break;
+        case BG_SPOT18_SHUTTER_RIGHT:
+            this->dyna.actor.world.pos.x += 180.0f;
+            break;
+        case BG_SPOT18_SHUTTER_LEFT:
+            this->dyna.actor.world.pos.x -= 180.0f;
+            break;
+    }
+}
 
 void BgSpot18Shutter_Init(Actor* thisx, PlayState* play) {
     s32 pad;
@@ -102,14 +132,14 @@ void BgSpot18Shutter_Init(Actor* thisx, PlayState* play) {
         if (LINK_IS_ADULT_OR_TIMESKIP) {
             if (GET_INFTABLE(sBgSpot18ShutterInfo[this->index].flag)) {
                 this->actionFunc = func_808B95AC;
-                this->dyna.actor.world.pos.y += 180.0f;
+                BgSpot18Shutter_Move(this);
             } else {
                 this->actionFunc = func_808B9618;
             }
         } else {
             if (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6))) {
                 this->actionFunc = func_808B95AC;
-                this->dyna.actor.world.pos.y += 180.0f;
+                BgSpot18Shutter_Move(this);
             } else {
                 this->actionFunc = func_808B95B8;
             }
@@ -158,11 +188,31 @@ void func_808B9618(BgSpot18Shutter* this, PlayState* play) {
 }
 
 void func_808B9698(BgSpot18Shutter* this, PlayState* play) {
-    if (Math_StepToF(&this->dyna.actor.world.pos.y, this->dyna.actor.home.pos.y + 180.0f, 1.44f)) {
-        Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_STONEDOOR_STOP);
-        this->actionFunc = func_808B95AC;
-    } else {
-        Actor_PlaySfx_Flagged(&this->dyna.actor, NA_SE_EV_STONE_STATUE_OPEN - SFX_FLAG);
+    switch (sBgSpot18ShutterInfo[this->index].direction) {
+        case BG_SPOT18_SHUTTER_UP:
+            if (Math_StepToF(&this->dyna.actor.world.pos.y, this->dyna.actor.home.pos.y + 180.0f, 1.44f)) {
+                Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_STONEDOOR_STOP);
+                this->actionFunc = func_808B95AC;
+            } else Actor_PlaySfx_Flagged(&this->dyna.actor, NA_SE_EV_STONE_STATUE_OPEN - SFX_FLAG);
+            break;
+        case BG_SPOT18_SHUTTER_DOWN:
+            if (Math_StepToF(&this->dyna.actor.world.pos.y, this->dyna.actor.home.pos.y - 180.0f, 1.44f)) {
+                Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_STONEDOOR_STOP);
+                this->actionFunc = func_808B95AC;
+            } else Actor_PlaySfx_Flagged(&this->dyna.actor, NA_SE_EV_STONE_STATUE_OPEN - SFX_FLAG);
+            break;
+        case BG_SPOT18_SHUTTER_RIGHT:
+            if (Math_StepToF(&this->dyna.actor.world.pos.x, this->dyna.actor.home.pos.x + 180.0f, 1.44f)) {
+                Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_STONEDOOR_STOP);
+                this->actionFunc = func_808B95AC;
+            } else Actor_PlaySfx_Flagged(&this->dyna.actor, NA_SE_EV_STONE_STATUE_OPEN - SFX_FLAG);
+            break;
+        case BG_SPOT18_SHUTTER_LEFT:
+            if (Math_StepToF(&this->dyna.actor.world.pos.x, this->dyna.actor.home.pos.x - 180.0f, 1.44f)) {
+                Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_STONEDOOR_STOP);
+                this->actionFunc = func_808B95AC;
+            } else  Actor_PlaySfx_Flagged(&this->dyna.actor, NA_SE_EV_STONE_STATUE_OPEN - SFX_FLAG);
+            break;
     }
 }
 
