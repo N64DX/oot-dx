@@ -4284,9 +4284,9 @@ void Durability_DrawMeter(PlayState* play) {
     gDPSetEnvColor(OVERLAY_DISP++, 100, 50, 50, 255);
     meterX += 14;
 
-    OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(      OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(meterX),                HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(8),        HIRES_MULTIPLY(16), 1 << 10, 1 << 10, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
-    OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(      OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_HIRES_MULTIPLY(meterX + 8),            HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(capacity), HIRES_MULTIPLY(16), 1 << 10, 1 << 10, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha);
-    OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadowOffset(OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(meterX + capacity + 8), HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(8),        HIRES_MULTIPLY(16), 1 << 10, 1 << 10, sMagicBorderR, sMagicBorderG, sMagicBorderB, interfaceCtx->magicAlpha, 3, 0x100);
+    OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(      OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(meterX),                HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(8),        HIRES_MULTIPLY(16), 1 << 10, 1 << 10, 255, 255, 255, interfaceCtx->magicAlpha);
+    OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(      OVERLAY_DISP, gMagicMeterMidTex, 24, 16, X_HIRES_MULTIPLY(meterX + 8),            HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(capacity), HIRES_MULTIPLY(16), 1 << 10, 1 << 10, 255, 255, 255, interfaceCtx->magicAlpha);
+    OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadowOffset(OVERLAY_DISP, gMagicMeterEndTex, 8,  16, X_HIRES_MULTIPLY(meterX + capacity + 8), HIRES_MULTIPLY(meterY + 2), X_HIRES_MULTIPLY(8),        HIRES_MULTIPLY(16), 1 << 10, 1 << 10, 255, 255, 255, interfaceCtx->magicAlpha, 3, 0x100);
 
     gDPPipeSync(OVERLAY_DISP++);
     gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, PRIMITIVE);

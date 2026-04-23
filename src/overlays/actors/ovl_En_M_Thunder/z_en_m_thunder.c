@@ -129,7 +129,7 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
                 break;
         }
 
-        if (HAS_HEROS_SWORD && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI) {
+        if (HAS_HEROS_SWORD && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI && player->itemAction == PLAYER_IA_SWORD_KOKIRI) {
             this->unk_1C6 += ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT;
             func_80A9EFE0(this, EnMThunder_SwordBeam_Attack);
             this->unk_1C4 = 1;
