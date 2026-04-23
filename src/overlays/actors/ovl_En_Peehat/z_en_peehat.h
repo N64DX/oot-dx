@@ -43,6 +43,7 @@ typedef struct EnPeehat {
     /* 0x034C */ ColliderJntSph colliderJntSph;
     /* 0x036C */ ColliderJntSphElement colliderJntSphElements[1];
     /* 0x03AC */ ColliderQuad colliderQuad;
-} EnPeehat; // size = 0x042C
+    /* 0x042C */ bool hitByLightArrow;
+} EnPeehat; // size = 0x0430
 
 #endif

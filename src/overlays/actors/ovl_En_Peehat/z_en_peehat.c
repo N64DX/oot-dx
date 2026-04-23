@@ -139,6 +139,7 @@ static ColliderQuadInit sQuadInit = {
 
 typedef enum EnPeehatDamageReaction {
     /* 00 */ PEAHAT_DMG_REACT_ATTACK = 0,
+    /* 01 */ PEAHAT_DMG_REACT_LIGHT_ARROW,
     /* 06 */ PEAHAT_DMG_REACT_LIGHT_ICE_ARROW = 6,
     /* 12 */ PEAHAT_DMG_REACT_FIRE = 12,
     /* 13 */ PEAHAT_DMG_REACT_HOOKSHOT = 13,
@@ -160,7 +161,7 @@ static DamageTable sDamageTable = {
     /* Giant's Knife */ DMG_ENTRY(4, PEAHAT_DMG_REACT_ATTACK),
     /* Fire arrow    */ DMG_ENTRY(4, PEAHAT_DMG_REACT_FIRE),
     /* Ice arrow     */ DMG_ENTRY(2, PEAHAT_DMG_REACT_ATTACK),
-    /* Light arrow   */ DMG_ENTRY(2, PEAHAT_DMG_REACT_ATTACK),
+    /* Light arrow   */ DMG_ENTRY(2, PEAHAT_DMG_REACT_LIGHT_ARROW),
     /* Unk arrow 1   */ DMG_ENTRY(2, PEAHAT_DMG_REACT_ATTACK),
     /* Unk arrow 2   */ DMG_ENTRY(2, PEAHAT_DMG_REACT_ATTACK),
     /* Unk arrow 3   */ DMG_ENTRY(2, PEAHAT_DMG_REACT_ATTACK),
@@ -232,6 +233,7 @@ void EnPeehat_Init(Actor* thisx, PlayState* play) {
     this->actor.cullingVolumeDistance = 4000.0f;
     this->actor.cullingVolumeScale = 800.0f;
     this->actor.cullingVolumeDownward = 1800.0f;
+    this->hitByLightArrow = false;
     switch (this->actor.params) {
         case PEAHAT_TYPE_GROUNDED_LARVA:
             EnPeehat_Ground_SetStateGround(this);
@@ -310,8 +312,10 @@ void EnPeehat_HitWhenGrounded(EnPeehat* this, PlayState* play) {
         Vec3f itemDropPos = this->actor.world.pos;
 
         itemDropPos.y += 70.0f;
-        Item_DropCollectibleRandom(play, &this->actor, &itemDropPos, 0x40);
-        Item_DropCollectibleRandom(play, &this->actor, &itemDropPos, 0x40);
+        if (!this->hitByLightArrow) {
+            Item_DropCollectibleRandom(play, &this->actor, &itemDropPos, 0x40);
+            Item_DropCollectibleRandom(play, &this->actor, &itemDropPos, 0x40);
+        }
         Item_DropCollectibleRandom(play, &this->actor, &itemDropPos, 0x40);
         this->unk_2D4 = 240;
     } else {
@@ -896,8 +900,10 @@ void EnPeehat_StateExplode(EnPeehat* this, PlayState* play) {
     }
     this->animTimer--;
     if (this->animTimer == 0) {
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
+        if (!this->hitByLightArrow) {
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
+        }
         Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
         Actor_Kill(&this->actor);
     }
@@ -926,6 +932,8 @@ void EnPeehat_Adult_CollisionCheck(EnPeehat* this, PlayState* play) {
             Actor_ApplyDamage(&this->actor);
             Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 8);
             Actor_PlaySfx(&this->actor, NA_SE_EN_PIHAT_DAMAGE);
+            if (this->actor.colChkInfo.damageReaction == PEAHAT_DMG_REACT_LIGHT_ARROW)
+                this->hitByLightArrow = true;
         }
 
         if (this->actor.colChkInfo.damageReaction == PEAHAT_DMG_REACT_FIRE) {
