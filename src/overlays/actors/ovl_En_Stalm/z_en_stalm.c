@@ -6,8 +6,6 @@
  */
 
 #include "z_en_stalm.h"
-#include "overlays/actors/ovl_En_Clear_Tag/z_en_clear_tag.h"
-#include "overlays/actors/ovl_Door_Warp1/z_door_warp1.h"
 
 #include "array_count.h"
 #include "gfx_setupdl.h"
@@ -345,11 +343,8 @@ void EnStalmaster_Init(Actor* thisx, struct PlayState* play) {
 
     EnStalmaster_SetupLimbs(this,play);
 
-    if (this->flags.switchFlag <= 0x3F && Flags_GetSwitch(play, this->flags.switchFlag)) {
-        if (play->sceneId == SCENE_BESITU)
-            Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_DOOR_WARP1, 0.0f, 0.0f, 0.0f, 0, 0, 0, WARP_DUNGEON_CHILD);
+    if (this->flags.switchFlag <= 0x3F && Flags_GetSwitch(play, this->flags.switchFlag))
         Actor_Kill(thisx);
-    }
 }
 
 void EnStalmaster_UpdateParts(EnStalmaster* this, struct PlayState* play) {
@@ -1160,11 +1155,8 @@ void EnStalmaster_Death(EnStalmaster* this, struct PlayState* play) {
     
     if (this->animationTimer == 0) {
         Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xB0);
-        if (this->flags.switchFlag <= 0x3F) {
-            if (play->sceneId == SCENE_BESITU)
-                Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_DOOR_WARP1, 0.0f, 0.0f, 0.0f, 0, 0, 0, WARP_DUNGEON_CHILD);
+        if (this->flags.switchFlag <= 0x3F)
             Flags_SetSwitch(play, this->flags.switchFlag);
-        }
         Actor_Kill(&this->actor);
         if (this->flags.miniboss)
             func_800F5B58();

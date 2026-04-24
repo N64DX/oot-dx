@@ -32,6 +32,7 @@
 #include "assets/objects/object_mastergolon/object_mastergolon.h"
 #include "assets/objects/object_masterzoora/object_masterzoora.h"
 #include "assets/objects/object_masterkokirihead/object_masterkokirihead.h"
+#include "assets/objects/object_kgy/object_kgy.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -57,6 +58,7 @@ void EnOssan_DrawBazaarShopkeeper(Actor* thisx, PlayState* play);
 void EnOssan_DrawZoraShopkeeper(Actor* thisx, PlayState* play);
 void EnOssan_DrawGoronShopkeeper(Actor* thisx, PlayState* play);
 void EnOssan_DrawHappyMaskShopkeeper(Actor* thisx, PlayState* play);
+void EnOssan_DrawSmithyShopkeeper(Actor* thisx, PlayState* play);
 
 void EnOssan_InitActionFunc(EnOssan* this, PlayState* play);
 void EnOssan_MainActionFunc(EnOssan* this, PlayState* play);
@@ -67,9 +69,11 @@ void EnOssan_TalkKakarikoPotionShopkeeper(PlayState* play);
 void EnOssan_TalkBombchuShopkeeper(PlayState* play);
 void EnOssan_TalkMarketPotionShopkeeper(PlayState* play);
 void EnOssan_TalkBazaarShopkeeper(PlayState* play);
+void EnOssan_TalkBazaarShopkeeper2(PlayState* play);
 void EnOssan_TalkZoraShopkeeper(PlayState* play);
 void EnOssan_TalkGoronShopkeeper(PlayState* play);
 void EnOssan_TalkHappyMaskShopkeeper(PlayState* play);
+void EnOssan_TalkSmithyShopkeeper(PlayState* play);
 
 s16 ShopItemDisp_Default(s16 v);
 s16 ShopItemDisp_SpookyMask(s16 v);
@@ -86,6 +90,7 @@ void EnOssan_InitBazaarShopkeeper(EnOssan* this, PlayState* play);
 void EnOssan_InitZoraShopkeeper(EnOssan* this, PlayState* play);
 void EnOssan_InitGoronShopkeeper(EnOssan* this, PlayState* play);
 void EnOssan_InitHappyMaskShopkeeper(EnOssan* this, PlayState* play);
+void EnOssan_InitSmithyShopkeeper(EnOssan* this, PlayState* play);
 
 void EnOssan_State_Idle(EnOssan* this, PlayState* play, Player* player);
 void EnOssan_State_StartConversation(EnOssan* this, PlayState* play, Player* player);
@@ -175,15 +180,6 @@ static s16 sItemShelfRot[] = { 0xEAAC, 0xEAAC, 0xEAAC, 0xEAAC, 0x1554, 0x1554, 0
 // unused values?
 static s16 D_80AC8904[] = { 0x001E, 0x001F, 0x0020, 0x0021, 0x0022, 0x0023, 0x0024, 0x0025 };
 
-#if DEBUG_FEATURES
-static char* sShopkeeperPrintName[] = {
-    T("コキリの店  ", "Kokiri Shop"),     T("薬屋        ", "Potion Shop"), T("夜の店      ", "Night Shop"),
-    T("路地裏の店  ", "Back Alley Shop"), T("盾の店      ", "Shield Shop"), T("大人の店    ", "Adult Shop"),
-    T("タロンの店  ", "Talon Shop"),      T("ゾーラの店  ", "Zora Shop"),   T("ゴロン夜の店", "Goron Night Shop"),
-    T("インゴーの店", "Ingo Store"),      T("お面屋      ", "Mask Shop"),
-};
-#endif
-
 typedef struct ShopkeeperObjInfo {
     /* 0x00 */ s16 objId;
     /* 0x02 */ s16 unk_02;
@@ -202,17 +198,18 @@ static s16 sShopkeeperObjectIds[][3] = {
     { OBJECT_OF1D_MAP, OBJECT_ID_MAX, OBJECT_MASTERGOLON },
     { OBJECT_OSSAN, OBJECT_ID_MAX, OBJECT_ID_MAX },
     { OBJECT_OS, OBJECT_ID_MAX, OBJECT_ID_MAX },
+    { OBJECT_KGY, OBJECT_ID_MAX, OBJECT_ID_MAX },
 };
 
 static EnOssanTalkOwnerFunc sShopkeeperTalkOwner[] = {
     EnOssan_TalkKokiriShopkeeper,       EnOssan_TalkKakarikoPotionShopkeeper, EnOssan_TalkBombchuShopkeeper,
-    EnOssan_TalkMarketPotionShopkeeper, EnOssan_TalkBazaarShopkeeper,         EnOssan_TalkDefaultShopkeeper,
+    EnOssan_TalkMarketPotionShopkeeper, EnOssan_TalkBazaarShopkeeper,         EnOssan_TalkBazaarShopkeeper2,
     EnOssan_TalkDefaultShopkeeper,      EnOssan_TalkZoraShopkeeper,           EnOssan_TalkGoronShopkeeper,
-    EnOssan_TalkDefaultShopkeeper,      EnOssan_TalkHappyMaskShopkeeper,
+    EnOssan_TalkDefaultShopkeeper,      EnOssan_TalkHappyMaskShopkeeper,      EnOssan_TalkSmithyShopkeeper,
 };
 
 static f32 sShopkeeperScale[] = {
-    0.01f, 0.011f, 0.0105f, 0.011f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f,
+    0.01f, 0.011f, 0.0105f, 0.011f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.008f,
 };
 
 typedef struct ShopItem {
@@ -321,7 +318,16 @@ static ShopItem sShopkeeperStores[][8] = {
       { SI_KEATON_MASK, -50, 76, -20 },
       { SI_BUNNY_HOOD, -80, 52, -3 },
       { SI_SPOOKY_MASK, -80, 76, -3 } },
-      
+
+    { { SI_DEKU_SHIELD_REPAIR, 50, 52, -20 },
+      { SI_HEROS_SHIELD_REPAIR, 50, 76, -20 },
+      { SI_HYLIAN_SHIELD_REPAIR, 80, 52, -3 },
+      { SI_MIRROR_SHIELD_REPAIR, 80, 76, -3 },
+      { SI_HYLIAN_SHIELD_UPGRADE, -50, 52, -20 },
+      { SI_MIRROR_SHIELD_UPGRADE, -50, 76, -20 },
+      { SI_DEKU_SHIELD_UPGRADE, -80, 52, -3 },
+      { SI_HEROS_SHIELD_UPGRADE, -80, 76, -3 } },
+
     { { SI_HYLIAN_SHIELD, 50, 52, -20 },
       { SI_BOMBS_5_R35, 50, 76, -20 },
       { SI_ARROWS_10, 80, 52, -3 },
@@ -346,6 +352,8 @@ static EnOssanGetGirlAParamsFunc sShopItemReplaceFunc[] = {
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
+    ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
+    ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,
 };
 
@@ -361,13 +369,13 @@ static EnOssanInitFunc sInitFuncs[] = {
     EnOssan_InitKokiriShopkeeper, EnOssan_InitPotionShopkeeper,    EnOssan_InitBombchuShopkeeper,
     EnOssan_InitPotionShopkeeper, EnOssan_InitBazaarShopkeeper,    EnOssan_InitBazaarShopkeeper,
     EnOssan_InitBazaarShopkeeper, EnOssan_InitZoraShopkeeper,      EnOssan_InitGoronShopkeeper,
-    EnOssan_InitBazaarShopkeeper, EnOssan_InitHappyMaskShopkeeper,
+    EnOssan_InitBazaarShopkeeper, EnOssan_InitHappyMaskShopkeeper, EnOssan_InitSmithyShopkeeper,
 };
 
 static Vec3f sShopkeeperPositionOffsets[] = {
     { 0.0f, 0.0f, 33.0f }, { 0.0f, 0.0f, 31.0f }, { 0.0f, 0.0f, 31.0f }, { 0.0f, 0.0f, 31.0f },
     { 0.0f, 0.0f, 0.0f },  { 0.0f, 0.0f, 0.0f },  { 0.0f, 0.0f, 0.0f },  { 0.0f, 0.0f, 36.0f },
-    { 0.0f, 0.0f, 15.0f }, { 0.0f, 0.0f, 0.0f },  { 0.0f, 0.0f, 26.0f },
+    { 0.0f, 0.0f, 15.0f }, { 0.0f, 0.0f, 0.0f },  { 0.0f, 0.0f, 26.0f }, { 0.0f, 0.0f, 0.0f },
 };
 
 static EnOssanStateFunc sStateFunc[] = {
@@ -535,6 +543,10 @@ void EnOssan_TalkBazaarShopkeeper(PlayState* play) {
     }
 }
 
+void EnOssan_TalkBazaarShopkeeper2(PlayState* play) {
+    Message_ContinueTextbox(play, 0x8011);
+}
+
 void EnOssan_TalkBombchuShopkeeper(PlayState* play) {
     Message_ContinueTextbox(play, 0x7076);
 }
@@ -581,6 +593,10 @@ void EnOssan_TalkHappyMaskShopkeeper(PlayState* play) {
                 break;
         }
     }
+}
+
+void EnOssan_TalkSmithyShopkeeper(PlayState* play) {
+    Message_ContinueTextbox(play, SHIELD_DURABILITY ? 0x8305 : 0x8306);
 }
 
 void EnOssan_UpdateCameraDirection(EnOssan* this, PlayState* play, f32 cameraFaceAngle) {
@@ -651,7 +667,7 @@ void EnOssan_Init(Actor* thisx, PlayState* play) {
     if (this->objectSlot1 < 0) {
         Actor_Kill(&this->actor);
         PRINTF_COLOR_ERROR();
-        PRINTF(T("バンクが無いよ！！(%s)\n", "There is no bank!! (%s)\n"), sShopkeeperPrintName[this->actor.params]);
+        PRINTF(T("バンクが無いよ！！(%s)\n", "There is no bank!! Shopkeeper params: (%s)\n"), this->actor.params);
         PRINTF_RST();
         ASSERT(0, "0", "../z_en_oB1.c", 1284);
         return;
@@ -660,8 +676,8 @@ void EnOssan_Init(Actor* thisx, PlayState* play) {
     if (EnOssan_TryGetObjBankIndices(this, play, objectIds) == 0) {
         Actor_Kill(&this->actor);
         PRINTF_COLOR_ERROR();
-        PRINTF(T("予備バンクが無いよ！！(%s)\n", "There is no spare bank!! (%s)\n"),
-               sShopkeeperPrintName[this->actor.params]);
+        PRINTF(T("予備バンクが無いよ！！(%s)\n", "There is no spare bank!! Shopkeeper params: (%s)\n"),
+               this->actor.params);
         PRINTF_RST();
         ASSERT(0, "0", "../z_en_oB1.c", 1295);
         return;
@@ -753,6 +769,17 @@ void EnOssan_StartShopping(PlayState* play, EnOssan* this) {
         Message_ContinueTextbox(play, 0x83);
     }
 
+    if (this->actor.params == OSSAN_TYPE_SMITHY && SHIELD_DURABILITY) {
+        if (!GET_EVENTCHKINF(EVENTCHKINF_45) && !GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP))
+            SET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP);
+        if (GET_EVENTCHKINF(EVENTCHKINF_45)) {
+            if (GET_EVENTCHKINF(EVENTCHKINF_RESTORED_LAKE_HYLIA) && !GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA))
+                SET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA);
+            if (!GET_EVENTCHKINF(EVENTCHKINF_RESTORED_LAKE_HYLIA))
+                SET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP);
+        }
+    }
+
     Interface_SetDoAction(play, DO_ACTION_DECIDE);
     this->stickRightPrompt.isEnabled = true;
     this->stickLeftPrompt.isEnabled = true;
@@ -781,6 +808,8 @@ void EnOssan_State_Idle(EnOssan* this, PlayState* play, Player* player) {
         player->stateFlags2 |= PLAYER_STATE2_29;
         Play_SetShopBrowsingViewpoint(play);
         EnOssan_SetStateStartShopping(play, this, false);
+    } else if (this->actor.params == OSSAN_TYPE_SMITHY && this->actor.xzDistToPlayer < 200.0f) {
+        Actor_OfferTalk(&this->actor, play, 200);
     } else if (this->actor.xzDistToPlayer < 100.0f) {
         Actor_OfferTalk(&this->actor, play, 100);
     }
@@ -1378,7 +1407,7 @@ void EnOssan_GiveItemWithFanfare(PlayState* play, EnOssan* this) {
     Player* player = GET_PLAYER(play);
 
     PRINTF("\n" VT_FGCOL(YELLOW) T("初めて手にいれた！！", "I got it for the first time!!") VT_RST "\n\n");
-    Actor_OfferGetItem(&this->actor, play, this->shelfSlots[this->cursorIndex]->getItemId, 120.0f, 120.0f);
+    Actor_OfferGetItem(&this->actor, play, this->shelfSlots[this->cursorIndex]->getItemId, this->actor.params == OSSAN_TYPE_SMITHY ? 200.0f : 120.0f, this->actor.params == OSSAN_TYPE_SMITHY ? 200.0f : 120.0f);
     play->msgCtx.msgMode = MSGMODE_TEXT_CLOSING;
     play->msgCtx.stateTimer = 4;
     player->stateFlags2 &= ~PLAYER_STATE2_29;
@@ -1743,7 +1772,7 @@ void EnOssan_State_GiveItemWithFanfare(EnOssan* this, PlayState* play, Player* p
         this->stateFlag = OSSAN_STATE_ITEM_PURCHASED;
         return;
     }
-    Actor_OfferGetItem(&this->actor, play, this->shelfSlots[this->cursorIndex]->getItemId, 120.0f, 120.0f);
+    Actor_OfferGetItem(&this->actor, play, this->shelfSlots[this->cursorIndex]->getItemId, this->actor.params == OSSAN_TYPE_SMITHY ? 200.0f : 120.0f, this->actor.params == OSSAN_TYPE_SMITHY ? 200.0f : 120.0f);
 }
 
 void EnOssan_State_ItemPurchased(EnOssan* this, PlayState* play, Player* player) {
@@ -1795,7 +1824,7 @@ void EnOssan_State_ContinueShoppingPrompt(EnOssan* this, PlayState* play, Player
                         Play_SetViewpoint(play, VIEWPOINT_PIVOT);
                         Message_StartTextbox(play, this->actor.textId, &this->actor);
                         EnOssan_SetStateStartShopping(play, this, true);
-                        Actor_OfferTalkExchangeEquiCylinder(&this->actor, play, 100.0f, -1);
+                        Actor_OfferTalkExchangeEquiCylinder(&this->actor, play, this->actor.params == OSSAN_TYPE_SMITHY ? 200.0f : 100.0f, -1);
                         break;
                     case 1:
                     default:
@@ -1814,7 +1843,7 @@ void EnOssan_State_ContinueShoppingPrompt(EnOssan* this, PlayState* play, Player
         Play_SetViewpoint(play, VIEWPOINT_PIVOT);
         Message_StartTextbox(play, this->actor.textId, &this->actor);
         EnOssan_SetStateStartShopping(play, this, true);
-        Actor_OfferTalkExchangeEquiCylinder(&this->actor, play, 100.0f, -1);
+        Actor_OfferTalkExchangeEquiCylinder(&this->actor, play, this->actor.params == OSSAN_TYPE_SMITHY ? 200.0f : 100.0f, -1);
     }
 }
 
@@ -2135,6 +2164,13 @@ void EnOssan_InitBombchuShopkeeper(EnOssan* this, PlayState* play) {
     this->obj3ToSeg6Func = NULL;
 }
 
+void EnOssan_InitSmithyShopkeeper(EnOssan* this, PlayState* play) {
+    static AnimationHeader* sAnimations[] = { &object_kgy_Anim_004B98, &object_kgy_Anim_0008FC, &object_kgy_Anim_00292C, &object_kgy_Anim_0042E4, &object_kgy_Anim_0101F0, &object_kgy_Anim_001764, &object_kgy_Anim_003334, &object_kgy_Anim_010B84, &object_kgy_Anim_001EA4, &object_kgy_Anim_003D88 };
+    SkelAnime_InitFlex(play, &this->skelAnime, &object_kgy_Skel_00F910, sAnimations[2], NULL, NULL, 0);
+    this->actor.draw = EnOssan_DrawSmithyShopkeeper;
+    this->obj3ToSeg6Func = NULL;
+}
+
 u16 EnOssan_SetupHelloDialog(EnOssan* this) {
     this->happyMaskShopState = OSSAN_HAPPY_STATE_NONE;
     // mask shop messages
@@ -2195,6 +2231,20 @@ u16 EnOssan_SetupHelloDialog(EnOssan* this) {
         }
     }
 
+    if (this->actor.params == OSSAN_TYPE_SMITHY) {
+        if (!SHIELD_DURABILITY)
+            return 0x8304;
+        if (!GET_EVENTCHKINF(EVENTCHKINF_45) && !GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP))
+            return 0x8300;
+        if (GET_EVENTCHKINF(EVENTCHKINF_45)) {
+            if (GET_EVENTCHKINF(EVENTCHKINF_RESTORED_LAKE_HYLIA) && !GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA))
+                return EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP ? 0x8302 : 0x8300;
+            if (!GET_EVENTCHKINF(EVENTCHKINF_RESTORED_LAKE_HYLIA))
+                return EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP ? 0x8301 : 0x8300;
+        }
+        return 0x8303;
+    }
+
     return 0x9E;
 }
 
@@ -2224,7 +2274,7 @@ void EnOssan_InitActionFunc(EnOssan* this, PlayState* play) {
         this->actor.world.pos.z += sShopkeeperPositionOffsets[this->actor.params].z;
 
         if (IS_CHILD_QUEST && this->actor.params == 4)
-            items = sShopkeeperStores[11];
+            items = sShopkeeperStores[12];
         else items = sShopkeeperStores[this->actor.params];
 
         ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 20.0f);
@@ -2614,6 +2664,20 @@ void EnOssan_DrawBombchuShopkeeper(Actor* thisx, PlayState* play) {
     gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(sBombchuShopkeeperEyeTextures[this->eyeTextureIdx]));
     SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount, NULL,
                           NULL, this);
+    EnOssan_DrawCursor(play, this, X_HIRES_DIVIDE(this->cursorX), HIRES_DIVIDE(this->cursorY), this->cursorZ, this->drawCursor);
+    EnOssan_DrawStickDirectionPrompts(play, this);
+
+    CLOSE_DISPS(play->state.gfxCtx, "../z_en_oB1.c", 4631);
+}
+
+void EnOssan_DrawSmithyShopkeeper(Actor* thisx, PlayState* play) {
+    EnOssan* this = (EnOssan*)thisx;
+
+    OPEN_DISPS(play->state.gfxCtx, "../z_en_oB1.c", 4611);
+
+    Gfx_SetupDL_25Opa(play->state.gfxCtx);
+
+    SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount, NULL, NULL, this);
     EnOssan_DrawCursor(play, this, X_HIRES_DIVIDE(this->cursorX), HIRES_DIVIDE(this->cursorY), this->cursorZ, this->drawCursor);
     EnOssan_DrawStickDirectionPrompts(play, this);
 

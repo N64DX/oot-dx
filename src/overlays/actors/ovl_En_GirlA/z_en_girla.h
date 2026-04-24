@@ -95,8 +95,13 @@ typedef enum EnGirlAShopItem {
     /* 0x38 */ SI_WALLET_BOTTOMLESS,
     /* 0x39 */ SI_DEKU_SHIELD_REPAIR,
     /* 0x3A */ SI_HYLIAN_SHIELD_REPAIR,
-    /* 0x3B */ SI_HEROS_SHIELD_REPAIR,
-    /* 0x3C */ SI_MAX
+    /* 0x3B */ SI_MIRROR_SHIELD_REPAIR,
+    /* 0x3C */ SI_HEROS_SHIELD_REPAIR,
+    /* 0x3D */ SI_DEKU_SHIELD_UPGRADE,
+    /* 0x3E */ SI_HYLIAN_SHIELD_UPGRADE,
+    /* 0x3F */ SI_MIRROR_SHIELD_UPGRADE,
+    /* 0x40 */ SI_HEROS_SHIELD_UPGRADE,
+    /* 0x41 */ SI_MAX
 } EnGirlAShopItem;
 
 typedef enum EnGirlACanBuyResult {

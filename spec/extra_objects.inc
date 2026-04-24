@@ -13,9 +13,23 @@ beginseg
 endseg
 
 beginseg
+    name "object_flowerpot"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_flowerpot/object_flowerpot.o"
+    number 6
+endseg
+
+beginseg
     name "object_ladder"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ladder/object_ladder.o"
+    number 6
+endseg
+
+beginseg
+    name "object_icefloe"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_icefloe/object_icefloe.o"
     number 6
 endseg
 
@@ -174,6 +188,20 @@ beginseg
 endseg
 
 beginseg
+    name "object_kgy"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_kgy/object_kgy.o"
+    number 6
+endseg
+
+beginseg
+    name "object_jg"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_jg/object_jg.o"
+    number 6
+endseg
+
+beginseg
     name "object_raf"
     compress
     include "$(BUILD_DIR)/assets/objects/object_raf/object_raf.o"
@@ -226,6 +254,13 @@ beginseg
     name "object_mkk"
     compress
     include "$(BUILD_DIR)/assets/objects/object_mkk/object_mkk.o"
+    number 6
+endseg
+
+beginseg
+    name "object_bee"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_bee/object_bee.o"
     number 6
 endseg
 

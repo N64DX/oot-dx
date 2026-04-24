@@ -105,6 +105,7 @@ static EnHollActionFunc sActionFuncs[] = {
     EnHoll_HorizontalInvisible,         // ENHOLL_H_INVISIBLE
     EnHoll_VerticalBgCover,             // ENHOLL_V_BGCOVER
     EnHoll_HorizontalInvisible,         // ENHOLL_H_INVISIBLE_NARROW
+    EnHoll_HorizontalVisibleNarrow,     // ENHOLL_H_SCENE_CHANGER
 };
 
 static InitChainEntry sInitChain[] = {
@@ -125,7 +126,7 @@ void EnHoll_ChooseAction(EnHoll* this) {
     s32 type = ENHOLL_GET_TYPE(&this->actor);
 
     EnHoll_SetupAction(this, sActionFuncs[type]);
-    if (type != ENHOLL_H_VISIBLE_NARROW) {
+    if (type != ENHOLL_H_VISIBLE_NARROW && type != ENHOLL_H_SCENE_CHANGER) {
         this->actor.draw = NULL;
     } else {
         this->planeAlpha = 255;
@@ -190,13 +191,14 @@ static f32 sHorizontalVisibleNarrowTriggerDists[2][4] = {
  */
 void EnHoll_HorizontalVisibleNarrow(EnHoll* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
-    s32 triggerDistsIndex = (u32)((play->sceneId == SCENE_SPIRIT_TEMPLE) ? 1 : 0);
+    s32 triggerDistsIndex = (u32)((play->sceneId == SCENE_SPIRIT_TEMPLE || play->sceneId == SCENE_GORON_VILLAGE) ? 1 : 0);
     Vec3f relPlayerPos;
     f32 orthogonalDistToPlayer;
     s32 transitionActorIndex;
+    bool isSceneChanger = ENHOLL_GET_TYPE(&this->actor) == ENHOLL_H_SCENE_CHANGER;
 
     Actor_WorldToActorCoords(&this->actor, &relPlayerPos, &player->actor.world.pos);
-    this->side = (relPlayerPos.z < 0.0f) ? 0 : 1;
+    this->side = (relPlayerPos.z < 0.0f  && !isSceneChanger) ? 0 : 1;
     orthogonalDistToPlayer = fabsf(relPlayerPos.z);
     if (relPlayerPos.y > ENHOLL_H_Y_MIN && relPlayerPos.y < ENHOLL_H_Y_MAX &&
         fabsf(relPlayerPos.x) < ENHOLL_H_HALFWIDTH_NARROW &&
@@ -209,6 +211,12 @@ void EnHoll_HorizontalVisibleNarrow(EnHoll* this, PlayState* play) {
                 EnHoll_SwapRooms(play);
                 Room_FinishRoomChange(play, &play->roomCtx);
             }
+        } else if (isSceneChanger) {
+            play->nextEntranceIndex = play->exitList[ENHOLL_GET_SWITCH_FLAG(&this->actor)];
+            gSaveContext.retainWeatherMode = true;
+            Scene_SetTransitionForNextEntrance(play);
+            play->transitionTrigger = TRANS_TRIGGER_START;
+            Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_103);
         } else {
             this->actor.room = play->transitionActors.list[transitionActorIndex].sides[this->side ^ 1].room;
             if (play->roomCtx.prevRoom.num < 0) {

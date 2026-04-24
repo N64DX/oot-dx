@@ -34,10 +34,38 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Obj_Flowerpot"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Flowerpot/z_obj_flowerpot.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Flowerpot/ovl_Obj_Flowerpot_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Kibako3"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Kibako3/z_obj_kibako3.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Kibako3/ovl_Obj_Kibako3_reloc.o"
+endseg
+
+beginseg
     name "ovl_Bg_Ladder"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ladder/z_bg_ladder.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Ladder/ovl_Bg_Ladder_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Icefloe"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Icefloe/z_bg_icefloe.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Icefloe/ovl_Bg_Icefloe_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Visiblock"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Visiblock/z_obj_visiblock.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Visiblock/ovl_Obj_Visiblock_reloc.o"
 endseg
 
 beginseg
@@ -195,6 +223,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Bee"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Bee/z_en_bee.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Bee/ovl_En_Bee_reloc.o"
+endseg
+
+beginseg
     name "ovl_En_Grasshopper"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Grasshopper/z_en_grasshopper.o"
@@ -227,4 +262,18 @@ beginseg
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Ganon_Sword/z_en_ganon_sword.o"
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Ganon_Sword/ovl_En_Ganon_Sword_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Go3"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Go3/z_en_go3.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Go3/ovl_En_Go3_reloc.o"
+endseg
+
+beginseg
+    name "ovl_En_Jg"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Jg/z_en_jg.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Jg/ovl_En_Jg_reloc.o"
 endseg

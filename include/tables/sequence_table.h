@@ -143,3 +143,4 @@ DEFINE_SEQUENCE    (Sequence_119,       NA_BGM_BOSS2,            MEDIUM_CART, CA
 DEFINE_SEQUENCE    (Sequence_120,       NA_BGM_SWAMP_REGION,     MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // swamp_region
 DEFINE_SEQUENCE    (Sequence_121,       NA_BGM_GANON_BATTLE,     MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // ganon_battle
 DEFINE_SEQUENCE    (Sequence_122,       NA_BGM_LAKE_HYLIA,       MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_RESUME | SEQ_FLAG_ENEMY       ) // lake_hylia
+DEFINE_SEQUENCE    (Sequence_123,       NA_BGM_TERMINA_FIELD,    MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // termina_field

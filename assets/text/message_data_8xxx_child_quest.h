@@ -322,6 +322,18 @@ COLOR(DEFAULT) "Créé par les Zoras, cet habit\n"
 )
 )
 
+DEFINE_MESSAGE(0x8011, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"We opened a new shop over here\n"
+"in Kakariko Village. We got some new\n"
+"goods to sell in this branch. I hope\n"
+"you be a steady customer for us!" EVENT
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x8100, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 SHIFT(57) "おニイちゃん、\n"
@@ -2756,6 +2768,441 @@ MSG(
 UNSKIPPABLE SHIFT(30) "No matter what happens...\n"
 SHIFT(35) "remember that I always...\n"
 SHIFT(55) "be your friend...\n" FADE(80)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8300, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO01) "Ugo-oh! Ugo ugo!\n"
+"Welcome to our humble blacksmith.\n"
+"We offer shield upgrades and repairs\n"
+"here! Only the best quality!" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8301, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO01) "Ugo-oh! Ugo, ugo!\n"
+"Hey! I remember you from all those\n"
+"years ago! I be more than happy to\n"
+"work on your shields again." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8302, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO01) "Ugoh ugo ugo!\n"
+"Good work on restoring Lake Hylia.\n"
+"Now that the lake is restored again\n"
+"I can provide some more upgrades." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8303, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO01) "Ugoh-ugo-ugo!\n"
+"Welcome back again to our humble\n"
+"blacksmith. Anything we can supply\n"
+"you with today??" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8304, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO01) "Ugoh-ugo-ugo!\n"
+"Welcome back again to our humble\n"
+"blacksmith. Anything we can supply\n"
+"you with today??"
+BOX_BREAK
+
+"..."
+BOX_BREAK
+
+"Your shields already happen to be\n"
+"indestructible.\n"
+"What do you even need me for?" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8305, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO00) "Ugoh-ooooh!!!\n"
+"What shield would you like me\n"
+"to repair or upgrade for you today?" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8306, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_VO_GAVO00) "Ugoh-ooooh!!!\n"
+"Your shields already happen to be\n"
+"indestructible.\n"
+"What do you even need me for?" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8400, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"It's chilly here outside...\n"
+"I was send to be on guard duty to\n"
+"look for help."
+BOX_BREAK
+
+"Oh? You haven't heard about it?"
+BOX_BREAK
+
+"The mines in our fair shrine have\n"
+"been infested by monsters, and we\n"
+"really could use a capable hero."
+BOX_BREAK
+
+"If you think you're up to the task...\n"
+"Let me open the door for you.\n"
+"We welcome any visitors after all,\n"
+"hero or not."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8401, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I opened the door for you.\n"
+"Welcome inside!\n"
+"Please visit the elder if you are\n"
+"interested in going into the mines."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8402, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I am known as Hyrule's best cobbler\n"
+"And I happened to craft a pair of\n"
+"boots that let you jump further.\n"
+"How about it..." TEXTID(0x8403)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8403, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"How about buying these boots for \n"
+"600 Rupees?\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Buy\n"
+    "Don't buy" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8404, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Do these boots fit you well?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8405, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Urrrr... My back... It's killing me..."
+BOX_BREAK
+
+"Did you want something from me?"
+BOX_BREAK
+
+"Huh? Access to the Goron Mines?"
+BOX_BREAK
+
+"Sorry, young lad. Can't do. These\n"
+"mines are sealed off because it's\n"
+"too dangerous. Even for you."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8430, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I would love to welcome you into\n"
+"our fair Goron Shrine, but we're\n"
+"dealing with bit of an issue here.\n"
+"You should go speak with the Elder."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8431, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"This door leads to the Goron Mines.\n"
+"I would stay out of it if I were you.\n"
+"You need the Elder's approval to go\n"
+"inside."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8432, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"The Elder is in the room behind me.\n"
+"I wouldn't trouble him if I were you.\n"
+"We got enough problems as it is\n"
+"already."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8433, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"We sealed off the Goron Mines.\n"
+"Dangerous monsters suddenly started\n"
+"infesting the mines, and many gave\n"
+"their lives defending it."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8434, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Oh Elder... What should we do?\n"
+"We can't go on like this anymore.\n"
+"Why did it had to happen!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8435, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"These monsters in the mines are\n"
+"a serious problem for us.\n"
+"It's causing heavy storms in the area."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8436, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"We Gorons locked up this place\n"
+"a long time ago.\n"
+"Even if we wanted to open it for you,\n"
+"we don't know how anymore."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8437, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Since we uhh...lost the key to here.\n"
+"I heard there's supposedly a sort of\n"
+"explosive so powerful it can blast\n"
+"open any door..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x84A0, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Excuse me, sir.\n"
+"Would you mind lending me\n"
+"your aid?"
+BOX_BREAK
+
+UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Never seen a talking frog before?\n"
+"I suppose there's a first time for\n"
+"everything..."
+BOX_BREAK
+
+UNSKIPPABLE "My friends are missing.\n"
+"Would you mind find them for me?\n"
+"We're having a dinner party."
+BOX_BREAK
+
+UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Much appreciated."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x84A1, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "My friends are still missing.\n"
+"Would you mind rounding them up\n"
+"for me?\n"
+"We're having a dinner party."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x84A2, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "Thank you for bringing\n"
+"my friends back here."
+BOX_BREAK
+
+UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Oh wait... I almost forget. Here.\n"
+"This is for you."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x84A3, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Dinner is almost ready guys."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x84A4, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Our friend is looking for us?\n"
+"And he's making us dinner?"
+BOX_BREAK
+
+UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Ok... I'll go there in just a second.\n"
+"I just wanna enjoy the view for a\n"
+"while longer..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x84A5, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "I just wanna enjoy the view for a\n"
+"while longer..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x84B0, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "I am bored."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x84B1, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "I am feeling a bit peckish.\n"
+"When is dinner ready?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x84B2, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "I forgot...\n"
+"Why are we here again?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x84B3, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+SFX(NA_SE_EV_FROG_CRY_0) UNSKIPPABLE "..."
+BOX_BREAK
+
+UNSKIPPABLE "Can I go back already?\n"
+"I liked my chilling spot."
 ),
 MSG(),
 MSG()

@@ -550,6 +550,12 @@ static bool Player_HasPerfected = false;
 static bool Player_CanPerfect = true;
 static bool Player_WasShieldUp = false;
 
+static u8 dekuWalkArrIndex;
+static DekuWalkRoutes dekuWalkRoutes[] = {
+    { { 635.0f,  1400.0f,   633.0f }, 5.5f, 0x2000, SCENE_ANCIENT_HOLLOW },
+    { { 2800.0f, -200.0f, -1430.0f }, 5.0f, 0x4950, SCENE_GORON_VILLAGE  },
+};
+
 static u16 D_8085361C[] = {
     NA_SE_VO_LI_SWEAT,
     NA_SE_VO_LI_SNEEZE,
@@ -838,6 +844,8 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_BOW, OBJECT_GI_HEROS_BOW, GID_HEROS_BOW, 0x8009, 0x80, CHEST_ANIM_LONG),
     // GI_GOLD_DUST
 	GET_ITEM(ITEM_BROKEN_GORONS_SWORD, OBJECT_GI_GOLD_DUST, GID_GOLD_DUST, 0x800A, 0x80, CHEST_ANIM_LONG),
+    // GI_BOOTS_UPGRADE
+	GET_ITEM(ITEM_BOOTS_UPGRADE, OBJECT_GI_BOOTS_2, GID_BOOTS_KOKIRI, 0x901D, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_MASTER
 	GET_ITEM(ITEM_MASTER_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9005, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_ROYAL
@@ -846,6 +854,14 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_TYCOON_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9007, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_BOTTOMLESS
 	GET_ITEM(ITEM_BOTTOMLESS_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9008, 0x80, CHEST_ANIM_LONG),
+    // GI_SHIELD_DEKU_UPGRADE
+	GET_ITEM(ITEM_SHIELD_DEKU_UPGRADE, OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, 0x9019, 0x80, CHEST_ANIM_LONG),
+    // GI_SHIELD_HYLIAN_UPGRADE
+	GET_ITEM(ITEM_SHIELD_HYLIAN_UPGRADE, OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, 0x901A, 0x80, CHEST_ANIM_LONG),
+    // GI_SHIELD_MIRROR_UPGRADE
+	GET_ITEM(ITEM_SHIELD_MIRROR_UPGRADE, OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, 0x901B, 0x80, CHEST_ANIM_LONG),
+    // GI_SHIELD_HEROS_UPGRADE
+	GET_ITEM(ITEM_SHIELD_HEROS_UPGRADE, OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, 0x901C, 0x80, CHEST_ANIM_LONG),
 };
 
 #define GET_PLAYER_ANIM(group, type) D_80853914[group * PLAYER_ANIMTYPE_MAX + type]
@@ -2828,7 +2844,7 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
-        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && gSaveContext.save.info.mirrorShieldIsBroken)
+        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken)
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
@@ -5354,7 +5370,7 @@ void func_8083819C(Player* this, PlayState* play) {
         Actor_Spawn(&play->actorCtx, play, IS_YOUNG_LINK ? ACTOR_ITEM_SHIELD_YOUNG : ACTOR_ITEM_SHIELD, this->actor.world.pos.x, this->actor.world.pos.y,
                     this->actor.world.pos.z, 0, 0, 0, 1);
         Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
-        gSaveContext.save.info.shieldDurability[EQUIP_INV_SHIELD_DEKU] = MAX_DURABILITY_SHIELD_DEKU;
+        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
         Message_StartTextbox(play, 0x305F, NULL);
     }
 }
@@ -5383,30 +5399,35 @@ void func_808382BC(Player* this) {
 }
 
 void Player_CheckShieldDurability(Player* this, PlayState* play) {
-    if ( ( (this->shieldDamage > 0 && this->currentShield > PLAYER_SHIELD_NONE && SHIELD_DURABILITY) || (this->shieldDamage > 10 && this->currentShield == PLAYER_SHIELD_DEKU && IS_CHILD_QUEST) ) && shieldDamageTimer == 0) {
-        u8* currentDurability = &gSaveContext.save.info.shieldDurability[this->currentShield - 1];
+    if (this->shieldDamage > 0 && this->currentShield > PLAYER_SHIELD_NONE && shieldDamageTimer == 0) {
+        ShieldDurability* shield = &gSaveContext.save.info.shields[this->currentShield - 1];
         shieldDamageTimer = SECONDS(0.5);
 
-        if (Player_PerfectTime > 0) {
+        if (Player_PerfectTime > 0 && (SHIELD_DURABILITY || gSaveContext.save.info.obtainedSkills.perfectBlockBoost)) {
             Player_PlaySfx(this, NA_SE_IT_EXPLOSION_LIGHT);
+            if (gSaveContext.save.info.obtainedSkills.perfectBlockBoost)
+                R_PERFECT_BLOCK_BOOST_TIMER = SECONDS(3);
             this->shieldDamage = 0;
             return;
         }
 
-        this->shieldDamage = CLAMP_MAX(this->shieldDamage, 15);
-        *currentDurability -= CLAMP_MAX(this->shieldDamage, *currentDurability);
-        this->shieldDamage = 0;
-
-        if (*currentDurability == 0) {
-            Audio_PlaySfxGeneral(NA_SE_IT_MAJIN_SWORD_BROKEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            if (this->currentShield == PLAYER_SHIELD_MIRROR) {
-                Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
-                Player_SetEquipmentData(play, this);
-                gSaveContext.save.info.mirrorShieldIsBroken = true;
+        if (SHIELD_DURABILITY || (this->shieldDamage > 0x10 && this->currentShield == PLAYER_SHIELD_DEKU && IS_CHILD_QUEST) ) {
+            this->shieldDamage = CLAMP_MAX(this->shieldDamage, 0x30);
+            shield->durability -= CLAMP_MAX(this->shieldDamage, shield->durability);
+            
+            if (shield->durability == 0) {
+                Audio_PlaySfxGeneral(NA_SE_IT_MAJIN_SWORD_BROKEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                if (this->currentShield == PLAYER_SHIELD_MIRROR) {
+                    Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
+                    Player_SetEquipmentData(play, this);
+                    gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = true;
+                }
+                else Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
+                    Message_StartTextbox(play, 0x305F, NULL);
             }
-            else Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
-            Message_StartTextbox(play, 0x305F, NULL);
         }
+
+        this->shieldDamage = 0;
     }
 }
 
@@ -5756,38 +5777,39 @@ static s16 sReturnEntranceGroupData[] = {
     /*  1 */ ENTR_DEATH_MOUNTAIN_CRATER_3, // from Double Magic Fairy Fountain
     /*  2 */ MAP_OUTSIDE_GANONS_CASTLE_2,  // from Double Defense Fairy Fountain (as adult)
     /*  3 */ ENTR_WOODFALL_2,              // from Great Quick Spin Fairy Fountain
+    /*  4 */ ENTR_GORON_VILLAGE_2,         // from Half Magic Cost Fairy Fountain
 
     // ENTR_RETURN_2
-    /*  4 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
-    /*  5 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
+    /*  5 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
+    /*  6 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
 
     // ENTR_RETURN_BAZAAR
-    /*  6 */ ENTR_KAKARIKO_VILLAGE_3,
-    /*  7 */ ENTR_MARKET_DAY_6,
+    /*  7 */ ENTR_KAKARIKO_VILLAGE_3,
+    /*  8 */ ENTR_MARKET_DAY_6,
 
     // ENTR_RETURN_4
-    /*  8 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
-    /*  9 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
+    /*  9 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
+    /* 10 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
 
     // ENTR_RETURN_SHOOTING_GALLERY
-    /* 10 */ ENTR_KAKARIKO_VILLAGE_10,
-    /* 11 */ ENTR_MARKET_DAY_8,
+    /* 11 */ ENTR_KAKARIKO_VILLAGE_10,
+    /* 12 */ ENTR_MARKET_DAY_8,
 
     // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    /* 12 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
-    /* 13 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
-    /* 14 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
+    /* 13 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
+    /* 14 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
+    /* 15 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
 };
 
 /**
  * The values are indices into `sReturnEntranceGroupData` marking the start of each group
  */
 static u8 sReturnEntranceGroupIndices[] = {
-    12, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    10, // ENTR_RETURN_SHOOTING_GALLERY
-    4,  // ENTR_RETURN_2
-    6,  // ENTR_RETURN_BAZAAR
-    8,  // ENTR_RETURN_4
+    13, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
+    11, // ENTR_RETURN_SHOOTING_GALLERY
+    5,  // ENTR_RETURN_2
+    7,  // ENTR_RETURN_BAZAAR
+    9,  // ENTR_RETURN_4
     0,  // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
 };
 
@@ -7929,7 +7951,7 @@ void func_8083DF68(Player* this, f32 arg1, s16 arg2) {
 void func_8083DFE0(Player* this, f32* arg1, s16* arg2) {
     s16 yawDiff = this->yaw - *arg2;
 
-    if (this->meleeWeaponState == 0) {
+    if (this->meleeWeaponState == 0 && !(gSaveContext.save.info.obtainedSkills.furtherJump && (this->currentBoots == PLAYER_BOOTS_KOKIRI || this->currentBoots == PLAYER_BOOTS_KOKIRI_CHILD))) {
         this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
     }
 
@@ -10530,7 +10552,7 @@ void Player_Action_Roll(Player* this, PlayState* play) {
                     } else if (this->actor.wallBgId != BGCHECK_SCENE) {
                         wallPolyActor = DynaPoly_GetActor(&play->colCtx, this->actor.wallBgId);
 
-                        if ((wallPolyActor != NULL) && (wallPolyActor->actor.id == ACTOR_OBJ_KIBAKO2)) {
+                        if ((wallPolyActor != NULL) && (wallPolyActor->actor.id == ACTOR_OBJ_KIBAKO2 || wallPolyActor->actor.id == ACTOR_OBJ_KIBAKO3)) {
                             // The OBJ_KIBAKO2 actor uses home z rotation as a flag to signal that it has been
                             // bonked into and should break.
                             wallPolyActor->actor.home.rot.z = 1;
@@ -11630,8 +11652,10 @@ void Player_Init(Actor* thisx, PlayState* play2) {
 
     gSaveContext.respawn[RESPAWN_MODE_DOWN].data = 1;
 
-    if (play->sceneId <= SCENE_INSIDE_GANONS_CASTLE_COLLAPSE) {
+    if (play->sceneId <= SCENE_INSIDE_GANONS_CASTLE && play->sceneId != SCENE_GANONS_TOWER && play->sceneId != SCENE_THIEVES_HIDEOUT) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[play->sceneId];
+    } else if (play->sceneId == SCENE_GORON_MINES) {
+        gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AC_SHIFT];
     }
 
     startMode = PLAYER_GET_START_MODE(thisx);
@@ -12582,8 +12606,31 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
 
     sControlInput = input;
 
-    // Perfect Shield Block
+    if (R_PERFECT_BLOCK_BOOST_TIMER > 0)
+        R_PERFECT_BLOCK_BOOST_TIMER--;
+    if (shieldDamageTimer > 0)
+        shieldDamageTimer--;
+
+    
     if (SHIELD_DURABILITY) {
+        // Restore Mirror Shield
+        if (!(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
+            if ( (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR) && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
+                if (mirrorShieldRestoreTimer < SECONDS(2))
+                    mirrorShieldRestoreTimer++;
+                else {
+                    mirrorShieldRestoreTimer = 0;
+                    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability++;
+                    if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability >= 60 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
+                        gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
+                        Message_StartTextbox(play, 0x9400, NULL);
+                        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
+                    }
+                }
+            } else mirrorShieldRestoreTimer = 0;
+        }
+
+        // Perfect Shield Block
         if (play->shootingGalleryStatus == 0 && this->currentShield > PLAYER_SHIELD_NONE) {
             if (CHECK_BTN_ALL(sControlInput->cur.button, BTN_R)) {
                 Player_WasShieldUp = true;
@@ -12611,24 +12658,6 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
             Player_PerfectResetTimer--;
         else if (Player_HasPerfected && Player_PerfectResetTimer == 0)
             Player_HasPerfected = false;
-    }
-
-    if (shieldDamageTimer > 0)
-        shieldDamageTimer--;
-    if (SHIELD_DURABILITY && !(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
-        if ( (gSaveContext.save.info.shieldDurability[2] < MAX_DURABILITY_SHIELD_MIRROR && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.mirrorShieldIsBroken) {
-            if (mirrorShieldRestoreTimer < SECONDS(2))
-                mirrorShieldRestoreTimer++;
-            else {
-                mirrorShieldRestoreTimer = 0;
-                gSaveContext.save.info.shieldDurability[2]++;
-                if (gSaveContext.save.info.shieldDurability[2] >= 60 && gSaveContext.save.info.mirrorShieldIsBroken) {
-                    gSaveContext.save.info.mirrorShieldIsBroken = false;
-                    Message_StartTextbox(play, 0x9303, NULL);
-                    gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
-                }
-            }
-        } else mirrorShieldRestoreTimer = 0;
     }
 
     if (this->actor.category == ACTORCAT_PLAYER && R_ENABLE_MIRROR == 1)
@@ -16448,21 +16477,25 @@ void func_80851828(PlayState* play, Player* this, CsCmdActorCue* cue) {
 }
 
 void PlayerCs_InitDekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
-    this->actor.world.rot.y = this->actor.shape.rot.y = 0x2000;
-    this->unk_450.x = 635.0f;
-    this->unk_450.y = 1400.0f;
-    this->unk_450.z = 633.0f;
-    this->speedXZ = 5.5f;
+    for (dekuWalkArrIndex=0; dekuWalkArrIndex<ARRAY_COUNT(dekuWalkRoutes); dekuWalkArrIndex++)
+        if (play->sceneId == dekuWalkRoutes[dekuWalkArrIndex].sceneId)
+            break;
+
+    this->actor.world.rot.y = this->actor.shape.rot.y = dekuWalkRoutes[dekuWalkArrIndex].yaw;
+    this->unk_450.x = dekuWalkRoutes[dekuWalkArrIndex].pos.x;
+    this->unk_450.y = dekuWalkRoutes[dekuWalkArrIndex].pos.y;
+    this->unk_450.z = dekuWalkRoutes[dekuWalkArrIndex].pos.z;
+    this->speedXZ = dekuWalkRoutes[dekuWalkArrIndex].speed;
     this->av2.actionVar2 = 0;
 }
 
 void PlayerCs_DekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
-    f32 speed = 5.5f;
+    f32 speed = dekuWalkRoutes[dekuWalkArrIndex].speed;
 
     this->av2.actionVar2++;
 
     if (this->av2.actionVar2 >= 22 && this->av2.actionVar2 >= 25)
-        this->actor.world.rot.y = this->actor.shape.rot.y = 0x2000;
+        this->actor.world.rot.y = this->actor.shape.rot.y = dekuWalkRoutes[dekuWalkArrIndex].yaw;
 
     func_80845BA0(play, this, &speed, 10);
 

@@ -104,6 +104,74 @@ Vtx roadtofortress_room_0Vtx_000658[] = {
 #include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_000658.vtx.inc"
 };
 
+Vtx roadtofortress_room_0Vtx_0017E0[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_0017E0.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_001A18[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_001A18.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_001E08[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_001E08.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_002450[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_002450.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_002A28[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_002A28.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_002DB0[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_002DB0.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_003170[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_003170.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_003460[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_003460.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_003848[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_003848.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_003C80[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_003C80.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_004080[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_004080.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_0042C0[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_0042C0.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_004518[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_004518.vtx.inc"
+};
+
+Vtx roadtofortress_room_0Vtx_0048D8[] = {
+#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_0048D8.vtx.inc"
+};
+
+static u64 scene_texture_08_Tex_000000[] = {
+#include "assets/misc/scene_texture_08/tex_000000.rgba16.inc.c"
+};
+
+static u64 scene_texture_08_Tex_003400[] = {
+#include "assets/misc/scene_texture_08/tex_003400.ia8.inc.c"
+};
+
+static u64 scene_texture_08_Tex_004000[] = {
+#include "assets/misc/scene_texture_08/tex_004000.ia8.inc.c"
+};
+
 Gfx roadtofortress_room_0DL_0013D8[] = {
     gsSPVertex(&roadtofortress_room_0Vtx_000658[208], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -214,10 +282,6 @@ Gfx roadtofortress_room_0DL_0013D8[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx roadtofortress_room_0Vtx_0017E0[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_0017E0.vtx.inc"
-};
-
 Gfx roadtofortress_room_0DL_0018E0[] = {
     gsSPVertex(&roadtofortress_room_0Vtx_0017E0[8], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -236,10 +300,6 @@ Gfx roadtofortress_room_0DL_0018E0[] = {
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx roadtofortress_room_0Vtx_001A18[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_001A18.vtx.inc"
 };
 
 Gfx roadtofortress_room_0DL_001DF8[] = {
@@ -271,10 +331,6 @@ Gfx roadtofortress_room_0DL_001DF8[] = {
     gsSP2Triangles(15, 14, 23, 0, 14, 19, 24, 0),
     gsSP1Triangle(19, 5, 25, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx roadtofortress_room_0Vtx_001E08[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_001E08.vtx.inc"
 };
 
 Gfx roadtofortress_room_0DL_002440[] = {
@@ -321,10 +377,6 @@ Gfx roadtofortress_room_0DL_002440[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx roadtofortress_room_0Vtx_002450[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_002450.vtx.inc"
-};
-
 Gfx roadtofortress_room_0DL_002A18[] = {
     gsSPVertex(&roadtofortress_room_0Vtx_002450[51], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -367,10 +419,6 @@ Gfx roadtofortress_room_0DL_002A18[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx roadtofortress_room_0Vtx_002A28[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_002A28.vtx.inc"
-};
-
 Gfx roadtofortress_room_0DL_002DA0[] = {
     gsSPVertex(&roadtofortress_room_0Vtx_002A28[22], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -395,10 +443,6 @@ Gfx roadtofortress_room_0DL_002DA0[] = {
     gsSP2Triangles(19, 14, 2, 0, 20, 21, 16, 0),
     gsSP1Triangle(20, 16, 15, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx roadtofortress_room_0Vtx_002DB0[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_002DB0.vtx.inc"
 };
 
 Gfx roadtofortress_room_0DL_003160[] = {
@@ -428,10 +472,6 @@ Gfx roadtofortress_room_0DL_003160[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx roadtofortress_room_0Vtx_003170[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_003170.vtx.inc"
-};
-
 Gfx roadtofortress_room_0DL_003450[] = {
     gsSPVertex(&roadtofortress_room_0Vtx_003170[13], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -455,10 +495,6 @@ Gfx roadtofortress_room_0DL_003450[] = {
     gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
     gsSP2Triangles(6, 8, 12, 0, 7, 6, 12, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx roadtofortress_room_0Vtx_003460[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_003460.vtx.inc"
 };
 
 Gfx roadtofortress_room_0DL_003838[] = {
@@ -493,10 +529,6 @@ Gfx roadtofortress_room_0DL_003838[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx roadtofortress_room_0Vtx_003848[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_003848.vtx.inc"
-};
-
 Gfx roadtofortress_room_0DL_003B38[] = {
     gsSPVertex(&roadtofortress_room_0Vtx_003848[39], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -529,10 +561,6 @@ Gfx roadtofortress_room_0DL_003B38[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx roadtofortress_room_0Vtx_003C80[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_003C80.vtx.inc"
-};
-
 Gfx roadtofortress_room_0DL_003DB0[] = {
     gsSPVertex(&roadtofortress_room_0Vtx_003C80[11], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -554,10 +582,6 @@ Gfx roadtofortress_room_0DL_003DB0[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx roadtofortress_room_0Vtx_004080[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_004080.vtx.inc"
-};
-
 Gfx roadtofortress_room_0DL_0041E0[] = {
     gsSPVertex(&roadtofortress_room_0Vtx_004080[14], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -567,18 +591,14 @@ Gfx roadtofortress_room_0DL_0041E0[] = {
     gsDPSetPrimColor(0, 0xFF, 255, 255, 255, 160),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
     gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(roadtofortress_sceneTex_007850, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, G_TX_NOLOD),
-    gsDPLoadMultiBlock(roadtofortress_sceneTex_007050, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(scene_texture_08_Tex_000000, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, G_TX_NOLOD),
+    gsDPLoadMultiBlock(scene_texture_08_Tex_003400, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(roadtofortress_room_0Vtx_004080, 14, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(10, 11, 12, 0, 11, 13, 12, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx roadtofortress_room_0Vtx_0042C0[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_0042C0.vtx.inc"
 };
 
 Gfx roadtofortress_room_0DL_0043C0[] = {
@@ -590,21 +610,13 @@ Gfx roadtofortress_room_0DL_0043C0[] = {
     gsDPSetPrimColor(0, 0xFF, 255, 255, 255, 160),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
     gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(roadtofortress_sceneTex_007850, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, G_TX_NOLOD),
-    gsDPLoadMultiBlock(roadtofortress_sceneTex_006850, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(scene_texture_08_Tex_000000, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 1, G_TX_NOLOD),
+    gsDPLoadMultiBlock(scene_texture_08_Tex_004000, 0x0100, 1, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(roadtofortress_room_0Vtx_0042C0, 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 4, 6, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx roadtofortress_room_0Vtx_004518[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_004518.vtx.inc"
-};
-
-Vtx roadtofortress_room_0Vtx_0048D8[] = {
-#include "assets/scenes/overworld/roadtofortress/roadtofortress_room_0Vtx_0048D8.vtx.inc"
 };
 
 Gfx roadtofortress_room_0DL_004BA8_1[] = {

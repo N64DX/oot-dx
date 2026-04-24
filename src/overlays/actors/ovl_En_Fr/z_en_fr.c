@@ -39,6 +39,7 @@ void EnFr_UpdateActive(Actor* thisx, PlayState* play);
 void EnFr_Draw(Actor* thisx, PlayState* play);
 
 // Animation Functions
+void EnFr_SetupTalkDialogue(EnFr* this, PlayState* play);
 void EnFr_SetupJumpingOutOfWater(EnFr* this, PlayState* play);
 void EnFr_JumpingOutOfWater(EnFr* this, PlayState* play);
 void EnFr_OrientOnLogSpot(EnFr* this, PlayState* play);
@@ -74,6 +75,26 @@ void EnFr_SetReward(EnFr* this, PlayState* play);
 void EnFr_Deactivate(EnFr* this, PlayState* play);
 void EnFr_GiveReward(EnFr* this, PlayState* play);
 void EnFr_SetIdle(EnFr* this, PlayState* play);
+
+static ColliderCylinderInit sCylinderInit = {
+    {
+        COL_MATERIAL_NONE,
+        AT_NONE,
+        AC_ON | AC_HARD | AC_TYPE_PLAYER,
+        OC1_ON | OC1_TYPE_ALL,
+        OC2_TYPE_1,
+        COLSHAPE_CYLINDER,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0x00000000, 0x00, 0x00 },
+        { 0x00000000, 0x00, 0x00 },
+        ATELEM_NONE,
+        ACELEM_ON,
+        OCELEM_ON,
+    },
+    { 18, 60, 0, { 0, 0, 0 } },
+};
 
 /*
 Frogs params WIP docs
@@ -172,7 +193,7 @@ ActorProfile En_Fr_Profile = {
 };
 
 static Color_RGBA8 sEnFrColor[] = {
-    { 200, 170, 0, 255 }, { 0, 170, 200, 255 }, { 210, 120, 100, 255 }, { 120, 130, 230, 255 }, { 190, 190, 190, 255 },
+    { 0, 128, 0, 255 }, { 200, 170, 0, 255 }, { 0, 170, 200, 255 }, { 210, 120, 100, 255 }, { 120, 130, 230, 255 }, { 190, 190, 190, 255 },
 };
 
 // Jumping back into water frog animation
@@ -237,6 +258,32 @@ static u8 sOcarinaNotes[] = {
     OCARINA_BTN_A, OCARINA_BTN_C_DOWN, OCARINA_BTN_C_RIGHT, OCARINA_BTN_C_LEFT, OCARINA_BTN_C_UP,
 };
 
+static FrogHideInfo sFrogHideInfo[] = {
+    {      0, 100.0f }, // Master
+    { 0x84B0, 140.0f }, // Yellow
+    { 0x84B1, 120.0f }, // Yellow
+    { 0x84B2, 250.0f }, // Yellow
+    { 0x84B3, 275.0f }, // Yellow
+    { 0x84B0, 140.0f }, // Blue
+    { 0x84B1, 120.0f }, // Blue
+    { 0x84B2, 250.0f }, // Blue
+    { 0x84B3, 275.0f }, // Blue
+    { 0x84B0, 140.0f }, // Red
+    { 0x84B1, 120.0f }, // Red
+    { 0x84B2, 250.0f }, // Red
+    { 0x84B3, 275.0f }, // Red
+    { 0x84B0, 140.0f }, // Purple
+    { 0x84B1, 120.0f }, // Purple
+    { 0x84B2, 250.0f }, // Purple
+    { 0x84B3, 275.0f }, // Purple
+    { 0x84B0, 140.0f }, // White
+    { 0x84B1, 120.0f }, // White
+    { 0x84B2, 250.0f }, // White
+    { 0x84B3, 275.0f }, // White
+};
+
+static bool sIsFrogTextbox = false;
+
 void EnFr_OrientUnderwater(EnFr* this) {
     Vec3f vec1;
     Vec3f vec2;
@@ -255,10 +302,40 @@ void EnFr_OrientUnderwater(EnFr* this) {
     this->actor.gravity = 0.0f;
 }
 
+void EnFr_GetDialogue(EnFr* this) {
+    if (this->type == FROG_MASTER) {
+        if (!FROG_GET_COMPLETED(1) && FROG_GET_INDEX_BIT(1, 1) && FROG_GET_INDEX_BIT(1, 2) && FROG_GET_INDEX_BIT(1, 3) && FROG_GET_INDEX_BIT(1, 4))
+            this->actor.textId = 0x84A2;
+        else if (!FROG_GET_COMPLETED(2) && FROG_GET_INDEX_BIT(2, 1) && FROG_GET_INDEX_BIT(2, 2) && FROG_GET_INDEX_BIT(2, 3) && FROG_GET_INDEX_BIT(2, 4))
+            this->actor.textId = 0x84A2;
+        else if (!FROG_GET_COMPLETED(3) && FROG_GET_INDEX_BIT(3, 1) && FROG_GET_INDEX_BIT(3, 2) && FROG_GET_INDEX_BIT(3, 3) && FROG_GET_INDEX_BIT(3, 4))
+            this->actor.textId = 0x84A2;
+        else if (!FROG_GET_COMPLETED(4) && FROG_GET_INDEX_BIT(4, 1) && FROG_GET_INDEX_BIT(4, 2) && FROG_GET_INDEX_BIT(4, 3) && FROG_GET_INDEX_BIT(4, 4))
+            this->actor.textId = 0x84A2;
+        else if (!FROG_GET_COMPLETED(5) && FROG_GET_INDEX_BIT(5, 1) && FROG_GET_INDEX_BIT(5, 2) && FROG_GET_INDEX_BIT(5, 3) && FROG_GET_INDEX_BIT(5, 4))
+            this->actor.textId = 0x84A2;
+        else if (gSaveContext.save.info.frogQuest.reward >= 5) 
+            this->actor.textId = 0x84A3;
+        else this->actor.textId = gSaveContext.save.info.frogQuest.started ? 0x84A1 : 0x84A0;
+    } else if (this->type == FROG_RETURNED) {
+        this->actor.textId = sFrogHideInfo[FROG_GET_INDEX(this->actor.params, this->index)].textId;
+    } else if (this->type == FROG_HIDDEN) {
+        this->actor.textId = FROG_GET_REGION ? 0x84A5 : 0x84A4;
+    }
+}
+
 void EnFr_Init(Actor* thisx, PlayState* play) {
     EnFr* this = (EnFr*)thisx;
 
-    if (this->actor.params == 0) {
+    this->type         = (this->actor.params >> 8) & 0xF;
+    this->index        = (this->actor.params >> 4) & 0xF;
+    this->actor.params = (this->actor.params)      & 0xF;
+
+    if (this->type == FROG_HIDDEN && (!gSaveContext.save.info.frogQuest.started || FROG_GET_REGION))
+        Actor_Kill(&this->actor);
+    EnFr_GetDialogue(this);
+
+    if (this->actor.params == 0 && this->type != FROG_MASTER) {
         this->actor.destroy = NULL;
         this->actor.draw = NULL;
         this->actor.update = EnFr_UpdateIdle;
@@ -267,7 +344,7 @@ void EnFr_Init(Actor* thisx, PlayState* play) {
         Actor_ChangeCategory(play, &play->actorCtx, &this->actor, ACTORCAT_PROP);
         this->actor.textId = 0x40AC;
         this->actionFunc = EnFr_Idle;
-    } else {
+    } else if (this->type == FROG_ZORAS_RIVER) {
         if ((this->actor.params >= 6) || (this->actor.params < 0)) {
             PRINTF_COLOR_ERROR();
             PRINTF(T("%s[%d] : 引数が間違っている！！(%d)\n", "%s[%d] : The argument is wrong!! (%d)\n"),
@@ -302,6 +379,24 @@ void EnFr_Update(Actor* thisx, PlayState* play) {
     s32 frogIndex;
     s32 pad2;
 
+    if (this->type != FROG_ZORAS_RIVER) {
+        Collider_InitCylinder(play, &this->collider);
+        Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
+        Actor_SetScale(&this->actor, this->type == FROG_MASTER ? 0.027f : 0.015f);
+        this->actor.update = EnFr_UpdateActive;
+
+        if (this->type == FROG_RETURNED && !FROG_GET_REGION) {
+            this->actor.draw = NULL;
+            this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
+            return;
+        }
+
+        SkelAnime_InitFlex(play, &this->skelAnime, &object_fr_Skel_00B498, &object_fr_Anim_001534, this->jointTable, this->morphTable, 24);
+        EnFr_DrawActive(this);
+        this->actionFunc = EnFr_SetupTalkDialogue;
+        return;
+    }
+
     if (Object_IsLoaded(&play->objectCtx, this->requiredObjectSlot)) {
         this->actor.flags &= ~ACTOR_FLAG_UPDATE_CULLING_DISABLED;
         frogIndex = this->actor.params - 1;
@@ -331,7 +426,6 @@ void EnFr_Update(Actor* thisx, PlayState* play) {
         this->isBelowWaterSurfacePrevious = this->isBelowWaterSurfaceCurrent = false;
         this->isJumpingUp = false;
         this->posLogSpot = this->actor.world.pos;
-        this->actionFunc = EnFr_SetupJumpingOutOfWater;
         this->isDeactivating = false;
         this->growingScaleIndex = 0;
         this->isActive = false;
@@ -340,6 +434,7 @@ void EnFr_Update(Actor* thisx, PlayState* play) {
         this->unusedButterflyActor = NULL;
         EnFr_OrientUnderwater(this);
         EnFr_DrawIdle(this);
+        this->actionFunc = EnFr_SetupJumpingOutOfWater;
         this->actor.update = EnFr_UpdateActive;
         this->isButterflyDrawn = false;
         this->xyAngleButterfly = 0x1000 * (s16)Rand_ZeroFloat(255.0f);
@@ -423,6 +518,68 @@ void EnFr_DecrementBlinkTimerUpdate(EnFr* this) {
         this->eyeTexIndex = 1;
         this->blinkTimer = 1;
     }
+}
+
+s32 EnFr_StartTalkDialogue(EnFr* this, PlayState* play, EnFrActionFunc actionFunc) {
+    Player* player = GET_PLAYER(play);
+
+    if (Actor_TalkOfferAccepted(&this->actor, play)) {
+        sIsFrogTextbox = true;
+        this->actionFunc = actionFunc;
+        return 1;
+    }
+
+    if (ABS((s16)(this->actor.yawTowardsPlayer - this->actor.shape.rot.y)) < 0x2151 && this->actor.xzDistToPlayer < sFrogHideInfo[FROG_GET_INDEX(this->actor.params, this->index)].talkRange && ( (player->focusActor != NULL && this->actor.isLockedOn) || player->focusActor == NULL) )
+        Actor_OfferTalk(&this->actor, play, sFrogHideInfo[FROG_GET_INDEX(this->actor.params, this->index)].talkRange);
+    return 0;
+}
+
+static u8 frogRewards[] = { GI_RUPEE_PURPLE, GI_BOMBCHUS_20, GI_WALLET_ADULT, GI_HEART_PIECE, GI_RUPEE_GOLD }; 
+
+void EnFr_EndTalkDialogue(EnFr* this, PlayState* play) {
+    if (Actor_TextboxIsClosing(&this->actor, play)) {
+        if (this->type == FROG_MASTER) {
+            if (this->actor.textId == 0x84A0)
+                gSaveContext.save.info.frogQuest.started = 1;
+            else if (this->actor.textId == 0x84A2) {
+                u8 reward = frogRewards[gSaveContext.save.info.frogQuest.reward++];
+                if (reward == GI_WALLET_ADULT) {
+                    if (CUR_UPG_VALUE(UPG_WALLET2) >= 2)
+                        reward = GI_WALLET_BOTTOMLESS;
+                    else if (CUR_UPG_VALUE(UPG_WALLET2) == 1)
+                        reward = GI_WALLET_TYCOON;
+                    else if (CUR_UPG_VALUE(UPG_WALLET) == 3)
+                        reward = GI_WALLET_ROYAL;
+                    else if (CUR_UPG_VALUE(UPG_WALLET) == 2)
+                        reward = GI_WALLET_MASTER;
+                    else if (CUR_UPG_VALUE(UPG_WALLET) == 1)
+                        reward = GI_WALLET_GIANT;
+                }
+
+                Actor_OfferGetItem(&this->actor, play, reward, 415.0f, 100.0f);
+
+                if (!FROG_GET_COMPLETED(1) && FROG_GET_INDEX_BIT(1, 1) && FROG_GET_INDEX_BIT(1, 2) && FROG_GET_INDEX_BIT(1, 3) && FROG_GET_INDEX_BIT(1, 4))
+                    FROG_SET_COMPLETED(1);
+                else if (!FROG_GET_COMPLETED(2) && FROG_GET_INDEX_BIT(2, 1) && FROG_GET_INDEX_BIT(2, 2) && FROG_GET_INDEX_BIT(2, 3) && FROG_GET_INDEX_BIT(2, 4))
+                    FROG_SET_COMPLETED(2);
+                else if (!FROG_GET_COMPLETED(3) && FROG_GET_INDEX_BIT(3, 1) && FROG_GET_INDEX_BIT(3, 2) && FROG_GET_INDEX_BIT(3, 3) && FROG_GET_INDEX_BIT(3, 4))
+                    FROG_SET_COMPLETED(3);
+                else if (!FROG_GET_COMPLETED(4) && FROG_GET_INDEX_BIT(4, 1) && FROG_GET_INDEX_BIT(4, 2) && FROG_GET_INDEX_BIT(4, 3) && FROG_GET_INDEX_BIT(4, 4))
+                    FROG_SET_COMPLETED(4);
+                else if (!FROG_GET_COMPLETED(5) && FROG_GET_INDEX_BIT(5, 1) && FROG_GET_INDEX_BIT(5, 2) && FROG_GET_INDEX_BIT(5, 3) && FROG_GET_INDEX_BIT(5, 4))
+                    FROG_SET_COMPLETED(5);
+            }
+        } else if (this->type == FROG_HIDDEN && !FROG_GET_REGION)
+            FROG_SET_REGION;
+
+        sIsFrogTextbox = false;
+        EnFr_GetDialogue(this);
+        this->actionFunc = EnFr_SetupTalkDialogue;
+    }
+}
+
+void EnFr_SetupTalkDialogue(EnFr* this, PlayState* play) {
+     EnFr_StartTalkDialogue(this, play, EnFr_EndTalkDialogue);
 }
 
 void EnFr_SetupJumpingOutOfWater(EnFr* this, PlayState* play) {
@@ -596,6 +753,21 @@ void EnFr_ButterflyPath(EnFr* this, PlayState* play) {
 
 void EnFr_UpdateActive(Actor* thisx, PlayState* play) {
     EnFr* this = (EnFr*)thisx;
+
+    if (this->type != FROG_ZORAS_RIVER) {
+        if (this->actor.xzDistToPlayer < 300.0f) {
+            Collider_UpdateCylinder(&this->actor, &this->collider);
+            CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
+            CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
+        }
+
+        if (this->type == FROG_RETURNED && !FROG_GET_REGION)
+            return;
+
+        this->actionFunc(this, play);
+        SkelAnime_Update(&this->skelAnime);
+        return;
+    }
 
     this->jumpCounter++;
     Actor_SetScale(&this->actor, this->scale * 0.0001f);
@@ -965,7 +1137,7 @@ void EnFr_SetReward(EnFr* this, PlayState* play) {
     songIndex = this->songIndex;
     this->actionFunc = EnFr_Deactivate;
     this->reward = GI_NONE;
-    if ((songIndex >= FROG_ZL) && (songIndex <= FROG_SOT)) {
+    if (songIndex <= FROG_SOT) {
         if (!FROG_HAS_SONG_BEEN_PLAYED(songIndex)) {
             FROG_SET_SONG_PLAYED(songIndex);
             this->reward = GI_RUPEE_PURPLE;
@@ -1090,7 +1262,21 @@ void EnFr_Draw(Actor* thisx, PlayState* play) {
     };
     s16 lightRadius;
     EnFr* this = (EnFr*)thisx;
-    s16 frogIndex = this->actor.params - 1;
+    s16 frogIndex = this->actor.params;
+
+    if (this->type == FROG_RETURNED && (GET_PLAYER(play)->getItemId > 0 || this->actor.xzDistToPlayer > 1000.0f || (Message_GetState(&play->msgCtx) != TEXT_STATE_NONE && !sIsFrogTextbox)))
+        return;
+
+    if (this->type != FROG_ZORAS_RIVER) {
+        OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+        Gfx_SetupDL_25Opa(play->state.gfxCtx);
+        gDPSetEnvColor(POLY_OPA_DISP++, sEnFrColor[frogIndex].r, sEnFrColor[frogIndex].g, sEnFrColor[frogIndex].b, 255);
+        gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(eyeTextures[this->eyeTexIndex]));
+        gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(eyeTextures[this->eyeTexIndex]));
+        SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount, NULL, NULL, this);
+        CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+        return;
+    }
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_fr.c", 1754);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);

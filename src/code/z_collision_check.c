@@ -3126,8 +3126,17 @@ void CollisionCheck_ApplyDamage(PlayState* play, CollisionCheckContext* colChkCt
         col->actor->colChkInfo.damage += damage;
     }
 
-    if (damage > 0 && !(play->sceneId == SCENE_SPIRIT_TEMPLE_BOSS && play->roomCtx.curRoom.num == 3 && Player_HasMirrorShieldEquipped(play)))
-        GET_PLAYER(play)->shieldDamage = (damage * 10 + 15) / 16;
+    if (SHIELD_DURABILITY)
+        if (damage > 0 && !(play->sceneId == SCENE_SPIRIT_TEMPLE_BOSS && play->roomCtx.curRoom.num == 3 && Player_HasMirrorShieldEquipped(play))) {
+            switch (SHIELD_DURABILITY) {
+                case 1:
+                    GET_PLAYER(play)->shieldDamage = damage / 3;
+                case 2:
+                    GET_PLAYER(play)->shieldDamage = damage / 3 * 2;
+                case 3:
+                    GET_PLAYER(play)->shieldDamage = damage;
+            }
+        }
 }
 
 /**

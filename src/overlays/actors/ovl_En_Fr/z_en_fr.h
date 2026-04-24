@@ -7,8 +7,24 @@
 
 struct EnFr;
 
+
+#define FROG_GET_INDEX(region, index)       (((region-1) * 4) + index - 1)
+#define FROG_SET_INDEX_BIT(region, index)   (gSaveContext.save.info.frogQuest.found |= (1 << FROG_GET_INDEX(region, index)))
+#define FROG_GET_INDEX_BIT(region, index)   (gSaveContext.save.info.frogQuest.found &  (1 << FROG_GET_INDEX(region, index)))
+#define FROG_SET_REGION                     (FROG_SET_INDEX_BIT(this->actor.params, this->index))
+#define FROG_GET_REGION                     (FROG_GET_INDEX_BIT(this->actor.params, this->index))
+#define FROG_SET_COMPLETED(index)           (gSaveContext.save.info.frogQuest.completed |= (1 << (index-1)))
+#define FROG_GET_COMPLETED(index)           (gSaveContext.save.info.frogQuest.completed &  (1 << (index-1)))
+
 typedef void (*EnFrActionFunc)(struct EnFr*, struct PlayState*);
 typedef void (*EnFrBlinkFunc)(struct EnFr*);
+
+typedef enum FrogRegionType {
+    /* 0 */ FROG_ZORAS_RIVER,
+    /* 1 */ FROG_RETURNED,
+    /* 2 */ FROG_HIDDEN,
+    /* 3 */ FROG_MASTER
+} FrogRegionType;
 
 typedef enum FrogType {
     /* 0 */ FROG_YELLOW,   // Middle
@@ -28,6 +44,11 @@ typedef enum FrogSongType {
     /* 6 */ FROG_CHOIR_SONG,
     /* 7 */ FROG_NO_SONG
 } FrogSongType;
+
+typedef struct FrogHideInfo {
+    /* 0x06 */ u16 textId;
+    /* 0x08 */ f32 talkRange;
+} FrogHideInfo; // size = 0x0xC
 
 typedef struct EnFr {
     /* 0x0000 */ Actor actor;
@@ -67,6 +88,9 @@ typedef struct EnFr {
     /* 0x03AA */ s16 xyAngleButterfly; // Butterfly Travels along random angles in the x-y plane
     /* 0x03AC */ Vec3f posButterfly; // Position/Coordinates of the Butterfly
     /* 0x03B8 */ Vec3f posButterflyLight; // Used in Lights_PointNoGlowSetInfo()
-} EnFr; // size = 0x03C4
+    /* 0x03C4 */ u8 type;
+    /* 0x03C5 */ u8 index;
+                 ColliderCylinder collider;
+} EnFr; // size = 0x03C8
 
 #endif

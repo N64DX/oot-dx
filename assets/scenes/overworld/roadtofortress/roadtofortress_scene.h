@@ -17,16 +17,13 @@ extern RomFile roadtofortress_sceneRoomList0x0000D0[];
 extern Spawn roadtofortress_sceneEntranceList0x0000D8[];
 extern u16 roadtofortress_sceneExitList_0000E0[];
 extern EnvLightSettings roadtofortress_sceneLightSettings0x0000E8[];
-extern Vec3s roadtofortress_scenePathwayList_000350[];
-extern Vec3s roadtofortress_scenePathwayList_000398[];
-extern Vec3s roadtofortress_scenePathwayList_0003C4[];
 extern Path roadtofortress_scenePathway_0003F0[];
-extern Vec3s roadtofortress_sceneCsCameraPoints_000528[];
 extern BgCamInfo roadtofortress_sceneCollisionHeader_002824CamDataList[];
 extern SurfaceType roadtofortress_sceneCollisionHeader_002824SurfaceType[];
 extern CollisionPoly roadtofortress_sceneCollisionHeader_002824Polygons[];
 extern Vec3s roadtofortress_sceneCollisionHeader_002824Vertices[];
 extern CollisionHeader roadtofortress_sceneCollisionHeader_002824;
+
 extern u64 roadtofortress_sceneTex_003050[];
 extern u64 roadtofortress_sceneTex_003850[];
 extern u64 roadtofortress_sceneTex_004050[];
@@ -38,4 +35,5 @@ extern u64 roadtofortress_sceneTex_007050[];
 extern u64 roadtofortress_sceneTex_007850[];
 extern u64 roadtofortress_sceneTLUT_008050[];
 extern u64 roadtofortress_sceneTLUT_008070[];
+
 #endif

@@ -292,6 +292,7 @@ typedef enum SceneID {
 #if !DEBUG_ASSETS
 // Debug-only scenes
 #define SCENE_TEST01        0x65
+#define SCENE_BESITU        0x66
 #define SCENE_DEPTH_TEST    0x67
 #define SCENE_SYOTES        0x68
 #define SCENE_SYOTES2       0x69
@@ -403,7 +404,14 @@ typedef enum SceneDrawConfig {
     /* 54 */ SDC_ANCIENT_HOLLOW,
     /* 55 */ SDC_WOODFALL_TEMPLE,
     /* 56 */ SDC_WOODFALL,
-    /* 57 */ SDC_MAX
+    /* 57 */ SDC_SPRING_LAKE,
+    /* 58 */ SDC_SPRING_LAKE_SMITHY,
+    /* 59 */ SDC_PATH_TO_GORON_VILLAGE,
+    /* 5A */ SDC_GROTTOS2,
+    /* 5B */ SDC_PATH_TO_WOODFALL,
+    /* 5C */ SDC_GORON_VILLAGE,
+    /* 5D */ SDC_GORON_SHRINE,
+    /* 5E */ SDC_MAX
 } SceneDrawConfig;
 
 typedef void (*SceneDrawConfigFunc)(struct PlayState*);

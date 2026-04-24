@@ -297,6 +297,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_120_swamp_region.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_121_ganon_battle.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_122_lake_hylia.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_123_termina_field.o"
 endseg
 
 beginseg
@@ -494,6 +495,12 @@ endseg
 beginseg
     name "map_grand_static"
     include "$(BUILD_DIR)/assets/textures/map_grand_static/map_grand_static.o"
+    number 11
+endseg
+
+beginseg
+    name "map_grand2_static"
+    include "$(BUILD_DIR)/assets/textures/map_grand2_static/map_grand2_static.o"
     number 11
 endseg
 

@@ -410,6 +410,8 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawOpa0Xlu1, { gGiGreatFairysSwordBladeDL, gGiGreatFairysSwordHiltEmblemDL } },
     // GID_GOLD_DUST
 	{ GetItem_DrawOpa0, { gGiGoldDustPowderDL } },
+    // GID_BOOTS_KOKIRI
+    { GetItem_DrawOpa0Xlu1, { gGiKokiriBootsDL, gGiKokiriBootsEmptyDL } },
 };
 
 /**

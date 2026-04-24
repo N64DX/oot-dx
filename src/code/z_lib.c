@@ -250,6 +250,12 @@ void Math_Vec3f_Copy(Vec3f* dest, Vec3f* src) {
     dest->z = src->z;
 }
 
+void Math_Vec3s_Copy(Vec3s* dest, Vec3s* src) {
+    dest->x = src->x;
+    dest->y = src->y;
+    dest->z = src->z;
+}
+
 void Math_Vec3s_ToVec3f(Vec3f* dest, Vec3s* src) {
     dest->x = src->x;
     dest->y = src->y;

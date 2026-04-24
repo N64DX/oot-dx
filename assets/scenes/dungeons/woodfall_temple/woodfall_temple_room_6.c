@@ -16,8 +16,8 @@ SceneCmd woodfall_temple_room_6Commands[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_6RoomShapeCullable_000130),
-    SCENE_CMD_OBJECT_LIST(14, woodfall_temple_room_6ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(9, woodfall_temple_room_6ActorEntry_00006C),
+    SCENE_CMD_OBJECT_LIST(17, woodfall_temple_room_6ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(12, woodfall_temple_room_6ActorEntry_00006C),
     SCENE_CMD_END(),
 };
 
@@ -35,6 +35,9 @@ s16 woodfall_temple_room_6ObjectList_000040[] = {
     OBJECT_GRASSHOPPER,
     OBJECT_ST,
     OBJECT_DEKUBABA,
+    OBJECT_KIBAKO2,
+    OBJECT_FR,
+    OBJECT_BG_TELEPORTER,
     OBJECT_TL,
 };
 
@@ -48,6 +51,9 @@ ActorEntry woodfall_temple_room_6ActorEntry_00006C[] = {
     { ACTOR_EN_KUSA,      { 1980, -1425,  240 }, {    0, 0x9680, 0 }, 0x002B },
     { ACTOR_EN_KUSA,      { 2070, -1425,  210 }, {    0, 0x2800, 0 }, 0x002B },
     { ACTOR_EN_BOX,       { 2265, -1440,    0 }, { 0x41, 0x4000, 0 }, 0x101D }, // Chest flag: 0x1D, Dungeon Map
+    { ACTOR_OBJ_KIBAKO2,  { 2360, -1425,  325 }, {    0,      0, 0 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO3,  { 2300, -1425,  325 }, {    0, 0x8000, 0 }, 0x0244 }, // Purple: 4 (Woodfall)
+    { ACTOR_OBJ_KIBAKO2,  { 2240, -1425,  325 }, {    0,      0, 0 }, 0xFFFF },
 };
 
 RoomShapeCullable woodfall_temple_room_6RoomShapeCullable_000130 = { 

@@ -538,10 +538,10 @@ DEFINE_MESSAGE(0xA064, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 )
 
 DEFINE_MESSAGE(0xA065, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-    MSG("ハイリア湖への道"),
-    MSG("Path to Lake Hylia"),
-    MSG("Weg zum Hylia-See"),
-    MSG("Chemin vers le Lac Hylia")
+    MSG("ウッドフォールへの道"),
+    MSG("Path to Woodfall"),
+    MSG("Weg zum Dämmerwald"),
+    MSG("Chemin vers Bois-Cascade")
 )
 
 DEFINE_MESSAGE(0xA066, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
@@ -551,39 +551,88 @@ DEFINE_MESSAGE(0xA066, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("Chemin vers la Forteresse Gerudo")
 )
 
+DEFINE_MESSAGE(0xA067, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("ハイリア湖への道"),
+    MSG("Path to Lake Hylia"),
+    MSG("Weg zum Hylia-See"),
+    MSG("Chemin vers le Lac Hylia")
+)
+
 DEFINE_MESSAGE(0xA068, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-    MSG("蜘蛛の巣の祠"),
-    MSG("Webbed Shrine"),
-    MSG("Versponnener Schrein"),
-    MSG("Sanctuaire Entoilé")
+    MSG("スプリングレイク"),
+    MSG("Spring Lake"),
+    MSG("Frühlingssee"),
+    MSG("Lac du Printemps")
 )
 
 DEFINE_MESSAGE(0xA069, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("ウッドフォール"),
+    MSG("Woodfall"),
+    MSG("Dämmerwald"),
+    MSG("Bois-Cascade")
+)
+
+DEFINE_MESSAGE(0xA06A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("ゴロンの里への道"),
+    MSG("Path to Goron Village"),
+    MSG("Weg zum Goronendorf"),
+    MSG("Chemin vers le Village Goron")
+)
+
+DEFINE_MESSAGE(0xA06B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("ゴロンの里"),
+    MSG("Goron Village"),
+    MSG("Goronendorf"),
+    MSG("Village Goron")
+)
+
+DEFINE_MESSAGE(0xA06C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("ゴロンのほこら"),
+    MSG("Goron Shrine"),
+    MSG("Goronen-Schrein"),
+    MSG("Autel Goron")
+)
+
+DEFINE_MESSAGE(0xA06E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("禁じられた森"),
     MSG("Forbidden Woods"),
     MSG("Verbotener Wald"),
     MSG("Bois Interdits")
 )
 
-DEFINE_MESSAGE(0xA06A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA06F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("蜘蛛の巣の祠"),
+    MSG("Webbed Shrine"),
+    MSG("Versponnener Schrein"),
+    MSG("Sanctuaire Entoilé")
+)
+
+DEFINE_MESSAGE(0xA070, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("古代の空洞"),
     MSG("Ancient Hollow"),
     MSG("Uralter Hohlraum"),
     MSG("Creux Antique")
 )
 
-DEFINE_MESSAGE(0xA06B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA071, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("ゴロン鉱山"),
+    MSG("Goron Mines"),
+    MSG("Mine der Goronen"),
+    MSG("Mine Goron")
+)
+
+DEFINE_MESSAGE(0xA072, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("ウッドフォールの神殿"),
     MSG("Woodfall Temple"),
     MSG("Dämmerwald Tempel"),
     MSG("Temple de Bois-Cascade")
 )
 
-DEFINE_MESSAGE(0xA06D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-    MSG("ウッドフォール"),
-    MSG("Woodfall"),
-    MSG("Dämmerwald"),
-    MSG("Bois-Cascade")
+DEFINE_MESSAGE(0xA074, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("スプリングレイクの鍛冶屋"),
+    MSG("Spring Lake Smithy"),
+    MSG("Schmiedewerkstatt"),
+    MSG("Forgeron du Lac")
 )
 
 DEFINE_MESSAGE(0xA148, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,

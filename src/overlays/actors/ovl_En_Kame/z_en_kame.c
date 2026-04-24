@@ -20,8 +20,6 @@
 #include "z_en_item00.h"
 #include "save.h"
 
-#include "overlays/actors/ovl_En_Clear_Tag/z_en_clear_tag.h"
-
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_HOOKSHOT_PULLS_PLAYER)
 
 void EnKame_Init(Actor* thisx, struct PlayState* play);

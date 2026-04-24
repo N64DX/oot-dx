@@ -452,6 +452,8 @@
     <Sample Name="SAMPLE_0_WOODFALL_629" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample629.aifc"/>
     <Sample Name="SAMPLE_0_WOODFALL_630" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample630.aifc"/>
     <Sample Name="SAMPLE_0_WOODFALL_631" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample631.aifc"/>
+    <Sample Name="SAMPLE_0_GABORA_1"     Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Gabora_Sample1.half.aifc"/>
+    <Sample Name="SAMPLE_0_GABORA_2"     Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Gabora_Sample2.half.aifc"/>
     <Sample Name="SAMPLE_0_STAL_1"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample1.aifc"/>
     <Sample Name="SAMPLE_0_STAL_2"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample2.aifc"/>
     <Sample Name="SAMPLE_0_STAL_3"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Stal_Sample3.aifc"/>

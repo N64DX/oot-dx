@@ -91,7 +91,9 @@ void EnShopnuts_Init(Actor* thisx, PlayState* play) {
         ((SHOPNUTS_GET_TYPE(&this->actor) == DNS_TYPE_DEKU_STICK_UPGRADE) &&
          GET_INFTABLE(INFTABLE_HAS_DEKU_STICK_UPGRADE)) ||
         ((SHOPNUTS_GET_TYPE(&this->actor) == DNS_TYPE_DEKU_NUT_UPGRADE) &&
-         GET_INFTABLE(INFTABLE_HAS_DEKU_NUT_UPGRADE))) {
+         GET_INFTABLE(INFTABLE_HAS_DEKU_NUT_UPGRADE)) ||
+        ((SHOPNUTS_GET_TYPE(&this->actor) == DNS_TYPE_MAGIC_BEAN) &&
+         GET_ITEMGETINF(ITEMGETINF_DEKU_MAGIC_BEAN))) {
         Actor_Kill(&this->actor);
     } else {
         EnShopnuts_SetupIdle(this);

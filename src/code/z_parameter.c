@@ -153,15 +153,21 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_INSIDE_GANONS_CASTLE_COLLAPSE, 0x00, 0x05, 0x50 },
     { SCENE_THIEVES_HIDEOUT, 0x00, 0x00, 0x00 },
     { SCENE_GROTTOS, 0x00, 0x00, 0xD0 },
-    { SCENE_GROTTO_SHORTCUTS, 0x00, 0x00, 0xD0 },
-    { SCENE_ROAD_TO_LAKE_HYLIA, 0x00, 0x00, 0x00 },
-    { SCENE_ROAD_TO_FORTRESS, 0x00, 0x00, 0x00 },
+    { SCENE_GROTTOS2, 0x00, 0x00, 0xD0 },
+    { SCENE_PATH_TO_WOODFALL, 0x00, 0x00, 0x00 },
+    { SCENE_PATH_TO_FORTRESS, 0x00, 0x00, 0x00 },
+    { SCENE_PATH_TO_LAKE_HYLIA, 0x00, 0x00, 0x00 },
+    { SCENE_SPRING_LAKE, 0x00, 0x00, 0x00 },
     { SCENE_WOODFALL, 0x00, 0x00, 0x00 },
-    { SCENE_SWAMP_SPIDER_HOUSE, 0x00, 0x00, 0x00 },
+    { SCENE_PATH_TO_GORON_VILLAGE, 0x00, 0x00, 0x00 },
+    { SCENE_GORON_VILLAGE, 0x00, 0x00, 0x00 },
+    { SCENE_GORON_SHRINE, 0x00, 0x00, 0x00 },
     { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
+    { SCENE_WEBBED_SHRINE, 0x00, 0x00, 0x00 },
     { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x00 },
     { SCENE_WOODFALL_TEMPLE, 0x00, 0x00, 0x1C },
     { SCENE_WOODFALL_TEMPLE_BOSS, 0x00, 0x00, 0x1C },
+    { SCENE_SPRING_LAKE_SMITHY, 0x10, 0x10, 0x15 },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
 
@@ -533,6 +539,14 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 case SCENE_GORON_CITY:
                 case SCENE_LON_LON_RANCH:
                 case SCENE_OUTSIDE_GANONS_CASTLE:
+                case SCENE_PATH_TO_WOODFALL:
+                case SCENE_PATH_TO_FORTRESS:
+                case SCENE_PATH_TO_LAKE_HYLIA:
+                case SCENE_SPRING_LAKE:
+                case SCENE_WOODFALL:
+                case SCENE_PATH_TO_GORON_VILLAGE:
+                case SCENE_GORON_VILLAGE:
+                case SCENE_GORON_SHRINE:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {
@@ -1982,6 +1996,14 @@ u8 Item_Give(PlayState* play, u8 item) {
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
+    } else if (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) {
+        u8 index = item - ITEM_SHIELD_DEKU_UPGRADE;
+        if (gSaveContext.save.info.shields[index].upgrade < 8)
+            gSaveContext.save.info.shields[index].upgrade++;
+        gSaveContext.save.info.shields[index].durability = Player_GetMaxShieldDurability(index+1);
+        if (item == ITEM_SHIELD_HEROS_UPGRADE)
+            gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
+        return ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI);
         for (i=0; i<4; i++)
@@ -2131,6 +2153,9 @@ u8 Item_Give(PlayState* play, u8 item) {
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_DEKU_NUT)
                 Interface_LoadItemIcon1(play, i+4);
+        return ITEM_NONE;
+    } else if (item == ITEM_BOOTS_UPGRADE) {
+        gSaveContext.save.info.obtainedSkills.furtherJump = 1;
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         INV_CONTENT(item) = item;
@@ -2503,7 +2528,7 @@ u8 Item_CheckObtainability(u8 item) {
             return ITEM_NONE;
         }
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
-        if ( (item == ITEM_SHIELD_DEKU && gSaveContext.save.info.shieldDurability[0] < MAX_DURABILITY_SHIELD_DEKU) || (item == ITEM_SHIELD_HYLIAN && gSaveContext.save.info.shieldDurability[1] < MAX_DURABILITY_SHIELD_HYLIAN) || (item == ITEM_SHIELD_MIRROR && gSaveContext.save.info.shieldDurability[2] < MAX_DURABILITY_SHIELD_DEKU) )
+        if (gSaveContext.save.info.shields[item - ITEM_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(item - ITEM_SHIELD_DEKU + 1))
             return ITEM_NONE;
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU + EQUIP_INV_SHIELD_DEKU)) {
             return item;
@@ -2511,7 +2536,7 @@ u8 Item_CheckObtainability(u8 item) {
             return ITEM_NONE;
         }
     } else if (item == ITEM_SHIELD_HEROS) {
-        if (item == ITEM_SHIELD_HEROS && gSaveContext.save.info.shieldDurability[3] < MAX_DURABILITY_SHIELD_HEROS)
+        if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS))
             return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
@@ -2607,7 +2632,9 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS) {
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS || item == ITEM_BOOTS_UPGRADE) {
+        return ITEM_NONE;
+    } else if (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) {
         return ITEM_NONE;
     }
 
@@ -3030,6 +3057,9 @@ s32 Magic_RequestChange(PlayState* play, s16 amount, s16 type) {
         return false;
     }
 
+    if (gSaveContext.save.info.obtainedSkills.halfMagicCost && type != MAGIC_ADD)
+        amount /= 2;
+
     if ((type != MAGIC_ADD) && (gSaveContext.save.info.playerData.magic - amount) < 0) {
         if (gSaveContext.magicCapacity != 0) {
             Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -3077,7 +3107,7 @@ s32 Magic_RequestChange(PlayState* play, s16 amount, s16 type) {
         case MAGIC_CONSUME_LENS:
             if (gSaveContext.magicState == MAGIC_STATE_IDLE) {
                 if (gSaveContext.save.info.playerData.magic != 0) {
-                    interfaceCtx->lensMagicConsumptionTimer = 80;
+                    interfaceCtx->lensMagicConsumptionTimer = gSaveContext.save.info.obtainedSkills.halfMagicCost ? 160 : 80;
                     gSaveContext.magicState = MAGIC_STATE_CONSUME_LENS;
                     return true;
                 } else {
@@ -3192,7 +3222,7 @@ void Magic_Update(PlayState* play) {
 
         case MAGIC_STATE_CONSUME:
             // Consume magic until target is reached or no more magic is available
-            gSaveContext.save.info.playerData.magic -= 2;
+            gSaveContext.save.info.playerData.magic -= gSaveContext.save.info.obtainedSkills.halfMagicCost ? 1 : 2;
             if (gSaveContext.save.info.playerData.magic <= 0) {
                 gSaveContext.save.info.playerData.magic = 0;
                 gSaveContext.magicState = MAGIC_STATE_METER_FLASH_1;
@@ -3271,7 +3301,7 @@ void Magic_Update(PlayState* play) {
                 interfaceCtx->lensMagicConsumptionTimer--;
                 if (interfaceCtx->lensMagicConsumptionTimer == 0) {
                     gSaveContext.save.info.playerData.magic--;
-                    interfaceCtx->lensMagicConsumptionTimer = 80;
+                    interfaceCtx->lensMagicConsumptionTimer = gSaveContext.save.info.obtainedSkills.halfMagicCost ? 160 : 80;
                 }
             }
 
@@ -3374,16 +3404,23 @@ void Magic_DrawMeter(PlayState* play) {
 
             // Fill the rest of the meter with the normal magic color
             gDPPipeSync(OVERLAY_DISP++);
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
-                            interfaceCtx->magicAlpha);
+            
+            if (gSaveContext.save.info.obtainedSkills.halfMagicCost) {
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 200, interfaceCtx->magicAlpha);
+            } else {
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2), interfaceCtx->magicAlpha);
+            }
 
             gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY(magicMeterY + 3) << 2,
                                 X_HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2, (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2,
                                 G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         } else {
             // Fill the whole meter with the normal magic color
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
-                            interfaceCtx->magicAlpha);
+            if (gSaveContext.save.info.obtainedSkills.halfMagicCost) {
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 200, interfaceCtx->magicAlpha);
+            } else {
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2), interfaceCtx->magicAlpha);
+            }
 
             gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 8, 0,
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
@@ -4232,8 +4269,9 @@ void Energy_Update(PlayState* play) {
 
 void Durability_DrawMeter(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
-    u8 capacity, durability;
+    u16 capacity, durability;
     u8 shield = GET_PLAYER(play)->currentShield;
+    u8 upgrade;
     u16 meterY = 190;
     u16 meterX = 26;
     f32 scaleDivide;
@@ -4243,29 +4281,22 @@ void Durability_DrawMeter(PlayState* play) {
         return;
     }
 
+    durability = gSaveContext.save.info.shields[shield-1].durability;
+    capacity = Player_GetMaxShieldDurability(shield);
+    upgrade = (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST) ? gSaveContext.save.info.shields[shield-1].upgrade : 2;
+
     switch (shield) {
         case PLAYER_SHIELD_DEKU:
-            durability = gSaveContext.save.info.shieldDurability[0];
-            capacity = MAX_DURABILITY_SHIELD_DEKU;
-            scaleDivide = 3.5f;
+            scaleDivide = 2.67f + upgrade * 0.33f;
             break;
-
         case PLAYER_SHIELD_HYLIAN:
-            durability = gSaveContext.save.info.shieldDurability[1];
-            capacity = MAX_DURABILITY_SHIELD_HYLIAN;
-            scaleDivide = 5.0f;
+            scaleDivide = 8.0f + upgrade;
             break;
-
         case PLAYER_SHIELD_MIRROR:
-            durability = gSaveContext.save.info.shieldDurability[2];
-            capacity = MAX_DURABILITY_SHIELD_MIRROR;
-            scaleDivide = 2.5f;
+            scaleDivide = 1.33f + upgrade * 0.167f;
             break;
-        
         case PLAYER_SHIELD_HEROS:
-            durability = gSaveContext.save.info.shieldDurability[3];
-            capacity = MAX_DURABILITY_SHIELD_HEROS;
-            scaleDivide = 5.0f;
+            scaleDivide = 8.0f + upgrade;
             break;
     }
 
@@ -5411,6 +5442,14 @@ void Interface_Update(PlayState* play) {
                 case SCENE_GORON_CITY:
                 case SCENE_LON_LON_RANCH:
                 case SCENE_OUTSIDE_GANONS_CASTLE:
+                case SCENE_PATH_TO_WOODFALL:
+                case SCENE_PATH_TO_FORTRESS:
+                case SCENE_PATH_TO_LAKE_HYLIA:
+                case SCENE_SPRING_LAKE:
+                case SCENE_WOODFALL:
+                case SCENE_PATH_TO_GORON_VILLAGE:
+                case SCENE_GORON_VILLAGE:
+                case SCENE_GORON_SHRINE:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {

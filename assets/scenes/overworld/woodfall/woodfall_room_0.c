@@ -16,7 +16,7 @@ SceneCmd woodfall_room_0Commands[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&woodfall_room_0RoomShapeCullable_0003B0),
-    SCENE_CMD_OBJECT_LIST(7, woodfall_room_0ObjectList_000050),
+    SCENE_CMD_OBJECT_LIST(8, woodfall_room_0ObjectList_000050),
     SCENE_CMD_ACTOR_LIST(37, woodfall_room_0ActorEntry_000064),
     SCENE_CMD_END(),
 };
@@ -30,10 +30,11 @@ s16 woodfall_room_0ObjectList_000050[] = {
     OBJECT_TSUBO,
     OBJECT_WOOD_PILLAR,
     OBJECT_RAILLIFT,
+    OBJECT_FR,
 };
 
 ActorEntry woodfall_room_0ActorEntry_000064[] = {
-    { ACTOR_EN_ITEM00,      {  -834,    106,   -248 }, {    0,      0,    0 }, 0x0101 },
+    { ACTOR_EN_FR,          {  -814,    106,   -248 }, {    0, 0xC000,    0 }, 0x0214 }, // Purple: 1 (Woodfall)
     { ACTOR_EN_GRASSHOPPER, {   731,    434,    560 }, {    0,      0,    0 }, 0x0003 },
     { ACTOR_EN_GRASSHOPPER, {   564,    381,   -742 }, {    0,      0,    0 }, 0x0003 },
     { ACTOR_OBJ_TSUBO,      {    81,    200,   1041 }, {    0,      0,    0 }, 0x4303 },

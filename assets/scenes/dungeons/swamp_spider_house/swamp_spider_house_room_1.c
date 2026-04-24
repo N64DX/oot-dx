@@ -1,10 +1,5 @@
 #include "swamp_spider_house_scene.h"
-#include "swamp_spider_house_room_0.h"
 #include "swamp_spider_house_room_1.h"
-#include "swamp_spider_house_room_2.h"
-#include "swamp_spider_house_room_3.h"
-#include "swamp_spider_house_room_4.h"
-#include "swamp_spider_house_room_5.h"
 
 #include "actor.h"
 #include "array_count.h"
@@ -15,7 +10,7 @@
 #include "sys_matrix.h"
 #include "ultra64.h"
 
-SceneCmd swamp_spider_house_room_1Commands[] = {
+SceneCmd swamp_spider_house_room_1[] = {
     SCENE_CMD_ECHO_SETTINGS(7),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
@@ -42,33 +37,33 @@ s16 swamp_spider_house_room_1ObjectList_000040[] = {
 };
 
 ActorEntry swamp_spider_house_room_1ActorEntry_000068[] = {
-    { ACTOR_OBJ_SWITCH,     { -280,  300, -1150 }, { 0,      0,      0 }, 0x0000, }, // 1
-    { ACTOR_OBJ_SWITCH,     {  280,  300, -1150 }, { 0,      0,      0 }, 0x0100, }, // 2
-    { ACTOR_EN_SW,          { -100, -20,  -60   }, { 0xC000, 0x1000, 0 }, 0x0001, }, // 3
-    { ACTOR_EN_SW,          {  115, -20,  -615  }, { 0xC000, 0,      0 }, 0x0001, }, // 4
-    { ACTOR_EN_SW,          { -80,  -20,  -990  }, { 0xC000, 0xE000, 0 }, 0x0001, }, // 5
-    { ACTOR_EN_SW,          { -100, -20,  -660  }, { 0xC000, 0,      0 }, 0x0001, }, // 6
-    { ACTOR_EN_SW,          {  270,  0,   -700  }, { 0xC000, 0x1000, 0 }, 0x0001, }, // 7
-    { ACTOR_EN_SW,          { -300,  0,   -1140 }, { 0xC000, 0x7000, 0 }, 0x0001, }, // 8
-    { ACTOR_EN_DEKUNUTS,    { -268,  300, -690  }, { 0,      0xC000, 0 }, 0x007F, }, // 9
-    { ACTOR_EN_ITEM00,      {  0,    294, -900  }, { 0,      0,      0 }, 0x0806, }, // 10
-    { ACTOR_EN_DEKUNUTS,    {  270,  300, -690  }, { 0,      0x4000, 0 }, 0x007F, }, // 11
-    { ACTOR_OBJ_TSUBO,      { -330,  300, -210  }, { 0,      0,      0 }, 0x0008, }, // 12
-    { ACTOR_OBJ_TSUBO,      { -270,  300, -210  }, { 0,      0,      0 }, 0x0008, }, // 13
-    { ACTOR_OBJ_TSUBO,      { -90,   0,   -270  }, { 0,      0,      0 }, 0x0003, }, // 14
-    { ACTOR_OBJ_TSUBO,      {  89,   0,   -269  }, { 0,      0,      0 }, 0x0003, }, // 15
-    { ACTOR_OBJ_TSUBO,      {  90,   0,   -209  }, { 0,      0,      0 }, 0x0003, }, // 16
-    { ACTOR_OBJ_TSUBO,      {  270,  300, -210  }, { 0,      0,      0 }, 0x0008, }, // 17
-    { ACTOR_OBJ_TSUBO,      {  330,  300, -210  }, { 0,      0,      0 }, 0x0008, }, // 18
-    { ACTOR_OBJ_TSUBO,      { -90,   0,   -211  }, { 0,      0,      0 }, 0x0003, }, // 19
-    { ACTOR_EN_KANBAN,      {  0,   -20,  -965  }, { 0,      0x8000, 0 }, 0x0049, }, // 20
-    { ACTOR_EN_KANBAN,      {  0,   -20,  -830  }, { 0,      0,      0 }, 0x0047, }, // 21
-    { ACTOR_EN_HIT_TAG,     { -18,   204, -866  }, { 0,      0,      0 }, 0x7E00, }, // 22
-    { ACTOR_EN_HIT_TAG,     {  20,   204, -866  }, { 0,      0,      0 }, 0x7E00, }, // 23
-    { ACTOR_EN_HIT_TAG,     {  20,   204, -934  }, { 0,      0,      0 }, 0x7E00, }, // 24
-    { ACTOR_EN_HIT_TAG,     { -19,   204, -934  }, { 0,      0,      0 }, 0x7E00, }, // 25
-    { ACTOR_EN_WONDER_ITEM, {  0,    215, -865  }, { 0,      0,      1 }, 0x1806, }, // 26
-    { ACTOR_EN_WONDER_ITEM, {  0,    215, -935  }, { 0,      0,      1 }, 0x1806, }, // 27
+    { ACTOR_OBJ_SWITCH,     { -280,  300, -1150 }, { 0,      0,      0 }, 0x0000 }, // 1
+    { ACTOR_OBJ_SWITCH,     {  280,  300, -1150 }, { 0,      0,      0 }, 0x0100 }, // 2
+    { ACTOR_EN_SW,          { -100, -20,  -60   }, { 0xC000, 0x1000, 0 }, 0x0001 }, // 3
+    { ACTOR_EN_SW,          {  115, -20,  -615  }, { 0xC000, 0,      0 }, 0x0001 }, // 4
+    { ACTOR_EN_SW,          { -80,  -20,  -990  }, { 0xC000, 0xE000, 0 }, 0x0001 }, // 5
+    { ACTOR_EN_SW,          { -100, -20,  -660  }, { 0xC000, 0,      0 }, 0x0001 }, // 6
+    { ACTOR_EN_SW,          {  270,  0,   -700  }, { 0xC000, 0x1000, 0 }, 0x0001 }, // 7
+    { ACTOR_EN_SW,          { -300,  0,   -1140 }, { 0xC000, 0x7000, 0 }, 0x0001 }, // 8
+    { ACTOR_EN_DEKUNUTS,    { -268,  300, -690  }, { 0,      0xC000, 0 }, 0x007F }, // 9
+    { ACTOR_EN_ITEM00,      {  0,    294, -900  }, { 0,      0,      0 }, 0x0806 }, // 10
+    { ACTOR_EN_DEKUNUTS,    {  270,  300, -690  }, { 0,      0x4000, 0 }, 0x007F }, // 11
+    { ACTOR_OBJ_TSUBO,      { -330,  300, -210  }, { 0,      0,      0 }, 0x0008 }, // 12
+    { ACTOR_OBJ_TSUBO,      { -270,  300, -210  }, { 0,      0,      0 }, 0x0008 }, // 13
+    { ACTOR_OBJ_TSUBO,      { -90,   0,   -270  }, { 0,      0,      0 }, 0x0003 }, // 14
+    { ACTOR_OBJ_TSUBO,      {  89,   0,   -269  }, { 0,      0,      0 }, 0x0003 }, // 15
+    { ACTOR_OBJ_TSUBO,      {  90,   0,   -209  }, { 0,      0,      0 }, 0x0003 }, // 16
+    { ACTOR_OBJ_TSUBO,      {  270,  300, -210  }, { 0,      0,      0 }, 0x0008 }, // 17
+    { ACTOR_OBJ_TSUBO,      {  330,  300, -210  }, { 0,      0,      0 }, 0x0008 }, // 18
+    { ACTOR_OBJ_TSUBO,      { -90,   0,   -211  }, { 0,      0,      0 }, 0x0003 }, // 19
+    { ACTOR_EN_KANBAN,      {  0,   -20,  -965  }, { 0,      0x8000, 0 }, 0x0049 }, // 20
+    { ACTOR_EN_KANBAN,      {  0,   -20,  -830  }, { 0,      0,      0 }, 0x0047 }, // 21
+    { ACTOR_EN_HIT_TAG,     { -18,   204, -866  }, { 0,      0,      0 }, 0x7E00 }, // 22
+    { ACTOR_EN_HIT_TAG,     {  20,   204, -866  }, { 0,      0,      0 }, 0x7E00 }, // 23
+    { ACTOR_EN_HIT_TAG,     {  20,   204, -934  }, { 0,      0,      0 }, 0x7E00 }, // 24
+    { ACTOR_EN_HIT_TAG,     { -19,   204, -934  }, { 0,      0,      0 }, 0x7E00 }, // 25
+    { ACTOR_EN_WONDER_ITEM, {  0,    215, -865  }, { 0,      0,      1 }, 0x1806 }, // 26
+    { ACTOR_EN_WONDER_ITEM, {  0,    215, -935  }, { 0,      0,      1 }, 0x1806 }, // 27
 };
 
 RoomShapeCullable swamp_spider_house_room_1RoomShapeCullable_000220 = { 
@@ -96,6 +91,69 @@ s32 swamp_spider_house_room_1_terminatorMaybe_0002EC = { 0x01000000 };
 
 Vtx swamp_spider_house_room_1Vtx_0002F0[] = {
 #include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0002F0.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_1Vtx_000F88[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_000F88.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_1Vtx_001140[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_001140.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_1Vtx_001E50[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_001E50.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_1Vtx_003C50[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_003C50.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_1Vtx_0043F0[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0043F0.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_1Vtx_005EF8[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_005EF8.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_1Vtx_006640[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_006640.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_1Vtx_0069C8[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0069C8.vtx.inc"
+};
+Vtx swamp_spider_house_room_1Vtx_0079B0[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0079B0.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_1Vtx_0081B8[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0081B8.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_1Vtx_0096B0[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0096B0.vtx.inc"
+};
+
+u64 swamp_spider_house_room_1Tex_008670[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Tex_008670.ci4.inc.c"
+};
+
+u64 swamp_spider_house_room_1Tex_008E70[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Tex_008E70.ci4.inc.c"
+};
+
+u64 swamp_spider_house_room_1TLUT_009670[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Tex_008670.tlut.rgba16.inc.c"
+};
+
+u64 swamp_spider_house_room_1TLUT_009690[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Tex_008E70.tlut.rgba16.inc.c"
+};
+
+u64 swamp_spider_house_room_1Tex_0098F8[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Tex_0098F8.rgba16.inc.c"
 };
 
 Gfx swamp_spider_house_room_1DL_000C70[] = {
@@ -178,10 +236,6 @@ Gfx swamp_spider_house_room_1DL_000C70[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx swamp_spider_house_room_1Vtx_000F88[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_000F88.vtx.inc"
-};
-
 Gfx swamp_spider_house_room_1DL_001068[] = {
     gsSPVertex(&swamp_spider_house_room_1Vtx_000F88[6], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -199,10 +253,6 @@ Gfx swamp_spider_house_room_1DL_001068[] = {
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 0, 3, 0, 4, 3, 5, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx swamp_spider_house_room_1Vtx_001140[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_001140.vtx.inc"
 };
 
 Gfx swamp_spider_house_room_1DL_001C10[] = {
@@ -267,10 +317,6 @@ Gfx swamp_spider_house_room_1DL_001C10[] = {
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx swamp_spider_house_room_1Vtx_001E50[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_001E50.vtx.inc"
 };
 
 Gfx swamp_spider_house_room_1DL_0036F0[] = {
@@ -415,10 +461,6 @@ Gfx swamp_spider_house_room_1DL_0036F0[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx swamp_spider_house_room_1Vtx_003C50[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_003C50.vtx.inc"
-};
-
 Gfx swamp_spider_house_room_1DL_0041D0[] = {
     gsSPVertex(&swamp_spider_house_room_1Vtx_003C50[80], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -466,10 +508,6 @@ Gfx swamp_spider_house_room_1DL_0041D0[] = {
     gsSPVertex(&swamp_spider_house_room_1Vtx_003C50[76], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx swamp_spider_house_room_1Vtx_0043F0[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0043F0.vtx.inc"
 };
 
 Gfx swamp_spider_house_room_1DL_005A80[] = {
@@ -596,10 +634,6 @@ Gfx swamp_spider_house_room_1DL_005A80[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx swamp_spider_house_room_1Vtx_005EF8[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_005EF8.vtx.inc"
-};
-
 Gfx swamp_spider_house_room_1DL_0063D8[] = {
     gsSPVertex(&swamp_spider_house_room_1Vtx_005EF8[70], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -647,10 +681,6 @@ Gfx swamp_spider_house_room_1DL_0063D8[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx swamp_spider_house_room_1Vtx_006640[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_006640.vtx.inc"
-};
-
 Gfx swamp_spider_house_room_1DL_006840[] = {
     gsSPVertex(&swamp_spider_house_room_1Vtx_006640[24], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -679,10 +709,6 @@ Gfx swamp_spider_house_room_1DL_006840[] = {
     gsSP2Triangles(6, 7, 8, 0, 9, 8, 7, 0),
     gsSP2Triangles(7, 10, 11, 0, 7, 11, 9, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx swamp_spider_house_room_1Vtx_0069C8[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0069C8.vtx.inc"
 };
 
 Gfx swamp_spider_house_room_1DL_007688[] = {
@@ -767,10 +793,6 @@ Gfx swamp_spider_house_room_1DL_007688[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx swamp_spider_house_room_1Vtx_0079B0[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0079B0.vtx.inc"
-};
-
 Gfx swamp_spider_house_room_1DL_007FB0[] = {
     gsSPVertex(&swamp_spider_house_room_1Vtx_0079B0[88], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -817,10 +839,6 @@ Gfx swamp_spider_house_room_1DL_007FB0[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx swamp_spider_house_room_1Vtx_0081B8[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0081B8.vtx.inc"
-};
-
 Gfx swamp_spider_house_room_1DL_008478[] = {
     gsSPVertex(&swamp_spider_house_room_1Vtx_0081B8[36], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -853,26 +871,6 @@ Gfx swamp_spider_house_room_1DL_008478[] = {
     gsSPEndDisplayList(),
 };
 
-u64 swamp_spider_house_room_1Tex_008670[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Tex_008670.ci4.inc.c"
-};
-
-u64 swamp_spider_house_room_1Tex_008E70[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Tex_008E70.ci4.inc.c"
-};
-
-u64 swamp_spider_house_room_1TLUT_009670[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Tex_008670.tlut.rgba16.inc.c"
-};
-
-u64 swamp_spider_house_room_1TLUT_009690[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Tex_008E70.tlut.rgba16.inc.c"
-};
-
-Vtx swamp_spider_house_room_1Vtx_0096B0[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Vtx_0096B0.vtx.inc"
-};
-
 Gfx swamp_spider_house_room_1DL_0097F0[] = {
     gsSPVertex(&swamp_spider_house_room_1Vtx_0096B0[12], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -893,8 +891,4 @@ Gfx swamp_spider_house_room_1DL_0097F0[] = {
     gsSP2Triangles(8, 9, 0, 0, 8, 0, 3, 0),
     gsSP2Triangles(10, 8, 3, 0, 10, 3, 11, 0),
     gsSPEndDisplayList(),
-};
-
-u64 swamp_spider_house_room_1Tex_0098F8[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1Tex_0098F8.rgba16.inc.c"
 };

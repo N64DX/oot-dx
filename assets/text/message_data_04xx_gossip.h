@@ -750,3 +750,55 @@ MSG(
 "forêt et a survécu!"
 )
 )
+
+DEFINE_MESSAGE(0x0421, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"They say there's a blacksmith down\n"
+"the road that reforges your shield for\n"
+"more durability. But only if you have\n"
+"the Shield Durability option enabled."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0422, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"They say there is an ancient Stalfos\n"
+"master locked up in a cave far into\n"
+"this region.\n"
+"Supposedly it guards a treasure."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0423, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"They say that when all five frog\n"
+"groups are reunited in Spring Lake\n"
+"that something good will happen."
+BOX_BREAK
+
+"There are frog groups in:\n"
+"Spring Lake, Goron Mines, Woodfall,\n"
+"Forbidden Woods and Stone Tower."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0424, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"They say there are hidden shortcuts\n"
+"located around the world.\n"
+"Do they even make sense where\n"
+"those make you go?"
+),
+MSG(),
+MSG()
+)

@@ -16,8 +16,8 @@ SceneCmd woodfall_temple_room_10Commands[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_10RoomShapeCullable_000180),
-    SCENE_CMD_OBJECT_LIST(14, woodfall_temple_room_10ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(21, woodfall_temple_room_10ActorEntry_00006C),
+    SCENE_CMD_OBJECT_LIST(16, woodfall_temple_room_10ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(25, woodfall_temple_room_10ActorEntry_00006C),
     SCENE_CMD_END(),
 };
 
@@ -35,6 +35,8 @@ s16 woodfall_temple_room_10ObjectList_000040[] = {
     OBJECT_GRASSHOPPER,
     OBJECT_ST,
     OBJECT_DEKUBABA,
+    OBJECT_KIBAKO2,
+    OBJECT_FR,
     OBJECT_BG_TELEPORTER,
 };
 
@@ -49,6 +51,10 @@ ActorEntry woodfall_temple_room_10ActorEntry_00006C[] = {
     { ACTOR_OBJ_RAILLIFT,   { -350,    0,   50 }, { 0,      0,      0 }, 0x800C },
     { ACTOR_EN_GRASSHOPPER, {   60,  125, -255 }, { 0, 0xAC80,      0 }, 0x0000 },
     { ACTOR_EN_GRASSHOPPER, {  210,   50,  165 }, { 0, 0x5280,      0 }, 0x0000 },
+    { ACTOR_OBJ_KIBAKO3,    {  600, -330, -600 }, { 0,      0,      0 }, 0x0224 }, // Purple: 2 (Woodfall)
+    { ACTOR_OBJ_KIBAKO2,    {  540, -330, -600 }, { 0,      0,      0 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO2,    {  540, -330, -550 }, { 0,      0,      0 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO2,    {  600, -330, -550 }, { 0,      0,      0 }, 0xFFFF },
     { ACTOR_EN_KUSA,        {   45, -330,  270 }, { 0, 0x8300,      0 }, 0x002B },
     { ACTOR_EN_KUSA,        {   75, -330,  -30 }, { 0, 0x9600,      0 }, 0x002B },
     { ACTOR_EN_KUSA,        {  105, -330,  450 }, { 0, 0x9A80,      0 }, 0x002B },

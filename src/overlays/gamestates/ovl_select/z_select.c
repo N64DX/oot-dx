@@ -142,17 +142,41 @@ void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
             else SET_INFTABLE(flag);
             break;
         case CARPENTERS:
-            if (!GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED)) {
+            if (GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED)) {
+                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED);
+            }
+            else {
                 SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED);
                 SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED);
                 SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED);
                 SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED);
             }
+            break;
+        case BLACKSMITH:
+            if (GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA)) {
+                CLEAR_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA);
+            }
             else {
-                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED);
+                SET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP);
+                SET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP);
+                SET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA);
+            }
+            break;
+        case FROG:
+            if (gSaveContext.save.info.frogQuest.quest != 0) {
+                gSaveContext.save.info.frogQuest.found = 0;
+                gSaveContext.save.info.frogQuest.completed = 0;
+                gSaveContext.save.info.frogQuest.reward = 0;
+                gSaveContext.save.info.frogQuest.started = 0;
+            }
+            else {
+                gSaveContext.save.info.frogQuest.found = 0xFFFFF;
+                gSaveContext.save.info.frogQuest.started = 1;
             }
             break;
         case NABOORU:
@@ -242,6 +266,10 @@ char* MapSelect_GetEvent(MapSelectState* this, u8 type, u16 flag) {
              return GET_INFTABLE(flag) ? "On" : "Off";
         case CARPENTERS:
             return (GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED)) ? "On" : "Off";
+        case BLACKSMITH:
+            return (GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA)) ? "On" : "Off";
+        case FROG:
+            return (gSaveContext.save.info.frogQuest.quest != 0) ? "On" : "Off";
         case NABOORU:
             return (GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE) && GET_EVENTCHKINF(EVENTCHKINF_3B) && GET_EVENTCHKINF(EVENTCHKINF_C0) && (gSaveContext.save.info.sceneFlags[SCENE_SPIRIT_TEMPLE_BOSS].swch &= (1 << flag))) ? "On" : "Off";
         default:
@@ -471,22 +499,31 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "116:" T(GFXP_HIRAGANA "ﾀﾞｲﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain R2"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_1 },
     { "117:" T(GFXP_HIRAGANA "ﾀﾞｲﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain R3"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_2 },
     { "118:" T(GFXP_HIRAGANA "ﾀﾞｲﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain R4"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_3 },
-    { "119:" T(GFXP_HIRAGANA "ﾏﾎｳｾｷ ﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain G2"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_1 },
-    { "120:" T(GFXP_HIRAGANA "ﾏﾎｳｾｷ ﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain G3"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_2 },
-    { "121:" T(GFXP_HIRAGANA "ｳｨﾝﾄﾞﾐﾙ", "Windmill"), MapSelect_LoadGame, ENTR_WINDMILL_AND_DAMPES_GRAVE_1 },
-    { "122:" T(GFXP_HIRAGANA "ｶﾞﾉﾝｼﾞｮｳﾉｿﾄ", "Outside Ganon's Castle"), MapSelect_LoadGame, MAP_OUTSIDE_GANONS_CASTLE_0 },
-    { "123:" T(GFXP_HIRAGANA "ﾚｲｸﾊｲﾘｱﾐﾁ", "Lake Hylia Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_LAKE_HYLIA_0 },
-    { "124:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Fortress Trail"), MapSelect_LoadGame, ENTR_ROAD_TO_FORTRESS_0 },
-    { "125:" T(GFXP_HIRAGANA "ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Webbed Shrine"), MapSelect_LoadGame, ENTR_SWAMP_SPIDER_HOUSE_0 },
-    { "126:" T(GFXP_HIRAGANA "古代樹", "Forbidden Woods"), MapSelect_LoadGame, ENTR_FORBIDDEN_WOODS_0 },
-    { "127:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
-    { "128:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall"), MapSelect_LoadGame, ENTR_WOODFALL_0 },
-    { "129:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
-    { "130:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
-    { "131:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_0 },
-    { "132:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_2 },
-    { "133:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTO_SHORTCUTS_4 },
-    { "134:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss"), MapSelect_LoadGame, ENTR_BESITU_0 },
+    { "119:" T(GFXP_HIRAGANA "ﾀﾞｲﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain R5"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_4 },
+    { "120:" T(GFXP_HIRAGANA "ﾏﾎｳｾｷ ﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain G2"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_1 },
+    { "121:" T(GFXP_HIRAGANA "ﾏﾎｳｾｷ ﾖｳｾｲﾉｲｽﾞﾐ", "Great Fairy's Fountain G3"), MapSelect_LoadGame, ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_2 },
+    { "122:" T(GFXP_HIRAGANA "ｳｨﾝﾄﾞﾐﾙ", "Windmill"), MapSelect_LoadGame, ENTR_WINDMILL_AND_DAMPES_GRAVE_1 },
+    { "123:" T(GFXP_HIRAGANA "ｶﾞﾉﾝｼﾞｮｳﾉｿﾄ", "Outside Ganon's Castle"), MapSelect_LoadGame, MAP_OUTSIDE_GANONS_CASTLE_0 },
+    { "124:" T(GFXP_HIRAGANA "ﾚｲｸﾊｲﾘｱﾐﾁ", "Path to Lake Hylia"), MapSelect_LoadGame, ENTR_PATH_TO_LAKE_HYLIA_0 },
+    { "125:" T(GFXP_HIRAGANA "ｽﾌﾟﾘﾝｸﾞﾚｲｸ", "Spring Lake"), MapSelect_LoadGame, ENTR_SPRING_LAKE_0 },
+    { "126:" T(GFXP_HIRAGANA "ｽﾌﾟﾘﾝｸﾞﾚｲｸﾉｶｼﾞﾔ", "Spring Lake Smithy"), MapSelect_LoadGame, ENTR_SPRING_LAKE_SMITHY_0 },
+    { "127:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉｻﾄﾍﾉﾐﾁ", "Path to Goron Village"), MapSelect_LoadGame, ENTR_PATH_TO_GORON_VILLAGE_0 },
+    { "128:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉｻﾄ", "Goron Village"), MapSelect_LoadGame, ENTR_GORON_VILLAGE_0 },
+    { "129:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉﾎｺﾗ", "Goron Shrine"), MapSelect_LoadGame, ENTR_GORON_SHRINE_0 },
+    { "130:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙ ﾄﾚｲﾙ", "Path to Woodfall"), MapSelect_LoadGame, ENTR_PATH_TO_WOODFALL_0 },
+    { "131:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙ ﾄﾚｲﾙ", "Ghost Shop"), MapSelect_LoadGame, ENTR_MARKET_GUARD_HOUSE_1 },
+    { "132:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Path to Gerudo's Fortress"), MapSelect_LoadGame, ENTR_PATH_TO_FORTRESS_0 },
+    { "133:" T(GFXP_HIRAGANA "ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Webbed Shrine"), MapSelect_LoadGame, ENTR_WEBBED_SHRINE_0 },
+    { "134:" T(GFXP_HIRAGANA "古代樹", "Forbidden Woods"), MapSelect_LoadGame, ENTR_FORBIDDEN_WOODS_0 },
+    { "135:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
+    { "136:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall"), MapSelect_LoadGame, ENTR_WOODFALL_0 },
+    { "137:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
+    { "138:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
+    { "139:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTOS2_0 },
+    { "140:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTOS2_2 },
+    { "141:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
+    { "142:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
+    { "143:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };
@@ -525,10 +562,16 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Shadow Attacks Kakariko",  SHADOW,                     EVENTCHKINF_AA                           },
     { 0, "Fast Windmill",            EVENT,                      EVENTCHKINF_65                           },
     { 0, "Drained Well",             WELL,                       EVENTCHKINF_DRAINED_WELL                 },
+    { 0, "Cleansed Goron Mines",     EVENT,                      EVENTCHKINF_CLEANSED_GORON_MINES         },
     { 0, "Purified Woodfall Temple", EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE     },
     { 0, "Purified Woodfall",        EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL            },
+    { 0, "Opened Goron City",        INFTABLE,                   INFTABLE_109                             },
+    { 0, "Opened Goron Shrine",      INFTABLE,                   INFTABLE_GORON_SHRINE_DOOR_OPENED        },
+    { 0, "Opened Goron Mines",       INFTABLE,                   INFTABLE_GORON_MINES_DOOR_OPENED         },
+    { 0, "Opened Secret Shrine",     INFTABLE,                   INFTABLE_SECRET_SHRINE_DOOR_OPENED       },
     { 0, "Sheik Reveal",             EVENT,                      EVENTCHKINF_C4                           },
     { 0, "Rainbow Bridge",           EVENT,                      EVENTCHKINF_CREATED_RAINBOW_BRIDGE       },
+    { 0, "Talked to Smithy",         BLACKSMITH,                 EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA  },
     { 0, "Killed Gohma",             SCENE_DEKU_TREE_BOSS,       1,                                       },
     { 0, "Killed King Dodongo",      SCENE_DODONGOS_CAVERN_BOSS, 1,                                       },
     { 0, "Killed Barinade",          SCENE_JABU_JABU_BOSS,       1,                                       },
@@ -541,6 +584,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Killed Hyper Gohma",       SCENE_ANCIENT_HOLLOW,       13                                       },
     { 0, "Killed King Deku",         SCENE_WOODFALL_TEMPLE_BOSS, 1                                        },
     { 0, "Completed Mask Quest",     MASK,                       ITEMGETINF_3F,                           },
+    { 0, "Completed Frog Quest",     FROG,                       0,                                       },
     { 0, "Got Bottle Cucco Lady",    ITEM,                       ITEMGETINF_0C,                           },
     { 0, "Got Pocket Egg",           ITEM,                       ITEMGETINF_2C,                           },
     { 0, "Got Cojiro",               ITEM,                       ITEMGETINF_2E,                           },

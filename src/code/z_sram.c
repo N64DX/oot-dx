@@ -440,10 +440,11 @@ void Sram_InitDebugSave(void) {
         }
     }
 
-    gSaveContext.save.info.shieldDurability[0] = MAX_DURABILITY_SHIELD_DEKU;
-    gSaveContext.save.info.shieldDurability[1] = MAX_DURABILITY_SHIELD_HYLIAN;
-    gSaveContext.save.info.shieldDurability[2] = MAX_DURABILITY_SHIELD_MIRROR;
-    gSaveContext.save.info.shieldDurability[3] = MAX_DURABILITY_SHIELD_HEROS;
+    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability   = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
+    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HYLIAN);
+    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
+    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability  = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
+    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].upgrade = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].upgrade = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].upgrade = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].upgrade = 3;
 
     Sram_SetRushQuestFlags();
     gSaveContext.save.entranceIndex = ENTR_HYRULE_FIELD_0;
@@ -570,11 +571,6 @@ void Sram_OpenSave(SramContext* sramCtx) {
         case SCENE_WOODFALL_TEMPLE_BOSS:
             if (gSaveContext.save.entranceIndex == ENTR_WOODFALL_TEMPLE_0)
                 gSaveContext.save.entranceIndex = ENTR_WOODFALL_TEMPLE_0;
-            break;
-
-        case SCENE_BESITU:
-            if (IS_CHILD_QUEST)
-                gSaveContext.save.entranceIndex = ENTR_FORBIDDEN_WOODS_6;
             break;
 
         case SCENE_DESERT_COLOSSUS:
@@ -711,9 +707,10 @@ void Sram_OpenSave(SramContext* sramCtx) {
     if (IS_CHILD_QUEST)
         gSaveContext.save.linkAge = LINK_AGE_CHILD;
 
+    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].upgrade = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].upgrade = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].upgrade = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].upgrade = 0;
     for (i=0; i<4; i++)
-        if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, i) && (gSaveContext.save.info.shieldDurability[i] == 0 || gSaveContext.save.info.shieldDurability[i] >= Player_GetMaxShieldDurability(i+1)) && ( (i == 3 && !gSaveContext.save.info.mirrorShieldIsBroken) || i != 3) )
-            gSaveContext.save.info.shieldDurability[i] = Player_GetMaxShieldDurability(i+1);
+        if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, i) && (gSaveContext.save.info.shields[i].durability == 0 || gSaveContext.save.info.shields[i].durability>= Player_GetMaxShieldDurability(i+1)) && ( (i == 3 && !gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) || i != 3) )
+            gSaveContext.save.info.shields[i].durability = Player_GetMaxShieldDurability(i+1);
 
     if (INV_CONTENT(ITEM_MAGIC_BEAN) == ITEM_MAGIC_BEAN)
         SET_MAGIC_BEANS;

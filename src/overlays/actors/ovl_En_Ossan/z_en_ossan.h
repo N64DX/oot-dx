@@ -92,7 +92,8 @@ typedef enum OssanType {
     /* 07 */ OSSAN_TYPE_ZORA,
     /* 08 */ OSSAN_TYPE_GORON,
     /* 09 */ OSSAN_TYPE_INGO,
-    /* 10 */ OSSAN_TYPE_MASK
+    /* 10 */ OSSAN_TYPE_MASK,
+    /* 11 */ OSSAN_TYPE_SMITHY
 } OssanType;
 
 typedef enum EnOssanState {

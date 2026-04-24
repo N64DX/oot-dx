@@ -289,6 +289,8 @@
         <Sample Name="SAMPLE_0_261"/>
         <Sample Name="SAMPLE_0_433"/>
         <Sample Name="SAMPLE_0_434"/>
+        <Sample Name="SAMPLE_0_GABORA_1"/>
+        <Sample Name="SAMPLE_0_GABORA_2"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_126"/>
@@ -427,6 +429,8 @@
         <Effect/>
         <Effect Name="EFFECT_134" Sample="SAMPLE_0_155"/>
         <Effect Name="EFFECT_135" Sample="SAMPLE_0_197"/>
+        <Effect Name="EFFECT_GABORA_1"  Sample="SAMPLE_0_GABORA_1"/>
+        <Effect Name="EFFECT_GABORA_2"  Sample="SAMPLE_0_GABORA_2"/>
         <Effect Name="EFFECT_LASH_KID"  Sample="SAMPLE_0_433"/>
         <Effect Name="EFFECT_LASH_KID2" Sample="SAMPLE_0_434"/>
     </Effects>

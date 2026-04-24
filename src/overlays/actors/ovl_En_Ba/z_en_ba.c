@@ -283,7 +283,7 @@ void EnBa_SwingAtPlayer(EnBa* this, PlayState* play) {
             }
         } else {
             if (this->unk_31A == 10) {
-                Actor_PlaySfx(&this->actor, NA_SE_EN_BALINADE_HAND_DOWN);
+                Actor_PlaySfx(&this->actor, NA_SE_EN_SHADEST_FLY_ATTACK);
             }
             if (this->unk_31A != 0) {
                 this->unk_31C = 8000;

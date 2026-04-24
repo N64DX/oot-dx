@@ -110,16 +110,46 @@ typedef struct Inventory {
 
 typedef union ObtainedItems {
     struct {
-        u8 magicBeans     : 1;
-        u8 feather        : 2;
-        u8 amuletOfEnergy : 1;
-        u8 hammer         : 1;
-        u8 fairysSword    : 1;
-        u8 masterSword    : 1;
-        u8 unk            : 1;
+        u8 magicBeans           : 1;
+        u8 feather              : 2;
+        u8 amuletOfEnergy       : 1;
+        u8 hammer               : 1;
+        u8 fairysSword          : 1;
+        u8 masterSword          : 1;
+        u8 mirrorShieldIsBroken : 1;
     };
     u8 items;
 } ObtainedItems; // size = 0x1
+
+typedef union ObtainedSkills {
+    struct {
+        u8 enhancedSpin      : 1;
+        u8 perfectBlockBoost : 1;
+        u8 halfMagicCost     : 1;
+        u8 furtherJump       : 1;
+        u8 unk               : 4;
+    };
+    u8 skills;
+} ObtainedSkills; // size = 0x1
+
+typedef union ShieldDurability {
+    struct {
+        u16 durability : 11;
+        u16 upgrade    : 5;
+    };
+    u16 shieldDurability;
+} ShieldDurability; // size = 0x2
+
+typedef union FrogQuest {
+    struct {
+        u32 found      : 20;
+        u32 completed  : 5;
+        u32 reward     : 3;
+        u32 started    : 1;
+        u32 unk        : 3;
+    };
+    u32 quest;
+} FrogQuest; // size = 0x2
 
 typedef struct Checksum {
     /* 0x00 */ u16 value;
@@ -294,15 +324,15 @@ typedef struct SaveInfo {
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
-    /* 0x0F18  0x0F34 */ char unk_F34[0x01];
-    /* 0x0F19  0x0F35 */ u8 mirrorShieldIsBroken;
-    /* 0x0F1A  0x0F36 */ u8 isEnhancedSpinAcquired;
+    /* 0x0F18  0x0F34 */ char unk_F34[0x03];
     /* 0x0F1B  0x0F37 */ u8 energy;
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
-    /* 0x0F20  0x0F3C */ u8 shieldDurability[4];
+    /* 0x0F20  0x0F3C */ FrogQuest frogQuest;
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
-    /* 0x1285  0x12A1 */ char unk_12A1[0x24];
+    /* 0x1285  0x12A1 */ char unk_12A1[0x1B];
+    /* 0x12A0  0x12BC */ ShieldDurability shields[4];
+    /* 0x1288  0x12C4 */ ObtainedSkills obtainedSkills;
     /* 0x12A9  0x12C5 */ u8 scarecrowSpawnSongSet;
     /* 0x12AA  0x12C6 */ u8 scarecrowSpawnSong[0x80];
     /* 0x132A  0x1346 */ ObtainedItems obtainedItems;
@@ -532,11 +562,6 @@ typedef enum LinkAge {
 #define IS_BOSS_RUSH        (R_QUEST_MODE == BOSS_RUSH)
 #define IS_RUSH_QUEST       (IS_DUNGEON_RUSH || IS_BOSS_RUSH)
 
-#define MAX_DURABILITY_SHIELD_DEKU      100
-#define MAX_DURABILITY_SHIELD_HYLIAN    255
-#define MAX_DURABILITY_SHIELD_MIRROR    50
-#define MAX_DURABILITY_SHIELD_HEROS     255
-
 #define FILE_SLOTS_SIZE 6
 
 #define MIRROR_MODE                 ((gSaveContext.options[0] >> 0)  & 1)  // Bits: 0
@@ -573,7 +598,7 @@ typedef enum LinkAge {
 #define STATIC_DARK_LINK_HP         ((gSaveContext.options[1] >> 15) & 1)  // Bits: 15
 #define NO_BOTTLED_FAIRIES          ((gSaveContext.options[1] >> 16) & 1)  // Bits: 16
 #define NO_ITEM_DROPS               ((gSaveContext.options[1] >> 17) & 1)  // Bits: 17
-#define SHIELD_DURABILITY           ((gSaveContext.options[1] >> 18) & 1)  // Bits: 18
+#define SHIELD_DURABILITY           ((gSaveContext.options[1] >> 18) & 3)  // Bits: 18-19
 
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
@@ -695,6 +720,9 @@ typedef enum LinkAge {
 #define EVENTCHKINF_31 0x31
 #define EVENTCHKINF_32 0x32
 #define EVENTCHKINF_GAVE_LETTER_TO_KING_ZORA 0x33
+#define EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP 0x34
+#define EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP 0x35
+#define EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA 0x36
 #define EVENTCHKINF_37 0x37
 #define EVENTCHKINF_38 0x38
 #define EVENTCHKINF_39 0x39
@@ -724,6 +752,7 @@ typedef enum LinkAge {
 #define EVENTCHKINF_PURIFIED_WOODFALL 0x53
 #define EVENTCHKINF_54 0x54
 #define EVENTCHKINF_55 0x55
+#define EVENTCHKINF_CLEANSED_GORON_MINES 0x56
 #define EVENTCHKINF_59 0x59
 #define EVENTCHKINF_5A 0x5A
 #define EVENTCHKINF_5B 0x5B
@@ -881,6 +910,7 @@ typedef enum LinkAge {
 #define ITEMGETINF_11 0x11
 #define ITEMGETINF_12 0x12
 #define ITEMGETINF_13 0x13
+#define ITEMGETINF_DEKU_MAGIC_BEAN 0x14
 #define ITEMGETINF_15 0x15
 #define ITEMGETINF_16 0x16
 #define ITEMGETINF_17 0x17
@@ -1020,6 +1050,10 @@ typedef enum LinkAge {
 #define INFTABLE_113 0x113
 #define INFTABLE_11A 0x11A
 #define INFTABLE_11E 0x11E
+#define INFTABLE_GORON_SHRINE_DOOR_OPENED 0x11F
+#define INFTABLE_GORON_MINES_DOOR_OPENED 0x120
+#define INFTABLE_SECRET_SHRINE_DOOR_OPENED 0x121
+#define INFTABLE_STONE_TOWER_DOOR_OPENED 0x122
 #define INFTABLE_124 0x124
 #define INFTABLE_129 0x129
 #define INFTABLE_12A 0x12A
@@ -1080,6 +1114,7 @@ typedef enum LinkAge {
 #define INFTABLE_1A8_SHIFT 8
 #define INFTABLE_1A9_SHIFT 9
 #define INFTABLE_1AB_SHIFT 11
+#define INFTABLE_1AC_SHIFT 12
 #define INFTABLE_1AD_SHIFT 13
 
 // INFTABLE 0x1D0-0x1DF

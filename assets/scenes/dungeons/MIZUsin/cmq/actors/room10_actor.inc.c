@@ -118,5 +118,5 @@
         {  0x0000,  0x0000,  0x0000 }, // rot
          0x7403, // params
     }, // 19
-    
-    { ACTOR_BG_SPOT00_HANEBASI, { -845, 920, 0 }, { 0, 0, 0x4000 }, 0xFFFE, }, // 20
+
+    { ACTOR_BG_SPOT00_HANEBASI, { -845, 920, 0 }, { 0, 0, 0x4000 }, 0xFFFD, }, // 20

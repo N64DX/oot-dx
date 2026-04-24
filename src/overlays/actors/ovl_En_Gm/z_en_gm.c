@@ -86,6 +86,7 @@ void EnGm_Init(Actor* thisx, PlayState* play) {
            this->actor.params);
 
     this->gmObjectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GM);
+    this->type = this->actor.params >> 8;
 
     if (this->gmObjectSlot < 0) {
         PRINTF_COLOR_ERROR();
@@ -103,9 +104,11 @@ void EnGm_Destroy(Actor* thisx, PlayState* play) {
     Collider_DestroyCylinder(play, &this->collider);
 }
 
-s32 func_80A3D7C8(void) {
+s32 func_80A3D7C8(EnGm* this) {
     if (IS_CHILD_QUEST) {
-        if (!GET_EVENTCHKINF(EVENTCHKINF_45))
+        if (this->type == MEDIGORON_GORON_VILLAGE)
+            return !gSaveContext.save.info.obtainedSkills.furtherJump;
+        else if (!GET_EVENTCHKINF(EVENTCHKINF_45))
             return 0;
         else if (!GET_EVENTCHKINF(EVENTCHKINF_49))
             return 2;
@@ -163,16 +166,20 @@ void EnGm_UpdateEye(EnGm* this) {
 }
 
 void EnGm_SetTextID(EnGm* this) {
-    switch (func_80A3D7C8()) {
+    switch (func_80A3D7C8(this)) {
         case 0:
-            if (GET_INFTABLE(INFTABLE_B0)) {
+            if (IS_CHILD_QUEST && this->type == MEDIGORON_GORON_VILLAGE) {
+                this->actor.textId = 0x8404;
+            } else if (GET_INFTABLE(INFTABLE_B0)) {
                 this->actor.textId = 0x304B;
             } else {
                 this->actor.textId = 0x304A;
             }
             break;
         case 1:
-            if (GET_INFTABLE(INFTABLE_B1)) {
+            if (IS_CHILD_QUEST && this->type == MEDIGORON_GORON_VILLAGE) {
+                this->actor.textId = 0x8402;
+            } else if (GET_INFTABLE(INFTABLE_B1)) {
                 this->actor.textId = 0x304F;
             } else {
                 this->actor.textId = 0x304C;
@@ -195,7 +202,7 @@ void func_80A3DB04(EnGm* this, PlayState* play) {
     dx = this->talkPos.x - player->actor.world.pos.x;
     dz = this->talkPos.z - player->actor.world.pos.z;
 
-    if (Flags_GetSwitch(play, this->actor.params)) {
+    if (Flags_GetSwitch(play, this->actor.params & 0xFF)) {
         EnGm_SetTextID(this);
         this->actionFunc = func_80A3DC44;
     } else if (Actor_TalkOfferAccepted(&this->actor, play)) {
@@ -224,15 +231,17 @@ void func_80A3DC44(EnGm* this, PlayState* play) {
     dz = this->talkPos.z - player->actor.world.pos.z;
 
     if (Actor_TalkOfferAccepted(&this->actor, play)) {
-        switch (func_80A3D7C8()) {
+        switch (func_80A3D7C8(this)) {
             case 0:
-                SET_INFTABLE(INFTABLE_B0);
+                if (this->type == MEDIGORON_GORON_CITY)
+                    SET_INFTABLE(INFTABLE_B0);
                 FALLTHROUGH;
             case 3:
                 this->actionFunc = func_80A3DD7C;
                 return;
             case 1:
-                SET_INFTABLE(INFTABLE_B1);
+                if (this->type == MEDIGORON_GORON_CITY)
+                    SET_INFTABLE(INFTABLE_B1);
                 if (IS_CHILD_QUEST)
                     this->actionFunc = EnGm_ProcessChoiceIndex;
                 FALLTHROUGH;
@@ -263,15 +272,18 @@ void func_80A3DD7C(EnGm* this, PlayState* play) {
     }
 }
 
+static u16 prices[] = { 200, 600 };
+static u8 item[] = { GI_SWORD_SILVER, GI_BOOTS_UPGRADE };
+
 void EnGm_ProcessChoiceIndex(EnGm* this, PlayState* play) {
     if (Message_GetState(&play->msgCtx) == TEXT_STATE_CHOICE && Message_ShouldAdvance(play)) {
         switch (play->msgCtx.choiceIndex) {
             case 0: // yes
-                if (gSaveContext.save.info.playerData.rupees < 200) {
+                if (gSaveContext.save.info.playerData.rupees < prices[this->type]) {
                     Message_ContinueTextbox(play, 0xC8);
                     this->actionFunc = func_80A3DD7C;
                 } else {
-                    Actor_OfferGetItem(&this->actor, play, IS_CHILD_QUEST_AS_CHILD ? GI_SWORD_SILVER : GI_SWORD_KNIFE, 415.0f, 10.0f);
+                    Actor_OfferGetItem(&this->actor, play, IS_CHILD_QUEST ? item[this->type] : GI_SWORD_KNIFE, 415.0f, 10.0f);
                     this->actionFunc = func_80A3DF00;
                 }
                 break;
@@ -288,13 +300,13 @@ void func_80A3DF00(EnGm* this, PlayState* play) {
         this->actor.parent = NULL;
         this->actionFunc = func_80A3DF60;
     } else {
-        Actor_OfferGetItem(&this->actor, play, IS_CHILD_QUEST_AS_CHILD ? GI_SWORD_SILVER : GI_SWORD_KNIFE, 415.0f, 10.0f);
+        Actor_OfferGetItem(&this->actor, play, IS_CHILD_QUEST ? item[this->type] : GI_SWORD_KNIFE, 415.0f, 10.0f);
     }
 }
 
 void func_80A3DF60(EnGm* this, PlayState* play) {
     if ((Message_GetState(&play->msgCtx) == TEXT_STATE_DONE) && Message_ShouldAdvance(play)) {
-        Rupees_ChangeBy(-200);
+        Rupees_ChangeBy(-prices[this->type]);
         this->actionFunc = func_80A3DC44;
     }
 }

@@ -41,4 +41,4 @@
          0x0EFF, // params
     }, // 6
 
-    { ACTOR_BG_SPOT00_HANEBASI, { -845, 920, 0 }, { 0, 0, 0x4000 }, 0xFFFE, }, // 7
+    { ACTOR_BG_SPOT00_HANEBASI, { -845, 920, 0 }, { 0, 0, 0x4000 }, 0xFFFD, }, // 7

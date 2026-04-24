@@ -1,10 +1,5 @@
 #include "swamp_spider_house_scene.h"
 #include "swamp_spider_house_room_0.h"
-#include "swamp_spider_house_room_1.h"
-#include "swamp_spider_house_room_2.h"
-#include "swamp_spider_house_room_3.h"
-#include "swamp_spider_house_room_4.h"
-#include "swamp_spider_house_room_5.h"
 
 #include "actor.h"
 #include "array_count.h"
@@ -15,7 +10,7 @@
 #include "sys_matrix.h"
 #include "ultra64.h"
 
-SceneCmd swamp_spider_house_room_0Commands[] = {
+SceneCmd swamp_spider_house_room_0[] = {
     SCENE_CMD_ECHO_SETTINGS(4),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
@@ -42,9 +37,9 @@ s16 swamp_spider_house_room_0ObjectList_000040[] = {
 };
 
 ActorEntry swamp_spider_house_room_0ActorEntry_000068[] = {
-    { ACTOR_EN_ST,       {    0, 300,  20 }, { 0, 0, 0 }, 0x0001, },
-    { ACTOR_EN_KAREBABA, { -190, 120, -75 }, { 0, 0, 0 }, 0x0000, },
-    { ACTOR_EN_KAREBABA, {  190, 120, -75 }, { 0, 0, 0 }, 0x0000, },
+    { ACTOR_EN_ST,       {    0, 300,  20 }, { 0, 0, 0 }, 0x0001 },
+    { ACTOR_EN_KAREBABA, { -190, 120, -75 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_KAREBABA, {  190, 120, -75 }, { 0, 0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable swamp_spider_house_room_0RoomShapeCullable_0000C0 = { 
@@ -68,6 +63,34 @@ s32 swamp_spider_house_room_0_terminatorMaybe_00014C = { 0x01000000 };
 
 Vtx swamp_spider_house_room_0Vtx_000150[] = {
 #include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_000150.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_0Vtx_000630[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_000630.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_0Vtx_000B20[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_000B20.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_0Vtx_001008[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_001008.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_0Vtx_0014F8[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_0014F8.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_0Vtx_0017F0[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_0017F0.vtx.inc"
+};
+
+Vtx swamp_spider_house_room_0Vtx_001B18[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_001B18.vtx.inc"
+};
+
+u64 swamp_spider_house_room_0Tex_002010[] = {
+#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Tex_002010.ci8.inc.c"
 };
 
 Gfx swamp_spider_house_room_0DL_000410[] = {
@@ -106,10 +129,6 @@ Gfx swamp_spider_house_room_0DL_000410[] = {
     gsSP2Triangles(18, 4, 7, 0, 18, 7, 19, 0),
     gsSP2Triangles(0, 18, 19, 0, 0, 19, 1, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx swamp_spider_house_room_0Vtx_000630[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_000630.vtx.inc"
 };
 
 Gfx swamp_spider_house_room_0DL_000940[] = {
@@ -151,10 +170,6 @@ Gfx swamp_spider_house_room_0DL_000940[] = {
     gsSP2Triangles(15, 14, 18, 0, 14, 20, 18, 0),
     gsSP1Triangle(20, 19, 18, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx swamp_spider_house_room_0Vtx_000B20[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_000B20.vtx.inc"
 };
 
 Gfx swamp_spider_house_room_0DL_000C00[] = {
@@ -204,10 +219,6 @@ Gfx swamp_spider_house_room_0DL_000F08[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx swamp_spider_house_room_0Vtx_001008[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_001008.vtx.inc"
-};
-
 Gfx swamp_spider_house_room_0DL_0012C8[] = {
     gsSPVertex(&swamp_spider_house_room_0Vtx_001008[36], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -248,10 +259,6 @@ Gfx swamp_spider_house_room_0DL_0012C8[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx swamp_spider_house_room_0Vtx_0014F8[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_0014F8.vtx.inc"
-};
-
 Gfx swamp_spider_house_room_0DL_0016F8[] = {
     gsSPVertex(&swamp_spider_house_room_0Vtx_0014F8[24], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -272,10 +279,6 @@ Gfx swamp_spider_house_room_0DL_0016F8[] = {
     gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
     gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx swamp_spider_house_room_0Vtx_0017F0[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_0017F0.vtx.inc"
 };
 
 Gfx swamp_spider_house_room_0DL_001A10[] = {
@@ -300,10 +303,6 @@ Gfx swamp_spider_house_room_0DL_001A10[] = {
     gsSP2Triangles(5, 6, 7, 0, 8, 9, 6, 0),
     gsSP2Triangles(2, 4, 0, 0, 8, 6, 5, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx swamp_spider_house_room_0Vtx_001B18[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Vtx_001B18.vtx.inc"
 };
 
 Gfx swamp_spider_house_room_0DL_001DB8[] = {
@@ -340,8 +339,4 @@ Gfx swamp_spider_house_room_0DL_001DB8[] = {
     gsSP2Triangles(13, 14, 15, 0, 14, 16, 15, 0),
     gsSP2Triangles(7, 13, 15, 0, 7, 15, 17, 0),
     gsSPEndDisplayList(),
-};
-
-u64 swamp_spider_house_room_0Tex_002010[] = {
-#include "assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0Tex_002010.ci8.inc.c"
 };

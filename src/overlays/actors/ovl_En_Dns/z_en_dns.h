@@ -18,7 +18,8 @@ typedef enum EnDnsType {
     /*  7 */ DNS_TYPE_RED_POTION,
     /*  8 */ DNS_TYPE_GREEN_POTION,
     /*  9 */ DNS_TYPE_DEKU_STICK_UPGRADE,
-    /* 10 */ DNS_TYPE_DEKU_NUT_UPGRADE
+    /* 10 */ DNS_TYPE_DEKU_NUT_UPGRADE,
+    /* 11 */ DNS_TYPE_MAGIC_BEAN
 } EnDnsType;
 
 typedef enum EnDnsCanBuyResult {

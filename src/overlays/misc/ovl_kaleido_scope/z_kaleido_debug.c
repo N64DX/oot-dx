@@ -39,15 +39,18 @@ typedef enum DebugSection {
     /* 0x62 */ SECTION_STONE_OF_AGONY,
     /* 0x63 */ SECTION_GERUDO_CARD,
     /* 0x64 */ SECTION_MAGIC,
-    /* 0x65 */ SECTION_DOUBLE_DEFENSE,
+    /* 0x65 */ SECTION_GREAT_FAIRY_UPGRADES,
     /* 0x66 */ SECTION_SKULL_TOKENS,
     /* 0x67 */ SECTION_HEART_PIECES,
-    /* 0x68 */ SECTION_BGS,
-    /* 0x69 */ SECTION_MASTER_SWORD,
+    /* 0x68 */ SECTION_SWORD_UPGRADE,
+    /* 0x69 */ SECTION_ABILITY_UPGRADES,
     /* 0x6A */ SECTION_FEATHER,
-    /* 0x6B */ SECTION_ENHANCED_SPIN,
-    /* 0x6C */ SECTION_AMULET_OF_ENERGY,
-    /* 0x6D */ SECTION_MAX
+    /* 0x6B */ SECTION_AMULET_OF_ENERGY,
+    /* 0x6C */ SECTION_SHIELD_DEKU_UPGRADES,
+    /* 0x6D */ SECTION_SHIELD_HYLIAN_UPGRADES,
+    /* 0x6E */ SECTION_SHIELD_MIRROR_UPGRADES,
+    /* 0x6F */ SECTION_SHIELD_HEROS_UPGRADES,
+    /* 0x70 */ SECTION_MAX
 } DebugSection;
 
 // Positions of each input section in the editor
@@ -165,15 +168,19 @@ static u16 sSectionPositions[SECTION_MAX][2] = {
     { 78, 185 },  // SECTION_STONE_OF_AGONY
     { 90, 185 },  // SECTION_GERUDO_CARD
     { 102, 185 }, // SECTION_MAGIC
-    { 114, 185 }, // SECTION_DOUBLE_DEFENSE
+    { 114, 185 }, // SECTION_GREAT_FAIRY_UPGRADES
     { 145, 185 }, // SECTION_SKULL_TOKENS
     { 210, 185 }, // SECTION_HEART_PIECES
 
     { 78, 204 }, // SECTION_BGS
-    { 90, 204 }, // SECTION_MASTER_SWORD
+    { 90, 204 }, // SECTION_GREAT_FAIRY_UPGRADES
     { 102, 204 }, // SECTION_FEATHER
-    { 114, 204 }, // SECTION_ENHANCED_SPIN
-    { 126, 204 }, // SECTION_AMULET_OF_ENERGY
+    { 114, 204 }, // SECTION_AMULET_OF_ENERGY
+    
+    { 170, 204 }, // SECTION_SHIELD_DEKU_UPGRADES
+    { 182, 204 }, // SECTION_SHIELD_HYLIAN_UPGRADES
+    { 194, 204 }, // SECTION_SHIELD_MIRROR_UPGRADES
+    { 206, 204 }, // SECTION_SHIELD_HEROS_UPGRADES
 };
 
 // First section of each row in the editor (starting from the top)
@@ -244,6 +251,8 @@ void KaleidoScope_DrawInventoryEditorText(Gfx** gfxP) {
     GfxPrint_Printf(&printer, "%s", "/4");
     GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 26);
     GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ｱｯﾌﾟ", "Upgr" )); // "Upgrades"
+    GfxPrint_SetPos(&printer, 19 - WS_PX_SHIFT, 26);
+    GfxPrint_Printf(&printer, "%s", T(GFXP_KATAKANA "ﾀﾃ", "Sh" )); // "Shield Upgrades"
 
     *gfxP = GfxPrint_Close(&printer);
     GfxPrint_Destroy(&printer);
@@ -459,8 +468,9 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
     // Magic & Double Magic
     KaleidoScope_DrawDigit(play, gSaveContext.save.info.playerData.isMagicAcquired + gSaveContext.save.info.playerData.isDoubleMagicAcquired, 102, 185);
 
-    // Double Defense
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.playerData.isDoubleDefenseAcquired, 114, 185);
+    // Double Defense / Enhanced Spin / Half Magic Cost
+    digitBuf[0] = gSaveContext.save.info.playerData.isDoubleDefenseAcquired + (gSaveContext.save.info.obtainedSkills.enhancedSpin * 2) + (gSaveContext.save.info.obtainedSkills.halfMagicCost * 4);
+    KaleidoScope_DrawDigit(play, digitBuf[0], 114, 185);
 
     // GS Tokens
     digitBuf[3] = gSaveContext.save.info.inventory.gsTokens;
@@ -485,20 +495,31 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
         play, ((gSaveContext.save.info.inventory.questItems & 0xF0000000) & 0xF0000000) >> QUEST_HEART_PIECE_COUNT, 210,
         185);
 
-    // Biggoron Sword
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.playerData.bgsFlag, 78, 204);
+    // Biggoron Sword / Master Sword
+    digitBuf[0] = gSaveContext.save.info.playerData.bgsFlag + (gSaveContext.save.info.obtainedItems.masterSword * 2);
+    KaleidoScope_DrawDigit(play, digitBuf[0], 78, 204);
 
-    // Master Sword
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.obtainedItems.masterSword, 90, 204);
+    // Perfect Block Boost / Further Jump
+    digitBuf[0] = gSaveContext.save.info.obtainedSkills.perfectBlockBoost + (gSaveContext.save.info.obtainedSkills.furtherJump * 2);
+    KaleidoScope_DrawDigit(play, digitBuf[0], 90, 204);
 
     // Feather
     KaleidoScope_DrawDigit(play, gSaveContext.save.info.obtainedItems.feather, 102, 204);
 
-    // Enhanced Spin
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.isEnhancedSpinAcquired, 114, 204);
-
     // Amulet of Energy
-    KaleidoScope_DrawDigit(play, gSaveContext.save.info.obtainedItems.amuletOfEnergy, 126, 204);
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.obtainedItems.amuletOfEnergy, 114, 204);
+    
+    // Deku Shield Upgrade Level
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].upgrade, 170, 204);
+    
+    // Hylian Shield Upgrade Level
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].upgrade, 182, 204);
+    
+    // Mirror Shield Upgrade Level
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].upgrade, 194, 204);
+    
+    // Hero's Shield Upgrade Level
+    KaleidoScope_DrawDigit(play, gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].upgrade, 206, 204);
 
     // Handles navigating the menu to different sections with the D-Pad
     // When the same direction is held, registers the input periodically based on a timer
@@ -526,10 +547,10 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
         curSection = sRowFirstSections[curRow];
     } else if (CHECK_BTN_ANY(dBtnInput, BTN_DLEFT)) {
         if (--curSection < SECTION_RUPEES) {
-            curSection = SECTION_AMULET_OF_ENERGY;
+            curSection = SECTION_SHIELD_HEROS_UPGRADES;
         }
     } else if (CHECK_BTN_ANY(dBtnInput, BTN_DRIGHT)) {
-        if (++curSection > SECTION_AMULET_OF_ENERGY) {
+        if (++curSection > SECTION_SHIELD_HEROS_UPGRADES) {
             curSection = SECTION_RUPEES;
         }
     }
@@ -911,13 +932,13 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         }
                         else if (i == 1) {
                             if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
-                                gSaveContext.save.info.shieldDurability[0] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)   ? MAX_DURABILITY_SHIELD_DEKU   : 0;
+                                gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability   = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)   ? Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU)   : 0;
                             if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
-                                gSaveContext.save.info.shieldDurability[1] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) ? MAX_DURABILITY_SHIELD_HYLIAN : 0;
+                                gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].durability = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) ? Player_GetMaxShieldDurability(PLAYER_SHIELD_HYLIAN) : 0;
                             if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
-                                gSaveContext.save.info.shieldDurability[2] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR) ? MAX_DURABILITY_SHIELD_MIRROR : 0;
+                                gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_MIRROR) ? Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR) : 0;
                             if (CHECK_BTN_ALL(input->press.button, BTN_CUP))
-                                gSaveContext.save.info.shieldDurability[3] = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)  ? MAX_DURABILITY_SHIELD_HEROS  : 0;
+                                gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability  = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)  ? Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS)  : 0;
 
                             if ( (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)  && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU)   || (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && !HAS_HEROS_SHIELD) ||
                                  (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_MIRROR) || (CHECK_BTN_ALL(input->press.button, BTN_CUP)   && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN &&  HAS_HEROS_SHIELD)) {
@@ -1002,25 +1023,39 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             gSaveContext.magicState = MAGIC_STATE_STEP_CAPACITY;
                         }
                     }
-                } else if (curSection == SECTION_DOUBLE_DEFENSE) {
-                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                } else if (curSection == SECTION_GREAT_FAIRY_UPGRADES) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
                         gSaveContext.save.info.playerData.isDoubleDefenseAcquired ^= 1;
                         if (!gSaveContext.save.info.playerData.isDoubleDefenseAcquired)
                             gSaveContext.save.info.inventory.defenseHearts = 0;
                         else gSaveContext.save.info.inventory.defenseHearts = 30;
-                    }
-                } else if (curSection == SECTION_BGS) {
-                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
+                        gSaveContext.save.info.obtainedSkills.enhancedSpin ^= 1;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
+                        gSaveContext.save.info.obtainedSkills.halfMagicCost ^= 1;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
+                        gSaveContext.save.info.playerData.isDoubleDefenseAcquired = gSaveContext.save.info.obtainedSkills.enhancedSpin = gSaveContext.save.info.obtainedSkills.halfMagicCost = gSaveContext.save.info.inventory.defenseHearts = 0;
+                } else if (curSection == SECTION_SWORD_UPGRADE) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP))
+                        gSaveContext.save.info.playerData.bgsFlag = gSaveContext.save.info.obtainedItems.masterSword = 1;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
+                        gSaveContext.save.info.playerData.bgsFlag = gSaveContext.save.info.obtainedItems.masterSword = 0;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
                         gSaveContext.save.info.playerData.bgsFlag ^= 1;
-                        for (j=0; j<8; j++)
-                            Interface_LoadItemIcon1(play, j);
-                    }
-                } else if (curSection == SECTION_MASTER_SWORD) {
-                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
                         gSaveContext.save.info.obtainedItems.masterSword ^= 1;
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
                         for (j=0; j<8; j++)
                             Interface_LoadItemIcon1(play, j);
-                    }
+                } else if (curSection == SECTION_ABILITY_UPGRADES) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP))
+                        gSaveContext.save.info.obtainedSkills.perfectBlockBoost = gSaveContext.save.info.obtainedSkills.furtherJump = 1;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
+                        gSaveContext.save.info.obtainedSkills.perfectBlockBoost = gSaveContext.save.info.obtainedSkills.furtherJump = 0;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
+                        gSaveContext.save.info.obtainedSkills.perfectBlockBoost ^= 1;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
+                        gSaveContext.save.info.obtainedSkills.furtherJump ^= 1;
                 } else if (curSection == SECTION_FEATHER) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && !HAS_GOLDEN_FEATHER)
                         gSaveContext.save.info.obtainedItems.feather++;
@@ -1036,12 +1071,20 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER;
                         else gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = gSaveContext.save.info.obtainedItems.magicBeans ? ITEM_MAGIC_BEAN : ITEM_NONE;
                     }
-                } else if (curSection == SECTION_ENHANCED_SPIN) {
-                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
-                        gSaveContext.save.info.isEnhancedSpinAcquired ^= 1;
                 } else if (curSection == SECTION_AMULET_OF_ENERGY) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
                         gSaveContext.save.info.obtainedItems.amuletOfEnergy ^= 1;
+                } else if (curSection >= SECTION_SHIELD_DEKU_UPGRADES && curSection <= SECTION_SHIELD_HEROS_UPGRADES) {
+                    u8 index = curSection - SECTION_SHIELD_DEKU_UPGRADES;
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT) && gSaveContext.save.info.shields[index].upgrade < 7)
+                        gSaveContext.save.info.shields[index].upgrade++;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT) && gSaveContext.save.info.shields[index].upgrade > 0)
+                        gSaveContext.save.info.shields[index].upgrade--;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CUP))
+                        gSaveContext.save.info.shields[index].upgrade = 7;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
+                        gSaveContext.save.info.shields[index].upgrade = 0;
+                    gSaveContext.save.info.shields[index].durability = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, index) ? Player_GetMaxShieldDurability(index+1) : 0;
                 } else if (curSection < SECTION_HEART_PIECES) {
                     i = curSection - SECTION_FIRST_MEDALLION;
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {

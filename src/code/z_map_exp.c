@@ -29,6 +29,10 @@ s16 sPlayerInitialDirection = 0;
 s16 sEntranceIconMapIndex = 0;
 static u8 minimap_timer = 0;
 static bool pressed_r = false;
+static s16 extendedMapIndex = 0;
+static u8 sMinimapResetTimer = 0;
+static u32 sMinimapOffset = 0;
+static u32 sMinimapSize = 0;
 
 void Map_SavePlayerInitialInfo(PlayState* play) {
     Player* player = GET_PLAYER(play);
@@ -103,10 +107,17 @@ void Map_SetFloorPalettesData(PlayState* play, s16 floor) {
     }
 }
 
+void Map_GetExtendedMapSizeAndOffset(u8 index, u16 size, u32 offset, u8* segment) {
+    extendedMapIndex = index + SCENE_GROTTOS2 - SCENE_PATH_TO_WOODFALL;
+    sMinimapSize = size;
+    sMinimapOffset = (uintptr_t)segment + offset;
+}
+
 void Map_InitData(PlayState* play, s16 room) {
     s32 mapIndex = gSaveContext.mapIndex;
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
-    s16 extendedMapIndex;
+    sMinimapOffset = (uintptr_t)_map_grand_staticSegmentRomStart + gMapData->owMinimapTexOffset[mapIndex];
+    sMinimapSize = gMapData->owMinimapTexSize[mapIndex];
 
     switch (play->sceneId) {
         case SCENE_HYRULE_FIELD:
@@ -129,34 +140,45 @@ void Map_InitData(PlayState* play, s16 room) {
         case SCENE_GORON_CITY:
         case SCENE_LON_LON_RANCH:
         case SCENE_OUTSIDE_GANONS_CASTLE:
-        case SCENE_ROAD_TO_LAKE_HYLIA:
-        case SCENE_ROAD_TO_FORTRESS:
+        case SCENE_PATH_TO_WOODFALL:
+        case SCENE_PATH_TO_FORTRESS:
+        case SCENE_PATH_TO_LAKE_HYLIA:
+        case SCENE_SPRING_LAKE:
+        case SCENE_WOODFALL:
+        case SCENE_PATH_TO_GORON_VILLAGE:
+        case SCENE_GORON_VILLAGE:
+        case SCENE_GORON_SHRINE:
             extendedMapIndex = mapIndex;
             if (play->sceneId == SCENE_GRAVEYARD) {
                 if (CHECK_QUEST_ITEM(QUEST_SONG_NOCTURNE)) {
-                    extendedMapIndex = 0x14 + 2;
+                    Map_GetExtendedMapSizeAndOffset(0x14, 1560, 0xB918, _map_grand_staticSegmentRomStart);
                 }
             } else if (play->sceneId == SCENE_LAKE_HYLIA) {
                 if ((LINK_IS_ADULT_OR_TIMESKIP) && !CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER)) {
-                    extendedMapIndex = 0x15 + 2;
+                    Map_GetExtendedMapSizeAndOffset(0x15, 3240, 0xBF30, _map_grand_staticSegmentRomStart);
                 }
             } else if (play->sceneId == SCENE_GERUDO_VALLEY) {
                 if ((LINK_IS_ADULT_OR_TIMESKIP) && !GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED()) {
-                    extendedMapIndex = 0x16 + 2;
+                    Map_GetExtendedMapSizeAndOffset(0x16, 2600, 0xCBD8, _map_grand_staticSegmentRomStart);
                 }
             } else if (play->sceneId == SCENE_GERUDOS_FORTRESS) {
                 if (GET_EVENTCHKINF_CARPENTERS_ALL_RESCUED()) {
-                    extendedMapIndex = 0x17 + 2;
+                    Map_GetExtendedMapSizeAndOffset(0x17, 3400, 0xD600, _map_grand_staticSegmentRomStart);
                 }
+            } else if (play->sceneId == SCENE_GORON_VILLAGE) {
+                if (room == 1)
+                    Map_GetExtendedMapSizeAndOffset(0x18, 304, 0, _map_grand2_staticSegmentRomStart);
+            } else if (play->sceneId == SCENE_GORON_SHRINE) {
+                if (room == 1)
+                    Map_GetExtendedMapSizeAndOffset(0x19, 456, 304, _map_grand2_staticSegmentRomStart);
             }
             PRINTF_COLOR_BLUE();
             PRINTF("ＫＫＫ＝%d\n", extendedMapIndex);
             PRINTF_RST();
             sEntranceIconMapIndex = extendedMapIndex;
-            DMA_REQUEST_SYNC(interfaceCtx->mapSegment,
-                             (uintptr_t)_map_grand_staticSegmentRomStart +
-                                 gMapData->owMinimapTexOffset[extendedMapIndex],
-                             gMapData->owMinimapTexSize[mapIndex], "../z_map_exp.c", 309);
+
+            if (sMinimapResetTimer == 0)
+                DMA_REQUEST_SYNC(interfaceCtx->mapSegment, sMinimapOffset, sMinimapSize, __FILE__, __LINE__);
             interfaceCtx->unk_258 = mapIndex;
             break;
         case SCENE_DEKU_TREE:
@@ -317,8 +339,14 @@ void Map_Init(PlayState* play) {
         case SCENE_GORON_CITY:
         case SCENE_LON_LON_RANCH:
         case SCENE_OUTSIDE_GANONS_CASTLE:
-        case SCENE_ROAD_TO_LAKE_HYLIA:
-        case SCENE_ROAD_TO_FORTRESS:
+        case SCENE_PATH_TO_WOODFALL:
+        case SCENE_PATH_TO_FORTRESS:
+        case SCENE_PATH_TO_LAKE_HYLIA:
+        case SCENE_SPRING_LAKE:
+        case SCENE_WOODFALL:
+        case SCENE_PATH_TO_GORON_VILLAGE:
+        case SCENE_GORON_VILLAGE:
+        case SCENE_GORON_SHRINE:
             mapIndex = play->sceneId - SCENE_HYRULE_FIELD;
             R_MAP_INDEX = gSaveContext.mapIndex = mapIndex;
             R_COMPASS_SCALE_X = gMapData->owCompassInfo[mapIndex][0];
@@ -392,7 +420,7 @@ void Minimap_DrawCompassIcons(PlayState* play) {
         gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
         gDPSetCombineMode(OVERLAY_DISP++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
 
-        if (play->sceneId >= SCENE_HYRULE_FIELD && play->sceneId <= SCENE_ROAD_TO_FORTRESS) { // Overworld
+        if (play->sceneId >= SCENE_HYRULE_FIELD && play->sceneId < SCENE_GROTTOS2) { // Overworld
             mapStartPosX = R_OW_MINIMAP_X + WS_SHIFT_HALF + (gMapData->overworldXOffset[R_MAP_INDEX]/2);
             mapWidth = gMapData->owMinimapWidth[R_MAP_INDEX];
         } else if (play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_ICE_CAVERN) { // Dungeons
@@ -442,6 +470,11 @@ void Minimap_Draw(PlayState* play) {
     s32 pad[2];
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     s32 mapIndex = gSaveContext.mapIndex;
+
+    if (sMinimapResetTimer > 0) {
+        sMinimapResetTimer--;
+        return;
+    }
 
     OPEN_DISPS(play->state.gfxCtx, "../z_map_exp.c", 626);
 
@@ -525,10 +558,16 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_GORON_CITY:
             case SCENE_LON_LON_RANCH:
             case SCENE_OUTSIDE_GANONS_CASTLE:
-            case SCENE_ROAD_TO_LAKE_HYLIA:
-            case SCENE_ROAD_TO_FORTRESS:
+            case SCENE_PATH_TO_WOODFALL:
+            case SCENE_PATH_TO_FORTRESS:
+            case SCENE_PATH_TO_LAKE_HYLIA:
+            case SCENE_SPRING_LAKE:
+            case SCENE_WOODFALL:
+            case SCENE_PATH_TO_GORON_VILLAGE:
+            case SCENE_GORON_VILLAGE:
+            case SCENE_GORON_SHRINE:
                 if (!R_MINIMAP_DISABLED) {
-                    s8 xOffset = gMapData->overworldXOffset[mapIndex] / 2;
+                    s8 xOffset = gMapData->overworldXOffset[extendedMapIndex] / 2;
                     
                     Gfx_SetupDL_39Overlay(play->state.gfxCtx);
 
@@ -537,16 +576,16 @@ void Minimap_Draw(PlayState* play) {
                                     interfaceCtx->minimapAlpha);
 
                     gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->mapSegment, G_IM_FMT_IA,
-                                           gMapData->owMinimapWidth[mapIndex], gMapData->owMinimapHeight[mapIndex], 0,
+                                           gMapData->owMinimapWidth[extendedMapIndex], gMapData->owMinimapHeight[extendedMapIndex], 0,
                                            G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                                            G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
                     if (R_ENABLE_MIRROR == 1) {
                         u16 x = WS_SHIFT_FULL + R_OW_MINIMAP_X + (xOffset * 2);
-                        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(x) << 2, HIRES_MULTIPLY(R_OW_MINIMAP_Y << 2), X_HIRES_MULTIPLY(x + gMapData->owMinimapWidth[mapIndex]) << 2, HIRES_MULTIPLY(((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[mapIndex]) << 2)),
-                            G_TX_RENDERTILE, (gMapData->owMinimapWidth[mapIndex] - 1) << 5, 0, (s32)(-X_HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(x) << 2, HIRES_MULTIPLY(R_OW_MINIMAP_Y << 2), X_HIRES_MULTIPLY(x + gMapData->owMinimapWidth[extendedMapIndex]) << 2, HIRES_MULTIPLY(((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[extendedMapIndex]) << 2)),
+                            G_TX_RENDERTILE, (gMapData->owMinimapWidth[extendedMapIndex] - 1) << 5, 0, (s32)(-X_HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
                     } else {
-                        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + R_OW_MINIMAP_X) << 2, HIRES_MULTIPLY(R_OW_MINIMAP_Y << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + R_OW_MINIMAP_X + gMapData->owMinimapWidth[mapIndex]) << 2, HIRES_MULTIPLY(((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[mapIndex]) << 2)),
+                        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + R_OW_MINIMAP_X) << 2, HIRES_MULTIPLY(R_OW_MINIMAP_Y << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + R_OW_MINIMAP_X + gMapData->owMinimapWidth[extendedMapIndex]) << 2, HIRES_MULTIPLY(((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[extendedMapIndex]) << 2)),
                             G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
                     }
 
@@ -555,8 +594,8 @@ void Minimap_Draw(PlayState* play) {
                         (LINK_AGE_IN_YEARS != YEARS_ADULT)) {
                         if ((gMapData->owEntranceFlag[sEntranceIconMapIndex] != 0xFFFF) &&
                              (gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] &
-                              gBitFlags[gMapData->owEntranceFlag[mapIndex]])) {
-                            s16 newX = gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (R_ENABLE_MIRROR == 1 ? (((xOffset + R_OW_MINIMAP_X + (gMapData->owMinimapWidth[mapIndex] / 2)) - (gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (8 / 2))) * 2 + (8 / 2) - 2) : 0);
+                              gBitFlags[gMapData->owEntranceFlag[extendedMapIndex]])) {
+                            s16 newX = gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (R_ENABLE_MIRROR == 1 ? (((xOffset + R_OW_MINIMAP_X + (gMapData->owMinimapWidth[extendedMapIndex] / 2)) - (gMapData->owEntranceIconPosX[sEntranceIconMapIndex] + (8 / 2))) * 2 + (8 / 2) - 2) : 0);
 
                             gDPLoadTextureBlock(OVERLAY_DISP++, gMapDungeonEntranceIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b,
                                                 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
@@ -616,6 +655,15 @@ s16 Map_GetFloorTextIndexOffset(s32 mapIndex, s32 floor) {
     return gMapData->floorTexIndexOffset[mapIndex][floor];
 }
 
+void Map_RecalculateCompass(void) {
+    R_COMPASS_SCALE_X = gMapData->owCompassInfo[extendedMapIndex][0];
+    R_COMPASS_SCALE_Y = gMapData->owCompassInfo[extendedMapIndex][1];
+    R_COMPASS_OFFSET_X = gMapData->owCompassInfo[extendedMapIndex][2];
+    R_COMPASS_OFFSET_Y = gMapData->owCompassInfo[extendedMapIndex][3];
+    R_OW_MINIMAP_X = gMapData->owMinimapPosX[extendedMapIndex];
+    R_OW_MINIMAP_Y = gMapData->owMinimapPosY[extendedMapIndex];
+}
+
 void Map_Update(PlayState* play) {
     static s16 sLastRoomNum = 99;
     Player* player = GET_PLAYER(play);
@@ -625,6 +673,20 @@ void Map_Update(PlayState* play) {
     s16 i;
 
     if (!IS_PAUSED(&play->pauseCtx)) {
+        switch (play->sceneId) {
+            case SCENE_GORON_VILLAGE:
+            case SCENE_GORON_SHRINE:
+                if (sMinimapResetTimer == ONE_SEC - 1)
+                    DMA_REQUEST_SYNC(interfaceCtx->mapSegment, sMinimapOffset, sMinimapSize, __FILE__, __LINE__);
+                else if (play->roomCtx.curRoom.num != sLastRoomNum) {
+                    sMinimapResetTimer = ONE_SEC;
+                    sLastRoomNum = play->roomCtx.curRoom.num;
+                    Map_InitData(play, play->roomCtx.curRoom.num);
+                    Map_RecalculateCompass();
+                }
+                break;
+        }
+
         switch (play->sceneId) {
             case SCENE_DEKU_TREE:
             case SCENE_DODONGOS_CAVERN:

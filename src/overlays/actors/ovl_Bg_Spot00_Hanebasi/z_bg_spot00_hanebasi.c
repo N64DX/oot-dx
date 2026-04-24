@@ -25,6 +25,7 @@
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
 typedef enum DrawbridgeType {
+    /* -3 */ DT_DRAWBRIDGE_INVISIBLE = -3,
     /* -2 */ DT_DRAWBRIDGE_VALLEY = -2,
     /* -1 */ DT_DRAWBRIDGE = -1,
     /*  0 */ DT_CHAIN_1,
@@ -73,7 +74,7 @@ void BgSpot00Hanebasi_Init(Actor* thisx, PlayState* play) {
 
     if (this->dyna.actor.params == DT_DRAWBRIDGE) {
         CollisionHeader_GetVirtual(&gHyruleFieldCastleDrawbridgeHorseBlockedCol, &colHeader);
-    } else if (this->dyna.actor.params == DT_DRAWBRIDGE_VALLEY) {
+    } else if (this->dyna.actor.params == DT_DRAWBRIDGE_VALLEY || this->dyna.actor.params == DT_DRAWBRIDGE_INVISIBLE) {
         CollisionHeader_GetVirtual(&gHyruleFieldCastleDrawbridgeCol, &colHeader);
     } else {
         CollisionHeader_GetVirtual(&gHyruleFieldCastleDrawbridgeChainsCol, &colHeader);
@@ -126,7 +127,7 @@ void BgSpot00Hanebasi_Init(Actor* thisx, PlayState* play) {
         }
 
         this->actionFunc = BgSpot00Hanebasi_SetTorchLightInfo;
-    } else if (this->dyna.actor.params == DT_DRAWBRIDGE_VALLEY) {
+    } else if (this->dyna.actor.params == DT_DRAWBRIDGE_VALLEY || this->dyna.actor.params == DT_DRAWBRIDGE_INVISIBLE) {
         this->actionFunc = BgSpot00Hanebasi_DrawbridgeValleyWait;
     } else {
         this->actionFunc = BgSpot00Hanebasi_SetTorchLightInfo;
@@ -305,7 +306,7 @@ void BgSpot00Hanebasi_Draw(Actor* thisx, PlayState* play) {
     Vec3f basePos = { 158.0f, 10.0f, 400.0f };
     Vec3f newPos;
 
-    if (play->sceneId == SCENE_WATER_TEMPLE)
+    if (thisx->params == DT_DRAWBRIDGE_INVISIBLE)
         return;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_bg_spot00_hanebasi.c", 698);
