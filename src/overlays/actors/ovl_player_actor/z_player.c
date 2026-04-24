@@ -3084,13 +3084,14 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     Interface_ChangeDpadSet(play);
     ArrowCycleHandle(this, play);
 
-    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
-        if (featherGroundTimer <= 3)
-                featherGroundTimer++;
-    } else featherGroundTimer = 0;
-
-    if (featherGroundTimer >= 3)
-            this->featherUseCount = 0;
+    if (this->featherUseCount != 0) {
+        if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+            if (featherGroundTimer <= 3)
+                    featherGroundTimer++;
+        } else featherGroundTimer = 0;
+        if (featherGroundTimer >= 3)
+                this->featherUseCount = 0;
+    }
 
     if (this->currentMask != PLAYER_MASK_NONE) {
         maskItemAction = this->currentMask - 1 + PLAYER_IA_MASK_KEATON;
@@ -3183,10 +3184,14 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 }
             }
         } else if (item != ITEM_ROCS_FEATHER && item != ITEM_GOLDEN_FEATHER) {
+            if (this->featherUseCount != 0)
+                if (item == ITEM_SLINGSHOT || item == ITEM_BOOMERANG || item == ITEM_HOOKSHOT || item == ITEM_LONGSHOT || item == ITEM_BOW || item == ITEM_BOW_FIRE || item == ITEM_BOW_ICE || item == ITEM_BOW_LIGHT)
+                    return;
             this->heldItemButton = i;
             Player_UseItem(play, this, item);
         } else if (this->featherUseCount < MAX_FEATHER_USES) {
-            if ( ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f && item == ITEM_ROCS_FEATHER && gSaveContext.save.info.energy >= 15) || (item == ITEM_GOLDEN_FEATHER && gSaveContext.save.info.energy >= 10)) {
+            u8 energyCost = (item == ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.obtainedItems.amuletOfEnergy * 5);
+            if ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && (this->speedXZ <= 0.2f || item == ITEM_GOLDEN_FEATHER) && gSaveContext.save.info.energy >= energyCost) {
                 Vec3f effectsPos = this->actor.home.pos;
                 this->featherUseCount++;
                 func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, 7.15f, play, NA_SE_VO_LI_SWORD_N);
@@ -3198,7 +3203,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 EffectSsGSplash_Spawn(play, &effectsPos, NULL, NULL, 0, 150);
                 this->stateFlags2 &= ~(PLAYER_STATE2_19);
                 Player_PlaySfx(this, NA_SE_PL_SKIP);
-                gSaveContext.save.info.energy -= item == (ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.obtainedItems.amuletOfEnergy * 5);
+                gSaveContext.save.info.energy -= energyCost;
             }
         }
     }

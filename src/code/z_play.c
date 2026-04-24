@@ -1763,6 +1763,8 @@ void Play_GetScreenPos(PlayState* this, Vec3f* src, Vec3f* dest) {
     w = this->viewProjectionMtxF.ww + (this->viewProjectionMtxF.wx * src->x + this->viewProjectionMtxF.wy * src->y +
                                        this->viewProjectionMtxF.wz * src->z);
 
+    if (R_ENABLE_MIRROR == 1)
+        dest->x *= -1;
     dest->x = (SCREEN_WIDTH / 2) + ((dest->x / w) * (SCREEN_WIDTH / 2));
     dest->y = (SCREEN_HEIGHT / 2) - ((dest->y / w) * (SCREEN_HEIGHT / 2));
 }
