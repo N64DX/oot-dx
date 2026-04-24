@@ -60,6 +60,9 @@ void EnWeatherTag_SetupAction(EnWeatherTag* this, EnWeatherTagActionFunc actionF
 void EnWeatherTag_Destroy(Actor* thisx, PlayState* play) {
     EnWeatherTag* this = (EnWeatherTag*)thisx;
 
+    if (this->killedOnInit)
+        return;
+
     if (PARAMS_GET_U(this->actor.params, 0, 4) == EN_WEATHER_TAG_TYPE_THUNDERSTORM_KAKARIKO) {
         play->envCtx.lightConfig = 4;        
         play->envCtx.changeSkyboxTimer = play->envCtx.changeDuration = 100;
@@ -90,6 +93,7 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
     EnWeatherTag* this = (EnWeatherTag*)thisx;
 
     this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
+    this->killedOnInit = false;
 
     switch (PARAMS_GET_U(this->actor.params, 0, 4)) {
         case EN_WEATHER_TAG_TYPE_CLOUDY_MARKET:
@@ -104,6 +108,7 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
                                       "☆☆☆☆☆ Cloudy (._.) Ah Melancholy ☆☆☆☆☆ \n") VT_RST);
             if (Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED)) {
                 Actor_Kill(&this->actor);
+                this->killedOnInit = true;
             }
             EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledCloudyLonLonRanch);
             break;
@@ -114,6 +119,7 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
 
             if (GET_EVENTCHKINF(EVENTCHKINF_4A)) {
                 Actor_Kill(&this->actor);
+                this->killedOnInit = true;
             }
             EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledCloudySnow);
             break;
@@ -124,6 +130,7 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
 
             if (GET_EVENTCHKINF(EVENTCHKINF_4A)) {
                 Actor_Kill(&this->actor);
+                this->killedOnInit = true;
             }
             EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledRainLakeHylia);
             break;
@@ -133,6 +140,7 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
                        T("☆☆☆☆☆ くもり (._.) あーあ 憂鬱 ☆☆☆☆☆ \n", "☆☆☆☆☆ Cloudy (._.) Ah Melancholy ☆☆☆☆☆") VT_RST);
             if (GET_EVENTCHKINF(EVENTCHKINF_49)) {
                 Actor_Kill(&this->actor);
+                this->killedOnInit = true;
             }
             EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledCloudyDeathMountain);
             break;
@@ -144,6 +152,7 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
             if (!GET_EVENTCHKINF(EVENTCHKINF_48) || !GET_EVENTCHKINF(EVENTCHKINF_49) ||
                 !GET_EVENTCHKINF(EVENTCHKINF_4A) || CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW)) {
                 Actor_Kill(&this->actor);
+                this->killedOnInit = true;
             }
             EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledCloudyRainThunderKakariko);
             break;

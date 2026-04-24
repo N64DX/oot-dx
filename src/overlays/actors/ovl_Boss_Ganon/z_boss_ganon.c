@@ -2880,14 +2880,14 @@ void BossGanon_UpdateDamage(BossGanon* this, PlayState* play) {
                     }
                 }
 
-                if (this->actor.colChkInfo.health <= 0 && !this->swordPhase && hasSword) {
+                if ((s16)this->actor.colChkInfo.health <= 0 && !this->swordPhase && hasSword) {
                     BossGanon_SetupSwordPhaseCutscene(this, play);
                     Actor_PlaySfx(&this->actor, NA_SE_EN_GANON_DEAD);
                     Actor_PlaySfx(&this->actor, NA_SE_EN_GANON_DD_THUNDER);
                     Sfx_PlaySfxAtPos(&sZeroVec, NA_SE_EN_LAST_DAMAGE);
                     SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 1);
                     this->screenFlashTimer = 4;
-                } else if (this->actor.colChkInfo.health <= 0) {
+                } else if ((s16)this->actor.colChkInfo.health <= 0) {
                     BossGanon_SetupDeathCutscene(this, play);
                     Actor_PlaySfx(&this->actor, NA_SE_EN_GANON_DEAD);
                     Actor_PlaySfx(&this->actor, NA_SE_EN_GANON_DD_THUNDER);

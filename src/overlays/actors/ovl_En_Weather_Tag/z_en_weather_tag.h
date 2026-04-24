@@ -11,7 +11,8 @@ typedef void (*EnWeatherTagActionFunc)(struct EnWeatherTag*, struct PlayState*);
 typedef struct EnWeatherTag {
     /* 0x0000 */ Actor actor;
     /* 0x014C */ EnWeatherTagActionFunc actionFunc;
-} EnWeatherTag; // size = 0x0154
+    /* 0x0154 */ bool killedOnInit;
+} EnWeatherTag; // size = 0x0158
 
 typedef enum EnWeatherTagType {
     /* 0x00 */ EN_WEATHER_TAG_TYPE_CLOUDY_MARKET,
