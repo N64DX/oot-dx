@@ -1182,6 +1182,7 @@ void Sram_WriteSramHeader(SramContext* sramCtx) {
 
 void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
     u16 i;
+    u8 sramHeaderSameCount = 0;
 
     PRINTF("sram_initialize( Game *game, Sram *sram )\n");
     SRAM_READ(OS_K1_TO_PHYSICAL(0xA8000000), sramCtx->readBuff, SRAM_SIZE);
@@ -1200,6 +1201,17 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
 #endif
             Sram_WriteSramHeader(sramCtx);
         }
+    }
+
+    for (i=0x10; i<0x20; i++) {
+        if (sramCtx->readBuff[i] == 255)
+            sramHeaderSameCount++;
+    }
+
+    if (sramHeaderSameCount >= 0x10) {
+        for (i=0x10; i<0x20; i++)
+            sramCtx->readBuff[i] = 0;
+        Sram_WriteSramHeader(sramCtx);
     }
 
     gSaveContext.soundSetting = sramCtx->readBuff[SRAM_HEADER_SOUND] & 3;
