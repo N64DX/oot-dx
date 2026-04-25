@@ -10,7 +10,7 @@
 #include "skybox.h"
 #include "ultra64.h"
 
-SceneCmd woodfall_temple_boss_sceneCommands[] = {
+SceneCmd woodfall_temple_boss_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_WOODFALL_TEMPLE),
     SCENE_CMD_ROOM_LIST(1, woodfall_temple_boss_sceneRoomList0x000088),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, woodfall_temple_boss_sceneTransitionActorList_000078),

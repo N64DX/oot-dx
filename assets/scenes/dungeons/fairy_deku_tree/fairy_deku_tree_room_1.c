@@ -5,12 +5,8 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
-#include "sequence.h"
-#include "skybox.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
-SceneCmd fairy_deku_tree_room_1Commands[] = {
+SceneCmd fairy_deku_tree_room_1[] = {
     SCENE_CMD_ECHO_SETTINGS(16),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),

@@ -1,16 +1,12 @@
-#include "woodfall_temple_boss_room_0.h"
 #include "woodfall_temple_boss_scene.h"
+#include "woodfall_temple_boss_room_0.h"
 
 #include "actor.h"
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
-#include "sequence.h"
-#include "skybox.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
-SceneCmd woodfall_temple_boss_room_0Commands[] = {
+SceneCmd woodfall_temple_boss_room_0[] = {
     SCENE_CMD_ECHO_SETTINGS(10),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_BOSS, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
     SCENE_CMD_SKYBOX_DISABLES(true, true),

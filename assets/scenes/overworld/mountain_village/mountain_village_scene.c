@@ -1,18 +1,13 @@
 #include "mountain_village_scene.h"
-#include "mountain_village_room_0.h"
-#include "mountain_village_room_1.h"
 
 #include "actor.h"
 #include "array_count.h"
 #include "camera.h"
-#include "cutscene_commands.h"
 #include "object.h"
-#include "ocarina.h"
 #include "player.h"
 #include "segment_symbols.h"
 #include "sequence.h"
 #include "skybox.h"
-#include "stdbool.h"
 #include "ultra64.h"
 
 SceneCmd mountain_village_scene[] = {

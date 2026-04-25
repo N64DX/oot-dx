@@ -5,12 +5,8 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
-#include "sequence.h"
-#include "skybox.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
-SceneCmd old_lost_woods_room_0Commands[] = {
+SceneCmd old_lost_woods_room_0[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(old_lost_woods_room_0AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(16),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),

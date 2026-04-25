@@ -2,16 +2,10 @@
 #define SWAMP_SPIDER_HOUSE_SCENE_H
 
 #include "bgcheck.h"
-#include "cutscene.h"
-#include "environment.h"
-#include "path.h"
 #include "romfile.h"
 #include "scene.h"
-#include "tex_len.h"
 #include "ultra64.h"
-#include "z_math.h"
 
-extern SceneCmd swamp_spider_house_scene[];
 extern SceneCmd* swamp_spider_house_sceneAlternateHeaders[];
 extern ActorEntry swamp_spider_house_sceneStartPositionList0x000088[];
 extern TransitionActorEntry swamp_spider_house_sceneTransitionActorList_000098[];

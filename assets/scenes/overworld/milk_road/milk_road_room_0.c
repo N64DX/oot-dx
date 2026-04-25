@@ -5,10 +5,6 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
-#include "sequence.h"
-#include "skybox.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
 SceneCmd milk_road_room_0[] = {
     SCENE_CMD_ECHO_SETTINGS(4),

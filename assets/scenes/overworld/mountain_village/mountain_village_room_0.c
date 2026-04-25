@@ -5,10 +5,6 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
-#include "sequence.h"
-#include "skybox.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
 SceneCmd mountain_village_room_0[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(mountain_village_room_0AlternateHeaders),

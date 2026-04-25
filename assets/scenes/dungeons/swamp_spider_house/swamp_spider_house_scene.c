@@ -1,22 +1,13 @@
 #include "swamp_spider_house_scene.h"
-#include "swamp_spider_house_room_0.h"
-#include "swamp_spider_house_room_1.h"
-#include "swamp_spider_house_room_2.h"
-#include "swamp_spider_house_room_3.h"
-#include "swamp_spider_house_room_4.h"
-#include "swamp_spider_house_room_5.h"
 
 #include "actor.h"
 #include "array_count.h"
 #include "camera.h"
-#include "cutscene_commands.h"
 #include "object.h"
-#include "ocarina.h"
 #include "player.h"
 #include "segment_symbols.h"
 #include "sequence.h"
 #include "skybox.h"
-#include "stdbool.h"
 #include "ultra64.h"
 
 SceneCmd swamp_spider_house_scene[] = {
@@ -43,7 +34,7 @@ SceneCmd* swamp_spider_house_sceneAlternateHeaders[] = {
 };
 
 ActorEntry swamp_spider_house_sceneStartPositionList0x000088[] = {
-    { ACTOR_PLAYER,     {      0,    120,    300 }, { 0, 0x8000, 0 }, 0x0FFF },
+    { ACTOR_PLAYER, { 0, 120, 300 }, { 0, 0x8000, 0 }, 0x0FFF },
 };
 
 TransitionActorEntry swamp_spider_house_sceneTransitionActorList_000098[] = {

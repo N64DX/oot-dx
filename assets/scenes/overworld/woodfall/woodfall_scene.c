@@ -10,7 +10,7 @@
 #include "skybox.h"
 #include "ultra64.h"
 
-SceneCmd woodfall_sceneCommands[] = {
+SceneCmd woodfall_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_SWAMP_REGION),
     SCENE_CMD_ROOM_LIST(1, woodfall_sceneRoomList0x0000E8),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),

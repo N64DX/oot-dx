@@ -13,16 +13,16 @@ beginseg
 endseg
 
 beginseg
-    name "roadtofortress_scene"
+    name "road_to_ikana_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/roadtofortress/roadtofortress_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/road_to_ikana/road_to_ikana_scene.o"
     number 2
 endseg
 
 beginseg
-    name "roadtofortress_room_0"
+    name "road_to_ikana_room_0"
     compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/roadtofortress/roadtofortress_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/road_to_ikana/road_to_ikana_room_0.o"
     number 3
 endseg
 

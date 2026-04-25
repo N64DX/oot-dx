@@ -1,16 +1,12 @@
-#include "woodfall_temple_room_11.h"
 #include "woodfall_temple_scene.h"
+#include "woodfall_temple_room_11.h"
 
 #include "actor.h"
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
-#include "sequence.h"
-#include "skybox.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
-SceneCmd woodfall_temple_room_11Commands[] = {
+SceneCmd woodfall_temple_room_11[] = {
     SCENE_CMD_ECHO_SETTINGS(4),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
@@ -57,6 +53,78 @@ s32 woodfall_temple_room_11_terminatorMaybe_00015C = { 0x01000000 };
 
 Vtx woodfall_temple_room_11Vtx_000160[] = {
 #include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_000160.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_000938[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_000938.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_001008[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_001008.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_001540[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_001540.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_001AC8[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_001AC8.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_001CC8[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_001CC8.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_001F60[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_001F60.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_002210[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_002210.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_002548[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_002548.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_002768[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_002768.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_002B20[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_002B20.vtx.inc"
+};
+
+Vtx woodfall_temple_room_11Vtx_003028[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_003028.vtx.inc"
+};
+
+u64 woodfall_temple_room_11Tex_003578[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_003578.ia8.inc.c"
+};
+
+u64 woodfall_temple_room_11Tex_003D78[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_003D78.ia8.inc.c"
+};
+
+u64 woodfall_temple_room_11Tex_004578[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_004578.rgba16.inc.c"
+};
+
+u64 woodfall_temple_room_11Tex_004D78[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_004D78.rgba16.inc.c"
+};
+
+u64 woodfall_temple_room_11Tex_005578[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_005578.ia16.inc.c"
+};
+
+u64 woodfall_temple_room_11Tex_005D78[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_005D78.ci8.inc.c"
+};
+
+u64 woodfall_temple_room_11Tex_006578[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_006578.ci8.inc.c"
 };
 
 Gfx woodfall_temple_room_11DL_000720[] = {
@@ -118,10 +186,6 @@ Gfx woodfall_temple_room_11DL_000720[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx woodfall_temple_room_11Vtx_000938[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_000938.vtx.inc"
-};
-
 Gfx woodfall_temple_room_11DL_000E18[] = {
     gsSPVertex(&woodfall_temple_room_11Vtx_000938[70], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -176,10 +240,6 @@ Gfx woodfall_temple_room_11DL_000E18[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx woodfall_temple_room_11Vtx_001008[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_001008.vtx.inc"
-};
-
 Gfx woodfall_temple_room_11DL_001358[] = {
     gsSPVertex(&woodfall_temple_room_11Vtx_001008[45], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -222,10 +282,6 @@ Gfx woodfall_temple_room_11DL_001358[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx woodfall_temple_room_11Vtx_001540[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_001540.vtx.inc"
-};
-
 Gfx woodfall_temple_room_11DL_001950[] = {
     gsSPVertex(&woodfall_temple_room_11Vtx_001540[57], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -265,10 +321,6 @@ Gfx woodfall_temple_room_11DL_001950[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx woodfall_temple_room_11Vtx_001AC8[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_001AC8.vtx.inc"
-};
-
 Gfx woodfall_temple_room_11DL_001BD8[] = {
     gsSPVertex(&woodfall_temple_room_11Vtx_001AC8[9], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -289,10 +341,6 @@ Gfx woodfall_temple_room_11DL_001BD8[] = {
     gsSP2Triangles(6, 0, 2, 0, 2, 7, 8, 0),
     gsSP2Triangles(2, 1, 7, 0, 2, 8, 5, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx woodfall_temple_room_11Vtx_001CC8[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_001CC8.vtx.inc"
 };
 
 Gfx woodfall_temple_room_11DL_001E58[] = {
@@ -320,10 +368,6 @@ Gfx woodfall_temple_room_11DL_001E58[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx woodfall_temple_room_11Vtx_001F60[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_001F60.vtx.inc"
-};
-
 Gfx woodfall_temple_room_11DL_002100[] = {
     gsSPVertex(&woodfall_temple_room_11Vtx_001F60[18], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -348,10 +392,6 @@ Gfx woodfall_temple_room_11DL_002100[] = {
     gsSP2Triangles(5, 14, 6, 0, 15, 16, 17, 0),
     gsSP1Triangle(15, 17, 8, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx woodfall_temple_room_11Vtx_002210[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_002210.vtx.inc"
 };
 
 Gfx woodfall_temple_room_11DL_0023C0[] = {
@@ -384,10 +424,6 @@ Gfx woodfall_temple_room_11DL_0023C0[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx woodfall_temple_room_11Vtx_002548[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_002548.vtx.inc"
-};
-
 Gfx woodfall_temple_room_11DL_002678[] = {
     gsSPVertex(&woodfall_temple_room_11Vtx_002548[11], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -408,10 +444,6 @@ Gfx woodfall_temple_room_11DL_002678[] = {
     gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
     gsSP1Triangle(8, 10, 9, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx woodfall_temple_room_11Vtx_002768[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_002768.vtx.inc"
 };
 
 Gfx woodfall_temple_room_11DL_0029D8[] = {
@@ -444,10 +476,6 @@ Gfx woodfall_temple_room_11DL_0029D8[] = {
     gsSP2Triangles(26, 27, 29, 0, 24, 26, 30, 0),
     gsSP2Triangles(29, 28, 30, 0, 26, 29, 30, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx woodfall_temple_room_11Vtx_002B20[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_002B20.vtx.inc"
 };
 
 Gfx woodfall_temple_room_11DL_002F00[] = {
@@ -484,10 +512,6 @@ Gfx woodfall_temple_room_11DL_002F00[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx woodfall_temple_room_11Vtx_003028[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Vtx_003028.vtx.inc"
-};
-
 Gfx woodfall_temple_room_11DL_0033A8[] = {
     gsSPVertex(&woodfall_temple_room_11Vtx_003028[48], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -522,32 +546,4 @@ Gfx woodfall_temple_room_11DL_0033A8[] = {
     gsSP2Triangles(12, 13, 8, 0, 12, 14, 13, 0),
     gsSP1Triangle(14, 15, 13, 0),
     gsSPEndDisplayList(),
-};
-
-u64 woodfall_temple_room_11Tex_003578[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_003578.ia8.inc.c"
-};
-
-u64 woodfall_temple_room_11Tex_003D78[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_003D78.ia8.inc.c"
-};
-
-u64 woodfall_temple_room_11Tex_004578[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_004578.rgba16.inc.c"
-};
-
-u64 woodfall_temple_room_11Tex_004D78[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_004D78.rgba16.inc.c"
-};
-
-u64 woodfall_temple_room_11Tex_005578[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_005578.ia16.inc.c"
-};
-
-u64 woodfall_temple_room_11Tex_005D78[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_005D78.ci8.inc.c"
-};
-
-u64 woodfall_temple_room_11Tex_006578[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_11Tex_006578.ci8.inc.c"
 };

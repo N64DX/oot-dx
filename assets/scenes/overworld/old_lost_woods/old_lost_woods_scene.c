@@ -3,17 +3,14 @@
 #include "actor.h"
 #include "array_count.h"
 #include "camera.h"
-#include "cutscene_commands.h"
 #include "object.h"
-#include "ocarina.h"
 #include "player.h"
 #include "segment_symbols.h"
 #include "sequence.h"
 #include "skybox.h"
-#include "stdbool.h"
 #include "ultra64.h"
 
-SceneCmd old_lost_woods_sceneCommands[] = {
+SceneCmd old_lost_woods_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_NONE, NA_BGM_MYSTERY_FOREST),
     SCENE_CMD_ROOM_LIST(1, old_lost_woods_sceneRoomList0x0000A0),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),
@@ -73,7 +70,7 @@ Vec3s old_lost_woods_sceneCollisionHeader0x0068D4_camPosData_00000130[3] = {
 };
 
 BgCamInfo old_lost_woods_sceneCollisionHeader0x0068D4_camDataList_00000144[] = {
-    { CAM_SET_NONE,    0, NULL },
+    { CAM_SET_DOORC,   3, &old_lost_woods_sceneCollisionHeader0x0068D4_camPosData_00000130[0] },
     { CAM_SET_NONE,    0, NULL },
     { CAM_SET_NORMAL4, 0, NULL }, // Used inside of log tunnels
     { CAM_SET_NORMAL0, 0, NULL },
@@ -81,20 +78,8 @@ BgCamInfo old_lost_woods_sceneCollisionHeader0x0068D4_camDataList_00000144[] = {
 };
 
 SurfaceType old_lost_woods_sceneCollisionHeader0x0068D4_polygonTypes_0000016C[] = {
-   0x00000001, 0x00000100,
-   0x00000001, 0x0000010A,
-   0x00000002, 0x0000010A,
-   0x00000401, 0x0000010A,
-   0x00000402, 0x0000010A,
-   0x00000003, 0x00000100,
-   0x00000201, 0x00000100,
-   0x00000101, 0x00000100,
-   0x00000002, 0x00000100,
-   0x00000004, 0x00000100,
-   0x00000502, 0x0000010A,
-   0x00000501, 0x0000010A,
-   0x00000003, 0x0000010A,
-   0x00000301, 0x0000010A,
+   0x00000001, 0x00000100, 0x00000001, 0x0000010A, 0x00000002, 0x0000010A, 0x00000401, 0x0000010A, 0x00000402, 0x0000010A, 0x00000003, 0x00000100, 0x00000201, 0x00000100, 0x00000101, 0x00000100, 0x00000002, 0x00000100, 0x00000004, 0x00000100, 0x00000502, 0x0000010A, 0x00000501, 0x0000010A,
+   0x00000003, 0x0000010A, 0x00000301, 0x0000010A,
 };
 
 CollisionPoly old_lost_woods_sceneCollisionHeader0x0068D4_polygons_000001DC[1368] = {
