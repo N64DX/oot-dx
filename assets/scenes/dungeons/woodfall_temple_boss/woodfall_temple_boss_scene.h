@@ -6,16 +6,11 @@
 #include "scene.h"
 #include "ultra64.h"
 
-extern SceneCmd woodfall_temple_boss_sceneCommands[];
 extern ActorEntry woodfall_temple_boss_sceneStartPositionList0x000068[];
 extern TransitionActorEntry woodfall_temple_boss_sceneTransitionActorList_000078[];
 extern RomFile woodfall_temple_boss_sceneRoomList0x000088[];
 extern Spawn woodfall_temple_boss_sceneEntranceList0x000090[];
 extern EnvLightSettings woodfall_temple_boss_sceneLightSettings0x000094[];
-extern BgCamInfo woodfall_temple_boss_sceneCollisionHeader_000778CamDataList[];
-extern SurfaceType woodfall_temple_boss_sceneCollisionHeader_000778SurfaceType[];
-extern CollisionPoly woodfall_temple_boss_sceneCollisionHeader_000778Polygons[];
-extern Vec3s woodfall_temple_boss_sceneCollisionHeader_000778Vertices[];
 extern CollisionHeader woodfall_temple_boss_sceneCollisionHeader_000778;
 
 extern u64 woodfall_temple_boss_sceneTex_0007B0[];

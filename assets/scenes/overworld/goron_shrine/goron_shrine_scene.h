@@ -2,17 +2,10 @@
 #define GORON_SHRINE_SCENE_H
 
 #include "bgcheck.h"
-#include "cutscene.h"
-#include "environment.h"
-#include "path.h"
 #include "romfile.h"
 #include "scene.h"
-#include "tex_len.h"
 #include "ultra64.h"
-#include "z_math.h"
 
-extern SceneCmd goron_shrine_scene[];
-extern SceneCmd* goron_shrine_sceneAlternateHeaders[];
 extern ActorEntry goron_shrine_sceneStartPositionList0x000094[];
 extern TransitionActorEntry goron_shrine_sceneTransitionActorList_0000C4[];
 extern RomFile goron_shrine_sceneRoomList0x0000D4[];

@@ -5,12 +5,9 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
-#include "sequence.h"
-#include "skybox.h"
-#include "sys_matrix.h"
 #include "ultra64.h"
 
-SceneCmd fairy_deku_tree_room_12Commands[] = {
+SceneCmd fairy_deku_tree_room_12[] = {
     SCENE_CMD_ECHO_SETTINGS(16),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
@@ -460,6 +457,14 @@ Vtx fairy_deku_tree_room_12Vtx_001700[] = {
     VTX(751, 480, 1716, 0, 0, 0, 0, 0, 0),
 };
 
+u64 fairy_deku_tree_room_12Tex_003598[] = {
+#include "assets/scenes/dungeons/fairy_deku_tree/fairy_deku_tree_room_12Tex_003598.rgba16.inc.c"
+};
+
+u64 fairy_deku_tree_room_12Tex_003D98[] = {
+#include "assets/scenes/dungeons/fairy_deku_tree/fairy_deku_tree_room_12Tex_003D98.rgba16.inc.c"
+};
+
 Gfx fairy_deku_tree_room_12Dlist0x001780[] = {
     gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
@@ -606,12 +611,4 @@ Gfx fairy_deku_tree_room_12Dlist0x001780[] = {
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
     gsSPEndDisplayList(),
-};
-
-u64 fairy_deku_tree_room_12Tex_003598[] = {
-#include "assets/scenes/dungeons/fairy_deku_tree/fairy_deku_tree_room_12Tex_003598.rgba16.inc.c"
-};
-
-u64 fairy_deku_tree_room_12Tex_003D98[] = {
-#include "assets/scenes/dungeons/fairy_deku_tree/fairy_deku_tree_room_12Tex_003D98.rgba16.inc.c"
 };

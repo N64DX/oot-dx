@@ -2,16 +2,10 @@
 #define ROAD_TO_SWAMP_SCENE_H
 
 #include "bgcheck.h"
-#include "cutscene.h"
-#include "environment.h"
-#include "path.h"
 #include "romfile.h"
 #include "scene.h"
-#include "tex_len.h"
 #include "ultra64.h"
-#include "z_math.h"
 
-extern SceneCmd road_to_swamp[];
 extern SceneCmd* road_to_swamp_sceneAlternateHeaders[];
 extern ActorEntry road_to_swamp_sceneStartPositionList0x000088[];
 extern TransitionActorEntry road_to_swamp_sceneTransitionActorList_0000B8[];

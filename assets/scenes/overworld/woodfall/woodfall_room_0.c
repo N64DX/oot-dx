@@ -1,16 +1,12 @@
-#include "woodfall_room_0.h"
 #include "woodfall_scene.h"
+#include "woodfall_room_0.h"
 
 #include "actor.h"
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
-#include "sequence.h"
-#include "skybox.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
-SceneCmd woodfall_room_0Commands[] = {
+SceneCmd woodfall_room_0[] = {
     SCENE_CMD_ECHO_SETTINGS(4),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_UNK_STRETCH_1, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),

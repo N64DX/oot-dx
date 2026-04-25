@@ -2,16 +2,10 @@
 #define MILK_ROAD_SCENE_H
 
 #include "bgcheck.h"
-#include "cutscene.h"
-#include "environment.h"
-#include "path.h"
 #include "romfile.h"
 #include "scene.h"
-#include "tex_len.h"
 #include "ultra64.h"
-#include "z_math.h"
 
-extern SceneCmd milk_road_scene[];
 extern ActorEntry milk_road_sceneStartPositionList0x000088[];
 extern RomFile milk_road_sceneRoomList0x0000F8[];
 extern Spawn milk_road_sceneEntranceList0x000100[];

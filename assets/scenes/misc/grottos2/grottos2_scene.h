@@ -2,16 +2,10 @@
 #define GROTTOS2_SCENE_H
 
 #include "bgcheck.h"
-#include "cutscene.h"
-#include "environment.h"
-#include "path.h"
 #include "romfile.h"
 #include "scene.h"
-#include "tex_len.h"
 #include "ultra64.h"
-#include "z_math.h"
 
-extern SceneCmd grottos2_scene[];
 extern ActorEntry grottos2_sceneStartPositionList0x000088[];
 extern RomFile grottos2_sceneRoomList0x000198[];
 extern Spawn grottos2_sceneEntranceList0x000210[];

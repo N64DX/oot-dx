@@ -6,18 +6,12 @@
 #include "scene.h"
 #include "ultra64.h"
 
-extern SceneCmd woodfall_sceneCommands[];
 extern ActorEntry woodfall_sceneStartPositionList0x000098[];
 extern RomFile woodfall_sceneRoomList0x0000E8[];
 extern Spawn woodfall_sceneEntranceList0x0000F0[];
 extern u16 woodfall_sceneExitList_0000FC[];
 extern EnvLightSettings woodfall_sceneLightSettings0x000104[];
 extern Path woodfall_scenePathway[];
-extern BgCamInfo woodfall_sceneCollisionHeader_003CECCamDataList[];
-extern SurfaceType woodfall_sceneCollisionHeader_003CECSurfaceType[];
-extern CollisionPoly woodfall_sceneCollisionHeader_003CECPolygons[];
-extern Vec3s woodfall_sceneCollisionHeader_003CECVertices[];
-extern WaterBox woodfall_sceneCollisionHeader_003CECWaterBoxes[];
 extern CollisionHeader woodfall_sceneCollisionHeader_003CEC;
 
 extern u64 woodfall_sceneTex_004990[];

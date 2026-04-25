@@ -2,16 +2,10 @@
 #define MOUNTAIN_SMITHY_SCENE_H
 
 #include "bgcheck.h"
-#include "cutscene.h"
-#include "environment.h"
-#include "path.h"
 #include "romfile.h"
 #include "scene.h"
-#include "tex_len.h"
 #include "ultra64.h"
-#include "z_math.h"
 
-extern SceneCmd mountain_smithy_scene[];
 extern ActorEntry mountain_smithy_sceneStartPositionList0x000080[];
 extern TransitionActorEntry mountain_smithy_sceneTransitionActorList_000090[];
 extern RomFile mountain_smithy_sceneRoomList0x0000A0[];

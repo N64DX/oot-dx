@@ -1,16 +1,12 @@
-#include "woodfall_temple_room_4.h"
 #include "woodfall_temple_scene.h"
+#include "woodfall_temple_room_4.h"
 
 #include "actor.h"
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
-#include "sequence.h"
-#include "skybox.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
-SceneCmd woodfall_temple_room_4Commands[] = {
+SceneCmd woodfall_temple_room_4[] = {
     SCENE_CMD_ECHO_SETTINGS(10),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
@@ -72,6 +68,34 @@ Vtx woodfall_temple_room_4Vtx_000180[] = {
 #include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_000180.vtx.inc"
 };
 
+Vtx woodfall_temple_room_4Vtx_000500[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_000500.vtx.inc"
+};
+
+Vtx woodfall_temple_room_4Vtx_001010[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_001010.vtx.inc"
+};
+
+Vtx woodfall_temple_room_4Vtx_001220[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_001220.vtx.inc"
+};
+
+Vtx woodfall_temple_room_4Vtx_001418[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_001418.vtx.inc"
+};
+
+Vtx woodfall_temple_room_4Vtx_001678[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_001678.vtx.inc"
+};
+
+Vtx woodfall_temple_room_4Vtx_002220[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_002220.vtx.inc"
+};
+
+u64 woodfall_temple_room_4Tex_001A18[] = {
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Tex_001A18.ci8.inc.c"
+};
+
 Gfx woodfall_temple_room_4DL_000380[] = {
     gsSPVertex(&woodfall_temple_room_4Vtx_000180[24], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -99,10 +123,6 @@ Gfx woodfall_temple_room_4DL_000380[] = {
     gsSPVertex(&woodfall_temple_room_4Vtx_000180[20], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx woodfall_temple_room_4Vtx_000500[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_000500.vtx.inc"
 };
 
 Gfx woodfall_temple_room_4DL_000C00[] = {
@@ -183,10 +203,6 @@ Gfx woodfall_temple_room_4DL_000C00[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx woodfall_temple_room_4Vtx_001010[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_001010.vtx.inc"
-};
-
 Gfx woodfall_temple_room_4DL_001130[] = {
     gsSPVertex(&woodfall_temple_room_4Vtx_001010[10], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -209,10 +225,6 @@ Gfx woodfall_temple_room_4DL_001130[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx woodfall_temple_room_4Vtx_001220[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_001220.vtx.inc"
-};
-
 Gfx woodfall_temple_room_4DL_001330[] = {
     gsSPVertex(&woodfall_temple_room_4Vtx_001220[9], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -232,10 +244,6 @@ Gfx woodfall_temple_room_4DL_001330[] = {
     gsSP2Triangles(4, 5, 2, 0, 6, 7, 2, 0),
     gsSP1Triangle(7, 8, 2, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx woodfall_temple_room_4Vtx_001418[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_001418.vtx.inc"
 };
 
 Gfx woodfall_temple_room_4DL_001578[] = {
@@ -260,10 +268,6 @@ Gfx woodfall_temple_room_4DL_001578[] = {
     gsSP2Triangles(4, 12, 10, 0, 4, 10, 5, 0),
     gsSP2Triangles(1, 13, 12, 0, 1, 12, 2, 0),
     gsSPEndDisplayList(),
-};
-
-Vtx woodfall_temple_room_4Vtx_001678[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_001678.vtx.inc"
 };
 
 Gfx woodfall_temple_room_4DL_0018A8[] = {
@@ -294,14 +298,6 @@ Gfx woodfall_temple_room_4DL_0018A8[] = {
     gsSP2Triangles(23, 24, 25, 0, 23, 25, 26, 0),
     gsSP2Triangles(25, 3, 2, 0, 25, 2, 26, 0),
     gsSPEndDisplayList(),
-};
-
-u64 woodfall_temple_room_4Tex_001A18[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Tex_001A18.ci8.inc.c"
-};
-
-Vtx woodfall_temple_room_4Vtx_002220[] = {
-#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_room_4Vtx_002220.vtx.inc"
 };
 
 Gfx woodfall_temple_room_4DL_002340[] = {

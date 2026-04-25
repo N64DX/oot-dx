@@ -5,12 +5,8 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
-#include "sequence.h"
-#include "skybox.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
-SceneCmd fairy_deku_tree_room_5Commands[] = {
+SceneCmd fairy_deku_tree_room_5[] = {
     SCENE_CMD_ECHO_SETTINGS(16),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
@@ -258,6 +254,37 @@ Vtx fairy_deku_tree_room_5Vtx_000C00[] = {
     VTX(407, 1640, 407, 0, 0, 0, 0, 0, 0),
 };
 
+Vtx fairy_deku_tree_room_5Vtx_003FE0[] = {
+    VTX(407, 1600, 164, 5175, -1562, 0, 0, 0, 255),
+    VTX(-2, 1600, 0, 2560, -512, 255, 255, 255, 255),
+    VTX(407, 1600, -164, 5175, 538, 0, 0, 0, 255),
+    VTX(81, 1560, 203, 3092, -1813, 187, 187, 187, 255),
+    VTX(164, 1500, 407, 3624, -3114, 53, 26, 0, 255),
+    VTX(164, 1600, -407, 3624, 2090, 0, 0, 0, 255),
+    VTX(-168, 1580, -407, 1496, 2090, 0, 0, 0, 255),
+    VTX(-168, 1440, 407, 1496, -3114, 53, 26, 0, 255),
+    VTX(-85, 1540, 203, 2028, -1813, 187, 187, 187, 255),
+    VTX(-407, 1440, 168, -28, -1590, 53, 26, 0, 255),
+    VTX(-204, 1540, 84, 1266, -1051, 187, 187, 187, 255),
+    VTX(-407, 1520, -168, -28, 566, 53, 26, 0, 255),
+    VTX(-204, 1560, -84, 1266, 27, 187, 187, 187, 255),
+};
+
+Vtx fairy_deku_tree_room_5Vtx_0040B0[] = {
+    VTX(-591, 1435, 51, 0, 0, 0, 0, 0, 0),
+    VTX(50, 1435, 589, 0, 0, 0, 0, 0, 0),
+    VTX(-52, 1583, -591, 0, 0, 0, 0, 0, 0),
+    VTX(589, 1583, -54, 0, 0, 0, 0, 0, 0),
+    VTX(-601, 1524, 63, 0, 0, 0, 0, 0, 0),
+    VTX(40, 1524, 601, 0, 0, 0, 0, 0, 0),
+    VTX(-62, 1672, -579, 0, 0, 0, 0, 0, 0),
+    VTX(579, 1672, -42, 0, 0, 0, 0, 0, 0),
+};
+
+u64 fairy_deku_tree_room_5Tex_004228[] = {
+#include "assets/scenes/dungeons/fairy_deku_tree/fairy_deku_tree_room_5Tex_004228.ia16.inc.c"
+};
+
 Gfx fairy_deku_tree_room_5Dlist0x000C80[] = {
     gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
@@ -342,33 +369,6 @@ Gfx fairy_deku_tree_room_5Dlist0x000C80[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx fairy_deku_tree_room_5Vtx_003FE0[] = {
-    VTX(407, 1600, 164, 5175, -1562, 0, 0, 0, 255),
-    VTX(-2, 1600, 0, 2560, -512, 255, 255, 255, 255),
-    VTX(407, 1600, -164, 5175, 538, 0, 0, 0, 255),
-    VTX(81, 1560, 203, 3092, -1813, 187, 187, 187, 255),
-    VTX(164, 1500, 407, 3624, -3114, 53, 26, 0, 255),
-    VTX(164, 1600, -407, 3624, 2090, 0, 0, 0, 255),
-    VTX(-168, 1580, -407, 1496, 2090, 0, 0, 0, 255),
-    VTX(-168, 1440, 407, 1496, -3114, 53, 26, 0, 255),
-    VTX(-85, 1540, 203, 2028, -1813, 187, 187, 187, 255),
-    VTX(-407, 1440, 168, -28, -1590, 53, 26, 0, 255),
-    VTX(-204, 1540, 84, 1266, -1051, 187, 187, 187, 255),
-    VTX(-407, 1520, -168, -28, 566, 53, 26, 0, 255),
-    VTX(-204, 1560, -84, 1266, 27, 187, 187, 187, 255),
-};
-
-Vtx fairy_deku_tree_room_5Vtx_0040B0[] = {
-    VTX(-591, 1435, 51, 0, 0, 0, 0, 0, 0),
-    VTX(50, 1435, 589, 0, 0, 0, 0, 0, 0),
-    VTX(-52, 1583, -591, 0, 0, 0, 0, 0, 0),
-    VTX(589, 1583, -54, 0, 0, 0, 0, 0, 0),
-    VTX(-601, 1524, 63, 0, 0, 0, 0, 0, 0),
-    VTX(40, 1524, 601, 0, 0, 0, 0, 0, 0),
-    VTX(-62, 1672, -579, 0, 0, 0, 0, 0, 0),
-    VTX(579, 1672, -42, 0, 0, 0, 0, 0, 0),
-};
-
 Gfx fairy_deku_tree_room_5Dlist0x004130[] = {
     gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
@@ -393,8 +393,4 @@ Gfx fairy_deku_tree_room_5Dlist0x004130[] = {
     gsSP2Triangles(9, 12, 10, 0, 12, 1, 10, 0),
     gsSP2Triangles(11, 6, 12, 0, 6, 1, 12, 0),
     gsSPEndDisplayList(),
-};
-
-u64 fairy_deku_tree_room_5Tex_004228[] = {
-#include "assets/scenes/dungeons/fairy_deku_tree/fairy_deku_tree_room_5Tex_004228.ia16.inc.c"
 };

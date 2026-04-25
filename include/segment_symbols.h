@@ -673,7 +673,7 @@ DECLARE_ROM_SEGMENT(ganon_tou_room_0)
 
 DECLARE_ROM_SEGMENT(road_to_swamp_room_0)
 
-DECLARE_ROM_SEGMENT(roadtofortress_room_0)
+DECLARE_ROM_SEGMENT(road_to_ikana_room_0)
 
 DECLARE_ROM_SEGMENT(milk_road_room_0)
 

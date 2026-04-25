@@ -2,16 +2,10 @@
 #define GORON_VILLAGE_SCENE_H
 
 #include "bgcheck.h"
-#include "cutscene.h"
-#include "environment.h"
-#include "path.h"
 #include "romfile.h"
 #include "scene.h"
-#include "tex_len.h"
 #include "ultra64.h"
-#include "z_math.h"
 
-extern SceneCmd goron_village_scene[];
 extern ActorEntry goron_village_sceneStartPositionList0x000094[];
 extern TransitionActorEntry goron_village_sceneTransitionActorList_0000E4[];
 extern RomFile goron_village_sceneRoomList0x0000F4[];
