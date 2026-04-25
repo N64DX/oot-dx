@@ -65,12 +65,14 @@ static Color_RGB8 sColors[][4] = {
     { { 135, 125, 95 }, { 135, 125, 95 }, { 135, 125, 95 }, { 135, 125, 95 } },     // shadow temple
     { { 255, 255, 255 }, { 255, 255, 255 }, { 255, 255, 255 }, { 255, 255, 255 } }, // ganons castle
     { { 232, 210, 176 }, { 232, 210, 176 }, { 232, 210, 176 }, { 232, 210, 176 } }, // gerudo training grounds
+    { { 255, 0, 0 }, { 255, 0, 0 }, { 255, 0, 0 }, { 255, 0, 0 } },                 // goron mines
 };
 
 static s16 sSceneIds[] = {
     SCENE_DEKU_TREE,     SCENE_DODONGOS_CAVERN, SCENE_FOREST_TEMPLE,
     SCENE_FIRE_TEMPLE,   SCENE_WATER_TEMPLE,    SCENE_SPIRIT_TEMPLE,
     SCENE_SHADOW_TEMPLE, SCENE_GANONS_TOWER,    SCENE_GERUDO_TRAINING_GROUND,
+    SCENE_GORON_MINES,
 };
 
 static InitChainEntry sInitChain[] = {
@@ -99,6 +101,12 @@ static Vec2f sFaceDirection[] = {
     { -1.0f, -1.0f },
 };
 
+bool ObjOshihiki_IsMoveableScene(PlayState* play) {
+    if (play->sceneId == SCENE_GORON_MINES)
+        return false;
+    return true;
+}
+
 void ObjOshihiki_InitDynapoly(ObjOshihiki* this, PlayState* play, CollisionHeader* collision, s32 moveFlag) {
     s32 pad;
     CollisionHeader* colHeader = NULL;
@@ -124,10 +132,10 @@ void ObjOshihiki_RotateXZ(Vec3f* out, Vec3f* in, f32 sn, f32 cs) {
     out->z = (in->z * cs) - (in->x * sn);
 }
 
-s32 ObjOshihiki_StrongEnough(ObjOshihiki* this) {
+s32 ObjOshihiki_StrongEnough(ObjOshihiki* this, PlayState* play) {
     s32 strength;
 
-    if (this->cantMove) {
+    if (this->cantMove || !ObjOshihiki_IsMoveableScene(play)) {
         return 0;
     }
     strength = Player_GetStrength();
@@ -470,7 +478,7 @@ void ObjOshihiki_OnScene(ObjOshihiki* this, PlayState* play) {
 
     this->stateFlags |= PUSHBLOCK_ON_SCENE;
     if ((this->timer <= 0) && (fabsf(this->dyna.unk_150) > 0.001f)) {
-        if (ObjOshihiki_StrongEnough(this) &&
+        if (ObjOshihiki_StrongEnough(this, play) &&
             !ObjOshihiki_CheckWall(play, this->dyna.unk_158, this->dyna.unk_150, this)) {
             this->direction = this->dyna.unk_150;
             ObjOshihiki_SetupPush(this, play);
@@ -497,7 +505,8 @@ void ObjOshihiki_OnActor(ObjOshihiki* this, PlayState* play) {
     DynaPolyActor* dynaPolyActor;
 
     this->stateFlags |= PUSHBLOCK_ON_ACTOR;
-    Actor_MoveXZGravity(&this->dyna.actor);
+    if (ObjOshihiki_IsMoveableScene(play))
+        Actor_MoveXZGravity(&this->dyna.actor);
 
     if (ObjOshihiki_CheckFloor(this, play)) {
         bgId = this->floorBgIds[this->highestFloor];
@@ -510,7 +519,7 @@ void ObjOshihiki_OnActor(ObjOshihiki* this, PlayState* play) {
                 DynaPolyActor_SetSwitchPressed(dynaPolyActor);
 
                 if ((this->timer <= 0) && (fabsf(this->dyna.unk_150) > 0.001f)) {
-                    if (ObjOshihiki_StrongEnough(this) && ObjOshihiki_NoSwitchPress(this, dynaPolyActor, play) &&
+                    if (ObjOshihiki_StrongEnough(this, play) && ObjOshihiki_NoSwitchPress(this, dynaPolyActor, play) &&
                         !ObjOshihiki_CheckWall(play, this->dyna.unk_158, this->dyna.unk_150, this)) {
 
                         this->direction = this->dyna.unk_150;
@@ -611,7 +620,8 @@ void ObjOshihiki_Fall(ObjOshihiki* this, PlayState* play) {
         this->dyna.unk_150 = 0.0f;
         player->stateFlags2 &= ~PLAYER_STATE2_4;
     }
-    Actor_MoveXZGravity(&this->dyna.actor);
+    if (ObjOshihiki_IsMoveableScene(play))
+        Actor_MoveXZGravity(&this->dyna.actor);
     if (ObjOshihiki_CheckGround(this, play)) {
         if (this->floorBgIds[this->highestFloor] == BGCHECK_SCENE) {
             ObjOshihiki_SetupOnScene(this, play);
@@ -672,6 +682,7 @@ void ObjOshihiki_Draw(Actor* thisx, PlayState* play) {
         case SCENE_SPIRIT_TEMPLE:
         case SCENE_SHADOW_TEMPLE:
         case SCENE_GERUDO_TRAINING_GROUND:
+        case SCENE_GORON_MINES:
             gDPSetEnvColor(POLY_OPA_DISP++, this->color.r, this->color.g, this->color.b, 255);
             break;
         default:
