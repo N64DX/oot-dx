@@ -3909,6 +3909,7 @@ void KaleidoScope_Update(PlayState* play) {
                 case SCENE_SPIRIT_TEMPLE_BOSS:
                 case SCENE_SHADOW_TEMPLE_BOSS:
                 case SCENE_ANCIENT_HOLLOW:
+                case SCENE_GORON_MINES:
                 case SCENE_WOODFALL_TEMPLE:
                 case SCENE_WOODFALL_TEMPLE_BOSS:
                     sInDungeonScene = true;

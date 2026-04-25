@@ -312,13 +312,6 @@ void Map_Init(PlayState* play) {
     ASSERT(interfaceCtx->mapSegment != NULL, "parameter->mapSegment != NULL", "../z_map_exp.c", 459);
 
     switch (play->sceneId) {
-        case SCENE_ANCIENT_HOLLOW:
-            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = 0x11;
-            break;
-        case SCENE_WOODFALL_TEMPLE:
-        case SCENE_WOODFALL_TEMPLE_BOSS:
-            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = 0x12;
-            break;
         case SCENE_HYRULE_FIELD:
         case SCENE_KAKARIKO_VILLAGE:
         case SCENE_GRAVEYARD:
@@ -357,6 +350,21 @@ void Map_Init(PlayState* play) {
             R_OW_MINIMAP_X = gMapData->owMinimapPosX[mapIndex];
             R_OW_MINIMAP_Y = gMapData->owMinimapPosY[mapIndex];
             break;
+        case SCENE_ANCIENT_HOLLOW:
+            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = SCENE_DEKU_TREE_BOSS;
+            break;
+         case SCENE_GORON_MINES:
+            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = SCENE_JABU_JABU_BOSS;
+            break;
+        case SCENE_WOODFALL_TEMPLE:
+        case SCENE_WOODFALL_TEMPLE_BOSS:
+            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = SCENE_DODONGOS_CAVERN_BOSS;
+            break;
+        case SCENE_GANONS_TOWER:
+        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = IS_CHILD_QUEST ? SCENE_INSIDE_GANONS_CASTLE : SCENE_GANONS_TOWER;
+            break;
         case SCENE_DEKU_TREE:
         case SCENE_DODONGOS_CAVERN:
         case SCENE_JABU_JABU:
@@ -367,12 +375,9 @@ void Map_Init(PlayState* play) {
         case SCENE_SHADOW_TEMPLE:
         case SCENE_BOTTOM_OF_THE_WELL:
         case SCENE_ICE_CAVERN:
-        case SCENE_GANONS_TOWER:
         case SCENE_GERUDO_TRAINING_GROUND:
         case SCENE_THIEVES_HIDEOUT:
         case SCENE_INSIDE_GANONS_CASTLE:
-        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
-        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
         case SCENE_TREASURE_BOX_SHOP:
         case SCENE_DEKU_TREE_BOSS:
         case SCENE_DODONGOS_CAVERN_BOSS:

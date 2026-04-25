@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_9.h"
+
+.startseq Sequence_124
+
+.incbin "aseq/dungeon_cave.aseq"
+
+.endseq Sequence_124

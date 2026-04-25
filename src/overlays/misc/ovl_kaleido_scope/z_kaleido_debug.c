@@ -29,28 +29,28 @@ typedef enum DebugSection {
     /* 0x36 */ SECTION_FIRST_EQUIPMENT,
     /* 0x39 */ SECTION_LAST_EQUIPMENT = 0x39,
     /* 0x3A */ SECTION_FIRST_DUNGEON_ITEMS,
-    /* 0x4C */ SECTION_LAST_DUNGEON_ITEMS = 0x4C,
-    /* 0x4D */ SECTION_FIRST_MEDALLION,
-    /* 0x52 */ SECTION_LAST_MEDALLION = 0x52,
-    /* 0x53 */ SECTION_FIRST_SONG,
-    /* 0x5E */ SECTION_LAST_SONG = 0x5E,
-    /* 0x5F */ SECTION_FIRST_SPIRITUAL_STONE,
-    /* 0x61 */ SECTION_LAST_SPIRITUAL_STONE = 0x61,
-    /* 0x62 */ SECTION_STONE_OF_AGONY,
-    /* 0x63 */ SECTION_GERUDO_CARD,
-    /* 0x64 */ SECTION_MAGIC,
-    /* 0x65 */ SECTION_GREAT_FAIRY_UPGRADES,
-    /* 0x66 */ SECTION_SKULL_TOKENS,
-    /* 0x67 */ SECTION_HEART_PIECES,
-    /* 0x68 */ SECTION_SWORD_UPGRADE,
-    /* 0x69 */ SECTION_ABILITY_UPGRADES,
-    /* 0x6A */ SECTION_FEATHER,
-    /* 0x6B */ SECTION_AMULET_OF_ENERGY,
-    /* 0x6C */ SECTION_SHIELD_DEKU_UPGRADES,
-    /* 0x6D */ SECTION_SHIELD_HYLIAN_UPGRADES,
-    /* 0x6E */ SECTION_SHIELD_MIRROR_UPGRADES,
-    /* 0x6F */ SECTION_SHIELD_HEROS_UPGRADES,
-    /* 0x70 */ SECTION_MAX
+    /* 0x4D */ SECTION_LAST_DUNGEON_ITEMS = 0x4D,
+    /* 0x4E */ SECTION_FIRST_MEDALLION,
+    /* 0x53 */ SECTION_LAST_MEDALLION = 0x53,
+    /* 0x54 */ SECTION_FIRST_SONG,
+    /* 0x5F */ SECTION_LAST_SONG = 0x5F,
+    /* 0x60 */ SECTION_FIRST_SPIRITUAL_STONE,
+    /* 0x62 */ SECTION_LAST_SPIRITUAL_STONE = 0x62,
+    /* 0x63 */ SECTION_STONE_OF_AGONY,
+    /* 0x64 */ SECTION_GERUDO_CARD,
+    /* 0x65 */ SECTION_MAGIC,
+    /* 0x66 */ SECTION_GREAT_FAIRY_UPGRADES,
+    /* 0x67 */ SECTION_SKULL_TOKENS,
+    /* 0x68 */ SECTION_HEART_PIECES,
+    /* 0x69 */ SECTION_SWORD_UPGRADE,
+    /* 0x6A */ SECTION_ABILITY_UPGRADES,
+    /* 0x6B */ SECTION_FEATHER,
+    /* 0x6C */ SECTION_AMULET_OF_ENERGY,
+    /* 0x6D */ SECTION_SHIELD_DEKU_UPGRADES,
+    /* 0x6E */ SECTION_SHIELD_HYLIAN_UPGRADES,
+    /* 0x6F */ SECTION_SHIELD_MIRROR_UPGRADES,
+    /* 0x70 */ SECTION_SHIELD_HEROS_UPGRADES,
+    /* 0x71 */ SECTION_MAX
 } DebugSection;
 
 // Positions of each input section in the editor
@@ -139,7 +139,8 @@ static u16 sSectionPositions[SECTION_MAX][2] = {
     { 228, 132 },
     { 238, 132 },
     { 248, 132 },
-    { 258, 132 }, // SECTION_LAST_DUNGEON_ITEMS
+    { 258, 132 },
+    { 268, 132 }, // SECTION_LAST_DUNGEON_ITEMS
 
     { 78, 149 }, // SECTION_FIRST_MEDALLION
     { 90, 149 },
@@ -424,7 +425,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
     }
 
     // Dungeon Items
-    for (digitBuf[1] = 78, i = 0; i < 19; i++, digitBuf[1] += 10) {
+    for (digitBuf[1] = 78, i = 0; i < 20; i++, digitBuf[1] += 10) {
         digitBuf[2] = gSaveContext.save.info.inventory.dungeonItems[i] & gEquipMasks[0];
         KaleidoScope_DrawDigit(play, digitBuf[2], digitBuf[1], 132);
     }

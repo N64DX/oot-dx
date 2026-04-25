@@ -3305,7 +3305,8 @@ static SeqWithVolume seqsWithVolume[] = {
     0x5F, NA_BGM_KOLIMA_FOREST,
     0x7F, NA_BGM_KOLOKTOS,
     0x5F, NA_BGM_GANON_BATTLE,
-    0x7F, NA_BGM_LAKE_HYLIA
+    0x7F, NA_BGM_LAKE_HYLIA,
+    0x7F, NA_BGM_DUNGEON_CAVE
 };
 
 void Audio_UpdateSceneSequenceResumePoint(void) {

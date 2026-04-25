@@ -342,6 +342,83 @@ beginseg
 endseg
 
 beginseg
+    name "old_dodongos_cavern_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "old_dodongos_cavern_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "old_dodongos_cavern_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_room_1.o"
+    number 3
+endseg
+
+beginseg
+    name "old_dodongos_cavern_room_2"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_room_2.o"
+    number 3
+endseg
+
+beginseg
+    name "old_dodongos_cavern_room_3"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_room_3.o"
+    number 3
+endseg
+
+beginseg
+    name "old_dodongos_cavern_room_4"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_room_4.o"
+    number 3
+endseg
+
+beginseg
+    name "old_dodongos_cavern_room_5"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_room_5.o"
+    number 3
+endseg
+
+beginseg
+    name "old_dodongos_cavern_room_6"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_room_6.o"
+    number 3
+endseg
+
+beginseg
+    name "old_dodongos_cavern_room_7"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_room_7.o"
+    number 3
+endseg
+
+beginseg
+    name "old_dodongos_cavern_room_8"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_room_8.o"
+    number 3
+endseg
+
+beginseg
+    name "old_dodongos_cavern_room_9"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_room_9.o"
+    number 3
+endseg
+
+beginseg
     name "woodfall_temple_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple/woodfall_temple_scene.o"
