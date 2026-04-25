@@ -676,10 +676,10 @@ void Map_Update(PlayState* play) {
         switch (play->sceneId) {
             case SCENE_GORON_VILLAGE:
             case SCENE_GORON_SHRINE:
-                if (sMinimapResetTimer == ONE_SEC - 1)
+                if (sMinimapResetTimer == 1)
                     DMA_REQUEST_SYNC(interfaceCtx->mapSegment, sMinimapOffset, sMinimapSize, __FILE__, __LINE__);
-                else if (play->roomCtx.curRoom.num != sLastRoomNum) {
-                    sMinimapResetTimer = ONE_SEC;
+                else if (sMinimapResetTimer == 0 && play->roomCtx.curRoom.num != sLastRoomNum && !R_BLOCK_TRANSITION_MINIMAP) {
+                    sMinimapResetTimer = 2;
                     sLastRoomNum = play->roomCtx.curRoom.num;
                     Map_InitData(play, play->roomCtx.curRoom.num);
                     Map_RecalculateCompass();

@@ -200,6 +200,12 @@ void EnHoll_HorizontalVisibleNarrow(EnHoll* this, PlayState* play) {
     Actor_WorldToActorCoords(&this->actor, &relPlayerPos, &player->actor.world.pos);
     this->side = (relPlayerPos.z < 0.0f  && !isSceneChanger) ? 0 : 1;
     orthogonalDistToPlayer = fabsf(relPlayerPos.z);
+
+    if (orthogonalDistToPlayer <= 150.0f)
+        R_BLOCK_TRANSITION_MINIMAP = 1;
+    else if (R_BLOCK_TRANSITION_MINIMAP && orthogonalDistToPlayer > 150.0f && orthogonalDistToPlayer < 200.0f)
+        R_BLOCK_TRANSITION_MINIMAP = 0;
+
     if (relPlayerPos.y > ENHOLL_H_Y_MIN && relPlayerPos.y < ENHOLL_H_Y_MAX &&
         fabsf(relPlayerPos.x) < ENHOLL_H_HALFWIDTH_NARROW &&
         orthogonalDistToPlayer < sHorizontalVisibleNarrowTriggerDists[triggerDistsIndex][0]) {
