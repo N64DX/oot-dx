@@ -276,6 +276,7 @@ struct PlayState;
 #define R_BEATEN_RUSH_MODE                       dREG(90)
 #define R_SPECIAL_POWER_TIMER                    dREG(91)
 #define R_PERFECT_BLOCK_BOOST_TIMER              dREG(92)
+#define R_BLOCK_TRANSITION_MINIMAP               dREG(93)
 #define R_IS_YOUNG_LINK                          HREG(77)
 #define R_ENABLE_MIRROR                          HREG(78)
 #define R_QUEST_MODE                             HREG(79)
