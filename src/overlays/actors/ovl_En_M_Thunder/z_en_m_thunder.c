@@ -13,6 +13,7 @@
 #include "save.h"
 
 #include "assets/objects/gameplay_keep/spin_attack.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_0x13700.h"
 
 #define FLAGS 0
 
@@ -382,11 +383,11 @@ void EnMThunder_SpinAttacking(EnMThunder* this, PlayState* play) {
 void EnMThunder_SwordBeam_Attack(EnMThunder* this, PlayState* play) {
     f32 sp2C;
 
-    if (this->unk_1AC > (9.0f / 10.0f))
-        this->unk_1B0 = 1.0f;
-    else this->unk_1B0 = this->unk_1AC * (10.0f / 9.0f);
+    if (this->spinAttackTimer > (9.0f / 10.0f))
+        this->spinAttackAlpha = 1.0f;
+    else this->spinAttackAlpha = this->spinAttackTimer * (10.0f / 9.0f);
 
-    if (Math_StepToF(&this->unk_1AC, 0.0f, 0.05f))
+    if (Math_StepToF(&this->spinAttackTimer, 0.0f, 0.05f))
         Actor_Kill(&this->actor);
     else {
         sp2C = -80.0f * Math_CosS(this->actor.world.rot.x);
@@ -395,7 +396,7 @@ void EnMThunder_SwordBeam_Attack(EnMThunder* this, PlayState* play) {
         this->actor.world.pos.z += sp2C * Math_CosS(this->actor.shape.rot.y);
         this->actor.world.pos.y += -80.0f * Math_SinS(this->actor.world.rot.x);
 
-        Math_SmoothStepToF(&this->actor.scale.x, this->unk_1C9, 0.6f, 2.0f, 0.0f);
+        Math_SmoothStepToF(&this->actor.scale.x, this->targetScale, 0.6f, 2.0f, 0.0f);
         Actor_SetScale(&this->actor, this->actor.scale.x);
 
         this->collider.dim.radius = this->actor.scale.x * 5.0f;
@@ -411,10 +412,10 @@ void EnMThunder_SwordBeam_Attack(EnMThunder* this, PlayState* play) {
         CollisionCheck_SetAT(play, &play->colChkCtx, &this->collider.base);
     }
 
-    if (this->unk_1C4 > 0)
-        this->unk_1C4--;
+    if (this->followPlayerTimer > 0)
+        this->followPlayerTimer--;
 
-    func_80A9F938(this, play);
+    EnMThunder_UpdateSpinAttack(this, play);
     
     if (Play_InCsMode(play))
         Actor_Kill(&this->actor);
@@ -459,7 +460,7 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
         case ENMTHUNDER_SUBTYPE_SWORDBEAM_REGULAR:
             gSPSegment(POLY_XLU_DISP++, 0x08,
                        Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, 0, 16, 64, 1, 0,
-                                        0x1FF - ((u16)(s32)(this->unk_1B4 * 10.0f) & 0x1FF), 32, 128));
+                                        0x1FF - ((u16)(s32)(this->spinTrailTexScroll * 10.0f) & 0x1FF), 32, 128));
     }
 
     switch (this->attackStrength) {
@@ -474,13 +475,13 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
             gSPDisplayList(POLY_XLU_DISP++, gSpinAttack2DL);
             break;
         case ENMTHUNDER_SUBTYPE_SWORDBEAM_REGULAR:
-            gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x80, 170, 255, 255, (u16)(this->unk_1B0 * 255.0f));
+            gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x80, 170, 255, 255, (u16)(this->spinAttackAlpha * 255.0f));
             gDPSetEnvColor(POLY_XLU_DISP++, 0, 100, 255, 128);
             gSPDisplayList(POLY_XLU_DISP++, gUnusedBeamBladeDL);
             break;
 
         case ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT:
-            gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x80, 0, 255, 255, (u16)(this->unk_1B0 * 255.0f));
+            gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x80, 0, 255, 255, (u16)(this->spinAttackAlpha * 255.0f));
             gDPSetEnvColor(POLY_XLU_DISP++, 200, 200, 200, 128);
             gSPDisplayList(POLY_XLU_DISP++, gUnusedBeamBladeDL);
             break;

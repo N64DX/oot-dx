@@ -233,7 +233,7 @@ void EnFirefly_Init(Actor* thisx, PlayState* play) {
             this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_ICE;
             this->actor.naviEnemyId = NAVI_ENEMY_ICE_KEESE;
         } else if (this->actor.params == KEESE_ELECTRIC_FLY) {
-            this->collider.elements[0].base.atDmgInfo.effect = 3; // Electric
+            this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = 3; // Electric
             this->actor.naviEnemyId = NAVI_ENEMY_ELECTRIC_KEESE;
         } else {
             this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_NONE;

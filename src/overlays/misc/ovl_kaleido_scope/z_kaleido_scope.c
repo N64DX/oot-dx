@@ -4920,10 +4920,10 @@ void KaleidoScope_Update(PlayState* play) {
             gSaveContext.buttonStatus[4] = sSavedButtonStatus[4];
             
             if (!switchedDualSet) {
-                dpadStatus[0] = D_808321A8[5];
-                dpadStatus[1] = D_808321A8[6];
-                dpadStatus[2] = D_808321A8[7];
-                dpadStatus[3] = D_808321A8[8];
+                dpadStatus[0] = sSavedButtonStatus[5];
+                dpadStatus[1] = sSavedButtonStatus[6];
+                dpadStatus[2] = sSavedButtonStatus[7];
+                dpadStatus[3] = sSavedButtonStatus[8];
             }
             else {
                 dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = BTN_ENABLED;
@@ -4953,9 +4953,9 @@ void KaleidoScope_DrawSwapItemIcons(PlayState* play, ItemID currItem, ItemID nex
     gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 90, 100, 130, alpha);
-    gDPLoadTextureBlock(OVERLAY_DISP++, gNamePanelLeftTex, G_IM_FMT_IA, G_IM_SIZ_8b, 72, 24, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadTextureBlock(OVERLAY_DISP++, gInfoPanelBgLeftTex, G_IM_FMT_IA, G_IM_SIZ_8b, 72, 24, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + x) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 40) << 2, HIRES_MULTIPLY((y + 20) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1850), HIRES_DIVIDE(1230));
-    gDPLoadTextureBlock(OVERLAY_DISP++, gNamePanelRightTex, G_IM_FMT_IA, G_IM_SIZ_8b, 72, 24, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadTextureBlock(OVERLAY_DISP++, gInfoPanelBgRightTex, G_IM_FMT_IA, G_IM_SIZ_8b, 72, 24, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 40) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + x + 40 + 40) << 2, HIRES_MULTIPLY((y + 20) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1850), HIRES_DIVIDE(1230));
 
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, alpha);

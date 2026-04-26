@@ -868,7 +868,7 @@ void BossFd_Fly(BossFd* this, PlayState* play) {
                         this->work[BFD_CEILING_TARGET]++;
                         this->timers[1] = 60;
                         this->work[BFD_CAM_SHAKE_TIMER] = 20;
-                        SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_VALVAISA_LAND2);
+                        SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_GOMA_DOWN);
                         Player_SetCsActionWithHaltedActors(play, &this->actor, PLAYER_CSACTION_5);
                         for (i1 = 0; i1 < 15; i1++) {
                             Vec3f sp144 = { 0.0f, 0.0f, 0.0f };
@@ -1255,7 +1255,7 @@ void BossFd_Effects(BossFd* this, PlayState* play) {
         this->fogMode = 2;
         spawnSpeed2.z = 30.0f;
 
-        SFX_PLAY_AT_POS(&sFireAudioVec, NA_SE_EN_VALVAISA_FIRE - SFX_FLAG);
+        SFX_PLAY_AT_POS(&sFireAudioVec, NA_SE_EN_DODO_K_FIRE - SFX_FLAG);
         spawnPos2 = this->headPos;
 
         spawnAngleY = BINANG_TO_RAD_ALT(this->actor.world.rot.y);
