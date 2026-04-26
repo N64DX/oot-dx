@@ -1156,6 +1156,7 @@ beginseg
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/circle_glow_textures.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_0x55DB0.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/eff_spark_textures.o"
+    include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_extra.o"
     number 4
 endseg
 

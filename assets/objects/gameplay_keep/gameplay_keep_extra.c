@@ -1,6 +1,8 @@
 #include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 #include "assets/misc/link_animetion/link_animetion_extra.h"
 
+#include "array_count.h"
+
 u64 gDropFeatherTex[TEX_LEN(u64, 32, 32, 16)] = {
 #include "assets/objects/gameplay_keep/gDropFeatherTex.rgba16.inc.c"
 };
@@ -446,6 +448,8 @@ Gfx gLinkChildGerudoMaskDL[84] = {
 #include "assets/objects/object_link_child/gLinkChildGerudoMaskDL.inc.c"
 };
 
+
+
 // Bunny hood
 
 #define gLinkChildBunnyHoodEyeTex_WIDTH 16
@@ -473,6 +477,8 @@ Vtx gLinkChildBunnyHoodVtx[] = {
 Gfx gLinkChildBunnyHoodDL[114] = {
 #include "assets/objects/object_link_child/gLinkChildBunnyHoodDL.inc.c"
 };
+
+
 
 // MM Bottle
 
@@ -543,6 +549,8 @@ Gfx gMMBottleGlassDL[] = {
     gsSPEndDisplayList(),
 };
 
+
+
 // MM Style Jumps
 
 LinkAnimationHeader gPlayerAnim_link_normal_newroll_jump_20f = { 
@@ -560,6 +568,8 @@ LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_20f = {
 LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_end_20f = { 
     { 16 }, gPlayerAnim_link_normal_newside_jump_end_20f_Data,
 };
+
+
 
 // Beehive
 
@@ -586,6 +596,8 @@ Gfx gFieldBeehiveDL[44] = {
 Gfx gFieldBeehiveFragmentDL[18] = {
 #include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentDL.inc.c"
 };
+
+
 
 // Liftable Rock
 

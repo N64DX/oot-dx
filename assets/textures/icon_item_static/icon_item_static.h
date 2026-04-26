@@ -226,13 +226,13 @@ extern Gfx gAButtonIconDL[11];
 extern Gfx gPromptCursorLeftDL[10];
 extern Gfx gPromptCursorRightDL[10];
 
-#define gNamePanelLeftTex_WIDTH 72
-#define gNamePanelLeftTex_HEIGHT 24
-extern u64 gNamePanelLeftTex[TEX_LEN(u64, gNamePanelLeftTex_WIDTH, gNamePanelLeftTex_HEIGHT, 8)];
+#define gInfoPanelBgLeftTex_WIDTH 72
+#define gInfoPanelBgLeftTex_HEIGHT 24
+extern u64 gInfoPanelBgRightTex[TEX_LEN(u64, gInfoPanelBgLeftTex_WIDTH, gInfoPanelBgLeftTex_HEIGHT, 8)];
 
-#define gNamePanelRightTex_WIDTH 72
-#define gNamePanelRightTex_HEIGHT 24
-extern u64 gNamePanelRightTex[TEX_LEN(u64, gNamePanelRightTex_WIDTH, gNamePanelRightTex_HEIGHT, 8)];
+#define gInfoPanelBgRightTex_WIDTH 72
+#define gInfoPanelBgRightTex_HEIGHT 24
+extern u64 gNamePanelRightTex[TEX_LEN(u64, gInfoPanelBgRightTex_WIDTH, gInfoPanelBgRightTex_HEIGHT, 8)];
 
 extern u64 gRightArrowTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 
