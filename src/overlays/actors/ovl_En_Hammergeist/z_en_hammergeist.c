@@ -387,7 +387,6 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
     EnHammergeist_ChangeAnimation(this, HAMMERGEIST_ANIMATION_IDLE);
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 80.0f);
     Actor_SetScale(&this->actor, 0.015f);
-    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
     this->actor.naviEnemyId = NAVI_ENEMY_MOLMAUK;
 
     thisx->gravity = -1.0f;
@@ -405,6 +404,7 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
     EnHammergeist_ChangeFace(this, HAMMERGEIST_FACE_NORMAL);
 
     EnHammergeist_InitAndSetCollision(this, play);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
     SkelAnime_InitFlex(play, &this->skelAnime, &gHammergeistSkel, NULL, this->jointTable, this->morphTable, GHAMMERGEISTSKEL_NUM_LIMBS);
     EnHammergeist_SetupDoNothing(this, play);
 

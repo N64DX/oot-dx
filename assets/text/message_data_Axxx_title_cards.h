@@ -140,7 +140,7 @@ DEFINE_MESSAGE(0xA026, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 
 DEFINE_MESSAGE(0xA027, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("双子の家"),
-    MSG("Twin's House"),
+    MSG("Twins' House"),
     MSG("Haus der Zwillinge"),
     MSG("Maison des Jumeaux")
 )
@@ -601,7 +601,7 @@ DEFINE_MESSAGE(0xA06E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 )
 
 DEFINE_MESSAGE(0xA06F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-    MSG("蜘蛛の巣の祠"),
+    MSG("くものすやしろ"),
     MSG("Webbed Shrine"),
     MSG("Versponnener Schrein"),
     MSG("Sanctuaire Entoilé")

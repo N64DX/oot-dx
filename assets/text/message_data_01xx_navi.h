@@ -412,7 +412,7 @@ UNSKIPPABLE COLOR(LIGHTBLUE) "Hast du es bemerkt?\n"
 "Diese Fackel ist noch warm." COLOR(DEFAULT)
 ),
 MSG(
-UNSKIPPABLE COLOR(LIGHTBLUE) "Tu l’as remarqué ?\n"
+UNSKIPPABLE COLOR(LIGHTBLUE) "Tu l'as remarqué ?\n"
 "Cette torche est encore chaude." COLOR(DEFAULT)
 )
 )

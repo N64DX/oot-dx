@@ -20,8 +20,8 @@ UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "Du hast den " COLOR(
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "Tu as trouvé le " COLOR(LIGHTBLUE) "Bouclier miroir" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "La surface polie du bouclier peut\n"
-"réfléchir la lumière ou l’énergie.\n"
-"Appuie sur " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " pour l’utiliser."
+"réfléchir la lumière ou l'énergie.\n"
+"Appuie sur " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " pour l'utiliser."
 )
 )
 
@@ -44,7 +44,7 @@ UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_KNIFE) QUICKTEXT_ENABLE "Du hast das " COLOR(R
 "eine größere Reichweite mit guter Kraft!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_KNIFE) QUICKTEXT_ENABLE "Tu as obtenu l’" COLOR(RED) "Épée d’argent" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_KNIFE) QUICKTEXT_ENABLE "Tu as obtenu l'" COLOR(RED) "Épée d’argent" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
 "Cette lame a été forgée par un\n"
 "forgeron expert pour avoir une\n"
 "plus grande portée et une bonne puissance!"
@@ -71,8 +71,8 @@ UNSKIPPABLE ITEM_ICON(0x5F) QUICKTEXT_ENABLE "Du hast das Silberschwert\n"
 "Meisterschmied für große Kraft geschmiedet!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5F) QUICKTEXT_ENABLE "Tu as transformé l’" 
-"Épée d’argent en " COLOR(RED) "Épée dorée" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(0x5F) QUICKTEXT_ENABLE "Tu as transformé l'" 
+"Épée d'argent en " COLOR(RED) "Épée dorée" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
 "Cette lame a été forgée par un\n"
 "maître forgeron pour une grande puissance!"
 )
