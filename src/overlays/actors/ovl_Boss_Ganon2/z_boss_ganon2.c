@@ -17,6 +17,7 @@
 #include "sfx.h"
 #include "sys_math.h"
 #include "sys_matrix.h"
+#include "tex_len.h"
 #include "versions.h"
 #include "z_lib.h"
 #include "effect.h"
@@ -28,14 +29,14 @@
 #include "assets/objects/object_ganon2/object_ganon2.h"
 #include "assets/objects/object_ganon_anime3/object_ganon_anime3.h"
 #include "assets/objects/object_geff/object_geff.h"
-#include "assets/overlays/ovl_Boss_Ganon2/ovl_Boss_Ganon2.h"
+#include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #if OOT_NTSC_N64
 #include "assets/objects/object_ganon2/object_ganon2_title_card.h"
 #endif
 
 #pragma increment_block_number "gc-eu:128 gc-eu-mq:128 gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128" \
-                               "ique-cn:128 ntsc-1.0:128 ntsc-1.1:128 ntsc-1.2:128 pal-1.0:128 pal-1.1:128"
+                               "ique-cn:0 ntsc-1.0:0 ntsc-1.1:0 ntsc-1.2:0 pal-1.0:128 pal-1.1:128"
 
 #define FLAGS                                                                                 \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | \
@@ -82,6 +83,20 @@ static bool isHyper;
 static u16 stalfosTimer;
 static Actor* spawnedStalfos[2];
 
+static Gfx gGanonLightOrbMaterialDL[14];
+static Gfx gGanonLightOrbModelDL[3];
+static Gfx gGanonShadowMaterialDL[4];
+static Gfx gGanonShadowModelDL[6];
+static Vtx gGanonSwordTrailVtx[22];
+static Gfx gGanonSwordTrailDL[35];
+static Gfx gGanonTriforceDL[16];
+static Gfx gGanonLightningDL[17];
+static Gfx gGanonFireRingDL[36];
+static Gfx gGanonZeldaMagicDL[33];
+static Gfx gGanonMasterSwordShadowDL[16];
+static Gfx gGanonMasterSwordDL[122];
+static Gfx gGanonRazorSwordDL[222];
+
 ActorProfile Boss_Ganon2_Profile = {
     /**/ ACTOR_BOSS_GANON2,
     /**/ ACTORCAT_BOSS,
@@ -104,8 +119,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -115,8 +130,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -126,8 +141,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -137,8 +152,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -148,8 +163,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -159,8 +174,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -170,8 +185,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -181,8 +196,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -192,8 +207,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -203,8 +218,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -214,8 +229,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -225,8 +240,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -236,8 +251,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -247,8 +262,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -258,8 +273,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x10 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -269,8 +284,8 @@ static ColliderJntSphElementInit sJntSphElementsInit1[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x00 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -296,8 +311,8 @@ static ColliderJntSphElementInit sJntSphElementsInit2[] = {
     {
         {
             ELEM_MATERIAL_UNK2,
-            { 0xFFCFFFFF, 0x00, 0x40 },
-            { 0xFFDFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x40 },
+            { 0xFFDFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -307,8 +322,8 @@ static ColliderJntSphElementInit sJntSphElementsInit2[] = {
     {
         {
             ELEM_MATERIAL_UNK2,
-            { 0xFFCFFFFF, 0x00, 0x40 },
-            { 0xFFDFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x40 },
+            { 0xFFDFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_ON,
@@ -2197,7 +2212,7 @@ void func_8090120C(BossGanon2* this, PlayState* play) {
             FALLTHROUGH;
         case 20:
             play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
-            gSaveContext.nextCutsceneIndex = 0xFFF2;
+            gSaveContext.nextCutsceneIndex = CS_INDEX_2;
             play->transitionTrigger = TRANS_TRIGGER_START;
             play->transitionType = TRANS_TYPE_FADE_WHITE;
             play->linkAgeOnLoad = LINK_AGE_CHILD;
@@ -3569,4 +3584,169 @@ Actor* BossGanon2_SpawnStalfos(PlayState* play) {
 // padding
 static u32 D_809071FC[2] = { 0 };
 
-#include "assets/overlays/ovl_Boss_Ganon2/ovl_Boss_Ganon2.c"
+#define gGanonLightOrbTex_WIDTH 64
+#define gGanonLightOrbTex_HEIGHT 64
+static u64 gGanonLightOrbTex[TEX_LEN(u64, gGanonLightOrbTex_WIDTH, gGanonLightOrbTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonLightOrbTex.i8.inc.c"
+};
+
+static Vtx gGanonLightOrbModelVtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonLightOrbModelVtx.inc.c"
+};
+
+static Gfx gGanonLightOrbMaterialDL[14] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonLightOrbMaterialDL.inc.c"
+};
+
+static Gfx gGanonLightOrbModelDL[3] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonLightOrbModelDL.inc.c"
+};
+
+static Vtx gGanonShadowModelVtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonShadowModelVtx.inc.c"
+};
+
+static Gfx gGanonShadowMaterialDL[4] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonShadowMaterialDL.inc.c"
+};
+
+static Gfx gGanonShadowModelDL[6] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonShadowModelDL.inc.c"
+};
+
+#define gGanonSwordTrailTex_WIDTH 32
+#define gGanonSwordTrailTex_HEIGHT 32
+static u64 gGanonSwordTrailTex[TEX_LEN(u64, gGanonSwordTrailTex_WIDTH, gGanonSwordTrailTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonSwordTrailTex.i8.inc.c"
+};
+
+#define gGanonSwordTrailMaskTex_WIDTH 32
+#define gGanonSwordTrailMaskTex_HEIGHT 32
+static u64 gGanonSwordTrailMaskTex[TEX_LEN(u64, gGanonSwordTrailMaskTex_WIDTH, gGanonSwordTrailMaskTex_HEIGHT, 4)] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonSwordTrailMaskTex.i4.inc.c"
+};
+
+static Vtx gGanonSwordTrailVtx[22] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonSwordTrailVtx.inc.c"
+};
+
+static Gfx gGanonSwordTrailDL[35] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonSwordTrailDL.inc.c"
+};
+
+#define gGanonTriforceTex_WIDTH 64
+#define gGanonTriforceTex_HEIGHT 64
+static u64 gGanonTriforceTex[TEX_LEN(u64, gGanonTriforceTex_WIDTH, gGanonTriforceTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonTriforceTex.i8.inc.c"
+};
+
+static Vtx gGanonTriforceVtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonTriforceVtx.inc.c"
+};
+
+static Gfx gGanonTriforceDL[16] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonTriforceDL.inc.c"
+};
+
+#define gGanonLightningTex_WIDTH 32
+#define gGanonLightningTex_HEIGHT 160
+static u64 gGanonLightningTex[TEX_LEN(u64, gGanonLightningTex_WIDTH, gGanonLightningTex_HEIGHT, 4)] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonLightningTex.i4.inc.c"
+};
+
+static Vtx gGanonLightningVtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonLightningVtx.inc.c"
+};
+
+static Gfx gGanonLightningDL[17] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonLightningDL.inc.c"
+};
+
+#define gGanonFireRingTex_WIDTH 32
+#define gGanonFireRingTex_HEIGHT 64
+static u64 gGanonFireRingTex[TEX_LEN(u64, gGanonFireRingTex_WIDTH, gGanonFireRingTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonFireRingTex.i8.inc.c"
+};
+
+static Vtx gGanonFireRingVtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonFireRingVtx.inc.c"
+};
+
+static Gfx gGanonFireRingDL[36] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonFireRingDL.inc.c"
+};
+
+#define gGanonZeldaMagicTex_WIDTH 32
+#define gGanonZeldaMagicTex_HEIGHT 64
+static u64 gGanonZeldaMagicTex[TEX_LEN(u64, gGanonZeldaMagicTex_WIDTH, gGanonZeldaMagicTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonZeldaMagicTex.i8.inc.c"
+};
+
+static Vtx gGanonZeldaMagicVtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonZeldaMagicVtx.inc.c"
+};
+
+static Gfx gGanonZeldaMagicDL[33] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonZeldaMagicDL.inc.c"
+};
+
+#define gGanonMasterSwordShadowTex_WIDTH 32
+#define gGanonMasterSwordShadowTex_HEIGHT 32
+static u64
+    gGanonMasterSwordShadowTex[TEX_LEN(u64, gGanonMasterSwordShadowTex_WIDTH, gGanonMasterSwordShadowTex_HEIGHT, 8)] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonMasterSwordShadowTex.i8.inc.c"
+    };
+
+static Vtx gGanonMasterSwordShadowVtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonMasterSwordShadowVtx.inc.c"
+};
+
+static Gfx gGanonMasterSwordShadowDL[16] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonMasterSwordShadowDL.inc.c"
+};
+
+#define gGanonMasterSwordPommelTex_WIDTH 16
+#define gGanonMasterSwordPommelTex_HEIGHT 16
+static u64 gGanonMasterSwordPommelTex[TEX_LEN(u64, gGanonMasterSwordPommelTex_WIDTH, gGanonMasterSwordPommelTex_HEIGHT,
+                                              16)] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonMasterSwordPommelTex.rgba16.inc.c"
+};
+
+#define gGanonMasterSwordGuardTex_WIDTH 32
+#define gGanonMasterSwordGuardTex_HEIGHT 32
+static u64
+    gGanonMasterSwordGuardTex[TEX_LEN(u64, gGanonMasterSwordGuardTex_WIDTH, gGanonMasterSwordGuardTex_HEIGHT, 16)] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonMasterSwordGuardTex.rgba16.inc.c"
+    };
+
+static Vtx gGanonMasterSwordVtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonMasterSwordVtx.inc.c"
+};
+
+static Gfx gGanonMasterSwordDL[122] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonMasterSwordDL.inc.c"
+};
+
+static u64 gSwordMetalTex[] = {
+#include "assets/objects/object_link_child/swords/razor_sword_metal.i8.inc.c"
+};
+
+static u64 gRazorSwordHandleDesignTex[] = {
+#include "assets/objects/object_link_child/swords/razor_sword_handle_design.rgba16.inc.c"
+};
+
+static u64 gRazorSwordHandleGripTex[] = {
+#include "assets/objects/object_link_child/swords/razor_sword_handle_grip.rgba16.inc.c"
+};
+
+static Vtx razor_sword_handle_vtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/razor_sword_handle.vtx.inc"
+};
+
+static Vtx razor_sword_blade_vtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/razor_sword_blade.vtx.inc"
+};
+
+static Gfx gGanonRazorSwordDL[222] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonRazorSwordDL.inc.c"
+};

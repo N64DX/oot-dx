@@ -19,7 +19,7 @@
 #include "player.h"
 #include "save.h"
 
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/shadow_circle.h"
 #include "assets/objects/object_wallmaster/object_wallmaster.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
@@ -71,13 +71,13 @@ static ColliderCylinderInit sCylinderInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0x00000000, 0x00, 0x00 },
-        { 0xFFCFFFFF, 0x00, 0x00 },
+        { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+        { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_NONE,
         ACELEM_ON,
         OCELEM_ON,
     },
-    { 30, 40, 0, { 0 } },
+    { 30, 40, 0, { 0, 0, 0 } },
 };
 
 static CollisionCheckInfoInit sColChkInfoInit = { 4, 30, 40, 150 };
@@ -265,7 +265,8 @@ void EnWallmas_SetupDie(EnWallmas* this, PlayState* play) {
     EffectSsDeadDb_Spawn(play, &this->actor.world.pos, &zeroVec, &zeroVec, 250, -10, 255, 255, 255, 255, 0, 0, 255, 1,
                          9, true);
 
-    Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xC0);
+    Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                               COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_12, false));
     this->actionFunc = EnWallmas_Die;
 }
 
@@ -429,7 +430,8 @@ void EnWallmas_Cooldown(EnWallmas* this, PlayState* play) {
 void EnWallmas_Die(EnWallmas* this, PlayState* play) {
     if (Math_StepToF(&this->actor.scale.x, 0.0f, 0.0015) != 0) {
         Actor_SetScale(&this->actor, 0.01f);
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xC0);
+        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                                   COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_12, false));
         Actor_Kill(&this->actor);
     }
     this->actor.scale.z = this->actor.scale.x;

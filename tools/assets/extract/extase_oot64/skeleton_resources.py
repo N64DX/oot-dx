@@ -65,6 +65,10 @@ class StandardLimbResource(CDataResource):
     def set_enum_member_name(self, enum_member_name: str):
         self.enum_member_name = enum_member_name
 
+    def get_as_xml(self) -> str:
+        return f"""\
+        <Limb Name="{self.symbol_name}" LimbType="Standard" EnumName="{self.enum_member_name}" Offset="0x{self.range_start:X}"/>"""
+
     def get_c_declaration_base(self):
         return f"StandardLimb {self.symbol_name}"
 
@@ -100,6 +104,10 @@ class LODLimbResource(CDataResource):
 
     def set_enum_member_name(self, enum_member_name: str):
         self.enum_member_name = enum_member_name
+
+    def get_as_xml(self):
+        return f"""\
+        <Limb Name="{self.symbol_name}" LimbType="LOD" EnumName="{self.enum_member_name}" Offset="0x{self.range_start:X}"/>"""
 
     def get_c_declaration_base(self):
         return f"LodLimb {self.symbol_name}"
@@ -208,6 +216,7 @@ class SkeletonResourceBaseABC(CDataResource):
         return RESOURCE_PARSE_SUCCESS
 
     def write_c_declaration(self, h):
+        assert self.limbs_array_resource is not None
         h.write(f"typedef enum {self.enum_name} {{\n")
         limb_enum_members = (
             self.enum_member_name_none,
@@ -223,7 +232,6 @@ class SkeletonResourceBaseABC(CDataResource):
         )
         h.write(f"}} {self.enum_name};\n")
         super().write_c_declaration(h)
-        return True
 
     @abc.abstractmethod
     def get_skeleton_header_cdata_unpacked(self) -> dict: ...
@@ -241,7 +249,11 @@ class SkeletonResourceABC(SkeletonResourceBaseABC):
             lambda file, offset: resource.limbs_array_type(
                 file,
                 offset,
-                f"{resource.name}_{address:08X}_Limbs",
+                (
+                    f"{resource.name.removesuffix('Skel')}Limbs"
+                    if resource.name.endswith("Skel")
+                    else f"{resource.name}_{address:08X}_Limbs"
+                ),
             ),
         )
         resource_limbs.set_length(

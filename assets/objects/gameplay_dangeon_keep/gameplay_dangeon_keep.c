@@ -1,4 +1,4 @@
-#include "gameplay_dangeon_keep.h"
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.h"
 
 #include "array_count.h"
 #include "camera.h"
@@ -7,12 +7,12 @@
 #include "sys_matrix.h"
 #include "ultra64.h"
 
-u64 gUnusedCandleDL_00000000_Tex[TEX_LEN(u64, gUnusedCandleDL_00000000_Tex_WIDTH, gUnusedCandleDL_00000000_Tex_HEIGHT, 8)] = {
-#include "assets/objects/gameplay_dangeon_keep/gUnusedCandleDL_00000000_Tex.i8.inc.c"
+u64 gameplay_dangeon_keep_000000_Tex[TEX_LEN(u64, gameplay_dangeon_keep_000000_Tex_WIDTH, gameplay_dangeon_keep_000000_Tex_HEIGHT, 8)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_000000_Tex.i8.inc.c"
 };
 
-u64 gUnusedCandleDL_00000200_Tex[TEX_LEN(u64, gUnusedCandleDL_00000200_Tex_WIDTH, gUnusedCandleDL_00000200_Tex_HEIGHT, 8)] = {
-#include "assets/objects/gameplay_dangeon_keep/gUnusedCandleDL_00000200_Tex.i8.inc.c"
+u64 gameplay_dangeon_keep_000200_Tex[TEX_LEN(u64, gameplay_dangeon_keep_000200_Tex_WIDTH, gameplay_dangeon_keep_000200_Tex_HEIGHT, 8)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_000200_Tex.i8.inc.c"
 };
 
 Vtx gUnusedCandleVtx[] = {
@@ -31,8 +31,8 @@ Gfx gBrownFragmentDL[18] = {
 #include "assets/objects/gameplay_dangeon_keep/gBrownFragmentDL.inc.c"
 };
 
-u64 gBrownFragmentDL_000005C0_Tex[TEX_LEN(u64, gBrownFragmentDL_000005C0_Tex_WIDTH, gBrownFragmentDL_000005C0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gBrownFragmentDL_000005C0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_0005C0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_0005C0_Tex_WIDTH, gameplay_dangeon_keep_0005C0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_0005C0_Tex.rgba16.inc.c"
 };
 
 Vtx gDoorLockVtx[] = {
@@ -51,8 +51,8 @@ Gfx gDoorChainDL[18] = {
 #include "assets/objects/gameplay_dangeon_keep/gDoorChainDL.inc.c"
 };
 
-u64 gDoorLockDL_00001280_Tex[TEX_LEN(u64, gDoorLockDL_00001280_Tex_WIDTH, gDoorLockDL_00001280_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gDoorLockDL_00001280_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_001280_Tex[TEX_LEN(u64, gameplay_dangeon_keep_001280_Tex_WIDTH, gameplay_dangeon_keep_001280_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_001280_Tex.rgba16.inc.c"
 };
 
 u64 gUnusedGoldLockTex[TEX_LEN(u64, gUnusedGoldLockTex_WIDTH, gUnusedGoldLockTex_HEIGHT, 16)] = {
@@ -235,12 +235,16 @@ Gfx gCrystalSwitchDiamondXluDL[22] = {
 #include "assets/objects/gameplay_dangeon_keep/gCrystalSwitchDiamondXluDL.inc.c"
 };
 
-u64 gFloorSwitch1DL_000078A0_Tex[TEX_LEN(u64, gFloorSwitch1DL_000078A0_Tex_WIDTH, gFloorSwitch1DL_000078A0_Tex_HEIGHT, 8)] = {
-#include "assets/objects/gameplay_dangeon_keep/gFloorSwitch1DL_000078A0_Tex.i8.inc.c"
+u64 gameplay_dangeon_keep_0078A0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_0078A0_Tex_WIDTH, gameplay_dangeon_keep_0078A0_Tex_HEIGHT, 8)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_0078A0_Tex.i8.inc.c"
 };
 
-u64 gFloorSwitch1DL_00007CA0_Tex[TEX_LEN(u64, gFloorSwitch1DL_00007CA0_Tex_WIDTH, gFloorSwitch1DL_00007CA0_Tex_HEIGHT, 8)] = {
-#include "assets/objects/gameplay_dangeon_keep/gFloorSwitch1DL_00007CA0_Tex.i8.inc.c"
+u64 gameplay_dangeon_keep_007CA0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_007CA0_Tex_WIDTH, gameplay_dangeon_keep_007CA0_Tex_HEIGHT, 8)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_007CA0_Tex.i8.inc.c"
+};
+
+u64 gameplay_dangeon_keep_0088A0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_0088A0_Tex_WIDTH, gameplay_dangeon_keep_0088A0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_0088A0_Tex.rgba16.inc.c"
 };
 
 u64 gEyeSwitchGoldClosedTex[TEX_LEN(u64, gEyeSwitchGoldClosedTex_WIDTH, gEyeSwitchGoldClosedTex_HEIGHT, 16)] = {
@@ -279,12 +283,12 @@ u64 gDungeonkeepTex_00D0A0[TEX_LEN(u64, gDungeonkeepTex_00D0A0_WIDTH, gDungeonke
 #include "assets/objects/gameplay_dangeon_keep/gDungeonkeepTex_00D0A0.rgba16.inc.c"
 };
 
-u64 gRustyFloorSwitchDL_0000D8A0_Tex[TEX_LEN(u64, gRustyFloorSwitchDL_0000D8A0_Tex_WIDTH, gRustyFloorSwitchDL_0000D8A0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gRustyFloorSwitchDL_0000D8A0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_00D8A0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_00D8A0_Tex_WIDTH, gameplay_dangeon_keep_00D8A0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_00D8A0_Tex.rgba16.inc.c"
 };
 
-u64 gRustyFloorSwitchDL_0000E0A0_Tex[TEX_LEN(u64, gRustyFloorSwitchDL_0000E0A0_Tex_WIDTH, gRustyFloorSwitchDL_0000E0A0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gRustyFloorSwitchDL_0000E0A0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_00E0A0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_00E0A0_Tex_WIDTH, gameplay_dangeon_keep_00E0A0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_00E0A0_Tex.rgba16.inc.c"
 };
 
 u64 gDungeonKeepTex_00E8A0[TEX_LEN(u64, gDungeonKeepTex_00E8A0_WIDTH, gDungeonKeepTex_00E8A0_HEIGHT, 8)] = {
@@ -299,52 +303,56 @@ u64 gDungeonKeepTex_00F0A0[TEX_LEN(u64, gDungeonKeepTex_00F0A0_WIDTH, gDungeonKe
 #include "assets/objects/gameplay_dangeon_keep/gDungeonKeepTex_00F0A0.rgba16.inc.c"
 };
 
-u64 gWoodenPlatofrmDL_0000F8A0_Tex[TEX_LEN(u64, gWoodenPlatofrmDL_0000F8A0_Tex_WIDTH, gWoodenPlatofrmDL_0000F8A0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gWoodenPlatofrmDL_0000F8A0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_00F8A0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_00F8A0_Tex_WIDTH, gameplay_dangeon_keep_00F8A0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_00F8A0_Tex.rgba16.inc.c"
 };
 
-u64 gPotDL_000108A0_Tex[TEX_LEN(u64, gPotDL_000108A0_Tex_WIDTH, gPotDL_000108A0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gPotDL_000108A0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_0108A0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_0108A0_Tex_WIDTH, gameplay_dangeon_keep_0108A0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_0108A0_Tex.rgba16.inc.c"
 };
 
-u64 gPotDL_000118A0_Tex[TEX_LEN(u64, gPotDL_000118A0_Tex_WIDTH, gPotDL_000118A0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gPotDL_000118A0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_0118A0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_0118A0_Tex_WIDTH, gameplay_dangeon_keep_0118A0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_0118A0_Tex.rgba16.inc.c"
 };
 
-u64 gPotFragmentDL_00011AA0_Tex[TEX_LEN(u64, gPotFragmentDL_00011AA0_Tex_WIDTH, gPotFragmentDL_00011AA0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gPotFragmentDL_00011AA0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_011AA0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_011AA0_Tex_WIDTH, gameplay_dangeon_keep_011AA0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_011AA0_Tex.rgba16.inc.c"
 };
 
-u64 gSmallWoodenBoxDL_00011CA0_Tex[TEX_LEN(u64, gSmallWoodenBoxDL_00011CA0_Tex_WIDTH, gSmallWoodenBoxDL_00011CA0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gSmallWoodenBoxDL_00011CA0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_011CA0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_011CA0_Tex_WIDTH, gameplay_dangeon_keep_011CA0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_011CA0_Tex.rgba16.inc.c"
 };
 
-u64 gSmallWoodenBoxFragmentDL_00012CA0_Tex[TEX_LEN(u64, gSmallWoodenBoxFragmentDL_00012CA0_Tex_WIDTH, gSmallWoodenBoxFragmentDL_00012CA0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gSmallWoodenBoxFragmentDL_00012CA0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_012CA0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_012CA0_Tex_WIDTH, gameplay_dangeon_keep_012CA0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_012CA0_Tex.rgba16.inc.c"
 };
 
-u64 gCrystalSwitchCoreOpaDL_000134A0_Tex[TEX_LEN(u64, gCrystalSwitchCoreOpaDL_000134A0_Tex_WIDTH, gCrystalSwitchCoreOpaDL_000134A0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gCrystalSwitchCoreOpaDL_000134A0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_0134A0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_0134A0_Tex_WIDTH, gameplay_dangeon_keep_0134A0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_0134A0_Tex.rgba16.inc.c"
 };
 
-u64 gCrystalSwitchCoreXluDL_00013CA0_Tex[TEX_LEN(u64, gCrystalSwitchCoreXluDL_00013CA0_Tex_WIDTH, gCrystalSwitchCoreXluDL_00013CA0_Tex_HEIGHT, 8)] = {
-#include "assets/objects/gameplay_dangeon_keep/gCrystalSwitchCoreXluDL_00013CA0_Tex.ia8.inc.c"
+u64 gameplay_dangeon_keep_013CA0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_013CA0_Tex_WIDTH, gameplay_dangeon_keep_013CA0_Tex_HEIGHT, 8)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_013CA0_Tex.ia8.inc.c"
 };
 
-u64 gCrystalSwitchCoreOpaDL_00013CB0_Tex[TEX_LEN(u64, gCrystalSwitchCoreOpaDL_00013CB0_Tex_WIDTH, gCrystalSwitchCoreOpaDL_00013CB0_Tex_HEIGHT, 4)] = {
-#include "assets/objects/gameplay_dangeon_keep/gCrystalSwitchCoreOpaDL_00013CB0_Tex.i4.inc.c"
+u64 gameplay_dangeon_keep_013CB0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_013CB0_Tex_WIDTH, gameplay_dangeon_keep_013CB0_Tex_HEIGHT, 4)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_013CB0_Tex.i4.inc.c"
 };
 
-u64 gCrstalSwitchRedTex[TEX_LEN(u64, gCrstalSwitchRedTex_WIDTH, gCrstalSwitchRedTex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gCrstalSwitchRedTex.rgba16.inc.c"
+u64 gCrystalSwitchRedTex[TEX_LEN(u64, gCrystalSwitchRedTex_WIDTH, gCrystalSwitchRedTex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gCrystalSwitchRedTex.rgba16.inc.c"
 };
 
-u64 gCrstalSwitchBlueTex[TEX_LEN(u64, gCrstalSwitchBlueTex_WIDTH, gCrstalSwitchBlueTex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gCrstalSwitchBlueTex.rgba16.inc.c"
+u64 gCrystalSwitchBlueTex[TEX_LEN(u64, gCrystalSwitchBlueTex_WIDTH, gCrystalSwitchBlueTex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gCrystalSwitchBlueTex.rgba16.inc.c"
 };
 
-u64 gMagicJarSpriteDL_00015CB0_Tex[TEX_LEN(u64, gMagicJarSpriteDL_00015CB0_Tex_WIDTH, gMagicJarSpriteDL_00015CB0_Tex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_dangeon_keep/gMagicJarSpriteDL_00015CB0_Tex.rgba16.inc.c"
+u64 gameplay_dangeon_keep_015CB0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_015CB0_Tex_WIDTH, gameplay_dangeon_keep_015CB0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_015CB0_Tex.rgba16.inc.c"
+};
+
+u64 gameplay_dangeon_keep_0164B0_Tex[TEX_LEN(u64, gameplay_dangeon_keep_0164B0_Tex_WIDTH, gameplay_dangeon_keep_0164B0_Tex_HEIGHT, 16)] = {
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_0164B0_Tex.rgba16.inc.c"
 };
 
 Vtx gPotVtx[] = {
@@ -362,5 +370,3 @@ Vtx gPotFragmentVtx[] = {
 Gfx gPotFragmentDL[18] = {
 #include "assets/objects/gameplay_dangeon_keep/gPotFragmentDL.inc.c"
 };
-
-#include "gameplay_dangeon_keep_extra.c"

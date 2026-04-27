@@ -25,6 +25,8 @@
 
 #include "assets/objects/object_torch2/object_torch2.h"
 
+#pragma increment_block_number "ique-cn:128"
+
 #define FLAGS                                                                                 \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | \
      ACTOR_FLAG_DRAW_CULLING_DISABLED)
@@ -608,7 +610,8 @@ void EnTorch2_Update(Actor* thisx, PlayState* play2) {
             sDeathFlag++;
             sActionState = ENTORCH2_DEATH;
             Enemy_StartFinishingBlow(play, &this->actor);
-            Item_DropCollectibleRandom(play, &this->actor, &thisx->world.pos, 0xC0);
+            Item_DropCollectibleRandom(play, &this->actor, &thisx->world.pos,
+                                       COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_12, false));
             this->stateFlags3 &= ~PLAYER_STATE3_2;
         } else {
             func_800F5ACC(NA_BGM_MINI_BOSS);

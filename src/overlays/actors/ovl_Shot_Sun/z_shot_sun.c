@@ -65,8 +65,8 @@ static ColliderCylinderInit sCylinderInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0x00000000, 0x00, 0x00 },
-        { 0x00000020, 0x00, 0x00 },
+        { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+        { 0x00000020, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_NONE,
         ACELEM_ON,
         OCELEM_ON,
@@ -78,7 +78,7 @@ void ShotSun_Init(Actor* thisx, PlayState* play) {
     ShotSun* this = (ShotSun*)thisx;
     s32 params;
 
-    PRINTF(T("%d ---- オカリナの秘密発生!!!!!!!!!!!!!\n", "%d ---- Ocarina secret occurrence!!!!!!!!!!!!!\n"),
+    PRINTF(T("%d ---- オカリナの秘密発生!!!!!!!!!!!!!\n", "%d ---- Ocarina secret spawn!!!!!!!!!!!!!\n"),
            this->actor.params);
     params = PARAMS_GET_U(this->actor.params, 0, 8);
     if (params == 0x40 || params == 0x41) {

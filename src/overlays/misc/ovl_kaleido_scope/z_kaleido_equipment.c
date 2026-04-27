@@ -77,7 +77,7 @@ static u8 sEquipmentItemOffsets[] = {
     ITEM_BOOTS_HOVER - ITEM_SWORD_KOKIRI,  // EQUIP_VALUE_BOOTS_HOVER
 };
 
-void KaleidoScope_DrawEquipmentImage(PlayState* play, void* source, u32 width, u32 height) {
+void KaleidoScope_DrawEquipmentImage(PlayState* play, void* texture, u32 width, u32 height) {
     PauseContext* pauseCtx = &play->pauseCtx;
     u8* curTexture;
     s32 vtxIndex;
@@ -95,7 +95,7 @@ void KaleidoScope_DrawEquipmentImage(PlayState* play, void* source, u32 width, u
     gDPSetTextureFilter(POLY_OPA_DISP++, G_TF_POINT);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, pauseCtx->alpha);
 
-    curTexture = source;
+    curTexture = texture;
     remainingSize = width * height * G_IM_SIZ_16b_BYTES;
     textureHeight = TMEM_SIZE / (width * G_IM_SIZ_16b_BYTES);
     textureSize = width * textureHeight * G_IM_SIZ_16b_BYTES;
@@ -381,8 +381,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
 
-                Audio_PlaySfxGeneral(NA_SE_SY_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                SFX_PLAY_CENTERED(NA_SE_SY_CURSOR);
 
                 cursorPoint = cursorX = cursorY = 0;
                 while (true) {
@@ -428,8 +427,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             if (pauseCtx->stickAdjX < -30) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
-                Audio_PlaySfxGeneral(NA_SE_SY_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                SFX_PLAY_CENTERED(NA_SE_SY_CURSOR);
 
                 cursorPoint = cursorX = 3;
                 cursorY = 0;
@@ -623,7 +621,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 1;
                         gSaveContext.save.info.equips.buttonItems[0] = ITEM_NONE;
                     }
-                    Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    SFX_PLAY_CENTERED(NA_SE_SY_CANCEL);
                 } else {
                     Inventory_ChangeEquipmentWithIcon(play, pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP]);
 
@@ -643,7 +641,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
 
                         Interface_LoadItemIcon1(play, 0);
                     }
-                    Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    SFX_PLAY_CENTERED(NA_SE_SY_DECIDE);
                 }
 
                 for (i=1; i<8; i++) {
@@ -659,8 +657,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
                 sEquipTimer = 10;
             } else {
-                Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                SFX_PLAY_CENTERED(NA_SE_SY_ERROR);
             }
         }
         if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) && (pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE) && CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && (pauseCtx->cursorX[PAUSE_EQUIP] != 0)) {
@@ -753,8 +750,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
         }
 
         if (oldCursorPoint != pauseCtx->cursorPoint[PAUSE_EQUIP]) {
-            Audio_PlaySfxGeneral(NA_SE_SY_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_CENTERED(NA_SE_SY_CURSOR);
         }
     } else if ((pauseCtx->mainState == PAUSE_MAIN_STATE_EQUIP_CHANGED) && (pauseCtx->pageIndex == PAUSE_EQUIP)) {
         KaleidoScope_SetCursorPos(pauseCtx, pauseCtx->cursorSlot[PAUSE_EQUIP] * 4, pauseCtx->equipVtx);
@@ -911,7 +907,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
         KaleidoScope_ProcessPlayerPreRender();
     }
 
-    gSPSegment(POLY_OPA_DISP++, 0x07, pauseCtx->playerSegment);
+    gSPSegment(POLY_OPA_DISP++, 0x07, PAUSE_PLAYER_SEGMENT_RENDER_TEXTURE(pauseCtx->playerSegment));
     gSPSegment(POLY_OPA_DISP++, 0x08, pauseCtx->iconItemSegment);
     gSPSegment(POLY_OPA_DISP++, 0x09, pauseCtx->iconItem24Segment);
     gSPSegment(POLY_OPA_DISP++, 0x0A, pauseCtx->nameSegment);
@@ -921,7 +917,8 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
     // Draw player prerender onto the equip page
 
     Gfx_SetupDL_42Opa(play->state.gfxCtx);
-    KaleidoScope_DrawEquipmentImage(play, pauseCtx->playerSegment, PAUSE_EQUIP_PLAYER_WIDTH, PAUSE_EQUIP_PLAYER_HEIGHT);
+    KaleidoScope_DrawEquipmentImage(play, PAUSE_PLAYER_SEGMENT_RENDER_TEXTURE(pauseCtx->playerSegment),
+                                    PAUSE_EQUIP_PLAYER_WIDTH, PAUSE_EQUIP_PLAYER_HEIGHT);
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_equipment.c", 609);
 }

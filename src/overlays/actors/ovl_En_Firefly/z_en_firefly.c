@@ -9,6 +9,7 @@
 #include "overlays/effects/ovl_Effect_Ss_Fhg_Flash/z_eff_ss_fhg_flash.h"
 
 #include "libc64/qrand.h"
+#include "array_count.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "ichain.h"
@@ -67,12 +68,12 @@ ActorProfile En_Firefly_Profile = {
     /**/ EnFirefly_Draw,
 };
 
-static ColliderJntSphElementInit sJntSphElementsInit[1] = {
+static ColliderJntSphElementInit sJntSphElementsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x01, 0x08 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_FIRE, 0x08 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_ON | ATELEM_SFX_HARD,
             ACELEM_ON,
             OCELEM_ON,
@@ -104,7 +105,7 @@ static ColliderJntSphInit sJntSphInit = {
         OC2_TYPE_1,
         COLSHAPE_JNTSPH,
     },
-    1,
+    ARRAY_COUNT(sJntSphElementsInit),
     sJntSphElementsInit,
 };
 
@@ -166,7 +167,7 @@ static InitChainEntry sInitChain[] = {
 
 void EnFirefly_Extinguish(EnFirefly* this) {
     this->actor.params += 2;
-    this->collider.elements[0].base.atDmgInfo.effect = 0; // None
+    this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_NONE;
     this->auraType = KEESE_AURA_NONE;
     this->onFire = false;
     this->actor.naviEnemyId = NAVI_ENEMY_KEESE;
@@ -182,7 +183,7 @@ void EnFirefly_Ignite(EnFirefly* this, PlayState* play) {
         this->actor.params -= 2;
     }
 
-    this->collider.elements[0].base.atDmgInfo.effect = 1; // Fire
+    this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_FIRE;
     this->auraType = KEESE_AURA_FIRE;
     this->onFire = true;
     this->actor.naviEnemyId = NAVI_ENEMY_FIRE_KEESE;
@@ -229,13 +230,13 @@ void EnFirefly_Init(Actor* thisx, PlayState* play) {
         }
 
         if (this->actor.params == KEESE_ICE_FLY) {
-            this->collider.elements[0].base.atDmgInfo.effect = 2; // Ice
+            this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_ICE;
             this->actor.naviEnemyId = NAVI_ENEMY_ICE_KEESE;
         } else if (this->actor.params == KEESE_ELECTRIC_FLY) {
-            this->collider.elements[0].base.atDmgInfo.effect = 3; // Electric
+            this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = 3; // Electric
             this->actor.naviEnemyId = NAVI_ENEMY_ELECTRIC_KEESE;
         } else {
-            this->collider.elements[0].base.atDmgInfo.effect = 0; // Nothing
+            this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_NONE;
             this->actor.naviEnemyId = NAVI_ENEMY_KEESE;
         }
 
@@ -511,7 +512,8 @@ void EnFirefly_Die(EnFirefly* this, PlayState* play) {
     Math_StepToF(&this->actor.scale.x, 0.0f, 0.00034f);
     this->actor.scale.y = this->actor.scale.z = this->actor.scale.x;
     if (this->timer == 0) {
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xE0);
+        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                                   COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_14, false));
         Actor_Kill(&this->actor);
     }
 }

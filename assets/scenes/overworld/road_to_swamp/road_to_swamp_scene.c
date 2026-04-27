@@ -17,9 +17,9 @@ SceneCmd road_to_swamp[] = {
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, road_to_swamp_sceneTransitionActorList_0000B8),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),
     SCENE_CMD_COL_HEADER(&road_to_swamp_sceneCollisionHeader_0026F8),
-    SCENE_CMD_ENTRANCE_LIST(road_to_swamp_sceneEntranceList0x0000D0),
+    SCENE_CMD_SPAWN_LIST(road_to_swamp_sceneEntranceList0x0000D0),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),
-    SCENE_CMD_SPAWN_LIST(4, road_to_swamp_sceneStartPositionList0x000088),
+    SCENE_CMD_PLAYER_ENTRY_LIST(4, road_to_swamp_sceneStartPositionList0x000088),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(road_to_swamp_sceneExitList_0000D8),
     SCENE_CMD_ENV_LIGHT_SETTINGS(20, road_to_swamp_sceneLightSettings0x0000E0),
@@ -869,9 +869,9 @@ SceneCmd road_to_swamp_sceneSet_timeskip[] = {
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, road_to_swamp_sceneTransitionActorList_timeskip),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 0),
     SCENE_CMD_COL_HEADER(&road_to_swamp_sceneCollisionHeader_0026F8),
-    SCENE_CMD_ENTRANCE_LIST(road_to_swamp_sceneEntranceList0x0000D0),
+    SCENE_CMD_SPAWN_LIST(road_to_swamp_sceneEntranceList0x0000D0),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),
-    SCENE_CMD_SPAWN_LIST(4, road_to_swamp_sceneStartPositionList0x000088),
+    SCENE_CMD_PLAYER_ENTRY_LIST(4, road_to_swamp_sceneStartPositionList0x000088),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(road_to_swamp_sceneExitList_0000D8),
     SCENE_CMD_ENV_LIGHT_SETTINGS(20, road_to_swamp_sceneLightSettings0x0000E0),
@@ -883,7 +883,7 @@ TransitionActorEntry road_to_swamp_sceneTransitionActorList_timeskip[] = {
 };
 
 u64 road_to_swamp_sceneTex_002730[] = {
-#include "build/pal-1.0/assets/scenes/overworld/spot00/spot00_room_0_03000520_RoomShapeCullable_0300052C_CullableEntries_03014E28_DL_00020838_Tex.rgba16.inc.c"
+#include "build/pal-1.0/assets/scenes/overworld/spot00/spot00_scene_00020838_Tex.rgba16.inc.c"
 };
 
 u64 road_to_swamp_sceneTex_002F30[] = {

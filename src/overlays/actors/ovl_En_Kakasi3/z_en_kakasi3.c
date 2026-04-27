@@ -53,8 +53,8 @@ static ColliderCylinderInit sCylinderInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xFFCFFFFF, 0x00, 0x00 },
-        { 0xFFCFFFFF, 0x00, 0x00 },
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+        { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_NONE,
         ACELEM_ON | ACELEM_HOOKABLE,
         OCELEM_ON,
@@ -85,8 +85,7 @@ void EnKakasi3_Init(Actor* thisx, PlayState* play) {
     EnKakasi3* this = (EnKakasi3*)thisx;
 
     PRINTF("\n\n");
-    // "Obonur" -- Related to the name of the scarecrow (Bonooru)
-    PRINTF(VT_FGCOL(YELLOW) "☆☆☆☆☆ おーボヌール ☆☆☆☆☆ \n" VT_RST);
+    PRINTF(VT_FGCOL(YELLOW) T("☆☆☆☆☆ おーボヌール ☆☆☆☆☆ \n", "☆☆☆☆☆ Bonooru ☆☆☆☆☆ \n") VT_RST);
     this->actor.attentionRangeType = ATTENTION_RANGE_6;
 
     Collider_InitCylinder(play, &this->collider);

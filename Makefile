@@ -32,7 +32,9 @@ COMPILER ?= ido
 #   gc-jp-mq       GameCube Japan Master Quest
 #   gc-us          GameCube US
 #   gc-us-mq       GameCube US Master Quest
+#   gc-eu-dbg-2    GameCube Europe/PAL Debug (earlier build)
 #   gc-eu-mq-dbg   GameCube Europe/PAL Master Quest Debug (default)
+#   gc-eu-dbg      GameCube Europe/PAL Debug
 #   gc-eu          GameCube Europe/PAL
 #   gc-eu-mq       GameCube Europe/PAL Master Quest
 #   gc-jp-ce       GameCube Japan (Collector's Edition disc)
@@ -133,6 +135,14 @@ else ifeq ($(VERSION),gc-us-mq)
   BUILD_DATE := 02-12-19
   BUILD_TIME := 14:05:42
   REVISION := 15
+else ifeq ($(VERSION),gc-eu-dbg-2)
+  REGION ?= EU
+  PLATFORM := GC
+  DEBUG_FEATURES ?= 1
+  BUILD_CREATOR := zelda@srd022j
+  BUILD_DATE := 03-02-13
+  BUILD_TIME := 19:46:49
+  REVISION := 15
 else ifeq ($(VERSION),gc-eu-mq-dbg)
   REGION ?= US
   PLATFORM := GC
@@ -140,6 +150,14 @@ else ifeq ($(VERSION),gc-eu-mq-dbg)
   BUILD_CREATOR := zelda@srd022j
   BUILD_DATE := 03-02-21
   BUILD_TIME := 00:16:31
+  REVISION := 15
+else ifeq ($(VERSION),gc-eu-dbg)
+  REGION ?= EU
+  PLATFORM := GC
+  DEBUG_FEATURES ?= 1
+  BUILD_CREATOR := zelda@srd022j
+  BUILD_DATE := 03-02-21
+  BUILD_TIME := 00:49:18
   REVISION := 15
 else ifeq ($(VERSION),gc-eu)
   REGION ?= US
@@ -319,9 +337,10 @@ MKLDSCRIPT := tools/mkldscript
 MKDMADATA  := tools/mkdmadata
 ELF2ROM    := tools/elf2rom
 BIN2C      := tools/bin2c
-N64TEXCONV := tools/assets/n64texconv/n64texconv
 FADO       := tools/fado/fado.elf
 PYTHON     ?= $(VENV)/bin/python3
+BUILD_FROM_PNG := tools/assets/build_from_png/build_from_png
+BUILD_JFIF := tools/assets/build_jfif/build_jfif
 
 # Command to replace $(BUILD_DIR) in some files with the build path.
 # We can't use the C preprocessor for this because it won't substitute inside string literals.
@@ -362,12 +381,12 @@ ifeq ($(DEBUG_FEATURES),1)
   GBI_DEFINES += -DGBI_DEBUG
 endif
 
-CPPFLAGS += -P -xc -fno-dollars-in-identifiers $(CPP_DEFINES)
+CPPFLAGS += -P -xc -fno-dollars-in-identifiers $(CPP_DEFINES) $(GBI_DEFINES)
 ASFLAGS += -march=vr4300 -32 -no-pad-sections -Iinclude -I$(EXTRACTED_DIR)
 
 ifeq ($(COMPILER),gcc)
-  CFLAGS += $(CPP_DEFINES) $(GBI_DEFINES) -G 0 -nostdinc -MD $(INC) -march=vr4300 -mfix4300 -mabi=32 -mno-abicalls -mdivide-breaks -fno-PIC -fno-common -ffreestanding -funsigned-char -fbuiltin -fno-builtin-sinf -fno-builtin-cosf $(CHECK_WARNINGS)
-  CCASFLAGS += $(CPP_DEFINES) $(GBI_DEFINES) -G 0 -nostdinc -MD $(INC) -march=vr4300 -mfix4300 -mabi=32 -mno-abicalls -fno-PIC -fno-common -Wa,-no-pad-sections
+  CFLAGS += $(CPP_DEFINES) $(GBI_DEFINES) -G 0 -nostdinc -MD -MP $(INC) -march=vr4300 -mfix4300 -mabi=32 -mno-abicalls -mdivide-breaks -fno-PIC -fno-common -ffreestanding -funsigned-char -fbuiltin -fno-builtin-sinf -fno-builtin-cosf $(CHECK_WARNINGS)
+  CCASFLAGS += $(CPP_DEFINES) $(GBI_DEFINES) -G 0 -nostdinc -MD -MP $(INC) -march=vr4300 -mfix4300 -mabi=32 -mno-abicalls -fno-PIC -fno-common -Wa,-no-pad-sections
   MIPS_VERSION := -mips3
 else
   # Suppress warnings for wrong number of macro arguments (to fake variadic
@@ -385,7 +404,7 @@ endif
 ifeq ($(COMPILER),ido)
   # Have CC_CHECK pretend to be a MIPS compiler
   MIPS_BUILTIN_DEFS := -D_MIPS_ISA_MIPS2=2 -D_MIPS_ISA=_MIPS_ISA_MIPS2 -D_ABIO32=1 -D_MIPS_SIM=_ABIO32 -D_MIPS_SZINT=32 -D_MIPS_SZLONG=32 -D_MIPS_SZPTR=32
-  CC_CHECK  = gcc -nostdinc -MD -fno-builtin -fsyntax-only -funsigned-char -std=gnu90 -D_LANGUAGE_C $(CPP_DEFINES) $(MIPS_BUILTIN_DEFS) $(GBI_DEFINES) $(INC) $(CHECK_WARNINGS)
+  CC_CHECK  = gcc -nostdinc -MD -MP -fno-builtin -fsyntax-only -funsigned-char -std=gnu90 -D_LANGUAGE_C $(CPP_DEFINES) $(MIPS_BUILTIN_DEFS) $(GBI_DEFINES) $(INC) $(CHECK_WARNINGS)
   ifeq ($(shell getconf LONG_BIT), 32)
     # Work around memory allocation bug in QEMU
     export QEMU_GUEST_BASE := 1
@@ -500,7 +519,6 @@ O_FILES := $(filter-out %_reloc.o,$(SPEC_O_FILES))
 OVL_RELOC_FILES := $(filter %_reloc.o,$(SPEC_O_FILES))
 
 # Automatic dependency files
-# (Only asm_processor dependencies and reloc dependencies are handled for now)
 DEP_FILES := $(O_FILES:.o=.d) $(O_FILES:.o=.asmproc.d) $(OVL_RELOC_FILES:.o=.d) $(BUILD_DIR)/spec.d
 
 TEXTURE_FILES_PNG_EXTRACTED := $(foreach dir,$(ASSET_BIN_DIRS_EXTRACTED),$(wildcard $(dir)/*.png))
@@ -730,7 +748,7 @@ $(BUILD_DIR)/src/makerom/%.o: CCASFLAGS := $(EGCS_CCASFLAGS)
 $(BUILD_DIR)/src/makerom/%.o: ASOPTFLAGS := $(EGCS_ASOPTFLAGS)
 endif
 
-ifeq ($(PERMUTER),)  # permuter + preprocess.py misbehaves, permuter doesn't care about rodata diffs or bss ordering so just don't use it in that case
+ifeq ($(PERMUTER),)  # permuter + preprocess.sh misbehaves, permuter doesn't care about rodata diffs or bss ordering so just don't use it in that case
 # Handle encoding (UTF-8 -> EUC-JP) and custom pragmas
 $(BUILD_DIR)/src/%.o: PREPROCESS := ./tools/preprocess.sh -v $(VERSION) -i $(ICONV) --
 endif
@@ -856,7 +874,7 @@ $(O_FILES): | asset_files
 .PHONY: o_files asset_files
 
 $(BUILD_DIR)/spec: $(SPEC) $(SPEC_INCLUDES)
-	$(CPP) $(CPPFLAGS) -MD -MF $@.d -MT $@ -I. $< | $(BUILD_DIR_REPLACE) > $@
+	$(CPP) $(CPPFLAGS) -MD -MP -MF $@.d -MT $@ -I. $< | $(BUILD_DIR_REPLACE) > $@
 
 $(LDSCRIPT): $(BUILD_DIR)/spec
 	$(MKLDSCRIPT) $< $@
@@ -868,7 +886,7 @@ $(BUILD_DIR)/baserom/%.o: $(EXTRACTED_DIR)/baserom/%
 	$(OBJCOPY) -I binary -O elf32-big $< $@
 
 $(BUILD_DIR)/data/%.o: data/%.s
-	$(CPP) $(CPPFLAGS) -MD -MF $(@:.o=.d) -MT $@ -Iinclude $< | $(AS) $(ASFLAGS) -o $@
+	$(CPP) $(CPPFLAGS) -MD -MP -MF $(@:.o=.d) -MT $@ -Iinclude $< | $(AS) $(ASFLAGS) -o $@
 
 ifeq ($(PLATFORM),IQUE)
   NES_CHARMAP := assets/text/charmap.chn.txt
@@ -877,10 +895,10 @@ else
 endif
 
 $(BUILD_DIR)/assets/text/%.enc.nes.h: assets/text/%.h $(EXTRACTED_DIR)/text/%.h $(NES_CHARMAP)
-	$(CPP) $(CPPFLAGS) -Iinclude -I$(EXTRACTED_DIR) -MD -MF $(@:.o=.d) -MT $@ $< | $(PYTHON) tools/msgenc.py --encoding utf-8 --charmap $(NES_CHARMAP) - $@
+	$(CPP) $(CPPFLAGS) -Iinclude -I$(EXTRACTED_DIR) -MD -MP -MF $(@:.o=.d) -MT $@ $< | $(PYTHON) tools/msgenc.py --encoding utf-8 --charmap $(NES_CHARMAP) - $@
 
 $(BUILD_DIR)/assets/text/%.enc.jpn.h: assets/text/%.h $(EXTRACTED_DIR)/text/%.h assets/text/charmap.jpn.txt
-	$(CPP) $(CPPFLAGS) -Iinclude -I$(EXTRACTED_DIR) -MD -MF $(@:.o=.d) -MT $@ $< | $(PYTHON) tools/msgenc.py --encoding SHIFT-JIS --wchar --charmap assets/text/charmap.jpn.txt - $@
+	$(CPP) $(CPPFLAGS) -Iinclude -I$(EXTRACTED_DIR) -MD -MP -MF $(@:.o=.d) -MT $@ $< | $(PYTHON) tools/msgenc.py --encoding SHIFT-JIS --wchar --charmap assets/text/charmap.jpn.txt - $@
 
 # Dependencies for encoded message headers. These dependencies are not automatic as these headers are generated
 # as part of the build. A clean build must know to generate them before the relevant .d files are created.
@@ -893,7 +911,7 @@ $(BUILD_DIR)/assets/text/staff_message_data_static.o: $(BUILD_DIR)/assets/text/m
 $(BUILD_DIR)/assets/text/%.o: assets/text/%.c
 ifneq ($(COMPILER),gcc)
 # Preprocess text with modern cpp for varargs macros
-	$(CPP) -undef -D_LANGUAGE_C -D__sgi $(CPPFLAGS) -MD -MT $@ $(INC) $< -o $(@:.o=.c)
+	$(CPP) -undef -D_LANGUAGE_C -D__sgi $(CPPFLAGS) -MD -MP -MT $@ $(INC) $< -o $(@:.o=.c)
 	$(CC) -c $(CFLAGS) $(MIPS_VERSION) $(OPTFLAGS) -o $@ $(@:.o=.c)
 else
 	$(CC) -c $(CFLAGS) $(MIPS_VERSION) $(OPTFLAGS) -o $@ $<
@@ -913,7 +931,7 @@ $(BUILD_DIR)/assets/%.o: $(EXTRACTED_DIR)/assets/%.c
 # Assemble the ROM header with GNU AS always
 $(BUILD_DIR)/src/makerom/rom_header.o: src/makerom/rom_header.s
 ifeq ($(COMPILER),ido)
-	$(CPP) $(CPPFLAGS) $(MIPS_BUILTIN_DEFS) $(INC) -MD -MF $(@:.o=.d) -MT $@ $< | $(AS) $(ASFLAGS) -o $@
+	$(CPP) $(CPPFLAGS) $(MIPS_BUILTIN_DEFS) $(INC) -MD -MP -MF $(@:.o=.d) -MT $@ $< | $(AS) $(ASFLAGS) -o $@
 else
 	$(CCAS) -c $(CCASFLAGS) $(MIPS_VERSION) $(ASOPTFLAGS) -o $@ $<
 endif
@@ -925,7 +943,7 @@ $(BUILD_DIR)/src/makerom/ipl3.o: $(EXTRACTED_DIR)/incbin/ipl3
 $(BUILD_DIR)/src/%.o: src/%.s
 ifeq ($(COMPILER),ido)
 # For header dependencies
-	$(CPP) $(MIPS_BUILTIN_DEFS) $(CPPFLAGS) -x assembler-with-cpp $(INC) -MD -MF $(@:.o=.d) -MT $@ $< -o /dev/null
+	$(CPP) $(MIPS_BUILTIN_DEFS) $(CPPFLAGS) -x assembler-with-cpp $(INC) -MD -MP -MF $(@:.o=.d) -MT $@ $< -o /dev/null
 	$(CCAS) -c $(CCASFLAGS) $(MIPS_VERSION) $(ASOPTFLAGS) -o $(@:.o=.tmp.o) $<
 # IDO generates bad symbol tables, fix the symbol table with strip..
 	$(STRIP) $(@:.o=.tmp.o) -N dummy-symbol-name
@@ -980,24 +998,24 @@ $(BUILD_DIR)/src/overlays/%_reloc.o: $(BUILD_DIR)/spec
 # Assets from assets/
 
 $(BUILD_DIR)/assets/%.inc.c: assets/%.png
-	tools/assets/build_from_png/build_from_png $< $(dir $@) assets/$(dir $*) $(wildcard $(EXTRACTED_DIR)/assets/$(dir $*))
+	$(BUILD_FROM_PNG) $< $(dir $@) assets/$(dir $*) $(wildcard $(EXTRACTED_DIR)/assets/$(dir $*))
 
 $(BUILD_DIR)/assets/%.bin.inc.c: assets/%.bin
 	$(BIN2C) -t 1 $< $@
 
 $(BUILD_DIR)/assets/%.jpg.inc.c: assets/%.jpg
-	$(N64TEXCONV) JFIF "" $< $@
+	$(BUILD_JFIF) $< $@
 
 # Assets from extracted/
 
 $(BUILD_DIR)/assets/%.inc.c: $(EXTRACTED_DIR)/assets/%.png
-	tools/assets/build_from_png/build_from_png $< $(dir $@) $(wildcard assets/$(dir $*)) $(EXTRACTED_DIR)/assets/$(dir $*)
+	$(BUILD_FROM_PNG) $< $(dir $@) $(wildcard assets/$(dir $*)) $(EXTRACTED_DIR)/assets/$(dir $*)
 
 $(BUILD_DIR)/assets/%.bin.inc.c: $(EXTRACTED_DIR)/assets/%.bin
 	$(BIN2C) -t 1 $< $@
 
 $(BUILD_DIR)/assets/%.jpg.inc.c: $(EXTRACTED_DIR)/assets/%.jpg
-	$(N64TEXCONV) JFIF "" $< $@
+	$(BUILD_JFIF) $< $@
 
 # Audio
 
@@ -1070,7 +1088,7 @@ $(BUILD_DIR)/assets/audio/soundfonts/%.c $(BUILD_DIR)/assets/audio/soundfonts/%.
 -include $(SOUNDFONT_DEP_FILES)
 
 $(BUILD_DIR)/assets/audio/soundfonts/%.o: $(BUILD_DIR)/assets/audio/soundfonts/%.c $(BUILD_DIR)/assets/audio/soundfonts/%.name
-	$(CPP) $(MIPS_BUILTIN_DEFS) $(CPPFLAGS) -x assembler-with-cpp $(INC) -I include/audio -MD -MF $(@:.o=.d) -MT $@ $< -o /dev/null
+	$(CPP) $(MIPS_BUILTIN_DEFS) $(CPPFLAGS) -x assembler-with-cpp $(INC) -I include/audio -MD -MP -MF $(@:.o=.d) -MT $@ $< -o /dev/null
 # compile c to unlinked object
 	$(CC) -c $(CFLAGS) $(MIPS_VERSION) $(OPTFLAGS) -I include/audio -o $(@:.o=.tmp) $<
 # partial link
@@ -1091,11 +1109,11 @@ endif
 # then assemble the sequences...
 
 $(BUILD_DIR)/assets/audio/sequences/%.o: assets/audio/sequences/%.seq include/audio/aseq.h $(SEQUENCE_TABLE) | $(SOUNDFONT_HEADERS)
-	$(SEQ_CPP) $(SEQ_CPPFLAGS) -MD -MT $@ $< -o $(@:.o=.s)
+	$(SEQ_CPP) $(SEQ_CPPFLAGS) -MD -MP -MT $@ $< -o $(@:.o=.s)
 	$(AS) $(ASFLAGS) -I $(BUILD_DIR)/assets/audio/soundfonts -I include/audio -I $(dir $<) $(@:.o=.s) -o $@
 
 $(BUILD_DIR)/assets/audio/sequences/%.o: $(EXTRACTED_DIR)/assets/audio/sequences/%.seq include/audio/aseq.h $(SEQUENCE_TABLE) | $(SOUNDFONT_HEADERS)
-	$(SEQ_CPP) $(SEQ_CPPFLAGS) -MD -MT $@ $< -o $(@:.o=.s)
+	$(SEQ_CPP) $(SEQ_CPPFLAGS) -MD -MP -MT $@ $< -o $(@:.o=.s)
 	$(AS) $(ASFLAGS) -I $(BUILD_DIR)/assets/audio/soundfonts -I include/audio -I $(dir $<) $(@:.o=.s) -o $@
 ifeq ($(AUDIO_BUILD_DEBUG),1)
 	$(OBJCOPY) -O binary -j.data $@ $(@:.o=.aseq)

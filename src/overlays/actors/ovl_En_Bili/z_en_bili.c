@@ -75,8 +75,8 @@ static ColliderCylinderInit sCylinderInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xFFCFFFFF, 0x03, 0x08 },
-        { 0xFFCFFFFF, 0x01, 0x00 },
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_ELECTRIC, 0x08 },
+        { 0xFFCFFFFF, HIT_BACKLASH_ELECTRIC, 0x00 },
         ATELEM_ON | ATELEM_SFX_NONE,
         ACELEM_ON,
         OCELEM_ON,
@@ -164,7 +164,7 @@ void EnBili_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 17.0f);
     this->actor.shape.shadowAlpha = 155;
     SkelAnime_Init(play, &this->skelAnime, &gBiriSkel, &gBiriDefaultAnim, this->jointTable, this->morphTable,
-                   EN_BILI_LIMB_MAX);
+                   BIRI_LIMB_MAX);
     Collider_InitCylinder(play, &this->collider);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
 
@@ -198,7 +198,7 @@ void EnBili_Destroy(Actor* thisx, PlayState* play) {
 
 void EnBili_SetupFloatIdle(EnBili* this) {
     this->actor.speed = 0.7f;
-    this->collider.elem.acDmgInfo.effect = 1; // Shock?
+    this->collider.elem.acDmgInfo.hitBacklash = HIT_BACKLASH_ELECTRIC;
     this->timer = 32;
     this->actor.home.pos.y = this->actor.world.pos.y;
     this->actor.gravity = 0.0f;
@@ -295,7 +295,7 @@ void EnBili_SetupDie(EnBili* this) {
  */
 void EnBili_SetupStunned(EnBili* this) {
     this->timer = 80;
-    this->collider.elem.acDmgInfo.effect = 0;
+    this->collider.elem.acDmgInfo.hitBacklash = HIT_BACKLASH_NONE;
     this->actor.gravity = -1.0f;
     this->actor.speed = 0.0f;
     Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_BLUE, 150, COLORFILTER_BUFFLAG_XLU, 80);
@@ -516,7 +516,7 @@ void EnBili_DischargeLightning(EnBili* this, PlayState* play) {
 }
 
 void EnBili_Climb(EnBili* this, PlayState* play) {
-    s32 skelAnimeUpdate = SkelAnime_Update(&this->skelAnime);
+    s32 animFinished = SkelAnime_Update(&this->skelAnime);
     f32 curFrame = this->skelAnime.curFrame;
 
     if (Animation_OnFrame(&this->skelAnime, 9.0f)) {
@@ -528,7 +528,7 @@ void EnBili_Climb(EnBili* this, PlayState* play) {
                        5.0f);
     }
 
-    if (skelAnimeUpdate) {
+    if (animFinished) {
         EnBili_SetupSetNewHomeHeight(this);
     }
 }
@@ -604,7 +604,8 @@ void EnBili_Die(EnBili* this, PlayState* play) {
             return;
         }
         this->actor.draw = NULL;
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x50);
+        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                                   COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_5, false));
     }
 
     if (this->timer != 0) {
@@ -859,11 +860,11 @@ s32 EnBili_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* 
     Vec3f limbScale = { 1.0f, 1.0f, 1.0f };
     f32 curFrame = this->skelAnime.curFrame;
 
-    if (limbIndex == EN_BILI_LIMB_OUTER_HOOD) {
+    if (limbIndex == BIRI_LIMB_OUTER_HOOD) {
         EnBili_PulseLimb3(this, curFrame, &limbScale);
-    } else if (limbIndex == EN_BILI_LIMB_INNER_HOOD) {
+    } else if (limbIndex == BIRI_LIMB_INNER_HOOD) {
         EnBili_PulseLimb2(this, curFrame, &limbScale);
-    } else if (limbIndex == EN_BILI_LIMB_TENTACLES) {
+    } else if (limbIndex == BIRI_LIMB_TENTACLES) {
         EnBili_PulseLimb4(this, curFrame, &limbScale);
         rot->y = (Camera_GetCamDirYaw(GET_ACTIVE_CAM(play)) - this->actor.shape.rot.y) + 0x8000;
     }

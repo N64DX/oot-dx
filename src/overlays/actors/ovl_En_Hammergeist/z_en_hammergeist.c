@@ -335,23 +335,23 @@ void EnHammergeist_UpdateCollision(EnHammergeist* this, PlayState* play) {
 
 void EnHammergeist_UpdateHammerCollider(EnHammergeist* this, PlayState* play) {
     if (this->leftHammerInfused) { // More damage and ice effect
-        this->hammerLeftCollider.elem.atDmgInfo.effect = 2; // Ice
+        this->hammerLeftCollider.elem.atDmgInfo.hitSpecialEffect = 2; // Ice
         this->hammerLeftCollider.elem.atDmgInfo.dmgFlags = (DMG_HAMMER | DMG_MAGIC_ICE);
         this->hammerLeftCollider.elem.atDmgInfo.damage = 0x18;
     }
     else {
-        this->hammerLeftCollider.elem.atDmgInfo.effect = 0;
+        this->hammerLeftCollider.elem.atDmgInfo.hitSpecialEffect = 0;
         this->hammerLeftCollider.elem.atDmgInfo.dmgFlags = DMG_HAMMER;
         this->hammerLeftCollider.elem.atDmgInfo.damage = 0x10;
     }
 
     if (this->rightHammerInfused) { // More damage and fire effect
-        this->hammerRightCollider.elem.atDmgInfo.effect = 1; // Fire
+        this->hammerRightCollider.elem.atDmgInfo.hitSpecialEffect = 1; // Fire
         this->hammerRightCollider.elem.atDmgInfo.dmgFlags = (DMG_HAMMER | DMG_MAGIC_FIRE);
         this->hammerRightCollider.elem.atDmgInfo.damage = 0x18;
     }
     else {
-        this->hammerRightCollider.elem.atDmgInfo.effect = 0;
+        this->hammerRightCollider.elem.atDmgInfo.hitSpecialEffect = 0;
         this->hammerRightCollider.elem.atDmgInfo.dmgFlags = DMG_HAMMER;
         this->hammerRightCollider.elem.atDmgInfo.damage = 0x10;
     }

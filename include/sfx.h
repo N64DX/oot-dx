@@ -157,6 +157,14 @@ typedef struct SfxParams {
 #define SFX_DIST_SCALING 10.0f
 #endif
 
+#define SFX_PLAY_CENTERED(sfxId)                                                                              \
+    Audio_PlaySfxGeneral(sfxId, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, \
+                         &gSfxDefaultReverb);
+
+#define SFX_PLAY_AT_POS(projectedPos, sfxId)                                                               \
+    Audio_PlaySfxGeneral(sfxId, projectedPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, \
+                         &gSfxDefaultReverb);
+
 void Audio_SetSfxBanksMute(u16 muteMask);
 void Audio_QueueSeqCmdMute(u8 channelIndex);
 void Audio_ClearBGMMute(u8 channelIndex);
@@ -175,10 +183,6 @@ void Audio_ProcessSfxRequests(void);
 void func_800F8F88(void);
 u8 Audio_IsSfxPlaying(u32 sfxId);
 void Audio_ResetSfx(void);
-
-extern Vec3f gSfxDefaultPos;
-extern f32 gSfxDefaultFreqAndVolScale;
-extern s8 gSfxDefaultReverb;
 
 extern SfxParams* gSfxParams[7];
 extern char D_80133390[];

@@ -15,6 +15,10 @@
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
+
+#include "assets/objects/gameplay_keep/player_pause_joint_tables.h"
+#include "assets/objects/gameplay_keep/player_anim_headers.h"
+
 #include "assets/objects/object_link_boy/object_link_boy.h"
 #include "assets/objects/object_link_child/object_link_child.h"
 #include "assets/objects/object_link_child/object_link_young.h"
@@ -829,7 +833,7 @@ int Player_IsBurningStickInRange(PlayState* play, Vec3f* pos, f32 xzRange, f32 y
     s32 pad;
 
     if ((this->heldItemAction == PLAYER_IA_DEKU_STICK) && (this->unk_860 != 0)) {
-        Math_Vec3f_Diff(&this->meleeWeaponInfo[0].tip, pos, &diff);
+        Math_Vec3f_Diff(MELEE_WEAPON_INFO_TIP(&this->meleeWeaponInfo[0]), pos, &diff);
         return ((SQ(diff.x) + SQ(diff.z)) <= SQ(xzRange)) && (0.0f <= diff.y) && (diff.y <= yRange);
     } else {
         return false;
@@ -1035,7 +1039,7 @@ PlayerFaceIndices sPlayerFaces[PLAYER_FACE_MAX] = {
 void* sEyeTextures[PLAYER_EYES_MAX] = {
     gLinkAdultEyesOpenTex,    // PLAYER_EYES_OPEN
     gLinkAdultEyesHalfTex,    // PLAYER_EYES_HALF
-    gLinkAdultEyesClosedfTex, // PLAYER_EYES_CLOSED
+    gLinkAdultEyesClosedTex,  // PLAYER_EYES_CLOSED
     gLinkAdultEyesRightTex,   // PLAYER_EYES_RIGHT
     gLinkAdultEyesLeftTex,    // PLAYER_EYES_LEFT
     gLinkAdultEyesWideTex,    // PLAYER_EYES_WIDE
@@ -1055,7 +1059,7 @@ void* sEyeTextures[][PLAYER_EYES_MAX] = {
     {
         gLinkAdultEyesOpenTex,    // PLAYER_EYES_OPEN
         gLinkAdultEyesHalfTex,    // PLAYER_EYES_HALF
-        gLinkAdultEyesClosedfTex, // PLAYER_EYES_CLOSED
+        gLinkAdultEyesClosedTex,  // PLAYER_EYES_CLOSED
         gLinkAdultEyesRightTex,   // PLAYER_EYES_RIGHT
         gLinkAdultEyesLeftTex,    // PLAYER_EYES_LEFT
         gLinkAdultEyesWideTex,    // PLAYER_EYES_WIDE
@@ -1063,9 +1067,9 @@ void* sEyeTextures[][PLAYER_EYES_MAX] = {
         gLinkAdultEyesWincingTex, // PLAYER_EYES_WINCING
     },
     {
-        gLinkChildEyesOpenTex,    // PLAYER_EYES_OPEN
-        gLinkChildEyesHalfTex,    // PLAYER_EYES_HALF
-        gLinkChildEyesClosedfTex, // PLAYER_EYES_CLOSED
+        gLinkChildEyesOpenTex,   // PLAYER_EYES_OPEN
+        gLinkChildEyesHalfTex,   // PLAYER_EYES_HALF
+        gLinkChildEyesClosedTex, // PLAYER_EYES_CLOSED
         /*
         Note `PLAYER_EYES_RIGHT` corresponds to the "left" eyes texture, and vice-versa with the "right" eyes textures.
         This is because on the textures Link appears to look left/right as if facing outwards the screen,
@@ -1522,30 +1526,42 @@ s32 Player_OverrideLimbDrawGameplayCrawling(PlayState* play, s32 limbIndex, Gfx*
     return false;
 }
 
-u8 func_80090480(PlayState* play, ColliderQuad* collider, WeaponInfo* weaponInfo, Vec3f* newTip, Vec3f* newBase) {
-    if (weaponInfo->active == 0) {
+/**
+ * Handles colliders for player weapons, by creating a quad collider each frame between the weapon's previous position
+ * and its new position.
+ * This position is given as a pair, `newPosA` and `newPosB`, representing two ends of a line that can be thought of as
+ * the active part of the weapon. Note that this line is not necessarily following the weapon's shape: for example
+ * arrows use a line perpendicular to the shaft.
+ * @param collider The quad collider to use for the weapon.
+ * @param newPosA One end of the line. For melee weapons, this is the tip.
+ * @param newPosB One end of the line. For melee weapons, this is the base.
+ * @return true if the weapon is active at a new position.
+ */
+u8 Player_UpdateWeaponInfo(PlayState* play, ColliderQuad* collider, WeaponInfo* weaponInfo, Vec3f* newPosA,
+                           Vec3f* newPosB) {
+    if (!weaponInfo->active) {
         if (collider != NULL) {
             Collider_ResetQuadAT(play, &collider->base);
         }
-        Math_Vec3f_Copy(&weaponInfo->tip, newTip);
-        Math_Vec3f_Copy(&weaponInfo->base, newBase);
-        weaponInfo->active = 1;
+        Math_Vec3f_Copy(&weaponInfo->posA, newPosA);
+        Math_Vec3f_Copy(&weaponInfo->posB, newPosB);
+        weaponInfo->active = true;
         return true;
-    } else if ((weaponInfo->tip.x == newTip->x) && (weaponInfo->tip.y == newTip->y) &&
-               (weaponInfo->tip.z == newTip->z) && (weaponInfo->base.x == newBase->x) &&
-               (weaponInfo->base.y == newBase->y) && (weaponInfo->base.z == newBase->z)) {
+    } else if ((weaponInfo->posA.x == newPosA->x) && (weaponInfo->posA.y == newPosA->y) &&
+               (weaponInfo->posA.z == newPosA->z) && (weaponInfo->posB.x == newPosB->x) &&
+               (weaponInfo->posB.y == newPosB->y) && (weaponInfo->posB.z == newPosB->z)) {
         if (collider != NULL) {
             Collider_ResetQuadAT(play, &collider->base);
         }
         return false;
     } else {
         if (collider != NULL) {
-            Collider_SetQuadVertices(collider, newBase, newTip, &weaponInfo->base, &weaponInfo->tip);
+            Collider_SetQuadVertices(collider, newPosB, newPosA, &weaponInfo->posB, &weaponInfo->posA);
             CollisionCheck_SetAT(play, &play->colChkCtx, &collider->base);
         }
-        Math_Vec3f_Copy(&weaponInfo->base, newBase);
-        Math_Vec3f_Copy(&weaponInfo->tip, newTip);
-        weaponInfo->active = 1;
+        Math_Vec3f_Copy(&weaponInfo->posB, newPosB);
+        Math_Vec3f_Copy(&weaponInfo->posA, newPosA);
+        weaponInfo->active = true;
         return true;
     }
 }
@@ -1575,33 +1591,35 @@ void Player_UpdateShieldCollider(PlayState* play, Player* this, ColliderQuad* co
     }
 }
 
-Vec3f D_80126080 = { 5000.0f, 400.0f, 0.0f };
-Vec3f D_8012608C = { 5000.0f, -400.0f, 1000.0f };
-Vec3f D_80126098 = { 5000.0f, 1400.0f, -1000.0f };
+// Positions for the tip of melee weapons, in the left hand limb's own model space.
+Vec3f sMeleeWeaponTipOffsetFromLeftHand0 = { 5000.0f, 400.0f, 0.0f };
+Vec3f sMeleeWeaponTipOffsetFromLeftHand1 = { 5000.0f, -400.0f, 1000.0f };
+Vec3f sMeleeWeaponTipOffsetFromLeftHand2 = { 5000.0f, 1400.0f, -1000.0f };
 
-Vec3f D_801260A4[3] = {
-    { 0.0f, 400.0f, 0.0f },
-    { 0.0f, 1400.0f, -1000.0f },
-    { 0.0f, -400.0f, 1000.0f },
-};
+// Positions for the base of melee weapons, in the left hand limb's own model space.
+Vec3f sMeleeWeaponBaseOffsetFromLeftHand0 = { 0.0f, 400.0f, 0.0f };
+Vec3f sMeleeWeaponBaseOffsetFromLeftHand1 = { 0.0f, 1400.0f, -1000.0f };
+Vec3f sMeleeWeaponBaseOffsetFromLeftHand2 = { 0.0f, -400.0f, 1000.0f };
 
-void func_800906D4(PlayState* play, Player* this, Vec3f* newTipPos) {
-    Vec3f newBasePos[3];
+void Player_UpdateMeleeWeaponInfo(PlayState* play, Player* this, Vec3f* newTipPositions) {
+    Vec3f newBasePositions[3];
 
-    Matrix_MultVec3f(&D_801260A4[0], &newBasePos[0]);
-    Matrix_MultVec3f(&D_801260A4[1], &newBasePos[1]);
-    Matrix_MultVec3f(&D_801260A4[2], &newBasePos[2]);
+    Matrix_MultVec3f(&sMeleeWeaponBaseOffsetFromLeftHand0, &newBasePositions[0]);
+    Matrix_MultVec3f(&sMeleeWeaponBaseOffsetFromLeftHand1, &newBasePositions[1]);
+    Matrix_MultVec3f(&sMeleeWeaponBaseOffsetFromLeftHand2, &newBasePositions[2]);
 
-    if (func_80090480(play, NULL, &this->meleeWeaponInfo[0], &newTipPos[0], &newBasePos[0]) &&
+    if (Player_UpdateWeaponInfo(play, NULL, &this->meleeWeaponInfo[0], &newTipPositions[0], &newBasePositions[0]) &&
         !(this->stateFlags1 & PLAYER_STATE1_SHIELDING)) {
-        EffectBlure_AddVertex(Effect_GetByIndex(this->meleeWeaponEffectIndex), &this->meleeWeaponInfo[0].tip,
-                              &this->meleeWeaponInfo[0].base);
+        EffectBlure_AddVertex(Effect_GetByIndex(this->meleeWeaponEffectIndex), &this->meleeWeaponInfo[0].posA,
+                              &this->meleeWeaponInfo[0].posB);
     }
 
     if ((this->meleeWeaponState > 0) &&
         ((this->meleeWeaponAnimation < PLAYER_MWA_SPIN_ATTACK_1H) || (this->stateFlags2 & PLAYER_STATE2_17))) {
-        func_80090480(play, &this->meleeWeaponQuads[0], &this->meleeWeaponInfo[1], &newTipPos[1], &newBasePos[1]);
-        func_80090480(play, &this->meleeWeaponQuads[1], &this->meleeWeaponInfo[2], &newTipPos[2], &newBasePos[2]);
+        Player_UpdateWeaponInfo(play, &this->meleeWeaponQuads[0], &this->meleeWeaponInfo[1], &newTipPositions[1],
+                                &newBasePositions[1]);
+        Player_UpdateWeaponInfo(play, &this->meleeWeaponQuads[1], &this->meleeWeaponInfo[2], &newTipPositions[2],
+                                &newBasePositions[2]);
     }
 }
 
@@ -1632,20 +1650,20 @@ void Player_DrawGetItem(PlayState* play, Player* this) {
     }
 }
 
-void func_80090A28(Player* this, Vec3f* vecs) {
-    D_8012608C.x = D_80126080.x;
+void Player_CalcMeleeWeaponTipPositions(Player* this, Vec3f* tipPositions) {
+    sMeleeWeaponTipOffsetFromLeftHand1.x = sMeleeWeaponTipOffsetFromLeftHand0.x;
 
     if (this->unk_845 >= 3) {
         this->unk_845++;
-        D_8012608C.x *= 1.0f + ((9 - this->unk_845) * 0.1f);
+        sMeleeWeaponTipOffsetFromLeftHand1.x *= 1.0f + ((9 - this->unk_845) * 0.1f);
     }
 
-    D_8012608C.x += 1200.0f;
-    D_80126098.x = D_8012608C.x;
+    sMeleeWeaponTipOffsetFromLeftHand1.x += 1200.0f;
+    sMeleeWeaponTipOffsetFromLeftHand2.x = sMeleeWeaponTipOffsetFromLeftHand1.x;
 
-    Matrix_MultVec3f(&D_80126080, &vecs[0]);
-    Matrix_MultVec3f(&D_8012608C, &vecs[1]);
-    Matrix_MultVec3f(&D_80126098, &vecs[2]);
+    Matrix_MultVec3f(&sMeleeWeaponTipOffsetFromLeftHand0, &tipPositions[0]);
+    Matrix_MultVec3f(&sMeleeWeaponTipOffsetFromLeftHand1, &tipPositions[1]);
+    Matrix_MultVec3f(&sMeleeWeaponTipOffsetFromLeftHand2, &tipPositions[2]);
 }
 
 void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 arg2) {
@@ -1687,7 +1705,7 @@ void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 arg2) {
 }
 
 // Coordinates of the player focus position, in the head limb's own model space.
-Vec3f sPlayerFocusHeadLimbModelPos = { 1100.0f, -700.0f, 0.0f };
+Vec3f sPlayerFocusOffsetFromHead = { 1100.0f, -700.0f, 0.0f };
 
 f32 sMeleeWeaponLengths[] = {
     0.0f,    // not a melee weapon
@@ -1744,17 +1762,17 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
         Math_Vec3f_Copy(&this->leftHandPos, sCurBodyPartPos);
 
         if (this->itemAction == PLAYER_IA_DEKU_STICK) {
-            Vec3f sp124[3];
+            Vec3f tipPositions[3];
 
             OPEN_DISPS(play->state.gfxCtx, "../z_player_lib.c", 2633);
 
             if (this->actor.scale.y >= 0.0f) {
-                D_80126080.x = this->unk_85C * 5000.0f;
-                func_80090A28(this, sp124);
+                sMeleeWeaponTipOffsetFromLeftHand0.x = this->unk_85C * 5000.0f;
+                Player_CalcMeleeWeaponTipPositions(this, tipPositions);
                 if (this->meleeWeaponState != 0) {
-                    func_800906D4(play, this, sp124);
+                    Player_UpdateMeleeWeaponInfo(play, this, tipPositions);
                 } else {
-                    Math_Vec3f_Copy(&this->meleeWeaponInfo[0].tip, &sp124[0]);
+                    Math_Vec3f_Copy(MELEE_WEAPON_INFO_TIP(&this->meleeWeaponInfo[0]), &tipPositions[0]);
                 }
             }
 
@@ -1767,20 +1785,20 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
             CLOSE_DISPS(play->state.gfxCtx, "../z_player_lib.c", 2656);
         } else if ((this->actor.scale.y >= 0.0f) && (this->meleeWeaponState != 0)) {
-            Vec3f spE4[3];
+            Vec3f tipPositions[3];
 
             if (Player_HoldsBrokenKnife(this)) {
-                D_80126080.x = 1500.0f;
+                sMeleeWeaponTipOffsetFromLeftHand0.x = 1500.0f;
             } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 1 && IS_RAZOR_SWORD) { // Razor Sword
-                D_80126080.x = 3000.0f;
+                sMeleeWeaponTipOffsetFromLeftHand0.x = 3000.0f;
             } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 3) { // Silver / Gilded Sword
-                D_80126080.x = 4000.0f;
+                sMeleeWeaponTipOffsetFromLeftHand0.x = 4000.0f;
             } else {
-                D_80126080.x = sMeleeWeaponLengths[Player_GetMeleeWeaponHeld(this)];
+                sMeleeWeaponTipOffsetFromLeftHand0.x = sMeleeWeaponLengths[Player_GetMeleeWeaponHeld(this)];
             }
 
-            func_80090A28(this, spE4);
-            func_800906D4(play, this, spE4);
+            Player_CalcMeleeWeaponTipPositions(this, tipPositions);
+            Player_UpdateMeleeWeaponInfo(play, this, tipPositions);
         } else if ((*dList != NULL) && (this->leftHandType == PLAYER_MODELTYPE_LH_BOTTLE)) {
             Color_RGB8* bottleColor = &sBottleColors[Player_ActionToBottle(this, this->bottleAction)];
 
@@ -1998,7 +2016,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                 Matrix_Get(&this->shieldMf);
             }
         } else if (limbIndex == PLAYER_LIMB_HEAD) {
-            Matrix_MultVec3f(&sPlayerFocusHeadLimbModelPos, &this->actor.focus.pos);
+            Matrix_MultVec3f(&sPlayerFocusOffsetFromHead, &this->actor.focus.pos);
         } else {
             // Position of Link's foot, in the foot limb's own model space.
             static Vec3f sLeftRightFootLimbModelFootPos[] = {
@@ -2019,25 +2037,27 @@ u32 Player_InitPauseDrawData(PlayState* play, u8* segment, SkelAnime* skelAnime)
     u32 size;
     void* ptr;
 
+    // Note that since gameplay_keep is typically a compressed segment and due to constraints in the DMA manager,
+    // the entire segment is loaded even when only the first bytes up to PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_BUFFER_SIZE
+    // are kept for later use.
     size = gObjectTable[OBJECT_GAMEPLAY_KEEP].vromEnd - gObjectTable[OBJECT_GAMEPLAY_KEEP].vromStart;
-    ptr = segment + PAUSE_EQUIP_BUFFER_SIZE;
+    ptr = PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_START(segment);
     DMA_REQUEST_SYNC(ptr, gObjectTable[OBJECT_GAMEPLAY_KEEP].vromStart, size, "../z_player_lib.c", 2982);
 
     size = gObjectTable[linkObjectId].vromEnd - gObjectTable[linkObjectId].vromStart;
-    ptr = segment + PAUSE_EQUIP_BUFFER_SIZE + PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_BUFFER_SIZE;
+    ptr = PAUSE_PLAYER_SEGMENT_LINK_OBJECT(segment);
     DMA_REQUEST_SYNC(ptr, gObjectTable[linkObjectId].vromStart, size, "../z_player_lib.c", 2988);
 
+    // Joint tables are placed after the link object
     ptr = (void*)ALIGN16((uintptr_t)ptr + size);
 
-    gSegments[4] = OS_K0_TO_PHYSICAL(segment + PAUSE_EQUIP_BUFFER_SIZE);
-    gSegments[6] =
-        OS_K0_TO_PHYSICAL(segment + PAUSE_EQUIP_BUFFER_SIZE + PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_BUFFER_SIZE);
+    gSegments[4] = OS_K0_TO_PHYSICAL(PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_START(segment));
+    gSegments[6] = OS_K0_TO_PHYSICAL(PAUSE_PLAYER_SEGMENT_LINK_OBJECT(segment));
 
     SkelAnime_InitLink(play, skelAnime, gPlayerSkelHeaders[GET_LINK_MODEL],
                        &gPlayerAnim_link_normal_wait, 9, ptr, ptr, PLAYER_LIMB_MAX);
 
-    return PAUSE_EQUIP_BUFFER_SIZE + PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_BUFFER_SIZE + size +
-           sizeof(Vec3s[PLAYER_LIMB_BUF_COUNT]);
+    return PAUSE_PLAYER_SEGMENT_TOTAL_SIZE(size);
 }
 
 u8 sPauseModelGroupBySword[] = {
@@ -2265,9 +2285,8 @@ void Player_DrawPause(PlayState* play, u8* segment, SkelAnime* skelAnime, Vec3f*
     Vec3s* srcTable;
     s32 i;
 
-    gSegments[4] = OS_K0_TO_PHYSICAL(segment + PAUSE_EQUIP_BUFFER_SIZE);
-    gSegments[6] =
-        OS_K0_TO_PHYSICAL(segment + PAUSE_EQUIP_BUFFER_SIZE + PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_BUFFER_SIZE);
+    gSegments[4] = OS_K0_TO_PHYSICAL(PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_START(segment));
+    gSegments[6] = OS_K0_TO_PHYSICAL(PAUSE_PLAYER_SEGMENT_LINK_OBJECT(segment));
 
     if (IS_CHILD_QUEST_AS_CHILD) {
         if (sword == PLAYER_SWORD_NONE && shield == PLAYER_SHIELD_NONE)
@@ -2301,9 +2320,9 @@ void Player_DrawPause(PlayState* play, u8* segment, SkelAnime* skelAnime, Vec3f*
         *destTable++ = *srcTable++;
     }
 
-    Player_DrawPauseImpl(play, segment + PAUSE_EQUIP_BUFFER_SIZE,
-                         segment + PAUSE_EQUIP_BUFFER_SIZE + PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_BUFFER_SIZE, skelAnime,
-                         pos, rot, scale, sword, tunic, shield, boots, PAUSE_EQUIP_PLAYER_WIDTH,
-                         PAUSE_EQUIP_PLAYER_HEIGHT, &eye, &at, 60.0f, play->state.gfxCtx->curFrameBuffer,
+    Player_DrawPauseImpl(play, PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_START(segment),
+                         PAUSE_PLAYER_SEGMENT_LINK_OBJECT(segment), skelAnime, pos, rot, scale, sword, tunic, shield,
+                         boots, PAUSE_EQUIP_PLAYER_WIDTH, PAUSE_EQUIP_PLAYER_HEIGHT, &eye, &at, 60.0f,
+                         play->state.gfxCtx->curFrameBuffer,
                          play->state.gfxCtx->curFrameBuffer + (PAUSE_EQUIP_PLAYER_WIDTH * PAUSE_EQUIP_PLAYER_HEIGHT));
 }

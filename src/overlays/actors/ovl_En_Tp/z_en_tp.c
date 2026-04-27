@@ -7,6 +7,7 @@
 #include "z_en_tp.h"
 
 #include "libc64/qrand.h"
+#include "array_count.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "ichain.h"
@@ -69,12 +70,12 @@ ActorProfile En_Tp_Profile = {
     /**/ EnTp_Draw,
 };
 
-static ColliderJntSphElementInit sJntSphElementsInit[1] = {
+static ColliderJntSphElementInit sJntSphElementsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x03, 0x08 },
-            { 0xFFCFFFFF, 0x01, 0x00 },
+            { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_ELECTRIC, 0x08 },
+            { 0xFFCFFFFF, HIT_BACKLASH_ELECTRIC, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_ON,
             OCELEM_NONE,
@@ -92,7 +93,7 @@ static ColliderJntSphInit sJntSphInit = {
         OC2_TYPE_1,
         COLSHAPE_JNTSPH,
     },
-    1,
+    ARRAY_COUNT(sJntSphElementsInit),
     sJntSphElementsInit,
 };
 
@@ -262,8 +263,7 @@ void EnTp_Head_ApproachPlayer(EnTp* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
 
     Math_SmoothStepToF(&this->actor.world.pos.y, player->actor.world.pos.y + 30.0f, 1.0f, 0.5f, 0.0f);
-    Audio_PlaySfxGeneral(NA_SE_EN_TAIL_FLY - SFX_FLAG, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_TAIL_FLY - SFX_FLAG);
 
     if (this->collider.base.atFlags & AT_HIT) {
         this->collider.base.atFlags &= ~AT_HIT;
@@ -336,7 +336,8 @@ void EnTp_Die(EnTp* this, PlayState* play) {
             effectPos.y = ((Rand_ZeroOne() - 0.5f) * 5.0f) + this->actor.world.pos.y;
             EffectSsDeadDb_Spawn(play, &effectPos, &effectVelAccel, &effectVelAccel, 100, 0, 255, 255, 255, 255, 0, 0,
                                  255, 1, 9, 1);
-            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x50);
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                                       COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_5, false));
         } else {
 #if OOT_VERSION < NTSC_1_1
             for (i = 0; i < 2; i++)
@@ -404,8 +405,7 @@ void EnTp_Head_TakeOff(EnTp* this, PlayState* play) {
     Math_SmoothStepToF(&this->actor.speed, 2.5f, 0.1f, 0.2f, 0.0f);
     Math_SmoothStepToF(&this->actor.world.pos.y, player->actor.world.pos.y + 85.0f + this->horizontalVariation, 1.0f,
                        this->actor.speed * 0.25f, 0.0f);
-    Audio_PlaySfxGeneral(NA_SE_EN_TAIL_FLY - SFX_FLAG, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_TAIL_FLY - SFX_FLAG);
 
     if (this->collider.base.atFlags & AT_HIT) {
         this->collider.base.atFlags &= ~AT_HIT;
@@ -502,8 +502,7 @@ void EnTp_Head_Wait(EnTp* this, PlayState* play) {
     this->actor.shape.rot.y = this->actor.world.rot.y;
 
     if (this->actor.world.pos.y != this->actor.home.pos.y) {
-        Audio_PlaySfxGeneral(NA_SE_EN_TAIL_FLY - SFX_FLAG, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_TAIL_FLY - SFX_FLAG);
     }
 }
 
@@ -572,8 +571,7 @@ void EnTp_Head_BurrowReturnHome(EnTp* this, PlayState* play) {
         }
 
         if (this->actor.world.pos.y != this->actor.home.pos.y) {
-            Audio_PlaySfxGeneral(NA_SE_EN_TAIL_FLY - SFX_FLAG, &this->actor.projectedPos, 4,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_TAIL_FLY - SFX_FLAG);
         }
 
         if (closeToFloor && ((play->gameplayFrames & 1) != 0)) {
@@ -722,8 +720,7 @@ void EnTp_Update(Actor* thisx, PlayState* play) {
         this->actor.shape.rot.z += 0x800;
 
         if (this->actor.shape.rot.z == 0) {
-            Audio_PlaySfxGeneral(NA_SE_EN_TAIL_CRY, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_TAIL_CRY);
         }
 
         if (this->actionIndex >= TAILPASARAN_ACTION_TAIL_FOLLOWHEAD) {

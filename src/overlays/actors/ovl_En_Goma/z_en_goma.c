@@ -90,8 +90,8 @@ static ColliderCylinderInit D_80A4B7A0 = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xFFCFFFFF, 0x00, 0x08 },
-        { 0xFFDFFFFF, 0x00, 0x00 },
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x08 },
+        { 0xFFDFFFFF, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_ON | ATELEM_SFX_NORMAL,
         ACELEM_NONE,
         OCELEM_ON,
@@ -110,8 +110,8 @@ static ColliderCylinderInit D_80A4B7CC = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xFFCFFFFF, 0x00, 0x08 },
-        { 0xFFDFFFFF, 0x00, 0x00 },
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x08 },
+        { 0xFFDFFFFF, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_NONE,
         ACELEM_ON,
         OCELEM_NONE,
@@ -450,10 +450,10 @@ void EnGoma_Dead(EnGoma* this, PlayState* play) {
 
             parent->childrenGohmaState[this->actor.params] = -1;
         }
-        Audio_PlaySfxGeneral(NA_SE_EN_EXTINCT, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_EXTINCT);
         Actor_Kill(&this->actor);
-        Item_DropCollectibleRandom(play, NULL, &this->actor.world.pos, 0x30);
+        Item_DropCollectibleRandom(play, NULL, &this->actor.world.pos,
+                                   COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_3, false));
     }
     this->visualState = 2;
 }

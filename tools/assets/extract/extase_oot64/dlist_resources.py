@@ -43,6 +43,7 @@ VERBOSE_ColorIndexedTexturesManager = False
 VERBOSE_BEST_EFFORT_TLUT_NO_REAL_USER = True
 
 EXPLICIT_DL_AND_TEX_SIZES = True
+TEXS_SHORTER_NAMES = True
 
 
 class MtxResource(CDataResource):
@@ -146,6 +147,7 @@ class VtxArrayResource(CDataResource):
         super().__init__(file, range_start, name)
 
     def get_as_xml(self):
+        assert self.range_end is not None
         return f"""\
         <Array Name="{self.symbol_name}" Count="{(self.range_end - self.range_start) // self.element_cdata_ext.size}" Offset="0x{self.range_start:X}">
             <Vtx/>
@@ -153,6 +155,7 @@ class VtxArrayResource(CDataResource):
 
     def get_c_declaration_base(self):
         if hasattr(self, "HACK_IS_STATIC_ON"):
+            assert isinstance(self.cdata_ext, CDataExt_Array)
             return f"Vtx {self.symbol_name}[{self.cdata_ext.length}]"
         return f"Vtx {self.symbol_name}[]"
 
@@ -275,6 +278,15 @@ class TextureResource(Resource):
         self.width_name = f"{self.symbol_name}_WIDTH"
         self.height_name = f"{self.symbol_name}_HEIGHT"
 
+    def get_as_xml(self):
+        tlut_offset_attr = (
+            f' TlutOffset="0x{self.resource_tlut.range_start:X}"'
+            if self.resource_tlut
+            else ""
+        )
+        return f"""\
+        <Texture Name="{self.symbol_name}" Format="{self.fmt.name.lower()}{self.siz.bpp}" Width="{self.width}" Height="{self.height}" Offset="0x{self.range_start:X}"{tlut_offset_attr}/>"""
+
     def check_declare_length(self):
         return (
             hasattr(self, "HACK_IS_STATIC_ON") or EXPLICIT_DL_AND_TEX_SIZES
@@ -333,10 +345,11 @@ class TextureResource(Resource):
                 if resource_ci.siz == G_IM_SIZ._4b:
                     v_max = max(max((b >> 4) & 0xF, b & 0xF) for b in resource_ci_data)
                     assert v_max < 16
-
-                if resource_ci.siz == G_IM_SIZ._8b:
+                elif resource_ci.siz == G_IM_SIZ._8b:
                     v_max = max(resource_ci_data)
                     assert v_max < 256
+                else:
+                    assert False, resource_ci.siz
 
                 new_min_count = v_max + 1
 
@@ -436,6 +449,9 @@ class TextureResource(Resource):
             return f"{self.name}.{format_name}{elem_type_suffix}"
 
     def write_extracted(self, memory_context):
+        assert self.file.data is not None
+        assert self.range_end is not None
+
         if self.is_tlut():
             # TLUTs are extracted as part of the color-indexed textures using them
 
@@ -595,10 +611,11 @@ class TLUTResource(TextureResource, can_size_be_unknown=True):
         if resource_ci.siz == G_IM_SIZ._4b:
             v_max = max(max((b >> 4) & 0xF, b & 0xF) for b in resource_ci_data)
             assert v_max < 16
-
-        if resource_ci.siz == G_IM_SIZ._8b:
+        elif resource_ci.siz == G_IM_SIZ._8b:
             v_max = max(resource_ci_data)
             assert v_max < 256
+        else:
+            assert False, resource_ci.siz
 
         new_min_count = v_max + 1
 
@@ -635,6 +652,7 @@ class TextureSplitTlutResource(TextureResource):
         return f"{self.name}.ci8.split_{'lo' if self.lo_half else 'hi'}.tlut_{self.resource_tlut.name}"
 
     def write_extracted(self, memory_context):
+        assert self.file.data is not None
         data = self.file.data[self.range_start : self.range_end]
         assert len(data) == self.range_end - self.range_start
 
@@ -642,7 +660,7 @@ class TextureSplitTlutResource(TextureResource):
             assert all(_b < 128 for _b in data)
         else:
             assert all(_b >= 128 for _b in data)
-            data = bytes(_b - 128 for _b in data)
+            data = memoryview(bytes(_b - 128 for _b in data))
 
         tlut_data = self.resource_tlut.file.data[
             self.resource_tlut.range_start : self.resource_tlut.range_end
@@ -1014,9 +1032,9 @@ class ColorIndexedTexturesManager:
         texs: list["ColorIndexedTexturesManager.Tex"]
 
     def __init__(self, *, HACK_late_SetTextureLUT=False):
-        self.cur_tlut_mode: G_TT = None
+        self.cur_tlut_mode: G_TT | None = None
 
-        self.cur_tluts_count: int = None
+        self.cur_tluts_count: int | None = None
         self.cur_tluts: dict[int, ColorIndexedTexturesManager.Tlut] = dict()
         self.cur_texs: list[ColorIndexedTexturesManager.Tex] = []
 
@@ -1159,7 +1177,7 @@ class ColorIndexedTexturesManager:
                     lambda file, offset: TextureResource(
                         file,
                         offset,
-                        f"{reporter.name}_{offset:08X}_CITex",
+                        f"{file.name if TEXS_SHORTER_NAMES else reporter.name}_{offset:08X}_CITex",
                         tex.fmt,
                         tex.siz,
                         tex.width,
@@ -1181,7 +1199,7 @@ class ColorIndexedTexturesManager:
                     lambda file, offset: TLUTResource(
                         file,
                         offset,
-                        f"{reporter.name}_{offset:08X}_TLUT",
+                        f"{file.name if TEXS_SHORTER_NAMES else reporter.name}_{offset:08X}_TLUT",
                         {
                             G_TT.RGBA16: G_IM_FMT.RGBA,
                             G_TT.IA16: G_IM_FMT.IA,
@@ -1249,7 +1267,7 @@ class DListResource(Resource, can_size_be_unknown=True):
                     lambda file, offset: TextureResource(
                         file,
                         offset,
-                        f"{self.name}_{offset:08X}_Tex",
+                        f"{file.name if TEXS_SHORTER_NAMES else self.name}_{offset:08X}_Tex",
                         g_fmt,
                         g_siz,
                         width,
@@ -1346,6 +1364,10 @@ class DListResource(Resource, can_size_be_unknown=True):
             print(self.name, hex(offset), hex(self.range_end))
 
         return RESOURCE_PARSE_SUCCESS
+
+    def get_as_xml(self):
+        return f"""\
+        <DList Name="{self.symbol_name}" Offset="0x{self.range_start:X}"/>"""
 
     def get_c_declaration_base(self):
         if hasattr(self, "HACK_IS_STATIC_ON") or EXPLICIT_DL_AND_TEX_SIZES:

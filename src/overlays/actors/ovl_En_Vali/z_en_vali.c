@@ -67,8 +67,8 @@ static ColliderQuadInit sQuadInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xFFCFFFFF, 0x07, 0x08 },
-        { 0x00000000, 0x00, 0x00 },
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_7, 0x08 },
+        { 0x00000000, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_ON | ATELEM_SFX_NONE,
         ACELEM_NONE,
         OCELEM_NONE,
@@ -87,8 +87,8 @@ static ColliderCylinderInit sCylinderInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xFFCFFFFF, 0x07, 0x08 },
-        { 0xFFCFFFFF, 0x01, 0x00 },
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_7, 0x08 },
+        { 0xFFCFFFFF, HIT_BACKLASH_ELECTRIC, 0x00 },
         ATELEM_ON | ATELEM_SFX_NORMAL,
         ACELEM_ON,
         OCELEM_ON,
@@ -157,7 +157,7 @@ void EnVali_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 27.0f);
     this->actor.shape.shadowAlpha = 155;
     SkelAnime_Init(play, &this->skelAnime, &gBariSkel, &gBariLurkingAnim, this->jointTable, this->morphTable,
-                   EN_VALI_LIMB_MAX);
+                   VALI_LIMB_MAX);
 
     Collider_InitQuad(play, &this->leftArmCollider);
     Collider_SetQuad(play, &this->leftArmCollider, &this->actor, &sQuadInit);
@@ -260,7 +260,8 @@ void EnVali_SetupDivideAndDie(EnVali* this, PlayState* play) {
         this->actor.world.rot.y += 0x10000 / 3;
     }
 
-    Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x50);
+    Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                               COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_5, false));
     this->timer = Rand_S16Offset(10, 10);
     this->bodyCollider.base.acFlags &= ~AC_ON;
     SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 40, NA_SE_EN_BARI_SPLIT);
@@ -274,7 +275,7 @@ void EnVali_SetupStunned(EnVali* this) {
     this->timer = 80;
     this->actor.velocity.y = 0.0f;
     Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_BLUE, 255, COLORFILTER_BUFFLAG_XLU, 80);
-    this->bodyCollider.elem.acDmgInfo.effect = 0;
+    this->bodyCollider.elem.acDmgInfo.hitBacklash = HIT_BACKLASH_NONE;
     Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_JR_FREEZE);
     this->actor.velocity.y = 1.0f;
     this->actionFunc = EnVali_Stunned;
@@ -464,7 +465,7 @@ void EnVali_Stunned(EnVali* this, PlayState* play) {
     }
 
     if (this->timer == 0) {
-        this->bodyCollider.elem.acDmgInfo.effect = 1; // Shock?
+        this->bodyCollider.elem.acDmgInfo.hitBacklash = HIT_BACKLASH_ELECTRIC;
         EnVali_SetupFloatIdle(this);
     }
 }
@@ -691,14 +692,14 @@ s32 EnVali_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* 
     EnVali* this = (EnVali*)thisx;
     f32 curFrame;
 
-    if ((limbIndex == EN_VALI_LIMB_NUCLEUS) || (limbIndex == EN_VALI_LIMB_OUTER_HOOD) ||
-        (limbIndex == EN_VALI_LIMB_INNER_HOOD)) {
+    if ((limbIndex == VALI_LIMB_NUCLEUS) || (limbIndex == VALI_LIMB_OUTER_HOOD) ||
+        (limbIndex == VALI_LIMB_INNER_HOOD)) {
         *dList = NULL;
         return false;
     } else {
         curFrame = this->skelAnime.curFrame;
 
-        if ((limbIndex == EN_VALI_LIMB_LEFT_ARM_BASE) || (limbIndex == EN_VALI_LIMB_RIGHT_ARM_BASE)) {
+        if ((limbIndex == VALI_LIMB_LEFT_ARM_BASE) || (limbIndex == VALI_LIMB_RIGHT_ARM_BASE)) {
             if (EnVali_SetArmLength(this, curFrame)) {
                 Matrix_Scale(this->armScale, 1.0f, 1.0f, MTXMODE_APPLY);
             }
@@ -716,11 +717,11 @@ void EnVali_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot
     EnVali* this = (EnVali*)thisx;
 
     if (this->actionFunc == EnVali_FloatIdle) {
-        if ((limbIndex == EN_VALI_LIMB_LEFT_FOREARM_BASE) || (limbIndex == EN_VALI_LIMB_RIGHT_FOREARM_BASE)) {
+        if ((limbIndex == VALI_LIMB_LEFT_FOREARM_BASE) || (limbIndex == VALI_LIMB_RIGHT_FOREARM_BASE)) {
             Matrix_MultVec3f(&D_80B28970, &sp3C);
             Matrix_MultVec3f(&D_80B2897C, &sp30);
 
-            if (limbIndex == EN_VALI_LIMB_LEFT_FOREARM_BASE) {
+            if (limbIndex == VALI_LIMB_LEFT_FOREARM_BASE) {
                 Collider_SetQuadVertices(&this->leftArmCollider, &sp30, &sp3C, &this->leftArmCollider.dim.quad[0],
                                          &this->leftArmCollider.dim.quad[1]);
             } else {

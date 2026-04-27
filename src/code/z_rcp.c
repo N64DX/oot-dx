@@ -223,6 +223,9 @@ Gfx sSetupDL[SETUPDL_MAX][6] = {
         gsDPPipeSync(),
         gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
         gsDPSetCombineMode(G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM),
+        // This render mode uses CVG_X_ALPHA to transfer texture alpha to coverage, but the coverage written to the
+        // framebuffer is always full. It also doesn't write depth, but uses an opaque Z mode. It's hard to say what
+        // the intention was here.
         gsDPSetOtherMode(G_AD_NOTPATTERN | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TT_NONE | G_TL_TILE |
                              G_TD_CLAMP | G_TP_PERSP | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
                          G_AC_NONE | G_ZS_PIXEL | AA_EN | Z_CMP | IM_RD | CVG_DST_FULL | ZMODE_OPA | CVG_X_ALPHA |
@@ -723,9 +726,7 @@ Gfx sSetupDL[SETUPDL_MAX][6] = {
         gsDPSetCombineMode(G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM),
         gsDPSetOtherMode(G_AD_DISABLE | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TT_NONE | G_TL_TILE |
                              G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
-                         G_AC_THRESHOLD | G_ZS_PIXEL | Z_UPD | IM_RD | CVG_DST_SAVE | ZMODE_OPA | FORCE_BL |
-                             GBL_c1(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA) |
-                             GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
+                         G_AC_THRESHOLD | G_ZS_PIXEL | G_RM_CLD_SURF | G_RM_CLD_SURF2 | Z_UPD),
         gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH),
         gsSPEndDisplayList(),
     },
@@ -756,6 +757,8 @@ Gfx sSetupDL[SETUPDL_MAX][6] = {
         gsDPPipeSync(),
         gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
         gsDPSetCombineMode(G_CC_DECALRGBA, G_CC_DECALRGBA),
+        // This render mode is a non-AA texture edge mode that writes full coverage to the framebuffer for all pixels.
+        // The c2 render mode would be G_RM_PASS2 if it were defined.
         gsDPSetOtherMode(G_AD_NOTPATTERN | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TT_NONE | G_TL_TILE |
                              G_TD_CLAMP | G_TP_PERSP | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
                          G_AC_THRESHOLD | G_ZS_PIXEL | Z_CMP | Z_UPD | CVG_DST_FULL | ZMODE_OPA | CVG_X_ALPHA |
@@ -768,6 +771,7 @@ Gfx sSetupDL[SETUPDL_MAX][6] = {
         gsDPPipeSync(),
         gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
         gsDPSetCombineMode(G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM),
+        // Same as SETUPDL_66
         gsDPSetOtherMode(G_AD_NOTPATTERN | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TT_NONE | G_TL_TILE |
                              G_TD_CLAMP | G_TP_PERSP | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
                          G_AC_THRESHOLD | G_ZS_PIXEL | Z_CMP | Z_UPD | CVG_DST_FULL | ZMODE_OPA | CVG_X_ALPHA |
@@ -780,6 +784,7 @@ Gfx sSetupDL[SETUPDL_MAX][6] = {
         gsDPPipeSync(),
         gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
         gsDPSetCombineMode(G_CC_DECALRGBA, G_CC_DECALRGBA),
+        // This render mode would be RM_ZB_SUB_SURF if it were defined.
         gsDPSetOtherMode(G_AD_NOTPATTERN | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TT_NONE | G_TL_TILE |
                              G_TD_CLAMP | G_TP_PERSP | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
                          G_AC_THRESHOLD | G_ZS_PIXEL | Z_CMP | Z_UPD | IM_RD | CVG_DST_FULL | ZMODE_OPA | CVG_X_ALPHA |
@@ -793,6 +798,7 @@ Gfx sSetupDL[SETUPDL_MAX][6] = {
         gsDPPipeSync(),
         gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
         gsDPSetCombineMode(G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM),
+        // This render mode would be RM_ZB_SUB_SURF if it were defined.
         gsDPSetOtherMode(G_AD_NOTPATTERN | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TT_NONE | G_TL_TILE |
                              G_TD_CLAMP | G_TP_PERSP | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
                          G_AC_THRESHOLD | G_ZS_PIXEL | Z_CMP | Z_UPD | IM_RD | CVG_DST_FULL | ZMODE_OPA | CVG_X_ALPHA |
@@ -854,28 +860,50 @@ Gfx gEmptyDL[] = {
     gsSPEndDisplayList(),
 };
 
+/**
+ * Set fog color and range.
+ *
+ * At or prior to fog near, geometry is unaffected by fog. At or beyond fog far, geometry is fully fogged.
+ * Between near and far, rendered geometry will be blended between the unfogged color and the supplied fog color.
+ *
+ * Fog far should be in the range 0 to 1000 and greater than or equal to fog near. If fog near is negative everything
+ * will be fully fogged. If fog near is 1000 or greater there is no fog.
+ */
 Gfx* Gfx_SetFog(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 near, s32 far) {
+    // Avoid 0 divisor in gSPFogPosition below
     if (far == near) {
         far++;
     }
-
     ASSERT(near != far, "n != f", "../z_rcp.c", 1155);
 
+    // Set the fog color, far away geometry will be rendered as this solid color.
     gDPSetFogColor(gfx++, r, g, b, a);
 
     if (near >= 1000) {
+        // Set a constant shade alpha of 0 for no fog
         gSPFogFactor(gfx++, 0, 0);
-    } else if (near >= 997) {
-        gSPFogFactor(gfx++, 0x7FFF, 0x8100);
+    } else if (near > 996) {
+        // Avoid an overflow when near and far are close (see bug below), by effectively clamping near to ~996.
+        // This is almost SPFogPosition(996.0937f, 1000)
+        gSPFogFactor(gfx++, 0x7FFF, -0x7F00);
     } else if (near < 0) {
+        // Set a constant shade alpha of 255 for fully fogged
         gSPFogFactor(gfx++, 0, 255);
     } else {
+        // Normal range. Shade alpha is 0 at z <= near and 255 at z >= far, linearly interpolated in between.
+        //! @bug If far - near < 4, the computed `fm` fog factor coefficient will overflow.
+        //! For example: 128000 / (983 - 980) > 32767
+        //! This is handled above in the case of near > 996, but the general case is not accounted for.
         gSPFogPosition(gfx++, near, far);
     }
-
     return gfx;
 }
 
+/**
+ * Like Gfx_SetFog but issues a pipesync before changing fog color.
+ *
+ * @see Gfx_SetFog
+ */
 Gfx* Gfx_SetFogWithSync(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 near, s32 far) {
     if (far == near) {
         far++;
@@ -898,6 +926,11 @@ Gfx* Gfx_SetFogWithSync(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 near, s32 far)
     return gfx;
 }
 
+/**
+ * Wrapper for Gfx_SetFog
+ *
+ * @see Gfx_SetFog
+ */
 Gfx* Gfx_SetFog2(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 near, s32 far) {
     return Gfx_SetFog(gfx, r, g, b, a, near, far);
 }

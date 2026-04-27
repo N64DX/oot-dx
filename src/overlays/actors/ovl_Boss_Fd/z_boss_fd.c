@@ -30,7 +30,7 @@
 #include "player.h"
 #include "save.h"
 
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/dust_textures.h"
 #include "assets/objects/object_fd/object_fd.h"
 #if OOT_NTSC_N64
 #include "assets/objects/object_fd/object_fd_title_card.h"
@@ -407,8 +407,7 @@ void BossFd_Fly(BossFd* this, PlayState* play) {
                     this->fogMode = 1;
                 }
                 if (this->timers[0] < 50) {
-                    Audio_PlaySfxGeneral(NA_SE_EN_DODO_K_ROLL - SFX_FLAG, &this->actor.projectedPos, 4,
-                                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_DODO_K_ROLL - SFX_FLAG);
                     this->subCamAtYOffset = Math_CosS(this->work[BFD_MOVE_TIMER] * 0x8000) * this->subCamShake;
                     Math_ApproachF(&this->subCamShake, 2.0f, 1.0f, 0.8 * 0.01f);
                 }
@@ -428,8 +427,7 @@ void BossFd_Fly(BossFd* this, PlayState* play) {
             case BFD_CS_LOOK_GROUND:
                 this->subCamAtYOffset = Math_CosS(this->work[BFD_MOVE_TIMER] * 0x8000) * this->subCamShake;
                 Math_ApproachF(&this->subCamShake, 2.0f, 1.0f, 0.8 * 0.01f);
-                Audio_PlaySfxGeneral(NA_SE_EN_DODO_K_ROLL - SFX_FLAG, &this->actor.projectedPos, 4,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_DODO_K_ROLL - SFX_FLAG);
                 if (this->timers[0] == 0) {
                     this->introState = BFD_CS_COLLAPSE;
                     this->subCamEyeNext.x = player2->actor.world.pos.x + 100.0f + 300.0f;
@@ -449,8 +447,7 @@ void BossFd_Fly(BossFd* this, PlayState* play) {
                 this->subCamAccel = 0.005f;
                 this->subCamAtYOffset = Math_CosS(this->work[BFD_MOVE_TIMER] * 0x8000) * this->subCamShake;
                 Math_ApproachF(&this->subCamShake, 2.0f, 1.0f, 0.8 * 0.01f);
-                Audio_PlaySfxGeneral(NA_SE_EN_DODO_K_ROLL - SFX_FLAG, &this->actor.projectedPos, 4,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_DODO_K_ROLL - SFX_FLAG);
                 if (this->timers[0] == 100) {
                     this->platformSignal = VBSIMA_COLLAPSE;
                 }
@@ -486,8 +483,7 @@ void BossFd_Fly(BossFd* this, PlayState* play) {
                 PRINTF("WAY_SPD Y = %f\n", this->subCamAtVel.y);
                 PRINTF("WAY_SPD Z = %f\n", this->subCamAtVel.z);
                 if ((this->timers[3] > 190) && !GET_EVENTCHKINF(EVENTCHKINF_BEGAN_VOLVAGIA_BATTLE)) {
-                    Audio_PlaySfxGeneral(NA_SE_EN_DODO_K_ROLL - SFX_FLAG, &this->actor.projectedPos, 4,
-                                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_DODO_K_ROLL - SFX_FLAG);
                 }
                 if (this->timers[3] == 190) {
                     this->subCamAtMaxVelFrac.x = this->subCamAtMaxVelFrac.y = this->subCamAtMaxVelFrac.z = 0.05f;
@@ -701,8 +697,7 @@ void BossFd_Fly(BossFd* this, PlayState* play) {
                 if (this->actor.bgCheckFlags & BGCHECKFLAG_CEILING) {
                     this->fwork[BFD_CEILING_BOUNCE] = -18384.0f;
                     this->timers[1] = 10;
-                    Audio_PlaySfxGeneral(NA_SE_EV_EXPLOSION, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EV_EXPLOSION);
                     Actor_RequestQuakeWithSpeed(play, 3, 10, 0x7530);
                     this->work[BFD_ROCK_TIMER] = 300;
                 }
@@ -801,8 +796,7 @@ void BossFd_Fly(BossFd* this, PlayState* play) {
 
                 sp150 = 1;
                 if (this->work[BFD_MOVE_TIMER] & 0x1C) {
-                    Audio_PlaySfxGeneral(NA_SE_EN_VALVAISA_BURN - SFX_FLAG, &this->actor.projectedPos, 4,
-                                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_VALVAISA_BURN - SFX_FLAG);
                 }
                 for (i1 = 0; i1 < sp150; i1++) {
                     if (sp150) { // Needed for matching
@@ -874,9 +868,7 @@ void BossFd_Fly(BossFd* this, PlayState* play) {
                         this->work[BFD_CEILING_TARGET]++;
                         this->timers[1] = 60;
                         this->work[BFD_CAM_SHAKE_TIMER] = 20;
-                        Audio_PlaySfxGeneral(NA_SE_EN_GOMA_DOWN, &this->actor.projectedPos, 4,
-                                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-                                             &gSfxDefaultReverb);
+                        SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_GOMA_DOWN);
                         Player_SetCsActionWithHaltedActors(play, &this->actor, PLAYER_CSACTION_5);
                         for (i1 = 0; i1 < 15; i1++) {
                             Vec3f sp144 = { 0.0f, 0.0f, 0.0f };
@@ -917,8 +909,7 @@ void BossFd_Fly(BossFd* this, PlayState* play) {
                 Vec3f sp114 = { 0.0f, 0.0f, 0.0f };
                 Vec3f sp108 = { 0.0f, 0.03f, 0.0f };
 
-                Audio_PlaySfxGeneral(NA_SE_EN_GOMA_LAST - SFX_FLAG, &this->actor.projectedPos, 4,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_GOMA_LAST - SFX_FLAG);
 
                 sp120.x = Rand_CenteredFloat(40.0f) + this->actor.world.pos.x;
                 sp120.y = (Rand_CenteredFloat(10.0f) + this->actor.world.pos.y) - 10.0f;
@@ -1166,8 +1157,7 @@ void BossFd_Effects(BossFd* this, PlayState* play) {
 
     if (this->work[BFD_ROAR_TIMER] != 0) {
         if (this->work[BFD_ROAR_TIMER] == 37) {
-            Audio_PlaySfxGeneral(NA_SE_EN_VALVAISA_ROAR, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_VALVAISA_ROAR);
         }
         jawAngle = 6000.0f;
         jawSpeed = 1300.0f;
@@ -1187,8 +1177,7 @@ void BossFd_Effects(BossFd* this, PlayState* play) {
         Vec3f spawnPos1;
         s16 i;
 
-        Audio_PlaySfxGeneral(NA_SE_EN_VALVAISA_APPEAR - SFX_FLAG, &this->actor.projectedPos, 4,
-                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_VALVAISA_APPEAR - SFX_FLAG);
         if (this->work[BFD_SPLASH_TIMER] != 0) {
             this->work[BFD_SPLASH_TIMER]--;
             if ((this->actor.colChkInfo.health == 0) ||
@@ -1266,8 +1255,7 @@ void BossFd_Effects(BossFd* this, PlayState* play) {
         this->fogMode = 2;
         spawnSpeed2.z = 30.0f;
 
-        Audio_PlaySfxGeneral(NA_SE_EN_DODO_K_FIRE - SFX_FLAG, &sFireAudioVec, 4, &gSfxDefaultFreqAndVolScale,
-                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        SFX_PLAY_AT_POS(&sFireAudioVec, NA_SE_EN_DODO_K_FIRE - SFX_FLAG);
         spawnPos2 = this->headPos;
 
         spawnAngleY = BINANG_TO_RAD_ALT(this->actor.world.rot.y);
@@ -1329,8 +1317,7 @@ void BossFd_CollisionCheck(BossFd* this, PlayState* play) {
         }
         this->work[BFD_DAMAGE_FLASH_TIMER] = 10;
         this->work[BFD_INVINC_TIMER] = 20;
-        Audio_PlaySfxGeneral(NA_SE_EN_VALVAISA_DAMAGE1, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EN_VALVAISA_DAMAGE1);
     }
 }
 

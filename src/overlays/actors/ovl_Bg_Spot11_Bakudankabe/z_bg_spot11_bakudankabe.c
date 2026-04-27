@@ -50,8 +50,8 @@ static ColliderCylinderInit sCylinderInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0x00000000, 0x00, 0x00 },
-        { 0x00000008, 0x00, 0x00 },
+        { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+        { 0x00000008, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_NONE,
         ACELEM_ON,
         OCELEM_NONE,
@@ -132,7 +132,7 @@ void BgSpot11Bakudankabe_Init(Actor* thisx, PlayState* play) {
     CollisionHeader_GetVirtual(&gDesertColossusBombableWallCol, &colHeader);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
     Actor_SetScale(&this->dyna.actor, 1.0f);
-    PRINTF("(spot11 " T("爆弾壁", "Bomb Wall") ")(arg_data 0x%04x)\n", this->dyna.actor.params);
+    PRINTF(T("(spot11 爆弾壁)(arg_data 0x%04x)\n", "(spot11 Bomb Wall)(arg_data 0x%04x)\n"), this->dyna.actor.params);
 }
 
 void BgSpot11Bakudankabe_Destroy(Actor* thisx, PlayState* play) {

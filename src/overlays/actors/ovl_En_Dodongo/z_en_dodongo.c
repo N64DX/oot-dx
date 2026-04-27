@@ -4,6 +4,7 @@
 #include "overlays/actors/ovl_En_Bom_Chu/z_en_bom_chu.h"
 
 #include "libc64/qrand.h"
+#include "array_count.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "ichain.h"
@@ -65,12 +66,12 @@ ActorProfile En_Dodongo_Profile = {
     /**/ EnDodongo_Draw,
 };
 
-static ColliderJntSphElementInit sBodyElementsInit[6] = {
+static ColliderJntSphElementInit sBodyElementsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_ON,
             OCELEM_ON,
@@ -80,8 +81,8 @@ static ColliderJntSphElementInit sBodyElementsInit[6] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_ON,
             OCELEM_ON,
@@ -91,8 +92,8 @@ static ColliderJntSphElementInit sBodyElementsInit[6] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_ON,
             OCELEM_ON,
@@ -102,8 +103,8 @@ static ColliderJntSphElementInit sBodyElementsInit[6] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0x00000000, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0x00000000, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_NONE,
             OCELEM_ON,
@@ -113,8 +114,8 @@ static ColliderJntSphElementInit sBodyElementsInit[6] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0x00000000, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0x00000000, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_NONE,
             OCELEM_ON,
@@ -124,8 +125,8 @@ static ColliderJntSphElementInit sBodyElementsInit[6] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0x0D800691, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0x0D800691, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_ON,
             OCELEM_ON | OCELEM_UNK3,
@@ -143,16 +144,16 @@ static ColliderJntSphInit sBodyJntSphInit = {
         OC2_TYPE_1,
         COLSHAPE_JNTSPH,
     },
-    6,
+    ARRAY_COUNT(sBodyElementsInit),
     sBodyElementsInit,
 };
 
-static ColliderTrisElementInit sHardElementsInit[3] = {
+static ColliderTrisElementInit sHardElementsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK2,
-            { 0x00000000, 0x00, 0x00 },
-            { 0xF24BF96E, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0xF24BF96E, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_ON | ACELEM_HOOKABLE | ACELEM_NO_AT_INFO,
             OCELEM_NONE,
@@ -162,8 +163,8 @@ static ColliderTrisElementInit sHardElementsInit[3] = {
     {
         {
             ELEM_MATERIAL_UNK2,
-            { 0x00000000, 0x00, 0x00 },
-            { 0xFFCBF96E, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0xFFCBF96E, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_ON | ACELEM_HOOKABLE | ACELEM_NO_AT_INFO,
             OCELEM_NONE,
@@ -173,8 +174,8 @@ static ColliderTrisElementInit sHardElementsInit[3] = {
     {
         {
             ELEM_MATERIAL_UNK2,
-            { 0x00000000, 0x00, 0x00 },
-            { 0xFFCBF96E, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0xFFCBF96E, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_ON | ACELEM_HOOKABLE | ACELEM_NO_AT_INFO,
             OCELEM_NONE,
@@ -192,7 +193,7 @@ static ColliderTrisInit sHardTrisInit = {
         OC2_NONE,
         COLSHAPE_TRIS,
     },
-    3,
+    ARRAY_COUNT(sHardElementsInit),
     sHardElementsInit,
 };
 
@@ -207,8 +208,8 @@ static ColliderQuadInit sAttackQuadInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0x20000000, 0x01, 0x10 },
-        { 0x00000000, 0x00, 0x00 },
+        { 0x20000000, HIT_SPECIAL_EFFECT_FIRE, 0x10 },
+        { 0x00000000, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_ON | ATELEM_SFX_NORMAL | ATELEM_UNK7,
         ACELEM_NONE,
         OCELEM_NONE,
@@ -711,7 +712,8 @@ void EnDodongo_Death(EnDodongo* this, PlayState* play) {
     if (this->timer != 0) {
         this->timer--;
         if (this->timer == 0) {
-            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                                       COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_4, false));
             Actor_Kill(&this->actor);
         }
     }

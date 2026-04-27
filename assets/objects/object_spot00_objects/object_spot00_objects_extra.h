@@ -1,0 +1,6 @@
+#ifndef OBJECT_SPOT00_OBJECTS_EXTRA_H
+#define OBJECT_SPOT00_OBJECTS_EXTRA_H
+
+extern CollisionHeader gHyruleFieldCastleDrawbridgeHorseBlockedCol;
+
+#endif

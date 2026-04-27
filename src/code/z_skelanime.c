@@ -1367,7 +1367,7 @@ s32 LinkAnimation_Loop(PlayState* play, SkelAnime* skelAnime) {
         skelAnime->curFrame -= skelAnime->animLength;
     }
     LinkAnimation_AnimateFrame(play, skelAnime);
-    return 0;
+    return false;
 }
 
 /**
@@ -1378,7 +1378,7 @@ s32 LinkAnimation_Once(PlayState* play, SkelAnime* skelAnime) {
 
     if (skelAnime->curFrame == skelAnime->endFrame) {
         LinkAnimation_AnimateFrame(play, skelAnime);
-        return 1;
+        return true;
     }
     skelAnime->curFrame += skelAnime->playSpeed * updateRate;
     if ((skelAnime->curFrame - skelAnime->endFrame) * skelAnime->playSpeed > 0.0f) {
@@ -1389,7 +1389,7 @@ s32 LinkAnimation_Once(PlayState* play, SkelAnime* skelAnime) {
         skelAnime->curFrame -= skelAnime->animLength;
     }
     LinkAnimation_AnimateFrame(play, skelAnime);
-    return 0;
+    return false;
 }
 
 /**
@@ -1785,7 +1785,7 @@ s32 SkelAnime_LoopFull(SkelAnime* skelAnime) {
         skelAnime->curFrame -= skelAnime->animLength;
     }
     SkelAnime_AnimateFrame(skelAnime);
-    return 0;
+    return false;
 }
 
 /**
@@ -1802,7 +1802,7 @@ s32 SkelAnime_LoopPartial(SkelAnime* skelAnime) {
     }
 
     SkelAnime_AnimateFrame(skelAnime);
-    return 0;
+    return false;
 }
 
 /**
@@ -1815,7 +1815,7 @@ s32 SkelAnime_Once(SkelAnime* skelAnime) {
         SkelAnime_GetFrameData(skelAnime->animation, (s32)skelAnime->curFrame, skelAnime->limbCount,
                                skelAnime->jointTable);
         SkelAnime_AnimateFrame(skelAnime);
-        return 1;
+        return true;
     }
 
     skelAnime->curFrame += skelAnime->playSpeed * updateRate;
@@ -1828,7 +1828,7 @@ s32 SkelAnime_Once(SkelAnime* skelAnime) {
         skelAnime->curFrame -= skelAnime->animLength;
     }
     SkelAnime_AnimateFrame(skelAnime);
-    return 0;
+    return false;
 }
 
 /**

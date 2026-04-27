@@ -140,8 +140,8 @@ f32 sBehindScreenZ[2] = { -15.0f, -65.0f };
 u8 sAudioIncreasingTranspose = 0;
 u8 gMorphaTransposeTable[16] = { 0, 0, 0, 1, 1, 2, 4, 6, 8, 8, 8, 8, 8, 8, 8, 8 };
 u8 sPrevChargeLevel = 0;
-f32 D_801305E4[4] = { 1.0f, 1.12246f, 1.33484f, 1.33484f }; // 2**({0, 2, 5, 5}/12)
-f32 D_801305F4 = 1.0f;
+f32 sSfxSwordChargeFreqLevels[4] = { 1.0f, 1.12246f, 1.33484f, 1.33484f }; // 2**({0, 2, 5, 5}/12)
+f32 sSfxSwordChargeFreq = 1.0f;
 u8 sGanonsTowerLevelsVol[8] = { 127, 80, 75, 73, 70, 68, 65, 60 };
 u8 sEnterGanonsTowerTimer = 0;
 #if DEBUG_FEATURES
@@ -1387,6 +1387,8 @@ void AudioOcarina_MapNotesToScarecrowButtons(u8 noteSongIndex) {
  *      - ocarina action (only used to make flags != 0)
  * bitmask 0x80000000:
  *      - unused (only used to make flags != 0)
+ *
+ * original name: Na_StartOcarinaSinglePlayCheck2
  */
 void AudioOcarina_Start(u16 ocarinaFlags) {
     u8 i;
@@ -1753,6 +1755,8 @@ void AudioOcarina_EnableInput(u8 inputEnabled) {
  * Resets ocarina properties based on the ocarina instrument id
  * If ocarina instrument id is "OCARINA_INSTRUMENT_OFF", turn off the ocarina
  * For all ocarina instrument ids, turn the ocarina on with the instrument id
+ *
+ * original name possibly Na_StopOcarinaMode
  */
 void AudioOcarina_SetInstrument(u8 ocarinaInstrumentId) {
     if (sOcarinaInstrumentId == ocarinaInstrumentId) {
@@ -1787,6 +1791,9 @@ void AudioOcarina_SetInstrument(u8 ocarinaInstrumentId) {
     }
 }
 
+/**
+ * original name possibly Na_StartOcarinaBgm
+ */
 void AudioOcarina_SetPlaybackSong(s8 songIndexPlusOne, s8 playbackState) {
     if (songIndexPlusOne == 0) {
         sPlaybackState = 0;
@@ -2817,21 +2824,20 @@ void func_800F4190(Vec3f* pos, u16 sfxId) {
 void Audio_PlaySfxRandom(Vec3f* pos, u16 baseSfxId, u8 randLim) {
     u8 offset = AudioThread_NextRandom() % randLim;
 
-    Audio_PlaySfxGeneral(baseSfxId + offset, pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-                         &gSfxDefaultReverb);
+    SFX_PLAY_AT_POS(pos, baseSfxId + offset);
 }
 
-void func_800F4254(Vec3f* pos, u8 level) {
+void Audio_PlaySwordChargeSfx(Vec3f* pos, u8 level) {
     level &= 3;
     if (level != sPrevChargeLevel) {
-        D_801305F4 = D_801305E4[level];
+        sSfxSwordChargeFreq = sSfxSwordChargeFreqLevels[level];
         switch (level) {
             case 1:
-                Audio_PlaySfxGeneral(NA_SE_PL_SWORD_CHARGE, pos, 4, &D_801305F4, &gSfxDefaultFreqAndVolScale,
+                Audio_PlaySfxGeneral(NA_SE_PL_SWORD_CHARGE, pos, 4, &sSfxSwordChargeFreq, &gSfxDefaultFreqAndVolScale,
                                      &gSfxDefaultReverb);
                 break;
             case 2:
-                Audio_PlaySfxGeneral(NA_SE_PL_SWORD_CHARGE, pos, 4, &D_801305F4, &gSfxDefaultFreqAndVolScale,
+                Audio_PlaySfxGeneral(NA_SE_PL_SWORD_CHARGE, pos, 4, &sSfxSwordChargeFreq, &gSfxDefaultFreqAndVolScale,
                                      &gSfxDefaultReverb);
                 break;
         }
@@ -2840,8 +2846,8 @@ void func_800F4254(Vec3f* pos, u8 level) {
     }
 
     if (level != 0) {
-        Audio_PlaySfxGeneral(NA_SE_IT_SWORD_CHARGE - SFX_FLAG, pos, 4, &D_801305F4, &gSfxDefaultFreqAndVolScale,
-                             &gSfxDefaultReverb);
+        Audio_PlaySfxGeneral(NA_SE_IT_SWORD_CHARGE - SFX_FLAG, pos, 4, &sSfxSwordChargeFreq,
+                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
     }
 }
 
@@ -3082,7 +3088,7 @@ void func_800F4C58(Vec3f* pos, u16 sfxId, u8 ioData) {
         }
         channelIndex++;
     }
-    Audio_PlaySfxGeneral(sfxId, pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    SFX_PLAY_AT_POS(pos, sfxId);
 }
 
 void func_800F4E30(Vec3f* pos, f32 arg1) {
@@ -3234,6 +3240,9 @@ void Audio_ClearSariaBgm2(void) {
     sSariaBgmPtr = NULL;
 }
 
+/**
+ * original name: Na_StartMorinigBgm
+ */
 void Audio_PlayMorningSceneSequence(u16 seqId) {
     Audio_PlaySceneSequence(seqId);
     // Writing a value of 1 to ioPort 0 will be used by
@@ -3734,12 +3743,10 @@ void Audio_UpdateMalonSinging(f32 dist, u16 seqId) {
 void func_800F64E0(u8 arg0) {
     D_80130608 = arg0;
     if (arg0 != 0) {
-        Audio_PlaySfxGeneral(NA_SE_SY_WIN_OPEN, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        SFX_PLAY_CENTERED(NA_SE_SY_WIN_OPEN);
         AUDIOCMD_GLOBAL_MUTE();
     } else {
-        Audio_PlaySfxGeneral(NA_SE_SY_WIN_CLOSE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        SFX_PLAY_CENTERED(NA_SE_SY_WIN_CLOSE);
         AUDIOCMD_GLOBAL_UNMUTE(0);
     }
 }
@@ -3848,8 +3855,7 @@ void Audio_SetBaseFilter(u8 filter) {
         if (filter == 0) {
             Audio_StopSfxById(NA_SE_PL_IN_BUBBLE);
         } else if (sAudioBaseFilter == 0) {
-            Audio_PlaySfxGeneral(NA_SE_PL_IN_BUBBLE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_CENTERED(NA_SE_PL_IN_BUBBLE);
         }
     }
     sAudioBaseFilter = filter;

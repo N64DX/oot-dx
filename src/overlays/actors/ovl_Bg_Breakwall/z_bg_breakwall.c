@@ -63,8 +63,8 @@ static ColliderQuadInit sQuadInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0x00000048, 0x00, 0x00 },
-        { 0x00000048, 0x00, 0x00 },
+        { 0x00000048, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+        { 0x00000048, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_NONE,
         ACELEM_ON,
         OCELEM_NONE,
@@ -269,13 +269,11 @@ void BgBreakwall_Wait(BgBreakwall* this, PlayState* play) {
                 gSaveContext.cutsceneTrigger = 1;
                 Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
             }
-            Audio_PlaySfxGeneral(NA_SE_SY_CORRECT_CHIME, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_CENTERED(NA_SE_SY_CORRECT_CHIME);
         }
 
         if (this->dyna.actor.params < 0) {
-            Audio_PlaySfxGeneral(NA_SE_SY_TRE_BOX_APPEAR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_CENTERED(NA_SE_SY_TRE_BOX_APPEAR);
         }
 
         Actor_Kill(&this->dyna.actor);

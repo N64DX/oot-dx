@@ -7,6 +7,7 @@
 #include "z_en_bb.h"
 
 #include "libc64/qrand.h"
+#include "array_count.h"
 #include "attributes.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
@@ -22,7 +23,7 @@
 #include "player.h"
 #include "save.h"
 
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/eff_fire.h"
 #include "assets/objects/object_Bb/object_Bb.h"
 
 #define FLAGS                                                                                 \
@@ -226,12 +227,12 @@ ActorProfile En_Bb_Profile = {
     /**/ EnBb_Draw,
 };
 
-static ColliderJntSphElementInit sJntSphElementsInit[1] = {
+static ColliderJntSphElementInit sJntSphElementsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_ON,
             OCELEM_ON,
@@ -249,7 +250,7 @@ static ColliderJntSphInit sJntSphInit = {
         OC2_TYPE_1,
         COLSHAPE_JNTSPH,
     },
-    1,
+    ARRAY_COUNT(sJntSphElementsInit),
     sJntSphElementsInit,
 };
 
@@ -370,7 +371,7 @@ void EnBb_Init(Actor* thisx, PlayState* play) {
                 thisx->naviEnemyId = NAVI_ENEMY_RED_BUBBLE;
                 thisx->colChkInfo.damageTable = &sDamageTableRed;
                 this->flameEnvColor.r = 255;
-                this->collider.elements[0].base.atDmgInfo.effect = 1;
+                this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_FIRE;
                 EnBb_SetupRed(play, this);
                 break;
             case ENBB_WHITE:
@@ -509,7 +510,8 @@ void EnBb_Death(EnBb* this, PlayState* play) {
         if (!BodyBreak_SpawnParts(&this->actor, &this->bodyBreak, play, enpartType)) {
             return;
         }
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xD0);
+        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                                   COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_13, false));
     } else {
         if (this->flamePrimAlpha) {
             if (this->flamePrimAlpha <= 20) {

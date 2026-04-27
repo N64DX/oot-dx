@@ -118,8 +118,8 @@ static ColliderCylinderInit sCylinderInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xFFCFFFFF, 0x08, 0x08 },
-        { 0xFFCFFFFF, 0x00, 0x00 },
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_8, 0x08 },
+        { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_ON | ATELEM_SFX_NORMAL,
         ACELEM_ON | ACELEM_HOOKABLE,
         OCELEM_ON,
@@ -152,7 +152,7 @@ void EnReeba_Init(Actor* thisx, PlayState* play) {
         PRINTF(VT_FGCOL(YELLOW) T("☆☆☆☆☆ リーバぼす登場 ☆☆☆☆☆ %f\n", "☆☆☆☆☆ Reeba boss appears ☆☆☆☆☆ %f\n") VT_RST,
                this->scale);
         this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(20, MONSTER_HP);
-        this->collider.elem.atDmgInfo.effect = 4;
+        this->collider.elem.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_KNOCKBACK;
         this->collider.elem.atDmgInfo.damage = 16;
         Actor_ChangeCategory(play, &play->actorCtx, &this->actor, ACTORCAT_ENEMY);
     }
@@ -510,9 +510,11 @@ void EnReeba_Die(EnReeba* this, PlayState* play) {
             EffectSsDeadDb_Spawn(play, &pos, &velocity, &accel, 120, 0, 255, 255, 255, 255, 255, 0, 0, 1, 9, true);
 
             if (this->type == LEEVER_TYPE_SMALL) {
-                Item_DropCollectibleRandom(play, &this->actor, &pos, 0xE0);
+                Item_DropCollectibleRandom(play, &this->actor, &pos,
+                                           COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_14, false));
             } else {
-                Item_DropCollectibleRandom(play, &this->actor, &pos, 0xC0);
+                Item_DropCollectibleRandom(play, &this->actor, &pos,
+                                           COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_12, false));
             }
 
             if (this->actor.parent != NULL) {

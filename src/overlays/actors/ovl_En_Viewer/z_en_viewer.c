@@ -26,13 +26,15 @@
 #include "skin.h"
 
 #include "assets/objects/object_zl4/object_zl4.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/eff_fire.h"
 #include "assets/objects/object_horse_zelda/object_horse_zelda.h"
 #include "assets/objects/object_horse_ganon/object_horse_ganon.h"
 #include "assets/objects/object_im/object_im.h"
 #include "assets/objects/object_gndd/object_gndd.h"
 #include "assets/objects/object_ganon/object_ganon.h"
 #include "assets/objects/object_opening_demo1/object_opening_demo1.h"
+
+#pragma increment_block_number "ntsc-1.0:128"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -214,7 +216,7 @@ static s16 sTimer = 0;
 void EnViewer_UpdateImpl(EnViewer* this, PlayState* play) {
     u8 type = PARAMS_GET_NOMASK(this->actor.params, 8);
     u16 csCurFrame;
-    s32 animationEnded;
+    s32 animFinished;
 
     if (type == ENVIEWER_TYPE_2_ZELDA) {
         if (gSaveContext.sceneLayer == 5) {
@@ -244,8 +246,7 @@ void EnViewer_UpdateImpl(EnViewer* this, PlayState* play) {
                 case 380:
                 case 409:
                 case 438:
-                    Audio_PlaySfxGeneral(NA_SE_SY_DEMO_CUT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    SFX_PLAY_CENTERED(NA_SE_SY_DEMO_CUT);
                     break;
             }
         }
@@ -262,8 +263,7 @@ void EnViewer_UpdateImpl(EnViewer* this, PlayState* play) {
             SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_FANFARE, 0, 0, NA_BGM_OPENING_GANON);
         }
         if (play->csCtx.curFrame == 960) {
-            Audio_PlaySfxGeneral(NA_SE_EV_HORSE_GROAN, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EV_HORSE_GROAN);
         }
     } else if (type == ENVIEWER_TYPE_6_HORSE_GANONDORF) {
         if (gSaveContext.sceneLayer == 5 || gSaveContext.sceneLayer == 10) {
@@ -295,7 +295,7 @@ void EnViewer_UpdateImpl(EnViewer* this, PlayState* play) {
     EnViewer_UpdatePosition(this, play);
     Actor_MoveXZGravity(&this->actor); // has no effect, speed/velocity and gravity are 0
 
-    animationEnded = SkelAnime_Update(&this->skin.skelAnime);
+    animFinished = SkelAnime_Update(&this->skin.skelAnime);
     if (type == ENVIEWER_TYPE_3_GANONDORF || type == ENVIEWER_TYPE_4_HORSE_GANONDORF) {
         if (play->csCtx.state != CS_STATE_IDLE && play->csCtx.actorCues[1] != NULL) {
             if (play->csCtx.actorCues[1]->id == 2 && sTimer == 0) {
@@ -325,7 +325,7 @@ void EnViewer_UpdateImpl(EnViewer* this, PlayState* play) {
                         }
                         break;
                     case 1:
-                        if (animationEnded) {
+                        if (animFinished) {
                             Animation_MorphToLoop(&this->skin.skelAnime, &gYoungGanondorfHorsebackLookSidewaysLoopAnim,
                                                   -5.0f);
                             this->state++;
@@ -339,7 +339,7 @@ void EnViewer_UpdateImpl(EnViewer* this, PlayState* play) {
                         }
                         break;
                     case 3:
-                        if (animationEnded) {
+                        if (animFinished) {
                             Animation_MorphToLoop(&this->skin.skelAnime, &gYoungGanondorfHorsebackMagicChargeUpLoopAnim,
                                                   -5.0f);
                             this->state++;
@@ -440,7 +440,7 @@ void EnViewer_UpdateImpl(EnViewer* this, PlayState* play) {
                     }
                     break;
                 case 2:
-                    if (animationEnded) {
+                    if (animFinished) {
                         Animation_MorphToLoop(&this->skin.skelAnime, &object_opening_demo1_Anim_0048FC, -5.0f);
                         this->state++;
                     }
@@ -454,14 +454,13 @@ void EnViewer_UpdateImpl(EnViewer* this, PlayState* play) {
             case 0:
                 if ((play->csCtx.state != CS_STATE_IDLE) && (play->csCtx.actorCues[1] != NULL) &&
                     (play->csCtx.actorCues[1]->id == 7)) {
-                    Audio_PlaySfxGeneral(NA_SE_EN_GANON_LAUGH, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    SFX_PLAY_CENTERED(NA_SE_EN_GANON_LAUGH);
                     Animation_MorphToPlayOnce(&this->skin.skelAnime, &gYoungGanondorfLaughStartAnim, -5.0f);
                     this->state++;
                 }
                 break;
             case 1:
-                if (animationEnded) {
+                if (animFinished) {
                     Animation_MorphToLoop(&this->skin.skelAnime, &gYoungGanondorfLaughLoopAnim, -5.0f);
                     this->state++;
                 }
@@ -484,7 +483,7 @@ void EnViewer_UpdateImpl(EnViewer* this, PlayState* play) {
                 }
                 break;
             case 2:
-                if (animationEnded) {
+                if (animFinished) {
                     Animation_MorphToLoop(&this->skin.skelAnime, &gYoungGanondorfKneelLoopAnim, -5.0f);
                     this->state++;
                 }
@@ -748,8 +747,7 @@ void EnViewer_UpdatePosition(EnViewer* this, PlayState* play) {
             if (type == ENVIEWER_TYPE_0_HORSE_ZELDA) {
                 if (!sHorseSfxPlayed) {
                     sHorseSfxPlayed = true;
-                    Audio_PlaySfxGeneral(NA_SE_EV_HORSE_NEIGH, &this->actor.projectedPos, 4,
-                                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EV_HORSE_NEIGH);
                 }
                 Actor_PlaySfx(&this->actor, NA_SE_EV_HORSE_RUN_LEVEL - SFX_FLAG);
             }
@@ -798,8 +796,7 @@ void EnViewer_UpdatePosition(EnViewer* this, PlayState* play) {
             }
         }
         if (type == ENVIEWER_TYPE_5_GANONDORF) {
-            Audio_PlaySfxGeneral(NA_SE_EV_BURNING - SFX_FLAG, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_CENTERED(NA_SE_EV_BURNING - SFX_FLAG);
             EnViewer_DrawFireEffects(this, play);
         }
     }

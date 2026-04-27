@@ -49,6 +49,7 @@
 #include "assets/objects/object_gi_bottle_letter/object_gi_bottle_letter.h"
 #include "assets/objects/object_gi_ocarina_0/object_gi_ocarina_0.h"
 #include "assets/objects/object_gi_boots_2/object_gi_boots_2.h"
+#include "assets/objects/object_gi_boots_2/object_gi_boots_2_extra.h"
 #include "assets/objects/object_gi_seed/object_gi_seed.h"
 #include "assets/objects/object_gi_gloves/object_gi_gloves.h"
 #include "assets/objects/object_gi_coin/object_gi_coin.h"

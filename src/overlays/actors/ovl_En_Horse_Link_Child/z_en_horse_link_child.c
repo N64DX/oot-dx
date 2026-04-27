@@ -64,8 +64,8 @@ static ColliderCylinderInitType1 sCylinderInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0x00000000, 0x00, 0x00 },
-        { 0x00000000, 0x00, 0x00 },
+        { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+        { 0x00000000, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_NONE,
         ACELEM_NONE,
         OCELEM_ON,
@@ -73,12 +73,12 @@ static ColliderCylinderInitType1 sCylinderInit = {
     { 20, 100, 0, { 0, 0, 0 } },
 };
 
-static ColliderJntSphElementInit sJntSphElementsInit[1] = {
+static ColliderJntSphElementInit sJntSphElementsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0x00000000, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0x00000000, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_NONE,
             OCELEM_ON,
@@ -96,7 +96,7 @@ static ColliderJntSphInit sJntSphInit = {
         OC2_TYPE_1 | OC2_UNK1,
         COLSHAPE_JNTSPH,
     },
-    1,
+    ARRAY_COUNT(sJntSphElementsInit),
     sJntSphElementsInit,
 };
 
@@ -107,8 +107,7 @@ void func_80A693D0(EnHorseLinkChild* this) {
 
     if ((this->skin.skelAnime.curFrame > D_80A6AF5C[this->unk_1F0]) &&
         !((this->unk_1F0 == 0) && (this->skin.skelAnime.curFrame > D_80A6AF5C[1]))) {
-        Audio_PlaySfxGeneral(NA_SE_EV_KID_HORSE_WALK, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EV_KID_HORSE_WALK);
         this->unk_1F0++;
         if (this->unk_1F0 >= ARRAY_COUNT(D_80A6AF5C)) {
             this->unk_1F0 = 0;
@@ -121,15 +120,12 @@ void func_80A6948C(EnHorseLinkChild* this) {
         func_80A693D0(this);
     } else if (this->skin.skelAnime.curFrame == 0.0f) {
         if ((this->animationIdx == 3) || (this->animationIdx == 4)) {
-            Audio_PlaySfxGeneral(NA_SE_EV_KID_HORSE_RUN, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                                 &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+            SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EV_KID_HORSE_RUN);
         } else if (this->animationIdx == 1) {
             if (Rand_ZeroOne() > 0.5f) {
-                Audio_PlaySfxGeneral(NA_SE_EV_KID_HORSE_GROAN, &this->actor.projectedPos, 4,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EV_KID_HORSE_GROAN);
             } else {
-                Audio_PlaySfxGeneral(NA_SE_EV_KID_HORSE_NEIGH, &this->actor.projectedPos, 4,
-                                     &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EV_KID_HORSE_NEIGH);
             }
         }
     }
@@ -360,7 +356,7 @@ void func_80A69F5C(EnHorseLinkChild* this, PlayState* play) {
 void func_80A6A068(EnHorseLinkChild* this, PlayState* play) {
     Player* player;
     f32 distFromLink;
-    s32 animationEnded;
+    s32 animFinished;
     s32 newAnimationIdx;
 
     func_80A69F5C(this, play);
@@ -368,22 +364,21 @@ void func_80A6A068(EnHorseLinkChild* this, PlayState* play) {
     distFromLink = Actor_WorldDistXZToActor(&this->actor, &player->actor);
 
     if (gSaveContext.save.entranceIndex == ENTR_LON_LON_RANCH_1) {
-        Audio_PlaySfxGeneral(NA_SE_EV_KID_HORSE_NEIGH, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EV_KID_HORSE_NEIGH);
         func_80A6A724(this);
         return;
     }
 
     if ((GET_EVENTCHKINF(EVENTCHKINF_CAN_LEARN_EPONAS_SONG) && R_EPONAS_SONG_PLAYED) ||
-        ((play->sceneId == SCENE_LON_LON_RANCH) && (gSaveContext.save.cutsceneIndex == 0xFFF1))) {
+        ((play->sceneId == SCENE_LON_LON_RANCH) && (gSaveContext.save.cutsceneIndex == CS_INDEX_1))) {
         func_80A6A4DC(this);
     } else {
         this->unk_2A0 = GET_EVENTCHKINF(EVENTCHKINF_CAN_LEARN_EPONAS_SONG);
     }
 
     newAnimationIdx = this->animationIdx;
-    animationEnded = SkelAnime_Update(&this->skin.skelAnime);
-    if (animationEnded || (this->animationIdx == 1) || (this->animationIdx == 0)) {
+    animFinished = SkelAnime_Update(&this->skin.skelAnime);
+    if (animFinished || (this->animationIdx == 1) || (this->animationIdx == 0)) {
         if (GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_CHILD_MALON_AT_RANCH)) {
             f32 distFromHome = Math3D_Vec3f_DistXYZ(&this->actor.world.pos, &this->actor.home.pos);
             f32 distLinkFromHome = Math3D_Vec3f_DistXYZ(&player->actor.world.pos, &this->actor.home.pos);
@@ -402,9 +397,9 @@ void func_80A6A068(EnHorseLinkChild* this, PlayState* play) {
                 } else {
                     this->actor.speed = 0.0f;
                     if (this->animationIdx == 0) {
-                        newAnimationIdx = animationEnded == true ? 1 : 0;
+                        newAnimationIdx = animFinished == true ? 1 : 0;
                     } else {
-                        newAnimationIdx = animationEnded == true ? 0 : 1;
+                        newAnimationIdx = animFinished == true ? 0 : 1;
                     }
                 }
             } else {
@@ -421,23 +416,23 @@ void func_80A6A068(EnHorseLinkChild* this, PlayState* play) {
                 } else {
                     this->actor.speed = 0.0f;
                     if (this->animationIdx == 0) {
-                        newAnimationIdx = animationEnded == true ? 1 : 0;
+                        newAnimationIdx = animFinished == true ? 1 : 0;
                     } else {
-                        newAnimationIdx = animationEnded == true ? 0 : 1;
+                        newAnimationIdx = animFinished == true ? 0 : 1;
                     }
                 }
             }
         } else {
             this->actor.speed = 0.0f;
             if (this->animationIdx == 0) {
-                newAnimationIdx = animationEnded == true ? 1 : 0;
+                newAnimationIdx = animFinished == true ? 1 : 0;
             } else {
-                newAnimationIdx = animationEnded == true ? 0 : 1;
+                newAnimationIdx = animFinished == true ? 0 : 1;
             }
         }
     }
 
-    if ((this->animationIdx != newAnimationIdx) || (animationEnded == true)) {
+    if ((this->animationIdx != newAnimationIdx) || (animFinished == true)) {
         this->animationIdx = newAnimationIdx;
         Animation_Change(&this->skin.skelAnime, sAnimations[this->animationIdx], func_80A695A4(this), 0.0f,
                          Animation_GetLastFrame(sAnimations[this->animationIdx]), ANIMMODE_ONCE, -5.0f);
@@ -461,8 +456,7 @@ void func_80A6A5A4(EnHorseLinkChild* this, PlayState* play) {
 
     if (R_EPONAS_SONG_PLAYED) {
         R_EPONAS_SONG_PLAYED = false;
-        Audio_PlaySfxGeneral(NA_SE_EV_KID_HORSE_NEIGH, &this->actor.projectedPos, 4, &gSfxDefaultFreqAndVolScale,
-                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        SFX_PLAY_AT_POS(&this->actor.projectedPos, NA_SE_EV_KID_HORSE_NEIGH);
         func_80A6A724(this);
     } else {
         this->actor.speed = 0.0f;

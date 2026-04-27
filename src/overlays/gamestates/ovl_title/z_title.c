@@ -31,6 +31,7 @@
 #include "save.h"
 
 #include "assets/textures/nintendo_rogo_static/nintendo_rogo_static.h"
+#include "assets/textures/nintendo_rogo_static/nintendo_rogo_static_extra.h"
 
 void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
 #if OOT_VERSION == NTSC_1_0
@@ -367,7 +368,7 @@ void ConsoleLogo_Destroy(GameState* thisx) {
 #if PLATFORM_N64
     if (this->unk_1E0) {
         if (func_801C7818() != 0) {
-            func_800D31A0();
+            Freeze_CurrentThread();
         }
         func_801C7268();
     }
@@ -385,7 +386,7 @@ void ConsoleLogo_Init(GameState* thisx) {
 #if PLATFORM_N64
     if ((D_80121210 != 0) && (D_80121211 != 0) && (D_80121212 == 0)) {
         if (func_801C7658() != 0) {
-            func_800D31A0();
+            Freeze_CurrentThread();
         }
         this->unk_1E0 = true;
     } else {

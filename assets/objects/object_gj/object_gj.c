@@ -7,8 +7,8 @@
 #include "sys_matrix.h"
 #include "ultra64.h"
 
-Vtx gGanonsCastleRubbleAroundArenaDL_06000000_Vtx_fused_[] = {
-#include "assets/objects/object_gj/gGanonsCastleRubbleAroundArenaDL_06000000_Vtx_fused_.inc.c"
+Vtx gGanonsCastleRubbleAroundArenaVtx[] = {
+#include "assets/objects/object_gj/gGanonsCastleRubbleAroundArenaVtx.inc.c"
 };
 
 Gfx gGanonsCastleRubbleAroundArenaDL[148] = {
@@ -35,8 +35,8 @@ CollisionHeader gGanonsCastleRubbleAroundArenaCol = {
 #include "assets/objects/object_gj/gGanonsCastleRubbleAroundArenaCol.inc.c"
 };
 
-Vtx gGanonsCastleRubble2DL_06001BA0_Vtx_fused_[] = {
-#include "assets/objects/object_gj/gGanonsCastleRubble2DL_06001BA0_Vtx_fused_.inc.c"
+Vtx gGanonsCastleRubble2Vtx[] = {
+#include "assets/objects/object_gj/gGanonsCastleRubble2Vtx.inc.c"
 };
 
 Gfx gGanonsCastleRubble2DL[41] = {
@@ -63,8 +63,8 @@ CollisionHeader gGanonsCastleRubble2Col = {
 #include "assets/objects/object_gj/gGanonsCastleRubble2Col.inc.c"
 };
 
-Vtx gGanonsCastleRubble3DL_06001FA0_Vtx_fused_[] = {
-#include "assets/objects/object_gj/gGanonsCastleRubble3DL_06001FA0_Vtx_fused_.inc.c"
+Vtx gGanonsCastleRubble3Vtx[] = {
+#include "assets/objects/object_gj/gGanonsCastleRubble3Vtx.inc.c"
 };
 
 Gfx gGanonsCastleRubble3DL[53] = {
@@ -91,8 +91,8 @@ CollisionHeader gGanonsCastleRubble3Col = {
 #include "assets/objects/object_gj/gGanonsCastleRubble3Col.inc.c"
 };
 
-Vtx gGanonsCastleRubble4DL_06002480_Vtx_fused_[] = {
-#include "assets/objects/object_gj/gGanonsCastleRubble4DL_06002480_Vtx_fused_.inc.c"
+Vtx gGanonsCastleRubble4Vtx[] = {
+#include "assets/objects/object_gj/gGanonsCastleRubble4Vtx.inc.c"
 };
 
 Gfx gGanonsCastleRubble4DL[41] = {
@@ -119,8 +119,8 @@ CollisionHeader gGanonsCastleRubble4Col = {
 #include "assets/objects/object_gj/gGanonsCastleRubble4Col.inc.c"
 };
 
-Vtx gGanonsCastleRubble5DL_06002880_Vtx_fused_[] = {
-#include "assets/objects/object_gj/gGanonsCastleRubble5DL_06002880_Vtx_fused_.inc.c"
+Vtx gGanonsCastleRubble5Vtx[] = {
+#include "assets/objects/object_gj/gGanonsCastleRubble5Vtx.inc.c"
 };
 
 Gfx gGanonsCastleRubble5DL[53] = {
@@ -147,8 +147,8 @@ CollisionHeader gGanonsCastleRubble5Col = {
 #include "assets/objects/object_gj/gGanonsCastleRubble5Col.inc.c"
 };
 
-Vtx gGanonsCastleRubble6DL_06002D60_Vtx[] = {
-#include "assets/objects/object_gj/gGanonsCastleRubble6DL_06002D60_Vtx.inc.c"
+Vtx gGanonsCastleRubble6Vtx[] = {
+#include "assets/objects/object_gj/gGanonsCastleRubble6Vtx.inc.c"
 };
 
 Gfx gGanonsCastleRubble6DL[21] = {
@@ -175,8 +175,8 @@ CollisionHeader gGanonsCastleRubble6Col = {
 #include "assets/objects/object_gj/gGanonsCastleRubble6Col.inc.c"
 };
 
-Vtx gGanonsCastleRubble7DL_06003010_Vtx_fused_[] = {
-#include "assets/objects/object_gj/gGanonsCastleRubble7DL_06003010_Vtx_fused_.inc.c"
+Vtx gGanonsCastleRubble7Vtx[] = {
+#include "assets/objects/object_gj/gGanonsCastleRubble7Vtx.inc.c"
 };
 
 Gfx gGanonsCastleRubble7DL[41] = {
@@ -203,8 +203,8 @@ CollisionHeader gGanonsCastleRubble7Col = {
 #include "assets/objects/object_gj/gGanonsCastleRubble7Col.inc.c"
 };
 
-Vtx gGanonsCastleRubbleTallDL_06003410_Vtx_fused_[] = {
-#include "assets/objects/object_gj/gGanonsCastleRubbleTallDL_06003410_Vtx_fused_.inc.c"
+Vtx gGanonsCastleRubbleTallVtx[] = {
+#include "assets/objects/object_gj/gGanonsCastleRubbleTallVtx.inc.c"
 };
 
 Gfx gGanonsCastleRubbleTallDL[57] = {
@@ -231,42 +231,42 @@ CollisionHeader gGanonsCastleRubbleTallCol = {
 #include "assets/objects/object_gj/gGanonsCastleRubbleTallCol.inc.c"
 };
 
-u64 gGanonsCastleRubbleAroundArenaDL_00003B20_Tex[TEX_LEN(u64, gGanonsCastleRubbleAroundArenaDL_00003B20_Tex_WIDTH, gGanonsCastleRubbleAroundArenaDL_00003B20_Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_gj/gGanonsCastleRubbleAroundArenaDL_00003B20_Tex.ia8.inc.c"
+u64 object_gj_003B20_Tex[TEX_LEN(u64, object_gj_003B20_Tex_WIDTH, object_gj_003B20_Tex_HEIGHT, 8)] = {
+#include "assets/objects/object_gj/object_gj_003B20_Tex.ia8.inc.c"
 };
 
-u64 gGanonsCastleRubbleAroundArenaDL_00003C20_Tex[TEX_LEN(u64, gGanonsCastleRubbleAroundArenaDL_00003C20_Tex_WIDTH, gGanonsCastleRubbleAroundArenaDL_00003C20_Tex_HEIGHT, 4)] = {
-#include "assets/objects/object_gj/gGanonsCastleRubbleAroundArenaDL_00003C20_Tex.i4.inc.c"
+u64 object_gj_003C20_Tex[TEX_LEN(u64, object_gj_003C20_Tex_WIDTH, object_gj_003C20_Tex_HEIGHT, 4)] = {
+#include "assets/objects/object_gj/object_gj_003C20_Tex.i4.inc.c"
 };
 
-u64 gGanonsCastleRubbleAroundArenaDL_00003D20_Tex[TEX_LEN(u64, gGanonsCastleRubbleAroundArenaDL_00003D20_Tex_WIDTH, gGanonsCastleRubbleAroundArenaDL_00003D20_Tex_HEIGHT, 16)] = {
-#include "assets/objects/object_gj/gGanonsCastleRubbleAroundArenaDL_00003D20_Tex.rgba16.inc.c"
+u64 object_gj_003D20_Tex[TEX_LEN(u64, object_gj_003D20_Tex_WIDTH, object_gj_003D20_Tex_HEIGHT, 16)] = {
+#include "assets/objects/object_gj/object_gj_003D20_Tex.rgba16.inc.c"
 };
 
-u64 gGanonsCastleRubbleAroundArenaDL_00003F20_Tex[TEX_LEN(u64, gGanonsCastleRubbleAroundArenaDL_00003F20_Tex_WIDTH, gGanonsCastleRubbleAroundArenaDL_00003F20_Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_gj/gGanonsCastleRubbleAroundArenaDL_00003F20_Tex.i8.inc.c"
+u64 object_gj_003F20_Tex[TEX_LEN(u64, object_gj_003F20_Tex_WIDTH, object_gj_003F20_Tex_HEIGHT, 8)] = {
+#include "assets/objects/object_gj/object_gj_003F20_Tex.i8.inc.c"
 };
 
-u64 gGanonsCastleRubbleAroundArenaDL_00004F20_Tex[TEX_LEN(u64, gGanonsCastleRubbleAroundArenaDL_00004F20_Tex_WIDTH, gGanonsCastleRubbleAroundArenaDL_00004F20_Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_gj/gGanonsCastleRubbleAroundArenaDL_00004F20_Tex.i8.inc.c"
+u64 object_gj_004F20_Tex[TEX_LEN(u64, object_gj_004F20_Tex_WIDTH, object_gj_004F20_Tex_HEIGHT, 8)] = {
+#include "assets/objects/object_gj/object_gj_004F20_Tex.i8.inc.c"
 };
 
-u64 gGanonsCastleRubbleAroundArenaDL_00005F20_Tex[TEX_LEN(u64, gGanonsCastleRubbleAroundArenaDL_00005F20_Tex_WIDTH, gGanonsCastleRubbleAroundArenaDL_00005F20_Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_gj/gGanonsCastleRubbleAroundArenaDL_00005F20_Tex.i8.inc.c"
+u64 object_gj_005F20_Tex[TEX_LEN(u64, object_gj_005F20_Tex_WIDTH, object_gj_005F20_Tex_HEIGHT, 8)] = {
+#include "assets/objects/object_gj/object_gj_005F20_Tex.i8.inc.c"
 };
 
-u64 gGanonsCastleRubble2DL_00006F20_Tex[TEX_LEN(u64, gGanonsCastleRubble2DL_00006F20_Tex_WIDTH, gGanonsCastleRubble2DL_00006F20_Tex_HEIGHT, 4)] = {
-#include "assets/objects/object_gj/gGanonsCastleRubble2DL_00006F20_Tex.i4.inc.c"
+u64 object_gj_006F20_Tex[TEX_LEN(u64, object_gj_006F20_Tex_WIDTH, object_gj_006F20_Tex_HEIGHT, 4)] = {
+#include "assets/objects/object_gj/object_gj_006F20_Tex.i4.inc.c"
 };
 
-u64 gGanonsCastleRubble2DL_00007320_Tex[TEX_LEN(u64, gGanonsCastleRubble2DL_00007320_Tex_WIDTH, gGanonsCastleRubble2DL_00007320_Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_gj/gGanonsCastleRubble2DL_00007320_Tex.i8.inc.c"
+u64 object_gj_007320_Tex[TEX_LEN(u64, object_gj_007320_Tex_WIDTH, object_gj_007320_Tex_HEIGHT, 8)] = {
+#include "assets/objects/object_gj/object_gj_007320_Tex.i8.inc.c"
 };
 
-u64 gGanonsCastleRubble3DL_00007720_Tex[TEX_LEN(u64, gGanonsCastleRubble3DL_00007720_Tex_WIDTH, gGanonsCastleRubble3DL_00007720_Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_gj/gGanonsCastleRubble3DL_00007720_Tex.ia8.inc.c"
+u64 object_gj_007720_Tex[TEX_LEN(u64, object_gj_007720_Tex_WIDTH, object_gj_007720_Tex_HEIGHT, 8)] = {
+#include "assets/objects/object_gj/object_gj_007720_Tex.ia8.inc.c"
 };
 
-u64 gGanonsCastleRubble3DL_00007B20_Tex[TEX_LEN(u64, gGanonsCastleRubble3DL_00007B20_Tex_WIDTH, gGanonsCastleRubble3DL_00007B20_Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_gj/gGanonsCastleRubble3DL_00007B20_Tex.i8.inc.c"
+u64 object_gj_007B20_Tex[TEX_LEN(u64, object_gj_007B20_Tex_WIDTH, object_gj_007B20_Tex_HEIGHT, 8)] = {
+#include "assets/objects/object_gj/object_gj_007B20_Tex.i8.inc.c"
 };

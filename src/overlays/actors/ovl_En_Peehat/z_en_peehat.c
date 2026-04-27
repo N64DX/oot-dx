@@ -3,6 +3,7 @@
 #include "overlays/effects/ovl_Effect_Ss_Hahen/z_eff_ss_hahen.h"
 
 #include "libc64/qrand.h"
+#include "array_count.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "ichain.h"
@@ -81,8 +82,8 @@ static ColliderCylinderInit sCylinderInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0x00000000, 0x00, 0x00 },
-        { 0xFFCFFFFF, 0x00, 0x00 },
+        { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+        { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_NONE,
         ACELEM_ON | ACELEM_HOOKABLE,
         OCELEM_ON,
@@ -90,12 +91,12 @@ static ColliderCylinderInit sCylinderInit = {
     { 50, 160, -70, { 0, 0, 0 } },
 };
 
-static ColliderJntSphElementInit sJntSphElementsInit[1] = {
+static ColliderJntSphElementInit sJntSphElementsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
+            { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+            { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
             ATELEM_NONE,
             ACELEM_ON,
             OCELEM_ON,
@@ -113,7 +114,7 @@ static ColliderJntSphInit sJntSphInit = {
         OC2_TYPE_1,
         COLSHAPE_JNTSPH,
     },
-    1,
+    ARRAY_COUNT(sJntSphElementsInit),
     sJntSphElementsInit,
 };
 
@@ -128,8 +129,8 @@ static ColliderQuadInit sQuadInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xFFCFFFFF, 0x00, 0x10 },
-        { 0xFFCFFFFF, 0x00, 0x00 },
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+        { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_ON | ATELEM_SFX_NORMAL,
         ACELEM_ON,
         OCELEM_NONE,
@@ -313,10 +314,13 @@ void EnPeehat_HitWhenGrounded(EnPeehat* this, PlayState* play) {
 
         itemDropPos.y += 70.0f;
         if (!this->hitByLightArrow) {
-            Item_DropCollectibleRandom(play, &this->actor, &itemDropPos, 0x40);
-            Item_DropCollectibleRandom(play, &this->actor, &itemDropPos, 0x40);
+            Item_DropCollectibleRandom(play, &this->actor, &itemDropPos,
+                                       COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_4, false));
+            Item_DropCollectibleRandom(play, &this->actor, &itemDropPos,
+                                       COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_4, false));
         }
-        Item_DropCollectibleRandom(play, &this->actor, &itemDropPos, 0x40);
+        Item_DropCollectibleRandom(play, &this->actor, &itemDropPos,
+                                   COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_4, false));
         this->unk_2D4 = 240;
     } else {
         s32 i;
@@ -619,7 +623,8 @@ void EnPeehat_Larva_StateSeekPlayer(EnPeehat* this, PlayState* play) {
             if (!(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) {
                 EffectSsDeadSound_SpawnStationary(play, &this->actor.projectedPos, NA_SE_EN_PIHAT_SM_DEAD, 1, 1, 40);
             }
-            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x20);
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                                       COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_2, false));
             Actor_Kill(&this->actor);
         }
     }
@@ -901,10 +906,13 @@ void EnPeehat_StateExplode(EnPeehat* this, PlayState* play) {
     this->animTimer--;
     if (this->animTimer == 0) {
         if (!this->hitByLightArrow) {
-            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
-            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                                       COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_4, false));
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                                       COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_4, false));
         }
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
+        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
+                                   COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_4, false));
         Actor_Kill(&this->actor);
     }
 }

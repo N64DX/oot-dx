@@ -52,19 +52,19 @@ u64 gPauseToPlayMelodyJPNTex[TEX_LEN(u64, gPauseToPlayMelodyJPNTex_WIDTH, gPause
 #include "assets/textures/icon_item_jpn_static/gPauseToPlayMelodyJPNTex.ia8.inc.c"
 };
 
-u64 gPauseToSelectItemJPNTex[TEX_LEN(u64, gPauseToSelectItemJPNTex_WIDTH, gPauseToSelectItemJPNTex_HEIGHT, 8)] = {
+u64 gPauseToSelectItemJPNTex[TEX_LEN(u64, TO_PAGE_LABEL_TEX_WIDTH, TO_PAGE_LABEL_TEX_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_jpn_static/gPauseToSelectItemJPNTex.ia8.inc.c"
 };
 
-u64 gPauseToMapJPNTex[TEX_LEN(u64, gPauseToMapJPNTex_WIDTH, gPauseToMapJPNTex_HEIGHT, 8)] = {
+u64 gPauseToMapJPNTex[TEX_LEN(u64, TO_PAGE_LABEL_TEX_WIDTH, TO_PAGE_LABEL_TEX_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_jpn_static/gPauseToMapJPNTex.ia8.inc.c"
 };
 
-u64 gPauseToQuestStatusJPNTex[TEX_LEN(u64, gPauseToQuestStatusJPNTex_WIDTH, gPauseToQuestStatusJPNTex_HEIGHT, 8)] = {
+u64 gPauseToQuestStatusJPNTex[TEX_LEN(u64, TO_PAGE_LABEL_TEX_WIDTH, TO_PAGE_LABEL_TEX_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_jpn_static/gPauseToQuestStatusJPNTex.ia8.inc.c"
 };
 
-u64 gPauseToEquipmentJPNTex[TEX_LEN(u64, gPauseToEquipmentJPNTex_WIDTH, gPauseToEquipmentJPNTex_HEIGHT, 8)] = {
+u64 gPauseToEquipmentJPNTex[TEX_LEN(u64, TO_PAGE_LABEL_TEX_WIDTH, TO_PAGE_LABEL_TEX_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_jpn_static/gPauseToEquipmentJPNTex.ia8.inc.c"
 };
 
@@ -72,8 +72,7 @@ u64 gPauseSavePromptJPNTex[TEX_LEN(u64, gPauseSavePromptJPNTex_WIDTH, gPauseSave
 #include "assets/textures/icon_item_jpn_static/gPauseSavePromptJPNTex.ia8.inc.c"
 };
 
-u64 gPauseSaveConfirmationJPNTex[TEX_LEN(u64, gPauseSaveConfirmationJPNTex_WIDTH, gPauseSaveConfirmationJPNTex_HEIGHT,
-                                         8)] = {
+u64 gPauseSaveConfirmationJPNTex[TEX_LEN(u64, gPauseSaveConfirmationJPNTex_WIDTH, gPauseSaveConfirmationJPNTex_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_jpn_static/gPauseSaveConfirmationJPNTex.ia8.inc.c"
 };
 
@@ -85,8 +84,7 @@ u64 gPauseNoJPNTex[TEX_LEN(u64, gPauseNoJPNTex_WIDTH, gPauseNoJPNTex_HEIGHT, 8)]
 #include "assets/textures/icon_item_jpn_static/gPauseNoJPNTex.ia8.inc.c"
 };
 
-u64 gPauseCurrentPositionJPNTex[TEX_LEN(u64, gPauseCurrentPositionJPNTex_WIDTH, gPauseCurrentPositionJPNTex_HEIGHT,
-                                        4)] = {
+u64 gPauseCurrentPositionJPNTex[TEX_LEN(u64, gPauseCurrentPositionJPNTex_WIDTH, gPauseCurrentPositionJPNTex_HEIGHT, 4)] = {
 #include "assets/textures/icon_item_jpn_static/gPauseCurrentPositionJPNTex.i4.inc.c"
 };
 
