@@ -1,8 +1,6 @@
     gsDPPipeSync(),
     gsSPClearGeometryMode(G_FOG | G_LIGHTING),
-   
- gsSPVertex(&shop1_room_0_030000A0_RoomShapeImageSingle_030000C0_RoomShapeDListsEntry_03003F18_DL_03002F60_DL_03002860_Vtx_fused_[24],
- 8, 0),
+    gsSPVertex(&gShop1DL_003F98_03003F18_DL_03002F60_DL_030000D0_Vtx_fused_[673], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
@@ -13,10 +11,6 @@
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
     gsDPSetPrimColor(0, 0, 0, 0, 0, 0),
-   
- gsSPVertex(&shop1_room_0_030000A0_RoomShapeImageSingle_030000C0_RoomShapeDListsEntry_03003F18_DL_03002F60_DL_030000D0_Vtx_fused_[28],
- 12, 0),
+    gsSPVertex(&gShop1DL_003F98_03003F18_DL_03002F60_DL_030000D0_Vtx_fused_[70], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
     gsSPEndDisplayList(),

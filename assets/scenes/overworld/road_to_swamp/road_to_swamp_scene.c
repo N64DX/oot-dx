@@ -883,7 +883,7 @@ TransitionActorEntry road_to_swamp_sceneTransitionActorList_timeskip[] = {
 };
 
 u64 road_to_swamp_sceneTex_002730[] = {
-#include "build/pal-1.0/assets/scenes/overworld/spot00/spot00_room_0_03000520_RoomShapeCullable_0300052C_CullableEntries_03014E28_DL_00020838_Tex.rgba16.inc.c"
+#include "build/pal-1.0/assets/scenes/overworld/spot00/spot00_scene_00020838_Tex.rgba16.inc.c"
 };
 
 u64 road_to_swamp_sceneTex_002F30[] = {
