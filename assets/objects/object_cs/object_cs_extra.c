@@ -30,10 +30,6 @@ u64 gGraveyardKidShirt22Tex[TEX_LEN(u64, gGraveyardKidShirt2Tex_WIDTH, gGraveyar
 #include "assets/objects/object_cs/gGraveyardKidShirt22Tex.ci8.tlut_gGraveyardKidTLUT.inc.c"
 };
 
-u64 gGraveyardKidBoot2Tex[TEX_LEN(u64, gGraveyardKidBoot2Tex_WIDTH, gGraveyardKidBoot2Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_cs/gGraveyardKidBoot2Tex.ci8.tlut_gGraveyardKidTLUT.inc.c"
-};
-
 u64 gGraveyardKidPants2Tex[TEX_LEN(u64, gGraveyardKidPantsTex_WIDTH, gGraveyardKidPantsTex_HEIGHT, 8)] = {
 #include "assets/objects/object_cs/gGraveyardKidPants2Tex.ci8.tlut_gGraveyardKidTLUT.inc.c"
 };
