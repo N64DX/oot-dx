@@ -1171,6 +1171,7 @@ beginseg
     name "gameplay_dangeon_keep"
     compress
     include "$(BUILD_DIR)/assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.o"
+    include "$(BUILD_DIR)/assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_extra.o"
     number 5
 endseg
 

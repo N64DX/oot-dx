@@ -2,6 +2,9 @@
 #define GAMEPLAY_DANGEON_KEEP_EXTRA_H
 
 #include "bgcheck.h"
+#include "tex_len.h"
+#include "ultra64.h"
+#include "z_math.h"
 
 extern Gfx gameplay_dangeon_keep_DL_01C228[];
 extern CollisionHeader gameplay_dangeon_keep_Colheader_01D488;
