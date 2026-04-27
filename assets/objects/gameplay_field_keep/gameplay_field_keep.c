@@ -263,90 +263,6 @@ u64 gFieldDoor1Tex[TEX_LEN(u64, gFieldDoor1Tex_WIDTH, gFieldDoor1Tex_HEIGHT, 4)]
 #include "assets/objects/gameplay_field_keep/gFieldDoor1Tex.i4.inc.c"
 };
 
-s16 gFieldUnusedFishFrameData[] = {
-#include "assets/objects/gameplay_field_keep/gFieldUnusedFishFrameData.inc.c"
-};
-
-JointIndex gFieldUnusedFishJointIndices[] = {
-#include "assets/objects/gameplay_field_keep/gFieldUnusedFishJointIndices.inc.c"
-};
-
-AnimationHeader gFieldUnusedFishAnim = {
-#include "assets/objects/gameplay_field_keep/gFieldUnusedFishAnim.inc.c"
-};
-
-Gfx gFieldUnusedFishDL[61] = {
-#include "assets/objects/gameplay_field_keep/gFieldUnusedFishDL.inc.c"
-};
-
-Gfx gFieldSkelUnusedFishDL_0061E8[2] = {
-#include "assets/objects/gameplay_field_keep/gFieldSkelUnusedFishDL_0061E8.inc.c"
-};
-
-Gfx gameplay_field_keep_0061F8_DL[2] = {
-#include "assets/objects/gameplay_field_keep/gameplay_field_keep_0061F8_DL.inc.c"
-};
-
-Vtx gFieldUnusedFishVtx[] = {
-#include "assets/objects/gameplay_field_keep/gFieldUnusedFishVtx.inc.c"
-};
-
-Gfx gFieldSkelUnusedFishDL_0063A8[20] = {
-#include "assets/objects/gameplay_field_keep/gFieldSkelUnusedFishDL_0063A8.inc.c"
-};
-
-Gfx gFieldSkelUnusedFishDL_006448[2] = {
-#include "assets/objects/gameplay_field_keep/gFieldSkelUnusedFishDL_006448.inc.c"
-};
-
-Gfx gameplay_field_keep_006458_DL[2] = {
-#include "assets/objects/gameplay_field_keep/gameplay_field_keep_006458_DL.inc.c"
-};
-
-Vtx gameplay_field_keep_Vtx_006468[] = {
-#include "assets/objects/gameplay_field_keep/gameplay_field_keep_Vtx_006468.inc.c"
-};
-
-u64 gFieldUnusedFishTex[TEX_LEN(u64, gFieldUnusedFishTex_WIDTH, gFieldUnusedFishTex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_field_keep/gFieldUnusedFishTex.rgba16.inc.c"
-};
-
-u64 gFieldUnusedFishBottomTex[TEX_LEN(u64, gFieldUnusedFishBottomTex_WIDTH, gFieldUnusedFishBottomTex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_field_keep/gFieldUnusedFishBottomTex.rgba16.inc.c"
-};
-
-u64 gFieldUnusedFishFinTex[TEX_LEN(u64, gFieldUnusedFishFinTex_WIDTH, gFieldUnusedFishFinTex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_field_keep/gFieldUnusedFishFinTex.rgba16.inc.c"
-};
-
-StandardLimb gameplay_field_keep_0088A8_Limb = {
-#include "assets/objects/gameplay_field_keep/gameplay_field_keep_0088A8_Limb.inc.c"
-};
-
-StandardLimb gameplay_field_keep_0088B4_Limb = {
-#include "assets/objects/gameplay_field_keep/gameplay_field_keep_0088B4_Limb.inc.c"
-};
-
-StandardLimb gameplay_field_keep_0088C0_Limb = {
-#include "assets/objects/gameplay_field_keep/gameplay_field_keep_0088C0_Limb.inc.c"
-};
-
-StandardLimb gameplay_field_keep_0088CC_Limb = {
-#include "assets/objects/gameplay_field_keep/gameplay_field_keep_0088CC_Limb.inc.c"
-};
-
-StandardLimb gameplay_field_keep_0088D8_Limb = {
-#include "assets/objects/gameplay_field_keep/gameplay_field_keep_0088D8_Limb.inc.c"
-};
-
-void* gFieldUnusedFishLimbs[] = {
-#include "assets/objects/gameplay_field_keep/gFieldUnusedFishLimbs.inc.c"
-};
-
-SkeletonHeader gFieldUnusedFishSkel = {
-#include "assets/objects/gameplay_field_keep/gFieldUnusedFishSkel.inc.c"
-};
-
 u64 gFieldSilverRockTLUT[] = {
 #include "assets/objects/gameplay_field_keep/gFieldSilverRockTex.tlut.rgba16.inc.c"
 };
@@ -398,4 +314,3 @@ Gfx gFieldSandstormDL[24] = {
 u64 gFieldKeepTex_00CB30[TEX_LEN(u64, gFieldKeepTex_00CB30_WIDTH, gFieldKeepTex_00CB30_HEIGHT, 16)] = {
 #include "assets/objects/gameplay_field_keep/gFieldKeepTex_00CB30.rgba16.inc.c"
 };
-
