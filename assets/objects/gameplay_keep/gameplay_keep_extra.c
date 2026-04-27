@@ -1,7 +1,8 @@
-#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
+#include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "gameplay_keep_extra.h"
 #include "assets/misc/link_animetion/link_animetion_extra.h"
 
-#include "array_count.h"
+#include "gfx.h"
 
 u64 gDropFeatherTex[TEX_LEN(u64, 32, 32, 16)] = {
 #include "assets/objects/gameplay_keep/gDropFeatherTex.rgba16.inc.c"
@@ -581,12 +582,12 @@ u64 gFieldBeehiveFragmentTex[TEX_LEN(u64, gFieldBeehiveFragmentTex_WIDTH, gField
 #include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentTex.rgba16.inc.c"
 };
 
-Vtx gFieldBeehiveDL_05009100_Vtx_fused_[] = {
-#include "assets/objects/gameplay_field_keep/gFieldBeehiveDL_05009100_Vtx_fused_.inc.c"
+Vtx gFieldBeehiveVtx[] = {
+#include "assets/objects/gameplay_field_keep/gFieldBeehiveVtx.inc.c"
 };
 
-Vtx gFieldBeehiveFragmentDL_05009910_Vtx[] = {
-#include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentDL_05009910_Vtx.inc.c"
+Vtx gFieldBeehiveFragmentVtx[] = {
+#include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentVtx.inc.c"
 };
 
 Gfx gFieldBeehiveDL[44] = {
@@ -601,8 +602,8 @@ Gfx gFieldBeehiveFragmentDL[18] = {
 
 // Liftable Rock
 
-Vtx gFieldKakeraDL_0500A6D0_Vtx[] = {
-#include "assets/objects/gameplay_field_keep/gFieldKakeraDL_0500A6D0_Vtx.inc.c"
+Vtx gFieldKakeraVtx[] = {
+#include "assets/objects/gameplay_field_keep/gFieldKakeraVtx.inc.c"
 };
 
 u64 gFieldKakeraTex[TEX_LEN(u64, gFieldKakeraTex_WIDTH, gFieldKakeraTex_HEIGHT, 16)] = {

@@ -21,6 +21,7 @@
 #include "save.h"
 
 #include "assets/objects/object_box/object_box.h"
+#include "assets/objects/object_box/object_box_extra.h"
 
 #define FLAGS 0
 

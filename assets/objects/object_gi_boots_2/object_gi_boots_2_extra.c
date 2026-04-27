@@ -1,20 +1,8 @@
-#include "object_gi_boots_2.h"
-#include "extracted/ntsc-1.0/assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/object_gi_boots_2/object_gi_boots_2.h"
+#include "object_gi_boots_2_extra.h"
+#include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #include "gfx.h"
-#include "sys_matrix.h"
-
-u64 gGiIronBootsRivetsDL_00000000_Tex[TEX_LEN(u64, gGiIronBootsRivetsDL_00000000_Tex_WIDTH, gGiIronBootsRivetsDL_00000000_Tex_HEIGHT, 8)] = {
-#include "assets/objects/object_gi_boots_2/gGiIronBootsRivetsDL_00000000_Tex.ia8.inc.c"
-};
-
-Vtx gGiIronBootsVtx[] = {
-#include "assets/objects/object_gi_boots_2/gGiIronBootsVtx.inc.c"
-};
-
-Vtx gGiIronBootsRivetsVtx[] = {
-#include "assets/objects/object_gi_boots_2/gGiIronBootsRivetsVtx.inc.c"
-};
 
 Gfx gGiKokiriBootsDL[] = {
     gsDPPipeSync(),
@@ -148,12 +136,4 @@ Gfx gGiKokiriBootsDL[] = {
 
 Gfx gGiKokiriBootsEmptyDL[] = {
     gsSPEndDisplayList(),
-};
-
-Gfx gGiIronBootsDL[141] = {
-#include "assets/objects/object_gi_boots_2/gGiIronBootsDL.inc.c"
-};
-
-Gfx gGiIronBootsRivetsDL[37] = {
-#include "assets/objects/object_gi_boots_2/gGiIronBootsRivetsDL.inc.c"
 };

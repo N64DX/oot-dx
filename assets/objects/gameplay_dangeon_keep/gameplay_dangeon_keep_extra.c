@@ -1,11 +1,8 @@
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.h"
 #include "gameplay_dangeon_keep_extra.h"
 
 #include "array_count.h"
-#include "camera.h"
 #include "gfx.h"
-#include "stdbool.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
 Vtx gameplay_dangeon_keepVtx_01C120[] = {
 #include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keepVtx_01C120.vtx.inc"

@@ -31,6 +31,7 @@
 #include "save.h"
 
 #include "assets/textures/nintendo_rogo_static/nintendo_rogo_static.h"
+#include "assets/textures/nintendo_rogo_static/nintendo_rogo_static_extra.h"
 
 void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
 #if OOT_VERSION == NTSC_1_0

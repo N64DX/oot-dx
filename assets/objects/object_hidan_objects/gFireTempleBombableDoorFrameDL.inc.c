@@ -8,7 +8,7 @@
     gsSPClearGeometryMode(G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetGeometryMode(G_FOG),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&gFireTempleDoorWithHandleRightDL_0600F5A0_Vtx_fused_[32], 15, 0),
+    gsSPVertex(&gFireTempleBombableDoorFrameVtx[0], 15, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
     gsSP2Triangles(4, 5, 6, 0, 5, 7, 6, 0),
     gsSP2Triangles(3, 8, 9, 0, 8, 10, 9, 0),

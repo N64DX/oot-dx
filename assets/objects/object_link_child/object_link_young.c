@@ -5,7 +5,6 @@
 #include "gfx.h"
 #include "player.h"
 
-
 u64 gLinkYoungEyesOpenTex[] = {
 #include "assets/objects/object_link_child/majora/eyes_open.ci8.inc.c"
 };
@@ -902,7 +901,7 @@ Gfx gLinkYoungRightHandAndOotNearDL[] = {
     
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gOcarinaofTimeDesignTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(gOcarinaOfTimeDesignTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsSPVertex(&ocarina_of_time_vtx, 23, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 3, 2, 0, 4, 2, 1, 0),

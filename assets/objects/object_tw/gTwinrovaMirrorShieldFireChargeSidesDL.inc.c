@@ -5,7 +5,7 @@
     gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2),
     gsSPClearGeometryMode(G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsDPSetPrimColor(0, 0, 255, 20, 0, 0),
-    gsSPVertex(&gTwinrovaMirrorShieldFireChargeCenterDL_0601DED0_Vtx_fused_[9], 12, 0),
+    gsSPVertex(&gTwinrovaMirrorShieldFireChargeSidesVtx[0], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 1, 0),
     gsSP2Triangles(5, 0, 2, 0, 2, 6, 5, 0),
     gsSP2Triangles(0, 7, 1, 0, 8, 3, 1, 0),

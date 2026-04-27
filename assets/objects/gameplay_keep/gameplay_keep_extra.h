@@ -2,10 +2,6 @@
 #define GAMEPLAY_KEEP_EXTRA_H
 
 #include "tex_len.h"
-#include "gfx.h"
-#include "stdbool.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
 extern u64 gDropFeatherTex[TEX_LEN(u64, 32, 32, 16)];
 

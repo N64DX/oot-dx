@@ -14,6 +14,7 @@
 #include "save.h"
 
 #include "assets/objects/object_cs/object_cs.h"
+#include "assets/objects/object_cs/object_cs_extra.h"
 #include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY)

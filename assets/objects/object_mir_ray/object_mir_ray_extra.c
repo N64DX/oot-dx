@@ -1,40 +1,7 @@
-#include "object_mir_ray.h"
+#include "assets/objects/object_mir_ray/object_mir_ray.h"
+#include "object_mir_ray_extra.h"
 
 #include "gfx.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
-
-Vtx gShieldBeamImageDL_06000000_Vtx_fused_[] = {
-#include "assets/objects/object_mir_ray/gShieldBeamImageDL_06000000_Vtx_fused_.inc.c"
-};
-
-Gfx gShieldBeamImageDL[27] = {
-#include "assets/objects/object_mir_ray/gShieldBeamImageDL.inc.c"
-};
-
-u64 gShieldBeamImageCircleTex[TEX_LEN(u64, gShieldBeamImageCircleTex_WIDTH, gShieldBeamImageCircleTex_HEIGHT, 16)] = {
-#include "assets/objects/object_mir_ray/gShieldBeamImageCircleTex.ia16.inc.c"
-};
-
-u64 gShieldBeamImageGerudoSymbolNewTex[TEX_LEN(u64, gShieldBeamImageGerudoSymbolNewTex_WIDTH, gShieldBeamImageGerudoSymbolNewTex_HEIGHT, 16)] = {
-#include "assets/objects/object_mir_ray/gShieldBeamImageGerudoSymbolNewTex.ia16.inc.c"
-};
-
-Vtx gShieldBeamGlowDL_06000B90_Vtx[] = {
-#include "assets/objects/object_mir_ray/gShieldBeamGlowDL_06000B90_Vtx.inc.c"
-};
-
-Gfx gShieldBeamGlowDL[21] = {
-#include "assets/objects/object_mir_ray/gShieldBeamGlowDL.inc.c"
-};
-
-u64 gShieldBeamGlowRayTex[TEX_LEN(u64, gShieldBeamGlowRayTex_WIDTH, gShieldBeamGlowRayTex_HEIGHT, 16)] = {
-#include "assets/objects/object_mir_ray/gShieldBeamGlowRayTex.ia16.inc.c"
-};
-
-
-
-// Majora's Mask
 
 Vtx object_mir_rayVtx_000000[] = {
 #include "assets/objects/object_mir_ray/object_mir_rayVtx_000000.vtx.inc"

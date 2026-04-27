@@ -143,6 +143,7 @@ beginseg
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/circle_glow_textures.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_0x55DB0.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/eff_spark_textures.o"
+    include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_extra.o"
     number 4
 endseg
 
@@ -159,6 +160,7 @@ beginseg
     compress
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.o"
+    include "$(BUILD_DIR)/assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_extra.o"
     number 5
 endseg
 
@@ -190,6 +192,7 @@ beginseg
     compress
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/object_box/object_box.o"
+    include "$(BUILD_DIR)/assets/objects/object_box/object_box_extra.o"
     number 6
 endseg
 
@@ -478,6 +481,7 @@ beginseg
     compress
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/object_spot00_objects/object_spot00_objects.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot00_objects/object_spot00_objects_extra.o"
     number 6
 endseg
 
@@ -1378,6 +1382,7 @@ beginseg
     compress
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/object_mir_ray/object_mir_ray.o"
+    include "$(BUILD_DIR)/assets/objects/object_mir_ray/object_mir_ray_extra.o"
     number 6
 endseg
 
@@ -2243,6 +2248,7 @@ beginseg
     compress
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/object_gi_boots_2/object_gi_boots_2.o"
+    include "$(BUILD_DIR)/assets/objects/object_gi_boots_2/object_gi_boots_2_extra.o"
     number 6
 endseg
 
@@ -2587,6 +2593,7 @@ beginseg
     compress
     romalign 0x1000
     include "$(BUILD_DIR)/assets/objects/object_cs/object_cs.o"
+    include "$(BUILD_DIR)/assets/objects/object_cs/object_cs_extra.o"
     number 6
 endseg
 

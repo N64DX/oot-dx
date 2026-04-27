@@ -4028,6 +4028,7 @@ beginseg
     name "nintendo_rogo_static"
     compress
     include "$(BUILD_DIR)/assets/textures/nintendo_rogo_static/nintendo_rogo_static.o"
+    include "$(BUILD_DIR)/assets/textures/nintendo_rogo_static/nintendo_rogo_static_extra.o"
     number 1
 endseg
 

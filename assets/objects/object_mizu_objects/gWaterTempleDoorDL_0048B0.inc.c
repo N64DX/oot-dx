@@ -9,7 +9,7 @@
     gsSPClearGeometryMode(G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetGeometryMode(G_FOG),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&gWaterTempleDoorLeftDL_060045C0_Vtx_fused_[32], 15, 0),
+    gsSPVertex(&object_mizu_objects_Vtx_0047C0[0], 15, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 7, 5, 0),
     gsSP2Triangles(8, 9, 3, 0, 8, 10, 9, 0),

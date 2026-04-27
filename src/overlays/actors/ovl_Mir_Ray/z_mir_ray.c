@@ -23,6 +23,7 @@
 #include "save.h"
 
 #include "assets/objects/object_mir_ray/object_mir_ray.h"
+#include "assets/objects/object_mir_ray/object_mir_ray_extra.h"
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_DRAW_CULLING_DISABLED)
 
