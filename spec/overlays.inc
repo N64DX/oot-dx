@@ -27,6 +27,7 @@ beginseg
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_copy_erase.o"
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_nameset.o"
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_choose.o"
+    include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/z_file_options.o"
     include "$(BUILD_DIR)/src/overlays/gamestates/ovl_file_choose/ovl_file_choose_reloc.o"
 endseg
 
@@ -44,6 +45,9 @@ beginseg
 #if !OOT_MQ
     include "$(BUILD_DIR)/src/overlays/misc/ovl_kaleido_scope/z_lmap_mark_data.o"
 #else
+    include "$(BUILD_DIR)/src/overlays/misc/ovl_kaleido_scope/z_lmap_mark_data_mq.o"
+#endif
+#if OOT_VERSION <= PAL_1_1
     include "$(BUILD_DIR)/src/overlays/misc/ovl_kaleido_scope/z_lmap_mark_data_mq.o"
 #endif
     include "$(BUILD_DIR)/src/overlays/misc/ovl_kaleido_scope/ovl_kaleido_scope_reloc.o"
@@ -66,6 +70,15 @@ beginseg
 #endif
     include "$(BUILD_DIR)/src/overlays/misc/ovl_map_mark_data/ovl_map_mark_data_reloc.o"
 endseg
+
+#if OOT_VERSION <= PAL_1_1
+beginseg
+    name "ovl_map_mark_data_mq"
+    compress
+    include "$(BUILD_DIR)/src/overlays/misc/ovl_map_mark_data/z_map_mark_data_mq.o"
+    include "$(BUILD_DIR)/src/overlays/misc/ovl_map_mark_data/ovl_map_mark_data_mq_reloc.o"
+endseg
+#endif
 
 beginseg
     name "ovl_En_Test"
