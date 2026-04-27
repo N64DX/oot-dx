@@ -95,6 +95,7 @@ static Gfx gGanonFireRingDL[36];
 static Gfx gGanonZeldaMagicDL[33];
 static Gfx gGanonMasterSwordShadowDL[16];
 static Gfx gGanonMasterSwordDL[122];
+static Gfx gGanonRazorSwordDL[222];
 
 ActorProfile Boss_Ganon2_Profile = {
     /**/ ACTOR_BOSS_GANON2,
@@ -3724,4 +3725,28 @@ static Vtx gGanonMasterSwordVtx[] = {
 
 static Gfx gGanonMasterSwordDL[122] = {
 #include "assets/overlays/ovl_Boss_Ganon2/gGanonMasterSwordDL.inc.c"
+};
+
+static u64 gSwordMetalTex[] = {
+#include "assets/objects/object_link_child/swords/razor_sword_metal.i8.inc.c"
+};
+
+static u64 gRazorSwordHandleDesignTex[] = {
+#include "assets/objects/object_link_child/swords/razor_sword_handle_design.rgba16.inc.c"
+};
+
+static u64 gRazorSwordHandleGripTex[] = {
+#include "assets/objects/object_link_child/swords/razor_sword_handle_grip.rgba16.inc.c"
+};
+
+static Vtx razor_sword_handle_vtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/razor_sword_handle.vtx.inc"
+};
+
+static Vtx razor_sword_blade_vtx[] = {
+#include "assets/overlays/ovl_Boss_Ganon2/razor_sword_blade.vtx.inc"
+};
+
+static Gfx gGanonRazorSwordDL[222] = {
+#include "assets/overlays/ovl_Boss_Ganon2/gGanonRazorSwordDL.inc.c"
 };
