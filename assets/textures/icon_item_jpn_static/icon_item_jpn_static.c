@@ -72,8 +72,7 @@ u64 gPauseSavePromptJPNTex[TEX_LEN(u64, gPauseSavePromptJPNTex_WIDTH, gPauseSave
 #include "assets/textures/icon_item_jpn_static/gPauseSavePromptJPNTex.ia8.inc.c"
 };
 
-u64 gPauseSaveConfirmationJPNTex[TEX_LEN(u64, gPauseSaveConfirmationJPNTex_WIDTH, gPauseSaveConfirmationJPNTex_HEIGHT,
-                                         8)] = {
+u64 gPauseSaveConfirmationJPNTex[TEX_LEN(u64, gPauseSaveConfirmationJPNTex_WIDTH, gPauseSaveConfirmationJPNTex_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_jpn_static/gPauseSaveConfirmationJPNTex.ia8.inc.c"
 };
 
@@ -85,8 +84,7 @@ u64 gPauseNoJPNTex[TEX_LEN(u64, gPauseNoJPNTex_WIDTH, gPauseNoJPNTex_HEIGHT, 8)]
 #include "assets/textures/icon_item_jpn_static/gPauseNoJPNTex.ia8.inc.c"
 };
 
-u64 gPauseCurrentPositionJPNTex[TEX_LEN(u64, gPauseCurrentPositionJPNTex_WIDTH, gPauseCurrentPositionJPNTex_HEIGHT,
-                                        4)] = {
+u64 gPauseCurrentPositionJPNTex[TEX_LEN(u64, gPauseCurrentPositionJPNTex_WIDTH, gPauseCurrentPositionJPNTex_HEIGHT, 4)] = {
 #include "assets/textures/icon_item_jpn_static/gPauseCurrentPositionJPNTex.i4.inc.c"
 };
 

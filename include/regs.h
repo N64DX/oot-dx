@@ -229,12 +229,12 @@ struct PlayState;
 #define R_PAUSE_INFO_PANEL_ICON_SAVE_PROMPT_X(i) WREG(61 + (i))
 #define R_PAUSE_INFO_PANEL_ICON_EQUIP_X(i)       WREG(64 + (i))
 #elif OOT_NTSC_N64
-#define R_KALEIDO_UNK1(i)                        WREG(44 + (i))
-#define R_KALEIDO_UNK2(i)                        WREG(48 + (i))
-#define R_KALEIDO_UNK3(i)                        WREG(52 + (i))
-#define R_KALEIDO_UNK4(i)                        WREG(56 + (i))
-#define R_KALEIDO_UNK5(i)                        WREG(60 + (i))
-#define R_KALEIDO_UNK6(i)                        WREG(64 + (i))
+#define R_PAUSE_INFO_PANEL_ICON_C_ITEM_X(i)      WREG(44 + (i))
+#define R_PAUSE_INFO_PANEL_TEXT_X(i)             WREG(48 + (i))
+#define R_PAUSE_INFO_PANEL_ICON_PLAY_SONG_X(i)   WREG(52 + (i))
+#define R_PAUSE_INFO_PANEL_TEXT_C_ITEM_X(i)      WREG(56 + (i))
+#define R_PAUSE_INFO_PANEL_ICON_SAVE_PROMPT_X(i) WREG(60 + (i))
+#define R_PAUSE_INFO_PANEL_ICON_EQUIP_X(i)       WREG(64 + (i))
 #endif
 #define R_DGN_MINIMAP_X                          WREG(68)
 #define R_DGN_MINIMAP_Y                          WREG(69)

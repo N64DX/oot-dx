@@ -687,15 +687,15 @@ void Regs_InitDataImpl(void) {
 #endif
 #if OOT_NTSC_N64
     R_B_LABEL_SCALE(3) = 100;
-    R_B_LABEL_X(3)     = B_BUTTON_X - 10;
-    R_B_LABEL_Y(3)     = B_BUTTON_Y + 6;
-    R_A_LABEL_Z(3)     = -380;
-    R_KALEIDO_UNK1(3)  = -45;
-    R_KALEIDO_UNK2(3)  = 16;
-    R_KALEIDO_UNK3(3)  = -55;
-    R_KALEIDO_UNK4(3)  = 43;
-    R_KALEIDO_UNK5(3)  = -33;
-    R_KALEIDO_UNK6(3)  = -33;
+    R_B_LABEL_X(3)                           = B_BUTTON_X - 10;
+    R_B_LABEL_Y(3)                           = B_BUTTON_Y + 6;
+    R_A_LABEL_Z(3)                           = -380;
+    R_PAUSE_INFO_PANEL_ICON_C_ITEM_X(3)      = -45;
+    R_PAUSE_INFO_PANEL_TEXT_X(3)             = 16;
+    R_PAUSE_INFO_PANEL_ICON_PLAY_SONG_X(3)   = -55;
+    R_PAUSE_INFO_PANEL_TEXT_C_ITEM_X(3)      = 43;
+    R_PAUSE_INFO_PANEL_ICON_SAVE_PROMPT_X(3) = -33;
+    R_PAUSE_INFO_PANEL_ICON_EQUIP_X(3)       = -33;
 #endif
 
     R_DGN_MINIMAP_X = 204;
