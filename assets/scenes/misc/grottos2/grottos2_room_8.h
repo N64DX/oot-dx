@@ -3,18 +3,18 @@
 
 #include "room.h"
 
-s16 grottos2_room_8ObjectList_000040[];
-ActorEntry grottos2_room_8ActorEntry_000044[];
-RoomShapeCullable grottos2_room_8RoomShapeCullable_000170;
-RoomShapeCullableEntry grottos2_room_8RoomShapeCullableEntry_00017C[8];
+extern s16 grottos2_room_8ObjectList_000040[];
+extern ActorEntry grottos2_room_8ActorEntry_000044[];
+extern RoomShapeCullable grottos2_room_8RoomShapeCullable_000170;
+extern RoomShapeCullableEntry grottos2_room_8RoomShapeCullableEntry_00017C[8];
 
-Gfx grottos2_room_8DL_000740[];
-Gfx grottos2_room_8DL_000A18[];
-Gfx grottos2_room_8DL_000D38[];
-Gfx grottos2_room_8DL_001108[];
-Gfx grottos2_room_8DL_001340[];
-Gfx grottos2_room_8DL_0015B8[];
-Gfx grottos2_room_8DL_002AA0[];
-Gfx grottos2_room_8DL_002CA0[];
+extern Gfx grottos2_room_8DL_000740[];
+extern Gfx grottos2_room_8DL_000A18[];
+extern Gfx grottos2_room_8DL_000D38[];
+extern Gfx grottos2_room_8DL_001108[];
+extern Gfx grottos2_room_8DL_001340[];
+extern Gfx grottos2_room_8DL_0015B8[];
+extern Gfx grottos2_room_8DL_002AA0[];
+extern Gfx grottos2_room_8DL_002CA0[];
 
 #endif
