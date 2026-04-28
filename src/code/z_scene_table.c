@@ -1830,9 +1830,9 @@ void Scene_DrawConfigSpringLake(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
 
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32)); // Chimney matrix effect 
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32)); // Chimney matrix effect 
     gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          0,                           32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 1
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 1)  % 128, 32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 2
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 1)  % 128, 32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 2
     gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 10) % 128, 32, 128, 1, 0,                    (gameplayFrames * 7)  % 128, 32, 128)); // Waterfall
     gSPSegment(POLY_XLU_DISP++, 0x0C, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 10) % 128, 64,  64, 1, 0,                    (gameplayFrames * 10) % 128, 64,  64)); // Chimney fog
     gSPSegment(POLY_OPA_DISP++, 0x0D, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 1)  % 128, 32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Chimney fire
@@ -1869,7 +1869,7 @@ void Scene_DrawConfigPathToGoronVillage(PlayState* play) {
 
     gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0,                           64,  64, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 1
     gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0,                           32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 2
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, 0,                           32,  32)); // Water 3
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, 0,                           32,  32)); // Water 3
 
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);

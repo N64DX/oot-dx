@@ -793,7 +793,7 @@ void EnTite_DeathCry(EnTite* this, PlayState* play) {
 void EnTite_FallApart(EnTite* this, PlayState* play) {
     if (BodyBreak_SpawnParts(&this->actor, &this->bodyBreak, play, this->actor.params + (this->actor.params == TEKTITE_YELLOW ? 23 : 0xB))) {
         if (this->actor.params == TEKTITE_YELLOW) {
-            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_TABLE_4);
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_4, false));
         } else if (this->actor.params == TEKTITE_BLUE) {
             Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
                                        COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_14, false));
