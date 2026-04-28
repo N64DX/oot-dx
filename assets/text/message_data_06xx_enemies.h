@@ -1053,7 +1053,7 @@ COLOR(LIGHTBLUE) "Pass auf, er sieht sehr stark aus!\n"
 ),
 MSG(
 QUICKTEXT_ENABLE "Peste Costaud\n"
-COLOR(LIGHTBLUE) "Attention, il a l’air très fort!\n"
+COLOR(LIGHTBLUE) "Attention, il a l'air très fort!\n"
 "Mais il semble faible face au feu..." COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
@@ -2265,7 +2265,7 @@ COLOR(DEFAULT) "Spreng ihn in die Luft!" COLOR(LIGHTBLUE) "!" COLOR(DEFAULT) QUI
 MSG(
 QUICKTEXT_ENABLE "Maître Stalfon\n"
 COLOR(LIGHTBLUE) "Serait-ce le Stalfos légendaire\n"
-"à l’armure dorée et aux quatre bras?\n"
+"à l'armure dorée et aux quatre bras?\n"
 COLOR(DEFAULT) "Fais-le exploser" COLOR(LIGHTBLUE) "!" COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )
@@ -2348,7 +2348,7 @@ COLOR(LIGHTBLUE) "Pass auf, er sieht sehr stark aus!\n"
 ),
 MSG(
 QUICKTEXT_ENABLE "King Deku\n"
-COLOR(LIGHTBLUE) "Attention, il a l’air très fort!\n"
+COLOR(LIGHTBLUE) "Attention, il a l'air très fort!\n"
 "Mais il semble faible face au feu..." COLOR(DEFAULT) QUICKTEXT_DISABLE
 )
 )

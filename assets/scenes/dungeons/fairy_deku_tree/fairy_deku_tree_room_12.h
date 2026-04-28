@@ -3,11 +3,11 @@
 
 #include "room.h"
 
-s16 fairy_deku_tree_room_12ObjectList0x000038[];
-ActorEntry fairy_deku_tree_room_12ActorList0x000048[];
-RoomShapeCullable fairy_deku_tree_room_12MeshHeader0x0000A0;
-RoomShapeCullableEntry fairy_deku_tree_room_12MeshDListEntry0x0000AC[1];
+extern s16 fairy_deku_tree_room_12ObjectList0x000038[];
+extern ActorEntry fairy_deku_tree_room_12ActorList0x000048[];
+extern RoomShapeCullable fairy_deku_tree_room_12MeshHeader0x0000A0;
+extern RoomShapeCullableEntry fairy_deku_tree_room_12MeshDListEntry0x0000AC[1];
 
-Gfx fairy_deku_tree_room_12Dlist0x001780[];
+extern Gfx fairy_deku_tree_room_12Dlist0x001780[];
 
 #endif

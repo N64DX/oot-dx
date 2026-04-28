@@ -67,7 +67,7 @@ COLOR(RED) "Heroenschwert" COLOR(DEFAULT) " hinterlassen! Es\n"
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS) QUICKTEXT_ENABLE "Un puissant ennemi a laissé\n"
-COLOR(RED) "l’Épée du Héros" COLOR(DEFAULT) "! Elle est à toi maintenant!" QUICKTEXT_DISABLE "\n"
+COLOR(RED) "l'Épée du Héros" COLOR(DEFAULT) "! Elle est à toi maintenant!" QUICKTEXT_DISABLE "\n"
 "Cette épée est capable de\n"
 "lancer de puissants rayons!"
 )

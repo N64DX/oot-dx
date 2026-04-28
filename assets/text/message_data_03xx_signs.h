@@ -1785,7 +1785,7 @@ SHIFT(50) COLOR(RED) "Nicht eintreten!\n" COLOR(DEFAULT)
 ),
 MSG(
 QUICKTEXT_ENABLE SHIFT(65) "Interdit !\n"
-SHIFT(50) COLOR(RED) "N’entrez pas !\n" COLOR(DEFAULT)
+SHIFT(50) COLOR(RED) "N'entrez pas !\n" COLOR(DEFAULT)
 )
 )
 

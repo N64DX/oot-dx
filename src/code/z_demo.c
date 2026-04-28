@@ -2474,7 +2474,8 @@ void Cutscene_HandleEntranceTriggers(PlayState* play) {
     if ( (gSaveContext.respawnFlag == 0 || gSaveContext.respawnFlag == -2) && USE_TITLE_CARDS) {
         u16 flags = gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + ((void)0, gSaveContext.sceneLayer)].field;
         if (!IS_CUTSCENE_LAYER && (flags & ENTRANCE_INFO_DISPLAY_TITLE_CARD_FLAG) && gSaveContext.showTitleCard)
-            Message_DisplaySceneTitleCard(play);
+            if ( (play->sceneId != SCENE_DODONGOS_CAVERN || GET_EVENTCHKINF(EVENTCHKINF_B0)) && (play->sceneId != SCENE_BOMBCHU_SHOP || GET_EVENTCHKINF(EVENTCHKINF_25)) )
+                Message_DisplaySceneTitleCard(play);
         gSaveContext.showTitleCard = true;
     }
 }

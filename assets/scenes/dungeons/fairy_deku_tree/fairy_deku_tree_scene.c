@@ -121,57 +121,57 @@ EnvLightSettings fairy_deku_tree_sceneLightSettings0x000270[] = {
 };
 
 Vec3s fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[] = {
-    {     -1,     54,   1058 }, // 0x00000300
-    {      0,  -1092,      0 }, // 0x00000306
-    {     -1,      0,      0 }, // 0x0000030C
-    {   -548,    579,    470 }, // 0x00000312
-    {    364,  20024,      0 }, // 0x00000318
-    {     -1,      0,      0 }, // 0x0000031E
-    {    -84,    141,    655 }, // 0x00000324
-    {   -364,  28580,      0 }, // 0x0000032A
-    {     -1,      0,      0 }, // 0x00000330
-    {    -79,    502,    659 }, // 0x00000336
-    {   2367,  28034,      0 }, // 0x0000033C
-    {     -1,      0,      0 }, // 0x00000342
-    {    -82,    855,    660 }, // 0x00000348
-    {   4369,  28944,      0 }, // 0x0000034E
-    {     -1,      0,      0 }, // 0x00000354
-    {   -496,   1071,    361 }, // 0x0000035A
-    {   1820,  18386,      0 }, // 0x00000360
-    {     -1,      0,      0 }, // 0x00000366
-    {    407,   1170,    540 }, // 0x0000036C
-    {   2002, -29490,      0 }, // 0x00000372
-    {     -1,      0,      0 }, // 0x00000378
-    {    473,   1477,    545 }, // 0x0000037E
-    {   1274, -26942,      0 }, // 0x00000384
-    {     -1,      0,      0 }, // 0x0000038A
-    {    519,    811,   -401 }, // 0x00000390
-    {   1274, -12197,      0 }, // 0x00000396
-    {     -1,      0,      0 }, // 0x0000039C
-    {    519,   1571,   -395 }, // 0x000003A2
-    {   1638, -12561,      0 }, // 0x000003A8
-    {     -1,      0,      0 }, // 0x000003AE
-    {    519,    607,   -392 }, // 0x000003B4
-    {   2002, -12561,      0 }, // 0x000003BA
-    {     -1,      0,      0 }, // 0x000003C0
-    {      0,   2847,     10 }, // 0x000003C6
-    {      0,      0,      0 }, // 0x000003CC
-    {     -1,      0,      0 }, // 0x000003D2
+    {     -1,     54,   1058 },
+    {      0,  -1092,      0 },
+    {     -1,      0,      0 },
+    {   -548,    579,    470 },
+    {    364,  20024,      0 },
+    {     -1,      0,      0 },
+    {    -84,    141,    655 },
+    {   -364,  28580,      0 },
+    {     -1,      0,      0 },
+    {    -79,    502,    659 },
+    {   2367,  28034,      0 },
+    {     -1,      0,      0 },
+    {    -82,    855,    660 },
+    {   4369,  28944,      0 },
+    {     -1,      0,      0 },
+    {   -496,   1071,    361 },
+    {   1820,  18386,      0 },
+    {     -1,      0,      0 },
+    {    407,   1170,    540 },
+    {   2002, -29490,      0 },
+    {     -1,      0,      0 },
+    {    473,   1477,    545 },
+    {   1274, -26942,      0 },
+    {     -1,      0,      0 },
+    {    519,    811,   -401 },
+    {   1274, -12197,      0 },
+    {     -1,      0,      0 },
+    {    519,   1571,   -395 },
+    {   1638, -12561,      0 },
+    {     -1,      0,      0 },
+    {    519,    607,   -392 },
+    {   2002, -12561,      0 },
+    {     -1,      0,      0 },
+    {      0,   2847,     10 },
+    {      0,      0,      0 },
+    {     -1,      0,      0 },
 };
 
 BgCamInfo fairy_deku_tree_sceneCollisionHeader0x00EA9C_camDataList_000003D8[] = {
-    /* spawn      */ { CAM_SET_SCENE_UNUSED,        3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* back door  */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* front door */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* back door  */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* back door  */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* back door  */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* front door */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* front door */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* front door */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* back door  */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* back door  */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
-    /* spiral     */ { CAM_SET_DUNGEON0,            3, fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300 },
+    /* spawn      */ { CAM_SET_SCENE_UNUSED,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* back door  */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* front door */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* back door  */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* back door  */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* back door  */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* front door */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* front door */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* front door */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* back door  */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* back door  */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
+    /* spiral     */ { CAM_SET_DUNGEON0,            3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[0] },
     /* keep cam   */ { CAM_SET_NONE,                0, NULL },
                      { CAM_SET_BOSS_MORPHA,         0, NULL },
                      { CAM_SET_NORMAL0,             0, NULL },
