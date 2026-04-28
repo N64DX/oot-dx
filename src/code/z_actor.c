@@ -2497,7 +2497,8 @@ void Actor_InitContext(PlayState* play, ActorContext* actorCtx, ActorEntry* play
     SavedSceneFlags* savedSceneFlags;
     s32 i;
 
-    savedSceneFlags = &gSaveContext.save.info.sceneFlags[play->sceneId];
+    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        savedSceneFlags = &gSaveContext.save.info.sceneFlags[play->sceneId];
 
     bzero(actorCtx, sizeof(ActorContext));
 
@@ -2512,10 +2513,12 @@ void Actor_InitContext(PlayState* play, ActorContext* actorCtx, ActorEntry* play
         overlayEntry++;
     }
 
-    actorCtx->flags.chest = savedSceneFlags->chest;
-    actorCtx->flags.swch = savedSceneFlags->swch;
-    actorCtx->flags.clear = savedSceneFlags->clear;
-    actorCtx->flags.collect = savedSceneFlags->collect;
+    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags)) {
+        actorCtx->flags.chest = savedSceneFlags->chest;
+        actorCtx->flags.swch = savedSceneFlags->swch;
+        actorCtx->flags.clear = savedSceneFlags->clear;
+        actorCtx->flags.collect = savedSceneFlags->collect;
+    }
 
     TitleCard_Init(play, &actorCtx->titleCtx);
 

@@ -454,8 +454,8 @@ void EnBox_WaitOpen(EnBox* this, PlayState* play) {
         if (sp4C.z > -50.0f && sp4C.z < 0.0f && fabsf(sp4C.y) < 10.0f && fabsf(sp4C.x) < 20.0f &&
             Player_IsFacingActor(&this->dyna.actor, 0x3000, play)) {
             if (this->giItem > 0)
-                Actor_OfferGetItemNearby(&this->dyna.actor, play, -ENBOX_GET_GET_ITEM_ID(&this->dyna.actor));
-            else Actor_OfferGetItemNearby(&this->dyna.actor, play, -PARAMS_GET_U(this->dyna.actor.params, 5, 7));
+                Actor_OfferGetItemNearby(&this->dyna.actor, play, -this->giItem);
+            else Actor_OfferGetItemNearby(&this->dyna.actor, play, -ENBOX_GET_GET_ITEM_ID(&this->dyna.actor));
         }
         if (Flags_GetTreasure(play, ENBOX_GET_TREASURE_FLAG(&this->dyna.actor))) {
             EnBox_SetupAction(this, EnBox_Open);
@@ -626,7 +626,7 @@ bool EnBox_IsItem(s16 item) {
 void EnBox_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx, Gfx** gfx) {
     EnBox* this = (EnBox*)thisx;
     s32 pad;
-    u8 i = this->giItem > 0 ? this->giItem : PARAMS_GET_U(this->dyna.actor.params, 5, 7);
+    u8 i = this->giItem > 0 ? this->giItem : ENBOX_GET_TREASURE_FLAG(&this->dyna.actor);
     bool is_key = i == GI_SMALL_KEY;
     bool is_dungeon_item = i == GI_COMPASS || i == GI_DUNGEON_MAP;
     bool is_item = EnBox_IsItem(i);
