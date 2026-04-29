@@ -62,6 +62,25 @@ void EnWeatherTag_SetupAction(EnWeatherTag* this, EnWeatherTagActionFunc actionF
     this->actionFunc = actionFunc;
 }
 
+void EnWeather_StopThunder(PlayState* play) {
+    Environment_StopStormNatureAmbience(play);
+    play->envCtx.lightningState = LIGHTNING_LAST;
+}
+
+void EnWeather_ResetWeather(PlayState* play, u8 lightConfig, u8 changeDuration) {
+    gInterruptSongOfStorms = false;
+    gWeatherMode = WEATHER_MODE_CLEAR;
+    play->envCtx.changeSkyboxState = CHANGE_SKYBOX_REQUESTED;
+    play->envCtx.skyboxConfig = 1;
+    play->envCtx.changeLightEnabled = true;
+    play->envCtx.lightConfig = lightConfig;
+    play->envCtx.changeSkyboxNextConfig = play->envCtx.changeLightNextConfig = gLightConfigAfterUnderwater = 0;
+    play->envCtx.changeSkyboxTimer = play->envCtx.changeLightTimer = play->envCtx.changeDuration = changeDuration;
+
+    if (play->envCtx.lightningState == LIGHTNING_ON)
+        EnWeather_StopThunder(play);
+}
+
 void EnWeatherTag_Destroy(Actor* thisx, PlayState* play) {
     EnWeatherTag* this = (EnWeatherTag*)thisx;
     u8 type = PARAMS_GET_U(this->actor.params, 0, 4);
@@ -69,38 +88,25 @@ void EnWeatherTag_Destroy(Actor* thisx, PlayState* play) {
     if (this->killedOnInit)
         return;
 
-    if (type == EN_WEATHER_TAG_TYPE_THUNDERSTORM_GORON_VILLAGE) {
-        if (lastEntranceIndex != gSaveContext.save.entranceIndex) {
-            play->envCtx.lightConfig = 2;
-            play->envCtx.changeSkyboxTimer = play->envCtx.changeDuration = 100;
-            Environment_StopStormNatureAmbience(play);
-            play->envCtx.lightningState = LIGHTNING_LAST;
-            play->envCtx.precipitation[PRECIP_RAIN_MAX] = 0;
-        } else return;
-    } else if (type == EN_WEATHER_TAG_TYPE_THUNDERSTORM_KAKARIKO) {
-        play->envCtx.lightConfig = 4;        
-        play->envCtx.changeSkyboxTimer = play->envCtx.changeDuration = 100;
+    if (type == EN_WEATHER_TAG_TYPE_CLOUDY_MARKET) {
+        EnWeather_ResetWeather(play, 3, 60);
+    } else if (type == EN_WEATHER_TAG_TYPE_CLOUDY_LON_LON_RANCH) {
+        EnWeather_ResetWeather(play, 2, 100);
+    } else if (type == EN_WEATHER_TAG_TYPE_SNOW_ZORAS_DOMAIN) {
+        EnWeather_ResetWeather(play, 2, 60);
+    } else if (type == EN_WEATHER_TAG_TYPE_RAIN_LAKE_HYLIA) {
+        EnWeather_ResetWeather(play, 2, 100);
         Environment_StopStormNatureAmbience(play);
-        play->envCtx.lightningState = LIGHTNING_LAST;
-        play->envCtx.precipitation[PRECIP_RAIN_MAX] = 0;
-    } else if (type == EN_WEATHER_TAG_TYPE_CLOUDY_MARKET) {
-        play->envCtx.lightConfig = 3;
-        play->envCtx.changeSkyboxTimer = play->envCtx.changeDuration = 60;
-    } else if (type == EN_WEATHER_TAG_TYPE_CLOUDY_DEATH_MOUNTAIN || type == EN_WEATHER_TAG_TYPE_SNOW_ZORAS_DOMAIN) {
-        play->envCtx.lightConfig = 2;
-        play->envCtx.changeSkyboxTimer = play->envCtx.changeDuration = 60;
-    } else {
-        play->envCtx.lightConfig = 2;
-        play->envCtx.changeSkyboxTimer = play->envCtx.changeDuration = 100;
+    } else if (type == EN_WEATHER_TAG_TYPE_CLOUDY_DEATH_MOUNTAIN) {
+        EnWeather_ResetWeather(play, 2, 60);
+    } else if (type == EN_WEATHER_TAG_TYPE_THUNDERSTORM_KAKARIKO) {
+        EnWeather_ResetWeather(play, 4, 100);
+    } else if (type == EN_WEATHER_TAG_TYPE_THUNDERSTORM_GRAVEYARD) {
+        EnWeather_StopThunder(play);
+    } else if (type == EN_WEATHER_TAG_TYPE_THUNDERSTORM_GORON_VILLAGE) {
+        if (lastEntranceIndex != gSaveContext.save.entranceIndex)
+            EnWeather_ResetWeather(play, 2, 100);
     }
-
-    gInterruptSongOfStorms = false;
-    gWeatherMode = WEATHER_MODE_CLEAR;
-    play->envCtx.changeSkyboxState = CHANGE_SKYBOX_REQUESTED;
-    play->envCtx.skyboxConfig = 1;
-    play->envCtx.changeSkyboxNextConfig = play->envCtx.changeLightNextConfig = gLightConfigAfterUnderwater = 0;
-    play->envCtx.changeLightEnabled = true;
-    play->envCtx.changeLightTimer = play->envCtx.changeDuration;
 }
 
 void EnWeatherTag_Init(Actor* thisx, PlayState* play) {

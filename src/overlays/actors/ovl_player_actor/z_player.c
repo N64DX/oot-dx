@@ -3213,7 +3213,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             Player_UseItem(play, this, item);
         } else if (this->featherUseCount < MAX_FEATHER_USES) {
             u8 energyCost = (item == ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.obtainedItems.amuletOfEnergy * 5);
-            if ( (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && (this->speedXZ <= 0.2f || item == ITEM_GOLDEN_FEATHER) && gSaveContext.save.info.energy >= energyCost) {
+            if ((((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f) || item == ITEM_GOLDEN_FEATHER) && gSaveContext.save.info.energy >= energyCost) {
                 Vec3f effectsPos = this->actor.home.pos;
                 this->featherUseCount++;
                 func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, 7.15f, play, NA_SE_VO_LI_SWORD_N);

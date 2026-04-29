@@ -255,12 +255,20 @@ Vtx woodfall_room_0Vtx_00AF70[] = {
 #include "assets/scenes/overworld/woodfall/woodfall_room_0Vtx_00AF70.vtx.inc"
 };
 
+Vtx woodfall_room_0Vtx_00D1C0[] = {
+#include "assets/scenes/overworld/woodfall/woodfall_room_0Vtx_00D1C0.vtx.inc"
+};
+
 Vtx woodfall_room_0Vtx_00D1F0[] = {
 #include "assets/scenes/overworld/woodfall/woodfall_room_0Vtx_00D1F0.vtx.inc"
 };
 
 Vtx woodfall_room_0Vtx_00F248[] = {
 #include "assets/scenes/overworld/woodfall/woodfall_room_0Vtx_00F248.vtx.inc"
+};
+
+Vtx woodfall_room_0Vtx_00F1F8[] = {
+#include "assets/scenes/overworld/woodfall/woodfall_room_0Vtx_00F1F8.vtx.inc"
 };
 
 Vtx woodfall_room_0Vtx_00F908[] = {
@@ -1403,16 +1411,13 @@ Gfx woodfall_room_0DL_008EC8[] = {
 Gfx woodfall_room_0DL_00AA88[] = {
     gsSPVertex(&woodfall_room_0Vtx_0091C8[388], 8, 0),
     gsSPCullDisplayList(0, 7),
-    gsSPTexture(0xFFFF, 0xFFFF, 3, G_TX_RENDERTILE, G_ON),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL1, TEXEL0, SHADE, TEXEL0, TEXEL1, TEXEL0, SHADE, TEXEL0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
     gsDPSetTextureLOD(G_TL_LOD),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(woodfall_sceneTex_0055D0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadMultiBlock(woodfall_sceneTex_0055D0, 0x0000, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadMultiBlock(woodfall_sceneTex_005590, 0x0100, 2, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 2, 2),
-    gsDPLoadMultiBlock(woodfall_sceneTex_005590, 0x0100, 3, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 2, 2),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(woodfall_room_0Vtx_0091C8, 32, 0),
@@ -1533,16 +1538,13 @@ Gfx woodfall_room_0DL_00AA88[] = {
 Gfx woodfall_room_0DL_00CC70[] = {
     gsSPVertex(&woodfall_room_0Vtx_00AF70[456], 8, 0),
     gsSPCullDisplayList(0, 7),
-    gsSPTexture(0xFFFF, 0xFFFF, 3, G_TX_RENDERTILE, G_ON),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL1, TEXEL0, SHADE, TEXEL0, TEXEL1, TEXEL0, SHADE, TEXEL0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
     gsDPSetTextureLOD(G_TL_LOD),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(woodfall_sceneTex_0055D0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadMultiBlock(woodfall_sceneTex_0055D0, 0x0000, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadMultiBlock(woodfall_sceneTex_005590, 0x0100, 2, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 2, 2),
-    gsDPLoadMultiBlock(woodfall_sceneTex_005590, 0x0100, 3, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 2, 2),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(woodfall_room_0Vtx_00AF70, 32, 0),
@@ -1682,16 +1684,13 @@ Gfx woodfall_room_0DL_00CC70[] = {
 Gfx woodfall_room_0DL_00ECF0[] = {
     gsSPVertex(&woodfall_room_0Vtx_00D1F0[424], 8, 0),
     gsSPCullDisplayList(0, 7),
-    gsSPTexture(0xFFFF, 0xFFFF, 3, G_TX_RENDERTILE, G_ON),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL1, TEXEL0, SHADE, TEXEL0, TEXEL1, TEXEL0, SHADE, TEXEL0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
     gsDPSetTextureLOD(G_TL_LOD),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(woodfall_sceneTex_0055D0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadMultiBlock(woodfall_sceneTex_0055D0, 0x0000, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadMultiBlock(woodfall_sceneTex_005590, 0x0100, 2, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 2, 2),
-    gsDPLoadMultiBlock(woodfall_sceneTex_005590, 0x0100, 3, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 2, 2),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(woodfall_room_0Vtx_00D1F0, 32, 0),
@@ -1819,10 +1818,28 @@ Gfx woodfall_room_0DL_00ECF0[] = {
     gsSPEndDisplayList(),
 };
 
+Gfx woodfall_room_0DL_00AA88_branch[] = {
+    gsSPVertex(woodfall_room_0Vtx_00AF40, 1, 0),
+    gsSPBranchLessZraw(woodfall_room_0DL_00AA88, 0, 0x00000640),
+    gsSPEndDisplayList(),
+};
+
+Gfx woodfall_room_0DL_00CC70_branch[] = {
+    gsSPVertex(woodfall_room_0Vtx_00D1C0, 1, 0),
+    gsSPBranchLessZraw(woodfall_room_0DL_00CC70, 0, 0x00000640),
+    gsSPEndDisplayList(),
+};
+
+Gfx woodfall_room_0DL_00ECF0_branch[] = {
+    gsSPVertex(woodfall_room_0Vtx_00F1F8, 1, 0),
+    gsSPBranchLessZraw(woodfall_room_0DL_00ECF0, 0, 0x00000640),
+    gsSPEndDisplayList(),
+};
+
 Gfx woodfall_room_0DL_00F228[] = {
-    gsSPDisplayList(woodfall_room_0DL_00AA88),
-    gsSPDisplayList(woodfall_room_0DL_00CC70),
-    gsSPDisplayList(woodfall_room_0DL_00ECF0),
+    gsSPDisplayList(woodfall_room_0DL_00AA88_branch),
+    gsSPDisplayList(woodfall_room_0DL_00CC70_branch),
+    gsSPDisplayList(woodfall_room_0DL_00ECF0_branch),
     gsSPEndDisplayList(),
 };
 
