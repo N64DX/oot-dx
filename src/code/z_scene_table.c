@@ -160,8 +160,6 @@ Gfx sDefaultDisplayList[] = {
     gsSPEndDisplayList(),
 };
 
-#if PLATFORM_N64 // Scene_Draw is at end of file in GC/iQue versions
-
 SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigDefault,                     // SDC_DEFAULT
     Scene_DrawConfigHyruleField,                 // SDC_HYRULE_FIELD
@@ -228,6 +226,8 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigGoronVillage,                // SDC_GORON_VILLAGE
     Scene_DrawConfigGoronShrine,                 // SDC_GORON_SHRINE
 };
+
+#if PLATFORM_N64 // Scene_Draw is at end of file in GC/iQue versions
 
 void Scene_Draw(PlayState* play) {
     if ((B_80121220 != NULL) && (B_80121220->unk_6C != NULL)) {
@@ -1739,15 +1739,8 @@ void Scene_DrawConfigBesitu(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
 }
 
-void Scene_DrawConfigForbiddenWoods(PlayState* play) {
-    u32 gameplayFrames = play->gameplayFrames;
-
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
-
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 10) % 128, 32, 32, 1, 0, (gameplayFrames * 10) % 128, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 3)  % 128, 32, 32, 1, 0, (gameplayFrames * 3)  % 128, 32, 32));
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, 0, 32, 32, 1, 0, -gameplayFrames, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, gameplayFrames, 64, 64, 1, 0, -gameplayFrames, 64, 64));
+void Scene_SetDefaultEnvColor(PlayState* play) {
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
@@ -1755,7 +1748,21 @@ void Scene_DrawConfigForbiddenWoods(PlayState* play) {
     gDPPipeSync(POLY_XLU_DISP++);
     gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
 
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
+void Scene_DrawConfigForbiddenWoods(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
+
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 10) % 128, 32, 32, 1, 0, (gameplayFrames * 10) % 128, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 3)  % 128, 32, 32, 1, 0, (gameplayFrames * 3)  % 128, 32, 32));
+    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, 0, 32, 32, 1, 0, -gameplayFrames, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, gameplayFrames, 64, 64, 1, 0, -gameplayFrames, 64, 64));
+
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
 
 void* sAncientHollowEntranceTextures[] = {
@@ -1766,7 +1773,7 @@ void* sAncientHollowEntranceTextures[] = {
 void Scene_DrawConfigAncientHollow(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 512, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 1
     gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 256, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 2
@@ -1787,48 +1794,38 @@ void Scene_DrawConfigAncientHollow(PlayState* play) {
         gDPSetEnvColor(POLY_XLU_DISP++, 255, 255, 255, 128);
     }
 
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
 
 void Scene_DrawConfigWoodfallTemple(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
     gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
 
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
-
-    gDPPipeSync(POLY_XLU_DISP++);
-    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
-
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
 
 void Scene_DrawConfigWoodfall(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
     gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
     gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
 
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
-
-    gDPPipeSync(POLY_XLU_DISP++);
-    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
-
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
 
 void Scene_DrawConfigSpringLake(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32)); // Chimney matrix effect 
     gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          0,                           32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 1
@@ -1837,186 +1834,84 @@ void Scene_DrawConfigSpringLake(PlayState* play) {
     gSPSegment(POLY_XLU_DISP++, 0x0C, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 10) % 128, 64,  64, 1, 0,                    (gameplayFrames * 10) % 128, 64,  64)); // Chimney fog
     gSPSegment(POLY_OPA_DISP++, 0x0D, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 1)  % 128, 32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Chimney fire
 
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
-
-    gDPPipeSync(POLY_XLU_DISP++);
-    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
-
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
 
 void Scene_DrawConfigSpringLakeSmithy(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32)); // Shining metal
 
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
-
-    gDPPipeSync(POLY_XLU_DISP++);
-    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
-
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
 
 void Scene_DrawConfigPathToGoronVillage(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0,                           64,  64, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 1
     gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0,                           32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 2
     gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, 0,                           32,  32)); // Water 3
 
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
-
-    gDPPipeSync(POLY_XLU_DISP++);
-    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
-
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
 
 void Scene_DrawConfigGrottos2(PlayState* play) {
     u32 gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 5171);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     gameplayFrames = play->gameplayFrames;
     gSPSegment(POLY_XLU_DISP++, 0x0D, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, 0, 32, 16, 1, gameplayFrames % 128, 0, 32,  16)); // Water
 
-    gDPPipeSync(POLY_XLU_DISP++);
-    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
-
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
-
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 5212);
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
 
 void Scene_DrawConfigPathToWoodfall(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 3)  % 128, 32, 32, 1, 0, (gameplayFrames * 3)  % 128, 32, 32));
     gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, 0, 32, 32, 1, 0, -gameplayFrames, 32, 32));
     gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, gameplayFrames, 64, 64, 1, 0, -gameplayFrames, 64, 64));
 
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
-
-    gDPPipeSync(POLY_XLU_DISP++);
-    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
-
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
 
 void Scene_DrawConfigGoronVillage(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0,  (gameplayFrames * 1), 0, 32,  32, 1, -(gameplayFrames * 1), -(gameplayFrames * 1), 32,  32));
     gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0,  (gameplayFrames * 1), 0, 32,  32, 1,  (gameplayFrames * 1), 0,                     32,  32));
     gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, -(gameplayFrames * 2), 0, 128, 64, 1, -(gameplayFrames * 3), 0,                     128, 64));
 
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
-
-    gDPPipeSync(POLY_XLU_DISP++);
-    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
-
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
-
 
 void Scene_DrawConfigGoronShrine(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7893);
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
     gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 1), 0, 32,  32, 1, gameplayFrames * 1, 0, 32,  32));
 
-    gDPPipeSync(POLY_OPA_DISP++);
-    gDPSetEnvColor(POLY_OPA_DISP++, 128, 128, 128, 128);
-
-    gDPPipeSync(POLY_XLU_DISP++);
-    gDPSetEnvColor(POLY_XLU_DISP++, 128, 128, 128, 128);
-
-    CLOSE_DISPS(play->state.gfxCtx, "../z_scene_table.c", 7910);
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
-#if !PLATFORM_N64 // Scene_Draw is at beginning of file in N64 versions
 
-SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
-    Scene_DrawConfigDefault,                     // SDC_DEFAULT
-    Scene_DrawConfigHyruleField,                 // SDC_HYRULE_FIELD
-    Scene_DrawConfigKakarikoVillage,             // SDC_KAKARIKO_VILLAGE
-    Scene_DrawConfigZorasRiver,                  // SDC_ZORAS_RIVER
-    Scene_DrawConfigKokiriForest,                // SDC_KOKIRI_FOREST
-    Scene_DrawConfigLakeHylia,                   // SDC_LAKE_HYLIA
-    Scene_DrawConfigZorasDomain,                 // SDC_ZORAS_DOMAIN
-    Scene_DrawConfigZorasFountain,               // SDC_ZORAS_FOUNTAIN
-    Scene_DrawConfigGerudoValley,                // SDC_GERUDO_VALLEY
-    Scene_DrawConfigLostWoods,                   // SDC_LOST_WOODS
-    Scene_DrawConfigDesertColossus,              // SDC_DESERT_COLOSSUS
-    Scene_DrawConfigGerudosFortress,             // SDC_GERUDOS_FORTRESS
-    Scene_DrawConfigHauntedWasteland,            // SDC_HAUNTED_WASTELAND
-    Scene_DrawConfigHyruleCastle,                // SDC_HYRULE_CASTLE
-    Scene_DrawConfigDeathMountainTrail,          // SDC_DEATH_MOUNTAIN_TRAIL
-    Scene_DrawConfigDeathMountainCrater,         // SDC_DEATH_MOUNTAIN_CRATER
-    Scene_DrawConfigGoronCity,                   // SDC_GORON_CITY
-    Scene_DrawConfigLonLonRanch,                 // SDC_LON_LON_RANCH
-    Scene_DrawConfigFireTemple,                  // SDC_FIRE_TEMPLE
-    Scene_DrawConfigDekuTree,                    // SDC_DEKU_TREE
-    Scene_DrawConfigDodongosCavern,              // SDC_DODONGOS_CAVERN
-    Scene_DrawConfigJabuJabu,                    // SDC_JABU_JABU
-    Scene_DrawConfigForestTemple,                // SDC_FOREST_TEMPLE
-    Scene_DrawConfigWaterTemple,                 // SDC_WATER_TEMPLE
-    Scene_DrawConfigShadowTempleAndWell,         // SDC_SHADOW_TEMPLE_AND_WELL
-    Scene_DrawConfigSpiritTemple,                // SDC_SPIRIT_TEMPLE
-    Scene_DrawConfigInsideGanonsCastle,          // SDC_INSIDE_GANONS_CASTLE
-    Scene_DrawConfigGerudoTrainingGround,        // SDC_GERUDO_TRAINING_GROUND
-    Scene_DrawConfigDekuTreeBoss,                // SDC_DEKU_TREE_BOSS
-    Scene_DrawConfigWaterTempleBoss,             // SDC_WATER_TEMPLE_BOSS
-    Scene_DrawConfigTempleOfTime,                // SDC_TEMPLE_OF_TIME
-    Scene_DrawConfigGrottos,                     // SDC_GROTTOS
-    Scene_DrawConfigChamberOfTheSages,           // SDC_CHAMBER_OF_THE_SAGES
-    Scene_DrawConfigGreatFairyFountain,          // SDC_GREAT_FAIRYS_FOUNTAIN
-    Scene_DrawConfigShootingGallery,             // SDC_SHOOTING_GALLERY
-    Scene_DrawConfigCastleCourtyardGuards,       // SDC_CASTLE_COURTYARD_GUARDS
-    Scene_DrawConfigOutsideGanonsCastle,         // SDC_OUTSIDE_GANONS_CASTLE
-    Scene_DrawConfigIceCavern,                   // SDC_ICE_CAVERN
-    Scene_DrawConfigGanonsTowerCollapseExterior, // SDC_GANONS_TOWER_COLLAPSE_EXTERIOR
-    Scene_DrawConfigFairysFountain,              // SDC_FAIRYS_FOUNTAIN
-    Scene_DrawConfigThievesHideout,              // SDC_THIEVES_HIDEOUT
-    Scene_DrawConfigBombchuBowlingAlley,         // SDC_BOMBCHU_BOWLING_ALLEY
-    Scene_DrawConfigRoyalFamilysTomb,            // SDC_ROYAL_FAMILYS_TOMB
-    Scene_DrawConfigLakesideLaboratory,          // SDC_LAKESIDE_LABORATORY
-    Scene_DrawConfigLonLonBuildings,             // SDC_LON_LON_BUILDINGS
-    Scene_DrawConfigMarketGuardHouse,            // SDC_MARKET_GUARD_HOUSE
-    Scene_DrawConfigPotionShopGranny,            // SDC_POTION_SHOP_GRANNY
-    Scene_DrawConfigCalmWater,                   // SDC_CALM_WATER
-    Scene_DrawConfigGraveExitLightShining,       // SDC_GRAVE_EXIT_LIGHT_SHINING
-    Scene_DrawConfigBesitu,                      // SDC_BESITU
-    Scene_DrawConfigFishingPond,                 // SDC_FISHING_POND
-    Scene_DrawConfigGanonsTowerCollapseInterior, // SDC_GANONS_TOWER_COLLAPSE_INTERIOR
-    Scene_DrawConfigInsideGanonsCastleCollapse,  // SDC_INSIDE_GANONS_CASTLE_COLLAPSE
-    Scene_DrawConfigForbiddenWoods,              // SDC_FORBIDDEN_WOODS
-    Scene_DrawConfigAncientHollow,               // SDC_ANCIENT_HOLLOW
-    Scene_DrawConfigWoodfallTemple,              // SDC_WOODFALL_TEMPLE
-    Scene_DrawConfigWoodfall,                    // SDC_WOODFALL_TEMPLE
-    Scene_DrawConfigSpringLake,                  // SDC_SPRING_LAKE
-    Scene_DrawConfigSpringLakeSmithy,            // SDC_SPRING_LAKE_SMITHY
-    Scene_DrawConfigPathToGoronVillage,          // SDC_PATH_TO_GORON_VILLAGE
-    Scene_DrawConfigGrottos2,                    // SDC_GROTTOS2
-    Scene_DrawConfigPathToWoodfall,              // SDC_PATH_TO_WOODFALL
-    Scene_DrawConfigGoronVillage,                // SDC_GORON_VILLAGE
-    Scene_DrawConfigGoronShrine,                 // SDC_GORON_SHRINE
-};
+#if !PLATFORM_N64 // Scene_Draw is at beginning of file in N64 versions
 
 void Scene_Draw(PlayState* play) {
 #if DEBUG_FEATURES

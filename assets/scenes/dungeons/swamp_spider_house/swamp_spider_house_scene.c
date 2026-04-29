@@ -34,7 +34,13 @@ SceneCmd* swamp_spider_house_sceneAlternateHeaders[] = {
 };
 
 ActorEntry swamp_spider_house_sceneStartPositionList0x000088[] = {
-    { ACTOR_PLAYER, { 0, 120, 300 }, { 0, 0x8000, 0 }, 0x0FFF },
+    { ACTOR_PLAYER, {    0, 120,   300 }, { 0, 0x8000, 0 }, 0x0FFF }, // Main entrance
+    { ACTOR_PLAYER, {    0, 120,   300 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 0
+    { ACTOR_PLAYER, {    0, 120,  -230 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 1
+    { ACTOR_PLAYER, {    0,   0, -1320 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 2
+    { ACTOR_PLAYER, { -465,   0,  -425 }, { 0, 0xC000, 0 }, 0x0DFF }, // Debug warp room 3
+    { ACTOR_PLAYER, {  465,   0,  -960 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 4
+    { ACTOR_PLAYER, {    0, 120, -2260 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 5
 };
 
 TransitionActorEntry swamp_spider_house_sceneTransitionActorList_000098[] = {
@@ -58,7 +64,13 @@ RomFile swamp_spider_house_sceneRoomList0x000118[] = {
 };
 
 Spawn swamp_spider_house_sceneEntranceList0x000148[] = {
-    { 0x00, 0x00 },
+    { 0x00, 0x00 }, // Main Entrance
+    { 0x01, 0x00 }, // Debug warp room 0
+    { 0x02, 0x01 }, // Debug warp room 1
+    { 0x03, 0x02 }, // Debug warp room 2
+    { 0x04, 0x03 }, // Debug warp room 3
+    { 0x05, 0x04 }, // Debug warp room 4
+    { 0x06, 0x05 }, // Debug warp room 5
 };
 
 u16 swamp_spider_house_sceneExitList_00014C[] = {

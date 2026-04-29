@@ -107,6 +107,8 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         MapSelect_LoadRoom(DBG_INSIDE_GANONS_CASTLE_0, this->roomNum, 20);
     else if (entranceIndex == ENTR_GANONS_TOWER_0)
         MapSelect_LoadRoom(DBG_GANONS_TOWER_0, this->roomNum, 9);
+    else if (entranceIndex == ENTR_WEBBED_SHRINE_0)
+        MapSelect_LoadRoom(DBG_WEBBED_SHRINE_0, this->roomNum, 6);
     else if (entranceIndex == ENTR_ANCIENT_HOLLOW_0)
         MapSelect_LoadRoom(DBG_ANCIENT_HOLLOW_0, this->roomNum, 14);
     else if (entranceIndex == ENTR_WOODFALL_TEMPLE_0)
