@@ -1233,10 +1233,6 @@ u64 woodfall_sceneTex_005190[] = {
 #include "assets/scenes/overworld/woodfall/woodfall_sceneTex_005190.rgba16.inc.c"
 };
 
-u64 woodfall_sceneTex_005590[] = {
-#include "assets/scenes/overworld/woodfall/woodfall_sceneTex_005590.ia8.inc.c"
-};
-
 u64 woodfall_sceneTex_0055D0[] = {
 #include "assets/scenes/overworld/woodfall/woodfall_sceneTex_0055D0.rgba16.inc.c"
 };

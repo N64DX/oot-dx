@@ -16,7 +16,6 @@ extern CollisionHeader woodfall_sceneCollisionHeader_003CEC;
 
 extern u64 woodfall_sceneTex_004990[];
 extern u64 woodfall_sceneTex_005190[];
-extern u64 woodfall_sceneTex_005590[];
 extern u64 woodfall_sceneTex_0055D0[];
 extern u64 woodfall_sceneTex_005DD0[];
 extern u64 woodfall_sceneTex_0065D0[];
