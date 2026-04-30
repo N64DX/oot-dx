@@ -139,7 +139,8 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
         }
 
         if (HAS_HEROS_SWORD && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI && player->itemAction == PLAYER_IA_SWORD_KOKIRI) {
-            this->attackStrength += ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT;
+            this->attackStrength += 2;
+            this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
             EnMThunder_SetupAction(this, EnMThunder_SwordBeam_Attack);
             this->followPlayerTimer = M_THUNDER_ATTACK_WEAK;
             this->targetScale = 12;
@@ -268,7 +269,8 @@ void EnMThunder_ChargingSpinAttack(EnMThunder* this, PlayState* play) {
             }
 
             if (HAS_HEROS_SWORD && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI) {
-                this->attackStrength += ENMTHUNDER_SUBTYPE_SWORDBEAM_GREAT;
+                this->attackStrength += 2;
+                this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
                 EnMThunder_SetupAction(this, EnMThunder_SwordBeam_Attack);
                 this->followPlayerTimer = 1;
                 this->targetScale = 12;

@@ -452,9 +452,11 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                     pauseCtx->equipAnimAlpha = 0;
                                     sEquipMoveTimer = 6;
                                 } else {
-                                    SFX_PLAY_CENTERED(NA_SE_SY_ERROR);
+                                    SFX_PLAY_CENTERED(NA_SE_SY_DECIDE);
                                 }
                             }
+                        } else {
+                            SFX_PLAY_CENTERED(NA_SE_SY_ERROR);
                         }
                     }
                     else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && canSelectItem) {
