@@ -466,7 +466,7 @@ void EnDekunuts_Run(EnDekunuts* this, PlayState* play) {
     }
 
     this->nextSpin--;
-    if (((this->actor.xzDistToPlayer <= 300.0f && this->nextSpin <= 0) || this->actor.xzDistToPlayer <= 70.0f) && HARDER_ENEMIES) {
+    if (((this->actor.xzDistToPlayer <= 300.0f && this->nextSpin <= 0) || this->actor.xzDistToPlayer <= 70.0f) && HARDER_ENEMIES && play->sceneId != SCENE_WOODFALL) {
         EnDekunuts_SetupSpin(this, play);
         return;
     }
@@ -588,6 +588,14 @@ void EnDekunuts_Update(Actor* thisx, PlayState* play) {
     s32 pad;
 
     if (this->actor.params != DEKUNUTS_FLOWER) {
+        if (play->sceneId == SCENE_WOODFALL && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && this->actor.colChkInfo.health > 0) { // Deku Scrubs will die when touching the water in the Woodfall area
+            Enemy_StartFinishingBlow(play, &this->actor);
+            Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_DAMAGE);
+            Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_CUTBODY);
+            Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, Animation_GetLastFrame(&gDekuNutsDamageAnim));
+            Actor_Kill(&this->actor);
+        }
+
         EnDekunuts_ColliderCheck(this, play);
         this->actionFunc(this, play);
         Actor_MoveXZGravity(&this->actor);

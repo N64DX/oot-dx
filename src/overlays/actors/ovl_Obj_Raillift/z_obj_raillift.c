@@ -205,6 +205,10 @@ void ObjRaillift_Update(Actor* thisx, PlayState* play) {
     this->actionFunc(this, play);
     Actor_SetFocus(thisx, 10.0f);
 
+    if (this->dyna.actor.xzDistToPlayer > 650.0f)
+        DynaPoly_DisableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
+    else DynaPoly_EnableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
+
     if (OBJRAILLIFT_REACT_TO_PLAYER_ON_TOP(thisx)) {
         f32 target;
         f32 step;

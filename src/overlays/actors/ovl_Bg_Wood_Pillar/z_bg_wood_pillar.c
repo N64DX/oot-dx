@@ -80,6 +80,10 @@ void BgWoodPillarobj_Destroy(Actor* thisx, PlayState* play) {
 
 void BgWoodPillarobj_Update(Actor* thisx, PlayState* play) {
     BgWoodPillarobj* this = (BgWoodPillarobj*)thisx;
+
+    if (this->dyna.actor.xzDistToPlayer > 650.0f)
+        DynaPoly_DisableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
+    else DynaPoly_EnableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
 }
 
 void BgWoodPillarobj_Draw(Actor* thisx, PlayState* play) {
