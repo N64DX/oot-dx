@@ -56,8 +56,8 @@ ActorEntry woodfall_room_0ActorEntry_000064[] = {
     { ACTOR_EN_BOX,         {    46,    196,   1568 }, { 0x4E, 0x0000,    0 }, 0x5002 }, // Sets chest flag: 0x02
     { ACTOR_EN_BOX,         {   627,     15,  -1314 }, { 0x4E, 0x4000,    0 }, 0x5000 }, // Sets chest flag: 0x00
     { ACTOR_EN_BOX,         {  1286,    120,   -973 }, { 0x3E, 0x7000,    0 }, 0x0001 }, // Sets chest flag: 0x01
-    { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0, 0x8000,    0 }, 0x0002 }, // Woodfall Temple
-    { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0, 0x8000,    0 }, 0x0003 }, // Ramp & Platform
+    { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0,      0,    0 }, 0x0002 }, // Woodfall Temple
+    { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0,      0,    0 }, 0x0003 }, // Ramp & Platform
     { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0, 0x8000,    0 }, 0x0000 }, // Water
     { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0,      0,    0 }, 0x0001 }, // Walls
     { ACTOR_OBJ_RAILLIFT,   {     0,    200,    600 }, {    0,      0,    0 }, 0x8000 },
