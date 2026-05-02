@@ -110,6 +110,12 @@ void EnBox_ClipToGround(EnBox* this, PlayState* play) {
     }
 }
 
+bool EnBox_CanHookshot(PlayState* play) {
+    if (play->sceneId == SCENE_WOODFALL || play->sceneId == SCENE_WOODFALL_TEMPLE)
+        return false;
+    return true;
+}
+
 void EnBox_Init(Actor* thisx, PlayState* play2) {
     PlayState* play = play2;
     EnBox* this = (EnBox*)thisx;
@@ -125,7 +131,7 @@ void EnBox_Init(Actor* thisx, PlayState* play2) {
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
 
     DynaPolyActor_Init(&this->dyna, 0);
-    CollisionHeader_GetVirtual(&gTreasureChestCol, &colHeader);
+    CollisionHeader_GetVirtual(EnBox_CanHookshot(play2) ? &gTreasureChestCol : &gTreasureChestNoHookshotCol, &colHeader);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
     DynaPoly_DisableCeilingCollision(play, &play->colCtx.dyna, this->dyna.bgId);
 
