@@ -16,4 +16,6 @@ extern u8 gTreasureChestKeySideAndTopTex[];
 extern Gfx gTreasureChestKeyChestFrontDL[55];
 extern Gfx gTreasureChestKeyChestSideAndLidDL[51];
 
+extern CollisionHeader gTreasureChestNoHookshotCol;
+
 #endif

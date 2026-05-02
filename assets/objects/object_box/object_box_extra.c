@@ -140,3 +140,75 @@ Gfx gTreasureChestKeyChestFrontDL[55] = {
 Gfx gTreasureChestKeyChestSideAndLidDL[51] = {
 #include "assets/objects/object_box/gTreasureChestKeyChestSideAndLidDL.inc.c"
 };
+
+SurfaceType gTreasureChestNoHookshotSurfaceTypes[] = {
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        }, // data
+    }, // 0
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_1,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        }, // data
+    }, // 1
+};
+
+CollisionHeader gTreasureChestNoHookshotCol = {
+    {
+        -2525, // x
+        2, // y
+        -1942, // z
+    }, // minBounds
+    {
+        2525, // x
+        4475, // y
+        1962, // z
+    }, // maxBounds
+    8, // numVertices
+    gTreasureChestVtxList, // vtxList
+    12, // numPolygons
+    gTreasureChestPolyList, // polyList
+    gTreasureChestNoHookshotSurfaceTypes, // surfaceTypeList
+    gTreasureChestBgCamList, // bgCamList
+    0, // numWaterBoxes
+    NULL, // waterBoxes
+};
