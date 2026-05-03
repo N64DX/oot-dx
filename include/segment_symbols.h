@@ -690,6 +690,12 @@ DECLARE_ROM_SEGMENT(goron_village_room_1)
 DECLARE_ROM_SEGMENT(goron_shrine_room_0)
 DECLARE_ROM_SEGMENT(goron_shrine_room_1)
 
+DECLARE_ROM_SEGMENT(dawngrove_village_room_0)
+
+DECLARE_ROM_SEGMENT(dawngrove_room_0)
+DECLARE_ROM_SEGMENT(dawngrove_room_1)
+DECLARE_ROM_SEGMENT(dawngrove_room_2)
+
 DECLARE_ROM_SEGMENT(old_lost_woods_room_0)
 
 DECLARE_ROM_SEGMENT(grottos2_room_6)

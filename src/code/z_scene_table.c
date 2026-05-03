@@ -107,6 +107,8 @@ void Scene_DrawConfigPathToWoodfall(PlayState* play);
 void Scene_DrawConfigGoronVillage(PlayState* play);
 void Scene_DrawConfigGoronShrine(PlayState* play);
 void Scene_DrawConfigGoronMines(PlayState* play);
+void Scene_DrawConfigDawngroveVillage(PlayState* play);
+void Scene_DrawConfigDawngrove(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -227,6 +229,8 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigGoronVillage,                // SDC_GORON_VILLAGE
     Scene_DrawConfigGoronShrine,                 // SDC_GORON_SHRINE
     Scene_DrawConfigGoronMines,                  // SDC_GORON_MINES
+    Scene_DrawConfigDawngroveVillage,            // SDC_DAWNGROVE_VILLAGE
+    Scene_DrawConfigDawngrove,                   // SDC_DAWNGROVE
 };
 
 #if PLATFORM_N64 // Scene_Draw is at end of file in GC/iQue versions
@@ -1921,6 +1925,28 @@ void Scene_DrawConfigGoronMines(PlayState* play) {
     gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, gameplayFrames % 256, 0,                          64, 32, 1, 0,  gameplayFrames      % 128, 64, 32)); // Boss Lava
 
     gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TexScroll(play->state.gfxCtx, gameplayFrames % 256, 0, 64, 32)); // Fog
+
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
+void Scene_DrawConfigDawngroveVillage(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, 0, 32,  32)); // Water
+
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
+void Scene_DrawConfigDawngrove(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 2) % 128, 32, 128, 1, 0, -(gameplayFrames * 2) % 128, 32, 128)); // Water & Waterfall
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);

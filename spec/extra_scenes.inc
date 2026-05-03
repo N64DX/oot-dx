@@ -62,6 +62,20 @@ beginseg
 endseg
 
 beginseg
+    name "woodfall_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "woodfall_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_room_0.o"
+    number 3
+endseg
+
+beginseg
     name "path_to_goron_village_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/overworld/path_to_goron_village/path_to_goron_village_scene.o"
@@ -118,16 +132,38 @@ beginseg
 endseg
 
 beginseg
-    name "woodfall_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_scene.o"
+    name "dawngrove_village_scene"
+    include "$(BUILD_DIR)/assets/scenes/overworld/dawngrove_village/dawngrove_village_scene.o"
     number 2
 endseg
 
 beginseg
-    name "woodfall_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/woodfall/woodfall_room_0.o"
+    name "dawngrove_village_room_0"
+    include "$(BUILD_DIR)/assets/scenes/overworld/dawngrove_village/dawngrove_village_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "dawngrove_scene"
+    include "$(BUILD_DIR)/assets/scenes/overworld/dawngrove/dawngrove_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "dawngrove_room_0"
+    include "$(BUILD_DIR)/assets/scenes/overworld/dawngrove/dawngrove_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "dawngrove_room_1"
+    include "$(BUILD_DIR)/assets/scenes/overworld/dawngrove/dawngrove_room_1.o"
+    number 3
+endseg
+
+beginseg
+    name "dawngrove_room_2"
+    include "$(BUILD_DIR)/assets/scenes/overworld/dawngrove/dawngrove_room_2.o"
     number 3
 endseg
 
