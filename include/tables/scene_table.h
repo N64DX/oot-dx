@@ -126,6 +126,7 @@
 /* 0x72 */ DEFINE_SCENE(woodfall_temple_scene, none, SCENE_WOODFALL_TEMPLE, SDC_WOODFALL_TEMPLE, 0, 0)
 /* 0x73 */ DEFINE_SCENE(woodfall_temple_boss_scene, none, SCENE_WOODFALL_TEMPLE_BOSS, SDC_WOODFALL_TEMPLE, 0, 0)
 /* 0x74 */ DEFINE_SCENE(mountain_smithy_scene, none, SCENE_SPRING_LAKE_SMITHY, SDC_SPRING_LAKE_SMITHY, 0, 0)
+/* 0x75 */ DEFINE_SCENE(dawngrove_village_scene, none, SCENE_DAWNGROVE_VILLAGE, SDC_DAWNGROVE_VILLAGE, 0, 0)
 
 // 0x7B (124th scene) = gSaveContext.save.info.sceneFlags MAX
 

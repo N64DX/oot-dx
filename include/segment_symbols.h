@@ -738,6 +738,8 @@ DECLARE_ROM_SEGMENT(woodfall_temple_boss_room_0)
 
 DECLARE_ROM_SEGMENT(mountain_smithy_room_0)
 
+DECLARE_ROM_SEGMENT(dawngrove_village_room_0)
+
 // Room symbols for compiling test scenes.
 // These are not wrapped in an `#if DEBUG_ASSETS` so that debug ROMs
 // can be built with DEBUG_ASSETS=0 (e.g. when DEBUG_FEATURES=0)

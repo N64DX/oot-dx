@@ -526,6 +526,7 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "141:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
     { "142:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
     { "143:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
+    { "144:" T(GFXP_HIRAGANA "", "Dawngrove Village"), MapSelect_LoadGame, ENTR_DAWNGROVE_VILLAGE_0 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };

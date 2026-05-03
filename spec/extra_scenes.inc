@@ -464,3 +464,15 @@ beginseg
     include "$(BUILD_DIR)/assets/scenes/indoors/mountain_smithy/mountain_smithy_room_0.o"
     number 3
 endseg
+
+beginseg
+    name "dawngrove_village_scene"
+    include "$(BUILD_DIR)/assets/scenes/overworld/dawngrove_village/dawngrove_village_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "dawngrove_village_room_0"
+    include "$(BUILD_DIR)/assets/scenes/overworld/dawngrove_village/dawngrove_village_room_0.o"
+    number 3
+endseg
