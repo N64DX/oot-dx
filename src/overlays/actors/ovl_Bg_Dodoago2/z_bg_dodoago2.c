@@ -176,7 +176,7 @@ void func_80871CF4(BgDodoago2* this, PlayState* play) {
         this->state = 0;
         Audio_PlaySfxGeneral(NA_SE_SY_CORRECT_CHIME, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         BgDodoago2_SetupAction(this, func_80871FB8);
-        OnePointCutscene_Init(play, 3380, 160, &this->dyna.actor, CAM_ID_MAIN);
+        OnePointCutscene_Init(play, play->sceneId == SCENE_GORON_MINES ? 3381 : 3380, 160, &this->dyna.actor, CAM_ID_MAIN);
 
         if (!sHasParent) {
             this->dyna.actor.parent = explosive;

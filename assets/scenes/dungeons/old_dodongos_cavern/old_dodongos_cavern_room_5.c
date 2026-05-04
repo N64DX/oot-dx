@@ -12,7 +12,7 @@ SceneCmd old_dodongos_cavern_room_5[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_5MeshHeader0x0000D0),
-    SCENE_CMD_OBJECT_LIST(9, old_dodongos_cavern_room_5ObjectList0x000038),
+    SCENE_CMD_OBJECT_LIST(8, old_dodongos_cavern_room_5ObjectList0x000038),
     SCENE_CMD_ACTOR_LIST(8, old_dodongos_cavern_room_5ActorList0x000048),
     SCENE_CMD_END(),
 };
@@ -21,12 +21,11 @@ s16 old_dodongos_cavern_room_5ObjectList0x000038[] = {
     OBJECT_DDAN_OBJECTS,
     OBJECT_BWALL2,
     OBJECT_BOX,
-    OBJECT_BOMBF,
-    OBJECT_DODOJR,
     OBJECT_DODONGO,
-    OBJECT_FIREFLY,
     OBJECT_AM,
     OBJECT_BEAST,
+    OBJECT_ICE_OBJECTS,
+    OBJECT_DODOJR,
 };
 
 ActorEntry old_dodongos_cavern_room_5ActorList0x000048[] = {
@@ -38,7 +37,7 @@ ActorEntry old_dodongos_cavern_room_5ActorList0x000048[] = {
     { ACTOR_EN_AM,         { 3106,  40, -4498 }, { 0, 0x4000, 0 }, 0xFFFF },
     { ACTOR_EN_AM,         { 3002,  40, -4583 }, { 0, 0x8000, 0 }, 0xFFFF },
     { ACTOR_OBJ_SWITCH,    { 3000, 100, -4482 }, { 0,      0, 0 }, 0x0201 }, // Switch: 02
-    { ACTOR_EN_DODOJR,     { 3778,  73,  -414 }, { 0, 0xC000, 0 }, 0x0001 },
+    
 };
 
 RoomShapeCullable old_dodongos_cavern_room_5MeshHeader0x0000D0 = {

@@ -12,7 +12,7 @@ SceneCmd old_dodongos_cavern_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_1MeshHeader0x0000B0),
-    SCENE_CMD_OBJECT_LIST(9, old_dodongos_cavern_room_1ObjectList0x000038),
+    SCENE_CMD_OBJECT_LIST(8, old_dodongos_cavern_room_1ObjectList0x000038),
     SCENE_CMD_ACTOR_LIST(7, old_dodongos_cavern_room_1ActorList0x000044),
     SCENE_CMD_END(),
 };
@@ -21,22 +21,21 @@ s16 old_dodongos_cavern_room_1ObjectList0x000038[] = {
     OBJECT_DDAN_OBJECTS,
     OBJECT_BWALL2,
     OBJECT_BOX,
-    OBJECT_BOMBF,
-    OBJECT_DODOJR,
     OBJECT_DODONGO,
-    OBJECT_FIREFLY,
     OBJECT_AM,
     OBJECT_BEAST,
+    OBJECT_ICE_OBJECTS,
+    OBJECT_DODOJR,
 };
 
 ActorEntry old_dodongos_cavern_room_1ActorList0x000044[] = {
-    { ACTOR_OBJECT_KANKYO, {    0, 0,    0 }, { 0,      0, 0 }, 0x0006 },
-    { ACTOR_EN_DODOJR,     { 2330, 0, -409 }, { 0, 0xC000, 0 }, 0x0000 },
-    { ACTOR_EN_DODOJR,     { 2275, 0, -343 }, { 0, 0xC000, 0 }, 0x0000 },
-    { ACTOR_EN_DODOJR,     { 2397, 0, -310 }, { 0, 0xC000, 0 }, 0x0000 },
-    { ACTOR_EN_DODOJR,     { 3355, 0, -490 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_EN_DODOJR,     { 3103, 0, -155 }, { 0, 0x8000, 0 }, 0x0001 },
-    { ACTOR_EN_BOX,        { 3720, 0, -197 }, { 0, 0x4000, 0 }, 0x0021 },
+    { ACTOR_OBJECT_KANKYO, {    0, 0,    0 }, {   0,      0, 0 }, 0x0006 },
+    { ACTOR_EN_DODOJR,     { 2330, 0, -409 }, {   0, 0xC000, 0 }, 0x0000 },
+    { ACTOR_EN_DODOJR,     { 2275, 0, -343 }, {   0, 0xC000, 0 }, 0x0000 },
+    { ACTOR_EN_DODOJR,     { 2397, 0, -310 }, {   0, 0xC000, 0 }, 0x0000 },
+    { ACTOR_EN_DODOJR,     { 3355, 0, -490 }, {   0,      0, 0 }, 0x0001 },
+    { ACTOR_EN_DODOJR,     { 3103, 0, -155 }, {   0, 0x8000, 0 }, 0x0001 },
+    { ACTOR_EN_BOX,        { 3720, 0, -197 }, { 0x1, 0x4000, 0 }, 0x5001 }, // Chest: 01, Bombs (5)
 };
 
 RoomShapeCullable old_dodongos_cavern_room_1MeshHeader0x0000B0 = {

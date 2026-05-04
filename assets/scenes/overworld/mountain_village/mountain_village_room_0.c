@@ -13,7 +13,7 @@ SceneCmd mountain_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_0003D0),
-    SCENE_CMD_OBJECT_LIST(14, mountain_village_room_0ObjectList_00004C),
+    SCENE_CMD_OBJECT_LIST(15, mountain_village_room_0ObjectList_00004C),
     SCENE_CMD_ACTOR_LIST(42, mountain_village_room_0ActorEntry_000074),
     SCENE_CMD_END(),
 };
@@ -37,6 +37,7 @@ s16 mountain_village_room_0ObjectList_00004C[] = {
     OBJECT_BOX,
     OBJECT_TSUBO,
     OBJECT_KA,
+    OBJECT_WOOD_PILLAR,
     OBJECT_CROW,
     OBJECT_BOMBIWA,
 };
@@ -138,7 +139,7 @@ SceneCmd mountain_village_room_0Set_timeskip[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_timeskip),
-    SCENE_CMD_OBJECT_LIST(14, mountain_village_room_0ObjectList_timeskip),
+    SCENE_CMD_OBJECT_LIST(15, mountain_village_room_0ObjectList_timeskip),
     SCENE_CMD_ACTOR_LIST(62, mountain_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
@@ -156,6 +157,7 @@ s16 mountain_village_room_0ObjectList_timeskip[] = {
     OBJECT_BOX,
     OBJECT_TSUBO,
     OBJECT_KA,
+    OBJECT_WOOD_PILLAR,
     OBJECT_FR,
     OBJECT_OF1D_MAP,
 };

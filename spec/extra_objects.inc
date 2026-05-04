@@ -111,6 +111,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_dblue_object"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_dblue_object/object_dblue_object.o"
+    number 6
+endseg
+
+beginseg
     name "object_lost_woods"
     compress
     include "$(BUILD_DIR)/assets/objects/object_lost_woods/object_lost_woods.o"

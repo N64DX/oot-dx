@@ -278,7 +278,7 @@ void EnBombf_Explode(EnBombf* this, PlayState* play) {
         Rumble_Request(this->actor.xzDistToPlayer, 255, 20, 150);
     }
 
-    this->explosionCollider.elements[0].dim.modelSphere.radius += 8;
+    this->explosionCollider.elements[0].dim.modelSphere.radius += play->sceneId == SCENE_GORON_MINES ? 10 : 8;
     this->explosionCollider.elements[0].dim.worldSphere.radius =
         this->explosionCollider.elements[0].dim.modelSphere.radius;
 

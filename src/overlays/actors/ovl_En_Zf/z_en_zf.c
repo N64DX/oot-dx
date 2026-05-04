@@ -81,7 +81,11 @@ s32 EnZf_DodgeRangedWaiting(PlayState* play, EnZf* this);
  *  8 - 15 : Upstairs inner platforms
  * 16 - 23 : Upstairs outer platforms (including several points on the long thin one)
  */
-static Vec3f sPlatformPositions[] = {
+ 
+static Vec3f* sPlatformPositions;
+static u8 sPlatformCount;
+ 
+static Vec3f sPlatformPositionsDodongosCavern[] = {
     // Downstairs
     { 3560.0f, 100.0f, -1517.0f },
     { 3170.0f, 100.0f, -1767.0f },
@@ -104,6 +108,33 @@ static Vec3f sPlatformPositions[] = {
     { 4260.0f, 531.0f, -1035.0f },
 
     // Upstairs outer
+    { 4757.0f, 531.0f, -1146.0f },
+    { 3850.0f, 531.0f, -883.0f },
+    { 4380.0f, 531.0f, -690.0f },
+    { 4197.0f, 531.0f, -646.0f },
+    { 4070.0f, 531.0f, -1575.0f },
+    { 3930.0f, 531.0f, -1705.0f },
+    { 3780.0f, 531.0f, -1835.0f },
+    { 3560.0f, 531.0f, -1985.0f },
+};
+
+static Vec3f sPlatformPositionsGoronMines[] = {
+    { 3531.5f, 0.0f, -2971.8f },
+    { 3201.8f, 0.0f, -2711.0f },
+    { 3561.9f, 0.0f, -2512.7f },
+    { 3929.6f, 0.0f, -2270.6f },
+    { 4300.6f, 0.0f, -2510.1f },
+    { 4315.3f, 0.0f, -2924.6f },
+    { 3939.1f, 0.0f, -3151.6f },
+    { 3584.6f, 0.0f, -3386.3f },
+    { 4527.0f, 531.0f, -1146.0f },
+    { 4442.0f, 531.0f, -1405.0f },
+    { 4170.0f, 531.0f, -1395.0f },
+    { 4030.0f, 531.0f, -1162.0f },
+    { 4010.0f, 531.0f, -883.0f },
+    { 4270.0f, 531.0f, -810.0f },
+    { 4520.0f, 531.0f, -880.0f },
+    { 4260.0f, 531.0f, -1035.0f },
     { 4757.0f, 531.0f, -1146.0f },
     { 3850.0f, 531.0f, -883.0f },
     { 4380.0f, 531.0f, -690.0f },
@@ -170,6 +201,26 @@ static ColliderQuadInit sSwordQuadInit = {
     { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } },
 };
 
+static ColliderQuadInit sSword2QuadInit = {
+    {
+        COL_MATERIAL_NONE,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_ON | AC_HARD | AC_TYPE_PLAYER,
+        OC1_NONE,
+        OC2_NONE,
+        COLSHAPE_QUAD,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+        { 0x00000000, HIT_BACKLASH_NONE, 0x00 },
+        ATELEM_ON | ATELEM_SFX_NORMAL | ATELEM_UNK7,
+        ACELEM_ON,
+        OCELEM_NONE,
+    },
+    { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } },
+};
+
 typedef enum EnZfDamageReaction {
     /* 0x0 */ ENZF_DMG_REACT_NONE,
     /* 0x1 */ ENZF_DMG_REACT_STUN,
@@ -225,6 +276,12 @@ static s32 D_80B4AB30; // Set to 0 and incremented in EnZf_HopAway, but not actu
 
 void EnZf_SetupAction(EnZf* this, EnZfActionFunc actionFunc) {
     this->actionFunc = actionFunc;
+}
+
+bool EnZf_IsDinolfos(EnZf* this) {
+    if (this->actor.params == ENZF_TYPE_DINOLFOS || this->actor.params == ENZF_TYPE_DINOLFOS_MINIBOSS_A || this->actor.params == ENZF_TYPE_DINOLFOS_MINIBOSS_B)
+        return true;
+    return false;
 }
 
 /**
@@ -300,6 +357,16 @@ void EnZf_Init(Actor* thisx, PlayState* play) {
     EffectBlureInit1 blureInit;
     f32 posDiff;
 
+    if (play->sceneId == SCENE_GORON_MINES) {
+        sPlatformPositions = sPlatformPositionsGoronMines;
+        sPlatformCount = ARRAY_COUNT(sPlatformPositionsGoronMines);
+    }
+    else {
+        sPlatformPositions = sPlatformPositionsDodongosCavern;
+        sPlatformCount = ARRAY_COUNT(sPlatformPositionsDodongosCavern);
+    }
+    D_80B4A1B4 = EnZf_IsDinolfos(this) ? 3 : 1;
+
     Actor_ProcessInitChain(thisx, sInitChain);
     thisx->attentionRangeType = ATTENTION_RANGE_3;
     this->clearFlag = PARAMS_GET_S(thisx->params, 8, 8);
@@ -338,9 +405,9 @@ void EnZf_Init(Actor* thisx, PlayState* play) {
     Collider_InitCylinder(play, &this->bodyCollider);
     Collider_SetCylinder(play, &this->bodyCollider, thisx, &sBodyCylinderInit);
     Collider_InitQuad(play, &this->swordCollider);
-    Collider_SetQuad(play, &this->swordCollider, thisx, &sSwordQuadInit);
+    Collider_SetQuad(play, &this->swordCollider, thisx, IS_CHILD_QUEST && EnZf_IsDinolfos(this) ? &sSword2QuadInit : &sSwordQuadInit);
 
-    if (thisx->params == ENZF_TYPE_DINOLFOS) {
+    if (EnZf_IsDinolfos(this)) {
         thisx->colChkInfo.health = Actor_EnemyHealthMultiply(12, ELITE_HP);
         thisx->naviEnemyId = NAVI_ENEMY_DINOLFOS;
         SkelAnime_Init(play, &this->skelAnime, &gZfDinolfosSkel, &gZfCryingAnim, this->jointTable, this->morphTable,
@@ -367,7 +434,7 @@ void EnZf_Init(Actor* thisx, PlayState* play) {
         if ((ABS(posDiff) <= 100.0f) && !Flags_GetSwitch(play, this->clearFlag)) {
             this->homePlatform = this->curPlatform = EnZf_FindPlatform(&thisx->world.pos, 0);
             EnZf_SetupDropIn(this);
-            D_80B4A1B4 = 1;
+            D_80B4A1B4 = EnZf_IsDinolfos(this) ? 3: 1;
         } else {
             Actor_Kill(thisx);
         }
@@ -411,7 +478,7 @@ s16 EnZf_FindPlatform(Vec3f* pos, s16 preferredIndex) {
         }
     }
 
-    for (i = ARRAY_COUNT(sPlatformPositions) - 1; i > -1; i--) {
+    for (i = sPlatformCount - 1; i > -1; i--) {
         if (((sPlatformPositions[i].y - 150.0f) <= pos->y) && (pos->y <= (sPlatformPositions[i].y + 150.0f)) &&
             ((sPlatformPositions[i].x - rangeXZ) <= pos->x) && (pos->x <= (sPlatformPositions[i].x + rangeXZ)) &&
             ((sPlatformPositions[i].z - rangeXZ) <= pos->z) && (pos->z <= (sPlatformPositions[i].z + rangeXZ))) {
@@ -446,7 +513,7 @@ s16 EnZf_FindNextPlatformAwayFromPlayer(Vec3f* pos, s16 curPlatform, s16 arg2, P
 
         // Upstairs outer
         if (initialPlatform >= PLATFORM_INDEX_UPSTAIRS_INNER_MAX) {
-            curLoopPlatform = ARRAY_COUNT(sPlatformPositions) - 1;
+            curLoopPlatform = sPlatformCount - 1;
             platformMinDist = 400.0f;
         } else { // upstairs inner
             curLoopPlatform = PLATFORM_INDEX_UPSTAIRS_INNER_MAX - 1;
@@ -519,7 +586,7 @@ s16 EnZf_FindNextPlatformTowardsPlayer(Vec3f* pos, s16 curPlatform, s16 arg2, Pl
 
     // Upstairs
     if (pos->y > 200.0f) {
-        curLoopPlatform = ARRAY_COUNT(sPlatformPositions) - 1;
+        curLoopPlatform = sPlatformCount - 1;
         minIndex = PLATFORM_INDEX_UPSTAIRS_MIN;
         minRange = 290.0f;
     }
@@ -571,7 +638,7 @@ s32 EnZf_CanAttack(PlayState* play, EnZf* this) {
         if (!Actor_OtherIsLockedOn(play, &this->actor)) {
             return true;
         }
-        if (this->actor.params == ENZF_TYPE_DINOLFOS) {
+        if (EnZf_IsDinolfos(this)) {
             playerFocusActor = player->focusActor;
             if (playerFocusActor == NULL) {
                 return false;
@@ -677,7 +744,7 @@ void EnZf_DropIn(EnZf* this, PlayState* play) {
         Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_CRY);
         this->actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
 
-        if (this->actor.params == ENZF_TYPE_LIZALFOS_MINIBOSS_A) {
+        if (this->actor.params == ENZF_TYPE_LIZALFOS_MINIBOSS_A || this->actor.params == ENZF_TYPE_DINOLFOS_MINIBOSS_A) {
             func_800F5ACC(NA_BGM_MINI_BOSS);
         }
     }
@@ -709,7 +776,7 @@ void EnZf_DropIn(EnZf* this, PlayState* play) {
 
     if (SkelAnime_Update(&this->skelAnime)) {
         this->alpha = 255;
-        if (this->actor.params > ENZF_TYPE_LIZALFOS_MINIBOSS_A) { // Only miniboss B
+        if (this->actor.params == ENZF_TYPE_LIZALFOS_MINIBOSS_B || this->actor.params == ENZF_TYPE_DINOLFOS_MINIBOSS_B) { // Only miniboss B
             EnZf_SetupSheatheSword(this, play);
         } else {
             func_80B45384(this);
@@ -738,7 +805,7 @@ void func_80B4543C(EnZf* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
     if (!EnZf_DodgeRangedEngaging(play, this)) {
-        if (this->actor.params == ENZF_TYPE_DINOLFOS) {
+        if (EnZf_IsDinolfos(this)) {
             if (this->unk_3F4 != 0) {
                 this->unk_3F4--;
                 if (angleToPlayer >= 0x1FFE) {
@@ -762,7 +829,7 @@ void func_80B4543C(EnZf* this, PlayState* play) {
             if (Actor_IsFacingPlayer(&this->actor, 30 * 0x10000 / 360)) {
                 if ((this->actor.xzDistToPlayer < 200.0f) && (this->actor.xzDistToPlayer > 100.0f) &&
                     (Rand_ZeroOne() < 0.3f)) {
-                    if (this->actor.params == ENZF_TYPE_DINOLFOS) {
+                    if (EnZf_IsDinolfos(this)) {
                         this->actor.world.rot.y = this->actor.shape.rot.y = this->actor.yawTowardsPlayer;
                         EnZf_SetupJumpForward(this);
                     } else {
@@ -909,7 +976,7 @@ void EnZf_ApproachPlayer(EnZf* this, PlayState* play) {
             }
         }
 
-        if (this->actor.params == ENZF_TYPE_DINOLFOS) {
+        if (EnZf_IsDinolfos(this)) {
             if (EnZf_ChooseAction(play, this)) {
                 return;
             }
@@ -983,7 +1050,7 @@ void EnZf_JumpForward(EnZf* this, PlayState* play) {
         Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_CRY);
     }
 
-    if ((this->actor.params == ENZF_TYPE_DINOLFOS) &&
+    if (EnZf_IsDinolfos(this) &&
         (this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND | BGCHECKFLAG_GROUND_TOUCH))) {
         if (EnZf_CanAttack(play, this)) {
             EnZf_SetupSlash(this);
@@ -1007,7 +1074,7 @@ void func_80B46098(EnZf* this, PlayState* play) {
     s16 phi_v1;
 
     if (!EnZf_DodgeRangedEngaging(play, this)) {
-        if ((this->actor.params != ENZF_TYPE_DINOLFOS) || !EnZf_ChooseAction(play, this)) {
+        if (!EnZf_IsDinolfos(this) || !EnZf_ChooseAction(play, this)) {
             temp_v0 = this->actor.yawTowardsPlayer - this->actor.shape.rot.y;
 
             if (temp_v0 > 0) {
@@ -1087,7 +1154,7 @@ void func_80B463E4(EnZf* this, PlayState* play) {
     Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 4000, 1);
 
     if (!EnZf_DodgeRangedEngaging(play, this) &&
-        ((this->actor.params != ENZF_TYPE_DINOLFOS) || !EnZf_ChooseAction(play, this))) {
+        (!EnZf_IsDinolfos(this) || !EnZf_ChooseAction(play, this))) {
         this->actor.world.rot.y = this->actor.shape.rot.y + 0x3A98;
         angleBehindPlayer = player->actor.shape.rot.y + 0x8000;
 
@@ -1194,7 +1261,7 @@ void EnZf_SetupSlash(EnZf* this) {
     Animation_Change(&this->skelAnime, &gZfSlashAnim, 1.25f, 0.0f, Animation_GetLastFrame(&gZfSlashAnim), ANIMMODE_ONCE,
                      -4.0f);
 
-    if (this->actor.params == ENZF_TYPE_DINOLFOS) {
+    if (EnZf_IsDinolfos(this)) {
         this->skelAnime.playSpeed = 1.75f;
     }
 
@@ -1219,7 +1286,7 @@ void EnZf_Slash(EnZf* this, PlayState* play) {
     if (SkelAnime_Update(&this->skelAnime)) {
         EffectBlure_AddSpace(Effect_GetByIndex(this->blureIndex));
 
-        if ((this->actor.params == ENZF_TYPE_DINOLFOS) && !Actor_IsFacingPlayer(&this->actor, 5460)) {
+        if (EnZf_IsDinolfos(this) && !Actor_IsFacingPlayer(&this->actor, 5460)) {
             func_80B45384(this);
             this->unk_3F0 = Rand_ZeroOne() * 5.0f + 5.0f;
             this->unk_3F4 = Rand_ZeroOne() * 20.0f + 100.0f;
@@ -1353,19 +1420,19 @@ void EnZf_Stunned(EnZf* this, PlayState* play) {
     if ((this->actor.colorFilterTimer == 0) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) {
         if (this->actor.colChkInfo.health == 0) {
             EnZf_SetupDie(this);
-        } else if ((this->actor.params != ENZF_TYPE_DINOLFOS) || !EnZf_ChooseAction(play, this)) {
+        } else if (!EnZf_IsDinolfos(this) || !EnZf_ChooseAction(play, this)) {
             if (D_80B4A1B4 != -1) {
                 func_80B44DC4(this, play);
             } else {
                 angleToWall = this->actor.wallYaw - this->actor.shape.rot.y;
                 angleToWall = ABS(angleToWall);
 
-                if ((this->actor.params == ENZF_TYPE_DINOLFOS) && (this->actor.bgCheckFlags & BGCHECKFLAG_WALL) &&
+                if (EnZf_IsDinolfos(this) && (this->actor.bgCheckFlags & BGCHECKFLAG_WALL) &&
                     (ABS(angleToWall) < 0x2EE0) && (this->actor.xzDistToPlayer < 90.0f)) {
                     this->actor.world.rot.y = this->actor.shape.rot.y;
                     EnZf_SetupJumpUp(this);
                 } else if (!EnZf_DodgeRangedEngaging(play, this)) {
-                    if (this->actor.params != ENZF_TYPE_DINOLFOS) {
+                    if (!EnZf_IsDinolfos(this)) {
                         func_80B44DC4(this, play);
                     } else if ((this->actor.xzDistToPlayer <= 100.0f) && ((play->gameplayFrames % 4) != 0) &&
                                EnZf_CanAttack(play, this)) {
@@ -1653,7 +1720,7 @@ void EnZf_SetupDamaged(EnZf* this) {
         this->hopAnimIndex = 1;
     }
 
-    if (this->actor.params == ENZF_TYPE_DINOLFOS) {
+    if (EnZf_IsDinolfos(this)) {
         this->skelAnime.playSpeed = 4.5f;
     }
 
@@ -1682,7 +1749,7 @@ void EnZf_Damaged(EnZf* this, PlayState* play) {
 
     Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 4500, 0);
 
-    if (((this->actor.params != ENZF_TYPE_DINOLFOS) || !EnZf_ChooseAction(play, this)) &&
+    if ((!EnZf_IsDinolfos(this) || !EnZf_ChooseAction(play, this)) &&
         SkelAnime_Update(&this->skelAnime) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) {
 
         if (D_80B4A1B4 != -1) {
@@ -1704,11 +1771,11 @@ void EnZf_Damaged(EnZf* this, PlayState* play) {
             wallYawDiff = this->actor.wallYaw - this->actor.shape.rot.y;
             wallYawDiff = ABS(wallYawDiff);
 
-            if ((this->actor.params == ENZF_TYPE_DINOLFOS) && (this->actor.bgCheckFlags & BGCHECKFLAG_WALL) &&
+            if (EnZf_IsDinolfos(this) && (this->actor.bgCheckFlags & BGCHECKFLAG_WALL) &&
                 (ABS(wallYawDiff) < 12000) && (this->actor.xzDistToPlayer < 90.0f)) {
                 EnZf_SetupJumpUp(this);
             } else if (!EnZf_DodgeRangedEngaging(play, this)) {
-                if (this->actor.params != ENZF_TYPE_DINOLFOS) {
+                if (!EnZf_IsDinolfos(this)) {
                     this->actor.world.rot.y = this->actor.shape.rot.y;
 
                     if (!EnZf_PrimaryFloorCheck(this, play, 135.0f) && (this->actor.xzDistToPlayer < 90.0f)) {
@@ -1888,7 +1955,7 @@ void EnZf_CircleAroundPlayer(EnZf* this, PlayState* play) {
         } else {
             EnZf_SetupApproachPlayer(this, play);
         }
-    } else if ((this->actor.params != ENZF_TYPE_DINOLFOS) || !EnZf_ChooseAction(play, this)) {
+    } else if (!EnZf_IsDinolfos(this) || !EnZf_ChooseAction(play, this)) {
         if (this->unk_3F0 == 0) {
             phi_v0_4 = player->actor.shape.rot.y - this->actor.shape.rot.y;
 
@@ -2009,7 +2076,7 @@ void EnZf_Die(EnZf* this, PlayState* play) {
 void EnZf_UpdateHeadRotation(EnZf* this, PlayState* play) {
     s16 angleTemp;
 
-    if ((this->actor.params == ENZF_TYPE_DINOLFOS) && (this->action == ENZF_ACTION_3) && (this->unk_3F4 != 0)) {
+    if (EnZf_IsDinolfos(this) && (this->action == ENZF_ACTION_3) && (this->unk_3F4 != 0)) {
         this->headRot = Math_SinS(this->unk_3F4 * 1400) * 0x2AA8;
     } else {
         angleTemp = this->actor.yawTowardsPlayer;
@@ -2048,7 +2115,7 @@ void EnZf_UpdateDamage(EnZf* this, PlayState* play) {
                     dropParams = COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_4, false);
                     EnZf_SetupDie(this);
 
-                    if (this->actor.params == ENZF_TYPE_DINOLFOS) {
+                    if (EnZf_IsDinolfos(this)) {
                         dropParams = COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_14, false);
                     }
 

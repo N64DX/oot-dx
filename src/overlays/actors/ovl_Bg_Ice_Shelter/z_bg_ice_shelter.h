@@ -14,7 +14,9 @@ typedef enum RedIceType {
     /* 2 */ RED_ICE_PLATFORM,  // Complex structure that can be climbed and walked on. Unused in vanilla OoT, used in MQ to cover the Ice Cavern Map chest
     /* 3 */ RED_ICE_WALL,      // Vertical ice sheets blocking corridors
     /* 4 */ RED_ICE_KING_ZORA, // Giant red ice block covering King Zora
-    /* 5 */ PURPLE_ICE_WALL    // Vertical ice sheets blocking corridors that can only be molten with Blue Fire Arrows
+    /* 5 */ PURPLE_ICE_LARGE,  // Large purple ice block that can only be molten with Blue Fire Arrows
+    /* 6 */ PURPLE_ICE_SMALL,  // Small purple ice block that can only be molten with Blue Fire Arrows
+    /* 7 */ PURPLE_ICE_WALL    // Vertical ice sheets blocking corridors that can only be molten with Blue Fire Arrows
 } RedIceType;
 
 typedef struct BgIceShelter {
