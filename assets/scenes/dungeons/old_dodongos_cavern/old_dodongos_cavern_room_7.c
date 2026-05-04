@@ -12,7 +12,7 @@ SceneCmd old_dodongos_cavern_room_7[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_7MeshHeader0x0000B0),
-    SCENE_CMD_OBJECT_LIST(11, old_dodongos_cavern_room_7ObjectList0x000038),
+    SCENE_CMD_OBJECT_LIST(8, old_dodongos_cavern_room_7ObjectList0x000038),
     SCENE_CMD_ACTOR_LIST(6, old_dodongos_cavern_room_7ActorList0x000048),
     SCENE_CMD_END(),
 };
@@ -21,14 +21,11 @@ s16 old_dodongos_cavern_room_7ObjectList0x000038[] = {
     OBJECT_DDAN_OBJECTS,
     OBJECT_BWALL2,
     OBJECT_BOX,
-    OBJECT_BOMBF,
-    OBJECT_DODOJR,
     OBJECT_DODONGO,
-    OBJECT_FIREFLY,
     OBJECT_AM,
     OBJECT_BEAST,
+    OBJECT_ICE_OBJECTS,
     OBJECT_GOROIWA,
-    OBJECT_HIDAN_OBJECTS, 
 };
 
 ActorEntry old_dodongos_cavern_room_7ActorList0x000048[] = {
@@ -38,7 +35,7 @@ ActorEntry old_dodongos_cavern_room_7ActorList0x000048[] = {
     { ACTOR_EN_GOROIWA,    { -2388, 571, -1038 }, {    0,      0, 1 }, 0x0C02 },
     { ACTOR_OBJ_OSHIHIKI,  { -2297, 421,  -915 }, {    0, 0x4000, 0 }, 0xFF00 },
     { ACTOR_EN_BOX,        { -2485, 571,  -911 }, { 0x59, 0xC000, 0 }, 0x0002 }, // Chest: 02, Ice Arrow
-    { ACTOR_EN_ITEM00,     { -2555, 582,  -911 }, {    0,      0, 0 }, 0x0302 }, // Collect 03, Red Rupee
+    { ACTOR_EN_ITEM00,     { -2555, 582,  -911 }, {    0,      0, 0 }, 0x2202 }, // Collect 22, Red Rupee
 };
 
 RoomShapeCullable old_dodongos_cavern_room_7MeshHeader0x0000B0 = {

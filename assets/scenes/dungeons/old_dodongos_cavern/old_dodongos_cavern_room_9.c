@@ -12,34 +12,27 @@ SceneCmd old_dodongos_cavern_room_9[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_9MeshHeader0x0000D0),
-    SCENE_CMD_OBJECT_LIST(11, old_dodongos_cavern_room_9ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(8, old_dodongos_cavern_room_9ActorList0x000044),
+    SCENE_CMD_OBJECT_LIST(4, old_dodongos_cavern_room_9ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(4, old_dodongos_cavern_room_9ActorList0x000044),
     SCENE_CMD_END(),
 };
 
 s16 old_dodongos_cavern_room_9ObjectList0x000038[] = {
     OBJECT_DDAN_OBJECTS,
     OBJECT_BWALL2,
-    OBJECT_BOX,
-    OBJECT_BOMBF,
-    OBJECT_DODOJR,
-    OBJECT_DODONGO,
-    OBJECT_FIREFLY,
-    OBJECT_AM,
-    OBJECT_BEAST,
     OBJECT_KINGDODONGO,
     OBJECT_WARP1,
 };
 
 ActorEntry old_dodongos_cavern_room_9ActorList0x000044[] = {
     { ACTOR_OBJECT_KANKYO,  {    0,     0,     0 }, { 0,     0, 0 }, 0x0006 },
-    { ACTOR_EN_BOMBF,       { -536, -1280, -4378 }, { 0,     0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,       {  548, -1280, -4382 }, { 0,     0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,       {  544, -1280, -5466 }, { 0,     0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,       { -532, -1280, -5469 }, { 0,     0, 0 }, 0xFFFF },
     { ACTOR_EN_RIVER_SOUND, {    1, -1306, -4914 }, { 0,     0, 0 }, 0x0002 },
-    { ACTOR_BOSS_DODONGO,   { -484, -1280, -4917 }, { 0,     0, 0 }, 0xFFFF },
     { ACTOR_BG_BREAKWALL,   {    0,   240, -4410 }, { 0,     0, 0 }, 0x6019 },
+    { ACTOR_BOSS_DODONGO,   { -484, -1280, -4917 }, { 0,     0, 0 }, 0xFFFF },
+  //{ ACTOR_EN_BOMBF,       { -536, -1280, -4378 }, { 0,     0, 0 }, 0xFFFF },
+  //{ ACTOR_EN_BOMBF,       {  548, -1280, -4382 }, { 0,     0, 0 }, 0xFFFF },
+  //{ ACTOR_EN_BOMBF,       {  544, -1280, -5466 }, { 0,     0, 0 }, 0xFFFF },
+  //{ ACTOR_EN_BOMBF,       { -532, -1280, -5469 }, { 0,     0, 0 }, 0xFFFF },
 };
 
 RoomShapeCullable old_dodongos_cavern_room_9MeshHeader0x0000D0 = {

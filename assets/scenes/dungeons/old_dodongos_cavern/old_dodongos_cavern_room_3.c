@@ -13,7 +13,7 @@ SceneCmd old_dodongos_cavern_room_3[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_3MeshHeader0x0000B0),
     SCENE_CMD_OBJECT_LIST(9, old_dodongos_cavern_room_3ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(8, old_dodongos_cavern_room_3ActorList0x000040),
+    SCENE_CMD_ACTOR_LIST(7, old_dodongos_cavern_room_3ActorList0x000040),
     SCENE_CMD_END(),
 };
 
@@ -21,23 +21,22 @@ s16 old_dodongos_cavern_room_3ObjectList0x000038[] = {
     OBJECT_DDAN_OBJECTS,
     OBJECT_BWALL2,
     OBJECT_BOX,
-    OBJECT_BOMBF,
-    OBJECT_DODOJR,
     OBJECT_DODONGO,
-    OBJECT_FIREFLY,
     OBJECT_AM,
     OBJECT_BEAST,
+    OBJECT_ICE_OBJECTS,
+    OBJECT_ZF,
+    OBJECT_GI_HEART,
 };
 
 ActorEntry old_dodongos_cavern_room_3ActorList0x000040[] = {
     { ACTOR_OBJECT_KANKYO, {    0,   0,     0 }, { 0, 0, 0 }, 0x0006 },
-    { ACTOR_EN_ITEM00,     { 2698,   0, -3452 }, { 0, 0, 0 }, 0x0001 },
-    { ACTOR_EN_ITEM00,     { 4309,   0, -2503 }, { 0, 0, 0 }, 0x0001 },
-    { ACTOR_EN_ITEM00,     { 4331,   0, -3408 }, { 0, 0, 0 }, 0x0003 },
-    { ACTOR_EN_ITEM00,     { 2742,   0, -2459 }, { 0, 0, 0 }, 0x0003 },
-    { ACTOR_EN_ZF,         { 3164,   0, -3151 }, { 0, 0, 0 }, 0x0001 },
-    { ACTOR_EN_ZF,         { 3959,   0, -3151 }, { 0, 0, 0 }, 0x0000 },
-    { ACTOR_EN_ITEM00,     { 4587, -49, -2939 }, { 0, 0, 0 }, 0x0006 },
+    { ACTOR_EN_ITEM00,     { 2698,   0, -3452 }, { 0, 0, 0 }, 0x2303 }, // Collect 23, Recovert Heart
+    { ACTOR_EN_ITEM00,     { 4309,   0, -2503 }, { 0, 0, 0 }, 0x2403 }, // Collect 24, Recovert Heart
+    { ACTOR_EN_ITEM00,     { 4331,   0, -3408 }, { 0, 0, 0 }, 0x2503 }, // Collect 25, Recovert Heart
+    { ACTOR_EN_ITEM00,     { 2742,   0, -2459 }, { 0, 0, 0 }, 0x2603 }, // Collect 26, Recovert Heart
+    { ACTOR_EN_ZF,         { 3164,   0, -3151 }, { 0, 0, 0 }, 0x0002 },
+    { ACTOR_EN_ZF,         { 3959,   0, -3151 }, { 0, 0, 0 }, 0x0003 },
 };
 
 RoomShapeCullable old_dodongos_cavern_room_3MeshHeader0x0000B0 = {

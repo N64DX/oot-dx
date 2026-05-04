@@ -12,7 +12,7 @@ SceneCmd old_dodongos_cavern_room_6[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_6MeshHeader0x0000A0),
-    SCENE_CMD_OBJECT_LIST(9, old_dodongos_cavern_room_6ObjectList0x000038),
+    SCENE_CMD_OBJECT_LIST(7, old_dodongos_cavern_room_6ObjectList0x000038),
     SCENE_CMD_ACTOR_LIST(4, old_dodongos_cavern_room_6ActorList0x000048),
     SCENE_CMD_END(),
 };
@@ -21,12 +21,10 @@ s16 old_dodongos_cavern_room_6ObjectList0x000038[] = {
     OBJECT_DDAN_OBJECTS,
     OBJECT_BWALL2,
     OBJECT_BOX,
-    OBJECT_BOMBF,
-    OBJECT_DODOJR,
     OBJECT_DODONGO,
-    OBJECT_FIREFLY,
     OBJECT_AM,
     OBJECT_BEAST,
+    OBJECT_ICE_OBJECTS,
 };
 
 ActorEntry old_dodongos_cavern_room_6ActorList0x000048[] = {

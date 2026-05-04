@@ -102,9 +102,9 @@ static ColliderCylinderInit sCylinderInit = {
     { 60, 60, 0, { 0, 0, 0 } },
 };
 
-static CollisionCheckInfoInit2 sColChkInit = { 20, 0, 60.0f, 60.0f, MASS_HEAVY };
+static CollisionCheckInfoInit2 sColChkInit = { 10, 0, 60.0f, 60.0f, MASS_HEAVY };
 
-static ColliderJntSphElementInit sJntSphItemsInit[] = {
+static ColliderJntSphElementInit sJntSphItemsMinibossInit[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
@@ -119,7 +119,45 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x04, 0x14 },
+            { 0xFFCFFFFF, 0x04, 0x18 },
+            { 0x00000000, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_NONE,
+            OCELEM_NONE,
+        },
+        { GBEASTSKEL_CLAW_R_LIMB, { { 0, 0, 0 }, 35 }, 70 },
+    },
+};
+
+static ColliderJntSphInit sJntSphMinibossInit = {
+    {
+        COL_MATERIAL_METAL,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_ON | AC_HARD | AC_TYPE_PLAYER,
+        OC1_ON | OC1_TYPE_ALL,
+        OC2_TYPE_1,
+        COLSHAPE_JNTSPH,
+    },
+    ARRAY_COUNT(sJntSphItemsMinibossInit),
+    sJntSphItemsMinibossInit,
+};
+
+static ColliderJntSphElementInit sJntSphItemsInit[] = {
+    {
+        {
+            ELEM_MATERIAL_UNK0,
+            { 0xFFCFFFFF, 0x04, 0x10 },
+            { 0x00000000, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_NONE,
+            OCELEM_NONE,
+        },
+        { GBEASTSKEL_CLAW_L_LIMB, { { 0, 0, 0 }, 35 }, 70 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK0,
+            { 0xFFCFFFFF, 0x04, 0x10 },
             { 0x00000000, 0x00, 0x00 },
             ATELEM_ON | ATELEM_SFX_NORMAL,
             ACELEM_NONE,
@@ -239,13 +277,17 @@ void EnBeast_Init(Actor* thisx, struct PlayState* play) {
     SkelAnime_InitFlex(play, &this->skelAnime, &gBeastSkel, &gBeastSkelIdleAnim, this->jointTable, this->morphTable, GBEASTSKEL_NUM_LIMBS);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, &sDamageTable, &sColChkInit);
-    Collider_InitJntSph(play, &this->colliderSpheres);
-    Collider_SetJntSph(play, &this->colliderSpheres, &this->actor, &sJntSphInit, this->colliderSpheresElements);
-    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
 
     this->type       =  this->actor.params        & 0xFF;
     this->miniboss   = (this->actor.params >> 15) & 1;
     this->switchFlag = (this->actor.params >> 8)  & 0x7F;
+
+    if (this->miniboss)
+        this->actor.colChkInfo.health = 20;
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
+
+    Collider_InitJntSph(play, &this->colliderSpheres);
+    Collider_SetJntSph(play, &this->colliderSpheres, &this->actor, this->miniboss ? &sJntSphMinibossInit : &sJntSphInit, this->colliderSpheresElements);
 
     if (this->type == BEAST_TYPE_IDLE) {
         this->timer = 39;
