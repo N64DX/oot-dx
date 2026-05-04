@@ -587,6 +587,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Killed Nabooru",           NABOORU,                    5                                        },
     { 0, "Killed Twinrova",          SCENE_SPIRIT_TEMPLE_BOSS,   3                                        },
     { 0, "Killed Hyper Gohma",       SCENE_ANCIENT_HOLLOW,       13                                       },
+    { 0, "Killed Black Beast",       SCENE_GORON_MINES,          9                                        },
     { 0, "Killed King Deku",         SCENE_WOODFALL_TEMPLE_BOSS, 1                                        },
     { 0, "Completed Mask Quest",     MASK,                       ITEMGETINF_3F,                           },
     { 0, "Completed Frog Quest",     FROG,                       0,                                       },

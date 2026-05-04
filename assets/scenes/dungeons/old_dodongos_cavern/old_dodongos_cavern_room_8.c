@@ -7,48 +7,56 @@
 #include "object.h"
 
 SceneCmd old_dodongos_cavern_room_8[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(old_dodongos_cavern_room_8AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(20),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_COLD, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_FREEZING, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_8MeshHeader0x000150),
-    SCENE_CMD_OBJECT_LIST(17, old_dodongos_cavern_room_8ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(9, old_dodongos_cavern_room_8ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(12, old_dodongos_cavern_room_8ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(17, old_dodongos_cavern_room_8ActorList0x000048),
     SCENE_CMD_END(),
+};
+
+SceneCmd* old_dodongos_cavern_room_8AlternateHeaders[] = {
+    old_dodongos_cavern_room_8Set_cleansed,
+    NULL,
+    old_dodongos_cavern_room_8Set_cleansed,
 };
 
 s16 old_dodongos_cavern_room_8ObjectList0x000038[] = {
     OBJECT_DDAN_OBJECTS,
     OBJECT_BWALL2,
     OBJECT_BOX,
-    OBJECT_BOMBF,
-    OBJECT_DODOJR,
-    OBJECT_DODONGO,
-    OBJECT_FIREFLY,
-    OBJECT_AM,
+    OBJECT_ICE_OBJECTS,
+    OBJECT_WOOD_PILLAR,
     OBJECT_BEAST,
-    OBJECT_GOROIWA,
+    OBJECT_SPIDER,
+    OBJECT_DBLUE_OBJECT,
     OBJECT_HIDAN_OBJECTS,
+    OBJECT_GOROIWA,
+    OBJECT_CRASHBOX,
+    OBJECT_FIREFLY,
 };
 
 ActorEntry old_dodongos_cavern_room_8ActorList0x000048[] = {
-    { ACTOR_OBJECT_KANKYO,    {    0,   0,     0 }, { 0,      0, 0 }, 0x0006 },
-    { ACTOR_EN_GOROIWA,       { 4428, 984, -1515 }, { 0, 0xC000, 1 }, 0x0D03 },
-    { ACTOR_BG_FLAME_THROWER, { 3150, 786, -1750 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3230, 784, -1750 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3310, 786, -1750 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3385, 786, -1750 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3365, 786, -1285 }, { 0, 0x8000, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3445, 786, -1285 }, { 0, 0x8000, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3525, 786, -1285 }, { 0, 0x8000, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3610, 788, -1285 }, { 0, 0x8000, 0 }, 0x0000 },
-    { ACTOR_EN_FIREFLY,       { 3544,   0,  -862 }, { 0,      0, 0 }, 0xFFFF },
-    { ACTOR_EN_FIREFLY,       { 3555,  94, -1678 }, { 0,      0, 0 }, 0xFFFF },
-    { ACTOR_EN_DODOJR,        { 3544,   0, -1093 }, { 0,      0, 0 }, 0xFFFF },
-    { ACTOR_EN_DODOJR,        { 3589,   0, -1391 }, { 0,      0, 0 }, 0xFFFF },
-    { ACTOR_EN_ITEM00,        { 3754,   0, -1524 }, { 0,      0, 0 }, 0x0003 },
-    { ACTOR_EN_BOX,           { 4240, 831, -1514 }, { 0, 0x4000, 0 }, 0x00C3 },
-    { ACTOR_EN_ITEM00,        { 3751, 393, -1503 }, { 0,      0, 0 }, 0x0006 },
+    { ACTOR_OBJECT_KANKYO,    {    0,   0,     0 }, {    0,      0, 0 }, 0x0006 },
+    { ACTOR_EN_GOROIWA,       { 4428, 984, -1515 }, {    0, 0xC000, 1 }, 0x0D03 },
+    { ACTOR_EN_BOX,           { 4240, 831, -1514 }, { 0x3F, 0x4000, 0 }, 0x0003 }, // Chest: 03, Boss Key
+    { ACTOR_BG_FLAME_THROWER, { 3150, 786, -1750 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3230, 784, -1750 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3310, 786, -1750 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3385, 786, -1750 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3365, 786, -1285 }, {    0, 0x8000, 0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3445, 786, -1285 }, {    0, 0x8000, 0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3525, 786, -1285 }, {    0, 0x8000, 0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3610, 788, -1285 }, {    0, 0x8000, 0 }, 0x0000 },
+    { ACTOR_EN_FIREFLY,       { 3544,   0,  -862 }, {    0,      0, 0 }, 0x0001 },
+    { ACTOR_EN_FIREFLY,       { 3555,  94, -1678 }, {    0,      0, 0 }, 0x0001 },
+    { ACTOR_EN_SPIDER,        { 3544,   0, -1093 }, {    0,      0, 0 }, 0xFFFF },
+    { ACTOR_EN_SPIDER,        { 3589,   0, -1391 }, {    0,      0, 0 }, 0xFFFF },
+    { ACTOR_EN_ITEM00,        { 3754,   0, -1524 }, {    0,      0, 0 }, 0x2903 }, // Collect: 29, Recovert Heart
+    { ACTOR_EN_ITEM00,        { 3751, 393, -1503 }, {    0,      0, 0 }, 0x0013 }, // Collect: 00, Gold Rupee
 };
 
 RoomShapeCullable old_dodongos_cavern_room_8MeshHeader0x000150 = {
@@ -59,6 +67,17 @@ RoomShapeCullable old_dodongos_cavern_room_8MeshHeader0x000150 = {
 
 RoomShapeCullableEntry old_dodongos_cavern_room_8MeshDListEntry0x00015C[1] = {
     { { 3890, 755, -1289 }, 1410, old_dodongos_cavern_room_8Dlist0x002D70, NULL },
+};
+
+SceneCmd old_dodongos_cavern_room_8Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(20),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
+    SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
+    SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_8MeshHeader0x000150),
+    SCENE_CMD_OBJECT_LIST(12, old_dodongos_cavern_room_8ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(17, old_dodongos_cavern_room_8ActorList0x000048),
+    SCENE_CMD_END(),
 };
 
 static s32 terminatorMaybe = { 0x01000000 };

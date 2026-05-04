@@ -111,6 +111,20 @@ beginseg
 endseg
 
 beginseg
+    name "object_dblue_object"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_dblue_object/object_dblue_object.o"
+    number 6
+endseg
+
+beginseg
+    name "object_crashbox"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_crashbox/object_crashbox.o"
+    number 6
+endseg
+
+beginseg
     name "object_lost_woods"
     compress
     include "$(BUILD_DIR)/assets/objects/object_lost_woods/object_lost_woods.o"
@@ -254,6 +268,20 @@ beginseg
     name "object_beast"
     compress
     include "$(BUILD_DIR)/assets/objects/object_beast/object_beast.o"
+    number 6
+endseg
+
+beginseg
+    name "object_spider"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_spider/object_spider.o"
+    number 6
+endseg
+
+beginseg
+    name "object_thefather"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_thefather/object_thefather.o"
     number 6
 endseg
 

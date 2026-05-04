@@ -6,6 +6,7 @@
 #include "scene.h"
 #include "ultra64.h"
 
+extern SceneCmd* old_dodongos_cavern_sceneAlternateHeaders[];
 extern ActorEntry old_dodongos_cavern_sceneStartPositionList0x000058[];
 extern TransitionActorEntry old_dodongos_cavern_sceneTransitionActorList0x000078[];
 extern RomFile old_dodongos_cavern_sceneRoomList0x000148[];
@@ -14,6 +15,9 @@ extern u16 old_dodongos_cavern_sceneExitList0x00019C[];
 extern EnvLightSettings old_dodongos_cavern_sceneLightSettings0x0001A0[];
 extern Path old_dodongos_cavern_scenePathway[];
 extern CollisionHeader old_dodongos_cavern_sceneCollisionHeader0x00E38C;
+
+extern SceneCmd old_dodongos_cavern_sceneSet_cleansed[];
+extern EnvLightSettings old_dodongos_cavern_sceneLightSettings_cleansed[];
 
 extern u64 old_dodongos_cavern_sceneTex_0017C0[];
 extern u64 old_dodongos_cavern_sceneTex_002180[];

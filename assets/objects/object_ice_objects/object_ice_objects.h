@@ -75,6 +75,4 @@ extern u64 object_ice_objects_Tex_006D50[TEX_LEN(u64, object_ice_objects_Tex_006
 #define object_ice_objects_Tex_007D50_HEIGHT 64
 extern u64 object_ice_objects_Tex_007D50[TEX_LEN(u64, object_ice_objects_Tex_007D50_WIDTH, object_ice_objects_Tex_007D50_HEIGHT, 8)];
 
-extern Gfx gPurpleIceWallDL[20];
-
 #endif

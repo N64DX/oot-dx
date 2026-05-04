@@ -214,7 +214,3 @@ u64 object_ice_objects_Tex_006D50[TEX_LEN(u64, object_ice_objects_Tex_006D50_WID
 u64 object_ice_objects_Tex_007D50[TEX_LEN(u64, object_ice_objects_Tex_007D50_WIDTH, object_ice_objects_Tex_007D50_HEIGHT, 8)] = {
 #include "assets/objects/object_ice_objects/object_ice_objects_Tex_007D50.ia8.inc.c"
 };
-
-Gfx gPurpleIceWallDL[20] = {
-#include "assets/objects/object_ice_objects/gPurpleIceWallDL.inc.c"
-};

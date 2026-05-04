@@ -11,7 +11,8 @@ typedef enum EnNutsballType {
     /*  1 */ EN_NUTSBALL_TYPE_HINTNUTS,
     /*  2 */ EN_NUTSBALL_TYPE_SHOPNUTS,
     /*  3 */ EN_NUTSBALL_TYPE_DNS,
-    /*  4 */ EN_NUTSBALL_TYPE_DNK
+    /*  4 */ EN_NUTSBALL_TYPE_DNK,
+    /*  5 */ EN_NUTSBALL_TYPE_WEB
 } EnNutsballType;
 
 struct EnNutsball;

@@ -5478,6 +5478,10 @@ void Interface_Update(PlayState* play) {
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_GORON) {
             sEnvHazard = PLAYER_ENV_HAZARD_NONE;
         }
+    } else if (sEnvHazard == PLAYER_ENV_HAZARD_FREEZINGROOM) {
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA) {
+            sEnvHazard = PLAYER_ENV_HAZARD_NONE;
+        }
     } else if ((Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) &&
                (Player_GetEnvironmentalHazard(play) <= PLAYER_ENV_HAZARD_UNDERWATER_FREE)) {
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA) {
@@ -5591,7 +5595,7 @@ void Interface_Update(PlayState* play) {
     }
 
     if (gSaveContext.timerState == TIMER_STATE_OFF) {
-        if (((sEnvHazard == PLAYER_ENV_HAZARD_HOTROOM) || (sEnvHazard == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) ||
+        if (((sEnvHazard == PLAYER_ENV_HAZARD_HOTROOM) || (sEnvHazard == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) || sEnvHazard == PLAYER_ENV_HAZARD_FREEZINGROOM ||
              (sEnvHazard == PLAYER_ENV_HAZARD_UNDERWATER_FREE)) &&
 
             (((gSaveContext.save.info.playerData.health >> 1) != 0 && !FIX_USEFUL_GLITCHES) || FIX_USEFUL_GLITCHES)) {

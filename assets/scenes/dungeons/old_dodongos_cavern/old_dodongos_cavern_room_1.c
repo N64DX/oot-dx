@@ -7,36 +7,44 @@
 #include "object.h"
 
 SceneCmd old_dodongos_cavern_room_1[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(old_dodongos_cavern_room_1AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(20),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_COLD, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_FREEZING, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_1MeshHeader0x0000B0),
-    SCENE_CMD_OBJECT_LIST(9, old_dodongos_cavern_room_1ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(7, old_dodongos_cavern_room_1ActorList0x000044),
+    SCENE_CMD_OBJECT_LIST(11, old_dodongos_cavern_room_1ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(6, old_dodongos_cavern_room_1ActorList0x000044),
     SCENE_CMD_END(),
+};
+
+SceneCmd* old_dodongos_cavern_room_1AlternateHeaders[] = {
+    old_dodongos_cavern_room_1Set_cleansed,
+    NULL,
+    old_dodongos_cavern_room_1Set_cleansed,
 };
 
 s16 old_dodongos_cavern_room_1ObjectList0x000038[] = {
     OBJECT_DDAN_OBJECTS,
     OBJECT_BWALL2,
     OBJECT_BOX,
-    OBJECT_BOMBF,
-    OBJECT_DODOJR,
-    OBJECT_DODONGO,
-    OBJECT_FIREFLY,
-    OBJECT_AM,
+    OBJECT_ICE_OBJECTS,
+    OBJECT_WOOD_PILLAR,
     OBJECT_BEAST,
+    OBJECT_SPIDER,
+    OBJECT_DBLUE_OBJECT,
+    OBJECT_HIDAN_OBJECTS,
+    OBJECT_GOROIWA,
+    OBJECT_CRASHBOX,
 };
 
 ActorEntry old_dodongos_cavern_room_1ActorList0x000044[] = {
-    { ACTOR_OBJECT_KANKYO, {    0, 0,    0 }, { 0,      0, 0 }, 0x0006 },
-    { ACTOR_EN_DODOJR,     { 2330, 0, -409 }, { 0, 0xC000, 0 }, 0x0000 },
-    { ACTOR_EN_DODOJR,     { 2275, 0, -343 }, { 0, 0xC000, 0 }, 0x0000 },
-    { ACTOR_EN_DODOJR,     { 2397, 0, -310 }, { 0, 0xC000, 0 }, 0x0000 },
-    { ACTOR_EN_DODOJR,     { 3355, 0, -490 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_EN_DODOJR,     { 3103, 0, -155 }, { 0, 0x8000, 0 }, 0x0001 },
-    { ACTOR_EN_BOX,        { 3720, 0, -197 }, { 0, 0x4000, 0 }, 0x0021 },
+    { ACTOR_OBJECT_KANKYO,      {    0,   0,    0 }, {   0,      0, 0 }, 0x0006 },
+    { ACTOR_EN_SPIDER,          { 2600,   0, -350 }, {   0, 0xC000, 0 }, 0x0001 },
+    { ACTOR_EN_SPIDER,          { 3355,   0, -490 }, {   0,      0, 0 }, 0x0001 },
+    { ACTOR_EN_SPIDER,          { 3103,   0, -155 }, {   0, 0x8000, 0 }, 0x0001 },
+    { ACTOR_EN_BOX,             { 3720,   0, -197 }, { 0x1, 0x4000, 0 }, 0x5001 }, // Chest: 01, Bombs (5)
+    { ACTOR_BG_DBLUE_WATERFALL, { 1800, 520, -260 }, {   0,      0, 0 }, 0x700C }, // Switch: 0C
 };
 
 RoomShapeCullable old_dodongos_cavern_room_1MeshHeader0x0000B0 = {
@@ -47,6 +55,17 @@ RoomShapeCullable old_dodongos_cavern_room_1MeshHeader0x0000B0 = {
 
 RoomShapeCullableEntry old_dodongos_cavern_room_1MeshDListEntry0x0000BC[1] = {
     { { 2470, 260, -340 } , 1372, old_dodongos_cavern_room_1Dlist0x001900, NULL },
+};
+
+SceneCmd old_dodongos_cavern_room_1Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(20),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
+    SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
+    SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_1MeshHeader0x0000B0),
+    SCENE_CMD_OBJECT_LIST(11, old_dodongos_cavern_room_1ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(6, old_dodongos_cavern_room_1ActorList0x000044),
+    SCENE_CMD_END(),
 };
 
 static s32 terminatorMaybe = { 0x01000000 };

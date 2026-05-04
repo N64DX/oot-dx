@@ -235,6 +235,7 @@ typedef struct EnvHazardTextTriggerEntry {
 
 EnvHazardTextTriggerEntry sEnvHazardTextTriggers[] = {
     { ENV_HAZARD_TEXT_TRIGGER_HOTROOM, 0x3040 },    // PLAYER_ENV_HAZARD_HOTROOM - 1
+    { ENV_HAZARD_TEXT_TRIGGER_HOTROOM, 0x9401 },    // PLAYER_ENV_HAZARD_FREEZINGROOM - 1
     { ENV_HAZARD_TEXT_TRIGGER_UNDERWATER, 0x401D }, // PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1
     { 0, 0x0000 },                                  // PLAYER_ENV_HAZARD_SWIMMING - 1
     { ENV_HAZARD_TEXT_TRIGGER_UNDERWATER, 0x401D }, // PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1
@@ -977,6 +978,8 @@ s32 Player_GetEnvironmentalHazard(PlayState* play) {
 
     if (play->roomCtx.curRoom.environmentType == ROOM_ENV_HOT) { // Room is hot
         envHazard = PLAYER_ENV_HAZARD_HOTROOM - 1;
+    } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_FREEZING) { // Room is freezing
+        envHazard = PLAYER_ENV_HAZARD_FREEZINGROOM - 1;
     } else if ((this->underwaterTimer > 80) &&
                ((this->currentBoots == PLAYER_BOOTS_IRON) || (this->underwaterTimer >= 300))) {
         envHazard = ((this->currentBoots == PLAYER_BOOTS_IRON) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
@@ -992,6 +995,7 @@ s32 Player_GetEnvironmentalHazard(PlayState* play) {
     if (!Player_InCsMode(play)) {
         if ((triggerEntry->flag != 0) && !(gSaveContext.envHazardTextTriggerFlags & triggerEntry->flag) &&
             (((envHazard == (PLAYER_ENV_HAZARD_HOTROOM - 1)) && (this->currentTunic != PLAYER_TUNIC_GORON)) ||
+              (envHazard == (PLAYER_ENV_HAZARD_FREEZINGROOM - 1) && this->currentTunic != PLAYER_TUNIC_ZORA) ||
              (((envHazard == (PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1)) ||
                (envHazard == (PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1))) &&
               (this->currentBoots == PLAYER_BOOTS_IRON) && (this->currentTunic != PLAYER_TUNIC_ZORA)))) {

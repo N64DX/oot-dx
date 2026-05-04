@@ -130,14 +130,15 @@ void BgDodoago2_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&this->dyna.actor.shape, 0.0f, NULL, 0.0f);
 
     this->jawSwitch = this->dyna.actor.params & 0x1F;
-    this->doorSwitch = (this->dyna.actor.params >> 8) & 0x1F;
+    this->doorSwitch = (this->dyna.actor.params >> 8) & 0xFF;
 
     if (Flags_GetSwitch(play, this->jawSwitch)) {
         thisx->flags ^= ACTOR_FLAG_ATTENTION_ENABLED;
         BgDodoago2_SetupAction(this, func_8087227C);
         this->dyna.actor.shape.rot.x = 0x1333;
         play->roomCtx.drawParams[BGDODOAGO2_EYE_LEFT] = play->roomCtx.drawParams[BGDODOAGO2_EYE_RIGHT] = 255;
-        Flags_SetSwitch(play, this->doorSwitch);
+        if (this->doorSwitch <= 0x1F)
+            Flags_SetSwitch(play, this->doorSwitch);
         this->flag = true;
         return;
     } else {
@@ -176,7 +177,7 @@ void func_80871CF4(BgDodoago2* this, PlayState* play) {
         this->state = 0;
         Audio_PlaySfxGeneral(NA_SE_SY_CORRECT_CHIME, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         BgDodoago2_SetupAction(this, func_80871FB8);
-        OnePointCutscene_Init(play, 3380, 160, &this->dyna.actor, CAM_ID_MAIN);
+        OnePointCutscene_Init(play, play->sceneId == SCENE_GORON_MINES ? 3381 : 3380, 160, &this->dyna.actor, CAM_ID_MAIN);
 
         if (!sHasParent) {
             this->dyna.actor.parent = explosive;
@@ -256,8 +257,8 @@ void func_80871FB8(BgDodoago2* this, PlayState* play) {
 }
 
 void func_8087227C(BgDodoago2* this, PlayState* play) {
-    if (!this->flag && DECR(this->timer) == 0)
-        Flags_SetSwitch(play, this->doorSwitch); // hardcoded hack to unlock the beta DC boss door
+    if (!this->flag && DECR(this->timer) == 0 && this->doorSwitch <= 0x1F)
+        Flags_SetSwitch(play, this->doorSwitch);
 }
 
 void func_80872288(BgDodoago2* this, PlayState* play) {

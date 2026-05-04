@@ -116,11 +116,12 @@ typedef enum RoomType {
 typedef enum RoomEnvironmentType {
     /* 0 */ ROOM_ENV_DEFAULT,
     /* 1 */ ROOM_ENV_COLD,
-    /* 2 */ ROOM_ENV_WARM,
-    /* 3 */ ROOM_ENV_HOT, // Enables hot room timer for the current room
-    /* 4 */ ROOM_ENV_UNK_STRETCH_1,
-    /* 5 */ ROOM_ENV_UNK_STRETCH_2,
-    /* 6 */ ROOM_ENV_UNK_STRETCH_3
+    /* 2 */ ROOM_ENV_FREEZING, // Enables freezing room timer for the current room
+    /* 3 */ ROOM_ENV_WARM,
+    /* 4 */ ROOM_ENV_HOT, // Enables hot room timer for the current room
+    /* 5 */ ROOM_ENV_UNK_STRETCH_1,
+    /* 6 */ ROOM_ENV_UNK_STRETCH_2,
+    /* 7 */ ROOM_ENV_UNK_STRETCH_3
 } RoomEnvironmentType;
 
 typedef enum LensMode {

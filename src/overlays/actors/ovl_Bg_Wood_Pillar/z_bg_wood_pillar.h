@@ -4,14 +4,14 @@
 #include "ultra64.h"
 #include "actor.h"
 
-struct BgWoodPillarobj;
+struct BgWoodPillar;
 
-typedef void (*BgWoodPillarobjActionFunc)(struct BgWoodPillarobj*, struct PlayState*);
+typedef void (*BgWoodPillarActionFunc)(struct BgWoodPillar*, struct PlayState*);
 
-typedef struct BgWoodPillarobj {
+typedef struct BgWoodPillar {
     /* 0x0000 */ DynaPolyActor dyna;
-    /* 0x0164 */ BgWoodPillarobjActionFunc actionFunc;
+    /* 0x0164 */ BgWoodPillarActionFunc actionFunc;
     /* 0x0168 */ ColliderCylinder colliderCylinder;
-} BgWoodPillarobj; // size = 0x01B4
+} BgWoodPillar; // size = 0x01B4
 
 #endif

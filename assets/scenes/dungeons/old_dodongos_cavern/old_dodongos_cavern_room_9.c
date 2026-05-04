@@ -7,39 +7,42 @@
 #include "object.h"
 
 SceneCmd old_dodongos_cavern_room_9[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(old_dodongos_cavern_room_9AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(20),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_COLD, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_FREEZING, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_9MeshHeader0x0000D0),
-    SCENE_CMD_OBJECT_LIST(11, old_dodongos_cavern_room_9ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(8, old_dodongos_cavern_room_9ActorList0x000044),
+    SCENE_CMD_OBJECT_LIST(10, old_dodongos_cavern_room_9ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(5, old_dodongos_cavern_room_9ActorList0x000044),
     SCENE_CMD_END(),
+};
+
+SceneCmd* old_dodongos_cavern_room_9AlternateHeaders[] = {
+    old_dodongos_cavern_room_9Set_cleansed,
+    NULL,
+    old_dodongos_cavern_room_9Set_cleansed,
 };
 
 s16 old_dodongos_cavern_room_9ObjectList0x000038[] = {
     OBJECT_DDAN_OBJECTS,
     OBJECT_BWALL2,
     OBJECT_BOX,
-    OBJECT_BOMBF,
-    OBJECT_DODOJR,
-    OBJECT_DODONGO,
-    OBJECT_FIREFLY,
-    OBJECT_AM,
-    OBJECT_BEAST,
+    OBJECT_ICE_OBJECTS,
+    OBJECT_WOOD_PILLAR,
     OBJECT_KINGDODONGO,
+    OBJECT_THEFATHER,
+    OBJECT_BDOOR,
     OBJECT_WARP1,
+    OBJECT_GI_HEARTS,
 };
 
 ActorEntry old_dodongos_cavern_room_9ActorList0x000044[] = {
-    { ACTOR_OBJECT_KANKYO,  {    0,     0,     0 }, { 0,     0, 0 }, 0x0006 },
-    { ACTOR_EN_BOMBF,       { -536, -1280, -4378 }, { 0,     0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,       {  548, -1280, -4382 }, { 0,     0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,       {  544, -1280, -5466 }, { 0,     0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,       { -532, -1280, -5469 }, { 0,     0, 0 }, 0xFFFF },
-    { ACTOR_EN_RIVER_SOUND, {    1, -1306, -4914 }, { 0,     0, 0 }, 0x0002 },
-    { ACTOR_BOSS_DODONGO,   { -484, -1280, -4917 }, { 0,     0, 0 }, 0xFFFF },
-    { ACTOR_BG_BREAKWALL,   {    0,   240, -4410 }, { 0,     0, 0 }, 0x6019 },
+    { ACTOR_OBJECT_KANKYO,  {    0,     0,     0 }, {   0,      0, 0 }, 0x0006 },
+    { ACTOR_BG_BREAKWALL,   {    0,   240, -4410 }, {   0,      0, 0 }, 0x4019 }, // Switch: 19
+    { ACTOR_EN_BOX,         {    0,   240, -4650 }, { 0x1, 0x8000, 0 }, 0x5004 }, // Chest: 04, Bombs (5)
+    { ACTOR_EN_RIVER_SOUND, {    1, -1306, -4914 }, {   0,      0, 0 }, 0x0002 },
+    { ACTOR_EN_THEFATHER,   {    0, -1280, -5400 }, {   0,      0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable old_dodongos_cavern_room_9MeshHeader0x0000D0 = {
@@ -51,6 +54,17 @@ RoomShapeCullable old_dodongos_cavern_room_9MeshHeader0x0000D0 = {
 RoomShapeCullableEntry old_dodongos_cavern_room_9MeshDListEntry0x0000DC[2] = {
     { { 0,  200, -4128 }, 712, old_dodongos_cavern_room_9Dlist0x001010, NULL },
     { { 0, -790, -4930 }, 933, old_dodongos_cavern_room_9Dlist0x001F40, NULL },
+};
+
+SceneCmd old_dodongos_cavern_room_9Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(20),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
+    SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
+    SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_9MeshHeader0x0000D0),
+    SCENE_CMD_OBJECT_LIST(10, old_dodongos_cavern_room_9ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(5, old_dodongos_cavern_room_9ActorList0x000044),
+    SCENE_CMD_END(),
 };
 
 static s32 terminatorMaybe = { 0x01000000 };
@@ -667,6 +681,7 @@ Gfx old_dodongos_cavern_room_9Dlist0x001F40[] = {
     gsSP2Triangles(20, 13, 12, 0, 20, 12, 21, 0),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(old_dodongos_cavern_room_9Tex_002B98, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 64, 0, 0, 0, 5, 6, 0, 0),
+    gsSPDisplayList(0x0A000000),
     gsSPVertex(&old_dodongos_cavern_room_9Vtx_0015D0[0], 20, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(0, 6, 7, 0, 4, 8, 5, 0),

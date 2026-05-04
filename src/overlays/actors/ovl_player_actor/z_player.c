@@ -1204,18 +1204,19 @@ static LinkAnimationHeader* D_80853D4C[][3] = {
 typedef enum FidgetType {
     /* 0x00 */ FIDGET_LOOK_AROUND, // ROOM_ENV_DEFAULT
     /* 0x01 */ FIDGET_COLD,        // ROOM_ENV_COLD
-    /* 0x02 */ FIDGET_WARM,        // ROOM_ENV_WARM
-    /* 0x03 */ FIDGET_HOT,         // ROOM_ENV_HOT (same animations as FIDGET_WARM)
-    /* 0x04 */ FIDGET_STRETCH_1,   // ROOM_ENV_UNK_STRETCH_1
-    /* 0x05 */ FIDGET_STRETCH_2,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
-    /* 0x06 */ FIDGET_STRETCH_3,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
-    /* 0x07 */ FIDGET_CRIT_HEALTH_START,
-    /* 0x08 */ FIDGET_CRIT_HEALTH_LOOP,
-    /* 0x09 */ FIDGET_SWORD_SWING,
-    /* 0x0A */ FIDGET_ADJUST_TUNIC,
-    /* 0x0B */ FIDGET_TAP_FEET,
-    /* 0x0C */ FIDGET_ADJUST_SHIELD,
-    /* 0x0D */ FIDGET_SWORD_SWING_TWO_HAND
+    /* 0x02 */ FIDGET_FREEZING,    // ROOM_ENV_FREEZING (same animations as FIDGET_COLD)
+    /* 0x03 */ FIDGET_WARM,        // ROOM_ENV_WARM
+    /* 0x04 */ FIDGET_HOT,         // ROOM_ENV_HOT (same animations as FIDGET_WARM)
+    /* 0x05 */ FIDGET_STRETCH_1,   // ROOM_ENV_UNK_STRETCH_1
+    /* 0x06 */ FIDGET_STRETCH_2,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
+    /* 0x07 */ FIDGET_STRETCH_3,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
+    /* 0x08 */ FIDGET_CRIT_HEALTH_START,
+    /* 0x09 */ FIDGET_CRIT_HEALTH_LOOP,
+    /* 0x0A */ FIDGET_SWORD_SWING,
+    /* 0x0B */ FIDGET_ADJUST_TUNIC,
+    /* 0x0C */ FIDGET_TAP_FEET,
+    /* 0x0D */ FIDGET_ADJUST_SHIELD,
+    /* 0x0E */ FIDGET_SWORD_SWING_TWO_HAND
 } FidgetType;
 
 static LinkAnimationHeader* sFidgetAnimations[][2] = {
@@ -1223,6 +1224,9 @@ static LinkAnimationHeader* sFidgetAnimations[][2] = {
     { &gPlayerAnim_link_normal_wait_typeA_20f, &gPlayerAnim_link_normal_waitF_typeA_20f },
 
     // FIDGET_COLD
+    { &gPlayerAnim_link_normal_wait_typeC_20f, &gPlayerAnim_link_normal_waitF_typeC_20f },
+
+    // FIDGET_FREEZING
     { &gPlayerAnim_link_normal_wait_typeC_20f, &gPlayerAnim_link_normal_waitF_typeC_20f },
 
     // FIDGET_WARM
@@ -4603,6 +4607,9 @@ s32 Player_CalcSpeedAndYawFromControlStick(PlayState* play, Player* this, f32* o
     f32 floorPitchInfluence;
     f32 speedCap;
 
+    if (R_WEB_TIMER > 0)
+        R_WEB_TIMER--; // Decrease the timer each frame
+
     if ((this->unk_6AD != 0) || (play->transitionTrigger == TRANS_TRIGGER_START) ||
         (this->stateFlags1 & PLAYER_STATE1_0)) {
         *outSpeedTarget = 0.0f;
@@ -4634,6 +4641,8 @@ s32 Player_CalcSpeedAndYawFromControlStick(PlayState* play, Player* this, f32* o
         if (sControlStickMagnitude != 0.0f) {
             sinFloorPitch = Math_SinS(this->floorPitch);
             speedCap = this->unk_880;
+            if (R_WEB_TIMER > 0)
+                speedCap *= 0.6f;
             floorPitchInfluence = CLAMP(sinFloorPitch, 0.0f, 0.6f);
 
             if (this->unk_6C4 != 0.0f) {

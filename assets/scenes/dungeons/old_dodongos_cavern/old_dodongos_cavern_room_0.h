@@ -3,10 +3,13 @@
 
 #include "room.h"
 
+extern SceneCmd* old_dodongos_cavern_room_0AlternateHeaders[];
 extern s16 old_dodongos_cavern_room_0ObjectList0x000038[];
 extern ActorEntry old_dodongos_cavern_room_0ActorList0x000044[];
 extern RoomShapeCullable old_dodongos_cavern_room_0MeshHeader0x0001A0;
 extern RoomShapeCullableEntry old_dodongos_cavern_room_0MeshDListEntry0x0001AC[26];
+
+extern SceneCmd old_dodongos_cavern_room_0Set_cleansed[];
 
 extern Gfx old_dodongos_cavern_room_0Dlist0x000640[];
 extern Gfx old_dodongos_cavern_room_0Dlist0x000AF0[];

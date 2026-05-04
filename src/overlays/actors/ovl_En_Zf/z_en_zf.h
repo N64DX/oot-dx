@@ -12,7 +12,9 @@ typedef enum EnZfType {
     /* -2 */ ENZF_TYPE_DINOLFOS = -2,
     /* -1 */ ENZF_TYPE_LIZALFOS_LONE, // Not a miniboss, e.g. Spirit Temple
     /*  0 */ ENZF_TYPE_LIZALFOS_MINIBOSS_A, // Pair with B
-    /*  1 */ ENZF_TYPE_LIZALFOS_MINIBOSS_B // Pair with A
+    /*  1 */ ENZF_TYPE_LIZALFOS_MINIBOSS_B, // Pair with A
+    /*  2 */ ENZF_TYPE_DINOLFOS_MINIBOSS_A, // Pair with B
+    /*  3 */ ENZF_TYPE_DINOLFOS_MINIBOSS_B // Pair with A
 } EnZfType;
 
 typedef enum EnZfAction {

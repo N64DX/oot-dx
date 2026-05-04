@@ -12,8 +12,8 @@ SceneCmd mountain_village_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_1RoomShapeCullable_000210),
-    SCENE_CMD_OBJECT_LIST(14, mountain_village_room_1ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(33, mountain_village_room_1ActorEntry_000074),
+    SCENE_CMD_OBJECT_LIST(15, mountain_village_room_1ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(39, mountain_village_room_1ActorEntry_000074),
     SCENE_CMD_END(),
 };
 
@@ -30,44 +30,51 @@ s16 mountain_village_room_1ObjectList_00004C[] = {
     OBJECT_BOX,
     OBJECT_TSUBO,
     OBJECT_KA,
+    OBJECT_WOOD_PILLAR,
     OBJECT_FR,
     OBJECT_D_HSBLOCK,
 };
 
 ActorEntry mountain_village_room_1ActorEntry_000074[] = {
-    { ACTOR_EN_MKK,      { 3472,  952,  -667 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3535,  952,  -606 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3565,  952,  -504 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3460,  952,  -619 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3514,  952,  -476 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3624,  952,  -603 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3460,  952,  -571 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3627,  952,  -518 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3516,  952,  -534 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3620,  952,  -551 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3564,  952,  -671 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3667,  952,  -633 }, { 0,      0, 0 }, 0xFA00 },
-    { ACTOR_EN_MKK,      { 3367,  952,  -528 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_EN_MKK,      { 3400,  952,  -572 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_EN_MKK,      { 3474,  952,  -552 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_EN_MKK,      { 3433,  952,  -542 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_EN_MKK,      { 3597,  952,  -621 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_EN_MKK,      { 3722,  952,  -585 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_EN_MKK,      { 3638,  952,  -563 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_EN_MKK,      { 3528,  952,  -572 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_EN_MKK,      { 3733,  952,  -659 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_EN_MKK,      { 3671,  952,  -624 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_DOOR_ANA,    { 2406, 1168, -1197 }, { 0,      0, 0 }, 0x0041 }, // Chest: 01 (Generic Grotto: Gold Rupee)
-    { ACTOR_EN_GS,       { 3685,  837, -1101 }, { 0, 0x47D0, 0 }, 0xFF22 },
-    { ACTOR_EN_FR,       { 2300, 1168, -1200 }, { 0,      0, 0 }, 0x0211 }, // Yellow: 1 (Spring Lake)
-    { ACTOR_OBJ_HSBLOCK, { 2230,  141,  -170 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
-    { ACTOR_OBJ_HSBLOCK, { 2700,  291,  -170 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
-    { ACTOR_OBJ_HSBLOCK, { 2950,  411,  -170 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
-    { ACTOR_OBJ_HSBLOCK, { 3180,  531,  -170 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
-    { ACTOR_OBJ_HSBLOCK, { 3550,  777, -1120 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
-    { ACTOR_OBJ_HSBLOCK, { 2400, 1108,  -990 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
-    { ACTOR_OBJ_HSBLOCK, { 1970, 1228,  -990 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
-    { ACTOR_OBJ_HSBLOCK, { 1550, 1348,  -990 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
+    { ACTOR_EN_MKK,         { 3472,  952,  -667 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3535,  952,  -606 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3565,  952,  -504 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3460,  952,  -619 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3514,  952,  -476 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3624,  952,  -603 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3460,  952,  -571 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3627,  952,  -518 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3516,  952,  -534 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3620,  952,  -551 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3564,  952,  -671 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3667,  952,  -633 }, { 0,      0, 0 }, 0xFA00 },
+    { ACTOR_EN_MKK,         { 3367,  952,  -528 }, { 0,      0, 0 }, 0xFA01 },
+    { ACTOR_EN_MKK,         { 3400,  952,  -572 }, { 0,      0, 0 }, 0xFA01 },
+    { ACTOR_EN_MKK,         { 3474,  952,  -552 }, { 0,      0, 0 }, 0xFA01 },
+    { ACTOR_EN_MKK,         { 3433,  952,  -542 }, { 0,      0, 0 }, 0xFA01 },
+    { ACTOR_EN_MKK,         { 3597,  952,  -621 }, { 0,      0, 0 }, 0xFA01 },
+    { ACTOR_EN_MKK,         { 3722,  952,  -585 }, { 0,      0, 0 }, 0xFA01 },
+    { ACTOR_EN_MKK,         { 3638,  952,  -563 }, { 0,      0, 0 }, 0xFA01 },
+    { ACTOR_EN_MKK,         { 3528,  952,  -572 }, { 0,      0, 0 }, 0xFA01 },
+    { ACTOR_EN_MKK,         { 3733,  952,  -659 }, { 0,      0, 0 }, 0xFA01 },
+    { ACTOR_EN_MKK,         { 3671,  952,  -624 }, { 0,      0, 0 }, 0xFA01 },
+    { ACTOR_DOOR_ANA,       { 2406, 1168, -1197 }, { 0,      0, 0 }, 0x0041 }, // Chest: 01 (Generic Grotto: Gold Rupee)
+    { ACTOR_EN_GS,          { 3685,  837, -1101 }, { 0, 0x47D0, 0 }, 0xFF22 },
+    { ACTOR_EN_FR,          { 2300, 1168, -1200 }, { 0,      0, 0 }, 0x0211 }, // Yellow: 1 (Spring Lake)
+    { ACTOR_OBJ_HSBLOCK,    { 2230,  141,  -170 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
+    { ACTOR_OBJ_HSBLOCK,    { 3550,  777, -1120 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
+    { ACTOR_BG_WOOD_PILLAR, { 2550,  260,   -75 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 2600,  300,   -75 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 2790,  380,   -75 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 2840,  420,   -75 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 3030,  500,   -75 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 3080,  540,   -75 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 2535, 1080, -1125 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 2485, 1120, -1125 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 2115, 1200, -1080 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 2065, 1240, -1080 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 1690, 1325, -1050 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR, { 1640, 1365, -1050 }, { 0,      0, 0 }, 0x0001 },
 };
 
 RoomShapeCullable mountain_village_room_1RoomShapeCullable_000210 = { 

@@ -25,15 +25,14 @@ typedef struct EnBeast {
     s16 headRotx;
     s16 headRoty;
     Vec3f WeaponTip, Weapon, ArmR, Chest, Head, LegL, LegR, HandR, HandL;
-    u8 alarmstate;
-    u8 cantSee;
-    u8 canDodge;
+    bool alarmstate;
+    bool cantSee;
+    bool canDodge;
     u8 inrange;
     f32 deathTimer;
     u8 type;
     u8 switchFlag;
     bool miniboss;
-    bool aggroed;
 } EnBeast;
 
 typedef enum BeastType {

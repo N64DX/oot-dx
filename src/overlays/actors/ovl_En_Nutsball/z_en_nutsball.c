@@ -21,6 +21,7 @@
 #include "assets/objects/object_shopnuts/object_shopnuts.h"
 #include "assets/objects/object_dns/object_dns.h"
 #include "assets/objects/object_dnk/object_dnk.h"
+#include "assets/objects/object_spider/object_spider.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -31,6 +32,8 @@ void EnNutsball_Draw(Actor* thisx, PlayState* play);
 
 void func_80ABBB34(EnNutsball* this, PlayState* play);
 void func_80ABBBA8(EnNutsball* this, PlayState* play);
+void EnNutsball_ProjectileSpawnWeb(EnNutsball* this, PlayState* play);
+void EnNutsball_ProjectileFlightSettingsWeb(EnNutsball* this, PlayState* play);
 
 ActorProfile En_Nutsball_Profile = {
     /**/ ACTOR_EN_NUTSBALL,
@@ -64,12 +67,32 @@ static ColliderCylinderInit sCylinderInit = {
     { 13, 13, 0, { 0, 0, 0 } },
 };
 
+static ColliderCylinderInit sCylinderWebInit = {
+    {
+        COL_MATERIAL_NONE,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_ON | AC_TYPE_PLAYER,
+        OC1_ON | OC1_TYPE_ALL,
+        OC2_TYPE_2,
+        COLSHAPE_CYLINDER,
+    },
+    {
+        ELEM_MATERIAL_UNK0,
+        { 0xFFCFFFFF, HIT_SPECIAL_EFFECT_NONE, 0x10 },
+        { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
+        ATELEM_ON | ATELEM_SFX_WOOD,
+        ACELEM_ON,
+        OCELEM_ON,
+    },
+    { 13, 13, 0, { 0, 0, 0 } },
+};
+
 static s16 sObjectIds[] = {
-    OBJECT_DEKUNUTS, OBJECT_HINTNUTS, OBJECT_SHOPNUTS, OBJECT_DNS, OBJECT_DNK,
+    OBJECT_DEKUNUTS, OBJECT_HINTNUTS, OBJECT_SHOPNUTS, OBJECT_DNS, OBJECT_DNK, OBJECT_SPIDER,
 };
 
 static Gfx* sDLists[] = {
-    gDekuNutsDekuNutDL, gHintNutsNutDL, gBusinessScrubDekuNutDL, gDntJijiNutDL, gDntStageNutDL,
+    gDekuNutsDekuNutDL, gHintNutsNutDL, gBusinessScrubDekuNutDL, gDntJijiNutDL, gDntStageNutDL, gWebs,
 };
 
 void EnNutsball_Init(Actor* thisx, PlayState* play) {
@@ -78,11 +101,13 @@ void EnNutsball_Init(Actor* thisx, PlayState* play) {
 
     ActorShape_Init(&this->actor.shape, 400.0f, ActorShadow_DrawCircle, 13.0f);
     Collider_InitCylinder(play, &this->collider);
-    Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
+    Collider_SetCylinder(play, &this->collider, &this->actor, thisx->params == EN_NUTSBALL_TYPE_WEB ? &sCylinderWebInit : &sCylinderInit);
     this->requiredObjectSlot = Object_GetSlot(&play->objectCtx, sObjectIds[NUTSBALL_GET_TYPE(&this->actor)]);
 
     if (this->requiredObjectSlot < 0) {
         Actor_Kill(&this->actor);
+    } else if (thisx->params == EN_NUTSBALL_TYPE_WEB) {
+        this->actionFunc = EnNutsball_ProjectileSpawnWeb;
     } else {
         this->actionFunc = func_80ABBB34;
     }
@@ -101,6 +126,17 @@ void func_80ABBB34(EnNutsball* this, PlayState* play) {
         this->actor.shape.rot.y = 0;
         this->timer = 30;
         this->actionFunc = func_80ABBBA8;
+        this->actor.speed = 10.0f;
+    }
+}
+
+void EnNutsball_ProjectileSpawnWeb(EnNutsball* this, PlayState* play) {
+    if (Object_IsLoaded(&play->objectCtx, this->requiredObjectSlot)) {
+        this->actor.objectSlot = this->requiredObjectSlot;
+        this->actor.draw = EnNutsball_Draw;
+        this->actor.shape.rot.y = 0;
+        this->timer = 30;
+        this->actionFunc = EnNutsball_ProjectileFlightSettingsWeb;
         this->actor.speed = 10.0f;
     }
 }
@@ -152,13 +188,53 @@ void func_80ABBBA8(EnNutsball* this, PlayState* play) {
     }
 }
 
+void EnNutsball_ProjectileFlightSettingsWeb(EnNutsball* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+    Vec3s sp4C;
+    Vec3f sp40;
+
+    this->timer--;
+
+    if (this->timer == 0)
+        this->actor.gravity = -1.0f;
+
+    this->actor.home.rot.z += 0x2AA8;
+
+    if (this->actor.bgCheckFlags & (BGCHECKFLAG_WALL | BGCHECKFLAG_GROUND)) { // Projectile hit the wall or ground
+        sp40.x = this->actor.world.pos.x;
+        sp40.y = this->actor.world.pos.y + 4;
+        sp40.z = this->actor.world.pos.z;
+
+        EffectSsHahen_SpawnBurst(play, &sp40, 6.0f, 0, 7, 3, 15, HAHEN_OBJECT_DEFAULT, 10, NULL);
+        SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EN_OCTAROCK_ROCK);
+        Actor_Kill(&this->actor);
+    } else if (this->collider.base.atFlags & AT_HIT) {
+        bool slowdown = true;
+        
+        sp40.x = this->actor.world.pos.x;
+        sp40.y = this->actor.world.pos.y + 4;
+        sp40.z = this->actor.world.pos.z;
+
+        if (player->currentShield == PLAYER_SHIELD_DEKU || player->currentShield == PLAYER_SHIELD_HEROS || (player->currentShield == PLAYER_SHIELD_HYLIAN && LINK_IS_ADULT))
+            if ((this->collider.base.atFlags & AT_HIT) && (this->collider.base.atFlags & AT_TYPE_ENEMY) && (this->collider.base.atFlags & AT_BOUNCED))
+                slowdown = false;
+
+        if (slowdown)
+            R_WEB_TIMER = SECONDS(3);
+
+        EffectSsHahen_SpawnBurst(play, &sp40, 6.0f, 0, 7, 3, 15, HAHEN_OBJECT_DEFAULT, 10, NULL);
+        SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EN_OCTAROCK_ROCK);
+        Actor_Kill(&this->actor);
+    }
+}
+
 void EnNutsball_Update(Actor* thisx, PlayState* play) {
     EnNutsball* this = (EnNutsball*)thisx;
     Player* player = GET_PLAYER(play);
     s32 pad;
 
     if (!(player->stateFlags1 & (PLAYER_STATE1_TALKING | PLAYER_STATE1_DEAD | PLAYER_STATE1_28 | PLAYER_STATE1_29)) ||
-        (this->actionFunc == func_80ABBB34)) {
+        (this->actionFunc == func_80ABBB34) || (this->actionFunc == EnNutsball_ProjectileSpawnWeb)) {
         this->actionFunc(this, play);
 
         Actor_MoveXZGravity(&this->actor);

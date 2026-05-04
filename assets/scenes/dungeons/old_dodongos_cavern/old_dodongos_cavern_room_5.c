@@ -7,38 +7,42 @@
 #include "object.h"
 
 SceneCmd old_dodongos_cavern_room_5[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(old_dodongos_cavern_room_5AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(20),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_COLD, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_FREEZING, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_5MeshHeader0x0000D0),
-    SCENE_CMD_OBJECT_LIST(9, old_dodongos_cavern_room_5ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(8, old_dodongos_cavern_room_5ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(11, old_dodongos_cavern_room_5ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(4, old_dodongos_cavern_room_5ActorList0x000048),
     SCENE_CMD_END(),
+};
+
+SceneCmd* old_dodongos_cavern_room_5AlternateHeaders[] = {
+    old_dodongos_cavern_room_5Set_cleansed,
+    NULL,
+    old_dodongos_cavern_room_5Set_cleansed,
 };
 
 s16 old_dodongos_cavern_room_5ObjectList0x000038[] = {
     OBJECT_DDAN_OBJECTS,
     OBJECT_BWALL2,
     OBJECT_BOX,
-    OBJECT_BOMBF,
-    OBJECT_DODOJR,
-    OBJECT_DODONGO,
-    OBJECT_FIREFLY,
-    OBJECT_AM,
+    OBJECT_ICE_OBJECTS,
+    OBJECT_WOOD_PILLAR,
     OBJECT_BEAST,
+    OBJECT_SPIDER,
+    OBJECT_DBLUE_OBJECT,
+    OBJECT_HIDAN_OBJECTS,
+    OBJECT_GOROIWA,
+    OBJECT_CRASHBOX,
 };
 
 ActorEntry old_dodongos_cavern_room_5ActorList0x000048[] = {
     { ACTOR_OBJECT_KANKYO, {    0,   0,     0 }, { 0,      0, 0 }, 0x0006 },
-    { ACTOR_EN_DODOJR,     { 3426,   0, -4046 }, { 0, 0x1555, 0 }, 0xFFFF },
-    { ACTOR_EN_DODOJR,     { 3415,   0, -4156 }, { 0, 0x1555, 0 }, 0xFFFF },
-    { ACTOR_EN_AM,         { 3001,  40, -4386 }, { 0,      0, 0 }, 0xFFFF },
-    { ACTOR_EN_AM,         { 2897,  40, -4498 }, { 0, 0xC000, 0 }, 0xFFFF },
-    { ACTOR_EN_AM,         { 3106,  40, -4498 }, { 0, 0x4000, 0 }, 0xFFFF },
-    { ACTOR_EN_AM,         { 3002,  40, -4583 }, { 0, 0x8000, 0 }, 0xFFFF },
+    { ACTOR_EN_SPIDER,     { 2700,   0, -4200 }, { 0, 0x3A98, 0 }, 0x0001 },
+    { ACTOR_EN_SPIDER,     { 3200,   0, -4800 }, { 0, 0x1555, 0 }, 0x0001 },
     { ACTOR_OBJ_SWITCH,    { 3000, 100, -4482 }, { 0,      0, 0 }, 0x0201 }, // Switch: 02
-    { ACTOR_EN_DODOJR,     { 3778,  73,  -414 }, { 0, 0xC000, 0 }, 0x0001 },
 };
 
 RoomShapeCullable old_dodongos_cavern_room_5MeshHeader0x0000D0 = {
@@ -49,6 +53,17 @@ RoomShapeCullable old_dodongos_cavern_room_5MeshHeader0x0000D0 = {
 
 RoomShapeCullableEntry old_dodongos_cavern_room_5MeshDListEntry0x0000DC[1] = {
     { { 3080, 160, -4413} , 801, old_dodongos_cavern_room_5Dlist0x0019A0, NULL },
+};
+
+SceneCmd old_dodongos_cavern_room_5Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(20),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
+    SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
+    SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_5MeshHeader0x0000D0),
+    SCENE_CMD_OBJECT_LIST(11, old_dodongos_cavern_room_5ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(4, old_dodongos_cavern_room_5ActorList0x000048),
+    SCENE_CMD_END(),
 };
 
 static s32 terminatorMaybe = { 0x01000000 };

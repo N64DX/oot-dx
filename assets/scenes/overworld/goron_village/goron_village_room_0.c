@@ -48,8 +48,8 @@ ActorEntry goron_village_room_0ActorEntry_00005C[] = {
     { ACTOR_OBJ_VISIBLOCK,      {  1890, -200, -1140 }, {      0,      0,      0 }, 0x0000 },
     { ACTOR_OBJ_VISIBLOCK,      {  2130, -230, -1350 }, {      0,      0,      0 }, 0x0000 },
     { ACTOR_OBJ_VISIBLOCK,      {  2350, -265, -1350 }, {      0, 0x05DC,      0 }, 0x0000 },
-    { ACTOR_BG_ICE_SHELTER,     { -1130, -140, -2050 }, {      0,      0,      0 }, 0x0508 }, // Switch: 08
-    { ACTOR_BG_ICE_SHELTER,     {  2585, -200, -1345 }, {      0, 0xC950,      0 }, 0x0509 }, // Switch: 09
+    { ACTOR_BG_ICE_SHELTER,     { -1130, -140, -2050 }, {      0,      0,      0 }, 0x0708 }, // Switch: 08
+    { ACTOR_BG_ICE_SHELTER,     {  2585, -200, -1345 }, {      0, 0xC950,      0 }, 0x0709 }, // Switch: 09
     { ACTOR_BG_SPOT18_SHUTTER,  {  -850, -200,    72 }, {      0, 0x0FA0,      0 }, 0x0000 },
     { ACTOR_OBJ_BEAN,           {   250, -200,   450 }, {      0,      0,      0 }, 0x010A }, // Switch: 0A
     { ACTOR_EN_GO3,             {  -665, -200,    50 }, {      0, 0x0FA0,      0 }, 0x0001 },
