@@ -677,6 +677,7 @@ beginseg
     name "object_ice_objects"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ice_objects/object_ice_objects.o"
+    include "$(BUILD_DIR)/assets/objects/object_ice_objects/object_ice_objects_extra.o"
     number 6
 endseg
 

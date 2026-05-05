@@ -62,6 +62,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 
 **Music tracks:**
 - "Kolima Forest" from "Golden Sun" by Asra
+- "Dungeon Cave" from Skies of Arcadia by doncamillo
 - "Ganon Battle" from "A Link to the Past" by Fish_waffle64
 - "Mysterious Forest" from "A Link to the Past" by Fish_waffle64
 - "Lake Hylia" from "Twilight Princess" by Liam

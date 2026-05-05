@@ -118,6 +118,27 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Bg_Breakwall2"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Breakwall2/z_bg_breakwall2.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Breakwall2/ovl_Bg_Breakwall2_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Dodoago2"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Dodoago2/z_bg_dodoago2.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Dodoago2/ovl_Bg_Dodoago2_reloc.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Flame_Thrower"
+    compress
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Flame_Thrower/z_bg_flame_thrower.o"
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Flame_Thrower/ovl_Bg_Flame_Thrower_reloc.o"
+endseg
+
+beginseg
     name "ovl_Obj_Purify"
     compress
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Purify/z_obj_purify.o"

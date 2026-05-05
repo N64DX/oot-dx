@@ -12,15 +12,15 @@ SceneCmd path_to_goron_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&path_to_goron_village_room_0RoomShapeCullable_000240),
-    SCENE_CMD_OBJECT_LIST(14, path_to_goron_village_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(28, path_to_goron_village_room_0ActorEntry_00005C),
+    SCENE_CMD_OBJECT_LIST(13, path_to_goron_village_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(30, path_to_goron_village_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
 
 s16 path_to_goron_village_room_0ObjectList_000040[] = {
     OBJECT_HORSE,
     OBJECT_SPOT18_OBJ,
-    OBJECT_HSSTUMP,
+    OBJECT_WOOD_PILLAR,
     OBJECT_ICEFLOE,
     OBJECT_FIREFLY,
     OBJECT_TITE,
@@ -31,13 +31,11 @@ s16 path_to_goron_village_room_0ObjectList_000040[] = {
     OBJECT_WF,
     OBJECT_BOX,
     OBJECT_KANBAN,
-    OBJECT_KA,
     OBJECT_FR,
 };
 
 ActorEntry path_to_goron_village_room_0ActorEntry_00005C[] = {
     { ACTOR_BG_SPOT18_SHUTTER, {   -770,    560,   -940 }, {    0, 0x0FA0,    0 }, 0x0000 },
-    { ACTOR_EN_KAKASI2,        {   -749,    560,   -654 }, {    0,      0,   14 }, 0x053E }, // Switch: 3E
     { ACTOR_EN_FR,             {     60,   -200,   -440 }, {    0, 0x8000,    0 }, 0x0221 }, // Yellow: 2 (Spring Lake)
     { ACTOR_OBJ_HAMISHI,       {    275,    180,   -200 }, {    0,      0,    0 }, 0x0000 }, // Switch: 00
     { ACTOR_OBJ_HAMISHI,       {    225,    180,   -150 }, {    0,      0,    0 }, 0x0001 }, // Switch: 01
@@ -54,9 +52,12 @@ ActorEntry path_to_goron_village_room_0ActorEntry_00005C[] = {
     { ACTOR_EN_ITEM00,         {   -300,   -200,   -650 }, {    0,      0,    0 }, 0x0201 }, // Collect: 02
     { ACTOR_EN_ITEM00,         {    566,   -200,    855 }, {    0,      0,    0 }, 0x0301 }, // Collect: 03
     { ACTOR_EN_ITEM00,         {   1287,   -200,   -168 }, {    0,      0,    0 }, 0x0401 }, // Collect: 04
-    { ACTOR_OBJ_HSSTUMP,       {  -1370,    320,    380 }, {    0, 0x0FA0,    0 }, 0x0000 },
-    { ACTOR_OBJ_HSSTUMP,       {  -1400,    440,   -200 }, {    0, 0xF060,    0 }, 0x0000 },
-    { ACTOR_OBJ_HSSTUMP,       {  -1000,    560,   -770 }, {    0, 0xCD38,    0 }, 0x0000 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1060,    520,   -750 }, {    0, 0x0FA0,    0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1130,    435,   -510 }, {    0, 0x0FA0,    0 }, 0x0000 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1460,    400,   -120 }, {    0, 0x03E8,    0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1500,    315,    140 }, {    0, 0x03E8,    0 }, 0x0000 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1350,    280,    460 }, {    0, 0xFC18,    0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1120,    195,    530 }, {    0, 0xFC18,    0 }, 0x0000 },
     { ACTOR_EN_ISHI,           {  -1326,    320,    172 }, {    0,      0,    0 }, 0x0210 },
     { ACTOR_EN_ISHI,           {  -1349,    320,    114 }, {    0,      0,    0 }, 0x0200 },
     { ACTOR_EN_ISHI,           {  -1264,    320,    161 }, {    0,      0,    0 }, 0x0200 },
@@ -998,3 +999,4 @@ Gfx path_to_goron_village_room_0DL_007060[] = {
     gsSP2Triangles(6, 5, 9, 0, 26, 29, 3, 0),
     gsSPEndDisplayList(),
 };
+

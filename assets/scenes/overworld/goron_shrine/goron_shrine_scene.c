@@ -46,7 +46,7 @@ Spawn goron_shrine_sceneEntranceList0x0000E4[] = {
 
 u16 goron_shrine_sceneExitList_0000EC[] = {
     ENTR_GORON_VILLAGE_1,
-    ENTR_GORON_SHRINE_1,
+    ENTR_GORON_MINES_0,
 };
 
 EnvLightSettings goron_shrine_sceneLightSettings0x0000F0[] = {
