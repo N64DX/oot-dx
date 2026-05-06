@@ -375,7 +375,7 @@ void ConsoleLogo_Destroy(GameState* thisx) {
 #endif
 
 #if PLATFORM_N64
-    func_800014E8();
+    CIC6105_EnableAudio();
 #endif
 }
 
