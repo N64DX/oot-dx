@@ -428,13 +428,6 @@ beginseg
 endseg
 
 beginseg
-    name "ovl_En_OE2"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_OE2/z_en_oe2.o"
-endseg
-
-beginseg
     name "ovl_Bg_Ydan_Hasi"
     compress
     flags OVERLAY
@@ -669,31 +662,10 @@ beginseg
 endseg
 
 beginseg
-    name "ovl_En_Bird"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Bird/z_en_bird.o"
-endseg
-
-beginseg
     name "ovl_En_Wood02"
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Wood02/z_en_wood02.o"
-endseg
-
-beginseg
-    name "ovl_En_Lightbox"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Lightbox/z_en_lightbox.o"
-endseg
-
-beginseg
-    name "ovl_En_Pu_box"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Pu_box/z_en_pu_box.o"
 endseg
 
 beginseg
@@ -708,13 +680,6 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Arow_Trap/z_en_arow_trap.o"
-endseg
-
-beginseg
-    name "ovl_En_Vase"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Vase/z_en_vase.o"
 endseg
 
 beginseg
@@ -1882,13 +1847,6 @@ beginseg
 endseg
 
 beginseg
-    name "ovl_En_Nwc"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Nwc/z_en_nwc.o"
-endseg
-
-beginseg
     name "ovl_En_Blkobj"
     compress
     flags OVERLAY
@@ -2082,13 +2040,6 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Mure2/z_obj_mure2.o"
-endseg
-
-beginseg
-    name "ovl_En_Go"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Go/z_en_go.o"
 endseg
 
 beginseg
