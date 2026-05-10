@@ -105,7 +105,6 @@
     include "$(BUILD_DIR)/src/libultra/io/contramwrite.o"
     include "$(BUILD_DIR)/src/libultra/io/pfsgetstatus.o"
     include "$(BUILD_DIR)/src/libultra/io/contpfs.o"
-    include "$(BUILD_DIR)/src/libultra/libc/bcmp.o"
     include "$(BUILD_DIR)/src/libultra/io/contramread.o"
     include "$(BUILD_DIR)/src/libultra/io/crc.o"
     include "$(BUILD_DIR)/src/libultra/io/pfsisplug.o"
