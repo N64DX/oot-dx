@@ -34,23 +34,23 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
-- **gh0st:** Open hand z-targeting animation to idle fix
+- **gh0st:** Open hand Z-Targeting animation to idle fix
 - **Kenton M:** Roc's Feather concept
 - **Nicko (Airi):** DK64 Expansion Pak warning display
-- **Nokaubure:** autosave concept, Gohma debris, ISG fix, Teleporter
+- **Nokaubure:** Autosave concept, Gohma debris, ISG fix, Teleporter
 - **OoT Randomizer:** Key chest textures
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
 - **thinedave & Aegiker:** Energy (stamina) wheel
-¨- **Yanis002:** MM Title Cards
+- **Yanis002:** MM title cards
 
 **Features & fixes by Skawo:**
 - Font preloading
-- Kakariko Gate Guard Dialogue
+- Kakariko gate guard dialogue
 - Stalfos break parts lag
 - Ingo Ranch text breaking Running Man timer
 - Spirit Temple room texture alpha blending fix
-- Kakariko Thunderstorm Weather fix
+- Kakariko thunderstorm weather fix
 
 **Actors and objects:**
 - **GrandLovania**: Stalmaster
@@ -158,15 +158,17 @@ git clean -df
 Build all ROMs, which requires all `baseroms` to be present:
 
 ```
-baseroms/ique-cn/baserom.z64
-baseroms/gc-us/baserom.z64
-baseroms/gc-us-mq/baserom.z64
 baseroms/gc-eu/baserom.z64
+baseroms/gc-eu-dbg/baserom.z64
+baseroms/gc-eu-dbg-2/baserom.z64
 baseroms/gc-eu-mq/baserom.z64
 baseroms/gc-eu-mq-dbg/baserom.z64
+baseroms/gc-us/baserom.z64
+baseroms/gc-us-mq/baserom.z64
 baseroms/gc-jp/baserom.z64
 baseroms/gc-jp-ce/baserom.z64
 baseroms/gc-jp-mq/baserom.z64
+baseroms/ique-cn/baserom.z64
 baseroms/ntsc-1.0/baserom.z64
 baseroms/ntsc-1.1/baserom.z64
 baseroms/ntsc-1.2/baserom.z64
@@ -177,13 +179,13 @@ baseroms/pal-1.1/baserom.z64
 Setup all:
 
 ```bash
-make setup -j VERSION=pal-1.0 && make setup -j VERSION=ntsc-1.0 && make setup -j VERSION=gc-eu && make setup -j VERSION=gc-eu-mq && make setup -j VERSION=gc-eu-mq-dbg && make setup -j VERSION=gc-jp && make setup -j VERSION=gc-jp-ce && make setup -j VERSION=gc-jp-mq && make setup -j VERSION=gc-us && make setup -j VERSION=gc-us-mq && make setup -j VERSION=ique-cn && make setup -j VERSION=ntsc-1.1 && make setup -j VERSION=ntsc-1.2 && make setup -j VERSION=pal-1.1 -j
+make setup -j VERSION=pal-1.0 && make setup -j VERSION=ntsc-1.0 && make setup -j VERSION=gc-eu && make setup -j VERSION=gc-eu-dbg && make setup -j VERSION=gc-eu-dbg-2 && make setup -j VERSION=gc-eu-mq && make setup -j VERSION=gc-eu-mq-dbg && make setup -j VERSION=gc-jp && make setup -j VERSION=gc-jp-ce && make setup -j VERSION=gc-jp-mq && make setup -j VERSION=gc-us && make setup -j VERSION=gc-us-mq && make setup -j VERSION=ique-cn && make setup -j VERSION=ntsc-1.1 && make setup -j VERSION=ntsc-1.2 && make setup -j VERSION=pal-1.1
 ```
 
 Build all:
 
 ```bash
-make -j VERSION=pal-1.0 && make -j VERSION=ntsc-1.0 && make -j VERSION=gc-eu && make -j VERSION=gc-eu-mq && make -j VERSION=gc-eu-mq-dbg && make -j VERSION=gc-jp && make -j VERSION=gc-jp-ce && make -j VERSION=gc-jp-mq && make -j VERSION=gc-us && make -j VERSION=gc-us-mq && make -j VERSION=ique-cn && make -j VERSION=ntsc-1.1 && make -j VERSION=ntsc-1.2 && make -j VERSION=pal-1.1 -j
+make -j VERSION=pal-1.0 && make -j VERSION=ntsc-1.0 && make -j VERSION=gc-eu && make -j VERSION=gc-eu-dbg && make -j VERSION=gc-eu-dbg-2 && make -j VERSION=gc-eu-mq && make -j VERSION=gc-eu-mq-dbg && make -j VERSION=gc-jp && make -j VERSION=gc-jp-ce && make -j VERSION=gc-jp-mq && make -j VERSION=gc-us && make -j VERSION=gc-us-mq && make -j VERSION=ique-cn && make -j VERSION=ntsc-1.1 && make -j VERSION=ntsc-1.2 && make -j VERSION=pal-1.1
 ```
 
 #### 7. Debug features
