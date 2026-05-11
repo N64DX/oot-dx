@@ -1761,9 +1761,6 @@ void Scene_DrawConfigForbiddenWoods(PlayState* play) {
     gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TexScroll(play->state.gfxCtx, 0, (gameplayFrames * 10) % 128, 32, 32));
     gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TexScroll(play->state.gfxCtx, 0, (gameplayFrames * 3)  % 128, 32, 32));
 
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0, 32, 32, 1, 0, -gameplayFrames, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, gameplayFrames, 64, 64, 1, 0, -gameplayFrames, 64, 64));
-
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
@@ -1919,10 +1916,11 @@ void Scene_DrawConfigGoronMines(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TexScroll(play->state.gfxCtx, gameplayFrames % 256, 0, 64, 32)); // Fog
-    
-    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                    gameplayFrames % 128, 32, 32, 1, 0, 0,                    32, 32)); // Lava
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, gameplayFrames % 256, 0,                    64, 32, 1, 0, gameplayFrames % 128, 64, 32)); // Boss Lava
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                    (gameplayFrames * 7) % 128, 32, 32, 1, 0, (gameplayFrames * 6) % 128, 32, 32)); // Lava
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                     gameplayFrames      % 128, 32, 32, 1, 0, 0,                          32, 32)); // Lava
+    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, gameplayFrames % 256, 0,                          64, 32, 1, 0,  gameplayFrames      % 128, 64, 32)); // Boss Lava
+
+    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TexScroll(play->state.gfxCtx, gameplayFrames % 256, 0, 64, 32)); // Fog
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);

@@ -10,6 +10,8 @@ extern RoomShapeCullable old_dodongos_cavern_room_0MeshHeader0x0001A0;
 extern RoomShapeCullableEntry old_dodongos_cavern_room_0MeshDListEntry0x0001AC[26];
 
 extern SceneCmd old_dodongos_cavern_room_0Set_cleansed[];
+extern s16 old_dodongos_cavern_room_0ObjectList_cleansed[];
+extern ActorEntry old_dodongos_cavern_room_0ActorList_cleansed[];
 
 extern Gfx old_dodongos_cavern_room_0Dlist0x000640[];
 extern Gfx old_dodongos_cavern_room_0Dlist0x000AF0[];

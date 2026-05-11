@@ -303,6 +303,8 @@ void EnBeast_Init(Actor* thisx, PlayState* play) {
 
     if (this->switchFlag <= 0x3F && Flags_GetSwitch(play, this->switchFlag))
         Actor_Kill(thisx);
+    else if (this->miniboss && play->sceneId == SCENE_GORON_VILLAGE && !GET_INFTABLE(INFTABLE_MONSTER_REQUEST_FROM_GORON_ELDER))
+        Actor_Kill(thisx);
 }
 
 void EnBeast_Destroy(Actor* thisx, PlayState* play) {
@@ -335,11 +337,11 @@ void EnBeast_Update(Actor* thisx, PlayState* play) {
     EnBeast_CheckDamage(this, play);
     Actor_UpdateBgCheckInfo(play, &this->actor, this->collider.dim.radius, this->collider.dim.height * 0.5f, 0.0f, UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2);
 
-    if (((this->actionFunc == EnBeast_AttackA) || (this->actionFunc == EnBeast_AttackA2)) && (this->skelAnime.curFrame > 20.0f) && (this->skelAnime.curFrame < 36.0f))
+    if ((this->actionFunc == EnBeast_AttackA || this->actionFunc == EnBeast_AttackA2) && this->skelAnime.curFrame > 20.0f && this->skelAnime.curFrame < 36.0f)
         CollisionCheck_SetAT(play, &play->colChkCtx, &this->colliderSpheres.base);
-    if ((this->actionFunc == EnBeast_AttackB) && (this->skelAnime.curFrame > 13.0f) && (this->skelAnime.curFrame < 21.0f))
+    if (this->actionFunc == EnBeast_AttackB && this->skelAnime.curFrame > 13.0f && this->skelAnime.curFrame < 21.0f)
         CollisionCheck_SetAT(play, &play->colChkCtx, &this->colliderSpheres.base);
-    if ((this->actionFunc == EnBeast_AttackC) && (this->skelAnime.curFrame > 14.0f) && (this->skelAnime.curFrame < 20.0f))
+    if (this->actionFunc == EnBeast_AttackC && this->skelAnime.curFrame > 14.0f && this->skelAnime.curFrame < 20.0f)
         CollisionCheck_SetAT(play, &play->colChkCtx, &this->colliderSpheres.base);
 
     if ((this->colliderSpheres.base.atFlags & AT_HIT)) {
@@ -347,7 +349,7 @@ void EnBeast_Update(Actor* thisx, PlayState* play) {
         Actor_SetPlayerKnockbackSmallNoDamage(play, &this->actor, 8.0f, this->actor.yawTowardsPlayer, 6.0f);
     }
 
-    if ((this->actionFunc != EnBeast_Death) && (this->actionFunc != EnBeast_AttackDb)) {
+    if (this->actionFunc != EnBeast_Death && this->actionFunc != EnBeast_AttackDb) {
         Collider_UpdateCylinder(&this->actor, &this->collider);
         if ((DECR(this->hurtboxCooldown) == 0) && (this->actionFunc != EnBeast_Waittojump))
             CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
@@ -670,9 +672,6 @@ void EnBeast_MoveF(EnBeast* this, PlayState* play) {
         }
 
         this->timer -= 1;
-
-        if (!Actor_TestFloorInDirection(&this->actor, play, this->actor.speed, this->actor.shape.rot.y))
-            this->actor.world.pos = this->actor.prevPos;
     } else EnBeast_ForwardBackCheck(this, play);
 }
 
@@ -745,9 +744,6 @@ void EnBeast_MoveB(EnBeast* this, PlayState* play) {
         }
 
         this->timer -= 1;
-
-        if (!Actor_TestFloorInDirection(&this->actor, play, this->actor.speed, this->actor.shape.rot.y + 0x8000))
-            this->actor.world.pos = this->actor.prevPos;
     } else {
         this->canDodge = true;
         EnBeast_ForwardBackCheck(this, play);
@@ -793,9 +789,6 @@ void EnBeast_AttackA(EnBeast* this, PlayState* play) {
         else this->actor.speed = 0.0f;
 
         this->timer -= 1;
-
-        if (!Actor_TestFloorInDirection(&this->actor, play, this->actor.speed, this->actor.shape.rot.y))
-            this->actor.world.pos = this->actor.prevPos;
     } else EnBeast_ForwardBackCheck(this, play);
 }
 
@@ -859,9 +852,6 @@ void EnBeast_AttackB(EnBeast* this, PlayState* play) {
     if (this->timer > 0) {
         this->actor.speed = 0.0f;
         this->timer -= 1;
-
-        if (!Actor_TestFloorInDirection(&this->actor, play, this->actor.speed, this->actor.shape.rot.y))
-            this->actor.world.pos = this->actor.prevPos;
     } else EnBeast_ForwardBackCheck(this, play);
 }
 
@@ -894,9 +884,6 @@ void EnBeast_AttackC(EnBeast* this, PlayState* play) {
         else this->actor.speed = 0.0f;
 
         this->timer -= 1;
-
-        if (!Actor_TestFloorInDirection(&this->actor, play, this->actor.speed, this->actor.shape.rot.y))
-            this->actor.world.pos = this->actor.prevPos;
     } else EnBeast_ForwardBackCheck(this, play);
 }
 
@@ -923,11 +910,9 @@ void EnBeast_AttackDa(EnBeast* this, PlayState* play) {
     if (this->timer > 0) {
         Player* player = GET_PLAYER(play);
 
-        if (this->skelAnime.curFrame < 16.0f) {
+        if (this->skelAnime.curFrame < 16.0f)
             this->actor.speed = 6.0f;
-            if (!Actor_TestFloorInDirection(&this->actor, play, this->actor.speed, this->actor.shape.rot.y))
-                this->actor.world.pos = this->actor.prevPos;
-        } else this->actor.speed = 0.0f;
+        else this->actor.speed = 0.0f;
         if ((this->skelAnime.curFrame >= 20.0f) && (this->actor.xzDistToPlayer <= 80) && (ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x1000) && (fabsf(this->actor.world.pos.y - player->actor.world.pos.y) <= 80.0f)) {
             this->actor.speed = 0.0f;
             this->timer = 48;

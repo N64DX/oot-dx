@@ -14,12 +14,12 @@ SceneCmd old_dodongos_cavern_room_7[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_7MeshHeader0x0000B0),
     SCENE_CMD_OBJECT_LIST(11, old_dodongos_cavern_room_7ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(6, old_dodongos_cavern_room_7ActorList0x000048),
+    SCENE_CMD_ACTOR_LIST(7, old_dodongos_cavern_room_7ActorList0x000048),
     SCENE_CMD_END(),
 };
 
 SceneCmd* old_dodongos_cavern_room_7AlternateHeaders[] = {
-    old_dodongos_cavern_room_7Set_cleansed,
+    NULL,
     NULL,
     old_dodongos_cavern_room_7Set_cleansed,
 };
@@ -43,7 +43,7 @@ ActorEntry old_dodongos_cavern_room_7ActorList0x000048[] = {
     { ACTOR_EN_GOROIWA,    { -1900, 451, -1100 }, {    0,      0, 1 }, 0x0C00 },
     { ACTOR_EN_GOROIWA,    { -2150, 451,  -750 }, {    0, 0x8000, 1 }, 0x0C01 },
     { ACTOR_EN_GOROIWA,    { -2388, 571, -1038 }, {    0,      0, 1 }, 0x0C02 },
-    { ACTOR_OBJ_OSHIHIKI,  { -2297, 421,  -915 }, {    0, 0x4000, 0 }, 0xFF00 },
+    { ACTOR_OBJ_OSHIHIKI,  { -2297, 451,  -915 }, {    0, 0x4000, 0 }, 0xFF00 },
     { ACTOR_EN_BOX,        { -2485, 571,  -911 }, { 0x59, 0xC000, 0 }, 0x0002 }, // Chest: 02, Ice Arrow
     { ACTOR_EN_ITEM00,     { -2555, 582,  -911 }, {    0,      0, 0 }, 0x2202 }, // Collect 22, Red Rupee
 };

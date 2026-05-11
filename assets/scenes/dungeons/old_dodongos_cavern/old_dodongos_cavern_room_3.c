@@ -19,7 +19,7 @@ SceneCmd old_dodongos_cavern_room_3[] = {
 };
 
 SceneCmd* old_dodongos_cavern_room_3AlternateHeaders[] = {
-    old_dodongos_cavern_room_3Set_cleansed,
+    NULL,
     NULL,
     old_dodongos_cavern_room_3Set_cleansed,
 };
@@ -1703,7 +1703,7 @@ Gfx old_dodongos_cavern_room_3Dlist0x008E90[] = {
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_CULL_BACK),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 127),
-    gsSPDisplayList(0x08000000),
+    gsSPDisplayList(0x0B000000),
     gsSPVertex(&old_dodongos_cavern_room_3Vtx_008B90[0], 16, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 3, 0, 4, 3, 2, 0),

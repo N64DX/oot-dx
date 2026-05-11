@@ -19,7 +19,7 @@ SceneCmd old_dodongos_cavern_room_6[] = {
 };
 
 SceneCmd* old_dodongos_cavern_room_6AlternateHeaders[] = {
-    old_dodongos_cavern_room_6Set_cleansed,
+    NULL,
     NULL,
     old_dodongos_cavern_room_6Set_cleansed,
 };

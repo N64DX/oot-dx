@@ -29,8 +29,8 @@ s16 goron_shrine_room_1ObjectList_00004C[] = {
 };
 
 ActorEntry goron_shrine_room_1ActorEntry_000058[] = {
-    { ACTOR_EN_GO3,       { -1723, -134, -115 }, { 0, 0x2AAB, 0 }, 0x0040 },
-    { ACTOR_EN_GO3,       { -1552, -133,   74 }, { 0, 0xB3E9, 0 }, 0x0050 },
+    { ACTOR_EN_GO3,       { -1723, -134, -115 }, { 0, 0x2AAB, 0 }, 0x0030 },
+    { ACTOR_EN_GO3,       { -1552, -133,   74 }, { 0, 0xB3E9, 0 }, 0x0040 },
     { ACTOR_EN_JG,        { -1690, -133,    0 }, { 0, 0x4000, 0 }, 0x0000 },
     { ACTOR_OBJ_SYOKUDAI, { -1505, -134, -140 }, { 0,      0, 0 }, 0x2400 },
     { ACTOR_OBJ_SYOKUDAI, { -1505, -134,  125 }, { 0,      0, 0 }, 0x2400 },

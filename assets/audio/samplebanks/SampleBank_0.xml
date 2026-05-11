@@ -443,6 +443,7 @@
     <Sample Name="SAMPLE_0_619" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample619.aifc"/>
     <Sample Name="SAMPLE_0_648" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample648.aifc"/>
     <Sample Name="SAMPLE_0_649" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Sample649.aifc"/>
+    <Sample Name="SAMPLE_0_SNOW_1"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Snow_Sample1.aifc"/>
     <Sample Name="SAMPLE_0_WOODFALL_378" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample378.aifc"/>
     <Sample Name="SAMPLE_0_WOODFALL_624" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample624.aifc"/>
     <Sample Name="SAMPLE_0_WOODFALL_625" Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Woodfall_Sample625.aifc"/>

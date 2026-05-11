@@ -75,6 +75,7 @@ static BgWoodPillarInfo sBgWoodPillarInfo[] = {
 
 void BgWoodPillar_Init(Actor* thisx, PlayState* play) {
     BgWoodPillar* this = (BgWoodPillar*)thisx;
+
     CollisionHeader* colHeader = NULL;
 
     DynaPolyActor_Init(&this->dyna, 0);
@@ -85,8 +86,8 @@ void BgWoodPillar_Init(Actor* thisx, PlayState* play) {
     CollisionHeader_GetVirtual(&gWoodPillarCol, &colHeader);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
 
-    this->dyna.actor.scale.x = this->dyna.actor.scale.z = sBgWoodPillarInfo[this->dyna.actor.params & 1].scaleXZ;
-    this->dyna.actor.scale.y = sBgWoodPillarInfo[this->dyna.actor.params & 1].scaleY;
+    this->dyna.actor.scale.x = this->dyna.actor.scale.z = sBgWoodPillarInfo[this->dyna.actor.params & 3].scaleXZ;
+    this->dyna.actor.scale.y = sBgWoodPillarInfo[this->dyna.actor.params & 3].scaleY;
 }
 
 void BgWoodPillar_Destroy(Actor* thisx, PlayState* play) {

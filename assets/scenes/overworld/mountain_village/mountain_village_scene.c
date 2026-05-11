@@ -160,7 +160,7 @@ SurfaceType mountain_village_sceneCollisionHeader_0058E8SurfaceType[] = {
                 /* isHorseBlocked */ false
             ),
             SURFACETYPE1(
-                SURFACE_MATERIAL_ICE,
+                SURFACE_MATERIAL_SNOW,
                 FLOOR_EFFECT_0,
                 /* lightSetting */ 31,
                 /* echo */ 10,
@@ -280,7 +280,7 @@ SurfaceType mountain_village_sceneCollisionHeader_0058E8SurfaceType[] = {
                 /* isHorseBlocked */ false
             ),
             SURFACETYPE1(
-                SURFACE_MATERIAL_ICE,
+                SURFACE_MATERIAL_SNOW,
                 FLOOR_EFFECT_0,
                 /* lightSetting */ 31,
                 /* echo */ 10,

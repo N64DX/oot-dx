@@ -977,6 +977,7 @@ typedef enum LinkAge {
 // This will make obtaining the Deku Nut upgrade impossible if Poachers Saw is obtained first.
 // This flag is never read for the Poachers Saw event, so the overlap only causes an issue for the Deku Nut Upgrade. It will not prevent obtaining Poachers Saw.
 #define ITEMGETINF_FOREST_STAGE_NUT_UPGRADE 0x1F
+#define ITEMGETINF_RUNNING_MAN_HEART_PIECE 0x20
 #define ITEMGETINF_23 0x23
 #define ITEMGETINF_24 0x24
 #define ITEMGETINF_25 0x25
@@ -1037,6 +1038,12 @@ typedef enum LinkAge {
 #define INFTABLE_71 0x71
 #define INFTABLE_76 0x76
 #define INFTABLE_77 0x77
+#define INFTABLE_TALKED_TO_GORON_ELDER 0x78
+#define INFTABLE_MONSTER_REQUEST_FROM_GORON_ELDER 0x79
+#define INFTABLE_ASKED_BY_GORON_ELDER 0x7A
+#define INFTABLE_PROOF_FOR_GORON_ELDER 0x7B
+#define INFTABLE_GOT_PERMISSION_FROM_GORON_ELDER 0x7C
+#define INFTABLE_THANKED_BY_GORON_ELDER 0x7D
 #define INFTABLE_TALKED_TO_TALON_IN_RANCH_HOUSE 0x7E
 #define INFTABLE_TALKED_TO_MALON_FIRST_TIME 0x84
 #define INFTABLE_TOLD_EPONA_IS_SCARED 0x85

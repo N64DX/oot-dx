@@ -51,7 +51,7 @@ ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_OBJ_TSUBO,         {   510,  363,   700 }, {    0,      0,  0 }, 0x3914 }, // Collect: 1C
     { ACTOR_EN_GS,             {  -805,    4,  1346 }, {    0, 0x63F0,  0 }, 0xFF23 },
     { ACTOR_EN_RIVER_SOUND,    { -1217,   16,   450 }, {    0,      0,  0 }, 0x0003 },
-    { ACTOR_BG_SPOT18_SHUTTER, {   470, 1408, -1575 }, {    0, 0xF830,  0 }, 0x0000 },
+    { ACTOR_BG_SPOT18_SHUTTER, {   470, 1408, -1575 }, {    0, 0xF830,  0 }, 0x00FF },
     { ACTOR_OBJ_HAMISHI,       {   146,  -30,   831 }, {    0,      0,  0 }, 0x0200 }, // Switch: 00
     { ACTOR_OBJ_HAMISHI,       {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
     { ACTOR_OBJ_HAMISHI,       {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
@@ -171,7 +171,7 @@ ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_OBJ_TSUBO,         {   510,  363,   700 }, {    0,      0,  0 }, 0x3914 }, // Collect: 1C
     { ACTOR_EN_GS,             {  -805,    4,  1346 }, {    0, 0x63F0,  0 }, 0xFF23 },
     { ACTOR_EN_RIVER_SOUND,    { -1217,   16,   450 }, {    0,      0,  0 }, 0x0003 },
-    { ACTOR_BG_SPOT18_SHUTTER, {   470, 1408, -1575 }, {    0, 0xF830,  0 }, 0x0000 },
+    { ACTOR_BG_SPOT18_SHUTTER, {   470, 1408, -1575 }, {    0, 0xF830,  0 }, 0x00FF },
     { ACTOR_OBJ_HAMISHI,       {   146,  -30,   831 }, {    0,      0,  0 }, 0x0000 }, // Switch: 00
     { ACTOR_OBJ_HAMISHI,       {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
     { ACTOR_OBJ_HAMISHI,       {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
@@ -201,8 +201,8 @@ ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   720 }, {    0, 0xB400,  0 }, 0x4000 }, // Collect: 20, Green Rupee
     { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   880 }, {    0,      0,  0 }, 0x4400 }, // Collect: 22, Green Rupee
     { ACTOR_EN_BEE,            {   219,   13,    71 }, {    0,      0,  0 }, 0x0020 },
-    { ACTOR_EN_GO3,            {   615, 1408, -1438 }, {    0, 0xEE39,  0 }, 0x0060 },
-    { ACTOR_EN_GO3,            {   693, 1408, -1407 }, {    0, 0xEE39,  0 }, 0x0070 },
+    { ACTOR_EN_GO3,            {   615, 1408, -1438 }, {    0, 0xEE39,  0 }, 0x0003 },
+    { ACTOR_EN_GO3,            {   693, 1408, -1407 }, {    0, 0xEE39,  0 }, 0x0013 },
     { ACTOR_EN_BOX,            { -1425,    8,   376 }, { 0x3E, 0xADF8,  0 }, 0x4000 }, // Chest: 00
     { ACTOR_EN_FR,             {  -844,       -5,   836       }, {    0, 0x3900,  0 }, 0x0300 }, // Master Frog
     { ACTOR_EN_FR,             {  -805,       -5,   917       }, {    0, 0x3E00,  0 }, 0x0121 }, // Yellow (Spring Lake)

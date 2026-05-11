@@ -27,7 +27,7 @@ SceneCmd old_dodongos_cavern_scene[] = {
 };
 
 SceneCmd* old_dodongos_cavern_sceneAlternateHeaders[] = {
-    old_dodongos_cavern_sceneSet_cleansed,
+    NULL,
     NULL,
     old_dodongos_cavern_sceneSet_cleansed,
 };

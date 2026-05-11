@@ -377,8 +377,8 @@ CHAN_00DC:
 /* 0x0383 [0xFF                    ] */ end
 
 .layer LAYER_0384
-/* 0x0384 [0xC6 0x01               ] */ instr       SF0_INST_1
-/* 0x0386 [0x58 0x2A 0x38          ] */ notedv      PITCH_A2, 42, 56
+/* 0x0384 [0xC6 0x5C               ] */ instr       SF0_INST_92
+/* 0x0386 [0x67 0x2A 0x38          ] */ notedv      PITCH_C4, 42, 56
 /* 0x0389 [0xFF                    ] */ end
 
 .channel CHAN_038A

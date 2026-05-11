@@ -219,7 +219,7 @@ void func_80AAF330(EnMm2* this, PlayState* play) {
 void EnMM2_GiveItem(EnMm2* this, PlayState* play) {
     if (Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
         if (!Actor_HasParent(&this->actor, play))
-            Actor_OfferGetItem(&this->actor, play, GI_AMULET_OF_ENERGY, 1000.0f, 1000.0f);
+            Actor_OfferGetItem(&this->actor, play, GI_HEART_PIECE, 1000.0f, 1000.0f);
 
         if (Actor_HasParent(&this->actor, play)) {
             this->actor.parent = NULL;
@@ -301,7 +301,8 @@ void func_80AAF668(EnMm2* this, PlayState* play) {
     this->actor.shape.rot.y = this->actor.world.rot.y;
     SkelAnime_Update(&this->skelAnime);
     if (((void)0, gSaveContext.subTimerSeconds) < HIGH_SCORE(HS_MARATHON)) {
-        if (!gSaveContext.save.info.obtainedItems.amuletOfEnergy && IS_CHILD_QUEST) {
+        if (!GET_ITEMGETINF(ITEMGETINF_RUNNING_MAN_HEART_PIECE) && IS_CHILD_QUEST) {
+            SET_ITEMGETINF(ITEMGETINF_RUNNING_MAN_HEART_PIECE);
             this->actor.textId = 0x8127;
             beatenRace = true;
         } else this->actor.textId = 0x6085;
