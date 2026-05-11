@@ -632,7 +632,7 @@ bool EnBox_IsItem(s16 item) {
 void EnBox_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx, Gfx** gfx) {
     EnBox* this = (EnBox*)thisx;
     s32 pad;
-    u8 i = this->giItem > 0 ? this->giItem : ENBOX_GET_TREASURE_FLAG(&this->dyna.actor);
+    u8 i = this->giItem > 0 ? this->giItem : ENBOX_GET_GET_ITEM_ID(&this->dyna.actor);
     bool is_key = i == GI_SMALL_KEY;
     bool is_dungeon_item = i == GI_COMPASS || i == GI_DUNGEON_MAP;
     bool is_item = EnBox_IsItem(i);
