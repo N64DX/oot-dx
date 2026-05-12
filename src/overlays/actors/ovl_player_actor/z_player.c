@@ -6790,6 +6790,38 @@ static u8 D_80854528[] = {
     GI_BOTTLE_RUTOS_LETTER, // EXCH_ITEM_BOTTLE_RUTOS_LETTER
 };
 
+static u8 D_80854528_CQ[] = {
+    GI_ZELDAS_LETTER,       // EXCH_ITEM_ZELDAS_LETTER
+    GI_WEIRD_EGG,           // EXCH_ITEM_WEIRD_EGG
+    GI_CHICKEN,             // EXCH_ITEM_CHICKEN
+    GI_MAGIC_BEAN,          // EXCH_ITEM_MAGIC_BEAN
+    GI_POCKET_EGG,          // EXCH_ITEM_POCKET_EGG
+    GI_POCKET_CUCCO,        // EXCH_ITEM_POCKET_CUCCO
+    GI_COJIRO,              // EXCH_ITEM_COJIRO
+    GI_ODD_MUSHROOM,        // EXCH_ITEM_ODD_MUSHROOM
+    GI_ODD_POTION,          // EXCH_ITEM_ODD_POTION
+    GI_POACHERS_SAW,        // EXCH_ITEM_POACHERS_SAW
+    GI_GOLD_DUST,           // EXCH_ITEM_BROKEN_GORONS_SWORD
+    GI_PRESCRIPTION,        // EXCH_ITEM_PRESCRIPTION
+    GI_EYEBALL_FROG,        // EXCH_ITEM_EYEBALL_FROG
+    GI_EYE_DROPS,           // EXCH_ITEM_EYE_DROPS
+    GI_CLAIM_CHECK,         // EXCH_ITEM_CLAIM_CHECK
+    GI_MASK_SKULL,          // EXCH_ITEM_MASK_SKULL
+    GI_MASK_SPOOKY,         // EXCH_ITEM_MASK_SPOOKY
+    GI_MASK_KEATON,         // EXCH_ITEM_MASK_KEATON
+    GI_MASK_BUNNY_HOOD,     // EXCH_ITEM_MASK_BUNNY_HOOD
+    GI_MASK_TRUTH,          // EXCH_ITEM_MASK_TRUTH
+    GI_MASK_GORON,          // EXCH_ITEM_MASK_GORON
+    GI_MASK_ZORA,           // EXCH_ITEM_MASK_ZORA
+    GI_MASK_GERUDO,         // EXCH_ITEM_MASK_GERUDO
+    GI_BOTTLE_RUTOS_LETTER, // EXCH_ITEM_BOTTLE_FISH
+    GI_BOTTLE_RUTOS_LETTER, // EXCH_ITEM_BOTTLE_BLUE_FIRE
+    GI_BOTTLE_RUTOS_LETTER, // EXCH_ITEM_BOTTLE_BUG
+    GI_BOTTLE_RUTOS_LETTER, // EXCH_ITEM_BOTTLE_POE
+    GI_BOTTLE_RUTOS_LETTER, // EXCH_ITEM_BOTTLE_BIG_POE
+    GI_BOTTLE_RUTOS_LETTER, // EXCH_ITEM_BOTTLE_RUTOS_LETTER
+};
+
 static LinkAnimationHeader* D_80854548[] = {
     &gPlayerAnim_link_normal_give_other,
     &gPlayerAnim_link_bottle_read,
@@ -6835,7 +6867,8 @@ s32 Player_ActionHandler_13(Player* this, PlayState* play) {
                         Player_SetupActionPreserveItemAction(play, this, Player_Action_ExchangeItem, 0);
 
                         if (sp2C >= 0) {
-                            giEntry = &sGetItemTable[D_80854528[sp2C] - 1];
+                            u8* table = IS_CHILD_QUEST ? D_80854528_CQ : D_80854528;
+                            giEntry = &sGetItemTable[table[sp2C] - 1];
                             func_8083AE40(this, giEntry->objectId);
                         }
 
@@ -11585,8 +11618,7 @@ void Player_Init(Actor* thisx, PlayState* play2) {
     this->prevBoots = this->currentBoots;
 
     Player_InitCommon(this, play, gPlayerSkelHeaders[GET_LINK_MODEL]);
-    
-    D_80854528[0xA] = IS_CHILD_QUEST ? GI_GOLD_DUST : GI_BROKEN_GORONS_SWORD;
+
     D_80854B18[PLAYER_CSACTION_63].type = LINK_IS_CHILD ? 2 : 5;
     D_80854B18[PLAYER_CSACTION_70].type = LINK_IS_CHILD ? 3 : 6;
     D_80854B18[PLAYER_CSACTION_71].type = LINK_IS_CHILD ? 3 : 6;
@@ -15188,7 +15220,8 @@ void Player_Action_ExchangeItem(Player* this, PlayState* play) {
 
             Player_StartTalking(play, talkActor);
         } else {
-            GetItemEntry* giEntry = &sGetItemTable[D_80854528[this->exchangeItemId - 1] - 1];
+            u8* table = IS_CHILD_QUEST ? D_80854528_CQ : D_80854528;
+            GetItemEntry* giEntry = &sGetItemTable[table[this->exchangeItemId - 1] - 1];
 
             if (this->itemAction >= PLAYER_IA_ZELDAS_LETTER) {
                 this->unk_862 = ABS(giEntry->gi);
