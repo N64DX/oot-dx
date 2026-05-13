@@ -308,7 +308,6 @@ void Inventory_ChangeEquipmentWithIcon(PlayState* play, s16 equipment, u16 value
 
     if (equipment == EQUIP_TYPE_SHIELD) {
         u8 shieldItem;
-        InterfaceContext* interfaceCtx = &play->interfaceCtx;
 
         if (value == PLAYER_SHIELD_DEKU)
             shieldItem = ITEM_SHIELD_DEKU;
@@ -320,7 +319,7 @@ void Inventory_ChangeEquipmentWithIcon(PlayState* play, s16 equipment, u16 value
             shieldItem = ITEM_SHIELD_HEROS;
         else shieldItem = ITEM_NONE;
 
-        DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(shieldItem)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __LINE__);
+        DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(shieldItem)), ITEM_ICON_SIZE, __FILE__, __LINE__);
     }
 }
 
