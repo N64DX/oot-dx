@@ -244,16 +244,18 @@ void Interface_Init(PlayState* play) {
         R_B_LABEL_X(1)     = B_MM_BUTTON_X - 9;
         R_START_LABEL_X(0) = R_START_BTN_X - 10;
         R_START_LABEL_X(1) = R_START_BTN_X - 9;
+        R_B_LABEL_X(2)     = B_MM_BUTTON_X - 11;
+        R_START_LABEL_X(2) = R_START_BTN_X - 11;
 #else
         R_B_LABEL_X(0)     = B_MM_BUTTON_X - 9;
         R_B_LABEL_X(1)     = B_MM_BUTTON_X - 12;
         R_START_LABEL_X(0) = R_START_BTN_X - 9;
         R_START_LABEL_X(1) = R_START_BTN_X - 12;
 #endif
-        R_B_LABEL_X(2)     = B_MM_BUTTON_X - 11;
+#if OOT_NTSC_N64
         R_B_LABEL_X(3)     = B_MM_BUTTON_X - 10;
-        R_START_LABEL_X(2) = R_START_BTN_X - 11;
         R_START_LABEL_X(3) = R_START_BTN_X - 10;
+#endif
         R_A_BTN_X          = R_A_ICON_X = A_MM_BUTTON_X;
         R_A_BTN_Y          = R_A_ICON_Y = A_MM_BUTTON_Y;
         R_B_BTN_COLOR(0)   = B_MM_BUTTON_R;
@@ -269,12 +271,14 @@ void Interface_Init(PlayState* play) {
 #if OOT_PAL || OOT_NTSC_N64
         R_B_LABEL_X(0)     = B_BUTTON_X - 10;
         R_B_LABEL_X(1)     = B_BUTTON_X - 9;
+        R_B_LABEL_X(2)     = B_BUTTON_X - 11;
 #else
         R_B_LABEL_X(0)     = B_BUTTON_X - 9;
         R_B_LABEL_X(1)     = B_BUTTON_X - 12;
 #endif
-        R_B_LABEL_X(2)     = B_BUTTON_X - 11;
+#if OOT_NTSC_N64
         R_B_LABEL_X(3)     = B_BUTTON_X - 10;
+#endif
         R_A_BTN_X          = R_A_ICON_X = A_BUTTON_X;
         R_A_BTN_Y          = R_A_ICON_Y = A_BUTTON_Y;
         R_B_BTN_COLOR(0)   = B_BUTTON_R;
@@ -481,10 +485,8 @@ void Regs_InitDataImpl(void) {
 
     ZREG(65) = 21;
     ZREG(66) = 122;
-#if OOT_VERSION < PAL_1_0
     R_START_BTN_X = 132;
     R_START_BTN_Y = 17;
-#endif
     R_ITEM_BTN_X(1) = C_LEFT_BUTTON_X;
     R_ITEM_BTN_X(2) = C_DOWN_BUTTON_X;
     R_ITEM_BTN_X(3) = C_RIGHT_BUTTON_X;
