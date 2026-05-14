@@ -52,8 +52,12 @@ void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
     char buildInfo[] = "       GC US";
 #elif OOT_VERSION == GC_US_MQ
     char buildInfo[] = "    GC US MQ";
+#elif OOT_VERSION == GC_EU_DBG_2
+    char buildInfo[] = " GC EU DBG 2";
 #elif OOT_VERSION == GC_EU_MQ_DBG
     char buildInfo[] = "GC EU MQ DBG";
+#elif OOT_VERSION == GC_EU_DBG
+    char buildInfo[] = "   GC EU DBG";
 #elif OOT_VERSION == GC_EU
     char buildInfo[] = "       GC EU";
 #elif OOT_VERSION == GC_EU_MQ
