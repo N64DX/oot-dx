@@ -11,6 +11,7 @@
 #endif
 
 #include "alloca.h"
+#include "array_count.h"
 #include "build.h"
 #include "console_logo_state.h"
 #include "gfx.h"
@@ -34,56 +35,18 @@
 #include "assets/textures/nintendo_rogo_static/nintendo_rogo_static_extra.h"
 
 void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
-#if OOT_VERSION == NTSC_1_0
-    char buildInfo[] = "    NTSC 1.0";
-#elif OOT_VERSION == NTSC_1_1
-    char buildInfo[] = "    NTSC 1.1";
-#elif OOT_VERSION == PAL_1_0
-    char buildInfo[] = "     PAL 1.0";
-#elif OOT_VERSION == NTSC_1_2
-    char buildInfo[] = "    NTSC 1.2";
-#elif OOT_VERSION == PAL_1_1
-    char buildInfo[] = "     PAL 1.1";
-#elif OOT_VERSION == GC_JP
-    char buildInfo[] = "       GC JP";
-#elif OOT_VERSION == GC_JP_MQ
-    char buildInfo[] = "    GC JP MQ";
-#elif OOT_VERSION == GC_US
-    char buildInfo[] = "       GC US";
-#elif OOT_VERSION == GC_US_MQ
-    char buildInfo[] = "    GC US MQ";
-#elif OOT_VERSION == GC_EU_DBG_2
-    char buildInfo[] = " GC EU DBG 2";
-#elif OOT_VERSION == GC_EU_MQ_DBG
-    char buildInfo[] = "GC EU MQ DBG";
-#elif OOT_VERSION == GC_EU_DBG
-    char buildInfo[] = "   GC EU DBG";
-#elif OOT_VERSION == GC_EU
-    char buildInfo[] = "       GC EU";
-#elif OOT_VERSION == GC_EU_MQ
-    char buildInfo[] = "    GC EU MQ";
-#elif OOT_VERSION == GC_JP_CE
-    char buildInfo[] = "    GC JP CE";
-#elif OOT_VERSION == IQUE_CN
-    char buildInfo[] = "     IQUE CN";
-#else
-    char buildInfo[] = "     UNKNOWN";
-#endif
-
-#if HIRES
-    char screenModeInfo[] = "640x480i";
-#elif WIDESCREEN
-    char screenModeInfo[] = "432x240p";
-#elif ULTRA_WS
-    char screenModeInfo[] = "576x240p";
-#elif HIRES_PRO
-    char screenModeInfo[] = "640x240p";
-#else
-    char screenModeInfo[] = "320x240p";
-#endif
-
     Gfx* gfx;
     GfxPrint* printer;
+
+    char buildInfo[ARRAY_COUNT(BUILD_INFO)] = "";
+    u8 i;
+
+    for (i=0; BUILD_INFO[i]; i++)
+        buildInfo[i] = (BUILD_INFO[i] == '_') ? ' ' : BUILD_INFO[i];
+
+    for (i=1; buildInfo[i + 1]; i++)
+        if (buildInfo[i - 1] >= '0' && buildInfo[i - 1] <= '9' && buildInfo[i] == ' ' && buildInfo[i + 1] >= '0' && buildInfo[i + 1] <= '9')
+            buildInfo[i] = '.';
 
     gfx = *gfxP;
     gfx = Gfx_SetupDL_28(gfx);
@@ -94,14 +57,14 @@ void ConsoleLogo_PrintBuildInfo(Gfx** gfxP) {
     GfxPrint_SetPos(printer, 8, 20);
     GfxPrint_Printf(printer, "OoT DX v%s", DX_VERSION);
     GfxPrint_SetColor(printer, 125, 255, 125, 255);
-    GfxPrint_SetPos(printer, 21, 20);
-    GfxPrint_Printf(printer, DEBUG_FEATURES ? "       Debug" : "     Release");
-    GfxPrint_SetColor(printer, 255, 255, 125, 255);
-    GfxPrint_SetPos(printer, 21, 22);
-    GfxPrint_Printf(printer, "%s", buildInfo);
-    GfxPrint_SetColor(printer, 255, 125, 125, 255);
     GfxPrint_SetPos(printer, 8, 22);
-    GfxPrint_Printf(printer, "%s", screenModeInfo);
+    GfxPrint_Printf(printer, "%s", buildInfo);
+    GfxPrint_SetColor(printer, 255, 255, 125, 255);
+    GfxPrint_SetPos(printer, 26, 20);
+    GfxPrint_Printf(printer, GIT_COMMIT);
+    GfxPrint_SetColor(printer, 255, 125, 125, 255);
+    GfxPrint_SetPos(printer, 25, 22);
+    GfxPrint_Printf(printer, HIRES ? "%dx%di" : "%dx%dp", SCREEN_WIDTH, SCREEN_HEIGHT);
     GfxPrint_SetColor(printer, 255, 255, 255, 255);
     GfxPrint_SetPos(printer, 8, 25);
     GfxPrint_Printf(printer, "By Admentus & GhostlyDark");
