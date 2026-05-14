@@ -26,6 +26,7 @@
 #include "sys_debug_controller.h"
 #include "sys_freeze.h"
 #include "title_setup_state.h"
+#include "file_select_state.h"
 #include "versions.h"
 #include "actor.h"
 #include "environment.h"
@@ -323,7 +324,11 @@ void ConsoleLogo_Main(GameState* thisx) {
         gSaveContext.natureAmbienceId = 0xFF;
         gSaveContext.gameMode = GAMEMODE_TITLE_SCREEN;
         this->state.running = false;
-        SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
+        if (SKIP_LOGO) {
+            SET_NEXT_GAMESTATE(&this->state, FileSelect_Init, FileSelectState);
+        } else {
+            SET_NEXT_GAMESTATE(&this->state, TitleSetup_Init, TitleSetupState);
+        }
     }
 
     CLOSE_DISPS(this->state.gfxCtx, "../z_title.c", 541);
