@@ -4,8 +4,6 @@
 #include "animation.h"
 #include "ultra64.h"
 
-extern FlexSkeletonHeader gThefatherSkel;
-
 typedef enum ObjectThefatherSkel {
     /* 0x00 */ GTHEFATHER_ROOT_POS_LIMB,
     /* 0x01 */ GTHEFATHER_ROOT_ROT_LIMB,
@@ -72,6 +70,8 @@ extern AnimationHeader gThefatherHurtAnim;
 extern AnimationHeader gThefatherIdleAnim;
 extern AnimationHeader gThefatherWalkAnim;
 extern AnimationHeader gThefatherDeathAnim;
+
+extern FlexSkeletonHeader gThefatherSkel;
 
 extern u64 gBlackBeastTitleCardTex[];
 extern u64 gBlackBeastTitleCardPalTex[];

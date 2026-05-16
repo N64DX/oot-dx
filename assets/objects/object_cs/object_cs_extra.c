@@ -2,9 +2,6 @@
 #include "object_cs_extra.h"
 
 #include "array_count.h"
-#include "gfx.h"
-#include "sys_matrix.h"
-#include "ultra64.h"
 
 u64 gGraveyardKidHair2Tex[TEX_LEN(u64, 16, 32, 8)] = {
 #include "assets/objects/object_cs/gGraveyardKidHair2Tex.ci8.tlut_gGraveyardKidTLUT.inc.c"

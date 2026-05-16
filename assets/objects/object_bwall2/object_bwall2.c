@@ -252,32 +252,6 @@ Gfx gDCBombableWallDL[] = {
     gsSPEndDisplayList(),
 };
 
-CollisionPoly gDCBombableWallCol_polygons_00002EE8[] = {
-   { 0x0000, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x7FFF, 0x0000 },
-   { 0x0000, 0x0000, 0x0003, 0x0001, 0x0000, 0x0000, 0x7FFF, 0x0000 },
-};
-
-SurfaceType gDCBombableWallCol_polygonTypes_00002F08[] = {
-    { 0x00000000, 0x000007CB },
-};
-
-Vec3s gDCBombableWallCol_vtx_00002ED0[] = {
-   { 80, 0, 0 },
-   { -80, 160, 0 },
-   { -80, 0, 0 },
-   { 80, 160, 0 },
-};
-
-CollisionHeader gDCBombableWallCol = {
-    { -80, 0, 0 },
-    { 80, 160, 0 },
-    ARRAY_COUNT(gDCBombableWallCol_vtx_00002ED0), gDCBombableWallCol_vtx_00002ED0,
-    ARRAY_COUNT(gDCBombableWallCol_polygons_00002EE8), gDCBombableWallCol_polygons_00002EE8,
-    gDCBombableWallCol_polygonTypes_00002F08,
-    NULL,
-    0, NULL,
-};
-
 Gfx gDCTunnel1[] = {
     gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
@@ -453,6 +427,32 @@ Gfx gDodongoJaw[] = {
     gsSP2Triangles(4, 5, 6, 0, 7, 4, 6, 0),
 
     gsSPEndDisplayList(),
+};
+
+CollisionPoly gDCBombableWallCol_polygons_00002EE8[] = {
+   { 0x0000, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x7FFF, 0x0000 },
+   { 0x0000, 0x0000, 0x0003, 0x0001, 0x0000, 0x0000, 0x7FFF, 0x0000 },
+};
+
+SurfaceType gDCBombableWallCol_polygonTypes_00002F08[] = {
+    { 0x00000000, 0x000007CB },
+};
+
+Vec3s gDCBombableWallCol_vtx_00002ED0[] = {
+   { 80, 0, 0 },
+   { -80, 160, 0 },
+   { -80, 0, 0 },
+   { 80, 160, 0 },
+};
+
+CollisionHeader gDCBombableWallCol = {
+    { -80, 0, 0 },
+    { 80, 160, 0 },
+    ARRAY_COUNT(gDCBombableWallCol_vtx_00002ED0), gDCBombableWallCol_vtx_00002ED0,
+    ARRAY_COUNT(gDCBombableWallCol_polygons_00002EE8), gDCBombableWallCol_polygons_00002EE8,
+    gDCBombableWallCol_polygonTypes_00002F08,
+    NULL,
+    0, NULL,
 };
 
 SurfaceType gDodongoJawCol_polygonTypes[] = {

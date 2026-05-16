@@ -216,6 +216,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_kbt"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_kbt/object_kbt.o"
+    number 6
+endseg
+
+beginseg
     name "object_jg"
     compress
     include "$(BUILD_DIR)/assets/objects/object_jg/object_jg.o"

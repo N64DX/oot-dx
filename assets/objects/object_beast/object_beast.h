@@ -4,8 +4,6 @@
 #include "animation.h"
 #include "ultra64.h"
 
-extern FlexSkeletonHeader gBeastSkel;
-
 typedef enum ObjectBeastSkel {
     /* 0x00 */ GBEASTSKEL_ROOT_POS_LIMB,
     /* 0x01 */ GBEASTSKEL_ROOT_ROT_LIMB,
@@ -46,5 +44,7 @@ extern AnimationHeader gBeastSkelWalkaAnim;
 extern AnimationHeader gBeastSkelAttackdaAnim;
 extern AnimationHeader gBeastSkelAttackdbAnim;
 extern AnimationHeader gBeastSkelAttackdcAnim;
+
+extern FlexSkeletonHeader gBeastSkel;
 
 #endif

@@ -1,7 +1,6 @@
 #ifndef OBJECT_JG_H
 #define OBJECT_JG_H
 
-#include "bgcheck.h"
 #include "animation.h"
 #include "ultra64.h"
 
@@ -66,6 +65,7 @@ extern AnimationHeader gGoronElderAngryAnim;
 extern AnimationHeader gGoronElderDepressedAnim;
 extern AnimationHeader gGoronElderIdleAnim;
 extern AnimationHeader gGoronElderDrumTakeOutAnim;
+
 extern FlexSkeletonHeader gGoronElderSkel;
 
 #endif

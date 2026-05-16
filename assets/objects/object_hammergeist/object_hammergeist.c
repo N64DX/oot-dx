@@ -2333,22 +2333,6 @@ void* gHammergeistSkelLimbs[13] = {
 
 FlexSkeletonHeader gHammergeistSkel = { gHammergeistSkelLimbs, 13, 12 };
 
-static void* sFaceFlipbookTextures[] = {
-    gHammergeistSkel_normal_ci8,
-    gHammergeistSkel_laugh_ci8,
-    gHammergeistSkel_mouth_open_ci8,
-};
-static void* sIceFlipbookTextures[] = {
-    gHammergeistSkel_metal2_rgba16,
-    gHammergeistSkel_hammerice_1_rgba16,
-    gHammergeistSkel_hammerice_2_rgba16,
-};
-static void* sFireFlipbookTextures[] = {
-    gHammergeistSkel_metal2_rgba16,
-    gHammergeistSkel_hammerfire_1_rgba16,
-    gHammergeistSkel_hammerfire_2_rgba16,
-};
-
 s16 gHammergeistSkelDamageAnimFrameData[172] = {
 	0x0005, 0x0027, 0x4000, 0xffff, 0x0000, 0xeff3, 0xcc6e, 0xf722, 0xff88, 0x0023, 0xffe7, 0xffea, 0xfff4, 0x0003, 0x0019, 0x0036, 
 	0x0058, 0x0052, 0x0046, 0x0042, 0x0043, 0x004b, 0x0059, 0x005a, 0x0058, 0x005c, 0x005e, 0x005f, 0xbfff, 0xbfae, 0xbeb8, 0xbd1e, 

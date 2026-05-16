@@ -5,11 +5,12 @@
 #include "ultra64.h"
 
 extern Gfx gDCBombableWallDL[];
-extern CollisionHeader gDCBombableWallCol;
 extern Gfx gDCTunnel3[];
 extern Gfx gDCTunnel1[];
 extern Gfx gDCTunnel2[];
 extern Gfx gDodongoJaw[];
+
+extern CollisionHeader gDCBombableWallCol;
 extern CollisionHeader gDodongoJawCol_collisionHeader;
 
 #endif

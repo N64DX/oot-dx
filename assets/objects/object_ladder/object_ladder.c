@@ -9,6 +9,22 @@ Vtx object_ladderVtx_000000[] = {
 #include "assets/objects/object_ladder/object_ladderVtx_000000.vtx.inc"
 };
 
+Vtx object_ladderVtx_000210[] = {
+#include "assets/objects/object_ladder/object_ladderVtx_000210.vtx.inc"
+};
+
+Vtx object_ladderVtx_000440[] = {
+#include "assets/objects/object_ladder/object_ladderVtx_000440.vtx.inc"
+};
+
+Vtx object_ladderVtx_000670[] = {
+#include "assets/objects/object_ladder/object_ladderVtx_000670.vtx.inc"
+};
+
+u64 gWoodenLadderTex[] = {
+#include "assets/objects/object_ladder/wooden_ladder.rgba16.inc.c"
+};
+
 Gfx gWoodenLadder12RungDL[] = {
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),
@@ -23,6 +39,57 @@ Gfx gWoodenLadder12RungDL[] = {
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(3, 2, 4, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gWoodenLadder16RungDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gWoodenLadderTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(object_ladderVtx_000210, 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gWoodenLadder20RungDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gWoodenLadderTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(object_ladderVtx_000440, 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gWoodenLadder24RungDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gWoodenLadderTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(object_ladderVtx_000670, 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
     gsSPEndDisplayList(),
 };
 
@@ -62,27 +129,6 @@ CollisionHeader gWoodenLadder12RungCol = {
     0, NULL
 };
 
-Vtx object_ladderVtx_000210[] = {
-#include "assets/objects/object_ladder/object_ladderVtx_000210.vtx.inc"
-};
-
-Gfx gWoodenLadder16RungDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gWoodenLadderTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
-    gsSPVertex(object_ladderVtx_000210, 12, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSPEndDisplayList(),
-};
-
 BgCamInfo gWoodenLadder16RungColCamDataList[] = {
     { 0x0000, 0, NULL },
 };
@@ -117,27 +163,6 @@ CollisionHeader gWoodenLadder16RungCol = {
     gWoodenLadder16RungColSurfaceType,
     gWoodenLadder16RungColCamDataList,
     0, NULL
-};
-
-Vtx object_ladderVtx_000440[] = {
-#include "assets/objects/object_ladder/object_ladderVtx_000440.vtx.inc"
-};
-
-Gfx gWoodenLadder20RungDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gWoodenLadderTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
-    gsSPVertex(object_ladderVtx_000440, 12, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSPEndDisplayList(),
 };
 
 BgCamInfo gWoodenLadder20RungColCamDataList[] = {
@@ -176,27 +201,6 @@ CollisionHeader gWoodenLadder20RungCol = {
     0, NULL
 };
 
-Vtx object_ladderVtx_000670[] = {
-#include "assets/objects/object_ladder/object_ladderVtx_000670.vtx.inc"
-};
-
-Gfx gWoodenLadder24RungDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gWoodenLadderTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
-    gsSPVertex(object_ladderVtx_000670, 12, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-    gsSPEndDisplayList(),
-};
-
 BgCamInfo gWoodenLadder24RungColCamDataList[] = {
     { 0x0000, 0, NULL },
 };
@@ -231,8 +235,4 @@ CollisionHeader gWoodenLadder24RungCol = {
     gWoodenLadder24RungColSurfaceType,
     gWoodenLadder24RungColCamDataList,
     0, NULL
-};
-
-u64 gWoodenLadderTex[] = {
-#include "assets/objects/object_ladder/wooden_ladder.rgba16.inc.c"
 };

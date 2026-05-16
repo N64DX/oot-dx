@@ -3184,11 +3184,3 @@ void* gMiniblinSkelLimbs[27] = {
 };
 
 FlexSkeletonHeader gMiniblinSkel = { gMiniblinSkelLimbs, 27, 25 };
-
-static void* sEyeTextures[] = {
-    gMiniblinSkel_eye_normal_rgba16,
-    gMiniblinSkel_eye_halfclosed_rgba16,
-    gMiniblinSkel_eye_closed_rgba16,
-    gMiniblinSkel_eye_laugh_rgba16,
-    gMiniblinSkel_eye_hit_rgba16,
-};

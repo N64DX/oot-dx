@@ -5,10 +5,6 @@
 #include "bgcheck.h"
 
 extern Gfx gDkjailIvyDL[];
-extern BgCamInfo gDkjailColCamDataList[];
-extern SurfaceType gDkjailColSurfaceType[];
-extern CollisionPoly gDkjailColPolygons[];
-extern Vec3s gDkjailColVertices[];
 extern CollisionHeader gDkjailCol;
 
 #endif

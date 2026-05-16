@@ -4,8 +4,6 @@
 #include "animation.h"
 #include "ultra64.h"
 
-extern FlexSkeletonHeader Armature;
-
 typedef enum ObjectSpiderSkel {
     /* 0x00 */ ARMATURE_ROOT_POS_LIMB,
     /* 0x01 */ ARMATURE_ROOT_ROT_LIMB,
@@ -48,5 +46,7 @@ extern AnimationHeader ArmatureAttackAnim;
 extern AnimationHeader ArmatureJumpbackAnim;
 
 extern Gfx gWebs[];
+
+extern FlexSkeletonHeader Armature;
 
 #endif

@@ -1,7 +1,6 @@
 #ifndef OBJECT_MKK_H
 #define OBJECT_MKK_H
 
-#include "gfx.h"
 #include "ultra64.h"
 
 extern Gfx gBlackBoeBodyMaterialDL[];
