@@ -2921,6 +2921,90 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x8310, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Huh... What was I doing again...\n"
+"Where am I?"
+BOX_BREAK
+
+"Solid frozen you say? Huh..."
+BOX_BREAK
+
+"I went into the mines to get my\n"
+"shipment of ore. The Gorons didn't\n"
+"want to go in here, so I did instead.\n"
+"Oh boy... That was the wrong call..."
+BOX_BREAK
+
+"You have my thanks young lad.\n"
+"Once it's safe I make my way over\n"
+"to the mines. I am guessing you are\n"
+"here to clean up the mines?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8311, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Once it's safe I make my way over\n"
+"to the smithy.\n"
+"I am counting on you, young lad."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8312, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Ahh... It's good to be back again.\n"
+"Thank you again young lad for\n"
+"saving me from the mines."
+BOX_BREAK
+
+"The Gorons also resumed their ore\n"
+"shipments again, which is great!\n"
+"My buddy over there can help you\n"
+"upgrade your shields even further."
+BOX_BREAK
+
+"And as a thank you, let me teach\n"
+"you a secret shield ability.\n"
+"It's called "COLOR(RED) "Enhanced Perfect Block" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"When you shield precisely when you\n"
+"get hit, your next sword slash will\n"
+"do more damage."
+BOX_BREAK
+
+"See you around again!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8313, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"You're getting the hang of that\n"
+COLOR(RED) "Enhanced Perfect Block" COLOR(DEFAULT) " ability?"
+BOX_BREAK
+
+"When you shield precisely when you\n"
+"get hit, your next sword slash will\n"
+"do more damage."
+BOX_BREAK
+
+"Please come again!"
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x8400, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(

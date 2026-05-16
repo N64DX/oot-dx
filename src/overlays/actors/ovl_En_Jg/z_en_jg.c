@@ -193,8 +193,7 @@ void EnJg_Init(Actor* thisx, PlayState* play) {
     Actor_SetScale(&this->actor, 0.01f);
     EnJg_SetShape(this);
 
-    this->animIndex = EN_JG_ANIM_IDLE;
-    Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, this->animIndex);
+    Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, EN_JG_ANIM_IDLE);
 }
 
 void EnJg_Destroy(Actor* thisx, PlayState* play) {
@@ -222,7 +221,6 @@ s32 EnJg_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* po
     Vec3s limbRot;
 
     if (limbIndex == GORON_ELDER_LIMB_ROOT) {
-        limbRot = this->interactInfo.torsoRot;
         Matrix_RotateY(BINANG_TO_RAD_ALT(limbRot.y), MTXMODE_APPLY);
         Matrix_RotateX(BINANG_TO_RAD_ALT(limbRot.x), MTXMODE_APPLY);
     }

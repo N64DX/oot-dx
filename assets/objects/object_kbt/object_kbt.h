@@ -42,6 +42,14 @@ extern AnimationHeader object_kbt_Anim_004274;
 extern AnimationHeader object_kbt_Anim_00E7BC;
 extern AnimationHeader object_kbt_Anim_00F0C8;
 
+extern u64 object_kbt_Tex_00A5B8[];
+extern u64 object_kbt_Tex_00ADB8[];
+extern u64 object_kbt_Tex_00B5B8[];
+extern u64 object_kbt_Tex_00BDB8[];
+extern u64 object_kbt_Tex_00C5B8[];
+extern u64 object_kbt_Tex_00CDB8[];
+extern u64 object_kbt_Tex_00D5B8[];
+
 extern FlexSkeletonHeader object_kbt_Skel_00DEE8;
 
 #endif

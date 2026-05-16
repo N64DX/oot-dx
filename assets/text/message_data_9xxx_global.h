@@ -308,6 +308,76 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x9019, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_DEKU) QUICKTEXT_ENABLE "You successfully upgraded your\n"
+COLOR(RED) "Deku Shield" COLOR(DEFAULT) " to be more durable!" QUICKTEXT_DISABLE "\n"
+"It's now at durability level " SHIELD_UPGRADE_LEVEL "!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x901A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HYLIAN) QUICKTEXT_ENABLE "You successfully upgraded your\n"
+COLOR(RED) "Hylian Shield" COLOR(DEFAULT) " to be more durable!" QUICKTEXT_DISABLE "\n"
+"It's now at durability level " SHIELD_UPGRADE_LEVEL "!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x901B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "You successfully upgraded your\n"
+COLOR(RED) "Mirror Shield" COLOR(DEFAULT) " to be more durable!" QUICKTEXT_DISABLE "\n"
+"It's now at durability level " SHIELD_UPGRADE_LEVEL "!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x901C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE "You successfully upgraded your\n"
+COLOR(RED) "Hero's Shield" COLOR(DEFAULT) " to be more durable!" QUICKTEXT_DISABLE "\n"
+"It's now at durability level " SHIELD_UPGRADE_LEVEL "!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x901D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BOOTS_KOKIRI) QUICKTEXT_ENABLE "You successfully upgraded your\n"
+COLOR(RED) "Kokiri Boots" COLOR(DEFAULT) " to jump further!" QUICKTEXT_DISABLE "\n"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x901E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_PERFECT_BLOCK_UPGRADE) "You learned the " COLOR(RED) "Enhanced\n"
+"Perfect Block" COLOR(DEFAULT) " ability!"
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_PERFECT_BLOCK_UPGRADE) "When you block an attack with\n"
+"your shield just before taking a\n"
+"hit your next sword slash does\n"
+"extra damage!"
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x9201, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "勇者の盾　８０ルピー\n"
@@ -592,60 +662,6 @@ QUICKTEXT_ENABLE "Hero's Shield Upgrade   200 Rupees" QUICKTEXT_DISABLE "\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Upgrade\n"
     "Don't upgrade" COLOR(DEFAULT)
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x9019, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_DEKU) QUICKTEXT_ENABLE "You successfully upgraded your\n"
-COLOR(RED) "Deku Shield" COLOR(DEFAULT) " to be more durable!" QUICKTEXT_DISABLE "\n"
-"It's now at durability level " SHIELD_UPGRADE_LEVEL "!"
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x901A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HYLIAN) QUICKTEXT_ENABLE "You successfully upgraded your\n"
-COLOR(RED) "Hylian Shield" COLOR(DEFAULT) " to be more durable!" QUICKTEXT_DISABLE "\n"
-"It's now at durability level " SHIELD_UPGRADE_LEVEL "!"
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x901B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "You successfully upgraded your\n"
-COLOR(RED) "Mirror Shield" COLOR(DEFAULT) " to be more durable!" QUICKTEXT_DISABLE "\n"
-"It's now at durability level " SHIELD_UPGRADE_LEVEL "!"
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x901C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE "You successfully upgraded your\n"
-COLOR(RED) "Hero's Shield" COLOR(DEFAULT) " to be more durable!" QUICKTEXT_DISABLE "\n"
-"It's now at durability level " SHIELD_UPGRADE_LEVEL "!"
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x901D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BOOTS_KOKIRI) QUICKTEXT_ENABLE "You successfully upgraded your\n"
-COLOR(RED) "Kokiri Boots" COLOR(DEFAULT) " to jump further!" QUICKTEXT_DISABLE "\n"
 ),
 MSG(),
 MSG()

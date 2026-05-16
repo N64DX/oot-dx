@@ -340,3 +340,10 @@ beginseg
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Jg/z_en_jg.o"
 endseg
+
+beginseg
+    name "ovl_En_Kbt"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Kbt/z_en_kbt.o"
+endseg

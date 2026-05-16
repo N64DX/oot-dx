@@ -133,7 +133,3 @@ Gfx gGiKokiriBootsDL[] = {
     gsSP2Triangles(17, 18, 19, 0, 17, 19, 20, 0),
     gsSPEndDisplayList(),
 };
-
-Gfx gGiKokiriBootsEmptyDL[] = {
-    gsSPEndDisplayList(),
-};

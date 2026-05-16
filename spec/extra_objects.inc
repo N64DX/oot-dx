@@ -167,6 +167,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_gi_title_deed"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_title_deed/object_gi_title_deed.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_sword_1_mm"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_sword_1_mm/object_gi_sword_1_mm.o"

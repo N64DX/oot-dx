@@ -77,7 +77,7 @@ ActorEntry goron_shrine_room_0ActorEntry_000058[] = {
     { ACTOR_OBJ_TSUBO,         { -376, -134, -537 }, {    0, 0x36B0,    0 }, 0x5500 }, // Collect: 2A
     { ACTOR_BG_SPOT18_SHUTTER, {  490, -538,  348 }, {    0, 0x8FA0,    0 }, 0x0000 },
     { ACTOR_EN_BOX,            { -400, -133,    0 }, { 0x3E, 0x4000, 0x1E }, 0xB000 }, // Chest: 00, appears on switch: 1E, Piece of Heart
-    { ACTOR_OBJ_KIBAKO3,       {  500, -440,   65 }, {    0, 0x7830,    0 }, 0x0241 }, // Yellow: 4 (Spring Lake)
+    { ACTOR_OBJ_KIBAKO3,       {  500, -440,   65 }, {    0, 0x7830,    0 }, 0x0223 }, // Red: 2 (Goron Mines)
 };
 
 RoomShapeCullable goron_shrine_room_0RoomShapeCullable_000310 = { 

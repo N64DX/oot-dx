@@ -1787,20 +1787,20 @@ static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveCont
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_HYLIAN,             IsHerosShield, ITEM_SHIELD_HEROS   },
     { ITEM_SWORD_KOKIRI ,             IsHerosSword,  ITEM_SWORD_HEROS    },
-    { ITEM_SHIELD_MIRROR,             IsChildQuest,  LAST_ITEM_ICON + 1  },
-    { ITEM_SWORD_MASTER,              IsRazorSword,  LAST_ITEM_ICON + 2  },
-    { ITEM_SWORD_BIGGORON,            IsSilverSword, LAST_ITEM_ICON + 3  },
-    { ITEM_SWORD_BIGGORON,            IsGildedSword, LAST_ITEM_ICON + 4  },
-    { ITEM_HOOKSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 5  },
-    { ITEM_LONGSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 6  },
-    { ITEM_BOW,                       IsChildQuest,  LAST_ITEM_ICON + 7  },
-    { ITEM_BOW_FIRE,                  IsChildQuest,  LAST_ITEM_ICON + 8  },
-    { ITEM_BOW_ICE,                   IsChildQuest,  LAST_ITEM_ICON + 9  },
-    { ITEM_BOW_LIGHT,                 IsChildQuest,  LAST_ITEM_ICON + 10 },
-    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,  LAST_ITEM_ICON + 11 },
-    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,  LAST_ITEM_ICON + 12 },
-    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,  LAST_ITEM_ICON + 13 },
-    { ITEM_STONE_OF_AGONY,            NULL,          LAST_ITEM_ICON + 14 },
+    { ITEM_SHIELD_MIRROR,             IsChildQuest,  LAST_ITEM_ICON + 2  },
+    { ITEM_SWORD_MASTER,              IsRazorSword,  LAST_ITEM_ICON + 3  },
+    { ITEM_SWORD_BIGGORON,            IsSilverSword, LAST_ITEM_ICON + 4  },
+    { ITEM_SWORD_BIGGORON,            IsGildedSword, LAST_ITEM_ICON + 5  },
+    { ITEM_HOOKSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 6  },
+    { ITEM_LONGSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 7  },
+    { ITEM_BOW,                       IsChildQuest,  LAST_ITEM_ICON + 8  },
+    { ITEM_BOW_FIRE,                  IsChildQuest,  LAST_ITEM_ICON + 9  },
+    { ITEM_BOW_ICE,                   IsChildQuest,  LAST_ITEM_ICON + 10 },
+    { ITEM_BOW_LIGHT,                 IsChildQuest,  LAST_ITEM_ICON + 11 },
+    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,  LAST_ITEM_ICON + 12 },
+    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,  LAST_ITEM_ICON + 13 },
+    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,  LAST_ITEM_ICON + 14 },
+    { ITEM_STONE_OF_AGONY,            NULL,          LAST_ITEM_ICON + 15 },
 };
 #undef LAST_ITEM_ICON
 
@@ -2158,6 +2158,9 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_BOOTS_UPGRADE) {
         gSaveContext.save.info.obtainedSkills.furtherJump = 1;
+        return ITEM_NONE;
+    } else if (item == ITEM_PERFECT_BLOCK_UPGRADE) {
+        gSaveContext.save.info.obtainedSkills.perfectBlockBoost = 1;
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         INV_CONTENT(item) = item;
@@ -2634,7 +2637,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS || item == ITEM_BOOTS_UPGRADE) {
+    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS || item == ITEM_BOOTS_UPGRADE || item == ITEM_PERFECT_BLOCK_UPGRADE) {
         return ITEM_NONE;
     } else if (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) {
         return ITEM_NONE;

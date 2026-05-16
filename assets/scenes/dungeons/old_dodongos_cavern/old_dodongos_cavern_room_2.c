@@ -13,8 +13,8 @@ SceneCmd old_dodongos_cavern_room_2[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_2MeshHeader0x000140),
-    SCENE_CMD_OBJECT_LIST(13, old_dodongos_cavern_room_2ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(14, old_dodongos_cavern_room_2ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(15, old_dodongos_cavern_room_2ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(16, old_dodongos_cavern_room_2ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -38,23 +38,27 @@ s16 old_dodongos_cavern_room_2ObjectList0x000038[] = {
     OBJECT_CRASHBOX,
     OBJECT_GI_HEART,
     OBJECT_BOMBF,
+    OBJECT_KIBAKO2,
+    OBJECT_FR,
 };
 
 ActorEntry old_dodongos_cavern_room_2ActorList0x000048[] = {
-    { ACTOR_OBJECT_KANKYO, {    0,    0,     0 }, { 0, 0, 0 }, 0x0006 },
-    { ACTOR_BG_DDAN_KD,    { -2320, 480, -2120 }, { 0, 0, 0 }, 0x000B }, // Switch: 0B
-    { ACTOR_EN_ITEM00,     { -1628, 542, -2111 }, { 0, 0, 0 }, 0x2803 }, // Collect: 28, Recovert Heart
-    { ACTOR_EN_BOMBF,      { -1716,  40, -2125 }, { 0, 0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,      { -1763,  40, -2239 }, { 0, 0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,      { -1763,  40, -2010 }, { 0, 0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,      { -1840,  40, -2010 }, { 0, 0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,      { -1837,  40, -2239 }, { 0, 0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,      { -1921,  40, -2236 }, { 0, 0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,      { -1921,  40, -2014 }, { 0, 0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,      { -2012,  40, -2239 }, { 0, 0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,      { -2012,  40, -2010 }, { 0, 0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,      { -2096,  40, -2239 }, { 0, 0, 0 }, 0xFFFF },
-    { ACTOR_EN_BOMBF,      { -2089,  40, -2010 }, { 0, 0, 0 }, 0xFFFF },
+    { ACTOR_OBJECT_KANKYO, {    0,    0,     0 }, {   0, 0,    0 }, 0x0006 },
+    { ACTOR_BG_DDAN_KD,    { -2320, 480, -2120 }, {   0, 0,    0 }, 0x000B }, // Switch: 0B
+    { ACTOR_EN_ITEM00,     { -1628, 542, -2111 }, {   0, 0,    0 }, 0x2803 }, // Collect: 28, Recovert Heart
+    { ACTOR_EN_BOMBF,      { -1716,  40, -2125 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_EN_BOMBF,      { -1763,  40, -2239 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_EN_BOMBF,      { -1763,  40, -2010 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_EN_BOMBF,      { -1840,  40, -2010 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_EN_BOMBF,      { -1837,  40, -2239 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_EN_BOMBF,      { -1921,  40, -2236 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_EN_BOMBF,      { -1921,  40, -2014 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_EN_BOMBF,      { -2012,  40, -2239 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_EN_BOMBF,      { -2012,  40, -2010 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_EN_BOMBF,      { -2096,  40, -2239 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_EN_BOMBF,      { -2089,  40, -2010 }, {   0, 0,    0 }, 0xFFFF },
+    { ACTOR_OBJ_KIBAKO3,   { -2250,   0, -2576 }, {   0, 0,    0 }, 0x0243 }, // Red: 4 (Goron Mines)
+    { ACTOR_OBJ_KIBAKO2,   { -2250,   0, -1664 }, { 0x1, 0, 0x2A }, 0xFFFF }, // Collect: 2A, Blue Rupee
 };
 
 RoomShapeCullable old_dodongos_cavern_room_2MeshHeader0x000140 = {
@@ -73,8 +77,8 @@ SceneCmd old_dodongos_cavern_room_2Set_cleansed[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_2MeshHeader0x000140),
-    SCENE_CMD_OBJECT_LIST(13, old_dodongos_cavern_room_2ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(14, old_dodongos_cavern_room_2ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(15, old_dodongos_cavern_room_2ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(16, old_dodongos_cavern_room_2ActorList0x000048),
     SCENE_CMD_END(),
 };
 

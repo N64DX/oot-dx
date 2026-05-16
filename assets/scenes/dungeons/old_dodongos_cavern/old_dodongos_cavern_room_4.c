@@ -13,8 +13,8 @@ SceneCmd old_dodongos_cavern_room_4[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_4MeshHeader0x0000B0),
-    SCENE_CMD_OBJECT_LIST(12, old_dodongos_cavern_room_4ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(7, old_dodongos_cavern_room_4ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(13, old_dodongos_cavern_room_4ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(5, old_dodongos_cavern_room_4ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -37,16 +37,20 @@ s16 old_dodongos_cavern_room_4ObjectList0x000038[] = {
     OBJECT_GOROIWA,
     OBJECT_CRASHBOX,
     OBJECT_DEMO_KEKKAI,
+    OBJECT_KBT,
 };
 
 ActorEntry old_dodongos_cavern_room_4ActorList0x000048[] = {
-    { ACTOR_OBJECT_KANKYO, {    0, 0,     0 }, { 0,      0, 0 }, 0x0006 },
-    { ACTOR_EN_BEAST,      { 1348, 0, -4355 }, { 0, 0x4000, 0 }, 0x7F00 },
-    { ACTOR_EN_BEAST,      { 1683, 0, -2619 }, { 0, 0x9112, 0 }, 0x7F00 },
-    { ACTOR_EN_BEAST,      { 2471, 0, -3077 }, { 0, 0x8000, 0 }, 0x7F00 },
-    { ACTOR_EN_BEAST,      { 2227, 0, -1935 }, { 0, 0x4000, 0 }, 0x7F00 },
-    { ACTOR_EN_BEAST,      { 1524, 0, -3495 }, { 0, 0x1E94, 0 }, 0x7F00 },
-    { ACTOR_EN_ITEM00,     { 1398, 0, -4299 }, { 0,      0, 0 }, 0x2702 }, // Collect: 27, Red Rupee
+    { ACTOR_OBJECT_KANKYO,  {    0,   0,     0 }, { 0,      0, 0 }, 0x0006 },
+    { ACTOR_EN_BEAST,       { 1348,   0, -4355 }, { 0, 0x4000, 0 }, 0x7F00 },
+    { ACTOR_EN_BEAST,       { 1683,   0, -2619 }, { 0, 0x9112, 0 }, 0x7F00 },
+    { ACTOR_EN_BEAST,       { 2471,   0, -3077 }, { 0, 0x8000, 0 }, 0x7F00 },
+    { ACTOR_EN_BEAST,       { 2227,   0, -1935 }, { 0, 0x4000, 0 }, 0x7F00 },
+    { ACTOR_EN_BEAST,       { 1524,   0, -3495 }, { 0, 0x1E94, 0 }, 0x7F00 },
+    { ACTOR_EN_ITEM00,      { 1398,   0, -4299 }, { 0,      0, 0 }, 0x2702 }, // Collect: 27, Red Rupee
+    { ACTOR_BG_ICE_SHELTER, { 1100,   0, -3475 }, { 0,      0, 0 }, 0x051B }, // Switch: 1B
+    { ACTOR_BG_WOOD_PILLAR, { 1100, -50, -3475 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_KBT,         { 1100,   0, -3475 }, { 0, 0x4000, 0 }, 0x001B },
 };
 
 RoomShapeCullable old_dodongos_cavern_room_4MeshHeader0x0000B0 = {
