@@ -322,7 +322,33 @@ COLOR(DEFAULT) "Créé par les Zoras, cet habit\n"
 )
 )
 
-DEFINE_MESSAGE(0x8011, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8011, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE COLOR(BLUE) "氷の矢" COLOR(DEFAULT) "を　手に入れた！" QUICKTEXT_DISABLE "\n"
+COLOR(YELLOW) "[C]" COLOR(DEFAULT) "にセットで　弓矢が変化。\n"
+"命中すれば　凍りつく！！"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE "You got the " COLOR(BLUE) "Ice Arrow" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Set it to " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "and your arrows will\n"
+"be powered up! If you hit your \n"
+"target, it will freeze."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE "Die " COLOR(BLUE) "Eis-Pfeile" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Plaziere sie auf " COLOR(YELLOW) "[C]" COLOR(DEFAULT) ", um sie\n"
+"zu verschießen! Triffst Du,\n"
+"wird Dein Ziel einfrieren!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE "Vous trouvez la " COLOR(BLUE) "Flèche de \n"
+"Glace" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Assignez-la à " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "pour \n"
+"enchanter vos flèches! Tirez \n"
+"et gelez votre cible."
+)
+)
+
+DEFINE_MESSAGE(0x8012, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "We opened a new shop over here\n"
@@ -2938,8 +2964,8 @@ BOX_BREAK
 BOX_BREAK
 
 "You have my thanks young lad.\n"
-"Once it's safe I make my way over\n"
-"to the mines. I am guessing you are\n"
+"Once it's safe I'll make my way over\n"
+"to the smithy. I am guessing you are\n"
 "here to clean up the mines?"
 ),
 MSG(),
@@ -2949,7 +2975,7 @@ MSG()
 DEFINE_MESSAGE(0x8311, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"Once it's safe I make my way over\n"
+"Once it's safe I'll make my way over\n"
 "to the smithy.\n"
 "I am counting on you, young lad."
 ),
@@ -3156,7 +3182,7 @@ BOX_BREAK
 BOX_BREAK
 
 "Some of those " COLOR(RED) "Beasts" COLOR(DEFAULT) " made it\n"
-"outside in " COLOR(ADJUSTABLE) "Goron Village" COLOR(DEFAULT) ", but we\n"
+"outside in " COLOR(ADJUSTABLE) "Goron Village" COLOR(DEFAULT) ", but we'll\n"
 "take care of it ourselves. It's not a\n"
 "task you should be burdened with."
 ),

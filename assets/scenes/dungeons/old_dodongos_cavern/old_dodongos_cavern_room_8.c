@@ -42,7 +42,7 @@ s16 old_dodongos_cavern_room_8ObjectList0x000038[] = {
 ActorEntry old_dodongos_cavern_room_8ActorList0x000048[] = {
     { ACTOR_OBJECT_KANKYO,    {    0,   0,     0 }, {    0,      0, 0 }, 0x0006 },
     { ACTOR_EN_GOROIWA,       { 4428, 984, -1515 }, {    0, 0xC000, 1 }, 0x0D03 },
-    { ACTOR_EN_BOX,           { 4240, 831, -1514 }, { 0x3F, 0x4000, 0 }, 0x0003 }, // Chest: 03, Boss Key
+    { ACTOR_EN_BOX,           { 4240, 831, -1514 }, { 0x3F, 0x4000, 0 }, 0x2003 }, // Chest: 03, Boss Key
     { ACTOR_BG_FLAME_THROWER, { 3150, 786, -1750 }, {    0,      0, 0 }, 0x0000 },
     { ACTOR_BG_FLAME_THROWER, { 3230, 784, -1750 }, {    0,      0, 0 }, 0x0000 },
     { ACTOR_BG_FLAME_THROWER, { 3310, 786, -1750 }, {    0,      0, 0 }, 0x0000 },
@@ -75,8 +75,8 @@ SceneCmd old_dodongos_cavern_room_8Set_cleansed[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_8MeshHeader0x000150),
-    SCENE_CMD_OBJECT_LIST(12, old_dodongos_cavern_room_8ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(17, old_dodongos_cavern_room_8ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(old_dodongos_cavern_room_8ObjectList0x000038), old_dodongos_cavern_room_8ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(old_dodongos_cavern_room_8ActorList0x000048), old_dodongos_cavern_room_8ActorList0x000048),
     SCENE_CMD_END(),
 };
 

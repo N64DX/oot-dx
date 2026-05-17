@@ -246,6 +246,7 @@ void EnSpider_Init(Actor* thisx, PlayState* play) {
     SkelAnime_InitFlex(play, &this->skelAnime, &Armature, &ArmatureIntroAnim, this->jointTable, this->morphTable, ARMATURE_NUM_LIMBS);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, &sDamageTable, &sColChkInit);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     Collider_InitJntSph(play, &this->colliderSpheres);
     Collider_SetJntSph(play, &this->colliderSpheres, &this->actor, &sJntSphInit, this->colliderSpheresElements);
 
@@ -360,9 +361,9 @@ void EnSpider_CheckDamage(EnSpider* this, PlayState* play) {
 
         if (this->actor.colChkInfo.health == 0) {
             this->deathTimer = 42;
-            Actor_PlaySfx(&this->actor, NA_SE_EN_STALTU_DAMAGE);
+            Actor_PlaySfx(&this->actor, NA_SE_EN_STALWALL_DEAD);
             EnSpider_SetupDeath(this, play);
-        }
+        } else Actor_PlaySfx(&this->actor, NA_SE_EN_STALTU_DAMAGE);
     }
 }
 void EnSpider_SetupDeath(EnSpider* this, PlayState* play) {
@@ -379,7 +380,7 @@ void EnSpider_Death(EnSpider* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
     if (this->deathTimer <= 0) {
-        Item_DropCollectible(play, &this->actor.world.pos, ITEM00_RUPEE_RED);
+        Item_DropCollectible(play, &this->actor.world.pos, ITEM00_RUPEE_BLUE);
         Actor_Kill(&this->actor);
     } else if (this->deathTimer > 0) 
         this->deathTimer -= 1;

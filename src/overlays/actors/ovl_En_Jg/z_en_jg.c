@@ -221,6 +221,7 @@ s32 EnJg_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* po
     Vec3s limbRot;
 
     if (limbIndex == GORON_ELDER_LIMB_ROOT) {
+        limbRot = this->interactInfo.torsoRot;
         Matrix_RotateY(BINANG_TO_RAD_ALT(limbRot.y), MTXMODE_APPLY);
         Matrix_RotateX(BINANG_TO_RAD_ALT(limbRot.x), MTXMODE_APPLY);
     }

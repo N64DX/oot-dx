@@ -77,8 +77,8 @@ SceneCmd old_dodongos_cavern_room_3Set_cleansed[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_3MeshHeader0x0000B0),
-    SCENE_CMD_OBJECT_LIST(13, old_dodongos_cavern_room_3ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(7, old_dodongos_cavern_room_3ActorList0x000040),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(old_dodongos_cavern_room_3ObjectList0x000038), old_dodongos_cavern_room_3ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(old_dodongos_cavern_room_3ActorList0x000040), old_dodongos_cavern_room_3ActorList0x000040),
     SCENE_CMD_END(),
 };
 

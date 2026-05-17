@@ -2241,7 +2241,7 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
         texIndex = pauseCtx->namedItem;
 
         if (pauseCtx->namedItem >= ITEM_SONG_MINUET)
-            texIndex -= ITEM_SONG_MINUET - ITEM_MASTER_WALLET;
+            texIndex -= ITEM_SONG_MINUET - ITEM_PERFECT_BLOCK_UPGRADE;
 
         if (pauseCtx->pageIndex == PAUSE_EQUIP) {
             if (showAltQuiverSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 0) {

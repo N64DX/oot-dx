@@ -201,6 +201,7 @@ s32 EnKbt_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* p
     if (this->switchFlag <= 0x3F && limbIndex == OBJECT_KBT_LIMB_0E)
         *dList = NULL;
     else if (limbIndex == OBJECT_KBT_LIMB_01) {
+        limbRot = this->interactInfo.torsoRot;
         Matrix_RotateY(BINANG_TO_RAD_ALT(limbRot.y), MTXMODE_APPLY);
         Matrix_RotateX(BINANG_TO_RAD_ALT(limbRot.x), MTXMODE_APPLY);
     }

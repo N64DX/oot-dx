@@ -60,7 +60,7 @@ TransitionActorEntry old_dodongos_cavern_sceneTransitionActorList0x000078[] = {
 	{ 8, 255, 3, 255, ACTOR_DOOR_SHUTTER, {  3560,   0, -2017 }, 0x8000, 0x003F },
 	{ 5, 255, 3, 255, ACTOR_DOOR_SHUTTER, {  3560,   0, -3863 },      0, 0x007F },
 	{ 2, 255, 0, 255, ACTOR_DOOR_SHUTTER, { -1140,   0, -2120 }, 0x4000, 0x0081 }, // Unlocks on switch: 01
-	{ 4, 255, 5, 255, ACTOR_DOOR_SHUTTER, {  2592,   0, -4114 }, 0x6000, 0x0080 },
+	{ 4, 255, 5, 255, ACTOR_DOOR_SHUTTER, {  2592,   0, -4114 }, 0x6000, 0x0082 }, // Unlocks on switch: 02
     { 9, 255, 9, 255, ACTOR_DOOR_SHUTTER, {     0, 240, -4090 },      0, 0x015C }, // Switch: 1C
 };
 
@@ -5680,13 +5680,13 @@ CollisionHeader old_dodongos_cavern_sceneCollisionHeader0x00E38C = {
 
 SceneCmd old_dodongos_cavern_sceneSet_cleansed[] = {
     SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_DUNGEON_CAVE),
-    SCENE_CMD_ROOM_LIST(10, old_dodongos_cavern_sceneRoomList0x000148),
-    SCENE_CMD_TRANSITION_ACTOR_LIST(14, old_dodongos_cavern_sceneTransitionActorList0x000078),
+    SCENE_CMD_ROOM_LIST(ARRAY_COUNT(old_dodongos_cavern_sceneRoomList0x000148), old_dodongos_cavern_sceneRoomList0x000148),
+    SCENE_CMD_TRANSITION_ACTOR_LIST(ARRAY_COUNT(old_dodongos_cavern_sceneTransitionActorList0x000078), old_dodongos_cavern_sceneTransitionActorList0x000078),
     SCENE_CMD_COL_HEADER(&old_dodongos_cavern_sceneCollisionHeader0x00E38C),
     SCENE_CMD_SPAWN_LIST(old_dodongos_cavern_sceneEntranceList0x000198),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_DUNGEON, OBJECT_GAMEPLAY_DANGEON_KEEP),
     SCENE_CMD_PATH_LIST(old_dodongos_cavern_scenePathway),
-    SCENE_CMD_PLAYER_ENTRY_LIST(1, old_dodongos_cavern_sceneStartPositionList0x000058),
+    SCENE_CMD_PLAYER_ENTRY_LIST(ARRAY_COUNT(old_dodongos_cavern_sceneStartPositionList0x000058), old_dodongos_cavern_sceneStartPositionList0x000058),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NONE, 0, LIGHT_MODE_SETTINGS),
     SCENE_CMD_EXIT_LIST(old_dodongos_cavern_sceneExitList0x00019C),
     SCENE_CMD_ENV_LIGHT_SETTINGS(8, old_dodongos_cavern_sceneLightSettings_cleansed),

@@ -3040,6 +3040,7 @@ void Message_OpenText(PlayState* play, u16 textId) {
             switch (textId) {
                 case 0x0050: textId = 0x800D; break;
                 case 0x0051: textId = 0x800E; break;
+                case 0x0071: textId = 0x8011; break;
                 case 0x00AA: textId = 0x800F; break;
                 case 0x00AB: textId = 0x8010; break;
 

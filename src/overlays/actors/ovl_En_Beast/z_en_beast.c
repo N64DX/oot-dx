@@ -281,8 +281,8 @@ void EnBeast_Init(Actor* thisx, PlayState* play) {
     this->switchFlag = (this->actor.params >> 8)  & 0x7F;
 
     if (this->miniboss)
-        this->actor.colChkInfo.health = 20;
-    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(20, ELITE_HP);
+    else this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
 
     Collider_InitJntSph(play, &this->colliderSpheres);
     Collider_SetJntSph(play, &this->colliderSpheres, &this->actor, this->miniboss ? &sJntSphMinibossInit : &sJntSphInit, this->colliderSpheresElements);
@@ -996,4 +996,5 @@ void EnBeast_Scream(EnBeast* this, PlayState* play) {
     else if (rand < 0.66)
         Actor_PlaySfx(&this->actor, NA_SE_EN_BEAST_HOWL);
     else Actor_PlaySfx(&this->actor, NA_SE_EN_BEAST_CRY2);
+}
 }

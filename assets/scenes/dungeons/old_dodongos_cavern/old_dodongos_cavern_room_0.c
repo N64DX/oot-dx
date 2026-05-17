@@ -108,26 +108,9 @@ SceneCmd old_dodongos_cavern_room_0Set_cleansed[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_0MeshHeader0x0001A0),
-    SCENE_CMD_OBJECT_LIST(14, old_dodongos_cavern_room_0ObjectList_cleansed),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(old_dodongos_cavern_room_0ObjectList0x000038), old_dodongos_cavern_room_0ObjectList0x000038),
     SCENE_CMD_ACTOR_LIST(20, old_dodongos_cavern_room_0ActorList_cleansed),
     SCENE_CMD_END(),
-};
-
-s16 old_dodongos_cavern_room_0ObjectList_cleansed[] = {
-    OBJECT_DDAN_OBJECTS,
-    OBJECT_BWALL2,
-    OBJECT_BOX,
-    OBJECT_ICE_OBJECTS,
-    OBJECT_WOOD_PILLAR,
-    OBJECT_BEAST,
-    OBJECT_SPIDER,
-    OBJECT_DBLUE_OBJECT,
-    OBJECT_HIDAN_OBJECTS,
-    OBJECT_GOROIWA,
-    OBJECT_CRASHBOX,
-    OBJECT_OF1D_MAP,
-    OBJECT_KIBAKO2,
-    OBJECT_FR,
 };
 
 ActorEntry old_dodongos_cavern_room_0ActorList_cleansed[] = {
