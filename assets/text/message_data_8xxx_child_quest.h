@@ -2858,8 +2858,8 @@ DEFINE_MESSAGE(0x8302, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 SFX(NA_SE_VO_GAVO01) "Ugoh ugo ugo!\n"
-"Good work on restoring Lake Hylia.\n"
-"Now that the lake is restored again\n"
+"Good work on cleansing the " COLOR(ADJUSTABLE) "Goron\n"
+"Mines" COLOR(DEFAULT) ". Now that it is open once more\n"
 "I can provide some more upgrades." EVENT
 ),
 MSG(),
@@ -2872,7 +2872,7 @@ MSG(
 SFX(NA_SE_VO_GAVO01) "Ugoh-ugo-ugo!\n"
 "Welcome back again to our humble\n"
 "blacksmith. Anything we can supply\n"
-"you with today??" EVENT
+"you with today?" EVENT
 ),
 MSG(),
 MSG()
@@ -2884,7 +2884,7 @@ MSG(
 SFX(NA_SE_VO_GAVO01) "Ugoh-ugo-ugo!\n"
 "Welcome back again to our humble\n"
 "blacksmith. Anything we can supply\n"
-"you with today??"
+"you with today?"
 BOX_BREAK
 
 "..."

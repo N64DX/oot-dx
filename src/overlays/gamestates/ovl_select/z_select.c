@@ -172,7 +172,8 @@ bool MapSelect_SetClearItemGroup(u16 checkFlag, u16 flags[], s32 count) {
 
 static u16 sCarpenterFlags[]  = { EVENTCHKINF_CARPENTER_0_RESCUED, EVENTCHKINF_CARPENTER_1_RESCUED, EVENTCHKINF_CARPENTER_2_RESCUED, EVENTCHKINF_CARPENTER_3_RESCUED };
 static u16 sGoronMinesFlags[] = { INFTABLE_GORON_MINES_DOOR_OPENED, INFTABLE_TALKED_TO_GORON_ELDER, INFTABLE_MONSTER_REQUEST_FROM_GORON_ELDER, INFTABLE_ASKED_BY_GORON_ELDER, INFTABLE_PROOF_FOR_GORON_ELDER, INFTABLE_GOT_PERMISSION_FROM_GORON_ELDER, INFTABLE_THANKED_BY_GORON_ELDER };
-static u16 sSmithyFlags[]     = { EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP, EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP, EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA };
+static u16 sSmithy1Flags[]    = { INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP, INFTABLE_TALKED_TO_SMITHY_POST_TIME_SKIP, INFTABLE_TALKED_TO_SMITHY_GORON_MINES };
+static u16 sSmithy2Flags[]    = { INFTABLE_TALKED_TO_ZUBORA_MINES, INFTABLE_TALKED_TO_ZUBORA_SMITHY };
 static u16 sNabooruMasks[]    = { EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE, EVENTCHKINF_3B, EVENTCHKINF_C0 };
 static u16 sHappyMasksFlags[] = { ITEMGETINF_23, ITEMGETINF_24, ITEMGETINF_25, ITEMGETINF_26, ITEMGETINF_38, ITEMGETINF_39, ITEMGETINF_3A, ITEMGETINF_3B, ITEMGETINF_3F, ITEMGETINF_2A };
 static u16 sWellFlags[]       = { EVENTCHKINF_DRAINED_WELL };
@@ -203,8 +204,11 @@ void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
                 gSaveContext.save.info.sceneFlags[SCENE_GORON_VILLAGE].swch &= ~(1 << 0x1F);
             else gSaveContext.save.info.sceneFlags[SCENE_GORON_VILLAGE].swch |= (1 << 0x1F);
             break;
-        case BLACKSMITH:
-            MapSelect_SetClearEventGroup(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP, sSmithyFlags, ARRAY_COUNT(sSmithyFlags));
+        case BLACKSMITH1:
+            MapSelect_SetClearTableGroup(INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP, sSmithy1Flags, ARRAY_COUNT(sSmithy1Flags));
+            break;
+        case BLACKSMITH2:
+            MapSelect_SetClearTableGroup(INFTABLE_TALKED_TO_ZUBORA_MINES, sSmithy2Flags, ARRAY_COUNT(sSmithy2Flags));
             break;
         case FROG:
             if (gSaveContext.save.info.frogQuest.quest != 0)
@@ -256,13 +260,14 @@ char* MapSelect_GetEvent(MapSelectState* this, u8 type, u16 flag) {
         case WELL:
         case SHADOW:
         case CARPENTERS:
-        case BLACKSMITH:
             return MapSelect_GetEventText(GET_EVENTCHKINF(flag));
         case ITEM:
         case MASK:
             return MapSelect_GetEventText(GET_ITEMGETINF(flag));
         case INFTABLE:
         case GORON_MINES:
+        case BLACKSMITH1:
+        case BLACKSMITH2:
             return MapSelect_GetEventText(GET_INFTABLE(flag));
         case FROG:
             return MapSelect_GetEventText(gSaveContext.save.info.frogQuest.quest != 0);
@@ -526,66 +531,67 @@ static MapSelectEntry sMapSelectEntries[] = {
 };
 
 static SaveSelectEntry sSaveSelectEntries[] = {
-    { 0, "Talked Malon Castle",      EVENT,                      EVENTCHKINF_TALKED_TO_MALON_FIRST_TIME     },
-    { 0, "Got Weird Egg",            EVENT,                      EVENTCHKINF_RECEIVED_WEIRD_EGG             },
-    { 0, "Talon Woken Castle",       EVENT,                      EVENTCHKINF_TALON_WOKEN_IN_CASTLE          },
-    { 0, "Talon Woken Kakariko",     EVENT,                      EVENTCHKINF_TALON_WOKEN_IN_KAKARIKO        },
-    { 0, "Talon Returned Castle",    EVENT,                      EVENTCHKINF_TALON_RETURNED_FROM_CASTLE     },
-    { 0, "Talon Returned Kakariko",  EVENT,                      EVENTCHKINF_TALON_RETURNED_FROM_KAKARIKO   },
-    { 0, "Zelda Visited",            EVENT,                      EVENTCHKINF_40                             },
-    { 0, "Zelda Fled",               EVENT,                      EVENTCHKINF_80                             },
-    { 0, "Gave Zelda's Letter",      INFTABLE,                   INFTABLE_76                                },
-    { 0, "Gave Letter King Zora",    EVENT,                      EVENTCHKINF_GAVE_LETTER_TO_KING_ZORA       },
-    { 0, "Opened Jabu-Jabu",         EVENT,                      EVENTCHKINF_OPENED_JABU_JABU               },
-    { 0, "Opened Door of Time",      EVENT,                      EVENTCHKINF_OPENED_DOOR_OF_TIME            },
-    { 0, "Pulled Master Sword",      EVENT,                      EVENTCHKINF_45                             },
-    { 0, "Learned Song of Storms",   EVENT,                      EVENTCHKINF_5B                             },
-    { 0, "Learned Prelude of Light", EVENT,                      EVENTCHKINF_55                             },
-    { 0, "Activated Scarecrow",      EVENT,                      EVENTCHKINF_9C                             },
-    { 0, "Epona Obtained",           EVENT,                      EVENTCHKINF_EPONA_OBTAINED                 },
-    { 0, "Race Cow Unlocked",        EVENT,                      EVENTCHKINF_HORSE_RACE_COW_UNLOCK          },
-    { 0, "Carpenters Freed",         CARPENTERS,                 EVENTCHKINF_CARPENTER_0_RESCUED            },
-    { 0, "Deku Tree Died",           EVENT,                      EVENTCHKINF_07                             },
-    { 0, "Got Kokiri's Emerald",     EVENT,                      EVENTCHKINF_09                             },
-    { 0, "Got Goron's Ruby",         EVENT,                      EVENTCHKINF_25                             },
-    { 0, "Got Zora's Sapphire",      EVENT,                      EVENTCHKINF_37                             },
-    { 0, "Cleansed Kokiri Forest",   EVENT,                      EVENTCHKINF_48                             },
-    { 0, "Cleansed Death Mountain",  EVENT,                      EVENTCHKINF_49                             },
-    { 0, "Cleansed Lake Hylia",      EVENT,                      EVENTCHKINF_4A                             },
-    { 0, "Talked Darunia in Temple", INFTABLE,                   INFTABLE_11A                               },
-    { 0, "Death Mountain Erupted",   EVENT,                      EVENTCHKINF_2F                             },
-    { 0, "Unfrozen King Zora",       INFTABLE,                   INFTABLE_138                               },
-    { 0, "Restored Lake Hylia",      EVENT,                      EVENTCHKINF_RESTORED_LAKE_HYLIA            },
-    { 0, "Shadow Attacks Kakariko",  SHADOW,                     EVENTCHKINF_AA                             },
-    { 0, "Fast Windmill",            EVENT,                      EVENTCHKINF_65                             },
-    { 0, "Drained Well",             WELL,                       EVENTCHKINF_DRAINED_WELL                   },
-    { 0, "Cleansed Goron Mines",     EVENT,                      EVENTCHKINF_CLEANSED_GORON_MINES           },
-    { 0, "Purified Woodfall Temple", EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE       },
-    { 0, "Purified Woodfall",        EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL              },
-    { 0, "Opened Goron City",        INFTABLE,                   INFTABLE_109                               },
-    { 0, "Opened Goron Shrine",      INFTABLE,                   INFTABLE_GORON_SHRINE_DOOR_OPENED          },
-    { 0, "Opened Goron Mines",       GORON_MINES,                INFTABLE_GORON_MINES_DOOR_OPENED           },
-    { 0, "Opened Secret Shrine",     INFTABLE,                   INFTABLE_SECRET_SHRINE_DOOR_OPENED         },
-    { 0, "Sheik Reveal",             EVENT,                      EVENTCHKINF_C4                             },
-    { 0, "Rainbow Bridge",           EVENT,                      EVENTCHKINF_CREATED_RAINBOW_BRIDGE         },
-    { 0, "Talked to Smithy",         BLACKSMITH,                 EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP },
-    { 0, "Killed Gohma",             SCENE_DEKU_TREE_BOSS,       1,                                         },
-    { 0, "Killed King Dodongo",      SCENE_DODONGOS_CAVERN_BOSS, 1,                                         },
-    { 0, "Killed Barinade",          SCENE_JABU_JABU_BOSS,       1,                                         },
-    { 0, "Killed Phantom Ganon",     SCENE_FOREST_TEMPLE_BOSS,   1,                                         },
-    { 0, "Killed Volvagia",          SCENE_FIRE_TEMPLE_BOSS,     1,                                         },
-    { 0, "Killed Morpha",            SCENE_WATER_TEMPLE_BOSS,    1,                                         },
-    { 0, "Killed Bongo Bongo",       SCENE_SHADOW_TEMPLE_BOSS,   1                                          },
-    { 0, "Killed Nabooru",           NABOORU,                    5                                          },
-    { 0, "Killed Twinrova",          SCENE_SPIRIT_TEMPLE_BOSS,   3                                          },
-    { 0, "Killed Hyper Gohma",       SCENE_ANCIENT_HOLLOW,       13                                         },
-    { 0, "Killed Black Beast",       SCENE_GORON_MINES,          9                                          },
-    { 0, "Killed King Deku",         SCENE_WOODFALL_TEMPLE_BOSS, 1                                          },
-    { 0, "Completed Mask Quest",     MASK,                       ITEMGETINF_3F,                             },
-    { 0, "Completed Frog Quest",     FROG,                       0,                                         },
-    { 0, "Got Bottle Cucco Lady",    ITEM,                       ITEMGETINF_0C,                             },
-    { 0, "Got Pocket Egg",           ITEM,                       ITEMGETINF_2C,                             },
-    { 0, "Got Cojiro",               ITEM,                       ITEMGETINF_2E,                             },
+    { 0, "Talked Malon Castle",      EVENT,                      EVENTCHKINF_TALKED_TO_MALON_FIRST_TIME   },
+    { 0, "Got Weird Egg",            EVENT,                      EVENTCHKINF_RECEIVED_WEIRD_EGG           },
+    { 0, "Talon Woken Castle",       EVENT,                      EVENTCHKINF_TALON_WOKEN_IN_CASTLE        },
+    { 0, "Talon Woken Kakariko",     EVENT,                      EVENTCHKINF_TALON_WOKEN_IN_KAKARIKO      },
+    { 0, "Talon Returned Castle",    EVENT,                      EVENTCHKINF_TALON_RETURNED_FROM_CASTLE   },
+    { 0, "Talon Returned Kakariko",  EVENT,                      EVENTCHKINF_TALON_RETURNED_FROM_KAKARIKO },
+    { 0, "Zelda Visited",            EVENT,                      EVENTCHKINF_40                           },
+    { 0, "Zelda Fled",               EVENT,                      EVENTCHKINF_80                           },
+    { 0, "Gave Zelda's Letter",      INFTABLE,                   INFTABLE_76                              },
+    { 0, "Gave Letter King Zora",    EVENT,                      EVENTCHKINF_GAVE_LETTER_TO_KING_ZORA     },
+    { 0, "Opened Jabu-Jabu",         EVENT,                      EVENTCHKINF_OPENED_JABU_JABU             },
+    { 0, "Opened Door of Time",      EVENT,                      EVENTCHKINF_OPENED_DOOR_OF_TIME          },
+    { 0, "Pulled Master Sword",      EVENT,                      EVENTCHKINF_45                           },
+    { 0, "Learned Song of Storms",   EVENT,                      EVENTCHKINF_5B                           },
+    { 0, "Learned Prelude of Light", EVENT,                      EVENTCHKINF_55                           },
+    { 0, "Activated Scarecrow",      EVENT,                      EVENTCHKINF_9C                           },
+    { 0, "Epona Obtained",           EVENT,                      EVENTCHKINF_EPONA_OBTAINED               },
+    { 0, "Race Cow Unlocked",        EVENT,                      EVENTCHKINF_HORSE_RACE_COW_UNLOCK        },
+    { 0, "Carpenters Freed",         CARPENTERS,                 EVENTCHKINF_CARPENTER_0_RESCUED          },
+    { 0, "Deku Tree Died",           EVENT,                      EVENTCHKINF_07                           },
+    { 0, "Got Kokiri's Emerald",     EVENT,                      EVENTCHKINF_09                           },
+    { 0, "Got Goron's Ruby",         EVENT,                      EVENTCHKINF_25                           },
+    { 0, "Got Zora's Sapphire",      EVENT,                      EVENTCHKINF_37                           },
+    { 0, "Cleansed Kokiri Forest",   EVENT,                      EVENTCHKINF_48                           },
+    { 0, "Cleansed Death Mountain",  EVENT,                      EVENTCHKINF_49                           },
+    { 0, "Cleansed Lake Hylia",      EVENT,                      EVENTCHKINF_4A                           },
+    { 0, "Talked Darunia in Temple", INFTABLE,                   INFTABLE_11A                             },
+    { 0, "Death Mountain Erupted",   EVENT,                      EVENTCHKINF_2F                           },
+    { 0, "Unfrozen King Zora",       INFTABLE,                   INFTABLE_138                             },
+    { 0, "Restored Lake Hylia",      EVENT,                      EVENTCHKINF_RESTORED_LAKE_HYLIA          },
+    { 0, "Shadow Attacks Kakariko",  SHADOW,                     EVENTCHKINF_AA                           },
+    { 0, "Fast Windmill",            EVENT,                      EVENTCHKINF_65                           },
+    { 0, "Drained Well",             WELL,                       EVENTCHKINF_DRAINED_WELL                 },
+    { 0, "Cleansed Goron Mines",     EVENT,                      EVENTCHKINF_CLEANSED_GORON_MINES         },
+    { 0, "Purified Woodfall Temple", EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE     },
+    { 0, "Purified Woodfall",        EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL            },
+    { 0, "Opened Goron City",        INFTABLE,                   INFTABLE_109                             },
+    { 0, "Opened Goron Shrine",      INFTABLE,                   INFTABLE_GORON_SHRINE_DOOR_OPENED        },
+    { 0, "Opened Goron Mines",       GORON_MINES,                INFTABLE_GORON_MINES_DOOR_OPENED         },
+    { 0, "Opened Secret Shrine",     INFTABLE,                   INFTABLE_SECRET_SHRINE_DOOR_OPENED       },
+    { 0, "Sheik Reveal",             EVENT,                      EVENTCHKINF_C4                           },
+    { 0, "Rainbow Bridge",           EVENT,                      EVENTCHKINF_CREATED_RAINBOW_BRIDGE       },
+    { 0, "Talked to Smithy",         BLACKSMITH1,                INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP  },
+    { 0, "Talked to Zubora",         BLACKSMITH2,                INFTABLE_TALKED_TO_ZUBORA_MINES          },
+    { 0, "Killed Gohma",             SCENE_DEKU_TREE_BOSS,       1,                                       },
+    { 0, "Killed King Dodongo",      SCENE_DODONGOS_CAVERN_BOSS, 1,                                       },
+    { 0, "Killed Barinade",          SCENE_JABU_JABU_BOSS,       1,                                       },
+    { 0, "Killed Phantom Ganon",     SCENE_FOREST_TEMPLE_BOSS,   1,                                       },
+    { 0, "Killed Volvagia",          SCENE_FIRE_TEMPLE_BOSS,     1,                                       },
+    { 0, "Killed Morpha",            SCENE_WATER_TEMPLE_BOSS,    1,                                       },
+    { 0, "Killed Bongo Bongo",       SCENE_SHADOW_TEMPLE_BOSS,   1                                        },
+    { 0, "Killed Nabooru",           NABOORU,                    5                                        },
+    { 0, "Killed Twinrova",          SCENE_SPIRIT_TEMPLE_BOSS,   3                                        },
+    { 0, "Killed Hyper Gohma",       SCENE_ANCIENT_HOLLOW,       13                                       },
+    { 0, "Killed Black Beast",       SCENE_GORON_MINES,          9                                        },
+    { 0, "Killed King Deku",         SCENE_WOODFALL_TEMPLE_BOSS, 1                                        },
+    { 0, "Completed Mask Quest",     MASK,                       ITEMGETINF_3F,                           },
+    { 0, "Completed Frog Quest",     FROG,                       0,                                       },
+    { 0, "Got Bottle Cucco Lady",    ITEM,                       ITEMGETINF_0C,                           },
+    { 0, "Got Pocket Egg",           ITEM,                       ITEMGETINF_2C,                           },
+    { 0, "Got Cojiro",               ITEM,                       ITEMGETINF_2E,                           },
 };
 
 void MapSelect_UpdateMenu(MapSelectState* this) {
