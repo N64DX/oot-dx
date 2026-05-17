@@ -292,12 +292,6 @@
         <Sample Name="SAMPLE_0_GABORA_1"/>
         <Sample Name="SAMPLE_0_GABORA_2"/>
         <Sample Name="SAMPLE_0_SNOW_1"/>
-        <Sample Name="SAMPLE_0_BEAST_1"/>
-        <Sample Name="SAMPLE_0_BEAST_2"/>
-        <Sample Name="SAMPLE_0_BEAST_3"/>
-        <Sample Name="SAMPLE_0_BLACKBEAST_1"/>
-        <Sample Name="SAMPLE_0_BLACKBEAST_2"/>
-        <Sample Name="SAMPLE_0_BLACKBEAST_3"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_126"/>
@@ -540,11 +534,5 @@
         <Instrument ProgramNumber="83" Name="INST_83" Envelope="Env0" Sample="SAMPLE_0_116"/>
         <Instrument ProgramNumber="82" Name="INST_82" Envelope="Env0" Sample="SAMPLE_0_119"/>
         <Instrument ProgramNumber="92" Name="INST_92" Envelope="Env0" Sample="SAMPLE_0_SNOW_1"/>
-        <Instrument ProgramNumber="93" Name="INST_93" Envelope="Env0" Sample="SAMPLE_0_BEAST_1"/>
-        <Instrument ProgramNumber="94" Name="INST_94" Envelope="Env0" Sample="SAMPLE_0_BEAST_2"/>
-        <Instrument ProgramNumber="95" Name="INST_95" Envelope="Env0" Sample="SAMPLE_0_BEAST_3"/>
-        <Instrument ProgramNumber="96" Name="INST_96" Envelope="Env0" Sample="SAMPLE_0_BLACKBEAST_1"/>
-        <Instrument ProgramNumber="97" Name="INST_97" Envelope="Env0" Sample="SAMPLE_0_BLACKBEAST_2"/>
-        <Instrument ProgramNumber="98" Name="INST_98" Envelope="Env0" Sample="SAMPLE_0_BLACKBEAST_3"/>
     </Instruments>
 </Soundfont>

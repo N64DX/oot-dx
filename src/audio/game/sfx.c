@@ -495,7 +495,7 @@ void Audio_PlayActiveSfx(u8 bankId) {
                 // then store the Id in upper and lower bits
                 if (gIsLargeSfxBank[bankId]) {
                     // ioPort 5, write the upper bits sfx index for `NA_BGM_GENERAL_SFX`, for banks with > 0xFF entries
-                    AUDIOCMD_CHANNEL_SET_IO(SEQ_PLAYER_SFX, sCurSfxPlayerChannelIndex, 5, (entry->sfxId & 0x100) >> 8);
+                    AUDIOCMD_CHANNEL_SET_IO(SEQ_PLAYER_SFX, sCurSfxPlayerChannelIndex, 5, ((u8)((entry->sfxId & 0x300) >> 7) + (u8)((entry->sfxId & 0xFF) >> 7)));
                 }
                 if (entry->sfxId & 0xC00) {
                     entry->state = SFX_STATE_PLAYING_1;

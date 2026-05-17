@@ -997,4 +997,3 @@ void EnBeast_Scream(EnBeast* this, PlayState* play) {
         Actor_PlaySfx(&this->actor, NA_SE_EN_BEAST_HOWL);
     else Actor_PlaySfx(&this->actor, NA_SE_EN_BEAST_CRY2);
 }
-}
