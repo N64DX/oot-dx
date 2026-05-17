@@ -3426,16 +3426,29 @@ CHAN_169E:
 /* 0x16A3 [0xDC 0x7F               ] */ panweight   127
 /* 0x16A5 [0xFC 0x00 0x7C          ] */ call        CHAN_007C
 /* 0x16A8 [0x92                    ] */ dellayer    2
+/* 0x16A9 [0x64                    ] */ ldio        IO_PORT_SFX_INDEX_HIBITS
+/* 0x1698 [0xC8 0x01               ] */ sub         1
+/* 0x169A [0xF3 0x02               ] */ rbeqz       CHAN_EV_HIGH
+
 /* 0x16A9 [0x64                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
-/* 0x16AA [0xF5 0x16 0xB4          ] */ bgez        CHAN_16B4
+/* 0x16AA [0xF5 0x16 0xB4          ] */ bgez        CHAN_EV_TABLE0
 /* 0x16AD [0xC9 0x7F               ] */ and         127
 /* 0x16AF [0xC2 0x17 0xD5          ] */ dyntbl      environmentbank_table + 2 * 1 * 128
-/* 0x16B2 [0xF4 0x03               ] */ rjump       CHAN_16B7
+/* 0x16B2 [0xF4 0x03               ] */ rjump       CHAN_EV_DYNCALL
 
-CHAN_16B4:
+CHAN_EV_HIGH:
+/* 0x16AF [0xC2 0x17 0xD5          ] */ dyntbl      environmentbank_table + 2 * 2 * 128
+/* 0x16A9 [0x64                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
+/* 0x16AA [0xF5 0x16 0xB4          ] */ bgez        CHAN_EV_DYNCALL
+/* 0x16AD [0xC9 0x7F               ] */ and         127
+/* 0x16AF [0xC2 0x17 0xD5          ] */ dyntbl      environmentbank_table + 2 * 3 * 128
+/* 0x16B2 [0xF4 0x03               ] */ rjump       CHAN_EV_DYNCALL
+
+CHAN_EV_TABLE0:
 /* 0x16B4 [0xC2 0x16 0xD5          ] */ dyntbl      environmentbank_table + 2 * 0 * 128
-CHAN_16B7:
+CHAN_EV_DYNCALL:
 /* 0x16B7 [0xE4                    ] */ dyncall
+
 CHAN_16B8:
 /* 0x16B8 [0x63                    ] */ ldio        IO_PORT_3
 /* 0x16B9 [0xC7 0x00 0x16 0xBE     ] */ stseq       0, STSEQ_HERE + STSEQ_FILTER_IDX
@@ -15022,7 +15035,6 @@ LAYER_6576:
 .channel CHAN_EN_STAL_DMGED
     ldlayer     0, LAYER_EN_STAL_DMGED
     end
-
 .layer LAYER_EN_STAL_DMGED
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_1, 0, 100
@@ -15031,7 +15043,6 @@ LAYER_6576:
 .channel CHAN_EN_STAL_GATHER
     ldlayer     0, LAYER_EN_STAL_GATHER
     end
-
 .layer LAYER_EN_STAL_GATHER
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_2, 0, 100
@@ -15040,7 +15051,6 @@ LAYER_6576:
 .channel CHAN_EN_STAL_DIE
     ldlayer     0, LAYER_EN_STAL_DIE
     end
-
 .layer LAYER_EN_STAL_DIE
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_3, 0, 100
@@ -15049,7 +15059,6 @@ LAYER_6576:
 .channel CHAN_EN_STAL_PICK
     ldlayer     0, LAYER_EN_STAL_PICK
     end
-
 .layer LAYER_EN_STAL_PICK
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_4, 0, 100
@@ -15058,7 +15067,6 @@ LAYER_6576:
 .channel CHAN_EN_STAL_REPLACE
     ldlayer     0, LAYER_EN_STAL_REPLACE
     end
-
 .layer LAYER_EN_STAL_REPLACE
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_5, 0, 100
@@ -15067,7 +15075,6 @@ LAYER_6576:
 .channel CHAN_EN_STAL_SCREECH
     ldlayer     0, LAYER_EN_STAL_SCREECH
     end
-
 .layer LAYER_EN_STAL_SCREECH
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_6, 0, 100
@@ -15076,7 +15083,6 @@ LAYER_6576:
 .channel CHAN_EN_STAL_STEP
     ldlayer     0, LAYER_EN_STAL_STEP
     end
-
 .layer LAYER_EN_STAL_STEP
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_7, 0, 100
@@ -15085,7 +15091,6 @@ LAYER_6576:
 .channel CHAN_EN_STAL_SWING
     ldlayer     0, LAYER_EN_STAL_SWING
     end
-
 .layer LAYER_EN_STAL_SWING
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_8, 0, 100
@@ -15094,10 +15099,57 @@ LAYER_6576:
 .channel CHAN_EN_STAL_TELEGRAPH
     ldlayer     0, LAYER_EN_STAL_TELEGRAPH
     end
-
 .layer LAYER_EN_STAL_TELEGRAPH
     instr       FONTANY_INSTR_SFX
     notedv      SF1_EFFECT_STAL_9, 0, 100
+    end
+    
+.channel CHAN_EN_BEAST_CRY1
+    ldlayer     0, LAYER_EN_BEAST_CRY1
+    end
+.layer LAYER_EN_BEAST_CRY1
+    instr       SF0_INST_93
+    notedv      PITCH_C4, 0, 100
+    end
+
+.channel CHAN_EN_BEAST_CRY2
+    ldlayer     0, LAYER_EN_BEAST_CRY2
+    end
+.layer LAYER_EN_BEAST_CRY2
+    instr       SF0_INST_94
+    notedv      PITCH_C4, 0, 100
+    end
+
+.channel CHAN_EN_BEAST_HOWL
+    ldlayer     0, LAYER_EN_BEAST_HOWL
+    end
+.layer LAYER_EN_BEAST_HOWL
+    instr       SF0_INST_95
+    notedv      PITCH_C4, 0, 100
+    end
+
+.channel CHAN_EN_BLACKBEAST_SCREAM1
+    ldlayer     0, LAYER_EN_BLACKBEAST_SCREAM1
+    end
+.layer LAYER_EN_BLACKBEAST_SCREAM1
+    instr       SF0_INST_96
+    notedv      PITCH_C4, 0, 100
+    end
+
+.channel CHAN_EN_BLACKBEAST_SCREAM2
+    ldlayer     0, LAYER_EN_BLACKBEAST_SCREAM2
+    end
+.layer LAYER_EN_BLACKBEAST_SCREAM2
+    instr       SF0_INST_97
+    notedv      PITCH_C4, 0, 100
+    end
+
+.channel CHAN_EN_BLACKBEAST_SCREAM3
+    ldlayer     0, LAYER_EN_BLACKBEAST_SCREAM3
+    end
+.layer LAYER_EN_BLACKBEAST_SCREAM3
+    instr       SF0_INST_98
+    notedv      PITCH_C4, 0, 100
     end
 
 .channel CHAN_EN_KUROSUKE_MOVE

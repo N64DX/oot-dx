@@ -1502,14 +1502,13 @@ void EnThefather_AttackMc(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_Scream(EnThefather* this, PlayState* play) {
-    f32 RandNum = Rand_ZeroOne();
+    f32 rand = Rand_ZeroOne();
 
     this->screamcountdown = 100;
 
-    if (RandNum > 0.25)
-        Actor_PlaySfx(&this->actor, NA_SE_EN_IRONNACK_DASH);
-    else if (RandNum < 0.5)
-        Actor_PlaySfx(&this->actor, NA_SE_VO_ST_DAMAGE);
-    else if (RandNum < 0.75)
-        Actor_PlaySfx(&this->actor, NA_SE_VO_FR_LAUGH_0);
+    if (rand < 0.4)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_BLACKBEAST_SCREAM1);
+    else if (rand < 0.7)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_BLACKBEAST_SCREAM2);
+    else Actor_PlaySfx(&this->actor, NA_SE_EN_BLACKBEAST_SCREAM3);
 }

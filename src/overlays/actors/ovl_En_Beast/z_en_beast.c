@@ -989,11 +989,11 @@ void EnBeast_AttackDc(EnBeast* this, PlayState* play) {
     }
 }
 void EnBeast_Scream(EnBeast* this, PlayState* play) {
-    f32 Rand = Rand_ZeroOne();
+    f32 rand = Rand_ZeroOne();
 
-    if (Rand < 0.33)
-        Actor_PlaySfx(&this->actor, NA_SE_EV_COW_CRY);
-    else if (Rand < 0.66)
-        Actor_PlaySfx(&this->actor, NA_SE_EN_WOLFOS_CRY);
-    else Actor_PlaySfx(&this->actor, NA_SE_EV_SMALL_DOG_BARK);
+    if (rand < 0.33)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_BEAST_CRY1);
+    else if (rand < 0.66)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_BEAST_HOWL);
+    else Actor_PlaySfx(&this->actor, NA_SE_EN_BEAST_CRY2);
 }
