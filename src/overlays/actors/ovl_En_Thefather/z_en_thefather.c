@@ -139,7 +139,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_HEAD_LIMB, { { 0, 0, 0 }, 35 }, 45 },
+        { GTHEFATHER_HEAD_LIMB, { { 0, 0, 0 }, 50 }, 45 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -149,7 +149,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_HAND_L_LIMB, { { 0, 0, 0 }, 35 }, 50 },
+        { GTHEFATHER_HAND_L_LIMB, { { 0, 0, 0 }, 50 }, 50 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -159,7 +159,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_HAND_R_LIMB, { { 0, 0, 0 }, 35 }, 50 },
+        { GTHEFATHER_HAND_R_LIMB, { { 0, 0, 0 }, 50 }, 50 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -169,7 +169,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_CHEST_LIMB, { { 0, 0, 0 }, 35 }, 55 },
+        { GTHEFATHER_CHEST_LIMB, { { 0, 0, 0 }, 50 }, 55 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -179,7 +179,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_SHIN_L_LIMB, { { 0, 0, 0 }, 35 }, 40 },
+        { GTHEFATHER_SHIN_L_LIMB, { { 0, 0, 0 }, 50 }, 40 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -189,7 +189,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_HOOF_L_LIMB, { { 0, 0, 0 }, 35 }, 40 },
+        { GTHEFATHER_HOOF_L_LIMB, { { 0, 0, 0 }, 50 }, 40 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -199,7 +199,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_HOOF_R_LIMB, { { 0, 0, 0 }, 35 }, 40 },
+        { GTHEFATHER_HOOF_R_LIMB, { { 0, 0, 0 }, 50 }, 40 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -209,7 +209,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_SHIN_R_LIMB, { { 0, 0, 0 }, 35 }, 40 },
+        { GTHEFATHER_SHIN_R_LIMB, { { 0, 0, 0 }, 50 }, 40 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -219,7 +219,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_UPPERLEG_L_LIMB, { { 0, 0, 0 }, 35 }, 30 },
+        { GTHEFATHER_UPPERLEG_L_LIMB, { { 0, 0, 0 }, 50 }, 30 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -229,7 +229,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_HIP_LIMB, { { 0, 0, 0 }, 35 }, 30 },
+        { GTHEFATHER_HIP_LIMB, { { 0, 0, 0 }, 50 }, 30 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -239,7 +239,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_TORSO_LIMB, { { 0, 0, 0 }, 35 }, 55 },
+        { GTHEFATHER_TORSO_LIMB, { { 0, 0, 0 }, 50 }, 55 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -249,7 +249,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_ARM_L_LIMB, { { 0, 0, 0 }, 35 }, 30 },
+        { GTHEFATHER_ARM_L_LIMB, { { 0, 0, 0 }, 50 }, 30 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -259,7 +259,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_ARM_R_LIMB, { { 0, 0, 0 }, 35 }, 30 },
+        { GTHEFATHER_ARM_R_LIMB, { { 0, 0, 0 }, 50 }, 30 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -269,7 +269,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_SHOULDER_L_LIMB, { { 0, 0, 0 }, 35 }, 30 },
+        { GTHEFATHER_SHOULDER_L_LIMB, { { 0, 0, 0 }, 50 }, 30 },
     }, {
         {
             COL_MATERIAL_HIT7,
@@ -279,7 +279,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_SHOULDER_R_LIMB, { { 0, 0, 0 }, 35 }, 30 },
+        { GTHEFATHER_SHOULDER_R_LIMB, { { 0, 0, 0 }, 50 }, 30 },
     },{
         {
             COL_MATERIAL_HIT7,
@@ -289,9 +289,10 @@ static ColliderJntSphElementInit sJntSphItemsInit[] = {
             ACELEM_ON | ACELEM_HOOKABLE,
             OCELEM_NONE,
         },
-        { GTHEFATHER_UPPERLEG_R_LIMB, { { 0, 0, 0 }, 35 }, 30 },
+        { GTHEFATHER_UPPERLEG_R_LIMB, { { 0, 0, 0 }, 50 }, 30 },
     },
 };
+
 static ColliderJntSphInit sJntSphInit = {
     {
         COL_MATERIAL_HIT7,
@@ -335,6 +336,18 @@ typedef enum gThefatherAnim {
     GTHEFATHER_ANIM_MAX
 } gThefatherAnim;
 
+typedef enum gTheFatherCutscenePhases {
+    GTHEFATHER_CUTSCENE_NONE = 0,
+    GTHEFATHER_CUTSCENE_FALLING_DOWN1,
+    GTHEFATHER_CUTSCENE_FALLING_DOWN2,
+    GTHEFATHER_CUTSCENE_FALLING_DOWN3,
+    GTHEFATHER_CUTSCENE_BOSS_FOCUS,
+    GTHEFATHER_CUTSCENE_PLAYER_FOCUS,
+    GTHEFATHER_CUTSCENE_INTRO_IDLE,
+    GTHEFATHER_CUTSCENE_DEAD,
+    GTHEFATHER_CUTSCENE_DEAD_IDLE
+} gTheFatherCutscenePhases;
+
 static AnimationInfo sAnimationInfo[GTHEFATHER_ANIM_MAX] = {
     { &gThefatherIdleAnim,         1.0f, 0.0f, -1.0f, ANIMMODE_LOOP, 3.0f },
     { &gThefatherAttack1Anim,      1.0f, 0.0f, -1.0f, ANIMMODE_LOOP, 1.0f },
@@ -357,6 +370,135 @@ static AnimationInfo sAnimationInfo[GTHEFATHER_ANIM_MAX] = {
     { &gThefatherDeathAnim,        1.0f, 0.0f, -1.0f, ANIMMODE_ONCE, 1.0f },
 };
 
+void EnTheFather_HandleCutscenes(EnThefather* this, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+
+    if (this->csTimer > 0)
+        this->csTimer--;
+
+    switch (this->cutscene) {
+        case GTHEFATHER_CUTSCENE_NONE:
+            if (this->actor.yDistToPlayer <= 1000.0f) {
+                Vec3f eye      = { 0.0f, -900.0f, -4500.0f };
+                Vec3f cameraAt = { 0.0f,    0.0f,     0.0f };
+
+                this->cutscene = GTHEFATHER_CUTSCENE_FALLING_DOWN1;
+
+                player->actor.world.rot.y = player->actor.shape.rot.y = player->yaw = player->parallelYaw = 0x8000;
+                player->actor.world.pos.x =     0;
+                player->actor.world.pos.z = -4415;
+                player->speedXZ           =     0;
+
+                this->subCamId = Play_CreateSubCamera(play);
+                Play_ChangeCameraStatus(play, this->subCamId, CAM_STAT_ACTIVE);
+                Play_ChangeCameraStatus(play, CAM_ID_MAIN, CAM_STAT_WAIT);
+                Play_SetCameraAtEye(play, this->subCamId, &cameraAt, &eye);
+
+                Player_SetCsAction(play, &this->actor, PLAYER_CSACTION_5);
+                Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_NOTHING_ALT);
+            }
+            break;
+
+        case GTHEFATHER_CUTSCENE_FALLING_DOWN1:
+            if (this->actor.yDistToPlayer <= 300.0f) {
+                Vec3f eye      = { 0.0f, -1100.0f, -4600.0f };
+                Vec3f cameraAt = { 0.0f,     0.0f,     0.0f };
+
+#if OOT_NTSC_N64
+                TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gBlackBeastTitleCardTex : gBlackBeastTitleCardPalTex), 160, 180, 192, 40);
+#else
+                TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gBlackBeastTitleCardPalTex), 160, 180, 192, 40);
+#endif
+
+                this->cutscene = GTHEFATHER_CUTSCENE_FALLING_DOWN2;
+                Play_SetCameraAtEye(play, this->subCamId, &cameraAt, &eye);
+                this->csTimer = SECONDS(1);
+            }
+            break;
+
+        case GTHEFATHER_CUTSCENE_FALLING_DOWN2:
+            if (this->csTimer == 0) {
+                Vec3f eye      = { 0.0f, -1250.0f, -4600.0f };
+                Vec3f cameraAt = { 0.0f,     0.0f,     0.0f };
+
+                this->cutscene = GTHEFATHER_CUTSCENE_FALLING_DOWN3;
+                Play_SetCameraAtEye(play, this->subCamId, &cameraAt, &eye);
+                this->csTimer = SECONDS(1);
+            }
+            break;
+
+        case GTHEFATHER_CUTSCENE_FALLING_DOWN3:
+            if (this->csTimer == 0) {
+                Vec3f eye      = { 200.0f, -1200.0f, -5500.0f };
+                Vec3f cameraAt = { 0.0f,       0.0f,     0.0f };
+
+                this->cutscene = GTHEFATHER_CUTSCENE_BOSS_FOCUS;
+                Play_SetCameraAtEye(play, this->subCamId, &cameraAt, &eye);
+                this->csTimer = SECONDS(3);
+            }
+            break;
+
+        case GTHEFATHER_CUTSCENE_BOSS_FOCUS:
+            if (this->csTimer == 0) {
+                Vec3f eye      = { 0.0f, -1200.0f, -4350.0f };
+                Vec3f cameraAt = { 0.0f, -1200.0f, -4400.0f };
+
+                this->cutscene = GTHEFATHER_CUTSCENE_PLAYER_FOCUS;
+                Play_SetCameraAtEye(play, this->subCamId, &cameraAt, &eye);
+                this->csTimer = 2;
+            }
+            break;
+
+        case GTHEFATHER_CUTSCENE_PLAYER_FOCUS:
+            if (this->csTimer == 0) {
+                this->cutscene = GTHEFATHER_CUTSCENE_INTRO_IDLE;
+                Play_ClearCamera(play, this->subCamId);
+                Play_ChangeCameraStatus(play, CAM_ID_MAIN, CAM_STAT_ACTIVE);
+                Player_SetCsAction(play, &this->actor, PLAYER_CSACTION_7);
+                Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
+                SET_EVENTCHKINF(EVENTCHKINF_BEGAN_BLACK_BEAST_BATTLE);
+            }
+            break;
+
+        case GTHEFATHER_CUTSCENE_INTRO_IDLE:
+            if (this->deathTimer > 0) {
+                Vec3f eye      = { 300.0f, -1200.0f, -4750.0f };
+                Vec3f cameraAt = { 550.0f, -1280.0f, -5300.0f };
+
+                this->cutscene = GTHEFATHER_CUTSCENE_DEAD;
+
+                this->subCamId = Play_CreateSubCamera(play);
+                Play_ChangeCameraStatus(play, this->subCamId, CAM_STAT_ACTIVE);
+                Play_ChangeCameraStatus(play, CAM_ID_MAIN, CAM_STAT_WAIT);
+                Play_SetCameraAtEye(play, this->subCamId, &cameraAt, &eye);
+
+                this->actor.world.rot.y = this->actor.shape.rot.y = 0;
+                this->actor.world.pos.x =   500;
+                this->actor.world.pos.y = -1280;
+                this->actor.world.pos.z = -5100;
+
+                player->actor.world.rot.y = player->actor.shape.rot.y = player->yaw = player->parallelYaw = 0x8000;
+                player->actor.world.pos.x =   500;
+                player->actor.world.pos.y = -1280;
+                player->actor.world.pos.z = -4950;
+
+                Player_SetCsAction(play, &this->actor, PLAYER_CSACTION_5);
+                Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_NOTHING_ALT);
+            }
+            break;
+
+        case GTHEFATHER_CUTSCENE_DEAD:
+            if (this->deathTimer <= 0) {
+                this->cutscene = GTHEFATHER_CUTSCENE_DEAD_IDLE;
+                Play_ClearCamera(play, this->subCamId);
+                Play_ChangeCameraStatus(play, CAM_ID_MAIN, CAM_STAT_ACTIVE);
+                Player_SetCsAction(play, &this->actor, PLAYER_CSACTION_7);
+                Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_ALL);
+            }
+            break;
+    }
+}
+
 void EnThefather_Init(Actor* thisx, PlayState* play) {
     EnThefather* this = (EnThefather*)thisx;
 
@@ -370,6 +512,7 @@ void EnThefather_Init(Actor* thisx, PlayState* play) {
 
     this->alarmstate = false;
     this->cantSee = true;
+    this->cutscene = GET_EVENTCHKINF(EVENTCHKINF_BEGAN_BLACK_BEAST_BATTLE) ? GTHEFATHER_CUTSCENE_INTRO_IDLE : GTHEFATHER_CUTSCENE_NONE;
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 20.0f);
     this->actor.world.rot.y = this->actor.shape.rot.y;
     Collider_InitCylinder(play, &this->collider);
@@ -381,6 +524,7 @@ void EnThefather_Init(Actor* thisx, PlayState* play) {
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, NULL, &sColChkInit);
     this->poise = 255;
     this->timer = 60;
+    this->csTimer = this->deathTimer = 0;
     EnThefather_SetupIdle(this, play);
     this->actor.speed = 0.0f;
     this->actor.colChkInfo.health = this->actor.maxHealth = Actor_EnemyHealthMultiply(80, BOSS_HP);
@@ -398,7 +542,6 @@ void EnThefather_Destroy(Actor* thisx, PlayState* play) {
     EnThefather* this = (EnThefather*)thisx;
 
     Collider_DestroyCylinder(play, &this->collider);
-    Collider_DestroyCylinder(play, &this->collider2);
     Collider_DestroyJntSph(play, &this->colliderSpheres);
 }
 
@@ -413,6 +556,7 @@ void EnThefather_Update(Actor* thisx, PlayState* play) {
 
     Actor_MoveXZGravity(&this->actor);
     this->actionFunc(this, play);
+    EnTheFather_HandleCutscenes(this, play);
 
     if (this->actionFunc != EnThefather_Death) {
         EnThefather_CheckDamage(this, play);
@@ -456,37 +600,35 @@ void EnThefather_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s
     Vec3f zeroVec = { 0.0f, 0.0f, 0.0f };
 
     if (limbIndex == GTHEFATHER_HEAD_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->Head);
-    if (limbIndex == GTHEFATHER_HAND_L_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->HandL);
-    if (limbIndex == GTHEFATHER_HAND_R_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->HandR);
-    if (limbIndex == GTHEFATHER_SHOULDER_R_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->ShoulderR);
-    if (limbIndex == GTHEFATHER_SHOULDER_L_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->ShoulderL);
-    if (limbIndex == GTHEFATHER_SHIN_R_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->ShinR);
-    if (limbIndex == GTHEFATHER_SHIN_L_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->ShinL);
-    if (limbIndex == GTHEFATHER_HOOF_L_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->FootL);
-    if (limbIndex == GTHEFATHER_HOOF_R_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->FootR);
-    if (limbIndex == GTHEFATHER_CHEST_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->Chest);
-    if (limbIndex == GTHEFATHER_HEAD_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->Head);
-    if (limbIndex == GTHEFATHER_TORSO_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->Abdomen);
-    if (limbIndex == GTHEFATHER_HIP_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->Waist);
-    if (limbIndex == GTHEFATHER_ARM_R_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->ArmR);
-    if (limbIndex == GTHEFATHER_ARM_L_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->ArmL);
+        Matrix_MultVec3f(&zeroVec, &this->head);
+    else if (limbIndex == GTHEFATHER_HAND_L_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->handL);
+    else if (limbIndex == GTHEFATHER_HAND_R_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->handR);
+    else if (limbIndex == GTHEFATHER_SHOULDER_R_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->shoulderR);
+    else if (limbIndex == GTHEFATHER_SHOULDER_L_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->shoulderL);
+    else if (limbIndex == GTHEFATHER_SHIN_R_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->shinR);
+    else if (limbIndex == GTHEFATHER_SHIN_L_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->shinL);
+    else if (limbIndex == GTHEFATHER_HOOF_L_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->footL);
+    else if (limbIndex == GTHEFATHER_HOOF_R_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->footR);
+    else if (limbIndex == GTHEFATHER_CHEST_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->chest);
+    else if (limbIndex == GTHEFATHER_TORSO_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->abdomen);
+    else if (limbIndex == GTHEFATHER_HIP_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->waist);
+    else if (limbIndex == GTHEFATHER_ARM_R_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->armR);
+    else if (limbIndex == GTHEFATHER_ARM_L_LIMB)
+        Matrix_MultVec3f(&zeroVec, &this->armL);
 
-    this->actor.focus.pos = this->Chest;
+    this->actor.focus.pos = this->chest;
 
     if (this->actionFunc != EnThefather_Death)
         Collider_UpdateSpheres(limbIndex, &this->colliderSpheres);
@@ -546,7 +688,7 @@ void EnThefather_CheckDamage(EnThefather* this, PlayState* play) {
                     else this->actor.colChkInfo.health -= damage;
 
                     if (this->actor.colChkInfo.health <= 0 && swordDamage == 0)
-                        this->actor.colChkInfo.health = 2;
+                        this->actor.colChkInfo.health = Actor_EnemyHealthCheckMultiply(2);
 
                     if (this->actor.colChkInfo.health == 0) {
                         this->deathTimer = 360;
@@ -610,46 +752,40 @@ void EnThefather_Death(EnThefather* this, PlayState* play) {
 
             if (this->skelAnime.curFrame == 16.0f) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-                Actor_SpawnFloorDustRing(play, &this->actor, &this->FootR, 10.0f, 3, 2.0f, 250, 15, false);
+                Actor_SpawnFloorDustRing(play, &this->actor, &this->footR, 10.0f, 3, 2.0f, 250, 15, false);
                 Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
-            }
-            if (this->skelAnime.curFrame == 30.0f) {
+            } else if (this->skelAnime.curFrame == 30.0f) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-                Actor_SpawnFloorDustRing(play, &this->actor, &this->FootL, 10.0f, 3, 2.0f, 250, 15, false);
+                Actor_SpawnFloorDustRing(play, &this->actor, &this->footL, 10.0f, 3, 2.0f, 250, 15, false);
                 Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
             }
         } else {
-            if (this->skelAnime.curFrame == 54.0f || this->skelAnime.curFrame == 263.0f)
-                EnThefather_Scream(this, play);
             this->actor.speed = 0;
-            if (this->skelAnime.curFrame == 93.0f || this->skelAnime.curFrame == 330.0f || this->skelAnime.curFrame == 337.0f) {
+            if (this->skelAnime.curFrame == 54.0f || this->skelAnime.curFrame == 263.0f) {
+                EnThefather_Scream(this, play);
+            } else if (this->skelAnime.curFrame == 93.0f || this->skelAnime.curFrame == 330.0f || this->skelAnime.curFrame == 337.0f) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-                Actor_SpawnFloorDustRing(play, &this->actor, &this->HandR, 10.0f, 3, 2.0f, 250, 15, false);
+                Actor_SpawnFloorDustRing(play, &this->actor, &this->handR, 10.0f, 3, 2.0f, 250, 15, false);
                 Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
-            }
-            if (this->skelAnime.curFrame == 326.0f || this->skelAnime.curFrame == 334.0f) {
+            } else if (this->skelAnime.curFrame == 326.0f || this->skelAnime.curFrame == 334.0f) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_J_WALK);
-                Actor_SpawnFloorDustRing(play, &this->actor, &this->HandL, 10.0f, 3, 2.0f, 250, 15, false);
+                Actor_SpawnFloorDustRing(play, &this->actor, &this->handL, 10.0f, 3, 2.0f, 250, 15, false);
                 Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
-            }
-            if (this->skelAnime.curFrame == 319.0f) {
+            } else if (this->skelAnime.curFrame == 319.0f) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-                Actor_SpawnFloorDustRing(play, &this->actor, &this->ShinR, 10.0f, 3, 2.0f, 250, 15, false);
-                Actor_SpawnFloorDustRing(play, &this->actor, &this->ShinR, 10.0f, 3, 2.0f, 250, 15, false);
+                Actor_SpawnFloorDustRing(play, &this->actor, &this->shinR, 10.0f, 3, 2.0f, 250, 15, false);
+                Actor_SpawnFloorDustRing(play, &this->actor, &this->shinR, 10.0f, 3, 2.0f, 250, 15, false);
                 Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
-            }
-            if (this->skelAnime.curFrame > 308 && this->skelAnime.curFrame < 319) {
+            } else if (this->skelAnime.curFrame > 308.0f && this->skelAnime.curFrame < 319.0f) {
                 this->actor.shape.shadowDraw = 0;
                 this->actor.speed = 5.0;
-            }
-            if (this->skelAnime.curFrame == 327.0f || this->skelAnime.curFrame == 333.0f) {
+            } else if (this->skelAnime.curFrame == 327.0f || this->skelAnime.curFrame == 333.0f) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-                Actor_SpawnFloorDustRing(play, &this->actor, &this->Chest, 10.0f, 3, 2.0f, 250, 15, false);
+                Actor_SpawnFloorDustRing(play, &this->actor, &this->chest, 10.0f, 3, 2.0f, 250, 15, false);
                 Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
-            }
-            if (this->skelAnime.curFrame == 326.0f || this->skelAnime.curFrame == 334.0f) {
+            } else if (this->skelAnime.curFrame == 326.0f || this->skelAnime.curFrame == 334.0f) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_J_WALK);
-                Actor_SpawnFloorDustRing(play, &this->actor, &this->HandR, 10.0f, 3, 2.0f, 250, 15, false);
+                Actor_SpawnFloorDustRing(play, &this->actor, &this->handR, 10.0f, 3, 2.0f, 250, 15, false);
                 Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
             }
         }
@@ -677,7 +813,6 @@ void EnThefather_ForwardBackCheck(EnThefather* this, PlayState* play) {
                 this->timer = 65;
                 EnThefather_SetupAttackJ(this, play); // Jump2Fists
             }
-
         } else if (this->actor.xzDistToPlayer < 300.0f && this->actor.xzDistToPlayer >= 150.0f) {
             this->timer = 40;
             EnThefather_SetupAttackF(this, play); // jumpattack
@@ -711,7 +846,6 @@ void EnThefather_ForwardBackCheck(EnThefather* this, PlayState* play) {
                     this->timer = 28;
                     EnThefather_SetupAttackMa(this, play); // grab
                 }
-
             } else if (relYawTowardsPlayer <= 0x4000) {
                 this->timer = 50;
                 EnThefather_SetupAttackH(this, play); // SweepL
@@ -725,7 +859,7 @@ void EnThefather_ForwardBackCheck(EnThefather* this, PlayState* play) {
         } else if (this->actor.xzDistToPlayer <= 60.0f) {
             this->timer = 43;
             EnThefather_SetupAttackG(this, play); // punchRSparks
-        } else if ((this->actor.xzDistToPlayer >= 400.0f)) {
+        } else if (this->actor.xzDistToPlayer >= 400.0f) {
             this->alarmstate = true;
             this->timer = 40;
             EnThefather_SetupMoveF(this, play);
@@ -742,14 +876,8 @@ void EnThefather_Idle(EnThefather* this, PlayState* play) {
 
     if (this->timer > 0) {
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.yDistToPlayer <= 50.0f) {
-            if (!this->alarmstate) {
+            if (!this->alarmstate)
                 SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 0, 0, NA_BGM_KOLOKTOS);
-#if OOT_NTSC_N64
-                TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL((gSaveContext.language == LANGUAGE_JPN) ? gBlackBeastTitleCardTex : gBlackBeastTitleCardPalTex), 160, 180, 192, 40);
-#else
-                TitleCard_InitBossName(play, &play->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(gBlackBeastTitleCardPalTex), 160, 180, 192, 40);
-#endif
-            }
 
             this->timer = 0;
             this->alarmstate = true;
@@ -795,11 +923,11 @@ void EnThefather_MoveF(EnThefather* this, PlayState* play) {
 
         if (this->skelAnime.curFrame == 14.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootL, 10.0f, 3, 2.0f, 250, 15, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footL, 10.0f, 3, 2.0f, 250, 15, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
         } else if (this->skelAnime.curFrame == 34.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootR, 10.0f, 3, 2.0f, 250, 15, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footR, 10.0f, 3, 2.0f, 250, 15, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
         }
 
@@ -817,19 +945,20 @@ void EnThefather_SetupAttackA(EnThefather* this, PlayState* play) {
 void EnThefather_AttackA(EnThefather* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
-    if ((this->skelAnime.curFrame >= 92 && this->skelAnime.curFrame < 103) || (this->skelAnime.curFrame >= 85 && this->skelAnime.curFrame < 90)) {
+    if ((this->skelAnime.curFrame >= 92.0f && this->skelAnime.curFrame < 103.0f) || (this->skelAnime.curFrame >= 85.0f && this->skelAnime.curFrame < 90.0f)) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xAFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xAFF, 1);
     }
-    if (this->skelAnime.curFrame == 87 || this->skelAnime.curFrame == 99)
+
+    if (this->skelAnime.curFrame == 87.0f || this->skelAnime.curFrame == 99.0f)
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
-    if (this->skelAnime.curFrame == 42.0f && this->screamcountdown <= 0)
+    else if (this->skelAnime.curFrame == 42.0f && this->screamcountdown <= 0)
         EnThefather_Scream(this, play);
 
     if (this->skelAnime.curFrame > 85.0f && this->skelAnime.curFrame < 96.0f) {
         if (this->skelAnime.curFrame == 90) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_COLI2);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->HandR, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->handR, 10.0f, 3, 2.0f, 250, 150, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 6, 13);
         }
         this->colliderSpheres.elements[2].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
@@ -847,6 +976,7 @@ void EnThefather_AttackA(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 0;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0;
     }
+
     if (this->timer > 0) {
         this->actor.speed = 0.0f;
         this->timer -= 1;
@@ -862,30 +992,26 @@ void EnThefather_SetupAttackB(EnThefather* this, PlayState* play) {
 void EnThefather_AttackB(EnThefather* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
-    if (((this->skelAnime.curFrame >= 24) && (this->skelAnime.curFrame < 32)) ||
-        ((this->skelAnime.curFrame >= 34) && (this->skelAnime.curFrame < 45))) {
+    if ((this->skelAnime.curFrame >= 24.0f && this->skelAnime.curFrame < 32.0f) || (this->skelAnime.curFrame >= 34.0f && this->skelAnime.curFrame < 45.0f)) {
         this->actor.speed = 6;
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xAFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xAFF, 1);
         if (this->skelAnime.curFrame == 31.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootL, 10.0f, 3, 2.0f, 250, 15, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footL, 10.0f, 3, 2.0f, 250, 15, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
         } else if (this->skelAnime.curFrame == 43.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootR, 10.0f, 3, 2.0f, 250, 15, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footR, 10.0f, 3, 2.0f, 250, 15, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
         }
-    } else {
-        this->actor.speed = 0;
-    }
-    if ((this->skelAnime.curFrame == 16.0f) && (this->screamcountdown <= 0)) {
-        EnThefather_Scream(this, play);
-    }
+    } else this->actor.speed = 0;
 
-    if ((this->skelAnime.curFrame == 22) || (this->skelAnime.curFrame == 28)) {
+    if (this->skelAnime.curFrame == 16.0f && this->screamcountdown <= 0)
+        EnThefather_Scream(this, play);
+    else if ((this->skelAnime.curFrame == 22.0f) || (this->skelAnime.curFrame == 28.0f))
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
-    }
+    
     if ((this->skelAnime.curFrame > 18.0f) && (this->skelAnime.curFrame < 24.0f)) {
         this->colliderSpheres.elements[1].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[1].base.atDmgInfo.hitSpecialEffect = 4;
@@ -895,6 +1021,7 @@ void EnThefather_AttackB(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[1].base.atDmgInfo.hitSpecialEffect = 0;
         this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0;
     }
+
     if ((this->skelAnime.curFrame > 27.0f) && (this->skelAnime.curFrame < 35.0f)) {
         this->colliderSpheres.elements[2].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 4;
@@ -904,11 +1031,10 @@ void EnThefather_AttackB(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 0;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0;
     }
-    if (this->timer > 0) {
+
+    if (this->timer > 0)
         this->timer -= 1;
-    } else {
-        EnThefather_ForwardBackCheck(this, play);
-    }
+    else EnThefather_ForwardBackCheck(this, play);
 }
 
 void EnThefather_SetupAttackC(EnThefather* this, PlayState* play) {
@@ -918,19 +1044,19 @@ void EnThefather_SetupAttackC(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackC(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
-    if ((this->skelAnime.curFrame >= 3) && (this->skelAnime.curFrame < 15)) {
+
+    if (this->skelAnime.curFrame >= 3.0f && this->skelAnime.curFrame < 15.0f) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0x1FF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0x1FF, 1);
-    } else {
-        this->actor.speed = 0;
-    }
-    if ((this->skelAnime.curFrame == 13) && (this->screamcountdown <= 0)) {
+    } else this->actor.speed = 0;
+
+    if (this->skelAnime.curFrame == 13.0f && this->screamcountdown <= 0.0f) {
         EnThefather_Scream(this, play);
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
     }
-    if ((this->skelAnime.curFrame >= 11.0f) && (this->skelAnime.curFrame < 16.0f)) {
+
+    if (this->skelAnime.curFrame >= 11.0f && this->skelAnime.curFrame < 16.0f) {
         this->colliderSpheres.elements[1].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[1].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0x10;
@@ -939,11 +1065,10 @@ void EnThefather_AttackC(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[1].base.atDmgInfo.hitSpecialEffect = 0;
         this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0;
     }
-    if (this->timer > 0) {
+
+    if (this->timer > 0)
         this->timer -= 1;
-    } else {
-        EnThefather_ForwardBackCheck(this, play);
-    }
+    else EnThefather_ForwardBackCheck(this, play);
 }
 
 void EnThefather_SetupAttackD(EnThefather* this, PlayState* play) {
@@ -953,19 +1078,19 @@ void EnThefather_SetupAttackD(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackD(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
-    if ((this->skelAnime.curFrame >= 3) && (this->skelAnime.curFrame < 15)) {
+
+    if (this->skelAnime.curFrame >= 3.0f && this->skelAnime.curFrame < 15.0f) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFA, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFA, 1);
-    } else {
-        this->actor.speed = 0;
-    }
-    if ((this->skelAnime.curFrame == 13) && (this->screamcountdown <= 0)) {
+    } else this->actor.speed = 0;
+
+    if (this->skelAnime.curFrame == 13.0f && this->screamcountdown <= 0) {
         EnThefather_Scream(this, play);
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
     }
-    if ((this->skelAnime.curFrame >= 11.0f) && (this->skelAnime.curFrame < 16.0f)) {
+
+    if (this->skelAnime.curFrame >= 11.0f && this->skelAnime.curFrame < 16.0f) {
         this->colliderSpheres.elements[2].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0x10;
@@ -974,11 +1099,10 @@ void EnThefather_AttackD(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 0;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0;
     }
-    if (this->timer > 0) {
+
+    if (this->timer > 0)
         this->timer -= 1;
-    } else {
-        EnThefather_ForwardBackCheck(this, play);
-    }
+    else EnThefather_ForwardBackCheck(this, play);
 }
 
 void EnThefather_SetupAttackE(EnThefather* this, PlayState* play) {
@@ -988,19 +1112,19 @@ void EnThefather_SetupAttackE(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackE(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
-    if ((this->skelAnime.curFrame >= 3) && (this->skelAnime.curFrame < 15)) {
+
+    if (this->skelAnime.curFrame >= 3.0f && this->skelAnime.curFrame < 15.0f) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFA, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFA, 1);
-    } else {
-        this->actor.speed = 0;
-    }
-    if ((this->skelAnime.curFrame == 13) && (this->screamcountdown <= 0)) {
+    } else this->actor.speed = 0;
+
+    if (this->skelAnime.curFrame == 13.0f && this->screamcountdown <= 0) {
         EnThefather_Scream(this, play);
         Actor_PlaySfx(&this->actor, NA_SE_EN_DEKU_MOUTH);
     }
-    if ((this->skelAnime.curFrame >= 12.0f) && (this->skelAnime.curFrame < 17.0f)) {
+
+    if (this->skelAnime.curFrame >= 12.0f && this->skelAnime.curFrame < 17.0f) {
         this->colliderSpheres.elements[0].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[0].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[0].base.atDmgInfo.damage = 0x20;
@@ -1009,11 +1133,10 @@ void EnThefather_AttackE(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[0].base.atDmgInfo.hitSpecialEffect = 0x00;
         this->colliderSpheres.elements[0].base.atDmgInfo.damage = 0;
     }
-    if (this->timer > 0) {
+
+    if (this->timer > 0)
         this->timer -= 1;
-    } else {
-        EnThefather_ForwardBackCheck(this, play);
-    }
+    else EnThefather_ForwardBackCheck(this, play);
 }
 
 void EnThefather_SetupAttackF(EnThefather* this, PlayState* play) {
@@ -1023,28 +1146,26 @@ void EnThefather_SetupAttackF(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackF(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
-    if ((this->skelAnime.curFrame >= 1) && (this->skelAnime.curFrame < 12)) {
+
+    if (this->skelAnime.curFrame >= 1.0f && this->skelAnime.curFrame < 12.0f) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
-    } else if ((this->skelAnime.curFrame >= 12) && (this->skelAnime.curFrame < 28)) {
+    } else if (this->skelAnime.curFrame >= 12 && this->skelAnime.curFrame < 28)
         this->actor.speed = 1 + (this->actor.xzDistToPlayer * 0.1);
-    } else {
-        this->actor.speed = 0;
-    }
-    if ((this->skelAnime.curFrame == 16.0f) && (this->screamcountdown <= 0)) {
+    else this->actor.speed = 0;
+
+    if (this->skelAnime.curFrame == 16.0f && this->screamcountdown <= 0)
         EnThefather_Scream(this, play);
-    }
-    if (this->skelAnime.curFrame == 13) {
+    else if (this->skelAnime.curFrame == 13.0f)
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
-    }
-    if ((this->skelAnime.curFrame >= 24.0f) && (this->skelAnime.curFrame < 29.0f)) {
+
+    if (this->skelAnime.curFrame >= 24.0f && this->skelAnime.curFrame < 29.0f) {
         if (this->skelAnime.curFrame == 27) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_COLI2);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->HandL, 10.0f, 3, 2.0f, 250, 150, false);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootL, 10.0f, 3, 2.0f, 250, 150, false);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootR, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->handL, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footL, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footR, 10.0f, 3, 2.0f, 250, 150, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 7, 15);
         }
         this->colliderSpheres.elements[1].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
@@ -1055,11 +1176,10 @@ void EnThefather_AttackF(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[1].base.atDmgInfo.hitSpecialEffect = 0;
         this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0;
     }
-    if (this->timer > 0) {
+
+    if (this->timer > 0)
         this->timer -= 1;
-    } else {
-        EnThefather_ForwardBackCheck(this, play);
-    }
+    else EnThefather_ForwardBackCheck(this, play);
 }
 
 void EnThefather_SetupAttackG(EnThefather* this, PlayState* play) {
@@ -1069,29 +1189,24 @@ void EnThefather_SetupAttackG(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackG(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
-    if ((this->skelAnime.curFrame >= 1) && (this->skelAnime.curFrame < 12)) {
+
+    if (this->skelAnime.curFrame >= 1.0f && this->skelAnime.curFrame < 12.0f) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
-    } else {
     }
-    if (this->skelAnime.curFrame == 22) {
+
+    if (this->skelAnime.curFrame == 22.0f)
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
-    }
-    if ((this->skelAnime.curFrame == 11.0f) && (this->screamcountdown <= 0)) {
+    else if (this->skelAnime.curFrame == 11.0f && this->screamcountdown <= 0)
         EnThefather_Scream(this, play);
-    }
-    if ((this->skelAnime.curFrame >= 21.0f) && (this->skelAnime.curFrame < 35.0f)) {
 
-        if (this->skelAnime.curFrame == 24) {
-
+    if (this->skelAnime.curFrame >= 21.0f && this->skelAnime.curFrame < 35.0f) {
+        if (this->skelAnime.curFrame == 24.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_COLI2);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->HandR, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->handR, 10.0f, 3, 2.0f, 250, 150, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 7, 15);
-        } else {
-            CollisionCheck_SpawnShieldParticlesMetal(play, &this->HandR);
-        }
+        } else CollisionCheck_SpawnShieldParticlesMetal(play, &this->handR);
         this->colliderSpheres.elements[2].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0x10;
@@ -1100,12 +1215,11 @@ void EnThefather_AttackG(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 0;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0;
     }
+
     if (this->timer > 0) {
         this->actor.speed = 0;
         this->timer -= 1;
-    } else {
-        EnThefather_ForwardBackCheck(this, play);
-    }
+    } else EnThefather_ForwardBackCheck(this, play);
 }
 void EnThefather_SetupAttackH(EnThefather* this, PlayState* play) {
     this->actor.world.rot.y = this->actor.yawTowardsPlayer;
@@ -1114,18 +1228,17 @@ void EnThefather_SetupAttackH(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackH(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
-    if ((this->skelAnime.curFrame >= 1) && (this->skelAnime.curFrame < 12)) {
+
+    if (this->skelAnime.curFrame >= 1.0f && this->skelAnime.curFrame < 12.0f) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
-    } else {
-    }
-    if ((this->skelAnime.curFrame == 22) && (this->screamcountdown <= 0)) {
+    } else if (this->skelAnime.curFrame == 22.0f && this->screamcountdown <= 0) {
         EnThefather_Scream(this, play);
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
     }
-    if ((this->skelAnime.curFrame >= 24.0f) && (this->skelAnime.curFrame < 33.0f)) {
+
+    if (this->skelAnime.curFrame >= 24.0f && this->skelAnime.curFrame < 33.0f) {
         this->colliderSpheres.elements[1].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[1].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0x10;
@@ -1134,12 +1247,11 @@ void EnThefather_AttackH(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[1].base.atDmgInfo.hitSpecialEffect = 0;
         this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0;
     }
+
     if (this->timer > 0) {
         this->actor.speed = 0;
         this->timer -= 1;
-    } else {
-        EnThefather_ForwardBackCheck(this, play);
-    }
+    } else EnThefather_ForwardBackCheck(this, play);
 }
 
 void EnThefather_SetupAttackJ(EnThefather* this, PlayState* play) {
@@ -1149,36 +1261,32 @@ void EnThefather_SetupAttackJ(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackJ(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
-    if ((this->skelAnime.curFrame >= 1) && (this->skelAnime.curFrame < 32)) {
+
+    if (this->skelAnime.curFrame >= 1.0f && this->skelAnime.curFrame < 32.0f) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         this->actor.speed = 0;
-        if (this->skelAnime.curFrame == 31) {
+        if (this->skelAnime.curFrame == 31.0f)
             this->actor.velocity.y = 10;
-        }
-        if ((this->skelAnime.curFrame == 44.0f) && (this->screamcountdown <= 0)) {
+        else if (this->skelAnime.curFrame == 44.0f && this->screamcountdown <= 0)
             EnThefather_Scream(this, play);
-        }
-    } else if ((this->skelAnime.curFrame >= 32) && (this->skelAnime.curFrame < 60)) {
-        if ((this->skelAnime.curFrame >= 32) && (this->skelAnime.curFrame < 45)) {
+    } else if (this->skelAnime.curFrame >= 32.0f && this->skelAnime.curFrame < 60.0f) {
+        if (this->skelAnime.curFrame >= 32.0f && this->skelAnime.curFrame < 45.0f)
             this->actor.velocity.y = 10;
-        }
         this->actor.speed = (this->actor.xzDistToPlayer * 0.1);
-    } else {
-        this->actor.speed = 0;
-    }
-    if (this->skelAnime.curFrame == 55) {
+    } else this->actor.speed = 0;
+
+    if (this->skelAnime.curFrame == 55)
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
-    }
+
     if ((this->skelAnime.curFrame >= 58.0f) && (this->skelAnime.curFrame < 63.0f)) {
         if (this->skelAnime.curFrame == 60) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_COLI2);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->HandL, 10.0f, 3, 2.0f, 250, 150, false);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->HandR, 10.0f, 3, 2.0f, 250, 150, false);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootL, 10.0f, 3, 2.0f, 250, 150, false);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootR, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->handL, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->handR, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footL, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footR, 10.0f, 3, 2.0f, 250, 150, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 7, 15);
         }
         this->colliderSpheres.elements[1].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
@@ -1195,11 +1303,10 @@ void EnThefather_AttackJ(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 0x00;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0;
     }
-    if (this->timer > 0) {
+    
+    if (this->timer > 0)
         this->timer -= 1;
-    } else {
-        EnThefather_ForwardBackCheck(this, play);
-    }
+    else EnThefather_ForwardBackCheck(this, play);
 }
 
 void EnThefather_SetupAttackI(EnThefather* this, PlayState* play) {
@@ -1209,42 +1316,40 @@ void EnThefather_SetupAttackI(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackI(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
-    if ((this->skelAnime.curFrame >= 9) && (this->skelAnime.curFrame < 41)) {
+
+    if (this->skelAnime.curFrame >= 9.0f && this->skelAnime.curFrame < 41.0f) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
 
         this->actor.speed = 5;
         if (this->skelAnime.curFrame == 21) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootL, 10.0f, 3, 2.0f, 250, 15, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footL, 10.0f, 3, 2.0f, 250, 15, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
         } else if (this->skelAnime.curFrame == 39) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootR, 10.0f, 3, 2.0f, 250, 15, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footR, 10.0f, 3, 2.0f, 250, 15, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 5, 10);
         }
+    } else this->actor.speed = 0;
 
-    } else {
-        this->actor.speed = 0;
-    }
-    if ((this->skelAnime.curFrame == 22) || (this->skelAnime.curFrame == 32) || (this->skelAnime.curFrame == 45)) {
+    if (this->skelAnime.curFrame == 22.0f || this->skelAnime.curFrame == 32.0f || this->skelAnime.curFrame == 45.0f)
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
-    }
+
     if ((this->skelAnime.curFrame >= 18.0f) && (this->skelAnime.curFrame < 26.0f)) {
         this->colliderSpheres.elements[1].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[1].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0x20;
-    } else if ((this->skelAnime.curFrame >= 28.0f) && (this->skelAnime.curFrame < 35.0f)) {
+    } else if (this->skelAnime.curFrame >= 28.0f && this->skelAnime.curFrame < 35.0f) {
         this->colliderSpheres.elements[2].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0x20;
-    } else if ((this->skelAnime.curFrame >= 40.0f) && (this->skelAnime.curFrame < 49.0f)) {
+    } else if (this->skelAnime.curFrame >= 40.0f && this->skelAnime.curFrame < 49.0f) {
         this->colliderSpheres.elements[1].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[1].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0x20;
-    } else if ((this->skelAnime.curFrame >= 53.0f) && (this->skelAnime.curFrame < 58.0f)) {
+    } else if (this->skelAnime.curFrame >= 53.0f && this->skelAnime.curFrame < 58.0f) {
         this->colliderSpheres.elements[0].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[0].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[0].base.atDmgInfo.damage = 0x20;
@@ -1259,6 +1364,7 @@ void EnThefather_AttackI(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[0].base.atDmgInfo.hitSpecialEffect = 0;
         this->colliderSpheres.elements[0].base.atDmgInfo.damage = 0;
     }
+
     if (this->timer > 0)
         this->timer -= 1;
     else EnThefather_ForwardBackCheck(this, play);
@@ -1271,40 +1377,36 @@ void EnThefather_SetupAttackK(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackK(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
-    if (((this->skelAnime.curFrame >= 26) && (this->skelAnime.curFrame < 35)) ||
-        ((this->skelAnime.curFrame >= 59) && (this->skelAnime.curFrame < 76)) ||
-        ((this->skelAnime.curFrame >= 90) && (this->skelAnime.curFrame < 96))) {
+
+    if ((this->skelAnime.curFrame >= 26.0f && this->skelAnime.curFrame < 35.0f) || (this->skelAnime.curFrame >= 59.0f && this->skelAnime.curFrame < 76.0f) || (this->skelAnime.curFrame >= 90.0f && this->skelAnime.curFrame < 96.0f)) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
-        if (this->skelAnime.curFrame == 72) {
+        if (this->skelAnime.curFrame == 72.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootL, 10.0f, 3, 2.0f, 250, 15, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footL, 10.0f, 3, 2.0f, 250, 15, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
-        } else if (this->skelAnime.curFrame == 94) {
+        } else if (this->skelAnime.curFrame == 94.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootR, 10.0f, 3, 2.0f, 250, 15, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footR, 10.0f, 3, 2.0f, 250, 15, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 5, 10);
         }
-        if (((this->skelAnime.curFrame >= 59) && (this->skelAnime.curFrame < 76)) ||
-            ((this->skelAnime.curFrame >= 90) && (this->skelAnime.curFrame < 96))) {
+
+        if ((this->skelAnime.curFrame >= 59.0f && this->skelAnime.curFrame < 76.0f) || (this->skelAnime.curFrame >= 90.0f && this->skelAnime.curFrame < 96.0f))
             this->actor.speed = 4;
-        }
-    } else {
-        this->actor.speed = 0;
-    }
-    if ((this->skelAnime.curFrame == 67) || (this->skelAnime.curFrame == 94)) {
+    } else this->actor.speed = 0;
+
+    if (this->skelAnime.curFrame == 67.0f || this->skelAnime.curFrame == 94.0f)
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
-    }
-    if ((this->skelAnime.curFrame >= 26.0f) && (this->skelAnime.curFrame < 37.0f)) {
-        if (this->skelAnime.curFrame == 31) {
+
+    if (this->skelAnime.curFrame >= 26.0f && this->skelAnime.curFrame < 37.0f) {
+        if (this->skelAnime.curFrame == 31.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_COLI2);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->HandR, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->handR, 10.0f, 3, 2.0f, 250, 150, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 7, 15);
-        } else if (this->skelAnime.curFrame == 32) {
+        } else if (this->skelAnime.curFrame == 32.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_COLI2);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->HandL, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->handL, 10.0f, 3, 2.0f, 250, 150, false);
         }
         this->colliderSpheres.elements[1].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[2].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
@@ -1312,11 +1414,11 @@ void EnThefather_AttackK(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0x20;
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0x20;
-    } else if ((this->skelAnime.curFrame >= 65.0f) && (this->skelAnime.curFrame < 69.0f)) {
+    } else if (this->skelAnime.curFrame >= 65.0f && this->skelAnime.curFrame < 69.0f) {
         this->colliderSpheres.elements[1].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[1].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0x20;
-    } else if ((this->skelAnime.curFrame >= 90.0f) && (this->skelAnime.curFrame < 97.0f)) {
+    } else if (this->skelAnime.curFrame >= 90.0f && this->skelAnime.curFrame < 97.0f) {
         this->colliderSpheres.elements[2].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 4;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0x20;
@@ -1328,11 +1430,10 @@ void EnThefather_AttackK(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 0;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0;
     }
-    if (this->timer > 0) {
+
+    if (this->timer > 0)
         this->timer -= 1;
-    } else {
-        EnThefather_ForwardBackCheck(this, play);
-    }
+    else EnThefather_ForwardBackCheck(this, play);
 }
 
 void EnThefather_SetupAttackL(EnThefather* this, PlayState* play) {
@@ -1342,45 +1443,41 @@ void EnThefather_SetupAttackL(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackL(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
-    if ((this->skelAnime.curFrame >= 1) && (this->skelAnime.curFrame < 32)) {
+
+    if (this->skelAnime.curFrame >= 1.0f && this->skelAnime.curFrame < 32.0f) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         this->actor.speed = 0;
-
-    } else if ((this->skelAnime.curFrame >= 32) && (this->skelAnime.curFrame < 59)) {
-        if ((this->skelAnime.curFrame >= 32) && (this->skelAnime.curFrame < 45)) {
+    } else if (this->skelAnime.curFrame >= 32.0f && this->skelAnime.curFrame < 59.0f) {
+        if (this->skelAnime.curFrame >= 32.0f && this->skelAnime.curFrame < 45.0f) 
             this->actor.velocity.y = 10;
-        }
         this->actor.speed = (this->actor.xzDistToPlayer * 0.06);
-    } else if (((this->skelAnime.curFrame >= 73) && (this->skelAnime.curFrame < 80)) ||
-               ((this->skelAnime.curFrame >= 83) && (this->skelAnime.curFrame < 92))) {
+    } else if ((this->skelAnime.curFrame >= 73.0f && this->skelAnime.curFrame < 80.0f) || (this->skelAnime.curFrame >= 83.0f && this->skelAnime.curFrame < 92.0f)) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         this->actor.speed = 5.0f;
-        if (this->skelAnime.curFrame == 79) {
+        if (this->skelAnime.curFrame == 79.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootL, 10.0f, 3, 2.0f, 250, 15, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footL, 10.0f, 3, 2.0f, 250, 15, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 4, 10);
-        } else if (this->skelAnime.curFrame == 91) {
+        } else if (this->skelAnime.curFrame == 91.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootR, 10.0f, 3, 2.0f, 250, 15, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footR, 10.0f, 3, 2.0f, 250, 15, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 5, 10);
         }
-    } else {
-        this->actor.speed = 0;
-    }
-    if ((this->skelAnime.curFrame == 55) || (this->skelAnime.curFrame == 70) || (this->skelAnime.curFrame == 88)) {
+    } else this->actor.speed = 0;
+
+    if (this->skelAnime.curFrame == 55.0f || this->skelAnime.curFrame == 70.0f || this->skelAnime.curFrame == 88.0f)
         Actor_PlaySfx(&this->actor, NA_SE_IT_HAMMER_SWING);
-    }
-    if ((this->skelAnime.curFrame >= 58.0f) && (this->skelAnime.curFrame < 88.0f)) {
-        if (this->skelAnime.curFrame == 60) {
+
+    if (this->skelAnime.curFrame >= 58.0f && this->skelAnime.curFrame < 88.0f) {
+        if (this->skelAnime.curFrame == 60.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_COLI2);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->HandL, 10.0f, 3, 2.0f, 250, 150, false);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->HandR, 10.0f, 3, 2.0f, 250, 150, false);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootL, 10.0f, 3, 2.0f, 250, 150, false);
-            Actor_SpawnFloorDustRing(play, &this->actor, &this->FootR, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->handL, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->handR, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footL, 10.0f, 3, 2.0f, 250, 150, false);
+            Actor_SpawnFloorDustRing(play, &this->actor, &this->footR, 10.0f, 3, 2.0f, 250, 150, false);
             Actor_RequestQuakeAndRumble(&this->actor, play, 7, 15);
         }
         this->colliderSpheres.elements[1].base.atDmgInfo.dmgFlags = 0xFFCFFFFF;
@@ -1397,11 +1494,10 @@ void EnThefather_AttackL(EnThefather* this, PlayState* play) {
         this->colliderSpheres.elements[2].base.atDmgInfo.hitSpecialEffect = 0x00;
         this->colliderSpheres.elements[2].base.atDmgInfo.damage = 0;
     }
-    if (this->timer > 0) {
+
+    if (this->timer > 0)
         this->timer -= 1;
-    } else {
-        EnThefather_ForwardBackCheck(this, play);
-    }
+    else EnThefather_ForwardBackCheck(this, play);
 }
 
 void EnThefather_SetupAttackMa(EnThefather* this, PlayState* play) {
@@ -1411,27 +1507,25 @@ void EnThefather_SetupAttackMa(EnThefather* this, PlayState* play) {
 }
 
 void EnThefather_AttackMa(EnThefather* this, PlayState* play) {
-
     SkelAnime_Update(&this->skelAnime);
+
     if (this->skelAnime.curFrame < 14.0f) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0x3FF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0x3FF, 1);
     }
+
     if (this->timer > 0) {
-        if ((this->skelAnime.curFrame == 22.0f) && (this->screamcountdown <= 0)) {
+        if ((this->skelAnime.curFrame == 22.0f) && (this->screamcountdown <= 0))
             EnThefather_Scream(this, play);
-        }
 
         this->actor.speed = 0.0f;
-        if ((this->skelAnime.curFrame >= 22.0f) && (this->actor.xzDistToPlayer <= 90) &&
-            (ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x1000)) {
+        if (this->skelAnime.curFrame >= 22.0f && this->actor.xzDistToPlayer <= 90 && ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x1000) {
             this->actor.speed = 0.0f;
             this->timer = 71;
             EnThefather_SetupAttackMb(this, play);
             GET_PLAYER(play)->invincibilityTimer = 0;
         }
         this->timer -= 1;
-
     } else {
         this->timer = 35;
         EnThefather_SetupAttackMc(this, play);
@@ -1453,7 +1547,7 @@ void EnThefather_SetupAttackMb(EnThefather* this, PlayState* play) {
 void EnThefather_AttackMb(EnThefather* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
     Vec3f pos;
-    Vec3f result = EnThefather_VectorBetween(this->HandR, this->HandL);
+    Vec3f result = EnThefather_VectorBetween(this->handR, this->handL);
 
     pos.x = player->actor.world.pos.x;
     pos.y = player->actor.world.pos.y + 65.0f;
@@ -1466,13 +1560,14 @@ void EnThefather_AttackMb(EnThefather* this, PlayState* play) {
         Actor_PlaySfx(&this->actor, NA_SE_EN_DEADHAND_BITE);
         CollisionCheck_SpawnRedBlood(play, &pos);
     }
+
     if (this->timer > 0) {
         this->actor.speed = 0.0f;
         this->timer -= 1;
         if (this->skelAnime.curFrame < 40) {
-            player->actor.world.pos.x = this->HandL.x;
-            player->actor.world.pos.z = this->HandL.z;
-            player->actor.world.pos.y = this->HandL.y - 20;
+            player->actor.world.pos.x = this->handL.x;
+            player->actor.world.pos.z = this->handL.z;
+            player->actor.world.pos.y = this->handL.y - 20;
         }
         if (this->skelAnime.curFrame == 30.0f && this->screamcountdown <= 0)
             EnThefather_Scream(this, play);

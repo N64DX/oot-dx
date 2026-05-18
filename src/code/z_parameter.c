@@ -4194,7 +4194,7 @@ void Energy_Draw(PlayState* play) {
     else if (energyHideTimer > 0)
         energyHideTimer--;
 
-    if (energyHideTimer == 0)
+    if (energyHideTimer == 0 || interfaceCtx->magicAlpha == 0)
         return;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 5551);

@@ -793,7 +793,7 @@ SurfaceType old_dodongos_cavern_sceneCollisionHeader0x00E38C_polygonTypes_000002
             SURFACETYPE0(
                 /* bgCamIndex */ 8,
                 /* exitIndex */ 0,
-                FLOOR_TYPE_0,
+                FLOOR_TYPE_6,
                 /* unk18 */ 0,
                 WALL_TYPE_0,
                 FLOOR_PROPERTY_0,

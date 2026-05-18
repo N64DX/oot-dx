@@ -1,86 +1,94 @@
 #include "object_bwall2.h"
 
 #include "gfx.h"
+#include "camera.h"
 #include "array_count.h"
 
-static Vtx object_dc_bombable_wallVtx_002DA0[4] = {
-    VTX(80, 0, 0, 1024, 1024, 68, 68, 68, 255),
-    VTX(-80, 160, 0, 0, 0, 255, 255, 255, 255),
-    VTX(-80, 0, 0, 0, 1024, 68, 68, 68, 255),
-    VTX(80, 160, 0, 1024, 0, 255, 255, 255, 255),
+static Vtx object_dc_bombable_wallVtx_002DA0[] = {
+    VTX( 80,   0, 0, 1024, 1024,  68,  68,  68, 255),
+    VTX(-80, 160, 0,    0,    0, 255, 255, 255, 255),
+    VTX(-80,   0, 0,    0, 1024,  68,  68,  68, 255),
+    VTX( 80, 160, 0, 1024,    0, 255, 255, 255, 255),
 };
 
-static Vtx object_dc_bombable_wallVtx_0029D8[16] = {
-    VTX(-80, 160, 0, 2048, 0, 153, 153, 153, 255),
-    VTX(-80, 0, -340, 0, 2048, 255, 255, 255, 255),
-    VTX(-80, 160, -340, 2048, 2048, 84, 84, 84, 255),
-    VTX(80, 160, 0, 2048, 0, 153, 153, 153, 255),
-    VTX(80, 160, -340, 2048, 2048, 84, 84, 84, 255),
-    VTX(80, 0, -340, 0, 2048, 255, 255, 255, 255),
-    VTX(-80, 0, 0, 0, 0, 119, 119, 119, 255),
-    VTX(80, 160, 0, 1024, 0, 153, 153, 153, 255),
-    VTX(-80, 160, 0, -1024, 0, 153, 153, 153, 255),
-    VTX(-80, 160, -340, -1024, 2048, 84, 84, 84, 255),
-    VTX(80, 160, -340, 1024, 2048, 84, 84, 84, 255),
-    VTX(-80, 0, 0, -1024, 0, 119, 119, 119, 255),
-    VTX(80, 0, 0, 1024, 0, 119, 119, 119, 255),
-    VTX(80, 0, -340, 1024, 2048, 255, 255, 255, 255),
-    VTX(-80, 0, -340, -1024, 2048, 255, 255, 255, 255),
-    VTX(80, 0, 0, 0, 0, 119, 119, 119, 255),
+static Vtx object_dc_bombable_wallVtx_0029D8[] = {
+    VTX(-80, 160,    0,  2048,    0, 153, 153, 153, 255),
+    VTX(-80,   0, -340,     0, 2048, 255, 255, 255, 255),
+    VTX(-80, 160, -340,  2048, 2048,  84,  84,  84, 255),
+    VTX( 80, 160,    0,  2048,    0, 153, 153, 153, 255),
+    VTX( 80, 160, -340,  2048, 2048,  84,  84,  84, 255),
+    VTX( 80,   0, -340,     0, 2048, 255, 255, 255, 255),
+    VTX(-80,   0,    0,     0,    0, 119, 119, 119, 255),
+    VTX( 80, 160,    0,  1024,    0, 153, 153, 153, 255),
+    VTX(-80, 160,    0, -1024,    0, 153, 153, 153, 255),
+    VTX(-80, 160, -340, -1024, 2048,  84,  84,  84, 255),
+    VTX( 80, 160, -340,  1024, 2048,  84,  84,  84, 255),
+    VTX(-80,   0,    0, -1024,    0, 119, 119, 119, 255),
+    VTX( 80,   0,    0,  1024,    0, 119, 119, 119, 255),
+    VTX( 80,   0, -340,  1024, 2048, 255, 255, 255, 255),
+    VTX(-80,   0, -340, -1024, 2048, 255, 255, 255, 255),
+    VTX( 80,   0,    0,     0,    0, 119, 119, 119, 255),
 };
 
-static Vtx object_dc_bombable_wallVtx_002BA8[18] = {
-    VTX(-80, 160, 0, 3456, 0, 204, 204, 204, 255),
-    VTX(-80, 160, -320, 3456, 2176, 94, 94, 94, 255),
-    VTX(80, 160, -320, 2688, 2176, 96, 96, 96, 255),
-    VTX(-80, 0, -320, 6080, -192, 47, 47, 47, 255),
-    VTX(80, 0, 0, 5504, 1408, 70, 70, 70, 255),
-    VTX(80, 0, -320, 6592, 320, 40, 40, 40, 255),
-    VTX(-80, 160, -320, 384, 2176, 94, 94, 94, 255),
-    VTX(-80, 0, 0, 1152, 0, 70, 70, 70, 255),
-    VTX(-80, 0, -320, 1152, 2176, 47, 47, 47, 255),
-    VTX(-80, 0, 0, 4992, 896, 70, 70, 70, 255),
-    VTX(-80, 160, 0, 384, 0, 204, 204, 204, 255),
-    VTX(80, 0, -320, 1920, 2176, 40, 40, 40, 255),
-    VTX(80, 160, 0, 2688, 0, 204, 204, 204, 255),
-    VTX(80, 0, 0, 1920, 0, 70, 70, 70, 255),
-    VTX(-80, 0, -320, 0, 2048, 47, 47, 47, 255),
-    VTX(80, 160, -320, 1024, 1024, 96, 96, 96, 255),
-    VTX(-80, 160, -320, 0, 1024, 94, 94, 94, 255),
-    VTX(80, 0, -320, 1024, 2048, 40, 40, 40, 255),
+static Vtx object_dc_bombable_wallVtx_002BA8[] = {
+    VTX(-80, 160,    0, 3456,    0, 204, 204, 204, 255),
+    VTX(-80, 160, -320, 3456, 2176,  94,  94,  94, 255),
+    VTX( 80, 160, -320, 2688, 2176,  96,  96,  96, 255),
+    VTX(-80,   0, -320, 6080, -192,  47,  47,  47, 255),
+    VTX( 80,   0,    0, 5504, 1408,  70,  70,  70, 255),
+    VTX( 80,   0, -320, 6592,  320,  40,  40,  40, 255),
+    VTX(-80, 160, -320,  384, 2176,  94,  94,  94, 255),
+    VTX(-80,   0,    0, 1152,    0,  70,  70,  70, 255),
+    VTX(-80,   0, -320, 1152, 2176,  47,  47,  47, 255),
+    VTX(-80,   0,    0, 4992,  896,  70,  70,  70, 255),
+    VTX(-80, 160,    0,  384,    0, 204, 204, 204, 255),
+    VTX( 80,   0, -320, 1920, 2176,  40,  40,  40, 255),
+    VTX( 80, 160,    0, 2688,    0, 204, 204, 204, 255),
+    VTX( 80,   0,    0, 1920,    0,  70,  70,  70, 255),
+    VTX(-80,   0, -320,    0, 2048,  47,  47,  47, 255),
+    VTX( 80, 160, -320, 1024, 1024,  96,  96,  96, 255),
+    VTX(-80, 160, -320,    0, 1024,  94,  94,  94, 255),
+    VTX( 80,   0, -320, 1024, 2048,  40,  40,  40, 255),
 };
 
-static Vtx object_dc_bombable_wallVtx_002800[16] = {
-    VTX(-80, 160, 0, -39, 156, 204, 204, 204, 255),
-    VTX(-40, 120, -160, 236, 2517, 94, 94, 94, 255),
-    VTX(40, 120, -160, 788, 2517, 96, 96, 96, 255),
-    VTX(-80, 0, -160, 6080, -192, 47, 47, 47, 255),
-    VTX(80, 0, 0, 5504, 1408, 70, 70, 70, 255),
-    VTX(80, 0, -160, 6592, 320, 40, 40, 40, 255),
-    VTX(-80, 0, 0, 4992, 896, 70, 70, 70, 255),
-    VTX(80, 0, -160, 1594, 3201, 40, 40, 40, 255),
-    VTX(80, 160, 0, 1063, 156, 204, 204, 204, 255),
-    VTX(80, 0, 0, 2061, 1127, 70, 70, 70, 255),
-    VTX(-80, 0, -160, 0, 2048, 47, 47, 47, 255),
-    VTX(40, 120, -160, 768, 1280, 96, 96, 96, 255),
-    VTX(-40, 120, -160, 256, 1280, 94, 94, 94, 255),
-    VTX(80, 0, -160, 1024, 2048, 40, 40, 40, 255),
-    VTX(-80, 0, -160, -570, 3201, 47, 47, 47, 255),
-    VTX(-80, 0, 0, -1037, 1127, 70, 70, 70, 255),
+static Vtx object_dc_bombable_wallVtx_002800[] = {
+    VTX(-80, 160,    0,   -39,  156, 204, 204, 204, 255),
+    VTX(-40, 120, -160,   236, 2517,  94,  94,  94, 255),
+    VTX( 40, 120, -160,   788, 2517,  96,  96,  96, 255),
+    VTX(-80,   0, -160,  6080, -192,  47,  47,  47, 255),
+    VTX( 80,   0,    0,  5504, 1408,  70,  70,  70, 255),
+    VTX( 80,   0, -160,  6592,  320,  40,  40,  40, 255),
+    VTX(-80,   0,    0,  4992,  896,  70,  70,  70, 255),
+    VTX( 80,   0, -160,  1594, 3201,  40,  40,  40, 255),
+    VTX( 80, 160,    0,  1063,  156, 204, 204, 204, 255),
+    VTX( 80,   0,    0,  2061, 1127,  70,  70,  70, 255),
+    VTX(-80,   0, -160,     0, 2048,  47,  47,  47, 255),
+    VTX( 40, 120, -160,   768, 1280,  96,  96,  96, 255),
+    VTX(-40, 120, -160,   256, 1280,  94,  94,  94, 255),
+    VTX( 80,   0, -160,  1024, 2048,  40,  40,  40, 255),
+    VTX(-80,   0, -160,  -570, 3201,  47,  47,  47, 255),
+    VTX(-80,   0,    0, -1037, 1127,  70,  70,  70, 255),
 };
 
-static Vtx gDodongoJaw_gJawDL_mesh_mesh_layer_Opaque_vtx_cull[8] = {
-    {{{-2703, -2066, -1867},0, {-16, -16},{0x0, 0x0, 0x0, 0x0}}},
-    {{{-2703, -2066, 4753},0, {-16, -16},{0x0, 0x0, 0x0, 0x0}}},
-    {{{-2703, 800, 4753},0, {-16, -16},{0x0, 0x0, 0x0, 0x0}}},
-    {{{-2703, 800, -1867},0, {-16, -16},{0x0, 0x0, 0x0, 0x0}}},
-    {{{2703, -2066, -1867},0, {-16, -16},{0x0, 0x0, 0x0, 0x0}}},
-    {{{2703, -2066, 4753},0, {-16, -16},{0x0, 0x0, 0x0, 0x0}}},
-    {{{2703, 800, 4753},0, {-16, -16},{0x0, 0x0, 0x0, 0x0}}},
-    {{{2703, 800, -1867},0, {-16, -16},{0x0, 0x0, 0x0, 0x0}}},
+static Vtx object_dc_bombable_floorVtx[] = {
+    VTX(-800, 0, -800,   0x0,   0x0, 0xFF, 0xFF, 0xFF, 0xFF),
+    VTX(-800, 0,  800,   0x0, 0x400, 0xFF, 0xFF, 0xFF, 0xFF),
+    VTX( 800, 0,  800, 0x400, 0x400, 0xFF, 0xFF, 0xFF, 0xFF),
+    VTX( 800, 0, -800, 0x400,   0x0, 0xFF, 0xFF, 0xFF, 0xFF),
 };
 
-static Vtx gDodongoJaw_gJawDL_mesh_mesh_layer_Opaque_vtx_0[118] = {
+static Vtx gDodongoJaw_gJawDL_mesh_mesh_layer_Opaque_vtx_cull[] = {
+    VTX(-2703, -2066, -1867, -16, -16, 0x0, 0x0, 0x0, 0x0),
+    VTX(-2703, -2066,  4753, -16, -16, 0x0, 0x0, 0x0, 0x0),
+    VTX(-2703,   800,  4753, -16, -16, 0x0, 0x0, 0x0, 0x0),
+    VTX(-2703,   800, -1867, -16, -16, 0x0, 0x0, 0x0, 0x0),
+    VTX( 2703, -2066, -1867, -16, -16, 0x0, 0x0, 0x0, 0x0),
+    VTX( 2703, -2066,  4753, -16, -16, 0x0, 0x0, 0x0, 0x0),
+    VTX( 2703,   800,  4753, -16, -16, 0x0, 0x0, 0x0, 0x0),
+    VTX( 2703,   800, -1867, -16, -16, 0x0, 0x0, 0x0, 0x0),
+};
+
+static Vtx gDodongoJaw_gJawDL_mesh_mesh_layer_Opaque_vtx_0[] = {
     {{{0, -111, 4753},0, {4098, -2},{0xFF, 0xFF, 0xFF, 0xFE}}},
     {{{-240, -111, 4653},0, {3636, -2},{0xFF, 0xFF, 0xFF, 0xFE}}},
     {{{-404, -400, 4323},0, {3566, 247},{0x44, 0x44, 0x44, 0xFE}}},
@@ -201,15 +209,15 @@ static Vtx gDodongoJaw_gJawDL_mesh_mesh_layer_Opaque_vtx_0[118] = {
     {{{800, -1886, -1059},0, {1009, 1430},{0x23, 0x1, 0x1, 0xFF}}},
 };
 
-static Vtx gDodongoJaw_gJawDL_mesh_mesh_layer_Opaque_vtx_1[8] = {
-    {{{1711, -200, 1879},0, {-8139, 1024},{0x77, 0x77, 0x77, 0xFE}}},
-    {{{1711, -400, 1879},0, {-8237, 10},{0x2, 0x2, 0x2, 0xFE}}},
-    {{{404, 0, 4323},0, {1432, 10},{0xFF, 0xFF, 0xFF, 0xFE}}},
-    {{{404, 200, 4323},0, {1530, 1024},{0xFE, 0xFE, 0xFE, 0xFE}}},
-    {{{-404, 0, 4323},0, {587, 0},{0xF8, 0xF8, 0xF4, 0xFE}}},
-    {{{-1711, -400, 1879},0, {10256, 0},{0x0, 0x0, 0x0, 0xFE}}},
-    {{{-1711, -200, 1879},0, {10157, 1014},{0x77, 0x77, 0x77, 0xFE}}},
-    {{{-404, 200, 4323},0, {488, 1014},{0xFE, 0xFE, 0xFE, 0xFE}}},
+static Vtx gDodongoJaw_gJawDL_mesh_mesh_layer_Opaque_vtx_1[] = {
+    VTX( 1711, -200, 1879, -8139, 1024, 0x77, 0x77, 0x77, 0xFE),
+    VTX( 1711, -400, 1879, -8237,   10,  0x2,  0x2,  0x2, 0xFE),
+    VTX(  404,    0, 4323,  1432,   10, 0xFF, 0xFF, 0xFF, 0xFE),
+    VTX(  404,  200, 4323,  1530, 1024, 0xFE, 0xFE, 0xFE, 0xFE),
+    VTX( -404,    0, 4323,   587,    0, 0xF8, 0xF8, 0xF4, 0xFE),
+    VTX(-1711, -400, 1879, 10256,    0,  0x0,  0x0,  0x0, 0xFE),
+    VTX(-1711, -200, 1879, 10157, 1014, 0x77, 0x77, 0x77, 0xFE),
+    VTX( -404,  200, 4323,   488, 1014, 0xFE, 0xFE, 0xFE, 0xFE),
 };
 
 static u64 object_dc_bombable_wallTex_000000[] = {
@@ -224,6 +232,10 @@ static u64 object_dc_bombable_wallTex_001800[] = {
 #include "assets/scenes//dungeons/old_dodongos_cavern/old_dodongos_cavern_sceneTex_0149E8.rgba16.inc.c"
 };
 
+static u64 object_dc_bombable_floorTex[] = {
+#include "assets/objects/object_kingdodongo/object_kingdodongo_Tex_025C58.rgba16.inc.c"
+};
+
 static u64 jawtex[] = {
 #include "assets/scenes/dungeons/old_dodongos_cavern/old_dodongos_cavern_sceneTex_00E3C0.rgba16.inc.c"
 };
@@ -234,12 +246,7 @@ static u64 teethTex[] = {
 
 Gfx gDCBombableWallDL[] = {
     gsDPPipeSync(),
-    gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsDPPipeSync(),
-    gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsSPSetOtherMode(0xE3, 12, 2, 0x00002000),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(65535, 65535, 0, 0, G_ON),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPLoadTextureBlock(object_dc_bombable_wallTex_001000, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, K5, SHADE, COMBINED_ALPHA, 0, 0, 0, 1, COMBINED, K5, PRIMITIVE, COMBINED_ALPHA, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
@@ -252,14 +259,24 @@ Gfx gDCBombableWallDL[] = {
     gsSPEndDisplayList(),
 };
 
-Gfx gDCTunnel1[] = {
+Gfx gDCBombableFloorDL[17] = {
     gsDPPipeSync(),
-    gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(object_dc_bombable_floorTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetCombineMode(G_CC_MODULATEIDECALA, G_CC_MODULATEIA_PRIM2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPClearGeometryMode(G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPSetGeometryMode(G_CULL_BACK),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsSPVertex(&object_dc_bombable_floorVtx[0], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gDCTunnel1DL[] = {
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsSPSetOtherMode(0xE3, 12, 2, 0x00002000),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(65535, 65535, 0, 0, G_ON),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPLoadTextureBlock(object_dc_bombable_wallTex_001800, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 64, 0, G_TX_MIRROR, G_TX_NOMIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, K5, SHADE, COMBINED_ALPHA, 0, 0, 0, 1, COMBINED, K5, PRIMITIVE, COMBINED_ALPHA, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
@@ -275,14 +292,10 @@ Gfx gDCTunnel1[] = {
     gsSPEndDisplayList(),
 };
 
-Gfx gDCTunnel2[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
+Gfx gDCTunnel2DL[] = {
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsSPSetOtherMode(0xE3, 12, 2, 0x00002000),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(65535, 65535, 0, 0, G_ON),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, object_dc_bombable_wallTex_000000),
     gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, 7, 0, 0, 6, 0, 0, 5, 0),
     gsDPLoadSync(),
@@ -305,14 +318,10 @@ Gfx gDCTunnel2[] = {
     gsSPEndDisplayList(),
 };
 
-Gfx gDCTunnel3[] = {
-    gsDPPipeSync(),
-    gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
+Gfx gDCTunnel3DL[] = {
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsSPSetOtherMode(0xE3, 12, 2, 0x00002000),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(65535, 65535, 0, 0, G_ON),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, object_dc_bombable_wallTex_000000),
     gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, 7, 0, 0, 6, 0, 0, 5, 0),
     gsDPLoadSync(),
@@ -335,18 +344,16 @@ Gfx gDCTunnel3[] = {
     gsSPEndDisplayList(),
 };
 
-Gfx gDodongoJaw[] = {
-    gsSPClearGeometryMode(G_LIGHTING),
+Gfx gDodongoJawDL[] = {
     gsSPVertex(gDodongoJaw_gJawDL_mesh_mesh_layer_Opaque_vtx_cull + 0, 8, 0),
     gsSPCullDisplayList(0, 7),
-
     gsDPPipeSync(),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsSPSetGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
     gsSPClearGeometryMode(G_CULL_FRONT | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_AD_NOISE | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TL_TILE | G_TD_CLAMP | G_TP_PERSP | G_CYC_2CYCLE | G_PM_NPRIMITIVE),
     gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_AC_NONE | G_ZS_PIXEL | G_RM_FOG_SHADE_A | G_RM_AA_ZB_OPA_SURF2),
-    gsSPTexture(65535, 65535, 0, 0, 1),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, 1),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPTileSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, jawtex),
@@ -404,7 +411,6 @@ Gfx gDodongoJaw[] = {
     gsSP2Triangles(15, 16, 12, 0, 15, 17, 16, 0),
     gsSP2Triangles(16, 17, 18, 0, 18, 17, 19, 0),
     gsSP2Triangles(20, 19, 17, 0, 20, 21, 19, 0),
-
     gsDPPipeSync(),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsSPSetGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
@@ -425,41 +431,179 @@ Gfx gDodongoJaw[] = {
     gsSPVertex(gDodongoJaw_gJawDL_mesh_mesh_layer_Opaque_vtx_1 + 0, 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 4, 6, 0),
-
     gsSPEndDisplayList(),
 };
 
-CollisionPoly gDCBombableWallCol_polygons_00002EE8[] = {
+CollisionPoly gDCBombableWallCol_PolyList[] = {
    { 0x0000, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x7FFF, 0x0000 },
    { 0x0000, 0x0000, 0x0003, 0x0001, 0x0000, 0x0000, 0x7FFF, 0x0000 },
 };
 
-SurfaceType gDCBombableWallCol_polygonTypes_00002F08[] = {
+SurfaceType gDCBombableWallCol_SurfaceTypes[] = {
     { 0x00000000, 0x000007CB },
 };
 
-Vec3s gDCBombableWallCol_vtx_00002ED0[] = {
-   { 80, 0, 0 },
+Vec3s gDCBombableWallCol_VtxList[] = {
+   {  80,   0, 0 },
    { -80, 160, 0 },
-   { -80, 0, 0 },
-   { 80, 160, 0 },
+   { -80,   0, 0 },
+   {  80, 160, 0 },
 };
 
 CollisionHeader gDCBombableWallCol = {
-    { -80, 0, 0 },
-    { 80, 160, 0 },
-    ARRAY_COUNT(gDCBombableWallCol_vtx_00002ED0), gDCBombableWallCol_vtx_00002ED0,
-    ARRAY_COUNT(gDCBombableWallCol_polygons_00002EE8), gDCBombableWallCol_polygons_00002EE8,
-    gDCBombableWallCol_polygonTypes_00002F08,
+    { -80,   0, 0 },
+    {  80, 160, 0 },
+    ARRAY_COUNT(gDCBombableWallCol_VtxList), gDCBombableWallCol_VtxList,
+    ARRAY_COUNT(gDCBombableWallCol_PolyList), gDCBombableWallCol_PolyList,
+    gDCBombableWallCol_SurfaceTypes,
     NULL,
     0, NULL,
 };
 
-SurfaceType gDodongoJawCol_polygonTypes[] = {
+BgCamInfo gDCBombableFloorCol_BgCamList[] = {
+    { CAM_SET_NONE, 0, NULL },
+};
+
+SurfaceType gDCBombableFloorCol_SurfaceTypes[] = {
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_DIRT,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
+};
+
+CollisionPoly gDCBombableFloorCol_PolyList[] = {
+    {
+        0,
+        {
+            COLPOLY_VTX(0, 0), // 0
+            COLPOLY_VTX(1, 0), // 1
+            COLPOLY_VTX(2, 0), // 2
+        }, {
+            COLPOLY_SNORMAL(0.0), // x
+            COLPOLY_SNORMAL(1.0), // y
+            COLPOLY_SNORMAL(0.0), // z
+        },
+        0,
+    }, {
+        0,
+        {
+            COLPOLY_VTX(0, 0), // 0
+            COLPOLY_VTX(2, 0), // 1
+            COLPOLY_VTX(3, 0), // 2
+        }, {
+            COLPOLY_SNORMAL(0.0), // x
+            COLPOLY_SNORMAL(1.0), // y
+            COLPOLY_SNORMAL(0.0), // z
+        },
+        0,
+    },
+};
+
+Vec3s gDCBombableFloorCol_VtxList[] = {
+    { -800, 0, -800 },
+    { -800, 0,  800 },
+    {  800, 0,  800 },
+    {  800, 0, -800 },
+};
+
+CollisionHeader gDCBombableFloorCol = {
+    { -800, 0, -800 },
+    {  800, 0,  800 },
+    ARRAY_COUNT(gDCBombableFloorCol_VtxList), gDCBombableFloorCol_VtxList,
+    ARRAY_COUNT(gDCBombableFloorCol_PolyList), gDCBombableFloorCol_PolyList, 
+    gDCBombableFloorCol_SurfaceTypes,
+    gDCBombableFloorCol_BgCamList, 
+    0, NULL,
+};
+
+BgCamInfo gDCBombableLavaFloorCol_BgCamList[] = {
+    { CAM_SET_NONE, 0, NULL },
+};
+
+SurfaceType gDCBombableLavaFloorCol_SurfaceTypes[] = {
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_DIRT,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
+};
+
+CollisionPoly gDCBombableLavaFloorCol_PolyList[] = {
+    {
+        0,
+        {
+            COLPOLY_VTX(0, 0), // 0
+            COLPOLY_VTX(1, 0), // 1
+            COLPOLY_VTX(2, 0), // 2
+        }, {
+            COLPOLY_SNORMAL(0.0), // x
+            COLPOLY_SNORMAL(1.0), // y
+            COLPOLY_SNORMAL(0.0), // z
+        },
+        0,
+    },
+};
+
+Vec3s gDCBombableLavaFloorCol_VtxList[] = {
+    {   7776, 0, -5300 },
+    { -10624, 0, -3700 },
+    {    176, 0, 10700 },
+};
+
+CollisionHeader gDCBombableLavaFloorCol = {
+    { -10624, 0, -5300, },
+    {   7776, 0, 10700, },
+    ARRAY_COUNT(gDCBombableLavaFloorCol_VtxList), gDCBombableLavaFloorCol_VtxList,
+    ARRAY_COUNT(gDCBombableLavaFloorCol_PolyList), gDCBombableLavaFloorCol_PolyList,
+    gDCBombableLavaFloorCol_SurfaceTypes,
+    gDCBombableLavaFloorCol_BgCamList,
+    0, NULL,
+};
+
+SurfaceType gDCDodongoJawCol_SurfaceTypes[] = {
     { 0x00000000, 0x00000010 }, { 0x00000000, 0x00000000 },
 };
 
-CollisionPoly gDodongoJawCol_polygons[] = {
+CollisionPoly gDCDodongoJawCol_PolyList[] = {
     { 0x0000, 0x0000, 0x0001, 0x0002, 0x0000, 0x7d08, 0x1b67, 0x0000 },
     { 0x0000, 0x0003, 0x0004, 0x0005, 0x0000, 0x7d08, 0x1b67, 0x0000 },
     { 0x0000, 0x0006, 0x0000, 0x0002, 0x014c, 0x7d45, 0x1a44, 0x0017 },
@@ -552,71 +696,71 @@ CollisionPoly gDodongoJawCol_polygons[] = {
     { 0x0001, 0x0033, 0x002f, 0x002e, 0x7fff, 0x0000, 0x0000, 0x0258 },
 };
 
-Vec3s gDodongoJawCol_vertices[56] = {
-    { -600, -405, 1848 },
-    { -800, 0, 0 },
-    { -2292, 0, 0 },
-    { 2292, 0, 0 },
-    { 800, 0, 0 },
-    { 600, -405, 1848 },
-    { -1711, -400, 1879 },
-    { 1711, -400, 1879 },
-    { -600, 362, -170 },
-    { 600, 362, -170 },
-    { 2456, 800, -376 },
-    { -2456, 800, -376 },
-    { 404, 0, 4323 },
-    { -404, 0, 4323 },
-    { 1000, -1600, -702 },
-    { 2374, -1600, -702 },
-    { 600, -1600, 564 },
-    { 2046, -1600, 564 },
-    { -2046, -1600, 564 },
-    { -2374, -1600, -702 },
-    { -600, -1600, 564 },
-    { -1000, -1600, -702 },
-    { -800, -1956, -702 },
-    { 800, -1956, -702 },
-    { 2703, 400, -702 },
-    { -2703, 400, -702 },
-    { -240, 152, 4621 },
-    { 0, 192, 4700 },
-    { 240, 152, 4621 },
-    { 0, -111, 4753 },
-    { 240, -111, 4653 },
-    { 404, -400, 4323 },
-    { 650, -800, 3759 },
-    { 979, -800, 3007 },
-    { -240, -111, 4653 },
-    { -404, -400, 4323 },
-    { -650, -800, 3759 },
-    { 1711, -200, 1879 },
-    { 404, 200, 4323 },
-    { -1711, -200, 1879 },
-    { -404, 200, 4323 },
-    { -979, -800, 3007 },
-    { 800, -1886, -1059 },
-    { 800, -461, -1785 },
-    { -800, -461, -1785 },
-    { -800, -1886, -1059 },
-    { -600, -2066, -1413 },
-    { -600, -1886, -1059 },
-    { 600, -1886, -1059 },
-    { 600, -2066, -1413 },
-    { -800, -995, -1513 },
-    { -600, -995, -1513 },
-    { 800, -995, -1513 },
-    { 600, -995, -1513 },
-    { 600, -1175, -1867 },
-    { -600, -1175, -1867 },
+Vec3s gDCDodongoJawCol_VtxList[] = {
+    {  -600,  -405,  1848 },
+    {  -800,     0,     0 },
+    { -2292,     0,     0 },
+    {  2292,     0,     0 },
+    {   800,     0,     0 },
+    {   600,  -405,  1848 },
+    { -1711,  -400,  1879 },
+    {  1711,  -400,  1879 },
+    {  -600,   362,  -170 },
+    {  600,    362,  -170 },
+    {  2456,   800,  -376 },
+    { -2456,   800,  -376 },
+    {  404,      0,  4323 },
+    {  -404,     0,  4323 },
+    {  1000, -1600,  -702 },
+    {  2374, -1600,  -702 },
+    {  600,  -1600,   564 },
+    {  2046, -1600,   564 },
+    { -2046, -1600,   564 },
+    { -2374, -1600,  -702 },
+    {  -600, -1600,   564 },
+    { -1000, -1600,  -702 },
+    {  -800, -1956,  -702 },
+    {   800, -1956,  -702 },
+    {  2703,   400,  -702 },
+    { -2703,   400,  -702 },
+    {  -240,   152,  4621 },
+    {     0,   192,  4700 },
+    {   240,   152,  4621 },
+    {     0,  -111,  4753 },
+    {   240,  -111,  4653 },
+    {   404,  -400,  4323 },
+    {   650,  -800,  3759 },
+    {   979,  -800,  3007 },
+    {  -240,  -111,  4653 },
+    {  -404,  -400,  4323 },
+    {  -650,  -800,  3759 },
+    {  1711,  -200,  1879 },
+    {   404,   200,  4323 },
+    { -1711,  -200,  1879 },
+    {  -404,   200,  4323 },
+    {  -979,  -800,  3007 },
+    {   800, -1886, -1059 },
+    {   800,  -461, -1785 },
+    {  -800,  -461, -1785 },
+    {  -800, -1886, -1059 },
+    {  -600, -2066, -1413 },
+    {  -600, -1886, -1059 },
+    {   600, -1886, -1059 },
+    {   600, -2066, -1413 },
+    {  -800,  -995, -1513 },
+    {  -600,  -995, -1513 },
+    {   800,  -995, -1513 },
+    {   600,  -995, -1513 },
+    {   600, -1175, -1867 },
+    {  -600, -1175, -1867 },
 };
 
-CollisionHeader gDodongoJawCol_collisionHeader = {
+CollisionHeader gDCDodongoJawCol = {
     { -2703, -2066, -1867 },
-    { 2703, 800, 4753 },
-    ARRAY_COUNT(gDodongoJawCol_vertices), gDodongoJawCol_vertices,
-    ARRAY_COUNT(gDodongoJawCol_polygons), gDodongoJawCol_polygons,
-    gDodongoJawCol_polygonTypes,
-    0,
+    {  2703,   800,  4753 },
+    ARRAY_COUNT(gDCDodongoJawCol_VtxList), gDCDodongoJawCol_VtxList,
+    ARRAY_COUNT(gDCDodongoJawCol_PolyList), gDCDodongoJawCol_PolyList,
+    gDCDodongoJawCol_SurfaceTypes,
+    NULL,
     0, NULL
 };

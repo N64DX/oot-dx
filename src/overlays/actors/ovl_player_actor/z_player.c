@@ -1357,6 +1357,8 @@ static u8 sFidgetAnimSfxTypes[] = {
     FIDGET_ANIMSFX_NONE,              // FIDGET_LOOK_AROUND (sword/shield in hand)
     FIDGET_ANIMSFX_SNEEZE,            // FIDGET_COLD
     FIDGET_ANIMSFX_SNEEZE,            // FIDGET_COLD (sword/shield in hand)
+    FIDGET_ANIMSFX_SNEEZE,            // FIDGET_FREEZING
+    FIDGET_ANIMSFX_SNEEZE,            // FIDGET_FREEZING (sword/shield in hand)
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_WARM
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_WARM (sword/shield in hand)
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_HOT
@@ -10295,12 +10297,23 @@ static AnimSfxEntry D_808545F0[] = {
     { 0, -ANIMSFX_DATA(ANIMSFX_TYPE_WALKING, 170) },
 };
 
+static bool sLinkIsFrozenToDeath = false;
+
 void Player_Action_80843CEC(Player* this, PlayState* play) {
     if (this->currentTunic != PLAYER_TUNIC_GORON) {
         if ((play->roomCtx.curRoom.environmentType == ROOM_ENV_HOT) || (sFloorType == FLOOR_TYPE_9) ||
             ((func_80838144(sFloorType) >= 0) &&
              !func_80042108(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId))) {
             func_8083821C(this);
+        }
+    }
+
+    if (this->currentTunic != PLAYER_TUNIC_ZORA) {
+        if (play->roomCtx.curRoom.environmentType == ROOM_ENV_FREEZING && !sLinkIsFrozenToDeath && play->gameOverCtx.state < GAMEOVER_DEATH_DELAY_MENU) {
+            sLinkIsFrozenToDeath = true;
+            EffectSsIcePiece_SpawnBurst(play, &this->actor.world.pos, this->actor.scale.x);
+            Player_PlaySfx(this, NA_SE_PL_FREEZE_S);
+            Player_PlayVoiceSfx(this, NA_SE_VO_LI_FREEZE);
         }
     }
 

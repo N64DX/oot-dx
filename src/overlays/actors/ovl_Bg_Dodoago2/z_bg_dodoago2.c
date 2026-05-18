@@ -125,7 +125,7 @@ void BgDodoago2_Init(Actor* thisx, PlayState* play) {
 
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
     DynaPolyActor_Init(&this->dyna, 0);
-    CollisionHeader_GetVirtual(&gDodongoJawCol_collisionHeader, &colHeader);
+    CollisionHeader_GetVirtual(&gDCDodongoJawCol, &colHeader);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
     ActorShape_Init(&this->dyna.actor.shape, 0.0f, NULL, 0.0f);
 
@@ -303,6 +303,6 @@ void BgDodoago2_Draw(Actor* thisx, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     gSPMatrix(POLY_OPA_DISP++, MATRIX_FINALIZE(play->state.gfxCtx, __FILE__, __LINE__), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-    gSPDisplayList(POLY_OPA_DISP++, gDodongoJaw);
+    gSPDisplayList(POLY_OPA_DISP++, gDodongoJawDL);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }

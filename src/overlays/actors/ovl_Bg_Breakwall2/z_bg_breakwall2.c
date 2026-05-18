@@ -18,8 +18,6 @@
 #include "effect.h"
 
 #include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.h"
-#include "assets/objects/object_bwall2/object_bwall2.h"
-#include "assets/objects/object_kingdodongo/object_kingdodongo.h"
 #include "overlays/effects/ovl_Effect_Ss_Kakera/z_eff_ss_kakera.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
@@ -45,7 +43,7 @@ ActorProfile Bg_Breakwall2_Profile = {
     /**/ ACTOR_BG_BREAKWALL2,
     /**/ ACTORCAT_BG,
     /**/ FLAGS,
-    /**/ OBJECT_GAMEPLAY_KEEP,
+    /**/ OBJECT_BWALL2,
     /**/ sizeof(BgBreakwall2),
     /**/ BgBreakwall2_Init,
     /**/ BgBreakwall2_Destroy,
@@ -74,11 +72,11 @@ static ColliderQuadInit sQuadInit = {
 };
 
 static BombableWall2Info sBombableWallInfo[] = {
-    { &gDCBombableWallCol,            gDCBombableWallDL,            gDCTunnel1, 0 },
-    { &gDCBombableWallCol,            gDCBombableWallDL,            gDCTunnel2, 0 },
-    { &gDCBombableWallCol,            gDCBombableWallDL,            gDCTunnel3, 0 },
-    { &object_kingdodongo_Col_0264A8, object_kingdodongo_DL_025BD0, NULL,       1 },
-    { &object_kingdodongo_Col_025B64, NULL,                         NULL,      -1 },
+    { &gDCBombableWallCol,      gDCBombableWallDL,  gDCTunnel1DL, 0 },
+    { &gDCBombableWallCol,      gDCBombableWallDL,  gDCTunnel2DL, 0 },
+    { &gDCBombableWallCol,      gDCBombableWallDL,  gDCTunnel3DL, 0 },
+    { &gDCBombableFloorCol,     gDCBombableFloorDL, NULL,         1 },
+    { &gDCBombableLavaFloorCol, NULL,               NULL,        -1 },
 };
 
 static InitChainEntry sInitChain[] = {
@@ -97,7 +95,7 @@ void BgBreakwall2_Init(Actor* thisx, PlayState* play) {
     s32 wallType = ((this->dyna.actor.params >> 13) & 3) & 0xFF;
 
     if ((this->dyna.actor.params >> 6) & 1)
-        wallType = BWALL_KD_LAVA_COVER;
+        wallType = BWALL2_LAVA_COVER;
 
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
     DynaPolyActor_Init(&this->dyna, 0);
@@ -105,7 +103,7 @@ void BgBreakwall2_Init(Actor* thisx, PlayState* play) {
     this->tunnelDList = sBombableWallInfo[wallType].tunnelDList;
     this->colType = sBombableWallInfo[wallType].colType;
 
-    if (wallType <= BWALL_DC_3)
+    if (wallType <= BWALL2_TUNNEL3)
         Actor_SetScale(&this->dyna.actor, 1.0f);
 
     if (this->colType == 1)
@@ -113,7 +111,7 @@ void BgBreakwall2_Init(Actor* thisx, PlayState* play) {
 
     if (this->bombableWallDList != NULL) {
         if (Flags_GetSwitch(play, this->dyna.actor.params & 0x3F)) {
-            if (wallType > BWALL_DC_3) {
+            if (wallType > BWALL2_TUNNEL3) {
                 Actor_Kill(&this->dyna.actor);
                 return;
             }
@@ -122,14 +120,10 @@ void BgBreakwall2_Init(Actor* thisx, PlayState* play) {
         ActorShape_Init(&this->dyna.actor.shape, 0.0f, NULL, 0.0f);
         Collider_InitQuad(play, &this->collider);
         Collider_SetQuad(play, &this->collider, &this->dyna.actor, &sQuadInit);
-    } else if (wallType != BWALL_KD_LAVA_COVER)
+    } else if (wallType != BWALL2_LAVA_COVER)
         this->dyna.actor.world.pos.y -= 40.0f;
 
-    this->bankIndex = (wallType >= BWALL_KD_FLOOR) ? Object_GetSlot(&play->objectCtx, OBJECT_KINGDODONGO) : Object_GetSlot(&play->objectCtx, OBJECT_BWALL2);
-
-    if (this->bankIndex < 0)
-        Actor_Kill(&this->dyna.actor);
-    else BgBreakwall2_SetupAction(this, BgBreakwall2_SetupWait);
+    BgBreakwall2_SetupAction(this, BgBreakwall2_SetupWait);
 }
 
 void BgBreakwall2_Destroy(Actor* thisx, PlayState* play) {
@@ -138,18 +132,14 @@ void BgBreakwall2_Destroy(Actor* thisx, PlayState* play) {
     DynaPoly_DeleteBgActor(play, &play->colCtx.dyna, this->dyna.bgId);
 }
 
-void BgBreakwall2_FloorBreak(BgBreakwall2* this, PlayState* play) {
-    s32 i;
-    s32 j;
-    Vec3f velocity;
-    Vec3f pos;
-    s16 arg5;
+void BgBreakwall2_LargeWallBreak(BgBreakwall2* this, PlayState* play) {
+    s32 i, j;
+    Vec3f velocity, pos;
+    s16 arg5, arg9;
     Actor* thisx = &this->dyna.actor;
     f32 sin = Math_SinS(thisx->shape.rot.y);
     f32 cos = Math_CosS(thisx->shape.rot.y);
-    f32 tmp1;
-    f32 tmp2;
-    s16 arg9;
+    f32 tmp1, tmp2;
 
     pos.y = thisx->world.pos.y + 10.0f;
 
@@ -177,18 +167,14 @@ void BgBreakwall2_FloorBreak(BgBreakwall2* this, PlayState* play) {
     }
 }
 
-void BgBreakwall2_LargeWallBreak(BgBreakwall2* this, PlayState* play) {
-    s32 i;
-    s32 j;
-    Vec3f velocity;
-    Vec3f pos;
-    s16 arg5;
+void BgBreakwall2_FloorBreak(BgBreakwall2* this, PlayState* play) {
+    s32 i, j;
+    Vec3f velocity, pos;
+    s16 arg5, arg9;
     Actor* thisx = &this->dyna.actor;
     f32 sin = Math_SinS(thisx->shape.rot.y);
     f32 cos = Math_CosS(thisx->shape.rot.y);
-    f32 tmp1;
-    f32 tmp2;
-    s16 arg9;
+    f32 tmp1, tmp2;
 
     for (i=0; i<5; i++) {
         pos.y = (24 * i) + thisx->world.pos.y;
@@ -222,28 +208,24 @@ void BgBreakwall2_DoNothing(BgBreakwall2* this, PlayState* play) { }
  * Sets up the collision model as well is the object dependency and action function to use.
  */
 void BgBreakwall2_SetupWait(BgBreakwall2* this, PlayState* play) {
-    if (Object_IsLoaded(&play->objectCtx, this->bankIndex)) {
-        CollisionHeader* colHeader = NULL;
-        s32 wallType = ((this->dyna.actor.params >> 13) & 3) & 0xFF;
+    CollisionHeader* colHeader = NULL;
+    s32 wallType = ((this->dyna.actor.params >> 13) & 3) & 0xFF;
 
-        if ((this->dyna.actor.params >> 6) & 1)
-            wallType = BWALL_KD_LAVA_COVER;
+    if ((this->dyna.actor.params >> 6) & 1)
+        wallType = BWALL2_LAVA_COVER;
 
-        this->dyna.actor.objectSlot = this->bankIndex;
-        Actor_SetObjectDependency(play, &this->dyna.actor);
-        this->dyna.actor.flags &= ~0x10;
-        this->dyna.actor.draw = BgBreakwall2_Draw;
+    this->dyna.actor.flags &= ~0x10;
+    this->dyna.actor.draw = BgBreakwall2_Draw;
 
-        if (wallType != BWALL_KD_LAVA_COVER && Flags_GetSwitch(play, this->dyna.actor.params & 0x3F))
-            BgBreakwall2_SetupAction(this, BgBreakwall2_DoNothing);
-        else {
-            CollisionHeader_GetVirtual(sBombableWallInfo[wallType].colHeader, &colHeader);
-            this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
+    if (wallType != BWALL2_LAVA_COVER && Flags_GetSwitch(play, this->dyna.actor.params & 0x3F))
+        BgBreakwall2_SetupAction(this, BgBreakwall2_DoNothing);
+    else {
+        CollisionHeader_GetVirtual(sBombableWallInfo[wallType].colHeader, &colHeader);
+        this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
 
-            if (wallType == BWALL_KD_LAVA_COVER)
-                BgBreakwall2_SetupAction(this, BgBreakwall2_LavaCoverMove);
-            else BgBreakwall2_SetupAction(this, BgBreakwall2_Wait);
-        }
+        if (wallType == BWALL2_LAVA_COVER)
+            BgBreakwall2_SetupAction(this, BgBreakwall2_LavaCoverMove);
+        else BgBreakwall2_SetupAction(this, BgBreakwall2_Wait);
     }
 }
 
@@ -256,7 +238,7 @@ void BgBreakwall2_Wait(BgBreakwall2* this, PlayState* play) {
         s32 wallType = ((this->dyna.actor.params >> 13) & 3) & 0xFF;
 
         if ((this->dyna.actor.params >> 6) & 1)
-            wallType = BWALL_KD_LAVA_COVER;
+            wallType = BWALL2_LAVA_COVER;
 
         DynaPoly_DeleteBgActor(play, &play->colCtx.dyna, this->dyna.bgId);
         effectPos.y = effectPos.z = effectPos.x = 0.0f;
@@ -268,21 +250,21 @@ void BgBreakwall2_Wait(BgBreakwall2* this, PlayState* play) {
             effectPos.y = -10.0f;
         }
 
-        if (wallType >= BWALL_DC_1 && wallType <= BWALL_DC_3)
-            BgBreakwall2_FloorBreak(this, play);
-        else if (wallType == BWALL_KD_FLOOR)
+        if (wallType <= BWALL2_TUNNEL3)
             BgBreakwall2_LargeWallBreak(this, play);
+        else if (wallType == BWALL2_FLOOR)
+            BgBreakwall2_FloorBreak(this, play);
 
         Flags_SetSwitch(play, this->dyna.actor.params & 0x3F);
 
-        if (wallType == BWALL_KD_FLOOR)
+        if (wallType == BWALL2_FLOOR)
             Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_EXPLOSION);
         else Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_WALL_BROKEN);
 
         if (this->dyna.actor.params < 0)
             Audio_PlaySfxGeneral(NA_SE_SY_TRE_BOX_APPEAR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 
-        if (wallType <= BWALL_DC_3)
+        if (wallType <= BWALL2_TUNNEL3)
             this->actionFunc = BgBreakwall2_DoNothing;
         else Actor_Kill(&this->dyna.actor);
     }
@@ -317,8 +299,8 @@ void BgBreakwall2_DrawTunnels(BgBreakwall2* this, PlayState* play) {
  * These are the quads used for the wall and floor collision. These are used for the detecting when a bomb explosion has collided with a wall, and can be adjusted for different wall or floor sizes.
  */
 static Vec3f sColQuadList[][4] = {
-    { { 80.0f, 160.0f, 10.0f }, { -80.0f, 160.0f, 10.0f }, { 80.0f, 0.0f, 10.0f }, { -80.0f, 0.0f, 10.0f } },
-    { { 10.0f, 0.0f, 10.0f }, { -10.0f, 0.0f, 10.0f }, { 10.0f, 0.0f, -10.0f }, { -10.0f, 0.0f, -10.0f } },
+    { { 80.0f, 160.0f, 10.0f }, { -80.0f, 160.0f, 10.0f }, { 80.0f, 0.0f,  10.0f }, { -80.0f, 0.0f,  10.0f } },
+    { { 10.0f,   0.0f, 10.0f }, { -10.0f,   0.0f, 10.0f }, { 10.0f, 0.0f, -10.0f }, { -10.0f, 0.0f, -10.0f } },
 };
 
 void BgBreakwall2_Draw(Actor* thisx, PlayState* play) {

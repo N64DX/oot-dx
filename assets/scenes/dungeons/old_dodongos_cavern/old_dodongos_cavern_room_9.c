@@ -13,7 +13,7 @@ SceneCmd old_dodongos_cavern_room_9[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_9MeshHeader0x0000D0),
-    SCENE_CMD_OBJECT_LIST(10, old_dodongos_cavern_room_9ObjectList0x000038),
+    SCENE_CMD_OBJECT_LIST(9, old_dodongos_cavern_room_9ObjectList0x000038),
     SCENE_CMD_ACTOR_LIST(5, old_dodongos_cavern_room_9ActorList0x000044),
     SCENE_CMD_END(),
 };
@@ -30,7 +30,6 @@ s16 old_dodongos_cavern_room_9ObjectList0x000038[] = {
     OBJECT_BOX,
     OBJECT_ICE_OBJECTS,
     OBJECT_WOOD_PILLAR,
-    OBJECT_KINGDODONGO,
     OBJECT_THEFATHER,
     OBJECT_BDOOR,
     OBJECT_WARP1,
@@ -38,11 +37,11 @@ s16 old_dodongos_cavern_room_9ObjectList0x000038[] = {
 };
 
 ActorEntry old_dodongos_cavern_room_9ActorList0x000044[] = {
-    { ACTOR_OBJECT_KANKYO,  {    0,     0,     0 }, {   0,      0, 0 }, 0x0006 },
-    { ACTOR_BG_BREAKWALL,   {    0,   240, -4410 }, {   0,      0, 0 }, 0x4019 }, // Switch: 19
-    { ACTOR_EN_BOX,         {    0,   240, -4650 }, { 0x1, 0x8000, 0 }, 0x5004 }, // Chest: 04, Bombs (5)
-    { ACTOR_EN_RIVER_SOUND, {    1, -1306, -4914 }, {   0,      0, 0 }, 0x0002 },
-    { ACTOR_EN_THEFATHER,   {    0, -1280, -5400 }, {   0,      0, 0 }, 0x0000 },
+    { ACTOR_OBJECT_KANKYO,  { 0,     0,     0 }, {   0,      0, 0 }, 0x0006 },
+    { ACTOR_BG_BREAKWALL2,  { 0,   240, -4410 }, {   0,      0, 0 }, 0x6019 }, // Switch: 19
+    { ACTOR_EN_BOX,         { 0,   240, -4650 }, { 0x1, 0x8000, 0 }, 0x5004 }, // Chest: 04, Bombs (5)
+    { ACTOR_EN_RIVER_SOUND, { 1, -1306, -4914 }, {   0,      0, 0 }, 0x0002 },
+    { ACTOR_EN_THEFATHER,   { 0, -1280, -5400 }, {   0,      0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable old_dodongos_cavern_room_9MeshHeader0x0000D0 = {
