@@ -21,7 +21,7 @@ SceneCmd path_to_goron_village_room_0[] = {
 SceneCmd* path_to_goron_village_room_0AlternateHeaders[] = {
     NULL,
     path_to_goron_village_room_0Set_timeskip,
-    path_to_goron_village_room_0Set_timeskip,
+    path_to_goron_village_room_0Set_cleansed,
 };
 
 s16 path_to_goron_village_room_0ObjectList_000040[] = {
@@ -95,12 +95,69 @@ SceneCmd path_to_goron_village_room_0Set_timeskip[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&path_to_goron_village_room_0RoomShapeCullable_000240),
-    SCENE_CMD_OBJECT_LIST(12, path_to_goron_village_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(28, path_to_goron_village_room_0ActorEntry_00005C),
+    SCENE_CMD_OBJECT_LIST(12, path_to_goron_village_room_0ObjectList_timeskip),
+    SCENE_CMD_ACTOR_LIST(28, path_to_goron_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
 
 s16 path_to_goron_village_room_0ObjectList_timeskip[] = {
+    OBJECT_HORSE,
+    OBJECT_SPOT18_OBJ,
+    OBJECT_WOOD_PILLAR,
+    OBJECT_ICEFLOE,
+    OBJECT_FIREFLY,
+    OBJECT_TITE,
+    OBJECT_WOOD02,
+    OBJECT_CROW,
+    OBJECT_WF,
+    OBJECT_BOX,
+    OBJECT_KANBAN,
+    OBJECT_FR,
+};
+
+ActorEntry path_to_goron_village_room_0ActorEntry_timeskip[] = {
+    { ACTOR_BG_SPOT18_SHUTTER, {   -770,    560,   -940 }, {    0, 0x0FA0,    0 }, 0x00FF },
+    { ACTOR_EN_FR,             {     60,   -200,   -440 }, {    0, 0x8000,    0 }, 0x0221 }, // Yellow: 2 (Spring Lake)
+    { ACTOR_EN_KANBAN,         {  -1209,    440,   -700 }, {    0, 0x105B,    0 }, 0x0055 },
+    { ACTOR_EN_TITE,           {  -1334,    200,    822 }, {    0,      0,    0 }, 0xFFFE },
+    { ACTOR_EN_CROW,           {   -152,    511,   -662 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_CROW,           {    419,    259,    269 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_WF,             {   -435,    139,    105 }, {    0,      0,    0 }, 0xFF00 },
+    { ACTOR_EN_WF,             {    769,    195,     76 }, {    0, 0xC4FA,    0 }, 0xFF00 },
+    { ACTOR_EN_WOOD02,         {   -475,    139,     67 }, {    0,      0,    0 }, 0xFF02 },
+    { ACTOR_EN_WOOD02,         {    667,    195,   -112 }, {    0,      0,    0 }, 0xFF02 },
+    { ACTOR_EN_WOOD02,         {  -1284,    320,    104 }, {    0,      0,    0 }, 0xFF02 },
+    { ACTOR_EN_ITEM00,         {    671,   -200,   -746 }, {    0,      0,    0 }, 0x0101 }, // Collect: 01
+    { ACTOR_EN_ITEM00,         {   -300,   -200,   -650 }, {    0,      0,    0 }, 0x0201 }, // Collect: 02
+    { ACTOR_EN_ITEM00,         {    566,   -200,    855 }, {    0,      0,    0 }, 0x0301 }, // Collect: 03
+    { ACTOR_EN_ITEM00,         {   1287,   -200,   -168 }, {    0,      0,    0 }, 0x0401 }, // Collect: 04
+    { ACTOR_BG_WOOD_PILLAR,    {  -1060,    520,   -750 }, {    0, 0x0FA0,    0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1130,    435,   -510 }, {    0, 0x0FA0,    0 }, 0x0000 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1460,    400,   -120 }, {    0, 0x03E8,    0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1500,    315,    140 }, {    0, 0x03E8,    0 }, 0x0000 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1350,    280,    460 }, {    0, 0xFC18,    0 }, 0x0001 },
+    { ACTOR_BG_WOOD_PILLAR,    {  -1120,    195,    530 }, {    0, 0xFC18,    0 }, 0x0000 },
+    { ACTOR_EN_ISHI,           {  -1326,    320,    172 }, {    0,      0,    0 }, 0x0210 },
+    { ACTOR_EN_ISHI,           {  -1349,    320,    114 }, {    0,      0,    0 }, 0x0200 },
+    { ACTOR_EN_ISHI,           {  -1264,    320,    161 }, {    0,      0,    0 }, 0x0200 },
+    { ACTOR_DOOR_ANA,          {  -1309,    320,    142 }, {    0, 0x305B,    4 }, 0x0041 }, // Chest: 01
+    { ACTOR_DOOR_ANA,          {    589,    195,     53 }, {    0, 0xAAAB,   19 }, 0x0000 },
+    { ACTOR_EN_BOX,            {   -172,   -200,    847 }, { 0x55,      0,    0 }, 0x5000 }, // Chest: 00, Purple Rupee
+    { ACTOR_EN_BOX,            {    248,   -200,  -1396 }, { 0x3E, 0x59D8,    0 }, 0x0006 }, // Chest: 06, Piece of Heart
+};
+
+SceneCmd path_to_goron_village_room_0Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(4),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 10),
+    SCENE_CMD_ROOM_SHAPE(&path_to_goron_village_room_0RoomShapeCullable_000240),
+    SCENE_CMD_OBJECT_LIST(12, path_to_goron_village_room_0ObjectList_cleansed),
+    SCENE_CMD_ACTOR_LIST(28, path_to_goron_village_room_0ActorEntry_cleansed),
+    SCENE_CMD_END(),
+};
+
+s16 path_to_goron_village_room_0ObjectList_cleansed[] = {
     OBJECT_HORSE,
     OBJECT_SPOT18_OBJ,
     OBJECT_WOOD_PILLAR,
@@ -116,7 +173,7 @@ s16 path_to_goron_village_room_0ObjectList_timeskip[] = {
     OBJECT_FR,
 };
 
-ActorEntry path_to_goron_village_room_0ActorEntry_timeskip[] = {
+ActorEntry path_to_goron_village_room_0ActorEntry_cleansed[] = {
     { ACTOR_BG_SPOT18_SHUTTER, {   -770,    560,   -940 }, {    0, 0x0FA0,    0 }, 0x00FF },
     { ACTOR_EN_FR,             {     60,   -200,   -440 }, {    0, 0x8000,    0 }, 0x0221 }, // Yellow: 2 (Spring Lake)
     { ACTOR_EN_KANBAN,         {  -1209,    440,   -700 }, {    0, 0x105B,    0 }, 0x0055 },
