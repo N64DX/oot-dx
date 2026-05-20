@@ -13,6 +13,10 @@ extern SceneCmd path_to_goron_village_room_0Set_timeskip[];
 extern s16 path_to_goron_village_room_0ObjectList_timeskip[];
 extern ActorEntry path_to_goron_village_room_0ActorEntry_timeskip[];
 
+extern SceneCmd path_to_goron_village_room_0Set_cleansed[];
+extern s16 path_to_goron_village_room_0ObjectList_cleansed[];
+extern ActorEntry path_to_goron_village_room_0ActorEntry_cleansed[];
+
 extern Gfx path_to_goron_village_room_0DL_0004D0[];
 extern Gfx path_to_goron_village_room_0DL_000910[];
 extern Gfx path_to_goron_village_room_0DL_000D78[];
