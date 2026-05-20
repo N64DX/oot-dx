@@ -7,6 +7,7 @@
 #include "object.h"
 
 SceneCmd goron_shrine_room_0[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(goron_shrine_room_0AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(10),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
@@ -15,6 +16,12 @@ SceneCmd goron_shrine_room_0[] = {
     SCENE_CMD_OBJECT_LIST(8, goron_shrine_room_0ObjectList_00004C),
     SCENE_CMD_ACTOR_LIST(42, goron_shrine_room_0ActorEntry_000058),
     SCENE_CMD_END(),
+};
+
+SceneCmd* goron_shrine_room_0AlternateHeaders[] = {
+    NULL,
+    NULL,
+    goron_shrine_room_0Set_cleansed,
 };
 
 s16 goron_shrine_room_0ObjectList_00004C[] = {
@@ -29,48 +36,48 @@ s16 goron_shrine_room_0ObjectList_00004C[] = {
 };
 
 ActorEntry goron_shrine_room_0ActorEntry_000058[] = {
-    { ACTOR_EN_GO3,            {  -912, -134,  110 }, { 0, 0x4000,    0 }, 0x0020 },
-    { ACTOR_EN_GO3,            {   458, -538,  264 }, { 0, 0x7530,    0 }, 0x0010 },
-    { ACTOR_EN_GO3,            {   156, -440,   78 }, { 0, 0x61A8,    0 }, 0x0000 },
-    { ACTOR_EN_GO3,            {   149, -440,  -99 }, { 0, 0x4268,    0 }, 0x0030 },
-    { ACTOR_EN_ISHI,           {  -207, -440,  241 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -146, -440, -404 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -214, -440, -350 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -221, -440, -432 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {   512, -320,  499 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {   777, -320,   57 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {   818, -320, -275 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {   795, -320, -357 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -394, -134, -323 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -401, -134, -248 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -808, -134, -269 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -543, -134, -377 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -557, -134,  411 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -489, -134,  295 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -686, -134,  295 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_EN_ISHI,           {  -693, -134, -214 }, { 0,      0,    0 }, 0x0100 },
-    { ACTOR_OBJ_SYOKUDAI,      {   -12, -440,    0 }, { 0,      0,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_SYOKUDAI,      {   966, -320,    3 }, { 0, 0xEE6C,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_SYOKUDAI,      {   -12, -239,  462 }, { 0,      0,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_SYOKUDAI,      {   451, -320,  534 }, { 0, 0x8FA0,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_SYOKUDAI,      {   801, -320,  372 }, { 0,      0,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_SYOKUDAI,      {   512, -320, -512 }, { 0, 0xF060,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_SYOKUDAI,      {   711, -320, -435 }, { 0, 0xF060,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_SYOKUDAI,      {  -188, -420, -129 }, { 0, 0xD3DC,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_SYOKUDAI,      {  -190, -420,  135 }, { 0, 0xEC78,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_SYOKUDAI,      {  -330, -134, -127 }, { 0,      0,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_SYOKUDAI,      {  -327, -134,  128 }, { 0,      0,    0 }, 0x16DE }, // Switch: 1E
-    { ACTOR_OBJ_TSUBO,         {   438, -440, -307 }, { 0, 0xF060,    0 }, 0x4700 }, // Collect: 23
-    { ACTOR_OBJ_TSUBO,         {   488, -440, -284 }, { 0, 0xF060,    0 }, 0x4900 }, // Collect: 24
-    { ACTOR_OBJ_TSUBO,         {   535, -440, -263 }, { 0, 0xF060,    0 }, 0x4B00 }, // Collect: 25
-    { ACTOR_OBJ_TSUBO,         {   580, -440, -243 }, { 0, 0xF060,    0 }, 0x4D00 }, // Collect: 26
-    { ACTOR_OBJ_TSUBO,         {  -349, -134, -471 }, { 0, 0x36B0,    0 }, 0x4F00 }, // Collect: 27
-    { ACTOR_OBJ_TSUBO,         {  -328, -134, -518 }, { 0, 0x36B0,    0 }, 0x5100 }, // Collect: 28
-    { ACTOR_OBJ_TSUBO,         {  -395, -134, -494 }, { 0, 0x36B0,    0 }, 0x5300 }, // Collect: 29
-    { ACTOR_OBJ_TSUBO,         {  -376, -134, -537 }, { 0, 0x36B0,    0 }, 0x5500 }, // Collect: 2A
-    { ACTOR_BG_SPOT18_SHUTTER, {   490, -538,  348 }, { 0, 0x8FA0,    0 }, 0x0000 },
-    { ACTOR_EN_BOX,            {  -400, -133,    0 }, { 0, 0x4000, 0x1E }, 0x17C0 }, // Chest: 00, appears on switch: 1E
-    { ACTOR_OBJ_KIBAKO3,       {   500, -440,   65 }, { 0, 0x7830,    0 }, 0x0241 }, // Yellow: 4 (Spring Lake)
+    { ACTOR_EN_GO3,            {  458, -538,  264 }, {    0, 0x7530,    0 }, 0x0002 },
+    { ACTOR_EN_GO3,            {  156, -440,   78 }, {    0, 0x61A8,    0 }, 0x0000 },
+    { ACTOR_EN_GO3,            { -912, -134,  110 }, {    0, 0x4000,    0 }, 0x0010 },
+    { ACTOR_EN_GO3,            {  149, -440,  -99 }, {    0, 0x4268,    0 }, 0x0020 },
+    { ACTOR_EN_ISHI,           { -207, -440,  241 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -146, -440, -404 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -214, -440, -350 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -221, -440, -432 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           {  512, -320,  499 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           {  777, -320,   57 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           {  818, -320, -275 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           {  795, -320, -357 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -394, -134, -323 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -401, -134, -248 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -808, -134, -269 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -543, -134, -377 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -557, -134,  411 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -489, -134,  295 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -686, -134,  295 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,           { -693, -134, -214 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_OBJ_SYOKUDAI2,     {  -12, -440,    0 }, {    0,      0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2,     {  966, -320,    3 }, {    0, 0xEE6C,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2,     {  -12, -239,  462 }, {    0,      0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2,     {  451, -320,  534 }, {    0, 0x8FA0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2,     {  801, -320,  372 }, {    0,      0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2,     {  512, -320, -512 }, {    0, 0xF060,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2,     {  711, -320, -435 }, {    0, 0xF060,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2,     { -188, -420, -129 }, {    0, 0xD3DC,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2,     { -190, -420,  135 }, {    0, 0xEC78,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2,     { -330, -134, -127 }, {    0,      0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2,     { -327, -134,  128 }, {    0,      0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_TSUBO,         {  438, -440, -307 }, {    0, 0xF060,    0 }, 0x4700 }, // Collect: 23
+    { ACTOR_OBJ_TSUBO,         {  488, -440, -284 }, {    0, 0xF060,    0 }, 0x4900 }, // Collect: 24
+    { ACTOR_OBJ_TSUBO,         {  535, -440, -263 }, {    0, 0xF060,    0 }, 0x4B00 }, // Collect: 25
+    { ACTOR_OBJ_TSUBO,         {  580, -440, -243 }, {    0, 0xF060,    0 }, 0x4D00 }, // Collect: 26
+    { ACTOR_OBJ_TSUBO,         { -349, -134, -471 }, {    0, 0x36B0,    0 }, 0x4F00 }, // Collect: 27
+    { ACTOR_OBJ_TSUBO,         { -328, -134, -518 }, {    0, 0x36B0,    0 }, 0x5100 }, // Collect: 28
+    { ACTOR_OBJ_TSUBO,         { -395, -134, -494 }, {    0, 0x36B0,    0 }, 0x5300 }, // Collect: 29
+    { ACTOR_OBJ_TSUBO,         { -376, -134, -537 }, {    0, 0x36B0,    0 }, 0x5500 }, // Collect: 2A
+    { ACTOR_BG_SPOT18_SHUTTER, {  490, -538,  348 }, {    0, 0x8FA0,    0 }, 0x0000 },
+    { ACTOR_EN_BOX,            { -400, -133,    0 }, { 0x3E, 0x4000, 0x1E }, 0xB000 }, // Chest: 00, appears on switch: 1E, Piece of Heart
+    { ACTOR_OBJ_KIBAKO3,       {  500, -440,   65 }, {    0, 0x7830,    0 }, 0x0223 }, // Red: 2 (Goron Mines)
 };
 
 RoomShapeCullable goron_shrine_room_0RoomShapeCullable_000310 = { 
@@ -101,7 +108,61 @@ RoomShapeCullableEntry goron_shrine_room_0RoomShapeCullableEntry_00031C[18] = {
     { {    111,   -267,    -90 },    616, NULL, goron_shrine_room_0DL_00B9E0 },
 };
 
-s32 goron_shrine_room_0_terminatorMaybe_00043C = { 0x01000000 };
+SceneCmd goron_shrine_room_0Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(10),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&goron_shrine_room_0RoomShapeCullable_000310),
+    SCENE_CMD_OBJECT_LIST(8, goron_shrine_room_0ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(40, goron_shrine_room_0ActorEntry_cleansed),
+    SCENE_CMD_END(),
+};
+
+ActorEntry goron_shrine_room_0ActorEntry_cleansed[] = {
+    { ACTOR_EN_GO3,        {  156, -440,   78 }, {    0, 0x61A8,    0 }, 0x0000 },
+    { ACTOR_EN_GO3,        { -912, -134,  110 }, {    0, 0x4000,    0 }, 0x0010 },
+    { ACTOR_EN_GO3,        {  149, -440,  -99 }, {    0, 0x4268,    0 }, 0x0020 },
+    { ACTOR_EN_ISHI,       { -207, -440,  241 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -146, -440, -404 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -214, -440, -350 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -221, -440, -432 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       {  512, -320,  499 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       {  777, -320,   57 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       {  818, -320, -275 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       {  795, -320, -357 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -394, -134, -323 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -401, -134, -248 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -808, -134, -269 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -543, -134, -377 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -557, -134,  411 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -489, -134,  295 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -686, -134,  295 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_EN_ISHI,       { -693, -134, -214 }, {    0,      0,    0 }, 0x0100 },
+    { ACTOR_OBJ_SYOKUDAI2, {  -12, -440,    0 }, {    0,      0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2, {  966, -320,    3 }, {    0, 0xEE6C,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2, {  -12, -239,  462 }, {    0,      0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2, {  451, -320,  534 }, {    0, 0x8FA0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2, {  801, -320,  372 }, {    0,      0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2, {  512, -320, -512 }, {    0, 0xF060,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2, {  711, -320, -435 }, {    0, 0xF060,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2, { -188, -420, -129 }, {    0, 0xD3DC,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2, { -190, -420,  135 }, {    0, 0xEC78,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2, { -330, -134, -127 }, {    0,      0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_SYOKUDAI2, { -327, -134,  128 }, {    0,      0,    0 }, 0x1E0B }, // Switch: 1E
+    { ACTOR_OBJ_TSUBO,     {  438, -440, -307 }, {    0, 0xF060,    0 }, 0x4700 }, // Collect: 23
+    { ACTOR_OBJ_TSUBO,     {  488, -440, -284 }, {    0, 0xF060,    0 }, 0x4900 }, // Collect: 24
+    { ACTOR_OBJ_TSUBO,     {  535, -440, -263 }, {    0, 0xF060,    0 }, 0x4B00 }, // Collect: 25
+    { ACTOR_OBJ_TSUBO,     {  580, -440, -243 }, {    0, 0xF060,    0 }, 0x4D00 }, // Collect: 26
+    { ACTOR_OBJ_TSUBO,     { -349, -134, -471 }, {    0, 0x36B0,    0 }, 0x4F00 }, // Collect: 27
+    { ACTOR_OBJ_TSUBO,     { -328, -134, -518 }, {    0, 0x36B0,    0 }, 0x5100 }, // Collect: 28
+    { ACTOR_OBJ_TSUBO,     { -395, -134, -494 }, {    0, 0x36B0,    0 }, 0x5300 }, // Collect: 29
+    { ACTOR_OBJ_TSUBO,     { -376, -134, -537 }, {    0, 0x36B0,    0 }, 0x5500 }, // Collect: 2A
+    { ACTOR_EN_BOX,        { -400, -133,    0 }, { 0x3E, 0x4000, 0x1E }, 0xB000 }, // Chest: 00, appears on switch: 1E, Piece of Heart
+    { ACTOR_OBJ_KIBAKO3,   {  500, -440,   65 }, {    0, 0x7830,    0 }, 0x0241 }, // Yellow: 4 (Spring Lake)
+};
+
+s32 goron_shrine_room_0_terminatorMaybe_00043C = {    0x01000000 };
 
 Vtx goron_shrine_room_0Vtx_000760[] = {
 #include "assets/scenes/overworld/goron_shrine/goron_shrine_room_0Vtx_000760.vtx.inc"

@@ -1005,12 +1005,6 @@ void Actor_Init(Actor* actor, PlayState* play) {
     actor->cullingVolumeScale = 350.0f;
     actor->cullingVolumeDownward = 700.0f;
 
-    if (EXTENDED_DRAW_DISTANCE && actor->id != ACTOR_EN_TORCH2 && actor->id != ACTOR_EN_BLKOBJ && actor->id != ACTOR_EN_HORSE && actor->id != ACTOR_EN_HORSE_GANON && actor->id != ACTOR_EN_HORSE_ZELDA && !(play->sceneId == SCENE_DODONGOS_CAVERN && actor->id == ACTOR_EN_ZF)) {
-        actor->cullingVolumeDistance = 32767.0f;
-        actor->cullingVolumeScale = 32767.0f;
-        actor->cullingVolumeDownward = 32767.0f;
-    }
-
     CollisionCheck_InitInfo(&actor->colChkInfo);
     actor->floorBgId = BGCHECK_SCENE;
     ActorShape_Init(&actor->shape, 0.0f, NULL, 0.0f);
@@ -1022,6 +1016,9 @@ void Actor_Init(Actor* actor, PlayState* play) {
             actor->maxHealth = actor->colChkInfo.health;
         else actor->maxHealth = 0;
     }
+
+    if (EXTENDED_DRAW_DISTANCE && actor->id != ACTOR_EN_TORCH2 && actor->id != ACTOR_EN_BLKOBJ && actor->id != ACTOR_EN_HORSE && actor->id != ACTOR_EN_HORSE_GANON && actor->id != ACTOR_EN_HORSE_ZELDA && !(play->sceneId == SCENE_DODONGOS_CAVERN && actor->id == ACTOR_EN_ZF))
+        actor->cullingVolumeDistance = actor->cullingVolumeScale = actor->cullingVolumeDownward = 32767.0f;
 }
 
 void Actor_Destroy(Actor* actor, PlayState* play) {

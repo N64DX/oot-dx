@@ -190,10 +190,6 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
             EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledRainThunder);
             break;
         case EN_WEATHER_TAG_TYPE_THUNDERSTORM_GORON_VILLAGE:
-            if (GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES)) {
-                Actor_Kill(&this->actor);
-                this->killedOnInit = true;
-            }
             if (lastEntranceIndex != gSaveContext.save.entranceIndex) {
                 Environment_PlayStormNatureAmbience(play);
                 WeatherTag_CheckEnableWeatherEffect(this, play, 0, 1, 0, 3, 60, WEATHER_MODE_CLOUDY_CONFIG3);

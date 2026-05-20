@@ -2241,7 +2241,7 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
         texIndex = pauseCtx->namedItem;
 
         if (pauseCtx->namedItem >= ITEM_SONG_MINUET)
-            texIndex -= ITEM_SONG_MINUET - ITEM_MASTER_WALLET;
+            texIndex -= ITEM_SONG_MINUET - ITEM_PERFECT_BLOCK_UPGRADE;
 
         if (pauseCtx->pageIndex == PAUSE_EQUIP) {
             if (showAltQuiverSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 0) {
@@ -3909,6 +3909,7 @@ void KaleidoScope_Update(PlayState* play) {
                 case SCENE_SPIRIT_TEMPLE_BOSS:
                 case SCENE_SHADOW_TEMPLE_BOSS:
                 case SCENE_ANCIENT_HOLLOW:
+                case SCENE_GORON_MINES:
                 case SCENE_WOODFALL_TEMPLE:
                 case SCENE_WOODFALL_TEMPLE_BOSS:
                     sInDungeonScene = true;

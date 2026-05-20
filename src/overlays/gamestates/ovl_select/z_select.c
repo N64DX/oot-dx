@@ -111,6 +111,8 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         MapSelect_LoadRoom(DBG_WEBBED_SHRINE_0, this->roomNum, 6);
     else if (entranceIndex == ENTR_ANCIENT_HOLLOW_0)
         MapSelect_LoadRoom(DBG_ANCIENT_HOLLOW_0, this->roomNum, 14);
+    else if (entranceIndex == ENTR_GORON_MINES_0)
+        MapSelect_LoadRoom(DBG_GORON_MINES_0, this->roomNum, 10);
     else if (entranceIndex == ENTR_WOODFALL_TEMPLE_0)
         MapSelect_LoadRoom(DBG_WOODFALL_TEMPLE_0, this->roomNum, 12);
 
@@ -125,6 +127,57 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     this->state.running = false;
     SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);
 }
+
+bool MapSelect_SetClearEventGroup(u16 checkFlag, u16 flags[], s32 count) {
+    s32 i;
+
+    if (GET_EVENTCHKINF(checkFlag)) {
+        for (i=0; i<count; i++)
+            CLEAR_EVENTCHKINF(flags[i]);
+        return true;
+    } else {
+        for (i=0; i<count; i++)
+            SET_EVENTCHKINF(flags[i]);
+        return false;
+    }
+}
+
+bool MapSelect_SetClearTableGroup(u16 checkFlag, u16 flags[], s32 count) {
+    s32 i;
+
+    if (GET_INFTABLE(checkFlag)) {
+        for (i=0; i<count; i++)
+            CLEAR_INFTABLE(flags[i]);
+        return true;
+    } else {
+        for (i=0; i<count; i++)
+            SET_INFTABLE(flags[i]);
+        return false;
+    }
+}
+
+bool MapSelect_SetClearItemGroup(u16 checkFlag, u16 flags[], s32 count) {
+    s32 i;
+
+    if (GET_ITEMGETINF(checkFlag)) {
+        for (i=0; i<count; i++)
+            CLEAR_ITEMGETINF(flags[i]);
+        return true;
+    } else {
+        for (i=0; i<count; i++)
+            SET_ITEMGETINF(flags[i]);
+        return false;
+    }
+}
+
+static u16 sCarpenterFlags[]  = { EVENTCHKINF_CARPENTER_0_RESCUED, EVENTCHKINF_CARPENTER_1_RESCUED, EVENTCHKINF_CARPENTER_2_RESCUED, EVENTCHKINF_CARPENTER_3_RESCUED };
+static u16 sGoronMinesFlags[] = { INFTABLE_GORON_MINES_DOOR_OPENED, INFTABLE_TALKED_TO_GORON_ELDER, INFTABLE_MONSTER_REQUEST_FROM_GORON_ELDER, INFTABLE_ASKED_BY_GORON_ELDER, INFTABLE_PROOF_FOR_GORON_ELDER, INFTABLE_GOT_PERMISSION_FROM_GORON_ELDER, INFTABLE_THANKED_BY_GORON_ELDER };
+static u16 sSmithy1Flags[]    = { INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP, INFTABLE_TALKED_TO_SMITHY_POST_TIME_SKIP, INFTABLE_TALKED_TO_SMITHY_GORON_MINES };
+static u16 sSmithy2Flags[]    = { INFTABLE_TALKED_TO_ZUBORA_MINES, INFTABLE_TALKED_TO_ZUBORA_SMITHY };
+static u16 sNabooruMasks[]    = { EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE, EVENTCHKINF_3B, EVENTCHKINF_C0 };
+static u16 sHappyMasksFlags[] = { ITEMGETINF_23, ITEMGETINF_24, ITEMGETINF_25, ITEMGETINF_26, ITEMGETINF_38, ITEMGETINF_39, ITEMGETINF_3A, ITEMGETINF_3B, ITEMGETINF_3F, ITEMGETINF_2A };
+static u16 sWellFlags[]       = { EVENTCHKINF_DRAINED_WELL };
+static u16 sShadowFlags[]     = { EVENTCHKINF_AA, EVENTCHKINF_54 };
 
 void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
     switch (type) {
@@ -144,110 +197,52 @@ void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
             else SET_INFTABLE(flag);
             break;
         case CARPENTERS:
-            if (GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED)) {
-                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED);
-            }
-            else {
-                SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED);
-                SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED);
-                SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED);
-                SET_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED);
-            }
+            MapSelect_SetClearEventGroup(EVENTCHKINF_CARPENTER_0_RESCUED, sCarpenterFlags, ARRAY_COUNT(sCarpenterFlags));
             break;
-        case BLACKSMITH:
-            if (GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA)) {
-                CLEAR_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA);
-            }
-            else {
-                SET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP);
-                SET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP);
-                SET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA);
-            }
+        case GORON_MINES:
+            if (MapSelect_SetClearTableGroup(INFTABLE_GORON_MINES_DOOR_OPENED, sGoronMinesFlags, ARRAY_COUNT(sGoronMinesFlags)))
+                gSaveContext.save.info.sceneFlags[SCENE_GORON_VILLAGE].swch &= ~(1 << 0x1F);
+            else gSaveContext.save.info.sceneFlags[SCENE_GORON_VILLAGE].swch |= (1 << 0x1F);
+            break;
+        case BLACKSMITH1:
+            MapSelect_SetClearTableGroup(INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP, sSmithy1Flags, ARRAY_COUNT(sSmithy1Flags));
+            break;
+        case BLACKSMITH2:
+            MapSelect_SetClearTableGroup(INFTABLE_TALKED_TO_ZUBORA_MINES, sSmithy2Flags, ARRAY_COUNT(sSmithy2Flags));
             break;
         case FROG:
-            if (gSaveContext.save.info.frogQuest.quest != 0) {
-                gSaveContext.save.info.frogQuest.found = 0;
-                gSaveContext.save.info.frogQuest.completed = 0;
-                gSaveContext.save.info.frogQuest.reward = 0;
-                gSaveContext.save.info.frogQuest.started = 0;
-            }
+            if (gSaveContext.save.info.frogQuest.quest != 0)
+                gSaveContext.save.info.frogQuest.found = gSaveContext.save.info.frogQuest.completed = gSaveContext.save.info.frogQuest.reward = gSaveContext.save.info.frogQuest.started = 0;
             else {
                 gSaveContext.save.info.frogQuest.found = 0xFFFFF;
                 gSaveContext.save.info.frogQuest.started = 1;
             }
             break;
         case NABOORU:
-            if (!GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE)) {
-                SET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE);
-                SET_EVENTCHKINF(EVENTCHKINF_3B);
-                SET_EVENTCHKINF(EVENTCHKINF_C0);
-                gSaveContext.save.info.sceneFlags[SCENE_SPIRIT_TEMPLE_BOSS].swch |= (1 << flag);
-            }
-            else {
-                CLEAR_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_3B);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_C0);
+            if (MapSelect_SetClearEventGroup(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE, sNabooruMasks, ARRAY_COUNT(sNabooruMasks)))
                 gSaveContext.save.info.sceneFlags[SCENE_SPIRIT_TEMPLE_BOSS].swch &= ~(1 << flag);
-            }
+            else gSaveContext.save.info.sceneFlags[SCENE_SPIRIT_TEMPLE_BOSS].swch |= (1 << flag);
             break;
         case MASK:
-            if (!GET_ITEMGETINF(ITEMGETINF_23)) {
-                SET_ITEMGETINF(ITEMGETINF_23);
-                SET_ITEMGETINF(ITEMGETINF_24);
-                SET_ITEMGETINF(ITEMGETINF_25);
-                SET_ITEMGETINF(ITEMGETINF_26);
-                SET_ITEMGETINF(ITEMGETINF_38);
-                SET_ITEMGETINF(ITEMGETINF_39);
-                SET_ITEMGETINF(ITEMGETINF_3A);
-                SET_ITEMGETINF(ITEMGETINF_3B);
-                SET_ITEMGETINF(ITEMGETINF_3F);
-                SET_ITEMGETINF(ITEMGETINF_2A);
+            if (MapSelect_SetClearItemGroup(ITEMGETINF_23, sHappyMasksFlags, ARRAY_COUNT(sHappyMasksFlags))) {
+                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_KEATON_MASK);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_SKULL_MASK);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_SPOOKY_MASK);
+                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_BUNNY_HOOD);
+            } else {
                 SET_EVENTCHKINF(EVENTCHKINF_PAID_BACK_KEATON_MASK);
                 SET_EVENTCHKINF(EVENTCHKINF_PAID_BACK_SKULL_MASK);
                 SET_EVENTCHKINF(EVENTCHKINF_PAID_BACK_SPOOKY_MASK);
                 SET_EVENTCHKINF(EVENTCHKINF_PAID_BACK_BUNNY_HOOD);
             }
-            else {
-                CLEAR_ITEMGETINF(ITEMGETINF_23);
-                CLEAR_ITEMGETINF(ITEMGETINF_24);
-                CLEAR_ITEMGETINF(ITEMGETINF_25);
-                CLEAR_ITEMGETINF(ITEMGETINF_26);
-                CLEAR_ITEMGETINF(ITEMGETINF_38);
-                CLEAR_ITEMGETINF(ITEMGETINF_39);
-                CLEAR_ITEMGETINF(ITEMGETINF_3A);
-                CLEAR_ITEMGETINF(ITEMGETINF_3B);
-                CLEAR_ITEMGETINF(ITEMGETINF_3F);
-                CLEAR_ITEMGETINF(ITEMGETINF_2A);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_KEATON_MASK);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_SKULL_MASK);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_SPOOKY_MASK);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_PAID_BACK_BUNNY_HOOD);
-            }
             break;
         case WELL:
-            if (!GET_EVENTCHKINF(flag)) {
-                SET_EVENTCHKINF(flag);
-                gSaveContext.save.info.sceneFlags[SCENE_WINDMILL_AND_DAMPES_GRAVE].swch |= (1 << 2);
-            }
-            else {
-                CLEAR_EVENTCHKINF(flag);
+            if (MapSelect_SetClearEventGroup(flag, sWellFlags, ARRAY_COUNT(sWellFlags)))
                 gSaveContext.save.info.sceneFlags[SCENE_WINDMILL_AND_DAMPES_GRAVE].swch &= ~(1 << 2);
-            }
+            else gSaveContext.save.info.sceneFlags[SCENE_WINDMILL_AND_DAMPES_GRAVE].swch |= (1 << 2);
             break;
         case SHADOW:
-            if (!GET_EVENTCHKINF(EVENTCHKINF_AA)) {
-                SET_EVENTCHKINF(EVENTCHKINF_AA);
-                SET_EVENTCHKINF(EVENTCHKINF_54);
-            }
-            else {
-                CLEAR_EVENTCHKINF(EVENTCHKINF_AA);
-                CLEAR_EVENTCHKINF(EVENTCHKINF_54);
-            }
+            MapSelect_SetClearEventGroup(EVENTCHKINF_AA, sShadowFlags, ARRAY_COUNT(sShadowFlags));
             break;
         default:
             gSaveContext.save.info.sceneFlags[type].clear ^= (1 << flag);
@@ -255,27 +250,31 @@ void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
     }
 }
 
+char* MapSelect_GetEventText(bool flag) {
+    return flag ? "On" : "Off";
+}
+
 char* MapSelect_GetEvent(MapSelectState* this, u8 type, u16 flag) {
     switch (type) {
         case EVENT:
         case WELL:
         case SHADOW:
-            return GET_EVENTCHKINF(flag) ? "On" : "Off";
+        case CARPENTERS:
+            return MapSelect_GetEventText(GET_EVENTCHKINF(flag));
         case ITEM:
         case MASK:
-            return GET_ITEMGETINF(flag) ? "On" : "Off";
+            return MapSelect_GetEventText(GET_ITEMGETINF(flag));
         case INFTABLE:
-             return GET_INFTABLE(flag) ? "On" : "Off";
-        case CARPENTERS:
-            return (GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_0_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_1_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_2_RESCUED) && GET_EVENTCHKINF(EVENTCHKINF_CARPENTER_3_RESCUED)) ? "On" : "Off";
-        case BLACKSMITH:
-            return (GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_PRE_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_POST_TIME_SKIP) || GET_EVENTCHKINF(EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA)) ? "On" : "Off";
+        case GORON_MINES:
+        case BLACKSMITH1:
+        case BLACKSMITH2:
+            return MapSelect_GetEventText(GET_INFTABLE(flag));
         case FROG:
-            return (gSaveContext.save.info.frogQuest.quest != 0) ? "On" : "Off";
+            return MapSelect_GetEventText(gSaveContext.save.info.frogQuest.quest != 0);
         case NABOORU:
-            return (GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE) && GET_EVENTCHKINF(EVENTCHKINF_3B) && GET_EVENTCHKINF(EVENTCHKINF_C0) && (gSaveContext.save.info.sceneFlags[SCENE_SPIRIT_TEMPLE_BOSS].swch &= (1 << flag))) ? "On" : "Off";
+            return MapSelect_GetEventText(GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE));
         default:
-            return gSaveContext.save.info.sceneFlags[type].clear & (1 << flag) ? "On" : "Off";
+            return MapSelect_GetEventText(gSaveContext.save.info.sceneFlags[type].clear & (1 << flag));
     }
 
 }
@@ -518,14 +517,15 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "133:" T(GFXP_HIRAGANA "ｽｶﾙﾁｭﾗﾄﾞｳｸﾂ", "Webbed Shrine"), MapSelect_LoadGame, ENTR_WEBBED_SHRINE_0 },
     { "134:" T(GFXP_HIRAGANA "古代樹", "Forbidden Woods"), MapSelect_LoadGame, ENTR_FORBIDDEN_WOODS_0 },
     { "135:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
-    { "136:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall"), MapSelect_LoadGame, ENTR_WOODFALL_0 },
-    { "137:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
-    { "138:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
-    { "139:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTOS2_0 },
-    { "140:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTOS2_2 },
-    { "141:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
-    { "142:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
-    { "143:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
+    { "136:" T(GFXP_HIRAGANA "ｺﾞﾛﾝｺｳｻﾞﾝ", "Goron Mines"), MapSelect_LoadGame, ENTR_GORON_MINES_0 },
+    { "137:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall"), MapSelect_LoadGame, ENTR_WOODFALL_0 },
+    { "138:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
+    { "139:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
+    { "140:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTOS2_0 },
+    { "141:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTOS2_2 },
+    { "142:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
+    { "143:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
+    { "144:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };
@@ -569,11 +569,12 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Purified Woodfall",        EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL            },
     { 0, "Opened Goron City",        INFTABLE,                   INFTABLE_109                             },
     { 0, "Opened Goron Shrine",      INFTABLE,                   INFTABLE_GORON_SHRINE_DOOR_OPENED        },
-    { 0, "Opened Goron Mines",       INFTABLE,                   INFTABLE_GORON_MINES_DOOR_OPENED         },
+    { 0, "Opened Goron Mines",       GORON_MINES,                INFTABLE_GORON_MINES_DOOR_OPENED         },
     { 0, "Opened Secret Shrine",     INFTABLE,                   INFTABLE_SECRET_SHRINE_DOOR_OPENED       },
     { 0, "Sheik Reveal",             EVENT,                      EVENTCHKINF_C4                           },
     { 0, "Rainbow Bridge",           EVENT,                      EVENTCHKINF_CREATED_RAINBOW_BRIDGE       },
-    { 0, "Talked to Smithy",         BLACKSMITH,                 EVENTCHKINF_TALKED_TO_SMITHY_LAKE_HYLIA  },
+    { 0, "Talked to Smithy",         BLACKSMITH1,                INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP  },
+    { 0, "Talked to Zubora",         BLACKSMITH2,                INFTABLE_TALKED_TO_ZUBORA_MINES          },
     { 0, "Killed Gohma",             SCENE_DEKU_TREE_BOSS,       1,                                       },
     { 0, "Killed King Dodongo",      SCENE_DODONGOS_CAVERN_BOSS, 1,                                       },
     { 0, "Killed Barinade",          SCENE_JABU_JABU_BOSS,       1,                                       },
@@ -584,6 +585,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Killed Nabooru",           NABOORU,                    5                                        },
     { 0, "Killed Twinrova",          SCENE_SPIRIT_TEMPLE_BOSS,   3                                        },
     { 0, "Killed Hyper Gohma",       SCENE_ANCIENT_HOLLOW,       13                                       },
+    { 0, "Killed Black Beast",       SCENE_GORON_MINES,          9                                        },
     { 0, "Killed King Deku",         SCENE_WOODFALL_TEMPLE_BOSS, 1                                        },
     { 0, "Completed Mask Quest",     MASK,                       ITEMGETINF_3F,                           },
     { 0, "Completed Frog Quest",     FROG,                       0,                                       },

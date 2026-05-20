@@ -30,16 +30,8 @@ void EnGo3_Init(Actor* thisx, PlayState* play);
 void EnGo3_Destroy(Actor* thisx, PlayState* play);
 void EnGo3_Update(Actor* thisx, PlayState* play);
 void EnGo3_Draw(Actor* thisx, PlayState* play);
-
-void EnGo3_StopRolling(EnGo3* this, PlayState* play);
 void EnGo3_CurledUp(EnGo3* this, PlayState* play);
-
-void func_80A46B40_3(EnGo3* this, PlayState* play);
-void EnGo3_ContinueRolling(EnGo3* this, PlayState* play);
-void EnGo3_SlowRolling(EnGo3* this, PlayState* play);
-void EnGo3_GroundRolling(EnGo3* this, PlayState* play);
-
-void EnGo3_ReverseRolling(EnGo3* this, PlayState* play);
+void EnGo3_80A46B40(EnGo3* this, PlayState* play);
 void EnGo3_SetupGetItem(EnGo3* this, PlayState* play);
 void EnGo3_SetGetItem(EnGo3* this, PlayState* play);
 
@@ -83,19 +75,19 @@ ActorProfile En_Go3_Profile = {
     /**/ EnGo3_Draw,
 };
 
-static EnGo3DataStruct1 D_80A4816C[2] = {
-    { 0, 0, 0, 30, 68 }, { 0, 0, 0, 30, 68 },
+static EnGo3DataStruct1 D_80A4816C[SPRING_LAKE_GORON_MAX_TYPE] = {
+    { 0, 0, 0, 30, 68 }, { 0, 0, 0, 30, 68 }, { 0, 0, 0, 30, 68 }, { 0, 0, 0, 30, 68 },
 };
 
-static EnGo3DataStruct2 D_80A481F8[2] = {
-    { 28.0f, 0.01f, 7, 40.0f }, { 28.0f, 0.01f, 7, 40.0f },
+static EnGo3DataStruct2 D_80A481F8[SPRING_LAKE_GORON_MAX_TYPE] = {
+    { 28.0f, 0.01f, 7, 40.0f }, { 28.0f, 0.01f, 7, 40.0f }, { 28.0f, 0.01f, 7, 40.0f }, { 28.0f, 0.01f, 7, 40.0f },
 };
 
-static f32 sPlayerTrackingYOffsets[2][2][2] = {
+static f32 sPlayerTrackingYOffsets[2][SPRING_LAKE_GORON_MAX_TYPE][2] = {
     {
-        { 0.0f, 20.0f },  { 0.0f, 20.0f },
+        { 0.0f, 20.0f },  { 0.0f, 20.0f }, { 0.0f, 20.0f }, { 0.0f, 20.0f },
     }, {
-        { 0.0f, 0.0f }, { 0.0f, 0.0f },
+        { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f },
     },
 };
 
@@ -142,8 +134,7 @@ static EnGo3DustEffectData sDustEffectData[2][4] = {
 
 static Vec3f sZeroVec = { 0.0f, 0.0f, 0.0f };
 
-void EnGo3_SpawnEffectDust(EnGo3* this, Vec3f* pos, Vec3f* velocity, Vec3f* accel, u8 initialTimer, f32 scale,
-                           f32 scaleStep) {
+void EnGo3_SpawnEffectDust(EnGo3* this, Vec3f* pos, Vec3f* velocity, Vec3f* accel, u8 initialTimer, f32 scale, f32 scaleStep) {
     EnGoEffect* dustEffect = this->effects;
     s16 i;
 
@@ -251,36 +242,70 @@ void EnGo3_GetItem(EnGo3* this, PlayState* play, s32 getItemId) {
     Actor_OfferGetItem(&this->actor, play, getItemId, this->actor.xzDistToPlayer + 1.0f, fabsf(this->actor.yDistToPlayer) + 1.0f);
 }
 
-s32 EnGo3_GetDialogState(EnGo3* this, PlayState* play) {
-    s16 dialogState = Message_GetState(&play->msgCtx);
-
-    if (this->dialogState == TEXT_STATE_AWAITING_NEXT || this->dialogState == TEXT_STATE_EVENT || this->dialogState == TEXT_STATE_CLOSING || this->dialogState == TEXT_STATE_DONE_HAS_NEXT)
-        if (dialogState != this->dialogState)
-            this->unk_20C++;
-
-    this->dialogState = dialogState;
-    return dialogState;
-}
-
 u16 EnGo3_GetTextIdGoronShrineGeneric(PlayState* play, EnGo3* this) {
     if (GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES))
-        return 0x8430 + this->textType;
+        return 0x8440 + this->textType;
     return 0x8430 + this->textType;
 }
 
 u16 EnGo3_GetTextIdGoronVillageDoor(PlayState* play, EnGo3* this) {
+    if (GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES))
+        return 0x8402;
     if (GET_INFTABLE(INFTABLE_GORON_SHRINE_DOOR_OPENED))
         return 0x8401;
     return 0x8400;
 }
 
-s16 EnGo3_UpdateTalkStateGoronVillageDoor(PlayState* play, EnGo3* this) {
-    if (Message_GetState(&play->msgCtx) == TEXT_STATE_CLOSING) {
-        if (this->actor.textId == 0x8400)
-            SET_INFTABLE(INFTABLE_GORON_SHRINE_DOOR_OPENED);
-        return NPC_TALK_STATE_IDLE;
+u16 EnGo3_GetTextIdGoronShrineDoor(PlayState* play, EnGo3* this) {
+    if (GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES))
+        return 0x8406;
+    if (GET_INFTABLE(INFTABLE_GORON_MINES_DOOR_OPENED))
+        return 0x8405;
+    if (GET_INFTABLE(INFTABLE_GOT_PERMISSION_FROM_GORON_ELDER))
+        return 0x8404;
+    return 0x8403;
+}
+
+u16 EnGo3_GetTextIdSecretShrineDoor(PlayState* play, EnGo3* this) {
+    switch (this->textType) {
+        case 0:  return 0x8407;
+        case 1:  return 0x8408;
+        default: return 0x8407;
     }
-    else return NPC_TALK_STATE_TALKING;
+}
+
+s16 EnGo3_UpdateTalkStateGoronVillageDoor(PlayState* play, EnGo3* this) {
+    switch (Message_GetState(&play->msgCtx)) {
+        case TEXT_STATE_CLOSING:
+            if (this->actor.textId == 0x8400)
+                SET_INFTABLE(INFTABLE_GORON_SHRINE_DOOR_OPENED);
+            return NPC_TALK_STATE_IDLE;
+
+        default:
+            return NPC_TALK_STATE_TALKING;
+    }
+}
+
+s16 EnGo3_UpdateTalkStateGoronShrineDoor(PlayState* play, EnGo3* this) {
+    switch (Message_GetState(&play->msgCtx)) {
+        case TEXT_STATE_CLOSING:
+            if (this->actor.textId == 0x8404)
+                SET_INFTABLE(INFTABLE_GORON_MINES_DOOR_OPENED);
+            return NPC_TALK_STATE_IDLE;
+
+        default:
+            return NPC_TALK_STATE_TALKING;
+    }
+}
+
+s16 EnGo3_UpdateTalkStateSecretShrineDoor(PlayState* play, EnGo3* this) {
+    switch (Message_GetState(&play->msgCtx)) {
+        case TEXT_STATE_CLOSING:
+            return NPC_TALK_STATE_IDLE;
+
+        default:
+            return NPC_TALK_STATE_TALKING;
+    }
 }
 
 u16 EnGo3_GetTextId(PlayState* play, Actor* thisx) {
@@ -291,10 +316,14 @@ u16 EnGo3_GetTextId(PlayState* play, Actor* thisx) {
         return textId;
     else {
         switch (this->type) {
-            case GORON_GENERIC:
+            case SPRING_LAKE_GORON_GENERIC:
                 return EnGo3_GetTextIdGoronShrineGeneric(play, this);
-            case GORON_VILLAGE_DOOR:
+            case SPRING_LAKE_GORON_VILLAGE_DOOR:
                 return EnGo3_GetTextIdGoronVillageDoor(play, this);
+            case SPRING_LAKE_GORON_SHRINE_DOOR:
+                return EnGo3_GetTextIdGoronShrineDoor(play, this);
+            case SPRING_LAKE_SECRET_SHRINE_DOOR:
+                return EnGo3_GetTextIdSecretShrineDoor(play, this);
         }
     }
     return textId;
@@ -303,12 +332,16 @@ u16 EnGo3_GetTextId(PlayState* play, Actor* thisx) {
 s16 EnGo3_UpdateTalkState(PlayState* play, Actor* thisx) {
     EnGo3* this = (EnGo3*)thisx;
     switch (this->type) {
-        case GORON_GENERIC:
+        case SPRING_LAKE_GORON_GENERIC:
             if (Message_GetState(&play->msgCtx) == TEXT_STATE_CLOSING)
                 return NPC_TALK_STATE_IDLE;
             return NPC_TALK_STATE_TALKING;
-        case GORON_VILLAGE_DOOR:
+        case SPRING_LAKE_GORON_VILLAGE_DOOR:
             return EnGo3_UpdateTalkStateGoronVillageDoor(play, this);
+        case SPRING_LAKE_GORON_SHRINE_DOOR:
+            return EnGo3_UpdateTalkStateGoronShrineDoor(play, this);
+         case SPRING_LAKE_SECRET_SHRINE_DOOR:
+            return EnGo3_UpdateTalkStateSecretShrineDoor(play, this);
     }
     return false;
 }
@@ -387,7 +420,7 @@ void func_80A45360_3(EnGo3* this, f32* alpha) {
 
 void func_80A454CC_3(EnGo3* this) {
     switch (this->type) {
-        case GORON_VILLAGE_DOOR:
+        case SPRING_LAKE_GORON_VILLAGE_DOOR:
             Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, EnGo3_ANIM_9);
             break;
         default:
@@ -435,8 +468,7 @@ void EnGo3_EyeMouthTexState(EnGo3* this) {
             this->eyeTexIndex = 1;
             this->mouthTexIndex = 0;
             break;
-        // case 3 only when biggoron is given eyedrops. Biggoron smiles. (only use of second mouth texture)
-        case 3:
+        case 3: // case 3 only when biggoron is given eyedrops. Biggoron smiles. (only use of second mouth texture)
             this->blinkTimer = 0;
             this->eyeTexIndex = 0;
             this->mouthTexIndex = 1;
@@ -478,13 +510,13 @@ void EnGo3_WakeUp(EnGo3* this, PlayState* play) {
     Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, EnGo3_ANIM_1);
     this->skelAnime.playSpeed = 1.0f;
 
-    this->actionFunc = func_80A46B40_3;
+    this->actionFunc = EnGo3_80A46B40;
 }
 
 void EnGo3_GetItemAnimation(EnGo3* this, PlayState* play) {
     Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, EnGo3_ANIM_1);
     this->unk_211 = true;
-    this->actionFunc = func_80A46B40_3;
+    this->actionFunc = EnGo3_80A46B40;
     this->skelAnime.playSpeed = 0.0f;
     this->actor.speed = 0.0f;
     this->skelAnime.curFrame = this->skelAnime.endFrame;
@@ -512,7 +544,6 @@ void EnGo3_Init(Actor* thisx, PlayState* play) {
     this->reverse = 0;
     this->isAwake = false;
     this->unk_211 = false;
-    this->goronState = 0;
     this->trackingMode = NPC_TRACKING_NONE;
 }
 
@@ -548,10 +579,10 @@ void EnGo3_CurledUp(EnGo3* this, PlayState* play) {
         EnGo3_WakeUp(this, play);
 }
 
-void func_80A46B40_3(EnGo3* this, PlayState* play) {
-    if (this->unk_211 == true) {
+void EnGo3_80A46B40(EnGo3* this, PlayState* play) {
+    if (this->unk_211 == true) 
         EnGo3_SelectGoronWakingUp(this);
-    } else {
+    else {
         if (Animation_OnFrame(&this->skelAnime, this->skelAnime.endFrame)) {
             func_80A454CC_3(this);
             this->unk_211 = true;
@@ -594,7 +625,7 @@ void EnGo3_SetGetItem(EnGo3* this, PlayState* play) {
                 EnGo3_RollingAnimation(this, play);
                 return;
         }
-        this->actionFunc = func_80A46B40_3;
+        this->actionFunc = EnGo3_80A46B40;
     }
 }
 
@@ -643,7 +674,7 @@ s32 EnGo3_OverrideLimbDraw(PlayState* play, s32 limb, Gfx** dList, Vec3f* pos, V
         Matrix_RotateY(BINANG_TO_RAD_ALT(limbRot.y), MTXMODE_APPLY);
         Matrix_RotateX(BINANG_TO_RAD_ALT(limbRot.x), MTXMODE_APPLY);
     }
-    if ((limb == 10) || (limb == 11) || (limb == 14)) {
+    if (limb == 10 || limb == 11 || limb == 14) {
         rot->y += Math_SinS(this->fidgetTableY[limb]) * FIDGET_AMPLITUDE;
         rot->z += Math_CosS(this->fidgetTableZ[limb]) * FIDGET_AMPLITUDE;
     }

@@ -9,6 +9,7 @@
 #include "sys_matrix.h"
 #include "z_lib.h"
 #include "play_state.h"
+#include "save.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -79,25 +80,25 @@ typedef enum EnJgAnimation {
 } EnJgAnimation;
 
 static AnimationInfo sAnimationInfo[EN_JG_ANIM_MAX] = {
-    { &gGoronElderIdleAnim, 1.0f, 0, -1, ANIMMODE_LOOP, -10 },            // EN_JG_ANIM_IDLE
-    { &gGoronElderWalkAnim, 1.0f, 0, -1, ANIMMODE_LOOP, -10 },            // EN_JG_ANIM_WALK
-    { &gGoronElderWavingAnim, 1.0f, 0, -1, ANIMMODE_LOOP, -10 },          // EN_JG_ANIM_WAVING
-    { &gGoronElderHeadShakeAnim, 1.0f, 0, -1, ANIMMODE_LOOP, -10 },       // EN_JG_ANIM_SHAKING_HEAD
-    { &gGoronElderSurpriseStartAnim, 1.0f, 0, -1, ANIMMODE_ONCE, -10 },   // EN_JG_ANIM_SURPRISE_START
-    { &gGoronElderSurpriseLoopAnim, 1.0f, 0, -1, ANIMMODE_LOOP, -10 },    // EN_JG_ANIM_SURPRISE_LOOP
-    { &gGoronElderAngryAnim, 1.0f, 0, -1, ANIMMODE_LOOP, -10 },           // EN_JG_ANIM_ANGRY
-    { &gGoronElderSurpriseStartAnim, 2.0f, 0, -1, ANIMMODE_ONCE, 0 },     // EN_JG_ANIM_FROZEN_START
-    { &gGoronElderSurpriseStartAnim, -2.0f, 0, -1, ANIMMODE_ONCE, 0 },    // EN_JG_ANIM_FROZEN_LOOP
-    { &gGoronElderWalkAnim, -1.0f, 0, -1, ANIMMODE_LOOP, -10 },           // EN_JG_ANIM_WALK_2
-    { &gGoronElderTakeOutDrumAnim, 1.0f, 0, -1, ANIMMODE_ONCE, 0 },       // EN_JG_ANIM_TAKING_OUT_DRUM
-    { &gGoronElderDrumIdleAnim, 1.0f, 0, -1, ANIMMODE_LOOP, 0 },          // EN_JG_ANIM_DRUM_IDLE
-    { &gGoronElderPlayingDrumAnim, 1.0f, 1, 44, ANIMMODE_ONCE, 0 },       // EN_JG_ANIM_PLAYING_DRUM
-    { &gGoronElderThinkingAnim, 1.0f, 0, -1, ANIMMODE_LOOP, 0 },          // EN_JG_ANIM_THINKING
-    { &gGoronElderRememberingAnim, 1.0f, 0, -1, ANIMMODE_ONCE, 0 },       // EN_JG_ANIM_REMEMBERING
-    { &gGoronElderStrongRememberingAnim, 1.0f, 0, -1, ANIMMODE_ONCE, 0 }, // EN_JG_ANIM_STRONG_REMEMBERING
-    { &gGoronElderDepressedAnim, 1.0f, 0, -1, ANIMMODE_LOOP, 0 },         // EN_JG_ANIM_DEPRESSED
-    { &gGoronElderIdleAnim, 1.0f, 0, -1, ANIMMODE_LOOP, 0 },              // EN_JG_ANIM_CUTSCENE_IDLE
-    { &gGoronElderCradleAnim, 1.0f, 0, -1, ANIMMODE_LOOP, 0 },            // EN_JG_ANIM_CRADLE
+    { &gGoronElderIdleAnim,              1.0f, 0, -1, ANIMMODE_LOOP, -10 }, // EN_JG_ANIM_IDLE
+    { &gGoronElderWalkAnim,              1.0f, 0, -1, ANIMMODE_LOOP, -10 }, // EN_JG_ANIM_WALK
+    { &gGoronElderWavingAnim,            1.0f, 0, -1, ANIMMODE_LOOP, -10 }, // EN_JG_ANIM_WAVING
+    { &gGoronElderHeadShakeAnim,         1.0f, 0, -1, ANIMMODE_LOOP, -10 }, // EN_JG_ANIM_SHAKING_HEAD
+    { &gGoronElderSurpriseStartAnim,     1.0f, 0, -1, ANIMMODE_ONCE, -10 }, // EN_JG_ANIM_SURPRISE_START
+    { &gGoronElderSurpriseLoopAnim,      1.0f, 0, -1, ANIMMODE_LOOP, -10 }, // EN_JG_ANIM_SURPRISE_LOOP
+    { &gGoronElderAngryAnim,             1.0f, 0, -1, ANIMMODE_LOOP, -10 }, // EN_JG_ANIM_ANGRY
+    { &gGoronElderSurpriseStartAnim,     2.0f, 0, -1, ANIMMODE_ONCE,   0 }, // EN_JG_ANIM_FROZEN_START
+    { &gGoronElderSurpriseStartAnim,    -2.0f, 0, -1, ANIMMODE_ONCE,   0 }, // EN_JG_ANIM_FROZEN_LOOP
+    { &gGoronElderWalkAnim,             -1.0f, 0, -1, ANIMMODE_LOOP, -10 }, // EN_JG_ANIM_WALK_2
+    { &gGoronElderTakeOutDrumAnim,       1.0f, 0, -1, ANIMMODE_ONCE,   0 }, // EN_JG_ANIM_TAKING_OUT_DRUM
+    { &gGoronElderDrumIdleAnim,          1.0f, 0, -1, ANIMMODE_LOOP,   0 }, // EN_JG_ANIM_DRUM_IDLE
+    { &gGoronElderPlayingDrumAnim,       1.0f, 1, 44, ANIMMODE_ONCE,   0 }, // EN_JG_ANIM_PLAYING_DRUM
+    { &gGoronElderThinkingAnim,          1.0f, 0, -1, ANIMMODE_LOOP,   0 }, // EN_JG_ANIM_THINKING
+    { &gGoronElderRememberingAnim,       1.0f, 0, -1, ANIMMODE_ONCE,   0 }, // EN_JG_ANIM_REMEMBERING
+    { &gGoronElderStrongRememberingAnim, 1.0f, 0, -1, ANIMMODE_ONCE,   0 }, // EN_JG_ANIM_STRONG_REMEMBERING
+    { &gGoronElderDepressedAnim,         1.0f, 0, -1, ANIMMODE_LOOP,   0 }, // EN_JG_ANIM_DEPRESSED
+    { &gGoronElderIdleAnim,              1.0f, 0, -1, ANIMMODE_LOOP,   0 }, // EN_JG_ANIM_CUTSCENE_IDLE
+    { &gGoronElderCradleAnim,            1.0f, 0, -1, ANIMMODE_LOOP,   0 }, // EN_JG_ANIM_CRADLE
 };
 
 static Vec3f sFocusOffset = { 0.0f, 0.0f, 0.0f };
@@ -116,14 +117,60 @@ void EnJg_UpdateCollision(EnJg* this, PlayState* play) {
 }
 
 u16 EnJg_GetTextId(PlayState* play, Actor* thisx) {
-    return 0x8405;
+    if (!GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES)) {
+        if (!GET_INFTABLE(INFTABLE_GOT_PERMISSION_FROM_GORON_ELDER)) {
+            if (GET_INFTABLE(INFTABLE_PROOF_FOR_GORON_ELDER))
+                return 0x8416;
+            if (!GET_INFTABLE(INFTABLE_TALKED_TO_GORON_ELDER))
+               return 0x8410;
+            if (!(gSaveContext.save.info.sceneFlags[SCENE_GORON_VILLAGE].swch & (1 << 0x1F)))
+                return 0x8411;
+            return !GET_INFTABLE(INFTABLE_ASKED_BY_GORON_ELDER) ? 0x8412 : 0x8413;
+        }
+        return 0x8419;
+    }
+    return !GET_INFTABLE(INFTABLE_THANKED_BY_GORON_ELDER) ? 0x841A : 0x841B;
 }
 
 s16 EnJg_UpdateTalkState(PlayState* play, Actor* thisx) {
     EnJg* this = (EnJg*)thisx;
-    if (Message_GetState(&play->msgCtx) == TEXT_STATE_CLOSING)
-        return NPC_TALK_STATE_IDLE;
-    return NPC_TALK_STATE_TALKING;
+    
+    switch (Message_GetState(&play->msgCtx)) {
+        case TEXT_STATE_CLOSING:
+            if (this->actor.textId == 0x8410)
+                SET_INFTABLE(INFTABLE_TALKED_TO_GORON_ELDER);
+            else if (this->actor.textId == 0x8411)
+                SET_INFTABLE(INFTABLE_MONSTER_REQUEST_FROM_GORON_ELDER);
+            else if (this->actor.textId == 0x8418)
+                SET_INFTABLE(INFTABLE_GOT_PERMISSION_FROM_GORON_ELDER);
+            else if (this->actor.textId == 0x841A)
+                SET_INFTABLE(INFTABLE_THANKED_BY_GORON_ELDER);
+            return NPC_TALK_STATE_IDLE;
+
+        case TEXT_STATE_EVENT:
+            if (Message_ShouldAdvance(play)) {
+                if (this->actor.textId == 0x8415 || this->actor.textId == 0x8416) {
+                    SET_INFTABLE(INFTABLE_PROOF_FOR_GORON_ELDER);
+                    this->actor.textId = (HAS_HEROS_SWORD && HAS_HEROS_SHIELD && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) ? 0x8418 : 0x8417;
+                    Message_ContinueTextbox(play, this->actor.textId);
+                    return NPC_TALK_STATE_TALKING;
+                }
+                return NPC_TALK_STATE_ACTION;
+            }
+
+        case TEXT_STATE_CHOICE:
+            if (Message_ShouldAdvance(play)) {
+                if (this->actor.textId == 0x8412 || this->actor.textId == 0x8413) {
+                    SET_INFTABLE(INFTABLE_ASKED_BY_GORON_ELDER);
+                    this->actor.textId = play->msgCtx.choiceIndex == 0 ? 0x8414 : 0x8415;
+                    Message_ContinueTextbox(play, this->actor.textId);
+                }
+                return NPC_TALK_STATE_TALKING;
+            }
+
+        default:
+            return NPC_TALK_STATE_TALKING;
+    }
 }
 
 void EnJg_SetShape(EnJg* this) {
@@ -146,8 +193,7 @@ void EnJg_Init(Actor* thisx, PlayState* play) {
     Actor_SetScale(&this->actor, 0.01f);
     EnJg_SetShape(this);
 
-    this->animIndex = EN_JG_ANIM_IDLE;
-    Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, this->animIndex);
+    Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, EN_JG_ANIM_IDLE);
 }
 
 void EnJg_Destroy(Actor* thisx, PlayState* play) {

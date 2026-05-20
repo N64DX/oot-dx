@@ -4,6 +4,5 @@
 #include "ultra64.h"
 
 extern Gfx gGiPendantDL[];
-extern Gfx gGiPendantEmptyDL[];
 
 #endif

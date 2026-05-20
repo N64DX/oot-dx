@@ -192,6 +192,7 @@ s32 EnToryo_TalkRespond(EnToryo* this, PlayState* play) {
                     }
                     break;
                 case 0x606F:
+                case 0x812A:
                     ret = 1;
                     if (Message_ShouldAdvance(play)) {
                         SET_INFTABLE(INFTABLE_171);
@@ -209,6 +210,7 @@ s32 EnToryo_TalkRespond(EnToryo* this, PlayState* play) {
                 case 0x606C:
                 case 0x606D:
                 case 0x606E:
+                case 0x812B:
                 default:
                     ret = 1;
                     if (Message_ShouldAdvance(play)) {
@@ -249,6 +251,9 @@ u32 EnToryo_ReactToExchangeItem(EnToryo* this, PlayState* play) {
 
     if (this->exchangeItemId != EXCH_ITEM_NONE) {
         if (this->exchangeItemId == EXCH_ITEM_POACHERS_SAW) {
+            if (IS_CHILD_QUEST && !GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES))
+                return GET_INFTABLE(INFTABLE_171) ? 0x812B : 0x812A;
+
             Sfx_PlaySfxCentered(NA_SE_SY_TRE_BOX_APPEAR);
             if (GET_INFTABLE(INFTABLE_171)) {
                 ret = 0x606E;

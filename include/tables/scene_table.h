@@ -122,7 +122,7 @@
 /* 0x6E */ DEFINE_SCENE(old_lost_woods_scene, none, SCENE_FORBIDDEN_WOODS, SDC_FORBIDDEN_WOODS, 0, 0)
 /* 0x6F */ DEFINE_SCENE(swamp_spider_house_scene, none, SCENE_WEBBED_SHRINE, SDC_DEFAULT, 0, 0)
 /* 0x70 */ DEFINE_SCENE(fairy_deku_tree_scene, none, SCENE_ANCIENT_HOLLOW, SDC_ANCIENT_HOLLOW, 0, 0)
-/* 0x71 */ DEFINE_SCENE(goron_shrine_scene, none, SCENE_GORON_MINES, SDC_GORON_SHRINE, 0, 0)
+/* 0x71 */ DEFINE_SCENE(old_dodongos_cavern_scene, none, SCENE_GORON_MINES, SDC_GORON_MINES, 0, 0)
 /* 0x72 */ DEFINE_SCENE(woodfall_temple_scene, none, SCENE_WOODFALL_TEMPLE, SDC_WOODFALL_TEMPLE, 0, 0)
 /* 0x73 */ DEFINE_SCENE(woodfall_temple_boss_scene, none, SCENE_WOODFALL_TEMPLE_BOSS, SDC_WOODFALL_TEMPLE, 0, 0)
 /* 0x74 */ DEFINE_SCENE(mountain_smithy_scene, none, SCENE_SPRING_LAKE_SMITHY, SDC_SPRING_LAKE_SMITHY, 0, 0)

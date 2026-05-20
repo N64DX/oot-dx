@@ -4,96 +4,27 @@
 #include "animation.h"
 #include "ultra64.h"
 
-extern u64 BuffDekuSkel_limb_rgba16[];
-extern u64 BuffDekuSkel_front_rgba16[];
-extern u64 BuffDekuSkel_body_rgba16_ci8[];
-extern u64 BuffDekuSkel_body_rgba16_pal_rgba16[];
-extern u64 BuffDekuSkel_eye_rgba16_png_001_rgba16[];
-extern u64 BuffDekuSkel_snout_rgba16_png_001_rgba16[];
-extern u64 BuffDekuSkel_mouth_rgba16_png_001_rgba16[];
-extern u64 BuffDekuSkel_leaf_rgba16_png_001_rgba16[];
-extern u64 BuffDekuSkel_hand_rgba16[];
-extern Vtx BuffDekuSkel_Torso_mesh_layer_Opaque_vtx_0[38];
-extern Gfx BuffDekuSkel_Torso_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Boob_L_mesh_layer_Opaque_vtx_0[19];
-extern Gfx BuffDekuSkel_Boob_L_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Boob_R_mesh_layer_Opaque_vtx_0[19];
-extern Gfx BuffDekuSkel_Boob_R_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Collar_mesh_layer_Opaque_vtx_0[10];
-extern Gfx BuffDekuSkel_Collar_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Collar_mesh_layer_Opaque_vtx_1[14];
-extern Gfx BuffDekuSkel_Collar_mesh_layer_Opaque_tri_1[];
-extern Vtx BuffDekuSkel_Head_mesh_layer_Opaque_vtx_0[63];
-extern Gfx BuffDekuSkel_Head_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Head_mesh_layer_Opaque_vtx_1[6];
-extern Gfx BuffDekuSkel_Head_mesh_layer_Opaque_tri_1[];
-extern Vtx BuffDekuSkel_Head_mesh_layer_Opaque_vtx_2[38];
-extern Gfx BuffDekuSkel_Head_mesh_layer_Opaque_tri_2[];
-extern Vtx BuffDekuSkel_Head_mesh_layer_Opaque_vtx_3[9];
-extern Gfx BuffDekuSkel_Head_mesh_layer_Opaque_tri_3[];
-extern Vtx BuffDekuSkel_Head_mesh_layer_Opaque_vtx_4[95];
-extern Gfx BuffDekuSkel_Head_mesh_layer_Opaque_tri_4[];
-extern Vtx BuffDekuSkel_Head_mesh_layer_Opaque_vtx_5[8];
-extern Gfx BuffDekuSkel_Head_mesh_layer_Opaque_tri_5[];
-extern Vtx BuffDekuSkel_Head_mesh_layer_Opaque_vtx_6[10];
-extern Gfx BuffDekuSkel_Head_mesh_layer_Opaque_tri_6[];
-extern Vtx BuffDekuSkel_Shoulder_L_mesh_layer_Opaque_vtx_0[43];
-extern Gfx BuffDekuSkel_Shoulder_L_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Forearm_L_mesh_layer_Opaque_vtx_0[23];
-extern Gfx BuffDekuSkel_Forearm_L_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Hand_L_mesh_layer_Opaque_vtx_0[81];
-extern Gfx BuffDekuSkel_Hand_L_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Shoulder_R_mesh_layer_Opaque_vtx_0[42];
-extern Gfx BuffDekuSkel_Shoulder_R_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Forearm_R_mesh_layer_Opaque_vtx_0[22];
-extern Gfx BuffDekuSkel_Forearm_R_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Hand_R_mesh_layer_Opaque_vtx_0[82];
-extern Gfx BuffDekuSkel_Hand_R_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Waist_mesh_layer_Opaque_vtx_0[45];
-extern Gfx BuffDekuSkel_Waist_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Waist_mesh_layer_Opaque_vtx_1[16];
-extern Gfx BuffDekuSkel_Waist_mesh_layer_Opaque_tri_1[];
-extern Vtx BuffDekuSkel_Waist_mesh_layer_Opaque_vtx_2[8];
-extern Gfx BuffDekuSkel_Waist_mesh_layer_Opaque_tri_2[];
-extern Vtx BuffDekuSkel_Waist_mesh_layer_Opaque_vtx_3[6];
-extern Gfx BuffDekuSkel_Waist_mesh_layer_Opaque_tri_3[];
-extern Vtx BuffDekuSkel_Thigh_L_mesh_layer_Opaque_vtx_0[11];
-extern Gfx BuffDekuSkel_Thigh_L_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Foot_L_mesh_layer_Opaque_vtx_0[14];
-extern Gfx BuffDekuSkel_Foot_L_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Foot_L_mesh_layer_Opaque_vtx_1[5];
-extern Gfx BuffDekuSkel_Foot_L_mesh_layer_Opaque_tri_1[];
-extern Vtx BuffDekuSkel_Thigh_R_mesh_layer_Opaque_vtx_0[11];
-extern Gfx BuffDekuSkel_Thigh_R_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Foot_R_mesh_layer_Opaque_vtx_0[14];
-extern Gfx BuffDekuSkel_Foot_R_mesh_layer_Opaque_tri_0[];
-extern Vtx BuffDekuSkel_Foot_R_mesh_layer_Opaque_vtx_1[5];
-extern Gfx BuffDekuSkel_Foot_R_mesh_layer_Opaque_tri_1[];
-extern Gfx mat_BuffDekuSkel_limb_layerOpaque[];
-extern Gfx mat_BuffDekuSkel_body_layerOpaque[];
-extern Gfx mat_BuffDekuSkel_head_layerOpaque[];
-extern Gfx mat_BuffDekuSkel_eye_layerOpaque[];
-extern Gfx mat_BuffDekuSkel_snoot1_layerOpaque[];
-extern Gfx mat_BuffDekuSkel_snoot2_layerOpaque[];
-extern Gfx mat_BuffDekuSkel_leaf_layerOpaque[];
-extern Gfx mat_BuffDekuSkel_hand_layerOpaque[];
-extern Gfx BuffDekuSkel_Torso_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Boob_L_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Boob_R_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Collar_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Head_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Shoulder_L_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Forearm_L_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Hand_L_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Shoulder_R_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Forearm_R_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Hand_R_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Waist_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Thigh_L_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Foot_L_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Thigh_R_mesh_layer_Opaque[];
-extern Gfx BuffDekuSkel_Foot_R_mesh_layer_Opaque[];
-extern FlexSkeletonHeader BuffDekuSkel;
+typedef enum ObjectBuffDekuSkel {
+    /* 0x00 */ BUFFDEKUSKEL_ROOT_POS_LIMB,
+    /* 0x01 */ BUFFDEKUSKEL_ROOT_ROT_LIMB,
+    /* 0x02 */ BUFFDEKUSKEL_TORSO_LIMB,
+    /* 0x03 */ BUFFDEKUSKEL_BOOB_L_LIMB,
+    /* 0x04 */ BUFFDEKUSKEL_BOOB_R_LIMB,
+    /* 0x05 */ BUFFDEKUSKEL_COLLAR_LIMB,
+    /* 0x06 */ BUFFDEKUSKEL_HEAD_LIMB,
+    /* 0x07 */ BUFFDEKUSKEL_SHOULDER_L_LIMB,
+    /* 0x08 */ BUFFDEKUSKEL_FOREARM_L_LIMB,
+    /* 0x09 */ BUFFDEKUSKEL_HAND_L_LIMB,
+    /* 0x0A */ BUFFDEKUSKEL_SHOULDER_R_LIMB,
+    /* 0x0B */ BUFFDEKUSKEL_FOREARM_R_LIMB,
+    /* 0x0C */ BUFFDEKUSKEL_HAND_R_LIMB,
+    /* 0x0D */ BUFFDEKUSKEL_WAIST_LIMB,
+    /* 0x0E */ BUFFDEKUSKEL_THIGH_L_LIMB,
+    /* 0x0F */ BUFFDEKUSKEL_FOOT_L_LIMB,
+    /* 0x10 */ BUFFDEKUSKEL_THIGH_R_LIMB,
+    /* 0x11 */ BUFFDEKUSKEL_FOOT_R_LIMB,
+    /* 0x12 */ BUFFDEKUSKEL_NUM_LIMBS
+} ObjectBuffDekuSkel;
 
 extern AnimationHeader BuffDekuSkelGetoutgroundAnim;
 extern AnimationHeader BuffDekuSkelPunchAnim;
@@ -106,27 +37,9 @@ extern AnimationHeader BuffDekuSkelSpinAnim;
 extern AnimationHeader BuffDekuSkelDeathAnim;
 extern AnimationHeader BuffDekuSkelPanicAnim;
 
+extern FlexSkeletonHeader BuffDekuSkel;
+
 extern u64 gKingDekuTitleCardTex[];
 extern u64 gKingDekuTitleCardPalTex[];
-
-#define BUFFDEKUSKEL_ROOT_POS_LIMB 0
-#define BUFFDEKUSKEL_ROOT_ROT_LIMB 1
-#define BUFFDEKUSKEL_TORSO_LIMB 2
-#define BUFFDEKUSKEL_BOOB_L_LIMB 3
-#define BUFFDEKUSKEL_BOOB_R_LIMB 4
-#define BUFFDEKUSKEL_COLLAR_LIMB 5
-#define BUFFDEKUSKEL_HEAD_LIMB 6
-#define BUFFDEKUSKEL_SHOULDER_L_LIMB 7
-#define BUFFDEKUSKEL_FOREARM_L_LIMB 8
-#define BUFFDEKUSKEL_HAND_L_LIMB 9
-#define BUFFDEKUSKEL_SHOULDER_R_LIMB 10
-#define BUFFDEKUSKEL_FOREARM_R_LIMB 11
-#define BUFFDEKUSKEL_HAND_R_LIMB 12
-#define BUFFDEKUSKEL_WAIST_LIMB 13
-#define BUFFDEKUSKEL_THIGH_L_LIMB 14
-#define BUFFDEKUSKEL_FOOT_L_LIMB 15
-#define BUFFDEKUSKEL_THIGH_R_LIMB 16
-#define BUFFDEKUSKEL_FOOT_R_LIMB 17
-#define BUFFDEKUSKEL_NUM_LIMBS 18
 
 #endif

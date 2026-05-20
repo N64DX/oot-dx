@@ -106,6 +106,7 @@ void Scene_DrawConfigGrottos2(PlayState* play);
 void Scene_DrawConfigPathToWoodfall(PlayState* play);
 void Scene_DrawConfigGoronVillage(PlayState* play);
 void Scene_DrawConfigGoronShrine(PlayState* play);
+void Scene_DrawConfigGoronMines(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -225,6 +226,7 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigPathToWoodfall,              // SDC_PATH_TO_WOODFALL
     Scene_DrawConfigGoronVillage,                // SDC_GORON_VILLAGE
     Scene_DrawConfigGoronShrine,                 // SDC_GORON_SHRINE
+    Scene_DrawConfigGoronMines,                  // SDC_GORON_MINES
 };
 
 #if PLATFORM_N64 // Scene_Draw is at end of file in GC/iQue versions
@@ -1756,10 +1758,8 @@ void Scene_DrawConfigForbiddenWoods(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 10) % 128, 32, 32, 1, 0, (gameplayFrames * 10) % 128, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 3)  % 128, 32, 32, 1, 0, (gameplayFrames * 3)  % 128, 32, 32));
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, 0, 32, 32, 1, 0, -gameplayFrames, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, gameplayFrames, 64, 64, 1, 0, -gameplayFrames, 64, 64));
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TexScroll(play->state.gfxCtx, 0, (gameplayFrames * 10) % 128, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TexScroll(play->state.gfxCtx, 0, (gameplayFrames * 3)  % 128, 32, 32));
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
@@ -1775,9 +1775,9 @@ void Scene_DrawConfigAncientHollow(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 512, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 1
-    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 256, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 2
-    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 2) % 256, 0, 64, 32, 1, 0, (gameplayFrames * 2) % 128, 64, 32)); // Boss Room Fog
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 2) % 512, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 1
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 2) % 256, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 2
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 2) % 256, 0, 64, 32, 1, 0, (gameplayFrames * 2) % 128, 64, 32)); // Boss Room Fog
     gSPSegment(POLY_OPA_DISP++, 0x0B, SEGMENTED_TO_VIRTUAL(sAncientHollowEntranceTextures[((void)0, gSaveContext.save.nightFlag)]));
 
     gDPPipeSync(POLY_OPA_DISP++);
@@ -1843,7 +1843,7 @@ void Scene_DrawConfigSpringLakeSmithy(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32)); // Shining metal
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32,  32)); // Shining metal
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
@@ -1879,9 +1879,9 @@ void Scene_DrawConfigPathToWoodfall(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, (gameplayFrames * 3)  % 128, 32, 32, 1, 0, (gameplayFrames * 3)  % 128, 32, 32));
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, 0, 32, 32, 1, 0, -gameplayFrames, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, 0, 0, gameplayFrames, 64, 64, 1, 0, -gameplayFrames, 64, 64));
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (gameplayFrames * 3)  % 128, 32, 32, 1, 0, (gameplayFrames * 3)  % 128, 32, 32));
+    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0, 32, 32, 1, 0, -gameplayFrames, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, gameplayFrames, 64, 64, 1, 0, -gameplayFrames, 64, 64));
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
@@ -1892,9 +1892,9 @@ void Scene_DrawConfigGoronVillage(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0,  (gameplayFrames * 1), 0, 32,  32, 1, -(gameplayFrames * 1), -(gameplayFrames * 1), 32,  32));
-    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, 0,  (gameplayFrames * 1), 0, 32,  32, 1,  (gameplayFrames * 1), 0,                     32,  32));
-    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, 0, -(gameplayFrames * 2), 0, 128, 64, 1, -(gameplayFrames * 3), 0,                     128, 64));
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,  (gameplayFrames * 1), 0, 32,  32, 1, -(gameplayFrames * 1), -(gameplayFrames * 1), 32,  32));
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,  (gameplayFrames * 1), 0, 32,  32, 1,  (gameplayFrames * 1), 0,                     32,  32));
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 2), 0, 128, 64, 1, -(gameplayFrames * 3), 0,                     128, 64));
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
@@ -1905,7 +1905,22 @@ void Scene_DrawConfigGoronShrine(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
-    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, 0, (gameplayFrames * 1), 0, 32,  32, 1, gameplayFrames * 1, 0, 32,  32));
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 1), 0, 32,  32, 1, gameplayFrames * 1, 0, 32,  32));
+
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
+void Scene_DrawConfigGoronMines(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                    (gameplayFrames * 7) % 128, 32, 32, 1, 0, (gameplayFrames * 6) % 128, 32, 32)); // Lava
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                     gameplayFrames      % 128, 32, 32, 1, 0, 0,                          32, 32)); // Lava
+    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, gameplayFrames % 256, 0,                          64, 32, 1, 0,  gameplayFrames      % 128, 64, 32)); // Boss Lava
+
+    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TexScroll(play->state.gfxCtx, gameplayFrames % 256, 0, 64, 32)); // Fog
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);

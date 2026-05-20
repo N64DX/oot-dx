@@ -548,6 +548,10 @@ void DoorWarp1_ChildWarpOut(DoorWarp1* this, PlayState* play) {
             Flags_SetEventChkInf(EVENTCHKINF_EXITED_HYPER_GOHMA);
             play->nextEntranceIndex = ENTR_FORBIDDEN_WOODS_5;
             gSaveContext.nextCutsceneIndex = CS_INDEX_NONE;
+        } else if (play->sceneId == SCENE_GORON_MINES) {
+            Flags_SetEventChkInf(EVENTCHKINF_CLEANSED_GORON_MINES);
+            play->nextEntranceIndex = ENTR_GORON_VILLAGE_3;
+            gSaveContext.nextCutsceneIndex = CS_INDEX_NONE;
         } else if (play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS) {
             if (!Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL)) {
                 Flags_SetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL);

@@ -566,7 +566,9 @@ void Sram_OpenSave(SramContext* sramCtx) {
         case SCENE_ANCIENT_HOLLOW:
             gSaveContext.save.entranceIndex = ENTR_ANCIENT_HOLLOW_0;
             break;
-
+        case SCENE_GORON_MINES:
+            gSaveContext.save.entranceIndex = ENTR_GORON_MINES_0;
+            break;
         case SCENE_WOODFALL_TEMPLE:
         case SCENE_WOODFALL_TEMPLE_BOSS:
             if (gSaveContext.save.entranceIndex == ENTR_WOODFALL_TEMPLE_0)

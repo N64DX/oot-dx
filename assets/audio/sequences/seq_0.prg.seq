@@ -377,8 +377,8 @@ CHAN_00DC:
 /* 0x0383 [0xFF                    ] */ end
 
 .layer LAYER_0384
-/* 0x0384 [0xC6 0x01               ] */ instr       SF0_INST_1
-/* 0x0386 [0x58 0x2A 0x38          ] */ notedv      PITCH_A2, 42, 56
+/* 0x0384 [0xC6 0x5C               ] */ instr       SF0_INST_92
+/* 0x0386 [0x67 0x2A 0x38          ] */ notedv      PITCH_C4, 42, 56
 /* 0x0389 [0xFF                    ] */ end
 
 .channel CHAN_038A
@@ -3426,16 +3426,29 @@ CHAN_169E:
 /* 0x16A3 [0xDC 0x7F               ] */ panweight   127
 /* 0x16A5 [0xFC 0x00 0x7C          ] */ call        CHAN_007C
 /* 0x16A8 [0x92                    ] */ dellayer    2
+/* 0x16A9 [0x64                    ] */ ldio        IO_PORT_SFX_INDEX_HIBITS
+/* 0x1698 [0xC8 0x01               ] */ sub         1
+/* 0x169A [0xF3 0x02               ] */ rbeqz       CHAN_EV_HIGH
+
 /* 0x16A9 [0x64                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
-/* 0x16AA [0xF5 0x16 0xB4          ] */ bgez        CHAN_16B4
+/* 0x16AA [0xF5 0x16 0xB4          ] */ bgez        CHAN_EV_TABLE0
 /* 0x16AD [0xC9 0x7F               ] */ and         127
 /* 0x16AF [0xC2 0x17 0xD5          ] */ dyntbl      environmentbank_table + 2 * 1 * 128
-/* 0x16B2 [0xF4 0x03               ] */ rjump       CHAN_16B7
+/* 0x16B2 [0xF4 0x03               ] */ rjump       CHAN_EV_DYNCALL
 
-CHAN_16B4:
+CHAN_EV_HIGH:
+/* 0x16AF [0xC2 0x17 0xD5          ] */ dyntbl      environmentbank_table + 2 * 2 * 128
+/* 0x16A9 [0x64                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
+/* 0x16AA [0xF5 0x16 0xB4          ] */ bgez        CHAN_EV_DYNCALL
+/* 0x16AD [0xC9 0x7F               ] */ and         127
+/* 0x16AF [0xC2 0x17 0xD5          ] */ dyntbl      environmentbank_table + 2 * 3 * 128
+/* 0x16B2 [0xF4 0x03               ] */ rjump       CHAN_EV_DYNCALL
+
+CHAN_EV_TABLE0:
 /* 0x16B4 [0xC2 0x16 0xD5          ] */ dyntbl      environmentbank_table + 2 * 0 * 128
-CHAN_16B7:
+CHAN_EV_DYNCALL:
 /* 0x16B7 [0xE4                    ] */ dyncall
+
 CHAN_16B8:
 /* 0x16B8 [0x63                    ] */ ldio        IO_PORT_3
 /* 0x16B9 [0xC7 0x00 0x16 0xBE     ] */ stseq       0, STSEQ_HERE + STSEQ_FILTER_IDX
@@ -7352,24 +7365,51 @@ CHAN_310E:
 /* 0x3115 [0xED 0x00               ] */ gain        0
 /* 0x3117 [0xDC 0x7F               ] */ panweight   127
 /* 0x3119 [0x65                    ] */ ldio        IO_PORT_SFX_INDEX_HIBITS
-/* 0x311A [0xC8 0x01               ] */ sub         1
-/* 0x311C [0xF3 0x0B               ] */ rbeqz       CHAN_3129
-/* 0x311E [0x64                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
-/* 0x311F [0xF5 0x31 0x37          ] */ bgez        CHAN_3137
-/* 0x3122 [0xC9 0x7F               ] */ and         127
-/* 0x3124 [0xC2 0x32 0x5E          ] */ dyntbl      enemybank_table + 2 * 1 * 128
-/* 0x3127 [0xF4 0x11               ] */ rjump       CHAN_313A
+/* 0x311A [0xF3 0x0B               ] */ rbeqz       CHAN_EN_CHUNK_0
+/* 0x311B [0xC8 0x01               ] */ sub         1
+/* 0x311C [0xF3 0x0B               ] */ rbeqz       CHAN_EN_CHUNK_1
+/* 0x311D [0xC8 0x01               ] */ sub         1
+/* 0x311E [0xF3 0x0B               ] */ rbeqz       CHAN_EN_CHUNK_2
+/* 0x311F [0xC8 0x01               ] */ sub         1
+/* 0x3120 [0xF3 0x0B               ] */ rbeqz       CHAN_EN_CHUNK_3
+/* 0x3121 [0xC8 0x01               ] */ sub         1
+/* 0x3122 [0xF3 0x0B               ] */ rbeqz       CHAN_EN_CHUNK_4
 
-CHAN_3129:
-/* 0x3129 [0xC2 0x33 0x5E          ] */ dyntbl      enemybank_table + 2 * 2 * 128
-/* 0x312C [0x64                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
-/* 0x312D [0xF5 0x31 0x3A          ] */ bgez        CHAN_313A
-/* 0x3130 [0xC9 0x7F               ] */ and         127
-/* 0x3132 [0xC2 0x34 0x5E          ] */ dyntbl      enemybank_table + 2 * 3 * 128
-/* 0x3135 [0xF4 0x03               ] */ rjump       CHAN_313A
+CHAN_EN_CHUNK_5:
+/* 0x3123 [0x65                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
+/* 0x3124 [0xC9 0x7F               ] */ and         127
+/* 0x3125 [0xC2 0x33 0x5E          ] */ dyntbl      enemybank_table + 2 * 5 * 128
+    rjump       CHAN_313A
 
-CHAN_3137:
-/* 0x3137 [0xC2 0x31 0x5E          ] */ dyntbl      enemybank_table + 2 * 0 * 128
+CHAN_EN_CHUNK_4:
+/* 0x3126 [0x65                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
+/* 0x3127 [0xC9 0x7F               ] */ and         127
+/* 0x3128 [0xC2 0x33 0x5E          ] */ dyntbl      enemybank_table + 2 * 4 * 128
+/* 0x3129 [0x65                    ] */ rjump       CHAN_313A
+
+CHAN_EN_CHUNK_3:
+/* 0x312A [0x65                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
+/* 0x312B [0xC9 0x7F               ] */ and         127
+/* 0x312C [0xC2 0x33 0x5E          ] */ dyntbl      enemybank_table + 2 * 3 * 128
+/* 0x312D [0x65                    ] */ rjump       CHAN_313A
+
+CHAN_EN_CHUNK_2:
+/* 0x312E [0x65                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
+/* 0x312F [0xC9 0x7F               ] */ and         127
+/* 0x3130 [0xC2 0x33 0x5E          ] */ dyntbl      enemybank_table + 2 * 2 * 128
+/* 0x3131 [0x65                    ] */ rjump       CHAN_313A
+
+CHAN_EN_CHUNK_1:
+/* 0x3132 [0x65                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
+/* 0x3133 [0xC9 0x7F               ] */ and         127
+/* 0x3134 [0xC2 0x33 0x5E          ] */ dyntbl      enemybank_table + 2 * 1 * 128
+/* 0x3135 [0x65                    ] */ rjump       CHAN_313A
+
+CHAN_EN_CHUNK_0:
+/* 0x3136 [0x65                    ] */ ldio        IO_PORT_SFX_INDEX_LOBITS
+/* 0x3137 [0xC9 0x7F               ] */ and         127
+/* 0x3138 [0xC2 0x33 0x5E          ] */ dyntbl      enemybank_table + 2 * 0 * 128
+
 CHAN_313A:
 /* 0x313A [0xDA 0x6A 0x7C          ] */ env         ENVELOPE_6A7C
 /* 0x313D [0xD9 0xFB               ] */ releaserate 251
@@ -15019,85 +15059,124 @@ LAYER_6576:
 .array ARRAY_65AA
     .byte 100, 95, 105
 
+.channel CHAN_EN_BEAST_CRY1
+    ldlayer     0, LAYER_EN_BEAST_CRY1
+    end
+.layer LAYER_EN_BEAST_CRY1
+    instr       SF1_INST_63
+    notedv      PITCH_C4, 0, 100
+    end
+
+.channel CHAN_EN_BEAST_CRY2
+    ldlayer     0, LAYER_EN_BEAST_CRY2
+    end
+.layer LAYER_EN_BEAST_CRY2
+    instr       SF1_INST_64
+    notedv      PITCH_C4, 0, 100
+    end
+
+.channel CHAN_EN_BEAST_HOWL
+    ldlayer     0, LAYER_EN_BEAST_HOWL
+    end
+.layer LAYER_EN_BEAST_HOWL
+    instr       SF1_INST_65
+    notedv      PITCH_C4, 0, 100
+    end
+
+.channel CHAN_EN_BLACKBEAST_SCREAM1
+    ldlayer     0, LAYER_EN_BLACKBEAST_SCREAM1
+    end
+.layer LAYER_EN_BLACKBEAST_SCREAM1
+    instr       SF1_INST_66
+    notedv      PITCH_C4, 0, 100
+    end
+
+.channel CHAN_EN_BLACKBEAST_SCREAM2
+    ldlayer     0, LAYER_EN_BLACKBEAST_SCREAM2
+    end
+.layer LAYER_EN_BLACKBEAST_SCREAM2
+    instr       SF1_INST_67
+    notedv      PITCH_C4, 0, 100
+    end
+
+.channel CHAN_EN_BLACKBEAST_SCREAM3
+    ldlayer     0, LAYER_EN_BLACKBEAST_SCREAM3
+    end
+.layer LAYER_EN_BLACKBEAST_SCREAM3
+    instr       SF1_INST_68
+    notedv      PITCH_C4, 0, 100
+    end
+
 .channel CHAN_EN_STAL_DMGED
     ldlayer     0, LAYER_EN_STAL_DMGED
     end
-
 .layer LAYER_EN_STAL_DMGED
-    instr       FONTANY_INSTR_SFX
-    notedv      SF1_EFFECT_STAL_1, 0, 100
+    instr       SF1_INST_69
+    notedv      PITCH_C4, 0, 100
     end
 
 .channel CHAN_EN_STAL_GATHER
     ldlayer     0, LAYER_EN_STAL_GATHER
     end
-
 .layer LAYER_EN_STAL_GATHER
-    instr       FONTANY_INSTR_SFX
-    notedv      SF1_EFFECT_STAL_2, 0, 100
+    instr       SF1_INST_70
+    notedv      PITCH_C4, 0, 100
     end
 
 .channel CHAN_EN_STAL_DIE
     ldlayer     0, LAYER_EN_STAL_DIE
     end
-
 .layer LAYER_EN_STAL_DIE
-    instr       FONTANY_INSTR_SFX
-    notedv      SF1_EFFECT_STAL_3, 0, 100
+    instr       SF1_INST_71
+    notedv      PITCH_C4, 0, 100
     end
 
 .channel CHAN_EN_STAL_PICK
     ldlayer     0, LAYER_EN_STAL_PICK
     end
-
 .layer LAYER_EN_STAL_PICK
-    instr       FONTANY_INSTR_SFX
-    notedv      SF1_EFFECT_STAL_4, 0, 100
+    instr       SF1_INST_72
+    notedv      PITCH_C4, 0, 100
     end
 
 .channel CHAN_EN_STAL_REPLACE
     ldlayer     0, LAYER_EN_STAL_REPLACE
     end
-
 .layer LAYER_EN_STAL_REPLACE
-    instr       FONTANY_INSTR_SFX
-    notedv      SF1_EFFECT_STAL_5, 0, 100
+    instr       SF1_INST_73
+    notedv      PITCH_C4, 0, 100
     end
 
 .channel CHAN_EN_STAL_SCREECH
     ldlayer     0, LAYER_EN_STAL_SCREECH
     end
-
 .layer LAYER_EN_STAL_SCREECH
-    instr       FONTANY_INSTR_SFX
-    notedv      SF1_EFFECT_STAL_6, 0, 100
+    instr       SF1_INST_74
+    notedv      PITCH_C4, 0, 100
     end
 
 .channel CHAN_EN_STAL_STEP
     ldlayer     0, LAYER_EN_STAL_STEP
     end
-
 .layer LAYER_EN_STAL_STEP
-    instr       FONTANY_INSTR_SFX
-    notedv      SF1_EFFECT_STAL_7, 0, 100
+    instr       SF1_INST_75
+    notedv      PITCH_C4, 0, 100
     end
 
 .channel CHAN_EN_STAL_SWING
     ldlayer     0, LAYER_EN_STAL_SWING
     end
-
 .layer LAYER_EN_STAL_SWING
-    instr       FONTANY_INSTR_SFX
-    notedv      SF1_EFFECT_STAL_8, 0, 100
+    instr       SF1_INST_76
+    notedv      PITCH_C4, 0, 100
     end
 
 .channel CHAN_EN_STAL_TELEGRAPH
     ldlayer     0, LAYER_EN_STAL_TELEGRAPH
     end
-
 .layer LAYER_EN_STAL_TELEGRAPH
-    instr       FONTANY_INSTR_SFX
-    notedv      SF1_EFFECT_STAL_9, 0, 100
+    instr       SF1_INST_77
+    notedv      PITCH_C4, 0, 100
     end
 
 .channel CHAN_EN_KUROSUKE_MOVE

@@ -118,6 +118,48 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Bg_Breakwall2"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Breakwall2/z_bg_breakwall2.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Dodoago2"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Dodoago2/z_bg_dodoago2.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Flame_Thrower"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Flame_Thrower/z_bg_flame_thrower.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Dblue_Waterfall"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Dblue_Waterfall/z_bg_dblue_waterfall.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Crashbox"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Crashbox/z_obj_crashbox.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Floater"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Floater/z_obj_floater.o"
+endseg
+
+beginseg
     name "ovl_Obj_Purify"
     compress
     flags OVERLAY
@@ -150,6 +192,13 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Pzlblock/z_obj_pzlblock.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Syokudai2"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Syokudai2/z_obj_syokudai2.o"
 endseg
 
 beginseg
@@ -216,6 +265,20 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Spider"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Spider/z_en_spider.o"
+endseg
+
+beginseg
+    name "ovl_En_Thefather"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Thefather/z_en_thefather.o"
+endseg
+
+beginseg
     name "ovl_En_Mkk"
     compress
     flags OVERLAY
@@ -276,4 +339,11 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Jg/z_en_jg.o"
+endseg
+
+beginseg
+    name "ovl_En_Kbt"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Kbt/z_en_kbt.o"
 endseg

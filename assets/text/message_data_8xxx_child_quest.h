@@ -322,7 +322,33 @@ COLOR(DEFAULT) "Créé par les Zoras, cet habit\n"
 )
 )
 
-DEFINE_MESSAGE(0x8011, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8011, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE COLOR(BLUE) "氷の矢" COLOR(DEFAULT) "を　手に入れた！" QUICKTEXT_DISABLE "\n"
+COLOR(YELLOW) "[C]" COLOR(DEFAULT) "にセットで　弓矢が変化。\n"
+"命中すれば　凍りつく！！"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE "You got the " COLOR(BLUE) "Ice Arrow" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Set it to " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "and your arrows will\n"
+"be powered up! If you hit your \n"
+"target, it will freeze."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE "Die " COLOR(BLUE) "Eis-Pfeile" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Plaziere sie auf " COLOR(YELLOW) "[C]" COLOR(DEFAULT) ", um sie\n"
+"zu verschießen! Triffst Du,\n"
+"wird Dein Ziel einfrieren!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE "Vous trouvez la " COLOR(BLUE) "Flèche de \n"
+"Glace" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Assignez-la à " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "pour \n"
+"enchanter vos flèches! Tirez \n"
+"et gelez votre cible."
+)
+)
+
+DEFINE_MESSAGE(0x8012, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "We opened a new shop over here\n"
@@ -2698,6 +2724,63 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x812A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(
+UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) SHIFT(78) "ア〜！！\n"
+SHIFT(9) "その　ノコギリは　オレっちのだ！"
+BOX_BREAK
+
+UNSKIPPABLE SHIFT(45) "けど…　そいつぁ…\n"
+SHIFT(33) "ウチの　ババアんとこに\n"
+"おいてきたハズだが…　まあいいや！" TEXTID(0x812B)
+),
+MSG(
+UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Hey, that saw! It's mine!"
+BOX_BREAK
+
+UNSKIPPABLE "But... I thought I left that saw\n"
+"with my old lady... Oh well..." TEXTID(0x812B)
+),
+MSG(
+UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Oh, das ist ja meine Säge!"
+BOX_BREAK
+
+UNSKIPPABLE "Aber... Ich dachte, ich hätte sie\n"
+"bei der alten Frau liegen gelassen..." TEXTID(0x812B)
+),
+MSG(
+UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Hé! Mais c'est ma scie!"
+BOX_BREAK
+
+UNSKIPPABLE "Je l'avais égarée chez ma vieille \n"
+"femme...C'est fou!" TEXTID(0x812B)
+)
+)
+
+DEFINE_MESSAGE(0x812B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"My spare saw broke, so I was\n"
+"going to Goron City to forge a\n"
+"new one with some high quality\n"
+COLOR(RED) "Gold Dust" COLOR(DEFAULT) " coming my way..."
+BOX_BREAK
+
+"Except... My shipment of " COLOR(RED) "Gold Dust" COLOR(DEFAULT) "\n"
+"is being delayed because of the\n"
+"monster infestation in the " COLOR(ADJUSTABLE) "Goron\n"
+"Mines" COLOR(DEFAULT) " over at " COLOR(ADJUSTABLE) "Spring Lake." COLOR(DEFAULT)
+BOX_BREAK
+
+"I really want another saw, but I\n"
+"have nothing to offer you right now.\n"
+"Once my " COLOR(RED) "Gold Dust" COLOR(DEFAULT) " shipment arrives,\n"
+"I trade you that. Deal?"
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x8200, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
@@ -2801,8 +2884,8 @@ DEFINE_MESSAGE(0x8302, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 SFX(NA_SE_VO_GAVO01) "Ugoh ugo ugo!\n"
-"Good work on restoring Lake Hylia.\n"
-"Now that the lake is restored again\n"
+"Good work on cleansing the " COLOR(ADJUSTABLE) "Goron\n"
+"Mines" COLOR(DEFAULT) ". Now that it is open once more\n"
 "I can provide some more upgrades." EVENT
 ),
 MSG(),
@@ -2815,7 +2898,7 @@ MSG(
 SFX(NA_SE_VO_GAVO01) "Ugoh-ugo-ugo!\n"
 "Welcome back again to our humble\n"
 "blacksmith. Anything we can supply\n"
-"you with today??" EVENT
+"you with today?" EVENT
 ),
 MSG(),
 MSG()
@@ -2827,7 +2910,7 @@ MSG(
 SFX(NA_SE_VO_GAVO01) "Ugoh-ugo-ugo!\n"
 "Welcome back again to our humble\n"
 "blacksmith. Anything we can supply\n"
-"you with today??"
+"you with today?"
 BOX_BREAK
 
 "..."
@@ -2859,6 +2942,90 @@ SFX(NA_SE_VO_GAVO00) "Ugoh-ooooh!!!\n"
 "Your shields already happen to be\n"
 "indestructible.\n"
 "What do you even need me for?" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8310, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Huh... What was I doing again...\n"
+"Where am I?"
+BOX_BREAK
+
+"Solid frozen you say? Huh..."
+BOX_BREAK
+
+"I went into the mines to get my\n"
+"shipment of ore. The Gorons didn't\n"
+"want to go in here, so I did instead.\n"
+"Oh boy... That was the wrong call..."
+BOX_BREAK
+
+"You have my thanks young lad.\n"
+"Once it's safe I'll make my way over\n"
+"to the smithy. I am guessing you are\n"
+"here to clean up the mines?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8311, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Once it's safe I'll make my way over\n"
+"to the smithy.\n"
+"I am counting on you, young lad."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8312, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Ahh... It's good to be back again.\n"
+"Thank you again young lad for\n"
+"saving me from the mines."
+BOX_BREAK
+
+"The Gorons also resumed their ore\n"
+"shipments again, which is great!\n"
+"My buddy over there can help you\n"
+"upgrade your shields even further."
+BOX_BREAK
+
+"And as a thank you, let me teach\n"
+"you a secret shield ability.\n"
+"It's called "COLOR(RED) "Enhanced Perfect Block" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"When you shield precisely when you\n"
+"get hit, your next sword slash will\n"
+"do more damage."
+BOX_BREAK
+
+"See you around again!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8313, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"You're getting the hang of that\n"
+COLOR(RED) "Enhanced Perfect Block" COLOR(DEFAULT) " ability?"
+BOX_BREAK
+
+"When you shield precisely when you\n"
+"get hit, your next sword slash will\n"
+"do more damage."
+BOX_BREAK
+
+"Please come again!"
 ),
 MSG(),
 MSG()
@@ -2904,16 +3071,355 @@ MSG()
 DEFINE_MESSAGE(0x8402, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"I am known as Hyrule's best cobbler\n"
-"And I happened to craft a pair of\n"
-"boots that let you jump further.\n"
-"How about it..." TEXTID(0x8403)
+"Oh, thank you so much hero!\n"
+"Finally peace has returned!\n"
+"Welcome inside to our fair shrine!"
 ),
 MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8403, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+DEFINE_MESSAGE(0x8403, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"This door leads to the " COLOR(ADJUSTABLE) "Goron Mines" COLOR(DEFAULT) ".\n"
+"I would stay out of it if I were you.\n"
+"You need the Elder's approval to go\n"
+"inside."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8404, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Right... Yes. The Elder told me you\n"
+"wanted to enter the mines.\n"
+"Alright... I open the door for you." TEXTID(0x8405)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8405, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Be careful there inside.\n"
+"There are huge spiders and beasts\n"
+"roaming around in there."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8406, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"You are amazing!\n"
+"We can finally resume our ore\n"
+"production again. Hurray!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8407, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"We Gorons locked up this place\n"
+"a long time ago.\n"
+"Even if we wanted to open it for you,\n"
+"we don't know how anymore."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8408, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Since we uhh...lost the key to here.\n"
+"I heard there's supposedly a sort of\n"
+"explosive so powerful it can blast\n"
+"open any door..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8410, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Urrrr... My back... It's killing me..."
+BOX_BREAK
+
+"Did you want something from me?"
+BOX_BREAK
+
+"Huh? Access to the " COLOR(ADJUSTABLE) "Goron Mines" COLOR(DEFAULT) "?"
+BOX_BREAK
+
+"Sorry, young lad. Can't do. These\n"
+"mines are sealed off because it's\n"
+"too dangerous. Even for you."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8411, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Sorry, young lad. Can't do. These\n"
+"mines are sealed off because it's\n"
+"too dangerous. Even for you."
+BOX_BREAK
+
+"You won't stand a chance in there\n"
+"in those mines. Those " COLOR(RED) "Beasts" COLOR(DEFAULT) " will\n"
+"shred you alive in seconds."
+BOX_BREAK
+
+"Some of those " COLOR(RED) "Beasts" COLOR(DEFAULT) " made it\n"
+"outside in " COLOR(ADJUSTABLE) "Goron Village" COLOR(DEFAULT) ", but we'll\n"
+"take care of it ourselves. It's not a\n"
+"task you should be burdened with."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8412, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Why are you still around here kid?\n"
+"I told you these mines are too\n"
+"dangerous to enter. It is our problem\n"
+"to deal with, not yours."
+BOX_BREAK
+
+"..."
+BOX_BREAK
+
+"Wait... You managed to take down\n"
+"the large " COLOR(RED) "Beast" COLOR(DEFAULT) " roaming outside?\n"
+"Maybe... Just maybe you are our\n"
+"only hope then."
+BOX_BREAK
+
+"Dangerous large spiders and beasts\n"
+"roam these mines, completely halting\n"
+"our iron ore productivity."
+BOX_BREAK
+
+"Almost all of the iron ore used in\n"
+"Hyrule is shipped from these mines.\n"
+"It's all thanks to that evil man our\n"
+"mines got infested."
+BOX_BREAK
+
+"You don't give up. Do you?\n"
+"Why do you insist on helping us?"
+BOX_BREAK
+
+"Ok then... Are you absolutely sure?\n"
+"\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "I'm afraid\n"
+    "Absolutely" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8413, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Did you change your mind?\n"
+"You still want to enter the mines?\n"
+"Why do you insist on helping us?"
+BOX_BREAK
+
+"I will warn you again. Huge spiders\n"
+"and beasts are roaming these mines.\n"
+"This is no place for a kid like you."
+BOX_BREAK
+
+"Ok then... Are you absolutely sure?\n"
+"\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "I'm afraid\n"
+    "Absolutely" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8414, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Good. You understand.\n"
+"This is no place for a kid like you.\n"
+"You should stay out of the mines.\n"
+"You don't want to die in there."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8415, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Sigh...\n"
+"Very well... If you're that insisting...\n"
+"But I won't allow it to send you in\n"
+"there unprepared."
+BOX_BREAK
+
+"Get me proof that you're both a hero\n"
+"and a friend of the Gorons."
+BOX_BREAK
+
+"Show me the equipment worthy for\n"
+"a hero and a blade crafted by our\n"
+"kin in the mountains." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8416, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Get me proof that you're both a hero\n"
+"and a friend of the Gorons.\n"
+"Only then I allow you into the mines."
+BOX_BREAK
+
+"Show me the lost " COLOR(RED) "Hero's Sword" COLOR(DEFAULT) ",\n"
+"a " COLOR(RED) "Silver Sword" COLOR(DEFAULT) " and a " COLOR(RED) "Hero's Shield" COLOR(DEFAULT) "." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8417, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"You don't look prepared to me...\n"
+"Return to me once you found the\n"
+"proof I want to see from you."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8418, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Very well...\n"
+"I see you have steeled yourself\n"
+"for what's to come.\n"
+"I will allow you to enter."
+BOX_BREAK
+
+"I will let the door guard know to\n"
+"open the door for you.\n"
+"Tell him I send you."
+BOX_BREAK
+
+"It's probably to late to change your\n"
+"to go inside, but I'll warn you one\n"
+"last time. There are huge spiders and\n"
+"beasts inside, so be careful."
+BOX_BREAK
+
+"Many of our kind died venturing\n"
+"into the mines... I do not wish to\n"
+"see you dead as well..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8419, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Many of our kind died venturing\n"
+"into the mines... I do not wish to\n"
+"see you dead as well..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x841A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"You have my eternal gratitude for\n"
+"cleasing the mines from that evil.\n"
+"How can we ever repay you?"
+BOX_BREAK
+
+"Thanks to you the production of\n"
+"ore finally flows through Hyrule\n"
+"once more."
+BOX_BREAK
+
+"Urrrr... My back... It's killing me..."
+BOX_BREAK
+
+"Not only that, but we can finally\n"
+"start digging for " COLOR(RED) "Gold Dust" COLOR(DEFAULT) " again.\n"
+"Sadly, we sold our latest batch to a\n"
+"craftsman from the " COLOR(ADJUSTABLE) "Gerudo Valley" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"Just say the word should you ever\n"
+"require our assistence. We got the\n"
+"best ore in the land."
+BOX_BREAK
+
+"Now that I think of it... I remember\n"
+"one of the " COLOR(BLUE) "shieldsmiths" COLOR(DEFAULT) " went into the\n"
+"mines just before we sealed it off...\n"
+"I hope he's alright..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x841B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Just say the word should you ever\n"
+"require our assistence. We got the\n"
+"best ore in the land."
+BOX_BREAK
+
+"Hmm... I wonder what became of that\n"
+COLOR(BLUE) "shieldsmith" COLOR(DEFAULT) " in the mines... We have\n"
+"another shipment ready of " COLOR(RED) "Gold Dust" COLOR(DEFAULT) "\n"
+"for the craftsmen in " COLOR(ADJUSTABLE) "Gerudo Valley" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8420, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I am known as Hyrule's best cobbler\n"
+"And I happened to craft a pair of\n"
+"boots that let you jump further.\n"
+"How about it..." TEXTID(0x8421)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8421, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
 "How about buying these boots for \n"
@@ -2926,30 +3432,10 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8404, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8422, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "Do these boots fit you well?"
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x8405, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-"Urrrr... My back... It's killing me..."
-BOX_BREAK
-
-"Did you want something from me?"
-BOX_BREAK
-
-"Huh? Access to the Goron Mines?"
-BOX_BREAK
-
-"Sorry, young lad. Can't do. These\n"
-"mines are sealed off because it's\n"
-"too dangerous. Even for you."
 ),
 MSG(),
 MSG()
@@ -2959,7 +3445,7 @@ DEFINE_MESSAGE(0x8430, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "I would love to welcome you into\n"
-"our fair Goron Shrine, but we're\n"
+"our fair " COLOR(ADJUSTABLE) "Goron Shrine" COLOR(DEFAULT) ", but we're\n"
 "dealing with bit of an issue here.\n"
 "You should go speak with the Elder."
 ),
@@ -2968,18 +3454,6 @@ MSG()
 )
 
 DEFINE_MESSAGE(0x8431, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-"This door leads to the Goron Mines.\n"
-"I would stay out of it if I were you.\n"
-"You need the Elder's approval to go\n"
-"inside."
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x8432, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "The Elder is in the room behind me.\n"
@@ -2991,10 +3465,10 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8433, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8432, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"We sealed off the Goron Mines.\n"
+"We sealed off the " COLOR(ADJUSTABLE) "Goron Mines" COLOR(DEFAULT) ".\n"
 "Dangerous monsters suddenly started\n"
 "infesting the mines, and many gave\n"
 "their lives defending it."
@@ -3003,7 +3477,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8434, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8433, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "Oh Elder... What should we do?\n"
@@ -3014,7 +3488,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8435, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8434, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "These monsters in the mines are\n"
@@ -3025,25 +3499,57 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8436, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8440, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"We Gorons locked up this place\n"
-"a long time ago.\n"
-"Even if we wanted to open it for you,\n"
-"we don't know how anymore."
+"Welcome to our fair " COLOR(ADJUSTABLE) "Goron Shrine" COLOR(DEFAULT) ".\n"
+"Peace has finally returned here.\n"
+"The Elder would love to see you."
 ),
 MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8437, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8441, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"Since we uhh...lost the key to here.\n"
-"I heard there's supposedly a sort of\n"
-"explosive so powerful it can blast\n"
-"open any door..."
+"The Elder finally has some peace\n"
+"of mind. You have our thanks!\n"
+"The Elder means a lot to us."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8442, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"The " COLOR(ADJUSTABLE) "Goron Mines" COLOR(DEFAULT) " are open once more.\n"
+"All thanks to you!\n"
+"Many still have died, so we have to\n"
+"honor those lost lives."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8443, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Yaaaaawn... It feels good to have\n"
+"peace around these parts once more."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8444, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"The fog and freezing cold have\n"
+"disappeared now that the " COLOR(RED) "Black Beast" COLOR(DEFAULT) "\n"
+"has been defeated. We can handle\n"
+"the cleanup from here on out now."
 ),
 MSG(),
 MSG()

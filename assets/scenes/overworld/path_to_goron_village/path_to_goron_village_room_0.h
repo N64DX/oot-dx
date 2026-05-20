@@ -3,10 +3,15 @@
 
 #include "room.h"
 
+extern SceneCmd* path_to_goron_village_room_0AlternateHeaders[];
 extern s16 path_to_goron_village_room_0ObjectList_000040[];
 extern ActorEntry path_to_goron_village_room_0ActorEntry_00005C[];
 extern RoomShapeCullable path_to_goron_village_room_0RoomShapeCullable_000240;
 extern RoomShapeCullableEntry path_to_goron_village_room_0RoomShapeCullableEntry_00024C[19];
+
+extern SceneCmd path_to_goron_village_room_0Set_timeskip[];
+extern s16 path_to_goron_village_room_0ObjectList_timeskip[];
+extern ActorEntry path_to_goron_village_room_0ActorEntry_timeskip[];
 
 extern Gfx path_to_goron_village_room_0DL_0004D0[];
 extern Gfx path_to_goron_village_room_0DL_000910[];

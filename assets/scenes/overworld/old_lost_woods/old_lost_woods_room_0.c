@@ -14,7 +14,7 @@ SceneCmd old_lost_woods_room_0[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader0x0008D0),
     SCENE_CMD_OBJECT_LIST(10, old_lost_woods_room_0ObjectList0x000040),
-    SCENE_CMD_ACTOR_LIST(140, old_lost_woods_room_0ActorList0x000048),
+    SCENE_CMD_ACTOR_LIST(139, old_lost_woods_room_0ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -33,7 +33,6 @@ s16 old_lost_woods_room_0ObjectList0x000040[] = {
     OBJECT_LOST_WOODS,
     OBJECT_WOOD02,
     OBJECT_OWL,
-    OBJECT_DEKUCITY_OBJ,
     OBJECT_FR,
 };
 
@@ -177,7 +176,6 @@ ActorEntry old_lost_woods_room_0ActorList0x000048[] = {
     { ACTOR_EN_ISHI,        {  2063,  170,  3295 }, {      0,      0,      0 }, 0x5001 },
     { ACTOR_EN_ISHI,        {  2004,  170,  3324 }, {      0,      0,      0 }, 0x6001 },
     { ACTOR_EN_ISHI,        {  1993,  170,  3395 }, {      0,      0,      0 }, 0x7001 },
-    { ACTOR_OBJ_PURIFY,     { -3000, -250,  -100 }, {      0, 0xC000,      0 }, 0x0003 },
 };
 
 RoomShapeCullable old_lost_woods_room_0MeshHeader0x0008D0 = {
@@ -206,7 +204,7 @@ SceneCmd old_lost_woods_room_0Set_timeskip[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader0x0008D0),
     SCENE_CMD_OBJECT_LIST(10, old_lost_woods_room_0ObjectList0x000040),
-    SCENE_CMD_ACTOR_LIST(141, old_lost_woods_room_0ActorList_timeskip),
+    SCENE_CMD_ACTOR_LIST(140, old_lost_woods_room_0ActorList_timeskip),
     SCENE_CMD_END(),
 };
 
@@ -350,7 +348,6 @@ ActorEntry old_lost_woods_room_0ActorList_timeskip[] = {
     { ACTOR_EN_OWL,         {  1875,  640, -1800 }, {      0,      0,      0 }, 0x037F },
     { ACTOR_DOOR_ANA,       {  2175,  160,  1425 }, {      0,      0,     20 }, 0x0000 },
     { ACTOR_OBJ_MURE,       {  2175,  188,  1425 }, {      0,      0,      0 }, 0x5324 },
-    { ACTOR_OBJ_PURIFY,     { -3000, -250,  -100 }, {      0, 0xC000,      0 }, 0x0003 },
     { ACTOR_EN_FR,          { -1000,  438, -3100 }, {      0,      0,      0 }, 0x0212 }, // Blue: 1 (Ancient Hollow & Forbidden Woods)
 };
 
@@ -709,13 +706,11 @@ u64 old_lost_woods_room_0Tex_00C290[] = {
 };
 
 Gfx old_lost_woods_room_0Dlist0x001C60[] = {
-    gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_001BE0[0], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsDPPipeSync(),
     gsSPTexture(65535, 65535, 0, 0, G_ON),
     gsDPLoadTextureBlock(old_lost_woods_sceneTex_007900, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, 0, 0, 5, 5, 0, 0),
     gsDPSetCombineLERP(TEXEL0, K5, SHADE, COMBINED_ALPHA, 0, 0, 0, TEXEL0, COMBINED, K5, PRIMITIVE, COMBINED_ALPHA, COMBINED, 0, PRIMITIVE, 0),
@@ -1204,13 +1199,11 @@ static Vtx old_lost_woods_room_0Vtx_005D10[] = {
 };
 
 Gfx old_lost_woods_room_0Dlist0x005D90[] = {
-    gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_005D10[0], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsDPPipeSync(),
     gsSPTexture(65535, 65535, 0, 0, G_ON),
     gsDPLoadTextureBlock(old_lost_woods_sceneTex_007900, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, 0, 0, 5, 5, 0, 0),
     gsDPSetCombineLERP(TEXEL0, K5, SHADE, COMBINED_ALPHA, 0, 0, 0, TEXEL0, COMBINED, K5, PRIMITIVE, COMBINED_ALPHA, COMBINED, 0, PRIMITIVE, 0),
@@ -1788,13 +1781,11 @@ static Vtx old_lost_woods_room_0Vtx_0089B0[] = {
 };
 
 Gfx old_lost_woods_room_0Dlist0x008A30[] = {
-    gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_0089B0[0], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsDPPipeSync(),
     gsSPTexture(65535, 65535, 0, 0, G_ON),
     gsDPLoadTextureBlock(old_lost_woods_sceneTex_007900, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, 0, 0, 5, 5, 0, 0),
     gsDPSetCombineLERP(TEXEL0, K5, SHADE, COMBINED_ALPHA, 0, 0, 0, TEXEL0, COMBINED, K5, PRIMITIVE, COMBINED_ALPHA, COMBINED, 0, PRIMITIVE, 0),
@@ -2230,13 +2221,11 @@ u64 old_lost_woods_room_0Tex_00DA90[] = {
 };
 
 Gfx old_lost_woods_room_0Dlist0x00BDC8[] = {
-    gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_00BD48[0], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsDPPipeSync(),
     gsSPTexture(65535, 65535, 0, 0, G_ON),
     gsDPLoadTextureBlock(old_lost_woods_sceneTex_007900, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, 0, 0, 5, 5, 0, 0),
     gsDPSetCombineLERP(TEXEL0, K5, SHADE, COMBINED_ALPHA, 0, 0, 0, TEXEL0, COMBINED, K5, PRIMITIVE, COMBINED_ALPHA, COMBINED, 0, PRIMITIVE, 0),
@@ -2648,13 +2637,11 @@ static Vtx old_lost_woods_room_0Vtx_00F330[] = {
 };
 
 Gfx old_lost_woods_room_0Dlist0x00F3B0[] = {
-    gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_00F330[0], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsDPPipeSync(),
     gsSPTexture(65535, 65535, 0, 0, G_ON),
     gsDPLoadTextureBlock(old_lost_woods_sceneTex_007900, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, 0, 0, 5, 5, 0, 0),
     gsDPSetCombineLERP(TEXEL0, K5, SHADE, COMBINED_ALPHA, 0, 0, 0, TEXEL0, COMBINED, K5, PRIMITIVE, COMBINED_ALPHA, COMBINED, 0, PRIMITIVE, 0),
@@ -2923,13 +2910,11 @@ static Vtx old_lost_woods_room_0Vtx_0127B8[] = {
 };
 
 Gfx old_lost_woods_room_0Dlist0x012838[] = {
-    gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_0127B8[0], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsDPPipeSync(),
     gsSPTexture(65535, 65535, 0, 0, G_ON),
     gsDPLoadTextureBlock(old_lost_woods_sceneTex_007900, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, 0, 0, 5, 5, 0, 0),
     gsDPSetCombineLERP(TEXEL0, K5, SHADE, COMBINED_ALPHA, 0, 0, 0, TEXEL0, COMBINED, K5, PRIMITIVE, COMBINED_ALPHA, COMBINED, 0, PRIMITIVE, 0),
@@ -3448,13 +3433,11 @@ static Vtx old_lost_woods_room_0Vtx_015440[] = {
 };
 
 Gfx old_lost_woods_room_0Dlist0x0154C0[] = {
-    gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_015440[0], 8, 0),
     gsSPCullDisplayList(0, 7),
     gsDPPipeSync(),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
-    gsDPPipeSync(),
     gsSPTexture(65535, 65535, 0, 0, G_ON),
     gsDPLoadTextureBlock(old_lost_woods_room_0Tex_003B10, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, 0, 1, 5, 5, 0, 0),
     gsDPSetCombineLERP(TEXEL0, K5, SHADE, COMBINED_ALPHA, 0, 0, 0, TEXEL0, COMBINED, K5, PRIMITIVE, COMBINED_ALPHA, COMBINED, 0, PRIMITIVE, 0),
@@ -3686,7 +3669,6 @@ u64 old_lost_woods_room_0Tex_019720[] = {
 };
 
 Gfx old_lost_woods_room_0Dlist0x019660[] = {
-    gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_0195E0[0], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -3852,7 +3834,6 @@ u64 old_lost_woods_room_0Tex_01A900[] = {
 };
 
 Gfx old_lost_woods_room_0Dlist0x01A730[] = {
-    gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_01A6B0[0], 8, 0),
     gsSPCullDisplayList(0, 7),

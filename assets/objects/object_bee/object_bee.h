@@ -1,7 +1,6 @@
 #ifndef OBJECT_BEE_H
 #define OBJECT_BEE_H
 
-#include "gfx.h"
 #include "animation.h"
 #include "ultra64.h"
 
@@ -19,12 +18,8 @@ typedef enum ObjectBeeLimb {
     /* 0x0A */ OBJECT_BEE_LIMB_MAX
 } ObjectBeeLimb;
 
-extern Gfx gBeeBodyDL[];
-extern Gfx gBeeHeadDL[];
-extern Gfx gBeeAntennaeDL[];
-extern Gfx gBeeRightWingDL[];
-extern Gfx gBeeLeftWingDL[];
 extern AnimationHeader gBeeFlyingAnim;
+
 extern SkeletonHeader gBeeSkel;
 
 #endif

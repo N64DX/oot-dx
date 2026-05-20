@@ -23,30 +23,17 @@ typedef enum CarnivorousLilyPadLimb {
 
 extern u64 gCarnivorousLilyPadTrapPetalTex[];
 extern u64 gCarnivorousLilyPadTrapTeethTex[];
-extern CollisionPoly gCarnivorousLilyPadColPolygons[];
-extern Gfx gCarnivorousLilyPadTexturelessPlatformDL[];
-extern Gfx gCarnivorousLilyPadFlowerDL[];
-extern Gfx gCarnivorousLilyPadRootsDL[];
-extern Gfx gCarnivorousLilyPadTrap3LowerSegmentDL[];
-extern Gfx gCarnivorousLilyPadTrap3MiddleSegmentDL[];
-extern Gfx gCarnivorousLilyPadTrap3UpperSegmentDL[];
-extern Gfx gCarnivorousLilyPadTrap2LowerSegmentDL[];
-extern Gfx gCarnivorousLilyPadTrap2MiddleSegmentDL[];
-extern Gfx gCarnivorousLilyPadTrap2UpperSegmentDL[];
-extern Gfx gCarnivorousLilyPadTrap1LowerSegmentDL[];
-extern Gfx gCarnivorousLilyPadTrap1MiddleSegmentDL[];
-extern Gfx gCarnivorousLilyPadTrap1UpperSegmentDL[];
-extern Gfx gCarnivorousLilyPadParticlePetalDL[];
-extern Gfx gCarnivorousLilyPadParticleTeethDL[];
+
 extern Gfx gCarnivorousLilyPadParticleDL[];
-extern Vec3s gCarnivorousLilyPadColVertices[];
+
 extern CollisionHeader gCarnivorousLilyPadCol;
+
 extern AnimationHeader gCarnivorousLilyPadConvulseAnim;
 extern AnimationHeader gCarnivorousLilyPadDeathAnim;
 extern AnimationHeader gCarnivorousLilyPadSpitAnim;
 extern AnimationHeader gCarnivorousLilyPadChewAnim;
 extern AnimationHeader gCarnivorousLilyPadCloseAnim;
-extern void* gCarnivorousLilyPadSkelLimbs[];
+
 extern FlexSkeletonHeader gCarnivorousLilyPadSkel;
 
 #endif

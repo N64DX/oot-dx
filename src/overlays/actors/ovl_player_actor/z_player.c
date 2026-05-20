@@ -852,6 +852,8 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_BROKEN_GORONS_SWORD, OBJECT_GI_GOLD_DUST, GID_GOLD_DUST, 0x800A, 0x80, CHEST_ANIM_LONG),
     // GI_BOOTS_UPGRADE
 	GET_ITEM(ITEM_BOOTS_UPGRADE, OBJECT_GI_BOOTS_2, GID_BOOTS_KOKIRI, 0x901D, 0x80, CHEST_ANIM_LONG),
+    // GI_PERFECT_BLOCK_UPGRADE
+	GET_ITEM(ITEM_PERFECT_BLOCK_UPGRADE, OBJECT_GI_TITLE_DEED, GID_LAND_TITLE_DEED, 0x901E, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_MASTER
 	GET_ITEM(ITEM_MASTER_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9005, 0x80, CHEST_ANIM_LONG),
     // GI_WALLET_ROYAL
@@ -1204,18 +1206,19 @@ static LinkAnimationHeader* D_80853D4C[][3] = {
 typedef enum FidgetType {
     /* 0x00 */ FIDGET_LOOK_AROUND, // ROOM_ENV_DEFAULT
     /* 0x01 */ FIDGET_COLD,        // ROOM_ENV_COLD
-    /* 0x02 */ FIDGET_WARM,        // ROOM_ENV_WARM
-    /* 0x03 */ FIDGET_HOT,         // ROOM_ENV_HOT (same animations as FIDGET_WARM)
-    /* 0x04 */ FIDGET_STRETCH_1,   // ROOM_ENV_UNK_STRETCH_1
-    /* 0x05 */ FIDGET_STRETCH_2,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
-    /* 0x06 */ FIDGET_STRETCH_3,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
-    /* 0x07 */ FIDGET_CRIT_HEALTH_START,
-    /* 0x08 */ FIDGET_CRIT_HEALTH_LOOP,
-    /* 0x09 */ FIDGET_SWORD_SWING,
-    /* 0x0A */ FIDGET_ADJUST_TUNIC,
-    /* 0x0B */ FIDGET_TAP_FEET,
-    /* 0x0C */ FIDGET_ADJUST_SHIELD,
-    /* 0x0D */ FIDGET_SWORD_SWING_TWO_HAND
+    /* 0x02 */ FIDGET_FREEZING,    // ROOM_ENV_FREEZING (same animations as FIDGET_COLD)
+    /* 0x03 */ FIDGET_WARM,        // ROOM_ENV_WARM
+    /* 0x04 */ FIDGET_HOT,         // ROOM_ENV_HOT (same animations as FIDGET_WARM)
+    /* 0x05 */ FIDGET_STRETCH_1,   // ROOM_ENV_UNK_STRETCH_1
+    /* 0x06 */ FIDGET_STRETCH_2,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
+    /* 0x07 */ FIDGET_STRETCH_3,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
+    /* 0x08 */ FIDGET_CRIT_HEALTH_START,
+    /* 0x09 */ FIDGET_CRIT_HEALTH_LOOP,
+    /* 0x0A */ FIDGET_SWORD_SWING,
+    /* 0x0B */ FIDGET_ADJUST_TUNIC,
+    /* 0x0C */ FIDGET_TAP_FEET,
+    /* 0x0D */ FIDGET_ADJUST_SHIELD,
+    /* 0x0E */ FIDGET_SWORD_SWING_TWO_HAND
 } FidgetType;
 
 static LinkAnimationHeader* sFidgetAnimations[][2] = {
@@ -1223,6 +1226,9 @@ static LinkAnimationHeader* sFidgetAnimations[][2] = {
     { &gPlayerAnim_link_normal_wait_typeA_20f, &gPlayerAnim_link_normal_waitF_typeA_20f },
 
     // FIDGET_COLD
+    { &gPlayerAnim_link_normal_wait_typeC_20f, &gPlayerAnim_link_normal_waitF_typeC_20f },
+
+    // FIDGET_FREEZING
     { &gPlayerAnim_link_normal_wait_typeC_20f, &gPlayerAnim_link_normal_waitF_typeC_20f },
 
     // FIDGET_WARM
@@ -1351,6 +1357,8 @@ static u8 sFidgetAnimSfxTypes[] = {
     FIDGET_ANIMSFX_NONE,              // FIDGET_LOOK_AROUND (sword/shield in hand)
     FIDGET_ANIMSFX_SNEEZE,            // FIDGET_COLD
     FIDGET_ANIMSFX_SNEEZE,            // FIDGET_COLD (sword/shield in hand)
+    FIDGET_ANIMSFX_SNEEZE,            // FIDGET_FREEZING
+    FIDGET_ANIMSFX_SNEEZE,            // FIDGET_FREEZING (sword/shield in hand)
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_WARM
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_WARM (sword/shield in hand)
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_HOT
@@ -4603,6 +4611,9 @@ s32 Player_CalcSpeedAndYawFromControlStick(PlayState* play, Player* this, f32* o
     f32 floorPitchInfluence;
     f32 speedCap;
 
+    if (R_WEB_TIMER > 0)
+        R_WEB_TIMER--; // Decrease the timer each frame
+
     if ((this->unk_6AD != 0) || (play->transitionTrigger == TRANS_TRIGGER_START) ||
         (this->stateFlags1 & PLAYER_STATE1_0)) {
         *outSpeedTarget = 0.0f;
@@ -4634,6 +4645,8 @@ s32 Player_CalcSpeedAndYawFromControlStick(PlayState* play, Player* this, f32* o
         if (sControlStickMagnitude != 0.0f) {
             sinFloorPitch = Math_SinS(this->floorPitch);
             speedCap = this->unk_880;
+            if (R_WEB_TIMER > 0)
+                speedCap *= 0.6f;
             floorPitchInfluence = CLAMP(sinFloorPitch, 0.0f, 0.6f);
 
             if (this->unk_6C4 != 0.0f) {
@@ -10284,12 +10297,23 @@ static AnimSfxEntry D_808545F0[] = {
     { 0, -ANIMSFX_DATA(ANIMSFX_TYPE_WALKING, 170) },
 };
 
+static bool sLinkIsFrozenToDeath = false;
+
 void Player_Action_80843CEC(Player* this, PlayState* play) {
     if (this->currentTunic != PLAYER_TUNIC_GORON) {
         if ((play->roomCtx.curRoom.environmentType == ROOM_ENV_HOT) || (sFloorType == FLOOR_TYPE_9) ||
             ((func_80838144(sFloorType) >= 0) &&
              !func_80042108(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId))) {
             func_8083821C(this);
+        }
+    }
+
+    if (this->currentTunic != PLAYER_TUNIC_ZORA) {
+        if (play->roomCtx.curRoom.environmentType == ROOM_ENV_FREEZING && !sLinkIsFrozenToDeath && play->gameOverCtx.state < GAMEOVER_DEATH_DELAY_MENU) {
+            sLinkIsFrozenToDeath = true;
+            EffectSsIcePiece_SpawnBurst(play, &this->actor.world.pos, this->actor.scale.x);
+            Player_PlaySfx(this, NA_SE_PL_FREEZE_S);
+            Player_PlayVoiceSfx(this, NA_SE_VO_LI_FREEZE);
         }
     }
 

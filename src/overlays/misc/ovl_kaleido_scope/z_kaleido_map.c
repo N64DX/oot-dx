@@ -42,7 +42,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
         gPauseFireTitleENGTex, gPauseWaterTitleENGTex,     gPauseSpiritTitleENGTex, gPauseShadowTitleENGTex,
         gPauseBotWTitleENGTex, gPauseIceCavernTitleENGTex, NULL,                    NULL,
         NULL,                  NULL,                       NULL,                    NULL,
-        NULL,                  NULL,                       NULL,
+        NULL,                  NULL,                       NULL,                    NULL,
     };
     static void* floorIconTexs[] = {
         gDungeonMapBlankFloorButtonTex, gDungeonMap8FButtonTex, gDungeonMap7FButtonTex, gDungeonMap6FButtonTex,

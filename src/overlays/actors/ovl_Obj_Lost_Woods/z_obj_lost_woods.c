@@ -12,6 +12,7 @@
 #include "sfx.h"
 #include "play_state.h"
 #include "z_en_item00.h"
+#include "save.h"
 
 #define FLAGS 0
 
@@ -44,9 +45,13 @@ void ObjLostWoods_Init(Actor* thisx, struct PlayState* play) {
     CollisionHeader* colHeader;
     ObjLostWoods* this = (ObjLostWoods*)thisx;;
 
-    this->dyna.actor.cullingVolumeDistance = 3000.0f;
-    this->dyna.actor.cullingVolumeScale = 1000.0f;
-    this->dyna.actor.cullingVolumeDownward = 1400.0f;
+    if (EXTENDED_DRAW_DISTANCE)
+        this->dyna.actor.cullingVolumeDistance = this->dyna.actor.cullingVolumeScale = this->dyna.actor.cullingVolumeDownward = 32767.0f;
+    else {
+        this->dyna.actor.cullingVolumeDistance = 2000.0f;
+        this->dyna.actor.cullingVolumeScale    = 1000.0f;
+        this->dyna.actor.cullingVolumeDownward = 1400.0f;
+    }
 
     switch (thisx->params & 0x00FF) {
         case 0x15: { // Porcino / Kakariko beta tree
@@ -133,9 +138,11 @@ void ObjLostWoods_Init(Actor* thisx, struct PlayState* play) {
             thisx->shape.yOffset = -28.0f;
             thisx->scale.x = thisx->scale.z = 6.00f;
             thisx->scale.y = 3.00f;
-            this->dyna.actor.cullingVolumeDistance = 6000.0f;
-            this->dyna.actor.cullingVolumeScale    = 4000.0f;
-            this->dyna.actor.cullingVolumeDownward = 4000.0f;
+            if (!EXTENDED_DRAW_DISTANCE) {
+                this->dyna.actor.cullingVolumeDistance = 6000.0f;
+                this->dyna.actor.cullingVolumeScale    = 4000.0f;
+                this->dyna.actor.cullingVolumeDownward = 4000.0f;
+            }
             break;
         case 0x1A: { // Huge tree without top
             static ColliderCylinderInit hugeTreeCylinderInit = {
@@ -161,9 +168,11 @@ void ObjLostWoods_Init(Actor* thisx, struct PlayState* play) {
             Actor_SetScale(thisx, 0.75f);
             Collider_InitCylinder(play, &this->collider);
             Collider_SetCylinder(play, &this->collider, &this->dyna.actor, &hugeTreeCylinderInit);
-            this->dyna.actor.cullingVolumeDistance = 6000.0f;
-            this->dyna.actor.cullingVolumeScale    = 4000.0f;
-            this->dyna.actor.cullingVolumeDownward = 4000.0f;
+            if (!EXTENDED_DRAW_DISTANCE) {
+                this->dyna.actor.cullingVolumeDistance = 2000.0f;
+                this->dyna.actor.cullingVolumeScale    = 1500.0f;
+                this->dyna.actor.cullingVolumeDownward = 1500.0f;
+            }
         } break;
         case 0x1B: // Log tunnel
             DynaPolyActor_Init(&this->dyna, 1);
@@ -288,12 +297,6 @@ void ObjLostWoods_EnKusa_SpawnFragments(ObjLostWoods* this, struct PlayState* pl
 void ObjLostWoods_Update(Actor* thisx, struct PlayState* play) {
     ObjLostWoods* this = (ObjLostWoods*)thisx;;
 
-    if (thisx->textId == 0x0203) {
-        Actor_OfferTalk(&this->dyna.actor, play, 75.0f);
-        thisx->flags |= 1;
-        Actor_SetFocus(&this->dyna.actor, 20.0f);
-    }
-
     if (thisx->params == 0x05 && !this->cut && this->collider.base.acFlags & AC_HIT) {
         this->collider.base.acFlags &= ~AC_HIT;
         ObjLostWoods_EnKusa_SpawnFragments(this, play);
@@ -303,7 +306,7 @@ void ObjLostWoods_Update(Actor* thisx, struct PlayState* play) {
         this->collider.dim.radius = 10;
     }
 
-    if (ObjLostWoods_HasCollider(thisx->params) && (thisx->xzDistToPlayer < 600.0f)) {
+    if (ObjLostWoods_HasCollider(thisx->params) && thisx->xzDistToPlayer < 600.0f) {
         Collider_UpdateCylinder(thisx, &this->collider);
         CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
         CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);

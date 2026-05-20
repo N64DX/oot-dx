@@ -12,8 +12,8 @@ SceneCmd woodfall_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&woodfall_room_0RoomShapeCullable_0003B0),
-    SCENE_CMD_OBJECT_LIST(8, woodfall_room_0ObjectList_000050),
-    SCENE_CMD_ACTOR_LIST(37, woodfall_room_0ActorEntry_000064),
+    SCENE_CMD_OBJECT_LIST(10, woodfall_room_0ObjectList_000050),
+    SCENE_CMD_ACTOR_LIST(36, woodfall_room_0ActorEntry_000064),
     SCENE_CMD_END(),
 };
 
@@ -27,6 +27,8 @@ s16 woodfall_room_0ObjectList_000050[] = {
     OBJECT_WOOD_PILLAR,
     OBJECT_RAILLIFT,
     OBJECT_FR,
+    OBJECT_ICEFLOE,
+    OBJECT_SPOT18_OBJ,
 };
 
 ActorEntry woodfall_room_0ActorEntry_000064[] = {
@@ -62,14 +64,13 @@ ActorEntry woodfall_room_0ActorEntry_000064[] = {
     { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0,      0,    0 }, 0x0001 }, // Walls
     { ACTOR_OBJ_RAILLIFT,   {     0,    200,    600 }, {    0,      0,    0 }, 0x8000 },
     { ACTOR_OBJ_RAILLIFT,   {   750,    250,   1350 }, {    0, 0x2000,    0 }, 0x8001 },
-    { ACTOR_BG_WOOD_PILLAR, {  -250,   -100,   1100 }, {    0,      0,    0 }, 0x0000 },
-    { ACTOR_BG_WOOD_PILLAR, {    50,   -100,   1400 }, {    0,      0,    0 }, 0x0000 },
-    { ACTOR_BG_WOOD_PILLAR, {   300,      0,   1100 }, {    0,      0,    0 }, 0x0000 },
-    { ACTOR_BG_WOOD_PILLAR, { -1266,   -100,    414 }, {    0,      0,    0 }, 0x0000 },
-    { ACTOR_BG_WOOD_PILLAR, {  1011,    -40,    455 }, {    0,      0,    0 }, 0x0000 },
-    { ACTOR_BG_WOOD_PILLAR, {  -485,   -200,  -1359 }, {    0,      0,    0 }, 0x0000 },
-    { ACTOR_BG_WOOD_PILLAR, {   750,    -10,    850 }, {    0,      0,    0 }, 0x0000 },
-    { ACTOR_BG_WOOD_PILLAR, {  1000,    -60,   -100 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_BG_WOOD_PILLAR, {  -250,   -100,   1100 }, {    0,      0,    0 }, 0x0002 },
+    { ACTOR_BG_WOOD_PILLAR, {    50,   -100,   1400 }, {    0,      0,    0 }, 0x0002 },
+    { ACTOR_BG_WOOD_PILLAR, {   300,      0,   1100 }, {    0,      0,    0 }, 0x0002 },
+    { ACTOR_BG_WOOD_PILLAR, { -1266,   -100,    414 }, {    0,      0,    0 }, 0x0002 },
+    { ACTOR_BG_WOOD_PILLAR, {  1011,    -40,    455 }, {    0,      0,    0 }, 0x0002 },
+    { ACTOR_BG_WOOD_PILLAR, {   750,    -10,    850 }, {    0,      0,    0 }, 0x0002 },
+    { ACTOR_BG_WOOD_PILLAR, {  1000,    -60,   -100 }, {    0,      0,    0 }, 0x0002 },
 };
 
 RoomShapeCullable woodfall_room_0RoomShapeCullable_0003B0 = { 

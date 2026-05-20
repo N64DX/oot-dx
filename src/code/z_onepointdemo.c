@@ -44,6 +44,31 @@ static CutsceneCameraPoint D_8012021C[14] = {
     { CS_CAM_CONTINUE, 0, 0, 60.0f, { -2007, 10, -1004 } },  { CS_CAM_CONTINUE, 0, 0, 60.0f, { -2007, 10, -1004 } },
     { CS_CAM_STOP, 0, 0, 60.0f, { -2007, 10, -1004 } },      { CS_CAM_STOP, 0, 0, 60.0f, { -2007, 10, -1004 } },
 };
+static CutsceneCameraPoint D_8012013C_2[14] = {
+    { CS_CAM_CONTINUE, 25, 40, 70.79991f, { -1717, 533, -2266 } },
+    { CS_CAM_CONTINUE, 20, 40, 70.99991f, { -1713, 434, -2275 } },
+    { CS_CAM_CONTINUE, 10, 30, 60.0f, { -1700, 323, -2286 } },
+    { CS_CAM_CONTINUE, 5, 25, 60.0f, { -1690, 218, -2263 } },
+    { CS_CAM_CONTINUE, 3, 20, 60.0f, { -1663, 168, -2244 } },
+    { CS_CAM_CONTINUE, 0, 20, 60.0f, { -1613, 115, -2175 } },
+    { CS_CAM_CONTINUE, 0, 30, 55.0f, { -1632, 58, -2111 } },
+    { CS_CAM_CONTINUE, 0, 30, 55.0f, { -1584, 31, -2111 } },
+    { CS_CAM_CONTINUE, 0, 30, 60.0f, { -1629, 54, -2111 } },
+    { CS_CAM_CONTINUE, 0, 30, 60.0f, { -1626, 35, -2107 } },
+    { CS_CAM_CONTINUE, 0, 50, 60.0f, { -1599, 12, -2106 } },
+    { CS_CAM_CONTINUE, 0, 50, 60.0f, { -1599, 12, -2106 } },
+    { CS_CAM_STOP, 0, 50, 60.0f, { -1599, 12, -2106 } },
+    { CS_CAM_STOP, 0, 30, 60.0f, { -1599, 12, -2106 } },
+};
+static CutsceneCameraPoint D_8012021C_2[14] = {
+    { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1653, 604, -2329 } }, { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1653, 516, -2328 } },
+    { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1653, 417, -2329 } }, { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1639, 306, -2313 } },
+    { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1625, 257, -2304 } }, { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1569, 147, -2199 } },
+    { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1497, 72, -2111 } },  { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1468, 7, -2111 } },
+    { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1450, 1, -2111 } },   { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1496, 17, -2093 } },
+    { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1424, 10, -2073 } },  { CS_CAM_CONTINUE, 0, 0, 60.0f, { -1424, 10, -2073 } },
+    { CS_CAM_STOP, 0, 0, 60.0f, { -1424, 10, -2073 } },      { CS_CAM_STOP, 0, 0, 60.0f, { -1424, 10, -2073 } },
+};
 static s16 D_801202FC = 13;
 static s16 D_80120300 = 210;
 static s16 D_80120304 = 0;
@@ -1868,6 +1893,45 @@ s32 OnePointCutscene_SetInfo(PlayState* play, s16 subCamId, s16 csId, Actor* act
             break;
         }
 
+        case 3381: {
+            static OnePointCsFull D_801218B4_2[2] = {
+                {
+                    ONEPOINT_CS_ACTION(ONEPOINT_CS_ACTION_ID_15, false, false),
+                    ONEPOINT_CS_INIT_FIELD_NONE,
+                    0x0101,
+                    60,
+                    0,
+                    65.0f,
+                    1.0f,
+                    { 1.0f, 400.0f, -3029.0f },
+                    { 0.0f, 620.0f, -2380.0f },
+                },
+                {
+                    ONEPOINT_CS_ACTION(ONEPOINT_CS_ACTION_ID_3, false, false),
+                    ONEPOINT_CS_INIT_FIELD_NONE,
+                    0x0101,
+                    100,
+                    0,
+                    70.0f,
+                    0.02f,
+                    { 0.0f, 224.0f, -2917.0f },
+                    { 0.0f, 264.0f, -2657.0f },
+                },
+            };
+
+            csInfo->keyFrames = D_801218B4_2;
+            csInfo->keyFrameCount = ARRAY_COUNT(D_801218B4_2);
+
+            Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_8);
+            Play_InitCameraDataUsingPlayer(play, subCamId, player, CAM_SET_CS_C);
+
+            i = Quake_Request(subCam, QUAKE_TYPE_1);
+            Quake_SetSpeed(i, 24000);
+            Quake_SetPerturbations(i, 2, 0, 0, 0);
+            Quake_SetDuration(i, 160);
+            break;
+        }
+
         case 3060: {
             static OnePointCsFull D_80121904[2] = {
                 {
@@ -1906,9 +1970,7 @@ s32 OnePointCutscene_SetInfo(PlayState* play, s16 subCamId, s16 csId, Actor* act
             Play_RequestCameraSetting(play, subCamId, CAM_SET_CS_3);
             Player_SetCsActionWithHaltedActors(play, &player->actor, PLAYER_CSACTION_5);
             OnePointCutscene_SetCsCamPoints(subCam, D_80120304 | 0x2000, D_80120300, D_8012013C, D_8012021C);
-#if OOT_VERSION >= PAL_1_0
             Sfx_PlaySfxCentered(NA_SE_SY_CORRECT_CHIME);
-#endif
             OnePointCutscene_Vec3sToVec3f(&mainCam->at, &D_8012013C[D_801202FC - 2].pos);
             OnePointCutscene_Vec3sToVec3f(&mainCam->eye, &D_8012021C[D_801202FC - 2].pos);
             D_8012013C[D_801202FC - 3].pos.x +=
@@ -1924,24 +1986,33 @@ s32 OnePointCutscene_SetInfo(PlayState* play, s16 subCamId, s16 csId, Actor* act
             D_8012021C[D_801202FC - 3].pos.z +=
                 (D_8012021C[D_801202FC - 2].pos.z - D_8012021C[D_801202FC - 3].pos.z) / 2;
 
-#if OOT_VERSION < PAL_1_0
-            i = Quake_Request(subCam, QUAKE_TYPE_1);
-            Quake_SetSpeed(i, 30000);
-            Quake_SetPerturbations(i, 3, 1, 1, 0);
-            Quake_SetDuration(i, D_80120300);
-
-            i = Quake_Request(mainCam, QUAKE_TYPE_3);
-            Quake_SetSpeed(i, 30000);
-            Quake_SetPerturbations(i, 3, 1, 1, 0);
-            Quake_SetDuration(i, D_80120300 + 50);
-#else
             i = Quake_Request(mainCam, QUAKE_TYPE_3);
             Quake_SetSpeed(i, 30000);
             Quake_SetPerturbations(i, 2, 1, 1, 0);
             Quake_SetDuration(i, 200);
-#endif
             break;
         }
+
+        case 3051:
+            Play_RequestCameraSetting(play, subCamId, CAM_SET_CS_3);
+            Player_SetCsActionWithHaltedActors(play, &player->actor, PLAYER_CSACTION_5);
+            OnePointCutscene_SetCsCamPoints(subCam, D_80120304 | 0x2000, D_80120300, D_8012013C_2, D_8012021C_2);
+            Sfx_PlaySfxCentered(NA_SE_SY_CORRECT_CHIME);
+            OnePointCutscene_Vec3sToVec3f(&mainCam->at, &D_8012013C_2[D_801202FC - 2].pos);
+            OnePointCutscene_Vec3sToVec3f(&mainCam->eye, &D_8012021C_2[D_801202FC - 2].pos);
+
+            D_8012013C_2[D_801202FC - 3].pos.x += (D_8012013C_2[D_801202FC - 2].pos.x - D_8012013C_2[D_801202FC - 3].pos.x) / 2;
+            D_8012013C_2[D_801202FC - 3].pos.y += (D_8012013C_2[D_801202FC - 2].pos.y - D_8012013C_2[D_801202FC - 3].pos.y) / 2;
+            D_8012013C_2[D_801202FC - 3].pos.z += (D_8012013C_2[D_801202FC - 2].pos.z - D_8012013C_2[D_801202FC - 3].pos.z) / 2;
+            D_8012021C_2[D_801202FC - 3].pos.x += (D_8012021C_2[D_801202FC - 2].pos.x - D_8012021C_2[D_801202FC - 3].pos.x) / 2;
+            D_8012021C_2[D_801202FC - 3].pos.y += (D_8012021C_2[D_801202FC - 2].pos.y - D_8012021C_2[D_801202FC - 3].pos.y) / 2;
+            D_8012021C_2[D_801202FC - 3].pos.z += (D_8012021C_2[D_801202FC - 2].pos.z - D_8012021C_2[D_801202FC - 3].pos.z) / 2;
+
+            i = Quake_Request(mainCam, QUAKE_TYPE_3);
+            Quake_SetSpeed(i, 30000);
+            Quake_SetPerturbations(i, 2, 1, 1, 0);
+            Quake_SetDuration(i, 200);
+            break;
 
         case 3120: {
             static OnePointCsFull D_80121954[3][2] = {

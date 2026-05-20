@@ -103,9 +103,10 @@ typedef enum PlayerMask {
 typedef enum PlayerEnvHazard {
     /* 0x0 */ PLAYER_ENV_HAZARD_NONE,
     /* 0x1 */ PLAYER_ENV_HAZARD_HOTROOM,
-    /* 0x2 */ PLAYER_ENV_HAZARD_UNDERWATER_FLOOR,
-    /* 0x3 */ PLAYER_ENV_HAZARD_SWIMMING,
-    /* 0x4 */ PLAYER_ENV_HAZARD_UNDERWATER_FREE
+    /* 0x2 */ PLAYER_ENV_HAZARD_FREEZINGROOM,
+    /* 0x3 */ PLAYER_ENV_HAZARD_UNDERWATER_FLOOR,
+    /* 0x4 */ PLAYER_ENV_HAZARD_SWIMMING,
+    /* 0x5 */ PLAYER_ENV_HAZARD_UNDERWATER_FREE
 } PlayerEnvHazard;
 
 typedef enum PlayerIdleType {

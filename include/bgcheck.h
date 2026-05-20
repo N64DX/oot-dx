@@ -178,7 +178,7 @@ typedef enum SurfaceSfxOffset {
     /* 11 */ SURFACE_SFX_OFFSET_BRIDGE, // WOOD_PLANK?
     /* 12 */ SURFACE_SFX_OFFSET_VINE,
     /* 13 */ SURFACE_SFX_OFFSET_IRON_BOOTS,
-    /* 14 */ SURFACE_SFX_OFFSET_UNUSED,
+    /* 14 */ SURFACE_SFX_OFFSET_SNOW,
     /* 15 */ SURFACE_SFX_OFFSET_ICE
 } SurfaceSfxOffset;
 
@@ -197,7 +197,8 @@ typedef enum SurfaceMaterial {
     /* 11 */ SURFACE_MATERIAL_DIRT_SOFT,
     /* 12 */ SURFACE_MATERIAL_ICE,
     /* 13 */ SURFACE_MATERIAL_CARPET,
-    /* 14 */ SURFACE_MATERIAL_MAX
+    /* 13 */ SURFACE_MATERIAL_SNOW,
+    /* 15 */ SURFACE_MATERIAL_MAX
 } SurfaceMaterial;
 
 typedef enum FloorEffect {

@@ -54,14 +54,15 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 
 **Actors and objects:**
 - **GrandLovania**: Stalmaster
-- **LeSéducteur:** Buff Scrub
+- **LeSéducteur:** Buff Scrub, King Deku
 - **Syeo & Trueffel:** Miniblin, Molmauk
-- **Sunset Tides Interactive:** Beast
+- **Sunset Tides Interactive:** Beast, Giant Spider, Black Beast
 - **thinedave & Aegiker:** Harder Mad Scrub, Biri, King Dodongo, Iron Knuckle & Ganondorf
 - **Zelda Spaceworld ´97 Experience:** Zol
 
 **Music tracks:**
 - "Kolima Forest" from "Golden Sun" by Asra
+- "Dungeon Cave" from Skies of Arcadia by doncamillo
 - "Ganon Battle" from "A Link to the Past" by Fish_waffle64
 - "Mysterious Forest" from "A Link to the Past" by Fish_waffle64
 - "Lake Hylia" from "Twilight Princess" by Liam
@@ -72,6 +73,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 **Scenes:**
 - Old Lost Woods from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Forbidden Woods
 - Fairy Deku Tree from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Ancient Hollow
+- Dodongo's Cavern from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Goron Mines
 
 ### Instructions
 

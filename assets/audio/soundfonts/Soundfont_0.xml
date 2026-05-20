@@ -291,6 +291,7 @@
         <Sample Name="SAMPLE_0_434"/>
         <Sample Name="SAMPLE_0_GABORA_1"/>
         <Sample Name="SAMPLE_0_GABORA_2"/>
+        <Sample Name="SAMPLE_0_SNOW_1"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_126"/>
@@ -532,5 +533,6 @@
         <Instrument ProgramNumber="86" Name="INST_86" Envelope="Env4" Sample="SAMPLE_0_114"/>
         <Instrument ProgramNumber="83" Name="INST_83" Envelope="Env0" Sample="SAMPLE_0_116"/>
         <Instrument ProgramNumber="82" Name="INST_82" Envelope="Env0" Sample="SAMPLE_0_119"/>
+        <Instrument ProgramNumber="92" Name="INST_92" Envelope="Env0" Sample="SAMPLE_0_SNOW_1"/>
     </Instruments>
 </Soundfont>

@@ -320,7 +320,7 @@ SurfaceType goron_village_sceneCollisionHeader_004DC4SurfaceType[] = {
             /* isHorseBlocked */ false
         ),
         SURFACETYPE1(
-            SURFACE_MATERIAL_ICE,
+            SURFACE_MATERIAL_SNOW,
             FLOOR_EFFECT_0,
             /* lightSetting */ 31,
             /* echo */ 2,
@@ -342,7 +342,7 @@ SurfaceType goron_village_sceneCollisionHeader_004DC4SurfaceType[] = {
             /* isHorseBlocked */ false
         ),
         SURFACETYPE1(
-            SURFACE_MATERIAL_ICE,
+            SURFACE_MATERIAL_SNOW,
             FLOOR_EFFECT_0,
             /* lightSetting */ 31,
             /* echo */ 2,

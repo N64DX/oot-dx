@@ -102,8 +102,8 @@ typedef enum SfxId {
 // enforced in Audio_PlayActiveSfx in sfx.c
 static_assert(NA_SE_PL_END - (NA_SE_PL_BASE + 1) <= 256, "Player Bank SFX Table is limited to 256 entries due to Sequence 0");
 static_assert(NA_SE_IT_END - (NA_SE_IT_BASE + 1) <= 128, "Item Bank SFX Table is limited to 128 entries due to Sequence 0");
-static_assert(NA_SE_EV_END - (NA_SE_EV_BASE + 1) <= 256, "Environment Bank SFX Table is limited to 256 entries due to Sequence 0");
-static_assert(NA_SE_EN_END - (NA_SE_EN_BASE + 1) <= 512, "Enemy Bank SFX Table is limited to 512 entries due to Sequence 0");
+static_assert(NA_SE_EV_END - (NA_SE_EV_BASE + 1) <= 256, "Environment Bank SFX Table is limited to 512 entries due to Sequence 0");
+static_assert(NA_SE_EN_END - (NA_SE_EN_BASE + 1) <= 768, "Enemy Bank SFX Table is limited to 512 entries due to Sequence 0");
 static_assert(NA_SE_SY_END - (NA_SE_SY_BASE + 1) <= 128, "System Bank SFX Table is limited to 128 entries due to Sequence 0");
 static_assert(NA_SE_OC_END - (NA_SE_OC_BASE + 1) <= 128, "Ocarina Bank SFX Table is limited to 128 entries due to Sequence 0");
 static_assert(NA_SE_VO_END - (NA_SE_VO_BASE + 1) <= 256, "Voice Bank SFX Table is limited to 256 entries due to Sequence 0");

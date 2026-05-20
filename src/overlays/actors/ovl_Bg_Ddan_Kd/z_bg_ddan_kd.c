@@ -114,14 +114,14 @@ void BgDdanKd_CheckForExplosions(BgDdanKd* this, PlayState* play) {
     if ((explosive != NULL) && (this->prevExplosive != NULL) && (explosive != this->prevExplosive) &&
         (Math_Vec3f_DistXZ(&this->prevExplosivePos, &explosive->world.pos) > 80.0f)) {
         BgDdanKd_SetupAction(this, BgDdanKd_LowerStairs);
-        OnePointCutscene_Init(play, 3050, 999, &this->dyna.actor, CAM_ID_MAIN);
+        OnePointCutscene_Init(play, play->sceneId == SCENE_GORON_MINES ? 3051 : 3050, 999, &this->dyna.actor, CAM_ID_MAIN);
     } else {
         if (this->timer != 0) {
             this->timer--;
         } else {
             this->prevExplosive = explosive;
             if (explosive != NULL) {
-                this->timer = 13;
+                this->timer = play->sceneId == SCENE_GORON_MINES ? 26 : 13;
                 this->prevExplosivePos = explosive->world.pos;
             }
         }

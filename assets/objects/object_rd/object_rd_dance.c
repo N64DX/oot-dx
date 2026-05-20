@@ -1,8 +1,5 @@
 #include "object_rd_dance.h"
 
-#include "array_count.h"
-#include "gfx.h"
-#include "sys_matrix.h"
 #include "ultra64.h"
 
 s16 sGibdoRedeadPirouetteAnimFrameData[] = {
@@ -36,8 +33,7 @@ JointIndex sGibdoRedeadPirouetteAnimJointIndices[] = {
 };
 
 AnimationHeader gGibdoRedeadPirouetteAnim = { 
-    { 25 }, sGibdoRedeadPirouetteAnimFrameData,
-    sGibdoRedeadPirouetteAnimJointIndices, 16
+    { 25 }, sGibdoRedeadPirouetteAnimFrameData, sGibdoRedeadPirouetteAnimJointIndices, 16
 };
 
 s16 sGibdoRedeadClappingDanceAnimFrameData[] = {
@@ -71,8 +67,7 @@ JointIndex sGibdoRedeadClappingDanceAnimJointIndices[] = {
 };
 
 AnimationHeader gGibdoRedeadClappingDanceAnim = { 
-    { 20 }, sGibdoRedeadClappingDanceAnimFrameData,
-    sGibdoRedeadClappingDanceAnimJointIndices, 13
+    { 20 }, sGibdoRedeadClappingDanceAnimFrameData, sGibdoRedeadClappingDanceAnimJointIndices, 13
 };
 
 s16 sGibdoRedeadSquattingDanceAnimFrameData[] = {
@@ -100,6 +95,5 @@ JointIndex sGibdoRedeadSquattingDanceAnimJointIndices[] = {
 };
 
 AnimationHeader gGibdoRedeadSquattingDanceAnim = { 
-    { 20 }, sGibdoRedeadSquattingDanceAnimFrameData,
-    sGibdoRedeadSquattingDanceAnimJointIndices, 24
+    { 20 }, sGibdoRedeadSquattingDanceAnimFrameData, sGibdoRedeadSquattingDanceAnimJointIndices, 24
 };

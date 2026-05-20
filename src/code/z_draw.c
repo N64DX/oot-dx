@@ -92,6 +92,7 @@
 #include "assets/objects/object_gi_feather/object_gi_feather.h"
 #include "assets/objects/object_gi_sword_4_mm/object_gi_sword_4_mm.h"
 #include "assets/objects/object_gi_gold_dust/object_gi_gold_dust.h"
+#include "assets/objects/object_gi_title_deed/object_gi_title_deed.h"
 #include "assets/objects/object_st/object_st.h"
 
 // "Get Item" Model Draw Functions
@@ -110,6 +111,7 @@ void GetItem_DrawDekuNuts(PlayState* play, s16 giDrawId);
 void GetItem_DrawRecoveryHeart(PlayState* play, s16 giDrawId);
 void GetItem_DrawFish(PlayState* play, s16 giDrawId);
 void GetItem_DrawOpa0(PlayState* play, s16 giDrawId);
+void GetItem_DrawOpa01(PlayState* play, s16 giDrawId);
 void GetItem_DrawOpa0Xlu1(PlayState* play, s16 giDrawId);
 void GetItem_DrawXlu01(PlayState* play, s16 giDrawId);
 void GetItem_DrawOpa10Xlu2(PlayState* play, s16 giDrawId);
@@ -400,9 +402,9 @@ DrawItemTableEntry sDrawItemTable[] = {
     // GID_LONGSHOT_MM
 	{ GetItem_DrawOpa0, { gGiLongshotMMDL } },
     // GID_HEROS_BOW
-	{ GetItem_DrawOpa0, { gGiHerosBowHandleDL, gGiHerosBowStringDL } },
+	{ GetItem_DrawOpa01, { gGiHerosBowHandleDL, gGiHerosBowStringDL } },
     // GID_AMULET_OF_ENERGY
-    { GetItem_DrawOpa0Xlu1, { gGiPendantDL, gGiPendantEmptyDL } },
+    { GetItem_DrawOpa0, { gGiPendantDL } },
     // GID_ROCS_FEATHER
     { GetItem_DrawOpa0, { gGiRocsFeatherDL } },
     // GID_GOLDEN_FEATHER
@@ -411,8 +413,10 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawOpa0Xlu1, { gGiGreatFairysSwordBladeDL, gGiGreatFairysSwordHiltEmblemDL } },
     // GID_GOLD_DUST
 	{ GetItem_DrawOpa0, { gGiGoldDustPowderDL } },
+    // GID_LAND_TITLE_DEED
+	{ GetItem_DrawOpa0, { gGiTitleDeedLandColorDL } },
     // GID_BOOTS_KOKIRI
-    { GetItem_DrawOpa0Xlu1, { gGiKokiriBootsDL, gGiKokiriBootsEmptyDL } },
+    { GetItem_DrawOpa0, { gGiKokiriBootsDL } },
 };
 
 /**
@@ -691,6 +695,17 @@ void GetItem_DrawOpa0(PlayState* play, s16 giDrawId) {
     gSPDisplayList(POLY_OPA_DISP++, sDrawItemTable[giDrawId].dlists[0]);
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_draw.c", 968);
+}
+
+void GetItem_DrawOpa01(PlayState* play, s16 giDrawId) {
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
+
+    Gfx_SetupDL_25Opa(play->state.gfxCtx);
+    MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
+    gSPDisplayList(POLY_OPA_DISP++, sDrawItemTable[giDrawId].dlists[0]);
+    gSPDisplayList(POLY_OPA_DISP++, sDrawItemTable[giDrawId].dlists[1]);
+
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
 
 void GetItem_DrawOpa0Xlu1(PlayState* play, s16 giDrawId) {

@@ -131,6 +131,12 @@
         <Sample Name="SAMPLE_0_LILYPAD_1"/>
         <Sample Name="SAMPLE_0_LILYPAD_2"/>
         <Sample Name="SAMPLE_0_LILYPAD_3"/>
+        <Sample Name="SAMPLE_0_BEAST_1"/>
+        <Sample Name="SAMPLE_0_BEAST_2"/>
+        <Sample Name="SAMPLE_0_BEAST_3"/>
+        <Sample Name="SAMPLE_0_BLACKBEAST_1"/>
+        <Sample Name="SAMPLE_0_BLACKBEAST_2"/>
+        <Sample Name="SAMPLE_0_BLACKBEAST_3"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
@@ -174,16 +180,6 @@
         <Effect Name="EFFECT_38" Sample="SAMPLE_0_342"/>
         <Effect Name="EFFECT_39" Sample="SAMPLE_0_326"/>
         <Effect Name="EFFECT_40" Sample="SAMPLE_0_343"/>
-        <Effect Name="EFFECT_STAL_1" Sample="SAMPLE_0_STAL_1"/>
-        <Effect Name="EFFECT_STAL_2" Sample="SAMPLE_0_STAL_2"/>
-        <Effect Name="EFFECT_STAL_3" Sample="SAMPLE_0_STAL_3"/>
-        <Effect Name="EFFECT_STAL_4" Sample="SAMPLE_0_STAL_4"/>
-        <Effect Name="EFFECT_STAL_5" Sample="SAMPLE_0_STAL_5"/>
-        <Effect Name="EFFECT_STAL_6" Sample="SAMPLE_0_STAL_6"/>
-        <Effect Name="EFFECT_STAL_7" Sample="SAMPLE_0_STAL_7"/>
-        <Effect Name="EFFECT_STAL_8" Sample="SAMPLE_0_STAL_8"/>
-        <Effect Name="EFFECT_STAL_9" Sample="SAMPLE_0_STAL_9"/>
-        <Effect Name="EFFECT_DUMMY"  Sample="SAMPLE_0_299"/>
     </Effects>
     <Drums>
         <Drum/>
@@ -251,7 +247,22 @@
         <Instrument ProgramNumber="59" Name="INST_59" Envelope="Env0" Sample="SAMPLE_0_SNAPPER_5"/>
         <Instrument ProgramNumber="60" Name="INST_60" Envelope="Env0" Sample="SAMPLE_0_LILYPAD_1"/>
         <Instrument ProgramNumber="61" Name="INST_61" Envelope="Env0" Sample="SAMPLE_0_LILYPAD_2"/>
-        <Instrument ProgramNumber="62" Name="INST_62" Envelope="Env0" Sample="SAMPLE_0_LILYPAD_3"/>
+        <Instrument ProgramNumber="62" Name="INST_62" Envelope="Env0" Sample="SAMPLE_0_LILYPAD_3"/>'
+        <Instrument ProgramNumber="63" Name="INST_63" Envelope="Env0" Sample="SAMPLE_0_BEAST_1"/>
+        <Instrument ProgramNumber="64" Name="INST_64" Envelope="Env0" Sample="SAMPLE_0_BEAST_2"/>
+        <Instrument ProgramNumber="65" Name="INST_65" Envelope="Env0" Sample="SAMPLE_0_BEAST_3"/>
+        <Instrument ProgramNumber="66" Name="INST_66" Envelope="Env0" Sample="SAMPLE_0_BLACKBEAST_1"/>
+        <Instrument ProgramNumber="67" Name="INST_67" Envelope="Env0" Sample="SAMPLE_0_BLACKBEAST_2"/>
+        <Instrument ProgramNumber="68" Name="INST_68" Envelope="Env0" Sample="SAMPLE_0_BLACKBEAST_3"/>
+        <Instrument ProgramNumber="69" Name="INST_69" Envelope="Env0" Sample="SAMPLE_0_STAL_1"/>
+        <Instrument ProgramNumber="70" Name="INST_70" Envelope="Env0" Sample="SAMPLE_0_STAL_2"/>
+        <Instrument ProgramNumber="71" Name="INST_71" Envelope="Env0" Sample="SAMPLE_0_STAL_3"/>
+        <Instrument ProgramNumber="72" Name="INST_72" Envelope="Env0" Sample="SAMPLE_0_STAL_4"/>
+        <Instrument ProgramNumber="73" Name="INST_73" Envelope="Env0" Sample="SAMPLE_0_STAL_5"/>
+        <Instrument ProgramNumber="74" Name="INST_74" Envelope="Env0" Sample="SAMPLE_0_STAL_6"/>
+        <Instrument ProgramNumber="75" Name="INST_75" Envelope="Env0" Sample="SAMPLE_0_STAL_7"/>
+        <Instrument ProgramNumber="76" Name="INST_76" Envelope="Env0" Sample="SAMPLE_0_STAL_8"/>
+        <Instrument ProgramNumber="77" Name="INST_77" Envelope="Env0" Sample="SAMPLE_0_STAL_9"/>
     </Instruments>
     <MatchPadding>
         0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3

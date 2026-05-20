@@ -169,7 +169,7 @@ void EnGm_SetTextID(EnGm* this) {
     switch (func_80A3D7C8(this)) {
         case 0:
             if (IS_CHILD_QUEST && this->type == MEDIGORON_GORON_VILLAGE) {
-                this->actor.textId = 0x8404;
+                this->actor.textId = 0x8422;
             } else if (GET_INFTABLE(INFTABLE_B0)) {
                 this->actor.textId = 0x304B;
             } else {
@@ -178,7 +178,7 @@ void EnGm_SetTextID(EnGm* this) {
             break;
         case 1:
             if (IS_CHILD_QUEST && this->type == MEDIGORON_GORON_VILLAGE) {
-                this->actor.textId = 0x8402;
+                this->actor.textId = 0x8420;
             } else if (GET_INFTABLE(INFTABLE_B1)) {
                 this->actor.textId = 0x304F;
             } else {

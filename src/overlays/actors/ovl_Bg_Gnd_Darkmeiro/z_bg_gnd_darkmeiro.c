@@ -101,7 +101,7 @@ void BgGndDarkmeiro_Init(Actor* thisx, PlayState* play2) {
             }
             break;
         case DARKMEIRO_WIDE_CLEAR_BLOCK:
-            this->dyna.actor.scale.x = 0.12f;
+            this->dyna.actor.scale.x = 0.16f;
             this->dyna.actor.scale.z = 0.08f;
             CollisionHeader_GetVirtual(&gClearBlockCol, &colHeader);
             this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);

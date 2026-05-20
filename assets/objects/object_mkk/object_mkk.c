@@ -1,5 +1,7 @@
 #include "object_mkk.h"
 
+#include "gfx.h"
+
 Vtx object_mkkVtx_000000[] = {
 #include "assets/objects/object_mkk/object_mkkVtx_000000.vtx.inc"
 };
@@ -35,8 +37,7 @@ Gfx gBlackBoeBodyMaterialDL[] = {
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_ZB_XLU_SURF2),
     gsDPSetCombineLERP(0, 0, 0, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
     gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock_4b(gBlackBoeTex, G_IM_FMT_I, 16, 16, 15, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4,
-                            4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock_4b(gBlackBoeTex, G_IM_FMT_I, 16, 16, 15, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 0, 0, 0, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
     gsSPEndDisplayList(),
