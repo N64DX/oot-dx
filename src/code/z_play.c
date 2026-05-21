@@ -407,8 +407,15 @@ void Play_Init(GameState* thisx) {
        gSaveContext.save.entranceIndex = ENTR_LOST_WOODS_6; 
 
     if (!IS_CUTSCENE_LAYER) {
-        if (IS_CHILD_QUEST) {
-            u8 sceneId = gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId;
+        u8 sceneId = gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId;
+        if (sceneId == SCENE_GROTTOS2) {
+            gSaveContext.sceneLayer = gSaveContext.save.entranceIndex == ENTR_GROTTOS_7 ? 1 : 0;
+            if (gSaveContext.save.entranceIndex == ENTR_GROTTOS_7)
+                gSaveContext.sceneLayer = 1;
+            else if (gSaveContext.save.entranceIndex == ENTR_CAVE_PASSAGE_0 || gSaveContext.save.entranceIndex == ENTR_CAVE_PASSAGE_1)
+                gSaveContext.sceneLayer = 2;
+            else gSaveContext.sceneLayer = 0;
+        } else if (IS_CHILD_QUEST) {
             if (GET_EVENTCHKINF(EVENTCHKINF_45)) {
                 if (sceneId == SCENE_KOKIRI_FOREST) 
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_48) ? 3 : 2;
@@ -416,6 +423,8 @@ void Play_Init(GameState* thisx) {
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_49) ? 3 : 2;
                 else if (sceneId == SCENE_ZORAS_DOMAIN) 
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_4A) ? 3 : 2;
+                else if (sceneId == SCENE_DAWNGROVE || sceneId == SCENE_DAWNGROVE_VILLAGE)
+                    gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW) ? 3: 2;
                 else if (sceneId == SCENE_PATH_TO_GORON_VILLAGE || sceneId == SCENE_GORON_VILLAGE || sceneId == SCENE_GORON_SHRINE || sceneId == SCENE_GORON_MINES)
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES) ? 3: 2;
                 else if (gSaveContext.save.entranceIndex != ENTR_MARKET_GUARD_HOUSE_0 && gSaveContext.save.entranceIndex != ENTR_BAZAAR_1)

@@ -3,8 +3,6 @@
 
 #include "room.h"
 
-extern SceneCmd dawngrove_village_room_0[];
-
 extern s16 dawngrove_village_room_0ObjectList_000040[];
 extern ActorEntry dawngrove_village_room_0ActorEntry_000058[];
 extern RoomShapeNormal dawngrove_village_room_0RoomShapeNormal_000318;

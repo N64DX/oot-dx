@@ -3,12 +3,15 @@
 
 #include "room.h"
 
-extern SceneCmd dawngrove_room_0[];
-
+extern SceneCmd* dawngrove_room_0AlternateHeaders[];
 extern s16 dawngrove_room_0ObjectList_000040[];
 extern ActorEntry dawngrove_room_0ActorEntry_000050[];
 extern RoomShapeNormal dawngrove_room_0RoomShapeNormal_000160;
 extern RoomShapeDListsEntry dawngrove_room_0RoomShapeDListsEntry_00016C[9];
+
+extern SceneCmd dawngrove_room_0Set_timeskip[];
+
+extern SceneCmd dawngrove_room_0Set_cleansed[];
 
 extern Gfx dawngrove_room_0DL_000480[];
 extern Gfx dawngrove_room_0DL_000948[];

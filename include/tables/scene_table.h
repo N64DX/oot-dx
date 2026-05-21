@@ -128,6 +128,10 @@
 /* 0x74 */ DEFINE_SCENE(woodfall_temple_scene, none, SCENE_WOODFALL_TEMPLE, SDC_WOODFALL_TEMPLE, 0, 0)
 /* 0x75 */ DEFINE_SCENE(woodfall_temple_boss_scene, none, SCENE_WOODFALL_TEMPLE_BOSS, SDC_WOODFALL_TEMPLE, 0, 0)
 /* 0x76 */ DEFINE_SCENE(mountain_smithy_scene, none, SCENE_SPRING_LAKE_SMITHY, SDC_SPRING_LAKE_SMITHY, 0, 0)
+/* 0x77 */ DEFINE_SCENE(dawngrove_house_1_scene, none, SCENE_DAWNGROVE_HOUSE, SDC_DEFAULT, 0, 0)
+/* 0x78 */ DEFINE_SCENE(dawngrove_house_2_scene, none, SCENE_IGORS_HOUSE, SDC_DEFAULT, 0, 0)
+/* 0x79 */ DEFINE_SCENE(dawngrove_inn_scene, none, SCENE_DAWNGROVE_INN, SDC_DEFAULT, 0, 0)
+/* 0x7A */ DEFINE_SCENE(dawngrove_shop_scene, none, SCENE_DAWNGROVE_SHOP, SDC_DEFAULT, 0, 0)
 
 // 0x7B (124th scene) = gSaveContext.save.info.sceneFlags MAX
 

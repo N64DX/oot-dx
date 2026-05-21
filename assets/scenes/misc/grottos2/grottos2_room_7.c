@@ -68,10 +68,6 @@ u64 grottos2_room_7Tex_001040[] = {
 #include "assets/scenes/misc/grottos2/grottos2_room_7Tex_001040.rgba16.inc.c"
 };
 
-u64 grottos2_room_7Tex_001840[] = {
-#include "assets/scenes/misc/grottos2/grottos2_room_7Tex_001840.rgba16.inc.c"
-};
-
 Gfx grottos2_room_7DL_0005B0[] = {
     gsSPVertex(&grottos2_room_7Vtx_0000E0[69], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -81,7 +77,7 @@ Gfx grottos2_room_7DL_0005B0[] = {
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(grottos2_room_7Tex_001840, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTextureBlock(grottos2_sceneTex_001840, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
     gsSPVertex(grottos2_room_7Vtx_0000E0, 32, 0),

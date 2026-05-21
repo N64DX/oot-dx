@@ -649,6 +649,41 @@ DEFINE_MESSAGE(0xA076, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("Forgeron du Lac")
 )
 
+DEFINE_MESSAGE(0xA077, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("暁の森の家"),
+    MSG("Dawngrove House"),
+    MSG("Dämmerhain Haus"),
+    MSG("Maison du Bosquaurore")
+)
+
+DEFINE_MESSAGE(0xA078, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("イゴールの家"),
+    MSG("Igor's House"),
+    MSG("Igors Haus"),
+    MSG("Maison d’Igor")
+)
+
+DEFINE_MESSAGE(0xA079, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("暁の森の宿屋"),
+    MSG("Dawngrove Inn"),
+    MSG("Dämmerhain Herberge"),
+    MSG("Auberge de Bosquaurore")
+)
+
+DEFINE_MESSAGE(0xA07A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("暁の森の店"),
+    MSG("Dawngrove Shop"),
+    MSG("Dämmerhain Laden"),
+    MSG("Boutique de Bosquaurore")
+)
+
+DEFINE_MESSAGE(0xA13E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("洞窟の通路"),
+    MSG("Cave Passage"),
+    MSG("Höhlenpassage"),
+    MSG("Passage Souterrain")
+)
+
 DEFINE_MESSAGE(0xA148, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("？"),
     MSG("?"),

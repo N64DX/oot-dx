@@ -1997,3 +1997,25 @@ SHIFT(40) "Watch your footing!" QUICKTEXT_DISABLE
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x0359, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE SHIFT(70) COLOR(YELLOW) "Dawngrove" COLOR(DEFAULT) "\n"
+SHIFT(20) "Beware! The sun never sets,\n"
+SHIFT(20) "and the creatures never sleep." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x035A, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "By decree of the goddess " COLOR(RED) "Din" COLOR(DEFAULT) ",\n"
+"magic has been outlawed in this\n"
+"sacred grove." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)

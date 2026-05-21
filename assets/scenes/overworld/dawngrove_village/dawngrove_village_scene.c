@@ -51,10 +51,10 @@ Spawn dawngrove_village_sceneEntranceList_0001F8[] = {
 };
 
 u16 dawngrove_village_sceneExitList_0000A8[] = {
-    ENTR_DAWNGROVE_0,
-    0x02fd,
-    0x0398,
-    0x052c,
+    ENTR_FORBIDDEN_WOODS_4,
+    ENTR_DAWNGROVE_INN_0,
+    ENTR_IGORS_HOUSE_0,
+    ENTR_DAWNGROVE_HOUSE_0,
 };
 
 EnvLightSettings dawngrove_village_sceneLightSettings_0000F0[] = {

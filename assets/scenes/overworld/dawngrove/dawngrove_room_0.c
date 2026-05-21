@@ -7,14 +7,21 @@
 #include "object.h"
 
 SceneCmd dawngrove_room_0[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(dawngrove_room_0AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(2),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_room_0RoomShapeNormal_000160),
-    SCENE_CMD_OBJECT_LIST(8, dawngrove_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(17, dawngrove_room_0ActorEntry_000050),
+    SCENE_CMD_OBJECT_LIST(10, dawngrove_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(18, dawngrove_room_0ActorEntry_000050),
     SCENE_CMD_END(),
+};
+
+SceneCmd* dawngrove_room_0AlternateHeaders[] = {
+    NULL,
+    dawngrove_room_0Set_timeskip,
+    dawngrove_room_0Set_cleansed,
 };
 
 s16 dawngrove_room_0ObjectList_000040[] = {
@@ -25,27 +32,33 @@ s16 dawngrove_room_0ObjectList_000040[] = {
     OBJECT_ST,
     OBJECT_SYOKUDAI,
     OBJECT_HIDAN_OBJECTS,
+    OBJECT_DEKUBABA,
     OBJECT_KANBAN,
+    OBJECT_LOST_WOODS,
 };
 
 ActorEntry dawngrove_room_0ActorEntry_000050[] = {
-    { ACTOR_OBJECT_KANKYO, {     0,   0,    0 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_WOOD02,     {  -567,  27,  142 }, { 0,      0,   0 }, 0x0002 },
-    { ACTOR_EN_WOOD02,     {  -386, -29, -147 }, { 0, 0xFA50,   0 }, 0x0007 },
-    { ACTOR_EN_WOOD02,     { -1015,   5, -267 }, { 0,      0,   0 }, 0x000B },
-    { ACTOR_EN_WOOD02,     { -1004,  28,  -49 }, { 0,      0,   0 }, 0x000B },
-    { ACTOR_EN_WOOD02,     {  -824,  28, -275 }, { 0,      0,   0 }, 0x000B },
-    { ACTOR_EN_KUSA,       {  -200, 179,  787 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_KUSA,       {  -200, 179,  703 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_KUSA,       {  -200, 179,  618 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_BOX,        {  -755, 313,  445 }, { 0, 0xC001,   0 }, 0x59C0 },
-    { ACTOR_EN_BOX,        {  -587, 314, -644 }, { 0, 0x7FFF,   0 }, 0x0A81 },
-    { ACTOR_EN_SW,         {  -223, 297,  536 }, { 0, 0x3FFC,   0 }, 0x0000 },
-    { ACTOR_EN_SW,         {  -223, 292,  482 }, { 0, 0x3FFC,   0 }, 0x0000 },
-    { ACTOR_EN_SW,         {  -223, 297,  422 }, { 0, 0x3FFC,   0 }, 0x0000 },
-    { ACTOR_EN_KANBAN,     {  -440,   0,  160 }, { 0, 0x7FFF,   0 }, 0x0010 },
-    { ACTOR_EN_BOX,        {   -96, 315,  740 }, { 0, 0x7FFF, 0xA }, 0xB1EA },
-    { ACTOR_OBJ_SYOKUDAI,  {  -687,  21,  168 }, { 0, 0x3FFC,   0 }, 0x200A },
+    { ACTOR_EN_WOOD02,      {  -567,  27,  142 }, {   0,      0,   0 }, 0x0002 },
+    { ACTOR_EN_WOOD02,      {  -386, -29, -147 }, {    0, 0xFA50,   0 }, 0x0007 },
+    { ACTOR_EN_WOOD02,      { -1015,   5, -267 }, {    0,      0,   0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -1004,  28,  -49 }, {    0,      0,   0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      {  -824,  28, -275 }, {    0,      0,   0 }, 0x000B },
+    { ACTOR_EN_KUSA,        {  -200, 179,  787 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_EN_KUSA,        {  -200, 179,  703 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_EN_KUSA,        {  -200, 179,  618 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_EN_BOX,         {  -755, 313,  445 }, { 0x4E, 0xC000,   0 }, 0x5000 }, // Chest flag: 00, Red Rupee
+    { ACTOR_EN_BOX,         {  -587, 314, -644 }, { 0x4E, 0x8000,   0 }, 0x5001 }, // Chest flag: 01, Red Rupee
+    { ACTOR_EN_BOX,         {   -96, 315,  740 }, { 0x3E, 0x8000, 0xA }, 0xB00A }, // Chest flag: 0A, checks switch: 0A, Piece of Heart
+    { ACTOR_EN_SW,          {  -223, 297,  536 }, {    0, 0x4000,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          {  -223, 292,  482 }, {    0, 0x4000,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          {  -223, 297,  422 }, {    0, 0x4000,   0 }, 0x0000 },
+    { ACTOR_EN_KANBAN,      {  -440,   0,  160 }, {    0, 0x8000,   0 }, 0x0059 },
+    { ACTOR_OBJ_SYOKUDAI,   {  -687,  21,  168 }, {    0, 0x8000,   0 }, 0x200A },
+    { ACTOR_OBJ_LOST_WOODS, { -5000, 250, -450 }, {    0,      0,   0 }, 0x0019 },
+    { ACTOR_OBJECT_KANKYO,  {     0,   0,    0 }, {    0,      0,   0 }, 0x0000 },
+
+    // Timeskip (not cleansed)
+    { ACTOR_EN_WEATHER_TAG, { -1800, 180, -425 }, {    0,      0,   0 }, 0x2008 },
 };
 
 RoomShapeNormal dawngrove_room_0RoomShapeNormal_000160 = { 
@@ -64,6 +77,28 @@ RoomShapeDListsEntry dawngrove_room_0RoomShapeDListsEntry_00016C[9] = {
     { dawngrove_room_0DL_002B00, NULL },
     { dawngrove_room_0DL_003438, NULL },
     { dawngrove_room_0DL_005EB0, NULL },
+};
+
+SceneCmd dawngrove_room_0Set_timeskip[] = {
+    SCENE_CMD_ECHO_SETTINGS(2),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_room_0RoomShapeNormal_000160),
+    SCENE_CMD_OBJECT_LIST(10, dawngrove_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(19, dawngrove_room_0ActorEntry_000050),
+    SCENE_CMD_END(),
+};
+
+SceneCmd dawngrove_room_0Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(2),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_room_0RoomShapeNormal_000160),
+    SCENE_CMD_OBJECT_LIST(10, dawngrove_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(18, dawngrove_room_0ActorEntry_000050),
+    SCENE_CMD_END(),
 };
 
 s32 dawngrove_room_0_terminatorMaybe_0001B4 = { 0x01000000 };

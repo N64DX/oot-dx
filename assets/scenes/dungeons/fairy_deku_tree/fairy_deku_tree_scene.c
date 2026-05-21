@@ -108,7 +108,7 @@ Spawn fairy_deku_tree_sceneEntranceList0x000268[] = {
 };
 
 u16 fairy_deku_tree_sceneExitList0x00026C[] = {
-    ENTR_FORBIDDEN_WOODS_2,
+    ENTR_CAVE_PASSAGE_1,
 };
 
 EnvLightSettings fairy_deku_tree_sceneLightSettings0x000270[] = {

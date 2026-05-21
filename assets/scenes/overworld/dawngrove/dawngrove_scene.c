@@ -28,8 +28,8 @@ SceneCmd dawngrove_scene[] = {
 
 ActorEntry dawngrove_sceneStartPositionList_0000D0[] = {
     { ACTOR_PLAYER, {   -40,   0,     0 }, { 0, 0xC004, 0 }, 0x0FFF },
-    { ACTOR_PLAYER, { -1294, 129, -1490 }, { 0, 0x127C, 0 }, 0x0FFF },
     { ACTOR_PLAYER, { -2708, 180,  -418 }, { 0, 0x3FFC, 0 }, 0x0FFF },
+    { ACTOR_PLAYER, { -1294, 129, -1490 }, { 0, 0x127C, 0 }, 0x0FFF },
 };
 
 TransitionActorEntry dawngrove_sceneTransitionActorList_000088[] = {
@@ -47,14 +47,14 @@ RomFile dawngrove_sceneRoomList_000070[] = {
 
 Spawn dawngrove_sceneEntranceList_000208[] = {
     { 0x00, 0x00 },
-    { 0x01, 0x02 },
-    { 0x02, 0x01 },
+    { 0x01, 0x01 },
+    { 0x02, 0x02 },
 };
 
 u16 dawngrove_sceneExitList_0000C8[] = {
-    ENTR_DAWNGROVE_VILLAGE_0,
-    ENTR_ANCIENT_HOLLOW_0,
-    0x037c,
+    ENTR_FORBIDDEN_WOODS_2,
+    ENTR_CAVE_PASSAGE_0,
+    ENTR_DAWNGROVE_SHOP_0,
 };
 
 EnvLightSettings dawngrove_sceneLightSettings_000100[] = {

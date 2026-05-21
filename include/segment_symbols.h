@@ -703,6 +703,8 @@ DECLARE_ROM_SEGMENT(grottos2_room_7)
 DECLARE_ROM_SEGMENT(grottos2_room_8)
 DECLARE_ROM_SEGMENT(grottos2_room_10)
 DECLARE_ROM_SEGMENT(grottos2_room_13)
+DECLARE_ROM_SEGMENT(dawngrove_grottos_room_0)
+DECLARE_ROM_SEGMENT(cave_passage_room_0)
 
 DECLARE_ROM_SEGMENT(swamp_spider_house_room_0)
 DECLARE_ROM_SEGMENT(swamp_spider_house_room_1)
@@ -754,6 +756,19 @@ DECLARE_ROM_SEGMENT(woodfall_temple_room_12)
 DECLARE_ROM_SEGMENT(woodfall_temple_boss_room_0)
 
 DECLARE_ROM_SEGMENT(mountain_smithy_room_0)
+
+DECLARE_ROM_SEGMENT(dawngrove_house_1_room_0)
+
+DECLARE_ROM_SEGMENT(dawngrove_house_2_room_0)
+
+DECLARE_ROM_SEGMENT(dawngrove_inn_room_0)
+DECLARE_ROM_SEGMENT(dawngrove_inn_room_1)
+DECLARE_ROM_SEGMENT(dawngrove_inn_room_2)
+DECLARE_ROM_SEGMENT(dawngrove_inn_room_3)
+DECLARE_ROM_SEGMENT(dawngrove_inn_room_4)
+DECLARE_ROM_SEGMENT(dawngrove_inn_room_5)
+
+DECLARE_ROM_SEGMENT(dawngrove_shop_room_0)
 
 // Room symbols for compiling test scenes.
 // These are not wrapped in an `#if DEBUG_ASSETS` so that debug ROMs

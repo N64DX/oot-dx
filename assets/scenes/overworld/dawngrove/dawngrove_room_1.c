@@ -7,14 +7,21 @@
 #include "object.h"
 
 SceneCmd dawngrove_room_1[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(dawngrove_room_1AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(2),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_room_1RoomShapeNormal_000210),
-    SCENE_CMD_OBJECT_LIST(8, dawngrove_room_1ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(28, dawngrove_room_1ActorEntry_000050),
+    SCENE_CMD_OBJECT_LIST(10, dawngrove_room_1ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(24, dawngrove_room_1ActorEntry_000050),
     SCENE_CMD_END(),
+};
+
+SceneCmd* dawngrove_room_1AlternateHeaders[] = {
+    NULL,
+    dawngrove_room_1Set_timeskip,
+    dawngrove_room_1Set_cleansed,
 };
 
 s16 dawngrove_room_1ObjectList_000040[] = {
@@ -26,37 +33,46 @@ s16 dawngrove_room_1ObjectList_000040[] = {
     OBJECT_SYOKUDAI,
     OBJECT_HIDAN_OBJECTS,
     OBJECT_DEKUBABA,
+    OBJECT_KANBAN,
+    OBJECT_LOST_WOODS,
 };
 
 ActorEntry dawngrove_room_1ActorEntry_000050[] = {
-    { ACTOR_OBJ_SYOKUDAI,   { -1481,  59, -252 }, { 0,      0,   0 }, 0x2400 },
-    { ACTOR_EN_DEKUNUTS,    { -2657, 180, -492 }, { 0, 0x2AA8,   0 }, 0x00FF },
-    { ACTOR_EN_DEKUNUTS,    { -2657, 180, -336 }, { 0, 0x5553,   0 }, 0x00FF },
-    { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -964 }, { 0,      0,   0 }, 0x1101 },
-    { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -884 }, { 0,      0,   0 }, 0x1101 },
-    { ACTOR_OBJ_SYOKUDAI,   { -1795,  28,   28 }, { 0,      0,   0 }, 0x1101 },
-    { ACTOR_OBJ_SYOKUDAI,   { -2034,  22, -779 }, { 0,      0,   0 }, 0x1101 },
-    { ACTOR_OBJ_MURE2,      { -2034,  22, -779 }, { 0,      0,   0 }, 0x0001 },
-    { ACTOR_EN_DEKUBABA,    { -1600, 134,  545 }, { 0, 0xB1CC,   0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,    { -1570, 142,  452 }, { 0, 0xCE3C,   0 }, 0x0000 },
-    { ACTOR_EN_WOOD02,      { -1964,  28, -168 }, { 0,  0x222,   0 }, 0x0007 },
-    { ACTOR_OBJ_MURE2,      { -2274,   0, -223 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_RIVER_SOUND, { -2588, -10, -424 }, { 0,      0,   0 }, 0x0003 },
-    { ACTOR_EN_KAREBABA,    { -1996,  28, -674 }, { 0, 0x4440,   0 }, 0x0000 },
-    { ACTOR_EN_KAREBABA,    { -1916,  28, -734 }, { 0, 0x4440,   0 }, 0x0000 },
-    { ACTOR_EN_KUSA,        { -1876,  28, -330 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_KUSA,        { -1876,  28, -490 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_OBJ_MURE,       { -1237, 238,  257 }, { 0,      0,   0 }, 0x0224 },
-    { ACTOR_EN_KUSA,        { -1875,  28, -580 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_BOX,         { -1885, 120, -411 }, { 0, 0x3FFF, 0x1 }, 0x8542 },
-    { ACTOR_BG_HIDAN_KOUSI, { -1795,  28,  -27 }, { 0,      0,   0 }, 0x0201 },
-    { ACTOR_OBJ_SYOKUDAI,   { -2365, 119,  540 }, { 0,      0,   0 }, 0x2400 },
-    { ACTOR_OBJ_SYOKUDAI,   { -1094, 179,  283 }, { 0,      0,   0 }, 0x2002 },
-    { ACTOR_DOOR_ANA,       { -1233, 179,  258 }, { 0,      0, 0x2 }, 0x0000 },
-    { ACTOR_DOOR_ANA,       { -1510, 180, -969 }, { 0,      0, 0x1 }, 0x0020 },
-    { ACTOR_EN_WOOD02,      {  -990, 171,  931 }, { 0, 0x25AE,   0 }, 0x0001 },
-    { ACTOR_EN_DEKUBABA,    { -1518, 208, -770 }, { 0, 0xDB08,   0 }, 0x0001 },
-    { ACTOR_OBJECT_KANKYO,  {     0,   0,    0 }, { 0,      0,   0 }, 0x0000 },
+    { ACTOR_OBJ_SYOKUDAI,   { -1481,  59, -252 }, {    0,      0,   0 }, 0x2400 },
+    { ACTOR_OBJ_SYOKUDAI,   { -2365, 119,  540 }, {    0,      0,   0 }, 0x2400 },
+    { ACTOR_OBJ_SYOKUDAI,   { -1094, 179,  283 }, {    0,      0,   0 }, 0x2002 },
+    { ACTOR_EN_DEKUNUTS,    { -2657, 180, -492 }, {    0, 0x2AA8,   0 }, 0x00FF },
+    { ACTOR_EN_DEKUNUTS,    { -2657, 180, -336 }, {    0, 0x5553,   0 }, 0x00FF },
+    { ACTOR_OBJ_MURE,       { -1237, 238,  257 }, {    0,      0,   0 }, 0x0224 },
+    { ACTOR_OBJ_MURE2,      { -2034,  22, -779 }, {    0,      0,   0 }, 0x0001 },
+    { ACTOR_OBJ_MURE2,      { -2274,   0, -223 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,    { -1600, 134,  545 }, {    0, 0xB1CC,   0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,    { -1570, 142,  452 }, {    0, 0xCE3C,   0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,    { -1518, 208, -770 }, {    0, 0xDB00,   0 }, 0x0001 },
+    { ACTOR_EN_KAREBABA,    { -1996,  28, -674 }, {    0, 0x4440,   0 }, 0x0000 },
+    { ACTOR_EN_KAREBABA,    { -1916,  28, -734 }, {    0, 0x4440,   0 }, 0x0000 },
+    { ACTOR_EN_WOOD02,      { -1964,  28, -168 }, {    0,  0x222,   0 }, 0x0007 },
+    { ACTOR_EN_WOOD02,      {  -990, 171,  931 }, {    0, 0x25AE,   0 }, 0x0001 },
+    { ACTOR_EN_KUSA,        { -1876,  28, -330 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_EN_KUSA,        { -1876,  28, -490 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_EN_KUSA,        { -1875,  28, -580 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_DOOR_ANA,       { -1233, 179,  258 }, {    0,      0,   2 }, 0x0000 },
+    { ACTOR_DOOR_ANA,       { -1510, 180, -969 }, {    0,      0,  21 }, 0x0000 },
+    { ACTOR_EN_RIVER_SOUND, { -2588, -10, -424 }, {    0,      0,   0 }, 0x0003 },
+    { ACTOR_OBJ_LOST_WOODS, { -5000, 250, -450 }, {    0,      0,   0 }, 0x0019 },
+    { ACTOR_OBJECT_KANKYO,  {     0,   0,    0 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_EN_KANBAN,      { -1500,  28,  -70 }, {    0, 0x8000,   0 }, 0x005A },
+
+    // Timeskip & Cleansed
+    { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -964 }, {    0,      0,   0 }, 0x1101 },
+    { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -884 }, {    0,      0,   0 }, 0x1101 },
+    { ACTOR_OBJ_SYOKUDAI,   { -1795,  28,   28 }, {    0,      0,   0 }, 0x1101 },
+    { ACTOR_OBJ_SYOKUDAI,   { -2034,  22, -779 }, {    0,      0,   0 }, 0x1101 },
+    { ACTOR_BG_HIDAN_KOUSI, { -1795,  28,  -27 }, {    0,      0,   0 }, 0x0201 },
+    { ACTOR_EN_BOX,         { -1885, 120, -411 }, { 0x82, 0x4000, 0x1 }, 0x8002 }, // Chest flag 2, checks switch: 01, Hero's Shield
+
+    // Timeskip (not cleansed)
+    { ACTOR_EN_WEATHER_TAG, { -1800, 180, -425 }, {    0,      0,   0 }, 0x2008 },
 };
 
 RoomShapeNormal dawngrove_room_1RoomShapeNormal_000210 = { 
@@ -86,6 +102,28 @@ RoomShapeDListsEntry dawngrove_room_1RoomShapeDListsEntry_00021C[20] = {
     { dawngrove_room_1DL_008478, NULL },
     { dawngrove_room_1DL_009EF0, NULL },
     { dawngrove_room_1DL_00B1F0, NULL },
+};
+
+SceneCmd dawngrove_room_1Set_timeskip[] = {
+    SCENE_CMD_ECHO_SETTINGS(2),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_room_1RoomShapeNormal_000210),
+    SCENE_CMD_OBJECT_LIST(10, dawngrove_room_1ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(31, dawngrove_room_1ActorEntry_000050),
+    SCENE_CMD_END(),
+};
+
+SceneCmd dawngrove_room_1Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(2),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_room_1RoomShapeNormal_000210),
+    SCENE_CMD_OBJECT_LIST(10, dawngrove_room_1ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(30, dawngrove_room_1ActorEntry_000050),
+    SCENE_CMD_END(),
 };
 
 s32 dawngrove_room_1_terminatorMaybe_0002BC = { 0x01000000 };

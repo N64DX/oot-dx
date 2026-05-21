@@ -108,7 +108,7 @@ void Map_SetFloorPalettesData(PlayState* play, s16 floor) {
 }
 
 void Map_GetExtendedMapSizeAndOffset(u8 index, u16 size, u32 offset, u8* segment) {
-    extendedMapIndex = index + SCENE_GROTTOS2 - SCENE_PATH_TO_WOODFALL;
+    extendedMapIndex = index + SCENE_FORBIDDEN_WOODS - SCENE_PATH_TO_WOODFALL;
     sMinimapSize = size;
     sMinimapOffset = (uintptr_t)segment + offset;
 }

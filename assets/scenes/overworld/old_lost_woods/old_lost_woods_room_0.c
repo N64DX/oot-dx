@@ -11,10 +11,10 @@ SceneCmd old_lost_woods_room_0[] = {
     SCENE_CMD_ECHO_SETTINGS(16),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, true),
-    SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
-    SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader0x0008D0),
-    SCENE_CMD_OBJECT_LIST(10, old_lost_woods_room_0ObjectList0x000040),
-    SCENE_CMD_ACTOR_LIST(139, old_lost_woods_room_0ActorList0x000048),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader_0008D0),
+    SCENE_CMD_OBJECT_LIST(9, old_lost_woods_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(129, old_lost_woods_room_0ActorList_000048),
     SCENE_CMD_END(),
 };
 
@@ -24,7 +24,7 @@ SceneCmd* old_lost_woods_room_0AlternateHeaders[] = {
     NULL,
 };
 
-s16 old_lost_woods_room_0ObjectList0x000040[] = {
+s16 old_lost_woods_room_0ObjectList_000040[] = {
     OBJECT_HORSE,
     OBJECT_SK2,
     OBJECT_PEEHAT,
@@ -36,18 +36,11 @@ s16 old_lost_woods_room_0ObjectList0x000040[] = {
     OBJECT_FR,
 };
 
-ActorEntry old_lost_woods_room_0ActorList0x000048[] = {
+ActorEntry old_lost_woods_room_0ActorList_000048[] = {
     { ACTOR_EN_RIVER_SOUND, {  -195,  193, -3014 }, {      0,      0,      0 }, 0x0001 },
     { ACTOR_EN_A_OBJ,       {  -322,  189,  -240 }, {      0, 0xE000,      0 }, 0x4A09 },
     { ACTOR_OBJ_BOMBIWA,    {   373,  209,    76 }, {      0,      0,      0 }, 0x0008 },
     { ACTOR_OBJ_BOMBIWA,    {   856,  183, -1546 }, {      0,      0,      0 }, 0x0009 },
-    { ACTOR_EN_TEST,        { -1666,  283,  -243 }, {      0, 0xC000,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        {  -430,  218, -1325 }, {      0, 0xD556,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        {   -69,  210, -2021 }, {      0,      0,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        {   601,  200, -1222 }, {      0, 0xC000,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        {  1296,  463, -2948 }, {      0,      0,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        {  1708,  160,  2977 }, {      0,      0,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        { -1898,   42,   581 }, {      0,      0,      0 }, 0x0003 },
     { ACTOR_EN_PEEHAT,      { -1924,   82,   916 }, {      0,      0,      0 }, 0xFFFE },
     { ACTOR_EN_PEEHAT,      {  -971,   91,   169 }, {      0,      0,      0 }, 0xFFFE },
     { ACTOR_EN_PEEHAT,      {   884,  160,  2668 }, {      0,      0,      0 }, 0xFFFE },
@@ -173,182 +166,49 @@ ActorEntry old_lost_woods_room_0ActorList0x000048[] = {
     { ACTOR_OBJ_LOST_WOODS, { -3179,  103,   461 }, {      0, 0x238E,      0 }, 0x0023 },
     { ACTOR_OBJ_LOST_WOODS, {  -396,  215,  -965 }, {      0, 0x5555,      0 }, 0x0023 },
     { ACTOR_OBJ_LOST_WOODS, {  3000,    0,  4300 }, {      0,      0,      0 }, 0x0019 },
-    { ACTOR_EN_ISHI,        {  2063,  170,  3295 }, {      0,      0,      0 }, 0x5001 },
-    { ACTOR_EN_ISHI,        {  2004,  170,  3324 }, {      0,      0,      0 }, 0x6001 },
-    { ACTOR_EN_ISHI,        {  1993,  170,  3395 }, {      0,      0,      0 }, 0x7001 },
+
+    // Timeskip
+    { ACTOR_EN_TEST,        { -1666,  283,  -243 }, {      0, 0xC000,      0 }, 0x0003 },
+    { ACTOR_EN_TEST,        {  -430,  218, -1325 }, {      0, 0xD556,      0 }, 0x0003 },
+    { ACTOR_EN_TEST,        {   -69,  210, -2021 }, {      0,      0,      0 }, 0x0003 },
+    { ACTOR_EN_TEST,        {   601,  200, -1222 }, {      0, 0xC000,      0 }, 0x0003 },
+    { ACTOR_EN_TEST,        {  1296,  463, -2948 }, {      0,      0,      0 }, 0x0003 },
+    { ACTOR_EN_TEST,        {  1708,  160,  2977 }, {      0,      0,      0 }, 0x0003 },
+    { ACTOR_EN_TEST,        { -1898,   42,   581 }, {      0,      0,      0 }, 0x0003 },
+    { ACTOR_EN_OWL,         {  1875,  640, -1800 }, {      0,      0,      0 }, 0x037F },
+    { ACTOR_DOOR_ANA,       {  2175,  160,  1425 }, {      0,      0,     20 }, 0x0000 },
+    { ACTOR_OBJ_MURE,       {  2175,  188,  1425 }, {      0,      0,      0 }, 0x5324 },
+    { ACTOR_EN_FR,          { -1000,  438, -3100 }, {      0,      0,      0 }, 0x0212 }, // Blue: 1 (Ancient Hollow & Forbidden Woods)
 };
 
-RoomShapeCullable old_lost_woods_room_0MeshHeader0x0008D0 = {
+RoomShapeCullable old_lost_woods_room_0MeshHeader_0008D0 = {
     2,
     9,
-    old_lost_woods_room_0MeshDListEntry0x0008DC,
-    old_lost_woods_room_0MeshDListEntry0x0008DC + ARRAY_COUNTU(old_lost_woods_room_0MeshDListEntry0x0008DC)
+    old_lost_woods_room_0MeshDListEntry_0008DC,
+    old_lost_woods_room_0MeshDListEntry_0008DC + ARRAY_COUNTU(old_lost_woods_room_0MeshDListEntry_0008DC)
 };
 
-RoomShapeCullableEntry old_lost_woods_room_0MeshDListEntry0x0008DC[9] = {
-    { { -1104, 420, -2021 }, 1559, old_lost_woods_room_0Dlist0x001C60, NULL },
-    { {  1321, 519, -2412 }, 1722, old_lost_woods_room_0Dlist0x005D90, NULL },
-    { { -2945, 314,   153 }, 1782, old_lost_woods_room_0Dlist0x008A30, NULL },
-    { {     0, 308,     0 }, 1724, old_lost_woods_room_0Dlist0x00BDC8, NULL },
-    { {  2978, 400,   -40 }, 1765, old_lost_woods_room_0Dlist0x00F3B0, NULL },
-    { { -1370, 362,  1773 }, 1465, old_lost_woods_room_0Dlist0x012838, NULL },
-    { {  1362, 360,  2375 }, 1927, old_lost_woods_room_0Dlist0x0154C0, NULL },
-    { {  -204, 410, -3054 }, 214,  NULL, old_lost_woods_room_0Dlist0x019660 },
-    { {  1329, 185, -1263 }, 2336, NULL, old_lost_woods_room_0Dlist0x01A730 },
+RoomShapeCullableEntry old_lost_woods_room_0MeshDListEntry_0008DC[9] = {
+    { { -1104, 420, -2021 }, 1559, old_lost_woods_room_0Dlist_001C60, NULL },
+    { {  1321, 519, -2412 }, 1722, old_lost_woods_room_0Dlist_005D90, NULL },
+    { { -2945, 314,   153 }, 1782, old_lost_woods_room_0Dlist_008A30, NULL },
+    { {     0, 308,     0 }, 1724, old_lost_woods_room_0Dlist_00BDC8, NULL },
+    { {  2978, 400,   -40 }, 1765, old_lost_woods_room_0Dlist_00F3B0, NULL },
+    { { -1370, 362,  1773 }, 1465, old_lost_woods_room_0Dlist_012838, NULL },
+    { {  1362, 360,  2375 }, 1927, old_lost_woods_room_0Dlist_0154C0, NULL },
+    { {  -204, 410, -3054 }, 214,  NULL, old_lost_woods_room_0Dlist_019660 },
+    { {  1329, 185, -1263 }, 2336, NULL, old_lost_woods_room_0Dlist_01A730 },
 };
 
 SceneCmd old_lost_woods_room_0Set_timeskip[] = {
     SCENE_CMD_ECHO_SETTINGS(16),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, true),
-    SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
-    SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader0x0008D0),
-    SCENE_CMD_OBJECT_LIST(10, old_lost_woods_room_0ObjectList0x000040),
-    SCENE_CMD_ACTOR_LIST(140, old_lost_woods_room_0ActorList_timeskip),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader_0008D0),
+    SCENE_CMD_OBJECT_LIST(9, old_lost_woods_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(140, old_lost_woods_room_0ActorList_000048),
     SCENE_CMD_END(),
-};
-
-ActorEntry old_lost_woods_room_0ActorList_timeskip[] = {
-    { ACTOR_EN_RIVER_SOUND, {  -195,  193, -3014 }, {      0,      0,      0 }, 0x0001 },
-    { ACTOR_EN_A_OBJ,       {  -322,  189,  -240 }, {      0, 0xE000,      0 }, 0x4A09 },
-    { ACTOR_OBJ_BOMBIWA,    {   373,  209,    76 }, {      0,      0,      0 }, 0x0008 },
-    { ACTOR_OBJ_BOMBIWA,    {   856,  183, -1546 }, {      0,      0,      0 }, 0x0009 },
-    { ACTOR_EN_TEST,        { -1666,  283,  -243 }, {      0, 0xC000,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        {  -430,  218, -1325 }, {      0, 0xD556,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        {   -69,  210, -2021 }, {      0,      0,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        {   601,  200, -1222 }, {      0, 0xC000,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        {  1296,  463, -2948 }, {      0,      0,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        {  1708,  160,  2977 }, {      0,      0,      0 }, 0x0003 },
-    { ACTOR_EN_TEST,        { -1898,   42,   581 }, {      0,      0,      0 }, 0x0003 },
-    { ACTOR_EN_PEEHAT,      { -1924,   82,   916 }, {      0,      0,      0 }, 0xFFFE },
-    { ACTOR_EN_PEEHAT,      {  -971,   91,   169 }, {      0,      0,      0 }, 0xFFFE },
-    { ACTOR_EN_PEEHAT,      {   884,  160,  2668 }, {      0,      0,      0 }, 0xFFFE },
-    { ACTOR_EN_PEEHAT,      {   704,  433, -2484 }, {      0,      0,      0 }, 0xFFFE },
-    { ACTOR_EN_PEEHAT,      { -2568,   32,  -578 }, {      0,      0,      0 }, 0xFFFE },
-    { ACTOR_EN_PEEHAT,      {  2533,  238, -1119 }, {      0,      0,      0 }, 0xFFFE },
-    { ACTOR_EN_PEEHAT,      { -1151,   53,    92 }, {      0,      0,      0 }, 0xFFFE },
-    { ACTOR_EN_PEEHAT,      {  1193,  160,  2281 }, {      0,      0,      0 }, 0xFFFE },
-    { ACTOR_EN_SLIM,        {  -687,  208,  -578 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        {   317,  411,  1071 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        {   807,  191,  -578 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        { -2465,   70,   118 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        { -2336,   17,   -63 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        { -2284,   64,   298 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        {  -636,  186,  -372 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        {  -816,  204,  -423 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        {   343,  384,  1251 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        {   111,  397,  1225 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        {   987,  182,  -552 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_EN_SLIM,        {  1090,  411, -2304 }, {      0,      0,      0 }, 0xFFFF },
-    { ACTOR_OBJ_LOST_WOODS, { -3387,    0,  -291 }, {      0,      0,      0 }, 0x0005 },
-    { ACTOR_OBJ_LOST_WOODS, { -3409,   45,   167 }, {      0,      0,      0 }, 0x0005 },
-    { ACTOR_OBJ_LOST_WOODS, {  1002,  184,  -948 }, {      0, 0x238E,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  1412,  164,  -905 }, {      0, 0x0E39,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  1541,  203, -1508 }, {      0, 0xC000,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  -160,  205, -1163 }, {      0, 0x5555,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  1325,  176,  -560 }, {      0, 0x238E,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  1972,  177,  -711 }, {      0, 0xC000,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  2101,  178,   882 }, {      0, 0xE38E,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  2704,  400,   667 }, {      0, 0x11C7,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  -204,  205,  -754 }, {      0, 0x2E39,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {    76,  200,  -388 }, {      0, 0x471C,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {   120,  211,   279 }, {      0, 0x238E,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {   335,  200, -1443 }, {      0, 0xB8E4,      0 }, 0x0015 },
-    { ACTOR_EN_WOOD02,      {  1046,  462, -3101 }, {      0, 0xEE39,      0 }, 0x000A },
-    { ACTOR_EN_WOOD02,      {  1433,  460, -2563 }, {      0, 0xEAAB,      0 }, 0x000A },
-    { ACTOR_EN_WOOD02,      {  1110,  436, -2714 }, {      0, 0x7FFF,      0 }, 0x000A },
-    { ACTOR_OBJ_LOST_WOODS, {  1498,  197,    86 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  -965,  397, -1416 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, { -1411,  242,  1813 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {   767,  160,  1765 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  1103,  160,  1828 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  1198,  160,  1586 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_EN_WOOD02,      {  -834,  416, -2263 }, {      0,      0,      0 }, 0x0004 },
-    { ACTOR_EN_WOOD02,      { -1167,  433, -2852 }, {      0,      0,      0 }, 0x0004 },
-    { ACTOR_EN_WOOD02,      {  -834,  423, -2596 }, {      0,      0,      0 }, 0x0004 },
-    { ACTOR_EN_WOOD02,      {  -527,  440, -2852 }, {      0,      0,      0 }, 0x0004 },
-    { ACTOR_OBJ_LOST_WOODS, { -2371,  195,  1476 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, { -2063,  259,  2244 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, { -2294,  142,   989 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, { -2806,   86,   375 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, { -1628,   63,  1246 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, { -1321,   28,  1066 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  -681,  227, -1008 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {   -92,  204, -1623 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, {  1163,  182, -1418 }, {      0,      0,      0 }, 0x0015 },
-    { ACTOR_OBJ_LOST_WOODS, { -4061,   72,    55 }, {      0,      0,      0 }, 0x0016 },
-    { ACTOR_OBJ_LOST_WOODS, { -1550,  231,  2045 }, {      0,      0,      0 }, 0x0016 },
-    { ACTOR_OBJ_LOST_WOODS, { -1674,   -7,   291 }, {      0,      0,      0 }, 0x0016 },
-    { ACTOR_OBJ_LOST_WOODS, {   610,  440, -2964 }, {      0,      0,      0 }, 0x0016 },
-    { ACTOR_OBJ_LOST_WOODS, {  1765,  160,  1971 }, {      0,      0,      0 }, 0x0016 },
-    { ACTOR_OBJ_LOST_WOODS, {  -826,  431, -2933 }, {      0,      0,      0 }, 0x0016 },
-    { ACTOR_OBJ_LOST_WOODS, { -1075,  416, -2458 }, {      0,      0,      0 }, 0x0016 },
-    { ACTOR_OBJ_LOST_WOODS, {  -509,  435, -2571 }, {      0,      0,      0 }, 0x0016 },
-    { ACTOR_OBJ_LOST_WOODS, {  2840,  200,  -738 }, {      0,      0,      0 }, 0x0016 },
-    { ACTOR_OBJ_LOST_WOODS, { -4121,   62,  -185 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_OBJ_LOST_WOODS, { -4220,   80,   225 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_OBJ_LOST_WOODS, { -1188,  240,  2067 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_OBJ_LOST_WOODS, {  2920,  196,    28 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_EN_WOOD02,      {  2185,  630, -3489 }, {      0,      0,      0 }, 0x0009 },
-    { ACTOR_EN_WOOD02,      {  1896,  577, -3437 }, {      0,      0,      0 }, 0x0009 },
-    { ACTOR_OBJ_LOST_WOODS, {  -492,  424,   475 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_OBJ_LOST_WOODS, {  -125,  200,    28 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_OBJ_LOST_WOODS, { -1359,    2,   658 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_OBJ_LOST_WOODS, {  -913,   62,  1210 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_OBJ_LOST_WOODS, {  -703,   95,  1393 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_OBJ_LOST_WOODS, {  -177,  206, -2177 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_OBJ_LOST_WOODS, {  -361,  216, -1941 }, {      0,      0,      0 }, 0x0017 },
-    { ACTOR_OBJ_LOST_WOODS, {  -222,  194,  -428 }, {      0,      0,      0 }, 0x0018 },
-    { ACTOR_OBJ_LOST_WOODS, {   216,  200,  -707 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1161,  160,  3126 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1371,  160,  2837 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {   715,  160,  3073 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  2343,  160,  2391 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, { -2068,  295,  -943 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, { -2619,  150,   842 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1573,  194,  -214 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1035,  184,   170 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {   369,  200,  -317 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {   497,  218,   529 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1624,  172,  -726 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  2111,  194,  -368 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {    88,  200, -1239 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {   856,  199,  -163 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  2008,  240, -1520 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  2367,  240, -1469 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, { -1679,  302,  -701 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, { -3113,   30,   -35 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, { -2140,   38,  -445 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {   395,  160,  2705 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1163,  166,   580 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1804,  199,   196 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  -117,  433,   836 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, { -1910,    0,   -61 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {   830,  160,  1066 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1163,  160,  1271 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, { -2832,    6,  -189 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  2239,  170,  1220 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1804,  160,  1066 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1573,  160,  1732 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  1676,  160,  2321 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  2213,  160,  2014 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, {  2316,  188,   144 }, {      0,      0,      0 }, 0x001A },
-    { ACTOR_OBJ_LOST_WOODS, { -1029,  300,   191 }, { 0xFD00, 0x2000, 0xEE39 }, 0x001B },
-    { ACTOR_OBJ_LOST_WOODS, {   -90,  423, -2736 }, {      0, 0x4B60,      0 }, 0x001B },
-    { ACTOR_OBJ_LOST_WOODS, {  1754,  160,  3312 }, {      0,      0,      0 }, 0x0020 },
-    { ACTOR_OBJ_LOST_WOODS, { -1398,  306,  -240 }, {      0, 0x7FFF,      0 }, 0x0022 },
-    { ACTOR_OBJ_LOST_WOODS, {  3135,  200,  -624 }, {      0, 0x238E,      0 }, 0x0022 },
-    { ACTOR_OBJ_LOST_WOODS, { -3318,   58,  -701 }, {      0, 0xE000,      0 }, 0x0022 },
-    { ACTOR_OBJ_LOST_WOODS, { -2781,   48,  -701 }, {      0, 0xC000,      0 }, 0x0022 },
-    { ACTOR_OBJ_LOST_WOODS, {  1867,  160,  2678 }, {      0, 0x238E,      0 }, 0x0023 },
-    { ACTOR_OBJ_LOST_WOODS, {   532,  160,  2203 }, {      0, 0xC000,      0 }, 0x0023 },
-    { ACTOR_OBJ_LOST_WOODS, { -3179,  103,   461 }, {      0, 0x238E,      0 }, 0x0023 },
-    { ACTOR_OBJ_LOST_WOODS, {  -396,  215,  -965 }, {      0, 0x5555,      0 }, 0x0023 },
-    { ACTOR_OBJ_LOST_WOODS, {  3000,    0,  4300 }, {      0,      0,      0 }, 0x0019 },
-    { ACTOR_EN_OWL,         {  1875,  640, -1800 }, {      0,      0,      0 }, 0x037F },
-    { ACTOR_DOOR_ANA,       {  2175,  160,  1425 }, {      0,      0,     20 }, 0x0000 },
-    { ACTOR_OBJ_MURE,       {  2175,  188,  1425 }, {      0,      0,      0 }, 0x5324 },
-    { ACTOR_EN_FR,          { -1000,  438, -3100 }, {      0,      0,      0 }, 0x0212 }, // Blue: 1 (Ancient Hollow & Forbidden Woods)
 };
 
 static s32 terminatorMaybe = { 0x01000000 };
@@ -705,7 +565,7 @@ u64 old_lost_woods_room_0Tex_00C290[] = {
 #include "assets/scenes/overworld/old_lost_woods/old_lost_woods_room_0Tex_00C290.rgba16.inc.c"
 };
 
-Gfx old_lost_woods_room_0Dlist0x001C60[] = {
+Gfx old_lost_woods_room_0Dlist_001C60[] = {
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_001BE0[0], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -1198,7 +1058,7 @@ static Vtx old_lost_woods_room_0Vtx_005D10[] = {
     VTX(3519, 1003, -3044, 0, 0, 0, 0, 0, 0),
 };
 
-Gfx old_lost_woods_room_0Dlist0x005D90[] = {
+Gfx old_lost_woods_room_0Dlist_005D90[] = {
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_005D10[0], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -1780,7 +1640,7 @@ static Vtx old_lost_woods_room_0Vtx_0089B0[] = {
     VTX(-3470, 640, 2003, 0, 0, 0, 0, 0, 0),
 };
 
-Gfx old_lost_woods_room_0Dlist0x008A30[] = {
+Gfx old_lost_woods_room_0Dlist_008A30[] = {
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_0089B0[0], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -2220,7 +2080,7 @@ u64 old_lost_woods_room_0Tex_00DA90[] = {
 #include "assets/scenes/overworld/old_lost_woods/old_lost_woods_room_0Tex_00DA90.rgba16.inc.c"
 };
 
-Gfx old_lost_woods_room_0Dlist0x00BDC8[] = {
+Gfx old_lost_woods_room_0Dlist_00BDC8[] = {
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_00BD48[0], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -2636,7 +2496,7 @@ static Vtx old_lost_woods_room_0Vtx_00F330[] = {
     VTX(2211, 640, 1730, 0, 0, 0, 0, 0, 0),
 };
 
-Gfx old_lost_woods_room_0Dlist0x00F3B0[] = {
+Gfx old_lost_woods_room_0Dlist_00F3B0[] = {
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_00F330[0], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -2909,7 +2769,7 @@ static Vtx old_lost_woods_room_0Vtx_0127B8[] = {
     VTX(-675, 798, 3424, 0, 0, 0, 0, 0, 0),
 };
 
-Gfx old_lost_woods_room_0Dlist0x012838[] = {
+Gfx old_lost_woods_room_0Dlist_012838[] = {
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_0127B8[0], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -3432,7 +3292,7 @@ static Vtx old_lost_woods_room_0Vtx_015440[] = {
     VTX(2577, 560, 3912, 0, 0, 0, 0, 0, 0),
 };
 
-Gfx old_lost_woods_room_0Dlist0x0154C0[] = {
+Gfx old_lost_woods_room_0Dlist_0154C0[] = {
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_015440[0], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -3668,7 +3528,7 @@ u64 old_lost_woods_room_0Tex_019720[] = {
 #include "assets/scenes/overworld/old_lost_woods/old_lost_woods_room_0Tex_019720.ia16.inc.c"
 };
 
-Gfx old_lost_woods_room_0Dlist0x019660[] = {
+Gfx old_lost_woods_room_0Dlist_019660[] = {
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_0195E0[0], 8, 0),
     gsSPCullDisplayList(0, 7),
@@ -3833,7 +3693,7 @@ u64 old_lost_woods_room_0Tex_01A900[] = {
 #include "assets/scenes/overworld/old_lost_woods/old_lost_woods_room_0Tex_01A900.ia16.inc.c"
 };
 
-Gfx old_lost_woods_room_0Dlist0x01A730[] = {
+Gfx old_lost_woods_room_0Dlist_01A730[] = {
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_FOG | G_LIGHTING),
     gsSPVertex(&old_lost_woods_room_0Vtx_01A6B0[0], 8, 0),
     gsSPCullDisplayList(0, 7),

@@ -74,6 +74,7 @@ void EnOssan_TalkZoraShopkeeper(PlayState* play);
 void EnOssan_TalkGoronShopkeeper(PlayState* play);
 void EnOssan_TalkHappyMaskShopkeeper(PlayState* play);
 void EnOssan_TalkSmithyShopkeeper(PlayState* play);
+void EnOssan_TalkDawngroveShopkeeper(PlayState* play);
 
 s16 ShopItemDisp_Default(s16 v);
 s16 ShopItemDisp_SpookyMask(s16 v);
@@ -199,6 +200,7 @@ static s16 sShopkeeperObjectIds[][3] = {
     { OBJECT_OSSAN, OBJECT_ID_MAX, OBJECT_ID_MAX },
     { OBJECT_OS, OBJECT_ID_MAX, OBJECT_ID_MAX },
     { OBJECT_KGY, OBJECT_ID_MAX, OBJECT_ID_MAX },
+    { OBJECT_OF1D_MAP, OBJECT_ID_MAX, OBJECT_MASTERGOLON },
 };
 
 static EnOssanTalkOwnerFunc sShopkeeperTalkOwner[] = {
@@ -206,10 +208,11 @@ static EnOssanTalkOwnerFunc sShopkeeperTalkOwner[] = {
     EnOssan_TalkMarketPotionShopkeeper, EnOssan_TalkBazaarShopkeeper,         EnOssan_TalkBazaarShopkeeper2,
     EnOssan_TalkDefaultShopkeeper,      EnOssan_TalkZoraShopkeeper,           EnOssan_TalkGoronShopkeeper,
     EnOssan_TalkDefaultShopkeeper,      EnOssan_TalkHappyMaskShopkeeper,      EnOssan_TalkSmithyShopkeeper,
+    EnOssan_TalkDawngroveShopkeeper,
 };
 
 static f32 sShopkeeperScale[] = {
-    0.01f, 0.011f, 0.0105f, 0.011f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.008f,
+    0.01f, 0.011f, 0.0105f, 0.011f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.008f, 0.01f,
 };
 
 typedef struct ShopItem {
@@ -328,6 +331,15 @@ static ShopItem sShopkeeperStores[][8] = {
       { SI_DEKU_SHIELD_UPGRADE, -80, 52, -3 },
       { SI_HEROS_SHIELD_UPGRADE, -80, 76, -3 } },
 
+    { { SI_DEKU_SHIELD, 50, 52, -20 },
+      { SI_HYLIAN_SHIELD, 50, 76, -20 },
+      { SI_HEROS_SHIELD, 80, 52, -3 },
+      { SI_RECOVERY_HEART, 80, 76, -3 },
+      { SI_BOMBS_10, -50, 52, -20 },
+      { SI_DEKU_NUTS_10, -50, 76, -20 },
+      { SI_DEKU_STICK, -80, 52, -3 },
+      { SI_ARROWS_30, -80, 76, -3 } },
+
     { { SI_HYLIAN_SHIELD, 50, 52, -20 },
       { SI_BOMBS_5_R35, 50, 76, -20 },
       { SI_ARROWS_10, 80, 52, -3 },
@@ -370,12 +382,14 @@ static EnOssanInitFunc sInitFuncs[] = {
     EnOssan_InitPotionShopkeeper, EnOssan_InitBazaarShopkeeper,    EnOssan_InitBazaarShopkeeper,
     EnOssan_InitBazaarShopkeeper, EnOssan_InitZoraShopkeeper,      EnOssan_InitGoronShopkeeper,
     EnOssan_InitBazaarShopkeeper, EnOssan_InitHappyMaskShopkeeper, EnOssan_InitSmithyShopkeeper,
+    EnOssan_InitGoronShopkeeper,
 };
 
 static Vec3f sShopkeeperPositionOffsets[] = {
     { 0.0f, 0.0f, 33.0f }, { 0.0f, 0.0f, 31.0f }, { 0.0f, 0.0f, 31.0f }, { 0.0f, 0.0f, 31.0f },
     { 0.0f, 0.0f, 0.0f },  { 0.0f, 0.0f, 0.0f },  { 0.0f, 0.0f, 0.0f },  { 0.0f, 0.0f, 36.0f },
     { 0.0f, 0.0f, 15.0f }, { 0.0f, 0.0f, 0.0f },  { 0.0f, 0.0f, 26.0f }, { 0.0f, 0.0f, 0.0f },
+    { 0.0f, 0.0f, 15.0f },
 };
 
 static EnOssanStateFunc sStateFunc[] = {
@@ -597,6 +611,12 @@ void EnOssan_TalkHappyMaskShopkeeper(PlayState* play) {
 
 void EnOssan_TalkSmithyShopkeeper(PlayState* play) {
     Message_ContinueTextbox(play, SHIELD_DURABILITY ? 0x8305 : 0x8306);
+}
+
+void EnOssan_TalkDawngroveShopkeeper(PlayState* play) {
+    if (!LINK_IS_ADULT_OR_TIMESKIP)
+        Message_ContinueTextbox(play, GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW) ? 0x8213 : 0x8212);
+    else Message_ContinueTextbox(play, 0x8211);
 }
 
 void EnOssan_UpdateCameraDirection(EnOssan* this, PlayState* play, f32 cameraFaceAngle) {
@@ -2243,7 +2263,8 @@ u16 EnOssan_SetupHelloDialog(EnOssan* this) {
                 return INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP ? 0x8301 : 0x8300;
         }
         return 0x8303;
-    }
+    } else if (this->actor.params == OSSAN_TYPE_DAWNGROVE)
+        return 0x8210;
 
     return 0x9E;
 }
@@ -2274,7 +2295,7 @@ void EnOssan_InitActionFunc(EnOssan* this, PlayState* play) {
         this->actor.world.pos.z += sShopkeeperPositionOffsets[this->actor.params].z;
 
         if (IS_CHILD_QUEST && this->actor.params == 4)
-            items = sShopkeeperStores[12];
+            items = sShopkeeperStores[13];
         else items = sShopkeeperStores[this->actor.params];
 
         ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 20.0f);

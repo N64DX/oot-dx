@@ -54,7 +54,7 @@ static ColliderCylinderInit sCylinderInit = {
     {
         ELEM_MATERIAL_UNK0,
         { 0x00000000, 0x00, 0x00 },
-        { 0x4FC1FFF6, 0x00, 0x00 },
+        { 0x0C000600, 0x00, 0x00 },
         ATELEM_NONE | ATELEM_SFX_NORMAL,
         ACELEM_ON,
         OCELEM_NONE,
@@ -115,6 +115,8 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_VEC3F_DIV1000(scale, 100, ICHAIN_STOP),
 };
 
+static f32 sBgDkjailIvyScale[] = { 0.1f, 0.2f };
+
 void BgDkjailIvy_Init(Actor* thisx, PlayState* play) {
     BgDkjailIvy* this = (BgDkjailIvy*)thisx;
     CollisionHeader* header = NULL;
@@ -135,6 +137,8 @@ void BgDkjailIvy_Init(Actor* thisx, PlayState* play) {
     Collider_UpdateCylinder(&this->dyna.actor, &this->collider);
     this->alpha = 255;
     BgDkjailIvy_SetupWaitForCut(this);
+  
+    this->dyna.actor.scale.x = this->dyna.actor.scale.y = sBgDkjailIvyScale[(this->dyna.actor.params >> 8) & 1];
 }
 
 void BgDkjailIvy_Destroy(Actor* thisx, PlayState* play) {

@@ -2856,6 +2856,50 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x8210, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Welcome..." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8211, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Welcome... To the Dawngrove Shop...\n"
+"Anything you want to buy?\n"
+"Or not... I don't really care..." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8212, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Folks don't tend to get around\n"
+"these parts... Something about\n"
+"it being too cursed around here...\n"
+"Buy. Don't buy. I don't really care." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8213, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Feels a bit brighter around these\n"
+"parts now that the curse has been\n"
+"lifted. You feel like buying something?\n"
+"Or perhaps not..." EVENT
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x8300, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
