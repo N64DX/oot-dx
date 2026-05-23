@@ -70,8 +70,9 @@ static ColliderCylinderInit sCylinderInit = {
     { 200, 200, 0, { 0, 0, 0 } },
 };
 
-static u32 sSpinAttackDmgFlags[] = { DMG_SPIN_MASTER, DMG_SPIN_KOKIRI, DMG_SPIN_GIANT, DMG_SPIN_GIANT };
-static u32 sJumpAttackDmgFlags[] = { DMG_JUMP_MASTER, DMG_JUMP_KOKIRI, DMG_JUMP_GIANT, DMG_JUMP_GIANT };
+static u32 sSpinAttackDmgFlags[] = { DMG_SPIN_MASTER, DMG_SPIN_KOKIRI, DMG_SPIN_GIANT, DMG_DEKU_STICK,  DMG_HAMMER_SWING, DMG_SPIN_GIANT };
+static u32 sJumpAttackDmgFlags[] = { DMG_JUMP_MASTER, DMG_JUMP_KOKIRI, DMG_JUMP_GIANT, DMG_JUMP_MASTER, DMG_HAMMER_JUMP,  DMG_JUMP_GIANT };
+static u8  sThunderDustType[]    = { 2, 3, 4, 4, 4, 4 };
 
 typedef enum {
     /* 0 */ ENMTHUNDER_SUBTYPE_SPIN_GREAT,
@@ -92,7 +93,7 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
 
     Collider_InitCylinder(play, &this->collider);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
-    this->swordType = PARAMS_GET_S(this->actor.params, 0, 8) - 1;
+    this->swordType = PARAMS_GET_S(this->actor.params, 0, 7) - 1;
     Lights_PointNoGlowSetInfo(&this->lightInfo, this->actor.world.pos.x, this->actor.world.pos.y,
                               this->actor.world.pos.z, 255, 255, 255, 0);
     this->lightNode = LightContext_InsertLight(play, &play->lightCtx, &this->lightInfo);
@@ -108,6 +109,7 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
     this->actor.room = -1;
     Actor_SetScale(&this->actor, 0.1f);
     this->isUsingMagic = false;
+    this->isBeam = (thisx->params & 0x80) != 0;
 
     if (player->stateFlags2 & PLAYER_STATE2_17) {
         if (!gSaveContext.save.info.playerData.isMagicAcquired || (gSaveContext.magicState != MAGIC_STATE_IDLE) ||
@@ -133,12 +135,12 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
             case 2: // Gilded Sword / Giant's Knife
                 this->targetScale = IS_CHILD_QUEST_AS_CHILD ? 3 : 4;
                 break;
-            case 3: // Great Fairy's Sword
+            case 5: // Great Fairy's Sword
                 this->targetScale = 4;
                 break;
         }
 
-        if (HAS_HEROS_SWORD && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI && player->itemAction == PLAYER_IA_SWORD_KOKIRI) {
+        if (this->isBeam) {
             this->attackStrength += 2;
             this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
             EnMThunder_SetupAction(this, EnMThunder_SwordBeam_Attack);
@@ -254,7 +256,7 @@ void EnMThunder_ChargingSpinAttack(EnMThunder* this, PlayState* play) {
                 case 2: // Gilded Sword / Giant's Knife
                     this->targetScale = IS_CHILD_QUEST_AS_CHILD ? 3 : 4;
                     break;
-                case 3: // Great Fairy's Sword
+                case 5: // Great Fairy's Sword
                     this->targetScale = 4;
                     break;
             }
@@ -268,7 +270,7 @@ void EnMThunder_ChargingSpinAttack(EnMThunder* this, PlayState* play) {
                 this->targetScale *= 2;
             }
 
-            if (HAS_HEROS_SWORD && CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_KOKIRI) {
+            if (this->isBeam) {
                 this->attackStrength += 2;
                 this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
                 EnMThunder_SetupAction(this, EnMThunder_SwordBeam_Attack);
@@ -308,7 +310,7 @@ void EnMThunder_ChargingSpinAttack(EnMThunder* this, PlayState* play) {
         if (this->actor.child == NULL) {
             Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_EFF_DUST, this->actor.world.pos.x,
                                this->actor.world.pos.y, this->actor.world.pos.z, 0, this->actor.shape.rot.y, 0,
-                               this->swordType + 2);
+                               sThunderDustType[this->swordType]);
         }
         this->dimmingIntensity += ((((player->unk_858 - 0.15f) * 1.5f) - this->dimmingIntensity) * 0.5f);
 
@@ -429,6 +431,9 @@ void EnMThunder_Update(Actor* thisx, PlayState* play) {
     s32 redGreen;
 
     this->actionFunc(this, play);
+    if (this->isBeam)
+        return;
+
     EnMThunder_AdjustEnvLights(play, this->dimmingIntensity);
     blueRadius = this->spinAttackTimer;
     redGreen = (u32)(blueRadius * 255.0f) & 0xFF;
@@ -519,7 +524,7 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
                 Matrix_RotateX(16384.0f, MTXMODE_APPLY);
             }
             break;
-        case 3:
+        case 5: // Great Fairy's Sword
             Matrix_Translate(200.0f, 350.0f, 0.0f, MTXMODE_APPLY);
             Matrix_Scale(-1.8f, -1.4f, -0.7f, MTXMODE_APPLY);
             Matrix_RotateX(16384.0f, MTXMODE_APPLY);
