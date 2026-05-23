@@ -6,6 +6,7 @@
 
 #include "z_en_po_relay.h"
 #include "overlays/actors/ovl_En_Honotrap/z_en_honotrap.h"
+#include "overlays/actors/ovl_Item_Etcetera/z_item_etcetera.h"
 
 #include "libc64/qrand.h"
 #include "gfx.h"
@@ -84,6 +85,7 @@ static ColliderCylinderInit sCylinderInit = {
 };
 
 static s32 sAlreadySpawned = false;
+static s32 sAlreadyTalked = false;
 
 static InitChainEntry sInitChain[] = {
     ICHAIN_S8(naviEnemyId, NAVI_ENEMY_DAMPES_GHOST, ICHAIN_CONTINUE),
@@ -133,7 +135,26 @@ void EnPoRelay_Init(Actor* thisx, PlayState* play) {
         this->textId = this->actor.textId;
         EnPoRelay_SetupIdle(this);
     }
-    this->actor.params &= 0x3F;
+
+    if (this->actor.params <= PO_RELAY_TYPE_PICTOBOX) {
+        this->actor.flags &= ~ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED;
+        this->actor.naviEnemyId = NAVI_ENEMY_NONE;
+        sAlreadySpawned = false;
+
+        if (this->actor.params == PO_RELAY_TYPE_PICTOBOX_HIDDEN) {
+            this->actor.draw = NULL;
+            this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
+        }
+
+        if (GET_INFTABLE(INFTABLE_ASKED_BY_IGOR)) {
+            Actor_Kill(&this->actor);
+            Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 10.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_ANCIENT_HOLLOW_KEY);
+        }
+    } else {
+        this->actor.params &= 0x3F;
+        if (IS_CHILD_QUEST)
+            this->actor.naviEnemyId = NAVI_ENEMY_IGORS_GHOST;
+    }
 }
 
 void EnPoRelay_Destroy(Actor* thisx, PlayState* play) {
@@ -148,7 +169,8 @@ void EnPoRelay_SetupIdle(EnPoRelay* this) {
     this->pathPoint = 0;
 
     // does not despawn upon room transitions
-    this->actor.room = -1;
+    if (this->actor.params > PO_RELAY_TYPE_PICTOBOX)
+        this->actor.room = -1;
 
     this->actor.shape.rot.y = 0;
     this->actor.world.rot.y = -0x8000;
@@ -191,9 +213,62 @@ void EnPoRelay_CorrectY(EnPoRelay* this) {
     this->actor.world.pos.y = Math_SinS(this->bobTimer * 0x800) * 8.0f + this->actor.home.pos.y;
 }
 
+u16 EnPoRelay_GetTextId(PlayState* play, Actor* thisx) {
+    GET_PLAYER(play)->exchangeItemId = EXCH_ITEM_PICTOBOX;
+
+    if (GET_INFTABLE(INFTABLE_ASKED_BY_IGOR))
+        return 0x8227;
+    else if (GET_INFTABLE(INFTABLE_SHOWED_PICTOBOX_TO_IGOR))
+        return 0x8225;
+    else return 0x8223;
+}
+
+s16 EnPoRelay_UpdateTalkState(PlayState* play, Actor* thisx) {
+    EnPoRelay* this = (EnPoRelay*)thisx;
+    
+    switch (Message_GetState(&play->msgCtx)) {
+        case TEXT_STATE_CLOSING:
+            if (this->actor.textId == 0x8226)
+                SET_INFTABLE(INFTABLE_ASKED_BY_IGOR);
+            return NPC_TALK_STATE_IDLE;
+
+        case TEXT_STATE_CHOICE:
+            if (Message_ShouldAdvance(play)) {
+                if (this->actor.textId == 0x8224) {
+                    SET_INFTABLE(INFTABLE_SHOWED_PICTOBOX_TO_IGOR);
+                    this->actor.textId = play->msgCtx.choiceIndex == 0 ? 0x8225 : 0x8226;
+                    Message_ContinueTextbox(play, this->actor.textId);
+                }
+                return NPC_TALK_STATE_TALKING;
+            }
+
+        default:
+            return NPC_TALK_STATE_TALKING;
+    }
+}
+
 void EnPoRelay_Idle(EnPoRelay* this, PlayState* play) {
     Math_ScaledStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 0x100);
-    if (Actor_TalkOfferAccepted(&this->actor, play)) {
+
+    if (this->actor.params <= PO_RELAY_TYPE_PICTOBOX) {
+        if (Npc_UpdateTalking(play, &this->actor, &this->interactInfo.talkState, 50.0f, EnPoRelay_GetTextId, EnPoRelay_UpdateTalkState))
+            if (Actor_GetPlayerExchangeItemId(play) == EXCH_ITEM_PICTOBOX)
+                this->actor.textId = GET_INFTABLE(INFTABLE_ASKED_BY_IGOR) ? 0x8227 : 0x8224;
+        GET_PLAYER(play)->actor.textId = this->actor.textId;
+        
+        if (this->actor.xzDistToPlayer > 500.0f || this->actor.yDistToPlayer < -15.0f)
+            return;
+    } else if (IS_CHILD_QUEST && !GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW)) {
+        this->actor.textId = this->textId = 0x8222;
+        if (!sAlreadyTalked && this->actor.xzDistToPlayer < 250.0f) {
+            this->actor.flags |= ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED;
+            Actor_OfferTalk(&this->actor, play, 250.0f);
+            sAlreadyTalked = true;
+        } else {
+            this->actor.flags &= ~ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED;
+            Actor_OfferTalk(&this->actor, play, 50.0f);
+        }
+    } else if (Actor_TalkOfferAccepted(&this->actor, play)) {
         this->actor.flags &= ~ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED;
         this->actionFunc = EnPoRelay_Talk;
     } else if (this->actor.xzDistToPlayer < 250.0f) {
@@ -451,6 +526,8 @@ void EnPoRelay_Draw(Actor* thisx, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_en_po_relay.c", 940);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(sEyesTextures[this->eyeTextureIdx]));
+    gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(IS_CHILD_QUEST ? object_tk_IgorShirt_Tex : object_tk_005440_Tex));
+    gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(IS_CHILD_QUEST ? object_tk_IgorKnees_Tex : object_tk_0056C0_Tex));
     SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount, NULL,
                           EnPoRelay_PostLimbDraw, &this->actor);
     CLOSE_DISPS(play->state.gfxCtx, "../z_en_po_relay.c", 954);

@@ -395,7 +395,7 @@ void CutsceneCmd_Misc(PlayState* play, CutsceneContext* csCtx, CsCmdMisc* cmd) {
 
         case CS_MISC_SHOW_TITLE_CARD:
             if (isFirstFrame) {
-                if (USE_TITLE_CARDS)
+                if (USE_TITLE_CARDS(play))
                     Message_DisplaySceneTitleCard(play);
                 else TitleCard_InitPlaceName(play, &play->actorCtx.titleCtx, player->giObjectSegment, 160, 120, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 20);
             }
@@ -2476,7 +2476,7 @@ void Cutscene_HandleEntranceTriggers(PlayState* play) {
         }
     }
 
-    if ( (gSaveContext.respawnFlag == 0 || gSaveContext.respawnFlag == -2) && USE_TITLE_CARDS) {
+    if ( (gSaveContext.respawnFlag == 0 || gSaveContext.respawnFlag == -2) && USE_TITLE_CARDS(play)) {
         u16 flags = gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + ((void)0, gSaveContext.sceneLayer)].field;
         if (!IS_CUTSCENE_LAYER && (flags & ENTRANCE_INFO_DISPLAY_TITLE_CARD_FLAG) && gSaveContext.showTitleCard)
             if ( (play->sceneId != SCENE_DODONGOS_CAVERN || GET_EVENTCHKINF(EVENTCHKINF_B0)) && (play->sceneId != SCENE_BOMBCHU_SHOP || GET_EVENTCHKINF(EVENTCHKINF_25)) )

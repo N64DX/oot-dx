@@ -1704,7 +1704,7 @@ void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn) {
 
     PRINTF("\nSCENE SIZE %fK\n", (scene->sceneFile.vromEnd - scene->sceneFile.vromStart) / 1024.0f);
 
-    if (USE_TITLE_CARDS) {
+    if (USE_TITLE_CARDS(this)) {
         u16 textId = sceneId;
 
         if (sceneId == SCENE_MARKET_ENTRANCE_NIGHT || sceneId == SCENE_MARKET_ENTRANCE_RUINS)

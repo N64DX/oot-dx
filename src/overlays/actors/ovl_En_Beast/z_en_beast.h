@@ -14,25 +14,16 @@ typedef struct EnBeast {
     Actor actor;
     EnBeastActionFunc actionFunc;
     SkelAnime skelAnime;
-    f32 timer;
-    f32 AnimSelect;
     Vec3s jointTable[GBEASTSKEL_NUM_LIMBS];
     Vec3s morphTable[GBEASTSKEL_NUM_LIMBS];
-    u8 hurtboxCooldown;
     ColliderCylinder collider;
     ColliderJntSph colliderSpheres;
     ColliderJntSphElement colliderSpheresElements[3];
-    s16 headRotx;
-    s16 headRoty;
-    Vec3f WeaponTip, Weapon, ArmR, Chest, Head, LegL, LegR, HandR, HandL;
-    bool alarmstate;
-    bool cantSee;
-    bool canDodge;
-    u8 inrange;
-    f32 deathTimer;
-    u8 type;
-    u8 switchFlag;
-    bool miniboss;
+    Vec3f armR, chest, head, legL, legR, handR, handL;
+    f32 timer;
+    s16 headRotx, headRoty;
+    u8 deathTimer, hurtboxCooldown, inrange, type, switchFlag;
+    bool alarmstate, cantSee, canDodge, miniboss;
 } EnBeast;
 
 typedef enum BeastType {

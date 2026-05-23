@@ -5,10 +5,14 @@
 #include "actor.h"
 #include "light.h"
 #include "assets/objects/object_tk/object_tk.h"
+#include "assets/objects/object_tk/object_tk_extra.h"
 
 struct EnPoRelay;
 
 typedef void (*EnPoRelayActionFunc)(struct EnPoRelay*, struct PlayState*);
+
+#define PO_RELAY_TYPE_PICTOBOX_HIDDEN   -2
+#define PO_RELAY_TYPE_PICTOBOX          -1
 
 typedef struct EnPoRelay {
     /* 0x0000 */ Actor actor;
@@ -27,6 +31,7 @@ typedef struct EnPoRelay {
     /* 0x027C */ LightNode* lightNode;
     /* 0x0280 */ LightInfo lightInfo;
     /* 0x0290 */ ColliderCylinder collider;
-} EnPoRelay; // size = 0x02DC
+    /* 0x02DC */ NpcInteractInfo interactInfo;
+} EnPoRelay; // size = 0x0304
 
 #endif

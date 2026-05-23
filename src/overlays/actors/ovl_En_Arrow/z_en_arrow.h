@@ -39,7 +39,8 @@ typedef enum ArrowType {
     /*   7 */ ARROW_0D,
     /*   8 */ ARROW_0E,
     /*   9 */ ARROW_SEED,
-    /*  10 */ ARROW_NUT
+    /*  10 */ ARROW_NUT,
+    /*  11 */ ARROW_NORMAL_LIT_ICE
 } ArrowType;
 
 #endif

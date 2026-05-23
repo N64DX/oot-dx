@@ -2375,3 +2375,29 @@ COLOR(LIGHTBLUE) "Watch out, it is extremely strong!\n"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x066A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(
+QUICKTEXT_ENABLE SHIFT(60) "イゴールの霊\n"
+SHIFT(21) COLOR(LIGHTBLUE) "死んだ墓守りさんの幽霊よ。\n"
+COLOR(DEFAULT) SHIFT(3) COLOR(LIGHTBLUE) "追っかけたら" COLOR(DEFAULT) "形見わけ" COLOR(LIGHTBLUE) "してくれる？" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Igor's Ghost\n"
+COLOR(LIGHTBLUE) "That's the ghost of the dead\n"
+"gravekeeper! If you chase him,\n"
+"he might give you his " COLOR(DEFAULT) "keepsake" COLOR(LIGHTBLUE) "..." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Das ist der Geist von Igor!\n"
+COLOR(LIGHTBLUE) "Der Geist des Totengräbers!\n"
+"Gewinnst Du den Wettlauf mit ihm,\n"
+"hat er vielleicht ein " COLOR(DEFAULT) "Andenken" COLOR(LIGHTBLUE) "..." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(
+QUICKTEXT_ENABLE "Spectre du Jumeau d'Igor\n"
+COLOR(LIGHTBLUE) "C'est le fantôme du fossoyeur!\n"
+"Suis-le et il te remettra son \n"
+COLOR(DEFAULT) "trésor" COLOR(LIGHTBLUE) "..." COLOR(DEFAULT) QUICKTEXT_DISABLE
+)
+)

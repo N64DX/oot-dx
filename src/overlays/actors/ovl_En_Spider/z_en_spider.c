@@ -105,7 +105,7 @@ static ColliderCylinderInit sCylinderInit = {
     { 40, 60, 0, { 0, 0, 0,} },
 };
 
-static CollisionCheckInfoInit2 sColChkInit = { 14, 40, 60, 0, MASS_HEAVY };
+static CollisionCheckInfoInit2 sColChkInit = { 10, 40, 60, 0, MASS_HEAVY };
 
 static ColliderJntSphElementInit sJntSphItemsInit[] = {
     {
@@ -143,6 +143,44 @@ static ColliderJntSphInit sJntSphInit = {
     },
     ARRAY_COUNT(sJntSphItemsInit),
     sJntSphItemsInit,
+};
+
+static ColliderJntSphElementInit sJntSphItemsMinibossInit[] = {
+    {
+        {
+            ELEM_MATERIAL_UNK0,
+            { 0xFFCFFFFF, 0x04, 0x18 },
+            { 0x00000000, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_NONE,
+            OCELEM_NONE,
+        },
+        { ARMATURE_MANDIBLEL_LIMB, { { 0, 0, 0 }, 35 }, 60 },
+    },
+    {
+        {
+            ELEM_MATERIAL_UNK0,
+            { 0xFFCFFFFF, 0x04, 0x10 },
+            { 0x00000000, 0x00, 0x00 },
+            ATELEM_ON | ATELEM_SFX_NORMAL,
+            ACELEM_NONE,
+            OCELEM_NONE,
+        },
+        { ARMATURE_MANDIBLER_LIMB, { { 0, 0, 0 }, 35 }, 60 },
+    },
+};
+
+static ColliderJntSphInit sJntSphMinibossInit = {
+    {
+        COL_MATERIAL_METAL,
+        AT_ON | AT_TYPE_ENEMY,
+        AC_ON | AC_HARD | AC_TYPE_PLAYER,
+        OC1_ON | OC1_TYPE_ALL,
+        OC2_TYPE_1,
+        COLSHAPE_JNTSPH,
+    },
+    ARRAY_COUNT(sJntSphItemsMinibossInit),
+    sJntSphItemsMinibossInit,
 };
 
 static InitChainEntry sInitChain[] = {
@@ -234,30 +272,39 @@ static DamageTable sDamageTable = {
 void EnSpider_Init(Actor* thisx, PlayState* play) {
     EnSpider* this = (EnSpider*)thisx;
 
+    this->type       =  this->actor.params        & 0xFF;
+    this->miniboss   = (this->actor.params >> 15) & 1;
+    this->switchFlag = (this->actor.params >> 8)  & 0x7F;
+
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->alarmstate = false;
-    if (this->actor.params == 2)
+    if (this->type == 2)
         this->cantSee = false;
 
     this->canDodge = true;
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawHorse, 10.0f);
     this->actor.world.rot.y = this->actor.shape.rot.y;
+    
     Collider_InitCylinder(play, &this->collider);
     SkelAnime_InitFlex(play, &this->skelAnime, &Armature, &ArmatureIntroAnim, this->jointTable, this->morphTable, ARMATURE_NUM_LIMBS);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, &sDamageTable, &sColChkInit);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     Collider_InitJntSph(play, &this->colliderSpheres);
-    Collider_SetJntSph(play, &this->colliderSpheres, &this->actor, &sJntSphInit, this->colliderSpheresElements);
+    Collider_SetJntSph(play, &this->colliderSpheres, &this->actor, this->miniboss ? &sJntSphMinibossInit : &sJntSphInit, this->colliderSpheresElements);
 
-    if (this->actor.params == 0) {
+    if (this->miniboss)
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(20, ELITE_HP);
+    else this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
+
+    if (this->type == 0) {
         this->timer = 39;
         EnSpider_SetupIdle(this, play);
         this->actor.speed = 0.0f;
-    } else if (this->actor.params == 1) {
+    } else if (this->type == 1) {
         EnSpider_SetupIntro(this, play);
         this->actor.speed = 0.0f;
-    } else if (this->actor.params == 2) {
+    } else if (this->type == 2) {
         this->timer = 39;
         EnSpider_SetupIdle(this, play);
         this->actor.speed = 0.0f;
@@ -266,6 +313,9 @@ void EnSpider_Init(Actor* thisx, PlayState* play) {
         EnSpider_SetupIdleP(this, play);
         this->actor.speed = 0.0f;
     }
+
+    if (this->switchFlag <= 0x3F && Flags_GetSwitch(play, this->switchFlag))
+        Actor_Kill(thisx);
 }
 
 void EnSpider_Destroy(Actor* thisx, PlayState* play) {
@@ -273,6 +323,9 @@ void EnSpider_Destroy(Actor* thisx, PlayState* play) {
 
     Collider_DestroyCylinder(play, &this->collider);
     Collider_DestroyJntSph(play, &this->colliderSpheres);
+
+    if (this->alarmstate && this->miniboss)
+        func_800F5B58();
 }
 
 void EnSpider_Update(Actor* thisx, PlayState* play) {
@@ -306,10 +359,10 @@ void EnSpider_Update(Actor* thisx, PlayState* play) {
     epos.y = this->actor.world.pos.y + 65.0f;
     epos.z = this->actor.world.pos.z;
 
-    if (this->actor.params == 2)
+    if (this->type == 2)
         this->cantSee = false;
 
-    if (this->actor.xzDistToPlayer < 900.0 && (play->gameplayFrames % 10) == 0 && this->actor.params != 2) {
+    if (this->actor.xzDistToPlayer < 900.0 && (play->gameplayFrames % 10) == 0 && this->type != 2) {
         if (BgCheck_EntityLineTest1(&play->colCtx, &epos, &pos, &colPoint, &poly, true, true, true, true, &bgId))
             this->cantSee = true;
         else this->cantSee = false;
@@ -397,31 +450,31 @@ void EnSpider_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* r
     Collider_UpdateSpheres(limbIndex, &this->colliderSpheres);
 
     if (limbIndex == ARMATURE_WAIST_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->Head);
+        Matrix_MultVec3f(&zeroVec, &this->head);
 
-    this->actor.focus.pos = this->Head;
+    this->actor.focus.pos = this->head;
     if ((this->deathTimer > 1 && this->deathTimer <= 3) || (this->deathTimer > 14 && this->deathTimer <= 16) || (this->deathTimer > 28 && this->deathTimer <= 32)) {
         s32 i;
         Vec3f effPos;
 
         if (limbIndex == ARMATURE_ABDOMEN_LIMB)
-            Matrix_MultVec3f(&zeroVec, &this->Chest);
+            Matrix_MultVec3f(&zeroVec, &this->chest);
         if (limbIndex == ARMATURE_LEGR1_LIMB)
-            Matrix_MultVec3f(&zeroVec, &this->ArmR);
+            Matrix_MultVec3f(&zeroVec, &this->armR);
         if (limbIndex == ARMATURE_LEGR3_LIMB)
-            Matrix_MultVec3f(&zeroVec, &this->LegR);
+            Matrix_MultVec3f(&zeroVec, &this->legR);
         if (limbIndex == ARMATURE_LEGL2_LIMB)
-            Matrix_MultVec3f(&zeroVec, &this->LegL);
+            Matrix_MultVec3f(&zeroVec, &this->legL);
         if (Rand_ZeroOne() > Rand_ZeroOne())
-            EffectSsDeadDb_Spawn(play, &this->Head, &zeroVec, &zeroVec, 25, 30, 208, 24, 22, 125, 0, 22, 0, 1, 9, true);
+            EffectSsDeadDb_Spawn(play, &this->head, &zeroVec, &zeroVec, 25, 30, 208, 24, 22, 125, 0, 22, 0, 1, 9, true);
         if (Rand_ZeroOne() > Rand_ZeroOne())
-            EffectSsDeadDb_Spawn(play, &this->Chest, &zeroVec, &zeroVec, 25, 30, 208, 24, 22, 125, 0, 22, 0, 1, 9, true);
+            EffectSsDeadDb_Spawn(play, &this->chest, &zeroVec, &zeroVec, 25, 30, 208, 24, 22, 125, 0, 22, 0, 1, 9, true);
         if (Rand_ZeroOne() > Rand_ZeroOne())
-            EffectSsDeadDb_Spawn(play, &this->LegR, &zeroVec, &zeroVec, 25, 30, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
+            EffectSsDeadDb_Spawn(play, &this->legR, &zeroVec, &zeroVec, 25, 30, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
         if (Rand_ZeroOne() > Rand_ZeroOne())
-            EffectSsDeadDb_Spawn(play, &this->ArmR, &zeroVec, &zeroVec, 25, 30, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
+            EffectSsDeadDb_Spawn(play, &this->armR, &zeroVec, &zeroVec, 25, 30, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
         if (Rand_ZeroOne() > Rand_ZeroOne())
-            EffectSsDeadDb_Spawn(play, &this->LegL, &zeroVec, &zeroVec, 25, 30, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
+            EffectSsDeadDb_Spawn(play, &this->legL, &zeroVec, &zeroVec, 25, 30, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
     }
 }
 
@@ -436,7 +489,7 @@ void EnSpider_StartClimb(EnSpider* this, PlayState* play) {
     if (this->timer > 0) {
         this->actor.velocity.y = 3.0f;
         this->actor.gravity = 0.0f;
-        this->timer -= 1;
+        this->timer--;
     }
     if (this->timer <= 0) {
         this->alarmstate = true;
@@ -457,7 +510,7 @@ void EnSpider_Climb(EnSpider* this, PlayState* play) {
 
     if (this->timer > 0) {
         this->actor.velocity.y = 5.0f;
-        this->timer -= 1;
+        this->timer--;
         if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) == 0 || (this->actor.bgCheckFlags & BGCHECKFLAG_CEILING) != 0) {
             this->timer = 11;
             EnSpider_SetupEndClimb(this, play);
@@ -485,7 +538,7 @@ void EnSpider_EndClimb(EnSpider* this, PlayState* play) {
             this->actor.velocity.y = 3.0f;
             this->actor.gravity = -3.0f;
         }
-        this->timer -= 1;
+        this->timer--;
     }
     if (this->timer <= 0) {
         this->alarmstate = true;
@@ -517,7 +570,7 @@ void EnSpider_IntroCont(EnSpider* this, PlayState* play) {
         this->alarmstate = true;
         if (this->skelAnime.curFrame == 16.0f || this->skelAnime.curFrame == 25.0f || this->skelAnime.curFrame == 32.0f)
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WALK);
-        this->timer -= 1;
+        this->timer--;
     } else EnSpider_ForwardBackCheck(this, play);
 }
 
@@ -526,7 +579,7 @@ void EnSpider_ForwardBackCheck(EnSpider* this, PlayState* play) {
     s16 relYawTowardsPlayer = ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y);
     this->canDodge = true;
 
-    if (this->actor.params == 2)
+    if (this->type == 2)
         this->cantSee = false;
     if (this->alarmstate && this->cantSee) {
         this->timer = 39;
@@ -578,17 +631,20 @@ void EnSpider_SetupIdle(EnSpider* this, PlayState* play) {
 }
 
 void EnSpider_Idle(EnSpider* this, PlayState* play) {
-    if (this->actor.params == 2)
+    if (this->type == 2)
         this->cantSee = false;
     SkelAnime_Update(&this->skelAnime);
 
     if (this->timer > 0) {
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
+            if (!this->alarmstate && this->miniboss)
+                func_800F5ACC(NA_BGM_MINI_BOSS2);
+
             this->timer = 0;
             this->alarmstate = true;
             EnSpider_ForwardBackCheck(this, play);
         }
-        this->timer -= 1;
+        this->timer--;
     }
     if (this->timer <= 0) {
         this->timer = 39;
@@ -605,15 +661,18 @@ void EnSpider_IdleP(EnSpider* this, PlayState* play) {
 
     if (this->timer > 0) {
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
+            if (!this->alarmstate && this->miniboss)
+                func_800F5ACC(NA_BGM_MINI_BOSS2);
+
             this->timer = 0;
             this->alarmstate = true;
             EnSpider_ForwardBackCheck(this, play);
         }
-        this->timer -= 1;
+        this->timer--;
     }
 
     if (this->timer <= 0) {
-        this->timer = 12 * this->actor.params;
+        this->timer = 12 * this->type;
         EnSpider_SetupMoveFP(this, play);
     }
 }
@@ -643,7 +702,7 @@ void EnSpider_MoveF(EnSpider* this, PlayState* play) {
     if (this->timer > 0) {
         Player* player = GET_PLAYER(play);
         this->actor.speed = 10.0f;
-        this->timer -= 1;
+        this->timer--;
 
         if (this->skelAnime.curFrame == 2.0f || this->skelAnime.curFrame == 4.0f || this->skelAnime.curFrame == 6.0f || this->skelAnime.curFrame == 8.0f || this->skelAnime.curFrame == 10.0f || this->skelAnime.curFrame == 12.0f)
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WALK);
@@ -669,7 +728,7 @@ void EnSpider_MoveFP(EnSpider* this, PlayState* play) {
     Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.world.rot.y, 1, 0xAAF, 1);
     if ((this->timer > 0) && (this->actor.xzDistToPlayer >= 90.0f)) {
         this->actor.speed = 8.0f;
-        this->timer -= 1;
+        this->timer--;
 
         if (this->skelAnime.curFrame == 2.0f || this->skelAnime.curFrame == 4.0f || this->skelAnime.curFrame == 6.0f || this->skelAnime.curFrame == 8.0f || this->skelAnime.curFrame == 10.0f || this->skelAnime.curFrame == 12.0f)
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WALK);
@@ -718,7 +777,7 @@ void EnSpider_MoveB(EnSpider* this, PlayState* play) {
             }
             this->actor.speed = 0.0f;
         }
-        this->timer -= 1;
+        this->timer--;
     } else {
         this->canDodge = true;
         EnSpider_ForwardBackCheck(this, play);
@@ -744,7 +803,7 @@ void EnSpider_JumpSideL(EnSpider* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
     
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     if (this->timer <= 0) {
         this->timer = 33;
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
@@ -774,7 +833,7 @@ void EnSpider_JumpSideR(EnSpider* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     if (this->timer <= 0) {
         this->timer = 33;
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
@@ -794,7 +853,7 @@ void EnSpider_MoveR(EnSpider* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
     if (this->timer > 0) {
-        this->timer -= 1;
+        this->timer--;
         if (this->skelAnime.curFrame == 2.0f || this->skelAnime.curFrame == 4.0f || this->skelAnime.curFrame == 6.0f || this->skelAnime.curFrame == 8.0f || this->skelAnime.curFrame == 10.0f || this->skelAnime.curFrame == 12.0f)
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WALK);
         this->actor.world.rot.y = this->actor.yawTowardsPlayer + 0x4000;
@@ -818,7 +877,7 @@ void EnSpider_MoveL(EnSpider* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
     if (this->timer > 0) {
-        this->timer -= 1;
+        this->timer--;
         if (this->skelAnime.curFrame == 2.0f || this->skelAnime.curFrame == 4.0f || this->skelAnime.curFrame == 6.0f || this->skelAnime.curFrame == 8.0f || this->skelAnime.curFrame == 10.0f || this->skelAnime.curFrame == 12.0f)
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WALK);
         this->actor.world.rot.y = this->actor.yawTowardsPlayer + 0xC000;
@@ -870,7 +929,7 @@ void EnSpider_AttackA(EnSpider* this, PlayState* play) {
             Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xAA0, 1);
             this->actor.speed = -10.0f;
         }
-        this->timer -= 1;
+        this->timer--;
     } else {
         this->timer = 15;
         EnSpider_SetupMoveB(this, play);
@@ -902,7 +961,7 @@ void EnSpider_AttackB(EnSpider* this, PlayState* play) {
         this->canDodge = true;
     if (this->timer > 0) {
         this->actor.speed = 0.0f;
-        this->timer -= 1;
+        this->timer--;
     } else EnSpider_ForwardBackCheck(this, play);
 }
 

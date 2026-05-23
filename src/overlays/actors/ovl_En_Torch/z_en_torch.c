@@ -27,7 +27,7 @@ ActorProfile En_Torch_Profile = {
 };
 
 static u8 sChestContents[] = {
-    GI_RUPEE_BLUE, GI_RUPEE_RED, GI_RUPEE_GOLD, GI_BOMBS_20, GI_BOMBS_1, GI_BOMBS_1, GI_BOMBS_1, GI_BOMBS_1,
+    GI_RUPEE_BLUE, GI_RUPEE_RED, GI_RUPEE_GOLD, GI_BOMBS_20, GI_BOMBS_1, GI_BOMBS_1, GI_SHRINE_KEY, GI_BOMBS_1,
 };
 
 void EnTorch_Init(Actor* thisx, PlayState* play) {
@@ -37,7 +37,7 @@ void EnTorch_Init(Actor* thisx, PlayState* play) {
     /* Spawn chest with desired contents.
        Contents are passed to en_torch from grotto params via Save Context. */
     Actor_Spawn(&play->actorCtx, play, ACTOR_EN_BOX, this->actor.world.pos.x, this->actor.world.pos.y,
-                this->actor.world.pos.z, 0, this->actor.shape.rot.y, 0,
+                this->actor.world.pos.z, sChestContents[(returnData >> 0x5) & 0x7], this->actor.shape.rot.y, 0,
                 (sChestContents[(returnData >> 0x5) & 0x7] << 0x5) | 0x5000 | (returnData & 0x1F));
 
     Actor_Kill(&this->actor);

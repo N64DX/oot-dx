@@ -202,6 +202,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Obj_Syokudai3"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Syokudai3/z_obj_syokudai3.o"
+endseg
+
+beginseg
     name "ovl_En_Horse_Young"
     compress
     flags OVERLAY

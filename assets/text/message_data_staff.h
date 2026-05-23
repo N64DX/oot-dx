@@ -841,20 +841,21 @@ MSG(
 QUICKTEXT_ENABLE "Areas\n"
 SHIFT(36) SHIFT(24) "Forbidden Woods\n"
 "\n"
-"\n"
-SHIFT(36) SHIFT(54) "ZELDA SPACEWORLD '97\n"
-"\n"
-"\n"
 SHIFT(36) SHIFT(24) "Ancient Hollow\n"
-"\n"
-"\n"
-SHIFT(36) SHIFT(54) "ZELDA SPACEWORLD '97\n"
-"\n"
 "\n"
 SHIFT(36) SHIFT(24) "Goron Mines\n"
 "\n"
 "\n"
-SHIFT(36) SHIFT(54) "ZELDA SPACEWORLD '97" QUICKTEXT_DISABLE FADE2(150)
+SHIFT(36) SHIFT(54) "ZELDA SPACEWORLD '97\n"
+"\n"
+"\n"
+"\n"
+SHIFT(36) SHIFT(24) "Dawngrove (Village)\n"
+"\n"
+"\n"
+SHIFT(36) SHIFT(54) "CAPTAIN SEEDY-EYE\n"
+"\n"
+SHIFT(36) SHIFT(54) "LUIGIBLOOD" QUICKTEXT_DISABLE FADE2(150)
 )
 )
 

@@ -805,6 +805,7 @@ beginseg
     name "object_tk"
     compress
     include "$(BUILD_DIR)/assets/objects/object_tk/object_tk.o"
+    include "$(BUILD_DIR)/assets/objects/object_tk/object_tk_extra.o"
     number 6
 endseg
 

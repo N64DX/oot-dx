@@ -171,11 +171,11 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_GORON_MINES, 0x00, 0x00, 0x00 },
     { SCENE_WOODFALL_TEMPLE, 0x00, 0x00, 0x1C },
     { SCENE_WOODFALL_TEMPLE_BOSS, 0x00, 0x00, 0x1C },
-    { SCENE_SPRING_LAKE_SMITHY, 0x10, 0x10, 0x15 },
-    { SCENE_DAWNGROVE_HOUSE, 0x10, 0x10, 0x15 },
-    { SCENE_IGORS_HOUSE, 0x10, 0x10, 0x15 },
-    { SCENE_DAWNGROVE_INN, 0x10, 0x10, 0x15 },
-    { SCENE_DAWNGROVE_SHOP, 0x10, 0x10, 0x15 },
+    { SCENE_SPRING_LAKE_SMITHY, 0x11, 0x15, 0x55 },
+    { SCENE_DAWNGROVE_HOUSE, 0x11, 0x15, 0x55 },
+    { SCENE_IGORS_HOUSE, 0x11, 0x15, 0x55 },
+    { SCENE_DAWNGROVE_INN, 0x11, 0x15, 0x55 },
+    { SCENE_DAWNGROVE_SHOP, 0x11, 0x15, 0x55 },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
 
@@ -2050,11 +2050,12 @@ u8 Item_Give(PlayState* play, u8 item) {
         gSaveContext.save.info.inventory.dungeonItems[gSaveContext.mapIndex] |= gBitFlags[item - ITEM_DUNGEON_BOSS_KEY];
         return ITEM_NONE;
     } else if (item == ITEM_SMALL_KEY) {
-        if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] < 0) {
-            gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] = 1;
+        u8 mapIndex = play->sceneId == SCENE_DAWNGROVE_INN ? SCENE_DEKU_TREE_BOSS : gSaveContext.mapIndex;
+        if (gSaveContext.save.info.inventory.dungeonKeys[mapIndex] < 0) {
+            gSaveContext.save.info.inventory.dungeonKeys[mapIndex] = 1;
             return ITEM_NONE;
         } else {
-            gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex]++;
+            gSaveContext.save.info.inventory.dungeonKeys[mapIndex]++;
             return ITEM_NONE;
         }
     } else if ((item == ITEM_QUIVER_30) || (item == ITEM_BOW)) {

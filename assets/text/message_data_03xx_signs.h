@@ -1947,7 +1947,7 @@ MSG()
 DEFINE_MESSAGE(0x0354, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-QUICKTEXT_ENABLE "The " COLOR(RED) "Secret Shrine" COLOR(DEFAULT) " is across the lake.\n"
+QUICKTEXT_ENABLE "The " COLOR(RED) "Webbed Shrine" COLOR(DEFAULT) " is across the lake.\n"
 "Please use the tunnel on your right\n"
 "to get over there.\n"
 "Be mindful of the monsters though..." QUICKTEXT_DISABLE

@@ -140,7 +140,7 @@ SceneCmd mountain_village_room_0Set_timeskip[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_timeskip),
     SCENE_CMD_OBJECT_LIST(15, mountain_village_room_0ObjectList_timeskip),
-    SCENE_CMD_ACTOR_LIST(62, mountain_village_room_0ActorEntry_timeskip),
+    SCENE_CMD_ACTOR_LIST(63, mountain_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
 
@@ -166,6 +166,7 @@ ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_EN_KAKASI2,        {   510,  363,   900 }, {    0,      0, 14 }, 0x053E }, // Switch: 3E
     { ACTOR_OBJ_SYOKUDAI,      {  -818,    8,  -170 }, {    0, 0x1770,  0 }, 0x243F },
     { ACTOR_OBJ_SYOKUDAI,      {   800, 1408, -1400 }, {    0, 0xEC78,  0 }, 0x205F }, // Switch: 1F
+    { ACTOR_OBJ_SYOKUDAI3,     {   400,  -40,  -300 }, {    0,      0,  0 }, 0x243F }, // Switch: 1F
     { ACTOR_OBJ_COMB,          {  1025,  271,   695 }, {    0, 0xFE0C,  0 }, 0x0081 },
     { ACTOR_EN_ITEM00,         {    79,  -30,   807 }, {    0,      0,  0 }, 0x0902 }, // Collect: 09
     { ACTOR_OBJ_TSUBO,         {   510,  363,   700 }, {    0,      0,  0 }, 0x3914 }, // Collect: 1C

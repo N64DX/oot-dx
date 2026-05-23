@@ -85,7 +85,7 @@ SceneCmd dawngrove_room_0Set_timeskip[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_room_0RoomShapeNormal_000160),
-    SCENE_CMD_OBJECT_LIST(10, dawngrove_room_0ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_room_0ObjectList_000040), dawngrove_room_0ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(19, dawngrove_room_0ActorEntry_000050),
     SCENE_CMD_END(),
 };
@@ -96,7 +96,7 @@ SceneCmd dawngrove_room_0Set_cleansed[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_room_0RoomShapeNormal_000160),
-    SCENE_CMD_OBJECT_LIST(10, dawngrove_room_0ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_room_0ObjectList_000040), dawngrove_room_0ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(18, dawngrove_room_0ActorEntry_000050),
     SCENE_CMD_END(),
 };

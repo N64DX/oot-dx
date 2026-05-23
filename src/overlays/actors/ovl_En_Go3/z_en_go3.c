@@ -266,11 +266,21 @@ u16 EnGo3_GetTextIdGoronShrineDoor(PlayState* play, EnGo3* this) {
     return 0x8403;
 }
 
-u16 EnGo3_GetTextIdSecretShrineDoor(PlayState* play, EnGo3* this) {
+u16 EnGo3_GetTextIdWebbedShrineDoor(PlayState* play, EnGo3* this) {
+    Player* player = GET_PLAYER(play);
+    player->exchangeItemId = EXCH_ITEM_SHRINE_KEY;
+
     switch (this->textType) {
-        case 0:  return 0x8407;
-        case 1:  return 0x8408;
-        default: return 0x8407;
+        case 0:
+            if (GET_INFTABLE(INFTABLE_WEBBED_SHRINE_DOOR_OPENED))
+                return 0x8409;
+            return 0x8407;
+        case 1:
+            if (GET_INFTABLE(INFTABLE_WEBBED_SHRINE_DOOR_OPENED))
+                return 0x840C;
+            return 0x840A;
+        default:
+            return 0x8407;
     }
 }
 
@@ -298,9 +308,11 @@ s16 EnGo3_UpdateTalkStateGoronShrineDoor(PlayState* play, EnGo3* this) {
     }
 }
 
-s16 EnGo3_UpdateTalkStateSecretShrineDoor(PlayState* play, EnGo3* this) {
+s16 EnGo3_UpdateTalkStateWebbedShrineDoor(PlayState* play, EnGo3* this) {
     switch (Message_GetState(&play->msgCtx)) {
         case TEXT_STATE_CLOSING:
+            if (this->actor.textId == 0x8408)
+                SET_INFTABLE(INFTABLE_WEBBED_SHRINE_DOOR_OPENED);
             return NPC_TALK_STATE_IDLE;
 
         default:
@@ -322,8 +334,8 @@ u16 EnGo3_GetTextId(PlayState* play, Actor* thisx) {
                 return EnGo3_GetTextIdGoronVillageDoor(play, this);
             case SPRING_LAKE_GORON_SHRINE_DOOR:
                 return EnGo3_GetTextIdGoronShrineDoor(play, this);
-            case SPRING_LAKE_SECRET_SHRINE_DOOR:
-                return EnGo3_GetTextIdSecretShrineDoor(play, this);
+            case SPRING_LAKE_WEBBED_SHRINE_DOOR:
+                return EnGo3_GetTextIdWebbedShrineDoor(play, this);
         }
     }
     return textId;
@@ -340,22 +352,21 @@ s16 EnGo3_UpdateTalkState(PlayState* play, Actor* thisx) {
             return EnGo3_UpdateTalkStateGoronVillageDoor(play, this);
         case SPRING_LAKE_GORON_SHRINE_DOOR:
             return EnGo3_UpdateTalkStateGoronShrineDoor(play, this);
-         case SPRING_LAKE_SECRET_SHRINE_DOOR:
-            return EnGo3_UpdateTalkStateSecretShrineDoor(play, this);
+         case SPRING_LAKE_WEBBED_SHRINE_DOOR:
+            return EnGo3_UpdateTalkStateWebbedShrineDoor(play, this);
     }
     return false;
 }
 
 void func_80A44790_3(EnGo3* this, PlayState* play) {
-    Npc_UpdateTalking(play, &this->actor, &this->interactInfo.talkState, this->interactRange, EnGo3_GetTextId, EnGo3_UpdateTalkState);
-    /*else {
-        if (Actor_TalkOfferAccepted(&this->actor, play))
-            this->interactInfo.talkState = NPC_TALK_STATE_TALKING;
-        else if (this->interactInfo.talkState != NPC_TALK_STATE_IDLE)
-            this->interactInfo.talkState = EnGo3_UpdateTalkState(play, &this->actor);
-        else if (Actor_OfferTalk(&this->actor, play, this->interactRange))
-            this->actor.textId = EnGo3_GetTextId(play, &this->actor);
-    }*/
+    Player* player = GET_PLAYER(play);
+
+    if (Npc_UpdateTalking(play, &this->actor, &this->interactInfo.talkState, this->interactRange, EnGo3_GetTextId, EnGo3_UpdateTalkState)) {
+        if (this->type == SPRING_LAKE_WEBBED_SHRINE_DOOR)
+            if (Actor_GetPlayerExchangeItemId(play) == EXCH_ITEM_SHRINE_KEY)
+                this->actor.textId = this->textType == 0 ? 0x8408 : 0x840B;
+        player->actor.textId = this->actor.textId;
+    }
 }
 
 void EnGo3_SetColliderDim(EnGo3* this) {

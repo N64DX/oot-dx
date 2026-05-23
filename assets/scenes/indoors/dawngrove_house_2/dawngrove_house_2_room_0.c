@@ -7,15 +7,22 @@
 #include "object.h"
 
 SceneCmd dawngrove_house_2_room_0[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(dawngrove_house_2_room_0AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(0),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_house_2_room_0RoomShapeNormal_000070),
     SCENE_CMD_OBJECT_LIST(1, dawngrove_house_2_room_0ObjectList_000048),
-    SCENE_CMD_ACTOR_LIST(1, dawngrove_house_2_room_0ActorEntry_000050),
+    SCENE_CMD_ACTOR_LIST(2, dawngrove_house_2_room_0ActorEntry_000050),
     SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
     SCENE_CMD_END(),
+};
+
+SceneCmd* dawngrove_house_2_room_0AlternateHeaders[] = {
+    NULL,
+    dawngrove_house_2_room_0Set_timeskip,
+    NULL,
 };
 
 s16 dawngrove_house_2_room_0ObjectList_000048[] = {
@@ -23,7 +30,8 @@ s16 dawngrove_house_2_room_0ObjectList_000048[] = {
 };
 
 ActorEntry dawngrove_house_2_room_0ActorEntry_000050[] = {
-    { ACTOR_EN_WONDER_TALK2, { -18, 85, -175 }, { 0,      0, 0 }, 0x8140 },
+    { ACTOR_EN_TK,           { 200,  0, -300 }, { 0, 0, 0 }, 0x0001 },
+    { ACTOR_EN_WONDER_TALK2, { -18, 85, -175 }, { 0, 0, 0 }, 0x9040 },
 };
 
 RoomShapeNormal dawngrove_house_2_room_0RoomShapeNormal_000070 = { 
@@ -49,6 +57,22 @@ RoomShapeDListsEntry dawngrove_house_2_room_0RoomShapeDListsEntry_00007C[15] = {
     { dawngrove_house_2_room_0DL_003778, NULL },
     { dawngrove_house_2_room_0DL_003930, NULL },
     { dawngrove_house_2_room_0DL_003E50, NULL },
+};
+
+SceneCmd dawngrove_house_2_room_0Set_timeskip[] = {
+    SCENE_CMD_ECHO_SETTINGS(0),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(true, true),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_house_2_room_0RoomShapeNormal_000070),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_house_2_room_0ObjectList_000048), dawngrove_house_2_room_0ObjectList_000048),
+    SCENE_CMD_ACTOR_LIST(1, dawngrove_house_2_room_0ActorEntry_timeskip),
+    SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
+    SCENE_CMD_END(),
+};
+
+ActorEntry dawngrove_house_2_room_0ActorEntry_timeskip[] = {
+    { ACTOR_EN_WONDER_TALK2, { -18, 85, -175 }, { 0, 0, 0 }, 0x8FC0 },
 };
 
 s32 dawngrove_house_2_room_0_terminatorMaybe_0000F4 = { 0x01000000 };

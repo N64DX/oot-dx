@@ -27,6 +27,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [Hylian Modding Discord](http://discord.gg/qQqDsM8)
 - [Zelda Spaceworld ´97 Experience](https://github.com/z64proto/sw97)
 - [Curse of Moonlight](https://github.com/Javarooster-png/curseofmoonlight)
+- [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) by Captain Seedy-Eye & LuigiBlood
 - [Demon's Quest](https://github.com/thinedave/ocarina-demonsquest-source)
 - [Darunia's Joy](https://github.com/DaruniasJoy/OoT-Custom-Sequences)
 - [MMR Music Repo](https://mega.nz/folder/4g1xHbwL#pzE9l2KBs-kwCJJr6E6IKQ)
@@ -76,6 +77,14 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - Old Lost Woods from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Forbidden Woods
 - Fairy Deku Tree from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Ancient Hollow
 - Dodongo's Cavern from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Goron Mines
+- Dawngrove from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk)
+- Dawngrove Grotto from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk)
+- Dawngrove Shop from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk)
+- Cave Passage from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk)
+- Dawngrove Village from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk)
+- Dawngrove Inn from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk)
+- Dawngrove House #1 from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk)
+- Dawngrove House #2 from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) as Igor's House
 
 ### Instructions
 

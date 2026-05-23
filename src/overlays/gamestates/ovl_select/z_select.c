@@ -579,7 +579,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Opened Goron City",        INFTABLE,                   INFTABLE_109                             },
     { 0, "Opened Goron Shrine",      INFTABLE,                   INFTABLE_GORON_SHRINE_DOOR_OPENED        },
     { 0, "Opened Goron Mines",       GORON_MINES,                INFTABLE_GORON_MINES_DOOR_OPENED         },
-    { 0, "Opened Secret Shrine",     INFTABLE,                   INFTABLE_SECRET_SHRINE_DOOR_OPENED       },
+    { 0, "Opened Secret Shrine",     INFTABLE,                   INFTABLE_WEBBED_SHRINE_DOOR_OPENED       },
     { 0, "Sheik Reveal",             EVENT,                      EVENTCHKINF_C4                           },
     { 0, "Rainbow Bridge",           EVENT,                      EVENTCHKINF_CREATED_RAINBOW_BRIDGE       },
     { 0, "Talked to Smithy",         BLACKSMITH1,                INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP  },

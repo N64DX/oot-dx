@@ -40,7 +40,7 @@ ActorEntry woodfall_temple_room_1ActorEntry_00006C[] = {
     { ACTOR_BG_LADDER,       {  570, -1485,  120 }, {    0,  0xC000,      0 }, 0x0902 }, // Appears on switch: 0x09
     { ACTOR_EN_KAREBABA,     { -165, -1188,  645 }, {    0,  0x3C00,      0 }, 0x0001 },
     { ACTOR_EN_DEKUBABA,     { -570, -1485,   45 }, {    0,       0,      0 }, 0x0000 },
-    { ACTOR_EN_WONDER_TALK2, {    0, -1185,  650 }, {    0,       0,      1 }, 0x4F8F }, // Sets switch: 0x0F
+    { ACTOR_EN_WONDER_TALK2, {    0, -1185,  650 }, {    0,       0,      1 }, 0x500F }, // Sets switch: 0x0F
     { ACTOR_OBJ_TSUBO,       {  665, -1185,  255 }, {    0,       0,      0 }, 0x4001 }, // Sets collect: 0x20, drops Blue Rupee
     { ACTOR_OBJ_TSUBO,       {  635, -1185,  255 }, {    0,       0,      0 }, 0x4201 }, // Sets collect: 0x21, drops Blue Rupee
     { ACTOR_BG_NUMA_HANA,    {    0, -1395,    0 }, {    0,       0,      0 }, 0x0000 },

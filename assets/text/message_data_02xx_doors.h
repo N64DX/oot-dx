@@ -1582,10 +1582,100 @@ COLOR(LIGHTBLUE) "Fermé pour une durée indéterminée.\n"
 DEFINE_MESSAGE(0x023E, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
+QUICKTEXT_ENABLE "This room is closed.\n"
+"Under renovation for the forseeable\n"
+"future.\n"
+SHIFT(20) "--Dawngrove Inn Staff"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0240, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
 COLOR(LIGHTBLUE) "Prove yourself worthy.\n"
 "Complete the trials of the forest\n"
 "without relying on the use of\n"
 "magic items." COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0241, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "This portrait pierces your\n"
+"heart and soul." COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0242, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "I don't imagine I'll be staying here\n"
+"much longer. That room upstairs...\n"
+"The door opens and closes by itself!" QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "If you ask me, that means\n"
+"the room is haunted! YIKES!" QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "I'd bet there's a ghost trying to\n"
+"protect something valuable it had in\n"
+"that room before it passed on..." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Not that it makes any difference\n"
+"to me. I'm content with what I have.\n"
+"I'm happy just relaxing on rooftops,\n"
+"spending my time in the sun. Ahh..." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0243, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "The " COLOR(PURPLE) "Duskside" COLOR(DEFAULT) "..." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Red and blue flames burn the\n"
+"bones as frost bites at the skin." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0244, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE SHIFT(38) QUICKTEXT_ENABLE COLOR(BLUE) "FROM DAWN TO DUSK:" COLOR(DEFAULT) "\n"
+SHIFT(10) "Everything to know about a trek\n"
+SHIFT(42) "to the " COLOR(PURPLE) "Duskside" COLOR(DEFAULT) " itself." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Travelling from the " COLOR(YELLOW) "Dawnside" COLOR(DEFAULT) " to\n"
+"the " COLOR(PURPLE) "Duskside" COLOR(DEFAULT) " has many dangers. It\n"
+"is ill-advised to make the journey\n"
+"without a proper sword and shield. "QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Also keep in mind that the\n"
+"environment of the " COLOR(PURPLE) "Duskside" COLOR(DEFAULT) " differs\n"
+"greatly from that of the " COLOR(YELLOW) "Dawnside" COLOR(DEFAULT) ".\n"
+"Prepare for heat AND cold!" QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Finally, be sure to bring a handful\n"
+"of effective potions and elixirs.\n"
+"You may not think you need\n"
+"them until it's too late!" QUICKTEXT_DISABLE
 ),
 MSG(),
 MSG()

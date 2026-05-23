@@ -4109,7 +4109,7 @@ void Player_DestroyHookshot(Player* this) {
 }
 
 s32 Player_TitleCardClear(PlayState* play) {
-    if (USE_TITLE_CARDS)
+    if (USE_TITLE_CARDS(play))
         return Message_TitleCardClear(play);
     else return TitleCard_Clear(play, &play->actorCtx.titleCtx);
 }
@@ -11910,7 +11910,7 @@ void Player_Init(Actor* thisx, PlayState* play2) {
         }
     }
 
-    if ((respawnFlag == 0 || respawnFlag < -1) && !USE_TITLE_CARDS) {
+    if ((respawnFlag == 0 || respawnFlag < -1) && !USE_TITLE_CARDS(play)) {
         titleFileSize = scene->titleFile.vromEnd - scene->titleFile.vromStart;
 
         if ((titleFileSize != 0) && gSaveContext.showTitleCard) {

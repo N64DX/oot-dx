@@ -12,6 +12,7 @@
 #include "ultra64.h"
 
 SceneCmd dawngrove_inn_scene[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(dawngrove_inn_sceneAlternateHeaders),
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_LINK_HOUSE),
     SCENE_CMD_ROOM_LIST(6, dawngrove_inn_sceneRoomList_000070),
     SCENE_CMD_TRANSITION_ACTOR_LIST(7, dawngrove_inn_sceneTransitionActorList_0000A0),
@@ -26,6 +27,12 @@ SceneCmd dawngrove_inn_scene[] = {
     SCENE_CMD_END(),
 };
 
+SceneCmd* dawngrove_inn_sceneAlternateHeaders[] = {
+    NULL,
+    dawngrove_inn_sceneSet_timeskip,
+    NULL,
+};
+
 ActorEntry dawngrove_inn_sceneStartPositionList_000118[] = {
     { ACTOR_PLAYER, { 307, 0, -1087 }, { 0, 0xDF4C, 0 }, 0x0FFF },
     { ACTOR_PLAYER, { 350, 0,  -230 }, { 0, 0xBFFC, 0 }, 0x0FFF },
@@ -36,7 +43,7 @@ TransitionActorEntry dawngrove_inn_sceneTransitionActorList_0000A0[] = {
     { 1, 255, 0, 255, ACTOR_EN_DOOR, {  34,   0,  -983 },      0, 0x003F },
     { 0, 255, 3, 255, ACTOR_EN_DOOR, { 130,   0,  -409 }, 0x4000, 0x003F },
     { 0, 255, 4, 255, ACTOR_EN_DOOR, { 130,   0,  -136 }, 0x4000, 0x003F },
-    { 5, 255, 0, 255, ACTOR_EN_DOOR, { 130, 140,  -136 }, 0xC000, 0x023F },
+    { 5, 255, 0, 255, ACTOR_EN_DOOR, { 130, 140,  -136 }, 0xC000, 0x02BE },
     { 0, 255, 5, 255, ACTOR_EN_DOOR, { 130, 140,  -459 }, 0x4000, 0x003F },
     { 0, 255, 2, 255, ACTOR_EN_DOOR, { 130,   0,  -681 }, 0x4000, 0x003F },
 };
@@ -74,17 +81,15 @@ EnvLightSettings dawngrove_inn_sceneLightSettings_000138[] = {
     { 0x14, 0x14, 0x32, 0x49, 0x49, 0x49, 0x00, 0x00, 0x0F, 0xB7, 0xB7, 0xB7, 0x1E, 0x1E, 0x50, 0x00, 0x00, 0x0A, 0x07DC, 0x3200 },
 };
 
-/*CutsceneData dawngrove_inn_sceneCutsceneData_000248[] = {
+/*CutsceneData gDawngroveInnCs[] = {
     CS_HEADER(10, 1050),
     CS_START_SEQ_LIST(1),
         CS_START_SEQ(0x1, 0, 1, 0, 0, 121, 138, -673, 121, 158, -673),
     CS_TRANSITION(10, 0, 100),
     CS_PLAYER_CUE_LIST(1),
-        CS_PLAYER_CUE(, 0, 240, 0x0000, 0x3ffc, 0x0000, 347, 20, -65, 347, 20, -65, 0.00000000e+00f, 0.00000000e+00f,
-                      1.40129846e-45f),
+        CS_PLAYER_CUE(, 0, 240, 0x0000, 0x3ffc, 0x0000, 347, 20, -65, 347, 20, -65, 0.00000000e+00f, 0.00000000e+00f, 1.40129846e-45f),
     CS_ACTOR_CUE_LIST(0x003e, 1),
-        CS_ACTOR_CUE(4, 0, 240, 0x0000, 0x0000, 0x0000, 0, 0, 0, 0, 0, 0, 0.00000000e+00f, 0.00000000e+00f,
-                     1.40129846e-45f),
+        CS_ACTOR_CUE(4, 0, 240, 0x0000, 0x0000, 0x0000, 0, 0, 0, 0, 0, 0, 0.00000000e+00f, 0.00000000e+00f, 1.40129846e-45f),
     CS_CAM_EYE_SPLINE(0, 1050),
         CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x00000000, 0.000000f), 346, 128, -65, 0x0000),
         CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x00000000, 0.000000f), 346, 148, -65, 0x0000),
@@ -3686,6 +3691,31 @@ CollisionHeader dawngrove_inn_sceneCollisionHeader_0004E0 = {
     dawngrove_inn_sceneCollisionHeader_0004E0SurfaceType,
     dawngrove_inn_sceneCollisionHeader_0004E0CamDataList,
     0, NULL
+};
+
+SceneCmd dawngrove_inn_sceneSet_timeskip[] = {
+    SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_LINK_HOUSE),
+    SCENE_CMD_ROOM_LIST(6, dawngrove_inn_sceneRoomList_000070),
+    SCENE_CMD_TRANSITION_ACTOR_LIST(7, dawngrove_inn_sceneTransitionActorList_timeskip),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 4),
+    SCENE_CMD_COL_HEADER(&dawngrove_inn_sceneCollisionHeader_0004E0),
+    SCENE_CMD_SPAWN_LIST(dawngrove_inn_sceneEntranceList_000240),
+    SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_DANGEON_KEEP),
+    SCENE_CMD_PLAYER_ENTRY_LIST(2, dawngrove_inn_sceneStartPositionList_000118),
+    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NONE, 0, LIGHT_MODE_SETTINGS),
+    SCENE_CMD_EXIT_LIST(dawngrove_inn_sceneExitList_000110),
+    SCENE_CMD_ENV_LIGHT_SETTINGS(12, dawngrove_inn_sceneLightSettings_000138),
+    SCENE_CMD_END(),
+};
+
+TransitionActorEntry dawngrove_inn_sceneTransitionActorList_timeskip[] = {
+    { 0, 255, 0,   0, ACTOR_EN_DOOR, { 353,   0, -1127 }, 0xDF4C, 0x01BF },
+    { 1, 255, 0, 255, ACTOR_EN_DOOR, {  34,   0,  -983 },      0, 0x003F },
+    { 0, 255, 3, 255, ACTOR_EN_DOOR, { 130,   0,  -409 }, 0x4000, 0x003F },
+    { 0, 255, 4, 255, ACTOR_EN_DOOR, { 130,   0,  -136 }, 0x4000, 0x003F },
+    { 5, 255, 0, 255, ACTOR_EN_DOOR, { 130, 140,  -136 }, 0xC000, 0x023F },
+    { 0, 255, 5, 255, ACTOR_EN_DOOR, { 130, 140,  -459 }, 0x4000, 0x003F },
+    { 0, 255, 2, 255, ACTOR_EN_DOOR, { 130,   0,  -681 }, 0x4000, 0x003F },
 };
 
 u64 dawngrove_inn_sceneTex_009E60[] = {

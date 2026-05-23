@@ -2900,6 +2900,251 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x8220, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I'm " COLOR(ADJUSTABLE) "Igor the Gravedigger" COLOR(DEFAULT) ",\n"
+"Dampé's 'lil bro, and I live here.\n"
+"It's a nice place, right?"
+BOX_BREAK
+
+"Say... Have you met my big bro\n"
+COLOR(ADJUSTABLE) "Dampé the Gravedigger" COLOR(DEFAULT) " already?\n"
+"He moved to Kakariko Village for\n"
+"a job offer he got a while ago.\n"
+BOX_BREAK
+
+"Me? I take care of the graves\n"
+"'round these parts, but there isn't\n"
+"much to take care of here."
+BOX_BREAK
+
+"Say hi to my big bro if you see\n"
+"him, will you?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8222, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Heh heh heh...\n"
+"Why are you here...?"
+BOX_BREAK
+
+"Heh heh heh...\n"
+"Go away..."
+BOX_BREAK
+
+"The curse... I must protect my\n"
+"brother... I have to lift the curse\n"
+"put on " COLOR(ADJUSTABLE) "Dawngrove Village" COLOR(DEFAULT) "...\n"
+"It comes from the " COLOR(ADJUSTABLE) "Ancient Hollow" COLOR(DEFAULT) "..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8223, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I lost it... Where can it be...\n"
+"I have to find it... My big bro\n"
+"always loved it...\n"
+"It has to be around somewhere here..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8224, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "You found my " COLOR(RED) "Pictograph Box" COLOR(DEFAULT) "?\n"
+"Now I can finally finish that frame\n"
+"I've been working on for my big bro...\n"
+"He would love it so much..."
+BOX_BREAK
+
+UNSKIPPABLE "Hehehe... Who am I kidding anyway.\n"
+"I am dead."
+BOX_BREAK
+
+UNSKIPPABLE "Say... Young one... Would you listen\n"
+"to my request?\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE)"I don't have time\n"
+    "Yes, I listen\n" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8225, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I have to protect my big bro...\n"
+"I have too..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8226, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Thank you... For listening..."
+BOX_BREAK
+
+UNSKIPPABLE "Me and my big bro " COLOR(RED) "Dampé" COLOR(DEFAULT) ", we grew\n"
+"up here in Dawngrove Village.\n"
+COLOR(RED) "Dampé" COLOR(DEFAULT) " left for Kakariko Village years\n"
+"ago to work for the graveyard there."
+BOX_BREAK
+
+UNSKIPPABLE "I stayed behind here in Dawngrove,\n"
+"looking after the village and the local\n"
+"graveyard. Those were some happy\n"
+"years..."
+BOX_BREAK
+
+UNSKIPPABLE "But one day that "COLOR(RED) "evil king" COLOR(DEFAULT) " rose to\n"
+"power. Hyrule was thrown in chaos,\n"
+"and evil monsters started roaming\n"
+"everywhere."
+BOX_BREAK
+
+UNSKIPPABLE "The " COLOR(RED) "evil king" COLOR(DEFAULT) " demanded we cooperated\n"
+"with him. But we wouldn't. So he cast\n"
+"a curse on our village. A death curse\n"
+"that drained us of our life years."
+BOX_BREAK
+
+UNSKIPPABLE "I fear for my big bro " COLOR(RED) "Dampé" COLOR(DEFAULT) ". He left\n"
+"Dawngrove Village years ago yes, but\n"
+"the curse affects our bloodlines."
+BOX_BREAK
+
+UNSKIPPABLE "An " COLOR(RED) "evil monster" COLOR(DEFAULT) " keeps the curse alive\n"
+"from within the " COLOR(ADJUSTABLE) "Ancient Hollow" COLOR(DEFAULT) ".\n"
+"Please defeat it and restore the curse.\n"
+"Save " COLOR(RED) "Dampé" COLOR(DEFAULT) " from the same fate I met."
+BOX_BREAK
+
+UNSKIPPABLE "Please restore the curse so I can\n"
+"finally have my rest... If you do so,\n"
+"come visit me in my grave in " COLOR(ADJUSTABLE) "Kakariko" COLOR(DEFAULT) ",\n"
+"and I give you my " COLOR(RED) "greatest treasure" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8227, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Please defeat the " COLOR(RED) "evil monster" COLOR(DEFAULT) " in the\n"
+COLOR(ADJUSTABLE) "Ancient Hollow" COLOR(DEFAULT) " so that I can finally\n"
+"rest in my grave in " COLOR(ADJUSTABLE) "Kakariko" COLOR(DEFAULT) ". I will\n"
+"then give you my " COLOR(RED) "greatest treasure" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8230, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Oh, are you off on your quest?\n"
+"I suppose you've ben training for?\n"
+"quite a while now. Be safe!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8231, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Oh, to be young... now that I'm old,\n"
+"I can't even use my trusty slingshot.\n"
+"If you happen to have some use for\n"
+"it, go ahead and take it with you."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8232, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"In the river! It was in the river!\n"
+"I could have sworn I saw it\n"
+"floating down the river..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8233, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"What's a wimpy kid like you doing\n"
+"up here, huh? You're not doing my\n"
+"plants any favors by standing\n"
+"in the way of their sunlight."
+BOX_BREAK
+
+"Unlike you, my plants are strong.\n"
+"They'll live whether or not\n"
+"you take away their light."
+BOX_BREAK
+
+"From the looks of it, you probably\n"
+"can't even uproot one of my\n"
+"plants here. Hahaha, loser!"
+BOX_BREAK
+
+"Although, I heard that there's\n"
+"something in the nearby " COLOR(RED) "grove" COLOR(DEFAULT) " that\n"
+"would give even a weakling like you\n"
+"the strength to uproot these plants..."
+BOX_BREAK
+
+"Not that you'd last a second in there."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8234, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Isn't it so relaxing laying here\n"
+"on this rooftop? Although, it'd be\n"
+"much better with some company..."
+BOX_BREAK
+
+"Oh well!\n"
+"At least you've paid me a visit.\n"
+"Let me give you a little something\n"
+"as a token of my appreciation."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8235, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"To get a good view, use " COLOR(YELLOW) "[C-Up]" COLOR(DEFAULT) " and \n"
+"look around with " COLOR(LIGHTBLUE) "[Control-Pad]" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x8300, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
@@ -3183,10 +3428,58 @@ MSG()
 DEFINE_MESSAGE(0x8408, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"Since we uhh...lost the key to here.\n"
-"I heard there's supposedly a sort of\n"
-"explosive so powerful it can blast\n"
-"open any door..."
+"Amazing! You found the lost key.\n"
+"Let me open up the shrine for you."
+BOX_BREAK
+
+"Just be careful in there, ok?\n"
+"A dangerous " COLOR(RED) "Giant Spider" COLOR(DEFAULT) " has made\n"
+"it's lair in there."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8409, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Just be careful in there, ok?\n"
+"A dangerous " COLOR(RED) "Giant Spider" COLOR(DEFAULT) " has made\n"
+"it's lair in there."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x840A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"We kind of...lost the key.\n"
+"It can't possibly be that far away...\n"
+"Could you perhaps go look for this?\n"
+"I have a feeling it's not far..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x840B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Oh, nice! You found the key,\n"
+"didn't you? Give it to my brother\n"
+"and he will unlock the door for you."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x840C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I should make sure to keep the\n"
+"key put away somewhere safe...\n"
+"Or we might lose it again..."
 ),
 MSG(),
 MSG()

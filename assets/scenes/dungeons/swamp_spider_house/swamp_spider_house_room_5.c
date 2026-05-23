@@ -13,17 +13,18 @@ SceneCmd swamp_spider_house_room_5[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&swamp_spider_house_room_5RoomShapeCullable_000190),
     SCENE_CMD_OBJECT_LIST(2, swamp_spider_house_room_5ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(1, swamp_spider_house_room_5ActorEntry_000068),
+    SCENE_CMD_ACTOR_LIST(2, swamp_spider_house_room_5ActorEntry_000068),
     SCENE_CMD_END(),
 };
 
 s16 swamp_spider_house_room_5ObjectList_000040[] = {
-    OBJECT_HAMMERGEIST,
-    OBJECT_GI_SWORD_1_MM,
+    OBJECT_SPIDER,
+    OBJECT_BOX,
 };
 
 ActorEntry swamp_spider_house_room_5ActorEntry_000068[] = {
-    { ACTOR_EN_HAMMERGEIST, { 100, 120, -2500 }, { 0, 0, 0 }, 0x0701 },
+    { ACTOR_EN_SPIDER, { 250, 120, -2700 }, {    0, 0xF060, 0 }, 0xFF02 },
+    { ACTOR_EN_BOX,    {   0, 120, -2640 }, { 0x83, 0x8000, 0 }, 0x1000 }, // Chest flag: 00, appears on clear, Hero's Sword
 };
 
 RoomShapeCullable swamp_spider_house_room_5RoomShapeCullable_000190 = { 

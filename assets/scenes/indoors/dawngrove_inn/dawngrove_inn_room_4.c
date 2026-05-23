@@ -7,29 +7,48 @@
 #include "object.h"
 
 SceneCmd dawngrove_inn_room_4[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(dawngrove_inn_room_4AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(0),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
-    SCENE_CMD_ROOM_SHAPE(&dawngrove_inn_room_4RoomShapeNormal_000070),
-    SCENE_CMD_ACTOR_LIST(3, dawngrove_inn_room_4ActorEntry_000040),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_inn_room_4RoomShapeNormal_000090),
+    SCENE_CMD_OBJECT_LIST(8, dawngrove_inn_room_4ObjectList_000048),
+    SCENE_CMD_ACTOR_LIST(3, dawngrove_inn_room_4ActorEntry_000050),
     SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
     SCENE_CMD_END(),
 };
 
-ActorEntry dawngrove_inn_room_4ActorEntry_000040[] = {
-    { ACTOR_EN_WONDER_TALK2, { 231, 28, -229 }, { 0, 0, 0 }, 0x09FF },
+SceneCmd* dawngrove_inn_room_4AlternateHeaders[] = {
+    NULL,
+    dawngrove_inn_room_4Set_timeskip,
+    NULL,
+};
+
+s16 dawngrove_inn_room_4ObjectList_000048[] = {
+    OBJECT_BOX,
+    OBJECT_CNE,
+    OBJECT_OS_ANIME,
+    OBJECT_BOX,
+    OBJECT_BWALL,
+    OBJECT_BOMBF,
+    OBJECT_TK,
+    OBJECT_GI_KEY,
+};
+
+ActorEntry dawngrove_inn_room_4ActorEntry_000050[] = {
+    { ACTOR_EN_WONDER_TALK2, { 231, 28, -229 }, { 0, 0, 0 }, 0x113F },
     { ACTOR_EN_LIGHT,        { 165, 35, -260 }, { 0, 0, 0 }, 0x83F0 },
     { ACTOR_EN_RIVER_SOUND,  { 164, 33, -261 }, { 0, 0, 0 }, 0x0014 },
 };
 
-RoomShapeNormal dawngrove_inn_room_4RoomShapeNormal_000070 = { 
+RoomShapeNormal dawngrove_inn_room_4RoomShapeNormal_000090 = { 
     0, 7,
-    dawngrove_inn_room_4RoomShapeDListsEntry_00007C,
-    dawngrove_inn_room_4RoomShapeDListsEntry_00007C + ARRAY_COUNTU(dawngrove_inn_room_4RoomShapeDListsEntry_00007C)
+    dawngrove_inn_room_4RoomShapeDListsEntry_00009C,
+    dawngrove_inn_room_4RoomShapeDListsEntry_00009C + ARRAY_COUNTU(dawngrove_inn_room_4RoomShapeDListsEntry_00009C)
 };
 
-RoomShapeDListsEntry dawngrove_inn_room_4RoomShapeDListsEntry_00007C[7] = {
+RoomShapeDListsEntry dawngrove_inn_room_4RoomShapeDListsEntry_00009C[7] = {
     { dawngrove_inn_room_4DL_000450, NULL },
     { dawngrove_inn_room_4DL_0009C0, NULL },
     { dawngrove_inn_room_4DL_0011C0, NULL },
@@ -37,6 +56,24 @@ RoomShapeDListsEntry dawngrove_inn_room_4RoomShapeDListsEntry_00007C[7] = {
     { dawngrove_inn_room_4DL_001A20, NULL },
     { dawngrove_inn_room_4DL_001F40, NULL },
     { dawngrove_inn_room_4DL_0036C8, NULL },
+};
+
+SceneCmd dawngrove_inn_room_4Set_timeskip[] = {
+    SCENE_CMD_ECHO_SETTINGS(0),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(true, true),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_inn_room_4RoomShapeNormal_000090),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_inn_room_4ObjectList_000048), dawngrove_inn_room_4ObjectList_000048),
+    SCENE_CMD_ACTOR_LIST(3, dawngrove_inn_room_4ActorEntry_timeskip),
+    SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
+    SCENE_CMD_END(),
+};
+
+ActorEntry dawngrove_inn_room_4ActorEntry_timeskip[] = {
+    { ACTOR_EN_WONDER_TALK2, { 231, 28, -229 }, { 0, 0, 0 }, 0x113F },
+    { ACTOR_EN_LIGHT,        { 165, 35, -260 }, { 0, 0, 0 }, 0x83F0 },
+    { ACTOR_EN_RIVER_SOUND,  { 164, 33, -261 }, { 0, 0, 0 }, 0x0014 },
 };
 
 s32 dawngrove_inn_room_4_terminatorMaybe_0000B4 = { 0x01000000 };

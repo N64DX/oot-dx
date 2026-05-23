@@ -7,29 +7,40 @@
 #include "object.h"
 
 SceneCmd dawngrove_inn_room_5[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(dawngrove_inn_room_5AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(0),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_inn_room_5RoomShapeNormal_000090),
-    SCENE_CMD_OBJECT_LIST(4, dawngrove_inn_room_5ObjectList_000048),
-    SCENE_CMD_ACTOR_LIST(4, dawngrove_inn_room_5ActorEntry_000050),
+    SCENE_CMD_OBJECT_LIST(8, dawngrove_inn_room_5ObjectList_000048),
+    SCENE_CMD_ACTOR_LIST(1, dawngrove_inn_room_5ActorEntry_000050),
     SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
     SCENE_CMD_END(),
 };
 
+SceneCmd* dawngrove_inn_room_5AlternateHeaders[] = {
+    NULL,
+    dawngrove_inn_room_5Set_timeskip,
+    NULL,
+};
+
 s16 dawngrove_inn_room_5ObjectList_000048[] = {
-    OBJECT_BOMBIWA,
+    OBJECT_BOX,
+    OBJECT_CNE,
+    OBJECT_OS_ANIME,
     OBJECT_BOX,
     OBJECT_BWALL,
     OBJECT_BOMBF,
+    OBJECT_TK,
+    OBJECT_GI_KEY,
 };
 
 ActorEntry dawngrove_inn_room_5ActorEntry_000050[] = {
     { ACTOR_BG_BREAKWALL, { 361, 140, -376 }, { 0, 0x8000, 0 }, 0x2000 },
-    { ACTOR_EN_ITEM00,    { 324, 140,  -26 }, { 0,      0, 0 }, 0x0106 },
     { ACTOR_EN_BOMBF,     { 168, 140, -756 }, { 0,      0, 0 }, 0xFFFF },
     { ACTOR_EN_BOMBF,     { 212, 140, -799 }, { 0,      0, 0 }, 0xFFFF },
+    { ACTOR_EN_PO_RELAY,  { 300, 140, -150 }, { 0,      0, 0 }, 0xFFFF },
 };
 
 RoomShapeNormal dawngrove_inn_room_5RoomShapeNormal_000090 = { 
@@ -50,6 +61,18 @@ RoomShapeDListsEntry dawngrove_inn_room_5RoomShapeDListsEntry_00009C[11] = {
     { dawngrove_inn_room_5DL_003A30, NULL },
     { dawngrove_inn_room_5DL_004120, NULL },
     { dawngrove_inn_room_5DL_007470, NULL },
+};
+
+SceneCmd dawngrove_inn_room_5Set_timeskip[] = {
+    SCENE_CMD_ECHO_SETTINGS(0),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(true, true),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_inn_room_5RoomShapeNormal_000090),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_inn_room_5ObjectList_000048), dawngrove_inn_room_5ObjectList_000048),
+    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(dawngrove_inn_room_5ActorEntry_000050), dawngrove_inn_room_5ActorEntry_000050),
+    SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
+    SCENE_CMD_END(),
 };
 
 s32 dawngrove_inn_room_5_terminatorMaybe_0000F4 = { 0x01000000 };

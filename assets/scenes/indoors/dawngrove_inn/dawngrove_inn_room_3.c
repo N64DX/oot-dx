@@ -11,8 +11,8 @@ SceneCmd dawngrove_inn_room_3[] = {
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
-    SCENE_CMD_ROOM_SHAPE(&dawngrove_inn_room_3RoomShapeNormal_000060),
-    SCENE_CMD_OBJECT_LIST(1, dawngrove_inn_room_3ObjectList_000048),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_inn_room_3RoomShapeNormal_000090),
+    SCENE_CMD_OBJECT_LIST(8, dawngrove_inn_room_3ObjectList_000048),
     SCENE_CMD_ACTOR_LIST(1, dawngrove_inn_room_3ActorEntry_000050),
     SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
     SCENE_CMD_END(),
@@ -20,19 +20,26 @@ SceneCmd dawngrove_inn_room_3[] = {
 
 s16 dawngrove_inn_room_3ObjectList_000048[] = {
     OBJECT_BOX,
+    OBJECT_CNE,
+    OBJECT_OS_ANIME,
+    OBJECT_BOX,
+    OBJECT_BWALL,
+    OBJECT_BOMBF,
+    OBJECT_TK,
+    OBJECT_GI_KEY,
 };
 
 ActorEntry dawngrove_inn_room_3ActorEntry_000050[] = {
     { ACTOR_EN_BOX, { 311, 0, -307 }, { 0x3C, 0, 0 }, 0x5000 },
 };
 
-RoomShapeNormal dawngrove_inn_room_3RoomShapeNormal_000060 = { 
+RoomShapeNormal dawngrove_inn_room_3RoomShapeNormal_000090 = { 
     0, 1,
-    dawngrove_inn_room_3RoomShapeDListsEntry_00006C,
-    dawngrove_inn_room_3RoomShapeDListsEntry_00006C + ARRAY_COUNTU(dawngrove_inn_room_3RoomShapeDListsEntry_00006C)
+    dawngrove_inn_room_3RoomShapeDListsEntry_00009C,
+    dawngrove_inn_room_3RoomShapeDListsEntry_00009C + ARRAY_COUNTU(dawngrove_inn_room_3RoomShapeDListsEntry_00009C)
 };
 
-RoomShapeDListsEntry dawngrove_inn_room_3RoomShapeDListsEntry_00006C[1] = {
+RoomShapeDListsEntry dawngrove_inn_room_3RoomShapeDListsEntry_00009C[1] = {
     { dawngrove_inn_room_3DL_000FF0, NULL },
 };
 

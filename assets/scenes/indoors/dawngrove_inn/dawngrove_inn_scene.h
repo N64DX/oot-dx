@@ -7,6 +7,7 @@
 #include "cutscene.h"
 #include "ultra64.h"
 
+extern SceneCmd* dawngrove_inn_sceneAlternateHeaders[];
 extern RomFile dawngrove_inn_sceneRoomList_000070[];
 extern TransitionActorEntry dawngrove_inn_sceneTransitionActorList_0000A0[];
 extern u16 dawngrove_inn_sceneExitList_000110[];
@@ -15,6 +16,9 @@ extern EnvLightSettings dawngrove_inn_sceneLightSettings_000138[];
 extern Spawn dawngrove_inn_sceneEntranceList_000240[];
 extern CutsceneData dawngrove_inn_sceneCutsceneData_000248[];
 extern CollisionHeader dawngrove_inn_sceneCollisionHeader_0004E0;
+
+extern SceneCmd dawngrove_inn_sceneSet_timeskip[];
+extern TransitionActorEntry dawngrove_inn_sceneTransitionActorList_timeskip[];
 
 extern u64 dawngrove_inn_sceneTex_009E60[];
 extern u64 dawngrove_inn_sceneTLUT_009E60[];

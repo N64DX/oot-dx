@@ -3,9 +3,14 @@
 
 #include "room.h"
 
-extern ActorEntry dawngrove_inn_room_4ActorEntry_000040[];
-extern RoomShapeNormal dawngrove_inn_room_4RoomShapeNormal_000070;
-extern RoomShapeDListsEntry dawngrove_inn_room_4RoomShapeDListsEntry_00007C[7];
+extern SceneCmd* dawngrove_inn_room_4AlternateHeaders[];
+extern s16 dawngrove_inn_room_4ObjectList_000048[];
+extern ActorEntry dawngrove_inn_room_4ActorEntry_000050[];
+extern RoomShapeNormal dawngrove_inn_room_4RoomShapeNormal_000090;
+extern RoomShapeDListsEntry dawngrove_inn_room_4RoomShapeDListsEntry_00009C[7];
+
+extern SceneCmd dawngrove_inn_room_4Set_timeskip[];
+extern ActorEntry dawngrove_inn_room_4ActorEntry_timeskip[];
 
 extern Gfx dawngrove_inn_room_4DL_000450[];
 extern Gfx dawngrove_inn_room_4DL_0009C0[];

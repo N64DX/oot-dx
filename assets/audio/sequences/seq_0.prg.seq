@@ -13562,6 +13562,19 @@ LAYER_5BCE:
 /* 0x5C78 [0xF7                    ] */ loopend
 /* 0x5C79 [0xFF                    ] */ end
 
+.channel CHAN_EV_FALLING_KEY
+/* 0x5C64 [0xC1 0x57               ] */ instr       SF0_INST_87
+/* 0x5C66 [0x88 0x5C 0x6A          ] */ ldlayer     0, LAYER_EV_FALLING_KEY
+/* 0x5C69 [0xFF                    ] */ end
+
+.layer LAYER_EV_FALLING_KEY
+/* 0x5C6A [0xC2 0x30               ] */ transpose   48
+/* 0x5C6E [0xCF 0xFA               ] */ releaserate 250
+/* 0x5C70 [0x67 0x0C 0x62          ] */ notedv      PITCH_C4, 12, 98
+/* 0x5C73 [0xCF 0xD8               ] */ releaserate 216
+/* 0x5C75 [0x67 0x28 0x57          ] */ notedv      PITCH_C4, 40, 87
+/* 0x5C79 [0xFF                    ] */ end
+
 .channel CHAN_5C7A
 /* 0x5C7A [0xC1 0x54               ] */ instr       SF0_INST_84
 /* 0x5C7C [0x88 0x5C 0x80          ] */ ldlayer     0, LAYER_5C80

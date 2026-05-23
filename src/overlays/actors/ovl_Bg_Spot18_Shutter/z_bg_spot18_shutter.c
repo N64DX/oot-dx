@@ -87,8 +87,8 @@ static BgSpot18ShutterInfo sBgSpot18ShutterInfo[] = {
         0.6f,
     }, {
         SCENE_SPRING_LAKE,
-        BG_SPOT18_SHUTTER_UP,
-        INFTABLE_SECRET_SHRINE_DOOR_OPENED,
+        BG_SPOT18_SHUTTER_DOWN,
+        INFTABLE_WEBBED_SHRINE_DOOR_OPENED,
         1.5f,
         1.0f,
     },
