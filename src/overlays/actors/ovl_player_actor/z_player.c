@@ -4919,10 +4919,6 @@ s32 Player_TryActionInterrupt(PlayState* play, Player* this, SkelAnime* skelAnim
 }
 
 void func_80837530(PlayState* play, Player* this, s32 arg2) {
-    u8 meleeWeapon = Player_GetMeleeWeaponHeld(this);
-    if (meleeWeapon == 6)
-        meleeWeapon = 4;
-
     if (arg2 != 0) {
         this->unk_858 = 0.0f;
     } else {
@@ -4934,7 +4930,22 @@ void func_80837530(PlayState* play, Player* this, s32 arg2) {
     if (this->actor.category == ACTORCAT_PLAYER) {
         Actor_Spawn(&play->actorCtx, play, ACTOR_EN_M_THUNDER, this->bodyPartsPos[PLAYER_BODYPART_WAIST].x,
                     this->bodyPartsPos[PLAYER_BODYPART_WAIST].y, this->bodyPartsPos[PLAYER_BODYPART_WAIST].z, 0, 0, 0,
-                    meleeWeapon | arg2);
+                    Player_GetMeleeWeaponHeld(this) | arg2);
+    }
+}
+
+void Player_SwordBeam(PlayState* play, Player* this, s32 magicCost) {
+    if (!gSaveContext.save.info.playerData.isMagicAcquired || gSaveContext.save.info.playerData.magic < magicCost || gSaveContext.magicState != MAGIC_STATE_IDLE)
+        return;
+
+    this->unk_858 = magicCost != 0 ? 0.0f : 0.5;
+    this->stateFlags1 |= PLAYER_STATE1_CHARGING_SPIN_ATTACK;
+
+    if (this->actor.category == ACTORCAT_PLAYER) {
+        s16 pitch = 0;
+        if (this->focusActor != NULL)
+            pitch = Math_Vec3f_Pitch(&this->bodyPartsPos[PLAYER_BODYPART_WAIST], &this->focusActor->focus.pos);
+        Actor_Spawn(&play->actorCtx, play, ACTOR_EN_M_THUNDER, this->bodyPartsPos[PLAYER_BODYPART_WAIST].x, this->bodyPartsPos[PLAYER_BODYPART_WAIST].y, this->bodyPartsPos[PLAYER_BODYPART_WAIST].z, pitch, 0, 0, Player_GetMeleeWeaponHeld(this) | (magicCost << 8) | 0x80);
     }
 }
 
@@ -15693,6 +15704,9 @@ s32 Player_ActionHandler_7(Player* this, PlayState* play) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 func_80837530(play, this, 0);
                 return 1;
+            } else if (HAS_HEROS_SWORD && this->itemAction == PLAYER_IA_SWORD_KOKIRI) {
+                this->stateFlags2 |= PLAYER_STATE2_17;
+                Player_SwordBeam(play, this, 0);
             }
         } else {
             return 0;

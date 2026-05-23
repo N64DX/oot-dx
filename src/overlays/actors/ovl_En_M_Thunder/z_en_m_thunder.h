@@ -26,6 +26,7 @@ typedef struct EnMThunder {
     /* 0x01C8 */ u8 chargeAlpha;
     /* 0x01C9 */ u8 targetScale;
     /* 0x01CA */ u8 isUsingMagic;
+    /* 0x01CB */ bool isBeam;
 } EnMThunder; // size = 0x01CC
 
 #endif
