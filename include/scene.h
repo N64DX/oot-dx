@@ -227,10 +227,19 @@ typedef struct SCmdMiscSettings {
 } SCmdMiscSettings;
 
 typedef struct SCmdTitleCard {
-    /* 0x0 */ u8 code;
-    /* 0x1 */ u8 data1;
-    /* 0x4 */ void* segment;
+    /* 0x00 */ u8 code;
+    /* 0x01 */ u8 data1;
+    /* 0x04 */ void* data;
 } SCmdTitleCard; // size = 0x8
+
+typedef struct SCmdRestrictions {
+    /* 0x00 */ u8 code;
+    /* 0x01 */ u8  data1;
+    /* 0x02 */ char pad[2];
+    /* 0x04 */ u8 flags1;
+    /* 0x05 */ u8 flags2;
+    /* 0x06 */ u8 flags3;
+} SCmdRestrictions; // size = 0x8
 
 typedef struct TitleCardInfo {
     u16 textId;
@@ -275,6 +284,7 @@ typedef union SceneCmd {
     SCmdAltHeaders        altHeaders;
     SCmdAltHeaders        questHeaders;
     SCmdTitleCard         titleCard;
+    SCmdRestrictions      restrictions;
 } SceneCmd; // size = 0x8
 
 typedef BAD_RETURN(s32) (*SceneCmdHandlerFunc)(struct PlayState*, SceneCmd*);
@@ -463,7 +473,8 @@ typedef enum SceneCommandTypeID {
     /* 0x19 */ SCENE_CMD_ID_MISC_SETTINGS,
     /* 0x1A */ SCENE_CMD_ID_QUEST_HEADER_LIST,
     /* 0x1B */ SCENE_CMD_ID_TITLE_CARD,
-    /* 0x1C */ SCENE_CMD_ID_MAX
+    /* 0x1C */ SCENE_CMD_ID_RESTRICTIONS,
+    /* 0x1D */ SCENE_CMD_ID_MAX
 } SceneCommandTypeID;
 
 #define SCENE_CMD_PLAYER_ENTRY_LIST(length, playerEntryList) \
@@ -550,6 +561,9 @@ typedef enum SceneCommandTypeID {
 
 #define SCENE_CMD_TITLE_CARD(titleCardInfo) \
     { SCENE_CMD_ID_TITLE_CARD, 0, CMD_PTR(titleCardInfo) }
+
+#define SCENE_CMD_RESTRICTIONS(flags1, flags2, flags3) \
+    { SCENE_CMD_ID_RESTRICTIONS, 0, CMD_BBBB(flags1, flags2, flags3, 0) }
 
 s32 Scene_ExecuteCommands(struct PlayState* play, SceneCmd* sceneCmd);
 void Scene_ResetTransitionActorList(struct GameState* state, TransitionActorList* transitionActors);

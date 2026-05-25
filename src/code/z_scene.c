@@ -569,8 +569,28 @@ void Scene_SetTransitionForNextEntrance(PlayState* play) {
     play->transitionType = ENTRANCE_INFO_START_TRANS_TYPE(gEntranceTable[entranceIndex].field);
 }
 
-void Scene_CommandTitleCard(PlayState* play, SceneCmd* cmd) {
-    Message_SetTitleCardInfo(play, SEGMENTED_TO_VIRTUAL(cmd->titleCard.segment));
+BAD_RETURN(s32) Scene_CommandTitleCard(PlayState* play, SceneCmd* cmd) {
+    Message_SetTitleCardInfo(play, SEGMENTED_TO_VIRTUAL(cmd->titleCard.data));
+}
+
+BAD_RETURN(s32) Scene_CommandRestrictions(PlayState* play, SceneCmd* cmd) {
+    InterfaceContext* interfaceCtx = &play->interfaceCtx;
+
+    interfaceCtx->restrictions.hGauge        = (cmd->restrictions.flags1 & 0xC0) >> 6;
+    interfaceCtx->restrictions.bButton       = (cmd->restrictions.flags1 & 0x30) >> 4;
+    interfaceCtx->restrictions.aButton       = (cmd->restrictions.flags1 & 0x0C) >> 2;
+    interfaceCtx->restrictions.bottles       = (cmd->restrictions.flags1 & 0x03) >> 0;
+    interfaceCtx->restrictions.tradeItems    = (cmd->restrictions.flags2 & 0x40) != 0;
+    interfaceCtx->restrictions.masks         = (cmd->restrictions.flags2 & 0x80) != 0;
+    interfaceCtx->restrictions.hookshot      = (cmd->restrictions.flags2 & 0x30) >> 4;
+    interfaceCtx->restrictions.ocarina       = (cmd->restrictions.flags2 & 0x0C) >> 2;
+    interfaceCtx->restrictions.warpSongs     = (cmd->restrictions.flags2 & 0x03) >> 0;
+    interfaceCtx->restrictions.sunsSong      = (cmd->restrictions.flags3 & 0xC0) >> 6;
+    interfaceCtx->restrictions.farores       = (cmd->restrictions.flags3 & 0x30) >> 4;
+    interfaceCtx->restrictions.dinsNayrus    = (cmd->restrictions.flags3 & 0x0C) >> 2;
+    interfaceCtx->restrictions.magicBow      = (cmd->restrictions.flags3 & 0x08) != 0;
+    interfaceCtx->restrictions.all           = (cmd->restrictions.flags3 & 0x03) >> 0;
+    interfaceCtx->restrictions.sceneOverride = true;
 }
 
 SceneCmdHandlerFunc sSceneCmdHandlers[SCENE_CMD_ID_MAX] = {
@@ -602,6 +622,7 @@ SceneCmdHandlerFunc sSceneCmdHandlers[SCENE_CMD_ID_MAX] = {
     Scene_CommandMiscSettings,             // SCENE_CMD_ID_MISC_SETTINGS
     Scene_CommandQuestHeaderList,          // SCENE_CMD_ID_QUEST_HEADER_LIST
     Scene_CommandTitleCard,                // SCENE_CMD_ID_TITLE_CARD
+    Scene_CommandRestrictions,             // SCENE_CMD_ID_RESTRICTIONS
 };
 
 RomFile sNaviQuestHintFiles[] = {
