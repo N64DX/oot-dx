@@ -144,8 +144,9 @@ typedef struct InterfaceContext {
         /* 0x026D */ u8    all;        // "another"; enables all item restrictions
         /* 0x026E */ u8    masks;      // "c_mask"
         /* 0x026F */ u8    magicBow;   // "m_bow"
+        /* 0x0270 */ u8    sceneOverride;
     }                   restrictions;
-} InterfaceContext; // size = 0x270
+} InterfaceContext; // size = 0x274
 
 /**
  * Button HUD positions and colors

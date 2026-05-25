@@ -1440,6 +1440,9 @@ void Interface_SetSceneRestrictions(PlayState* play) {
     s32 pad2;
     s32 pad3;
 
+    if (interfaceCtx->restrictions.sceneOverride)
+        return;
+
     interfaceCtx->restrictions.all = 0;
     interfaceCtx->restrictions.dinsNayrus = 0;
     interfaceCtx->restrictions.magicBow = 0;
