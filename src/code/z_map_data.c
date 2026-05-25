@@ -383,8 +383,9 @@ static s8 sDungeonXOffset[10][44] = {
     { 48, 48, 56, 32, 48, 24, 56, 48, 40, 32, 64, 48                                                                                                                                 }, // Ice Cavern (12)
 };
 
-static s8 sOverworldXOffset[27] = {
-    11, 3, 3, 3, 3, 20, 17, 13, 3, 15, 6, 1, 5, 6, 15, 10, 12, 3, 14, 14, 3, 3, 3, 3, 17, 15, 5
+static s8 sOverworldXOffset[OVERWORLD_EXTENDED_MINIMAPS] = {
+    11, 3, 3, 3, 3, 20, 17, 13, 3, 15, 6, 1, 5, 6, 15, 10, 12, 3, 14, 14, 3, 3, 3, 3, 3, 3, 3, 3,
+    3, 17, 15, 5, 3, 3
 };
 
 MapData gMapDataTable = {
