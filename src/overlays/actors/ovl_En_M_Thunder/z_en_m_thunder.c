@@ -141,6 +141,7 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
         }
 
         if (this->isBeam) {
+            this->collider.elem.atDmgInfo.dmgFlags = DMG_SLINGSHOT;
             this->attackStrength += 2;
             this->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
             EnMThunder_SetupAction(this, EnMThunder_SwordBeam_Attack);

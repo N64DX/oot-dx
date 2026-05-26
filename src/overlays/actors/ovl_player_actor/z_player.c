@@ -547,6 +547,7 @@ static s32 sWorldYawToTouchedWall = 0;
 static s16 sFloorShapePitch = 0;
 static s32 sUseHeldItem = false; // When true, the current held item is used. Is reset to false every frame.
 static s32 sHeldItemButtonIsHeldDown = false; // Indicates if the button for the current held item is held down.
+static u8 beamCooldown = 0;
 static u8 featherGroundTimer = 0;
 static u8 mirrorShieldRestoreTimer = 0;
 static u8 shieldDamageTimer = 0;
@@ -4934,12 +4935,30 @@ void func_80837530(PlayState* play, Player* this, s32 arg2) {
     }
 }
 
+static bool Player_ActorDWithinMeleeDistance(PlayState* play, Player* this, Actor* actor, f32 xzDist) {
+    return Math_Vec3f_DistXZ(&this->actor.world.pos, &actor->world.pos) < xzDist;
+}
+
+static bool Player_EnemyWithinMeleeDistance(PlayState* play, Player* this, ActorCategory actorCategory, f32 xzDist) {
+    Actor* actor = play->actorCtx.actorLists[actorCategory].head;
+    f32 dist;
+
+    while (actor != NULL) {
+        if (Player_ActorDWithinMeleeDistance(play, this, actor, xzDist))
+            return false;
+        actor = actor->next;
+    }
+    return true;
+}
+
 void Player_SwordBeam(PlayState* play, Player* this, s32 magicCost) {
-    if (!gSaveContext.save.info.playerData.isMagicAcquired || gSaveContext.save.info.playerData.magic < magicCost || gSaveContext.magicState != MAGIC_STATE_IDLE)
+    if (beamCooldown != 0 || !gSaveContext.save.info.playerData.isMagicAcquired || gSaveContext.save.info.playerData.magic < magicCost || gSaveContext.magicState != MAGIC_STATE_IDLE ||
+       (this->focusActor != NULL && Player_ActorDWithinMeleeDistance(play, this, this->focusActor, 100.0f)) || !Player_EnemyWithinMeleeDistance(play, this, ACTORCAT_ENEMY, 100.0f) || !Player_EnemyWithinMeleeDistance(play, this, ACTORCAT_BOSS, 100.0f))
         return;
 
     this->unk_858 = magicCost != 0 ? 0.0f : 0.5;
     this->stateFlags1 |= PLAYER_STATE1_CHARGING_SPIN_ATTACK;
+    beamCooldown = SECONDS(1);
 
     if (this->actor.category == ACTORCAT_PLAYER) {
         s16 pitch = 0;
@@ -12672,11 +12691,9 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
 
     sControlInput = input;
 
-    if (R_PERFECT_BLOCK_BOOST_TIMER > 0)
-        R_PERFECT_BLOCK_BOOST_TIMER--;
-    if (shieldDamageTimer > 0)
-        shieldDamageTimer--;
-
+    DECR(beamCooldown);
+    DECR(R_PERFECT_BLOCK_BOOST_TIMER);
+    DECR(shieldDamageTimer);
     
     if (SHIELD_DURABILITY) {
         // Restore Mirror Shield
