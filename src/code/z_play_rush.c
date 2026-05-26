@@ -92,7 +92,9 @@ void Play_SetDungeonRushProgress(PlayState* this) {
         switch (gSaveContext.save.entranceIndex) {
             case ENTR_GANONDORF_BOSS_0:
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_SPIRIT - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
-                gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
+                gSaveContext.save.info.obtainedItems.lightArrow = 1;
+                if (!IS_CHILD_QUEST)
+                    gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
                 Inventory_ChangeUpgrade(UPG_STRENGTH, 3);
                 break;
 
@@ -120,7 +122,6 @@ void Play_SetDungeonRushProgress(PlayState* this) {
 
             case ENTR_FIRE_TEMPLE_BOSS_0:
                 gSaveContext.save.info.inventory.items[SLOT_HAMMER] = ITEM_HAMMER;
-                SET_HAMMER;
                 break;
 
             case ENTR_FOREST_TEMPLE_BOSS_0:
@@ -158,30 +159,31 @@ void Play_SetDungeonRushProgress(PlayState* this) {
 
             case ENTR_INSIDE_GANONS_CASTLE_0:
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_SPIRIT - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
-                gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
+                gSaveContext.save.info.obtainedItems.lightArrow = 1;
                 if (IS_CHILD_QUEST) {
-                    SET_FAIRYS_SWORD;
+                    gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE] = ITEM_GOLDEN_FEATHER;
+                    gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE] = ITEM_SWORD_FAIRYS;
                     SET_AMULET_OF_ENERGY;
-                    SET_GOLDEN_FEATHER;
                     SET_MASTER_SWORD;
-                    gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = ITEM_GOLDEN_FEATHER;
                     gSaveContext.save.info.obtainedSkills.enhancedSpin = true;
                     for (i=0; i<4; i++) {
                         if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_ROCS_FEATHER) {
                             gSaveContext.save.info.equips.buttonItems[i] = ITEM_GOLDEN_FEATHER;
                             Interface_LoadItemIcon1(this, i);
                         }
-                        if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
+                        if (DPAD_BUTTON(i) == SLOT_ARROW_FIRE)
                             Interface_LoadItemIcon1(this, i+4);
                     }
-                }
+                } else gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
                 break;
 
             case ENTR_SPIRIT_TEMPLE_0:
             case ENTR_SPIRIT_TEMPLE_BOSS_0:
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_SHADOW - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
-                gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE] = ITEM_ARROW_ICE;
                 gSaveContext.save.info.inventory.items[SLOT_NAYRUS_LOVE] = ITEM_NAYRUS_LOVE;
+                gSaveContext.save.info.obtainedItems.iceArrow = 1;
+                if (!IS_CHILD_QUEST)
+                    gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE] = ITEM_ARROW_ICE;
                 break;
 
             case ENTR_SHADOW_TEMPLE_0:
@@ -207,16 +209,16 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_FOREST - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_STORMS - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON);
-                gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
                 gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = true;
                 gSaveContext.magicFillTarget = gSaveContext.save.info.playerData.magic = 0x60;
                 gSaveContext.magicCapacity = gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = 0;
+                gSaveContext.save.info.obtainedItems.fireArrow = 1;
                 if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] == ITEM_NONE)
                     gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] = ITEM_BOTTLE_FAIRY;
                 if (IS_CHILD_QUEST) {
                     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS);
                     SET_HEROS_SWORD;
-                }
+                } else gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
                 break;
 
             case ENTR_FOREST_TEMPLE_0:
@@ -225,10 +227,8 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.inventory.items[SLOT_HOOKSHOT] = ITEM_HOOKSHOT;
                 if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_2] == ITEM_NONE)
                     gSaveContext.save.info.inventory.items[SLOT_BOTTLE_2] = ITEM_BOTTLE_FAIRY;
-                if (IS_CHILD_QUEST) {
-                    gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = ITEM_ROCS_FEATHER;
-                    SET_ROCS_FEATHER;
-                }
+                if (IS_CHILD_QUEST)
+                    gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE] = ITEM_ROCS_FEATHER;
                 break;
 
             case ENTR_TEMPLE_OF_TIME_0:

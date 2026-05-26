@@ -2977,6 +2977,15 @@ typedef struct {
     u16 var;
 } ArrowInfo;
 
+static bool ArrowIsObtained(const ItemID item) {
+    switch (item) {
+        case ITEM_ARROW_FIRE:  return gSaveContext.save.info.obtainedItems.fireArrow  ? true :false;
+        case ITEM_ARROW_ICE:   return gSaveContext.save.info.obtainedItems.iceArrow   ? true :false;
+        case ITEM_ARROW_LIGHT: return gSaveContext.save.info.obtainedItems.lightArrow ? true :false;
+        default:               return true;
+    }
+}
+
 static const ArrowInfo gArrows[] = {
     { ITEM_BOW,         SLOT_BOW,         ITEM_BOW,       0x8, 0x2, },
     { ITEM_ARROW_FIRE,  SLOT_ARROW_FIRE,  ITEM_BOW_FIRE,  0x9, 0x3, },
@@ -3017,17 +3026,34 @@ static const ArrowInfo* GetNextInfo(u16 variable) {
         u8  nextIdx           = (startIdx + i) % ARRAY_COUNT(cycleOrder);
         u16 nextVar           = cycleOrder[nextIdx];
         const ArrowInfo* info = GetInfo(nextVar);
-        if (info != NULL && info->item == gSaveContext.save.info.inventory.items[info->slot] && gSaveContext.save.info.playerData.magic >= (GetMagicCostByInfo(info) - magicCost))
-            return info;
+        
+        if (info != NULL && gSaveContext.save.info.playerData.magic >= (GetMagicCostByInfo(info) - magicCost))
+            if ((IS_CHILD_QUEST && ArrowIsObtained(info->item)) || (!IS_CHILD_QUEST && info->item == gSaveContext.save.info.inventory.items[info->slot]))
+                return info;
     }
     return NULL;
 }
 
 static void UpdateButton(Player* player, PlayState* play, const ArrowInfo* info) {
-    if (player->heldItemButton < 4)
-        gSaveContext.save.info.equips.buttonItems[player->heldItemButton] = info->icon;
-    else DPAD_BUTTON(player->heldItemButton - 4) = info->slot;
-    Interface_LoadItemIcon1(play, player->heldItemButton);
+    if (!IS_CHILD_QUEST) {
+        if (player->heldItemButton < 4)
+            gSaveContext.save.info.equips.buttonItems[player->heldItemButton] = info->icon;
+        else DPAD_BUTTON(player->heldItemButton - 4) = info->slot;
+        Interface_LoadItemIcon1(play, player->heldItemButton);
+    } else {
+        u8 i;
+        for (i=1; i<4; i++)
+            if (gSaveContext.save.info.equips.buttonItems[i] == gSaveContext.save.info.inventory.items[SLOT_BOW]) {
+                gSaveContext.save.info.equips.buttonItems[i] = info->icon;
+                Interface_LoadItemIcon1(play, i);
+            }
+        gSaveContext.save.info.inventory.items[SLOT_BOW] = info->icon;
+
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_BOW)
+                Interface_LoadItemIcon1(play, i+4);
+    }
+
     player->heldItemAction = player->itemAction = info->action;
 }
 

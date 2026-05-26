@@ -1816,13 +1816,16 @@ u8 Interface_LoadItemIconChildQuest(u8 item) {
 }
 
 u8 Interface_GetItemFromDpad(u8 button) {
-    if (DPAD_BUTTON(button) == SLOT_ARROW_FIRE)
-        return (gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE]  == ITEM_ARROW_FIRE)  ? ITEM_BOW_FIRE  : ITEM_NONE;
-    else if (DPAD_BUTTON(button) == SLOT_ARROW_ICE)
-        return (gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE]   == ITEM_ARROW_ICE)   ? ITEM_BOW_ICE   : ITEM_NONE;
-    else if (DPAD_BUTTON(button) == SLOT_ARROW_LIGHT)
-        return( gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] == ITEM_ARROW_LIGHT) ? ITEM_BOW_LIGHT : ITEM_NONE;
-    else if (DPAD_BUTTON(button) == SLOT_TRADE_CHILD)
+    if (!IS_CHILD_QUEST) {
+        if (DPAD_BUTTON(button) == SLOT_ARROW_FIRE)
+            return (gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE]  == ITEM_ARROW_FIRE)  ? ITEM_BOW_FIRE  : ITEM_NONE;
+        else if (DPAD_BUTTON(button) == SLOT_ARROW_ICE)
+            return (gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE]   == ITEM_ARROW_ICE)   ? ITEM_BOW_ICE   : ITEM_NONE;
+        else if (DPAD_BUTTON(button) == SLOT_ARROW_LIGHT)
+            return( gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] == ITEM_ARROW_LIGHT) ? ITEM_BOW_LIGHT : ITEM_NONE;
+    }
+
+    if (DPAD_BUTTON(button) == SLOT_TRADE_CHILD)
         return (gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] >= ITEM_WEIRD_EGG && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] <= ITEM_MASK_TRUTH) ? gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] : ITEM_NONE;
     else if (DPAD_BUTTON(button) < SLOT_SWORDS)
         return gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)];
@@ -2317,34 +2320,35 @@ u8 Item_Give(PlayState* play, u8 item) {
         } else {
             AMMO(ITEM_MAGIC_BEAN)++;
         }
-        SET_MAGIC_BEANS;
         return ITEM_NONE;
-    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER) {
+    } else if (ITEM_ARROW_FIRE) {
+        gSaveContext.save.info.obtainedItems.fireArrow = 1;
+        if (IS_CHILD_QUEST)
+            return ITEM_NONE;
+    } else if (ITEM_ARROW_ICE) {
+        gSaveContext.save.info.obtainedItems.iceArrow = 1;
+        if (IS_CHILD_QUEST)
+            return ITEM_NONE;
+    } else if (ITEM_ARROW_LIGHT) {
+        gSaveContext.save.info.obtainedItems.lightArrow = 1;
+        if (IS_CHILD_QUEST)
+            return ITEM_NONE;
+    } else if (item == ITEM_GOLDEN_FEATHER) {
+        INV_CONTENT(ITEM_ARROW_FIRE) = item;
         for (i=0; i<4; i++) {
-            if (item == ITEM_GOLDEN_FEATHER && gSaveContext.save.info.equips.buttonItems[i] == ITEM_ROCS_FEATHER) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_ROCS_FEATHER) {
                 gSaveContext.save.info.equips.buttonItems[i] = item;
                 Interface_LoadItemIcon1(play, i);
             }
-        }
-        gSaveContext.save.info.obtainedItems.feather = (item == ITEM_ROCS_FEATHER) ? 1 : 2;
-        INV_CONTENT(ITEM_MAGIC_BEAN) = item;
-        for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
                 Interface_LoadItemIcon1(play, i+4);
+        }
+        return ITEM_NONE;
+    } else if (item == ITEM_SWORD_FAIRYS) {
+        INV_CONTENT(ITEM_ARROW_ICE) = item;
         return ITEM_NONE;
     } else if (item == ITEM_AMULET_OF_ENERGY) {
         gSaveContext.save.info.obtainedItems.amuletOfEnergy = 1;
-        return ITEM_NONE;
-    } else if (item == ITEM_HAMMER) {
-        INV_CONTENT(ITEM_HAMMER) = item;
-        SET_HAMMER;
-        return ITEM_NONE;
-    } else if (item == ITEM_SWORD_FAIRYS) {
-        INV_CONTENT(ITEM_HAMMER) = item;
-        SET_FAIRYS_SWORD;
-        for (i=0; i<4; i++)
-            if (DPAD_BUTTON(i) == SLOT_HAMMER)
-                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;

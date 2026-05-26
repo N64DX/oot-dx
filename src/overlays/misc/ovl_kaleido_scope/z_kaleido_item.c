@@ -399,18 +399,9 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                     if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_TRADE_CHILD && GET_INFTABLE(INFTABLE_76) && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] >= ITEM_MASK_KEATON && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] <= ITEM_MASK_TRUTH) {
                         KaleidoScope_HandleSwitchMask(play, pauseCtx, input);
                         KaleidoScope_DrawSwapItemIcons(play, gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD], KaleidoScope_GetNextMask(), pauseCtx->alpha);
-                    }
-                    if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_MAGIC_BEAN && HAS_MAGIC_BEANS && HAS_ROCS_FEATHER) {
-                        currItem = gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN;
-                        nextItem = currItem == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN;
-                        KaleidoScope_HandleSwitchFeather(play, pauseCtx, input);
-                        KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
-                    }
-                    if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_HAMMER && HAS_HAMMER && HAS_FAIRYS_SWORD) {
-                        currItem = gSaveContext.save.info.inventory.items[SLOT_HAMMER] == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER;
-                        nextItem = currItem == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER;
-                        KaleidoScope_HandleSwitchFairysSword(play, pauseCtx, input);
-                        KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
+                    } else if (pauseCtx->cursorPoint[PAUSE_ITEM] == SLOT_BOW && IS_CHILD_QUEST) {
+                        KaleidoScope_HandleSwitchBow(play, pauseCtx, input);
+                        KaleidoScope_DrawSwapItemIcons(play, gSaveContext.save.info.inventory.items[SLOT_BOW], KaleidoScope_GetNextBow(), pauseCtx->alpha);
                     }
 
                     if (FIX_USEFUL_GLITCHES && pauseCtx->mainState != PAUSE_MAIN_STATE_IDLE)
@@ -472,10 +463,12 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                             else button = 3;
 
                             for (i=0; i<4; i++) {
+                                bool isArrowSlot = (cursorSlot == SLOT_BOW || cursorSlot == SLOT_ARROW_FIRE || cursorSlot == SLOT_ARROW_ICE || cursorSlot == SLOT_ARROW_LIGHT) && (DPAD_BUTTON(i) == SLOT_BOW || DPAD_BUTTON(i) == SLOT_ARROW_FIRE || DPAD_BUTTON(i) == SLOT_ARROW_ICE || DPAD_BUTTON(i) == SLOT_ARROW_LIGHT);
+
                                 if (i == button)
                                     continue;
 
-                                if (DPAD_BUTTON(i) == cursorSlot || ((cursorSlot == SLOT_BOW || cursorSlot == SLOT_ARROW_FIRE || cursorSlot == SLOT_ARROW_ICE || cursorSlot == SLOT_ARROW_LIGHT) && (DPAD_BUTTON(i) == SLOT_BOW || DPAD_BUTTON(i) == SLOT_ARROW_FIRE || DPAD_BUTTON(i) == SLOT_ARROW_ICE || DPAD_BUTTON(i) == SLOT_ARROW_LIGHT))) {
+                                if (DPAD_BUTTON(i) == cursorSlot || (!IS_CHILD_QUEST && isArrowSlot)) {
                                     DPAD_BUTTON(i) = DPAD_BUTTON(button);
                                     Interface_LoadItemIcon1(play, i+4);
                                     break;
@@ -595,6 +588,8 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
             KaleidoScope_DrawAmmoCount(pauseCtx, play->state.gfxCtx, gSaveContext.save.info.inventory.items[i]);
         }
     }
+    if (gSaveContext.save.info.inventory.items[SLOT_BOW] >= ITEM_BOW_FIRE && gSaveContext.save.info.inventory.items[SLOT_BOW] <= ITEM_BOW_LIGHT)
+        KaleidoScope_DrawAmmoCount(pauseCtx, play->state.gfxCtx, ITEM_BOW);
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_item.c", 516);
 }
@@ -950,10 +945,6 @@ void KaleidoScope_UpdateTradeEquips(PlayState* play, u8 item, u8 slot) {
             gSaveContext.save.info.equips.buttonItems[i + 1] = item;
             Interface_LoadItemIcon1(play, i + 1);
         }
-        if (gSaveContext.save.info.playerData.childEquips.cButtonSlots[i] == slot)
-            gSaveContext.save.info.playerData.childEquips.buttonItems[i + 1] = item;
-        if (gSaveContext.save.info.playerData.adultEquips.cButtonSlots[i] == slot)
-            gSaveContext.save.info.playerData.adultEquips.buttonItems[i + 1] = item;
     }
 
     for (i=0; i<4; i++)
@@ -975,26 +966,47 @@ void KaleidoScope_HandleSwitchMask(PlayState* play, PauseContext* pauseCtx, Inpu
     }
 }
 
-void KaleidoScope_HandleSwitchFeather(PlayState* play, PauseContext* pauseCtx, Input* input) {
-    u8 i;
+u8 KaleidoScope_GetNextBow() {
+    u8 item = gSaveContext.save.info.inventory.items[SLOT_BOW];
 
-    if (CHECK_BTN_ANY(input->press.button, BTN_CUP)) {
-        gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] = (gSaveContext.save.info.inventory.items[SLOT_MAGIC_BEAN] == ITEM_MAGIC_BEAN ? (HAS_GOLDEN_FEATHER ? ITEM_GOLDEN_FEATHER : ITEM_ROCS_FEATHER) : ITEM_MAGIC_BEAN);
-        for (i=0; i<4; i++)
-            if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
-                Interface_LoadItemIcon1(play, i+4);
-        Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    switch (item) {
+        case ITEM_BOW:
+            if (gSaveContext.save.info.obtainedItems.fireArrow)
+                return ITEM_BOW_FIRE;
+        case ITEM_BOW_FIRE:
+            if (gSaveContext.save.info.obtainedItems.iceArrow)
+                return ITEM_BOW_ICE;
+        case ITEM_BOW_ICE:
+            if (gSaveContext.save.info.obtainedItems.lightArrow)
+                return ITEM_BOW_LIGHT;
+        default:
+            return ITEM_BOW;
     }
 }
 
-void KaleidoScope_HandleSwitchFairysSword(PlayState* play, PauseContext* pauseCtx, Input* input) {
+void KaleidoScope_UpdateBowEquips(PlayState* play, u8 item, u8 slot) {
     u8 i;
+    gSaveContext.save.info.inventory.items[SLOT_BOW] = item;
 
+    for (i=0; i<3; i++) {
+        if (gSaveContext.save.info.equips.cButtonSlots[i] == slot) {
+            gSaveContext.save.info.equips.buttonItems[i + 1] = item;
+            Interface_LoadItemIcon1(play, i + 1);
+        }
+    }
+
+    for (i=0; i<4; i++)
+        if (DPAD_BUTTON(i) == slot)
+            Interface_LoadItemIcon1(play, i + 4);
+}
+
+void KaleidoScope_HandleSwitchBow(PlayState* play, PauseContext* pauseCtx, Input* input) {
     if (CHECK_BTN_ANY(input->press.button, BTN_CUP)) {
-        gSaveContext.save.info.inventory.items[SLOT_HAMMER] = (gSaveContext.save.info.inventory.items[SLOT_HAMMER] == ITEM_HAMMER ? ITEM_SWORD_FAIRYS : ITEM_HAMMER);
-        for (i=0; i<4; i++)
-            if (DPAD_BUTTON(i) == SLOT_HAMMER)
-                Interface_LoadItemIcon1(play, i+4);
-        Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        u8 nextBow = KaleidoScope_GetNextBow();
+
+        if (gSaveContext.save.info.inventory.items[SLOT_BOW] != nextBow) {
+            KaleidoScope_UpdateBowEquips(play, nextBow, pauseCtx->cursorPoint[PAUSE_ITEM]);
+            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+        }
     }
 }

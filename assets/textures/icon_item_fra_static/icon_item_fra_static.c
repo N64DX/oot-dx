@@ -113,8 +113,16 @@ u64 gPauseSelectItem10FRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_T
 #include "build/pal-1.0/assets/textures/icon_item_fra_static/gPauseSelectItem10FRATex.ia8.inc.c"
 };
 
+u64 gPauseSelectItem10CQFRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
+#include "assets/textures/icon_item_fra_static/gPauseSelectItem10CQFRATex.ia8.inc.c"
+};
+
 u64 gPauseSelectItem20FRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
 #include "build/pal-1.0/assets/textures/icon_item_fra_static/gPauseSelectItem20FRATex.ia8.inc.c"
+};
+
+u64 gPauseSelectItem20CQFRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
+#include "assets/textures/icon_item_fra_static/gPauseSelectItem20CQFRATex.ia8.inc.c"
 };
 
 u64 gPauseMap10FRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
@@ -249,8 +257,16 @@ u64 gPauseSelectItem10FRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_T
 #include "assets/textures/icon_item_fra_static/gPauseSelectItem10FRATex.ia8.inc.c"
 };
 
+u64 gPauseSelectItem10CQFRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
+#include "assets/textures/icon_item_fra_static/gPauseSelectItem10CQFRATex.ia8.inc.c"
+};
+
 u64 gPauseSelectItem20FRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_fra_static/gPauseSelectItem20FRATex.ia8.inc.c"
+};
+
+u64 gPauseSelectItem20CQFRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
+#include "assets/textures/icon_item_fra_static/gPauseSelectItem20CQFRATex.ia8.inc.c"
 };
 
 u64 gPauseMap10FRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {

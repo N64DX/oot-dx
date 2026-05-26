@@ -46,6 +46,35 @@ void Interface_Init(PlayState* play) {
             if (gSaveContext.save.info.shields[i].durability > Player_GetMaxShieldDurability(i+1))
                 gSaveContext.save.info.shields[i].durability = Player_GetMaxShieldDurability(i+1);
 
+    // Check and reset bow and magic arrows
+    if (IS_CHILD_QUEST) {
+        if (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ARROW_FIRE) {
+            gSaveContext.save.info.obtainedItems.fireArrow = 1;
+            INV_CONTENT(ITEM_ARROW_FIRE) = ITEM_NONE;
+        }
+        if (INV_CONTENT(ITEM_ARROW_ICE) == ITEM_ARROW_ICE) {
+            gSaveContext.save.info.obtainedItems.iceArrow = 1;
+            INV_CONTENT(ITEM_ARROW_ICE) = ITEM_NONE;
+        } 
+        if (INV_CONTENT(ITEM_ARROW_LIGHT) == ITEM_ARROW_LIGHT) {
+            gSaveContext.save.info.obtainedItems.lightArrow = 1;
+            INV_CONTENT(ITEM_ARROW_LIGHT) = ITEM_NONE;
+        } 
+    } else {
+        if (INV_CONTENT(ITEM_BOW) != ITEM_BOW && INV_CONTENT(ITEM_BOW) != ITEM_NONE) {
+            INV_CONTENT(ITEM_BOW) = ITEM_BOW;
+            for (i=0; i<3; i++)
+                if (gSaveContext.save.info.equips.cButtonSlots[i] == SLOT_BOW)
+                    gSaveContext.save.info.equips.buttonItems[i + 1] = ITEM_BOW;
+        }
+        if (INV_CONTENT(ITEM_ARROW_FIRE)  > ITEM_FISHING_POLE && INV_CONTENT(ITEM_ARROW_FIRE)  < ITEM_SONG_MINUET)
+            INV_CONTENT(ITEM_ARROW_FIRE)  = ITEM_ARROW_FIRE;
+        if (INV_CONTENT(ITEM_ARROW_ICE)   > ITEM_FISHING_POLE && INV_CONTENT(ITEM_ARROW_ICE)   < ITEM_SONG_MINUET)
+            INV_CONTENT(ITEM_ARROW_ICE)   = ITEM_ARROW_ICE;
+        if (INV_CONTENT(ITEM_ARROW_LIGHT) > ITEM_FISHING_POLE && INV_CONTENT(ITEM_ARROW_LIGHT) < ITEM_SONG_MINUET)
+            INV_CONTENT(ITEM_ARROW_LIGHT) = ITEM_ARROW_LIGHT;
+    }        
+
     if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_BIGGORON && !gSaveContext.save.info.playerData.swordHealth && LINK_IS_ADULT)
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_GIANTS_KNIFE;
     else if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_GIANTS_KNIFE && IS_CHILD_QUEST_AS_CHILD)
