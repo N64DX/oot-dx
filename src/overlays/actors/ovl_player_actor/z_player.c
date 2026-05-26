@@ -1460,9 +1460,9 @@ static s8 sItemActions[] = {
     PLAYER_IA_NONE,                // ITEM_BOOTS_KOKIRI,
     PLAYER_IA_NONE,                // ITEM_BOOTS_IRON,
     PLAYER_IA_NONE,                // ITEM_BOOTS_HOVER,
-    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_30,
-    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_40,
-    PLAYER_IA_NONE,                // ITEM_BULLET_BAG_50,
+    PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
+    PLAYER_IA_NONE,                // ITEM_ROCS_FEATHER
+    PLAYER_IA_NONE,                // ITEM_GOLDEN_FEATHER
     PLAYER_IA_NONE,                // ITEM_QUIVER_30,
     PLAYER_IA_NONE,                // ITEM_QUIVER_40,
     PLAYER_IA_NONE,                // ITEM_QUIVER_50,
@@ -1479,7 +1479,6 @@ static s8 sItemActions[] = {
     PLAYER_IA_NONE,                // ITEM_GIANTS_WALLET,
     PLAYER_IA_NONE,                // ITEM_DEKU_SEEDS,
     PLAYER_IA_NONE,                // ITEM_FISHING_POLE,
-    PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
 };
 
 static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {

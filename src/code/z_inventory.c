@@ -163,9 +163,9 @@ void* gItemIcons[] = {
     gItemIconBootsKokiriTex,       // ITEM_BOOTS_KOKIRI
     gItemIconBootsIronTex,         // ITEM_BOOTS_IRON
     gItemIconBootsHoverTex,        // ITEM_BOOTS_HOVER
-    gItemIconBulletBag30Tex,       // ITEM_BULLET_BAG_30
-    gItemIconBulletBag40Tex,       // ITEM_BULLET_BAG_40
-    gItemIconBulletBag50Tex,       // ITEM_BULLET_BAG_50
+    gItemIconGreatFairysSwordTex,  // ITEM_SWORD_FAIRYS
+    gItemIconRocsFeatherTex,       // ITEM_ROCS_FEATHER
+    gItemIconGoldenFeatherTex,     // ITEM_GOLDEN_FEATHER
     gItemIconQuiver30Tex,          // ITEM_QUIVER_30
     gItemIconQuiver40Tex,          // ITEM_QUIVER_40
     gItemIconQuiver50Tex,          // ITEM_QUIVER_50
@@ -182,9 +182,9 @@ void* gItemIcons[] = {
     gItemIconGiantsWalletTex,      // ITEM_GIANTS_WALLET
     gItemIconDekuSeedsTex,         // ITEM_DEKU_SEEDS
     gItemIconFishingPoleTex,       // ITEM_FISHING_POLE
-    gItemIconGreatFairysSwordTex,  // ITEM_SWORD_FAIRYS
-    gItemIconRocsFeatherTex,       // ITEM_ROCS_FEATHER
-    gItemIconGoldenFeatherTex,     // ITEM_GOLDEN_FEATHER
+    gItemIconBulletBag30Tex,       // ITEM_BULLET_BAG_30
+    gItemIconBulletBag40Tex,       // ITEM_BULLET_BAG_40
+    gItemIconBulletBag50Tex,       // ITEM_BULLET_BAG_50
     gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
     gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
     gItemIconAmuletOfEnergyTex,    // ITEM_AMULET_OF_ENERGY

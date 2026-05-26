@@ -286,16 +286,16 @@ u64 gItemIconBootsHoverTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] 
 #include "assets/textures/icon_item_static/gItemIconBootsHoverTex.rgba32.inc.c"
 };
 
-u64 gItemIconBulletBag30Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
-#include "assets/textures/icon_item_static/gItemIconBulletBag30Tex.rgba32.inc.c"
+u64 gItemIconGreatFairysSwordTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconGreatFairysSwordTex.rgba32.inc.c"
 };
 
-u64 gItemIconBulletBag40Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
-#include "assets/textures/icon_item_static/gItemIconBulletBag40Tex.rgba32.inc.c"
+u64 gItemIconRocsFeatherTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconRocsFeatherTex.rgba32.inc.c"
 };
 
-u64 gItemIconBulletBag50Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
-#include "assets/textures/icon_item_static/gItemIconBulletBag50Tex.rgba32.inc.c"
+u64 gItemIconGoldenFeatherTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconGoldenFeatherTex.rgba32.inc.c"
 };
 
 u64 gItemIconQuiver30Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
@@ -362,16 +362,16 @@ u64 gItemIconFishingPoleTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)]
 #include "assets/textures/icon_item_static/gItemIconFishingPoleTex.rgba32.inc.c"
 };
 
-u64 gItemIconGreatFairysSwordTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
-#include "assets/textures/icon_item_static/gItemIconGreatFairysSwordTex.rgba32.inc.c"
+u64 gItemIconBulletBag30Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconBulletBag30Tex.rgba32.inc.c"
 };
 
-u64 gItemIconRocsFeatherTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
-#include "assets/textures/icon_item_static/gItemIconRocsFeatherTex.rgba32.inc.c"
+u64 gItemIconBulletBag40Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconBulletBag40Tex.rgba32.inc.c"
 };
 
-u64 gItemIconGoldenFeatherTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
-#include "assets/textures/icon_item_static/gItemIconGoldenFeatherTex.rgba32.inc.c"
+u64 gItemIconBulletBag50Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconBulletBag50Tex.rgba32.inc.c"
 };
 
 u64 gItemIconSwordHerosTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {

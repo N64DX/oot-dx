@@ -21,10 +21,11 @@ extern bool showAltScalesSlot;
 
 #define AGE_REQ_ADULT LINK_AGE_ADULT
 #define AGE_REQ_CHILD LINK_AGE_CHILD
+#define AGE_REQ_CQ   8
 #define AGE_REQ_NONE 9
 
 #define CHECK_AGE_REQ_SLOT(slot) \
-    ((gSlotAgeReqs[slot] == AGE_REQ_NONE) || gSlotAgeReqs[slot] == ((void)0, gSaveContext.save.linkAge) || IS_CHILD_QUEST_AS_CHILD)
+    ((gSlotAgeReqs[slot] == AGE_REQ_NONE) || gSlotAgeReqs[slot] == ((void)0, gSaveContext.save.linkAge) || IS_CHILD_QUEST_AS_CHILD || (gSlotAgeReqs[slot] == AGE_REQ_CQ && !IS_CHILD_QUEST && LINK_IS_ADULT))
 
 #define CHECK_AGE_REQ_EQUIP(y, x) \
     (((gEquipAgeReqs[y][x] == AGE_REQ_NONE) || (gEquipAgeReqs[y][x] == ((void)0, gSaveContext.save.linkAge)) || IS_CHILD_QUEST_AS_CHILD) && !(SHIELD_DURABILITY && y == 1 && x == 3 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken))

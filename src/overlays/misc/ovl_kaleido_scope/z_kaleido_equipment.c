@@ -881,7 +881,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                     KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, IS_RAZOR_SWORD ? gItemIconSwordRazorTex : gItemIconSwordMasterTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
 
                 if (k == EQUIP_INV_SWORD_BIGGORON && gBitFlags[2] & gSaveContext.save.info.inventory.equipment) {
-                    void* icon = gItemIconSwordBiggoronTex;
+                    void* icon = gSaveContext.save.info.playerData.swordHealth ? gItemIconSwordBiggoronTex : gItemIconBrokenGiantsKnifeTex;
                     if (IS_CHILD_QUEST_AS_CHILD)
                         icon = gSaveContext.save.info.playerData.bgsFlag ? gItemIconSwordGildedTex : gItemIconSwordSilverTex;
                     KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, icon, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
