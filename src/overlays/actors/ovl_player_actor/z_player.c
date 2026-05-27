@@ -4,6 +4,7 @@
  * Description: Link
  */
 
+#include "overlays/actors/ovl_Door_Spiral/z_door_spiral.h"
 #include "overlays/actors/ovl_Bg_Heavy_Block/z_bg_heavy_block.h"
 #include "overlays/actors/ovl_Demo_Kankyo/z_demo_kankyo.h"
 #include "overlays/actors/ovl_En_Boom/z_en_boom.h"
@@ -50,7 +51,6 @@
 #include "play_state.h"
 #include "save.h"
 #include "skin_matrix.h"
-
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
@@ -6135,6 +6135,15 @@ void Player_GetRelativePosition(Player* this, Vec3f* base, Vec3f* offset, Vec3f*
     dest->z = base->z + ((offset->z * cos) - (offset->x * sin));
 }
 
+void Player_TranslateAndRotateY(Player* this, Vec3f* translation, Vec3f* src, Vec3f* dst) {
+    Lib_Vec3f_TranslateAndRotateY(translation, this->actor.shape.rot.y, src, dst);
+}
+
+void func_80835BF8(Vec3f* srcPos, s16 rotY, f32 radius, Vec3f* dstPos) {
+    dstPos->x = Math_SinS(rotY) * radius + srcPos->x;
+    dstPos->z = Math_CosS(rotY) * radius + srcPos->z;
+}
+
 Actor* Player_SpawnFairy(PlayState* play, Player* this, Vec3f* arg2, Vec3f* arg3, s32 type) {
     Vec3f pos;
 
@@ -6177,6 +6186,41 @@ s32 Player_PosVsWallLineTest(PlayState* play, Player* this, Vec3f* offset, Colli
     return BgCheck_EntityLineTest1(&play->colCtx, &posA, &posB, posResult, wallPoly, true, false, false, true, bgId);
 }
 
+void Player_Door_Staircase(PlayState* play, Player* this, Actor* door) {
+    static Vec3f D_8085D10C = { 20.0f, 0.0f, 20.0f };
+    DoorSpiral* doorStaircase = (DoorSpiral*)door;
+
+    this->yaw = doorStaircase->actor.home.rot.y + 0x8000;
+    this->actor.shape.rot.y = this->yaw;
+    if (this->speedXZ <= 0.0f)
+        this->speedXZ = 0.1f;
+    func_80838E70(play, this, 50.0f, this->actor.shape.rot.y);
+
+    this->unk_447 = this->doorType;
+    this->av1.actionVar1 = 0;
+    this->stateFlags1 |= PLAYER_STATE1_29;
+    func_80835BF8(&doorStaircase->actor.world.pos, doorStaircase->actor.shape.rot.y, -140.0f, &this->unk_450);
+
+    D_8085D10C.x = (this->doorDirection != 0) ? -400.0f : 400.0f;
+    D_8085D10C.z = 200.0f;
+    Player_TranslateAndRotateY(this, &this->unk_450, &D_8085D10C, &this->unk_45C);
+
+    doorStaircase->shouldClimb = true;
+
+    func_80832224(this);
+
+    if (this->doorTimer != 0) {
+        this->av2.actionVar2 = 0;
+        Player_AnimPlayOnce(play, this, Player_GetIdleAnim(this));
+        this->skelAnime.endFrame = 0.0f;
+    } else this->speedXZ = 0.1f;
+
+    Camera_RequestSetting(Play_GetCamera(play, CAM_ID_MAIN), CAM_SET_SCENE0);
+    this->cv.slidingDoorBgCamIndex = play->transitionActors.list[GET_TRANSITION_ACTOR_INDEX(&doorStaircase->actor)].sides[0].bgCamIndex;
+    Actor_DisableLens(play);
+    this->floorSfxOffset = NA_SE_PL_WALK_CONCRETE - SFX_FLAG;
+}
+
 s32 Player_ActionHandler_1(Player* this, PlayState* play) {
     Actor* attachedActor;
     s32 pad3;
@@ -6190,7 +6234,7 @@ s32 Player_ActionHandler_1(Player* this, PlayState* play) {
     if ((this->doorType != PLAYER_DOORTYPE_NONE) &&
         (!(this->stateFlags1 & PLAYER_STATE1_CARRYING_ACTOR) ||
          ((this->heldActor != NULL) && (this->heldActor->id == ACTOR_EN_RU1)))) {
-        if (CHECK_BTN_ALL(sControlInput->press.button, BTN_A) || (Player_Action_TryOpeningDoor == this->actionFunc)) {
+        if (CHECK_BTN_ALL(sControlInput->press.button, BTN_A) || (Player_Action_TryOpeningDoor == this->actionFunc) || (this->doorType == PLAYER_DOORTYPE_STAIRCASE) || (this->doorType == PLAYER_DOORTYPE_PROXIMITY)) {
             doorActor = this->doorActor;
 
             if (this->doorType <= PLAYER_DOORTYPE_AJAR) {
@@ -6203,7 +6247,9 @@ s32 Player_ActionHandler_1(Player* this, PlayState* play) {
             sp78 = Math_CosS(doorActor->shape.rot.y);
             sp74 = Math_SinS(doorActor->shape.rot.y);
 
-            if (this->doorType == PLAYER_DOORTYPE_SLIDING) {
+            if (this->doorType == PLAYER_DOORTYPE_STAIRCASE) {
+                Player_Door_Staircase(play, this, doorActor);
+            } else if (this->doorType == PLAYER_DOORTYPE_SLIDING) {
                 SlidingDoorActorBase* slidingDoor = (SlidingDoorActorBase*)doorActor;
 
                 this->yaw = slidingDoor->dyna.actor.home.rot.y;
@@ -10631,6 +10677,11 @@ void Player_Action_Roll(Player* this, PlayState* play) {
                      (ocCollidedActor = this->cylinder.base.oc,
                       ((ocCollidedActor->id == ACTOR_EN_WOOD02) &&
                        (ABS((s16)(this->actor.world.rot.y - ocCollidedActor->yawTowardsPlayer)) > 0x6000))))) {
+                    if (this->doorType == PLAYER_DOORTYPE_STAIRCASE) {
+                        func_80853080(this, play);
+                        return;
+                    }
+
                     if (ocCollidedActor != NULL) {
                         // The EN_WOOD02 actor uses home y rotation as a flag to signal that it has been
                         // bonked into and should try to spawn a drop.
@@ -11136,6 +11187,19 @@ s32 func_80845C68(PlayState* play, s32 arg1) {
     return arg1;
 }
 
+Vec3f D_8085D100 = { 0.0f, 50.0f, 0.0f };
+
+s32 func_80835DF8(PlayState* play, Player* this, CollisionPoly** outPoly, s32* outBgId) {
+    Vec3f pos;
+    f32 yIntersect = func_808396F4(play, this, &D_8085D100, &pos, outPoly, outBgId);
+
+    if ((*outBgId == BGCHECK_SCENE) && (fabsf(this->actor.world.pos.y - yIntersect) < 10.0f)) {
+        Environment_ChangeLightSetting(play, SurfaceType_GetLightSetting(&play->colCtx, *outPoly, *outBgId));
+        return true;
+    }
+    return false;
+}
+
 void Player_Action_80845CA4(Player* this, PlayState* play) {
     if (!Player_ActionHandler_13(this, play)) {
         if (this->av2.actionVar2 == 0) {
@@ -11148,6 +11212,28 @@ void Player_Action_80845CA4(Player* this, PlayState* play) {
         } else if (this->av1.actionVar1 == 0) {
             f32 sp3C = 5.0f * sWaterSpeedFactor;
             s32 temp = func_80845BA0(play, this, &sp3C, -1);
+
+            if (this->unk_447 == PLAYER_DOORTYPE_STAIRCASE) {
+                if (MREG(64) < 0) {
+                    if (play->roomCtx.status != 1) {
+                        MREG(68) += MREG(64);
+                        if (MREG(68) < 0) {
+                            MREG(68) = 0;
+                        }
+
+                        this->actor.world.pos.y += (this->doorDirection != 0) ? 3.0f : -3.0f;
+                        this->actor.prevPos.y = this->actor.world.pos.y;
+                    }
+                } else if (MREG(64) == 0) {
+                    CollisionPoly* sp64;
+                    s32 sp60;
+
+                    if (func_80835DF8(play, this, &sp64, &sp60)) {
+                        this->actor.floorPoly = sp64;
+                        this->actor.floorBgId = sp60;
+                    }
+                }
+            }
 
             if (temp < 30) {
                 this->av1.actionVar1 = 1;
@@ -11168,11 +11254,77 @@ void Player_Action_80845CA4(Player* this, PlayState* play) {
                     this->unk_450.x = (Math_SinS(sConveyorYaw) * 400.0f) + this->actor.world.pos.x;
                     this->unk_450.z = (Math_CosS(sConveyorYaw) * 400.0f) + this->actor.world.pos.z;
                 }
-            } else if (this->av2.actionVar2 < 0) {
-                this->av2.actionVar2++;
+            } else {
+                if (this->av2.actionVar2 < 0) {
+                    this->av2.actionVar2++;
+                    sp34 = gSaveContext.entranceSpeed;
+                    sp30 = -1;
+                } else if (this->unk_447 == PLAYER_DOORTYPE_STAIRCASE) {
+                    if (MREG(64) == 0) {
+                        MREG(64) = 16;
+                        MREG(68) = 0;
 
-                sp34 = gSaveContext.entranceSpeed;
-                sp30 = -1;
+                        MREG(65) = MREG(66) = MREG(67) = MREG(68);
+                    } else if (MREG(64) >= 0) {
+                        MREG(68) += MREG(64);
+                        if (MREG(68) > 255) {
+                            TransitionActorEntry* temp_v1_4; // sp50
+                            s32 roomNum;
+
+                            temp_v1_4 = &play->transitionActors.list[this->doorNext];
+                            roomNum = temp_v1_4->sides[0].room;
+                            MREG(68) = 255;
+
+                            if (roomNum != play->roomCtx.curRoom.num && play->roomCtx.curRoom.num >= 0) {
+                                play->roomCtx.prevRoom = play->roomCtx.curRoom;
+
+                                play->roomCtx.curRoom.num = -1;
+                                play->roomCtx.curRoom.segment = NULL;
+                                Room_FinishRoomChange(play, &play->roomCtx);
+                            } else {
+                                static Vec3f D_8085D62C = { 0.0f, 0.0f, 0.0f };
+                                static Vec3f D_8085D638 = { 0.0f, 0.0f, 0.0f };
+                                static Vec3f D_8085D644 = { 0.0f, 0.0f, 0.0f };
+
+                                MREG(64) = -16;
+                                if (play->roomCtx.curRoom.num < 0) {
+                                    Room_RequestNewRoom(play, &play->roomCtx, temp_v1_4->sides[0].room);
+                                    play->roomCtx.prevRoom.num = -1;
+                                    play->roomCtx.prevRoom.segment = NULL;
+                                }
+
+                                this->actor.world.pos.x = temp_v1_4->pos.x;
+                                this->actor.world.pos.y = temp_v1_4->pos.y;
+                                this->actor.world.pos.z = temp_v1_4->pos.z;
+
+                                this->actor.shape.rot.y = ((((temp_v1_4->rotY >> 7) & 0x1FF) / 180.0f) * 0x8000);
+
+                                D_8085D62C.x = (this->doorDirection != 0) ? -120.0f : 120.0f;
+                                D_8085D62C.y = (this->doorDirection != 0) ? -75.0f : 75.0f;
+                                D_8085D62C.z = -240.0f;
+                                if (this->doorDirection != 0)
+                                    Camera_ChangeDoorCam(play->cameraPtrs[0], &this->actor, -2, 0.0f, temp_v1_4->pos.x + 50, temp_v1_4->pos.y + 95, temp_v1_4->pos.z - 50);
+                                else Camera_ChangeDoorCam(play->cameraPtrs[0], &this->actor, -2, 0.0f, temp_v1_4->pos.x - 50, temp_v1_4->pos.y + 5, temp_v1_4->pos.z - 50);
+ 
+                                Player_TranslateAndRotateY(this, &this->actor.world.pos, &D_8085D62C, &this->actor.world.pos);
+
+                                D_8085D638.x = (this->doorDirection != 0) ? 130.0f : -130.0f;
+                                D_8085D638.z = 160.0f;
+                                Player_TranslateAndRotateY(this, &this->actor.world.pos, &D_8085D638, &this->unk_450);
+                                D_8085D644.z = 160.0f;
+                                Player_TranslateAndRotateY(this, &this->unk_450, &D_8085D644, &this->unk_45C);
+
+                                this->actor.shape.rot.y += (this->doorDirection != 0) ? 0x4000 : -0x4000;
+                                this->av1.actionVar1 = 0;
+
+                                this->actor.world.rot.y = this->yaw = this->actor.shape.rot.y;
+                            }
+                        }
+
+                        this->actor.world.pos.y += (this->doorDirection != 0) ? 3.0f : -3.0f;
+                        this->actor.prevPos.y = this->actor.world.pos.y;
+                    }
+                }
             }
 
             sp2C = func_80845BA0(play, this, &sp34, sp30);
@@ -11180,7 +11332,12 @@ void Player_Action_80845CA4(Player* this, PlayState* play) {
             if ((this->av2.actionVar2 == 0) ||
                 ((sp2C == 0) && (this->speedXZ == 0.0f) &&
                  (Play_GetCamera(play, CAM_ID_MAIN)->stateFlags & CAM_STATE_CAM_FUNC_FINISH))) {
+                if (this->unk_447 == PLAYER_DOORTYPE_STAIRCASE) {
+                    Map_InitRoomData(play, play->roomCtx.curRoom.num);
+                    Map_SavePlayerInitialInfo(play);
+                }
 
+                MREG(64) = 0;
                 Camera_SetFinishedFlag(Play_GetCamera(play, CAM_ID_MAIN));
                 func_80845C68(play, gSaveContext.respawn[RESPAWN_MODE_DOWN].data);
 
@@ -11860,7 +12017,7 @@ void Player_UpdateInterface(PlayState* play, Player* this) {
                     doAction = DO_ACTION_REEL;
                 }
             } else if ((Player_Action_8084E3C4 != this->actionFunc) && !(this->stateFlags2 & PLAYER_STATE2_CRAWLING)) {
-                if ((this->doorType != PLAYER_DOORTYPE_NONE) &&
+                if ((this->doorType != PLAYER_DOORTYPE_NONE) && (this->doorType != PLAYER_DOORTYPE_STAIRCASE) &&
                     (!(this->stateFlags1 & PLAYER_STATE1_CARRYING_ACTOR) ||
                      ((heldActor != NULL) && (heldActor->id == ACTOR_EN_RU1)))) {
                     doAction = DO_ACTION_OPEN;
@@ -12033,6 +12190,7 @@ void Player_ProcessSceneCollision(PlayState* play, Player* this) {
     f32 float1; // multi-purpose variable, see define names (fake match?)
     f32 ceilingCheckHeight;
     u32 flags;
+    s32 spAC = (Player_Action_80845CA4 == this->actionFunc) && (this->unk_447 == PLAYER_DOORTYPE_STAIRCASE);
 
     sPrevFloorProperty = this->floorProperty;
 
@@ -12050,7 +12208,7 @@ void Player_ProcessSceneCollision(PlayState* play, Player* this) {
     }
 
     if (this->stateFlags1 & (PLAYER_STATE1_29 | PLAYER_STATE1_31)) {
-        if (this->stateFlags1 & PLAYER_STATE1_31) {
+        if ((!(this->stateFlags1 & PLAYER_STATE1_DEAD) && !(this->stateFlags2 & PLAYER_STATE2_14) && (this->stateFlags1 & PLAYER_STATE1_31)) || spAC) {
             this->actor.bgCheckFlags &= ~BGCHECKFLAG_GROUND;
             flags = UPDBGCHECKINFO_FLAG_3 | UPDBGCHECKINFO_FLAG_4 | UPDBGCHECKINFO_FLAG_5;
         } else if ((this->stateFlags1 & PLAYER_STATE1_0) && ((this->unk_A84 - (s32)this->actor.world.pos.y) >= 100)) {
@@ -12091,6 +12249,11 @@ void Player_ProcessSceneCollision(PlayState* play, Player* this) {
     if (floorPoly != NULL) {
         this->floorProperty = SurfaceType_GetFloorProperty(&play->colCtx, floorPoly, this->actor.floorBgId);
         this->prevFloorSfxOffset = this->floorSfxOffset;
+
+        if (spAC) {
+            this->floorSfxOffset = NA_SE_PL_WALK_CONCRETE - SFX_FLAG;
+            return;
+        }
 
         if (this->actor.bgCheckFlags & BGCHECKFLAG_WATER) {
             if (this->actor.depthInWater < 20.0f) {
@@ -12991,6 +13154,8 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
 
                 Player_DetectRumbleSecrets(this, play);
             }
+        } else if (!(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && Player_Action_80845CA4 == this->actionFunc && this->unk_447 == PLAYER_DOORTYPE_STAIRCASE) {
+            this->actor.world.pos.y = this->actor.prevPos.y;
         }
 
         if ((play->csCtx.state != CS_STATE_IDLE) && (this->csAction != PLAYER_CSACTION_6) &&

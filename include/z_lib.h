@@ -41,5 +41,6 @@ void Color_RGBA8_Copy(Color_RGBA8* dst, Color_RGBA8* src);
 void Sfx_PlaySfxCentered(u16 sfxId);
 void Sfx_PlaySfxCentered2(u16 sfxId);
 void Sfx_PlaySfxAtPos(Vec3f* projectedPos, u16 sfxId);
+void Lib_Vec3f_TranslateAndRotateY(Vec3f* translation, s16 rotAngle, Vec3f* src, Vec3f* dst);
 
 #endif

@@ -3507,7 +3507,7 @@ void Actor_SpawnTransitionActors(PlayState* play, ActorContext* actorCtx) {
                   (transitionActor->sides[1].room == play->roomCtx.prevRoom.num)))) {
                 Actor_Spawn(actorCtx, play, (s16)(transitionActor->id & 0x1FFF), transitionActor->pos.x,
                             transitionActor->pos.y, transitionActor->pos.z, 0, transitionActor->rotY, 0,
-                            (i << TRANSITION_ACTOR_PARAMS_INDEX_SHIFT) + transitionActor->params);
+                            (i << TRANSITION_ACTOR_PARAMS_INDEX_SHIFT) + (transitionActor->params & 0x3FF));
 
                 transitionActor->id = -transitionActor->id;
                 numActors = play->transitionActors.count;

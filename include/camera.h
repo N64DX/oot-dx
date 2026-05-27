@@ -208,7 +208,9 @@ typedef enum CameraSettingType {
     /* 0x3F */ CAM_SET_DIRECTED_YAW, // Does not auto-update yaw, tends to keep the camera pointed at a certain yaw (used by biggoron and final spirit lowering platform) "TEPPEN"
     /* 0x40 */ CAM_SET_PIVOT_FROM_SIDE, // Fixed side view, allows rotation of camera (eg. Potion Shop, Meadow at fairy grotto) "CIRCLE7"
     /* 0x41 */ CAM_SET_NORMAL4,
-    /* 0x42 */ CAM_SET_MAX
+    /* 0x42 */ CAM_SET_SCENE0,
+    /* 0x43 */ CAM_SET_SPIRAL_DOOR,
+    /* 0x43 */ CAM_SET_MAX
 } CameraSettingType;
 
 typedef enum CameraModeType {
@@ -1161,6 +1163,7 @@ typedef struct Unique2 {
 #define UNIQUE2_FLAG_0 (1 << 0)
 #define UNIQUE2_FLAG_1 (1 << 1)
 #define UNIQUE2_FLAG_4 (1 << 4)
+#define UNIQUE2_FLAG_5 (1 << 5)
 
 #define CAM_FUNCDATA_UNIQ2(yOffset, eyeDist, fov, interfaceField) \
     { yOffset, CAM_DATA_Y_OFFSET }, \
@@ -1171,9 +1174,14 @@ typedef struct Unique2 {
 typedef struct DoorParams {
     /* 0x0 */ struct Actor* doorActor;
     /* 0x4 */ s16 bgCamIndex;
-    /* 0x6 */ s16 timer1;
-    /* 0x8 */ s16 timer2;
-    /* 0xA */ s16 timer3;
+    /* 0x6 */ union {
+        Vec3s eye; // position of the camera while exiting a spiral staircase
+        struct {
+            s16 timer1; // timer while camera is fixed in front of the door
+            s16 timer2; // timer while camera is behind the door looking at player
+            s16 timer3; // timer while camera turns around to face forward
+        };
+    };
 } DoorParams; // size = 0xC
 
 typedef struct Unique3ReadOnlyData {
@@ -1526,6 +1534,42 @@ typedef struct Special9 {
     { fov, CAM_DATA_FOV }, \
     { interfaceField, CAM_DATA_INTERFACE_FIELD }
 
+/*================================
+ *   Camera_Special8() Data
+ *================================
+ */
+
+#define CAM_FUNCDATA_SPEC8(yOffset, eyeStepScale, posStepScale, fov, spiralDoorCsLength, interfaceFlags) \
+    { yOffset,            CAM_DATA_Y_OFFSET }, \
+    { eyeStepScale,       CAM_DATA_YAW_UPDATE_RATE_TARGET }, \
+    { posStepScale,       CAM_DATA_XZ_UPDATE_RATE_TARGET }, \
+    { fov,                CAM_DATA_FOV }, \
+    { spiralDoorCsLength, CAM_DATA_MIN_MAX_DIST_FACTOR }, \
+    { interfaceFlags, CAM_DATA_INTERFACE_FIELD }
+
+typedef struct {
+    /* 0x00 */ f32 yOffset;
+    /* 0x04 */ f32 eyeStepScale;
+    /* 0x08 */ f32 posStepScale;
+    /* 0x0C */ f32 fov;
+    /* 0x10 */ s16 spiralDoorCsLength;
+    /* 0x12 */ s16 interfaceField;
+} Special8ReadOnlyData; // size = 0x14
+
+typedef struct {
+    /* 0x0 */ Vec3f eye;
+    /* 0xC */ s16 spiralDoorCsFrame; // 1/5th of the length of the cutscene
+    /* 0xE */ s16 fov;
+} Special8ReadWriteData; // size = 0x10
+
+typedef struct {
+    /* 0x00 */ Special8ReadOnlyData roData;
+    /* 0x14 */ Special8ReadWriteData rwData;
+} Special8; // size = 0x24
+
+#define SPECIAL8_FLAG_0 (1 << 0)
+#define SPECIAL8_FLAG_3 (1 << 3)
+
 typedef union CamParamData {
     Normal1 norm1;
     Normal2 norm2;
@@ -1566,6 +1610,7 @@ typedef union CamParamData {
         /* 0xC */ union {
             Unique0 uniq0;
             Unique3 uniq3;
+            Special8 spec8;
             Special9 spec9;
         };
     };

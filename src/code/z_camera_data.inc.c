@@ -187,6 +187,8 @@ char sCameraSettingNames[][12] = {
     "TEPPEN     ", // CAM_SET_DIRECTED_YAW
     "CIRCLE7    ", // CAM_SET_PIVOT_FROM_SIDE
     "NORMAL4    ", // CAM_SET_NORMAL4
+    "SCENE0     ", // CAM_SET_SCENE0
+    "SPIRAL_DOOR", // CAM_SET_SPIRAL_DOOR
 };
 
 char sCameraModeNames[][12] = {
@@ -1476,6 +1478,20 @@ CameraModeValue sSetNormal4ModeTalkData[] = {
                                            KEEPON3_FLAG_7 | KEEPON3_FLAG_5)),
 };
 
+/*=====================================================================
+ *                   Custom Data: SCENE0 Setting
+ *=====================================================================
+ */
+
+CameraModeValue sSetScene0ModeNormalData[] = { CAM_FUNCDATA_UNIQ2(-40, 20, 60, CAM_INTERFACE_FIELD(CAM_LETTERBOX_NONE, CAM_HUD_VISIBILITY_ALL, UNIQUE2_FLAG_5 | UNIQUE2_FLAG_4 | UNIQUE2_FLAG_1)) };
+
+/*=====================================================================
+ *                   Custom Data: SPIRAL_DOOR Setting
+ *=====================================================================
+ */
+
+CameraModeValue sSetSpiralDoorModeNormalData[] = { CAM_FUNCDATA_SPEC8(-40, 50, 80, 60, 10, CAM_INTERFACE_FIELD(CAM_LETTERBOX_NONE, CAM_HUD_VISIBILITY_ALL, SPECIAL8_FLAG_0)) };
+
 /**
  * =====================================================================
  *    CAMERA SETTINGS: USAGE OF FUNCTIONS AND DATA FOR SPECIFIC MODES
@@ -2391,6 +2407,14 @@ CameraMode sCamSetNormal4Modes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SUBJ3, sSetNormal0ModeZAimDataMirror),        // CAM_MODE_Z_AIM_MIRROR
 };
 
+CameraMode sCamSetScene0Modes[] = {
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_UNIQ2, sSetScene0ModeNormalData), // CAM_MODE_NORMAL
+};
+
+CameraMode sCamSetSpiralDoorModes[] = {
+    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC8, sSetSpiralDoorModeNormalData), // CAM_MODE_NORMAL
+};
+
 CameraSetting sCameraSettings[] = {
     { { 0x00000000 }, NULL },                             // CAM_SET_NONE
     { { 0x053FFFFF }, sCamSetNormal0Modes },              // CAM_SET_NORMAL0
@@ -2458,6 +2482,8 @@ CameraSetting sCameraSettings[] = {
     { { 0x053FFFFF }, sCamSetDirectedYawModes },          // CAM_SET_DIRECTED_YAW
     { { 0xC5000ECD }, sCamSetPivotFromSideModes },        // CAM_SET_PIVOT_FROM_SIDE
     { { 0x053FFFFF }, sCamSetNormal4Modes },              // CAM_SET_NORMAL4
+    { { 0x00000001 }, sCamSetScene0Modes },               // CAM_SET_SCENE0
+    { { 0x00000001 }, sCamSetSpiralDoorModes },           // CAM_SET_SPIRAL_DOOR
 };
 
 s32 Camera_Normal0(Camera* camera);

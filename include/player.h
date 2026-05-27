@@ -272,7 +272,9 @@ typedef enum PlayerDoorType {
     /*  0 */ PLAYER_DOORTYPE_NONE,
     /*  1 */ PLAYER_DOORTYPE_HANDLE,
     /*  2 */ PLAYER_DOORTYPE_SLIDING,
-    /*  3 */ PLAYER_DOORTYPE_FAKE
+    /*  3 */ PLAYER_DOORTYPE_FAKE,
+    /*  4 */ PLAYER_DOORTYPE_STAIRCASE,
+    /*  5 */ PLAYER_DOORTYPE_PROXIMITY
 } PlayerDoorType;
 
 typedef struct PlayerFaceIndices {
@@ -998,6 +1000,7 @@ typedef struct Player {
     /* 0x0A87 */ u8 unk_A87;
     /* 0x0A88 */ Vec3f unk_A88; // previous body part 0 position
     /* 0x0A94 */ u8 shieldDamage;
+    /* 0x0A95 */ s8 doorNext; // used with spiral staircase
 } Player; // size = 0xA98
 
 // z_player_lib.c

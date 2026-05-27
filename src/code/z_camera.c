@@ -29,6 +29,8 @@
 #pragma increment_block_number "gc-eu:128 gc-eu-mq:128 gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128" \
                                "ique-cn:64 ntsc-1.0:128 ntsc-1.1:128 ntsc-1.2:128 pal-1.0:128 pal-1.1:128"
 
+void func_80057FC4(Camera* camera);
+
 s16 Camera_RequestSettingImpl(Camera* camera, s16 requestedSetting, s16 flags);
 s32 Camera_RequestModeImpl(Camera* camera, s16 requestedMode, u8 forceModeChange);
 s32 Camera_UpdateWater(Camera* camera);
@@ -4911,7 +4913,10 @@ s32 Camera_Unique2(Camera* camera) {
         }
     }
 
-    Camera_BGCheck(camera, at, eye);
+    if (!(roData->interfaceField & UNIQUE2_FLAG_5)) {
+        Camera_BGCheck(camera, at, eye);
+    }
+
     camera->dist = OLib_Vec3fDist(at, eye);
     camera->roll = 0;
     camera->fov = Camera_LERPCeilF(roData->fovTarget, camera->fov, 0.2f, 0.1f);
@@ -7290,8 +7295,93 @@ s32 Camera_Special6(Camera* camera) {
     return true;
 }
 
+/**
+ * Exiting a spiral staircase cutscene.
+ * Camera remains fixed at given position, and tracks player for the duration of the cutscene
+ */
 s32 Camera_Special8(Camera* camera) {
-    return Camera_Noop(camera);
+    Vec3f* at = &camera->at;
+    Vec3f* eyeNext = &camera->eyeNext;
+    PosRot* playerPosRot = &camera->playerPosRot;
+    Vec3f atTarget;
+    Vec3f posOffsetTarget;
+    f32 yNormal;
+    f32 playerYOffset = Player_GetHeight(camera->player);
+    DoorParams* doorParams = &camera->paramData.doorParams;
+    Special8ReadOnlyData* roData = &camera->paramData.spec8.roData;
+    Special8ReadWriteData* rwData = &camera->paramData.spec8.rwData;
+
+    Camera_UnsetStateFlag(camera, CAM_STATE_CAM_FUNC_FINISH);
+    yNormal = (0.8f - ((68.0f / playerYOffset) * -0.2f));
+
+    if (!RELOAD_PARAMS(camera)) { }
+    else {
+        CameraModeValue* values = sCameraSettings[camera->setting].cameraModes[camera->mode].values;
+
+        // Initialize data
+        roData->yOffset = GET_NEXT_SCALED_RO_DATA(values) * playerYOffset * yNormal;
+        roData->eyeStepScale = GET_NEXT_SCALED_RO_DATA(values);
+        roData->posStepScale = GET_NEXT_SCALED_RO_DATA(values);
+        roData->fov = GET_NEXT_RO_DATA(values);
+        roData->spiralDoorCsLength = GET_NEXT_RO_DATA(values) * 5;
+        roData->interfaceField = GET_NEXT_RO_DATA(values);
+        rwData->fov = roData->fov * 100.0f;
+        rwData->spiralDoorCsFrame = 0;
+        Camera_UnsetStateFlag(camera, CAM_STATE_CHECK_BG | CAM_STATE_CHECK_WATER);
+        rwData->eye.x = doorParams->eye.x;
+        rwData->eye.y = doorParams->eye.y;
+        rwData->eye.z = doorParams->eye.z;
+    }
+
+    // Check if cutscene is still playing
+    if (rwData->spiralDoorCsFrame < roData->spiralDoorCsLength) {
+        rwData->spiralDoorCsFrame++;
+        sCameraInterfaceField = roData->interfaceField;
+        posOffsetTarget.x = 0.0f;
+        posOffsetTarget.y = roData->yOffset + playerYOffset;
+        posOffsetTarget.z = 0.0f;
+        Camera_LERPCeilVec3f(&posOffsetTarget, &camera->playerToAtOffset, roData->posStepScale, roData->posStepScale, 0.1f);
+
+        // Camera follows player as they exit the stairwell
+        atTarget.x = playerPosRot->pos.x + camera->playerToAtOffset.x;
+        atTarget.y = playerPosRot->pos.y + camera->playerToAtOffset.y;
+        atTarget.z = playerPosRot->pos.z + camera->playerToAtOffset.z;
+        if (camera->animState == 0) {
+            camera->animState++;
+            if (!(roData->interfaceField & SPECIAL8_FLAG_0)) {
+                camera->eyeNext = rwData->eye;
+                camera->at = atTarget;
+            }
+        }
+
+        // Update at to look at player
+        Camera_LERPCeilVec3f(&atTarget, at, roData->posStepScale, roData->posStepScale, 10.0f);
+
+        // Move camera position &rwData->eye and remain there for the entire cutscen
+        Camera_LERPCeilVec3f(&rwData->eye, eyeNext, roData->eyeStepScale, roData->eyeStepScale, 0.1f);
+        camera->eye = *eyeNext;
+        camera->dist = OLib_Vec3fDist(at, &camera->eye);
+        camera->roll = 0;
+        camera->xzSpeed = 0.0f;
+        camera->fov = CAM_DATA_SCALED(rwData->fov);
+        camera->atLERPStepScale = Camera_ClampLERPScale(camera, 1.0f);
+        camera->playerToAtOffset.x = camera->at.x - playerPosRot->pos.x;
+        camera->playerToAtOffset.y = camera->at.y - playerPosRot->pos.y;
+        camera->playerToAtOffset.z = camera->at.z - playerPosRot->pos.z;
+    } else {
+        // Cutscene is finished
+        Camera_SetStateFlag(camera, CAM_STATE_BLOCK_BG | CAM_STATE_CAM_FUNC_FINISH);
+        sCameraInterfaceField = CAM_INTERFACE_FIELD(CAM_LETTERBOX_NONE, CAM_HUD_VISIBILITY_ALL, 0);
+
+        // Wait for user input to move to the next camera update function
+        if ((camera->xzSpeed > 0.001f) || CAMERA_CHECK_BTN(&D_8015BD7C->state.input[0], BTN_A) || CAMERA_CHECK_BTN(&D_8015BD7C->state.input[0], BTN_B) || CAMERA_CHECK_BTN(&D_8015BD7C->state.input[0], BTN_CUP) || CAMERA_CHECK_BTN(&D_8015BD7C->state.input[0], BTN_CDOWN) || CAMERA_CHECK_BTN(&D_8015BD7C->state.input[0], BTN_CLEFT) ||
+             CAMERA_CHECK_BTN(&D_8015BD7C->state.input[0], BTN_CRIGHT) || CAMERA_CHECK_BTN(&D_8015BD7C->state.input[0], BTN_Z) || CAMERA_CHECK_BTN(&D_8015BD7C->state.input[0], BTN_L) || CAMERA_CHECK_BTN(&D_8015BD7C->state.input[0], BTN_R) || (roData->interfaceField & SPECIAL8_FLAG_3)) {
+            func_80057FC4(camera);
+            Camera_SetStateFlag(camera, CAM_STATE_CHECK_WATER | CAM_STATE_CHECK_WATER);
+            Camera_UnsetStateFlag(camera, CAM_STATE_BLOCK_BG);
+        }
+    }
+    return true;
 }
 
 s32 Camera_Special9(Camera* camera) {
@@ -8817,6 +8907,8 @@ s32 Camera_ChangeDoorCam(Camera* camera, Actor* doorActor, s16 bgCamIndex, f32 a
     if (bgCamIndex == -1) {
         Camera_RequestSetting(camera, CAM_SET_DOORC);
         PRINTF(".... change default door camera (set %d)\n", CAM_SET_DOORC);
+    } else if (bgCamIndex == -2) {
+        Camera_RequestSetting(camera, CAM_SET_SPIRAL_DOOR);
     } else {
         s32 setting = Camera_GetBgCamSetting(camera, bgCamIndex);
 

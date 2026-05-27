@@ -12,8 +12,8 @@ SceneCmd woodfall_temple_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_1RoomShapeCullable_0002C0),
-    SCENE_CMD_OBJECT_LIST(16, woodfall_temple_room_1ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(35, woodfall_temple_room_1ActorEntry_00006C),
+    SCENE_CMD_OBJECT_LIST(15, woodfall_temple_room_1ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(31, woodfall_temple_room_1ActorEntry_00006C),
     SCENE_CMD_END(),
 };
 
@@ -33,14 +33,9 @@ s16 woodfall_temple_room_1ObjectList_000040[] = {
     OBJECT_DEKUBABA,
     OBJECT_KIBAKO2,
     OBJECT_FR,
-    OBJECT_BG_TELEPORTER,
 };
 
 ActorEntry woodfall_temple_room_1ActorEntry_00006C[] = {
-    { ACTOR_DOOR_SPIRAL,     {  570, -1185, -720 }, {    0,       0,      0 }, 0x0080 },
-    { ACTOR_BG_TELEPORTER,   {  600, -1185, -680 }, {    6,       0, 0x010A }, 0x0600 },
-    { ACTOR_BG_TELEPORTER,   {  570, -1185, -680 }, {    6,       0, 0x010A }, 0x0600 },
-    { ACTOR_BG_TELEPORTER,   {  540, -1185, -680 }, {    6,       0, 0x010A }, 0x0600 },
     { ACTOR_BG_LADDER,       {  570, -1485, -120 }, {    0,  0xC000,      0 }, 0x0902 }, // Appears on switch: 0x09
     { ACTOR_BG_LADDER,       {  570, -1485,  120 }, {    0,  0xC000,      0 }, 0x0902 }, // Appears on switch: 0x09
     { ACTOR_EN_KAREBABA,     { -165, -1188,  645 }, {    0,  0x3C00,      0 }, 0x0001 },
