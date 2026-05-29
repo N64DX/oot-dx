@@ -21,10 +21,11 @@ extern bool showAltScalesSlot;
 
 #define AGE_REQ_ADULT LINK_AGE_ADULT
 #define AGE_REQ_CHILD LINK_AGE_CHILD
+#define AGE_REQ_CQ   8
 #define AGE_REQ_NONE 9
 
 #define CHECK_AGE_REQ_SLOT(slot) \
-    ((gSlotAgeReqs[slot] == AGE_REQ_NONE) || gSlotAgeReqs[slot] == ((void)0, gSaveContext.save.linkAge) || IS_CHILD_QUEST_AS_CHILD)
+    ((gSlotAgeReqs[slot] == AGE_REQ_NONE) || gSlotAgeReqs[slot] == ((void)0, gSaveContext.save.linkAge) || IS_CHILD_QUEST_AS_CHILD || (gSlotAgeReqs[slot] == AGE_REQ_CQ && !IS_CHILD_QUEST && LINK_IS_ADULT))
 
 #define CHECK_AGE_REQ_EQUIP(y, x) \
     (((gEquipAgeReqs[y][x] == AGE_REQ_NONE) || (gEquipAgeReqs[y][x] == ((void)0, gSaveContext.save.linkAge)) || IS_CHILD_QUEST_AS_CHILD) && !(SHIELD_DURABILITY && y == 1 && x == 3 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken))
@@ -269,10 +270,10 @@ void KaleidoScope_UpdateDungeonMap(struct PlayState* play);
 void PauseMapMark_Draw(struct PlayState* play);
 
 u8 KaleidoScope_GetNextMask(void);
+u8 KaleidoScope_GetNextBow(void);
 void KaleidoScope_UpdateTradeEquips(struct PlayState* play, u8 item, u8 slot);
 void KaleidoScope_HandleSwitchMask(struct PlayState* play, PauseContext* pauseCtx, Input* input);
-void KaleidoScope_HandleSwitchFeather(struct PlayState* play, PauseContext* pauseCtx, Input* input);
-void KaleidoScope_HandleSwitchFairysSword(struct PlayState* play, PauseContext* pauseCtx, Input* input);
+void KaleidoScope_HandleSwitchBow(struct PlayState* play, PauseContext* pauseCtx, Input* input);
 void KaleidoScope_DrawSwapItemIcons(struct PlayState* play, ItemID currItem, ItemID nextItem, u16 alpha);
 
 #endif

@@ -110,13 +110,13 @@ typedef struct Inventory {
 
 typedef union ObtainedItems {
     struct {
-        u8 magicBeans           : 1;
-        u8 feather              : 2;
+        u8 fireArrow            : 1;
+        u8 iceArrow             : 1;
+        u8 lightArrow           : 1;
         u8 amuletOfEnergy       : 1;
-        u8 hammer               : 1;
-        u8 fairysSword          : 1;
         u8 masterSword          : 1;
         u8 mirrorShieldIsBroken : 1;
+        u8 unk                  : 2;
     };
     u8 items;
 } ObtainedItems; // size = 0x1
@@ -567,18 +567,12 @@ typedef enum LinkAge {
 #define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SHIELD       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (HAS_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) )
 
-#define SET_MAGIC_BEANS       (gSaveContext.save.info.obtainedItems.magicBeans = 1)
-#define HAS_MAGIC_BEANS       (gSaveContext.save.info.obtainedItems.magicBeans)
-#define SET_ROCS_FEATHER      (gSaveContext.save.info.obtainedItems.feather = 1)
-#define HAS_ROCS_FEATHER      (gSaveContext.save.info.obtainedItems.feather > 0)
-#define SET_GOLDEN_FEATHER    (gSaveContext.save.info.obtainedItems.feather = 2)
-#define HAS_GOLDEN_FEATHER    (gSaveContext.save.info.obtainedItems.feather > 1)
+#define HAS_ROCS_FEATHER      (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ROCS_FEATHER || HAS_GOLDEN_FEATHER)
+#define HAS_GOLDEN_FEATHER    (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_GOLDEN_FEATHER)
+#define HAS_FAIRYS_SWORD      (INV_CONTENT(ITEM_ARROW_ICE)  == ITEM_SWORD_FAIRYS)
+
 #define SET_AMULET_OF_ENERGY  (gSaveContext.save.info.obtainedItems.amuletOfEnergy = 1)
 #define HAS_AMULET_OF_ENERGY  (gSaveContext.save.info.obtainedItems.amuletOfEnergy)
-#define SET_HAMMER            (gSaveContext.save.info.obtainedItems.hammer = 1)
-#define HAS_HAMMER            (gSaveContext.save.info.obtainedItems.hammer)
-#define SET_FAIRYS_SWORD      (gSaveContext.save.info.obtainedItems.fairysSword = 1)
-#define HAS_FAIRYS_SWORD      (gSaveContext.save.info.obtainedItems.fairysSword)
 #define SET_MASTER_SWORD      (gSaveContext.save.info.obtainedItems.masterSword = 1)
 #define HAS_MASTER_SWORD      (gSaveContext.save.info.obtainedItems.masterSword)
 

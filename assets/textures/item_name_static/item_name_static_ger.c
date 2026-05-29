@@ -282,16 +282,16 @@ u64 gHoverBootsItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 #include "build/pal-1.0/assets/textures/item_name_static/gHoverBootsItemNameGERTex.ia4.inc.c"
 };
 
-u64 gBulletBag30ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag30ItemNameGERTex.ia4.inc.c"
+u64 gGreatFairysSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGreatFairysSwordItemNameGERTex.ia4.inc.c"
 };
 
-u64 gBulletBag40ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag40ItemNameGERTex.ia4.inc.c"
+u64 gRocsFeatherItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gRocsFeatherItemNameGERTex.ia4.inc.c"
 };
 
-u64 gBulletBag50ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag50ItemNameGERTex.ia4.inc.c"
+u64 gGoldenFeatherItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGoldenFeatherItemNameGERTex.ia4.inc.c"
 };
 
 u64 gQuiver30ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -358,16 +358,16 @@ u64 gHerosBowItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIG
 #include "assets/textures/item_name_static/gHerosBowItemNameGERTex.ia4.inc.c"
 };
 
-u64 gGreatFairysSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gGreatFairysSwordItemNameGERTex.ia4.inc.c"
+u64 gBulletBag30ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag30ItemNameGERTex.ia4.inc.c"
 };
 
-u64 gRocsFeatherItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gRocsFeatherItemNameGERTex.ia4.inc.c"
+u64 gBulletBag40ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag40ItemNameGERTex.ia4.inc.c"
 };
 
-u64 gGoldenFeatherItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gGoldenFeatherItemNameGERTex.ia4.inc.c"
+u64 gBulletBag50ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag50ItemNameGERTex.ia4.inc.c"
 };
 
 u64 gHerosSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

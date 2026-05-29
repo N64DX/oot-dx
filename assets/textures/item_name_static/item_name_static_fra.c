@@ -282,16 +282,16 @@ u64 gHoverBootsItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 #include "build/pal-1.0/assets/textures/item_name_static/gHoverBootsItemNameFRATex.ia4.inc.c"
 };
 
-u64 gBulletBag30ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag30ItemNameFRATex.ia4.inc.c"
+u64 gGreatFairysSwordItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGreatFairysSwordItemNameFRATex.ia4.inc.c"
 };
 
-u64 gBulletBag40ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag40ItemNameFRATex.ia4.inc.c"
+u64 gRocsFeatherItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gRocsFeatherItemNameFRATex.ia4.inc.c"
 };
 
-u64 gBulletBag50ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag50ItemNameFRATex.ia4.inc.c"
+u64 gGoldenFeatherItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGoldenFeatherItemNameFRATex.ia4.inc.c"
 };
 
 u64 gQuiver30ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -358,16 +358,16 @@ u64 gHerosBowItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIG
 #include "assets/textures/item_name_static/gHerosBowItemNameFRATex.ia4.inc.c"
 };
 
-u64 gGreatFairysSwordItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gGreatFairysSwordItemNameFRATex.ia4.inc.c"
+u64 gBulletBag30ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag30ItemNameFRATex.ia4.inc.c"
 };
 
-u64 gRocsFeatherItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gRocsFeatherItemNameFRATex.ia4.inc.c"
+u64 gBulletBag40ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag40ItemNameFRATex.ia4.inc.c"
 };
 
-u64 gGoldenFeatherItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gGoldenFeatherItemNameFRATex.ia4.inc.c"
+u64 gBulletBag50ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag50ItemNameFRATex.ia4.inc.c"
 };
 
 u64 gHerosSwordItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

@@ -282,16 +282,16 @@ u64 gHoverBootsItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 #include "assets/textures/item_name_static/gHoverBootsItemNameENGTex.ia4.inc.c"
 };
 
-u64 gBulletBag30ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gBulletBag30ItemNameENGTex.ia4.inc.c"
+u64 gGreatFairysSwordItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGreatFairysSwordItemNameENGTex.ia4.inc.c"
 };
 
-u64 gBulletBag40ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gBulletBag40ItemNameENGTex.ia4.inc.c"
+u64 gRocsFeatherItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gRocsFeatherItemNameENGTex.ia4.inc.c"
 };
 
-u64 gBulletBag50ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gBulletBag50ItemNameENGTex.ia4.inc.c"
+u64 gGoldenFeatherItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGoldenFeatherItemNameENGTex.ia4.inc.c"
 };
 
 u64 gQuiver30ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -358,16 +358,16 @@ u64 gHerosBowItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIG
 #include "assets/textures/item_name_static/gHerosBowItemNameENGTex.ia4.inc.c"
 };
 
-u64 gGreatFairysSwordItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gGreatFairysSwordItemNameENGTex.ia4.inc.c"
+u64 gBulletBag30ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBulletBag30ItemNameENGTex.ia4.inc.c"
 };
 
-u64 gRocsFeatherItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gRocsFeatherItemNameENGTex.ia4.inc.c"
+u64 gBulletBag40ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBulletBag40ItemNameENGTex.ia4.inc.c"
 };
 
-u64 gGoldenFeatherItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gGoldenFeatherItemNameENGTex.ia4.inc.c"
+u64 gBulletBag50ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBulletBag50ItemNameENGTex.ia4.inc.c"
 };
 
 u64 gHerosSwordItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

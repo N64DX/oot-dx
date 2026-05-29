@@ -405,12 +405,11 @@ void Sram_InitDebugSave(void) {
     if (IS_CHILD_QUEST) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE] = ITEM_GOLDEN_FEATHER;
+        gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE] = ITEM_SWORD_FAIRYS;
+        gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] = ITEM_NONE;
         SET_HEROS_SWORD;
         SET_HEROS_SHIELD;
-        SET_MAGIC_BEANS;
-        SET_ROCS_FEATHER;
-        SET_HAMMER;
-        SET_FAIRYS_SWORD;
     }
 
     gSaveContext.save.info.horseData.sceneId = SCENE_HYRULE_FIELD;
@@ -713,11 +712,6 @@ void Sram_OpenSave(SramContext* sramCtx) {
     for (i=0; i<4; i++)
         if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, i) && (gSaveContext.save.info.shields[i].durability == 0 || gSaveContext.save.info.shields[i].durability>= Player_GetMaxShieldDurability(i+1)) && ( (i == 3 && !gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) || i != 3) )
             gSaveContext.save.info.shields[i].durability = Player_GetMaxShieldDurability(i+1);
-
-    if (INV_CONTENT(ITEM_MAGIC_BEAN) == ITEM_MAGIC_BEAN)
-        SET_MAGIC_BEANS;
-    if (INV_CONTENT(ITEM_HAMMER) == ITEM_HAMMER)
-        SET_HAMMER;
 
     // Cheating
     if (DAMAGE_TAKEN == 7 || MONSTER_HP == 7 || ELITE_HP == 7 || BOSS_HP == 7 || DEBUG_MODE || DEBUG_FEATURES)
