@@ -5,7 +5,7 @@
  * Authors: Curse of Moonlight
  */
 
-#include "z_En_Spider.h"
+#include "z_en_spider.h"
 
 #include "libc64/qrand.h"
 #include "array_count.h"
