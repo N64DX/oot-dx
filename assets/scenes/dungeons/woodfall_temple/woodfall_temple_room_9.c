@@ -12,8 +12,8 @@ SceneCmd woodfall_temple_room_9[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_9RoomShapeCullable_0001B0),
-    SCENE_CMD_OBJECT_LIST(16, woodfall_temple_room_9ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(24, woodfall_temple_room_9ActorEntry_00006C),
+    SCENE_CMD_OBJECT_LIST(15, woodfall_temple_room_9ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(20, woodfall_temple_room_9ActorEntry_00006C),
     SCENE_CMD_END(),
 };
 
@@ -33,14 +33,9 @@ s16 woodfall_temple_room_9ObjectList_000040[] = {
     OBJECT_DEKUBABA,
     OBJECT_KIBAKO2,
     OBJECT_FR,
-    OBJECT_BG_TELEPORTER,
 };
 
 ActorEntry woodfall_temple_room_9ActorEntry_00006C[] = {
-    { ACTOR_DOOR_SPIRAL,   { -1065,  0, -960 }, {    0, 0,      0 }, 0x0000 },
-    { ACTOR_BG_TELEPORTER, { -1100,  0, -920 }, {    4, 0, 0x0103 }, 0x0600 },
-    { ACTOR_BG_TELEPORTER, { -1060,  0, -920 }, {    4, 0, 0x0103 }, 0x0600 },
-    { ACTOR_BG_TELEPORTER, { -1020,  0, -920 }, {    4, 0, 0x0103 }, 0x0600 },
     { ACTOR_ELF_MSG,       { -1065,  0, -600 }, { 0x1E, 0,      0 }, 0x0D09 }, // Sets switch: 0x0D
     { ACTOR_EN_MKK,        { -1095,  0, -285 }, {    0, 0,      0 }, 0xFF00 },
     { ACTOR_EN_MKK,        {  -975,  0, -120 }, {    0, 0,      0 }, 0xFF00 },

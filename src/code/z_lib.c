@@ -630,3 +630,14 @@ void Sfx_PlaySfxCentered2(u16 sfxId) {
 void Sfx_PlaySfxAtPos(Vec3f* projectedPos, u16 sfxId) {
     SFX_PLAY_AT_POS(projectedPos, sfxId);
 }
+
+void Lib_Vec3f_TranslateAndRotateY(Vec3f* translation, s16 rotAngle, Vec3f* src, Vec3f* dst) {
+    f32 cos;
+    f32 sin;
+
+    cos = Math_CosS(rotAngle);
+    sin = Math_SinS(rotAngle);
+    dst->x = translation->x + (src->x * cos + src->z * sin);
+    dst->y = translation->y + src->y;
+    dst->z = translation->z + (src->z * cos - src->x * sin);
+}

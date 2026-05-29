@@ -13,7 +13,7 @@
 SceneCmd woodfall_temple_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(3, NATURE_ID_NONE, NA_BGM_WOODFALL_TEMPLE),
     SCENE_CMD_ROOM_LIST(13, woodfall_temple_sceneRoomList0x000218),
-    SCENE_CMD_TRANSITION_ACTOR_LIST(17, woodfall_temple_sceneTransitionActorList_0000C8),
+    SCENE_CMD_TRANSITION_ACTOR_LIST(21, woodfall_temple_sceneTransitionActorList_0000C8),
     SCENE_CMD_COL_HEADER(&woodfall_temple_sceneCollisionHeader_012458),
     SCENE_CMD_SPAWN_LIST(woodfall_temple_sceneEntranceList0x000280),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_DUNGEON, OBJECT_GAMEPLAY_DANGEON_KEEP),
@@ -62,6 +62,10 @@ TransitionActorEntry woodfall_temple_sceneTransitionActorList_0000C8[] = {
     { 10, 255, 1,  255, ACTOR_EN_HOLL,         60,  -595,   120, 0x0000, 0x017F }, // 14
     { 10, 255, 1,  255, ACTOR_EN_HOLL,        300,  -595,   240, 0x0000, 0x017F }, // 15
     { 10, 255, 1,  255, ACTOR_EN_HOLL,        -60,  -595,   420, 0x0000, 0x017F }, // 16
+    { 1,  255, 1,  255, ACTOR_DOOR_SPIRAL,    570, -1185,  -720, 0x0000, 0x50BF }, // 17
+    { 3,  255, 3,  255, ACTOR_DOOR_SPIRAL,  -1110, -1185,  -960, 0x0000, 0x4CBF }, // 18
+    { 9,  255, 9,  255, ACTOR_DOOR_SPIRAL,  -1065,     0,  -960, 0x0000, 0x483F }, // 19
+    { 10, 255, 10, 255, ACTOR_DOOR_SPIRAL,    570,    60,  -720, 0x0000, 0x443F }, // 20
 };
 
 RomFile woodfall_temple_sceneRoomList0x000218[] = {
