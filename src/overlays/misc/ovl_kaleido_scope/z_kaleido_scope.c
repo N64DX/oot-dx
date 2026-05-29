@@ -1028,9 +1028,9 @@ char gItemAgeReqs[] = {
     AGE_REQ_CHILD, // ITEM_SWORD_FAIRYS,
     AGE_REQ_CHILD, // ITEM_ROCS_FEATHER,
     AGE_REQ_CHILD, // ITEM_GOLDEN_FEATHER,
-    AGE_REQ_ADULT, // ITEM_QUIVER_30
-    AGE_REQ_ADULT, // ITEM_QUIVER_40
-    AGE_REQ_ADULT, // ITEM_QUIVER_50
+    AGE_REQ_CHILD, // ITEM_SHRINE_KEY,
+    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
+    AGE_REQ_CHILD, // ITEM_SHIELD_HEROS
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_20
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_30
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_40
@@ -1047,6 +1047,10 @@ char gItemAgeReqs[] = {
     AGE_REQ_CHILD, // ITEM_BULLET_BAG_30
     AGE_REQ_CHILD, // ITEM_BULLET_BAG_40
     AGE_REQ_CHILD, // ITEM_BULLET_BAG_50
+    AGE_REQ_ADULT, // ITEM_QUIVER_30
+    AGE_REQ_ADULT, // ITEM_QUIVER_40
+    AGE_REQ_ADULT, // ITEM_QUIVER_50
+    AGE_REQ_CHILD, // ITEM_AMULET_OF_ENERGY
 };
 
 u8 gAreaGsFlags[] = {
@@ -2322,6 +2326,8 @@ void KaleidoScope_DrawUIOverlay(PlayState* play) {
 
 static bool lastItem[4];
 
+#define ITEM_LABEL_LANGUAGE_OFFSET 130
+
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
     u16 texIndex;
@@ -2400,17 +2406,17 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                 PRINTF("zoom_name=%d\n", pauseCtx->namedItem);
 
                 if (gSaveContext.language) { // != LANGUAGE_JPN for NTSC versions, LANGUAGE_ENG for PAL versions
-                    texIndex += ITEM_SMALL_KEY;
+                    texIndex += ITEM_LABEL_LANGUAGE_OFFSET;
                 }
 
 #if OOT_PAL || OOT_NTSC_N64
                 if (gSaveContext.language == LANGUAGE_FRA) {
-                    texIndex += ITEM_SMALL_KEY;
+                    texIndex += ITEM_LABEL_LANGUAGE_OFFSET;
                 }
 #endif
 #if OOT_NTSC_N64
                 if (gSaveContext.language == LANGUAGE_JPN)
-                    texIndex += ITEM_SMALL_KEY * 2;
+                    texIndex += ITEM_LABEL_LANGUAGE_OFFSET * 2;
 #endif
 
                 PRINTF("J_N=%d  point=%d\n", gSaveContext.language, texIndex);

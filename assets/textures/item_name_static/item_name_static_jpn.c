@@ -294,16 +294,16 @@ u64 gGoldenFeatherItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX
 #include "assets/textures/item_name_static/gGoldenFeatherItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gQuiver30ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gQuiver30ItemNameJPNTex.ia4.inc.c"
+u64 gShrineKeyItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gShrineKeyItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gQuiver40ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gQuiver40ItemNameJPNTex.ia4.inc.c"
+u64 gHerosSwordItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gQuiver50ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gQuiver50ItemNameJPNTex.ia4.inc.c"
+u64 gHerosShieldItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosShieldItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gBombBag20ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -370,12 +370,16 @@ u64 gBulletBag50ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "assets/textures/item_name_static/gBulletBag50ItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameJPNTex.ia4.inc.c"
+u64 gQuiver30ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gQuiver30ItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gHerosShieldItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosShieldItemNameJPNTex.ia4.inc.c"
+u64 gQuiver40ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gQuiver40ItemNameJPNTex.ia4.inc.c"
+};
+
+u64 gQuiver50ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gQuiver50ItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gAmuletOfEnergyItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

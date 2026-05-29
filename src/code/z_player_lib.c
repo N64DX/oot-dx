@@ -164,6 +164,7 @@ u8 sActionModelGroups[PLAYER_IA_MAX] = {
     PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_MASTER
     PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_KOKIRI
     PLAYER_MODELGROUP_BGS,              // PLAYER_IA_SWORD_BIGGORON
+    PLAYER_MODELGROUP_SWORD_FAIRYS,     // PLAYER_IA_SWORD_FAIRYS
     PLAYER_MODELGROUP_10,               // PLAYER_IA_DEKU_STICK
     PLAYER_MODELGROUP_HAMMER,           // PLAYER_IA_HAMMER
     PLAYER_MODELGROUP_BOW,              // PLAYER_IA_BOW
@@ -225,7 +226,6 @@ u8 sActionModelGroups[PLAYER_IA_MAX] = {
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_MASK_GERUDO
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_MASK_TRUTH
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_LENS_OF_TRUTH
-    PLAYER_MODELGROUP_SWORD_FAIRYS,     // PLAYER_IA_SWORD_FAIRYS
 };
 
 typedef struct EnvHazardTextTriggerEntry {
@@ -901,9 +901,7 @@ int func_8008F128(Player* this) {
 s32 Player_ActionToMeleeWeapon(s32 itemAction) {
     s32 meleeWeapon = itemAction - PLAYER_IA_FISHING_POLE;
 
-    if (itemAction == PLAYER_IA_SWORD_FAIRYS) {
-        return 6;
-    } if ((meleeWeapon > 0) && (meleeWeapon < 6)) {
+    if ((meleeWeapon > 0) && (meleeWeapon < 7)) {
         return meleeWeapon;
     } else {
         return 0;
@@ -915,7 +913,7 @@ s32 Player_GetMeleeWeaponHeld(Player* this) {
 }
 
 s32 Player_HoldsTwoHandedWeapon(Player* this) {
-    if ((this->heldItemAction >= PLAYER_IA_SWORD_BIGGORON && this->heldItemAction <= PLAYER_IA_HAMMER) || this->heldItemAction == PLAYER_IA_SWORD_FAIRYS) {
+    if ((this->heldItemAction >= PLAYER_IA_SWORD_BIGGORON && this->heldItemAction <= PLAYER_IA_HAMMER)) {
         return (LINK_IS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) ? 0 : 1;
     } else {
         return 0;
@@ -1716,9 +1714,9 @@ f32 sMeleeWeaponLengths[] = {
     4000.0f, // Master Sword
     3000.0f, // Kokiri Sword
     5500.0f, // Biggoron's Sword
+    5500.0f, // Great Fairy's Sword
     0.0f,    // Deku Stick
     2500.0f, // Hammer
-    5500.0f, // Great Fairy's Sword
 };
 
 Gfx* sBottleDLists[] = { gLinkAdultBottleDL, gLinkChildBottleDL, gLinkYoungBottleDL };

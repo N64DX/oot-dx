@@ -294,16 +294,16 @@ u64 gGoldenFeatherItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX
 #include "assets/textures/item_name_static/gGoldenFeatherItemNameGERTex.ia4.inc.c"
 };
 
-u64 gQuiver30ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gQuiver30ItemNameGERTex.ia4.inc.c"
+u64 gShrineKeyItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gShrineKeyItemNameGERTex.ia4.inc.c"
 };
 
-u64 gQuiver40ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gQuiver40ItemNameGERTex.ia4.inc.c"
+u64 gHerosSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameGERTex.ia4.inc.c"
 };
 
-u64 gQuiver50ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gQuiver50ItemNameGERTex.ia4.inc.c"
+u64 gHerosShieldItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosShieldItemNameGERTex.ia4.inc.c"
 };
 
 u64 gBombBag20ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -370,12 +370,16 @@ u64 gBulletBag50ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "build/pal-1.0/assets/textures/item_name_static/gBulletBag50ItemNameGERTex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameGERTex.ia4.inc.c"
+u64 gQuiver30ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gQuiver30ItemNameGERTex.ia4.inc.c"
 };
 
-u64 gHerosShieldItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosShieldItemNameGERTex.ia4.inc.c"
+u64 gQuiver40ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gQuiver40ItemNameGERTex.ia4.inc.c"
+};
+
+u64 gQuiver50ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gQuiver50ItemNameGERTex.ia4.inc.c"
 };
 
 u64 gAmuletOfEnergyItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

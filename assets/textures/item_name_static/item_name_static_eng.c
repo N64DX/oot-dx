@@ -294,16 +294,16 @@ u64 gGoldenFeatherItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX
 #include "assets/textures/item_name_static/gGoldenFeatherItemNameENGTex.ia4.inc.c"
 };
 
-u64 gQuiver30ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gQuiver30ItemNameENGTex.ia4.inc.c"
+u64 gShrineKeyItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gShrineKeyItemNameENGTex.ia4.inc.c"
 };
 
-u64 gQuiver40ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gQuiver40ItemNameENGTex.ia4.inc.c"
+u64 gHerosSwordItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameENGTex.ia4.inc.c"
 };
 
-u64 gQuiver50ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gQuiver50ItemNameENGTex.ia4.inc.c"
+u64 gHerosShieldItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosShieldItemNameENGTex.ia4.inc.c"
 };
 
 u64 gBombBag20ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -370,12 +370,16 @@ u64 gBulletBag50ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "assets/textures/item_name_static/gBulletBag50ItemNameENGTex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameENGTex.ia4.inc.c"
+u64 gQuiver30ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gQuiver30ItemNameENGTex.ia4.inc.c"
 };
 
-u64 gHerosShieldItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosShieldItemNameENGTex.ia4.inc.c"
+u64 gQuiver40ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gQuiver40ItemNameENGTex.ia4.inc.c"
+};
+
+u64 gQuiver50ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gQuiver50ItemNameENGTex.ia4.inc.c"
 };
 
 u64 gAmuletOfEnergyItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
