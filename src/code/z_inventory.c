@@ -166,9 +166,9 @@ void* gItemIcons[] = {
     gItemIconGreatFairysSwordTex,  // ITEM_SWORD_FAIRYS
     gItemIconRocsFeatherTex,       // ITEM_ROCS_FEATHER
     gItemIconGoldenFeatherTex,     // ITEM_GOLDEN_FEATHER
-    gItemIconQuiver30Tex,          // ITEM_QUIVER_30
-    gItemIconQuiver40Tex,          // ITEM_QUIVER_40
-    gItemIconQuiver50Tex,          // ITEM_QUIVER_50
+    gItemIconRoomKeyTex,           // ITEM_SHRINE_KEY
+    gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
+    gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
     gItemIconBombBag20Tex,         // ITEM_BOMB_BAG_20
     gItemIconBombBag30Tex,         // ITEM_BOMB_BAG_30
     gItemIconBombBag40Tex,         // ITEM_BOMB_BAG_40
@@ -185,8 +185,9 @@ void* gItemIcons[] = {
     gItemIconBulletBag30Tex,       // ITEM_BULLET_BAG_30
     gItemIconBulletBag40Tex,       // ITEM_BULLET_BAG_40
     gItemIconBulletBag50Tex,       // ITEM_BULLET_BAG_50
-    gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
-    gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
+    gItemIconQuiver30Tex,          // ITEM_QUIVER_30
+    gItemIconQuiver40Tex,          // ITEM_QUIVER_40
+    gItemIconQuiver50Tex,          // ITEM_QUIVER_50
     gItemIconAmuletOfEnergyTex,    // ITEM_AMULET_OF_ENERGY
     gItemIconLandTitleDeedTex,     // ITEM_PERFECT_BLOCK_UPGRADE
     gItemIconGiantsWalletTex,      // ITEM_MASTER_WALLET

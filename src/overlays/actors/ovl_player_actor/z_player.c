@@ -1463,9 +1463,9 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
     PLAYER_IA_NONE,                // ITEM_ROCS_FEATHER
     PLAYER_IA_NONE,                // ITEM_GOLDEN_FEATHER
-    PLAYER_IA_NONE,                // ITEM_QUIVER_30,
-    PLAYER_IA_NONE,                // ITEM_QUIVER_40,
-    PLAYER_IA_NONE,                // ITEM_QUIVER_50,
+    PLAYER_IA_SHRINE_KEY,          // ITEM_SHRINE_KEY,
+    PLAYER_IA_NONE,                // ITEM_SWORD_HEROS,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS,
     PLAYER_IA_NONE,                // ITEM_BOMB_BAG_20,
     PLAYER_IA_NONE,                // ITEM_BOMB_BAG_30,
     PLAYER_IA_NONE,                // ITEM_BOMB_BAG_40,
@@ -1488,6 +1488,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_MASTER
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_KOKIRI
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_BIGGORON
+    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_FAIRYS
     func_8083485C,                 // PLAYER_IA_DEKU_STICK
     func_8083485C,                 // PLAYER_IA_HAMMER
     func_8083501C,                 // PLAYER_IA_BOW
@@ -1549,7 +1550,6 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     func_8083485C,                 // PLAYER_IA_MASK_GERUDO
     func_8083485C,                 // PLAYER_IA_MASK_TRUTH
     func_8083485C,                 // PLAYER_IA_LENS_OF_TRUTH
-    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_FAIRYS
 };
 
 static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
@@ -1559,6 +1559,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_MASTER
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_KOKIRI
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_BIGGORON
+    Player_InitDefaultIA,        // PLAYER_IA_SWORD_FAIRYS
     Player_InitDekuStickIA,      // PLAYER_IA_DEKU_STICK
     Player_InitHammerIA,         // PLAYER_IA_HAMMER
     Player_InitBowOrSlingshotIA, // PLAYER_IA_BOW
@@ -1620,7 +1621,6 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_MASK_GERUDO
     Player_InitDefaultIA,        // PLAYER_IA_MASK_TRUTH
     Player_InitDefaultIA,        // PLAYER_IA_LENS_OF_TRUTH
-    Player_InitDefaultIA,        // PLAYER_IA_SWORD_FAIRYS
 };
 
 typedef enum ItemChangeType {
@@ -3162,7 +3162,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
     }
 
     if (!(this->stateFlags1 & (PLAYER_STATE1_CARRYING_ACTOR | PLAYER_STATE1_29)) && !func_8008F128(this)) {
-        if (this->itemAction >= PLAYER_IA_FISHING_POLE && this->itemAction != PLAYER_IA_SWORD_FAIRYS) {
+        if (this->itemAction >= PLAYER_IA_FISHING_POLE) {
             if (!Player_ItemIsInUse(this, B_BTN_ITEM) && !Player_ItemIsInUse(this, C_BTN_ITEM(0)) &&
                 !Player_ItemIsInUse(this, C_BTN_ITEM(1)) && !Player_ItemIsInUse(this, C_BTN_ITEM(2)) &&
                 !Player_ItemIsInUse(this, Interface_GetItemFromDpad(0)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(1)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(2)) && !Player_ItemIsInUse(this, Interface_GetItemFromDpad(3)) ) {
@@ -4119,7 +4119,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
              ((itemAction == PLAYER_IA_HOOKSHOT) || (itemAction == PLAYER_IA_LONGSHOT))) ||
              ((this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && itemAction >= PLAYER_IA_MASK_KEATON && itemAction <= PLAYER_IA_MASK_TRUTH)) {
 
-            if (!(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && itemAction >= PLAYER_IA_BOTTLE && itemAction <= PLAYER_IA_ZELDAS_LETTER && FIX_USEFUL_GLITCHES)
+            if (!(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && itemAction >= PLAYER_IA_BOTTLE && itemAction < PLAYER_IA_ZELDAS_LETTER && FIX_USEFUL_GLITCHES)
                 return;
 
             if ((play->bombchuBowlingStatus == 0) &&
@@ -4161,7 +4161,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
                 } else {
                     Sfx_PlaySfxCentered(NA_SE_SY_ERROR);
                 }
-            } else if (itemAction >= PLAYER_IA_MASK_KEATON && itemAction != PLAYER_IA_SWORD_FAIRYS) {
+            } else if (itemAction >= PLAYER_IA_MASK_KEATON) {
                 // Handle wearable masks
                 if (this->currentMask != PLAYER_MASK_NONE) {
                     this->currentMask = PLAYER_MASK_NONE;
@@ -4172,7 +4172,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
 
                 func_808328EC(this, NA_SE_PL_CHANGE_ARMS);
             } else if (((itemAction >= PLAYER_IA_OCARINA_FAIRY) && (itemAction <= PLAYER_IA_OCARINA_OF_TIME)) ||
-                       (itemAction >= PLAYER_IA_BOTTLE_FISH && itemAction != PLAYER_IA_SWORD_FAIRYS)) {
+                       (itemAction >= PLAYER_IA_BOTTLE_FISH)) {
                 // Handle "cutscene items"
                 if (!Player_CheckHostileLockOn(this) ||
                     ((itemAction >= PLAYER_IA_BOTTLE_POTION_RED) && (itemAction <= PLAYER_IA_BOTTLE_FAIRY))) {
@@ -5134,7 +5134,7 @@ void func_80837918(Player* this, s32 quadIndex, u32 dmgFlags) {
 
 static u32 D_80854488[][2] = {
     { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT },
-    { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT },
+    { DMG_SLASH_GIANT, DMG_JUMP_GIANT },   { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP },
 };
 
 void func_80837948(PlayState* play, Player* this, s32 arg2) {

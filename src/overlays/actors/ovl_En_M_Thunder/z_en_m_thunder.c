@@ -70,8 +70,8 @@ static ColliderCylinderInit sCylinderInit = {
     { 200, 200, 0, { 0, 0, 0 } },
 };
 
-static u32 sSpinAttackDmgFlags[] = { DMG_SPIN_MASTER, DMG_SPIN_KOKIRI, DMG_SPIN_GIANT, DMG_DEKU_STICK,  DMG_HAMMER_SWING, DMG_SPIN_GIANT };
-static u32 sJumpAttackDmgFlags[] = { DMG_JUMP_MASTER, DMG_JUMP_KOKIRI, DMG_JUMP_GIANT, DMG_JUMP_MASTER, DMG_HAMMER_JUMP,  DMG_JUMP_GIANT };
+static u32 sSpinAttackDmgFlags[] = { DMG_SPIN_MASTER, DMG_SPIN_KOKIRI, DMG_SPIN_GIANT, DMG_SPIN_GIANT };
+static u32 sJumpAttackDmgFlags[] = { DMG_JUMP_MASTER, DMG_JUMP_KOKIRI, DMG_JUMP_GIANT, DMG_JUMP_GIANT };
 static u8  sThunderDustType[]    = { 2, 3, 4, 4, 4, 4 };
 
 typedef enum {
@@ -135,7 +135,7 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
             case 2: // Gilded Sword / Giant's Knife
                 this->targetScale = IS_CHILD_QUEST_AS_CHILD ? 3 : 4;
                 break;
-            case 5: // Great Fairy's Sword
+            case 3: // Great Fairy's Sword
                 this->targetScale = 4;
                 break;
         }
@@ -257,7 +257,7 @@ void EnMThunder_ChargingSpinAttack(EnMThunder* this, PlayState* play) {
                 case 2: // Gilded Sword / Giant's Knife
                     this->targetScale = IS_CHILD_QUEST_AS_CHILD ? 3 : 4;
                     break;
-                case 5: // Great Fairy's Sword
+                case 3: // Great Fairy's Sword
                     this->targetScale = 4;
                     break;
             }
@@ -525,7 +525,7 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
                 Matrix_RotateX(16384.0f, MTXMODE_APPLY);
             }
             break;
-        case 5: // Great Fairy's Sword
+        case 3: // Great Fairy's Sword
             Matrix_Translate(200.0f, 350.0f, 0.0f, MTXMODE_APPLY);
             Matrix_Scale(-1.8f, -1.4f, -0.7f, MTXMODE_APPLY);
             Matrix_RotateX(16384.0f, MTXMODE_APPLY);

@@ -1786,24 +1786,24 @@ static bool IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_
 static bool IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
 static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
 
-#define LAST_ITEM_ICON ITEM_AMULET_OF_ENERGY
+#define LAST_ITEM_ICON ITEM_PERFECT_BLOCK_UPGRADE
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_HYLIAN,             IsHerosShield, ITEM_SHIELD_HEROS   },
     { ITEM_SWORD_KOKIRI ,             IsHerosSword,  ITEM_SWORD_HEROS    },
-    { ITEM_SHIELD_MIRROR,             IsChildQuest,  LAST_ITEM_ICON + 2  },
-    { ITEM_SWORD_MASTER,              IsRazorSword,  LAST_ITEM_ICON + 3  },
-    { ITEM_SWORD_BIGGORON,            IsSilverSword, LAST_ITEM_ICON + 4  },
-    { ITEM_SWORD_BIGGORON,            IsGildedSword, LAST_ITEM_ICON + 5  },
-    { ITEM_HOOKSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 6  },
-    { ITEM_LONGSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 7  },
-    { ITEM_BOW,                       IsChildQuest,  LAST_ITEM_ICON + 8  },
-    { ITEM_BOW_FIRE,                  IsChildQuest,  LAST_ITEM_ICON + 9  },
-    { ITEM_BOW_ICE,                   IsChildQuest,  LAST_ITEM_ICON + 10 },
-    { ITEM_BOW_LIGHT,                 IsChildQuest,  LAST_ITEM_ICON + 11 },
-    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,  LAST_ITEM_ICON + 12 },
-    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,  LAST_ITEM_ICON + 13 },
-    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,  LAST_ITEM_ICON + 14 },
-    { ITEM_STONE_OF_AGONY,            NULL,          LAST_ITEM_ICON + 15 },
+    { ITEM_SHIELD_MIRROR,             IsChildQuest,  LAST_ITEM_ICON + 1  },
+    { ITEM_SWORD_MASTER,              IsRazorSword,  LAST_ITEM_ICON + 2  },
+    { ITEM_SWORD_BIGGORON,            IsSilverSword, LAST_ITEM_ICON + 3  },
+    { ITEM_SWORD_BIGGORON,            IsGildedSword, LAST_ITEM_ICON + 4  },
+    { ITEM_HOOKSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 5  },
+    { ITEM_LONGSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 6  },
+    { ITEM_BOW,                       IsChildQuest,  LAST_ITEM_ICON + 7  },
+    { ITEM_BOW_FIRE,                  IsChildQuest,  LAST_ITEM_ICON + 8  },
+    { ITEM_BOW_ICE,                   IsChildQuest,  LAST_ITEM_ICON + 9  },
+    { ITEM_BOW_LIGHT,                 IsChildQuest,  LAST_ITEM_ICON + 10 },
+    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,  LAST_ITEM_ICON + 11 },
+    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,  LAST_ITEM_ICON + 12 },
+    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,  LAST_ITEM_ICON + 13 },
+    { ITEM_STONE_OF_AGONY,            NULL,          LAST_ITEM_ICON + 14 },
 };
 #undef LAST_ITEM_ICON
 
