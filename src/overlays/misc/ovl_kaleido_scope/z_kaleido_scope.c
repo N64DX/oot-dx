@@ -2345,8 +2345,7 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                 if (LINK_IS_ADULT || (IS_CHILD_QUEST && CUR_UPG_VALUE(UPG_QUIVER) > 0))
                     texIndex = ITEM_BULLET_BAG_30 + CUR_UPG_VALUE(UPG_BULLET_BAG) - 1;
                 else texIndex = ITEM_QUIVER_30 + CUR_UPG_VALUE(UPG_QUIVER) - 1;
-            } else if (showAltScalesSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 12)
-                texIndex = ITEM_AMULET_OF_ENERGY;
+            }
         }
 
         if (IS_CHILD_QUEST_AS_CHILD) {
