@@ -1463,7 +1463,7 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
     PLAYER_IA_NONE,                // ITEM_ROCS_FEATHER
     PLAYER_IA_NONE,                // ITEM_GOLDEN_FEATHER
-    PLAYER_IA_SHRINE_KEY,          // ITEM_SHRINE_KEY,
+    PLAYER_IA_NONE,                // ITEM_SHRINE_KEY,
     PLAYER_IA_NONE,                // ITEM_SWORD_HEROS,
     PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS,
     PLAYER_IA_NONE,                // ITEM_BOMB_BAG_20,
@@ -1541,6 +1541,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     func_8083485C,                 // PLAYER_IA_FROG
     func_8083485C,                 // PLAYER_IA_EYEDROPS
     func_8083485C,                 // PLAYER_IA_CLAIM_CHECK
+    func_8083485C,                 // PLAYER_IA_SHRINE_KEY
     func_8083485C,                 // PLAYER_IA_MASK_KEATON
     func_8083485C,                 // PLAYER_IA_MASK_SKULL
     func_8083485C,                 // PLAYER_IA_MASK_SPOOKY
@@ -1612,6 +1613,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_FROG
     Player_InitDefaultIA,        // PLAYER_IA_EYEDROPS
     Player_InitDefaultIA,        // PLAYER_IA_CLAIM_CHECK
+    Player_InitDefaultIA,        // PLAYER_IA_SHRINE_KEY
     Player_InitDefaultIA,        // PLAYER_IA_MASK_KEATON
     Player_InitDefaultIA,        // PLAYER_IA_MASK_SKULL
     Player_InitDefaultIA,        // PLAYER_IA_MASK_SPOOKY
