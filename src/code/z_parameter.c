@@ -2321,15 +2321,15 @@ u8 Item_Give(PlayState* play, u8 item) {
             AMMO(ITEM_MAGIC_BEAN)++;
         }
         return ITEM_NONE;
-    } else if (ITEM_ARROW_FIRE) {
+    } else if (item == ITEM_ARROW_FIRE) {
         gSaveContext.save.info.obtainedItems.fireArrow = 1;
         if (IS_CHILD_QUEST)
             return ITEM_NONE;
-    } else if (ITEM_ARROW_ICE) {
+    } else if (item == ITEM_ARROW_ICE) {
         gSaveContext.save.info.obtainedItems.iceArrow = 1;
         if (IS_CHILD_QUEST)
             return ITEM_NONE;
-    } else if (ITEM_ARROW_LIGHT) {
+    } else if (item == ITEM_ARROW_LIGHT) {
         gSaveContext.save.info.obtainedItems.lightArrow = 1;
         if (IS_CHILD_QUEST)
             return ITEM_NONE;
