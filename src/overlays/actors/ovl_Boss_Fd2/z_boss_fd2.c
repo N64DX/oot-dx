@@ -218,7 +218,7 @@ void BossFd2_Destroy(Actor* thisx, PlayState* play) {
 void BossFd2_SetupEmerge(BossFd2* this, PlayState* play) {
     BossFd* bossFd = (BossFd*)this->actor.parent;
     s16 temp_rand;
-    s8 health;
+    s16 health;
 
     PRINTF("UP INIT 1\n");
     Animation_PlayOnce(&this->skelAnime, &gHoleVolvagiaEmergeAnim);
@@ -259,7 +259,7 @@ void BossFd2_Emerge(BossFd2* this, PlayState* play) {
             PRINTF("PL time %x \n", player);
             PRINTF("MT time %x \n", bossFd);
             if ((this->timers[0] == 0) && (player->actor.world.pos.y > 70.0f)) {
-                s8 health;
+                s16 health;
 
                 PRINTF("UP 1.6 \n");
                 bossFd->faceExposed = 0;
@@ -329,7 +329,7 @@ void BossFd2_Emerge(BossFd2* this, PlayState* play) {
 
 void BossFd2_SetupIdle(BossFd2* this, PlayState* play) {
     BossFd* bossFd = (BossFd*)this->actor.parent;
-    s8 health;
+    s16 health;
     s16 idleTime;
 
     PRINTF("UP INIT 1\n");
@@ -396,7 +396,7 @@ void BossFd2_Burrow(BossFd2* this, PlayState* play) {
     } else {
         Math_ApproachF(&this->actor.world.pos.y, -100.0f, 1.0f, 10.0f);
         if (this->timers[0] == 0) {
-            if ((this->work[FD2_HOLE_COUNTER] >= 3) && ((s8)bossFd->actor.colChkInfo.health < Actor_EnemyHealthMultiply(24, BOSS_HP))) {
+            if ((this->work[FD2_HOLE_COUNTER] >= 3) && ((s16)bossFd->actor.colChkInfo.health < Actor_EnemyHealthMultiply(24, BOSS_HP))) {
                 this->work[FD2_HOLE_COUNTER] = 0;
                 this->actionFunc = BossFd2_Wait;
                 bossFd->handoffSignal = FD2_SIGNAL_FLY;
@@ -902,7 +902,7 @@ void BossFd2_CollisionCheck(BossFd2* this, PlayState* play) {
             PRINTF_RST();
             PRINTF("hp %d\n", bossFd->actor.colChkInfo.health);
 
-            if ((s8)bossFd->actor.colChkInfo.health <= 0) {
+            if ((s16)bossFd->actor.colChkInfo.health <= 0) {
                 bossFd->actor.colChkInfo.health = 0;
                 BossFd2_SetupDeath(this, play);
                 this->work[FD2_DAMAGE_FLASH_TIMER] = 10;
