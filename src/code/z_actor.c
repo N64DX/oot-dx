@@ -512,7 +512,7 @@ void Attention_Draw(Attention* attention, PlayState* play) {
                         Matrix_Pop();
                     }
                     
-                    if (actor != NULL && (play->actorCtx.lensActive || player->currentMask == PLAYER_MASK_TRUTH))
+                    if (actor != NULL && (play->actorCtx.lensActive || player->currentMask == PLAYER_MASK_TRUTH) && (actor->category == ACTORCAT_ENEMY || actor->category == ACTORCAT_BOSS))
                         TargetHealth_Draw(play, &projectedPos, actor->colChkInfo.health, actor->maxHealth);
                 }
 
