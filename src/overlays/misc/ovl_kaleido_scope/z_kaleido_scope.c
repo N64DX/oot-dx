@@ -2326,7 +2326,7 @@ void KaleidoScope_DrawUIOverlay(PlayState* play) {
 
 static bool lastItem[4];
 
-#define ITEM_LABEL_LANGUAGE_OFFSET 130
+#define ITEM_LABEL_LANGUAGE_OFFSET ITEM_DUNGEON_MAP
 
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
