@@ -489,7 +489,8 @@ typedef enum LinkAge {
 
 #define SCENE_LAYER_GOTO(play, layer) (IS_CHILD_QUEST_AS_CHILD && !IS_CUTSCENE_LAYER ? !IS_DAY : layer)
 
-#define DPAD_BUTTON(button)      (gSaveContext.save.info.playerData.dpadItems[gSaveContext.save.linkAge + gSaveContext.save.info.playerData.dpadDualSet * 2][button])
+#define DPAD_BUTTON(button)             (gSaveContext.save.info.playerData.dpadItems[gSaveContext.save.linkAge + gSaveContext.save.info.playerData.dpadDualSet * 2][button])
+#define DPAD_BUTTON_SET(button, set)    (gSaveContext.save.info.playerData.dpadItems[gSaveContext.save.linkAge + set                                           * 2][button])
 
 // Usage in Map Select suggests that `gSaveContext.save.cutsceneIndex` was,
 // at one point in development, a variable related to the time.

@@ -1816,34 +1816,40 @@ u8 Interface_LoadItemIconChildQuest(u8 item) {
 }
 
 u8 Interface_GetItemFromDpad(u8 button) {
+    bool set = gSaveContext.save.info.playerData.dpadDualSet;
+    if (button > 4)  {
+        button -= 4;
+        set = !set;
+    }
+
     if (!IS_CHILD_QUEST) {
-        if (DPAD_BUTTON(button) == SLOT_ARROW_FIRE)
+        if (DPAD_BUTTON_SET(button, set) == SLOT_ARROW_FIRE)
             return (gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE]  == ITEM_ARROW_FIRE)  ? ITEM_BOW_FIRE  : ITEM_NONE;
-        else if (DPAD_BUTTON(button) == SLOT_ARROW_ICE)
+        else if (DPAD_BUTTON_SET(button, set) == SLOT_ARROW_ICE)
             return (gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE]   == ITEM_ARROW_ICE)   ? ITEM_BOW_ICE   : ITEM_NONE;
-        else if (DPAD_BUTTON(button) == SLOT_ARROW_LIGHT)
+        else if (DPAD_BUTTON_SET(button, set) == SLOT_ARROW_LIGHT)
             return( gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] == ITEM_ARROW_LIGHT) ? ITEM_BOW_LIGHT : ITEM_NONE;
     }
 
-    if (DPAD_BUTTON(button) == SLOT_TRADE_CHILD)
+    if (DPAD_BUTTON_SET(button, set) == SLOT_TRADE_CHILD)
         return (gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] >= ITEM_WEIRD_EGG && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] <= ITEM_MASK_TRUTH) ? gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] : ITEM_NONE;
-    else if (DPAD_BUTTON(button) < SLOT_SWORDS)
-        return gSaveContext.save.info.inventory.items[DPAD_BUTTON(button)];
-    else if (DPAD_BUTTON(button) == SLOT_SWORDS)
+    else if (DPAD_BUTTON_SET(button, set) < SLOT_SWORDS)
+        return gSaveContext.save.info.inventory.items[DPAD_BUTTON_SET(button, set)];
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_SWORDS)
         return ITEM_SWORDS;
-    else if (DPAD_BUTTON(button) == SLOT_SHIELDS)
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_SHIELDS)
         return ITEM_SHIELDS;
-    else if (DPAD_BUTTON(button) == SLOT_TUNICS)
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNICS)
         return ITEM_TUNICS;
-    else if (DPAD_BUTTON(button) == SLOT_BOOTS)
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS)
         return ITEM_BOOTS;
-    else if (DPAD_BUTTON(button) == SLOT_TUNIC_GORON && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNIC_GORON && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))
         return ITEM_TUNIC_GORON;
-    else if (DPAD_BUTTON(button) == SLOT_TUNIC_ZORA  && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNIC_ZORA  && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
         return ITEM_TUNIC_ZORA;
-    else if (DPAD_BUTTON(button) == SLOT_BOOTS_IRON  && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON))
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS_IRON  && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON))
         return ITEM_BOOTS_IRON;
-    else if (DPAD_BUTTON(button) == SLOT_BOOTS_HOVER && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS_HOVER && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
         return ITEM_BOOTS_HOVER;
     else return ITEM_NONE;
 }

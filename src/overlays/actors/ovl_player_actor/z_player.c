@@ -3156,8 +3156,9 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
 
         if (!Player_ItemIsItemAction(C_BTN_ITEM(0), maskItemAction) &&
             !Player_ItemIsItemAction(C_BTN_ITEM(1), maskItemAction) &&
-            !Player_ItemIsItemAction(C_BTN_ITEM(2), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(0), maskItemAction) &&
-            !Player_ItemIsItemAction(Interface_GetItemFromDpad(1), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(2), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(3), maskItemAction) ) {
+            !Player_ItemIsItemAction(C_BTN_ITEM(2), maskItemAction) &&
+            !Player_ItemIsItemAction(Interface_GetItemFromDpad(0), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(1), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(2), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(3), maskItemAction) &&
+            !Player_ItemIsItemAction(Interface_GetItemFromDpad(4), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(5), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(6), maskItemAction) && !Player_ItemIsItemAction(Interface_GetItemFromDpad(7), maskItemAction) ) {
             this->currentMask = PLAYER_MASK_NONE;
             SET_MASK_AGE(this->currentMask);
         }
