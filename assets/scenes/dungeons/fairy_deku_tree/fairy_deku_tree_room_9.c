@@ -31,15 +31,15 @@ s16 fairy_deku_tree_room_9ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_9ActorList0x000048[] = {
+    { ACTOR_OBJ_SWITCH,  { 1135, 1160, -1158 }, { 0, 0x2000, 0 }, 0x0400 }, // Switch: 04
+    { ACTOR_EN_ITEM00,   { 1522,  960,  -227 }, { 0,      0, 0 }, 0x2103 }, // Collectible: 21, Red Rupee
+    { ACTOR_OBJ_KIBAKO3, { 1150,  960, -1250 }, { 0, 0x2000, 0 }, 0x0242 }, // Blue: 4 (Ancient Hollow & Forbidden Woods)
     { ACTOR_EN_TP,       { 1362, 1173,  -987 }, { 0,      0, 0 }, 0xFFFE },
-    { ACTOR_OBJ_SWITCH,  { 1135, 1160, -1158 }, { 0, 0x2000, 0 }, 0x0400 },
     { ACTOR_EN_TP,       { 1131,  997,  -802 }, { 0,      0, 0 }, 0xFFFE },
     { ACTOR_EN_ST,       { 1502, 1162,   297 }, { 0,      0, 0 }, 0xFFFF },
     { ACTOR_EN_ST,       { 1508, 1162,  -298 }, { 0,      0, 0 }, 0x0009 },
     { ACTOR_EN_ST,       { 1087, 1059,   864 }, { 0,      0, 0 }, 0xFFFF },
     { ACTOR_EN_DEKUBABA, { 1407,  960,    16 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_EN_ITEM00,   { 1522,  960,  -227 }, { 0,      0, 0 }, 0x0003 },
-    { ACTOR_OBJ_KIBAKO3, { 1150,  960, -1250 }, { 0, 0x2000, 0 }, 0x0242 }, // Blue: 4 (Ancient Hollow & Forbidden Woods)
 };
 
 RoomShapeCullable fairy_deku_tree_room_9MeshHeader0x0000D0 = {

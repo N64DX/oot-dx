@@ -32,8 +32,8 @@ s16 fairy_deku_tree_room_7ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_7ActorList0x000048[] = {
-    { ACTOR_EN_BOX,  { -953, 520,  950 }, { 0, 0xE000, 0 }, 0x1825 },
-    { ACTOR_EN_TEST, { -860, 520, 1080 }, { 0, 0xE000, 0 }, 0x0003 },
+    { ACTOR_EN_BOX,  { -953, 520,  950 }, { 0x41, 0xE000, 0 }, 0x1005 }, // Chest: 05, appears on clear, Dungeon Map
+    { ACTOR_EN_TEST, { -860, 520, 1080 }, {    0, 0xE000, 0 }, 0x0003 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_7MeshHeader0x000060 = {

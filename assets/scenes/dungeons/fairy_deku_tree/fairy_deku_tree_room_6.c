@@ -32,18 +32,18 @@ s16 fairy_deku_tree_room_6ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_6ActorList0x000048[] = {
-    { ACTOR_OBJ_SWITCH,      { 1583, 160,  -248 }, { 0, 0x1555,    0 }, 0x2000 },
-    { ACTOR_OBJ_SWITCH,      { 1238, 350, -1235 }, { 0, 0xE000,    0 }, 0x1F02 },
-    { ACTOR_EN_BOX,          { 1113, 200, -1178 }, { 0, 0x5FFF, 0x1F }, 0x8843 },
-    { ACTOR_EN_DEKUBABA,     { 1392, 160,  -131 }, { 0,      0,    0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,     { 1395, 160,  -309 }, { 0,      0,    0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,     {  480, 240, -1429 }, { 0,      0,    0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,     {   72, 240, -1508 }, { 0,      0,    0 }, 0x0000 },
-    { ACTOR_EN_BOX,          {   65, 240, -1645 }, { 0, 0x7FFF,    0 }, 0x50E4 },
-    { ACTOR_EN_DEKUBABA,     {  196, 240, -1580 }, { 0,      0,    0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,     {  291, 240, -1684 }, { 0,      0,    0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,     {  420, 240, -1286 }, { 0,      0,    0 }, 0x0000 },
-    { ACTOR_BG_YDAN_MARUTA2, { 1141,  80, -1078 }, { 0, 0x905C,    0 }, 0x0020 },
+    { ACTOR_OBJ_SWITCH,      { 1583, 160,  -248 }, {    0, 0x1555,    0 }, 0x2000 }, // Switch: 20
+    { ACTOR_OBJ_SWITCH,      { 1238, 350, -1235 }, {    0, 0xE000,    0 }, 0x1F02 }, // Switch: 1F
+    { ACTOR_EN_BOX,          { 1113, 200, -1178 }, { 0x42, 0x6000, 0x1F }, 0x8003 }, // Chest: 03, checks switch: 1F, Small Key
+    { ACTOR_EN_BOX,          {   65, 240, -1645 }, {  0x7, 0x8000,    0 }, 0x5004 }, // Chest: 04, Deku Stick
+    { ACTOR_EN_DEKUBABA,     { 1392, 160,  -131 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     { 1395, 160,  -309 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     {  480, 240, -1429 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     {   72, 240, -1508 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     {  196, 240, -1580 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     {  291, 240, -1684 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,     {  420, 240, -1286 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_BG_YDAN_MARUTA2, { 1141,  80, -1078 }, {    0, 0x905C,    0 }, 0x0020 }, // Switch: 20
 };
 
 RoomShapeCullable fairy_deku_tree_room_6MeshHeader0x000100 = {

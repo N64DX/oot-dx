@@ -38,7 +38,7 @@ ActorEntry fairy_deku_tree_room_12ActorList0x000048[] = {
     { ACTOR_EN_MINIBLIN, { 600, -640,  950 }, { 0,      0, 0 }, 0x0000 },
     { ACTOR_EN_MINIBLIN, { 350, -640, 1000 }, { 0, 0x4000, 0 }, 0x0000 },
     { ACTOR_EN_MINIBLIN, {  00, -640,  900 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_OBJ_KIBAKO3, { 900, -280,  1050 }, { 0, 0x2000, 0 }, 0x0232 }, // Blue: 3 (Ancient Hollow & Forbidden Woods)
+    { ACTOR_OBJ_KIBAKO3, { 900, -280, 1050 }, { 0, 0x2000, 0 }, 0x0232 }, // Blue: 3 (Ancient Hollow & Forbidden Woods)
 };
 
 RoomShapeCullable fairy_deku_tree_room_12MeshHeader0x0000A0 = {

@@ -23,9 +23,9 @@ s16 grottos2_room_7ObjectList_000040[] = {
 };
 
 ActorEntry grottos2_room_7ActorEntry_000048[] = {
-    { ACTOR_EN_DINOFOS, { 513, 0, 1019 }, { 0,         0, 0 }, 0x0000 },
-    { ACTOR_EN_DINOFOS, { 741, 0,  858 }, { 0,         0, 0 }, 0x0000 },
-    { ACTOR_EN_BOX,     { 615, 0,  786 }, { 0x3E, 0x8000, 0 }, 0x1000 },
+    { ACTOR_EN_DINOFOS, { 513, 0, 1019 }, { 0,         0, 0 }, 0xFE00 },
+    { ACTOR_EN_DINOFOS, { 741, 0,  858 }, { 0,         0, 0 }, 0xFE00 },
+    { ACTOR_EN_BOX,     { 615, 0,  786 }, { 0x3E, 0x8000, 0 }, 0x1002 }, // Chest flag: 02, appears on room clear, Piece of Heart
 };
 
 RoomShapeCullable grottos2_room_7RoomShapeCullable_000080 = { 
