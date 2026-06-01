@@ -31,12 +31,12 @@ s16 fairy_deku_tree_room_11ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_11ActorList0x00004C[] = {
-    { ACTOR_EN_GOMA, 1431, 1400, 3, 0, 0, 0, 0x0007 },
-    { ACTOR_EN_GOMA, 1422, 1400, -73, 0, 0, 0, 0x0006 },
-    { ACTOR_EN_DEKUNUTS, 1004, 1400, -995, 0, 0, 0, 0x0000 },
-    { ACTOR_EN_DEKUNUTS, 1568, 1400, -569, 0, 0, 0, 0x0000 },
-    { ACTOR_EN_DEKUNUTS, 1298, 1400, -22, 0, 0, 0, 0x0000 },
-    { ACTOR_EN_DEKUNUTS, 1467, 1400, 462, 0, 0, 0, 0x0000 },
+    { ACTOR_EN_GOMA,     { 1431, 1400,    3 }, { 0, 0, 0 }, 0x0007 },
+    { ACTOR_EN_GOMA,     { 1422, 1400,  -73 }, { 0, 0, 0 }, 0x0006 },
+    { ACTOR_EN_DEKUNUTS, { 1004, 1400, -995 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUNUTS, { 1568, 1400, -569 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUNUTS, { 1298, 1400,  -22 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUNUTS, { 1467, 1400,  462 }, { 0, 0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_11MeshHeader0x0000B0 = {

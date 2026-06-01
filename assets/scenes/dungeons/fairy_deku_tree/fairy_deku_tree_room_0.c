@@ -36,26 +36,25 @@ s16 fairy_deku_tree_room_0ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_0ActorList0x000048[] = {
-    { ACTOR_OBJ_SWITCH,    { -784,  741,  783 }, { 0, 0x5FFF, 0 }, 0x0002 },
-    { ACTOR_OBJ_SWITCH,    { -343, 1029,  601 }, { 0, 0xE000, 0 }, 0x0202 },
-    { ACTOR_OBJ_SWITCH,    {  785, 1291,  781 }, { 0, 0xA001, 0 }, 0x0302 },
-    { ACTOR_BG_YDAN_HASI2, {  549, 1400,  549 }, { 0, 0x0FA5, 0 }, 0x001E },
-    { ACTOR_EN_DEKUBABA,   {  975,    0,  313 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,   {  205,  400,  501 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,   {  211,  520, -492 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,   { -480,  920, -231 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,   { -236, 1524, -462 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_EN_BOX,        {   25, 1680,   18 }, { 0, 0xA000, 0 }, 0x27E0 },
-    { ACTOR_EN_DEKUBABA,   { -759,    0,  232 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA,   { -948,    0,  288 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_ITEM00,     {  346,  800,  360 }, { 0,      0, 0 }, 0x0003 },
-    { ACTOR_OBJ_SWITCH,    { 1112,  971,   -4 }, { 0, 0xC000, 0 }, 0x0502 },
-    { ACTOR_EN_KO,         {   55, 1680,   50 }, { 0, 0x2000, 0 }, 0x000C },
-    { ACTOR_EN_FIREFLY,    { -185, 1980,  300 }, { 0, 0x4000, 0 }, 0x0005 },
-    { ACTOR_EN_FIREFLY,    {  185, 1980,  300 }, { 0, 0xC000, 0 }, 0x0005 },
-    { ACTOR_EN_FIREFLY,    {  -15, 1980, -200 }, { 0,      0, 0 }, 0x0005 },
-    { ACTOR_EN_FIREFLY,    {  100, 1980,  400 }, { 0, 0x8000, 0 }, 0x0005 },
-    
+    { ACTOR_OBJ_SWITCH,    { -784,  741,  783 }, {    0, 0x5FFF, 0 }, 0x0002 }, // Switch: 00
+    { ACTOR_OBJ_SWITCH,    { -343, 1029,  601 }, {    0, 0xE000, 0 }, 0x0202 }, // Switch: 02
+    { ACTOR_OBJ_SWITCH,    {  785, 1291,  781 }, {    0, 0xA001, 0 }, 0x0302 }, // Switch: 03
+    { ACTOR_OBJ_SWITCH,    { 1112,  971,   -4 }, {    0, 0xC000, 0 }, 0x0502 }, // Switch: 05
+    { ACTOR_BG_YDAN_HASI2, {  549, 1400,  549 }, {    0, 0x0FA5, 0 }, 0x001E }, // Switch: 1E
+    { ACTOR_EN_BOX,        {   25, 1680,   18 }, { 0x3F, 0xA000, 0 }, 0x2000 }, // Chest: 00, Boss Key
+    { ACTOR_EN_ITEM00,     {  346,  800,  360 }, {    0,      0, 0 }, 0x2003 }, // Collectible: 20, Red Rupee
+    { ACTOR_EN_KO,         {   55, 1680,   50 }, {    0, 0x2000, 0 }, 0x000C },
+    { ACTOR_EN_DEKUBABA,   {  975,    0,  313 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,   {  205,  400,  501 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,   {  211,  520, -492 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,   { -480,  920, -231 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,   { -236, 1524, -462 }, {    0,      0, 0 }, 0x0001 },
+    { ACTOR_EN_DEKUBABA,   { -759,    0,  232 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA,   { -948,    0,  288 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_FIREFLY,    { -185, 1980,  300 }, {    0, 0x4000, 0 }, 0x0005 },
+    { ACTOR_EN_FIREFLY,    {  185, 1980,  300 }, {    0, 0xC000, 0 }, 0x0005 },
+    { ACTOR_EN_FIREFLY,    {  -15, 1980, -200 }, {    0,      0, 0 }, 0x0005 },
+    { ACTOR_EN_FIREFLY,    {  100, 1980,  400 }, {    0, 0x8000, 0 }, 0x0005 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_0MeshHeader0x000150 = {

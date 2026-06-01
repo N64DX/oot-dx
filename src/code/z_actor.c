@@ -991,6 +991,26 @@ void Actor_SetObjectDependency(PlayState* play, Actor* actor) {
     gSegments[6] = OS_K0_TO_PHYSICAL(play->objectCtx.slots[actor->objectSlot].segment);
 }
 
+bool Actor_ExtendedDrawDistanceExempt(Actor* actor, PlayState* play) {
+    switch (actor->id) {
+        case ACTOR_DOOR_SHUTTER:
+        case ACTOR_EN_TORCH2:
+        case ACTOR_EN_BLKOBJ:
+        case ACTOR_EN_HORSE:
+        case ACTOR_EN_HORSE_GANON:
+        case ACTOR_EN_HORSE_ZELDA:
+            return true;
+
+        case ACTOR_EN_ZF:
+            if (play->sceneId == SCENE_DODONGOS_CAVERN)
+                return true;
+            return false;
+
+        default:
+            return false;
+    }
+}
+
 void Actor_Init(Actor* actor, PlayState* play) {
     Actor_SetWorldToHome(actor);
     Actor_SetShapeRotToWorld(actor);
@@ -1017,7 +1037,7 @@ void Actor_Init(Actor* actor, PlayState* play) {
         else actor->maxHealth = 0;
     }
 
-    if (EXTENDED_DRAW_DISTANCE && actor->id != ACTOR_EN_TORCH2 && actor->id != ACTOR_EN_BLKOBJ && actor->id != ACTOR_EN_HORSE && actor->id != ACTOR_EN_HORSE_GANON && actor->id != ACTOR_EN_HORSE_ZELDA && !(play->sceneId == SCENE_DODONGOS_CAVERN && actor->id == ACTOR_EN_ZF))
+    if (EXTENDED_DRAW_DISTANCE && !Actor_ExtendedDrawDistanceExempt(actor, play))
         actor->cullingVolumeDistance = actor->cullingVolumeScale = actor->cullingVolumeDownward = 32767.0f;
 }
 
@@ -4068,7 +4088,6 @@ void Actor_SetTextWithPrefix(PlayState* play, Actor* actor, s16 baseTextId) {
         case SCENE_KOKIRI_FOREST:
         case SCENE_SACRED_FOREST_MEADOW:
         case SCENE_LOST_WOODS:
-        case 112:
             prefix = 0x1000;
             break;
         case SCENE_STABLE:

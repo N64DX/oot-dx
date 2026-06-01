@@ -152,15 +152,15 @@ Path old_dodongos_cavern_scenePathway[] = {
 };
 
 BgCamInfo old_dodongos_cavern_sceneCollisionHeader0x00E38C_camDataList_00000264[] = {
-	{ CAM_SET_DUNGEON0,               0, NULL }, // Entrance cam
-	{ CAM_SET_NONE,                   0, NULL }, // "Keep current camera"
-	{ CAM_SET_BOSS_MORPHA,            0, NULL }, // Hanging wooden bridges cam
-	{ CAM_SET_NORMAL0,                0, NULL }, // Main room cam, Keese tunnel near heart cam, Lizalfos room cam, boss room upper cam
-	{ CAM_SET_NORMAL3,                0, NULL }, // Blue Dodongo room cam near door and near vine area, tunnel to stair room cam
-	{ CAM_SET_BOSS_TWINROVA_PLATFORM, 0, NULL }, // Tunnel cam
-	{ CAM_SET_DUNGEON0,               0, NULL }, // Stair room cam
-	{ CAM_SET_BOSS_BONGO,             0, NULL }, // Lizalfos room lava cam
-	{ CAM_SET_DUNGEON2,               0, NULL }, // Boss cam
+	{ CAM_SET_DUNGEON0, 0, NULL }, // Entrance cam
+	{ CAM_SET_NONE,     0, NULL }, // "Keep current camera"
+	{ CAM_SET_BRIDGE,   0, NULL }, // Hanging wooden bridges cam
+	{ CAM_SET_NORMAL0,  0, NULL }, // Main room cam, Keese tunnel near heart cam, Lizalfos room cam, boss room upper cam
+	{ CAM_SET_NORMAL3,  0, NULL }, // Blue Dodongo room cam near door and near vine area, tunnel to stair room cam
+	{ CAM_SET_TUNNEL,   0, NULL }, // Tunnel cam
+	{ CAM_SET_DUNGEON0, 0, NULL }, // Stair room cam
+	{ CAM_SET_LOOKUP,   0, NULL }, // Lizalfos room lava cam
+	{ CAM_SET_DUNGEON2, 0, NULL }, // Boss cam
 };
 
 SurfaceType old_dodongos_cavern_sceneCollisionHeader0x00E38C_polygonTypes_000002AC[] = {

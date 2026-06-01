@@ -31,11 +31,11 @@ s16 fairy_deku_tree_room_1ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_1ActorList0x000048[] = {
-    { ACTOR_EN_DEKUBABA,  {    8, 0,  -75 }, { 0, 0, 0 }, 0x0001 },
-    { ACTOR_EN_BOX,       {    7, 0,  162 }, { 0, 0, 0 }, 0x5041 },
-    { ACTOR_OBJ_SYOKUDAI, {  138, 0,   33 }, { 0, 0, 0 }, 0x1088 },
-    { ACTOR_OBJ_SYOKUDAI, { -127, 0,   33 }, { 0, 0, 0 }, 0x1088 },
-    { ACTOR_OBJ_SYOKUDAI, {   11, 0, -219 }, { 0, 0, 0 }, 0x27FF },
+    { ACTOR_EN_DEKUBABA,  {    8, 0,  -75 }, {   0, 0, 0 }, 0x0001 },
+    { ACTOR_EN_BOX,       {    7, 0,  162 }, { 0x2, 0, 0 }, 0x5001 }, // Chest: 01, Deku Nuts
+    { ACTOR_OBJ_SYOKUDAI, {  138, 0,   33 }, {   0, 0, 0 }, 0x1088 }, // Switch: 08
+    { ACTOR_OBJ_SYOKUDAI, { -127, 0,   33 }, {   0, 0, 0 }, 0x1088 }, // Switch: 08
+    { ACTOR_OBJ_SYOKUDAI, {   11, 0, -219 }, {   0, 0, 0 }, 0x27FF },
 };
 
 RoomShapeCullable fairy_deku_tree_room_1MeshHeader0x0000A0 = {

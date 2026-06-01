@@ -208,9 +208,15 @@ typedef enum CameraSettingType {
     /* 0x3F */ CAM_SET_DIRECTED_YAW, // Does not auto-update yaw, tends to keep the camera pointed at a certain yaw (used by biggoron and final spirit lowering platform) "TEPPEN"
     /* 0x40 */ CAM_SET_PIVOT_FROM_SIDE, // Fixed side view, allows rotation of camera (eg. Potion Shop, Meadow at fairy grotto) "CIRCLE7"
     /* 0x41 */ CAM_SET_NORMAL4,
-    /* 0x42 */ CAM_SET_SCENE0,
-    /* 0x43 */ CAM_SET_SPIRAL_DOOR,
-    /* 0x43 */ CAM_SET_MAX
+    /* 0x42 */ CAM_SET_LOOKUP,
+    /* 0x43 */ CAM_SET_TOWER0,
+    /* 0x44 */ CAM_SET_BRIDGE,
+    /* 0x45 */ CAM_SET_STAIRS,
+    /* 0x46 */ CAM_SET_TUNNEL,
+    /* 0x47 */ CAM_SET_SCENE0,
+    /* 0x48 */ CAM_SET_SPIRAL_DOOR,
+    /* 0x49 */ CAM_SET_DOORD,
+    /* 0x4A */ CAM_SET_MAX
 } CameraSettingType;
 
 typedef enum CameraModeType {

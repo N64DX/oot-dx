@@ -31,9 +31,9 @@ s16 fairy_deku_tree_room_5ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_5ActorList0x00004C[] = {
-    { ACTOR_EN_DEKUBABA, 13, 1320, -158, 0, 0, 0, 0x0001 },
-    { ACTOR_EN_DEKUBABA, -149, 1320, 10, 0, 0, 0, 0x0001 },
-    { ACTOR_EN_DEKUBABA, 82, 1320, 59, 0, 0, 0, 0x0001 },
+    { ACTOR_EN_DEKUBABA, {   13, 1320, -158 }, { 0, 0, 0 }, 0x0001 },
+    { ACTOR_EN_DEKUBABA, { -149, 1320,   10 }, { 0, 0, 0 }, 0x0001 },
+    { ACTOR_EN_DEKUBABA, {   82, 1320,   59 }, { 0, 0, 0 }, 0x0001 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_5MeshHeader0x000080 = {
