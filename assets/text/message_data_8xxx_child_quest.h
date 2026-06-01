@@ -27,24 +27,24 @@ UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "Tu as trouvé le " C
 
 DEFINE_MESSAGE(0x8004, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_KNIFE) QUICKTEXT_ENABLE COLOR(RED) "シルバーソード" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE COLOR(RED) "シルバーソード" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
 "名工によって鍛えられた刃は\n"
 "広い攻撃範囲と　そこそこの威力を持つ！"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_KNIFE) QUICKTEXT_ENABLE "You got the " COLOR(RED) "Silver Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "You got the " COLOR(RED) "Silver Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "This blade was forged by an\n"
 "expert smith to have a wider\n"
 "slash range with decent power!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_KNIFE) QUICKTEXT_ENABLE "Du hast das " COLOR(RED) "Silberschwert" COLOR(DEFAULT) " bekommen!" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Du hast das " COLOR(RED) "Silberschwert" COLOR(DEFAULT) " bekommen!" QUICKTEXT_DISABLE "\n"
 "Diese Klinge wurde von einem\n"
 "Meisterschmied geschmiedet und hat\n"
 "eine größere Reichweite mit guter Kraft!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_KNIFE) QUICKTEXT_ENABLE "Tu as obtenu l'" COLOR(RED) "Épée d’argent" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Tu as obtenu l'" COLOR(RED) "Épée d’argent" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
 "Cette lame a été forgée par un\n"
 "forgeron expert pour avoir une\n"
 "plus grande portée et une bonne puissance!"
@@ -53,25 +53,25 @@ UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_KNIFE) QUICKTEXT_ENABLE "Tu as obtenu l'" COLO
 
 DEFINE_MESSAGE(0x8005, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5F) QUICKTEXT_ENABLE "シルバーソードが\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "シルバーソードが\n"
 COLOR(RED) "ギルデッドソード" COLOR(DEFAULT) "に生まれ変わった！" QUICKTEXT_DISABLE "\n"
 "名工によって鍛えられた刃は\n"
 "非常に大きな力を持つ！"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5F) QUICKTEXT_ENABLE "You got the Silver Sword\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "You got the Silver Sword\n"
 "reforged into the " COLOR(RED) "Gilded Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "This blade was forged by a\n"
 "master smith for great power!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5F) QUICKTEXT_ENABLE "Du hast das Silberschwert\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Du hast das Silberschwert\n"
 "zum " COLOR(RED) "Goldschwert" COLOR(DEFAULT) " umschmieden lassen!" QUICKTEXT_DISABLE "\n"
 "Diese Klinge wurde von einem\n"
 "Meisterschmied für große Kraft geschmiedet!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(0x5F) QUICKTEXT_ENABLE "Tu as transformé l'" 
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Tu as transformé l'" 
 "Épée d'argent en " COLOR(RED) "Épée dorée" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
 "Cette lame a été forgée par un\n"
 "maître forgeron pour une grande puissance!"
