@@ -175,17 +175,18 @@ typedef enum PlayerItemAction {
     /* 0x38 */ PLAYER_IA_FROG,
     /* 0x39 */ PLAYER_IA_EYEDROPS,
     /* 0x3A */ PLAYER_IA_CLAIM_CHECK,
-    /* 0x3B */ PLAYER_IA_SHRINE_KEY,
-    /* 0x3C */ PLAYER_IA_MASK_KEATON,
-    /* 0x3D */ PLAYER_IA_MASK_SKULL,
-    /* 0x3E */ PLAYER_IA_MASK_SPOOKY,
-    /* 0x3F */ PLAYER_IA_MASK_BUNNY_HOOD,
-    /* 0x40 */ PLAYER_IA_MASK_GORON,
-    /* 0x41 */ PLAYER_IA_MASK_ZORA,
-    /* 0x42 */ PLAYER_IA_MASK_GERUDO,
-    /* 0x43 */ PLAYER_IA_MASK_TRUTH,
-    /* 0x44 */ PLAYER_IA_LENS_OF_TRUTH,
-    /* 0x45 */ PLAYER_IA_MAX
+    /* 0x3B */ PLAYER_IA_PICTOBOX,
+    /* 0x3C */ PLAYER_IA_SHRINE_KEY,
+    /* 0x3D */ PLAYER_IA_MASK_KEATON,
+    /* 0x3E */ PLAYER_IA_MASK_SKULL,
+    /* 0x3F */ PLAYER_IA_MASK_SPOOKY,
+    /* 0x40 */ PLAYER_IA_MASK_BUNNY_HOOD,
+    /* 0x41 */ PLAYER_IA_MASK_GORON,
+    /* 0x42 */ PLAYER_IA_MASK_ZORA,
+    /* 0x43 */ PLAYER_IA_MASK_GERUDO,
+    /* 0x44 */ PLAYER_IA_MASK_TRUTH,
+    /* 0x45 */ PLAYER_IA_LENS_OF_TRUTH,
+    /* 0x46 */ PLAYER_IA_MAX
 } PlayerItemAction;
 
 typedef enum PlayerLimb {

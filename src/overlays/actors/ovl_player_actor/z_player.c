@@ -851,6 +851,10 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_BOW, OBJECT_GI_HEROS_BOW, GID_HEROS_BOW, 0x8009, 0x80, CHEST_ANIM_LONG),
     // GI_GOLD_DUST
 	GET_ITEM(ITEM_BROKEN_GORONS_SWORD, OBJECT_GI_GOLD_DUST, GID_GOLD_DUST, 0x800A, 0x80, CHEST_ANIM_LONG),
+    // GI_PICTOBOX
+	GET_ITEM(ITEM_PICTOBOX, OBJECT_GI_CAMERA, GID_PICTOGRAPH_BOX, 0x901F, 0x80, CHEST_ANIM_SHORT),
+    // GI_SHRINE_KEY
+	GET_ITEM(ITEM_SHRINE_KEY, OBJECT_GI_ROOM_KEY, GID_ROOM_KEY, 0x9020, 0x80, CHEST_ANIM_SHORT),
     // GI_BOOTS_UPGRADE
 	GET_ITEM(ITEM_BOOTS_UPGRADE, OBJECT_GI_BOOTS_2, GID_BOOTS_KOKIRI, 0x901D, 0x80, CHEST_ANIM_LONG),
     // GI_PERFECT_BLOCK_UPGRADE
@@ -1463,9 +1467,9 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
     PLAYER_IA_NONE,                // ITEM_ROCS_FEATHER
     PLAYER_IA_NONE,                // ITEM_GOLDEN_FEATHER
-    PLAYER_IA_NONE,                // ITEM_SHRINE_KEY,
+    PLAYER_IA_PICTOBOX,            // ITEM_PICTOBOX,
+    PLAYER_IA_SHRINE_KEY,          // ITEM_SHRINE_KEY,
     PLAYER_IA_NONE,                // ITEM_SWORD_HEROS,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS,
     PLAYER_IA_NONE,                // ITEM_BOMB_BAG_20,
     PLAYER_IA_NONE,                // ITEM_BOMB_BAG_30,
     PLAYER_IA_NONE,                // ITEM_BOMB_BAG_40,
@@ -1541,6 +1545,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     func_8083485C,                 // PLAYER_IA_FROG
     func_8083485C,                 // PLAYER_IA_EYEDROPS
     func_8083485C,                 // PLAYER_IA_CLAIM_CHECK
+    func_8083485C,                 // PLAYER_IA_PICTOBOX
     func_8083485C,                 // PLAYER_IA_SHRINE_KEY
     func_8083485C,                 // PLAYER_IA_MASK_KEATON
     func_8083485C,                 // PLAYER_IA_MASK_SKULL
@@ -1613,6 +1618,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_FROG
     Player_InitDefaultIA,        // PLAYER_IA_EYEDROPS
     Player_InitDefaultIA,        // PLAYER_IA_CLAIM_CHECK
+    Player_InitDefaultIA,        // PLAYER_IA_PICTOBOX
     Player_InitDefaultIA,        // PLAYER_IA_SHRINE_KEY
     Player_InitDefaultIA,        // PLAYER_IA_MASK_KEATON
     Player_InitDefaultIA,        // PLAYER_IA_MASK_SKULL
@@ -6891,6 +6897,8 @@ static u8 D_80854528[] = {
     GI_EYEBALL_FROG,        // EXCH_ITEM_EYEBALL_FROG
     GI_EYE_DROPS,           // EXCH_ITEM_EYE_DROPS
     GI_CLAIM_CHECK,         // EXCH_ITEM_CLAIM_CHECK
+    GI_PICTOBOX,            // EXCH_ITEM_PICTOBOX
+    GI_SHRINE_KEY,          // EXCH_ITEM_SHRINE_KEY
     GI_MASK_SKULL,          // EXCH_ITEM_MASK_SKULL
     GI_MASK_SPOOKY,         // EXCH_ITEM_MASK_SPOOKY
     GI_MASK_KEATON,         // EXCH_ITEM_MASK_KEATON
@@ -6923,6 +6931,8 @@ static u8 D_80854528_CQ[] = {
     GI_EYEBALL_FROG,        // EXCH_ITEM_EYEBALL_FROG
     GI_EYE_DROPS,           // EXCH_ITEM_EYE_DROPS
     GI_CLAIM_CHECK,         // EXCH_ITEM_CLAIM_CHECK
+    GI_PICTOBOX,            // EXCH_ITEM_PICTOBOX
+    GI_SHRINE_KEY,          // EXCH_ITEM_SHRINE_KEY
     GI_MASK_SKULL,          // EXCH_ITEM_MASK_SKULL
     GI_MASK_SPOOKY,         // EXCH_ITEM_MASK_SPOOKY
     GI_MASK_KEATON,         // EXCH_ITEM_MASK_KEATON

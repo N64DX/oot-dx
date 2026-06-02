@@ -1109,7 +1109,8 @@ void func_80083108(PlayState* play) {
 
                 if (interfaceCtx->restrictions.tradeItems != 0) {
                     for (i = 1; i < 4; i++) {
-                        if ( (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_ZELDAS_LETTER) || (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_SOLD_OUT && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK) || gSaveContext.save.info.equips.buttonItems[i] == ITEM_MAGIC_BEAN) {
+                        if ( (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_ZELDAS_LETTER) || (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_SOLD_OUT && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK) ||
+                              gSaveContext.save.info.equips.buttonItems[i] == ITEM_MAGIC_BEAN || (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_PICTOBOX && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_SHRINE_KEY)) {
                             if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                                 sp28 = true;
                             }
@@ -1118,14 +1119,16 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if ( (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_ZELDAS_LETTER) || (Interface_GetItemFromDpad(i) >= ITEM_SOLD_OUT && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) || Interface_GetItemFromDpad(i) == ITEM_MAGIC_BEAN) {
+                        if ( (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_ZELDAS_LETTER) || (Interface_GetItemFromDpad(i) >= ITEM_SOLD_OUT && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) ||
+                              Interface_GetItemFromDpad(i) == ITEM_MAGIC_BEAN || (Interface_GetItemFromDpad(i) >= ITEM_PICTOBOX && Interface_GetItemFromDpad(i) <= ITEM_SHRINE_KEY)) {
                             if (dpadStatus[i] == BTN_ENABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_DISABLED;
                         }
                 } else if (interfaceCtx->restrictions.tradeItems == 0) {
                     for (i = 1; i < 4; i++) {
-                        if ( (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_ZELDAS_LETTER) || (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_SOLD_OUT && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK) || gSaveContext.save.info.equips.buttonItems[i] == ITEM_MAGIC_BEAN)  {
+                        if ( (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG  && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_ZELDAS_LETTER) || (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_SOLD_OUT && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK) ||
+                              gSaveContext.save.info.equips.buttonItems[i] == ITEM_MAGIC_BEAN || (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_PICTOBOX && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_SHRINE_KEY)) {
                             if (gSaveContext.buttonStatus[i] == BTN_DISABLED) {
                                 sp28 = true;
                             }
@@ -1134,7 +1137,8 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if ( (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_ZELDAS_LETTER) || (Interface_GetItemFromDpad(i) >= ITEM_SOLD_OUT && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) || Interface_GetItemFromDpad(i) == ITEM_MAGIC_BEAN) {
+                        if ( (Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_ZELDAS_LETTER) || (Interface_GetItemFromDpad(i) >= ITEM_SOLD_OUT && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) ||
+                              Interface_GetItemFromDpad(i) == ITEM_MAGIC_BEAN || (Interface_GetItemFromDpad(i) >= ITEM_PICTOBOX && Interface_GetItemFromDpad(i) <= ITEM_SHRINE_KEY)) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_ENABLED;
@@ -1354,6 +1358,7 @@ void func_80083108(PlayState* play) {
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_PICTOBOX && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_SHRINE_KEY) &&
                             !(Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i]))) {
                             if ((play->sceneId != SCENE_TREASURE_BOX_SHOP) ||
                                 (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LENS_OF_TRUTH)) {
@@ -1372,7 +1377,8 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if (Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) && !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                        if (Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) && !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG &&
+                            Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)  && !(Interface_GetItemFromDpad(i) >= ITEM_PICTOBOX && Interface_GetItemFromDpad(i) <= ITEM_SHRINE_KEY) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
                             if (play->sceneId != SCENE_TREASURE_BOX_SHOP || Interface_GetItemFromDpad(i) != ITEM_LENS_OF_TRUTH) {
                                 if (dpadStatus[i] == BTN_ENABLED)
                                     sp28 = true;
@@ -2340,18 +2346,15 @@ u8 Item_Give(PlayState* play, u8 item) {
         if (IS_CHILD_QUEST)
             return ITEM_NONE;
     } else if (item == ITEM_GOLDEN_FEATHER) {
-        INV_CONTENT(ITEM_ARROW_FIRE) = item;
+        INV_CONTENT(item) = item;
         for (i=0; i<4; i++) {
             if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_ROCS_FEATHER) {
                 gSaveContext.save.info.equips.buttonItems[i] = item;
                 Interface_LoadItemIcon1(play, i);
             }
-            if (DPAD_BUTTON(i) == SLOT_MAGIC_BEAN)
+            if (DPAD_BUTTON(i) == SLOT_FEATHER)
                 Interface_LoadItemIcon1(play, i+4);
         }
-        return ITEM_NONE;
-    } else if (item == ITEM_SWORD_FAIRYS) {
-        INV_CONTENT(ITEM_ARROW_ICE) = item;
         return ITEM_NONE;
     } else if (item == ITEM_AMULET_OF_ENERGY) {
         gSaveContext.save.info.obtainedItems.amuletOfEnergy = 1;
@@ -2481,8 +2484,7 @@ u8 Item_Give(PlayState* play, u8 item) {
                 }
             }
         }
-    } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
-
+    } else if ((item >= ITEM_WEIRD_EGG && item <= ITEM_CLAIM_CHECK) || (item >= ITEM_PICTOBOX && item <= ITEM_SHRINE_KEY)) {
         temp = INV_CONTENT(item);
         INV_CONTENT(item) = item;
 
@@ -2496,16 +2498,13 @@ u8 Item_Give(PlayState* play, u8 item) {
                         gSaveContext.save.info.equips.buttonItems[i] = ITEM_NONE;
                     }
                     for (i=0; i<4; i++)
-                        if (DPAD_BUTTON(i) == SLOT_TRADE_CHILD)
+                        if (DPAD_BUTTON(i) == SLOT(item))
                             Interface_LoadItemIcon1(play, i+4);
                     return ITEM_NONE;
                 }
             }
         }
 
-        for (i=0; i<4; i++)
-            if (DPAD_BUTTON(i) == SLOT_TRADE_CHILD)
-                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     }
 
@@ -2650,9 +2649,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if (item == ITEM_ROCS_FEATHER || item == ITEM_GOLDEN_FEATHER || item == ITEM_AMULET_OF_ENERGY || item == ITEM_SWORD_FAIRYS || item == ITEM_BOOTS_UPGRADE || item == ITEM_PERFECT_BLOCK_UPGRADE) {
-        return ITEM_NONE;
-    } else if (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) {
+    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_SHRINE_KEY) || (item >= ITEM_BOOTS_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK_UPGRADE) ) {
         return ITEM_NONE;
     }
 
@@ -2692,7 +2689,7 @@ s32 Inventory_ReplaceItem(PlayState* play, u16 oldItem, u16 newItem) {
                 }
             }
             for (i=0; i<4; i++)
-                if (Interface_GetItemFromDpad(i) == oldItem)
+                if (DPAD_BUTTON(i) == SLOT(oldItem))
                     Interface_LoadItemIcon1(play, i+4);                 
             return true;
         }

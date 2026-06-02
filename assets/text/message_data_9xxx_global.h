@@ -378,6 +378,29 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x901F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_PICTOBOX) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Pictograph Box" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Someone must have lost it!\n"
+"It looks rusty from all the water,\n"
+"but somehow still functional."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9020, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHRINE_KEY) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Shrine Key" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Bring it back to the Gorons that\n"
+"lost their key to the shrine!"
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x9201, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "勇者の盾　８０ルピー\n"

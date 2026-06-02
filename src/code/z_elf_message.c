@@ -70,6 +70,11 @@ u32 QuestHint_CheckCondition(QuestHintCmd* hintCmd) {
                 case (QUEST_HINT_CONDITION_MAGIC << 4):
                     return ((hintCmd->byte0 & 1) == 1) ==
                            (((void)0, gSaveContext.save.info.playerData.isMagicAcquired) != 0);
+
+                case (QUEST_HINT_CONDITION_LIGHT_ARROW << 5):
+                    if (IS_CHILD_QUEST)
+                        return ((hintCmd->byte0 & 1) == 1) == (((void)0, gSaveContext.save.info.obtainedItems.lightArrow) != 0);
+                    else return ((hintCmd->byte0 & 1) == 1) == (hintCmd->byte3 == INV_CONTENT(hintCmd->byte1));
             }
     }
 

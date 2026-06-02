@@ -67,6 +67,9 @@ typedef struct QuestHintCmd {
 // Check if the magic meter has been obtained
 #define QUEST_HINT_CONDITION_MAGIC         4
 
+// Check if the light arrow has been obtained
+#define QUEST_HINT_CONDITION_LIGHT_ARROW   5
+
 /*
  * Byte pack macros
  */
@@ -152,6 +155,14 @@ typedef struct QuestHintCmd {
         HINT_B1(QUEST_HINT_CONDITION_MAGIC, 0),        \
         HINT_B(textId),                                \
         HINT_B(0),                                     \
+    }
+
+#define QUEST_HINT_LIGHT_ARROW(type, slotItemId, itemId, tf, textId) \
+    {                                                                \
+        HINT_B0(type, QUEST_HINT_CONDITION_LIGHT_ARROW, tf),         \
+        HINT_B(slotItemId),                                          \
+        HINT_B(textId),                                              \
+        HINT_B(0),                                                   \
     }
 
 #endif

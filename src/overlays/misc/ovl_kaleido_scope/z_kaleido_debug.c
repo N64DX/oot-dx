@@ -213,7 +213,7 @@ static s16 sSlotItems[] = {
 static s16 sSlotCQItems[] = {
     ITEM_DEKU_STICK, ITEM_DEKU_NUT,      ITEM_BOMB,       ITEM_BOW,      ITEM_ROCS_FEATHER, ITEM_DINS_FIRE,
     ITEM_SLINGSHOT,  ITEM_OCARINA_FAIRY, ITEM_BOMBCHU,    ITEM_HOOKSHOT, ITEM_SWORD_FAIRYS, ITEM_FARORES_WIND,
-    ITEM_BOOMERANG,  ITEM_LENS_OF_TRUTH, ITEM_MAGIC_BEAN, ITEM_HAMMER,   ITEM_NONE,         ITEM_NAYRUS_LOVE,
+    ITEM_BOOMERANG,  ITEM_LENS_OF_TRUTH, ITEM_MAGIC_BEAN, ITEM_HAMMER,   ITEM_SHRINE_KEY,   ITEM_NAYRUS_LOVE,
 };
 
 void KaleidoScope_DrawInventoryEditorText(Gfx** gfxP) {
@@ -671,9 +671,9 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             AMMO(gAmmoItems[i]) = 15;
                         }
                     }
-                } else if (i == SLOT_ARROW_FIRE && IS_CHILD_QUEST) {
+                } else if (i == SLOT_FEATHER && IS_CHILD_QUEST) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
-                        Inventory_DeleteItem(ITEM_ROCS_FEATHER, SLOT(ITEM_ARROW_FIRE));
+                        Inventory_DeleteItem(ITEM_ROCS_FEATHER, SLOT(ITEM_ROCS_FEATHER));
                     } else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                         if (gSaveContext.save.info.inventory.items[i] == ITEM_NONE)
                             gSaveContext.save.info.inventory.items[i] = ITEM_ROCS_FEATHER;
@@ -683,6 +683,20 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         if (gSaveContext.save.info.inventory.items[i] == ITEM_NONE)
                             gSaveContext.save.info.inventory.items[i] = ITEM_GOLDEN_FEATHER;
                         else if (gSaveContext.save.info.inventory.items[i] > ITEM_ROCS_FEATHER && gSaveContext.save.info.inventory.items[i] <= ITEM_GOLDEN_FEATHER)
+                            gSaveContext.save.info.inventory.items[i]--;
+                    }
+                } else if (i == SLOT_QUEST && IS_CHILD_QUEST) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                        Inventory_DeleteItem(ITEM_PICTOBOX, SLOT(ITEM_PICTOBOX));
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
+                        if (gSaveContext.save.info.inventory.items[i] == ITEM_NONE)
+                            gSaveContext.save.info.inventory.items[i] = ITEM_PICTOBOX;
+                        else if (gSaveContext.save.info.inventory.items[i] >= ITEM_PICTOBOX && gSaveContext.save.info.inventory.items[i] < ITEM_SHRINE_KEY)
+                            gSaveContext.save.info.inventory.items[i]++;
+                    } else if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
+                        if (gSaveContext.save.info.inventory.items[i] == ITEM_NONE)
+                            gSaveContext.save.info.inventory.items[i] = ITEM_SHRINE_KEY;
+                        else if (gSaveContext.save.info.inventory.items[i] > ITEM_PICTOBOX && gSaveContext.save.info.inventory.items[i] <= ITEM_SHRINE_KEY)
                             gSaveContext.save.info.inventory.items[i]--;
                     }
                 } else if (i == SLOT_OCARINA) {
