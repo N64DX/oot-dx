@@ -166,6 +166,7 @@ void* gItemIcons[] = {
     gItemIconGreatFairysSwordTex,  // ITEM_SWORD_FAIRYS
     gItemIconRocsFeatherTex,       // ITEM_ROCS_FEATHER
     gItemIconGoldenFeatherTex,     // ITEM_GOLDEN_FEATHER
+    gItemIconPictoboxTex,          // ITEM_PICTOBOX
     gItemIconRoomKeyTex,           // ITEM_SHRINE_KEY
     gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
     gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
@@ -298,6 +299,26 @@ u8 gItemSlots[] = {
     SLOT_TRADE_ADULT,   // ITEM_EYEBALL_FROG
     SLOT_TRADE_ADULT,   // ITEM_EYE_DROPS
     SLOT_TRADE_ADULT,   // ITEM_CLAIM_CHECK
+    SLOT_NONE,          // ITEM_BOW_FIRE,
+    SLOT_NONE,          // ITEM_BOW_ICE,
+    SLOT_NONE,          // ITEM_BOW_LIGHT,
+    SLOT_NONE,          // ITEM_SWORD_KOKIRI,
+    SLOT_NONE,          // ITEM_SWORD_MASTER,
+    SLOT_NONE,          // ITEM_SWORD_BIGGORON,
+    SLOT_NONE,          // ITEM_SHIELD_DEKU,
+    SLOT_NONE,          // ITEM_SHIELD_HYLIAN,
+    SLOT_NONE,          // ITEM_SHIELD_MIRROR,
+    SLOT_NONE,          // ITEM_TUNIC_KOKIRI,
+    SLOT_NONE,          // ITEM_TUNIC_GORON,
+    SLOT_NONE,          // ITEM_TUNIC_ZORA,
+    SLOT_NONE,          // ITEM_BOOTS_KOKIRI,
+    SLOT_NONE,          // ITEM_BOOTS_IRON,
+    SLOT_NONE,          // ITEM_BOOTS_HOVER,
+    SLOT_SWORD_FAIRYS,  // ITEM_SWORD_FAIRYS,
+    SLOT_FEATHER,       // ITEM_ROCS_FEATHER,
+    SLOT_FEATHER,       // ITEM_GOLDEN_FEATHER,
+    SLOT_QUEST,         // ITEM_PICTOBOX,
+    SLOT_QUEST,         // ITEM_SHRINE_KEY,
 };
 
 void Inventory_ChangeEquipment(s16 equipment, u16 value) {

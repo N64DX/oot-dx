@@ -80,13 +80,17 @@ void func_808787A4(BgGjyoBridge* this, PlayState* play) {
 void BgGjyoBridge_TriggerCutscene(BgGjyoBridge* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
 
-    bool has_medallions;
-    if (IS_CHILD_QUEST)
+    bool has_medallions, has_light_arrow;
+    if (IS_CHILD_QUEST) {
         has_medallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT) && CHECK_QUEST_ITEM(QUEST_MEDALLION_LIGHT) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER);
-    else has_medallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT);
+        has_light_arrow = gSaveContext.save.info.obtainedItems.lightArrow;
+    } else {
+        has_medallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT);
+        has_light_arrow = INV_CONTENT(ITEM_ARROW_LIGHT) == ITEM_ARROW_LIGHT;
+    }
 
-    if (has_medallions &&
-        (INV_CONTENT(ITEM_ARROW_LIGHT) == ITEM_ARROW_LIGHT) && (player->actor.world.pos.x > -70.0f) &&
+    if (has_medallions && has_light_arrow &&
+        (player->actor.world.pos.x > -70.0f) &&
         (player->actor.world.pos.x < 300.0f) && (player->actor.world.pos.y > 1340.0f) &&
         (player->actor.world.pos.z > 1340.0f) && (player->actor.world.pos.z < 1662.0f) && !Play_InCsMode(play)) {
         play->csCtx.script = SEGMENTED_TO_VIRTUAL(gRainbowBridgeCs);

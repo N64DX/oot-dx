@@ -167,6 +167,20 @@ beginseg
 endseg
 
 beginseg
+    name "object_gi_camera"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_camera/object_gi_camera.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_room_key"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_room_key/object_gi_room_key.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_title_deed"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_title_deed/object_gi_title_deed.o"
