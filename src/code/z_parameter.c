@@ -1358,7 +1358,7 @@ void func_80083108(PlayState* play) {
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
-                              (gSaveContext.save.info.equips.buttonItems[i] >= ITEM_PICTOBOX && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_SHRINE_KEY) &&
+                             !(gSaveContext.save.info.equips.buttonItems[i] >= ITEM_PICTOBOX && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_SHRINE_KEY) &&
                             !(Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i]))) {
                             if ((play->sceneId != SCENE_TREASURE_BOX_SHOP) ||
                                 (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LENS_OF_TRUTH)) {
@@ -1405,7 +1405,9 @@ void func_80083108(PlayState* play) {
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
-                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK))) {
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
+                            !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_PICTOBOX) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_SHRINE_KEY))) {
                             if (gSaveContext.buttonStatus[i] == BTN_DISABLED) {
                                 sp28 = true;
                             }
@@ -1417,7 +1419,7 @@ void func_80083108(PlayState* play) {
                         if (Interface_GetItemFromDpad(i) != ITEM_DINS_FIRE     && Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT        &&   Interface_GetItemFromDpad(i) != ITEM_LONGSHOT     && Interface_GetItemFromDpad(i) != ITEM_FARORES_WIND && Interface_GetItemFromDpad(i) != ITEM_NAYRUS_LOVE &&
                             Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE)  &&
                           !(Interface_GetItemFromDpad(i) >= ITEM_BOW_FIRE      && Interface_GetItemFromDpad(i) <= ITEM_BOW_LIGHT)      &&
-                          !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)) {
+                          !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)    && !(Interface_GetItemFromDpad(i) >= ITEM_PICTOBOX     && Interface_GetItemFromDpad(i) <= ITEM_SHRINE_KEY)) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_ENABLED;

@@ -182,7 +182,7 @@ void ShotSun_UpdateHyliaSun(ShotSun* this, PlayState* play) {
     if (this->collider.base.acFlags & AC_HIT) {
         Sfx_PlaySfxCentered(NA_SE_SY_CORRECT_CHIME);
         PRINTF(VT_FGCOL(CYAN) "SHOT_SUN HIT!!!!!!!\n" VT_RST);
-        if (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_NONE) {
+        if (IS_CHILD_QUEST ? !gSaveContext.save.info.obtainedItems.fireArrow : INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_NONE) {
             Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, 700.0f, -800.0f, 7261.0f, 0, 0, 0, 7);
             play->csCtx.script = SEGMENTED_TO_VIRTUAL(gLakeHyliaFireArrowsCS);
             if (1) {}

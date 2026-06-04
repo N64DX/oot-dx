@@ -495,18 +495,19 @@ typedef enum GetItemID {
     /* 0x8A */ GI_HEROS_BOW,
     /* 0x8B */ GI_GOLD_DUST,
     /* 0x8C */ GI_PICTOBOX,
-    /* 0x8C */ GI_SHRINE_KEY,
-    /* 0x8D */ GI_BOOTS_UPGRADE,
-    /* 0x8E */ GI_PERFECT_BLOCK_UPGRADE,
-    /* 0x8F */ GI_WALLET_MASTER,
-    /* 0x90 */ GI_WALLET_ROYAL,
-    /* 0x91 */ GI_WALLET_TYCOON,
-    /* 0x92 */ GI_WALLET_BOTTOMLESS,
-    /* 0x93 */ GI_SHIELD_DEKU_UPGRADE,
-    /* 0x94 */ GI_SHIELD_HYLIAN_UPGRADE,
-    /* 0x95 */ GI_SHIELD_MIRROR_UPGRADE,
-    /* 0x96 */ GI_SHIELD_HEROS_UPGRADE,
-    /* 0x97 */ GI_MAX
+    /* 0x8D */ GI_SHRINE_KEY,
+    /* 0x8E */ GI_BOOTS_UPGRADE,
+    /* 0x8F */ GI_PERFECT_BLOCK_UPGRADE,
+    /* 0x90 */ GI_WALLET_MASTER,
+    /* 0x91 */ GI_WALLET_ROYAL,
+    /* 0x92 */ GI_WALLET_TYCOON,
+    /* 0x93 */ GI_WALLET_BOTTOMLESS,
+    /* 0x94 */ GI_SHIELD_DEKU_UPGRADE,
+    /* 0x95 */ GI_SHIELD_HYLIAN_UPGRADE,
+    /* 0x96 */ GI_SHIELD_MIRROR_UPGRADE,
+    /* 0x97 */ GI_SHIELD_HEROS_UPGRADE,
+    /* 0x98 */ GI_ANCIENT_HOLLOW_KEY,
+    /* 0x99 */ GI_MAX
 } GetItemID;
 
 typedef enum GetItemDrawID {
