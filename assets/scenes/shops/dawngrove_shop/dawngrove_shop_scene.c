@@ -42,7 +42,7 @@ Spawn dawngrove_shop_sceneEntranceList_000118[] = {
 };
 
 u16 dawngrove_shop_sceneExitList_000078[] = {
-    ENTR_DAWNGROVE_2,
+    ENTR_ANCIENT_GROVE_2,
 };
 
 EnvLightSettings dawngrove_shop_sceneLightSettings_000090[] = {

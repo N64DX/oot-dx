@@ -107,8 +107,8 @@ void Scene_DrawConfigPathToWoodfall(PlayState* play);
 void Scene_DrawConfigGoronVillage(PlayState* play);
 void Scene_DrawConfigGoronShrine(PlayState* play);
 void Scene_DrawConfigGoronMines(PlayState* play);
-void Scene_DrawConfigDawngroveVillage(PlayState* play);
-void Scene_DrawConfigDawngrove(PlayState* play);
+void Scene_DrawConfigRiversideVillage(PlayState* play);
+void Scene_DrawConfigAncientGrove(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -229,8 +229,8 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigGoronVillage,                // SDC_GORON_VILLAGE
     Scene_DrawConfigGoronShrine,                 // SDC_GORON_SHRINE
     Scene_DrawConfigGoronMines,                  // SDC_GORON_MINES
-    Scene_DrawConfigDawngroveVillage,            // SDC_DAWNGROVE_VILLAGE
-    Scene_DrawConfigDawngrove,                   // SDC_DAWNGROVE
+    Scene_DrawConfigRiversideVillage,            // SDC_RIVERSIDE_VILLAGE
+    Scene_DrawConfigAncientGrove,                // SDC_ANCIENT_GROVE
 };
 
 #if PLATFORM_N64 // Scene_Draw is at end of file in GC/iQue versions
@@ -1930,7 +1930,7 @@ void Scene_DrawConfigGoronMines(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
 
-void Scene_DrawConfigDawngroveVillage(PlayState* play) {
+void Scene_DrawConfigRiversideVillage(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
@@ -1941,7 +1941,7 @@ void Scene_DrawConfigDawngroveVillage(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
 
-void Scene_DrawConfigDawngrove(PlayState* play) {
+void Scene_DrawConfigAncientGrove(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);

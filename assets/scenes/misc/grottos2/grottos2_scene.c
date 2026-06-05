@@ -3541,7 +3541,7 @@ CollisionHeader grottos2_sceneCollisionHeader_00AC9C = {
 };
 
 SceneCmd grottos2_sceneSet_dawngrove[] = {
-    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_INSIDE_DEKU_TREE),
+    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_DAWNGROVE_CAVE),
     SCENE_CMD_ROOM_LIST(7, grottos2_sceneRoomList0x000198),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 22),
     SCENE_CMD_COL_HEADER(&grottos2_sceneCollisionHeader_dawngrove),
@@ -7933,7 +7933,7 @@ CollisionHeader grottos2_sceneCollisionHeader_dawngrove = {
 };
 
 SceneCmd grottos2_sceneSet_cave_passage[] = {
-    SCENE_CMD_SOUND_SETTINGS(3, NATURE_ID_NONE, NA_BGM_CAVERN),
+    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_DAWNGROVE_CAVE),
     SCENE_CMD_ROOM_LIST(7, grottos2_sceneRoomList0x000198),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 19),
     SCENE_CMD_COL_HEADER(&grottos2_sceneCollisionHeader_cave_passage),
@@ -7949,7 +7949,7 @@ SceneCmd grottos2_sceneSet_cave_passage[] = {
 };
 
 u16 grottos2_sceneExitList_cave_passage[] = {
-    ENTR_DAWNGROVE_1,
+    ENTR_ANCIENT_GROVE_1,
     ENTR_ANCIENT_HOLLOW_0,
 };
 

@@ -74,7 +74,7 @@ void EnOssan_TalkZoraShopkeeper(PlayState* play);
 void EnOssan_TalkGoronShopkeeper(PlayState* play);
 void EnOssan_TalkHappyMaskShopkeeper(PlayState* play);
 void EnOssan_TalkSmithyShopkeeper(PlayState* play);
-void EnOssan_TalkDawngroveShopkeeper(PlayState* play);
+void EnOssan_TalkAncientGroveShopkeeper(PlayState* play);
 
 s16 ShopItemDisp_Default(s16 v);
 s16 ShopItemDisp_SpookyMask(s16 v);
@@ -208,7 +208,7 @@ static EnOssanTalkOwnerFunc sShopkeeperTalkOwner[] = {
     EnOssan_TalkMarketPotionShopkeeper, EnOssan_TalkBazaarShopkeeper,         EnOssan_TalkBazaarShopkeeper2,
     EnOssan_TalkDefaultShopkeeper,      EnOssan_TalkZoraShopkeeper,           EnOssan_TalkGoronShopkeeper,
     EnOssan_TalkDefaultShopkeeper,      EnOssan_TalkHappyMaskShopkeeper,      EnOssan_TalkSmithyShopkeeper,
-    EnOssan_TalkDawngroveShopkeeper,
+    EnOssan_TalkAncientGroveShopkeeper,
 };
 
 static f32 sShopkeeperScale[] = {
@@ -613,7 +613,7 @@ void EnOssan_TalkSmithyShopkeeper(PlayState* play) {
     Message_ContinueTextbox(play, SHIELD_DURABILITY ? 0x8305 : 0x8306);
 }
 
-void EnOssan_TalkDawngroveShopkeeper(PlayState* play) {
+void EnOssan_TalkAncientGroveShopkeeper(PlayState* play) {
     if (!LINK_IS_ADULT_OR_TIMESKIP)
         Message_ContinueTextbox(play, GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW) ? 0x8213 : 0x8212);
     else Message_ContinueTextbox(play, 0x8211);
@@ -2263,7 +2263,7 @@ u16 EnOssan_SetupHelloDialog(EnOssan* this) {
                 return INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP ? 0x8301 : 0x8300;
         }
         return 0x8303;
-    } else if (this->actor.params == OSSAN_TYPE_DAWNGROVE)
+    } else if (this->actor.params == OSSAN_TYPE_ANCIENT_GROVE)
         return 0x8210;
 
     return 0x9E;

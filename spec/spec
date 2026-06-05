@@ -157,6 +157,11 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_40_25.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_41_20.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_42_28.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_43_red_ice_cavern.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_44_dawngrove.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_45_dawngrove_village.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_46_dawngrove_cave.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_47_deep_woods.o"
 #if OOT_VERSION >= PAL_1_0
     include "$(BUILD_DIR)/assets/audio/audiobank_padding.o"
 #endif
@@ -279,7 +284,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_112_cavern.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_113_sacred_cove.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_114_tal_tal_heights.o"
-    include "$(BUILD_DIR)/assets/audio/sequences/seq_115_mysterious_forest.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_115_deep_woods.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_116_kolima_forest.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_117_koloktos.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_118_woodfall_temple.o"
@@ -288,7 +293,10 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_121_ganon_battle.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_122_lake_hylia.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_123_termina_field.o"
-    include "$(BUILD_DIR)/assets/audio/sequences/seq_124_dungeon_cave.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_124_red_ice_cavern.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_125_dawngrove.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_126_dawngrove_village.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_127_dawngrove_cave.o"
 endseg
 
 beginseg

@@ -127,10 +127,10 @@ void func_809B0524(EnAni* this, PlayState* play) {
     }
 }
 
-#define ITEMGETINF_FLAG (play->sceneId == SCENE_DAWNGROVE_VILLAGE ? ITEMGETINF_DAWNGROVE_VILLAGE_ROOFTOP_MAN_REWARD : ITEMGETINF_15)
-#define GI_ITEM_REWARD  (play->sceneId == SCENE_DAWNGROVE_VILLAGE ? GI_RUPEE_RED                                    : GI_HEART_PIECE)
-#define REWARD_TEXTID   (play->sceneId == SCENE_DAWNGROVE_VILLAGE ? 0x8234                                          : 0x5055)
-#define REPEAT_TEXTID   (play->sceneId == SCENE_DAWNGROVE_VILLAGE ? 0x8235                                          : 0x5056)
+#define ITEMGETINF_FLAG (play->sceneId == SCENE_RIVERSIDE_VILLAGE ? ITEMGETINF_RIVERSIDE_VILLAGE_ROOFTOP_MAN_REWARD : ITEMGETINF_15)
+#define GI_ITEM_REWARD  (play->sceneId == SCENE_RIVERSIDE_VILLAGE ? GI_RUPEE_RED                                    : GI_HEART_PIECE)
+#define REWARD_TEXTID   (play->sceneId == SCENE_RIVERSIDE_VILLAGE ? 0x8234                                          : 0x5055)
+#define REPEAT_TEXTID   (play->sceneId == SCENE_RIVERSIDE_VILLAGE ? 0x8235                                          : 0x5056)
 
 void func_809B0558(EnAni* this, PlayState* play) {
     if (Actor_HasParent(&this->actor, play)) {

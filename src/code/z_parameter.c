@@ -162,8 +162,8 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_PATH_TO_GORON_VILLAGE, 0x00, 0x00, 0x00 },
     { SCENE_GORON_VILLAGE, 0x00, 0x00, 0x00 },
     { SCENE_GORON_SHRINE, 0x00, 0x00, 0x00 },
-    { SCENE_DAWNGROVE_VILLAGE, 0x00, 0x00, 0x00 },
-    { SCENE_DAWNGROVE, 0x00, 0x00, 0x1C },
+    { SCENE_RIVERSIDE_VILLAGE, 0x00, 0x00, 0x00 },
+    { SCENE_ANCIENT_GROVE, 0x00, 0x00, 0x1C },
     { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
     { SCENE_GROTTOS2, 0x00, 0x00, 0xD0 },
     { SCENE_WEBBED_SHRINE, 0x00, 0x00, 0x00 },
@@ -172,10 +172,10 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_WOODFALL_TEMPLE, 0x00, 0x00, 0x1C },
     { SCENE_WOODFALL_TEMPLE_BOSS, 0x00, 0x00, 0x1C },
     { SCENE_SPRING_LAKE_SMITHY, 0x11, 0x15, 0x55 },
-    { SCENE_DAWNGROVE_HOUSE, 0x11, 0x15, 0x55 },
+    { SCENE_RIVERSIDE_HOUSE, 0x11, 0x15, 0x55 },
     { SCENE_IGORS_HOUSE, 0x11, 0x15, 0x55 },
-    { SCENE_DAWNGROVE_INN, 0x11, 0x15, 0x55 },
-    { SCENE_DAWNGROVE_SHOP, 0x11, 0x15, 0x55 },
+    { SCENE_RIVERSIDE_INN, 0x11, 0x15, 0x55 },
+    { SCENE_ANCIENT_GROVE_SHOP, 0x11, 0x15, 0x55 },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
 
@@ -555,8 +555,8 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 case SCENE_PATH_TO_GORON_VILLAGE:
                 case SCENE_GORON_VILLAGE:
                 case SCENE_GORON_SHRINE:
-                case SCENE_DAWNGROVE_VILLAGE:
-                case SCENE_DAWNGROVE:
+                case SCENE_RIVERSIDE_VILLAGE:
+                case SCENE_ANCIENT_GROVE:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {
@@ -2050,7 +2050,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         gSaveContext.save.info.inventory.dungeonItems[gSaveContext.mapIndex] |= gBitFlags[item - ITEM_DUNGEON_BOSS_KEY];
         return ITEM_NONE;
     } else if (item == ITEM_SMALL_KEY) {
-        u8 mapIndex = play->sceneId == SCENE_DAWNGROVE_INN ? SCENE_DEKU_TREE_BOSS : gSaveContext.mapIndex;
+        u8 mapIndex = play->sceneId == SCENE_RIVERSIDE_INN ? SCENE_DEKU_TREE_BOSS : gSaveContext.mapIndex;
         if (gSaveContext.save.info.inventory.dungeonKeys[mapIndex] < 0) {
             gSaveContext.save.info.inventory.dungeonKeys[mapIndex] = 1;
             return ITEM_NONE;

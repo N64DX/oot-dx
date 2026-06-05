@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_47_deep_woods.h"
+
+.startseq Sequence_115
+
+.incbin "aseq/deep_woods.aseq"
+
+.endseq Sequence_115

@@ -12,7 +12,7 @@
 #include "ultra64.h"
 
 SceneCmd dawngrove_scene[] = {
-    SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_SACRED_COVE),
+    SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_DAWNGROVE),
     SCENE_CMD_ROOM_LIST(3, dawngrove_sceneRoomList_000070),
     SCENE_CMD_TRANSITION_ACTOR_LIST(4, dawngrove_sceneTransitionActorList_000088),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 4),
@@ -54,7 +54,7 @@ Spawn dawngrove_sceneEntranceList_000208[] = {
 u16 dawngrove_sceneExitList_0000C8[] = {
     ENTR_FORBIDDEN_WOODS_2,
     ENTR_CAVE_PASSAGE_0,
-    ENTR_DAWNGROVE_SHOP_0,
+    ENTR_ANCIENT_GROVE_SHOP_0,
 };
 
 EnvLightSettings dawngrove_sceneLightSettings_000100[] = {

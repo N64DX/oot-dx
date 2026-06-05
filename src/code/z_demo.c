@@ -142,8 +142,8 @@ EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_GERUDOS_FORTRESS_17, 2, EVENTCHKINF_C7, gGerudoFortressFirstCaptureCs, false },
     { ENTR_DEATH_MOUNTAIN_CRATER_1, 2, EVENTCHKINF_B9, gDeathMountainCraterIntroCs, true },
     { ENTR_KOKIRI_FOREST_12, 2, EVENTCHKINF_C6, gKokiriForestDekuSproutPart3Cs, false },
-    { ENTR_DAWNGROVE_0, 2, EVENTCHKINF_SEEN_DAWNGROVE_INTRO_CS, gDawngroveIntroCs, true },
-    { ENTR_DAWNGROVE_VILLAGE_0, 2, EVENTCHKINF_SEEN_DAWNGROVE_VILLAGE_INTRO_CS, gDawngroveVillageIntroCs, true },
+    { ENTR_ANCIENT_GROVE_0, 2, EVENTCHKINF_SEEN_ANCIENT_GROVE_INTRO_CS, gDawngroveIntroCs, true },
+    { ENTR_RIVERSIDE_VILLAGE_0, 2, EVENTCHKINF_SEEN_RIVERSIDE_VILLAGE_INTRO_CS, gDawngroveVillageIntroCs, true },
 };
 
 void* sCutscenesUnknownList[] = {

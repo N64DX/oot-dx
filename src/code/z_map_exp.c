@@ -148,8 +148,8 @@ void Map_InitData(PlayState* play, s16 room) {
         case SCENE_PATH_TO_GORON_VILLAGE:
         case SCENE_GORON_VILLAGE:
         case SCENE_GORON_SHRINE:
-        case SCENE_DAWNGROVE_VILLAGE:
-        case SCENE_DAWNGROVE:
+        case SCENE_RIVERSIDE_VILLAGE:
+        case SCENE_ANCIENT_GROVE:
             extendedMapIndex = mapIndex;
             if (play->sceneId == SCENE_GRAVEYARD) {
                 if (CHECK_QUEST_ITEM(QUEST_SONG_NOCTURNE)) {
@@ -342,8 +342,8 @@ void Map_Init(PlayState* play) {
         case SCENE_PATH_TO_GORON_VILLAGE:
         case SCENE_GORON_VILLAGE:
         case SCENE_GORON_SHRINE:
-        case SCENE_DAWNGROVE_VILLAGE:
-        case SCENE_DAWNGROVE:
+        case SCENE_RIVERSIDE_VILLAGE:
+        case SCENE_ANCIENT_GROVE:
             mapIndex = play->sceneId - SCENE_HYRULE_FIELD;
             R_MAP_INDEX = gSaveContext.mapIndex = mapIndex;
             R_COMPASS_SCALE_X = gMapData->owCompassInfo[mapIndex][0];
@@ -571,8 +571,8 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_PATH_TO_GORON_VILLAGE:
             case SCENE_GORON_VILLAGE:
             case SCENE_GORON_SHRINE:
-            case SCENE_DAWNGROVE_VILLAGE:
-            case SCENE_DAWNGROVE:
+            case SCENE_RIVERSIDE_VILLAGE:
+            case SCENE_ANCIENT_GROVE:
                 if (!R_MINIMAP_DISABLED) {
                     s8 xOffset = gMapData->overworldXOffset[extendedMapIndex] / 2;
                     

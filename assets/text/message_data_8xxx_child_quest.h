@@ -2868,7 +2868,8 @@ MSG()
 DEFINE_MESSAGE(0x8211, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"Welcome... To the Dawngrove Shop...\n"
+"Welcome... To the Ancient Grove\n"
+"Shop...\n"
 "Anything you want to buy?\n"
 "Or not... I don't really care..." EVENT
 ),
@@ -2939,7 +2940,7 @@ BOX_BREAK
 
 "The curse... I must protect my\n"
 "brother... I have to lift the curse\n"
-"put on " COLOR(ADJUSTABLE) "Dawngrove Village" COLOR(DEFAULT) "...\n"
+"put on " COLOR(ADJUSTABLE) "Riverside Village" COLOR(DEFAULT) "...\n"
 "It comes from the " COLOR(ADJUSTABLE) "Ancient Hollow" COLOR(DEFAULT) "..."
 ),
 MSG(),
@@ -2998,12 +2999,12 @@ UNSKIPPABLE "Thank you... For listening..."
 BOX_BREAK
 
 UNSKIPPABLE "Me and my big bro " COLOR(RED) "Dampé" COLOR(DEFAULT) ", we grew\n"
-"up here in Dawngrove Village.\n"
+"up here in Riverside Village.\n"
 COLOR(RED) "Dampé" COLOR(DEFAULT) " left for Kakariko Village years\n"
 "ago to work for the graveyard there."
 BOX_BREAK
 
-UNSKIPPABLE "I stayed behind here in Dawngrove,\n"
+UNSKIPPABLE "I stayed behind here in Riverside,\n"
 "looking after the village and the local\n"
 "graveyard. Those were some happy\n"
 "years..."
@@ -3022,7 +3023,7 @@ UNSKIPPABLE "The " COLOR(RED) "evil king" COLOR(DEFAULT) " demanded we cooperate
 BOX_BREAK
 
 UNSKIPPABLE "I fear for my big bro " COLOR(RED) "Dampé" COLOR(DEFAULT) ". He left\n"
-"Dawngrove Village years ago yes, but\n"
+"Riverside Village years ago yes, but\n"
 "the curse affects our bloodlines."
 BOX_BREAK
 

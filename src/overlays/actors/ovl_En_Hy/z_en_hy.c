@@ -673,7 +673,7 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
             return 0x700C;
 
         case ENHY_TYPE_OLD_WOMAN:
-            if (play->sceneId == SCENE_DAWNGROVE_HOUSE)
+            if (play->sceneId == SCENE_RIVERSIDE_HOUSE)
                 return 0x8231;
             return Actor_ZeldaFledDialogue() ? 0x704A : (GET_INFTABLE(INFTABLE_C6) ? 0x7022 : 0x7021);
 
@@ -687,7 +687,7 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
             }
 
         case ENHY_TYPE_YOUNG_WOMAN_BROWN_HAIR:
-            if (play->sceneId == SCENE_DAWNGROVE_INN) {
+            if (play->sceneId == SCENE_RIVERSIDE_INN) {
                 return 0x8230;
             } else if (Actor_ZeldaFledDialogue()) {
                 return GET_INFTABLE(INFTABLE_C9) ? 0x701E : 0x7048;
@@ -722,7 +722,7 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
                                                                          : 0x7014;
 
         case ENHY_TYPE_MAN_2_ALT_MUSTACHE:
-            if (play->sceneId == SCENE_DAWNGROVE_VILLAGE) {
+            if (play->sceneId == SCENE_RIVERSIDE_VILLAGE) {
                 return 0x8232;
             } else if (play->sceneId == SCENE_KAKARIKO_VILLAGE) {
                 return !IS_DAY ? 0x5084 : 0x5083;

@@ -12,7 +12,7 @@
 
 SceneCmd old_dodongos_cavern_scene[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(old_dodongos_cavern_sceneAlternateHeaders),
-    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_DUNGEON_CAVE),
+    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_RED_ICE_CAVERN),
     SCENE_CMD_ROOM_LIST(10, old_dodongos_cavern_sceneRoomList0x000148),
     SCENE_CMD_TRANSITION_ACTOR_LIST(14, old_dodongos_cavern_sceneTransitionActorList0x000078),
     SCENE_CMD_COL_HEADER(&old_dodongos_cavern_sceneCollisionHeader0x00E38C),
@@ -5679,7 +5679,7 @@ CollisionHeader old_dodongos_cavern_sceneCollisionHeader0x00E38C = {
 };
 
 SceneCmd old_dodongos_cavern_sceneSet_cleansed[] = {
-    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_DUNGEON_CAVE),
+    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_RED_ICE_CAVERN),
     SCENE_CMD_ROOM_LIST(ARRAY_COUNT(old_dodongos_cavern_sceneRoomList0x000148), old_dodongos_cavern_sceneRoomList0x000148),
     SCENE_CMD_TRANSITION_ACTOR_LIST(ARRAY_COUNT(old_dodongos_cavern_sceneTransitionActorList0x000078), old_dodongos_cavern_sceneTransitionActorList0x000078),
     SCENE_CMD_COL_HEADER(&old_dodongos_cavern_sceneCollisionHeader0x00E38C),

@@ -12,7 +12,7 @@
 #include "ultra64.h"
 
 SceneCmd dawngrove_village_scene[] = {
-    SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_KAKARIKO_KID),
+    SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_DAWNGROVE_VILLAGE),
     SCENE_CMD_ROOM_LIST(1, dawngrove_village_sceneRoomList_000070),
     SCENE_CMD_TRANSITION_ACTOR_LIST(3, dawngrove_village_sceneTransitionActorList_000078),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 4),
@@ -52,9 +52,9 @@ Spawn dawngrove_village_sceneEntranceList_0001F8[] = {
 
 u16 dawngrove_village_sceneExitList_0000A8[] = {
     ENTR_FORBIDDEN_WOODS_4,
-    ENTR_DAWNGROVE_INN_0,
+    ENTR_RIVERSIDE_INN_0,
     ENTR_IGORS_HOUSE_0,
-    ENTR_DAWNGROVE_HOUSE_0,
+    ENTR_RIVERSIDE_HOUSE_0,
 };
 
 EnvLightSettings dawngrove_village_sceneLightSettings_0000F0[] = {

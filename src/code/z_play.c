@@ -423,7 +423,7 @@ void Play_Init(GameState* thisx) {
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_49) ? 3 : 2;
                 else if (sceneId == SCENE_ZORAS_DOMAIN) 
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_4A) ? 3 : 2;
-                else if (sceneId == SCENE_DAWNGROVE || sceneId == SCENE_DAWNGROVE_VILLAGE)
+                else if (sceneId == SCENE_ANCIENT_GROVE || sceneId == SCENE_RIVERSIDE_VILLAGE)
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW) ? 3: 2;
                 else if (sceneId == SCENE_PATH_TO_GORON_VILLAGE || sceneId == SCENE_GORON_VILLAGE || sceneId == SCENE_GORON_SHRINE || sceneId == SCENE_GORON_MINES)
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES) ? 3: 2;

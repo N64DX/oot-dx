@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_43_red_ice_cavern.h"
+
+.startseq Sequence_124
+
+.incbin "aseq/red_ice_cavern.aseq"
+
+.endseq Sequence_124

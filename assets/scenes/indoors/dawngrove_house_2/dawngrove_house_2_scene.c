@@ -42,7 +42,7 @@ Spawn dawngrove_house_2_sceneEntranceList_000198[] = {
 };
 
 u16 dawngrove_house_2_sceneExitList_000078[] = {
-    ENTR_DAWNGROVE_VILLAGE_3,
+    ENTR_RIVERSIDE_VILLAGE_3,
 };
 
 EnvLightSettings dawngrove_house_2_sceneLightSettings_000090[] = {

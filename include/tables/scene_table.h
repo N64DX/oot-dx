@@ -118,8 +118,8 @@
 /* 0x6A */ DEFINE_SCENE(path_to_goron_village_scene, none, SCENE_PATH_TO_GORON_VILLAGE, SDC_PATH_TO_GORON_VILLAGE, 0, 0)
 /* 0x6B */ DEFINE_SCENE(goron_village_scene, none, SCENE_GORON_VILLAGE, SDC_GORON_VILLAGE, 0, 0)
 /* 0x6C */ DEFINE_SCENE(goron_shrine_scene, none, SCENE_GORON_SHRINE, SDC_GORON_SHRINE, 0, 0)
-/* 0x6D */ DEFINE_SCENE(dawngrove_village_scene, none, SCENE_DAWNGROVE_VILLAGE, SDC_DAWNGROVE_VILLAGE, 0, 0)
-/* 0x6E */ DEFINE_SCENE(dawngrove_scene, none, SCENE_DAWNGROVE, SDC_DAWNGROVE, 0, 0)
+/* 0x6D */ DEFINE_SCENE(dawngrove_village_scene, none, SCENE_RIVERSIDE_VILLAGE, SDC_RIVERSIDE_VILLAGE, 0, 0)
+/* 0x6E */ DEFINE_SCENE(dawngrove_scene, none, SCENE_ANCIENT_GROVE, SDC_ANCIENT_GROVE, 0, 0)
 /* 0x6F */ DEFINE_SCENE(old_lost_woods_scene, none, SCENE_FORBIDDEN_WOODS, SDC_FORBIDDEN_WOODS, 0, 0)
 /* 0x70 */ DEFINE_SCENE(grottos2_scene, none, SCENE_GROTTOS2, SDC_GROTTOS2, 0, 0)
 /* 0x71 */ DEFINE_SCENE(swamp_spider_house_scene, none, SCENE_WEBBED_SHRINE, SDC_DEFAULT, 0, 0)
@@ -128,10 +128,10 @@
 /* 0x74 */ DEFINE_SCENE(woodfall_temple_scene, none, SCENE_WOODFALL_TEMPLE, SDC_WOODFALL_TEMPLE, 0, 0)
 /* 0x75 */ DEFINE_SCENE(woodfall_temple_boss_scene, none, SCENE_WOODFALL_TEMPLE_BOSS, SDC_WOODFALL_TEMPLE, 0, 0)
 /* 0x76 */ DEFINE_SCENE(mountain_smithy_scene, none, SCENE_SPRING_LAKE_SMITHY, SDC_SPRING_LAKE_SMITHY, 0, 0)
-/* 0x77 */ DEFINE_SCENE(dawngrove_house_1_scene, none, SCENE_DAWNGROVE_HOUSE, SDC_DEFAULT, 0, 0)
+/* 0x77 */ DEFINE_SCENE(dawngrove_house_1_scene, none, SCENE_RIVERSIDE_HOUSE, SDC_DEFAULT, 0, 0)
 /* 0x78 */ DEFINE_SCENE(dawngrove_house_2_scene, none, SCENE_IGORS_HOUSE, SDC_DEFAULT, 0, 0)
-/* 0x79 */ DEFINE_SCENE(dawngrove_inn_scene, none, SCENE_DAWNGROVE_INN, SDC_DEFAULT, 0, 0)
-/* 0x7A */ DEFINE_SCENE(dawngrove_shop_scene, none, SCENE_DAWNGROVE_SHOP, SDC_DEFAULT, 0, 0)
+/* 0x79 */ DEFINE_SCENE(dawngrove_inn_scene, none, SCENE_RIVERSIDE_INN, SDC_DEFAULT, 0, 0)
+/* 0x7A */ DEFINE_SCENE(dawngrove_shop_scene, none, SCENE_ANCIENT_GROVE_SHOP, SDC_DEFAULT, 0, 0)
 
 // 0x7B (124th scene) = gSaveContext.save.info.sceneFlags MAX
 

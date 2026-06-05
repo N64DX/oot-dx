@@ -594,17 +594,17 @@ DEFINE_MESSAGE(0xA06C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 )
 
 DEFINE_MESSAGE(0xA06D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-    MSG("暁の森の村"),
-    MSG("Dawngrove Village"),
-    MSG("Dämmerhain-Dorf"),
-    MSG("Village Bosquaurore")
+    MSG("川辺の村"),
+    MSG("Riverside Village"),
+    MSG("Flussdorf"),
+    MSG("Village de la Rivière")
 )
 
 DEFINE_MESSAGE(0xA06E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-    MSG("暁の森"),
-    MSG("Dawngrove"),
-    MSG("Dämmerhain"),
-    MSG("Bosquaurore")
+    MSG("古の森"),
+    MSG("Ancient Grove"),
+    MSG("Uralter Hain"),
+    MSG("Bosquet Ancien")
 )
 
 DEFINE_MESSAGE(0xA06F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
@@ -650,10 +650,10 @@ DEFINE_MESSAGE(0xA076, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 )
 
 DEFINE_MESSAGE(0xA077, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-    MSG("暁の森の家"),
-    MSG("Dawngrove House"),
-    MSG("Dämmerhain Haus"),
-    MSG("Maison du Bosquaurore")
+    MSG("川辺の家"),
+    MSG("Riverside House"),
+    MSG("Haus im Flussdorf"),
+    MSG("Maison de la Rivière")
 )
 
 DEFINE_MESSAGE(0xA078, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
@@ -664,17 +664,17 @@ DEFINE_MESSAGE(0xA078, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 )
 
 DEFINE_MESSAGE(0xA079, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-    MSG("暁の森の宿屋"),
-    MSG("Dawngrove Inn"),
-    MSG("Dämmerhain Herberge"),
-    MSG("Auberge de Bosquaurore")
+    MSG("川辺の宿"),
+    MSG("Riverside Inn"),
+    MSG("Herberge des Flussdorfs"),
+    MSG("Auberge de la Rivière")
 )
 
 DEFINE_MESSAGE(0xA07A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-    MSG("暁の森の店"),
-    MSG("Dawngrove Shop"),
-    MSG("Dämmerhain Laden"),
-    MSG("Boutique de Bosquaurore")
+    MSG("古の森の店"),
+    MSG("Ancient Grove Shop"),
+    MSG("Laden des Uralten Hains"),
+    MSG("Boutique du Bosquet Ancien")
 )
 
 DEFINE_MESSAGE(0xA13E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,

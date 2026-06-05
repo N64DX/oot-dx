@@ -1585,7 +1585,7 @@ MSG(
 QUICKTEXT_ENABLE "This room is closed.\n"
 "Under renovation for the forseeable\n"
 "future.\n"
-SHIFT(20) "--Dawngrove Inn Staff"
+SHIFT(20) "--Riverside Inn Staff"
 ),
 MSG(),
 MSG()

@@ -110,7 +110,7 @@ void EnHs2_Idle(EnHs2* this, PlayState* play) {
     u16 textId = MaskReaction_GetTextId(play, MASK_REACTION_SET_CARPENTERS_SON);
 
     if (textId == 0) {
-        textId = play->sceneId == SCENE_DAWNGROVE_VILLAGE ? 0x8233 : 0x5069;
+        textId = play->sceneId == SCENE_RIVERSIDE_VILLAGE ? 0x8233 : 0x5069;
     }
 
     EnHs2_Interact(this, play, textId, EnHs2_Talking);

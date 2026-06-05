@@ -11,7 +11,7 @@
 #include "ultra64.h"
 
 SceneCmd old_lost_woods_scene[] = {
-    SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_NONE, NA_BGM_MYSTERY_FOREST),
+    SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_DEEP_WOODS),
     SCENE_CMD_ROOM_LIST(1, old_lost_woods_sceneRoomList0x0000A0),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),
     SCENE_CMD_COL_HEADER(&old_lost_woods_sceneCollisionHeader0x0068D4),
@@ -50,9 +50,9 @@ Spawn old_lost_woods_sceneEntranceList0x0000A8[] = {
 u16 old_lost_woods_sceneExitList0x0000B4[] = {
     ENTR_PATH_TO_WOODFALL_0,
     ENTR_SPRING_LAKE_4,
-    ENTR_DAWNGROVE_0,
+    ENTR_ANCIENT_GROVE_0,
     ENTR_LOST_WOODS_10,
-    ENTR_DAWNGROVE_VILLAGE_0,
+    ENTR_RIVERSIDE_VILLAGE_0,
 };
 
 EnvLightSettings old_lost_woods_sceneLightSettings0x0000C0[] = {
