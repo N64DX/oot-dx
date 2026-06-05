@@ -169,7 +169,6 @@ void* gItemIcons[] = {
     gItemIconPictoboxTex,          // ITEM_PICTOBOX
     gItemIconRoomKeyTex,           // ITEM_SHRINE_KEY
     gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
-    gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
     gItemIconBombBag20Tex,         // ITEM_BOMB_BAG_20
     gItemIconBombBag30Tex,         // ITEM_BOMB_BAG_30
     gItemIconBombBag40Tex,         // ITEM_BOMB_BAG_40
@@ -189,6 +188,7 @@ void* gItemIcons[] = {
     gItemIconQuiver30Tex,          // ITEM_QUIVER_30
     gItemIconQuiver40Tex,          // ITEM_QUIVER_40
     gItemIconQuiver50Tex,          // ITEM_QUIVER_50
+    gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
     gItemIconAmuletOfEnergyTex,    // ITEM_AMULET_OF_ENERGY
     gItemIconLandTitleDeedTex,     // ITEM_PERFECT_BLOCK_UPGRADE
     gItemIconGiantsWalletTex,      // ITEM_MASTER_WALLET
@@ -342,7 +342,8 @@ void Inventory_ChangeEquipmentWithIcon(PlayState* play, s16 equipment, u16 value
             shieldItem = ITEM_SHIELD_HEROS;
         else shieldItem = ITEM_NONE;
 
-        DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(shieldItem)), ITEM_ICON_SIZE, __FILE__, __LINE__);
+        if (shieldItem < ITEM_SWORD_CS)
+            DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(shieldItem)), ITEM_ICON_SIZE, __FILE__, __LINE__);
     }
 }
 
