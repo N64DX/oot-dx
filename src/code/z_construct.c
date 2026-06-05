@@ -200,7 +200,7 @@ void Interface_Init(PlayState* play) {
             item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
 
         if (item < ITEM_SWORD_CS)
-            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, "../z_construct.c", 198);
+            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE,  __FILE__, __LINE__);
     }
 
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_DEKU)
@@ -212,7 +212,9 @@ void Interface_Init(PlayState* play) {
     else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_HEROS)
         item = ITEM_SHIELD_HEROS;
     else item = ITEM_NONE;
-    DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, __FILE__, __LINE__);
+
+    if (item < ITEM_SWORD_CS)
+        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE,  __FILE__, __LINE__);
 
     PRINTF("ＥＶＥＮＴ＝%d\n", ((void)0, gSaveContext.timerState));
 
