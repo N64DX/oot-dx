@@ -21,7 +21,7 @@
 #include "audio.h"
 #include "save.h"
 
-#define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_DRAW_CULLING_DISABLED)
+#define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 void EnHammergeist_Init(Actor* thisx, PlayState* play);
 void EnHammergeist_Destroy(Actor* thisx, PlayState* play);
@@ -166,7 +166,7 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_F32(lockOnArrowOffset, 2600, ICHAIN_STOP),
 };
 
-typedef enum {
+typedef enum EnHammergeistAnimation {
     /* 0 */ HAMMERGEIST_ANIMATION_IDLE,
     /* 1 */ HAMMERGEIST_ANIMATION_WALK,
     /* 2 */ HAMMERGEIST_ANIMATION_DAMAGE,
@@ -180,31 +180,31 @@ typedef enum {
 } EnHammergeistAnimation;
 
 static AnimationInfo sAnimationInfo[] = {
-    { &gHammergeistSkelIdleAnim, 1.0f, 0.0f, -1.0f, ANIMMODE_LOOP_INTERP, 3.0f },
-    { &gHammergeistSkelWalkAnim, 2.0f, 0.0f, -1.0f, ANIMMODE_LOOP_PARTIAL, 3.0f },
-    { &gHammergeistSkelDamageAnim, 3.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP, 3.0f },
-    { &gHammergeistSkelDieAnim, 1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP, 3.0f },
-    { &gHammergeistSkelExplosionAnim, 2.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP, 3.0f },
-    { &gHammergeistSkelInfuseAnim, 1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP, 3.0f },
-    { &gHammergeistSkelSlamheavyAnim, 1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP, 3.0f },
-    { &gHammergeistSkelSlamlAnim, 1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP, 3.0f },
-    { &gHammergeistSkelSlamrAnim, 1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP, 3.0f },
-    { &gHammergeistSkelFlexAnim, 1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP, 3.0f },
+    { &gHammergeistSkelIdleAnim,      1.0f, 0.0f, -1.0f, ANIMMODE_LOOP_INTERP,  3.0f },
+    { &gHammergeistSkelWalkAnim,      2.0f, 0.0f, -1.0f, ANIMMODE_LOOP_PARTIAL, 3.0f },
+    { &gHammergeistSkelDamageAnim,    3.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP,  3.0f },
+    { &gHammergeistSkelDieAnim,       1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP,  3.0f },
+    { &gHammergeistSkelExplosionAnim, 2.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP,  3.0f },
+    { &gHammergeistSkelInfuseAnim,    1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP,  3.0f },
+    { &gHammergeistSkelSlamheavyAnim, 1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP,  3.0f },
+    { &gHammergeistSkelSlamlAnim,     1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP,  3.0f },
+    { &gHammergeistSkelSlamrAnim,     1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP,  3.0f },
+    { &gHammergeistSkelFlexAnim,      1.0f, 0.0f, -1.0f, ANIMMODE_ONCE_INTERP,  3.0f },
 };
 
-typedef enum {
+typedef enum EnHammergeistFace {
     /* 0 */ HAMMERGEIST_FACE_NORMAL,
     /* 1 */ HAMMERGEIST_FACE_LAUGH,
     /* 2 */ HAMMERGEIST_FACE_MOUTH_OPEN
 } EnHammergeistFace;
 
-typedef enum {
+typedef enum EnHammergeistFireHammer {
     /* 0 */ HAMMERGEIST_FIRE_HAMMER_NORMAL,
     /* 1 */ HAMMERGEIST_FIRE_HAMMER_FIRE_1,
     /* 2 */ HAMMERGEIST_FIRE_HAMMER_FIRE_2
 } EnHammergeistFireHammer;
 
-typedef enum {
+typedef enum EnHammerGeistIceHammer {
     /* 0 */ HAMMERGEIST_ICE_HAMMER_NORMAL,
     /* 1 */ HAMMERGEIST_ICE_HAMMER_ICE_1,
     /* 2 */ HAMMERGEIST_ICE_HAMMER_ICE_2
@@ -230,7 +230,7 @@ static void* sIceHammerTextures[] = {
     gHammergeistSkel_hammerice_2_rgba16
 };
 
-typedef enum {
+typedef enum EnHammergeistDamageEffect {
     /*  0 */ ENHAMMERGEIST_DMGEFF_NONE,
     /*  1 */ ENHAMMERGEIST_DMGEFF_STUN,
     /*  6 */ ENHAMMERGEIST_DMGEFF_ICE_MAGIC = 6,

@@ -13,7 +13,7 @@ SceneCmd dawngrove_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_room_1RoomShapeNormal_000210),
-    SCENE_CMD_OBJECT_LIST(10, dawngrove_room_1ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(11, dawngrove_room_1ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(24, dawngrove_room_1ActorEntry_000050),
     SCENE_CMD_END(),
 };
@@ -35,6 +35,7 @@ s16 dawngrove_room_1ObjectList_000040[] = {
     OBJECT_DEKUBABA,
     OBJECT_KANBAN,
     OBJECT_LOST_WOODS,
+    OBJECT_GOOMBA,
 };
 
 ActorEntry dawngrove_room_1ActorEntry_000050[] = {
@@ -64,6 +65,9 @@ ActorEntry dawngrove_room_1ActorEntry_000050[] = {
     { ACTOR_EN_KANBAN,      { -1500,  28,  -70 }, {    0, 0x8000,   0 }, 0x005A },
 
     // Timeskip & Cleansed
+    { ACTOR_EN_GOOMBA,      { -2000,  28, -400 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,      { -2000, 120,  500 }, {    0, 0x8000,   0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,      { -1200, 180,  600 }, {    0, 0x8000,   0 }, 0x0000 },
     { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -964 }, {    0,      0,   0 }, 0x1101 },
     { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -884 }, {    0,      0,   0 }, 0x1101 },
     { ACTOR_OBJ_SYOKUDAI,   { -1795,  28,   28 }, {    0,      0,   0 }, 0x1101 },
@@ -111,7 +115,7 @@ SceneCmd dawngrove_room_1Set_timeskip[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_room_1RoomShapeNormal_000210),
     SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_room_1ObjectList_000040), dawngrove_room_1ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(31, dawngrove_room_1ActorEntry_000050),
+    SCENE_CMD_ACTOR_LIST(34, dawngrove_room_1ActorEntry_000050),
     SCENE_CMD_END(),
 };
 

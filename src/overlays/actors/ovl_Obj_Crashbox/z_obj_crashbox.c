@@ -7,8 +7,10 @@
 
 #include "libc64/qrand.h"
 #include "array_count.h"
+#include "gfx_setupdl.h"
 #include "ichain.h"
 #include "sfx.h"
+#include "sys_matrix.h"
 #include "z_lib.h"
 #include "play_state.h"
 #include "effect.h"
@@ -64,6 +66,8 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_F32(cullingVolumeDownward, 1000, ICHAIN_STOP),
 };
 
+static f32 sObjCrashboxSize[] = { 0.5f, 0.75f, 1.0f };
+
 void ObjCrashbox_Init(Actor* thisx, PlayState* play) {
     ObjCrashbox* this = (ObjCrashbox*)thisx;
     CollisionHeader* colHeader = NULL;
@@ -80,23 +84,11 @@ void ObjCrashbox_Init(Actor* thisx, PlayState* play) {
 
     this->dyna.actor.velocity.x = this->dyna.actor.velocity.y = this->dyna.actor.velocity.z = 0.0f;
     this->dyna.actor.gravity = -1.0f;
-
-    switch (this->dyna.actor.params) {
-        case OBJ_CRASHBOX_SMALL:
-            Actor_SetScale(&this->dyna.actor, 0.5f);
-            break;
-        case OBJ_CRASHBOX_MEDIUM:
-            this->collider.dim.radius = 25;
-            this->collider.dim.height = 20;
-            Actor_SetScale(&this->dyna.actor, 0.5f);
-            break;
-        case OBJ_CRASHBOX_LARGE:
-            Actor_SetScale(&this->dyna.actor, 1.0f);
-            break;
-    }
-
     this->dyna.actor.colChkInfo.mass = MASS_IMMOVABLE;
     this->actionFunc = ObjCrashbox_Wait;
+
+    this->type = (this->dyna.actor.params >> 4) & 1;
+    Actor_SetScale(&this->dyna.actor, sObjCrashboxSize[this->dyna.actor.params & 3]);
 }
 
 void ObjCrashbox_Destroy(Actor* thisx, PlayState* play) {
@@ -163,7 +155,11 @@ void ObjCrashbox_Break(ObjCrashbox* this, PlayState* play) {
 }
 
 void ObjCrashbox_Wait(ObjCrashbox* this, PlayState* play) {
-    if (((this->collider.base.acFlags & AC_HIT) && (this->collider.elem.acHitElem->atDmgInfo.dmgFlags & (DMG_EXPLOSIVE | DMG_HAMMER_SWING | DMG_HAMMER_JUMP)) && (this->dyna.actor.bgCheckFlags & BGCHECKFLAG_GROUND))) {
+    u32 dmgFlags = DMG_HAMMER_SWING | DMG_HAMMER_JUMP;
+    if (this->type == OBJ_CRASHBOX_ALL)
+        dmgFlags |= DMG_EXPLOSIVE;
+
+    if (((this->collider.base.acFlags & AC_HIT) && (this->collider.elem.acHitElem->atDmgInfo.dmgFlags & dmgFlags) && (this->dyna.actor.bgCheckFlags & BGCHECKFLAG_GROUND))) {
         ObjCrashbox_Break(this, play);
         SfxSource_PlaySfxAtFixedWorldPos(play, &this->dyna.actor.world.pos, 80, NA_SE_EV_WOODBOX_BREAK);
         Actor_Kill(&this->dyna.actor);
@@ -189,5 +185,18 @@ void ObjCrashbox_Update(Actor* thisx, PlayState* play) {
 }
 
 void ObjCrashbox_Draw(Actor* thisx, PlayState* play) {
-    Gfx_DrawDListOpa(play, gCrashboxDL);
+    ObjCrashbox* this = (ObjCrashbox*)thisx;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    Gfx_SetupDL_25Opa(play->state.gfxCtx);
+    MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
+
+    if (this->type == OBJ_CRASHBOX_HAMMER) {
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 0, 0, 255);
+    } else {
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
+    }
+
+    gSPDisplayList(POLY_OPA_DISP++, gCrashboxDL);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }

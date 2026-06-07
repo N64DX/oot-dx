@@ -12,8 +12,8 @@ SceneCmd cave_passage_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&cave_passage_room_0RoomShapeNormal_000150),
-    SCENE_CMD_OBJECT_LIST(8, cave_passage_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(19, cave_passage_room_0ActorEntry_000050),
+    SCENE_CMD_OBJECT_LIST(9, cave_passage_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(22, cave_passage_room_0ActorEntry_000050),
     SCENE_CMD_END(),
 };
 
@@ -26,6 +26,7 @@ s16 cave_passage_room_0ObjectList_000040[] = {
     OBJECT_KANBAN,
     OBJECT_DKJAIL_OBJ,
     OBJECT_KANBAN,
+    OBJECT_GOOMBA,
 };
 
 ActorEntry cave_passage_room_0ActorEntry_000050[] = {
@@ -41,6 +42,9 @@ ActorEntry cave_passage_room_0ActorEntry_000050[] = {
     { ACTOR_EN_SW,         { -1718, 190,  -563 }, {  0, 0x4000, 0 }, 0x0000 },
     { ACTOR_EN_SW,         { -1718, 190,  -610 }, {  0, 0x4000, 0 }, 0x0000 },
     { ACTOR_EN_DEKUBABA,   { -1538,  95,  -556 }, {  0, 0x76C0, 0 }, 0x0001 },
+    { ACTOR_EN_GOOMBA,     { -1550,  87, -1100 }, {  0, 0x2000, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,     { -2150,  59, -1000 }, {  0, 0x4000, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,     { -1570,  95,  -620 }, {  0, 0x8000, 0 }, 0x0000 },
     { ACTOR_OBJ_OSHIHIKI,  { -1990,  52, -1126 }, {  0,      0, 0 }, 0x1100 }, // Sets switch: 11, without switch
     { ACTOR_OBJ_OSHIHIKI,  { -1930, -10, -1126 }, {  0,      0, 0 }, 0x1104 }, // Sets switch: 11, with switch
     { ACTOR_OBJ_BLOCKSTOP, { -1931, -10, -1126 }, {  0,      0, 0 }, 0x0011 }, // Checks switch: 11

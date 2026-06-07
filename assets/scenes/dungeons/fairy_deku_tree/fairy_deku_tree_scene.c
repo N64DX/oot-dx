@@ -59,10 +59,10 @@ TransitionActorEntry fairy_deku_tree_sceneTransitionActorList0x000078[] = {
     {  3, -3,  0,  4, ACTOR_DOOR_SHUTTER, {    0,  720,   423 }, 0x0000, 0x003F }, // 11
     { 10, -3,  0, -3, ACTOR_DOOR_SHUTTER, { -798, 1320,   798 }, 0x6000, 0x003F }, // 12
     {  6, -3,  0, -3, ACTOR_DOOR_SHUTTER, {   -1,  240, -1129 }, 0x0000, 0x003F }, // 13
-    {  6, -3,  0, -3, ACTOR_DOOR_SHUTTER, { 1129,  160,     0 }, 0xC000, 0x003F }, // 14
+    {  6, -3,  0, -3, ACTOR_DOOR_SHUTTER, { 1129,  160,     0 }, 0xC000, 0x02DA }, // 14, Sets switch: 1A
     {  0, -3,  9, -3, ACTOR_DOOR_SHUTTER, {  798, 1160,  -798 }, 0x6000, 0x0084 }, // 15, Checks switch: 04
     {  2, -3,  0,  3, ACTOR_DOOR_SHUTTER, {    0,  400,   423 }, 0x0000, 0x003F }, // 16
-    {  1, -3,  0, -3, ACTOR_DOOR_SHUTTER, {    0,    0,  -643 }, 0x8000, 0x003F }, // 17
+    {  1, -3,  0, -3, ACTOR_DOOR_SHUTTER, {    0,    0,  -643 }, 0x8000, 0x02DB }, // 17, Sets switch: 1B
     {  0,  2,  1, -3, ACTOR_DOOR_SHUTTER, {    0,   80,   423 }, 0x8000, 0x0088 }, // 18, Checks switch: 08
     {  0,  8,  3, -3, ACTOR_DOOR_SHUTTER, {  299,  720,  -299 }, 0xE000, 0x0081 }, // 19, Checks switch: 01
     {  4, -3,  0,  5, ACTOR_DOOR_SHUTTER, { -299, 1000,   299 }, 0xE000, 0x0082 }, // 20, Checks switch: 02

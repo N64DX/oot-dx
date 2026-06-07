@@ -258,6 +258,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Goomba"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Goomba/z_en_goomba.o"
+endseg
+
+beginseg
     name "ovl_En_Slim"
     compress
     flags OVERLAY

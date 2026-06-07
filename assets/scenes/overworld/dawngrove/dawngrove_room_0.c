@@ -13,8 +13,8 @@ SceneCmd dawngrove_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_room_0RoomShapeNormal_000160),
-    //SCENE_CMD_OBJECT_LIST(10, dawngrove_room_0ObjectList_000040),
-    //SCENE_CMD_ACTOR_LIST(18, dawngrove_room_0ActorEntry_000050),
+    SCENE_CMD_OBJECT_LIST(11, dawngrove_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(18, dawngrove_room_0ActorEntry_000050),
     SCENE_CMD_END(),
 };
 
@@ -35,10 +35,11 @@ s16 dawngrove_room_0ObjectList_000040[] = {
     OBJECT_DEKUBABA,
     OBJECT_KANBAN,
     OBJECT_LOST_WOODS,
+    OBJECT_GOOMBA,
 };
 
 ActorEntry dawngrove_room_0ActorEntry_000050[] = {
-    { ACTOR_EN_WOOD02,      {  -567,  27,  142 }, {   0,      0,   0 }, 0x0002 },
+    { ACTOR_EN_WOOD02,      {  -567,  27,  142 }, {    0,      0,   0 }, 0x0002 },
     { ACTOR_EN_WOOD02,      {  -386, -29, -147 }, {    0, 0xFA50,   0 }, 0x0007 },
     { ACTOR_EN_WOOD02,      { -1015,   5, -267 }, {    0,      0,   0 }, 0x000B },
     { ACTOR_EN_WOOD02,      { -1004,  28,  -49 }, {    0,      0,   0 }, 0x000B },

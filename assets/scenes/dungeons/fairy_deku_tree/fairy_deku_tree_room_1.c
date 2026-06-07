@@ -12,8 +12,8 @@ SceneCmd fairy_deku_tree_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&fairy_deku_tree_room_1MeshHeader0x0000A0),
-    SCENE_CMD_OBJECT_LIST(10, fairy_deku_tree_room_1ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(5, fairy_deku_tree_room_1ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(11, fairy_deku_tree_room_1ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(7, fairy_deku_tree_room_1ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -28,14 +28,17 @@ s16 fairy_deku_tree_room_1ObjectList0x000038[] = {
     OBJECT_TP,
     OBJECT_DEKUBABA,
     OBJECT_DEKUNUTS,
+    OBJECT_GOOMBA,
 };
 
 ActorEntry fairy_deku_tree_room_1ActorList0x000048[] = {
-    { ACTOR_EN_DEKUBABA,  {    8, 0,  -75 }, {   0, 0, 0 }, 0x0001 },
-    { ACTOR_EN_BOX,       {    7, 0,  162 }, { 0x2, 0, 0 }, 0x5001 }, // Chest: 01, Deku Nuts
-    { ACTOR_OBJ_SYOKUDAI, {  138, 0,   33 }, {   0, 0, 0 }, 0x1088 }, // Switch: 08
-    { ACTOR_OBJ_SYOKUDAI, { -127, 0,   33 }, {   0, 0, 0 }, 0x1088 }, // Switch: 08
-    { ACTOR_OBJ_SYOKUDAI, {   11, 0, -219 }, {   0, 0, 0 }, 0x27FF },
+    { ACTOR_EN_DEKUBABA,  {    8, 0,  -75 }, {    0, 0, 0 }, 0x0001 },
+    { ACTOR_EN_GOOMBA,    {  200, 0, -150 }, {    0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,    { -150, 0,  -50 }, {    0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_BOX,       {    7, 0,  162 }, { 0x42, 0, 0 }, 0x5001 }, // Chest: 01, Small Key
+    { ACTOR_OBJ_SYOKUDAI, {  138, 0,   33 }, {    0, 0, 0 }, 0x1088 }, // Switch: 08
+    { ACTOR_OBJ_SYOKUDAI, { -127, 0,   33 }, {    0, 0, 0 }, 0x1088 }, // Switch: 08
+    { ACTOR_OBJ_SYOKUDAI, {   11, 0, -219 }, {    0, 0, 0 }, 0x27FF },
 };
 
 RoomShapeCullable fairy_deku_tree_room_1MeshHeader0x0000A0 = {
