@@ -374,6 +374,10 @@ u64 gItemIconBulletBag50Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)]
 #include "assets/textures/icon_item_static/gItemIconBulletBag50Tex.rgba32.inc.c"
 };
 
+u64 gItemIconBulletBag60Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconBulletBag50Tex.rgba32.inc.c"
+};
+
 u64 gItemIconQuiver30Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
 #include "assets/textures/icon_item_static/gItemIconQuiver30Tex.rgba32.inc.c"
 };
@@ -383,6 +387,10 @@ u64 gItemIconQuiver40Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = 
 };
 
 u64 gItemIconQuiver50Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconQuiver50Tex.rgba32.inc.c"
+};
+
+u64 gItemIconQuiver60Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
 #include "assets/textures/icon_item_static/gItemIconQuiver50Tex.rgba32.inc.c"
 };
 

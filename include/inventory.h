@@ -17,10 +17,10 @@ extern u16 gEquipNegMasks[EQUIP_TYPE_MAX];
 extern u32 gUpgradeMasks[UPG_MAX];
 extern u8 gEquipShifts[EQUIP_TYPE_MAX];
 extern u8 gUpgradeShifts[UPG_MAX];
-extern u16 gUpgradeCapacities[UPG_MAX][4];
+extern u16 gUpgradeCapacities[UPG_MAX][5];
 extern u32 gGsFlagsMasks[4];
 extern u32 gGsFlagsShifts[4];
-extern void* gItemIcons[0x8F];
+extern void* gItemIcons[0x91];
 extern u8 gItemSlots[76];
 
 #endif

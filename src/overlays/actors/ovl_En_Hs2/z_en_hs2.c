@@ -15,6 +15,7 @@
 #include "z_lib.h"
 #include "face_reaction.h"
 #include "play_state.h"
+#include "save.h"
 
 #include "assets/objects/object_hs/object_hs.h"
 
@@ -110,7 +111,9 @@ void EnHs2_Idle(EnHs2* this, PlayState* play) {
     u16 textId = MaskReaction_GetTextId(play, MASK_REACTION_SET_CARPENTERS_SON);
 
     if (textId == 0) {
-        textId = play->sceneId == SCENE_RIVERSIDE_VILLAGE ? 0x8233 : 0x5069;
+        if (play->sceneId == SCENE_RIVERSIDE_VILLAGE)
+            textId = LINK_IS_ADULT_OR_TIMESKIP ? 0x8244 : 0x8234;
+        else textId = 0x5069;
     }
 
     EnHs2_Interact(this, play, textId, EnHs2_Talking);

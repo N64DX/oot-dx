@@ -2078,6 +2078,10 @@ u8 Item_Give(PlayState* play, u8 item) {
         Inventory_ChangeUpgrade(UPG_QUIVER, 3);
         AMMO(ITEM_BOW) = CAPACITY(UPG_QUIVER, 3);
         return ITEM_NONE;
+    } else if (item == ITEM_QUIVER_60) {
+        Inventory_ChangeUpgrade(UPG_QUIVER, 4);
+        AMMO(ITEM_BOW) = CAPACITY(UPG_QUIVER, 4);
+        return ITEM_NONE;
     } else if (item == ITEM_BULLET_BAG_40) {
         Inventory_ChangeUpgrade(UPG_BULLET_BAG, 2);
         AMMO(ITEM_SLINGSHOT) = CAPACITY(UPG_BULLET_BAG, 2);
@@ -2085,6 +2089,10 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_BULLET_BAG_50) {
         Inventory_ChangeUpgrade(UPG_BULLET_BAG, 3);
         AMMO(ITEM_SLINGSHOT) = CAPACITY(UPG_BULLET_BAG, 3);
+        return ITEM_NONE;
+    } else if (item == ITEM_BULLET_BAG_60) {
+        Inventory_ChangeUpgrade(UPG_BULLET_BAG, 4);
+        AMMO(ITEM_SLINGSHOT) = CAPACITY(UPG_BULLET_BAG, 4);
         return ITEM_NONE;
     } else if (item == ITEM_BOMB_BAG_20) {
         if (CUR_UPG_VALUE(UPG_BOMB_BAG) == 0) {
@@ -2595,9 +2603,9 @@ u8 Item_CheckObtainability(u8 item) {
         } else {
             return 0;
         }
-    } else if ((item == ITEM_QUIVER_40) || (item == ITEM_QUIVER_50)) {
+    } else if ((item == ITEM_QUIVER_40) || (item == ITEM_QUIVER_50) || (item == ITEM_QUIVER_60)) {
         return ITEM_NONE;
-    } else if ((item == ITEM_BULLET_BAG_40) || (item == ITEM_BULLET_BAG_50)) {
+    } else if ((item == ITEM_BULLET_BAG_40) || (item == ITEM_BULLET_BAG_50) || (item == ITEM_BULLET_BAG_60)) {
         return ITEM_NONE;
     } else if ((item == ITEM_BOMB_BAG_20) || (item == ITEM_BOMB)) {
         if (CUR_UPG_VALUE(UPG_BOMB_BAG) == 0) {

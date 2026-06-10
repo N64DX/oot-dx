@@ -3057,9 +3057,10 @@ MSG()
 DEFINE_MESSAGE(0x8230, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"Oh, are you off on your quest?\n"
-"I suppose you've ben training for?\n"
-"quite a while now. Be safe!"
+"Oh, are you one of our guests?\n"
+"Have you been enjoying your stay?\n"
+"Do stay clear of the deeper woods\n"
+"though, it's not safe in there."
 ),
 MSG(),
 MSG()
@@ -3071,7 +3072,14 @@ MSG(
 "Oh, to be young... now that I'm old,\n"
 "I can't even use my trusty slingshot.\n"
 "If you happen to have some use for\n"
-"it, go ahead and take it with you."
+"it, I gladly sell you my " COLOR(RED) "Bullet Bag" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"Would you like to buy my " COLOR(RED) "Bullet Bag" COLOR(DEFAULT) "?\n"
+"It's only 150 Rupees!\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Gladly!\n" 
+    "I don't need one" COLOR(DEFAULT)
 ),
 MSG(),
 MSG()
@@ -3080,15 +3088,27 @@ MSG()
 DEFINE_MESSAGE(0x8232, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"In the river! It was in the river!\n"
-"I could have sworn I saw it\n"
-"floating down the river..."
+"Oh, to be young...\n"
+"Are you having fun with my\n"
+COLOR(RED) "Bullet Bag" COLOR(DEFAULT) "?"
 ),
 MSG(),
 MSG()
 )
 
 DEFINE_MESSAGE(0x8233, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Every day I am always looking\n"
+"towards the river. It's the lifeblood\n"
+"of our humble village. It's why it's\n"
+"called " COLOR(ADJUSTABLE) "Riverside Village" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8234, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "What's a wimpy kid like you doing\n"
@@ -3105,21 +3125,12 @@ BOX_BREAK
 "From the looks of it, you probably\n"
 "can't even uproot one of my\n"
 "plants here. Hahaha, loser!"
-BOX_BREAK
-
-"Although, I heard that there's\n"
-"something in the nearby " COLOR(RED) "grove" COLOR(DEFAULT) " that\n"
-"would give even a weakling like you\n"
-"the strength to uproot these plants..."
-BOX_BREAK
-
-"Not that you'd last a second in there."
 ),
 MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8234, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8235, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "Isn't it so relaxing laying here\n"
@@ -3136,11 +3147,115 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8235, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8236, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"To get a good view, use " COLOR(YELLOW) "[C-Up]" COLOR(DEFAULT) " and \n"
-"look around with " COLOR(LIGHTBLUE) "[Control-Pad]" COLOR(DEFAULT) "."
+"Isn't it so relaxing laying here\n"
+"on this rooftop?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8240, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Oh, are you one of our guests?\n"
+"It's been a long time since we\n"
+"had any new guests...\n"
+"Not since the curse happened..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8241, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Oh, to be young... now that I'm old,\n"
+"I can't even use my trusty slingshot.\n"
+"If you happen to have some use for\n"
+"it, I gladly sell you my " COLOR(RED) "Bullet Bag" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"Would you like to buy my " COLOR(RED) "Bullet Bag" COLOR(DEFAULT) "?\n"
+"It's only 150 Rupees!\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Gladly!\n" 
+    "I don't need one" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8243, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"In the river! It was in the river!\n"
+"I could have sworn I saw it\n"
+"floating down the river..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8244, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"..."
+BOX_BREAK
+
+"Please step aside... My plants aren't\n"
+"getting their sunlight..."
+BOX_BREAK
+
+"Ugh... It's no use... Since the curse\n"
+"everything is just dying here...\n"
+"It's all the fault of that evil man..."
+BOX_BREAK
+
+"The curse spreads from the nearby\n"
+"grove... I wish someone would help us.\n"
+"I would even settle for a wimpy kid\n"
+"like you to do it."
+BOX_BREAK
+
+"Not that you'd last a second in there."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8245, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Isn't it so relaxing laying here\n"
+"on this rooftop? Although, it'd be\n"
+"much better with some company..."
+BOX_BREAK
+
+"Company huh... How long has it since\n"
+"been since we had any new visitors?\n"
+"Not since the curse for sure.\n"
+"Everyone got scared coming here."
+BOX_BREAK
+
+"Oh well!\n"
+"At least you've paid me a visit.\n"
+"Let me give you a little something\n"
+"as a token of my appreciation."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8246, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Isn't it so relaxing laying here\n"
+"on this rooftop?\n"
+"Would be even more relaxing if it\n"
+"wasn't for the curse..."
 ),
 MSG(),
 MSG()

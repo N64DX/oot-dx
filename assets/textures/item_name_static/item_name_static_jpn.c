@@ -370,6 +370,10 @@ u64 gBulletBag50ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "assets/textures/item_name_static/gBulletBag50ItemNameJPNTex.ia4.inc.c"
 };
 
+u64 gBulletBag60ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBulletBag60ItemNameJPNTex.ia4.inc.c"
+};
+
 u64 gQuiver30ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gQuiver30ItemNameJPNTex.ia4.inc.c"
 };
@@ -380,6 +384,10 @@ u64 gQuiver40ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIG
 
 u64 gQuiver50ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gQuiver50ItemNameJPNTex.ia4.inc.c"
+};
+
+u64 gQuiver60ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gQuiver60ItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gHerosShieldItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

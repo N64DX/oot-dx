@@ -72,7 +72,7 @@ SceneCmd dawngrove_house_2_room_0Set_timeskip[] = {
 };
 
 ActorEntry dawngrove_house_2_room_0ActorEntry_timeskip[] = {
-    { ACTOR_EN_WONDER_TALK2, { -18, 85, -175 }, { 0, 0, 0 }, 0x8FC0 },
+    { ACTOR_EN_WONDER_TALK2, { -18, 85, -175 }, { 0, 0, 0 }, 0x9080 },
 };
 
 s32 dawngrove_house_2_room_0_terminatorMaybe_0000F4 = { 0x01000000 };

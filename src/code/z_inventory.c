@@ -75,16 +75,16 @@ u8 gUpgradeShifts[UPG_MAX] = {
     23, // UPG_WALLET2
 };
 
-u16 gUpgradeCapacities[UPG_MAX][4] = {
-    { 0, 30, 40, 50 },     // UPG_QUIVER
-    { 0, 20, 30, 40 },     // UPG_BOMB_BAG
-    { 0, 0, 0, 0 },        // UPG_STRENGTH (unused)
-    { 0, 0, 0, 0 },        // UPG_SCALE (unused)
-    { 99, 200, 500, 999 }, // UPG_WALLET
-    { 0, 30, 40, 50 },     // UPG_BULLET_BAG
-    { 0, 10, 20, 30 },     // UPG_DEKU_STICKS
-    { 0, 20, 30, 40 },     // UPG_DEKU_NUTS
-    { 0, 2000, 5000, 9999 }, // UPG_WALLET2
+u16 gUpgradeCapacities[UPG_MAX][5] = {
+    { 0, 30, 40, 50, 60 },       // UPG_QUIVER
+    { 0, 20, 30, 40, 50 },       // UPG_BOMB_BAG
+    { 0, 0, 0, 0, 0 },          // UPG_STRENGTH (unused)
+    { 0, 0, 0, 0, 0 },          // UPG_SCALE (unused)
+    { 99, 200, 500, 999, 0 },   // UPG_WALLET
+    { 0, 30, 40, 50, 60 },      // UPG_BULLET_BAG
+    { 0, 10, 20, 30, 40 },      // UPG_DEKU_STICKS
+    { 0, 20, 30, 40, 50 },      // UPG_DEKU_NUTS
+    { 0, 2000, 5000, 9999, 0 }, // UPG_WALLET2
 };
 
 u32 gGsFlagsMasks[] = { 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000 };
@@ -185,9 +185,11 @@ void* gItemIcons[] = {
     gItemIconBulletBag30Tex,       // ITEM_BULLET_BAG_30
     gItemIconBulletBag40Tex,       // ITEM_BULLET_BAG_40
     gItemIconBulletBag50Tex,       // ITEM_BULLET_BAG_50
+    gItemIconBulletBag60Tex,       // ITEM_BULLET_BAG_60
     gItemIconQuiver30Tex,          // ITEM_QUIVER_30
     gItemIconQuiver40Tex,          // ITEM_QUIVER_40
     gItemIconQuiver50Tex,          // ITEM_QUIVER_50
+    gItemIconQuiver60Tex,          // ITEM_QUIVER_60
     gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
     gItemIconAmuletOfEnergyTex,    // ITEM_AMULET_OF_ENERGY
     gItemIconLandTitleDeedTex,     // ITEM_PERFECT_BLOCK_UPGRADE

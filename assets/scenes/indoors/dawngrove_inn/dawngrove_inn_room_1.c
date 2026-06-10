@@ -37,7 +37,7 @@ s16 dawngrove_inn_room_1ObjectList_000048[] = {
 };
 
 ActorEntry dawngrove_inn_room_1ActorEntry_000050[] = {
-    { ACTOR_EN_WONDER_TALK2, { 0, 26, -1170 }, { 0, 0, 0 }, 0x10BF },
+    { ACTOR_EN_WONDER_TALK2, { 0, 26, -1170 }, { 0, 0, 0 }, 0x10FF },
 };
 
 RoomShapeNormal dawngrove_inn_room_1RoomShapeNormal_000090 = { 
@@ -66,7 +66,7 @@ SceneCmd dawngrove_inn_room_1Set_timeskip[] = {
 };
 
 ActorEntry dawngrove_inn_room_1ActorEntry_timeskip[] = {
-    { ACTOR_EN_WONDER_TALK2, { 0, 26, -1170 }, { 0, 0, 0 }, 0x10BF },
+    { ACTOR_EN_WONDER_TALK2, { 0, 26, -1170 }, { 0, 0, 0 }, 0x113F },
 };
 
 s32 dawngrove_inn_room_1_terminatorMaybe_00007C = { 0x01000000 };

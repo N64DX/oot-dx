@@ -390,18 +390,68 @@ MSG()
 )
 
 DEFINE_MESSAGE(0x9020, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BULLET_BAG_60) QUICKTEXT_ENABLE COLOR(RED) "タネブクロ" COLOR(DEFAULT) "が大きくなった！" QUICKTEXT_DISABLE "\n"
+"パチンコのタマを　入れられる！\n"
+COLOR(YELLOW) "６０コ" COLOR(DEFAULT) "まで　入るぞ！"
+),
+MSG(
+ITEM_ICON(ITEM_BULLET_BAG_60) QUICKTEXT_ENABLE "Your " COLOR(RED) "Deku Seeds Bullet Bag \n"
+COLOR(DEFAULT) "has become bigger!" QUICKTEXT_DISABLE "\n"
+"Now you can carry more bullets!\n"
+"This bag can hold " COLOR(YELLOW) "60" COLOR(RED) " " COLOR(DEFAULT) "bullets!"
+),
+MSG(
+ITEM_ICON(ITEM_BULLET_BAG_60) QUICKTEXT_ENABLE "Deine " COLOR(RED) "Munitionstasche\n"
+COLOR(DEFAULT) "ist größer geworden!" QUICKTEXT_DISABLE "\n"
+"Jetzt kannst Du insgesamt\n"
+COLOR(YELLOW) "60" COLOR(RED) " Deku-Kerne " COLOR(DEFAULT) "tragen!"
+),
+MSG(
+ITEM_ICON(ITEM_BULLET_BAG_60) QUICKTEXT_ENABLE "Votre " COLOR(RED) "Sac de graines" COLOR(DEFAULT) " devient\n"
+"plus gros!" QUICKTEXT_DISABLE " Vous pouvez \n"
+"désormais transporter jusqu'à\n"
+COLOR(YELLOW) "60" COLOR(RED) " " COLOR(DEFAULT) "munitions!"
+)
+)
+
+DEFINE_MESSAGE(0x9021, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_60) QUICKTEXT_ENABLE COLOR(RED) "最大の矢立て" COLOR(DEFAULT) "に　とりかえた！" QUICKTEXT_DISABLE "\n"
+"矢を持てる数が　さらにふえた！\n"
+COLOR(YELLOW) "６０本" COLOR(DEFAULT) "まで　持てるぞ！"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_60) QUICKTEXT_ENABLE "You upgraded your quiver to\n"
+"the " COLOR(RED) "Biggest Quiver" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Now you can carry even more \n"
+"arrows, to a maximum of " COLOR(YELLOW) "60" COLOR(DEFAULT) "!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_60) QUICKTEXT_ENABLE "Der " COLOR(RED) "Riesenköcher" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Jetzt kannst Du insgesamt\n"
+COLOR(YELLOW) "60" COLOR(DEFAULT) " Pfeile tragen!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_60) QUICKTEXT_ENABLE "Vous changez votre carquois \n"
+"pour un " COLOR(RED) "Enorme Carquois" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Vous pouvez désormais trans-\n"
+"porter jusqu'à " COLOR(YELLOW) "60 " COLOR(DEFAULT) "flèches!"
+)
+)
+
+DEFINE_MESSAGE(0x9022, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_PICTOBOX) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Pictograph Box" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Someone must have lost it!\n"
-"It looks rusty from all the water,\n"
-"but somehow still functional."
+UNSKIPPABLE ITEM_ICON(ITEM_SHRINE_KEY) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Shrine Key" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Bring it back to the Gorons that\n"
+"lost their key to the shrine!"
 ),
 MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x9021, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9023, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_SHRINE_KEY) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Shrine Key" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"

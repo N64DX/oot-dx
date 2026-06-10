@@ -370,6 +370,10 @@ u64 gBulletBag50ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "assets/textures/item_name_static/gBulletBag50ItemNameENGTex.ia4.inc.c"
 };
 
+u64 gBulletBag60ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBulletBag60ItemNameENGTex.ia4.inc.c"
+};
+
 u64 gQuiver30ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gQuiver30ItemNameENGTex.ia4.inc.c"
 };
@@ -380,6 +384,10 @@ u64 gQuiver40ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIG
 
 u64 gQuiver50ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gQuiver50ItemNameENGTex.ia4.inc.c"
+};
+
+u64 gQuiver60ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gQuiver60ItemNameENGTex.ia4.inc.c"
 };
 
 u64 gHerosShieldItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
