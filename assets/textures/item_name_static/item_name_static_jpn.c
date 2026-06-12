@@ -302,20 +302,20 @@ u64 gShrineKeyItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "assets/textures/item_name_static/gShrineKeyItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameJPNTex.ia4.inc.c"
+u64 gShieldPotionItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gShieldPotionItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gBombBag20ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gBombBag20ItemNameJPNTex.ia4.inc.c"
+u64 gWoodenShieldItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gWoodenShieldItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gBombBag30ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gBombBag30ItemNameJPNTex.ia4.inc.c"
+u64 gHerosShieldItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosShieldItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gBombBag40ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gBombBag40ItemNameJPNTex.ia4.inc.c"
+u64 gMetalShieldItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gMetalShieldItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gGoronsBraceletItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -390,12 +390,28 @@ u64 gQuiver60ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIG
 #include "assets/textures/item_name_static/gQuiver60ItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gHerosShieldItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosShieldItemNameJPNTex.ia4.inc.c"
+u64 gBombBag20ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBombBag20ItemNameJPNTex.ia4.inc.c"
+};
+
+u64 gBombBag30ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBombBag30ItemNameJPNTex.ia4.inc.c"
+};
+
+u64 gBombBag40ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBombBag40ItemNameJPNTex.ia4.inc.c"
+};
+
+u64 gHerosSwordItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gAmuletOfEnergyItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gAmuletOfEnergyItemNameJPNTex.ia4.inc.c"
+};
+
+u64 gPerfectBlockItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gPerfectBlockItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gMinuetOfForestItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

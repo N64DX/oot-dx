@@ -168,10 +168,10 @@ void* gItemIcons[] = {
     gItemIconGoldenFeatherTex,     // ITEM_GOLDEN_FEATHER
     gItemIconPictoboxTex,          // ITEM_PICTOBOX
     gItemIconRoomKeyTex,           // ITEM_SHRINE_KEY
-    gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
-    gItemIconBombBag20Tex,         // ITEM_BOMB_BAG_20
-    gItemIconBombBag30Tex,         // ITEM_BOMB_BAG_30
-    gItemIconBombBag40Tex,         // ITEM_BOMB_BAG_40
+    gItemIconBottlePotionShieldTex, // ITEM_BOTTLE_POTION_SHIELD
+    gItemIconShieldWoodenTex,      // ITEM_SHIELD_WOODEN
+    gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
+    gItemIconShieldMetalTex,       // ITEM_SHIELD_METAL
     gItemIconGoronsBraceletTex,    // ITEM_STRENGTH_GORONS_BRACELET
     gItemIconSilverGauntletsTex,   // ITEM_STRENGTH_SILVER_GAUNTLETS
     gItemIconGoldenGauntletsTex,   // ITEM_STRENGTH_GOLD_GAUNTLETS
@@ -190,7 +190,10 @@ void* gItemIcons[] = {
     gItemIconQuiver40Tex,          // ITEM_QUIVER_40
     gItemIconQuiver50Tex,          // ITEM_QUIVER_50
     gItemIconQuiver60Tex,          // ITEM_QUIVER_60
-    gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
+    gItemIconBombBag20Tex,         // ITEM_BOMB_BAG_20
+    gItemIconBombBag30Tex,         // ITEM_BOMB_BAG_30
+    gItemIconBombBag40Tex,         // ITEM_BOMB_BAG_40
+    gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
     gItemIconAmuletOfEnergyTex,    // ITEM_AMULET_OF_ENERGY
     gItemIconLandTitleDeedTex,     // ITEM_PERFECT_BLOCK_UPGRADE
     gItemIconGiantsWalletTex,      // ITEM_MASTER_WALLET
@@ -321,6 +324,7 @@ u8 gItemSlots[] = {
     SLOT_FEATHER,       // ITEM_GOLDEN_FEATHER,
     SLOT_QUEST,         // ITEM_PICTOBOX,
     SLOT_QUEST,         // ITEM_SHRINE_KEY,
+    SLOT_BOTTLE_1,      // ITEM_BOTTLE_POTION_SHIELD
 };
 
 void Inventory_ChangeEquipment(s16 equipment, u16 value) {

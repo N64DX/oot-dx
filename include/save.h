@@ -133,6 +133,15 @@ typedef union ObtainedSkills {
     u8 skills;
 } ObtainedSkills; // size = 0x1
 
+typedef union ObtainedSkins {
+    struct {
+        u8 woodenShield : 1;
+        u8 metalShield  : 1;
+        u8 unk          : 6;
+    };
+    u8 skins;
+} ObtainedSkins; // size = 0x1
+
 typedef union ShieldDurability {
     struct {
         u16 durability : 11;
@@ -326,7 +335,8 @@ typedef struct SaveInfo {
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
-    /* 0x0F18  0x0F34 */ char unk_F34[0x03];
+    /* 0x0F18  0x0F34 */ ObtainedSkins obtainedSkins;
+    /* 0x0F19  0x0F35 */ char unk_F34[0x02];
     /* 0x0F1B  0x0F37 */ u8 energy;
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
     /* 0x0F20  0x0F3C */ FrogQuest frogQuest;

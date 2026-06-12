@@ -33,6 +33,8 @@ typedef struct BowSlingshotStringData {
 
 FlexSkeletonHeader* gPlayerSkelHeaders[] = { &gLinkAdultSkel, &gLinkChildSkel, &gLinkYoungSkel };
 
+static u8 sheathType;
+
 s16 sBootData[PLAYER_BOOTS_MAX][17] = {
     // PLAYER_BOOTS_KOKIRI
     {
@@ -199,6 +201,7 @@ u8 sActionModelGroups[PLAYER_IA_MAX] = {
     PLAYER_MODELGROUP_BOTTLE,           // PLAYER_IA_BOTTLE_POTION_RED
     PLAYER_MODELGROUP_BOTTLE,           // PLAYER_IA_BOTTLE_POTION_BLUE
     PLAYER_MODELGROUP_BOTTLE,           // PLAYER_IA_BOTTLE_POTION_GREEN
+    PLAYER_MODELGROUP_BOTTLE,           // PLAYER_IA_BOTTLE_POTION_SHIELD
     PLAYER_MODELGROUP_BOTTLE,           // PLAYER_IA_BOTTLE_MILK_FULL
     PLAYER_MODELGROUP_BOTTLE,           // PLAYER_IA_BOTTLE_MILK_HALF
     PLAYER_MODELGROUP_BOTTLE,           // PLAYER_IA_BOTTLE_FAIRY
@@ -237,7 +240,7 @@ typedef struct EnvHazardTextTriggerEntry {
 
 EnvHazardTextTriggerEntry sEnvHazardTextTriggers[] = {
     { ENV_HAZARD_TEXT_TRIGGER_HOTROOM, 0x3040 },    // PLAYER_ENV_HAZARD_HOTROOM - 1
-    { ENV_HAZARD_TEXT_TRIGGER_FREEZINGROOM, 0x9401 }, // PLAYER_ENV_HAZARD_FREEZINGROOM - 1
+    { ENV_HAZARD_TEXT_TRIGGER_FREEZINGROOM, 0x9402 }, // PLAYER_ENV_HAZARD_FREEZINGROOM - 1
     { ENV_HAZARD_TEXT_TRIGGER_UNDERWATER, 0x401D }, // PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1
     { 0, 0x0000 },                                  // PLAYER_ENV_HAZARD_SWIMMING - 1
     { ENV_HAZARD_TEXT_TRIGGER_UNDERWATER, 0x401D }, // PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1
@@ -319,6 +322,14 @@ Gfx* sPlayerRightHandShieldDLs[PLAYER_SHIELD_MAX * MAX_LINK_MODELS] = {
     gLinkAdultRightHandClosedNearDL,
     gLinkChildHoldingHerosShieldDL,
     gLinkYoungHoldingHerosShieldDL,
+    // PLAYER_SHIELD_METAL
+    gLinkAdultRightHandClosedNearDL,
+    gLinkChildHoldingWoodenShieldDL,
+    gLinkYoungHoldingWoodenShieldDL,
+    // PLAYER_SHIELD_METAL
+    gLinkAdultRightHandClosedNearDL,
+    gLinkChildHoldingMetalShieldDL,
+    gLinkYoungHoldingMetalShieldDL,
 };
 
 Gfx* D_80125D28[PLAYER_SHIELD_MAX * MAX_LINK_MODELS] = {
@@ -390,26 +401,9 @@ Gfx* gPlayerLeftHandClosedDLs[MAX_LINK_MODELS] = {
     gLinkYoungLeftFistNearDL,
 };
 
-Gfx* gPlayerShields[][4] = {
-    { gLinkChildDekuShieldWithMatrixDL, gLinkChildHylianShieldAndSheathNearDL, gLinkChildMirrorShieldWithMatrixDL, gLinkChildHerosShieldWithMatrixDL },
-    { gLinkYoungDekuShieldWithMatrixDL, gLinkYoungHylianShieldAndSheathNearDL, gLinkYoungMirrorShieldWithMatrixDL, gLinkYoungHerosShieldWithMatrixDL },
-};
-
-
-Gfx* gPlayerSheathedSwordsWithShields[][5][5] = {
-    {
-        { gLinkChildDekuShieldKokiriSwordSheathedDL, gLinkChildHylianShieldKokiriSwordSheathedDL, gLinkChildMirrorShieldKokiriSwordSheathedDL, gLinkChildHerosShieldKokiriSwordSheathedDL, gLinkChildHylianShieldKokiriSwordSheathDL },
-        { gLinkChildDekuShieldRazorSwordSheathedDL,  gLinkChildHylianShieldRazorSwordSheathedDL,  gLinkChildMirrorShieldRazorSwordSheathedDL,  gLinkChildHerosShieldRazorSwordSheathedDL,  gLinkChildHylianShieldRazorSwordSheathDL  },
-        { gLinkChildDekuShieldGildedSwordSheathedDL, gLinkChildHylianShieldGildedSwordSheathedDL, gLinkChildMirrorShieldGildedSwordSheathedDL, gLinkChildHerosShieldGildedSwordSheathedDL, gLinkChildHylianShieldGildedSwordSheathDL },
-        { gLinkChildDekuShieldHerosSwordSheathedDL,  gLinkChildHylianShieldHerosSwordSheathedDL,  gLinkChildMirrorShieldHerosSwordSheathedDL,  gLinkChildHerosShieldHerosSwordSheathedDL,  gLinkChildHylianShieldHerosSwordSheathDL  },
-        { gLinkChildDekuShieldMasterSwordSheathedDL, gLinkChildHylianShieldMasterSwordSheathedDL, gLinkChildMirrorShieldMasterSwordSheathedDL, gLinkChildHerosShieldMasterSwordSheathedDL, gLinkChildHylianShieldMasterSwordSheathDL  },
-    }, {
-        { gLinkYoungDekuShieldKokiriSwordSheathedDL, gLinkYoungHylianShieldKokiriSwordSheathedDL, gLinkYoungMirrorShieldKokiriSwordSheathedDL, gLinkYoungHerosShieldKokiriSwordSheathedDL, gLinkYoungHylianShieldKokiriSwordSheathDL },
-        { gLinkYoungDekuShieldRazorSwordSheathedDL,  gLinkYoungHylianShieldRazorSwordSheathedDL,  gLinkYoungMirrorShieldRazorSwordSheathedDL,  gLinkYoungHerosShieldRazorSwordSheathedDL,  gLinkYoungHylianShieldRazorSwordSheathDL  },
-        { gLinkYoungDekuShieldGildedSwordSheathedDL, gLinkYoungHylianShieldGildedSwordSheathedDL, gLinkYoungMirrorShieldGildedSwordSheathedDL, gLinkYoungHerosShieldGildedSwordSheathedDL, gLinkYoungHylianShieldGildedSwordSheathDL },
-        { gLinkYoungDekuShieldHerosSwordSheathedDL,  gLinkYoungHylianShieldHerosSwordSheathedDL,  gLinkYoungMirrorShieldHerosSwordSheathedDL,  gLinkYoungHerosShieldHerosSwordSheathedDL,  gLinkYoungHylianShieldHerosSwordSheathDL  },
-        { gLinkYoungDekuShieldMasterSwordSheathedDL, gLinkYoungHylianShieldMasterSwordSheathedDL, gLinkYoungMirrorShieldMasterSwordSheathedDL, gLinkYoungHerosShieldMasterSwordSheathedDL, gLinkYoungHylianShieldMasterSwordSheathDL  },
-    }
+Gfx* gPlayerShields[][PLAYER_SHIELD_MAX-1] = {
+    { gLinkChildDekuShieldWithMatrixDL, gLinkChildHylianShieldAndSheathNearDL, gLinkChildMirrorShieldWithMatrixDL, gLinkChildHerosShieldWithMatrixDL, gLinkChildWoodenShieldWithMatrixDL, gLinkChildMetalShieldWithMatrixDL },
+    { gLinkYoungDekuShieldWithMatrixDL, gLinkYoungHylianShieldAndSheathNearDL, gLinkYoungMirrorShieldWithMatrixDL, gLinkYoungHerosShieldWithMatrixDL, gLinkYoungWoodenShieldWithMatrixDL, gLinkYoungMetalShieldWithMatrixDL },
 };
 
 Gfx* gPlayerSheathedSwords[][5] = {
@@ -707,12 +701,14 @@ void Player_SetModelsForHoldingShield(Player* this) {
         this->sheathDLists = sPlayerDListGroups[this->sheathType = PLAYER_MODELTYPE_SHEATH_16] + GET_LINK_MODEL;
         this->modelAnimType = PLAYER_ANIMTYPE_2;
     }
+    sheathType = this->sheathType;
 }
 
 void Player_SetModels(Player* this, s32 modelGroup) {
     this->leftHandType = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_LEFT_HAND];
     this->rightHandType = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_RIGHT_HAND];
     this->sheathType = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_SHEATH];
+    sheathType = this->sheathType;
 
     this->leftHandDLists = sPlayerDListGroups[gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_LEFT_HAND]] + GET_LINK_MODEL;
     this->rightHandDLists = sPlayerDListGroups[gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_RIGHT_HAND]] + GET_LINK_MODEL;
@@ -1131,6 +1127,16 @@ Color_RGB8 sGauntletColors[] = {
     { 254, 207, 15 },
 };
 
+u8 Player_GetShieldSkin(void) {
+    if (LINK_IS_ADULT)
+        return 0;
+    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU && gSaveContext.save.info.obtainedSkins.woodenShield)
+        return 4;
+    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD && gSaveContext.save.info.obtainedSkins.metalShield)
+        return 2;
+    return 0;
+}
+
 Gfx* sBootDListGroups[][2] = {
     { gLinkAdultLeftIronBootDL, gLinkAdultRightIronBootDL },   // PLAYER_BOOTS_IRON
     { gLinkAdultLeftHoverBootDL, gLinkAdultRightHoverBootDL }, // PLAYER_BOOTS_HOVER
@@ -1224,6 +1230,19 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
             }
         } else if (Player_GetStrength() > PLAYER_STR_NONE) {
             gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][2]);
+        }
+
+        if (LINK_IS_CHILD) {
+            u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
+            if (shield == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+                shield = 4;
+
+            if (play->pauseCtx.state <= PAUSE_STATE_WAIT_BG_PRERENDER || play->pauseCtx.state == PAUSE_STATE_GAME_OVER_START || play->pauseCtx.state == PAUSE_STATE_GAME_OVER_WAIT_BG_PRERENDER || shield == EQUIP_VALUE_SHIELD_HYLIAN)
+                if ((shield > PLAYER_SHIELD_NONE && sheathType == PLAYER_MODELTYPE_SHEATH_18) || (shield == EQUIP_VALUE_SHIELD_HYLIAN && sheathType == PLAYER_MODELTYPE_SHEATH_19 && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD)) {
+                    gDPPipeSync(POLY_OPA_DISP++);
+                    gSPMatrix(POLY_OPA_DISP++, 0x0D000400, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+                    gSPDisplayList(POLY_OPA_DISP++, gPlayerShields[IS_YOUNG_LINK][shield - 1 + Player_GetShieldSkin()]);
+                }
         }
     }
 
@@ -1452,6 +1471,7 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
 
             if (sRightHandType == PLAYER_MODELTYPE_RH_SHIELD) {
                 dLists += this->currentShield * MAX_LINK_MODELS;
+                dLists += Player_GetShieldSkin() * MAX_LINK_MODELS;
             } else if ((this->rightHandType == PLAYER_MODELTYPE_RH_OPEN) && (this->actor.speed > 2.0f) &&
                        !(this->stateFlags1 & PLAYER_STATE1_27)) {
                 dLists = sPlayerRightHandClosedDLs + GET_LINK_MODEL;
@@ -1477,14 +1497,10 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                         dLists = &gPlayerSheathedSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                     else if (this->currentShield == PLAYER_SHIELD_NONE)
                         dLists = &gPlayerSwordSheaths[IS_YOUNG_LINK][swordEquipValue - 1];
-                    else if (PLAYER_MODELTYPE_SHEATH_19 && this->currentShield == PLAYER_SHIELD_HYLIAN && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD)
-                        dLists = &gPlayerSheathedSwordsWithShields[IS_YOUNG_LINK][swordEquipValue - 1][4];
                     else if (this->sheathType == PLAYER_MODELTYPE_SHEATH_18)
-                        dLists = &gPlayerSheathedSwordsWithShields[IS_YOUNG_LINK][swordEquipValue - 1][this->currentShield - 1];
+                        dLists = &gPlayerSheathedSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                     else dLists = &gPlayerSwordSheaths[IS_YOUNG_LINK][swordEquipValue - 1];
                 }
-                else if (this->currentShield > PLAYER_SHIELD_NONE && this->sheathType == PLAYER_MODELTYPE_SHEATH_18)
-                    dLists = &gPlayerShields[IS_YOUNG_LINK][this->currentShield - 1];
             }
 
             *dList = *dLists;
@@ -1734,6 +1750,7 @@ Color_RGB8 sBottleColors[] = {
     { 255, 0, 0 },     // Red Potion
     { 0, 0, 255 },     // Blue Potion
     { 0, 255, 0 },     // Green Potion
+    { 191, 0, 255 },   // Shield Potion
     { 255, 255, 255 }, // Milk
     { 255, 255, 255 }, // Half Milk
     { 80, 80, 255 },   // Fairy
@@ -2167,6 +2184,7 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                 dListOffset = playerSwordAndShield[1] * MAX_LINK_MODELS;
             if (shieldEquipValue == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD)
                 dListOffset += MAX_LINK_MODELS * 2;
+            dListOffset += MAX_LINK_MODELS * Player_GetShieldSkin();
             dLists = sPlayerDListGroups[type] + GET_LINK_MODEL;
             *dList = *(dLists + dListOffset);
         }
@@ -2183,14 +2201,10 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                     *dList = gPlayerSheathedSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                 else if (shieldEquipValue == EQUIP_VALUE_SHIELD_NONE)
                     *dList = gPlayerSwordSheaths[IS_YOUNG_LINK][swordEquipValue - 1];
-                else if (shieldEquipValue == EQUIP_VALUE_SHIELD_HYLIAN && !IS_HEROS_SHIELD)
-                    *dList = gPlayerSheathedSwordsWithShields[IS_YOUNG_LINK][swordEquipValue - 1][4];
                 else if (type == PLAYER_MODELTYPE_SHEATH_18)
-                    *dList = gPlayerSheathedSwordsWithShields[IS_YOUNG_LINK][swordEquipValue - 1][shieldEquipValue - 1];
+                    *dList = gPlayerSheathedSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                 else *dList = gPlayerSwordSheaths[IS_YOUNG_LINK][swordEquipValue - 1];
             }
-            else if (shieldEquipValue == EQUIP_VALUE_SHIELD_HYLIAN && !IS_HEROS_SHIELD)
-                *dList = gPlayerShields[IS_YOUNG_LINK][shieldEquipValue - 1];
         }
         else if (limbIndex == PLAYER_LIMB_WAIST) {
             type = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_WAIST];

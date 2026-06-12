@@ -144,3 +144,100 @@ Gfx gGiHerosShieldEmblemDL[] = {
     gsSP2Triangles(7, 6, 13, 0, 0, 13, 12, 0),
     gsSPEndDisplayList(),
 };
+
+Vtx gGiMetalShieldFrameVtx[] = {
+#include "assets/objects/object_gi_shield_2_mm/gGiMetalShieldFrameVtx.inc.c"
+};
+
+Vtx gGiMetalShieldSymbolVtx[] = {
+#include "assets/objects/object_gi_shield_2_mm/gGiMetalShieldSymbolVtx.inc.c"
+};
+
+u64 gGiMetalShieldFrameTex[] = {
+#include "assets/objects/object_gi_shield_2_mm/gGiMetalShieldFrameTex.ci4.inc.c"
+};
+
+u64 gGiMetalShieldFrameTLUT[] = {
+#include "assets/objects/object_gi_shield_2_mm/gGiMetalShieldFrameTex.tlut.rgba16.inc.c"
+};
+
+u64 gGiMetalShieldSymbolTex[] = {
+#include "assets/objects/object_gi_shield_2_mm/gGiMetalShieldSymbolTex.ci8.inc.c"
+};
+
+u64 gGiMetalShieldSymbolTLUT[] = {
+#include "assets/objects/object_gi_shield_2_mm/gGiMetalShieldSymbolTex.tlut.rgba16.inc.c"
+};
+
+u64 gGiMetalShieldBackTex[] = {
+#include "assets/objects/object_gi_shield_2_mm/gGiMetalShieldBackTex.rgba16.inc.c"
+};
+
+Gfx gGiMetalShieldFrameDL[] = {
+    gsDPPipeSync(),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, 0, G_ON),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gGiMetalShieldBackTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, 0, 0, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPTileSync(),
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 256, 7, 0, 0, 0, 0, 0, 0, 0),
+    gsDPLoadSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_CULL_BACK | G_FOG | G_LIGHTING | G_CLIPPING),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsSPVertex(gGiMetalShieldFrameVtx, 23, 0),
+    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
+    gsSP2Triangles(2, 4, 3, 0, 2, 5, 4, 0),
+    gsSP2Triangles(5, 2, 6, 0, 6, 2, 1, 0),
+    gsSP2Triangles(7, 8, 9, 0, 8, 10, 11, 0),
+    gsSP2Triangles(11, 10, 12, 0, 9, 13, 7, 0),
+    gsSP2Triangles(11, 9, 8, 0, 14, 12, 10, 0),
+    gsSP2Triangles(15, 16, 17, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 18, 0, 17, 22, 15, 0),
+    gsSP2Triangles(19, 17, 16, 0, 21, 19, 18, 0),
+    gsDPPipeSync(),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTextureBlock_4b(gGiMetalShieldFrameTex, G_IM_FMT_CI, 64, 64, 0, 0, 0, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gGiMetalShieldFrameTLUT),
+    gsDPTileSync(),
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 256, 7, 0, 0, 0, 0, 0, 0, 0),
+    gsDPLoadSync(),
+    gsDPLoadTLUTCmd(7, 15),
+    gsDPPipeSync(),
+    gsSPVertex(&gGiMetalShieldFrameVtx[23], 17, 0),
+    gsSP2Triangles(0, 1, 2, 0, 2, 3, 4, 0),
+    gsSP2Triangles(2, 5, 6, 0, 7, 8, 9, 0),
+    gsSP2Triangles(10, 11, 12, 0, 13, 14, 15, 0),
+    gsSP2Triangles(12, 5, 16, 0, 1, 0, 12, 0),
+    gsSP2Triangles(2, 16, 5, 0, 12, 6, 5, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gGiMetalShieldSymbolDL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsSPTexture(0x7CF, 0x9C3, 0, 0, G_ON),
+    gsDPLoadTLUT_pal256(gGiMetalShieldSymbolTLUT),
+    gsDPLoadTextureBlock(gGiMetalShieldSymbolTex, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 8, 0, 0, 0, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPTileSync(),
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 256, 7, 0, 0, 0, 0, 0, 0, 0),
+    gsDPLoadSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_CLIPPING),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsSPVertex(gGiMetalShieldSymbolVtx, 28, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 4, 15, 5, 0),
+    gsSP2Triangles(1, 16, 2, 0, 17, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 19, 23, 24, 0),
+    gsSP2Triangles(10, 12, 14, 0, 11, 10, 14, 0),
+    gsSP2Triangles(12, 10, 9, 0, 13, 12, 9, 0),
+    gsSP2Triangles(25, 20, 22, 0, 21, 26, 24, 0),
+    gsSP2Triangles(27, 17, 26, 0, 27, 6, 8, 0),
+    gsSPEndDisplayList(),
+};

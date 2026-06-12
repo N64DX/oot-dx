@@ -19,6 +19,7 @@
 #include "assets/objects/object_gi_stick/object_gi_stick.h"
 #include "assets/objects/object_gi_map/object_gi_map.h"
 #include "assets/objects/object_gi_shield_1/object_gi_shield_1.h"
+#include "assets/objects/object_gi_shield_1/object_gi_shield_1_extra.h"
 #include "assets/objects/object_gi_magicpot/object_gi_magicpot.h"
 #include "assets/objects/object_gi_bomb_1/object_gi_bomb_1.h"
 #include "assets/objects/object_gi_purse/object_gi_purse.h"
@@ -36,6 +37,7 @@
 #include "assets/objects/object_gi_bow/object_gi_bow.h"
 #include "assets/objects/object_gi_glasses/object_gi_glasses.h"
 #include "assets/objects/object_gi_liquid/object_gi_liquid.h"
+#include "assets/objects/object_gi_liquid/object_gi_liquid_extra.h"
 #include "assets/objects/object_gi_shield_3/object_gi_shield_3.h"
 #include "assets/objects/object_gi_letter/object_gi_letter.h"
 #include "assets/objects/object_gi_clothes/object_gi_clothes.h"
@@ -390,8 +392,12 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawSkullToken, { gSkulltulaTokenDL, gSkulltulaTokenFlameDL } },
     // GID_SHIELD_MIRROR_MM,
     { GetItem_DrawMirrorShield, { gGiMirrorShieldMMDL, gGiMirrorShieldEmptyMMDL } },
+    // GID_SHIELD_WOODEN
+    { GetItem_DrawOpa0, { gGiWoodenShieldDL } },
     // GID_SHIELD_HEROS
     { GetItem_DrawOpa0Xlu1, { gGiHerosShieldEmblemDL, gGiHerosShieldDL } },
+    // GID_SHIELD_METAL
+    { GetItem_DrawOpa01, { gGiMetalShieldFrameDL, gGiMetalShieldSymbolDL } },
     // GID_SWORD_HEROS
     { GetItem_DrawOpa0Xlu1, { gGiHerosSwordBladeHiltDL, gGiHerosSwordGuardDL } },
     // GID_SWORD_SILVER
@@ -420,6 +426,8 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawOpa0Xlu1, { gGiPictoBoxFrameDL, gGiPictoBoxBodyAndLensDL } },
     // GID_ROOM_KEY
     { GetItem_DrawXlu0, { gGiRoomKeyDL } },
+    // GID_BOTTLE_POTION_SHIELD
+    { GetItem_DrawPotion, { gGiPotionPotDL, gGiPurplePotColorDL, gGiPurpleLiquidColorDL, gGiPotionLiquidDL, gGiPurplePatternColorDL, gGiPotionPatternDL } },
     // GID_LAND_TITLE_DEED
 	{ GetItem_DrawOpa0, { gGiTitleDeedLandColorDL } },
     // GID_BOOTS_KOKIRI

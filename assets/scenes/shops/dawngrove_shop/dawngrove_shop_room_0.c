@@ -12,7 +12,7 @@ SceneCmd dawngrove_shop_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(30, 16, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_shop_room_0RoomShapeNormal_000090),
-    SCENE_CMD_OBJECT_LIST(13, dawngrove_shop_room_0ObjectList_000048),
+    SCENE_CMD_OBJECT_LIST(14, dawngrove_shop_room_0ObjectList_000048),
     SCENE_CMD_ACTOR_LIST(3, dawngrove_shop_room_0ActorEntry_000060),
     SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
     SCENE_CMD_END(),
@@ -29,9 +29,10 @@ s16 dawngrove_shop_room_0ObjectList_000048[] = {
     OBJECT_GI_SHIELD_2_MM,
     OBJECT_GI_NUTS,
     OBJECT_GI_BOMB_1,
-    OBJECT_GI_STICK,
+    OBJECT_GI_LIQUID,
     OBJECT_GI_HEART,
     OBJECT_GI_ARROW,
+    OBJECT_GI_SOLDOUT,
 };
 
 ActorEntry dawngrove_shop_room_0ActorEntry_000060[] = {

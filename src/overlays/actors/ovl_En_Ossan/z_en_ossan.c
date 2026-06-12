@@ -331,13 +331,13 @@ static ShopItem sShopkeeperStores[][8] = {
       { SI_DEKU_SHIELD_UPGRADE, -80, 52, -3 },
       { SI_HEROS_SHIELD_UPGRADE, -80, 76, -3 } },
 
-    { { SI_DEKU_SHIELD, 50, 52, -20 },
+    { { SI_WOODEN_SHIELD, 50, 52, -20 },
       { SI_HYLIAN_SHIELD, 50, 76, -20 },
-      { SI_HEROS_SHIELD, 80, 52, -3 },
+      { SI_METAL_SHIELD, 80, 52, -3 },
       { SI_RECOVERY_HEART, 80, 76, -3 },
       { SI_BOMBS_10, -50, 52, -20 },
       { SI_DEKU_NUTS_10, -50, 76, -20 },
-      { SI_DEKU_STICK, -80, 52, -3 },
+      { SI_SHIELD_POTION, -80, 52, -3 },
       { SI_ARROWS_30, -80, 76, -3 } },
 
     { { SI_HYLIAN_SHIELD, 50, 52, -20 },
@@ -366,7 +366,8 @@ static EnOssanGetGirlAParamsFunc sShopItemReplaceFunc[] = {
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
-    ShopItemDisp_Default,
+    ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
+    ShopItemDisp_Default,   ShopItemDisp_Default,
 };
 
 static InitChainEntry sInitChain[] = {
@@ -614,7 +615,7 @@ void EnOssan_TalkSmithyShopkeeper(PlayState* play) {
 }
 
 void EnOssan_TalkAncientGroveShopkeeper(PlayState* play) {
-    if (!LINK_IS_ADULT_OR_TIMESKIP)
+    if (LINK_IS_ADULT_OR_TIMESKIP)
         Message_ContinueTextbox(play, GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW) ? 0x8213 : 0x8212);
     else Message_ContinueTextbox(play, 0x8211);
 }
@@ -1485,6 +1486,10 @@ void EnOssan_HandleCanBuyItem(PlayState* play, EnOssan* this) {
         case CANBUY_RESULT_CANT_GET_NOW_5:
             Sfx_PlaySfxCentered(NA_SE_SY_ERROR);
             EnOssan_SetStateCantGetItem(play, this, 0x86);
+            break;
+        case CANBUY_RESULT_CANT_BREAK_SHIELD:
+            Sfx_PlaySfxCentered(NA_SE_SY_ERROR);
+            EnOssan_SetStateCantGetItem(play, this, 0x9401);
             break;
     }
 }

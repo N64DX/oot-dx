@@ -19,6 +19,7 @@
 #include "item.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/object_link_child/object_link_young.h"
 
@@ -233,7 +234,7 @@ void ItemShieldYoung_Draw(Actor* thisx, PlayState* play) {
         gSPSegment(POLY_OPA_DISP++, 0x0C, gCullBackDList);
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_item_shield_young.c", 460);
-        gSPDisplayList(POLY_OPA_DISP++, SEGMENTED_TO_VIRTUAL(gLinkYoungDekuShieldDL));
+        gSPDisplayList(POLY_OPA_DISP++, SEGMENTED_TO_VIRTUAL(gSaveContext.save.info.obtainedSkins.woodenShield ? gLinkYoungWoodenShieldDL : gLinkYoungDekuShieldDL));
         CLOSE_DISPS(play->state.gfxCtx, "../z_item_shield_young.c", 465);
     }
 }

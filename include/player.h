@@ -8,7 +8,7 @@
 struct Player;
 
 #define MAX_LINK_MODELS 3
-#define MAX_BOMB_ARROWS 3
+#define MAX_BOMB_ARROWS 2
 
 #define PLAYER_PARAMS(startMode, startBgCamIndex) (PARAMS_PACK_NOMASK(startMode, 8) | PARAMS_PACK_NOMASK(startBgCamIndex, 0))
 
@@ -59,7 +59,9 @@ typedef enum PlayerShield {
     /* 0x02 */ PLAYER_SHIELD_HYLIAN,
     /* 0x03 */ PLAYER_SHIELD_MIRROR,
     /* 0x04 */ PLAYER_SHIELD_HEROS,
-    /* 0x05 */ PLAYER_SHIELD_MAX
+    /* 0x05 */ PLAYER_SHIELD_WOODEN,
+    /* 0x06 */ PLAYER_SHIELD_METAL,
+    /* 0x07 */ PLAYER_SHIELD_MAX
 } PlayerShield;
 
 typedef enum PlayerTunic {
@@ -158,36 +160,37 @@ typedef enum PlayerItemAction {
     /* 0x26 */ PLAYER_IA_BOTTLE_POTION_RED,
     /* 0x27 */ PLAYER_IA_BOTTLE_POTION_BLUE,
     /* 0x28 */ PLAYER_IA_BOTTLE_POTION_GREEN,
-    /* 0x29 */ PLAYER_IA_BOTTLE_MILK_FULL,
-    /* 0x2A */ PLAYER_IA_BOTTLE_MILK_HALF,
-    /* 0x2B */ PLAYER_IA_BOTTLE_FAIRY,
-    /* 0x2C */ PLAYER_IA_ZELDAS_LETTER,
-    /* 0x2D */ PLAYER_IA_WEIRD_EGG,
-    /* 0x2E */ PLAYER_IA_CHICKEN,
-    /* 0x2F */ PLAYER_IA_MAGIC_BEAN,
-    /* 0x30 */ PLAYER_IA_POCKET_EGG,
-    /* 0x31 */ PLAYER_IA_POCKET_CUCCO,
-    /* 0x32 */ PLAYER_IA_COJIRO,
-    /* 0x33 */ PLAYER_IA_ODD_MUSHROOM,
-    /* 0x34 */ PLAYER_IA_ODD_POTION,
-    /* 0x35 */ PLAYER_IA_POACHERS_SAW,
-    /* 0x36 */ PLAYER_IA_BROKEN_GORONS_SWORD,
-    /* 0x37 */ PLAYER_IA_PRESCRIPTION,
-    /* 0x38 */ PLAYER_IA_FROG,
-    /* 0x39 */ PLAYER_IA_EYEDROPS,
-    /* 0x3A */ PLAYER_IA_CLAIM_CHECK,
-    /* 0x3B */ PLAYER_IA_PICTOBOX,
-    /* 0x3C */ PLAYER_IA_SHRINE_KEY,
-    /* 0x3D */ PLAYER_IA_MASK_KEATON,
-    /* 0x3E */ PLAYER_IA_MASK_SKULL,
-    /* 0x3F */ PLAYER_IA_MASK_SPOOKY,
-    /* 0x40 */ PLAYER_IA_MASK_BUNNY_HOOD,
-    /* 0x41 */ PLAYER_IA_MASK_GORON,
-    /* 0x42 */ PLAYER_IA_MASK_ZORA,
-    /* 0x43 */ PLAYER_IA_MASK_GERUDO,
-    /* 0x44 */ PLAYER_IA_MASK_TRUTH,
-    /* 0x45 */ PLAYER_IA_LENS_OF_TRUTH,
-    /* 0x46 */ PLAYER_IA_MAX
+    /* 0x29 */ PLAYER_IA_BOTTLE_POTION_SHIELD,
+    /* 0x2A */ PLAYER_IA_BOTTLE_MILK_FULL,
+    /* 0x2B */ PLAYER_IA_BOTTLE_MILK_HALF,
+    /* 0x2C */ PLAYER_IA_BOTTLE_FAIRY,
+    /* 0x2D */ PLAYER_IA_ZELDAS_LETTER,
+    /* 0x2E */ PLAYER_IA_WEIRD_EGG,
+    /* 0x2F */ PLAYER_IA_CHICKEN,
+    /* 0x30 */ PLAYER_IA_MAGIC_BEAN,
+    /* 0x31 */ PLAYER_IA_POCKET_EGG,
+    /* 0x32 */ PLAYER_IA_POCKET_CUCCO,
+    /* 0x33 */ PLAYER_IA_COJIRO,
+    /* 0x34 */ PLAYER_IA_ODD_MUSHROOM,
+    /* 0x35 */ PLAYER_IA_ODD_POTION,
+    /* 0x36 */ PLAYER_IA_POACHERS_SAW,
+    /* 0x37 */ PLAYER_IA_BROKEN_GORONS_SWORD,
+    /* 0x38 */ PLAYER_IA_PRESCRIPTION,
+    /* 0x39 */ PLAYER_IA_FROG,
+    /* 0x3A */ PLAYER_IA_EYEDROPS,
+    /* 0x3B */ PLAYER_IA_CLAIM_CHECK,
+    /* 0x3C */ PLAYER_IA_PICTOBOX,
+    /* 0x3D */ PLAYER_IA_SHRINE_KEY,
+    /* 0x3E */ PLAYER_IA_MASK_KEATON,
+    /* 0x3F */ PLAYER_IA_MASK_SKULL,
+    /* 0x40 */ PLAYER_IA_MASK_SPOOKY,
+    /* 0x41 */ PLAYER_IA_MASK_BUNNY_HOOD,
+    /* 0x42 */ PLAYER_IA_MASK_GORON,
+    /* 0x43 */ PLAYER_IA_MASK_ZORA,
+    /* 0x44 */ PLAYER_IA_MASK_GERUDO,
+    /* 0x45 */ PLAYER_IA_MASK_TRUTH,
+    /* 0x46 */ PLAYER_IA_LENS_OF_TRUTH,
+    /* 0x47 */ PLAYER_IA_MAX
 } PlayerItemAction;
 
 typedef enum PlayerLimb {
@@ -1011,7 +1014,7 @@ typedef struct Player {
     /* 0x0A94 */ u8 shieldDamage;
     /* 0x0A95 */ s8 doorNext; // used with spiral staircase
     /* 0x0A98 */ BombArrowLink sBombArrowLinks[MAX_BOMB_ARROWS];
-} Player; // size = 0xE94
+} Player; // size = 0xD40
 
 // z_player_lib.c
 void Player_SetBootData(struct PlayState* play, Player* this);

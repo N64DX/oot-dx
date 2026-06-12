@@ -73,7 +73,7 @@ ActorEntry dawngrove_room_1ActorEntry_000050[] = {
     { ACTOR_OBJ_SYOKUDAI,   { -1795,  28,   28 }, {    0,      0,   0 }, 0x1101 },
     { ACTOR_OBJ_SYOKUDAI,   { -2034,  22, -779 }, {    0,      0,   0 }, 0x1101 },
     { ACTOR_BG_HIDAN_KOUSI, { -1795,  28,  -27 }, {    0,      0,   0 }, 0x0201 },
-    { ACTOR_EN_BOX,         { -1885, 120, -411 }, { 0x82, 0x4000, 0x1 }, 0x8002 }, // Chest flag 2, checks switch: 01, Hero's Shield
+    { ACTOR_EN_BOX,         { -1885, 120, -411 }, { 0x84, 0x4000, 0x1 }, 0x8002 }, // Chest flag 2, checks switch: 01, Metal Shield
 
     // Timeskip (not cleansed)
     { ACTOR_EN_WEATHER_TAG, { -1800, 180, -425 }, {    0,      0,   0 }, 0x2008 },
