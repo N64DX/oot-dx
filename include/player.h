@@ -8,6 +8,7 @@
 struct Player;
 
 #define MAX_LINK_MODELS 3
+#define MAX_BOMB_ARROWS 3
 
 #define PLAYER_PARAMS(startMode, startBgCamIndex) (PARAMS_PACK_NOMASK(startMode, 8) | PARAMS_PACK_NOMASK(startBgCamIndex, 0))
 
@@ -814,6 +815,12 @@ typedef void (*AfterPutAwayFunc)(struct PlayState*, struct Player*);
 #define UNK6AE_ROT_UPPER_Y (1 << 7)
 #define UNK6AE_ROT_UPPER_Z (1 << 8)
 
+typedef struct BombArrowLink {
+    /* 0x0000 */ Actor* arrow;
+    /* 0x014C */ Actor* bomb;
+    /* 0x0150 */ bool loosed;
+} BombArrowLink; // size = 0x154
+
 typedef struct Player {
     /* 0x0000 */ Actor actor;
     /* 0x014C */ s8 currentTunic; // current tunic from `PlayerTunic`
@@ -1003,7 +1010,8 @@ typedef struct Player {
     /* 0x0A88 */ Vec3f unk_A88; // previous body part 0 position
     /* 0x0A94 */ u8 shieldDamage;
     /* 0x0A95 */ s8 doorNext; // used with spiral staircase
-} Player; // size = 0xA98
+    /* 0x0A98 */ BombArrowLink sBombArrowLinks[MAX_BOMB_ARROWS];
+} Player; // size = 0xE94
 
 // z_player_lib.c
 void Player_SetBootData(struct PlayState* play, Player* this);

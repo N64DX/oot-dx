@@ -527,7 +527,7 @@ void Minimap_Draw(PlayState* play) {
                     }
                 }
 
-                if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L) && !Play_InCsMode(play) && !pressed_r && minimap_timer < (60 / R_UPDATE_RATE) && sNoclipTimer == 0) {
+                if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L) && !Play_InCsMode(play) && !pressed_r && minimap_timer < (60 / R_UPDATE_RATE) && sNoclipTimer == 0 && !BombArrow_IsActive(play)) {
                     PRINTF("Game_play_demo_mode_check=%d\n", Play_InCsMode(play));
                     // clang-format off
                     if (!R_MINIMAP_DISABLED) { SFX_PLAY_CENTERED(NA_SE_SY_CAMERA_ZOOM_UP);
@@ -624,7 +624,7 @@ void Minimap_Draw(PlayState* play) {
                     Minimap_DrawCompassIcons(play); // Draw icons for the player spawn and current position
                 }
 
-                if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L) && !Play_InCsMode(play) && !pressed_r && minimap_timer < (60 / R_UPDATE_RATE) && sNoclipTimer == 0) {
+                if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L) && !Play_InCsMode(play) && !pressed_r && minimap_timer < (60 / R_UPDATE_RATE) && sNoclipTimer == 0 && !BombArrow_IsActive(play)) {
                     // clang-format off
                     if (!R_MINIMAP_DISABLED) { SFX_PLAY_CENTERED(NA_SE_SY_CAMERA_ZOOM_UP);
                     } else {

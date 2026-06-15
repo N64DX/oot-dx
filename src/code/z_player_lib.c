@@ -1752,6 +1752,37 @@ static BowSlingshotStringData sBowSlingshotStringData[][2] = {
     }
 };
 
+void Player_UpdateBombFromPlayerLimb(PlayState* play) {
+    Player* player = GET_PLAYER(play);
+    BombArrowLink* link = NULL;
+    Actor* bomb;
+    static Vec3f sNockedBombOffset = { 275, 1000, 275 }; // Local-space offset from the right hand limb
+    Vec3f bombPos;
+    MtxF bombMf;
+    u8 i;
+
+    for (i=0; i<MAX_BOMB_ARROWS; i++)
+        if ((player->sBombArrowLinks[i].arrow != NULL) && (player->sBombArrowLinks[i].bomb != NULL) && !player->sBombArrowLinks[i].loosed) {
+            link = &player->sBombArrowLinks[i];
+            break;
+        }
+
+    if (link == NULL || link->bomb == NULL)
+        return;
+
+    bomb = link->bomb;
+    Matrix_MultVec3f(&sNockedBombOffset, &bombPos);
+    Matrix_Get(&bombMf);
+
+    Actor_SetScale(bomb, 0.0025f);
+
+    Math_Vec3f_Copy(&bomb->world.pos, &bombPos);
+    Math_Vec3f_Copy(&bomb->prevPos, &bombPos);
+
+    Matrix_MtxFToYXZRotS(&bombMf, &bomb->world.rot, false);
+    Math_Vec3s_Copy(&bomb->shape.rot, &bomb->world.rot);
+}
+
 void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx) {
     Player* this = (Player*)thisx;
 
@@ -1867,6 +1898,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
         } else if ((this->rightHandType == PLAYER_MODELTYPE_RH_SLINGSHOT) ||
                    (this->rightHandType == PLAYER_MODELTYPE_RH_BOW)) {
             BowSlingshotStringData* stringData = &sBowSlingshotStringData[GET_LINK_MODEL][this->heldItemAction == PLAYER_IA_SLINGSHOT];
+            Player_UpdateBombFromPlayerLimb(play);
 
             OPEN_DISPS(play->state.gfxCtx, "../z_player_lib.c", 2783);
 

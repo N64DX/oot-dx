@@ -30,9 +30,11 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [Demon's Quest](https://github.com/thinedave/ocarina-demonsquest-source)
 - [Darunia's Joy](https://github.com/DaruniasJoy/OoT-Custom-Sequences)
 - [MMR Music Repo](https://mega.nz/folder/4g1xHbwL#pzE9l2KBs-kwCJJr6E6IKQ)
+- [MM Recomp Bomb Arrow](https://github.com/a-priestley/MMRecompBombArrows)
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
+- **a-priestley:** Bomb Arrow
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
 - **gh0st:** Open hand Z-Targeting animation to idle fix
 - **Kenton M:** Roc's Feather concept
