@@ -2988,18 +2988,18 @@ typedef struct {
 
 static bool ArrowIsObtained(const ItemID item) {
     switch (item) {
-        case ITEM_ARROW_FIRE:  return gSaveContext.save.info.obtainedItems.fireArrow  ? true :false;
-        case ITEM_ARROW_ICE:   return gSaveContext.save.info.obtainedItems.iceArrow   ? true :false;
-        case ITEM_ARROW_LIGHT: return gSaveContext.save.info.obtainedItems.lightArrow ? true :false;
+        case ITEM_ARROW_FIRE:  return gSaveContext.save.info.obtainedItems.fireArrow  ? true : false;
+        case ITEM_ARROW_ICE:   return gSaveContext.save.info.obtainedItems.iceArrow   ? true : false;
+        case ITEM_ARROW_LIGHT: return gSaveContext.save.info.obtainedItems.lightArrow ? true : false;
         default:               return true;
     }
 }
 
 static const ArrowInfo gArrows[] = {
-    { ITEM_BOW,         SLOT_BOW,         ITEM_BOW,       0x8, 0x2, },
-    { ITEM_ARROW_FIRE,  SLOT_ARROW_FIRE,  ITEM_BOW_FIRE,  0x9, 0x3, },
-    { ITEM_ARROW_ICE,   SLOT_ARROW_ICE,   ITEM_BOW_ICE,   0xA, 0x4, },
-    { ITEM_ARROW_LIGHT, SLOT_ARROW_LIGHT, ITEM_BOW_LIGHT, 0xB, 0x5, },
+    { ITEM_BOW,         SLOT_BOW,         ITEM_BOW,       PLAYER_IA_BOW,       0x2, },
+    { ITEM_ARROW_FIRE,  SLOT_ARROW_FIRE,  ITEM_BOW_FIRE,  PLAYER_IA_BOW_FIRE,  0x3, },
+    { ITEM_ARROW_ICE,   SLOT_ARROW_ICE,   ITEM_BOW_ICE,   PLAYER_IA_BOW_ICE,   0x4, },
+    { ITEM_ARROW_LIGHT, SLOT_ARROW_LIGHT, ITEM_BOW_LIGHT, PLAYER_IA_BOW_LIGHT, 0x5, },
 };
 
 static const ArrowInfo* GetInfo(u16 variable) {
@@ -3071,7 +3071,7 @@ static void ArrowCycleHandle(Player* player, PlayState* play) {
     const ArrowInfo *curInfo, *nextInfo;
     u8 item;
 
-    if ( (player->stateFlags1 & PLAYER_STATE1_26) || play->interfaceCtx.restrictions.magicBow != 0)
+    if (play->interfaceCtx.restrictions.magicBow != 0 || (player->stateFlags1 & PLAYER_STATE1_26) || gSaveContext.magicState == MAGIC_STATE_FILL)
         return;
 
     if (gArrowCycleState.frameDelay >= 1) {
