@@ -19,6 +19,9 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
+#include "item.h"
+#include "controller.h"
+#include "save.h"
 
 #include "assets/objects/gameplay_keep/arrow_skel.h"
 #include "assets/objects/gameplay_keep/gArrow1_Anim.h"
@@ -36,6 +39,11 @@ void EnArrow_Shoot(EnArrow* this, PlayState* play);
 void EnArrow_Fly(EnArrow* this, PlayState* play);
 void func_809B45E0(EnArrow* this, PlayState* play);
 void func_809B4640(EnArrow* this, PlayState* play);
+
+void EnArrow_InitializeBombArrow(Actor* arrow, PlayState* play);
+void EnArrow_TryDetonate(Actor* arrow, PlayState* play);
+void EnArrow_Submerge(Actor* arrow, PlayState* play);
+void EnArrow_UpdateAttachedBomb(Actor* arrow, PlayState* play);
 
 ActorProfile En_Arrow_Profile = {
     /**/ ACTOR_EN_ARROW,
@@ -160,6 +168,8 @@ void EnArrow_Init(Actor* thisx, PlayState* play) {
 void EnArrow_Destroy(Actor* thisx, PlayState* play) {
     EnArrow* this = (EnArrow*)thisx;
 
+    EnArrow_TryDetonate(thisx, play);
+
     if (this->actor.params <= ARROW_LIGHT) {
         Effect_Delete(play, this->effectIndex);
     }
@@ -214,6 +224,8 @@ void EnArrow_Shoot(EnArrow* this, PlayState* play) {
 }
 
 void func_809B3CEC(PlayState* play, EnArrow* this) {
+    EnArrow_TryDetonate(&this->actor, play);
+    
     EnArrow_SetupAction(this, func_809B4640);
     Animation_PlayOnce(&this->skelAnime, &gArrow1_Anim);
     this->actor.world.rot.y += (s32)(24576.0f * (Rand_ZeroOne() - 0.5f)) + 0x8000;
@@ -265,6 +277,7 @@ void EnArrow_WaterBoxCollision(EnArrow* this, PlayState* play) {
     f32 temp;
 
     if (WaterBox_GetSurface1(play, &play->colCtx, this->actor.world.pos.x, this->actor.world.pos.z, &y, &waterBox) && this->actor.world.pos.y < y && !(this->actor.bgCheckFlags & BGCHECKFLAG_WATER)) {
+        EnArrow_Submerge(&this->actor, play);
         this->actor.bgCheckFlags |= BGCHECKFLAG_WATER;
 
         Math_Vec3f_Diff(&this->actor.world.pos, &this->actor.home.pos, &sp44);
@@ -439,6 +452,7 @@ void EnArrow_Fly(EnArrow* this, PlayState* play) {
 }
 
 void func_809B45E0(EnArrow* this, PlayState* play) {
+    EnArrow_TryDetonate(&this->actor, play);
     SkelAnime_Update(&this->skelAnime);
 
     if (DECR(this->timer) == 0) {
@@ -460,6 +474,9 @@ void EnArrow_Update(Actor* thisx, PlayState* play) {
     s32 pad;
     EnArrow* this = (EnArrow*)thisx;
     Player* player = GET_PLAYER(play);
+
+    if (CHECK_BTN_ALL(play->state.input[0].press.button, BTN_L))
+        EnArrow_InitializeBombArrow(thisx, play);
 
     if (this->actor.params >= 0x100) {
         this->actor.params = this->actor.params >> 8;
@@ -509,6 +526,8 @@ void EnArrow_Update(Actor* thisx, PlayState* play) {
         // spawn dust for the flame
         func_8002836C(play, &this->unk_21C, &velocity, &accel, &primColor, &envColor, 100, 0, 8);
     }
+
+    EnArrow_UpdateAttachedBomb(thisx, play);
 }
 
 void func_809B4800(EnArrow* this, PlayState* play) {
@@ -594,3 +613,5 @@ void EnArrow_Draw(Actor* thisx, PlayState* play) {
 
     func_809B4800(this, play);
 }
+
+#include "z_en_bomb_arrow.c"

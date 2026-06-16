@@ -511,7 +511,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
     KaleidoScope_DrawDigit(play, digitBuf[0], 90, 204);
 
     // Magic Arrow
-    KaleidoScope_DrawDigit(play, (gSaveContext.save.info.obtainedItems.fireArrow * 1) + (gSaveContext.save.info.obtainedItems.iceArrow * 2) + (gSaveContext.save.info.obtainedItems.lightArrow * 4) , 102, 204);
+    KaleidoScope_DrawDigit(play, (gSaveContext.save.info.obtainedItems.fireArrow * 1) + (gSaveContext.save.info.obtainedItems.iceArrow * 2) + (gSaveContext.save.info.obtainedItems.lightArrow * 4) + (gSaveContext.save.info.obtainedItems.bombArrow * 8) , 102, 204);
 
     // Amulet of Energy
     KaleidoScope_DrawDigit(play, gSaveContext.save.info.obtainedItems.amuletOfEnergy, 114, 204);
@@ -1068,6 +1068,8 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                         gSaveContext.save.info.obtainedItems.iceArrow ^= 1;
                     else if (CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
                         gSaveContext.save.info.obtainedItems.lightArrow ^= 1;
+                    else if (CHECK_BTN_ALL(input->press.button, BTN_CUP))
+                        gSaveContext.save.info.obtainedItems.bombArrow ^= 1;
                 } else if (curSection == SECTION_AMULET_OF_ENERGY) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_CUP) || CHECK_BTN_ALL(input->press.button, BTN_CLEFT) || CHECK_BTN_ALL(input->press.button, BTN_CDOWN) || CHECK_BTN_ALL(input->press.button, BTN_CRIGHT))
                         gSaveContext.save.info.obtainedItems.amuletOfEnergy ^= 1;

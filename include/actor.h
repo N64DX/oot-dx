@@ -834,4 +834,7 @@ bool Actor_OtherIsTargeted(struct PlayState* play, Actor* actor);
 void Actor_DrawDamageEffects(struct PlayState* play, Actor* actor, Vec3f bodyPartsPos[], s16 bodyPartsCount, f32 effectScale, f32 frozenSteamScale, f32 effectAlpha, u8 type);
 void Actor_SpawnIceEffects(struct PlayState* play, Actor* actor, Vec3f limbPos[], s32 limbPosCount, s32 effectsPerLimb, f32 scale, f32 scaleRange);
 
+Actor* BombArrow_Unlink(Actor* arrow, struct PlayState* play);
+bool BombArrow_IsActive(struct PlayState* play);
+
 #endif

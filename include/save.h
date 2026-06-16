@@ -116,7 +116,8 @@ typedef union ObtainedItems {
         u8 amuletOfEnergy       : 1;
         u8 masterSword          : 1;
         u8 mirrorShieldIsBroken : 1;
-        u8 unk                  : 2;
+        u8 bombArrow            : 1;
+        u8 unk                  : 1;
     };
     u8 items;
 } ObtainedItems; // size = 0x1

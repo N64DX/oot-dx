@@ -253,7 +253,7 @@ static DamageTable sDamageTable[] = {
     /* Fire arrow    */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
     /* Ice arrow     */ DMG_ENTRY(4, ENHAMMERGEIST_DMGEFF_NONE),
     /* Light arrow   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
-    /* Unk arrow 1   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
+    /* Unk arrow 1   */ DMG_ENTRY(4, ENHAMMERGEIST_DMGEFF_NONE),
     /* Unk arrow 2   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
     /* Unk arrow 3   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
     /* Fire magic    */ DMG_ENTRY(0, ENHAMMERGEIST_DMGEFF_FIRE),

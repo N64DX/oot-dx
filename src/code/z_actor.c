@@ -4968,7 +4968,7 @@ void Actor_SetDropFlag(Actor* actor, ColliderElement* elem, s32 freezeFlag) {
     } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_ICE) {
         actor->dropFlag = 0x02;
     } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK1) {
-        actor->dropFlag = 0x04;
+        actor->dropFlag = 0x00;
     } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK2) {
         actor->dropFlag = 0x08;
     } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK3) {
@@ -5006,7 +5006,7 @@ void Actor_SetDropFlagJntSph(Actor* actor, ColliderJntSph* jntSph, s32 freezeFla
         } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_ICE) {
             flag = 0x02;
         } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK1) {
-            flag = 0x04;
+            flag = 0x00;
         } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK2) {
             flag = 0x08;
         } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK3) {
@@ -6871,4 +6871,30 @@ void Actor_SpawnIceEffects(PlayState* play, Actor* actor, Vec3f limbPos[], s32 l
 
         limbPos++;
     }
+}
+
+Actor* BombArrow_Unlink(Actor* arrow, PlayState* play) {
+    Player* player = GET_PLAYER(play);
+    u8 i;
+
+    for (i=0; i<MAX_BOMB_ARROWS; i++)
+        if (player->sBombArrowLinks[i].arrow == arrow) {
+            Actor* bomb = player->sBombArrowLinks[i].bomb;
+            player->sBombArrowLinks[i].arrow = NULL;
+            player->sBombArrowLinks[i].bomb = NULL;
+            player->sBombArrowLinks[i].loosed = false;
+            return bomb;
+        }
+
+    return NULL;
+}
+
+bool BombArrow_IsActive(PlayState* play) {
+    Player* player = GET_PLAYER(play);
+    u8 i;
+    
+    for (i=0; i<MAX_BOMB_ARROWS; i++)
+        if (player->sBombArrowLinks[i].bomb != NULL)
+            return true;
+    return false;
 }

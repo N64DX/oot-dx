@@ -122,7 +122,7 @@ static DamageTable sDamageTable = {
     /* Fire arrow    */ DMG_ENTRY(4, BARI_DMG_REACT_FIRE),
     /* Ice arrow     */ DMG_ENTRY(4, BARI_DMG_REACT_ICE),
     /* Light arrow   */ DMG_ENTRY(2, BARI_DMG_REACT_NONE),
-    /* Unk arrow 1   */ DMG_ENTRY(2, BARI_DMG_REACT_NONE),
+    /* Unk arrow 1   */ DMG_ENTRY(4, BARI_DMG_REACT_NONE),
     /* Unk arrow 2   */ DMG_ENTRY(2, BARI_DMG_REACT_NONE),
     /* Unk arrow 3   */ DMG_ENTRY(2, BARI_DMG_REACT_NONE),
     /* Fire magic    */ DMG_ENTRY(4, BARI_DMG_REACT_FIRE),

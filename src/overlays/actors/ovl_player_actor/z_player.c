@@ -3122,6 +3122,7 @@ static void ArrowCycleHandle(Player* player, PlayState* play) {
         return;
     }
 
+    BombArrow_Unlink(arrow, play);
     arrow->params = nextInfo->var << 8;
     UpdateButton(player, play, nextInfo);
 
