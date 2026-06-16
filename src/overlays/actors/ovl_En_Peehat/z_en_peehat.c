@@ -163,7 +163,7 @@ static DamageTable sDamageTable = {
     /* Fire arrow    */ DMG_ENTRY(4, PEAHAT_DMG_REACT_FIRE),
     /* Ice arrow     */ DMG_ENTRY(2, PEAHAT_DMG_REACT_ATTACK),
     /* Light arrow   */ DMG_ENTRY(2, PEAHAT_DMG_REACT_LIGHT_ARROW),
-    /* Unk arrow 1   */ DMG_ENTRY(2, PEAHAT_DMG_REACT_ATTACK),
+    /* Unk arrow 1   */ DMG_ENTRY(4, PEAHAT_DMG_REACT_ATTACK),
     /* Unk arrow 2   */ DMG_ENTRY(2, PEAHAT_DMG_REACT_ATTACK),
     /* Unk arrow 3   */ DMG_ENTRY(2, PEAHAT_DMG_REACT_ATTACK),
     /* Fire magic    */ DMG_ENTRY(3, PEAHAT_DMG_REACT_FIRE),

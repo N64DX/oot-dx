@@ -202,7 +202,7 @@ static DamageTable sDamageTable = {
     /* Fire arrow    */ DMG_ENTRY(2, GELDB_DMG_REACT_NORMAL),
     /* Ice arrow     */ DMG_ENTRY(2, GELDB_DMG_REACT_FREEZE),
     /* Light arrow   */ DMG_ENTRY(2, GELDB_DMG_REACT_NORMAL),
-    /* Unk arrow 1   */ DMG_ENTRY(2, GELDB_DMG_REACT_NORMAL),
+    /* Unk arrow 1   */ DMG_ENTRY(4, GELDB_DMG_REACT_NORMAL),
     /* Unk arrow 2   */ DMG_ENTRY(2, GELDB_DMG_REACT_NORMAL),
     /* Unk arrow 3   */ DMG_ENTRY(2, GELDB_DMG_REACT_NORMAL),
     /* Fire magic    */ DMG_ENTRY(4, GELDB_DMG_REACT_UNK_E),
