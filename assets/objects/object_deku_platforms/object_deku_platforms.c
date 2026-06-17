@@ -2,23 +2,19 @@
 
 #include "gfx.h"
 
-u64 deku_platformsTex_000000[] = {
+static u64 deku_platformsTex_000000[] = {
 #include "assets/objects/object_deku_platforms/deku_platformsTex_000000.ci8.inc.c"
 };
 
-u64 deku_platformsTex_000400[] = {
-#include "assets/objects/object_deku_platforms/deku_platformsTex_000400.rgba16.inc.c"
+static u64 deku_platformsTLUT_000000[] = {
+#include "assets/objects/object_deku_platforms/deku_platformsTex_000000.tlut.rgba16.inc.c"
 };
 
-u64 deku_platformsTex_000600[] = {
-#include "assets/objects/object_deku_platforms/deku_platformsTex_000600.ci8.inc.c"
+static u64 deku_platformsTex_000600[] = {
+#include "assets/objects/object_deku_platforms/deku_platformsTex_000600.rgba16.inc.c"
 };
 
-u64 deku_platformsTex_000A00[] = {
-#include "assets/objects/object_deku_platforms/deku_platformsTex_000A00.rgba16.inc.c"
-};
-
-u64 deku_platformsTex_000C00[] = {
+static u64 deku_platformsTex_000C00[] = {
 #include "assets/objects/object_deku_platforms/deku_platformsTex_000C00.rgba16.inc.c"
 };
 
@@ -766,19 +762,12 @@ Gfx gDekuPlatformsDL[] = {
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP1Triangle(6, 7, 8, 0),
     gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_RGBA16),
-    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, deku_platformsTex_000A00),
-    gsDPTileSync(),
-    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 256, 7, 0, 0, 0, 0, 0, 0, 0),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, deku_platformsTex_000600),
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, 7, 0, 2, 5, 0, 0, 5, 0),
     gsDPLoadSync(),
-    gsDPLoadTLUTCmd(7, 255),
+    gsDPLoadBlock(7, 0, 0, 1023, 256),
     gsDPPipeSync(),
-    gsDPSetTextureImage(G_IM_FMT_CI, G_IM_SIZ_16b, 1, deku_platformsTex_000600),
-    gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, 7, 0, 2, 5, 0, 0, 5, 0),
-    gsDPLoadSync(),
-    gsDPLoadBlock(7, 0, 0, 511, 512),
-    gsDPPipeSync(),
-    gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, 0, 0, 2, 5, 0, 0, 5, 0),
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, 2, 5, 0, 0, 5, 0),
     gsDPSetTileSize(0, 0, 0, 124, 124),
     gsSPVertex(&deku_platformsVtx_002DD0[0], 30, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
@@ -849,7 +838,7 @@ Gfx gDekuPlatformsDL[] = {
     gsSP1Triangle(0, 6, 7, 0),
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_RGBA16),
-    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, deku_platformsTex_000400),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, deku_platformsTLUT_000000),
     gsDPTileSync(),
     gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 256, 7, 0, 0, 0, 0, 0, 0, 0),
     gsDPLoadSync(),

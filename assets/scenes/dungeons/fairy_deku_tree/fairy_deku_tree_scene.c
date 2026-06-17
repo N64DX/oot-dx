@@ -34,7 +34,7 @@ ActorEntry fairy_deku_tree_sceneStartPositionList0x000058[] = {
     { ACTOR_PLAYER, {    0,  720,  350 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 3
     { ACTOR_PLAYER, { -250, 1000,  250 }, { 0, 0x6000, 0 }, 0x0DFF }, // Debug warp room 4
     { ACTOR_PLAYER, {  250, 1480, -250 }, { 0, 0xE000, 0 }, 0x0DFF }, // Debug warp room 5
-    { ACTOR_PLAYER, { 1200,  160,    0 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 6
+    { ACTOR_PLAYER, { 1300,  160,    0 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 6
     { ACTOR_PLAYER, { -850,  520,  850 }, { 0, 0XE000, 0 }, 0x0DFF }, // Debug warp room 7
     { ACTOR_PLAYER, { 1220,  760,    0 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 8
     { ACTOR_PLAYER, {  850, 1080,  850 }, { 0, 0x2000, 0 }, 0x0DFF }, // Debug warp room 9
