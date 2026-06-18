@@ -3231,7 +3231,7 @@ void Magic_Update(PlayState* play) {
 
         case MAGIC_STATE_CONSUME:
             // Consume magic until target is reached or no more magic is available
-            gSaveContext.save.info.playerData.magic -= gSaveContext.save.info.obtainedSkills.halfMagicCost ? 1 : 2;
+            gSaveContext.save.info.playerData.magic -= MAGIC_COST(2);
             if (gSaveContext.save.info.playerData.magic <= 0) {
                 gSaveContext.save.info.playerData.magic = 0;
                 gSaveContext.magicState = MAGIC_STATE_METER_FLASH_1;
@@ -3411,23 +3411,16 @@ void Magic_DrawMeter(PlayState* play) {
 
             // Fill the rest of the meter with the normal magic color
             gDPPipeSync(OVERLAY_DISP++);
-            
-            if (gSaveContext.save.info.obtainedSkills.halfMagicCost) {
-                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 200, interfaceCtx->magicAlpha);
-            } else {
-                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2), interfaceCtx->magicAlpha);
-            }
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
+                            interfaceCtx->magicAlpha);
 
             gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY(magicMeterY + 3) << 2,
                                 X_HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2, (HIRES_MULTIPLY((magicMeterY + 10)) - (HIRES_PX_SHIFT * 2)) << 2,
                                 G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         } else {
             // Fill the whole meter with the normal magic color
-            if (gSaveContext.save.info.obtainedSkills.halfMagicCost) {
-                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 200, interfaceCtx->magicAlpha);
-            } else {
-                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2), interfaceCtx->magicAlpha);
-            }
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
+                            interfaceCtx->magicAlpha);
 
             gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 8, 0,
                                  G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK,
@@ -3436,6 +3429,12 @@ void Magic_DrawMeter(PlayState* play) {
             gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_MAGIC_FILL_X) << 2, HIRES_MULTIPLY(magicMeterY + 3) << 2,
                                 X_HIRES_MULTIPLY(R_MAGIC_FILL_X + gSaveContext.save.info.playerData.magic) << 2,
                                 HIRES_MULTIPLY((magicMeterY + 10) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+        }
+
+        if (gSaveContext.save.info.obtainedSkills.halfMagicCost) {
+            gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gUnusedAmmoDigitHalfTex, 16, 8, X_HIRES_MULTIPLY(R_MAGIC_METER_X + 4 + gSaveContext.magicCapacity), HIRES_MULTIPLY(magicMeterY + 7), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(8), X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));
         }
     }
 

@@ -3012,9 +3012,9 @@ static const ArrowInfo* GetInfo(u16 variable) {
 
 static u8 GetMagicCostByInfo(const ArrowInfo *info) {
     switch (info->item) {
-        case ITEM_ARROW_FIRE:  return sMagicArrowCosts[0];
-        case ITEM_ARROW_ICE:   return sMagicArrowCosts[1];
-        case ITEM_ARROW_LIGHT: return sMagicArrowCosts[2];
+        case ITEM_ARROW_FIRE:  return MAGIC_COST(sMagicArrowCosts[0]);
+        case ITEM_ARROW_ICE:   return MAGIC_COST(sMagicArrowCosts[1]);
+        case ITEM_ARROW_LIGHT: return MAGIC_COST(sMagicArrowCosts[2]);
         default:               return 0;
     }
 }
@@ -4167,7 +4167,7 @@ void Player_UseItem(PlayState* play, Player* this, s32 item) {
                 // Handle magic spells
                 if (((itemAction == PLAYER_IA_FARORES_WIND) && (gSaveContext.respawn[RESPAWN_MODE_TOP].data > 0)) ||
                     ((gSaveContext.magicCapacity != 0) && (gSaveContext.magicState == MAGIC_STATE_IDLE) &&
-                     (gSaveContext.save.info.playerData.magic >= sMagicSpellCosts[temp]))) {
+                     (gSaveContext.save.info.playerData.magic >= MAGIC_COST(sMagicSpellCosts[temp])))) {
                     this->itemAction = itemAction;
                     this->unk_6AD = 4;
                 } else {

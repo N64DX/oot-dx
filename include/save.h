@@ -652,6 +652,7 @@ typedef enum LinkAge {
 #define EXTRA_SAVE_SLOTS            ((gSaveContext.globalSettings >> 4) & 1)  // Bits: 4
 
 #define MAX_SWORD_HEALTH 8
+#define MAGIC_COST(magic) (gSaveContext.save.info.obtainedSkills.halfMagicCost ? (magic / 2) : magic)
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
