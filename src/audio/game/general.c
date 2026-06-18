@@ -791,7 +791,7 @@ NatureAmbienceDataIO sNatureAmbienceDataIO[20] = {
 };
 
 #if !PLATFORM_N64
-u32 sOcarinaAllowedButtonMask = (BTN_A | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT);
+u32 sOcarinaAllowedButtonMask = (BTN_A | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT | BTN_DUP | BTN_DDOWN | BTN_DLEFT | BTN_DRIGHT);
 s32 sOcarinaAButtonMap = BTN_A;
 s32 sOcarinaCUpButtonMap = BTN_CUP;
 s32 sOcarinaCDownButtonMap = BTN_CDOWN;
@@ -1246,7 +1246,7 @@ s32 Audio_SetGanonsTowerBgmVolume(u8 targetVol);
 
 #if PLATFORM_N64
 
-#define OCARINA_ALLOWED_BUTTON_MASK (BTN_A | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT)
+#define OCARINA_ALLOWED_BUTTON_MASK (BTN_A | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT | BTN_DUP | BTN_DDOWN | BTN_DLEFT | BTN_DRIGHT)
 #define OCARINA_A_MAP BTN_A
 #define OCARINA_CUP_MAP BTN_CUP
 #define OCARINA_CDOWN_MAP BTN_CDOWN
@@ -1261,13 +1261,13 @@ s32 Audio_SetGanonsTowerBgmVolume(u8 targetVol);
 void AudioOcarina_SetCustomButtonMapping(u8 useCustom) {
     if (!useCustom) {
         AUDIO_PRINTF("AUDIO : Ocarina Control Assign Normal\n");
-        OCARINA_ALLOWED_BUTTON_MASK = (BTN_A | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT);
+        OCARINA_ALLOWED_BUTTON_MASK = (BTN_A | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT | BTN_DUP | BTN_DDOWN | BTN_DLEFT | BTN_DRIGHT);
         OCARINA_A_MAP = BTN_A;
         OCARINA_CUP_MAP = BTN_CUP;
         OCARINA_CDOWN_MAP = BTN_CDOWN;
     } else {
         AUDIO_PRINTF("AUDIO : Ocarina Control Assign Custom\n");
-        OCARINA_ALLOWED_BUTTON_MASK = (BTN_A | BTN_B | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT);
+        OCARINA_ALLOWED_BUTTON_MASK = (BTN_A | BTN_B | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT | BTN_DUP | BTN_DDOWN | BTN_DLEFT | BTN_DRIGHT);
         OCARINA_A_MAP = BTN_B;
         OCARINA_CUP_MAP = BTN_CDOWN;
         OCARINA_CDOWN_MAP = BTN_A;
@@ -1669,22 +1669,22 @@ void AudioOcarina_PlayControllerInput(u8 unused) {
             sCurOcarinaPitch = OCARINA_PITCH_D4;
             sCurOcarinaButtonIndex = OCARINA_BTN_A;
 
-        } else if (CHECK_BTN_ANY(sOcarinaInputButtonPress, OCARINA_CDOWN_MAP)) {
+        } else if (CHECK_BTN_ANY(sOcarinaInputButtonPress, OCARINA_CDOWN_MAP | BTN_DDOWN)) {
             AUDIO_PRINTF("Presss NA_KEY_F4 %08x\n", OCARINA_CDOWN_MAP);
             sCurOcarinaPitch = OCARINA_PITCH_F4;
             sCurOcarinaButtonIndex = OCARINA_BTN_C_DOWN;
 
-        } else if (CHECK_BTN_ANY(sOcarinaInputButtonPress, BTN_CRIGHT)) {
+        } else if (CHECK_BTN_ANY(sOcarinaInputButtonPress, BTN_CRIGHT | BTN_DRIGHT)) {
             AUDIO_PRINTF("Presss NA_KEY_A4 %08x\n", BTN_CRIGHT);
             sCurOcarinaPitch = OCARINA_PITCH_A4;
             sCurOcarinaButtonIndex = OCARINA_BTN_C_RIGHT;
 
-        } else if (CHECK_BTN_ANY(sOcarinaInputButtonPress, BTN_CLEFT)) {
+        } else if (CHECK_BTN_ANY(sOcarinaInputButtonPress, BTN_CLEFT | BTN_DLEFT)) {
             AUDIO_PRINTF("Presss NA_KEY_B4 %08x\n", BTN_CLEFT);
             sCurOcarinaPitch = OCARINA_PITCH_B4;
             sCurOcarinaButtonIndex = OCARINA_BTN_C_LEFT;
 
-        } else if (CHECK_BTN_ANY(sOcarinaInputButtonPress, OCARINA_CUP_MAP)) {
+        } else if (CHECK_BTN_ANY(sOcarinaInputButtonPress, OCARINA_CUP_MAP | BTN_DUP)) {
             AUDIO_PRINTF("Presss NA_KEY_D5 %08x\n", OCARINA_CUP_MAP);
             sCurOcarinaPitch = OCARINA_PITCH_D5;
             sCurOcarinaButtonIndex = OCARINA_BTN_C_UP;

@@ -731,26 +731,24 @@ MSG(
 QUICKTEXT_ENABLE "Coding\n"
 SHIFT(36) SHIFT(24) "Mirror Mode\n"
 "\n"
-"\n"
 SHIFT(36) SHIFT(54) "AEGIKER\n"
 "\n"
 "\n"
 SHIFT(36) SHIFT(24) "Roc's Feather\n"
 "\n"
-"\n"
 SHIFT(36) SHIFT(54) "KENTOM M\n"
 "\n"
 "\n"
-SHIFT(36) SHIFT(24) "Bug fixes & features\n"
+SHIFT(36) SHIFT(24) "Bug fixes\n"
+"\n"
+SHIFT(36) SHIFT(54) "SKAWO, GH0ST\n" 
 "\n"
 "\n"
-SHIFT(36) SHIFT(54) "SKAWO, GH0ST & A-PRIESTLEY\n" 
+SHIFT(36) SHIFT(24) "Features\n"
 "\n"
+SHIFT(36) SHIFT(54) "NOKAUBURE, A-PRIESTLEY\n"
 "\n"
-SHIFT(36) SHIFT(24) "Autosave & Optimization\n"
-"\n"
-"\n"
-SHIFT(36) SHIFT(54) "NOKAUBURE" QUICKTEXT_DISABLE FADE2(150)
+SHIFT(36) SHIFT(54) "ZELDA64HACK" QUICKTEXT_DISABLE FADE2(150)
 )
 )
 

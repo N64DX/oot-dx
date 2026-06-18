@@ -363,12 +363,6 @@ void PadMgr_HandleRetrace(PadMgr* padMgr) {
     osRecvMesg(serialEventQueue, NULL, OS_MESG_BLOCK);
     osContGetReadData(padMgr->pads);
 
-#if !DEBUG_FEATURES
-    // Clear controllers 2 and 4
-    bzero(&padMgr->pads[1], sizeof(OSContPad));
-    bzero(&padMgr->pads[3], sizeof(OSContPad));
-#endif
-
     // If resetting, clear all controllers
     if (padMgr->isResetting) {
         bzero(padMgr->pads, sizeof(padMgr->pads));
