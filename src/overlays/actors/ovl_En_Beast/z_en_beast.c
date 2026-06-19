@@ -317,6 +317,12 @@ void EnBeast_Destroy(Actor* thisx, PlayState* play) {
         func_800F5B58();
 }
 
+void EnBeast_SetAlarmState(EnBeast* this) {
+    if (!this->alarmstate && this->miniboss)
+        func_800F5ACC(NA_BGM_MINI_BOSS2);
+    this->alarmstate = true;
+}
+
 void EnBeast_Update(Actor* thisx, PlayState* play) {
     EnBeast* this = (EnBeast*)thisx;
 
@@ -357,7 +363,7 @@ void EnBeast_Update(Actor* thisx, PlayState* play) {
     }
 
     if (player->meleeWeaponState != 0 && Actor_IsFacingPlayer(&this->actor, 0xA38) && this->actor.xzDistToPlayer < 200.0f && this->canDodge && this->hurtboxCooldown == 0 && this->actor.world.pos.y >= player->actor.world.pos.y - 10.0f) {
-        this->alarmstate = true;
+        EnBeast_SetAlarmState(this);
         this->canDodge = false;
         this->timer = 15;
         EnBeast_SetupMoveB(this, play);
@@ -399,7 +405,7 @@ void EnBeast_CheckDamage(EnBeast* this, PlayState* play) {
         if (!this->alarmstate) {
             this->timer = 29;
             this->cantSee = false;
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             EnBeast_SetupMoveF(this, play);
         }
 
@@ -517,12 +523,12 @@ void EnBeast_ForwardBackCheck(EnBeast* this, PlayState* play) {
         this->actor.speed = 0.0f;
     } else if (this->alarmstate) {
         if ((this->actor.xzDistToPlayer < 70.0f)) {
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             this->timer = 15;
             this->canDodge = false;
             EnBeast_SetupMoveB(this, play);
         } else if ((this->actor.xzDistToPlayer < 300.0f) && (this->actor.xzDistToPlayer >= 140.0f)) {
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             this->actor.speed = 0.0f;
             if ((RandNum <= 0.74) && (this->actor.xzDistToPlayer < 200.0f)) {
                 this->timer = 46;
@@ -532,7 +538,7 @@ void EnBeast_ForwardBackCheck(EnBeast* this, PlayState* play) {
                 EnBeast_SetupMoveF(this, play);
             }
         } else if ((this->actor.xzDistToPlayer < 140.0f) && (this->actor.xzDistToPlayer >= 70.0f)) {
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             this->actor.speed = 0.0f;
             this->timer = 35;
             if ((RandNum <= 0.74) && (relYawTowardsPlayer < 0x1500) && (GET_PLAYER(play)->invincibilityTimer == 0))
@@ -543,7 +549,7 @@ void EnBeast_ForwardBackCheck(EnBeast* this, PlayState* play) {
             }
             else EnBeast_SetupAttackB(this, play);
         } else if ((this->actor.xzDistToPlayer >= 300.0f) && (this->actor.xzDistToPlayer < 1200.0f)) {
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             this->timer = 21;
             EnBeast_SetupMoveF(this, play);
         } else {
@@ -565,11 +571,8 @@ void EnBeast_Idle(EnBeast* this, PlayState* play) {
 
     if (this->timer > 0) {
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
-            if (!this->alarmstate && this->miniboss)
-                func_800F5ACC(NA_BGM_MINI_BOSS2);
-
             this->timer = 0;
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             EnBeast_ForwardBackCheck(this, play);
         }
         this->timer--;
@@ -599,7 +602,7 @@ void EnBeast_Waittojump(EnBeast* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
     if (this->inrange == 3) {
-        this->alarmstate = true;
+        EnBeast_SetAlarmState(this);
         EnBeast_SetupAttackA2(this, play);
     }
 }
@@ -614,11 +617,8 @@ void EnBeast_IdleP(EnBeast* this, PlayState* play) {
 
     if (this->timer > 0) {
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
-            if (!this->alarmstate && this->miniboss)
-                func_800F5ACC(NA_BGM_MINI_BOSS2);
-
             this->timer = 0;
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             EnBeast_ForwardBackCheck(this, play);
         }
         this->timer--;
@@ -641,7 +641,7 @@ void EnBeast_Idle2(EnBeast* this, PlayState* play) {
     if (this->timer > 0) {
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
             this->timer = 0;
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             EnBeast_ForwardBackCheck(this, play);
         }
         this->timer--;
@@ -697,7 +697,7 @@ void EnBeast_MoveFP(EnBeast* this, PlayState* play) {
 
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
             this->timer = 0;
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             EnBeast_ForwardBackCheck(this, play);
         }
     } else {
@@ -735,7 +735,7 @@ void EnBeast_MoveB(EnBeast* this, PlayState* play) {
             this->actor.speed = -13.0f;
         else {
             if ((this->actor.xzDistToPlayer < 140.0f) && (this->actor.xzDistToPlayer >= 70.0f)) {
-                this->alarmstate = true;
+                EnBeast_SetAlarmState(this);
                 this->actor.speed = 0.0f;
                 this->timer = 35;
                 EnBeast_SetupAttackB(this, play);

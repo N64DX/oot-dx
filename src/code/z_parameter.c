@@ -171,11 +171,11 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_GORON_MINES, 0x00, 0x00, 0x00 },
     { SCENE_WOODFALL_TEMPLE, 0x00, 0x00, 0x1C },
     { SCENE_WOODFALL_TEMPLE_BOSS, 0x00, 0x00, 0x1C },
-    { SCENE_SPRING_LAKE_SMITHY, 0x11, 0x15, 0x55 },
-    { SCENE_RIVERSIDE_HOUSE, 0x11, 0x15, 0x55 },
-    { SCENE_IGORS_HOUSE, 0x11, 0x15, 0x55 },
-    { SCENE_RIVERSIDE_INN, 0x11, 0x15, 0x55 },
-    { SCENE_ANCIENT_GROVE_SHOP, 0x11, 0x15, 0x55 },
+    { SCENE_SPRING_LAKE_SMITHY, 0x10, 0x10, 0x55 },
+    { SCENE_RIVERSIDE_HOUSE, 0x10, 0x10, 0x55 },
+    { SCENE_IGORS_HOUSE, 0x10, 0x10, 0x55 },
+    { SCENE_RIVERSIDE_INN, 0x10, 0x10, 0x55 },
+    { SCENE_ANCIENT_GROVE_SHOP, 0x10, 0x10, 0x55 },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
 
@@ -1809,11 +1809,10 @@ static bool IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_
 static bool IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag;         }
 static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag;         }
 
-#define LAST_ITEM_ICON ITEM_PERFECT_BLOCK_UPGRADE
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_DEKU,               IsWoodenShield, ITEM_SHIELD_WOODEN  },
     { ITEM_SHIELD_HYLIAN,             IsHerosShield,  ITEM_SHIELD_HEROS   },
-    { ITEM_SHIELD_HYLIAN,             IsMetalShield,  ITEM_SHIELD_METAL   },
+    { ITEM_SHIELD_HEROS,              IsMetalShield,  ITEM_SHIELD_METAL   },
     { ITEM_SWORD_KOKIRI ,             IsHerosSword,   ITEM_SWORD_HEROS    },
     { ITEM_SHIELD_MIRROR,             IsChildQuest,   LAST_ITEM_ICON + 1  },
     { ITEM_SWORD_MASTER,              IsRazorSword,   LAST_ITEM_ICON + 2  },
@@ -1830,7 +1829,6 @@ static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,   LAST_ITEM_ICON + 13 },
     { ITEM_STONE_OF_AGONY,            NULL,           LAST_ITEM_ICON + 14 },
 };
-#undef LAST_ITEM_ICON
 
 u8 Interface_LoadItemIconChildQuest(u8 item) {
     u8 i;
@@ -2543,6 +2541,9 @@ u8 Item_Give(PlayState* play, u8 item) {
             }
         }
 
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_TRADE_CHILD)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     }
 
@@ -2552,8 +2553,7 @@ u8 Item_Give(PlayState* play, u8 item) {
 
     for (i=0; i<4; i++)
         if (Interface_GetItemFromDpad(i) == item)
-                Interface_LoadItemIcon1(play, i+4);
-
+            Interface_LoadItemIcon1(play, i+4);
     return temp;
 }
 
@@ -2642,7 +2642,9 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_DEKU_STICK_UPGRADE_20) && (item <= ITEM_DEKU_NUT_UPGRADE_40)) {
         return ITEM_NONE;
-    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_GIANTS_WALLET) || (item >= ITEM_MASTER_WALLET && item <= ITEM_BOTTOMLESS_WALLET)) {
+    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_BOMB_BAG_40) || (item >= ITEM_STRENGTH_GORONS_BRACELET && item <= ITEM_STRENGTH_GOLD_GAUNTLETS) || (item >= ITEM_SCALE_SILVER && item <= ITEM_SCALE_GOLDEN) || (item >= ITEM_ADULTS_WALLET && item <= ITEM_GIANTS_WALLET)) {
+        return ITEM_NONE;
+    } else if (item >= ITEM_MASTER_WALLET && item <= ITEM_BOTTOMLESS_WALLET) {
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         return ITEM_NONE;
@@ -2698,6 +2700,16 @@ u8 Item_CheckObtainability(u8 item) {
     } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_SHRINE_KEY) || (item >= ITEM_BOOTS_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK_UPGRADE) ) {
         return ITEM_NONE;
     }
+
+    if (IS_CHILD_QUEST)
+        switch (item) {
+            case ITEM_ARROW_FIRE:
+                return gSaveContext.save.info.obtainedItems.fireArrow  ? ITEM_ARROW_FIRE  : ITEM_NONE;
+            case ITEM_ARROW_ICE:
+                return gSaveContext.save.info.obtainedItems.iceArrow   ? ITEM_ARROW_ICE   : ITEM_NONE;
+            case ITEM_ARROW_LIGHT:
+                return gSaveContext.save.info.obtainedItems.lightArrow ? ITEM_ARROW_LIGHT : ITEM_NONE;
+        }
 
     return gSaveContext.save.info.inventory.items[slot];
 }

@@ -1069,6 +1069,7 @@ beginseg
     name "object_spot18_obj"
     compress
     include "$(BUILD_DIR)/assets/objects/object_spot18_obj/object_spot18_obj.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot18_obj/object_spot18_obj_extra.o"
     number 6
 endseg
 

@@ -17,12 +17,11 @@ typedef struct EnBom {
     /* 0x01FA */ s16 flashSpeedScale;
     /* 0x01FC */ f32 flashIntensity;
     /* 0x0200 */ u8 colliderSetOC;
-    /* 0x0201 */ u8 size;
+    /* 0x0202 */ u16 size;
     /* 0x0204 */ EnBomActionFunc actionFunc;
 } EnBom; // size = 0x0208
 
 typedef enum EnBomType {
-    /* 0xFF */ BOMB_ARROW = -1,
     /* 0x00 */ BOMB_BODY,
     /* 0x01 */ BOMB_EXPLOSION
 } EnBomType;

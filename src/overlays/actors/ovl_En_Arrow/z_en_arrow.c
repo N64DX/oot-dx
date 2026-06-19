@@ -117,7 +117,7 @@ void EnArrow_Init(Actor* thisx, PlayState* play) {
         this->actor.params = ARROW_NUT;
     }
 
-    if (this->actor.params <= ARROW_SEED) {
+    if (this->actor.params <= ARROW_SEED || this->actor.params == ARROW_NORMAL_LIT_ICE) {
 
         if (this->actor.params <= ARROW_0E) {
             SkelAnime_Init(play, &this->skelAnime, &gArrowSkel, &gArrow2_Anim, NULL, NULL, 0);
@@ -155,7 +155,7 @@ void EnArrow_Init(Actor* thisx, PlayState* play) {
 
         if (this->actor.params < 0) {
             this->collider.base.atFlags = (AT_ON | AT_TYPE_ENEMY);
-        } else if (this->actor.params <= ARROW_SEED) {
+        } else if (this->actor.params <= ARROW_SEED || this->actor.params == ARROW_NORMAL_LIT_ICE) {
             this->collider.elem.atDmgInfo.dmgFlags = dmgFlags[this->actor.params];
             LOG_HEX("this->at_info.cl_elem.at_btl_info.at_type", this->collider.elem.atDmgInfo.dmgFlags,
                     "../z_en_arrow.c", 707);
@@ -338,7 +338,7 @@ void EnArrow_Fly(EnArrow* this, PlayState* play) {
         this->actor.gravity = -0.4f;
     }
 
-    atTouched = (this->actor.params != ARROW_NORMAL_LIT) && (this->actor.params <= ARROW_SEED) && (this->actor.params != ARROW_NORMAL_LIT_ICE) &&
+    atTouched = (this->actor.params != ARROW_NORMAL_LIT) && (this->actor.params != ARROW_NORMAL_LIT_ICE) && (this->actor.params <= ARROW_SEED) &&
                 (this->collider.base.atFlags & AT_HIT);
 
     if (atTouched || this->touchedPoly) {
@@ -552,7 +552,7 @@ void func_809B4800(EnArrow* this, PlayState* play) {
         Matrix_MultVec3f(&sPosAOffset, &posA);
         Matrix_MultVec3f(&sPosBOffset, &posB);
 
-        if (this->actor.params <= ARROW_SEED) {
+        if (this->actor.params <= ARROW_SEED || this->actor.params == ARROW_NORMAL_LIT_ICE) {
             addBlureVertex = this->actor.params <= ARROW_LIGHT;
 
             if (this->hitActor == NULL) {

@@ -13,13 +13,13 @@ SceneCmd dawngrove_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_village_room_0RoomShapeNormal_000318),
-    SCENE_CMD_OBJECT_LIST(11, dawngrove_village_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(41, dawngrove_village_room_0ActorEntry_000058),
+    SCENE_CMD_OBJECT_LIST(13, dawngrove_village_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(44, dawngrove_village_room_0ActorEntry_000058),
     SCENE_CMD_END(),
 };
 
 SceneCmd* dawngrove_village_room_0AlternateHeaders[] = {
-    NULL,
+    dawngrove_village_room_0Set_night,
     dawngrove_village_room_0Set_timeskip,
     NULL,
 };
@@ -29,6 +29,8 @@ s16 dawngrove_village_room_0ObjectList_000040[] = {
     OBJECT_KIBAKO2,
     OBJECT_NIW,
     OBJECT_ANI,
+    OBJECT_AHG,
+    OBJECT_CNE,
     OBJECT_BOX,
     OBJECT_HS,
     OBJECT_OS_ANIME,
@@ -80,9 +82,9 @@ ActorEntry dawngrove_village_room_0ActorEntry_000058[] = {
     { ACTOR_EN_ANI,         { -1855,  290,  359 }, {    0, 0x84FA,     0 }, 0x0000 },
     { ACTOR_EN_HS2,         {  -370,  189, -574 }, {    0, 0xB4A4,     0 }, 0x0000 },
     { ACTOR_EN_HY,          { -1699,  295, -171 }, {    0, 0x31C4,     0 }, 0x000C },
-
-    // Timeskip
-    { ACTOR_ITEM_ETCETERA,  {  -132, -186, -902 }, {    0, 0x2AA8, 0xE38 }, 0x000F }, // Switch: 0B, Pictograph Box
+    { ACTOR_EN_HY,          { -1100,    0, -650 }, {    0, 0xF830,     0 }, 0x0002 },
+    { ACTOR_EN_HY,          {  -600,    0,  150 }, {    0, 0x9000,     0 }, 0x0004 },
+    { ACTOR_EN_HY,          {  -900,   92,  500 }, {    0, 0xC180,     0 }, 0x000B },
 };
 
 RoomShapeNormal dawngrove_village_room_0RoomShapeNormal_000318 = { 
@@ -136,6 +138,61 @@ RoomShapeDListsEntry dawngrove_village_room_0RoomShapeDListsEntry_000324[42] = {
     { dawngrove_village_room_0DL_00BB40, NULL },
 };
 
+SceneCmd dawngrove_village_room_0Set_night[] = {
+    SCENE_CMD_ECHO_SETTINGS(0),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_village_room_0RoomShapeNormal_000318),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_village_room_0ObjectList_000040), dawngrove_village_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(41, dawngrove_village_room_0ActorEntry_night),
+    SCENE_CMD_END(),
+};
+
+ActorEntry dawngrove_village_room_0ActorEntry_night[] = {
+    { ACTOR_EN_WOOD02,      { -2096,   90,   75 }, {    0,      0,     0 }, 0x0000 },
+    { ACTOR_EN_WOOD02,      {  -965,   90,  607 }, {    0, 0xFC72,     0 }, 0x0B09 },
+    { ACTOR_EN_WOOD02,      { -1580,  146, -706 }, {    0,  0xAAA,     0 }, 0x0000 },
+    { ACTOR_EN_WOOD02,      { -1659,  294, -258 }, {    0,  0xAAA,     0 }, 0x0002 },
+    { ACTOR_EN_WOOD02,      { -1799,  294, -220 }, {    0,  0xAAA,     0 }, 0x0002 },
+    { ACTOR_EN_WOOD02,      { -2007,  154, -351 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -1910,  218, -606 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -1573,   -1,  -70 }, {    0, 0x1FFE,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -1493,   -1,  -10 }, {    0, 0x2E36,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -2519,  121,  269 }, {    0, 0x2E36,     0 }, 0x0002 },
+    { ACTOR_EN_WOOD02,      {  -556,   -1,  185 }, {    0, 0x2E36,     0 }, 0x0004 },
+    { ACTOR_EN_WOOD02,      { -2559,  111, -111 }, {    0, 0x5FFA,     0 }, 0x0C07 },
+    { ACTOR_EN_WOOD02,      { -2040,   84,   86 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -2145,   84,   86 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -2097,   92,  129 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -2095,   84,   41 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -2328,  137, -297 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_KUSA,        {  -725,    0,  -39 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        {  -649,    0,  -39 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        {  -567,    0,  -39 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        {  -904,    0,  -39 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        {  -485,    0,  -39 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        { -1551,  154, -739 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        { -1531,  154, -679 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_OBJ_MURE2,      { -2519,  121,  269 }, {    0, 0x2E36,     0 }, 0x0001 },
+    { ACTOR_OBJ_MURE2,      { -2559,  111, -111 }, {    0, 0x5FFA,     0 }, 0x0001 },
+    { ACTOR_OBJ_MURE2,      {  -965,   90,  607 }, {    0, 0xFC72,     0 }, 0x0002 },
+    { ACTOR_OBJ_MURE2,      {  -426,  189, -696 }, {    0, 0x3C6E,     0 }, 0x0001 },
+    { ACTOR_OBJ_MURE2,      {  -467,  189, -599 }, {    0, 0x2E36,     0 }, 0x0001 },
+    { ACTOR_EN_WONDER_ITEM, { -1357,  -26, -224 }, {    0,      0,     0 }, 0x1220 }, // Collectible: 20, Green Rupee
+    { ACTOR_EN_WONDER_ITEM, { -1377,  -26, -164 }, {    0,      0,     0 }, 0x1221 }, // Collectible: 21, Green Rupee
+    { ACTOR_EN_WONDER_ITEM, { -1525,  125, -497 }, {    0,      0,     0 }, 0x1262 }, // Collectible: 22, Blue Rupee
+    { ACTOR_OBJ_KIBAKO2,    { -1046,   90,  383 }, {  0x1, 0x4AA6,     0 }, 0xFFFF }, // Blue Rupee
+    { ACTOR_OBJ_KIBAKO2,    { -1067,   90,  304 }, {  0x1, 0x4AA6,     0 }, 0xFFFF }, // Blue Rupee
+    { ACTOR_OBJ_BOMBIWA,    { -2245,  143, -297 }, {    0,  0xAAA,     0 }, 0x801F }, // Sets switch: 1F
+    { ACTOR_EN_ITEM00,      { -2244,  143, -297 }, {    0,  0xAAA,     0 }, 0x0214 }, // Collectible: 02, Purple Rupee
+    { ACTOR_EN_BOX,         { -1729,  295, -238 }, { 0x3E,  0xB60,     0 }, 0x0001 }, // Chest flag: 01, Piece of Heart
+    { ACTOR_EN_NIW,         {  -987,   90,  344 }, {    0, 0x4AA6,     0 }, 0x0008 },
+    { ACTOR_EN_ANI,         { -1855,  290,  359 }, {    0, 0x84FA,     0 }, 0x0000 },
+    { ACTOR_EN_HS2,         {  -370,  189, -574 }, {    0, 0xB4A4,     0 }, 0x0000 },
+    { ACTOR_EN_HY,          { -1699,  295, -171 }, {    0, 0x31C4,     0 }, 0x000C },
+};
+
 SceneCmd dawngrove_village_room_0Set_timeskip[] = {
     SCENE_CMD_ECHO_SETTINGS(0),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
@@ -143,8 +200,53 @@ SceneCmd dawngrove_village_room_0Set_timeskip[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_village_room_0RoomShapeNormal_000318),
     SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_village_room_0ObjectList_000040), dawngrove_village_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(42, dawngrove_village_room_0ActorEntry_000058),
+    SCENE_CMD_ACTOR_LIST(42, dawngrove_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
+};
+
+ActorEntry dawngrove_village_room_0ActorEntry_timeskip[] = {
+    { ACTOR_EN_WOOD02,      { -2096,   90,   75 }, {    0,      0,     0 }, 0x0000 },
+    { ACTOR_EN_WOOD02,      {  -965,   90,  607 }, {    0, 0xFC72,     0 }, 0x0B09 },
+    { ACTOR_EN_WOOD02,      { -1580,  146, -706 }, {    0,  0xAAA,     0 }, 0x0000 },
+    { ACTOR_EN_WOOD02,      { -1659,  294, -258 }, {    0,  0xAAA,     0 }, 0x0002 },
+    { ACTOR_EN_WOOD02,      { -1799,  294, -220 }, {    0,  0xAAA,     0 }, 0x0002 },
+    { ACTOR_EN_WOOD02,      { -2007,  154, -351 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -1910,  218, -606 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -1573,   -1,  -70 }, {    0, 0x1FFE,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -1493,   -1,  -10 }, {    0, 0x2E36,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -2519,  121,  269 }, {    0, 0x2E36,     0 }, 0x0002 },
+    { ACTOR_EN_WOOD02,      {  -556,   -1,  185 }, {    0, 0x2E36,     0 }, 0x0004 },
+    { ACTOR_EN_WOOD02,      { -2559,  111, -111 }, {    0, 0x5FFA,     0 }, 0x0C07 },
+    { ACTOR_EN_WOOD02,      { -2040,   84,   86 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -2145,   84,   86 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -2097,   92,  129 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -2095,   84,   41 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_WOOD02,      { -2328,  137, -297 }, {    0,  0xAAA,     0 }, 0x000B },
+    { ACTOR_EN_KUSA,        {  -725,    0,  -39 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        {  -649,    0,  -39 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        {  -567,    0,  -39 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        {  -904,    0,  -39 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        {  -485,    0,  -39 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        { -1551,  154, -739 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_EN_KUSA,        { -1531,  154, -679 }, {    0,      0,     0 }, 0x0200 },
+    { ACTOR_OBJ_MURE2,      { -2519,  121,  269 }, {    0, 0x2E36,     0 }, 0x0001 },
+    { ACTOR_OBJ_MURE2,      { -2559,  111, -111 }, {    0, 0x5FFA,     0 }, 0x0001 },
+    { ACTOR_OBJ_MURE2,      {  -965,   90,  607 }, {    0, 0xFC72,     0 }, 0x0002 },
+    { ACTOR_OBJ_MURE2,      {  -426,  189, -696 }, {    0, 0x3C6E,     0 }, 0x0001 },
+    { ACTOR_OBJ_MURE2,      {  -467,  189, -599 }, {    0, 0x2E36,     0 }, 0x0001 },
+    { ACTOR_EN_WONDER_ITEM, { -1357,  -26, -224 }, {    0,      0,     0 }, 0x1220 }, // Collectible: 20, Green Rupee
+    { ACTOR_EN_WONDER_ITEM, { -1377,  -26, -164 }, {    0,      0,     0 }, 0x1221 }, // Collectible: 21, Green Rupee
+    { ACTOR_EN_WONDER_ITEM, { -1525,  125, -497 }, {    0,      0,     0 }, 0x1262 }, // Collectible: 22, Blue Rupee
+    { ACTOR_OBJ_KIBAKO2,    { -1046,   90,  383 }, {  0x1, 0x4AA6,     0 }, 0xFFFF }, // Blue Rupee
+    { ACTOR_OBJ_KIBAKO2,    { -1067,   90,  304 }, {  0x1, 0x4AA6,     0 }, 0xFFFF }, // Blue Rupee
+    { ACTOR_OBJ_BOMBIWA,    { -2245,  143, -297 }, {    0,  0xAAA,     0 }, 0x801F }, // Sets switch: 1F
+    { ACTOR_EN_ITEM00,      { -2244,  143, -297 }, {    0,  0xAAA,     0 }, 0x0214 }, // Collectible: 02, Purple Rupee
+    { ACTOR_EN_BOX,         { -1729,  295, -238 }, { 0x3E,  0xB60,     0 }, 0x0001 }, // Chest flag: 01, Piece of Heart
+    { ACTOR_EN_NIW,         {  -987,   90,  344 }, {    0, 0x4AA6,     0 }, 0x0008 },
+    { ACTOR_EN_ANI,         { -1855,  290,  359 }, {    0, 0x84FA,     0 }, 0x0000 },
+    { ACTOR_EN_HS2,         {  -370,  189, -574 }, {    0, 0xB4A4,     0 }, 0x0000 },
+    { ACTOR_EN_HY,          { -1699,  295, -171 }, {    0, 0x31C4,     0 }, 0x000C },
+    { ACTOR_ITEM_ETCETERA,  {  -132, -186, -902 }, {    0, 0x2AA8, 0xE38 }, 0x000F }, // Switch: 0B, Pictograph Box
 };
 
 s32 dawngrove_village_room_0_terminatorMaybe_000474 = { 0x01000000 };
@@ -756,8 +858,8 @@ Gfx dawngrove_village_room_0DL_003E88[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal256(dawngrove_village_sceneTLUT_00B220),
-    gsDPLoadTextureBlock(dawngrove_village_sceneTex_00B220, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(0x0B000000),
+    gsDPLoadTextureBlock(0x0A000000, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_TERR2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
@@ -988,8 +1090,8 @@ Gfx dawngrove_village_room_0DL_005478[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal256(dawngrove_village_sceneTLUT_00B220),
-    gsDPLoadTextureBlock(dawngrove_village_sceneTex_00B220, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(0x0B000000),
+    gsDPLoadTextureBlock(0x0A000000, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_TERR2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
@@ -1032,8 +1134,8 @@ Gfx dawngrove_village_room_0DL_0057D8[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal256(dawngrove_village_sceneTLUT_00B220),
-    gsDPLoadTextureBlock(dawngrove_village_sceneTex_00B220, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(0x0B000000),
+    gsDPLoadTextureBlock(0x0A000000, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_TERR2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
@@ -1239,8 +1341,8 @@ Gfx dawngrove_village_room_0DL_0069B8[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal256(dawngrove_village_sceneTLUT_00B220),
-    gsDPLoadTextureBlock(dawngrove_village_sceneTex_00B220, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(0x0B000000),
+    gsDPLoadTextureBlock(0x0A000000, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_TERR2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
@@ -1261,8 +1363,8 @@ Gfx dawngrove_village_room_0DL_006B68[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal256(dawngrove_village_sceneTLUT_00B220),
-    gsDPLoadTextureBlock(dawngrove_village_sceneTex_00B220, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(0x0B000000),
+    gsDPLoadTextureBlock(0x0A000000, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_TERR2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
@@ -1433,8 +1535,8 @@ Gfx dawngrove_village_room_0DL_007A50[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal256(dawngrove_village_sceneTLUT_00B220),
-    gsDPLoadTextureBlock(dawngrove_village_sceneTex_00B220, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(0x0B000000),
+    gsDPLoadTextureBlock(0x0A000000, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_TERR2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
@@ -1626,8 +1728,8 @@ Gfx dawngrove_village_room_0DL_008CF8[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal256(dawngrove_village_sceneTLUT_00B220),
-    gsDPLoadTextureBlock(dawngrove_village_sceneTex_00B220, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(0x0B000000),
+    gsDPLoadTextureBlock(0x0A000000, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_TERR2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
@@ -1648,8 +1750,8 @@ Gfx dawngrove_village_room_0DL_008EA8[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal256(dawngrove_village_sceneTLUT_00B220),
-    gsDPLoadTextureBlock(dawngrove_village_sceneTex_00B220, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(0x0B000000),
+    gsDPLoadTextureBlock(0x0A000000, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_TERR2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),

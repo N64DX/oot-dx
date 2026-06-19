@@ -926,7 +926,7 @@ int Player_HoldsBrokenKnife(Player* this) {
 s32 Player_ActionToBottle(Player* this, s32 itemAction) {
     s32 bottle = itemAction - PLAYER_IA_BOTTLE;
 
-    if ((bottle >= 0) && (bottle < 13)) {
+    if ((bottle >= 0) && (bottle < PLAYER_IA_ZELDAS_LETTER - PLAYER_IA_BOTTLE)) {
         return bottle;
     } else {
         return -1;

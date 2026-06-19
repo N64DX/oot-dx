@@ -32,8 +32,8 @@ s16 fairy_deku_tree_room_10ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_10ActorList0x000048[] = {
-    { ACTOR_EN_ST,        {  -496, 1354, 1462 }, { 0, 0xC000, 0 }, 0xFFFF },
-    { ACTOR_EN_ST,        {   572, 1393, 1456 }, { 0, 0xC000, 0 }, 0xFFFF },
+    { ACTOR_EN_ST,        {  -496, 1354, 1462 }, { 0, 0xC000, 0 }, 0x0000 },
+    { ACTOR_EN_ST,        {   572, 1393, 1456 }, { 0, 0xC000, 0 }, 0x0000 },
     { ACTOR_OBJ_SYOKUDAI, { -1174, 1400, 1218 }, { 0,      0, 0 }, 0x27FF },
     { ACTOR_OBJ_SYOKUDAI, {    16, 1360, 1299 }, { 0,      0, 0 }, 0x1087 }, // Switch: 07
     { ACTOR_OBJ_SYOKUDAI, {  1175, 1400, 964  }, { 0,      0, 0 }, 0x1087 }, // Switch: 07

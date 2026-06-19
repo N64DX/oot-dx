@@ -3038,6 +3038,8 @@ void Message_OpenText(PlayState* play, u16 textId) {
 
         if (IS_CHILD_QUEST) {
             switch (textId) {
+                case 0x0009: textId = 0x8012; break;
+                case 0x000A: textId = 0x8013; break;
                 case 0x0050: textId = 0x800D; break;
                 case 0x0051: textId = 0x800E; break;
                 case 0x0071: textId = 0x8011; break;

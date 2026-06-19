@@ -3263,13 +3263,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                         Interface_LoadItemIcon1(play, i);
                 }
             }
-        } else if (item != ITEM_ROCS_FEATHER && item != ITEM_GOLDEN_FEATHER) {
-            if (this->featherUseCount != 0)
-                if (item == ITEM_SLINGSHOT || item == ITEM_BOOMERANG || item == ITEM_HOOKSHOT || item == ITEM_LONGSHOT || item == ITEM_BOW || item == ITEM_BOW_FIRE || item == ITEM_BOW_ICE || item == ITEM_BOW_LIGHT)
-                    return;
-            this->heldItemButton = i;
-            Player_UseItem(play, this, item);
-        } else if (this->featherUseCount < MAX_FEATHER_USES) {
+        } else if (item >= ITEM_ROCS_FEATHER && item <= ITEM_GOLDEN_FEATHER && this->featherUseCount < MAX_FEATHER_USES) {
             u8 energyCost = (item == ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.obtainedItems.amuletOfEnergy * 5);
             if ((((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f) || item == ITEM_GOLDEN_FEATHER) && gSaveContext.save.info.energy >= energyCost) {
                 Vec3f effectsPos = this->actor.home.pos;
@@ -3285,6 +3279,9 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 Player_PlaySfx(this, NA_SE_PL_SKIP);
                 gSaveContext.save.info.energy -= energyCost;
             }
+        } else {
+            this->heldItemButton = i;
+            Player_UseItem(play, this, item);
         }
     }
 }
@@ -6823,6 +6820,8 @@ s32 func_8083AD4C(PlayState* play, Player* this) {
         camMode = CAM_MODE_FIRST_PERSON;
     }
 
+    if (this->rideActor == NULL && camMode != CAM_MODE_FIRST_PERSON)
+        Player_AnimPlayLoop(play, this, &gPlayerAnim_link_normal_wait);
     return Camera_RequestMode(Play_GetCamera(play, CAM_ID_MAIN), camMode);
 }
 
@@ -7068,7 +7067,7 @@ s32 Player_ActionHandler_13(Player* this, PlayState* play) {
 
                 sp2C = Player_ActionToBottle(this, this->itemAction);
                 if (sp2C >= 0) {
-                    if (sp2C == 0xC) {
+                    if (sp2C == PLAYER_IA_BOTTLE_FAIRY - PLAYER_IA_BOTTLE) {
                         Player_SetupActionPreserveItemAction(play, this, Player_Action_8084EED8, 0);
                         Player_AnimPlayOnceAdjusted(play, this, &gPlayerAnim_link_bottle_bug_out);
                         Player_SetTurnAroundCamera(play, CAM_ITEM_TYPE_3);
@@ -15313,11 +15312,8 @@ void Player_Action_8084EAC0(Player* this, PlayState* play) {
                 }
                 
                 if (sp28 & 8) {
-                    u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
-                    if (IS_HEROS_SHIELD && shield == 2)
-                        shield = 4;
-                    if (shield != PLAYER_SHIELD_NONE)
-                        gSaveContext.save.info.shields[shield - 1].durability = Player_GetMaxShieldDurability(shield);
+                    if (this->currentShield > PLAYER_SHIELD_NONE)
+                        gSaveContext.save.info.shields[this->currentShield-1].durability = CLAMP_MAX(gSaveContext.save.info.shields[this->currentShield-1].durability + Player_MaxShieldDurabilityValues[this->currentShield-1][1], Player_GetMaxShieldDurability(this->currentShield));
                 }
             }
 

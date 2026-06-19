@@ -3,7 +3,6 @@
 
 #include "room.h"
 
-extern SceneCmd* dawngrove_inn_room_4AlternateHeaders[];
 extern s16 dawngrove_inn_room_4ObjectList_000048[];
 extern ActorEntry dawngrove_inn_room_4ActorEntry_000050[];
 extern RoomShapeNormal dawngrove_inn_room_4RoomShapeNormal_000090;

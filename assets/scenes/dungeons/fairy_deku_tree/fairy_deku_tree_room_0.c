@@ -64,7 +64,7 @@ ActorEntry fairy_deku_tree_room_0ActorList0x000048[] = {
     { ACTOR_EN_GOOMBA,     {    0,  240, -550 }, {    0,      0, 0 }, 0x0000 },
     { ACTOR_EN_GOOMBA,     {  -35,  400,  550 }, {    0,      0, 0 }, 0x0000 },
     { ACTOR_EN_GOOMBA,     {  400,  720, -370 }, {    0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_GOOMBA,     { -425, 1000,  320 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,     { -450, 1320,  300 }, {    0, 0x7530, 0 }, 0x0000 },
     { ACTOR_OBJ_CRASHBOX,  {  825,    0,    0 }, {    0,      0, 0 }, 0x0012 },
     { ACTOR_OBJ_CRASHBOX,  { 1020,    0, -155 }, {    0,  0xB00, 0 }, 0x0011 },
 };

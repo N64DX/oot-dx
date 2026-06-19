@@ -71,8 +71,8 @@ UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Du hast das Silbers
 "Meisterschmied für große Kraft geschmiedet!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Tu as transformé l'" 
-"Épée d'argent en " COLOR(RED) "Épée dorée" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Tu as transformé la" 
+"Lame d'Argent en " COLOR(RED) "Lame Dorée" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
 "Cette lame a été forgée par un\n"
 "maître forgeron pour une grande puissance!"
 )
@@ -216,7 +216,7 @@ COLOR(RED) "Goldpulver" COLOR(DEFAULT) " getauscht!" QUICKTEXT_DISABLE "\n"
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_BROKEN_GORONS_SWORD) QUICKTEXT_ENABLE "Vous échangez la Scie\n" 
-"contre l'" COLOR(RED) "poudre d'or" COLOR(DEFAULT) " de grande qualité !" QUICKTEXT_DISABLE "\n"
+"contre l'" COLOR(RED) "Poudre d'Or" COLOR(DEFAULT) " de grande qualité !" QUICKTEXT_DISABLE "\n"
 "Apportez-la à un maître forgeron\n"
 "pour reforger une épée avec !"
 )
@@ -255,8 +255,9 @@ ITEM_ICON(ITEM_TUNIC_ZORA) QUICKTEXT_ENABLE COLOR(BLUE) "ゾーラの服" COLOR(
 ),
 MSG(
 ITEM_ICON(ITEM_TUNIC_ZORA) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Zora Tunic" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"This is diving suit. Wear it\n"
-"and you won't drown underwater."
+"This is a diving suit. Wear it\n"
+"and you won't drown underwater.\n"
+"or freeze from the cold."
 ),
 MSG(
 ITEM_ICON(ITEM_TUNIC_ZORA) QUICKTEXT_ENABLE "Die " COLOR(BLUE) "Zora-Rüstung" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
@@ -348,7 +349,57 @@ UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE "Vous trouvez la " COLOR(
 )
 )
 
-DEFINE_MESSAGE(0x8012, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8012, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_PRESCRIPTION) QUICKTEXT_ENABLE "金の粉を　あずけて\n"
+COLOR(RED) "処方せん" COLOR(DEFAULT) "を　受け取った！" QUICKTEXT_DISABLE "\n"
+"キングゾーラに会いに行こう！"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_PRESCRIPTION) QUICKTEXT_ENABLE "You checked in the Gold Dust\n"
+"and received a " COLOR(RED) "Prescription" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Go see King Zora!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_PRESCRIPTION) QUICKTEXT_ENABLE "Du hast Biggoron das Goldpulver\n"
+"gegeben und dafür ein " COLOR(RED) "Rezept\n"
+COLOR(DEFAULT) "erhalten!" QUICKTEXT_DISABLE " Geh zu König Zora!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_PRESCRIPTION) QUICKTEXT_ENABLE "Vous remettez la Poudre\n"
+"d'Or et vous recevez une\n"
+COLOR(RED) "Ordonnance" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Allez vite voir le Roi Zora!"
+)
+)
+
+DEFINE_MESSAGE(0x8013, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_CLAIM_CHECK) QUICKTEXT_ENABLE "ギルデッドソード！！" QUICKTEXT_DISABLE "\n"
+"…の" COLOR(RED) "ひきかえ券" COLOR(DEFAULT) "を　もらった。\n"
+"出来上がりが　待ちどおしい！"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_CLAIM_CHECK) QUICKTEXT_ENABLE "The Gilded Sword..." QUICKTEXT_DISABLE "\n"
+"You got a " COLOR(RED) "Claim Check " COLOR(DEFAULT) "for it!\n"
+"You can't wait for the sword\n"
+"to be completed!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_CLAIM_CHECK) QUICKTEXT_ENABLE "Das Goldschwert!" QUICKTEXT_DISABLE "\n"
+"Du hast ein " COLOR(RED) "Zertifikat" COLOR(DEFAULT) " erhalten.\n"
+"Hoffentlich ist das Schwert\n"
+"bald wieder repariert!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_CLAIM_CHECK) QUICKTEXT_ENABLE "La Lame Dorée..." QUICKTEXT_DISABLE "\n"
+"Vous recevez un " COLOR(RED) "Certificat" COLOR(DEFAULT) "!\n"
+"Une fois prête, sa lame tran-\n"
+"chera du monstre en rondelles!"
+)
+)
+
+DEFINE_MESSAGE(0x8014, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "We opened a new shop over here\n"
@@ -3152,6 +3203,85 @@ MSG(),
 MSG(
 "Isn't it so relaxing laying here\n"
 "on this rooftop?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8237, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"What a nice little village this is.\n"
+"I should find myself a room at the\n"
+"inn to stay overnight.\n"
+"I wonder... Do I have enough Rupees?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8238, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Let's see... As for tomorrow's plan...\n"
+"Yeah, time for some sightseeing.\n"
+"I wonder if I still have enough\n"
+"Rupees for another night here..."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8239, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I go could for some fishing 'round\n"
+"these waters.\n"
+"I wonder... What kinda of bait would\n"
+"work best here?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x823A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I caught quite the fish today.\n"
+"Time to prepare skin it and prepare\n"
+"for dinner.\n"
+"I can't wait to fish again tomorrow!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x823B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Please don't pester my poor Cucco.\n"
+"He doesn't like to get carried\n"
+"around town."
+BOX_BREAK
+
+"Hey! You listen to me young boy!\n"
+"I am being serious here!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x823C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I have to take care of my mother.\n"
+"She's old, but way too eager to\n"
+"get outside and do some exploring\n"
+"like she used to do in the old days."
+BOX_BREAK
+
+"Keep an eye out for her if you see\n"
+"here roaming about, ok?"
 ),
 MSG(),
 MSG()

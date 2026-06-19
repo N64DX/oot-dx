@@ -170,7 +170,7 @@ void ObjSyokudai3_Update(Actor* thisx, PlayState* play2) {
             if (dmgFlags & DMG_ARROW_NORMAL) {
                 arrow = (EnArrow*)this->flameCollider.base.ac;
                 if (arrow->actor.update != NULL && arrow->actor.id == ACTOR_EN_ARROW) {
-                    arrow->actor.params = 11;
+                    arrow->actor.params = ARROW_NORMAL_LIT_ICE;
                     arrow->collider.elem.atDmgInfo.dmgFlags = DMG_ARROW_ICE;
                 }
             }

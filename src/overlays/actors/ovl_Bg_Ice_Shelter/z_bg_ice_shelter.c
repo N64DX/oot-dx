@@ -5,6 +5,7 @@
  */
 
 #include "z_bg_ice_shelter.h"
+#include "overlays/actors/ovl_En_Arrow/z_en_arrow.h"
 
 #include "libc64/qrand.h"
 #include "gfx.h"
@@ -376,7 +377,7 @@ void Bg_IceShelter_MeltOnIceArrowHit(BgIceShelter* this, ColliderCylinder cylind
     if (cylinder.base.acFlags & AC_HIT) {
         cylinder.base.acFlags &= ~AC_HIT;
         if (cylinder.base.ac != NULL && cylinder.base.ac->id == ACTOR_EN_ARROW) {
-            if (cylinder.base.ac->child != NULL && cylinder.base.ac->child->id == ACTOR_ARROW_ICE) {
+            if ( (cylinder.base.ac->child != NULL && cylinder.base.ac->child->id == ACTOR_ARROW_ICE) || cylinder.base.ac->params == ARROW_NORMAL_LIT_ICE)  {
                 if (type == RED_ICE_KING_ZORA)
                     if (this->dyna.actor.parent != NULL)
                         this->dyna.actor.parent->freezeTimer = 50;

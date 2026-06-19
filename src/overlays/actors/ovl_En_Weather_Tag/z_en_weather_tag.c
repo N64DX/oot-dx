@@ -192,7 +192,8 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
         case EN_WEATHER_TAG_TYPE_THUNDERSTORM_GORON_VILLAGE:
             if (lastEntranceIndex != gSaveContext.save.entranceIndex) {
                 Environment_PlayStormNatureAmbience(play);
-                WeatherTag_CheckEnableWeatherEffect(this, play, 0, 1, 0, 3, 60, WEATHER_MODE_CLOUDY_CONFIG3);
+                if (play->skyboxId == SKYBOX_NORMAL_SKY)
+                    WeatherTag_CheckEnableWeatherEffect(this, play, 0, 1, 0, 3, 60, WEATHER_MODE_CLOUDY_CONFIG3);
             }
             EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledRainThunderGoronVillage);
             break;

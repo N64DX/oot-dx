@@ -356,6 +356,7 @@ typedef enum ItemID {
 
 #define ITEM_TRADE_CHILD ITEM_WEIRD_EGG
 #define ITEM_TRADE_ADULT ITEM_POCKET_EGG
+#define LAST_ITEM_ICON   ITEM_PERFECT_BLOCK_UPGRADE
 
 // Get Item result may vary depending on context (chest/shop/scrub/drop)
 typedef enum GetItemID {

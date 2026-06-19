@@ -37,6 +37,8 @@ extern u64 dawngrove_village_sceneTex_00AC20[];
 extern u64 dawngrove_village_sceneTLUT_00AC20[];
 extern u64 dawngrove_village_sceneTex_00B220[];
 extern u64 dawngrove_village_sceneTLUT_00B220[];
+extern u64 dawngrove_village_sceneTex_00B220_night[];
+extern u64 dawngrove_village_sceneTLUT_00B220_night[];
 extern u64 dawngrove_village_sceneTex_00B820[];
 extern u64 dawngrove_village_sceneTLUT_00B820[];
 extern u64 dawngrove_village_sceneTex_00C220[];

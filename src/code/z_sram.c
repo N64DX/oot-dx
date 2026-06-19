@@ -708,7 +708,13 @@ void Sram_OpenSave(SramContext* sramCtx) {
     if (IS_CHILD_QUEST)
         gSaveContext.save.linkAge = LINK_AGE_CHILD;
 
-    gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].upgrade = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].upgrade = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].upgrade = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].upgrade = 0;
+    if (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ARROW_FIRE)
+        gSaveContext.save.info.obtainedItems.fireArrow = 1;
+    if (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ARROW_ICE)
+        gSaveContext.save.info.obtainedItems.iceArrow = 1;
+    if (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ARROW_LIGHT)
+        gSaveContext.save.info.obtainedItems.lightArrow = 1;
+
     for (i=0; i<4; i++)
         if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, i) && (gSaveContext.save.info.shields[i].durability == 0 || gSaveContext.save.info.shields[i].durability>= Player_GetMaxShieldDurability(i+1)) && ( (i == 3 && !gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) || i != 3) )
             gSaveContext.save.info.shields[i].durability = Player_GetMaxShieldDurability(i+1);

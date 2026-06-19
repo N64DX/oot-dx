@@ -15,6 +15,7 @@
 #include "save.h"
 
 #include "assets/objects/object_spot18_obj/object_spot18_obj.h"
+#include "assets/objects/object_spot18_obj/object_spot18_obj_extra.h"
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_DRAW_CULLING_DISABLED)
 
@@ -42,7 +43,9 @@ typedef struct BgSpot18ShutterInfo {
     /* 0x04 */ u32 flag;
     /* 0x08 */ f32 scaleX;
     /* 0x0C */ f32 scaleY;
-} BgSpot18ShutterInfo; // size = 0x10
+    /* 0x10 */ f32 scaleZ;
+    /* 0x14 */ Gfx* doorDL;
+} BgSpot18ShutterInfo; // size = 0x18
 
 ActorProfile Bg_Spot18_Shutter_Profile = {
     /**/ ACTOR_BG_SPOT18_SHUTTER,
@@ -67,30 +70,40 @@ static BgSpot18ShutterInfo sBgSpot18ShutterInfo[] = {
         INFTABLE_109,
         1.0f,
         1.0f,
+        1.0f,
+        gGoronCityDoorDL,
     }, {
         SCENE_PATH_TO_GORON_VILLAGE,
         BG_SPOT18_SHUTTER_UP,
         INFTABLE_STONE_TOWER_DOOR_OPENED,
         1.5f,
         1.0f,
+        1.0f,
+        gGoronCityDoorDL,
     }, {
         SCENE_GORON_VILLAGE,
         BG_SPOT18_SHUTTER_UP,
         INFTABLE_GORON_SHRINE_DOOR_OPENED,
-        1.0f,
-        1.0f,
+        10.0f,
+        10.0f,
+        7.75f,
+        gGoronShrineDoorDL,
     }, {
         SCENE_GORON_SHRINE,
         BG_SPOT18_SHUTTER_DOWN,
         INFTABLE_GORON_MINES_DOOR_OPENED,
-        0.5f,
-        0.6f,
+        4.5f,
+        8.0f,
+        5.0f,
+        gGoronShrineDoorDL,
     }, {
         SCENE_SPRING_LAKE,
         BG_SPOT18_SHUTTER_DOWN,
         INFTABLE_WEBBED_SHRINE_DOOR_OPENED,
         1.5f,
         1.0f,
+        1.0f,
+        gGoronCityDoorDL,
     },
 };
 
@@ -127,6 +140,7 @@ void BgSpot18Shutter_Init(Actor* thisx, PlayState* play) {
 
     thisx->scale.x *= sBgSpot18ShutterInfo[this->index].scaleX;
     thisx->scale.y *= sBgSpot18ShutterInfo[this->index].scaleY;
+    thisx->scale.z *= sBgSpot18ShutterInfo[this->index].scaleZ;
 
     if (param == 0) {
         if (LINK_IS_ADULT_OR_TIMESKIP) {
@@ -154,7 +168,7 @@ void BgSpot18Shutter_Init(Actor* thisx, PlayState* play) {
         }
     }
 
-    CollisionHeader_GetVirtual(&gGoronCityDoorCol, &colHeader);
+    CollisionHeader_GetVirtual(sBgSpot18ShutterInfo[this->index].doorDL == gGoronCityDoorDL ? &gGoronCityDoorCol : &gGoronShrineDoorCol, &colHeader);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
 }
 
@@ -239,5 +253,7 @@ void BgSpot18Shutter_Update(Actor* thisx, PlayState* play) {
 }
 
 void BgSpot18Shutter_Draw(Actor* thisx, PlayState* play) {
-    Gfx_DrawDListOpa(play, gGoronCityDoorDL);
+    BgSpot18Shutter* this = (BgSpot18Shutter*)thisx;
+
+    Gfx_DrawDListOpa(play, sBgSpot18ShutterInfo[this->index].doorDL);
 }

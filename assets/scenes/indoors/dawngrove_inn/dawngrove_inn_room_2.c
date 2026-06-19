@@ -7,19 +7,27 @@
 #include "object.h"
 
 SceneCmd dawngrove_inn_room_2[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(dawngrove_inn_room_2AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(0),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_inn_room_2RoomShapeNormal_000090),
-    SCENE_CMD_OBJECT_LIST(8, dawngrove_inn_room_2ObjectList_000048),
+    SCENE_CMD_OBJECT_LIST(9, dawngrove_inn_room_2ObjectList_000048),
     SCENE_CMD_ACTOR_LIST(1, dawngrove_inn_room_2ActorEntry_000050),
     SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
     SCENE_CMD_END(),
 };
 
+SceneCmd* dawngrove_inn_room_2AlternateHeaders[] = {
+    dawngrove_inn_room_2Set_night,
+    NULL,
+    NULL,
+};
+
 s16 dawngrove_inn_room_2ObjectList_000048[] = {
     OBJECT_BOX,
+    OBJECT_AHG,
     OBJECT_CNE,
     OBJECT_OS_ANIME,
     OBJECT_BOX,
@@ -30,7 +38,10 @@ s16 dawngrove_inn_room_2ObjectList_000048[] = {
 };
 
 ActorEntry dawngrove_inn_room_2ActorEntry_000050[] = {
-    { ACTOR_EN_WONDER_TALK2, { 430, 47, -651 }, { 0, 0, 0 }, 0x117F },
+    { ACTOR_EN_WONDER_TALK2, { 430, 47, -651 }, { 0,      0, 0 }, 0x117F },
+
+    // Night
+    { ACTOR_EN_HY,           { 190,  0, -590 }, { 0, 0x8000, 0 }, 0x0002 },
 };
 
 RoomShapeNormal dawngrove_inn_room_2RoomShapeNormal_000090 = { 
@@ -46,6 +57,18 @@ RoomShapeDListsEntry dawngrove_inn_room_2RoomShapeDListsEntry_00009C[6] = {
     { dawngrove_inn_room_2DL_0016F0, NULL },
     { dawngrove_inn_room_2DL_001DD0, NULL },
     { dawngrove_inn_room_2DL_0022E0, NULL },
+};
+
+SceneCmd dawngrove_inn_room_2Set_night[] = {
+    SCENE_CMD_ECHO_SETTINGS(0),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(true, true),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&dawngrove_inn_room_2RoomShapeNormal_000090),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_inn_room_2ObjectList_000048), dawngrove_inn_room_2ObjectList_000048),
+    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(dawngrove_inn_room_2ActorEntry_000050), dawngrove_inn_room_2ActorEntry_000050),
+    SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
+    SCENE_CMD_END(),
 };
 
 s32 dawngrove_inn_room_2_terminatorMaybe_00008C = { 0x01000000 };

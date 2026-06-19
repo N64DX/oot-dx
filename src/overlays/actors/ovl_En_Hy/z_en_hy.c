@@ -650,6 +650,10 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
                 return 0x5086;
             } else if (play->sceneId == SCENE_KAKARIKO_VILLAGE) {
                 return 0x5085;
+            } else if (play->sceneId == SCENE_RIVERSIDE_VILLAGE) {
+                return 0x8237;
+            } else if (play->sceneId == SCENE_RIVERSIDE_INN) {
+                return 0x8238;
             } else if (Actor_ZeldaFledDialogue()) {
                 return GET_INFTABLE(INFTABLE_C3) ? 0x701A : 0x7047;
             } else if (GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE)) {
@@ -666,6 +670,10 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
             return Actor_ZeldaFledDialogue() ? (GET_INFTABLE(INFTABLE_C4) ? 0x7001 : 0x70EB) : 0x7001;
 
         case ENHY_TYPE_MAN_1_SHAVED_BLACK_SHIRT:
+            if (play->sceneId == SCENE_RIVERSIDE_VILLAGE)
+                return 0x8239;
+            else if (play->sceneId == SCENE_RIVERSIDE_INN)
+                return 0x823A;
             return Actor_ZeldaFledDialogue() ? 0x704B : (GET_INFTABLE(INFTABLE_C5) ? 0x7024 : 0x7023);
 
         case ENHY_TYPE_BEGGAR:
@@ -718,6 +726,10 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
             }
 
         case ENHY_TYPE_YOUNG_WOMAN_ORANGE_HAIR:
+            if (play->sceneId == SCENE_RIVERSIDE_VILLAGE)
+                return 0x823B;
+            else if (play->sceneId == SCENE_RIVERSIDE_HOUSE)
+                return 0x823C;
             return GET_INFTABLE(INFTABLE_MALON_SPAWNED_AT_HYRULE_CASTLE) ? (GET_INFTABLE(INFTABLE_CC) ? 0x7014 : 0x70A4)
                                                                          : 0x7014;
 
@@ -1219,6 +1231,12 @@ void EnHy_WaitForObjects(EnHy* this, PlayState* play) {
 
         EnHy_InitSetProperties(this);
         this->path = Path_GetByIndex(play, ENHY_GET_PATH_INDEX(&this->actor), 15);
+
+        switch (ENHY_GET_TYPE(&this->actor)) {
+            case ENHY_TYPE_YOUNG_WOMAN_ORANGE_HAIR:
+                if (play->sceneId == SCENE_RIVERSIDE_VILLAGE || play->sceneId == SCENE_RIVERSIDE_HOUSE)
+                    Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, ENHY_ANIM_9);
+        }
 
         switch (ENHY_GET_TYPE(&this->actor)) {
             case ENHY_TYPE_MAN_2_BALD:

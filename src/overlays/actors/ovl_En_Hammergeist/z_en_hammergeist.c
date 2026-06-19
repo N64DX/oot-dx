@@ -425,6 +425,7 @@ void EnHammergeist_Destroy(Actor* thisx, PlayState* play) {
     Collider_DestroyCylinder(play, &this->hammerLeftCollider);
     Collider_DestroyCylinder(play, &this->hammerRightCollider);
     Collider_DestroyJntSph(play, &this->explosionCollider);
+    sNumAlive--;
 
     if (this->switchFlag != 0xFF && sNumAlive == 0)
         func_800F5B58();
@@ -646,10 +647,8 @@ void EnHammergeist_CheckDamage(EnHammergeist* this, PlayState* play) {
             EnHammergeist_SetupStunned(this, play);
         }
 
-        if (this->actor.colChkInfo.health == 0) {
+        if (this->actor.colChkInfo.health == 0)
             EnHammergeist_SetupDie(this, play);
-            sNumAlive--;
-        }
     }
   //if ((this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && this->actionFunc != EnHammergeist_Die)
   //    EnHammergeist_SetupDie(this, play); // Currently, the Hammergeist dies if he falls into a water box

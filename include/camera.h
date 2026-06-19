@@ -215,8 +215,7 @@ typedef enum CameraSettingType {
     /* 0x46 */ CAM_SET_TUNNEL,
     /* 0x47 */ CAM_SET_SCENE0,
     /* 0x48 */ CAM_SET_SPIRAL_DOOR,
-    /* 0x49 */ CAM_SET_DOORD,
-    /* 0x4A */ CAM_SET_MAX
+    /* 0x49 */ CAM_SET_MAX
 } CameraSettingType;
 
 typedef enum CameraModeType {

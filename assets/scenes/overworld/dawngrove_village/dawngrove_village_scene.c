@@ -12,7 +12,7 @@
 #include "ultra64.h"
 
 SceneCmd dawngrove_village_scene[] = {
-    SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_DAWNGROVE_VILLAGE),
+    SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_MARKET_ENTRANCE, NA_BGM_DAWNGROVE_VILLAGE),
     SCENE_CMD_ROOM_LIST(1, dawngrove_village_sceneRoomList_000070),
     SCENE_CMD_TRANSITION_ACTOR_LIST(3, dawngrove_village_sceneTransitionActorList_000078),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 4),
@@ -20,7 +20,7 @@ SceneCmd dawngrove_village_scene[] = {
     SCENE_CMD_SPAWN_LIST(dawngrove_village_sceneEntranceList_0001F8),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PLAYER_ENTRY_LIST(4, dawngrove_village_sceneStartPositionList_0000B0),
-    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_DRAW_256_4FACE, 0, LIGHT_MODE_SETTINGS),
+    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(dawngrove_village_sceneExitList_0000A8),
     SCENE_CMD_ENV_LIGHT_SETTINGS(12, dawngrove_village_sceneLightSettings_0000F0),
     SCENE_CMD_END(),
@@ -2408,6 +2408,14 @@ u64 dawngrove_village_sceneTex_00B220[] = {
 
 u64 dawngrove_village_sceneTLUT_00B220[] = {
 #include "assets/scenes/overworld/dawngrove_village/dawngrove_village_sceneTex_00B220.tlut.rgba16.inc.c"
+};
+
+u64 dawngrove_village_sceneTex_00B220_night[] = {
+#include "assets/scenes/overworld/dawngrove_village/dawngrove_village_sceneTex_00B220_night.ci8.inc.c"
+};
+
+u64 dawngrove_village_sceneTLUT_00B220_night[] = {
+#include "assets/scenes/overworld/dawngrove_village/dawngrove_village_sceneTex_00B220_night.tlut.rgba16.inc.c"
 };
 
 u64 dawngrove_village_sceneTex_00B820[] = {

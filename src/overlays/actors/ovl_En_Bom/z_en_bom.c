@@ -111,17 +111,17 @@ void EnBom_Init(Actor* thisx, PlayState* play) {
     thisx->colChkInfo.cylHeight = 10;
     this->timer = 70;
     this->flashSpeedScale = 7;
+    this->size = thisx->shape.rot.z;
     Collider_InitCylinder(play, &this->bombCollider);
     Collider_InitJntSph(play, &this->explosionCollider);
     Collider_SetCylinder(play, &this->bombCollider, thisx, &sCylinderInit);
     Collider_SetJntSph(play, &this->explosionCollider, thisx, &sJntSphInit, &this->explosionColliderElements[0]);
-    this->explosionColliderElements[0].base.atDmgInfo.damage += (thisx->shape.rot.z & 0xFF00) >> 8;
+    this->explosionColliderElements[0].base.atDmgInfo.damage += (this->size & 0xFF00) >> 8;
 
-    thisx->shape.rot.z &= 0xFF;
-    if (thisx->shape.rot.z & 0x80) {
-        thisx->shape.rot.z |= 0xFF00;
+    this->size &= 0xFF;
+    if (this->size & 0x80) {
+        this->size |= 0xFF00;
     }
-    this->size = thisx->params == BOMB_ARROW ? 0 : thisx->shape.rot.z;
 
     EnBom_SetupAction(this, EnBom_Move);
 }
@@ -265,35 +265,27 @@ void EnBom_Update(Actor* thisx, PlayState* play2) {
                             UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_1 | UPDBGCHECKINFO_FLAG_2 |
                                 UPDBGCHECKINFO_FLAG_3 | UPDBGCHECKINFO_FLAG_4);
 
-    if (thisx->params == BOMB_BODY || thisx->params == BOMB_ARROW) {
+    if (thisx->params == BOMB_BODY) {
         if (this->timer < 63) {
             dustAccel.y = 0.2f;
 
             // spawn spark effect on even frames
             effPos = thisx->world.pos;
-            
-            if (thisx->params == BOMB_ARROW) {
-                Color_RGBA8 primColor = { 255, 255, 150, 255 };
-                Color_RGBA8 envColor = { 255, 0, 0, 0 };
-                effPos.y += 6.0f;
-                if ((play->gameplayFrames % 2) == 0)
-                    EffectSsGSpk_SpawnAccel(play, thisx, &effPos, &effVelocity, &effAccel, &primColor, &envColor, 50, 5);
-            } else {
-                effPos.y += 17.0f;
-                if ((play->gameplayFrames % 2) == 0)
-                    EffectSsGSpk_SpawnFuse(play, thisx, &effPos, &effVelocity, &effAccel);
+            effPos.y += 17.0f;
+            if ((play->gameplayFrames % 2) == 0) {
+                EffectSsGSpk_SpawnFuse(play, thisx, &effPos, &effVelocity, &effAccel);
             }
 
             Actor_PlaySfx(thisx, NA_SE_IT_BOMB_IGNIT - SFX_FLAG);
 
             effPos.y += 3.0f;
-            func_8002829C(play, &effPos, &effVelocity, &dustAccel, &dustColor, &dustColor, thisx->params == BOMB_ARROW ? 25 : 50, 5);
+            func_8002829C(play, &effPos, &effVelocity, &dustAccel, &dustColor, &dustColor, 50, 5);
         }
 
         if ((this->bombCollider.base.acFlags & AC_HIT) || ((this->bombCollider.base.ocFlags1 & OC1_HIT) &&
                                                            (this->bombCollider.base.oc->category == ACTORCAT_ENEMY))) {
             this->timer = 0;
-            thisx->shape.rot.z = 0;
+            this->size = 0;
         } else {
             // if a lit stick touches the bomb, set timer to 100
             // these bombs never have a timer over 70, so this isn't used
@@ -308,7 +300,7 @@ void EnBom_Update(Actor* thisx, PlayState* play2) {
 
         // double bomb flash speed and adjust red color at certain times during the countdown
         if ((this->timer == 3) || (this->timer == 20) || (this->timer == 40)) {
-            thisx->shape.rot.z = 0;
+            this->size = 0;
             this->flashSpeedScale >>= 1;
         }
 
@@ -329,8 +321,6 @@ void EnBom_Update(Actor* thisx, PlayState* play2) {
             if (Actor_HasParent(thisx, play)) {
                 effPos.y += 30.0f;
             }
-            if (thisx->params == BOMB_ARROW)
-               effPos.y -= 30.0f; 
 
             EffectSsBomb2_SpawnLayered(play, &effPos, &effVelocity, &bomb2Accel, 100, (this->size * 6) + 19);
 
@@ -386,7 +376,7 @@ void EnBom_Draw(Actor* thisx, PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_bom.c", 913);
 
-    if (thisx->params == BOMB_BODY || thisx->params == BOMB_ARROW) {
+    if (thisx->params == BOMB_BODY) {
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         Matrix_ReplaceRotation(&play->billboardMtxF);
         func_8002EBCC(thisx, play, 0);

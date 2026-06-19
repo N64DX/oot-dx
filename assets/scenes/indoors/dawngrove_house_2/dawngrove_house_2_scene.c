@@ -779,8 +779,24 @@ CollisionHeader dawngrove_house_2_sceneCollisionHeader_0001A0 = {
     0, NULL
 };
 
-u64 dawngrove_house_2_sceneTex_001B60[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_001B60.rgba16.inc.c"
+u64 dawngrove_house_2_sceneTex_001240[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_001240.rgba16.inc.c"
+};
+
+u64 dawngrove_house_2_sceneTex_002240[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_002240.ci8.inc.c"
+};
+
+u64 dawngrove_house_2_sceneTLUT_002240[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_002240.tlut.rgba16.inc.c"
+};
+
+u64 dawngrove_house_2_sceneTex_002840[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_002840.ci8.inc.c"
+};
+
+u64 dawngrove_house_2_sceneTLUT_002840[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_002840.tlut.rgba16.inc.c"
 };
 
 u64 dawngrove_house_2_sceneTex_002B60[] = {
@@ -791,45 +807,58 @@ u64 dawngrove_house_2_sceneTLUT_002B60[] = {
 #include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_002B60.tlut.rgba16.inc.c"
 };
 
+u64 dawngrove_house_2_sceneTex_002E40[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_002E40.ci8.inc.c"
+};
+
+u64 dawngrove_house_2_sceneTLUT_002E40[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_002E40.tlut.rgba16.inc.c"
+};
+
 u64 dawngrove_house_2_sceneTex_002E60[] = {
 #include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_002E60.ci4.inc.c"
+};
+
+u64 dawngrove_house_2_sceneTex_003240[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_003240.ci8.inc.c"
+};
+
+u64 dawngrove_house_2_sceneTLUT_003240[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_003240.tlut.rgba16.inc.c"
+};
+
+u64 dawngrove_house_2_sceneTex_003540[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_003540.ci8.inc.c"
+};
+
+u64 dawngrove_house_2_sceneTLUT_003540[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_003540.tlut.rgba16.inc.c"
 };
 
 u64 dawngrove_house_2_sceneTLUT_002E60[] = {
 #include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_002E60.tlut.rgba16.inc.c"
 };
 
-u64 dawngrove_house_2_sceneTex_003500[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_003500.ci8.inc.c"
+u64 dawngrove_house_2_sceneTex_003840[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_003840.ci8.inc.c"
 };
 
-u64 dawngrove_house_2_sceneTLUT_003500[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_003500.tlut.rgba16.inc.c"
+u64 dawngrove_house_2_sceneTLUT_003840[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_003840.tlut.rgba16.inc.c"
 };
 
-u64 dawngrove_house_2_sceneTex_003900[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_003900.ci8.inc.c"
+u64 dawngrove_house_2_sceneTex_003E40[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_003E40.ci4.inc.c"
 };
 
-u64 dawngrove_house_2_sceneTLUT_003900[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_003900.tlut.rgba16.inc.c"
+u64 dawngrove_house_2_sceneTLUT_003E40[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_003E40.tlut.rgba16.inc.c"
 };
 
-u64 dawngrove_house_2_sceneTex_003C00[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_003C00.ci8.inc.c"
+u64 dawngrove_house_2_sceneTex_003EE0[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_003EE0.rgba16.inc.c"
 };
 
-u64 dawngrove_house_2_sceneTLUT_003C00[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_003C00.tlut.rgba16.inc.c"
-};
-
-u64 dawngrove_house_2_sceneTex_003F00[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_003F00.ci8.inc.c"
-};
-
-u64 dawngrove_house_2_sceneTLUT_003F00[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_003F00.tlut.rgba16.inc.c"
-};
 
 u64 dawngrove_house_2_sceneTex_0045A0[] = {
 #include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_0045A0.ci8.inc.c"
@@ -839,16 +868,12 @@ u64 dawngrove_house_2_sceneTLUT_0045A0[] = {
 #include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_0045A0.tlut.rgba16.inc.c"
 };
 
-u64 dawngrove_house_2_sceneTex_0049A0[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_0049A0.rgba16.inc.c"
+u64 dawngrove_house_2_sceneTex_0046E0[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_0046E0.ci8.inc.c"
 };
 
-u64 dawngrove_house_2_sceneTex_0051A0[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_0051A0.ci8.inc.c"
-};
-
-u64 dawngrove_house_2_sceneTLUT_0051A0[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_0051A0.tlut.rgba16.inc.c"
+u64 dawngrove_house_2_sceneTLUT_0046E0[] = {
+#include "assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_sceneTex_0046E0.tlut.rgba16.inc.c"
 };
 
 u64 dawngrove_house_2_sceneTex_0057A0[] = {
@@ -873,12 +898,4 @@ u64 dawngrove_house_2_sceneTex_0065C0[] = {
 
 u64 dawngrove_house_2_sceneTLUT_0065C0[] = {
 #include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_0065C0.tlut.rgba16.inc.c"
-};
-
-u64 dawngrove_house_2_sceneTex_006BC0[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_006BC0.ci8.inc.c"
-};
-
-u64 dawngrove_house_2_sceneTLUT_006BC0[] = {
-#include "assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_sceneTex_006BC0.tlut.rgba16.inc.c"
 };

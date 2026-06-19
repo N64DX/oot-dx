@@ -12,7 +12,7 @@ SceneCmd dawngrove_inn_room_4[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_inn_room_4RoomShapeNormal_000090),
-    SCENE_CMD_OBJECT_LIST(8, dawngrove_inn_room_4ObjectList_000048),
+    SCENE_CMD_OBJECT_LIST(9, dawngrove_inn_room_4ObjectList_000048),
     SCENE_CMD_ACTOR_LIST(3, dawngrove_inn_room_4ActorEntry_000050),
     SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
     SCENE_CMD_END(),
@@ -20,6 +20,7 @@ SceneCmd dawngrove_inn_room_4[] = {
 
 s16 dawngrove_inn_room_4ObjectList_000048[] = {
     OBJECT_BOX,
+    OBJECT_AHG,
     OBJECT_CNE,
     OBJECT_OS_ANIME,
     OBJECT_BOX,

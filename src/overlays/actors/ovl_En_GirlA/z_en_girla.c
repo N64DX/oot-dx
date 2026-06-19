@@ -271,66 +271,26 @@ static ShopItemEntry sShopItemEntries[] = {
     /* SI_RED_POTION_R50 */
     { OBJECT_GI_LIQUID, GID_BOTTLE_POTION_RED, func_8002EBCC, 50, 1, 0x0065, 0x0063, GI_BOTTLE_POTION_RED,
       EnGirlA_CanBuy_RedPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_HEROS_SHIELD */
-    { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, func_8002EBCC, 80, 1, 0x9201, 0x9101, GI_SHIELD_HEROS,
-      EnGirlA_CanBuy_HerosShield, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_WOODEN_SHIELD */
-    { OBJECT_GI_SHIELD_1, GID_SHIELD_WOODEN, func_8002EBCC, 40, 1, 0x9202, 0x9102, GI_SHIELD_WOODEN,
-      EnGirlA_CanBuy_WoodenShield, EnGirlA_ItemGive_DekuShield, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_METAL_SHIELD */
-    { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_METAL, func_8002EBCC, 80, 1, 0x9203, 0x9103, GI_SHIELD_METAL,
-      EnGirlA_CanBuy_MetalShield, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_SHIELD_POTION */
-	{ OBJECT_GI_LIQUID, GID_BOTTLE_POTION_SHIELD, func_8002EBCC, 80, 1, 0x9204, 0x9104, GI_BOTTLE_POTION_SHIELD,
-      EnGirlA_CanBuy_ShieldPotion, EnGirlA_ItemGive_BottledItem, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_WALLET_ADULT */
-    { OBJECT_GI_PURSE, GID_WALLET_ADULT, func_8002EBCC, 300, 1, 0x9205, 0x9105, GI_WALLET_ADULT,
-      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
-    /* SI_WALLET_GIANT */
-    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 300, 1, 0x9206, 0x9106, GI_WALLET_GIANT,
-      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
-    /* SI_WALLET_MASTER */
-    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 300, 1, 0x9207, 0x9107, GI_WALLET_MASTER,
-      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
-      /* SI_WALLET_ROYAL */
-    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 300, 1, 0x9208, 0x9108, GI_WALLET_ROYAL,
-      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
-      /* SI_WALLET_TYCOON */
-    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 300, 1, 0x9209, 0x9109, GI_WALLET_TYCOON,
-      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
-    /* SI_WALLET_BOTTOMLESS */
-    { OBJECT_GI_PURSE, GID_WALLET_GIANT, func_8002EBCC, 300, 1, 0x920A, 0x910A, GI_WALLET_BOTTOMLESS,
-      EnGirlA_CanBuy_Wallet, NULL, EnGirlA_BuyEvent_ObtainWallet },
-    /* SI_DEKU_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, func_8002EBCC, 30, 1, 0x920B, 0x910B, GI_SHIELD_DEKU,
-      EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_DekuShield, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_WOODEN_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_1, GID_SHIELD_WOODEN, func_8002EBCC, 30, 1, 0x920C, 0x921C, GI_SHIELD_WOODEN,
-      EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_DekuShield, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_HYLIAN_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, func_8002EBCC, 60, 1, 0x920D, 0x910D, GI_SHIELD_HYLIAN,
-      EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HylianShield, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_MIRROR_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, func_8002EBCC, 80, 1, 0x920E, 0x910E, GI_SHIELD_MIRROR_MM,
-      EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_MirrorShield, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_HEROS_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, func_8002EBCC, 60, 1, 0x920F, 0x910F, GI_SHIELD_HEROS,
-      EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_HEROS_SHIELD_REPAIR */
-    { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_METAL, func_8002EBCC, 60, 1, 0x9210, 0x9110, GI_SHIELD_METAL,
-      EnGirlA_CanBuy_ShieldRepair, EnGirlA_ItemGive_HerosShield, EnGirlA_BuyEvent_ShieldDiscount },
-    /* SI_DEKU_SHIELD_UPGRADE */
-    { OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, func_8002EBCC, 50, 1, 0x9211, 0x9111, GI_SHIELD_DEKU_UPGRADE,
-      EnGirlA_CanBuy_ShieldUpgrade, NULL, EnGirlA_BuyEvent_ObtainShieldUpgrade },
-    /* SI_HYLIAN_SHIELD_UPGRADE */
-    { OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, func_8002EBCC, 100, 1, 0x9212, 0x9112, GI_SHIELD_HYLIAN_UPGRADE,
-      EnGirlA_CanBuy_ShieldUpgrade, NULL, EnGirlA_BuyEvent_ObtainShieldUpgrade },
-    /* SI_MIRROR_SHIELD_UPGRADE */
-    { OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, func_8002EBCC, 400, 1, 0x9213, 0x9113, GI_SHIELD_MIRROR_UPGRADE,
-      EnGirlA_CanBuy_ShieldUpgrade, NULL, EnGirlA_BuyEvent_ObtainShieldUpgrade },
-    /* SI_HEROS_SHIELD_UPGRADE */
-    { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, func_8002EBCC, 200, 1, 0x9214, 0x9114, GI_SHIELD_HEROS_UPGRADE,
-      EnGirlA_CanBuy_ShieldUpgrade, NULL, EnGirlA_BuyEvent_ObtainShieldUpgrade },
+    /* SI_HEROS_SHIELD          */ { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS,         func_8002EBCC, 80,  1, 0x9201, 0x9101, GI_SHIELD_HEROS,          EnGirlA_CanBuy_HerosShield,   EnGirlA_ItemGive_HerosShield,  EnGirlA_BuyEvent_ShieldDiscount      },
+    /* SI_WOODEN_SHIELD         */ { OBJECT_GI_SHIELD_1,    GID_SHIELD_WOODEN,        func_8002EBCC, 40,  1, 0x9202, 0x9102, GI_SHIELD_WOODEN,         EnGirlA_CanBuy_WoodenShield,  EnGirlA_ItemGive_DekuShield,   EnGirlA_BuyEvent_ShieldDiscount      },
+    /* SI_METAL_SHIELD          */ { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_METAL,         func_8002EBCC, 80,  1, 0x9203, 0x9103, GI_SHIELD_METAL,          EnGirlA_CanBuy_MetalShield,   EnGirlA_ItemGive_HerosShield,  EnGirlA_BuyEvent_ShieldDiscount      },
+    /* SI_SHIELD_POTION         */ { OBJECT_GI_LIQUID,      GID_BOTTLE_POTION_SHIELD, func_8002EBCC, 80,  1, 0x9204, 0x9104, GI_BOTTLE_POTION_SHIELD,  EnGirlA_CanBuy_ShieldPotion,  EnGirlA_ItemGive_BottledItem,  EnGirlA_BuyEvent_ShieldDiscount      },
+    /* SI_WALLET_ADULT          */ { OBJECT_GI_PURSE,       GID_WALLET_ADULT,         func_8002EBCC, 300, 1, 0x9205, 0x9105, GI_WALLET_ADULT,          EnGirlA_CanBuy_Wallet,        NULL,                          EnGirlA_BuyEvent_ObtainWallet        },
+    /* SI_WALLET_GIANT          */ { OBJECT_GI_PURSE,       GID_WALLET_GIANT,         func_8002EBCC, 300, 1, 0x9206, 0x9106, GI_WALLET_GIANT,          EnGirlA_CanBuy_Wallet,        NULL,                          EnGirlA_BuyEvent_ObtainWallet        },
+    /* SI_WALLET_MASTER         */ { OBJECT_GI_PURSE,       GID_WALLET_GIANT,         func_8002EBCC, 300, 1, 0x9207, 0x9107, GI_WALLET_MASTER,         EnGirlA_CanBuy_Wallet,        NULL,                          EnGirlA_BuyEvent_ObtainWallet        },
+    /* SI_WALLET_ROYAL          */ { OBJECT_GI_PURSE,       GID_WALLET_GIANT,         func_8002EBCC, 300, 1, 0x9208, 0x9108, GI_WALLET_ROYAL,          EnGirlA_CanBuy_Wallet,        NULL,                          EnGirlA_BuyEvent_ObtainWallet        },
+    /* SI_WALLET_TYCOON         */ { OBJECT_GI_PURSE,       GID_WALLET_GIANT,         func_8002EBCC, 300, 1, 0x9209, 0x9109, GI_WALLET_TYCOON,         EnGirlA_CanBuy_Wallet,        NULL,                          EnGirlA_BuyEvent_ObtainWallet        },
+    /* SI_WALLET_BOTTOMLESS     */ { OBJECT_GI_PURSE,       GID_WALLET_GIANT,         func_8002EBCC, 300, 1, 0x920A, 0x910A, GI_WALLET_BOTTOMLESS,     EnGirlA_CanBuy_Wallet,        NULL,                          EnGirlA_BuyEvent_ObtainWallet        },
+    /* SI_DEKU_SHIELD_REPAIR    */ { OBJECT_GI_SHIELD_1,    GID_SHIELD_DEKU,          func_8002EBCC, 30,  1, 0x920B, 0x910B, GI_SHIELD_DEKU,           EnGirlA_CanBuy_ShieldRepair,  EnGirlA_ItemGive_DekuShield,   EnGirlA_BuyEvent_ShieldDiscount      },
+    /* SI_HYLIAN_SHIELD_REPAIR  */ { OBJECT_GI_SHIELD_2,    GID_SHIELD_HYLIAN,        func_8002EBCC, 60,  1, 0x920C, 0x910C, GI_SHIELD_HYLIAN,         EnGirlA_CanBuy_ShieldRepair,  EnGirlA_ItemGive_HylianShield, EnGirlA_BuyEvent_ShieldDiscount      },
+    /* SI_MIRROR_SHIELD_REPAIR  */ { OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM,     func_8002EBCC, 80,  1, 0x920D, 0x910D, GI_SHIELD_MIRROR_MM,      EnGirlA_CanBuy_ShieldRepair,  EnGirlA_ItemGive_MirrorShield, EnGirlA_BuyEvent_ShieldDiscount      },
+    /* SI_HEROS_SHIELD_REPAIR   */ { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS,         func_8002EBCC, 60,  1, 0x920E, 0x910E, GI_SHIELD_HEROS,          EnGirlA_CanBuy_ShieldRepair,  EnGirlA_ItemGive_HerosShield,  EnGirlA_BuyEvent_ShieldDiscount      },
+    /* SI_WOODEN_SHIELD_REPAIR  */ { OBJECT_GI_SHIELD_1,    GID_SHIELD_WOODEN,        func_8002EBCC, 30,  1, 0x920F, 0x910F, GI_SHIELD_WOODEN,         EnGirlA_CanBuy_ShieldRepair,  EnGirlA_ItemGive_DekuShield,   EnGirlA_BuyEvent_ShieldDiscount      },
+    /* SI_METAL_SHIELD_REPAIR   */ { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_METAL,         func_8002EBCC, 60,  1, 0x9210, 0x9110, GI_SHIELD_METAL,          EnGirlA_CanBuy_ShieldRepair,  EnGirlA_ItemGive_HerosShield,  EnGirlA_BuyEvent_ShieldDiscount      },
+    /* SI_DEKU_SHIELD_UPGRADE   */ { OBJECT_GI_SHIELD_1,    GID_SHIELD_DEKU,          func_8002EBCC, 50,  1, 0x9211, 0x9111, GI_SHIELD_DEKU_UPGRADE,   EnGirlA_CanBuy_ShieldUpgrade, NULL,                          EnGirlA_BuyEvent_ObtainShieldUpgrade },
+    /* SI_HYLIAN_SHIELD_UPGRADE */ { OBJECT_GI_SHIELD_2,    GID_SHIELD_HYLIAN,        func_8002EBCC, 100, 1, 0x9212, 0x9112, GI_SHIELD_HYLIAN_UPGRADE, EnGirlA_CanBuy_ShieldUpgrade, NULL,                          EnGirlA_BuyEvent_ObtainShieldUpgrade },
+    /* SI_MIRROR_SHIELD_UPGRADE */ { OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM,     func_8002EBCC, 400, 1, 0x9213, 0x9113, GI_SHIELD_MIRROR_UPGRADE, EnGirlA_CanBuy_ShieldUpgrade, NULL,                          EnGirlA_BuyEvent_ObtainShieldUpgrade },
+    /* SI_HEROS_SHIELD_UPGRADE  */ { OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS,         func_8002EBCC, 200, 1, 0x9214, 0x9114, GI_SHIELD_HEROS_UPGRADE,  EnGirlA_CanBuy_ShieldUpgrade, NULL,                          EnGirlA_BuyEvent_ObtainShieldUpgrade },
 };
 
 // Defines the Hylian Shield discount amount
@@ -353,13 +313,13 @@ static bool EnGirlA_CanBuy_ShieldUpgradeCheck(u8 shield) {
 s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
     switch (this->actor.params) {
         case SI_DEKU_SHIELD:
-            if (SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
+            if (!gSaveContext.save.info.obtainedSkins.woodenShield && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
                 this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU) ? SI_DEKU_SHIELD_REPAIR : SI_DEKU_SHIELD;
                 return true;
             }
             break;
         case SI_WOODEN_SHIELD:
-            if (SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
+            if (gSaveContext.save.info.obtainedSkins.woodenShield && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
                 this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU) ? SI_WOODEN_SHIELD_REPAIR : SI_WOODEN_SHIELD;
                 return true;
             }
@@ -374,7 +334,7 @@ s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
             if (!GET_EVENTCHKINF(EVENTCHKINF_45)) {
                 this->actor.params = SI_SOLD_OUT;
                 return true;
-            } else if (SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
+            } else if (!gSaveContext.save.info.obtainedSkins.metalShield && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
                 this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS) ? SI_HEROS_SHIELD_REPAIR : SI_HEROS_SHIELD;
                 return true;
             }
@@ -383,7 +343,7 @@ s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
             if (!GET_EVENTCHKINF(EVENTCHKINF_45)) {
                 this->actor.params = SI_SOLD_OUT;
                 return true;
-            } else if (SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
+            } else if (gSaveContext.save.info.obtainedSkins.metalShield && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
                 this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS) ? SI_METAL_SHIELD_REPAIR : SI_METAL_SHIELD;
                 return true;
             }
@@ -1048,8 +1008,13 @@ void EnGirlA_ItemGive_BottledItem(PlayState* play, EnGirlA* this) {
 void EnGirlA_BuyEvent_ShieldDiscount(PlayState* play, EnGirlA* this) {
     switch (this->actor.params) {
         case SI_DEKU_SHIELD:
+        case SI_WOODEN_SHIELD:
         case SI_DEKU_SHIELD_REPAIR:
+        case SI_WOODEN_SHIELD_REPAIR:
             gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
+            if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU)
+                DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(ITEM_SHIELD_DEKU)), ITEM_ICON_SIZE, __FILE__, __LINE__);
+            
             break;
         case SI_HYLIAN_SHIELD:
         case SI_HYLIAN_SHIELD_REPAIR:
@@ -1059,8 +1024,12 @@ void EnGirlA_BuyEvent_ShieldDiscount(PlayState* play, EnGirlA* this) {
             gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
             break;
         case SI_HEROS_SHIELD:
+        case SI_METAL_SHIELD:
         case SI_HEROS_SHIELD_REPAIR:
+        case SI_METAL_SHIELD_REPAIR:
             gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
+            if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+                DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(ITEM_SHIELD_HEROS)), ITEM_ICON_SIZE,  __FILE__, __LINE__);
             break;
     }
     
