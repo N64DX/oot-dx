@@ -38,6 +38,7 @@
 #include "assets/objects/gameplay_keep/raindrop_model.h"
 #include "assets/objects/gameplay_keep/lens_flare.h"
 #include "assets/objects/gameplay_keep/moon.h"
+#include "assets/objects/gameplay_keep/star.h"
 #include "assets/objects/gameplay_keep/gameplay_keep_0x4D160.h"
 #include "assets/objects/gameplay_field_keep/gameplay_field_keep.h"
 
@@ -3160,9 +3161,17 @@ void Environment_DrawSkyboxStar(Gfx** gfxP, f32 x, f32 y, s32 width, s32 height)
     Gfx* gfx = *gfxP;
     u32 xl = x * 4.0f;
     u32 yl = y * 4.0f;
+#if USE_STAR_TEXTURE
+    u32 xh = xl + (width  << 2);
+    u32 yh = yl + (height << 2);
+    u32 dsdx = (64 << 10) / width;
+    u32 dtdy = (64 << 10) / height;
+    gSPTextureRectangle(gfx++, xl, yl, xh, yh, G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
+#else
     u32 xd = width;
     u32 yd = height;
     gSPTextureRectangle(gfx++, xl, yl, xl + xd, yl + yd, 0, 0, 0, 0, 0);
+#endif
     *gfxP = gfx;
 }
 
@@ -3195,8 +3204,15 @@ void Environment_DrawSkyboxStarsImpl(PlayState* play, Gfx** gfxP) {
 
     gDPPipeSync(gfx++);
     gDPSetEnvColor(gfx++, 255, 255, 255, 255.0f * D_801F4F28);
+#if USE_STAR_TEXTURE
+    gDPSetCombineLERP(gfx++, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0);
+    gDPSetOtherMode(gfx++, G_AD_DISABLE | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TT_NONE | G_TL_TILE | G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE, G_AC_NONE | G_ZS_PRIM | G_RM_AA_XLU_SURF | G_RM_AA_XLU_SURF2);
+    gDPLoadTextureBlock(gfx++, gStarTex, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTexture(gfx++, 0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON);
+#else
     gDPSetCombineLERP(gfx++, PRIMITIVE, 0, ENVIRONMENT, 0, PRIMITIVE, 0, ENVIRONMENT, 0, PRIMITIVE, 0, ENVIRONMENT, 0, PRIMITIVE, 0, ENVIRONMENT, 0);
     gDPSetOtherMode(gfx++, G_AD_DISABLE | G_CD_DISABLE | G_CK_NONE | G_TC_FILT | G_TF_POINT | G_TT_NONE | G_TL_TILE | G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE, G_AC_NONE | G_ZS_PRIM | G_RM_AA_XLU_LINE | G_RM_AA_XLU_LINE2);
+#endif
 
     for (i=0; i<sEnvSkyboxNumStars; i++) {
         if (i < 16) {
@@ -3254,7 +3270,11 @@ void Environment_DrawSkyboxStarsImpl(PlayState* play, Gfx** gfxP) {
                 imgY = (imgY * -(SCREEN_HEIGHT / 2)) + (SCREEN_HEIGHT / 2);
 
                 gfxTemp = gfx;
+#if USE_STAR_TEXTURE
+                Environment_DrawSkyboxStar(&gfxTemp, imgX, imgY, imgWidth, imgWidth);
+#else
                 Environment_DrawSkyboxStar(&gfxTemp, imgX, imgY, imgWidth, 4);
+#endif
                 gfx = gfxTemp;
             }
         }

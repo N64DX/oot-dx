@@ -71,6 +71,7 @@ beginseg
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/eff_sparkles.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/hover_boots_circle.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/moon.o"
+    include "$(BUILD_DIR)/assets/objects/gameplay_keep/star.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_0x38FB0.o"
 #if OOT_NTSC
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_ntsc_0x39850.o"

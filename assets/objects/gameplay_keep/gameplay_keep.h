@@ -57,6 +57,7 @@
 #include "eff_sparkles.h"
 #include "hover_boots_circle.h"
 #include "moon.h"
+#include "star.h"
 #include "gameplay_keep_0x38FB0.h"
 #include "rectangular_sign_model.h"
 #include "directional_sign_model.h"
