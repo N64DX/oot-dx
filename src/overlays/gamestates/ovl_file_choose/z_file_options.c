@@ -115,53 +115,49 @@ char* FileSelectGlobalOptions_GetOption(FileSelectState* this, u8 index, u8 shif
 }
 
 static FileSelectOptionsEntry sFileOptionsEntries[] = {
-    { 0, "Mirror Mode",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 0,  true  },
-    { 0, "Autosave",               FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 1,  true  },
-    { 0, "Agony Visual Icon",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 2,  true  },
-    { 0, "Extended Draw Distance", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 3,  true  },
-    { 0, "No Letterboxing",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 4,  true  },
-    { 0, "Resume Last Area",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 5,  true  },
-#if !PLATFORM_IQUE
-    { 0, "Disable Token Freeze",   FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 6,  true  },
-#endif
-    { 0, "Censor Fire Temple",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 7,  true  },
-    { 0, "Skip Intros",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 8,  true  },
-    { 0, "No Owl",                 FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 9,  true  },
-    { 0, "Instant Put Away",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 10, true  },
-    { 0, "Pull Sword Out",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 11, true  },
-    { 0, "Shield In Front",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 12, true  },
-    { 0, "No Disruptive Text",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 13, true  },
-    { 0, "Bow Aiming Reticle",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 14, true  },
-    { 0, "No Low Health Beep",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 15, true  },
-    { 0, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 16, true  },
-    { 0, "Fix Useful Glitches",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 17, true  },
-    { 0, "Reflect Chest Contents", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 18, true  },
-    { 0, "Easier Fishing",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 19, true  },
-    { 0, "Use MM Young Link",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 20, true  },
-    { 0, "Jump Animations",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 21, true  },
-    { 0, "Use MM Bottles",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 22, true  },
-#if !PLATFORM_IQUE
-    { 0, "Use MM Title Cards",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 23, false },
-#endif
-    { 0, "Use MM HUD",             FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           0, 24, true  },
-    { 0, "Health Recovery",        FileSelectOptions_SetOptionMax3, FileSelectOptions_GetHealthRecovery,   1, 0,  true  },
-    { 0, "Damage Taken",           FileSelectOptions_SetOptionMax7, FileSelectOptions_GetDamageTaken,      1, 2,  true  },
-    { 0, "Monster Health",         FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,               1, 5,  true  },
-    { 0, "Elite Monster Health",   FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,               1, 8,  true  },
-    { 0, "Boss Health",            FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP,               1, 11, true  },
-    { 0, "Harder Enemies",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           1, 14, true  },
-    { 0, "Static Dark Link HP",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           1, 15, true  },
-    { 0, "No Bottled Fairies",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           1, 16, true  },
-    { 0, "No Item Drops",          FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption,           1, 17, true  },
-    { 0, "Shield Durability",      FileSelectOptions_SetOptionMax3, FileSelectOptions_GetShieldDurability, 1, 18, true  },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 0,  "Mirror Mode",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 1,  "Autosave",               FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 2,  "Agony Visual Icon",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 3,  "Extended Draw Distance", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 4,  "No Letterboxing",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 5,  "Resume Last Area",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_NO_IQUE    | SHOW_OPTION_ALL_QUESTS, 0, 6,  "Disable Token Freeze",   FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 7,  "Fire Temple",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 8,  "Skip Intros",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 9,  "No Owl",                 FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 10, "Instant Put Away",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 11, "Pull Sword Out",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 12, "Shield In Front",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 13, "No Disruptive Text",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 14, "Bow Aiming Reticle",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 15, "No Low Health Beep",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 16, "Uninverted  Aiming",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 17, "Fix Useful Glitches",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 18, "Reflect Chest Contents", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 19, "Easier Fishing",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 20, "Use MM Young Link",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 21, "Jump Animations",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 22, "Use MM Bottles",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_NO_IQUE    | SHOW_OPTION_NO_CQ,      0, 23, "Use MM Title Cards",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 24, "Use MM HUD",             FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 0,  "Health Recovery",        FileSelectOptions_SetOptionMax3, FileSelectOptions_GetHealthRecovery   },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 2,  "Damage Taken",           FileSelectOptions_SetOptionMax7, FileSelectOptions_GetDamageTaken      },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 5,  "Monster Health",         FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP               },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 8,  "Elite Monster Health",   FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP               },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 11, "Boss Health",            FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP               },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 14, "Harder Enemies",         FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 15, "Static Dark Link HP",    FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 16, "No Bottled Fairies",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 17, "No Item Drops",          FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 18, "Shield Durability",      FileSelectOptions_SetOptionMax3, FileSelectOptions_GetShieldDurability },
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {
-    { 0, "Skip Logo",        FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 0, true },
-    { 0, "Debug Mode",       FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 1, true },
-    { 0, "Show RAM",         FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 2, true },
-    { 0, "Show FPS",         FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption, 0, 3, true },
-    { 0, "Extra Save Slots", FileSelectGlobalOptions_ToggleSaveSlotsOption, FileSelectGlobalOptions_GetOption, 0, 4, true },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 0, "Skip Logo",              FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 1, "Debug Mode",             FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 2, "Show RAM",               FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 3, "Show FPS",               FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 4, "Extra Save Slots",       FileSelectGlobalOptions_ToggleSaveSlotsOption, FileSelectGlobalOptions_GetOption },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {
@@ -366,7 +362,7 @@ void FileSelectOptions_Reset(FileSelectState* this) {
         this->count = 0;
 
         for (i=0; i<ARRAY_COUNT(sFileOptionsEntries); i++) {
-            if (!sFileOptionsEntries[i].showOnChildQuest && isChildQuestMode)
+            if ((GET_OPTION_QUESTS(i) == SHOW_OPTION_NO_CQ && isChildQuestMode) || (GET_OPTION_QUESTS(i) == SHOW_OPTION_ONLY_CQ && !isChildQuestMode) || (GET_OPTION_BUILDS(i) == SHOW_OPTION_NO_IQUE && PLATFORM_IQUE))
                 continue;
             this->entries[this->count++] = sFileOptionsEntries[i];
         }
