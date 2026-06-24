@@ -622,7 +622,6 @@ typedef enum LinkAge {
 #define MIRROR_MODE                 ((gSaveContext.options[0] >> 0)  & 1)  // Bits: 0
 #define AUTOSAVE                    ((gSaveContext.options[0] >> 1)  & 1)  // Bits: 1
 #define AGONY_VISUAL_ICON           ((gSaveContext.options[0] >> 2)  & 1)  // Bits: 2
-#define EXTENDED_DRAW_DISTANCE      ((gSaveContext.options[0] >> 3)  & 1)  // Bits: 3
 #define NO_LETTERBOXING             ((gSaveContext.options[0] >> 4)  & 1)  // Bits: 4
 #define RESUME_LAST_AREA            ((gSaveContext.options[0] >> 5)  & 1)  // Bits: 5
 #define DISABLE_TOKEN_FREEZE        ((gSaveContext.options[0] >> 6)  & 1)  // Bits: 6
@@ -660,6 +659,8 @@ typedef enum LinkAge {
 #define SHOW_RAM                    ((gSaveContext.globalSettings >> 2) & 1)  // Bits: 2
 #define SHOW_FPS                    ((gSaveContext.globalSettings >> 3) & 1)  // Bits: 3
 #define EXTRA_SAVE_SLOTS            ((gSaveContext.globalSettings >> 4) & 1)  // Bits: 4
+#define EXTENDED_DRAW_DISTANCE      ((gSaveContext.globalSettings >> 5) & 1)  // Bits: 5
+#define SHOW_STARS                  ((gSaveContext.globalSettings >> 6) & 1)  // Bits: 6
 
 #define MAX_SWORD_HEALTH 8
 #define MAGIC_COST(magic) (gSaveContext.save.info.obtainedSkills.halfMagicCost ? (magic / 2) : magic)

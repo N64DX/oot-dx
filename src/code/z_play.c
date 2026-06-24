@@ -1383,7 +1383,8 @@ void Play_Draw(PlayState* this) {
             (R_PLAY_DRAW_ENV_FLAGS & PLAY_ENV_DRAW_SUN_AND_MOON)) {
             if (!this->envCtx.sunMoonDisabled) {
                 Environment_DrawSunAndMoon(this);
-                Environment_SetupSkyboxStars(this);
+                if (SHOW_STARS)
+                    Environment_SetupSkyboxStars(this);
             }
         }
 
@@ -1519,7 +1520,8 @@ Play_Draw_skip:
     }
 
     Camera_Finish(GET_ACTIVE_CAM(this));
-    Environment_DrawSkyboxStars(this);
+    if (SHOW_STARS)
+        Environment_DrawSkyboxStars(this);
 
     CLOSE_DISPS(gfxCtx, "../z_play.c", 4508);
 }
