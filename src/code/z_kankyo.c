@@ -74,7 +74,7 @@ u16 gTimeSpeed = 0;
 
 u16 sSunScreenDepth = GPACK_ZDZ(G_MAXFBZ, 0);
 
-u32 sEnvSkyboxNumStars = 0;
+u16 sEnvSkyboxNumStars = 0;
 f32 D_801F4F28;
 Gfx* sSkyboxStarsDList;
 
@@ -3134,9 +3134,22 @@ s32 Environment_IsSceneUpsideDown(PlayState* play) {
     return false;
 }
 
+u16 Environment_GetAmountOfStars(void) {
+    u16 starsPerSage = 0;
+    u8 i;
+
+    if (!LINK_IS_ADULT_OR_TIMESKIP)
+        return AMOUNT_OF_STARS;
+
+    for (i=0; i<6; i++)
+        if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST + i))
+            starsPerSage += AMOUNT_OF_STARS / 6;
+    return starsPerSage * 3;
+}
+
 void Environment_SetupSkyboxStars(PlayState* play) {
-    if (gSaveContext.save.nightFlag && play->skyboxId == SKYBOX_NORMAL_SKY) {
-        sEnvSkyboxNumStars = AMOUNT_OF_STARS;
+    if (gSaveContext.save.nightFlag && (play->skyboxId == SKYBOX_NORMAL_SKY || play->skyboxId == SKYBOX_TERMINA_SKY)) {
+        sEnvSkyboxNumStars = Environment_GetAmountOfStars();
         if (gSaveContext.save.dayTime >= CLOCK_TIME(21, 0) || gSaveContext.save.dayTime < CLOCK_TIME(2, 0))
             D_801F4F28 = 1.0f;
         else if (gSaveContext.save.dayTime > CLOCK_TIME(19, 0))
@@ -3161,17 +3174,11 @@ void Environment_DrawSkyboxStar(Gfx** gfxP, f32 x, f32 y, s32 width, s32 height)
     Gfx* gfx = *gfxP;
     u32 xl = x * 4.0f;
     u32 yl = y * 4.0f;
-#if USE_STAR_TEXTURE
     u32 xh = xl + (width  << 2);
     u32 yh = yl + (height << 2);
     u32 dsdx = (64 << 10) / width;
     u32 dtdy = (64 << 10) / height;
     gSPTextureRectangle(gfx++, xl, yl, xh, yh, G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
-#else
-    u32 xd = width;
-    u32 yd = height;
-    gSPTextureRectangle(gfx++, xl, yl, xl + xd, yl + yd, 0, 0, 0, 0, 0);
-#endif
     *gfxP = gfx;
 }
 
@@ -3204,15 +3211,11 @@ void Environment_DrawSkyboxStarsImpl(PlayState* play, Gfx** gfxP) {
 
     gDPPipeSync(gfx++);
     gDPSetEnvColor(gfx++, 255, 255, 255, 255.0f * D_801F4F28);
-#if USE_STAR_TEXTURE
-    gDPSetCombineLERP(gfx++, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0);
+    gDPSetCombineLERP(gfx++, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, ENVIRONMENT, 0);
+    
     gDPSetOtherMode(gfx++, G_AD_DISABLE | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TT_NONE | G_TL_TILE | G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE, G_AC_NONE | G_ZS_PRIM | G_RM_AA_XLU_SURF | G_RM_AA_XLU_SURF2);
     gDPLoadTextureBlock(gfx++, gStarTex, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTexture(gfx++, 0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON);
-#else
-    gDPSetCombineLERP(gfx++, PRIMITIVE, 0, ENVIRONMENT, 0, PRIMITIVE, 0, ENVIRONMENT, 0, PRIMITIVE, 0, ENVIRONMENT, 0, PRIMITIVE, 0, ENVIRONMENT, 0);
-    gDPSetOtherMode(gfx++, G_AD_DISABLE | G_CD_DISABLE | G_CK_NONE | G_TC_FILT | G_TF_POINT | G_TT_NONE | G_TL_TILE | G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE, G_AC_NONE | G_ZS_PRIM | G_RM_AA_XLU_LINE | G_RM_AA_XLU_LINE2);
-#endif
 
     for (i=0; i<sEnvSkyboxNumStars; i++) {
         if (i < 16) {
@@ -3270,11 +3273,7 @@ void Environment_DrawSkyboxStarsImpl(PlayState* play, Gfx** gfxP) {
                 imgY = (imgY * -(SCREEN_HEIGHT / 2)) + (SCREEN_HEIGHT / 2);
 
                 gfxTemp = gfx;
-#if USE_STAR_TEXTURE
                 Environment_DrawSkyboxStar(&gfxTemp, imgX, imgY, imgWidth, imgWidth);
-#else
-                Environment_DrawSkyboxStar(&gfxTemp, imgX, imgY, imgWidth, 4);
-#endif
                 gfx = gfxTemp;
             }
         }
