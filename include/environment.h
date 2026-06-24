@@ -27,6 +27,9 @@ struct View;
 #define TERMINA_SKYBOX0     9
 #define TERMINA_SKYBOX1     10
 
+#define AMOUNT_OF_STARS     300
+#define STARS_NAME(index)   ((u32)gSaveContext.save.info.playerData.playerName[index])
+
 // This mode disables the updating of lights in both light modes.
 // With this mode enabled, the only way lights can change is via the adjustment arrays.
 // This mode is not used in the original game.
@@ -307,5 +310,7 @@ s32 Environment_IsForcedSequenceDisabled(void);
 void Environment_PlayStormNatureAmbience(struct PlayState* play);
 void Environment_StopStormNatureAmbience(struct PlayState* play);
 void Environment_WarpSongLeave(struct PlayState* play);
+void Environment_SetupSkyboxStars(struct PlayState* play);
+void Environment_DrawSkyboxStars(struct PlayState* play);
 
 #endif
