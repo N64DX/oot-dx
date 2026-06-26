@@ -537,6 +537,51 @@ void Skybox_Setup(PlayState* play, SkyboxContext* skyboxCtx, s16 skyboxId) {
             }
             break;
 
+        case SKYBOX_TERMINA_SKY:
+            skyboxConfig = 4;
+
+            for (i=0; i<ARRAY_COUNT(gTimeBasedTerminaSkyboxConfigs[skyboxConfig]); i++)
+                if (gSaveContext.skyboxTime >= gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].startTime && (gSaveContext.skyboxTime < gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].endTime || gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].endTime == 0xFFFF)) {
+                    play->envCtx.skybox1Index = skybox1Index = gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].skybox1Index;
+                    play->envCtx.skybox2Index = skybox2Index = gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].skybox2Index;
+                    if (gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].changeSkybox)
+                        play->envCtx.skyboxBlend = Environment_LerpWeight(gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].endTime, gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].startTime, ((void)0, gSaveContext.skyboxTime)) * 255.0f;
+                    else play->envCtx.skyboxBlend = 0;
+                    break;
+                }
+
+            size = gNormalSkyFiles[skybox1Index].file.vromEnd - gNormalSkyFiles[skybox1Index].file.vromStart;
+            skyboxCtx->staticSegments[0] = GAME_STATE_ALLOC(&play->state, size, "../z_vr_box.c", 1054);
+            DMA_REQUEST_SYNC(skyboxCtx->staticSegments[0], gNormalSkyFiles[skybox1Index].file.vromStart, size, __FILE__, __LINE__);
+            size = gNormalSkyFiles[skybox2Index].file.vromEnd - gNormalSkyFiles[skybox2Index].file.vromStart;
+            skyboxCtx->staticSegments[1] = GAME_STATE_ALLOC(&play->state, size, "../z_vr_box.c", 1060);
+            DMA_REQUEST_SYNC(skyboxCtx->staticSegments[1], gNormalSkyFiles[skybox2Index].file.vromStart, size, __FILE__, __LINE__);
+
+            if ((skybox1Index & 1) ^ ((skybox1Index & 4) >> 2)) {
+                size = gNormalSkyFiles[skybox1Index].palette.vromEnd - gNormalSkyFiles[skybox1Index].palette.vromStart;
+                skyboxCtx->palettes = GAME_STATE_ALLOC(&play->state, size * 2, "../z_vr_box.c", 1072);
+                DMA_REQUEST_SYNC(skyboxCtx->palettes, gNormalSkyFiles[skybox1Index].palette.vromStart, size, __FILE__, __LINE__);
+                DMA_REQUEST_SYNC((u8*)skyboxCtx->palettes + size, gNormalSkyFiles[skybox2Index].palette.vromStart, size, __FILE__, __LINE__);
+            } else {
+                size = gNormalSkyFiles[skybox1Index].palette.vromEnd - gNormalSkyFiles[skybox1Index].palette.vromStart;
+                skyboxCtx->palettes = GAME_STATE_ALLOC(&play->state, size * 2, "../z_vr_box.c", 1085);
+                DMA_REQUEST_SYNC(skyboxCtx->palettes, gNormalSkyFiles[skybox2Index].palette.vromStart, size, __FILE__, __LINE__);
+                DMA_REQUEST_SYNC((u8*)skyboxCtx->palettes + size, gNormalSkyFiles[skybox1Index].palette.vromStart, size, __FILE__, __LINE__);
+            }
+            
+            skyboxCtx->prim.r = 145;
+            skyboxCtx->prim.g = 120;
+            skyboxCtx->prim.b = 155;
+
+            skyboxCtx->env.r = 40;
+            skyboxCtx->env.g = 0;
+            skyboxCtx->env.b = 40;
+
+            // Inverted Stone Tower Temple and Inverted Stone Tower
+            //if ((play->sceneId == SCENE_F41) || (play->sceneId == SCENE_INISIE_R))
+            //    skyboxCtx->rot.z = 3.15f;
+            break;
+
         case SKYBOX_BAZAAR:
             skyboxCtx->drawType = SKYBOX_DRAW_256_4FACE;
 

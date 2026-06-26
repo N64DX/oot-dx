@@ -19,7 +19,7 @@ SceneCmd path_to_goron_village_scene[] = {
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PATH_LIST(path_to_goron_village_scenePathway_000338),
     SCENE_CMD_PLAYER_ENTRY_LIST(3, path_to_goron_village_sceneStartPositionList0x000088),
-    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 0, LIGHT_MODE_TIME),
+    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_TERMINA_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(path_to_goron_village_sceneExitList_0000C8),
     SCENE_CMD_ENV_LIGHT_SETTINGS(20, path_to_goron_village_sceneLightSettings0x0000D0),
     SCENE_CMD_END(),

@@ -24,6 +24,9 @@ struct View;
 #define LIGHT_SETTING_MAX 31
 #define LIGHT_SETTING_OVERRIDE_NONE 0xFF
 
+#define TERMINA_SKYBOX0     9
+#define TERMINA_SKYBOX1     10
+
 // This mode disables the updating of lights in both light modes.
 // With this mode enabled, the only way lights can change is via the adjustment arrays.
 // This mode is not used in the original game.
@@ -139,6 +142,16 @@ typedef struct TimeBasedSkyboxEntry {
     /* 0x06 */ u8 skybox2Index;
 } TimeBasedSkyboxEntry; // size = 0x8
 
+typedef struct TimeBasedTerminaSkyboxEntry {
+    /* 0x00 */ u16 startTime;
+    /* 0x02 */ u16 endTime;
+    /* 0x04 */ u8 changeSkybox;
+    /* 0x05 */ u8 skybox1Index;
+    /* 0x06 */ u8 skybox2Index;
+    /* 0x07 */ u8 color1Index;
+    /* 0x08 */ u8 color2Index;
+} TimeBasedTerminaSkyboxEntry; // size = 0xC
+
 typedef struct CurrentEnvLightSettings {
     /* 0x00 */ u8 ambientColor[3];
     /* 0x03 */ s8 light1Dir[3];
@@ -231,6 +244,7 @@ typedef struct EnvironmentContext {
 
 extern u8 gSkyboxIsChanging;
 extern TimeBasedSkyboxEntry gTimeBasedSkyboxConfigs[][9];
+extern TimeBasedTerminaSkyboxEntry gTimeBasedTerminaSkyboxConfigs[][9];
 
 extern u8 gWeatherMode;
 extern u8 gLightConfigAfterUnderwater;
