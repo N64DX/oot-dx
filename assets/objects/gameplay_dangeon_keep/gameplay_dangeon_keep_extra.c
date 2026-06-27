@@ -87,3 +87,31 @@ CollisionHeader gameplay_dangeon_keep_Colheader_01D488 = {
     gameplay_dangeon_keep_Colheader_01D488CamDataList,
     0, NULL
 };
+
+u64 gEyeSwitchExGoldClosedTex[] = {
+#include "assets/objects/gameplay_dangeon_keep/gEyeSwitchExGoldClosedTex.rgba16.inc.c"
+};
+
+u64 gEyeSwitchExGoldOpeningTex[] = {
+#include "assets/objects/gameplay_dangeon_keep/gEyeSwitchExGoldOpeningTex.rgba16.inc.c"
+};
+
+u64 gEyeSwitchExGoldClosingTex[] = {
+#include "assets/objects/gameplay_dangeon_keep/gEyeSwitchExGoldClosingTex.rgba16.inc.c"
+};
+
+u64 gEyeSwitchExGoldOpenTex[] = {
+#include "assets/objects/gameplay_dangeon_keep/gEyeSwitchExGoldOpenTex.rgba16.inc.c"
+};
+
+u64 gEyeSwitchExSilverOpenTex[] = {
+#include "assets/objects/gameplay_dangeon_keep/gEyeSwitchExSilverOpenTex.rgba16.inc.c"
+};
+
+u64 gEyeSwitchExSilverHalfTex[] = {
+#include "assets/objects/gameplay_dangeon_keep/gEyeSwitchExSilverHalfTex.rgba16.inc.c"
+};
+
+u64 gEyeSwitchExSilverClosedTex[] = {
+#include "assets/objects/gameplay_dangeon_keep/gEyeSwitchExSilverClosedTex.rgba16.inc.c"
+};

@@ -38,6 +38,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **a-priestley:** Bomb Arrow
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
 - **gh0st:** Open hand Z-Targeting animation to idle fix
+- **Goodland:** Tougher eye switch textures
 - **Kenton M:** Roc's Feather concept
 - **Nicko (Airi):** DK64 Expansion Pak warning display
 - **Nokaubure:** Autosave concept, Gohma debris, ISG fix, Teleporter

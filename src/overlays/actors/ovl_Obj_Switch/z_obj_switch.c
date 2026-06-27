@@ -21,8 +21,10 @@
 #include "z_lib.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 
 #include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.h"
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_extra.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -298,6 +300,19 @@ void ObjSwitch_UpdateTwoTexScrollXY(ObjSwitch* this) {
     this->y2TexScroll = (this->y2TexScroll - 1) & 0x7F;
 }
 
+static u16 isStrongScenes[] = { SCENE_FOREST_TEMPLE, SCENE_FIRE_TEMPLE, SCENE_GORON_MINES, SCENE_ICE_CAVERN, SCENE_WATER_TEMPLE, SCENE_BOTTOM_OF_THE_WELL, SCENE_SHADOW_TEMPLE, SCENE_GERUDO_TRAINING_GROUND, SCENE_SPIRIT_TEMPLE, SCENE_INSIDE_GANONS_CASTLE };
+
+bool ObjSwitch_IsStrong(PlayState* play) {
+    u8 i;
+
+    if (!IS_CHILD_QUEST)
+        return false;
+    for (i=0; i<ARRAY_COUNT(isStrongScenes); i++)
+        if (isStrongScenes[i] == play->sceneId)
+            return true;
+    return false;
+}
+
 void ObjSwitch_Init(Actor* thisx, PlayState* play) {
     ObjSwitch* this = (ObjSwitch*)thisx;
     s32 isSwitchFlagSet = Flags_GetSwitch(play, OBJSWITCH_SWITCH_FLAG(&this->dyna.actor));
@@ -314,11 +329,16 @@ void ObjSwitch_Init(Actor* thisx, PlayState* play) {
     }
 
     Actor_SetFocus(&this->dyna.actor, sFocusHeights[type]);
+    this->isStrong = ObjSwitch_IsStrong(play);
 
     if (type == OBJSWITCH_TYPE_FLOOR_RUSTY) {
         ObjSwitch_InitTrisCollider(this, play, &sRustyFloorTrisInit);
     } else if (type == OBJSWITCH_TYPE_EYE) {
         ObjSwitch_InitTrisCollider(this, play, &sEyeTrisInit);
+        if (this->isStrong) {
+            this->tris.colliderElements[0].base.acDmgInfo.dmgFlags &= ~DMG_SLINGSHOT;
+            this->tris.colliderElements[1].base.acDmgInfo.dmgFlags &= ~DMG_SLINGSHOT;
+        }
     } else if (type == OBJSWITCH_TYPE_CRYSTAL || type == OBJSWITCH_TYPE_CRYSTAL_TARGETABLE) {
         ObjSwitch_InitJntSphCollider(this, play, &sCrystalJntSphInit);
     }
@@ -769,6 +789,10 @@ void ObjSwitch_DrawEye(Actor* thisx, PlayState* play) {
         { gEyeSwitchGoldOpenTex, gEyeSwitchGoldOpeningTex, gEyeSwitchGoldClosingTex, gEyeSwitchGoldClosedTex },
         // OBJSWITCH_SUBTYPE_TOGGLE
         { gEyeSwitchSilverOpenTex, gEyeSwitchSilverHalfTex, gEyeSwitchSilverClosedTex, gEyeSwitchSilverClosedTex },
+        // OBJSWITCH_SUBTYPE_ONCE_STRONG
+        { gEyeSwitchExGoldOpenTex, gEyeSwitchExGoldOpeningTex, gEyeSwitchExGoldClosingTex, gEyeSwitchExGoldClosedTex },
+        // OBJSWITCH_SUBTYPE_TOGGLE_STRONG
+        { gEyeSwitchExSilverOpenTex, gEyeSwitchExSilverHalfTex, gEyeSwitchExSilverClosedTex, gEyeSwitchExSilverClosedTex },
     };
     static Gfx* eyeSwitchDLs[] = {
         gEyeSwitch1DL, // OBJSWITCH_SUBTYPE_ONCE
@@ -781,7 +805,7 @@ void ObjSwitch_DrawEye(Actor* thisx, PlayState* play) {
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_obj_switch.c", 1462);
-    gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(eyeTextures[subType][this->eyeTexIndex]));
+    gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(eyeTextures[subType + this->isStrong * 2][this->eyeTexIndex]));
     gSPDisplayList(POLY_OPA_DISP++, eyeSwitchDLs[subType]);
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_obj_switch.c", 1471);
