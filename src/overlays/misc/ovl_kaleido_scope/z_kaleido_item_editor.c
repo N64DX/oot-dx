@@ -27,7 +27,7 @@ typedef enum ItemEditorTabs {
 } ItemEditorTabs;
 
 typedef struct ItemEditorEntry {
-    /* 0x00 */ u8 param1, param2, param3;
+    /* 0x00 */ u8 questMode, param1, param2, param3;
     /* 0x04 */ char* name;
     /* 0x08 */ void  (*setFunc) (u8, u8, u8, struct PlayState*);
     /* 0x0C */ char* (*getFunc) (u8, u8, u8);
@@ -36,12 +36,13 @@ typedef struct ItemEditorEntry {
 typedef struct ItemEditorState {
     /* 0x00 */ ItemEditorEntry* entries;
     /* 0x04 */ s16 verticalInputAccumulator, verticalInput;
-    /* 0x08 */ u8 count, topDisplayedEntry, topDisplayedTabEntry, timerUp, timerDown;
-    /* 0x0D */ s8 tab, currentEntry, currentTabEntry;
+    /* 0x08 */ u8 count, timerUp, timerDown;
+    /* 0x0B */ s8 tab, topDisplayedEntry, topDisplayedTabEntry, currentEntry, currentTabEntry;
     /* 0x10 */ bool lockUp, lockDown;
     /* 0x12 */ s8 savedEntry[ITEM_EDITOR_TAB_MAX];
     /* 0x19 */ u8 savedTopEntry[ITEM_EDITOR_TAB_MAX];
-} ItemEditorState; // size = 0x20
+    /* 0x22 */ u8 visibleIndices[30];
+} ItemEditorState; // size = 0x44
 
 ItemEditorState state;
 
@@ -484,244 +485,170 @@ char* ItemEditor_GetDungeon(u8 scene, u8 param2, u8 param3) {
 char* sItemEditorTabEntries[] = { "Item Editor", "Ammo Editor", "Equipment Editor", "Upgrade Editor", "Song Editor", "Quest Editor", "Dungeon Keys Editor", "Dungeon Quest Editor", "Reset Scene Flags" };
 
 ItemEditorEntry sItemEditorItemEntries[] = {
-    { ITEM_DEKU_STICK,    ITEM_DEKU_STICK,      SLOT_DEKU_STICK,    "Deku Stick",    ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_DEKU_NUT,      ITEM_DEKU_NUT,        SLOT_DEKU_NUT,      "Deku Nut",      ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_BOMB,          ITEM_BOMB,            SLOT_BOMB,          "Bomb",          ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_BOMBCHU,       ITEM_BOMBCHU,         SLOT_BOMBCHU,       "Bombchu",       ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_SLINGSHOT,     ITEM_SLINGSHOT,       SLOT_SLINGSHOT,     "Slingshot",     ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_BOW,           ITEM_BOW,             SLOT_BOW,           "Bow",           ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_ARROW_FIRE,    ITEM_ARROW_FIRE,      SLOT_ARROW_FIRE,    "Fire Arrow",    ItemEditor_SetArrow,  ItemEditor_GetItem },
-    { ITEM_ARROW_ICE,     ITEM_ARROW_ICE,       SLOT_ARROW_ICE,     "Ice Arrow",     ItemEditor_SetArrow,  ItemEditor_GetItem },
-    { ITEM_ARROW_LIGHT,   ITEM_ARROW_LIGHT,     SLOT_ARROW_LIGHT,   "Light Arrow",   ItemEditor_SetArrow,  ItemEditor_GetItem },
-    { ITEM_BOOMERANG,     ITEM_BOOMERANG,       SLOT_BOOMERANG,     "Boomerang",     ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_HOOKSHOT,      ITEM_LONGSHOT,        SLOT_HOOKSHOT,      "Hookshot",      ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_HAMMER,        ITEM_HAMMER,          SLOT_HAMMER,        "Hammer",        ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_OCARINA_FAIRY, ITEM_OCARINA_OF_TIME, SLOT_OCARINA,       "Ocarina",       ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_LENS_OF_TRUTH, ITEM_LENS_OF_TRUTH,   SLOT_LENS_OF_TRUTH, "Lens of Truth", ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_MAGIC_BEAN,    ITEM_MAGIC_BEAN,      SLOT_MAGIC_BEAN,    "Magic Bean",    ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_DINS_FIRE,     ITEM_DINS_FIRE,       SLOT_DINS_FIRE,     "Din's Fire",    ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_FARORES_WIND,  ITEM_FARORES_WIND,    SLOT_FARORES_WIND,  "Farore's Wind", ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_NAYRUS_LOVE,   ITEM_NAYRUS_LOVE,     SLOT_NAYRUS_LOVE,   "Nayru's Love",  ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_1,      "Bottle #1",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_2,      "Bottle #2",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_3,      "Bottle #3",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_4,      "Bottle #4",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { ITEM_POCKET_EGG,    ITEM_CLAIM_CHECK,     SLOT_TRADE_ADULT,   "Adult Trade",   ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_WEIRD_EGG,     ITEM_SOLD_OUT,        SLOT_TRADE_CHILD,   "Child Trade",   ItemEditor_SetItem,   ItemEditor_GetItem },
-};
-
-ItemEditorEntry sItemEditorCQItemEntries[] = {
-    { ITEM_DEKU_STICK,    ITEM_DEKU_STICK,      SLOT_DEKU_STICK,    "Deku Stick",    ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_DEKU_NUT,      ITEM_DEKU_NUT,        SLOT_DEKU_NUT,      "Deku Nut",      ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_BOMB,          ITEM_BOMB,            SLOT_BOMB,          "Bomb",          ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_BOMBCHU,       ITEM_BOMBCHU,         SLOT_BOMBCHU,       "Bombchu",       ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_SLINGSHOT,     ITEM_SLINGSHOT,       SLOT_SLINGSHOT,     "Slingshot",     ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_BOW,           ITEM_BOW,             SLOT_BOW,           "Bow",           ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_ARROW_FIRE,    ITEM_ARROW_FIRE,      SLOT_ARROW_FIRE,    "Fire Arrow",    ItemEditor_SetArrow,  ItemEditor_GetItem },
-    { ITEM_ARROW_ICE,     ITEM_ARROW_ICE,       SLOT_ARROW_ICE,     "Ice Arrow",     ItemEditor_SetArrow,  ItemEditor_GetItem },
-    { ITEM_ARROW_LIGHT,   ITEM_ARROW_LIGHT,     SLOT_ARROW_LIGHT,   "Light Arrow",   ItemEditor_SetArrow,  ItemEditor_GetItem },
-    { ITEM_BOOMERANG,     ITEM_BOOMERANG,       SLOT_BOOMERANG,     "Boomerang",     ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_HOOKSHOT,      ITEM_LONGSHOT,        SLOT_HOOKSHOT,      "Hookshot",      ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_HAMMER,        ITEM_HAMMER,          SLOT_HAMMER,        "Hammer",        ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_OCARINA_FAIRY, ITEM_OCARINA_OF_TIME, SLOT_OCARINA,       "Ocarina",       ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_LENS_OF_TRUTH, ITEM_LENS_OF_TRUTH,   SLOT_LENS_OF_TRUTH, "Lens of Truth", ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_MAGIC_BEAN,    ITEM_MAGIC_BEAN,      SLOT_MAGIC_BEAN,    "Magic Bean",    ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_DINS_FIRE,     ITEM_DINS_FIRE,       SLOT_DINS_FIRE,     "Din's Fire",    ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_FARORES_WIND,  ITEM_FARORES_WIND,    SLOT_FARORES_WIND,  "Farore's Wind", ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_NAYRUS_LOVE,   ITEM_NAYRUS_LOVE,     SLOT_NAYRUS_LOVE,   "Nayru's Love",  ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_1,      "Bottle #1",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_2,      "Bottle #2",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_3,      "Bottle #3",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_4,      "Bottle #4",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { ITEM_POCKET_EGG,    ITEM_CLAIM_CHECK,     SLOT_TRADE_ADULT,   "Adult Trade",   ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_WEIRD_EGG,     ITEM_SOLD_OUT,        SLOT_TRADE_CHILD,   "Child Trade",   ItemEditor_SetItem,   ItemEditor_GetItem },
-    { ITEM_ROCS_FEATHER,  ITEM_GOLDEN_FEATHER,  SLOT_FEATHER,       "Feather",       ItemEditor_SetCQItem, ItemEditor_GetItem },
-    { ITEM_SWORD_FAIRYS,  ITEM_SWORD_FAIRYS,    SLOT_SWORD_FAIRYS,  "Fairy's Sword", ItemEditor_SetCQItem, ItemEditor_GetItem },
-    { ITEM_PICTOBOX,      ITEM_SHRINE_KEY,      SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem, ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_STICK,    ITEM_DEKU_STICK,      SLOT_DEKU_STICK,    "Deku Stick",    ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_NUT,      ITEM_DEKU_NUT,        SLOT_DEKU_NUT,      "Deku Nut",      ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMB,          ITEM_BOMB,            SLOT_BOMB,          "Bomb",          ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMBCHU,       ITEM_BOMBCHU,         SLOT_BOMBCHU,       "Bombchu",       ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_SLINGSHOT,     ITEM_SLINGSHOT,       SLOT_SLINGSHOT,     "Slingshot",     ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOW,           ITEM_BOW,             SLOT_BOW,           "Bow",           ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_FIRE,    ITEM_ARROW_FIRE,      SLOT_ARROW_FIRE,    "Fire Arrow",    ItemEditor_SetArrow,  ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_ICE,     ITEM_ARROW_ICE,       SLOT_ARROW_ICE,     "Ice Arrow",     ItemEditor_SetArrow,  ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_LIGHT,   ITEM_ARROW_LIGHT,     SLOT_ARROW_LIGHT,   "Light Arrow",   ItemEditor_SetArrow,  ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOOMERANG,     ITEM_BOOMERANG,       SLOT_BOOMERANG,     "Boomerang",     ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_HOOKSHOT,      ITEM_LONGSHOT,        SLOT_HOOKSHOT,      "Hookshot",      ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_HAMMER,        ITEM_HAMMER,          SLOT_HAMMER,        "Hammer",        ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_OCARINA_FAIRY, ITEM_OCARINA_OF_TIME, SLOT_OCARINA,       "Ocarina",       ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_LENS_OF_TRUTH, ITEM_LENS_OF_TRUTH,   SLOT_LENS_OF_TRUTH, "Lens of Truth", ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_MAGIC_BEAN,    ITEM_MAGIC_BEAN,      SLOT_MAGIC_BEAN,    "Magic Bean",    ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DINS_FIRE,     ITEM_DINS_FIRE,       SLOT_DINS_FIRE,     "Din's Fire",    ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_FARORES_WIND,  ITEM_FARORES_WIND,    SLOT_FARORES_WIND,  "Farore's Wind", ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_NAYRUS_LOVE,   ITEM_NAYRUS_LOVE,     SLOT_NAYRUS_LOVE,   "Nayru's Love",  ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_1,      "Bottle #1",     ItemEditor_SetBottle, ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_2,      "Bottle #2",     ItemEditor_SetBottle, ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_3,      "Bottle #3",     ItemEditor_SetBottle, ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_4,      "Bottle #4",     ItemEditor_SetBottle, ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_POCKET_EGG,    ITEM_CLAIM_CHECK,     SLOT_TRADE_ADULT,   "Adult Trade",   ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_WEIRD_EGG,     ITEM_SOLD_OUT,        SLOT_TRADE_CHILD,   "Child Trade",   ItemEditor_SetItem,   ItemEditor_GetItem },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_ROCS_FEATHER,  ITEM_GOLDEN_FEATHER,  SLOT_FEATHER,       "Feather",       ItemEditor_SetCQItem, ItemEditor_GetItem },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_SWORD_FAIRYS,  ITEM_SWORD_FAIRYS,    SLOT_SWORD_FAIRYS,  "Fairy's Sword", ItemEditor_SetCQItem, ItemEditor_GetItem },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_SHRINE_KEY,      SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem, ItemEditor_GetItem },
 };
 
 ItemEditorEntry sItemEditorAmmoEntries[] = {
-    { 0,               0xFF,            0,   "Rupees",     ItemEditor_SetRupees,     ItemEditor_GetAmmo },
-    { 0,               0xFE,            100, "Skulltulas", ItemEditor_SetSkulltulas, ItemEditor_GetAmmo },
-    { ITEM_DEKU_STICK, UPG_DEKU_STICKS, 0,   "Deku Stick", ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
-    { ITEM_DEKU_NUT,   UPG_DEKU_NUTS,   0,   "Deku Nut",   ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
-    { ITEM_BOMB,       UPG_BOMB_BAG,    0,   "Bomb",       ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
-    { ITEM_BOMBCHU,    0,               50,  "Bombchu",    ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
-    { ITEM_SLINGSHOT,  UPG_BULLET_BAG,  0,   "Slingshot",  ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
-    { ITEM_BOW,        UPG_QUIVER,      0,   "Bow",        ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
-    { ITEM_MAGIC_BEAN, 0,               15,  "Magic Bean", ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
+    { SHOW_OPTION_ALL_QUESTS, 0,               0xFF,            0,   "Rupees",     ItemEditor_SetRupees,     ItemEditor_GetAmmo },
+    { SHOW_OPTION_ALL_QUESTS, 0,               0xFE,            100, "Skulltulas", ItemEditor_SetSkulltulas, ItemEditor_GetAmmo },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_STICK, UPG_DEKU_STICKS, 0,   "Deku Stick", ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_NUT,   UPG_DEKU_NUTS,   0,   "Deku Nut",   ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMB,       UPG_BOMB_BAG,    0,   "Bomb",       ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMBCHU,    0,               50,  "Bombchu",    ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_SLINGSHOT,  UPG_BULLET_BAG,  0,   "Slingshot",  ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOW,        UPG_QUIVER,      0,   "Bow",        ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_MAGIC_BEAN, 0,               15,  "Magic Bean", ItemEditor_SetAmmo,       ItemEditor_GetAmmo },
 };
 
 ItemEditorEntry sItemEditorEquipmentEntries[] = {
-    { EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  0, "Master Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Giant's Knife",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SHIELD_DEKU,    EQUIP_TYPE_SHIELD, 0, "Deku Shield",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SHIELD_HYLIAN,  EQUIP_TYPE_SHIELD, 0, "Hylian Shield",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SHIELD_MIRROR,  EQUIP_TYPE_SHIELD, 0, "Mirror Shield",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_TUNIC_GORON,    EQUIP_TYPE_TUNIC,  0, "Goron Tunic",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_TUNIC_ZORA,     EQUIP_TYPE_TUNIC,  0, "Zora Tunic",     ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_BOOTS_IRON,     EQUIP_TYPE_BOOTS,  0, "Iron Boots",     ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_BOOTS_HOVER,    EQUIP_TYPE_BOOTS,  0, "Hover Boots",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-};
-
-ItemEditorEntry sItemEditorCQEquipmentEntries[] = {
-    { EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SWORD_HEROS,    EQUIP_TYPE_SWORD,  0, "Hero's Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Silver Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SHIELD_DEKU,    EQUIP_TYPE_SHIELD, 0, "Deku Shield",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SHIELD_HYLIAN,  EQUIP_TYPE_SHIELD, 0, "Hylian Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SHIELD_HEROS,   EQUIP_TYPE_SHIELD, 0, "Hero's Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_SHIELD_MIRROR,  EQUIP_TYPE_SHIELD, 0, "Mirror Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_TUNIC_GORON,    EQUIP_TYPE_TUNIC,  0, "Goron Tunic",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_TUNIC_ZORA,     EQUIP_TYPE_TUNIC,  0, "Zora Tunic",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_BOOTS_IRON,     EQUIP_TYPE_BOOTS,  0, "Iron Boots",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { EQUIP_INV_BOOTS_HOVER,    EQUIP_TYPE_BOOTS,  0, "Hover Boots",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  0, "Master Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Giant's Knife",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_HEROS,    EQUIP_TYPE_SWORD,  0, "Hero's Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Silver Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_DEKU,    EQUIP_TYPE_SHIELD, 0, "Deku Shield",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_HYLIAN,  EQUIP_TYPE_SHIELD, 0, "Hylian Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_HEROS,   EQUIP_TYPE_SHIELD, 0, "Hero's Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_MIRROR,  EQUIP_TYPE_SHIELD, 0, "Mirror Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_TUNIC_GORON,    EQUIP_TYPE_TUNIC,  0, "Goron Tunic",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_TUNIC_ZORA,     EQUIP_TYPE_TUNIC,  0, "Zora Tunic",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_BOOTS_IRON,     EQUIP_TYPE_BOOTS,  0, "Iron Boots",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_BOOTS_HOVER,    EQUIP_TYPE_BOOTS,  0, "Hover Boots",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
 };
 
 ItemEditorEntry sItemEditorUpgradesEntries[] = {
-    { 0, 0, 0, "Health",           ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Max Health",       ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Piece of Heart",   ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Magic",            ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Wallet",           ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Deku Stick",       ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Deku Nuts",        ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Bullet Bag",       ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Quiver",           ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Bomb Bag",         ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Strength",         ItemEditor_SetItem,   ItemEditor_GetItem   },
-};
-
-ItemEditorEntry sItemEditorCQUpgradesEntries[] = {
-    { 0, 0, 0, "Health",           ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Max Health",       ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Piece of Heart",   ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Magic",            ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Wallet",           ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Deku Stick",       ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Deku Nuts",        ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Bullet Bag",       ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Quiver",           ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Bomb Bag",         ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Strength",         ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Perfect Block",    ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { 0, 0, 0, "Amulet of Energy", ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Health",           ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Max Health",       ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Piece of Heart",   ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Magic",            ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Wallet",           ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Deku Stick",       ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Deku Nuts",        ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Bullet Bag",       ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Quiver",           ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Bomb Bag",         ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Strength",         ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ONLY_CQ,    0, 0, 0, "Perfect Block",    ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ONLY_CQ,    0, 0, 0, "Amulet of Energy", ItemEditor_SetItem,   ItemEditor_GetItem   },
 };
 
 ItemEditorEntry sItemEditorSongEntries[] = {
-    { QUEST_SONG_LULLABY,  0, 0, "Zelda's Lullaby",    ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_EPONA,    0, 0, "Epona's Song",       ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_SARIA,    0, 0, "Saria's Song",       ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_SUN,      0, 0, "Sun's Song",         ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_TIME,     0, 0, "Song of Time",       ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_STORMS,   0, 0, "Song of Storms",     ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_MINUET,   0, 0, "Minuet of Forest",   ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_BOLERO,   0, 0, "Bolero of Fire",     ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_SERENADE, 0, 0, "Serenade of Water",  ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_REQUIEM,  0, 0, "Requiem of Water",   ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_NOCTURNE, 0, 0, "Nocturne of Shadow", ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_SONG_PRELUDE,  0, 0, "Prelude of Light",   ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_LULLABY,  0, 0, "Zelda's Lullaby",    ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_EPONA,    0, 0, "Epona's Song",       ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SARIA,    0, 0, "Saria's Song",       ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SUN,      0, 0, "Sun's Song",         ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_TIME,     0, 0, "Song of Time",       ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_STORMS,   0, 0, "Song of Storms",     ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_MINUET,   0, 0, "Minuet of Forest",   ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_BOLERO,   0, 0, "Bolero of Fire",     ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SERENADE, 0, 0, "Serenade of Water",  ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_REQUIEM,  0, 0, "Requiem of Water",   ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_NOCTURNE, 0, 0, "Nocturne of Shadow", ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_PRELUDE,  0, 0, "Prelude of Light",   ItemEditor_SetQuest, ItemEditor_GetQuest },
 };
 
 ItemEditorEntry sItemEditorQuestEntries[] = {
-    { QUEST_KOKIRI_EMERALD,   0, 0, "Kokiri's Emerald", ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_GORON_RUBY,       0, 0, "Goron's Ruby",     ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_ZORA_SAPPHIRE,    0, 0, "Zora's Sapphire",  ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_MEDALLION_LIGHT,  0, 0, "Light Medallion",  ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_MEDALLION_FOREST, 0, 0, "Forest Medallion", ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_MEDALLION_FIRE,   0, 0, "Fire Medallion",   ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_MEDALLION_WATER,  0, 0, "Water Medallion",  ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_MEDALLION_SHADOW, 0, 0, "Shadow Medallion", ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_MEDALLION_SPIRIT, 0, 0, "Spirit Medallion", ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_STONE_OF_AGONY,   0, 0, "Stone of Agony",   ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { QUEST_GERUDOS_CARD,     0, 0, "Gerudo's Card",    ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_KOKIRI_EMERALD,   0, 0, "Kokiri's Emerald", ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_GORON_RUBY,       0, 0, "Goron's Ruby",     ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_ZORA_SAPPHIRE,    0, 0, "Zora's Sapphire",  ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_MEDALLION_LIGHT,  0, 0, "Light Medallion",  ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_MEDALLION_FOREST, 0, 0, "Forest Medallion", ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_MEDALLION_FIRE,   0, 0, "Fire Medallion",   ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_MEDALLION_WATER,  0, 0, "Water Medallion",  ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_MEDALLION_SHADOW, 0, 0, "Shadow Medallion", ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_MEDALLION_SPIRIT, 0, 0, "Spirit Medallion", ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_STONE_OF_AGONY,   0, 0, "Stone of Agony",   ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_GERUDOS_CARD,     0, 0, "Gerudo's Card",    ItemEditor_SetQuest, ItemEditor_GetQuest },
 };
 
 ItemEditorEntry sItemEditorDungeonKeysEntries[] = {
-    { SCENE_DEKU_TREE,              0, 0, "Deku Tree",          ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_DODONGOS_CAVERN,        0, 0, "Dodongo's Cavern",   ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_JABU_JABU,              0, 0, "Jabu-Jabu",          ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_FOREST_TEMPLE,          0, 0, "Forest Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_FIRE_TEMPLE,            0, 0, "Fire Temple",        ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_WATER_TEMPLE,           0, 0, "Water Temple",       ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_SHADOW_TEMPLE,          0, 0, "Shadow Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_SPIRIT_TEMPLE,          0, 0, "Spirit Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_ICE_CAVERN,             0, 0, "Ice Cavern",         ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_BOTTOM_OF_THE_WELL,     0, 0, "Bottom of the Well", ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_THIEVES_HIDEOUT,        0, 0, "Thieves' Hideout",   ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_GERUDO_TRAINING_GROUND, 0, 0, "Training Ground",    ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_INSIDE_GANONS_CASTLE,   0, 0, "Ganon's Castle",     ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_TREASURE_BOX_SHOP,      0, 0, "Teasure Box Shop",   ItemEditor_SetKeys, ItemEditor_GetKeys },
-};
-
-ItemEditorEntry sItemEditorCQDungeonKeysEntries[] = {
-    { SCENE_DEKU_TREE,              0, 0, "Deku Tree",          ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_DODONGOS_CAVERN,        0, 0, "Dodongo's Cavern",   ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_JABU_JABU,              0, 0, "Jabu-Jabu",          ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_DEKU_TREE_BOSS,         0, 0, "Ancient Hollow",     ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_FOREST_TEMPLE,          0, 0, "Forest Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_FIRE_TEMPLE,            0, 0, "Fire Temple",        ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_WATER_TEMPLE,           0, 0, "Water Temple",       ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_SHADOW_TEMPLE,          0, 0, "Shadow Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_SPIRIT_TEMPLE,          0, 0, "Spirit Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_DODONGOS_CAVERN_BOSS,   0, 0, "Woodfall Temple",    ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_ICE_CAVERN,             0, 0, "Ice Cavern",         ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_BOTTOM_OF_THE_WELL,     0, 0, "Bottom of the Well", ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_THIEVES_HIDEOUT,        0, 0, "Thieves' Hideout",   ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_GERUDO_TRAINING_GROUND, 0, 0, "Training Ground",    ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_INSIDE_GANONS_CASTLE,   0, 0, "Ganon's Castle",     ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SCENE_TREASURE_BOX_SHOP,      0, 0, "Teasure Box Shop",   ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_DEKU_TREE,              0, 0, "Deku Tree",          ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_DODONGOS_CAVERN,        0, 0, "Dodongo's Cavern",   ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_JABU_JABU,              0, 0, "Jabu-Jabu",          ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_DEKU_TREE_BOSS,         0, 0, "Ancient Hollow",     ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_FOREST_TEMPLE,          0, 0, "Forest Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_FIRE_TEMPLE,            0, 0, "Fire Temple",        ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_WATER_TEMPLE,           0, 0, "Water Temple",       ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_SHADOW_TEMPLE,          0, 0, "Shadow Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_SPIRIT_TEMPLE,          0, 0, "Spirit Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_DODONGOS_CAVERN_BOSS,   0, 0, "Woodfall Temple",    ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_ICE_CAVERN,             0, 0, "Ice Cavern",         ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_BOTTOM_OF_THE_WELL,     0, 0, "Bottom of the Well", ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_THIEVES_HIDEOUT,        0, 0, "Thieves' Hideout",   ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_GERUDO_TRAINING_GROUND, 0, 0, "Training Ground",    ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_INSIDE_GANONS_CASTLE,   0, 0, "Ganon's Castle",     ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_TREASURE_BOX_SHOP,      0, 0, "Teasure Box Shop",   ItemEditor_SetKeys, ItemEditor_GetKeys },
 };
 
 ItemEditorEntry sItemEditorDungeonQuestEntries[] = {
-    { SCENE_DEKU_TREE,              0, 0, "Deku Tree",          ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_DODONGOS_CAVERN,        0, 0, "Dodongo's Cavern",   ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_JABU_JABU,              0, 0, "Jabu-Jabu",          ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_FOREST_TEMPLE,          0, 0, "Forest Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_FIRE_TEMPLE,            0, 0, "Fire Temple",        ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_WATER_TEMPLE,           0, 0, "Water Temple",       ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_SHADOW_TEMPLE,          0, 0, "Shadow Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_SPIRIT_TEMPLE,          0, 0, "Spirit Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_ICE_CAVERN,             0, 0, "Ice Cavern",         ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_BOTTOM_OF_THE_WELL,     0, 0, "Bottom of the Well", ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_GERUDO_TRAINING_GROUND, 0, 0, "Training Ground",    ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_INSIDE_GANONS_CASTLE,   0, 0, "Ganon's Castle",     ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-};
-
-ItemEditorEntry sItemEditorCQDungeonQuestEntries[] = {
-    { SCENE_DEKU_TREE,              0, 0, "Deku Tree",          ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_DODONGOS_CAVERN,        0, 0, "Dodongo's Cavern",   ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_JABU_JABU,              0, 0, "Jabu-Jabu",          ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_DEKU_TREE_BOSS,         0, 0, "Ancient Hollow",     ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_FOREST_TEMPLE,          0, 0, "Forest Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_FIRE_TEMPLE,            0, 0, "Fire Temple",        ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_WATER_TEMPLE,           0, 0, "Water Temple",       ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_SHADOW_TEMPLE,          0, 0, "Shadow Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_SPIRIT_TEMPLE,          0, 0, "Spirit Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_DODONGOS_CAVERN_BOSS,   0, 0, "Woodfall Temple",    ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_JABU_JABU_BOSS,         0, 0, "Goron Mines",        ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_ICE_CAVERN,             0, 0, "Ice Cavern",         ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_BOTTOM_OF_THE_WELL,     0, 0, "Bottom of the Well", ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_GERUDO_TRAINING_GROUND, 0, 0, "Training Ground",    ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SCENE_INSIDE_GANONS_CASTLE,   0, 0, "Ganon's Tower",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_DEKU_TREE,              0, 0, "Deku Tree",          ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_DODONGOS_CAVERN,        0, 0, "Dodongo's Cavern",   ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_JABU_JABU,              0, 0, "Jabu-Jabu",          ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_DEKU_TREE_BOSS,         0, 0, "Ancient Hollow",     ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_FOREST_TEMPLE,          0, 0, "Forest Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_FIRE_TEMPLE,            0, 0, "Fire Temple",        ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_WATER_TEMPLE,           0, 0, "Water Temple",       ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_SHADOW_TEMPLE,          0, 0, "Shadow Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_SPIRIT_TEMPLE,          0, 0, "Spirit Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_DODONGOS_CAVERN_BOSS,   0, 0, "Woodfall Temple",    ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_JABU_JABU_BOSS,         0, 0, "Goron Mines",        ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_ICE_CAVERN,             0, 0, "Ice Cavern",         ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_BOTTOM_OF_THE_WELL,     0, 0, "Bottom of the Well", ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_GERUDO_TRAINING_GROUND, 0, 0, "Training Ground",    ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_INSIDE_GANONS_CASTLE,   0, 0, "Ganon's Tower",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
 };
 
 ItemEditorEntry sItemEditorSceneFlagsEntries[] = {
-    { 0, 0, 0, "Chests",        ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { 0, 0, 0, "Switches",      ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { 0, 0, 0, "Enemy Clears",  ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { 0, 0, 0, "Item Collects", ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { 0, 0, 0, "Extra",         ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Chests",        ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Switches",      ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Enemy Clears",  ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Item Collects", ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Extra",         ItemEditor_SetQuest, ItemEditor_GetQuest },
 };
+
+void ItemEditor_FilterEntries(ItemEditorEntry* entries, u8 totalCount) {
+    u8 i, j = 0;
+
+    state.entries = entries;
+    for (i=0; i < totalCount; i++)
+        if (entries[i].questMode == SHOW_OPTION_ALL_QUESTS || (entries[i].questMode == SHOW_OPTION_ONLY_CQ && IS_CHILD_QUEST) || (entries[i].questMode == SHOW_OPTION_NO_CQ && !IS_CHILD_QUEST))
+            state.visibleIndices[j++] = i;
+    state.count = j;
+}
 
 void KaleidoScope_UpdateItemEditorMenu(PlayState* play) {
     Input* input = &play->state.input[0];
     ItemEditorEntry* selectedEntry;
     PauseContext* pauseCtx = &play->pauseCtx;
     s8* currentEntry;
-    u8* topDisplayedEntry;
+    s8* topDisplayedEntry;
 
     if (state.tab == ITEM_EDITOR_TAB_SELECT) {
         currentEntry = &state.currentTabEntry;
@@ -741,40 +668,31 @@ void KaleidoScope_UpdateItemEditorMenu(PlayState* play) {
                 
                 switch (state.tab) {
                     case ITEM_EDITOR_TAB_ITEMS:
-                        state.entries = IS_CHILD_QUEST_AS_CHILD ? sItemEditorCQItemEntries : sItemEditorItemEntries;
-                        state.count   = IS_CHILD_QUEST_AS_CHILD ? ARRAY_COUNT(sItemEditorCQItemEntries) : ARRAY_COUNT(sItemEditorItemEntries);
+                        ItemEditor_FilterEntries(sItemEditorItemEntries, ARRAY_COUNT(sItemEditorItemEntries));
                         break;
                     case ITEM_EDITOR_TAB_AMMO:
-                        state.entries = sItemEditorAmmoEntries;
-                        state.count   = ARRAY_COUNT(sItemEditorAmmoEntries);
+                        ItemEditor_FilterEntries(sItemEditorAmmoEntries, ARRAY_COUNT(sItemEditorAmmoEntries));
                         break;
                     case ITEM_EDITOR_TAB_EQUIPMENT:
-                        state.entries = IS_CHILD_QUEST_AS_CHILD ? sItemEditorCQEquipmentEntries : sItemEditorEquipmentEntries;
-                        state.count   = IS_CHILD_QUEST_AS_CHILD ? ARRAY_COUNT(sItemEditorCQEquipmentEntries) : ARRAY_COUNT(sItemEditorEquipmentEntries);
+                        ItemEditor_FilterEntries(sItemEditorEquipmentEntries, ARRAY_COUNT(sItemEditorEquipmentEntries));
                         break;
                     case ITEM_EDITOR_TAB_UPGRADES:
-                        state.entries = IS_CHILD_QUEST_AS_CHILD ? sItemEditorCQUpgradesEntries : sItemEditorUpgradesEntries;
-                        state.count   = IS_CHILD_QUEST_AS_CHILD ? ARRAY_COUNT(sItemEditorCQUpgradesEntries) : ARRAY_COUNT(sItemEditorUpgradesEntries);
+                        ItemEditor_FilterEntries(sItemEditorUpgradesEntries, ARRAY_COUNT(sItemEditorUpgradesEntries));
                         break;
                     case ITEM_EDITOR_TAB_SONGS:
-                        state.entries = sItemEditorSongEntries;
-                        state.count   = ARRAY_COUNT(sItemEditorSongEntries);
+                        ItemEditor_FilterEntries(sItemEditorSongEntries, ARRAY_COUNT(sItemEditorSongEntries));
                         break;
                     case ITEM_EDITOR_TAB_QUEST:
-                        state.entries = sItemEditorQuestEntries;
-                        state.count   = ARRAY_COUNT(sItemEditorQuestEntries);
+                        ItemEditor_FilterEntries(sItemEditorQuestEntries, ARRAY_COUNT(sItemEditorQuestEntries));
                         break;
                     case ITEM_EDITOR_TAB_DUNGEON_KEYS:
-                        state.entries = IS_CHILD_QUEST_AS_CHILD ? sItemEditorCQDungeonKeysEntries : sItemEditorDungeonKeysEntries;
-                        state.count   = IS_CHILD_QUEST_AS_CHILD ? ARRAY_COUNT(sItemEditorCQDungeonKeysEntries) : ARRAY_COUNT(sItemEditorDungeonKeysEntries);
+                        ItemEditor_FilterEntries(sItemEditorDungeonKeysEntries, ARRAY_COUNT(sItemEditorDungeonKeysEntries));
                         break;
                     case ITEM_EDITOR_TAB_DUNGEON_QUEST:
-                        state.entries = IS_CHILD_QUEST_AS_CHILD ? sItemEditorCQDungeonQuestEntries : sItemEditorDungeonQuestEntries;
-                        state.count   = IS_CHILD_QUEST_AS_CHILD ? ARRAY_COUNT(sItemEditorCQDungeonQuestEntries) : ARRAY_COUNT(sItemEditorDungeonQuestEntries);
+                        ItemEditor_FilterEntries(sItemEditorDungeonQuestEntries, ARRAY_COUNT(sItemEditorDungeonQuestEntries));
                         break;
                     case ITEM_EDITOR_TAB_RESET_SCENE_FLAGS:
-                        state.entries = sItemEditorSceneFlagsEntries;
-                        state.count   = ARRAY_COUNT(sItemEditorSceneFlagsEntries);
+                        ItemEditor_FilterEntries(sItemEditorSceneFlagsEntries, ARRAY_COUNT(sItemEditorSceneFlagsEntries));
                         break;
                 }
 
@@ -790,7 +708,7 @@ void KaleidoScope_UpdateItemEditorMenu(PlayState* play) {
             }
 
             if (CHECK_BTN_ANY(input->press.button, BTN_A | BTN_B | BTN_CRIGHT | BTN_CLEFT | BTN_CDOWN | BTN_CUP)) {
-                selectedEntry = &state.entries[state.currentEntry];
+                selectedEntry = &state.entries[state.visibleIndices[state.currentEntry]];
                 selectedEntry->setFunc(selectedEntry->param1, selectedEntry->param2, selectedEntry->param3, play);
                 SFX_PLAY_CENTERED(NA_SE_IT_SWORD_IMPACT);
             }
@@ -844,10 +762,11 @@ void KaleidoScope_UpdateItemEditorMenu(PlayState* play) {
     if (state.verticalInputAccumulator < -7) {
         state.verticalInput = 0;
         state.verticalInputAccumulator = 0;
+
         (*currentEntry)++;
         *currentEntry = (*currentEntry + state.count) % state.count;
 
-        if (state.count > 24 && (*currentEntry == ((*topDisplayedEntry + state.count + (state.count >= 19 ? 19 : state.count-1)) % state.count))) {
+        if (state.count > 24 && (*currentEntry == ((*topDisplayedEntry + state.count + (state.count >= 23 ? 23 : state.count-1)) % state.count))) {
             (*topDisplayedEntry)++;
             *topDisplayedEntry = (*topDisplayedEntry + state.count) % state.count;
         }
@@ -872,6 +791,7 @@ void KaleidoScope_UpdateItemEditorMenu(PlayState* play) {
     }
 
     *currentEntry = (*currentEntry + state.count) % state.count;
+    *topDisplayedEntry = (*topDisplayedEntry + state.count) % state.count;
 
     if (state.timerUp != 0)
         state.timerUp--;
@@ -927,7 +847,7 @@ void KaleidoScope_DrawItemEditor(PlayState* play) {
     GfxPrint printer;
     u16 title, i;
     s8* currentEntry;
-    u8* topDisplayedEntry;
+    s8* topDisplayedEntry;
     u8 shift = 20;
     
     if (pauseCtx->debugState == PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPENING && !firstTimeUse)
@@ -978,9 +898,10 @@ void KaleidoScope_DrawItemEditor(PlayState* play) {
         else GfxPrint_SetColor(&printer, 200, 200, 55, 255);
 
         if (state.tab > ITEM_EDITOR_TAB_SELECT) {
-            GfxPrint_Printf(&printer, "%s", state.entries[title].name);
+            ItemEditorEntry* entry = &state.entries[state.visibleIndices[title]];
+            GfxPrint_Printf(&printer, "%s", entry->name);
             GfxPrint_SetPos(&printer, shift - WS_PX_SHIFT, i + 4);
-            GfxPrint_Printf(&printer, "%s", state.entries[title].getFunc(state.entries[title].param1, state.entries[title].param2, state.entries[title].param3));
+            GfxPrint_Printf(&printer, "%s", entry->getFunc(entry->param1, entry->param2, entry->param3));
         } else GfxPrint_Printf(&printer, "%s", sItemEditorTabEntries[title]);
     };
 
