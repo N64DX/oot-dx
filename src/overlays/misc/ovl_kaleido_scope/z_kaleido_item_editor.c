@@ -40,9 +40,9 @@ typedef struct ItemEditorState {
     /* 0x0B */ s8 tab, topDisplayedEntry, topDisplayedTabEntry, currentEntry, currentTabEntry;
     /* 0x10 */ bool lockUp, lockDown;
     /* 0x12 */ s8 savedEntry[ITEM_EDITOR_TAB_MAX];
-    /* 0x19 */ u8 savedTopEntry[ITEM_EDITOR_TAB_MAX];
-    /* 0x22 */ u8 visibleIndices[30];
-} ItemEditorState; // size = 0x44
+    /* 0x1E */ u8 savedTopEntry[ITEM_EDITOR_TAB_MAX];
+    /* 0x28 */ u8 visibleIndices[30];
+} ItemEditorState; // size = 0x48
 
 ItemEditorState state;
 
@@ -69,24 +69,13 @@ void ItemEditor_SetCQItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
         ItemEditor_SetItem(firstItem, lastItem, slot, play);
 }
 
-void ItemEditor_SetArrow(u8 item, u8 param2, u8 slot, PlayState* play) {
+void ItemEditor_SetArrow(u8 item, u8 bit, u8 slot, PlayState* play) {
     if (!IS_CHILD_QUEST_AS_CHILD) {
         gSaveContext.save.info.inventory.items[slot] = (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE ? SLOT(item) : ITEM_NONE);
-
-        if (item == ITEM_ARROW_FIRE)
-            gSaveContext.save.info.obtainedItems.fireArrow  = gSaveContext.save.info.inventory.items[slot] == SLOT(item) ? 1 : 0;
-        else if (item == ITEM_ARROW_ICE)
-            gSaveContext.save.info.obtainedItems.iceArrow   = gSaveContext.save.info.inventory.items[slot] == SLOT(item) ? 1 : 0;
-        else if (item == ITEM_ARROW_LIGHT)
-            gSaveContext.save.info.obtainedItems.lightArrow = gSaveContext.save.info.inventory.items[slot] == SLOT(item) ? 1 : 0;
-    } else {
-        if (item == ITEM_ARROW_FIRE)
-            gSaveContext.save.info.obtainedItems.fireArrow  ^= 1;
-        else if (item == ITEM_ARROW_ICE)
-            gSaveContext.save.info.obtainedItems.iceArrow   ^= 1;
-        else if (item == ITEM_ARROW_LIGHT)
-            gSaveContext.save.info.obtainedItems.lightArrow ^= 1;
-    }
+        if (SLOT(item))
+            gSaveContext.save.info.obtainedItems.items |= (0x80 >> bit);
+        else gSaveContext.save.info.obtainedItems.items &= ~(0x80 >> bit);
+    } else gSaveContext.save.info.obtainedItems.items ^= (0x80 >> bit);
 }
 
 void ItemEditor_SetBottle(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
@@ -219,6 +208,125 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
     }
 }
 
+void ItemEditor_SetHealth(u8 type, u8 max, u8 param3, PlayState* play) {
+    s16* health;
+    s16 maxHealth;
+    s16 rounded, next, prev;
+
+    if (type == 2) {
+        gSaveContext.save.info.playerData.isDoubleDefenseAcquired ^= 1;
+        gSaveContext.save.info.inventory.defenseHearts = gSaveContext.save.info.playerData.isDoubleDefenseAcquired ? max : 0;
+        return;
+    }
+
+    if (type == 0) {
+        health = &gSaveContext.save.info.playerData.health;
+        maxHealth = gSaveContext.save.info.playerData.healthCapacity;
+    } else {
+        health = &gSaveContext.save.info.playerData.healthCapacity;
+        maxHealth = max * 0x10;
+    }
+
+    if (play->state.input[0].press.button == BTN_A) {
+        rounded = (*health / 0x10) * 0x10;
+        next = rounded + 0x10;
+        *health = (next <= maxHealth) ? next : maxHealth;
+    } else if (play->state.input[0].press.button == BTN_B) {
+        rounded = ((*health + 0xF) / 0x10) * 0x10;
+        prev = rounded - 0x10;
+        *health = (*health > 0) ? ((prev < *health) ? prev : *health - 0x10) : 0;
+    } else if (play->state.input[0].press.button == BTN_CUP) {
+        *health = maxHealth;
+    } else if (play->state.input[0].press.button == BTN_CDOWN) {
+        *health = 0;
+    } else if (play->state.input[0].press.button == BTN_CLEFT) {
+        *health = (*health > 0xA0) ? *health - 0xA0 : 0;
+    } else if (play->state.input[0].press.button == BTN_CRIGHT) {
+        next = *health + 0xA0;
+        *health = (next <= maxHealth) ? next : maxHealth;
+    }
+
+    if (type == 1 && gSaveContext.save.info.playerData.health > gSaveContext.save.info.playerData.healthCapacity)
+        gSaveContext.save.info.playerData.health = gSaveContext.save.info.playerData.healthCapacity;
+}
+
+void ItemEditor_SetHeart(u8 param1, u8 param2, u8 param3, PlayState* play) {
+    if (play->state.input[0].press.button == BTN_A && (((gSaveContext.save.info.inventory.questItems & 0xF0000000) & 0xF0000000) >> QUEST_HEART_PIECE_COUNT) != 3)
+        gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
+    else if (play->state.input[0].press.button == BTN_B && (((gSaveContext.save.info.inventory.questItems & 0xF0000000) & 0xF0000000) >> QUEST_HEART_PIECE_COUNT) != 0)
+        gSaveContext.save.info.inventory.questItems -= (1 << QUEST_HEART_PIECE_COUNT);
+}
+
+void ItemEditor_SetMagic(u8 param1, u8 param2, u8 param3, PlayState* play) {
+    u8 level = gSaveContext.save.info.playerData.isMagicAcquired + gSaveContext.save.info.playerData.isDoubleMagicAcquired;
+
+    if (play->state.input[0].press.button == BTN_A)
+        level = (level + 1) % 3;
+    else if (play->state.input[0].press.button == BTN_B)
+        level = (level + 2) % 3;
+
+    if (!CHECK_BTN_ANY(play->state.input[0].press.button, BTN_A | BTN_B))
+        return;
+
+    switch (level) {
+        case 0: // No magic
+            gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = false;
+            gSaveContext.save.info.playerData.magic = gSaveContext.save.info.playerData.magicLevel = 0;
+            break;
+        case 1: // Normal magic
+            gSaveContext.save.info.playerData.isMagicAcquired = true;
+            gSaveContext.save.info.playerData.isDoubleMagicAcquired = false;
+            gSaveContext.magicFillTarget = MAGIC_NORMAL_METER;
+            gSaveContext.save.info.playerData.magicLevel = 1;
+            gSaveContext.save.info.playerData.magic = 0;
+            gSaveContext.magicState = MAGIC_STATE_STEP_CAPACITY;
+            break;
+        case 2: // Double magic
+            gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = true;
+            gSaveContext.magicFillTarget = MAGIC_DOUBLE_METER;
+            gSaveContext.save.info.playerData.magicLevel = 2;
+            gSaveContext.save.info.playerData.magic = 0;
+            gSaveContext.magicState = MAGIC_STATE_STEP_CAPACITY;
+            break;
+    }
+}
+
+void ItemEditor_SetUpgrade(u8 upgrade, u8 max, u8 param3, PlayState* play) {
+    if (upgrade ==  UPG_WALLET) {
+        u8 level = CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2);
+
+        if (play->state.input[0].press.button == BTN_A && level < max)
+            level++;
+        else if (play->state.input[0].press.button == BTN_B && level > 0)
+            level--;
+
+        Inventory_ChangeUpgrade(UPG_WALLET,  (level < 3) ?  level      : 3);
+        Inventory_ChangeUpgrade(UPG_WALLET2, (level > 3) ? (level - 3) : 0);
+    } else if (play->state.input[0].press.button == BTN_A && CUR_UPG_VALUE(upgrade) < max)
+        Inventory_ChangeUpgrade(upgrade, CUR_UPG_VALUE(upgrade) + 1);
+    else if (play->state.input[0].press.button == BTN_B && CUR_UPG_VALUE(upgrade) > 0)
+        Inventory_ChangeUpgrade(upgrade, CUR_UPG_VALUE(upgrade) - 1);
+}
+
+void ItemEditor_SetObtainedSkill(u8 bit, u8 param2, u8 param3, PlayState* play) {
+    gSaveContext.save.info.obtainedSkills.skills ^= (0x80 >> bit);
+}
+
+void ItemEditor_SetObtainedItem(u8 bit, u8 param2, u8 param3, PlayState* play) {
+    gSaveContext.save.info.obtainedItems.items ^= (0x80 >> bit);
+}
+
+void ItemEditor_SetDurability(u8 shield, u8 max, u8 param3, PlayState* play) {
+    if (play->state.input[0].press.button == BTN_A && gSaveContext.save.info.shields[shield].upgrade < max) {
+        gSaveContext.save.info.shields[shield].upgrade++;
+        gSaveContext.save.info.shields[shield].durability = Player_GetMaxShieldDurability(shield+1);
+    }
+    else if (play->state.input[0].press.button == BTN_B && gSaveContext.save.info.shields[shield].upgrade > 0) {
+        gSaveContext.save.info.shields[shield].upgrade--;
+        gSaveContext.save.info.shields[shield].durability = Player_GetMaxShieldDurability(shield+1);
+    }
+}
+
 void ItemEditor_SetQuest(u8 quest, u8 param2, u8 param3, PlayState* play) {
     gSaveContext.save.info.inventory.questItems ^= gBitFlags[quest];
 }
@@ -241,6 +349,34 @@ void ItemEditor_SetDungeon(u8 scene, u8 param2, u8 param3, PlayState* play) {
         gSaveContext.save.info.inventory.dungeonItems[scene] ^= gBitFlags[DUNGEON_MAP];
     else if (play->state.input[0].press.button == BTN_B || play->state.input[0].press.button == BTN_CDOWN)
         gSaveContext.save.info.inventory.dungeonItems[scene] = 0;
+}
+
+void ItemEditor_SetFlagsClear(u8 clear, u8 param2, u8 param3, PlayState* play) {
+    switch (clear) {
+        case 0:
+            gSaveContext.save.info.sceneFlags[play->sceneId].chest       = play->actorCtx.flags.chest   = 0;
+            break;
+        case 1:
+            gSaveContext.save.info.sceneFlags[play->sceneId].swch        = play->actorCtx.flags.swch    = play->actorCtx.flags.tempSwch    = 0;
+            break;
+        case 2:
+            gSaveContext.save.info.sceneFlags[play->sceneId].clear       = play->actorCtx.flags.clear   = play->actorCtx.flags.tempClear   = 0;
+            break;
+        case 3:
+            gSaveContext.save.info.sceneFlags[play->sceneId].collect     = play->actorCtx.flags.collect = play->actorCtx.flags.tempCollect = 0;
+            break;
+        case 4:
+            gSaveContext.save.info.sceneFlags[play->sceneId].extra.quest = 0;
+            gSaveContext.save.info.sceneFlags[play->sceneId].extra.exit  = 0;
+            gSaveContext.save.info.sceneFlags[play->sceneId].extra.unk   = 0;
+            break;
+        case 5:
+            gSaveContext.save.info.sceneFlags[play->sceneId].rooms       = 0;
+            break;
+        case 6:
+            gSaveContext.save.info.sceneFlags[play->sceneId].floors      = 0;
+            break;
+    }
 }
 
 char* ItemEditor_GetItem(u8 item, u8 param2, u8 slot) {
@@ -421,6 +557,70 @@ char* ItemEditor_GetEquipment(u8 item, u8 type, u8 upgrade) {
     return (CHECK_OWNED_EQUIP_ALT(type, item)) ? "Set" : "None";
 }
 
+char* ItemEditor_GetHealth(u8 type, u8 param2, u8 param3) {
+    static char buf[3];
+    u16 health;
+    u8 i = 0;
+
+    if (type == 0)
+        health = gSaveContext.save.info.playerData.health / 0x10;
+    else if (type == 1)
+        health = gSaveContext.save.info.playerData.healthCapacity / 0x10;
+    else if (type == 2)
+        return gSaveContext.save.info.playerData.isDoubleDefenseAcquired ? "Set" : "None";
+    else if (type == 3)
+        health = gSaveContext.magicCapacity;
+
+    if (health >= 10)
+        buf[i++] = '0' + (health / 10 % 10);
+
+    buf[i++] = '0' + (health % 10);
+    buf[i] = '\0';
+
+    return buf;
+}
+
+char* ItemEditor_GetHeart(u8 param1, u8 param2, u8 param3) {
+    static char buf[2] = { '0', '\0' };
+    buf[0] = '0' + (((gSaveContext.save.info.inventory.questItems & 0xF0000000) & 0xF0000000) >> QUEST_HEART_PIECE_COUNT);
+    return buf;
+}
+
+char* ItemEditor_GetMagic(u8 type, u8 param2, u8 param3) {
+    switch (gSaveContext.save.info.playerData.magicLevel) {
+        case 0:
+            return "None";
+        case 1:
+            return "Normal";
+        case 2:
+            return "Double";
+        default:
+            return "Unknown";
+    }
+}
+
+char* ItemEditor_GetUpgrade(u8 upgrade, u8 param2, u8 param3) {
+    static char buf[2] = { '0', '\0' };
+    if (upgrade == UPG_WALLET)
+        buf[0] = '0' + CUR_UPG_VALUE(UPG_WALLET) + + CUR_UPG_VALUE(UPG_WALLET2);
+    else buf[0] = '0' + CUR_UPG_VALUE(upgrade);
+    return buf;
+}
+
+char* ItemEditor_GetObtainedSkill(u8 bit, u8 param2, u8 param3) {
+    return (gSaveContext.save.info.obtainedSkills.skills & (0x80 >> bit)) ? "Set" : "None";
+}
+
+char* ItemEditor_GetObtainedItem(u8 bit, u8 param2, u8 param3) {
+    return (gSaveContext.save.info.obtainedItems.items & (0x80 >> bit)) ? "Set" : "None";
+}
+
+char* ItemEditor_GetDurability(u8 shield, u8 param2, u8 param3) {
+    static char buf[2] = { '0', '\0' };
+    buf[0] = '0' + gSaveContext.save.info.shields[shield].upgrade;
+    return buf;
+}
+
 char* ItemEditor_GetQuest(u8 quest, u8 param2, u8 param3) {
     return (CHECK_QUEST_ITEM(quest)) ? "Set" : "None";
 }
@@ -482,36 +682,41 @@ char* ItemEditor_GetDungeon(u8 scene, u8 param2, u8 param3) {
     return buf;
 }
 
+char* ItemEditor_GetFlagsClear(u8 param1, u8 param2, u8 param3) {
+    return "Clear";
+}
+
 char* sItemEditorTabEntries[] = { "Item Editor", "Ammo Editor", "Equipment Editor", "Upgrade Editor", "Song Editor", "Quest Editor", "Dungeon Keys Editor", "Dungeon Quest Editor", "Reset Scene Flags" };
 
 ItemEditorEntry sItemEditorItemEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_STICK,    ITEM_DEKU_STICK,      SLOT_DEKU_STICK,    "Deku Stick",    ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_NUT,      ITEM_DEKU_NUT,        SLOT_DEKU_NUT,      "Deku Nut",      ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMB,          ITEM_BOMB,            SLOT_BOMB,          "Bomb",          ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMBCHU,       ITEM_BOMBCHU,         SLOT_BOMBCHU,       "Bombchu",       ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_SLINGSHOT,     ITEM_SLINGSHOT,       SLOT_SLINGSHOT,     "Slingshot",     ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOW,           ITEM_BOW,             SLOT_BOW,           "Bow",           ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_FIRE,    ITEM_ARROW_FIRE,      SLOT_ARROW_FIRE,    "Fire Arrow",    ItemEditor_SetArrow,  ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_ICE,     ITEM_ARROW_ICE,       SLOT_ARROW_ICE,     "Ice Arrow",     ItemEditor_SetArrow,  ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_LIGHT,   ITEM_ARROW_LIGHT,     SLOT_ARROW_LIGHT,   "Light Arrow",   ItemEditor_SetArrow,  ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOOMERANG,     ITEM_BOOMERANG,       SLOT_BOOMERANG,     "Boomerang",     ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_HOOKSHOT,      ITEM_LONGSHOT,        SLOT_HOOKSHOT,      "Hookshot",      ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_HAMMER,        ITEM_HAMMER,          SLOT_HAMMER,        "Hammer",        ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_OCARINA_FAIRY, ITEM_OCARINA_OF_TIME, SLOT_OCARINA,       "Ocarina",       ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_LENS_OF_TRUTH, ITEM_LENS_OF_TRUTH,   SLOT_LENS_OF_TRUTH, "Lens of Truth", ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_MAGIC_BEAN,    ITEM_MAGIC_BEAN,      SLOT_MAGIC_BEAN,    "Magic Bean",    ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_DINS_FIRE,     ITEM_DINS_FIRE,       SLOT_DINS_FIRE,     "Din's Fire",    ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_FARORES_WIND,  ITEM_FARORES_WIND,    SLOT_FARORES_WIND,  "Farore's Wind", ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_NAYRUS_LOVE,   ITEM_NAYRUS_LOVE,     SLOT_NAYRUS_LOVE,   "Nayru's Love",  ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_1,      "Bottle #1",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_2,      "Bottle #2",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_3,      "Bottle #3",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_4,      "Bottle #4",     ItemEditor_SetBottle, ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_POCKET_EGG,    ITEM_CLAIM_CHECK,     SLOT_TRADE_ADULT,   "Adult Trade",   ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_WEIRD_EGG,     ITEM_SOLD_OUT,        SLOT_TRADE_CHILD,   "Child Trade",   ItemEditor_SetItem,   ItemEditor_GetItem },
-    { SHOW_OPTION_ONLY_CQ,    ITEM_ROCS_FEATHER,  ITEM_GOLDEN_FEATHER,  SLOT_FEATHER,       "Feather",       ItemEditor_SetCQItem, ItemEditor_GetItem },
-    { SHOW_OPTION_ONLY_CQ,    ITEM_SWORD_FAIRYS,  ITEM_SWORD_FAIRYS,    SLOT_SWORD_FAIRYS,  "Fairy's Sword", ItemEditor_SetCQItem, ItemEditor_GetItem },
-    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_SHRINE_KEY,      SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem, ItemEditor_GetItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_STICK,    ITEM_DEKU_STICK,      SLOT_DEKU_STICK,    "Deku Stick",    ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_NUT,      ITEM_DEKU_NUT,        SLOT_DEKU_NUT,      "Deku Nut",      ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMB,          ITEM_BOMB,            SLOT_BOMB,          "Bomb",          ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMBCHU,       ITEM_BOMBCHU,         SLOT_BOMBCHU,       "Bombchu",       ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_SLINGSHOT,     ITEM_SLINGSHOT,       SLOT_SLINGSHOT,     "Slingshot",     ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOW,           ITEM_BOW,             SLOT_BOW,           "Bow",           ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_FIRE,    0,                    SLOT_ARROW_FIRE,    "Fire Arrow",    ItemEditor_SetArrow,        ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_ICE,     1,                    SLOT_ARROW_ICE,     "Ice Arrow",     ItemEditor_SetArrow,        ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_LIGHT,   2,                    SLOT_ARROW_LIGHT,   "Light Arrow",   ItemEditor_SetArrow,        ItemEditor_GetItem         },
+    { SHOW_OPTION_ONLY_CQ,    6,                  0,                    0,                  "Bomb Arrow",    ItemEditor_SetObtainedItem, ItemEditor_GetObtainedItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOOMERANG,     ITEM_BOOMERANG,       SLOT_BOOMERANG,     "Boomerang",     ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_HOOKSHOT,      ITEM_LONGSHOT,        SLOT_HOOKSHOT,      "Hookshot",      ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_HAMMER,        ITEM_HAMMER,          SLOT_HAMMER,        "Hammer",        ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_OCARINA_FAIRY, ITEM_OCARINA_OF_TIME, SLOT_OCARINA,       "Ocarina",       ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_LENS_OF_TRUTH, ITEM_LENS_OF_TRUTH,   SLOT_LENS_OF_TRUTH, "Lens of Truth", ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_MAGIC_BEAN,    ITEM_MAGIC_BEAN,      SLOT_MAGIC_BEAN,    "Magic Bean",    ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DINS_FIRE,     ITEM_DINS_FIRE,       SLOT_DINS_FIRE,     "Din's Fire",    ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_FARORES_WIND,  ITEM_FARORES_WIND,    SLOT_FARORES_WIND,  "Farore's Wind", ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_NAYRUS_LOVE,   ITEM_NAYRUS_LOVE,     SLOT_NAYRUS_LOVE,   "Nayru's Love",  ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_1,      "Bottle #1",     ItemEditor_SetBottle,       ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_2,      "Bottle #2",     ItemEditor_SetBottle,       ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_3,      "Bottle #3",     ItemEditor_SetBottle,       ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_4,      "Bottle #4",     ItemEditor_SetBottle,       ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_POCKET_EGG,    ITEM_CLAIM_CHECK,     SLOT_TRADE_ADULT,   "Adult Trade",   ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_WEIRD_EGG,     ITEM_SOLD_OUT,        SLOT_TRADE_CHILD,   "Child Trade",   ItemEditor_SetItem,         ItemEditor_GetItem         },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_ROCS_FEATHER,  ITEM_GOLDEN_FEATHER,  SLOT_FEATHER,       "Feather",       ItemEditor_SetCQItem,       ItemEditor_GetItem         },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_SWORD_FAIRYS,  ITEM_SWORD_FAIRYS,    SLOT_SWORD_FAIRYS,  "Fairy's Sword", ItemEditor_SetCQItem,       ItemEditor_GetItem         },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_SHRINE_KEY,      SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem,       ItemEditor_GetItem         },
 };
 
 ItemEditorEntry sItemEditorAmmoEntries[] = {
@@ -528,8 +733,8 @@ ItemEditorEntry sItemEditorAmmoEntries[] = {
 
 ItemEditorEntry sItemEditorEquipmentEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  0, "Master Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Giant's Knife",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  0, "Master Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Giant's Knife", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_HEROS,    EQUIP_TYPE_SWORD,  0, "Hero's Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Silver Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
@@ -544,19 +749,33 @@ ItemEditorEntry sItemEditorEquipmentEntries[] = {
 };
 
 ItemEditorEntry sItemEditorUpgradesEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Health",           ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Max Health",       ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Piece of Heart",   ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Magic",            ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Wallet",           ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Deku Stick",       ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Deku Nuts",        ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Bullet Bag",       ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Quiver",           ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Bomb Bag",         ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Strength",         ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ONLY_CQ,    0, 0, 0, "Perfect Block",    ItemEditor_SetItem,   ItemEditor_GetItem   },
-    { SHOW_OPTION_ONLY_CQ,    0, 0, 0, "Amulet of Energy", ItemEditor_SetItem,   ItemEditor_GetItem   },
+    { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Health",                   ItemEditor_SetHealth,        ItemEditor_GetHealth        },
+    { SHOW_OPTION_NO_CQ,      1,                       20, 0, "Max Health",               ItemEditor_SetHealth,        ItemEditor_GetHealth        },
+    { SHOW_OPTION_NO_CQ,      2,                       20, 0, "Double Defense",           ItemEditor_SetHealth,        ItemEditor_GetHealth        },   
+    { SHOW_OPTION_ONLY_CQ,    1,                       30, 0, "Max Health",               ItemEditor_SetHealth,        ItemEditor_GetHealth        },
+    { SHOW_OPTION_ONLY_CQ,    2,                       30, 0, "Double Defense",           ItemEditor_SetHealth,        ItemEditor_GetHealth        },
+    { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Piece of Heart",           ItemEditor_SetHeart,         ItemEditor_GetHeart         },
+    { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Magic",                    ItemEditor_SetMagic,         ItemEditor_GetMagic         },
+    { SHOW_OPTION_ONLY_CQ,    2,                        0, 0, "Half Magic Cost",          ItemEditor_SetObtainedSkill, ItemEditor_GetObtainedSkill },
+    { SHOW_OPTION_ONLY_CQ,    0,                        0, 0, "Enhanced Spin",            ItemEditor_SetObtainedSkill, ItemEditor_GetObtainedSkill },
+    { SHOW_OPTION_NO_CQ,      UPG_WALLET,               2, 0, "Wallet",                   ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_ONLY_CQ,    UPG_WALLET,               6, 0, "Wallet",                   ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_ALL_QUESTS, UPG_DEKU_STICKS,          3, 0, "Deku Stick",               ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_ALL_QUESTS, UPG_DEKU_NUTS,            3, 0, "Deku Nuts",                ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_NO_CQ,      UPG_BULLET_BAG,           3, 0, "Bullet Bag",               ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_NO_CQ,      UPG_QUIVER,               3, 0, "Quiver",                   ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_ONLY_CQ,    UPG_BULLET_BAG,           4, 0, "Bullet Bag",               ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_ONLY_CQ,    UPG_QUIVER,               4, 0, "Quiver",                   ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_ALL_QUESTS, UPG_BOMB_BAG,             3, 0, "Bomb Bag",                 ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_ALL_QUESTS, UPG_STRENGTH,             3, 0, "Strength",                 ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_ALL_QUESTS, UPG_SCALE,                2, 0, "Scale",                    ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
+    { SHOW_OPTION_ONLY_CQ,    1,                        0, 0, "Perfect Block",            ItemEditor_SetObtainedSkill, ItemEditor_GetObtainedSkill },
+    { SHOW_OPTION_ONLY_CQ,    3,                        0, 0, "Amulet of Energy",         ItemEditor_SetObtainedItem,  ItemEditor_GetObtainedItem  },
+    { SHOW_OPTION_ONLY_CQ,    3,                        0, 0, "Further Jump",             ItemEditor_SetObtainedSkill, ItemEditor_GetObtainedSkill },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_DEKU,    7, 0, "Deku Shield Durability",   ItemEditor_SetDurability,    ItemEditor_GetDurability    },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HYLIAN,  7, 0, "Hylian Shield Durability", ItemEditor_SetDurability,    ItemEditor_GetDurability    },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HEROS,   7, 0, "Hero's Shield Durability", ItemEditor_SetDurability,    ItemEditor_GetDurability    },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_MIRROR,  7, 0, "Mirror Shield Durability", ItemEditor_SetDurability,    ItemEditor_GetDurability    },
 };
 
 ItemEditorEntry sItemEditorSongEntries[] = {
@@ -626,11 +845,13 @@ ItemEditorEntry sItemEditorDungeonQuestEntries[] = {
 };
 
 ItemEditorEntry sItemEditorSceneFlagsEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Chests",        ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Switches",      ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Enemy Clears",  ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Item Collects", ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Extra",         ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, 0, 0, 0, "Chests",        ItemEditor_SetFlagsClear, ItemEditor_GetFlagsClear },
+    { SHOW_OPTION_ALL_QUESTS, 1, 0, 0, "Switches",      ItemEditor_SetFlagsClear, ItemEditor_GetFlagsClear },
+    { SHOW_OPTION_ALL_QUESTS, 2, 0, 0, "Enemy Clears",  ItemEditor_SetFlagsClear, ItemEditor_GetFlagsClear },
+    { SHOW_OPTION_ALL_QUESTS, 3, 0, 0, "Item Collects", ItemEditor_SetFlagsClear, ItemEditor_GetFlagsClear },
+    { SHOW_OPTION_ALL_QUESTS, 4, 0, 0, "Extra",         ItemEditor_SetFlagsClear, ItemEditor_GetFlagsClear },
+    { SHOW_OPTION_ALL_QUESTS, 5, 0, 0, "Rooms",         ItemEditor_SetFlagsClear, ItemEditor_GetFlagsClear },
+    { SHOW_OPTION_ALL_QUESTS, 6, 0, 0, "Floors",        ItemEditor_SetFlagsClear, ItemEditor_GetFlagsClear },
 };
 
 void ItemEditor_FilterEntries(ItemEditorEntry* entries, u8 totalCount) {
@@ -849,7 +1070,7 @@ void KaleidoScope_DrawItemEditor(PlayState* play) {
     s8* currentEntry;
     s8* topDisplayedEntry;
     u8 shift = 20;
-    
+
     if (pauseCtx->debugState == PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPENING && !firstTimeUse)
         KaleidoScope_ResetItemEditor();
 
@@ -886,7 +1107,9 @@ void KaleidoScope_DrawItemEditor(PlayState* play) {
         topDisplayedEntry = &state.topDisplayedEntry;
     }
 
-    if (state.tab >= ITEM_EDITOR_TAB_UPGRADES)
+    if (state.tab == ITEM_EDITOR_TAB_UPGRADES)
+        shift = 30;
+    else if (state.tab > ITEM_EDITOR_TAB_UPGRADES)
         shift = 25;
 
     for (i=0; i<(state.count < 24 ? state.count : 24); i++) {
