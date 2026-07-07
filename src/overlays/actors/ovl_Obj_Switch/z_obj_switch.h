@@ -54,6 +54,7 @@ typedef struct ObjSwitch {
     /* 0x016A */ s16 disableAcTimer;
     /* 0x016C */ s16 cooldownTimer;
     /* 0x016E */ u8 cooldownOn;
+    /* 0x016F */ bool isStrong;
     /* 0x0170 */ s16 eyeTexIndex;
     /* 0x0174 */ void* crystalSubtype1texture;
     /* 0x0178 */ u8 x1TexScroll;
