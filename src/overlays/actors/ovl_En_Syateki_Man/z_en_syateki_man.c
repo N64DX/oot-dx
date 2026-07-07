@@ -362,8 +362,10 @@ void EnSyatekiMan_EndGame(EnSyatekiMan* this, PlayState* play) {
                                    CUR_UPG_VALUE(UPG_BULLET_BAG));
                             if (CUR_UPG_VALUE(UPG_BULLET_BAG) == 1) {
                                 this->getItemId = GI_BULLET_BAG_40;
-                            } else {
+                            } else if (CUR_UPG_VALUE(UPG_BULLET_BAG) == 2) {
                                 this->getItemId = GI_BULLET_BAG_50;
+                            } else {
+                                this->getItemId = GI_BULLET_BAG_60;
                             }
                         } else {
                             this->getItemId = GI_RUPEE_PURPLE;
@@ -380,6 +382,9 @@ void EnSyatekiMan_EndGame(EnSyatekiMan* this, PlayState* play) {
                                     break;
                                 case 2:
                                     this->getItemId = GI_QUIVER_50;
+                                    break;
+                                case 3:
+                                    this->getItemId = GI_QUIVER_60;
                                     break;
                             }
                         } else {
@@ -425,7 +430,7 @@ void EnSyatekiMan_FinishPrize(EnSyatekiMan* this, PlayState* play) {
         PRINTF(VT_FGCOL(GREEN) T("☆☆☆☆☆ 正常終了 ☆☆☆☆☆ \n", "☆☆☆☆☆ Normal termination ☆☆☆☆☆ \n") VT_RST);
         if (IS_CHILD_QUEST ? gSaveContext.save.entranceIndex == ENTR_SHOOTING_GALLERY_1 : !LINK_IS_ADULT) {
             SET_ITEMGETINF(ITEMGETINF_0D);
-        } else if ((this->getItemId == GI_QUIVER_40) || (this->getItemId == GI_QUIVER_50)) {
+        } else if ((this->getItemId == GI_QUIVER_40) || (this->getItemId == GI_QUIVER_50) || (this->getItemId == GI_QUIVER_60)) {
             SET_ITEMGETINF(ITEMGETINF_0E);
         }
         this->gameResult = SYATEKI_RESULT_NONE;

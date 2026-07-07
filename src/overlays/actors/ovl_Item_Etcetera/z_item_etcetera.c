@@ -11,6 +11,7 @@
 #include "printf.h"
 #include "rand.h"
 #include "draw.h"
+#include "sfx.h"
 #include "effect.h"
 #include "play_state.h"
 #include "save.h"
@@ -26,6 +27,8 @@ void ItemEtcetera_Draw(Actor* thisx, PlayState* play);
 void ItemEtcetera_WaitForObject(ItemEtcetera* this, PlayState* play);
 void func_80B85824(ItemEtcetera* this, PlayState* play);
 void func_80B858B4(ItemEtcetera* this, PlayState* play);
+void ItemEtcetera_PictoboxFunction(ItemEtcetera* this, PlayState* play);
+void ItemEtcetera_AncientHollowKeyFunction(ItemEtcetera* this, PlayState* play);
 void ItemEtcetera_SpawnSparkles(ItemEtcetera* this, PlayState* play);
 void ItemEtcetera_MoveFireArrowDown(ItemEtcetera* this, PlayState* play);
 void func_80B85B28(ItemEtcetera* this, PlayState* play);
@@ -59,6 +62,8 @@ static s16 sObjectIds[] = {
     OBJECT_GI_HEARTS,        // ITEM_ETC_HEART_PIECE_CHEST_GAME
     OBJECT_GI_KEY,           // ITEM_ETC_KEY_SMALL_CHEST_GAME
     OBJECT_GI_SWORD_1_MM,    // ITEM_ETC_SWORD_HEROS
+    OBJECT_GI_CAMERA,        // ITEM_ETC_PICTOBOX
+    OBJECT_GI_KEY,           // ITEM_ETC_ANCIENT_HOLLOW_KEY
 };
 
 // Indices passed to the item table in z_draw.c
@@ -78,6 +83,8 @@ static s16 sDrawItemIndices[] = {
     GID_HEART_PIECE,         // ITEM_ETC_HEART_PIECE_CHEST_GAME
     GID_SMALL_KEY,           // ITEM_ETC_KEY_SMALL_CHEST_GAME
     GID_SWORD_HEROS,         // ITEM_ETC_SWORD_HEROS
+    GID_PICTOGRAPH_BOX,      // ITEM_ETC_PICTOBOX
+    GID_SMALL_KEY,           // ITEM_ETC_ANCIENT_HOLLOW_KEY
 };
 
 static s16 sGetItemIds[] = {
@@ -96,6 +103,8 @@ static s16 sGetItemIds[] = {
     GI_NONE,                // ITEM_ETC_HEART_PIECE_CHEST_GAME
     GI_NONE,                // ITEM_ETC_KEY_SMALL_CHEST_GAME
     GI_SWORD_HEROS,         // ITEM_ETC_SWORD_HEROS
+    GI_PICTOBOX,            // ITEM_ETC_PICTOBOX
+    GI_ANCIENT_HOLLOW_KEY   // ITEM_ETC_ANCIENT_HOLLOW_KEY
 };
 
 void ItemEtcetera_SetupAction(ItemEtcetera* this, ItemEtceteraActionFunc actionFunc) {
@@ -107,6 +116,7 @@ void ItemEtcetera_Init(Actor* thisx, PlayState* play) {
     s32 pad;
     s32 type;
     s32 objectSlot;
+    u8 collect = (this->actor.params >> 8) & 0xFF;
 
     type = PARAMS_GET_U(this->actor.params, 0, 8);
     PRINTF("no = %d\n", type);
@@ -121,6 +131,7 @@ void ItemEtcetera_Init(Actor* thisx, PlayState* play) {
     this->getItemId = sGetItemIds[type];
     this->futureActionFunc = func_80B85824;
     this->drawFunc = ItemEtcetera_Draw;
+    this->playedSfx = false;
     Actor_SetScale(&this->actor, 0.25f);
     ItemEtcetera_SetupAction(this, ItemEtcetera_WaitForObject);
     switch (type) {
@@ -150,6 +161,19 @@ void ItemEtcetera_Init(Actor* thisx, PlayState* play) {
             break;
         case ITEM_ETC_SWORD_HEROS:
             if (HAS_HEROS_SWORD)
+                Actor_Kill(&this->actor);
+            break;
+        case ITEM_ETC_PICTOBOX:
+            if (Flags_GetSwitch(play, 0xB))
+                Actor_Kill(&this->actor);
+            else {
+                Actor_SetScale(&this->actor, 0.5f);
+                this->futureActionFunc = ItemEtcetera_PictoboxFunction;
+            }
+            break;
+        case ITEM_ETC_ANCIENT_HOLLOW_KEY:
+            this->futureActionFunc = ItemEtcetera_AncientHollowKeyFunction;
+            if (Flags_GetSwitch(play, 0xB))
                 Actor_Kill(&this->actor);
             break;
     }
@@ -192,6 +216,30 @@ void func_80B858B4(ItemEtcetera* this, PlayState* play) {
             EffectSsBubble_Spawn(play, &this->actor.world.pos, 0.0f, 0.0f, 10.0f, 0.13f);
         }
     }
+}
+
+void ItemEtcetera_PictoboxFunction(ItemEtcetera* this, PlayState* play) {
+    if (Actor_HasParent(&this->actor, play)) {
+        Flags_SetSwitch(play, 0xB);
+        Actor_Kill(&this->actor);
+    } else {
+        Actor_OfferGetItem(&this->actor, play, this->getItemId, 30.0f, 50.0f);
+        if ((play->gameplayFrames & 0xD) == 0)
+            EffectSsBubble_Spawn(play, &this->actor.world.pos, 0.0f, 0.0f, 10.0f, 0.13f);
+    }
+}
+
+void ItemEtcetera_AncientHollowKeyFunction(ItemEtcetera* this, PlayState* play) {
+    if (!this->playedSfx && this->actor.xzDistToPlayer < 300.0f && this->actor.yDistToPlayer > -15.0f) {
+        this->playedSfx = true;
+        Actor_PlaySfx(&this->actor, NA_SE_EV_FALLING_KEY);
+    }
+
+    if (Actor_HasParent(&this->actor, play)) {
+        Flags_SetSwitch(play, 0xB);
+        Actor_Kill(&this->actor);
+    }
+    else Actor_OfferGetItem(&this->actor, play, this->getItemId, 30.0f, 50.0f);
 }
 
 void ItemEtcetera_SpawnSparkles(ItemEtcetera* this, PlayState* play) {

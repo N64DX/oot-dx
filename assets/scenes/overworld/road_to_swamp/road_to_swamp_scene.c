@@ -12,7 +12,7 @@
 
 SceneCmd road_to_swamp[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(road_to_swamp_sceneAlternateHeaders),
-    SCENE_CMD_SOUND_SETTINGS(2, NATURE_ID_GENERAL_NIGHT, NA_BGM_MYSTERY_FOREST),
+    SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_GENERAL_NIGHT, NA_BGM_DEEP_WOODS),
     SCENE_CMD_ROOM_LIST(1, road_to_swamp_sceneRoomList0x0000C8),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, road_to_swamp_sceneTransitionActorList_0000B8),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),
@@ -864,7 +864,7 @@ CollisionHeader road_to_swamp_sceneCollisionHeader_0026F8 = {
 };
 
 SceneCmd road_to_swamp_sceneSet_timeskip[] = {
-    SCENE_CMD_SOUND_SETTINGS(2, NATURE_ID_GENERAL_NIGHT, NA_BGM_MYSTERY_FOREST),
+    SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_GENERAL_NIGHT, NA_BGM_DEEP_WOODS),
     SCENE_CMD_ROOM_LIST(1, road_to_swamp_sceneRoomList0x0000C8),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, road_to_swamp_sceneTransitionActorList_timeskip),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 0),

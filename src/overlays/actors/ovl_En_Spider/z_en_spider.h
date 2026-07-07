@@ -14,19 +14,14 @@ typedef struct EnSpider {
     Actor actor;
     EnSpiderActionFunc actionFunc;
     SkelAnime skelAnime;
-    f32 timer;
-    f32 AnimSelect;
     Vec3s jointTable[ARMATURE_NUM_LIMBS];
     Vec3s morphTable[ARMATURE_NUM_LIMBS];
-    u8 hurtboxCooldown;
     ColliderCylinder collider;
     ColliderJntSph colliderSpheres;
     ColliderJntSphElement colliderSpheresElements[2];
-    Vec3f ArmR, Chest, Head, LegL, LegR, HandR, HandL;
-    bool alarmstate;
-    bool cantSee;
-    bool canDodge;
-    f32 deathTimer;
+    Vec3f armR, chest, head, legL, legR;
+    u8 timer, deathTimer, hurtboxCooldown, type, switchFlag;
+    bool alarmstate, cantSee, canDodge, miniboss;
 } EnSpider;
 
 #endif

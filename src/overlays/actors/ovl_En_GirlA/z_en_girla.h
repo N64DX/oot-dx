@@ -87,21 +87,26 @@ typedef enum EnGirlAShopItem {
     /* 0x30 */ SI_RED_POTION_R40,
     /* 0x31 */ SI_RED_POTION_R50,
     /* 0x32 */ SI_HEROS_SHIELD,
-    /* 0x33 */ SI_WALLET_ADULT,
-    /* 0x34 */ SI_WALLET_GIANT,
-    /* 0x35 */ SI_WALLET_MASTER,
-    /* 0x36 */ SI_WALLET_ROYAL,
-    /* 0x37 */ SI_WALLET_TYCOON,
-    /* 0x38 */ SI_WALLET_BOTTOMLESS,
-    /* 0x39 */ SI_DEKU_SHIELD_REPAIR,
-    /* 0x3A */ SI_HYLIAN_SHIELD_REPAIR,
-    /* 0x3B */ SI_MIRROR_SHIELD_REPAIR,
-    /* 0x3C */ SI_HEROS_SHIELD_REPAIR,
-    /* 0x3D */ SI_DEKU_SHIELD_UPGRADE,
-    /* 0x3E */ SI_HYLIAN_SHIELD_UPGRADE,
-    /* 0x3F */ SI_MIRROR_SHIELD_UPGRADE,
-    /* 0x40 */ SI_HEROS_SHIELD_UPGRADE,
-    /* 0x41 */ SI_MAX
+    /* 0x33 */ SI_WOODEN_SHIELD,
+    /* 0x34 */ SI_METAL_SHIELD,
+    /* 0x35 */ SI_SHIELD_POTION,
+    /* 0x36 */ SI_WALLET_ADULT,
+    /* 0x37 */ SI_WALLET_GIANT,
+    /* 0x38 */ SI_WALLET_MASTER,
+    /* 0x39 */ SI_WALLET_ROYAL,
+    /* 0x3A */ SI_WALLET_TYCOON,
+    /* 0x3B */ SI_WALLET_BOTTOMLESS,
+    /* 0x3C */ SI_DEKU_SHIELD_REPAIR,
+    /* 0x3D */ SI_HYLIAN_SHIELD_REPAIR,
+    /* 0x3E */ SI_MIRROR_SHIELD_REPAIR,
+    /* 0x3F */ SI_HEROS_SHIELD_REPAIR,
+    /* 0x40 */ SI_WOODEN_SHIELD_REPAIR,
+    /* 0x41 */ SI_METAL_SHIELD_REPAIR,
+    /* 0x42 */ SI_DEKU_SHIELD_UPGRADE,
+    /* 0x43 */ SI_HYLIAN_SHIELD_UPGRADE,
+    /* 0x44 */ SI_MIRROR_SHIELD_UPGRADE,
+    /* 0x45 */ SI_HEROS_SHIELD_UPGRADE,
+    /* 0x46 */ SI_MAX
 } EnGirlAShopItem;
 
 typedef enum EnGirlACanBuyResult {
@@ -110,7 +115,8 @@ typedef enum EnGirlACanBuyResult {
     /* 2 */ CANBUY_RESULT_CANT_GET_NOW,
     /* 3 */ CANBUY_RESULT_NEED_BOTTLE,
     /* 4 */ CANBUY_RESULT_NEED_RUPEES,
-    /* 5 */ CANBUY_RESULT_CANT_GET_NOW_5
+    /* 5 */ CANBUY_RESULT_CANT_GET_NOW_5,
+    /* 6 */ CANBUY_RESULT_CANT_BREAK_SHIELD
 } EnGirlACanBuyResult;
 
 #endif

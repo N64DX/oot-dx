@@ -317,6 +317,12 @@ void EnBeast_Destroy(Actor* thisx, PlayState* play) {
         func_800F5B58();
 }
 
+void EnBeast_SetAlarmState(EnBeast* this) {
+    if (!this->alarmstate && this->miniboss)
+        func_800F5ACC(NA_BGM_MINI_BOSS2);
+    this->alarmstate = true;
+}
+
 void EnBeast_Update(Actor* thisx, PlayState* play) {
     EnBeast* this = (EnBeast*)thisx;
 
@@ -357,7 +363,7 @@ void EnBeast_Update(Actor* thisx, PlayState* play) {
     }
 
     if (player->meleeWeaponState != 0 && Actor_IsFacingPlayer(&this->actor, 0xA38) && this->actor.xzDistToPlayer < 200.0f && this->canDodge && this->hurtboxCooldown == 0 && this->actor.world.pos.y >= player->actor.world.pos.y - 10.0f) {
-        this->alarmstate = true;
+        EnBeast_SetAlarmState(this);
         this->canDodge = false;
         this->timer = 15;
         EnBeast_SetupMoveB(this, play);
@@ -399,7 +405,7 @@ void EnBeast_CheckDamage(EnBeast* this, PlayState* play) {
         if (!this->alarmstate) {
             this->timer = 29;
             this->cantSee = false;
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             EnBeast_SetupMoveF(this, play);
         }
 
@@ -475,35 +481,35 @@ void EnBeast_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* ro
     Collider_UpdateSpheres(limbIndex, &this->colliderSpheres);
 
     if (limbIndex == GBEASTSKEL_HAND_R_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->HandR);
+        Matrix_MultVec3f(&zeroVec, &this->handR);
     if (limbIndex == GBEASTSKEL_HAND_L_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->HandL);
+        Matrix_MultVec3f(&zeroVec, &this->handL);
     if (limbIndex == GBEASTSKEL_HEAD_LIMB)
-        Matrix_MultVec3f(&zeroVec, &this->Head);
+        Matrix_MultVec3f(&zeroVec, &this->head);
 
-    this->actor.focus.pos = this->Head;
+    this->actor.focus.pos = this->head;
     if ((((this->deathTimer > 1) && (this->deathTimer <= 3)) || ((this->deathTimer > 14) && (this->deathTimer <= 16)) || ((this->deathTimer > 28) && (this->deathTimer <= 32)))) {
         s32 i;
         Vec3f effPos;
 
         if (limbIndex == GBEASTSKEL_CHEST_LIMB)
-            Matrix_MultVec3f(&zeroVec, &this->Chest);
+            Matrix_MultVec3f(&zeroVec, &this->chest);
         if (limbIndex == GBEASTSKEL_ARM_R_LIMB)
-            Matrix_MultVec3f(&zeroVec, &this->ArmR);
+            Matrix_MultVec3f(&zeroVec, &this->armR);
         if (limbIndex == GBEASTSKEL_LEG_R_LIMB)
-            Matrix_MultVec3f(&zeroVec, &this->LegR);
+            Matrix_MultVec3f(&zeroVec, &this->legR);
         if (limbIndex == GBEASTSKEL_LEG_L_LIMB)
-            Matrix_MultVec3f(&zeroVec, &this->LegL);
+            Matrix_MultVec3f(&zeroVec, &this->legL);
         if (Rand_ZeroOne() > Rand_ZeroOne())
-            EffectSsDeadDb_Spawn(play, &this->Head, &zeroVec, &zeroVec, 5, 10, 208, 24, 22, 125, 0, 22, 0, 1, 9, true);
+            EffectSsDeadDb_Spawn(play, &this->head, &zeroVec, &zeroVec, 5, 10, 208, 24, 22, 125, 0, 22, 0, 1, 9, true);
         if (Rand_ZeroOne() > Rand_ZeroOne())
-            EffectSsDeadDb_Spawn(play, &this->Chest, &zeroVec, &zeroVec, 5, 10, 208, 24, 22, 125, 0, 22, 0, 1, 9, true);
+            EffectSsDeadDb_Spawn(play, &this->chest, &zeroVec, &zeroVec, 5, 10, 208, 24, 22, 125, 0, 22, 0, 1, 9, true);
         if (Rand_ZeroOne() > Rand_ZeroOne())
-            EffectSsDeadDb_Spawn(play, &this->LegR, &zeroVec, &zeroVec, 5, 10, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
+            EffectSsDeadDb_Spawn(play, &this->legR, &zeroVec, &zeroVec, 5, 10, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
         if (Rand_ZeroOne() > Rand_ZeroOne())
-            EffectSsDeadDb_Spawn(play, &this->ArmR, &zeroVec, &zeroVec, 5, 10, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
+            EffectSsDeadDb_Spawn(play, &this->armR, &zeroVec, &zeroVec, 5, 10, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
         if (Rand_ZeroOne() > Rand_ZeroOne())
-            EffectSsDeadDb_Spawn(play, &this->LegL, &zeroVec, &zeroVec, 5, 10, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
+            EffectSsDeadDb_Spawn(play, &this->legL, &zeroVec, &zeroVec, 5, 10, 208, 22, 22, 125, 0, 22, 0, 1, 9, true);
     }
 }
 
@@ -517,12 +523,12 @@ void EnBeast_ForwardBackCheck(EnBeast* this, PlayState* play) {
         this->actor.speed = 0.0f;
     } else if (this->alarmstate) {
         if ((this->actor.xzDistToPlayer < 70.0f)) {
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             this->timer = 15;
             this->canDodge = false;
             EnBeast_SetupMoveB(this, play);
         } else if ((this->actor.xzDistToPlayer < 300.0f) && (this->actor.xzDistToPlayer >= 140.0f)) {
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             this->actor.speed = 0.0f;
             if ((RandNum <= 0.74) && (this->actor.xzDistToPlayer < 200.0f)) {
                 this->timer = 46;
@@ -532,7 +538,7 @@ void EnBeast_ForwardBackCheck(EnBeast* this, PlayState* play) {
                 EnBeast_SetupMoveF(this, play);
             }
         } else if ((this->actor.xzDistToPlayer < 140.0f) && (this->actor.xzDistToPlayer >= 70.0f)) {
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             this->actor.speed = 0.0f;
             this->timer = 35;
             if ((RandNum <= 0.74) && (relYawTowardsPlayer < 0x1500) && (GET_PLAYER(play)->invincibilityTimer == 0))
@@ -543,7 +549,7 @@ void EnBeast_ForwardBackCheck(EnBeast* this, PlayState* play) {
             }
             else EnBeast_SetupAttackB(this, play);
         } else if ((this->actor.xzDistToPlayer >= 300.0f) && (this->actor.xzDistToPlayer < 1200.0f)) {
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             this->timer = 21;
             EnBeast_SetupMoveF(this, play);
         } else {
@@ -565,14 +571,11 @@ void EnBeast_Idle(EnBeast* this, PlayState* play) {
 
     if (this->timer > 0) {
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
-            if (!this->alarmstate && this->miniboss)
-                func_800F5ACC(NA_BGM_MINI_BOSS2);
-
             this->timer = 0;
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             EnBeast_ForwardBackCheck(this, play);
         }
-        this->timer -= 1;
+        this->timer--;
     }
 
     if (this->timer <= 0) {
@@ -599,7 +602,7 @@ void EnBeast_Waittojump(EnBeast* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
     if (this->inrange == 3) {
-        this->alarmstate = true;
+        EnBeast_SetAlarmState(this);
         EnBeast_SetupAttackA2(this, play);
     }
 }
@@ -614,14 +617,11 @@ void EnBeast_IdleP(EnBeast* this, PlayState* play) {
 
     if (this->timer > 0) {
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
-            if (!this->alarmstate && this->miniboss)
-                func_800F5ACC(NA_BGM_MINI_BOSS2);
-
             this->timer = 0;
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             EnBeast_ForwardBackCheck(this, play);
         }
-        this->timer -= 1;
+        this->timer--;
     }
 
     if (this->timer <= 0) {
@@ -641,10 +641,10 @@ void EnBeast_Idle2(EnBeast* this, PlayState* play) {
     if (this->timer > 0) {
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
             this->timer = 0;
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             EnBeast_ForwardBackCheck(this, play);
         }
-        this->timer -= 1;
+        this->timer--;
     }
 
     if (this->timer <= 0) {
@@ -671,7 +671,7 @@ void EnBeast_MoveF(EnBeast* this, PlayState* play) {
             Actor_SpawnFloorDustRing(play, &this->actor, &this->actor.world.pos, 10.0f, 6, 20.0f, 200, 100, false);
         }
 
-        this->timer -= 1;
+        this->timer--;
     } else EnBeast_ForwardBackCheck(this, play);
 }
 
@@ -688,7 +688,7 @@ void EnBeast_MoveFP(EnBeast* this, PlayState* play) {
 
     if ((this->timer > 0) && (this->actor.xzDistToPlayer >= 90.0f)) {
         this->actor.speed = 8.0f;
-        this->timer -= 1;
+        this->timer--;
 
         if (this->skelAnime.curFrame == 2.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_WOLFOS_WALK);
@@ -697,7 +697,7 @@ void EnBeast_MoveFP(EnBeast* this, PlayState* play) {
 
         if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
             this->timer = 0;
-            this->alarmstate = true;
+            EnBeast_SetAlarmState(this);
             EnBeast_ForwardBackCheck(this, play);
         }
     } else {
@@ -735,7 +735,7 @@ void EnBeast_MoveB(EnBeast* this, PlayState* play) {
             this->actor.speed = -13.0f;
         else {
             if ((this->actor.xzDistToPlayer < 140.0f) && (this->actor.xzDistToPlayer >= 70.0f)) {
-                this->alarmstate = true;
+                EnBeast_SetAlarmState(this);
                 this->actor.speed = 0.0f;
                 this->timer = 35;
                 EnBeast_SetupAttackB(this, play);
@@ -743,7 +743,7 @@ void EnBeast_MoveB(EnBeast* this, PlayState* play) {
             this->actor.speed = 0.0f;
         }
 
-        this->timer -= 1;
+        this->timer--;
     } else {
         this->canDodge = true;
         EnBeast_ForwardBackCheck(this, play);
@@ -788,7 +788,7 @@ void EnBeast_AttackA(EnBeast* this, PlayState* play) {
             this->actor.speed = 12.0f;
         else this->actor.speed = 0.0f;
 
-        this->timer -= 1;
+        this->timer--;
     } else EnBeast_ForwardBackCheck(this, play);
 }
 
@@ -826,7 +826,7 @@ void EnBeast_AttackA2(EnBeast* this, PlayState* play) {
             this->actor.speed = 12.0f;
         else this->actor.speed = 0.0f;
 
-        this->timer -= 1;
+        this->timer--;
     } else EnBeast_ForwardBackCheck(this, play);
 }
 
@@ -851,7 +851,7 @@ void EnBeast_AttackB(EnBeast* this, PlayState* play) {
 
     if (this->timer > 0) {
         this->actor.speed = 0.0f;
-        this->timer -= 1;
+        this->timer--;
     } else EnBeast_ForwardBackCheck(this, play);
 }
 
@@ -883,7 +883,7 @@ void EnBeast_AttackC(EnBeast* this, PlayState* play) {
             this->actor.speed = 3.0f;
         else this->actor.speed = 0.0f;
 
-        this->timer -= 1;
+        this->timer--;
     } else EnBeast_ForwardBackCheck(this, play);
 }
 
@@ -919,7 +919,7 @@ void EnBeast_AttackDa(EnBeast* this, PlayState* play) {
             EnBeast_SetupAttackDb(this, play);
             player->invincibilityTimer = 0;
         }
-        this->timer -= 1;
+        this->timer--;
     } else {
         this->timer = 27;
         EnBeast_SetupAttackDc(this, play);
@@ -944,7 +944,7 @@ void EnBeast_AttackDb(EnBeast* this, PlayState* play) {
     pos.x = player->actor.world.pos.x;
     pos.y = player->actor.world.pos.y + 65.0f;
     pos.z = player->actor.world.pos.z;
-    result = vector_between(this->HandR, this->HandL);
+    result = vector_between(this->handR, this->handL);
     SkelAnime_Update(&this->skelAnime);
 
     if ((this->skelAnime.curFrame == 15) || (this->skelAnime.curFrame == 27)) {
@@ -955,7 +955,7 @@ void EnBeast_AttackDb(EnBeast* this, PlayState* play) {
 
     if (this->timer > 0) {
         this->actor.speed = 0.0f;
-        this->timer -= 1;
+        this->timer--;
 
         Math_ApproachF(&player->actor.world.pos.x, result.x, 1.0f, 30.0f);
         Math_ApproachF(&player->actor.world.pos.z, result.z, 1.0f, 30.0f);
@@ -982,7 +982,7 @@ void EnBeast_AttackDc(EnBeast* this, PlayState* play) {
 
     if (this->timer > 0) {
         this->actor.speed = 0.0f;
-        this->timer -= 1;
+        this->timer--;
     } else {
         EnBeast_ForwardBackCheck(this, play);
         this->canDodge = true;

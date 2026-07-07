@@ -883,7 +883,7 @@ void EnThefather_Idle(EnThefather* this, PlayState* play) {
             this->alarmstate = true;
             EnThefather_ForwardBackCheck(this, play);
         }
-        this->timer -= 1;
+        this->timer--;
     }
     if (this->timer <= 0) {
         this->timer = 39;
@@ -900,7 +900,7 @@ void EnThefather_Hurt(EnThefather* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
     if (this->timer > 0) {
-        this->timer -= 1;
+        this->timer--;
         this->actor.speed = 0;
     }
     if (this->timer <= 0)
@@ -919,7 +919,7 @@ void EnThefather_MoveF(EnThefather* this, PlayState* play) {
 
     if (this->timer > 0 && this->actor.xzDistToPlayer >= 80.0f) {
         this->actor.speed = 3.0f;
-        this->timer -= 1;
+        this->timer--;
 
         if (this->skelAnime.curFrame == 14.0f) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_WALK);
@@ -979,7 +979,7 @@ void EnThefather_AttackA(EnThefather* this, PlayState* play) {
 
     if (this->timer > 0) {
         this->actor.speed = 0.0f;
-        this->timer -= 1;
+        this->timer--;
     } else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1033,7 +1033,7 @@ void EnThefather_AttackB(EnThefather* this, PlayState* play) {
     }
 
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1067,7 +1067,7 @@ void EnThefather_AttackC(EnThefather* this, PlayState* play) {
     }
 
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1101,7 +1101,7 @@ void EnThefather_AttackD(EnThefather* this, PlayState* play) {
     }
 
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1135,7 +1135,7 @@ void EnThefather_AttackE(EnThefather* this, PlayState* play) {
     }
 
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1178,7 +1178,7 @@ void EnThefather_AttackF(EnThefather* this, PlayState* play) {
     }
 
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1218,7 +1218,7 @@ void EnThefather_AttackG(EnThefather* this, PlayState* play) {
 
     if (this->timer > 0) {
         this->actor.speed = 0;
-        this->timer -= 1;
+        this->timer--;
     } else EnThefather_ForwardBackCheck(this, play);
 }
 void EnThefather_SetupAttackH(EnThefather* this, PlayState* play) {
@@ -1250,7 +1250,7 @@ void EnThefather_AttackH(EnThefather* this, PlayState* play) {
 
     if (this->timer > 0) {
         this->actor.speed = 0;
-        this->timer -= 1;
+        this->timer--;
     } else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1305,7 +1305,7 @@ void EnThefather_AttackJ(EnThefather* this, PlayState* play) {
     }
     
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1366,7 +1366,7 @@ void EnThefather_AttackI(EnThefather* this, PlayState* play) {
     }
 
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1432,7 +1432,7 @@ void EnThefather_AttackK(EnThefather* this, PlayState* play) {
     }
 
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1496,7 +1496,7 @@ void EnThefather_AttackL(EnThefather* this, PlayState* play) {
     }
 
     if (this->timer > 0)
-        this->timer -= 1;
+        this->timer--;
     else EnThefather_ForwardBackCheck(this, play);
 }
 
@@ -1525,7 +1525,7 @@ void EnThefather_AttackMa(EnThefather* this, PlayState* play) {
             EnThefather_SetupAttackMb(this, play);
             GET_PLAYER(play)->invincibilityTimer = 0;
         }
-        this->timer -= 1;
+        this->timer--;
     } else {
         this->timer = 35;
         EnThefather_SetupAttackMc(this, play);
@@ -1563,7 +1563,7 @@ void EnThefather_AttackMb(EnThefather* this, PlayState* play) {
 
     if (this->timer > 0) {
         this->actor.speed = 0.0f;
-        this->timer -= 1;
+        this->timer--;
         if (this->skelAnime.curFrame < 40) {
             player->actor.world.pos.x = this->handL.x;
             player->actor.world.pos.z = this->handL.z;
@@ -1591,7 +1591,7 @@ void EnThefather_AttackMc(EnThefather* this, PlayState* play) {
 
     if (this->timer > 0) {
         this->actor.speed = 0.0f;
-        this->timer -= 1;
+        this->timer--;
 
     } else EnThefather_ForwardBackCheck(this, play);
 }

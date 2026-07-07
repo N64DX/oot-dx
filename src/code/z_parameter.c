@@ -154,7 +154,6 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_INSIDE_GANONS_CASTLE_COLLAPSE, 0x00, 0x05, 0x50 },
     { SCENE_THIEVES_HIDEOUT, 0x00, 0x00, 0x00 },
     { SCENE_GROTTOS, 0x00, 0x00, 0xD0 },
-    { SCENE_GROTTOS2, 0x00, 0x00, 0xD0 },
     { SCENE_PATH_TO_WOODFALL, 0x00, 0x00, 0x00 },
     { SCENE_PATH_TO_FORTRESS, 0x00, 0x00, 0x00 },
     { SCENE_PATH_TO_LAKE_HYLIA, 0x00, 0x00, 0x00 },
@@ -163,13 +162,20 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_PATH_TO_GORON_VILLAGE, 0x00, 0x00, 0x00 },
     { SCENE_GORON_VILLAGE, 0x00, 0x00, 0x00 },
     { SCENE_GORON_SHRINE, 0x00, 0x00, 0x00 },
+    { SCENE_RIVERSIDE_VILLAGE, 0x00, 0x00, 0x00 },
+    { SCENE_ANCIENT_GROVE, 0x00, 0x00, 0x1C },
     { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
+    { SCENE_GROTTOS2, 0x00, 0x00, 0xD0 },
     { SCENE_WEBBED_SHRINE, 0x00, 0x00, 0x00 },
-    { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x00 },
+    { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x1C },
     { SCENE_GORON_MINES, 0x00, 0x00, 0x00 },
     { SCENE_WOODFALL_TEMPLE, 0x00, 0x00, 0x1C },
     { SCENE_WOODFALL_TEMPLE_BOSS, 0x00, 0x00, 0x1C },
-    { SCENE_SPRING_LAKE_SMITHY, 0x10, 0x10, 0x15 },
+    { SCENE_SPRING_LAKE_SMITHY, 0x10, 0x10, 0x55 },
+    { SCENE_RIVERSIDE_HOUSE, 0x10, 0x10, 0x55 },
+    { SCENE_IGORS_HOUSE, 0x10, 0x10, 0x55 },
+    { SCENE_RIVERSIDE_INN, 0x10, 0x10, 0x55 },
+    { SCENE_ANCIENT_GROVE_SHOP, 0x10, 0x10, 0x55 },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
 
@@ -549,6 +555,8 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 case SCENE_PATH_TO_GORON_VILLAGE:
                 case SCENE_GORON_VILLAGE:
                 case SCENE_GORON_SHRINE:
+                case SCENE_RIVERSIDE_VILLAGE:
+                case SCENE_ANCIENT_GROVE:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {
@@ -1073,8 +1081,9 @@ void func_80083108(PlayState* play) {
 
                 if (interfaceCtx->restrictions.bottles != 0) {
                     for (i = 1; i < 4; i++) {
-                        if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
-                            (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) {
+                        if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY &&
+                             gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE) ||
+                            (gSaveContext.save.info.equips.buttonItems[i] == ITEM_BOTTLE_POTION_SHIELD)) {
                             if (gSaveContext.buttonStatus[i] == BTN_ENABLED) {
                                 sp28 = true;
                             }
@@ -1083,15 +1092,16 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if (Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) {
+                        if ((Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) || Interface_GetItemFromDpad(i) == ITEM_BOTTLE_POTION_SHIELD) {
                             if (dpadStatus[i] == BTN_ENABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_DISABLED;
                         }
                 } else if (interfaceCtx->restrictions.bottles == 0) {
                     for (i = 1; i < 4; i++) {
-                        if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY) &&
-                            (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) {
+                        if ((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_BOTTLE_EMPTY &&
+                             gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE) ||
+                            (gSaveContext.save.info.equips.buttonItems[i] == ITEM_BOTTLE_POTION_SHIELD)) {
                             if (gSaveContext.buttonStatus[i] == BTN_DISABLED) {
                                 sp28 = true;
                             }
@@ -1100,7 +1110,7 @@ void func_80083108(PlayState* play) {
                         }
                     }
                     for (i=0; i<4; i++)
-                        if (Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) {
+                        if ((Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) || Interface_GetItemFromDpad(i) == ITEM_BOTTLE_POTION_SHIELD) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_ENABLED;
@@ -1359,6 +1369,7 @@ void func_80083108(PlayState* play) {
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
                              !(gSaveContext.save.info.equips.buttonItems[i] >= ITEM_PICTOBOX && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_SHRINE_KEY) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] != ITEM_BOTTLE_POTION_SHIELD) &&
                             !(Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i]))) {
                             if ((play->sceneId != SCENE_TREASURE_BOX_SHOP) ||
                                 (gSaveContext.save.info.equips.buttonItems[i] != ITEM_LENS_OF_TRUTH)) {
@@ -1378,7 +1389,7 @@ void func_80083108(PlayState* play) {
                     }
                     for (i=0; i<4; i++)
                         if (Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) && !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG &&
-                            Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)  && !(Interface_GetItemFromDpad(i) >= ITEM_PICTOBOX && Interface_GetItemFromDpad(i) <= ITEM_SHRINE_KEY) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i))) {
+                            Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)  && !(Interface_GetItemFromDpad(i) >= ITEM_PICTOBOX && Interface_GetItemFromDpad(i) <= ITEM_SHRINE_KEY) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i)) && Interface_GetItemFromDpad(i) != ITEM_BOTTLE_POTION_SHIELD) {
                             if (play->sceneId != SCENE_TREASURE_BOX_SHOP || Interface_GetItemFromDpad(i) != ITEM_LENS_OF_TRUTH) {
                                 if (dpadStatus[i] == BTN_ENABLED)
                                     sp28 = true;
@@ -1407,7 +1418,8 @@ void func_80083108(PlayState* play) {
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_PICTOBOX) &&
-                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_SHRINE_KEY))) {
+                              (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_SHRINE_KEY)) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] != ITEM_BOTTLE_POTION_SHIELD)) {
                             if (gSaveContext.buttonStatus[i] == BTN_DISABLED) {
                                 sp28 = true;
                             }
@@ -1419,7 +1431,8 @@ void func_80083108(PlayState* play) {
                         if (Interface_GetItemFromDpad(i) != ITEM_DINS_FIRE     && Interface_GetItemFromDpad(i) != ITEM_HOOKSHOT        &&   Interface_GetItemFromDpad(i) != ITEM_LONGSHOT     && Interface_GetItemFromDpad(i) != ITEM_FARORES_WIND && Interface_GetItemFromDpad(i) != ITEM_NAYRUS_LOVE &&
                             Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE)  &&
                           !(Interface_GetItemFromDpad(i) >= ITEM_BOW_FIRE      && Interface_GetItemFromDpad(i) <= ITEM_BOW_LIGHT)      &&
-                          !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)    && !(Interface_GetItemFromDpad(i) >= ITEM_PICTOBOX     && Interface_GetItemFromDpad(i) <= ITEM_SHRINE_KEY)) {
+                          !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG     && Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)    && !(Interface_GetItemFromDpad(i) >= ITEM_PICTOBOX     && Interface_GetItemFromDpad(i) <= ITEM_SHRINE_KEY)  &&
+                            Interface_GetItemFromDpad(i) != ITEM_BOTTLE_POTION_SHIELD) {
                             if (dpadStatus[i] == BTN_DISABLED)
                                 sp28 = true;
                             dpadStatus[i] = BTN_ENABLED;
@@ -1787,33 +1800,35 @@ typedef struct ChildQuestIcons {
     u8 icon;
 } ChildQuestIcons;
 
-static bool IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                               }
-static bool IsHerosShield(void)   { return IS_HEROS_SHIELD;                                                       }
-static bool IsHerosSword(void)    { return IS_HEROS_SWORD;                                                        }
-static bool IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                            }
-static bool IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
-static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
+static bool IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                                       }
+static bool IsWoodenShield(void)  { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.obtainedSkins.woodenShield; }
+static bool IsHerosShield(void)   { return IS_HEROS_SHIELD         && !gSaveContext.save.info.obtainedSkins.metalShield;  }
+static bool IsMetalShield(void)   { return IS_HEROS_SHIELD         &&  gSaveContext.save.info.obtainedSkins.metalShield;  }
+static bool IsHerosSword(void)    { return IS_HEROS_SWORD;                                                                }
+static bool IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                                    }
+static bool IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag;         }
+static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag;         }
 
-#define LAST_ITEM_ICON ITEM_PERFECT_BLOCK_UPGRADE
 static ChildQuestIcons sChildQuestIcons[] = {
-    { ITEM_SHIELD_HYLIAN,             IsHerosShield, ITEM_SHIELD_HEROS   },
-    { ITEM_SWORD_KOKIRI ,             IsHerosSword,  ITEM_SWORD_HEROS    },
-    { ITEM_SHIELD_MIRROR,             IsChildQuest,  LAST_ITEM_ICON + 1  },
-    { ITEM_SWORD_MASTER,              IsRazorSword,  LAST_ITEM_ICON + 2  },
-    { ITEM_SWORD_BIGGORON,            IsSilverSword, LAST_ITEM_ICON + 3  },
-    { ITEM_SWORD_BIGGORON,            IsGildedSword, LAST_ITEM_ICON + 4  },
-    { ITEM_HOOKSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 5  },
-    { ITEM_LONGSHOT,                  IsChildQuest,  LAST_ITEM_ICON + 6  },
-    { ITEM_BOW,                       IsChildQuest,  LAST_ITEM_ICON + 7  },
-    { ITEM_BOW_FIRE,                  IsChildQuest,  LAST_ITEM_ICON + 8  },
-    { ITEM_BOW_ICE,                   IsChildQuest,  LAST_ITEM_ICON + 9  },
-    { ITEM_BOW_LIGHT,                 IsChildQuest,  LAST_ITEM_ICON + 10 },
-    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,  LAST_ITEM_ICON + 11 },
-    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,  LAST_ITEM_ICON + 12 },
-    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,  LAST_ITEM_ICON + 13 },
-    { ITEM_STONE_OF_AGONY,            NULL,          LAST_ITEM_ICON + 14 },
+    { ITEM_SHIELD_DEKU,               IsWoodenShield, ITEM_SHIELD_WOODEN  },
+    { ITEM_SHIELD_HYLIAN,             IsHerosShield,  ITEM_SHIELD_HEROS   },
+    { ITEM_SHIELD_HEROS,              IsMetalShield,  ITEM_SHIELD_METAL   },
+    { ITEM_SWORD_KOKIRI ,             IsHerosSword,   ITEM_SWORD_HEROS    },
+    { ITEM_SHIELD_MIRROR,             IsChildQuest,   LAST_ITEM_ICON + 1  },
+    { ITEM_SWORD_MASTER,              IsRazorSword,   LAST_ITEM_ICON + 2  },
+    { ITEM_SWORD_BIGGORON,            IsSilverSword,  LAST_ITEM_ICON + 3  },
+    { ITEM_SWORD_BIGGORON,            IsGildedSword,  LAST_ITEM_ICON + 4  },
+    { ITEM_HOOKSHOT,                  IsChildQuest,   LAST_ITEM_ICON + 5  },
+    { ITEM_LONGSHOT,                  IsChildQuest,   LAST_ITEM_ICON + 6  },
+    { ITEM_BOW,                       IsChildQuest,   LAST_ITEM_ICON + 7  },
+    { ITEM_BOW_FIRE,                  IsChildQuest,   LAST_ITEM_ICON + 8  },
+    { ITEM_BOW_ICE,                   IsChildQuest,   LAST_ITEM_ICON + 9  },
+    { ITEM_BOW_LIGHT,                 IsChildQuest,   LAST_ITEM_ICON + 10 },
+    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,   LAST_ITEM_ICON + 11 },
+    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,   LAST_ITEM_ICON + 12 },
+    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,   LAST_ITEM_ICON + 13 },
+    { ITEM_STONE_OF_AGONY,            NULL,           LAST_ITEM_ICON + 14 },
 };
-#undef LAST_ITEM_ICON
 
 u8 Interface_LoadItemIconChildQuest(u8 item) {
     u8 i;
@@ -2004,12 +2019,22 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
+        if (item == ITEM_SHIELD_DEKU)
+            gSaveContext.save.info.obtainedSkins.woodenShield = 0;
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
-    } else if (item == ITEM_SHIELD_HEROS) {
+    } else if (item == ITEM_SHIELD_WOODEN) {
+        gSaveContext.save.info.obtainedSkins.woodenShield = 1;
+        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 0);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_SHIELDS)
+                Interface_LoadItemIcon1(play, i+4);
+        return ITEM_NONE;
+    } else if (item == ITEM_SHIELD_HEROS || item == ITEM_SHIELD_METAL) {
+        gSaveContext.save.info.obtainedSkins.metalShield = item == ITEM_SHIELD_METAL ? 1 : 0;
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
         SET_HEROS_SHIELD;
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
@@ -2042,11 +2067,12 @@ u8 Item_Give(PlayState* play, u8 item) {
         gSaveContext.save.info.inventory.dungeonItems[gSaveContext.mapIndex] |= gBitFlags[item - ITEM_DUNGEON_BOSS_KEY];
         return ITEM_NONE;
     } else if (item == ITEM_SMALL_KEY) {
-        if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] < 0) {
-            gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] = 1;
+        u8 mapIndex = play->sceneId == SCENE_RIVERSIDE_INN ? SCENE_DEKU_TREE_BOSS : gSaveContext.mapIndex;
+        if (gSaveContext.save.info.inventory.dungeonKeys[mapIndex] < 0) {
+            gSaveContext.save.info.inventory.dungeonKeys[mapIndex] = 1;
             return ITEM_NONE;
         } else {
-            gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex]++;
+            gSaveContext.save.info.inventory.dungeonKeys[mapIndex]++;
             return ITEM_NONE;
         }
     } else if ((item == ITEM_QUIVER_30) || (item == ITEM_BOW)) {
@@ -2069,6 +2095,10 @@ u8 Item_Give(PlayState* play, u8 item) {
         Inventory_ChangeUpgrade(UPG_QUIVER, 3);
         AMMO(ITEM_BOW) = CAPACITY(UPG_QUIVER, 3);
         return ITEM_NONE;
+    } else if (item == ITEM_QUIVER_60) {
+        Inventory_ChangeUpgrade(UPG_QUIVER, 4);
+        AMMO(ITEM_BOW) = CAPACITY(UPG_QUIVER, 4);
+        return ITEM_NONE;
     } else if (item == ITEM_BULLET_BAG_40) {
         Inventory_ChangeUpgrade(UPG_BULLET_BAG, 2);
         AMMO(ITEM_SLINGSHOT) = CAPACITY(UPG_BULLET_BAG, 2);
@@ -2076,6 +2106,10 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_BULLET_BAG_50) {
         Inventory_ChangeUpgrade(UPG_BULLET_BAG, 3);
         AMMO(ITEM_SLINGSHOT) = CAPACITY(UPG_BULLET_BAG, 3);
+        return ITEM_NONE;
+    } else if (item == ITEM_BULLET_BAG_60) {
+        Inventory_ChangeUpgrade(UPG_BULLET_BAG, 4);
+        AMMO(ITEM_SLINGSHOT) = CAPACITY(UPG_BULLET_BAG, 4);
         return ITEM_NONE;
     } else if (item == ITEM_BOMB_BAG_20) {
         if (CUR_UPG_VALUE(UPG_BOMB_BAG) == 0) {
@@ -2435,7 +2469,7 @@ u8 Item_Give(PlayState* play, u8 item) {
                 return ITEM_NONE;
             }
         }
-    } else if (((item >= ITEM_BOTTLE_POTION_RED) && (item <= ITEM_BOTTLE_POE)) || (item == ITEM_MILK)) {
+    } else if (((item >= ITEM_BOTTLE_POTION_RED) && (item <= ITEM_BOTTLE_POE)) || (item == ITEM_MILK) || (item == ITEM_BOTTLE_POTION_SHIELD)) {
         temp = SLOT(item);
 
         if ((item != ITEM_BOTTLE_MILK_FULL) && (item != ITEM_BOTTLE_RUTOS_LETTER)) {
@@ -2507,6 +2541,9 @@ u8 Item_Give(PlayState* play, u8 item) {
             }
         }
 
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_TRADE_CHILD)
+                Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     }
 
@@ -2516,8 +2553,7 @@ u8 Item_Give(PlayState* play, u8 item) {
 
     for (i=0; i<4; i++)
         if (Interface_GetItemFromDpad(i) == item)
-                Interface_LoadItemIcon1(play, i+4);
-
+            Interface_LoadItemIcon1(play, i+4);
     return temp;
 }
 
@@ -2547,15 +2583,23 @@ u8 Item_CheckObtainability(u8 item) {
             return ITEM_NONE;
         }
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
-        if (gSaveContext.save.info.shields[item - ITEM_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(item - ITEM_SHIELD_DEKU + 1))
+        if (gSaveContext.save.info.shields[item - ITEM_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(item - ITEM_SHIELD_DEKU + 1)) {
             return ITEM_NONE;
-        if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU + EQUIP_INV_SHIELD_DEKU)) {
+        } else if (item == ITEM_SHIELD_DEKU && gSaveContext.save.info.obtainedSkins.woodenShield) {
+            return ITEM_NONE;
+        } else if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU + EQUIP_INV_SHIELD_DEKU)) {
             return item;
         } else {
             return ITEM_NONE;
         }
-    } else if (item == ITEM_SHIELD_HEROS) {
+    } else if (item == ITEM_SHIELD_WOODEN) {
+        if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU) || !gSaveContext.save.info.obtainedSkins.woodenShield)
+            return ITEM_NONE;
+        return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) ? item : ITEM_NONE;
+    } else if (item == ITEM_SHIELD_HEROS || item == ITEM_SHIELD_METAL) {
         if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS))
+            return ITEM_NONE;
+        else if ((item == ITEM_SHIELD_HEROS && gSaveContext.save.info.obtainedSkins.metalShield) || (item == ITEM_SHIELD_METAL && !gSaveContext.save.info.obtainedSkins.metalShield))
             return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
@@ -2586,9 +2630,9 @@ u8 Item_CheckObtainability(u8 item) {
         } else {
             return 0;
         }
-    } else if ((item == ITEM_QUIVER_40) || (item == ITEM_QUIVER_50)) {
+    } else if ((item == ITEM_QUIVER_40) || (item == ITEM_QUIVER_50) || (item == ITEM_QUIVER_60)) {
         return ITEM_NONE;
-    } else if ((item == ITEM_BULLET_BAG_40) || (item == ITEM_BULLET_BAG_50)) {
+    } else if ((item == ITEM_BULLET_BAG_40) || (item == ITEM_BULLET_BAG_50) || (item == ITEM_BULLET_BAG_60)) {
         return ITEM_NONE;
     } else if ((item == ITEM_BOMB_BAG_20) || (item == ITEM_BOMB)) {
         if (CUR_UPG_VALUE(UPG_BOMB_BAG) == 0) {
@@ -2598,7 +2642,9 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_DEKU_STICK_UPGRADE_20) && (item <= ITEM_DEKU_NUT_UPGRADE_40)) {
         return ITEM_NONE;
-    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_GIANTS_WALLET) || (item >= ITEM_MASTER_WALLET && item <= ITEM_BOTTOMLESS_WALLET)) {
+    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_BOMB_BAG_40) || (item >= ITEM_STRENGTH_GORONS_BRACELET && item <= ITEM_STRENGTH_GOLD_GAUNTLETS) || (item >= ITEM_SCALE_SILVER && item <= ITEM_SCALE_GOLDEN) || (item >= ITEM_ADULTS_WALLET && item <= ITEM_GIANTS_WALLET)) {
+        return ITEM_NONE;
+    } else if (item >= ITEM_MASTER_WALLET && item <= ITEM_BOTTOMLESS_WALLET) {
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         return ITEM_NONE;
@@ -2628,7 +2674,7 @@ u8 Item_CheckObtainability(u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_BOTTLE_EMPTY) {
         return ITEM_NONE;
-    } else if (((item >= ITEM_BOTTLE_POTION_RED) && (item <= ITEM_BOTTLE_POE)) || (item == ITEM_MILK)) {
+    } else if (((item >= ITEM_BOTTLE_POTION_RED) && (item <= ITEM_BOTTLE_POE)) || (item == ITEM_MILK) || (item == ITEM_BOTTLE_POTION_SHIELD)) {
         temp = SLOT(item);
 
         if ((item != ITEM_BOTTLE_MILK_FULL) && (item != ITEM_BOTTLE_RUTOS_LETTER)) {
@@ -2654,6 +2700,16 @@ u8 Item_CheckObtainability(u8 item) {
     } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_SHRINE_KEY) || (item >= ITEM_BOOTS_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK_UPGRADE) ) {
         return ITEM_NONE;
     }
+
+    if (IS_CHILD_QUEST)
+        switch (item) {
+            case ITEM_ARROW_FIRE:
+                return gSaveContext.save.info.obtainedItems.fireArrow  ? ITEM_ARROW_FIRE  : ITEM_NONE;
+            case ITEM_ARROW_ICE:
+                return gSaveContext.save.info.obtainedItems.iceArrow   ? ITEM_ARROW_ICE   : ITEM_NONE;
+            case ITEM_ARROW_LIGHT:
+                return gSaveContext.save.info.obtainedItems.lightArrow ? ITEM_ARROW_LIGHT : ITEM_NONE;
+        }
 
     return gSaveContext.save.info.inventory.items[slot];
 }

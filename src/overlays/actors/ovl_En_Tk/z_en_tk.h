@@ -22,6 +22,11 @@ struct EnTk;
 
 typedef void (*EnTkActionFunc)(struct EnTk*, struct PlayState*);
 
+typedef enum DampeType {
+    /* 0 */ GRAVEDIGGER_DAMPE,
+    /* 1 */ GRAVEDIGGER_IGOR
+} DampeType;
+
 typedef struct EnTk {
     /* 0x0000 */ Actor      actor;
     /* 0x014C */ SkelAnime  skelAnime;

@@ -197,8 +197,19 @@ static u8 sMaxUpgradeValues[] = {
     /* UPG_BOMB_BAG    */ 3,
     /* UPG_STRENGTH    */ 3,
     /* UPG_SCALE       */ 2,
-    /* UPG_WALLET      */ 6,
+    /* UPG_WALLET      */ 2,
     /* UPG_BULLET_BAG  */ 3,
+    /* UPG_DEKU_STICKS */ 3,
+    /* UPG_DEKU_NUTS   */ 3,
+};
+
+static u8 sMaxUpgradeCQValues[] = {
+    /* UPG_QUIVER      */ 4,
+    /* UPG_BOMB_BAG    */ 3,
+    /* UPG_STRENGTH    */ 3,
+    /* UPG_SCALE       */ 2,
+    /* UPG_WALLET      */ 6,
+    /* UPG_BULLET_BAG  */ 4,
     /* UPG_DEKU_STICKS */ 3,
     /* UPG_DEKU_NUTS   */ 3,
 };
@@ -871,7 +882,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                             }
                         } else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN) ||
                                    CHECK_BTN_ALL(input->press.button, BTN_CRIGHT)) {
-                            if (i == 4) {
+                            if (i == 4 && CUR_UPG_VALUE(i) < (IS_CHILD_QUEST ? sMaxUpgradeCQValues[i] : sMaxUpgradeValues[i])) {
                                 switch (CUR_UPG_VALUE(UPG_WALLET) + CUR_UPG_VALUE(UPG_WALLET2)) {
                                     case 0:
                                         Inventory_ChangeUpgrade(UPG_WALLET, 1);
@@ -898,7 +909,7 @@ void KaleidoScope_DrawInventoryEditor(PlayState* play) {
                                         Inventory_ChangeUpgrade(UPG_WALLET2, 3);
                                         break;
                                 }
-                            } else if (CUR_UPG_VALUE(i) < sMaxUpgradeValues[i]) {
+                            } else if (CUR_UPG_VALUE(i) < (IS_CHILD_QUEST ? sMaxUpgradeCQValues[i] : sMaxUpgradeValues[i])) {
                                 Inventory_ChangeUpgrade(i, CUR_UPG_VALUE(i) + 1);
                             }
                         }

@@ -12,7 +12,7 @@
 
 SceneCmd old_dodongos_cavern_scene[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(old_dodongos_cavern_sceneAlternateHeaders),
-    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_DUNGEON_CAVE),
+    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_RED_ICE_CAVERN),
     SCENE_CMD_ROOM_LIST(10, old_dodongos_cavern_sceneRoomList0x000148),
     SCENE_CMD_TRANSITION_ACTOR_LIST(14, old_dodongos_cavern_sceneTransitionActorList0x000078),
     SCENE_CMD_COL_HEADER(&old_dodongos_cavern_sceneCollisionHeader0x00E38C),
@@ -48,20 +48,20 @@ ActorEntry old_dodongos_cavern_sceneStartPositionList0x000058[] = {
 };
 
 TransitionActorEntry old_dodongos_cavern_sceneTransitionActorList0x000078[] = {
-	{ 0, 255, 1, 255, ACTOR_EN_HOLL,      {  1140,   0,  -320 }, 0x4000, 0x003F },
-	{ 2, 255, 0, 255, ACTOR_EN_HOLL,      { -1140, 531, -2120 }, 0x4000, 0x003F },
-	{ 4, 255, 0, 255, ACTOR_EN_HOLL,      {  1140,  80, -2120 }, 0xC000, 0x003F },
-	{ 6, 255, 0, 255, ACTOR_EN_HOLL,      {  1140, 531, -2120 }, 0xC000, 0x003F },
-	{ 6, 255, 0, 255, ACTOR_EN_HOLL,      {  1140, 531,  -920 }, 0xC000, 0x003F },
-	{ 7, 255, 0, 255, ACTOR_EN_HOLL,      { -1140, 531,  -920 }, 0x4000, 0x003F },
-	{ 8, 255, 6, 255, ACTOR_EN_HOLL,      {  2740, 771, -1520 }, 0xC000, 0x003F },
-	{ 8, 255, 1, 255, ACTOR_DOOR_SHUTTER, {  3560,   0,  -560 },      0, 0x003F },
-	{ 9, 255, 0, 255, ACTOR_DOOR_SHUTTER, {     0, 240, -3546 },      0, 0x0090 }, // Unlocks on switch: 10
-	{ 8, 255, 3, 255, ACTOR_DOOR_SHUTTER, {  3560,   0, -2017 }, 0x8000, 0x003F },
-	{ 5, 255, 3, 255, ACTOR_DOOR_SHUTTER, {  3560,   0, -3863 },      0, 0x007F },
-	{ 2, 255, 0, 255, ACTOR_DOOR_SHUTTER, { -1140,   0, -2120 }, 0x4000, 0x0081 }, // Unlocks on switch: 01
-	{ 4, 255, 5, 255, ACTOR_DOOR_SHUTTER, {  2592,   0, -4114 }, 0x6000, 0x0082 }, // Unlocks on switch: 02
-    { 9, 255, 9, 255, ACTOR_DOOR_SHUTTER, {     0, 240, -4090 },      0, 0x015C }, // Switch: 1C
+	{ 0, -1, 1, -1, ACTOR_EN_HOLL,      {  1140,   0,  -320 }, 0x4000, 0x003F },
+	{ 2, -1, 0, -1, ACTOR_EN_HOLL,      { -1140, 531, -2120 }, 0x4000, 0x003F },
+	{ 4, -1, 0, -1, ACTOR_EN_HOLL,      {  1140,  80, -2120 }, 0xC000, 0x003F },
+	{ 6, -1, 0, -1, ACTOR_EN_HOLL,      {  1140, 531, -2120 }, 0xC000, 0x003F },
+	{ 6, -1, 0, -1, ACTOR_EN_HOLL,      {  1140, 531,  -920 }, 0xC000, 0x003F },
+	{ 7, -1, 0, -1, ACTOR_EN_HOLL,      { -1140, 531,  -920 }, 0x4000, 0x003F },
+	{ 8, -1, 6, -1, ACTOR_EN_HOLL,      {  2740, 771, -1520 }, 0xC000, 0x003F },
+	{ 8, -1, 1, -1, ACTOR_DOOR_SHUTTER, {  3560,   0,  -560 },      0, 0x003F },
+	{ 9, -1, 0, -1, ACTOR_DOOR_SHUTTER, {     0, 240, -3546 },      0, 0x0090 }, // Unlocks on switch: 10
+	{ 8, -1, 3, -1, ACTOR_DOOR_SHUTTER, {  3560,   0, -2017 }, 0x8000, 0x003F },
+	{ 5, -1, 3, -1, ACTOR_DOOR_SHUTTER, {  3560,   0, -3863 },      0, 0x007F },
+	{ 2, -1, 0, -1, ACTOR_DOOR_SHUTTER, { -1140,   0, -2120 }, 0x4000, 0x0081 }, // Unlocks on switch: 01
+	{ 4, -1, 5, -1, ACTOR_DOOR_SHUTTER, {  2592,   0, -4114 }, 0x6000, 0x0082 }, // Unlocks on switch: 02
+    { 9, -1, 9, -1, ACTOR_DOOR_SHUTTER, {     0, 240, -4090 },      0, 0x0140 }, // Switch: 00
 };
 
 RomFile old_dodongos_cavern_sceneRoomList0x000148[] = {
@@ -5679,7 +5679,7 @@ CollisionHeader old_dodongos_cavern_sceneCollisionHeader0x00E38C = {
 };
 
 SceneCmd old_dodongos_cavern_sceneSet_cleansed[] = {
-    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_DUNGEON_CAVE),
+    SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_RED_ICE_CAVERN),
     SCENE_CMD_ROOM_LIST(ARRAY_COUNT(old_dodongos_cavern_sceneRoomList0x000148), old_dodongos_cavern_sceneRoomList0x000148),
     SCENE_CMD_TRANSITION_ACTOR_LIST(ARRAY_COUNT(old_dodongos_cavern_sceneTransitionActorList0x000078), old_dodongos_cavern_sceneTransitionActorList0x000078),
     SCENE_CMD_COL_HEADER(&old_dodongos_cavern_sceneCollisionHeader0x00E38C),

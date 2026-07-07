@@ -265,7 +265,7 @@ void EnOwl_Init(Actor* thisx, PlayState* play) {
             this->actionFunc = EnOwl_WaitLWPostSaria;
             break;
         case OWL_FORBIDDEN_WOODS:
-            if (HAS_ROCS_FEATHER || !GET_EVENTCHKINF(EVENTCHKINF_EXITED_HYPER_GOHMA)) {
+            if (HAS_ROCS_FEATHER || !GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW)) {
                  // spoken with the owl or didn't exited from Hyper Gohma yet
                 PRINTF(T("フクロウ退避\n", "Owl evacuation\n"));
                 Actor_Kill(&this->actor);

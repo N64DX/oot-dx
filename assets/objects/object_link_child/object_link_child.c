@@ -1675,137 +1675,6 @@ Gfx gLinkChildMasterSwordSheathDL[] = {
     gsSPEndDisplayList(),
 };
 
-
-
-// Shields With Sheaths
-
-Gfx gLinkChildDekuShieldKokiriSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedKokiriSwordDL),
-    gsSPBranchList(gLinkChildDekuShieldWithMatrixDL),
-};
-
-Gfx gLinkChildDekuShieldHerosSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedHerosSwordDL),
-    gsSPBranchList(gLinkChildDekuShieldWithMatrixDL),
-};
-
-Gfx gLinkChildDekuShieldRazorSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedRazorSwordDL),
-    gsSPBranchList(gLinkChildDekuShieldWithMatrixDL),
-};
-
-Gfx gLinkChildDekuShieldGildedSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedGildedSwordDL),
-    gsSPBranchList(gLinkChildDekuShieldWithMatrixDL),
-};
-
-Gfx gLinkChildDekuShieldMasterSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedMasterSwordDL),
-    gsSPBranchList(gLinkChildDekuShieldWithMatrixDL),
-};
-
-Gfx gLinkChildHylianShieldKokiriSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedKokiriSwordDL),
-    gsSPBranchList(gLinkChildHylianShieldAndSheathNearDL),
-};
-
-Gfx gLinkChildHylianShieldHerosSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedHerosSwordDL),
-    gsSPBranchList(gLinkChildHylianShieldAndSheathNearDL),
-};
-
-Gfx gLinkChildHylianShieldRazorSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedRazorSwordDL),
-    gsSPBranchList(gLinkChildHylianShieldAndSheathNearDL),
-};
-
-Gfx gLinkChildHylianShieldGildedSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedGildedSwordDL),
-    gsSPBranchList(gLinkChildHylianShieldAndSheathNearDL),
-};
-
-Gfx gLinkChildHylianShieldMasterSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedMasterSwordDL),
-    gsSPBranchList(gLinkChildHylianShieldAndSheathNearDL),
-};
-
-Gfx gLinkChildHylianShieldKokiriSwordSheathDL[] = {
-    gsSPDisplayList(gLinkChildKokiriSwordSheathDL),
-    gsSPBranchList(gLinkChildHylianShieldAndSheathNearDL),
-};
-
-Gfx gLinkChildHylianShieldHerosSwordSheathDL[] = {
-    gsSPDisplayList(gLinkChildHerosSwordSheathDL),
-    gsSPBranchList(gLinkChildHylianShieldAndSheathNearDL),
-};
-
-Gfx gLinkChildHylianShieldRazorSwordSheathDL[] = {
-    gsSPDisplayList(gLinkChildRazorSwordSheathDL),
-    gsSPBranchList(gLinkChildHylianShieldAndSheathNearDL),
-};
-
-Gfx gLinkChildHylianShieldGildedSwordSheathDL[] = {
-    gsSPDisplayList(gLinkChildGildedSwordSheathDL),
-    gsSPBranchList(gLinkChildHylianShieldAndSheathNearDL),
-};
-
-Gfx gLinkChildHylianShieldMasterSwordSheathDL[] = {
-    gsSPDisplayList(gLinkChildMasterSwordSheathDL),
-    gsSPBranchList(gLinkChildHylianShieldAndSheathNearDL),
-};
-
-Gfx gLinkChildHerosShieldKokiriSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedKokiriSwordDL),
-    gsSPBranchList(gLinkChildHerosShieldWithMatrixDL),
-};
-
-Gfx gLinkChildHerosShieldHerosSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedHerosSwordDL),
-    gsSPBranchList(gLinkChildHerosShieldWithMatrixDL),
-};
-
-Gfx gLinkChildHerosShieldRazorSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedRazorSwordDL),
-    gsSPBranchList(gLinkChildHerosShieldWithMatrixDL),
-};
-
-Gfx gLinkChildHerosShieldGildedSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedGildedSwordDL),
-    gsSPBranchList(gLinkChildHerosShieldWithMatrixDL),
-};
-
-Gfx gLinkChildHerosShieldMasterSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedMasterSwordDL),
-    gsSPBranchList(gLinkChildHerosShieldWithMatrixDL),
-};
-
-Gfx gLinkChildMirrorShieldKokiriSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedKokiriSwordDL),
-    gsSPBranchList(gLinkChildMirrorShieldWithMatrixDL),
-};
-
-Gfx gLinkChildMirrorShieldHerosSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedHerosSwordDL),
-    gsSPBranchList(gLinkChildMirrorShieldWithMatrixDL),
-};
-
-Gfx gLinkChildMirrorShieldRazorSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedRazorSwordDL),
-    gsSPBranchList(gLinkChildMirrorShieldWithMatrixDL),
-};
-
-Gfx gLinkChildMirrorShieldGildedSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedGildedSwordDL),
-    gsSPBranchList(gLinkChildMirrorShieldWithMatrixDL),
-};
-
-Gfx gLinkChildMirrorShieldMasterSwordSheathedDL[] = {
-    gsSPDisplayList(gLinkChildSheathedMasterSwordDL),
-    gsSPBranchList(gLinkChildMirrorShieldWithMatrixDL),
-};
-
-
-
 // Hero's Shield
 
 static u64 gLinkChildHerosShieldFrontTLUT[] = {
@@ -1899,6 +1768,158 @@ Gfx gLinkChildHoldingHerosShieldDL[] = {
 Gfx gLinkChildHerosShieldWithMatrixDL[] = {
     gsSPMatrix(&gLinkChildHerosShieldMtx, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPBranchList(gLinkChildHerosShieldDL),
+};
+
+
+
+// Wooden Shield
+
+static u64 gLinkChildWoodenShieldFrontTex[] = {
+#include "assets/objects/object_link_child/shields/wooden_shield_front.rgba16.inc.c"
+};
+
+Gfx gLinkChildWoodenShieldDL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(gLinkChildWoodenShieldFrontTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPSetGeometryMode(G_LIGHTING),
+    gsSPDisplayList(0x0C000000),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsSPVertex(gLinkChildDekuShieldVtx, 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(3, 5, 2, 0, 6, 2, 7, 0),
+    gsSP2Triangles(1, 8, 9, 0, 10, 11, 12, 0),
+    gsSP2Triangles(13, 14, 15, 0, 13, 15, 16, 0),
+    gsSP2Triangles(17, 18, 19, 0, 11, 10, 20, 0),
+    gsSP2Triangles(21, 22, 23, 0, 23, 22, 24, 0),
+    gsSP2Triangles(25, 26, 20, 0, 20, 10, 25, 0),
+    gsSP1Triangle(27, 28, 29, 0),
+    gsSPVertex(&gLinkChildDekuShieldVtx[30], 9, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(3, 2, 4, 0, 3, 4, 5, 0),
+    gsSP1Triangle(6, 7, 8, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gLinkChildDekuShieldBackTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&gLinkChildDekuShieldVtx[39], 8, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 5, 4, 0, 1, 0, 6, 0),
+    gsSP2Triangles(4, 1, 6, 0, 7, 4, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gLinkChildHoldingWoodenShieldDL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(gLinkChildDekuShieldBackTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsSPVertex(gLinkChildRightFistAndDekuShieldNearVtx, 8, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(5, 4, 6, 0, 4, 0, 2, 0),
+    gsSP2Triangles(2, 6, 4, 0, 1, 0, 7, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gLinkChildWoodenShieldFrontTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&gLinkChildRightFistAndDekuShieldNearVtx[8], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 3, 5, 9, 0),
+    gsSP2Triangles(10, 11, 12, 0, 13, 14, 15, 0),
+    gsSP2Triangles(1, 0, 16, 0, 13, 15, 8, 0),
+    gsSP2Triangles(17, 18, 19, 0, 19, 18, 20, 0),
+    gsSP2Triangles(21, 8, 22, 0, 23, 24, 16, 0),
+    gsSP2Triangles(16, 0, 23, 0, 25, 26, 27, 0),
+    gsSP1Triangle(7, 28, 29, 0),
+    gsSPVertex(&gLinkChildRightFistAndDekuShieldNearVtx[38], 9, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(3, 2, 4, 0, 3, 4, 5, 0),
+    gsSP1Triangle(6, 7, 8, 0),
+    gsSPBranchList(gLinkChildRightHandClosedNearDL),
+};
+
+Gfx gLinkChildWoodenShieldWithMatrixDL[] = {
+    gsSPMatrix(&gLinkChildDekuShieldMtx, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPBranchList(gLinkChildWoodenShieldDL),
+};
+
+
+
+// Metal Shield
+
+static u64 gLinkChildMetalShieldFrontLeftTLUT[] = {
+#include "assets/objects/object_link_child/shields/metal_shield_front_left.tlut.rgba16.inc.c"
+};
+
+static u64 gLinkChildMetalShieldFrontRightTLUT[] = {
+#include "assets/objects/object_link_child/shields/metal_shield_front_right.tlut.rgba16.inc.c"
+};
+
+static u64 gLinkChildMetalShieldFrontLeftTex[] = {
+#include "assets/objects/object_link_child/shields/metal_shield_front_left.ci8.inc.c"
+};
+
+static u64 gLinkChildMetalShieldFrontRightTex[] = {
+#include "assets/objects/object_link_child/shields/metal_shield_front_right.ci8.inc.c"
+};
+
+static Vtx metal_shield_vtx[] = {
+#include "assets/objects/object_link_child/shields/metal_shield.vtx.inc"
+};
+
+Gfx gLinkChildMetalShieldDL[] = {
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(gLinkChildMetalShieldFrontLeftTex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(gLinkChildMetalShieldFrontLeftTLUT),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPClearGeometryMode(G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING | G_CLIPPING),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsSPVertex(metal_shield_vtx, 7, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 1, 0, 0),
+    gsSP2Triangles(4, 5, 6, 0, 2, 6, 0, 0),
+    gsSP2Triangles(4, 2, 1, 0, 2, 4, 6, 0),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTextureBlock_4b(gLinkChildShieldHandleTex, G_IM_FMT_CI, 8, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal16(0, gLinkChildShieldHandleTLUT),
+    gsSPVertex(&metal_shield_vtx[7], 7, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(3, 5, 2, 0, 3, 2, 1, 0),
+    gsSP2Triangles(1, 4, 3, 0, 1, 0, 6, 0),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTextureBlock(gLinkChildHerosShieldBackTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(gLinkChildHerosShieldBackTLUT),
+    gsSPVertex(&metal_shield_vtx[14], 6, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 2, 5, 0, 4, 3, 2, 0),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTextureBlock(gLinkChildMetalShieldFrontRightTex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(gLinkChildMetalShieldFrontRightTLUT),
+    gsSPVertex(&metal_shield_vtx[20], 7, 0),
+    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
+    gsSP2Triangles(0, 4, 1, 0, 2, 1, 5, 0),
+    gsSP2Triangles(6, 4, 3, 0, 4, 0, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gLinkChildHoldingMetalShieldDL[] = {
+	gsSPDisplayList(gLinkChildRightHandClosedNearDL),
+    gsSPBranchList(gLinkChildMetalShieldDL),
+};
+
+Gfx gLinkChildMetalShieldWithMatrixDL[] = {
+    gsSPMatrix(&gLinkChildHerosShieldMtx, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPBranchList(gLinkChildMetalShieldDL),
 };
 
 

@@ -805,6 +805,7 @@ beginseg
     name "object_tk"
     compress
     include "$(BUILD_DIR)/assets/objects/object_tk/object_tk.o"
+    include "$(BUILD_DIR)/assets/objects/object_tk/object_tk_extra.o"
     number 6
 endseg
 
@@ -1068,6 +1069,7 @@ beginseg
     name "object_spot18_obj"
     compress
     include "$(BUILD_DIR)/assets/objects/object_spot18_obj/object_spot18_obj.o"
+    include "$(BUILD_DIR)/assets/objects/object_spot18_obj/object_spot18_obj_extra.o"
     number 6
 endseg
 
@@ -1257,6 +1259,7 @@ beginseg
     name "object_gi_shield_1"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_shield_1/object_gi_shield_1.o"
+    include "$(BUILD_DIR)/assets/objects/object_gi_shield_1/object_gi_shield_1_extra.o"
     number 6
 endseg
 
@@ -1470,6 +1473,7 @@ beginseg
     name "object_gi_liquid"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_liquid/object_gi_liquid.o"
+    include "$(BUILD_DIR)/assets/objects/object_gi_liquid/object_gi_liquid_extra.o"
     number 6
 endseg
 

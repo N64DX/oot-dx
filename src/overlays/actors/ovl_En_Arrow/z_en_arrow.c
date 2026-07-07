@@ -100,7 +100,7 @@ static EffectBlureInit2 blureLight = {
 
 static u32 dmgFlags[] = {
     DMG_ARROW_FIRE,  DMG_ARROW_NORMAL, DMG_ARROW_NORMAL, DMG_ARROW_FIRE, DMG_ARROW_ICE,
-    DMG_ARROW_LIGHT, DMG_ARROW_UNK3,   DMG_ARROW_UNK1,   DMG_ARROW_UNK2, DMG_SLINGSHOT,
+    DMG_ARROW_LIGHT, DMG_ARROW_UNK3,   DMG_ARROW_UNK1,   DMG_ARROW_UNK2, DMG_SLINGSHOT, DMG_ARROW_ICE,
 };
 
 void EnArrow_SetupAction(EnArrow* this, EnArrowActionFunc actionFunc) {
@@ -117,7 +117,7 @@ void EnArrow_Init(Actor* thisx, PlayState* play) {
         this->actor.params = ARROW_NUT;
     }
 
-    if (this->actor.params <= ARROW_SEED) {
+    if (this->actor.params <= ARROW_SEED || this->actor.params == ARROW_NORMAL_LIT_ICE) {
 
         if (this->actor.params <= ARROW_0E) {
             SkelAnime_Init(play, &this->skelAnime, &gArrowSkel, &gArrow2_Anim, NULL, NULL, 0);
@@ -136,7 +136,7 @@ void EnArrow_Init(Actor* thisx, PlayState* play) {
 
             Effect_Add(play, &this->effectIndex, EFFECT_BLURE2, 0, 0, &blureFire);
 
-        } else if (this->actor.params == ARROW_ICE) {
+        } else if (this->actor.params == ARROW_ICE || this->actor.params == ARROW_NORMAL_LIT_ICE) {
 
             Effect_Add(play, &this->effectIndex, EFFECT_BLURE2, 0, 0, &blureIce);
 
@@ -155,7 +155,7 @@ void EnArrow_Init(Actor* thisx, PlayState* play) {
 
         if (this->actor.params < 0) {
             this->collider.base.atFlags = (AT_ON | AT_TYPE_ENEMY);
-        } else if (this->actor.params <= ARROW_SEED) {
+        } else if (this->actor.params <= ARROW_SEED || this->actor.params == ARROW_NORMAL_LIT_ICE) {
             this->collider.elem.atDmgInfo.dmgFlags = dmgFlags[this->actor.params];
             LOG_HEX("this->at_info.cl_elem.at_btl_info.at_type", this->collider.elem.atDmgInfo.dmgFlags,
                     "../z_en_arrow.c", 707);
@@ -197,6 +197,7 @@ void EnArrow_Shoot(EnArrow* this, PlayState* play) {
                 break;
 
             case ARROW_NORMAL_LIT:
+            case ARROW_NORMAL_LIT_ICE:
             case ARROW_NORMAL_HORSE:
             case ARROW_NORMAL:
                 Player_PlaySfx(player, NA_SE_IT_ARROW_SHOT);
@@ -299,8 +300,8 @@ void EnArrow_WaterBoxCollision(EnArrow* this, PlayState* play) {
         EffectSsGRipple_Spawn(play, &sp44, 100, 500, 4);
         EffectSsGRipple_Spawn(play, &sp44, 100, 500, 8);
 
-        if (this->actor.params == ARROW_ICE || this->actor.params == ARROW_FIRE) {
-            if (this->actor.params == ARROW_ICE && func_809B4640 != this->actionFunc) {
+        if (this->actor.params == ARROW_ICE || this->actor.params == ARROW_NORMAL_LIT_ICE || this->actor.params == ARROW_FIRE || this->actor.params == ARROW_NORMAL_LIT) {
+            if ( (this->actor.params == ARROW_ICE || this->actor.params == ARROW_NORMAL_LIT_ICE) && func_809B4640 != this->actionFunc) {
                 Actor_Spawn(&play->actorCtx, play, ACTOR_BG_ICEFLOE, sp44.x, sp44.y, sp44.z, 0, 0, 0, 300);
                 Actor_Kill(&this->actor);
                 return;
@@ -337,7 +338,7 @@ void EnArrow_Fly(EnArrow* this, PlayState* play) {
         this->actor.gravity = -0.4f;
     }
 
-    atTouched = (this->actor.params != ARROW_NORMAL_LIT) && (this->actor.params <= ARROW_SEED) &&
+    atTouched = (this->actor.params != ARROW_NORMAL_LIT) && (this->actor.params != ARROW_NORMAL_LIT_ICE) && (this->actor.params <= ARROW_SEED) &&
                 (this->collider.base.atFlags & AT_HIT);
 
     if (atTouched || this->touchedPoly) {
@@ -525,6 +526,13 @@ void EnArrow_Update(Actor* thisx, PlayState* play) {
         static Color_RGBA8 envColor = { 255, 50, 0, 0 };
         // spawn dust for the flame
         func_8002836C(play, &this->unk_21C, &velocity, &accel, &primColor, &envColor, 100, 0, 8);
+    } else if (this->actor.params == ARROW_NORMAL_LIT_ICE) {
+        static Vec3f velocity = { 0.0f, 0.5f, 0.0f };
+        static Vec3f accel = { 0.0f, 0.5f, 0.0f };
+        static Color_RGBA8 primColor = { 100, 255, 255, 255 };
+        static Color_RGBA8 envColor = { 255, 50, 0, 0 };
+        // spawn dust for the flame
+        func_8002836C(play, &this->unk_21C, &velocity, &accel, &primColor, &envColor, 100, 0, 8);
     }
 
     EnArrow_UpdateAttachedBomb(thisx, play);
@@ -544,7 +552,7 @@ void func_809B4800(EnArrow* this, PlayState* play) {
         Matrix_MultVec3f(&sPosAOffset, &posA);
         Matrix_MultVec3f(&sPosBOffset, &posB);
 
-        if (this->actor.params <= ARROW_SEED) {
+        if (this->actor.params <= ARROW_SEED || this->actor.params == ARROW_NORMAL_LIT_ICE) {
             addBlureVertex = this->actor.params <= ARROW_LIGHT;
 
             if (this->hitActor == NULL) {

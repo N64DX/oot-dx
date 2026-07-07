@@ -179,7 +179,7 @@ void EnBox_Init(Actor* thisx, PlayState* play2) {
         this->dyna.actor.world.pos.y = this->dyna.actor.home.pos.y - 50.0f;
         this->alpha = 0;
         this->dyna.actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
-    } else if (this->type == ENBOX_TYPE_SWITCH_FLAG_BIG && !Flags_GetSwitch(play, this->switchFlag)) {
+    } else if ((this->type == ENBOX_TYPE_SWITCH_FLAG_BIG || this->type == ENBOX_TYPE_SWITCH_FLAG_DECORATED_BIG) && !Flags_GetSwitch(play, this->switchFlag)) {
         EnBox_SetupAction(this, EnBox_AppearOnSwitchFlag);
         DynaPoly_DisableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
         this->movementFlags |= ENBOX_MOVE_IMMOBILE;
@@ -639,7 +639,7 @@ void EnBox_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot,
 
     if (limbIndex == 1) {
         MATRIX_FINALIZE_AND_LOAD((*gfx)++, play->state.gfxCtx, "../z_en_box.c", 1492);
-        if (this->type != ENBOX_TYPE_DECORATED_BIG) {
+        if (this->type != ENBOX_TYPE_DECORATED_BIG && this->type != ENBOX_TYPE_SWITCH_FLAG_DECORATED_BIG) {
             if (is_key && REFLECT_CHEST_CONTENTS) {
                 gSPDisplayList((*gfx)++, gTreasureChestKeyChestFrontDL);
             } else if (is_dungeon_item && REFLECT_CHEST_CONTENTS) {
@@ -654,7 +654,7 @@ void EnBox_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot,
         }
     } else if (limbIndex == 3) {
         MATRIX_FINALIZE_AND_LOAD((*gfx)++, play->state.gfxCtx, "../z_en_box.c", 1502);
-        if (this->type != ENBOX_TYPE_DECORATED_BIG) {
+        if (this->type != ENBOX_TYPE_DECORATED_BIG && this->type != ENBOX_TYPE_SWITCH_FLAG_DECORATED_BIG) {
             if (is_key && REFLECT_CHEST_CONTENTS) {
                 gSPDisplayList((*gfx)++, gTreasureChestKeyChestSideAndLidDL);
             } else if (is_dungeon_item && REFLECT_CHEST_CONTENTS) {

@@ -12,8 +12,8 @@ SceneCmd fairy_deku_tree_room_9[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&fairy_deku_tree_room_9MeshHeader0x0000D0),
-    SCENE_CMD_OBJECT_LIST(10, fairy_deku_tree_room_9ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(9, fairy_deku_tree_room_9ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(11, fairy_deku_tree_room_9ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(13, fairy_deku_tree_room_9ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -28,18 +28,23 @@ s16 fairy_deku_tree_room_9ObjectList0x000038[] = {
     OBJECT_TP,
     OBJECT_DEKUBABA,
     OBJECT_DEKUNUTS,
+    OBJECT_GOOMBA,
 };
 
 ActorEntry fairy_deku_tree_room_9ActorList0x000048[] = {
     { ACTOR_OBJ_SWITCH,  { 1135, 1160, -1158 }, { 0, 0x2000, 0 }, 0x0400 }, // Switch: 04
     { ACTOR_EN_ITEM00,   { 1522,  960,  -227 }, { 0,      0, 0 }, 0x2103 }, // Collectible: 21, Red Rupee
     { ACTOR_OBJ_KIBAKO3, { 1150,  960, -1250 }, { 0, 0x2000, 0 }, 0x0242 }, // Blue: 4 (Ancient Hollow & Forbidden Woods)
-    { ACTOR_EN_TP,       { 1362, 1173,  -987 }, { 0,      0, 0 }, 0xFFFE },
-    { ACTOR_EN_TP,       { 1131,  997,  -802 }, { 0,      0, 0 }, 0xFFFE },
-    { ACTOR_EN_ST,       { 1502, 1162,   297 }, { 0,      0, 0 }, 0xFFFF },
-    { ACTOR_EN_ST,       { 1508, 1162,  -298 }, { 0,      0, 0 }, 0x0009 },
-    { ACTOR_EN_ST,       { 1087, 1059,   864 }, { 0,      0, 0 }, 0xFFFF },
+    { ACTOR_EN_TP,       { 1362, 1173,  -987 }, { 0,      0, 0 }, 0xFFFF },
+    { ACTOR_EN_TP,       { 1131,  997,  -802 }, { 0,      0, 0 }, 0xFFFF },
+    { ACTOR_EN_ST,       { 1502, 1162,   297 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_ST,       { 1508, 1162,  -298 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_ST,       { 1087, 1059,   864 }, { 0,      0, 0 }, 0x0000 },
     { ACTOR_EN_DEKUBABA, { 1407,  960,    16 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_EN_GOOMBA,   { 1300,  960,  -100 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,   { 1600,  960,  -450 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,   { 1370,  960,  -920 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,   { 1000,  960, -1000 }, { 0,      0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_9MeshHeader0x0000D0 = {

@@ -286,6 +286,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_goomba"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_goomba/object_goomba.o"
+    number 6
+endseg
+
+beginseg
     name "object_slime"
     compress
     include "$(BUILD_DIR)/assets/objects/object_slime/object_slime.o"

@@ -593,46 +593,95 @@ DEFINE_MESSAGE(0xA06C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("Autel Goron")
 )
 
+DEFINE_MESSAGE(0xA06D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("川辺の村"),
+    MSG("Riverside Village"),
+    MSG("Flussdorf"),
+    MSG("Village de la Rivière")
+)
+
 DEFINE_MESSAGE(0xA06E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("古の森"),
+    MSG("Ancient Grove"),
+    MSG("Uralter Hain"),
+    MSG("Bosquet Ancien")
+)
+
+DEFINE_MESSAGE(0xA06F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("禁じられた森"),
     MSG("Forbidden Woods"),
     MSG("Verbotener Wald"),
     MSG("Bois Interdits")
 )
 
-DEFINE_MESSAGE(0xA06F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA071, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("くものすやしろ"),
     MSG("Webbed Shrine"),
     MSG("Versponnener Schrein"),
     MSG("Sanctuaire Entoilé")
 )
 
-DEFINE_MESSAGE(0xA070, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA072, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("古代の空洞"),
     MSG("Ancient Hollow"),
     MSG("Uralter Hohlraum"),
     MSG("Creux Antique")
 )
 
-DEFINE_MESSAGE(0xA071, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA073, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("ゴロン鉱山"),
     MSG("Goron Mines"),
     MSG("Mine der Goronen"),
     MSG("Mine Goron")
 )
 
-DEFINE_MESSAGE(0xA072, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA074, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("ウッドフォールの神殿"),
     MSG("Woodfall Temple"),
     MSG("Dämmerwald Tempel"),
     MSG("Temple de Bois-Cascade")
 )
 
-DEFINE_MESSAGE(0xA074, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA076, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("スプリングレイクの鍛冶屋"),
     MSG("Spring Lake Smithy"),
     MSG("Schmiedewerkstatt"),
     MSG("Forgeron du Lac")
+)
+
+DEFINE_MESSAGE(0xA077, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("川辺の家"),
+    MSG("Riverside House"),
+    MSG("Haus im Flussdorf"),
+    MSG("Maison de la Rivière")
+)
+
+DEFINE_MESSAGE(0xA078, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("イゴールの家"),
+    MSG("Igor's House"),
+    MSG("Igors Haus"),
+    MSG("Maison d’Igor")
+)
+
+DEFINE_MESSAGE(0xA079, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("川辺の宿"),
+    MSG("Riverside Inn"),
+    MSG("Herberge des Flussdorfs"),
+    MSG("Auberge de la Rivière")
+)
+
+DEFINE_MESSAGE(0xA07A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("古の森の店"),
+    MSG("Ancient Grove Shop"),
+    MSG("Laden des Uralten Hains"),
+    MSG("Boutique du Bosquet Ancien")
+)
+
+DEFINE_MESSAGE(0xA13E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("洞窟の通路"),
+    MSG("Cave Passage"),
+    MSG("Höhlenpassage"),
+    MSG("Passage Souterrain")
 )
 
 DEFINE_MESSAGE(0xA148, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,

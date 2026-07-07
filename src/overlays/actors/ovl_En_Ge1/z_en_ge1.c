@@ -522,6 +522,9 @@ void EnGe1_WaitTillItemGiven_Archery(EnGe1* this, PlayState* play) {
                 case 2:
                     getItemId = GI_QUIVER_50;
                     break;
+                case 3:
+                    getItemId = GI_QUIVER_60;
+                    break;
             }
         } else {
             getItemId = GI_HEART_PIECE;
@@ -549,6 +552,9 @@ void EnGe1_BeginGiveItem_Archery(EnGe1* this, PlayState* play) {
                 break;
             case 2:
                 getItemId = GI_QUIVER_50;
+                break;
+            case 3:
+                getItemId = GI_QUIVER_60;
                 break;
         }
     } else {

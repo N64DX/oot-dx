@@ -1,0 +1,8 @@
+#include "aseq.h"
+#include "Soundfont_45_dawngrove_village.h"
+
+.startseq Sequence_126
+
+.incbin "aseq/dawngrove_village.aseq"
+
+.endseq Sequence_126

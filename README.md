@@ -27,6 +27,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [Hylian Modding Discord](http://discord.gg/qQqDsM8)
 - [Zelda Spaceworld ´97 Experience](https://github.com/z64proto/sw97)
 - [Curse of Moonlight](https://github.com/Javarooster-png/curseofmoonlight)
+- [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) by Captain Seedy-Eye & LuigiBlood
 - [Demon's Quest](https://github.com/thinedave/ocarina-demonsquest-source)
 - [Darunia's Joy](https://github.com/DaruniasJoy/OoT-Custom-Sequences)
 - [MMR Music Repo](https://mega.nz/folder/4g1xHbwL#pzE9l2KBs-kwCJJr6E6IKQ)
@@ -64,9 +65,9 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 
 **Music tracks:**
 - "Kolima Forest" from "Golden Sun" by Asra
-- "Dungeon Cave" from Skies of Arcadia by doncamillo
+- "Dawngrove", "Dawngrove Village", "Dawngrove Cave" & "Red Ice Cavern" from "Dawn & Dusk" by Captain Seedy-Eye
+- "Deep Woods" from "The Missing Link" by ZerovoltOv
 - "Ganon Battle" from "A Link to the Past" by Fish_waffle64
-- "Mysterious Forest" from "A Link to the Past" by Fish_waffle64
 - "Lake Hylia" from "Twilight Princess" by Liam
 - "Tal Tal Height" from "Link's Awakening DX" by NewSoupVi
 - "Sacred Grove" from "Twilight Princess" by ZeldaBoy14
@@ -76,6 +77,14 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - Old Lost Woods from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Forbidden Woods
 - Fairy Deku Tree from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Ancient Hollow
 - Dodongo's Cavern from [Zelda SpaceWorld '97 Experience](https://github.com/z64proto/sw97) as Goron Mines
+- Dawngrove from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) as Ancient Grove
+- Dawngrove Grotto from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) as Ancient Grove Grotto
+- Dawngrove Shop from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) as Ancient Grove Shop
+- Cave Passage from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) as Cave Passage
+- Dawngrove Village from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) as Riverside Village
+- Dawngrove Inn from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) as Riverside Inn
+- Dawngrove House #1 from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) as Riverside House
+- Dawngrove House #2 from [Dawn & Dusk](https://github.com/LuigiBlood/zelda_dawn_dusk) as Igor's House
 
 ### Instructions
 

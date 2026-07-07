@@ -43,7 +43,7 @@ s32 ObjLostWoods_HasCollider(s16 params) {
 
 void ObjLostWoods_Init(Actor* thisx, struct PlayState* play) {
     CollisionHeader* colHeader;
-    ObjLostWoods* this = (ObjLostWoods*)thisx;;
+    ObjLostWoods* this = (ObjLostWoods*)thisx;
 
     if (EXTENDED_DRAW_DISTANCE)
         this->dyna.actor.cullingVolumeDistance = this->dyna.actor.cullingVolumeScale = this->dyna.actor.cullingVolumeDownward = 32767.0f;
@@ -237,7 +237,7 @@ void ObjLostWoods_Init(Actor* thisx, struct PlayState* play) {
 }
 
 void ObjLostWoods_Destroy(Actor* thisx, struct PlayState* play) {
-    ObjLostWoods* this = (ObjLostWoods*)thisx;;
+    ObjLostWoods* this = (ObjLostWoods*)thisx;
 
     if (thisx->params == 0x001B || thisx->params == 0x001E || thisx->params == 0x000C) {
         DynaPoly_DeleteBgActor(play, &play->colCtx.dyna, this->dyna.bgId);
@@ -295,7 +295,7 @@ void ObjLostWoods_EnKusa_SpawnFragments(ObjLostWoods* this, struct PlayState* pl
 }
 
 void ObjLostWoods_Update(Actor* thisx, struct PlayState* play) {
-    ObjLostWoods* this = (ObjLostWoods*)thisx;;
+    ObjLostWoods* this = (ObjLostWoods*)thisx;
 
     if (thisx->params == 0x05 && !this->cut && this->collider.base.acFlags & AC_HIT) {
         this->collider.base.acFlags &= ~AC_HIT;

@@ -83,37 +83,20 @@ extern Gfx gLinkChildRazorSwordSheathDL[];
 extern Gfx gLinkChildGildedSwordSheathDL[];
 extern Gfx gLinkChildMasterSwordSheathDL[];
 
-// Shields With Sheathed Swords
-extern Gfx gLinkChildDekuShieldKokiriSwordSheathedDL[];
-extern Gfx gLinkChildDekuShieldHerosSwordSheathedDL[];
-extern Gfx gLinkChildDekuShieldRazorSwordSheathedDL[];
-extern Gfx gLinkChildDekuShieldGildedSwordSheathedDL[];
-extern Gfx gLinkChildDekuShieldMasterSwordSheathedDL[];
-extern Gfx gLinkChildHylianShieldKokiriSwordSheathedDL[];
-extern Gfx gLinkChildHylianShieldHerosSwordSheathedDL[];
-extern Gfx gLinkChildHylianShieldRazorSwordSheathedDL[];
-extern Gfx gLinkChildHylianShieldGildedSwordSheathedDL[];
-extern Gfx gLinkChildHylianShieldMasterSwordSheathedDL[];
-extern Gfx gLinkChildHylianShieldKokiriSwordSheathDL[];
-extern Gfx gLinkChildHylianShieldHerosSwordSheathDL[];
-extern Gfx gLinkChildHylianShieldRazorSwordSheathDL[];
-extern Gfx gLinkChildHylianShieldGildedSwordSheathDL[];
-extern Gfx gLinkChildHylianShieldMasterSwordSheathDL[];
-extern Gfx gLinkChildHerosShieldKokiriSwordSheathedDL[];
-extern Gfx gLinkChildHerosShieldHerosSwordSheathedDL[];
-extern Gfx gLinkChildHerosShieldRazorSwordSheathedDL[];
-extern Gfx gLinkChildHerosShieldGildedSwordSheathedDL[];
-extern Gfx gLinkChildHerosShieldMasterSwordSheathedDL[];
-extern Gfx gLinkChildMirrorShieldKokiriSwordSheathedDL[];
-extern Gfx gLinkChildMirrorShieldHerosSwordSheathedDL[];
-extern Gfx gLinkChildMirrorShieldRazorSwordSheathedDL[];
-extern Gfx gLinkChildMirrorShieldGildedSwordSheathedDL[];
-extern Gfx gLinkChildMirrorShieldMasterSwordSheathedDL[];
-
 // Hero's Shield
 extern Gfx gLinkChildHerosShieldDL[];
 extern Gfx gLinkChildHoldingHerosShieldDL[];
 extern Gfx gLinkChildHerosShieldWithMatrixDL[];
+
+// Wooden Shield;
+extern Gfx gLinkChildWoodenShieldDL[];
+extern Gfx gLinkChildHoldingWoodenShieldDL[];
+extern Gfx gLinkChildWoodenShieldWithMatrixDL[];
+
+// Metal Shield
+extern Gfx gLinkChildMetalShieldDL[];
+extern Gfx gLinkChildHoldingMetalShieldDL[];
+extern Gfx gLinkChildMetalShieldWithMatrixDL[];
 
 // Mirror Shield
 extern Gfx gLinkChildMirrorShieldDL[];

@@ -29,6 +29,7 @@
 #include "assets/scenes/overworld/spot16/spot16_room_0.h"
 #include "assets/scenes/overworld/spot18/spot18_scene.h"
 #include "assets/scenes/overworld/spot20/spot20_scene.h"
+#include "assets/scenes/overworld/dawngrove_village/dawngrove_village_scene.h"
 
 #include "assets/scenes/dungeons/Bmori1/Bmori1_scene.h"
 #include "assets/scenes/dungeons/MIZUsin/MIZUsin_scene.h"
@@ -107,6 +108,9 @@ void Scene_DrawConfigPathToWoodfall(PlayState* play);
 void Scene_DrawConfigGoronVillage(PlayState* play);
 void Scene_DrawConfigGoronShrine(PlayState* play);
 void Scene_DrawConfigGoronMines(PlayState* play);
+void Scene_DrawConfigRiversideVillage(PlayState* play);
+void Scene_DrawConfigRiversideInn(PlayState* play);
+void Scene_DrawConfigAncientGrove(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -227,6 +231,9 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigGoronVillage,                // SDC_GORON_VILLAGE
     Scene_DrawConfigGoronShrine,                 // SDC_GORON_SHRINE
     Scene_DrawConfigGoronMines,                  // SDC_GORON_MINES
+    Scene_DrawConfigRiversideVillage,            // SDC_RIVERSIDE_VILLAGE
+    Scene_DrawConfigRiversideInn,                // SDC_RIVERSIDE_INN
+    Scene_DrawConfigAncientGrove,                // SDC_ANCIENT_GROVE
 };
 
 #if PLATFORM_N64 // Scene_Draw is at end of file in GC/iQue versions
@@ -1921,6 +1928,52 @@ void Scene_DrawConfigGoronMines(PlayState* play) {
     gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, gameplayFrames % 256, 0,                          64, 32, 1, 0,  gameplayFrames      % 128, 64, 32)); // Boss Lava
 
     gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TexScroll(play->state.gfxCtx, gameplayFrames % 256, 0, 64, 32)); // Fog
+
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
+void* sRiversideWindowTextures[] = {
+    dawngrove_village_sceneTex_00B220,
+    dawngrove_village_sceneTex_00B220_night,
+    dawngrove_village_sceneTLUT_00B220,
+    dawngrove_village_sceneTLUT_00B220_night,
+};
+
+void Scene_DrawConfigRiversideVillage(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, 0, 32,  32)); // Water
+    gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(sRiversideWindowTextures[((void)0, gSaveContext.save.nightFlag)]));
+    gSPSegment(POLY_OPA_DISP++, 0x0B, SEGMENTED_TO_VIRTUAL(sRiversideWindowTextures[((void)0, gSaveContext.save.nightFlag + 2)]));
+
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
+void Scene_DrawConfigRiversideInn(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
+
+    gDPPipeSync(POLY_XLU_DISP++);
+    if (gSaveContext.save.nightFlag) {
+        gDPSetEnvColor(POLY_XLU_DISP++, 50, 50, 50, 80);
+    } else {
+        gDPSetEnvColor(POLY_XLU_DISP++, 255, 255, 128, 100);
+    }
+
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
+}
+
+void Scene_DrawConfigAncientGrove(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 2) % 128, 32, 128, 1, 0, -(gameplayFrames * 2) % 128, 32, 128)); // Water & Waterfall
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);

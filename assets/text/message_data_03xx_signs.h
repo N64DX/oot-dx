@@ -1947,7 +1947,7 @@ MSG()
 DEFINE_MESSAGE(0x0354, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-QUICKTEXT_ENABLE "The " COLOR(RED) "Secret Shrine" COLOR(DEFAULT) " is across the lake.\n"
+QUICKTEXT_ENABLE "The " COLOR(RED) "Webbed Shrine" COLOR(DEFAULT) " is across the lake.\n"
 "Please use the tunnel on your right\n"
 "to get over there.\n"
 "Be mindful of the monsters though..." QUICKTEXT_DISABLE
@@ -1993,6 +1993,28 @@ MSG(),
 MSG(
 QUICKTEXT_ENABLE SHIFT(60) COLOR(RED) "Goron Smithy" COLOR(DEFAULT) "\n"
 SHIFT(40) "Watch your footing!" QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0359, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE SHIFT(67) COLOR(YELLOW) "Ancient Grove" COLOR(DEFAULT) "\n"
+SHIFT(20) "Beware! The sun never sets,\n"
+SHIFT(20) "and the creatures never sleep." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x035A, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "By decree of the goddess " COLOR(RED) "Din" COLOR(DEFAULT) ",\n"
+"magic has been outlawed in this\n"
+"sacred grove." QUICKTEXT_DISABLE
 ),
 MSG(),
 MSG()

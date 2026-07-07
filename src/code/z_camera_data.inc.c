@@ -194,7 +194,6 @@ char sCameraSettingNames[][12] = {
     "TUNNEL     ", // CAM_SET_TUNNEL
     "SCENE0     ", // CAM_SET_SCENE0
     "SPIRAL_DOOR", // CAM_SET_SPIRAL_DOOR
-    "DOORD      ", // CAM_SET_DOORD
 };
 
 char sCameraModeNames[][12] = {
@@ -1544,20 +1543,6 @@ CameraModeValue sSetScene0ModeNormalData[] = { CAM_FUNCDATA_UNIQ2(-40, 20, 60, C
 CameraModeValue sSetSpiralDoorModeNormalData[] = { CAM_FUNCDATA_SPEC8(-40, 50, 80, 60, 10, CAM_INTERFACE_FIELD(CAM_LETTERBOX_NONE, CAM_HUD_VISIBILITY_ALL, SPECIAL8_FLAG_0)) };
 
 /**
- *=====================================================================
- *                   Custom Data: DOORD Setting
- *=====================================================================
- */
-
-CameraModeValue sSetDoorDModeNormalData[] = {
-    /* CAM_FUNC_SPEC9 */ { -30, 0 }, { 60, 7 }, { 0x3002, 9 },
-};
-
-CameraModeValue sSetDoorDModeZParallelData[] = {
-    /* CAM_FUNC_SPEC9 */ { -30, 0 }, { 60, 7 }, { 0x300A, 9 },
-};
-
-/**
  * =====================================================================
  *    CAMERA SETTINGS: USAGE OF FUNCTIONS AND DATA FOR SPECIFIC MODES
  * =====================================================================
@@ -2605,11 +2590,6 @@ CameraMode sCamSetSpiralDoorModes[] = {
     CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC8, sSetSpiralDoorModeNormalData), // CAM_MODE_NORMAL
 };
 
-CameraMode sCamSetDoorDModes[] = {
-    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC9, sSetDoorDModeNormalData),    // CAM_MODE_NORMAL
-    CAM_SETTING_MODE_ENTRY(CAM_FUNC_SPEC9, sSetDoorDModeZParallelData), // CAM_MODE_TARGET
-};
-
 CameraSetting sCameraSettings[] = {
     { { 0x00000000 }, NULL },                             // CAM_SET_NONE
     { { 0x053FFFFF }, sCamSetNormal0Modes },              // CAM_SET_NORMAL0
@@ -2684,7 +2664,6 @@ CameraSetting sCameraSettings[] = {
     { { 0x051FFFFF }, sCamSetTunnelModes },               // CAM_SET_TUNNEL
     { { 0x00000001 }, sCamSetScene0Modes },               // CAM_SET_SCENE0
     { { 0x00000001 }, sCamSetSpiralDoorModes },           // CAM_SET_SPIRAL_DOOR
-    { { 0xC5000003 }, sCamSetDoorDModes },                // CAM_SET_DOORD
 };
 
 s32 Camera_Normal0(Camera* camera);

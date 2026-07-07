@@ -5,5 +5,7 @@
 
 extern Gfx gGiHerosShieldDL[];
 extern Gfx gGiHerosShieldEmblemDL[];
+extern Gfx gGiMetalShieldFrameDL[];
+extern Gfx gGiMetalShieldSymbolDL[];
 
 #endif

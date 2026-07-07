@@ -127,6 +127,11 @@ void func_809B0524(EnAni* this, PlayState* play) {
     }
 }
 
+#define ITEMGETINF_FLAG (play->sceneId == SCENE_RIVERSIDE_VILLAGE ? ITEMGETINF_RIVERSIDE_VILLAGE_ROOFTOP_MAN_REWARD : ITEMGETINF_15)
+#define GI_ITEM_REWARD  (play->sceneId == SCENE_RIVERSIDE_VILLAGE ? GI_RUPEE_RED                                    : GI_HEART_PIECE)
+#define REWARD_TEXTID   (play->sceneId == SCENE_RIVERSIDE_VILLAGE ? (LINK_IS_ADULT_OR_TIMESKIP ? 0x8245 : 0x8235)   : 0x5055)
+#define REPEAT_TEXTID   (play->sceneId == SCENE_RIVERSIDE_VILLAGE ? (LINK_IS_ADULT_OR_TIMESKIP ? 0x8246 : 0x8236)   : 0x5056)
+
 void func_809B0558(EnAni* this, PlayState* play) {
     if (Actor_HasParent(&this->actor, play)) {
         this->actor.parent = NULL;
@@ -135,17 +140,17 @@ void func_809B0558(EnAni* this, PlayState* play) {
         } else {
             EnAni_SetupAction(this, func_809B0524);
         }
-        SET_ITEMGETINF(ITEMGETINF_15);
+        SET_ITEMGETINF(ITEMGETINF_FLAG);
     } else {
-        Actor_OfferGetItem(&this->actor, play, GI_HEART_PIECE, 10000.0f, 200.0f);
+        Actor_OfferGetItem(&this->actor, play, GI_ITEM_REWARD, 10000.0f, 200.0f);
     }
 }
 
 void func_809B05F0(EnAni* this, PlayState* play) {
     if (Actor_TextboxIsClosing(&this->actor, play)) {
         EnAni_SetupAction(this, func_809B0558);
+        Actor_OfferGetItem(&this->actor, play, GI_ITEM_REWARD, 10000.0f, 200.0f);
     }
-    Actor_OfferGetItem(&this->actor, play, GI_HEART_PIECE, 10000.0f, 200.0f);
 }
 
 void func_809B064C(EnAni* this, PlayState* play) {
@@ -158,19 +163,19 @@ void func_809B064C(EnAni* this, PlayState* play) {
 
     yawDiff = this->actor.yawTowardsPlayer - this->actor.shape.rot.y;
     if (Actor_TalkOfferAccepted(&this->actor, play)) {
-        if (this->actor.textId == 0x5056) {
+        if (this->actor.textId == REPEAT_TEXTID) {
             EnAni_SetupAction(this, func_809B04F0);
-        } else if (this->actor.textId == 0x5055) {
+        } else if (this->actor.textId == REWARD_TEXTID) {
             EnAni_SetupAction(this, func_809B05F0);
         } else {
             EnAni_SetupAction(this, func_809B04F0);
         }
     } else if (yawDiff >= -0x36AF && yawDiff < 0 && this->actor.xzDistToPlayer < 150.0f &&
                -80.0f < this->actor.yDistToPlayer) {
-        if (GET_ITEMGETINF(ITEMGETINF_15)) {
-            EnAni_SetText(this, play, 0x5056);
+        if (GET_ITEMGETINF(ITEMGETINF_FLAG)) {
+            EnAni_SetText(this, play, REPEAT_TEXTID);
         } else {
-            EnAni_SetText(this, play, 0x5055);
+            EnAni_SetText(this, play, REWARD_TEXTID);
         }
     } else if (yawDiff >= -0x3E7 && yawDiff < 0x36B0 && this->actor.xzDistToPlayer < 350.0f) {
         EnAni_SetText(this, play, textId);
@@ -184,25 +189,25 @@ void func_809B07F8(EnAni* this, PlayState* play) {
 
     yawDiff = this->actor.yawTowardsPlayer - this->actor.shape.rot.y;
     if (Actor_TalkOfferAccepted(&this->actor, play)) {
-        if (this->actor.textId == 0x5056) {
+        if (this->actor.textId == REPEAT_TEXTID) {
             EnAni_SetupAction(this, func_809B0524);
-        } else if (this->actor.textId == 0x5055) {
+        } else if (this->actor.textId == REWARD_TEXTID) {
             EnAni_SetupAction(this, func_809B05F0);
         } else {
             EnAni_SetupAction(this, func_809B0524);
         }
     } else if (yawDiff > -0x36B0 && yawDiff < 0 && this->actor.xzDistToPlayer < 150.0f &&
                -80.0f < this->actor.yDistToPlayer) {
-        if (GET_ITEMGETINF(ITEMGETINF_15)) {
-            EnAni_SetText(this, play, 0x5056);
+        if (GET_ITEMGETINF(ITEMGETINF_FLAG)) {
+            EnAni_SetText(this, play, REPEAT_TEXTID);
         } else {
-            EnAni_SetText(this, play, 0x5055);
+            EnAni_SetText(this, play, REWARD_TEXTID);
         }
     } else if (yawDiff > -0x3E8 && yawDiff < 0x36B0 && this->actor.xzDistToPlayer < 350.0f) {
         if (!GET_EVENTCHKINF(EVENTCHKINF_2F)) {
             textId = 0x5052;
         } else {
-            textId = GET_ITEMGETINF(ITEMGETINF_15) ? 0x5054 : 0x5053;
+            textId = GET_ITEMGETINF(ITEMGETINF_FLAG) ? 0x5054 : 0x5053;
         }
         EnAni_SetText(this, play, textId);
     }

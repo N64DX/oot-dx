@@ -545,7 +545,7 @@ void DoorWarp1_ChildWarpOut(DoorWarp1* this, PlayState* play) {
             play->nextEntranceIndex = ENTR_ZORAS_FOUNTAIN_0;
             gSaveContext.nextCutsceneIndex = CS_INDEX_NONE;
         } else if (play->sceneId == SCENE_ANCIENT_HOLLOW) {
-            Flags_SetEventChkInf(EVENTCHKINF_EXITED_HYPER_GOHMA);
+            Flags_SetEventChkInf(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW);
             play->nextEntranceIndex = ENTR_FORBIDDEN_WOODS_5;
             gSaveContext.nextCutsceneIndex = CS_INDEX_NONE;
         } else if (play->sceneId == SCENE_GORON_MINES) {

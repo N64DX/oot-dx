@@ -13,8 +13,8 @@ SceneCmd old_dodongos_cavern_room_8[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_8MeshHeader0x000150),
-    SCENE_CMD_OBJECT_LIST(12, old_dodongos_cavern_room_8ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(17, old_dodongos_cavern_room_8ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(13, old_dodongos_cavern_room_8ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(19, old_dodongos_cavern_room_8ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -36,27 +36,30 @@ s16 old_dodongos_cavern_room_8ObjectList0x000038[] = {
     OBJECT_HIDAN_OBJECTS,
     OBJECT_GOROIWA,
     OBJECT_CRASHBOX,
+    OBJECT_SYOKUDAI,
     OBJECT_FIREFLY,
 };
 
 ActorEntry old_dodongos_cavern_room_8ActorList0x000048[] = {
-    { ACTOR_OBJECT_KANKYO,    {    0,   0,     0 }, {    0,      0, 0 }, 0x0006 },
-    { ACTOR_EN_GOROIWA,       { 4428, 984, -1515 }, {    0, 0xC000, 1 }, 0x0D03 },
-    { ACTOR_EN_BOX,           { 4240, 831, -1514 }, { 0x3F, 0x4000, 0 }, 0x2003 }, // Chest: 03, Boss Key
-    { ACTOR_BG_FLAME_THROWER, { 3150, 786, -1750 }, {    0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3230, 784, -1750 }, {    0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3310, 786, -1750 }, {    0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3385, 786, -1750 }, {    0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3365, 786, -1285 }, {    0, 0x8000, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3445, 786, -1285 }, {    0, 0x8000, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3525, 786, -1285 }, {    0, 0x8000, 0 }, 0x0000 },
-    { ACTOR_BG_FLAME_THROWER, { 3610, 788, -1285 }, {    0, 0x8000, 0 }, 0x0000 },
-    { ACTOR_EN_FIREFLY,       { 3544,   0,  -862 }, {    0,      0, 0 }, 0x0001 },
-    { ACTOR_EN_FIREFLY,       { 3555,  94, -1678 }, {    0,      0, 0 }, 0x0001 },
-    { ACTOR_EN_SPIDER,        { 3544,   0, -1093 }, {    0,      0, 0 }, 0xFFFF },
-    { ACTOR_EN_SPIDER,        { 3589,   0, -1391 }, {    0,      0, 0 }, 0xFFFF },
-    { ACTOR_EN_ITEM00,        { 3754,   0, -1524 }, {    0,      0, 0 }, 0x2903 }, // Collect: 29, Recovert Heart
-    { ACTOR_EN_ITEM00,        { 3751, 393, -1503 }, {    0,      0, 0 }, 0x0013 }, // Collect: 00, Gold Rupee
+    { ACTOR_OBJECT_KANKYO,    {    0,   0,     0 }, {    0,      0,    0 }, 0x0006 },
+    { ACTOR_EN_GOROIWA,       { 4428, 984, -1515 }, {    0, 0xC000,    1 }, 0x0D03 },
+    { ACTOR_EN_BOX,           { 4240, 831, -1514 }, { 0x3F, 0x4000, 0x18 }, 0xC003 }, // Chest: 03, Boss Key
+    { ACTOR_BG_FLAME_THROWER, { 3150, 786, -1750 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3230, 784, -1750 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3310, 786, -1750 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3385, 786, -1750 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3365, 786, -1285 }, {    0, 0x8000,    0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3445, 786, -1285 }, {    0, 0x8000,    0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3525, 786, -1285 }, {    0, 0x8000,    0 }, 0x0000 },
+    { ACTOR_BG_FLAME_THROWER, { 3610, 788, -1285 }, {    0, 0x8000,    0 }, 0x0000 },
+    { ACTOR_OBJ_SYOKUDAI2,    { 3275, 791, -1320 }, {    0,      0,    0 }, 0x1802 }, // Switch: 18
+    { ACTOR_OBJ_SYOKUDAI2,    { 3520, 791, -1720 }, {    0,      0,    0 }, 0x1802 }, // Switch: 18
+    { ACTOR_EN_FIREFLY,       { 3544,   0,  -862 }, {    0,      0,    0 }, 0x0001 },
+    { ACTOR_EN_FIREFLY,       { 3555,  94, -1678 }, {    0,      0,    0 }, 0x0001 },
+    { ACTOR_EN_SPIDER,        { 3544,   0, -1093 }, {    0,      0,    0 }, 0xFFFF },
+    { ACTOR_EN_SPIDER,        { 3589,   0, -1391 }, {    0,      0,    0 }, 0xFFFF },
+    { ACTOR_EN_ITEM00,        { 3754,   0, -1524 }, {    0,      0,    0 }, 0x2903 }, // Collect: 29, Recovert Heart
+    { ACTOR_EN_ITEM00,        { 3751, 393, -1503 }, {    0,      0,    0 }, 0x0013 }, // Collect: 00, Gold Rupee
 };
 
 RoomShapeCullable old_dodongos_cavern_room_8MeshHeader0x000150 = {

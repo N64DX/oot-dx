@@ -650,6 +650,10 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
                 return 0x5086;
             } else if (play->sceneId == SCENE_KAKARIKO_VILLAGE) {
                 return 0x5085;
+            } else if (play->sceneId == SCENE_RIVERSIDE_VILLAGE) {
+                return 0x8237;
+            } else if (play->sceneId == SCENE_RIVERSIDE_INN) {
+                return 0x8238;
             } else if (Actor_ZeldaFledDialogue()) {
                 return GET_INFTABLE(INFTABLE_C3) ? 0x701A : 0x7047;
             } else if (GET_EVENTCHKINF(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE)) {
@@ -666,6 +670,10 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
             return Actor_ZeldaFledDialogue() ? (GET_INFTABLE(INFTABLE_C4) ? 0x7001 : 0x70EB) : 0x7001;
 
         case ENHY_TYPE_MAN_1_SHAVED_BLACK_SHIRT:
+            if (play->sceneId == SCENE_RIVERSIDE_VILLAGE)
+                return 0x8239;
+            else if (play->sceneId == SCENE_RIVERSIDE_INN)
+                return 0x823A;
             return Actor_ZeldaFledDialogue() ? 0x704B : (GET_INFTABLE(INFTABLE_C5) ? 0x7024 : 0x7023);
 
         case ENHY_TYPE_BEGGAR:
@@ -673,6 +681,8 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
             return 0x700C;
 
         case ENHY_TYPE_OLD_WOMAN:
+            if (play->sceneId == SCENE_RIVERSIDE_HOUSE)
+                return GET_ITEMGETINF(ITEMGETINF_RIVERSIDE_VILLAGE_BULLET_BAG) ? 0x8232 : 0x8231;
             return Actor_ZeldaFledDialogue() ? 0x704A : (GET_INFTABLE(INFTABLE_C6) ? 0x7022 : 0x7021);
 
         case ENHY_TYPE_OLD_MAN:
@@ -685,7 +695,9 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
             }
 
         case ENHY_TYPE_YOUNG_WOMAN_BROWN_HAIR:
-            if (Actor_ZeldaFledDialogue()) {
+            if (play->sceneId == SCENE_RIVERSIDE_INN) {
+                return LINK_IS_ADULT_OR_TIMESKIP ? 0x8240 : 0x8230;
+            } else if (Actor_ZeldaFledDialogue()) {
                 return GET_INFTABLE(INFTABLE_C9) ? 0x701E : 0x7048;
             } else {
                 return GET_INFTABLE(INFTABLE_C8) ? 0x701E : 0x701D;
@@ -714,11 +726,17 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
             }
 
         case ENHY_TYPE_YOUNG_WOMAN_ORANGE_HAIR:
+            if (play->sceneId == SCENE_RIVERSIDE_VILLAGE)
+                return 0x823B;
+            else if (play->sceneId == SCENE_RIVERSIDE_HOUSE)
+                return 0x823C;
             return GET_INFTABLE(INFTABLE_MALON_SPAWNED_AT_HYRULE_CASTLE) ? (GET_INFTABLE(INFTABLE_CC) ? 0x7014 : 0x70A4)
                                                                          : 0x7014;
 
         case ENHY_TYPE_MAN_2_ALT_MUSTACHE:
-            if (play->sceneId == SCENE_KAKARIKO_VILLAGE) {
+            if (play->sceneId == SCENE_RIVERSIDE_VILLAGE) {
+                return LINK_IS_ADULT_OR_TIMESKIP ? 0x8243 : 0x8233;
+            } else if (play->sceneId == SCENE_KAKARIKO_VILLAGE) {
                 return !IS_DAY ? 0x5084 : 0x5083;
             } else {
                 return Actor_ZeldaFledDialogue() ? 0x7044 : 0x7015;
@@ -769,6 +787,21 @@ u16 EnHy_GetTextId(PlayState* play, Actor* thisx) {
     }
 }
 
+void EnHy_BoughtBulletBag(EnHy* this, PlayState* play) {
+    if ((Message_GetState(&play->msgCtx) == TEXT_STATE_DONE) && Message_ShouldAdvance(play)) {
+        Rupees_ChangeBy(-150);
+        this->actionFunc = EnHy_Fidget;
+    }
+}
+
+void EnHy_GiveBulletBag(EnHy* this, PlayState* play) {
+    if (Actor_HasParent(&this->actor, play)) {
+        this->actor.parent = NULL;
+        this->actionFunc = EnHy_BoughtBulletBag;
+    } else Actor_OfferGetItem(&this->actor, play, GI_BULLET_BAG_60, 415.0f, 10.0f);
+
+}
+
 s16 EnHy_UpdateTalkState(PlayState* play, Actor* thisx) {
     EnHy* this = (EnHy*)thisx;
     s16 beggarItems[] = { ITEM_BOTTLE_BLUE_FIRE, ITEM_BOTTLE_FISH, ITEM_BOTTLE_BUG, ITEM_BOTTLE_FAIRY };
@@ -778,6 +811,21 @@ s16 EnHy_UpdateTalkState(PlayState* play, Actor* thisx) {
         case TEXT_STATE_NONE:
         case TEXT_STATE_DONE_HAS_NEXT:
         case TEXT_STATE_CHOICE:
+            if (Message_ShouldAdvance(play)) {
+                if (this->actor.textId == 0x8231) {
+                    if (play->msgCtx.choiceIndex == 0) {
+                        if (gSaveContext.save.info.playerData.rupees < 150)
+                            Message_ContinueTextbox(play, 0xC8);
+                        else {
+                            SET_ITEMGETINF(ITEMGETINF_RIVERSIDE_VILLAGE_BULLET_BAG);
+                            Actor_OfferGetItem(&this->actor, play, GI_BULLET_BAG_60, 415.0f, 10.0f);
+                            this->actionFunc = EnHy_GiveBulletBag;
+                        }
+                    }
+                }
+                return NPC_TALK_STATE_TALKING;
+            }
+        
         case TEXT_STATE_DONE:
         case TEXT_STATE_SONG_DEMO_DONE:
         case TEXT_STATE_8:
@@ -1183,6 +1231,12 @@ void EnHy_WaitForObjects(EnHy* this, PlayState* play) {
 
         EnHy_InitSetProperties(this);
         this->path = Path_GetByIndex(play, ENHY_GET_PATH_INDEX(&this->actor), 15);
+
+        switch (ENHY_GET_TYPE(&this->actor)) {
+            case ENHY_TYPE_YOUNG_WOMAN_ORANGE_HAIR:
+                if (play->sceneId == SCENE_RIVERSIDE_VILLAGE || play->sceneId == SCENE_RIVERSIDE_HOUSE)
+                    Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, ENHY_ANIM_9);
+        }
 
         switch (ENHY_GET_TYPE(&this->actor)) {
             case ENHY_TYPE_MAN_2_BALD:

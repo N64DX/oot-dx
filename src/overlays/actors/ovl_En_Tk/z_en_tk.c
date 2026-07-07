@@ -23,6 +23,7 @@
 
 #include "assets/objects/gameplay_keep/dust_textures.h"
 #include "assets/objects/object_tk/object_tk.h"
+#include "assets/objects/object_tk/object_tk_extra.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY)
 
@@ -32,6 +33,7 @@ void EnTk_Update(Actor* thisx, PlayState* play);
 void EnTk_Draw(Actor* thisx, PlayState* play);
 
 s32 EnTk_CheckNextSpot(EnTk* this, PlayState* play);
+void EnTk_House(EnTk* this, PlayState* play);
 void EnTk_Rest(EnTk* this, PlayState* play);
 void EnTk_Walk(EnTk* this, PlayState* play);
 void EnTk_Dig(EnTk* this, PlayState* play);
@@ -351,6 +353,9 @@ u16 EnTk_GetTextId(PlayState* play, Actor* thisx) {
         return textId;
     }
 
+    if (thisx->params == GRAVEDIGGER_IGOR)
+        return 0x8220;
+
     if (GET_INFTABLE(INFTABLE_D9)) {
         /* "Do you want me to dig here? ..." */
         return 0x5019;
@@ -504,7 +509,9 @@ void EnTk_Init(Actor* thisx, PlayState* play) {
 
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, NULL, &sColChkInfoInit);
 
-    if (gSaveContext.save.dayTime <= CLOCK_TIME(18, 0) || gSaveContext.save.dayTime >= CLOCK_TIME(21, 0) ||
+    if (this->actor.params == GRAVEDIGGER_IGOR)
+        this->actionFunc = EnTk_House;
+    else if (gSaveContext.save.dayTime <= CLOCK_TIME(18, 0) || gSaveContext.save.dayTime >= CLOCK_TIME(21, 0) ||
         LINK_IS_ADULT || play->sceneId != SCENE_GRAVEYARD) {
         Actor_Kill(&this->actor);
         return;
@@ -516,13 +523,38 @@ void EnTk_Init(Actor* thisx, PlayState* play) {
     this->actor.gravity = -0.1f;
     this->currentReward = -1;
     this->currentSpot = NULL;
-    this->actionFunc = EnTk_Rest;
+    if (this->actor.params != GRAVEDIGGER_IGOR)
+        this->actionFunc = EnTk_Rest;
 }
 
 void EnTk_Destroy(Actor* thisx, PlayState* play) {
     EnTk* this = (EnTk*)thisx;
 
     Collider_DestroyCylinder(play, &this->collider);
+}
+
+void EnTk_House(EnTk* this, PlayState* play) {
+    s16 v1;
+    s16 a1_;
+
+    if (this->interactInfo.talkState != NPC_TALK_STATE_IDLE || EnTk_CheckFacingPlayer(this)) {
+        v1 = this->actor.shape.rot.y;
+        v1 -= this->h_21E;
+        v1 = this->actor.yawTowardsPlayer - v1;
+
+        Npc_UpdateTalking(play, &this->actor, &this->interactInfo.talkState, this->collider.dim.radius + 30.0f, EnTk_GetTextId, EnTk_UpdateTalkState);
+    } else if (Actor_TalkOfferAccepted(&this->actor, play)) {
+        v1 = this->actor.shape.rot.y;
+        v1 -= this->h_21E;
+        v1 = this->actor.yawTowardsPlayer - v1;
+
+        this->interactInfo.talkState = NPC_TALK_STATE_TALKING;
+    } else {
+        v1 = 0;
+    }
+
+    a1_ = CLAMP(-v1, 1270, 10730);
+    Math_SmoothStepToS(&this->headRot, a1_, 6, 1000, 1);
 }
 
 void EnTk_Rest(EnTk* this, PlayState* play) {
@@ -684,10 +716,11 @@ void EnTk_Update(Actor* thisx, PlayState* play) {
     EnTk_UpdateEyes(this);
 }
 
-void func_80B1D200(PlayState* play) {
+void func_80B1D200(EnTk* this, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_en_tk.c", 1188);
 
-    gSPDisplayList(POLY_OPA_DISP++, gDampeShovelDL);
+    if (this->actor.params != GRAVEDIGGER_IGOR)
+        gSPDisplayList(POLY_OPA_DISP++, gDampeShovelDL);
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_en_tk.c", 1190);
 }
@@ -723,7 +756,7 @@ void EnTk_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, 
     /* Limb 14 - Neck */
     if (limbIndex == 14) {
         Matrix_MultVec3f(&sp28, &this->v3f_304);
-        func_80B1D200(play);
+        func_80B1D200(this, play);
     }
 }
 
@@ -744,6 +777,8 @@ void EnTk_Draw(Actor* thisx, PlayState* play) {
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
 
     gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(sEyesSegments[this->eyeTextureIdx]));
+    gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(this->actor.params == GRAVEDIGGER_IGOR ? object_tk_IgorShirt_Tex : object_tk_005440_Tex));
+    gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(this->actor.params == GRAVEDIGGER_IGOR ? object_tk_IgorKnees_Tex : object_tk_0056C0_Tex));
 
     SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount,
                           EnTk_OverrideLimbDraw, EnTk_PostLimbDraw, this);

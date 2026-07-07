@@ -60,6 +60,9 @@
 
 #include "assets/scenes/misc/hakaana_ouke/hakaana_ouke_scene.h"
 
+#include "assets/scenes/overworld/dawngrove/dawngrove_scene.h"
+#include "assets/scenes/overworld/dawngrove_village/dawngrove_village_scene.h"
+
 u16 sCurTextId = 0;
 u16 sCurOcarinaAction = 0;
 
@@ -139,6 +142,8 @@ EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_GERUDOS_FORTRESS_17, 2, EVENTCHKINF_C7, gGerudoFortressFirstCaptureCs, false },
     { ENTR_DEATH_MOUNTAIN_CRATER_1, 2, EVENTCHKINF_B9, gDeathMountainCraterIntroCs, true },
     { ENTR_KOKIRI_FOREST_12, 2, EVENTCHKINF_C6, gKokiriForestDekuSproutPart3Cs, false },
+    { ENTR_ANCIENT_GROVE_0, 2, EVENTCHKINF_SEEN_ANCIENT_GROVE_INTRO_CS, gDawngroveIntroCs, true },
+    { ENTR_RIVERSIDE_VILLAGE_0, 2, EVENTCHKINF_SEEN_RIVERSIDE_VILLAGE_INTRO_CS, gDawngroveVillageIntroCs, true },
 };
 
 void* sCutscenesUnknownList[] = {
@@ -390,7 +395,7 @@ void CutsceneCmd_Misc(PlayState* play, CutsceneContext* csCtx, CsCmdMisc* cmd) {
 
         case CS_MISC_SHOW_TITLE_CARD:
             if (isFirstFrame) {
-                if (USE_TITLE_CARDS)
+                if (USE_TITLE_CARDS(play))
                     Message_DisplaySceneTitleCard(play);
                 else TitleCard_InitPlaceName(play, &play->actorCtx.titleCtx, player->giObjectSegment, 160, 120, PLACE_NAME_TEX_WIDTH, PLACE_NAME_TEX_HEIGHT, 20);
             }
@@ -2471,7 +2476,7 @@ void Cutscene_HandleEntranceTriggers(PlayState* play) {
         }
     }
 
-    if ( (gSaveContext.respawnFlag == 0 || gSaveContext.respawnFlag == -2) && USE_TITLE_CARDS) {
+    if ( (gSaveContext.respawnFlag == 0 || gSaveContext.respawnFlag == -2) && USE_TITLE_CARDS(play)) {
         u16 flags = gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + ((void)0, gSaveContext.sceneLayer)].field;
         if (!IS_CUTSCENE_LAYER && (flags & ENTRANCE_INFO_DISPLAY_TITLE_CARD_FLAG) && gSaveContext.showTitleCard)
             if ( (play->sceneId != SCENE_DODONGOS_CAVERN || GET_EVENTCHKINF(EVENTCHKINF_B0)) && (play->sceneId != SCENE_BOMBCHU_SHOP || GET_EVENTCHKINF(EVENTCHKINF_25)) )

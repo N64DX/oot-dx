@@ -9,7 +9,7 @@ static ColliderQuadInit sKickQuadInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xFFCFFFFF, 0x00, 0x20 },
+        { 0xFFCFFFFF, 0x00, 0x30 },
         { 0x00000000, 0x00, 0x00 },
         ATELEM_ON | ATELEM_SFX_NORMAL | ATELEM_UNK7,
         ACELEM_NONE,
@@ -29,7 +29,7 @@ static ColliderQuadInit sSwordQuadInit = {
     },
     {
         ELEM_MATERIAL_UNK0,
-        { 0xFFCFFFFF, 0x00, 0x30 },
+        { 0xFFCFFFFF, 0x00, 0x40 },
         { 0x00000000, 0x00, 0x00 },
         ATELEM_ON | ATELEM_SFX_HARD,
         ACELEM_NONE,
@@ -711,7 +711,7 @@ void BossGanon_SwordPhasePull(BossGanon* this, PlayState* play) {
                     player->actor.parent = &this->actor;
                     player->av2.actionVar2 = 0xA;
                     player->actor.speed = player->actor.velocity.y = 0;
-                    play->damagePlayer(play, -16);
+                    play->damagePlayer(play, -0x18);
 
                 }
                 break;
@@ -730,7 +730,7 @@ void BossGanon_SwordPhasePull(BossGanon* this, PlayState* play) {
                     Math_Vec3f_Copy(&sGrabPos, &this->rightHandPos);
                     player->actor.world.rot.y = sBossGanonLimbRot.y + 0x8000;
                     if (this->pulleyTimer % 20 == 0) {
-                        play->damagePlayer(play, -16);
+                        play->damagePlayer(play, -0x18);
                         Player_PlaySfx(player, LINK_IS_ADULT ? NA_SE_VO_LI_DAMAGE_S : NA_SE_VO_LI_DAMAGE_S_KID);
                     }
                 } else {

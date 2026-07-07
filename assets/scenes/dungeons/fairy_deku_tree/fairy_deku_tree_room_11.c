@@ -12,8 +12,8 @@ SceneCmd fairy_deku_tree_room_11[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&fairy_deku_tree_room_11MeshHeader0x0000B0),
-    SCENE_CMD_OBJECT_LIST(10, fairy_deku_tree_room_11ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(6, fairy_deku_tree_room_11ActorList0x00004C),
+    SCENE_CMD_OBJECT_LIST(11, fairy_deku_tree_room_11ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(11, fairy_deku_tree_room_11ActorList0x00004C),
     SCENE_CMD_END(),
 };
 
@@ -28,6 +28,7 @@ s16 fairy_deku_tree_room_11ObjectList0x000038[] = {
     OBJECT_TP,
     OBJECT_DEKUBABA,
     OBJECT_DEKUNUTS,
+    OBJECT_GOOMBA,
 };
 
 ActorEntry fairy_deku_tree_room_11ActorList0x00004C[] = {
@@ -37,6 +38,11 @@ ActorEntry fairy_deku_tree_room_11ActorList0x00004C[] = {
     { ACTOR_EN_DEKUNUTS, { 1568, 1400, -569 }, { 0, 0, 0 }, 0x0000 },
     { ACTOR_EN_DEKUNUTS, { 1298, 1400,  -22 }, { 0, 0, 0 }, 0x0000 },
     { ACTOR_EN_DEKUNUTS, { 1467, 1400,  462 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,   { 1500, 1400,  200 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,   { 1500, 1400,  200 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,   { 1400, 1400, -300 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,   { 1450, 1400, -850 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,   { 1150, 1400, -800 }, { 0, 0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_11MeshHeader0x0000B0 = {

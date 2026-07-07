@@ -133,6 +133,15 @@ typedef union ObtainedSkills {
     u8 skills;
 } ObtainedSkills; // size = 0x1
 
+typedef union ObtainedSkins {
+    struct {
+        u8 woodenShield : 1;
+        u8 metalShield  : 1;
+        u8 unk          : 6;
+    };
+    u8 skins;
+} ObtainedSkins; // size = 0x1
+
 typedef union ShieldDurability {
     struct {
         u16 durability : 11;
@@ -326,7 +335,8 @@ typedef struct SaveInfo {
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
-    /* 0x0F18  0x0F34 */ char unk_F34[0x03];
+    /* 0x0F18  0x0F34 */ ObtainedSkins obtainedSkins;
+    /* 0x0F19  0x0F35 */ char unk_F34[0x02];
     /* 0x0F1B  0x0F37 */ u8 energy;
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
     /* 0x0F20  0x0F3C */ FrogQuest frogQuest;
@@ -597,7 +607,7 @@ typedef enum LinkAge {
 #define QUEST_MAX           BOSS_RUSH
 #define QUEST_MODE          gSaveContext.save.info.questMode
 
-#define USE_TITLE_CARDS     (((TITLE_CARDS || (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST)) && !PLATFORM_IQUE))
+#define USE_TITLE_CARDS(play)   (((TITLE_CARDS || play->sceneId > SCENE_OUTSIDE_GANONS_CASTLE || (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST)) && !PLATFORM_IQUE))
 
 #define IS_VANILLA_QUEST    (R_QUEST_MODE % 3 == 0)
 #define IS_MASTER_QUEST     (R_QUEST_MODE % 3 == 1)
@@ -755,7 +765,7 @@ typedef enum LinkAge {
 #define EVENTCHKINF_21 0x21
 #define EVENTCHKINF_22 0x22
 #define EVENTCHKINF_23 0x23
-#define EVENTCHKINF_EXITED_HYPER_GOHMA 0x24
+#define EVENTCHKINF_24 0x24
 #define EVENTCHKINF_25 0x25
 #define EVENTCHKINF_2A 0x2A
 #define EVENTCHKINF_2B 0x2B
@@ -795,7 +805,8 @@ typedef enum LinkAge {
 #define EVENTCHKINF_PURIFIED_WOODFALL 0x53
 #define EVENTCHKINF_54 0x54
 #define EVENTCHKINF_55 0x55
-#define EVENTCHKINF_CLEANSED_GORON_MINES 0x56
+#define EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW 0x56
+#define EVENTCHKINF_CLEANSED_GORON_MINES 0x57
 #define EVENTCHKINF_59 0x59
 #define EVENTCHKINF_5A 0x5A
 #define EVENTCHKINF_5B 0x5B
@@ -904,6 +915,8 @@ typedef enum LinkAge {
 #define EVENTCHKINF_C7 0xC7
 #define EVENTCHKINF_C8 0xC8
 #define EVENTCHKINF_C9 0xC9
+#define EVENTCHKINF_SEEN_ANCIENT_GROVE_INTRO_CS     0xCA
+#define EVENTCHKINF_SEEN_RIVERSIDE_VILLAGE_INTRO_CS 0xCB
 
 // EVENTCHKINF 0xD0-0xD6
 #define EVENTCHKINF_INDEX_SONGS_FOR_FROGS EVENTCHKINF_INDEX(EVENTCHKINF_SONGS_FOR_FROGS_CHOIR)
@@ -974,6 +987,8 @@ typedef enum LinkAge {
 // This flag is never read for the Poachers Saw event, so the overlap only causes an issue for the Deku Nut Upgrade. It will not prevent obtaining Poachers Saw.
 #define ITEMGETINF_FOREST_STAGE_NUT_UPGRADE 0x1F
 #define ITEMGETINF_RUNNING_MAN_HEART_PIECE 0x20
+#define ITEMGETINF_RIVERSIDE_VILLAGE_ROOFTOP_MAN_REWARD 0x21
+#define ITEMGETINF_RIVERSIDE_VILLAGE_BULLET_BAG 0x22
 #define ITEMGETINF_23 0x23
 #define ITEMGETINF_24 0x24
 #define ITEMGETINF_25 0x25
@@ -1042,6 +1057,8 @@ typedef enum LinkAge {
 #define INFTABLE_THANKED_BY_GORON_ELDER 0x7D
 #define INFTABLE_TALKED_TO_TALON_IN_RANCH_HOUSE 0x7E
 #define INFTABLE_RESCUED_ZUBORA 0x7F
+#define INFTABLE_SHOWED_PICTOBOX_TO_IGOR 0x80
+#define INFTABLE_ASKED_BY_IGOR 0x81
 #define INFTABLE_TALKED_TO_MALON_FIRST_TIME 0x84
 #define INFTABLE_TOLD_EPONA_IS_SCARED 0x85
 #define INFTABLE_MALON_SPAWNED_AT_HYRULE_CASTLE 0x8B
@@ -1109,7 +1126,7 @@ typedef enum LinkAge {
 #define INFTABLE_11E 0x11E
 #define INFTABLE_GORON_SHRINE_DOOR_OPENED 0x11F
 #define INFTABLE_GORON_MINES_DOOR_OPENED 0x120
-#define INFTABLE_SECRET_SHRINE_DOOR_OPENED 0x121
+#define INFTABLE_WEBBED_SHRINE_DOOR_OPENED 0x121
 #define INFTABLE_STONE_TOWER_DOOR_OPENED 0x122
 #define INFTABLE_124 0x124
 #define INFTABLE_129 0x129

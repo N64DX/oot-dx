@@ -2888,18 +2888,18 @@ UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_50) QUICKTEXT_ENABLE COLOR(RED) "最大の矢�
 COLOR(YELLOW) "５０本" COLOR(DEFAULT) "まで　持てるぞ！"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_40) QUICKTEXT_ENABLE "You upgraded your quiver to\n"
+UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_50) QUICKTEXT_ENABLE "You upgraded your quiver to\n"
 "the " COLOR(RED) "Biggest Quiver" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Now you can carry even more \n"
 "arrows, to a maximum of " COLOR(YELLOW) "50" COLOR(DEFAULT) "!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_40) QUICKTEXT_ENABLE "Der " COLOR(RED) "Riesenköcher" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_50) QUICKTEXT_ENABLE "Der " COLOR(RED) "Riesenköcher" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Jetzt kannst Du insgesamt\n"
 COLOR(YELLOW) "50" COLOR(DEFAULT) " Pfeile tragen!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_40) QUICKTEXT_ENABLE "Vous changez votre carquois \n"
+UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_50) QUICKTEXT_ENABLE "Vous changez votre carquois \n"
 "pour un " COLOR(RED) "Enorme Carquois" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Vous pouvez désormais trans-\n"
 "porter jusqu'à " COLOR(YELLOW) "50 " COLOR(DEFAULT) "flèches!"

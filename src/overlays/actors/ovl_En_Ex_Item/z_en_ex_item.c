@@ -409,8 +409,10 @@ void EnExItem_TargetPrizeApproach(EnExItem* this, PlayState* play) {
         this->actor.parent = NULL;
         if (CUR_UPG_VALUE(UPG_BULLET_BAG) == 1) {
             getItemId = GI_BULLET_BAG_40;
-        } else {
+        } else if (CUR_UPG_VALUE(UPG_BULLET_BAG) == 2) {
             getItemId = GI_BULLET_BAG_50;
+        } else {
+            getItemId = GI_BULLET_BAG_60;
         }
         Actor_OfferGetItem(&this->actor, play, getItemId, 2000.0f, 1000.0f);
         this->actionFunc = EnExItem_TargetPrizeGive;
@@ -423,7 +425,11 @@ void EnExItem_TargetPrizeGive(EnExItem* this, PlayState* play) {
     if (Actor_HasParent(&this->actor, play)) {
         this->actionFunc = EnExItem_TargetPrizeFinish;
     } else {
-        getItemId = (CUR_UPG_VALUE(UPG_BULLET_BAG) == 2) ? GI_BULLET_BAG_50 : GI_BULLET_BAG_40;
+        if (CUR_UPG_VALUE(UPG_BULLET_BAG) == 1)
+            getItemId = GI_BULLET_BAG_40;
+        else if (CUR_UPG_VALUE(UPG_BULLET_BAG) == 2)
+            getItemId = GI_BULLET_BAG_50;
+        else getItemId = GI_BULLET_BAG_60;
 
         Actor_OfferGetItem(&this->actor, play, getItemId, 2000.0f, 1000.0f);
     }

@@ -32,7 +32,8 @@ typedef enum EnBoxType {
     /*  8 */ ENBOX_TYPE_SWITCH_FLAG_FALL_SMALL, // falling, appear on switch flag set
     /*  9 */ ENBOX_TYPE_LULLABY_BIG,            // big, appear when Zelda's Lullaby is played
     /* 10 */ ENBOX_TYPE_SUNS_BIG,               // big, appear when Sun's Song is played
-    /* 11 */ ENBOX_TYPE_SWITCH_FLAG_BIG         // big, appear on switch flag set
+    /* 11 */ ENBOX_TYPE_SWITCH_FLAG_BIG,        // big, appear on switch flag set
+    /* 12 */ ENBOX_TYPE_SWITCH_FLAG_DECORATED_BIG // boss key chest, different look, same as ENBOX_TYPE_SWITCH_FLAG_BIG otherwise
 } EnBoxType;
 
 typedef struct EnBox {

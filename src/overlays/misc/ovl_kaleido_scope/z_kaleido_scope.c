@@ -91,6 +91,7 @@ typedef enum VtxPageInit {
 static u8 editor_timer = 0;
 static bool pressed_r = false;
 bool showAltQuiverSlot = false;
+bool showAltStrengthSlot = false;
 bool showAltScalesSlot = false;
 
 #if OOT_NTSC
@@ -1025,14 +1026,15 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_BOOTS_KOKIRI
     AGE_REQ_ADULT, // ITEM_BOOTS_IRON
     AGE_REQ_ADULT, // ITEM_BOOTS_HOVER
-    AGE_REQ_CHILD, // ITEM_SWORD_FAIRYS,
-    AGE_REQ_CHILD, // ITEM_ROCS_FEATHER,
-    AGE_REQ_CHILD, // ITEM_GOLDEN_FEATHER,
-    AGE_REQ_CHILD, // ITEM_PICTOBOX,
-    AGE_REQ_CHILD, // ITEM_SHRINE_KEY,
-    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
-    AGE_REQ_NONE,  // ITEM_BOMB_BAG_20
-    AGE_REQ_NONE,  // ITEM_BOMB_BAG_30
+    AGE_REQ_CHILD, // ITEM_SWORD_FAIRYS
+    AGE_REQ_CHILD, // ITEM_ROCS_FEATHER
+    AGE_REQ_CHILD, // ITEM_GOLDEN_FEATHER
+    AGE_REQ_CHILD, // ITEM_PICTOBOX
+    AGE_REQ_CHILD, // ITEM_SHRINE_KEY
+    AGE_REQ_NONE,  // ITEM_BOTTLE_POTION_SHIELD
+    AGE_REQ_CHILD, // ITEM_SHIELD_WOODEN
+    AGE_REQ_CHILD, // ITEM_SHIELD_HEROS
+    AGE_REQ_CHILD, // ITEM_SHIELD_METAL
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_40
     AGE_REQ_CHILD, // ITEM_STRENGTH_GORONS_BRACELET
     AGE_REQ_ADULT, // ITEM_STRENGTH_SILVER_GAUNTLETS
@@ -1040,18 +1042,23 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_SCALE_SILVER
     AGE_REQ_NONE,  // ITEM_SCALE_GOLDEN
     AGE_REQ_ADULT, // ITEM_GIANTS_KNIFE
-    AGE_REQ_NONE,  // ITEM_ADULTS_WALLET,
-    AGE_REQ_NONE,  // ITEM_GIANTS_WALLET,
-    AGE_REQ_NONE,  // ITEM_DEKU_SEEDS,
-    AGE_REQ_NONE,  // ITEM_FISHING_POLE,
+    AGE_REQ_NONE,  // ITEM_ADULTS_WALLET
+    AGE_REQ_NONE,  // ITEM_GIANTS_WALLET
+    AGE_REQ_NONE,  // ITEM_DEKU_SEEDS
+    AGE_REQ_NONE,  // ITEM_FISHING_POLE
     AGE_REQ_CHILD, // ITEM_BULLET_BAG_30
     AGE_REQ_CHILD, // ITEM_BULLET_BAG_40
     AGE_REQ_CHILD, // ITEM_BULLET_BAG_50
+    AGE_REQ_CHILD, // ITEM_BULLET_BAG_60
     AGE_REQ_ADULT, // ITEM_QUIVER_30
     AGE_REQ_ADULT, // ITEM_QUIVER_40
     AGE_REQ_ADULT, // ITEM_QUIVER_50
-    AGE_REQ_CHILD, // ITEM_SHIELD_HEROS
+    AGE_REQ_ADULT, // ITEM_QUIVER_60
+    AGE_REQ_NONE,  // ITEM_BOMB_BAG_20
+    AGE_REQ_NONE,  // ITEM_BOMB_BAG_30
+    AGE_REQ_NONE,  // ITEM_BOMB_BAG_40
     AGE_REQ_CHILD, // ITEM_AMULET_OF_ENERGY
+    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
 };
 
 u8 gAreaGsFlags[] = {
@@ -2325,9 +2332,9 @@ void KaleidoScope_DrawUIOverlay(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
-static bool lastItem[4];
+static bool lastItem[5];
 
-#define ITEM_LABEL_LANGUAGE_OFFSET ITEM_DUNGEON_MAP
+#define ITEM_LABEL_LANGUAGE_OFFSET ITEM_SMALL_KEY
 
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
@@ -2345,7 +2352,7 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
         texIndex = pauseCtx->namedItem;
 
         if (pauseCtx->namedItem >= ITEM_SONG_MINUET)
-            texIndex -= ITEM_SONG_MINUET - ITEM_PERFECT_BLOCK_UPGRADE;
+            texIndex -= ITEM_SONG_MINUET - LAST_ITEM_ICON - 1;
 
         if (pauseCtx->pageIndex == PAUSE_EQUIP) {
             if (showAltQuiverSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 0) {
@@ -2365,8 +2372,10 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
             else if (pauseCtx->pageIndex == PAUSE_EQUIP) {
                 if (pauseCtx->namedItem == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
                     texIndex = ITEM_SWORD_HEROS;
+                else if (pauseCtx->namedItem == ITEM_SHIELD_DEKU && gSaveContext.save.info.obtainedSkins.woodenShield)
+                    texIndex = ITEM_SHIELD_WOODEN;
                 else if (pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-                    texIndex = ITEM_SHIELD_HEROS;
+                    texIndex = gSaveContext.save.info.obtainedSkins.metalShield ? ITEM_SHIELD_METAL : ITEM_SHIELD_HEROS;
                 else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_RAZOR_SWORD)
                     texIndex = ITEM_BOW_FIRE;
                 else if (pauseCtx->namedItem == ITEM_HEART_PIECE_2) // Biggoron Sword
@@ -3940,7 +3949,8 @@ void KaleidoScope_Update(PlayState* play) {
             lastItem[0] = IS_HEROS_SWORD;
             lastItem[1] = IS_HEROS_SHIELD;
             lastItem[2] = showAltQuiverSlot;
-            lastItem[3] = showAltScalesSlot;
+            lastItem[3] = showAltStrengthSlot;
+            lastItem[4] = showAltScalesSlot;
             pauseCtx->was_in_debug = false;
             sSavedButtonStatus[0] = gSaveContext.buttonStatus[0];
             sSavedButtonStatus[1] = gSaveContext.buttonStatus[1];

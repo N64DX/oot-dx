@@ -59,7 +59,6 @@ Gfx gCrashboxDL[] = {
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
     gsSPClearGeometryMode(G_TEXTURE_ENABLE | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetGeometryMode(G_TEXTURE_ENABLE | G_CULL_BACK | G_FOG | G_LIGHTING),
-    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
     gsDPSetEnvColor(255, 255, 255, 255),
     gsSPVertex(&object_crashboxVtx[0], 20, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),

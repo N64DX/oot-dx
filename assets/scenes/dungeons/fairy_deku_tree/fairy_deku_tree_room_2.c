@@ -31,11 +31,11 @@ s16 fairy_deku_tree_room_2ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_2ActorList0x000048[] = {
-    { ACTOR_EN_ST,       { -135, 506,  146 }, { 0, 0xE000, 0 }, 0xFFFF },
-    { ACTOR_EN_ST,       {   75, 494,  -70 }, { 0, 0xE000, 0 }, 0xFFFF },
+    { ACTOR_EN_ST,       { -135, 506,  146 }, { 0, 0xE000, 0 }, 0x0000 },
+    { ACTOR_EN_ST,       {   75, 494,  -70 }, { 0, 0xE000, 0 }, 0x0000 },
     { ACTOR_EN_DEKUNUTS, { -195, 320, -175 }, { 0,      0, 0 }, 0x0000 },
     { ACTOR_EN_DEKUNUTS, {  110, 320,   98 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_TP,       {  -11, 333,    0 }, { 0,      0, 0 }, 0xFFFE },
+    { ACTOR_EN_TP,       {  -11, 333,    0 }, { 0,      0, 0 }, 0xFFFF },
 };
 
 RoomShapeCullable fairy_deku_tree_room_2MeshHeader0x0000A0 = {

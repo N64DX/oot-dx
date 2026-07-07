@@ -1582,10 +1582,145 @@ COLOR(LIGHTBLUE) "Fermé pour une durée indéterminée.\n"
 DEFINE_MESSAGE(0x023E, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
+QUICKTEXT_ENABLE "This room is closed.\n"
+"Under renovation for the forseeable\n"
+"future.\n"
+SHIFT(20) "--Riverside Inn Staff" QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0240, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
 COLOR(LIGHTBLUE) "Prove yourself worthy.\n"
 "Complete the trials of the forest\n"
 "without relying on the use of\n"
 "magic items." COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0241, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "This portrait pierces your\n"
+"heart and soul." COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0242, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "This portrait pierces your\n"
+"heart and soul.\n" COLOR(DEFAULT) QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "Wait... There's a note on the portrait.\n"
+"It reads:\n" COLOR(DEFAULT) QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Dampé, if you read this, I'm at the\n"
+"inn upstairs studying the curse.\n"
+"---Igor" QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0243, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "I don't imagine I'll be staying here\n"
+"much longer. That room upstairs...\n"
+"It is being renovated for years!" QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "The noise... The constant noise!\n"
+"Day after day! YIKES!" QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "I bet it is costing a ton of Rupees\n"
+"to completely redesign the room,\n"
+"but only to end up being the same." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Not that it makes any difference\n"
+"to me. I'm content with what I have.\n"
+"I'm happy just relaxing on rooftops,\n"
+"spending my time in the sun. Ahh..." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0244, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "I don't imagine I'll be staying here\n"
+"much longer. That room upstairs...\n"
+"The door opens and closes by itself!" QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "If you ask me, that means\n"
+"the room is haunted! YIKES!" QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "I'd bet there's a ghost trying to\n"
+"protect something valuable it had in\n"
+"that room before it passed on..." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Not that it makes any difference\n"
+"to me. I'm content with what I have.\n"
+"I'm happy just relaxing on rooftops,\n"
+"spending my time in the sun. Ahh..." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0245, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE "The " COLOR(PURPLE) "Ancient Hollow" COLOR(DEFAULT) "..." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Red and blue flames burn the\n"
+"bones as frost bites at the skin." QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0246, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE SHIFT(37) COLOR(BLUE) "TOWARDS THE DARK:" COLOR(DEFAULT) "\n"
+SHIFT(8) "Everything to know about a trek\n"
+SHIFT(22) "to the " COLOR(PURPLE) "Ancient Hollow" COLOR(DEFAULT) " itself." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Travelling from the " COLOR(YELLOW) "Forbidden Woods" COLOR(DEFAULT) "\n"
+"to the " COLOR(PURPLE) "Ancient Grove" COLOR(DEFAULT) " is dangerous.\n"
+"It is ill-advised to make the journey\n"
+"without a proper sword and shield. "QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Also keep in mind that that a\n"
+"dark presence dwells within the\n"
+COLOR(PURPLE) "Ancient Hollow" COLOR(DEFAULT) ", causing evil monsters\n"
+"to appear." QUICKTEXT_DISABLE
+BOX_BREAK
+
+QUICKTEXT_ENABLE "Finally, be sure to bring a handful\n"
+"of effective potions and elixirs.\n"
+"You may not think you need\n"
+"them until it's too late!" QUICKTEXT_DISABLE
 ),
 MSG(),
 MSG()

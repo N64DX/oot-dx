@@ -14,6 +14,7 @@ typedef struct ItemEtcetera {
     /* 0x0150 */ s16 giDrawId;
     /* 0x0152 */ s16 getItemId;
     /* 0x0154 */ u8 requiredObjectSlot;
+    /* 0x0155 */ bool playedSfx;
     /* 0x0158 */ ActorFunc drawFunc;
     /* 0x015C */ ItemEtceteraActionFunc actionFunc;
 } ItemEtcetera; // size = 0x0160
@@ -33,7 +34,9 @@ typedef enum ItemEtceteraType {
     /* 0x0B */ ITEM_ETC_RUPEE_PURPLE_CHEST_GAME,
     /* 0x0C */ ITEM_ETC_HEART_PIECE_CHEST_GAME,
     /* 0x0D */ ITEM_ETC_KEY_SMALL_CHEST_GAME,
-    /* 0x0E */ ITEM_ETC_SWORD_HEROS
+    /* 0x0E */ ITEM_ETC_SWORD_HEROS,
+    /* 0x0F */ ITEM_ETC_PICTOBOX,
+    /* 0x10 */ ITEM_ETC_ANCIENT_HOLLOW_KEY
 } ItemEtceteraType;
 
 #endif

@@ -8909,8 +8909,6 @@ s32 Camera_ChangeDoorCam(Camera* camera, Actor* doorActor, s16 bgCamIndex, f32 a
         PRINTF(".... change default door camera (set %d)\n", CAM_SET_DOORC);
     } else if (bgCamIndex == -2) {
         Camera_RequestSetting(camera, CAM_SET_SPIRAL_DOOR);
-    } else if (bgCamIndex == -3) {
-        Camera_RequestSetting(camera, CAM_SET_DOORD);
     } else {
         s32 setting = Camera_GetBgCamSetting(camera, bgCamIndex);
 

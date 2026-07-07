@@ -14,7 +14,7 @@ SceneCmd mountain_village_room_0[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_0003D0),
     SCENE_CMD_OBJECT_LIST(15, mountain_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(42, mountain_village_room_0ActorEntry_000074),
+    SCENE_CMD_ACTOR_LIST(40, mountain_village_room_0ActorEntry_000074),
     SCENE_CMD_END(),
 };
 
@@ -55,8 +55,6 @@ ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_OBJ_HAMISHI,       {   146,  -30,   831 }, {    0,      0,  0 }, 0x0200 }, // Switch: 00
     { ACTOR_OBJ_HAMISHI,       {   147,  -30,   770 }, {    0,      0,  0 }, 0x0001 }, // Switch: 01
     { ACTOR_OBJ_HAMISHI,       {    79,  -30,   805 }, {    0,      0,  0 }, 0x0002 }, // Switch: 02
-    { ACTOR_OBJ_BOMBIWA,       { -1045,   31,  -240 }, {    0,      0,  0 }, 0x0003 }, // Switch: 03
-    { ACTOR_OBJ_BOMBIWA,       {  -965,   35,  -275 }, {    0,      0,  0 }, 0x0004 }, // Switch: 04
     { ACTOR_EN_ISHI,           {   244, 1408, -1322 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,           {   514, 1408, -1213 }, {    0,      0,  0 }, 0x0110 },
     { ACTOR_EN_ISHI,           {   654,  -17,   850 }, {    0,      0,  0 }, 0x0200 },
@@ -140,7 +138,7 @@ SceneCmd mountain_village_room_0Set_timeskip[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_timeskip),
     SCENE_CMD_OBJECT_LIST(15, mountain_village_room_0ObjectList_timeskip),
-    SCENE_CMD_ACTOR_LIST(62, mountain_village_room_0ActorEntry_timeskip),
+    SCENE_CMD_ACTOR_LIST(63, mountain_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
 
@@ -166,6 +164,7 @@ ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_EN_KAKASI2,        {   510,  363,   900 }, {    0,      0, 14 }, 0x053E }, // Switch: 3E
     { ACTOR_OBJ_SYOKUDAI,      {  -818,    8,  -170 }, {    0, 0x1770,  0 }, 0x243F },
     { ACTOR_OBJ_SYOKUDAI,      {   800, 1408, -1400 }, {    0, 0xEC78,  0 }, 0x205F }, // Switch: 1F
+    { ACTOR_OBJ_SYOKUDAI3,     {   400,  -40,  -300 }, {    0,      0,  0 }, 0x243F },
     { ACTOR_OBJ_COMB,          {  1025,  271,   695 }, {    0, 0xFE0C,  0 }, 0x0081 },
     { ACTOR_EN_ITEM00,         {    79,  -30,   807 }, {    0,      0,  0 }, 0x0902 }, // Collect: 09
     { ACTOR_OBJ_TSUBO,         {   510,  363,   700 }, {    0,      0,  0 }, 0x3914 }, // Collect: 1C

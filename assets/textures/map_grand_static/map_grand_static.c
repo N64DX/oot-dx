@@ -129,3 +129,11 @@ u64 gGoronVillageMinimapTex[TEX_LEN(u64, 80, 47, 4)] = {
 u64 gGoronShrineMinimapTex[TEX_LEN(u64, 80, 60, 4)] = {
 #include "assets/textures/map_grand_static/gGoronShrineMinimapTex.ia4.inc.c"
 };
+
+u64 gDawngroveVillageMinimapTex[TEX_LEN(u64, 96, 62, 4)] = {
+#include "assets/textures/map_grand_static/gDawngroveVillageMinimapTex.ia4.inc.c"
+};
+
+u64 gDawngroveMinimapTex[TEX_LEN(u64, 64, 56, 4)] = {
+#include "assets/textures/map_grand_static/gDawngroveMinimapTex.ia4.inc.c"
+};

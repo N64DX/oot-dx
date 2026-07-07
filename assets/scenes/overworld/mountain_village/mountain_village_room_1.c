@@ -58,7 +58,7 @@ ActorEntry mountain_village_room_1ActorEntry_000074[] = {
     { ACTOR_EN_MKK,         { 3528,  952,  -572 }, { 0,      0, 0 }, 0xFA01 },
     { ACTOR_EN_MKK,         { 3733,  952,  -659 }, { 0,      0, 0 }, 0xFA01 },
     { ACTOR_EN_MKK,         { 3671,  952,  -624 }, { 0,      0, 0 }, 0xFA01 },
-    { ACTOR_DOOR_ANA,       { 2406, 1168, -1197 }, { 0,      0, 0 }, 0x0041 }, // Chest: 01 (Generic Grotto: Gold Rupee)
+    { ACTOR_DOOR_ANA,       { 2406, 1168, -1197 }, { 0,      0, 0 }, 0x00C1 }, // Chest: 01 (Generic Grotto: Goron's Key)
     { ACTOR_EN_GS,          { 3685,  837, -1101 }, { 0, 0x47D0, 0 }, 0xFF22 },
     { ACTOR_EN_FR,          { 2300, 1168, -1200 }, { 0,      0, 0 }, 0x0211 }, // Yellow: 1 (Spring Lake)
     { ACTOR_OBJ_HSBLOCK,    { 2230,  141,  -170 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F

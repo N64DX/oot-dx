@@ -74,7 +74,7 @@ Spawn swamp_spider_house_sceneEntranceList0x000148[] = {
 };
 
 u16 swamp_spider_house_sceneExitList_00014C[] = {
-    ENTR_FORBIDDEN_WOODS_4,
+    ENTR_SPRING_LAKE_3,
 };
 
 EnvLightSettings swamp_spider_house_sceneLightSettings0x000150[] = {
