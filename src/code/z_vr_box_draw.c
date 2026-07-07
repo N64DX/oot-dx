@@ -14,6 +14,15 @@ Mtx* Skybox_UpdateMatrix(SkyboxContext* skyboxCtx, f32 x, f32 y, f32 z) {
     return MATRIX_TO_MTX(sSkyboxDrawMatrix, "../z_vr_box_draw.c", 42);
 }
 
+void Skybox_SetColors(SkyboxContext* skyboxCtx, u8 primR, u8 primG, u8 primB, u8 envR, u8 envG, u8 envB) {
+    skyboxCtx->prim.r = primR;
+    skyboxCtx->prim.g = primG;
+    skyboxCtx->prim.b = primB;
+    skyboxCtx->env.r = envR;
+    skyboxCtx->env.g = envG;
+    skyboxCtx->env.b = envB;
+}
+
 void Skybox_Draw(SkyboxContext* skyboxCtx, GraphicsContext* gfxCtx, s16 skyboxId, s16 blend, f32 x, f32 y, f32 z) {
     OPEN_DISPS(gfxCtx, "../z_vr_box_draw.c", 52);
 
@@ -46,6 +55,13 @@ void Skybox_Draw(SkyboxContext* skyboxCtx, GraphicsContext* gfxCtx, s16 skyboxId
 
     // Enable texture filtering RDP pipeline stages for bilinear filtering
     gDPSetTextureConvert(POLY_OPA_DISP++, G_TC_FILT);
+
+    // Set skybox color
+    if (skyboxId == SKYBOX_TERMINA_SKY) {
+        gDPSetCombineLERP(POLY_OPA_DISP++, TEXEL1, TEXEL0, PRIMITIVE_ALPHA, TEXEL0, TEXEL1, TEXEL0, PRIMITIVE, TEXEL0, PRIMITIVE, ENVIRONMENT, COMBINED, ENVIRONMENT, 0, 0, 0, COMBINED);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, skyboxCtx->prim.r, skyboxCtx->prim.g, skyboxCtx->prim.b, blend);
+        gDPSetEnvColor(POLY_OPA_DISP++, skyboxCtx->env.r, skyboxCtx->env.g, skyboxCtx->env.b, 0);
+    }
 
     if (skyboxCtx->drawType != SKYBOX_DRAW_128) {
         // 256x256 textures, per-face palettes

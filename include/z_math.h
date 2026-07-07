@@ -124,6 +124,7 @@ extern Vec3s gZeroVec3s;
 #define F32_LERP(v0,v1,t) ((v0) * (1.0f - (t)) + (v1) * (t))
 #define F32_LERPIMP(v0, v1, t) (v0 + ((v1 - v0) * t))
 #define F32_LERPIMPINV(v0, v1, t) ((v0) + (((v1) - (v0)) / (t)))
+#define F32_LERPIMPALT(v0, v1, t) (((v1) - (v0)) * (t) + (v0))
 #define BINANG_LERPIMP(v0, v1, t) ((v0) + (s16)((s16)((v1) - (v0)) * (t)))
 #define BINANG_LERPIMPINV(v0, v1, t) ((v0) + (s16)((v1) - (v0)) / (t))
 

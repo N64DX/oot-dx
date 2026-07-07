@@ -1095,6 +1095,24 @@ beginseg
 endseg
 
 beginseg
+    name "d2_fine_static"
+    compress
+    include "$(BUILD_DIR)/assets/textures/skyboxes/d2_fine_static.o"
+endseg
+
+beginseg
+    name "d2_cloud_static"
+    compress
+    include "$(BUILD_DIR)/assets/textures/skyboxes/d2_cloud_static.o"
+endseg
+
+beginseg
+    name "d2_fine_pal_static"
+    compress
+    include "$(BUILD_DIR)/assets/textures/skyboxes/d2_fine_pal_static.o"
+endseg
+
+beginseg
     name "vr_MDVR_static"
     compress
     include "$(BUILD_DIR)/assets/textures/backgrounds/vr_MDVR_static.o"

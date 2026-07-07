@@ -174,6 +174,290 @@ TimeBasedSkyboxEntry gTimeBasedSkyboxConfigs[][9] = {
     },
 };
 
+TimeBasedTerminaSkyboxEntry gTimeBasedTerminaSkyboxConfigs[][9] = {
+    { // SKYBOX_CONFIG_0
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   3,   3 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,   3,   4 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,   4,   4 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   0,   1 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   1 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   2 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   2,   2 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   2,   3 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   3,   3 },
+    }, { // SKYBOX_CONFIG_1
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,   7,   7 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,   7,   8 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,   8,   8 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,   4,   5 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   5,   5 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,   5,   6 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,   6,   6 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,   6,   7 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,   7,   7 },
+    }, { // SKYBOX_CONFIG_2
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  11,  52 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  52,  52 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,   8,   9 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,   9,   9 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,   9,  10 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  10,  10 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  10,  11 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+    }, { // SKYBOX_CONFIG_3
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  15,  15 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  15,  16 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  16,  16 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  12,  13 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  13,  13 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  13,  14 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  14,  14 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  14,  15 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  15,  15 },
+    }, { // SKYBOX_CONFIG_4
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  19,  19 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  19,  20 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  20,  20 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  16,  17 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  17,  17 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  17,  18 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  18,  18 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  18,  19 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  19,  19 },
+    }, { // SKYBOX_CONFIG_5
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  23,  23 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  23,  52 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  52,  52 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  20,  21 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  21,  21 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  21,  22 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  22,  22 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  22,  23 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  23,  23 },
+    }, { // SKYBOX_CONFIG_6
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  27,  27 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  27,  28 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  28,  28 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  24,  25 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  25,  25 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  25,  26 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  26,  26 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  26,  27 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  27,  27 },
+    }, { // SKYBOX_CONFIG_7
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  31,  31 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  31,  32 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  32,  32 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  28,  29 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  29,  29 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  29,  30 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  30,  30 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  30,  31 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  31,  31 },
+    }, { // SKYBOX_CONFIG_8
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  35,  35 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  35,  52 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  52,  52 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  32,  33 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  33,  33 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  33,  34 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  34,  34 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  34,  35 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  35,  35 },
+    }, { // SKYBOX_CONFIG_9
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  39,  39 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  39,  40 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  40,  40 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  36,  37 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  37,  37 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  37,  38 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  38,  38 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  38,  39 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  39,  39 },
+    }, { // SKYBOX_CONFIG_10
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  43,  43 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  43,  44 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  44,  44 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  40,  41 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  41,  41 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  41,  42 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  42,  42 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  42,  43 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  43,  43 },
+    }, { // SKYBOX_CONFIG_11
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  47,  47 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  47,  52 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  52,  52 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  44,  45 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  45,  45 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  45,  46 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  46,  46 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  46,  47 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  47,  47 },
+    }, { // SKYBOX_CONFIG_12
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  51,  51 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  51,  48 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  48,  49 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  49,  49 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  49,  49 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  49,  50 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  50,  50 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  50,  51 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  51,  51 },
+    }, { // SKYBOX_CONFIG_13
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  55,  55 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  55,  52 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  52,  52 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  52,  53 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  53,  53 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  53,  54 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  54,  54 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  54,  54 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  55,  55 },
+    }, { // SKYBOX_CONFIG_14
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  59,  59 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  59,  56 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  56 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  57 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  57,  57 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  57,  58 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  58,  58 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  58,  58 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  59,  59 },
+    }, { // SKYBOX_CONFIG_15
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  63,  63 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  63,  60 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  60,  60 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  60,  61 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  61,  61 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  61,  62 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  62,  62 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  62,  62 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  63,  63 },
+    }, { // SKYBOX_CONFIG_16
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  67,  67 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  67,  64 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  64,  64 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  64,  65 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  65,  65 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  65,  66 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  66,  66 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  66,  66 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  67,  67 },
+    }, { // SKYBOX_CONFIG_17
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   1 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   1 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   1 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   1 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   1 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   1 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   1 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   1 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   1,   1 },
+    }, { // SKYBOX_CONFIG_18
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  71,  71 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  71,  72 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  72,  72 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  68,  69 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  69,  69 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  69,  70 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  70,  70 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  70,  71 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  71,  71 },
+    }, { // SKYBOX_CONFIG_19
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  75,  75 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  75,  76 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  76,  76 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  72,  73 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  73,  73 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  73,  74 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  74,  74 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  74,  75 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  75,  75 },
+    }, { // SKYBOX_CONFIG_20
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  79,  79 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  79,  52 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  52,  52 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  76,  77 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  77,  77 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  77,  78 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  78,  78 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  78,  79 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  79,  79 },
+    }, { // SKYBOX_CONFIG_21
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  83,  83 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  83,  84 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  84,  84 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  80,  81 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  81,  81 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  81,  82 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  82,  82 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  82,  83 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  83,  83 },
+    }, { // SKYBOX_CONFIG_22
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  87,  87 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  87,  88 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  88,  88 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  84,  85 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  85,  85 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  85,  86 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  86,  86 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  86,  87 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  87,  87 },
+    }, { // SKYBOX_CONFIG_23
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  91,  91 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  91,  52 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  52,  52 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  88,  89 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  89,  89 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  89,  90 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  90,  90 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  90,  91 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  91,  91 },
+    }, { // SKYBOX_CONFIG_24
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  11,  11 },
+    }, { // SKYBOX_CONFIG_25
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  95 , 95 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1,  95,  96 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  96,  96 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  92,  93 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  93,  93 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0,  93,  94 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  94,  94 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  94,  95 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,  95,  95 },
+    }, { // SKYBOX_CONFIG_26
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  99,  99 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  99, 100 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1, 100, 100 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  96,  97 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  97,  97 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  97,  98 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  98,  98 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  98,  99 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  99,  99 },
+    }, { // SKYBOX_CONFIG_27
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(4, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX0, 103, 103 },
+        { CLOCK_TIME(4, 0),  CLOCK_TIME(5, 0),      false, TERMINA_SKYBOX0, TERMINA_SKYBOX1, 103,  52 },
+        { CLOCK_TIME(5, 0),  CLOCK_TIME(6, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  52,  52 },
+        { CLOCK_TIME(6, 0),  CLOCK_TIME(8, 0),      false, TERMINA_SKYBOX1, TERMINA_SKYBOX1, 100, 101 },
+        { CLOCK_TIME(8, 0),  CLOCK_TIME(16, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX1, 101, 101 },
+        { CLOCK_TIME(16, 0), CLOCK_TIME(17, 0),     false, TERMINA_SKYBOX1, TERMINA_SKYBOX0, 101, 102 },
+        { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0, 102, 102 },
+        { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0, 102, 103 },
+        { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0, 103, 103 },
+    },
+};
+
 SkyboxFile gNormalSkyFiles[] = {
     {
         ROM_FILE(vr_fine0_static),
@@ -210,6 +494,14 @@ SkyboxFile gNormalSkyFiles[] = {
     {
         ROM_FILE(vr_holy0_static),
         ROM_FILE(vr_holy0_pal_static),
+    },
+    {
+        ROM_FILE(d2_fine_static),
+        ROM_FILE(d2_fine_pal_static),
+    },
+    {
+        ROM_FILE(d2_cloud_static),
+        ROM_FILE(d2_fine_pal_static),
     },
 };
 
@@ -429,7 +721,7 @@ void Environment_Init(PlayState* play2, EnvironmentContext* envCtx, s32 unused) 
                     break;
             }
 
-            if (play->skyboxId == SKYBOX_NORMAL_SKY) {
+            if (play->skyboxId == SKYBOX_NORMAL_SKY || play->skyboxId == SKYBOX_TERMINA_SKY) {
                 if (gWeatherMode == WEATHER_MODE_SNOW) {
                     play->envCtx.precipitation[PRECIP_SNOW_CUR] = play->envCtx.precipitation[PRECIP_SNOW_MAX] = 64;
                 } else if (gWeatherMode == WEATHER_MODE_RAIN) {
@@ -674,12 +966,63 @@ void Environment_UpdateStorm(EnvironmentContext* envCtx, u8 unused) {
     }
 }
 
+Color_RGBA8 sSkyboxPrimColors[] = {
+    { 181, 100, 72, 0 },  { 255, 255, 255, 0 }, { 255, 164, 63, 0 },  { 70, 90, 100, 0 },   { 180, 110, 70, 0 },
+    { 140, 120, 90, 0 },  { 186, 107, 70, 0 },  { 50, 90, 120, 0 },   { 160, 104, 125, 0 }, { 225, 234, 150, 0 },
+    { 243, 84, 33, 0 },   { 112, 37, 55, 0 },   { 181, 100, 27, 0 },  { 255, 255, 255, 0 }, { 186, 107, 69, 0 },
+    { 10, 40, 90, 0 },    { 180, 120, 100, 0 }, { 140, 120, 110, 0 }, { 186, 107, 70, 0 },  { 0, 50, 60, 0 },
+    { 160, 104, 215, 0 }, { 225, 234, 150, 0 }, { 243, 84, 33, 0 },   { 100, 25, 45, 0 },   { 181, 100, 27, 0 },
+    { 255, 255, 255, 0 }, { 186, 107, 69, 0 },  { 10, 10, 50, 0 },    { 165, 110, 63, 0 },  { 150, 120, 90, 0 },
+    { 166, 112, 65, 0 },  { 10, 40, 60, 0 },    { 160, 104, 215, 0 }, { 225, 234, 150, 0 }, { 243, 84, 33, 0 },
+    { 100, 20, 40, 0 },   { 181, 100, 27, 0 },  { 255, 255, 255, 0 }, { 186, 107, 69, 0 },  { 0, 50, 70, 0 },
+    { 180, 126, 70, 0 },  { 150, 140, 120, 0 }, { 225, 164, 63, 0 },  { 0, 70, 80, 0 },     { 160, 104, 215, 0 },
+    { 225, 234, 150, 0 }, { 243, 84, 33, 0 },   { 100, 40, 65, 0 },   { 105, 72, 57, 0 },   { 150, 120, 90, 0 },
+    { 80, 56, 21, 0 },    { 60, 46, 40, 0 },    { 210, 120, 180, 0 }, { 210, 120, 180, 0 }, { 210, 120, 180, 0 },
+    { 210, 120, 180, 0 }, { 100, 90, 110, 0 },  { 100, 90, 110, 0 },  { 100, 90, 110, 0 },  { 100, 90, 110, 0 },
+    { 255, 255, 255, 0 }, { 255, 255, 255, 0 }, { 255, 255, 255, 0 }, { 255, 255, 255, 0 }, { 25, 53, 235, 0 },
+    { 25, 53, 235, 0 },   { 25, 53, 235, 0 },   { 25, 53, 235, 0 },   { 198, 121, 88, 0 },  { 255, 255, 255, 0 },
+    { 255, 164, 70, 0 },  { 55, 53, 91, 0 },    { 199, 126, 78, 0 },  { 159, 125, 103, 0 }, { 186, 107, 59, 0 },
+    { 50, 90, 120, 0 },   { 171, 113, 131, 0 }, { 225, 234, 180, 0 }, { 237, 84, 37, 0 },   { 133, 48, 75, 0 },
+    { 198, 121, 88, 0 },  { 255, 255, 255, 0 }, { 255, 164, 70, 0 },  { 55, 53, 91, 0 },    { 209, 135, 100, 0 },
+    { 180, 177, 158, 0 }, { 196, 127, 79, 0 },  { 50, 90, 120, 0 },   { 171, 113, 131, 0 }, { 225, 234, 180, 0 },
+    { 237, 84, 37, 0 },   { 133, 48, 75, 0 },   { 198, 121, 88, 0 },  { 235, 250, 235, 0 }, { 255, 164, 70, 0 },
+    { 55, 53, 91, 0 },    { 205, 140, 110, 0 }, { 159, 125, 103, 0 }, { 186, 107, 59, 0 },  { 50, 90, 120, 0 },
+    { 171, 113, 131, 0 }, { 225, 234, 180, 0 }, { 237, 84, 37, 0 },   { 133, 48, 75, 0 },
+};
+
+Color_RGBA8 sSkyboxEnvColors[] = {
+    { 102, 135, 99, 0 }, { 0, 15, 69, 0 },    { 110, 55, 110, 0 }, { 0, 0, 100, 0 },   { 70, 10, 10, 0 },
+    { 40, 0, 10, 0 },    { 40, 40, 40, 0 },   { 20, 20, 30, 0 },   { 60, 0, 10, 0 },   { 65, 45, 0, 0 },
+    { 20, 25, 90, 0 },   { 0, 5, 25, 0 },     { 102, 135, 99, 0 }, { 0, 4, 199, 0 },   { 60, 65, 89, 0 },
+    { 0, 0, 0, 0 },      { 70, 10, 10, 0 },   { 20, 0, 30, 0 },    { 40, 40, 40, 0 },  { 0, 0, 20, 0 },
+    { 60, 0, 10, 0 },    { 65, 45, 0, 0 },    { 20, 25, 90, 0 },   { 0, 0, 30, 0 },    { 102, 135, 99, 0 },
+    { 0, 4, 199, 0 },    { 60, 65, 89, 0 },   { 0, 0, 20, 0 },     { 66, 10, 10, 0 },  { 46, 5, 2, 0 },
+    { 66, 10, 10, 0 },   { 0, 20, 50, 0 },    { 60, 0, 10, 0 },    { 65, 45, 0, 0 },   { 20, 25, 90, 0 },
+    { 0, 0, 20, 0 },     { 102, 135, 99, 0 }, { 0, 4, 199, 0 },    { 60, 65, 89, 0 },  { 0, 0, 40, 0 },
+    { 90, 90, 100, 0 },  { 60, 20, 30, 0 },   { 110, 55, 110, 0 }, { 0, 0, 50, 0 },    { 60, 0, 10, 0 },
+    { 65, 45, 0, 0 },    { 20, 25, 90, 0 },   { 0, 0, 25, 0 },     { 10, 0, 0, 0 },    { 46, 5, 2, 0 },
+    { 34, 14, 10, 0 },   { 21, 5, 13, 0 },    { 0, 0, 0, 0 },      { 0, 0, 0, 0 },     { 0, 0, 0, 0 },
+    { 0, 0, 0, 0 },      { 50, 20, 10, 0 },   { 50, 20, 10, 0 },   { 50, 20, 10, 0 },  { 50, 20, 10, 0 },
+    { 30, 15, 250, 0 },  { 30, 15, 250, 0 },  { 30, 15, 250, 0 },  { 30, 15, 250, 0 }, { 177, 82, 93, 0 },
+    { 177, 82, 93, 0 },  { 177, 82, 93, 0 },  { 177, 82, 93, 0 },  { 90, 82, 102, 0 }, { 0, 4, 199, 0 },
+    { 101, 24, 131, 0 }, { 26, 7, 0, 0 },     { 70, 9, 6, 0 },     { 49, 6, 1, 0 },    { 40, 15, 59, 0 },
+    { 0, 2, 28, 0 },     { 60, 0, 10, 0 },    { 75, 45, 0, 0 },    { 20, 20, 89, 0 },  { 0, 7, 17, 0 },
+    { 90, 82, 102, 0 },  { 0, 4, 199, 0 },    { 101, 24, 131, 0 }, { 26, 7, 0, 0 },    { 70, 12, 16, 0 },
+    { 51, 10, 15, 0 },   { 50, 15, 58, 0 },   { 0, 2, 28, 0 },     { 60, 0, 10, 0 },   { 75, 45, 0, 0 },
+    { 20, 20, 89, 0 },   { 0, 7, 17, 0 },     { 90, 82, 102, 0 },  { 0, 4, 199, 0 },   { 101, 24, 131, 0 },
+    { 26, 7, 0, 0 },     { 70, 20, 45, 0 },   { 49, 6, 1, 0 },     { 40, 15, 59, 0 },  { 0, 2, 28, 0 },
+    { 60, 0, 10, 0 },    { 75, 45, 0, 0 },    { 20, 20, 89, 0 },   { 0, 7, 17, 0 },
+};
+
 void Environment_UpdateSkybox(u8 skyboxId, EnvironmentContext* envCtx, SkyboxContext* skyboxCtx) {
     u32 size;
     u8 i;
     u8 newSkybox1Index = 0xFF;
     u8 newSkybox2Index = 0xFF;
     u8 skyboxBlend = 0;
+    u8 color1Index = 255;
+    u8 color2Index = 255;
+    f32 colorWeight = 0.0f;
 
     if (skyboxId == SKYBOX_CUTSCENE_MAP) {
         envCtx->skyboxConfig = 3;
@@ -830,6 +1173,103 @@ void Environment_UpdateSkybox(u8 skyboxId, EnvironmentContext* envCtx, SkyboxCon
         }
 
         envCtx->skyboxBlend = skyboxBlend;
+    } else if (skyboxId == SKYBOX_TERMINA_SKY && !envCtx->skyboxDisabled) {
+        for (i=0; i<ARRAY_COUNT(gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig]); i++) {
+            if (gSaveContext.skyboxTime >= gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].startTime && (gSaveContext.skyboxTime < gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].endTime || gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].endTime == 0xFFFF)) {
+                newSkybox1Index = gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].skybox1Index;
+                newSkybox2Index = gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].skybox2Index;
+                gSkyboxIsChanging = gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].changeSkybox;
+
+                if (gSkyboxIsChanging)
+                    skyboxBlend = Environment_LerpWeight(gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].endTime, gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].startTime, ((void)0, gSaveContext.skyboxTime)) * 255;
+                else {
+                    skyboxBlend = Environment_LerpWeight(gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].endTime, gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].startTime, ((void)0, gSaveContext.skyboxTime)) * 255;
+                    skyboxBlend = (skyboxBlend < 128) ? 255 : 0;
+
+                    if ((envCtx->changeSkyboxState != CHANGE_SKYBOX_INACTIVE) && (envCtx->changeSkyboxState < CHANGE_SKYBOX_ACTIVE)) {
+                        envCtx->changeSkyboxState++;
+                        skyboxBlend = 0;
+                    }
+                }
+                color1Index = gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].color1Index;
+                color2Index = gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].color2Index;
+                colorWeight = Environment_LerpWeight(gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].endTime, gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].startTime, gSaveContext.skyboxTime);
+                break;
+            }
+        }
+
+        Environment_UpdateStorm(envCtx, skyboxBlend);
+
+        if (envCtx->changeSkyboxState >= CHANGE_SKYBOX_ACTIVE) {
+            newSkybox1Index = gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].skybox1Index;
+            newSkybox2Index = gTimeBasedTerminaSkyboxConfigs[envCtx->changeSkyboxNextConfig][i].skybox2Index;
+            color1Index = gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].color1Index;
+            color2Index = gTimeBasedTerminaSkyboxConfigs[envCtx->changeSkyboxNextConfig][i].color2Index;
+            colorWeight = (envCtx->changeDuration - (f32)envCtx->changeSkyboxTimer) / envCtx->changeDuration;
+            skyboxBlend = ((f32)envCtx->changeDuration - envCtx->changeSkyboxTimer) / (f32)envCtx->changeDuration * 255;
+            envCtx->changeSkyboxTimer--;
+
+            if (envCtx->changeSkyboxTimer <= 0) {
+                envCtx->changeSkyboxState = CHANGE_SKYBOX_INACTIVE;
+                envCtx->skyboxConfig = envCtx->changeSkyboxNextConfig;
+            }
+        }
+
+        if (envCtx->skybox1Index != newSkybox1Index && envCtx->skyboxDmaState == SKYBOX_DMA_INACTIVE) {
+            envCtx->skyboxDmaState = SKYBOX_DMA_TEXTURE1_START;
+            size = gNormalSkyFiles[newSkybox1Index].file.vromEnd - gNormalSkyFiles[newSkybox1Index].file.vromStart;
+            osCreateMesgQueue(&envCtx->loadQueue, &envCtx->loadMsg, 1);
+            DMA_REQUEST_ASYNC(&envCtx->dmaRequest, skyboxCtx->staticSegments[0], gNormalSkyFiles[newSkybox1Index].file.vromStart, size, 0, &envCtx->loadQueue, NULL, __FILE__, __LINE__);
+            envCtx->skybox1Index = newSkybox1Index;
+        }
+
+        if (envCtx->skybox2Index != newSkybox2Index && envCtx->skyboxDmaState == SKYBOX_DMA_INACTIVE) {
+            envCtx->skyboxDmaState = SKYBOX_DMA_TEXTURE2_START;
+            size = gNormalSkyFiles[newSkybox2Index].file.vromEnd - gNormalSkyFiles[newSkybox2Index].file.vromStart;
+            osCreateMesgQueue(&envCtx->loadQueue, &envCtx->loadMsg, 1);
+            DMA_REQUEST_ASYNC(&envCtx->dmaRequest, skyboxCtx->staticSegments[1], gNormalSkyFiles[newSkybox2Index].file.vromStart, size, 0, &envCtx->loadQueue, NULL, __FILE__, __LINE__);
+            envCtx->skybox2Index = newSkybox2Index;
+        }
+
+        if (envCtx->skyboxDmaState == SKYBOX_DMA_TEXTURE1_DONE) {
+            envCtx->skyboxDmaState = SKYBOX_DMA_TLUT1_START;
+
+            if ((newSkybox1Index & 1) ^ ((newSkybox1Index & 4) >> 2)) {
+                size = gNormalSkyFiles[newSkybox1Index].palette.vromEnd - gNormalSkyFiles[newSkybox1Index].palette.vromStart;
+                osCreateMesgQueue(&envCtx->loadQueue, &envCtx->loadMsg, 1);
+                DMA_REQUEST_ASYNC(&envCtx->dmaRequest, skyboxCtx->palettes, gNormalSkyFiles[newSkybox1Index].palette.vromStart, size, 0, &envCtx->loadQueue, NULL, __FILE__, __LINE__);
+            } else {
+                size = gNormalSkyFiles[newSkybox1Index].palette.vromEnd - gNormalSkyFiles[newSkybox1Index].palette.vromStart;
+                osCreateMesgQueue(&envCtx->loadQueue, &envCtx->loadMsg, 1);
+                DMA_REQUEST_ASYNC(&envCtx->dmaRequest, (u8*)skyboxCtx->palettes + size, gNormalSkyFiles[newSkybox1Index].palette.vromStart, size, 0, &envCtx->loadQueue, NULL, __FILE__, __LINE__);
+            }
+        }
+
+        if (envCtx->skyboxDmaState == SKYBOX_DMA_TEXTURE2_DONE) {
+            envCtx->skyboxDmaState = SKYBOX_DMA_TLUT2_START;
+
+            if ((newSkybox2Index & 1) ^ ((newSkybox2Index & 4) >> 2)) {
+                size = gNormalSkyFiles[newSkybox2Index].palette.vromEnd - gNormalSkyFiles[newSkybox2Index].palette.vromStart;
+                osCreateMesgQueue(&envCtx->loadQueue, &envCtx->loadMsg, 1);
+                DMA_REQUEST_ASYNC(&envCtx->dmaRequest, skyboxCtx->palettes, gNormalSkyFiles[newSkybox2Index].palette.vromStart, size, 0, &envCtx->loadQueue, NULL, __FILE__, __LINE__);
+            } else {
+                size = gNormalSkyFiles[newSkybox2Index].palette.vromEnd - gNormalSkyFiles[newSkybox2Index].palette.vromStart;
+                osCreateMesgQueue(&envCtx->loadQueue, &envCtx->loadMsg, 1);
+                DMA_REQUEST_ASYNC(&envCtx->dmaRequest, (u8*)skyboxCtx->palettes + size, gNormalSkyFiles[newSkybox2Index].palette.vromStart, size, 0, &envCtx->loadQueue, NULL, __FILE__, __LINE__);
+            }
+        }
+
+        if (envCtx->skyboxDmaState == SKYBOX_DMA_TEXTURE1_START || envCtx->skyboxDmaState == SKYBOX_DMA_TEXTURE2_START) {
+            if (osRecvMesg(&envCtx->loadQueue, NULL, OS_MESG_NOBLOCK) == 0)
+                envCtx->skyboxDmaState++;
+        } else if (envCtx->skyboxDmaState >= SKYBOX_DMA_TEXTURE1_DONE) {
+            if (osRecvMesg(&envCtx->loadQueue, NULL, OS_MESG_NOBLOCK) == 0)
+                envCtx->skyboxDmaState = SKYBOX_DMA_INACTIVE;
+        }
+
+        envCtx->skyboxBlend = skyboxBlend;
+        Skybox_SetColors(skyboxCtx, F32_LERPIMPALT(sSkyboxPrimColors[color1Index].r, sSkyboxPrimColors[color2Index].r, colorWeight), F32_LERPIMPALT(sSkyboxPrimColors[color1Index].g, sSkyboxPrimColors[color2Index].g, colorWeight), F32_LERPIMPALT(sSkyboxPrimColors[color1Index].b, sSkyboxPrimColors[color2Index].b, colorWeight),
+                                    F32_LERPIMPALT(sSkyboxEnvColors[color1Index].r,  sSkyboxEnvColors[color2Index].r, colorWeight),  F32_LERPIMPALT(sSkyboxEnvColors[color1Index].g,  sSkyboxEnvColors[color2Index].g, colorWeight),  F32_LERPIMPALT(sSkyboxEnvColors[color1Index].b, sSkyboxEnvColors[color2Index].b, colorWeight));
     }
 }
 
@@ -942,6 +1382,8 @@ void Environment_Update(PlayState* play, EnvironmentContext* envCtx, LightContex
     if (pauseCtx->state == PAUSE_STATE_OFF) {
         if (!IS_PAUSED(&play->pauseCtx)) {
             if (play->skyboxId == SKYBOX_NORMAL_SKY) {
+                play->skyboxCtx.rot.y -= 0.001f;
+            } else if (play->skyboxId == SKYBOX_TERMINA_SKY) {
                 play->skyboxCtx.rot.y -= 0.001f;
             } else if (play->skyboxId == SKYBOX_CUTSCENE_MAP) {
                 play->skyboxCtx.rot.y -= 0.005f;

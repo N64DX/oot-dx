@@ -3,6 +3,7 @@
 
 #include "ultra64/ultratypes.h"
 #include "ultra64/gbi.h"
+#include "color.h"
 
 #include "romfile.h"
 #include "z_math.h"
@@ -18,6 +19,7 @@ typedef enum SkyboxId {
     /* 0x04 */ SKYBOX_MARKET_ADULT,
     /* 0x05 */ SKYBOX_CUTSCENE_MAP,
     /* 0x07 */ SKYBOX_HOUSE_LINK = 7,
+    /* 0x08 */ SKYBOX_TERMINA_SKY,
     /* 0x09 */ SKYBOX_MARKET_CHILD_DAY = 9,
     /* 0x0A */ SKYBOX_MARKET_CHILD_NIGHT,
     /* 0x0B */ SKYBOX_HAPPY_MASK_SHOP,
@@ -55,7 +57,9 @@ typedef struct SkyboxContext {
     /* 0x13C */ Vtx* roomVtx;
     /* 0x140 */ s16 drawType;
     /* 0x144 */ Vec3f rot;
-} SkyboxContext; // size = 0x160
+    /* 0x150 */ Color_RGB8 prim;
+    /* 0x154 */ Color_RGB8 env;
+} SkyboxContext; // size = 0x158
 
 typedef struct SkyboxFile {
     /* 0x00 */ RomFile file;
@@ -66,6 +70,7 @@ extern SkyboxFile gNormalSkyFiles[];
 
 void Skybox_Init(struct GameState* state, SkyboxContext* skyboxCtx, s16 skyboxId);
 Mtx* Skybox_UpdateMatrix(SkyboxContext* skyboxCtx, f32 x, f32 y, f32 z);
+void Skybox_SetColors(SkyboxContext* skyboxCtx, u8 primR, u8 primG, u8 primB, u8 envR, u8 envG, u8 envB);
 void Skybox_Draw(SkyboxContext* skyboxCtx, struct GraphicsContext* gfxCtx, s16 skyboxId, s16 blend, f32 x, f32 y,
                  f32 z);
 void Skybox_Update(SkyboxContext* skyboxCtx);
