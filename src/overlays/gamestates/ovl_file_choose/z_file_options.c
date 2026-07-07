@@ -118,7 +118,6 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 0,  "Mirror Mode",            FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 1,  "Autosave",               FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 2,  "Agony Visual Icon",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
-    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 3,  "Extended Draw Distance", FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 4,  "No Letterboxing",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 5,  "Resume Last Area",       FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_NO_IQUE    | SHOW_OPTION_ALL_QUESTS, 0, 6,  "Disable Token Freeze",   FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
@@ -158,6 +157,8 @@ static FileSelectOptionsEntry sGlobalOptionsEntries[] = {
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 2, "Show RAM",               FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 3, "Show FPS",               FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 4, "Extra Save Slots",       FileSelectGlobalOptions_ToggleSaveSlotsOption, FileSelectGlobalOptions_GetOption },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 5, "Extended Draw Distance", FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 6, "Show Stars",             FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {

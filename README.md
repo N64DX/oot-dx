@@ -32,11 +32,13 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [Darunia's Joy](https://github.com/DaruniasJoy/OoT-Custom-Sequences)
 - [MMR Music Repo](https://mega.nz/folder/4g1xHbwL#pzE9l2KBs-kwCJJr6E6IKQ)
 - [MM Recomp Bomb Arrow](https://github.com/a-priestley/MMRecompBombArrows)
+- [MM Recomp Textured Stars](https://github.com/danielryb/MMRecompTexturedStars)
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
 - **a-priestley:** Bomb Arrow
 - **CYB3RTR0N & ShadowOne333:** JPEG widescreen backgrounds
+- **danielryb:** Textured Stars
 - **gh0st:** Open hand Z-Targeting animation to idle fix
 - **Goodland:** Tougher eye switch textures
 - **Kenton M:** Roc's Feather concept

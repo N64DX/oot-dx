@@ -4,6 +4,9 @@
 #include "ultra64.h"
 #include "libc64/math64.h"
 
+#define RAND_MULTIPLIER 1664525
+#define RAND_INCREMENT  1013904223
+
 u32 Rand_Next(void);
 void Rand_Seed(u32 seed);
 f32 Rand_ZeroOne(void);

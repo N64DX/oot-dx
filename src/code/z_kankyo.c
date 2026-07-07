@@ -20,6 +20,7 @@
 #include "sys_math.h"
 #include "sys_math3d.h"
 #include "sys_matrix.h"
+#include "skin_matrix.h"
 #include "terminal.h"
 #include "translation.h"
 #include "versions.h"
@@ -37,6 +38,7 @@
 #include "assets/objects/gameplay_keep/raindrop_model.h"
 #include "assets/objects/gameplay_keep/lens_flare.h"
 #include "assets/objects/gameplay_keep/moon.h"
+#include "assets/objects/gameplay_keep/star.h"
 #include "assets/objects/gameplay_keep/gameplay_keep_0x4D160.h"
 #include "assets/objects/gameplay_field_keep/gameplay_field_keep.h"
 
@@ -71,6 +73,10 @@ u8 gSkyboxIsChanging = false;
 u16 gTimeSpeed = 0;
 
 u16 sSunScreenDepth = GPACK_ZDZ(G_MAXFBZ, 0);
+
+u16 sEnvSkyboxNumStars = 0;
+f32 D_801F4F28;
+Gfx* sSkyboxStarsDList;
 
 typedef struct TimeBasedLightEntry {
     /* 0x00 */ u16 startTime;
@@ -3119,5 +3125,178 @@ void Environment_WarpSongLeave(PlayState* play) {
 
         case ENTR_SACRED_FOREST_MEADOW_0:
             break;
+    }
+}
+
+s32 Environment_IsSceneUpsideDown(PlayState* play) {
+    //if ((play->sceneId == SCENE_F41) || (play->sceneId == SCENE_INISIE_R))
+    //    return true;
+    return false;
+}
+
+u16 Environment_GetAmountOfStars(void) {
+    u16 starsPerSage = 0;
+    u8 i;
+
+    if (!LINK_IS_ADULT_OR_TIMESKIP)
+        return AMOUNT_OF_STARS;
+
+    for (i=0; i<6; i++)
+        if (CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST + i))
+            starsPerSage += AMOUNT_OF_STARS / 6;
+    return starsPerSage * 3;
+}
+
+void Environment_SetupSkyboxStars(PlayState* play) {
+    if (gSaveContext.save.nightFlag && (play->skyboxId == SKYBOX_NORMAL_SKY || play->skyboxId == SKYBOX_TERMINA_SKY)) {
+        sEnvSkyboxNumStars = Environment_GetAmountOfStars();
+        if (gSaveContext.save.dayTime >= CLOCK_TIME(21, 0) || gSaveContext.save.dayTime < CLOCK_TIME(2, 0))
+            D_801F4F28 = 1.0f;
+        else if (gSaveContext.save.dayTime > CLOCK_TIME(19, 0))
+            D_801F4F28 = 1.0f - ((CLOCK_TIME(21, 0) - gSaveContext.save.dayTime) * (1.0f / (CLOCK_TIME(2, 0) + 1)));
+        else if (gSaveContext.save.dayTime < CLOCK_TIME(3, 0))
+            D_801F4F28 = (CLOCK_TIME(3, 0) - gSaveContext.save.dayTime) * (1.0f / (CLOCK_TIME(1, 0) + 1));
+        else D_801F4F28 = 0.0f;
+    } else {
+        D_801F4F28 = 0.0f;
+        sEnvSkyboxNumStars = 0;
+    }
+
+    if ((sEnvSkyboxNumStars != 0) && (D_801F4F28 != 0.0f)) {
+        OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+        sSkyboxStarsDList = POLY_OPA_DISP;
+        gSPNoOp(POLY_OPA_DISP++);
+        CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    } else sSkyboxStarsDList = NULL;
+}
+
+void Environment_DrawSkyboxStar(Gfx** gfxP, f32 x, f32 y, s32 width, s32 height) {
+    Gfx* gfx = *gfxP;
+    u32 xl = x * 4.0f;
+    u32 yl = y * 4.0f;
+    u32 xh = xl + (width  << 2);
+    u32 yh = yl + (height << 2);
+    u32 dsdx = (64 << 10) / width;
+    u32 dtdy = (64 << 10) / height;
+    gSPTextureRectangle(gfx++, xl, yl, xh, yh, G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
+    *gfxP = gfx;
+}
+
+void Environment_DrawSkyboxStarsImpl(PlayState* play, Gfx** gfxP) {
+    static const Vec3s D_801DD880[] = {
+        { 0x0384, 0x2328, 0xD508 }, { 0x09C4, 0x2328, 0xDA1C }, { 0x0E74, 0x22D8, 0xDA1C }, { 0x1450, 0x2468, 0xD8F0 }, { 0x1C84, 0x28A0, 0xCBA8 }, { 0x1F40, 0x2134, 0xD8F0 }, { 0x1F40, 0x28A0, 0xDAE4 }, { 0xE4A8, 0x4A38, 0x4A38 },
+        { 0xD058, 0x4C2C, 0x3A98 }, { 0xD8F0, 0x36B0, 0x47E0 }, { 0xD954, 0x3264, 0x3E1C }, { 0xD8F0, 0x3070, 0x37DC }, { 0xD8F0, 0x1F40, 0x5208 }, { 0xD760, 0x1838, 0x27D8 }, { 0x0000, 0x4E20, 0x4A38 }, { 0x076C, 0x2328, 0xDCD8 },
+    };
+
+    static const Color_RGBA8_u32 D_801DD8E0[] = { { 65, 164, 255, 255 },  { 131, 164, 230, 255 }, { 98, 205, 255, 255 }, { 82, 82, 255, 255 }, { 123, 164, 164, 255 }, { 98, 205, 255, 255 },  { 98, 164, 230, 255 }, { 255, 90, 0, 255 } };
+
+    static const Color_RGBA8_u32 D_801DD900[] = {
+        {  64,  80, 112, 255 }, {  96,  96, 128, 255 }, { 128, 112, 144, 255 }, { 160, 128, 160, 255 }, { 192, 144, 168, 255 }, { 224, 160, 176, 255 }, { 224, 160, 176, 255 }, { 104, 104, 136, 255 },
+        { 136, 120, 152, 255 }, { 168, 136, 168, 255 }, { 200, 152, 184, 255 }, { 232, 168, 184, 255 }, { 224, 176, 184, 255 }, { 240, 192, 192, 255 }, { 232, 184, 192, 255 }, { 248, 200, 192, 255 },
+    };
+
+    Vec3f pos;
+    f32 temp, imgY, imgX, invScale, temp_f20, scale;
+    u32 imgWidth, phi_v1 = 0, i;
+    Gfx* gfx = *gfxP;
+    Gfx* gfxTemp;
+    f32(*viewProjectionMtxF)[4];
+    bool negateY = Environment_IsSceneUpsideDown(play);
+    u32 randInt = (STARS_NAME(0) << 0x18) ^ (STARS_NAME(1) << 0x14) ^ (STARS_NAME(2) << 0x10) ^ (STARS_NAME(3) << 0xC) ^ (STARS_NAME(4) << 8) ^ (STARS_NAME(5) << 4) ^ (STARS_NAME(6) << 0) ^ (STARS_NAME(7) >> 4) ^ (STARS_NAME(7) << 0x1C);
+    fu gRandFloat;
+
+    Matrix_MtxToMtxF(play->view.viewingPtr, &play->billboardMtxF);
+    Matrix_MtxToMtxF(&play->view.projection, &play->viewProjectionMtxF);
+    SkinMatrix_MtxFMtxFMult(&play->viewProjectionMtxF, &play->billboardMtxF, &play->viewProjectionMtxF);
+
+    gDPPipeSync(gfx++);
+    gDPSetEnvColor(gfx++, 255, 255, 255, 255.0f * D_801F4F28);
+    gDPSetCombineLERP(gfx++, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, ENVIRONMENT, 0);
+    
+    gDPSetOtherMode(gfx++, G_AD_DISABLE | G_CD_MAGICSQ | G_CK_NONE | G_TC_FILT | G_TF_BILERP | G_TT_NONE | G_TL_TILE | G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE, G_AC_NONE | G_ZS_PRIM | G_RM_AA_XLU_SURF | G_RM_AA_XLU_SURF2);
+    gDPLoadTextureBlock(gfx++, gStarTex, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTexture(gfx++, 0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON);
+
+    for (i=0; i<sEnvSkyboxNumStars; i++) {
+        if (i < 16) {
+            pos.x = play->view.eye.x + (s32)D_801DD880[i].x;
+            pos.y = play->view.eye.y + (s32)D_801DD880[i].y;
+            pos.z = play->view.eye.z + (s32)D_801DD880[i].z;
+            imgWidth = 8;
+        } else {
+            f32 temp_f22, temp_f4, temp_f2;
+
+            randInt = (randInt * RAND_MULTIPLIER) + RAND_INCREMENT;
+            gRandFloat.i = (randInt >> 9) | 0x3F800000;
+            temp = gRandFloat.f;
+            temp_f4 = temp - 1.0f;
+
+            randInt = (randInt * RAND_MULTIPLIER) + RAND_INCREMENT;
+            gRandFloat.i = (randInt >> 9) | 0x3F800000;
+            temp_f20 = ((gRandFloat.f - 1.0f) + temp_f4) * 0.5f;
+
+            randInt = (randInt * RAND_MULTIPLIER) + RAND_INCREMENT;
+
+            // Set random position
+            pos.y = play->view.eye.y + (SQ(temp_f20) * SQ(128.0f)) - 1000.0f;
+            pos.x = play->view.eye.x + (Math_SinS(randInt) * (1.2f - temp_f20) * SQ(128.0f));
+            pos.z = play->view.eye.z + (Math_CosS(randInt) * (1.2f - temp_f20) * SQ(128.0f));
+
+            randInt = (randInt * RAND_MULTIPLIER) + RAND_INCREMENT;
+            gRandFloat.i = ((randInt >> 9) | 0x3F800000);
+            temp_f2 = gRandFloat.f - 1.0f;
+            imgWidth = (u32)((SQ(temp_f2) * 8.0f) + 2.0f); // Set random width
+        }
+
+        if (negateY) 
+            pos.y = -pos.y;
+
+        if (i < 15 || i == 15) {
+            gDPSetColor(gfx++, G_SETPRIMCOLOR, D_801DD8E0[i % ARRAY_COUNTU(D_801DD8E0)].rgba);
+        } else if ((i & 0x3F) == 0 || i == 16) {
+            gDPSetColor(gfx++, G_SETPRIMCOLOR, D_801DD900[phi_v1 % ARRAY_COUNTU(D_801DD900)].rgba);
+            phi_v1++;
+        }
+
+        viewProjectionMtxF = play->viewProjectionMtxF.mf;
+
+        if (imgWidth >= 2) {
+            scale = pos.x * play->viewProjectionMtxF.mf[0][3] + pos.y * play->viewProjectionMtxF.mf[1][3] + pos.z * play->viewProjectionMtxF.mf[2][3] + play->viewProjectionMtxF.mf[3][3]; // w component
+            if (scale >= 1.0f) {
+                invScale = 1.0f / scale;
+                imgX = (pos.x * viewProjectionMtxF[0][0] + pos.y * viewProjectionMtxF[1][0] + pos.z * viewProjectionMtxF[2][0] + viewProjectionMtxF[3][0]) * invScale; // x component
+                imgY = (((pos.x * viewProjectionMtxF[0][1]) + (pos.y * viewProjectionMtxF[1][1]) + (pos.z * viewProjectionMtxF[2][1])) + viewProjectionMtxF[3][1]) * invScale; // y component
+            }
+
+            if ((scale >= 1.0f) && (imgX > -1.0f) && (imgX < 1.0f) && (imgY > -1.0f) && (imgY < 1.0f)) {
+                imgX = (imgX * (SCREEN_WIDTH / 2)) + (SCREEN_WIDTH / 2);
+                imgY = (imgY * -(SCREEN_HEIGHT / 2)) + (SCREEN_HEIGHT / 2);
+
+                gfxTemp = gfx;
+                Environment_DrawSkyboxStar(&gfxTemp, imgX, imgY, imgWidth, imgWidth);
+                gfx = gfxTemp;
+            }
+        }
+    }
+
+    gDPPipeSync(gfx++);
+    *gfxP = gfx;
+}
+
+void Environment_DrawSkyboxStars(PlayState* play) {
+    Gfx* gfx;
+    Gfx* gfxHead;
+
+    if (sSkyboxStarsDList != NULL) {
+        OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+        gfxHead = POLY_OPA_DISP;
+        gfx = Gfx_Open(gfxHead);
+        gSPDisplayList(sSkyboxStarsDList, gfx);
+        Environment_DrawSkyboxStarsImpl(play, &gfx);
+        gSPEndDisplayList(gfx++);
+        Gfx_Close(gfxHead, gfx);
+        POLY_OPA_DISP = gfx;
+        sSkyboxStarsDList = NULL;
+        CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
     }
 }
