@@ -1889,7 +1889,7 @@ void Cutscene_ProcessScript(PlayState* play, CutsceneContext* csCtx, u8* script)
         return;
     }
 
-    if ( (DEBUG_FEATURES || DEBUG_MODE) && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_DRIGHT)) {
+    if ( (DEBUG_FEATURES || DEBUG_MODE) && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_DRIGHT) && !(play->msgCtx.msgMode >= MSGMODE_OCARINA_STARTING && play->msgCtx.msgMode <= MSGMODE_OCARINA_AWAIT_INPUT)) {
         csCtx->state = CS_STATE_STOP;
         return;
     }

@@ -47,6 +47,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Syeo:** Deluxe chest textures
 - **thinedave & Aegiker:** Energy (stamina) wheel
 - **Yanis002:** MM title cards
+- **zelda64hack:** Free analog cam
 
 **Features & fixes by Skawo:**
 - Font preloading

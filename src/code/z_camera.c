@@ -1601,6 +1601,63 @@ s32 Camera_Noop(Camera* camera) {
     return true;
 }
 
+// Shared state for P2-stick free cam across all camera modes.
+static s16 sCamP2Yaw = 0;
+static s16 sCamP2Pitch = 0;
+static bool sCamP2HasManualPitch = false;
+static bool sCamP2Active = false;
+
+#define CAM_P2_FREE_CAM_ACTIVE (1 << 0)
+#define CAM_P2_FREE_CAM_INPUT  (1 << 1)
+
+static void Camera_ResetP2FreeCam(void) {
+    sCamP2Yaw = 0;
+    sCamP2Pitch = 0;
+    sCamP2HasManualPitch = false;
+    sCamP2Active = false;
+}
+
+static s32 Camera_UpdateP2FreeCam(Camera* camera, VecGeo* eyeAtOffset) {
+    s8 p2StickX, p2StickY;
+    bool p2HasInput;
+    s32 p2State = 0;
+
+    if (camera->status != CAM_STAT_ACTIVE)
+        return sCamP2Active ? CAM_P2_FREE_CAM_ACTIVE : 0;
+
+    p2StickX = camera->play->state.input[1].rel.stick_x;
+    p2StickY = camera->play->state.input[1].rel.stick_y;
+    p2HasInput = (ABS(p2StickX) > 10) || (ABS(p2StickY) > 10);
+
+    if (!sCamP2Active && p2HasInput) {
+        sCamP2Yaw = eyeAtOffset->yaw;
+        sCamP2Pitch = eyeAtOffset->pitch;
+        sCamP2Active = true;
+    }
+
+    if (ABS(p2StickX) > 10)
+        sCamP2Yaw += p2StickX * 16;
+
+    if (ABS(p2StickY) > 10) {
+        if (!sCamP2HasManualPitch)
+            sCamP2Pitch = eyeAtOffset->pitch;
+        sCamP2Pitch = CLAMP(sCamP2Pitch + (s16)(p2StickY * 16), -0x3000, 0x3000);
+        sCamP2HasManualPitch = true;
+    }
+
+    if (sCamP2Active) {
+        eyeAtOffset->yaw = sCamP2Yaw;
+        p2State |= CAM_P2_FREE_CAM_ACTIVE;
+        if (sCamP2HasManualPitch)
+            eyeAtOffset->pitch = sCamP2Pitch;
+    }
+
+    if (p2HasInput)
+        p2State |= CAM_P2_FREE_CAM_INPUT;
+
+    return p2State;
+}
+
 s32 Camera_Normal1(Camera* camera) {
     Vec3f* eye = &camera->eye;
     Vec3f* at = &camera->at;
@@ -1619,6 +1676,7 @@ s32 Camera_Normal1(Camera* camera) {
     Normal1ReadWriteData* rwData = &camera->paramData.norm1.rwData;
     f32 playerHeight;
     f32 rate = 0.1f;
+    s32 updateSwingYawTarget;
 
     playerHeight = Player_GetHeight(camera->player);
     if (RELOAD_PARAMS(camera) || CAM_DEBUG_RELOAD_PARAMS) {
@@ -1680,7 +1738,12 @@ s32 Camera_Normal1(Camera* camera) {
     if (camera->xzSpeed > 0.001f) {
         rwData->startSwingTimer = CAM_GLOBAL_50 + CAM_GLOBAL_51;
     } else if (rwData->startSwingTimer > 0) {
-        if (rwData->startSwingTimer > CAM_GLOBAL_50) {
+        updateSwingYawTarget = true;
+        if (sCamP2Active && ABS((s16)(camera->playerPosRot.rot.y - atEyeGeo.yaw)) < 0x4000) {
+            rwData->swingYawTarget = atEyeGeo.yaw;
+            updateSwingYawTarget = false;
+        }
+        if (updateSwingYawTarget && (rwData->startSwingTimer > CAM_GLOBAL_50)) {
             rwData->swingYawTarget = atEyeGeo.yaw + ((s16)((s16)(camera->playerPosRot.rot.y - 0x7FFF) - atEyeGeo.yaw) /
                                                      rwData->startSwingTimer);
         }
@@ -1754,8 +1817,9 @@ s32 Camera_Normal1(Camera* camera) {
 
     if (rwData->startSwingTimer <= 0) {
         eyeAdjustment.pitch = atEyeNextGeo.pitch;
-        eyeAdjustment.yaw =
-            Camera_LERPCeilS(rwData->swingYawTarget, atEyeNextGeo.yaw, 1.0f / camera->yawUpdateRateInv, 0xA);
+        if (sCamP2Active && ABS((s16)(camera->playerPosRot.rot.y - atEyeNextGeo.yaw)) < 0x4000)
+            eyeAdjustment.yaw = atEyeNextGeo.yaw;
+        else eyeAdjustment.yaw = Camera_LERPCeilS(rwData->swingYawTarget, atEyeNextGeo.yaw, 1.0f / camera->yawUpdateRateInv, 0xA);
     } else if (rwData->swing.unk_18 != 0) {
         eyeAdjustment.yaw =
             Camera_LERPCeilS(rwData->swing.unk_16, atEyeNextGeo.yaw, 1.0f / camera->yawUpdateRateInv, 0xA);
@@ -1769,6 +1833,12 @@ s32 Camera_Normal1(Camera* camera) {
             Camera_CalcDefaultPitch(camera, atEyeNextGeo.pitch, roData->pitchTarget, rwData->slopePitchAdj);
     }
 
+    t = Camera_UpdateP2FreeCam(camera, &eyeAdjustment);
+    if (t & CAM_P2_FREE_CAM_ACTIVE)
+        rwData->swingYawTarget = eyeAdjustment.yaw;
+    if (t & CAM_P2_FREE_CAM_INPUT)
+        rwData->startSwingTimer = CAM_GLOBAL_50 + CAM_GLOBAL_51;
+
     // set eyeAdjustment pitch from 79.65 degrees to -85 degrees
     if (eyeAdjustment.pitch > 0x38A4) {
         eyeAdjustment.pitch = 0x38A4;
@@ -1779,7 +1849,7 @@ s32 Camera_Normal1(Camera* camera) {
 
     *eyeNext = Camera_AddVecGeoToVec3f(at, &eyeAdjustment);
     if ((camera->status == CAM_STAT_ACTIVE) && !(roData->interfaceField & NORMAL1_FLAG_4)) {
-        rwData->swingYawTarget = camera->playerPosRot.rot.y - 0x7FFF;
+        rwData->swingYawTarget = sCamP2Active ? sCamP2Yaw : camera->playerPosRot.rot.y - 0x7FFF;
         if (rwData->startSwingTimer > 0) {
             func_80046E20(camera, &eyeAdjustment, roData->distMin, roData->unk_0C, &sp98, &rwData->swing);
         } else {
@@ -2119,6 +2189,8 @@ s32 Camera_Normal3(Camera* camera) {
         sp84.yaw += rwData->yawUpdAmt;
         rwData->yawTimer--;
     }
+
+    Camera_UpdateP2FreeCam(camera, &sp84);
 
     *eyeNext = Camera_AddVecGeoToVec3f(at, &sp84);
 
@@ -2836,6 +2908,8 @@ s32 Camera_Jump3(Camera* camera) {
     if (eyeDiffGeo.pitch < CAM_MIN_PITCH_1) {
         eyeDiffGeo.pitch = CAM_MIN_PITCH_1;
     }
+
+    Camera_UpdateP2FreeCam(camera, &eyeDiffGeo);
 
     *eyeNext = Camera_AddVecGeoToVec3f(at, &eyeDiffGeo);
     if ((camera->status == CAM_STAT_ACTIVE) && !(roData->interfaceField & JUMP3_FLAG_4)) {
@@ -3671,7 +3745,6 @@ s32 Camera_KeepOn4(Camera* camera) {
     f32 temp_f0_2;
     CollisionPoly* spC0;
     VecGeo vecGeo;
-    VecGeo atToEyeDir;
     VecGeo atToEyeNextDir;
     s16* itemType = &camera->data2;
     s16 atToEyeBasePitch;
@@ -3835,7 +3908,6 @@ s32 Camera_KeepOn4(Camera* camera) {
 
     sUpdateCameraDirection = 1;
     sCameraInterfaceField = roData->interfaceField;
-    atToEyeDir = OLib_Vec3fDiffToVecGeo(at, eye);
     atToEyeNextDir = OLib_Vec3fDiffToVecGeo(at, eyeNext);
     sAtTarget = playerPosRot->pos;
     sAtTarget.y += playerHeight;
@@ -4834,6 +4906,7 @@ s32 Camera_Unique1(Camera* camera) {
     }
 
     sp8C.yaw = Camera_LERPFloorS(rwData->yawTarget, eyeNextAtOffset.yaw, 0.5f, 0x2710);
+    Camera_UpdateP2FreeCam(camera, &sp8C);
     *eyeNext = Camera_AddVecGeoToVec3f(at, &sp8C);
     *eye = *eyeNext;
     Camera_BGCheck(camera, at, eye);
@@ -8234,6 +8307,15 @@ Vec3s Camera_Update(Camera* camera) {
     if (ENABLE_DEBUG_CAM_UPDATE) {
         PRINTF("camera: engine (%d %d %d) %04x \n", camera->setting, camera->mode,
                sCameraSettings[camera->setting].cameraModes[camera->mode].funcIdx, camera->stateFlags);
+    }
+
+    if (camera->status == CAM_STAT_ACTIVE) {
+        static bool sPrevWasZTarget = false;
+        bool isZTarget = camera->mode == CAM_MODE_Z_TARGET_FRIENDLY || camera->mode == CAM_MODE_Z_TARGET_UNFRIENDLY || camera->mode == CAM_MODE_Z_PARALLEL;
+
+        if (isZTarget && !sPrevWasZTarget)
+            Camera_ResetP2FreeCam();
+        sPrevWasZTarget = isZTarget;
     }
 
     if (sOOBTimer < 200) {
