@@ -1291,6 +1291,9 @@ void KaleidoScope_HandlePageToggles(PauseContext* pauseCtx, Input* input) {
             editor_timer = pressed_r = 0;
     }
 
+    if (pauseCtx->debugState != PAUSE_DEBUG_STATE_CLOSED)
+        return;
+
     if (CHECK_BTN_ALL(input->press.button, BTN_R) && !CHECK_BTN_ALL(input->cur.button, BTN_L)) {
         KaleidoScope_SetupPageSwitch(pauseCtx, PAGE_SWITCH_PT_RIGHT);
         return;
@@ -3701,7 +3704,7 @@ void KaleidoScope_Draw(PlayState* play) {
 
     if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPENING) ||
         (pauseCtx->debugState == PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPEN)) {
-        KaleidoScope_DrawInventoryEditor(play);
+        KaleidoScope_DrawItemEditor(play);
     }
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 3254);
@@ -4403,7 +4406,7 @@ void KaleidoScope_Update(PlayState* play) {
 #if PLATFORM_GC && OOT_NTSC
                         AudioOcarina_SetInstrument(OCARINA_INSTRUMENT_OFF);
 #endif
-                    } else if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
+                    } else if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED && CHECK_BTN_ALL(input->press.button, BTN_B)) {
                         pauseCtx->nextPageMode = 0;
                         pauseCtx->promptChoice = 0;
                         SFX_PLAY_CENTERED(NA_SE_SY_DECIDE);

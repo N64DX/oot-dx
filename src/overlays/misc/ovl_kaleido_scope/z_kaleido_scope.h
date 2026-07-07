@@ -253,7 +253,7 @@ typedef enum UIOverlayQuad {
 
 void KaleidoScope_DrawQuestStatus(struct PlayState* play, GraphicsContext* gfxCtx);
 s32 KaleidoScope_UpdateQuestStatusPoint(PauseContext* pauseCtx, s32 point);
-void KaleidoScope_DrawInventoryEditor(struct PlayState* play);
+void KaleidoScope_DrawItemEditor(struct PlayState* play);
 void KaleidoScope_DrawPlayerWork(struct PlayState* play);
 void KaleidoScope_DrawEquipment(struct PlayState* play);
 void KaleidoScope_SetCursorPos(PauseContext* pauseCtx, u16 index, Vtx* vtx);
