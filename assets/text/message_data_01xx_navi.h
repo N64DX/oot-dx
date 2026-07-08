@@ -437,6 +437,18 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x0111, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE COLOR(LIGHTBLUE) "Hey! " NAME "!\n"
+"We scouted this entire floor and I'm\n"
+"sure there's no key to be found here.\n"
+"Maybe the key is not in this place?"
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x0114, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE SHIFT(36) COLOR(LIGHTBLUE) "わぁーっ！　見て　見て！\n"

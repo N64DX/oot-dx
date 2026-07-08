@@ -20,7 +20,7 @@ SceneCmd dawngrove_village_scene[] = {
     SCENE_CMD_SPAWN_LIST(dawngrove_village_sceneEntranceList_0001F8),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PLAYER_ENTRY_LIST(4, dawngrove_village_sceneStartPositionList_0000B0),
-    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 0, LIGHT_MODE_TIME),
+    SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_TERMINA_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(dawngrove_village_sceneExitList_0000A8),
     SCENE_CMD_ENV_LIGHT_SETTINGS(12, dawngrove_village_sceneLightSettings_0000F0),
     SCENE_CMD_END(),
