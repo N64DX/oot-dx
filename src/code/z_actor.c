@@ -3925,6 +3925,24 @@ s32 BodyBreak_SpawnParts(Actor* actor, BodyBreak* bodyBreak, PlayState* play, s1
     return true;
 }
 
+void Actor_SpawnBodyParts(Actor* actor, PlayState* play, s32 partParams, Gfx** dList) {
+    if (*dList != NULL) {
+        EnPart* part;
+        Actor* spawnedPart;
+        MtxF* currentMatrix = Matrix_GetCurrent();
+
+        spawnedPart = Actor_SpawnAsChild(&play->actorCtx, actor, play, ACTOR_EN_PART, currentMatrix->mf[3][0], currentMatrix->mf[3][1], currentMatrix->mf[3][2], 0, 0, actor->objectSlot, partParams);
+
+        if (spawnedPart != NULL) {
+            part = (EnPart*)spawnedPart;
+
+            Matrix_MtxFToYXZRotS(currentMatrix, &part->actor.shape.rot, false);
+            part->displayList = *dList;
+            Math_Vec3f_Copy(&part->actor.scale, &actor->scale);
+        }
+    }
+}
+
 void Actor_SpawnFloorDustRing(PlayState* play, Actor* actor, Vec3f* posXZ, f32 radius, s32 amountMinusOne,
                               f32 randAccelWeight, s16 scale, s16 scaleStep, u8 useLighting) {
     Vec3f pos;

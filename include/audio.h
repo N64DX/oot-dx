@@ -1164,6 +1164,7 @@ void Audio_PlaySfxIncreasinglyTransposed(Vec3f* pos, s16 sfxId, u8* semitones);
 void Audio_ResetIncreasingTranspose(void);
 void Audio_PlaySfxTransposed(Vec3f* pos, u16 sfxId, s8 semitone);
 void func_800F4C58(Vec3f* pos, u16 sfxId, u8);
+void AudioSfx_SetChannelIO(Vec3f* pos, u16 sfxId, u8 ioData);
 void func_800F4E30(Vec3f* pos, f32);
 void Audio_ClearSariaBgm(void);
 void Audio_ClearSariaBgmAtPos(Vec3f* pos);

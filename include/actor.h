@@ -419,9 +419,11 @@ typedef enum NaviEnemy {
     /* 0x65 */ NAVI_ENEMY_GIANT_BEE,
     /* 0x66 */ NAVI_ENEMY_DRAGONFLY,
     /* 0x67 */ NAVI_ENEMY_SNAPPER,
-    /* 0x68 */ NAVI_ENEMY_KING_DEKU,
-    /* 0x69 */ NAVI_ENEMY_THEFATHER,
-    /* 0x6A */ NAVI_ENEMY_IGORS_GHOST,
+    /* 0x68 */ NAVI_ENEMY_BAD_BAT,
+    /* 0x69 */ NAVI_ENEMY_GARO,
+    /* 0x6A */ NAVI_ENEMY_KING_DEKU,
+    /* 0x6B */ NAVI_ENEMY_THEFATHER,
+    /* 0x6C */ NAVI_ENEMY_IGORS_GHOST,
     /* 0xFF */ NAVI_ENEMY_NONE = 0xFF
 } NaviEnemy;
 
@@ -768,6 +770,7 @@ void BodyBreak_Alloc(BodyBreak* bodyBreak, s32 count, struct PlayState* play);
 void BodyBreak_SetInfo(BodyBreak* bodyBreak, s32 limbIndex, s32 minLimbIndex, s32 maxLimbIndex, u32 count, Gfx** dList,
                        s16 objectSlot);
 s32 BodyBreak_SpawnParts(Actor* actor, BodyBreak* bodyBreak, struct PlayState* play, s16 type);
+void Actor_SpawnBodyParts(Actor* actor, struct PlayState* play, s32 partParams, Gfx** dList);
 void Actor_SpawnFloorDustRing(struct PlayState* play, Actor* actor, Vec3f* posXZ, f32 radius, s32 amountMinusOne,
                               f32 randAccelWeight, s16 scale, s16 scaleStep, u8 useLighting);
 void func_80033480(struct PlayState* play, Vec3f* posBase, f32 randRangeDiameter, s32 amountMinusOne, s16 scaleBase,
@@ -834,6 +837,8 @@ u8 Actor_ZeldaFledDialogue(void);
 u8 Actor_OtherIsTargeted(struct PlayState* play, Actor* actor);
 void Actor_DrawDamageEffects(struct PlayState* play, Actor* actor, Vec3f bodyPartsPos[], s16 bodyPartsCount, f32 effectScale, f32 frozenSteamScale, f32 effectAlpha, u8 type);
 void Actor_SpawnIceEffects(struct PlayState* play, Actor* actor, Vec3f limbPos[], s32 limbPosCount, s32 effectsPerLimb, f32 scale, f32 scaleRange);
+
+Actor* Actor_FindActor(struct PlayState* play, Actor* actorListStart, u8 actorCategory, s16 actorId);
 
 Actor* BombArrow_Unlink(Actor* arrow, struct PlayState* play);
 u8 BombArrow_IsActive(struct PlayState* play);

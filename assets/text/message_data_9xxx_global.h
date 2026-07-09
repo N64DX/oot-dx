@@ -2,18 +2,15 @@ DEFINE_MESSAGE(0x9000, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE SHIFT(12) COLOR(RED) "黄金のスタルチュラのしるし" COLOR(DEFAULT) "を　手に入れた！" QUICKTEXT_DISABLE "\n"
 SHIFT(8) "これまでに" COLOR(RED) TOKENS COLOR(DEFAULT) "こ　あつめた！" FADE(40)
-)
-,
+),
 MSG(
 "You got a " COLOR(RED) "Gold Skulltula Token" COLOR(DEFAULT) "!\n"
 "You've collected " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " " PLURAL_TOKENS " in total." FADE(40)
-)
-,
+),
 MSG(
 "Du erhältst ein " COLOR(RED) "Skulltula-Symbol" COLOR(DEFAULT) ". Du\n"
 "hast insgesamt " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " " PLURAL_TOKENS " zerstört." FADE(40)
-)
-,
+),
 MSG(
 "Vous venez de détruire une\n"
 COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "!\n"
@@ -1167,6 +1164,45 @@ MSG(
 "I already told you!\n"
 "That tunic isn't for sale!\n"
 "Ohhh... I could go for a swim..." PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x94C0, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Brrrinnnggg them!" EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x94C1, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Those inssside...Our friendsss...\n"
+"Brrrriiiiinnnng them!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x94D0, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+COLOR(RED) SHIFT(85) "DIE!!!\n"
+SHIFT(60) "INTERLOPER!!!" COLOR(DEFAULT) FADE(40)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x94D1, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"To die without leaving a corpse...\n"
+"That is the way of us Garo." FADE(40)
 ),
 MSG(),
 MSG()

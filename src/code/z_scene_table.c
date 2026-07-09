@@ -111,6 +111,7 @@ void Scene_DrawConfigGoronMines(PlayState* play);
 void Scene_DrawConfigRiversideVillage(PlayState* play);
 void Scene_DrawConfigRiversideInn(PlayState* play);
 void Scene_DrawConfigAncientGrove(PlayState* play);
+void Scene_DrawConfigForsakenKingdom(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -234,6 +235,7 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigRiversideVillage,            // SDC_RIVERSIDE_VILLAGE
     Scene_DrawConfigRiversideInn,                // SDC_RIVERSIDE_INN
     Scene_DrawConfigAncientGrove,                // SDC_ANCIENT_GROVE
+    Scene_DrawConfigForsakenKingdom,             // SDC_FORSAKEN_KINGDOM
 };
 
 #if PLATFORM_N64 // Scene_Draw is at end of file in GC/iQue versions
@@ -1974,6 +1976,21 @@ void Scene_DrawConfigAncientGrove(PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
     gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 2) % 128, 32, 128, 1, 0, -(gameplayFrames * 2) % 128, 32, 128)); // Water & Waterfall
+
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
+void Scene_DrawConfigForsakenKingdom(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                           0, 32,  32, 1, (gameplayFrames * 1) % 128,                           0, 32,  32)); // Coast Lighter Water
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                           0, 32,  32, 1,                          0, -(gameplayFrames * 1) % 128, 32,  32)); // Lighter Water
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 1) % 128, 32,  32, 1,                          0, -(gameplayFrames * 1) % 128, 32,  32)); // Darker Water
+    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 2) % 128, 32, 128, 1,                          0, -(gameplayFrames * 2) % 128, 32, 128)); // Waterfall
+    gSPSegment(POLY_XLU_DISP++, 0x0C, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  (gameplayFrames * 3) % 128, 64,  64, 1,                          0,  (gameplayFrames * 3) % 128, 64,  64)); // Fog
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);

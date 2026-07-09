@@ -113,6 +113,13 @@ void func_80ACDDE8(EnPart* this, PlayState* play) {
             ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 30.0f);
             this->timer = 18;
             break;
+        case 15:
+            this->actor.world.rot.y = this->actor.parent->shape.rot.y + 0x8000;
+            this->timer = 100;
+            this->actor.velocity.y = 7.0f;
+            this->actor.speed = 2.0f;
+            this->actor.gravity = -1.0f;
+            break;
     }
 }
 
@@ -142,6 +149,22 @@ void func_80ACE13C(EnPart* this, PlayState* play) {
 
         if ((this->actor.params == 13) && (this->actor.parent != NULL) && (this->actor.parent->update == NULL)) {
             this->actor.parent = NULL;
+        }
+    } else if (this->actor.params == 15) {
+        this->timer--;
+        if (this->timer > 0) {
+            this->actor.shape.rot.x += 0x3A98;
+            this->actor.shape.rot.y = this->actor.shape.rot.y; // Set to itself
+            this->actor.shape.rot.z = this->actor.shape.rot.z; // Set to itself
+            if (BgCheck_SphVsFirstPoly(&play->colCtx, &this->actor.world.pos, 20.0f))
+                this->timer = 0;
+        } else {
+            Math_Vec3f_Copy(&pos, &this->actor.world.pos);
+            pos.y = this->actor.floorHeight;
+            
+            EffectSsDeadDb_Spawn(play, &pos, &gZeroVec3f, &gZeroVec3f, this->actor.scale.y * 1400.0f, 7, 255, 255, 255, 255, 255, 0, 0, 1, 9, true);
+            SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 10, NA_SE_EN_EXTINCT);
+            Actor_Kill(&this->actor);
         }
     } else if (this->timer <= 0) {
         switch (this->actor.params) {
@@ -336,6 +359,8 @@ void EnPart_Draw(Actor* thisx, PlayState* play) {
         gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(object_tite_Tex_yellow_body));
         gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(object_tite_Tex_yellow_eye));
         gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(object_tite_Tex_yellow_leg));
+    } else if (thisx->params == 15) {
+        gSPSegment(POLY_OPA_DISP++, 0x0C, gEmptyDL);
     }
 
     if (this->displayList != NULL) {

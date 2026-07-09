@@ -118,6 +118,20 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Obj_Dhouse"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Dhouse/z_obj_dhouse.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Hakaisi"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Hakaisi/z_obj_hakaisi.o"
+endseg
+
+beginseg
     name "ovl_Bg_Breakwall2"
     compress
     flags OVERLAY
@@ -216,6 +230,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Encount3"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Encount3/z_en_encount3.o"
+endseg
+
+beginseg
     name "ovl_En_Tanron1"
     compress
     flags OVERLAY
@@ -307,6 +328,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_Bat"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Bat/z_en_bat.o"
+endseg
+
+beginseg
     name "ovl_En_Grasshopper"
     compress
     flags OVERLAY
@@ -318,6 +346,20 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Kame/z_en_kame.o"
+endseg
+
+beginseg
+    name "ovl_En_Railgibud"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Railgibud/z_en_railgibud.o"
+endseg
+
+beginseg
+    name "ovl_En_Jso"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Jso/z_en_jso.o"
 endseg
 
 beginseg
