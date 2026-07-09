@@ -3091,6 +3091,20 @@ void func_800F4C58(Vec3f* pos, u16 sfxId, u8 ioData) {
     SFX_PLAY_AT_POS(pos, sfxId);
 }
 
+void AudioSfx_SetChannelIO(Vec3f* pos, u16 sfxId, u8 ioData) {
+    u8 channelIndex = 0, i, bankId;
+
+    bankId = SFX_BANK_SHIFT(sfxId);
+    for (i=0; i<bankId; i++)
+        channelIndex += gChannelsPerBank[gSfxChannelLayout][i];
+
+    for (i=0; i<gChannelsPerBank[gSfxChannelLayout][bankId]; i++) {
+        if ((gActiveSfx[bankId][i].entryIndex != 0xFF) && (sfxId == gSfxBanks[bankId][gActiveSfx[bankId][i].entryIndex].sfxId))
+            AUDIOCMD_CHANNEL_SET_IO(SEQ_PLAYER_SFX, channelIndex, 6, ioData);
+        channelIndex++;
+    }
+}
+
 void func_800F4E30(Vec3f* pos, f32 arg1) {
     f32 phi_f22;
     s8 pan;

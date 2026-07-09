@@ -168,6 +168,54 @@ beginseg
 endseg
 
 beginseg
+    name "ikana_canyon_scene"
+    include "$(BUILD_DIR)/assets/scenes/overworld/ikana_canyon/ikana_canyon_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "ikana_canyon_room_0"
+    include "$(BUILD_DIR)/assets/scenes/overworld/ikana_canyon/ikana_canyon_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "ikana_canyon_room_2"
+    include "$(BUILD_DIR)/assets/scenes/overworld/ikana_canyon/ikana_canyon_room_2.o"
+    number 3
+endseg
+
+beginseg
+    name "ikana_canyon_room_3"
+    include "$(BUILD_DIR)/assets/scenes/overworld/ikana_canyon/ikana_canyon_room_3.o"
+    number 3
+endseg
+
+beginseg
+    name "ikana_canyon_room_4"
+    include "$(BUILD_DIR)/assets/scenes/overworld/ikana_canyon/ikana_canyon_room_4.o"
+    number 3
+endseg
+
+beginseg
+    name "ikana_graveyard_scene"
+    include "$(BUILD_DIR)/assets/scenes/overworld/ikana_graveyard/ikana_graveyard_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "ikana_graveyard_room_0"
+    include "$(BUILD_DIR)/assets/scenes/overworld/ikana_graveyard/ikana_graveyard_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "ikana_graveyard_room_1"
+    include "$(BUILD_DIR)/assets/scenes/overworld/ikana_graveyard/ikana_graveyard_room_1.o"
+    number 3
+endseg
+
+beginseg
     name "old_lost_woods_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/overworld/old_lost_woods/old_lost_woods_scene.o"

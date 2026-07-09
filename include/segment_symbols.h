@@ -699,6 +699,14 @@ DECLARE_ROM_SEGMENT(dawngrove_room_0)
 DECLARE_ROM_SEGMENT(dawngrove_room_1)
 DECLARE_ROM_SEGMENT(dawngrove_room_2)
 
+DECLARE_ROM_SEGMENT(ikana_canyon_room_0)
+DECLARE_ROM_SEGMENT(ikana_canyon_room_2)
+DECLARE_ROM_SEGMENT(ikana_canyon_room_3)
+DECLARE_ROM_SEGMENT(ikana_canyon_room_4)
+
+DECLARE_ROM_SEGMENT(ikana_graveyard_room_0)
+DECLARE_ROM_SEGMENT(ikana_graveyard_room_1)
+
 DECLARE_ROM_SEGMENT(old_lost_woods_room_0)
 
 DECLARE_ROM_SEGMENT(grottos2_room_6)
