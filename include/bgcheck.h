@@ -154,6 +154,8 @@ typedef enum WallType {
 
 typedef enum FloorProperty {
     /*  0 */ FLOOR_PROPERTY_0,
+    /*  1 */ FLOOR_PROPERTY_1,
+    /*  2 */ FLOOR_PROPERTY_2,
     /*  5 */ FLOOR_PROPERTY_5 = 5,
     /*  6 */ FLOOR_PROPERTY_6,
     /*  7 */ FLOOR_PROPERTY_7,

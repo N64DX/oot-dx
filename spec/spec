@@ -157,11 +157,12 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_40_25.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_41_20.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_42_28.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_43_red_ice_cavern.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_44_dawngrove.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_45_dawngrove_village.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_46_dawngrove_cave.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_47_deep_woods.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_43_30.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_44_red_ice_cavern.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_45_dawngrove.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_46_dawngrove_village.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_47_dawngrove_cave.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_48_deep_woods.o"
 #if OOT_VERSION >= PAL_1_0
     include "$(BUILD_DIR)/assets/audio/audiobank_padding.o"
 #endif
@@ -297,6 +298,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_125_dawngrove.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_126_dawngrove_village.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_127_dawngrove_cave.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_128_ikana_region.o"
 endseg
 
 beginseg
