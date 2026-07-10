@@ -25,7 +25,7 @@ s16 swamp_spider_house_room_5ObjectList_000040[] = {
 
 ActorEntry swamp_spider_house_room_5ActorEntry_000068[] = {
     { ACTOR_EN_SPIDER, { 250, 120, -2700 }, {              0, 0xF060, 0 }, 0xFF02 },
-    { ACTOR_EN_BOX,    {   0, 120, -2640 }, { GI_SWORD_HEROS, 0x8000, 0 }, 0x1000 }, // Chest flag: 00, appears on clear, Hero's Sword
+    { ACTOR_EN_BOX,    {   0, 120, -2640 }, { GI_SWORD_HEROS, 0x8000, 0 }, 0x1000 }, // Chest flag: 00, on clear, Hero's Sword
 };
 
 RoomShapeCullable swamp_spider_house_room_5RoomShapeCullable_000190 = { 

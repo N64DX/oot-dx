@@ -45,7 +45,7 @@ ActorEntry woodfall_temple_room_6ActorEntry_00006C[] = {
     { ACTOR_EN_KUSA,      { 2520, -1425,  210 }, {    0, 0x8480, 0 }, 0x002B },
     { ACTOR_EN_KUSA,      { 1980, -1425,  240 }, {    0, 0x9680, 0 }, 0x002B },
     { ACTOR_EN_KUSA,      { 2070, -1425,  210 }, {    0, 0x2800, 0 }, 0x002B },
-    { ACTOR_EN_BOX,       { 2265, -1440,    0 }, { 0x41, 0x4000, 0 }, 0x101D }, // Chest flag: 0x1D, Dungeon Map
+    { ACTOR_EN_BOX,       { 2265, -1440,    0 }, { 0x41, 0x4000, 0 }, 0x101D }, // Chest: 1D, on clear, Dungeon Map
     { ACTOR_OBJ_KIBAKO2,  { 2360, -1425,  325 }, {    0,      0, 0 }, 0xFFFF },
     { ACTOR_OBJ_KIBAKO3,  { 2300, -1425,  325 }, {    0, 0x8000, 0 }, 0x0244 }, // Purple: 4 (Woodfall)
     { ACTOR_OBJ_KIBAKO2,  { 2240, -1425,  325 }, {    0,      0, 0 }, 0xFFFF },

@@ -427,8 +427,13 @@ void EnHammergeist_Destroy(Actor* thisx, PlayState* play) {
     Collider_DestroyJntSph(play, &this->explosionCollider);
     sNumAlive--;
 
-    if (this->switchFlag != 0xFF && sNumAlive == 0)
+    if (this->switchFlag != 0xFF && sNumAlive == 0) {
         func_800F5B58();
+        if (this->switchFlag != 0xFF && sNumAlive == 0)
+            Flags_SetSwitch(play, this->switchFlag);
+        if (this->reward == HAMMERGEIST_REWARD_HEROS_SWORD && !HAS_HEROS_SWORD)
+            Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 5.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_SWORD_HEROS);
+    }
 }
 
 void EnHammergeist_Update(Actor* thisx, PlayState* play) {
@@ -778,13 +783,8 @@ void EnHammergeist_Die(EnHammergeist* this, PlayState* play) {
         if (play->gameplayFrames % 2 == 0)
             this->alpha -= 5;
     if (SkelAnime_Update(&this->skelAnime))
-        if (DECR(this->fireTimer) == 0 && this->actor.colorFilterTimer == 0) {
-            if (this->switchFlag != 0xFF && sNumAlive == 0)
-                Flags_SetSwitch(play, this->switchFlag);
-            if (this->reward == HAMMERGEIST_REWARD_HEROS_SWORD && !HAS_HEROS_SWORD)
-                Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 5.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_SWORD_HEROS);
+        if (DECR(this->fireTimer) == 0 && this->actor.colorFilterTimer == 0)
             Actor_Kill(&this->actor);
-        }
 }
 
 void EnHammergeist_SetupExplosion(EnHammergeist* this, PlayState* play) {

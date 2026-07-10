@@ -43,7 +43,7 @@ s16 old_dodongos_cavern_room_8ObjectList0x000038[] = {
 ActorEntry old_dodongos_cavern_room_8ActorList0x000048[] = {
     { ACTOR_OBJECT_KANKYO,    {    0,   0,     0 }, {    0,      0,    0 }, 0x0006 },
     { ACTOR_EN_GOROIWA,       { 4428, 984, -1515 }, {    0, 0xC000,    1 }, 0x0D03 },
-    { ACTOR_EN_BOX,           { 4240, 831, -1514 }, { 0x3F, 0x4000, 0x18 }, 0xC003 }, // Chest: 03, Boss Key
+    { ACTOR_EN_BOX,           { 4240, 831, -1514 }, { 0x3F, 0x4000, 0x18 }, 0xC003 }, // Chest: 03, checks switch: 18, Boss Key
     { ACTOR_BG_FLAME_THROWER, { 3150, 786, -1750 }, {    0,      0,    0 }, 0x0000 },
     { ACTOR_BG_FLAME_THROWER, { 3230, 784, -1750 }, {    0,      0,    0 }, 0x0000 },
     { ACTOR_BG_FLAME_THROWER, { 3310, 786, -1750 }, {    0,      0,    0 }, 0x0000 },

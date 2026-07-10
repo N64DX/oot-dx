@@ -36,22 +36,22 @@ s16 woodfall_temple_room_1ObjectList_000040[] = {
 };
 
 ActorEntry woodfall_temple_room_1ActorEntry_00006C[] = {
-    { ACTOR_BG_LADDER,       {  570, -1485, -120 }, {    0,  0xC000,      0 }, 0x0902 }, // Appears on switch: 0x09
-    { ACTOR_BG_LADDER,       {  570, -1485,  120 }, {    0,  0xC000,      0 }, 0x0902 }, // Appears on switch: 0x09
+    { ACTOR_BG_LADDER,       {  570, -1485, -120 }, {    0,  0xC000,      0 }, 0x0902 }, // Checks switch: 09
+    { ACTOR_BG_LADDER,       {  570, -1485,  120 }, {    0,  0xC000,      0 }, 0x0902 }, // Checks switch: 09
     { ACTOR_EN_KAREBABA,     { -165, -1188,  645 }, {    0,  0x3C00,      0 }, 0x0001 },
     { ACTOR_EN_DEKUBABA,     { -570, -1485,   45 }, {    0,       0,      0 }, 0x0000 },
-    { ACTOR_EN_WONDER_TALK2, {    0, -1185,  650 }, {    0,       0,      1 }, 0x500F }, // Sets switch: 0x0F
-    { ACTOR_OBJ_TSUBO,       {  665, -1185,  255 }, {    0,       0,      0 }, 0x4001 }, // Sets collect: 0x20, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,       {  635, -1185,  255 }, {    0,       0,      0 }, 0x4201 }, // Sets collect: 0x21, drops Blue Rupee
+    { ACTOR_EN_WONDER_TALK2, {    0, -1185,  650 }, {    0,       0,      1 }, 0x500F }, // Sets switch: 0F
+    { ACTOR_OBJ_TSUBO,       {  665, -1185,  255 }, {    0,       0,      0 }, 0x4001 }, // Sets collect: 20, drops Blue Rupee
+    { ACTOR_OBJ_TSUBO,       {  635, -1185,  255 }, {    0,       0,      0 }, 0x4201 }, // Sets collect: 21, drops Blue Rupee
     { ACTOR_BG_NUMA_HANA,    {    0, -1395,    0 }, {    0,       0,      0 }, 0x0000 },
     { ACTOR_EN_TANRON1,      {  420, -1195,    0 }, {    0,       0,      0 }, 0x0007 },
-    { ACTOR_OBJ_SYOKUDAI,    {  420, -1290,    0 }, {    0,       0,      0 }, 0x243F }, // Sets switch: 0x3F
-    { ACTOR_OBJ_SYOKUDAI,    { -405, -1185, -495 }, {    0,       0,      0 }, 0x1052 }, // Sets switch: 0x12
+    { ACTOR_OBJ_SYOKUDAI,    {  420, -1290,    0 }, {    0,       0,      0 }, 0x243F }, // Sets switch: 3F
+    { ACTOR_OBJ_SYOKUDAI,    { -405, -1185, -495 }, {    0,       0,      0 }, 0x1052 }, // Sets switch: 12
     { ACTOR_EN_RAF,          {    0, -1495,  270 }, {    0,       0,      0 }, 0x0F80 },
     { ACTOR_EN_RAF,          { -270, -1495,    0 }, {    0,       0,      0 }, 0x0F80 },
     { ACTOR_EN_RAF,          {  270, -1495,    0 }, {    0,       0,      0 }, 0x0F80 },
-    { ACTOR_ELF_MSG2,        {    0, -1365,    0 }, {    5,       0,      0 }, 0x150D }, // Sets switch: 0x15
-    { ACTOR_ELF_MSG2,        { -405, -1115, -495 }, {    0,       0,      0 }, 0x160E }, // Sets switch: 0x16
+    { ACTOR_ELF_MSG2,        {    0, -1365,    0 }, {    5,       0,      0 }, 0x150D }, // Sets switch: 15
+    { ACTOR_ELF_MSG2,        { -405, -1115, -495 }, {    0,       0,      0 }, 0x160E }, // Sets switch: 16
     { ACTOR_OBJ_TSUBO,       {  510, -1485,  510 }, {    0,       0,      0 }, 0x0003 }, // Drops Recovery Heart
     { ACTOR_OBJ_TSUBO,       {  660, -1485, -120 }, {    0,       0,      0 }, 0x0003 }, // Drops Recovery Heart
     { ACTOR_OBJ_TSUBO,       {  660, -1485,  120 }, {    0,       0,      0 }, 0x0003 }, // Drops Recovery Heart
@@ -59,12 +59,12 @@ ActorEntry woodfall_temple_room_1ActorEntry_00006C[] = {
     { ACTOR_OBJ_TSUBO,       {  630, -1485,  630 }, {    0,       0,      0 }, 0x000D }, // Drops Deku Stick
     { ACTOR_OBJ_TSUBO,       {  510, -1485,  630 }, {    0,       0,      0 }, 0x000B }, // Drops Bombs (5)
     { ACTOR_OBJ_TSUBO,       {  630, -1485,  510 }, {    0,       0,      0 }, 0x0009 }, // Drops Arrows (10)
-    { ACTOR_OBJ_SWITCH,      {  570, -1185,    0 }, {    0,  0xC000,      0 }, 0x0900 }, // Sets switch: 0x09
-    { ACTOR_OBJ_SWITCH,      { -565, -1250, -470 }, {    0,       0,      0 }, 0x1100 }, // Sets switch: 0x11
+    { ACTOR_OBJ_SWITCH,      {  570, -1185,    0 }, {    0,  0xC000,      0 }, 0x0900 }, // Sets switch: 09
+    { ACTOR_OBJ_SWITCH,      { -565, -1250, -470 }, {    0,       0,      0 }, 0x1100 }, // Sets switch: 11
     { ACTOR_EN_KUSA,         { -660, -1485,  -90 }, {    0,  0x0780,      0 }, 0x002B },
     { ACTOR_EN_KUSA,         { -120, -1185,  630 }, {    0,  0x2F00,      0 }, 0x002B },
     { ACTOR_EN_KUSA,         { -615, -1485, -105 }, {    0,  0x3A80,      0 }, 0x002B },
-    { ACTOR_EN_BOX,          {    0, -1185,  450 }, { 0x4B,  0x8000,   0x11 }, 0x8017 }, // Chest flag: 0x17, checks switch: 0x11, Arrows
+    { ACTOR_EN_BOX,          {    0, -1185,  450 }, { 0x4B,  0x8000,   0x11 }, 0x8017 }, // Chest: 17, checks switch: 11, Arrows
     { ACTOR_OBJ_PURIFY,      {    0, -1574,    0 }, {    0,       0,      0 }, 0x1000 },
     { ACTOR_OBJ_PURIFY,      {    0, -1495,    0 }, {    0,       0,      0 }, 0x0000 },
 };

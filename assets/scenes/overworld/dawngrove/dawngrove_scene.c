@@ -33,9 +33,9 @@ ActorEntry dawngrove_sceneStartPositionList_0000D0[] = {
 };
 
 TransitionActorEntry dawngrove_sceneTransitionActorList_000088[] = {
-    { 2, 255, 0, 255, ACTOR_EN_HOLL, {  -975,   1,  -608 },    364, 0x0000 },
-    { 1, 255, 0, 255, ACTOR_EN_HOLL, { -1221,  31,  -130 },  15652, 0x0000 },
-    { 1, 255, 0, 255, ACTOR_EN_HOLL, {  -586, 183,   934 },  15652, 0x0000 },
+    { 2, 255, 0, 255, ACTOR_EN_HOLL, {  -975,   1,  -608 },    364, 0x003F },
+    { 1, 255, 0, 255, ACTOR_EN_HOLL, { -1221,  31,  -130 },  15652, 0x003F },
+    { 1, 255, 0, 255, ACTOR_EN_HOLL, {  -586, 183,   934 },  15652, 0x003F },
     { 2,   0, 2,   0, ACTOR_EN_DOOR, { -1322, 129, -1544 }, -28036, 0x01BF },
 };
 

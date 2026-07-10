@@ -27,7 +27,7 @@ s16 fairy_deku_tree_room_8ObjectList0x000038[] = {
 };
 
 ActorEntry fairy_deku_tree_room_8ActorList0x000048[] = {
-    { ACTOR_EN_BOX,   { 2001, 760, -9 }, { 0x40, 0x4000, 0 }, 0x1006 }, // Chest: 06, appears on clear, Compass
+    { ACTOR_EN_BOX,   { 2001, 760, -9 }, { 0x40, 0x4000, 0 }, 0x1006 }, // Chest: 06, on clear, Compass
     { ACTOR_EN_BEAST, { 1900, 760,  0 }, {    0, 0x4000, 0 }, 0xFF00 },
 };
 

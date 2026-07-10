@@ -287,8 +287,8 @@
         <Sample Name="SAMPLE_0_259"/>
         <Sample Name="SAMPLE_0_260"/>
         <Sample Name="SAMPLE_0_261"/>
-        <Sample Name="SAMPLE_0_433"/>
-        <Sample Name="SAMPLE_0_434"/>
+        <Sample Name="SAMPLE_0_LINK_433"/>
+        <Sample Name="SAMPLE_0_LINK_434"/>
         <Sample Name="SAMPLE_0_GABORA_1"/>
         <Sample Name="SAMPLE_0_GABORA_2"/>
         <Sample Name="SAMPLE_0_SNOW_1"/>
@@ -432,8 +432,8 @@
         <Effect Name="EFFECT_135" Sample="SAMPLE_0_197"/>
         <Effect Name="EFFECT_GABORA_1"  Sample="SAMPLE_0_GABORA_1"/>
         <Effect Name="EFFECT_GABORA_2"  Sample="SAMPLE_0_GABORA_2"/>
-        <Effect Name="EFFECT_LASH_KID"  Sample="SAMPLE_0_433"/>
-        <Effect Name="EFFECT_LASH_KID2" Sample="SAMPLE_0_434"/>
+        <Effect Name="EFFECT_LASH_KID"  Sample="SAMPLE_0_LINK_433"/>
+        <Effect Name="EFFECT_LASH_KID2" Sample="SAMPLE_0_LINK_434"/>
     </Effects>
     <Drums>
         <Drum Name="DRUM_0" Envelope="Env6" Pan="64" Note="A0" Sample="SAMPLE_0_120"/>

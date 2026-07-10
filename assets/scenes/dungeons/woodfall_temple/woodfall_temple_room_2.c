@@ -54,15 +54,15 @@ ActorEntry woodfall_temple_room_2ActorEntry_00006C[] = {
     { ACTOR_EN_MKK,       { -491, -1485, 1206 }, {      0,      0,    0 }, 0x7800 },
     { ACTOR_EN_MKK,       { -555, -1485, 1665 }, {      0,      0,    0 }, 0x7800 },
     { ACTOR_EN_MKK,       { -600, -1485, 1755 }, {      0,      0,    0 }, 0x7800 },
-    { ACTOR_OBJ_SYOKUDAI, { -120, -1185,  855 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 0x3F
-    { ACTOR_OBJ_SYOKUDAI, {  120, -1185,  855 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 0x3F
+    { ACTOR_OBJ_SYOKUDAI, { -120, -1185,  855 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 3F
+    { ACTOR_OBJ_SYOKUDAI, {  120, -1185,  855 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 3F
     { ACTOR_OBJ_TSUBO,    {  120, -1185, 2100 }, {      0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
     { ACTOR_EN_KUSA,      {  -90, -1485, 1770 }, {      0, 0xAF80,    0 }, 0x0002 },
     { ACTOR_EN_KUSA,      {  -45, -1485, 1680 }, {      0, 0x4180,    0 }, 0x0002 },
     { ACTOR_EN_KUSA,      { -120, -1185,  930 }, {      0,      0,    0 }, 0x2202 },
     { ACTOR_EN_KUSA,      {  120, -1185,  930 }, {      0,      0,    0 }, 0x2302 },
     { ACTOR_EN_KUSA,      { -105, -1485, 1695 }, {      0, 0x7800,    0 }, 0x0002 },
-    { ACTOR_EN_BOX,       {  465, -1155, 1890 }, {    0x2, 0x4000,    0 }, 0x5018 }, // Chest flag: 0x18, Deku Nuts
+    { ACTOR_EN_BOX,       {  465, -1155, 1890 }, {    0x2, 0x4000,    0 }, 0x5018 }, // Chest: 18, Deku Nuts
     { ACTOR_OBJ_COMB,     {  -91, -1083, 1611 }, { 0xA200, 0x9580,    0 }, 0xFF02 },
 };
 

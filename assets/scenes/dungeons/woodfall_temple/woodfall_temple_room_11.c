@@ -23,9 +23,9 @@ s16 woodfall_temple_room_11ObjectList_000040[] = {
 };
 
 ActorEntry woodfall_temple_room_11ActorEntry_000048[] = {
-    { ACTOR_BG_TOKI_SWD,   { -2000,   8, -100 }, { 0, 0, 0 }, 0x000E }, // Sets switch: 0x0E
-    { ACTOR_ELF_MSG2,      { -2000,   8, -100 }, { 5, 0, 0 }, 0x0E0F }, // Sets switch: 0x0E
-    { ACTOR_BG_DKJAIL_IVY, { -2000,   0,   90 }, { 0, 0, 0 }, 0x0008 }, // Sets switch: 0x08
+    { ACTOR_BG_TOKI_SWD,   { -2000,   8, -100 }, { 0, 0, 0 }, 0x000E }, // Sets switch: 0E
+    { ACTOR_ELF_MSG2,      { -2000,   8, -100 }, { 5, 0, 0 }, 0x0E0F }, // Sets switch: 0E
+    { ACTOR_BG_DKJAIL_IVY, { -2000,   0,   90 }, { 0, 0, 0 }, 0x0008 }, // Sets switch: 08
 };
 
 RoomShapeCullable woodfall_temple_room_11RoomShapeCullable_000090 = { 

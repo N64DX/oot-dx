@@ -76,7 +76,7 @@ ActorEntry goron_shrine_room_0ActorEntry_000058[] = {
     { ACTOR_OBJ_TSUBO,         { -395, -134, -494 }, {    0, 0x36B0,    0 }, 0x5300 }, // Collect: 29
     { ACTOR_OBJ_TSUBO,         { -376, -134, -537 }, {    0, 0x36B0,    0 }, 0x5500 }, // Collect: 2A
     { ACTOR_BG_SPOT18_SHUTTER, {  490, -538,  348 }, {    0, 0x8FA0,    0 }, 0x0000 },
-    { ACTOR_EN_BOX,            { -400, -133,    0 }, { 0x3E, 0x4000, 0x1E }, 0xB000 }, // Chest: 00, appears on switch: 1E, Piece of Heart
+    { ACTOR_EN_BOX,            { -400, -133,    0 }, { 0x3E, 0x4000, 0x1E }, 0xB000 }, // Chest: 00, checks switch: 1E, Piece of Heart
     { ACTOR_OBJ_KIBAKO3,       {  500, -440,   65 }, {    0, 0x7830,    0 }, 0x0223 }, // Red: 2 (Goron Mines)
 };
 
@@ -158,7 +158,7 @@ ActorEntry goron_shrine_room_0ActorEntry_cleansed[] = {
     { ACTOR_OBJ_TSUBO,     { -328, -134, -518 }, {    0, 0x36B0,    0 }, 0x5100 }, // Collect: 28
     { ACTOR_OBJ_TSUBO,     { -395, -134, -494 }, {    0, 0x36B0,    0 }, 0x5300 }, // Collect: 29
     { ACTOR_OBJ_TSUBO,     { -376, -134, -537 }, {    0, 0x36B0,    0 }, 0x5500 }, // Collect: 2A
-    { ACTOR_EN_BOX,        { -400, -133,    0 }, { 0x3E, 0x4000, 0x1E }, 0xB000 }, // Chest: 00, appears on switch: 1E, Piece of Heart
+    { ACTOR_EN_BOX,        { -400, -133,    0 }, { 0x3E, 0x4000, 0x1E }, 0xB000 }, // Chest: 00, checks switch: 1E, Piece of Heart
     { ACTOR_OBJ_KIBAKO3,   {  500, -440,   65 }, {    0, 0x7830,    0 }, 0x0241 }, // Yellow: 4 (Spring Lake)
 };
 

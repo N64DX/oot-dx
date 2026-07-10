@@ -38,17 +38,17 @@ s16 woodfall_temple_room_3ObjectList_000040[] = {
 
 ActorEntry woodfall_temple_room_3ActorEntry_00006C[] = {
     { ACTOR_EN_KAREBABA,   { -1215, -1185, -825 }, {      0, 0x1E00,      0 }, 0x0001 },
-    { ACTOR_BG_YDAN_SP,    { -1110, -1100, -585 }, { 0x4000,      0,      0 }, 0x0001 }, // Sets switch: 0x01
+    { ACTOR_BG_YDAN_SP,    { -1110, -1100, -585 }, { 0x4000,      0,      0 }, 0x0001 }, // Sets switch: 01
     { ACTOR_EN_ST,         { -1410, -1300, -630 }, {      0, 0x1680,      0 }, 0x003F },
     { ACTOR_EN_DEKUBABA,   { -1200, -1185, -780 }, {      0, 0x0F00,      0 }, 0x0000 },
     { ACTOR_ELF_MSG,       { -1110, -1485,    0 }, {   0x14,      0,      0 }, 0x0C0A },
-    { ACTOR_OBJ_PZLBLOCK,  { -1110, -1485,    0 }, {      1,      0,      6 }, 0x073F }, // Sets switch: 0x3F
+    { ACTOR_OBJ_PZLBLOCK,  { -1110, -1485,    0 }, {      1,      0,      6 }, 0x073F }, // Sets switch: 3F
     { ACTOR_EN_TANRON1,    { -1350, -1405, -570 }, {      0,      0,      0 }, 0x0004 },
-    { ACTOR_OBJ_SYOKUDAI,  { -1380, -1195, -210 }, {      0,      0,      0 }, 0x200A }, // Sets switch: 0x0A
-    { ACTOR_OBJ_SYOKUDAI,  { -1350, -1485, -570 }, {      0,      0,      0 }, 0x243F }, // Sets switch: 0x3F
-    { ACTOR_OBJ_SYOKUDAI,  { -1050, -1185, -810 }, {      0,      0,      0 }, 0x243F }, // Sets switch: 0x3F
-    { ACTOR_OBJ_SYOKUDAI,  { -1062, -1485,  405 }, {      0,      0,      0 }, 0x1053 }, // Sets switch: 0x13
-    { ACTOR_ELF_MSG2,      { -1062, -1415,  406 }, {      0,   0x14,      0 }, 0x140B }, // Sets switch: 0x14
+    { ACTOR_OBJ_SYOKUDAI,  { -1380, -1195, -210 }, {      0,      0,      0 }, 0x200A }, // Sets switch: 0A
+    { ACTOR_OBJ_SYOKUDAI,  { -1350, -1485, -570 }, {      0,      0,      0 }, 0x243F }, // Sets switch: 3F
+    { ACTOR_OBJ_SYOKUDAI,  { -1050, -1185, -810 }, {      0,      0,      0 }, 0x243F }, // Sets switch: 3F
+    { ACTOR_OBJ_SYOKUDAI,  { -1062, -1485,  405 }, {      0,      0,      0 }, 0x1053 }, // Sets switch: 13
+    { ACTOR_ELF_MSG2,      { -1062, -1415,  406 }, {      0,   0x14,      0 }, 0x140B }, // Sets switch: 14
     { ACTOR_OBJ_TSUBO,     {  -780, -1185, -165 }, {      0,      0,      0 }, 0x0003 }, // Drops Recovery Heart
     { ACTOR_OBJ_TSUBO,     {  -780, -1185, -105 }, {      0,      0,      0 }, 0x0003 }, // Drops Recovery Heart
     { ACTOR_OBJ_COMB,      { -1110, -1255, -128 }, {      0,      0,      0 }, 0xFF02 },

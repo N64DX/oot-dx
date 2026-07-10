@@ -55,9 +55,9 @@ ActorEntry woodfall_room_0ActorEntry_000064[] = {
   //{ ACTOR_EN_PP,          { -1232,    235,    -72 }, {    0,   0xC1,    0 }, 0x0101 },
   //{ ACTOR_EN_PP,          { -1139,    108,   -906 }, {    0,   0x8A,    0 }, 0x0101 },
   //{ ACTOR_EN_PP,          {   968,    112,    939 }, {    0,  0x165,    0 }, 0x0101 },
-    { ACTOR_EN_BOX,         {    46,    196,   1568 }, { 0x4E, 0x0000,    0 }, 0x5002 }, // Sets chest flag: 0x02
-    { ACTOR_EN_BOX,         {   627,     15,  -1314 }, { 0x4E, 0x4000,    0 }, 0x5000 }, // Sets chest flag: 0x00
-    { ACTOR_EN_BOX,         {  1286,    120,   -973 }, { 0x3E, 0x7000,    0 }, 0x0001 }, // Sets chest flag: 0x01
+    { ACTOR_EN_BOX,         {    46,    196,   1568 }, { 0x4E, 0x0000,    0 }, 0x5002 }, // Chest: 02, Red Rupee
+    { ACTOR_EN_BOX,         {   627,     15,  -1314 }, { 0x4E, 0x4000,    0 }, 0x5000 }, // Chest: 00, Red Rupee
+    { ACTOR_EN_BOX,         {  1286,    120,   -973 }, { 0x3E, 0x7000,    0 }, 0x0001 }, // Chest: 01, Piece of Heart
     { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0,      0,    0 }, 0x0002 }, // Woodfall Temple
     { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0,      0,    0 }, 0x0003 }, // Ramp & Platform
     { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0, 0x8000,    0 }, 0x0000 }, // Water
