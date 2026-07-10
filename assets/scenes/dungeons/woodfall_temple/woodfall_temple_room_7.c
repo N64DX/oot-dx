@@ -5,6 +5,7 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
+#include "item.h"
 
 SceneCmd woodfall_temple_room_7[] = {
     SCENE_CMD_ECHO_SETTINGS(7),
@@ -37,10 +38,10 @@ s16 woodfall_temple_room_7ObjectList_000040[] = {
 };
 
 ActorEntry woodfall_temple_room_7ActorEntry_00006C[] = {
-    { ACTOR_EN_DINOFOS,   { 1230,  -781, 1180 }, {    0, 0x8000, 0 }, 0xFE00 },
-    { ACTOR_EN_DINOFOS,   { 1330,  -781, 1180 }, {    0, 0x8000, 0 }, 0xFE00 },
-    { ACTOR_EN_DINOFOS,   { 1130,  -781, 1180 }, {    0, 0x8000, 0 }, 0xFE00 },
-    { ACTOR_EN_BOX,       { 1230, -1215, 1455 }, { 0x80,      0, 0 }, 0x101B }, // Chest flag: 1B, Great Fairy's Sword
+    { ACTOR_EN_DINOFOS,   { 1230,  -781, 1180 }, {               0, 0x8000, 0 }, 0xFE00 },
+    { ACTOR_EN_DINOFOS,   { 1330,  -781, 1180 }, {               0, 0x8000, 0 }, 0xFE00 },
+    { ACTOR_EN_DINOFOS,   { 1130,  -781, 1180 }, {               0, 0x8000, 0 }, 0xFE00 },
+    { ACTOR_EN_BOX,       { 1230, -1215, 1455 }, { GI_SWORD_FAIRYS,      0, 0 }, 0x101B }, // Chest: 1B, on clear, Great Fairy's Sword
 };
 
 RoomShapeCullable woodfall_temple_room_7RoomShapeCullable_0000B0 = { 

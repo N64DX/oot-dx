@@ -42,7 +42,7 @@ s16 dawngrove_room_1ObjectList_000040[] = {
 ActorEntry dawngrove_room_1ActorEntry_000050[] = {
     { ACTOR_OBJ_SYOKUDAI,   { -1481,  59, -252 }, {               0,      0,   0 }, 0x2400 },
     { ACTOR_OBJ_SYOKUDAI,   { -2365, 119,  540 }, {               0,      0,   0 }, 0x2400 },
-    { ACTOR_OBJ_SYOKUDAI,   { -1094, 179,  283 }, {               0,      0,   0 }, 0x2002 },
+    { ACTOR_OBJ_SYOKUDAI,   { -1094, 179,  283 }, {               0,      0,   0 }, 0x2002 }, // Sets switch: 02
     { ACTOR_EN_DEKUNUTS,    { -2657, 180, -492 }, {               0, 0x2AA8,   0 }, 0x0300 },
     { ACTOR_EN_DEKUNUTS,    { -2657, 180, -336 }, {               0, 0x5553,   0 }, 0x0300 },
     { ACTOR_OBJ_MURE,       { -1237, 238,  257 }, {               0,      0,   0 }, 0x0224 },
@@ -70,11 +70,11 @@ ActorEntry dawngrove_room_1ActorEntry_000050[] = {
     { ACTOR_EN_GOOMBA,      { -2000,  28, -400 }, {               0,      0,   0 }, 0x0000 },
     { ACTOR_EN_GOOMBA,      { -2000, 120,  500 }, {               0, 0x8000,   0 }, 0x0000 },
     { ACTOR_EN_GOOMBA,      { -1200, 180,  600 }, {               0, 0x8000,   0 }, 0x0000 },
-    { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -964 }, {               0,      0,   0 }, 0x1101 },
-    { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -884 }, {               0,      0,   0 }, 0x1101 },
-    { ACTOR_OBJ_SYOKUDAI,   { -1795,  28,   28 }, {               0,      0,   0 }, 0x1101 },
-    { ACTOR_OBJ_SYOKUDAI,   { -2034,  22, -779 }, {               0,      0,   0 }, 0x1101 },
-    { ACTOR_EN_BOX,         { -1885, 120, -411 }, { GI_SHIELD_METAL, 0x4000, 0x1 }, 0x8002 }, // Chest flag 2, checks switch: 01, Metal Shield
+    { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -964 }, {               0,      0,   0 }, 0x1101 }, // Sets switch: 01
+    { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -884 }, {               0,      0,   0 }, 0x1101 }, // Sets switch: 01
+    { ACTOR_OBJ_SYOKUDAI,   { -1795,  28,   28 }, {               0,      0,   0 }, 0x1101 }, // Sets switch: 01
+    { ACTOR_OBJ_SYOKUDAI,   { -2034,  22, -779 }, {               0,      0,   0 }, 0x1101 }, // Sets switch: 01
+    { ACTOR_EN_BOX,         { -1885, 120, -411 }, { GI_SHIELD_METAL, 0x4000, 0x1 }, 0x8002 }, // Chest: 02, checks switch: 01, Metal Shield
 
     // Timeskip (not cleansed)
     { ACTOR_EN_WEATHER_TAG, { -1800, 180, -425 }, {    0,      0,   0 }, 0x2008 },

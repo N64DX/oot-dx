@@ -41,7 +41,7 @@ ActorEntry woodfall_temple_room_4ActorEntry_00006C[] = {
     { ACTOR_EN_KUSA,        {  -901, -1485,  776 }, {    0, 0x7F80, 0 }, 0x002B },
     { ACTOR_EN_KUSA,        {  -855, -1487,  849 }, {    0, 0x8A80, 0 }, 0x002B },
     { ACTOR_EN_KUSA,        {  -873, -1491,  905 }, {    0, 0x9980, 0 }, 0x002B },
-    { ACTOR_EN_BOX,         { -1110, -1508, 1125 }, { 0x40,      0, 0 }, 0x101C }, // Chest flag: 0x1C, Compass
+    { ACTOR_EN_BOX,         { -1110, -1508, 1125 }, { 0x40,      0, 0 }, 0x101C }, // Chest: 1C, on clear, Compass
     { ACTOR_OBJ_KIBAKO3,    { -1375, -1485,  800 }, {    0, 0x4000, 0 }, 0x0234 }, // Purple: 3 (Woodfall)
 };
 

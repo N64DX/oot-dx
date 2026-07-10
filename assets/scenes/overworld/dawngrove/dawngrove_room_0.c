@@ -47,14 +47,14 @@ ActorEntry dawngrove_room_0ActorEntry_000050[] = {
     { ACTOR_EN_KUSA,        {  -200, 179,  787 }, {    0,      0,   0 }, 0x0000 },
     { ACTOR_EN_KUSA,        {  -200, 179,  703 }, {    0,      0,   0 }, 0x0000 },
     { ACTOR_EN_KUSA,        {  -200, 179,  618 }, {    0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_BOX,         {  -755, 313,  445 }, { 0x4E, 0xC000,   0 }, 0x5000 }, // Chest flag: 00, Red Rupee
-    { ACTOR_EN_BOX,         {  -587, 314, -644 }, { 0x4E, 0x8000,   0 }, 0x5001 }, // Chest flag: 01, Red Rupee
-    { ACTOR_EN_BOX,         {   -96, 315,  740 }, { 0x3E, 0x8000, 0xA }, 0xB00A }, // Chest flag: 0A, checks switch: 0A, Piece of Heart
+    { ACTOR_EN_BOX,         {  -755, 313,  445 }, { 0x4E, 0xC000,   0 }, 0x5000 }, // Chest: 00, Red Rupee
+    { ACTOR_EN_BOX,         {  -587, 314, -644 }, { 0x4E, 0x8000,   0 }, 0x5001 }, // Chest: 01, Red Rupee
+    { ACTOR_EN_BOX,         {   -96, 315,  740 }, { 0x3E, 0x8000, 0xA }, 0xB00A }, // Chest: 0A, checks switch: 0A, Piece of Heart
     { ACTOR_EN_SW,          {  -223, 297,  536 }, {    0, 0x4000,   0 }, 0x0000 },
     { ACTOR_EN_SW,          {  -223, 292,  482 }, {    0, 0x4000,   0 }, 0x0000 },
     { ACTOR_EN_SW,          {  -223, 297,  422 }, {    0, 0x4000,   0 }, 0x0000 },
     { ACTOR_EN_KANBAN,      {  -440,   0,  160 }, {    0, 0x8000,   0 }, 0x0059 },
-    { ACTOR_OBJ_SYOKUDAI,   {  -687,  21,  168 }, {    0, 0x8000,   0 }, 0x200A },
+    { ACTOR_OBJ_SYOKUDAI,   {  -687,  21,  168 }, {    0, 0x8000,   0 }, 0x200A }, // Sets switch: 0A
     { ACTOR_OBJ_LOST_WOODS, { -5000, 250, -450 }, {    0,      0,   0 }, 0x0019 },
     { ACTOR_OBJECT_KANKYO,  {     0,   0,    0 }, {    0,      0,   0 }, 0x0000 },
 

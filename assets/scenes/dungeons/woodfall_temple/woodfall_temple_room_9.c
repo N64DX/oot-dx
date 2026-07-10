@@ -36,7 +36,7 @@ s16 woodfall_temple_room_9ObjectList_000040[] = {
 };
 
 ActorEntry woodfall_temple_room_9ActorEntry_00006C[] = {
-    { ACTOR_ELF_MSG,       { -1065,  0, -600 }, { 0x1E, 0,      0 }, 0x0D09 }, // Sets switch: 0x0D
+    { ACTOR_ELF_MSG,       { -1065,  0, -600 }, { 0x1E, 0,      0 }, 0x0D09 }, // Sets switch: 0D
     { ACTOR_EN_MKK,        { -1095,  0, -285 }, {    0, 0,      0 }, 0xFF00 },
     { ACTOR_EN_MKK,        {  -975,  0, -120 }, {    0, 0,      0 }, 0xFF00 },
     { ACTOR_EN_MKK,        {  -900,  0,   60 }, {    0, 0,      0 }, 0xFF00 },
@@ -51,11 +51,11 @@ ActorEntry woodfall_temple_room_9ActorEntry_00006C[] = {
     { ACTOR_EN_MKK,        {  -795,  0,  225 }, {    0, 0,      0 }, 0x3200 },
     { ACTOR_EN_MKK,        { -1095,  0,  420 }, {    0, 0,      0 }, 0x3200 },
     { ACTOR_EN_MKK,        { -1035,  0,  420 }, {    0, 0,      0 }, 0x3200 },
-    { ACTOR_OBJ_SYOKUDAI,  { -1065, 15,  120 }, {    0, 0,      0 }, 0x243F }, // Sets switch: 0x3F
-    { ACTOR_OBJ_SYOKUDAI,  { -1335,  0,  195 }, {    0, 0,      0 }, 0x10CB }, // Sets switch: 0x0B
-    { ACTOR_OBJ_SYOKUDAI,  {  -795,  0,  195 }, {    0, 0,      0 }, 0x10CB }, // Sets switch: 0x0B
-    { ACTOR_OBJ_SYOKUDAI,  { -1065,  0,  420 }, {    0, 0,      0 }, 0x10CB }, // Sets switch: 0x0B
-    { ACTOR_EN_BOX,        { -1065,  0,  240 }, {  0x1, 0,      0 }, 0x7019 }, // Chest flag: 0x19, Bombs
+    { ACTOR_OBJ_SYOKUDAI,  { -1065, 15,  120 }, {    0, 0,      0 }, 0x243F }, // Sets switch: 3F
+    { ACTOR_OBJ_SYOKUDAI,  { -1335,  0,  195 }, {    0, 0,      0 }, 0x10CB }, // Sets switch: 0B
+    { ACTOR_OBJ_SYOKUDAI,  {  -795,  0,  195 }, {    0, 0,      0 }, 0x10CB }, // Sets switch: 0B
+    { ACTOR_OBJ_SYOKUDAI,  { -1065,  0,  420 }, {    0, 0,      0 }, 0x10CB }, // Sets switch: 0B
+    { ACTOR_EN_BOX,        { -1065,  0,  240 }, {  0x1, 0,      0 }, 0x7019 }, // Chest: 19, on clear, Bombs
 };
 
 RoomShapeCullable woodfall_temple_room_9RoomShapeCullable_0001B0 = { 

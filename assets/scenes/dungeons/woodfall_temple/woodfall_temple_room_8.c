@@ -39,11 +39,11 @@ s16 woodfall_temple_room_8ObjectList_000040[] = {
 ActorEntry woodfall_temple_room_8ActorEntry_00006C[] = {
     { ACTOR_EN_HAMMERGEIST, { 1230, -1192, -1230 }, {    0,      0, 0 }, 0x0000 },
     { ACTOR_EN_HAMMERGEIST, { 1030, -1192, -1430 }, {    0,      0, 0 }, 0x0000 },
-    { ACTOR_OBJ_TSUBO,      { 1095,  1185, -1770 }, {    0,      0, 0 }, 0x4C01 }, // Sets collect: 0x26, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,      { 1140, -1185, -1770 }, {    0,      0, 0 }, 0x4E01 }, // Sets collect: 0x27, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,      { 1365, -1185, -1770 }, {    0,      0, 0 }, 0x5001 }, // Sets collect: 0x28, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,      { 1320, -1185, -1770 }, {    0,      0, 0 }, 0x5201 }, // Sets collect: 0x29, drops Blue Rupee
-    { ACTOR_EN_BOX,         { 1230, -1185, -1920 }, { 0x3F, 0x8000, 0 }, 0x201E }, // Chest flag: 0x1E, Boss Key
+    { ACTOR_OBJ_TSUBO,      { 1095,  1185, -1770 }, {    0,      0, 0 }, 0x4C01 }, // Sets collect: 26, drops Blue Rupee
+    { ACTOR_OBJ_TSUBO,      { 1140, -1185, -1770 }, {    0,      0, 0 }, 0x4E01 }, // Sets collect: 27, drops Blue Rupee
+    { ACTOR_OBJ_TSUBO,      { 1365, -1185, -1770 }, {    0,      0, 0 }, 0x5001 }, // Sets collect: 28, drops Blue Rupee
+    { ACTOR_OBJ_TSUBO,      { 1320, -1185, -1770 }, {    0,      0, 0 }, 0x5201 }, // Sets collect: 29, drops Blue Rupee
+    { ACTOR_EN_BOX,         { 1230, -1185, -1920 }, { 0x3F, 0x8000, 0 }, 0x201E }, // Chest: 1E, Boss Key
 };
 
 RoomShapeCullable woodfall_temple_room_8RoomShapeCullable_000120 = { 
