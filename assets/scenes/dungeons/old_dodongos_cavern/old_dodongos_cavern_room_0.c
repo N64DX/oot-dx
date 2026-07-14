@@ -13,7 +13,7 @@ SceneCmd old_dodongos_cavern_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_0MeshHeader0x0001A0),
-    SCENE_CMD_OBJECT_LIST(15, old_dodongos_cavern_room_0ObjectList0x000038),
+    SCENE_CMD_OBJECT_LIST(14, old_dodongos_cavern_room_0ObjectList0x000038),
     SCENE_CMD_ACTOR_LIST(23, old_dodongos_cavern_room_0ActorList0x000044),
     SCENE_CMD_END(),
 };
@@ -37,7 +37,6 @@ s16 old_dodongos_cavern_room_0ObjectList0x000038[] = {
     OBJECT_GOROIWA,
     OBJECT_CRASHBOX,
     OBJECT_SYOKUDAI,
-    OBJECT_DEMO_KEKKAI,
     OBJECT_KIBAKO2,
     OBJECT_FR,
 };
@@ -62,7 +61,7 @@ ActorEntry old_dodongos_cavern_room_0ActorList0x000044[] = {
     { ACTOR_OBJ_SWITCH,       {  900,    0, -1520 }, {      0,      0,      0 }, 0x0101 }, // Switch: 01
     { ACTOR_OBJ_SWITCH,       {  900,   80, -2120 }, {      0,      0,      0 }, 0x1001 }, // Switch: 10
     { ACTOR_BG_ICE_SHELTER,   {  900,   80, -2120 }, {      0,      0,      0 }, 0x0508 }, // Switch: 08
-    { ACTOR_BG_GND_DARKMEIRO, {  800,  120, -2120 }, { 0x4000,      0, 0x4000 }, 0x1003 }, // Clears on switch: 10
+    { ACTOR_OBJ_CRASHBOX,     {  815,   80, -2120 }, {      0,      0,      0 }, 0x0313 }, // Switch: 03
     { ACTOR_BG_ICE_SHELTER,   {    0,  240, -2680 }, {      0,      0,      0 }, 0x050A }, // Switch: 0A
     { ACTOR_BG_WOOD_PILLAR,   {    0,  240, -2680 }, {      0,      0,      0 }, 0x0000 },
     { ACTOR_OBJ_KIBAKO3,      { -776,  360, -2930 }, {      0, 0x4000,      0 }, 0x0233 }, // Red: 3 (Goron Mines)
