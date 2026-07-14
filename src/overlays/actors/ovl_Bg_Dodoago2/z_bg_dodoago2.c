@@ -20,6 +20,7 @@
 
 #include "overlays/actors/ovl_En_Bom/z_en_bom.h"
 #include "overlays/effects/ovl_Effect_Ss_Kakera/z_eff_ss_kakera.h"
+#include "assets/objects/object_bwall2/object_bwall2.h"
 
 #define FLAGS (ACTOR_FLAG_LOCK_ON_DISABLED | ACTOR_FLAG_ATTENTION_ENABLED)
 

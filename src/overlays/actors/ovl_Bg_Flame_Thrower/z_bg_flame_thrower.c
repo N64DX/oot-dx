@@ -16,6 +16,8 @@
 #include "z_lib.h"
 #include "play_state.h"
 
+#include "assets/objects/object_hidan_objects/object_hidan_objects.h"
+
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_DRAW_CULLING_DISABLED)
 
 void BgFlameThrower_Init(Actor* thisx, struct PlayState* play);

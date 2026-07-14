@@ -11,6 +11,8 @@
 #include "z_lib.h"
 #include "play_state.h"
 
+#include "assets/objects/object_crashbox/object_crashbox.h"
+
 #define FLAGS 0
 
 void ObjFloater_Init(Actor* thisx, struct PlayState* play);

@@ -66,7 +66,7 @@ ActorEntry road_to_ikana_room_0ActorEntry_000064[] = {
     { ACTOR_EN_GOROIWA,         {  4443, 1462,    45 }, {      0,      0,  1 }, 0x4D02 },
     { ACTOR_EN_A_OBJ,           {  1614,  200,  -877 }, {      0,      0,  0 }, 0x460A }, 
     { ACTOR_EN_HAMMERGEIST,     {  1614,  200,  -777 }, {      0, 0xC000,  0 }, 0x0000 }, // Sets switch: 00
-    { ACTOR_EN_BOX,             {  2014,  200,  -877 }, {   0x48, 0x4000,  0 }, 0xB000 }, // Chest: 00, checks switch: 00, Piece of Heart
+    { ACTOR_EN_BOX,             {  2014,  200,  -877 }, {   0x3E, 0x4000,  0 }, 0xB000 }, // Chest: 00, checks switch: 00, Piece of Heart
     { ACTOR_BG_SPOT00_HANEBASI, {   790,  328, -1810 }, { 0x1000, 0xF574,  0 }, 0xFFFE },
     { ACTOR_EN_WEATHER_TAG,     {  4000,  575,  -500 }, {      0,      0,  0 }, 0x0A00 },
 };

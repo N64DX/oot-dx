@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_bwall2/object_bwall2.h"
-
 struct BgBreakwall2;
 
 typedef void (*BgBreakwall2ActionFunc)(struct BgBreakwall2*, struct PlayState*);

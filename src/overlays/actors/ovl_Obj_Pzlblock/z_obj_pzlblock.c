@@ -15,6 +15,8 @@
 #include "play_state.h"
 #include "array_count.h"
 
+#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_extra.h"
+
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_CAN_PRESS_SWITCHES)
 
 void ObjPzlblock_Init(Actor* thisx, struct PlayState* play);

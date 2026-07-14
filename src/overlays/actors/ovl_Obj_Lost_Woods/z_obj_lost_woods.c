@@ -14,6 +14,8 @@
 #include "z_en_item00.h"
 #include "save.h"
 
+#include "assets/objects/object_lost_woods/object_lost_woods.h"
+
 #define FLAGS 0
 
 void ObjLostWoods_Init(Actor* thisx, struct PlayState* play);
@@ -41,7 +43,7 @@ s32 ObjLostWoods_HasCollider(s16 params) {
     else return false;
 }
 
-void ObjLostWoods_Init(Actor* thisx, struct PlayState* play) {
+void ObjLostWoods_Init(Actor* thisx, PlayState* play) {
     CollisionHeader* colHeader;
     ObjLostWoods* this = (ObjLostWoods*)thisx;
 
@@ -236,7 +238,7 @@ void ObjLostWoods_Init(Actor* thisx, struct PlayState* play) {
     }
 }
 
-void ObjLostWoods_Destroy(Actor* thisx, struct PlayState* play) {
+void ObjLostWoods_Destroy(Actor* thisx, PlayState* play) {
     ObjLostWoods* this = (ObjLostWoods*)thisx;
 
     if (thisx->params == 0x001B || thisx->params == 0x001E || thisx->params == 0x000C) {
@@ -257,7 +259,7 @@ static Vec3f D_80A9C23C_FKeep[] = {
 
 static s16 D_80A9C26C_FKeep[] = { 108, 102, 96, 84, 66, 55, 42, 38 };
 
-void ObjLostWoods_EnKusa_SpawnFragments(ObjLostWoods* this, struct PlayState* play) {
+void ObjLostWoods_EnKusa_SpawnFragments(ObjLostWoods* this, PlayState* play) {
     Vec3f velocity;
     Vec3f pos;
     s32 i;
@@ -294,7 +296,7 @@ void ObjLostWoods_EnKusa_SpawnFragments(ObjLostWoods* this, struct PlayState* pl
     }
 }
 
-void ObjLostWoods_Update(Actor* thisx, struct PlayState* play) {
+void ObjLostWoods_Update(Actor* thisx, PlayState* play) {
     ObjLostWoods* this = (ObjLostWoods*)thisx;
 
     if (thisx->params == 0x05 && !this->cut && this->collider.base.acFlags & AC_HIT) {
@@ -313,7 +315,7 @@ void ObjLostWoods_Update(Actor* thisx, struct PlayState* play) {
     }
 }
 
-void ObjLostWoods_Draw(Actor* thisx, struct PlayState* play) {
+void ObjLostWoods_Draw(Actor* thisx, PlayState* play) {
     ObjLostWoods* this = (ObjLostWoods*)thisx;
 
     switch (thisx->params & 0x00FF) {

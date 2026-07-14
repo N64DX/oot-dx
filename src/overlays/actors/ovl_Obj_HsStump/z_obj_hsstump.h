@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_hsstump/object_hsstump.h"
-
 #define OBJHSSTUMP_GET_SWITCH_FLAG(thisx) ((thisx)->params & 0x3F)
 #define OBJHSSTUMP_GET_ISHIDDEN(thisx) (((thisx)->params >> 12) & 0xF)
 

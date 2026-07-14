@@ -8,7 +8,7 @@ struct EnTanron1;
 
 #define ENTANRON1_GET_100(thisx) ((thisx)->params & 0x100)
 
-typedef struct {
+typedef struct EnTanron1Struct {
     /* 0x00 */ Vec3f unk_00;
     /* 0x0C */ Vec3f unk_0C;
     /* 0x18 */ s16 unk_18;

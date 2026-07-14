@@ -15,6 +15,9 @@
 #include "play_state.h"
 #include "save.h"
 
+#include "assets/objects/object_numa_obj/object_numa_obj.h"
+#include "assets/objects/object_dekucity_obj/object_dekucity_obj.h"
+
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_DRAW_CULLING_DISABLED)
 
 void ObjPurify_Init(Actor* thisx, struct PlayState* play);

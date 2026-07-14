@@ -14,6 +14,8 @@
 #include "play_state.h"
 #include "effect.h"
 
+#include "assets/objects/object_hsstump/object_hsstump.h"
+
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 #define DEG_TO_BINANG_ALT3(degrees) ((degrees) * (0x8000 / 180.0f))

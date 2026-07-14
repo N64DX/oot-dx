@@ -61,15 +61,15 @@ void EnHammergeist_Flex(EnHammergeist* this, PlayState* play);
 
 
 ActorProfile En_Hammergeist_Profile = {
-    ACTOR_EN_HAMMERGEIST,
-    ACTORCAT_ENEMY,
-    FLAGS,
-    OBJECT_HAMMERGEIST,
-    sizeof(EnHammergeist),
-    EnHammergeist_Init,
-    EnHammergeist_Destroy,
-    EnHammergeist_Update,
-    EnHammergeist_Draw,
+    /**/ ACTOR_EN_HAMMERGEIST,
+    /**/ ACTORCAT_ENEMY,
+    /**/ FLAGS,
+    /**/ OBJECT_HAMMERGEIST,
+    /**/ sizeof(EnHammergeist),
+    /**/ EnHammergeist_Init,
+    /**/ EnHammergeist_Destroy,
+    /**/ EnHammergeist_Update,
+    /**/ EnHammergeist_Draw,
 };
 
 static ColliderCylinderInit sCylinderInit = {

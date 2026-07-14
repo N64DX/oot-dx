@@ -6,7 +6,7 @@
 
 #include "assets/objects/object_raf/object_raf.h"
 
-#define CARNIVOROUS_LILY_GET_TYPE(thisx) (((thisx)->params >> 12) & 0xF)
+#define CARNIVOROUS_LILY_GET_TYPE(thisx)         (((thisx)->params >> 12) & 0xF)
 #define CARNIVOROUS_LILY_GET_REVIVE_TIMER(thisx) (((thisx)->params >> 7) & 0x1F)
 
 #define CARNIVOROUS_LILY_SWITCH_FLAG_NONE 0x7F

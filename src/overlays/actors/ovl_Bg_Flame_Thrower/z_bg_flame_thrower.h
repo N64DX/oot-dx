@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_hidan_objects/object_hidan_objects.h"
-
 #define FLAME_COUNT       5
 #define FLAME_DURATION    100
 

@@ -22,6 +22,8 @@
 #include "z_en_item00.h"
 #include "save.h"
 
+#include "assets/objects/object_slime/object_slime.h"
+
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 void EnSlim_Init(Actor* thisx, struct PlayState* play);

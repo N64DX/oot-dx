@@ -19,6 +19,8 @@
 #include "z_en_item00.h"
 #include "save.h"
 
+#include "assets/objects/object_mkk/object_mkk.h"
+
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE)
 
 void EnMkk_Init(Actor* thisx, struct PlayState* play);

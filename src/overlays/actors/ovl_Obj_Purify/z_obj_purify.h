@@ -4,9 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_numa_obj/object_numa_obj.h"
-#include "assets/objects/object_dekucity_obj/object_dekucity_obj.h"
-
 struct ObjPurify;
 
 typedef void (*ObjPurifyActionFunc)(struct ObjPurify*, struct PlayState*);
@@ -20,7 +17,7 @@ typedef struct ObjPurify {
     /* 0x168 */ f32 unk168[2];
 } ObjPurify; // size = 0x170
 
-#define OBJPURIFY_GET_INFO_INDEX(thisx) ((thisx)->params & 0xF)
-#define OBJPURIFY_GET_UNK_FLAG(thisx) (((thisx)->params >> 0xC) & 1)
+#define OBJPURIFY_GET_INFO_INDEX(thisx)  ((thisx)->params & 0xF)
+#define OBJPURIFY_GET_UNK_FLAG(thisx)   (((thisx)->params >> 0xC) & 1)
 
 #endif

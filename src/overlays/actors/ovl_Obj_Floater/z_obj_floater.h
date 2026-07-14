@@ -6,8 +6,6 @@
 
 #define FLOATER_TYPE(params) (params & 0xFF)
 
-#include "assets/objects/object_crashbox/object_crashbox.h"
-
 struct ObjFloater;
 
 typedef enum ObjFloaterType {

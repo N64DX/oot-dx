@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_numa_obj/object_numa_obj.h"
-
 struct DoorSpiral;
 
 typedef void (*DoorSpiralActionFunc)(struct DoorSpiral*, struct PlayState*);
@@ -15,13 +13,12 @@ typedef void (*DoorSpiralActionFunc)(struct DoorSpiral*, struct PlayState*);
 
 typedef struct DoorSpiral {
     /* 0x000 */ Actor actor;
-    /* 0x144 */ u8 shouldClimb;
-    /* 0x145 */ s8 type;
+    /* 0x144 */ bool shouldClimb;
+    /* 0x145 */ u8 type;
     /* 0x146 */ u8 direction; // represents a staircase up or down
     /* 0x147 */ u8 index;
     /* 0x148 */ u8 unk148;
     /* 0x149 */ s8 objectSlot;
-    /* 0x14A */ s8 unk14A;
     /* 0x14C */ DoorSpiralActionFunc actionFunc;
 } DoorSpiral; // size = 0x150
 

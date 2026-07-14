@@ -7,8 +7,8 @@
 #include "cutscene.h"
 #include "ultra64.h"
 
-extern RomFile dawngrove_sceneRoomList_000070[];
 extern TransitionActorEntry dawngrove_sceneTransitionActorList_000088[];
+extern RomFile dawngrove_sceneRoomList_000070[];
 extern u16 dawngrove_sceneExitList_0000C8[];
 extern ActorEntry dawngrove_sceneStartPositionList_0000D0[];
 extern EnvLightSettings dawngrove_sceneLightSettings_000100[];

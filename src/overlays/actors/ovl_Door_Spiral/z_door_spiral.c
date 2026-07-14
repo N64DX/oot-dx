@@ -14,6 +14,8 @@
 #include "play_state.h"
 #include "save.h"
 
+#include "assets/objects/object_numa_obj/object_numa_obj.h"
+
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 void DoorSpiral_Init(Actor* thisx, struct PlayState* play);
@@ -89,7 +91,6 @@ static InitChainEntry sInitChain[] = {
 
 void DoorSpiral_SetupAction(DoorSpiral* this, DoorSpiralActionFunc actionFunc) {
     this->actionFunc = actionFunc;
-    this->unk14A = 0;
 }
 
 s32 func_809A2B70(DoorSpiral* this, PlayState* play) {

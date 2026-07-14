@@ -4,12 +4,10 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_dblue_object/object_dblue_object.h"
-
-#define BGDBLUEWATERFALL_GET_SWITCH_FLAG(thisx) ((thisx)->params & 0x7F)
-#define BGDBLUEWATERFALL_GET_100(thisx) (((thisx)->params >> 8) & 1)
-#define BGDBLUEWATERFALL_GET_7000(thisx) (((thisx)->params >> 12) & 7)
-#define BGDBLUEWATERFALL_GET_8000(thisx) (((thisx)->params >> 15) & 1)
+#define BGDBLUEWATERFALL_GET_SWITCH_FLAG(thisx)  ((thisx)->params & 0x7F)
+#define BGDBLUEWATERFALL_GET_100(thisx)         (((thisx)->params >> 8) & 1)
+#define BGDBLUEWATERFALL_GET_7000(thisx)        (((thisx)->params >> 12) & 7)
+#define BGDBLUEWATERFALL_GET_8000(thisx)        (((thisx)->params >> 15) & 1)
 
 struct BgDblueWaterfall;
 

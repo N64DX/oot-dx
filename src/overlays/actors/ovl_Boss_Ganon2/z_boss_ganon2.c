@@ -345,44 +345,6 @@ static ColliderJntSphInit sJntSphInit2 = {
     sJntSphElementsInit2,
 };
 
-static ColliderJntSphElementInit sJntSphElementsHyperInit2[] = {
-    {
-        {
-            ELEM_MATERIAL_UNK2,
-            { 0xFFCFFFFF, 0x00, 0x60 },
-            { 0xFFDFFFFF, 0x00, 0x00 },
-            ATELEM_ON | ATELEM_SFX_NORMAL,
-            ACELEM_ON,
-            OCELEM_ON,
-        },
-        { 15, { { 0, 0, 0 }, 45 }, 150 },
-    },
-    {
-        {
-            ELEM_MATERIAL_UNK2,
-            { 0xFFCFFFFF, 0x00, 0x60 },
-            { 0xFFDFFFFF, 0x00, 0x00 },
-            ATELEM_ON | ATELEM_SFX_NORMAL,
-            ACELEM_ON,
-            OCELEM_ON,
-        },
-        { 16, { { 0, 0, 0 }, 45 }, 150 },
-    },
-};
-
-static ColliderJntSphInit sJntSphHyperInit2 = {
-    {
-        COL_MATERIAL_METAL,
-        AT_ON | AT_TYPE_ENEMY,
-        AC_ON | AC_TYPE_PLAYER,
-        OC1_ON | OC1_TYPE_PLAYER,
-        OC2_TYPE_1,
-        COLSHAPE_JNTSPH,
-    },
-    ARRAY_COUNT(sJntSphElementsHyperInit2),
-    sJntSphElementsHyperInit2,
-};
-
 static Vec3f D_8090EB20;
 
 static EnZl3* sZelda;
@@ -515,7 +477,7 @@ void BossGanon2_Init(Actor* thisx, PlayState* play) {
     Collider_InitJntSph(play, &this->unk_424);
     Collider_SetJntSph(play, &this->unk_424, &this->actor, &sJntSphInit1, this->unk_464);
     Collider_InitJntSph(play, &this->unk_444);
-    Collider_SetJntSph(play, &this->unk_444, &this->actor, isHyper ? &sJntSphHyperInit2 : &sJntSphInit2, this->unk_864);
+    Collider_SetJntSph(play, &this->unk_444, &this->actor, &sJntSphInit2, this->unk_864);
     BossGanon2_SetObjectSegment(this, play, OBJECT_GANON, false);
     SkelAnime_InitFlex(play, &this->skelAnime, &gGanondorfSkel, NULL, NULL, NULL, 0);
     func_808FD5C4(this, play);
@@ -523,6 +485,11 @@ void BossGanon2_Init(Actor* thisx, PlayState* play) {
     this->actor.gravity = 0.0f;
     spawnedStalfos[0] = spawnedStalfos[1] = NULL;
     stalfosTimer = 0;
+
+    if (isHyper) {
+        this->unk_444.elements[0].base.atDmgInfo.damage = 0x60;
+        this->unk_444.elements[1].base.atDmgInfo.damage = 0x60;
+    }
 }
 
 void BossGanon2_Destroy(Actor* thisx, PlayState* play) {
