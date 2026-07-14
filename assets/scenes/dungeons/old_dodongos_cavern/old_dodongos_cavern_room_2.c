@@ -37,9 +37,9 @@ s16 old_dodongos_cavern_room_2ObjectList0x000038[] = {
     OBJECT_GOROIWA,
     OBJECT_CRASHBOX,
     OBJECT_GI_HEART,
-    OBJECT_BOMBF,
     OBJECT_KIBAKO2,
     OBJECT_FR,
+    OBJECT_BOMBF,
 };
 
 ActorEntry old_dodongos_cavern_room_2ActorList0x000048[] = {

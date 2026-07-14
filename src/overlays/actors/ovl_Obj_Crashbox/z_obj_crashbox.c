@@ -67,11 +67,20 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_F32(cullingVolumeDownward, 1000, ICHAIN_STOP),
 };
 
-static f32 sObjCrashboxSize[] = { 0.5f, 0.75f, 1.0f };
+static Vec3f sObjCrashboxSize[] = {
+    { 0.5f  , 0.5f,   0.5f },
+    { 0.75f, 0.75f,  0.75f },
+    { 1.0f,   1.0f,   1.0f },
+    { 0.25f,  0.5f, 1.325f },
+};
 
 void ObjCrashbox_Init(Actor* thisx, PlayState* play) {
     ObjCrashbox* this = (ObjCrashbox*)thisx;
     CollisionHeader* colHeader = NULL;
+
+    this->switchFlag = (thisx->params >> 8) & 0xFF;
+    if (this->switchFlag <= 0x3F && Flags_GetSwitch(play, this->switchFlag))
+        Actor_Kill(&this->dyna.actor);
 
     this->timer = 5;
 
@@ -89,7 +98,7 @@ void ObjCrashbox_Init(Actor* thisx, PlayState* play) {
     this->actionFunc = ObjCrashbox_Wait;
 
     this->type = (this->dyna.actor.params >> 4) & 1;
-    Actor_SetScale(&this->dyna.actor, sObjCrashboxSize[this->dyna.actor.params & 3]);
+    thisx->scale = sObjCrashboxSize[this->dyna.actor.params & 3];
 }
 
 void ObjCrashbox_Destroy(Actor* thisx, PlayState* play) {
@@ -113,6 +122,9 @@ void ObjCrashbox_Break(ObjCrashbox* this, PlayState* play) {
     f32 cos = Math_CosS(thisx->shape.rot.y);
     f32 tmp1, tmp2;
     f32 scale;
+
+    if (this->switchFlag <= 0x3F)
+        Flags_SetSwitch(play, this->switchFlag);
 
     for (i=0; i<5; i++) {
         pos.y = (24 * i) + thisx->world.pos.y;

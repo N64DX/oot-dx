@@ -19,6 +19,7 @@ typedef struct ObjCrashbox {
     /* 0x0170 */ ColliderCylinder collider;
     /* 0x01BC */ u8 timer;
     /* 0x01BD */ u8 type;
+    /* 0x01BE */ u8 switchFlag;
 } ObjCrashbox; // size = 0x01C0
 
 #endif

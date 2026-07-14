@@ -43,7 +43,7 @@ ActorEntry old_dodongos_cavern_room_6ActorList0x000048[] = {
     { ACTOR_OBJECT_KANKYO,      {    0,    0,     0 }, { 0,      0, 0 }, 0x0006 },
     { ACTOR_EN_BEAST,           { 1962,  531, -2097 }, { 0, 0xC000, 0 }, 0x7F00 },
     { ACTOR_EN_BEAST,           { 2219,  531, -1300 }, { 0, 0xA000, 0 }, 0x7F00 },
-    { ACTOR_OBJ_CRASHBOX,       { 1960,  531, -1180 }, { 0,      0, 0 }, 0x0002 },
+    { ACTOR_OBJ_CRASHBOX,       { 1960,  531, -1180 }, { 0,      0, 0 }, 0xFF02 },
     { ACTOR_OBJ_OSHIHIKI,       { 1960,  531, -1180 }, { 0,      0, 0 }, 0xFF00 },
     { ACTOR_OBJ_FLOATER,        { 2300,  549, -1520 }, { 0,      0, 0 }, 0x9700 },
     { ACTOR_BG_DBLUE_WATERFALL, { 2300, 1171, -1520 }, { 0,      0, 0 }, 0x200D }, // Switch: 0D
