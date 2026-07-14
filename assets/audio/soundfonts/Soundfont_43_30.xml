@@ -56,7 +56,7 @@
         <Sample Name="SAMPLE_0_IKANA_621"/>
         <Sample Name="SAMPLE_0_353"/>
         <Sample Name="SAMPLE_0_354"/>
-        <Sample Name="SAMPEL_0_FLUTE"/>
+        <Sample Name="SAMPLE_0_FLUTE"/>
         <Sample Name="SAMPLE_0_118"/>
     </Samples>
     <Instruments>
@@ -65,8 +65,8 @@
         <Instrument ProgramNumber="2" Name="INST_2" Envelope="Env2" Sample="SAMPLE_0_IKANA_619"/>
         <Instrument ProgramNumber="3" Name="INST_3" Envelope="Env3" Sample="SAMPLE_0_IKANA_620"/>
         <Instrument ProgramNumber="4" Name="INST_4" Envelope="Env4" Sample="SAMPLE_0_IKANA_621"/>
-        <Instrument ProgramNumber="5" Name="INST_5" Envelope="Env5" Sample="SAMPLE_0_354" RangeLo="AF3" SampleLo="SAMPLE_0_353" SampleRateLo="44100" BaseNoteLo="GF4"/>
-        <Instrument ProgramNumber="6" Name="INST_6" Envelope="Env6" Sample="SAMPEL_0_FLUTE"/>
+        <Instrument ProgramNumber="5" Name="INST_5" Envelope="Env5" Sample="SAMPLE_0_354" RangeLo="AF3" SampleLo="SAMPLE_0_353" SampleRateLo="44100" BaseNoteLo="GF3"/>
+        <Instrument ProgramNumber="6" Name="INST_6" Envelope="Env6" Sample="SAMPLE_0_FLUTE" BaseNote="F4"/>
         <Instrument ProgramNumber="7" Name="INST_7" Envelope="Env7" Sample="SAMPLE_0_118"/>
         <Instrument ProgramNumber="8" Name="INST_8" Envelope="Env8" Sample="SAMPLE_0_118"/>
     </Instruments>

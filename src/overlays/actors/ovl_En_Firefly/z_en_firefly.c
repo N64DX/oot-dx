@@ -82,20 +82,6 @@ static ColliderJntSphElementInit sJntSphElementsInit[] = {
     },
 };
 
-static ColliderJntSphElementInit sJntSphElementsElectricInit[1] = {
-    {
-        {
-            ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x01, 0x18 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
-            ATELEM_ON | ATELEM_SFX_HARD,
-            ACELEM_ON,
-            OCELEM_ON,
-        },
-        { 1, { { 0, 1000, 0 }, 15 }, 100 },
-    },
-};
-
 static ColliderJntSphInit sJntSphInit = {
     {
         COL_MATERIAL_HIT3,
@@ -107,19 +93,6 @@ static ColliderJntSphInit sJntSphInit = {
     },
     ARRAY_COUNT(sJntSphElementsInit),
     sJntSphElementsInit,
-};
-
-static ColliderJntSphInit sJntSphElectricInit = {
-    {
-        COL_MATERIAL_HIT3,
-        AT_ON | AT_TYPE_ENEMY,
-        AC_ON | AC_TYPE_PLAYER,
-        OC1_ON | OC1_TYPE_ALL,
-        OC2_TYPE_1,
-        COLSHAPE_JNTSPH,
-    },
-    1,
-    sJntSphElementsElectricInit,
 };
 
 static CollisionCheckInfoInit sColChkInfoInit = { 1, 10, 10, 30 };
@@ -174,9 +147,6 @@ void EnFirefly_Extinguish(EnFirefly* this) {
 }
 
 void EnFirefly_Ignite(EnFirefly* this, PlayState* play) {
-    if (this->actor.params == KEESE_ELECTRIC_FLY)
-        Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
-
     if (this->actor.params == KEESE_ICE_FLY || this->actor.params == KEESE_ELECTRIC_FLY) {
         this->actor.params = KEESE_FIRE_FLY;
     } else {
@@ -196,9 +166,7 @@ void EnFirefly_Init(Actor* thisx, PlayState* play) {
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 25.0f);
     SkelAnime_Init(play, &this->skelAnime, &gKeeseSkeleton, &gKeeseFlyAnim, this->jointTable, this->morphTable, 28);
     Collider_InitJntSph(play, &this->collider);
-    if (this->actor.params == KEESE_ELECTRIC_FLY)
-        Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphElectricInit, this->colliderElements);
-    else Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
+    Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
     CollisionCheck_SetInfo(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
 
@@ -233,7 +201,8 @@ void EnFirefly_Init(Actor* thisx, PlayState* play) {
             this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_ICE;
             this->actor.naviEnemyId = NAVI_ENEMY_ICE_KEESE;
         } else if (this->actor.params == KEESE_ELECTRIC_FLY) {
-            this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = 3; // Electric
+            this->collider.elements[0].base.atDmgInfo.damage = 0x18;
+            this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_ELECTRIC;
             this->actor.naviEnemyId = NAVI_ENEMY_ELECTRIC_KEESE;
         } else {
             this->collider.elements[0].base.atDmgInfo.hitSpecialEffect = HIT_SPECIAL_EFFECT_NONE;

@@ -18,6 +18,8 @@
 #include "array_count.h"
 #include "play_state.h"
 
+#include "assets/overlays/ovl_En_Tanron1/ovl_En_Tanron1.c"
+
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_DRAW_CULLING_DISABLED)
 
 void EnTanron1_Init(Actor* thisx, struct PlayState* play);
@@ -39,8 +41,6 @@ ActorProfile En_Tanron1_Profile = {
     /**/ EnTanron1_Update,
     /**/ EnTanron1_Draw,
 };
-
-#include "assets/overlays/ovl_En_Tanron1/ovl_En_Tanron1.c"
 
 void EnTanron1_Init(Actor* thisx, PlayState* play) {
     EnTanron1* this = (EnTanron1*)thisx;

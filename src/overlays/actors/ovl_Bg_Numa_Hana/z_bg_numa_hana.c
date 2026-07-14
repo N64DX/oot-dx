@@ -17,6 +17,8 @@
 #include "one_point_cutscene.h"
 #include "save.h"
 
+#include "assets/objects/object_numa_obj/object_numa_obj.h"
+
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_HOOKSHOT_PULLS_PLAYER)
 
 void BgNumaHana_Init(Actor* thisx, struct PlayState* play);

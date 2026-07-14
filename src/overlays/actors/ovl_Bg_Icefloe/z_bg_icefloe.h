@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_icefloe/object_icefloe.h"
-
 struct BgIcefloe;
 
 typedef void (*BgIcefloeActionFunc)(struct BgIcefloe*, struct PlayState*);

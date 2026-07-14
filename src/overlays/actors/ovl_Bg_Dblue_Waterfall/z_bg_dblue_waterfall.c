@@ -19,6 +19,8 @@
 #include "regs.h"
 #include "effect.h"
 
+#include "assets/objects/object_dblue_object/object_dblue_object.h"
+
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 void BgDblueWaterfall_Init(Actor* thisx, struct PlayState* play);

@@ -17,6 +17,8 @@
 #include "rand.h"
 #include "play_state.h"
 
+#include "assets/objects/object_icefloe/object_icefloe.h"
+
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 void BgIcefloe_Init(Actor* thisx, struct PlayState* play);

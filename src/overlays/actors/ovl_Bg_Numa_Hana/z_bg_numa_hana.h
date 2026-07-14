@@ -6,9 +6,7 @@
 
 #include "z_fireobj.h"
 
-#include "assets/objects/object_numa_obj/object_numa_obj.h"
-
-#define BG_NUMA_HANA_GET_TYPE(thisx) ((thisx)->params & 1)
+#define BG_NUMA_HANA_GET_TYPE(thisx)     ((thisx)->params & 1)
 #define BG_NUMA_HANA_SWITCH_FLAG(thisx) (((thisx)->params >> 8) & 0x3F)
 
 typedef enum {

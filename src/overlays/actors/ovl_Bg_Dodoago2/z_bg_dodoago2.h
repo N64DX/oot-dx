@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_bwall2/object_bwall2.h"
-
 typedef enum BgDodoago2Eye {
     /* 0 */ BGDODOAGO2_EYE_LEFT,
     /* 1 */ BGDODOAGO2_EYE_RIGHT

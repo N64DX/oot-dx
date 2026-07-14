@@ -17,6 +17,7 @@
 #include "effect.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/object_dkjail_obj/object_dkjail_obj.h"
 
 #define FLAGS 0
 

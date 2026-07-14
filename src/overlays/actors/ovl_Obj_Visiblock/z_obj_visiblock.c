@@ -11,6 +11,8 @@
 #include "ichain.h"
 #include "play_state.h"
 
+#include "assets/objects/object_ice_objects/object_ice_objects.h"
+
 #define FLAGS (ACTOR_FLAG_REACT_TO_LENS)
 
 void ObjVisiblock_Init(Actor* thisx, struct PlayState* play);

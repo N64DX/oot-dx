@@ -5,14 +5,15 @@
  */
 
 #include "z_en_ganon_sword.h"
-#include "assets/objects/object_ganon/object_ganon_extra.h"
-#include "overlays/actors/ovl_Boss_Ganon/z_boss_ganon.h"
 
 #include "gfx_setupdl.h"
 #include "sfx.h"
 #include "sys_matrix.h"
 #include "z_lib.h"
 #include "play_state.h"
+
+#include "overlays/actors/ovl_Boss_Ganon/z_boss_ganon.h"
+#include "assets/objects/object_ganon/object_ganon_extra.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 

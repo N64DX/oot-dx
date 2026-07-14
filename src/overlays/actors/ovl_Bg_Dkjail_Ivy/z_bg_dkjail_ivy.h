@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_dkjail_obj/object_dkjail_obj.h"
-
 #define BG_DKJAIL_GET_SWITCH_FLAG(thisx) ((thisx)->params & 0x7F)
 
 struct BgDkjailIvy;

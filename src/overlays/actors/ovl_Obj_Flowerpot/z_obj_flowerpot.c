@@ -20,6 +20,8 @@
 #include "effect.h"
 #include "z_en_item00.h"
 
+#include "assets/objects/object_flowerpot/object_flowerpot.h"
+
 #define FLAGS 0
 
 void ObjFlowerpot_Init(Actor* thisx, struct PlayState* play);

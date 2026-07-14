@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_crashbox/object_crashbox.h"
-
 struct ObjCrashbox;
 
 typedef enum ObjCrashBoxType {

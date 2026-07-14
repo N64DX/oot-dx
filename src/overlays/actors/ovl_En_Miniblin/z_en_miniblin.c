@@ -6,7 +6,6 @@
  */
 
 #include "z_en_miniblin.h"
-#include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 #include "libc64/qrand.h"
 #include "segmented_address.h"
@@ -20,6 +19,8 @@
 #include "audio.h"
 #include "z_en_item00.h"
 #include "save.h"
+
+#include "assets/objects/gameplay_keep/gameplay_keep.h"
 
 /** TODO:
  * Enemy should be able to throw bomb back at player (Old and unfunctional code still available)
@@ -64,15 +65,15 @@ void EnMiniblin_SetupDie(EnMiniblin* this, struct PlayState* play);
 void EnMiniblin_Die(EnMiniblin* this, struct PlayState* play);
 
 ActorProfile En_Miniblin_Profile = {
-    ACTOR_EN_MINIBLIN,  
-    ACTORCAT_ENEMY,    
-    FLAGS,           
-    OBJECT_MINIBLIN, 
-    sizeof(EnMiniblin), 
-    EnMiniblin_Init,
-    EnMiniblin_Destroy, 
-    EnMiniblin_Update, 
-    EnMiniblin_Draw,
+    /**/ ACTOR_EN_MINIBLIN,  
+    /**/ ACTORCAT_ENEMY,    
+    /**/ FLAGS,           
+    /**/ OBJECT_MINIBLIN, 
+    /**/ sizeof(EnMiniblin), 
+    /**/ EnMiniblin_Init,
+    /**/ EnMiniblin_Destroy, 
+    /**/ EnMiniblin_Update, 
+    /**/ EnMiniblin_Draw,
 };
 
 static ColliderCylinderInit sCylinderInit = {

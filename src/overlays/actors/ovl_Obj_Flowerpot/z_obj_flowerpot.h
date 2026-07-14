@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_flowerpot/object_flowerpot.h"
-
 struct ObjFlowerpot;
 
 typedef void (*ObjFlowerpotActionFunc)(struct ObjFlowerpot*, struct PlayState*);

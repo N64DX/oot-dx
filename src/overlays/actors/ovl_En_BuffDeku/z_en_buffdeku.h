@@ -11,23 +11,18 @@ struct EnBuffDeku;
 typedef void (*EnBuffDekuActionFunc)(struct EnBuffDeku*, struct PlayState*);
 
 typedef struct EnBuffDeku {
-    Actor actor;
-    SkelAnime skelAnime;
-    Vec3s jointTable[BUFFDEKUSKEL_NUM_LIMBS];
-    Vec3s morphTable[BUFFDEKUSKEL_NUM_LIMBS];
-    EnBuffDekuActionFunc actionFunc;
-	u8 timer;
-    ColliderCylinder colliderBody;
-    bool playerHit;
-    bool onFire;
-    bool panicTest;
-    u8 switchFlag;
-    Vec3f bodyPartsPos[8];
-    ColliderJntSph colliderSpheres;
-    ColliderJntSphElement colliderSpheresElements[4];
-    s8 subCamId;
-    u8 dekuStickCooldownTimer;
-    u8 attackCooldownTimer;
-} EnBuffDeku;
+    /* 0x0000 */ Actor actor;
+    /* 0x0144 */ SkelAnime skelAnime;
+    /* 0x0188 */ Vec3s jointTable[BUFFDEKUSKEL_NUM_LIMBS];
+    /* 0x018E */ Vec3s morphTable[BUFFDEKUSKEL_NUM_LIMBS];
+    /* 0x0194 */ EnBuffDekuActionFunc actionFunc;
+    /* 0x0198 */ Vec3f bodyPartsPos[8];
+    /* 0x01F8 */ ColliderCylinder colliderBody;
+    /* 0x0244 */ ColliderJntSph colliderSpheres;
+    /* 0x0264 */ ColliderJntSphElement colliderSpheresElements[4];
+    /* 0x02A4 */ bool playerHit, onFire, panicTest;
+    /* 0x02A7 */ s8 subCamId;
+    /* 0x02A8 */ u8 timer, switchFlag, dekuStickCooldownTimer, attackCooldownTimer;
+} EnBuffDeku; // size = 0x02AC
 
 #endif

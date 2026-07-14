@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_slime/object_slime.h"
-
 struct EnSlim;
 
 typedef void (*EnSlimActionFunc)(struct EnSlim*, struct PlayState*);

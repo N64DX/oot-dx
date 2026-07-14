@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_mkk/object_mkk.h"
-
 #define ENMKK_GET_2(thisx) ((thisx)->params & 2)
 #define ENMKK_GET_4(thisx) ((thisx)->params & 4)
 #define ENMKK_GET_FF00(thisx) (((thisx)->params >> 8) & 0xFF)

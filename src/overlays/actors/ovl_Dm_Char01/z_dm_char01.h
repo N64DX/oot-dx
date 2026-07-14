@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/object_mtoride/object_mtoride.h"
-
 struct DmChar01;
 
 typedef struct DmChar01 {

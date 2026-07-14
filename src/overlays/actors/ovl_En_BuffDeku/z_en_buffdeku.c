@@ -24,7 +24,6 @@
 #include "audio.h"
 #include "save.h"
 
-#include "assets/objects/object_buffdeku/object_buffdeku.h"
 #include "overlays/actors/ovl_Door_Warp1/z_door_warp1.h"
 
 #define FLAGS (ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
@@ -177,53 +176,6 @@ static ColliderJntSphElementInit sJntSphItemsInit[4] = {
     },
 };
 
-static ColliderJntSphElementInit sJntSphItemsInitBoss[4] = {
-    {
-        {
-            ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x04, 0x40 }, //0x01 : fire, 0x02: ice, 0x03 :thunder, 0x04: 
-            { 0xFFCFFFFF, 0x00, 0x00 },
-            ATELEM_ON,
-            ACELEM_ON,
-            OCELEM_ON,
-        },
-        { BUFFDEKUSKEL_HAND_L_LIMB, { { 0, 0, 0 }, 30 }, 200 },
-    },
-    {
-        {
-            ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x00, 0x04 },
-            { 0xFFCFFFFF, 0x00, 0x00 },
-            ATELEM_NONE,
-            ACELEM_ON,
-            OCELEM_ON,
-        },
-        { BUFFDEKUSKEL_HAND_R_LIMB, { { 0, 0, 0 }, 30 }, 200 },
-    },
-    {
-        {
-            ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0xFFC1FFFF, 0x00, 0x00 },
-            ATELEM_NONE,
-            ACELEM_ON,
-            OCELEM_ON,
-        },
-        { BUFFDEKUSKEL_FOREARM_L_LIMB, { { 0, 0, 0 }, 30 }, 200 },
-    },
-    {
-        {
-            ELEM_MATERIAL_UNK0,
-            { 0x00000000, 0x00, 0x00 },
-            { 0xFFC1FFFF, 0x00, 0x00 },
-            ATELEM_NONE,
-            ACELEM_ON,
-            OCELEM_ON,
-        },
-        { BUFFDEKUSKEL_FOREARM_R_LIMB, { { 0, 0, 0 }, 30 }, 200 },
-    },
-};
-
 static ColliderJntSphInit sJntSphInit = {
     {
         COL_MATERIAL_HIT6,
@@ -235,19 +187,6 @@ static ColliderJntSphInit sJntSphInit = {
     },
     ARRAY_COUNT(sJntSphItemsInit),
     sJntSphItemsInit,
-};
-
-static ColliderJntSphInit sJntSphInitBoss = {
-    {
-        COL_MATERIAL_HIT6,
-        AT_ON | AT_TYPE_ENEMY,
-        AC_ON |  AC_TYPE_PLAYER,
-        OC1_ON | OC1_TYPE_ALL,
-        OC2_TYPE_1,
-        COLSHAPE_JNTSPH,
-    },
-    ARRAY_COUNT(sJntSphItemsInitBoss),
-    sJntSphItemsInitBoss,
 };
 
 static InitChainEntry sInitChain[] = {
@@ -272,9 +211,14 @@ void EnBuffDeku_Init(Actor* thisx, PlayState* play) {
 	ActorShape_Init(&thisx->shape, 0.0f, ActorShadow_DrawCircle, 40.0f);
 
     Collider_InitJntSph(play, &this->colliderSpheres);
-    Collider_SetJntSph(play, &this->colliderSpheres, thisx, isHyper ? &sJntSphInitBoss : &sJntSphInit, this->colliderSpheresElements);
+    Collider_SetJntSph(play, &this->colliderSpheres, thisx, &sJntSphInit, this->colliderSpheresElements);
     Collider_InitCylinder(play, &this->colliderBody);
     Collider_SetCylinder(play, &this->colliderBody, &this->actor, &sCylinderInit);
+
+    if (isHyper) {
+        this->colliderSpheres.elements[0].base.atDmgInfo.damage = 0x40;
+        this->colliderSpheres.elements[0].dim.scale = this->colliderSpheres.elements[1].dim.scale = this->colliderSpheres.elements[2].dim.scale = this->colliderSpheres.elements[3].dim.scale = 200;
+    }
 
     this->colliderBody.base.acFlags &= ~AC_ON;
     this->colliderSpheres.base.acFlags &= ~AC_ON;

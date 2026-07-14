@@ -1,5 +1,5 @@
 #ifndef Z_BG_GANONLADDER_H
-#define Z_BG_GANONLADDER_H 1
+#define Z_BG_GANONLADDER_H
 
 #include "ultra64.h"
 #include "actor.h"

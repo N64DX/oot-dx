@@ -37,15 +37,15 @@ void EnGoomba_Stunned(EnGoomba* this, struct PlayState* play);
 void EnGoomba_Die(EnGoomba* this, struct PlayState* play);
 
 ActorProfile En_Goomba_Profile = {
-    ACTOR_EN_GOOMBA,
-    ACTORCAT_ENEMY,
-    FLAGS,
-    OBJECT_GOOMBA,
-    sizeof(EnGoomba),
-    EnGoomba_Init,
-    EnGoomba_Destroy,
-    EnGoomba_Update,
-    EnGoomba_Draw,
+    /**/ ACTOR_EN_GOOMBA,
+    /**/ ACTORCAT_ENEMY,
+    /**/ FLAGS,
+    /**/ OBJECT_GOOMBA,
+    /**/ sizeof(EnGoomba),
+    /**/ EnGoomba_Init,
+    /**/ EnGoomba_Destroy,
+    /**/ EnGoomba_Update,
+    /**/ EnGoomba_Draw,
 };
 
 typedef enum EnGoombaDamageEffect {

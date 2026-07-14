@@ -4,8 +4,6 @@
 #include "ultra64.h"
 #include "actor.h"
 
-#include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep_extra.h"
-
 struct ObjPzlblock;
 
 typedef void (*ObjPzlblockActionFunc)(struct ObjPzlblock*, struct PlayState*);

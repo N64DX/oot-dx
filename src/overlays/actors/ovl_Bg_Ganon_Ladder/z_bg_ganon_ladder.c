@@ -5,14 +5,15 @@
  */
 
 #include "z_bg_ganon_ladder.h"
-#include "assets/objects/object_ganon_ladder/object_ganon_ladder.h"
-#include "overlays/actors/ovl_Boss_Ganon/z_boss_ganon.h"
 
 #include "gfx_setupdl.h"
 #include "ichain.h"
 #include "sfx.h"
 #include "sys_matrix.h"
 #include "play_state.h"
+
+#include "overlays/actors/ovl_Boss_Ganon/z_boss_ganon.h"
+#include "assets/objects/object_ganon_ladder/object_ganon_ladder.h"
 
 #define FLAGS 0
 
