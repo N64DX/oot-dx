@@ -196,25 +196,33 @@ void EnHoll_HorizontalVisibleNarrow(EnHoll* this, PlayState* play) {
     f32 orthogonalDistToPlayer;
     s32 transitionActorIndex;
     u8 isSceneChanger = ENHOLL_GET_TYPE(&this->actor) == ENHOLL_H_SCENE_CHANGER;
+    f32 enHollYMin = ENHOLL_H_Y_MIN;
+    f32 enHollHalfwidth = ENHOLL_H_HALFWIDTH_NARROW;
 
     Actor_WorldToActorCoords(&this->actor, &relPlayerPos, &player->actor.world.pos);
     this->side = (relPlayerPos.z < 0.0f  && !isSceneChanger) ? 0 : 1;
     orthogonalDistToPlayer = fabsf(relPlayerPos.z);
+
+    if (play->sceneId == SCENE_FORSAKEN_KINGDOM) {
+        enHollYMin      = -90.0f;
+        enHollHalfwidth = 280.0f;
+    }
 
     if (orthogonalDistToPlayer <= 150.0f)
         R_BLOCK_TRANSITION_MINIMAP = 1;
     else if (R_BLOCK_TRANSITION_MINIMAP && orthogonalDistToPlayer > 150.0f && orthogonalDistToPlayer < 200.0f)
         R_BLOCK_TRANSITION_MINIMAP = 0;
 
-    if (relPlayerPos.y > ENHOLL_H_Y_MIN && relPlayerPos.y < ENHOLL_H_Y_MAX &&
-        fabsf(relPlayerPos.x) < ENHOLL_H_HALFWIDTH_NARROW &&
+    if (relPlayerPos.y > enHollYMin && relPlayerPos.y < ENHOLL_H_Y_MAX &&
+        fabsf(relPlayerPos.x) < enHollHalfwidth &&
         orthogonalDistToPlayer < sHorizontalVisibleNarrowTriggerDists[triggerDistsIndex][0]) {
 
         transitionActorIndex = GET_TRANSITION_ACTOR_INDEX(&this->actor);
         if (orthogonalDistToPlayer > sHorizontalVisibleNarrowTriggerDists[triggerDistsIndex][1]) {
             if (play->roomCtx.prevRoom.num >= 0 && play->roomCtx.status == 0) {
                 this->actor.room = play->transitionActors.list[transitionActorIndex].sides[this->side].room;
-                EnHoll_SwapRooms(play);
+                if (play->roomCtx.prevRoom.num == this->actor.room || !FIX_USEFUL_GLITCHES)
+                    EnHoll_SwapRooms(play);
                 Room_FinishRoomChange(play, &play->roomCtx);
             }
         } else if (isSceneChanger) {

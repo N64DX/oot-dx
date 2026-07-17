@@ -13,14 +13,14 @@ SceneCmd ikana_canyon_room_2[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_2RoomShapeCullable_0000E0),
     SCENE_CMD_OBJECT_LIST(14, ikana_canyon_room_2ObjectList_000058),
-    SCENE_CMD_ACTOR_LIST(4, ikana_canyon_room_2ActorEntry_000084),
+    SCENE_CMD_ACTOR_LIST(5, ikana_canyon_room_2ActorEntry_000084),
     SCENE_CMD_END(),
 };
 
 s16 ikana_canyon_room_2ObjectList_000058[] = {
     OBJECT_OKUTA,
     OBJECT_ICEFLOE,
-    OBJECT_SPOT18_OBJ,
+    OBJECT_ICE_BLOCK,
     OBJECT_RD,
     OBJECT_HSSTUMP,
     OBJECT_GI_HEART,
@@ -37,8 +37,9 @@ s16 ikana_canyon_room_2ObjectList_000058[] = {
 ActorEntry ikana_canyon_room_2ActorEntry_000084[] = {
     { ACTOR_DOOR_ANA,       { -2475, -505, 2475 }, { 0, 0xA400, 0x4 }, 0x00B4 },
     { ACTOR_OBJ_MURE,       { -2802, -658, 2752 }, { 0,      0,   0 }, 0x6322 },
-    { ACTOR_EN_KANBAN,      { -2980, -505, 3087 }, { 0, 0x6A00,   0 }, 0x0033 },
+    { ACTOR_EN_KANBAN,      { -2980, -505, 3087 }, { 0, 0x6A00,   0 }, 0x005C },
     { ACTOR_EN_RIVER_SOUND, { -2985, -447, 2695 }, { 0,      0,   0 }, 0x0003 },
+    { ACTOR_BG_WEATHER,     { -3000, -505, 2700 }, { 0,      0,   0 }, 0x0000 },
 };
 
 RoomShapeCullable ikana_canyon_room_2RoomShapeCullable_0000E0 = { 

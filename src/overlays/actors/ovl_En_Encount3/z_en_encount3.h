@@ -25,10 +25,10 @@ typedef struct EnEncount3 {
     /* 0x168 */ f32 unk170;
     /* 0x16C */ f32 unk174;
     /* 0x170 */ f32 unk178;
-    /* 0x174 */ u8 unk148;
-    /* 0x175 */ u8 unk14E;
-    /* 0x176 */ s8 switchFlag;
-    /* 0x177 */ u8 timer;
-} EnEncount3; // size = 0x178
+    /* 0x174 */ u16 timer;
+    /* 0x176 */ u8 unk148;
+    /* 0x177 */ u8 unk14E;
+    /* 0x178 */ s8 switchFlag;
+} EnEncount3; // size = 0x17C
 
 #endif

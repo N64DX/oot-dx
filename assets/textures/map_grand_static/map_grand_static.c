@@ -137,3 +137,11 @@ u64 gDawngroveVillageMinimapTex[TEX_LEN(u64, 96, 62, 4)] = {
 u64 gDawngroveMinimapTex[TEX_LEN(u64, 64, 56, 4)] = {
 #include "assets/textures/map_grand_static/gDawngroveMinimapTex.ia4.inc.c"
 };
+
+u64 gIkanaValleyMinimapTex[TEX_LEN(u64, 80, 83, 4)] = {
+#include "assets/textures/map_grand_static/gIkanaValleyMinimapTex.ia4.inc.c"
+};
+
+u64 gIkanaGraveyardMinimapTex[TEX_LEN(u64, 48, 77, 4)] = {
+#include "assets/textures/map_grand_static/gIkanaGraveyardMinimapTex.ia4.inc.c"
+};

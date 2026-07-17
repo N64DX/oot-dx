@@ -2208,7 +2208,7 @@ CollisionHeader ikana_graveyard_sceneCollisionHeader_006E30 = {
 };
 
 SceneCmd ikana_graveyard_sceneSet_cleansed[] = {
-    SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_IKANA_REGION),
+    SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_TERMINA_FIELD),
     SCENE_CMD_ROOM_LIST(2, ikana_graveyard_sceneRoomList0x000124),
     SCENE_CMD_TRANSITION_ACTOR_LIST(3, ikana_graveyard_sceneTransitionActorList_000104),
     SCENE_CMD_COL_HEADER(&ikana_graveyard_sceneCollisionHeader_006E30),

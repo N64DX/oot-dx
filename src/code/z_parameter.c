@@ -164,6 +164,8 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_GORON_SHRINE, 0x00, 0x00, 0x00 },
     { SCENE_RIVERSIDE_VILLAGE, 0x00, 0x00, 0x00 },
     { SCENE_ANCIENT_GROVE, 0x00, 0x00, 0x1C },
+    { SCENE_FORSAKEN_KINGDOM, 0x00, 0x00, 0x00 },
+    { SCENE_GLOOMY_GRAVEYARD, 0x00, 0x00, 0x00 },
     { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
     { SCENE_GROTTOS2, 0x00, 0x00, 0xD0 },
     { SCENE_WEBBED_SHRINE, 0x00, 0x00, 0x00 },
@@ -557,6 +559,8 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 case SCENE_GORON_SHRINE:
                 case SCENE_RIVERSIDE_VILLAGE:
                 case SCENE_ANCIENT_GROVE:
+                case SCENE_FORSAKEN_KINGDOM:
+                case SCENE_GLOOMY_GRAVEYARD:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {
