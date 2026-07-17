@@ -2019,3 +2019,79 @@ QUICKTEXT_ENABLE "By decree of the goddess " COLOR(RED) "Din" COLOR(DEFAULT) ",\
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x035B, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE SHIFT(65) "This way to:\n"
+SHIFT(68) COLOR(RED) "Spring Lake" COLOR(DEFAULT) QUICKTEXT_DISABLE
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x035C, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+COLOR(RED) "Secret shrine behind waterfall\n"
+COLOR(DEFAULT) "Now awaiting the challenges of\n"
+"bold visitors sure of their might.\n"
+"Hee-hee-hee!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x035D, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+COLOR(RED) "Forsaken Kingdom across the canyon.\n"
+COLOR(DEFAULT) "Beware of Octoroks!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x035E, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+COLOR(RED) "Empty Well\n"
+COLOR(DEFAULT) "Entry prohibited due to ghost\n"
+"sightings!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x035F, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+COLOR(RED) "Purple Ice Cavern\n"
+COLOR(DEFAULT) "Entry prohibited due to ghost\n"
+"sightings!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0360, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+COLOR(RED) "Royal Vault\n"
+COLOR(DEFAULT) "We've prepared wandering spirits\n"
+"and are awaiting your arrival."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0361, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+COLOR(RED) "Condemned Castle Front Gate\n"
+COLOR(DEFAULT) "Use what you will, this sealed\n"
+"gate shall never open."
+),
+MSG(),
+MSG()
+)

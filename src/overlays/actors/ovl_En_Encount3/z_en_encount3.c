@@ -22,10 +22,10 @@ void EnEncount3_Destroy(Actor* thisx, struct PlayState* play);
 void EnEncount3_Update(Actor* thisx, struct PlayState* play);
 void EnEncount3_Draw(Actor* thisx, struct PlayState* play);
 
-void func_809AD058(EnEncount3* this);
+void EnEncount3_SetupCheckToActivate(EnEncount3* this);
 
-void func_809AD084(EnEncount3* this, struct PlayState* play);
-void func_809AD194(EnEncount3* this, struct PlayState* play);
+void EnEncount3_CheckToActivate(EnEncount3* this, struct PlayState* play);
+void EnEncount3_SetSwitch(EnEncount3* this, struct PlayState* play);
 void func_809AD1EC(EnEncount3* this, struct PlayState* play);
 
 ActorProfile En_Encount3_Profile = {
@@ -40,7 +40,9 @@ ActorProfile En_Encount3_Profile = {
     /**/ EnEncount3_Draw,
 };
 
-s32 D_809AD810 = false;
+static u16 gTimer = 0;
+static u8 gCount = 0;
+u8 spawnedRingOfFire = false;
 
 void EnEncount3_Init(Actor* thisx, PlayState* play) {
     EnEncount3* this = (EnEncount3*)thisx;
@@ -57,37 +59,50 @@ void EnEncount3_Init(Actor* thisx, PlayState* play) {
         Actor_Kill(&this->actor);
     this->actor.flags |= ACTOR_FLAG_LOCK_ON_DISABLED;
     this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
-    func_809AD058(this);
+    EnEncount3_SetupCheckToActivate(this);
+
+    gTimer = 0;
+    gCount++;
 }
 
-void EnEncount3_Destroy(Actor* thisx, PlayState* play) { }
+void EnEncount3_Destroy(Actor* thisx, PlayState* play) {
+    EnEncount3* this = (EnEncount3*)thisx;
 
-void func_809AD058(EnEncount3* this) {
-    this->timer = 30;
-    this->actionFunc = func_809AD084;
+    gCount--;
+    if (this->unk14E) {
+        u8 remaining = (gCount < 15) ? (15 - gCount) : 1;
+        gTimer += SECONDS(remaining * 4);
+    }
 }
 
-void func_809AD084(EnEncount3* this, PlayState* play) {
+void EnEncount3_SetupCheckToActivate(EnEncount3* this) {
+    this->timer = SECONDS(10);
+    this->actionFunc = EnEncount3_CheckToActivate;
+}
+
+void EnEncount3_CheckToActivate(EnEncount3* this, PlayState* play) {
     if (this->switchFlag > -1 && Flags_GetSwitch(play, this->switchFlag)) {
         Actor_Kill(&this->actor);
         return;
     }
-    if (!(this->unk16C < this->actor.xzDistToPlayer) && !GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_STONE_TOWER) && Player_GetMask(play) != PLAYER_MASK_SKULL && !D_809AD810) {
+    if (!(this->unk16C < this->actor.xzDistToPlayer) && !GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_STONE_TOWER) && Player_GetMask(play) != PLAYER_MASK_SKULL && !spawnedRingOfFire) {
         if (this->timer > 0)
             this->timer--;
+        else if (gTimer > 0)
+            gTimer--;
         else {
             this->child = Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_EN_JSO, this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, 0, 0, 0, ENCOUNT3_GET_PARAM_F80(&this->actor));
             if (this->child != NULL) {
                 this->unk14E = true;
-                D_809AD810 = true;
-                this->actionFunc = func_809AD194;
+                spawnedRingOfFire = true;
+                this->actionFunc = EnEncount3_SetSwitch;
                 this->unk148 = true;
             }
         }
     }
 }
 
-void func_809AD194(EnEncount3* this, PlayState* play) {
+void EnEncount3_SetSwitch(EnEncount3* this, PlayState* play) {
     if (!this->unk14E) {
         this->unk178 = 0.0f;
         if (this->switchFlag > -1)
@@ -98,7 +113,7 @@ void func_809AD194(EnEncount3* this, PlayState* play) {
 
 void func_809AD1EC(EnEncount3* this, PlayState* play) {
     if (this->unk174 < 0.002f) {
-        D_809AD810 = false;
+        spawnedRingOfFire = false;
         Actor_Kill(&this->actor);
     }
 }
@@ -109,22 +124,22 @@ void EnEncount3_Update(Actor* thisx, PlayState* play) {
     Player* player = GET_PLAYER(play);
 
     this->actionFunc(this, play);
-    if (this->actionFunc == func_809AD194) {
+    if (this->actionFunc == EnEncount3_SetSwitch) {
         new_var = this->unk16C * 0.52f;
         if (new_var < this->actor.xzDistToPlayer)
             this->unk178 = (this->unk16C * 0.03125f * 0.001f) + 0.1f;
         else this->unk178 = 0.06f;
 
         if (this->unk16C + 50.0f < this->actor.xzDistToPlayer) {
-            if (this->actionFunc == func_809AD194) {
+            if (this->actionFunc == EnEncount3_SetSwitch) {
                 this->unk148 = false;
                 this->unk178 = 0.0f;
-                D_809AD810 = false;
+                spawnedRingOfFire = false;
                 if ((this->child != NULL && this->child->update != NULL) && this->child->colChkInfo.health > 0) {
                     Actor_Kill(this->child);
                     this->child = NULL;
                 }
-                func_809AD058(this);
+                EnEncount3_SetupCheckToActivate(this);
             }
         } else if (this->unk16C < this->actor.xzDistToPlayer) {
             s16 i;
@@ -143,7 +158,7 @@ void EnEncount3_Update(Actor* thisx, PlayState* play) {
 
     this->unk168 = this->unk16C;
     this->unk168 /= 7666.0f;
-    if (this->actionFunc != func_809AD194) {
+    if (this->actionFunc != EnEncount3_SetSwitch) {
         Math_ApproachZeroF(&this->unk170, 0.3f, 10.0f);
         Math_ApproachZeroF(&this->unk160, 0.3f, 5.0f);
     } else if (this->unk148) {

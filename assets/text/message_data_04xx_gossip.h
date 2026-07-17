@@ -802,3 +802,37 @@ MSG(
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x0425, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"They say that there is a special\n"
+"hookshot left behind in the graveyard\n"
+"strong enough to climb the cursed\n"
+"surfaces in this land."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0426, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"They say you can freeze the\n"
+"Octoroks to turn them into solid\n"
+"platforms to stand upon."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x0427, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"They say that the Skull Mask\n"
+"protects you from the eyes\n"
+"of the Garo watching you here."
+),
+MSG(),
+MSG()
+)

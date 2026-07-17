@@ -122,7 +122,7 @@ static DamageTable sDamageTable = {
     /* Unknown 2     */ DMG_ENTRY(0, BAD_BAT_DMGEFF_NONE),
 };
 
-static CollisionCheckInfoInit sColChkInfoInit = { 1, 15, 30, 10 };
+static CollisionCheckInfoInit sColChkInfoInit = { 3, 15, 30, 10 };
 
 static InitChainEntry sInitChain[] = {
     ICHAIN_S8(naviEnemyId, NAVI_ENEMY_BAD_BAT, ICHAIN_CONTINUE),

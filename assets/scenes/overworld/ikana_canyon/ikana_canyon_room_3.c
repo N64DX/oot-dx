@@ -13,13 +13,14 @@ SceneCmd ikana_canyon_room_3[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_3RoomShapeCullable_0000A0),
     SCENE_CMD_OBJECT_LIST(14, ikana_canyon_room_3ObjectList_000058),
+    SCENE_CMD_ACTOR_LIST(1, ikana_canyon_room_3ActorEntry_000084),
     SCENE_CMD_END(),
 };
 
 s16 ikana_canyon_room_3ObjectList_000058[] = {
     OBJECT_OKUTA,
     OBJECT_ICEFLOE,
-    OBJECT_SPOT18_OBJ,
+    OBJECT_ICE_BLOCK,
     OBJECT_RD,
     OBJECT_HSSTUMP,
     OBJECT_GI_HEART,
@@ -37,6 +38,10 @@ RoomShapeCullable ikana_canyon_room_3RoomShapeCullable_0000A0 = {
     2, 5,
     ikana_canyon_room_3RoomShapeCullableEntry_0000AC,
     ikana_canyon_room_3RoomShapeCullableEntry_0000AC + ARRAY_COUNTU(ikana_canyon_room_3RoomShapeCullableEntry_0000AC)
+};
+
+ActorEntry ikana_canyon_room_3ActorEntry_000084[] = {
+    { ACTOR_BG_WEATHER, { -1750, 109, 1600 }, { 0, 0, 0 }, 0x0000 },
 };
 
 RoomShapeCullableEntry ikana_canyon_room_3RoomShapeCullableEntry_0000AC[5] = {

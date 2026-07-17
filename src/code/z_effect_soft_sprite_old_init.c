@@ -12,6 +12,7 @@
 #include "player.h"
 #include "skin_matrix.h"
 
+#include "overlays/effects/ovl_Effect_En_Ice_Block/z_eff_en_ice_block.h"
 #include "overlays/effects/ovl_Effect_Ss_Dust/z_eff_ss_dust.h"
 #include "overlays/effects/ovl_Effect_Ss_KiraKira/z_eff_ss_kirakira.h"
 #include "overlays/effects/ovl_Effect_Ss_Bomb/z_eff_ss_bomb.h"
@@ -1217,4 +1218,17 @@ void EffectSsIceSmoke_Spawn(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f*
     initParams.scale = scale;
 
     EffectSs_Spawn(play, EFFECT_SS_ICE_SMOKE, 128, &initParams);
+}
+
+// EffectSsIceBlock Spawn Functions
+
+void EffectSsIceBlock_Spawn(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale) {
+    EffectEnIceBlockInitParams initParams;
+
+    Math_Vec3f_Copy(&initParams.pos, pos);
+    Math_Vec3f_Copy(&initParams.velocity, velocity);
+    Math_Vec3f_Copy(&initParams.accel, accel);
+    initParams.scale = scale;
+
+    EffectSs_Spawn(play, EFFECT_EN_ICE_BLOCK, 128, &initParams);
 }
