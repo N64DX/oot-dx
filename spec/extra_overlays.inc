@@ -6,13 +6,6 @@ beginseg
 endseg
 
 beginseg
-    name "ovl_Effect_En_Ice_Block"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/effects/ovl_Effect_En_Ice_Block/z_eff_en_ice_block.o"
-endseg
-
-beginseg
     name "ovl_Item_Shield_Young"
     compress
     flags OVERLAY
@@ -73,13 +66,6 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Icefloe/z_bg_icefloe.o"
-endseg
-
-beginseg
-    name "ovl_Obj_Iceblock"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Iceblock/z_obj_iceblock.o"
 endseg
 
 beginseg
@@ -269,13 +255,6 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Raf/z_en_raf.o"
-endseg
-
-beginseg
-    name "ovl_En_Okuta2"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Okuta2/z_en_okuta2.o"
 endseg
 
 beginseg
