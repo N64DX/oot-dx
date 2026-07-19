@@ -221,8 +221,8 @@ Path ikana_canyon_scenePathway_000674[] = {
 };
 
 BgCamInfo ikana_canyon_sceneCollisionHeader_00D9FCCamDataList[] = {
-    { 0x0000, 0, NULL },
-    { 0x0001, 0, NULL },
+    { CAM_SET_NONE,    0, NULL },
+    { CAM_SET_NORMAL0, 0, NULL },
 };
 
 SurfaceType ikana_canyon_sceneCollisionHeader_00D9FCSurfaceType[] = {

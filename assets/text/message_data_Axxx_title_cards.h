@@ -657,34 +657,41 @@ DEFINE_MESSAGE(0xA076, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 )
 
 DEFINE_MESSAGE(0xA078, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+    MSG("お墓の底"),
+    MSG("Beneath the Graveyard"),
+    MSG("Unter dem Friedhof"),
+    MSG("Sous le cimetière")
+)
+
+DEFINE_MESSAGE(0xA079, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("川辺の宿"),
     MSG("Riverside Inn"),
     MSG("Herberge des Flussdorfs"),
     MSG("Auberge de la Rivière")
 )
 
-DEFINE_MESSAGE(0xA079, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA07A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("川辺の家"),
     MSG("Riverside House"),
     MSG("Haus im Flussdorf"),
     MSG("Maison de la Rivière")
 )
 
-DEFINE_MESSAGE(0xA07A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA07B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("イゴールの家"),
     MSG("Igor's House"),
     MSG("Igors Haus"),
     MSG("Maison d’Igor")
 )
 
-DEFINE_MESSAGE(0xA07B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA07C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("古の森の店"),
     MSG("Ancient Grove Shop"),
     MSG("Laden des Uralten Hains"),
     MSG("Boutique du Bosquet Ancien")
 )
 
-DEFINE_MESSAGE(0xA07C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0xA07D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("スプリングレイクの鍛冶屋"),
     MSG("Spring Lake Smithy"),
     MSG("Schmiedewerkstatt"),
