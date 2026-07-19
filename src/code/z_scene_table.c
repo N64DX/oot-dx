@@ -112,6 +112,7 @@ void Scene_DrawConfigRiversideVillage(PlayState* play);
 void Scene_DrawConfigRiversideInn(PlayState* play);
 void Scene_DrawConfigAncientGrove(PlayState* play);
 void Scene_DrawConfigForsakenKingdom(PlayState* play);
+void Scene_DrawConfigBeneathTheGraveyard(PlayState* play);
 
 // Entrance Table definition
 #define DEFINE_ENTRANCE(_0, sceneId, spawn, continueBgm, displayTitleCard, endTransType, startTransType) \
@@ -236,6 +237,7 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigRiversideInn,                // SDC_RIVERSIDE_INN
     Scene_DrawConfigAncientGrove,                // SDC_ANCIENT_GROVE
     Scene_DrawConfigForsakenKingdom,             // SDC_FORSAKEN_KINGDOM
+    Scene_DrawConfigBeneathTheGraveyard,         // SDC_BENEATH_THE_GRAVEYARD
 };
 
 #if PLATFORM_N64 // Scene_Draw is at end of file in GC/iQue versions
@@ -1995,6 +1997,40 @@ void Scene_DrawConfigForsakenKingdom(PlayState* play) {
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
+
+void Scene_DrawConfigBeneathTheGraveyard(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 1) % 128,                           0, 16, 128, 1, (gameplayFrames * 1) % 128,                           0, 32, 32)); // Room 0 Exit Warp Light
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,                           0,  (gameplayFrames * 6) % 128, 32,  32, 1,                          0, -(gameplayFrames * 4) % 128, 32, 32)); // Room 4 Water Stream
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 1) % 128,                           0, 32,  32, 1, (gameplayFrames * 1) % 128,  (gameplayFrames * 1) % 128, 32, 32)); // Room 4 Water
+
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+}
+
+/*AnimatedMatTexScrollParams beneath_the_graveyard_sceneTexAnim_001E78TexScrollParams_001E60[] = {
+    { -1, 0, 0x10, 0x40 },
+    { 1, 0, 0x20, 0x20 },
+};
+
+AnimatedMatTexScrollParams beneath_the_graveyard_sceneTexAnim_001E78TexScrollParams_001E68[] = {
+    { 0, -6, 0x20, 0x20 },
+    { 0, -4, 0x20, 0x20 },
+};
+
+AnimatedMatTexScrollParams beneath_the_graveyard_sceneTexAnim_001E78TexScrollParams_001E70[] = {
+    { -1, 0, 0x20, 0x20 },
+    { 1, 1, 0x20, 0x20 },
+};
+
+AnimatedMaterial beneath_the_graveyard_sceneTexAnim_001E78[] = {
+    {  1, 1, beneath_the_graveyard_sceneTexAnim_001E78TexScrollParams_001E60 },
+    {  2, 1, beneath_the_graveyard_sceneTexAnim_001E78TexScrollParams_001E68 },
+    { -3, 1, beneath_the_graveyard_sceneTexAnim_001E78TexScrollParams_001E70 },
+};*/
 
 #if !PLATFORM_N64 // Scene_Draw is at beginning of file in N64 versions
 

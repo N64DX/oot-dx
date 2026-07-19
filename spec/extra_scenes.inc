@@ -629,44 +629,44 @@ beginseg
 endseg
 
 beginseg
-    name "mountain_smithy_scene"
+    name "beneath_the_graveyard_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/indoors/mountain_smithy/mountain_smithy_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_scene.o"
     number 2
 endseg
 
 beginseg
-    name "mountain_smithy_room_0"
+    name "beneath_the_graveyard_room_0"
     compress
-    include "$(BUILD_DIR)/assets/scenes/indoors/mountain_smithy/mountain_smithy_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_0.o"
     number 3
 endseg
 
 beginseg
-    name "dawngrove_house_1_scene"
+    name "beneath_the_graveyard_room_1"
     compress
-    include "$(BUILD_DIR)/assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "dawngrove_house_1_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_1.o"
     number 3
 endseg
 
 beginseg
-    name "dawngrove_house_2_scene"
+    name "beneath_the_graveyard_room_2"
     compress
-    include "$(BUILD_DIR)/assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_scene.o"
-    number 2
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_2.o"
+    number 3
 endseg
 
 beginseg
-    name "dawngrove_house_2_room_0"
+    name "beneath_the_graveyard_room_3"
     compress
-    include "$(BUILD_DIR)/assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_3.o"
+    number 3
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_4"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_4.o"
     number 3
 endseg
 
@@ -720,6 +720,34 @@ beginseg
 endseg
 
 beginseg
+    name "dawngrove_house_1_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "dawngrove_house_1_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/indoors/dawngrove_house_1/dawngrove_house_1_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "dawngrove_house_2_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "dawngrove_house_2_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/indoors/dawngrove_house_2/dawngrove_house_2_room_0.o"
+    number 3
+endseg
+
+beginseg
     name "dawngrove_shop_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/shops/dawngrove_shop/dawngrove_shop_scene.o"
@@ -730,5 +758,19 @@ beginseg
     name "dawngrove_shop_room_0"
     compress
     include "$(BUILD_DIR)/assets/scenes/shops/dawngrove_shop/dawngrove_shop_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "mountain_smithy_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/indoors/mountain_smithy/mountain_smithy_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "mountain_smithy_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/indoors/mountain_smithy/mountain_smithy_room_0.o"
     number 3
 endseg

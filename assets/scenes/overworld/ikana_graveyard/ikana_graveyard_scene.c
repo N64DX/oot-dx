@@ -61,8 +61,8 @@ Spawn ikana_graveyard_sceneEntranceList0x000134[] = {
 
 u16 ikana_graveyard_sceneExitList_000140[] = {
     ENTR_FORSAKEN_KINGDOM_0,
-    ENTR_GLOOMY_GRAVEYARD_1,
-    ENTR_GLOOMY_GRAVEYARD_2,
+    ENTR_BENEATH_THE_GRAVEYARD_0,
+    ENTR_BENEATH_THE_GRAVEYARD_1,
     ENTR_GLOOMY_GRAVEYARD_3,
     ENTR_GLOOMY_GRAVEYARD_4,
 };
@@ -177,11 +177,11 @@ Vec3s ikana_graveyard_sceneCollisionHeader_006E30CamPosData[] = {
 };
 
 BgCamInfo ikana_graveyard_sceneCollisionHeader_006E30CamDataList[] = {
-    { 0x0035, 3, &ikana_graveyard_sceneCollisionHeader_006E30CamPosData[0] },
-    { 0x0035, 3, &ikana_graveyard_sceneCollisionHeader_006E30CamPosData[3] },
-    { 0x0035, 3, &ikana_graveyard_sceneCollisionHeader_006E30CamPosData[6] },
-    { 0x0058, 0, NULL },
-    { 0x0000, 0, NULL },
+    { CAM_SET_NORMAL0, 3, &ikana_graveyard_sceneCollisionHeader_006E30CamPosData[0] }, // CAM_SET_CIRCLE6
+    { CAM_SET_NORMAL0, 3, &ikana_graveyard_sceneCollisionHeader_006E30CamPosData[3] }, // CAM_SET_CIRCLE6
+    { CAM_SET_NORMAL0, 3, &ikana_graveyard_sceneCollisionHeader_006E30CamPosData[6] }, // CAM_SET_CIRCLE6
+    { CAM_SET_NORMAL0, 0, NULL },                                                      // CAM_SET_NORMAL4
+    { CAM_SET_NONE,    0, NULL },
 };
 
 SurfaceType ikana_graveyard_sceneCollisionHeader_006E30SurfaceType[] = {

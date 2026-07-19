@@ -32,12 +32,12 @@ s16 ikana_graveyard_room_0ObjectList_00004C[] = {
 };
 
 ActorEntry ikana_graveyard_room_0ActorEntry_000064[] = {
-    { ACTOR_EN_BAT,        { -459, 202,  -148 }, { 0, 0x1A00,     0 }, 0xFF9F },
-    { ACTOR_EN_BAT,        {  413, 200,  -154 }, { 0, 0x9B00,     0 }, 0xFF9F },
-    { ACTOR_EN_BAT,        { -458, 260,  -218 }, { 0,      0,     0 }, 0xFF02 },
-    { ACTOR_EN_BAT,        { -359, 247,  -119 }, { 0,      0,     0 }, 0xFF02 },
-    { ACTOR_EN_BAT,        { -158, 284,   304 }, { 0, 0xC000,     0 }, 0xFF02 },
-    { ACTOR_EN_BAT,        {  343, 294,   -96 }, { 0, 0x8000,     0 }, 0xFF03 },
+    { ACTOR_EN_BAT,        { -459, 202,  -148 }, { 0, 0x1A00,    0 }, 0xFF9F },
+    { ACTOR_EN_BAT,        {  413, 200,  -154 }, { 0, 0x9B00,    0 }, 0xFF9F },
+    { ACTOR_EN_BAT,        { -458, 260,  -218 }, { 0,      0,    0 }, 0xFF02 },
+    { ACTOR_EN_BAT,        { -359, 247,  -119 }, { 0,      0,    0 }, 0xFF02 },
+    { ACTOR_EN_BAT,        { -158, 284,   304 }, { 0, 0xC000,    0 }, 0xFF02 },
+    { ACTOR_EN_BAT,        {  343, 294,   -96 }, { 0, 0x8000,    0 }, 0xFF03 },
     { ACTOR_EN_SKB,        { -548, 198,  -231 }, { 0,      0,    0 }, 0x1000 },
     { ACTOR_EN_SKB,        {  392,  58,   -34 }, { 0,      0,    0 }, 0x1000 },
     { ACTOR_EN_SKB,        {   29,  64,   187 }, { 0,      0,    0 }, 0x1000 },
