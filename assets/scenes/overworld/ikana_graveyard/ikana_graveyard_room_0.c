@@ -7,14 +7,21 @@
 #include "object.h"
 
 SceneCmd ikana_graveyard_room_0[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(ikana_graveyard_room_0AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(4),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_CURSED, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&ikana_graveyard_room_0RoomShapeCullable_000330),
     SCENE_CMD_OBJECT_LIST(6, ikana_graveyard_room_0ObjectList_00004C),
     SCENE_CMD_ACTOR_LIST(37, ikana_graveyard_room_0ActorEntry_000064),
     SCENE_CMD_END(),
+};
+
+SceneCmd* ikana_graveyard_room_0AlternateHeaders[] = {
+    NULL,
+    NULL,
+    ikana_graveyard_room_0Set_cleansed,
 };
 
 s16 ikana_graveyard_room_0ObjectList_00004C[] = {
@@ -96,6 +103,47 @@ RoomShapeCullableEntry ikana_graveyard_room_0RoomShapeCullableEntry_00033C[17] =
     { {     72,     55,    158 },     94, ikana_graveyard_room_0DL_0016B0, NULL },
     { {   -125,     98,    -95 },  -1562, ikana_graveyard_room_0DL_0079C8, NULL },
     { {   -505,    423,  -2174 },     90, ikana_graveyard_room_0DL_008530, NULL },
+};
+
+SceneCmd ikana_graveyard_room_0Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(4),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_ROOM_SHAPE(&ikana_graveyard_room_0RoomShapeCullable_000330),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(ikana_graveyard_room_0ObjectList_00004C), ikana_graveyard_room_0ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(27, ikana_graveyard_room_0ActorEntry_cleansed),
+    SCENE_CMD_END(),
+};
+
+ActorEntry ikana_graveyard_room_0ActorEntry_cleansed[] = {
+    { ACTOR_EN_BAT,        { -459, 202,  -148 }, { 0, 0x1A00,    0 }, 0xFF9F },
+    { ACTOR_EN_BAT,        {  413, 200,  -154 }, { 0, 0x9B00,    0 }, 0xFF9F },
+    { ACTOR_EN_BAT,        { -458, 260,  -218 }, { 0,      0,    0 }, 0xFF02 },
+    { ACTOR_EN_BAT,        { -359, 247,  -119 }, { 0,      0,    0 }, 0xFF02 },
+    { ACTOR_EN_BAT,        { -158, 284,   304 }, { 0, 0xC000,    0 }, 0xFF02 },
+    { ACTOR_EN_BAT,        {  343, 294,   -96 }, { 0, 0x8000,    0 }, 0xFF03 },
+    { ACTOR_OBJ_HAKAISI,   { -470,  13,   411 }, { 0, 0xD1C0,    0 }, 0xFFFF },
+    { ACTOR_OBJ_HAKAISI,   { -179,  73,  -500 }, { 0, 0xB330,    0 }, 0xFFFF },
+    { ACTOR_OBJ_HAKAISI,   {  235,  23,   426 }, { 0, 0xD1C0,    0 }, 0x0600 },
+    { ACTOR_OBJ_HAKAISI,   { -422,  54,   -12 }, { 0, 0x27D0,    0 }, 0x0801 },
+    { ACTOR_OBJ_HAKAISI,   {  238,  60,   -80 }, { 0, 0x9B00,    0 }, 0x0702 },
+    { ACTOR_OBJ_HANA,      { -384,  54,    13 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_OBJ_HANA,      { -142,  75,  -477 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_OBJ_HANA,      { -137,  75,  -493 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_OBJ_HANA,      {  192,  23,   445 }, { 0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_LIGHT,      { -364, -25,   734 }, { 0,      0,    0 }, 0x07F4 },
+    { ACTOR_EN_LIGHT,      {  -27,  39,   222 }, { 0,      0,    0 }, 0x07F4 },
+    { ACTOR_EN_LIGHT,      {    6,  72,  -358 }, { 0,      0,    0 }, 0x07F4 },
+    { ACTOR_EN_KUSA,       {  240,  66,  -139 }, { 0,      0,    0 }, 0x2507 },
+    { ACTOR_EN_KUSA,       {  183,  63,   -99 }, { 0,      0,    0 }, 0x272B },
+    { ACTOR_EN_KUSA,       { -441,  23,   361 }, { 0,      0,    0 }, 0x282B },
+    { ACTOR_EN_KUSA,       { -407,  19,   420 }, { 0,      0,    0 }, 0x263B },
+    { ACTOR_EN_KUSA,       {   87,  50,    86 }, { 0,      0,    0 }, 0x297B },
+    { ACTOR_EN_HIT_TAG,    { -459, 188,  -147 }, { 0,      0,    0 }, 0xFE00 },
+    { ACTOR_EN_HIT_TAG,    {  118,  72,   756 }, { 0,      0,    0 }, 0xFE00 },
+    { ACTOR_EN_HIT_TAG,    {  412, 185,  -154 }, { 0,      0,    0 }, 0xFE00 },
+    { ACTOR_OBJ_DHOUSE,    { -304, 474, -2333 }, { 0,      0,    0 }, 0x0000 },
 };
 
 s32 ikana_graveyard_room_0_terminatorMaybe_00043C = { 0x01000000 };

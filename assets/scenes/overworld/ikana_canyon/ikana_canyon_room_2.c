@@ -7,14 +7,21 @@
 #include "object.h"
 
 SceneCmd ikana_canyon_room_2[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(ikana_canyon_room_2AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(20),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_CURSED, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_2RoomShapeCullable_0000E0),
     SCENE_CMD_OBJECT_LIST(13, ikana_canyon_room_2ObjectList_000058),
     SCENE_CMD_ACTOR_LIST(5, ikana_canyon_room_2ActorEntry_000084),
     SCENE_CMD_END(),
+};
+
+SceneCmd* ikana_canyon_room_2AlternateHeaders[] = {
+    NULL,
+    NULL,
+    ikana_canyon_room_2Set_cleansed,
 };
 
 s16 ikana_canyon_room_2ObjectList_000058[] = {
@@ -56,6 +63,24 @@ RoomShapeCullableEntry ikana_canyon_room_2RoomShapeCullableEntry_0000EC[8] = {
     { {  -2066,   -520,   2835 },    426, NULL, ikana_canyon_room_2DL_002A60 },
     { {  -2337,   -520,   2740 },    702, NULL, ikana_canyon_room_2DL_002088 },
     { {  -2337,   -520,   2740 },    702, NULL, ikana_canyon_room_2DL_0028B0 },
+};
+
+SceneCmd ikana_canyon_room_2Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(20),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(true, true),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 10),
+    SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_2RoomShapeCullable_0000E0),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(ikana_canyon_room_2ObjectList_000058), ikana_canyon_room_2ObjectList_000058),
+    SCENE_CMD_ACTOR_LIST(4, ikana_canyon_room_2ActorEntry_cleansed),
+    SCENE_CMD_END(),
+};
+
+ActorEntry ikana_canyon_room_2ActorEntry_cleansed[] = {
+    { ACTOR_DOOR_ANA,       { -2475, -505, 2475 }, { 0, 0xA400, 0x4 }, 0x00B4 },
+    { ACTOR_OBJ_MURE,       { -2802, -658, 2752 }, { 0,      0,   0 }, 0x6322 },
+    { ACTOR_EN_KANBAN,      { -2980, -505, 3087 }, { 0, 0x6A00,   0 }, 0x005C },
+    { ACTOR_EN_RIVER_SOUND, { -2985, -447, 2695 }, { 0,      0,   0 }, 0x0003 },
 };
 
 s32 ikana_canyon_room_2_terminatorMaybe_00016C = { 0x01000000 };

@@ -545,6 +545,7 @@ void EnItem00_Init(Actor* thisx, PlayState* play) {
             break;
         case ITEM00_TUNIC_ZORA:
         case ITEM00_TUNIC_GORON:
+        case ITEM00_TUNIC_SPIRIT:
             this->actor.objectSlot = Object_GetSlot(&play->objectCtx, OBJECT_GI_CLOTHES);
             Actor_SetObjectDependency(play, &this->actor);
             if (this->actor.objectSlot < 0) {
@@ -649,6 +650,7 @@ void EnItem00_Init(Actor* thisx, PlayState* play) {
         case ITEM00_SHIELD_HEROS_STOLEN:
         case ITEM00_TUNIC_ZORA:
         case ITEM00_TUNIC_GORON:
+        case ITEM00_TUNIC_SPIRIT:
         case ITEM00_BOMBS_SPECIAL:
         case ITEM00_FEATHER:
             break;
@@ -911,7 +913,7 @@ void EnItem00_Update(Actor* thisx, PlayState* play) {
 
     if ((this->actor.params == ITEM00_SHIELD_DEKU) || (this->actor.params == ITEM00_SHIELD_HYLIAN) || (this->actor.params == ITEM00_SHIELD_HEROS) ||
         (this->actor.params == ITEM00_SHIELD_DEKU_STOLEN) || (this->actor.params == ITEM00_SHIELD_HYLIAN_STOLEN) || (this->actor.params == ITEM00_SHIELD_HEROS_STOLEN) ||
-        (this->actor.params == ITEM00_TUNIC_ZORA) || (this->actor.params == ITEM00_TUNIC_GORON)) {
+        (this->actor.params == ITEM00_TUNIC_ZORA) || (this->actor.params == ITEM00_TUNIC_GORON) ||(this->actor.params == ITEM00_TUNIC_SPIRIT)) {
         this->actor.shape.yOffset = Math_CosS(this->actor.shape.rot.x) * 37.0f;
         this->actor.shape.yOffset = ABS(this->actor.shape.yOffset);
     }
@@ -1021,6 +1023,9 @@ void EnItem00_Update(Actor* thisx, PlayState* play) {
         case ITEM00_TUNIC_GORON:
             getItemId = GI_TUNIC_GORON;
             break;
+        case ITEM00_TUNIC_SPIRIT:
+            getItemId = GI_TUNIC_SPIRIT;
+            break;
         case ITEM00_BOMBS_SPECIAL:
             break;
         case ITEM00_FEATHER:
@@ -1046,6 +1051,7 @@ void EnItem00_Update(Actor* thisx, PlayState* play) {
         case ITEM00_SHIELD_HEROS:
         case ITEM00_TUNIC_ZORA:
         case ITEM00_TUNIC_GORON:
+        case ITEM00_TUNIC_SPIRIT:
             if (Actor_HasParent(&this->actor, play)) {
                 Flags_SetCollectible(play, this->collectibleFlag);
                 Actor_Kill(&this->actor);
@@ -1152,6 +1158,9 @@ void EnItem00_Draw(Actor* thisx, PlayState* play) {
             case ITEM00_TUNIC_GORON:
                 GetItem_Draw(play, GID_TUNIC_GORON);
                 break;
+            case ITEM00_TUNIC_SPIRIT:
+                GetItem_Draw(play, GID_TUNIC_SPIRIT);
+                break;
             case ITEM00_FLEXIBLE:
                 break;
         }
@@ -1253,7 +1262,7 @@ void EnItem00_DrawHeartPiece(EnItem00* this, PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_en_item00.c", 1673);
 }
 
-static u8 is_tunic_item(s16 dropId)     { return (dropId == ITEM00_TUNIC_ZORA  || dropId == ITEM00_TUNIC_GORON); }
+static u8 is_tunic_item(s16 dropId)     { return (dropId == ITEM00_TUNIC_ZORA  || dropId == ITEM00_TUNIC_GORON   || dropId == ITEM00_TUNIC_SPIRIT); }
 static u8 is_shield_item(s16 dropId)    { return (dropId == ITEM00_SHIELD_DEKU || dropId == ITEM00_SHIELD_HYLIAN || dropId == ITEM00_SHIELD_HEROS) || (dropId == ITEM00_SHIELD_DEKU_STOLEN || dropId == ITEM00_SHIELD_HYLIAN_STOLEN || dropId == ITEM00_SHIELD_HEROS_STOLEN); }
 static u8 is_rupee_item(s16 dropId)     { return (dropId == ITEM00_RUPEE_GREEN || dropId == ITEM00_RUPEE_BLUE    || dropId == ITEM00_RUPEE_RED || dropId == ITEM00_RUPEE_ORANGE || dropId == ITEM00_RUPEE_PURPLE); }
 static u8 is_special_item(s16 dropId)   { return (is_tunic_item(dropId)        || is_shield_item(dropId)         || is_rupee_item(dropId)      || dropId == ITEM00_HEART_PIECE  || dropId == ITEM00_HEART_CONTAINER || dropId == ITEM00_SMALL_KEY || dropId == ITEM00_SMALL_KEY); }

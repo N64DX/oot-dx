@@ -306,6 +306,10 @@ u64 gShieldPotionItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_
 #include "assets/textures/item_name_static/gShieldPotionItemNameJPNTex.ia4.inc.c"
 };
 
+u64 gHerosSwordItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameJPNTex.ia4.inc.c"
+};
+
 u64 gWoodenShieldItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gWoodenShieldItemNameJPNTex.ia4.inc.c"
 };
@@ -318,6 +322,10 @@ u64 gMetalShieldItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "assets/textures/item_name_static/gMetalShieldItemNameJPNTex.ia4.inc.c"
 };
 
+u64 gSpiritTunicItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gSpiritTunicItemNameJPNTex.ia4.inc.c"
+};
+
 u64 gGoronsBraceletItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gGoronsBraceletItemNameJPNTex.ia4.inc.c"
 };
@@ -328,14 +336,6 @@ u64 gSilverGauntletsItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_T
 
 u64 gGoldenGauntletsItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gGoldenGauntletsItemNameJPNTex.ia4.inc.c"
-};
-
-u64 gSilverScaleItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gSilverScaleItemNameJPNTex.ia4.inc.c"
-};
-
-u64 gGoldenScaleItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gGoldenScaleItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gBrokenGiantsKnifeItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -402,8 +402,12 @@ u64 gBombBag40ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "assets/textures/item_name_static/gBombBag40ItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameJPNTex.ia4.inc.c"
+u64 gSilverScaleItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gSilverScaleItemNameJPNTex.ia4.inc.c"
+};
+
+u64 gGoldenScaleItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGoldenScaleItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gAmuletOfEnergyItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

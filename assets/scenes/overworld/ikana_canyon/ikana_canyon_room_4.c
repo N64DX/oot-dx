@@ -7,14 +7,21 @@
 #include "object.h"
 
 SceneCmd ikana_canyon_room_4[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(ikana_canyon_room_4AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(4),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_CURSED, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_4RoomShapeCullable_000140),
     SCENE_CMD_OBJECT_LIST(13, ikana_canyon_room_4ObjectList_000058),
     SCENE_CMD_ACTOR_LIST(5, ikana_canyon_room_4ActorEntry_000084),
     SCENE_CMD_END(),
+};
+
+SceneCmd* ikana_canyon_room_4AlternateHeaders[] = {
+    NULL,
+    NULL,
+    ikana_canyon_room_4Set_cleansed,
 };
 
 s16 ikana_canyon_room_4ObjectList_000058[] = {
@@ -62,6 +69,24 @@ RoomShapeCullableEntry ikana_canyon_room_4RoomShapeCullableEntry_00014C[14] = {
     { {   2069,   -277,   3566 },    186, NULL, ikana_canyon_room_4DL_0082B0 },
     { {   2723,   -520,   4294 },   1324, NULL, ikana_canyon_room_4DL_008820 },
     { {   2562,   -160,   4979 },    -62, ikana_canyon_room_4DL_0029D0, NULL },
+};
+
+SceneCmd ikana_canyon_room_4Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(4),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 10),
+    SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_4RoomShapeCullable_000140),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(ikana_canyon_room_4ObjectList_000058), ikana_canyon_room_4ObjectList_000058),
+    SCENE_CMD_ACTOR_LIST(4, ikana_canyon_room_4ActorEntry_cleansed),
+    SCENE_CMD_END(),
+};
+
+ActorEntry ikana_canyon_room_4ActorEntry_cleansed[] = {
+    { ACTOR_EN_GS,       { 3323, -160, 3940 }, { 0, 0xC800, 0 }, 0xFF25 },
+    { ACTOR_EN_ITEM00,   { 3238, -160, 3901 }, { 0,      0, 0 }, 0x1E06 },
+    { ACTOR_EN_KANBAN,   { 2265, -160, 4554 }, { 0, 0x3D00, 0 }, 0x005B },
+    { ACTOR_EN_SHOPNUTS, { 2657, -160, 4261 }, { 0,      0, 0 }, 0x0007 },
 };
 
 s32 ikana_canyon_room_4_terminatorMaybe_00022C = { 0x01000000 };

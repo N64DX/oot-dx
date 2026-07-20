@@ -7,14 +7,21 @@
 #include "object.h"
 
 SceneCmd ikana_canyon_room_3[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(ikana_canyon_room_3AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(15),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_CURSED, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_3RoomShapeCullable_0000A0),
     SCENE_CMD_OBJECT_LIST(13, ikana_canyon_room_3ObjectList_000058),
     SCENE_CMD_ACTOR_LIST(1, ikana_canyon_room_3ActorEntry_000084),
     SCENE_CMD_END(),
+};
+
+SceneCmd* ikana_canyon_room_3AlternateHeaders[] = {
+    NULL,
+    NULL,
+    ikana_canyon_room_3Set_cleansed,
 };
 
 s16 ikana_canyon_room_3ObjectList_000058[] = {
@@ -49,6 +56,16 @@ RoomShapeCullableEntry ikana_canyon_room_3RoomShapeCullableEntry_0000AC[5] = {
     { {  -1788,    399,   1585 },    338, ikana_canyon_room_3DL_000C38, NULL },
     { {  -1740,   1465,   1679 },    190, ikana_canyon_room_3DL_001020, NULL },
     { {  -1740,    982,   1679 },    324, ikana_canyon_room_3DL_0012A8, NULL },
+};
+
+SceneCmd ikana_canyon_room_3Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(15),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(true, true),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 10),
+    SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_3RoomShapeCullable_0000A0),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(ikana_canyon_room_3ObjectList_000058), ikana_canyon_room_3ObjectList_000058),
+    SCENE_CMD_END(),
 };
 
 s32 ikana_canyon_room_3_terminatorMaybe_0000FC = { 0x01000000 };

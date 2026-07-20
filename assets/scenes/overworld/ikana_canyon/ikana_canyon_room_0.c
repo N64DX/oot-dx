@@ -7,14 +7,21 @@
 #include "object.h"
 
 SceneCmd ikana_canyon_room_0[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(ikana_canyon_room_0AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(4),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_CURSED, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_0RoomShapeCullable_0004C0),
     SCENE_CMD_OBJECT_LIST(13, ikana_canyon_room_0ObjectList_000058),
     SCENE_CMD_ACTOR_LIST(54, ikana_canyon_room_0ActorEntry_000084),
     SCENE_CMD_END(),
+};
+
+SceneCmd* ikana_canyon_room_0AlternateHeaders[] = {
+    NULL,
+    NULL,
+    ikana_canyon_room_0Set_cleansed,
 };
 
 s16 ikana_canyon_room_0ObjectList_000058[] = {
@@ -115,6 +122,42 @@ RoomShapeCullableEntry ikana_canyon_room_0RoomShapeCullableEntry_0004CC[12] = {
     { {   -519,    694,   1350 },   1676, ikana_canyon_room_0DL_0112D8, NULL },
     { {    111,    419,   2621 },   3648, ikana_canyon_room_0DL_001AC8, NULL },
     { {    234,   -340,   4315 },   2452, ikana_canyon_room_0DL_0073A8, ikana_canyon_room_0DL_024820 },
+};
+
+SceneCmd ikana_canyon_room_0Set_cleansed[] = {
+    SCENE_CMD_ECHO_SETTINGS(4),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 10),
+    SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_0RoomShapeCullable_0004C0),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(ikana_canyon_room_0ObjectList_000058), ikana_canyon_room_0ObjectList_000058),
+    SCENE_CMD_ACTOR_LIST(22, ikana_canyon_room_0ActorEntry_cleansed),
+    SCENE_CMD_END(),
+};
+
+ActorEntry ikana_canyon_room_0ActorEntry_cleansed[] = {
+    { ACTOR_EN_CROW,         {   -744,   763,  357 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_CROW,         {   -677,   540, 2571 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_CROW,         {   -478,   497, 1527 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_CROW,         {    170,   350, 3042 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_CROW,         {    492,   601,   67 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_EN_OKUTA,        {   -335,  -520, 3353 }, {    0,      0,    0 }, 0x0200 },
+    { ACTOR_EN_OKUTA,        {   -329,  -520, 3532 }, {    0,      0,    0 }, 0x0200 },
+    { ACTOR_EN_GS,           {    176,  -505, 3778 }, {    0, 0xC000,    0 }, 0xFF26 },
+    { ACTOR_EN_GS,           {  -1352,   800,  100 }, {    0, 0xF555,    0 }, 0xFF27 },
+    { ACTOR_EN_KANBAN,       {   -157,  -432, 3924 }, {    0, 0xF800,    0 }, 0x005D },
+    { ACTOR_EN_KANBAN,       {  -1755,   794, 1452 }, {    0, 0x5600,    0 }, 0x005E },
+    { ACTOR_EN_KANBAN,       {   -145,   592, -529 }, {    0, 0xF200,    0 }, 0x005F },
+    { ACTOR_EN_KANBAN,       {  -1094,   600,  178 }, {    0, 0x1F00,    0 }, 0x0060 },
+    { ACTOR_EN_KANBAN,       {    486,   200, 2084 }, {    0, 0xC666,    0 }, 0x0061 },
+    { ACTOR_EN_KUSA,         {   -384,   200, 2589 }, {    0,      0,    0 }, 0x463F },
+    { ACTOR_EN_KUSA,         {   -423,   200, 2441 }, {    0,      0,    0 }, 0x4757 },
+    { ACTOR_EN_KUSA,         {   -422,   200, 2543 }, {    0,      0,    0 }, 0x487F },
+    { ACTOR_EN_KUSA,         {   -910,   200, 2747 }, {    0,      0,    0 }, 0x4943 },
+    { ACTOR_OBJ_HSSTUMP,     {  -1011,   -40, 3319 }, {    0, 0x4100,    0 }, 0x0000 },
+    { ACTOR_OBJ_HSSTUMP,     {   -948,  -241, 2900 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_OBJ_HSSTUMP,     {   -944,   200, 2780 }, {    0, 0x4C00,    0 }, 0x0000 },
+    { ACTOR_OBJ_HSSTUMP,     {   -633,  -440, 3767 }, {    0,      0,    0 }, 0x0000 },
 };
 
 s32 ikana_canyon_room_0_terminatorMaybe_00058C = { 0x01000000 };

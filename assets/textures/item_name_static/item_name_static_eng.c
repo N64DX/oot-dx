@@ -306,6 +306,10 @@ u64 gShieldPotionItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_
 #include "assets/textures/item_name_static/gShieldPotionItemNameENGTex.ia4.inc.c"
 };
 
+u64 gHerosSwordItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameENGTex.ia4.inc.c"
+};
+
 u64 gWoodenShieldItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gWoodenShieldItemNameENGTex.ia4.inc.c"
 };
@@ -318,6 +322,10 @@ u64 gMetalShieldItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "assets/textures/item_name_static/gMetalShieldItemNameENGTex.ia4.inc.c"
 };
 
+u64 gSpiritTunicItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gSpiritTunicItemNameENGTex.ia4.inc.c"
+};
+
 u64 gGoronsBraceletItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gGoronsBraceletItemNameENGTex.ia4.inc.c"
 };
@@ -328,14 +336,6 @@ u64 gSilverGauntletsItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_T
 
 u64 gGoldenGauntletsItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gGoldenGauntletsItemNameENGTex.ia4.inc.c"
-};
-
-u64 gSilverScaleItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gSilverScaleItemNameENGTex.ia4.inc.c"
-};
-
-u64 gGoldenScaleItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gGoldenScaleItemNameENGTex.ia4.inc.c"
 };
 
 u64 gBrokenGiantsKnifeItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -402,8 +402,12 @@ u64 gBombBag40ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "assets/textures/item_name_static/gBombBag40ItemNameENGTex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameENGTex.ia4.inc.c"
+u64 gSilverScaleItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gSilverScaleItemNameENGTex.ia4.inc.c"
+};
+
+u64 gGoldenScaleItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGoldenScaleItemNameENGTex.ia4.inc.c"
 };
 
 u64 gAmuletOfEnergyItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
