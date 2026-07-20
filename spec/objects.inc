@@ -1529,6 +1529,7 @@ beginseg
     name "object_gi_clothes"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_clothes/object_gi_clothes.o"
+    include "$(BUILD_DIR)/assets/objects/object_gi_clothes/object_gi_clothes_extra.o"
     number 6
 endseg
 

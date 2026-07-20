@@ -241,6 +241,7 @@ typedef struct EnvHazardTextTriggerEntry {
 EnvHazardTextTriggerEntry sEnvHazardTextTriggers[] = {
     { ENV_HAZARD_TEXT_TRIGGER_HOTROOM, 0x3040 },    // PLAYER_ENV_HAZARD_HOTROOM - 1
     { ENV_HAZARD_TEXT_TRIGGER_FREEZINGROOM, 0x9402 }, // PLAYER_ENV_HAZARD_FREEZINGROOM - 1
+    { ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM, 0x9403 }, // PLAYER_ENV_HAZARD_CURSEDROOM - 1
     { ENV_HAZARD_TEXT_TRIGGER_UNDERWATER, 0x401D }, // PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1
     { 0, 0x0000 },                                  // PLAYER_ENV_HAZARD_SWIMMING - 1
     { ENV_HAZARD_TEXT_TRIGGER_UNDERWATER, 0x401D }, // PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1
@@ -749,6 +750,8 @@ void Player_SetEquipmentData(PlayState* play, Player* this) {
 
         if (this->currentShield == PLAYER_SHIELD_HYLIAN && IS_HEROS_SHIELD)
             this->currentShield = PLAYER_SHIELD_HEROS;
+        if (this->currentTunic == PLAYER_TUNIC_KOKIRI && IS_SPIRIT_TUNIC)
+            this->currentTunic = PLAYER_TUNIC_SPIRIT;
 
         Player_SetModelGroup(this, Player_ActionToModelGroup(this, this->heldItemAction));
         Player_SetBootData(play, this);
@@ -976,6 +979,8 @@ s32 Player_GetEnvironmentalHazard(PlayState* play) {
         envHazard = PLAYER_ENV_HAZARD_HOTROOM - 1;
     } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_FREEZING) { // Room is freezing
         envHazard = PLAYER_ENV_HAZARD_FREEZINGROOM - 1;
+    } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_CURSED) { // Room is cursed
+        envHazard = PLAYER_ENV_HAZARD_CURSEDROOM - 1;
     } else if ((this->underwaterTimer > 80) &&
                ((this->currentBoots == PLAYER_BOOTS_IRON) || (this->underwaterTimer >= 300))) {
         envHazard = ((this->currentBoots == PLAYER_BOOTS_IRON) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
@@ -992,6 +997,7 @@ s32 Player_GetEnvironmentalHazard(PlayState* play) {
         if ((triggerEntry->flag != 0) && !(gSaveContext.envHazardTextTriggerFlags & triggerEntry->flag) &&
             (((envHazard == (PLAYER_ENV_HAZARD_HOTROOM - 1)) && (this->currentTunic != PLAYER_TUNIC_GORON)) ||
               (envHazard == (PLAYER_ENV_HAZARD_FREEZINGROOM - 1) && this->currentTunic != PLAYER_TUNIC_ZORA) ||
+              (envHazard == (PLAYER_ENV_HAZARD_CURSEDROOM - 1) && this->currentTunic != PLAYER_TUNIC_SPIRIT) ||
              (((envHazard == (PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1)) ||
                (envHazard == (PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1))) &&
               (this->currentBoots == PLAYER_BOOTS_IRON) && (this->currentTunic != PLAYER_TUNIC_ZORA)))) {
@@ -1120,6 +1126,7 @@ Color_RGB8 sTunicColors[PLAYER_TUNIC_MAX] = {
     { 30, 105, 27 }, // PLAYER_TUNIC_KOKIRI
     { 100, 20, 0 },  // PLAYER_TUNIC_GORON
     { 0, 60, 100 },  // PLAYER_TUNIC_ZORA
+    { 70, 38, 64 },  // PLAYER_TUNIC_SPIRIT
 };
 
 Color_RGB8 sGauntletColors[] = {
@@ -1183,6 +1190,8 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
     gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(sMouthTextures[GET_LINK_MODEL][mouthIndex]));
 #endif
 
+    if (tunic == EQUIP_INV_TUNIC_KOKIRI && IS_SPIRIT_TUNIC)
+        tunic = EQUIP_INV_TUNIC_SPIRIT;
     color = &sTunicColors[tunic];
     gDPSetEnvColor(POLY_OPA_DISP++, color->r, color->g, color->b, 0);
 

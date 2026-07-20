@@ -559,7 +559,7 @@ void EnOssan_TalkBazaarShopkeeper(PlayState* play) {
 }
 
 void EnOssan_TalkBazaarShopkeeper2(PlayState* play) {
-    Message_ContinueTextbox(play, 0x8014);
+    Message_ContinueTextbox(play, 0x8015);
 }
 
 void EnOssan_TalkBombchuShopkeeper(PlayState* play) {

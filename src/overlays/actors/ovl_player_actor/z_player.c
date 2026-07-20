@@ -844,6 +844,8 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_SWORD_BIGGORON, OBJECT_GI_SWORD_3_MM, GID_SWORD_SILVER, 0x8004, 0x80, CHEST_ANIM_LONG),
     // GI_SWORD_GILDED
     GET_ITEM(ITEM_SWORD_BIGGORON, OBJECT_GI_SWORD_3_MM, GID_SWORD_GILDED, 0x8005, 0x80, CHEST_ANIM_LONG),
+    // GI_TUNIC_SPIRIT
+    GET_ITEM(ITEM_TUNIC_SPIRIT, OBJECT_GI_CLOTHES, GID_TUNIC_SPIRIT, 0x800F, 0x80, CHEST_ANIM_LONG),
     // GI_POWER_BRACELET
 	GET_ITEM(ITEM_STRENGTH_SILVER_GAUNTLETS, OBJECT_GI_BRACELET, GID_POWER_BRACELET, 0x8007, 0x80, CHEST_ANIM_LONG),
     // GI_POWER_BRACELETS
@@ -1227,6 +1229,7 @@ typedef enum FidgetType {
     /* 0x02 */ FIDGET_FREEZING,    // ROOM_ENV_FREEZING (same animations as FIDGET_COLD)
     /* 0x03 */ FIDGET_WARM,        // ROOM_ENV_WARM
     /* 0x04 */ FIDGET_HOT,         // ROOM_ENV_HOT (same animations as FIDGET_WARM)
+    /* 0x00 */ FIDGET_CURSED,      // ROOM_ENV_CURSED
     /* 0x05 */ FIDGET_STRETCH_1,   // ROOM_ENV_UNK_STRETCH_1
     /* 0x06 */ FIDGET_STRETCH_2,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
     /* 0x07 */ FIDGET_STRETCH_3,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
@@ -1254,6 +1257,9 @@ static LinkAnimationHeader* sFidgetAnimations[][2] = {
 
     // FIDGET_HOT
     { &gPlayerAnim_link_normal_wait_typeB_20f, &gPlayerAnim_link_normal_waitF_typeB_20f },
+
+    // FIDGET_CURSED
+    { &gPlayerAnim_link_normal_wait_typeA_20f, &gPlayerAnim_link_normal_waitF_typeA_20f },
 
     // FIDGET_STRETCH_1
     { &gPlayerAnim_link_wait_typeD_20f, &gPlayerAnim_link_waitF_typeD_20f },
@@ -1381,6 +1387,8 @@ static u8 sFidgetAnimSfxTypes[] = {
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_WARM (sword/shield in hand)
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_HOT
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_HOT (sword/shield in hand)
+    FIDGET_ANIMSFX_NONE,              // FIDGET_CURSED
+    FIDGET_ANIMSFX_NONE,              // FIDGET_CURSED (sword/shield in hand)
     FIDGET_ANIMSFX_STRETCH,           // FIDGET_STRETCH_1
     FIDGET_ANIMSFX_STRETCH,           // FIDGET_STRETCH_1 (sword/shield in hand)
     FIDGET_ANIMSFX_STRETCH,           // FIDGET_STRETCH_2
@@ -2796,6 +2804,9 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
     Player_SetEquipmentData(play, this);
     Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
 
+    if (equipType == EQUIP_TYPE_TUNIC && this->currentTunic == PLAYER_TUNIC_SPIRIT)
+        Inventory_ChangeEquipmentWithIcon(play, equipType, EQUIP_VALUE_TUNIC_KOKIRI);
+
     if (button < 4) {
         for (i=0; i<4; i++)
             if (Interface_GetItemFromDpad(i) == gSaveContext.save.info.equips.buttonItems[button])
@@ -2914,6 +2925,7 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
         { PLAYER_TUNIC_KOKIRI, EQUIP_INV_TUNIC_KOKIRI, 9              },
         { PLAYER_TUNIC_GORON,  EQUIP_INV_TUNIC_GORON,  LINK_AGE_ADULT },
         { PLAYER_TUNIC_ZORA,   EQUIP_INV_TUNIC_ZORA,   LINK_AGE_ADULT },
+        { PLAYER_TUNIC_SPIRIT, EQUIP_INV_TUNIC_SPIRIT, LINK_AGE_CHILD },
     };
 
     u8 current    = this->currentTunic;
@@ -2942,8 +2954,13 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
         }
 
     nextItem = validItems[i % validCount];
-    if (current != nextItem)
+    if (current != nextItem) {
+        if (nextItem == PLAYER_TUNIC_SPIRIT)
+            SET_SPIRIT_TUNIC;
+        else if (nextItem == PLAYER_TUNIC_KOKIRI)
+            CLEAR_SPIRIT_TUNIC;
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_TUNIC, nextItem);
+    }
 }
 
 void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
@@ -3227,6 +3244,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
         else if (item == ITEM_TUNIC_GORON) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
                 Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 1 ? 0 : 1);
+                CLEAR_SPIRIT_TUNIC;
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3237,6 +3255,18 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
         } else if (item == ITEM_TUNIC_ZORA) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA)) {
                 Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 2 ? 0 : 2);
+                CLEAR_SPIRIT_TUNIC;
+                for (i=0; i<4; i++) {
+                    if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
+                        Interface_LoadItemIcon1(play, i+4);
+                    if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_TUNICS)
+                        Interface_LoadItemIcon1(play, i);
+                }
+            }
+        } else if (item == ITEM_TUNIC_SPIRIT) {
+            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT)) {
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI);
+                TOGGLE_SPIRIT_TUNIC;
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -5678,6 +5708,10 @@ s32 func_808382DC(Player* this, PlayState* play) {
                     this->swimmingInPoisonWater = false;
                     this->floorTypeTimer = 0;
                     this->actor.colChkInfo.damage = 4;
+                    func_80837C0C(play, this, PLAYER_HIT_RESPONSE_NONE, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
+                } else if (this->floorTypeTimer >= SECONDS(5) && this->currentTunic != PLAYER_TUNIC_SPIRIT && Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_CURSEDROOM) {
+                    this->floorTypeTimer = 0;
+                    this->actor.colChkInfo.damage = 8;
                     func_80837C0C(play, this, PLAYER_HIT_RESPONSE_NONE, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
                 } else if (Player_GetEnvironmentalHazard(play) < PLAYER_ENV_HAZARD_SWIMMING)
                     this->swimmingInPoisonWater = false;

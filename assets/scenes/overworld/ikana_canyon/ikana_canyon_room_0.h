@@ -3,10 +3,14 @@
 
 #include "room.h"
 
+extern SceneCmd* ikana_canyon_room_0AlternateHeaders[];
 extern s16 ikana_canyon_room_0ObjectList_000058[];
 extern ActorEntry ikana_canyon_room_0ActorEntry_000084[];
 extern RoomShapeCullable ikana_canyon_room_0RoomShapeCullable_0004C0;
 extern RoomShapeCullableEntry ikana_canyon_room_0RoomShapeCullableEntry_0004CC[12];
+
+extern SceneCmd ikana_canyon_room_0Set_cleansed[];
+extern ActorEntry ikana_canyon_room_0ActorEntry_cleansed[];
 
 extern Gfx ikana_canyon_room_0DL_001AC8[];
 extern Gfx ikana_canyon_room_0DL_002548[];

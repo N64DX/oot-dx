@@ -1124,6 +1124,18 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x9403, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE COLOR(LIGHTBLUE) NAME ", your life force is being\n"
+"drained by the curse that\n"
+"haunts this place!\n"
+"We can't stay here for long!" COLOR(DEFAULT) QUICKTEXT_DISABLE FADE(60)
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x94A0, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(

@@ -268,6 +268,7 @@ typedef enum TimerId {
 #define ENV_HAZARD_TEXT_TRIGGER_HOTROOM (1 << 0)
 #define ENV_HAZARD_TEXT_TRIGGER_UNDERWATER (1 << 1)
 #define ENV_HAZARD_TEXT_TRIGGER_FREEZINGROOM (1 << 2)
+#define ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM (1 << 3)
 
 typedef enum WorldMapArea {
     /*  0 */ WORLD_MAP_AREA_HYRULE_FIELD,
@@ -578,6 +579,12 @@ typedef enum LinkAge {
 #define TOGGLE_HEROS_SHIELD   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 1)
 #define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SHIELD       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (HAS_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) )
+
+#define SET_SPIRIT_TUNIC      (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 2)
+#define CLEAR_SPIRIT_TUNIC    (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 2))
+#define TOGGLE_SPIRIT_TUNIC   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 2)
+#define HAS_SPIRIT_TUNIC    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 2) && IS_CHILD_QUEST_AS_CHILD)
+#define IS_SPIRIT_TUNIC       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT) && (HAS_SPIRIT_TUNIC || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI)) )
 
 #define HAS_ROCS_FEATHER      (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ROCS_FEATHER || HAS_GOLDEN_FEATHER)
 #define HAS_GOLDEN_FEATHER    (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_GOLDEN_FEATHER)

@@ -192,9 +192,6 @@ static f32 BgWeather_GetNightFactor(void) {
 void BgWeather_Init(Actor* thisx, PlayState* play) {
     BgWeather* this = (BgWeather*)thisx;
 
-    if (GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_STONE_TOWER))
-        Actor_Kill(&this->actor);
-
     this->rainFogIntensity = RAIN_FOG_INTENSITY;
     this->nightMistIntensity = BgWeather_GetNightFactor();
     this->fogLastEye = play->mainCamera.eye;

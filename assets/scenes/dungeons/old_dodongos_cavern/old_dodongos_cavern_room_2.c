@@ -45,7 +45,7 @@ s16 old_dodongos_cavern_room_2ObjectList0x000038[] = {
 ActorEntry old_dodongos_cavern_room_2ActorList0x000048[] = {
     { ACTOR_OBJECT_KANKYO, {    0,    0,     0 }, {   0, 0,    0 }, 0x0006 },
     { ACTOR_BG_DDAN_KD,    { -2320, 480, -2120 }, {   0, 0,    0 }, 0x000B }, // Switch: 0B
-    { ACTOR_EN_ITEM00,     { -1628, 542, -2111 }, {   0, 0,    0 }, 0x2803 }, // Collect: 28, Recovert Heart
+    { ACTOR_EN_ITEM00,     { -1628, 542, -2111 }, {   0, 0,    0 }, 0x2803 }, // Collect: 28, Recovery Heart
     { ACTOR_EN_BOMBF,      { -1716,  40, -2125 }, {   0, 0,    0 }, 0xFFFF },
     { ACTOR_EN_BOMBF,      { -1763,  40, -2239 }, {   0, 0,    0 }, 0xFFFF },
     { ACTOR_EN_BOMBF,      { -1763,  40, -2010 }, {   0, 0,    0 }, 0xFFFF },

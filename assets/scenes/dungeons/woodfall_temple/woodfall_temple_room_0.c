@@ -37,15 +37,15 @@ s16 woodfall_temple_room_0ObjectList_000040[] = {
 };
 
 ActorEntry woodfall_temple_room_0ActorEntry_00006C[] = {
-    { ACTOR_EN_ITEM00,        {  -50, -1250, -1550 }, { 0,      0,    0 }, 0x001B },
+    { ACTOR_EN_ITEM00,        {  -50, -1250, -1550 }, { 0,      0,    0 }, 0x001C }, // Respawnable Feather
     { ACTOR_BG_JYA_IRONOBJ,   {  340, -1485, -1610 }, { 0, 0x4000,    0 }, 0x0000 },
     { ACTOR_OBJ_RAILLIFT,     { -325, -1350, -1750 }, { 0,      0, 0x19 }, 0x8007 },
-    { ACTOR_EN_ITEM00,        { -330, -1155, -1980 }, { 0,      0,    0 }, 0x0102 },
-    { ACTOR_EN_ITEM00,        {  330, -1155, -1980 }, { 0,      0,    0 }, 0x0202 },
-    { ACTOR_EN_ITEM00,        {   30, -1605, -1650 }, { 0,      0,    0 }, 0x0301 },
-    { ACTOR_EN_ITEM00,        {  -30, -1605, -1650 }, { 0,      0,    0 }, 0x0401 },
-    { ACTOR_EN_ITEM00,        {   30, -1605, -1710 }, { 0,      0,    0 }, 0x0501 },
-    { ACTOR_EN_ITEM00,        {  -30, -1605, -1710 }, { 0,      0,    0 }, 0x0601 },
+    { ACTOR_EN_ITEM00,        { -330, -1155, -1980 }, { 0,      0,    0 }, 0x0102 }, // Collect: 01, Red Rupee
+    { ACTOR_EN_ITEM00,        {  330, -1155, -1980 }, { 0,      0,    0 }, 0x0202 }, // Collect: 02, Red Rupee
+    { ACTOR_EN_ITEM00,        {   30, -1605, -1650 }, { 0,      0,    0 }, 0x0301 }, // Collect: 03, Blue Rupee
+    { ACTOR_EN_ITEM00,        {  -30, -1605, -1650 }, { 0,      0,    0 }, 0x0401 }, // Collect: 04, Blue Rupee
+    { ACTOR_EN_ITEM00,        {   30, -1605, -1710 }, { 0,      0,    0 }, 0x0501 }, // Collect: 05, Blue Rupee
+    { ACTOR_EN_ITEM00,        {  -30, -1605, -1710 }, { 0,      0,    0 }, 0x0601 }, // Collect: 06, Blue Rupee
     { ACTOR_EN_ST,            { -330,  -805, -1980 }, { 0,      0,    0 }, 0x003F },
     { ACTOR_EN_ST,            {  330,  -805, -1980 }, { 0,      0,    0 }, 0x003F },
     { ACTOR_EN_ST,            { -390,  -805, -1560 }, { 0,      0,    0 }, 0x003F },

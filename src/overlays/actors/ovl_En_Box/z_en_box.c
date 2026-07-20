@@ -619,6 +619,7 @@ u8 EnBox_IsItem(s16 item) {
         case GI_SCALE_GOLDEN:
         case GI_TUNIC_GORON:
         case GI_TUNIC_ZORA:
+        case GI_TUNIC_SPIRIT:
         case GI_AMULET_OF_ENERGY:
         case GI_ROCS_FEATHER:
         case GI_GOLDEN_FEATHER:

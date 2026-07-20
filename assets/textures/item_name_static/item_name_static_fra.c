@@ -306,6 +306,10 @@ u64 gShieldPotionItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_
 #include "assets/textures/item_name_static/gShieldPotionItemNameFRATex.ia4.inc.c"
 };
 
+u64 gHerosSwordItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameFRATex.ia4.inc.c"
+};
+
 u64 gWoodenShieldItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gWoodenShieldItemNameFRATex.ia4.inc.c"
 };
@@ -318,6 +322,10 @@ u64 gMetalShieldItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "assets/textures/item_name_static/gMetalShieldItemNameFRATex.ia4.inc.c"
 };
 
+u64 gSpiritTunicItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gSpiritTunicItemNameFRATex.ia4.inc.c"
+};
+
 u64 gGoronsBraceletItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "build/pal-1.0/assets/textures/item_name_static/gGoronsBraceletItemNameFRATex.ia4.inc.c"
 };
@@ -328,14 +336,6 @@ u64 gSilverGauntletsItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_T
 
 u64 gGoldenGauntletsItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "build/pal-1.0/assets/textures/item_name_static/gGoldenGauntletsItemNameFRATex.ia4.inc.c"
-};
-
-u64 gSilverScaleItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gSilverScaleItemNameFRATex.ia4.inc.c"
-};
-
-u64 gGoldenScaleItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gGoldenScaleItemNameFRATex.ia4.inc.c"
 };
 
 u64 gBrokenGiantsKnifeItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -402,8 +402,12 @@ u64 gBombBag40ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "build/pal-1.0/assets/textures/item_name_static/gBombBag40ItemNameFRATex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameFRATex.ia4.inc.c"
+u64 gSilverScaleItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gSilverScaleItemNameFRATex.ia4.inc.c"
+};
+
+u64 gGoldenScaleItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gGoldenScaleItemNameFRATex.ia4.inc.c"
 };
 
 u64 gAmuletOfEnergyItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

@@ -405,6 +405,7 @@ void Sram_InitDebugSave(void) {
     if (IS_CHILD_QUEST) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, 3);
         gSaveContext.save.info.inventory.items[SLOT_FEATHER]      = ITEM_GOLDEN_FEATHER;
         gSaveContext.save.info.inventory.items[SLOT_SWORD_FAIRYS] = ITEM_SWORD_FAIRYS;
         gSaveContext.save.info.inventory.items[SLOT_QUEST]        = ITEM_PICTOBOX;

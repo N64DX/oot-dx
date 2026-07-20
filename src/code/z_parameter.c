@@ -1764,7 +1764,7 @@ u8 Interface_GetLoadItem(u16 button) {
     else if (item == ITEM_SHIELDS)
         return (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
     else if (item == ITEM_TUNICS)
-        return ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+        return (TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == PLAYER_TUNIC_KOKIRI && IS_SPIRIT_TUNIC) ? ITEM_TUNIC_SPIRIT : ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
     else if (item == ITEM_BOOTS)
         return ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
     return item;
@@ -1813,12 +1813,15 @@ static u8 IsHerosSword(void)    { return IS_HEROS_SWORD;                        
 static u8 IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                                    }
 static u8 IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag;         }
 static u8 IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag;         }
+static u8 IsSpiritTunic(void)   { return IS_SPIRIT_TUNIC;                                                               }
 
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_DEKU,               IsWoodenShield, ITEM_SHIELD_WOODEN  },
     { ITEM_SHIELD_HYLIAN,             IsHerosShield,  ITEM_SHIELD_HEROS   },
     { ITEM_SHIELD_HEROS,              IsMetalShield,  ITEM_SHIELD_METAL   },
     { ITEM_SWORD_KOKIRI ,             IsHerosSword,   ITEM_SWORD_HEROS    },
+    { ITEM_TUNICS,                    IsSpiritTunic,  ITEM_TUNIC_SPIRIT   },
+    { ITEM_TUNIC_SPIRIT,              IsSpiritTunic,  ITEM_TUNIC_SPIRIT   },
     { ITEM_SHIELD_MIRROR,             IsChildQuest,   LAST_ITEM_ICON + 1  },
     { ITEM_SWORD_MASTER,              IsRazorSword,   LAST_ITEM_ICON + 2  },
     { ITEM_SWORD_BIGGORON,            IsSilverSword,  LAST_ITEM_ICON + 3  },
@@ -1871,13 +1874,15 @@ u8 Interface_GetItemFromDpad(u8 button) {
         return ITEM_TUNICS;
     else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS)
         return ITEM_BOOTS;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNIC_GORON && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNIC_GORON  && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))
         return ITEM_TUNIC_GORON;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNIC_ZORA  && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNIC_ZORA   && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
         return ITEM_TUNIC_ZORA;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS_IRON  && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON))
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNIC_SPIRIT && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT))
+        return ITEM_TUNIC_SPIRIT;
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS_IRON   && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON))
         return ITEM_BOOTS_IRON;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS_HOVER && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
+    else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS_HOVER  && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
         return ITEM_BOOTS_HOVER;
     else return ITEM_NONE;
 }
@@ -2041,7 +2046,6 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_SHIELD_HEROS || item == ITEM_SHIELD_METAL) {
         gSaveContext.save.info.obtainedSkins.metalShield = item == ITEM_SHIELD_METAL ? 1 : 0;
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
-        SET_HEROS_SHIELD;
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
             Player_SetEquipmentData(play, GET_PLAYER(play));
         for (i=0; i<4; i++)
@@ -2060,6 +2064,12 @@ u8 Item_Give(PlayState* play, u8 item) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_TUNICS || DPAD_BUTTON(i) == SLOT_TUNIC_GORON || DPAD_BUTTON(i) == SLOT_TUNIC_ZORA)
+                Interface_LoadItemIcon1(play, i+4);
+        return ITEM_NONE;
+    } else if (item == ITEM_TUNIC_SPIRIT) {
+        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, 3);
+        for (i=0; i<4; i++)
+            if (DPAD_BUTTON(i) == SLOT_TUNICS || DPAD_BUTTON(i) == SLOT_TUNIC_SPIRIT)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_HOVER)) {
@@ -2615,6 +2625,8 @@ u8 Item_CheckObtainability(u8 item) {
         } else {
             return ITEM_NONE;
         }
+    } else if (item == ITEM_TUNIC_SPIRIT) {
+        return (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT)) ? item : ITEM_NONE;
     } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_HOVER)) {
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, item - ITEM_BOOTS_KOKIRI + EQUIP_INV_BOOTS_KOKIRI)) {
             return item;
@@ -3843,7 +3855,8 @@ void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
         }
         
         item = Interface_GetItemFromDpad(button-4);
-        if ( (item == ITEM_TUNIC_GORON && player->currentTunic == 1) || (item == ITEM_TUNIC_ZORA && player->currentTunic == 2) || (item == ITEM_BOOTS_IRON && player->currentBoots == 1) || (item == ITEM_BOOTS_HOVER && player->currentBoots == 2) || (item >= ITEM_MASK_KEATON && item <= ITEM_MASK_TRUTH && player->currentMask == item - ITEM_MASK_KEATON + 1) ) {
+        if ( (item == ITEM_TUNIC_GORON && player->currentTunic == 1) || (item == ITEM_TUNIC_ZORA && player->currentTunic == 2) || (item == ITEM_TUNIC_SPIRIT && player->currentTunic == 3) || (item == ITEM_BOOTS_IRON && player->currentBoots == 1) || (item == ITEM_BOOTS_HOVER && player->currentBoots == 2) ||
+             (item >= ITEM_MASK_KEATON && item <= ITEM_MASK_TRUTH && player->currentMask == item - ITEM_MASK_KEATON + 1) ) {
             dd    *=  0.8;
             width +=  3;
             offset = -1;
@@ -5555,6 +5568,10 @@ void Interface_Update(PlayState* play) {
         }
     } else if (sEnvHazard == PLAYER_ENV_HAZARD_FREEZINGROOM) {
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA) {
+            sEnvHazard = PLAYER_ENV_HAZARD_NONE;
+        }
+    } else if (sEnvHazard == PLAYER_ENV_HAZARD_CURSEDROOM) {
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_KOKIRI && IS_SPIRIT_TUNIC) {
             sEnvHazard = PLAYER_ENV_HAZARD_NONE;
         }
     } else if ((Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) &&

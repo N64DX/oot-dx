@@ -306,6 +306,10 @@ u64 gShieldPotionItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_
 #include "assets/textures/item_name_static/gShieldPotionItemNameGERTex.ia4.inc.c"
 };
 
+u64 gHerosSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameGERTex.ia4.inc.c"
+};
+
 u64 gWoodenShieldItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gWoodenShieldItemNameGERTex.ia4.inc.c"
 };
@@ -318,6 +322,10 @@ u64 gMetalShieldItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "assets/textures/item_name_static/gMetalShieldItemNameGERTex.ia4.inc.c"
 };
 
+u64 gSpiritTunicItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gSpiritTunicItemNameGERTex.ia4.inc.c"
+};
+
 u64 gGoronsBraceletItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "build/pal-1.0/assets/textures/item_name_static/gGoronsBraceletItemNameGERTex.ia4.inc.c"
 };
@@ -328,14 +336,6 @@ u64 gSilverGauntletsItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_T
 
 u64 gGoldenGauntletsItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "build/pal-1.0/assets/textures/item_name_static/gGoldenGauntletsItemNameGERTex.ia4.inc.c"
-};
-
-u64 gSilverScaleItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gSilverScaleItemNameGERTex.ia4.inc.c"
-};
-
-u64 gGoldenScaleItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gGoldenScaleItemNameGERTex.ia4.inc.c"
 };
 
 u64 gBrokenGiantsKnifeItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -402,8 +402,12 @@ u64 gBombBag40ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "build/pal-1.0/assets/textures/item_name_static/gBombBag40ItemNameGERTex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameGERTex.ia4.inc.c"
+u64 gSilverScaleItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gSilverScaleItemNameGERTex.ia4.inc.c"
+};
+
+u64 gGoldenScaleItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gGoldenScaleItemNameGERTex.ia4.inc.c"
 };
 
 u64 gAmuletOfEnergyItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

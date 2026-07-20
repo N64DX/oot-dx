@@ -3,10 +3,14 @@
 
 #include "room.h"
 
+extern SceneCmd* ikana_graveyard_room_1AlternateHeaders[];
 extern s16 ikana_graveyard_room_1ObjectList_00004C[];
 extern ActorEntry ikana_graveyard_room_1ActorEntry_000064[];
 extern RoomShapeCullable ikana_graveyard_room_1RoomShapeCullable_0003A0;
 extern RoomShapeCullableEntry ikana_graveyard_room_1RoomShapeCullableEntry_0003AC[16];
+
+extern SceneCmd ikana_graveyard_room_1Set_cleansed[];
+extern ActorEntry ikana_graveyard_room_1ActorEntry_cleansed[];
 
 extern Gfx ikana_graveyard_room_1DL_001230[];
 extern Gfx ikana_graveyard_room_1DL_001B10[];

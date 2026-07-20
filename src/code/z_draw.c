@@ -41,6 +41,7 @@
 #include "assets/objects/object_gi_shield_3/object_gi_shield_3.h"
 #include "assets/objects/object_gi_letter/object_gi_letter.h"
 #include "assets/objects/object_gi_clothes/object_gi_clothes.h"
+#include "assets/objects/object_gi_clothes/object_gi_clothes_extra.h"
 #include "assets/objects/object_gi_bean/object_gi_bean.h"
 #include "assets/objects/object_gi_fish/object_gi_fish.h"
 #include "assets/objects/object_gi_saw/object_gi_saw.h"
@@ -405,6 +406,8 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawOpa0, { gGiSilverSwordDL } },
     // GID_SWORD_GILDED
     { GetItem_DrawOpa0, { gGiGildedSwordDL } },
+    // GID_TUNIC_SPIRIT
+    { GetItem_DrawOpa1023, { gGiTunicCollarDL, gGiSpiritCollarColorDL, gGiSpiritTunicColorDL, gGiTunicDL } },
     // GID_POWER_BRACELET
     { GetItem_DrawOpa0, { gGiPowerBraceletDL } },
     // GID_HOOKSHOT_MM
