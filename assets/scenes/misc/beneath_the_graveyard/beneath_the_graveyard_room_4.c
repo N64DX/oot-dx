@@ -12,13 +12,13 @@ SceneCmd beneath_the_graveyard_room_4[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&beneath_the_graveyard_room_4RoomShapeCullable_0000C0),
-    SCENE_CMD_OBJECT_LIST(4, beneath_the_graveyard_room_4ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(5, beneath_the_graveyard_room_4ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(2, beneath_the_graveyard_room_4ActorEntry_00004C),
     SCENE_CMD_END(),
 };
 
 s16 beneath_the_graveyard_room_4ObjectList_000040[] = {
-  //OBJECT_HAKA_OBJ,
+    OBJECT_HAKA_OBJ,
     OBJECT_TSUBO,
     OBJECT_BAT,
     OBJECT_BOX,
@@ -26,13 +26,8 @@ s16 beneath_the_graveyard_room_4ObjectList_000040[] = {
 };
 
 ActorEntry beneath_the_graveyard_room_4ActorEntry_00004C[] = {
-    { ACTOR_EN_IK,    { -1164,  0, -246 }, {    0, 0x8000, 0 }, 0xFF07 },
-    { ACTOR_EN_BOX,   { -1159,  0, -241 }, { 0x3E, 0x8000, 0 }, 0x1000 }, // Chest: 00, on clear, Piece of Heart
-  //{ ACTOR_EN_TEST5, { -1434, -4, -214 }, {    0,      0, 0 }, 0x0000 },
-  //{ ACTOR_EN_TEST5, { -1364, -4, -480 }, {    0,      0, 0 }, 0x0000 },
-  //{ ACTOR_EN_TEST5, { -1198, -4,   40 }, {    0,      0, 0 }, 0x0000 },
-  //{ ACTOR_EN_TEST5, {  -921, -4,  -64 }, {    0,      0, 0 }, 0x0000 },
-  //{ ACTOR_EN_TEST5, {  -878, -4, -318 }, {    0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_IK,  { -1164,  0, -246 }, {    0, 0x8000, 0 }, 0xFF07 },
+    { ACTOR_EN_BOX, { -1159,  0, -241 }, { 0x3E, 0x8000, 0 }, 0x1000 }, // Chest: 00, on clear, Piece of Heart
 };
 
 RoomShapeCullable beneath_the_graveyard_room_4RoomShapeCullable_0000C0 = { 
@@ -45,7 +40,7 @@ RoomShapeCullableEntry beneath_the_graveyard_room_4RoomShapeCullableEntry_0000CC
     { {  -1160,     57,   -595 },     76, beneath_the_graveyard_room_4DL_002DB0, NULL },
     { {  -1155,     26,   -223 },    398, beneath_the_graveyard_room_4DL_0029C0, NULL },
     { {  -1160,     90,   -250 },    418, beneath_the_graveyard_room_4DL_0019F0, NULL },
-    { {  -1160,      0,   -260 },   -170, beneath_the_graveyard_room_4DL_002ED0, NULL },
+    { {  -1160,      0,   -260 },    170, beneath_the_graveyard_room_4DL_002ED0, NULL },
     { {   -857,     47,    -24 },     52, NULL, beneath_the_graveyard_room_4DL_004880 },
     { {  -1510,     58,   -296 },     64, NULL, beneath_the_graveyard_room_4DL_004580 },
     { {  -1250,     76,     69 },     82, NULL, beneath_the_graveyard_room_4DL_0042A0 },

@@ -21,6 +21,7 @@ extern Gfx gLightOrbMaterial1DL[];
 extern Gfx gLightOrbMaterial2DL[];
 extern Gfx gLightOrbModelDL[];
 
+extern u64 gEffFireMask1Tex[];
 extern Gfx gFrozenSteamMaterialDL[];
 extern Gfx gFrozenSteamModelDL[];
 

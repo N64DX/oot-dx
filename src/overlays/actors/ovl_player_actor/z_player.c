@@ -15106,6 +15106,12 @@ static s16 sWarpSongEntrances[] = {
     ENTR_DESERT_COLOSSUS_5,
     ENTR_GRAVEYARD_7,
     ENTR_TEMPLE_OF_TIME_7,
+    ENTR_SACRED_FOREST_MEADOW_2,
+    ENTR_DEATH_MOUNTAIN_CRATER_4,
+    ENTR_LAKE_HYLIA_8,
+    ENTR_DESERT_COLOSSUS_5,
+    ENTR_FORSAKEN_KINGDOM_10,
+    ENTR_TEMPLE_OF_TIME_7,
 };
 
 void Player_Action_8084E3C4(Player* this, PlayState* play) {
@@ -15140,9 +15146,11 @@ void Player_Action_8084E3C4(Player* this, PlayState* play) {
         this->stateFlags2 &= ~(PLAYER_STATE2_23 | PLAYER_STATE2_24 | PLAYER_STATE2_25);
         this->unk_6A8 = NULL;
     } else if (play->msgCtx.ocarinaMode == OCARINA_MODE_02) {
-        s32 pad;
+        s32 warpIndex = play->msgCtx.lastPlayedSong;
+        if ((gSaveContext.save.info.enhancedWarpSongs.warpsongs & (1 << warpIndex)) && play->msgCtx.choiceIndex == 1)
+            warpIndex += 6;
 
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].entranceIndex = sWarpSongEntrances[play->msgCtx.lastPlayedSong];
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].entranceIndex = sWarpSongEntrances[warpIndex];
         gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams =
             PLAYER_PARAMS(PLAYER_START_MODE_WARP_SONG, PLAYER_START_BG_CAM_DEFAULT);
         gSaveContext.respawn[RESPAWN_MODE_RETURN].data = play->msgCtx.lastPlayedSong;

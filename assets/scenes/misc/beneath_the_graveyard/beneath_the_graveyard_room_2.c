@@ -12,13 +12,13 @@ SceneCmd beneath_the_graveyard_room_2[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&beneath_the_graveyard_room_2RoomShapeCullable_000090),
-    SCENE_CMD_OBJECT_LIST(4, beneath_the_graveyard_room_2ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(1, beneath_the_graveyard_room_2ActorEntry_00004C),
+    SCENE_CMD_OBJECT_LIST(5, beneath_the_graveyard_room_2ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(3, beneath_the_graveyard_room_2ActorEntry_00004C),
     SCENE_CMD_END(),
 };
 
 s16 beneath_the_graveyard_room_2ObjectList_000040[] = {
-  //OBJECT_HAKA_OBJ,
+    OBJECT_HAKA_OBJ,
     OBJECT_TSUBO,
     OBJECT_BAT,
     OBJECT_BOX,
@@ -28,9 +28,9 @@ s16 beneath_the_graveyard_room_2ObjectList_000040[] = {
 
 ActorEntry beneath_the_graveyard_room_2ActorEntry_00004C[] = {
   //{ ACTOR_EN_PO_COMPOSER,  { 2240, 140, 320 }, { 0, 0xC000, 0 }, 0x80FF },
-    { ACTOR_EN_IK,           { 1860,   0, 327 }, { 0, 0xC000, 0 }, 0xFF06 },
-  //{ ACTOR_BG_HAKA_CURTAIN, { 2120, 260, 320 }, { 0,      0, 0 }, 0x0000 },
-  //{ ACTOR_BG_HAKA_TOMB,    { 2280,  40, 320 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_IK,           { 1860,   0, 327 }, { 0, 0xC000, 0 }, 0x0206 }, // Switch: 02
+    { ACTOR_BG_HAKA_CURTAIN, { 2120, 260, 320 }, { 0,      0, 0 }, 0x0000 }, // Checks switch: 02
+    { ACTOR_BG_HAKA_TOMB,    { 2280,  40, 320 }, { 0,      0, 0 }, 0x0000 }, // Checks switch: 02
 };
 
 RoomShapeCullable beneath_the_graveyard_room_2RoomShapeCullable_000090 = { 
@@ -43,7 +43,7 @@ RoomShapeCullableEntry beneath_the_graveyard_room_2RoomShapeCullableEntry_00009C
     { {   1820,    130,    320 },    384, beneath_the_graveyard_room_2DL_004F30, NULL },
     { {   1755,    130,    320 },    452, beneath_the_graveyard_room_2DL_003220, NULL },
     { {   2210,    170,    320 },    258, beneath_the_graveyard_room_2DL_0007B8, NULL },
-    { {   1820,      0,    320 },   -170, beneath_the_graveyard_room_2DL_0050B8, NULL },
+    { {   1820,      0,    320 },    170, beneath_the_graveyard_room_2DL_0050B8, NULL },
 };
 
 s32 beneath_the_graveyard_room_2_terminatorMaybe_0000DC = { 0x01000000 };

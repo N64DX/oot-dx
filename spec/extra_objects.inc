@@ -6,6 +6,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_sek"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_sek/object_sek.o"
+    number 6
+endseg
+
+beginseg
     name "object_hsstump"
     compress
     include "$(BUILD_DIR)/assets/objects/object_hsstump/object_hsstump.o"
@@ -142,6 +149,20 @@ beginseg
     name "object_hakaisi"
     compress
     include "$(BUILD_DIR)/assets/objects/object_hakaisi/object_hakaisi.o"
+    number 6
+endseg
+
+beginseg
+    name "object_haka_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_haka_obj/object_haka_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_water_effect"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_water_effect/object_water_effect.o"
     number 6
 endseg
 

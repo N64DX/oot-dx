@@ -12,18 +12,18 @@ SceneCmd beneath_the_graveyard_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&beneath_the_graveyard_room_0RoomShapeCullable_0000E0),
-    SCENE_CMD_OBJECT_LIST(6, beneath_the_graveyard_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(5, beneath_the_graveyard_room_0ActorEntry_000054),
+    SCENE_CMD_OBJECT_LIST(8, beneath_the_graveyard_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(8, beneath_the_graveyard_room_0ActorEntry_000054),
     SCENE_CMD_END(),
 };
 
 s16 beneath_the_graveyard_room_0ObjectList_000040[] = {
-  //OBJECT_HAKA_OBJ,
+    OBJECT_HAKA_OBJ,
     OBJECT_TSUBO,
     OBJECT_BAT,
     OBJECT_BOX,
     OBJECT_SYOKUDAI,
-  //OBJECT_WATER_EFFECT,
+    OBJECT_WATER_EFFECT,
     OBJECT_FIREFLY,
     OBJECT_ST,
   //OBJECT_PO_COMPOSER,
@@ -31,13 +31,13 @@ s16 beneath_the_graveyard_room_0ObjectList_000040[] = {
 
 ActorEntry beneath_the_graveyard_room_0ActorEntry_000054[] = {
     { ACTOR_OBJ_MURE3,       {  -99,   0, -300 }, { 0, 0, 0 }, 0x402D },
-  //{ ACTOR_EN_WATER_EFFECT, {  -43, 239,  317 }, { 0, 0, 0 }, 0x00FF },
-  //{ ACTOR_EN_WATER_EFFECT, {  112, 246,  344 }, { 0, 0, 0 }, 0x00FF },
+    { ACTOR_EN_WATER_EFFECT, {  -43, 239,  317 }, { 0, 0, 0 }, 0x00FF },
+    { ACTOR_EN_WATER_EFFECT, {  112, 246,  344 }, { 0, 0, 0 }, 0x00FF },
     { ACTOR_OBJ_SYOKUDAI,    {  426,   0,  275 }, { 0, 0, 0 }, 0x287F },
     { ACTOR_OBJ_TSUBO,       {  303,   0,  269 }, { 0, 0, 0 }, 0x450A },
     { ACTOR_OBJ_TSUBO,       {  330,   0,  397 }, { 0, 0, 0 }, 0x471E },
     { ACTOR_OBJ_TSUBO,       { -200,   0, -330 }, { 0, 0, 0 }, 0x590E },
-  //{ ACTOR_EN_TEST2,        { -120,   0, -520 }, { 0, 0, 0 }, 0x0007 },
+    { ACTOR_EN_TEST2,        { -120,   0, -520 }, { 0, 0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable beneath_the_graveyard_room_0RoomShapeCullable_0000E0 = { 

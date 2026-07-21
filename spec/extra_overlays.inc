@@ -34,6 +34,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Obj_Warpstone"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Warpstone/z_obj_warpstone.o"
+endseg
+
+beginseg
     name "ovl_Obj_HsStump"
     compress
     flags OVERLAY
@@ -136,6 +143,41 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Hakaisi/z_obj_hakaisi.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Haka_Bombwall"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Haka_Bombwall/z_bg_haka_bombwall.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Haka_Curtain"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Haka_Curtain/z_bg_haka_curtain.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Haka_Tomb"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Haka_Tomb/z_bg_haka_tomb.o"
+endseg
+
+beginseg
+    name "ovl_En_Water_Effect"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Water_Effect/z_en_water_effect.o"
+endseg
+
+beginseg
+    name "ovl_En_Test2"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Test2/z_en_test2.o"
 endseg
 
 beginseg

@@ -4308,3 +4308,69 @@ UNSKIPPABLE "Can I go back already?\n"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x8500, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(10) "In memory of the royal family\n"
+"of a kingdom long lost to despair.\n"
+SHIFT(15) "May a new dawn rise again." QUICKTEXT_DISABLE EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8501, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(20) "When kingdom's light was\n"
+SHIFT(45) "swallowed whole," QUICKTEXT_DISABLE
+BOX_BREAK
+
+UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(25) "The restless crown could\n"
+SHIFT(60) "find no sleep." QUICKTEXT_DISABLE
+BOX_BREAK
+
+UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(25) "Through endless dusk and\n"
+SHIFT(60) "silent stone..." QUICKTEXT_DISABLE
+BOX_BREAK
+
+UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(42) "Walk the path where\n"
+SHIFT(62) "shadows keep." QUICKTEXT_DISABLE
+BOX_BREAK
+
+UNSKIPPABLE "This is an interesting poem...\n"
+"huh?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8502, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Something is inscribed on the \n"
+"tombstone..."
+BOX_BREAK
+
+UNSKIPPABLE "It's the " COLOR(YELLOW) "secret melody" COLOR(DEFAULT) " of the\n"
+"Composer Brothers\n"
+"of the " COLOR(RED) "Ancient Kingdom of ......" COLOR(DEFAULT) "!"
+BOX_BREAK
+
+UNSKIPPABLE "Wait... I can't quite make up that\n"
+"last part."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8503, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE SHIFT(5) "Your " COLOR(PURPLE) "Nocturne of Shadow" COLOR(DEFAULT) " song\n"
+SHIFT(40) "has been enhanced!"
+),
+MSG(),
+MSG()
+)
