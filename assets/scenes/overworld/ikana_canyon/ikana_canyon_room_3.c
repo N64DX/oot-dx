@@ -13,7 +13,7 @@ SceneCmd ikana_canyon_room_3[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_3RoomShapeCullable_0000A0),
-    SCENE_CMD_OBJECT_LIST(13, ikana_canyon_room_3ObjectList_000058),
+    SCENE_CMD_OBJECT_LIST(14, ikana_canyon_room_3ObjectList_000058),
     SCENE_CMD_ACTOR_LIST(1, ikana_canyon_room_3ActorEntry_000084),
     SCENE_CMD_END(),
 };
@@ -27,6 +27,7 @@ SceneCmd* ikana_canyon_room_3AlternateHeaders[] = {
 s16 ikana_canyon_room_3ObjectList_000058[] = {
     OBJECT_OKUTA,
     OBJECT_ICEFLOE,
+    OBJECT_SEK,
     OBJECT_RD,
     OBJECT_HSSTUMP,
     OBJECT_GI_HEART,

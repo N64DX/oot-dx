@@ -2,7 +2,7 @@
 #define VERSIONS_H
 
 // OoT DX
-#define DX_VERSION "0.5.4"
+#define DX_VERSION "0.6.0"
 
 // OOT versions in build order
 #define NTSC_1_0         1

@@ -4023,7 +4023,7 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
                             Message_StartTextbox(play, 0x88C, NULL); // "You can't warp here!"
                             play->msgCtx.ocarinaMode = OCARINA_MODE_04;
                         } else if (GET_EVENTINF_INGO_RACE_STATE() != INGO_RACE_STATE_HORSE_RENTAL_PERIOD) {
-                            Message_StartTextbox(play, msgCtx->lastPlayedSong + 0x88D,
+                            Message_StartTextbox(play, msgCtx->lastPlayedSong + ((IS_CHILD_QUEST && gSaveContext.save.info.enhancedWarpSongs.warpsongs & (1 << msgCtx->lastPlayedSong)) ? 0x8A0 : 0x88D),
                                                  NULL); // "Warp to [place name]?"
                             play->msgCtx.ocarinaMode = OCARINA_MODE_01;
                         } else {
@@ -4802,11 +4802,11 @@ void Message_Update(PlayState* play) {
                     }
                 } else if (msgCtx->textboxEndType != TEXTBOX_ENDTYPE_PERSISTENT &&
                            msgCtx->textboxEndType != TEXTBOX_ENDTYPE_EVENT && YREG(31) == 0) {
-                    if (msgCtx->textboxEndType == TEXTBOX_ENDTYPE_2_CHOICE &&
+                    if ((msgCtx->textboxEndType == TEXTBOX_ENDTYPE_2_CHOICE || msgCtx->textboxEndType == TEXTBOX_ENDTYPE_3_CHOICE) &&
                         play->msgCtx.ocarinaMode == OCARINA_MODE_01) {
                         if (Message_ShouldAdvance(play)) {
                             PRINTF("OCARINA_MODE=%d -> ", play->msgCtx.ocarinaMode);
-                            play->msgCtx.ocarinaMode = (msgCtx->choiceIndex == 0) ? OCARINA_MODE_02 : OCARINA_MODE_04;
+                            play->msgCtx.ocarinaMode = (msgCtx->choiceIndex < (msgCtx->textboxEndType == TEXTBOX_ENDTYPE_2_CHOICE ? 1 : 2)) ? OCARINA_MODE_02 : OCARINA_MODE_04;
                             PRINTF("InRaceSeq=%d(%d) OCARINA_MODE=%d  -->  ", GET_EVENTINF_INGO_RACE_STATE(), 1,
                                    play->msgCtx.ocarinaMode);
                             Message_CloseTextbox(play);
@@ -4852,6 +4852,7 @@ void Message_Update(PlayState* play) {
 
                     if (msgCtx->textId != 0x2061 && msgCtx->textId != 0x2025 && msgCtx->textId != 0x208C &&
                         ((msgCtx->textId < 0x88D || msgCtx->textId >= 0x893) || msgCtx->choiceIndex != 0) &&
+                        ((msgCtx->textId < 0x8A0 || msgCtx->textId >= 0x8A5) || msgCtx->choiceIndex == 2) &&
                         (msgCtx->textId != 0x3055 && gSaveContext.save.cutsceneIndex < CS_INDEX_0)) {
                         PRINTF("=== day_time=%x ", ((void)0, gSaveContext.save.cutsceneIndex));
                         if (play->activeCamId == CAM_ID_MAIN) {

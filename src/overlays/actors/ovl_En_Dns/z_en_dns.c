@@ -37,6 +37,7 @@ u32 EnDns_CanBuyDekuShield(EnDns* this);
 u32 EnDns_CanBuyBombs(EnDns* this);
 u32 EnDns_CanBuyArrows(EnDns* this);
 u32 EnDns_CanBuyBottle(EnDns* this);
+u32 EnDns_CanBuySpiritTunic(EnDns* this);
 
 void EnDns_PayPrice(EnDns* this);
 void EnDns_PayForDekuNuts(EnDns* this);
@@ -90,7 +91,7 @@ static ColliderCylinderInitType1 sCylinderInit = {
 };
 
 static u16 sStartingTextIds[] = {
-    0x10A0, 0x10A1, 0x10A2, 0x10CA, 0x10CB, 0x10CC, 0x10CD, 0x10CE, 0x10CF, 0x10DC, 0x10DD, 0x94A0,
+    0x10A0, 0x10A1, 0x10A2, 0x10CA, 0x10CB, 0x10CC, 0x10CD, 0x10CE, 0x10CF, 0x10DC, 0x10DD, 0x94A0, 0x94A1,
 };
 
 static DnsItemEntry sItemDekuNuts = { 20, 5, GI_DEKU_NUTS_5_2, EnDns_CanBuyDekuNuts, EnDns_PayForDekuNuts };
@@ -107,11 +108,12 @@ static DnsItemEntry sItemDekuStickUpgrade = { 40, 1, GI_DEKU_STICK_UPGRADE_20, E
                                               EnDns_PayForDekuStickUpgrade };
 static DnsItemEntry sItemDekuNutUpgrade = { 40, 1, GI_DEKU_NUT_UPGRADE_30, EnDns_CanBuyPrice,
                                             EnDns_PayForDekuNutUpgrade };
-static DnsItemEntry sItemDekuMagicBean = { 50, 1, GI_MAGIC_BEAN, EnDns_CanBuyPrice, EnDns_PayForMagicBean };
+static DnsItemEntry sItemDekuMagicBean = { 50, 1, GI_MAGIC_BEAN, EnDns_CanBuySpiritTunic, EnDns_PayForMagicBean };
+static DnsItemEntry sItemSpiritTunic = { 500, 1, GI_TUNIC_SPIRIT, EnDns_CanBuyPrice, EnDns_PayPrice };
 
 static DnsItemEntry* sItemEntries[] = {
     &sItemDekuNuts, &sItemDekuSticks, &sItemHeartPiece,  &sItemDekuSeeds,        &sItemDekuShield,     &sItemBombs,
-    &sItemArrows,   &sItemRedPotion,  &sItemGreenPotion, &sItemDekuStickUpgrade, &sItemDekuNutUpgrade, &sItemDekuMagicBean,
+    &sItemArrows,   &sItemRedPotion,  &sItemGreenPotion, &sItemDekuStickUpgrade, &sItemDekuNutUpgrade, &sItemDekuMagicBean, &sItemSpiritTunic,
 };
 
 static InitChainEntry sInitChain[] = {
@@ -291,6 +293,18 @@ u32 EnDns_CanBuyArrows(EnDns* this) {
 
 u32 EnDns_CanBuyBottle(EnDns* this) {
     if (!Inventory_HasEmptyBottle()) {
+        return DNS_CANBUY_RESULT_CAPACITY_FULL;
+    }
+
+    if (gSaveContext.save.info.playerData.rupees < this->dnsItemEntry->itemPrice) {
+        return DNS_CANBUY_RESULT_NEED_RUPEES;
+    }
+
+    return DNS_CANBUY_RESULT_SUCCESS;
+}
+
+u32 EnDns_CanBuySpiritTunic(EnDns* this) {
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT)) {
         return DNS_CANBUY_RESULT_CAPACITY_FULL;
     }
 

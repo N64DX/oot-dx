@@ -437,6 +437,5 @@ void EffectSsDeadSound_Spawn(struct PlayState* play, Vec3f* pos, Vec3f* velocity
 void EffectSsDeadSound_SpawnStationary(struct PlayState* play, Vec3f* pos, u16 sfxId, s16 lowerPriority, s16 repeatMode,
                                        s32 life);
 void EffectSsIceSmoke_Spawn(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale);
-void EffectSsIceBlock_Spawn(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale);
 
 #endif

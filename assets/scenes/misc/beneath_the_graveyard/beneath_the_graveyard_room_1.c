@@ -12,31 +12,31 @@ SceneCmd beneath_the_graveyard_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&beneath_the_graveyard_room_1RoomShapeCullable_0000D0),
-    SCENE_CMD_OBJECT_LIST(6, beneath_the_graveyard_room_1ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(8, beneath_the_graveyard_room_1ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(8, beneath_the_graveyard_room_1ActorEntry_000050),
     SCENE_CMD_END(),
 };
 
 s16 beneath_the_graveyard_room_1ObjectList_000040[] = {
-  //OBJECT_HAKA_OBJ,
+    OBJECT_HAKA_OBJ,
     OBJECT_TSUBO,
     OBJECT_BAT,
     OBJECT_BOX,
     OBJECT_SYOKUDAI,
-  //OBJECT_WATER_EFFECT,
+    OBJECT_WATER_EFFECT,
     OBJECT_FIREFLY,
     OBJECT_ST,
 };
 
 ActorEntry beneath_the_graveyard_room_1ActorEntry_000050[] = {
-    { ACTOR_EN_BAT,       { 1103, 88, 326 }, {    0, 0xC000, 0 }, 0xFF34 },
-    { ACTOR_OBJ_SYOKUDAI, { 1270,  0, 256 }, {    0,      0, 0 }, 0x10C0 }, // Sets switch: 03
-    { ACTOR_OBJ_SYOKUDAI, {  850,  0, 161 }, {    0,      0, 0 }, 0x10C0 }, // Sets switch: 03
-    { ACTOR_OBJ_SYOKUDAI, {  853,  0, 480 }, {    0,      0, 0 }, 0x10C0 }, // Sets switch: 03
-    { ACTOR_OBJ_TSUBO,    {  829,  0, 234 }, {    0,      0, 0 }, 0x531E },
-    { ACTOR_OBJ_TSUBO,    {  835,  0, 409 }, {    0,      0, 0 }, 0x550A },
-    { ACTOR_OBJ_TSUBO,    { 1270,  0, 380 }, {    0,      0, 0 }, 0x5714 },
-    { ACTOR_EN_BOX,       { 1090,  0, 320 }, { 0x55, 0xC000, 0 }, 0x7003 }, // Chest: 03, on clear, Purple Rupee
+    { ACTOR_EN_BAT,       { 1103, 88, 326 }, {    0, 0xC000,   0 }, 0x0434 }, // Switch: 04
+    { ACTOR_OBJ_SYOKUDAI, { 1270,  0, 256 }, {    0,      0,   0 }, 0x10C0 }, // Switch: 03
+    { ACTOR_OBJ_SYOKUDAI, {  850,  0, 161 }, {    0,      0,   0 }, 0x10C0 }, // Switch: 03
+    { ACTOR_OBJ_SYOKUDAI, {  853,  0, 480 }, {    0,      0,   0 }, 0x10C0 }, // Switch: 03
+    { ACTOR_OBJ_TSUBO,    {  829,  0, 234 }, {    0,      0,   0 }, 0x531E },
+    { ACTOR_OBJ_TSUBO,    {  835,  0, 409 }, {    0,      0,   0 }, 0x550A },
+    { ACTOR_OBJ_TSUBO,    { 1270,  0, 380 }, {    0,      0,   0 }, 0x5714 },
+    { ACTOR_EN_BOX,       { 1090,  0, 320 }, { 0x55, 0xC000, 0x4 }, 0x8003 }, // Chest: 03, checks switch: 02, Purple Rupee
 };
 
 RoomShapeCullable beneath_the_graveyard_room_1RoomShapeCullable_0000D0 = { 

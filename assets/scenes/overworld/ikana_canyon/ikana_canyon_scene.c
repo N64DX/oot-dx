@@ -20,7 +20,7 @@ SceneCmd ikana_canyon_scene[] = {
     SCENE_CMD_SPAWN_LIST(ikana_canyon_sceneEntranceList0x000228),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PATH_LIST(ikana_canyon_scenePathway_000674),
-    SCENE_CMD_PLAYER_ENTRY_LIST(15, ikana_canyon_sceneStartPositionList0x0000B0),
+    SCENE_CMD_PLAYER_ENTRY_LIST(11, ikana_canyon_sceneStartPositionList0x0000B0),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_TERMINA_SKY, 3, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(ikana_canyon_sceneExitList_000248),
     SCENE_CMD_ENV_LIGHT_SETTINGS(16, ikana_canyon_sceneLightSettings0x000260),
@@ -44,6 +44,7 @@ ActorEntry ikana_canyon_sceneStartPositionList0x0000B0[] = {
     { ACTOR_PLAYER, {   546,  400,   858 }, { 0, 0xD120, 0 }, 0x0FFF },
     { ACTOR_PLAYER, { -3068, -505,  2690 }, { 0, 0x32C8, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {  -344,  562,  -711 }, { 0,      0, 0 }, 0x0FFF },
+    { ACTOR_PLAYER, {  -852,  200,  2700 }, { 0, 0x5700, 0 }, 0x0DFF },
 };
 
 TransitionActorEntry ikana_canyon_sceneTransitionActorList_0001A0[] = {
@@ -72,6 +73,7 @@ Spawn ikana_canyon_sceneEntranceList0x000228[] = {
     { 0x07, 0x00 },
     { 0x08, 0x01 },
     { 0x09, 0x00 },
+    { 0x0A, 0x00 },
 };
 
 u16 ikana_canyon_sceneExitList_000248[] = {
@@ -4025,7 +4027,7 @@ SceneCmd ikana_canyon_sceneSet_cleansed[] = {
     SCENE_CMD_SPAWN_LIST(ikana_canyon_sceneEntranceList0x000228),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PATH_LIST(ikana_canyon_scenePathway_000674),
-    SCENE_CMD_PLAYER_ENTRY_LIST(15, ikana_canyon_sceneStartPositionList0x0000B0),
+    SCENE_CMD_PLAYER_ENTRY_LIST(11, ikana_canyon_sceneStartPositionList0x0000B0),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_TERMINA_SKY, 3, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(ikana_canyon_sceneExitList_000248),
     SCENE_CMD_ENV_LIGHT_SETTINGS(16, ikana_canyon_sceneLightSettings_cleansed),

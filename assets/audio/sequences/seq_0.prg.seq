@@ -4391,6 +4391,16 @@ LAYER_1E02:
 /* 0x1EA8 [0xCD 0x14               ] */ stereo      1, 0, 1, 0, 0
 /* 0x1EAA [0xFF                    ] */ end
 
+.channel CHAN_EV_WATERDROP_GRD
+/* 0x2E78 [0x88 0x2E 0x7C          ] */ ldlayer     0, LAYER_EV_WATERDROP_GRD
+/* 0x2E7B [0xFF                    ] */ end
+
+.layer LAYER_EV_WATERDROP_GRD
+/* 0x2E7C [0xC6 0x47               ] */ instr       SF0_INST_71
+/* 0x2E7E [0x6E 0x08 0x62          ] */ notedv      PITCH_G4, 8, 98
+/* 0x2E81 [0x6B 0x10 0x62          ] */ notedv      PITCH_E4, 16, 98
+/* 0x2E84 [0xFF                    ] */ end
+
 .channel CHAN_1EAB
 /* 0x1EAB [0xC1 0x49               ] */ instr       SF0_INST_73
 /* 0x1EAD [0xED 0x0A               ] */ gain        10
@@ -7436,6 +7446,18 @@ CHAN_3158:
 /* 0x315A [0x92                    ] */ dellayer    2
 /* 0x315B [0x93                    ] */ dellayer    3
 /* 0x315C [0xF4 0xA6               ] */ rjump       CHAN_3104
+
+.channel CHAN_EV_CURTAIN_DOWN
+/* 0x501B [0xDA 0xBF 0xF8          ] */ env         ENVELOPE_BFF8
+/* 0x501E [0x88 0x50 0x22          ] */ ldlayer     0, LAYER_EV_CURTAIN_DOWN_1
+/* 0x5021 [0xFF                    ] */ end
+
+.layer LAYER_EV_CURTAIN_DOWN_1
+/* 0x5022 [0xC6 0x42               ] */ instr       SF0_INST_66
+/* 0x5024 [0xC2 0x30               ] */ transpose   48
+LAYER_EV_CURTAIN_DOWN_2:
+/* 0x5026 [0x53 0x16 0x64          ] */ notedv      PITCH_E2, 22, 100
+/* 0x5029 [0xF4 0xFB               ] */ rjump       LAYER_EV_CURTAIN_DOWN_2
 
 #define DEFINE_SFX(lblName, sfxId, priority, decay, rand, flags) \
     entry lblName
@@ -16202,6 +16224,10 @@ ENVELOPE_6A6C:
 
 .envelope ENVELOPE_6A7C
     point 1, 32700
+    hang
+
+.envelope ENVELOPE_BFF8
+    point 10, 32700
     hang
 
 .envelope ENVELOPE_C034

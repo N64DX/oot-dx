@@ -117,6 +117,9 @@ void EnJg_UpdateCollision(EnJg* this, PlayState* play) {
 }
 
 u16 EnJg_GetTextId(PlayState* play, Actor* thisx) {
+    if (thisx->params == SPRING_LAKE_ELDER_PATH)
+        return !GET_INFTABLE(INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED) ? 0x841C : 0x841D;
+
     if (!GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES)) {
         if (!GET_INFTABLE(INFTABLE_GOT_PERMISSION_FROM_GORON_ELDER)) {
             if (GET_INFTABLE(INFTABLE_PROOF_FOR_GORON_ELDER))
@@ -134,7 +137,7 @@ u16 EnJg_GetTextId(PlayState* play, Actor* thisx) {
 
 s16 EnJg_UpdateTalkState(PlayState* play, Actor* thisx) {
     EnJg* this = (EnJg*)thisx;
-    
+
     switch (Message_GetState(&play->msgCtx)) {
         case TEXT_STATE_CLOSING:
             if (this->actor.textId == 0x8410)
@@ -145,6 +148,8 @@ s16 EnJg_UpdateTalkState(PlayState* play, Actor* thisx) {
                 SET_INFTABLE(INFTABLE_GOT_PERMISSION_FROM_GORON_ELDER);
             else if (this->actor.textId == 0x841A)
                 SET_INFTABLE(INFTABLE_THANKED_BY_GORON_ELDER);
+            else if (this->actor.textId == 0x841C)
+                SET_INFTABLE(INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED);
             return NPC_TALK_STATE_IDLE;
 
         case TEXT_STATE_EVENT:
@@ -182,6 +187,11 @@ void EnJg_SetShape(EnJg* this) {
 
 void EnJg_Init(Actor* thisx, PlayState* play) {
     EnJg* this = (EnJg*)thisx;
+
+    u8 hasMedallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT);
+
+    if ((thisx->params == SPRING_LAKE_ELDER_SHRINE && !GET_INFTABLE(INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED) && hasMedallions) || (thisx->params == SPRING_LAKE_ELDER_PATH && (GET_INFTABLE(INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED) || !hasMedallions)))
+        Actor_Kill(thisx);
 
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 20.0f);
     SkelAnime_InitFlex(play, &this->skelAnime, &gGoronElderSkel, &gGoronElderIdleAnim, this->jointTable, this->morphTable, GORON_ELDER_LIMB_MAX);

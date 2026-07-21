@@ -13,8 +13,8 @@ SceneCmd ikana_canyon_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&ikana_canyon_room_0RoomShapeCullable_0004C0),
-    SCENE_CMD_OBJECT_LIST(13, ikana_canyon_room_0ObjectList_000058),
-    SCENE_CMD_ACTOR_LIST(54, ikana_canyon_room_0ActorEntry_000084),
+    SCENE_CMD_OBJECT_LIST(14, ikana_canyon_room_0ObjectList_000058),
+    SCENE_CMD_ACTOR_LIST(55, ikana_canyon_room_0ActorEntry_000084),
     SCENE_CMD_END(),
 };
 
@@ -27,6 +27,7 @@ SceneCmd* ikana_canyon_room_0AlternateHeaders[] = {
 s16 ikana_canyon_room_0ObjectList_000058[] = {
     OBJECT_OKUTA,
     OBJECT_ICEFLOE,
+    OBJECT_SEK,
     OBJECT_RD,
     OBJECT_HSSTUMP,
     OBJECT_GI_HEART,
@@ -97,10 +98,10 @@ ActorEntry ikana_canyon_room_0ActorEntry_000084[] = {
     { ACTOR_OBJ_HSSTUMP,     {   -944,   200, 2780 }, {    0, 0x4C00,    0 }, 0x0000 },
     { ACTOR_OBJ_HSSTUMP,     {   -633,  -440, 3767 }, {    0,      0,    0 }, 0x0000 },
     { ACTOR_BG_WEATHER,      {    500,   200, 1650 }, {    0,      0,    0 }, 0x0000 },
+    { ACTOR_OBJ_WARPSTONE,   {   -852,   200, 2592 }, {    0,      0,    0 }, 0x0004 },
   //{ ACTOR_BG_IKNV_OBJ,     {   -229,   480,  713 }, {    0,   0x65,    0 }, 0xFE00 },
   //{ ACTOR_BG_IKNV_OBJ,     {   1401,   857, -250 }, {    0,      0,    0 }, 0xFE01 },
   //{ ACTOR_BG_IKNV_DOUKUTU, {    -87,   193, 1175 }, {    0,      0,    0 }, 0xFE01 },
-  //{ ACTOR_OBJ_WARPSTONE,   {   -852,   200, 2592 }, {    0,      0,    0 }, 0x0008 },
 };
 
 RoomShapeCullable ikana_canyon_room_0RoomShapeCullable_0004C0 = { 

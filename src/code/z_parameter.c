@@ -1813,15 +1813,12 @@ static u8 IsHerosSword(void)    { return IS_HEROS_SWORD;                        
 static u8 IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                                    }
 static u8 IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag;         }
 static u8 IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag;         }
-static u8 IsSpiritTunic(void)   { return IS_SPIRIT_TUNIC;                                                               }
 
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_DEKU,               IsWoodenShield, ITEM_SHIELD_WOODEN  },
     { ITEM_SHIELD_HYLIAN,             IsHerosShield,  ITEM_SHIELD_HEROS   },
     { ITEM_SHIELD_HEROS,              IsMetalShield,  ITEM_SHIELD_METAL   },
     { ITEM_SWORD_KOKIRI ,             IsHerosSword,   ITEM_SWORD_HEROS    },
-    { ITEM_TUNICS,                    IsSpiritTunic,  ITEM_TUNIC_SPIRIT   },
-    { ITEM_TUNIC_SPIRIT,              IsSpiritTunic,  ITEM_TUNIC_SPIRIT   },
     { ITEM_SHIELD_MIRROR,             IsChildQuest,   LAST_ITEM_ICON + 1  },
     { ITEM_SWORD_MASTER,              IsRazorSword,   LAST_ITEM_ICON + 2  },
     { ITEM_SWORD_BIGGORON,            IsSilverSword,  LAST_ITEM_ICON + 3  },
@@ -2046,6 +2043,7 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_SHIELD_HEROS || item == ITEM_SHIELD_METAL) {
         gSaveContext.save.info.obtainedSkins.metalShield = item == ITEM_SHIELD_METAL ? 1 : 0;
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        SET_HEROS_SHIELD;
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
             Player_SetEquipmentData(play, GET_PLAYER(play));
         for (i=0; i<4; i++)

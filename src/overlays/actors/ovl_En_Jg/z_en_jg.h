@@ -15,6 +15,11 @@ struct EnJg;
 
 typedef void (*EnJgActionFunc)(struct EnJg*, struct PlayState*);
 
+typedef enum SpringLakeElderType {
+    /* 0x00 */ SPRING_LAKE_ELDER_SHRINE,
+    /* 0x01 */ SPRING_LAKE_ELDER_PATH
+} SpringLakeElderType;
+
 typedef struct EnJgDataStruct2 {
     f32 shape_unk_10;
     f32 scale;

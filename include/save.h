@@ -108,6 +108,19 @@ typedef struct Inventory {
     /* 0x5C */ s16 gsTokens;
 } Inventory; // size = 0x5E
 
+typedef union EnhancedWarpSongs {
+    struct {
+        u8 minuetOfForest   : 1;
+        u8 boleroOfFire     : 1;
+        u8 serenadeOfWater  : 1;
+        u8 requiemOfSpirit  : 1;
+        u8 nocturneOfShadow : 1;
+        u8 preludeOfLight   : 1;
+        u8 unk              : 2;
+    };
+    u8 warpsongs;
+} EnhancedWarpSongs; // size = 0x1
+
 typedef union ObtainedItems {
     struct {
         u8 fireArrow            : 1;
@@ -117,7 +130,7 @@ typedef union ObtainedItems {
         u8 masterSword          : 1;
         u8 mirrorShieldIsBroken : 1;
         u8 bombArrow            : 1;
-        u8 unk                  : 1;
+        u8 spiritEarrings       : 1;
     };
     u8 items;
 } ObtainedItems; // size = 0x1
@@ -337,7 +350,8 @@ typedef struct SaveInfo {
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
     /* 0x0F18  0x0F34 */ ObtainedSkins obtainedSkins;
-    /* 0x0F19  0x0F35 */ char unk_F34[0x02];
+    /* 0x0F19  0x0F35 */ char unk_F34[0x01];
+    /* 0x0F1A  0x0F36 */ EnhancedWarpSongs enhancedWarpSongs;
     /* 0x0F1B  0x0F37 */ u8 energy;
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
     /* 0x0F20  0x0F3C */ FrogQuest frogQuest;
@@ -1136,7 +1150,7 @@ typedef enum LinkAge {
 #define INFTABLE_GORON_SHRINE_DOOR_OPENED 0x11F
 #define INFTABLE_GORON_MINES_DOOR_OPENED 0x120
 #define INFTABLE_WEBBED_SHRINE_DOOR_OPENED 0x121
-#define INFTABLE_STONE_TOWER_DOOR_OPENED 0x122
+#define INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED 0x122
 #define INFTABLE_124 0x124
 #define INFTABLE_129 0x129
 #define INFTABLE_12A 0x12A

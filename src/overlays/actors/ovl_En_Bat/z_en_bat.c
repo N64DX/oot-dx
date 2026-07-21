@@ -160,9 +160,10 @@ void EnBat_Init(Actor* thisx, PlayState* play) {
     thisx->depthInWater = BGCHECK_Y_MIN;
     Actor_SetFocus(thisx, 20.0f);
 
-    if (sEnBatAlreadySpawned)
+    if (sEnBatAlreadySpawned || Flags_GetSwitch(play, this->switchFlag))
         Actor_Kill(thisx);
-    this->actor.room = -1;
+    else if (play->sceneId == SCENE_GLOOMY_GRAVEYARD)
+        this->actor.room = -1;
 
     if (this->paramFlags & BAD_BAT_PARAMFLAG_PERCH) {
         thisx->params = 0;
@@ -346,12 +347,11 @@ void EnBat_Die(EnBat* this, PlayState* play) {
             SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 11, NA_SE_EN_EXTINCT);
             Actor_Kill(&this->actor);
 
-            if (this->actor.room == -1 && this->switchFlag <= 0x3F) {
-                Actor* enemy = NULL;
+            if (this->switchFlag <= 0x3F) {
+                Actor* enemy = play->actorCtx.actorLists[ACTORCAT_ENEMY].head;
 
                 do { // Search for other EnBats. If find none, set switch flag
-                    enemy = Actor_Find(&play->actorCtx, ACTORCAT_ENEMY, ACTOR_EN_BAT);
-                    if (enemy != NULL) {
+                    if (enemy != NULL && enemy->id == ACTOR_EN_BAT) {
                         if (enemy != &this->actor)
                             break;
                         enemy = enemy->next;
@@ -447,7 +447,7 @@ void EnBat_Update(Actor* thisx, PlayState* play) {
             Actor_UpdateBgCheckInfo(play, &this->actor, 12.0f, 15.0f, 50.0f, UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2);
         else if (this->actionFunc != EnBat_FlyIdle || (this->actor.xzDistToPlayer < 400.0f && this->actor.projectedPos.z > 0.0f)) {
             if (this->paramFlags & BAD_BAT_PARAMFLAG_0)
-                Actor_UpdateBgCheckInfo(play, &this->actor, 12.0f, 15.0f, 50.0f, UPDBGCHECKINFO_FLAG_1 | UPDBGCHECKINFO_FLAG_2);
+                Actor_UpdateBgCheckInfo(play, &this->actor, 12.0f, 15.0f, 50.0f, UPDBGCHECKINFO_FLAG_0 | UPDBGCHECKINFO_FLAG_2);
             else Actor_UpdateBgCheckInfo(play, &this->actor, 12.0f, 15.0f, 50.0f, UPDBGCHECKINFO_FLAG_2);
         } else Math_Vec3f_Copy(&this->actor.prevPos, &prevPos);
 

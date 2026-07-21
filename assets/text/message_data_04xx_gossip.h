@@ -818,9 +818,9 @@ MSG()
 DEFINE_MESSAGE(0x0426, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-"They say you can freeze the\n"
-"Octoroks to turn them into solid\n"
-"platforms to stand upon."
+"They say there is a hidden treasure\n"
+"hidden somewhere in this land that\n"
+"restores your Hookshot once more."
 ),
 MSG(),
 MSG()
