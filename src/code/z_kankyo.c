@@ -3201,7 +3201,7 @@ void Environment_DrawSkyboxStarsImpl(PlayState* play, Gfx** gfxP) {
     Gfx* gfx = *gfxP;
     Gfx* gfxTemp;
     f32(*viewProjectionMtxF)[4];
-    bool negateY = Environment_IsSceneUpsideDown(play);
+    u8 negateY = Environment_IsSceneUpsideDown(play);
     u32 randInt = (STARS_NAME(0) << 0x18) ^ (STARS_NAME(1) << 0x14) ^ (STARS_NAME(2) << 0x10) ^ (STARS_NAME(3) << 0xC) ^ (STARS_NAME(4) << 8) ^ (STARS_NAME(5) << 4) ^ (STARS_NAME(6) << 0) ^ (STARS_NAME(7) >> 4) ^ (STARS_NAME(7) << 0x1C);
     fu gRandFloat;
 

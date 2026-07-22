@@ -9,7 +9,7 @@ struct DmChar01;
 typedef struct DmChar01 {
     /* 0x000 */ DynaPolyActor dyna;
     /* 0x1AC */ u8 unk_34C;
-    /* 0x1CD */ bool hasCollision;
+    /* 0x1CD */ u8 hasCollision;
 } DmChar01; // size = 0x1B0
 
 #endif

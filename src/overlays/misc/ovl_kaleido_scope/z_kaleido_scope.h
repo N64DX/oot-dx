@@ -16,9 +16,7 @@ extern char gSlotAgeReqs[];
 extern char gEquipAgeReqs[EQUIP_TYPE_MAX][4];
 extern char gItemAgeReqs[];
 extern u8 gAreaGsFlags[];
-extern bool showAltQuiverSlot;
-extern bool showAltStrengthSlot;
-extern bool showAltScalesSlot;
+extern u8 showAltQuiverSlot, showAltStrengthSlot, showAltScalesSlot;
 
 #define AGE_REQ_ADULT LINK_AGE_ADULT
 #define AGE_REQ_CHILD LINK_AGE_CHILD

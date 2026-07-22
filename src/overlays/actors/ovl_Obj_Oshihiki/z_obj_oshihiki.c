@@ -101,7 +101,7 @@ static Vec2f sFaceDirection[] = {
     { -1.0f, -1.0f },
 };
 
-bool ObjOshihiki_IsMoveableScene(PlayState* play) {
+u8 ObjOshihiki_IsMoveableScene(PlayState* play) {
     if (play->sceneId == SCENE_GORON_MINES)
         return false;
     return true;

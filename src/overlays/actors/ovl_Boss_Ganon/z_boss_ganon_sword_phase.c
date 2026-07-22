@@ -679,7 +679,7 @@ void BossGanon_SwordPhasePull(BossGanon* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
     u8 curFrame = (u8)this->skelAnime.curFrame;
     u8 i;
-    bool finished = SkelAnime_Update(&this->skelAnime);
+    u8 finished = SkelAnime_Update(&this->skelAnime);
 
     this->envLightMode = 13;
     this->beamTexScroll += 96;
@@ -787,7 +787,7 @@ void BossGanon_SetupSwordPhaseCatch(BossGanon* this, PlayState* play) {
 
 void BossGanon_SwordPhaseCatch(BossGanon* this, PlayState* play) {
     u8 curFrame = (u8)this->skelAnime.curFrame;
-    bool finished = SkelAnime_Update(&this->skelAnime);
+    u8 finished = SkelAnime_Update(&this->skelAnime);
 
     if (this->skelAnime.animation == &SwordPhasePullAnim) {
         switch (curFrame) {
@@ -825,7 +825,7 @@ void EnGanon_DrawPulley(PlayState* play, Vec3f* pos, Vec3s* rot, Vec3f* scale, u
 
 void BossGanon_DrawPulleys(BossGanon* this, PlayState* play) {
     f32 dist, timer, lerp, a, b;
-    bool direction;
+    u8 direction;
     
     if (this->pulleyTimer == 255 || this->pulleyTimer == 0)
         return;

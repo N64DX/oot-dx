@@ -28,7 +28,7 @@ BombArrowLink* EnArrow_FindLinkByArrow(Actor* arrow, PlayState* play) {
     return NULL;
 }
 
-bool EnArrow_IsLoosed(Actor* arrow, PlayState* play) {
+u8 EnArrow_IsLoosed(Actor* arrow, PlayState* play) {
     if (arrow == NULL)
         return false;
     return Actor_HasNoParent(arrow, play);
@@ -78,13 +78,13 @@ void EnArrow_Submerge(Actor* arrow, PlayState* play) {
     } else Actor_PlaySfx(bomb, NA_SE_EV_BOMB_DROP_WATER);
 }
 
-bool EnArrow_IsBombExploding(Actor* bomb) {
+u8 EnArrow_IsBombExploding(Actor* bomb) {
     return bomb != NULL && bomb->params == BOMB_EXPLOSION;
 }
 
 void EnArrow_TryDetonate(Actor* arrow, PlayState* play) {
     BombArrowLink* link = NULL;
-    bool loosed;
+    u8 loosed;
     EnBom* bomb = NULL;
 
     if (arrow == NULL)

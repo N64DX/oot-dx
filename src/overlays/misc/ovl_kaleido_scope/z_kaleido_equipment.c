@@ -556,8 +556,8 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
 
         // Handle input for changing equipment
 
-        if (pauseCtx->was_in_debug) {
-            pauseCtx->was_in_debug = false;
+        if (pauseCtx->wasInDebug) {
+            pauseCtx->wasInDebug = false;
             pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
             sEquipTimer = 10;
         }

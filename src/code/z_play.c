@@ -2192,5 +2192,5 @@ u16 Player_GetMaxShieldDurability(u8 shield) {
     return 0;
 }
 
-u8   Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 50 + HAS_AMULET_OF_ENERGY * 50; }
-bool Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || HAS_AMULET_OF_ENERGY || gSaveContext.save.info.obtainedSkills.enhancedSpin; }
+u8 Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 50 + HAS_AMULET_OF_ENERGY * 50; }
+u8 Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || HAS_AMULET_OF_ENERGY || gSaveContext.save.info.obtainedSkills.enhancedSpin; }

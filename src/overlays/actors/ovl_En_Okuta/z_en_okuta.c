@@ -597,16 +597,6 @@ void EnOkuta_Update(Actor* thisx, PlayState* play2) {
     if (!(player->stateFlags1 & (PLAYER_STATE1_TALKING | PLAYER_STATE1_DEAD | PLAYER_STATE1_28 | PLAYER_STATE1_29))) {
         if (this->actor.params == 0) {
             EnOkuta_ColliderCheck(this, play);
-            if (!WaterBox_GetSurfaceImpl(play, &play->colCtx, this->actor.world.pos.x, this->actor.world.pos.z,
-                                         &ySurface, &outWaterBox) ||
-                (ySurface < this->actor.floorHeight)) {
-                if (this->actor.colChkInfo.health != 0) {
-                    Actor_Kill(&this->actor);
-                    return;
-                }
-            } else {
-                this->actor.home.pos.y = ySurface;
-            }
         }
         this->actionFunc(this, play);
         if (this->actor.params == 0) {

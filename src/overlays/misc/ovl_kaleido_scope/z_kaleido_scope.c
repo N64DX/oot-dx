@@ -89,10 +89,10 @@ typedef enum VtxPageInit {
 #define VTX_PAGE_PROMPT_QUADS PROMPT_QUAD_MAX // VTX_PAGE_PROMPT
 
 static u8 editor_timer = 0;
-static bool pressed_r = false;
-bool showAltQuiverSlot = false;
-bool showAltStrengthSlot = false;
-bool showAltScalesSlot = false;
+static u8 pressed_r = false;
+u8 showAltQuiverSlot = false;
+u8 showAltStrengthSlot = false;
+u8 showAltScalesSlot = false;
 
 #if OOT_NTSC
 
@@ -1035,7 +1035,6 @@ char gItemAgeReqs[] = {
     AGE_REQ_CHILD, // ITEM_SHIELD_WOODEN
     AGE_REQ_CHILD, // ITEM_SHIELD_HEROS
     AGE_REQ_CHILD, // ITEM_SHIELD_METAL
-    AGE_REQ_NONE,  // ITEM_BOMB_BAG_40
     AGE_REQ_CHILD, // ITEM_STRENGTH_GORONS_BRACELET
     AGE_REQ_ADULT, // ITEM_STRENGTH_SILVER_GAUNTLETS
     AGE_REQ_ADULT, // ITEM_STRENGTH_GOLD_GAUNTLETS
@@ -2335,14 +2334,14 @@ void KaleidoScope_DrawUIOverlay(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
-static bool lastItem[5];
+static u8 lastItem[5];
 
 #define ITEM_LABEL_LANGUAGE_OFFSET ITEM_SMALL_KEY
 
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
     u16 texIndex;
-    bool isNewItem = false;
+    u8 isNewItem = false;
 
     for (texIndex=0; texIndex<ARRAY_COUNT(lastItem); texIndex++)
         if (!lastItem[texIndex])
@@ -3954,7 +3953,7 @@ void KaleidoScope_Update(PlayState* play) {
             lastItem[2] = showAltQuiverSlot;
             lastItem[3] = showAltStrengthSlot;
             lastItem[4] = showAltScalesSlot;
-            pauseCtx->was_in_debug = false;
+            pauseCtx->wasInDebug = false;
             sSavedButtonStatus[0] = gSaveContext.buttonStatus[0];
             sSavedButtonStatus[1] = gSaveContext.buttonStatus[1];
             sSavedButtonStatus[2] = gSaveContext.buttonStatus[2];

@@ -58,7 +58,7 @@ typedef struct MapSelectState {
     /* 0x0228 */ s32 timerDown;
     /* 0x022C */ s32 lockUp;
     /* 0x0230 */ s32 lockDown;
-    /* 0x0234 */ bool mainTab;
+    /* 0x0234 */ u8 mainTab;
     /* 0x0238 */ u8* staticSegment;
 } MapSelectState; // size = 0x240
 

@@ -145,12 +145,12 @@ typedef struct PlayState {
     /* 0x1242B */ u8 viewpoint; // toggleable camera setting by shops or player. Is also equal to the bgCamIndex + 1
     /* 0x1242C */ SceneTableEntry* loadedScene;
     /* 0x12130 */ u8 specialIconAlpha;
-    /* 0x12131 */ bool specialIconUp;
+    /* 0x12131 */ u8 specialIconUp;
     /* 0x12132 */ s8 specialIconShake;
     /* 0x12133 */ u8 specialIconCount;
     /* 0x12134 */ u8 specialIconLast;
-    /* 0x12135 */ bool progressRush;
-    /* 0x12136 */ bool swapEquipment;
+    /* 0x12135 */ u8 progressRush;
+    /* 0x12136 */ u8 swapEquipment;
 } PlayState; // size = 0x12518
 
 extern Mtx D_01000000; // billboardMtx
@@ -196,7 +196,7 @@ void Play_SetDungeonRushProgress(PlayState* this);
 u32 Player_UseSpecialPower(struct PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, s32 amount);
 u16 Player_GetMaxShieldDurability(u8 shield);
 u8 Player_GetMaxEnergy(void);
-bool Player_HasEnergyUnlocked(void);
+u8 Player_HasEnergyUnlocked(void);
 
 void Play_Init(GameState* thisx);
 void Play_Destroy(GameState* thisx);

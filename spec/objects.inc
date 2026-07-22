@@ -1078,6 +1078,7 @@ beginseg
     name "object_bdoor"
     compress
     include "$(BUILD_DIR)/assets/objects/object_bdoor/object_bdoor.o"
+    include "$(BUILD_DIR)/assets/objects/object_bdoor/object_bdoor_extra.o"
     number 6
 endseg
 
@@ -2107,6 +2108,7 @@ beginseg
     name "object_gi_bracelet"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_bracelet/object_gi_bracelet.o"
+    include "$(BUILD_DIR)/assets/objects/object_gi_bracelet/object_gi_bracelet_extra.o"
     number 6
 endseg
 

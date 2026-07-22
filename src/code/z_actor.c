@@ -991,7 +991,7 @@ void Actor_SetObjectDependency(PlayState* play, Actor* actor) {
     gSegments[6] = OS_K0_TO_PHYSICAL(play->objectCtx.slots[actor->objectSlot].segment);
 }
 
-bool Actor_ExtendedDrawDistanceExempt(Actor* actor, PlayState* play) {
+u8 Actor_ExtendedDrawDistanceExempt(Actor* actor, PlayState* play) {
     switch (actor->id) {
         case ACTOR_DOOR_SHUTTER:
         case ACTOR_EN_TORCH2:
@@ -6565,7 +6565,7 @@ u16 Actor_EnemyHealthCheckMultiply(u16 health) {
     return health * DAMAGE_MULTIPLY;
 }
 
-bool Actor_ZeldaFledDialogue() {
+u8 Actor_ZeldaFledDialogue() {
     if (!IS_CHILD_QUEST)
         return GET_EVENTCHKINF(EVENTCHKINF_80);
     else return GET_EVENTCHKINF(EVENTCHKINF_80) && !GET_EVENTCHKINF(EVENTCHKINF_45);
@@ -6574,7 +6574,7 @@ bool Actor_ZeldaFledDialogue() {
 /**
  * Returns true if the player is targeting an actor other than the provided actor
  */
-bool Actor_OtherIsTargeted(PlayState* play, Actor* actor) {
+u8 Actor_OtherIsTargeted(PlayState* play, Actor* actor) {
     Player* player = GET_PLAYER(play);
 
     if ((player->stateFlags3 & PLAYER_STATE1_HOSTILE_LOCK_ON) && !actor->isLockedOn) {
@@ -6893,7 +6893,7 @@ Actor* BombArrow_Unlink(Actor* arrow, PlayState* play) {
     return NULL;
 }
 
-bool BombArrow_IsActive(PlayState* play) {
+u8 BombArrow_IsActive(PlayState* play) {
     Player* player = GET_PLAYER(play);
     u8 i;
     

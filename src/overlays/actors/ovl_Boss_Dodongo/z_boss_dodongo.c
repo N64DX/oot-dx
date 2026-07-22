@@ -63,7 +63,7 @@ void BossDodongo_UpdateEffects(PlayState* play);
 void BossDodongo_SetupBite(BossDodongo* this, PlayState* play);
 void BossDodongo_Bite(BossDodongo* this, PlayState* play);
 
-static bool isHyper;
+static u8 isHyper;
 
 ActorProfile Boss_Dodongo_Profile = {
     /**/ ACTOR_EN_DODONGO,
@@ -573,7 +573,7 @@ static const f32 middleX = -890.0f;
 static const f32 middleZ = -3304.0f;
 
 // Hardcoded to avoid expensive CheckLine: 1 = left, 0 = right
-bool BossDodongo_DetermineDirection(BossDodongo* this, PlayState* play) {
+u8 BossDodongo_DetermineDirection(BossDodongo* this, PlayState* play) {
     Vec3f* pos = &this->actor.world.pos;
     s32 rotY = (s32)this->actor.world.rot.y + 0x7FFF;
 
@@ -646,7 +646,7 @@ void BossDodongo_Bite(BossDodongo* this, PlayState* play) {
         }
 
     } else { // throw
-        bool direction = (this->skelAnime.animation == &gKingDodongoThrowleftAnim);
+        u8 direction = (this->skelAnime.animation == &gKingDodongoThrowleftAnim);
         if (curFrame == (direction ? 10 : 5)) {
             player->actor.shape.rot.x = player->actor.world.rot.x = 0;
             player->actor.shape.rot.z = player->actor.world.rot.z = 0;

@@ -64,7 +64,7 @@ typedef struct EnSlim {
     /* 0x036C */ Vec3f backLeftFootPos;
     /* 0x0378 */ s16 deformationCounter;
     /* 0x037A */ u8 timer;
-    /* 0x037B */ bool hasSplit;
+    /* 0x037B */ u8 hasSplit;
 } EnSlim; // size = 0x037C
 
 #endif

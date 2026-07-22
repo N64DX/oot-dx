@@ -162,29 +162,13 @@ typedef struct BossGanon {
     /* 0x0718 */ s16 organAlpha;
     /* 0x071A */ u8 useOpenHand;
     /* 0x071B */ u8 windowShatterState;
-    bool ladderFall;
-    bool swordPhase;
-    bool swordDl;
-    bool kickHit;
-    bool spawnSword;
-    bool kickAT;
-    bool grabbedLink;
-    bool pullSword;
-    bool swordCaught;
-    bool invincible;
-    u8 damageCooldown;
-    u8 pulleyTimer;
+    u8 ladderFall, swordPhase, swordDl, kickHit, spawnSword, kickAT, grabbedLink, pullSword, swordCaught, invincible, damageCooldown, pulleyTimer;
     s8 swordAT;
     s16 beamTexScroll;
     s32 blureIndex;
-    Vec3f beamPos2;
-    Vec3f beamScale;
-    Vec3f rightHandPos;
-    Vec3s beamRot;
-    Vec3s headRot;
-    Vec3s torsoRot;
-    ColliderQuad kickCollider;
-    ColliderQuad swordCollider;
+    Vec3f beamPos2, beamScale, rightHandPos;
+    Vec3s beamRot, headRot, torsoRot;
+    ColliderQuad kickCollider, swordCollider;
 } BossGanon; // size = 0x71C
 
 typedef enum BossGanonSwordType {

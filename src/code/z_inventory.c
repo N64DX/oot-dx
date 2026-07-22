@@ -359,7 +359,7 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
     u16 equipValue = gSaveContext.save.info.equips.equipment & gEquipMasks[equipment];
     u8 i;
     u8 item;
-    bool isHerosShield = false;
+    u8 isHerosShield = false;
 
     PRINTF(T("装備アイテム抹消 = %d  zzz=%d\n", "Erasing equipment item = %d  zzz=%d\n"), equipment, equipValue);
 

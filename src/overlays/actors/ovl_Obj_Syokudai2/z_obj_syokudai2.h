@@ -16,7 +16,7 @@ typedef struct ObjSyokudai2 {
     /* 0x01E6 */ u8 flameTexScroll;
     /* 0x01E8 */ LightNode* lightNode;
     /* 0x01EC */ LightInfo lightInfo;
-    /* 0x01FC */ bool isLit;
+    /* 0x01FC */ u8 isLit;
 } ObjSyokudai2; // size = 0x0200
 
 #endif

@@ -47,12 +47,12 @@ void EnBuffDeku_SetupDeath(EnBuffDeku* this, struct PlayState* play);
 void EnBuffDeku_Death(EnBuffDeku* this, struct PlayState* play);
 void EnBuffDeku_SetupSpin(EnBuffDeku* this);
 void EnBuffDeku_Spin(EnBuffDeku* this, struct PlayState* play);
-bool EnBuffDeku_ShouldPanic(EnBuffDeku* this, struct PlayState* play);
+u8 EnBuffDeku_ShouldPanic(EnBuffDeku* this, struct PlayState* play);
 void EnBuffDeku_SetupPanic(EnBuffDeku* this);
 void EnBuffDeku_Panic(EnBuffDeku* this, struct PlayState* play);
 Actor* EnBuffDeku_SpawnAssists(EnBuffDeku* this, PlayState* play);
 
-static bool isHyper;
+static u8 isHyper;
 static Actor* spawnedAssists[3] = { NULL, NULL, NULL };
 static u16 spawnType[]   = {    0, ACTOR_EN_IK, ACTOR_EN_DINOFOS, ACTOR_EN_TEST, ACTOR_EN_ZF,    0 };
 static u16 spawnParams[] = {    0,      0xFF06,           0xFF00,        0x0003,      0xFFFF,    0 };
@@ -247,7 +247,7 @@ void EnBuffDeku_Destroy(Actor* thisx, PlayState* play) {
         func_800F5B58();
 }
 
-bool EnBuffDeku_ShouldPanic(EnBuffDeku* this, PlayState* play) {
+u8 EnBuffDeku_ShouldPanic(EnBuffDeku* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
     Actor* actor;
     actor = play->actorCtx.actorLists[ACTORCAT_ITEMACTION].head;

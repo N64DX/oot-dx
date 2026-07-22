@@ -50,8 +50,8 @@ typedef struct FileSelectState {
     /* 0x1C9F6 */ u16 deaths[FILE_SLOTS_SIZE];
     /* 0x1C9FC */ u8 fileNames[FILE_SLOTS_SIZE][8];
     /* 0x1C9FC */ u8 questMode[FILE_SLOTS_SIZE];
-    /* 0x1C9FC */ bool selectingQuestMode;
-    /* 0x1C9FC */ bool selectingOptionsMode;
+    /* 0x1C9FC */ u8 selectingQuestMode;
+    /* 0x1C9FC */ u8 selectingOptionsMode;
     /* 0x1CA14 */ u16 healthCapacities[FILE_SLOTS_SIZE];
     /* 0x1CA1C */ u32 questItems[FILE_SLOTS_SIZE];
     /* 0x1CA28 */ s16 n64ddFlags[FILE_SLOTS_SIZE];
@@ -108,7 +108,7 @@ typedef struct FileSelectState {
     /* 0x1CAD2 */ s16 kbdY;
     /* 0x1CAD4 */ s16 newFileNameCharCount;
     /* 0x1CAD6 */ s16 unk_1CAD6[5];
-    /* 0x1CA72 */ bool doRefresh;
+    /* 0x1CA72 */ u8 doRefresh;
 
     /* 0x01D0 */ s32 count;
     /* 0x01D4 */ FileSelectOptionsEntry* entries;

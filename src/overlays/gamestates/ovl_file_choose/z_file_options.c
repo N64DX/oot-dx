@@ -358,7 +358,7 @@ void FileSelectOptions_Reset(FileSelectState* this) {
         this->count = ARRAY_COUNT(sGlobalOptionsEntries);
     } else {
         u8 questMode = this->questMode[CURRENT_SLOT(this->buttonIndex)];
-        bool isChildQuestMode = (questMode == CHILD_QUEST || questMode == CHILD_MASTER_QUEST ||  questMode == CHILD_URA_QUEST || questMode == DUNGEON_CHILD_RUSH);
+        u8 isChildQuestMode = (questMode == CHILD_QUEST || questMode == CHILD_MASTER_QUEST ||  questMode == CHILD_URA_QUEST || questMode == DUNGEON_CHILD_RUSH);
         this->entries = sFileOptionsBuffer;
         this->count = 0;
 

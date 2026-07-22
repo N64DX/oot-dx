@@ -86,7 +86,7 @@ static ColliderCylinderInit sColCylinderInit1 = {
     { 100, 60, 280, { 0, 0, 0 } },
 };
 
-static bool sHasParent = false;
+static u8 sHasParent = false;
 
 void BgDodoago2_SetupAction(BgDodoago2* this, BgDodoago2ActionFunc actionFunc) {
     this->actionFunc = actionFunc;

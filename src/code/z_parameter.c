@@ -194,7 +194,7 @@ static s16 sMagicBorderB = 255;
 
 u8 dpadStatus[] = { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED };
 u8 dpadAlphas[] = { 0, 0, 0, 0, 0 };
-bool switchedDualSet = false;
+u8 switchedDualSet = false;
 u8 sNoclipTimer = 0;
 static u8 shielded = 0;
 static u16 dpad_x;
@@ -203,8 +203,8 @@ static u16 dpad_y;
 static s16 curEnergy = 0;
 static u8 energyHideTimer = 0;
 static u8 energyRefillTimer = 0;
-static bool drawKeys = false;
-static bool drawShieldDurability = false;
+static u8 drawKeys = false;
+static u8 drawShieldDurability = false;
 
 static s16 sExtraItemBases[] = {
     ITEM_DEKU_STICK, // ITEM_DEKU_STICKS_5
@@ -1793,21 +1793,21 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
 
-typedef bool (*ItemCondition)(void);
+typedef u8 (*ItemCondition)(void);
 typedef struct ChildQuestIcons {
     u8 item;
     ItemCondition condition;
     u8 icon;
 } ChildQuestIcons;
 
-static bool IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                                       }
-static bool IsWoodenShield(void)  { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.obtainedSkins.woodenShield; }
-static bool IsHerosShield(void)   { return IS_HEROS_SHIELD         && !gSaveContext.save.info.obtainedSkins.metalShield;  }
-static bool IsMetalShield(void)   { return IS_HEROS_SHIELD         &&  gSaveContext.save.info.obtainedSkins.metalShield;  }
-static bool IsHerosSword(void)    { return IS_HEROS_SWORD;                                                                }
-static bool IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                                    }
-static bool IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag;         }
-static bool IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag;         }
+static u8 IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                                       }
+static u8 IsWoodenShield(void)  { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.obtainedSkins.woodenShield; }
+static u8 IsHerosShield(void)   { return IS_HEROS_SHIELD         && !gSaveContext.save.info.obtainedSkins.metalShield;  }
+static u8 IsMetalShield(void)   { return IS_HEROS_SHIELD         &&  gSaveContext.save.info.obtainedSkins.metalShield;  }
+static u8 IsHerosSword(void)    { return IS_HEROS_SWORD;                                                                }
+static u8 IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                                    }
+static u8 IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag;         }
+static u8 IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag;         }
 
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_DEKU,               IsWoodenShield, ITEM_SHIELD_WOODEN  },
@@ -1839,7 +1839,7 @@ u8 Interface_LoadItemIconChildQuest(u8 item) {
 }
 
 u8 Interface_GetItemFromDpad(u8 button) {
-    bool set = gSaveContext.save.info.playerData.dpadDualSet;
+    u8 set = gSaveContext.save.info.playerData.dpadDualSet;
     if (button > 4)  {
         button -= 4;
         set = !set;
@@ -2796,7 +2796,7 @@ void Inventory_UpdateBottleItem(PlayState* play, u8 item, u8 button) {
         
         for (i=1; i<4; i++)
             if (gSaveContext.save.info.equips.cButtonSlots[i-1] == DPAD_BUTTON(button-4)) {
-                gSaveContext.save.info.equips.cButtonSlots[i-1] = gSaveContext.save.info.equips.buttonItems[i] = item;
+                gSaveContext.save.info.equips.buttonItems[i] = item;
                 Interface_LoadItemIcon1(play, i);
             }
         
@@ -4185,7 +4185,7 @@ static void Interface_PrintHeapUsage(PlayState* this) {
 }
 
 static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfaceCtx) {
-    bool isRumble = play->specialIconLast == SPECIAL_ICON_RUMBLE;
+    u8 isRumble = play->specialIconLast == SPECIAL_ICON_RUMBLE;
     u16 x = 26, y = 190;
 
     if (play->specialIconAlpha >= 240) {

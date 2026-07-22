@@ -830,12 +830,12 @@ s32 Actor_TrackPlayer(struct PlayState* play, Actor* actor, Vec3s* headRot, Vec3
 
 u16 Actor_EnemyHealthMultiply(u16 health, u8 type);
 u16 Actor_EnemyHealthCheckMultiply(u16 health);
-bool Actor_ZeldaFledDialogue(void);
-bool Actor_OtherIsTargeted(struct PlayState* play, Actor* actor);
+u8 Actor_ZeldaFledDialogue(void);
+u8 Actor_OtherIsTargeted(struct PlayState* play, Actor* actor);
 void Actor_DrawDamageEffects(struct PlayState* play, Actor* actor, Vec3f bodyPartsPos[], s16 bodyPartsCount, f32 effectScale, f32 frozenSteamScale, f32 effectAlpha, u8 type);
 void Actor_SpawnIceEffects(struct PlayState* play, Actor* actor, Vec3f limbPos[], s32 limbPosCount, s32 effectsPerLimb, f32 scale, f32 scaleRange);
 
 Actor* BombArrow_Unlink(Actor* arrow, struct PlayState* play);
-bool BombArrow_IsActive(struct PlayState* play);
+u8 BombArrow_IsActive(struct PlayState* play);
 
 #endif

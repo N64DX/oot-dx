@@ -65,7 +65,7 @@ void ObjRaillift_Init(Actor* thisx, PlayState* play) {
     CollisionHeader* header = NULL;
     Path* path;
     u8 type = OBJRAILLIFT_GET_TYPE(thisx);
-    bool isColorful = false;
+    u8 isColorful = false;
 
     Actor_ProcessInitChain(thisx, sInitChain);
 
@@ -113,11 +113,8 @@ void ObjRaillift_DoNothing(ObjRaillift* this, PlayState* play) { }
 void ObjRaillift_Move(ObjRaillift* this, PlayState* play) {
     Actor* thisx = &this->dyna.actor;
     Vec3f nextPoint;
-    f32 speed;
-    f32 target;
-    f32 step;
-    bool isTeleporting;
-    bool isPosUpdated;
+    f32 speed, target, step;
+    u8 isTeleporting, isPosUpdated;
     Vec3s* endPoint;
 
     if (OBJRAILLIFT_HAS_FLAG(thisx)) {

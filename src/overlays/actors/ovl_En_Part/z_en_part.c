@@ -122,7 +122,7 @@ void func_80ACE13C(EnPart* this, PlayState* play) {
     Vec3f velocity = { 0.0f, 0.0f, 0.0f };
     Vec3f accel = { 0.0f, 0.0f, 0.0f };
     Vec3f zeroVec = { 0.0f, 0.0f, 0.0f };
-    bool parentFloorHeight = false;
+    u8 parentFloorHeight = false;
 
     if ((this->actor.params == 12) || (this->actor.params == 13)) {
         Actor_UpdateBgCheckInfo(play, &this->actor, 5.0f, 15.0f, 0.0f,

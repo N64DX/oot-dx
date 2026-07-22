@@ -31,6 +31,5 @@ extern u64 gBossDoorWaterTex[TEX_LEN(u64, gBossDoorWaterTex_WIDTH, gBossDoorWate
 #define gBossDoorDefaultTex_WIDTH 32
 #define gBossDoorDefaultTex_HEIGHT 64
 extern u64 gBossDoorDefaultTex[TEX_LEN(u64, gBossDoorDefaultTex_WIDTH, gBossDoorDefaultTex_HEIGHT, 16)];
-extern u64 gBossDoorWoodfallTex[];
 
 #endif

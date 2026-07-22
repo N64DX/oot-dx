@@ -104,7 +104,7 @@ typedef struct EntranceCutscene {
     /* 0x02 */ u8 ageRestriction; // 0 for adult only, 1 for child only, 2 for both ages
     /* 0x03 */ u8 flag;           // eventChkInf flag bound to the entrance cutscene
     /* 0x04 */ void* script;      // cutscene script that should run
-    /* 0x08 */ bool skip;         // if cutscene is skipable
+    /* 0x08 */ u8 skip;           // if cutscene is skipable
 } EntranceCutscene;               // size = 0x9
 
 EntranceCutscene sEntranceCutsceneTable[] = {
@@ -597,7 +597,7 @@ void CutsceneCmd_SetTime(PlayState* play, CutsceneContext* csCtx, CsCmdTime* cmd
 void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDestination* cmd) {
     Player* player = GET_PLAYER(play);
     s32 titleDemoSkipped = false;
-    bool doCutsceneSkip = false;
+    u8 doCutsceneSkip = false;
 
     if ((gSaveContext.gameMode != GAMEMODE_NORMAL) && (gSaveContext.gameMode != GAMEMODE_END_CREDITS) &&
         (play->sceneId != SCENE_HYRULE_FIELD) && (csCtx->curFrame > 20) &&
@@ -2486,7 +2486,7 @@ void Cutscene_HandleEntranceTriggers(PlayState* play) {
 }
 
 void Cutscene_HandleConditionalTriggers(PlayState* play) {
-    bool has_medallions;
+    u8 has_medallions;
     if (IS_CHILD_QUEST)
         has_medallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT) && CHECK_QUEST_ITEM(QUEST_MEDALLION_LIGHT);
     else has_medallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT);

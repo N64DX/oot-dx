@@ -80,7 +80,7 @@ void func_808787A4(BgGjyoBridge* this, PlayState* play) {
 void BgGjyoBridge_TriggerCutscene(BgGjyoBridge* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
 
-    bool has_medallions, has_light_arrow;
+    u8 has_medallions, has_light_arrow;
     if (IS_CHILD_QUEST) {
         has_medallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT) && CHECK_QUEST_ITEM(QUEST_MEDALLION_LIGHT) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER);
         has_light_arrow = gSaveContext.save.info.obtainedItems.lightArrow;

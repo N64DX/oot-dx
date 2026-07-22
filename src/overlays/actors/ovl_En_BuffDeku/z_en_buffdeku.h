@@ -20,7 +20,7 @@ typedef struct EnBuffDeku {
     /* 0x01F8 */ ColliderCylinder colliderBody;
     /* 0x0244 */ ColliderJntSph colliderSpheres;
     /* 0x0264 */ ColliderJntSphElement colliderSpheresElements[4];
-    /* 0x02A4 */ bool playerHit, onFire, panicTest;
+    /* 0x02A4 */ u8 playerHit, onFire, panicTest;
     /* 0x02A7 */ s8 subCamId;
     /* 0x02A8 */ u8 timer, switchFlag, dekuStickCooldownTimer, attackCooldownTimer;
 } EnBuffDeku; // size = 0x02AC

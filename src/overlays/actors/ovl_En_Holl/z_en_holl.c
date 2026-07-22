@@ -195,7 +195,7 @@ void EnHoll_HorizontalVisibleNarrow(EnHoll* this, PlayState* play) {
     Vec3f relPlayerPos;
     f32 orthogonalDistToPlayer;
     s32 transitionActorIndex;
-    bool isSceneChanger = ENHOLL_GET_TYPE(&this->actor) == ENHOLL_H_SCENE_CHANGER;
+    u8 isSceneChanger = ENHOLL_GET_TYPE(&this->actor) == ENHOLL_H_SCENE_CHANGER;
 
     Actor_WorldToActorCoords(&this->actor, &relPlayerPos, &player->actor.world.pos);
     this->side = (relPlayerPos.z < 0.0f  && !isSceneChanger) ? 0 : 1;

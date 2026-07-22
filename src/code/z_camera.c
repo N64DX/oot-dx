@@ -1604,8 +1604,8 @@ s32 Camera_Noop(Camera* camera) {
 // Shared state for P2-stick free cam across all camera modes.
 static s16 sCamP2Yaw = 0;
 static s16 sCamP2Pitch = 0;
-static bool sCamP2HasManualPitch = false;
-static bool sCamP2Active = false;
+static u8 sCamP2HasManualPitch = false;
+static u8 sCamP2Active = false;
 
 #define CAM_P2_FREE_CAM_ACTIVE (1 << 0)
 #define CAM_P2_FREE_CAM_INPUT  (1 << 1)
@@ -1619,7 +1619,7 @@ static void Camera_ResetP2FreeCam(void) {
 
 static s32 Camera_UpdateP2FreeCam(Camera* camera, VecGeo* eyeAtOffset) {
     s8 p2StickX, p2StickY;
-    bool p2HasInput;
+    u8 p2HasInput;
     s32 p2State = 0;
 
     if (camera->status != CAM_STAT_ACTIVE)
@@ -8310,8 +8310,8 @@ Vec3s Camera_Update(Camera* camera) {
     }
 
     if (camera->status == CAM_STAT_ACTIVE) {
-        static bool sPrevWasZTarget = false;
-        bool isZTarget = camera->mode == CAM_MODE_Z_TARGET_FRIENDLY || camera->mode == CAM_MODE_Z_TARGET_UNFRIENDLY || camera->mode == CAM_MODE_Z_PARALLEL;
+        static u8 sPrevWasZTarget = false;
+        u8 isZTarget = camera->mode == CAM_MODE_Z_TARGET_FRIENDLY || camera->mode == CAM_MODE_Z_TARGET_UNFRIENDLY || camera->mode == CAM_MODE_Z_PARALLEL;
 
         if (isZTarget && !sPrevWasZTarget)
             Camera_ResetP2FreeCam();

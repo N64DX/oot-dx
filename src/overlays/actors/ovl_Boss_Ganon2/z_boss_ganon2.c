@@ -79,7 +79,7 @@ void BossGanon2_GenShadowTexture(void* shadowTexture, BossGanon2* this, PlayStat
 void BossGanon2_DrawShadowTexture(void* shadowTexture, BossGanon2* this, PlayState* play);
 Actor* BossGanon2_SpawnStalfos(PlayState* play);
 
-static bool isHyper;
+static u8 isHyper;
 static u16 stalfosTimer;
 static Actor* spawnedStalfos[2];
 
@@ -3345,7 +3345,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
             f32 temp_f0;
             f32 angle;
             s32 pad;
-            bool isRazorSword = IS_RAZOR_SWORD;
+            u8 isRazorSword = IS_RAZOR_SWORD;
 
             Gfx_SetupDL_25Xlu(play->state.gfxCtx);
             spA0.x = play->envCtx.dirLight1.params.dir.x;

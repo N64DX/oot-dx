@@ -36,9 +36,8 @@ typedef struct ItemEditorEntry {
 typedef struct ItemEditorState {
     /* 0x00 */ ItemEditorEntry* entries;
     /* 0x04 */ s16 verticalInputAccumulator, verticalInput;
-    /* 0x08 */ u8 count, timerUp, timerDown;
-    /* 0x0B */ s8 tab, topDisplayedEntry, topDisplayedTabEntry, currentEntry, currentTabEntry;
-    /* 0x10 */ bool lockUp, lockDown;
+    /* 0x08 */ u8 count, timerUp, timerDown, lockUp, lockDown;
+    /* 0x0D */ s8 tab, topDisplayedEntry, topDisplayedTabEntry, currentEntry, currentTabEntry;
     /* 0x12 */ s8 savedEntry[ITEM_EDITOR_TAB_MAX];
     /* 0x1E */ u8 savedTopEntry[ITEM_EDITOR_TAB_MAX];
     /* 0x28 */ u8 visibleIndices[30];
@@ -46,7 +45,7 @@ typedef struct ItemEditorState {
 
 ItemEditorState state;
 
-bool firstTimeUse = false;
+u8 firstTimeUse = false;
 
 void ItemEditor_SetItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
     if (play->state.input[0].press.button == BTN_A) {
@@ -193,7 +192,7 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
             if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS))
                 SET_HEROS_SWORD;
             else CLEAR_HEROS_SWORD;
-            play->pauseCtx.was_in_debug = true;
+            play->pauseCtx.wasInDebug = true;
         }
 
         if (item == EQUIP_INV_SWORD_BIGGORON)
@@ -203,7 +202,7 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
             if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SHIELD_HEROS))
                 SET_HEROS_SHIELD;
             else CLEAR_HEROS_SHIELD;
-            play->pauseCtx.was_in_debug = true;
+            play->pauseCtx.wasInDebug = true;
         }
     }
 }

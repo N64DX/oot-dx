@@ -553,9 +553,10 @@ static u8 mirrorShieldRestoreTimer = 0;
 static u8 shieldDamageTimer = 0;
 static u8 Player_PerfectTime = 0;
 static s8 Player_PerfectResetTimer = 0;
-static bool Player_HasPerfected = false;
-static bool Player_CanPerfect = true;
-static bool Player_WasShieldUp = false;
+static u8 Player_HasPerfected = false;
+static u8 Player_CanPerfect = true;
+static u8 Player_WasShieldUp = false;
+static u8 sLinkIsFrozenToDeath = false;
 
 static u8 dekuWalkArrIndex;
 static DekuWalkRoutes dekuWalkRoutes[] = {
@@ -2915,7 +2916,7 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
         { PLAYER_TUNIC_ZORA,   EQUIP_INV_TUNIC_ZORA,   LINK_AGE_ADULT },
     };
 
-    u8 current    = TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+    u8 current    = this->currentTunic;
     u8 validCount = 0;
     u8 validItems[ARRAY_COUNT(equipments)], i, nextItem;
 
@@ -2998,7 +2999,7 @@ typedef struct {
     u16 var;
 } ArrowInfo;
 
-static bool ArrowIsObtained(const ItemID item) {
+static u8 ArrowIsObtained(const ItemID item) {
     switch (item) {
         case ITEM_ARROW_FIRE:  return gSaveContext.save.info.obtainedItems.fireArrow  ? true : false;
         case ITEM_ARROW_ICE:   return gSaveContext.save.info.obtainedItems.iceArrow   ? true : false;
@@ -3224,7 +3225,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
         else if (item == ITEM_BOOTS)
             Player_ChangeBoots(this, play, i);
         else if (item == ITEM_TUNIC_GORON) {
-            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_TUNIC_GORON)) {
+            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
                 Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 1 ? 0 : 1);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
@@ -3234,7 +3235,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 }
             }
         } else if (item == ITEM_TUNIC_ZORA) {
-            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_TUNIC_ZORA)) {
+            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA)) {
                 Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 2 ? 0 : 2);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
@@ -4981,11 +4982,11 @@ void func_80837530(PlayState* play, Player* this, s32 arg2) {
     }
 }
 
-static bool Player_ActorDWithinMeleeDistance(PlayState* play, Player* this, Actor* actor, f32 xzDist) {
+static u8 Player_ActorDWithinMeleeDistance(PlayState* play, Player* this, Actor* actor, f32 xzDist) {
     return Math_Vec3f_DistXZ(&this->actor.world.pos, &actor->world.pos) < xzDist;
 }
 
-static bool Player_EnemyWithinMeleeDistance(PlayState* play, Player* this, ActorCategory actorCategory, f32 xzDist) {
+static u8 Player_EnemyWithinMeleeDistance(PlayState* play, Player* this, ActorCategory actorCategory, f32 xzDist) {
     Actor* actor = play->actorCtx.actorLists[actorCategory].head;
     f32 dist;
 
@@ -10425,8 +10426,6 @@ static AnimSfxEntry D_808545F0[] = {
     { 0, -ANIMSFX_DATA(ANIMSFX_TYPE_WALKING, 170) },
 };
 
-static bool sLinkIsFrozenToDeath = false;
-
 void Player_Action_80843CEC(Player* this, PlayState* play) {
     if (this->currentTunic != PLAYER_TUNIC_GORON) {
         if ((play->roomCtx.curRoom.environmentType == ROOM_ENV_HOT) || (sFloorType == FLOOR_TYPE_9) ||
@@ -10436,13 +10435,11 @@ void Player_Action_80843CEC(Player* this, PlayState* play) {
         }
     }
 
-    if (this->currentTunic != PLAYER_TUNIC_ZORA) {
-        if (play->roomCtx.curRoom.environmentType == ROOM_ENV_FREEZING && !sLinkIsFrozenToDeath && play->gameOverCtx.state < GAMEOVER_DEATH_DELAY_MENU) {
-            sLinkIsFrozenToDeath = true;
-            EffectSsIcePiece_SpawnBurst(play, &this->actor.world.pos, this->actor.scale.x);
-            Player_PlaySfx(this, NA_SE_PL_FREEZE_S);
-            Player_PlayVoiceSfx(this, NA_SE_VO_LI_FREEZE);
-        }
+    if (this->currentTunic != PLAYER_TUNIC_ZORA && play->roomCtx.curRoom.environmentType == ROOM_ENV_FREEZING && !sLinkIsFrozenToDeath && play->gameOverCtx.state < GAMEOVER_DEATH_DELAY_MENU) {
+        sLinkIsFrozenToDeath = true;
+        EffectSsIcePiece_SpawnBurst(play, &this->actor.world.pos, this->actor.scale.x);
+        Player_PlaySfx(this, NA_SE_PL_FREEZE_S);
+        Player_PlayVoiceSfx(this, NA_SE_VO_LI_FREEZE);
     }
 
     Player_DecelerateToZero(this);
@@ -13528,7 +13525,7 @@ void Player_DrawGameplay(PlayState* play, Player* this, s32 lod, Gfx* cullDList,
 void Player_Draw(Actor* thisx, PlayState* play2) {
     PlayState* play = play2;
     Player* this = (Player*)thisx;
-    bool unmirror = false;
+    u8 unmirror = false;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_player.c", 19346);
 

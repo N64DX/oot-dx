@@ -2014,7 +2014,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                 }
             } else if (this->heldItemAction == PLAYER_IA_BOW_FIRE || this->heldItemAction == PLAYER_IA_BOW_ICE || this->heldItemAction == PLAYER_IA_BOW_LIGHT || this->heldItemAction == PLAYER_IA_BOW) {
                 if (heldActor != NULL && BOW_AIMING_RETICLE) {
-                    bool skip = false;
+                    u8 skip = false;
                     MtxF sp44;
 
                     if (R_ENABLE_MIRROR == 1)
