@@ -67,6 +67,7 @@
 #include "assets/objects/object_gi_brokensword/object_gi_brokensword.h"
 #include "assets/objects/object_gi_prescription/object_gi_prescription.h"
 #include "assets/objects/object_gi_bracelet/object_gi_bracelet.h"
+#include "assets/objects/object_gi_bracelet/object_gi_bracelet_extra.h"
 #include "assets/objects/object_gi_soldout/object_gi_soldout.h"
 #include "assets/objects/object_gi_frog/object_gi_frog.h"
 #include "assets/objects/object_gi_golonmask/object_gi_golonmask.h"

@@ -302,7 +302,7 @@ void ObjSwitch_UpdateTwoTexScrollXY(ObjSwitch* this) {
 
 static u16 isStrongScenes[] = { SCENE_FOREST_TEMPLE, SCENE_FIRE_TEMPLE, SCENE_GORON_MINES, SCENE_ICE_CAVERN, SCENE_WATER_TEMPLE, SCENE_BOTTOM_OF_THE_WELL, SCENE_SHADOW_TEMPLE, SCENE_GERUDO_TRAINING_GROUND, SCENE_SPIRIT_TEMPLE, SCENE_INSIDE_GANONS_CASTLE };
 
-bool ObjSwitch_IsStrong(PlayState* play) {
+u8 ObjSwitch_IsStrong(PlayState* play) {
     u8 i;
 
     if (!IS_CHILD_QUEST)

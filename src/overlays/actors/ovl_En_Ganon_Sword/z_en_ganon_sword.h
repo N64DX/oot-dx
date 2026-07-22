@@ -13,9 +13,7 @@ typedef struct EnGanonSword {
     EnGanonSwordActionFunc actionFunc;
     ColliderJntSph collider;
     ColliderJntSphElement swordSphs[6];
-    bool swordAT;
-    bool setY;
-    u8 sfxTimer;
+    u8 swordAT, setY, sfxTimer;
 } EnGanonSword;
 
 #endif

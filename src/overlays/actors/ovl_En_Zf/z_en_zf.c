@@ -278,7 +278,7 @@ void EnZf_SetupAction(EnZf* this, EnZfActionFunc actionFunc) {
     this->actionFunc = actionFunc;
 }
 
-bool EnZf_IsDinolfos(EnZf* this) {
+u8 EnZf_IsDinolfos(EnZf* this) {
     if (this->actor.params == ENZF_TYPE_DINOLFOS || this->actor.params == ENZF_TYPE_DINOLFOS_MINIBOSS_A || this->actor.params == ENZF_TYPE_DINOLFOS_MINIBOSS_B)
         return true;
     return false;

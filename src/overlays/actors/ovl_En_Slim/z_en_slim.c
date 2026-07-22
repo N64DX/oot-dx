@@ -486,7 +486,7 @@ void EnSlim_DeathCry(EnSlim* this, PlayState* play) {
  * Spawn EnPart and drop items
  */
 void EnSlim_FallApart(EnSlim* this, PlayState* play) {
-    if (1 || BodyBreak_SpawnParts(&this->actor, &this->bodyBreak, play, (this->actor.params + 0xB))) {
+    if (1 || BodyBreak_SpawnParts(&this->actor, &this->bodyBreak, play, (this->actor.params + 11))) {
         if (this->actor.params == TEKSLIM_BLUE)
             Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xE0);
         else Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);

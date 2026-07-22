@@ -56,7 +56,3 @@ u64 gBossDoorWaterTex[TEX_LEN(u64, gBossDoorWaterTex_WIDTH, gBossDoorWaterTex_HE
 u64 gBossDoorDefaultTex[TEX_LEN(u64, gBossDoorDefaultTex_WIDTH, gBossDoorDefaultTex_HEIGHT, 16)] = {
 #include "assets/objects/object_bdoor/gBossDoorDefaultTex.rgba16.inc.c"
 };
-
-u64 gBossDoorWoodfallTex[] = {
-#include "assets/objects/object_bdoor/gBossDoorWoodfallTex.rgba16.inc.c"
-};

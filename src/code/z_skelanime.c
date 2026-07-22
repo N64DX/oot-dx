@@ -1994,7 +1994,7 @@ void SkelAnime_UpdateTranslation(SkelAnime* skelAnime, Vec3f* diff, s16 angle, s
     f32 z;
     f32 sin;
     f32 cos;
-    bool isClimbing = skelAnime->animation == &gPlayerAnim_clink_normal_climb_upL || skelAnime->animation == &gPlayerAnim_clink_normal_climb_upR;
+    u8 isClimbing = skelAnime->animation == &gPlayerAnim_clink_normal_climb_upL || skelAnime->animation == &gPlayerAnim_clink_normal_climb_upR;
 
     // If `ANIM_FLAG_UPDATE_XZ` behaved as expected, it would also be checked here
     if (skelAnime->movementFlags & ANIM_FLAG_ADJUST_STARTING_POS) {

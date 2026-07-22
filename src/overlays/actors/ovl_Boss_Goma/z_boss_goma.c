@@ -88,7 +88,7 @@ void BossGoma_PrepareBeam(BossGoma* this, PlayState* play);
 void BossGoma_SetupBeam(BossGoma* this, PlayState* play);
 void BossGoma_Beam(BossGoma* this, PlayState* play);
 
-static bool isHyper;
+static u8 isHyper;
 static u8 lizalfosCount;
 static Actor* spawnedLizalfos[3];
 static Actor* spawnedRocks;
@@ -285,7 +285,7 @@ static ColliderQuadInit sBeamQuadInit = {
     { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } },
 };
 
-static bool sGomaBeaming = false;
+static u8 sGomaBeaming = false;
 
 static u8 sClearPixelTableFirstPass[16 * 16] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00,

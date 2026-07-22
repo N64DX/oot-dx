@@ -793,7 +793,7 @@ void EnIk_SetupReactToAttack(EnIk* this) {
 void EnIk_ReactToAttack(EnIk* this, PlayState* play) {
     Math_SmoothStepToF(&this->actor.speed, 0.0f, 1.0f, 1.0f, 0.0f);
 
-    if (BodyBreak_SpawnParts(&this->actor, &this->bodyBreak, play, this->actor.params + 4)) {
+    if (BodyBreak_SpawnParts(&this->actor, &this->bodyBreak, play, this->actor.params + (this->isHyper ? 0 : 4))) {
         this->bodyBreak.val = BODYBREAK_STATUS_FINISHED;
     }
 

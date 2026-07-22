@@ -209,7 +209,7 @@ void EnNutsball_ProjectileFlightSettingsWeb(EnNutsball* this, PlayState* play) {
         SfxSource_PlaySfxAtFixedWorldPos(play, &this->actor.world.pos, 20, NA_SE_EN_OCTAROCK_ROCK);
         Actor_Kill(&this->actor);
     } else if (this->collider.base.atFlags & AT_HIT) {
-        bool slowdown = true;
+        u8 slowdown = true;
         
         sp40.x = this->actor.world.pos.x;
         sp40.y = this->actor.world.pos.y + 4;

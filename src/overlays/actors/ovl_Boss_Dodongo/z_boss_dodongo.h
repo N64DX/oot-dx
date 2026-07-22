@@ -95,8 +95,8 @@ typedef struct BossDodongo {
     /* 0x0920 */ BossDodongoEffect effects[BOSS_DODONGO_EFFECT_COUNT];
     /* 0x1820 */ ColliderQuad biteCollider;
     /* 0x1840 */ u8 smallDodongoTimer;
-    /* 0x1841 */ bool bite;
-    /* 0x1842 */ bool grabbedLink;
+    /* 0x1841 */ u8 bite;
+    /* 0x1842 */ u8 grabbedLink;
 } BossDodongo; // size = 0x1823
 
 typedef enum BossDodongoType {

@@ -17,7 +17,7 @@ typedef struct ObjFlowerpot {
     /* 0x1EA */ u8 unk_1EA;
     /* 0x1EB */ s8 unk_1EB;
     /* 0x1EC */ s8 unk_1EC;
-    /* 0x1ED */ bool droppedRupeeOnPickup;
+    /* 0x1ED */ u8 droppedRupeeOnPickup;
 } ObjFlowerpot; // size = 0x1F0
 
 #endif

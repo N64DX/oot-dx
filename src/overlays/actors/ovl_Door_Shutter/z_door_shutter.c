@@ -33,6 +33,7 @@
 #include "assets/objects/object_ddan_objects/object_ddan_objects.h"
 #include "assets/objects/object_bdan_objects/object_bdan_objects.h"
 #include "assets/objects/object_bdoor/object_bdoor.h"
+#include "assets/objects/object_bdoor/object_bdoor_extra.h"
 #include "assets/objects/object_hidan_objects/object_hidan_objects.h"
 #include "assets/objects/object_ganon_objects/object_ganon_objects.h"
 #include "assets/objects/object_jya_door/object_jya_door.h"

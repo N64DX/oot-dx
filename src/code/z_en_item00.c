@@ -1253,10 +1253,10 @@ void EnItem00_DrawHeartPiece(EnItem00* this, PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_en_item00.c", 1673);
 }
 
-static bool is_tunic_item(s16 dropId)     { return (dropId == ITEM00_TUNIC_ZORA  || dropId == ITEM00_TUNIC_GORON); }
-static bool is_shield_item(s16 dropId)    { return (dropId == ITEM00_SHIELD_DEKU || dropId == ITEM00_SHIELD_HYLIAN || dropId == ITEM00_SHIELD_HEROS) || (dropId == ITEM00_SHIELD_DEKU_STOLEN || dropId == ITEM00_SHIELD_HYLIAN_STOLEN || dropId == ITEM00_SHIELD_HEROS_STOLEN); }
-static bool is_rupee_item(s16 dropId)     { return (dropId == ITEM00_RUPEE_GREEN || dropId == ITEM00_RUPEE_BLUE    || dropId == ITEM00_RUPEE_RED || dropId == ITEM00_RUPEE_ORANGE || dropId == ITEM00_RUPEE_PURPLE); }
-static bool is_special_item(s16 dropId)   { return (is_tunic_item(dropId)        || is_shield_item(dropId)         || is_rupee_item(dropId)      || dropId == ITEM00_HEART_PIECE  || dropId == ITEM00_HEART_CONTAINER || dropId == ITEM00_SMALL_KEY || dropId == ITEM00_SMALL_KEY); }
+static u8 is_tunic_item(s16 dropId)     { return (dropId == ITEM00_TUNIC_ZORA  || dropId == ITEM00_TUNIC_GORON); }
+static u8 is_shield_item(s16 dropId)    { return (dropId == ITEM00_SHIELD_DEKU || dropId == ITEM00_SHIELD_HYLIAN || dropId == ITEM00_SHIELD_HEROS) || (dropId == ITEM00_SHIELD_DEKU_STOLEN || dropId == ITEM00_SHIELD_HYLIAN_STOLEN || dropId == ITEM00_SHIELD_HEROS_STOLEN); }
+static u8 is_rupee_item(s16 dropId)     { return (dropId == ITEM00_RUPEE_GREEN || dropId == ITEM00_RUPEE_BLUE    || dropId == ITEM00_RUPEE_RED || dropId == ITEM00_RUPEE_ORANGE || dropId == ITEM00_RUPEE_PURPLE); }
+static u8 is_special_item(s16 dropId)   { return (is_tunic_item(dropId)        || is_shield_item(dropId)         || is_rupee_item(dropId)      || dropId == ITEM00_HEART_PIECE  || dropId == ITEM00_HEART_CONTAINER || dropId == ITEM00_SMALL_KEY || dropId == ITEM00_SMALL_KEY); }
 
 /**
  * Converts a given drop type ID based on link's current age, health and owned items.

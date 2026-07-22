@@ -19,14 +19,14 @@
 
 #include "assets/objects/object_dinofos/object_dinofos.h"
 
-#define rScale regs[0]
-#define rTexIdx regs[1]
+#define rScale      regs[0]
+#define rTexIdx     regs[1]
 #define rPrimColorR regs[2]
 #define rPrimColorG regs[3]
 #define rPrimColorB regs[4]
 #define rPrimColorA regs[5]
-#define rFadeDelay regs[6]
-#define rScaleStep regs[9]
+#define rFadeDelay  regs[6]
+#define rScaleStep  regs[9]
 #define rObjectSlot regs[10]
 #define rYAccelStep regs[11] // has no effect due to how it's implemented
 

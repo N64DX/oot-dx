@@ -21,8 +21,7 @@ typedef struct EnThefather {
     ColliderJntSphElement colliderSpheresElements[16];
     Vec3f armR, armL, chest, head, legL, legR, handR, handL, shinR, shinL, footR, footL, shoulderR, shoulderL, waist, abdomen;
     u16 deathTimer;
-    u8 timer, csTimer, hurtboxCooldown, poise, screamcountdown, subCamId, cutscene;
-    bool alarmstate, cantSee;
+    u8 timer, csTimer, hurtboxCooldown, poise, screamcountdown, subCamId, cutscene, alarmstate, cantSee;
 } EnThefather;
 
 #endif

@@ -342,8 +342,8 @@ void EnKame_ProcessAttackEffects(EnKame* this, PlayState* play) {
 
             if (surfaceMaterial == SURFACE_MATERIAL_DIRT || surfaceMaterial == SURFACE_MATERIAL_SAND)
                 func_800286CC(play, &this->actor.world.pos, &sVelocity, &gZeroVec3f, 550, 100);
-            //else if (surfaceMaterial == SURFACE_MATERIAL_SNOW)
-            //    func_800B0DE0(play, &this->actor.world.pos, &sVelocity, &gZeroVec3f, &sSnowPrimColor, &sSnowEnvColor, 550, 100);
+            else if (surfaceMaterial == SURFACE_MATERIAL_SNOW)
+                func_8002829C(play, &this->actor.world.pos, &sVelocity, &gZeroVec3f, &sSnowPrimColor, &sSnowEnvColor, 550, 100);
         }
     }
 

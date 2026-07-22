@@ -20,8 +20,7 @@ typedef struct EnSpider {
     ColliderJntSph colliderSpheres;
     ColliderJntSphElement colliderSpheresElements[2];
     Vec3f armR, chest, head, legL, legR;
-    u8 timer, deathTimer, hurtboxCooldown, type, switchFlag;
-    bool alarmstate, cantSee, canDodge, miniboss;
+    u8 timer, deathTimer, hurtboxCooldown, type, switchFlag, alarmstate, cantSee, canDodge, miniboss;
 } EnSpider;
 
 #endif

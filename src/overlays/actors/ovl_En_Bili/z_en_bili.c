@@ -106,7 +106,7 @@ static ColliderQuadInit sBeamQuadInit = {
     { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } },
 };
 
-static bool sBiliBeaming = false;
+static u8 sBiliBeaming = false;
 
 typedef enum BiriDamageReaction {
     /* 0x0 */ BIRI_DMG_REACT_NONE,

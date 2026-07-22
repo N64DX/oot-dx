@@ -128,7 +128,7 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);
 }
 
-bool MapSelect_SetClearEventGroup(u16 checkFlag, u16 flags[], s32 count) {
+u8 MapSelect_SetClearEventGroup(u16 checkFlag, u16 flags[], s32 count) {
     s32 i;
 
     if (GET_EVENTCHKINF(checkFlag)) {
@@ -142,7 +142,7 @@ bool MapSelect_SetClearEventGroup(u16 checkFlag, u16 flags[], s32 count) {
     }
 }
 
-bool MapSelect_SetClearTableGroup(u16 checkFlag, u16 flags[], s32 count) {
+u8 MapSelect_SetClearTableGroup(u16 checkFlag, u16 flags[], s32 count) {
     s32 i;
 
     if (GET_INFTABLE(checkFlag)) {
@@ -156,7 +156,7 @@ bool MapSelect_SetClearTableGroup(u16 checkFlag, u16 flags[], s32 count) {
     }
 }
 
-bool MapSelect_SetClearItemGroup(u16 checkFlag, u16 flags[], s32 count) {
+u8 MapSelect_SetClearItemGroup(u16 checkFlag, u16 flags[], s32 count) {
     s32 i;
 
     if (GET_ITEMGETINF(checkFlag)) {
@@ -250,7 +250,7 @@ void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
     }
 }
 
-char* MapSelect_GetEventText(bool flag) {
+char* MapSelect_GetEventText(u16 flag) {
     return flag ? "On" : "Off";
 }
 

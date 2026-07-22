@@ -209,7 +209,7 @@ void Message_SetTables(void);
 void Message_Init(struct PlayState* play);
 void Message_SetTitleCardInfo(struct PlayState* play, struct TitleCardInfo* info);
 void Message_DisplaySceneTitleCard(struct PlayState* play);
-bool Message_HasSceneTitleCardMessage(struct PlayState* play, u16 textId);
+u8 Message_HasSceneTitleCardMessage(struct PlayState* play, u16 textId);
 
 extern s16 gOcarinaSongItemMap[];
 

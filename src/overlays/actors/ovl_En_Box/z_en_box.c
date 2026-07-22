@@ -110,7 +110,7 @@ void EnBox_ClipToGround(EnBox* this, PlayState* play) {
     }
 }
 
-bool EnBox_CanHookshot(PlayState* play) {
+u8 EnBox_CanHookshot(PlayState* play) {
     if (play->sceneId == SCENE_WOODFALL || play->sceneId == SCENE_WOODFALL_TEMPLE)
         return false;
     return true;
@@ -579,7 +579,7 @@ void EnBox_Update(Actor* thisx, PlayState* play) {
     }
 }
 
-bool EnBox_IsItem(s16 item) {
+u8 EnBox_IsItem(s16 item) {
     switch (item) {
         case GI_SLINGSHOT:
         case GI_BOW:
@@ -633,9 +633,9 @@ void EnBox_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot,
     EnBox* this = (EnBox*)thisx;
     s32 pad;
     u8 i = this->giItem > 0 ? this->giItem : ENBOX_GET_GET_ITEM_ID(&this->dyna.actor);
-    bool is_key = i == GI_SMALL_KEY;
-    bool is_dungeon_item = i == GI_COMPASS || i == GI_DUNGEON_MAP;
-    bool is_item = EnBox_IsItem(i);
+    u8 is_key = i == GI_SMALL_KEY;
+    u8 is_dungeon_item = i == GI_COMPASS || i == GI_DUNGEON_MAP;
+    u8 is_item = EnBox_IsItem(i);
 
     if (limbIndex == 1) {
         MATRIX_FINALIZE_AND_LOAD((*gfx)++, play->state.gfxCtx, "../z_en_box.c", 1492);

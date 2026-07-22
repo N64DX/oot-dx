@@ -282,7 +282,7 @@ static FrogHideInfo sFrogHideInfo[] = {
     { 0x84B3, 275.0f }, // White
 };
 
-static bool sIsFrogTextbox = false;
+static u8 sIsFrogTextbox = false;
 
 void EnFr_OrientUnderwater(EnFr* this) {
     Vec3f vec1;

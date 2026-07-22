@@ -388,7 +388,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
             }
 
             if (cursorItem != PAUSE_ITEM_NONE) {
-                bool canSelectItem = true;
+                u8 canSelectItem = true;
                 u8 currItem, nextItem;
                 index = cursorSlot * 4; // required to match?
                 KaleidoScope_SetCursorPos(pauseCtx, index, pauseCtx->itemVtx);
@@ -463,7 +463,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                             else button = 3;
 
                             for (i=0; i<4; i++) {
-                                bool isArrowSlot = (cursorSlot == SLOT_BOW || cursorSlot == SLOT_ARROW_FIRE || cursorSlot == SLOT_ARROW_ICE || cursorSlot == SLOT_ARROW_LIGHT) && (DPAD_BUTTON(i) == SLOT_BOW || DPAD_BUTTON(i) == SLOT_ARROW_FIRE || DPAD_BUTTON(i) == SLOT_ARROW_ICE || DPAD_BUTTON(i) == SLOT_ARROW_LIGHT);
+                                u8 isArrowSlot = (cursorSlot == SLOT_BOW || cursorSlot == SLOT_ARROW_FIRE || cursorSlot == SLOT_ARROW_ICE || cursorSlot == SLOT_ARROW_LIGHT) && (DPAD_BUTTON(i) == SLOT_BOW || DPAD_BUTTON(i) == SLOT_ARROW_FIRE || DPAD_BUTTON(i) == SLOT_ARROW_ICE || DPAD_BUTTON(i) == SLOT_ARROW_LIGHT);
 
                                 if (i == button)
                                     continue;

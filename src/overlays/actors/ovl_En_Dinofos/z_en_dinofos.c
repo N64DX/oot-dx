@@ -266,7 +266,7 @@ static void* sEyeTextures[] = {
 };
 
 static s8 sNumAlive = 0;
-static bool getAggressive;
+static u8 getAggressive;
 
 static InitChainEntry sInitChain[] = {
     ICHAIN_F32(lockOnArrowOffset, 2000, ICHAIN_CONTINUE),
@@ -295,7 +295,7 @@ static EffectBlureInit2 sBlureInit = {
 };
 
 void EnDinofos_Init(Actor* thisx, PlayState* play) {
-    static bool sTexturesDesegmented = false;
+    static u8 sTexturesDesegmented = false;
 
     EnDinofos* this = (EnDinofos*)thisx;
     s8 i;
@@ -359,7 +359,7 @@ void EnDinofos_Blink(EnDinofos* this) {
         this->eyeTexIndex = 1;
 }
 
-bool EnDinofos_IsFacingPlayer(EnDinofos* this) {
+u8 EnDinofos_IsFacingPlayer(EnDinofos* this) {
     s16 angleToPlayer = (this->actor.yawTowardsPlayer - this->headRotY) - this->actor.shape.rot.y;
 
     if (ABS_ALT(angleToPlayer) < 0x3000)
@@ -427,7 +427,7 @@ void EnDinofos_EnableBumperCollision(EnDinofos* this) {
     }
 }
 
-bool EnDinofos_Dodge(EnDinofos* this, PlayState* play) {
+u8 EnDinofos_Dodge(EnDinofos* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
     s16 angleToProjectile;
     s16 angleToBombchu;
@@ -1074,7 +1074,7 @@ void EnDinofos_RotateHead(EnDinofos* this, PlayState* play) {
     }
 }
 
-bool EnDinofos_UpdateDamage(EnDinofos* this, PlayState* play) {
+u8 EnDinofos_UpdateDamage(EnDinofos* this, PlayState* play) {
     s8 i;
 
     if (this->bodyAndFireCollider.base.acFlags & AC_HIT) {

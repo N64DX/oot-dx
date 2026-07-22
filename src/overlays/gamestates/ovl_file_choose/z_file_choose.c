@@ -923,7 +923,7 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
 #if OOT_PAL_N64
     u8 fileNameChar;
 #endif
-    bool is_in_file_confirm = this->menuMode == FS_MENU_MODE_SELECT && (this->selectMode == SM_FADE_IN_FILE_INFO || this->selectMode == SM_CONFIRM_FILE || this->selectMode == SM_FADE_OUT_FILE_INFO || this->selectMode == SM_FADE_OUT);
+    u8 isInFileConfirm = this->menuMode == FS_MENU_MODE_SELECT && (this->selectMode == SM_FADE_IN_FILE_INFO || this->selectMode == SM_CONFIRM_FILE || this->selectMode == SM_FADE_OUT_FILE_INFO || this->selectMode == SM_FADE_OUT);
 
     this->windowContentVtx = GRAPH_ALLOC(this->state.gfxCtx, 0x288 * sizeof(Vtx));
 
@@ -1153,7 +1153,7 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
         this->windowContentVtx[phi_t2 + 1].v.tc[0] = this->windowContentVtx[phi_t2 + 3].v.tc[0] = 0x800;
         
         // Move the Yes and Quit buttons up
-        if (is_in_file_confirm) {
+        if (isInFileConfirm) {
             this->windowContentVtx[phi_t2 + 0].v.ob[1] += 16;
             this->windowContentVtx[phi_t2 + 1].v.ob[1] += 16;
             this->windowContentVtx[phi_t2 + 2].v.ob[1] += 16;
@@ -1208,7 +1208,7 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
     this->windowContentVtx[phi_t2 + 5].v.tc[0] = this->windowContentVtx[phi_t2 + 7].v.tc[0] = 0x1000;
     
     // Copy the vertices for the Options button from the Yes button and move it down 2 buttons
-    if (is_in_file_confirm)
+    if (isInFileConfirm)
         for (phi_t5=0; phi_t5<4; phi_t5++) {
             this->windowContentVtx[phi_t2 + 4 + phi_t5] = this->windowContentVtx[0x288 - 20 + phi_t5];
             this->windowContentVtx[phi_t2 + 4 + phi_t5].v.ob[1] -= 32;

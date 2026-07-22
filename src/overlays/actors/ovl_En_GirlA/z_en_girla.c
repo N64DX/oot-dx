@@ -300,7 +300,7 @@ void EnGirlA_SetupAction(EnGirlA* this, EnGirlAActionFunc func) {
     this->actionFunc = func;
 }
 
-static bool EnGirlA_CanBuy_ShieldUpgradeCheck(u8 shield) {
+static u8 EnGirlA_CanBuy_ShieldUpgradeCheck(u8 shield) {
     if (gSaveContext.save.info.shields[shield].upgrade >= 3)
         return false;
     if (gSaveContext.save.info.shields[shield].upgrade >= 2 && (!GET_EVENTCHKINF(EVENTCHKINF_45) || !GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES) || !GET_INFTABLE(INFTABLE_TALKED_TO_ZUBORA_MINES)))

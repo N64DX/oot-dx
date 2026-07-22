@@ -103,7 +103,7 @@ void BossGanon_UpdateDoNothing(Actor* thisx, PlayState* play);
 void BossGanon_UpdateCollider(BossGanon* this, PlayState* play, Vec3f* src, ColliderQuad* collider);
 void BossGanon_ChooseNextAction(BossGanon* this, PlayState* play);
 
-static bool hasSword;
+static u8 hasSword;
 
 ActorProfile Boss_Ganon_Profile = {
     /**/ ACTOR_BOSS_GANON,
@@ -2946,7 +2946,7 @@ void BossGanon_Update(Actor* thisx, PlayState* play2) {
     f32 xOffset;
     f32 zOffset;
 
-    bool doAnime1 = ((this->actionFunc != BossGanon_IntroCutscene) && (this->actionFunc != BossGanon_DeathAndTowerCutscene));
+    u8 doAnime1 = ((this->actionFunc != BossGanon_IntroCutscene) && (this->actionFunc != BossGanon_DeathAndTowerCutscene));
     if ((this->actionFunc != BossGanon_IntroCutscene) && (this->actionFunc != BossGanon_DeathAndTowerCutscene)) {
         for (i=0; i<21; i++) {
             if (this->actionFunc == BossGanon_Anime2Funcs[i]) {

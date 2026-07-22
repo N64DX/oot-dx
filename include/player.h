@@ -821,7 +821,7 @@ typedef void (*AfterPutAwayFunc)(struct PlayState*, struct Player*);
 typedef struct BombArrowLink {
     /* 0x0000 */ Actor* arrow;
     /* 0x014C */ Actor* bomb;
-    /* 0x0150 */ bool loosed;
+    /* 0x0150 */ u8 loosed;
 } BombArrowLink; // size = 0x154
 
 typedef struct Player {
@@ -837,7 +837,7 @@ typedef struct Player {
     /* 0x0154 */ s8 itemAction; // the difference between this and heldItemAction is unclear
     /* 0x0155 */ s8 bottleAction;
     /* 0x0156 */ s8 featherUseCount;
-    /* 0x0157 */ bool swimmingInPoisonWater;
+    /* 0x0157 */ u8 swimmingInPoisonWater;
     /* 0x0158 */ u8 modelGroup;
     /* 0x0159 */ u8 nextModelGroup;
     /* 0x015A */ s8 itemChangeType;

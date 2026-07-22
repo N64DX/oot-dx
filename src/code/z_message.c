@@ -153,7 +153,7 @@ s16 sMessageHasSetSfx = false;
 
 u16 sOcarinaSongBitFlags = 0; // ocarina bit flags
 
-bool setTempEnglish = false;
+u8 setTempEnglish = false;
 
 #if OOT_NTSC_N64
 
@@ -433,7 +433,7 @@ s32 Message_TitleCardClear(PlayState* play) {
     return true;
 }
 
-bool Message_HasSceneTitleCardMessage(PlayState* play, u16 textId) {
+u8 Message_HasSceneTitleCardMessage(PlayState* play, u16 textId) {
     MessageTableEntry* messageTableEntry;
     const char** languageSegmentTable;
 
@@ -654,7 +654,7 @@ void Message_GrowTextbox(MessageContext* msgCtx) {
 
 #if OOT_NTSC_N64
 
-bool Message_FindMessage(PlayState* play, u16 textId, Language language) {
+u8 Message_FindMessage(PlayState* play, u16 textId, Language language) {
     Font* font = &play->msgCtx.font;
     MessageTableEntry* messageTableEntry;
     const char** languageSegmentTable;

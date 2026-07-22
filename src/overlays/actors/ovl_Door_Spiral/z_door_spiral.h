@@ -13,7 +13,7 @@ typedef void (*DoorSpiralActionFunc)(struct DoorSpiral*, struct PlayState*);
 
 typedef struct DoorSpiral {
     /* 0x000 */ Actor actor;
-    /* 0x144 */ bool shouldClimb;
+    /* 0x144 */ u8 shouldClimb;
     /* 0x145 */ u8 type;
     /* 0x146 */ u8 direction; // represents a staircase up or down
     /* 0x147 */ u8 index;

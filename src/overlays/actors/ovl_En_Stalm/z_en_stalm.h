@@ -40,8 +40,8 @@ typedef enum StalmasterDamageEffect {
 } StalmasterDamageEffect;
 
 typedef struct StalmasterParts {
-    bool csHandled;
-    bool invisible;
+    u8 csHandled;
+    u8 invisible;
     u8 gravity;
     u8 onGround;
     u8 bounceCounter;

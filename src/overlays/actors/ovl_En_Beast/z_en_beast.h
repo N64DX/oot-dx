@@ -23,7 +23,7 @@ typedef struct EnBeast {
     f32 timer;
     s16 headRotx, headRoty;
     u8 deathTimer, hurtboxCooldown, inrange, type, switchFlag;
-    bool alarmstate, cantSee, canDodge, miniboss;
+    u8 alarmstate, cantSee, canDodge, miniboss;
 } EnBeast;
 
 typedef enum BeastType {
