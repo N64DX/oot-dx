@@ -108,6 +108,19 @@ typedef struct Inventory {
     /* 0x5C */ s16 gsTokens;
 } Inventory; // size = 0x5E
 
+typedef union EnhancedWarpSongs {
+    struct {
+        u8 minuetOfForest   : 1;
+        u8 boleroOfFire     : 1;
+        u8 serenadeOfWater  : 1;
+        u8 requiemOfSpirit  : 1;
+        u8 nocturneOfShadow : 1;
+        u8 preludeOfLight   : 1;
+        u8 unk              : 2;
+    };
+    u8 warpsongs;
+} EnhancedWarpSongs; // size = 0x1
+
 typedef union ObtainedItems {
     struct {
         u8 fireArrow            : 1;
@@ -268,6 +281,7 @@ typedef enum TimerId {
 #define ENV_HAZARD_TEXT_TRIGGER_HOTROOM (1 << 0)
 #define ENV_HAZARD_TEXT_TRIGGER_UNDERWATER (1 << 1)
 #define ENV_HAZARD_TEXT_TRIGGER_FREEZINGROOM (1 << 2)
+#define ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM (1 << 3)
 
 typedef enum WorldMapArea {
     /*  0 */ WORLD_MAP_AREA_HYRULE_FIELD,
@@ -336,7 +350,8 @@ typedef struct SaveInfo {
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
     /* 0x0F18  0x0F34 */ ObtainedSkins obtainedSkins;
-    /* 0x0F19  0x0F35 */ char unk_F34[0x02];
+    /* 0x0F19  0x0F35 */ char unk_F34[0x01];
+    /* 0x0F1A  0x0F36 */ EnhancedWarpSongs enhancedWarpSongs;
     /* 0x0F1B  0x0F37 */ u8 energy;
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
     /* 0x0F20  0x0F3C */ FrogQuest frogQuest;
@@ -579,6 +594,12 @@ typedef enum LinkAge {
 #define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST_AS_CHILD)
 #define IS_HEROS_SHIELD       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (HAS_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) )
 
+#define SET_SPIRIT_TUNIC      (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 2)
+#define CLEAR_SPIRIT_TUNIC    (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 2))
+#define TOGGLE_SPIRIT_TUNIC   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 2)
+#define HAS_SPIRIT_TUNIC    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 2) && IS_CHILD_QUEST_AS_CHILD)
+#define IS_SPIRIT_TUNIC       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT) && (HAS_SPIRIT_TUNIC || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI)) )
+
 #define HAS_ROCS_FEATHER      (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ROCS_FEATHER || HAS_GOLDEN_FEATHER)
 #define HAS_GOLDEN_FEATHER    (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_GOLDEN_FEATHER)
 #define HAS_FAIRYS_SWORD      (INV_CONTENT(ITEM_ARROW_ICE)  == ITEM_SWORD_FAIRYS)
@@ -808,6 +829,7 @@ typedef enum LinkAge {
 #define EVENTCHKINF_55 0x55
 #define EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW 0x56
 #define EVENTCHKINF_CLEANSED_GORON_MINES 0x57
+#define EVENTCHKINF_CLEANSED_STONE_TOWER 0x58
 #define EVENTCHKINF_59 0x59
 #define EVENTCHKINF_5A 0x5A
 #define EVENTCHKINF_5B 0x5B

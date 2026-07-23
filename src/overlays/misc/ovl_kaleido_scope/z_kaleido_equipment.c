@@ -614,6 +614,27 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                     }
                 }
             }
+
+            if (cursorItem == ITEM_TUNIC_KOKIRI && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT)) {
+                KaleidoScope_DrawSwapItemIcons(play, HAS_SPIRIT_TUNIC ? ITEM_TUNIC_SPIRIT : ITEM_TUNIC_KOKIRI, HAS_SPIRIT_TUNIC ? ITEM_TUNIC_KOKIRI : ITEM_TUNIC_SPIRIT, pauseCtx->alpha);
+
+                if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
+                    Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                    TOGGLE_SPIRIT_TUNIC;
+                    Player_SetEquipmentData(play, GET_PLAYER(play));
+                    pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
+                    sEquipTimer = 10;
+
+                    for (i=1; i<8; i++) {
+                        if (i<4) {
+                            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_TUNICS)
+                                Interface_LoadItemIcon1(play, i);
+                        }
+                        else if (Interface_GetItemFromDpad(i-4) == ITEM_TUNICS)
+                            Interface_LoadItemIcon1(play, i);
+                    }
+                }
+            }
         }
 
         if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) &&
@@ -675,7 +696,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 else if (cursorSlot == 5 || cursorSlot == 6 || cursorSlot == 7)
                     temp = SLOT_SHIELDS;
                 else if (cursorSlot == 9)
-                    temp = SLOT_TUNICS;
+                    temp = IS_SPIRIT_TUNIC ? SLOT_TUNIC_SPIRIT : SLOT_TUNICS;
                 else if (cursorSlot == 10 || cursorSlot == 11)
                     temp = SLOT_TUNIC_GORON + cursorSlot - 10;
                 else if (cursorSlot == 13)
@@ -698,6 +719,8 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                             temp = ITEM_TUNIC_GORON;
                         else if (temp == SLOT_TUNIC_ZORA)
                             temp = ITEM_TUNIC_ZORA;
+                        else if (temp == SLOT_TUNIC_SPIRIT)
+                            temp = ITEM_TUNIC_SPIRIT;
                         else if (temp == SLOT_BOOTS_IRON)
                             temp = ITEM_BOOTS_IRON;
                         else if (temp == SLOT_BOOTS_HOVER)
@@ -916,6 +939,8 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconShieldWoodenTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if (i == EQUIP_TYPE_SHIELD && k == EQUIP_INV_SHIELD_HYLIAN && IS_HEROS_SHIELD) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gSaveContext.save.info.obtainedSkins.metalShield ? gItemIconShieldMetalTex : gItemIconShieldHerosTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
+            } else if (i == EQUIP_TYPE_TUNIC && k == EQUIP_INV_TUNIC_KOKIRI && IS_SPIRIT_TUNIC) {
+                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconTunicSpiritTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if (gBitFlags[bit] & gSaveContext.save.info.inventory.equipment) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIcons[ITEM_SWORD_KOKIRI + temp],
                                                    ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);

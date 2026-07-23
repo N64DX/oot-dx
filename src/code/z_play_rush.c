@@ -92,6 +92,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
         switch (gSaveContext.save.entranceIndex) {
             case ENTR_GANONDORF_BOSS_0:
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_SPIRIT - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT);
                 gSaveContext.save.info.obtainedItems.lightArrow = 1;
                 if (!IS_CHILD_QUEST)
                     gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
@@ -159,6 +160,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
 
             case ENTR_INSIDE_GANONS_CASTLE_0:
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_MEDALLION_SPIRIT - ITEM_MEDALLION_FOREST + QUEST_MEDALLION_FOREST];
+                gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT);
                 gSaveContext.save.info.obtainedItems.lightArrow = 1;
                 if (IS_CHILD_QUEST) {
                     gSaveContext.save.info.inventory.items[SLOT_FEATHER]      = ITEM_GOLDEN_FEATHER;

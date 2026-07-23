@@ -110,15 +110,6 @@
         <Sample Name="SAMPLE_0_33"/>
         <Sample Name="SAMPLE_0_105"/>
         <Sample Name="SAMPLE_0_19"/>
-        <Sample Name="SAMPLE_0_STAL_1"/>
-        <Sample Name="SAMPLE_0_STAL_2"/>
-        <Sample Name="SAMPLE_0_STAL_3"/>
-        <Sample Name="SAMPLE_0_STAL_4"/>
-        <Sample Name="SAMPLE_0_STAL_5"/>
-        <Sample Name="SAMPLE_0_STAL_6"/>
-        <Sample Name="SAMPLE_0_STAL_7"/>
-        <Sample Name="SAMPLE_0_STAL_8"/>
-        <Sample Name="SAMPLE_0_STAL_9"/>
         <Sample Name="SAMPLE_0_BOE_1"/>
         <Sample Name="SAMPLE_0_BOE_2"/>
         <Sample Name="SAMPLE_0_DRAGONFLY_1"/>
@@ -137,6 +128,19 @@
         <Sample Name="SAMPLE_0_BLACKBEAST_1"/>
         <Sample Name="SAMPLE_0_BLACKBEAST_2"/>
         <Sample Name="SAMPLE_0_BLACKBEAST_3"/>
+        <Sample Name="SAMPLE_0_STAL_1"/>
+        <Sample Name="SAMPLE_0_STAL_2"/>
+        <Sample Name="SAMPLE_0_STAL_3"/>
+        <Sample Name="SAMPLE_0_STAL_4"/>
+        <Sample Name="SAMPLE_0_STAL_5"/>
+        <Sample Name="SAMPLE_0_STAL_6"/>
+        <Sample Name="SAMPLE_0_STAL_7"/>
+        <Sample Name="SAMPLE_0_STAL_8"/>
+        <Sample Name="SAMPLE_0_STAL_9"/>
+        <Sample Name="SAMPLE_0_GARO_1"/>
+        <Sample Name="SAMPLE_0_GARO_2"/>
+        <Sample Name="SAMPLE_0_GARO_3"/>
+        <Sample Name="SAMPLE_0_49"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
@@ -263,6 +267,10 @@
         <Instrument ProgramNumber="75" Name="INST_75" Envelope="Env0" Sample="SAMPLE_0_STAL_7"/>
         <Instrument ProgramNumber="76" Name="INST_76" Envelope="Env0" Sample="SAMPLE_0_STAL_8"/>
         <Instrument ProgramNumber="77" Name="INST_77" Envelope="Env0" Sample="SAMPLE_0_STAL_9"/>
+        <Instrument ProgramNumber="78" Name="INST_78" Envelope="Env0" Sample="SAMPLE_0_GARO_1"/>
+        <Instrument ProgramNumber="79" Name="INST_79" Envelope="Env0" Sample="SAMPLE_0_GARO_2"/>
+        <Instrument ProgramNumber="80" Name="INST_80" Envelope="Env0" Sample="SAMPLE_0_GARO_3"/>
+        <Instrument ProgramNumber="81" Name="INST_81" Envelope="Env0" Sample="SAMPLE_0_49"/> <!-- Unused draw sword sound effect, but used in MM for Garo (Master) -->
     </Instruments>
     <MatchPadding>
         0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3

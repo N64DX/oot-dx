@@ -68,7 +68,8 @@ typedef enum PlayerTunic {
     /* 0x00 */ PLAYER_TUNIC_KOKIRI,
     /* 0x01 */ PLAYER_TUNIC_GORON,
     /* 0x02 */ PLAYER_TUNIC_ZORA,
-    /* 0x03 */ PLAYER_TUNIC_MAX
+    /* 0x03 */ PLAYER_TUNIC_SPIRIT,
+    /* 0x04 */ PLAYER_TUNIC_MAX
 } PlayerTunic;
 
 typedef enum PlayerBoots {
@@ -107,9 +108,10 @@ typedef enum PlayerEnvHazard {
     /* 0x0 */ PLAYER_ENV_HAZARD_NONE,
     /* 0x1 */ PLAYER_ENV_HAZARD_HOTROOM,
     /* 0x2 */ PLAYER_ENV_HAZARD_FREEZINGROOM,
-    /* 0x3 */ PLAYER_ENV_HAZARD_UNDERWATER_FLOOR,
-    /* 0x4 */ PLAYER_ENV_HAZARD_SWIMMING,
-    /* 0x5 */ PLAYER_ENV_HAZARD_UNDERWATER_FREE
+    /* 0x3 */ PLAYER_ENV_HAZARD_CURSEDROOM,
+    /* 0x4 */ PLAYER_ENV_HAZARD_UNDERWATER_FLOOR,
+    /* 0x5 */ PLAYER_ENV_HAZARD_SWIMMING,
+    /* 0x6 */ PLAYER_ENV_HAZARD_UNDERWATER_FREE
 } PlayerEnvHazard;
 
 typedef enum PlayerIdleType {

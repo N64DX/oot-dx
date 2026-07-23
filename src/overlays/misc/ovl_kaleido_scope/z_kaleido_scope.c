@@ -1032,14 +1032,14 @@ char gItemAgeReqs[] = {
     AGE_REQ_CHILD, // ITEM_PICTOBOX
     AGE_REQ_CHILD, // ITEM_SHRINE_KEY
     AGE_REQ_NONE,  // ITEM_BOTTLE_POTION_SHIELD
+    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
     AGE_REQ_CHILD, // ITEM_SHIELD_WOODEN
     AGE_REQ_CHILD, // ITEM_SHIELD_HEROS
     AGE_REQ_CHILD, // ITEM_SHIELD_METAL
+    AGE_REQ_CHILD, // ITEM_TUNIC_SPIRIT
     AGE_REQ_CHILD, // ITEM_STRENGTH_GORONS_BRACELET
     AGE_REQ_ADULT, // ITEM_STRENGTH_SILVER_GAUNTLETS
     AGE_REQ_ADULT, // ITEM_STRENGTH_GOLD_GAUNTLETS
-    AGE_REQ_NONE,  // ITEM_SCALE_SILVER
-    AGE_REQ_NONE,  // ITEM_SCALE_GOLDEN
     AGE_REQ_ADULT, // ITEM_GIANTS_KNIFE
     AGE_REQ_NONE,  // ITEM_ADULTS_WALLET
     AGE_REQ_NONE,  // ITEM_GIANTS_WALLET
@@ -1056,8 +1056,10 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_20
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_30
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_40
+    AGE_REQ_NONE,  // ITEM_SCALE_SILVER
+    AGE_REQ_NONE,  // ITEM_SCALE_GOLDEN
     AGE_REQ_CHILD, // ITEM_AMULET_OF_ENERGY
-    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
+    AGE_REQ_CHILD, // ITEM_PERFECT_BLOCK_UPGRADE
 };
 
 u8 gAreaGsFlags[] = {
@@ -2334,7 +2336,7 @@ void KaleidoScope_DrawUIOverlay(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
-static u8 lastItem[5];
+static u8 lastItem[6];
 
 #define ITEM_LABEL_LANGUAGE_OFFSET ITEM_SMALL_KEY
 
@@ -2378,6 +2380,8 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                     texIndex = ITEM_SHIELD_WOODEN;
                 else if (pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
                     texIndex = gSaveContext.save.info.obtainedSkins.metalShield ? ITEM_SHIELD_METAL : ITEM_SHIELD_HEROS;
+                else if (pauseCtx->namedItem == ITEM_TUNIC_KOKIRI && IS_SPIRIT_TUNIC)
+                    texIndex = ITEM_TUNIC_SPIRIT;
                 else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_RAZOR_SWORD)
                     texIndex = ITEM_BOW_FIRE;
                 else if (pauseCtx->namedItem == ITEM_HEART_PIECE_2) // Biggoron Sword
@@ -3950,9 +3954,10 @@ void KaleidoScope_Update(PlayState* play) {
         case PAUSE_STATE_INIT:
             lastItem[0] = IS_HEROS_SWORD;
             lastItem[1] = IS_HEROS_SHIELD;
-            lastItem[2] = showAltQuiverSlot;
-            lastItem[3] = showAltStrengthSlot;
-            lastItem[4] = showAltScalesSlot;
+            lastItem[2] = IS_SPIRIT_TUNIC;
+            lastItem[3] = showAltQuiverSlot;
+            lastItem[4] = showAltStrengthSlot;
+            lastItem[5] = showAltScalesSlot;
             pauseCtx->wasInDebug = false;
             sSavedButtonStatus[0] = gSaveContext.buttonStatus[0];
             sSavedButtonStatus[1] = gSaveContext.buttonStatus[1];

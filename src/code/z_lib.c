@@ -4,6 +4,7 @@
 #include "printf.h"
 #include "regs.h"
 #include "sys_math.h"
+#include "sys_math3d.h"
 #include "rand.h"
 #include "sfx.h"
 
@@ -601,6 +602,26 @@ void Math_ApproachS(s16* pValue, s16 target, s16 scale, s16 step) {
     } else {
         *pValue += diff;
     }
+}
+
+f32 Math_Vec3f_StepTo(Vec3f* start, Vec3f* target, f32 speed) {
+    Vec3f diff;
+    f32 f2, f0;
+
+    Math_Vec3f_Diff(target, start, &diff);
+    f0 = Math3D_Vec3fMagnitude(&diff);
+    if (speed < f0) {
+        f2 = speed / f0;
+        f0 -= speed;
+        start->x += f2 * diff.x;
+        start->y += f2 * diff.y;
+        start->z += f2 * diff.z;
+    } else {
+        Math_Vec3f_Copy(start, target);
+        f0 = 0.0f;
+    }
+
+    return f0;
 }
 
 void Color_RGBA8_Copy(Color_RGBA8* dst, Color_RGBA8* src) {

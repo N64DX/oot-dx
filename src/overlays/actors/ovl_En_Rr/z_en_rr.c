@@ -715,6 +715,9 @@ void EnRr_Death(EnRr* this, PlayState* play) {
             case 3:
                 Item_DropCollectible(play, &dropPos, ITEM00_TUNIC_ZORA);
                 break;
+            case 4:
+                Item_DropCollectible(play, &dropPos, ITEM00_TUNIC_SPIRIT);
+                break;
         }
         PRINTF(VT_FGCOL(GREEN) T("「%s」が出た！！", "「%s」dropped!!") VT_RST "\n", sDropNames[this->dropType]);
         switch (this->dropType) {

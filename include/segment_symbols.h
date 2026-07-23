@@ -699,6 +699,14 @@ DECLARE_ROM_SEGMENT(dawngrove_room_0)
 DECLARE_ROM_SEGMENT(dawngrove_room_1)
 DECLARE_ROM_SEGMENT(dawngrove_room_2)
 
+DECLARE_ROM_SEGMENT(ikana_canyon_room_0)
+DECLARE_ROM_SEGMENT(ikana_canyon_room_2)
+DECLARE_ROM_SEGMENT(ikana_canyon_room_3)
+DECLARE_ROM_SEGMENT(ikana_canyon_room_4)
+
+DECLARE_ROM_SEGMENT(ikana_graveyard_room_0)
+DECLARE_ROM_SEGMENT(ikana_graveyard_room_1)
+
 DECLARE_ROM_SEGMENT(old_lost_woods_room_0)
 
 DECLARE_ROM_SEGMENT(grottos2_room_6)
@@ -758,11 +766,11 @@ DECLARE_ROM_SEGMENT(woodfall_temple_room_12)
 
 DECLARE_ROM_SEGMENT(woodfall_temple_boss_room_0)
 
-DECLARE_ROM_SEGMENT(mountain_smithy_room_0)
-
-DECLARE_ROM_SEGMENT(dawngrove_house_1_room_0)
-
-DECLARE_ROM_SEGMENT(dawngrove_house_2_room_0)
+DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_0)
+DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_1)
+DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_2)
+DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_3)
+DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_4)
 
 DECLARE_ROM_SEGMENT(dawngrove_inn_room_0)
 DECLARE_ROM_SEGMENT(dawngrove_inn_room_1)
@@ -771,7 +779,13 @@ DECLARE_ROM_SEGMENT(dawngrove_inn_room_3)
 DECLARE_ROM_SEGMENT(dawngrove_inn_room_4)
 DECLARE_ROM_SEGMENT(dawngrove_inn_room_5)
 
+DECLARE_ROM_SEGMENT(dawngrove_house_1_room_0)
+
+DECLARE_ROM_SEGMENT(dawngrove_house_2_room_0)
+
 DECLARE_ROM_SEGMENT(dawngrove_shop_room_0)
+
+DECLARE_ROM_SEGMENT(mountain_smithy_room_0)
 
 // Room symbols for compiling test scenes.
 // These are not wrapped in an `#if DEBUG_ASSETS` so that debug ROMs

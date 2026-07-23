@@ -43,10 +43,10 @@ s16 old_dodongos_cavern_room_3ObjectList0x000038[] = {
 
 ActorEntry old_dodongos_cavern_room_3ActorList0x000040[] = {
     { ACTOR_OBJECT_KANKYO, {    0,   0,     0 }, { 0, 0, 0 }, 0x0006 },
-    { ACTOR_EN_ITEM00,     { 2698,   0, -3452 }, { 0, 0, 0 }, 0x2303 }, // Collect 23, Recovert Heart
-    { ACTOR_EN_ITEM00,     { 4309,   0, -2503 }, { 0, 0, 0 }, 0x2403 }, // Collect 24, Recovert Heart
-    { ACTOR_EN_ITEM00,     { 4331,   0, -3408 }, { 0, 0, 0 }, 0x2503 }, // Collect 25, Recovert Heart
-    { ACTOR_EN_ITEM00,     { 2742,   0, -2459 }, { 0, 0, 0 }, 0x2603 }, // Collect 26, Recovert Heart
+    { ACTOR_EN_ITEM00,     { 2698,   0, -3452 }, { 0, 0, 0 }, 0x2303 }, // Collect 23, Recovery Heart
+    { ACTOR_EN_ITEM00,     { 4309,   0, -2503 }, { 0, 0, 0 }, 0x2403 }, // Collect 24, Recovery Heart
+    { ACTOR_EN_ITEM00,     { 4331,   0, -3408 }, { 0, 0, 0 }, 0x2503 }, // Collect 25, Recovery Heart
+    { ACTOR_EN_ITEM00,     { 2742,   0, -2459 }, { 0, 0, 0 }, 0x2603 }, // Collect 26, Recovery Heart
     { ACTOR_EN_ZF,         { 3164,   0, -3151 }, { 0, 0, 0 }, 0x0002 },
     { ACTOR_EN_ZF,         { 3959,   0, -3151 }, { 0, 0, 0 }, 0x0003 },
 };

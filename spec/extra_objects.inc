@@ -6,6 +6,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_sek"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_sek/object_sek.o"
+    number 6
+endseg
+
+beginseg
     name "object_hsstump"
     compress
     include "$(BUILD_DIR)/assets/objects/object_hsstump/object_hsstump.o"
@@ -104,6 +111,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_lost_woods"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_lost_woods/object_lost_woods.o"
+    number 6
+endseg
+
+beginseg
     name "object_bwall2"
     compress
     include "$(BUILD_DIR)/assets/objects/object_bwall2/object_bwall2.o"
@@ -125,9 +139,37 @@ beginseg
 endseg
 
 beginseg
-    name "object_lost_woods"
+    name "object_dhouse"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_lost_woods/object_lost_woods.o"
+    include "$(BUILD_DIR)/assets/objects/object_dhouse/object_dhouse.o"
+    number 6
+endseg
+
+beginseg
+    name "object_hakaisi"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_hakaisi/object_hakaisi.o"
+    number 6
+endseg
+
+beginseg
+    name "object_haka_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_haka_obj/object_haka_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_water_effect"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_water_effect/object_water_effect.o"
+    number 6
+endseg
+
+beginseg
+    name "object_big_fwall"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_big_fwall/object_big_fwall.o"
     number 6
 endseg
 
@@ -335,6 +377,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_bat"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_bat/object_bat.o"
+    number 6
+endseg
+
+beginseg
     name "object_grasshopper"
     compress
     include "$(BUILD_DIR)/assets/objects/object_grasshopper/object_grasshopper.o"
@@ -345,6 +394,13 @@ beginseg
     name "object_tl"
     compress
     include "$(BUILD_DIR)/assets/objects/object_tl/object_tl.o"
+    number 6
+endseg
+
+beginseg
+    name "object_jso"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_jso/object_jso.o"
     number 6
 endseg
 

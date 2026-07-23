@@ -330,6 +330,34 @@ void ItemEditor_SetQuest(u8 quest, u8 param2, u8 param3, PlayState* play) {
     gSaveContext.save.info.inventory.questItems ^= gBitFlags[quest];
 }
 
+void ItemEditor_SetWarpSong(u8 song, u8 param2, u8 param3, PlayState* play) {
+    gSaveContext.save.info.enhancedWarpSongs.warpsongs ^= (1 << song);
+
+
+    if (IS_CHILD_QUEST) {
+        if (play->state.input[0].press.button == BTN_A) {
+            if (!CHECK_QUEST_ITEM(song))
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[song];
+            else if (!(gSaveContext.save.info.enhancedWarpSongs.warpsongs & (1 << (song - QUEST_SONG_MINUET))))
+                gSaveContext.save.info.enhancedWarpSongs.warpsongs |= (1 << (song - QUEST_SONG_MINUET));
+            else {
+                gSaveContext.save.info.inventory.questItems &= ~gBitFlags[song];
+                gSaveContext.save.info.enhancedWarpSongs.warpsongs &= ~(1 << (song - QUEST_SONG_MINUET));
+            }
+        } else if (play->state.input[0].press.button == BTN_B) {
+            if (CHECK_QUEST_ITEM(song) && (gSaveContext.save.info.enhancedWarpSongs.warpsongs & (1 << (song - QUEST_SONG_MINUET))))
+                gSaveContext.save.info.enhancedWarpSongs.warpsongs &= ~(1 << (song - QUEST_SONG_MINUET));
+            else if (CHECK_QUEST_ITEM(song))
+                gSaveContext.save.info.inventory.questItems &= ~gBitFlags[song];
+            else {
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[song];
+                gSaveContext.save.info.enhancedWarpSongs.warpsongs |= (1 << (song - QUEST_SONG_MINUET));
+            }
+        }
+    } else gSaveContext.save.info.inventory.questItems ^= gBitFlags[song];
+    
+}
+
 void ItemEditor_SetKeys(u8 scene, u8 param2, u8 param3, PlayState* play) {
     if (play->state.input[0].press.button == BTN_A && gSaveContext.save.info.inventory.dungeonKeys[scene] < 20)
         gSaveContext.save.info.inventory.dungeonKeys[scene]++;
@@ -338,7 +366,7 @@ void ItemEditor_SetKeys(u8 scene, u8 param2, u8 param3, PlayState* play) {
 }
 
 void ItemEditor_SetDungeon(u8 scene, u8 param2, u8 param3, PlayState* play) {
-    if (play->state.input[0].press.button == BTN_A) 
+    if (play->state.input[0].press.button == BTN_A)
         gSaveContext.save.info.inventory.dungeonItems[scene] = 7;  
     else if (play->state.input[0].press.button == BTN_CUP) 
         gSaveContext.save.info.inventory.dungeonItems[scene] ^= gBitFlags[DUNGEON_BOSS_KEY];    
@@ -624,6 +652,15 @@ char* ItemEditor_GetQuest(u8 quest, u8 param2, u8 param3) {
     return (CHECK_QUEST_ITEM(quest)) ? "Set" : "None";
 }
 
+char* ItemEditor_GetWarpSong(u8 song, u8 param2, u8 param3) {
+    if (IS_CHILD_QUEST) {
+        if (CHECK_QUEST_ITEM(song))
+            return (gSaveContext.save.info.enhancedWarpSongs.warpsongs & (1 << (song - QUEST_SONG_MINUET))) ? "Enhanced" : "Standard";
+        return "None";
+    }
+    return (CHECK_QUEST_ITEM(song)) ? "Set" : "None";
+}
+
 char* ItemEditor_GetKeys(u8 scene, u8 param2, u8 param3) {
     static char buf[3];
     s8 keys = gSaveContext.save.info.inventory.dungeonKeys[scene];
@@ -743,6 +780,7 @@ ItemEditorEntry sItemEditorEquipmentEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_MIRROR,  EQUIP_TYPE_SHIELD, 0, "Mirror Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_TUNIC_GORON,    EQUIP_TYPE_TUNIC,  0, "Goron Tunic",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_TUNIC_ZORA,     EQUIP_TYPE_TUNIC,  0, "Zora Tunic",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_TUNIC_SPIRIT,   EQUIP_TYPE_TUNIC,  0, "Spirit Tunic",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_BOOTS_IRON,     EQUIP_TYPE_BOOTS,  0, "Iron Boots",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_BOOTS_HOVER,    EQUIP_TYPE_BOOTS,  0, "Hover Boots",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
 };
@@ -778,18 +816,18 @@ ItemEditorEntry sItemEditorUpgradesEntries[] = {
 };
 
 ItemEditorEntry sItemEditorSongEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_LULLABY,  0, 0, "Zelda's Lullaby",    ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_EPONA,    0, 0, "Epona's Song",       ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SARIA,    0, 0, "Saria's Song",       ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SUN,      0, 0, "Sun's Song",         ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_TIME,     0, 0, "Song of Time",       ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_STORMS,   0, 0, "Song of Storms",     ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_MINUET,   0, 0, "Minuet of Forest",   ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_BOLERO,   0, 0, "Bolero of Fire",     ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SERENADE, 0, 0, "Serenade of Water",  ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_REQUIEM,  0, 0, "Requiem of Water",   ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_NOCTURNE, 0, 0, "Nocturne of Shadow", ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_PRELUDE,  0, 0, "Prelude of Light",   ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_LULLABY,  0, 0, "Zelda's Lullaby",    ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_EPONA,    0, 0, "Epona's Song",       ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SARIA,    0, 0, "Saria's Song",       ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SUN,      0, 0, "Sun's Song",         ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_TIME,     0, 0, "Song of Time",       ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_STORMS,   0, 0, "Song of Storms",     ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_MINUET,   0, 0, "Minuet of Forest",   ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_BOLERO,   0, 0, "Bolero of Fire",     ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SERENADE, 0, 0, "Serenade of Water",  ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_REQUIEM,  0, 0, "Requiem of Water",   ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_NOCTURNE, 0, 0, "Nocturne of Shadow", ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_PRELUDE,  0, 0, "Prelude of Light",   ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
 };
 
 ItemEditorEntry sItemEditorQuestEntries[] = {

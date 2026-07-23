@@ -54,14 +54,12 @@
  */
 static u32 sRandInt = 1;
 
-#if !PLATFORM_N64
 /**
  * Space to store a value to be re-interpreted as a float.
  *
  * @note Orignal name: __qrand_itemp
  */
 static FloatInt sRandFloat;
-#endif
 
 /**
  * Gets the next integer in the sequence of pseudo-random numbers.
@@ -115,7 +113,6 @@ f32 Rand_ZeroOne(void) {
 #endif
 }
 
-#if !PLATFORM_N64
 /**
  * Returns a pseudo-random floating-point number between -0.5f and 0.5f by the same manner in which Rand_ZeroOne
  * generates its result.
@@ -129,7 +126,6 @@ f32 Rand_Centered(void) {
     sRandFloat.i = (sRandInt >> 9) | 0x3F800000;
     return sRandFloat.f - 1.5f;
 }
-#endif
 
 //! All functions below are unused variants of the above four, that use a provided random number variable instead of the
 //! internal `sRandInt`
@@ -180,7 +176,6 @@ f32 Rand_ZeroOne_Variable(u32* rndNum) {
 #endif
 }
 
-#if !PLATFORM_N64
 /**
  * Generates the next pseudo-random floating-point number between -0.5f and 0.5f from the provided rndNum.
  *
@@ -194,4 +189,3 @@ f32 Rand_Centered_Variable(u32* rndNum) {
     sRandFloat.i = ((*rndNum = next) >> 9) | 0x3F800000;
     return sRandFloat.f - 1.5f;
 }
-#endif
