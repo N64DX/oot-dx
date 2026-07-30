@@ -217,10 +217,9 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_FIRE];
                 if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] == ITEM_NONE)
                     gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] = ITEM_BOTTLE_FAIRY;
-                if (IS_CHILD_QUEST) {
+                if (IS_CHILD_QUEST)
                     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS);
-                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
-                } else gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
+                else gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
                 break;
 
             case ENTR_FOREST_TEMPLE_0:
@@ -251,7 +250,6 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                     gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
                     gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
                     gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
-                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_HEROS];
                 }
                 break;
 

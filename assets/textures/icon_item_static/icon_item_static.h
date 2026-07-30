@@ -69,30 +69,30 @@ extern u64 gItemIconBowLightTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 
 extern u64 gItemIconSwordKokiriTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconSwordMasterTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconSwordBiggoronTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+extern u64 gItemIconSwordHerosTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconShieldDekuTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconShieldHylianTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconShieldMirrorTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+extern u64 gItemIconShieldHerosTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconTunicKokiriTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconTunicGoronTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconTunicZoraTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+extern u64 gItemIconTunicSpiritTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconBootsKokiriTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconBootsIronTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconBootsHoverTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+extern u64 gItemIconBootsPegasusTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconGreatFairysSwordTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconRocsFeatherTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconGoldenFeatherTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconPictoboxTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconRoomKeyTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+extern u64 gItemIconCQ1Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+extern u64 gItemIconCQ2Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconBottlePotionShieldTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
-extern u64 gItemIconSwordHerosTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconShieldWoodenTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
-extern u64 gItemIconShieldHerosTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconShieldMetalTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconShieldMetalTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
-extern u64 gItemIconTunicSpiritTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
-extern u64 gItemIconGoronsBraceletTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
-extern u64 gItemIconSilverGauntletsTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
-extern u64 gItemIconGoldenGauntletsTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconBrokenGiantsKnifeTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconAdultsWalletTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconGiantsWalletTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
@@ -109,6 +109,9 @@ extern u64 gItemIconQuiver60Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 
 extern u64 gItemIconBombBag20Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconBombBag30Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconBombBag40Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+extern u64 gItemIconGoronsBraceletTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+extern u64 gItemIconSilverGauntletsTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+extern u64 gItemIconGoldenGauntletsTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconScaleSilverTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconScaleGoldenTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconAmuletOfEnergyTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
@@ -216,6 +219,25 @@ extern u64 gPauseSave04Tex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX
 extern u64 gPauseSave14Tex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
 extern u64 gPauseSave24Tex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
 extern u64 gPauseGameOver10Tex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+
+#if OOT_NTSC_N64
+extern u64 gPauseQuestStatus00Tex[];
+extern u64 gPauseQuestStatus20Tex[];
+#endif
+
+// Child quest exclusive tiles
+extern u64 gPauseSelectItem21CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseSelectItem22CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseSelectItem23CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseEquipment00CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseEquipment01CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseEquipment02CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseEquipment03CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseEquipment04CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseEquipment11CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseEquipment12CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseEquipment13CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseEquipment14CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
 
 #define gABtnSymbolTex_WIDTH 24
 #define gBBtnSymbolTex_WIDTH 24

@@ -20,7 +20,9 @@
 typedef enum EnMThunderSwordType {
     /* 0 */ M_THUNDER_SWORD_MASTER,
     /* 1 */ M_THUNDER_SWORD_KOKIRI,
-    /* 2 */ M_THUNDER_SWORD_GIANT
+    /* 2 */ M_THUNDER_SWORD_GIANT,
+    /* 3 */ M_THUNDER_SWORD_HEROS,
+    /* 4 */ M_THUNDER_SWORD_FAIRIES
 } EnMThunderSwordType;
 
 typedef enum EnMThunderAttackStrength {
@@ -70,8 +72,8 @@ static ColliderCylinderInit sCylinderInit = {
     { 200, 200, 0, { 0, 0, 0 } },
 };
 
-static u32 sSpinAttackDmgFlags[] = { DMG_SPIN_MASTER, DMG_SPIN_KOKIRI, DMG_SPIN_GIANT, DMG_SPIN_GIANT };
-static u32 sJumpAttackDmgFlags[] = { DMG_JUMP_MASTER, DMG_JUMP_KOKIRI, DMG_JUMP_GIANT, DMG_JUMP_GIANT };
+static u32 sSpinAttackDmgFlags[] = { DMG_SPIN_MASTER, DMG_SPIN_KOKIRI, DMG_SPIN_GIANT, DMG_SPIN_GIANT, DMG_SPIN_KOKIRI };
+static u32 sJumpAttackDmgFlags[] = { DMG_JUMP_MASTER, DMG_JUMP_KOKIRI, DMG_JUMP_GIANT, DMG_JUMP_GIANT, DMG_JUMP_KOKIRI };
 static u8  sThunderDustType[]    = { 2, 3, 4, 4, 4, 4 };
 
 typedef enum {
@@ -126,16 +128,17 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
         this->collider.elem.atDmgInfo.dmgFlags = sSpinAttackDmgFlags[this->swordType];
         this->attackStrength = M_THUNDER_ATTACK_WEAK;
         switch (this->swordType) {
-            case 1: // Kokiri Sword
+            case M_THUNDER_SWORD_KOKIRI:
+            case M_THUNDER_SWORD_HEROS: 
                 this->targetScale = 2;
                 break;
-            case 0: // Razor Sword / Master Sword
+            case M_THUNDER_SWORD_MASTER:
                 this->targetScale = IS_CHILD_QUEST_AS_CHILD ? (!CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? 2 : 3) : 4;
                 break;
-            case 2: // Gilded Sword / Giant's Knife
+            case M_THUNDER_SWORD_GIANT:
                 this->targetScale = IS_CHILD_QUEST_AS_CHILD ? 3 : 4;
                 break;
-            case 3: // Great Fairy's Sword
+            case M_THUNDER_SWORD_FAIRIES:
                 this->targetScale = 4;
                 break;
         }
@@ -248,16 +251,17 @@ void EnMThunder_ChargingSpinAttack(EnMThunder* this, PlayState* play) {
             }
 
             switch (this->swordType) {
-                case 1: // Kokiri Sword
+                case M_THUNDER_SWORD_KOKIRI:
+                case M_THUNDER_SWORD_HEROS:
                     this->targetScale = 2;
                     break;
-                case 0: // Razor Sword / Master Sword
+                case M_THUNDER_SWORD_MASTER:
                     this->targetScale = IS_CHILD_QUEST_AS_CHILD ? (!CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? 2 : 3) : 4;
                     break;
-                case 2: // Gilded Sword / Giant's Knife
+                case M_THUNDER_SWORD_GIANT:
                     this->targetScale = IS_CHILD_QUEST_AS_CHILD ? 3 : 4;
                     break;
-                case 3: // Great Fairy's Sword
+                case M_THUNDER_SWORD_FAIRIES:
                     this->targetScale = 4;
                     break;
             }
@@ -503,7 +507,7 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
             Matrix_Scale(-0.7f, -0.6f, -0.4f, MTXMODE_APPLY);
             Matrix_RotateX(16384.0f, MTXMODE_APPLY);
             break;
-        case 0:
+        case M_THUNDER_SWORD_MASTER:
             if (LINK_IS_ADULT || (IS_CHILD_QUEST_AS_CHILD && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER))) { // Master Sword
                 Matrix_Translate(0.0f, 300.0f, -100.0f, MTXMODE_APPLY);
                 Matrix_Scale(-1.2f, -1.0f, -0.7f, MTXMODE_APPLY);
@@ -514,7 +518,7 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
                 Matrix_RotateX(16384.0f, MTXMODE_APPLY);
             }
             break;
-        case 2:
+        case M_THUNDER_SWORD_GIANT:
             if (LINK_IS_ADULT) { // Giant's Knife
                 Matrix_Translate(200.0f, 350.0f, 0.0f, MTXMODE_APPLY);
                 Matrix_Scale(-1.8f, -1.4f, -0.7f, MTXMODE_APPLY);
@@ -525,7 +529,7 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
                 Matrix_RotateX(16384.0f, MTXMODE_APPLY);
             }
             break;
-        case 3: // Great Fairy's Sword
+        case M_THUNDER_SWORD_FAIRIES: // Great Fairy's Sword
             Matrix_Translate(200.0f, 350.0f, 0.0f, MTXMODE_APPLY);
             Matrix_Scale(-1.8f, -1.4f, -0.7f, MTXMODE_APPLY);
             Matrix_RotateX(16384.0f, MTXMODE_APPLY);

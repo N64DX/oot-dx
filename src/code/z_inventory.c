@@ -6,9 +6,6 @@
 #include "save.h"
 
 #include "assets/textures/icon_item_static/icon_item_static.h"
-#if OOT_NTSC_N64
-#include "assets/textures/icon_item_static/icon_item_static_all.h"
-#endif
 #include "assets/textures/icon_item_24_static/icon_item_24_static.h"
 #include "assets/textures/parameter_static/parameter_static.h"
 
@@ -154,29 +151,29 @@ void* gItemIcons[] = {
     gItemIconSwordKokiriTex,       // ITEM_SWORD_KOKIRI
     gItemIconSwordMasterTex,       // ITEM_SWORD_MASTER
     gItemIconSwordBiggoronTex,     // ITEM_SWORD_BIGGORON
+    gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
     gItemIconShieldDekuTex,        // ITEM_SHIELD_DEKU
     gItemIconShieldHylianTex,      // ITEM_SHIELD_HYLIAN
     gItemIconShieldMirrorTex,      // ITEM_SHIELD_MIRROR
+    gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
     gItemIconTunicKokiriTex,       // ITEM_TUNIC_KOKIRI
     gItemIconTunicGoronTex,        // ITEM_TUNIC_GORON
     gItemIconTunicZoraTex,         // ITEM_TUNIC_ZORA
+    gItemIconTunicSpiritTex,       // ITEM_TUNIC_SPIRIT
     gItemIconBootsKokiriTex,       // ITEM_BOOTS_KOKIRI
     gItemIconBootsIronTex,         // ITEM_BOOTS_IRON
     gItemIconBootsHoverTex,        // ITEM_BOOTS_HOVER
+    gItemIconBootsKokiriTex,       // ITEM_BOOTS_PEGASUS
     gItemIconGreatFairysSwordTex,  // ITEM_SWORD_FAIRYS
     gItemIconRocsFeatherTex,       // ITEM_ROCS_FEATHER
     gItemIconGoldenFeatherTex,     // ITEM_GOLDEN_FEATHER
     gItemIconPictoboxTex,          // ITEM_PICTOBOX
     gItemIconRoomKeyTex,           // ITEM_SHRINE_KEY
+    gItemIconRoomKeyTex,           // ITEM_CQ_1
+    gItemIconRoomKeyTex,           // ITEM_CQ_2
     gItemIconBottlePotionShieldTex, // ITEM_BOTTLE_POTION_SHIELD
-    gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
     gItemIconShieldWoodenTex,      // ITEM_SHIELD_WOODEN
-    gItemIconShieldHerosTex,       // ITEM_SHIELD_HEROS
     gItemIconShieldMetalTex,       // ITEM_SHIELD_METAL
-    gItemIconTunicSpiritTex,       // ITEM_TUNIC_SPIRIT
-    gItemIconGoronsBraceletTex,    // ITEM_STRENGTH_GORONS_BRACELET
-    gItemIconSilverGauntletsTex,   // ITEM_STRENGTH_SILVER_GAUNTLETS
-    gItemIconGoldenGauntletsTex,   // ITEM_STRENGTH_GOLD_GAUNTLETS
     gItemIconBrokenGiantsKnifeTex, // ITEM_GIANTS_KNIFE
     gItemIconAdultsWalletTex,      // ITEM_ADULTS_WALLET
     gItemIconGiantsWalletTex,      // ITEM_GIANTS_WALLET
@@ -193,6 +190,9 @@ void* gItemIcons[] = {
     gItemIconBombBag20Tex,         // ITEM_BOMB_BAG_20
     gItemIconBombBag30Tex,         // ITEM_BOMB_BAG_30
     gItemIconBombBag40Tex,         // ITEM_BOMB_BAG_40
+    gItemIconGoronsBraceletTex,    // ITEM_STRENGTH_GORONS_BRACELET
+    gItemIconSilverGauntletsTex,   // ITEM_STRENGTH_SILVER_GAUNTLETS
+    gItemIconGoldenGauntletsTex,   // ITEM_STRENGTH_GOLD_GAUNTLETS
     gItemIconScaleSilverTex,       // ITEM_SCALE_SILVER
     gItemIconScaleGoldenTex,       // ITEM_SCALE_GOLDEN
     gItemIconAmuletOfEnergyTex,    // ITEM_AMULET_OF_ENERGY
@@ -360,37 +360,14 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
     u16 equipValue = gSaveContext.save.info.equips.equipment & gEquipMasks[equipment];
     u8 i;
     u8 item;
-    u8 isFourthItemIndex = false;
 
     PRINTF(T("装備アイテム抹消 = %d  zzz=%d\n", "Erasing equipment item = %d  zzz=%d\n"), equipment, equipValue);
 
     if (equipValue) {
         equipValue >>= gEquipShifts[equipment];
 
-        if (equipment == EQUIP_TYPE_SHIELD) {
-            if (IS_HEROS_SHIELD && equipValue == 2) {
-                gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_HEROS];
-                gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
-                gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(equipment, 3);
-                isFourthItemIndex = true;
-            } else {
-                gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
-                gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
-            }
-        } else if (equipment == EQUIP_TYPE_TUNIC) {
-            if (IS_SPIRIT_TUNIC && equipValue == 1) {
-                gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_TUNIC_SPIRIT];
-                gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
-                gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(equipment, 3);
-                isFourthItemIndex = true;
-            } else {
-                gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
-                gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
-            }
-        } else {
-            gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
-            gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
-        }
+        gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
+        gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
 
         if (equipment == EQUIP_TYPE_TUNIC) {
             gSaveContext.save.info.equips.equipment |= EQUIP_VALUE_TUNIC_KOKIRI << (EQUIP_TYPE_TUNIC * 4);
@@ -403,7 +380,7 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
 
         if (equipment == EQUIP_TYPE_SWORD || equipment == EQUIP_TYPE_SHIELD)
             for (i=1; i<4; i++)
-                if ( (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS && equipment == EQUIP_TYPE_SWORD) || (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SHIELDS && equipment == EQUIP_TYPE_SHIELD) ) {
+                if ((gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS && equipment == EQUIP_TYPE_SWORD) || (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SHIELDS && equipment == EQUIP_TYPE_SHIELD)) {
                     gSaveContext.save.info.equips.buttonItems[i]    = ITEM_NONE;
                     gSaveContext.save.info.equips.cButtonSlots[i-1] = SLOT_NONE;
                     break;
@@ -422,7 +399,7 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
         play->pauseCtx.cursorSpecialPos = PAUSE_CURSOR_PAGE_LEFT;
     }
 
-    return isFourthItemIndex ? 4 : equipValue;
+    return equipValue;
 }
 
 void Inventory_ChangeUpgrade(s16 upgrade, s16 value) {

@@ -38,7 +38,6 @@
 
 #if OOT_NTSC_N64
 #include "assets/textures/do_action_static/do_action_static_all.h"
-#include "assets/textures/icon_item_static/icon_item_static_all.h"
 #else
 #include "assets/textures/do_action_static/do_action_static.h"
 #endif
@@ -1764,7 +1763,7 @@ u8 Interface_GetLoadItem(u16 button) {
     else if (item == ITEM_SHIELDS)
         return (SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) == PLAYER_SHIELD_NONE) ? ITEM_NONE : (ITEM_SHIELD_DEKU + SHIELD_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) - 1);
     else if (item == ITEM_TUNICS)
-        return (TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == PLAYER_TUNIC_KOKIRI && IS_SPIRIT_TUNIC) ? ITEM_TUNIC_SPIRIT : ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
+        return ITEM_TUNIC_KOKIRI + TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC));
     else if (item == ITEM_BOOTS)
         return ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
     return item;
@@ -1807,18 +1806,14 @@ typedef struct ChildQuestIcons {
 
 static u8 IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                               }
 static u8 IsWoodenShield(void)  { return IS_CHILD_QUEST_AS_CHILD &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN); }
-static u8 IsHerosShield(void)   { return IS_HEROS_SHIELD         && !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL);  }
-static u8 IsMetalShield(void)   { return IS_HEROS_SHIELD         &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL);  }
-static u8 IsHerosSword(void)    { return IS_HEROS_SWORD;                                                        }
-static u8 IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                            }
+static u8 IsMetalShield(void)   { return IS_CHILD_QUEST_AS_CHILD &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL);  }
+static u8 IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER);  }
 static u8 IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
 static u8 IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
 
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_DEKU,               IsWoodenShield, ITEM_SHIELD_WOODEN  },
-    { ITEM_SHIELD_HYLIAN,             IsHerosShield,  ITEM_SHIELD_HEROS   },
     { ITEM_SHIELD_HEROS,              IsMetalShield,  ITEM_SHIELD_METAL   },
-    { ITEM_SWORD_KOKIRI ,             IsHerosSword,   ITEM_SWORD_HEROS    },
     { ITEM_SHIELD_MIRROR,             IsChildQuest,   LAST_ITEM_ICON + 1  },
     { ITEM_SWORD_MASTER,              IsRazorSword,   LAST_ITEM_ICON + 2  },
     { ITEM_SWORD_BIGGORON,            IsSilverSword,  LAST_ITEM_ICON + 3  },
@@ -1985,7 +1980,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         PRINTF_RST();
 
         return ITEM_NONE;
-    } else if ((item >= ITEM_SWORD_KOKIRI) && (item <= ITEM_SWORD_BIGGORON)) {
+    } else if ((item >= ITEM_SWORD_KOKIRI) && (item <= ITEM_SWORD_HEROS)) {
         gSaveContext.save.info.inventory.equipment |=
             OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, item - ITEM_SWORD_KOKIRI + EQUIP_INV_SWORD_KOKIRI);
 
@@ -2013,19 +2008,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
 
         return ITEM_NONE;
-    } else if (item == ITEM_SWORD_HEROS) {
-        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
-        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
-        if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_KOKIRI)
-            Interface_LoadItemIcon1(play, 0);
-        for (i=0; i<4; i++) {
-            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
-                Interface_LoadItemIcon1(play, i);
-            if (DPAD_BUTTON(i) == SLOT_SWORDS)
-                Interface_LoadItemIcon1(play, i+4);
-        }
-        return ITEM_NONE;
-    } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
+    } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_HEROS)) {
         if (item == ITEM_SHIELD_DEKU)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
@@ -2040,14 +2023,9 @@ u8 Item_Give(PlayState* play, u8 item) {
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
-    } else if (item == ITEM_SHIELD_HEROS || item == ITEM_SHIELD_METAL) {
-        if (item == ITEM_SHIELD_HEROS)
-            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_METAL];
-        else gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_METAL];
+    } else if (item == ITEM_SHIELD_METAL) {
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_METAL];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
-        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_HEROS];
-        if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
-            Player_SetEquipmentData(play, GET_PLAYER(play));
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
@@ -2060,22 +2038,16 @@ u8 Item_Give(PlayState* play, u8 item) {
         if (item == ITEM_SHIELD_HEROS_UPGRADE)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
         return ITEM_NONE;
-    } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
+    } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_SPIRIT)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI);
         for (i=0; i<4; i++)
-            if (DPAD_BUTTON(i) == SLOT_TUNICS || DPAD_BUTTON(i) == SLOT_TUNIC_GORON || DPAD_BUTTON(i) == SLOT_TUNIC_ZORA)
+            if (DPAD_BUTTON(i) == SLOT_TUNICS || DPAD_BUTTON(i) == SLOT_TUNIC_GORON || DPAD_BUTTON(i) == SLOT_TUNIC_ZORA || DPAD_BUTTON(i) == SLOT_TUNIC_SPIRIT)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
-    } else if (item == ITEM_TUNIC_SPIRIT) {
-        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, 3);
-        for (i=0; i<4; i++)
-            if (DPAD_BUTTON(i) == SLOT_TUNICS || DPAD_BUTTON(i) == SLOT_TUNIC_SPIRIT)
-                Interface_LoadItemIcon1(play, i+4);
-        return ITEM_NONE;
-    } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_HOVER)) {
+    } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_PEGASUS)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_BOOTS, item - ITEM_BOOTS_KOKIRI);
         for (i=0; i<4; i++)
-            if (DPAD_BUTTON(i) == SLOT_BOOTS || DPAD_BUTTON(i) == SLOT_BOOTS_IRON || DPAD_BUTTON(i) == SLOT_BOOTS_HOVER)
+            if (DPAD_BUTTON(i) == SLOT_BOOTS || DPAD_BUTTON(i) == SLOT_BOOTS_IRON || DPAD_BUTTON(i) == SLOT_BOOTS_HOVER || DPAD_BUTTON(i) == SLOT_BOOTS_PEGASUS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if ((item == ITEM_DUNGEON_BOSS_KEY) || (item == ITEM_DUNGEON_COMPASS) || (item == ITEM_DUNGEON_MAP)) {
@@ -5571,7 +5543,7 @@ void Interface_Update(PlayState* play) {
             sEnvHazard = PLAYER_ENV_HAZARD_NONE;
         }
     } else if (sEnvHazard == PLAYER_ENV_HAZARD_CURSEDROOM) {
-        if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_KOKIRI && IS_SPIRIT_TUNIC) {
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_SPIRIT) {
             sEnvHazard = PLAYER_ENV_HAZARD_NONE;
         }
     } else if ((Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) &&

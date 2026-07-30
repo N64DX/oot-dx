@@ -156,7 +156,7 @@ s16 EnJg_UpdateTalkState(PlayState* play, Actor* thisx) {
             if (Message_ShouldAdvance(play)) {
                 if (this->actor.textId == 0x8415 || this->actor.textId == 0x8416) {
                     SET_INFTABLE(INFTABLE_PROOF_FOR_GORON_ELDER);
-                    this->actor.textId = (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_HEROS) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) ? 0x8418 : 0x8417;
+                    this->actor.textId = (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) ? 0x8418 : 0x8417;
                     Message_ContinueTextbox(play, this->actor.textId);
                     return NPC_TALK_STATE_TALKING;
                 }

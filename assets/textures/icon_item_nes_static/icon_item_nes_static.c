@@ -102,16 +102,8 @@ u64 gPauseSelectItem10ENGTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_T
 #include "assets/textures/icon_item_nes_static/gPauseSelectItem10ENGTex.ia8.inc.c"
 };
 
-u64 gPauseSelectItem10CQENGTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
-#include "assets/textures/icon_item_nes_static/gPauseSelectItem10CQENGTex.ia8.inc.c"
-};
-
 u64 gPauseSelectItem20ENGTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_nes_static/gPauseSelectItem20ENGTex.ia8.inc.c"
-};
-
-u64 gPauseSelectItem20CQENGTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
-#include "assets/textures/icon_item_nes_static/gPauseSelectItem20CQENGTex.ia8.inc.c"
 };
 
 u64 gPauseMap10ENGTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
@@ -133,3 +125,5 @@ u64 gPauseQuestStatus20ENGTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_
 u64 gPauseSave10ENGTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_nes_static/gPauseSave10ENGTex.ia8.inc.c"
 };
+
+#include "icon_item_nes_static_all.c"

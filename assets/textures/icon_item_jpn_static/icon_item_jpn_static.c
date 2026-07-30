@@ -100,16 +100,8 @@ u64 gPauseSelectItem10JPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_T
 #include "assets/textures/icon_item_jpn_static/gPauseSelectItem10JPNTex.ia8.inc.c"
 };
 
-u64 gPauseSelectItem10CQJPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
-#include "assets/textures/icon_item_jpn_static/gPauseSelectItem10CQJPNTex.ia8.inc.c"
-};
-
 u64 gPauseSelectItem20JPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_jpn_static/gPauseSelectItem20JPNTex.ia8.inc.c"
-};
-
-u64 gPauseSelectItem20CQJPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
-#include "assets/textures/icon_item_jpn_static/gPauseSelectItem20CQJPNTex.ia8.inc.c"
 };
 
 u64 gPauseMap10JPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
@@ -131,3 +123,5 @@ u64 gPauseQuestStatus20JPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_
 u64 gPauseSave10JPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_jpn_static/gPauseSave10JPNTex.ia8.inc.c"
 };
+
+#include "icon_item_jpn_static_all.c"

@@ -12,9 +12,6 @@
 #include "save.h"
 
 #include "assets/textures/icon_item_static/icon_item_static.h"
-#if OOT_NTSC_N64
-#include "assets/textures/icon_item_static/icon_item_static_all.h"
-#endif
 #include "assets/textures/parameter_static/parameter_static.h"
 
 static u8 sChildUpgrades[] = {
@@ -60,21 +57,25 @@ static u8 sEquipmentItemOffsets[] = {
     ITEM_SWORD_KOKIRI - ITEM_SWORD_KOKIRI,   // EQUIP_VALUE_SWORD_KOKIRI
     ITEM_SWORD_MASTER - ITEM_SWORD_KOKIRI,   // EQUIP_VALUE_SWORD_MASTER
     ITEM_SWORD_BIGGORON - ITEM_SWORD_KOKIRI, // EQUIP_VALUE_SWORD_BIGGORON
+    ITEM_SWORD_HEROS - ITEM_SWORD_KOKIRI,    // EQUIP_VALUE_SWORD_HEROS
     // EQUIP_TYPE_SHIELD
     0,                                      // unused
     ITEM_SHIELD_DEKU - ITEM_SWORD_KOKIRI,   // EQUIP_VALUE_SHIELD_DEKU
     ITEM_SHIELD_HYLIAN - ITEM_SWORD_KOKIRI, // EQUIP_VALUE_SHIELD_HYLIAN
     ITEM_SHIELD_MIRROR - ITEM_SWORD_KOKIRI, // EQUIP_VALUE_SHIELD_MIRROR
+    ITEM_SHIELD_HEROS - ITEM_SWORD_KOKIRI,  // EQUIP_VALUE_SHIELD_HEROS
     // EQUIP_TYPE_TUNIC
     0,                                     // unused
     ITEM_TUNIC_KOKIRI - ITEM_SWORD_KOKIRI, // EQUIP_VALUE_TUNIC_KOKIRI
     ITEM_TUNIC_GORON - ITEM_SWORD_KOKIRI,  // EQUIP_VALUE_TUNIC_GORON
     ITEM_TUNIC_ZORA - ITEM_SWORD_KOKIRI,   // EQUIP_VALUE_TUNIC_ZORA
+    ITEM_TUNIC_SPIRIT - ITEM_SWORD_KOKIRI,   // EQUIP_VALUE_TUNIC_SPIRIT
     // EQUIP_TYPE_BOOTS
     0,                                     // unused
     ITEM_BOOTS_KOKIRI - ITEM_SWORD_KOKIRI, // EQUIP_VALUE_BOOTS_KOKIRI
     ITEM_BOOTS_IRON - ITEM_SWORD_KOKIRI,   // EQUIP_VALUE_BOOTS_IRON
     ITEM_BOOTS_HOVER - ITEM_SWORD_KOKIRI,  // EQUIP_VALUE_BOOTS_HOVER
+    ITEM_BOOTS_PEGASUS - ITEM_SWORD_KOKIRI,  // EQUIP_VALUE_BOOTS_UNK
 };
 
 void KaleidoScope_DrawEquipmentImage(PlayState* play, void* texture, u32 width, u32 height) {
@@ -156,9 +157,9 @@ void KaleidoScope_DrawPlayerWork(PlayState* play) {
         scale = 0.046f;
 
         if (IS_CHILD_QUEST) {
-            if ( (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_NONE && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_NONE) || CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_NONE)
+            if ((CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_NONE && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_NONE) || CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_NONE)
                 pos.y = -130.0f;
-            if ( (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_NONE && (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_NONE || CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU || (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD) || CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_MIRROR) ) || CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_NONE)
+            if ((CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == EQUIP_VALUE_SWORD_NONE && CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) != EQUIP_VALUE_SHIELD_HYLIAN) || CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_NONE)
                 pos.y = -188.0f;
         }
     } else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) != EQUIP_VALUE_SWORD_MASTER) {
@@ -259,7 +260,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                                 }
                             }
                         } else {
-                            if ( (gBitFlags[pauseCtx->cursorPoint[PAUSE_EQUIP] - 1] & gSaveContext.save.info.inventory.equipment) || (pauseCtx->cursorPoint[PAUSE_EQUIP] == 6 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) || (pauseCtx->cursorPoint[PAUSE_EQUIP] == 1 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ) {
+                            if ( (gBitFlags[(pauseCtx->cursorX[PAUSE_EQUIP] - 1) + pauseCtx->cursorY[PAUSE_EQUIP] * 4] & gSaveContext.save.info.inventory.equipment) || (pauseCtx->cursorX[PAUSE_EQUIP] == 2 && pauseCtx->cursorY[PAUSE_EQUIP] == 1 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) || (pauseCtx->cursorX[PAUSE_EQUIP] == 1 && pauseCtx->cursorY[PAUSE_EQUIP] == 0 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ) {
                                 cursorMoveResult = 2;
                             }
                         }
@@ -272,9 +273,9 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                         }
 
                         pauseCtx->cursorPoint[PAUSE_EQUIP] =
-                            pauseCtx->cursorX[PAUSE_EQUIP] + (pauseCtx->cursorY[PAUSE_EQUIP] * 4);
+                            pauseCtx->cursorX[PAUSE_EQUIP] + (pauseCtx->cursorY[PAUSE_EQUIP] * 5);
 
-                        if (pauseCtx->cursorPoint[PAUSE_EQUIP] >= 16) {
+                        if (pauseCtx->cursorPoint[PAUSE_EQUIP] >= 20) {
                             pauseCtx->cursorPoint[PAUSE_EQUIP] = pauseCtx->cursorX[PAUSE_EQUIP];
                         }
 
@@ -286,7 +287,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                         }
                     }
                 } else if (pauseCtx->stickAdjX > 30) {
-                    if (pauseCtx->cursorX[PAUSE_EQUIP] < 3) {
+                    if (pauseCtx->cursorX[PAUSE_EQUIP] < (IS_CHILD_QUEST ? 4 : 3)) {
                         pauseCtx->cursorX[PAUSE_EQUIP]++;
                         pauseCtx->cursorPoint[PAUSE_EQUIP] += 1;
 
@@ -295,7 +296,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                                 cursorMoveResult = 1;
                             }
                         } else {
-                            if ( (gBitFlags[pauseCtx->cursorPoint[PAUSE_EQUIP] - 1] & gSaveContext.save.info.inventory.equipment) || (pauseCtx->cursorPoint[PAUSE_EQUIP] == 6 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) || (pauseCtx->cursorPoint[PAUSE_EQUIP] == 1 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ) {
+                            if ( (gBitFlags[(pauseCtx->cursorX[PAUSE_EQUIP] - 1) + pauseCtx->cursorY[PAUSE_EQUIP] * 4] & gSaveContext.save.info.inventory.equipment) || (pauseCtx->cursorX[PAUSE_EQUIP] == 2 && pauseCtx->cursorY[PAUSE_EQUIP] == 1 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) || (pauseCtx->cursorX[PAUSE_EQUIP] == 1 && pauseCtx->cursorY[PAUSE_EQUIP] == 0 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ) {
                                 cursorMoveResult = 2;
                             }
                         }
@@ -308,9 +309,9 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                         }
 
                         pauseCtx->cursorPoint[PAUSE_EQUIP] =
-                            pauseCtx->cursorX[PAUSE_EQUIP] + (pauseCtx->cursorY[PAUSE_EQUIP] * 4);
+                            pauseCtx->cursorX[PAUSE_EQUIP] + (pauseCtx->cursorY[PAUSE_EQUIP] * 5);
 
-                        if (pauseCtx->cursorPoint[PAUSE_EQUIP] >= 16) {
+                        if (pauseCtx->cursorPoint[PAUSE_EQUIP] >= 20) {
                             pauseCtx->cursorPoint[PAUSE_EQUIP] = pauseCtx->cursorX[PAUSE_EQUIP];
                         }
 
@@ -334,7 +335,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 if (pauseCtx->stickAdjY > 30) {
                     if (pauseCtx->cursorY[PAUSE_EQUIP] != 0) {
                         pauseCtx->cursorY[PAUSE_EQUIP]--;
-                        pauseCtx->cursorPoint[PAUSE_EQUIP] -= 4;
+                        pauseCtx->cursorPoint[PAUSE_EQUIP] -= 5;
 
                         if (pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_CURSOR_X_UPG) {
                             if (pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_CURSOR_Y_BULLETBAG_QUIVER) {
@@ -347,7 +348,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                                 }
                             }
                         } else {
-                            if ( (gBitFlags[pauseCtx->cursorPoint[PAUSE_EQUIP] - 1] & gSaveContext.save.info.inventory.equipment) || (pauseCtx->cursorPoint[PAUSE_EQUIP] == 6 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) || (pauseCtx->cursorPoint[PAUSE_EQUIP] == 1 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ) {
+                            if ( (gBitFlags[(pauseCtx->cursorX[PAUSE_EQUIP] - 1) + pauseCtx->cursorY[PAUSE_EQUIP] * 4] & gSaveContext.save.info.inventory.equipment) || (pauseCtx->cursorX[PAUSE_EQUIP] == 2 && pauseCtx->cursorY[PAUSE_EQUIP] == 1 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) || (pauseCtx->cursorX[PAUSE_EQUIP] == 1 && pauseCtx->cursorY[PAUSE_EQUIP] == 0 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ) {
                                 cursorMoveResult = 2;
                             }
                         }
@@ -359,7 +360,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 } else if (pauseCtx->stickAdjY < -30) {
                     if (pauseCtx->cursorY[PAUSE_EQUIP] < 3) {
                         pauseCtx->cursorY[PAUSE_EQUIP]++;
-                        pauseCtx->cursorPoint[PAUSE_EQUIP] += 4;
+                        pauseCtx->cursorPoint[PAUSE_EQUIP] += 5;
 
                         if (pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_CURSOR_X_UPG) {
                             if (pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_CURSOR_Y_SCALE) {
@@ -369,7 +370,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                                 cursorMoveResult = 1;
                             }
                         } else {
-                            if ( (gBitFlags[pauseCtx->cursorPoint[PAUSE_EQUIP] - 1] & gSaveContext.save.info.inventory.equipment) || (pauseCtx->cursorPoint[PAUSE_EQUIP] == 6 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) || (pauseCtx->cursorPoint[PAUSE_EQUIP] == 1 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ) {
+                            if ( (gBitFlags[(pauseCtx->cursorX[PAUSE_EQUIP] - 1) + pauseCtx->cursorY[PAUSE_EQUIP] * 4] & gSaveContext.save.info.inventory.equipment) || (pauseCtx->cursorX[PAUSE_EQUIP] == 2 && pauseCtx->cursorY[PAUSE_EQUIP] == 1 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) || (pauseCtx->cursorX[PAUSE_EQUIP] == 1 && pauseCtx->cursorY[PAUSE_EQUIP] == 0 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ) {
                                 cursorMoveResult = 2;
                             }
                         }
@@ -415,7 +416,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                             }
                         }
                     } else {
-                        if ( (gBitFlags[cursorPoint - 1] & gSaveContext.save.info.inventory.equipment) || (cursorPoint == 6 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) || (cursorPoint == 1 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ) {
+                        if (gBitFlags[cursorPoint - 1] & gSaveContext.save.info.inventory.equipment) {
                             pauseCtx->cursorPoint[PAUSE_EQUIP] = cursorPoint;
                             pauseCtx->cursorX[PAUSE_EQUIP] = cursorX;
                             pauseCtx->cursorY[PAUSE_EQUIP] = cursorY;
@@ -424,12 +425,12 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                     }
 
                     cursorY = cursorY + 1;
-                    cursorPoint = cursorPoint + 4;
+                    cursorPoint = cursorPoint + 5;
                     if (cursorY >= 4) {
                         cursorY = 0;
-                        cursorPoint = cursorX + 1;
-                        cursorX = cursorPoint;
-                        if (cursorX >= 4) {
+                        cursorX = cursorX + 1;
+                        cursorPoint = cursorX;
+                        if (cursorX >= (IS_CHILD_QUEST ? 5 : 4)) {
                             KaleidoScope_MoveCursorToSpecialPos(play, PAUSE_CURSOR_PAGE_RIGHT);
                             break;
                         }
@@ -442,7 +443,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 pauseCtx->cursorSpecialPos = 0;
                 SFX_PLAY_CENTERED(NA_SE_SY_CURSOR);
 
-                cursorPoint = cursorX = 3;
+                cursorPoint = cursorX = IS_CHILD_QUEST ? 4 : 3;
                 cursorY = 0;
                 while (true) {
                     if (cursorX == EQUIP_CURSOR_X_UPG) {
@@ -453,7 +454,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                             break;
                         }
                     } else {
-                        if ( (gBitFlags[cursorPoint - 1] & gSaveContext.save.info.inventory.equipment) || (cursorPoint == 6 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) || (cursorPoint == 1 && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ) {
+                        if (gBitFlags[cursorPoint - 1] & gSaveContext.save.info.inventory.equipment) {
                             pauseCtx->cursorPoint[PAUSE_EQUIP] = cursorPoint;
                             pauseCtx->cursorX[PAUSE_EQUIP] = cursorX;
                             pauseCtx->cursorY[PAUSE_EQUIP] = cursorY;
@@ -462,11 +463,11 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                     }
 
                     cursorY = cursorY + 1;
-                    cursorPoint = cursorPoint + 4;
+                    cursorPoint = cursorPoint + 5;
                     if (cursorY >= 4) {
                         cursorY = 0;
-                        cursorPoint = cursorX - 1;
-                        cursorX = cursorPoint;
+                        cursorX = cursorX - 1;
+                        cursorPoint = cursorX;
                         if (cursorX < 0) {
                             KaleidoScope_MoveCursorToSpecialPos(play, PAUSE_CURSOR_PAGE_LEFT);
                             break;
@@ -562,81 +563,6 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             sEquipTimer = 10;
         }
 
-        if (pauseCtx->cursorSpecialPos == 0 && pauseCtx->state == PAUSE_STATE_MAIN && pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE && IS_CHILD_QUEST) {
-            if (cursorItem == ITEM_SWORD_KOKIRI && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) {
-                KaleidoScope_DrawSwapItemIcons(play, CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) ? ITEM_SWORD_HEROS : ITEM_SWORD_KOKIRI, CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) ? ITEM_SWORD_KOKIRI : ITEM_SWORD_HEROS, pauseCtx->alpha);
-
-                if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
-                    Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-                    gSaveContext.save.info.upgradeItems ^= gBitFlags[UPGRADE_SWORD_HEROS];
-                    Player_SetEquipmentData(play, GET_PLAYER(play));
-                    pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
-                    sEquipTimer = 10;
-
-                    if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_KOKIRI)
-                        Interface_LoadItemIcon1(play, 0);
-
-                    for (i=1; i<8; i++) {
-                        if (i<4) {
-                            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
-                                Interface_LoadItemIcon1(play, i);
-                        }
-                        else if (Interface_GetItemFromDpad(i-4) == ITEM_SWORDS)
-                            Interface_LoadItemIcon1(play, i);
-                    }
-                }
-            }
-
-            if (cursorItem == ITEM_SHIELD_HYLIAN && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
-                u8 herosShield = CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL) ? ITEM_SHIELD_METAL : ITEM_SHIELD_HEROS;
-                KaleidoScope_DrawSwapItemIcons(play, HAS_HEROS_SHIELD ? herosShield : ITEM_SHIELD_HYLIAN, HAS_HEROS_SHIELD ? ITEM_SHIELD_HYLIAN : herosShield, pauseCtx->alpha);
-
-                if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
-                    Player *player = GET_PLAYER(play);
-                    Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-                    gSaveContext.save.info.upgradeItems ^= gBitFlags[UPGRADE_SHIELD_HEROS];
-                    Player_SetEquipmentData(play, player);
-                    pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
-                    sEquipTimer = 10;
-
-                    if (player->currentShield == PLAYER_SHIELD_HYLIAN)
-                        DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(ITEM_SHIELD_HYLIAN)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __LINE__);
-                    else if (player->currentShield == PLAYER_SHIELD_HEROS)
-                        DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(ITEM_SHIELD_HEROS)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __LINE__);
-
-                    for (i=1; i<8; i++) {
-                        if (i<4) {
-                            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SHIELDS)
-                                Interface_LoadItemIcon1(play, i);
-                        }
-                        else if (Interface_GetItemFromDpad(i-4) == ITEM_SHIELDS)
-                            Interface_LoadItemIcon1(play, i);
-                    }
-                }
-            }
-
-            if (cursorItem == ITEM_TUNIC_KOKIRI && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT)) {
-                KaleidoScope_DrawSwapItemIcons(play, HAS_SPIRIT_TUNIC ? ITEM_TUNIC_SPIRIT : ITEM_TUNIC_KOKIRI, HAS_SPIRIT_TUNIC ? ITEM_TUNIC_KOKIRI : ITEM_TUNIC_SPIRIT, pauseCtx->alpha);
-
-                if (CHECK_BTN_ALL(input->press.button, BTN_CUP)) {
-                    Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-                    gSaveContext.save.info.upgradeItems ^= gBitFlags[UPGRADE_TUNIC_SPIRIT];
-                    Player_SetEquipmentData(play, GET_PLAYER(play));
-                    pauseCtx->mainState = PAUSE_MAIN_STATE_EQUIP_CHANGED;
-                    sEquipTimer = 10;
-
-                    for (i=1; i<8; i++) {
-                        if (i<4) {
-                            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_TUNICS)
-                                Interface_LoadItemIcon1(play, i);
-                        }
-                        else if (Interface_GetItemFromDpad(i-4) == ITEM_TUNICS)
-                            Interface_LoadItemIcon1(play, i);
-                    }
-                }
-            }
-        }
-
         if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) &&
             (pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE) &&
             CHECK_BTN_ALL(input->press.button, BTN_A) && (pauseCtx->cursorX[PAUSE_EQUIP] != EQUIP_CURSOR_X_UPG)) {
@@ -691,18 +617,18 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
         }
         if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) && (pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE) && CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && (pauseCtx->cursorX[PAUSE_EQUIP] != 0)) {
             if (CHECK_AGE_REQ_EQUIP(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP])) {
-                if (cursorSlot == 1 || cursorSlot == 2 || cursorSlot == 3)
+                if (cursorSlot == 1 || cursorSlot == 2 || cursorSlot == 3 || cursorSlot == 4)
                     temp = SLOT_SWORDS;
-                else if (cursorSlot == 5 || cursorSlot == 6 || cursorSlot == 7)
+                else if (cursorSlot == 6 || cursorSlot == 7 || cursorSlot == 8 || cursorSlot == 9)
                     temp = SLOT_SHIELDS;
-                else if (cursorSlot == 9)
-                    temp = IS_SPIRIT_TUNIC ? SLOT_TUNIC_SPIRIT : SLOT_TUNICS;
-                else if (cursorSlot == 10 || cursorSlot == 11)
-                    temp = SLOT_TUNIC_GORON + cursorSlot - 10;
-                else if (cursorSlot == 13)
+                else if (cursorSlot == 11)
+                    temp = SLOT_TUNICS;
+                else if (cursorSlot == 12 || cursorSlot == 13 || cursorSlot == 14)
+                    temp = SLOT_TUNIC_GORON + cursorSlot - 12;
+                else if (cursorSlot == 16)
                     temp = SLOT_BOOTS;
-                else if (cursorSlot == 14 || cursorSlot == 15)
-                    temp = SLOT_BOOTS_IRON + cursorSlot - 14;
+                else if (cursorSlot == 17 || cursorSlot == 18 || cursorSlot == 19)
+                    temp = SLOT_BOOTS_IRON + cursorSlot - 17;
                 else temp = SLOT_NONE;
                 
                 if (temp != SLOT_NONE) {
@@ -725,6 +651,8 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                             temp = ITEM_BOOTS_IRON;
                         else if (temp == SLOT_BOOTS_HOVER)
                             temp = ITEM_BOOTS_HOVER;
+                        else if (temp == SLOT_BOOTS_PEGASUS)
+                            temp = ITEM_BOOTS_PEGASUS;
                         
                         if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
                             i = 1;
@@ -797,10 +725,10 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
 
     // for each row (one row per equip type)
     for (rowStart = 0, i = 0, point = EQUIP_QUAD_SWORD_KOKIRI * 4; i < EQUIP_TYPE_MAX;
-         i++, rowStart += 4, point += 4 * 4) {
+         i++, rowStart += 4, point += 5 * 4) {
 
         // for each equip column
-        for (k = 0, temp = rowStart + 1, bit = rowStart, j = point; k < 3; k++, bit++, j += 4, temp++) {
+        for (k = 0, temp = (i * 5) + 1, bit = rowStart, j = point; k < 4; k++, bit++, j += 4, temp++) {
 
             if ((gBitFlags[bit] & gSaveContext.save.info.inventory.equipment) && (pauseCtx->cursorSpecialPos == 0)) {
                 if (CHECK_AGE_REQ_EQUIP(i, k + 1)) {
@@ -849,7 +777,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             showAltQuiverSlot ^= 1;
         }
-    } else if (cursorSlot == 8 && CUR_UPG_VALUE(UPG_STRENGTH) > 0 && CHECK_UPGRADE_ITEM(UPGRADE_PERFECT_BLOCK)) {
+    } else if (cursorSlot == 10 && CUR_UPG_VALUE(UPG_STRENGTH) > 0 && CHECK_UPGRADE_ITEM(UPGRADE_PERFECT_BLOCK)) {
         u8 currItem =  showAltStrengthSlot ? ITEM_PERFECT_BLOCK_UPGRADE : sChildUpgradeItemBases[2] + CUR_UPG_VALUE(UPG_STRENGTH) - 1;
         u8 nextItem = !showAltStrengthSlot ? ITEM_PERFECT_BLOCK_UPGRADE : sChildUpgradeItemBases[2] + CUR_UPG_VALUE(UPG_STRENGTH) - 1;
         KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
@@ -858,7 +786,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             showAltStrengthSlot ^= 1;
         }
-    } else if (cursorSlot == 12 && CUR_UPG_VALUE(UPG_SCALE) > 0 && CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY)) {
+    } else if (cursorSlot == 15 && CUR_UPG_VALUE(UPG_SCALE) > 0 && CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY)) {
         u8 currItem =  showAltScalesSlot ? ITEM_AMULET_OF_ENERGY : sChildUpgradeItemBases[3] + CUR_UPG_VALUE(UPG_SCALE) - 1;
         u8 nextItem = !showAltScalesSlot ? ITEM_AMULET_OF_ENERGY : sChildUpgradeItemBases[3] + CUR_UPG_VALUE(UPG_SCALE) - 1;
         KaleidoScope_DrawSwapItemIcons(play, currItem, nextItem, pauseCtx->alpha);
@@ -870,8 +798,8 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
     }
 
     // for each row
-    for (rowStart = 0, j = 0, temp = 0, i = 0; i < 4; i++, rowStart += 4, j += 4 * 4) {
-        gSPVertex(POLY_OPA_DISP++, &pauseCtx->equipVtx[j], 4 * 4, 0);
+    for (rowStart = 0, j = 0, temp = 0, i = 0; i < 4; i++, rowStart += 4, j += 5 * 4) {
+        gSPVertex(POLY_OPA_DISP++, &pauseCtx->equipVtx[j], 5 * 4, 0);
 
         // Draw upgrade `i`
         // EQUIP_QUAD_UPG_BULLETBAG_QUIVER, EQUIP_QUAD_UPG_BOMB_BAG, EQUIP_QUAD_UPG_STRENGTH, EQUIP_QUAD_UPG_SCALE
@@ -915,32 +843,19 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
         // EQUIP_QUAD_TUNIC_KOKIRI, EQUIP_QUAD_TUNIC_GORON, EQUIP_QUAD_TUNIC_ZORA
         // EQUIP_QUAD_BOOTS_KOKIRI, EQUIP_QUAD_BOOTS_IRON, EQUIP_QUAD_BOOTS_HOVER
 
-        for (k = 0, bit = rowStart, point = 4; k < 3; k++, point += 4, temp++, bit++) {
-
-            if (i == EQUIP_TYPE_SWORD) {
+        for (k = 0, bit = rowStart, point = 4; k < 4; k++, point += 4, temp++, bit++) {
+            if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_MASTER && gBitFlags[1] & gSaveContext.save.info.inventory.equipment) {
+                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, (IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) ? gItemIconSwordRazorTex : gItemIconSwordMasterTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
+            } else if (i == EQUIP_TYPE_SWORD && k == EQUIP_INV_SWORD_BIGGORON && gBitFlags[2] & gSaveContext.save.info.inventory.equipment) {
                 void* icon;
-                if (k == EQUIP_INV_SWORD_KOKIRI) {
-                    if (gBitFlags[3] & gSaveContext.save.info.inventory.equipment && IS_HEROS_SWORD)
-                        KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconSwordHerosTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-                    else if (gBitFlags[0] & gSaveContext.save.info.inventory.equipment)
-                        KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconSwordKokiriTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-                }
-
-                if (k == EQUIP_INV_SWORD_MASTER && gBitFlags[1] & gSaveContext.save.info.inventory.equipment)
-                    KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, IS_RAZOR_SWORD ? gItemIconSwordRazorTex : gItemIconSwordMasterTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-
-                if (k == EQUIP_INV_SWORD_BIGGORON && gBitFlags[2] & gSaveContext.save.info.inventory.equipment) {
-                    void* icon = gSaveContext.save.info.playerData.swordHealth ? gItemIconSwordBiggoronTex : gItemIconBrokenGiantsKnifeTex;
-                    if (IS_CHILD_QUEST_AS_CHILD)
-                        icon = gSaveContext.save.info.playerData.bgsFlag ? gItemIconSwordGildedTex : gItemIconSwordSilverTex;
-                    KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, icon, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-                }
+                if (IS_CHILD_QUEST_AS_CHILD)
+                    icon = gSaveContext.save.info.playerData.bgsFlag ? gItemIconSwordGildedTex : gItemIconSwordSilverTex;
+                else icon = gSaveContext.save.info.playerData.swordHealth ? gItemIconSwordBiggoronTex : gItemIconBrokenGiantsKnifeTex;
+                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, icon, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if (i == EQUIP_TYPE_SHIELD && k == EQUIP_INV_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN)) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconShieldWoodenTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-            } else if (i == EQUIP_TYPE_SHIELD && k == EQUIP_INV_SHIELD_HYLIAN && IS_HEROS_SHIELD) {
-                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL) ? gItemIconShieldMetalTex : gItemIconShieldHerosTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-            } else if (i == EQUIP_TYPE_TUNIC && k == EQUIP_INV_TUNIC_KOKIRI && IS_SPIRIT_TUNIC) {
-                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconTunicSpiritTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
+            } else if (i == EQUIP_TYPE_SHIELD && k == EQUIP_INV_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL)) {
+                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconShieldMetalTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
             } else if (gBitFlags[bit] & gSaveContext.save.info.inventory.equipment) {
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIcons[ITEM_SWORD_KOKIRI + temp],
                                                    ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
@@ -949,29 +864,25 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
     }
 
     // Draw player to the player prerender buffer
+    if (!IS_CHILD_QUEST) {
+        KaleidoScope_DrawPlayerWork(play);
 
-    KaleidoScope_DrawPlayerWork(play);
+        if (pauseCtx->mainState == PAUSE_MAIN_STATE_EQUIP_CHANGED && sEquipTimer == 10)
+            KaleidoScope_SetupPlayerPreRender(play);
+        if (pauseCtx->mainState == PAUSE_MAIN_STATE_EQUIP_CHANGED && sEquipTimer == 9)
+            KaleidoScope_ProcessPlayerPreRender();
 
-    if ((pauseCtx->mainState == PAUSE_MAIN_STATE_EQUIP_CHANGED) && (sEquipTimer == 10)) {
-        KaleidoScope_SetupPlayerPreRender(play);
+        gSPSegment(POLY_OPA_DISP++, 0x07, PAUSE_PLAYER_SEGMENT_RENDER_TEXTURE(pauseCtx->playerSegment));
+        gSPSegment(POLY_OPA_DISP++, 0x08, pauseCtx->iconItemSegment);
+        gSPSegment(POLY_OPA_DISP++, 0x09, pauseCtx->iconItem24Segment);
+        gSPSegment(POLY_OPA_DISP++, 0x0A, pauseCtx->nameSegment);
+        gSPSegment(POLY_OPA_DISP++, 0x0B, interfaceCtx->mapSegment);
+        gSPSegment(POLY_OPA_DISP++, 0x0C, pauseCtx->iconItemAltSegment);
+
+        // Draw player prerender onto the equip page
+        Gfx_SetupDL_42Opa(play->state.gfxCtx);
+        KaleidoScope_DrawEquipmentImage(play, PAUSE_PLAYER_SEGMENT_RENDER_TEXTURE(pauseCtx->playerSegment), PAUSE_EQUIP_PLAYER_WIDTH, PAUSE_EQUIP_PLAYER_HEIGHT);
     }
-
-    if ((pauseCtx->mainState == PAUSE_MAIN_STATE_EQUIP_CHANGED) && (sEquipTimer == 9)) {
-        KaleidoScope_ProcessPlayerPreRender();
-    }
-
-    gSPSegment(POLY_OPA_DISP++, 0x07, PAUSE_PLAYER_SEGMENT_RENDER_TEXTURE(pauseCtx->playerSegment));
-    gSPSegment(POLY_OPA_DISP++, 0x08, pauseCtx->iconItemSegment);
-    gSPSegment(POLY_OPA_DISP++, 0x09, pauseCtx->iconItem24Segment);
-    gSPSegment(POLY_OPA_DISP++, 0x0A, pauseCtx->nameSegment);
-    gSPSegment(POLY_OPA_DISP++, 0x0B, interfaceCtx->mapSegment);
-    gSPSegment(POLY_OPA_DISP++, 0x0C, pauseCtx->iconItemAltSegment);
-
-    // Draw player prerender onto the equip page
-
-    Gfx_SetupDL_42Opa(play->state.gfxCtx);
-    KaleidoScope_DrawEquipmentImage(play, PAUSE_PLAYER_SEGMENT_RENDER_TEXTURE(pauseCtx->playerSegment),
-                                    PAUSE_EQUIP_PLAYER_WIDTH, PAUSE_EQUIP_PLAYER_HEIGHT);
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_equipment.c", 609);
 }

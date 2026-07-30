@@ -409,8 +409,6 @@ void Sram_InitDebugSave(void) {
         gSaveContext.save.info.inventory.items[SLOT_FEATHER]      = ITEM_GOLDEN_FEATHER;
         gSaveContext.save.info.inventory.items[SLOT_SWORD_FAIRYS] = ITEM_SWORD_FAIRYS;
         gSaveContext.save.info.inventory.items[SLOT_QUEST]        = ITEM_PICTOBOX;
-        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
-        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_HEROS];
     }
 
     gSaveContext.save.info.horseData.sceneId = SCENE_HYRULE_FIELD;

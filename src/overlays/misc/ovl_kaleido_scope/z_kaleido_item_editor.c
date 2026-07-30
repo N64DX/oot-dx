@@ -182,35 +182,49 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
         }
 
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item)) {
-            Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, PLAYER_SWORD_NONE);
+            Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_NONE);
             gSaveContext.save.info.equips.buttonItems[0] = ITEM_NONE;
             gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 1;
             Player_SetEquipmentData(play, GET_PLAYER(play));
         }
 
-        if (item == EQUIP_INV_SWORD_KOKIRI || item == EQUIP_INV_SWORD_HEROS) {
-            if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS))
-                gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
-            else gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_HEROS];
-            play->pauseCtx.wasInDebug = true;
-        }
-
         if (item == EQUIP_INV_SWORD_BIGGORON)
             gSaveContext.save.info.playerData.swordHealth = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) ? MAX_SWORD_HEALTH : 0;
     } else if (type == EQUIP_TYPE_SHIELD) {
-        if (item == EQUIP_INV_SHIELD_HYLIAN || item == EQUIP_INV_SHIELD_HEROS) {
-            if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS))
-                gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_HEROS];
-            else gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_HEROS];
-            play->pauseCtx.wasInDebug = true;
+        if (upgrade) {
+            if (item == EQUIP_INV_SHIELD_DEKU) {
+                if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
+                } else if (!CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_WOODEN];
+                } else {
+                    gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
+                }
+            } else if (item == EQUIP_INV_SHIELD_HEROS) {
+                if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_METAL];
+                } else if (!CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_METAL];
+                } else {
+                    gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_METAL];
+                }
+            }
         }
+
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item))
+            Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
     } else if (type == EQUIP_TYPE_TUNIC) {
-        if (item == EQUIP_INV_TUNIC_KOKIRI || item == EQUIP_INV_TUNIC_SPIRIT) {
-            if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT))
-                gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_TUNIC_SPIRIT];
-            else gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_TUNIC_SPIRIT];
-            play->pauseCtx.wasInDebug = true;
-        }
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item))
+            Inventory_ChangeEquipment(EQUIP_TYPE_TUNIC, EQUIP_VALUE_TUNIC_KOKIRI);
+    } else if (type == EQUIP_TYPE_BOOTS) {
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item))
+            Inventory_ChangeEquipment(EQUIP_TYPE_BOOTS, EQUIP_VALUE_BOOTS_KOKIRI);
     }
 }
 
@@ -576,13 +590,18 @@ char* ItemEditor_GetAmmo(u8 item, u8 type, u8 param3) {
 
 char* ItemEditor_GetEquipment(u8 item, u8 type, u8 upgrade) {
     if (upgrade && type == EQUIP_TYPE_SWORD) {
-        if (item == EQUIP_INV_SWORD_MASTER && (gBitFlags[1] & gSaveContext.save.info.inventory.equipment))
-            return IS_RAZOR_SWORD ? "Razor Sword" : "Master Sword";
-        else if (item == EQUIP_INV_SWORD_BIGGORON && (gBitFlags[2] & gSaveContext.save.info.inventory.equipment)) {
+        if (item == EQUIP_INV_SWORD_MASTER && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? "Master Sword" : "Razor Sword";
+        else if (item == EQUIP_INV_SWORD_BIGGORON && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
             if (IS_CHILD_QUEST)
                 return gSaveContext.save.info.playerData.bgsFlag ? "Gilded Sword" : "Silver Sword";
             return gSaveContext.save.info.playerData.bgsFlag ? "Biggoron Sword" : "Giant's Knife";
         }
+    } else if (upgrade && type == EQUIP_TYPE_SHIELD) {
+        if (item == EQUIP_INV_SHIELD_DEKU && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN) ? "Wooden Shield" : "Deku Shield";
+        else if (item == EQUIP_INV_SHIELD_HEROS && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL) ? "Metal Shield" : "Hero's Shield";
     }
 
     return (CHECK_OWNED_EQUIP_ALT(type, item)) ? "Set" : "None";
@@ -771,13 +790,13 @@ ItemEditorEntry sItemEditorEquipmentEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  0, "Master Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Giant's Knife", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_HEROS,    EQUIP_TYPE_SWORD,  0, "Hero's Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Silver Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_DEKU,    EQUIP_TYPE_SHIELD, 0, "Deku Shield",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_HEROS,    EQUIP_TYPE_SWORD,  0, "Hero's Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_DEKU,    EQUIP_TYPE_SHIELD, 1, "Deku Shield",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_HYLIAN,  EQUIP_TYPE_SHIELD, 0, "Hylian Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_HEROS,   EQUIP_TYPE_SHIELD, 0, "Hero's Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_MIRROR,  EQUIP_TYPE_SHIELD, 0, "Mirror Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HEROS,   EQUIP_TYPE_SHIELD, 1, "Hero's Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_TUNIC_GORON,    EQUIP_TYPE_TUNIC,  0, "Goron Tunic",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_TUNIC_ZORA,     EQUIP_TYPE_TUNIC,  0, "Zora Tunic",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_TUNIC_SPIRIT,   EQUIP_TYPE_TUNIC,  0, "Spirit Tunic",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },

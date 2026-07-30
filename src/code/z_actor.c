@@ -4947,7 +4947,7 @@ u8 Actor_ApplyDamage(Actor* actor) {
 
 u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
     if (IS_CHILD_QUEST_AS_CHILD) {
-        if (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && IS_HEROS_SWORD)
+        if (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && itemAction == PLAYER_IA_SWORD_HEROS)
             damage *= 1.5;
         else if (dmgFlags & (DMG_SLASH_GIANT | DMG_SPIN_GIANT | DMG_JUMP_GIANT) && itemAction == PLAYER_IA_SWORD_BIGGORON)
             damage *= gSaveContext.save.info.playerData.bgsFlag ? 0.75 : 0.5;
@@ -4966,10 +4966,8 @@ u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
 }
 
 void Actor_RestoreShieldDurability(s32 dmgFlags) {
-    if (SHIELD_DURABILITY && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && IS_HEROS_SWORD)) {
+    if (SHIELD_DURABILITY && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS))) {
         u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
-        if (IS_HEROS_SHIELD && shield == 2)
-            shield = 4;
         if (shield != PLAYER_SHIELD_NONE) {
             ShieldDurability* sh = &gSaveContext.save.info.shields[shield - 1];
             sh->durability = sh->durability + 3 > Player_GetMaxShieldDurability(shield) ? Player_GetMaxShieldDurability(shield) : sh->durability + 3;

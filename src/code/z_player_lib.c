@@ -166,6 +166,7 @@ u8 sActionModelGroups[PLAYER_IA_MAX] = {
     PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_MASTER
     PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_KOKIRI
     PLAYER_MODELGROUP_BGS,              // PLAYER_IA_SWORD_BIGGORON
+    PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_HEROS
     PLAYER_MODELGROUP_SWORD_FAIRYS,     // PLAYER_IA_SWORD_FAIRYS
     PLAYER_MODELGROUP_10,               // PLAYER_IA_DEKU_STICK
     PLAYER_MODELGROUP_HAMMER,           // PLAYER_IA_HAMMER
@@ -418,8 +419,8 @@ Gfx* gPlayerSwordSheaths[][5] = {
 };
 
 Gfx* gPlayerSwords[][6] = {
-    { gLinkChildLeftFistAndKokiriSwordNearDL, gLinkChildLeftHandHoldingRazorSwordDL, gLinkChildLeftHandHoldingSilverSwordDL, gLinkChildLeftHandHoldingGoldenSwordDL, gLinkChildLeftHandHoldingHerosSwordDL, gLinkChildLeftHandHoldingMasterSwordDL2 },
-    { gLinkYoungLeftFistAndKokiriSwordNearDL, gLinkYoungLeftHandHoldingRazorSwordDL, gLinkYoungLeftHandHoldingSilverSwordDL, gLinkYoungLeftHandHoldingGoldenSwordDL, gLinkYoungLeftHandHoldingHerosSwordDL, gLinkYoungLeftHandHoldingMasterSwordDL2 },
+    { gLinkChildLeftFistAndKokiriSwordNearDL, gLinkChildLeftHandHoldingRazorSwordDL, gLinkChildLeftHandHoldingSilverSwordDL, gLinkChildLeftHandHoldingHerosSwordDL, gLinkChildLeftHandHoldingGoldenSwordDL, gLinkChildLeftHandHoldingMasterSwordDL2 },
+    { gLinkYoungLeftFistAndKokiriSwordNearDL, gLinkYoungLeftHandHoldingRazorSwordDL, gLinkYoungLeftHandHoldingSilverSwordDL, gLinkYoungLeftHandHoldingHerosSwordDL, gLinkYoungLeftHandHoldingGoldenSwordDL, gLinkYoungLeftHandHoldingMasterSwordDL2 },
 };
 
 // Identical to `sPlayerLeftHandSwordDLs` and unused
@@ -748,11 +749,6 @@ void Player_SetEquipmentData(PlayState* play, Player* this) {
         this->currentBoots = BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
         this->currentSwordItemId = B_BTN_ITEM;
 
-        if (this->currentShield == PLAYER_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-            this->currentShield = PLAYER_SHIELD_HEROS;
-        if (this->currentTunic == PLAYER_TUNIC_KOKIRI && IS_SPIRIT_TUNIC)
-            this->currentTunic = PLAYER_TUNIC_SPIRIT;
-
         Player_SetModelGroup(this, Player_ActionToModelGroup(this, this->heldItemAction));
         Player_SetBootData(play, this);
     }
@@ -902,7 +898,7 @@ int func_8008F128(Player* this) {
 s32 Player_ActionToMeleeWeapon(s32 itemAction) {
     s32 meleeWeapon = itemAction - PLAYER_IA_FISHING_POLE;
 
-    if ((meleeWeapon > 0) && (meleeWeapon < 7)) {
+    if ((meleeWeapon > 0) && (meleeWeapon < PLAYER_IA_BOW - PLAYER_IA_FISHING_POLE)) {
         return meleeWeapon;
     } else {
         return 0;
@@ -914,7 +910,7 @@ s32 Player_GetMeleeWeaponHeld(Player* this) {
 }
 
 s32 Player_HoldsTwoHandedWeapon(Player* this) {
-    if ((this->heldItemAction >= PLAYER_IA_SWORD_BIGGORON && this->heldItemAction <= PLAYER_IA_HAMMER)) {
+    if ((this->heldItemAction == PLAYER_IA_SWORD_BIGGORON || this->heldItemAction == PLAYER_IA_SWORD_FAIRYS || this->heldItemAction == PLAYER_IA_DEKU_STICK || this->heldItemAction == PLAYER_IA_HAMMER)) {
         return (LINK_IS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) ? 0 : 1;
     } else {
         return 0;
@@ -1139,7 +1135,7 @@ u8 Player_GetShieldSkin(void) {
         return 0;
     else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
         return 4;
-    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL))
+    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL))
         return 2;
     return 0;
 }
@@ -1190,8 +1186,6 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
     gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(sMouthTextures[GET_LINK_MODEL][mouthIndex]));
 #endif
 
-    if (tunic == EQUIP_INV_TUNIC_KOKIRI && IS_SPIRIT_TUNIC)
-        tunic = EQUIP_INV_TUNIC_SPIRIT;
     color = &sTunicColors[tunic];
     gDPSetEnvColor(POLY_OPA_DISP++, color->r, color->g, color->b, 0);
 
@@ -1243,8 +1237,6 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
 
         if (LINK_IS_CHILD) {
             u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
-            if (shield == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-                shield = 4;
 
             if (play->pauseCtx.state <= PAUSE_STATE_WAIT_BG_PRERENDER || play->pauseCtx.state == PAUSE_STATE_GAME_OVER_START || play->pauseCtx.state == PAUSE_STATE_GAME_OVER_WAIT_BG_PRERENDER || shield == EQUIP_VALUE_SHIELD_HYLIAN)
                 if ((shield > PLAYER_SHIELD_NONE && sheathType == PLAYER_MODELTYPE_SHEATH_18) || (shield == EQUIP_VALUE_SHIELD_HYLIAN && sheathType == PLAYER_MODELTYPE_SHEATH_19 && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD)) {
@@ -1463,8 +1455,6 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
 
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD) {
                     if (gSaveContext.save.info.playerData.bgsFlag && swordEquipValue == EQUIP_VALUE_SWORD_BIGGORON)
-                        *dLists = gPlayerSwords[IS_YOUNG_LINK][3];
-                    else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                         *dLists = gPlayerSwords[IS_YOUNG_LINK][4];
                     else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                         *dLists = gPlayerSwords[IS_YOUNG_LINK][5];
@@ -1496,9 +1486,7 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
 
             if (LINK_IS_CHILD) {
                 EquipValueSword swordEquipValue = CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD);
-                if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
-                    swordEquipValue = 4;
-                else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+                if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                     swordEquipValue = 5;
                 
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
@@ -1741,6 +1729,7 @@ f32 sMeleeWeaponLengths[] = {
     4000.0f, // Master Sword
     3000.0f, // Kokiri Sword
     5500.0f, // Biggoron's Sword
+    3000.0f, // Hero's Sword
     5500.0f, // Great Fairy's Sword
     0.0f,    // Deku Stick
     2500.0f, // Hammer
@@ -1850,7 +1839,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
             if (Player_HoldsBrokenKnife(this)) {
                 sMeleeWeaponTipOffsetFromLeftHand0.x = 1500.0f;
-            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 1 && IS_RAZOR_SWORD) { // Razor Sword
+            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 1 && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) { // Razor Sword
                 sMeleeWeaponTipOffsetFromLeftHand0.x = 3000.0f;
             } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 3) { // Silver / Gilded Sword
                 sMeleeWeaponTipOffsetFromLeftHand0.x = 4000.0f;
@@ -2138,7 +2127,7 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
     Gfx** dLists;
 
     if ((modelGroup == PLAYER_MODELGROUP_SWORD_AND_SHIELD) && !LINK_IS_ADULT &&
-        (playerSwordAndShield[1] == PLAYER_SHIELD_HYLIAN) && !IS_HEROS_SHIELD) {
+        (playerSwordAndShield[1] == PLAYER_SHIELD_HYLIAN)) {
         modelGroup = PLAYER_MODELGROUP_CHILD_HYLIAN_SHIELD;
     }
 
@@ -2178,31 +2167,24 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
         if (limbIndex == PLAYER_LIMB_L_HAND) {
             if (gSaveContext.save.info.playerData.bgsFlag && swordEquipValue == EQUIP_VALUE_SWORD_BIGGORON)
-                *dList = gPlayerSwords[IS_YOUNG_LINK][3];
-            else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][4];
             else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][5];
             else if (swordEquipValue != EQUIP_VALUE_SWORD_NONE)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][swordEquipValue - 1];
-        }
-        else if (limbIndex == PLAYER_LIMB_R_HAND) {
+        } else if (limbIndex == PLAYER_LIMB_R_HAND) {
             type = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_RIGHT_HAND];
             sRightHandType = type;
             if (type == PLAYER_MODELTYPE_RH_SHIELD)
                 dListOffset = playerSwordAndShield[1] * MAX_LINK_MODELS;
-            if (shieldEquipValue == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+            if (shieldEquipValue == EQUIP_VALUE_SHIELD_HEROS)
                 dListOffset += MAX_LINK_MODELS * 2;
             dListOffset += MAX_LINK_MODELS * Player_GetShieldSkin();
             dLists = sPlayerDListGroups[type] + GET_LINK_MODEL;
             *dList = *(dLists + dListOffset);
-        }
-        else if (limbIndex == PLAYER_LIMB_SHEATH) {
+        } else if (limbIndex == PLAYER_LIMB_SHEATH) {
             type = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_SHEATH];
-
-            if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
-                swordEquipValue = 4;
-            else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                 swordEquipValue = 5;
 
             if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
@@ -2214,13 +2196,11 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                     *dList = gPlayerSheathedSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                 else *dList = gPlayerSwordSheaths[IS_YOUNG_LINK][swordEquipValue - 1];
             }
-        }
-        else if (limbIndex == PLAYER_LIMB_WAIST) {
+        } else if (limbIndex == PLAYER_LIMB_WAIST) {
             type = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_WAIST];
             dLists = sPlayerDListGroups[type] + GET_LINK_MODEL;
             *dList = *(dLists + dListOffset);
-        }
-        else return false;
+        } else return false;
     }
 
     return false;
@@ -2350,7 +2330,7 @@ void Player_DrawPause(PlayState* play, u8* segment, SkelAnime* skelAnime, Vec3f*
     if (IS_CHILD_QUEST_AS_CHILD) {
         if (sword == PLAYER_SWORD_NONE && shield == PLAYER_SHIELD_NONE)
             srcTable = gLinkPauseAdultJointTable;
-        else if (shield == PLAYER_SHIELD_HYLIAN && !IS_HEROS_SHIELD)
+        else if (shield == PLAYER_SHIELD_HYLIAN)
             srcTable = gLinkPauseChildJointTable;
         else if (sword == PLAYER_SWORD_NONE)
             srcTable = gLinkPauseAdultShieldJointTable;

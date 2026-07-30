@@ -13,7 +13,7 @@ extern u8 gAmmoItems[];
 extern s16 gVtxPageMapWorldQuadsWidth[];
 extern s16 gVtxPageMapWorldQuadsHeight[];
 extern char gSlotAgeReqs[];
-extern char gEquipAgeReqs[EQUIP_TYPE_MAX][4];
+extern char gEquipAgeReqs[EQUIP_TYPE_MAX][5];
 extern char gItemAgeReqs[];
 extern u8 gAreaGsFlags[];
 extern u8 showAltQuiverSlot, showAltStrengthSlot, showAltScalesSlot;
@@ -97,31 +97,35 @@ typedef enum EquipQuad {
     /*  1 */ EQUIP_QUAD_SWORD_KOKIRI,
     /*  2 */ EQUIP_QUAD_SWORD_MASTER,
     /*  3 */ EQUIP_QUAD_SWORD_BIGGORON,
+    /*  4 */ EQUIP_QUAD_SWORD_HEROS,
     // Row 1
-    /*  4 */ EQUIP_QUAD_UPG_BOMB_BAG,
-    /*  5 */ EQUIP_QUAD_SHIELD_DEKU,
-    /*  6 */ EQUIP_QUAD_SHIELD_HYLIAN,
-    /*  7 */ EQUIP_QUAD_SHIELD_MIRROR,
+    /*  5 */ EQUIP_QUAD_UPG_BOMB_BAG,
+    /*  6 */ EQUIP_QUAD_SHIELD_DEKU,
+    /*  7 */ EQUIP_QUAD_SHIELD_HYLIAN,
+    /*  8 */ EQUIP_QUAD_SHIELD_MIRROR,
+    /*  9 */ EQUIP_QUAD_SHIELD_HEROS,
     // Row 2
-    /*  8 */ EQUIP_QUAD_UPG_STRENGTH,
-    /*  9 */ EQUIP_QUAD_TUNIC_KOKIRI,
-    /* 10 */ EQUIP_QUAD_TUNIC_GORON,
-    /* 11 */ EQUIP_QUAD_TUNIC_ZORA,
+    /* 10 */ EQUIP_QUAD_UPG_STRENGTH,
+    /* 11 */ EQUIP_QUAD_TUNIC_KOKIRI,
+    /* 12 */ EQUIP_QUAD_TUNIC_GORON,
+    /* 13 */ EQUIP_QUAD_TUNIC_ZORA,
+    /* 14 */ EQUIP_QUAD_TUNIC_SPIRIT,
     // Row 3
-    /* 12 */ EQUIP_QUAD_UPG_SCALE,
-    /* 13 */ EQUIP_QUAD_BOOTS_KOKIRI,
-    /* 14 */ EQUIP_QUAD_BOOTS_IRON,
-    /* 15 */ EQUIP_QUAD_BOOTS_HOVER,
+    /* 15 */ EQUIP_QUAD_UPG_SCALE,
+    /* 16 */ EQUIP_QUAD_BOOTS_KOKIRI,
+    /* 17 */ EQUIP_QUAD_BOOTS_IRON,
+    /* 18 */ EQUIP_QUAD_BOOTS_HOVER,
+    /* 19 */ EQUIP_QUAD_BOOTS_PEGASUS,
     // Markers indicating the currently selected equip
-    /* 16 */ EQUIP_QUAD_SELECTED_SWORD,
-    /* 17 */ EQUIP_QUAD_SELECTED_SHIELD,
-    /* 18 */ EQUIP_QUAD_SELECTED_TUNIC,
-    /* 19 */ EQUIP_QUAD_SELECTED_BOOTS,
+    /* 20 */ EQUIP_QUAD_SELECTED_SWORD,
+    /* 21 */ EQUIP_QUAD_SELECTED_SHIELD,
+    /* 22 */ EQUIP_QUAD_SELECTED_TUNIC,
+    /* 23 */ EQUIP_QUAD_SELECTED_BOOTS,
     // Player prerender
-    /* 20 */ EQUIP_QUAD_PLAYER_FIRST,
-    /* 23 */ EQUIP_QUAD_PLAYER_LAST = EQUIP_QUAD_PLAYER_FIRST + PAUSE_EQUIP_PLAYER_FRAG_NUM - 1,
-    // 24..27 are unused, probably meant for player prerender
-    /* 28 */ EQUIP_QUAD_MAX = EQUIP_QUAD_PLAYER_LAST + 4 + 1
+    /* 24 */ EQUIP_QUAD_PLAYER_FIRST,
+    /* 27 */ EQUIP_QUAD_PLAYER_LAST = EQUIP_QUAD_PLAYER_FIRST + PAUSE_EQUIP_PLAYER_FRAG_NUM - 1,
+    // 28..31 are unused, probably meant for player prerender
+    /* 32 */ EQUIP_QUAD_MAX = EQUIP_QUAD_PLAYER_LAST + 4 + 1
 } EquipQuad;
 
 // The world map image is split into a number of quad fragments for drawing

@@ -1038,7 +1038,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->nextEntranceIndex = ENTR_HYRULE_FIELD_16;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_WHITE;
-                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_TIME - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[QUEST_SONG_TIME];
                 break;
 
             case CS_DEST_GERUDO_VALLEY_CREDITS:

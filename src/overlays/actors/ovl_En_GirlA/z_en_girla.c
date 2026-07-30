@@ -1028,7 +1028,7 @@ void EnGirlA_BuyEvent_ShieldDiscount(PlayState* play, EnGirlA* this) {
         case SI_HEROS_SHIELD_REPAIR:
         case SI_METAL_SHIELD_REPAIR:
             gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
-            if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+            if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HEROS)
                 DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(ITEM_SHIELD_HEROS)), ITEM_ICON_SIZE,  __FILE__, __LINE__);
             break;
     }

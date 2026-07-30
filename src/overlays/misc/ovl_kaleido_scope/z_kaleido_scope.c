@@ -32,7 +32,6 @@
 #include "assets/textures/icon_item_static/icon_item_static.h"
 #include "assets/textures/icon_item_24_static/icon_item_24_static.h"
 #if OOT_NTSC_N64
-#include "assets/textures/icon_item_static/icon_item_static_all.h"
 #include "assets/textures/icon_item_nes_static/icon_item_nes_static.h"
 #include "assets/textures/icon_item_ger_static/icon_item_ger_static.h"
 #include "assets/textures/icon_item_fra_static/icon_item_fra_static.h"
@@ -111,6 +110,27 @@ static void* sEquipPageBgQuadsJPNTexs[] = {
     gPauseEquipment12Tex,
     gPauseEquipment13Tex,
     gPauseEquipment14Tex,
+    // column 3
+    gPauseEquipment20Tex,
+    gPauseEquipment21Tex,
+    gPauseEquipment22Tex,
+    gPauseEquipment23Tex,
+    gPauseEquipment24Tex,
+};
+
+static void* sEquipPageBgQuadsCQJPNTexs[] = {
+    // column 1
+    gPauseEquipment00CQTex,
+    gPauseEquipment01CQTex,
+    gPauseEquipment02CQTex,
+    gPauseEquipment03CQTex,
+    gPauseEquipment04CQTex,
+    // column 2
+    gPauseEquipment10CQJPNTex,
+    gPauseEquipment11CQTex,
+    gPauseEquipment12CQTex,
+    gPauseEquipment13CQTex,
+    gPauseEquipment14CQTex,
     // column 3
     gPauseEquipment20Tex,
     gPauseEquipment21Tex,
@@ -250,6 +270,27 @@ static void* sEquipPageBgQuadsFRATexs[] = {
     gPauseEquipment24Tex,
 };
 
+static void* sEquipPageBgQuadsCQFRATexs[] = {
+    // column 1
+    gPauseEquipment00CQFRATex,
+    gPauseEquipment01CQTex,
+    gPauseEquipment02CQTex,
+    gPauseEquipment03CQTex,
+    gPauseEquipment04CQTex,
+    // column 2
+    gPauseEquipment10CQFRATex,
+    gPauseEquipment11CQTex,
+    gPauseEquipment12CQTex,
+    gPauseEquipment13CQTex,
+    gPauseEquipment14CQTex,
+    // column 3
+    gPauseEquipment20FRATex,
+    gPauseEquipment21Tex,
+    gPauseEquipment22Tex,
+    gPauseEquipment23Tex,
+    gPauseEquipment24Tex,
+};
+
 static void* sItemPageBgQuadsFRATexs[] = {
     // column 1
     gPauseSelectItem00FRATex,
@@ -370,6 +411,27 @@ static void* sEquipPageBgQuadsGERTexs[] = {
     gPauseEquipment12Tex,
     gPauseEquipment13Tex,
     gPauseEquipment14Tex,
+    // column 3
+    gPauseEquipment20GERTex,
+    gPauseEquipment21Tex,
+    gPauseEquipment22Tex,
+    gPauseEquipment23Tex,
+    gPauseEquipment24Tex,
+};
+
+static void* sEquipPageBgQuadsCQGERTexs[] = {
+    // column 1
+    gPauseEquipment00CQGERTex,
+    gPauseEquipment01CQTex,
+    gPauseEquipment02CQTex,
+    gPauseEquipment03CQTex,
+    gPauseEquipment04CQTex,
+    // column 2
+    gPauseEquipment10CQGERTex,
+    gPauseEquipment11CQTex,
+    gPauseEquipment12CQTex,
+    gPauseEquipment13CQTex,
+    gPauseEquipment14CQTex,
     // column 3
     gPauseEquipment20GERTex,
     gPauseEquipment21Tex,
@@ -500,6 +562,27 @@ static void* sEquipPageBgQuadsENGTexs[] = {
     gPauseEquipment12Tex,
     gPauseEquipment13Tex,
     gPauseEquipment14Tex,
+    // column 3
+    gPauseEquipment20Tex,
+    gPauseEquipment21Tex,
+    gPauseEquipment22Tex,
+    gPauseEquipment23Tex,
+    gPauseEquipment24Tex,
+};
+
+static void* sEquipPageBgQuadsCQENGTexs[] = {
+    // column 1
+    gPauseEquipment00CQTex,
+    gPauseEquipment01CQTex,
+    gPauseEquipment02CQTex,
+    gPauseEquipment03CQTex,
+    gPauseEquipment04CQTex,
+    // column 2
+    gPauseEquipment10CQENGTex,
+    gPauseEquipment11CQTex,
+    gPauseEquipment12CQTex,
+    gPauseEquipment13CQTex,
+    gPauseEquipment14CQTex,
     // column 3
     gPauseEquipment20Tex,
     gPauseEquipment21Tex,
@@ -642,6 +725,13 @@ static void* sEquipPageBgQuadsTexs[] = {
     sEquipPageBgQuadsJPNTexs,
 };
 
+static void* sEquipPageBgQuadsCQTexs[] = {
+    sEquipPageBgQuadsCQENGTexs,
+    sEquipPageBgQuadsCQGERTexs,
+    sEquipPageBgQuadsCQFRATexs,
+    sEquipPageBgQuadsCQJPNTexs,
+};
+
 static void* sItemPageBgQuadsTexs[] = {
     sItemPageBgQuadsENGTexs,
     sItemPageBgQuadsGERTexs,
@@ -677,19 +767,25 @@ static void* sSavePromptBgQuadsTexs[] = {
     sSavePromptBgQuadsJPNTexs,
 };
 
-#define EQUIPMENT_TEXS(language) (sEquipPageBgQuadsTexs[(language)])
+#define EQUIPMENT_TEXS(language) (IS_CHILD_QUEST ? sEquipPageBgQuadsCQTexs[(language)] : sEquipPageBgQuadsTexs[(language)])
 #define SELECT_ITEM_TEXS(language) (IS_CHILD_QUEST ? sItemPageBgQuadsCQTexs[(language)] : sItemPageBgQuadsTexs[(language)])
 #define MAP_TEXS(language) (sMapPageBgQuadsTexs[(language)])
 #define QUEST_STATUS_TEXS(language) (sQuestPageBgQuadsTexs[(language)])
 #define SAVE_TEXS(language) (sSavePromptBgQuadsTexs[(language)])
 #elif OOT_NTSC
-#define EQUIPMENT_TEXS(language) ((language) != LANGUAGE_JPN ? sEquipPageBgQuadsENGTexs : sEquipPageBgQuadsJPNTexs)
+#define EQUIPMENT_TEXS(language) ((language) != LANGUAGE_JPN ? (IS_CHILD_QUEST ? sEquipPageBgQuadsCQENGTexs : sEquipPageBgQuadsENGTexs) : (IS_CHILD_QUEST ? sEquipPageBgQuadsCQJPNTexs : sEquipPageBgQuadsJPNTexs))
 #define SELECT_ITEM_TEXS(language) ((language) != LANGUAGE_JPN ? (IS_CHILD_QUEST ? sItemPageBgQuadsCQENGTexs : sItemPageBgQuadsENGTexs) : (IS_CHILD_QUEST ? sItemPageBgQuadsCQJPNTexs : sItemPageBgQuadsJPNTexs))
 #define MAP_TEXS(language) ((language) != LANGUAGE_JPN ? sMapPageBgQuadsENGTexs : sMapPageBgQuadsJPNTexs)
 #define QUEST_STATUS_TEXS(language) ((language) != LANGUAGE_JPN ? sQuestPageBgQuadsENGTexs : sQuestPageBgQuadsJPNTexs)
 #define SAVE_TEXS(language) ((language) != LANGUAGE_JPN ? sSavePromptBgQuadsENGTexs : sSavePromptBgQuadsJPNTexs)
 #else
 static void* sEquipPageBgQuadsTexs[] = {
+    sEquipPageBgQuadsCQENGTexs,
+    sEquipPageBgQuadsCQGERTexs,
+    sEquipPageBgQuadsCQFRATexs,
+};
+
+static void* sEquipPageBgQuadsCQTexs[] = {
     sEquipPageBgQuadsENGTexs,
     sEquipPageBgQuadsGERTexs,
     sEquipPageBgQuadsFRATexs,
@@ -725,7 +821,7 @@ static void* sSavePromptBgQuadsTexs[] = {
     sSavePromptBgQuadsFRATexs,
 };
 
-#define EQUIPMENT_TEXS(language) (sEquipPageBgQuadsTexs[(language)])
+#define EQUIPMENT_TEXS(language) (IS_CHILD_QUEST ? sEquipPageBgQuadsCQTexs[(language)] : sEquipPageBgQuadsTexs[(language)])
 #define SELECT_ITEM_TEXS(language) (IS_CHILD_QUEST ? sItemPageBgQuadsCQTexs[(language)] : sItemPageBgQuadsTexs[(language)])
 #define MAP_TEXS(language) (sMapPageBgQuadsTexs[(language)])
 #define QUEST_STATUS_TEXS(language) (sQuestPageBgQuadsTexs[(language)])
@@ -927,30 +1023,34 @@ char gSlotAgeReqs[] = {
     AGE_REQ_CHILD, // SLOT_TRADE_CHILD
 };
 
-char gEquipAgeReqs[4][4] = {
+char gEquipAgeReqs[4][5] = {
     {
         AGE_REQ_ADULT, // 0 UPG_QUIVER
         AGE_REQ_CHILD, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_KOKIRI
         AGE_REQ_ADULT, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_MASTER
         AGE_REQ_ADULT, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_BIGGORON
+        AGE_REQ_CHILD, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_HEROS
     },
     {
         AGE_REQ_NONE,  // 0 UPG_BOMB_BAG
         AGE_REQ_CHILD, // EQUIP_TYPE_SHIELD EQUIP_VALUE_SHIELD_DEKU
         AGE_REQ_NONE,  // EQUIP_TYPE_SHIELD EQUIP_VALUE_SHIELD_HYLIAN
         AGE_REQ_ADULT, // EQUIP_TYPE_SHIELD EQUIP_VALUE_SHIELD_MIRROR
+        AGE_REQ_CHILD, // EQUIP_TYPE_SHIELD EQUIP_VALUE_SHIELD_HEROS
     },
     {
         AGE_REQ_ADULT, // 0 UPG_STRENGTH
         AGE_REQ_NONE,  // EQUIP_TYPE_TUNIC EQUIP_VALUE_TUNIC_KOKIRI
         AGE_REQ_ADULT, // EQUIP_TYPE_TUNIC EQUIP_VALUE_TUNIC_GORON
         AGE_REQ_ADULT, // EQUIP_TYPE_TUNIC EQUIP_VALUE_TUNIC_ZORA
+        AGE_REQ_CHILD, // EQUIP_TYPE_TUNIC EQUIP_VALUE_TUNIC_SPIRIT
     },
     {
         AGE_REQ_NONE,  // 0 UPG_SCALE
         AGE_REQ_NONE,  // EQUIP_TYPE_BOOTS EQUIP_VALUE_BOOTS_KOKIRI
         AGE_REQ_ADULT, // EQUIP_TYPE_BOOTS EQUIP_VALUE_BOOTS_IRON
         AGE_REQ_ADULT, // EQUIP_TYPE_BOOTS EQUIP_VALUE_BOOTS_HOVER
+        AGE_REQ_CHILD, // EQUIP_TYPE_BOOTS EQUIP_VALUE_BOOTS_PEGASUS
     },
 };
 
@@ -1017,29 +1117,29 @@ char gItemAgeReqs[] = {
     AGE_REQ_CHILD, // ITEM_SWORD_KOKIRI
     AGE_REQ_ADULT, // ITEM_SWORD_MASTER
     AGE_REQ_ADULT, // ITEM_SWORD_BIGGORON
+    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
     AGE_REQ_CHILD, // ITEM_SHIELD_DEKU
     AGE_REQ_NONE,  // ITEM_SHIELD_HYLIAN
     AGE_REQ_ADULT, // ITEM_SHIELD_MIRROR
+    AGE_REQ_CHILD, // ITEM_SHIELD_HEROS
     AGE_REQ_NONE,  // ITEM_TUNIC_KOKIRI
     AGE_REQ_ADULT, // ITEM_TUNIC_GORON
     AGE_REQ_ADULT, // ITEM_TUNIC_ZORA
+    AGE_REQ_CHILD, // ITEM_TUNIC_SPIRIT
     AGE_REQ_NONE,  // ITEM_BOOTS_KOKIRI
     AGE_REQ_ADULT, // ITEM_BOOTS_IRON
     AGE_REQ_ADULT, // ITEM_BOOTS_HOVER
+    AGE_REQ_CHILD, // ITEM_BOOTS_PEGASUS
     AGE_REQ_CHILD, // ITEM_SWORD_FAIRYS
     AGE_REQ_CHILD, // ITEM_ROCS_FEATHER
     AGE_REQ_CHILD, // ITEM_GOLDEN_FEATHER
     AGE_REQ_CHILD, // ITEM_PICTOBOX
     AGE_REQ_CHILD, // ITEM_SHRINE_KEY
+    AGE_REQ_CHILD, // ITEM_CQ1
+    AGE_REQ_CHILD, // ITEM_CQ2
     AGE_REQ_NONE,  // ITEM_BOTTLE_POTION_SHIELD
-    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
     AGE_REQ_CHILD, // ITEM_SHIELD_WOODEN
-    AGE_REQ_CHILD, // ITEM_SHIELD_HEROS
     AGE_REQ_CHILD, // ITEM_SHIELD_METAL
-    AGE_REQ_CHILD, // ITEM_TUNIC_SPIRIT
-    AGE_REQ_CHILD, // ITEM_STRENGTH_GORONS_BRACELET
-    AGE_REQ_ADULT, // ITEM_STRENGTH_SILVER_GAUNTLETS
-    AGE_REQ_ADULT, // ITEM_STRENGTH_GOLD_GAUNTLETS
     AGE_REQ_ADULT, // ITEM_GIANTS_KNIFE
     AGE_REQ_NONE,  // ITEM_ADULTS_WALLET
     AGE_REQ_NONE,  // ITEM_GIANTS_WALLET
@@ -1056,6 +1156,9 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_20
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_30
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_40
+    AGE_REQ_CHILD, // ITEM_STRENGTH_GORONS_BRACELET
+    AGE_REQ_ADULT, // ITEM_STRENGTH_SILVER_GAUNTLETS
+    AGE_REQ_ADULT, // ITEM_STRENGTH_GOLD_GAUNTLETS
     AGE_REQ_NONE,  // ITEM_SCALE_SILVER
     AGE_REQ_NONE,  // ITEM_SCALE_GOLDEN
     AGE_REQ_CHILD, // ITEM_AMULET_OF_ENERGY
@@ -2336,7 +2439,7 @@ void KaleidoScope_DrawUIOverlay(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
-static u8 lastItem[6];
+static u8 lastItem[3];
 
 #define ITEM_LABEL_LANGUAGE_OFFSET ITEM_SMALL_KEY
 
@@ -2374,15 +2477,11 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                     texIndex = ITEM_DEKU_SEEDS;
             }
             else if (pauseCtx->pageIndex == PAUSE_EQUIP) {
-                if (pauseCtx->namedItem == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
-                    texIndex = ITEM_SWORD_HEROS;
-                else if (pauseCtx->namedItem == ITEM_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
+                if (pauseCtx->namedItem == ITEM_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
                     texIndex = ITEM_SHIELD_WOODEN;
-                else if (pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-                    texIndex = CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL) ? ITEM_SHIELD_METAL : ITEM_SHIELD_HEROS;
-                else if (pauseCtx->namedItem == ITEM_TUNIC_KOKIRI && IS_SPIRIT_TUNIC)
-                    texIndex = ITEM_TUNIC_SPIRIT;
-                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_RAZOR_SWORD)
+                if (pauseCtx->namedItem == ITEM_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL))
+                    texIndex = ITEM_SHIELD_METAL;
+                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER))
                     texIndex = ITEM_BOW_FIRE;
                 else if (pauseCtx->namedItem == ITEM_HEART_PIECE_2) // Biggoron Sword
                     texIndex = ITEM_BOW_LIGHT;
@@ -2980,7 +3079,8 @@ static s16 sItemVtxQuadsWithAmmo[] = {
     SLOT_MAGIC_BEAN * 4, // ITEM_QUAD_AMMO_BEAN_
 };
 
-static s16 sEquipColumnsX[] = { -114, 12, 44, 76 };
+static s16 sEquipColumnsX[] = { -114, 12, 44, 76, -300 };
+static s16 sEquipColumnsXCQ[] = { -114, -20, 12, 44, 76 };
 
 static u8 sEquipQuadsFirstByEquipType[EQUIP_TYPE_MAX] = {
     EQUIP_QUAD_SWORD_KOKIRI, // EQUIP_TYPE_SWORD
@@ -3414,9 +3514,9 @@ void KaleidoScope_SetVertices(PlayState* play, GraphicsContext* gfxCtx) {
     for (k = 0, i = 0, y = (EQUIP_TYPE_MAX * EQUIP_GRID_CELL_HEIGHT) / 2 - 6; i < EQUIP_TYPE_MAX;
          i++, y -= EQUIP_GRID_CELL_HEIGHT) {
         // for each column
-        for (j = 0; j < 4; j++, k += 4) {
+        for (j = 0; j < 5; j++, k += 4) {
             pauseCtx->equipVtx[k + 0].v.ob[0] = pauseCtx->equipVtx[k + 2].v.ob[0] =
-                sEquipColumnsX[j] + EQUIP_GRID_QUAD_MARGIN;
+                (IS_CHILD_QUEST ? sEquipColumnsXCQ[j] : sEquipColumnsX[j]) + EQUIP_GRID_QUAD_MARGIN;
 
             pauseCtx->equipVtx[k + 1].v.ob[0] = pauseCtx->equipVtx[k + 3].v.ob[0] =
                 pauseCtx->equipVtx[k + 0].v.ob[0] + EQUIP_GRID_QUAD_WIDTH;
@@ -3952,12 +4052,9 @@ void KaleidoScope_Update(PlayState* play) {
 
     switch (pauseCtx->state) {
         case PAUSE_STATE_INIT:
-            lastItem[0] = IS_HEROS_SWORD;
-            lastItem[1] = IS_HEROS_SHIELD;
-            lastItem[2] = IS_SPIRIT_TUNIC;
-            lastItem[3] = showAltQuiverSlot;
-            lastItem[4] = showAltStrengthSlot;
-            lastItem[5] = showAltScalesSlot;
+            lastItem[0] = showAltQuiverSlot;
+            lastItem[1] = showAltStrengthSlot;
+            lastItem[2] = showAltScalesSlot;
             pauseCtx->wasInDebug = false;
             sSavedButtonStatus[0] = gSaveContext.buttonStatus[0];
             sSavedButtonStatus[1] = gSaveContext.buttonStatus[1];

@@ -1476,29 +1476,29 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_KOKIRI,        // ITEM_SWORD_KOKIRI
     PLAYER_IA_SWORD_MASTER,        // ITEM_SWORD_MASTER
     PLAYER_IA_SWORD_BIGGORON,      // ITEM_SWORD_BIGGORON
+    PLAYER_IA_SWORD_HEROS,         // ITEM_SWORD_HEROS
     PLAYER_IA_NONE,                // ITEM_SHIELD_DEKU,
     PLAYER_IA_NONE,                // ITEM_SHIELD_HYLIAN,
     PLAYER_IA_NONE,                // ITEM_SHIELD_MIRROR,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS,
     PLAYER_IA_NONE,                // ITEM_TUNIC_KOKIRI,
     PLAYER_IA_NONE,                // ITEM_TUNIC_GORON,
     PLAYER_IA_NONE,                // ITEM_TUNIC_ZORA,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_SPIRIT,
     PLAYER_IA_NONE,                // ITEM_BOOTS_KOKIRI,
     PLAYER_IA_NONE,                // ITEM_BOOTS_IRON,
     PLAYER_IA_NONE,                // ITEM_BOOTS_HOVER,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_PEGASUS,
     PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
     PLAYER_IA_NONE,                // ITEM_ROCS_FEATHER
     PLAYER_IA_NONE,                // ITEM_GOLDEN_FEATHER
     PLAYER_IA_PICTOBOX,            // ITEM_PICTOBOX,
     PLAYER_IA_SHRINE_KEY,          // ITEM_SHRINE_KEY,
+    PLAYER_IA_NONE,                // ITEM_CQ_1,
+    PLAYER_IA_NONE,                // ITEM_CQ_2,
     PLAYER_IA_BOTTLE_POTION_SHIELD, // ITEM_BOTTLE_POTION_SHIELD,
     PLAYER_IA_NONE,                // ITEM_SHIELD_WOODEN,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS,
     PLAYER_IA_NONE,                // ITEM_SHIELD_METAL,
-    PLAYER_IA_NONE,                // ITEM_STRENGTH_GORONS_BRACELET,
-    PLAYER_IA_NONE,                // ITEM_STRENGTH_SILVER_GAUNTLETS,
-    PLAYER_IA_NONE,                // ITEM_STRENGTH_GOLD_GAUNTLETS,
-    PLAYER_IA_NONE,                // ITEM_SCALE_SILVER,
-    PLAYER_IA_NONE,                // ITEM_SCALE_GOLDEN,
     PLAYER_IA_NONE,                // ITEM_GIANTS_KNIFE,
     PLAYER_IA_NONE,                // ITEM_ADULTS_WALLET,
     PLAYER_IA_NONE,                // ITEM_GIANTS_WALLET,
@@ -1513,6 +1513,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_MASTER
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_KOKIRI
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_BIGGORON
+    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_HEROS
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_FAIRYS
     func_8083485C,                 // PLAYER_IA_DEKU_STICK
     func_8083485C,                 // PLAYER_IA_HAMMER
@@ -1587,6 +1588,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_MASTER
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_KOKIRI
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_BIGGORON
+    Player_InitDefaultIA,        // PLAYER_IA_SWORD_HEROS
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_FAIRYS
     Player_InitDekuStickIA,      // PLAYER_IA_DEKU_STICK
     Player_InitHammerIA,         // PLAYER_IA_HAMMER
@@ -2798,14 +2800,9 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
     if (equipType == EQUIP_TYPE_SWORD)
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
 
-    if (equipType == EQUIP_TYPE_SHIELD && nextEquip == PLAYER_SHIELD_HEROS)
-        Inventory_ChangeEquipmentWithIcon(play, equipType, EQUIP_VALUE_SHIELD_HYLIAN);
-    else Inventory_ChangeEquipmentWithIcon(play, equipType, nextEquip);
+    Inventory_ChangeEquipmentWithIcon(play, equipType, nextEquip);
     Player_SetEquipmentData(play, this);
     Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
-
-    if (equipType == EQUIP_TYPE_TUNIC && this->currentTunic == PLAYER_TUNIC_SPIRIT)
-        Inventory_ChangeEquipmentWithIcon(play, equipType, EQUIP_VALUE_TUNIC_KOKIRI);
 
     if (button < 4) {
         for (i=0; i<4; i++)
@@ -2823,17 +2820,14 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     static const SwordSwapEntry equipments[] = {
         { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
         { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
         { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
+        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    LINK_AGE_CHILD },
     };
 
     u8 current    = gSaveContext.save.info.equips.buttonItems[0];
     u8 validCount = 0;
     u8 validItems[ARRAY_COUNT(equipments)], validEquips[ARRAY_COUNT(equipments)], i, nextItem, nextEquip;
-
-    if (current == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
-        current = ITEM_SWORD_HEROS;
 
     for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const SwordSwapEntry* equipment = &equipments[i];
@@ -2862,13 +2856,6 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     if (current != nextItem) {
         if (nextItem == ITEM_SWORD_BIGGORON && !gSaveContext.save.info.playerData.swordHealth && LINK_IS_ADULT)
             nextItem = ITEM_GIANTS_KNIFE;
-        else if (nextItem == ITEM_SWORD_HEROS) {
-            gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
-            nextItem = ITEM_SWORD_KOKIRI;
-        }
-        else if (nextItem == ITEM_SWORD_KOKIRI)
-            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_HEROS];
-
         gSaveContext.save.info.equips.buttonItems[0] = nextItem;
         Interface_LoadItemIcon1(play, 0);
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SWORD, nextEquip);
@@ -2878,9 +2865,9 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
 void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
     static const EquipmentSwapEntry equipments[] = {
         { PLAYER_SHIELD_DEKU,   EQUIP_INV_SHIELD_DEKU,   LINK_AGE_CHILD },
-        { PLAYER_SHIELD_HEROS,  EQUIP_INV_SHIELD_HEROS,  LINK_AGE_CHILD },
         { PLAYER_SHIELD_HYLIAN, EQUIP_INV_SHIELD_HYLIAN, 9              },
         { PLAYER_SHIELD_MIRROR, EQUIP_INV_SHIELD_MIRROR, LINK_AGE_ADULT },
+        { PLAYER_SHIELD_HEROS,  EQUIP_INV_SHIELD_HEROS,  LINK_AGE_CHILD },
     };
 
     u8 current    = this->currentShield;
@@ -2892,7 +2879,7 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
-        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR &&CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN))
+        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN))
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
@@ -2911,13 +2898,8 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
         }
 
     nextItem = validItems[i % validCount];
-    if (current != nextItem) {
-        if (nextItem == PLAYER_SHIELD_HEROS)
-            gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_HEROS];
-        else if (nextItem == PLAYER_SHIELD_HYLIAN)
-            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_HEROS];
+    if (current != nextItem)
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SHIELD, nextItem);
-    }
 }
 
 void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
@@ -2954,13 +2936,8 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
         }
 
     nextItem = validItems[i % validCount];
-    if (current != nextItem) {
-        if (nextItem == PLAYER_TUNIC_SPIRIT)
-            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_TUNIC_SPIRIT];
-        else if (nextItem == PLAYER_TUNIC_KOKIRI)
-            gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_TUNIC_SPIRIT];
+    if (current != nextItem)
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_TUNIC, nextItem);
-    }
 }
 
 void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
@@ -3244,7 +3221,6 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
         else if (item == ITEM_TUNIC_GORON) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
                 Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 1 ? 0 : 1);
-                gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_TUNIC_SPIRIT];
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3255,7 +3231,6 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
         } else if (item == ITEM_TUNIC_ZORA) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA)) {
                 Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 2 ? 0 : 2);
-                gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_TUNIC_SPIRIT];
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3265,8 +3240,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             }
         } else if (item == ITEM_TUNIC_SPIRIT) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT)) {
-                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI);
-                gSaveContext.save.info.upgradeItems ^= gBitFlags[UPGRADE_TUNIC_SPIRIT];
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 3 ? 0 : 3);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -5185,7 +5159,7 @@ void func_80837918(Player* this, s32 quadIndex, u32 dmgFlags) {
 }
 
 static u32 D_80854488[][2] = {
-    { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT },
+    { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI },
     { DMG_SLASH_GIANT, DMG_JUMP_GIANT },   { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP },
 };
 
@@ -15982,7 +15956,7 @@ s32 Player_ActionHandler_7(Player* this, PlayState* play) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 func_80837530(play, this, 0);
                 return 1;
-            } else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && this->itemAction == PLAYER_IA_SWORD_KOKIRI) {
+            } else if (this->itemAction == PLAYER_IA_SWORD_HEROS) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 Player_SwordBeam(play, this, 0);
             }

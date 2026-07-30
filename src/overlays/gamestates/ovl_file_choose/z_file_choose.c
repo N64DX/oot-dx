@@ -2074,6 +2074,7 @@ void FileSelect_LoadGame(GameState* thisx) {
     if ((gSaveContext.save.info.equips.buttonItems[0] != ITEM_SWORD_KOKIRI) &&
         (gSaveContext.save.info.equips.buttonItems[0] != ITEM_SWORD_MASTER) &&
         (gSaveContext.save.info.equips.buttonItems[0] != ITEM_SWORD_BIGGORON) &&
+        (gSaveContext.save.info.equips.buttonItems[0] != ITEM_SWORD_HEROS) &&
         (gSaveContext.save.info.equips.buttonItems[0] != ITEM_GIANTS_KNIFE)) {
         u16 swordEquipValue;
 
