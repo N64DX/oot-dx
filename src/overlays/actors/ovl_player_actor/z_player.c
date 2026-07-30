@@ -2863,11 +2863,11 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
         if (nextItem == ITEM_SWORD_BIGGORON && !gSaveContext.save.info.playerData.swordHealth && LINK_IS_ADULT)
             nextItem = ITEM_GIANTS_KNIFE;
         else if (nextItem == ITEM_SWORD_HEROS) {
-            SET_HEROS_SWORD;
+            gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
             nextItem = ITEM_SWORD_KOKIRI;
         }
         else if (nextItem == ITEM_SWORD_KOKIRI)
-            CLEAR_HEROS_SWORD;
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_HEROS];
 
         gSaveContext.save.info.equips.buttonItems[0] = nextItem;
         Interface_LoadItemIcon1(play, 0);
@@ -2892,7 +2892,7 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
-        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken)
+        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR &&CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN))
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
@@ -2913,9 +2913,9 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
     nextItem = validItems[i % validCount];
     if (current != nextItem) {
         if (nextItem == PLAYER_SHIELD_HEROS)
-            SET_HEROS_SHIELD;
+            gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_HEROS];
         else if (nextItem == PLAYER_SHIELD_HYLIAN)
-            CLEAR_HEROS_SHIELD;
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_HEROS];
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SHIELD, nextItem);
     }
 }
@@ -2956,9 +2956,9 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
     nextItem = validItems[i % validCount];
     if (current != nextItem) {
         if (nextItem == PLAYER_TUNIC_SPIRIT)
-            SET_SPIRIT_TUNIC;
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_TUNIC_SPIRIT];
         else if (nextItem == PLAYER_TUNIC_KOKIRI)
-            CLEAR_SPIRIT_TUNIC;
+            gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_TUNIC_SPIRIT];
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_TUNIC, nextItem);
     }
 }
@@ -3018,9 +3018,9 @@ typedef struct {
 
 static u8 ArrowIsObtained(const ItemID item) {
     switch (item) {
-        case ITEM_ARROW_FIRE:  return gSaveContext.save.info.obtainedItems.fireArrow  ? true : false;
-        case ITEM_ARROW_ICE:   return gSaveContext.save.info.obtainedItems.iceArrow   ? true : false;
-        case ITEM_ARROW_LIGHT: return gSaveContext.save.info.obtainedItems.lightArrow ? true : false;
+        case ITEM_ARROW_FIRE:  return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_FIRE)  ? true : false;
+        case ITEM_ARROW_ICE:   return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_ICE)   ? true : false;
+        case ITEM_ARROW_LIGHT: return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_LIGHT) ? true : false;
         default:               return true;
     }
 }
@@ -3244,7 +3244,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
         else if (item == ITEM_TUNIC_GORON) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
                 Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 1 ? 0 : 1);
-                CLEAR_SPIRIT_TUNIC;
+                gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_TUNIC_SPIRIT];
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3255,7 +3255,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
         } else if (item == ITEM_TUNIC_ZORA) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA)) {
                 Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 2 ? 0 : 2);
-                CLEAR_SPIRIT_TUNIC;
+                gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_TUNIC_SPIRIT];
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3266,7 +3266,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
         } else if (item == ITEM_TUNIC_SPIRIT) {
             if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT)) {
                 Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_KOKIRI);
-                TOGGLE_SPIRIT_TUNIC;
+                gSaveContext.save.info.upgradeItems ^= gBitFlags[UPGRADE_TUNIC_SPIRIT];
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3295,7 +3295,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 }
             }
         } else if (item >= ITEM_ROCS_FEATHER && item <= ITEM_GOLDEN_FEATHER && this->featherUseCount < MAX_FEATHER_USES) {
-            u8 energyCost = (item == ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.obtainedItems.amuletOfEnergy * 5);
+            u8 energyCost = (item == ITEM_ROCS_FEATHER ? 15 : 10) - (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) ? 5 : 0);
             if ((((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f) || item == ITEM_GOLDEN_FEATHER) && gSaveContext.save.info.energy >= energyCost) {
                 Vec3f effectsPos = this->actor.home.pos;
                 this->featherUseCount++;
@@ -5529,9 +5529,9 @@ void Player_CheckShieldDurability(Player* this, PlayState* play) {
         ShieldDurability* shield = &gSaveContext.save.info.shields[this->currentShield - 1];
         shieldDamageTimer = SECONDS(0.5);
 
-        if (Player_PerfectTime > 0 && (SHIELD_DURABILITY || gSaveContext.save.info.obtainedSkills.perfectBlockBoost)) {
+        if (Player_PerfectTime > 0 && (SHIELD_DURABILITY || CHECK_UPGRADE_ITEM(UPGRADE_PERFECT_BLOCK))) {
             Player_PlaySfx(this, NA_SE_IT_EXPLOSION_LIGHT);
-            if (gSaveContext.save.info.obtainedSkills.perfectBlockBoost)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_PERFECT_BLOCK))
                 R_PERFECT_BLOCK_BOOST_TIMER = SECONDS(3);
             this->shieldDamage = 0;
             return;
@@ -5546,7 +5546,7 @@ void Player_CheckShieldDurability(Player* this, PlayState* play) {
                 if (this->currentShield == PLAYER_SHIELD_MIRROR) {
                     Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
                     Player_SetEquipmentData(play, this);
-                    gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = true;
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
                 }
                 else Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
                     Message_StartTextbox(play, 0x305F, NULL);
@@ -8166,7 +8166,7 @@ void func_8083DF68(Player* this, f32 arg1, s16 arg2) {
 void func_8083DFE0(Player* this, f32* arg1, s16* arg2) {
     s16 yawDiff = this->yaw - *arg2;
 
-    if (this->meleeWeaponState == 0 && !(gSaveContext.save.info.obtainedSkills.furtherJump && (this->currentBoots == PLAYER_BOOTS_KOKIRI || this->currentBoots == PLAYER_BOOTS_KOKIRI_CHILD))) {
+    if (this->meleeWeaponState == 0 && !(CHECK_UPGRADE_ITEM(UPGRADE_FURTHER_JUMP) && (this->currentBoots == PLAYER_BOOTS_KOKIRI || this->currentBoots == PLAYER_BOOTS_KOKIRI_CHILD))) {
         this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
     }
 
@@ -12944,14 +12944,14 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
     if (SHIELD_DURABILITY) {
         // Restore Mirror Shield
         if (!(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
-            if ( (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR) && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
+            if ( (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR) && this->currentShield == PLAYER_SHIELD_MIRROR) || CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN)) {
                 if (mirrorShieldRestoreTimer < SECONDS(2))
                     mirrorShieldRestoreTimer++;
                 else {
                     mirrorShieldRestoreTimer = 0;
                     gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability++;
-                    if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability >= 60 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
-                        gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
+                    if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability >= 60 && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN)) {
+                        gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
                         Message_StartTextbox(play, 0x9400, NULL);
                         gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
                     }
@@ -15147,7 +15147,7 @@ void Player_Action_8084E3C4(Player* this, PlayState* play) {
         this->unk_6A8 = NULL;
     } else if (play->msgCtx.ocarinaMode == OCARINA_MODE_02) {
         s32 warpIndex = play->msgCtx.lastPlayedSong;
-        if ((gSaveContext.save.info.enhancedWarpSongs.warpsongs & (1 << warpIndex)) && play->msgCtx.choiceIndex == 1)
+        if (CHECK_UPGRADE_ITEM(warpIndex) && play->msgCtx.choiceIndex == 1)
             warpIndex += 6;
 
         gSaveContext.respawn[RESPAWN_MODE_RETURN].entranceIndex = sWarpSongEntrances[warpIndex];
@@ -15982,7 +15982,7 @@ s32 Player_ActionHandler_7(Player* this, PlayState* play) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 func_80837530(play, this, 0);
                 return 1;
-            } else if (HAS_HEROS_SWORD && this->itemAction == PLAYER_IA_SWORD_KOKIRI) {
+            } else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && this->itemAction == PLAYER_IA_SWORD_KOKIRI) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 Player_SwordBeam(play, this, 0);
             }

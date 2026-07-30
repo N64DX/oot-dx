@@ -335,6 +335,55 @@ beginseg
 endseg
 
 beginseg
+    name "red_ice_cavern_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "red_ice_cavern_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "red_ice_cavern_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_room_1.o"
+    number 3
+endseg
+
+beginseg
+    name "red_ice_cavern_room_2"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_room_2.o"
+    number 3
+endseg
+
+beginseg
+    name "red_ice_cavern_room_3"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_room_3.o"
+    number 3
+endseg
+
+beginseg
+    name "red_ice_cavern_room_4"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_room_4.o"
+    number 3
+endseg
+
+beginseg
+    name "red_ice_cavern_room_5"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_room_5.o"
+    number 3
+endseg
+
+beginseg
     name "fairy_deku_tree_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/fairy_deku_tree/fairy_deku_tree_scene.o"

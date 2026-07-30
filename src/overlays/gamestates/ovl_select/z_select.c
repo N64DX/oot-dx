@@ -524,6 +524,7 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "140:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉｻﾄ", "Goron Village"), MapSelect_LoadGame, ENTR_GORON_VILLAGE_0 },
     { "141:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉﾎｺﾗ", "Goron Shrine"), MapSelect_LoadGame, ENTR_GORON_SHRINE_0 },
     { "142:" T(GFXP_HIRAGANA "ﾎﾛﾋﾞﾀｵｳｺｸ", "Forsaken Kingdom"), MapSelect_LoadGame, ENTR_FORSAKEN_KINGDOM_0 },
+    { "143:" T(GFXP_HIRAGANA "ﾑﾗｻｷﾉｺｵﾘｱﾅ", "Purple Ice Cavern"), MapSelect_LoadGame, ENTR_PURPLE_ICE_CAVERN_0 },
     { "143:" T(GFXP_HIRAGANA "ﾌﾞｷﾐﾅﾎﾞﾁ", "Gloomy Graveyard"), MapSelect_LoadGame, ENTR_GLOOMY_GRAVEYARD_0 },
     { "144:" T(GFXP_HIRAGANA "ｵﾊｶﾉｿｺ1", "Beneath the Graveyard #1"), MapSelect_LoadGame, ENTR_BENEATH_THE_GRAVEYARD_0 },
     { "145:" T(GFXP_HIRAGANA "ｵﾊｶﾉｿｺ2", "Beneath the Graveyard #2"), MapSelect_LoadGame, ENTR_BENEATH_THE_GRAVEYARD_1 },

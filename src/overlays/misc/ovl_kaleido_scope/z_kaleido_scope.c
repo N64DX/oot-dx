@@ -2376,10 +2376,10 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
             else if (pauseCtx->pageIndex == PAUSE_EQUIP) {
                 if (pauseCtx->namedItem == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
                     texIndex = ITEM_SWORD_HEROS;
-                else if (pauseCtx->namedItem == ITEM_SHIELD_DEKU && gSaveContext.save.info.obtainedSkins.woodenShield)
+                else if (pauseCtx->namedItem == ITEM_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
                     texIndex = ITEM_SHIELD_WOODEN;
                 else if (pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-                    texIndex = gSaveContext.save.info.obtainedSkins.metalShield ? ITEM_SHIELD_METAL : ITEM_SHIELD_HEROS;
+                    texIndex = CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL) ? ITEM_SHIELD_METAL : ITEM_SHIELD_HEROS;
                 else if (pauseCtx->namedItem == ITEM_TUNIC_KOKIRI && IS_SPIRIT_TUNIC)
                     texIndex = ITEM_TUNIC_SPIRIT;
                 else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_RAZOR_SWORD)

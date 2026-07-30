@@ -79,7 +79,7 @@ void ObjWarpstone_Init(Actor* thisx, PlayState* play) {
     Collider_SetCylinder(play, &this->collider, &this->dyna.actor, &sCylinderInit);
     Actor_SetFocus(&this->dyna.actor, 40.0f);
 
-    if (!(gSaveContext.save.info.enhancedWarpSongs.warpsongs & (1 << thisx->params)))
+    if (!CHECK_UPGRADE_ITEM(this->dyna.actor.params))
         ObjWarpstone_SetupAction(this, ObjWarpstone_ClosedIdle);
     else {
         ObjWarpstone_SetupAction(this, ObjWarpstone_OpenedIdle);
@@ -98,7 +98,7 @@ void ObjWarpstone_ClosedIdle(ObjWarpstone* this, PlayState* play) {
 }
 
 void ObjWarpstone_BeginOpeningCutscene(ObjWarpstone* this, PlayState* play) {
-    if (gSaveContext.save.info.enhancedWarpSongs.warpsongs & (1 << this->dyna.actor.params)) {
+    if (CHECK_UPGRADE_ITEM(this->dyna.actor.params)) {
         ObjWarpstone_SetupAction(this, ObjWarpstone_PlayOpeningCutscene);
         //Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_OWL_WARP_SWITCH_ON);
     }

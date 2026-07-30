@@ -62,6 +62,7 @@
 
 #include "assets/scenes/overworld/dawngrove/dawngrove_scene.h"
 #include "assets/scenes/overworld/dawngrove_village/dawngrove_village_scene.h"
+#include "assets/scenes/overworld/woodfall/woodfall_scene.h"
 
 u16 sCurTextId = 0;
 u16 sCurOcarinaAction = 0;
@@ -144,6 +145,7 @@ EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_KOKIRI_FOREST_12, 2, EVENTCHKINF_C6, gKokiriForestDekuSproutPart3Cs, false },
     { ENTR_ANCIENT_GROVE_0, 2, EVENTCHKINF_SEEN_ANCIENT_GROVE_INTRO_CS, gDawngroveIntroCs, true },
     { ENTR_RIVERSIDE_VILLAGE_0, 2, EVENTCHKINF_SEEN_RIVERSIDE_VILLAGE_INTRO_CS, gDawngroveVillageIntroCs, true },
+    { ENTR_WOODFALL_0, 2, EVENTCHKINF_SEEN_WOODFALL_INTRO_CS, gWoodfallIntroCs, true },
 };
 
 void* sCutscenesUnknownList[] = {

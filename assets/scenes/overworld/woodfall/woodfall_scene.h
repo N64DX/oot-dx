@@ -4,6 +4,7 @@
 #include "bgcheck.h"
 #include "romfile.h"
 #include "scene.h"
+#include "cutscene.h"
 #include "ultra64.h"
 
 extern ActorEntry woodfall_sceneStartPositionList0x000098[];
@@ -11,6 +12,7 @@ extern RomFile woodfall_sceneRoomList0x0000E8[];
 extern Spawn woodfall_sceneEntranceList0x0000F0[];
 extern u16 woodfall_sceneExitList_0000FC[];
 extern EnvLightSettings woodfall_sceneLightSettings0x000104[];
+extern CutsceneData gWoodfallIntroCs[];
 extern Path woodfall_scenePathway[];
 extern CollisionHeader woodfall_sceneCollisionHeader_003CEC;
 

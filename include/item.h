@@ -120,6 +120,32 @@ typedef enum QuestItem {
     /* 0x1C */ QUEST_HEART_PIECE_COUNT = 0x1C // for accessing the `Inventory.questItems` bitfield
 } QuestItem;
 
+typedef enum UpgradeItem {
+    /* 0x00 */ UPGRADE_SONG_MINUET,
+    /* 0x01 */ UPGRADE_SONG_BOLERO,
+    /* 0x02 */ UPGRADE_SONG_SERENADE,
+    /* 0x03 */ UPGRADE_SONG_REQUIEM,
+    /* 0x04 */ UPGRADE_SONG_NOCTURNE,
+    /* 0x05 */ UPGRADE_SONG_PRELUDE,
+    /* 0x06 */ UPGRADE_ARROW_FIRE,
+    /* 0x07 */ UPGRADE_ARROW_ICE,
+    /* 0x08 */ UPGRADE_ARROW_LIGHT,
+    /* 0x09 */ UPGRADE_ARROW_BOMB,
+    /* 0x0A */ UPGRADE_SWORD_HEROS,
+    /* 0x0B */ UPGRADE_SWORD_MASTER,
+    /* 0x0C */ UPGRADE_SHIELD_WOODEN,
+    /* 0x0D */ UPGRADE_SHIELD_HEROS,
+    /* 0x0E */ UPGRADE_SHIELD_METAL,
+    /* 0x0F */ UPGRADE_SHIELD_MIRROR_BROKEN,
+    /* 0x10 */ UPGRADE_TUNIC_SPIRIT,
+    /* 0x11 */ UPGRADE_AMULET_OF_ENERGY,
+    /* 0x12 */ UPGRADE_EARRINGS_SPIRIT,
+    /* 0x13 */ UPGRADE_ENHANCED_SPIN,
+    /* 0x14 */ UPGRADE_PERFECT_BLOCK,
+    /* 0x15 */ UPGRADE_HALF_MAGIC_COST,
+    /* 0x16 */ UPGRADE_FURTHER_JUMP
+} UpgradeItem;
+
 typedef enum DungeonItem {
     /* 0x00 */ DUNGEON_BOSS_KEY,
     /* 0x01 */ DUNGEON_COMPASS,

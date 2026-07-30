@@ -107,7 +107,7 @@ void EnGm_Destroy(Actor* thisx, PlayState* play) {
 s32 func_80A3D7C8(EnGm* this) {
     if (IS_CHILD_QUEST) {
         if (this->type == MEDIGORON_GORON_VILLAGE)
-            return !gSaveContext.save.info.obtainedSkills.furtherJump;
+            return !CHECK_UPGRADE_ITEM(UPGRADE_FURTHER_JUMP);
         else if (!GET_EVENTCHKINF(EVENTCHKINF_45))
             return 0;
         else if (!GET_EVENTCHKINF(EVENTCHKINF_49))

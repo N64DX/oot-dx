@@ -166,7 +166,7 @@ void ArmsHook_Shoot(ArmsHook* this, PlayState* play) {
     u8 i;
     u8 canHookshot = true;
 
-    if (!gSaveContext.save.info.obtainedItems.spiritEarrings)
+    if (!CHECK_UPGRADE_ITEM(UPGRADE_EARRINGS_SPIRIT))
         for (i=0; i<ARRAY_COUNT(cursedLocations); i++)
             if (play->sceneId == cursedLocations[i])
                 canHookshot = false;

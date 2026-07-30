@@ -82,7 +82,7 @@ void BgTokiSwd_Init(Actor* thisx, PlayState* play) {
     s32 pad;
     BgTokiSwd* this = (BgTokiSwd*)thisx;
     
-    if (IS_BOSS_RUSH || IS_DUNGEON_RUSH || (this->actor.params != MASTER_SWORD_TEMPLE_OF_TIME && HAS_MASTER_SWORD)) {
+    if (IS_BOSS_RUSH || IS_DUNGEON_RUSH || (this->actor.params != MASTER_SWORD_TEMPLE_OF_TIME && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER))) {
         Actor_Kill(&this->actor);
         return;
     }
@@ -124,7 +124,7 @@ void func_808BAF40(BgTokiSwd* this, PlayState* play) {
             if (!LINK_IS_ADULT) {
                 if (this->actor.params != MASTER_SWORD_TEMPLE_OF_TIME) {
                     this->actor.shape.yOffset = 800.0f;
-                    SET_MASTER_SWORD;
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_MASTER];
                     Item_Give(play, ITEM_SWORD_MASTER);
                     Flags_SetSwitch(play, this->actor.params);
                     play->csCtx.script = gPullMasterSwordWoodfallCs;

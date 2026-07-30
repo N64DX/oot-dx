@@ -27,10 +27,10 @@ extern u8 showAltQuiverSlot, showAltStrengthSlot, showAltScalesSlot;
     ((gSlotAgeReqs[slot] == AGE_REQ_NONE) || gSlotAgeReqs[slot] == ((void)0, gSaveContext.save.linkAge) || IS_CHILD_QUEST_AS_CHILD || (gSlotAgeReqs[slot] == AGE_REQ_CQ && !IS_CHILD_QUEST && LINK_IS_ADULT))
 
 #define CHECK_AGE_REQ_EQUIP(y, x) \
-    (((gEquipAgeReqs[y][x] == AGE_REQ_NONE) || (gEquipAgeReqs[y][x] == ((void)0, gSaveContext.save.linkAge)) || IS_CHILD_QUEST_AS_CHILD) && !(SHIELD_DURABILITY && y == 1 && x == 3 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken))
+    (((gEquipAgeReqs[y][x] == AGE_REQ_NONE) || (gEquipAgeReqs[y][x] == ((void)0, gSaveContext.save.linkAge)) || IS_CHILD_QUEST_AS_CHILD) && !(SHIELD_DURABILITY && y == 1 && x == 3 && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN)))
 
 #define CHECK_AGE_REQ_ITEM(item) \
-    (((gItemAgeReqs[item] == AGE_REQ_NONE) || (gItemAgeReqs[item] == ((void)0, gSaveContext.save.linkAge)) || IS_CHILD_QUEST_AS_CHILD) && !(SHIELD_DURABILITY && item == ITEM_SHIELD_MIRROR && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken))
+    (((gItemAgeReqs[item] == AGE_REQ_NONE) || (gItemAgeReqs[item] == ((void)0, gSaveContext.save.linkAge)) || IS_CHILD_QUEST_AS_CHILD) && !(SHIELD_DURABILITY && item == ITEM_SHIELD_MIRROR && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN)))
 
 // Each page's background is made of a 3x5 grid of quads
 #define PAGE_BG_COLS 3

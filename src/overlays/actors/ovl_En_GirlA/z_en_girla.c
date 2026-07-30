@@ -313,13 +313,13 @@ static u8 EnGirlA_CanBuy_ShieldUpgradeCheck(u8 shield) {
 s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
     switch (this->actor.params) {
         case SI_DEKU_SHIELD:
-            if (!gSaveContext.save.info.obtainedSkins.woodenShield && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
+            if (!CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN) && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
                 this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU) ? SI_DEKU_SHIELD_REPAIR : SI_DEKU_SHIELD;
                 return true;
             }
             break;
         case SI_WOODEN_SHIELD:
-            if (gSaveContext.save.info.obtainedSkins.woodenShield && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
+            if (CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN) && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
                 this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU) ? SI_WOODEN_SHIELD_REPAIR : SI_WOODEN_SHIELD;
                 return true;
             }
@@ -334,7 +334,7 @@ s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
             if (!GET_EVENTCHKINF(EVENTCHKINF_45)) {
                 this->actor.params = SI_SOLD_OUT;
                 return true;
-            } else if (!gSaveContext.save.info.obtainedSkins.metalShield && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
+            } else if (!CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL) && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
                 this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS) ? SI_HEROS_SHIELD_REPAIR : SI_HEROS_SHIELD;
                 return true;
             }
@@ -343,7 +343,7 @@ s32 EnGirlA_TryChangeShopItem(EnGirlA* this) {
             if (!GET_EVENTCHKINF(EVENTCHKINF_45)) {
                 this->actor.params = SI_SOLD_OUT;
                 return true;
-            } else if (gSaveContext.save.info.obtainedSkins.metalShield && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
+            } else if (CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL) && SHIELD_DURABILITY && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
                 this->actor.params = gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS) ? SI_METAL_SHIELD_REPAIR : SI_METAL_SHIELD;
                 return true;
             }
@@ -636,7 +636,7 @@ s32 EnGirlA_CanBuy_HylianShield(PlayState* play, EnGirlA* this) {
 }
 
 s32 EnGirlA_CanBuy_DekuShield(PlayState* play, EnGirlA* this) {
-    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU) && !gSaveContext.save.info.obtainedSkins.woodenShield) {
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU) && !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN)) {
         return CANBUY_RESULT_CANT_GET_NOW;
     }
     if (gSaveContext.save.info.playerData.rupees < this->basePrice) {
@@ -649,7 +649,7 @@ s32 EnGirlA_CanBuy_DekuShield(PlayState* play, EnGirlA* this) {
 }
 
 s32 EnGirlA_CanBuy_WoodenShield(PlayState* play, EnGirlA* this) {
-    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU) && gSaveContext.save.info.obtainedSkins.woodenShield)
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU) && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
         return CANBUY_RESULT_CANT_GET_NOW;
     if (gSaveContext.save.info.playerData.rupees < this->basePrice)
         return CANBUY_RESULT_NEED_RUPEES;
@@ -659,7 +659,7 @@ s32 EnGirlA_CanBuy_WoodenShield(PlayState* play, EnGirlA* this) {
 }
 
 s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this) {
-    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && !gSaveContext.save.info.obtainedSkins.metalShield)
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL))
         return CANBUY_RESULT_CANT_GET_NOW;
     if (gSaveContext.save.info.playerData.rupees < this->basePrice)
         return CANBUY_RESULT_NEED_RUPEES;
@@ -669,7 +669,7 @@ s32 EnGirlA_CanBuy_HerosShield(PlayState* play, EnGirlA* this) {
 }
 
 s32 EnGirlA_CanBuy_MetalShield(PlayState* play, EnGirlA* this) {
-    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && gSaveContext.save.info.obtainedSkins.metalShield)
+    if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL))
         return CANBUY_RESULT_CANT_GET_NOW;
     if (gSaveContext.save.info.playerData.rupees < this->basePrice)
         return CANBUY_RESULT_NEED_RUPEES;
@@ -927,7 +927,7 @@ void EnGirlA_ItemGive_HerosShield(PlayState* play, EnGirlA* this) {
 
 void EnGirlA_ItemGive_MirrorShield(PlayState* play, EnGirlA* this) {
     Item_Give(play, ITEM_SHIELD_MIRROR);
-    gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
+    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
     Rupees_ChangeBy(-this->basePrice);
 }
 

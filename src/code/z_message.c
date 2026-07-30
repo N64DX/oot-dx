@@ -2562,7 +2562,7 @@ void Message_Decode(PlayState* play) {
                         words = token_words[gSaveContext.save.info.inventory.gsTokens != 1];
                         break;
                     case MESSAGE_MASTER_SWORD:
-                        words = sword_words[IS_CHILD_QUEST_AS_CHILD && !HAS_MASTER_SWORD];
+                        words = sword_words[IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)];
                         break;
                 }
                 ASSERT(words != NULL, "words != null", "../message.c", 2444);
@@ -4023,7 +4023,7 @@ void Message_DrawMain(PlayState* play, Gfx** p) {
                             Message_StartTextbox(play, 0x88C, NULL); // "You can't warp here!"
                             play->msgCtx.ocarinaMode = OCARINA_MODE_04;
                         } else if (GET_EVENTINF_INGO_RACE_STATE() != INGO_RACE_STATE_HORSE_RENTAL_PERIOD) {
-                            Message_StartTextbox(play, msgCtx->lastPlayedSong + ((IS_CHILD_QUEST && gSaveContext.save.info.enhancedWarpSongs.warpsongs & (1 << msgCtx->lastPlayedSong)) ? 0x8A0 : 0x88D),
+                            Message_StartTextbox(play, msgCtx->lastPlayedSong + ((IS_CHILD_QUEST && CHECK_UPGRADE_ITEM(msgCtx->lastPlayedSong)) ? 0x8A0 : 0x88D),
                                                  NULL); // "Warp to [place name]?"
                             play->msgCtx.ocarinaMode = OCARINA_MODE_01;
                         } else {

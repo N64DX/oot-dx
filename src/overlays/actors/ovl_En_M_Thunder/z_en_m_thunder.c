@@ -130,7 +130,7 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
                 this->targetScale = 2;
                 break;
             case 0: // Razor Sword / Master Sword
-                this->targetScale = IS_CHILD_QUEST_AS_CHILD ? (!HAS_MASTER_SWORD ? 2 : 3) : 4;
+                this->targetScale = IS_CHILD_QUEST_AS_CHILD ? (!CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? 2 : 3) : 4;
                 break;
             case 2: // Gilded Sword / Giant's Knife
                 this->targetScale = IS_CHILD_QUEST_AS_CHILD ? 3 : 4;
@@ -148,7 +148,7 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
             this->followPlayerTimer = M_THUNDER_ATTACK_WEAK;
             this->targetScale = 12;
         } else {
-            if (Player_HasEnergyUnlocked() && gSaveContext.save.info.obtainedSkills.enhancedSpin && gSaveContext.save.info.energy > 30) {
+            if (Player_HasEnergyUnlocked() && CHECK_UPGRADE_ITEM(UPGRADE_ENHANCED_SPIN) && gSaveContext.save.info.energy > 30) {
                 gSaveContext.save.info.energy -= 30;
                 this->collider.elem.atDmgInfo.dmgFlags = sJumpAttackDmgFlags[this->swordType];
                 this->attackStrength = M_THUNDER_ATTACK_STRONG;
@@ -252,7 +252,7 @@ void EnMThunder_ChargingSpinAttack(EnMThunder* this, PlayState* play) {
                     this->targetScale = 2;
                     break;
                 case 0: // Razor Sword / Master Sword
-                    this->targetScale = IS_CHILD_QUEST_AS_CHILD ? (!HAS_MASTER_SWORD ? 2 : 3) : 4;
+                    this->targetScale = IS_CHILD_QUEST_AS_CHILD ? (!CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? 2 : 3) : 4;
                     break;
                 case 2: // Gilded Sword / Giant's Knife
                     this->targetScale = IS_CHILD_QUEST_AS_CHILD ? 3 : 4;
@@ -504,7 +504,7 @@ void EnMThunder_Draw(Actor* thisx, PlayState* play2) {
             Matrix_RotateX(16384.0f, MTXMODE_APPLY);
             break;
         case 0:
-            if (LINK_IS_ADULT || (IS_CHILD_QUEST_AS_CHILD && HAS_MASTER_SWORD)) { // Master Sword
+            if (LINK_IS_ADULT || (IS_CHILD_QUEST_AS_CHILD && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER))) { // Master Sword
                 Matrix_Translate(0.0f, 300.0f, -100.0f, MTXMODE_APPLY);
                 Matrix_Scale(-1.2f, -1.0f, -0.7f, MTXMODE_APPLY);
                 Matrix_RotateX(16384.0f, MTXMODE_APPLY);

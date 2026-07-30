@@ -38,7 +38,7 @@ void EnArrow_InitializeBombArrow(Actor* arrow, PlayState* play) {
     Player* player = GET_PLAYER(play);
     EnBom* bomb;
 
-    if (play == NULL || arrow == NULL  || !gSaveContext.save.info.obtainedItems.bombArrow || arrow->params != ARROW_NORMAL || AMMO(ITEM_BOMB) <= 0 || EnArrow_IsLoosed(arrow, play) || EnArrow_FindLinkByArrow(arrow, play) != NULL) // Existing normal arrow is still nocked, and bomb arrows became equipped. Upgrade it in-place by attaching a bomb.
+    if (play == NULL || arrow == NULL  || !CHECK_UPGRADE_ITEM(UPGRADE_ARROW_BOMB) || arrow->params != ARROW_NORMAL || AMMO(ITEM_BOMB) <= 0 || EnArrow_IsLoosed(arrow, play) || EnArrow_FindLinkByArrow(arrow, play) != NULL) // Existing normal arrow is still nocked, and bomb arrows became equipped. Upgrade it in-place by attaching a bomb.
         return;
 
     bomb = (EnBom*)Actor_SpawnAsChild(&play->actorCtx, arrow, play, ACTOR_EN_BOM, arrow->world.pos.x, arrow->world.pos.y, arrow->world.pos.z, 0, 0, 0, BOMB_BODY);

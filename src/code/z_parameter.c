@@ -1805,14 +1805,14 @@ typedef struct ChildQuestIcons {
     u8 icon;
 } ChildQuestIcons;
 
-static u8 IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                                       }
-static u8 IsWoodenShield(void)  { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.obtainedSkins.woodenShield; }
-static u8 IsHerosShield(void)   { return IS_HEROS_SHIELD         && !gSaveContext.save.info.obtainedSkins.metalShield;  }
-static u8 IsMetalShield(void)   { return IS_HEROS_SHIELD         &&  gSaveContext.save.info.obtainedSkins.metalShield;  }
-static u8 IsHerosSword(void)    { return IS_HEROS_SWORD;                                                                }
-static u8 IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                                    }
-static u8 IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag;         }
-static u8 IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag;         }
+static u8 IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                               }
+static u8 IsWoodenShield(void)  { return IS_CHILD_QUEST_AS_CHILD &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN); }
+static u8 IsHerosShield(void)   { return IS_HEROS_SHIELD         && !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL);  }
+static u8 IsMetalShield(void)   { return IS_HEROS_SHIELD         &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL);  }
+static u8 IsHerosSword(void)    { return IS_HEROS_SWORD;                                                        }
+static u8 IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                            }
+static u8 IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
+static u8 IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
 
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_DEKU,               IsWoodenShield, ITEM_SHIELD_WOODEN  },
@@ -2015,7 +2015,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
-        SET_HEROS_SWORD;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
         if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_KOKIRI)
             Interface_LoadItemIcon1(play, 0);
         for (i=0; i<4; i++) {
@@ -2027,23 +2027,25 @@ u8 Item_Give(PlayState* play, u8 item) {
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         if (item == ITEM_SHIELD_DEKU)
-            gSaveContext.save.info.obtainedSkins.woodenShield = 0;
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_SHIELD_WOODEN) {
-        gSaveContext.save.info.obtainedSkins.woodenShield = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_WOODEN];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 0);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_SHIELD_HEROS || item == ITEM_SHIELD_METAL) {
-        gSaveContext.save.info.obtainedSkins.metalShield = item == ITEM_SHIELD_METAL ? 1 : 0;
+        if (item == ITEM_SHIELD_HEROS)
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_METAL];
+        else gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_METAL];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
-        SET_HEROS_SHIELD;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_HEROS];
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
             Player_SetEquipmentData(play, GET_PLAYER(play));
         for (i=0; i<4; i++)
@@ -2056,7 +2058,7 @@ u8 Item_Give(PlayState* play, u8 item) {
             gSaveContext.save.info.shields[index].upgrade++;
         gSaveContext.save.info.shields[index].durability = Player_GetMaxShieldDurability(index+1);
         if (item == ITEM_SHIELD_HEROS_UPGRADE)
-            gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
         return ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI);
@@ -2224,10 +2226,10 @@ u8 Item_Give(PlayState* play, u8 item) {
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_BOOTS_UPGRADE) {
-        gSaveContext.save.info.obtainedSkills.furtherJump = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_FURTHER_JUMP];
         return ITEM_NONE;
     } else if (item == ITEM_PERFECT_BLOCK_UPGRADE) {
-        gSaveContext.save.info.obtainedSkills.perfectBlockBoost = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_PERFECT_BLOCK];
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         INV_CONTENT(item) = item;
@@ -2383,15 +2385,15 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         return ITEM_NONE;
     } else if (item == ITEM_ARROW_FIRE) {
-        gSaveContext.save.info.obtainedItems.fireArrow = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_FIRE];
         if (IS_CHILD_QUEST)
             return ITEM_NONE;
     } else if (item == ITEM_ARROW_ICE) {
-        gSaveContext.save.info.obtainedItems.iceArrow = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_ICE];
         if (IS_CHILD_QUEST)
             return ITEM_NONE;
     } else if (item == ITEM_ARROW_LIGHT) {
-        gSaveContext.save.info.obtainedItems.lightArrow = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_LIGHT];
         if (IS_CHILD_QUEST)
             return ITEM_NONE;
     } else if (item == ITEM_GOLDEN_FEATHER) {
@@ -2406,7 +2408,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         return ITEM_NONE;
     } else if (item == ITEM_AMULET_OF_ENERGY) {
-        gSaveContext.save.info.obtainedItems.amuletOfEnergy = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_AMULET_OF_ENERGY];
         return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
@@ -2598,7 +2600,7 @@ u8 Item_CheckObtainability(u8 item) {
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         if (gSaveContext.save.info.shields[item - ITEM_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(item - ITEM_SHIELD_DEKU + 1)) {
             return ITEM_NONE;
-        } else if (item == ITEM_SHIELD_DEKU && gSaveContext.save.info.obtainedSkins.woodenShield) {
+        } else if (item == ITEM_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN)) {
             return ITEM_NONE;
         } else if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU + EQUIP_INV_SHIELD_DEKU)) {
             return item;
@@ -2606,13 +2608,13 @@ u8 Item_CheckObtainability(u8 item) {
             return ITEM_NONE;
         }
     } else if (item == ITEM_SHIELD_WOODEN) {
-        if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU) || !gSaveContext.save.info.obtainedSkins.woodenShield)
+        if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU) || !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
             return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) ? item : ITEM_NONE;
     } else if (item == ITEM_SHIELD_HEROS || item == ITEM_SHIELD_METAL) {
         if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS))
             return ITEM_NONE;
-        else if ((item == ITEM_SHIELD_HEROS && gSaveContext.save.info.obtainedSkins.metalShield) || (item == ITEM_SHIELD_METAL && !gSaveContext.save.info.obtainedSkins.metalShield))
+        else if ((item == ITEM_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL)) || (item == ITEM_SHIELD_METAL && !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL)))
             return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
@@ -2719,11 +2721,11 @@ u8 Item_CheckObtainability(u8 item) {
     if (IS_CHILD_QUEST)
         switch (item) {
             case ITEM_ARROW_FIRE:
-                return gSaveContext.save.info.obtainedItems.fireArrow  ? ITEM_ARROW_FIRE  : ITEM_NONE;
+                return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_FIRE)  ? ITEM_ARROW_FIRE  : ITEM_NONE;
             case ITEM_ARROW_ICE:
-                return gSaveContext.save.info.obtainedItems.iceArrow   ? ITEM_ARROW_ICE   : ITEM_NONE;
+                return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_ICE)   ? ITEM_ARROW_ICE   : ITEM_NONE;
             case ITEM_ARROW_LIGHT:
-                return gSaveContext.save.info.obtainedItems.lightArrow ? ITEM_ARROW_LIGHT : ITEM_NONE;
+                return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_LIGHT) ? ITEM_ARROW_LIGHT : ITEM_NONE;
         }
 
     return gSaveContext.save.info.inventory.items[slot];
@@ -3142,7 +3144,7 @@ s32 Magic_RequestChange(PlayState* play, s16 amount, s16 type) {
         return false;
     }
 
-    if (gSaveContext.save.info.obtainedSkills.halfMagicCost && type != MAGIC_ADD)
+    if (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) && type != MAGIC_ADD)
         amount /= 2;
 
     if ((type != MAGIC_ADD) && (gSaveContext.save.info.playerData.magic - amount) < 0) {
@@ -3189,7 +3191,7 @@ s32 Magic_RequestChange(PlayState* play, s16 amount, s16 type) {
         case MAGIC_CONSUME_LENS:
             if (gSaveContext.magicState == MAGIC_STATE_IDLE) {
                 if (gSaveContext.save.info.playerData.magic != 0) {
-                    interfaceCtx->lensMagicConsumptionTimer = gSaveContext.save.info.obtainedSkills.halfMagicCost ? 160 : 80;
+                    interfaceCtx->lensMagicConsumptionTimer = CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? 160 : 80;
                     gSaveContext.magicState = MAGIC_STATE_CONSUME_LENS;
                     return true;
                 } else {
@@ -3380,7 +3382,7 @@ void Magic_Update(PlayState* play) {
                 interfaceCtx->lensMagicConsumptionTimer--;
                 if (interfaceCtx->lensMagicConsumptionTimer == 0) {
                     gSaveContext.save.info.playerData.magic--;
-                    interfaceCtx->lensMagicConsumptionTimer = gSaveContext.save.info.obtainedSkills.halfMagicCost ? 160 : 80;
+                    interfaceCtx->lensMagicConsumptionTimer = CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? 160 : 80;
                 }
             }
 
@@ -3502,7 +3504,7 @@ void Magic_DrawMeter(PlayState* play) {
                                 HIRES_MULTIPLY((magicMeterY + 10) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
 
-        if (gSaveContext.save.info.obtainedSkills.halfMagicCost) {
+        if (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST)) {
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
             OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gUnusedAmmoDigitHalfTex, 16, 8, X_HIRES_MULTIPLY(R_MAGIC_METER_X + 4 + gSaveContext.magicCapacity), HIRES_MULTIPLY(magicMeterY + 7), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(8), X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));

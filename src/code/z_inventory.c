@@ -360,7 +360,7 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
     u16 equipValue = gSaveContext.save.info.equips.equipment & gEquipMasks[equipment];
     u8 i;
     u8 item;
-    u8 isHerosShield = false;
+    u8 isFourthItemIndex = false;
 
     PRINTF(T("装備アイテム抹消 = %d  zzz=%d\n", "Erasing equipment item = %d  zzz=%d\n"), equipment, equipValue);
 
@@ -369,10 +369,20 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
 
         if (equipment == EQUIP_TYPE_SHIELD) {
             if (IS_HEROS_SHIELD && equipValue == 2) {
-                CLEAR_HEROS_SHIELD;
+                gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_HEROS];
                 gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
                 gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(equipment, 3);
-                isHerosShield = true;
+                isFourthItemIndex = true;
+            } else {
+                gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
+                gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
+            }
+        } else if (equipment == EQUIP_TYPE_TUNIC) {
+            if (IS_SPIRIT_TUNIC && equipValue == 1) {
+                gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_TUNIC_SPIRIT];
+                gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
+                gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(equipment, 3);
+                isFourthItemIndex = true;
             } else {
                 gSaveContext.save.info.equips.equipment &= gEquipNegMasks[equipment];
                 gSaveContext.save.info.inventory.equipment ^= OWNED_EQUIP_FLAG(equipment, equipValue - 1);
@@ -412,7 +422,7 @@ u8 Inventory_DeleteEquipment(PlayState* play, s16 equipment) {
         play->pauseCtx.cursorSpecialPos = PAUSE_CURSOR_PAGE_LEFT;
     }
 
-    return isHerosShield ? 4 : equipValue;
+    return isFourthItemIndex ? 4 : equipValue;
 }
 
 void Inventory_ChangeUpgrade(s16 upgrade, s16 value) {

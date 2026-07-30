@@ -160,7 +160,7 @@ void ItemEtcetera_Init(Actor* thisx, PlayState* play) {
             this->actor.world.pos.y += 15.0f;
             break;
         case ITEM_ETC_SWORD_HEROS:
-            if (HAS_HEROS_SWORD)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS))
                 Actor_Kill(&this->actor);
             break;
         case ITEM_ETC_PICTOBOX:

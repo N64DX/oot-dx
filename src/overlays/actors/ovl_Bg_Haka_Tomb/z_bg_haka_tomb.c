@@ -69,7 +69,7 @@ void BgHakaTomb_Destroy(Actor* thisx, PlayState* play) {
 void BgHakaTomb_Activate(BgHakaTomb* this, PlayState* play) {
     if (Flags_GetSwitch(play, this->dyna.actor.room)) {
         this->dyna.actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY;
-        if (!gSaveContext.save.info.enhancedWarpSongs.nocturneOfShadow) {
+        if (!CHECK_UPGRADE_ITEM(UPGRADE_SONG_NOCTURNE)) {
             this->dyna.actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
             if (this->dyna.actor.isLockedOn)
                 this->actionFunc = BgHakaTomb_NocturneUpgrade1;
@@ -85,7 +85,7 @@ void BgHakaTomb_NocturneUpgrade1(BgHakaTomb* this, PlayState* play) {
     else {
         yawDiff = this->dyna.actor.yawTowardsPlayer - this->dyna.actor.world.rot.y;
         if (!(this->dyna.actor.xzDistToPlayer > 120.0f)) {
-            if (gSaveContext.save.info.enhancedWarpSongs.nocturneOfShadow)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_SONG_NOCTURNE))
                 this->dyna.actor.textId = 0x8500;
             yawDiffNew = ABS(yawDiff);
             if (yawDiffNew < 0x4300)
@@ -97,9 +97,9 @@ void BgHakaTomb_NocturneUpgrade1(BgHakaTomb* this, PlayState* play) {
 void BgHakaTomb_NocturneUpgrade2(BgHakaTomb* this, PlayState* play) {
     if (Message_GetState(&play->msgCtx) == TEXT_STATE_EVENT && Message_ShouldAdvance(play)) {
         Message_CloseTextbox(play);
-        if (!gSaveContext.save.info.enhancedWarpSongs.nocturneOfShadow) {
+        if (!CHECK_UPGRADE_ITEM(UPGRADE_SONG_NOCTURNE)) {
             play->csCtx.script = SEGMENTED_TO_VIRTUAL(gBeneathTheGraveardEnhancedNocturneOfShadowTeachCs);
-            gSaveContext.save.info.enhancedWarpSongs.nocturneOfShadow = true;
+            gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SONG_NOCTURNE];
             gSaveContext.cutsceneTrigger = 1;
         }
         this->actionFunc = BgHakaTomb_NocturneUpgrade1;

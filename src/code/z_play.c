@@ -2145,7 +2145,7 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos) {
  * Use a special power (usually a tunic power) through the Amulet of Energy at the cost of energy
  */
 u32 Player_UseSpecialPower(PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, s32 amount) {
-    if (Player_InBlockingCsMode(this, player) || !gSaveContext.save.info.obtainedItems.amuletOfEnergy)
+    if (Player_InBlockingCsMode(this, player) || !CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY))
         return amount;
     if (gSaveContext.save.info.energy < cost || R_SPECIAL_POWER_TIMER > 0)
         return amount;
@@ -2194,5 +2194,5 @@ u16 Player_GetMaxShieldDurability(u8 shield) {
     return 0;
 }
 
-u8 Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 50 + HAS_AMULET_OF_ENERGY * 50; }
-u8 Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || HAS_AMULET_OF_ENERGY || gSaveContext.save.info.obtainedSkills.enhancedSpin; }
+u8 Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 50 + CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) * 50; }
+u8 Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) || CHECK_UPGRADE_ITEM(UPGRADE_ENHANCED_SPIN); }

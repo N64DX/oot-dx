@@ -971,13 +971,13 @@ u8 KaleidoScope_GetNextBow() {
 
     switch (item) {
         case ITEM_BOW:
-            if (gSaveContext.save.info.obtainedItems.fireArrow)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_ARROW_FIRE))
                 return ITEM_BOW_FIRE;
         case ITEM_BOW_FIRE:
-            if (gSaveContext.save.info.obtainedItems.iceArrow)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_ARROW_ICE))
                 return ITEM_BOW_ICE;
         case ITEM_BOW_ICE:
-            if (gSaveContext.save.info.obtainedItems.lightArrow)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_ARROW_LIGHT))
                 return ITEM_BOW_LIGHT;
         default:
             return ITEM_BOW;

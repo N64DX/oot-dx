@@ -358,6 +358,9 @@ void Map_Init(PlayState* play) {
             R_OW_MINIMAP_X = gMapData->owMinimapPosX[mapIndex];
             R_OW_MINIMAP_Y = gMapData->owMinimapPosY[mapIndex];
             break;
+        case SCENE_PURPLE_ICE_CAVERN:
+            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = SCENE_GANONS_TOWER_COLLAPSE_INTERIOR;
+            break;
         case SCENE_ANCIENT_HOLLOW:
             mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = SCENE_DEKU_TREE_BOSS;
             break;

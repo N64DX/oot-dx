@@ -409,7 +409,7 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
     EnHammergeist_SetupDoNothing(this, play);
 
     if (this->switchFlag != 0xFF && Flags_GetSwitch(play, this->switchFlag)) {
-        if (this->reward == HAMMERGEIST_REWARD_HEROS_SWORD && !HAS_HEROS_SWORD)
+        if (this->reward == HAMMERGEIST_REWARD_HEROS_SWORD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS))
             Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 5.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_SWORD_HEROS);
         Actor_Kill(thisx);
     }
@@ -431,7 +431,7 @@ void EnHammergeist_Destroy(Actor* thisx, PlayState* play) {
         func_800F5B58();
         if (this->switchFlag != 0xFF && sNumAlive == 0)
             Flags_SetSwitch(play, this->switchFlag);
-        if (this->reward == HAMMERGEIST_REWARD_HEROS_SWORD && !HAS_HEROS_SWORD)
+        if (this->reward == HAMMERGEIST_REWARD_HEROS_SWORD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS))
             Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 5.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_SWORD_HEROS);
     }
 }
