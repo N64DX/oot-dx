@@ -89,9 +89,6 @@ typedef enum VtxPageInit {
 
 static u8 editor_timer = 0;
 static u8 pressed_r = false;
-u8 showAltQuiverSlot = false;
-u8 showAltStrengthSlot = false;
-u8 showAltScalesSlot = false;
 
 #if OOT_NTSC
 
@@ -132,11 +129,11 @@ static void* sEquipPageBgQuadsCQJPNTexs[] = {
     gPauseEquipment13CQTex,
     gPauseEquipment14CQTex,
     // column 3
-    gPauseEquipment20Tex,
-    gPauseEquipment21Tex,
-    gPauseEquipment22Tex,
-    gPauseEquipment23Tex,
-    gPauseEquipment24Tex,
+    gPauseEquipment20CQTex,
+    gPauseEquipment21CQTex,
+    gPauseEquipment22CQTex,
+    gPauseEquipment23CQTex,
+    gPauseEquipment24CQTex,
 };
 
 static void* sItemPageBgQuadsJPNTexs[] = {
@@ -284,11 +281,11 @@ static void* sEquipPageBgQuadsCQFRATexs[] = {
     gPauseEquipment13CQTex,
     gPauseEquipment14CQTex,
     // column 3
-    gPauseEquipment20FRATex,
-    gPauseEquipment21Tex,
-    gPauseEquipment22Tex,
-    gPauseEquipment23Tex,
-    gPauseEquipment24Tex,
+    gPauseEquipment20CQFRATex,
+    gPauseEquipment21CQTex,
+    gPauseEquipment22CQTex,
+    gPauseEquipment23CQTex,
+    gPauseEquipment24CQTex,
 };
 
 static void* sItemPageBgQuadsFRATexs[] = {
@@ -433,11 +430,11 @@ static void* sEquipPageBgQuadsCQGERTexs[] = {
     gPauseEquipment13CQTex,
     gPauseEquipment14CQTex,
     // column 3
-    gPauseEquipment20GERTex,
-    gPauseEquipment21Tex,
-    gPauseEquipment22Tex,
-    gPauseEquipment23Tex,
-    gPauseEquipment24Tex,
+    gPauseEquipment20CQGERTex,
+    gPauseEquipment21CQTex,
+    gPauseEquipment22CQTex,
+    gPauseEquipment23CQTex,
+    gPauseEquipment24CQTex,
 };
 
 static void* sItemPageBgQuadsGERTexs[] = {
@@ -584,11 +581,11 @@ static void* sEquipPageBgQuadsCQENGTexs[] = {
     gPauseEquipment13CQTex,
     gPauseEquipment14CQTex,
     // column 3
-    gPauseEquipment20Tex,
-    gPauseEquipment21Tex,
-    gPauseEquipment22Tex,
-    gPauseEquipment23Tex,
-    gPauseEquipment24Tex,
+    gPauseEquipment20CQTex,
+    gPauseEquipment21CQTex,
+    gPauseEquipment22CQTex,
+    gPauseEquipment23CQTex,
+    gPauseEquipment24CQTex,
 };
 
 static void* sItemPageBgQuadsENGTexs[] = {
@@ -1023,7 +1020,7 @@ char gSlotAgeReqs[] = {
     AGE_REQ_CHILD, // SLOT_TRADE_CHILD
 };
 
-char gEquipAgeReqs[4][5] = {
+char gEquipAgeReqs[4][6] = {
     {
         AGE_REQ_ADULT, // 0 UPG_QUIVER
         AGE_REQ_CHILD, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_KOKIRI
@@ -1162,7 +1159,8 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_SCALE_SILVER
     AGE_REQ_NONE,  // ITEM_SCALE_GOLDEN
     AGE_REQ_CHILD, // ITEM_AMULET_OF_ENERGY
-    AGE_REQ_CHILD, // ITEM_PERFECT_BLOCK_UPGRADE
+    AGE_REQ_CHILD, // ITEM_AMBER_EARRINGS
+    AGE_REQ_CHILD, // ITEM_PERFECT_BLOCK
 };
 
 u8 gAreaGsFlags[] = {
@@ -2461,14 +2459,6 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
         if (pauseCtx->namedItem >= ITEM_SONG_MINUET)
             texIndex -= ITEM_SONG_MINUET - LAST_ITEM_ICON - 1;
 
-        if (pauseCtx->pageIndex == PAUSE_EQUIP) {
-            if (showAltQuiverSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 0) {
-                if (LINK_IS_ADULT || (IS_CHILD_QUEST && CUR_UPG_VALUE(UPG_QUIVER) > 0))
-                    texIndex = ITEM_BULLET_BAG_30 + CUR_UPG_VALUE(UPG_BULLET_BAG) - 1;
-                else texIndex = ITEM_QUIVER_30 + CUR_UPG_VALUE(UPG_QUIVER) - 1;
-            }
-        }
-
         if (IS_CHILD_QUEST_AS_CHILD) {
             if (pauseCtx->pageIndex == PAUSE_ITEM) {
                 if (pauseCtx->namedItem == ITEM_BOW || pauseCtx->namedItem == ITEM_BOW_FIRE || pauseCtx->namedItem == ITEM_BOW_ICE || pauseCtx->namedItem == ITEM_BOW_LIGHT)
@@ -3079,8 +3069,8 @@ static s16 sItemVtxQuadsWithAmmo[] = {
     SLOT_MAGIC_BEAN * 4, // ITEM_QUAD_AMMO_BEAN_
 };
 
-static s16 sEquipColumnsX[] = { -114, 12, 44, 76, -300 };
-static s16 sEquipColumnsXCQ[] = { -114, -20, 12, 44, 76 };
+static s16 sEquipColumnsX[] = { -114, 12, 44, 76, -300, -300 };
+static s16 sEquipColumnsXCQ[] = { -114, -64, -32, 0, 32, 72 };
 
 static u8 sEquipQuadsFirstByEquipType[EQUIP_TYPE_MAX] = {
     EQUIP_QUAD_SWORD_KOKIRI, // EQUIP_TYPE_SWORD
@@ -3514,7 +3504,7 @@ void KaleidoScope_SetVertices(PlayState* play, GraphicsContext* gfxCtx) {
     for (k = 0, i = 0, y = (EQUIP_TYPE_MAX * EQUIP_GRID_CELL_HEIGHT) / 2 - 6; i < EQUIP_TYPE_MAX;
          i++, y -= EQUIP_GRID_CELL_HEIGHT) {
         // for each column
-        for (j = 0; j < 5; j++, k += 4) {
+        for (j = 0; j < 6; j++, k += 4) {
             pauseCtx->equipVtx[k + 0].v.ob[0] = pauseCtx->equipVtx[k + 2].v.ob[0] =
                 (IS_CHILD_QUEST ? sEquipColumnsXCQ[j] : sEquipColumnsX[j]) + EQUIP_GRID_QUAD_MARGIN;
 
@@ -4052,9 +4042,6 @@ void KaleidoScope_Update(PlayState* play) {
 
     switch (pauseCtx->state) {
         case PAUSE_STATE_INIT:
-            lastItem[0] = showAltQuiverSlot;
-            lastItem[1] = showAltStrengthSlot;
-            lastItem[2] = showAltScalesSlot;
             pauseCtx->wasInDebug = false;
             sSavedButtonStatus[0] = gSaveContext.buttonStatus[0];
             sSavedButtonStatus[1] = gSaveContext.buttonStatus[1];

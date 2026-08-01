@@ -426,6 +426,10 @@ u64 gAmuletOfEnergyItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TE
 #include "assets/textures/item_name_static/gAmuletOfEnergyItemNameFRATex.ia4.inc.c"
 };
 
+u64 gAmberEarringsItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gAmberEarringsItemNameFRATex.ia4.inc.c"
+};
+
 u64 gPerfectBlockItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gPerfectBlockItemNameFRATex.ia4.inc.c"
 };

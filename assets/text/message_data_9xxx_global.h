@@ -166,11 +166,11 @@ MSG()
 DEFINE_MESSAGE(0x900B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_PERFECT_BLOCK_UPGRADE) "You learned the " COLOR(RED) "Enhanced\n"
+UNSKIPPABLE ITEM_ICON(ITEM_PERFECT_BLOCK) "You learned the " COLOR(RED) "Enhanced\n"
 "Perfect Block" COLOR(DEFAULT) " ability!"
 BOX_BREAK
 
-UNSKIPPABLE ITEM_ICON(ITEM_PERFECT_BLOCK_UPGRADE) "When you block an attack with\n"
+UNSKIPPABLE ITEM_ICON(ITEM_PERFECT_BLOCK) "When you block an attack with\n"
 "your shield just before taking a\n"
 "hit your next sword slash does\n"
 "extra damage!"

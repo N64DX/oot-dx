@@ -426,6 +426,10 @@ u64 gAmuletOfEnergyItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TE
 #include "assets/textures/item_name_static/gAmuletOfEnergyItemNameJPNTex.ia4.inc.c"
 };
 
+u64 gAmberEarringsItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gAmberEarringsItemNameJPNTex.ia4.inc.c"
+};
+
 u64 gPerfectBlockItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gPerfectBlockItemNameJPNTex.ia4.inc.c"
 };

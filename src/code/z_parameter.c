@@ -2197,10 +2197,10 @@ u8 Item_Give(PlayState* play, u8 item) {
             if (DPAD_BUTTON(i) == SLOT_DEKU_NUT)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
-    } else if (item == ITEM_BOOTS_UPGRADE) {
+    } else if (item == ITEM_FURTHER_JUMP) {
         gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_FURTHER_JUMP];
         return ITEM_NONE;
-    } else if (item == ITEM_PERFECT_BLOCK_UPGRADE) {
+    } else if (item == ITEM_PERFECT_BLOCK) {
         gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_PERFECT_BLOCK];
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
@@ -2686,7 +2686,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_SHRINE_KEY) || (item >= ITEM_BOOTS_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK_UPGRADE) ) {
+    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_SHRINE_KEY) || (item >= ITEM_FURTHER_JUMP && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK) ) {
         return ITEM_NONE;
     }
 

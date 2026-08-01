@@ -827,7 +827,7 @@ ItemEditorEntry sItemEditorUpgradesEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, UPG_SCALE,                2, 0, "Scale",                    ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
     { SHOW_OPTION_ONLY_CQ,    UPGRADE_PERFECT_BLOCK,    0, 0, "Perfect Block",            ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
     { SHOW_OPTION_ONLY_CQ,    UPGRADE_AMULET_OF_ENERGY, 0, 0, "Amulet of Energy",         ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
-    { SHOW_OPTION_ONLY_CQ,    UPGRADE_EARRINGS_SPIRIT,  0, 0, "Spirit Earrings",          ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
+    { SHOW_OPTION_ONLY_CQ,    UPGRADE_AMBER_EARRINGS,   0, 0, "Amber Earrings",           ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
     { SHOW_OPTION_ONLY_CQ,    UPGRADE_FURTHER_JUMP,     0, 0, "Further Jump",             ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_DEKU,    7, 0, "Deku Shield Durability",   ItemEditor_SetDurability,  ItemEditor_GetDurability  },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HYLIAN,  7, 0, "Hylian Shield Durability", ItemEditor_SetDurability,  ItemEditor_GetDurability  },

@@ -196,7 +196,8 @@ void* gItemIcons[] = {
     gItemIconScaleSilverTex,       // ITEM_SCALE_SILVER
     gItemIconScaleGoldenTex,       // ITEM_SCALE_GOLDEN
     gItemIconAmuletOfEnergyTex,    // ITEM_AMULET_OF_ENERGY
-    gItemIconLandTitleDeedTex,     // ITEM_PERFECT_BLOCK_UPGRADE
+    gItemIconAmberEarringsTex,     // ITEM_AMBER_EARRINGS
+    gItemIconLandTitleDeedTex,     // ITEM_PERFECT_BLOCK
     gItemIconGiantsWalletTex,      // ITEM_MASTER_WALLET
     gItemIconGiantsWalletTex,      // ITEM_ROYAL_WALLET
     gItemIconGiantsWalletTex,      // ITEM_TYCOON_WALLET

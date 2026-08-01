@@ -273,7 +273,7 @@ void func_80A3DD7C(EnGm* this, PlayState* play) {
 }
 
 static u16 prices[] = { 200, 600 };
-static u8 item[] = { GI_SWORD_SILVER, GI_BOOTS_UPGRADE };
+static u8 item[] = { GI_SWORD_SILVER, GI_FURTHER_JUMP };
 
 void EnGm_ProcessChoiceIndex(EnGm* this, PlayState* play) {
     if (Message_GetState(&play->msgCtx) == TEXT_STATE_CHOICE && Message_ShouldAdvance(play)) {

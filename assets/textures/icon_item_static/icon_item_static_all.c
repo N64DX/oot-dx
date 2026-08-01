@@ -57,3 +57,23 @@ u64 gPauseEquipment13CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX
 u64 gPauseEquipment14CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_static/gPauseEquipment14CQTex.ia8.inc.c"
 };
+
+u64 gPauseEquipment20CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
+#include "assets/textures/icon_item_static/gPauseEquipment20CQTex.ia8.inc.c"
+};
+
+u64 gPauseEquipment21CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
+#include "assets/textures/icon_item_static/gPauseEquipment21CQTex.ia8.inc.c"
+};
+
+u64 gPauseEquipment22CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
+#include "assets/textures/icon_item_static/gPauseEquipment22CQTex.ia8.inc.c"
+};
+
+u64 gPauseEquipment23CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
+#include "assets/textures/icon_item_static/gPauseEquipment23CQTex.ia8.inc.c"
+};
+
+u64 gPauseEquipment24CQTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)] = {
+#include "assets/textures/icon_item_static/gPauseEquipment24CQTex.ia8.inc.c"
+};
