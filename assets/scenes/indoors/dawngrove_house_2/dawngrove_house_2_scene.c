@@ -9,12 +9,13 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd dawngrove_house_2_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_LINK_HOUSE),
     SCENE_CMD_ROOM_LIST(1, dawngrove_house_2_sceneRoomList_000060),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, dawngrove_house_2_sceneTransitionActorList_000068),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 4),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_RIVERSIDE_VILLAGE),
     SCENE_CMD_COL_HEADER(&dawngrove_house_2_sceneCollisionHeader_0001A0),
     SCENE_CMD_SPAWN_LIST(dawngrove_house_2_sceneEntranceList_000198),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_DANGEON_KEEP),

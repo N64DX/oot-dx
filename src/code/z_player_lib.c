@@ -241,8 +241,8 @@ typedef struct EnvHazardTextTriggerEntry {
 
 EnvHazardTextTriggerEntry sEnvHazardTextTriggers[] = {
     { ENV_HAZARD_TEXT_TRIGGER_HOTROOM, 0x3040 },    // PLAYER_ENV_HAZARD_HOTROOM - 1
-    { ENV_HAZARD_TEXT_TRIGGER_FREEZINGROOM, 0x9402 }, // PLAYER_ENV_HAZARD_FREEZINGROOM - 1
-    { ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM, 0x9403 }, // PLAYER_ENV_HAZARD_CURSEDROOM - 1
+    { ENV_HAZARD_TEXT_TRIGGER_FREEZINGROOM, 0x9403 }, // PLAYER_ENV_HAZARD_FREEZINGROOM - 1
+    { ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM, 0x9404 }, // PLAYER_ENV_HAZARD_CURSEDROOM - 1
     { ENV_HAZARD_TEXT_TRIGGER_UNDERWATER, 0x401D }, // PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1
     { 0, 0x0000 },                                  // PLAYER_ENV_HAZARD_SWIMMING - 1
     { ENV_HAZARD_TEXT_TRIGGER_UNDERWATER, 0x401D }, // PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1
@@ -1145,9 +1145,9 @@ Gfx* sBootDListGroups[][2] = {
     { gLinkAdultLeftHoverBootDL, gLinkAdultRightHoverBootDL }, // PLAYER_BOOTS_HOVER
 };
 
-Gfx* sLinkChildEquipmentDListGroups[][6] = {
-    { gLinkChildIronBootsDL, gLinkChildHoverBootsDL, gLinkChildGoronBraceletDL, gLinkChildPowerBraceletDL, gLinkChildPowerBraceletsDL, gLinkChildAmuletOfEnergyDL },
-    { gLinkYoungIronBootsDL, gLinkYoungHoverBootsDL, gLinkYoungGoronBraceletDL, gLinkYoungPowerBraceletDL, gLinkYoungPowerBraceletsDL, gLinkYoungAmuletOfEnergyDL },
+Gfx* sLinkChildEquipmentDListGroups[][7] = {
+    { gLinkChildIronBootsDL, gLinkChildHoverBootsDL, gLinkChildGoronBraceletDL, gLinkChildPowerBraceletDL, gLinkChildPowerBraceletsDL, gLinkChildAmuletOfEnergyDL, gLinkChildEarringsAmberDL },
+    { gLinkYoungIronBootsDL, gLinkYoungHoverBootsDL, gLinkYoungGoronBraceletDL, gLinkYoungPowerBraceletDL, gLinkYoungPowerBraceletsDL, gLinkYoungAmuletOfEnergyDL, gLinkYoungEarringsAmberDL },
 };
 
 void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dListCount, s32 lod, s32 tunic, s32 boots,
@@ -1222,17 +1222,18 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
         } else if (IS_CHILD_QUEST) {
             s32 strengthUpgrade = CUR_UPG_VALUE(UPG_STRENGTH);
             gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
-            if (strengthUpgrade >= PLAYER_STR_BRACELET) {
+            if (strengthUpgrade >= PLAYER_STR_BRACELET)
                 gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][strengthUpgrade + 1]);
-            }
-            if (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY)) {
+            if (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY))
                 gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][5]);
-            }
-            if (boots == PLAYER_BOOTS_IRON || boots == PLAYER_BOOTS_HOVER) {
+            if (CHECK_UPGRADE_ITEM(UPGRADE_AMBER_EARRINGS))
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][6]);
+            if (boots == PLAYER_BOOTS_IRON || boots == PLAYER_BOOTS_HOVER)
                 gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][boots - 1]);
+        } else {
+            if (Player_GetStrength() > PLAYER_STR_NONE) {
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][2]);
             }
-        } else if (Player_GetStrength() > PLAYER_STR_NONE) {
-            gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][2]);
         }
 
         if (LINK_IS_CHILD) {

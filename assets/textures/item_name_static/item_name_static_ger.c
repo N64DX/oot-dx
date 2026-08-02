@@ -402,6 +402,10 @@ u64 gBombBag40ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "build/pal-1.0/assets/textures/item_name_static/gBombBag40ItemNameGERTex.ia4.inc.c"
 };
 
+u64 gBombBag50ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBombBag50ItemNameGERTex.ia4.inc.c"
+};
+
 u64 gGoronsBraceletItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "build/pal-1.0/assets/textures/item_name_static/gGoronsBraceletItemNameGERTex.ia4.inc.c"
 };

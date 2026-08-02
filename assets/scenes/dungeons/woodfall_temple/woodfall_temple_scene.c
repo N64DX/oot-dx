@@ -9,11 +9,13 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd woodfall_temple_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(3, NATURE_ID_NONE, NA_BGM_WOODFALL_TEMPLE),
     SCENE_CMD_ROOM_LIST(13, woodfall_temple_sceneRoomList0x000218),
     SCENE_CMD_TRANSITION_ACTOR_LIST(21, woodfall_temple_sceneTransitionActorList_0000C8),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_WOODFALL),
     SCENE_CMD_COL_HEADER(&woodfall_temple_sceneCollisionHeader_012458),
     SCENE_CMD_SPAWN_LIST(woodfall_temple_sceneEntranceList0x000280),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_DUNGEON, OBJECT_GAMEPLAY_DANGEON_KEEP),

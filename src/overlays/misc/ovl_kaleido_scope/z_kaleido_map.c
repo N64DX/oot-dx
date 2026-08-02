@@ -450,6 +450,15 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         -17,  // WORLD_MAP_AREA_LON_LON_RANCH
         37,   // WORLD_MAP_AREA_QUESTION_MARK
         -6,   // WORLD_MAP_AREA_GANONS_CASTLE
+        50,   // WORLD_MAP_AREA_ANCIENT_GROVE
+        50,   // WORLD_MAP_AREA_FORBIDDEN_WOODS
+        -49,  // WORLD_MAP_AREA_FORSAKEN_KINGDOM
+        -49,  // WORLD_MAP_AREA_GLOOMY_GRAVEYARD
+        -49,  // WORLD_MAP_AREA_GORON_SHRINE
+        -49,  // WORLD_MAP_AREA_GORON_VILLAGE
+        50,   // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
+        -49,  // WORLD_MAP_AREA_SPRING_LAKE
+        50,   // WORLD_MAP_AREA_WOODFALL
     };
     static s16 areaBoxWidths[] = {
         96, // WORLD_MAP_AREA_HYRULE_FIELD
@@ -474,6 +483,15 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         32, // WORLD_MAP_AREA_LON_LON_RANCH
         16, // WORLD_MAP_AREA_QUESTION_MARK
         32, // WORLD_MAP_AREA_GANONS_CASTLE
+        32, // WORLD_MAP_AREA_ANCIENT_GROVE
+        32, // WORLD_MAP_AREA_FORBIDDEN_WOODS
+        32, // WORLD_MAP_AREA_FORSAKEN_KINGDOM
+        32, // WORLD_MAP_AREA_GLOOMY_GRAVEYARD
+        32, // WORLD_MAP_AREA_GORON_SHRINE
+        32, // WORLD_MAP_AREA_GORON_VILLAGE
+        32, // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
+        32, // WORLD_MAP_AREA_SPRING_LAKE
+        32, // WORLD_MAP_AREA_WOODFALL
     };
     static s16 areaBoxPosY[] = {
         30,  // WORLD_MAP_AREA_HYRULE_FIELD
@@ -498,6 +516,15 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         12,  // WORLD_MAP_AREA_LON_LON_RANCH
         36,  // WORLD_MAP_AREA_QUESTION_MARK
         50,  // WORLD_MAP_AREA_GANONS_CASTLE
+        2,   // WORLD_MAP_AREA_ANCIENT_GROVE
+        2,   // WORLD_MAP_AREA_FORBIDDEN_WOODS
+        -31, // WORLD_MAP_AREA_FORSAKEN_KINGDOM
+        -31, // WORLD_MAP_AREA_GLOOMY_GRAVEYARD
+        -31, // WORLD_MAP_AREA_GORON_SHRINE
+        -31, // WORLD_MAP_AREA_GORON_VILLAGE
+        2,   // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
+        -31, // WORLD_MAP_AREA_SPRING_LAKE
+        2,   // WORLD_MAP_AREA_WOODFALL
     };
     static s16 areaBoxHeights[] = {
         59, // WORLD_MAP_AREA_HYRULE_FIELD
@@ -522,6 +549,15 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         17, // WORLD_MAP_AREA_LON_LON_RANCH
         16, // WORLD_MAP_AREA_QUESTION_MARK
         17, // WORLD_MAP_AREA_GANONS_CASTLE
+        17, // WORLD_MAP_AREA_ANCIENT_GROVE
+        17, // WORLD_MAP_AREA_FORBIDDEN_WOODS
+        17, // WORLD_MAP_AREA_FORSAKEN_KINGDOM
+        17, // WORLD_MAP_AREA_GLOOMY_GRAVEYARD
+        17, // WORLD_MAP_AREA_GORON_SHRINE
+        17, // WORLD_MAP_AREA_GORON_VILLAGE
+        17, // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
+        17, // WORLD_MAP_AREA_SPRING_LAKE
+        17, // WORLD_MAP_AREA_WOODFALL
     };
     static void* areaBoxTexs[] = {
         gWorldMapAreaBox7Tex, // WORLD_MAP_AREA_HYRULE_FIELD
@@ -546,6 +582,15 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_LON_LON_RANCH
         gWorldMapAreaBox8Tex, // WORLD_MAP_AREA_QUESTION_MARK
         gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_GANONS_CASTLE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_ANCIENT_GROVE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_FORBIDDEN_WOODS
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_FORSAKEN_KINGDOM
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_GLOOMY_GRAVEYARD
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_GORON_SHRINE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_GORON_VILLAGE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_SPRING_LAKE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_WOODFALL
     };
     static void* currentPosTitleTexs[] = LANGUAGE_ARRAY(gPauseCurrentPositionJPNTex, gPauseCurrentPositionENGTex,
                                                         gPauseCurrentPositionGERTex, gPauseCurrentPositionFRATex);

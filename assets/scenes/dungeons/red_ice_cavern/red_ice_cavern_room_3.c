@@ -8,12 +8,12 @@
 
 SceneCmd red_ice_cavern_room_3[] = {
     SCENE_CMD_ECHO_SETTINGS(0),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_FREEZING, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&red_ice_cavern_room_3RoomShapeNormal_0001E0),
     SCENE_CMD_OBJECT_LIST(5, red_ice_cavern_room_3ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(25, red_ice_cavern_room_3ActorEntry_000050),
+    SCENE_CMD_ACTOR_LIST(27, red_ice_cavern_room_3ActorEntry_000050),
     SCENE_CMD_END(),
 };
 
@@ -30,12 +30,12 @@ ActorEntry red_ice_cavern_room_3ActorEntry_000050[] = {
     { ACTOR_EN_VM,           {  838,  59, -1152 }, {      0, 0xC004, 0 }, 0x0700 },
     { ACTOR_BG_YDAN_MARUTA,  {  277,  80,  -681 }, {      0,      0, 0 }, 0x00FF },
     { ACTOR_BG_YDAN_MARUTA,  {  277,  54,  -905 }, {      0,      0, 0 }, 0x00FF },
-    { ACTOR_BG_HIDAN_KOUSI,  {  859,  36,  -587 }, {      0, 0x3FFC, 0 }, 0x1402 },
-    { ACTOR_OBJ_SWITCH,      {  684, 214,  -667 }, {      0, 0xFE20, 0 }, 0x1402 },
-    { ACTOR_BG_ICE_SHELTER,  {  979, 196, -1401 }, {      0, 0x36BE, 0 }, 0x0003 },
-    { ACTOR_BG_HIDAN_KOUSI,  { 1220, 180,  -651 }, {      0,      0, 0 }, 0x1602 },
-    { ACTOR_BG_HIDAN_KOUSI,  { 1380, 180,  -651 }, {      0, 0x7FFF, 0 }, 0x1602 },
-    { ACTOR_OBJ_SWITCH,      { 1301, 180, -1111 }, {      0,      0, 0 }, 0x1600 },
+    { ACTOR_BG_ICE_SHELTER,  {  979, 196, -1401 }, {      0, 0x36BE, 0 }, 0x0003 }, // Switch: 03
+    { ACTOR_BG_HIDAN_KOUSI,  {  859,  36,  -587 }, {      0, 0x3FFC, 0 }, 0x1402 }, // Checks switch: 14
+    { ACTOR_BG_HIDAN_KOUSI,  { 1220, 180,  -651 }, {      0,      0, 0 }, 0x1602 }, // Checks switch: 16
+    { ACTOR_BG_HIDAN_KOUSI,  { 1380, 180,  -651 }, {      0, 0x7FFF, 0 }, 0x1602 }, // Checks switch: 16
+    { ACTOR_OBJ_SWITCH,      {  684, 214,  -667 }, {      0, 0xFE20, 0 }, 0x1402 }, // Switch: 14
+    { ACTOR_OBJ_SWITCH,      { 1301, 180, -1111 }, {      0,      0, 0 }, 0x1600 }, // Switch: 16
     { ACTOR_BG_ICE_TURARA,   { 1221, 180, -1111 }, {      0,      0, 0 }, 0x0000 },
     { ACTOR_BG_ICE_TURARA,   { 1381, 180, -1111 }, {      0,      0, 0 }, 0x0000 },
     { ACTOR_BG_ICE_TURARA,   { 1181, 180, -1151 }, {      0,      0, 0 }, 0x0000 },
@@ -51,6 +51,8 @@ ActorEntry red_ice_cavern_room_3ActorEntry_000050[] = {
     { ACTOR_BG_ICE_TURARA,   { 1243, 537,  -946 }, { 0x7FFF,      0, 0 }, 0x0002 },
     { ACTOR_BG_ICE_TURARA,   { 1303, 572,  -766 }, { 0x7FFF,      0, 0 }, 0x0002 },
     { ACTOR_BG_ICE_TURARA,   { 1367, 532,  -766 }, { 0x7FFF,      0, 0 }, 0x0002 },
+    { ACTOR_BG_WEATHER,      {    0,   0,     0 }, {      0,      0, 0 }, 0x0001 },
+    { ACTOR_OBJECT_KANKYO,   {    0,   0,     0 }, {      0,      0, 0 }, 0x0007 },
 };
 
 RoomShapeNormal red_ice_cavern_room_3RoomShapeNormal_0001E0 = { 
@@ -198,7 +200,7 @@ Gfx red_ice_cavern_room_3DL_002FF8[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal256(red_ice_cavern_sceneTLUT_015510),
+    gsDPLoadTLUT_pal256(red_ice_cavern_sceneTLUT_00F9D0),
     gsDPLoadTextureBlock(red_ice_cavern_sceneTex_00F9D0, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
@@ -366,7 +368,7 @@ Gfx red_ice_cavern_room_3DL_002FF8[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal16(0, red_ice_cavern_sceneTLUT_017D90),
+    gsDPLoadTLUT_pal16(0, red_ice_cavern_sceneTLUT_011ED0),
     gsDPLoadTextureBlock_4b(red_ice_cavern_sceneTex_011ED0, G_IM_FMT_CI, 32, 128, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 7, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
@@ -490,7 +492,7 @@ Gfx red_ice_cavern_room_3DL_002FF8[] = {
     gsDPSetTextureFilter(G_TF_BILERP),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTLUT_pal16(0, red_ice_cavern_sceneTLUT_017D90),
+    gsDPLoadTLUT_pal16(0, red_ice_cavern_sceneTLUT_011ED0),
     gsDPLoadTextureBlock_4b(red_ice_cavern_sceneTex_011ED0, G_IM_FMT_CI, 32, 128, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 7, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),

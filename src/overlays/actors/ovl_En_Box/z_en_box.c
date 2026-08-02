@@ -590,13 +590,15 @@ u8 EnBox_IsItem(s16 item) {
         case GI_HAMMER:
         case GI_BOTTLE_EMPTY:
         case GI_SWORD_KOKIRI:
-        case GI_SWORD_HEROS:
         case GI_SWORD_KNIFE:
         case GI_SWORD_BIGGORON:
+        case GI_SWORD_HEROS:
         case GI_SHIELD_DEKU:
         case GI_SHIELD_HYLIAN:
-        case GI_SHIELD_HEROS:
         case GI_SHIELD_MIRROR:
+        case GI_SHIELD_HEROS:
+        case GI_SHIELD_WOODEN:
+        case GI_SHIELD_METAL:
         case GI_BOOTS_IRON:
         case GI_BOOTS_HOVER:
         case GI_SILVER_GAUNTLETS:
@@ -604,9 +606,17 @@ u8 EnBox_IsItem(s16 item) {
         case GI_ARROW_FIRE:
         case GI_ARROW_ICE:
         case GI_ARROW_LIGHT:
+        case GI_BULLET_BAG_30:
+        case GI_BULLET_BAG_40:
+        case GI_BULLET_BAG_50:
+        case GI_BULLET_BAG_60:
+        case GI_QUIVER_40:
+        case GI_QUIVER_50:
+        case GI_QUIVER_60:
         case GI_BOMB_BAG_20:
         case GI_BOMB_BAG_30:
         case GI_BOMB_BAG_40:
+        case GI_BOMB_BAG_50:
         case GI_WALLET_ADULT:
         case GI_WALLET_GIANT:
         case GI_WALLET_MASTER:
@@ -621,9 +631,12 @@ u8 EnBox_IsItem(s16 item) {
         case GI_TUNIC_ZORA:
         case GI_TUNIC_SPIRIT:
         case GI_AMULET_OF_ENERGY:
+        case GI_AMBER_EARRINGS:
         case GI_ROCS_FEATHER:
         case GI_GOLDEN_FEATHER:
         case GI_SWORD_FAIRYS:
+        case GI_PICTOBOX:
+        case GI_SHRINE_KEY:
             return true;
         default:
             return false;

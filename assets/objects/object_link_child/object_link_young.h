@@ -120,8 +120,8 @@ extern Gfx gLinkYoungPowerBraceletDL[];
 extern Gfx gLinkYoungPowerBraceletsDL[];
 
 // Earring
-extern Gfx gLinkYoungEarringsIronDL[];
-extern Gfx gLinkYoungEarringsHoverDL[];
+//extern Gfx gLinkYoungEarringsDL[];
+extern Gfx gLinkYoungEarringsAmberDL[];
 
 // Boots
 extern Gfx gLinkYoungIronBootsDL[];

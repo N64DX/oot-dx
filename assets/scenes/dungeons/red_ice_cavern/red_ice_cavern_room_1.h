@@ -3,8 +3,6 @@
 
 #include "room.h"
 
-extern SceneCmd red_ice_cavern_room_1[];
-
 extern s16 red_ice_cavern_room_1ObjectList_000040[];
 extern ActorEntry red_ice_cavern_room_1ActorEntry_000048[];
 extern RoomShapeNormal red_ice_cavern_room_1RoomShapeNormal_0000A8;

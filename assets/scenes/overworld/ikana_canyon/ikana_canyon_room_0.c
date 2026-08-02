@@ -98,7 +98,7 @@ ActorEntry ikana_canyon_room_0ActorEntry_000084[] = {
     { ACTOR_OBJ_HSSTUMP,     {   -944,   200, 2780 }, {    0, 0x4C00,    0 }, 0x0000 },
     { ACTOR_OBJ_HSSTUMP,     {   -633,  -440, 3767 }, {    0,      0,    0 }, 0x0000 },
     { ACTOR_BG_WEATHER,      {    500,   200, 1650 }, {    0,      0,    0 }, 0x0000 },
-    { ACTOR_OBJ_WARPSTONE,   {   -852,   200, 2592 }, {    0,      0,    0 }, 0x0004 },
+    { ACTOR_OBJ_WARPSTONE,   {   -852,   200, 2592 }, {    0,      0,    0 }, 0x0004 }, // Nocturne of Shadow
   //{ ACTOR_BG_IKNV_OBJ,     {   -229,   480,  713 }, {    0,   0x65,    0 }, 0xFE00 },
   //{ ACTOR_BG_IKNV_OBJ,     {   1401,   857, -250 }, {    0,      0,    0 }, 0xFE01 },
   //{ ACTOR_BG_IKNV_DOUKUTU, {    -87,   193, 1175 }, {    0,      0,    0 }, 0xFE01 },

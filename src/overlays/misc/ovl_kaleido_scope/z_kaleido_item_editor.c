@@ -47,6 +47,13 @@ ItemEditorState state;
 
 u8 firstTimeUse = false;
 
+void ItemEditor_RefreshIcons(PlayState* play) {
+    u8 i;
+
+    for (i=0; i<8; i++)
+        Interface_LoadItemIcon1(play, i);
+}
+
 void ItemEditor_SetItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
     if (play->state.input[0].press.button == BTN_A) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE)
@@ -61,6 +68,8 @@ void ItemEditor_SetItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
             gSaveContext.save.info.inventory.items[slot]--;
         else gSaveContext.save.info.inventory.items[slot] = ITEM_NONE;
     }
+
+    ItemEditor_RefreshIcons(play);
 }
 
 void ItemEditor_SetCQItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
@@ -75,6 +84,8 @@ void ItemEditor_SetArrow(u8 item, u8 upgrade, u8 slot, PlayState* play) {
             gSaveContext.save.info.upgradeItems |= gBitFlags[upgrade];
         else gSaveContext.save.info.upgradeItems &= ~gBitFlags[upgrade];
     } else gSaveContext.save.info.upgradeItems ^= gBitFlags[upgrade];
+
+    ItemEditor_RefreshIcons(play);
 }
 
 void ItemEditor_SetBottle(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
@@ -95,6 +106,8 @@ void ItemEditor_SetBottle(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
             gSaveContext.save.info.inventory.items[slot]--;
         else gSaveContext.save.info.inventory.items[slot] = ITEM_NONE;
     }
+
+    ItemEditor_RefreshIcons(play);
 }
 
 void ItemEditor_SetAmmo(u8 item, u8 upgrade, u8 max, PlayState* play) {
@@ -226,6 +239,8 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item))
             Inventory_ChangeEquipment(EQUIP_TYPE_BOOTS, EQUIP_VALUE_BOOTS_KOKIRI);
     }
+
+    ItemEditor_RefreshIcons(play);
 }
 
 void ItemEditor_SetHealth(u8 type, u8 max, u8 param3, PlayState* play) {

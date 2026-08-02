@@ -11,11 +11,13 @@
 #include "ultra64.h"
 #include "cutscene_commands.h"
 #include "ocarina.h"
+#include "save.h"
 
 SceneCmd beneath_the_graveyard_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_GENERAL_NIGHT, NA_BGM_CAVERN),
     SCENE_CMD_ROOM_LIST(5, beneath_the_graveyard_sceneRoomList0x0000F0),
     SCENE_CMD_TRANSITION_ACTOR_LIST(4, beneath_the_graveyard_sceneTransitionActorList_0000B0),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_GLOOMY_GRAVEYARD),
     SCENE_CMD_COL_HEADER(&beneath_the_graveyard_sceneCollisionHeader_008814),
     SCENE_CMD_SPAWN_LIST(beneath_the_graveyard_sceneEntranceList0x000118),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),

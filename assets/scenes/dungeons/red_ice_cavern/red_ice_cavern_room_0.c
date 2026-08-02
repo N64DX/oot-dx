@@ -8,12 +8,12 @@
 
 SceneCmd red_ice_cavern_room_0[] = {
     SCENE_CMD_ECHO_SETTINGS(0),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_FREEZING, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&red_ice_cavern_room_0RoomShapeNormal_000190),
     SCENE_CMD_OBJECT_LIST(5, red_ice_cavern_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(20, red_ice_cavern_room_0ActorEntry_000050),
+    SCENE_CMD_ACTOR_LIST(22, red_ice_cavern_room_0ActorEntry_000050),
     SCENE_CMD_END(),
 };
 
@@ -26,26 +26,28 @@ s16 red_ice_cavern_room_0ObjectList_000040[] = {
 };
 
 ActorEntry red_ice_cavern_room_0ActorEntry_000050[] = {
-    { ACTOR_EN_ICE_HONO,    { 1038, 318, -180 }, { 0,      0,   0 }, 0xFFFF },
-    { ACTOR_EN_BOX,         {  521, 396,  452 }, { 0, 0x7FFF, 0x1 }, 0x5841 },
-    { ACTOR_BG_ICE_TURARA,  {  140,  60,  170 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_BG_ICE_TURARA,  {  178,  20,  109 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_BG_ICE_TURARA,  {  172,  40, -202 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_BG_ICE_TURARA,  {  354, 117,  205 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_BG_ICE_TURARA,  {  440, 120,  151 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_BG_ICE_TURARA,  {  357, 100,  130 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_ITEM00,      {  357, 130,  130 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_ITEM00,      {  140,  70,  170 }, { 0,      0,   0 }, 0x0100 },
-    { ACTOR_EN_ITEM00,      {  172,  70, -202 }, { 0,      0,   0 }, 0x0200 },
-    { ACTOR_BG_ICE_TURARA,  { 1125, 180,  231 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_BG_ICE_TURARA,  { 1075, 153,  231 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_BG_ICE_TURARA,  {  733, 367,  519 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_BG_ICE_TURARA,  {  706, 381,  476 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_BG_ICE_TURARA,  {  683, 384,  435 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_BG_ICE_TURARA,  {  659, 364,  395 }, { 0,      0,   0 }, 0x0000 },
-    { ACTOR_EN_ITEM00,      { 1125, 180,  231 }, { 0,      0,   0 }, 0x1303 },
-    { ACTOR_EN_ITEM00,      { 1075, 180,  231 }, { 0,      0,   0 }, 0x1503 },
-    { ACTOR_EN_ITEM00,      {  354, 120,  205 }, { 0,      0,   0 }, 0x1003 },
+    { ACTOR_BG_ICE_TURARA,  {  140,  60,  170 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  {  178,  20,  109 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  {  172,  40, -202 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  {  354, 117,  205 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  {  440, 120,  151 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  {  357, 100,  130 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  { 1125, 180,  231 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  { 1075, 153,  231 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  {  733, 367,  519 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  {  706, 381,  476 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  {  683, 384,  435 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_ICE_TURARA,  {  659, 364,  395 }, {    0,      0,   0 }, 0x0000 },
+    { ACTOR_EN_ITEM00,      {  357, 130,  130 }, {    0,      0,   0 }, 0x2000 }, // Collect: 20, Green Rupee
+    { ACTOR_EN_ITEM00,      {  140,  70,  170 }, {    0,      0,   0 }, 0x2100 }, // Collect: 21, Green Rupee
+    { ACTOR_EN_ITEM00,      {  172,  70, -202 }, {    0,      0,   0 }, 0x2200 }, // Collect: 22, Green Rupee
+    { ACTOR_EN_ITEM00,      { 1125, 180,  231 }, {    0,      0,   0 }, 0x2303 }, // Collect: 23, Recovery Heart
+    { ACTOR_EN_ITEM00,      { 1075, 180,  231 }, {    0,      0,   0 }, 0x2403 }, // Collect: 24, Recovery Heart
+    { ACTOR_EN_ITEM00,      {  354, 120,  205 }, {    0,      0,   0 }, 0x2503 }, // Collect: 25, Recovery Heart
+    { ACTOR_EN_ICE_HONO,    { 1038, 318, -180 }, {    0,      0,   0 }, 0xFFFF },
+    { ACTOR_EN_BOX,         {  521, 396,  452 }, { 0x42, 0x8000, 0x1 }, 0x5001 }, // Chest: 01, checks switch: 01, Small Key
+    { ACTOR_BG_WEATHER,     {    0,   0,    0 }, {    0,      0,   0 }, 0x0001 },
+    { ACTOR_OBJECT_KANKYO,  {    0,   0,    0 }, {    0,      0,   0 }, 0x0007 },
 };
 
 RoomShapeNormal red_ice_cavern_room_0RoomShapeNormal_000190 = { 

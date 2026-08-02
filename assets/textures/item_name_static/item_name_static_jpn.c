@@ -402,6 +402,10 @@ u64 gBombBag40ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "assets/textures/item_name_static/gBombBag40ItemNameJPNTex.ia4.inc.c"
 };
 
+u64 gBombBag50ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBombBag50ItemNameJPNTex.ia4.inc.c"
+};
+
 u64 gGoronsBraceletItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gGoronsBraceletItemNameJPNTex.ia4.inc.c"
 };

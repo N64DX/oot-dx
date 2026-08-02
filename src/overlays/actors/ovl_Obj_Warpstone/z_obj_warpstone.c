@@ -8,10 +8,12 @@
 
 #include "z_lib.h"
 #include "ichain.h"
+#include "sfx.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "sys_matrix.h" 
 #include "play_state.h"
+#include "one_point_cutscene.h"
 #include "save.h"
 
 #include "assets/objects/object_sek/object_sek.h"
@@ -74,6 +76,9 @@ void ObjWarpstone_SetupAction(ObjWarpstone* this, ObjWarpstoneActionFunc actionF
 void ObjWarpstone_Init(Actor* thisx, PlayState* play) {
     ObjWarpstone* this = (ObjWarpstone*)thisx;
 
+    if (this->dyna.actor.params >= 6)
+        this->dyna.actor.params = 0;
+
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
     Collider_InitCylinder(play, &this->collider);
     Collider_SetCylinder(play, &this->collider, &this->dyna.actor, &sCylinderInit);
@@ -94,13 +99,17 @@ void ObjWarpstone_Destroy(Actor* thisx, PlayState* play) {
 }
 
 void ObjWarpstone_ClosedIdle(ObjWarpstone* this, PlayState* play) {
-    ObjWarpstone_SetupAction(this, ObjWarpstone_BeginOpeningCutscene);
+    if (this->collider.base.acFlags & AC_HIT)
+        ObjWarpstone_SetupAction(this, ObjWarpstone_BeginOpeningCutscene);
 }
 
 void ObjWarpstone_BeginOpeningCutscene(ObjWarpstone* this, PlayState* play) {
-    if (CHECK_UPGRADE_ITEM(this->dyna.actor.params)) {
+    if (!Player_InCsMode(play)) {
+        OnePointCutscene_Attention(play, &this->dyna.actor);
+        gSaveContext.save.info.upgradeItems |= gBitFlags[this->dyna.actor.params];
+        Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_OWL_WARP_SWITCH_ON);
+        Message_StartTextbox(play, 0x08A6 + this->dyna.actor.params, NULL);
         ObjWarpstone_SetupAction(this, ObjWarpstone_PlayOpeningCutscene);
-        //Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_OWL_WARP_SWITCH_ON);
     }
 }
 

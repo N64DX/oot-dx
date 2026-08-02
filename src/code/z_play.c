@@ -427,7 +427,7 @@ void Play_Init(GameState* thisx) {
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW) ? 3: 2;
                 else if (sceneId == SCENE_PATH_TO_GORON_VILLAGE || sceneId == SCENE_GORON_VILLAGE || sceneId == SCENE_GORON_SHRINE || sceneId == SCENE_GORON_MINES)
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES) ? 3: 2;
-                else if (sceneId == SCENE_FORSAKEN_KINGDOM || sceneId == SCENE_GLOOMY_GRAVEYARD)
+                else if (sceneId == SCENE_FORSAKEN_KINGDOM || sceneId == SCENE_GLOOMY_GRAVEYARD || sceneId == SCENE_PURPLE_ICE_CAVERN)
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_STONE_TOWER) ? 3: 2;
                 else if (gSaveContext.save.entranceIndex != ENTR_MARKET_GUARD_HOUSE_0 && gSaveContext.save.entranceIndex != ENTR_BAZAAR_1)
                     gSaveContext.sceneLayer += 2;

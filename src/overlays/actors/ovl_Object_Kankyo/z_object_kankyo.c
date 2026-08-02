@@ -121,6 +121,12 @@ void ObjectKankyo_Init(Actor* thisx, PlayState* play) {
             }
             break;
 
+        case 7:
+            ObjectKankyo_SetupAction(this, ObjectKankyo_Snow);
+            play->envCtx.precipitation[PRECIP_SNOW_MAX] = 64;
+            sIsSpawned = true;
+            break;
+
         case 2:
             ObjectKankyo_SetupAction(this, ObjectKankyo_Lightning);
             break;
@@ -508,6 +514,7 @@ void ObjectKankyo_Draw(Actor* thisx, PlayState* play) {
 
         case 3:
         case 6:
+        case 7:
             ObjectKankyo_DrawSnow(thisx, play);
             break;
 

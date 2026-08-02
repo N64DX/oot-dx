@@ -9,12 +9,13 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd fairy_deku_tree_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(2, NATURE_ID_NONE, NA_BGM_KOLIMA_FOREST),
     SCENE_CMD_ROOM_LIST(14, fairy_deku_tree_sceneRoomList0x0001F8),
     SCENE_CMD_TRANSITION_ACTOR_LIST(24, fairy_deku_tree_sceneTransitionActorList0x000078),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_ANCIENT_GROVE),
     SCENE_CMD_COL_HEADER(&fairy_deku_tree_sceneCollisionHeader0x00EA9C),
     SCENE_CMD_SPAWN_LIST(fairy_deku_tree_sceneEntranceList0x000268),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_DUNGEON, OBJECT_GAMEPLAY_DANGEON_KEEP),

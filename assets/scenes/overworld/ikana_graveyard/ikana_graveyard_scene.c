@@ -9,12 +9,14 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd ikana_graveyard_scene[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(ikana_graveyard_sceneAlternateHeaders),
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_IKANA_REGION),
     SCENE_CMD_ROOM_LIST(2, ikana_graveyard_sceneRoomList0x000124),
     SCENE_CMD_TRANSITION_ACTOR_LIST(3, ikana_graveyard_sceneTransitionActorList_000104),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_GLOOMY_GRAVEYARD),
     SCENE_CMD_COL_HEADER(&ikana_graveyard_sceneCollisionHeader_006E30),
     SCENE_CMD_SPAWN_LIST(ikana_graveyard_sceneEntranceList0x000134),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
@@ -2211,6 +2213,7 @@ SceneCmd ikana_graveyard_sceneSet_cleansed[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_TERMINA_FIELD),
     SCENE_CMD_ROOM_LIST(2, ikana_graveyard_sceneRoomList0x000124),
     SCENE_CMD_TRANSITION_ACTOR_LIST(3, ikana_graveyard_sceneTransitionActorList_000104),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_GLOOMY_GRAVEYARD),
     SCENE_CMD_COL_HEADER(&ikana_graveyard_sceneCollisionHeader_006E30),
     SCENE_CMD_SPAWN_LIST(ikana_graveyard_sceneEntranceList0x000134),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),

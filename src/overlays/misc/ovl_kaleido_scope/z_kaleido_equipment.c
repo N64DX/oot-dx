@@ -42,15 +42,15 @@ static u8 sAdultUpgradeItemBases[] = {
 
 static u8 sCQUpgrades[] = {
     0,
-    UPGRADE_AMBER_EARRINGS,
     UPGRADE_PERFECT_BLOCK,
+    UPGRADE_AMBER_EARRINGS,
     UPGRADE_AMULET_OF_ENERGY,
 };
 
 static u8 sCQUpgradesItemBases[] = {
     ITEM_QUIVER_30,
-    ITEM_AMBER_EARRINGS,
     ITEM_PERFECT_BLOCK,
+    ITEM_AMBER_EARRINGS,
     ITEM_AMULET_OF_ENERGY,
 };
 

@@ -190,6 +190,7 @@ void* gItemIcons[] = {
     gItemIconBombBag20Tex,         // ITEM_BOMB_BAG_20
     gItemIconBombBag30Tex,         // ITEM_BOMB_BAG_30
     gItemIconBombBag40Tex,         // ITEM_BOMB_BAG_40
+    gItemIconBombBag40Tex,         // ITEM_BOMB_BAG_50
     gItemIconGoronsBraceletTex,    // ITEM_STRENGTH_GORONS_BRACELET
     gItemIconSilverGauntletsTex,   // ITEM_STRENGTH_SILVER_GAUNTLETS
     gItemIconGoldenGauntletsTex,   // ITEM_STRENGTH_GOLD_GAUNTLETS

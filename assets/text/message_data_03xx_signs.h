@@ -2095,3 +2095,13 @@ COLOR(DEFAULT) "Use what you will, this sealed\n"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x0362, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"The silver light shall illuminate\n"
+"the path across the dark abyss."
+),
+MSG(),
+MSG()
+)

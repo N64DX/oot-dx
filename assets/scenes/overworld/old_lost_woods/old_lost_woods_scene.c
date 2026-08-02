@@ -9,11 +9,12 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd old_lost_woods_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_DEEP_WOODS),
     SCENE_CMD_ROOM_LIST(1, old_lost_woods_sceneRoomList0x0000A0),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_FORBIDDEN_WOODS),
     SCENE_CMD_COL_HEADER(&old_lost_woods_sceneCollisionHeader0x0068D4),
     SCENE_CMD_SPAWN_LIST(old_lost_woods_sceneEntranceList0x0000A8),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),

@@ -192,6 +192,11 @@ static f32 BgWeather_GetNightFactor(void) {
 void BgWeather_Init(Actor* thisx, PlayState* play) {
     BgWeather* this = (BgWeather*)thisx;
 
+    if (thisx->params == 1 && GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_STONE_TOWER)) {
+        Actor_Kill(thisx);
+        return;
+    }
+
     this->rainFogIntensity = RAIN_FOG_INTENSITY;
     this->nightMistIntensity = BgWeather_GetNightFactor();
     this->fogLastEye = play->mainCamera.eye;
@@ -443,7 +448,7 @@ static void BgWeather_DrawRainFog(BgWeather* this, PlayState* play) {
     Matrix_Translate(eyeX, eyeY, eyeZ, MTXMODE_NEW);
     MATRIX_FINALIZE_AND_LOAD(gfx++, gfxCtx, __FILE__, __LINE__);
 
-    for (li = 0; li < RAIN_FOG_NUM_LAYERS; li++) {
+    for (li=0; li<RAIN_FOG_NUM_LAYERS; li++) {
         u8 layerIndex = sRainFogLayerOrder[li];
         const FogLayer* layer = &sRainFogLayers[layerIndex];
         f32 opacity = (layerIndex == RAIN_FOG_GROUND_LAYER) ? RAIN_FOG_GROUND_OPACITY : RAIN_FOG_OPACITY;
@@ -463,7 +468,7 @@ static void BgWeather_DrawRainFog(BgWeather* this, PlayState* play) {
 
         vtx = Graph_Alloc(gfxCtx, sizeof(Vtx) * FOG_VERTS_PER_PUFF * FOG_PUFFS_PER_LAYER);
 
-        for (gx = 0; gx < FOG_GRID_DIM; gx++) {
+        for (gx=0; gx<FOG_GRID_DIM; gx++) {
             for (gz = 0; gz < FOG_GRID_DIM; gz++) {
                 s32 cellX = baseCellX + gx;
                 s32 cellZ = baseCellZ + gz;

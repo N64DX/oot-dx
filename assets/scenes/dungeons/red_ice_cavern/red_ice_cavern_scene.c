@@ -9,17 +9,18 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd red_ice_cavern_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_RED_ICE_CAVERN),
     SCENE_CMD_ROOM_LIST(6, red_ice_cavern_sceneRoomList_000070),
     SCENE_CMD_TRANSITION_ACTOR_LIST(7, red_ice_cavern_sceneTransitionActorList_0000A0),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 0),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_FORSAKEN_KINGDOM),
     SCENE_CMD_COL_HEADER(&red_ice_cavern_sceneCollisionHeader_000198),
     SCENE_CMD_SPAWN_LIST(red_ice_cavern_sceneEntranceList_000190),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_DANGEON_KEEP),
     SCENE_CMD_PATH_LIST(red_ice_cavern_scenePathway_000140),
-    SCENE_CMD_PLAYER_ENTRY_LIST(1, red_ice_cavern_sceneStartPositionList_000118),
+    SCENE_CMD_PLAYER_ENTRY_LIST(7, red_ice_cavern_sceneStartPositionList_000118),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_DRAW_128, 0, LIGHT_MODE_SETTINGS),
     SCENE_CMD_EXIT_LIST(red_ice_cavern_sceneExitList_000110),
     SCENE_CMD_ENV_LIGHT_SETTINGS(1, red_ice_cavern_sceneLightSettings_000128),
@@ -27,17 +28,23 @@ SceneCmd red_ice_cavern_scene[] = {
 };
 
 ActorEntry red_ice_cavern_sceneStartPositionList_000118[] = {
-    { ACTOR_PLAYER,  { -200, 0, -12 }, { 0, 0x3FFF, 0 }, 0x0FFF },
+    { ACTOR_PLAYER, { -200,   0,  -12 }, { 0, 0x4000, 0 }, 0x0FFF },
+    { ACTOR_PLAYER, { -200,   0,  -12 }, { 0, 0x4000, 0 }, 0x0FFF }, // Debug warp room 0
+    { ACTOR_PLAYER, { 1650, 180,   50 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 1
+    { ACTOR_PLAYER, { 2325, 188,   50 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 2
+    { ACTOR_PLAYER, {  375,  60,  350 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 3
+    { ACTOR_PLAYER, { 1575, 180, -875 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 4
+    { ACTOR_PLAYER, {  890, 120,  650 }, { 0, 0x1000, 0 }, 0x0DFF }, // Debug warp room 5
 };
 
 TransitionActorEntry red_ice_cavern_sceneTransitionActorList_0000A0[] = {
     { 5, 255, 0, 255, ACTOR_DOOR_SHUTTER, {  863, 120,  557 },  32767, 0x0000 },
     { 3, 255, 0, 255, ACTOR_DOOR_SHUTTER, {  380,  60, -269 },      0, 0x0000 },
     { 3, 255, 0, 255, ACTOR_DOOR_SHUTTER, { 1301, 180, -301 },      0, 0x0000 },
-    { 3, 255, 4, 255, ACTOR_DOOR_SHUTTER, { 1469, 180, -872 },  16383, 0x004C },
-    { 0, 255, 5, 255, ACTOR_DOOR_SHUTTER, {  611, 384,  675 },      0, 0x0082 },
-    { 1, 255, 0, 255, ACTOR_DOOR_SHUTTER, { 1488, 180,   59 }, -16373, 0x02C0 },
-    { 1, 255, 2, 255, ACTOR_DOOR_SHUTTER, { 2156, 178,   54 },  16372, 0x02C6 },
+    { 3, 255, 4, 255, ACTOR_DOOR_SHUTTER, { 1469, 180, -872 },  16383, 0x004C }, // Checks clear: 0C
+    { 0, 255, 5, 255, ACTOR_DOOR_SHUTTER, {  611, 384,  675 },      0, 0x0082 }, // Checks switch: 02
+    { 1, 255, 0, 255, ACTOR_DOOR_SHUTTER, { 1488, 180,   59 }, -16373, 0x02C0 }, // Switch: 00
+    { 1, 255, 2, 255, ACTOR_DOOR_SHUTTER, { 2156, 178,   54 },  16372, 0x02C6 }, // Switch: 06
 };
 
 RomFile red_ice_cavern_sceneRoomList_000070[] = {
@@ -50,7 +57,13 @@ RomFile red_ice_cavern_sceneRoomList_000070[] = {
 };
 
 Spawn red_ice_cavern_sceneEntranceList_000190[] = {
-    { 0x00, 0x00 },
+    { 0x00, 0x00 }, // Main Entrance
+    { 0x01, 0x00 }, // Debug warp room 0
+    { 0x02, 0x01 }, // Debug warp room 1
+    { 0x03, 0x02 }, // Debug warp room 2
+    { 0x04, 0x03 }, // Debug warp room 3
+    { 0x05, 0x04 }, // Debug warp room 4
+    { 0x06, 0x05 }, // Debug warp room 5
 };
 
 u16 red_ice_cavern_sceneExitList_000110[] = {
@@ -5046,8 +5059,6 @@ u64 red_ice_cavern_sceneTex_01A710[] = {
 u64 red_ice_cavern_sceneTLUT_01A710[] = {
 #include "assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_sceneTex_01A710.tlut.rgba16.inc.c"
 };
-
-
 
 CollisionHeader red_ice_cavern_sceneCollisionHeader_000198 = { 
     { -617, -300, -1520 },

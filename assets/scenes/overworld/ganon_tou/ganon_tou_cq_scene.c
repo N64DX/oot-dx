@@ -1,4 +1,5 @@
 #include "assets/scenes/overworld/ganon_tou/ganon_tou_scene.h"
+#include "save.h"
 
 extern SceneCmd* questHeaders_ganon_tou_scene[];
 

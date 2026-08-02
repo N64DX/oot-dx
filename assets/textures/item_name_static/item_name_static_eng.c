@@ -402,6 +402,10 @@ u64 gBombBag40ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "assets/textures/item_name_static/gBombBag40ItemNameENGTex.ia4.inc.c"
 };
 
+u64 gBombBag50ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBombBag50ItemNameENGTex.ia4.inc.c"
+};
+
 u64 gGoronsBraceletItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gGoronsBraceletItemNameENGTex.ia4.inc.c"
 };

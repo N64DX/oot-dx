@@ -78,7 +78,7 @@ ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_OBJ_MURE,          {  -319,    0,  1279 }, {    0,      0,  0 }, 0x5324 },
     { ACTOR_OBJ_MURE,          {   327,  -30,  -637 }, {    0,      0,  0 }, 0x3322 },
     { ACTOR_OBJ_MURE,          {  -971,  -30,   457 }, {    0,      0,  0 }, 0x6322 },
-    { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   720 }, {    0,   0xB4,  0 }, 0x4000 }, // Collect: 20, Green Rupee
+    { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   720 }, {    0,      0,  0 }, 0x4000 }, // Collect: 20, Green Rupee
     { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   880 }, {    0,      0,  0 }, 0x4400 }, // Collect: 22, Green Rupee
     { ACTOR_EN_CROW,           {   311,  943,   272 }, {    0,      0,  0 }, 0x0000 },
     { ACTOR_EN_BEE,            {   219,   13,    71 }, {    0,      0,  0 }, 0x0000 },
@@ -137,8 +137,8 @@ SceneCmd mountain_village_room_0Set_timeskip[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_timeskip),
-    SCENE_CMD_OBJECT_LIST(15, mountain_village_room_0ObjectList_timeskip),
-    SCENE_CMD_ACTOR_LIST(63, mountain_village_room_0ActorEntry_timeskip),
+    SCENE_CMD_OBJECT_LIST(16, mountain_village_room_0ObjectList_timeskip),
+    SCENE_CMD_ACTOR_LIST(64, mountain_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
 
@@ -158,6 +158,7 @@ s16 mountain_village_room_0ObjectList_timeskip[] = {
     OBJECT_WOOD_PILLAR,
     OBJECT_FR,
     OBJECT_OF1D_MAP,
+    OBJECT_SEK,
 };
 
 ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
@@ -197,8 +198,9 @@ ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_OBJ_MURE,          {  -319,    0,  1279 }, {    0,      0,  0 }, 0x5324 },
     { ACTOR_OBJ_MURE,          {   327,  -30,  -637 }, {    0,      0,  0 }, 0x3322 },
     { ACTOR_OBJ_MURE,          {  -971,  -30,   457 }, {    0,      0,  0 }, 0x6322 },
-    { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   720 }, {    0, 0xB400,  0 }, 0x4000 }, // Collect: 20, Green Rupee
+    { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   720 }, {    0,      0,  0 }, 0x4000 }, // Collect: 20, Green Rupee
     { ACTOR_OBJ_FLOWERPOT,     {    87,   71,   880 }, {    0,      0,  0 }, 0x4400 }, // Collect: 22, Green Rupee
+    { ACTOR_OBJ_WARPSTONE,     {  -573,    8,  -230 }, {    0,      0,  0 }, 0x0002 }, // Serenade of Water
     { ACTOR_EN_BEE,            {   219,   13,    71 }, {    0,      0,  0 }, 0x0020 },
     { ACTOR_EN_GO3,            {   615, 1408, -1438 }, {    0, 0xEE39,  0 }, 0x0003 },
     { ACTOR_EN_GO3,            {   693, 1408, -1407 }, {    0, 0xEE39,  0 }, 0x0013 },

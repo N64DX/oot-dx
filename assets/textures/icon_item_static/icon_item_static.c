@@ -406,6 +406,10 @@ u64 gItemIconBombBag40Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] =
 #include "assets/textures/icon_item_static/gItemIconBombBag40Tex.rgba32.inc.c"
 };
 
+u64 gItemIconBombBag50Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconBombBag40Tex.rgba32.inc.c"
+};
+
 u64 gItemIconGoronsBraceletTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
 #include "assets/textures/icon_item_static/gItemIconGoronsBraceletTex.rgba32.inc.c"
 };

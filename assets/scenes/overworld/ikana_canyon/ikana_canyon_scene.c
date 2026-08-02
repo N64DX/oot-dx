@@ -9,12 +9,13 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd ikana_canyon_scene[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(ikana_canyon_sceneAlternateHeaders),
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_IKANA_REGION),
     SCENE_CMD_ROOM_LIST(4, ikana_canyon_sceneRoomList0x000200),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 6),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_FORSAKEN_KINGDOM),
     SCENE_CMD_TRANSITION_ACTOR_LIST(5, ikana_canyon_sceneTransitionActorList_0001A0),
     SCENE_CMD_COL_HEADER(&ikana_canyon_sceneCollisionHeader_00D9FC),
     SCENE_CMD_SPAWN_LIST(ikana_canyon_sceneEntranceList0x000228),
@@ -44,7 +45,7 @@ ActorEntry ikana_canyon_sceneStartPositionList0x0000B0[] = {
     { ACTOR_PLAYER, {   546,  400,   858 }, { 0, 0xD120, 0 }, 0x0FFF },
     { ACTOR_PLAYER, { -3068, -505,  2690 }, { 0, 0x32C8, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {  -344,  562,  -711 }, { 0,      0, 0 }, 0x0FFF },
-    { ACTOR_PLAYER, {  -852,  200,  2700 }, { 0, 0x5700, 0 }, 0x0DFF },
+    { ACTOR_PLAYER, {  -852,  200,  2700 }, { 0, 0x5700, 0 }, 0x06FF }, // Owl Statue
 };
 
 TransitionActorEntry ikana_canyon_sceneTransitionActorList_0001A0[] = {
@@ -73,7 +74,7 @@ Spawn ikana_canyon_sceneEntranceList0x000228[] = {
     { 0x07, 0x00 },
     { 0x08, 0x01 },
     { 0x09, 0x00 },
-    { 0x0A, 0x00 },
+    { 0x0A, 0x00 }, // Owl Statue
 };
 
 u16 ikana_canyon_sceneExitList_000248[] = {
@@ -4021,7 +4022,7 @@ CollisionHeader ikana_canyon_sceneCollisionHeader_00D9FC = {
 SceneCmd ikana_canyon_sceneSet_cleansed[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_TERMINA_FIELD),
     SCENE_CMD_ROOM_LIST(4, ikana_canyon_sceneRoomList0x000200),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 6),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_FORSAKEN_KINGDOM),
     SCENE_CMD_TRANSITION_ACTOR_LIST(5, ikana_canyon_sceneTransitionActorList_0001A0),
     SCENE_CMD_COL_HEADER(&ikana_canyon_sceneCollisionHeader_00D9FC),
     SCENE_CMD_SPAWN_LIST(ikana_canyon_sceneEntranceList0x000228),

@@ -6,12 +6,20 @@ Vtx gGiPendantVtx[] = {
 #include "assets/objects/object_gi_pendant/gGiPendantVtx.inc.c"
 };
 
+Vtx gGiEarringVtx[] = {
+#include "assets/objects/object_gi_pendant/gGiEarringVtx.inc.c"
+};
+
 u64 gGiPendantBlankTex[] = {
 #include "assets/objects/object_gi_pendant/gGiPendantBlankTex.i8.inc.c"
 };
 
 u64 gGiPendantBackgroundTex[] = {
 #include "assets/objects/object_gi_pendant/gGiPendantBackgroundTex.i4.inc.c"
+};
+
+u64 gGiEarringTex[] = {
+#include "assets/objects/object_link_boy/gLinkAdultEarringTex.ia16.inc.c"
 };
 
 Gfx gGiPendantDL[] = {
@@ -137,5 +145,22 @@ Gfx gGiPendantDL[] = {
     gsSP2Triangles(5, 2, 1, 0, 2, 5, 4, 0),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH),
     gsSP2Triangles(0, 4, 5, 0, 0, 5, 1, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gGiEarringsDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
+    gsDPSetPrimColor(0, 0xFF, 187, 165, 61, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gGiEarringTex, G_IM_FMT_IA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(gGiEarringVtx, 8, 0),
+    gsSPClearGeometryMode(G_CULL_BOTH),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(4, 3, 6, 0, 0, 7, 1, 0),
     gsSPEndDisplayList(),
 };

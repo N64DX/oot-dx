@@ -109,6 +109,7 @@ extern u64 gItemIconQuiver60Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 
 extern u64 gItemIconBombBag20Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconBombBag30Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconBombBag40Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
+extern u64 gItemIconBombBag50Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconGoronsBraceletTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconSilverGauntletsTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];
 extern u64 gItemIconGoldenGauntletsTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)];

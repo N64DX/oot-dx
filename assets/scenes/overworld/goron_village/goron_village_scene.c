@@ -9,17 +9,18 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd goron_village_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_TERMINA_FIELD),
     SCENE_CMD_ROOM_LIST(2, goron_village_sceneRoomList0x0000F4),
     SCENE_CMD_TRANSITION_ACTOR_LIST(2, goron_village_sceneTransitionActorList_0000E4),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 6),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_GORON_VILLAGE),
     SCENE_CMD_COL_HEADER(&goron_village_sceneCollisionHeader_004DC4),
     SCENE_CMD_SPAWN_LIST(goron_village_sceneEntranceList0x000104),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PATH_LIST(goron_village_scenePathway_00034C),
-    SCENE_CMD_PLAYER_ENTRY_LIST(4, goron_village_sceneStartPositionList0x000094),
+    SCENE_CMD_PLAYER_ENTRY_LIST(5, goron_village_sceneStartPositionList0x000094),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_TERMINA_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(goron_village_sceneExitList_000110),
     SCENE_CMD_ENV_LIGHT_SETTINGS(24, goron_village_sceneLightSettings0x00011C),
@@ -31,6 +32,7 @@ ActorEntry goron_village_sceneStartPositionList0x000094[] = {
     { ACTOR_PLAYER, {  -834, -200,   104 }, { 0, 0x0FA0, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {  2440, -200, -1295 }, { 0, 0xC950, 0 }, 0x0DFF },
     { ACTOR_PLAYER, {    77,  200,   393 }, { 0, 0x90AC, 0 }, 0x0DFF },
+    { ACTOR_PLAYER, {  1189, -200,  -911 }, { 0, 0x4A80, 0 }, 0x06FF },
 };
 
 TransitionActorEntry goron_village_sceneTransitionActorList_0000E4[] = {
@@ -48,6 +50,7 @@ Spawn goron_village_sceneEntranceList0x000104[] = {
     { 0x01, 0x00 },
     { 0x02, 0x00 },
     { 0x03, 0x00 },
+    { 0x04, 0x00 },
 };
 
 u16 goron_village_sceneExitList_000110[] = {

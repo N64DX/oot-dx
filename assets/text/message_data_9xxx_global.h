@@ -1,24 +1,90 @@
 DEFINE_MESSAGE(0x9000, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
 MSG(
-QUICKTEXT_ENABLE SHIFT(12) COLOR(RED) "黄金のスタルチュラのしるし" COLOR(DEFAULT) "を　手に入れた！" QUICKTEXT_DISABLE "\n"
-SHIFT(8) "これまでに" COLOR(RED) TOKENS COLOR(DEFAULT) "こ　あつめた！" FADE(40)
+UNSKIPPABLE ITEM_ICON(ITEM_AMULET_OF_ENERGY) QUICKTEXT_ENABLE "You got the " COLOR(LIGHTBLUE) "Amulet of Energy" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"It grants you special power\n"
+"that enhances your tunics\n"
+"at the cost of energy!"
 ),
-MSG(
-"You got a " COLOR(RED) "Gold Skulltula Token" COLOR(DEFAULT) "!\n"
-"You've collected " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " " PLURAL_TOKENS " in total." FADE(40)
-),
-MSG(
-"Du erhältst ein " COLOR(RED) "Skulltula-Symbol" COLOR(DEFAULT) ". Du\n"
-"hast insgesamt " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " " PLURAL_TOKENS " zerstört." FADE(40)
-),
-MSG(
-"Vous venez de détruire une\n"
-COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "!\n"
-"Vous avez collecté " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " " PLURAL_TOKENS " au total." FADE(40)
-)
+MSG(),
+MSG()
 )
 
 DEFINE_MESSAGE(0x9001, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_AMBER_EARRINGS) QUICKTEXT_ENABLE "You got the " COLOR(YELLOW) "Amber Earrings" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Those will finally allow your\n"
+"Longshot to latch unto objects\n"
+"in the " COLOR(PURPLE) "Forsaken Kingdom" COLOR(DEFAULT) " region!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9002, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_ROCS_FEATHER) QUICKTEXT_ENABLE "You got the " COLOR(LIGHTBLUE) "Roc's Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to leap into the air,\n"
+"as light as a feather!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9003, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GOLDEN_FEATHER) QUICKTEXT_ENABLE "You found the " COLOR(LIGHTBLUE) "Golden Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to leap into the air.\n"
+"This feather is even stronger!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9004, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_FAIRYS) QUICKTEXT_ENABLE "You got the " COLOR(RED) "Great Fairy's Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Set it to " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "to use it."
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_FAIRYS) "With black roses etched into it,\n"
+"the Great Fairy's Sword is the\n"
+"most powerful of all blades."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9005, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_WOODEN) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "木の盾" COLOR(DEFAULT) "を入手！" QUICKTEXT_DISABLE "\n"
+COLOR(BLUE) "そうび画面" COLOR(DEFAULT) "に　切りかえて、\n"
+"カーソルで選んで　" COLOR(BLUE) "[A]" COLOR(DEFAULT) "でそうび。"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_WOODEN) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Wooden Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Switch to the " COLOR(BLUE) "Equipment \n"
+"Subscreen" COLOR(DEFAULT) " and select the\n"
+"shield, then equip it with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_WOODEN) QUICKTEXT_ENABLE "Der " COLOR(LIGHTBLUE) "Holzschild" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Gehe ins " COLOR(BLUE) "Ausrüstungs-Menü" COLOR(DEFAULT) ",\n"
+"um ihn mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) " auszuwählen."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_WOODEN) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(LIGHTBLUE) "Bouclier\n"
+"de Bois" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Sélectionnez-le à \n"
+"l'" COLOR(BLUE) "écran de l'Equipement" COLOR(DEFAULT) ", puis \n"
+"appuyez sur " COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour l'équiper."
+)
+)
+
+DEFINE_MESSAGE(0x9006, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "勇者の盾" COLOR(DEFAULT) "を入手！" QUICKTEXT_DISABLE "\n"
 COLOR(BLUE) "そうび画面" COLOR(DEFAULT) "に　切りかえて、\n"
@@ -43,7 +109,32 @@ UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE "Vous obtenez un " COL
 )
 )
 
-DEFINE_MESSAGE(0x9002, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9007, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_METAL) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "メタルシールド" COLOR(DEFAULT) "を入手！" QUICKTEXT_DISABLE "\n"
+COLOR(BLUE) "そうび画面" COLOR(DEFAULT) "に　切りかえて、\n"
+"カーソルで選んで　" COLOR(BLUE) "[A]" COLOR(DEFAULT) "でそうび。"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_METAL) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Metal Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Switch to the " COLOR(BLUE) "Equipment \n"
+"Subscreen" COLOR(DEFAULT) " and select the\n"
+"shield, then equip it with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_METAL) QUICKTEXT_ENABLE "Der " COLOR(LIGHTBLUE) "Metallschild" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Gehe ins " COLOR(BLUE) "Ausrüstungs-Menü" COLOR(DEFAULT) ",\n"
+"um ihn mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) " auszuwählen."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_METAL) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(LIGHTBLUE) "Bouclier\n"
+"de Métal" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Sélectionnez-le à \n"
+"l'" COLOR(BLUE) "écran de l'Equipement" COLOR(DEFAULT) ", puis \n"
+"appuyez sur " COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour l'équiper."
+)
+)
+
+DEFINE_MESSAGE(0x9008, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS)
 QUICKTEXT_ENABLE "強敵が残した\n"
@@ -70,79 +161,13 @@ COLOR(RED) "l'Épée du Héros" COLOR(DEFAULT) "! Elle est à toi maintenant!" Q
 )
 )
 
-DEFINE_MESSAGE(0x9003, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_ROCS_FEATHER) QUICKTEXT_ENABLE "You got the " COLOR(LIGHTBLUE) "Roc's Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to leap into the air,\n"
-"as light as a feather!"
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x9004, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GOLDEN_FEATHER) QUICKTEXT_ENABLE "You found the " COLOR(LIGHTBLUE) "Golden Feather" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to leap into the air.\n"
-"This feather is even stronger!"
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x9005, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Master Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"What a worthy wallet! Now\n"
-"you can carry up to " COLOR(YELLOW) "999" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x9006, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Royal Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"What a fancy wallet! Now you\n"
-"can carry up to " COLOR(YELLOW) "2000" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x9007, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Tycoon's Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"What a gigantic wallet! Now you\n"
-"can carry up to " COLOR(YELLOW) "5000" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
-),
-MSG(),
-MSG()
-)
-
-DEFINE_MESSAGE(0x9008, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Bottomless Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"What a endless wallet! Now you\n"
-"can carry up to " COLOR(YELLOW) "9999" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
-),
-MSG(),
-MSG()
-)
-
 DEFINE_MESSAGE(0x9009, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_AMULET_OF_ENERGY) QUICKTEXT_ENABLE "You got the " COLOR(LIGHTBLUE) "Amulet of Energy" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"It grants you special power\n"
-"that enhances your tunics\n"
-"at the cost of energy!"
+ITEM_ICON(ITEM_TUNIC_SPIRIT) QUICKTEXT_ENABLE "You got a " COLOR(PURPLE) "Spirit Tunic" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"This is a curse-protected tunic.\n"
+"It will keep you safe from any\n"
+"life-draining curses."
 ),
 MSG(),
 MSG()
@@ -151,13 +176,10 @@ MSG()
 DEFINE_MESSAGE(0x900A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_FAIRYS) QUICKTEXT_ENABLE "You got the " COLOR(RED) "Great Fairy's Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Set it to " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "to use it."
-BOX_BREAK
-
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_FAIRYS) "With black roses etched into it,\n"
-"the Great Fairy's Sword is the\n"
-"most powerful of all blades."
+UNSKIPPABLE ITEM_ICON(ITEM_PICTOBOX) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Pictograph Box" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Someone must have lost it!\n"
+"It looks rusty from all the water,\n"
+"but somehow still functional."
 ),
 MSG(),
 MSG()
@@ -166,14 +188,9 @@ MSG()
 DEFINE_MESSAGE(0x900B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_PERFECT_BLOCK) "You learned the " COLOR(RED) "Enhanced\n"
-"Perfect Block" COLOR(DEFAULT) " ability!"
-BOX_BREAK
-
-UNSKIPPABLE ITEM_ICON(ITEM_PERFECT_BLOCK) "When you block an attack with\n"
-"your shield just before taking a\n"
-"hit your next sword slash does\n"
-"extra damage!"
+UNSKIPPABLE ITEM_ICON(ITEM_SHRINE_KEY) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Shrine Key" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Bring it back to the Gorons that\n"
+"lost their key to the shrine!"
 ),
 MSG(),
 MSG()
@@ -182,9 +199,10 @@ MSG()
 DEFINE_MESSAGE(0x900C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SMALL_KEY) QUICKTEXT_ENABLE "Igor left behind a " COLOR(RED) "Small Key" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"This key will open a locked\n"
-"door within the " COLOR(ADJUSTABLE) "Ancient Hollow" COLOR(DEFAULT) "."
+ITEM_ICON(ITEM_BOTTLE_POTION_SHIELD) QUICKTEXT_ENABLE "You got a " COLOR(PURPLE) "Shield Potion" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Drink it with " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to restore\n"
+"the durability of your current\n"
+"equipped shield."
 ),
 MSG(),
 MSG()
@@ -201,6 +219,22 @@ MSG()
 )
 
 DEFINE_MESSAGE(0x900E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_PERFECT_BLOCK) "You learned the " COLOR(RED) "Enhanced\n"
+"Perfect Block" COLOR(DEFAULT) " ability!"
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_PERFECT_BLOCK) "When you block an attack with\n"
+"your shield just before taking a\n"
+"hit your next sword slash does\n"
+"extra damage!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x900F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_BULLET_BAG_60) QUICKTEXT_ENABLE COLOR(RED) "タネブクロ" COLOR(DEFAULT) "が大きくなった！" QUICKTEXT_DISABLE "\n"
 "パチンコのタマを　入れられる！\n"
@@ -226,7 +260,7 @@ COLOR(YELLOW) "60" COLOR(RED) " " COLOR(DEFAULT) "munitions!"
 )
 )
 
-DEFINE_MESSAGE(0x900F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9010, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_60) QUICKTEXT_ENABLE COLOR(RED) "最大の矢立て" COLOR(DEFAULT) "に　とりかえた！" QUICKTEXT_DISABLE "\n"
 "矢を持てる数が　さらにふえた！\n"
@@ -252,6 +286,86 @@ UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_60) QUICKTEXT_ENABLE "Vous changez votre carqu
 )
 
 DEFINE_MESSAGE(0x9011, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BOMB_BAG_50) QUICKTEXT_ENABLE COLOR(RED) "最大のボム袋" COLOR(DEFAULT) "を　手に入れた！" QUICKTEXT_DISABLE "\n"
+"バクダンが　さらに　ふえた！\n"
+COLOR(YELLOW) "５０コ" COLOR(DEFAULT) "まで　持てるぞ！"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BOMB_BAG_50) QUICKTEXT_ENABLE "You got the \n"
+COLOR(RED) "Biggest Bomb Bag" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Now, you can carry up to \n"
+COLOR(YELLOW) "50" COLOR(DEFAULT) " Bombs!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BOMB_BAG_50) QUICKTEXT_ENABLE "Die " COLOR(RED) "Riesen-Bombentasche" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Jetzt kannst Du insgesamt " COLOR(YELLOW) "50\n"
+COLOR(DEFAULT) "Bomben tragen!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BOMB_BAG_50) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(RED) "Enorme Sac \n"
+"de Bombes" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Vous pouvez \n"
+"désormais transporter jusqu'à \n"
+COLOR(YELLOW) "50" COLOR(DEFAULT) " bombes!"
+)
+)
+
+DEFINE_MESSAGE(0x9012, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SMALL_KEY) QUICKTEXT_ENABLE "Igor left behind a " COLOR(RED) "Small Key" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"This key will open a locked\n"
+"door within the " COLOR(ADJUSTABLE) "Ancient Hollow" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9013, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Master Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"What a worthy wallet! Now\n"
+"you can carry up to " COLOR(YELLOW) "999" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9014, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Royal Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"What a fancy wallet! Now you\n"
+"can carry up to " COLOR(YELLOW) "2000" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9015, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Tycoon's Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"What a gigantic wallet! Now you\n"
+"can carry up to " COLOR(YELLOW) "5000" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9016, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_GIANTS_WALLET) QUICKTEXT_ENABLE "You got a " COLOR(BLUE) "Bottomless Wallet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"What a endless wallet! Now you\n"
+"can carry up to " COLOR(YELLOW) "9999" COLOR(DEFAULT) " " COLOR(YELLOW) "Rupees" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x9017, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_DEKU) QUICKTEXT_ENABLE "You successfully upgraded your\n"
@@ -262,7 +376,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x9012, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9018, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HYLIAN) QUICKTEXT_ENABLE "You successfully upgraded your\n"
@@ -273,7 +387,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x9013, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9019, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "You successfully upgraded your\n"
@@ -284,7 +398,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x9014, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x901A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_HEROS) QUICKTEXT_ENABLE "You successfully upgraded your\n"
@@ -295,89 +409,228 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x9015, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x901B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_WOODEN) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "木の盾" COLOR(DEFAULT) "を入手！" QUICKTEXT_DISABLE "\n"
-COLOR(BLUE) "そうび画面" COLOR(DEFAULT) "に　切りかえて、\n"
-"カーソルで選んで　" COLOR(BLUE) "[A]" COLOR(DEFAULT) "でそうび。"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE COLOR(RED) "シルバーソード" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
+"名工によって鍛えられた刃は\n"
+"広い攻撃範囲と　そこそこの威力を持つ！"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_WOODEN) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Wooden Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Switch to the " COLOR(BLUE) "Equipment \n"
-"Subscreen" COLOR(DEFAULT) " and select the\n"
-"shield, then equip it with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "You got the " COLOR(RED) "Silver Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"This blade was forged by an\n"
+"expert smith to have a wider\n"
+"slash range with decent power!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_WOODEN) QUICKTEXT_ENABLE "Der " COLOR(LIGHTBLUE) "Holzschild" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Gehe ins " COLOR(BLUE) "Ausrüstungs-Menü" COLOR(DEFAULT) ",\n"
-"um ihn mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) " auszuwählen."
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Du hast das " COLOR(RED) "Silberschwert" COLOR(DEFAULT) " bekommen!" QUICKTEXT_DISABLE "\n"
+"Diese Klinge wurde von einem\n"
+"Meisterschmied geschmiedet und hat\n"
+"eine größere Reichweite mit guter Kraft!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_WOODEN) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(LIGHTBLUE) "Bouclier\n"
-"de Bois" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Sélectionnez-le à \n"
-"l'" COLOR(BLUE) "écran de l'Equipement" COLOR(DEFAULT) ", puis \n"
-"appuyez sur " COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour l'équiper."
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Tu as obtenu l'" COLOR(RED) "Épée d’argent" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
+"Cette lame a été forgée par un\n"
+"forgeron expert pour avoir une\n"
+"plus grande portée et une bonne puissance!"
 )
 )
 
-DEFINE_MESSAGE(0x9016, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x901C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_METAL) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "メタルシールド" COLOR(DEFAULT) "を入手！" QUICKTEXT_DISABLE "\n"
-COLOR(BLUE) "そうび画面" COLOR(DEFAULT) "に　切りかえて、\n"
-"カーソルで選んで　" COLOR(BLUE) "[A]" COLOR(DEFAULT) "でそうび。"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "シルバーソードが\n"
+COLOR(RED) "ギルデッドソード" COLOR(DEFAULT) "に生まれ変わった！" QUICKTEXT_DISABLE "\n"
+"名工によって鍛えられた刃は\n"
+"非常に大きな力を持つ！"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_METAL) QUICKTEXT_ENABLE "You got a " COLOR(LIGHTBLUE) "Metal Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Switch to the " COLOR(BLUE) "Equipment \n"
-"Subscreen" COLOR(DEFAULT) " and select the\n"
-"shield, then equip it with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "."
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "You got the Silver Sword\n"
+"reforged into the " COLOR(RED) "Gilded Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"This blade was forged by a\n"
+"master smith for great power!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_METAL) QUICKTEXT_ENABLE "Der " COLOR(LIGHTBLUE) "Metallschild" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Gehe ins " COLOR(BLUE) "Ausrüstungs-Menü" COLOR(DEFAULT) ",\n"
-"um ihn mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) " auszuwählen."
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Du hast das Silberschwert\n"
+"zum " COLOR(RED) "Goldschwert" COLOR(DEFAULT) " umschmieden lassen!" QUICKTEXT_DISABLE "\n"
+"Diese Klinge wurde von einem\n"
+"Meisterschmied für große Kraft geschmiedet!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_METAL) QUICKTEXT_ENABLE "Vous obtenez un " COLOR(LIGHTBLUE) "Bouclier\n"
-"de Métal" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Sélectionnez-le à \n"
-"l'" COLOR(BLUE) "écran de l'Equipement" COLOR(DEFAULT) ", puis \n"
-"appuyez sur " COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour l'équiper."
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Tu as transformé la" 
+"Lame d'Argent en " COLOR(RED) "Lame Dorée" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
+"Cette lame a été forgée par un\n"
+"maître forgeron pour une grande puissance!"
 )
 )
 
-DEFINE_MESSAGE(0x9017, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
+DEFINE_MESSAGE(0x901D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_PICTOBOX) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Pictograph Box" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Someone must have lost it!\n"
-"It looks rusty from all the water,\n"
-"but somehow still functional."
+UNSKIPPABLE ITEM_ICON(ITEM_BROKEN_GORONS_SWORD) QUICKTEXT_ENABLE "密猟者のノコギリと\n"
+"高品質の" COLOR(RED) "金の粉" COLOR(DEFAULT) "を\n"
+"手に入れた！" QUICKTEXT_DISABLE "\n"
+"マスター鍛冶屋に持っていき、\n"
+"これで剣を作ってもらおう！"
 ),
-MSG(),
-MSG()
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BROKEN_GORONS_SWORD) QUICKTEXT_ENABLE "You traded the Poacher's Saw\n"
+"for some high quality " COLOR(RED) "Gold Dust" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Bring it to a master smith to\n"
+"reforge a sword with it!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BROKEN_GORONS_SWORD) QUICKTEXT_ENABLE "Du hast die Säge gegen\n"
+COLOR(RED) "Goldpulver" COLOR(DEFAULT) " getauscht!" QUICKTEXT_DISABLE "\n"
+"Bring es zu einem Meisterschmied,\n"
+"um damit ein Schwert zu schmieden!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BROKEN_GORONS_SWORD) QUICKTEXT_ENABLE "Vous échangez la Scie\n" 
+"contre l'" COLOR(RED) "Poudre d'Or" COLOR(DEFAULT) " de grande qualité !" QUICKTEXT_DISABLE "\n"
+"Apportez-la à un maître forgeron\n"
+"pour reforger une épée avec !"
+)
 )
 
-DEFINE_MESSAGE(0x9018, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
+DEFINE_MESSAGE(0x901E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHRINE_KEY) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Shrine Key" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Bring it back to the Gorons that\n"
-"lost their key to the shrine!"
+UNSKIPPABLE ITEM_ICON(ITEM_BOW) QUICKTEXT_ENABLE COLOR(RED) "勇者の弓" COLOR(DEFAULT) "を　みつけた！" QUICKTEXT_DISABLE "\n"
+COLOR(YELLOW) "Ｃアイテム画面" COLOR(DEFAULT) "で、\n"
+COLOR(YELLOW) "[C-Left]" COLOR(DEFAULT) "・" COLOR(YELLOW) "[C-Down]" COLOR(DEFAULT) "・" COLOR(YELLOW) "[C-Right]" COLOR(DEFAULT) "に　セットしよう。"
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_BOW) COLOR(YELLOW) "[C]" COLOR(DEFAULT) "を押すと　持ちかえます。\n"
+"もう一度" COLOR(YELLOW) "[C]" COLOR(DEFAULT) "を押すとかまえて、\n"
+"はなすと　" COLOR(RED) "矢" COLOR(DEFAULT) "を発射。"
 ),
-MSG(),
-MSG()
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BOW) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Hero's Bow" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"On the " COLOR(YELLOW) "Select Item Subscreen" COLOR(DEFAULT) ",\n"
+"you can set it to " COLOR(YELLOW) "[C-Left]" COLOR(DEFAULT) ", " COLOR(YELLOW) "[C-Down]" COLOR(DEFAULT) " or" COLOR(YELLOW) " [C-Right]" COLOR(DEFAULT) "."
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_BOW) "Press " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "to take it out\n"
+"and hold it. As you hold down\n"
+COLOR(YELLOW) "[C]" COLOR(DEFAULT) " you can aim with " COLOR(LIGHTBLUE) "[Control-Pad]" COLOR(DEFAULT) "." COLOR(YELLOW) " " COLOR(DEFAULT) "Release\n"
+COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to let fly with an " COLOR(RED) "arrow" COLOR(DEFAULT) "."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BOW) QUICKTEXT_ENABLE "Der " COLOR(RED) "Heroenbogen" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Im " COLOR(YELLOW) "Gegenstands-Menü" COLOR(DEFAULT) " kannst\n"
+"Du ihn auf " COLOR(YELLOW) "[C-Left]" COLOR(DEFAULT) ", " COLOR(YELLOW) "[C-Down]" COLOR(DEFAULT) " oder " COLOR(YELLOW) "[C-Right]\n"
+COLOR(DEFAULT) "plazieren."
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_BOW) "Drücke " COLOR(YELLOW) "[C]" COLOR(DEFAULT) ", um den Bogen\n"
+"zu benutzen. Halte " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " und\n"
+"ziele mit " COLOR(LIGHTBLUE) "[Control-Pad]" COLOR(DEFAULT) ". Laß " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " los,\n"
+"um " COLOR(RED) "Pfeile" COLOR(DEFAULT) " abzuschießen!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_BOW) QUICKTEXT_ENABLE "Vous trouvez l'" COLOR(RED) "Arc du Brave" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Assignez-le en appuyant sur \n"
+COLOR(YELLOW) "[C-Left]" COLOR(DEFAULT) ", " COLOR(YELLOW) "[C-Down]" COLOR(DEFAULT) " ou " COLOR(YELLOW) "[C-Right]" COLOR(DEFAULT) " dans l'" COLOR(YELLOW) "Inventaire" COLOR(DEFAULT) "."
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_BOW) "Appuyez sur " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "pour le \n"
+"brandir. Maintenez " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " et \n"
+"visez avec le " COLOR(LIGHTBLUE) "[Control-Pad]" COLOR(DEFAULT) "." COLOR(YELLOW) " " COLOR(DEFAULT) "Relâchez " COLOR(YELLOW) "[C]" COLOR(DEFAULT) "\n"
+"pour décocher une " COLOR(RED) "flèche" COLOR(DEFAULT) "."
+)
 )
 
-DEFINE_MESSAGE(0x9019, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(),
+DEFINE_MESSAGE(0x901F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
-ITEM_ICON(ITEM_BOTTLE_POTION_SHIELD) QUICKTEXT_ENABLE "You got a " COLOR(PURPLE) "Shield Potion" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Drink it with " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to restore\n"
-"the durability of your current\n"
-"equipped shield."
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) QUICKTEXT_ENABLE COLOR(BLUE) "パワーグローブ" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
+"そうびすれば　力があふれ、\n"
+COLOR(BLUE) "[A]" COLOR(DEFAULT) "で　つかみ　持ち上げられる！"
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) "約束だから　" COLOR(RED) "ナボール" COLOR(DEFAULT) "に\n"
+"わたしてあげよう。"
 ),
-MSG(),
-MSG()
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) QUICKTEXT_ENABLE "You found the " COLOR(BLUE) "Power Bracelet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"If you wore it, you would\n"
+"feel power in your arms, the \n"
+"power to lift big things with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "!"
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) "You did promise to give\n"
+"it to " COLOR(RED) "Nabooru" COLOR(DEFAULT) ". You should keep\n"
+"your word..."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) QUICKTEXT_ENABLE "Das " COLOR(BLUE) "Kraftarmband" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"Trägst Du sie, hast Du\n"
+"die Kraft, mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) " auch sehr\n"
+"schwere Dinge anzuheben!"
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) "Du hast versprochen, sie " COLOR(RED) "Naboru" COLOR(DEFAULT) "\n"
+"zu geben! Halte also Wort!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) QUICKTEXT_ENABLE "Vous trouvez le " COLOR(BLUE) "Bracelet\n"
+"des Titans" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " En les portant vous \n"
+"pourriez soulever d'énormes \n"
+"objets avec " COLOR(BLUE) "[A]" COLOR(DEFAULT) "!"
+BOX_BREAK
+
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) "Vous avez promis à\n"
+COLOR(RED) "Nabooru" COLOR(DEFAULT) " de le lui rapporter..."
+)
+)
+
+DEFINE_MESSAGE(0x9020, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE COLOR(BLUE) "パワーグローブ" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
+"両腕に　さらに　力が　みなぎる！\n"
+COLOR(BLUE) "[A]" COLOR(DEFAULT) "でつかんで　持ってみよう！"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE "You got another " COLOR(BLUE) "Power Bracelet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"You can feel even more power \n"
+"coursing through your arms!\n"
+"Grab with " COLOR(BLUE) "[A]" COLOR(DEFAULT) " and lift stuff up!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE "Du hast einen weiteren " COLOR(BLUE) "Kraftarmband" COLOR(DEFAULT) "\n"
+"bekommen!" QUICKTEXT_DISABLE " Du fühlst noch größere Kraft\n"
+"in den Armen! Du packst\n"
+"schwerste Dinge mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) "!"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE "Vous trouvez le " COLOR(BLUE) "Bracelet\n"
+"des Titans" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Une puissance encore\n"
+"plus grande vous envahit! Utilisez\n"
+COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour soulever d'énormes objets!"
+)
+)
+
+DEFINE_MESSAGE(0x9021, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "ミラーシールド" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
+"みがかれた表面は 光やエネルギーを\n"
+"反射することができる。\n"
+COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) "で　使え。"
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "You found the " COLOR(LIGHTBLUE) "Mirror Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"The shield's polished surface can\n"
+"reflect light or energy. Press " COLOR(LIGHTBLUE) "[R]\n"
+COLOR(DEFAULT) "to use it."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "Du hast den " COLOR(LIGHTBLUE) "Spiegelschild" COLOR(DEFAULT) " gefunden!" QUICKTEXT_DISABLE "\n"
+"Die polierte Oberfläche des Schildes\n"
+"kann Licht oder Energie reflektieren.\n"
+"Drücke " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " um ihn zu benutzen."
+),
+MSG(
+UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "Tu as trouvé le " COLOR(LIGHTBLUE) "Bouclier miroir" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"La surface polie du bouclier peut\n"
+"réfléchir la lumière ou l'énergie.\n"
+"Appuie sur " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " pour l'utiliser."
+)
 )
 
 DEFINE_MESSAGE(0x9101, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
@@ -1113,7 +1366,27 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x9402, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9402, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(
+QUICKTEXT_ENABLE SHIFT(12) COLOR(RED) "黄金のスタルチュラのしるし" COLOR(DEFAULT) "を　手に入れた！" QUICKTEXT_DISABLE "\n"
+SHIFT(8) "これまでに" COLOR(RED) TOKENS COLOR(DEFAULT) "こ　あつめた！" FADE(40)
+),
+MSG(
+"You got a " COLOR(RED) "Gold Skulltula Token" COLOR(DEFAULT) "!\n"
+"You've collected " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " " PLURAL_TOKENS " in total." FADE(40)
+),
+MSG(
+"Du erhältst ein " COLOR(RED) "Skulltula-Symbol" COLOR(DEFAULT) ". Du\n"
+"hast insgesamt " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " " PLURAL_TOKENS " zerstört." FADE(40)
+),
+MSG(
+"Vous venez de détruire une\n"
+COLOR(RED) "Skulltula d'or" COLOR(DEFAULT) "!\n"
+"Vous avez collecté " COLOR(RED) TOKENS COLOR(DEFAULT) COLOR(DEFAULT) " " PLURAL_TOKENS " au total." FADE(40)
+)
+)
+
+DEFINE_MESSAGE(0x9403, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 QUICKTEXT_ENABLE COLOR(LIGHTBLUE) NAME ", it's freezing in\n"
@@ -1124,7 +1397,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x9403, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x9404, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 QUICKTEXT_ENABLE COLOR(LIGHTBLUE) NAME ", your life force is being\n"
@@ -1187,6 +1460,18 @@ MSG(
 "I already told you!\n"
 "That tunic isn't for sale!\n"
 "Ohhh... I could go for a swim..." PERSISTENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x94B3, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"We opened a new shop over here\n"
+"in Kakariko Village. We got some new\n"
+"goods to sell in this branch. I hope\n"
+"you be a steady customer for us!" EVENT
 ),
 MSG(),
 MSG()

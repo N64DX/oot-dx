@@ -9,11 +9,13 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd dawngrove_shop_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_SHOP),
     SCENE_CMD_ROOM_LIST(1, dawngrove_shop_sceneRoomList_000060),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, dawngrove_shop_sceneTransitionActorList_000068),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_ANCIENT_GROVE),
     SCENE_CMD_MISC_SETTINGS(0x10, 0),
     SCENE_CMD_COL_HEADER(&dawngrove_shop_sceneCollisionHeader_000120),
     SCENE_CMD_SPAWN_LIST(dawngrove_shop_sceneEntranceList_000118),

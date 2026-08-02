@@ -259,7 +259,16 @@ typedef enum WorldMapArea {
     /* 19 */ WORLD_MAP_AREA_LON_LON_RANCH,
     /* 20 */ WORLD_MAP_AREA_QUESTION_MARK, // Windmill/Dampé's Grave (and a Lon Lon Ranch cutscene). Labeled as "?"
     /* 21 */ WORLD_MAP_AREA_GANONS_CASTLE,
-    /* 22 */ WORLD_MAP_AREA_MAX // also grottos and fairy's/great fairy's fountains (scenes with varying locations)
+    /* 22 */ WORLD_MAP_AREA_ANCIENT_GROVE,
+    /* 23 */ WORLD_MAP_AREA_FORBIDDEN_WOODS,
+    /* 24 */ WORLD_MAP_AREA_FORSAKEN_KINGDOM,
+    /* 25 */ WORLD_MAP_AREA_GLOOMY_GRAVEYARD,
+    /* 26 */ WORLD_MAP_AREA_GORON_SHRINE,
+    /* 27 */ WORLD_MAP_AREA_GORON_VILLAGE,
+    /* 28 */ WORLD_MAP_AREA_RIVERSIDE_VILLAGE,
+    /* 29 */ WORLD_MAP_AREA_SPRING_LAKE,
+    /* 30 */ WORLD_MAP_AREA_WOODFALL,
+    /* 31 */ WORLD_MAP_AREA_MAX // also grottos and fairy's/great fairy's fountains (scenes with varying locations)
 } WorldMapArea;
 
 // offsets in SavePlayerData and SaveContext/Save

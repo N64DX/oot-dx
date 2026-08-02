@@ -10,12 +10,13 @@
 #include "skybox.h"
 #include "cutscene_commands.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd dawngrove_village_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_MARKET_ENTRANCE, NA_BGM_DAWNGROVE_VILLAGE),
     SCENE_CMD_ROOM_LIST(1, dawngrove_village_sceneRoomList_000070),
     SCENE_CMD_TRANSITION_ACTOR_LIST(3, dawngrove_village_sceneTransitionActorList_000078),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 4),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_RIVERSIDE_VILLAGE),
     SCENE_CMD_COL_HEADER(&dawngrove_village_sceneCollisionHeader_000340),
     SCENE_CMD_SPAWN_LIST(dawngrove_village_sceneEntranceList_0001F8),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),

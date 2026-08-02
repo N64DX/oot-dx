@@ -9,11 +9,13 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd woodfall_temple_boss_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_WOODFALL_TEMPLE),
     SCENE_CMD_ROOM_LIST(1, woodfall_temple_boss_sceneRoomList0x000088),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, woodfall_temple_boss_sceneTransitionActorList_000078),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_WOODFALL),
     SCENE_CMD_COL_HEADER(&woodfall_temple_boss_sceneCollisionHeader_000778),
     SCENE_CMD_SPAWN_LIST(woodfall_temple_boss_sceneEntranceList0x000090),
     SCENE_CMD_PLAYER_ENTRY_LIST(1, woodfall_temple_boss_sceneStartPositionList0x000068),

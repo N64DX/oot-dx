@@ -402,6 +402,10 @@ u64 gBombBag40ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "build/pal-1.0/assets/textures/item_name_static/gBombBag40ItemNameFRATex.ia4.inc.c"
 };
 
+u64 gBombBag50ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gBombBag50ItemNameFRATex.ia4.inc.c"
+};
+
 u64 gGoronsBraceletItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "build/pal-1.0/assets/textures/item_name_static/gGoronsBraceletItemNameFRATex.ia4.inc.c"
 };

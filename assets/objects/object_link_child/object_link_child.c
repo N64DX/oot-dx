@@ -2713,7 +2713,7 @@ static Vtx earring_vtx[] = {
 #include "assets/objects/object_link_child/other/earring.vtx.inc"
 };
 
-Gfx gLinkChildEarringsIronDL[] = {
+/*Gfx gLinkChildEarringsDL[] = {
     gsSPMatrix(0x0D0001C0, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
@@ -2725,12 +2725,12 @@ Gfx gLinkChildEarringsIronDL[] = {
     gsDPLoadTextureBlock(gLinkChildEarringTex, G_IM_FMT_IA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetTileSize(G_TX_RENDERTILE, 0, 0, 0x007C, 0x007C),
     gsSPClearGeometryMode(G_CULL_BOTH),
-    gsSP2Triangles(0,  1,  2,  0, 3,  4,  5,  0),
-    gsSP2Triangles(4,  3,  6,  0, 0,  7,  1,  0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(4, 3, 6, 0, 0, 7, 1, 0),
     gsSPEndDisplayList(),
-};
+};*/
 
-Gfx gLinkChildEarringsHoverDL[] = {
+Gfx gLinkChildEarringsAmberDL[] = {
     gsSPMatrix(0x0D0001C0, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
@@ -2742,8 +2742,8 @@ Gfx gLinkChildEarringsHoverDL[] = {
     gsDPLoadTextureBlock(gLinkChildEarringTex, G_IM_FMT_IA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetTileSize(G_TX_RENDERTILE, 0, 0, 0x007C, 0x007C),
     gsSPClearGeometryMode(G_CULL_BOTH),
-    gsSP2Triangles(0,  1,  2,  0, 3,  4,  5,  0),
-    gsSP2Triangles(4,  3,  6,  0, 0,  7,  1,  0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(4, 3, 6, 0, 0, 7, 1, 0),
     gsSPEndDisplayList(),
 };
 

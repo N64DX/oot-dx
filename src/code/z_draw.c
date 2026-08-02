@@ -392,50 +392,29 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawOpa0, { gGiKokiriSwordDL } },
     // GID_SKULL_TOKEN_2
     { GetItem_DrawSkullToken, { gSkulltulaTokenDL, gSkulltulaTokenFlameDL } },
-    // GID_SHIELD_MIRROR_MM,
-    { GetItem_DrawMirrorShield, { gGiMirrorShieldMMDL, gGiMirrorShieldEmptyMMDL } },
-    // GID_SHIELD_WOODEN
-    { GetItem_DrawOpa0, { gGiWoodenShieldDL } },
-    // GID_SHIELD_HEROS
-    { GetItem_DrawOpa0Xlu1, { gGiHerosShieldEmblemDL, gGiHerosShieldDL } },
-    // GID_SHIELD_METAL
-    { GetItem_DrawOpa01, { gGiMetalShieldFrameDL, gGiMetalShieldSymbolDL } },
-    // GID_SWORD_HEROS
-    { GetItem_DrawOpa0Xlu1, { gGiHerosSwordBladeHiltDL, gGiHerosSwordGuardDL } },
-    // GID_SWORD_SILVER
-    { GetItem_DrawOpa0, { gGiSilverSwordDL } },
-    // GID_SWORD_GILDED
-    { GetItem_DrawOpa0, { gGiGildedSwordDL } },
-    // GID_TUNIC_SPIRIT
-    { GetItem_DrawOpa1023, { gGiTunicCollarDL, gGiSpiritCollarColorDL, gGiSpiritTunicColorDL, gGiTunicDL } },
-    // GID_POWER_BRACELET
-    { GetItem_DrawOpa0, { gGiPowerBraceletDL } },
-    // GID_HOOKSHOT_MM
-	{ GetItem_DrawOpa0, { gGiHookshotMMDL } },
-    // GID_LONGSHOT_MM
-	{ GetItem_DrawOpa0, { gGiLongshotMMDL } },
-    // GID_HEROS_BOW
-	{ GetItem_DrawOpa01, { gGiHerosBowHandleDL, gGiHerosBowStringDL } },
-    // GID_AMULET_OF_ENERGY
-    { GetItem_DrawOpa0, { gGiPendantDL } },
-    // GID_ROCS_FEATHER
-    { GetItem_DrawOpa0, { gGiRocsFeatherDL } },
-    // GID_GOLDEN_FEATHER
-    { GetItem_DrawOpa0, { gGiGoldenFeatherDL } },
-    // GID_SWORD_FAIRYS
-    { GetItem_DrawOpa0Xlu1, { gGiGreatFairysSwordBladeDL, gGiGreatFairysSwordHiltEmblemDL } },
-    // GID_GOLD_DUST
-	{ GetItem_DrawOpa0, { gGiGoldDustPowderDL } },
-    // GID_PICTOGRAPH_BOX,
-    { GetItem_DrawOpa0Xlu1, { gGiPictoBoxFrameDL, gGiPictoBoxBodyAndLensDL } },
-    // GID_ROOM_KEY
-    { GetItem_DrawXlu0, { gGiRoomKeyDL } },
-    // GID_BOTTLE_POTION_SHIELD
-    { GetItem_DrawPotion, { gGiPotionPotDL, gGiPurplePotColorDL, gGiPurpleLiquidColorDL, gGiPotionLiquidDL, gGiPurplePatternColorDL, gGiPotionPatternDL } },
-    // GID_LAND_TITLE_DEED
-	{ GetItem_DrawOpa0, { gGiTitleDeedLandColorDL } },
-    // GID_BOOTS_KOKIRI
-    { GetItem_DrawOpa0, { gGiKokiriBootsDL } },
+    { GetItem_DrawMirrorShield, { gGiMirrorShieldMMDL, gGiMirrorShieldEmptyMMDL } },                                                                               // GID_SHIELD_MIRROR_MM,
+    { GetItem_DrawOpa0,         { gGiWoodenShieldDL } },                                                                                                           // GID_SHIELD_WOODEN
+    { GetItem_DrawOpa0Xlu1,     { gGiHerosShieldEmblemDL, gGiHerosShieldDL } },                                                                                    // GID_SHIELD_HEROS
+    { GetItem_DrawOpa01,        { gGiMetalShieldFrameDL, gGiMetalShieldSymbolDL } },                                                                               // GID_SHIELD_METAL
+    { GetItem_DrawOpa0Xlu1,     { gGiHerosSwordBladeHiltDL, gGiHerosSwordGuardDL } },                                                                              // GID_SWORD_HEROS
+    { GetItem_DrawOpa0,         { gGiSilverSwordDL } },                                                                                                            // GID_SWORD_SILVER
+    { GetItem_DrawOpa0,         { gGiGildedSwordDL } },                                                                                                            // GID_SWORD_GILDED
+    { GetItem_DrawOpa1023,      { gGiTunicCollarDL, gGiSpiritCollarColorDL, gGiSpiritTunicColorDL, gGiTunicDL } },                                                 // GID_TUNIC_SPIRIT
+    { GetItem_DrawOpa0,         { gGiPowerBraceletDL } },                                                                                                          // GID_POWER_BRACELET
+	{ GetItem_DrawOpa0,         { gGiHookshotMMDL } },                                                                                                             // GID_HOOKSHOT_MM
+	{ GetItem_DrawOpa0,         { gGiLongshotMMDL } },                                                                                                             // GID_LONGSHOT_MM
+	{ GetItem_DrawOpa01,        { gGiHerosBowHandleDL, gGiHerosBowStringDL } },                                                                                    // GID_HEROS_BOW
+    { GetItem_DrawXlu0,         { gGiPendantDL } },                                                                                                                // GID_AMULET_OF_ENERGY
+    { GetItem_DrawOpa0,         { gGiEarringsDL } },                                                                                                               // GID_AMBER_EARRINGS
+    { GetItem_DrawOpa0,         { gGiRocsFeatherDL } },                                                                                                            // GID_ROCS_FEATHER
+    { GetItem_DrawOpa0,         { gGiGoldenFeatherDL } },                                                                                                          // GID_GOLDEN_FEATHER
+    { GetItem_DrawOpa0Xlu1,     { gGiGreatFairysSwordBladeDL, gGiGreatFairysSwordHiltEmblemDL } },                                                                 // GID_SWORD_FAIRYS
+	{ GetItem_DrawOpa0,         { gGiGoldDustPowderDL } },                                                                                                         // GID_GOLD_DUST
+    { GetItem_DrawOpa0Xlu1,     { gGiPictoBoxFrameDL, gGiPictoBoxBodyAndLensDL } },                                                                                // GID_PICTOGRAPH_BOX,
+    { GetItem_DrawXlu0,         { gGiRoomKeyDL } },                                                                                                                // GID_ROOM_KEY
+    { GetItem_DrawPotion,       { gGiPotionPotDL, gGiPurplePotColorDL, gGiPurpleLiquidColorDL, gGiPotionLiquidDL, gGiPurplePatternColorDL, gGiPotionPatternDL } }, // GID_BOTTLE_POTION_SHIELD
+	{ GetItem_DrawOpa0,         { gGiTitleDeedLandColorDL } },                                                                                                     // GID_LAND_TITLE_DEED
+    { GetItem_DrawOpa0,         { gGiKokiriBootsDL } },                                                                                                            // GID_BOOTS_KOKIRI
 };
 
 /**
@@ -730,7 +709,7 @@ void GetItem_DrawOpa01(PlayState* play, s16 giDrawId) {
 void GetItem_DrawXlu0(PlayState* play, s16 giDrawId) {
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    Gfx_SetupDL_25Opa(play->state.gfxCtx);
+    Gfx_SetupDL_25Xlu(play->state.gfxCtx);
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
     gSPDisplayList(POLY_XLU_DISP++, sDrawItemTable[giDrawId].dlists[0]);
 

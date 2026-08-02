@@ -168,6 +168,7 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
     { SCENE_GROTTOS2, 0x00, 0x00, 0xD0 },
     { SCENE_WEBBED_SHRINE, 0x00, 0x00, 0x00 },
+    { SCENE_PURPLE_ICE_CAVERN, 0x00, 0x00, 0x1C },
     { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x1C },
     { SCENE_GORON_MINES, 0x00, 0x00, 0x00 },
     { SCENE_WOODFALL_TEMPLE, 0x00, 0x00, 0x1C },
@@ -2118,6 +2119,10 @@ u8 Item_Give(PlayState* play, u8 item) {
         Inventory_ChangeUpgrade(UPG_BOMB_BAG, 3);
         AMMO(ITEM_BOMB) = CAPACITY(UPG_BOMB_BAG, 3);
         return ITEM_NONE;
+    } else if (item == ITEM_BOMB_BAG_50) {
+        Inventory_ChangeUpgrade(UPG_BOMB_BAG, 4);
+        AMMO(ITEM_BOMB) = CAPACITY(UPG_BOMB_BAG, 4);
+        return ITEM_NONE;
     } else if (item == ITEM_STRENGTH_GORONS_BRACELET) {
         Inventory_ChangeUpgrade(UPG_STRENGTH, 1);
         return ITEM_NONE;
@@ -2379,8 +2384,8 @@ u8 Item_Give(PlayState* play, u8 item) {
                 Interface_LoadItemIcon1(play, i+4);
         }
         return ITEM_NONE;
-    } else if (item == ITEM_AMULET_OF_ENERGY) {
-        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_AMULET_OF_ENERGY];
+    } else if (item == ITEM_AMULET_OF_ENERGY || ITEM_AMBER_EARRINGS) {
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_AMULET_OF_ENERGY + item - ITEM_AMULET_OF_ENERGY];
         return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
@@ -2631,7 +2636,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_DEKU_STICK_UPGRADE_20) && (item <= ITEM_DEKU_NUT_UPGRADE_40)) {
         return ITEM_NONE;
-    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_BOMB_BAG_40) || (item >= ITEM_STRENGTH_GORONS_BRACELET && item <= ITEM_STRENGTH_GOLD_GAUNTLETS) || (item >= ITEM_SCALE_SILVER && item <= ITEM_SCALE_GOLDEN) || (item >= ITEM_ADULTS_WALLET && item <= ITEM_GIANTS_WALLET)) {
+    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_SCALE_GOLDEN) || (item >= ITEM_ADULTS_WALLET && item <= ITEM_GIANTS_WALLET) || item == ITEM_GIANTS_KNIFE) {
         return ITEM_NONE;
     } else if (item >= ITEM_MASTER_WALLET && item <= ITEM_BOTTOMLESS_WALLET) {
         return ITEM_NONE;

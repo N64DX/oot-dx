@@ -30,8 +30,8 @@ s16 mountain_village_room_1ObjectList_00004C[] = {
     OBJECT_BOX,
     OBJECT_TSUBO,
     OBJECT_KA,
-    OBJECT_WOOD_PILLAR,
     OBJECT_FR,
+    OBJECT_WOOD_PILLAR,
     OBJECT_D_HSBLOCK,
 };
 

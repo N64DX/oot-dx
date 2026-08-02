@@ -1153,6 +1153,7 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_20
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_30
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_40
+    AGE_REQ_NONE,  // ITEM_BOMB_BAG_50
     AGE_REQ_CHILD, // ITEM_STRENGTH_GORONS_BRACELET
     AGE_REQ_ADULT, // ITEM_STRENGTH_SILVER_GAUNTLETS
     AGE_REQ_ADULT, // ITEM_STRENGTH_GOLD_GAUNTLETS
@@ -4195,25 +4196,25 @@ void KaleidoScope_Update(PlayState* play) {
             if (((void)0, gSaveContext.worldMapArea) < WORLD_MAP_AREA_MAX) {
 #if OOT_NTSC_N64
                 if (gSaveContext.language == LANGUAGE_JPN)
-                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_JPN) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_JPN) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
                 else if (gSaveContext.language == LANGUAGE_ENG)
-                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
                 else if (gSaveContext.language == LANGUAGE_GER)
-                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_GER) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
-                else DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_FRA) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_GER) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                else DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_FRA) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
 #elif OOT_NTSC
                 if (gSaveContext.language == LANGUAGE_JPN) {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
                         (uintptr_t)_map_name_staticSegmentRomStart +
-                            ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_JPN) * MAP_NAME_TEX2_SIZE) +
+                            ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_JPN) * MAP_NAME_TEX2_SIZE) +
                             24 * MAP_NAME_TEX1_SIZE,
                         MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
                 } else {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
                         (uintptr_t)_map_name_staticSegmentRomStart +
-                            ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) +
+                            ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) +
                             24 * MAP_NAME_TEX1_SIZE,
                         MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
                 }
@@ -4222,21 +4223,21 @@ void KaleidoScope_Update(PlayState* play) {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
                         (uintptr_t)_map_name_staticSegmentRomStart +
-                            ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) +
+                            ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) +
                             36 * MAP_NAME_TEX1_SIZE,
                         MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", 3776);
                 } else if (gSaveContext.language == LANGUAGE_GER) {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
                         (uintptr_t)_map_name_staticSegmentRomStart +
-                            ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_GER) * MAP_NAME_TEX2_SIZE) +
+                            ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_GER) * MAP_NAME_TEX2_SIZE) +
                             36 * MAP_NAME_TEX1_SIZE,
                         MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", 3780);
                 } else {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
                         (uintptr_t)_map_name_staticSegmentRomStart +
-                            ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_FRA) * MAP_NAME_TEX2_SIZE) +
+                            ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_FRA) * MAP_NAME_TEX2_SIZE) +
                             36 * MAP_NAME_TEX1_SIZE,
                         MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", 3784);
                 }

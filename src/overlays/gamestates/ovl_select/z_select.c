@@ -109,6 +109,8 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         MapSelect_LoadRoom(DBG_GANONS_TOWER_0, this->roomNum, 9);
     else if (entranceIndex == ENTR_WEBBED_SHRINE_0)
         MapSelect_LoadRoom(DBG_WEBBED_SHRINE_0, this->roomNum, 6);
+    else if (entranceIndex == ENTR_PURPLE_ICE_CAVERN_0)
+        MapSelect_LoadRoom(DBG_PURPLE_ICE_CAVERN_0, this->roomNum, 6);
     else if (entranceIndex == ENTR_ANCIENT_HOLLOW_0)
         MapSelect_LoadRoom(DBG_ANCIENT_HOLLOW_0, this->roomNum, 14);
     else if (entranceIndex == ENTR_GORON_MINES_0)

@@ -190,6 +190,8 @@ void EnBomBowlPit_GivePrize(EnBomBowlPit* this, PlayState* play) {
 
     if ((this->getItemId == GI_BOMB_BAG_30) && (CUR_UPG_VALUE(UPG_BOMB_BAG) == 2)) {
         this->getItemId = GI_BOMB_BAG_40;
+    } else if ((this->getItemId == GI_BOMB_BAG_30) && (CUR_UPG_VALUE(UPG_BOMB_BAG) == 3)) {
+        this->getItemId = GI_BOMB_BAG_50;
     }
 
     player->stateFlags1 &= ~PLAYER_STATE1_29;

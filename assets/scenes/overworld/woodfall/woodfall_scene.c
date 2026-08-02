@@ -10,11 +10,12 @@
 #include "skybox.h"
 #include "cutscene_commands.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd woodfall_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_SWAMP_REGION),
     SCENE_CMD_ROOM_LIST(1, woodfall_sceneRoomList0x0000E8),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_WOODFALL),
     SCENE_CMD_COL_HEADER(&woodfall_sceneCollisionHeader_003CEC),
     SCENE_CMD_SPAWN_LIST(woodfall_sceneEntranceList0x0000F0),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),
