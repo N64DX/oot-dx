@@ -598,7 +598,7 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
                 this->newFileNameCharCount = 0;
                 this->nameEntryBoxPosX = 120;
                 this->nameEntryBoxAlpha = 0;
-                MemCpy(&this->fileNames[CURRENT_SLOT(this->buttonIndex)][0], &emptyName, sizeof(emptyName));
+                MemCopy(&this->fileNames[CURRENT_SLOT(this->buttonIndex)][0], &emptyName, sizeof(emptyName));
             } else if (this->n64ddFlags[CURRENT_SLOT(this->buttonIndex)] == this->n64ddFlag) {
                 SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_L);
                 this->actionTimer = 8;
