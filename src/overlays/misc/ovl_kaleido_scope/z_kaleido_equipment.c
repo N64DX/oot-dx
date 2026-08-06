@@ -237,7 +237,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
 
         // Handle moving the cursor with stick input
 
-        if (pauseCtx->cursorSpecialPos == 0) {
+        if (pauseCtx->cursorSpecialPos == 0 && !pauseCtx->itemDescriptionOn) {
             pauseCtx->nameColorSet = 0;
 
             cursorItem = pauseCtx->cursorItem[PAUSE_EQUIP];
@@ -425,7 +425,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 }
             } while (cursorMoveResult == 0);
         } else if (pauseCtx->cursorSpecialPos == PAUSE_CURSOR_PAGE_LEFT) {
-            if (pauseCtx->stickAdjX > 30) {
+            if (pauseCtx->stickAdjX > 30 && !pauseCtx->itemDescriptionOn) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
 
@@ -488,7 +488,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 }
             }
         } else { // cursorSpecialPos == PAUSE_CURSOR_PAGE_RIGHT
-            if (pauseCtx->stickAdjX < -30) {
+            if (pauseCtx->stickAdjX < -30 && !pauseCtx->itemDescriptionOn) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
                 SFX_PLAY_CENTERED(NA_SE_SY_CURSOR);
@@ -547,12 +547,26 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
 
         if (pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_CURSOR_X_UPG) {
             pauseCtx->cursorColorSet = 0;
+
             if (LINK_AGE_IN_YEARS == YEARS_CHILD) {
-                if ((pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_CURSOR_Y_BULLETBAG_QUIVER)) {
-                    if (IS_CHILD_QUEST && CUR_UPG_VALUE(UPG_QUIVER) > 0)
-                        cursorItem = ITEM_QUIVER_30 + CUR_UPG_VALUE(UPG_QUIVER) - 1;
-                    else if (CUR_UPG_VALUE(UPG_BULLET_BAG) != 0)
-                        cursorItem = ITEM_BULLET_BAG_30 + CUR_UPG_VALUE(UPG_BULLET_BAG) - 1;
+                if ((pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_CURSOR_Y_BULLETBAG_QUIVER) &&
+                    (CUR_UPG_VALUE(UPG_BULLET_BAG) != 0)) {
+                    cursorItem = ITEM_BULLET_BAG_30 + CUR_UPG_VALUE(UPG_BULLET_BAG) - 1;
+                } else {
+                    cursorItem = ITEM_QUIVER_30 + sUpgradeItemOffsets[pauseCtx->cursorY[PAUSE_EQUIP]] +
+                                 CUR_UPG_VALUE(pauseCtx->cursorY[PAUSE_EQUIP]) - 1;
+                    PRINTF("H_arrowcase_1 + non_equip_item_table = %d\n", cursorItem);
+                }
+            } else {
+                if ((pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_CURSOR_Y_BULLETBAG_QUIVER) &&
+                    (CUR_UPG_VALUE(UPG_QUIVER) == 0)) {
+                    cursorItem = ITEM_BULLET_BAG_30 + CUR_UPG_VALUE(UPG_BULLET_BAG) - 1;
+                } else {
+                    cursorItem = ITEM_QUIVER_30 + sUpgradeItemOffsets[pauseCtx->cursorY[PAUSE_EQUIP]] +
+                                 CUR_UPG_VALUE(pauseCtx->cursorY[PAUSE_EQUIP]) - 1;
+                    PRINTF(T("大人 H_arrowcase_1 + non_equip_item_table = %d\n",
+                             "Adult H_arrowcase_1 + non_equip_item_table = %d\n"),
+                           cursorItem);
                 }
             }
         } else if (pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_CURSOR_X_UPG_CQ) {
@@ -623,7 +637,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
             sEquipTimer = 10;
         }
 
-        if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) &&
+        if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) && play->msgCtx.msgLength == 0 &&
             (pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE) &&
             CHECK_BTN_ALL(input->press.button, BTN_A) && (pauseCtx->cursorX[PAUSE_EQUIP] != EQUIP_CURSOR_X_UPG) && (pauseCtx->cursorX[PAUSE_EQUIP] != EQUIP_CURSOR_X_UPG_CQ)) {
 
@@ -675,97 +689,102 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 SFX_PLAY_CENTERED(NA_SE_SY_ERROR);
             }
         }
-        if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) && (pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE) && CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && (pauseCtx->cursorX[PAUSE_EQUIP] != 0)) {
-            if (CHECK_AGE_REQ_EQUIP(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP])) {
-                if (cursorSlot == 1 || cursorSlot == 2 || cursorSlot == 3 || cursorSlot == 4)
-                    temp = SLOT_SWORDS;
-                else if (cursorSlot == 7 || cursorSlot == 8 || cursorSlot == 9 || cursorSlot == 10)
-                    temp = SLOT_SHIELDS;
-                else if (cursorSlot == 13)
-                    temp = SLOT_TUNICS;
-                else if (cursorSlot == 14 || cursorSlot == 15 || cursorSlot == 16)
-                    temp = SLOT_TUNIC_GORON + cursorSlot - 12;
-                else if (cursorSlot == 19)
-                    temp = SLOT_BOOTS;
-                else if (cursorSlot == 20 || cursorSlot == 21 || cursorSlot == 22)
-                    temp = SLOT_BOOTS_IRON + cursorSlot - 17;
-                else temp = SLOT_NONE;
-                
-                if (temp != SLOT_NONE) {
-                    if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
-                        if (temp == SLOT_SWORDS)
-                            temp = ITEM_SWORDS;
-                        else if (temp == SLOT_SHIELDS)
-                            temp = ITEM_SHIELDS;
-                        else if (temp == SLOT_TUNICS)
-                            temp = ITEM_TUNICS;
-                        else if (temp == SLOT_BOOTS)
-                            temp = ITEM_BOOTS;
-                        else if (temp == SLOT_TUNIC_GORON)
-                            temp = ITEM_TUNIC_GORON;
-                        else if (temp == SLOT_TUNIC_ZORA)
-                            temp = ITEM_TUNIC_ZORA;
-                        else if (temp == SLOT_TUNIC_SPIRIT)
-                            temp = ITEM_TUNIC_SPIRIT;
-                        else if (temp == SLOT_BOOTS_IRON)
-                            temp = ITEM_BOOTS_IRON;
-                        else if (temp == SLOT_BOOTS_HOVER)
-                            temp = ITEM_BOOTS_HOVER;
-                        else if (temp == SLOT_BOOTS_PEGASUS)
-                            temp = ITEM_BOOTS_PEGASUS;
-                        
-                        if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
-                            i = 1;
-                        else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
-                            i = 2;
-                        else i = 3;
-                        
-                        for (j=1; j<4; j++)
-                            if (gSaveContext.save.info.equips.buttonItems[j] == temp && j != i) {
-                                gSaveContext.save.info.equips.buttonItems[j]    = gSaveContext.save.info.equips.buttonItems[i];
-                                gSaveContext.save.info.equips.cButtonSlots[j-1] = gSaveContext.save.info.equips.cButtonSlots[i-1];
-                                Interface_LoadItemIcon1(play, j);
-                                break;
-                            }
 
-                        if (gSaveContext.save.info.equips.buttonItems[i] == temp) {
-                            gSaveContext.save.info.equips.buttonItems[i] = gSaveContext.save.info.equips.cButtonSlots[i-1] = ITEM_NONE;
-                             Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-                        } else {
-                            gSaveContext.save.info.equips.buttonItems[i]    = temp;
-                            gSaveContext.save.info.equips.cButtonSlots[i-1] = SLOT_NONE;
-                            Interface_LoadItemIcon1(play, i);
-                            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-                        }
-                    }
-                    else {
-                        if (CHECK_BTN_ALL(input->press.button, BTN_DUP))
-                            i = 0;
-                        else if (CHECK_BTN_ALL(input->press.button, BTN_DRIGHT))
-                            i = 1;
-                        else if (CHECK_BTN_ALL(input->press.button, BTN_DDOWN))
-                            i = 2;
-                        else i = 3;
-                        
-                        for (j=0; j<4; j++)
-                            if (DPAD_BUTTON(j) == temp && j != i) {
-                                DPAD_BUTTON(j) = DPAD_BUTTON(i);
-                                Interface_LoadItemIcon1(play, j+4);
-                                break;
+        if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) && (pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE)) {
+            if (CHECK_BTN_ALL(input->press.button, BTN_A) && (pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_CURSOR_X_UPG || pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_CURSOR_X_UPG_CQ) && !pauseCtx->itemDescriptionOn) // Give description on item through a message box
+               Message_PauseMenu_ShowDescription(play, 0x0900 + cursorItem, 3);
+            else if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && pauseCtx->cursorX[PAUSE_EQUIP] != EQUIP_CURSOR_X_UPG) {
+                if (CHECK_AGE_REQ_EQUIP(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP])) {
+                    if (cursorSlot == 1 || cursorSlot == 2 || cursorSlot == 3 || cursorSlot == 4)
+                        temp = SLOT_SWORDS;
+                    else if (cursorSlot == 7 || cursorSlot == 8 || cursorSlot == 9 || cursorSlot == 10)
+                        temp = SLOT_SHIELDS;
+                    else if (cursorSlot == 13)
+                        temp = SLOT_TUNICS;
+                    else if (cursorSlot == 14 || cursorSlot == 15 || cursorSlot == 16)
+                        temp = SLOT_TUNIC_GORON + cursorSlot - 12;
+                    else if (cursorSlot == 19)
+                        temp = SLOT_BOOTS;
+                    else if (cursorSlot == 20 || cursorSlot == 21 || cursorSlot == 22)
+                        temp = SLOT_BOOTS_IRON + cursorSlot - 17;
+                    else temp = SLOT_NONE;
+
+                    if (temp != SLOT_NONE) {
+                        if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
+                            if (temp == SLOT_SWORDS)
+                                temp = ITEM_SWORDS;
+                            else if (temp == SLOT_SHIELDS)
+                                temp = ITEM_SHIELDS;
+                            else if (temp == SLOT_TUNICS)
+                                temp = ITEM_TUNICS;
+                            else if (temp == SLOT_BOOTS)
+                                temp = ITEM_BOOTS;
+                            else if (temp == SLOT_TUNIC_GORON)
+                                temp = ITEM_TUNIC_GORON;
+                            else if (temp == SLOT_TUNIC_ZORA)
+                                temp = ITEM_TUNIC_ZORA;
+                            else if (temp == SLOT_TUNIC_SPIRIT)
+                                temp = ITEM_TUNIC_SPIRIT;
+                            else if (temp == SLOT_BOOTS_IRON)
+                                temp = ITEM_BOOTS_IRON;
+                            else if (temp == SLOT_BOOTS_HOVER)
+                                temp = ITEM_BOOTS_HOVER;
+                            else if (temp == SLOT_BOOTS_PEGASUS)
+                                temp = ITEM_BOOTS_PEGASUS;
+                            
+                            if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
+                                i = 1;
+                            else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))
+                                i = 2;
+                            else i = 3;
+                            
+                            for (j=1; j<4; j++)
+                                if (gSaveContext.save.info.equips.buttonItems[j] == temp && j != i) {
+                                    gSaveContext.save.info.equips.buttonItems[j]    = gSaveContext.save.info.equips.buttonItems[i];
+                                    gSaveContext.save.info.equips.cButtonSlots[j-1] = gSaveContext.save.info.equips.cButtonSlots[i-1];
+                                    Interface_LoadItemIcon1(play, j);
+                                    break;
+                                }
+
+                            if (gSaveContext.save.info.equips.buttonItems[i] == temp) {
+                                gSaveContext.save.info.equips.buttonItems[i] = gSaveContext.save.info.equips.cButtonSlots[i-1] = ITEM_NONE;
+                                 Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                            } else {
+                                gSaveContext.save.info.equips.buttonItems[i]    = temp;
+                                gSaveContext.save.info.equips.cButtonSlots[i-1] = SLOT_NONE;
+                                Interface_LoadItemIcon1(play, i);
+                                Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                             }
-                        
-                        if (DPAD_BUTTON(i) == temp) {
-                            DPAD_BUTTON(i) = SLOT_NONE;
-                            Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-                        } else {
-                            DPAD_BUTTON(i) = temp;
-                            Interface_LoadItemIcon1(play, i+4);
-                            Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                        }
+                        else {
+                            if (CHECK_BTN_ALL(input->press.button, BTN_DUP))
+                                i = 0;
+                            else if (CHECK_BTN_ALL(input->press.button, BTN_DRIGHT))
+                                i = 1;
+                            else if (CHECK_BTN_ALL(input->press.button, BTN_DDOWN))
+                                i = 2;
+                            else i = 3;
+                            
+                            for (j=0; j<4; j++)
+                                if (DPAD_BUTTON(j) == temp && j != i) {
+                                    DPAD_BUTTON(j) = DPAD_BUTTON(i);
+                                    Interface_LoadItemIcon1(play, j+4);
+                                    break;
+                                }
+                            
+                            if (DPAD_BUTTON(i) == temp) {
+                                DPAD_BUTTON(i) = SLOT_NONE;
+                                Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                            } else {
+                                DPAD_BUTTON(i) = temp;
+                                Interface_LoadItemIcon1(play, i+4);
+                                Audio_PlaySfxGeneral(NA_SE_SY_DECIDE, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+                            }
                         }
                     }
                 }
+                else Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
             }
-            else Audio_PlaySfxGeneral(NA_SE_SY_ERROR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
         }
 
         if (oldCursorPoint != pauseCtx->cursorPoint[PAUSE_EQUIP]) {

@@ -2889,7 +2889,7 @@ COLOR(YELLOW) "５０本" COLOR(DEFAULT) "まで　持てるぞ！"
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_50) QUICKTEXT_ENABLE "You upgraded your quiver to\n"
-"the " COLOR(RED) "Biggest Quiver" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"the " COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_QUIVER) "Quiver" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Now you can carry even more \n"
 "arrows, to a maximum of " COLOR(YELLOW) "50" COLOR(DEFAULT) "!"
 ),
@@ -2984,7 +2984,7 @@ COLOR(YELLOW) "４０コ" COLOR(DEFAULT) "まで　持てるぞ！"
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_BOMB_BAG_40) QUICKTEXT_ENABLE "You got the \n"
-COLOR(RED) "Biggest Bomb Bag" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_BOMB_BAG) "Biggest Bomb Bag" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Now, you can carry up to \n"
 COLOR(YELLOW) "40" COLOR(DEFAULT) " Bombs!"
 ),

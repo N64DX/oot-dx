@@ -1091,6 +1091,7 @@ void Play_Update(PlayState* this) {
             if (IS_PAUSED(&this->pauseCtx)) {
                 PLAY_LOG(3721);
                 KaleidoScopeCall_Update(this);
+                Message_Update(this);
             } else if (this->gameOverCtx.state != GAMEOVER_INACTIVE) {
                 PLAY_LOG(3727);
                 GameOver_Update(this);

@@ -910,31 +910,31 @@ s16 gVtxPageMapWorldQuadsHeight[VTX_PAGE_MAP_WORLD_QUADS] = {
  * For example when scrolling left from the quest page PAUSE_QUEST (so, to PAUSE_MAP),
  * the index is `PAUSE_QUEST + PAGE_SWITCH_PT_LEFT` and the data is button status for the map page.
  */
-static u8 gPageSwitchNextButtonStatus[][5] = {
+static u8 gPageSwitchNextButtonStatus[][7] = {
     // PAUSE_ITEM  + PAGE_SWITCH_PT_LEFT
     //
     //  -> PAUSE_EQUIP
-    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
     // PAUSE_MAP   + PAGE_SWITCH_PT_LEFT
     //
     //  -> PAUSE_ITEM
-    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_DISABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_DISABLED, BTN_ENABLED },
     // PAUSE_QUEST + PAGE_SWITCH_PT_LEFT
     // PAUSE_ITEM  + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_MAP
-    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED },
+    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED },
     // PAUSE_EQUIP + PAGE_SWITCH_PT_LEFT
     // PAUSE_MAP   + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_QUEST
-    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_ENABLED },
+    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_ENABLED, BTN_ENABLED },
     //
     // PAUSE_QUEST + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_EQUIP
-    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
     //
     // PAUSE_EQUIP + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_ITEM
-    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_DISABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_DISABLED, BTN_ENABLED },
 };
 
 static s16 D_8082AB8C = 0;
@@ -1372,6 +1372,9 @@ void KaleidoScope_SetupPageSwitch(PauseContext* pauseCtx, u8 pt) {
     gSaveContext.buttonStatus[4] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][4];
     dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][1];
 
+    if (USE_PAUSE_INFO)
+        gSaveContext.buttonStatus[4] = sInDungeonScene ? BTN_ENABLED : gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][5];
+
     PRINTF("kscope->kscp_pos+pt = %d\n", pauseCtx->pageIndex + pt);
 
     gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
@@ -1379,7 +1382,7 @@ void KaleidoScope_SetupPageSwitch(PauseContext* pauseCtx, u8 pt) {
 }
 
 void KaleidoScope_HandlePageToggles(PauseContext* pauseCtx, Input* input) {
-    if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) && CHECK_BTN_ALL(input->rel.button, BTN_L) && !pressed_r && editor_timer < (60 / R_UPDATE_RATE)) {
+    if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) && CHECK_BTN_ALL(input->rel.button, BTN_L) && !pressed_r && editor_timer < (60 / R_UPDATE_RATE) && !pauseCtx->itemDescriptionOn) {
         if (DEBUG_FEATURES || DEBUG_MODE)
             pauseCtx->debugState = PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPENING;
         return;
@@ -1397,12 +1400,12 @@ void KaleidoScope_HandlePageToggles(PauseContext* pauseCtx, Input* input) {
     if (pauseCtx->debugState != PAUSE_DEBUG_STATE_CLOSED)
         return;
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_R) && !CHECK_BTN_ALL(input->cur.button, BTN_L)) {
+    if (CHECK_BTN_ALL(input->press.button, BTN_R) && !CHECK_BTN_ALL(input->cur.button, BTN_L) && !pauseCtx->itemDescriptionOn) {
         KaleidoScope_SetupPageSwitch(pauseCtx, PAGE_SWITCH_PT_RIGHT);
         return;
     }
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_Z) && !CHECK_BTN_ALL(input->cur.button, BTN_L)) {
+    if (CHECK_BTN_ALL(input->press.button, BTN_Z) && !CHECK_BTN_ALL(input->cur.button, BTN_L) && !pauseCtx->itemDescriptionOn) {
         KaleidoScope_SetupPageSwitch(pauseCtx, PAGE_SWITCH_PT_LEFT);
         return;
     }
@@ -2438,20 +2441,31 @@ void KaleidoScope_DrawUIOverlay(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
-static u8 lastItem[3];
-
 #define ITEM_LABEL_LANGUAGE_OFFSET ITEM_SMALL_KEY
 
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
     u16 texIndex;
-    u8 isNewItem = false;
 
-    for (texIndex=0; texIndex<ARRAY_COUNT(lastItem); texIndex++)
-        if (!lastItem[texIndex])
-            isNewItem = true;
+    if (!play->pauseCtx.itemDescriptionOn && USE_PAUSE_INFO) {
+        if (pauseCtx->cursorSpecialPos == 0 && (pauseCtx->pageIndex != PAUSE_MAP || sInDungeonScene)) {
+            u8 item = pauseCtx->cursorItem[pauseCtx->pageIndex];
+            if (item <= ITEM_BOW_LIGHT || (item >= ITEM_SWORD_FAIRYS && item <= ITEM_BOTTLE_POTION_SHIELD) || (item >= ITEM_BULLET_BAG_30 && item <= ITEM_PERFECT_BLOCK) || (item >= ITEM_MEDALLION_FOREST && item <= ITEM_DUNGEON_MAP) || pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_SKULL_TOKEN || pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_HEART_PIECE) {
+                if (play->interfaceCtx.unk_1F0 != DO_ACTION_INFO) {
+                    Interface_SetDoAction(play, DO_ACTION_INFO);
+                    Interface_LoadActionLabelB(play, DO_ACTION_SAVE);
+                }
+            } else if (play->interfaceCtx.unk_1F0 == DO_ACTION_INFO) {
+                Interface_SetDoAction(play, DO_ACTION_DECIDE);
+                Interface_LoadActionLabelB(play, DO_ACTION_SAVE);
+            }
+        } else if (play->interfaceCtx.unk_1F0 == DO_ACTION_INFO) {
+            Interface_SetDoAction(play, DO_ACTION_DECIDE);
+            Interface_LoadActionLabelB(play, DO_ACTION_SAVE);
+        }
+    }
 
-    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) || isNewItem ||
+    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) ||
         ((pauseCtx->pageIndex == PAUSE_MAP) && (pauseCtx->cursorSpecialPos != 0))) {
 
         pauseCtx->namedItem = pauseCtx->cursorItem[pauseCtx->pageIndex];
@@ -3844,6 +3858,9 @@ void KaleidoScope_UpdateOpening(PlayState* play) {
         gSaveContext.buttonStatus[4] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + PAGE_SWITCH_PT_LEFT][4];
         dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + PAGE_SWITCH_PT_LEFT][1];
 
+        if (USE_PAUSE_INFO)
+            gSaveContext.buttonStatus[4] = sInDungeonScene ? BTN_ENABLED : gPageSwitchNextButtonStatus[pauseCtx->pageIndex + PAGE_SWITCH_PT_LEFT][5];
+
         pauseCtx->pageIndex = sPageSwitchNextPageIndex[pauseCtx->nextPageMode];
 
         pauseCtx->mainState = PAUSE_MAIN_STATE_IDLE;
@@ -4487,7 +4504,7 @@ void KaleidoScope_Update(PlayState* play) {
             switch (pauseCtx->mainState) {
                 case PAUSE_MAIN_STATE_IDLE:
                     Interface_ChangeDpadSet(play);
-                    if (CHECK_BTN_ALL(input->press.button, BTN_START)) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_START) && !pauseCtx->itemDescriptionOn) {
                         Interface_SetDoAction(play, DO_ACTION_NONE);
                         pauseCtx->state = PAUSE_STATE_CLOSING;
                         R_PAUSE_PAGES_Y_ORIGIN_2 = PAUSE_PAGES_Y_ORIGIN_2_LOWER;
@@ -4495,7 +4512,7 @@ void KaleidoScope_Update(PlayState* play) {
 #if PLATFORM_GC && OOT_NTSC
                         AudioOcarina_SetInstrument(OCARINA_INSTRUMENT_OFF);
 #endif
-                    } else if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED && CHECK_BTN_ALL(input->press.button, BTN_B)) {
+                    } else if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED && CHECK_BTN_ALL(input->press.button, BTN_B) && !pauseCtx->itemDescriptionOn) {
                         pauseCtx->nextPageMode = 0;
                         pauseCtx->promptChoice = 0;
                         SFX_PLAY_CENTERED(NA_SE_SY_DECIDE);

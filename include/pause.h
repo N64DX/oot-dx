@@ -243,7 +243,8 @@ typedef struct PauseContext {
     /* 0x027A */ u8 tradeQuestMarker; // Can be either a `WorldMapPoint` value or `TRADE_QUEST_MARKER_NONE`
     /* 0x027C */ SkelAnime playerSkelAnime;
     /* 0x02C0 */ u8 wasInDebug;
-} PauseContext; // size = 0x2C1
+    /* 0x02C1 */ u8 itemDescriptionOn; // helpful description of item given through a message box
+} PauseContext; // size = 0x2C4
 
 // Note that z_kaleido_scope.c assumes that the dimensions and texture format here also matches the dimensions and
 // texture format for ITEM_NAME_TEX_*

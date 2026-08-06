@@ -563,7 +563,8 @@ typedef enum LinkAge {
 #define QUEST_MAX           BOSS_RUSH
 #define QUEST_MODE          gSaveContext.save.info.questMode
 
-#define USE_TITLE_CARDS(play)   (((TITLE_CARDS || play->sceneId > SCENE_OUTSIDE_GANONS_CASTLE || (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST)) && !PLATFORM_IQUE))
+#define USE_TITLE_CARDS(play)   (((TITLE_CARDS    || play->sceneId > SCENE_OUTSIDE_GANONS_CASTLE || (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST)) && !PLATFORM_IQUE))
+#define USE_PAUSE_INFO          ((USE_MM_PAUSE_INFO || IS_CHILD_QUEST))
 
 #define IS_VANILLA_QUEST    (R_QUEST_MODE % 3 == 0)
 #define IS_MASTER_QUEST     (R_QUEST_MODE % 3 == 1)
@@ -599,6 +600,7 @@ typedef enum LinkAge {
 #define USE_MM_BOTTLES              ((gSaveContext.options[0] >> 22) & 1)  // Bits: 22
 #define TITLE_CARDS                 ((gSaveContext.options[0] >> 23) & 1)  // Bits: 23
 #define USE_MM_HUD                  ((gSaveContext.options[0] >> 24) & 1)  // Bits: 24
+#define USE_MM_PAUSE_INFO           ((gSaveContext.options[0] >> 25) & 1)  // Bits: 25
 #define HEALTH_RECOVERY             ((gSaveContext.options[1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gSaveContext.options[1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gSaveContext.options[1] >> 5)  & 7)  // Bits: 5-7

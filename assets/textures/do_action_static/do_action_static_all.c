@@ -116,6 +116,10 @@ u64 gNum8DoActionENGTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 
 #include "assets/textures/do_action_static/gNum8DoActionENGTex.ia4.inc.c"
 };
 
+u64 gInfoDoActionENGTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gInfoDoActionENGTex.ia4.inc.c"
+};
+
 u64 gAttackDoActionGERTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
 #include "build/pal-1.0/assets/textures/do_action_static/gAttackDoActionGERTex.ia4.inc.c"
 };
@@ -230,6 +234,10 @@ u64 gNum7DoActionGERTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 
 
 u64 gNum8DoActionGERTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
 #include "build/pal-1.0/assets/textures/do_action_static/gNum8DoActionENGTex.ia4.inc.c"
+};
+
+u64 gInfoDoActionGERTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gInfoDoActionGERTex.ia4.inc.c"
 };
 
 u64 gAttackDoActionFRATex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
@@ -348,6 +356,10 @@ u64 gNum8DoActionFRATex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 
 #include "build/pal-1.0/assets/textures/do_action_static/gNum8DoActionENGTex.ia4.inc.c"
 };
 
+u64 gInfoDoActionFRATex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gInfoDoActionFRATex.ia4.inc.c"
+};
+
 u64 gAttackDoActionJPNTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
 #include "assets/textures/do_action_static/gAttackDoActionJPNTex.ia4.inc.c"
 };
@@ -462,4 +474,8 @@ u64 gNum7DoActionJPNTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 
 
 u64 gNum8DoActionJPNTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
 #include "assets/textures/do_action_static/gNum8DoActionJPNTex.ia4.inc.c"
+};
+
+u64 gInfoDoActionJPNTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gInfoDoActionJPNTex.ia4.inc.c"
 };

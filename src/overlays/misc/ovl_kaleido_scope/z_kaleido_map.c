@@ -1,5 +1,6 @@
 #include "z_kaleido_scope.h"
 
+#include "controller.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "language_array.h"
@@ -62,6 +63,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
     static u16 mapBgPulseStage = 0;
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     PauseContext* pauseCtx = &play->pauseCtx;
+    Input* input = &play->state.input[0];
     s16 i;
     s16 j;
     s16 oldCursorPoint;
@@ -77,7 +79,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
         pauseCtx->cursorColorSet = 0;
         oldCursorPoint = pauseCtx->cursorPoint[PAUSE_MAP];
 
-        if (pauseCtx->cursorSpecialPos == 0) {
+        if (pauseCtx->cursorSpecialPos == 0 && !pauseCtx->itemDescriptionOn) {
             if (pauseCtx->stickAdjX > 30) {
                 if (pauseCtx->cursorX[PAUSE_MAP] != 0) {
                     KaleidoScope_MoveCursorToSpecialPos(play, PAUSE_CURSOR_PAGE_RIGHT);
@@ -165,7 +167,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
                 }
             }
         } else if (pauseCtx->cursorSpecialPos == PAUSE_CURSOR_PAGE_LEFT) {
-            if (pauseCtx->stickAdjX > 30) {
+            if (pauseCtx->stickAdjX > 30 && !pauseCtx->itemDescriptionOn) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
                 pauseCtx->cursorSlot[PAUSE_MAP] = pauseCtx->cursorPoint[PAUSE_MAP] = pauseCtx->dungeonMapSlot;
@@ -175,7 +177,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
                 SFX_PLAY_CENTERED(NA_SE_SY_CURSOR);
             }
         } else {
-            if (pauseCtx->stickAdjX < -30) {
+            if (pauseCtx->stickAdjX < -30 && !pauseCtx->itemDescriptionOn) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
                 pauseCtx->cursorX[PAUSE_MAP] = 1;
@@ -213,6 +215,8 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
 
     if (pauseCtx->cursorSpecialPos == 0) {
         if (pauseCtx->cursorPoint[PAUSE_MAP] < 3) {
+            if (CHECK_BTN_ALL(input->press.button, BTN_A) && pauseCtx->pageIndex == PAUSE_MAP && !pauseCtx->itemDescriptionOn) // Give description on item through a message box
+                Message_PauseMenu_ShowDescription(play, 0x0900 + pauseCtx->cursorItem[PAUSE_MAP], 3);
             pauseCtx->cursorItem[PAUSE_MAP] = ITEM_DUNGEON_BOSS_KEY + pauseCtx->cursorPoint[PAUSE_MAP];
         } else {
             pauseCtx->cursorItem[PAUSE_MAP] = PAUSE_ITEM_NONE;

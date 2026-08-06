@@ -15,7 +15,7 @@ MSG(),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_AMBER_EARRINGS) QUICKTEXT_ENABLE "You got the " COLOR(YELLOW) "Amber Earrings" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Those will finally allow your\n"
-"Longshot to latch unto objects\n"
+"Longshot to latch onto objects\n"
 "in the " COLOR(PURPLE) "Forsaken Kingdom" COLOR(DEFAULT) " region!"
 ),
 MSG(),
@@ -268,7 +268,7 @@ COLOR(YELLOW) "６０本" COLOR(DEFAULT) "まで　持てるぞ！"
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_QUIVER_60) QUICKTEXT_ENABLE "You upgraded your quiver to\n"
-"the " COLOR(RED) "Biggest Quiver" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"the " COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_QUIVER) "Quiver" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Now you can carry even more \n"
 "arrows, to a maximum of " COLOR(YELLOW) "60" COLOR(DEFAULT) "!"
 ),
@@ -293,7 +293,7 @@ COLOR(YELLOW) "５０コ" COLOR(DEFAULT) "まで　持てるぞ！"
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_BOMB_BAG_50) QUICKTEXT_ENABLE "You got the \n"
-COLOR(RED) "Biggest Bomb Bag" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_BOMB_BAG) "Bomb Bag" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Now, you can carry up to \n"
 COLOR(YELLOW) "50" COLOR(DEFAULT) " Bombs!"
 ),

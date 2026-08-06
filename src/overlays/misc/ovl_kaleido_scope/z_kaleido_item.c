@@ -161,7 +161,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
         cursorItem = pauseCtx->cursorItem[PAUSE_ITEM];
         cursorSlot = pauseCtx->cursorSlot[PAUSE_ITEM];
 
-        if (pauseCtx->cursorSpecialPos == 0) {
+        if (pauseCtx->cursorSpecialPos == 0 && !pauseCtx->itemDescriptionOn) {
             pauseCtx->cursorColorSet = 4;
 
             if (cursorItem == PAUSE_ITEM_NONE) {
@@ -261,7 +261,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                        pauseCtx->cursorSpecialPos);
             }
         } else if (pauseCtx->cursorSpecialPos == PAUSE_CURSOR_PAGE_LEFT) {
-            if (pauseCtx->stickAdjX > 30) {
+            if (pauseCtx->stickAdjX > 30 && !pauseCtx->itemDescriptionOn) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
 
@@ -291,7 +291,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                 }
             }
         } else { // cursorSpecialPos == PAUSE_CURSOR_PAGE_RIGHT
-            if (pauseCtx->stickAdjX < -30) {
+            if (pauseCtx->stickAdjX < -30 && !pauseCtx->itemDescriptionOn) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
 
@@ -406,6 +406,9 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
 
                     if (FIX_USEFUL_GLITCHES && pauseCtx->mainState != PAUSE_MAIN_STATE_IDLE)
                         canSelectItem = false;
+
+                    if (CHECK_BTN_ALL(input->press.button, BTN_A) && !pauseCtx->itemDescriptionOn) // Give description on item through a message box
+                        Message_PauseMenu_ShowDescription(play, 0x0900 + cursorItem, 3);
 
                     if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT) && canSelectItem) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {

@@ -2006,6 +2006,13 @@ void Message_LoadItemIcon(PlayState* play, u16 itemId, s16 y) {
 }
 
 #if !PLATFORM_IQUE
+static const char* upgrade_prefix_name_words[4][4] = {
+    { "",     "",         "",         "" },
+    { "大きい", "Big ",     "Groß ",    "Grand " },
+    { "巨大な", "Huge ",    "Riesig ", "Énorme " },
+    { "最大",  "Biggest ", "Größte ", "Le Plus Grand " },
+};
+
 static const char* sword_words[2][4] = {
     { "マスターソード", "Master Sword", "Master-Schwert", "L'Epée de Légende" },
     { "レイザーソード", "Razor Sword", "Elfenschwert", "Lame Rasoir" }
@@ -2537,12 +2544,19 @@ void Message_Decode(PlayState* play) {
                 decodedBufPos--;
             }
 #if !PLATFORM_IQUE
-            else if (curChar == MESSAGE_AGE_LAD || curChar == MESSAGE_AGE_ONE || curChar == MESSAGE_AGE_BOY || curChar == MESSAGE_AGE_GUY || curChar == MESSAGE_AGE_GUY_C || curChar == MESSAGE_PLURAL_TOKENS || curChar == MESSAGE_MASTER_SWORD) {
+            else if (curChar == MESSAGE_UPGRADE_SIZE_PREFIX || curChar == MESSAGE_AGE_LAD || curChar == MESSAGE_AGE_ONE || curChar == MESSAGE_AGE_BOY || curChar == MESSAGE_AGE_GUY || curChar == MESSAGE_AGE_GUY_C || curChar == MESSAGE_PLURAL_TOKENS || curChar == MESSAGE_MASTER_SWORD) {
                 const char* word = NULL;
                 const char* const* words = NULL;
-                s8 len;
+                u8 len, upgradeType, upgradeValue;
 
                 switch (curChar) {
+                    case MESSAGE_UPGRADE_SIZE_PREFIX:
+                        upgradeType = MSG_BUF[++msgCtx->msgBufPos];
+                        upgradeValue = CUR_UPG_VALUE(upgradeType) - 1;
+                        if (!IS_CHILD_QUEST && upgradeValue == 2)
+                            upgradeValue++;
+                        words = upgrade_prefix_name_words[upgradeValue];
+                        break;
                     case MESSAGE_AGE_LAD:
                         words = lad_words[!LINK_IS_CHILD];
                         break;
@@ -3092,7 +3106,7 @@ void Message_OpenText(PlayState* play, u16 textId) {
 
         if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG) {
             if (language == LANGUAGE_JPN) {
-                DMA_REQUEST_SYNC(play->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, UNK_FILE, UNK_LINE);
+                DMA_REQUEST_SYNC(play->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, __FILE__, __LINE__);
                 gSaveContext.language = LANGUAGE_ENG;
                 setTempEnglish = true;
             }
@@ -3104,16 +3118,16 @@ void Message_OpenText(PlayState* play, u16 textId) {
         if (B_80121220 == NULL || B_80121220->unk_64 == NULL || !B_80121220->unk_64(&play->msgCtx.font))
             switch (language) {
                 case LANGUAGE_ENG:
-                     DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_nes_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+                     DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_nes_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
                      break;
                 case LANGUAGE_GER:
-                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_ger_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_ger_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
                     break;
                 case LANGUAGE_FRA:
-                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_fra_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_fra_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
                     break;
                 case LANGUAGE_JPN:
-                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_jpn_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, "../z_message_PAL.c", UNK_LINE);
+                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_jpn_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
                     break;
                 default:
                     break;
@@ -3283,6 +3297,132 @@ void Message_ContinueTextbox(PlayState* play, u16 textId) {
         Interface_SetDoAction(play, DO_ACTION_NEXT);
     }
     msgCtx->textboxColorAlphaCurrent = msgCtx->textboxColorAlphaTarget;
+}
+
+void Message_PauseMenu_ShowDescription(PlayState* play, u16 textId, u8 textBoxPos) {
+    MessageContext* msgCtx = &play->msgCtx;
+    Font* font = &msgCtx->font;
+    s16 textBoxType;
+    Language language = gSaveContext.language;
+
+    if (!USE_PAUSE_INFO)
+        return;
+
+    msgCtx->ocarinaAction = 0xFFFF;
+    sMessageHasSetSfx = sMessageStartFrameCount = sTextboxSkipped = sTextIsCredits = 0;
+    play->pauseCtx.itemDescriptionOn = true;
+
+#if OOT_NTSC
+    if (language == LANGUAGE_JPN && !setTempEnglish) {
+        R_TEXT_CHAR_SCALE = 88;
+        R_TEXT_LINE_SPACING = 18;
+        R_TEXT_INIT_XPOS = 50;
+#endif
+    } else {
+        R_TEXT_CHAR_SCALE = 75;
+#if !PLATFORM_IQUE
+        R_TEXT_LINE_SPACING = 12;
+        R_TEXT_INIT_XPOS = 65;
+#else
+        R_TEXT_LINE_SPACING = 16;
+        R_TEXT_INIT_XPOS = 60;
+#endif
+    }
+
+    if (IS_CHILD_QUEST_AS_CHILD) {
+        if (textId == 0x0900 + ITEM_BOW)
+            textId = 0x09FC;
+        else if (textId == 0x0900 + ITEM_BROKEN_GORONS_SWORD)
+            textId = 0x09FD;
+        else if (textId == 0x0900 + ITEM_STRENGTH_SILVER_GAUNTLETS)
+            textId = 0x09FE;
+        else if (textId == 0x0900 + ITEM_STRENGTH_GOLD_GAUNTLETS)
+            textId = 0x09FF;
+        else if (textId == 0x0900 + ITEM_BOW_FIRE)
+            textId = 0x0900 + ITEM_ARROW_FIRE;
+        else if (textId == 0x0900 + ITEM_BOW_ICE)
+            textId = 0x0900 + ITEM_ARROW_ICE;
+        else if (textId == 0x0900 + ITEM_BOW_LIGHT)
+            textId = 0x0900 + ITEM_ARROW_LIGHT;
+    }
+
+    msgCtx->textId = textId;
+
+#if OOT_NTSC_N64
+        if (!Message_FindMessage(play, textId, language) && language != LANGUAGE_ENG) {
+            if (language == LANGUAGE_JPN) {
+                DMA_REQUEST_SYNC(play->msgCtx.font.fontBuf, (uintptr_t)_nes_font_staticSegmentRomStart, _nes_font_staticSegmentRomEnd - _nes_font_staticSegmentRomStart, __FILE__, __LINE__);
+                gSaveContext.language = LANGUAGE_ENG;
+                setTempEnglish = true;
+            }
+            language = LANGUAGE_ENG;
+            Message_FindMessage(play, textId, language);
+        }
+        msgCtx->msgLength = font->msgLength;
+
+        if (B_80121220 == NULL || B_80121220->unk_64 == NULL || !B_80121220->unk_64(&play->msgCtx.font))
+            switch (language) {
+                case LANGUAGE_ENG:
+                     DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_nes_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
+                     break;
+                case LANGUAGE_GER:
+                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_ger_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
+                    break;
+                case LANGUAGE_FRA:
+                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_fra_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
+                    break;
+                case LANGUAGE_JPN:
+                    DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_jpn_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
+                    break;
+                default:
+                    break;
+            }
+#elif OOT_NTSC
+        if (language == LANGUAGE_JPN) {
+            Message_FindMessageJPN(play, textId);
+            msgCtx->msgLength = font->msgLength;
+            DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_jpn_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
+        } else {
+            Message_FindMessageNES(play, textId);
+            msgCtx->msgLength = font->msgLength;
+            DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_nes_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
+        }
+#else
+        if (language == LANGUAGE_ENG) {
+            Message_FindMessagePAL(play, textId);
+            msgCtx->msgLength = font->msgLength;
+            DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_nes_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
+        } else if (language == LANGUAGE_GER) {
+            Message_FindMessagePAL(play, textId);
+            msgCtx->msgLength = font->msgLength;
+            DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_ger_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
+        } else {
+            Message_FindMessagePAL(play, textId);
+            msgCtx->msgLength = font->msgLength;
+            DMA_REQUEST_SYNC(MSG_BUF, (uintptr_t)_fra_message_data_staticSegmentRomStart + font->msgOffset, font->msgLength, __FILE__, __LINE__);
+        }
+#endif
+
+    msgCtx->textBoxProperties = font->fontBuf[0];
+    msgCtx->textBoxType = msgCtx->textBoxProperties >> 4;
+    msgCtx->textBoxPos = textBoxPos;
+    textBoxType = msgCtx->textBoxType;
+    if (textBoxType < TEXTBOX_TYPE_NONE_BOTTOM) {
+        DMA_REQUEST_SYNC(msgCtx->textboxSegment, (uintptr_t)_message_staticSegmentRomStart, MESSAGE_STATIC_TEX_SIZE, __FILE__, __LINE__);
+        msgCtx->textboxColorRed = 0;
+        msgCtx->textboxColorGreen = 0;
+        msgCtx->textboxColorBlue = 0;
+        msgCtx->textboxColorAlphaTarget = 230;
+        msgCtx->textboxColorAlphaCurrent = 0;
+    }
+    msgCtx->choiceNum = msgCtx->textUnskippable = msgCtx->textboxEndType = 0;
+    msgCtx->msgBufPos = msgCtx->unk_E3D0 = msgCtx->textDrawPos = 0;
+
+    msgCtx->talkActor = NULL;
+    msgCtx->msgMode = MSGMODE_TEXT_START;
+    msgCtx->stateTimer = 0;
+    msgCtx->textDelayTimer = 0;
+    play->msgCtx.ocarinaMode = OCARINA_MODE_00;
 }
 
 void Message_StartOcarinaImpl(PlayState* play, u16 ocarinaActionId) {
@@ -4684,6 +4824,8 @@ void Message_Update(PlayState* play) {
                         R_TEXTBOX_Y_TARGET = sTextboxMidYPositions[var];
                     } else {
                         R_TEXTBOX_Y_TARGET = sTextboxLowerYPositions[var];
+                        if (play->pauseCtx.itemDescriptionOn)
+                            R_TEXTBOX_Y_TARGET -= 12;
                     }
 
 #if OOT_NTSC && !PLATFORM_IQUE
@@ -4879,6 +5021,12 @@ void Message_Update(PlayState* play) {
                 msgCtx->msgMode = MSGMODE_NONE;
                 interfaceCtx->unk_1FA = interfaceCtx->unk_1FC = 0;
                 msgCtx->textId = msgCtx->stateTimer = 0;
+
+                if (play->pauseCtx.itemDescriptionOn) {
+                    Interface_SetDoAction(play, DO_ACTION_INFO);
+                    Interface_LoadActionLabelB(play, DO_ACTION_SAVE);
+                    play->pauseCtx.itemDescriptionOn = false;
+                }
 
                 if (msgCtx->textboxEndType == TEXTBOX_ENDTYPE_PERSISTENT) {
                     msgCtx->textboxEndType = TEXTBOX_ENDTYPE_DEFAULT;
