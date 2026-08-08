@@ -295,7 +295,7 @@ u64 gHoverBootsItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 };
 
 u64 gPegasusBootsItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gKokiriBootsItemNameJPNTex.ia4.inc.c"
+#include "assets/textures/item_name_static/gPegasusBootsItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gGreatFairysSwordItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

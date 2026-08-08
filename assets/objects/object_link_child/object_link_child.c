@@ -2756,11 +2756,11 @@ static u64 gIronBootTex[] = {
 };
 
 static Vtx left_iron_boot_vtx[] = {
-#include "assets/objects/object_link_child/other/left_iron_boot.vtx.inc"
+#include "assets/objects/object_link_child/boots/left_iron_boot.vtx.inc"
 };
 
 static Vtx right_iron_boot_vtx[] = {
-#include "assets/objects/object_link_child/other/right_iron_boot.vtx.inc"
+#include "assets/objects/object_link_child/boots/right_iron_boot.vtx.inc"
 };
 
 static Gfx gLeftIronBootDL[] = {
@@ -2851,11 +2851,11 @@ static u64 gHoverBootsFeatherTex[] = {
 };
 
 static Vtx left_hover_boot_vtx[] = {
-#include "assets/objects/object_link_child/other/left_hover_boot.vtx.inc"
+#include "assets/objects/object_link_child/boots/left_hover_boot.vtx.inc"
 };
 
 static Vtx right_hover_boot_vtx[] = {
-#include "assets/objects/object_link_child/other/right_hover_boot.vtx.inc"
+#include "assets/objects/object_link_child/boots/right_hover_boot.vtx.inc"
 };
 
 static Gfx gLeftHoverBootDL[65] = {
@@ -2961,6 +2961,63 @@ static Gfx gRightHoverBootDL[65] = {
 Gfx gLinkChildHoverBootsDL[] = {
     gsSPDisplayList(gLeftHoverBootDL),
     gsSPBranchList(gRightHoverBootDL),
+};
+
+
+
+// Pegasus Boots
+
+static u64 gPegasusBootsFeatherTex[] = {
+#include "assets/objects/object_link_child/boots/pegasus_boots_feather.rgba16.inc.c"
+};
+
+static Vtx left_pegasus_boot_vtx[] = {
+#include "assets/objects/object_link_child/boots/left_pegasus_boot.vtx.inc"
+};
+
+static Vtx right_pegasus_boot_vtx[] = {
+#include "assets/objects/object_link_child/boots/right_pegasus_boot.vtx.inc"
+};
+
+static Gfx gLeftPegasusBootDL[] = {
+    gsSPMatrix(0x0D000180, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
+    gsSPDisplayList(0x0C000000),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsDPLoadTextureBlock(gPegasusBootsFeatherTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsSPClearGeometryMode(G_CULL_BOTH),
+    gsSPVertex(left_pegasus_boot_vtx, 8, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSPEndDisplayList(),
+};
+
+static Gfx gRightPegasusBootDL[] = {
+    gsSPMatrix(0x0D0000C0, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
+    gsSPDisplayList(0x0C000000),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+    gsDPLoadTextureBlock(gPegasusBootsFeatherTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsSPClearGeometryMode(G_CULL_BOTH),
+    gsSPVertex(right_pegasus_boot_vtx, 8, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gLinkChildPegasusBootsDL[] = {
+    gsSPDisplayList(gLeftPegasusBootDL),
+    gsSPBranchList(gRightPegasusBootDL),
 };
 
 

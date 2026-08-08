@@ -295,7 +295,7 @@ u64 gHoverBootsItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 };
 
 u64 gPegasusBootsItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gKokiriBootsItemNameGERTex.ia4.inc.c"
+#include "assets/textures/item_name_static/gPegasusBootsItemNameGERTex.ia4.inc.c"
 };
 
 u64 gGreatFairysSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

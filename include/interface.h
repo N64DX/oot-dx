@@ -68,7 +68,9 @@ typedef enum DoAction {
     /* 0x1B */ DO_ACTION_7,
     /* 0x1C */ DO_ACTION_8,
     /* 0x1D */ DO_ACTION_INFO,
-    /* 0x1E */ DO_ACTION_MAX
+    /* 0x1E */ DO_ACTION_DASH,
+    /* 0x1F */ DO_ACTION_SKIP,
+    /* 0x20 */ DO_ACTION_MAX
 } DoAction;
 
 typedef struct InterfaceContext {

@@ -414,7 +414,7 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawXlu0,         { gGiRoomKeyDL } },                                                                                                                // GID_ROOM_KEY
     { GetItem_DrawPotion,       { gGiPotionPotDL, gGiPurplePotColorDL, gGiPurpleLiquidColorDL, gGiPotionLiquidDL, gGiPurplePatternColorDL, gGiPotionPatternDL } }, // GID_BOTTLE_POTION_SHIELD
 	{ GetItem_DrawOpa0,         { gGiTitleDeedLandColorDL } },                                                                                                     // GID_LAND_TITLE_DEED
-    { GetItem_DrawOpa0,         { gGiKokiriBootsDL } },                                                                                                            // GID_BOOTS_KOKIRI
+    { GetItem_DrawOpa0,         { gGiPegasusBootsDL } },                                                                                                           // GID_BOOTS_PEGASUS
 };
 
 /**

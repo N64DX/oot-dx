@@ -163,7 +163,7 @@ void* gItemIcons[] = {
     gItemIconBootsKokiriTex,       // ITEM_BOOTS_KOKIRI
     gItemIconBootsIronTex,         // ITEM_BOOTS_IRON
     gItemIconBootsHoverTex,        // ITEM_BOOTS_HOVER
-    gItemIconBootsKokiriTex,       // ITEM_BOOTS_PEGASUS
+    gItemIconBootsPegasusTex,      // ITEM_BOOTS_PEGASUS
     gItemIconGreatFairysSwordTex,  // ITEM_SWORD_FAIRYS
     gItemIconRocsFeatherTex,       // ITEM_ROCS_FEATHER
     gItemIconGoldenFeatherTex,     // ITEM_GOLDEN_FEATHER

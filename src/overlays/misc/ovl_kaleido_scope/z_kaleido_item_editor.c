@@ -817,6 +817,7 @@ ItemEditorEntry sItemEditorEquipmentEntries[] = {
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_TUNIC_SPIRIT,   EQUIP_TYPE_TUNIC,  0, "Spirit Tunic",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_BOOTS_IRON,     EQUIP_TYPE_BOOTS,  0, "Iron Boots",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_BOOTS_HOVER,    EQUIP_TYPE_BOOTS,  0, "Hover Boots",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_BOOTS_PEGASUS,  EQUIP_TYPE_BOOTS,  0, "Pegasus Boots", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
 };
 
 ItemEditorEntry sItemEditorUpgradesEntries[] = {
@@ -843,7 +844,6 @@ ItemEditorEntry sItemEditorUpgradesEntries[] = {
     { SHOW_OPTION_ONLY_CQ,    UPGRADE_PERFECT_BLOCK,    0, 0, "Perfect Block",            ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
     { SHOW_OPTION_ONLY_CQ,    UPGRADE_AMULET_OF_ENERGY, 0, 0, "Amulet of Energy",         ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
     { SHOW_OPTION_ONLY_CQ,    UPGRADE_AMBER_EARRINGS,   0, 0, "Amber Earrings",           ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
-    { SHOW_OPTION_ONLY_CQ,    UPGRADE_FURTHER_JUMP,     0, 0, "Further Jump",             ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_DEKU,    7, 0, "Deku Shield Durability",   ItemEditor_SetDurability,  ItemEditor_GetDurability  },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HYLIAN,  7, 0, "Hylian Shield Durability", ItemEditor_SetDurability,  ItemEditor_GetDurability  },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HEROS,   7, 0, "Hero's Shield Durability", ItemEditor_SetDurability,  ItemEditor_GetDurability  },

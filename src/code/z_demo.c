@@ -616,7 +616,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
     if (csCtx->curFrame > 20 && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_START) && gSaveContext.fileNum != 0xFEDC && gSaveContext.gameMode == GAMEMODE_NORMAL) {
         if (play->specialIconAlpha == 0) {
             play->specialIconAlpha = SECONDS(3);
-            Interface_LoadActionLabelB(play, DO_ACTION_NEXT);
+            Interface_LoadActionLabelB(play, DO_ACTION_SKIP);
         }
         else doCutsceneSkip = true;
     }

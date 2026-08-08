@@ -96,6 +96,26 @@ s16 sBootData[PLAYER_BOOTS_MAX][17] = {
         0,                           // IREG(69)
         FRAMERATE_CONST(130, 156),   // MREG(95)
     },
+    // PLAYER_BOOTS_PEGASUS
+    {
+        200,                         // REG(19)
+        FRAMERATE_CONST(1000, 1200), // REG(30)
+        FRAMERATE_CONST(300, 360),   // REG(32)
+        700,                         // REG(34)
+        FRAMERATE_CONST(550, 660),   // REG(35)
+        FRAMERATE_CONST(270, 324),   // REG(36)
+        600,                         // REG(37)
+        FRAMERATE_CONST(350, 420),   // REG(38)
+        800,                         // R_DECELERATE_RATE
+        600,                         // R_RUN_SPEED_LIMIT
+        -100,                        // REG(68)
+        600,                         // REG(69)
+        590,                         // IREG(66)
+        750,                         // IREG(67)
+        125,                         // IREG(68)
+        200,                         // IREG(69)
+        FRAMERATE_CONST(130, 156),   // MREG(95)
+    },
     // PLAYER_BOOTS_INDOOR
     {
         200,                         // REG(19)
@@ -1145,9 +1165,9 @@ Gfx* sBootDListGroups[][2] = {
     { gLinkAdultLeftHoverBootDL, gLinkAdultRightHoverBootDL }, // PLAYER_BOOTS_HOVER
 };
 
-Gfx* sLinkChildEquipmentDListGroups[][7] = {
-    { gLinkChildIronBootsDL, gLinkChildHoverBootsDL, gLinkChildGoronBraceletDL, gLinkChildPowerBraceletDL, gLinkChildPowerBraceletsDL, gLinkChildAmuletOfEnergyDL, gLinkChildEarringsAmberDL },
-    { gLinkYoungIronBootsDL, gLinkYoungHoverBootsDL, gLinkYoungGoronBraceletDL, gLinkYoungPowerBraceletDL, gLinkYoungPowerBraceletsDL, gLinkYoungAmuletOfEnergyDL, gLinkYoungEarringsAmberDL },
+Gfx* sLinkChildEquipmentDListGroups[][8] = {
+    { gLinkChildIronBootsDL, gLinkChildHoverBootsDL, gLinkChildPegasusBootsDL, gLinkChildGoronBraceletDL, gLinkChildPowerBraceletDL, gLinkChildPowerBraceletsDL, gLinkChildAmuletOfEnergyDL, gLinkChildEarringsAmberDL },
+    { gLinkYoungIronBootsDL, gLinkYoungHoverBootsDL, gLinkYoungPegasusBootsDL, gLinkYoungGoronBraceletDL, gLinkYoungPowerBraceletDL, gLinkYoungPowerBraceletsDL, gLinkYoungAmuletOfEnergyDL, gLinkYoungEarringsAmberDL },
 };
 
 void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dListCount, s32 lod, s32 tunic, s32 boots,
@@ -1223,16 +1243,16 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
             s32 strengthUpgrade = CUR_UPG_VALUE(UPG_STRENGTH);
             gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
             if (strengthUpgrade >= PLAYER_STR_BRACELET)
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][strengthUpgrade + 1]);
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][strengthUpgrade + 2]);
             if (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY))
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][5]);
-            if (CHECK_UPGRADE_ITEM(UPGRADE_AMBER_EARRINGS))
                 gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][6]);
-            if (boots == PLAYER_BOOTS_IRON || boots == PLAYER_BOOTS_HOVER)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_AMBER_EARRINGS))
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][7]);
+            if (boots == PLAYER_BOOTS_IRON || boots == PLAYER_BOOTS_HOVER || boots == PLAYER_BOOTS_PEGASUS)
                 gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][boots - 1]);
         } else {
             if (Player_GetStrength() > PLAYER_STR_NONE) {
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][2]);
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][3]);
             }
         }
 

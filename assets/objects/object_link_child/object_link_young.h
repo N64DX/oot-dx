@@ -126,6 +126,7 @@ extern Gfx gLinkYoungEarringsAmberDL[];
 // Boots
 extern Gfx gLinkYoungIronBootsDL[];
 extern Gfx gLinkYoungHoverBootsDL[];
+extern Gfx gLinkYoungPegasusBootsDL[];
 
 // Amulet of Energy
 extern Gfx gLinkYoungAmuletOfEnergyDL[];

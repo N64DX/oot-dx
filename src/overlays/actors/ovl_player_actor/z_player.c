@@ -196,6 +196,7 @@ s32 func_80835C08(Player* this, PlayState* play);
 void Player_UseItem(PlayState* play, Player* this, s32 item);
 void func_80839F90(Player* this, PlayState* play);
 s32 func_8083C61C(PlayState* play, Player* this);
+void func_80842CF0(PlayState* play, Player* this);
 void Player_UpdateCommon(Player* this, PlayState* play, Input* input);
 void func_8084FF7C(Player* this);
 void Player_UpdateBunnyEars(Player* this);
@@ -282,6 +283,7 @@ s32 Player_StartFishing(PlayState* play);
 s32 func_80852F38(PlayState* play, Player* this);
 s32 Player_TryCsAction(PlayState* play, Actor* actor, s32 csAction);
 void func_80853080(Player* this, PlayState* play);
+void Player_RequestQuake(PlayState* play, s32 speed, s32 y, s32 duration);
 s32 Player_InflictDamage(PlayState* play, s32 damage);
 void Player_StartTalking(PlayState* play, Actor* actor);
 void func_80838940(Player* this, LinkAnimationHeader* anim, f32 arg2, PlayState* play, u16 sfxId);
@@ -295,6 +297,12 @@ void Player_Action_8084170C(Player* this, PlayState* play);
 void Player_Action_808417FC(Player* this, PlayState* play);
 void Player_Action_8084193C(Player* this, PlayState* play);
 void Player_Action_TurnInPlace(Player* this, PlayState* play);
+void Player_Action_80842180(Player* this, PlayState* play);
+void Player_Action_DashBonk(Player* this, PlayState* play);
+void Player_Action_DashCharge(Player* this, PlayState* play);
+void Player_Action_StartDashCharge(PlayState* play, Player* this);
+void Player_Action_SpawnDashDust(PlayState* play, Player* this, s32 dashMode);
+void Player_Action_8084227C(Player* this, PlayState* play);
 void Player_Action_80842180(Player* this, PlayState* play);
 void Player_Action_8084227C(Player* this, PlayState* play);
 void Player_Action_8084279C(Player* this, PlayState* play);
@@ -835,7 +843,7 @@ static GetItemEntry sGetItemTable[] = {
 	GET_ITEM(ITEM_PICTOBOX,                  OBJECT_GI_CAMERA,      GID_PICTOGRAPH_BOX,       GETITEM_CQ_TEXT(GI_PICTOBOX),              0xA0, CHEST_ANIM_SHORT), // GI_PICTOBOX
 	GET_ITEM(ITEM_SHRINE_KEY,                OBJECT_GI_ROOM_KEY,    GID_ROOM_KEY,             GETITEM_CQ_TEXT(GI_SHRINE_KEY),            0xA0, CHEST_ANIM_SHORT), // GI_SHRINE_KEY
     GET_ITEM(ITEM_BOTTLE_POTION_SHIELD,      OBJECT_GI_LIQUID,      GID_BOTTLE_POTION_SHIELD, GETITEM_CQ_TEXT(GI_BOTTLE_POTION_SHIELD),  0x80, CHEST_ANIM_LONG),  // GI_BOTTLE_POTION_SHIELD
-	GET_ITEM(ITEM_FURTHER_JUMP,              OBJECT_GI_BOOTS_2,     GID_BOOTS_KOKIRI,         GETITEM_CQ_TEXT(GI_FURTHER_JUMP),          0x80, CHEST_ANIM_LONG),  // GI_FURTHER_JUMP
+	GET_ITEM(ITEM_BOOTS_PEGASUS,             OBJECT_GI_BOOTS_2,     GID_BOOTS_PEGASUS,        GETITEM_CQ_TEXT(GI_BOOTS_PEGASUS),         0x80, CHEST_ANIM_LONG),  // GI_BOOTS_PEGASUS
 	GET_ITEM(ITEM_PERFECT_BLOCK,             OBJECT_GI_TITLE_DEED,  GID_LAND_TITLE_DEED,      GETITEM_CQ_TEXT(GI_PERFECT_BLOCK),         0x80, CHEST_ANIM_LONG),  // GI_PERFECT_BLOCK
 	GET_ITEM(ITEM_BULLET_BAG_60,             OBJECT_GI_DEKUPOUCH,   GID_BULLET_BAG_50,        GETITEM_CQ_TEXT(GI_BULLET_BAG_60),         0x80, CHEST_ANIM_LONG),  // GI_BULLET_BAG_60
 	GET_ITEM(ITEM_QUIVER_60,                 OBJECT_GI_ARROWCASE,   GID_QUIVER_50,            GETITEM_CQ_TEXT(GI_QUIVER_60),             0x80, CHEST_ANIM_LONG),  // GI_QUIVER_60
@@ -2910,9 +2918,10 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
 
 void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
     static const EquipmentSwapEntry equipments[] = {
-        { PLAYER_BOOTS_KOKIRI, EQUIP_INV_BOOTS_KOKIRI, 9              },
-        { PLAYER_BOOTS_IRON,   EQUIP_INV_BOOTS_IRON,   LINK_AGE_ADULT },
-        { PLAYER_BOOTS_HOVER,  EQUIP_INV_BOOTS_HOVER,  LINK_AGE_ADULT },
+        { PLAYER_BOOTS_KOKIRI,  EQUIP_INV_BOOTS_KOKIRI, 9              },
+        { PLAYER_BOOTS_IRON,    EQUIP_INV_BOOTS_IRON,    LINK_AGE_ADULT },
+        { PLAYER_BOOTS_HOVER,   EQUIP_INV_BOOTS_HOVER,   LINK_AGE_ADULT },
+        { PLAYER_BOOTS_PEGASUS, EQUIP_INV_BOOTS_PEGASUS, LINK_AGE_CHILD },
     };
 
     u8 current    = BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
@@ -5677,6 +5686,13 @@ s32 func_808382DC(Player* this, PlayState* play) {
     return 1;
 }
 
+void Player_QuitDashing(Player* this) {
+    if (R_IS_DASHING) {
+        R_IS_DASHING = false;
+        this->meleeWeaponState = 0;
+    }
+}
+
 void func_80838940(Player* this, LinkAnimationHeader* anim, f32 arg2, PlayState* play, u16 sfxId) {
     Player_SetupAction(play, this, Player_Action_8084411C, 1);
 
@@ -5690,6 +5706,7 @@ void func_80838940(Player* this, LinkAnimationHeader* anim, f32 arg2, PlayState*
 
     Player_PlayJumpingSfx(this);
     Player_PlayVoiceSfx(this, sfxId);
+    Player_QuitDashing(this);
 
     this->stateFlags1 |= PLAYER_STATE1_18;
 }
@@ -7416,7 +7433,7 @@ void func_8083C148(Player* this, PlayState* play) {
  * even if they occur.
  */
 s32 Player_ActionHandler_Roll(Player* this, PlayState* play) {
-    if (!Player_UpdateHostileLockOn(this) && !sUpperBodyIsBusy && !(this->stateFlags1 & PLAYER_STATE1_23) &&
+    if (!Player_UpdateHostileLockOn(this) && !sUpperBodyIsBusy && !R_IS_DASHING && !(this->stateFlags1 & PLAYER_STATE1_23) &&
         CHECK_BTN_ALL(sControlInput->press.button, BTN_A)) {
         if (Player_TryRoll(this, play)) {
             return true;
@@ -8108,7 +8125,7 @@ void func_8083DF68(Player* this, f32 arg1, s16 arg2) {
 void func_8083DFE0(Player* this, f32* arg1, s16* arg2) {
     s16 yawDiff = this->yaw - *arg2;
 
-    if (this->meleeWeaponState == 0 && !(CHECK_UPGRADE_ITEM(UPGRADE_FURTHER_JUMP) && (this->currentBoots == PLAYER_BOOTS_KOKIRI || this->currentBoots == PLAYER_BOOTS_KOKIRI_CHILD))) {
+    if (this->meleeWeaponState == 0 && this->currentBoots != PLAYER_BOOTS_PEGASUS) {
         this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
     }
 
@@ -9266,6 +9283,11 @@ void Player_Action_Idle(Player* this, PlayState* play) {
     Player_DecelerateToZero(this);
 
     if (this->av2.fallDamageStunTimer == 0) {
+        if (!R_IS_DASHING && play->interfaceCtx.unk_1F0 == DO_ACTION_DASH && this->currentBoots == PLAYER_BOOTS_PEGASUS && CHECK_BTN_ALL(sControlInput->cur.button, BTN_A) && gSaveContext.save.info.energy > 0) {
+            Player_Action_StartDashCharge(play, this);
+            return;
+        }
+
         if (!Player_TryActionHandlerList(play, this, sActionHandlerListIdle, true)) {
             if (Player_UpdateHostileLockOn(this)) {
                 func_8083CEAC(this, play);
@@ -9281,6 +9303,11 @@ void Player_Action_Idle(Player* this, PlayState* play) {
 
             if (speedTarget != 0.0f) {
                 func_8083C8DC(this, play, yawTarget);
+                return;
+            }
+
+            if (R_IS_DASHING) {
+                func_8083C8DC(this, play, this->actor.shape.rot.y);
                 return;
             }
 
@@ -9751,6 +9778,58 @@ void Player_Action_80842180(Player* this, PlayState* play) {
     this->stateFlags2 |= PLAYER_STATE2_5;
     func_80841EE4(this, play);
 
+    if (!R_IS_DASHING && play->interfaceCtx.unk_1F0 == DO_ACTION_DASH && this->currentBoots == PLAYER_BOOTS_PEGASUS && CHECK_BTN_ALL(sControlInput->cur.button, BTN_A) && gSaveContext.save.info.energy > 10) {
+        Player_Action_StartDashCharge(play, this);
+        return;
+    } else if (!CHECK_BTN_ALL(sControlInput->cur.button, BTN_A) || gSaveContext.save.info.energy == 0)
+        Player_QuitDashing(this);
+
+    if (R_IS_DASHING) {
+        if (this->speedXZ >= 7.0f && (this->actor.bgCheckFlags & BGCHECKFLAG_PLAYER_WALL_INTERACT) && sWorldYawToTouchedWall < 0x2000) {
+            Player_QuitDashing(this);
+
+            if (this->doorType == PLAYER_DOORTYPE_STAIRCASE) {
+                func_80853080(this, play);
+                return;
+            }
+
+            if (this->actor.wallBgId != BGCHECK_SCENE) {
+                DynaPolyActor* wallPolyActor = DynaPoly_GetActor(&play->colCtx, this->actor.wallBgId);
+
+                if ((wallPolyActor != NULL) &&
+                    ((wallPolyActor->actor.id == ACTOR_OBJ_KIBAKO2) || (wallPolyActor->actor.id == ACTOR_OBJ_KIBAKO3))) {
+                    wallPolyActor->actor.home.rot.z = 1;
+                }
+            }
+
+            Player_SetupAction(play, this, Player_Action_DashBonk, 0);
+            Player_AnimPlayOnce(play, this, GET_PLAYER_ANIM(PLAYER_ANIMGROUP_hip_down, this->modelAnimType));
+            this->speedXZ = -this->speedXZ;
+            Player_RequestQuake(play, 33267, 3, 12);
+            Player_RequestRumble(this, 255, 20, 150, 0);
+            Player_PlaySfx(this, NA_SE_PL_BODY_HIT);
+            Player_PlayVoiceSfx(this, NA_SE_VO_LI_CLIMB_END);
+            return;
+        }
+        
+        if ((play->gameplayFrames & 1) == 0)
+            Player_Action_SpawnDashDust(play, this, 1);
+
+        if (Player_GetMeleeWeaponHeld(this) != 0) {
+            AnimTaskQueue_AddLoadPlayerFrame(play, &gPlayerAnim_link_fighter_Lpierce_kiru, 2, this->skelAnime.limbCount, this->upperJointTable);
+            AnimTaskQueue_AddCopy(play, PLAYER_LIMB_MAX - PLAYER_LIMB_UPPER, &this->skelAnime.jointTable[PLAYER_LIMB_UPPER], &this->upperJointTable[PLAYER_LIMB_UPPER]);
+
+            this->meleeWeaponState = 1;
+            this->stateFlags2 |= PLAYER_STATE2_17;
+
+            if ((this->meleeWeaponQuads[0].base.atFlags & AT_HIT) || (this->meleeWeaponQuads[1].base.atFlags & AT_HIT)) {
+                func_80842CF0(play, this);
+                Player_PlaySfx(this, NA_SE_IT_SWORD_STRIKE);
+            }
+        } else this->meleeWeaponState = 0;
+        Actor_PlaySfx_Flagged2(&this->actor, NA_SE_PL_MAGIC_WIND_NORMAL - SFX_FLAG);
+    }
+
     if (!Player_TryActionHandlerList(play, this, sActionHandlerList8, true)) {
         if (Player_IsZTargetingWithHostileUpdate(this)) {
             func_8083C858(this, play);
@@ -9758,6 +9837,17 @@ void Player_Action_80842180(Player* this, PlayState* play) {
         }
 
         Player_GetMovementSpeedAndYaw(this, &speedTarget, &yawTarget, SPEED_MODE_CURVED, play);
+
+        if (R_IS_DASHING) { // Hold A to dash at the cost of energy, will keep dashing until A is released
+            if (sControlStickMagnitude > 0.0f && ABS(this->yaw - yawTarget) > 0x4000)
+                Player_QuitDashing(this);
+            else {
+                speedTarget = CLAMP_MIN(speedTarget, 6.0f);
+                speedTarget *= 2.0f;
+                if (sControlStickMagnitude == 0.0f)
+                    yawTarget = this->yaw;
+            }
+        }
 
         if (this->currentMask == PLAYER_MASK_BUNNY) {
             speedTarget *= 1.5f;
@@ -9771,7 +9861,85 @@ void Player_Action_80842180(Player* this, PlayState* play) {
                 func_8083C0B8(this, play);
             }
         }
+    } else Player_QuitDashing(this);
+}
+
+void Player_Action_DashBonk(Player* this, PlayState* play) {
+    this->stateFlags2 |= PLAYER_STATE2_5;
+    Math_StepToF(&this->speedXZ, 0.0f, 2.0f);
+    if (LinkAnimation_Update(play, &this->skelAnime))
+        func_8083A060(this, play);
+}
+
+void Player_Action_StartDashCharge(PlayState* play, Player* this) {
+    Player_SetupAction(play, this, Player_Action_DashCharge, 1);
+    Player_AnimPlayLoop(play, this, D_80854360[Player_HoldsTwoHandedWeapon(this)]);
+    Audio_PlaySwordChargeSfx(&this->actor.projectedPos, 1);
+}
+
+void Player_Action_DashCharge(Player* this, PlayState* play) {
+    f32 speedTarget;
+    s16 yawTarget;
+
+    this->stateFlags2 |= PLAYER_STATE2_5;
+
+    if ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && CHECK_BTN_ALL(sControlInput->cur.button, BTN_A) &&
+        (gSaveContext.save.info.energy > 0)) {
+        this->av2.actionVar2++;
+
+        Audio_PlaySwordChargeSfx(&this->actor.projectedPos, 1);
+        LinkAnimation_Update(play, &this->skelAnime);
+        Player_DecelerateToZero(this);
+
+        Player_GetMovementSpeedAndYaw(this, &speedTarget, &yawTarget, SPEED_MODE_CURVED, play);
+        Math_ScaledStepToS(&this->actor.shape.rot.y, yawTarget, 1200);
+        this->yaw = this->actor.shape.rot.y;
+
+        if ((play->gameplayFrames & 7) == 0)
+            Player_Action_SpawnDashDust(play, this, 0);
+
+        if (this->av2.actionVar2 >= SECONDS(1)) {
+            Audio_PlaySwordChargeSfx(&this->actor.projectedPos, 0);
+            R_IS_DASHING = true;
+
+            if (Player_GetMeleeWeaponHeld(this) != 0) {
+                s32 temp = Player_HoldsBrokenKnife(this) ? 1 : Player_GetMeleeWeaponHeld(this) - 1;
+
+                this->meleeWeaponAnimation = PLAYER_MWA_BIG_SPIN_1H;
+                func_80837918(this, 0, D_80854488[temp][0]);
+                func_80837918(this, 1, D_80854488[temp][0]);
+            }
+
+            func_8083C858(this, play);
+        }
+    } else {
+        Audio_PlaySwordChargeSfx(&this->actor.projectedPos, 0);
+        func_80839F90(this, play);
     }
+}
+
+void Player_Action_SpawnDashDust(PlayState* play, Player* this, s32 dashMode) {
+    Vec3f velocity;
+    Vec3f accel = { 0.0f, 0.0f, 0.0f };
+    Vec3f* pos = &this->bodyPartsPos[(play->gameplayFrames & 1) ? PLAYER_BODYPART_L_FOOT : PLAYER_BODYPART_R_FOOT];
+    s16 scale;
+    s16 life;
+
+    if (dashMode) {
+        velocity.x = (-Math_SinS(this->actor.shape.rot.y) * (2.0f + (Rand_ZeroOne() * 3.0f))) + Rand_Centered();
+        velocity.z = (-Math_CosS(this->actor.shape.rot.y) * (2.0f + (Rand_ZeroOne() * 3.0f))) + Rand_Centered();
+        velocity.y = 2.0f + (Rand_ZeroOne() * 2.0f);
+        scale = 110 + (s16)(Rand_ZeroOne() * 90.0f);
+        life = 16;
+    } else {
+        velocity.x = Rand_Centered() * 3.0f;
+        velocity.z = Rand_Centered() * 3.0f;
+        velocity.y = 1.0f + (Rand_ZeroOne() * 1.5f);
+        scale = 60 + (s16)(Rand_ZeroOne() * 60.0f);
+        life = 10;
+    }
+
+    func_800287AC(play, pos, &velocity, &accel, scale, 5, life);
 }
 
 void Player_Action_8084227C(Player* this, PlayState* play) {
@@ -12026,7 +12194,7 @@ static f32 D_80854784[] = { 120.0f, 240.0f, 360.0f };
  *     - Navi C-up icon for hints
  */
 void Player_UpdateInterface(PlayState* play, Player* this) {
-    if ((Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) && (this->actor.category == ACTORCAT_PLAYER)) {
+    if (((Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) || ((play->msgCtx.msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND) && (play->msgCtx.msgMode <= MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND))) && (this->actor.category == ACTORCAT_PLAYER)) {
         Actor* heldActor = this->heldActor;
         Actor* interactRangeActor = this->interactRangeActor;
         s32 sp24;
@@ -12114,7 +12282,7 @@ void Player_UpdateInterface(PlayState* play, Player* this) {
                                                             ((play->roomCtx.curRoom.type != ROOM_TYPE_INDOORS) &&
                                                              !(this->stateFlags1 & PLAYER_STATE1_SHIELDING) &&
                                                              (controlStickDirection == PLAYER_STICK_DIR_FORWARD))))))) {
-                        doAction = DO_ACTION_ATTACK;
+                        doAction = this->currentBoots == PLAYER_BOOTS_PEGASUS ? DO_ACTION_DASH : DO_ACTION_ATTACK;
                     } else if ((play->roomCtx.curRoom.type != ROOM_TYPE_INDOORS) && Player_IsZTargeting(this) &&
                                (controlStickDirection >= PLAYER_STICK_DIR_LEFT)) {
                         doAction = DO_ACTION_JUMP;
@@ -12135,6 +12303,9 @@ void Player_UpdateInterface(PlayState* play, Player* this) {
             doAction = DO_ACTION_NONE;
             this->putAwayCooldownTimer--;
         }
+
+        if (R_IS_DASHING)
+            doAction = DO_ACTION_DASH;
 
         Interface_SetDoAction(play, doAction);
 
@@ -13159,6 +13330,9 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
         if (!Player_InBlockingCsMode(play, this) && !(this->stateFlags2 & PLAYER_STATE2_CRAWLING)) {
             func_8083D53C(play, this);
 
+            if ((this->stateFlags1 & PLAYER_STATE1_27) || !(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
+                Player_QuitDashing(this);
+
             if ((this->actor.category == ACTORCAT_PLAYER) && (gSaveContext.save.info.playerData.health == 0)) {
                 if (this->stateFlags1 & (PLAYER_STATE1_13 | PLAYER_STATE1_14 | PLAYER_STATE1_21)) {
                     func_80832440(play, this);
@@ -13493,6 +13667,16 @@ void Player_DrawGameplay(PlayState* play, Player* this, s32 lod, Gfx* cullDList,
             gDPSetEnvColor(POLY_XLU_DISP++, 120, 90, 30, 128);
             gSPDisplayList(POLY_XLU_DISP++, gHoverBootsCircleDL);
         }
+    }
+
+    if (R_IS_DASHING) {
+        Matrix_Translate(this->actor.world.pos.x + (Math_SinS(this->actor.shape.rot.y) * 80.0f), this->actor.world.pos.y + 40.0f, this->actor.world.pos.z + (Math_CosS(this->actor.shape.rot.y) * 80.0f), MTXMODE_NEW);
+        Matrix_RotateY(BINANG_TO_RAD(this->actor.shape.rot.y), MTXMODE_APPLY);
+        Matrix_RotateX(BINANG_TO_RAD((s16)-0x4000), MTXMODE_APPLY);
+        Matrix_Scale(0.015f, 0.015f, 0.015f, MTXMODE_APPLY);
+        MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_player.c", 19326);
+        gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(s32)(play->gameplayFrames * 1), (s32)(play->gameplayFrames * 20), 0x40, 0x40, 1, -(s32)(play->gameplayFrames * 2), (s32)(play->gameplayFrames * 10), 0x40, 0x40));
+        gSPDisplayList(POLY_XLU_DISP++, sDashWindConeDL);
     }
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_player.c", 19328);

@@ -295,7 +295,7 @@ u64 gHoverBootsItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 };
 
 u64 gPegasusBootsItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gKokiriBootsItemNameFRATex.ia4.inc.c"
+#include "assets/textures/item_name_static/gPegasusBootsItemNameFRATex.ia4.inc.c"
 };
 
 u64 gGreatFairysSwordItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

@@ -107,7 +107,7 @@ void EnGm_Destroy(Actor* thisx, PlayState* play) {
 s32 func_80A3D7C8(EnGm* this) {
     if (IS_CHILD_QUEST) {
         if (this->type == MEDIGORON_GORON_VILLAGE)
-            return !CHECK_UPGRADE_ITEM(UPGRADE_FURTHER_JUMP);
+            return !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_PEGASUS);
         else if (!GET_EVENTCHKINF(EVENTCHKINF_45))
             return 0;
         else if (!GET_EVENTCHKINF(EVENTCHKINF_49))
@@ -273,7 +273,7 @@ void func_80A3DD7C(EnGm* this, PlayState* play) {
 }
 
 static u16 prices[] = { 200, 600 };
-static u8 item[] = { GI_SWORD_SILVER, GI_FURTHER_JUMP };
+static u8 item[] = { GI_SWORD_SILVER, GI_BOOTS_PEGASUS };
 
 void EnGm_ProcessChoiceIndex(EnGm* this, PlayState* play) {
     if (Message_GetState(&play->msgCtx) == TEXT_STATE_CHOICE && Message_ShouldAdvance(play)) {

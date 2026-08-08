@@ -34,13 +34,8 @@
 #include "assets/textures/parameter_static/parameter_static.h"
 #include "assets/textures/parameter_static/parameter_static_all.h"
 #include "assets/textures/parameter_static/parameter_static_quest.h"
-#include "assets/textures/icon_item_static/icon_item_static.h"
-
-#if OOT_NTSC_N64
-#include "assets/textures/do_action_static/do_action_static_all.h"
-#else
 #include "assets/textures/do_action_static/do_action_static.h"
-#endif
+#include "assets/textures/icon_item_static/icon_item_static.h"
 
 #pragma increment_block_number "gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128 ntsc-1.0:128 ntsc-1.1:128" \
                                "ntsc-1.2:128"
@@ -206,6 +201,7 @@ static u16 dpad_y;
 static s16 curEnergy = 0;
 static u8 energyHideTimer = 0;
 static u8 energyRefillTimer = 0;
+static u8 sDashEnergyTimer = 0;
 static u8 drawKeys = false;
 static u8 drawShieldDurability = false;
 
@@ -2202,9 +2198,6 @@ u8 Item_Give(PlayState* play, u8 item) {
             if (DPAD_BUTTON(i) == SLOT_DEKU_NUT)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
-    } else if (item == ITEM_FURTHER_JUMP) {
-        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_FURTHER_JUMP];
-        return ITEM_NONE;
     } else if (item == ITEM_PERFECT_BLOCK) {
         gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_PERFECT_BLOCK];
         return ITEM_NONE;
@@ -2596,15 +2589,13 @@ u8 Item_CheckObtainability(u8 item) {
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ? item : ITEM_NONE;
-    } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
+    } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_SPIRIT)) {
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI + EQUIP_INV_TUNIC_KOKIRI)) {
             return item;
         } else {
             return ITEM_NONE;
         }
-    } else if (item == ITEM_TUNIC_SPIRIT) {
-        return (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT)) ? item : ITEM_NONE;
-    } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_HOVER)) {
+    } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_PEGASUS)) {
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, item - ITEM_BOOTS_KOKIRI + EQUIP_INV_BOOTS_KOKIRI)) {
             return item;
         } else {
@@ -2691,7 +2682,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_SHRINE_KEY) || (item >= ITEM_FURTHER_JUMP && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK) ) {
+    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_SHRINE_KEY) || (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK) ) {
         return ITEM_NONE;
     }
 
@@ -3593,6 +3584,10 @@ const u32 gDpadTex[] = {
     0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 
 };
 
+#define START_BUTTON_RGB_R  (USE_MM_HUD ? START_MM_BUTTON_R : START_BUTTON_R)
+#define START_BUTTON_RGB_G  (USE_MM_HUD ? START_MM_BUTTON_G : START_BUTTON_G)
+#define START_BUTTON_RGB_B  (USE_MM_HUD ? START_MM_BUTTON_B : START_BUTTON_B)
+
 void Interface_DrawItemButtons(PlayState* play) {
     static void* cUpLabelTextures[] = LANGUAGE_ARRAY(gNaviCUpJPNTex, gNaviCUpENGTex, gNaviCUpENGTex, gNaviCUpENGTex);
 #if OOT_NTSC_N64
@@ -3655,30 +3650,23 @@ void Interface_DrawItemButtons(PlayState* play) {
 
     if (!IS_PAUSE_STATE_GAMEOVER(pauseCtx)) {
         if (IS_PAUSED(&play->pauseCtx)) {
-            u8 rgb[3];
-            if (USE_MM_HUD) {
-                rgb[0] = START_MM_BUTTON_R; rgb[1] = START_MM_BUTTON_G; rgb[2] = START_MM_BUTTON_B;
-            } else {
-                rgb[0] = START_BUTTON_R;    rgb[1] = START_BUTTON_G;    rgb[2] = START_BUTTON_B;
-            }
-
             // Start Button Texture, Color & Label
             gDPPipeSync(OVERLAY_DISP++);
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, rgb[0], rgb[1], rgb[2],
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B,
                             interfaceCtx->startAlpha);
 
 #if (OOT_VERSION < PAL_1_0) && !OOT_NTSC_N64
             OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(R_START_BTN_X + startButtonLeftMMShift + WS_SHIFT_FULL), HIRES_MULTIPLY(R_START_BTN_Y), X_HIRES_MULTIPLY(22),
                                 HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)),
-                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), rgb[0], rgb[1], rgb[2], interfaceCtx->startAlpha);
+                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, interfaceCtx->startAlpha);
 #elif OOT_NTSC && !OOT_NTSC_N64
             OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(132 + startButtonLeftMMShift + WS_SHIFT_FULL), HIRES_MULTIPLY(R_START_BTN_Y), X_HIRES_MULTIPLY(22),
                                 HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)),
-                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), rgb[0], rgb[1], rgb[2], interfaceCtx->startAlpha);
+                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, interfaceCtx->startAlpha);
 #else
             OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + startButtonLeftMMShift + WS_SHIFT_FULL), HIRES_MULTIPLY(R_START_BTN_Y), X_HIRES_MULTIPLY(22),
                                 HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)),
-                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), rgb[0], rgb[1], rgb[2], interfaceCtx->startAlpha);
+                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, interfaceCtx->startAlpha);
 #endif
 
             gDPPipeSync(OVERLAY_DISP++);
@@ -3710,6 +3698,11 @@ void Interface_DrawItemButtons(PlayState* play) {
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language) + height) << 2, G_TX_RENDERTILE, 0, 0,
                                 X_HIRES_DIVIDE(texCoordScale), HIRES_DIVIDE(texCoordScale));
 #endif
+        } else if (IS_CUTSCENE_LAYER && play->specialIconAlpha > 0) { // Stop Cutscene
+            OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(268 + WS_SHIFT_FULL), HIRES_MULTIPLY(182), X_HIRES_MULTIPLY(22), HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)), (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, 255);
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
+            gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(185) << 2, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL + 48) << 2, HIRES_MULTIPLY(185 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
     }
 
@@ -4309,11 +4302,21 @@ void Energy_Update(PlayState* play) {
     if (!Player_HasEnergyUnlocked())
         return;
 
-    if (energyRefillTimer > 0)
+    if (gSaveContext.save.info.energy > Player_GetMaxEnergy())
+        gSaveContext.save.info.energy = Player_GetMaxEnergy();
+
+    if (R_IS_DASHING) { // Don't regen energy while dashing
+        f32 interval = Player_GetMeleeWeaponHeld(GET_PLAYER(play)) ? 0.1 : 0.2;
+        if (++sDashEnergyTimer >= SECONDS(interval)) {
+            sDashEnergyTimer = 0;
+            gSaveContext.save.info.energy = CLAMP(gSaveContext.save.info.energy - 1, 0, 255);
+        }
+    } else if (energyRefillTimer > 0)
         energyRefillTimer--;
     else if (gSaveContext.save.info.energy < Player_GetMaxEnergy()) {
         energyRefillTimer = SECONDS(0.5);
         gSaveContext.save.info.energy++;
+        sDashEnergyTimer = 0;
     }
 }
 
@@ -4419,15 +4422,6 @@ void Interface_Draw(PlayState* play) {
     gSPSegment(OVERLAY_DISP++, 0x07, interfaceCtx->doActionSegment);
     gSPSegment(OVERLAY_DISP++, 0x08, interfaceCtx->iconItemSegment);
     gSPSegment(OVERLAY_DISP++, 0x0B, interfaceCtx->mapSegment);
-
-    // Stop Cutscene
-    if (IS_CUTSCENE_LAYER && play->specialIconAlpha > 0) {
-        Gfx_SetupDL_39Overlay(play->state.gfxCtx);
-        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
-        gDPSetEnvColor(OVERLAY_DISP++, 255, 255, 255, 255);
-        gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(185) << 2, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL + 48) << 2, HIRES_MULTIPLY(185 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
-    }
 
     if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) {
         static u8 walletColors[][7] = {

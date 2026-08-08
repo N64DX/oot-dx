@@ -4958,7 +4958,7 @@ u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
     if (R_PERFECT_BLOCK_BOOST_TIMER > 0) {
         damage *= 1.5f;
         R_PERFECT_BLOCK_BOOST_TIMER = 0;
-    } else if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SLASH_MASTER | DMG_SLASH_GIANT)) && CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) && R_SPECIAL_POWER_TIMER == 0 && gSaveContext.save.info.energy >= 30) {
+    } else if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SLASH_MASTER | DMG_SLASH_GIANT)) && CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) && R_SPECIAL_POWER_TIMER == 0 && !R_IS_DASHING && gSaveContext.save.info.energy >= 30) {
         gSaveContext.save.info.energy -= 30;
         R_SPECIAL_POWER_TIMER = SECONDS(8);
         damage *= 1.5;

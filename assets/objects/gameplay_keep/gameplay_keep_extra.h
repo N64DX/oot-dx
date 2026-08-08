@@ -59,4 +59,6 @@ extern Gfx gFieldBeehiveFragmentDL[18];
 #define gFieldKakeraTex_HEIGHT 32
 extern Gfx gFieldKakeraDL[23];
 
+extern Gfx sDashWindConeDL[];
+
 #endif

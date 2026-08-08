@@ -41,7 +41,8 @@ typedef enum EquipInvTunic {
 typedef enum EquipInvBoots {
     /* 0 */ EQUIP_INV_BOOTS_KOKIRI,
     /* 1 */ EQUIP_INV_BOOTS_IRON,
-    /* 2 */ EQUIP_INV_BOOTS_HOVER
+    /* 2 */ EQUIP_INV_BOOTS_HOVER,
+    /* 3 */ EQUIP_INV_BOOTS_PEGASUS
 } EquipInvBoots;
 
 // `EquipValue*` enums are for ItemEquips.equipment (for example used in the `CUR_EQUIP_VALUE` macro)
@@ -143,8 +144,7 @@ typedef enum UpgradeItem {
     /* 0x0F */ UPGRADE_AMBER_EARRINGS,
     /* 0x10 */ UPGRADE_ENHANCED_SPIN,
     /* 0x11 */ UPGRADE_PERFECT_BLOCK,
-    /* 0x12 */ UPGRADE_HALF_MAGIC_COST,
-    /* 0x13 */ UPGRADE_FURTHER_JUMP
+    /* 0x12 */ UPGRADE_HALF_MAGIC_COST
 } UpgradeItem;
 
 typedef enum DungeonItem {
@@ -376,11 +376,10 @@ typedef enum ItemID {
     /* 0xE7 */ ITEM_DEKU_STICK_UPGRADE_30,
     /* 0xE8 */ ITEM_DEKU_NUT_UPGRADE_30,
     /* 0xE9 */ ITEM_DEKU_NUT_UPGRADE_40,
-    /* 0xEA */ ITEM_FURTHER_JUMP,
-    /* 0xEB */ ITEM_SHIELD_DEKU_UPGRADE,
-    /* 0xEC */ ITEM_SHIELD_HYLIAN_UPGRADE,
-    /* 0xED */ ITEM_SHIELD_MIRROR_UPGRADE,
-    /* 0xEE */ ITEM_SHIELD_HEROS_UPGRADE,
+    /* 0xEA */ ITEM_SHIELD_DEKU_UPGRADE,
+    /* 0xEB */ ITEM_SHIELD_HYLIAN_UPGRADE,
+    /* 0xEC */ ITEM_SHIELD_MIRROR_UPGRADE,
+    /* 0xED */ ITEM_SHIELD_HEROS_UPGRADE,
     /* 0xF0 */ ITEM_SWORDS = 0xF0,
     /* 0xF1 */ ITEM_SHIELDS,
     /* 0xF2 */ ITEM_TUNICS,
@@ -534,7 +533,7 @@ typedef enum GetItemID {
     /* 0x87 */ GI_PICTOBOX,
     /* 0x88 */ GI_SHRINE_KEY,
     /* 0x89 */ GI_BOTTLE_POTION_SHIELD,
-    /* 0x8A */ GI_FURTHER_JUMP,
+    /* 0x8A */ GI_BOOTS_PEGASUS,
     /* 0x8B */ GI_PERFECT_BLOCK,
     /* 0x8C */ GI_BULLET_BAG_60,
     /* 0x8D */ GI_QUIVER_60,
@@ -702,7 +701,7 @@ typedef enum GetItemDrawID {
     /* 0x88 */ GID_ROOM_KEY,
     /* 0x89 */ GID_BOTTLE_POTION_SHIELD,
     /* 0x8A */ GID_LAND_TITLE_DEED,
-    /* 0x8B */ GID_BOOTS_KOKIRI,
+    /* 0x8B */ GID_BOOTS_PEGASUS,
     /* 0x8C */ GID_MAX
 } GetItemDrawID;
 

@@ -211,8 +211,10 @@ MSG()
 DEFINE_MESSAGE(0x900D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BOOTS_KOKIRI) QUICKTEXT_ENABLE "You successfully upgraded your\n"
-COLOR(RED) "Kokiri Boots" COLOR(DEFAULT) " to jump further!" QUICKTEXT_DISABLE
+UNSKIPPABLE ITEM_ICON(ITEM_BOOTS_PEGASUS) QUICKTEXT_ENABLE "You got the " COLOR(RED) "Pegasus Boots" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
+"They feel so light and faster to\n"
+"wear. Traversing the landscape\n"
+"should be a breeze now."
 ),
 MSG(),
 MSG()

@@ -76,11 +76,12 @@ typedef enum PlayerBoots {
     /* 0x00 */ PLAYER_BOOTS_KOKIRI,
     /* 0x01 */ PLAYER_BOOTS_IRON,
     /* 0x02 */ PLAYER_BOOTS_HOVER,
+    /* 0x03 */ PLAYER_BOOTS_PEGASUS,
     /* Values below are only relevant when setting regs in Player_SetBootData */
-    /* 0x03 */ PLAYER_BOOTS_INDOOR,
-    /* 0x04 */ PLAYER_BOOTS_IRON_UNDERWATER,
-    /* 0x05 */ PLAYER_BOOTS_KOKIRI_CHILD,
-    /* 0x06 */ PLAYER_BOOTS_MAX
+    /* 0x04 */ PLAYER_BOOTS_INDOOR,
+    /* 0x05 */ PLAYER_BOOTS_IRON_UNDERWATER,
+    /* 0x06 */ PLAYER_BOOTS_KOKIRI_CHILD,
+    /* 0x07 */ PLAYER_BOOTS_MAX
 } PlayerBoots;
 
 typedef enum PlayerStrength {

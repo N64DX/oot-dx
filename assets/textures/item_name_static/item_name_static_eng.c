@@ -295,7 +295,7 @@ u64 gHoverBootsItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 };
 
 u64 gPegasusBootsItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gKokiriBootsItemNameENGTex.ia4.inc.c"
+#include "assets/textures/item_name_static/gPegasusBootsItemNameENGTex.ia4.inc.c"
 };
 
 u64 gGreatFairysSwordItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
