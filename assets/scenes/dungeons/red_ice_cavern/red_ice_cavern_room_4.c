@@ -12,28 +12,27 @@ SceneCmd red_ice_cavern_room_4[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&red_ice_cavern_room_4RoomShapeNormal_0000B0),
-    SCENE_CMD_OBJECT_LIST(5, red_ice_cavern_room_4ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(4, red_ice_cavern_room_4ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(8, red_ice_cavern_room_4ActorEntry_000050),
     SCENE_CMD_END(),
 };
 
 s16 red_ice_cavern_room_4ObjectList_000040[] = {
     OBJECT_ICE_OBJECTS,
-    OBJECT_YDAN_OBJECTS,
-    OBJECT_PO_COMPOSER,
-    OBJECT_SYOKUDAI,
     OBJECT_BOX,
+    OBJECT_SYOKUDAI,
+    OBJECT_PO_COMPOSER,
 };
 
 ActorEntry red_ice_cavern_room_4ActorEntry_000050[] = {
-    { ACTOR_EN_WONDER_TALK,  { 1700, 196,  -872 }, {    0, 0xC000, 0 }, 0x2FFF }, // Switch: 2F
-    { ACTOR_OBJ_SYOKUDAI,    { 1794, 180,  -690 }, {    0, 0x1050, 0 }, 0x2400 },
-    { ACTOR_OBJ_SYOKUDAI,    { 1792, 180, -1058 }, {    0, 0x3050, 0 }, 0x2400 },
-    { ACTOR_OBJ_SYOKUDAI,    { 1902, 180,  -798 }, {    0, 0xEFA0, 0 }, 0x2400 },
-    { ACTOR_OBJ_SYOKUDAI,    { 1900, 180,  -950 }, {    0,  0xFA0, 0 }, 0x2400 },
-    { ACTOR_EN_BOX,          { 1851, 180,  -873 }, { 0x42, 0xC000, 0 }, 0x7005 }, // Chest: 05, appears on clear, Small Key
-    { ACTOR_BG_WEATHER,      {    0,   0,    0 },  {    0,      0, 0 }, 0x0001 },
-    { ACTOR_OBJECT_KANKYO,   {    0,   0,     0 }, {    0,      0, 0 }, 0x0007 },
+    { ACTOR_EN_WONDER_TALK,  { 1700, 196,  -872 }, {    0, 0xC000,   0 }, 0x37FF }, // Switch: 2F
+    { ACTOR_OBJ_SYOKUDAI,    { 1794, 180,  -690 }, {    0, 0x1050,   0 }, 0x2400 },
+    { ACTOR_OBJ_SYOKUDAI,    { 1792, 180, -1058 }, {    0, 0x3050,   0 }, 0x2400 },
+    { ACTOR_OBJ_SYOKUDAI,    { 1902, 180,  -798 }, {    0, 0xEFA0,   0 }, 0x2400 },
+    { ACTOR_OBJ_SYOKUDAI,    { 1900, 180,  -950 }, {    0,  0xFA0,   0 }, 0x2400 },
+    { ACTOR_EN_BOX,          { 1851, 180,  -873 }, { 0x42, 0xC000, 0xA }, 0x8005 }, // Chest: 05, checks switch: 0A, Small Key
+    { ACTOR_BG_WEATHER,      {    0,   0,    0 },  {    0,      0,   0 }, 0x0001 },
+    { ACTOR_OBJECT_KANKYO,   {    0,   0,     0 }, {    0,      0,   0 }, 0x0007 },
 };
 
 RoomShapeNormal red_ice_cavern_room_4RoomShapeNormal_0000B0 = { 

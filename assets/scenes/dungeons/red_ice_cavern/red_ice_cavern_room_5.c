@@ -12,16 +12,17 @@ SceneCmd red_ice_cavern_room_5[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&red_ice_cavern_room_5RoomShapeNormal_0001F0),
-    SCENE_CMD_OBJECT_LIST(6, red_ice_cavern_room_5ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(26, red_ice_cavern_room_5ActorEntry_000050),
+    SCENE_CMD_OBJECT_LIST(7, red_ice_cavern_room_5ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(28, red_ice_cavern_room_5ActorEntry_000050),
     SCENE_CMD_END(),
 };
 
 s16 red_ice_cavern_room_5ObjectList_000040[] = {
     OBJECT_ICE_OBJECTS,
+    OBJECT_BOX,
+    OBJECT_SYOKUDAI,
     OBJECT_DEMO_KEKKAI,
     OBJECT_KANBAN,
-    OBJECT_SYOKUDAI,
     OBJECT_HAKA_OBJECTS,
     OBJECT_FZ,
 };

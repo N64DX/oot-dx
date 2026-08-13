@@ -2195,5 +2195,5 @@ u16 Player_GetMaxShieldDurability(u8 shield) {
     return 0;
 }
 
-u8 Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 50 + (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) != 0) * 50; }
+u8 Player_GetMaxEnergy(void)        { return ((Player_HasEnergyUnlocked() != 0) * 50) + ((CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) != 0) * 50); }
 u8 Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) || CHECK_UPGRADE_ITEM(UPGRADE_ENHANCED_SPIN) || CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_PEGASUS); }

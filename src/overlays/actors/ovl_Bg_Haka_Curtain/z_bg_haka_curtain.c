@@ -54,7 +54,6 @@ void BgHakaCurtain_Init(Actor* thisx, PlayState* play) {
     DynaPolyActor_Init(&this->dyna, DYNA_TRANSFORM_POS);
     CollisionHeader_GetVirtual(&object_haka_obj_Colheader_001588, &header);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, header);
-    this->timer = SECONDS(5);
     if (Flags_GetSwitch(play, this->dyna.actor.room)) {
         BgHakaCurtain_80B6DE80(this);
         return;
@@ -100,7 +99,7 @@ void BgHakaCurtain_80B6DE80(BgHakaCurtain* this) {
 void BgHakaCurtain_Update(Actor* thisx, PlayState* play) {
     BgHakaCurtain* this = (BgHakaCurtain*)thisx;
 
-    if (DECR(this->timer) == 0)
+    if (Flags_GetSwitch(play, this->dyna.actor.room))
         BgHakaCurtain_80B6DD80(this);
     this->actionFunc(this, play);
 }

@@ -3317,8 +3317,10 @@ void Message_PauseMenu_ShowDescription(PlayState* play, u16 textId, u8 textBoxPo
         R_TEXT_CHAR_SCALE = 88;
         R_TEXT_LINE_SPACING = 18;
         R_TEXT_INIT_XPOS = 50;
-#endif
     } else {
+#else
+    if (1) {
+#endif
         R_TEXT_CHAR_SCALE = 75;
 #if !PLATFORM_IQUE
         R_TEXT_LINE_SPACING = 12;

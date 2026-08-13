@@ -14,7 +14,7 @@ SceneCmd red_ice_cavern_room_2[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&red_ice_cavern_room_2RoomShapeNormal_000148),
     SCENE_CMD_OBJECT_LIST(4, red_ice_cavern_room_2ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(18, red_ice_cavern_room_2ActorEntry_000048),
+    SCENE_CMD_ACTOR_LIST(16, red_ice_cavern_room_2ActorEntry_000048),
     SCENE_CMD_END(),
 };
 

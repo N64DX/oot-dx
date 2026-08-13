@@ -41,7 +41,7 @@ TransitionActorEntry red_ice_cavern_sceneTransitionActorList_0000A0[] = {
     { 5, 255, 0, 255, ACTOR_DOOR_SHUTTER, {  863, 120,  557 },  32767, 0x0000 },
     { 3, 255, 0, 255, ACTOR_DOOR_SHUTTER, {  380,  60, -269 },      0, 0x0000 },
     { 3, 255, 0, 255, ACTOR_DOOR_SHUTTER, { 1301, 180, -301 },      0, 0x0000 },
-    { 3, 255, 4, 255, ACTOR_DOOR_SHUTTER, { 1469, 180, -872 },  16383, 0x004C }, // Checks clear: 0C
+    { 3, 255, 4, 255, ACTOR_DOOR_SHUTTER, { 1469, 180, -872 },  16383, 0x008A }, // Checks clear: 0A
     { 0, 255, 5, 255, ACTOR_DOOR_SHUTTER, {  611, 384,  675 },      0, 0x0082 }, // Checks switch: 02
     { 1, 255, 0, 255, ACTOR_DOOR_SHUTTER, { 1488, 180,   59 }, -16373, 0x02C0 }, // Switch: 00
     { 1, 255, 2, 255, ACTOR_DOOR_SHUTTER, { 2156, 178,   54 },  16372, 0x02C6 }, // Switch: 06

@@ -695,18 +695,14 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                Message_PauseMenu_ShowDescription(play, 0x0900 + cursorItem, 3);
             else if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && pauseCtx->cursorX[PAUSE_EQUIP] != EQUIP_CURSOR_X_UPG) {
                 if (CHECK_AGE_REQ_EQUIP(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP])) {
-                    if (cursorSlot == 1 || cursorSlot == 2 || cursorSlot == 3 || cursorSlot == 4)
+                    if (cursorSlot >= 1 && cursorSlot <= 4)
                         temp = SLOT_SWORDS;
-                    else if (cursorSlot == 7 || cursorSlot == 8 || cursorSlot == 9 || cursorSlot == 10)
+                    else if (cursorSlot >= 7 && cursorSlot <= 10)
                         temp = SLOT_SHIELDS;
-                    else if (cursorSlot == 13)
-                        temp = SLOT_TUNICS;
-                    else if (cursorSlot == 14 || cursorSlot == 15 || cursorSlot == 16)
-                        temp = SLOT_TUNIC_GORON + cursorSlot - 12;
-                    else if (cursorSlot == 19)
-                        temp = SLOT_BOOTS;
-                    else if (cursorSlot == 20 || cursorSlot == 21 || cursorSlot == 22)
-                        temp = SLOT_BOOTS_IRON + cursorSlot - 17;
+                    else if (cursorSlot >= 13 && cursorSlot <= 16)
+                        temp = SLOT_TUNICS + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
+                    else if (cursorSlot >= 19 && cursorSlot <= 22)
+                        temp = SLOT_BOOTS + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
                     else temp = SLOT_NONE;
 
                     if (temp != SLOT_NONE) {

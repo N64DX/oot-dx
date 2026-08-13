@@ -12,6 +12,7 @@
 #include "save.h"
 
 SceneCmd old_lost_woods_scene[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(old_lost_woods_sceneAlternateHeaders),
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_DEEP_WOODS),
     SCENE_CMD_ROOM_LIST(1, old_lost_woods_sceneRoomList0x0000A0),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_FORBIDDEN_WOODS),
@@ -23,6 +24,12 @@ SceneCmd old_lost_woods_scene[] = {
     SCENE_CMD_EXIT_LIST(old_lost_woods_sceneExitList0x0000B4),
     SCENE_CMD_ENV_LIGHT_SETTINGS(5, old_lost_woods_sceneLightSettings0x0000C0),
     SCENE_CMD_END(),
+};
+
+SceneCmd* old_lost_woods_sceneAlternateHeaders[] = {
+    NULL,
+    NULL,
+    NULL,
 };
 
 ActorEntry old_lost_woods_sceneStartPositionList0x000050[] = {

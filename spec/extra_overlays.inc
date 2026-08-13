@@ -452,3 +452,10 @@ beginseg
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Kbt/z_en_kbt.o"
 endseg
+
+beginseg
+    name "ovl_En_Po_Composer"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Po_Composer/z_en_po_composer.o"
+endseg

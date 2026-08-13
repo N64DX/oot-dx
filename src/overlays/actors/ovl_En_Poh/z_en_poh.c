@@ -438,7 +438,9 @@ void EnPoh_Talk(EnPoh* this, PlayState* play) {
     this->colliderCylinder.dim.pos.z = this->actor.world.pos.z;
     this->colliderCylinder.base.ocFlags1 = OC1_ON | OC1_TYPE_PLAYER;
     if (this->actor.params == EN_POH_FLAT || this->actor.params == EN_POH_SHARP) {
-        if (CHECK_QUEST_ITEM(QUEST_SONG_SUN)) {
+        if (play->sceneId == SCENE_PURPLE_ICE_CAVERN) {
+            this->actor.textId = !Flags_GetSwitch(play, 0xA) ? 0x8510 : 0x8512;
+        } else if (CHECK_QUEST_ITEM(QUEST_SONG_SUN)) {
             this->actor.textId = 0x5000;
         } else if (!Flags_GetSwitch(play, 0xA) && !Flags_GetSwitch(play, 0xB)) {
             this->actor.textId = 0x500F;
@@ -736,6 +738,12 @@ void EnPoh_Death(EnPoh* this, PlayState* play) {
         this->unk_198--;
     }
     if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+        if (play->sceneId == SCENE_PURPLE_ICE_CAVERN) {
+            this->actor.world.pos.x = 1600;
+            this->actor.world.pos.y = 181;
+            this->actor.world.pos.z = -875;
+        }
+
         objectId = (this->infoIdx == EN_POH_INFO_COMPOSER) ? OBJECT_PO_COMPOSER : OBJECT_POH;
         EffectSsHahen_SpawnBurst(play, &this->actor.world.pos, 6.0f, 0, 1, 1, 15, objectId, 10,
                                  this->info->lanternDisplayList);
@@ -856,7 +864,9 @@ void EnPoh_TalkComposer(EnPoh* this, PlayState* play) {
     if (Message_GetState(&play->msgCtx) == TEXT_STATE_CHOICE) {
         if (Message_ShouldAdvance(play)) {
             if (play->msgCtx.choiceIndex == 0) {
-                if (!Flags_GetSwitch(play, 0xB) && !Flags_GetSwitch(play, 0xA)) {
+                if (play->sceneId == SCENE_PURPLE_ICE_CAVERN) {
+                    this->actor.textId = !Flags_GetSwitch(play, 0xA) ? 0x8511 : 0x8513;
+                } else if (!Flags_GetSwitch(play, 0xB) && !Flags_GetSwitch(play, 0xA)) {
                     this->actor.textId = 0x5010;
                 } else {
                     this->actor.textId = 0x5014;

@@ -62,11 +62,11 @@ void ElfMsg_SetupAction(ElfMsg* this, ElfMsgActionFunc actionFunc) {
  * Can also set a switch flag from params while killing.
  */
 s32 ElfMsg_KillCheck(ElfMsg* this, PlayState* play) {
-    if (NO_DISRUPTIVE_TEXT && !PARAMS_GET_NOSHIFT(this->actor.params, 15, 1)) {
+    if ((play->sceneId != SCENE_ANCIENT_HOLLOW && NO_DISRUPTIVE_TEXT && !PARAMS_GET_NOSHIFT(this->actor.params, 15, 1)) || (play->sceneId == SCENE_ANCIENT_HOLLOW && gSaveContext.save.info.inventory.dungeonKeys[SCENE_DEKU_TREE_BOSS] >= 0)) {
         Actor_Kill(&this->actor);
         return 0;
     }
-    
+
     if ((this->actor.world.rot.y > 0) && (this->actor.world.rot.y < 0x41) &&
         Flags_GetSwitch(play, this->actor.world.rot.y - 1)) {
         LOG_STRING_T("共倒れ", "Mutual destruction", "../z_elf_msg.c", 161);

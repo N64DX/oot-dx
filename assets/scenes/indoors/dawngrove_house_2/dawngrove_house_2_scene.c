@@ -12,6 +12,7 @@
 #include "save.h"
 
 SceneCmd dawngrove_house_2_scene[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(dawngrove_house_2_sceneAlternateHeaders),
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_LINK_HOUSE),
     SCENE_CMD_ROOM_LIST(1, dawngrove_house_2_sceneRoomList_000060),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, dawngrove_house_2_sceneTransitionActorList_000068),
@@ -24,6 +25,12 @@ SceneCmd dawngrove_house_2_scene[] = {
     SCENE_CMD_EXIT_LIST(dawngrove_house_2_sceneExitList_000078),
     SCENE_CMD_ENV_LIGHT_SETTINGS(12, dawngrove_house_2_sceneLightSettings_000090),
     SCENE_CMD_END(),
+};
+
+SceneCmd* dawngrove_house_2_sceneAlternateHeaders[] = {
+    NULL,
+    NULL,
+    NULL,
 };
 
 ActorEntry dawngrove_house_2_sceneStartPositionList_000080[] = {

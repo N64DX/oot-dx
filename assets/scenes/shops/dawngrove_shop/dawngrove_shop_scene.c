@@ -15,11 +15,10 @@ SceneCmd dawngrove_shop_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_SHOP),
     SCENE_CMD_ROOM_LIST(1, dawngrove_shop_sceneRoomList_000060),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, dawngrove_shop_sceneTransitionActorList_000068),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_ANCIENT_GROVE),
-    SCENE_CMD_MISC_SETTINGS(0x10, 0),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_FIXED_SHOP_VIEWPOINT, WORLD_MAP_AREA_ANCIENT_GROVE),
     SCENE_CMD_COL_HEADER(&dawngrove_shop_sceneCollisionHeader_000120),
     SCENE_CMD_SPAWN_LIST(dawngrove_shop_sceneEntranceList_000118),
-    SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_DANGEON_KEEP),
+    SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PLAYER_ENTRY_LIST(1, dawngrove_shop_sceneStartPositionList_000080),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NONE, 0, LIGHT_MODE_SETTINGS),
     SCENE_CMD_EXIT_LIST(dawngrove_shop_sceneExitList_000078),
@@ -32,7 +31,7 @@ ActorEntry dawngrove_shop_sceneStartPositionList_000080[] = {
 };
 
 TransitionActorEntry dawngrove_shop_sceneTransitionActorList_000068[] = {
-    { 0, 0, 0, 0, ACTOR_EN_DOOR, { 95, 0, 154 }, 16380, 0x01BF },
+    { 0, 255, 0, 255, ACTOR_EN_DOOR, { 95, 0, 154 }, 16380, 0x01BF },
 };
 
 RomFile dawngrove_shop_sceneRoomList_000060[] = {
@@ -276,7 +275,7 @@ SurfaceType dawngrove_shop_sceneCollisionHeader_000120SurfaceType[] = {
         {
         {
             SURFACETYPE0(
-                /* bgCamIndex */ 2,
+                /* bgCamIndex */ 1,
                 /* exitIndex */ 0,
                 FLOOR_TYPE_0,
                 /* unk18 */ 0,
@@ -412,10 +411,10 @@ u64 dawngrove_shop_sceneTex_004300[] = {
 #include "assets/scenes/shops/dawngrove_shop/dawngrove_shop_sceneTex_004300.rgba16.inc.c"
 };
 
-u64 dawngrove_shop_sceneTex_004B00[] = {
-#include "assets/scenes/shops/dawngrove_shop/dawngrove_shop_sceneTex_004B00.ci4.inc.c"
-};
-
 u64 dawngrove_shop_sceneTLUT_004B00[] = {
 #include "assets/scenes/shops/dawngrove_shop/dawngrove_shop_sceneTex_004B00.tlut.rgba16.inc.c"
+};
+
+u64 dawngrove_shop_sceneTex_004B00[] = {
+#include "assets/scenes/shops/dawngrove_shop/dawngrove_shop_sceneTex_004B00.ci4.inc.c"
 };

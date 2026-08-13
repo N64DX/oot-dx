@@ -217,7 +217,7 @@ void EnBuffDeku_Init(Actor* thisx, PlayState* play) {
 
     if (isHyper) {
         this->colliderSpheres.elements[0].base.atDmgInfo.damage = 0x40;
-        this->colliderSpheres.elements[0].dim.scale = this->colliderSpheres.elements[1].dim.scale = this->colliderSpheres.elements[2].dim.scale = this->colliderSpheres.elements[3].dim.scale = 200;
+        this->colliderSpheres.elements[0].dim.scale = this->colliderSpheres.elements[1].dim.scale = this->colliderSpheres.elements[2].dim.scale = this->colliderSpheres.elements[3].dim.scale = 2.0f;
     }
 
     this->colliderBody.base.acFlags &= ~AC_ON;

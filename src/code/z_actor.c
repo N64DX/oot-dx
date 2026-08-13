@@ -4948,11 +4948,22 @@ u8 Actor_ApplyDamage(Actor* actor) {
 }
 
 u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
+    if (damage < 1)
+        return (u8)damage;
+    
     if (IS_CHILD_QUEST_AS_CHILD) {
         if (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && itemAction == PLAYER_IA_SWORD_HEROS)
             damage *= 1.5;
         else if (dmgFlags & (DMG_SLASH_GIANT | DMG_SPIN_GIANT | DMG_JUMP_GIANT) && itemAction == PLAYER_IA_SWORD_BIGGORON)
             damage *= gSaveContext.save.info.playerData.bgsFlag ? 0.75 : 0.5;
+    }
+
+    if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_SPIRIT && gSaveContext.save.info.playerData.health < gSaveContext.save.info.playerData.healthCapacity && CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) && R_SPECIAL_POWER_TIMER == 0 && gSaveContext.save.info.energy >= 25) {
+        s16 recovery = (s16)(damage * 2.0f);
+        gSaveContext.save.info.energy -= 25;
+        R_SPECIAL_POWER_TIMER = SECONDS(6);
+        gSaveContext.save.info.playerData.health = CLAMP_MAX((gSaveContext.save.info.playerData.health + recovery + 3) & ~3, gSaveContext.save.info.playerData.healthCapacity);
+        SFX_PLAY_CENTERED(NA_SE_SY_HP_RECOVER);
     }
 
     if (R_PERFECT_BLOCK_BOOST_TIMER > 0) {

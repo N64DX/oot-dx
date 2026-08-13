@@ -4165,3 +4165,225 @@ SHIFT(40) "has been enhanced!"
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x8504, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Oh... And you are?"
+BOX_BREAK
+
+UNSKIPPABLE "My name is " COLOR(RED) "Tone" COLOR(DEFAULT) ", and I thank\n"
+"you for setting my soul free."
+BOX_BREAK
+
+UNSKIPPABLE "I am one of the composer brothers\n"
+"who engraved our royal song on the\n"
+"tombstone in front of you."
+BOX_BREAK
+
+UNSKIPPABLE "This once beautiful kingdom from\n"
+"ages ago has seen better days.\n"
+"We long for a saviour who would\n"
+"set us free from the calamity."
+BOX_BREAK
+
+UNSKIPPABLE "The calamity that still lurks within\n"
+"the Stone Tower... A guardian left\n"
+"behind by he who conquered us."
+BOX_BREAK
+
+UNSKIPPABLE "Please, I ask of you. Use our song,\n"
+"and find a way to safe our once\n"
+"fair land. If you come across my\n"
+"brother, please set him free."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8510, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+UNSKIPPABLE "GYAAAAH!\n"
+TEXT_SPEED(2) QUICKTEXT_ENABLE "YOU" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "KILLED" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "ME..." QUICKTEXT_DISABLE TEXT_SPEED(0) QUICKTEXT_ENABLE "Unbelievable!" QUICKTEXT_DISABLE
+BOX_BREAK
+
+UNSKIPPABLE "Oh, what?\n"
+"You're not one of his\n"
+"minions, are you?"
+BOX_BREAK
+
+UNSKIPPABLE "Because of my role as a ghost, I\n"
+"had to act like that. I apologize."
+BOX_BREAK
+
+UNSKIPPABLE "Now then, let me introduce myself.\n"
+"Ahem..." TEXTID(0x8511)
+),
+MSG(),
+MSG(
+)
+)
+
+DEFINE_MESSAGE(0x8511, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"I am one of the ghostly composer\n"
+"brothers of a kingdom that once\n"
+"thrived but now lost to the shadows."
+BOX_BREAK
+
+"This kingdom existed long before\n"
+"the kingdom of " COLOR(ADJUSTABLE) "Hyrule" COLOR(DEFAULT) ". A kingdom\n"
+"of great beauty."
+BOX_BREAK
+
+"We brothers also served the Royal\n"
+"Family of this nation, and we're\n"
+"assigned to study the mystic\n"
+"powers of the family."
+BOX_BREAK
+
+"Huh... What's that? You are saying\n"
+"you met us before? Sharp and Flat?\n"
+"And you have met my brother in\n"
+"the tombs?"
+BOX_BREAK
+
+"Ohhhhh... I see... That's why you were\n"
+"able to come here.\n"
+"You mastered the true power of the\n"
+COLOR(PURPLE) "Nocturne of Shadow" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"So uhh..."
+BOX_BREAK
+
+"That meant we successfully passed\n"
+"down the " COLOR(PURPLE) "Nocturne of Shadow" COLOR(DEFAULT) " to\n"
+"the next generations to come."
+BOX_BREAK
+
+"You see... An ancient evil long ago\n"
+"befell this kingdom, and it was our\n"
+"last hope to pass down this song\n"
+"in the hopes of a Hero to redeem us."
+BOX_BREAK
+
+"Hmm... What was the calamity's name\n"
+"again... Wasn't it " COLOR(RED) "Demise" COLOR(DEFAULT) "?"
+BOX_BREAK
+
+"That's why we gave our lives to \n"
+"protect the secret." TEXTID(0x8514)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8512, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+UNSKIPPABLE QUICKTEXT_ENABLE "GYAAAAH!" QUICKTEXT_DISABLE "\n"
+TEXT_SPEED(2) QUICKTEXT_ENABLE "I'M" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "DEAD" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "A" QUICKTEXT_DISABLE QUICKTEXT_ENABLE "GAIN!" QUICKTEXT_DISABLE TEXT_SPEED(0) "\n"
+"What? You again?"
+BOX_BREAK
+
+UNSKIPPABLE "Somehow, you remind me of...\n"
+"our Princess Hilda..."
+BOX_BREAK
+
+UNSKIPPABLE "Hmm... Since your kindom of " COLOR(ADJUSTABLE) "Hyrule" COLOR(DEFAULT) "\n"
+"is descended from our " COLOR(PURPLE) "lost kingdom" COLOR(DEFAULT) ", I\n"
+"will tell you a little more of our\n"
+"tale."
+BOX_BREAK
+
+UNSKIPPABLE "Back then, people called us great\n"
+"composers because of the many\n"
+"musical masterpieces we wrote."
+BOX_BREAK
+
+UNSKIPPABLE "But we brothers were not just\n"
+"composers."
+BOX_BREAK
+
+UNSKIPPABLE "We had a mission to analyze the\n"
+"mysterious powers of our kingdom's\n"
+"Royal Family."
+BOX_BREAK
+
+UNSKIPPABLE "Our names would be a part of\n"
+"our kingdom's history if we could\n"
+"complete our research!"
+BOX_BREAK
+
+UNSKIPPABLE "We kept our study extremely\n"
+"secret until we completed it." TEXTID(0x8513)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8513, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Yeah yeah... You heard that before\n"
+"already. I know.\n"
+"But it soothens my soul knowing\n"
+"our legacy got passed on."
+BOX_BREAK
+
+"We inscribed our song on the " COLOR(RED) "royal\n"
+"tombstone deep below the graveyards" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"And as you saw for yourself, it\n"
+"awakened the " COLOR(RED) "Owl Statue" COLOR(DEFAULT) " on our\n"
+"land. " COLOR(RED) "Owl Statues" COLOR(DEFAULT) "? Yeah, those\n"
+"existed for ages long before " COLOR(ADJUSTABLE) "Hyrule" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"However... Let me get you in on a\n"
+"secret. There's a " COLOR(RED) "hidden treasure" COLOR(DEFAULT) "\n"
+"in here that bypasses the song to\n"
+"get into the " COLOR(PURPLE) "lost kingdom" COLOR(DEFAULT) "." TEXTID(0x8514)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8514, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Do you want to hear what I \n"
+"said again?\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Yes\n"
+    "No" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8515, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE SHIFT(35) "Royal Composer Bros.\n"
+SHIFT(51) "Note the Younger\n"
+SHIFT(80) "R.I.P." QUICKTEXT_DISABLE EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8516, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE SHIFT(35) "Royal Composer Bros.\n"
+SHIFT(51) "Tone the Elder\n"
+SHIFT(80) "R.I.P." QUICKTEXT_DISABLE EVENT
+),
+MSG(),
+MSG()
+)

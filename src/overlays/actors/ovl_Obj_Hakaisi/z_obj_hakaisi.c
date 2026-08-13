@@ -25,24 +25,24 @@ void ObjHakaisi_Destroy(Actor* thisx, struct PlayState* play);
 void ObjHakaisi_Update(Actor* thisx, struct PlayState* play);
 void ObjHakaisi_Draw(Actor* thisx, struct PlayState* play);
 
-void func_80B1444C(ObjHakaisi* this);
-void func_80B14460(ObjHakaisi* this, struct PlayState* play);
-void func_80B14558(ObjHakaisi* this);
-void func_80B1456C(ObjHakaisi* this, struct PlayState* play);
-void func_80B145F4(ObjHakaisi* this);
-void func_80B14648(ObjHakaisi* this, struct PlayState* play);
-void func_80B149A8(ObjHakaisi* this);
-void func_80B149C0(ObjHakaisi* this, struct PlayState* play);
-void func_80B14A24(ObjHakaisi* this, struct PlayState* play, Vec3f vec);
-void func_80B14B6C(ObjHakaisi* this, struct PlayState* play, Vec3f vec, u8 arg3);
-void func_80B14CF8(struct PlayState* play, Vec3f vec, u8 arg2, u8 arg3, u8 arg4);
-void func_80B14F4C(ObjHakaisi* this, struct PlayState* play, u8 arg2);
-void func_80B151E0(ObjHakaisi* this, struct PlayState* play);
-void func_80B15254(Actor* thisx, struct PlayState* play);
-void func_80B15264(ObjHakaisi* this);
-void func_80B15330(ObjHakaisi* this, struct PlayState* play);
-void func_80B1544C(Actor* thisx, struct PlayState* play);
-void func_80B154A0(Actor* thisx, struct PlayState* play);
+void ObjHakaisi_80B1444C(ObjHakaisi* this);
+void ObjHakaisi_80B14460(ObjHakaisi* this, struct PlayState* play);
+void ObjHakaisi_80B14558(ObjHakaisi* this);
+void ObjHakaisi_80B1456C(ObjHakaisi* this, struct PlayState* play);
+void ObjHakaisi_80B145F4(ObjHakaisi* this);
+void ObjHakaisi_80B14648(ObjHakaisi* this, struct PlayState* play);
+void ObjHakaisi_80B149A8(ObjHakaisi* this);
+void ObjHakaisi_80B149C0(ObjHakaisi* this, struct PlayState* play);
+void ObjHakaisi_80B14A24(ObjHakaisi* this, struct PlayState* play, Vec3f vec);
+void ObjHakaisi_80B14B6C(ObjHakaisi* this, struct PlayState* play, Vec3f vec, u8 arg3);
+void ObjHakaisi_80B14CF8(struct PlayState* play, Vec3f vec, u8 arg2, u8 arg3, u8 arg4);
+void ObjHakaisi_80B14F4C(ObjHakaisi* this, struct PlayState* play, u8 arg2);
+void ObjHakaisi_80B151E0(ObjHakaisi* this, struct PlayState* play);
+void ObjHakaisi_80B15254(Actor* thisx, struct PlayState* play);
+void ObjHakaisi_80B15264(ObjHakaisi* this);
+void ObjHakaisi_80B15330(ObjHakaisi* this, struct PlayState* play);
+void ObjHakaisi_80B1544C(Actor* thisx, struct PlayState* play);
+void ObjHakaisi_80B154A0(Actor* thisx, struct PlayState* play);
 
 ActorProfile Obj_Hakaisi_Profile = {
     /**/ ACTOR_OBJ_HAKAISI,
@@ -91,7 +91,7 @@ void ObjHakaisi_Init(Actor* thisx, PlayState* play) {
     this->dyna.actor.colChkInfo.health = 3;
     if (OBJHAKAISI_GET_FF(&this->dyna.actor) == 3) {
         this->dyna.actor.draw = NULL;
-        func_80B1444C(this);
+        ObjHakaisi_80B1444C(this);
         return;
     }
 
@@ -131,7 +131,7 @@ void ObjHakaisi_Init(Actor* thisx, PlayState* play) {
     for (i=0; i<ARRAY_COUNT(D_80B155BC); i++)
         Matrix_MultVec3f(&D_80B155BC[i], &this->unk_160[i]);
 
-    func_80B1444C(this);
+    ObjHakaisi_80B1444C(this);
 }
 
 void ObjHakaisi_Destroy(Actor* thisx, PlayState* play) {
@@ -143,65 +143,67 @@ void ObjHakaisi_Destroy(Actor* thisx, PlayState* play) {
     }
 }
 
-void func_80B1444C(ObjHakaisi* this) {
-    this->actionFunc = func_80B14460;
+void ObjHakaisi_80B1444C(ObjHakaisi* this) {
+    this->actionFunc = ObjHakaisi_80B14460;
 }
 
-void func_80B14460(ObjHakaisi* this, PlayState* play) {
+void ObjHakaisi_80B14460(ObjHakaisi* this, PlayState* play) {
     s16 sp26 = BINANG_SUB(this->dyna.actor.shape.rot.y, this->dyna.actor.yawTowardsPlayer);
 
     if (this->collider.base.acFlags & AC_HIT) {
         this->collider.base.acFlags &= ~AC_HIT;
         this->dyna.actor.colChkInfo.health--;
+        if (this->dyna.actor.colChkInfo.health > 0)
+            ObjHakaisi_80B14A24(this, play, this->unk_160[this->unk_194]);
     }
     if (this->dyna.actor.colChkInfo.health == 0)
-        func_80B14558(this);
+        ObjHakaisi_80B14558(this);
     CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
 }
 
-void func_80B14558(ObjHakaisi* this) {
-    this->actionFunc = func_80B1456C;
+void ObjHakaisi_80B14558(ObjHakaisi* this) {
+    this->actionFunc = ObjHakaisi_80B1456C;
 }
 
-void func_80B1456C(ObjHakaisi* this, PlayState* play) {
-    func_80B145F4(this);
+void ObjHakaisi_80B1456C(ObjHakaisi* this, PlayState* play) {
+    ObjHakaisi_80B145F4(this);
     DynaPoly_DisableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
 }
 
-void func_80B145F4(ObjHakaisi* this) {
+void ObjHakaisi_80B145F4(ObjHakaisi* this) {
     this->unk_19A = 0;
     this->dyna.actor.flags |= ACTOR_FLAG_LOCK_ON_DISABLED;
     this->dyna.actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
     Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_WALL_BROKEN);
-    this->actionFunc = func_80B14648;
+    this->actionFunc = ObjHakaisi_80B14648;
 }
 
-void func_80B14648(ObjHakaisi* this, PlayState* play) {
+void ObjHakaisi_80B14648(ObjHakaisi* this, PlayState* play) {
     if (this->unk_19A < 2)
-        func_80B14CF8(play, this->unk_160[this->unk_194], 100, 30, 5);
+        ObjHakaisi_80B14CF8(play, this->unk_160[this->unk_194], 100, 30, 5);
 
     this->unk_19A++;
 
     if (this->dyna.actor.colChkInfo.health == 0) {
-        func_80B14A24(this, play, this->unk_160[this->unk_194]);
-        func_80B14A24(this, play, this->unk_160[this->unk_194]);
-        func_80B14B6C(this, play, this->unk_160[this->unk_194], 70);
+        ObjHakaisi_80B14A24(this, play, this->unk_160[this->unk_194]);
+        ObjHakaisi_80B14A24(this, play, this->unk_160[this->unk_194]);
+        ObjHakaisi_80B14B6C(this, play, this->unk_160[this->unk_194], 70);
         Flags_SetSwitch(play, this->switchFlag);
         this->dyna.actor.draw = NULL;
-        func_80B149A8(this);
+        ObjHakaisi_80B149A8(this);
     }
 
     if (this->unk_19E != this->dyna.actor.colChkInfo.health) {
         if ((this->unk_19E > 20) && (this->dyna.actor.colChkInfo.health <= 20)) {
-            func_80B14A24(this, play, this->unk_160[this->unk_194]);
-            func_80B14A24(this, play, this->unk_160[this->unk_194]);
-            func_80B14F4C(this, play, false);
-            func_80B14B6C(this, play, this->unk_160[this->unk_194], 40);
+            ObjHakaisi_80B14A24(this, play, this->unk_160[this->unk_194]);
+            ObjHakaisi_80B14A24(this, play, this->unk_160[this->unk_194]);
+            ObjHakaisi_80B14F4C(this, play, false);
+            ObjHakaisi_80B14B6C(this, play, this->unk_160[this->unk_194], 40);
             this->unk_194 = 1;
         } else if ((this->unk_19E > 10) && (this->dyna.actor.colChkInfo.health <= 10)) {
-            func_80B14A24(this, play, this->unk_160[this->unk_194]);
-            func_80B14A24(this, play, this->unk_160[this->unk_194]);
-            func_80B14B6C(this, play, this->unk_160[this->unk_194], 60);
+            ObjHakaisi_80B14A24(this, play, this->unk_160[this->unk_194]);
+            ObjHakaisi_80B14A24(this, play, this->unk_160[this->unk_194]);
+            ObjHakaisi_80B14B6C(this, play, this->unk_160[this->unk_194], 60);
             this->unk_194 = 2;
         }
         this->unk_19A = 0;
@@ -212,20 +214,20 @@ void func_80B14648(ObjHakaisi* this, PlayState* play) {
     this->unk_19E = this->dyna.actor.colChkInfo.health;
 }
 
-void func_80B149A8(ObjHakaisi* this) {
+void ObjHakaisi_80B149A8(ObjHakaisi* this) {
     this->unk_19A = 0;
-    this->actionFunc = func_80B149C0;
+    this->actionFunc = ObjHakaisi_80B149C0;
 }
 
-void func_80B149C0(ObjHakaisi* this, PlayState* play) {
+void ObjHakaisi_80B149C0(ObjHakaisi* this, PlayState* play) {
     if (this->unk_19A < 60)
         this->unk_19A++;
 }
 
-void func_80B14A24(ObjHakaisi* this, PlayState* play, Vec3f vec) {
+void ObjHakaisi_80B14A24(ObjHakaisi* this, PlayState* play, Vec3f vec) {
     u8 i;
 
-    func_80B14CF8(play, vec, 100, 30, 5);
+    ObjHakaisi_80B14CF8(play, vec, 100, 30, 5);
 
     for (i=0; i<5; i++) {
         vec.x += Rand_Centered() * 20.0f;
@@ -235,7 +237,7 @@ void func_80B14A24(ObjHakaisi* this, PlayState* play, Vec3f vec) {
     }
 }
 
-void func_80B14B6C(ObjHakaisi* this, PlayState* play, Vec3f vec, u8 arg3) {
+void ObjHakaisi_80B14B6C(ObjHakaisi* this, PlayState* play, Vec3f vec, u8 arg3) {
     u8 i;
     s16 temp_s1;
     Vec3f sp6C;
@@ -252,10 +254,10 @@ void func_80B14B6C(ObjHakaisi* this, PlayState* play, Vec3f vec, u8 arg3) {
         EffectSsHahen_SpawnBurst(play, &sp6C, 10.0f, 0, arg3, 30, 2, OBJECT_HAKAISI, 15, object_hakaisi_DL_0021B0);
     }
 
-    func_80B14CF8(play, vec, 100, 50, 20);
+    ObjHakaisi_80B14CF8(play, vec, 100, 50, 20);
 }
 
-void func_80B14CF8(PlayState* play, Vec3f vec, u8 arg2, u8 arg3, u8 arg4) {
+void ObjHakaisi_80B14CF8(PlayState* play, Vec3f vec, u8 arg2, u8 arg3, u8 arg4) {
     static Color_RGBA8 sPrimColor = { 170, 130, 90, 255 };
     static Color_RGBA8 sEnvColor = { 100, 60, 20, 0 };
     u8 i;
@@ -287,7 +289,7 @@ void func_80B14CF8(PlayState* play, Vec3f vec, u8 arg2, u8 arg3, u8 arg4) {
     }
 }
 
-void func_80B14F4C(ObjHakaisi* this, PlayState* play, u8 arg2) {
+void ObjHakaisi_80B14F4C(ObjHakaisi* this, PlayState* play, u8 arg2) {
     if (!arg2)
         Actor_Spawn(&play->actorCtx, play, ACTOR_OBJ_HAKAISI, this->dyna.actor.world.pos.x, this->dyna.actor.world.pos.y + 55.0f, this->dyna.actor.world.pos.z - 10.0f, this->dyna.actor.shape.rot.x, this->dyna.actor.shape.rot.y, this->dyna.actor.shape.rot.z, 4);
     else Actor_Spawn(&play->actorCtx, play, ACTOR_OBJ_HAKAISI, this->dyna.actor.world.pos.x + 20.0f, this->dyna.actor.world.pos.y + 30.0f, this->dyna.actor.world.pos.z - 10.0f, this->dyna.actor.shape.rot.x, this->dyna.actor.shape.rot.y, this->dyna.actor.shape.rot.z, 5);
@@ -322,19 +324,19 @@ void ObjHakaisi_Draw(Actor* thisx, PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
 
-void func_80B151E0(ObjHakaisi* this, PlayState* play) {
-    this->dyna.actor.update = func_80B1544C;
-    this->dyna.actor.draw = func_80B154A0;
-    this->dyna.actor.destroy = func_80B15254;
+void ObjHakaisi_80B151E0(ObjHakaisi* this, PlayState* play) {
+    this->dyna.actor.update = ObjHakaisi_80B1544C;
+    this->dyna.actor.draw = ObjHakaisi_80B154A0;
+    this->dyna.actor.destroy = ObjHakaisi_80B15254;
     Actor_SetScale(&this->dyna.actor, 0.1f);
     this->dyna.actor.shape.yOffset = 100.0f;
     this->dyna.actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
-    func_80B15264(this);
+    ObjHakaisi_80B15264(this);
 }
 
-void func_80B15254(Actor* thisx, PlayState* play) { }
+void ObjHakaisi_80B15254(Actor* thisx, PlayState* play) { }
 
-void func_80B15264(ObjHakaisi* this) {
+void ObjHakaisi_80B15264(ObjHakaisi* this) {
     static Vec3f D_80B15600 = { 1.0f, 0.0f, 0.0f };
     s16 sp32 = Rand_Next();
 
@@ -345,18 +347,18 @@ void func_80B15264(ObjHakaisi* this) {
     this->dyna.actor.velocity.x = Math_SinS(sp32) * 4.0f;
     this->dyna.actor.velocity.z = Math_CosS(sp32) * 4.0f;
     this->dyna.actor.velocity.y = 7.0f;
-    this->actionFunc = func_80B15330;
+    this->actionFunc = ObjHakaisi_80B15330;
 }
 
-void func_80B15330(ObjHakaisi* this, PlayState* play) {
+void ObjHakaisi_80B15330(ObjHakaisi* this, PlayState* play) {
     MtxF sp34;
 
     this->dyna.actor.velocity.y += this->dyna.actor.gravity;
     Actor_UpdatePos(&this->dyna.actor);
 
     if (this->dyna.actor.bgCheckFlags & BGCHECKFLAG_GROUND_TOUCH) {
-        func_80B14B6C(this, play, this->dyna.actor.world.pos, 40);
-        func_80B14CF8(play, this->dyna.actor.world.pos, 100, 30, 10);
+        ObjHakaisi_80B14B6C(this, play, this->dyna.actor.world.pos, 40);
+        ObjHakaisi_80B14CF8(play, this->dyna.actor.world.pos, 100, 30, 10);
         Actor_Kill(&this->dyna.actor);
     }
 
@@ -369,7 +371,7 @@ void func_80B15330(ObjHakaisi* this, PlayState* play) {
     Matrix_MtxFToYXZRotS(&sp34, &this->dyna.actor.shape.rot, false);
 }
 
-void func_80B1544C(Actor* thisx, PlayState* play) {
+void ObjHakaisi_80B1544C(Actor* thisx, PlayState* play) {
     ObjHakaisi* this = (ObjHakaisi*)thisx;
 
     this->actionFunc(this, play);
@@ -377,7 +379,7 @@ void func_80B1544C(Actor* thisx, PlayState* play) {
     Actor_UpdateBgCheckInfo(play, &this->dyna.actor, 0.0f, 0.0f, 0.0f, UPDBGCHECKINFO_FLAG_2);
 }
 
-void func_80B154A0(Actor* thisx, PlayState* play) {
+void ObjHakaisi_80B154A0(Actor* thisx, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);

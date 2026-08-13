@@ -12,8 +12,8 @@ SceneCmd beneath_the_graveyard_room_2[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&beneath_the_graveyard_room_2RoomShapeCullable_000090),
-    SCENE_CMD_OBJECT_LIST(5, beneath_the_graveyard_room_2ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(3, beneath_the_graveyard_room_2ActorEntry_00004C),
+    SCENE_CMD_OBJECT_LIST(6, beneath_the_graveyard_room_2ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(4, beneath_the_graveyard_room_2ActorEntry_00004C),
     SCENE_CMD_END(),
 };
 
@@ -23,11 +23,11 @@ s16 beneath_the_graveyard_room_2ObjectList_000040[] = {
     OBJECT_BAT,
     OBJECT_BOX,
     OBJECT_IK,
-  //OBJECT_PO_COMPOSER,
+    OBJECT_PO_COMPOSER,
 };
 
 ActorEntry beneath_the_graveyard_room_2ActorEntry_00004C[] = {
-  //{ ACTOR_EN_PO_COMPOSER,  { 2240, 140, 320 }, { 0, 0xC000, 0 }, 0x80FF },
+    { ACTOR_EN_PO_COMPOSER,  { 2240,  80, 320 }, { 0, 0xC000, 0 }, 0x0200 }, // Checks switch: 02
     { ACTOR_EN_IK,           { 1860,   0, 327 }, { 0, 0xC000, 0 }, 0x0206 }, // Switch: 02
     { ACTOR_BG_HAKA_CURTAIN, { 2120, 260, 320 }, { 0,      0, 0 }, 0x0000 }, // Checks switch: 02
     { ACTOR_BG_HAKA_TOMB,    { 2280,  40, 320 }, { 0,      0, 0 }, 0x0000 }, // Checks switch: 02

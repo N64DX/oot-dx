@@ -65,7 +65,7 @@ u16 ikana_graveyard_sceneExitList_000140[] = {
     ENTR_FORSAKEN_KINGDOM_0,
     ENTR_BENEATH_THE_GRAVEYARD_0,
     ENTR_BENEATH_THE_GRAVEYARD_1,
-    ENTR_GLOOMY_GRAVEYARD_3,
+    ENTR_FAIRYS_FOUNTAIN_0,
     ENTR_GLOOMY_GRAVEYARD_4,
 };
 
@@ -444,7 +444,7 @@ SurfaceType ikana_graveyard_sceneCollisionHeader_006E30SurfaceType[] = {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 3,
-                /* exitIndex */ 4,
+                /* exitIndex */ 0, // 4
                 FLOOR_TYPE_10,
                 /* unk18 */ 0,
                 WALL_TYPE_0,

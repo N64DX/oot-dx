@@ -122,9 +122,13 @@ void ObjectKankyo_Init(Actor* thisx, PlayState* play) {
             break;
 
         case 7:
-            ObjectKankyo_SetupAction(this, ObjectKankyo_Snow);
-            play->envCtx.precipitation[PRECIP_SNOW_MAX] = 64;
-            sIsSpawned = true;
+            if (!sIsSpawned) {
+                ObjectKankyo_SetupAction(this, ObjectKankyo_Snow);
+                play->envCtx.precipitation[PRECIP_SNOW_MAX] = 64;
+                sIsSpawned = true;
+            } else {
+                Actor_Kill(&this->actor);
+            }
             break;
 
         case 2:
