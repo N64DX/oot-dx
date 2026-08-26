@@ -409,7 +409,6 @@ void Play_Init(GameState* thisx) {
     if (!IS_CUTSCENE_LAYER) {
         u8 sceneId = gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId;
         if (sceneId == SCENE_GROTTOS2) {
-            gSaveContext.sceneLayer = gSaveContext.save.entranceIndex == ENTR_GROTTOS_7 ? 1 : 0;
             if (gSaveContext.save.entranceIndex == ENTR_GROTTOS_7)
                 gSaveContext.sceneLayer = 1;
             else if (gSaveContext.save.entranceIndex == ENTR_CAVE_PASSAGE_0 || gSaveContext.save.entranceIndex == ENTR_CAVE_PASSAGE_1)

@@ -35,8 +35,7 @@ typedef enum ItemEtceteraType {
     /* 0x0C */ ITEM_ETC_HEART_PIECE_CHEST_GAME,
     /* 0x0D */ ITEM_ETC_KEY_SMALL_CHEST_GAME,
     /* 0x0E */ ITEM_ETC_SWORD_HEROS,
-    /* 0x0F */ ITEM_ETC_PICTOBOX,
-    /* 0x10 */ ITEM_ETC_ANCIENT_HOLLOW_KEY
+    /* 0x0F */ ITEM_ETC_PICTOBOX
 } ItemEtceteraType;
 
 #endif

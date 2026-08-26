@@ -214,7 +214,7 @@ void BossGanon_SwordPhaseCutscene(BossGanon* this, PlayState* play) {
             if (this->csTimer >= 30) {
                 this->csState = 3;
                 this->csTimer = 0;
-                Message_StartTextbox(play, 0x8125, NULL);
+                Message_StartTextbox(play, 0x8126, NULL);
                 this->fwork[GDF_FWORK_1] = 1000.0f;
             }
 
@@ -249,7 +249,7 @@ void BossGanon_SwordPhaseCutscene(BossGanon* this, PlayState* play) {
             this->envLightMode = 14;
 
             if (this->csTimer == 30) {
-                Message_StartTextbox(play, 0x8126, NULL);
+                Message_StartTextbox(play, 0x8127, NULL);
                 this->csState = 5;
                 this->csTimer = 0;
             }

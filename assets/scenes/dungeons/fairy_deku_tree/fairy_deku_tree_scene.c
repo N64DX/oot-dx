@@ -63,7 +63,7 @@ TransitionActorEntry fairy_deku_tree_sceneTransitionActorList0x000078[] = {
     {  6, 13,  0, -1, ACTOR_DOOR_SHUTTER, { 1129,  160,     0 }, 0xC000, 0x02DA }, // 14, Sets switch: 1A
     {  0, -1,  9, 14, ACTOR_DOOR_SHUTTER, {  798, 1160,  -798 }, 0x6000, 0x0084 }, // 15, Checks switch: 04
     {  2, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,  400,   423 }, 0x0000, 0x003F }, // 16
-    {  1, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,    0,  -643 }, 0x8000, 0x02DB }, // 17, Sets switch: 1B
+    {  1, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,    0,  -643 }, 0x8000, 0x003F }, // 17
     {  0, -1,  1, -1, ACTOR_DOOR_SHUTTER, {    0,   80,   423 }, 0x8000, 0x0088 }, // 18, Checks switch: 08
     {  0, -1,  3, -1, ACTOR_DOOR_SHUTTER, {  299,  720,  -299 }, 0xE000, 0x0081 }, // 19, Checks switch: 01
     {  4, 15,  0, -1, ACTOR_DOOR_SHUTTER, { -299, 1000,   299 }, 0xE000, 0x0082 }, // 20, Checks switch: 02

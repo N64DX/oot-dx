@@ -2041,12 +2041,11 @@ u8 Item_Give(PlayState* play, u8 item) {
         gSaveContext.save.info.inventory.dungeonItems[gSaveContext.mapIndex] |= gBitFlags[item - ITEM_DUNGEON_BOSS_KEY];
         return ITEM_NONE;
     } else if (item == ITEM_SMALL_KEY) {
-        u8 mapIndex = play->sceneId == SCENE_RIVERSIDE_INN ? SCENE_DEKU_TREE_BOSS : gSaveContext.mapIndex;
-        if (gSaveContext.save.info.inventory.dungeonKeys[mapIndex] < 0) {
-            gSaveContext.save.info.inventory.dungeonKeys[mapIndex] = 1;
+        if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] < 0) {
+            gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] = 1;
             return ITEM_NONE;
         } else {
-            gSaveContext.save.info.inventory.dungeonKeys[mapIndex]++;
+            gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex]++;
             return ITEM_NONE;
         }
     } else if ((item == ITEM_QUIVER_30) || (item == ITEM_BOW)) {

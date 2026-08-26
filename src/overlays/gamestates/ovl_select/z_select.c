@@ -591,6 +591,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Opened Forsaken Kingdom",  INFTABLE,                   INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED    },
     { 0, "Sheik Reveal",             EVENT,                      EVENTCHKINF_C4                           },
     { 0, "Rainbow Bridge",           EVENT,                      EVENTCHKINF_CREATED_RAINBOW_BRIDGE       },
+    { 0, "Showed Pictobox",          INFTABLE,                   INFTABLE_SHOWED_PICTOBOX_TO_IGOR         },
     { 0, "Talked to Smithy",         BLACKSMITH1,                INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP  },
     { 0, "Talked to Zubora",         BLACKSMITH2,                INFTABLE_TALKED_TO_ZUBORA_MINES          },
     { 0, "Killed Gohma",             SCENE_DEKU_TREE_BOSS,       1,                                       },

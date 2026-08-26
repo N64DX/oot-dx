@@ -146,10 +146,8 @@ void EnPoRelay_Init(Actor* thisx, PlayState* play) {
             this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
         }
 
-        if (GET_INFTABLE(INFTABLE_ASKED_BY_IGOR)) {
+        if (GET_INFTABLE(INFTABLE_ASKED_BY_IGOR))
             Actor_Kill(&this->actor);
-            Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 10.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_ANCIENT_HOLLOW_KEY);
-        }
     } else {
         this->actor.params &= 0x3F;
         if (IS_CHILD_QUEST)
