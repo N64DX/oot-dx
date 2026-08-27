@@ -1857,12 +1857,12 @@ u8 Interface_GetItemFromDpad(u8 button) {
         return (gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] >= ITEM_WEIRD_EGG && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] <= ITEM_MASK_TRUTH) ? gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] : ITEM_NONE;
     else if (slot < SLOT_SWORDS)
         return gSaveContext.save.info.inventory.items[slot];
-    else if (slot == SLOT_SWORDS || slot == SLOT_SHIELDS)
+    else if (slot == SLOT_SWORDS || slot == SLOT_SHIELDS || slot == SLOT_TUNICS || slot == SLOT_BOOTS)
         return ITEM_SWORDS + slot - SLOT_SWORDS;
-    else if (slot >= SLOT_TUNICS && slot <= SLOT_TUNIC_SPIRIT && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, slot - SLOT_TUNICS))
-        return ITEM_TUNIC_KOKIRI + slot - SLOT_TUNICS;
-    else if (slot >= SLOT_BOOTS && slot <= SLOT_BOOTS_PEGASUS && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, slot - SLOT_BOOTS))
-        return ITEM_BOOTS_KOKIRI + slot - SLOT_BOOTS;
+    else if (slot >= SLOT_TUNIC_GORON && slot <= SLOT_TUNIC_SPIRIT && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, slot - SLOT_TUNIC_GORON))
+        return ITEM_TUNIC_GORON + slot - SLOT_TUNIC_GORON;
+    else if (slot >= SLOT_BOOTS_IRON && slot <= SLOT_BOOTS_PEGASUS && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, slot - SLOT_BOOTS_IRON))
+        return ITEM_BOOTS_IRON + slot - SLOT_BOOTS_IRON;
     else return ITEM_NONE;
 }
 
@@ -4454,6 +4454,7 @@ void Interface_Draw(PlayState* play) {
             case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
             case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
             case SCENE_TREASURE_BOX_SHOP:
+            case SCENE_PURPLE_ICE_CAVERN:
             case SCENE_ANCIENT_HOLLOW:
             case SCENE_WOODFALL_TEMPLE:
                 if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0) {
@@ -5467,6 +5468,10 @@ void Interface_Update(PlayState* play) {
                 case SCENE_PATH_TO_GORON_VILLAGE:
                 case SCENE_GORON_VILLAGE:
                 case SCENE_GORON_SHRINE:
+                case SCENE_RIVERSIDE_VILLAGE:
+                case SCENE_ANCIENT_GROVE:
+                case SCENE_FORSAKEN_KINGDOM:
+                case SCENE_GLOOMY_GRAVEYARD:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {

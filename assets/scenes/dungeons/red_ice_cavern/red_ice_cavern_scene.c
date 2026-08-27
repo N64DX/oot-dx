@@ -32,7 +32,7 @@ ActorEntry red_ice_cavern_sceneStartPositionList_000118[] = {
     { ACTOR_PLAYER, { -200,   0,  -12 }, { 0, 0x4000, 0 }, 0x0FFF }, // Debug warp room 0
     { ACTOR_PLAYER, { 1650, 180,   50 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 1
     { ACTOR_PLAYER, { 2325, 188,   50 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 2
-    { ACTOR_PLAYER, {  375,  60,  350 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 3
+    { ACTOR_PLAYER, {  375,  60, -350 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 3
     { ACTOR_PLAYER, { 1575, 180, -875 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 4
     { ACTOR_PLAYER, {  890, 120,  650 }, { 0, 0x1000, 0 }, 0x0DFF }, // Debug warp room 5
 };

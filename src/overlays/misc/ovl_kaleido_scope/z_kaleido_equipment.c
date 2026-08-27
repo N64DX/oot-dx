@@ -699,35 +699,25 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                         temp = SLOT_SWORDS;
                     else if (cursorSlot >= 7 && cursorSlot <= 10)
                         temp = SLOT_SHIELDS;
-                    else if (cursorSlot >= 13 && cursorSlot <= 16)
-                        temp = SLOT_TUNICS + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
-                    else if (cursorSlot >= 19 && cursorSlot <= 22)
-                        temp = SLOT_BOOTS + pauseCtx->cursorX[PAUSE_EQUIP] - 1;
+                    else if (cursorSlot == 13)
+                        temp = SLOT_TUNICS;
+                    else if (cursorSlot >= 14 && cursorSlot <= 16)
+                        temp = SLOT_TUNIC_GORON + pauseCtx->cursorX[PAUSE_EQUIP] - 2;
+                    else if (cursorSlot == 19)
+                        temp = SLOT_BOOTS;
+                    else if (cursorSlot >= 20 && cursorSlot <= 22)
+                        temp = SLOT_BOOTS_IRON + pauseCtx->cursorX[PAUSE_EQUIP] - 2;
                     else temp = SLOT_NONE;
 
                     if (temp != SLOT_NONE) {
                         if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT)) {
-                            if (temp == SLOT_SWORDS)
-                                temp = ITEM_SWORDS;
-                            else if (temp == SLOT_SHIELDS)
-                                temp = ITEM_SHIELDS;
-                            else if (temp == SLOT_TUNICS)
-                                temp = ITEM_TUNICS;
-                            else if (temp == SLOT_BOOTS)
-                                temp = ITEM_BOOTS;
-                            else if (temp == SLOT_TUNIC_GORON)
-                                temp = ITEM_TUNIC_GORON;
-                            else if (temp == SLOT_TUNIC_ZORA)
-                                temp = ITEM_TUNIC_ZORA;
-                            else if (temp == SLOT_TUNIC_SPIRIT)
-                                temp = ITEM_TUNIC_SPIRIT;
-                            else if (temp == SLOT_BOOTS_IRON)
-                                temp = ITEM_BOOTS_IRON;
-                            else if (temp == SLOT_BOOTS_HOVER)
-                                temp = ITEM_BOOTS_HOVER;
-                            else if (temp == SLOT_BOOTS_PEGASUS)
-                                temp = ITEM_BOOTS_PEGASUS;
-                            
+                            if (temp == SLOT_SWORDS || temp == SLOT_SHIELDS || temp == SLOT_TUNICS || temp == SLOT_BOOTS)
+                                temp = ITEM_SWORDS + temp - SLOT_SWORDS;
+                            else if (temp >= SLOT_TUNIC_GORON && temp <= SLOT_TUNIC_SPIRIT)
+                                temp = ITEM_TUNIC_GORON + temp - SLOT_TUNIC_GORON;
+                            else if (temp >= SLOT_BOOTS_IRON && temp <= SLOT_BOOTS_PEGASUS)
+                                temp = ITEM_BOOTS_IRON + temp - SLOT_BOOTS_IRON;
+
                             if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT))
                                 i = 1;
                             else if (CHECK_BTN_ALL(input->press.button, BTN_CDOWN))

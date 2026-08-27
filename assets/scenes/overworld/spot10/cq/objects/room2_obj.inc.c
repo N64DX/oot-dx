@@ -10,3 +10,5 @@
     OBJECT_GI_DEKUPOUCH, // 9
     OBJECT_ST, // 10
     OBJECT_KANBAN, // 11
+    OBJECT_KM1, // 12
+    OBJECT_OS_ANIME, // 13

@@ -3216,7 +3216,7 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             }
         } else if (item >= ITEM_ROCS_FEATHER && item <= ITEM_GOLDEN_FEATHER && this->featherUseCount < MAX_FEATHER_USES) {
             u8 energyCost = (item == ITEM_ROCS_FEATHER ? 15 : 10) - (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) ? 5 : 0);
-            if ((((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f) || item == ITEM_GOLDEN_FEATHER) && gSaveContext.save.info.energy >= energyCost) {
+            if (((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) || item == ITEM_GOLDEN_FEATHER) && gSaveContext.save.info.energy >= energyCost) {
                 Vec3f effectsPos = this->actor.home.pos;
                 this->featherUseCount++;
                 func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, 7.15f, play, NA_SE_VO_LI_SWORD_N);
@@ -3487,7 +3487,7 @@ s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play) {
     if (LinkAnimation_Update(play, &this->upperSkelAnime) ||
         ((Player_ItemToItemAction(this->heldItemId) == this->heldItemAction) &&
          (sUseHeldItem =
-              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && this->heldItemAction <= PLAYER_IA_SWORD_BIGGORON)))))) {
+              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && this->heldItemAction <= PLAYER_IA_SWORD_HEROS)))))) {
         Player_SetUpperActionFunc(this, sItemActionUpdateFuncs[this->heldItemAction]);
         this->unk_834 = 0;
         this->idleType = PLAYER_IDLE_DEFAULT;
@@ -10703,15 +10703,16 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
             if (this->actor.velocity.y < 0.0f) {
                 if (this->av2.actionVar2 >= 0) {
                     // Do not change the animation if it's newside_jump and Link hasn't touched the ground
-                    if (((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || (this->av2.actionVar2 == 0) ||
-                        (this->fallDistance > 0)) && this->skelAnime.animation != &gPlayerAnim_link_normal_newside_jump_20f) {
-                        if ((sYDistToFloor > 800.0f) || (this->stateFlags1 & PLAYER_STATE1_2)) {
-                            func_80843E14(this, NA_SE_VO_LI_FALL_S);
-                            this->stateFlags1 &= ~PLAYER_STATE1_2;
-                        }
+                    if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || (this->av2.actionVar2 == 0) ||
+                        (this->fallDistance > 0)) {
+                        if (this->skelAnime.animation != &gPlayerAnim_link_normal_newside_jump_20f) {
+                            if ((sYDistToFloor > 800.0f) || (this->stateFlags1 & PLAYER_STATE1_2)) {
+                                func_80843E14(this, NA_SE_VO_LI_FALL_S);
+                                this->stateFlags1 &= ~PLAYER_STATE1_2;
+                            }
 
-                        LinkAnimation_Change(play, &this->skelAnime, &gPlayerAnim_link_normal_landing, 1.0f, 0.0f, 0.0f,
-                                             ANIMMODE_ONCE, 8.0f);
+                            LinkAnimation_Change(play, &this->skelAnime, &gPlayerAnim_link_normal_landing, 1.0f, 0.0f, 0.0f, ANIMMODE_ONCE, 8.0f);
+                        }
                         this->av2.actionVar2 = -1;
                     }
                 } else {

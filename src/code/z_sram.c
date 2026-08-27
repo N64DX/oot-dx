@@ -562,17 +562,11 @@ void Sram_OpenSave(SramContext* sramCtx) {
             gSaveContext.save.entranceIndex = ENTR_GANONS_TOWER_0;
             break;
 
-        case SCENE_ANCIENT_HOLLOW:
-            gSaveContext.save.entranceIndex = ENTR_ANCIENT_HOLLOW_0;
-            break;
-        case SCENE_GORON_MINES:
-            gSaveContext.save.entranceIndex = ENTR_GORON_MINES_0;
-            break;
+        case SCENE_PURPLE_ICE_CAVERN:    gSaveContext.save.entranceIndex = ENTR_PURPLE_ICE_CAVERN_0; break;
+        case SCENE_ANCIENT_HOLLOW:       gSaveContext.save.entranceIndex = ENTR_ANCIENT_HOLLOW_0;    break;
+        case SCENE_GORON_MINES:          gSaveContext.save.entranceIndex = ENTR_GORON_MINES_0;       break;
         case SCENE_WOODFALL_TEMPLE:
-        case SCENE_WOODFALL_TEMPLE_BOSS:
-            if (gSaveContext.save.entranceIndex == ENTR_WOODFALL_TEMPLE_0)
-                gSaveContext.save.entranceIndex = ENTR_WOODFALL_TEMPLE_0;
-            break;
+        case SCENE_WOODFALL_TEMPLE_BOSS: gSaveContext.save.entranceIndex = ENTR_WOODFALL_TEMPLE_0;   break;
 
         case SCENE_DESERT_COLOSSUS:
             if (IS_RUSH_QUEST) {

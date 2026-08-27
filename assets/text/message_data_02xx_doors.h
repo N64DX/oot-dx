@@ -1711,7 +1711,7 @@ QUICKTEXT_ENABLE "Travelling from the " COLOR(YELLOW) "Forbidden Woods" COLOR(DE
 "without a proper sword and shield. "QUICKTEXT_DISABLE
 BOX_BREAK
 
-QUICKTEXT_ENABLE "Also keep in mind that that a\n"
+QUICKTEXT_ENABLE "Also keep in mind that a\n"
 "dark presence dwells within the\n"
 COLOR(PURPLE) "Ancient Hollow" COLOR(DEFAULT) ", causing evil monsters\n"
 "to appear." QUICKTEXT_DISABLE

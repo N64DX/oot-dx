@@ -1106,7 +1106,11 @@ s32 EnKo_CanSpawn(EnKo* this, PlayState* play) {
             }
 
         case SCENE_LOST_WOODS:
-            return (INV_CONTENT(ITEM_TRADE_ADULT) == ITEM_ODD_POTION) ? true : false;
+            if (ENKO_TYPE == ENKO_TYPE_CHILD_3)
+                return true;
+            else if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO)
+                return (INV_CONTENT(ITEM_TRADE_ADULT) == ITEM_ODD_POTION) ? true : false;
+            return false;
         case SCENE_GROTTOS2:
             return !GET_INFTABLE(INFTABLE_SHOWED_PICTOBOX_TO_IGOR);
         case SCENE_ANCIENT_HOLLOW:

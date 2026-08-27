@@ -2341,8 +2341,8 @@ BOX_BREAK
 
 "Soul you say? I give you a hint.\n"
 "There\'s a lost soul waiting for you\n"
-"in Riverside Village.\n"
-"Find what he lost to put him at ease."
+"in " COLOR(ADJUSTABLE) "Riverside Village" COLOR(DEFAULT) ".\n"
+COLOR(RED) "Find what he lost" COLOR(DEFAULT) " to put him at ease."
 ),
 MSG(),
 MSG()
@@ -3019,7 +3019,7 @@ MSG()
 DEFINE_MESSAGE(0x8239, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"I go could for some fishing 'round\n"
+"I could go for some fishing 'round\n"
 "these waters.\n"
 "I wonder... What kinda of bait would\n"
 "work best here?"
