@@ -2795,9 +2795,9 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     static const SwordSwapEntry equipments[] = {
         { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    LINK_AGE_CHILD },
         { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
         { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
-        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    LINK_AGE_CHILD },
     };
 
     u8 current    = gSaveContext.save.info.equips.buttonItems[0];
@@ -2840,9 +2840,9 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
 void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
     static const EquipmentSwapEntry equipments[] = {
         { PLAYER_SHIELD_DEKU,   EQUIP_INV_SHIELD_DEKU,   LINK_AGE_CHILD },
+        { PLAYER_SHIELD_HEROS,  EQUIP_INV_SHIELD_HEROS,  LINK_AGE_CHILD },
         { PLAYER_SHIELD_HYLIAN, EQUIP_INV_SHIELD_HYLIAN, 9              },
         { PLAYER_SHIELD_MIRROR, EQUIP_INV_SHIELD_MIRROR, LINK_AGE_ADULT },
-        { PLAYER_SHIELD_HEROS,  EQUIP_INV_SHIELD_HEROS,  LINK_AGE_CHILD },
     };
 
     u8 current    = this->currentShield;

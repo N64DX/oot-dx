@@ -279,10 +279,14 @@ typedef PauseMapMarkData PauseMapMarksData[3];
 void KaleidoSetup_Update(struct PlayState* play);
 void KaleidoSetup_Init(struct PlayState* play);
 void KaleidoSetup_Destroy(struct PlayState* play);
+u8 KaleidoScope_GetEquipBit(u8 bit, u8 type);
 
 extern u8 gBossMarkState;
 extern f32 gBossMarkScale;
 extern u32 D_8016139C;
 extern PauseMapMarksData* gLoadedPauseMarkDataTable;
+
+extern u8 sEquipmentItemOrder[4][4];
+extern u8 sCQEquipmentItemOrder[4][4];
 
 #endif

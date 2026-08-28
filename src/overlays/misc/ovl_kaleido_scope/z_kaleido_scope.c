@@ -90,6 +90,24 @@ typedef enum VtxPageInit {
 static u8 editor_timer = 0;
 static u8 pressed_r = false;
 
+u8 KaleidoScope_GetEquipBit(u8 bit, u8 type) {
+    return IS_CHILD_QUEST_AS_CHILD ? sCQEquipmentItemOrder[bit][type] : sEquipmentItemOrder[bit][type];
+}
+
+u8 sEquipmentItemOrder[4][4] = {
+    { 0, 1, 2, 3 }, // Swords
+    { 0, 1, 2, 3 }, // Shields
+    { 0, 1, 2, 3 }, // Tunics
+    { 0, 1, 2, 3 }, // Boots
+};
+
+u8 sCQEquipmentItemOrder[4][4] = {
+    { 0, 3, 1, 2 }, // Swords
+    { 0, 3, 1, 2 }, // Shields
+    { 0, 1, 2, 3 }, // Tunics
+    { 0, 1, 2, 3 }, // Boots
+};
+
 #if OOT_NTSC
 
 // Japanese
@@ -3560,7 +3578,10 @@ void KaleidoScope_SetVertices(PlayState* play, GraphicsContext* gfxCtx) {
 
     for (j = 0; j < EQUIP_TYPE_MAX; k += 4, j++) {
         if (CUR_EQUIP_VALUE(j) != 0) {
-            i = (CUR_EQUIP_VALUE(j) + sEquipQuadsFirstByEquipType[j] - 1) * 4;
+            x = 0;
+            while (KaleidoScope_GetEquipBit(j, x) != (CUR_EQUIP_VALUE(j) - 1))
+                x++;
+            i = (sEquipQuadsFirstByEquipType[j] + x) * 4;
 
             pauseCtx->equipVtx[k + 0].v.ob[0] = pauseCtx->equipVtx[k + 2].v.ob[0] =
                 pauseCtx->equipVtx[i].v.ob[0] + EQUIP_GRID_SELECTED_QUAD_MARGIN;
