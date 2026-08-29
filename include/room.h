@@ -169,6 +169,7 @@ void Room_Init(struct PlayState* play, Room* room);
 u32 Room_SetupFirstRoom(struct PlayState* play, RoomContext* roomCtx);
 s32 Room_RequestNewRoom(struct PlayState* play, RoomContext* roomCtx, s32 roomNum);
 s32 Room_ProcessRoomRequest(struct PlayState* play, RoomContext* roomCtx);
+u8 Room_GetDrawFlags(struct PlayState* play, Room* room, u32 flags);
 void Room_Draw(struct PlayState* play, Room* room, u32 flags);
 void Room_FinishRoomChange(struct PlayState* play, RoomContext* roomCtx);
 
