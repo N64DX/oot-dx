@@ -91,7 +91,7 @@ static u8 editor_timer = 0;
 static u8 pressed_r = false;
 
 u8 KaleidoScope_GetEquipBit(u8 bit, u8 type) {
-    return IS_CHILD_QUEST_AS_CHILD ? sCQEquipmentItemOrder[bit][type] : sEquipmentItemOrder[bit][type];
+    return IS_CHILD_QUEST ? sCQEquipmentItemOrder[bit][type] : sEquipmentItemOrder[bit][type];
 }
 
 u8 sEquipmentItemOrder[4][4] = {

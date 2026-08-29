@@ -650,6 +650,14 @@ void ObjectKankyo_DrawSnow(Actor* thisx, PlayState* play2) {
             }
         }
 
+        if (play->envCtx.precipitation[PRECIP_SNOW_CUR] > 0) { // Set up the XLU pipeline, texture segment, and particle colors once; they are identical for every particle.
+            Gfx_SetupDL_61Xlu(play->state.gfxCtx);
+            gSPSegment(POLY_XLU_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(gDust5Tex));
+            gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 200, 200, 200, 180);
+            gDPSetEnvColor(POLY_XLU_DISP++, 200, 200, 200, 180);
+            gDPPipeSync(POLY_XLU_DISP++);
+        }
+
         for (i = 0; i < play->envCtx.precipitation[PRECIP_SNOW_CUR]; i++) {
             switch (this->effects[i].state) {
                 case 0:
@@ -739,23 +747,11 @@ void ObjectKankyo_DrawSnow(Actor* thisx, PlayState* play2) {
                              this->effects[i].base.y + this->effects[i].pos.y,
                              this->effects[i].base.z + this->effects[i].pos.z, MTXMODE_NEW);
             Matrix_Scale(0.05f, 0.05f, 0.05f, MTXMODE_APPLY);
-            gDPPipeSync(POLY_XLU_DISP++);
-
-            gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 200, 200, 200, 180);
-            gDPSetEnvColor(POLY_XLU_DISP++, 200, 200, 200, 180);
 
             MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_object_kankyo.c", 1107);
-
-            gSPSegment(POLY_XLU_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(gDust5Tex));
-
-            Gfx_SetupDL_61Xlu(play->state.gfxCtx);
             gSPMatrix(POLY_XLU_DISP++, &D_01000000, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-            gDPPipeSync(POLY_XLU_DISP++);
-
             gSPDisplayList(POLY_XLU_DISP++, gEffDustDL);
-
-            gDPPipeSync(POLY_XLU_DISP++);
         }
 
         CLOSE_DISPS(play->state.gfxCtx, "../z_object_kankyo.c", 1127);

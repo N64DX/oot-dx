@@ -3687,7 +3687,7 @@ void Interface_DrawItemButtons(PlayState* play) {
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language) + height) << 2, G_TX_RENDERTILE, 0, 0,
                                 X_HIRES_DIVIDE(texCoordScale), HIRES_DIVIDE(texCoordScale));
 #endif
-        } else if (IS_CUTSCENE_LAYER && play->specialIconAlpha > 0) { // Stop Cutscene
+        } else if ((IS_CUTSCENE_LAYER || play->csCtx.state != CS_STATE_IDLE) && play->specialIconAlpha > 0 && interfaceCtx->unk_1FC == DO_ACTION_SKIP) { // Stop Cutscene
             OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(268 + WS_SHIFT_FULL), HIRES_MULTIPLY(182), X_HIRES_MULTIPLY(22), HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)), (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, 255);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
@@ -4118,11 +4118,11 @@ static void Interface_PrintHeapUsage(PlayState* this) {
     const u32 reservedStatic = sizeof(gZBuffer) + sizeof(gGfxSPTaskOutputBuffer) + sizeof(gGfxSPTaskYieldBuffer) + sizeof(gGfxSPTaskStack) + sizeof(gGfxPools) + sizeof(gAudioHeap); // Known static memory regions
     SystemArena_GetSizes(&maxFree, &free, &alloc); // Get memory info from the system arena
 
-    OPEN_DISPS(this->state.gfxCtx, "../z_parameter.c", 3816);
+    OPEN_DISPS(this->state.gfxCtx, __FILE__, __LINE__);
 
     printer = alloca(sizeof(GfxPrint));
     GfxPrint_Init(printer);
-    GfxPrint_Open(printer, POLY_XLU_DISP);
+    GfxPrint_Open(printer, OVERLAY_DISP);
 
     GfxPrint_SetColor(printer, 255, 255, 255, 255);
 
@@ -4155,7 +4155,7 @@ static void Interface_PrintHeapUsage(PlayState* this) {
         GfxPrint_Printf(printer, "STATIC:%.2f", usedMB);
     }
 
-    POLY_XLU_DISP = GfxPrint_Close(printer);
+    OVERLAY_DISP = GfxPrint_Close(printer);
     GfxPrint_Destroy(printer);
 
     CLOSE_DISPS(this->state.gfxCtx, "../z_parameter.c", 3854);

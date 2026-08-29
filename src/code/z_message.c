@@ -3246,6 +3246,7 @@ void Message_OpenText(PlayState* play, u16 textId) {
         }
         msgCtx->textboxColorAlphaCurrent = 0;
     }
+    msgCtx->textColorAlpha = 255;
     msgCtx->choiceNum = msgCtx->textUnskippable = msgCtx->textboxEndType = 0;
     msgCtx->msgBufPos = msgCtx->unk_E3D0 = msgCtx->textDrawPos = 0;
 }
@@ -3415,6 +3416,7 @@ void Message_PauseMenu_ShowDescription(PlayState* play, u16 textId, u8 textBoxPo
         msgCtx->textboxColorAlphaTarget = 230;
         msgCtx->textboxColorAlphaCurrent = 0;
     }
+    msgCtx->textColorAlpha = 255;
     msgCtx->choiceNum = msgCtx->textUnskippable = msgCtx->textboxEndType = 0;
     msgCtx->msgBufPos = msgCtx->unk_E3D0 = msgCtx->textDrawPos = 0;
 

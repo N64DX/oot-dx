@@ -1233,7 +1233,7 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
                                                     : gLinkAdultRightGauntletPlate3DL);
             }
 
-            if (boots != PLAYER_BOOTS_KOKIRI) {
+            if (boots != PLAYER_BOOTS_KOKIRI && boots != PLAYER_BOOTS_PEGASUS) {
                 Gfx** bootDLists = sBootDListGroups[boots - PLAYER_BOOTS_IRON];
 
                 gSPDisplayList(POLY_OPA_DISP++, bootDLists[0]);
@@ -2087,6 +2087,11 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                 Matrix_TranslateRotateZYX(&sSheathLimbModelShieldOnBackPos, &sSheathLimbModelShieldOnBackZyxRot);
                 Matrix_Get(&this->shieldMf);
             }
+
+            OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+            gDPPipeSync(POLY_OPA_DISP++);
+            gDPSetEnvColor(POLY_OPA_DISP++, sTunicColors[this->currentTunic].r, sTunicColors[this->currentTunic].g, sTunicColors[this->currentTunic].b, 0);
+            CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
         } else if (limbIndex == PLAYER_LIMB_HEAD) {
             Matrix_MultVec3f(&sPlayerFocusOffsetFromHead, &this->actor.focus.pos);
         } else {
@@ -2126,6 +2131,7 @@ u32 Player_InitPauseDrawData(PlayState* play, u8* segment, SkelAnime* skelAnime)
     gSegments[4] = OS_K0_TO_PHYSICAL(PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_START(segment));
     gSegments[6] = OS_K0_TO_PHYSICAL(PAUSE_PLAYER_SEGMENT_LINK_OBJECT(segment));
 
+    assert(SEGMENT_OFFSET(&gPlayerAnim_link_normal_wait) + sizeof(gPlayerAnim_link_normal_wait) <= PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_BUFFER_SIZE);
     SkelAnime_InitLink(play, skelAnime, gPlayerSkelHeaders[GET_LINK_MODEL],
                        &gPlayerAnim_link_normal_wait, 9, ptr, ptr, PLAYER_LIMB_MAX);
 

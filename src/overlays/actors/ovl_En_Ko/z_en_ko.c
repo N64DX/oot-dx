@@ -1264,6 +1264,10 @@ void func_80A99048(EnKo* this, PlayState* play) {
                 this->collider.dim.height += 200;
                 this->actionFunc = func_80A995CC;
                 return;
+            } else if (play->sceneId == SCENE_LOST_WOODS && INV_CONTENT(ITEM_OCARINA_FAIRY) == ITEM_NONE) {
+                this->collider.dim.height += 200;
+                this->actionFunc = func_80A995CC;
+                return;
             }
             Path_CopyLastPoint(this->path, &this->actor.world.pos);
         }

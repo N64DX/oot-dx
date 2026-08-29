@@ -3696,10 +3696,10 @@ BOX_BREAK
 "Tell him I send you."
 BOX_BREAK
 
-"It's probably to late to change your\n"
-"to go inside, but I'll warn you one\n"
-"last time. There are huge spiders and\n"
-"beasts inside, so be careful."
+"It's probably too late to change your\n"
+"mind, but I'll warn you one last time.\n"
+"There are huge spiders and beasts\n"
+"inside, so be careful."
 BOX_BREAK
 
 "Many of our kind died venturing\n"
@@ -3744,7 +3744,7 @@ BOX_BREAK
 BOX_BREAK
 
 "Just say the word should you ever\n"
-"require our assistence. We got the\n"
+"require our assistance. We have the\n"
 "best ore in the land."
 BOX_BREAK
 
@@ -3761,7 +3761,7 @@ DEFINE_MESSAGE(0x841B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "Just say the word should you ever\n"
-"require our assistence. We got the\n"
+"require our assistance. We have the\n"
 "best ore in the land."
 BOX_BREAK
 

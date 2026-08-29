@@ -961,6 +961,8 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->nextEntranceIndex = ENTR_LAKE_HYLIA_5;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK;
+                if (doCutsceneSkip)
+                    SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 40);
                 break;
 
             case CS_DEST_KAKARIKO_VILLAGE_DRAIN_WELL:

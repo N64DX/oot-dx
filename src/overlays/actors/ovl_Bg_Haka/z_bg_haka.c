@@ -88,7 +88,7 @@ void BgHaka_IdleClosed(BgHaka* this, PlayState* play) {
                 this->actionFunc = BgHaka_IdleLockedClosed;
             }
         } else if (0.0f < this->dyna.unk_150 ||
-                   (play->sceneId == SCENE_LAKE_HYLIA && !LINK_IS_ADULT && !Flags_GetSwitch(play, 0x23))) {
+                   (play->sceneId == SCENE_LAKE_HYLIA && !LINK_IS_ADULT_OR_TIMESKIP && !Flags_GetSwitch(play, 0x23))) {
             this->dyna.unk_150 = 0.0f;
             player->stateFlags2 &= ~PLAYER_STATE2_4;
         } else {

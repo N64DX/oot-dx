@@ -536,7 +536,7 @@ void EnKz_Update(Actor* thisx, PlayState* play) {
     EnKz* this = (EnKz*)thisx;
     s32 pad;
 
-    if (LINK_IS_ADULT && !GET_INFTABLE(INFTABLE_138)) {
+    if (LINK_IS_ADULT_OR_TIMESKIP && !GET_INFTABLE(INFTABLE_138)) {
         SET_INFTABLE(INFTABLE_138);
     }
     Collider_UpdateCylinder(&this->actor, &this->collider);
