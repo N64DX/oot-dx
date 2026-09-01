@@ -181,6 +181,48 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Bg_Spdweb"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Spdweb/z_bg_spdweb.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Spidertent"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Spidertent/z_obj_spidertent.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Kin2_Bombwall"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Kin2_Bombwall/z_bg_kin2_bombwall.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Kin2_Shelf"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Kin2_Shelf/z_bg_kin2_shelf.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Kin2_Picture"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Kin2_Picture/z_bg_kin2_picture.o"
+endseg
+
+beginseg
+    name "ovl_Bg_Kin2_Fence"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Kin2_Fence/z_bg_kin2_fence.o"
+endseg
+
+beginseg
     name "ovl_Bg_Breakwall2"
     compress
     flags OVERLAY
@@ -318,6 +360,13 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Hammergeist/z_en_hammergeist.o"
+endseg
+
+beginseg
+    name "ovl_En_Sbeetle"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Sbeetle/z_en_sbeetle.o"
 endseg
 
 beginseg
@@ -459,3 +508,11 @@ beginseg
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Po_Composer/z_en_po_composer.o"
 endseg
+
+beginseg
+    name "ovl_En_Poh_Soul"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Poh_Soul/z_en_poh_soul.o"
+endseg
+

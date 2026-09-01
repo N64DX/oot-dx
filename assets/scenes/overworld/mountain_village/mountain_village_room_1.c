@@ -12,8 +12,8 @@ SceneCmd mountain_village_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_1RoomShapeCullable_000210),
-    SCENE_CMD_OBJECT_LIST(15, mountain_village_room_1ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(39, mountain_village_room_1ActorEntry_000074),
+    SCENE_CMD_OBJECT_LIST(13, mountain_village_room_1ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(25, mountain_village_room_1ActorEntry_000074),
     SCENE_CMD_END(),
 };
 
@@ -31,8 +31,6 @@ s16 mountain_village_room_1ObjectList_00004C[] = {
     OBJECT_TSUBO,
     OBJECT_KA,
     OBJECT_FR,
-    OBJECT_WOOD_PILLAR,
-    OBJECT_D_HSBLOCK,
 };
 
 ActorEntry mountain_village_room_1ActorEntry_000074[] = {
@@ -61,20 +59,6 @@ ActorEntry mountain_village_room_1ActorEntry_000074[] = {
     { ACTOR_DOOR_ANA,       { 2406, 1168, -1197 }, { 0,      0, 0 }, 0x00C1 }, // Chest: 01 (Generic Grotto: Goron's Key)
     { ACTOR_EN_GS,          { 3685,  837, -1101 }, { 0, 0x47D0, 0 }, 0xFF22 },
     { ACTOR_EN_FR,          { 2300, 1168, -1200 }, { 0,      0, 0 }, 0x0211 }, // Yellow: 1 (Spring Lake)
-    { ACTOR_OBJ_HSBLOCK,    { 2230,  141,  -170 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
-    { ACTOR_OBJ_HSBLOCK,    { 3550,  777, -1120 }, { 0,      0, 0 }, 0x1F01 }, // Unlocks on switch: 1F
-    { ACTOR_BG_WOOD_PILLAR, { 2550,  260,   -75 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 2600,  300,   -75 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 2790,  380,   -75 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 2840,  420,   -75 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 3030,  500,   -75 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 3080,  540,   -75 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 2535, 1080, -1125 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 2485, 1120, -1125 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 2115, 1200, -1080 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 2065, 1240, -1080 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 1690, 1325, -1050 }, { 0,      0, 0 }, 0x0001 },
-    { ACTOR_BG_WOOD_PILLAR, { 1640, 1365, -1050 }, { 0,      0, 0 }, 0x0001 },
 };
 
 RoomShapeCullable mountain_village_room_1RoomShapeCullable_000210 = { 

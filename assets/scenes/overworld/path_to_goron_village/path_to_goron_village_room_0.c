@@ -13,8 +13,8 @@ SceneCmd path_to_goron_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&path_to_goron_village_room_0RoomShapeCullable_000240),
-    SCENE_CMD_OBJECT_LIST(13, path_to_goron_village_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(18, path_to_goron_village_room_0ActorEntry_00005C),
+    SCENE_CMD_OBJECT_LIST(12, path_to_goron_village_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(15, path_to_goron_village_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
 
@@ -27,7 +27,6 @@ SceneCmd* path_to_goron_village_room_0AlternateHeaders[] = {
 s16 path_to_goron_village_room_0ObjectList_000040[] = {
     OBJECT_HORSE,
     OBJECT_SPOT18_OBJ,
-    OBJECT_WOOD_PILLAR,
     OBJECT_ICEFLOE,
     OBJECT_FIREFLY,
     OBJECT_TITE,
@@ -53,9 +52,6 @@ ActorEntry path_to_goron_village_room_0ActorEntry_00005C[] = {
     { ACTOR_EN_ITEM00,         {   -300,   -200,   -650 }, {    0,      0,    0 }, 0x0201 }, // Collect: 02
     { ACTOR_EN_ITEM00,         {    566,   -200,    855 }, {    0,      0,    0 }, 0x0301 }, // Collect: 03
     { ACTOR_EN_ITEM00,         {   1287,   -200,   -168 }, {    0,      0,    0 }, 0x0401 }, // Collect: 04
-    { ACTOR_BG_WOOD_PILLAR,    {  -1130,    435,   -510 }, {    0, 0x0FA0,    0 }, 0x0000 },
-    { ACTOR_BG_WOOD_PILLAR,    {  -1500,    315,     50 }, {    0, 0x03E8,    0 }, 0x0000 },
-    { ACTOR_BG_WOOD_PILLAR,    {  -1120,    195,    530 }, {    0, 0xFC18,    0 }, 0x0000 },
     { ACTOR_EN_ISHI,           {  -1326,    320,    172 }, {    0,      0,    0 }, 0x0210 },
     { ACTOR_EN_ISHI,           {  -1349,    320,    114 }, {    0,      0,    0 }, 0x0200 },
     { ACTOR_EN_ISHI,           {  -1264,    320,    161 }, {    0,      0,    0 }, 0x0200 },
