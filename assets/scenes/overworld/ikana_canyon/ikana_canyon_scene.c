@@ -36,7 +36,7 @@ SceneCmd* ikana_canyon_sceneAlternateHeaders[] = {
 
 ActorEntry ikana_canyon_sceneStartPositionList0x0000B0[] = {
     { ACTOR_PLAYER, {   -64, -371,  4870 }, { 0, 0x8300, 0 }, 0x0FFF },
-    { ACTOR_PLAYER, { -1028,  639,    93 }, { 0, 0x1680, 0 }, 0x0EFF },
+    { ACTOR_PLAYER, { -1028,  639,    93 }, { 0, 0x1C00, 0 }, 0x0EFF },
     { ACTOR_PLAYER, {  -343,  440,   963 }, { 0,  0x680, 0 }, 0x0EFF },
     { ACTOR_PLAYER, {  1360,  823,  -220 }, { 0, 0xD8F0, 0 }, 0x0DFF },
     { ACTOR_PLAYER, { -1563,  128,  1548 }, { 0, 0xB9B0, 0 }, 0x0FFF },
@@ -79,7 +79,7 @@ Spawn ikana_canyon_sceneEntranceList0x000228[] = {
 
 u16 ikana_canyon_sceneExitList_000248[] = {
     ENTR_GLOOMY_GRAVEYARD_0,
-    ENTR_FORSAKEN_KINGDOM_1,
+    ENTR_ROYAL_VAULT_0,
     ENTR_FORSAKEN_KINGDOM_2,
     ENTR_FORSAKEN_KINGDOM_3,
     ENTR_FORSAKEN_KINGDOM_4,
