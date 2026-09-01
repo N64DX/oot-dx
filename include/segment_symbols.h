@@ -724,12 +724,26 @@ DECLARE_ROM_SEGMENT(swamp_spider_house_room_3)
 DECLARE_ROM_SEGMENT(swamp_spider_house_room_4)
 DECLARE_ROM_SEGMENT(swamp_spider_house_room_5)
 
+DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_0)
+DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_1)
+DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_2)
+DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_3)
+DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_4)
+
+
 DECLARE_ROM_SEGMENT(red_ice_cavern_room_0)
 DECLARE_ROM_SEGMENT(red_ice_cavern_room_1)
 DECLARE_ROM_SEGMENT(red_ice_cavern_room_2)
 DECLARE_ROM_SEGMENT(red_ice_cavern_room_3)
 DECLARE_ROM_SEGMENT(red_ice_cavern_room_4)
 DECLARE_ROM_SEGMENT(red_ice_cavern_room_5)
+
+DECLARE_ROM_SEGMENT(oceanside_spider_house_room_0)
+DECLARE_ROM_SEGMENT(oceanside_spider_house_room_1)
+DECLARE_ROM_SEGMENT(oceanside_spider_house_room_2)
+DECLARE_ROM_SEGMENT(oceanside_spider_house_room_3)
+DECLARE_ROM_SEGMENT(oceanside_spider_house_room_4)
+DECLARE_ROM_SEGMENT(oceanside_spider_house_room_5)
 
 DECLARE_ROM_SEGMENT(fairy_deku_tree_room_0)
 DECLARE_ROM_SEGMENT(fairy_deku_tree_room_1)
@@ -772,12 +786,6 @@ DECLARE_ROM_SEGMENT(woodfall_temple_room_11)
 DECLARE_ROM_SEGMENT(woodfall_temple_room_12)
 
 DECLARE_ROM_SEGMENT(woodfall_temple_boss_room_0)
-
-DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_0)
-DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_1)
-DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_2)
-DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_3)
-DECLARE_ROM_SEGMENT(beneath_the_graveyard_room_4)
 
 DECLARE_ROM_SEGMENT(dawngrove_inn_room_0)
 DECLARE_ROM_SEGMENT(dawngrove_inn_room_1)
