@@ -247,7 +247,9 @@ void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
             MapSelect_SetClearEventGroup(EVENTCHKINF_AA, sShadowFlags, ARRAY_COUNT(sShadowFlags));
             break;
         default:
-            gSaveContext.save.info.sceneFlags[type].clear ^= (1 << flag);
+            if (type < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+                gSaveContext.save.info.sceneFlags[type].clear ^= (1 << flag);
+            else gSaveContextExtended.sceneFlags[type - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)].clear ^= (1 << flag);
             break;
     }
 }
@@ -276,7 +278,9 @@ char* MapSelect_GetEvent(MapSelectState* this, u8 type, u16 flag) {
         case NABOORU:
             return MapSelect_GetEventText(GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE));
         default:
-            return MapSelect_GetEventText(gSaveContext.save.info.sceneFlags[type].clear & (1 << flag));
+            if (type < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+                return MapSelect_GetEventText(gSaveContext.save.info.sceneFlags[type].clear & (1 << flag));
+            else return MapSelect_GetEventText(gSaveContextExtended.sceneFlags[type - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)].clear & (1 << flag));
     }
 
 }
