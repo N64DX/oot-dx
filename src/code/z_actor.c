@@ -2522,6 +2522,8 @@ void Actor_InitContext(PlayState* play, ActorContext* actorCtx, ActorEntry* play
 
     if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
         savedSceneFlags = &gSaveContext.save.info.sceneFlags[play->sceneId];
+    else if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
+        savedSceneFlags = &gSaveContextExtended.sceneFlags[play->sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
 
     bzero(actorCtx, sizeof(ActorContext));
 
@@ -2536,7 +2538,7 @@ void Actor_InitContext(PlayState* play, ActorContext* actorCtx, ActorEntry* play
         overlayEntry++;
     }
 
-    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags)) {
+    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags)) {
         actorCtx->flags.chest = savedSceneFlags->chest;
         actorCtx->flags.swch = savedSceneFlags->swch;
         actorCtx->flags.clear = savedSceneFlags->clear;
