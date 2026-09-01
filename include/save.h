@@ -405,6 +405,11 @@ typedef struct SaveContext {
     /* 0x1428 */ u32 options[10];
 } SaveContext; // size = 0x1450
 
+typedef struct SaveContextExtended {
+    /* 0x00 */ SavedSceneFlags sceneFlags[9];
+    /* 0xFC */ char unk_FC[4];
+} SaveContextExtended; // size = 0x100
+
 typedef enum ButtonStatus {
     /* 0x00 */ BTN_ENABLED,
     /* 0xFF */ BTN_DISABLED = 0xFF
@@ -1250,5 +1255,6 @@ typedef enum IngoRaceState {
 void SaveContext_Init(void);
 
 extern SaveContext gSaveContext;
+extern SaveContextExtended gSaveContextExtended;
 
 #endif

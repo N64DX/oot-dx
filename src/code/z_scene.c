@@ -510,8 +510,11 @@ BAD_RETURN(s32) Scene_CommandAlternateHeaderList(PlayState* play, SceneCmd* cmd)
 BAD_RETURN(s32) Scene_CommandQuestHeaderList(PlayState* play, SceneCmd* cmd) {
     if (R_QUEST_MODE > 0) {
         SceneCmd* questHeader = ((SceneCmd**)SEGMENTED_TO_VIRTUAL(cmd->questHeaders.data))[R_QUEST_MODE - 1];
-        if (R_QUEST_MODE == DUNGEON_CHILD_RUSH && gSaveContext.save.info.sceneFlags[play->sceneId].extra.quest == 1)
-            questHeader = ((SceneCmd**)SEGMENTED_TO_VIRTUAL(cmd->questHeaders.data))[CHILD_MASTER_QUEST - 1];
+        if (R_QUEST_MODE == DUNGEON_CHILD_RUSH) {
+            SavedSceneFlags* sf = (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags)) ? &gSaveContext.save.info.sceneFlags[play->sceneId] : (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags)) ? &gSaveContextExtended.sceneFlags[play->sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)] : NULL;
+            if (sf != NULL && sf->extra.quest == 1)
+                questHeader = ((SceneCmd**)SEGMENTED_TO_VIRTUAL(cmd->questHeaders.data))[CHILD_MASTER_QUEST - 1];
+        }
 
         if (questHeader != NULL) {
             Scene_ExecuteCommands(play, SEGMENTED_TO_VIRTUAL(questHeader));

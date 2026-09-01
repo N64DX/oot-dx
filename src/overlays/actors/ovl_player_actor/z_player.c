@@ -5888,7 +5888,13 @@ static s16 sDungeonEntrances[] = {
     ENTR_INSIDE_GANONS_CASTLE_0,           // SCENE_INSIDE_GANONS_CASTLE
 };
 
-#define THIS_SCENE_FLAG gSaveContext.save.info.sceneFlags[play->sceneId]
+static SavedSceneFlags* Player_GetSceneFlags(PlayState* play) {
+    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        return &gSaveContext.save.info.sceneFlags[play->sceneId];
+    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
+        return &gSaveContextExtended.sceneFlags[play->sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
+    return NULL;
+}
 
 void Player_HandleDungeonRushExits(PlayState* play) {
     if (IS_RUSH_QUEST) {
@@ -5913,9 +5919,9 @@ void Player_HandleDungeonRushExits(PlayState* play) {
                 break;
 
             case ENTR_SPIRIT_TEMPLE_2:
-                if (CUR_UPG_VALUE(UPG_STRENGTH) >= PLAYER_STR_SILVER_G && !THIS_SCENE_FLAG.extra.exit) {
+                if (CUR_UPG_VALUE(UPG_STRENGTH) >= PLAYER_STR_SILVER_G && !Player_GetSceneFlags(play)->extra.exit) {
                     play->nextEntranceIndex = ENTR_SPIRIT_TEMPLE_DR;
-                    THIS_SCENE_FLAG.extra.exit = 1;
+                    Player_GetSceneFlags(play)->extra.exit = 1;
                 }
                 break;
 
@@ -5944,7 +5950,7 @@ void Player_HandleDungeonRushExits(PlayState* play) {
         }
     }
 
-    if (R_QUEST_MODE == DUNGEON_CHILD_RUSH && THIS_SCENE_FLAG.extra.quest < 1) {
+    if (R_QUEST_MODE == DUNGEON_CHILD_RUSH && Player_GetSceneFlags(play)->extra.quest < 1) {
         u8 resetItem = ITEM_NONE;
         u8 resetSlot = SLOT_NONE;
         u8 i;
@@ -5969,12 +5975,14 @@ void Player_HandleDungeonRushExits(PlayState* play) {
             case ENTR_WATER_TEMPLE_BOSS_0:
             case ENTR_SHADOW_TEMPLE_BOSS_0:
             case ENTR_SPIRIT_TEMPLE_BOSS_0:
-            case ENTR_GANONS_TOWER_0:
-                THIS_SCENE_FLAG.chest = THIS_SCENE_FLAG.swch = THIS_SCENE_FLAG.clear = THIS_SCENE_FLAG.collect = THIS_SCENE_FLAG.rooms = THIS_SCENE_FLAG.floors = play->actorCtx.flags.chest = play->actorCtx.flags.swch = play->actorCtx.flags.clear = play->actorCtx.flags.collect = 0;
-                THIS_SCENE_FLAG.extra.quest++;
+            case ENTR_GANONS_TOWER_0: {
+                SavedSceneFlags* flags = Player_GetSceneFlags(play);
+                flags->chest = flags->swch = flags->clear = flags->collect = flags->rooms = flags->floors = play->actorCtx.flags.chest = play->actorCtx.flags.swch = play->actorCtx.flags.clear = play->actorCtx.flags.collect = 0;
+                flags->extra.quest++;
                 play->nextEntranceIndex = sDungeonEntrances[play->sceneId];
                 gSaveContext.save.info.inventory.dungeonItems[play->sceneId] = gSaveContext.save.info.inventory.dungeonKeys[play->sceneId] = 0;
                 break;
+            }
         }
 
         if (resetItem == ITEM_SHIELD_MIRROR) {
