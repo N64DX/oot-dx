@@ -761,6 +761,54 @@ s32 Room_ProcessRoomRequest(PlayState* play, RoomContext* roomCtx) {
     return true;
 }
 
+/**
+ * Checks whether the room has any translucent (XLU) mesh entries to draw. All room shape types may carry xlu display lists; unloaded rooms have none.
+ */
+u8 Room_HasXlu(Room* room) {
+    RoomShapeDListsEntry* entry;
+    RoomShapeCullableEntry* roomShapeCullableEntry;
+    u8 i;
+
+    if (room->segment == NULL || room->roomShape == NULL)
+        return false;
+
+    switch (room->roomShape->base.type) {
+        case ROOM_SHAPE_TYPE_NORMAL:
+            if (room->roomShape->normal.entries != NULL) {
+                entry = SEGMENTED_TO_VIRTUAL(room->roomShape->normal.entries);
+                for (i=0; i<room->roomShape->normal.numEntries; i++, entry++)
+                    if (entry->xlu != NULL)
+                        return true;
+            }
+            return false;
+
+        case ROOM_SHAPE_TYPE_IMAGE:
+            if (room->roomShape->image.base.entry != NULL && ((RoomShapeDListsEntry*)SEGMENTED_TO_VIRTUAL(room->roomShape->image.base.entry))->xlu != NULL)
+                return true;
+            return false;
+
+        case ROOM_SHAPE_TYPE_CULLABLE:
+            roomShapeCullableEntry = SEGMENTED_TO_VIRTUAL(room->roomShape->cullable.entries);
+            for (i=0; i<room->roomShape->cullable.numEntries; i++, roomShapeCullableEntry++)
+                if (roomShapeCullableEntry->xlu != NULL)
+                    return true;
+            return false;
+
+        default:
+            return false;
+    }
+}
+
+/**
+ * Computes the draw flags for a room. The caller passes the global room draw flags (which may include ROOM_DRAW_XLU for the whole frame); this drops the cost of the XLU buffer if the specific room has no XLU mesh entries to draw, avoiding wasted XLU setup.
+ */
+u8 Room_GetDrawFlags(PlayState* play, Room* room, u32 flags) {
+    flags &= ROOM_DRAW_OPA | ROOM_DRAW_XLU;
+    if ((flags & ROOM_DRAW_XLU) && !Room_HasXlu(room))
+        flags &= ~ROOM_DRAW_XLU;
+    return flags;
+}
+
 void Room_Draw(PlayState* play, Room* room, u32 flags) {
     if (room->segment != NULL) {
         gSegments[3] = OS_K0_TO_PHYSICAL(room->segment);

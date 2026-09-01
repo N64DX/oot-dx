@@ -1416,8 +1416,8 @@ void Play_Draw(PlayState* this) {
                     roomDrawFlags = R_PLAY_DRAW_ROOM_FLAGS;
                 }
                 Scene_Draw(this);
-                Room_Draw(this, &this->roomCtx.curRoom, roomDrawFlags & (ROOM_DRAW_OPA | ROOM_DRAW_XLU));
-                Room_Draw(this, &this->roomCtx.prevRoom, roomDrawFlags & (ROOM_DRAW_OPA | ROOM_DRAW_XLU));
+                Room_Draw(this, &this->roomCtx.curRoom, Room_GetDrawFlags(this, &this->roomCtx.curRoom, roomDrawFlags));
+                Room_Draw(this, &this->roomCtx.prevRoom, Room_GetDrawFlags(this, &this->roomCtx.prevRoom, roomDrawFlags));
             }
         }
 
