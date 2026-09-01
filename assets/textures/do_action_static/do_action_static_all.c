@@ -1,4 +1,4 @@
-#include "do_action_static_all.h"
+#include "do_action_static.h"
 
 u64 gAttackDoActionENGTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
 #include "assets/textures/do_action_static/gAttackDoActionENGTex.ia4.inc.c"
@@ -114,6 +114,18 @@ u64 gNum7DoActionENGTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 
 
 u64 gNum8DoActionENGTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
 #include "assets/textures/do_action_static/gNum8DoActionENGTex.ia4.inc.c"
+};
+
+u64 gInfoDoActionENGTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gInfoDoActionENGTex.ia4.inc.c"
+};
+
+u64 gDashDoActionENGTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gDashDoActionENGTex.ia4.inc.c"
+};
+
+u64 gSkipDoActionENGTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gSkipDoActionENGTex.ia4.inc.c"
 };
 
 u64 gAttackDoActionGERTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
@@ -232,6 +244,18 @@ u64 gNum8DoActionGERTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 
 #include "build/pal-1.0/assets/textures/do_action_static/gNum8DoActionENGTex.ia4.inc.c"
 };
 
+u64 gInfoDoActionGERTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gInfoDoActionGERTex.ia4.inc.c"
+};
+
+u64 gDashDoActionGERTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gDashDoActionGERTex.ia4.inc.c"
+};
+
+u64 gSkipDoActionGERTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gSkipDoActionGERTex.ia4.inc.c"
+};
+
 u64 gAttackDoActionFRATex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
 #include "build/pal-1.0/assets/textures/do_action_static/gAttackDoActionFRATex.ia4.inc.c"
 };
@@ -348,6 +372,18 @@ u64 gNum8DoActionFRATex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 
 #include "build/pal-1.0/assets/textures/do_action_static/gNum8DoActionENGTex.ia4.inc.c"
 };
 
+u64 gInfoDoActionFRATex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gInfoDoActionFRATex.ia4.inc.c"
+};
+
+u64 gDashDoActionFRATex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gDashDoActionFRATex.ia4.inc.c"
+};
+
+u64 gSkipDoActionFRATex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gSkipDoActionFRATex.ia4.inc.c"
+};
+
 u64 gAttackDoActionJPNTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
 #include "assets/textures/do_action_static/gAttackDoActionJPNTex.ia4.inc.c"
 };
@@ -462,4 +498,16 @@ u64 gNum7DoActionJPNTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 
 
 u64 gNum8DoActionJPNTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
 #include "assets/textures/do_action_static/gNum8DoActionJPNTex.ia4.inc.c"
+};
+
+u64 gInfoDoActionJPNTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gInfoDoActionJPNTex.ia4.inc.c"
+};
+
+u64 gDashDoActionJPNTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gDashDoActionJPNTex.ia4.inc.c"
+};
+
+u64 gSkipDoActionJPNTex[TEX_LEN(u64, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 4)] = {
+#include "assets/textures/do_action_static/gSkipDoActionJPNTex.ia4.inc.c"
 };

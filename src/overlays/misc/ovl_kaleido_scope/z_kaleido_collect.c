@@ -12,9 +12,6 @@
 
 #include "assets/textures/parameter_static/parameter_static.h"
 #include "assets/textures/icon_item_static/icon_item_static.h"
-#if OOT_NTSC_N64
-#include "assets/textures/icon_item_static/icon_item_static_all.h"
-#endif
 
 #define SONG_MAX_LENGTH 8
 
@@ -202,7 +199,7 @@ void KaleidoScope_DrawQuestStatus(PlayState* play, GraphicsContext* gfxCtx) {
 
                 prevCursorPoint = pauseCtx->cursorPoint[PAUSE_QUEST];
 
-                if (pauseCtx->stickAdjX < -30) {
+                if (pauseCtx->stickAdjX < -30 && !pauseCtx->itemDescriptionOn) {
                     // Move cursor left
                     nextCursorPoint = sCursorPointLinks[prevCursorPoint][2];
                     if (nextCursorPoint == CURSOR_TO_LEFT) {
@@ -216,7 +213,7 @@ void KaleidoScope_DrawQuestStatus(PlayState* play, GraphicsContext* gfxCtx) {
                             nextCursorPoint = sCursorPointLinks[nextCursorPoint][2];
                         }
                     }
-                } else if (pauseCtx->stickAdjX > 30) {
+                } else if (pauseCtx->stickAdjX > 30 && !pauseCtx->itemDescriptionOn) {
                     // Move cursor right
                     nextCursorPoint = sCursorPointLinks[prevCursorPoint][3];
                     if (nextCursorPoint == CURSOR_TO_RIGHT) {
@@ -232,7 +229,7 @@ void KaleidoScope_DrawQuestStatus(PlayState* play, GraphicsContext* gfxCtx) {
                     }
                 }
 
-                if (pauseCtx->stickAdjY < -30) {
+                if (pauseCtx->stickAdjY < -30 && !pauseCtx->itemDescriptionOn) {
                     // Move cursor down
                     nextCursorPoint = sCursorPointLinks[prevCursorPoint][1];
                     while (nextCursorPoint >= 0) {
@@ -241,7 +238,7 @@ void KaleidoScope_DrawQuestStatus(PlayState* play, GraphicsContext* gfxCtx) {
                         }
                         nextCursorPoint = sCursorPointLinks[nextCursorPoint][1];
                     }
-                } else if (pauseCtx->stickAdjY > 30) {
+                } else if (pauseCtx->stickAdjY > 30 && !pauseCtx->itemDescriptionOn) {
                     // Move cursor up
                     nextCursorPoint = sCursorPointLinks[prevCursorPoint][0];
                     while (nextCursorPoint >= 0) {
@@ -298,6 +295,14 @@ void KaleidoScope_DrawQuestStatus(PlayState* play, GraphicsContext* gfxCtx) {
 
             if ((pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE) &&
                 (pauseCtx->cursorSpecialPos == 0)) {
+                if (CHECK_BTN_ALL(input->press.button, BTN_A) && !pauseCtx->itemDescriptionOn) { // Give description on item through a message box
+                    if (pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_SKULL_TOKEN)
+                        Message_PauseMenu_ShowDescription(play, 0x0900 + ITEM_SKULL_TOKEN, 3);
+                    else if (pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_HEART_PIECE)
+                        Message_PauseMenu_ShowDescription(play, 0x0900 + ITEM_HEART_PIECE, 3);
+                    else Message_PauseMenu_ShowDescription(play, 0x0900 + pauseCtx->cursorItem[pauseCtx->pageIndex], 3);
+                }
+
                 if ((cursor >= QUEST_SONG_MINUET) && (cursor < QUEST_KOKIRI_EMERALD)) {
                     if (CHECK_QUEST_ITEM(pauseCtx->cursorPoint[PAUSE_QUEST])) {
                         cursor = pauseCtx->cursorSlot[PAUSE_QUEST];
@@ -344,7 +349,7 @@ void KaleidoScope_DrawQuestStatus(PlayState* play, GraphicsContext* gfxCtx) {
                 }
             }
         } else if (pauseCtx->cursorSpecialPos == PAUSE_CURSOR_PAGE_LEFT) {
-            if (pauseCtx->stickAdjX > 30) {
+            if (pauseCtx->stickAdjX > 30 && !pauseCtx->itemDescriptionOn) {
                 // Move cursor right from the "scroll to left page" position
 
                 pauseCtx->cursorPoint[PAUSE_QUEST] = QUEST_STONE_OF_AGONY;
@@ -365,7 +370,7 @@ void KaleidoScope_DrawQuestStatus(PlayState* play, GraphicsContext* gfxCtx) {
                 pauseCtx->cursorSlot[pauseCtx->pageIndex] = cursor;
             }
         } else { // cursorSpecialPos == PAUSE_CURSOR_PAGE_RIGHT
-            if (pauseCtx->stickAdjX < -30) {
+            if (pauseCtx->stickAdjX < -30 && !pauseCtx->itemDescriptionOn) {
                 // Move cursor left from the "scroll to right page" position
 
                 pauseCtx->cursorPoint[PAUSE_QUEST] = QUEST_MEDALLION_FOREST;

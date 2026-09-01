@@ -66,7 +66,7 @@ s32 ElfMsg_KillCheck(ElfMsg* this, PlayState* play) {
         Actor_Kill(&this->actor);
         return 0;
     }
-    
+
     if ((this->actor.world.rot.y > 0) && (this->actor.world.rot.y < 0x41) &&
         Flags_GetSwitch(play, this->actor.world.rot.y - 1)) {
         LOG_STRING_T("共倒れ", "Mutual destruction", "../z_elf_msg.c", 161);

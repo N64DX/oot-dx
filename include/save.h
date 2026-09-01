@@ -108,40 +108,6 @@ typedef struct Inventory {
     /* 0x5C */ s16 gsTokens;
 } Inventory; // size = 0x5E
 
-typedef union ObtainedItems {
-    struct {
-        u8 fireArrow            : 1;
-        u8 iceArrow             : 1;
-        u8 lightArrow           : 1;
-        u8 amuletOfEnergy       : 1;
-        u8 masterSword          : 1;
-        u8 mirrorShieldIsBroken : 1;
-        u8 bombArrow            : 1;
-        u8 unk                  : 1;
-    };
-    u8 items;
-} ObtainedItems; // size = 0x1
-
-typedef union ObtainedSkills {
-    struct {
-        u8 enhancedSpin      : 1;
-        u8 perfectBlockBoost : 1;
-        u8 halfMagicCost     : 1;
-        u8 furtherJump       : 1;
-        u8 unk               : 4;
-    };
-    u8 skills;
-} ObtainedSkills; // size = 0x1
-
-typedef union ObtainedSkins {
-    struct {
-        u8 woodenShield : 1;
-        u8 metalShield  : 1;
-        u8 unk          : 6;
-    };
-    u8 skins;
-} ObtainedSkins; // size = 0x1
-
 typedef union ShieldDurability {
     struct {
         u16 durability : 11;
@@ -159,7 +125,7 @@ typedef union FrogQuest {
         u32 unk        : 3;
     };
     u32 quest;
-} FrogQuest; // size = 0x2
+} FrogQuest; // size = 0x4
 
 typedef struct Checksum {
     /* 0x00 */ u16 value;
@@ -268,6 +234,7 @@ typedef enum TimerId {
 #define ENV_HAZARD_TEXT_TRIGGER_HOTROOM (1 << 0)
 #define ENV_HAZARD_TEXT_TRIGGER_UNDERWATER (1 << 1)
 #define ENV_HAZARD_TEXT_TRIGGER_FREEZINGROOM (1 << 2)
+#define ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM (1 << 3)
 
 typedef enum WorldMapArea {
     /*  0 */ WORLD_MAP_AREA_HYRULE_FIELD,
@@ -292,7 +259,16 @@ typedef enum WorldMapArea {
     /* 19 */ WORLD_MAP_AREA_LON_LON_RANCH,
     /* 20 */ WORLD_MAP_AREA_QUESTION_MARK, // Windmill/Dampé's Grave (and a Lon Lon Ranch cutscene). Labeled as "?"
     /* 21 */ WORLD_MAP_AREA_GANONS_CASTLE,
-    /* 22 */ WORLD_MAP_AREA_MAX // also grottos and fairy's/great fairy's fountains (scenes with varying locations)
+    /* 22 */ WORLD_MAP_AREA_ANCIENT_GROVE,
+    /* 23 */ WORLD_MAP_AREA_FORBIDDEN_WOODS,
+    /* 24 */ WORLD_MAP_AREA_FORSAKEN_KINGDOM,
+    /* 25 */ WORLD_MAP_AREA_GLOOMY_GRAVEYARD,
+    /* 26 */ WORLD_MAP_AREA_GORON_SHRINE,
+    /* 27 */ WORLD_MAP_AREA_GORON_VILLAGE,
+    /* 28 */ WORLD_MAP_AREA_RIVERSIDE_VILLAGE,
+    /* 29 */ WORLD_MAP_AREA_SPRING_LAKE,
+    /* 30 */ WORLD_MAP_AREA_WOODFALL,
+    /* 31 */ WORLD_MAP_AREA_MAX // also grottos and fairy's/great fairy's fountains (scenes with varying locations)
 } WorldMapArea;
 
 // offsets in SavePlayerData and SaveContext/Save
@@ -309,7 +285,7 @@ typedef struct SavePlayerData {
     /* 0x1A  0x0036 */ u16 swordHealth;
     /* 0x1C  0x0038 */ u16 naviTimer;
     /* 0x1E  0x003A */ u8 isMagicAcquired;
-    /* 0x1F  0x003B */ u8 equipmentUpgrades;
+    /* 0x1F  0x003B */ char unk_3B[0x01];
     /* 0x20  0x003C */ u8 isDoubleMagicAcquired;
     /* 0x21  0x003D */ u8 isDoubleDefenseAcquired;
     /* 0x22  0x003E */ u8 bgsFlag;
@@ -335,19 +311,17 @@ typedef struct SaveInfo {
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
-    /* 0x0F18  0x0F34 */ ObtainedSkins obtainedSkins;
-    /* 0x0F19  0x0F35 */ char unk_F34[0x02];
-    /* 0x0F1B  0x0F37 */ u8 energy;
+    /* 0x0F18  0x0F34 */ u32 upgradeItems;
     /* 0x0F1C  0x0F38 */ u32 worldMapAreaData; // "area_arrival"
     /* 0x0F20  0x0F3C */ FrogQuest frogQuest;
     /* 0x0F24  0x0F40 */ u8 scarecrowLongSongSet;
     /* 0x0F25  0x0F41 */ u8 scarecrowLongSong[0x360];
     /* 0x1285  0x12A1 */ char unk_12A1[0x1B];
     /* 0x12A0  0x12BC */ ShieldDurability shields[4];
-    /* 0x1288  0x12C4 */ ObtainedSkills obtainedSkills;
+    /* 0x1288  0x12C4 */ char unk_12C4[0x01];
     /* 0x12A9  0x12C5 */ u8 scarecrowSpawnSongSet;
     /* 0x12AA  0x12C6 */ u8 scarecrowSpawnSong[0x80];
-    /* 0x132A  0x1346 */ ObtainedItems obtainedItems;
+    /* 0x132A  0x1346 */ u8 energy;
     /* 0x13CB  0x1347 */ u8 questMode;
     /* 0x132C  0x1348 */ HorseData horseData;
     /* 0x1336  0x1352 */ Checksum checksum; // "check_sum"
@@ -566,27 +540,9 @@ typedef enum LinkAge {
 #define SET_MASK_ADULT(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0x00FF) | (((val) & 0xFF) << 8)))
 #define SET_MASK_CHILD(val)     (gSaveContext.save.info.playerData.mask = ((gSaveContext.save.info.playerData.mask & 0xFF00) | ((val) & 0xFF)))
 
-#define SET_HEROS_SWORD       (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 0)
-#define CLEAR_HEROS_SWORD     (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 0))
-#define TOGGLE_HEROS_SWORD    (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 0)
-#define HAS_HEROS_SWORD     (((gSaveContext.save.info.playerData.equipmentUpgrades >>   0) & 1) && IS_CHILD_QUEST_AS_CHILD)
-#define IS_HEROS_SWORD        (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS) && (HAS_HEROS_SWORD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)) )
-#define IS_RAZOR_SWORD       (!gSaveContext.save.info.obtainedItems.masterSword && IS_CHILD_QUEST_AS_CHILD)
-
-#define SET_HEROS_SHIELD      (gSaveContext.save.info.playerData.equipmentUpgrades |=   1 << 1)
-#define CLEAR_HEROS_SHIELD    (gSaveContext.save.info.playerData.equipmentUpgrades &= ~(1 << 1))
-#define TOGGLE_HEROS_SHIELD   (gSaveContext.save.info.playerData.equipmentUpgrades ^=   1 << 1)
-#define HAS_HEROS_SHIELD    (((gSaveContext.save.info.playerData.equipmentUpgrades >>   1) & 1) && IS_CHILD_QUEST_AS_CHILD)
-#define IS_HEROS_SHIELD       (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && (HAS_HEROS_SHIELD || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN)) )
-
 #define HAS_ROCS_FEATHER      (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ROCS_FEATHER || HAS_GOLDEN_FEATHER)
 #define HAS_GOLDEN_FEATHER    (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_GOLDEN_FEATHER)
 #define HAS_FAIRYS_SWORD      (INV_CONTENT(ITEM_ARROW_ICE)  == ITEM_SWORD_FAIRYS)
-
-#define SET_AMULET_OF_ENERGY  (gSaveContext.save.info.obtainedItems.amuletOfEnergy = 1)
-#define HAS_AMULET_OF_ENERGY  (gSaveContext.save.info.obtainedItems.amuletOfEnergy)
-#define SET_MASTER_SWORD      (gSaveContext.save.info.obtainedItems.masterSword = 1)
-#define HAS_MASTER_SWORD      (gSaveContext.save.info.obtainedItems.masterSword)
 
 #define YEARS_CHILD 5
 #define YEARS_ADULT 17
@@ -607,7 +563,8 @@ typedef enum LinkAge {
 #define QUEST_MAX           BOSS_RUSH
 #define QUEST_MODE          gSaveContext.save.info.questMode
 
-#define USE_TITLE_CARDS(play)   (((TITLE_CARDS || play->sceneId > SCENE_OUTSIDE_GANONS_CASTLE || (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST)) && !PLATFORM_IQUE))
+#define USE_TITLE_CARDS(play)   (((TITLE_CARDS    || play->sceneId > SCENE_OUTSIDE_GANONS_CASTLE || (R_QUEST_MODE >= CHILD_QUEST && R_QUEST_MODE <= CHILD_URA_QUEST)) && !PLATFORM_IQUE))
+#define USE_PAUSE_INFO          ((USE_MM_PAUSE_INFO || IS_CHILD_QUEST))
 
 #define IS_VANILLA_QUEST    (R_QUEST_MODE % 3 == 0)
 #define IS_MASTER_QUEST     (R_QUEST_MODE % 3 == 1)
@@ -643,6 +600,7 @@ typedef enum LinkAge {
 #define USE_MM_BOTTLES              ((gSaveContext.options[0] >> 22) & 1)  // Bits: 22
 #define TITLE_CARDS                 ((gSaveContext.options[0] >> 23) & 1)  // Bits: 23
 #define USE_MM_HUD                  ((gSaveContext.options[0] >> 24) & 1)  // Bits: 24
+#define USE_MM_PAUSE_INFO           ((gSaveContext.options[0] >> 25) & 1)  // Bits: 25
 #define HEALTH_RECOVERY             ((gSaveContext.options[1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gSaveContext.options[1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gSaveContext.options[1] >> 5)  & 7)  // Bits: 5-7
@@ -663,7 +621,7 @@ typedef enum LinkAge {
 #define SHOW_STARS                  ((gSaveContext.globalSettings >> 6) & 1)  // Bits: 6
 
 #define MAX_SWORD_HEALTH 8
-#define MAGIC_COST(magic) (gSaveContext.save.info.obtainedSkills.halfMagicCost ? (magic / 2) : magic)
+#define MAGIC_COST(magic) (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? (magic / 2) : magic)
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
@@ -696,6 +654,7 @@ typedef enum LinkAge {
 #define CUR_CAPACITY(upg) CAPACITY(upg, CUR_UPG_VALUE(upg))
 
 #define CHECK_QUEST_ITEM(item) (gSaveContext.save.info.inventory.questItems & gBitFlags[item])
+#define CHECK_UPGRADE_ITEM(item) (gSaveContext.save.info.upgradeItems & gBitFlags[item])
 #define CHECK_DUNGEON_ITEM(item, dungeonIndex) (gSaveContext.save.info.inventory.dungeonItems[dungeonIndex] & gBitFlags[item])
 
 #define GET_GS_FLAGS(index) \
@@ -808,6 +767,7 @@ typedef enum LinkAge {
 #define EVENTCHKINF_55 0x55
 #define EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW 0x56
 #define EVENTCHKINF_CLEANSED_GORON_MINES 0x57
+#define EVENTCHKINF_CLEANSED_STONE_TOWER 0x58
 #define EVENTCHKINF_59 0x59
 #define EVENTCHKINF_5A 0x5A
 #define EVENTCHKINF_5B 0x5B
@@ -918,6 +878,7 @@ typedef enum LinkAge {
 #define EVENTCHKINF_C9 0xC9
 #define EVENTCHKINF_SEEN_ANCIENT_GROVE_INTRO_CS     0xCA
 #define EVENTCHKINF_SEEN_RIVERSIDE_VILLAGE_INTRO_CS 0xCB
+#define EVENTCHKINF_SEEN_WOODFALL_INTRO_CS          0xCC
 
 // EVENTCHKINF 0xD0-0xD6
 #define EVENTCHKINF_INDEX_SONGS_FOR_FROGS EVENTCHKINF_INDEX(EVENTCHKINF_SONGS_FOR_FROGS_CHOIR)
@@ -1128,7 +1089,7 @@ typedef enum LinkAge {
 #define INFTABLE_GORON_SHRINE_DOOR_OPENED 0x11F
 #define INFTABLE_GORON_MINES_DOOR_OPENED 0x120
 #define INFTABLE_WEBBED_SHRINE_DOOR_OPENED 0x121
-#define INFTABLE_STONE_TOWER_DOOR_OPENED 0x122
+#define INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED 0x122
 #define INFTABLE_124 0x124
 #define INFTABLE_129 0x129
 #define INFTABLE_12A 0x12A

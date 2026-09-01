@@ -10,16 +10,17 @@
 #include "skybox.h"
 #include "cutscene_commands.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd dawngrove_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_NONE, NA_BGM_DAWNGROVE),
     SCENE_CMD_ROOM_LIST(3, dawngrove_sceneRoomList_000070),
     SCENE_CMD_TRANSITION_ACTOR_LIST(4, dawngrove_sceneTransitionActorList_000088),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 4),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_ANCIENT_GROVE),
     SCENE_CMD_COL_HEADER(&dawngrove_sceneCollisionHeader_000408),
     SCENE_CMD_SPAWN_LIST(dawngrove_sceneEntranceList_000208),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
-    SCENE_CMD_PLAYER_ENTRY_LIST(3, dawngrove_sceneStartPositionList_0000D0),
+    SCENE_CMD_PLAYER_ENTRY_LIST(4, dawngrove_sceneStartPositionList_0000D0),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_UNSET_1D, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(dawngrove_sceneExitList_0000C8),
     SCENE_CMD_ENV_LIGHT_SETTINGS(12, dawngrove_sceneLightSettings_000100),
@@ -30,6 +31,7 @@ ActorEntry dawngrove_sceneStartPositionList_0000D0[] = {
     { ACTOR_PLAYER, {   -40,   0,     0 }, { 0, 0xC004, 0 }, 0x0FFF },
     { ACTOR_PLAYER, { -2708, 180,  -418 }, { 0, 0x3FFC, 0 }, 0x0FFF },
     { ACTOR_PLAYER, { -1294, 129, -1490 }, { 0, 0x127C, 0 }, 0x0FFF },
+    { ACTOR_PLAYER, { -2050,  28,  -175 }, { 0, 0x8000, 0 }, 0x06FF }, // Owl Warp
 };
 
 TransitionActorEntry dawngrove_sceneTransitionActorList_000088[] = {
@@ -49,6 +51,7 @@ Spawn dawngrove_sceneEntranceList_000208[] = {
     { 0x00, 0x00 },
     { 0x01, 0x01 },
     { 0x02, 0x02 },
+    { 0x03, 0x01 },
 };
 
 u16 dawngrove_sceneExitList_0000C8[] = {
@@ -103,7 +106,7 @@ CutsceneData gDawngroveIntroCs[] = {
         CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42340000, 45.000000f), -436, 161, -1, 0x0000),
         CS_CAM_POINT(CS_CAM_STOP, 0x00, 0, CS_FLOAT(0x42340000, 45.000000f), -436, 161, -1, 0x0000),
     CS_MISC_LIST(1),
-        CS_MISC(CS_MISC_SHOW_TITLE_CARD, 52, 53, 0, 0, -1372, 199, -370, -1372, 219, -370, 0, 0, 1),
+        CS_MISC(CS_MISC_SHOW_TITLE_CARD, 52, 53, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0),
     CS_END_OF_SCRIPT(),
 };
 

@@ -10,12 +10,13 @@
 #include "skybox.h"
 #include "cutscene_commands.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd dawngrove_village_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(0, NATURE_ID_MARKET_ENTRANCE, NA_BGM_DAWNGROVE_VILLAGE),
     SCENE_CMD_ROOM_LIST(1, dawngrove_village_sceneRoomList_000070),
     SCENE_CMD_TRANSITION_ACTOR_LIST(3, dawngrove_village_sceneTransitionActorList_000078),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 4),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_RIVERSIDE_VILLAGE),
     SCENE_CMD_COL_HEADER(&dawngrove_village_sceneCollisionHeader_000340),
     SCENE_CMD_SPAWN_LIST(dawngrove_village_sceneEntranceList_0001F8),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
@@ -91,7 +92,7 @@ CutsceneData gDawngroveVillageIntroCs[] = {
         CS_CAM_POINT(CS_CAM_CONTINUE, 0x00, 0, CS_FLOAT(0x42340000, 45.000000f), -942, 82, 47, 0x0000),
         CS_CAM_POINT(CS_CAM_STOP, 0x00, 0, CS_FLOAT(0x42340000, 45.000000f), -942, 82, 47, 0x0000),
     CS_MISC_LIST(1),
-        CS_MISC(CS_MISC_SHOW_TITLE_CARD, 40, 41, 0, 0, -1379, 187, 473, -1379, 207, 473, 0, 0, 1),
+        CS_MISC(CS_MISC_SHOW_TITLE_CARD, 40, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
     CS_END_OF_SCRIPT(),
 };
 

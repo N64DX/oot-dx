@@ -9,12 +9,13 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd fairy_deku_tree_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(2, NATURE_ID_NONE, NA_BGM_KOLIMA_FOREST),
     SCENE_CMD_ROOM_LIST(14, fairy_deku_tree_sceneRoomList0x0001F8),
     SCENE_CMD_TRANSITION_ACTOR_LIST(24, fairy_deku_tree_sceneTransitionActorList0x000078),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_ANCIENT_GROVE),
     SCENE_CMD_COL_HEADER(&fairy_deku_tree_sceneCollisionHeader0x00EA9C),
     SCENE_CMD_SPAWN_LIST(fairy_deku_tree_sceneEntranceList0x000268),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_DUNGEON, OBJECT_GAMEPLAY_DANGEON_KEEP),
@@ -62,7 +63,7 @@ TransitionActorEntry fairy_deku_tree_sceneTransitionActorList0x000078[] = {
     {  6, 13,  0, -1, ACTOR_DOOR_SHUTTER, { 1129,  160,     0 }, 0xC000, 0x02DA }, // 14, Sets switch: 1A
     {  0, -1,  9, 14, ACTOR_DOOR_SHUTTER, {  798, 1160,  -798 }, 0x6000, 0x0084 }, // 15, Checks switch: 04
     {  2, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,  400,   423 }, 0x0000, 0x003F }, // 16
-    {  1, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,    0,  -643 }, 0x8000, 0x02DB }, // 17, Sets switch: 1B
+    {  1, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,    0,  -643 }, 0x8000, 0x003F }, // 17
     {  0, -1,  1, -1, ACTOR_DOOR_SHUTTER, {    0,   80,   423 }, 0x8000, 0x0088 }, // 18, Checks switch: 08
     {  0, -1,  3, -1, ACTOR_DOOR_SHUTTER, {  299,  720,  -299 }, 0xE000, 0x0081 }, // 19, Checks switch: 01
     {  4, 15,  0, -1, ACTOR_DOOR_SHUTTER, { -299, 1000,   299 }, 0xE000, 0x0082 }, // 20, Checks switch: 02

@@ -9,13 +9,14 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd swamp_spider_house_scene[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(swamp_spider_house_sceneAlternateHeaders),
     SCENE_CMD_SOUND_SETTINGS(2, NATURE_ID_NONE, NA_BGM_CAVERN),
     SCENE_CMD_ROOM_LIST(6, swamp_spider_house_sceneRoomList0x000118),
     SCENE_CMD_TRANSITION_ACTOR_LIST(8, swamp_spider_house_sceneTransitionActorList_000098),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_SPRING_LAKE),
     SCENE_CMD_COL_HEADER(&swamp_spider_house_sceneCollisionHeader_005CF4),
     SCENE_CMD_SPAWN_LIST(swamp_spider_house_sceneEntranceList0x000148),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_DUNGEON, OBJECT_GAMEPLAY_DANGEON_KEEP),
@@ -2035,7 +2036,7 @@ SceneCmd swamp_spider_house_sceneSet_timeskip[] = {
     SCENE_CMD_SOUND_SETTINGS(2, NATURE_ID_NONE, NA_BGM_CAVERN),
     SCENE_CMD_ROOM_LIST(6, swamp_spider_house_sceneRoomList0x000118),
     SCENE_CMD_TRANSITION_ACTOR_LIST(8, swamp_spider_house_sceneTransitionActorList_timeskip),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 10),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_SPRING_LAKE),
     SCENE_CMD_COL_HEADER(&swamp_spider_house_sceneCollisionHeader_005CF4),
     SCENE_CMD_SPAWN_LIST(swamp_spider_house_sceneEntranceList0x000148),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_DUNGEON, OBJECT_GAMEPLAY_DANGEON_KEEP),

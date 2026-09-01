@@ -32,7 +32,6 @@
 #include "assets/textures/icon_item_static/icon_item_static.h"
 #include "assets/textures/icon_item_24_static/icon_item_24_static.h"
 #if OOT_NTSC_N64
-#include "assets/textures/icon_item_static/icon_item_static_all.h"
 #include "assets/textures/icon_item_nes_static/icon_item_nes_static.h"
 #include "assets/textures/icon_item_ger_static/icon_item_ger_static.h"
 #include "assets/textures/icon_item_fra_static/icon_item_fra_static.h"
@@ -90,9 +89,24 @@ typedef enum VtxPageInit {
 
 static u8 editor_timer = 0;
 static u8 pressed_r = false;
-u8 showAltQuiverSlot = false;
-u8 showAltStrengthSlot = false;
-u8 showAltScalesSlot = false;
+
+u8 KaleidoScope_GetEquipBit(u8 bit, u8 type) {
+    return IS_CHILD_QUEST ? sCQEquipmentItemOrder[bit][type] : sEquipmentItemOrder[bit][type];
+}
+
+u8 sEquipmentItemOrder[4][4] = {
+    { 0, 1, 2, 3 }, // Swords
+    { 0, 1, 2, 3 }, // Shields
+    { 0, 1, 2, 3 }, // Tunics
+    { 0, 1, 2, 3 }, // Boots
+};
+
+u8 sCQEquipmentItemOrder[4][4] = {
+    { 0, 3, 1, 2 }, // Swords
+    { 0, 3, 1, 2 }, // Shields
+    { 0, 1, 2, 3 }, // Tunics
+    { 0, 1, 2, 3 }, // Boots
+};
 
 #if OOT_NTSC
 
@@ -117,6 +131,27 @@ static void* sEquipPageBgQuadsJPNTexs[] = {
     gPauseEquipment22Tex,
     gPauseEquipment23Tex,
     gPauseEquipment24Tex,
+};
+
+static void* sEquipPageBgQuadsCQJPNTexs[] = {
+    // column 1
+    gPauseEquipment00CQTex,
+    gPauseEquipment01CQTex,
+    gPauseEquipment02CQTex,
+    gPauseEquipment03CQTex,
+    gPauseEquipment04CQTex,
+    // column 2
+    gPauseEquipment10CQJPNTex,
+    gPauseEquipment11CQTex,
+    gPauseEquipment12CQTex,
+    gPauseEquipment13CQTex,
+    gPauseEquipment14CQTex,
+    // column 3
+    gPauseEquipment20CQTex,
+    gPauseEquipment21CQTex,
+    gPauseEquipment22CQTex,
+    gPauseEquipment23CQTex,
+    gPauseEquipment24CQTex,
 };
 
 static void* sItemPageBgQuadsJPNTexs[] = {
@@ -250,6 +285,27 @@ static void* sEquipPageBgQuadsFRATexs[] = {
     gPauseEquipment24Tex,
 };
 
+static void* sEquipPageBgQuadsCQFRATexs[] = {
+    // column 1
+    gPauseEquipment00CQFRATex,
+    gPauseEquipment01CQTex,
+    gPauseEquipment02CQTex,
+    gPauseEquipment03CQTex,
+    gPauseEquipment04CQTex,
+    // column 2
+    gPauseEquipment10CQFRATex,
+    gPauseEquipment11CQTex,
+    gPauseEquipment12CQTex,
+    gPauseEquipment13CQTex,
+    gPauseEquipment14CQTex,
+    // column 3
+    gPauseEquipment20CQFRATex,
+    gPauseEquipment21CQTex,
+    gPauseEquipment22CQTex,
+    gPauseEquipment23CQTex,
+    gPauseEquipment24CQTex,
+};
+
 static void* sItemPageBgQuadsFRATexs[] = {
     // column 1
     gPauseSelectItem00FRATex,
@@ -376,6 +432,27 @@ static void* sEquipPageBgQuadsGERTexs[] = {
     gPauseEquipment22Tex,
     gPauseEquipment23Tex,
     gPauseEquipment24Tex,
+};
+
+static void* sEquipPageBgQuadsCQGERTexs[] = {
+    // column 1
+    gPauseEquipment00CQGERTex,
+    gPauseEquipment01CQTex,
+    gPauseEquipment02CQTex,
+    gPauseEquipment03CQTex,
+    gPauseEquipment04CQTex,
+    // column 2
+    gPauseEquipment10CQGERTex,
+    gPauseEquipment11CQTex,
+    gPauseEquipment12CQTex,
+    gPauseEquipment13CQTex,
+    gPauseEquipment14CQTex,
+    // column 3
+    gPauseEquipment20CQGERTex,
+    gPauseEquipment21CQTex,
+    gPauseEquipment22CQTex,
+    gPauseEquipment23CQTex,
+    gPauseEquipment24CQTex,
 };
 
 static void* sItemPageBgQuadsGERTexs[] = {
@@ -506,6 +583,27 @@ static void* sEquipPageBgQuadsENGTexs[] = {
     gPauseEquipment22Tex,
     gPauseEquipment23Tex,
     gPauseEquipment24Tex,
+};
+
+static void* sEquipPageBgQuadsCQENGTexs[] = {
+    // column 1
+    gPauseEquipment00CQTex,
+    gPauseEquipment01CQTex,
+    gPauseEquipment02CQTex,
+    gPauseEquipment03CQTex,
+    gPauseEquipment04CQTex,
+    // column 2
+    gPauseEquipment10CQENGTex,
+    gPauseEquipment11CQTex,
+    gPauseEquipment12CQTex,
+    gPauseEquipment13CQTex,
+    gPauseEquipment14CQTex,
+    // column 3
+    gPauseEquipment20CQTex,
+    gPauseEquipment21CQTex,
+    gPauseEquipment22CQTex,
+    gPauseEquipment23CQTex,
+    gPauseEquipment24CQTex,
 };
 
 static void* sItemPageBgQuadsENGTexs[] = {
@@ -642,6 +740,13 @@ static void* sEquipPageBgQuadsTexs[] = {
     sEquipPageBgQuadsJPNTexs,
 };
 
+static void* sEquipPageBgQuadsCQTexs[] = {
+    sEquipPageBgQuadsCQENGTexs,
+    sEquipPageBgQuadsCQGERTexs,
+    sEquipPageBgQuadsCQFRATexs,
+    sEquipPageBgQuadsCQJPNTexs,
+};
+
 static void* sItemPageBgQuadsTexs[] = {
     sItemPageBgQuadsENGTexs,
     sItemPageBgQuadsGERTexs,
@@ -677,19 +782,25 @@ static void* sSavePromptBgQuadsTexs[] = {
     sSavePromptBgQuadsJPNTexs,
 };
 
-#define EQUIPMENT_TEXS(language) (sEquipPageBgQuadsTexs[(language)])
+#define EQUIPMENT_TEXS(language) (IS_CHILD_QUEST ? sEquipPageBgQuadsCQTexs[(language)] : sEquipPageBgQuadsTexs[(language)])
 #define SELECT_ITEM_TEXS(language) (IS_CHILD_QUEST ? sItemPageBgQuadsCQTexs[(language)] : sItemPageBgQuadsTexs[(language)])
 #define MAP_TEXS(language) (sMapPageBgQuadsTexs[(language)])
 #define QUEST_STATUS_TEXS(language) (sQuestPageBgQuadsTexs[(language)])
 #define SAVE_TEXS(language) (sSavePromptBgQuadsTexs[(language)])
 #elif OOT_NTSC
-#define EQUIPMENT_TEXS(language) ((language) != LANGUAGE_JPN ? sEquipPageBgQuadsENGTexs : sEquipPageBgQuadsJPNTexs)
+#define EQUIPMENT_TEXS(language) ((language) != LANGUAGE_JPN ? (IS_CHILD_QUEST ? sEquipPageBgQuadsCQENGTexs : sEquipPageBgQuadsENGTexs) : (IS_CHILD_QUEST ? sEquipPageBgQuadsCQJPNTexs : sEquipPageBgQuadsJPNTexs))
 #define SELECT_ITEM_TEXS(language) ((language) != LANGUAGE_JPN ? (IS_CHILD_QUEST ? sItemPageBgQuadsCQENGTexs : sItemPageBgQuadsENGTexs) : (IS_CHILD_QUEST ? sItemPageBgQuadsCQJPNTexs : sItemPageBgQuadsJPNTexs))
 #define MAP_TEXS(language) ((language) != LANGUAGE_JPN ? sMapPageBgQuadsENGTexs : sMapPageBgQuadsJPNTexs)
 #define QUEST_STATUS_TEXS(language) ((language) != LANGUAGE_JPN ? sQuestPageBgQuadsENGTexs : sQuestPageBgQuadsJPNTexs)
 #define SAVE_TEXS(language) ((language) != LANGUAGE_JPN ? sSavePromptBgQuadsENGTexs : sSavePromptBgQuadsJPNTexs)
 #else
 static void* sEquipPageBgQuadsTexs[] = {
+    sEquipPageBgQuadsCQENGTexs,
+    sEquipPageBgQuadsCQGERTexs,
+    sEquipPageBgQuadsCQFRATexs,
+};
+
+static void* sEquipPageBgQuadsCQTexs[] = {
     sEquipPageBgQuadsENGTexs,
     sEquipPageBgQuadsGERTexs,
     sEquipPageBgQuadsFRATexs,
@@ -725,7 +836,7 @@ static void* sSavePromptBgQuadsTexs[] = {
     sSavePromptBgQuadsFRATexs,
 };
 
-#define EQUIPMENT_TEXS(language) (sEquipPageBgQuadsTexs[(language)])
+#define EQUIPMENT_TEXS(language) (IS_CHILD_QUEST ? sEquipPageBgQuadsCQTexs[(language)] : sEquipPageBgQuadsTexs[(language)])
 #define SELECT_ITEM_TEXS(language) (IS_CHILD_QUEST ? sItemPageBgQuadsCQTexs[(language)] : sItemPageBgQuadsTexs[(language)])
 #define MAP_TEXS(language) (sMapPageBgQuadsTexs[(language)])
 #define QUEST_STATUS_TEXS(language) (sQuestPageBgQuadsTexs[(language)])
@@ -817,31 +928,31 @@ s16 gVtxPageMapWorldQuadsHeight[VTX_PAGE_MAP_WORLD_QUADS] = {
  * For example when scrolling left from the quest page PAUSE_QUEST (so, to PAUSE_MAP),
  * the index is `PAUSE_QUEST + PAGE_SWITCH_PT_LEFT` and the data is button status for the map page.
  */
-static u8 gPageSwitchNextButtonStatus[][5] = {
+static u8 gPageSwitchNextButtonStatus[][7] = {
     // PAUSE_ITEM  + PAGE_SWITCH_PT_LEFT
     //
     //  -> PAUSE_EQUIP
-    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
     // PAUSE_MAP   + PAGE_SWITCH_PT_LEFT
     //
     //  -> PAUSE_ITEM
-    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_DISABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_DISABLED, BTN_ENABLED },
     // PAUSE_QUEST + PAGE_SWITCH_PT_LEFT
     // PAUSE_ITEM  + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_MAP
-    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED },
+    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED },
     // PAUSE_EQUIP + PAGE_SWITCH_PT_LEFT
     // PAUSE_MAP   + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_QUEST
-    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_ENABLED },
+    { BTN_ENABLED, BTN_DISABLED, BTN_DISABLED, BTN_DISABLED, BTN_ENABLED, BTN_ENABLED },
     //
     // PAUSE_QUEST + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_EQUIP
-    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED },
     //
     // PAUSE_EQUIP + PAGE_SWITCH_PT_RIGHT
     //  -> PAUSE_ITEM
-    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_DISABLED },
+    { BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_ENABLED, BTN_DISABLED, BTN_ENABLED },
 };
 
 static s16 D_8082AB8C = 0;
@@ -927,30 +1038,34 @@ char gSlotAgeReqs[] = {
     AGE_REQ_CHILD, // SLOT_TRADE_CHILD
 };
 
-char gEquipAgeReqs[4][4] = {
+char gEquipAgeReqs[4][6] = {
     {
         AGE_REQ_ADULT, // 0 UPG_QUIVER
         AGE_REQ_CHILD, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_KOKIRI
         AGE_REQ_ADULT, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_MASTER
         AGE_REQ_ADULT, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_BIGGORON
+        AGE_REQ_CHILD, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_HEROS
     },
     {
         AGE_REQ_NONE,  // 0 UPG_BOMB_BAG
         AGE_REQ_CHILD, // EQUIP_TYPE_SHIELD EQUIP_VALUE_SHIELD_DEKU
         AGE_REQ_NONE,  // EQUIP_TYPE_SHIELD EQUIP_VALUE_SHIELD_HYLIAN
         AGE_REQ_ADULT, // EQUIP_TYPE_SHIELD EQUIP_VALUE_SHIELD_MIRROR
+        AGE_REQ_CHILD, // EQUIP_TYPE_SHIELD EQUIP_VALUE_SHIELD_HEROS
     },
     {
         AGE_REQ_ADULT, // 0 UPG_STRENGTH
         AGE_REQ_NONE,  // EQUIP_TYPE_TUNIC EQUIP_VALUE_TUNIC_KOKIRI
         AGE_REQ_ADULT, // EQUIP_TYPE_TUNIC EQUIP_VALUE_TUNIC_GORON
         AGE_REQ_ADULT, // EQUIP_TYPE_TUNIC EQUIP_VALUE_TUNIC_ZORA
+        AGE_REQ_CHILD, // EQUIP_TYPE_TUNIC EQUIP_VALUE_TUNIC_SPIRIT
     },
     {
         AGE_REQ_NONE,  // 0 UPG_SCALE
         AGE_REQ_NONE,  // EQUIP_TYPE_BOOTS EQUIP_VALUE_BOOTS_KOKIRI
         AGE_REQ_ADULT, // EQUIP_TYPE_BOOTS EQUIP_VALUE_BOOTS_IRON
         AGE_REQ_ADULT, // EQUIP_TYPE_BOOTS EQUIP_VALUE_BOOTS_HOVER
+        AGE_REQ_CHILD, // EQUIP_TYPE_BOOTS EQUIP_VALUE_BOOTS_PEGASUS
     },
 };
 
@@ -1017,29 +1132,29 @@ char gItemAgeReqs[] = {
     AGE_REQ_CHILD, // ITEM_SWORD_KOKIRI
     AGE_REQ_ADULT, // ITEM_SWORD_MASTER
     AGE_REQ_ADULT, // ITEM_SWORD_BIGGORON
+    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
     AGE_REQ_CHILD, // ITEM_SHIELD_DEKU
     AGE_REQ_NONE,  // ITEM_SHIELD_HYLIAN
     AGE_REQ_ADULT, // ITEM_SHIELD_MIRROR
+    AGE_REQ_CHILD, // ITEM_SHIELD_HEROS
     AGE_REQ_NONE,  // ITEM_TUNIC_KOKIRI
     AGE_REQ_ADULT, // ITEM_TUNIC_GORON
     AGE_REQ_ADULT, // ITEM_TUNIC_ZORA
+    AGE_REQ_CHILD, // ITEM_TUNIC_SPIRIT
     AGE_REQ_NONE,  // ITEM_BOOTS_KOKIRI
     AGE_REQ_ADULT, // ITEM_BOOTS_IRON
     AGE_REQ_ADULT, // ITEM_BOOTS_HOVER
+    AGE_REQ_CHILD, // ITEM_BOOTS_PEGASUS
     AGE_REQ_CHILD, // ITEM_SWORD_FAIRYS
     AGE_REQ_CHILD, // ITEM_ROCS_FEATHER
     AGE_REQ_CHILD, // ITEM_GOLDEN_FEATHER
     AGE_REQ_CHILD, // ITEM_PICTOBOX
     AGE_REQ_CHILD, // ITEM_SHRINE_KEY
+    AGE_REQ_CHILD, // ITEM_CQ1
+    AGE_REQ_CHILD, // ITEM_CQ2
     AGE_REQ_NONE,  // ITEM_BOTTLE_POTION_SHIELD
     AGE_REQ_CHILD, // ITEM_SHIELD_WOODEN
-    AGE_REQ_CHILD, // ITEM_SHIELD_HEROS
     AGE_REQ_CHILD, // ITEM_SHIELD_METAL
-    AGE_REQ_CHILD, // ITEM_STRENGTH_GORONS_BRACELET
-    AGE_REQ_ADULT, // ITEM_STRENGTH_SILVER_GAUNTLETS
-    AGE_REQ_ADULT, // ITEM_STRENGTH_GOLD_GAUNTLETS
-    AGE_REQ_NONE,  // ITEM_SCALE_SILVER
-    AGE_REQ_NONE,  // ITEM_SCALE_GOLDEN
     AGE_REQ_ADULT, // ITEM_GIANTS_KNIFE
     AGE_REQ_NONE,  // ITEM_ADULTS_WALLET
     AGE_REQ_NONE,  // ITEM_GIANTS_WALLET
@@ -1056,8 +1171,15 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_20
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_30
     AGE_REQ_NONE,  // ITEM_BOMB_BAG_40
+    AGE_REQ_NONE,  // ITEM_BOMB_BAG_50
+    AGE_REQ_CHILD, // ITEM_STRENGTH_GORONS_BRACELET
+    AGE_REQ_ADULT, // ITEM_STRENGTH_SILVER_GAUNTLETS
+    AGE_REQ_ADULT, // ITEM_STRENGTH_GOLD_GAUNTLETS
+    AGE_REQ_NONE,  // ITEM_SCALE_SILVER
+    AGE_REQ_NONE,  // ITEM_SCALE_GOLDEN
     AGE_REQ_CHILD, // ITEM_AMULET_OF_ENERGY
-    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
+    AGE_REQ_CHILD, // ITEM_AMBER_EARRINGS
+    AGE_REQ_CHILD, // ITEM_PERFECT_BLOCK
 };
 
 u8 gAreaGsFlags[] = {
@@ -1268,6 +1390,9 @@ void KaleidoScope_SetupPageSwitch(PauseContext* pauseCtx, u8 pt) {
     gSaveContext.buttonStatus[4] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][4];
     dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][1];
 
+    if (USE_PAUSE_INFO)
+        gSaveContext.buttonStatus[4] = sInDungeonScene ? BTN_ENABLED : gPageSwitchNextButtonStatus[pauseCtx->pageIndex + pt][5];
+
     PRINTF("kscope->kscp_pos+pt = %d\n", pauseCtx->pageIndex + pt);
 
     gSaveContext.hudVisibilityMode = HUD_VISIBILITY_NO_CHANGE;
@@ -1275,7 +1400,7 @@ void KaleidoScope_SetupPageSwitch(PauseContext* pauseCtx, u8 pt) {
 }
 
 void KaleidoScope_HandlePageToggles(PauseContext* pauseCtx, Input* input) {
-    if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) && CHECK_BTN_ALL(input->rel.button, BTN_L) && !pressed_r && editor_timer < (60 / R_UPDATE_RATE)) {
+    if ((pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) && CHECK_BTN_ALL(input->rel.button, BTN_L) && !pressed_r && editor_timer < (60 / R_UPDATE_RATE) && !pauseCtx->itemDescriptionOn) {
         if (DEBUG_FEATURES || DEBUG_MODE)
             pauseCtx->debugState = PAUSE_DEBUG_STATE_INVENTORY_EDITOR_OPENING;
         return;
@@ -1293,12 +1418,12 @@ void KaleidoScope_HandlePageToggles(PauseContext* pauseCtx, Input* input) {
     if (pauseCtx->debugState != PAUSE_DEBUG_STATE_CLOSED)
         return;
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_R) && !CHECK_BTN_ALL(input->cur.button, BTN_L)) {
+    if (CHECK_BTN_ALL(input->press.button, BTN_R) && !CHECK_BTN_ALL(input->cur.button, BTN_L) && !pauseCtx->itemDescriptionOn) {
         KaleidoScope_SetupPageSwitch(pauseCtx, PAGE_SWITCH_PT_RIGHT);
         return;
     }
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_Z) && !CHECK_BTN_ALL(input->cur.button, BTN_L)) {
+    if (CHECK_BTN_ALL(input->press.button, BTN_Z) && !CHECK_BTN_ALL(input->cur.button, BTN_L) && !pauseCtx->itemDescriptionOn) {
         KaleidoScope_SetupPageSwitch(pauseCtx, PAGE_SWITCH_PT_LEFT);
         return;
     }
@@ -2334,20 +2459,31 @@ void KaleidoScope_DrawUIOverlay(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_scope_PAL.c", 2032);
 }
 
-static u8 lastItem[5];
-
 #define ITEM_LABEL_LANGUAGE_OFFSET ITEM_SMALL_KEY
 
 void KaleidoScope_UpdateNamePanel(PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
     u16 texIndex;
-    u8 isNewItem = false;
 
-    for (texIndex=0; texIndex<ARRAY_COUNT(lastItem); texIndex++)
-        if (!lastItem[texIndex])
-            isNewItem = true;
+    if (!play->pauseCtx.itemDescriptionOn && USE_PAUSE_INFO) {
+        if (pauseCtx->cursorSpecialPos == 0 && (pauseCtx->pageIndex != PAUSE_MAP || sInDungeonScene)) {
+            u8 item = pauseCtx->cursorItem[pauseCtx->pageIndex];
+            if (item <= ITEM_BOW_LIGHT || (item >= ITEM_SWORD_FAIRYS && item <= ITEM_BOTTLE_POTION_SHIELD) || (item >= ITEM_BULLET_BAG_30 && item <= ITEM_PERFECT_BLOCK) || (item >= ITEM_MEDALLION_FOREST && item <= ITEM_DUNGEON_MAP) || pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_SKULL_TOKEN || pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_HEART_PIECE) {
+                if (play->interfaceCtx.unk_1F0 != DO_ACTION_INFO) {
+                    Interface_SetDoAction(play, DO_ACTION_INFO);
+                    Interface_LoadActionLabelB(play, DO_ACTION_SAVE);
+                }
+            } else if (play->interfaceCtx.unk_1F0 == DO_ACTION_INFO) {
+                Interface_SetDoAction(play, DO_ACTION_DECIDE);
+                Interface_LoadActionLabelB(play, DO_ACTION_SAVE);
+            }
+        } else if (play->interfaceCtx.unk_1F0 == DO_ACTION_INFO) {
+            Interface_SetDoAction(play, DO_ACTION_DECIDE);
+            Interface_LoadActionLabelB(play, DO_ACTION_SAVE);
+        }
+    }
 
-    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) || isNewItem ||
+    if ((pauseCtx->namedItem != pauseCtx->cursorItem[pauseCtx->pageIndex]) ||
         ((pauseCtx->pageIndex == PAUSE_MAP) && (pauseCtx->cursorSpecialPos != 0))) {
 
         pauseCtx->namedItem = pauseCtx->cursorItem[pauseCtx->pageIndex];
@@ -2355,14 +2491,6 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
 
         if (pauseCtx->namedItem >= ITEM_SONG_MINUET)
             texIndex -= ITEM_SONG_MINUET - LAST_ITEM_ICON - 1;
-
-        if (pauseCtx->pageIndex == PAUSE_EQUIP) {
-            if (showAltQuiverSlot && pauseCtx->cursorPoint[PAUSE_EQUIP] == 0) {
-                if (LINK_IS_ADULT || (IS_CHILD_QUEST && CUR_UPG_VALUE(UPG_QUIVER) > 0))
-                    texIndex = ITEM_BULLET_BAG_30 + CUR_UPG_VALUE(UPG_BULLET_BAG) - 1;
-                else texIndex = ITEM_QUIVER_30 + CUR_UPG_VALUE(UPG_QUIVER) - 1;
-            }
-        }
 
         if (IS_CHILD_QUEST_AS_CHILD) {
             if (pauseCtx->pageIndex == PAUSE_ITEM) {
@@ -2372,13 +2500,11 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
                     texIndex = ITEM_DEKU_SEEDS;
             }
             else if (pauseCtx->pageIndex == PAUSE_EQUIP) {
-                if (pauseCtx->namedItem == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
-                    texIndex = ITEM_SWORD_HEROS;
-                else if (pauseCtx->namedItem == ITEM_SHIELD_DEKU && gSaveContext.save.info.obtainedSkins.woodenShield)
+                if (pauseCtx->namedItem == ITEM_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
                     texIndex = ITEM_SHIELD_WOODEN;
-                else if (pauseCtx->namedItem == ITEM_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-                    texIndex = gSaveContext.save.info.obtainedSkins.metalShield ? ITEM_SHIELD_METAL : ITEM_SHIELD_HEROS;
-                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_RAZOR_SWORD)
+                if (pauseCtx->namedItem == ITEM_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL))
+                    texIndex = ITEM_SHIELD_METAL;
+                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER))
                     texIndex = ITEM_BOW_FIRE;
                 else if (pauseCtx->namedItem == ITEM_HEART_PIECE_2) // Biggoron Sword
                     texIndex = ITEM_BOW_LIGHT;
@@ -2976,7 +3102,8 @@ static s16 sItemVtxQuadsWithAmmo[] = {
     SLOT_MAGIC_BEAN * 4, // ITEM_QUAD_AMMO_BEAN_
 };
 
-static s16 sEquipColumnsX[] = { -114, 12, 44, 76 };
+static s16 sEquipColumnsX[] = { -114, 12, 44, 76, -300, -300 };
+static s16 sEquipColumnsXCQ[] = { -114, -64, -32, 0, 32, 72 };
 
 static u8 sEquipQuadsFirstByEquipType[EQUIP_TYPE_MAX] = {
     EQUIP_QUAD_SWORD_KOKIRI, // EQUIP_TYPE_SWORD
@@ -3410,9 +3537,9 @@ void KaleidoScope_SetVertices(PlayState* play, GraphicsContext* gfxCtx) {
     for (k = 0, i = 0, y = (EQUIP_TYPE_MAX * EQUIP_GRID_CELL_HEIGHT) / 2 - 6; i < EQUIP_TYPE_MAX;
          i++, y -= EQUIP_GRID_CELL_HEIGHT) {
         // for each column
-        for (j = 0; j < 4; j++, k += 4) {
+        for (j = 0; j < 6; j++, k += 4) {
             pauseCtx->equipVtx[k + 0].v.ob[0] = pauseCtx->equipVtx[k + 2].v.ob[0] =
-                sEquipColumnsX[j] + EQUIP_GRID_QUAD_MARGIN;
+                (IS_CHILD_QUEST ? sEquipColumnsXCQ[j] : sEquipColumnsX[j]) + EQUIP_GRID_QUAD_MARGIN;
 
             pauseCtx->equipVtx[k + 1].v.ob[0] = pauseCtx->equipVtx[k + 3].v.ob[0] =
                 pauseCtx->equipVtx[k + 0].v.ob[0] + EQUIP_GRID_QUAD_WIDTH;
@@ -3451,7 +3578,10 @@ void KaleidoScope_SetVertices(PlayState* play, GraphicsContext* gfxCtx) {
 
     for (j = 0; j < EQUIP_TYPE_MAX; k += 4, j++) {
         if (CUR_EQUIP_VALUE(j) != 0) {
-            i = (CUR_EQUIP_VALUE(j) + sEquipQuadsFirstByEquipType[j] - 1) * 4;
+            x = 0;
+            while (KaleidoScope_GetEquipBit(j, x) != (CUR_EQUIP_VALUE(j) - 1))
+                x++;
+            i = (sEquipQuadsFirstByEquipType[j] + x) * 4;
 
             pauseCtx->equipVtx[k + 0].v.ob[0] = pauseCtx->equipVtx[k + 2].v.ob[0] =
                 pauseCtx->equipVtx[i].v.ob[0] + EQUIP_GRID_SELECTED_QUAD_MARGIN;
@@ -3749,6 +3879,9 @@ void KaleidoScope_UpdateOpening(PlayState* play) {
         gSaveContext.buttonStatus[4] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + PAGE_SWITCH_PT_LEFT][4];
         dpadStatus[0] = dpadStatus[1] = dpadStatus[2] = dpadStatus[3] = gPageSwitchNextButtonStatus[pauseCtx->pageIndex + PAGE_SWITCH_PT_LEFT][1];
 
+        if (USE_PAUSE_INFO)
+            gSaveContext.buttonStatus[4] = sInDungeonScene ? BTN_ENABLED : gPageSwitchNextButtonStatus[pauseCtx->pageIndex + PAGE_SWITCH_PT_LEFT][5];
+
         pauseCtx->pageIndex = sPageSwitchNextPageIndex[pauseCtx->nextPageMode];
 
         pauseCtx->mainState = PAUSE_MAIN_STATE_IDLE;
@@ -3948,11 +4081,6 @@ void KaleidoScope_Update(PlayState* play) {
 
     switch (pauseCtx->state) {
         case PAUSE_STATE_INIT:
-            lastItem[0] = IS_HEROS_SWORD;
-            lastItem[1] = IS_HEROS_SHIELD;
-            lastItem[2] = showAltQuiverSlot;
-            lastItem[3] = showAltStrengthSlot;
-            lastItem[4] = showAltScalesSlot;
             pauseCtx->wasInDebug = false;
             sSavedButtonStatus[0] = gSaveContext.buttonStatus[0];
             sSavedButtonStatus[1] = gSaveContext.buttonStatus[1];
@@ -4023,6 +4151,7 @@ void KaleidoScope_Update(PlayState* play) {
                 case SCENE_WATER_TEMPLE_BOSS:
                 case SCENE_SPIRIT_TEMPLE_BOSS:
                 case SCENE_SHADOW_TEMPLE_BOSS:
+                case SCENE_PURPLE_ICE_CAVERN:
                 case SCENE_ANCIENT_HOLLOW:
                 case SCENE_GORON_MINES:
                 case SCENE_WOODFALL_TEMPLE:
@@ -4106,25 +4235,25 @@ void KaleidoScope_Update(PlayState* play) {
             if (((void)0, gSaveContext.worldMapArea) < WORLD_MAP_AREA_MAX) {
 #if OOT_NTSC_N64
                 if (gSaveContext.language == LANGUAGE_JPN)
-                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_JPN) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_JPN) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
                 else if (gSaveContext.language == LANGUAGE_ENG)
-                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
                 else if (gSaveContext.language == LANGUAGE_GER)
-                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_GER) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
-                else DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_FRA) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                    DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_GER) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
+                else DMA_REQUEST_SYNC(pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE), (uintptr_t)_map_name_staticSegmentRomStart + ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_FRA) * MAP_NAME_TEX2_SIZE) + 48 * MAP_NAME_TEX1_SIZE, MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
 #elif OOT_NTSC
                 if (gSaveContext.language == LANGUAGE_JPN) {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
                         (uintptr_t)_map_name_staticSegmentRomStart +
-                            ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_JPN) * MAP_NAME_TEX2_SIZE) +
+                            ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_JPN) * MAP_NAME_TEX2_SIZE) +
                             24 * MAP_NAME_TEX1_SIZE,
                         MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
                 } else {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
                         (uintptr_t)_map_name_staticSegmentRomStart +
-                            ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) +
+                            ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) +
                             24 * MAP_NAME_TEX1_SIZE,
                         MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", UNK_LINE);
                 }
@@ -4133,21 +4262,21 @@ void KaleidoScope_Update(PlayState* play) {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
                         (uintptr_t)_map_name_staticSegmentRomStart +
-                            ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) +
+                            ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_ENG) * MAP_NAME_TEX2_SIZE) +
                             36 * MAP_NAME_TEX1_SIZE,
                         MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", 3776);
                 } else if (gSaveContext.language == LANGUAGE_GER) {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
                         (uintptr_t)_map_name_staticSegmentRomStart +
-                            ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_GER) * MAP_NAME_TEX2_SIZE) +
+                            ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_GER) * MAP_NAME_TEX2_SIZE) +
                             36 * MAP_NAME_TEX1_SIZE,
                         MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", 3780);
                 } else {
                     DMA_REQUEST_SYNC(
                         pauseCtx->nameSegment + MAX(MAP_NAME_TEX1_SIZE, ITEM_NAME_TEX_SIZE),
                         (uintptr_t)_map_name_staticSegmentRomStart +
-                            ((((void)0, gSaveContext.worldMapArea) + 22 * LANGUAGE_FRA) * MAP_NAME_TEX2_SIZE) +
+                            ((((void)0, gSaveContext.worldMapArea) + WORLD_MAP_AREA_MAX * LANGUAGE_FRA) * MAP_NAME_TEX2_SIZE) +
                             36 * MAP_NAME_TEX1_SIZE,
                         MAP_NAME_TEX2_SIZE, "../z_kaleido_scope_PAL.c", 3784);
                 }
@@ -4397,7 +4526,7 @@ void KaleidoScope_Update(PlayState* play) {
             switch (pauseCtx->mainState) {
                 case PAUSE_MAIN_STATE_IDLE:
                     Interface_ChangeDpadSet(play);
-                    if (CHECK_BTN_ALL(input->press.button, BTN_START)) {
+                    if (CHECK_BTN_ALL(input->press.button, BTN_START) && !pauseCtx->itemDescriptionOn) {
                         Interface_SetDoAction(play, DO_ACTION_NONE);
                         pauseCtx->state = PAUSE_STATE_CLOSING;
                         R_PAUSE_PAGES_Y_ORIGIN_2 = PAUSE_PAGES_Y_ORIGIN_2_LOWER;
@@ -4405,7 +4534,7 @@ void KaleidoScope_Update(PlayState* play) {
 #if PLATFORM_GC && OOT_NTSC
                         AudioOcarina_SetInstrument(OCARINA_INSTRUMENT_OFF);
 #endif
-                    } else if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED && CHECK_BTN_ALL(input->press.button, BTN_B)) {
+                    } else if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED && CHECK_BTN_ALL(input->press.button, BTN_B) && !pauseCtx->itemDescriptionOn) {
                         pauseCtx->nextPageMode = 0;
                         pauseCtx->promptChoice = 0;
                         SFX_PLAY_CENTERED(NA_SE_SY_DECIDE);

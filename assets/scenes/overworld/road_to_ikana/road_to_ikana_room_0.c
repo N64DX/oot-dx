@@ -13,8 +13,8 @@ SceneCmd road_to_ikana_room_0[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_WIND_SETTINGS(80, 80, 80, 0),
     SCENE_CMD_ROOM_SHAPE(&road_to_ikana_room_0RoomShapeCullable_000550),
-    SCENE_CMD_OBJECT_LIST(10, road_to_ikana_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(37, road_to_ikana_room_0ActorEntry_000064),
+    SCENE_CMD_OBJECT_LIST(11, road_to_ikana_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(38, road_to_ikana_room_0ActorEntry_000064),
     SCENE_CMD_END(),
 };
 
@@ -29,6 +29,7 @@ s16 road_to_ikana_room_0ObjectList_000040[] = {
     OBJECT_HAMMERGEIST,
     OBJECT_BOX,
     OBJECT_SPOT00_OBJECTS,
+    OBJECT_SEK,
 };
 
 ActorEntry road_to_ikana_room_0ActorEntry_000064[] = {
@@ -69,6 +70,7 @@ ActorEntry road_to_ikana_room_0ActorEntry_000064[] = {
     { ACTOR_EN_BOX,             {  2014,  200,  -877 }, {   0x3E, 0x4000,  0 }, 0xB000 }, // Chest: 00, checks switch: 00, Piece of Heart
     { ACTOR_BG_SPOT00_HANEBASI, {   790,  328, -1810 }, { 0x1000, 0xF574,  0 }, 0xFFFE },
     { ACTOR_EN_WEATHER_TAG,     {  4000,  575,  -500 }, {      0,      0,  0 }, 0x0A00 },
+    { ACTOR_OBJ_WARPSTONE,      {  1825,  200,   125 }, {      0, 0xA800,  0 }, 0x0003 }, // Requiem of Spirit
 };
 
 RoomShapeCullable road_to_ikana_room_0RoomShapeCullable_000550 = { 

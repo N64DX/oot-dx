@@ -303,13 +303,13 @@ void BgDyYoseizo_ChooseType(BgDyYoseizo* this, PlayState* play) {
                 }
                 break;
             case FAIRY_UPGRADE_GREAT_QUICK_SPIN:
-                if (!gSaveContext.save.info.obtainedSkills.enhancedSpin) {
+                if (!CHECK_UPGRADE_ITEM(UPGRADE_ENHANCED_SPIN)) {
                     this->givingSpell = true;
                     givingReward = true;
                 }
                 break;
             case FAIRY_UPGRADE_HALF_MAGIC_COST:
-                if (!gSaveContext.save.info.obtainedSkills.halfMagicCost) {
+                if (!CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST)) {
                     this->givingSpell = true;
                     givingReward = true;
                 }
@@ -813,9 +813,9 @@ void BgDyYoseizo_Give_Reward(BgDyYoseizo* this, PlayState* play) {
                 break;
             case FAIRY_UPGRADE_DOUBLE_DEFENSE:
                 if (this->fountainType == FAIRY_UPGRADE_GREAT_QUICK_SPIN)
-                    gSaveContext.save.info.obtainedSkills.enhancedSpin = true;
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ENHANCED_SPIN];
                 else if (this->fountainType == FAIRY_UPGRADE_HALF_MAGIC_COST)
-                    gSaveContext.save.info.obtainedSkills.halfMagicCost = true;
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_HALF_MAGIC_COST];
                 else gSaveContext.save.info.playerData.isDoubleDefenseAcquired = true;
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_HEARTS_MAGIC);
                 break;

@@ -9,11 +9,13 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd mountain_smithy_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(5, NATURE_ID_NONE, NA_BGM_SHOP),
     SCENE_CMD_ROOM_LIST(1, mountain_smithy_sceneRoomList0x0000A0),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, mountain_smithy_sceneTransitionActorList_000090),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_SPRING_LAKE),
     SCENE_CMD_COL_HEADER(&mountain_smithy_sceneCollisionHeader_0008DC),
     SCENE_CMD_SPAWN_LIST(mountain_smithy_sceneEntranceList0x0000A8),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),

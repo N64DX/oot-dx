@@ -45,7 +45,7 @@ ActorEntry old_dodongos_cavern_room_1ActorList0x000044[] = {
     { ACTOR_EN_SPIDER,          { 3355,   0, -490 }, {   0,      0, 0 }, 0x0001 },
     { ACTOR_EN_SPIDER,          { 3103,   0, -155 }, {   0, 0x8000, 0 }, 0x0001 },
     { ACTOR_EN_BOX,             { 3720,   0, -197 }, { 0x1, 0x4000, 0 }, 0x5001 }, // Chest: 01, Bombs (5)
-    { ACTOR_BG_DBLUE_WATERFALL, { 1800, 520, -260 }, {   0,      0, 0 }, 0x700C }, // Switch: 0C
+    { ACTOR_BG_DBLUE_WATERFALL, { 1800, 520, -250 }, {   0,      0, 0 }, 0x700E }, // Switch: 0E
 };
 
 RoomShapeCullable old_dodongos_cavern_room_1MeshHeader0x0000B0 = {

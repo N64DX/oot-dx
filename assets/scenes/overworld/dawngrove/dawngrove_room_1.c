@@ -14,7 +14,7 @@ SceneCmd dawngrove_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_room_1RoomShapeNormal_000210),
-    SCENE_CMD_OBJECT_LIST(11, dawngrove_room_1ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(12, dawngrove_room_1ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(25, dawngrove_room_1ActorEntry_000050),
     SCENE_CMD_END(),
 };
@@ -35,6 +35,7 @@ s16 dawngrove_room_1ObjectList_000040[] = {
     OBJECT_HIDAN_OBJECTS,
     OBJECT_DEKUBABA,
     OBJECT_KANBAN,
+    OBJECT_SEK,
     OBJECT_LOST_WOODS,
     OBJECT_GOOMBA,
 };
@@ -67,7 +68,7 @@ ActorEntry dawngrove_room_1ActorEntry_000050[] = {
     { ACTOR_BG_HIDAN_KOUSI, { -1795,  28,  -27 }, {               0,      0,   0 }, 0x0201 },
 
     // Timeskip & Cleansed
-    { ACTOR_EN_GOOMBA,      { -2000,  28, -400 }, {               0,      0,   0 }, 0x0000 },
+    { ACTOR_EN_GOOMBA,      { -2000,  28, -550 }, {               0,      0,   0 }, 0x0000 },
     { ACTOR_EN_GOOMBA,      { -2000, 120,  500 }, {               0, 0x8000,   0 }, 0x0000 },
     { ACTOR_EN_GOOMBA,      { -1200, 180,  600 }, {               0, 0x8000,   0 }, 0x0000 },
     { ACTOR_OBJ_SYOKUDAI,   { -2524, -15, -964 }, {               0,      0,   0 }, 0x1101 }, // Sets switch: 01
@@ -75,9 +76,10 @@ ActorEntry dawngrove_room_1ActorEntry_000050[] = {
     { ACTOR_OBJ_SYOKUDAI,   { -1795,  28,   28 }, {               0,      0,   0 }, 0x1101 }, // Sets switch: 01
     { ACTOR_OBJ_SYOKUDAI,   { -2034,  22, -779 }, {               0,      0,   0 }, 0x1101 }, // Sets switch: 01
     { ACTOR_EN_BOX,         { -1885, 120, -411 }, { GI_SHIELD_METAL, 0x4000, 0x1 }, 0x8002 }, // Chest: 02, checks switch: 01, Metal Shield
+    { ACTOR_OBJ_WARPSTONE,  { -2050,  28,  -85 }, {               0, 0x8000,   0 }, 0x0000 }, // Minuet of Forest
 
     // Timeskip (not cleansed)
-    { ACTOR_EN_WEATHER_TAG, { -1800, 180, -425 }, {    0,      0,   0 }, 0x2008 },
+    { ACTOR_EN_WEATHER_TAG, { -1800, 180, -425 }, {               0,      0,   0 }, 0x2008 },
 };
 
 RoomShapeNormal dawngrove_room_1RoomShapeNormal_000210 = { 
@@ -116,7 +118,7 @@ SceneCmd dawngrove_room_1Set_timeskip[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_room_1RoomShapeNormal_000210),
     SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_room_1ObjectList_000040), dawngrove_room_1ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(34, dawngrove_room_1ActorEntry_000050),
+    SCENE_CMD_ACTOR_LIST(35, dawngrove_room_1ActorEntry_000050),
     SCENE_CMD_END(),
 };
 
@@ -127,7 +129,7 @@ SceneCmd dawngrove_room_1Set_cleansed[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_room_1RoomShapeNormal_000210),
     SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(dawngrove_room_1ObjectList_000040), dawngrove_room_1ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(30, dawngrove_room_1ActorEntry_000050),
+    SCENE_CMD_ACTOR_LIST(34, dawngrove_room_1ActorEntry_000050),
     SCENE_CMD_END(),
 };
 

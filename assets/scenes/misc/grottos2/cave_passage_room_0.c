@@ -12,7 +12,7 @@ SceneCmd cave_passage_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&cave_passage_room_0RoomShapeNormal_000150),
-    SCENE_CMD_OBJECT_LIST(9, cave_passage_room_0ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(12, cave_passage_room_0ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(22, cave_passage_room_0ActorEntry_000050),
     SCENE_CMD_END(),
 };
@@ -27,6 +27,9 @@ s16 cave_passage_room_0ObjectList_000040[] = {
     OBJECT_DKJAIL_OBJ,
     OBJECT_KANBAN,
     OBJECT_GOOMBA,
+    OBJECT_FA,
+    OBJECT_KW1,
+    OBJECT_OS_ANIME,
 };
 
 ActorEntry cave_passage_room_0ActorEntry_000050[] = {
@@ -35,7 +38,8 @@ ActorEntry cave_passage_room_0ActorEntry_000050[] = {
     { ACTOR_EN_KUSA,       { -1488,  95,  -434 }, {  0,      0, 0 }, 0xFF01 },
     { ACTOR_EN_KUSA,       { -1609,  95,  -433 }, {  0,      0, 0 }, 0xFF01 },
     { ACTOR_EN_KUSA,       { -1410,  95,  -690 }, {  0,      0, 0 }, 0xFF01 },
-    { ACTOR_OBJ_SYOKUDAI,  { -2091, 145, -1489 }, {  0,      0, 0 }, 0x2400 },
+  //{ ACTOR_OBJ_SYOKUDAI,  { -2091, 145, -1489 }, {  0,      0, 0 }, 0x2400 }, // Spawned through Fado
+    { ACTOR_EN_KO,         { -2091, 145, -1550 }, {  0, 0x4000, 0 }, 0x000C }, // Fado
     { ACTOR_OBJ_SYOKUDAI,  { -1559,  87, -1171 }, {  0,      0, 0 }, 0x13C0 },
     { ACTOR_OBJ_SYOKUDAI,  { -2086,  59, -1018 }, {  0,      0, 0 }, 0x13C0 },
     { ACTOR_EN_SW,         { -1718, 190,  -514 }, {  0, 0x4000, 0 }, 0x0000 },

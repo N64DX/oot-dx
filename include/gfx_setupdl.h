@@ -119,4 +119,6 @@ void Gfx_SetupDL_61Xlu(struct GraphicsContext* gfxCtx);
 void Gfx_SetupDL_56Opa(struct GraphicsContext* gfxCtx);
 void Gfx_SetupDL_56Ptr(Gfx** gfxP);
 
+extern Gfx sSetupDL[SETUPDL_MAX][6];
+
 #endif

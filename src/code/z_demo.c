@@ -62,6 +62,7 @@
 
 #include "assets/scenes/overworld/dawngrove/dawngrove_scene.h"
 #include "assets/scenes/overworld/dawngrove_village/dawngrove_village_scene.h"
+#include "assets/scenes/overworld/woodfall/woodfall_scene.h"
 
 u16 sCurTextId = 0;
 u16 sCurOcarinaAction = 0;
@@ -144,6 +145,7 @@ EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_KOKIRI_FOREST_12, 2, EVENTCHKINF_C6, gKokiriForestDekuSproutPart3Cs, false },
     { ENTR_ANCIENT_GROVE_0, 2, EVENTCHKINF_SEEN_ANCIENT_GROVE_INTRO_CS, gDawngroveIntroCs, true },
     { ENTR_RIVERSIDE_VILLAGE_0, 2, EVENTCHKINF_SEEN_RIVERSIDE_VILLAGE_INTRO_CS, gDawngroveVillageIntroCs, true },
+    { ENTR_WOODFALL_0, 2, EVENTCHKINF_SEEN_WOODFALL_INTRO_CS, gWoodfallIntroCs, true },
 };
 
 void* sCutscenesUnknownList[] = {
@@ -614,7 +616,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
     if (csCtx->curFrame > 20 && CHECK_BTN_ALL(play->state.input[0].press.button, BTN_START) && gSaveContext.fileNum != 0xFEDC && gSaveContext.gameMode == GAMEMODE_NORMAL) {
         if (play->specialIconAlpha == 0) {
             play->specialIconAlpha = SECONDS(3);
-            Interface_LoadActionLabelB(play, DO_ACTION_NEXT);
+            Interface_LoadActionLabelB(play, DO_ACTION_SKIP);
         }
         else doCutsceneSkip = true;
     }
@@ -959,6 +961,8 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->nextEntranceIndex = ENTR_LAKE_HYLIA_5;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK;
+                if (doCutsceneSkip)
+                    SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 40);
                 break;
 
             case CS_DEST_KAKARIKO_VILLAGE_DRAIN_WELL:
@@ -1036,7 +1040,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->nextEntranceIndex = ENTR_HYRULE_FIELD_16;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_WHITE;
-                gSaveContext.save.info.inventory.questItems |= gBitFlags[ITEM_SONG_TIME - ITEM_SONG_MINUET + QUEST_SONG_MINUET];
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[QUEST_SONG_TIME];
                 break;
 
             case CS_DEST_GERUDO_VALLEY_CREDITS:
@@ -2486,10 +2490,10 @@ void Cutscene_HandleEntranceTriggers(PlayState* play) {
 }
 
 void Cutscene_HandleConditionalTriggers(PlayState* play) {
-    u8 has_medallions;
+    u8 hasMedallions;
     if (IS_CHILD_QUEST)
-        has_medallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT) && CHECK_QUEST_ITEM(QUEST_MEDALLION_LIGHT);
-    else has_medallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT);
+        hasMedallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT) && CHECK_QUEST_ITEM(QUEST_MEDALLION_LIGHT);
+    else hasMedallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT);
 
     PRINTF("\ngame_info.mode=[%d] restart_flag", ((void)0, gSaveContext.respawnFlag));
 
@@ -2509,7 +2513,7 @@ void Cutscene_HandleConditionalTriggers(PlayState* play) {
             Item_Give(play, ITEM_OCARINA_FAIRY);
             gSaveContext.save.entranceIndex = ENTR_LOST_WOODS_0;
             gSaveContext.save.cutsceneIndex = CS_INDEX_0;
-        } else if (has_medallions &&
+        } else if (hasMedallions &&
                    LINK_IS_ADULT_OR_TIMESKIP && !Flags_GetEventChkInf(EVENTCHKINF_C4) &&
                    (gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId == SCENE_TEMPLE_OF_TIME)) {
             Flags_SetEventChkInf(EVENTCHKINF_C4);

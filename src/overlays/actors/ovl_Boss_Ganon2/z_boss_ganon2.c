@@ -2290,7 +2290,7 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
                     this->unk_342 = 5;
                     Actor_PlaySfx(&this->actor, NA_SE_EN_MGANON_DAMAGE);
                     Audio_StopSfxById(NA_SE_EN_MGANON_UNARI);
-                    this->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(IS_CHILD_QUEST && HAS_MASTER_SWORD ? 6 : 2);
+                    this->actor.colChkInfo.health -= Actor_EnemyHealthCheckMultiply(IS_CHILD_QUEST && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? 6 : 2);
                     health = this->actor.colChkInfo.health;
                     if (health <= this->actor.maxHealth - Actor_EnemyHealthCheckMultiply(10) && this->unk_334 == 0) {
                         func_80900818(this, play);
@@ -2319,9 +2319,9 @@ void BossGanon2_CollisionCheck(BossGanon2* this, PlayState* play) {
             phi_v1_2 = Actor_EnemyHealthCheckMultiply(1);
             if ( (acHitElem->atDmgInfo.dmgFlags & (DMG_JUMP_MASTER | DMG_SPIN_MASTER | DMG_SLASH_MASTER)) && player->heldItemAction == PLAYER_IA_SWORD_MASTER) {
                 if (acHitElem->atDmgInfo.dmgFlags & DMG_JUMP_MASTER) {
-                    phi_v1_2 = Actor_EnemyHealthCheckMultiply(IS_CHILD_QUEST && HAS_MASTER_SWORD ? 12 : 4);
+                    phi_v1_2 = Actor_EnemyHealthCheckMultiply(IS_CHILD_QUEST && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? 12 : 4);
                 } else {
-                    phi_v1_2 = Actor_EnemyHealthCheckMultiply(IS_CHILD_QUEST && HAS_MASTER_SWORD ? 6 : 2);
+                    phi_v1_2 = Actor_EnemyHealthCheckMultiply(IS_CHILD_QUEST && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? 6 : 2);
                 }
             }
             this->actor.colChkInfo.health -= phi_v1_2;
@@ -3345,7 +3345,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
             f32 temp_f0;
             f32 angle;
             s32 pad;
-            u8 isRazorSword = IS_RAZOR_SWORD;
+            u8 isRazorSword = IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER);
 
             Gfx_SetupDL_25Xlu(play->state.gfxCtx);
             spA0.x = play->envCtx.dirLight1.params.dir.x;

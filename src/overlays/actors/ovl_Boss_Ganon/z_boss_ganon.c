@@ -2825,7 +2825,7 @@ void BossGanon_UpdateDamage(BossGanon* this, PlayState* play) {
             this->unk_2D4 = 4;
             if (!this->invincible && this->actor.colChkInfo.damage > 0 && (u8)IRANDOM_RANGE(0, 3) > 0) {
                 if (this->damageCooldown == 0) {
-                    if (IS_CHILD_QUEST && HAS_MASTER_SWORD && this->actor.colChkInfo.itemAction == PLAYER_IA_SWORD_MASTER)
+                    if (IS_CHILD_QUEST && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && this->actor.colChkInfo.itemAction == PLAYER_IA_SWORD_MASTER)
                         this->actor.colChkInfo.damage *= 4;
                     Actor_ApplyDamage(&this->actor);
                     this->damageCooldown = SECONDS(0.5);
@@ -2865,7 +2865,7 @@ void BossGanon_UpdateDamage(BossGanon* this, PlayState* play) {
                     damage = Actor_EnemyHealthCheckMultiply(2);
                 } else {
                     hitWithSword = true;
-                    if (IS_CHILD_QUEST && HAS_MASTER_SWORD && this->actor.colChkInfo.itemAction == PLAYER_IA_SWORD_MASTER)
+                    if (IS_CHILD_QUEST && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && this->actor.colChkInfo.itemAction == PLAYER_IA_SWORD_MASTER)
                         damage *= 3;
                 }
 

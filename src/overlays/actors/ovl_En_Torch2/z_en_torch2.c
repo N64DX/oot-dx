@@ -131,7 +131,7 @@ void EnTorch2_Init(Actor* thisx, PlayState* play2) {
     this->shieldQuad.base.atFlags = AT_ON | AT_TYPE_ENEMY;
     this->shieldQuad.base.acFlags = AC_ON | AC_HARD | AC_TYPE_PLAYER;
     this->actor.colChkInfo.damageTable = &sDamageTable;
-    this->actor.colChkInfo.health = !STATIC_DARK_LINK_HP ? (gSaveContext.save.info.playerData.healthCapacity >> 3) : Actor_EnemyHealthMultiply(20, ELITE_HP);
+    this->actor.colChkInfo.health = !STATIC_DARK_LINK_HP ? Actor_EnemyHealthMultiply((gSaveContext.save.info.playerData.healthCapacity >> 3), ELITE_HP) : Actor_EnemyHealthMultiply(20, ELITE_HP);
     this->actor.colChkInfo.cylRadius = 60;
     this->actor.colChkInfo.cylHeight = 100;
     play->func_11D54(this, play);
@@ -178,7 +178,7 @@ s32 EnTorch2_SwingSword(PlayState* play, Input* input, Player* this) {
     if ((this->speedXZ < 0.0f) || (player->speedXZ < 0.0f)) {
         return 0;
     }
-    if (gSaveContext.save.info.playerData.health < 0x50) {
+    if (gSaveContext.save.info.playerData.health < Actor_EnemyHealthMultiply(0x50, ELITE_HP)) {
         attackDelay = 15;
         noAttackChance += 0.3f;
     }
@@ -283,7 +283,7 @@ void EnTorch2_Update(Actor* thisx, PlayState* play2) {
                  *  creating a hole in his defenses. This also makes Dark Link harder at low
                  *  health, while the other health checks are intended to make him easier.
                  */
-                if ((gSaveContext.save.info.playerData.health < 0x50) && (sCounterState != 0)) {
+                if ((gSaveContext.save.info.playerData.health < Actor_EnemyHealthMultiply(0x50, ELITE_HP)) && (sCounterState != 0)) {
                     sCounterState = 0;
                     sStaggerTimer = 50;
                 }
@@ -671,7 +671,7 @@ void EnTorch2_Update(Actor* thisx, PlayState* play2) {
     if (this->speedXZ == -18.0f) {
         u8 staggerThreshold = (u32)Rand_CenteredFloat(2.0f) + 6;
 
-        if (gSaveContext.save.info.playerData.health < 0x50) {
+        if (gSaveContext.save.info.playerData.health < Actor_EnemyHealthMultiply(0x50, ELITE_HP)) {
             staggerThreshold = (u32)Rand_CenteredFloat(2.0f) + 3;
         }
         if (this->actor.xzDistToPlayer > 80.0f) {

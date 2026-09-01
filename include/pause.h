@@ -243,7 +243,8 @@ typedef struct PauseContext {
     /* 0x027A */ u8 tradeQuestMarker; // Can be either a `WorldMapPoint` value or `TRADE_QUEST_MARKER_NONE`
     /* 0x027C */ SkelAnime playerSkelAnime;
     /* 0x02C0 */ u8 wasInDebug;
-} PauseContext; // size = 0x2C1
+    /* 0x02C1 */ u8 itemDescriptionOn; // helpful description of item given through a message box
+} PauseContext; // size = 0x2C4
 
 // Note that z_kaleido_scope.c assumes that the dimensions and texture format here also matches the dimensions and
 // texture format for ITEM_NAME_TEX_*
@@ -278,10 +279,14 @@ typedef PauseMapMarkData PauseMapMarksData[3];
 void KaleidoSetup_Update(struct PlayState* play);
 void KaleidoSetup_Init(struct PlayState* play);
 void KaleidoSetup_Destroy(struct PlayState* play);
+u8 KaleidoScope_GetEquipBit(u8 bit, u8 type);
 
 extern u8 gBossMarkState;
 extern f32 gBossMarkScale;
 extern u32 D_8016139C;
 extern PauseMapMarksData* gLoadedPauseMarkDataTable;
+
+extern u8 sEquipmentItemOrder[4][4];
+extern u8 sCQEquipmentItemOrder[4][4];
 
 #endif

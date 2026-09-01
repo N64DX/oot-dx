@@ -34,14 +34,8 @@
 #include "assets/textures/parameter_static/parameter_static.h"
 #include "assets/textures/parameter_static/parameter_static_all.h"
 #include "assets/textures/parameter_static/parameter_static_quest.h"
-#include "assets/textures/icon_item_static/icon_item_static.h"
-
-#if OOT_NTSC_N64
-#include "assets/textures/do_action_static/do_action_static_all.h"
-#include "assets/textures/icon_item_static/icon_item_static_all.h"
-#else
 #include "assets/textures/do_action_static/do_action_static.h"
-#endif
+#include "assets/textures/icon_item_static/icon_item_static.h"
 
 #pragma increment_block_number "gc-jp:128 gc-jp-ce:128 gc-jp-mq:128 gc-us:128 gc-us-mq:128 ntsc-1.0:128 ntsc-1.1:128" \
                                "ntsc-1.2:128"
@@ -164,18 +158,22 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_GORON_SHRINE, 0x00, 0x00, 0x00 },
     { SCENE_RIVERSIDE_VILLAGE, 0x00, 0x00, 0x00 },
     { SCENE_ANCIENT_GROVE, 0x00, 0x00, 0x1C },
+    { SCENE_FORSAKEN_KINGDOM, 0x00, 0x00, 0x00 },
+    { SCENE_GLOOMY_GRAVEYARD, 0x00, 0x00, 0x00 },
     { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
     { SCENE_GROTTOS2, 0x00, 0x00, 0xD0 },
     { SCENE_WEBBED_SHRINE, 0x00, 0x00, 0x00 },
+    { SCENE_PURPLE_ICE_CAVERN, 0x00, 0x00, 0x1C },
     { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x1C },
     { SCENE_GORON_MINES, 0x00, 0x00, 0x00 },
     { SCENE_WOODFALL_TEMPLE, 0x00, 0x00, 0x1C },
     { SCENE_WOODFALL_TEMPLE_BOSS, 0x00, 0x00, 0x1C },
-    { SCENE_SPRING_LAKE_SMITHY, 0x10, 0x10, 0x55 },
+    { SCENE_BENEATH_THE_GRAVEYARD, 0x00, 0x00, 0xD0 },
+    { SCENE_RIVERSIDE_INN, 0x10, 0x10, 0x55 },
     { SCENE_RIVERSIDE_HOUSE, 0x10, 0x10, 0x55 },
     { SCENE_IGORS_HOUSE, 0x10, 0x10, 0x55 },
-    { SCENE_RIVERSIDE_INN, 0x10, 0x10, 0x55 },
     { SCENE_ANCIENT_GROVE_SHOP, 0x10, 0x10, 0x55 },
+    { SCENE_SPRING_LAKE_SMITHY, 0x10, 0x10, 0x55 },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
 
@@ -203,6 +201,7 @@ static u16 dpad_y;
 static s16 curEnergy = 0;
 static u8 energyHideTimer = 0;
 static u8 energyRefillTimer = 0;
+static u8 sDashEnergyTimer = 0;
 static u8 drawKeys = false;
 static u8 drawShieldDurability = false;
 
@@ -557,6 +556,8 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 case SCENE_GORON_SHRINE:
                 case SCENE_RIVERSIDE_VILLAGE:
                 case SCENE_ANCIENT_GROVE:
+                case SCENE_FORSAKEN_KINGDOM:
+                case SCENE_GLOOMY_GRAVEYARD:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {
@@ -1800,20 +1801,16 @@ typedef struct ChildQuestIcons {
     u8 icon;
 } ChildQuestIcons;
 
-static u8 IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                                       }
-static u8 IsWoodenShield(void)  { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.obtainedSkins.woodenShield; }
-static u8 IsHerosShield(void)   { return IS_HEROS_SHIELD         && !gSaveContext.save.info.obtainedSkins.metalShield;  }
-static u8 IsMetalShield(void)   { return IS_HEROS_SHIELD         &&  gSaveContext.save.info.obtainedSkins.metalShield;  }
-static u8 IsHerosSword(void)    { return IS_HEROS_SWORD;                                                                }
-static u8 IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD &&  IS_RAZOR_SWORD;                                    }
-static u8 IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag;         }
-static u8 IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag;         }
+static u8 IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                               }
+static u8 IsWoodenShield(void)  { return IS_CHILD_QUEST_AS_CHILD &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN); }
+static u8 IsMetalShield(void)   { return IS_CHILD_QUEST_AS_CHILD &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL);  }
+static u8 IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER);  }
+static u8 IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
+static u8 IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
 
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_DEKU,               IsWoodenShield, ITEM_SHIELD_WOODEN  },
-    { ITEM_SHIELD_HYLIAN,             IsHerosShield,  ITEM_SHIELD_HEROS   },
     { ITEM_SHIELD_HEROS,              IsMetalShield,  ITEM_SHIELD_METAL   },
-    { ITEM_SWORD_KOKIRI ,             IsHerosSword,   ITEM_SWORD_HEROS    },
     { ITEM_SHIELD_MIRROR,             IsChildQuest,   LAST_ITEM_ICON + 1  },
     { ITEM_SWORD_MASTER,              IsRazorSword,   LAST_ITEM_ICON + 2  },
     { ITEM_SWORD_BIGGORON,            IsSilverSword,  LAST_ITEM_ICON + 3  },
@@ -1840,40 +1837,32 @@ u8 Interface_LoadItemIconChildQuest(u8 item) {
 
 u8 Interface_GetItemFromDpad(u8 button) {
     u8 set = gSaveContext.save.info.playerData.dpadDualSet;
+    u8 slot = DPAD_BUTTON_SET(button, set);
+    
     if (button > 4)  {
         button -= 4;
         set = !set;
     }
 
     if (!IS_CHILD_QUEST) {
-        if (DPAD_BUTTON_SET(button, set) == SLOT_ARROW_FIRE)
+        if (slot == SLOT_ARROW_FIRE)
             return (gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE]  == ITEM_ARROW_FIRE)  ? ITEM_BOW_FIRE  : ITEM_NONE;
-        else if (DPAD_BUTTON_SET(button, set) == SLOT_ARROW_ICE)
+        else if (slot == SLOT_ARROW_ICE)
             return (gSaveContext.save.info.inventory.items[SLOT_ARROW_ICE]   == ITEM_ARROW_ICE)   ? ITEM_BOW_ICE   : ITEM_NONE;
-        else if (DPAD_BUTTON_SET(button, set) == SLOT_ARROW_LIGHT)
+        else if (slot == SLOT_ARROW_LIGHT)
             return( gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] == ITEM_ARROW_LIGHT) ? ITEM_BOW_LIGHT : ITEM_NONE;
     }
 
-    if (DPAD_BUTTON_SET(button, set) == SLOT_TRADE_CHILD)
+    if (slot == SLOT_TRADE_CHILD)
         return (gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] >= ITEM_WEIRD_EGG && gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] <= ITEM_MASK_TRUTH) ? gSaveContext.save.info.inventory.items[SLOT_TRADE_CHILD] : ITEM_NONE;
-    else if (DPAD_BUTTON_SET(button, set) < SLOT_SWORDS)
-        return gSaveContext.save.info.inventory.items[DPAD_BUTTON_SET(button, set)];
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_SWORDS)
-        return ITEM_SWORDS;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_SHIELDS)
-        return ITEM_SHIELDS;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNICS)
-        return ITEM_TUNICS;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS)
-        return ITEM_BOOTS;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNIC_GORON && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON))
-        return ITEM_TUNIC_GORON;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_TUNIC_ZORA  && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA))
-        return ITEM_TUNIC_ZORA;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS_IRON  && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON))
-        return ITEM_BOOTS_IRON;
-    else if (DPAD_BUTTON_SET(button, set) == SLOT_BOOTS_HOVER && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
-        return ITEM_BOOTS_HOVER;
+    else if (slot < SLOT_SWORDS)
+        return gSaveContext.save.info.inventory.items[slot];
+    else if (slot == SLOT_SWORDS || slot == SLOT_SHIELDS || slot == SLOT_TUNICS || slot == SLOT_BOOTS)
+        return ITEM_SWORDS + slot - SLOT_SWORDS;
+    else if (slot >= SLOT_TUNIC_GORON && slot <= SLOT_TUNIC_SPIRIT && CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, slot - SLOT_TUNIC_GORON))
+        return ITEM_TUNIC_GORON + slot - SLOT_TUNIC_GORON;
+    else if (slot >= SLOT_BOOTS_IRON && slot <= SLOT_BOOTS_PEGASUS && CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, slot - SLOT_BOOTS_IRON))
+        return ITEM_BOOTS_IRON + slot - SLOT_BOOTS_IRON;
     else return ITEM_NONE;
 }
 
@@ -1978,7 +1967,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         PRINTF_RST();
 
         return ITEM_NONE;
-    } else if ((item >= ITEM_SWORD_KOKIRI) && (item <= ITEM_SWORD_BIGGORON)) {
+    } else if ((item >= ITEM_SWORD_KOKIRI) && (item <= ITEM_SWORD_HEROS)) {
         gSaveContext.save.info.inventory.equipment |=
             OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, item - ITEM_SWORD_KOKIRI + EQUIP_INV_SWORD_KOKIRI);
 
@@ -2006,39 +1995,24 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
 
         return ITEM_NONE;
-    } else if (item == ITEM_SWORD_HEROS) {
-        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
-        SET_HEROS_SWORD;
-        if (gSaveContext.save.info.equips.buttonItems[0] == ITEM_SWORD_KOKIRI)
-            Interface_LoadItemIcon1(play, 0);
-        for (i=0; i<4; i++) {
-            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
-                Interface_LoadItemIcon1(play, i);
-            if (DPAD_BUTTON(i) == SLOT_SWORDS)
-                Interface_LoadItemIcon1(play, i+4);
-        }
-        return ITEM_NONE;
-    } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
+    } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_HEROS)) {
         if (item == ITEM_SHIELD_DEKU)
-            gSaveContext.save.info.obtainedSkins.woodenShield = 0;
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if (item == ITEM_SHIELD_WOODEN) {
-        gSaveContext.save.info.obtainedSkins.woodenShield = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_WOODEN];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 0);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
-    } else if (item == ITEM_SHIELD_HEROS || item == ITEM_SHIELD_METAL) {
-        gSaveContext.save.info.obtainedSkins.metalShield = item == ITEM_SHIELD_METAL ? 1 : 0;
+    } else if (item == ITEM_SHIELD_METAL) {
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_METAL];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
-        SET_HEROS_SHIELD;
-        if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN)
-            Player_SetEquipmentData(play, GET_PLAYER(play));
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
@@ -2049,30 +2023,29 @@ u8 Item_Give(PlayState* play, u8 item) {
             gSaveContext.save.info.shields[index].upgrade++;
         gSaveContext.save.info.shields[index].durability = Player_GetMaxShieldDurability(index+1);
         if (item == ITEM_SHIELD_HEROS_UPGRADE)
-            gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
         return ITEM_NONE;
-    } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
+    } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_SPIRIT)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI);
         for (i=0; i<4; i++)
-            if (DPAD_BUTTON(i) == SLOT_TUNICS || DPAD_BUTTON(i) == SLOT_TUNIC_GORON || DPAD_BUTTON(i) == SLOT_TUNIC_ZORA)
+            if (DPAD_BUTTON(i) == SLOT_TUNICS || DPAD_BUTTON(i) == SLOT_TUNIC_GORON || DPAD_BUTTON(i) == SLOT_TUNIC_ZORA || DPAD_BUTTON(i) == SLOT_TUNIC_SPIRIT)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
-    } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_HOVER)) {
+    } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_PEGASUS)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_BOOTS, item - ITEM_BOOTS_KOKIRI);
         for (i=0; i<4; i++)
-            if (DPAD_BUTTON(i) == SLOT_BOOTS || DPAD_BUTTON(i) == SLOT_BOOTS_IRON || DPAD_BUTTON(i) == SLOT_BOOTS_HOVER)
+            if (DPAD_BUTTON(i) == SLOT_BOOTS || DPAD_BUTTON(i) == SLOT_BOOTS_IRON || DPAD_BUTTON(i) == SLOT_BOOTS_HOVER || DPAD_BUTTON(i) == SLOT_BOOTS_PEGASUS)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
     } else if ((item == ITEM_DUNGEON_BOSS_KEY) || (item == ITEM_DUNGEON_COMPASS) || (item == ITEM_DUNGEON_MAP)) {
         gSaveContext.save.info.inventory.dungeonItems[gSaveContext.mapIndex] |= gBitFlags[item - ITEM_DUNGEON_BOSS_KEY];
         return ITEM_NONE;
     } else if (item == ITEM_SMALL_KEY) {
-        u8 mapIndex = play->sceneId == SCENE_RIVERSIDE_INN ? SCENE_DEKU_TREE_BOSS : gSaveContext.mapIndex;
-        if (gSaveContext.save.info.inventory.dungeonKeys[mapIndex] < 0) {
-            gSaveContext.save.info.inventory.dungeonKeys[mapIndex] = 1;
+        if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] < 0) {
+            gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] = 1;
             return ITEM_NONE;
         } else {
-            gSaveContext.save.info.inventory.dungeonKeys[mapIndex]++;
+            gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex]++;
             return ITEM_NONE;
         }
     } else if ((item == ITEM_QUIVER_30) || (item == ITEM_BOW)) {
@@ -2130,6 +2103,10 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_BOMB_BAG_40) {
         Inventory_ChangeUpgrade(UPG_BOMB_BAG, 3);
         AMMO(ITEM_BOMB) = CAPACITY(UPG_BOMB_BAG, 3);
+        return ITEM_NONE;
+    } else if (item == ITEM_BOMB_BAG_50) {
+        Inventory_ChangeUpgrade(UPG_BOMB_BAG, 4);
+        AMMO(ITEM_BOMB) = CAPACITY(UPG_BOMB_BAG, 4);
         return ITEM_NONE;
     } else if (item == ITEM_STRENGTH_GORONS_BRACELET) {
         Inventory_ChangeUpgrade(UPG_STRENGTH, 1);
@@ -2210,11 +2187,8 @@ u8 Item_Give(PlayState* play, u8 item) {
             if (DPAD_BUTTON(i) == SLOT_DEKU_NUT)
                 Interface_LoadItemIcon1(play, i+4);
         return ITEM_NONE;
-    } else if (item == ITEM_BOOTS_UPGRADE) {
-        gSaveContext.save.info.obtainedSkills.furtherJump = 1;
-        return ITEM_NONE;
-    } else if (item == ITEM_PERFECT_BLOCK_UPGRADE) {
-        gSaveContext.save.info.obtainedSkills.perfectBlockBoost = 1;
+    } else if (item == ITEM_PERFECT_BLOCK) {
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_PERFECT_BLOCK];
         return ITEM_NONE;
     } else if (item == ITEM_LONGSHOT) {
         INV_CONTENT(item) = item;
@@ -2370,15 +2344,15 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         return ITEM_NONE;
     } else if (item == ITEM_ARROW_FIRE) {
-        gSaveContext.save.info.obtainedItems.fireArrow = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_FIRE];
         if (IS_CHILD_QUEST)
             return ITEM_NONE;
     } else if (item == ITEM_ARROW_ICE) {
-        gSaveContext.save.info.obtainedItems.iceArrow = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_ICE];
         if (IS_CHILD_QUEST)
             return ITEM_NONE;
     } else if (item == ITEM_ARROW_LIGHT) {
-        gSaveContext.save.info.obtainedItems.lightArrow = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_LIGHT];
         if (IS_CHILD_QUEST)
             return ITEM_NONE;
     } else if (item == ITEM_GOLDEN_FEATHER) {
@@ -2392,8 +2366,8 @@ u8 Item_Give(PlayState* play, u8 item) {
                 Interface_LoadItemIcon1(play, i+4);
         }
         return ITEM_NONE;
-    } else if (item == ITEM_AMULET_OF_ENERGY) {
-        gSaveContext.save.info.obtainedItems.amuletOfEnergy = 1;
+    } else if (item == ITEM_AMULET_OF_ENERGY || item == ITEM_AMBER_EARRINGS) {
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_AMULET_OF_ENERGY + item - ITEM_AMULET_OF_ENERGY];
         return ITEM_NONE;
     } else if ((item == ITEM_HEART_PIECE_2) || (item == ITEM_HEART_PIECE)) {
         gSaveContext.save.info.inventory.questItems += 1 << QUEST_HEART_PIECE_COUNT;
@@ -2585,7 +2559,7 @@ u8 Item_CheckObtainability(u8 item) {
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_MIRROR)) {
         if (gSaveContext.save.info.shields[item - ITEM_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(item - ITEM_SHIELD_DEKU + 1)) {
             return ITEM_NONE;
-        } else if (item == ITEM_SHIELD_DEKU && gSaveContext.save.info.obtainedSkins.woodenShield) {
+        } else if (item == ITEM_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN)) {
             return ITEM_NONE;
         } else if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU + EQUIP_INV_SHIELD_DEKU)) {
             return item;
@@ -2593,24 +2567,24 @@ u8 Item_CheckObtainability(u8 item) {
             return ITEM_NONE;
         }
     } else if (item == ITEM_SHIELD_WOODEN) {
-        if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU) || !gSaveContext.save.info.obtainedSkins.woodenShield)
+        if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU) || !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
             return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) ? item : ITEM_NONE;
     } else if (item == ITEM_SHIELD_HEROS || item == ITEM_SHIELD_METAL) {
         if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS))
             return ITEM_NONE;
-        else if ((item == ITEM_SHIELD_HEROS && gSaveContext.save.info.obtainedSkins.metalShield) || (item == ITEM_SHIELD_METAL && !gSaveContext.save.info.obtainedSkins.metalShield))
+        else if ((item == ITEM_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL)) || (item == ITEM_SHIELD_METAL && !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL)))
             return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
     } else if (item == ITEM_SWORD_HEROS) {
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ? item : ITEM_NONE;
-    } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_ZORA)) {
+    } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_SPIRIT)) {
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI + EQUIP_INV_TUNIC_KOKIRI)) {
             return item;
         } else {
             return ITEM_NONE;
         }
-    } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_HOVER)) {
+    } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_PEGASUS)) {
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, item - ITEM_BOOTS_KOKIRI + EQUIP_INV_BOOTS_KOKIRI)) {
             return item;
         } else {
@@ -2642,7 +2616,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_DEKU_STICK_UPGRADE_20) && (item <= ITEM_DEKU_NUT_UPGRADE_40)) {
         return ITEM_NONE;
-    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_BOMB_BAG_40) || (item >= ITEM_STRENGTH_GORONS_BRACELET && item <= ITEM_STRENGTH_GOLD_GAUNTLETS) || (item >= ITEM_SCALE_SILVER && item <= ITEM_SCALE_GOLDEN) || (item >= ITEM_ADULTS_WALLET && item <= ITEM_GIANTS_WALLET)) {
+    } else if ((item >= ITEM_BOMB_BAG_30 && item <= ITEM_SCALE_GOLDEN) || (item >= ITEM_ADULTS_WALLET && item <= ITEM_GIANTS_WALLET) || item == ITEM_GIANTS_KNIFE) {
         return ITEM_NONE;
     } else if (item >= ITEM_MASTER_WALLET && item <= ITEM_BOTTOMLESS_WALLET) {
         return ITEM_NONE;
@@ -2697,18 +2671,18 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_SHRINE_KEY) || (item >= ITEM_BOOTS_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK_UPGRADE) ) {
+    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_SHRINE_KEY) || (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK) ) {
         return ITEM_NONE;
     }
 
     if (IS_CHILD_QUEST)
         switch (item) {
             case ITEM_ARROW_FIRE:
-                return gSaveContext.save.info.obtainedItems.fireArrow  ? ITEM_ARROW_FIRE  : ITEM_NONE;
+                return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_FIRE)  ? ITEM_ARROW_FIRE  : ITEM_NONE;
             case ITEM_ARROW_ICE:
-                return gSaveContext.save.info.obtainedItems.iceArrow   ? ITEM_ARROW_ICE   : ITEM_NONE;
+                return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_ICE)   ? ITEM_ARROW_ICE   : ITEM_NONE;
             case ITEM_ARROW_LIGHT:
-                return gSaveContext.save.info.obtainedItems.lightArrow ? ITEM_ARROW_LIGHT : ITEM_NONE;
+                return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_LIGHT) ? ITEM_ARROW_LIGHT : ITEM_NONE;
         }
 
     return gSaveContext.save.info.inventory.items[slot];
@@ -3127,7 +3101,7 @@ s32 Magic_RequestChange(PlayState* play, s16 amount, s16 type) {
         return false;
     }
 
-    if (gSaveContext.save.info.obtainedSkills.halfMagicCost && type != MAGIC_ADD)
+    if (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) && type != MAGIC_ADD)
         amount /= 2;
 
     if ((type != MAGIC_ADD) && (gSaveContext.save.info.playerData.magic - amount) < 0) {
@@ -3174,7 +3148,7 @@ s32 Magic_RequestChange(PlayState* play, s16 amount, s16 type) {
         case MAGIC_CONSUME_LENS:
             if (gSaveContext.magicState == MAGIC_STATE_IDLE) {
                 if (gSaveContext.save.info.playerData.magic != 0) {
-                    interfaceCtx->lensMagicConsumptionTimer = gSaveContext.save.info.obtainedSkills.halfMagicCost ? 160 : 80;
+                    interfaceCtx->lensMagicConsumptionTimer = CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? 160 : 80;
                     gSaveContext.magicState = MAGIC_STATE_CONSUME_LENS;
                     return true;
                 } else {
@@ -3365,7 +3339,7 @@ void Magic_Update(PlayState* play) {
                 interfaceCtx->lensMagicConsumptionTimer--;
                 if (interfaceCtx->lensMagicConsumptionTimer == 0) {
                     gSaveContext.save.info.playerData.magic--;
-                    interfaceCtx->lensMagicConsumptionTimer = gSaveContext.save.info.obtainedSkills.halfMagicCost ? 160 : 80;
+                    interfaceCtx->lensMagicConsumptionTimer = CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? 160 : 80;
                 }
             }
 
@@ -3487,7 +3461,7 @@ void Magic_DrawMeter(PlayState* play) {
                                 HIRES_MULTIPLY((magicMeterY + 10) - (HIRES_PX_SHIFT * 2)) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
 
-        if (gSaveContext.save.info.obtainedSkills.halfMagicCost) {
+        if (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST)) {
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
             OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gUnusedAmmoDigitHalfTex, 16, 8, X_HIRES_MULTIPLY(R_MAGIC_METER_X + 4 + gSaveContext.magicCapacity), HIRES_MULTIPLY(magicMeterY + 7), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(8), X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));
@@ -3599,6 +3573,10 @@ const u32 gDpadTex[] = {
     0x000000ff, 0x000000ff, 0x000000ff, 0x00000096, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 
 };
 
+#define START_BUTTON_RGB_R  (USE_MM_HUD ? START_MM_BUTTON_R : START_BUTTON_R)
+#define START_BUTTON_RGB_G  (USE_MM_HUD ? START_MM_BUTTON_G : START_BUTTON_G)
+#define START_BUTTON_RGB_B  (USE_MM_HUD ? START_MM_BUTTON_B : START_BUTTON_B)
+
 void Interface_DrawItemButtons(PlayState* play) {
     static void* cUpLabelTextures[] = LANGUAGE_ARRAY(gNaviCUpJPNTex, gNaviCUpENGTex, gNaviCUpENGTex, gNaviCUpENGTex);
 #if OOT_NTSC_N64
@@ -3661,30 +3639,23 @@ void Interface_DrawItemButtons(PlayState* play) {
 
     if (!IS_PAUSE_STATE_GAMEOVER(pauseCtx)) {
         if (IS_PAUSED(&play->pauseCtx)) {
-            u8 rgb[3];
-            if (USE_MM_HUD) {
-                rgb[0] = START_MM_BUTTON_R; rgb[1] = START_MM_BUTTON_G; rgb[2] = START_MM_BUTTON_B;
-            } else {
-                rgb[0] = START_BUTTON_R;    rgb[1] = START_BUTTON_G;    rgb[2] = START_BUTTON_B;
-            }
-
             // Start Button Texture, Color & Label
             gDPPipeSync(OVERLAY_DISP++);
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, rgb[0], rgb[1], rgb[2],
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B,
                             interfaceCtx->startAlpha);
 
 #if (OOT_VERSION < PAL_1_0) && !OOT_NTSC_N64
             OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(R_START_BTN_X + startButtonLeftMMShift + WS_SHIFT_FULL), HIRES_MULTIPLY(R_START_BTN_Y), X_HIRES_MULTIPLY(22),
                                 HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)),
-                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), rgb[0], rgb[1], rgb[2], interfaceCtx->startAlpha);
+                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, interfaceCtx->startAlpha);
 #elif OOT_NTSC && !OOT_NTSC_N64
             OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(132 + startButtonLeftMMShift + WS_SHIFT_FULL), HIRES_MULTIPLY(R_START_BTN_Y), X_HIRES_MULTIPLY(22),
                                 HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)),
-                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), rgb[0], rgb[1], rgb[2], interfaceCtx->startAlpha);
+                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, interfaceCtx->startAlpha);
 #else
             OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(startButtonLeftPos[gSaveContext.language] + startButtonLeftMMShift + WS_SHIFT_FULL), HIRES_MULTIPLY(R_START_BTN_Y), X_HIRES_MULTIPLY(22),
                                 HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)),
-                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), rgb[0], rgb[1], rgb[2], interfaceCtx->startAlpha);
+                                (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, interfaceCtx->startAlpha);
 #endif
 
             gDPPipeSync(OVERLAY_DISP++);
@@ -3716,6 +3687,11 @@ void Interface_DrawItemButtons(PlayState* play) {
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language) + height) << 2, G_TX_RENDERTILE, 0, 0,
                                 X_HIRES_DIVIDE(texCoordScale), HIRES_DIVIDE(texCoordScale));
 #endif
+        } else if ((IS_CUTSCENE_LAYER || play->csCtx.state != CS_STATE_IDLE) && play->specialIconAlpha > 0 && interfaceCtx->unk_1FC == DO_ACTION_SKIP) { // Stop Cutscene
+            OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(268 + WS_SHIFT_FULL), HIRES_MULTIPLY(182), X_HIRES_MULTIPLY(22), HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)), (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, 255);
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
+            gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(185) << 2, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL + 48) << 2, HIRES_MULTIPLY(185 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
     }
 
@@ -3838,7 +3814,8 @@ void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
         }
         
         item = Interface_GetItemFromDpad(button-4);
-        if ( (item == ITEM_TUNIC_GORON && player->currentTunic == 1) || (item == ITEM_TUNIC_ZORA && player->currentTunic == 2) || (item == ITEM_BOOTS_IRON && player->currentBoots == 1) || (item == ITEM_BOOTS_HOVER && player->currentBoots == 2) || (item >= ITEM_MASK_KEATON && item <= ITEM_MASK_TRUTH && player->currentMask == item - ITEM_MASK_KEATON + 1) ) {
+        if ( (item == ITEM_TUNIC_GORON && player->currentTunic == 1) || (item == ITEM_TUNIC_ZORA && player->currentTunic == 2) || (item == ITEM_TUNIC_SPIRIT && player->currentTunic == 3) || (item == ITEM_BOOTS_IRON && player->currentBoots == 1) || (item == ITEM_BOOTS_HOVER && player->currentBoots == 2) ||
+             (item >= ITEM_MASK_KEATON && item <= ITEM_MASK_TRUTH && player->currentMask == item - ITEM_MASK_KEATON + 1) ) {
             dd    *=  0.8;
             width +=  3;
             offset = -1;
@@ -4141,11 +4118,11 @@ static void Interface_PrintHeapUsage(PlayState* this) {
     const u32 reservedStatic = sizeof(gZBuffer) + sizeof(gGfxSPTaskOutputBuffer) + sizeof(gGfxSPTaskYieldBuffer) + sizeof(gGfxSPTaskStack) + sizeof(gGfxPools) + sizeof(gAudioHeap); // Known static memory regions
     SystemArena_GetSizes(&maxFree, &free, &alloc); // Get memory info from the system arena
 
-    OPEN_DISPS(this->state.gfxCtx, "../z_parameter.c", 3816);
+    OPEN_DISPS(this->state.gfxCtx, __FILE__, __LINE__);
 
     printer = alloca(sizeof(GfxPrint));
     GfxPrint_Init(printer);
-    GfxPrint_Open(printer, POLY_XLU_DISP);
+    GfxPrint_Open(printer, OVERLAY_DISP);
 
     GfxPrint_SetColor(printer, 255, 255, 255, 255);
 
@@ -4178,7 +4155,7 @@ static void Interface_PrintHeapUsage(PlayState* this) {
         GfxPrint_Printf(printer, "STATIC:%.2f", usedMB);
     }
 
-    POLY_XLU_DISP = GfxPrint_Close(printer);
+    OVERLAY_DISP = GfxPrint_Close(printer);
     GfxPrint_Destroy(printer);
 
     CLOSE_DISPS(this->state.gfxCtx, "../z_parameter.c", 3854);
@@ -4314,11 +4291,21 @@ void Energy_Update(PlayState* play) {
     if (!Player_HasEnergyUnlocked())
         return;
 
-    if (energyRefillTimer > 0)
+    if (gSaveContext.save.info.energy > Player_GetMaxEnergy())
+        gSaveContext.save.info.energy = Player_GetMaxEnergy();
+
+    if (R_IS_DASHING) { // Don't regen energy while dashing
+        f32 interval = Player_GetMeleeWeaponHeld(GET_PLAYER(play)) ? 0.1 : 0.2;
+        if (++sDashEnergyTimer >= SECONDS(interval)) {
+            sDashEnergyTimer = 0;
+            gSaveContext.save.info.energy = CLAMP(gSaveContext.save.info.energy - 1, 0, 255);
+        }
+    } else if (energyRefillTimer > 0)
         energyRefillTimer--;
     else if (gSaveContext.save.info.energy < Player_GetMaxEnergy()) {
         energyRefillTimer = SECONDS(0.5);
         gSaveContext.save.info.energy++;
+        sDashEnergyTimer = 0;
     }
 }
 
@@ -4425,15 +4412,6 @@ void Interface_Draw(PlayState* play) {
     gSPSegment(OVERLAY_DISP++, 0x08, interfaceCtx->iconItemSegment);
     gSPSegment(OVERLAY_DISP++, 0x0B, interfaceCtx->mapSegment);
 
-    // Stop Cutscene
-    if (IS_CUTSCENE_LAYER && play->specialIconAlpha > 0) {
-        Gfx_SetupDL_39Overlay(play->state.gfxCtx);
-        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
-        gDPSetEnvColor(OVERLAY_DISP++, 255, 255, 255, 255);
-        gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(185) << 2, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL + 48) << 2, HIRES_MULTIPLY(185 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
-    }
-
     if (pauseCtx->debugState == PAUSE_DEBUG_STATE_CLOSED) {
         static u8 walletColors[][7] = {
             { 200, 255, 100 }, // Default
@@ -4476,6 +4454,7 @@ void Interface_Draw(PlayState* play) {
             case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
             case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
             case SCENE_TREASURE_BOX_SHOP:
+            case SCENE_PURPLE_ICE_CAVERN:
             case SCENE_ANCIENT_HOLLOW:
             case SCENE_WOODFALL_TEMPLE:
                 if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0) {
@@ -5489,6 +5468,10 @@ void Interface_Update(PlayState* play) {
                 case SCENE_PATH_TO_GORON_VILLAGE:
                 case SCENE_GORON_VILLAGE:
                 case SCENE_GORON_SHRINE:
+                case SCENE_RIVERSIDE_VILLAGE:
+                case SCENE_ANCIENT_GROVE:
+                case SCENE_FORSAKEN_KINGDOM:
+                case SCENE_GLOOMY_GRAVEYARD:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {
@@ -5550,6 +5533,10 @@ void Interface_Update(PlayState* play) {
         }
     } else if (sEnvHazard == PLAYER_ENV_HAZARD_FREEZINGROOM) {
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA) {
+            sEnvHazard = PLAYER_ENV_HAZARD_NONE;
+        }
+    } else if (sEnvHazard == PLAYER_ENV_HAZARD_CURSEDROOM) {
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_SPIRIT) {
             sEnvHazard = PLAYER_ENV_HAZARD_NONE;
         }
     } else if ((Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_UNDERWATER_FLOOR) &&

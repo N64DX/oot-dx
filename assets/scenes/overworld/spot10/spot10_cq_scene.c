@@ -8,6 +8,14 @@ static SceneCmd start[] = {
 
 #include "assets/scenes/overworld/spot10/spot10_scene.c"
 
+static Vec3s cq_path_points0[] = {
+#include "assets/scenes/overworld/spot10/cq/scene/pathPoints0.inc.c"
+};
+
+static Path cq_path_list[] = {
+#include "assets/scenes/overworld/spot10/cq/scene/pathList.inc.c"
+};
+
 static ActorEntry cq_player_entry_list[] = {
 #include "assets/scenes/overworld/spot10/cq/scene/playerEntryList.inc.c"
 };

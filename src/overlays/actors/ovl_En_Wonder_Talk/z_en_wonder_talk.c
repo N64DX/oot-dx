@@ -125,6 +125,12 @@ void func_80B391CC(EnWonderTalk* this, PlayState* play) {
                                            "☆☆☆☆☆ Attention coordinates\t       \t☆☆☆☆☆ %f\n") VT_RST,
                        0.0f);
                 break;
+            case 6:
+                this->actor.textId = 0x8515;
+                this->unk_156 = TEXT_STATE_EVENT;
+                this->height = 0.0f;
+                this->unk_15C = 110.0f;
+                break;
             default:
                 this->actor.textId = 0x7072;
                 this->unk_156 = TEXT_STATE_EVENT;
@@ -229,6 +235,7 @@ void func_80B395F0(EnWonderTalk* this, PlayState* play) {
                 this->actionFunc = func_80B391CC;
                 break;
             case 5:
+            case 6:
                 Message_CloseTextbox(play);
                 if (this->unk_164 == 0) {
                     Actor_Spawn(&play->actorCtx, play, ACTOR_EN_POH, this->actor.world.pos.x, this->actor.world.pos.y,

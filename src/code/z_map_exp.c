@@ -150,6 +150,8 @@ void Map_InitData(PlayState* play, s16 room) {
         case SCENE_GORON_SHRINE:
         case SCENE_RIVERSIDE_VILLAGE:
         case SCENE_ANCIENT_GROVE:
+        case SCENE_FORSAKEN_KINGDOM:
+        case SCENE_GLOOMY_GRAVEYARD:
             extendedMapIndex = mapIndex;
             if (play->sceneId == SCENE_GRAVEYARD) {
                 if (CHECK_QUEST_ITEM(QUEST_SONG_NOCTURNE)) {
@@ -344,6 +346,8 @@ void Map_Init(PlayState* play) {
         case SCENE_GORON_SHRINE:
         case SCENE_RIVERSIDE_VILLAGE:
         case SCENE_ANCIENT_GROVE:
+        case SCENE_FORSAKEN_KINGDOM:
+        case SCENE_GLOOMY_GRAVEYARD:
             mapIndex = play->sceneId - SCENE_HYRULE_FIELD;
             R_MAP_INDEX = gSaveContext.mapIndex = mapIndex;
             R_COMPASS_SCALE_X = gMapData->owCompassInfo[mapIndex][0];
@@ -353,6 +357,9 @@ void Map_Init(PlayState* play) {
             Map_InitData(play, mapIndex);
             R_OW_MINIMAP_X = gMapData->owMinimapPosX[mapIndex];
             R_OW_MINIMAP_Y = gMapData->owMinimapPosY[mapIndex];
+            break;
+        case SCENE_PURPLE_ICE_CAVERN:
+            mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = SCENE_GANONS_TOWER_COLLAPSE_INTERIOR;
             break;
         case SCENE_ANCIENT_HOLLOW:
             mapIndex = R_MAP_INDEX = gSaveContext.mapIndex = SCENE_DEKU_TREE_BOSS;
@@ -573,6 +580,8 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_GORON_SHRINE:
             case SCENE_RIVERSIDE_VILLAGE:
             case SCENE_ANCIENT_GROVE:
+            case SCENE_FORSAKEN_KINGDOM:
+            case SCENE_GLOOMY_GRAVEYARD:
                 if (!R_MINIMAP_DISABLED) {
                     s8 xOffset = gMapData->overworldXOffset[extendedMapIndex] / 2;
                     

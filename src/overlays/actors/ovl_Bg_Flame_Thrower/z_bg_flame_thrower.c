@@ -172,7 +172,7 @@ void BgFlameThrower_Update(Actor* thisx, PlayState* play) {
     }
 }
 
-Gfx* BgFlameThrower_DrawFlame(PlayState* play, BgFlameThrower* this, s16 frame, MtxF* mtx, Gfx* displayList) {
+Gfx* BgFlameThrower_DrawFlame(PlayState* play, BgFlameThrower* this, s16 frame, MtxF* mtx, f32 sinYaw, f32 cosYaw, Gfx* displayList) {
     f32 phi_f12;
 
     u8 index = (((this->timer + frame) % 8) * 7) * (1 / 7.0f);
@@ -186,9 +186,9 @@ Gfx* BgFlameThrower_DrawFlame(PlayState* play, BgFlameThrower* this, s16 frame, 
 
     mtx->xx = mtx->yy = mtx->zz = (0.7f * phi_f12) + 0.5f;
 
-    mtx->xw = ((((mtx->xx * 3.0f)  * phi_f12) + 20.0f) * Math_SinS(this->dyna.actor.shape.rot.y - 0x2000)) + this->dyna.actor.world.pos.x;
+    mtx->xw = ((((mtx->xx * 3.0f)  * phi_f12) + 20.0f) * sinYaw) + this->dyna.actor.world.pos.x;
     mtx->yw = this->dyna.actor.world.pos.y + 50.0f + (0.7f * phi_f12);
-    mtx->zw = ((((mtx->xx * 25.0f) * phi_f12) + 20.0f) * Math_CosS(this->dyna.actor.shape.rot.y - 0x2000)) + this->dyna.actor.world.pos.z;
+    mtx->zw = ((((mtx->xx * 25.0f) * phi_f12) + 20.0f) * cosYaw) + this->dyna.actor.world.pos.z;
 
     gSPMatrix(displayList++, Matrix_MtxFToMtx(MATRIX_CHECK_FLOATS(mtx, __FILE__, __LINE__), GRAPH_ALLOC(play->state.gfxCtx, sizeof(Mtx))), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
     gSPDisplayList(displayList++, gFireTempleFireballDL);
@@ -199,6 +199,7 @@ Gfx* BgFlameThrower_DrawFlame(PlayState* play, BgFlameThrower* this, s16 frame, 
 Gfx* BgFlameThrower_DrawSetupFlame(PlayState* play, BgFlameThrower* this, Gfx* displayList) {
     s8 i, phi_s1, phi_s2;
     MtxF mtx;
+    f32 sinYaw, cosYaw;
 
     if (this->timer < 4) {
         phi_s1 = 4 - this->timer;
@@ -211,8 +212,12 @@ Gfx* BgFlameThrower_DrawSetupFlame(PlayState* play, BgFlameThrower* this, Gfx* d
 
     Matrix_MtxFCopy(&mtx, &gIdentityMtxF);
 
+    // The flame sprite positions depend only on the actor's constant yaw, so the trig is computed once per actor.
+    sinYaw = Math_SinS(this->dyna.actor.shape.rot.y - 0x2000);
+    cosYaw = Math_CosS(this->dyna.actor.shape.rot.y - 0x2000);
+
     for (i=phi_s2-1; i>=phi_s1; i--)
-        displayList = BgFlameThrower_DrawFlame(play, this, i, &mtx, displayList);
+        displayList = BgFlameThrower_DrawFlame(play, this, i, &mtx, sinYaw, cosYaw, displayList);
 
     return displayList;
 }
@@ -221,8 +226,6 @@ void BgFlameThrower_Draw(Actor* thisx, PlayState* play) {
     BgFlameThrower* this = (BgFlameThrower*)thisx;
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
-    Gfx_SetupDL_25Opa(play->state.gfxCtx);
-    MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
     POLY_XLU_DISP = Gfx_SetupDL(POLY_XLU_DISP, SETUPDL_20);
     POLY_XLU_DISP = BgFlameThrower_DrawSetupFlame(play, this, POLY_XLU_DISP);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);

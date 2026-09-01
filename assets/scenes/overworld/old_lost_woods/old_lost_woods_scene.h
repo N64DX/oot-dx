@@ -6,6 +6,7 @@
 #include "scene.h"
 #include "ultra64.h"
 
+extern SceneCmd* old_lost_woods_sceneAlternateHeaders[];
 extern ActorEntry old_lost_woods_sceneStartPositionList0x000050[];
 extern RomFile old_lost_woods_sceneRoomList0x0000A0[];
 extern Spawn old_lost_woods_sceneEntranceList0x0000A8[];

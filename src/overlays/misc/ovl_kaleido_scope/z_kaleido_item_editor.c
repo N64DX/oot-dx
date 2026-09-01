@@ -47,6 +47,13 @@ ItemEditorState state;
 
 u8 firstTimeUse = false;
 
+void ItemEditor_RefreshIcons(PlayState* play) {
+    u8 i;
+
+    for (i=0; i<8; i++)
+        Interface_LoadItemIcon1(play, i);
+}
+
 void ItemEditor_SetItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
     if (play->state.input[0].press.button == BTN_A) {
         if (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE)
@@ -61,6 +68,8 @@ void ItemEditor_SetItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
             gSaveContext.save.info.inventory.items[slot]--;
         else gSaveContext.save.info.inventory.items[slot] = ITEM_NONE;
     }
+
+    ItemEditor_RefreshIcons(play);
 }
 
 void ItemEditor_SetCQItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
@@ -68,13 +77,15 @@ void ItemEditor_SetCQItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
         ItemEditor_SetItem(firstItem, lastItem, slot, play);
 }
 
-void ItemEditor_SetArrow(u8 item, u8 bit, u8 slot, PlayState* play) {
+void ItemEditor_SetArrow(u8 item, u8 upgrade, u8 slot, PlayState* play) {
     if (!IS_CHILD_QUEST_AS_CHILD) {
         gSaveContext.save.info.inventory.items[slot] = (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE ? SLOT(item) : ITEM_NONE);
         if (SLOT(item))
-            gSaveContext.save.info.obtainedItems.items |= (0x80 >> bit);
-        else gSaveContext.save.info.obtainedItems.items &= ~(0x80 >> bit);
-    } else gSaveContext.save.info.obtainedItems.items ^= (0x80 >> bit);
+            gSaveContext.save.info.upgradeItems |= gBitFlags[upgrade];
+        else gSaveContext.save.info.upgradeItems &= ~gBitFlags[upgrade];
+    } else gSaveContext.save.info.upgradeItems ^= gBitFlags[upgrade];
+
+    ItemEditor_RefreshIcons(play);
 }
 
 void ItemEditor_SetBottle(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
@@ -95,6 +106,8 @@ void ItemEditor_SetBottle(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
             gSaveContext.save.info.inventory.items[slot]--;
         else gSaveContext.save.info.inventory.items[slot] = ITEM_NONE;
     }
+
+    ItemEditor_RefreshIcons(play);
 }
 
 void ItemEditor_SetAmmo(u8 item, u8 upgrade, u8 max, PlayState* play) {
@@ -159,13 +172,13 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
             if (item == EQUIP_INV_SWORD_MASTER) {
                 if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)) {
                     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
-                    gSaveContext.save.info.obtainedItems.masterSword = 0;
-                } else if (!gSaveContext.save.info.obtainedItems.masterSword) {
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_MASTER];
+                } else if (!CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) {
                     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
-                    gSaveContext.save.info.obtainedItems.masterSword = 1;
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_MASTER];
                 } else {
                     gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(type, item);
-                    gSaveContext.save.info.obtainedItems.masterSword = 0;
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_MASTER];
                 }
             } else if (item == EQUIP_INV_SWORD_BIGGORON) {
                 if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
@@ -182,34 +195,57 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
         }
 
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item)) {
-            Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, PLAYER_SWORD_NONE);
+            Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_NONE);
             gSaveContext.save.info.equips.buttonItems[0] = ITEM_NONE;
             gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 1;
             Player_SetEquipmentData(play, GET_PLAYER(play));
         }
 
-        if (item == EQUIP_INV_SWORD_KOKIRI || item == EQUIP_INV_SWORD_HEROS) {
-            if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS))
-                SET_HEROS_SWORD;
-            else CLEAR_HEROS_SWORD;
-            play->pauseCtx.wasInDebug = true;
-        }
-
         if (item == EQUIP_INV_SWORD_BIGGORON)
             gSaveContext.save.info.playerData.swordHealth = CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON) ? MAX_SWORD_HEALTH : 0;
     } else if (type == EQUIP_TYPE_SHIELD) {
-        if (item == EQUIP_INV_SHIELD_HYLIAN || item == EQUIP_INV_SHIELD_HEROS) {
-            if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SHIELD_HEROS))
-                SET_HEROS_SHIELD;
-            else CLEAR_HEROS_SHIELD;
-            play->pauseCtx.wasInDebug = true;
+        if (upgrade) {
+            if (item == EQUIP_INV_SHIELD_DEKU) {
+                if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
+                } else if (!CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_WOODEN];
+                } else {
+                    gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
+                }
+            } else if (item == EQUIP_INV_SHIELD_HEROS) {
+                if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_METAL];
+                } else if (!CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_METAL];
+                } else {
+                    gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_METAL];
+                }
+            }
         }
+
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item))
+            Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
+    } else if (type == EQUIP_TYPE_TUNIC) {
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item))
+            Inventory_ChangeEquipment(EQUIP_TYPE_TUNIC, EQUIP_VALUE_TUNIC_KOKIRI);
+    } else if (type == EQUIP_TYPE_BOOTS) {
+        if (CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item))
+            Inventory_ChangeEquipment(EQUIP_TYPE_BOOTS, EQUIP_VALUE_BOOTS_KOKIRI);
     }
+
+    ItemEditor_RefreshIcons(play);
 }
 
 void ItemEditor_SetHealth(u8 type, u8 max, u8 param3, PlayState* play) {
     s16* health;
-    s16 maxHealth;
+    s16 maxHealth, minHealth;
     s16 rounded, next, prev;
 
     if (type == 2) {
@@ -221,9 +257,11 @@ void ItemEditor_SetHealth(u8 type, u8 max, u8 param3, PlayState* play) {
     if (type == 0) {
         health = &gSaveContext.save.info.playerData.health;
         maxHealth = gSaveContext.save.info.playerData.healthCapacity;
+        minHealth = 0;
     } else {
         health = &gSaveContext.save.info.playerData.healthCapacity;
         maxHealth = max * 0x10;
+        minHealth = 0x30;
     }
 
     if (play->state.input[0].press.button == BTN_A) {
@@ -233,13 +271,13 @@ void ItemEditor_SetHealth(u8 type, u8 max, u8 param3, PlayState* play) {
     } else if (play->state.input[0].press.button == BTN_B) {
         rounded = ((*health + 0xF) / 0x10) * 0x10;
         prev = rounded - 0x10;
-        *health = (*health > 0) ? ((prev < *health) ? prev : *health - 0x10) : 0;
+        *health = (*health > minHealth) ? ((prev < *health) ? prev : *health - 0x10) : minHealth;
     } else if (play->state.input[0].press.button == BTN_CUP) {
         *health = maxHealth;
     } else if (play->state.input[0].press.button == BTN_CDOWN) {
-        *health = 0;
+        *health = minHealth;
     } else if (play->state.input[0].press.button == BTN_CLEFT) {
-        *health = (*health > 0xA0) ? *health - 0xA0 : 0;
+        *health = (*health > 0xA0 + minHealth) ? *health - 0xA0 : minHealth;
     } else if (play->state.input[0].press.button == BTN_CRIGHT) {
         next = *health + 0xA0;
         *health = (next <= maxHealth) ? next : maxHealth;
@@ -307,14 +345,6 @@ void ItemEditor_SetUpgrade(u8 upgrade, u8 max, u8 param3, PlayState* play) {
         Inventory_ChangeUpgrade(upgrade, CUR_UPG_VALUE(upgrade) - 1);
 }
 
-void ItemEditor_SetObtainedSkill(u8 bit, u8 param2, u8 param3, PlayState* play) {
-    gSaveContext.save.info.obtainedSkills.skills ^= (0x80 >> bit);
-}
-
-void ItemEditor_SetObtainedItem(u8 bit, u8 param2, u8 param3, PlayState* play) {
-    gSaveContext.save.info.obtainedItems.items ^= (0x80 >> bit);
-}
-
 void ItemEditor_SetDurability(u8 shield, u8 max, u8 param3, PlayState* play) {
     if (play->state.input[0].press.button == BTN_A && gSaveContext.save.info.shields[shield].upgrade < max) {
         gSaveContext.save.info.shields[shield].upgrade++;
@@ -326,8 +356,36 @@ void ItemEditor_SetDurability(u8 shield, u8 max, u8 param3, PlayState* play) {
     }
 }
 
+void ItemEditor_SetUpgradeItem(u8 upgrade, u8 param2, u8 param3, PlayState* play) {
+    gSaveContext.save.info.upgradeItems ^= gBitFlags[upgrade];
+}
+
 void ItemEditor_SetQuest(u8 quest, u8 param2, u8 param3, PlayState* play) {
     gSaveContext.save.info.inventory.questItems ^= gBitFlags[quest];
+}
+
+void ItemEditor_SetWarpSong(u8 song, u8 upgrade, u8 param3, PlayState* play) {
+    if (IS_CHILD_QUEST) {
+        if (play->state.input[0].press.button == BTN_A) {
+            if (!CHECK_QUEST_ITEM(song))
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[song];
+            else if (!CHECK_UPGRADE_ITEM(upgrade))
+                gSaveContext.save.info.upgradeItems |= gBitFlags[upgrade];
+            else {
+                gSaveContext.save.info.inventory.questItems &= ~gBitFlags[song];
+                gSaveContext.save.info.upgradeItems &= ~gBitFlags[upgrade];
+            }
+        } else if (play->state.input[0].press.button == BTN_B) {
+            if (CHECK_QUEST_ITEM(song) && CHECK_UPGRADE_ITEM(upgrade))
+                gSaveContext.save.info.upgradeItems &= ~gBitFlags[upgrade];
+            else if (CHECK_QUEST_ITEM(song))
+                gSaveContext.save.info.inventory.questItems &= ~gBitFlags[song];
+            else {
+                gSaveContext.save.info.inventory.questItems |= gBitFlags[song];
+                gSaveContext.save.info.upgradeItems |= gBitFlags[upgrade];
+            }
+        }
+    } else gSaveContext.save.info.inventory.questItems ^= gBitFlags[song];
 }
 
 void ItemEditor_SetKeys(u8 scene, u8 param2, u8 param3, PlayState* play) {
@@ -338,7 +396,7 @@ void ItemEditor_SetKeys(u8 scene, u8 param2, u8 param3, PlayState* play) {
 }
 
 void ItemEditor_SetDungeon(u8 scene, u8 param2, u8 param3, PlayState* play) {
-    if (play->state.input[0].press.button == BTN_A) 
+    if (play->state.input[0].press.button == BTN_A)
         gSaveContext.save.info.inventory.dungeonItems[scene] = 7;  
     else if (play->state.input[0].press.button == BTN_CUP) 
         gSaveContext.save.info.inventory.dungeonItems[scene] ^= gBitFlags[DUNGEON_BOSS_KEY];    
@@ -382,11 +440,11 @@ char* ItemEditor_GetItem(u8 item, u8 param2, u8 slot) {
     if (IS_CHILD_QUEST_AS_CHILD) {
         switch (item) {
             case ITEM_ARROW_FIRE:
-                return gSaveContext.save.info.obtainedItems.fireArrow  ? "Set" : "None";
+                return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_FIRE)  ? "Set" : "None";
             case ITEM_ARROW_ICE:
-                return gSaveContext.save.info.obtainedItems.iceArrow   ? "Set" : "None";
+                return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_ICE)   ? "Set" : "None";
             case ITEM_ARROW_LIGHT:
-                return gSaveContext.save.info.obtainedItems.lightArrow ? "Set" : "None";
+                return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_LIGHT) ? "Set" : "None";
         }
 
         switch (gSaveContext.save.info.inventory.items[slot]) {
@@ -410,6 +468,9 @@ char* ItemEditor_GetItem(u8 item, u8 param2, u8 slot) {
         case ITEM_DEKU_NUT:
         case ITEM_BOMB:
         case ITEM_BOW:
+        case ITEM_BOW_FIRE:
+        case ITEM_BOW_ICE:
+        case ITEM_BOW_LIGHT:
         case ITEM_ARROW_FIRE:
         case ITEM_DINS_FIRE:
         case ITEM_SLINGSHOT:
@@ -544,13 +605,18 @@ char* ItemEditor_GetAmmo(u8 item, u8 type, u8 param3) {
 
 char* ItemEditor_GetEquipment(u8 item, u8 type, u8 upgrade) {
     if (upgrade && type == EQUIP_TYPE_SWORD) {
-        if (item == EQUIP_INV_SWORD_MASTER && (gBitFlags[1] & gSaveContext.save.info.inventory.equipment))
-            return IS_RAZOR_SWORD ? "Razor Sword" : "Master Sword";
-        else if (item == EQUIP_INV_SWORD_BIGGORON && (gBitFlags[2] & gSaveContext.save.info.inventory.equipment)) {
+        if (item == EQUIP_INV_SWORD_MASTER && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? "Master Sword" : "Razor Sword";
+        else if (item == EQUIP_INV_SWORD_BIGGORON && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
             if (IS_CHILD_QUEST)
                 return gSaveContext.save.info.playerData.bgsFlag ? "Gilded Sword" : "Silver Sword";
             return gSaveContext.save.info.playerData.bgsFlag ? "Biggoron Sword" : "Giant's Knife";
         }
+    } else if (upgrade && type == EQUIP_TYPE_SHIELD) {
+        if (item == EQUIP_INV_SHIELD_DEKU && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN) ? "Wooden Shield" : "Deku Shield";
+        else if (item == EQUIP_INV_SHIELD_HEROS && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL) ? "Metal Shield" : "Hero's Shield";
     }
 
     return (CHECK_OWNED_EQUIP_ALT(type, item)) ? "Set" : "None";
@@ -606,22 +672,27 @@ char* ItemEditor_GetUpgrade(u8 upgrade, u8 param2, u8 param3) {
     return buf;
 }
 
-char* ItemEditor_GetObtainedSkill(u8 bit, u8 param2, u8 param3) {
-    return (gSaveContext.save.info.obtainedSkills.skills & (0x80 >> bit)) ? "Set" : "None";
-}
-
-char* ItemEditor_GetObtainedItem(u8 bit, u8 param2, u8 param3) {
-    return (gSaveContext.save.info.obtainedItems.items & (0x80 >> bit)) ? "Set" : "None";
-}
-
 char* ItemEditor_GetDurability(u8 shield, u8 param2, u8 param3) {
     static char buf[2] = { '0', '\0' };
     buf[0] = '0' + gSaveContext.save.info.shields[shield].upgrade;
     return buf;
 }
 
+char* ItemEditor_GetUpgradeItem(u8 upgrade, u8 param2, u8 param3) {
+    return (CHECK_UPGRADE_ITEM(upgrade)) ? "Set" : "None";
+}
+
 char* ItemEditor_GetQuest(u8 quest, u8 param2, u8 param3) {
     return (CHECK_QUEST_ITEM(quest)) ? "Set" : "None";
+}
+
+char* ItemEditor_GetWarpSong(u8 song, u8 upgrade, u8 param3) {
+    if (IS_CHILD_QUEST) {
+        if (CHECK_QUEST_ITEM(song))
+            return CHECK_UPGRADE_ITEM(upgrade) ? "Enhanced" : "Standard";
+        return "None";
+    }
+    return (CHECK_QUEST_ITEM(song)) ? "Set" : "None";
 }
 
 char* ItemEditor_GetKeys(u8 scene, u8 param2, u8 param3) {
@@ -694,10 +765,10 @@ ItemEditorEntry sItemEditorItemEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, ITEM_BOMBCHU,       ITEM_BOMBCHU,         SLOT_BOMBCHU,       "Bombchu",       ItemEditor_SetItem,         ItemEditor_GetItem         },
     { SHOW_OPTION_ALL_QUESTS, ITEM_SLINGSHOT,     ITEM_SLINGSHOT,       SLOT_SLINGSHOT,     "Slingshot",     ItemEditor_SetItem,         ItemEditor_GetItem         },
     { SHOW_OPTION_ALL_QUESTS, ITEM_BOW,           ITEM_BOW,             SLOT_BOW,           "Bow",           ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_FIRE,    0,                    SLOT_ARROW_FIRE,    "Fire Arrow",    ItemEditor_SetArrow,        ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_ICE,     1,                    SLOT_ARROW_ICE,     "Ice Arrow",     ItemEditor_SetArrow,        ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_LIGHT,   2,                    SLOT_ARROW_LIGHT,   "Light Arrow",   ItemEditor_SetArrow,        ItemEditor_GetItem         },
-    { SHOW_OPTION_ONLY_CQ,    6,                  0,                    0,                  "Bomb Arrow",    ItemEditor_SetObtainedItem, ItemEditor_GetObtainedItem },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_FIRE,    UPGRADE_ARROW_FIRE,   SLOT_ARROW_FIRE,    "Fire Arrow",    ItemEditor_SetArrow,        ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_ICE,     UPGRADE_ARROW_ICE,    SLOT_ARROW_ICE,     "Ice Arrow",     ItemEditor_SetArrow,        ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_LIGHT,   UPGRADE_ARROW_LIGHT,  SLOT_ARROW_LIGHT,   "Light Arrow",   ItemEditor_SetArrow,        ItemEditor_GetItem         },
+    { SHOW_OPTION_ONLY_CQ,    UPGRADE_ARROW_BOMB, 0,                    0,                  "Bomb Arrow",    ItemEditor_SetUpgradeItem,  ItemEditor_GetUpgradeItem },
     { SHOW_OPTION_ALL_QUESTS, ITEM_BOOMERANG,     ITEM_BOOMERANG,       SLOT_BOOMERANG,     "Boomerang",     ItemEditor_SetItem,         ItemEditor_GetItem         },
     { SHOW_OPTION_ALL_QUESTS, ITEM_HOOKSHOT,      ITEM_LONGSHOT,        SLOT_HOOKSHOT,      "Hookshot",      ItemEditor_SetItem,         ItemEditor_GetItem         },
     { SHOW_OPTION_ALL_QUESTS, ITEM_HAMMER,        ITEM_HAMMER,          SLOT_HAMMER,        "Hammer",        ItemEditor_SetItem,         ItemEditor_GetItem         },
@@ -734,62 +805,64 @@ ItemEditorEntry sItemEditorEquipmentEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  0, "Master Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Giant's Knife", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_HEROS,    EQUIP_TYPE_SWORD,  0, "Hero's Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Silver Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_DEKU,    EQUIP_TYPE_SHIELD, 0, "Deku Shield",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_HEROS,    EQUIP_TYPE_SWORD,  0, "Hero's Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_DEKU,    EQUIP_TYPE_SHIELD, 1, "Deku Shield",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_HYLIAN,  EQUIP_TYPE_SHIELD, 0, "Hylian Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_HEROS,   EQUIP_TYPE_SHIELD, 0, "Hero's Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_MIRROR,  EQUIP_TYPE_SHIELD, 0, "Mirror Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HEROS,   EQUIP_TYPE_SHIELD, 1, "Hero's Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_TUNIC_GORON,    EQUIP_TYPE_TUNIC,  0, "Goron Tunic",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_TUNIC_ZORA,     EQUIP_TYPE_TUNIC,  0, "Zora Tunic",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_TUNIC_SPIRIT,   EQUIP_TYPE_TUNIC,  0, "Spirit Tunic",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_BOOTS_IRON,     EQUIP_TYPE_BOOTS,  0, "Iron Boots",    ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_BOOTS_HOVER,    EQUIP_TYPE_BOOTS,  0, "Hover Boots",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_BOOTS_PEGASUS,  EQUIP_TYPE_BOOTS,  0, "Pegasus Boots", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
 };
 
 ItemEditorEntry sItemEditorUpgradesEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Health",                   ItemEditor_SetHealth,        ItemEditor_GetHealth        },
-    { SHOW_OPTION_NO_CQ,      1,                       20, 0, "Max Health",               ItemEditor_SetHealth,        ItemEditor_GetHealth        },
-    { SHOW_OPTION_NO_CQ,      2,                       20, 0, "Double Defense",           ItemEditor_SetHealth,        ItemEditor_GetHealth        },   
-    { SHOW_OPTION_ONLY_CQ,    1,                       30, 0, "Max Health",               ItemEditor_SetHealth,        ItemEditor_GetHealth        },
-    { SHOW_OPTION_ONLY_CQ,    2,                       30, 0, "Double Defense",           ItemEditor_SetHealth,        ItemEditor_GetHealth        },
-    { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Piece of Heart",           ItemEditor_SetHeart,         ItemEditor_GetHeart         },
-    { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Magic",                    ItemEditor_SetMagic,         ItemEditor_GetMagic         },
-    { SHOW_OPTION_ONLY_CQ,    2,                        0, 0, "Half Magic Cost",          ItemEditor_SetObtainedSkill, ItemEditor_GetObtainedSkill },
-    { SHOW_OPTION_ONLY_CQ,    0,                        0, 0, "Enhanced Spin",            ItemEditor_SetObtainedSkill, ItemEditor_GetObtainedSkill },
-    { SHOW_OPTION_NO_CQ,      UPG_WALLET,               2, 0, "Wallet",                   ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_ONLY_CQ,    UPG_WALLET,               6, 0, "Wallet",                   ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_ALL_QUESTS, UPG_DEKU_STICKS,          3, 0, "Deku Stick",               ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_ALL_QUESTS, UPG_DEKU_NUTS,            3, 0, "Deku Nuts",                ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_NO_CQ,      UPG_BULLET_BAG,           3, 0, "Bullet Bag",               ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_NO_CQ,      UPG_QUIVER,               3, 0, "Quiver",                   ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_ONLY_CQ,    UPG_BULLET_BAG,           4, 0, "Bullet Bag",               ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_ONLY_CQ,    UPG_QUIVER,               4, 0, "Quiver",                   ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_ALL_QUESTS, UPG_BOMB_BAG,             3, 0, "Bomb Bag",                 ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_ALL_QUESTS, UPG_STRENGTH,             3, 0, "Strength",                 ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_ALL_QUESTS, UPG_SCALE,                2, 0, "Scale",                    ItemEditor_SetUpgrade,       ItemEditor_GetUpgrade       },
-    { SHOW_OPTION_ONLY_CQ,    1,                        0, 0, "Perfect Block",            ItemEditor_SetObtainedSkill, ItemEditor_GetObtainedSkill },
-    { SHOW_OPTION_ONLY_CQ,    3,                        0, 0, "Amulet of Energy",         ItemEditor_SetObtainedItem,  ItemEditor_GetObtainedItem  },
-    { SHOW_OPTION_ONLY_CQ,    3,                        0, 0, "Further Jump",             ItemEditor_SetObtainedSkill, ItemEditor_GetObtainedSkill },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_DEKU,    7, 0, "Deku Shield Durability",   ItemEditor_SetDurability,    ItemEditor_GetDurability    },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HYLIAN,  7, 0, "Hylian Shield Durability", ItemEditor_SetDurability,    ItemEditor_GetDurability    },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HEROS,   7, 0, "Hero's Shield Durability", ItemEditor_SetDurability,    ItemEditor_GetDurability    },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_MIRROR,  7, 0, "Mirror Shield Durability", ItemEditor_SetDurability,    ItemEditor_GetDurability    },
+    { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Health",                   ItemEditor_SetHealth,      ItemEditor_GetHealth      },
+    { SHOW_OPTION_NO_CQ,      1,                       20, 0, "Max Health",               ItemEditor_SetHealth,      ItemEditor_GetHealth      },
+    { SHOW_OPTION_NO_CQ,      2,                       20, 0, "Double Defense",           ItemEditor_SetHealth,      ItemEditor_GetHealth      },   
+    { SHOW_OPTION_ONLY_CQ,    1,                       30, 0, "Max Health",               ItemEditor_SetHealth,      ItemEditor_GetHealth      },
+    { SHOW_OPTION_ONLY_CQ,    2,                       30, 0, "Double Defense",           ItemEditor_SetHealth,      ItemEditor_GetHealth      },
+    { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Piece of Heart",           ItemEditor_SetHeart,       ItemEditor_GetHeart       },
+    { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Magic",                    ItemEditor_SetMagic,       ItemEditor_GetMagic       },
+    { SHOW_OPTION_ONLY_CQ,    UPGRADE_HALF_MAGIC_COST,  0, 0, "Half Magic Cost",          ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
+    { SHOW_OPTION_ONLY_CQ,    UPGRADE_ENHANCED_SPIN,    0, 0, "Enhanced Spin",            ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
+    { SHOW_OPTION_NO_CQ,      UPG_WALLET,               2, 0, "Wallet",                   ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_ONLY_CQ,    UPG_WALLET,               6, 0, "Wallet",                   ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_ALL_QUESTS, UPG_DEKU_STICKS,          3, 0, "Deku Stick",               ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_ALL_QUESTS, UPG_DEKU_NUTS,            3, 0, "Deku Nuts",                ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_NO_CQ,      UPG_BULLET_BAG,           3, 0, "Bullet Bag",               ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_NO_CQ,      UPG_QUIVER,               3, 0, "Quiver",                   ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_ONLY_CQ,    UPG_BULLET_BAG,           4, 0, "Bullet Bag",               ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_ONLY_CQ,    UPG_QUIVER,               4, 0, "Quiver",                   ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_ALL_QUESTS, UPG_BOMB_BAG,             3, 0, "Bomb Bag",                 ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_ALL_QUESTS, UPG_STRENGTH,             3, 0, "Strength",                 ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_ALL_QUESTS, UPG_SCALE,                2, 0, "Scale",                    ItemEditor_SetUpgrade,     ItemEditor_GetUpgrade     },
+    { SHOW_OPTION_ONLY_CQ,    UPGRADE_PERFECT_BLOCK,    0, 0, "Perfect Block",            ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
+    { SHOW_OPTION_ONLY_CQ,    UPGRADE_AMULET_OF_ENERGY, 0, 0, "Amulet of Energy",         ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
+    { SHOW_OPTION_ONLY_CQ,    UPGRADE_AMBER_EARRINGS,   0, 0, "Amber Earrings",           ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_DEKU,    7, 0, "Deku Shield Durability",   ItemEditor_SetDurability,  ItemEditor_GetDurability  },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HYLIAN,  7, 0, "Hylian Shield Durability", ItemEditor_SetDurability,  ItemEditor_GetDurability  },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_HEROS,   7, 0, "Hero's Shield Durability", ItemEditor_SetDurability,  ItemEditor_GetDurability  },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SHIELD_MIRROR,  7, 0, "Mirror Shield Durability", ItemEditor_SetDurability,  ItemEditor_GetDurability  },
 };
 
 ItemEditorEntry sItemEditorSongEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_LULLABY,  0, 0, "Zelda's Lullaby",    ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_EPONA,    0, 0, "Epona's Song",       ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SARIA,    0, 0, "Saria's Song",       ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SUN,      0, 0, "Sun's Song",         ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_TIME,     0, 0, "Song of Time",       ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_STORMS,   0, 0, "Song of Storms",     ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_MINUET,   0, 0, "Minuet of Forest",   ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_BOLERO,   0, 0, "Bolero of Fire",     ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SERENADE, 0, 0, "Serenade of Water",  ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_REQUIEM,  0, 0, "Requiem of Water",   ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_NOCTURNE, 0, 0, "Nocturne of Shadow", ItemEditor_SetQuest, ItemEditor_GetQuest },
-    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_PRELUDE,  0, 0, "Prelude of Light",   ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_LULLABY,  0,                     0, "Zelda's Lullaby",    ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_EPONA,    0,                     0, "Epona's Song",       ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SARIA,    0,                     0, "Saria's Song",       ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SUN,      0,                     0, "Sun's Song",         ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_TIME,     0,                     0, "Song of Time",       ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_STORMS,   0,                     0, "Song of Storms",     ItemEditor_SetQuest,    ItemEditor_GetQuest },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_MINUET,   UPGRADE_SONG_MINUET,   0, "Minuet of Forest",   ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_BOLERO,   UPGRADE_SONG_BOLERO,   0, "Bolero of Fire",     ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_SERENADE, UPGRADE_SONG_SERENADE, 0, "Serenade of Water",  ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_REQUIEM,  UPGRADE_SONG_REQUIEM,  0, "Requiem of Spirit",  ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_NOCTURNE, UPGRADE_SONG_NOCTURNE, 0, "Nocturne of Shadow", ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
+    { SHOW_OPTION_ALL_QUESTS, QUEST_SONG_PRELUDE,  UPGRADE_SONG_PRELUDE,  0, "Prelude of Light",   ItemEditor_SetWarpSong, ItemEditor_GetWarpSong },
 };
 
 ItemEditorEntry sItemEditorQuestEntries[] = {
@@ -807,40 +880,42 @@ ItemEditorEntry sItemEditorQuestEntries[] = {
 };
 
 ItemEditorEntry sItemEditorDungeonKeysEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, SCENE_DEKU_TREE,              0, 0, "Deku Tree",          ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_DODONGOS_CAVERN,        0, 0, "Dodongo's Cavern",   ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_JABU_JABU,              0, 0, "Jabu-Jabu",          ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ONLY_CQ,    SCENE_DEKU_TREE_BOSS,         0, 0, "Ancient Hollow",     ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_FOREST_TEMPLE,          0, 0, "Forest Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_FIRE_TEMPLE,            0, 0, "Fire Temple",        ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_WATER_TEMPLE,           0, 0, "Water Temple",       ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_SHADOW_TEMPLE,          0, 0, "Shadow Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_SPIRIT_TEMPLE,          0, 0, "Spirit Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ONLY_CQ,    SCENE_DODONGOS_CAVERN_BOSS,   0, 0, "Woodfall Temple",    ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_ICE_CAVERN,             0, 0, "Ice Cavern",         ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_BOTTOM_OF_THE_WELL,     0, 0, "Bottom of the Well", ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_THIEVES_HIDEOUT,        0, 0, "Thieves' Hideout",   ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_GERUDO_TRAINING_GROUND, 0, 0, "Training Ground",    ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_INSIDE_GANONS_CASTLE,   0, 0, "Ganon's Castle",     ItemEditor_SetKeys, ItemEditor_GetKeys },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_TREASURE_BOX_SHOP,      0, 0, "Teasure Box Shop",   ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_DEKU_TREE,                      0, 0, "Deku Tree",          ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_DODONGOS_CAVERN,                0, 0, "Dodongo's Cavern",   ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_JABU_JABU,                      0, 0, "Jabu-Jabu",          ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_DEKU_TREE_BOSS,                 0, 0, "Ancient Hollow",     ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_FOREST_TEMPLE,                  0, 0, "Forest Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_FIRE_TEMPLE,                    0, 0, "Fire Temple",        ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_WATER_TEMPLE,                   0, 0, "Water Temple",       ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_SHADOW_TEMPLE,                  0, 0, "Shadow Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_SPIRIT_TEMPLE,                  0, 0, "Spirit Temple",      ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_DODONGOS_CAVERN_BOSS,           0, 0, "Woodfall Temple",    ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_ICE_CAVERN,                     0, 0, "Ice Cavern",         ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_BOTTOM_OF_THE_WELL,             0, 0, "Bottom of the Well", ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_THIEVES_HIDEOUT,                0, 0, "Thieves' Hideout",   ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_GERUDO_TRAINING_GROUND,         0, 0, "Training Ground",    ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_GANONS_TOWER_COLLAPSE_INTERIOR, 0, 0, "Purple Ice Cavern",  ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_INSIDE_GANONS_CASTLE,           0, 0, "Ganon's Castle",     ItemEditor_SetKeys, ItemEditor_GetKeys },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_TREASURE_BOX_SHOP,              0, 0, "Teasure Box Shop",   ItemEditor_SetKeys, ItemEditor_GetKeys },
 };
 
 ItemEditorEntry sItemEditorDungeonQuestEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, SCENE_DEKU_TREE,              0, 0, "Deku Tree",          ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_DODONGOS_CAVERN,        0, 0, "Dodongo's Cavern",   ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_JABU_JABU,              0, 0, "Jabu-Jabu",          ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ONLY_CQ,    SCENE_DEKU_TREE_BOSS,         0, 0, "Ancient Hollow",     ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_FOREST_TEMPLE,          0, 0, "Forest Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_FIRE_TEMPLE,            0, 0, "Fire Temple",        ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_WATER_TEMPLE,           0, 0, "Water Temple",       ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_SHADOW_TEMPLE,          0, 0, "Shadow Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_SPIRIT_TEMPLE,          0, 0, "Spirit Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ONLY_CQ,    SCENE_DODONGOS_CAVERN_BOSS,   0, 0, "Woodfall Temple",    ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ONLY_CQ,    SCENE_JABU_JABU_BOSS,         0, 0, "Goron Mines",        ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_ICE_CAVERN,             0, 0, "Ice Cavern",         ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_BOTTOM_OF_THE_WELL,     0, 0, "Bottom of the Well", ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_GERUDO_TRAINING_GROUND, 0, 0, "Training Ground",    ItemEditor_SetDungeon, ItemEditor_GetDungeon },
-    { SHOW_OPTION_ALL_QUESTS, SCENE_INSIDE_GANONS_CASTLE,   0, 0, "Ganon's Tower",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_DEKU_TREE,                      0, 0, "Deku Tree",          ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_DODONGOS_CAVERN,                0, 0, "Dodongo's Cavern",   ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_JABU_JABU,                      0, 0, "Jabu-Jabu",          ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_DEKU_TREE_BOSS,                 0, 0, "Ancient Hollow",     ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_FOREST_TEMPLE,                  0, 0, "Forest Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_FIRE_TEMPLE,                    0, 0, "Fire Temple",        ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_WATER_TEMPLE,                   0, 0, "Water Temple",       ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_SHADOW_TEMPLE,                  0, 0, "Shadow Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_SPIRIT_TEMPLE,                  0, 0, "Spirit Temple",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_DODONGOS_CAVERN_BOSS,           0, 0, "Woodfall Temple",    ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_JABU_JABU_BOSS,                 0, 0, "Goron Mines",        ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_ICE_CAVERN,                     0, 0, "Ice Cavern",         ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_BOTTOM_OF_THE_WELL,             0, 0, "Bottom of the Well", ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_GERUDO_TRAINING_GROUND,         0, 0, "Training Ground",    ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ONLY_CQ,    SCENE_GANONS_TOWER_COLLAPSE_INTERIOR, 0, 0, "Purple Ice Cavern",  ItemEditor_SetDungeon, ItemEditor_GetDungeon },
+    { SHOW_OPTION_ALL_QUESTS, SCENE_INSIDE_GANONS_CASTLE,           0, 0, "Ganon's Tower",      ItemEditor_SetDungeon, ItemEditor_GetDungeon },
 };
 
 ItemEditorEntry sItemEditorSceneFlagsEntries[] = {

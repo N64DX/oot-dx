@@ -405,11 +405,10 @@ void Sram_InitDebugSave(void) {
     if (IS_CHILD_QUEST) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, 3);
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_TUNIC, 3);
         gSaveContext.save.info.inventory.items[SLOT_FEATHER]      = ITEM_GOLDEN_FEATHER;
         gSaveContext.save.info.inventory.items[SLOT_SWORD_FAIRYS] = ITEM_SWORD_FAIRYS;
         gSaveContext.save.info.inventory.items[SLOT_QUEST]        = ITEM_PICTOBOX;
-        SET_HEROS_SWORD;
-        SET_HEROS_SHIELD;
     }
 
     gSaveContext.save.info.horseData.sceneId = SCENE_HYRULE_FIELD;
@@ -563,17 +562,11 @@ void Sram_OpenSave(SramContext* sramCtx) {
             gSaveContext.save.entranceIndex = ENTR_GANONS_TOWER_0;
             break;
 
-        case SCENE_ANCIENT_HOLLOW:
-            gSaveContext.save.entranceIndex = ENTR_ANCIENT_HOLLOW_0;
-            break;
-        case SCENE_GORON_MINES:
-            gSaveContext.save.entranceIndex = ENTR_GORON_MINES_0;
-            break;
+        case SCENE_PURPLE_ICE_CAVERN:    gSaveContext.save.entranceIndex = ENTR_PURPLE_ICE_CAVERN_0; break;
+        case SCENE_ANCIENT_HOLLOW:       gSaveContext.save.entranceIndex = ENTR_ANCIENT_HOLLOW_0;    break;
+        case SCENE_GORON_MINES:          gSaveContext.save.entranceIndex = ENTR_GORON_MINES_0;       break;
         case SCENE_WOODFALL_TEMPLE:
-        case SCENE_WOODFALL_TEMPLE_BOSS:
-            if (gSaveContext.save.entranceIndex == ENTR_WOODFALL_TEMPLE_0)
-                gSaveContext.save.entranceIndex = ENTR_WOODFALL_TEMPLE_0;
-            break;
+        case SCENE_WOODFALL_TEMPLE_BOSS: gSaveContext.save.entranceIndex = ENTR_WOODFALL_TEMPLE_0;   break;
 
         case SCENE_DESERT_COLOSSUS:
             if (IS_RUSH_QUEST) {
@@ -612,7 +605,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
         gSaveContext.save.info.playerData.healthCapacity = gSaveContext.save.info.playerData.health = 0x30;
         gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = 0;
         gSaveContext.save.info.playerData.isMagicAcquired = gSaveContext.save.info.playerData.isDoubleMagicAcquired = gSaveContext.save.info.playerData.isDoubleDefenseAcquired = gSaveContext.save.info.playerData.bgsFlag = gSaveContext.save.info.playerData.dpadDualSet = false;
-        gSaveContext.save.info.playerData.equipmentUpgrades = 0;
+        gSaveContext.save.info.upgradeItems = 0;
     }
 
     PRINTF("scene_no = %d\n", gSaveContext.save.entranceIndex);
@@ -669,7 +662,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
         }
     }
 
-    if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER) && !(IS_CHILD_QUEST && GET_EVENTCHKINF(EVENTCHKINF_PURIFIED_WOODFALL) && !HAS_MASTER_SWORD)) {
+    if (LINK_IS_ADULT_OR_TIMESKIP && !CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER) && !(IS_CHILD_QUEST && GET_EVENTCHKINF(EVENTCHKINF_PURIFIED_WOODFALL) && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER))) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER);
         gSaveContext.save.info.equips.buttonItems[0] = ITEM_SWORD_MASTER;
         gSaveContext.save.info.equips.equipment &= ~(0xF << (EQUIP_TYPE_SWORD * 4));
@@ -710,14 +703,14 @@ void Sram_OpenSave(SramContext* sramCtx) {
         gSaveContext.save.linkAge = LINK_AGE_CHILD;
 
     if (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ARROW_FIRE)
-        gSaveContext.save.info.obtainedItems.fireArrow = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_FIRE];
     if (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ARROW_ICE)
-        gSaveContext.save.info.obtainedItems.iceArrow = 1;
+       gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_ICE];
     if (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ARROW_LIGHT)
-        gSaveContext.save.info.obtainedItems.lightArrow = 1;
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_LIGHT];
 
     for (i=0; i<4; i++)
-        if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, i) && (gSaveContext.save.info.shields[i].durability == 0 || gSaveContext.save.info.shields[i].durability>= Player_GetMaxShieldDurability(i+1)) && ( (i == 3 && !gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) || i != 3) )
+        if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, i) && (gSaveContext.save.info.shields[i].durability == 0 || gSaveContext.save.info.shields[i].durability>= Player_GetMaxShieldDurability(i+1)) && ( (i == 3 && !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN)) || i != 3) )
             gSaveContext.save.info.shields[i].durability = Player_GetMaxShieldDurability(i+1);
 
     // Cheating

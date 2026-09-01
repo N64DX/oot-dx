@@ -1,227 +1,3 @@
-DEFINE_MESSAGE(0x8003, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE COLOR(LIGHTBLUE) "ミラーシールド" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
-"みがかれた表面は 光やエネルギーを\n"
-"反射することができる。\n"
-COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) "で　使え。"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "You found the " COLOR(LIGHTBLUE) "Mirror Shield" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"The shield's polished surface can\n"
-"reflect light or energy. Press " COLOR(LIGHTBLUE) "[R]\n"
-COLOR(DEFAULT) "to use it."
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "Du hast den " COLOR(LIGHTBLUE) "Spiegelschild" COLOR(DEFAULT) " gefunden!" QUICKTEXT_DISABLE "\n"
-"Die polierte Oberfläche des Schildes\n"
-"kann Licht oder Energie reflektieren.\n"
-"Drücke " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " um ihn zu benutzen."
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SHIELD_MIRROR) QUICKTEXT_ENABLE "Tu as trouvé le " COLOR(LIGHTBLUE) "Bouclier miroir" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"La surface polie du bouclier peut\n"
-"réfléchir la lumière ou l'énergie.\n"
-"Appuie sur " COLOR(LIGHTBLUE) "[R]" COLOR(DEFAULT) " pour l'utiliser."
-)
-)
-
-DEFINE_MESSAGE(0x8004, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE COLOR(RED) "シルバーソード" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
-"名工によって鍛えられた刃は\n"
-"広い攻撃範囲と　そこそこの威力を持つ！"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "You got the " COLOR(RED) "Silver Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"This blade was forged by an\n"
-"expert smith to have a wider\n"
-"slash range with decent power!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Du hast das " COLOR(RED) "Silberschwert" COLOR(DEFAULT) " bekommen!" QUICKTEXT_DISABLE "\n"
-"Diese Klinge wurde von einem\n"
-"Meisterschmied geschmiedet und hat\n"
-"eine größere Reichweite mit guter Kraft!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Tu as obtenu l'" COLOR(RED) "Épée d’argent" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
-"Cette lame a été forgée par un\n"
-"forgeron expert pour avoir une\n"
-"plus grande portée et une bonne puissance!"
-)
-)
-
-DEFINE_MESSAGE(0x8005, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "シルバーソードが\n"
-COLOR(RED) "ギルデッドソード" COLOR(DEFAULT) "に生まれ変わった！" QUICKTEXT_DISABLE "\n"
-"名工によって鍛えられた刃は\n"
-"非常に大きな力を持つ！"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "You got the Silver Sword\n"
-"reforged into the " COLOR(RED) "Gilded Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"This blade was forged by a\n"
-"master smith for great power!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Du hast das Silberschwert\n"
-"zum " COLOR(RED) "Goldschwert" COLOR(DEFAULT) " umschmieden lassen!" QUICKTEXT_DISABLE "\n"
-"Diese Klinge wurde von einem\n"
-"Meisterschmied für große Kraft geschmiedet!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Tu as transformé la" 
-"Lame d'Argent en " COLOR(RED) "Lame Dorée" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
-"Cette lame a été forgée par un\n"
-"maître forgeron pour une grande puissance!"
-)
-)
-
-DEFINE_MESSAGE(0x8007, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) QUICKTEXT_ENABLE COLOR(BLUE) "パワーグローブ" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
-"そうびすれば　力があふれ、\n"
-COLOR(BLUE) "[A]" COLOR(DEFAULT) "で　つかみ　持ち上げられる！"
-BOX_BREAK
-
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) "約束だから　" COLOR(RED) "ナボール" COLOR(DEFAULT) "に\n"
-"わたしてあげよう。"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) QUICKTEXT_ENABLE "You found the " COLOR(BLUE) "Power Bracelet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"If you wore it, you would\n"
-"feel power in your arms, the \n"
-"power to lift big things with " COLOR(BLUE) "[A]" COLOR(DEFAULT) "!"
-BOX_BREAK
-
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) "You did promise to give\n"
-"it to " COLOR(RED) "Nabooru" COLOR(DEFAULT) ". You should keep\n"
-"your word..."
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) QUICKTEXT_ENABLE "Das " COLOR(BLUE) "Kraftarmband" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Trägst Du sie, hast Du\n"
-"die Kraft, mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) " auch sehr\n"
-"schwere Dinge anzuheben!"
-BOX_BREAK
-
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) "Du hast versprochen, sie " COLOR(RED) "Naboru" COLOR(DEFAULT) "\n"
-"zu geben! Halte also Wort!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) QUICKTEXT_ENABLE "Vous trouvez le " COLOR(BLUE) "Bracelet\n"
-"des Titans" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " En les portant vous \n"
-"pourriez soulever d'énormes \n"
-"objets avec " COLOR(BLUE) "[A]" COLOR(DEFAULT) "!"
-BOX_BREAK
-
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_SILVER_GAUNTLETS) "Vous avez promis à\n"
-COLOR(RED) "Nabooru" COLOR(DEFAULT) " de le lui rapporter..."
-)
-)
-
-DEFINE_MESSAGE(0x8008, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE COLOR(BLUE) "パワーグローブ" COLOR(DEFAULT) "を手に入れた！" QUICKTEXT_DISABLE "\n"
-"両腕に　さらに　力が　みなぎる！\n"
-COLOR(BLUE) "[A]" COLOR(DEFAULT) "でつかんで　持ってみよう！"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE "You got another " COLOR(BLUE) "Power Bracelet" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"You can feel even more power \n"
-"coursing through your arms!\n"
-"Grab with " COLOR(BLUE) "[A]" COLOR(DEFAULT) " and lift stuff up!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE "Du hast einen weiteren " COLOR(BLUE) "Kraftarmband" COLOR(DEFAULT) "\n"
-"bekommen!" QUICKTEXT_DISABLE " Du fühlst noch größere Kraft\n"
-"in den Armen! Du packst\n"
-"schwerste Dinge mit " COLOR(BLUE) "[A]" COLOR(DEFAULT) "!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_STRENGTH_GOLD_GAUNTLETS) QUICKTEXT_ENABLE "Vous trouvez le " COLOR(BLUE) "Bracelet\n"
-"des Titans" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE " Une puissance encore\n"
-"plus grande vous envahit! Utilisez\n"
-COLOR(BLUE) "[A]" COLOR(DEFAULT) " pour soulever d'énormes objets!"
-)
-)
-
-DEFINE_MESSAGE(0x8009, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BOW) QUICKTEXT_ENABLE COLOR(RED) "勇者の弓" COLOR(DEFAULT) "を　みつけた！" QUICKTEXT_DISABLE "\n"
-COLOR(YELLOW) "Ｃアイテム画面" COLOR(DEFAULT) "で、\n"
-COLOR(YELLOW) "[C-Left]" COLOR(DEFAULT) "・" COLOR(YELLOW) "[C-Down]" COLOR(DEFAULT) "・" COLOR(YELLOW) "[C-Right]" COLOR(DEFAULT) "に　セットしよう。"
-BOX_BREAK
-
-UNSKIPPABLE ITEM_ICON(ITEM_BOW) COLOR(YELLOW) "[C]" COLOR(DEFAULT) "を押すと　持ちかえます。\n"
-"もう一度" COLOR(YELLOW) "[C]" COLOR(DEFAULT) "を押すとかまえて、\n"
-"はなすと　" COLOR(RED) "矢" COLOR(DEFAULT) "を発射。"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BOW) QUICKTEXT_ENABLE "You found the " COLOR(RED) "Hero's Bow" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"On the " COLOR(YELLOW) "Select Item Subscreen" COLOR(DEFAULT) ",\n"
-"you can set it to " COLOR(YELLOW) "[C-Left]" COLOR(DEFAULT) ", " COLOR(YELLOW) "[C-Down]" COLOR(DEFAULT) " or" COLOR(YELLOW) " [C-Right]" COLOR(DEFAULT) "."
-BOX_BREAK
-
-UNSKIPPABLE ITEM_ICON(ITEM_BOW) "Press " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "to take it out\n"
-"and hold it. As you hold down\n"
-COLOR(YELLOW) "[C]" COLOR(DEFAULT) " you can aim with " COLOR(LIGHTBLUE) "[Control-Pad]" COLOR(DEFAULT) "." COLOR(YELLOW) " " COLOR(DEFAULT) "Release\n"
-COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to let fly with an " COLOR(RED) "arrow" COLOR(DEFAULT) "."
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BOW) QUICKTEXT_ENABLE "Der " COLOR(RED) "Heroenbogen" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Im " COLOR(YELLOW) "Gegenstands-Menü" COLOR(DEFAULT) " kannst\n"
-"Du ihn auf " COLOR(YELLOW) "[C-Left]" COLOR(DEFAULT) ", " COLOR(YELLOW) "[C-Down]" COLOR(DEFAULT) " oder " COLOR(YELLOW) "[C-Right]\n"
-COLOR(DEFAULT) "plazieren."
-BOX_BREAK
-
-UNSKIPPABLE ITEM_ICON(ITEM_BOW) "Drücke " COLOR(YELLOW) "[C]" COLOR(DEFAULT) ", um den Bogen\n"
-"zu benutzen. Halte " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " und\n"
-"ziele mit " COLOR(LIGHTBLUE) "[Control-Pad]" COLOR(DEFAULT) ". Laß " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " los,\n"
-"um " COLOR(RED) "Pfeile" COLOR(DEFAULT) " abzuschießen!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BOW) QUICKTEXT_ENABLE "Vous trouvez l'" COLOR(RED) "Arc du Brave" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Assignez-le en appuyant sur \n"
-COLOR(YELLOW) "[C-Left]" COLOR(DEFAULT) ", " COLOR(YELLOW) "[C-Down]" COLOR(DEFAULT) " ou " COLOR(YELLOW) "[C-Right]" COLOR(DEFAULT) " dans l'" COLOR(YELLOW) "Inventaire" COLOR(DEFAULT) "."
-BOX_BREAK
-
-UNSKIPPABLE ITEM_ICON(ITEM_BOW) "Appuyez sur " COLOR(YELLOW) "[C] " COLOR(DEFAULT) "pour le \n"
-"brandir. Maintenez " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " et \n"
-"visez avec le " COLOR(LIGHTBLUE) "[Control-Pad]" COLOR(DEFAULT) "." COLOR(YELLOW) " " COLOR(DEFAULT) "Relâchez " COLOR(YELLOW) "[C]" COLOR(DEFAULT) "\n"
-"pour décocher une " COLOR(RED) "flèche" COLOR(DEFAULT) "."
-)
-)
-
-DEFINE_MESSAGE(0x800A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BROKEN_GORONS_SWORD) QUICKTEXT_ENABLE "密猟者のノコギリと\n"
-"高品質の" COLOR(RED) "金の粉" COLOR(DEFAULT) "を\n"
-"手に入れた！" QUICKTEXT_DISABLE "\n"
-"マスター鍛冶屋に持っていき、\n"
-"これで剣を作ってもらおう！"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BROKEN_GORONS_SWORD) QUICKTEXT_ENABLE "You traded the Poacher's Saw\n"
-"for some high quality " COLOR(RED) "Gold Dust" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
-"Bring it to a master smith to\n"
-"reforge a sword with it!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BROKEN_GORONS_SWORD) QUICKTEXT_ENABLE "Du hast die Säge gegen\n"
-COLOR(RED) "Goldpulver" COLOR(DEFAULT) " getauscht!" QUICKTEXT_DISABLE "\n"
-"Bring es zu einem Meisterschmied,\n"
-"um damit ein Schwert zu schmieden!"
-),
-MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_BROKEN_GORONS_SWORD) QUICKTEXT_ENABLE "Vous échangez la Scie\n" 
-"contre l'" COLOR(RED) "Poudre d'Or" COLOR(DEFAULT) " de grande qualité !" QUICKTEXT_DISABLE "\n"
-"Apportez-la à un maître forgeron\n"
-"pour reforger une épée avec !"
-)
-)
-
 DEFINE_MESSAGE(0x800D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 ITEM_ICON(ITEM_TUNIC_GORON) QUICKTEXT_ENABLE COLOR(RED) "ゴロンの服" COLOR(DEFAULT) "を　手に入れた！" QUICKTEXT_DISABLE "\n"
@@ -273,7 +49,7 @@ ITEM_ICON(ITEM_TUNIC_ZORA) QUICKTEXT_ENABLE "Vous obtenez une " COLOR(BLUE) "Tun
 )
 )
 
-DEFINE_MESSAGE(0x800F, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8010, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "ゴロンの服　　２００ルピー\n"
 COLOR(DEFAULT) "ゴロン族の作った　大人専用の服。\n"
@@ -298,7 +74,7 @@ COLOR(DEFAULT) "Créé par les Gorons, cet habit\n"
 )
 )
 
-DEFINE_MESSAGE(0x8010, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8011, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(
 QUICKTEXT_ENABLE COLOR(RED) "ゾーラの服　　３００ルピー\n"
 COLOR(DEFAULT) "ゾーラ族の作った　大人専用の服。\n"
@@ -323,7 +99,7 @@ COLOR(DEFAULT) "Créé par les Zoras, cet habit\n"
 )
 )
 
-DEFINE_MESSAGE(0x8011, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8012, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE COLOR(BLUE) "氷の矢" COLOR(DEFAULT) "を　手に入れた！" QUICKTEXT_DISABLE "\n"
 COLOR(YELLOW) "[C]" COLOR(DEFAULT) "にセットで　弓矢が変化。\n"
@@ -349,7 +125,7 @@ UNSKIPPABLE ITEM_ICON(ITEM_ARROW_ICE) QUICKTEXT_ENABLE "Vous trouvez la " COLOR(
 )
 )
 
-DEFINE_MESSAGE(0x8012, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8013, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_PRESCRIPTION) QUICKTEXT_ENABLE "金の粉を　あずけて\n"
 COLOR(RED) "処方せん" COLOR(DEFAULT) "を　受け取った！" QUICKTEXT_DISABLE "\n"
@@ -373,7 +149,7 @@ COLOR(RED) "Ordonnance" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 )
 )
 
-DEFINE_MESSAGE(0x8013, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8014, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_CLAIM_CHECK) QUICKTEXT_ENABLE "ギルデッドソード！！" QUICKTEXT_DISABLE "\n"
 "…の" COLOR(RED) "ひきかえ券" COLOR(DEFAULT) "を　もらった。\n"
@@ -397,18 +173,6 @@ UNSKIPPABLE ITEM_ICON(ITEM_CLAIM_CHECK) QUICKTEXT_ENABLE "La Lame Dorée..." QUI
 "Une fois prête, sa lame tran-\n"
 "chera du monstre en rondelles!"
 )
-)
-
-DEFINE_MESSAGE(0x8014, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
-MSG(),
-MSG(
-"We opened a new shop over here\n"
-"in Kakariko Village. We got some new\n"
-"goods to sell in this branch. I hope\n"
-"you be a steady customer for us!" EVENT
-),
-MSG(),
-MSG()
 )
 
 DEFINE_MESSAGE(0x8100, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
@@ -2567,6 +2331,26 @@ MSG()
 DEFINE_MESSAGE(0x8124, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
+UNSKIPPABLE "Hi hi hi... You look familiar, do you?"
+BOX_BREAK
+
+"See this torch beside me? It won\'t\n"
+"burn bright because it\'s soul is\n"
+"missing."
+BOX_BREAK
+
+"Soul you say? I give you a hint.\n"
+"There\'s a lost soul waiting for you\n"
+"in " COLOR(ADJUSTABLE) "Riverside Village" COLOR(DEFAULT) ".\n"
+COLOR(RED) "Find what he lost" COLOR(DEFAULT) " to put him at ease."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8125, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
 UNSKIPPABLE "Hoo hoo!"
 BOX_BREAK_DELAYED(40)
 
@@ -2586,7 +2370,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8125, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8126, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 UNSKIPPABLE "Arghh...! You...!"
@@ -2595,7 +2379,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8126, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8127, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 UNSKIPPABLE "You've got guts, kid.\n"
@@ -2619,7 +2403,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8127, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_TOP,
+DEFINE_MESSAGE(0x8128, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_TOP,
 MSG(
 SHIFT(51) TEXT_SPEED(1) "ハア　ハア　ハア" TEXT_SPEED(0) "。"
 BOX_BREAK
@@ -2711,7 +2495,7 @@ BOX_BREAK
 )
 )
 
-DEFINE_MESSAGE(0x8128, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+DEFINE_MESSAGE(0x8129, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 UNSKIPPABLE "Hoo hoo!"
@@ -2744,7 +2528,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x8129, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+DEFINE_MESSAGE(0x812A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
 UNSKIPPABLE "Interesting..."
@@ -2775,7 +2559,7 @@ MSG(),
 MSG()
 )
 
-DEFINE_MESSAGE(0x812A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+DEFINE_MESSAGE(0x812B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(
 UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) SHIFT(78) "ア〜！！\n"
 SHIFT(9) "その　ノコギリは　オレっちのだ！"
@@ -2808,7 +2592,7 @@ UNSKIPPABLE "Je l'avais égarée chez ma vieille \n"
 )
 )
 
-DEFINE_MESSAGE(0x812B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+DEFINE_MESSAGE(0x812C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
 "My spare saw broke, so I was\n"
@@ -3235,7 +3019,7 @@ MSG()
 DEFINE_MESSAGE(0x8239, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"I go could for some fishing 'round\n"
+"I could go for some fishing 'round\n"
 "these waters.\n"
 "I wonder... What kinda of bait would\n"
 "work best here?"
@@ -3912,10 +3696,10 @@ BOX_BREAK
 "Tell him I send you."
 BOX_BREAK
 
-"It's probably to late to change your\n"
-"to go inside, but I'll warn you one\n"
-"last time. There are huge spiders and\n"
-"beasts inside, so be careful."
+"It's probably too late to change your\n"
+"mind, but I'll warn you one last time.\n"
+"There are huge spiders and beasts\n"
+"inside, so be careful."
 BOX_BREAK
 
 "Many of our kind died venturing\n"
@@ -3960,7 +3744,7 @@ BOX_BREAK
 BOX_BREAK
 
 "Just say the word should you ever\n"
-"require our assistence. We got the\n"
+"require our assistance. We have the\n"
 "best ore in the land."
 BOX_BREAK
 
@@ -3977,7 +3761,7 @@ DEFINE_MESSAGE(0x841B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "Just say the word should you ever\n"
-"require our assistence. We got the\n"
+"require our assistance. We have the\n"
 "best ore in the land."
 BOX_BREAK
 
@@ -3985,6 +3769,45 @@ BOX_BREAK
 COLOR(BLUE) "shieldsmith" COLOR(DEFAULT) " in the mines... We have\n"
 "another shipment ready of " COLOR(RED) "Gold Dust" COLOR(DEFAULT) "\n"
 "for the craftsmen in " COLOR(ADJUSTABLE) "Gerudo Valley" COLOR(DEFAULT) "."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x841C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Ahh... Very good. You're here."
+BOX_BREAK
+
+"I had a vision... From a sage by\n"
+"the name of " COLOR(YELLOW) "Rauru" COLOR(DEFAULT) " who told me\n"
+"to let the " COLOR(ADJUSTABLE) "Hero of Time" COLOR(DEFAULT) " access\n"
+"the realm that lies beyond here."
+BOX_BREAK
+
+"It has been sealed off by us Gorons\n"
+"ages ago. There's a dark evil beyond\n"
+"this door, the " COLOR(PURPLE) "Forsaken Kingom" COLOR(DEFAULT) ".\n"
+"We do not dare to venture beyond."
+BOX_BREAK
+
+"But perhaps... You're the one to\n"
+"finally break this ancient curse.\n"
+"Step forth. The " COLOR(YELLOW) "Sage of Light" COLOR(DEFAULT) " is\n"
+"awaiting your arrival."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x841D, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I opened the door for you now.\n"
+"Good luck in there, for whatever\n"
+"awaits you in there.\n"
+"I'll be going back to the shrine now."
 ),
 MSG(),
 MSG()
@@ -4292,6 +4115,294 @@ BOX_BREAK
 
 UNSKIPPABLE "Can I go back already?\n"
 "I liked my chilling spot."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8500, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(10) "In memory of the royal family\n"
+"of a kingdom long lost to despair.\n"
+SHIFT(15) "May a new dawn rise again." QUICKTEXT_DISABLE EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8501, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(20) "When kingdom's light was\n"
+SHIFT(45) "swallowed whole," QUICKTEXT_DISABLE
+BOX_BREAK
+
+UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(25) "The restless crown could\n"
+SHIFT(60) "find no sleep." QUICKTEXT_DISABLE
+BOX_BREAK
+
+UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(25) "Through endless dusk and\n"
+SHIFT(60) "silent stone..." QUICKTEXT_DISABLE
+BOX_BREAK
+
+UNSKIPPABLE QUICKTEXT_ENABLE SHIFT(42) "Walk the path where\n"
+SHIFT(62) "shadows keep." QUICKTEXT_DISABLE
+BOX_BREAK
+
+UNSKIPPABLE "This is an interesting poem...\n"
+"huh?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8502, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Something is inscribed on the \n"
+"tombstone..."
+BOX_BREAK
+
+UNSKIPPABLE "It's the " COLOR(YELLOW) "secret melody" COLOR(DEFAULT) " of the\n"
+"Composer Brothers\n"
+"of the " COLOR(RED) "Ancient Kingdom of ......" COLOR(DEFAULT) "!"
+BOX_BREAK
+
+UNSKIPPABLE "Wait... I can't quite make up that\n"
+"last part."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8503, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE SHIFT(5) "Your " COLOR(PURPLE) "Nocturne of Shadow" COLOR(DEFAULT) " song\n"
+SHIFT(40) "has been enhanced!"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8504, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+UNSKIPPABLE "Oh... And you are?"
+BOX_BREAK
+
+UNSKIPPABLE "My name is " COLOR(RED) "Tone" COLOR(DEFAULT) ", and I thank\n"
+"you for setting my soul free."
+BOX_BREAK
+
+UNSKIPPABLE "I am one of the composer brothers\n"
+"who engraved our royal song on the\n"
+"tombstone in front of you."
+BOX_BREAK
+
+UNSKIPPABLE "This once beautiful kingdom from\n"
+"ages ago has seen better days.\n"
+"We long for a saviour who would\n"
+"set us free from the calamity."
+BOX_BREAK
+
+UNSKIPPABLE "The calamity that still lurks within\n"
+"the Stone Tower... A guardian left\n"
+"behind by he who conquered us."
+BOX_BREAK
+
+UNSKIPPABLE "Please, I ask of you. Use our song,\n"
+"and find a way to safe our once\n"
+"fair land. If you come across my\n"
+"brother, please set him free."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8510, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+UNSKIPPABLE "GYAAAAH!\n"
+TEXT_SPEED(2) QUICKTEXT_ENABLE "YOU" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "KILLED" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "ME..." QUICKTEXT_DISABLE TEXT_SPEED(0) QUICKTEXT_ENABLE "Unbelievable!" QUICKTEXT_DISABLE
+BOX_BREAK
+
+UNSKIPPABLE "Oh, what?\n"
+"You're not one of his\n"
+"minions, are you?"
+BOX_BREAK
+
+UNSKIPPABLE "Because of my role as a ghost, I\n"
+"had to act like that. I apologize."
+BOX_BREAK
+
+UNSKIPPABLE "Now then, let me introduce myself.\n"
+"Ahem..." TEXTID(0x8511)
+),
+MSG(),
+MSG(
+)
+)
+
+DEFINE_MESSAGE(0x8511, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"I am one of the ghostly composer\n"
+"brothers of a kingdom that once\n"
+"thrived but now lost to the shadows."
+BOX_BREAK
+
+"This kingdom existed long before\n"
+"the kingdom of " COLOR(ADJUSTABLE) "Hyrule" COLOR(DEFAULT) ". A kingdom\n"
+"of great beauty."
+BOX_BREAK
+
+"We brothers also served the Royal\n"
+"Family of this nation, and we're\n"
+"assigned to study the mystic\n"
+"powers of the family."
+BOX_BREAK
+
+"Huh... What's that? You are saying\n"
+"you met us before? Sharp and Flat?\n"
+"And you have met my brother in\n"
+"the tombs?"
+BOX_BREAK
+
+"Ohhhhh... I see... That's why you were\n"
+"able to come here.\n"
+"You mastered the true power of the\n"
+COLOR(PURPLE) "Nocturne of Shadow" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"So uhh..."
+BOX_BREAK
+
+"That meant we successfully passed\n"
+"down the " COLOR(PURPLE) "Nocturne of Shadow" COLOR(DEFAULT) " to\n"
+"the next generations to come."
+BOX_BREAK
+
+"You see... An ancient evil long ago\n"
+"befell this kingdom, and it was our\n"
+"last hope to pass down this song\n"
+"in the hopes of a Hero to redeem us."
+BOX_BREAK
+
+"Hmm... What was the calamity's name\n"
+"again... Wasn't it " COLOR(RED) "Demise" COLOR(DEFAULT) "?"
+BOX_BREAK
+
+"That's why we gave our lives to \n"
+"protect the secret." TEXTID(0x8514)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8512, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+UNSKIPPABLE QUICKTEXT_ENABLE "GYAAAAH!" QUICKTEXT_DISABLE "\n"
+TEXT_SPEED(2) QUICKTEXT_ENABLE "I'M" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "DEAD" QUICKTEXT_DISABLE " " QUICKTEXT_ENABLE "A" QUICKTEXT_DISABLE QUICKTEXT_ENABLE "GAIN!" QUICKTEXT_DISABLE TEXT_SPEED(0) "\n"
+"What? You again?"
+BOX_BREAK
+
+UNSKIPPABLE "Somehow, you remind me of...\n"
+"our Princess Hilda..."
+BOX_BREAK
+
+UNSKIPPABLE "Hmm... Since your kindom of " COLOR(ADJUSTABLE) "Hyrule" COLOR(DEFAULT) "\n"
+"is descended from our " COLOR(PURPLE) "lost kingdom" COLOR(DEFAULT) ", I\n"
+"will tell you a little more of our\n"
+"tale."
+BOX_BREAK
+
+UNSKIPPABLE "Back then, people called us great\n"
+"composers because of the many\n"
+"musical masterpieces we wrote."
+BOX_BREAK
+
+UNSKIPPABLE "But we brothers were not just\n"
+"composers."
+BOX_BREAK
+
+UNSKIPPABLE "We had a mission to analyze the\n"
+"mysterious powers of our kingdom's\n"
+"Royal Family."
+BOX_BREAK
+
+UNSKIPPABLE "Our names would be a part of\n"
+"our kingdom's history if we could\n"
+"complete our research!"
+BOX_BREAK
+
+UNSKIPPABLE "We kept our study extremely\n"
+"secret until we completed it." TEXTID(0x8513)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8513, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Yeah yeah... You heard that before\n"
+"already. I know.\n"
+"But it soothens my soul knowing\n"
+"our legacy got passed on."
+BOX_BREAK
+
+"We inscribed our song on the " COLOR(RED) "royal\n"
+"tombstone deep below the graveyards" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"And as you saw for yourself, it\n"
+"awakened the " COLOR(RED) "Owl Statue" COLOR(DEFAULT) " on our\n"
+"land. " COLOR(RED) "Owl Statues" COLOR(DEFAULT) "? Yeah, those\n"
+"existed for ages long before " COLOR(ADJUSTABLE) "Hyrule" COLOR(DEFAULT) "."
+BOX_BREAK
+
+"However... Let me get you in on a\n"
+"secret. There's a " COLOR(RED) "hidden treasure" COLOR(DEFAULT) "\n"
+"in here that bypasses the song to\n"
+"get into the " COLOR(PURPLE) "lost kingdom" COLOR(DEFAULT) "." TEXTID(0x8514)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8514, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Do you want to hear what I \n"
+"said again?\n"
+TWO_CHOICE
+    COLOR(ADJUSTABLE) "Yes\n"
+    "No" COLOR(DEFAULT)
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8515, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE SHIFT(35) "Royal Composer Bros.\n"
+SHIFT(51) "Note the Younger\n"
+SHIFT(80) "R.I.P." QUICKTEXT_DISABLE EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8516, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+QUICKTEXT_ENABLE SHIFT(35) "Royal Composer Bros.\n"
+SHIFT(51) "Tone the Elder\n"
+SHIFT(80) "R.I.P." QUICKTEXT_DISABLE EVENT
 ),
 MSG(),
 MSG()

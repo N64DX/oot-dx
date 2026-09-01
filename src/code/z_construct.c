@@ -49,15 +49,15 @@ void Interface_Init(PlayState* play) {
     // Check and reset bow and magic arrows
     if (IS_CHILD_QUEST) {
         if (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ARROW_FIRE) {
-            gSaveContext.save.info.obtainedItems.fireArrow = 1;
+            gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_FIRE];
             INV_CONTENT(ITEM_ARROW_FIRE) = ITEM_NONE;
         }
         if (INV_CONTENT(ITEM_ARROW_ICE) == ITEM_ARROW_ICE) {
-            gSaveContext.save.info.obtainedItems.iceArrow = 1;
+            gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_ICE];
             INV_CONTENT(ITEM_ARROW_ICE) = ITEM_NONE;
         } 
         if (INV_CONTENT(ITEM_ARROW_LIGHT) == ITEM_ARROW_LIGHT) {
-            gSaveContext.save.info.obtainedItems.lightArrow = 1;
+            gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_LIGHT];
             INV_CONTENT(ITEM_ARROW_LIGHT) = ITEM_NONE;
         } 
     } else {

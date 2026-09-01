@@ -113,6 +113,8 @@ void BgHidanFwbig_Init(Actor* thisx, PlayState* play2) {
         this->actor.world.pos.y = this->actor.home.pos.y - (2400.0f * this->actor.scale.y);
     } else {
         Actor_SetScale(&this->actor, 0.1f);
+        if (play->sceneId == SCENE_GLOOMY_GRAVEYARD)
+            this->actor.scale.x *= 0.3;
         this->actionFunc = BgHidanFwbig_WaitForSwitch;
     }
 }

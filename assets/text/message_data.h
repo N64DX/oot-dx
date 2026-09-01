@@ -8,6 +8,7 @@
     #include "message_data_04xx_gossip.h"
     #include "message_data_06xx_enemies.h"
     #include "message_data_08xx_songs.h"
+    #include "message_data_09xx_items_pause_screen.h"
     #include "message_data_1xxx_forest.h"
     #include "message_data_2xxx_ranch_&_zelda.h"
     #include "message_data_3xxx_mountain.h"

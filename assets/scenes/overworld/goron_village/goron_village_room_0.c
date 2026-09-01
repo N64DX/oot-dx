@@ -13,7 +13,7 @@ SceneCmd goron_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&goron_village_room_0RoomShapeCullable_0000F0),
-    SCENE_CMD_OBJECT_LIST(14, goron_village_room_0ObjectList_00004C),
+    SCENE_CMD_OBJECT_LIST(13, goron_village_room_0ObjectList_00004C),
     SCENE_CMD_ACTOR_LIST(15, goron_village_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
@@ -38,7 +38,6 @@ s16 goron_village_room_0ObjectList_00004C[] = {
     OBJECT_KIBAKO2,
     OBJECT_KA,
     OBJECT_MAMENOKI,
-    OBJECT_FR,
 };
 
 ActorEntry goron_village_room_0ActorEntry_00005C[] = {
@@ -114,8 +113,8 @@ SceneCmd goron_village_room_0Set_timeskip[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&goron_village_room_0RoomShapeCullable_0000F0),
-    SCENE_CMD_OBJECT_LIST(15, goron_village_room_0ObjectList_timeskip),
-    SCENE_CMD_ACTOR_LIST(20, goron_village_room_0ActorEntry_timeskip),
+    SCENE_CMD_OBJECT_LIST(16, goron_village_room_0ObjectList_timeskip),
+    SCENE_CMD_ACTOR_LIST(21, goron_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
 
@@ -134,6 +133,7 @@ s16 goron_village_room_0ObjectList_timeskip[] = {
     OBJECT_KA,
     OBJECT_MAMENOKI,
     OBJECT_FR,
+    OBJECT_SEK,
     OBJECT_BEAST,
 };
 
@@ -158,6 +158,7 @@ ActorEntry goron_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_EN_GO3,             {  -665, -200,    50 }, {      0, 0x0FA0,      0 }, 0x0001 },
     { ACTOR_EN_WEATHER_TAG,     {   400,  200,  1000 }, {      0,      0,      0 }, 0x2008 },
     { ACTOR_EN_BEAST,           {  -900, -200, -1600 }, {      0, 0x2EE0,      0 }, 0x9F00 }, // Switch: 1F
+    { ACTOR_OBJ_WARPSTONE,      {  1070, -200,  -925 }, {      0, 0x5000,      0 }, 0x0001 }, // Bolero of Fire
 };
 
 SceneCmd goron_village_room_0Set_cleansed[] = {
@@ -166,8 +167,8 @@ SceneCmd goron_village_room_0Set_cleansed[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&goron_village_room_0RoomShapeCullable_0000F0),
-    SCENE_CMD_OBJECT_LIST(14, goron_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(17, goron_village_room_0ActorEntry_cleansed),
+    SCENE_CMD_OBJECT_LIST(15, goron_village_room_0ObjectList_timeskip),
+    SCENE_CMD_ACTOR_LIST(18, goron_village_room_0ActorEntry_cleansed),
     SCENE_CMD_END(),
 };
 
@@ -189,6 +190,7 @@ ActorEntry goron_village_room_0ActorEntry_cleansed[] = {
     { ACTOR_BG_ICE_SHELTER,     {  2585, -200, -1345 }, {      0, 0xC950,      0 }, 0x0709 }, // Switch: 09
     { ACTOR_OBJ_BEAN,           {   250, -200,   450 }, {      0,      0,      0 }, 0x010A }, // Switch: 0A
     { ACTOR_EN_GO3,             {  -665, -200,    50 }, {      0, 0x0FA0,      0 }, 0x0001 },
+    { ACTOR_OBJ_WARPSTONE,      {  1070, -200,  -925 }, {      0, 0x5000,      0 }, 0x0001 }, // Bolero of Fire
 };
 
 s32 goron_village_room_0_terminatorMaybe_00036C = { 0x01000000 };

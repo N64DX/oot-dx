@@ -303,7 +303,7 @@ void func_80AAF668(EnMm2* this, PlayState* play) {
     if (((void)0, gSaveContext.subTimerSeconds) < HIGH_SCORE(HS_MARATHON)) {
         if (!GET_ITEMGETINF(ITEMGETINF_RUNNING_MAN_HEART_PIECE) && IS_CHILD_QUEST) {
             SET_ITEMGETINF(ITEMGETINF_RUNNING_MAN_HEART_PIECE);
-            this->actor.textId = 0x8127;
+            this->actor.textId = 0x8128;
             beatenRace = true;
         } else this->actor.textId = 0x6085;
     } else {

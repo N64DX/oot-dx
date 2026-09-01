@@ -198,6 +198,7 @@ typedef struct MessageContext {
 void Message_UpdateOcarinaMemoryGame(struct PlayState* play);
 u8 Message_ShouldAdvance(struct PlayState* play);
 void Message_CloseTextbox(struct PlayState*);
+void Message_PauseMenu_ShowDescription(struct PlayState* play, u16 textId, u8 textBoxPos);
 void Message_StartTextbox(struct PlayState* play, u16 textId, struct Actor* actor);
 void Message_ContinueTextbox(struct PlayState* play, u16 textId);
 void Message_StartOcarina(struct PlayState* play, u16 ocarinaActionId);

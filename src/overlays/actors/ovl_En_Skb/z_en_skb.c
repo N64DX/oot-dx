@@ -43,8 +43,12 @@ void EnSkb_Draw(Actor* thisx, PlayState* play);
 
 void EnSkb_SetupRiseFromGround(EnSkb* this);
 void EnSkb_RiseFromGround(EnSkb* this, PlayState* play);
+void EnSkb_SetupWaitRiseFromGround(EnSkb* this);
+void EnSkb_WaitRiseFromGround(EnSkb* this, PlayState* play);
 void EnSkb_SetupDespawn(EnSkb* this);
 void EnSkb_Despawn(EnSkb* this, PlayState* play);
+void EnSkb_SetupWait(EnSkb* this);
+void EnSkb_Wait(EnSkb* this, PlayState* play);
 void EnSkb_SetupWalkForward(EnSkb* this);
 void EnSkb_WalkForward(EnSkb* this, PlayState* play);
 void EnSkb_SetupAttack(EnSkb* this);
@@ -169,6 +173,8 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_F32_DIV1000(gravity, -2000, ICHAIN_STOP),
 };
 
+u8 sEnSkbAlreadySpawned; // used for those spawned with room -1 in Graveyard to avoid respawn on room change
+
 void EnSkb_Init(Actor* thisx, PlayState* play) {
     EnSkb* this = (EnSkb*)thisx;
 
@@ -183,9 +189,21 @@ void EnSkb_Init(Actor* thisx, PlayState* play) {
                    this->morphTable, 20);
     this->actor.naviEnemyId = NAVI_ENEMY_STALCHILD;
 
+    if (sEnSkbAlreadySpawned)
+        Actor_Kill(thisx);
+
+    if (this->actor.params & (1 << 12)) {
+        this->actor.params &= ~(1 << 12);
+        this->isHidden = true;
+        this->actor.room = -1;
+    }
+    this->timer = ONE_SEC;
+
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, &this->actor, &sJntSphInit, this->colliderElements);
     Actor_SetScale(&this->actor, ((this->actor.params * 0.1f) + 1.0f) * 0.01f);
+    if (this->isHidden)
+        this->collider.elements[0].base.atDmgInfo.damage = 0x20;
 
     this->collider.elements[0].dim.modelSphere.radius = this->collider.elements[0].dim.worldSphere.radius =
         10 + this->actor.params;
@@ -194,7 +212,10 @@ void EnSkb_Init(Actor* thisx, PlayState* play) {
 
     this->actor.home.pos = this->actor.world.pos;
     this->actor.floorHeight = this->actor.world.pos.y;
-    EnSkb_SetupRiseFromGround(this);
+
+    if (!this->isHidden)
+        EnSkb_SetupRiseFromGround(this);
+    else EnSkb_SetupWaitRiseFromGround(this);
 }
 
 void EnSkb_Destroy(Actor* thisx, PlayState* play) {
@@ -213,7 +234,7 @@ void EnSkb_Destroy(Actor* thisx, PlayState* play) {
 }
 
 void EnSkb_DecideNextAction(EnSkb* this, PlayState* play) {
-    if (IS_DAY || Player_GetMask(play) == PLAYER_MASK_SKULL) {
+    if (!this->isHidden && (IS_DAY || Player_GetMask(play) == PLAYER_MASK_SKULL)) {
         EnSkb_SetupDespawn(this);
     } else if (Actor_IsFacingPlayer(&this->actor, 0x11C7) &&
                (this->actor.xzDistToPlayer < (60.0f + (this->actor.params * 6.0f)))) {
@@ -248,6 +269,18 @@ void EnSkb_RiseFromGround(EnSkb* this, PlayState* play) {
     }
 }
 
+void EnSkb_SetupWaitRiseFromGround(EnSkb* this) {
+    this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
+    EnSkb_SetupAction(this, EnSkb_WaitRiseFromGround);
+}
+
+void EnSkb_WaitRiseFromGround(EnSkb* this, PlayState* play) {
+    if (this->actor.xzDistToPlayer <= 300.0f && DECR(this->timer) == 0) {
+        this->actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
+        EnSkb_SetupRiseFromGround(this);
+    }
+}
+
 void EnSkb_SetupDespawn(EnSkb* this) {
     Animation_Change(&this->skelAnime, &gStalchildUncurlingAnim, -1.0f,
                      Animation_GetLastFrame(&gStalchildUncurlingAnim), 0.0f, ANIMMODE_ONCE, -4.0f);
@@ -266,8 +299,29 @@ void EnSkb_Despawn(EnSkb* this, PlayState* play) {
     }
     Math_SmoothStepToF(&this->actor.shape.shadowScale, 0.0f, 1.0f, 2.5f, 0.0f);
     if (SkelAnime_Update(&this->skelAnime)) {
-        Actor_Kill(&this->actor);
+        if (this->isHidden) {
+            this->actor.world.pos = this->actor.home.pos;
+            this->actor.world.pos.y = this->actor.floorHeight;
+            EnSkb_SetupWaitRiseFromGround(this);
+        }
+        else Actor_Kill(&this->actor);
     }
+}
+
+void EnSkb_SetupWait(EnSkb* this) {
+    Animation_Change(&this->skelAnime, &gStalchildWalkingAnim, 0.96000004f, 0.0f, Animation_GetLastFrame(&gStalchildWalkingAnim), ANIMMODE_LOOP, -4.0f);
+    this->actionState = SKB_BEHAVIOR_WALKING;
+    this->headlessYawOffset = 0;
+    this->actor.speed = 0;
+    EnSkb_SetupAction(this, EnSkb_Wait);
+}
+
+void EnSkb_Wait(EnSkb* this, PlayState* play) {
+    this->skelAnime.playSpeed = 0;
+    SkelAnime_Update(&this->skelAnime);
+
+    if (this->actor.xzDistToPlayer <= 300.0f)
+        EnSkb_DecideNextAction(this, play);
 }
 
 void EnSkb_SetupWalkForward(EnSkb* this) {
@@ -310,7 +364,7 @@ void EnSkb_WalkForward(EnSkb* this, PlayState* play) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_STALKID_WALK);
         }
     }
-    if (Math_Vec3f_DistXZ(&this->actor.home.pos, &player->actor.world.pos) > 800.0f || IS_DAY || Player_GetMask(play) == PLAYER_MASK_SKULL) {
+    if (Math_Vec3f_DistXZ(&this->actor.home.pos, &player->actor.world.pos) > 800.0f || (!this->isHidden && (IS_DAY || Player_GetMask(play) == PLAYER_MASK_SKULL))) {
         EnSkb_SetupDespawn(this);
     } else if (Actor_IsFacingPlayer(&this->actor, 0x11C7) &&
                (this->actor.xzDistToPlayer < (60.0f + (this->actor.params * 6.0f)))) {
@@ -526,6 +580,9 @@ void EnSkb_CheckDamage(EnSkb* this, PlayState* play) {
 void EnSkb_Update(Actor* thisx, PlayState* play) {
     EnSkb* this = (EnSkb*)thisx;
     s32 pad;
+
+    if (this->actor.room == -1)
+        sEnSkbAlreadySpawned = true;
 
     EnSkb_CheckDamage(this, play);
     Actor_MoveXZGravity(&this->actor);

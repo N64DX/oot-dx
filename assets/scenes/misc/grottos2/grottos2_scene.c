@@ -15,7 +15,7 @@ SceneCmd grottos2_scene[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(grottos2_sceneAlternateHeaders),
     SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_INSIDE_DEKU_TREE),
     SCENE_CMD_ROOM_LIST(7, grottos2_sceneRoomList0x000198),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 22),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_MAX),
     SCENE_CMD_COL_HEADER(&grottos2_sceneCollisionHeader_00AC9C),
     SCENE_CMD_SPAWN_LIST(grottos2_sceneEntranceList_000210),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
@@ -105,10 +105,1065 @@ BgCamInfo grottos2_sceneCollisionHeader_00AC9CCamDataList[] = {
 };
 
 SurfaceType grottos2_sceneCollisionHeader_00AC9CSurfaceType[] = {
-    {0x00000000, 0x000057C8}, {0x00000000, 0x00005008}, {0x00016100, 0x00005008}, {0x00000000, 0x00005041}, {0x00016100, 0x00005041}, {0x00000000, 0x00005081}, {0x00016100, 0x00005081}, {0x00000000, 0x000050C8}, {0x00016100, 0x000050C8}, {0x00000000, 0x00005101}, {0x00016100, 0x00005101}, {0x00000000, 0x00005181},
-    {0x00000200, 0x060C5001}, {0x00000000, 0x00005001}, {0x00000002, 0x000057C8}, {0x00000002, 0x00005008}, {0x00000002, 0x00005148}, {0x00000002, 0x00005006}, {0x00016302, 0x00005008}, {0x00016402, 0x00005008}, {0x40000002, 0x00005006}, {0x00000000, 0x000051C0}, {0x00000000, 0x000051C8}, {0x00016100, 0x000051C0},
-    {0x00016602, 0x00005008}, {0x00016502, 0x00005008}, {0x00800000, 0x000057C8}, {0x00000002, 0x00005208}, {0x40000002, 0x00005206}, {0x00000000, 0x000057C6}, {0x00016102, 0x00005208}, {0x00000002, 0x000057C6}, {0x00000000, 0x00005248}, {0x00016100, 0x00005248}, {0x00000000, 0x000057D8}, {0x00000000, 0x00005281},
-    {0x00016100, 0x00005281}, {0x40016702, 0x00005008}, {0x40000002, 0x000057C8}, {0x00000000, 0x00005308}, {0x00016100, 0x00005308}, {0x00000000, 0x00005348}, {0x00000000, 0x00005388}, {0x00000000, 0x00005341}, {0x00000000, 0x00005381}, {0x00016100, 0x00005381},
+        {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 1,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 1,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 2,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 2,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 3,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 3,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 4,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 4,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 6,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 2,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_FAST,
+                CONVEYOR_DIRECTION_FROM_BINANG(0xC000),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 5,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_TALL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 3,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 4,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ true,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_TALL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_DIRT,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 7,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 7,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_DIRT,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 7,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 6,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 5,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_4,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 8,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ true,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_TALL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 8,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_TALL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 8,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_TALL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 9,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 9,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_1,
+                /* lightSetting */ 31,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 10,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 10,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 7,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ true,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 0,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 2,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ true,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 12,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 12,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 13,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_GRASS,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 14,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 13,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 14,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 1,
+                FLOOR_TYPE_11,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_SAND,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 14,
+                /* echo */ 10,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly grottos2_sceneCollisionHeader_00AC9CPolygons[] = {
@@ -3593,8 +4648,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 0
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3617,8 +4671,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 1
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3641,8 +4694,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 2
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3665,8 +4717,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 3
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3689,8 +4740,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 4
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3713,8 +4763,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 5
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3737,8 +4786,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 6
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3761,8 +4809,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 7
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3785,8 +4832,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 8
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3809,8 +4855,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 9
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3833,8 +4878,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 10
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3857,8 +4901,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 11
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3881,8 +4924,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 12
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3905,8 +4947,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 13
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3929,8 +4970,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 14
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3953,8 +4993,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 15
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -3977,8 +5016,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 16
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -4001,8 +5039,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 17
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -4025,8 +5062,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 18
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -4049,8 +5085,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 19
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -4073,8 +5108,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 20
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -4097,8 +5131,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 21
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -4121,8 +5154,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 22
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -4145,7 +5177,7 @@ SurfaceType grottos2_sceneCollisionHeader_dawngroveSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 23
+    },
 };
 
 CollisionPoly grottos2_sceneCollisionHeader_dawngrovePolygons[] = {
@@ -6504,7 +7536,6 @@ CollisionPoly grottos2_sceneCollisionHeader_dawngrovePolygons[] = {
     { 0x0002, { 0x00c2, 0x00c3, 0x00c4 }, { 0x49cf, 0xf924, 0x97a7 }, 0xfd36 },
     { 0x0002, { 0x00c3, 0x00c0, 0x00c4 }, { 0x2f7e, 0x943b, 0x3221 }, 0x0034 },
     { 0x0002, { 0x00c0, 0x00c1, 0x00c4 }, { 0xa511, 0xf2c4, 0x5919 }, 0x02cc },
-
 };
 
 Vec3s grottos2_sceneCollisionHeader_dawngroveVertices[] = {
@@ -8004,8 +9035,7 @@ SurfaceType grottos2_sceneCollisionHeader_cave_passageSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 0
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -8028,8 +9058,7 @@ SurfaceType grottos2_sceneCollisionHeader_cave_passageSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 1
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -8052,8 +9081,7 @@ SurfaceType grottos2_sceneCollisionHeader_cave_passageSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 2
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -8076,8 +9104,7 @@ SurfaceType grottos2_sceneCollisionHeader_cave_passageSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 3
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -8100,8 +9127,7 @@ SurfaceType grottos2_sceneCollisionHeader_cave_passageSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 4
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -8124,8 +9150,7 @@ SurfaceType grottos2_sceneCollisionHeader_cave_passageSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 5
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -8148,8 +9173,7 @@ SurfaceType grottos2_sceneCollisionHeader_cave_passageSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 6
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -8172,8 +9196,7 @@ SurfaceType grottos2_sceneCollisionHeader_cave_passageSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 7
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -8196,8 +9219,7 @@ SurfaceType grottos2_sceneCollisionHeader_cave_passageSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 8
-    {
+    }, {
         {
             SURFACETYPE0(
                 /* bgCamIndex */ 0,
@@ -8220,7 +9242,7 @@ SurfaceType grottos2_sceneCollisionHeader_cave_passageSurfaceType[] = {
                 /* unk27 */ false
             ),
         },
-    }, // 9
+    },
 };
 
 Vec3s grottos2_sceneCollisionHeader_cave_passageVertices[] = {
@@ -9180,7 +10202,6 @@ CollisionPoly grottos2_sceneCollisionHeader_cave_passagePolygons[] = {
     { 0x0008, { 0x017d, 0x0179, 0x017a }, { 0x0c04, 0x7f6d, 0x0103 }, 0x0041 },
     { 0x0008, { 0x017b, 0x017d, 0x017a }, { 0x1351, 0x7e85, 0x01a0 }, 0x00a4 },
     { 0x0008, { 0x017c, 0x017d, 0x017b }, { 0x1274, 0x7ea4, 0x021a }, 0x009e },
-
 };
 
 CollisionHeader grottos2_sceneCollisionHeader_cave_passage = { 

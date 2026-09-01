@@ -9,12 +9,13 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd goron_shrine_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(4, NATURE_ID_NONE, NA_BGM_GORON_CITY),
     SCENE_CMD_ROOM_LIST(2, goron_shrine_sceneRoomList0x0000D4),
     SCENE_CMD_TRANSITION_ACTOR_LIST(1, goron_shrine_sceneTransitionActorList_0000C4),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 6),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_GORON_SHRINE),
     SCENE_CMD_COL_HEADER(&goron_shrine_sceneCollisionHeader_005B84),
     SCENE_CMD_SPAWN_LIST(goron_shrine_sceneEntranceList0x0000E4),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),

@@ -36,9 +36,9 @@ s16 woodfall_temple_room_2ObjectList_000040[] = {
 };
 
 ActorEntry woodfall_temple_room_2ActorEntry_00006C[] = {
-    { ACTOR_EN_ITEM00,    {  275, -1150, 2000 }, {      0,      0,    0 }, 0x001B },
-    { ACTOR_EN_ITEM00,    {  350, -1125, 1600 }, {      0,      0,    0 }, 0x001B },
-    { ACTOR_EN_ITEM00,    {  350, -1125, 1500 }, {      0,      0,    0 }, 0x001B },
+    { ACTOR_EN_ITEM00,    {  275, -1150, 2000 }, {      0,      0,    0 }, 0x001C }, // Respawnable Feather
+    { ACTOR_EN_ITEM00,    {  350, -1125, 1600 }, {      0,      0,    0 }, 0x001C }, // Respawnable Feather
+    { ACTOR_EN_ITEM00,    {  350, -1125, 1500 }, {      0,      0,    0 }, 0x001C }, // Respawnable Feather
     { ACTOR_OBJ_RAILLIFT, {  350, -1150, 1100 }, {      0,      0, 0x19 }, 0x8008 },
     { ACTOR_EN_ST,        { -120,  -850,  930 }, {      0,      0,    0 }, 0x003F },
     { ACTOR_EN_ST,        {  120,  -850,  930 }, {      0,      0,    0 }, 0x003F },

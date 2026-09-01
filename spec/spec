@@ -335,9 +335,6 @@ endseg
 beginseg
     name "icon_item_static"
     include "$(BUILD_DIR)/assets/textures/icon_item_static/icon_item_static.o"
-    #if OOT_NTSC_N64
-    include "$(BUILD_DIR)/assets/textures/icon_item_static/icon_item_static_all.o"
-    #endif
     number 8
 endseg
 

@@ -12,7 +12,6 @@ static s16 cq_objects[] = {
 #include "assets/scenes/overworld/spot10/cq/objects/room2_obj.inc.c"
 };
 
-
 static s16 cq_objects_header2[] = {
 #include "assets/scenes/overworld/spot10/cq/objects/room2_obj_header2.inc.c"
 };

@@ -109,6 +109,8 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         MapSelect_LoadRoom(DBG_GANONS_TOWER_0, this->roomNum, 9);
     else if (entranceIndex == ENTR_WEBBED_SHRINE_0)
         MapSelect_LoadRoom(DBG_WEBBED_SHRINE_0, this->roomNum, 6);
+    else if (entranceIndex == ENTR_PURPLE_ICE_CAVERN_0)
+        MapSelect_LoadRoom(DBG_PURPLE_ICE_CAVERN_0, this->roomNum, 6);
     else if (entranceIndex == ENTR_ANCIENT_HOLLOW_0)
         MapSelect_LoadRoom(DBG_ANCIENT_HOLLOW_0, this->roomNum, 14);
     else if (entranceIndex == ENTR_GORON_MINES_0)
@@ -523,17 +525,22 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "139:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉｻﾄﾍﾉﾐﾁ", "Path to Goron Village"), MapSelect_LoadGame, ENTR_PATH_TO_GORON_VILLAGE_0 },
     { "140:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉｻﾄ", "Goron Village"), MapSelect_LoadGame, ENTR_GORON_VILLAGE_0 },
     { "141:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉﾎｺﾗ", "Goron Shrine"), MapSelect_LoadGame, ENTR_GORON_SHRINE_0 },
-    { "142:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Path to Gerudo's Fortress"), MapSelect_LoadGame, ENTR_PATH_TO_FORTRESS_0 },
-    { "143:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
-    { "144:" T(GFXP_HIRAGANA "ｺﾞﾛﾝｺｳｻﾞﾝ", "Goron Mines"), MapSelect_LoadGame, ENTR_GORON_MINES_0 },
-    { "145:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
-    { "146:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
-    { "147:" T(GFXP_HIRAGANA "ｴｲﾝｼｪﾝﾄｸﾞﾛｰﾌﾞｸﾞﾛｯﾄ", "Ancient Grove Grotto"), MapSelect_LoadGame, ENTR_GROTTOS2_7 },
-    { "148:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTOS2_0 },
-    { "149:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTOS2_2 },
-    { "150:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
-    { "151:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
-    { "152:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
+    { "142:" T(GFXP_HIRAGANA "ﾎﾛﾋﾞﾀｵｳｺｸ", "Forsaken Kingdom"), MapSelect_LoadGame, ENTR_FORSAKEN_KINGDOM_0 },
+    { "143:" T(GFXP_HIRAGANA "ﾑﾗｻｷﾉｺｵﾘｱﾅ", "Purple Ice Cavern"), MapSelect_LoadGame, ENTR_PURPLE_ICE_CAVERN_0 },
+    { "143:" T(GFXP_HIRAGANA "ﾌﾞｷﾐﾅﾎﾞﾁ", "Gloomy Graveyard"), MapSelect_LoadGame, ENTR_GLOOMY_GRAVEYARD_0 },
+    { "144:" T(GFXP_HIRAGANA "ｵﾊｶﾉｿｺ1", "Beneath the Graveyard #1"), MapSelect_LoadGame, ENTR_BENEATH_THE_GRAVEYARD_0 },
+    { "145:" T(GFXP_HIRAGANA "ｵﾊｶﾉｿｺ2", "Beneath the Graveyard #2"), MapSelect_LoadGame, ENTR_BENEATH_THE_GRAVEYARD_1 },
+    { "146:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Path to Gerudo's Fortress"), MapSelect_LoadGame, ENTR_PATH_TO_FORTRESS_0 },
+    { "147:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
+    { "148:" T(GFXP_HIRAGANA "ｺﾞﾛﾝｺｳｻﾞﾝ", "Goron Mines"), MapSelect_LoadGame, ENTR_GORON_MINES_0 },
+    { "149:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
+    { "150:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
+    { "151:" T(GFXP_HIRAGANA "ｴｲﾝｼｪﾝﾄｸﾞﾛｰﾌﾞｸﾞﾛｯﾄ", "Ancient Grove Grotto"), MapSelect_LoadGame, ENTR_GROTTOS2_7 },
+    { "152:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTOS2_0 },
+    { "153:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTOS2_2 },
+    { "154:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
+    { "155:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
+    { "156:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };
@@ -576,12 +583,15 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Cleansed Goron Mines",     EVENT,                      EVENTCHKINF_CLEANSED_GORON_MINES         },
     { 0, "Purified Woodfall Temple", EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE     },
     { 0, "Purified Woodfall",        EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL            },
+    { 0, "Cleansed Stone Tower",     EVENT,                      EVENTCHKINF_CLEANSED_STONE_TOWER         },
     { 0, "Opened Goron City",        INFTABLE,                   INFTABLE_109                             },
     { 0, "Opened Goron Shrine",      INFTABLE,                   INFTABLE_GORON_SHRINE_DOOR_OPENED        },
     { 0, "Opened Goron Mines",       GORON_MINES,                INFTABLE_GORON_MINES_DOOR_OPENED         },
     { 0, "Opened Secret Shrine",     INFTABLE,                   INFTABLE_WEBBED_SHRINE_DOOR_OPENED       },
+    { 0, "Opened Forsaken Kingdom",  INFTABLE,                   INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED    },
     { 0, "Sheik Reveal",             EVENT,                      EVENTCHKINF_C4                           },
     { 0, "Rainbow Bridge",           EVENT,                      EVENTCHKINF_CREATED_RAINBOW_BRIDGE       },
+    { 0, "Showed Pictobox",          INFTABLE,                   INFTABLE_SHOWED_PICTOBOX_TO_IGOR         },
     { 0, "Talked to Smithy",         BLACKSMITH1,                INFTABLE_TALKED_TO_SMITHY_PRE_TIME_SKIP  },
     { 0, "Talked to Zubora",         BLACKSMITH2,                INFTABLE_TALKED_TO_ZUBORA_MINES          },
     { 0, "Killed Gohma",             SCENE_DEKU_TREE_BOSS,       1,                                       },

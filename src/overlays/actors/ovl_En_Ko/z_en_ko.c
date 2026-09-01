@@ -508,8 +508,12 @@ u16 EnKo_GetTextId(PlayState* play, Actor* thisx) {
     u16 textId;
     EnKo* this = (EnKo*)thisx;
 
-    if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO && play->sceneId == SCENE_ANCIENT_HOLLOW)
-        return (CHECK_DUNGEON_ITEM(DUNGEON_MAP, gSaveContext.mapIndex) && CHECK_DUNGEON_ITEM(DUNGEON_COMPASS, gSaveContext.mapIndex)) ? 0x8123 : 0x8122;
+    if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO) {
+        if (play->sceneId == SCENE_GROTTOS2)
+            return 0x8124;
+        else if (play->sceneId == SCENE_ANCIENT_HOLLOW)
+            return (CHECK_DUNGEON_ITEM(DUNGEON_MAP, gSaveContext.mapIndex) && CHECK_DUNGEON_ITEM(DUNGEON_COMPASS, gSaveContext.mapIndex)) ? 0x8123 : 0x8122;
+    }
 
     if (ENKO_TYPE == ENKO_TYPE_CHILD_0 || ENKO_TYPE == ENKO_TYPE_CHILD_2 || ENKO_TYPE == ENKO_TYPE_CHILD_3 ||
         ENKO_TYPE == ENKO_TYPE_CHILD_4 || ENKO_TYPE == ENKO_TYPE_CHILD_7 || ENKO_TYPE == ENKO_TYPE_CHILD_8 ||
@@ -1102,9 +1106,15 @@ s32 EnKo_CanSpawn(EnKo* this, PlayState* play) {
             }
 
         case SCENE_LOST_WOODS:
-            return (INV_CONTENT(ITEM_TRADE_ADULT) == ITEM_ODD_POTION) ? true : false;
+            if (ENKO_TYPE == ENKO_TYPE_CHILD_3)
+                return true;
+            else if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO)
+                return (INV_CONTENT(ITEM_TRADE_ADULT) == ITEM_ODD_POTION) ? true : false;
+            return false;
+        case SCENE_GROTTOS2:
+            return !GET_INFTABLE(INFTABLE_SHOWED_PICTOBOX_TO_IGOR);
         case SCENE_ANCIENT_HOLLOW:
-            return true;
+            return !GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW);
         default:
             return false;
     }
@@ -1194,16 +1204,19 @@ void EnKo_Init(Actor* thisx, PlayState* play) {
         !EnKo_AreObjectsAvailable(this, play)) {
         Actor_Kill(thisx);
     }
+
+    if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO && play->sceneId == SCENE_GROTTOS2)
+        Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_OBJ_SYOKUDAI, -2091, 145, -1489, 0, 0, 0, GET_INFTABLE(INFTABLE_SHOWED_PICTOBOX_TO_IGOR) ? 0x2400 : 0x2000);
+
     if (!EnKo_CanSpawn(this, play)) {
         Actor_Kill(thisx);
     }
     this->actionFunc = func_80A99048;
 
-    if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO && play->sceneId == SCENE_ANCIENT_HOLLOW)
-        if (CHECK_DUNGEON_ITEM(DUNGEON_MAP, gSaveContext.mapIndex) && CHECK_DUNGEON_ITEM(DUNGEON_COMPASS, gSaveContext.mapIndex)) {
-            this->actor.world.pos.x += 100;
-            this->actor.world.pos.z -= 100;
-        }
+    if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO && play->sceneId == SCENE_ANCIENT_HOLLOW && CHECK_DUNGEON_ITEM(DUNGEON_MAP, gSaveContext.mapIndex) && CHECK_DUNGEON_ITEM(DUNGEON_COMPASS, gSaveContext.mapIndex)) {
+        this->actor.world.pos.x += 100;
+        this->actor.world.pos.z -= 100;
+    }
 }
 
 void EnKo_Destroy(Actor* thisx, PlayState* play) {
@@ -1248,6 +1261,10 @@ void func_80A99048(EnKo* this, PlayState* play) {
                            this->actor.world.pos.y, this->actor.world.pos.z, 0, 0, 0, 3);
         if (ENKO_TYPE == ENKO_TYPE_CHILD_3) {
             if (!CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD)) {
+                this->collider.dim.height += 200;
+                this->actionFunc = func_80A995CC;
+                return;
+            } else if (play->sceneId == SCENE_LOST_WOODS && INV_CONTENT(ITEM_OCARINA_FAIRY) == ITEM_NONE) {
                 this->collider.dim.height += 200;
                 this->actionFunc = func_80A995CC;
                 return;

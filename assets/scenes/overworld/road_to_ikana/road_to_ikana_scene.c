@@ -9,16 +9,17 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd road_to_ikana_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_GERUDO_VALLEY),
     SCENE_CMD_ROOM_LIST(1, road_to_ikana_sceneRoomList0x0000D0),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 0),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_GERUDO_VALLEY),
     SCENE_CMD_COL_HEADER(&road_to_ikana_sceneCollisionHeader_002824),
     SCENE_CMD_SPAWN_LIST(road_to_ikana_sceneEntranceList0x0000D8),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),
     SCENE_CMD_PATH_LIST(road_to_ikana_scenePathway_0003F0),
-    SCENE_CMD_PLAYER_ENTRY_LIST(4, road_to_ikana_sceneStartPositionList0x000090),
+    SCENE_CMD_PLAYER_ENTRY_LIST(5, road_to_ikana_sceneStartPositionList0x000090),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NORMAL_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(road_to_ikana_sceneExitList_0000E0),
     SCENE_CMD_ENV_LIGHT_SETTINGS(28, road_to_ikana_sceneLightSettings0x0000E8),
@@ -29,7 +30,8 @@ ActorEntry road_to_ikana_sceneStartPositionList0x000090[] = {
     { ACTOR_PLAYER, { -3006,   0,  -305 }, { 0, 0x2800, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {  1234, 340, -2297 }, { 0, 0xDD00, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {  5154, 575,  -240 }, { 0, 0xC300, 0 }, 0x0FFF },
-    { ACTOR_PLAYER, {  1670, 200,   -94 }, { 0, 0xC000, 0 }, 0x04FF },
+    { ACTOR_PLAYER, {  1670, 200,   -94 }, { 0, 0xC000, 0 }, 0x04FF }, // Shortcut Grotto
+    { ACTOR_PLAYER, {  1730, 200,    70 }, { 0, 0xA800, 0 }, 0x06FF }, // Owl Statue
 };
 
 RomFile road_to_ikana_sceneRoomList0x0000D0[] = {
@@ -40,7 +42,8 @@ Spawn road_to_ikana_sceneEntranceList0x0000D8[] = {
     { 0x00, 0x00 },
     { 0x01, 0x00 },
     { 0x02, 0x00 },
-    { 0x03, 0x00 },
+    { 0x03, 0x00 }, // Shortcut Grotto
+    { 0x04, 0x00 }, // Owl Statue
 };
 
 u16 road_to_ikana_sceneExitList_0000E0[] = {

@@ -4,7 +4,15 @@
 
 #include "gfx.h"
 
-Gfx gGiKokiriBootsDL[] = {
+Vtx gGiPegasusBootsVtx[] = {
+#include "assets/objects/object_gi_boots_2/gGiPegasusBootsVtx.inc.c"
+};
+
+u64 gGiPegasusBootsWingTex[] = {
+#include "assets/objects/object_gi_boots_2/gGiPegasusBootsWingTex.ia4.inc.c"
+};
+
+Gfx gGiPegasusBootsDL[] = {
     gsDPPipeSync(),
     gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2),
     gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, 1, COMBINED, 0, SHADE, 0, 0, 0, 0, 1),
@@ -131,5 +139,20 @@ Gfx gGiKokiriBootsDL[] = {
     gsSP2Triangles(10, 11, 9, 0, 11, 10, 12, 0),
     gsSP2Triangles(13, 12, 14, 0, 15, 14, 16, 0),
     gsSP2Triangles(17, 18, 19, 0, 17, 19, 20, 0),
+
+    // Wings
+    gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, 0, 0, 0, TEXEL0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
+    gsDPSetPrimColor(0, 0, 230, 230, 160, 255),
+    gsDPSetEnvColor(90, 60, 80, 255),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock_4b(gGiPegasusBootsWingTex, G_IM_FMT_IA, 48, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPClearGeometryMode(G_CULL_BACK | G_FOG | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPSetGeometryMode(G_LIGHTING),
+    gsSPVertex(gGiPegasusBootsVtx, 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
+    gsSP2Triangles(4, 5, 6, 0, 6, 7, 4, 0),
+    gsSP2Triangles(8, 9, 10, 0, 10, 11, 8, 0),
+
     gsSPEndDisplayList(),
 };

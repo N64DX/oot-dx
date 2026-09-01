@@ -104,7 +104,7 @@ void func_80AFB768(EnSi* this, PlayState* play) {
 #if !PLATFORM_IQUE
                 if (!DISABLE_TOKEN_FREEZE)
                     player->actor.freezeTimer = 10;
-                Message_StartTextbox(play, DISABLE_TOKEN_FREEZE ? 0x9000 : 0xB4, NULL);
+                Message_StartTextbox(play, DISABLE_TOKEN_FREEZE ? 0x9402 : 0xB4, NULL);
 #else
                 player->actor.freezeTimer = 10;
                 Message_StartTextbox(play, 0xB4, NULL);
@@ -133,7 +133,7 @@ void func_80AFB89C(EnSi* this, PlayState* play) {
 #if !PLATFORM_IQUE
         if (!DISABLE_TOKEN_FREEZE)
             player->actor.freezeTimer = 10;
-        Message_StartTextbox(play, DISABLE_TOKEN_FREEZE ? 0x9000 : 0xB4, NULL);
+        Message_StartTextbox(play, DISABLE_TOKEN_FREEZE ? 0x9402 : 0xB4, NULL);
 #else
         player->actor.freezeTimer = 10;
         Message_StartTextbox(play, 0xB4, NULL);

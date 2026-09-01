@@ -9,16 +9,17 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd mountain_village_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_TERMINA_FIELD),
     SCENE_CMD_ROOM_LIST(2, mountain_village_sceneRoomList0x00015C),
     SCENE_CMD_TRANSITION_ACTOR_LIST(3, mountain_village_sceneTransitionActorList_00012C),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 6),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_SPRING_LAKE),
     SCENE_CMD_COL_HEADER(&mountain_village_sceneCollisionHeader_0058E8),
     SCENE_CMD_SPAWN_LIST(mountain_village_sceneEntranceList0x00016C),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),
-    SCENE_CMD_PLAYER_ENTRY_LIST(5, mountain_village_sceneStartPositionList0x00009C),
+    SCENE_CMD_PLAYER_ENTRY_LIST(6, mountain_village_sceneStartPositionList0x00009C),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_TERMINA_SKY, 0, LIGHT_MODE_TIME),
     SCENE_CMD_EXIT_LIST(mountain_village_sceneExitList_000180),
     SCENE_CMD_ENV_LIGHT_SETTINGS(24, mountain_village_sceneLightSettings0x00018C),
@@ -31,6 +32,7 @@ ActorEntry mountain_village_sceneStartPositionList0x00009C[] = {
     { ACTOR_PLAYER, {  2089,   15,   939 }, { 0, 0xADF8, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {   461, 1408, -1502 }, { 0, 0xF830, 0 }, 0x0FFF },
     { ACTOR_PLAYER, { -1232,  275, -1029 }, { 0, 0x0BB8, 0 }, 0x0DFF },
+    { ACTOR_PLAYER, {  -649,    8,  -196 }, { 0, 0x3800, 0 }, 0x06FF }, // Owl Statue
 };
 
 TransitionActorEntry mountain_village_sceneTransitionActorList_00012C[] = {
@@ -50,6 +52,7 @@ Spawn mountain_village_sceneEntranceList0x00016C[] = {
     { 0x02, 0x00 },
     { 0x03, 0x00 },
     { 0x04, 0x00 },
+    { 0x05, 0x00 },
 };
 
 u16 mountain_village_sceneExitList_000180[] = {

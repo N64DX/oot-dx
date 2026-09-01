@@ -11,6 +11,7 @@
 #include "player.h"
 #include "z_lib.h"
 #include "save.h"
+#include "array_count.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
@@ -157,8 +158,18 @@ void ArmsHook_AttachToActor(ArmsHook* this, Actor* actor) {
     Math_Vec3f_Diff(&actor->world.pos, &this->actor.world.pos, &this->attachPointOffset);
 }
 
+static u16 cursedLocations[] = { SCENE_FORSAKEN_KINGDOM, SCENE_GLOOMY_GRAVEYARD, SCENE_BENEATH_THE_GRAVEYARD, SCENE_PURPLE_ICE_CAVERN };
+
 void ArmsHook_Shoot(ArmsHook* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
+    
+    u8 i;
+    u8 canHookshot = true;
+
+    if (!CHECK_UPGRADE_ITEM(UPGRADE_AMBER_EARRINGS))
+        for (i=0; i<ARRAY_COUNT(cursedLocations); i++)
+            if (play->sceneId == cursedLocations[i])
+                canHookshot = false;
 
     if ((this->actor.parent == NULL) || (!Player_HoldsHookshot(player))) {
         ArmsHook_DetachFromActor(this);
@@ -169,7 +180,7 @@ void ArmsHook_Shoot(ArmsHook* this, PlayState* play) {
     Actor_PlaySfx_Flagged2(&player->actor, NA_SE_IT_HOOKSHOT_CHAIN - SFX_FLAG);
     ArmsHook_CheckForCancel(this);
 
-    if ((this->timer != 0) && (this->collider.base.atFlags & AT_HIT) &&
+    if ((this->timer != 0) && (this->collider.base.atFlags & AT_HIT) && canHookshot &&
         (this->collider.elem.atHitElem->elemMaterial != ELEM_MATERIAL_UNK4)) {
         Actor* touchedActor = this->collider.base.at;
 
@@ -301,7 +312,7 @@ void ArmsHook_Shoot(ArmsHook* this, PlayState* play) {
             this->actor.world.pos.x += 10.0f * polyNormalX;
             this->actor.world.pos.z += 10.0f * polyNormalZ;
             this->timer = 0;
-            if (SurfaceType_CanHookshot(&play->colCtx, poly, bgId)) {
+            if (canHookshot && SurfaceType_CanHookshot(&play->colCtx, poly, bgId)) {
                 DynaPolyActor* dynaPolyActor;
 
                 if (bgId != BGCHECK_SCENE) {

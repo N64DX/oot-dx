@@ -96,6 +96,26 @@ s16 sBootData[PLAYER_BOOTS_MAX][17] = {
         0,                           // IREG(69)
         FRAMERATE_CONST(130, 156),   // MREG(95)
     },
+    // PLAYER_BOOTS_PEGASUS
+    {
+        200,                         // REG(19)
+        FRAMERATE_CONST(1000, 1200), // REG(30)
+        FRAMERATE_CONST(300, 360),   // REG(32)
+        700,                         // REG(34)
+        FRAMERATE_CONST(550, 660),   // REG(35)
+        FRAMERATE_CONST(270, 324),   // REG(36)
+        600,                         // REG(37)
+        FRAMERATE_CONST(350, 420),   // REG(38)
+        800,                         // R_DECELERATE_RATE
+        600,                         // R_RUN_SPEED_LIMIT
+        -100,                        // REG(68)
+        600,                         // REG(69)
+        590,                         // IREG(66)
+        750,                         // IREG(67)
+        125,                         // IREG(68)
+        200,                         // IREG(69)
+        FRAMERATE_CONST(130, 156),   // MREG(95)
+    },
     // PLAYER_BOOTS_INDOOR
     {
         200,                         // REG(19)
@@ -166,6 +186,7 @@ u8 sActionModelGroups[PLAYER_IA_MAX] = {
     PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_MASTER
     PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_KOKIRI
     PLAYER_MODELGROUP_BGS,              // PLAYER_IA_SWORD_BIGGORON
+    PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_HEROS
     PLAYER_MODELGROUP_SWORD_FAIRYS,     // PLAYER_IA_SWORD_FAIRYS
     PLAYER_MODELGROUP_10,               // PLAYER_IA_DEKU_STICK
     PLAYER_MODELGROUP_HAMMER,           // PLAYER_IA_HAMMER
@@ -240,7 +261,8 @@ typedef struct EnvHazardTextTriggerEntry {
 
 EnvHazardTextTriggerEntry sEnvHazardTextTriggers[] = {
     { ENV_HAZARD_TEXT_TRIGGER_HOTROOM, 0x3040 },    // PLAYER_ENV_HAZARD_HOTROOM - 1
-    { ENV_HAZARD_TEXT_TRIGGER_FREEZINGROOM, 0x9402 }, // PLAYER_ENV_HAZARD_FREEZINGROOM - 1
+    { ENV_HAZARD_TEXT_TRIGGER_FREEZINGROOM, 0x9403 }, // PLAYER_ENV_HAZARD_FREEZINGROOM - 1
+    { ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM, 0x9404 }, // PLAYER_ENV_HAZARD_CURSEDROOM - 1
     { ENV_HAZARD_TEXT_TRIGGER_UNDERWATER, 0x401D }, // PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1
     { 0, 0x0000 },                                  // PLAYER_ENV_HAZARD_SWIMMING - 1
     { ENV_HAZARD_TEXT_TRIGGER_UNDERWATER, 0x401D }, // PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1
@@ -417,8 +439,8 @@ Gfx* gPlayerSwordSheaths[][5] = {
 };
 
 Gfx* gPlayerSwords[][6] = {
-    { gLinkChildLeftFistAndKokiriSwordNearDL, gLinkChildLeftHandHoldingRazorSwordDL, gLinkChildLeftHandHoldingSilverSwordDL, gLinkChildLeftHandHoldingGoldenSwordDL, gLinkChildLeftHandHoldingHerosSwordDL, gLinkChildLeftHandHoldingMasterSwordDL2 },
-    { gLinkYoungLeftFistAndKokiriSwordNearDL, gLinkYoungLeftHandHoldingRazorSwordDL, gLinkYoungLeftHandHoldingSilverSwordDL, gLinkYoungLeftHandHoldingGoldenSwordDL, gLinkYoungLeftHandHoldingHerosSwordDL, gLinkYoungLeftHandHoldingMasterSwordDL2 },
+    { gLinkChildLeftFistAndKokiriSwordNearDL, gLinkChildLeftHandHoldingRazorSwordDL, gLinkChildLeftHandHoldingSilverSwordDL, gLinkChildLeftHandHoldingHerosSwordDL, gLinkChildLeftHandHoldingGoldenSwordDL, gLinkChildLeftHandHoldingMasterSwordDL2 },
+    { gLinkYoungLeftFistAndKokiriSwordNearDL, gLinkYoungLeftHandHoldingRazorSwordDL, gLinkYoungLeftHandHoldingSilverSwordDL, gLinkYoungLeftHandHoldingHerosSwordDL, gLinkYoungLeftHandHoldingGoldenSwordDL, gLinkYoungLeftHandHoldingMasterSwordDL2 },
 };
 
 // Identical to `sPlayerLeftHandSwordDLs` and unused
@@ -747,9 +769,6 @@ void Player_SetEquipmentData(PlayState* play, Player* this) {
         this->currentBoots = BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
         this->currentSwordItemId = B_BTN_ITEM;
 
-        if (this->currentShield == PLAYER_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-            this->currentShield = PLAYER_SHIELD_HEROS;
-
         Player_SetModelGroup(this, Player_ActionToModelGroup(this, this->heldItemAction));
         Player_SetBootData(play, this);
     }
@@ -899,7 +918,7 @@ int func_8008F128(Player* this) {
 s32 Player_ActionToMeleeWeapon(s32 itemAction) {
     s32 meleeWeapon = itemAction - PLAYER_IA_FISHING_POLE;
 
-    if ((meleeWeapon > 0) && (meleeWeapon < 7)) {
+    if ((meleeWeapon > 0) && (meleeWeapon < PLAYER_IA_BOW - PLAYER_IA_FISHING_POLE)) {
         return meleeWeapon;
     } else {
         return 0;
@@ -911,7 +930,7 @@ s32 Player_GetMeleeWeaponHeld(Player* this) {
 }
 
 s32 Player_HoldsTwoHandedWeapon(Player* this) {
-    if ((this->heldItemAction >= PLAYER_IA_SWORD_BIGGORON && this->heldItemAction <= PLAYER_IA_HAMMER)) {
+    if ((this->heldItemAction == PLAYER_IA_SWORD_BIGGORON || this->heldItemAction == PLAYER_IA_SWORD_FAIRYS || this->heldItemAction == PLAYER_IA_DEKU_STICK || this->heldItemAction == PLAYER_IA_HAMMER)) {
         return (LINK_IS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) ? 0 : 1;
     } else {
         return 0;
@@ -976,6 +995,8 @@ s32 Player_GetEnvironmentalHazard(PlayState* play) {
         envHazard = PLAYER_ENV_HAZARD_HOTROOM - 1;
     } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_FREEZING) { // Room is freezing
         envHazard = PLAYER_ENV_HAZARD_FREEZINGROOM - 1;
+    } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_CURSED) { // Room is cursed
+        envHazard = PLAYER_ENV_HAZARD_CURSEDROOM - 1;
     } else if ((this->underwaterTimer > 80) &&
                ((this->currentBoots == PLAYER_BOOTS_IRON) || (this->underwaterTimer >= 300))) {
         envHazard = ((this->currentBoots == PLAYER_BOOTS_IRON) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
@@ -992,6 +1013,7 @@ s32 Player_GetEnvironmentalHazard(PlayState* play) {
         if ((triggerEntry->flag != 0) && !(gSaveContext.envHazardTextTriggerFlags & triggerEntry->flag) &&
             (((envHazard == (PLAYER_ENV_HAZARD_HOTROOM - 1)) && (this->currentTunic != PLAYER_TUNIC_GORON)) ||
               (envHazard == (PLAYER_ENV_HAZARD_FREEZINGROOM - 1) && this->currentTunic != PLAYER_TUNIC_ZORA) ||
+              (envHazard == (PLAYER_ENV_HAZARD_CURSEDROOM - 1) && this->currentTunic != PLAYER_TUNIC_SPIRIT) ||
              (((envHazard == (PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1)) ||
                (envHazard == (PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1))) &&
               (this->currentBoots == PLAYER_BOOTS_IRON) && (this->currentTunic != PLAYER_TUNIC_ZORA)))) {
@@ -1120,6 +1142,7 @@ Color_RGB8 sTunicColors[PLAYER_TUNIC_MAX] = {
     { 30, 105, 27 }, // PLAYER_TUNIC_KOKIRI
     { 100, 20, 0 },  // PLAYER_TUNIC_GORON
     { 0, 60, 100 },  // PLAYER_TUNIC_ZORA
+    { 70, 38, 64 },  // PLAYER_TUNIC_SPIRIT
 };
 
 Color_RGB8 sGauntletColors[] = {
@@ -1130,9 +1153,9 @@ Color_RGB8 sGauntletColors[] = {
 u8 Player_GetShieldSkin(void) {
     if (LINK_IS_ADULT)
         return 0;
-    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU && gSaveContext.save.info.obtainedSkins.woodenShield)
+    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
         return 4;
-    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD && gSaveContext.save.info.obtainedSkins.metalShield)
+    else if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL))
         return 2;
     return 0;
 }
@@ -1142,9 +1165,9 @@ Gfx* sBootDListGroups[][2] = {
     { gLinkAdultLeftHoverBootDL, gLinkAdultRightHoverBootDL }, // PLAYER_BOOTS_HOVER
 };
 
-Gfx* sLinkChildEquipmentDListGroups[][6] = {
-    { gLinkChildIronBootsDL, gLinkChildHoverBootsDL, gLinkChildGoronBraceletDL, gLinkChildPowerBraceletDL, gLinkChildPowerBraceletsDL, gLinkChildAmuletOfEnergyDL },
-    { gLinkYoungIronBootsDL, gLinkYoungHoverBootsDL, gLinkYoungGoronBraceletDL, gLinkYoungPowerBraceletDL, gLinkYoungPowerBraceletsDL, gLinkYoungAmuletOfEnergyDL },
+Gfx* sLinkChildEquipmentDListGroups[][8] = {
+    { gLinkChildIronBootsDL, gLinkChildHoverBootsDL, gLinkChildPegasusBootsDL, gLinkChildGoronBraceletDL, gLinkChildPowerBraceletDL, gLinkChildPowerBraceletsDL, gLinkChildAmuletOfEnergyDL, gLinkChildEarringsAmberDL },
+    { gLinkYoungIronBootsDL, gLinkYoungHoverBootsDL, gLinkYoungPegasusBootsDL, gLinkYoungGoronBraceletDL, gLinkYoungPowerBraceletDL, gLinkYoungPowerBraceletsDL, gLinkYoungAmuletOfEnergyDL, gLinkYoungEarringsAmberDL },
 };
 
 void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dListCount, s32 lod, s32 tunic, s32 boots,
@@ -1210,7 +1233,7 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
                                                     : gLinkAdultRightGauntletPlate3DL);
             }
 
-            if (boots != PLAYER_BOOTS_KOKIRI) {
+            if (boots != PLAYER_BOOTS_KOKIRI && boots != PLAYER_BOOTS_PEGASUS) {
                 Gfx** bootDLists = sBootDListGroups[boots - PLAYER_BOOTS_IRON];
 
                 gSPDisplayList(POLY_OPA_DISP++, bootDLists[0]);
@@ -1219,23 +1242,22 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
         } else if (IS_CHILD_QUEST) {
             s32 strengthUpgrade = CUR_UPG_VALUE(UPG_STRENGTH);
             gSPClearGeometryMode(POLY_OPA_DISP++, G_CULL_BOTH);
-            if (strengthUpgrade >= PLAYER_STR_BRACELET) {
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][strengthUpgrade + 1]);
-            }
-            if (gSaveContext.save.info.obtainedItems.amuletOfEnergy) {
-                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][5]);
-            }
-            if (boots == PLAYER_BOOTS_IRON || boots == PLAYER_BOOTS_HOVER) {
+            if (strengthUpgrade >= PLAYER_STR_BRACELET)
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][strengthUpgrade + 2]);
+            if (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY))
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][6]);
+            if (CHECK_UPGRADE_ITEM(UPGRADE_AMBER_EARRINGS))
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][7]);
+            if (boots == PLAYER_BOOTS_IRON || boots == PLAYER_BOOTS_HOVER || boots == PLAYER_BOOTS_PEGASUS)
                 gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][boots - 1]);
+        } else {
+            if (Player_GetStrength() > PLAYER_STR_NONE) {
+                gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][3]);
             }
-        } else if (Player_GetStrength() > PLAYER_STR_NONE) {
-            gSPDisplayList(POLY_OPA_DISP++, sLinkChildEquipmentDListGroups[IS_YOUNG_LINK][2]);
         }
 
         if (LINK_IS_CHILD) {
             u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
-            if (shield == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD)
-                shield = 4;
 
             if (play->pauseCtx.state <= PAUSE_STATE_WAIT_BG_PRERENDER || play->pauseCtx.state == PAUSE_STATE_GAME_OVER_START || play->pauseCtx.state == PAUSE_STATE_GAME_OVER_WAIT_BG_PRERENDER || shield == EQUIP_VALUE_SHIELD_HYLIAN)
                 if ((shield > PLAYER_SHIELD_NONE && sheathType == PLAYER_MODELTYPE_SHEATH_18) || (shield == EQUIP_VALUE_SHIELD_HYLIAN && sheathType == PLAYER_MODELTYPE_SHEATH_19 && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD)) {
@@ -1454,10 +1476,8 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
 
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD) {
                     if (gSaveContext.save.info.playerData.bgsFlag && swordEquipValue == EQUIP_VALUE_SWORD_BIGGORON)
-                        *dLists = gPlayerSwords[IS_YOUNG_LINK][3];
-                    else if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                         *dLists = gPlayerSwords[IS_YOUNG_LINK][4];
-                    else if (HAS_MASTER_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+                    else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                         *dLists = gPlayerSwords[IS_YOUNG_LINK][5];
                     else *dLists = gPlayerSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                 }
@@ -1487,9 +1507,7 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
 
             if (LINK_IS_CHILD) {
                 EquipValueSword swordEquipValue = CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD);
-                if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
-                    swordEquipValue = 4;
-                else if (HAS_MASTER_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+                if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                     swordEquipValue = 5;
                 
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
@@ -1732,6 +1750,7 @@ f32 sMeleeWeaponLengths[] = {
     4000.0f, // Master Sword
     3000.0f, // Kokiri Sword
     5500.0f, // Biggoron's Sword
+    3000.0f, // Hero's Sword
     5500.0f, // Great Fairy's Sword
     0.0f,    // Deku Stick
     2500.0f, // Hammer
@@ -1841,7 +1860,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
             if (Player_HoldsBrokenKnife(this)) {
                 sMeleeWeaponTipOffsetFromLeftHand0.x = 1500.0f;
-            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 1 && IS_RAZOR_SWORD) { // Razor Sword
+            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 1 && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) { // Razor Sword
                 sMeleeWeaponTipOffsetFromLeftHand0.x = 3000.0f;
             } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 3) { // Silver / Gilded Sword
                 sMeleeWeaponTipOffsetFromLeftHand0.x = 4000.0f;
@@ -2068,6 +2087,11 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                 Matrix_TranslateRotateZYX(&sSheathLimbModelShieldOnBackPos, &sSheathLimbModelShieldOnBackZyxRot);
                 Matrix_Get(&this->shieldMf);
             }
+
+            OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+            gDPPipeSync(POLY_OPA_DISP++);
+            gDPSetEnvColor(POLY_OPA_DISP++, sTunicColors[this->currentTunic].r, sTunicColors[this->currentTunic].g, sTunicColors[this->currentTunic].b, 0);
+            CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
         } else if (limbIndex == PLAYER_LIMB_HEAD) {
             Matrix_MultVec3f(&sPlayerFocusOffsetFromHead, &this->actor.focus.pos);
         } else {
@@ -2107,6 +2131,7 @@ u32 Player_InitPauseDrawData(PlayState* play, u8* segment, SkelAnime* skelAnime)
     gSegments[4] = OS_K0_TO_PHYSICAL(PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_START(segment));
     gSegments[6] = OS_K0_TO_PHYSICAL(PAUSE_PLAYER_SEGMENT_LINK_OBJECT(segment));
 
+    assert(SEGMENT_OFFSET(&gPlayerAnim_link_normal_wait) + sizeof(gPlayerAnim_link_normal_wait) <= PAUSE_PLAYER_SEGMENT_GAMEPLAY_KEEP_BUFFER_SIZE);
     SkelAnime_InitLink(play, skelAnime, gPlayerSkelHeaders[GET_LINK_MODEL],
                        &gPlayerAnim_link_normal_wait, 9, ptr, ptr, PLAYER_LIMB_MAX);
 
@@ -2129,7 +2154,7 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
     Gfx** dLists;
 
     if ((modelGroup == PLAYER_MODELGROUP_SWORD_AND_SHIELD) && !LINK_IS_ADULT &&
-        (playerSwordAndShield[1] == PLAYER_SHIELD_HYLIAN) && !IS_HEROS_SHIELD) {
+        (playerSwordAndShield[1] == PLAYER_SHIELD_HYLIAN)) {
         modelGroup = PLAYER_MODELGROUP_CHILD_HYLIAN_SHIELD;
     }
 
@@ -2169,31 +2194,24 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
         if (limbIndex == PLAYER_LIMB_L_HAND) {
             if (gSaveContext.save.info.playerData.bgsFlag && swordEquipValue == EQUIP_VALUE_SWORD_BIGGORON)
-                *dList = gPlayerSwords[IS_YOUNG_LINK][3];
-            else if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][4];
-            else if (HAS_MASTER_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+            else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][5];
             else if (swordEquipValue != EQUIP_VALUE_SWORD_NONE)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][swordEquipValue - 1];
-        }
-        else if (limbIndex == PLAYER_LIMB_R_HAND) {
+        } else if (limbIndex == PLAYER_LIMB_R_HAND) {
             type = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_RIGHT_HAND];
             sRightHandType = type;
             if (type == PLAYER_MODELTYPE_RH_SHIELD)
                 dListOffset = playerSwordAndShield[1] * MAX_LINK_MODELS;
-            if (shieldEquipValue == EQUIP_VALUE_SHIELD_HYLIAN && IS_HEROS_SHIELD)
+            if (shieldEquipValue == EQUIP_VALUE_SHIELD_HEROS)
                 dListOffset += MAX_LINK_MODELS * 2;
             dListOffset += MAX_LINK_MODELS * Player_GetShieldSkin();
             dLists = sPlayerDListGroups[type] + GET_LINK_MODEL;
             *dList = *(dLists + dListOffset);
-        }
-        else if (limbIndex == PLAYER_LIMB_SHEATH) {
+        } else if (limbIndex == PLAYER_LIMB_SHEATH) {
             type = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_SHEATH];
-
-            if (HAS_HEROS_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
-                swordEquipValue = 4;
-            else if (HAS_MASTER_SWORD && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                 swordEquipValue = 5;
 
             if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
@@ -2205,13 +2223,11 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                     *dList = gPlayerSheathedSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                 else *dList = gPlayerSwordSheaths[IS_YOUNG_LINK][swordEquipValue - 1];
             }
-        }
-        else if (limbIndex == PLAYER_LIMB_WAIST) {
+        } else if (limbIndex == PLAYER_LIMB_WAIST) {
             type = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_WAIST];
             dLists = sPlayerDListGroups[type] + GET_LINK_MODEL;
             *dList = *(dLists + dListOffset);
-        }
-        else return false;
+        } else return false;
     }
 
     return false;
@@ -2341,7 +2357,7 @@ void Player_DrawPause(PlayState* play, u8* segment, SkelAnime* skelAnime, Vec3f*
     if (IS_CHILD_QUEST_AS_CHILD) {
         if (sword == PLAYER_SWORD_NONE && shield == PLAYER_SHIELD_NONE)
             srcTable = gLinkPauseAdultJointTable;
-        else if (shield == PLAYER_SHIELD_HYLIAN && !IS_HEROS_SHIELD)
+        else if (shield == PLAYER_SHIELD_HYLIAN)
             srcTable = gLinkPauseChildJointTable;
         else if (sword == PLAYER_SWORD_NONE)
             srcTable = gLinkPauseAdultShieldJointTable;

@@ -6,6 +6,7 @@
 #include "scene.h"
 #include "ultra64.h"
 
+extern SceneCmd* dawngrove_house_1_sceneAlternateHeaders[];
 extern RomFile dawngrove_house_1_sceneRoomList_000060[];
 extern TransitionActorEntry dawngrove_house_1_sceneTransitionActorList_000068[];
 extern u16 dawngrove_house_1_sceneExitList_000078[];

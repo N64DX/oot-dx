@@ -75,7 +75,7 @@ static BgSpot18ShutterInfo sBgSpot18ShutterInfo[] = {
     }, {
         SCENE_PATH_TO_GORON_VILLAGE,
         BG_SPOT18_SHUTTER_UP,
-        INFTABLE_STONE_TOWER_DOOR_OPENED,
+        INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED,
         1.5f,
         1.0f,
         1.0f,

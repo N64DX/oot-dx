@@ -21,6 +21,7 @@ extern Gfx gLightOrbMaterial1DL[];
 extern Gfx gLightOrbMaterial2DL[];
 extern Gfx gLightOrbModelDL[];
 
+extern u64 gEffFireMask1Tex[];
 extern Gfx gFrozenSteamMaterialDL[];
 extern Gfx gFrozenSteamModelDL[];
 
@@ -57,5 +58,7 @@ extern Gfx gFieldBeehiveFragmentDL[18];
 #define gFieldKakeraTex_WIDTH 32
 #define gFieldKakeraTex_HEIGHT 32
 extern Gfx gFieldKakeraDL[23];
+
+extern Gfx sDashWindConeDL[];
 
 #endif

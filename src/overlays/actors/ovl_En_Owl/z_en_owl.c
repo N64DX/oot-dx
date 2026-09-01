@@ -134,7 +134,7 @@ void EnOwl_Init(Actor* thisx, PlayState* play) {
     ColliderCylinder* collider;
     s32 owlType;
     s32 switchFlag;
-    u8 hasMedallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT) && CHECK_QUEST_ITEM(QUEST_MEDALLION_LIGHT);
+    u8 hasMedallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT);
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     ActorShape_Init(&this->actor.shape, 0, ActorShadow_DrawCircle, 36.0f);
@@ -811,7 +811,7 @@ void EnOwl_AfterTalkGanonsCastle(EnOwl* this, PlayState* play) {
 void EnOwl_WaitGanonsCastle(EnOwl* this, PlayState* play) {
     EnOwl_LookAtLink(this, play);
 
-    if (EnOwl_CheckInitTalk(this, play, 0x8128, 360.0f, 0)) {
+    if (EnOwl_CheckInitTalk(this, play, 0x8129, 360.0f, 0)) {
         Audio_PlayFanfare(NA_BGM_OWL);
         this->actionFunc = EnOwl_AfterTalkGanonsCastle;
     }
@@ -840,7 +840,7 @@ void EnOwl_AfterTalkForbiddenWoods(EnOwl* this, PlayState* play) {
 void EnOwl_WaitForbiddenWoods(EnOwl* this, PlayState* play) {
     EnOwl_LookAtLink(this, play);
 
-    if (EnOwl_CheckInitTalk(this, play, 0x8124, 360.0f, 0)) {
+    if (EnOwl_CheckInitTalk(this, play, 0x8125, 360.0f, 0)) {
         Audio_PlayFanfare(NA_BGM_OWL);
         this->actionFunc = EnOwl_AfterTalkForbiddenWoods;
     }

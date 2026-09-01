@@ -9,11 +9,12 @@
 #include "sequence.h"
 #include "skybox.h"
 #include "ultra64.h"
+#include "save.h"
 
 SceneCmd milk_road_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_FIELD_LOGIC),
     SCENE_CMD_ROOM_LIST(1, milk_road_sceneRoomList0x0000F8),
-    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 0),
+    SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_HYRULE_FIELD),
     SCENE_CMD_COL_HEADER(&milk_road_sceneCollisionHeader_001E84),
     SCENE_CMD_SPAWN_LIST(milk_road_sceneEntranceList0x000100),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_OVERWORLD, OBJECT_GAMEPLAY_FIELD_KEEP),

@@ -196,6 +196,7 @@ s32 func_80835C08(Player* this, PlayState* play);
 void Player_UseItem(PlayState* play, Player* this, s32 item);
 void func_80839F90(Player* this, PlayState* play);
 s32 func_8083C61C(PlayState* play, Player* this);
+void func_80842CF0(PlayState* play, Player* this);
 void Player_UpdateCommon(Player* this, PlayState* play, Input* input);
 void func_8084FF7C(Player* this);
 void Player_UpdateBunnyEars(Player* this);
@@ -282,6 +283,7 @@ s32 Player_StartFishing(PlayState* play);
 s32 func_80852F38(PlayState* play, Player* this);
 s32 Player_TryCsAction(PlayState* play, Actor* actor, s32 csAction);
 void func_80853080(Player* this, PlayState* play);
+void Player_RequestQuake(PlayState* play, s32 speed, s32 y, s32 duration);
 s32 Player_InflictDamage(PlayState* play, s32 damage);
 void Player_StartTalking(PlayState* play, Actor* actor);
 void func_80838940(Player* this, LinkAnimationHeader* anim, f32 arg2, PlayState* play, u16 sfxId);
@@ -295,6 +297,12 @@ void Player_Action_8084170C(Player* this, PlayState* play);
 void Player_Action_808417FC(Player* this, PlayState* play);
 void Player_Action_8084193C(Player* this, PlayState* play);
 void Player_Action_TurnInPlace(Player* this, PlayState* play);
+void Player_Action_80842180(Player* this, PlayState* play);
+void Player_Action_DashBonk(Player* this, PlayState* play);
+void Player_Action_DashCharge(Player* this, PlayState* play);
+void Player_Action_StartDashCharge(PlayState* play, Player* this);
+void Player_Action_SpawnDashDust(PlayState* play, Player* this, s32 dashMode);
+void Player_Action_8084227C(Player* this, PlayState* play);
 void Player_Action_80842180(Player* this, PlayState* play);
 void Player_Action_8084227C(Player* this, PlayState* play);
 void Player_Action_8084279C(Player* this, PlayState* play);
@@ -822,72 +830,41 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_BULLET_BAG_50, OBJECT_GI_DEKUPOUCH, GID_BULLET_BAG_50, 0x6C, 0x80, CHEST_ANIM_LONG),
     // GI_ICE_TRAP
     GET_ITEM_NONE,
-    // GI_AMULET_OF_ENERGY
-    GET_ITEM(ITEM_AMULET_OF_ENERGY, OBJECT_GI_PENDANT, GID_AMULET_OF_ENERGY, 0x9009, 0x80, CHEST_ANIM_LONG),
-    // GI_ROCS_FEATHER
-    GET_ITEM(ITEM_ROCS_FEATHER, OBJECT_GI_FEATHER, GID_ROCS_FEATHER, 0x9003, 0x80, CHEST_ANIM_LONG),
-    // GI_GOLDEN_FEATHER
-    GET_ITEM(ITEM_GOLDEN_FEATHER, OBJECT_GI_FEATHER, GID_GOLDEN_FEATHER, 0x9004, 0x80, CHEST_ANIM_LONG),
-    // GI_SWORD_FAIRYS
-    GET_ITEM(ITEM_SWORD_FAIRYS, OBJECT_GI_SWORD_4_MM, GID_SWORD_FAIRYS, 0x900A, 0x80, CHEST_ANIM_LONG),
-    // GI_SHIELD_MIRROR_MM
-    GET_ITEM(ITEM_SHIELD_MIRROR, OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, 0x8003, 0x80, CHEST_ANIM_LONG),
-    // GI_SHIELD_WOODEN
-    GET_ITEM(ITEM_SHIELD_WOODEN, OBJECT_GI_SHIELD_1, GID_SHIELD_WOODEN, 0x9015, 0xA0, CHEST_ANIM_SHORT),
-    // GI_SHIELD_HEROS
-    GET_ITEM(ITEM_SHIELD_HEROS, OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, 0x9001, 0xA0, CHEST_ANIM_SHORT),
-    // GI_SHIELD_METAL
-    GET_ITEM(ITEM_SHIELD_METAL, OBJECT_GI_SHIELD_2_MM, GID_SHIELD_METAL, 0x9016, 0xA0, CHEST_ANIM_SHORT),
-    // GI_SWORD_HEROS
-	GET_ITEM(ITEM_SWORD_HEROS, OBJECT_GI_SWORD_1_MM, GID_SWORD_HEROS, 0x9002, 0x80, CHEST_ANIM_LONG),
-    // GI_SWORD_SILVER
-    GET_ITEM(ITEM_SWORD_BIGGORON, OBJECT_GI_SWORD_3_MM, GID_SWORD_SILVER, 0x8004, 0x80, CHEST_ANIM_LONG),
-    // GI_SWORD_GILDED
-    GET_ITEM(ITEM_SWORD_BIGGORON, OBJECT_GI_SWORD_3_MM, GID_SWORD_GILDED, 0x8005, 0x80, CHEST_ANIM_LONG),
-    // GI_POWER_BRACELET
-	GET_ITEM(ITEM_STRENGTH_SILVER_GAUNTLETS, OBJECT_GI_BRACELET, GID_POWER_BRACELET, 0x8007, 0x80, CHEST_ANIM_LONG),
-    // GI_POWER_BRACELETS
-	GET_ITEM(ITEM_STRENGTH_GOLD_GAUNTLETS, OBJECT_GI_BRACELET, GID_POWER_BRACELET, 0x8008, 0x80, CHEST_ANIM_LONG),
-    // GI_HOOKSHOT_MM
-	GET_ITEM(ITEM_HOOKSHOT, OBJECT_GI_HOOKSHOT_MM, GID_HOOKSHOT_MM, 0x36, 0x80, CHEST_ANIM_LONG),
-    // GI_LONGSHOT_MM
-	GET_ITEM(ITEM_LONGSHOT, OBJECT_GI_HOOKSHOT_MM, GID_LONGSHOT_MM, 0x4F, 0x80, CHEST_ANIM_LONG),
-    // GI_HEROS_BOW
-	GET_ITEM(ITEM_BOW, OBJECT_GI_HEROS_BOW, GID_HEROS_BOW, 0x8009, 0x80, CHEST_ANIM_LONG),
-    // GI_GOLD_DUST
-	GET_ITEM(ITEM_BROKEN_GORONS_SWORD, OBJECT_GI_GOLD_DUST, GID_GOLD_DUST, 0x800A, 0x80, CHEST_ANIM_LONG),
-    // GI_PICTOBOX
-	GET_ITEM(ITEM_PICTOBOX, OBJECT_GI_CAMERA, GID_PICTOGRAPH_BOX, 0x9017, 0x80, CHEST_ANIM_SHORT),
-    // GI_SHRINE_KEY
-	GET_ITEM(ITEM_SHRINE_KEY, OBJECT_GI_ROOM_KEY, GID_ROOM_KEY, 0x9018, 0x80, CHEST_ANIM_SHORT),
-    // GI_BOTTLE_POTION_SHIELD
-    GET_ITEM(ITEM_BOTTLE_POTION_SHIELD, OBJECT_GI_LIQUID, GID_BOTTLE_POTION_SHIELD, 0x9019, 0x80, CHEST_ANIM_LONG),
-    // GI_BOOTS_UPGRADE
-	GET_ITEM(ITEM_BOOTS_UPGRADE, OBJECT_GI_BOOTS_2, GID_BOOTS_KOKIRI, 0x900D, 0x80, CHEST_ANIM_LONG),
-    // GI_PERFECT_BLOCK_UPGRADE
-	GET_ITEM(ITEM_PERFECT_BLOCK_UPGRADE, OBJECT_GI_TITLE_DEED, GID_LAND_TITLE_DEED, 0x900B, 0x80, CHEST_ANIM_LONG),
-    // GI_WALLET_MASTER
-	GET_ITEM(ITEM_MASTER_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9005, 0x80, CHEST_ANIM_LONG),
-    // GI_WALLET_ROYAL
-	GET_ITEM(ITEM_ROYAL_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9006, 0x80, CHEST_ANIM_LONG),
-    // GI_WALLET_TYCOON
-	GET_ITEM(ITEM_TYCOON_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9007, 0x80, CHEST_ANIM_LONG),
-    // GI_WALLET_BOTTOMLESS
-	GET_ITEM(ITEM_BOTTOMLESS_WALLET, OBJECT_GI_PURSE, GID_WALLET_GIANT, 0x9008, 0x80, CHEST_ANIM_LONG),
-    // GI_SHIELD_DEKU_UPGRADE
-	GET_ITEM(ITEM_SHIELD_DEKU_UPGRADE, OBJECT_GI_SHIELD_1, GID_SHIELD_DEKU, 0x9011, 0x80, CHEST_ANIM_LONG),
-    // GI_SHIELD_HYLIAN_UPGRADE
-	GET_ITEM(ITEM_SHIELD_HYLIAN_UPGRADE, OBJECT_GI_SHIELD_2, GID_SHIELD_HYLIAN, 0x9012, 0x80, CHEST_ANIM_LONG),
-    // GI_SHIELD_MIRROR_UPGRADE
-	GET_ITEM(ITEM_SHIELD_MIRROR_UPGRADE, OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM, 0x9013, 0x80, CHEST_ANIM_LONG),
-    // GI_SHIELD_HEROS_UPGRADE
-	GET_ITEM(ITEM_SHIELD_HEROS_UPGRADE, OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS, 0x9014, 0x80, CHEST_ANIM_LONG),
-    // GI_ANCIENT_HOLLOW_KEY
-	GET_ITEM(ITEM_SMALL_KEY, OBJECT_GI_KEY, GID_SMALL_KEY, 0x900C, 0x80, CHEST_ANIM_LONG),
-    // GI_BULLET_BAG_60
-	GET_ITEM(ITEM_BULLET_BAG_60, OBJECT_GI_DEKUPOUCH, GID_BULLET_BAG_50, 0x900E, 0x80, CHEST_ANIM_LONG),
-    // GI_QUIVER_60
-	GET_ITEM(ITEM_QUIVER_60, OBJECT_GI_ARROWCASE, GID_QUIVER_50, 0x900F, 0x80, CHEST_ANIM_LONG),
+    GET_ITEM(ITEM_AMULET_OF_ENERGY,          OBJECT_GI_PENDANT,     GID_AMULET_OF_ENERGY,     GETITEM_CQ_TEXT(GI_AMULET_OF_ENERGY),      0x80, CHEST_ANIM_LONG),  // GI_AMULET_OF_ENERGY
+    GET_ITEM(ITEM_AMBER_EARRINGS,            OBJECT_GI_PENDANT,     GID_AMBER_EARRINGS,       GETITEM_CQ_TEXT(GI_AMBER_EARRINGS),        0x80, CHEST_ANIM_LONG),  // GI_AMBER_EARRINGS
+    GET_ITEM(ITEM_ROCS_FEATHER,              OBJECT_GI_FEATHER,     GID_ROCS_FEATHER,         GETITEM_CQ_TEXT(GI_ROCS_FEATHER),          0x80, CHEST_ANIM_LONG),  // GI_ROCS_FEATHER
+    GET_ITEM(ITEM_GOLDEN_FEATHER,            OBJECT_GI_FEATHER,     GID_GOLDEN_FEATHER,       GETITEM_CQ_TEXT(GI_GOLDEN_FEATHER),        0x80, CHEST_ANIM_LONG),  // GI_GOLDEN_FEATHER
+    GET_ITEM(ITEM_SWORD_FAIRYS,              OBJECT_GI_SWORD_4_MM,  GID_SWORD_FAIRYS,         GETITEM_CQ_TEXT(GI_SWORD_FAIRYS),          0x80, CHEST_ANIM_LONG),  // GI_SWORD_FAIRYS
+    GET_ITEM(ITEM_SHIELD_WOODEN,             OBJECT_GI_SHIELD_1,    GID_SHIELD_WOODEN,        GETITEM_CQ_TEXT(GI_SHIELD_WOODEN),         0xA0, CHEST_ANIM_SHORT), // GI_SHIELD_WOODEN
+    GET_ITEM(ITEM_SHIELD_HEROS,              OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS,         GETITEM_CQ_TEXT(GI_SHIELD_HEROS),          0xA0, CHEST_ANIM_SHORT), // GI_SHIELD_HEROS
+    GET_ITEM(ITEM_SHIELD_METAL,              OBJECT_GI_SHIELD_2_MM, GID_SHIELD_METAL,         GETITEM_CQ_TEXT(GI_SHIELD_METAL),          0xA0, CHEST_ANIM_SHORT), // GI_SHIELD_METAL
+	GET_ITEM(ITEM_SWORD_HEROS,               OBJECT_GI_SWORD_1_MM,  GID_SWORD_HEROS,          GETITEM_CQ_TEXT(GI_SWORD_HEROS),           0x80, CHEST_ANIM_LONG),  // GI_SWORD_HEROS
+    GET_ITEM(ITEM_TUNIC_SPIRIT,              OBJECT_GI_CLOTHES,     GID_TUNIC_SPIRIT,         GETITEM_CQ_TEXT(GI_TUNIC_SPIRIT),          0x80, CHEST_ANIM_LONG),  // GI_TUNIC_SPIRIT
+	GET_ITEM(ITEM_PICTOBOX,                  OBJECT_GI_CAMERA,      GID_PICTOGRAPH_BOX,       GETITEM_CQ_TEXT(GI_PICTOBOX),              0xA0, CHEST_ANIM_SHORT), // GI_PICTOBOX
+	GET_ITEM(ITEM_SHRINE_KEY,                OBJECT_GI_ROOM_KEY,    GID_ROOM_KEY,             GETITEM_CQ_TEXT(GI_SHRINE_KEY),            0xA0, CHEST_ANIM_SHORT), // GI_SHRINE_KEY
+    GET_ITEM(ITEM_BOTTLE_POTION_SHIELD,      OBJECT_GI_LIQUID,      GID_BOTTLE_POTION_SHIELD, GETITEM_CQ_TEXT(GI_BOTTLE_POTION_SHIELD),  0x80, CHEST_ANIM_LONG),  // GI_BOTTLE_POTION_SHIELD
+	GET_ITEM(ITEM_BOOTS_PEGASUS,             OBJECT_GI_BOOTS_2,     GID_BOOTS_PEGASUS,        GETITEM_CQ_TEXT(GI_BOOTS_PEGASUS),         0x80, CHEST_ANIM_LONG),  // GI_BOOTS_PEGASUS
+	GET_ITEM(ITEM_PERFECT_BLOCK,             OBJECT_GI_TITLE_DEED,  GID_LAND_TITLE_DEED,      GETITEM_CQ_TEXT(GI_PERFECT_BLOCK),         0x80, CHEST_ANIM_LONG),  // GI_PERFECT_BLOCK
+	GET_ITEM(ITEM_BULLET_BAG_60,             OBJECT_GI_DEKUPOUCH,   GID_BULLET_BAG_50,        GETITEM_CQ_TEXT(GI_BULLET_BAG_60),         0x80, CHEST_ANIM_LONG),  // GI_BULLET_BAG_60
+	GET_ITEM(ITEM_QUIVER_60,                 OBJECT_GI_ARROWCASE,   GID_QUIVER_50,            GETITEM_CQ_TEXT(GI_QUIVER_60),             0x80, CHEST_ANIM_LONG),  // GI_QUIVER_60
+	GET_ITEM(ITEM_BOMB_BAG_50,               OBJECT_GI_BOMBPOUCH,   GID_BOMB_BAG_40,          GETITEM_CQ_TEXT(GI_BOMB_BAG_50),           0x80, CHEST_ANIM_LONG),  // GI_BOMB_BAG_50
+	GET_ITEM(ITEM_MASTER_WALLET,             OBJECT_GI_PURSE,       GID_WALLET_GIANT,         GETITEM_CQ_TEXT(GI_WALLET_MASTER),         0x80, CHEST_ANIM_LONG),  // GI_WALLET_MASTER
+	GET_ITEM(ITEM_ROYAL_WALLET,              OBJECT_GI_PURSE,       GID_WALLET_GIANT,         GETITEM_CQ_TEXT(GI_WALLET_ROYAL),          0x80, CHEST_ANIM_LONG),  // GI_WALLET_ROYAL
+	GET_ITEM(ITEM_TYCOON_WALLET,             OBJECT_GI_PURSE,       GID_WALLET_GIANT,         GETITEM_CQ_TEXT(GI_WALLET_TYCOON),         0x80, CHEST_ANIM_LONG),  // GI_WALLET_TYCOON
+	GET_ITEM(ITEM_BOTTOMLESS_WALLET,         OBJECT_GI_PURSE,       GID_WALLET_GIANT,         GETITEM_CQ_TEXT(GI_WALLET_BOTTOMLESS),     0x80, CHEST_ANIM_LONG),  // GI_WALLET_BOTTOMLESS
+	GET_ITEM(ITEM_SHIELD_DEKU_UPGRADE,       OBJECT_GI_SHIELD_1,    GID_SHIELD_DEKU,          GETITEM_CQ_TEXT(GI_SHIELD_DEKU_UPGRADE),   0x80, CHEST_ANIM_LONG),  // GI_SHIELD_DEKU_UPGRADE
+	GET_ITEM(ITEM_SHIELD_HYLIAN_UPGRADE,     OBJECT_GI_SHIELD_2,    GID_SHIELD_HYLIAN,        GETITEM_CQ_TEXT(GI_SHIELD_HYLIAN_UPGRADE), 0x80, CHEST_ANIM_LONG),  // GI_SHIELD_HYLIAN_UPGRADE
+	GET_ITEM(ITEM_SHIELD_MIRROR_UPGRADE,     OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM,     GETITEM_CQ_TEXT(GI_SHIELD_MIRROR_UPGRADE), 0x80, CHEST_ANIM_LONG),  // GI_SHIELD_MIRROR_UPGRADE
+	GET_ITEM(ITEM_SHIELD_HEROS_UPGRADE,      OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS,         GETITEM_CQ_TEXT(GI_SHIELD_HEROS_UPGRADE),  0x80, CHEST_ANIM_LONG),  // GI_SHIELD_HEROS_UPGRADE
+    GET_ITEM(ITEM_SWORD_BIGGORON,            OBJECT_GI_SWORD_3_MM,  GID_SWORD_SILVER,         GETITEM_CQ_TEXT(GI_SWORD_SILVER),          0x80, CHEST_ANIM_LONG),  // GI_SWORD_SILVER
+    GET_ITEM(ITEM_SWORD_BIGGORON,            OBJECT_GI_SWORD_3_MM,  GID_SWORD_GILDED,         GETITEM_CQ_TEXT(GI_SWORD_GILDED),          0x80, CHEST_ANIM_LONG),  // GI_SWORD_GILDED
+	GET_ITEM(ITEM_BROKEN_GORONS_SWORD,       OBJECT_GI_GOLD_DUST,   GID_GOLD_DUST,            GETITEM_CQ_TEXT(GI_GOLD_DUST),             0x80, CHEST_ANIM_LONG),  // GI_GOLD_DUST
+	GET_ITEM(ITEM_BOW,                       OBJECT_GI_HEROS_BOW,   GID_HEROS_BOW,            GETITEM_CQ_TEXT(GI_HEROS_BOW),             0x80, CHEST_ANIM_LONG),  // GI_HEROS_BOW
+	GET_ITEM(ITEM_STRENGTH_SILVER_GAUNTLETS, OBJECT_GI_BRACELET,    GID_POWER_BRACELET,       GETITEM_CQ_TEXT(GI_POWER_BRACELET),        0x80, CHEST_ANIM_LONG),  // GI_POWER_BRACELET
+	GET_ITEM(ITEM_STRENGTH_GOLD_GAUNTLETS,   OBJECT_GI_BRACELET,    GID_POWER_BRACELET,       GETITEM_CQ_TEXT(GI_POWER_BRACELETS),       0x80, CHEST_ANIM_LONG),  // GI_POWER_BRACELETS
+    GET_ITEM(ITEM_SHIELD_MIRROR,             OBJECT_GI_SHIELD_3_MM, GID_SHIELD_MIRROR_MM,     GETITEM_CQ_TEXT(GI_SHIELD_MIRROR_MM),      0x80, CHEST_ANIM_LONG),  // GI_SHIELD_MIRROR_MM
+	GET_ITEM(ITEM_HOOKSHOT,                  OBJECT_GI_HOOKSHOT_MM, GID_HOOKSHOT_MM,          0x36,                                      0x80, CHEST_ANIM_LONG),  // GI_HOOKSHOT_MM
+	GET_ITEM(ITEM_LONGSHOT,                  OBJECT_GI_HOOKSHOT_MM, GID_LONGSHOT_MM,          0x4F,                                      0x80, CHEST_ANIM_LONG),  // GI_LONGSHOT_MM
 };
 
 #define GET_PLAYER_ANIM(group, type) D_80853914[group * PLAYER_ANIMTYPE_MAX + type]
@@ -1227,6 +1204,7 @@ typedef enum FidgetType {
     /* 0x02 */ FIDGET_FREEZING,    // ROOM_ENV_FREEZING (same animations as FIDGET_COLD)
     /* 0x03 */ FIDGET_WARM,        // ROOM_ENV_WARM
     /* 0x04 */ FIDGET_HOT,         // ROOM_ENV_HOT (same animations as FIDGET_WARM)
+    /* 0x00 */ FIDGET_CURSED,      // ROOM_ENV_CURSED
     /* 0x05 */ FIDGET_STRETCH_1,   // ROOM_ENV_UNK_STRETCH_1
     /* 0x06 */ FIDGET_STRETCH_2,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
     /* 0x07 */ FIDGET_STRETCH_3,   // ROOM_ENV_UNK_STRETCH_1 (same animations as FIDGET_STRETCH_1)
@@ -1254,6 +1232,9 @@ static LinkAnimationHeader* sFidgetAnimations[][2] = {
 
     // FIDGET_HOT
     { &gPlayerAnim_link_normal_wait_typeB_20f, &gPlayerAnim_link_normal_waitF_typeB_20f },
+
+    // FIDGET_CURSED
+    { &gPlayerAnim_link_normal_wait_typeA_20f, &gPlayerAnim_link_normal_waitF_typeA_20f },
 
     // FIDGET_STRETCH_1
     { &gPlayerAnim_link_wait_typeD_20f, &gPlayerAnim_link_waitF_typeD_20f },
@@ -1381,6 +1362,8 @@ static u8 sFidgetAnimSfxTypes[] = {
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_WARM (sword/shield in hand)
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_HOT
     FIDGET_ANIMSFX_SWEAT,             // FIDGET_HOT (sword/shield in hand)
+    FIDGET_ANIMSFX_NONE,              // FIDGET_CURSED
+    FIDGET_ANIMSFX_NONE,              // FIDGET_CURSED (sword/shield in hand)
     FIDGET_ANIMSFX_STRETCH,           // FIDGET_STRETCH_1
     FIDGET_ANIMSFX_STRETCH,           // FIDGET_STRETCH_1 (sword/shield in hand)
     FIDGET_ANIMSFX_STRETCH,           // FIDGET_STRETCH_2
@@ -1468,29 +1451,29 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_KOKIRI,        // ITEM_SWORD_KOKIRI
     PLAYER_IA_SWORD_MASTER,        // ITEM_SWORD_MASTER
     PLAYER_IA_SWORD_BIGGORON,      // ITEM_SWORD_BIGGORON
+    PLAYER_IA_SWORD_HEROS,         // ITEM_SWORD_HEROS
     PLAYER_IA_NONE,                // ITEM_SHIELD_DEKU,
     PLAYER_IA_NONE,                // ITEM_SHIELD_HYLIAN,
     PLAYER_IA_NONE,                // ITEM_SHIELD_MIRROR,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS,
     PLAYER_IA_NONE,                // ITEM_TUNIC_KOKIRI,
     PLAYER_IA_NONE,                // ITEM_TUNIC_GORON,
     PLAYER_IA_NONE,                // ITEM_TUNIC_ZORA,
+    PLAYER_IA_NONE,                // ITEM_TUNIC_SPIRIT,
     PLAYER_IA_NONE,                // ITEM_BOOTS_KOKIRI,
     PLAYER_IA_NONE,                // ITEM_BOOTS_IRON,
     PLAYER_IA_NONE,                // ITEM_BOOTS_HOVER,
+    PLAYER_IA_NONE,                // ITEM_BOOTS_PEGASUS,
     PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
     PLAYER_IA_NONE,                // ITEM_ROCS_FEATHER
     PLAYER_IA_NONE,                // ITEM_GOLDEN_FEATHER
     PLAYER_IA_PICTOBOX,            // ITEM_PICTOBOX,
     PLAYER_IA_SHRINE_KEY,          // ITEM_SHRINE_KEY,
+    PLAYER_IA_NONE,                // ITEM_CQ_1,
+    PLAYER_IA_NONE,                // ITEM_CQ_2,
     PLAYER_IA_BOTTLE_POTION_SHIELD, // ITEM_BOTTLE_POTION_SHIELD,
     PLAYER_IA_NONE,                // ITEM_SHIELD_WOODEN,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS,
     PLAYER_IA_NONE,                // ITEM_SHIELD_METAL,
-    PLAYER_IA_NONE,                // ITEM_STRENGTH_GORONS_BRACELET,
-    PLAYER_IA_NONE,                // ITEM_STRENGTH_SILVER_GAUNTLETS,
-    PLAYER_IA_NONE,                // ITEM_STRENGTH_GOLD_GAUNTLETS,
-    PLAYER_IA_NONE,                // ITEM_SCALE_SILVER,
-    PLAYER_IA_NONE,                // ITEM_SCALE_GOLDEN,
     PLAYER_IA_NONE,                // ITEM_GIANTS_KNIFE,
     PLAYER_IA_NONE,                // ITEM_ADULTS_WALLET,
     PLAYER_IA_NONE,                // ITEM_GIANTS_WALLET,
@@ -1505,6 +1488,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_MASTER
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_KOKIRI
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_BIGGORON
+    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_HEROS
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_FAIRYS
     func_8083485C,                 // PLAYER_IA_DEKU_STICK
     func_8083485C,                 // PLAYER_IA_HAMMER
@@ -1579,6 +1563,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_MASTER
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_KOKIRI
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_BIGGORON
+    Player_InitDefaultIA,        // PLAYER_IA_SWORD_HEROS
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_FAIRYS
     Player_InitDekuStickIA,      // PLAYER_IA_DEKU_STICK
     Player_InitHammerIA,         // PLAYER_IA_HAMMER
@@ -2790,9 +2775,7 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
     if (equipType == EQUIP_TYPE_SWORD)
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 0;
 
-    if (equipType == EQUIP_TYPE_SHIELD && nextEquip == PLAYER_SHIELD_HEROS)
-        Inventory_ChangeEquipmentWithIcon(play, equipType, EQUIP_VALUE_SHIELD_HYLIAN);
-    else Inventory_ChangeEquipmentWithIcon(play, equipType, nextEquip);
+    Inventory_ChangeEquipmentWithIcon(play, equipType, nextEquip);
     Player_SetEquipmentData(play, this);
     Player_PlaySfx(this, NA_SE_PL_CHANGE_ARMS);
 
@@ -2812,7 +2795,7 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     static const SwordSwapEntry equipments[] = {
         { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
+        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    LINK_AGE_CHILD },
         { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
         { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
     };
@@ -2820,9 +2803,6 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     u8 current    = gSaveContext.save.info.equips.buttonItems[0];
     u8 validCount = 0;
     u8 validItems[ARRAY_COUNT(equipments)], validEquips[ARRAY_COUNT(equipments)], i, nextItem, nextEquip;
-
-    if (current == ITEM_SWORD_KOKIRI && IS_HEROS_SWORD)
-        current = ITEM_SWORD_HEROS;
 
     for (i=0; i<ARRAY_COUNT(equipments); i++) {
         const SwordSwapEntry* equipment = &equipments[i];
@@ -2851,13 +2831,6 @@ void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     if (current != nextItem) {
         if (nextItem == ITEM_SWORD_BIGGORON && !gSaveContext.save.info.playerData.swordHealth && LINK_IS_ADULT)
             nextItem = ITEM_GIANTS_KNIFE;
-        else if (nextItem == ITEM_SWORD_HEROS) {
-            SET_HEROS_SWORD;
-            nextItem = ITEM_SWORD_KOKIRI;
-        }
-        else if (nextItem == ITEM_SWORD_KOKIRI)
-            CLEAR_HEROS_SWORD;
-
         gSaveContext.save.info.equips.buttonItems[0] = nextItem;
         Interface_LoadItemIcon1(play, 0);
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SWORD, nextEquip);
@@ -2881,7 +2854,7 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
 
         if ( (equipment->requiredAge != gSaveContext.save.linkAge && equipment->requiredAge <= LINK_AGE_CHILD) && !IS_CHILD_QUEST_AS_CHILD)
             continue;
-        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken)
+        if (SHIELD_DURABILITY && equipment->itemId == PLAYER_SHIELD_MIRROR && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN))
             continue;
 
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, equipment->equipId)) {
@@ -2900,13 +2873,8 @@ void Player_ChangeShield(Player* this, PlayState* play, s32 button) {
         }
 
     nextItem = validItems[i % validCount];
-    if (current != nextItem) {
-        if (nextItem == PLAYER_SHIELD_HEROS)
-            SET_HEROS_SHIELD;
-        else if (nextItem == PLAYER_SHIELD_HYLIAN)
-            CLEAR_HEROS_SHIELD;
+    if (current != nextItem)
         Player_ChangeEquipment(this, play, button, EQUIP_TYPE_SHIELD, nextItem);
-    }
 }
 
 void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
@@ -2914,6 +2882,7 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
         { PLAYER_TUNIC_KOKIRI, EQUIP_INV_TUNIC_KOKIRI, 9              },
         { PLAYER_TUNIC_GORON,  EQUIP_INV_TUNIC_GORON,  LINK_AGE_ADULT },
         { PLAYER_TUNIC_ZORA,   EQUIP_INV_TUNIC_ZORA,   LINK_AGE_ADULT },
+        { PLAYER_TUNIC_SPIRIT, EQUIP_INV_TUNIC_SPIRIT, LINK_AGE_CHILD },
     };
 
     u8 current    = this->currentTunic;
@@ -2948,9 +2917,10 @@ void Player_ChangeTunic(Player* this, PlayState* play, s32 button) {
 
 void Player_ChangeBoots(Player* this, PlayState* play, u8 button) {
     static const EquipmentSwapEntry equipments[] = {
-        { PLAYER_BOOTS_KOKIRI, EQUIP_INV_BOOTS_KOKIRI, 9              },
-        { PLAYER_BOOTS_IRON,   EQUIP_INV_BOOTS_IRON,   LINK_AGE_ADULT },
-        { PLAYER_BOOTS_HOVER,  EQUIP_INV_BOOTS_HOVER,  LINK_AGE_ADULT },
+        { PLAYER_BOOTS_KOKIRI,  EQUIP_INV_BOOTS_KOKIRI, 9              },
+        { PLAYER_BOOTS_IRON,    EQUIP_INV_BOOTS_IRON,    LINK_AGE_ADULT },
+        { PLAYER_BOOTS_HOVER,   EQUIP_INV_BOOTS_HOVER,   LINK_AGE_ADULT },
+        { PLAYER_BOOTS_PEGASUS, EQUIP_INV_BOOTS_PEGASUS, LINK_AGE_CHILD },
     };
 
     u8 current    = BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
@@ -3001,9 +2971,9 @@ typedef struct {
 
 static u8 ArrowIsObtained(const ItemID item) {
     switch (item) {
-        case ITEM_ARROW_FIRE:  return gSaveContext.save.info.obtainedItems.fireArrow  ? true : false;
-        case ITEM_ARROW_ICE:   return gSaveContext.save.info.obtainedItems.iceArrow   ? true : false;
-        case ITEM_ARROW_LIGHT: return gSaveContext.save.info.obtainedItems.lightArrow ? true : false;
+        case ITEM_ARROW_FIRE:  return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_FIRE)  ? true : false;
+        case ITEM_ARROW_ICE:   return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_ICE)   ? true : false;
+        case ITEM_ARROW_LIGHT: return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_LIGHT) ? true : false;
         default:               return true;
     }
 }
@@ -3224,9 +3194,9 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             Player_ChangeTunic(this, play, i);
         else if (item == ITEM_BOOTS)
             Player_ChangeBoots(this, play, i);
-        else if (item == ITEM_TUNIC_GORON) {
-            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_GORON)) {
-                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 1 ? 0 : 1);
+        else if (item >= ITEM_TUNIC_GORON && item <= ITEM_TUNIC_SPIRIT) {
+            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI)) {
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == item - ITEM_TUNIC_KOKIRI ? 0 : item - ITEM_TUNIC_KOKIRI);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3234,29 +3204,9 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                         Interface_LoadItemIcon1(play, i);
                 }
             }
-        } else if (item == ITEM_TUNIC_ZORA) {
-            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_ZORA)) {
-                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_TUNIC, TUNIC_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC)) == 2 ? 0 : 2);
-                for (i=0; i<4; i++) {
-                    if (Interface_GetItemFromDpad(i) == ITEM_TUNICS)
-                        Interface_LoadItemIcon1(play, i+4);
-                    if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_TUNICS)
-                        Interface_LoadItemIcon1(play, i);
-                }
-            }
-        } else if (item == ITEM_BOOTS_IRON) {
-            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON)) {
-                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_BOOTS, BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS)) == 1 ? 0 : 1);
-                for (i=0; i<4; i++) {
-                    if (Interface_GetItemFromDpad(i) == ITEM_BOOTS)
-                        Interface_LoadItemIcon1(play, i+4);
-                    if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_BOOTS)
-                        Interface_LoadItemIcon1(play, i);
-                }
-            }
-        } else if (item == ITEM_BOOTS_HOVER) {
-            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER)) {
-                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_BOOTS, BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS)) == 2 ? 0 : 2);
+        } else if (item >= ITEM_BOOTS_IRON && item <= ITEM_BOOTS_PEGASUS) {
+            if (CHECK_OWNED_EQUIP(EQUIP_TYPE_BOOTS, item - ITEM_BOOTS_KOKIRI)) {
+                Player_ChangeEquipment(this, play, i, EQUIP_TYPE_BOOTS, BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS)) == item - ITEM_BOOTS_KOKIRI ? 0 : item - ITEM_BOOTS_KOKIRI);
                 for (i=0; i<4; i++) {
                     if (Interface_GetItemFromDpad(i) == ITEM_BOOTS)
                         Interface_LoadItemIcon1(play, i+4);
@@ -3265,8 +3215,8 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 }
             }
         } else if (item >= ITEM_ROCS_FEATHER && item <= ITEM_GOLDEN_FEATHER && this->featherUseCount < MAX_FEATHER_USES) {
-            u8 energyCost = (item == ITEM_ROCS_FEATHER ? 15 : 10) - (gSaveContext.save.info.obtainedItems.amuletOfEnergy * 5);
-            if ((((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->speedXZ <= 0.2f) || item == ITEM_GOLDEN_FEATHER) && gSaveContext.save.info.energy >= energyCost) {
+            u8 energyCost = (item == ITEM_ROCS_FEATHER ? 15 : 10) - (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) ? 5 : 0);
+            if (((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) || item == ITEM_GOLDEN_FEATHER) && gSaveContext.save.info.energy >= energyCost) {
                 Vec3f effectsPos = this->actor.home.pos;
                 this->featherUseCount++;
                 func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, 7.15f, play, NA_SE_VO_LI_SWORD_N);
@@ -3537,7 +3487,7 @@ s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play) {
     if (LinkAnimation_Update(play, &this->upperSkelAnime) ||
         ((Player_ItemToItemAction(this->heldItemId) == this->heldItemAction) &&
          (sUseHeldItem =
-              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && this->heldItemAction <= PLAYER_IA_SWORD_BIGGORON)))))) {
+              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && this->heldItemAction <= PLAYER_IA_SWORD_HEROS)))))) {
         Player_SetUpperActionFunc(this, sItemActionUpdateFuncs[this->heldItemAction]);
         this->unk_834 = 0;
         this->idleType = PLAYER_IDLE_DEFAULT;
@@ -5155,7 +5105,7 @@ void func_80837918(Player* this, s32 quadIndex, u32 dmgFlags) {
 }
 
 static u32 D_80854488[][2] = {
-    { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT },
+    { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI },
     { DMG_SLASH_GIANT, DMG_JUMP_GIANT },   { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP },
 };
 
@@ -5499,9 +5449,9 @@ void Player_CheckShieldDurability(Player* this, PlayState* play) {
         ShieldDurability* shield = &gSaveContext.save.info.shields[this->currentShield - 1];
         shieldDamageTimer = SECONDS(0.5);
 
-        if (Player_PerfectTime > 0 && (SHIELD_DURABILITY || gSaveContext.save.info.obtainedSkills.perfectBlockBoost)) {
+        if (Player_PerfectTime > 0 && (SHIELD_DURABILITY || CHECK_UPGRADE_ITEM(UPGRADE_PERFECT_BLOCK))) {
             Player_PlaySfx(this, NA_SE_IT_EXPLOSION_LIGHT);
-            if (gSaveContext.save.info.obtainedSkills.perfectBlockBoost)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_PERFECT_BLOCK))
                 R_PERFECT_BLOCK_BOOST_TIMER = SECONDS(3);
             this->shieldDamage = 0;
             return;
@@ -5516,7 +5466,7 @@ void Player_CheckShieldDurability(Player* this, PlayState* play) {
                 if (this->currentShield == PLAYER_SHIELD_MIRROR) {
                     Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, EQUIP_VALUE_SHIELD_NONE);
                     Player_SetEquipmentData(play, this);
-                    gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = true;
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
                 }
                 else Inventory_DeleteEquipment(play, EQUIP_TYPE_SHIELD);
                     Message_StartTextbox(play, 0x305F, NULL);
@@ -5679,6 +5629,10 @@ s32 func_808382DC(Player* this, PlayState* play) {
                     this->floorTypeTimer = 0;
                     this->actor.colChkInfo.damage = 4;
                     func_80837C0C(play, this, PLAYER_HIT_RESPONSE_NONE, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
+                } else if (this->floorTypeTimer >= SECONDS(5) && this->currentTunic != PLAYER_TUNIC_SPIRIT && Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_CURSEDROOM) {
+                    this->floorTypeTimer = 0;
+                    this->actor.colChkInfo.damage = 8;
+                    func_80837C0C(play, this, PLAYER_HIT_RESPONSE_NONE, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
                 } else if (Player_GetEnvironmentalHazard(play) < PLAYER_ENV_HAZARD_SWIMMING)
                     this->swimmingInPoisonWater = false;
 
@@ -5701,6 +5655,13 @@ s32 func_808382DC(Player* this, PlayState* play) {
     return 1;
 }
 
+void Player_QuitDashing(Player* this) {
+    if (R_IS_DASHING) {
+        R_IS_DASHING = false;
+        this->meleeWeaponState = 0;
+    }
+}
+
 void func_80838940(Player* this, LinkAnimationHeader* anim, f32 arg2, PlayState* play, u16 sfxId) {
     Player_SetupAction(play, this, Player_Action_8084411C, 1);
 
@@ -5714,6 +5675,7 @@ void func_80838940(Player* this, LinkAnimationHeader* anim, f32 arg2, PlayState*
 
     Player_PlayJumpingSfx(this);
     Player_PlayVoiceSfx(this, sfxId);
+    Player_QuitDashing(this);
 
     this->stateFlags1 |= PLAYER_STATE1_18;
 }
@@ -7440,7 +7402,7 @@ void func_8083C148(Player* this, PlayState* play) {
  * even if they occur.
  */
 s32 Player_ActionHandler_Roll(Player* this, PlayState* play) {
-    if (!Player_UpdateHostileLockOn(this) && !sUpperBodyIsBusy && !(this->stateFlags1 & PLAYER_STATE1_23) &&
+    if (!Player_UpdateHostileLockOn(this) && !sUpperBodyIsBusy && !R_IS_DASHING && !(this->stateFlags1 & PLAYER_STATE1_23) &&
         CHECK_BTN_ALL(sControlInput->press.button, BTN_A)) {
         if (Player_TryRoll(this, play)) {
             return true;
@@ -8132,7 +8094,7 @@ void func_8083DF68(Player* this, f32 arg1, s16 arg2) {
 void func_8083DFE0(Player* this, f32* arg1, s16* arg2) {
     s16 yawDiff = this->yaw - *arg2;
 
-    if (this->meleeWeaponState == 0 && !(gSaveContext.save.info.obtainedSkills.furtherJump && (this->currentBoots == PLAYER_BOOTS_KOKIRI || this->currentBoots == PLAYER_BOOTS_KOKIRI_CHILD))) {
+    if (this->meleeWeaponState == 0 && this->currentBoots != PLAYER_BOOTS_PEGASUS) {
         this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
     }
 
@@ -9290,6 +9252,11 @@ void Player_Action_Idle(Player* this, PlayState* play) {
     Player_DecelerateToZero(this);
 
     if (this->av2.fallDamageStunTimer == 0) {
+        if (!R_IS_DASHING && play->interfaceCtx.unk_1F0 == DO_ACTION_DASH && this->currentBoots == PLAYER_BOOTS_PEGASUS && CHECK_BTN_ALL(sControlInput->cur.button, BTN_A) && gSaveContext.save.info.energy > 0) {
+            Player_Action_StartDashCharge(play, this);
+            return;
+        }
+
         if (!Player_TryActionHandlerList(play, this, sActionHandlerListIdle, true)) {
             if (Player_UpdateHostileLockOn(this)) {
                 func_8083CEAC(this, play);
@@ -9305,6 +9272,11 @@ void Player_Action_Idle(Player* this, PlayState* play) {
 
             if (speedTarget != 0.0f) {
                 func_8083C8DC(this, play, yawTarget);
+                return;
+            }
+
+            if (R_IS_DASHING) {
+                func_8083C8DC(this, play, this->actor.shape.rot.y);
                 return;
             }
 
@@ -9775,6 +9747,58 @@ void Player_Action_80842180(Player* this, PlayState* play) {
     this->stateFlags2 |= PLAYER_STATE2_5;
     func_80841EE4(this, play);
 
+    if (!R_IS_DASHING && play->interfaceCtx.unk_1F0 == DO_ACTION_DASH && this->currentBoots == PLAYER_BOOTS_PEGASUS && CHECK_BTN_ALL(sControlInput->cur.button, BTN_A) && gSaveContext.save.info.energy > 10) {
+        Player_Action_StartDashCharge(play, this);
+        return;
+    } else if (!CHECK_BTN_ALL(sControlInput->cur.button, BTN_A) || gSaveContext.save.info.energy == 0)
+        Player_QuitDashing(this);
+
+    if (R_IS_DASHING) {
+        if (this->speedXZ >= 7.0f && (this->actor.bgCheckFlags & BGCHECKFLAG_PLAYER_WALL_INTERACT) && sWorldYawToTouchedWall < 0x2000) {
+            Player_QuitDashing(this);
+
+            if (this->doorType == PLAYER_DOORTYPE_STAIRCASE) {
+                func_80853080(this, play);
+                return;
+            }
+
+            if (this->actor.wallBgId != BGCHECK_SCENE) {
+                DynaPolyActor* wallPolyActor = DynaPoly_GetActor(&play->colCtx, this->actor.wallBgId);
+
+                if ((wallPolyActor != NULL) &&
+                    ((wallPolyActor->actor.id == ACTOR_OBJ_KIBAKO2) || (wallPolyActor->actor.id == ACTOR_OBJ_KIBAKO3))) {
+                    wallPolyActor->actor.home.rot.z = 1;
+                }
+            }
+
+            Player_SetupAction(play, this, Player_Action_DashBonk, 0);
+            Player_AnimPlayOnce(play, this, GET_PLAYER_ANIM(PLAYER_ANIMGROUP_hip_down, this->modelAnimType));
+            this->speedXZ = -this->speedXZ;
+            Player_RequestQuake(play, 33267, 3, 12);
+            Player_RequestRumble(this, 255, 20, 150, 0);
+            Player_PlaySfx(this, NA_SE_PL_BODY_HIT);
+            Player_PlayVoiceSfx(this, NA_SE_VO_LI_CLIMB_END);
+            return;
+        }
+        
+        if ((play->gameplayFrames & 1) == 0)
+            Player_Action_SpawnDashDust(play, this, 1);
+
+        if (Player_GetMeleeWeaponHeld(this) != 0) {
+            AnimTaskQueue_AddLoadPlayerFrame(play, &gPlayerAnim_link_fighter_Lpierce_kiru, 2, this->skelAnime.limbCount, this->upperJointTable);
+            AnimTaskQueue_AddCopy(play, PLAYER_LIMB_MAX - PLAYER_LIMB_UPPER, &this->skelAnime.jointTable[PLAYER_LIMB_UPPER], &this->upperJointTable[PLAYER_LIMB_UPPER]);
+
+            this->meleeWeaponState = 1;
+            this->stateFlags2 |= PLAYER_STATE2_17;
+
+            if ((this->meleeWeaponQuads[0].base.atFlags & AT_HIT) || (this->meleeWeaponQuads[1].base.atFlags & AT_HIT)) {
+                func_80842CF0(play, this);
+                Player_PlaySfx(this, NA_SE_IT_SWORD_STRIKE);
+            }
+        } else this->meleeWeaponState = 0;
+        Actor_PlaySfx_Flagged2(&this->actor, NA_SE_PL_MAGIC_WIND_NORMAL - SFX_FLAG);
+    }
+
     if (!Player_TryActionHandlerList(play, this, sActionHandlerList8, true)) {
         if (Player_IsZTargetingWithHostileUpdate(this)) {
             func_8083C858(this, play);
@@ -9782,6 +9806,17 @@ void Player_Action_80842180(Player* this, PlayState* play) {
         }
 
         Player_GetMovementSpeedAndYaw(this, &speedTarget, &yawTarget, SPEED_MODE_CURVED, play);
+
+        if (R_IS_DASHING) { // Hold A to dash at the cost of energy, will keep dashing until A is released
+            if (sControlStickMagnitude > 0.0f && ABS(this->yaw - yawTarget) > 0x4000)
+                Player_QuitDashing(this);
+            else {
+                speedTarget = CLAMP_MIN(speedTarget, 6.0f);
+                speedTarget *= 2.0f;
+                if (sControlStickMagnitude == 0.0f)
+                    yawTarget = this->yaw;
+            }
+        }
 
         if (this->currentMask == PLAYER_MASK_BUNNY) {
             speedTarget *= 1.5f;
@@ -9795,7 +9830,85 @@ void Player_Action_80842180(Player* this, PlayState* play) {
                 func_8083C0B8(this, play);
             }
         }
+    } else Player_QuitDashing(this);
+}
+
+void Player_Action_DashBonk(Player* this, PlayState* play) {
+    this->stateFlags2 |= PLAYER_STATE2_5;
+    Math_StepToF(&this->speedXZ, 0.0f, 2.0f);
+    if (LinkAnimation_Update(play, &this->skelAnime))
+        func_8083A060(this, play);
+}
+
+void Player_Action_StartDashCharge(PlayState* play, Player* this) {
+    Player_SetupAction(play, this, Player_Action_DashCharge, 1);
+    Player_AnimPlayLoop(play, this, D_80854360[Player_HoldsTwoHandedWeapon(this)]);
+    Audio_PlaySwordChargeSfx(&this->actor.projectedPos, 1);
+}
+
+void Player_Action_DashCharge(Player* this, PlayState* play) {
+    f32 speedTarget;
+    s16 yawTarget;
+
+    this->stateFlags2 |= PLAYER_STATE2_5;
+
+    if ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && CHECK_BTN_ALL(sControlInput->cur.button, BTN_A) &&
+        (gSaveContext.save.info.energy > 0)) {
+        this->av2.actionVar2++;
+
+        Audio_PlaySwordChargeSfx(&this->actor.projectedPos, 1);
+        LinkAnimation_Update(play, &this->skelAnime);
+        Player_DecelerateToZero(this);
+
+        Player_GetMovementSpeedAndYaw(this, &speedTarget, &yawTarget, SPEED_MODE_CURVED, play);
+        Math_ScaledStepToS(&this->actor.shape.rot.y, yawTarget, 1200);
+        this->yaw = this->actor.shape.rot.y;
+
+        if ((play->gameplayFrames & 7) == 0)
+            Player_Action_SpawnDashDust(play, this, 0);
+
+        if (this->av2.actionVar2 >= SECONDS(1)) {
+            Audio_PlaySwordChargeSfx(&this->actor.projectedPos, 0);
+            R_IS_DASHING = true;
+
+            if (Player_GetMeleeWeaponHeld(this) != 0) {
+                s32 temp = Player_HoldsBrokenKnife(this) ? 1 : Player_GetMeleeWeaponHeld(this) - 1;
+
+                this->meleeWeaponAnimation = PLAYER_MWA_BIG_SPIN_1H;
+                func_80837918(this, 0, D_80854488[temp][0]);
+                func_80837918(this, 1, D_80854488[temp][0]);
+            }
+
+            func_8083C858(this, play);
+        }
+    } else {
+        Audio_PlaySwordChargeSfx(&this->actor.projectedPos, 0);
+        func_80839F90(this, play);
     }
+}
+
+void Player_Action_SpawnDashDust(PlayState* play, Player* this, s32 dashMode) {
+    Vec3f velocity;
+    Vec3f accel = { 0.0f, 0.0f, 0.0f };
+    Vec3f* pos = &this->bodyPartsPos[(play->gameplayFrames & 1) ? PLAYER_BODYPART_L_FOOT : PLAYER_BODYPART_R_FOOT];
+    s16 scale;
+    s16 life;
+
+    if (dashMode) {
+        velocity.x = (-Math_SinS(this->actor.shape.rot.y) * (2.0f + (Rand_ZeroOne() * 3.0f))) + Rand_Centered();
+        velocity.z = (-Math_CosS(this->actor.shape.rot.y) * (2.0f + (Rand_ZeroOne() * 3.0f))) + Rand_Centered();
+        velocity.y = 2.0f + (Rand_ZeroOne() * 2.0f);
+        scale = 110 + (s16)(Rand_ZeroOne() * 90.0f);
+        life = 16;
+    } else {
+        velocity.x = Rand_Centered() * 3.0f;
+        velocity.z = Rand_Centered() * 3.0f;
+        velocity.y = 1.0f + (Rand_ZeroOne() * 1.5f);
+        scale = 60 + (s16)(Rand_ZeroOne() * 60.0f);
+        life = 10;
+    }
+
+    func_800287AC(play, pos, &velocity, &accel, scale, 5, life);
 }
 
 void Player_Action_8084227C(Player* this, PlayState* play) {
@@ -10590,15 +10703,16 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
             if (this->actor.velocity.y < 0.0f) {
                 if (this->av2.actionVar2 >= 0) {
                     // Do not change the animation if it's newside_jump and Link hasn't touched the ground
-                    if (((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || (this->av2.actionVar2 == 0) ||
-                        (this->fallDistance > 0)) && this->skelAnime.animation != &gPlayerAnim_link_normal_newside_jump_20f) {
-                        if ((sYDistToFloor > 800.0f) || (this->stateFlags1 & PLAYER_STATE1_2)) {
-                            func_80843E14(this, NA_SE_VO_LI_FALL_S);
-                            this->stateFlags1 &= ~PLAYER_STATE1_2;
-                        }
+                    if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || (this->av2.actionVar2 == 0) ||
+                        (this->fallDistance > 0)) {
+                        if (this->skelAnime.animation != &gPlayerAnim_link_normal_newside_jump_20f) {
+                            if ((sYDistToFloor > 800.0f) || (this->stateFlags1 & PLAYER_STATE1_2)) {
+                                func_80843E14(this, NA_SE_VO_LI_FALL_S);
+                                this->stateFlags1 &= ~PLAYER_STATE1_2;
+                            }
 
-                        LinkAnimation_Change(play, &this->skelAnime, &gPlayerAnim_link_normal_landing, 1.0f, 0.0f, 0.0f,
-                                             ANIMMODE_ONCE, 8.0f);
+                            LinkAnimation_Change(play, &this->skelAnime, &gPlayerAnim_link_normal_landing, 1.0f, 0.0f, 0.0f, ANIMMODE_ONCE, 8.0f);
+                        }
                         this->av2.actionVar2 = -1;
                     }
                 } else {
@@ -12050,7 +12164,7 @@ static f32 D_80854784[] = { 120.0f, 240.0f, 360.0f };
  *     - Navi C-up icon for hints
  */
 void Player_UpdateInterface(PlayState* play, Player* this) {
-    if ((Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) && (this->actor.category == ACTORCAT_PLAYER)) {
+    if (((Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) || ((play->msgCtx.msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND) && (play->msgCtx.msgMode <= MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND))) && (this->actor.category == ACTORCAT_PLAYER)) {
         Actor* heldActor = this->heldActor;
         Actor* interactRangeActor = this->interactRangeActor;
         s32 sp24;
@@ -12138,7 +12252,7 @@ void Player_UpdateInterface(PlayState* play, Player* this) {
                                                             ((play->roomCtx.curRoom.type != ROOM_TYPE_INDOORS) &&
                                                              !(this->stateFlags1 & PLAYER_STATE1_SHIELDING) &&
                                                              (controlStickDirection == PLAYER_STICK_DIR_FORWARD))))))) {
-                        doAction = DO_ACTION_ATTACK;
+                        doAction = this->currentBoots == PLAYER_BOOTS_PEGASUS ? DO_ACTION_DASH : DO_ACTION_ATTACK;
                     } else if ((play->roomCtx.curRoom.type != ROOM_TYPE_INDOORS) && Player_IsZTargeting(this) &&
                                (controlStickDirection >= PLAYER_STICK_DIR_LEFT)) {
                         doAction = DO_ACTION_JUMP;
@@ -12159,6 +12273,9 @@ void Player_UpdateInterface(PlayState* play, Player* this) {
             doAction = DO_ACTION_NONE;
             this->putAwayCooldownTimer--;
         }
+
+        if (R_IS_DASHING)
+            doAction = DO_ACTION_DASH;
 
         Interface_SetDoAction(play, doAction);
 
@@ -12910,14 +13027,14 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
     if (SHIELD_DURABILITY) {
         // Restore Mirror Shield
         if (!(this->stateFlags1 & (PLAYER_STATE1_DEAD | PLAYER_STATE1_29)) && Message_GetState(&play->msgCtx) == TEXT_STATE_NONE) {
-            if ( (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR) && this->currentShield == PLAYER_SHIELD_MIRROR) || gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
+            if ( (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability < Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR) && this->currentShield == PLAYER_SHIELD_MIRROR) || CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN)) {
                 if (mirrorShieldRestoreTimer < SECONDS(2))
                     mirrorShieldRestoreTimer++;
                 else {
                     mirrorShieldRestoreTimer = 0;
                     gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability++;
-                    if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability >= 60 && gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken) {
-                        gSaveContext.save.info.obtainedItems.mirrorShieldIsBroken = false;
+                    if (gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability >= 60 && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN)) {
+                        gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
                         Message_StartTextbox(play, 0x9400, NULL);
                         gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
                     }
@@ -13182,6 +13299,9 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
 
         if (!Player_InBlockingCsMode(play, this) && !(this->stateFlags2 & PLAYER_STATE2_CRAWLING)) {
             func_8083D53C(play, this);
+
+            if ((this->stateFlags1 & PLAYER_STATE1_27) || !(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
+                Player_QuitDashing(this);
 
             if ((this->actor.category == ACTORCAT_PLAYER) && (gSaveContext.save.info.playerData.health == 0)) {
                 if (this->stateFlags1 & (PLAYER_STATE1_13 | PLAYER_STATE1_14 | PLAYER_STATE1_21)) {
@@ -13517,6 +13637,16 @@ void Player_DrawGameplay(PlayState* play, Player* this, s32 lod, Gfx* cullDList,
             gDPSetEnvColor(POLY_XLU_DISP++, 120, 90, 30, 128);
             gSPDisplayList(POLY_XLU_DISP++, gHoverBootsCircleDL);
         }
+    }
+
+    if (R_IS_DASHING) {
+        Matrix_Translate(this->actor.world.pos.x + (Math_SinS(this->actor.shape.rot.y) * 80.0f), this->actor.world.pos.y + 40.0f, this->actor.world.pos.z + (Math_CosS(this->actor.shape.rot.y) * 80.0f), MTXMODE_NEW);
+        Matrix_RotateY(BINANG_TO_RAD(this->actor.shape.rot.y), MTXMODE_APPLY);
+        Matrix_RotateX(BINANG_TO_RAD((s16)-0x4000), MTXMODE_APPLY);
+        Matrix_Scale(0.015f, 0.015f, 0.015f, MTXMODE_APPLY);
+        MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_player.c", 19326);
+        gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(s32)(play->gameplayFrames * 1), (s32)(play->gameplayFrames * 20), 0x40, 0x40, 1, -(s32)(play->gameplayFrames * 2), (s32)(play->gameplayFrames * 10), 0x40, 0x40));
+        gSPDisplayList(POLY_XLU_DISP++, sDashWindConeDL);
     }
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_player.c", 19328);
@@ -15072,6 +15202,12 @@ static s16 sWarpSongEntrances[] = {
     ENTR_DESERT_COLOSSUS_5,
     ENTR_GRAVEYARD_7,
     ENTR_TEMPLE_OF_TIME_7,
+    ENTR_ANCIENT_GROVE_3,
+    ENTR_GORON_VILLAGE_4,
+    ENTR_SPRING_LAKE_5,
+    ENTR_PATH_TO_FORTRESS_4,
+    ENTR_FORSAKEN_KINGDOM_10,
+    ENTR_TEMPLE_OF_TIME_7,
 };
 
 void Player_Action_8084E3C4(Player* this, PlayState* play) {
@@ -15106,9 +15242,11 @@ void Player_Action_8084E3C4(Player* this, PlayState* play) {
         this->stateFlags2 &= ~(PLAYER_STATE2_23 | PLAYER_STATE2_24 | PLAYER_STATE2_25);
         this->unk_6A8 = NULL;
     } else if (play->msgCtx.ocarinaMode == OCARINA_MODE_02) {
-        s32 pad;
+        s32 warpIndex = play->msgCtx.lastPlayedSong;
+        if (CHECK_UPGRADE_ITEM(warpIndex) && play->msgCtx.choiceIndex == 1)
+            warpIndex += 6;
 
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].entranceIndex = sWarpSongEntrances[play->msgCtx.lastPlayedSong];
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].entranceIndex = sWarpSongEntrances[warpIndex];
         gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams =
             PLAYER_PARAMS(PLAYER_START_MODE_WARP_SONG, PLAYER_START_BG_CAM_DEFAULT);
         gSaveContext.respawn[RESPAWN_MODE_RETURN].data = play->msgCtx.lastPlayedSong;
@@ -15940,7 +16078,7 @@ s32 Player_ActionHandler_7(Player* this, PlayState* play) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 func_80837530(play, this, 0);
                 return 1;
-            } else if (HAS_HEROS_SWORD && this->itemAction == PLAYER_IA_SWORD_KOKIRI) {
+            } else if (this->itemAction == PLAYER_IA_SWORD_HEROS) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 Player_SwordBeam(play, this, 0);
             }

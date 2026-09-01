@@ -1,5 +1,6 @@
 #include "z_kaleido_scope.h"
 
+#include "controller.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "language_array.h"
@@ -62,6 +63,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
     static u16 mapBgPulseStage = 0;
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     PauseContext* pauseCtx = &play->pauseCtx;
+    Input* input = &play->state.input[0];
     s16 i;
     s16 j;
     s16 oldCursorPoint;
@@ -77,7 +79,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
         pauseCtx->cursorColorSet = 0;
         oldCursorPoint = pauseCtx->cursorPoint[PAUSE_MAP];
 
-        if (pauseCtx->cursorSpecialPos == 0) {
+        if (pauseCtx->cursorSpecialPos == 0 && !pauseCtx->itemDescriptionOn) {
             if (pauseCtx->stickAdjX > 30) {
                 if (pauseCtx->cursorX[PAUSE_MAP] != 0) {
                     KaleidoScope_MoveCursorToSpecialPos(play, PAUSE_CURSOR_PAGE_RIGHT);
@@ -165,7 +167,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
                 }
             }
         } else if (pauseCtx->cursorSpecialPos == PAUSE_CURSOR_PAGE_LEFT) {
-            if (pauseCtx->stickAdjX > 30) {
+            if (pauseCtx->stickAdjX > 30 && !pauseCtx->itemDescriptionOn) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
                 pauseCtx->cursorSlot[PAUSE_MAP] = pauseCtx->cursorPoint[PAUSE_MAP] = pauseCtx->dungeonMapSlot;
@@ -175,7 +177,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
                 SFX_PLAY_CENTERED(NA_SE_SY_CURSOR);
             }
         } else {
-            if (pauseCtx->stickAdjX < -30) {
+            if (pauseCtx->stickAdjX < -30 && !pauseCtx->itemDescriptionOn) {
                 pauseCtx->nameDisplayTimer = 0;
                 pauseCtx->cursorSpecialPos = 0;
                 pauseCtx->cursorX[PAUSE_MAP] = 1;
@@ -213,6 +215,8 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
 
     if (pauseCtx->cursorSpecialPos == 0) {
         if (pauseCtx->cursorPoint[PAUSE_MAP] < 3) {
+            if (CHECK_BTN_ALL(input->press.button, BTN_A) && pauseCtx->pageIndex == PAUSE_MAP && !pauseCtx->itemDescriptionOn) // Give description on item through a message box
+                Message_PauseMenu_ShowDescription(play, 0x0900 + pauseCtx->cursorItem[PAUSE_MAP], 3);
             pauseCtx->cursorItem[PAUSE_MAP] = ITEM_DUNGEON_BOSS_KEY + pauseCtx->cursorPoint[PAUSE_MAP];
         } else {
             pauseCtx->cursorItem[PAUSE_MAP] = PAUSE_ITEM_NONE;
@@ -450,6 +454,15 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         -17,  // WORLD_MAP_AREA_LON_LON_RANCH
         37,   // WORLD_MAP_AREA_QUESTION_MARK
         -6,   // WORLD_MAP_AREA_GANONS_CASTLE
+        50,   // WORLD_MAP_AREA_ANCIENT_GROVE
+        50,   // WORLD_MAP_AREA_FORBIDDEN_WOODS
+        -49,  // WORLD_MAP_AREA_FORSAKEN_KINGDOM
+        -49,  // WORLD_MAP_AREA_GLOOMY_GRAVEYARD
+        -49,  // WORLD_MAP_AREA_GORON_SHRINE
+        -49,  // WORLD_MAP_AREA_GORON_VILLAGE
+        50,   // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
+        -49,  // WORLD_MAP_AREA_SPRING_LAKE
+        50,   // WORLD_MAP_AREA_WOODFALL
     };
     static s16 areaBoxWidths[] = {
         96, // WORLD_MAP_AREA_HYRULE_FIELD
@@ -474,6 +487,15 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         32, // WORLD_MAP_AREA_LON_LON_RANCH
         16, // WORLD_MAP_AREA_QUESTION_MARK
         32, // WORLD_MAP_AREA_GANONS_CASTLE
+        32, // WORLD_MAP_AREA_ANCIENT_GROVE
+        32, // WORLD_MAP_AREA_FORBIDDEN_WOODS
+        32, // WORLD_MAP_AREA_FORSAKEN_KINGDOM
+        32, // WORLD_MAP_AREA_GLOOMY_GRAVEYARD
+        32, // WORLD_MAP_AREA_GORON_SHRINE
+        32, // WORLD_MAP_AREA_GORON_VILLAGE
+        32, // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
+        32, // WORLD_MAP_AREA_SPRING_LAKE
+        32, // WORLD_MAP_AREA_WOODFALL
     };
     static s16 areaBoxPosY[] = {
         30,  // WORLD_MAP_AREA_HYRULE_FIELD
@@ -498,6 +520,15 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         12,  // WORLD_MAP_AREA_LON_LON_RANCH
         36,  // WORLD_MAP_AREA_QUESTION_MARK
         50,  // WORLD_MAP_AREA_GANONS_CASTLE
+        2,   // WORLD_MAP_AREA_ANCIENT_GROVE
+        2,   // WORLD_MAP_AREA_FORBIDDEN_WOODS
+        -31, // WORLD_MAP_AREA_FORSAKEN_KINGDOM
+        -31, // WORLD_MAP_AREA_GLOOMY_GRAVEYARD
+        -31, // WORLD_MAP_AREA_GORON_SHRINE
+        -31, // WORLD_MAP_AREA_GORON_VILLAGE
+        2,   // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
+        -31, // WORLD_MAP_AREA_SPRING_LAKE
+        2,   // WORLD_MAP_AREA_WOODFALL
     };
     static s16 areaBoxHeights[] = {
         59, // WORLD_MAP_AREA_HYRULE_FIELD
@@ -522,6 +553,15 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         17, // WORLD_MAP_AREA_LON_LON_RANCH
         16, // WORLD_MAP_AREA_QUESTION_MARK
         17, // WORLD_MAP_AREA_GANONS_CASTLE
+        17, // WORLD_MAP_AREA_ANCIENT_GROVE
+        17, // WORLD_MAP_AREA_FORBIDDEN_WOODS
+        17, // WORLD_MAP_AREA_FORSAKEN_KINGDOM
+        17, // WORLD_MAP_AREA_GLOOMY_GRAVEYARD
+        17, // WORLD_MAP_AREA_GORON_SHRINE
+        17, // WORLD_MAP_AREA_GORON_VILLAGE
+        17, // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
+        17, // WORLD_MAP_AREA_SPRING_LAKE
+        17, // WORLD_MAP_AREA_WOODFALL
     };
     static void* areaBoxTexs[] = {
         gWorldMapAreaBox7Tex, // WORLD_MAP_AREA_HYRULE_FIELD
@@ -546,6 +586,15 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_LON_LON_RANCH
         gWorldMapAreaBox8Tex, // WORLD_MAP_AREA_QUESTION_MARK
         gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_GANONS_CASTLE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_ANCIENT_GROVE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_FORBIDDEN_WOODS
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_FORSAKEN_KINGDOM
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_GLOOMY_GRAVEYARD
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_GORON_SHRINE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_GORON_VILLAGE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_SPRING_LAKE
+        gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_WOODFALL
     };
     static void* currentPosTitleTexs[] = LANGUAGE_ARRAY(gPauseCurrentPositionJPNTex, gPauseCurrentPositionENGTex,
                                                         gPauseCurrentPositionGERTex, gPauseCurrentPositionFRATex);

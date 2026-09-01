@@ -348,6 +348,15 @@ static ShopItem sShopkeeperStores[][8] = {
       { SI_DEKU_NUTS_10, -50, 76, -20 },
       { SI_DEKU_STICK, -80, 52, -3 },
       { SI_DEKU_NUTS_5, -80, 76, -3 } },
+
+    { { SI_GREEN_POTION, 50, 52, -20 },
+      { SI_BLUE_FIRE, 50, 76, -20 },
+      { SI_RED_POTION_R30, 80, 52, -3 },
+      { SI_FAIRY, 80, 76, -3 },
+      { SI_SHIELD_POTION, -50, 52, -20 },
+      { SI_BUGS, -50, 76, -20 },
+      { SI_POE, -80, 52, -3 },
+      { SI_FISH, -80, 76, -3 } },
 };
 static EnOssanGetGirlAParamsFunc sShopItemReplaceFunc[] = {
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
@@ -559,7 +568,7 @@ void EnOssan_TalkBazaarShopkeeper(PlayState* play) {
 }
 
 void EnOssan_TalkBazaarShopkeeper2(PlayState* play) {
-    Message_ContinueTextbox(play, 0x8014);
+    Message_ContinueTextbox(play, 0x94B3);
 }
 
 void EnOssan_TalkBombchuShopkeeper(PlayState* play) {
@@ -2301,6 +2310,8 @@ void EnOssan_InitActionFunc(EnOssan* this, PlayState* play) {
 
         if (IS_CHILD_QUEST && this->actor.params == 4)
             items = sShopkeeperStores[13];
+        else if (IS_CHILD_QUEST && this->actor.params == 1)
+            items = sShopkeeperStores[14];
         else items = sShopkeeperStores[this->actor.params];
 
         ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 20.0f);

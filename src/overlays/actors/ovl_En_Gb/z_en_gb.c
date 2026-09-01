@@ -359,7 +359,7 @@ void func_80A2FA50(EnGb* this, PlayState* play) {
             Player* player = GET_PLAYER(play);
 
             player->exchangeItemId = EXCH_ITEM_NONE;
-            this->textId = HIGH_SCORE(HS_POE_POINTS) == 300 ? 0x8129 : 0x70F8;
+            this->textId = HIGH_SCORE(HS_POE_POINTS) == 300 ? 0x812A : 0x70F8;
             Message_ContinueTextbox(play, this->textId);
             this->actionFunc = func_80A2FB40;
         }

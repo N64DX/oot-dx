@@ -1960,7 +1960,7 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                             getItemId = -GI_SLINGSHOT;
                         else if (CUR_UPG_VALUE(UPG_BULLET_BAG) == 1)
                             getItemId = -GI_BULLET_BAG_40;
-                        else if (CUR_UPG_VALUE(UPG_BULLET_BAG) >= 2)
+                        else if (CUR_UPG_VALUE(UPG_BULLET_BAG) == 2)
                             getItemId = -GI_BULLET_BAG_50;
                         else if (CUR_UPG_VALUE(UPG_BULLET_BAG) >= 3)
                             getItemId = -GI_BULLET_BAG_60;
@@ -1969,17 +1969,19 @@ s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange
                             getItemId = -GI_BOW;
                         else if (CUR_UPG_VALUE(UPG_QUIVER) == 1)
                             getItemId = -GI_QUIVER_40;
-                        else if (CUR_UPG_VALUE(UPG_QUIVER) >= 2)
+                        else if (CUR_UPG_VALUE(UPG_QUIVER) == 2)
                             getItemId = -GI_QUIVER_50;
                         else if (CUR_UPG_VALUE(UPG_QUIVER) >= 3)
                             getItemId = -GI_QUIVER_60;
-                    } else if (getItemId == -GI_BOMB_BAG_20 || getItemId == -GI_BOMB_BAG_30 || getItemId == -GI_BOMB_BAG_40) {
+                    } else if (getItemId == -GI_BOMB_BAG_20 || getItemId == -GI_BOMB_BAG_30 || getItemId == -GI_BOMB_BAG_40 || getItemId == -GI_BOMB_BAG_50) {
                         if (CUR_UPG_VALUE(UPG_BOMB_BAG) == 0)
                             getItemId = -GI_BOMB_BAG_20;
                         else if (CUR_UPG_VALUE(UPG_BOMB_BAG) == 1)
                             getItemId = -GI_BOMB_BAG_30;
-                        else if (CUR_UPG_VALUE(UPG_BOMB_BAG) >= 2)
+                        else if (CUR_UPG_VALUE(UPG_BOMB_BAG) == 2)
                             getItemId = -GI_BOMB_BAG_40;
+                        else if (CUR_UPG_VALUE(UPG_BOMB_BAG) >= 3)
+                            getItemId = -GI_BOMB_BAG_50;
                     } else if (getItemId == -GI_WALLET_ADULT || getItemId == -GI_WALLET_GIANT || getItemId == -GI_WALLET_MASTER || getItemId == -GI_WALLET_ROYAL || getItemId == -GI_WALLET_TYCOON || getItemId == -GI_WALLET_BOTTOMLESS) {
                         if (CUR_UPG_VALUE(UPG_WALLET2) >= 2)
                             getItemId = -GI_WALLET_BOTTOMLESS;
@@ -3925,6 +3927,24 @@ s32 BodyBreak_SpawnParts(Actor* actor, BodyBreak* bodyBreak, PlayState* play, s1
     return true;
 }
 
+void Actor_SpawnBodyParts(Actor* actor, PlayState* play, s32 partParams, Gfx** dList) {
+    if (*dList != NULL) {
+        EnPart* part;
+        Actor* spawnedPart;
+        MtxF* currentMatrix = Matrix_GetCurrent();
+
+        spawnedPart = Actor_SpawnAsChild(&play->actorCtx, actor, play, ACTOR_EN_PART, currentMatrix->mf[3][0], currentMatrix->mf[3][1], currentMatrix->mf[3][2], 0, 0, actor->objectSlot, partParams);
+
+        if (spawnedPart != NULL) {
+            part = (EnPart*)spawnedPart;
+
+            Matrix_MtxFToYXZRotS(currentMatrix, &part->actor.shape.rot, false);
+            part->displayList = *dList;
+            Math_Vec3f_Copy(&part->actor.scale, &actor->scale);
+        }
+    }
+}
+
 void Actor_SpawnFloorDustRing(PlayState* play, Actor* actor, Vec3f* posXZ, f32 radius, s32 amountMinusOne,
                               f32 randAccelWeight, s16 scale, s16 scaleStep, u8 useLighting) {
     Vec3f pos;
@@ -4928,17 +4948,28 @@ u8 Actor_ApplyDamage(Actor* actor) {
 }
 
 u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
+    if (damage < 1)
+        return (u8)damage;
+    
     if (IS_CHILD_QUEST_AS_CHILD) {
-        if (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && IS_HEROS_SWORD)
+        if (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && itemAction == PLAYER_IA_SWORD_HEROS)
             damage *= 1.5;
         else if (dmgFlags & (DMG_SLASH_GIANT | DMG_SPIN_GIANT | DMG_JUMP_GIANT) && itemAction == PLAYER_IA_SWORD_BIGGORON)
             damage *= gSaveContext.save.info.playerData.bgsFlag ? 0.75 : 0.5;
     }
 
+    if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_SPIRIT && gSaveContext.save.info.playerData.health < gSaveContext.save.info.playerData.healthCapacity && CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) && R_SPECIAL_POWER_TIMER == 0 && gSaveContext.save.info.energy >= 25) {
+        s16 recovery = (s16)(damage * 2.0f);
+        gSaveContext.save.info.energy -= 25;
+        R_SPECIAL_POWER_TIMER = SECONDS(6);
+        gSaveContext.save.info.playerData.health = CLAMP_MAX((gSaveContext.save.info.playerData.health + recovery + 3) & ~3, gSaveContext.save.info.playerData.healthCapacity);
+        SFX_PLAY_CENTERED(NA_SE_SY_HP_RECOVER);
+    }
+
     if (R_PERFECT_BLOCK_BOOST_TIMER > 0) {
         damage *= 1.5f;
         R_PERFECT_BLOCK_BOOST_TIMER = 0;
-    } else if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SLASH_MASTER | DMG_SLASH_GIANT)) && gSaveContext.save.info.obtainedItems.amuletOfEnergy && R_SPECIAL_POWER_TIMER == 0 && gSaveContext.save.info.energy >= 30) {
+    } else if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_ZORA && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SLASH_MASTER | DMG_SLASH_GIANT)) && CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) && R_SPECIAL_POWER_TIMER == 0 && !R_IS_DASHING && gSaveContext.save.info.energy >= 30) {
         gSaveContext.save.info.energy -= 30;
         R_SPECIAL_POWER_TIMER = SECONDS(8);
         damage *= 1.5;
@@ -4948,10 +4979,8 @@ u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
 }
 
 void Actor_RestoreShieldDurability(s32 dmgFlags) {
-    if (SHIELD_DURABILITY && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && IS_HEROS_SWORD)) {
+    if (SHIELD_DURABILITY && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS))) {
         u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
-        if (IS_HEROS_SHIELD && shield == 2)
-            shield = 4;
         if (shield != PLAYER_SHIELD_NONE) {
             ShieldDurability* sh = &gSaveContext.save.info.shields[shield - 1];
             sh->durability = sh->durability + 3 > Player_GetMaxShieldDurability(shield) ? Player_GetMaxShieldDurability(shield) : sh->durability + 3;

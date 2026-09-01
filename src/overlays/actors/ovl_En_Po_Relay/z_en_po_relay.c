@@ -146,10 +146,8 @@ void EnPoRelay_Init(Actor* thisx, PlayState* play) {
             this->actor.flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
         }
 
-        if (GET_INFTABLE(INFTABLE_ASKED_BY_IGOR)) {
+        if (GET_INFTABLE(INFTABLE_ASKED_BY_IGOR))
             Actor_Kill(&this->actor);
-            Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_ETCETERA, this->actor.world.pos.x, this->actor.world.pos.y + 10.0f, this->actor.world.pos.z, 0, 0, 0, ITEM_ETC_ANCIENT_HOLLOW_KEY);
-        }
     } else {
         this->actor.params &= 0x3F;
         if (IS_CHILD_QUEST)
@@ -251,13 +249,13 @@ void EnPoRelay_Idle(EnPoRelay* this, PlayState* play) {
     Math_ScaledStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 0x100);
 
     if (this->actor.params <= PO_RELAY_TYPE_PICTOBOX) {
-        if (Npc_UpdateTalking(play, &this->actor, &this->interactInfo.talkState, 50.0f, EnPoRelay_GetTextId, EnPoRelay_UpdateTalkState))
-            if (Actor_GetPlayerExchangeItemId(play) == EXCH_ITEM_PICTOBOX)
-                this->actor.textId = GET_INFTABLE(INFTABLE_ASKED_BY_IGOR) ? 0x8227 : 0x8224;
-        GET_PLAYER(play)->actor.textId = this->actor.textId;
-        
         if (this->actor.xzDistToPlayer > 500.0f || this->actor.yDistToPlayer < -15.0f)
             return;
+        else {
+            if (Npc_UpdateTalking(play, &this->actor, &this->interactInfo.talkState, 50.0f, EnPoRelay_GetTextId, EnPoRelay_UpdateTalkState) && Actor_GetPlayerExchangeItemId(play) == EXCH_ITEM_PICTOBOX)
+                this->actor.textId = GET_INFTABLE(INFTABLE_ASKED_BY_IGOR) ? 0x8227 : 0x8224;
+            GET_PLAYER(play)->actor.textId = this->actor.textId;
+        }
     } else if (IS_CHILD_QUEST && !GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW)) {
         this->actor.textId = this->textId = 0x8222;
         if (!sAlreadyTalked && this->actor.xzDistToPlayer < 250.0f) {

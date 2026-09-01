@@ -9,12 +9,11 @@
 SceneCmd dawngrove_shop_room_0[] = {
     SCENE_CMD_ECHO_SETTINGS(0),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
-    SCENE_CMD_SKYBOX_DISABLES(false, true),
-    SCENE_CMD_TIME_SETTINGS(30, 16, 0),
+    SCENE_CMD_SKYBOX_DISABLES(true, true),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&dawngrove_shop_room_0RoomShapeNormal_000090),
     SCENE_CMD_OBJECT_LIST(14, dawngrove_shop_room_0ObjectList_000048),
     SCENE_CMD_ACTOR_LIST(3, dawngrove_shop_room_0ActorEntry_000060),
-    SCENE_CMD_WIND_SETTINGS(15, 40, 109, 190),
     SCENE_CMD_END(),
 };
 

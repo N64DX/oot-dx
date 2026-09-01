@@ -409,7 +409,6 @@ void Play_Init(GameState* thisx) {
     if (!IS_CUTSCENE_LAYER) {
         u8 sceneId = gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId;
         if (sceneId == SCENE_GROTTOS2) {
-            gSaveContext.sceneLayer = gSaveContext.save.entranceIndex == ENTR_GROTTOS_7 ? 1 : 0;
             if (gSaveContext.save.entranceIndex == ENTR_GROTTOS_7)
                 gSaveContext.sceneLayer = 1;
             else if (gSaveContext.save.entranceIndex == ENTR_CAVE_PASSAGE_0 || gSaveContext.save.entranceIndex == ENTR_CAVE_PASSAGE_1)
@@ -427,6 +426,8 @@ void Play_Init(GameState* thisx) {
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW) ? 3: 2;
                 else if (sceneId == SCENE_PATH_TO_GORON_VILLAGE || sceneId == SCENE_GORON_VILLAGE || sceneId == SCENE_GORON_SHRINE || sceneId == SCENE_GORON_MINES)
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES) ? 3: 2;
+                else if (sceneId == SCENE_FORSAKEN_KINGDOM || sceneId == SCENE_GLOOMY_GRAVEYARD || sceneId == SCENE_PURPLE_ICE_CAVERN)
+                    gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_STONE_TOWER) ? 3: 2;
                 else if (gSaveContext.save.entranceIndex != ENTR_MARKET_GUARD_HOUSE_0 && gSaveContext.save.entranceIndex != ENTR_BAZAAR_1)
                     gSaveContext.sceneLayer += 2;
             } else if (sceneId == SCENE_HYRULE_FIELD)
@@ -1089,6 +1090,7 @@ void Play_Update(PlayState* this) {
             if (IS_PAUSED(&this->pauseCtx)) {
                 PLAY_LOG(3721);
                 KaleidoScopeCall_Update(this);
+                Message_Update(this);
             } else if (this->gameOverCtx.state != GAMEOVER_INACTIVE) {
                 PLAY_LOG(3727);
                 GameOver_Update(this);
@@ -2143,7 +2145,7 @@ s32 func_800C0DB4(PlayState* this, Vec3f* pos) {
  * Use a special power (usually a tunic power) through the Amulet of Energy at the cost of energy
  */
 u32 Player_UseSpecialPower(PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, s32 amount) {
-    if (Player_InBlockingCsMode(this, player) || !gSaveContext.save.info.obtainedItems.amuletOfEnergy)
+    if (Player_InBlockingCsMode(this, player) || !CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY))
         return amount;
     if (gSaveContext.save.info.energy < cost || R_SPECIAL_POWER_TIMER > 0)
         return amount;
@@ -2192,5 +2194,5 @@ u16 Player_GetMaxShieldDurability(u8 shield) {
     return 0;
 }
 
-u8 Player_GetMaxEnergy(void)        { return Player_HasEnergyUnlocked() * 50 + HAS_AMULET_OF_ENERGY * 50; }
-u8 Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || HAS_AMULET_OF_ENERGY || gSaveContext.save.info.obtainedSkills.enhancedSpin; }
+u8 Player_GetMaxEnergy(void)        { return ((Player_HasEnergyUnlocked() != 0) * 50) + ((CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) != 0) * 50); }
+u8 Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) || CHECK_UPGRADE_ITEM(UPGRADE_ENHANCED_SPIN) || CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_PEGASUS); }

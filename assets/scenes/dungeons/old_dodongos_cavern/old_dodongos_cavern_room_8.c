@@ -58,7 +58,7 @@ ActorEntry old_dodongos_cavern_room_8ActorList0x000048[] = {
     { ACTOR_EN_FIREFLY,       { 3555,  94, -1678 }, {    0,      0,    0 }, 0x0001 },
     { ACTOR_EN_SPIDER,        { 3544,   0, -1093 }, {    0,      0,    0 }, 0xFFFF },
     { ACTOR_EN_SPIDER,        { 3589,   0, -1391 }, {    0,      0,    0 }, 0xFFFF },
-    { ACTOR_EN_ITEM00,        { 3754,   0, -1524 }, {    0,      0,    0 }, 0x2903 }, // Collect: 29, Recovert Heart
+    { ACTOR_EN_ITEM00,        { 3754,   0, -1524 }, {    0,      0,    0 }, 0x2903 }, // Collect: 29, Recovery Heart
     { ACTOR_EN_ITEM00,        { 3751, 393, -1503 }, {    0,      0,    0 }, 0x0013 }, // Collect: 00, Gold Rupee
 };
 

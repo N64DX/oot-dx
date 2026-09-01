@@ -356,7 +356,22 @@ s16 EnGo2_UpdateTalkStateGoronCityRollingBig(PlayState* play, EnGo2* this) {
             if (Message_ShouldAdvance(play)) {
                 if (this->actor.textId == 0x3012) {
                     this->actionFunc = EnGo2_SetupGetItem;
-                    bombBagUpgrade = CUR_UPG_VALUE(UPG_BOMB_BAG) == 2 ? GI_BOMB_BAG_40 : GI_BOMB_BAG_30;
+
+                    switch (CUR_UPG_VALUE(UPG_BOMB_BAG)) {
+                        case 0:
+                            bombBagUpgrade = GI_BOMB_BAG_20;
+                            break;
+                        case 1:
+                            bombBagUpgrade = GI_BOMB_BAG_30;
+                            break;
+                        case 2:
+                            bombBagUpgrade = GI_BOMB_BAG_40;
+                            break;
+                        case 3:
+                            bombBagUpgrade = GI_BOMB_BAG_50;
+                            break;
+                    }
+
                     EnGo2_GetItem(this, play, bombBagUpgrade);
                     Message_CloseTextbox(play);
                     SET_INFTABLE(INFTABLE_11E);

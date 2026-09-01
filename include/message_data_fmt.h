@@ -41,6 +41,7 @@
 #define MESSAGE_FISH_INFO                  0x1D
 #define MESSAGE_HIGHSCORE                  0x1E
 #define MESSAGE_TIME                       0x1F
+#define MESSAGE_UPGRADE_SIZE_PREFIX        0xF6
 #define MESSAGE_SHIELD_UPGRADE_LEVEL       0xF7
 #define MESSAGE_SHIELD_UPGRADE_PRICE       0xF8
 #define MESSAGE_MASTER_SWORD               0xF9
@@ -222,6 +223,7 @@ typedef enum TextboxBackgroundYOffsetIndex {
 # define HIGHSCORE(highscore)                               CTRL_BASE(HIGHSCORE)            ARG1(highscore)
 # define TIME                                               CTRL_BASE(TIME)
 # define QUICKTEXT_ENABLE                                   CTRL_BASE(QUICKTEXT_ENABLE)
+# define UPGRADE_SIZE_PREFIX(upgrade)                       CTRL_BASE(UPGRADE_SIZE_PREFIX)  ARG1(upgrade)
 # define SHIELD_UPGRADE_LEVEL                               CTRL_BASE(SHIELD_UPGRADE_LEVEL)
 # define SHIELD_UPGRADE_PRICE                               CTRL_BASE(SHIELD_UPGRADE_PRICE)
 # define MASTER_SWORD                                       CTRL_BASE(MASTER_SWORD)

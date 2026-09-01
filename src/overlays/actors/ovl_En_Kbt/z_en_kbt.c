@@ -115,7 +115,7 @@ s16 EnKbt_UpdateTalkState(PlayState* play, Actor* thisx) {
                 SET_INFTABLE(INFTABLE_TALKED_TO_ZUBORA_MINES);
             else if (this->actor.textId == 0x8312) {
                 SET_INFTABLE(INFTABLE_TALKED_TO_ZUBORA_SMITHY);
-                Actor_OfferGetItem(&this->actor, play, GI_PERFECT_BLOCK_UPGRADE, 1000.0f, 1000.0f);
+                Actor_OfferGetItem(&this->actor, play, GI_PERFECT_BLOCK, 1000.0f, 1000.0f);
             }
             return NPC_TALK_STATE_IDLE;
 
