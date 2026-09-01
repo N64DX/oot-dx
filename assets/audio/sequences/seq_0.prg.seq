@@ -7520,6 +7520,31 @@ LAYER_EV_OWL_WARP_SWITCH_ON_10:
 /* 0x2F60 [0x67 0x80 0xF8 0x64     ] */ notedv      PITCH_C4, 248, 100
 /* 0x2F64 [0xFF                    ] */ end
 
+.channel CHAN_EV_WOODPLATE_BROKEN
+/* 0x4593 [0x88 0x45 0xA0          ] */ ldlayer     0, LAYER_EV_WOODPLATE_BROKEN_1
+/* 0x4596 [0x89 0x45 0x9A          ] */ ldlayer     1, LAYER_EV_WOODPLATE_BROKEN_2
+/* 0x4599 [0xFF                    ] */ end
+
+.layer LAYER_EV_WOODPLATE_BROKEN_1
+/* 0x45A0 [0xC6 0x15               ] */ instr       SF0_INST_21
+/* 0x45A2 [0xC2 0x30               ] */ transpose   48
+/* 0x45A4 [0x6E 0x00 0x63          ] */ notedv      PITCH_G4, 0, 99
+/* 0x45A7 [0xFF                    ] */ end
+
+.layer LAYER_EV_WOODPLATE_BROKEN_2
+/* 0x459A [0xC6 0x3F               ] */ instr       SF0_INST_63
+/* 0x459C [0x66 0x00 0x68          ] */ notedv      PITCH_B3, 0, 104
+/* 0x459F [0xFF                    ] */ end
+
+.channel CHAN_EV_SMALL_WOODPLATE_BOUND_0
+/* 0x5031 [0x88 0x50 0x35          ] */ ldlayer     0, LAYER_EV_SMALL_WOODPLATE_BOUND_0
+/* 0x5034 [0xFF                    ] */ end
+
+.layer LAYER_EV_SMALL_WOODPLATE_BOUND_0
+/* 0x5035 [0xC6 0x3F               ] */ instr       SF0_INST_63
+/* 0x5037 [0x69 0x0C 0x64          ] */ notedv      PITCH_D4, 12, 100
+/* 0x503A [0xFF                    ] */ end
+
 #define DEFINE_SFX(lblName, sfxId, priority, decay, rand, flags) \
     entry lblName
 

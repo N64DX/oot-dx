@@ -4424,3 +4424,75 @@ SHIFT(80) "R.I.P." QUICKTEXT_DISABLE EVENT
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x8520, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(BLUE) "Blue" COLOR(DEFAULT) " Mask first."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8521, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(ADJUSTABLE) "Green" COLOR(DEFAULT) " Mask second."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8522, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(RED) "Red" COLOR(DEFAULT) " Mask third."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8523, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(YELLOW) "Yellow" COLOR(DEFAULT) " Mask fourth."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8524, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(ADJUSTABLE) "Green" COLOR(DEFAULT) " Mask again fifth."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8525, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(BLUE) "Blue" COLOR(DEFAULT) " Mask again last."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8526, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"There is a special relic locked away\n"
+"in this room that lets you control\n"
+"empty vessels."
+),
+MSG(),
+MSG()
+)
