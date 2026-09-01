@@ -25,4 +25,4 @@ typedef enum {
     /* 3 */ LADDER_SIZE_24RUNG
 } BgLadderSize;
 
-#endif // Z_BG_LADDER_H
+#endif

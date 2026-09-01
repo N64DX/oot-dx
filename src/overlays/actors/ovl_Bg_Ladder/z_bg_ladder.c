@@ -23,14 +23,14 @@
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
-void BgLadder_Init(Actor* thisx, PlayState* play);
-void BgLadder_Destroy(Actor* thisx, PlayState* play);
-void BgLadder_Update(Actor* thisx, PlayState* play);
-void BgLadder_Draw(Actor* thisx, PlayState* play);
-void BgLadder_Wait(BgLadder* this, PlayState* play);
-void BgLadder_StartCutscene(BgLadder* this, PlayState* play);
-void BgLadder_FadeIn(BgLadder* this, PlayState* play);
-void BgLadder_DoNothing(BgLadder* this, PlayState* play);
+void BgLadder_Init(Actor* thisx, struct PlayState* play);
+void BgLadder_Destroy(Actor* thisx, struct PlayState* play);
+void BgLadder_Update(Actor* thisx, struct PlayState* play);
+void BgLadder_Draw(Actor* thisx, struct PlayState* play);
+void BgLadder_Wait(BgLadder* this, struct PlayState* play);
+void BgLadder_StartCutscene(BgLadder* this, struct PlayState* play);
+void BgLadder_FadeIn(BgLadder* this, struct PlayState* play);
+void BgLadder_DoNothing(BgLadder* this, struct PlayState* play);
 
 ActorProfile Bg_Ladder_Profile = {
     /**/ ACTOR_BG_LADDER,
