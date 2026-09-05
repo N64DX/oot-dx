@@ -28,6 +28,7 @@
 
 #include "assets/objects/gameplay_keep/gameplay_keep_0x55DB0.h"
 #include "assets/objects/object_bv/object_bv.h"
+#include "assets/objects/object_bv/object_bv_spark.h"
 #if OOT_NTSC_N64
 #include "assets/objects/object_bv/object_bv_title_card.h"
 #endif
@@ -3535,7 +3536,7 @@ void BossVa_DrawEffects(BossVaEffect* effect, PlayState* play) {
             if (materialFlag == 0) {
                 Gfx_SetupDL_25Xlu(play->state.gfxCtx);
                 gDPSetEnvColor(POLY_XLU_DISP++, 130, 130, 30, 0);
-                gSPDisplayList(POLY_XLU_DISP++, gBarinadeDL_0156A0);
+                gSPDisplayList(POLY_XLU_DISP++, gBarinadeDL_0156A0_IA8);
                 materialFlag++;
             }
 
@@ -3684,7 +3685,7 @@ void BossVa_DrawEffects(BossVaEffect* effect, PlayState* play) {
             if (materialFlag == 0) {
                 Gfx_SetupDL_25Xlu2(play->state.gfxCtx);
                 gDPSetEnvColor(POLY_XLU_DISP++, 130, 130, 30, 0);
-                gSPDisplayList(POLY_XLU_DISP++, gBarinadeDL_0156A0);
+                gSPDisplayList(POLY_XLU_DISP++, gBarinadeDL_0156A0_IA8);
                 materialFlag++;
             }
 
