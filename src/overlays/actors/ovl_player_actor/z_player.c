@@ -9808,17 +9808,15 @@ void Player_Action_80842180(Player* this, PlayState* play) {
         Player_GetMovementSpeedAndYaw(this, &speedTarget, &yawTarget, SPEED_MODE_CURVED, play);
 
         if (R_IS_DASHING) { // Hold A to dash at the cost of energy, will keep dashing until A is released
-            if (sControlStickMagnitude > 0.0f && ABS(this->yaw - yawTarget) > 0x4000)
+            if (sControlStickMagnitude > 0.0f && ABS(this->yaw - yawTarget) > 0xFFFF)
                 Player_QuitDashing(this);
             else {
                 speedTarget = CLAMP_MIN(speedTarget, 6.0f);
-                speedTarget *= 2.0f;
+                speedTarget *= 2.5f;
                 if (sControlStickMagnitude == 0.0f)
                     yawTarget = this->yaw;
             }
-        }
-
-        if (this->currentMask == PLAYER_MASK_BUNNY) {
+        } else if (this->currentMask == PLAYER_MASK_BUNNY) {
             speedTarget *= 1.5f;
         }
 
@@ -12252,7 +12250,7 @@ void Player_UpdateInterface(PlayState* play, Player* this) {
                                                             ((play->roomCtx.curRoom.type != ROOM_TYPE_INDOORS) &&
                                                              !(this->stateFlags1 & PLAYER_STATE1_SHIELDING) &&
                                                              (controlStickDirection == PLAYER_STICK_DIR_FORWARD))))))) {
-                        doAction = this->currentBoots == PLAYER_BOOTS_PEGASUS ? DO_ACTION_DASH : DO_ACTION_ATTACK;
+                        doAction = this->currentBoots == PLAYER_BOOTS_PEGASUS && !Player_IsZTargeting(this) ? DO_ACTION_DASH : DO_ACTION_ATTACK;
                     } else if ((play->roomCtx.curRoom.type != ROOM_TYPE_INDOORS) && Player_IsZTargeting(this) &&
                                (controlStickDirection >= PLAYER_STICK_DIR_LEFT)) {
                         doAction = DO_ACTION_JUMP;
@@ -16078,7 +16076,7 @@ s32 Player_ActionHandler_7(Player* this, PlayState* play) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 func_80837530(play, this, 0);
                 return 1;
-            } else if (this->itemAction == PLAYER_IA_SWORD_HEROS) {
+            } else if (this->itemAction == PLAYER_IA_SWORD_HEROS || (this->itemAction == PLAYER_IA_SWORD_MASTER && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && gSaveContext.save.info.playerData.health >= gSaveContext.save.info.playerData.healthCapacity && IS_CHILD_QUEST)) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 Player_SwordBeam(play, this, 0);
             }

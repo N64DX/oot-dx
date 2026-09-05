@@ -106,8 +106,11 @@ void EnGm_Destroy(Actor* thisx, PlayState* play) {
 
 s32 func_80A3D7C8(EnGm* this) {
     if (IS_CHILD_QUEST) {
-        if (this->type == MEDIGORON_GORON_VILLAGE)
+        if (this->type == MEDIGORON_GORON_VILLAGE) {
+            if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_IRON) || !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_HOVER))
+                return 4;
             return !CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_PEGASUS);
+        }
         else if (!GET_EVENTCHKINF(EVENTCHKINF_45))
             return 0;
         else if (!GET_EVENTCHKINF(EVENTCHKINF_49))
@@ -191,6 +194,9 @@ void EnGm_SetTextID(EnGm* this) {
         case 3:
             this->actor.textId = 0x304D;
             break;
+        case 4:
+            this->actor.textId = 0x8423;
+            break;
     }
 }
 
@@ -237,6 +243,7 @@ void func_80A3DC44(EnGm* this, PlayState* play) {
                     SET_INFTABLE(INFTABLE_B0);
                 FALLTHROUGH;
             case 3:
+            case 4:
                 this->actionFunc = func_80A3DD7C;
                 return;
             case 1:
