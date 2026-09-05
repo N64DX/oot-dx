@@ -828,6 +828,7 @@ beginseg
     name "object_bv"
     compress
     include "$(BUILD_DIR)/assets/objects/object_bv/object_bv.o"
+    include "$(BUILD_DIR)/assets/objects/object_bv/object_bv_spark.o"
 #if OOT_NTSC_N64
     include "$(BUILD_DIR)/assets/objects/object_bv/object_bv_title_card.o"
 #endif
