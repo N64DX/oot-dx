@@ -3318,7 +3318,6 @@ void Message_PauseMenu_ShowDescription(PlayState* play, u16 textId, u8 textBoxPo
         R_TEXT_CHAR_SCALE = 88;
         R_TEXT_LINE_SPACING = 18;
         R_TEXT_INIT_XPOS = 50;
-#endif
     } else {
         R_TEXT_CHAR_SCALE = 75;
 #if !PLATFORM_IQUE
@@ -3329,6 +3328,18 @@ void Message_PauseMenu_ShowDescription(PlayState* play, u16 textId, u8 textBoxPo
         R_TEXT_INIT_XPOS = 60;
 #endif
     }
+#else
+    {
+        R_TEXT_CHAR_SCALE = 75;
+#if !PLATFORM_IQUE
+        R_TEXT_LINE_SPACING = 12;
+        R_TEXT_INIT_XPOS = 65;
+#else
+        R_TEXT_LINE_SPACING = 16;
+        R_TEXT_INIT_XPOS = 60;
+#endif
+    }
+#endif
 
     if (IS_CHILD_QUEST_AS_CHILD) {
         if (textId == 0x0900 + ITEM_BOW)
