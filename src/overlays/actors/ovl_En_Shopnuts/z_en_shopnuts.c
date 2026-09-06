@@ -88,6 +88,7 @@ void EnShopnuts_Init(Actor* thisx, PlayState* play) {
     Collider_UpdateCylinder(&this->actor, &this->collider);
 
     if (((SHOPNUTS_GET_TYPE(&this->actor) == DNS_TYPE_HEART_PIECE) && GET_ITEMGETINF(ITEMGETINF_DEKU_HEART_PIECE)) ||
+        (SHOPNUTS_GET_TYPE(&this->actor) == DNS_TYPE_SPIRIT_TUNIC && !GET_ITEMGETINF(ITEMGETINF_SPIRIT_TUNIC)) ||
         ((SHOPNUTS_GET_TYPE(&this->actor) == DNS_TYPE_DEKU_STICK_UPGRADE) &&
          GET_INFTABLE(INFTABLE_HAS_DEKU_STICK_UPGRADE)) ||
         ((SHOPNUTS_GET_TYPE(&this->actor) == DNS_TYPE_DEKU_NUT_UPGRADE) &&

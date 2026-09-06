@@ -1926,6 +1926,13 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                 Matrix_MtxFToYXZRotS(&this->mf_9E0, &this->unk_3BC, 0);
             }
         }
+
+        if (sLeftHandType == PLAYER_MODELTYPE_LH_SWORD) {
+            OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+            gDPPipeSync(POLY_OPA_DISP++);
+            gDPSetEnvColor(POLY_OPA_DISP++, sTunicColors[this->currentTunic].r, sTunicColors[this->currentTunic].g, sTunicColors[this->currentTunic].b, 0);
+            CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+        }
     } else if (limbIndex == PLAYER_LIMB_R_HAND) {
         Actor* heldActor = this->heldActor;
 

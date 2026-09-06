@@ -334,7 +334,7 @@ static ShopItem sShopkeeperStores[][8] = {
     { { SI_WOODEN_SHIELD, 50, 52, -20 },
       { SI_HYLIAN_SHIELD, 50, 76, -20 },
       { SI_METAL_SHIELD, 80, 52, -3 },
-      { SI_RECOVERY_HEART, 80, 76, -3 },
+      { SI_SPIRIT_TUNIC, 80, 76, -3 },
       { SI_BOMBS_10, -50, 52, -20 },
       { SI_DEKU_NUTS_10, -50, 76, -20 },
       { SI_SHIELD_POTION, -80, 52, -3 },
@@ -376,7 +376,7 @@ static EnOssanGetGirlAParamsFunc sShopItemReplaceFunc[] = {
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
     ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default, ShopItemDisp_Default,
-    ShopItemDisp_Default,   ShopItemDisp_Default,
+    ShopItemDisp_Default,   ShopItemDisp_Default,    ShopItemDisp_Default,
 };
 
 static InitChainEntry sInitChain[] = {
@@ -568,7 +568,7 @@ void EnOssan_TalkBazaarShopkeeper(PlayState* play) {
 }
 
 void EnOssan_TalkBazaarShopkeeper2(PlayState* play) {
-    Message_ContinueTextbox(play, 0x94B3);
+    Message_ContinueTextbox(play, 0x94B5);
 }
 
 void EnOssan_TalkBombchuShopkeeper(PlayState* play) {
@@ -1264,6 +1264,7 @@ s32 EnOssan_HasPlayerSelectedItem(PlayState* play, EnOssan* this, Input* input) 
                     return true;
                 case SI_GORON_TUNIC:
                 case SI_ZORA_TUNIC:
+                case SI_SPIRIT_TUNIC:
                     Sfx_PlaySfxCentered(NA_SE_SY_DECIDE);
                     this->drawCursor = 0;
                     this->stateFlag = OSSAN_STATE_SELECT_ITEM_TUNIC;
@@ -1428,6 +1429,8 @@ void EnOssan_State_DisplayOnlyBombDialog(EnOssan* this, PlayState* play, Player*
     if (this->cameraFaceAngle == 0.0f) {
         if (itemIndex == SI_GORON_TUNIC || itemIndex == SI_ZORA_TUNIC)
             Message_ContinueTextbox(play, 0x94B0);
+        else if (itemIndex == SI_SPIRIT_TUNIC)
+            Message_ContinueTextbox(play, 0x94B1);
         else Message_ContinueTextbox(play, 0x3010);
         this->stateFlag = OSSAN_STATE_WAIT_FOR_DISPLAY_ONLY_BOMB_DIALOG;
     }
@@ -1599,13 +1602,15 @@ void EnOssan_BuyGoronCityBombs(PlayState* play, EnOssan* this) {
 }
 
 void EnOssan_BuyTunic(PlayState* play, EnOssan* this) {
-    if (!IS_CHILD_QUEST || GET_EVENTCHKINF(EVENTCHKINF_45) || LINK_IS_ADULT)
+    if (LINK_IS_ADULT_OR_TIMESKIP && !(itemIndex == SI_SPIRIT_TUNIC && !GET_ITEMGETINF(ITEMGETINF_SPIRIT_TUNIC)))
         EnOssan_HandleCanBuyItem(play, this);
     else {
         if (itemIndex == SI_GORON_TUNIC && GET_INFTABLE(INFTABLE_TRIED_BUYING_GORON_TUNIC))
-            EnOssan_SetStateCantGetItem(play, this, 0x94B1);
-        else if (itemIndex == SI_ZORA_TUNIC && GET_INFTABLE(INFTABLE_TRIED_BUYING_ZORA_TUNIC))
             EnOssan_SetStateCantGetItem(play, this, 0x94B2);
+        else if (itemIndex == SI_ZORA_TUNIC && GET_INFTABLE(INFTABLE_TRIED_BUYING_ZORA_TUNIC))
+            EnOssan_SetStateCantGetItem(play, this, 0x94B3);
+        else if (itemIndex == SI_SPIRIT_TUNIC && GET_INFTABLE(INFTABLE_TRIED_BUYING_SPIRIT_TUNIC))
+            EnOssan_SetStateCantGetItem(play, this, 0x94B4);
         else {
             this->stickLeftPrompt.isEnabled = false;
             this->stickRightPrompt.isEnabled = false;
@@ -1887,6 +1892,8 @@ void EnOssan_State_WaitForDisplayOnlyBombDialog(EnOssan* this, PlayState* play, 
             SET_INFTABLE(INFTABLE_TRIED_BUYING_GORON_TUNIC);
         else if (itemIndex == SI_ZORA_TUNIC)
             SET_INFTABLE(INFTABLE_TRIED_BUYING_ZORA_TUNIC);
+        else if (itemIndex == SI_SPIRIT_TUNIC)
+            SET_INFTABLE(INFTABLE_TRIED_BUYING_SPIRIT_TUNIC);
         else SET_INFTABLE(INFTABLE_FC);
         EnOssan_StartShopping(play, this);
     }

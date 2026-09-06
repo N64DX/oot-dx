@@ -2030,6 +2030,8 @@ u8 Item_Give(PlayState* play, u8 item) {
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_TUNICS || DPAD_BUTTON(i) == SLOT_TUNIC_GORON || DPAD_BUTTON(i) == SLOT_TUNIC_ZORA || DPAD_BUTTON(i) == SLOT_TUNIC_SPIRIT)
                 Interface_LoadItemIcon1(play, i+4);
+        if (item == ITEM_TUNIC_SPIRIT)
+            SET_ITEMGETINF(ITEMGETINF_SPIRIT_TUNIC);
         return ITEM_NONE;
     } else if ((item >= ITEM_BOOTS_KOKIRI) && (item <= ITEM_BOOTS_PEGASUS)) {
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_BOOTS, item - ITEM_BOOTS_KOKIRI);
@@ -4295,7 +4297,7 @@ void Energy_Update(PlayState* play) {
         gSaveContext.save.info.energy = Player_GetMaxEnergy();
 
     if (R_IS_DASHING) { // Don't regen energy while dashing
-        f32 interval = Player_GetMeleeWeaponHeld(GET_PLAYER(play)) ? 0.1 : 0.2;
+        f32 interval = CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) ? 0.1 : 0.15;
         if (++sDashEnergyTimer >= SECONDS(interval)) {
             sDashEnergyTimer = 0;
             gSaveContext.save.info.energy = CLAMP(gSaveContext.save.info.energy - 1, 0, 255);

@@ -1440,10 +1440,35 @@ static Gfx gMasterSwordBladeDL[] = {
     gsSPEndDisplayList(),    
 };
 
+static Mtx gGripMasterSwordMtx = gdSPDefMtx(
+    1, 0, 0, 184,
+    0, 1, 0, 260,
+    0, 0, 1, 40,
+    0, 0, 0, 1
+);
+
+static Mtx gScaleMasterSwordMtx = gdSPDefMtx(
+  0.8,   0,   0, 0,
+    0, 0.6,   0, 0,
+    0,   0, 0.8, 0,
+    0,   0,   0, 1
+);
+
+static Mtx gScaleMasterSwordSheathMtx = gdSPDefMtx(
+  0.8,   0,   0, 0,
+    0, 0.8,   0, 0,
+    0,   0, 0.8, 0,
+    0,   0,   0, 1
+);
+
 Gfx gLinkChildLeftHandHoldingMasterSwordDL2[] = {
     gsSPDisplayList(gLinkChildLeftHandNearDL),
+    gsSPMatrix(&gScaleMasterSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPMatrix(&gGripMasterSwordMtx, G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPDisplayList(gMasterSwordHandleDL),
     gsSPBranchList(gMasterSwordBladeDL),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
+    gsSPEndDisplayList(),
 };
 
 
@@ -1475,6 +1500,13 @@ static Mtx gSheathedGildedSwordMtx = {
     0          , 0          , 0          , 0          , 
     0          , 0          , 0          , 0          , 
 };
+
+static Mtx gSheathedMasterSwordMtx = gdSPDefMtx(
+    1, 0, 0, -578,
+    0, 1, 0, -221,
+    0, 0, 1, 62,
+    0, 0, 0, 1
+);
 
 Gfx gLinkChildSheathedKokiriSwordDL[] = {
     gsSPDisplayList(gLinkChildKokiriSwordSheathDL),
@@ -1509,7 +1541,8 @@ Gfx gLinkChildSheathedGildedSwordDL[] = {
 
 Gfx gLinkChildSheathedMasterSwordDL[] = {
     gsSPDisplayList(gLinkChildMasterSwordSheathDL),
-    gsSPMatrix(&gSheathedGildedSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPMatrix(&gScaleMasterSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPMatrix(&gSheathedMasterSwordMtx, G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPDisplayList(gMasterSwordHandleDL),
     gsSPPopMatrix(G_MTX_MODELVIEW),
     gsSPEndDisplayList(),
@@ -1651,7 +1684,15 @@ Gfx gLinkChildGildedSwordSheathDL[] = {
     gsSPEndDisplayList(),
 };
 
+static Vtx master_sword_sheath_cover_vtx[] = {
+    VTX( -300,  318,   0, 0x0, 0x200, 0x00, 0x00, 0x00, 0xFF),
+    VTX( -387,   18, -75, 0x0, 0x200, 0x00, 0x00, 0x00, 0xFF),
+    VTX( -387,   18,  75, 0x0, 0x200, 0x00, 0x00, 0x00, 0xFF),
+    VTX( -300, -282,   0, 0x0, 0x200, 0x00, 0x00, 0x00, 0xFF),
+};
+
 Gfx gLinkChildMasterSwordSheathDL[] = {
+    gsSPMatrix(&gScaleMasterSwordSheathMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
@@ -1674,8 +1715,24 @@ Gfx gLinkChildMasterSwordSheathDL[] = {
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 5, 0, 5, 7, 3, 0),
     gsSP2Triangles(8, 1, 0, 0, 8, 9, 1, 0),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsSPTexture(0, 0, 0, G_TX_RENDERTILE, G_OFF),
+    gsDPSetCombineLERP(0, 0, 0, PRIMITIVE, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
+    gsSPClearGeometryMode(G_LIGHTING),
+    gsDPSetPrimColor(0, 0, 0, 0, 0, 255),
+    gsSPVertex(&master_sword_sheath_cover_vtx[0], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
     gsSPEndDisplayList(),
 };
+
+
 
 // Hero's Shield
 
@@ -1711,7 +1768,7 @@ static Vtx heros_shield_vtx[] = {
 #include "assets/objects/object_link_child/shields/heros_shield.vtx.inc"
 };
 
-static Mtx gLinkChildHerosShieldMtx = { 
+static Mtx gHerosShieldMtx = { 
     -1         , 0          , 65535      , 0          , 
     0          , 65536      , 36175872   , 1          , 
     2684689    , 0          , 149880872  , 0          , 
@@ -1768,7 +1825,7 @@ Gfx gLinkChildHoldingHerosShieldDL[] = {
 };
 
 Gfx gLinkChildHerosShieldWithMatrixDL[] = {
-    gsSPMatrix(&gLinkChildHerosShieldMtx, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPMatrix(&gHerosShieldMtx, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPBranchList(gLinkChildHerosShieldDL),
 };
 
@@ -1920,7 +1977,7 @@ Gfx gLinkChildHoldingMetalShieldDL[] = {
 };
 
 Gfx gLinkChildMetalShieldWithMatrixDL[] = {
-    gsSPMatrix(&gLinkChildHerosShieldMtx, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPMatrix(&gHerosShieldMtx, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPBranchList(gLinkChildMetalShieldDL),
 };
 
@@ -1948,7 +2005,7 @@ static Vtx mirror_shield_vtx[] = {
 #include "assets/objects/object_link_child/shields/mirror_shield.vtx.inc"
 };
 
-static Mtx gLinkChildMirrorShieldMtx = { 
+static Mtx gMirrorShieldMtx = { 
     -1         , 0          , 65535      , 0          , 
     0          , 65536      , 36175872   , -3276799   , 
     2684689    , 0          , 149880872  , 0          , 
@@ -2073,7 +2130,7 @@ Gfx gLinkChildHoldingMirrorShieldDL[] = {
 };
 
 Gfx gLinkChildMirrorShieldWithMatrixDL[] = {
-    gsSPMatrix(&gLinkChildMirrorShieldMtx, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPMatrix(&gMirrorShieldMtx, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPBranchList(gLinkChildMirrorShieldDL),
 };
 

@@ -235,6 +235,8 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
     } else if (type == EQUIP_TYPE_TUNIC) {
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item))
             Inventory_ChangeEquipment(EQUIP_TYPE_TUNIC, EQUIP_VALUE_TUNIC_KOKIRI);
+        if (item == EQUIP_INV_TUNIC_SPIRIT && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT))
+            SET_ITEMGETINF(ITEMGETINF_SPIRIT_TUNIC);
     } else if (type == EQUIP_TYPE_BOOTS) {
         if (CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS) == (item + 1) && !CHECK_OWNED_EQUIP_ALT(type, item))
             Inventory_ChangeEquipment(EQUIP_TYPE_BOOTS, EQUIP_VALUE_BOOTS_KOKIRI);

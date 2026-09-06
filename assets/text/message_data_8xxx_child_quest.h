@@ -3816,9 +3816,9 @@ MSG()
 DEFINE_MESSAGE(0x8420, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-"I am known as Hyrule's best cobbler\n"
-"And I happened to craft a pair of\n"
-"boots that let you jump further.\n"
+"I am known as Hyrule's best cobbler,\n"
+"and I crafted a pair of boots that\n"
+"let you run faster.\n"
 "How about it..." TEXTID(0x8421)
 ),
 MSG(),
@@ -3828,7 +3828,7 @@ MSG()
 DEFINE_MESSAGE(0x8421, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-"How about buying these boots for \n"
+"How about buying these boots for\n"
 "600 Rupees?\n"
 TWO_CHOICE
     COLOR(ADJUSTABLE) "Buy\n"
@@ -3842,6 +3842,23 @@ DEFINE_MESSAGE(0x8422, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 "Do these boots fit you well?"
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8423, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I am known as Hyrule's best cobbler\n"
+"and I am working on crafting a pair of\n"
+"boots that let you run like the wind.\n"
+"But I am lacking a bit of inspiration..."
+BOX_BREAK
+
+"Perhaps you could show me some of\n"
+"the boots you obtained during your\n"
+"journey to inspire me..."
 ),
 MSG(),
 MSG()

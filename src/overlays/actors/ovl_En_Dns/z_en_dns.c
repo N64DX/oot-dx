@@ -109,7 +109,7 @@ static DnsItemEntry sItemDekuStickUpgrade = { 40, 1, GI_DEKU_STICK_UPGRADE_20, E
 static DnsItemEntry sItemDekuNutUpgrade = { 40, 1, GI_DEKU_NUT_UPGRADE_30, EnDns_CanBuyPrice,
                                             EnDns_PayForDekuNutUpgrade };
 static DnsItemEntry sItemDekuMagicBean = { 50, 1, GI_MAGIC_BEAN, EnDns_CanBuySpiritTunic, EnDns_PayForMagicBean };
-static DnsItemEntry sItemSpiritTunic = { 500, 1, GI_TUNIC_SPIRIT, EnDns_CanBuyPrice, EnDns_PayPrice };
+static DnsItemEntry sItemSpiritTunic = { 300, 1, GI_TUNIC_SPIRIT, EnDns_CanBuyPrice, EnDns_PayPrice };
 
 static DnsItemEntry* sItemEntries[] = {
     &sItemDekuNuts, &sItemDekuSticks, &sItemHeartPiece,  &sItemDekuSeeds,        &sItemDekuShield,     &sItemBombs,
@@ -135,6 +135,9 @@ void EnDns_Init(Actor* thisx, PlayState* play) {
         PRINTF(VT_FGCOL(RED) T("引数エラー（売りナッツ）[ arg_data = %d ]",
                                "Argument error (selling nuts) [ arg_data = %d ]") VT_RST "\n",
                this->actor.params);
+        Actor_Kill(&this->actor);
+        return;
+    } else if (DNS_GET_TYPE(&this->actor) == DNS_TYPE_SPIRIT_TUNIC && !GET_ITEMGETINF(ITEMGETINF_SPIRIT_TUNIC)) { // Only shows up after having obtained your first Spirit Tunic
         Actor_Kill(&this->actor);
         return;
     }

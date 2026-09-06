@@ -29,7 +29,7 @@ s16 dawngrove_shop_room_0ObjectList_000048[] = {
     OBJECT_GI_NUTS,
     OBJECT_GI_BOMB_1,
     OBJECT_GI_LIQUID,
-    OBJECT_GI_HEART,
+    OBJECT_GI_CLOTHES,
     OBJECT_GI_ARROW,
     OBJECT_GI_SOLDOUT,
 };
