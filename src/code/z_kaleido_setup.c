@@ -179,6 +179,7 @@ void KaleidoSetup_Init(PlayState* play) {
     pauseCtx->cursorColorSet = 4;
     pauseCtx->ocarinaSongIdx = -1;
     pauseCtx->cursorSpecialPos = 0;
+    pauseCtx->wasInDebug = pauseCtx->itemDescriptionOn = false;
 
     View_Init(&pauseCtx->view, play->state.gfxCtx);
 

@@ -325,7 +325,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
 
         if (pauseCtx->cursorSpecialPos == 0) {
             if (cursorItem != PAUSE_ITEM_NONE) {
-                if (ABS(pauseCtx->stickAdjY) > 30) {
+                if (ABS(pauseCtx->stickAdjY) > 30 && !pauseCtx->itemDescriptionOn) {
                     cursorMoveResult = 0;
 
                     cursorPoint = pauseCtx->cursorPoint[PAUSE_ITEM];
