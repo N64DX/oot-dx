@@ -71,7 +71,7 @@ MSG()
 DEFINE_MESSAGE(0x0906, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-ITEM_ICON(ITEM_BOW) COLOR(RED) "Fairy Slingshot" COLOR(DEFAULT) "\n"
+ITEM_ICON(ITEM_SLINGSHOT) COLOR(RED) "Fairy Slingshot" COLOR(DEFAULT) "\n"
 "Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to shoot a " COLOR(RED) "bullet seed" COLOR(DEFAULT) ".\n"
 "Use [Control-Pad] to aim."
 ),
@@ -973,7 +973,7 @@ MSG(),
 MSG(
 ITEM_ICON(ITEM_MEDALLION_FOREST) COLOR(RED) "Forest Medallion" COLOR(DEFAULT) "\n"
 "A sage's proof that you\n"
-"overcame the trail of the " COLOR(ADJUSTABLE) "light" COLOR(DEFAULT) "!"
+"overcame the trial of the " COLOR(ADJUSTABLE) "forest" COLOR(DEFAULT) "!"
 ),
 MSG(),
 MSG()
@@ -984,7 +984,7 @@ MSG(),
 MSG(
 ITEM_ICON(ITEM_MEDALLION_FIRE) COLOR(RED) "Fire Medallion" COLOR(DEFAULT) "\n"
 "A sage's proof that you\n"
-"overcame the trail of " COLOR(RED) "light" COLOR(DEFAULT) "!"
+"overcame the trial of " COLOR(RED) "fire" COLOR(DEFAULT) "!"
 ),
 MSG(),
 MSG()
@@ -995,7 +995,7 @@ MSG(),
 MSG(
 ITEM_ICON(ITEM_MEDALLION_WATER) COLOR(RED) "Water Medallion" COLOR(DEFAULT) "\n"
 "A sage's proof that you\n"
-"overcame the trail of " COLOR(BLUE) "light" COLOR(DEFAULT) "!"
+"overcame the trial of " COLOR(BLUE) "water" COLOR(DEFAULT) "!"
 ),
 MSG(),
 MSG()
@@ -1006,7 +1006,7 @@ MSG(),
 MSG(
 ITEM_ICON(ITEM_MEDALLION_SPIRIT) COLOR(RED) "Spirit Medallion" COLOR(DEFAULT) "\n"
 "A sage's proof that you\n"
-"overcame the trail of " COLOR(YELLOW) "spirit" COLOR(DEFAULT) "!"
+"overcame the trial of " COLOR(YELLOW) "spirit" COLOR(DEFAULT) "!"
 ),
 MSG(),
 MSG()
@@ -1017,7 +1017,7 @@ MSG(),
 MSG(
 ITEM_ICON(ITEM_MEDALLION_SHADOW) COLOR(RED) "Shadow Medallion" COLOR(DEFAULT) "\n"
 "A sage's proof that you\n"
-"overcame the trail of " COLOR(PURPLE) "shadow" COLOR(DEFAULT) "!"
+"overcame the trial of " COLOR(PURPLE) "shadow" COLOR(DEFAULT) "!"
 ),
 MSG(),
 MSG()
@@ -1028,7 +1028,7 @@ MSG(),
 MSG(
 ITEM_ICON(ITEM_MEDALLION_LIGHT) COLOR(RED) "Light Medallion" COLOR(DEFAULT) "\n"
 "A sage's proof that you\n"
-"overcame the trail of " COLOR(LIGHTBLUE) "light" COLOR(DEFAULT) "!"
+"overcame the trial of " COLOR(LIGHTBLUE) "light" COLOR(DEFAULT) "!"
 ),
 MSG(),
 MSG()
