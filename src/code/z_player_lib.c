@@ -203,6 +203,7 @@ u8 sActionModelGroups[PLAYER_IA_MAX] = {
     PLAYER_MODELGROUP_EXPLOSIVES,       // PLAYER_IA_BOMB
     PLAYER_MODELGROUP_EXPLOSIVES,       // PLAYER_IA_BOMBCHU
     PLAYER_MODELGROUP_BOOMERANG,        // PLAYER_IA_BOOMERANG
+    PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_CANE_OF_SOMARIA
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_MAGIC_SPELL_15
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_MAGIC_SPELL_16
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_MAGIC_SPELL_17
@@ -1936,6 +1937,41 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
     } else if (limbIndex == PLAYER_LIMB_R_HAND) {
         Actor* heldActor = this->heldActor;
 
+        if (this->heldItemAction == PLAYER_IA_CANE_OF_SOMARIA) {
+            Vec3f forearmPos;
+            Vec3f handPos;
+            f32 dx;
+            f32 dy;
+            f32 dz;
+            f32 handYaw;
+            f32 horizDist;
+            f32 handPitch;
+
+            forearmPos = this->bodyPartsPos[PLAYER_BODYPART_R_FOREARM];
+            handPos = this->bodyPartsPos[PLAYER_BODYPART_R_HAND];
+            dx = handPos.x - forearmPos.x;
+            dy = handPos.y - forearmPos.y;
+            dz = handPos.z - forearmPos.z;
+            handYaw = Math_FAtan2F(dx, dz);
+            horizDist = sqrtf((dx * dx) + (dz * dz));
+            handPitch = Math_FAtan2F(dy, horizDist);
+
+            OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+
+            Matrix_Push();
+            Matrix_Translate(handPos.x, handPos.y, handPos.z, MTXMODE_NEW);
+            Matrix_RotateY(handYaw, MTXMODE_APPLY);
+            Matrix_RotateX(-handPitch, MTXMODE_APPLY);
+            Matrix_RotateY(BINANG_TO_RAD(0x4000), MTXMODE_APPLY);
+            Matrix_Translate(-3.5f, 15.0f, 2.0f, MTXMODE_APPLY);
+            Matrix_Scale(0.05f, 0.05f, 0.05f, MTXMODE_APPLY);
+            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
+            gSPDisplayList(POLY_OPA_DISP++, gPlayerCaneOfSomariaDL);
+            Matrix_Pop();
+
+            CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+        }
+
         if (this->rightHandType == PLAYER_MODELTYPE_RH_FF) {
             Matrix_Get(&this->shieldMf);
         } else if ((this->rightHandType == PLAYER_MODELTYPE_RH_SLINGSHOT) ||
@@ -2069,6 +2105,8 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
                 if (this->unk_862 == 0) {
                     Math_Vec3f_Copy(&heldActor->world.pos, &sGetItemRefPos);
+                    if (heldActor->id == ACTOR_ITEM_SOMARIA_CUBE)
+                        heldActor->world.pos.y += 5.0f;
                 }
             }
         }
