@@ -637,6 +637,7 @@ u8 EnBox_IsItem(s16 item) {
         case GI_SWORD_FAIRYS:
         case GI_PICTOBOX:
         case GI_SHRINE_KEY:
+        case GI_CANE_OF_SOMARIA:
             return true;
         default:
             return false;

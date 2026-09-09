@@ -318,8 +318,8 @@ u64 gShrineKeyItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "assets/textures/item_name_static/gShrineKeyItemNameENGTex.ia4.inc.c"
 };
 
-u64 gCQ1ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gShrineKeyItemNameENGTex.ia4.inc.c"
+u64 gCaneOfSomariaItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gCaneOfSomariaItemNameENGTex.ia4.inc.c"
 };
 
 u64 gCQ2ItemNameENGTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

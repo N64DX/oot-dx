@@ -223,6 +223,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_gi_cane"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_cane/object_gi_cane.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_title_deed"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_title_deed/object_gi_title_deed.o"

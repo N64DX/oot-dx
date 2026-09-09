@@ -2496,7 +2496,7 @@ u8 Item_Give(PlayState* play, u8 item) {
                 }
             }
         }
-    } else if ((item >= ITEM_WEIRD_EGG && item <= ITEM_CLAIM_CHECK) || (item >= ITEM_PICTOBOX && item <= ITEM_SHRINE_KEY)) {
+    } else if ((item >= ITEM_WEIRD_EGG && item <= ITEM_CLAIM_CHECK) || (item >= ITEM_PICTOBOX && item <= ITEM_CANE_OF_SOMARIA)) {
         temp = INV_CONTENT(item);
         INV_CONTENT(item) = item;
 
@@ -2673,7 +2673,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_SHRINE_KEY) || (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK) ) {
+    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_CANE_OF_SOMARIA) || (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK) ) {
         return ITEM_NONE;
     }
 

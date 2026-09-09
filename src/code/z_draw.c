@@ -98,6 +98,7 @@
 #include "assets/objects/object_gi_gold_dust/object_gi_gold_dust.h"
 #include "assets/objects/object_gi_camera/object_gi_camera.h"
 #include "assets/objects/object_gi_room_key/object_gi_room_key.h"
+#include "assets/objects/object_gi_cane/object_gi_cane.h"
 #include "assets/objects/object_gi_title_deed/object_gi_title_deed.h"
 #include "assets/objects/object_st/object_st.h"
 
@@ -392,7 +393,7 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawOpa0, { gGiKokiriSwordDL } },
     // GID_SKULL_TOKEN_2
     { GetItem_DrawSkullToken, { gSkulltulaTokenDL, gSkulltulaTokenFlameDL } },
-    { GetItem_DrawMirrorShield, { gGiMirrorShieldMMDL, gGiMirrorShieldEmptyMMDL } },                                                                               // GID_SHIELD_MIRROR_MM,
+    { GetItem_DrawMirrorShield, { gGiMirrorShieldMMDL, gGiMirrorShieldEmptyMMDL } },                                                                               // GID_SHIELD_MIRROR_MM
     { GetItem_DrawOpa0,         { gGiWoodenShieldDL } },                                                                                                           // GID_SHIELD_WOODEN
     { GetItem_DrawOpa0Xlu1,     { gGiHerosShieldEmblemDL, gGiHerosShieldDL } },                                                                                    // GID_SHIELD_HEROS
     { GetItem_DrawOpa01,        { gGiMetalShieldFrameDL, gGiMetalShieldSymbolDL } },                                                                               // GID_SHIELD_METAL
@@ -410,8 +411,9 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawOpa0,         { gGiGoldenFeatherDL } },                                                                                                          // GID_GOLDEN_FEATHER
     { GetItem_DrawOpa0Xlu1,     { gGiGreatFairysSwordBladeDL, gGiGreatFairysSwordHiltEmblemDL } },                                                                 // GID_SWORD_FAIRYS
 	{ GetItem_DrawOpa0,         { gGiGoldDustPowderDL } },                                                                                                         // GID_GOLD_DUST
-    { GetItem_DrawOpa0Xlu1,     { gGiPictoBoxFrameDL, gGiPictoBoxBodyAndLensDL } },                                                                                // GID_PICTOGRAPH_BOX,
+    { GetItem_DrawOpa0Xlu1,     { gGiPictoBoxFrameDL, gGiPictoBoxBodyAndLensDL } },                                                                                // GID_PICTOGRAPH_BOX
     { GetItem_DrawXlu0,         { gGiRoomKeyDL } },                                                                                                                // GID_ROOM_KEY
+    { GetItem_DrawOpa0,         { gGiCaneOfSomariaDL } },                                                                                                          // GID_CANE_OF_SOMARIA
     { GetItem_DrawPotion,       { gGiPotionPotDL, gGiPurplePotColorDL, gGiPurpleLiquidColorDL, gGiPotionLiquidDL, gGiPurplePatternColorDL, gGiPotionPatternDL } }, // GID_BOTTLE_POTION_SHIELD
 	{ GetItem_DrawOpa0,         { gGiTitleDeedLandColorDL } },                                                                                                     // GID_LAND_TITLE_DEED
     { GetItem_DrawOpa0,         { gGiPegasusBootsDL } },                                                                                                           // GID_BOOTS_PEGASUS

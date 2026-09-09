@@ -318,8 +318,8 @@ u64 gShrineKeyItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "assets/textures/item_name_static/gShrineKeyItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gCQ1ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gShrineKeyItemNameJPNTex.ia4.inc.c"
+u64 gCaneOfSomariaItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gCaneOfSomariaItemNameJPNTex.ia4.inc.c"
 };
 
 u64 gCQ2ItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
