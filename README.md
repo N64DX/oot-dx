@@ -34,6 +34,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [MM Recomp Bomb Arrow](https://github.com/a-priestley/MMRecompBombArrows)
 - [MM Recomp Textured Stars](https://github.com/danielryb/MMRecompTexturedStars)
 - [MM Recomp 6 Save Slots](https://github.com/SilntRavn/MajorasMask-Ultimate-6-Save-Slots)
+- [Not Enough Items SoH fork](https://github.com/skijer/Shipwright/tree/Not-Enough-Items)
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
@@ -45,8 +46,10 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Kenton M:** Roc's Feather concept
 - **Nicko (Airi):** DK64 Expansion Pak warning display
 - **Nokaubure:** Autosave concept, Gohma debris, ISG fix, Teleporter
+- **Nukumnehtar:** Cane of Byrna/Somaria item icon
 - **OoT Randomizer:** Key chest textures
 - **SilntRavn:** 6 Save Slots layout
+- **Skijer:** custom items concepts & models (Cane of Byrna/Somaria, Pegasus Boots)
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
 - **thinedave & Aegiker:** Energy (stamina) wheel
