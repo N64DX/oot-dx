@@ -13,6 +13,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Item_Somaria_Cube"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Item_Somaria_Cube/z_item_somaria_cube.o"
+endseg
+
+beginseg
     name "ovl_Bg_Weather"
     compress
     flags OVERLAY
