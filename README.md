@@ -44,6 +44,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Kenton M:** Roc's Feather concept
 - **Nicko (Airi):** DK64 Expansion Pak warning display
 - **Nokaubure:** Autosave concept, Gohma debris, ISG fix, Teleporter
+- **Nukumnehtar:** Cane of Somaria item icon
 - **OoT Randomizer:** Key chest textures
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
