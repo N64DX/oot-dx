@@ -66,10 +66,10 @@ ActorEntry oceanside_spider_house_room_3ActorEntry_000058[] = {
     { ACTOR_EN_POH_SOUL,     { 385, -100, -1370 }, {      0,      0,    0 }, 0x0016 },
 
     // Room 4
-    { ACTOR_EN_ST,          { 1589, 380, -1262 }, {                  0, 0xC000, 0 }, 0x0001 },
-    { ACTOR_EN_BOX,         { 1620, 120, -1263 }, { GI_CANE_OF_SOMARIA, 0x4000, 0 }, 0x0000 }, // Chest: 00, Cane of Somaria
-    { ACTOR_BG_HIDAN_KOUSI, { 1319, 120, -1275 }, {                  0, 0x4000, 0 }, 0x3803 },
-    { ACTOR_OBJ_SWITCH,     { 1850, 120, -1265 }, {                  0, 0x4000, 0 }, 0x3820 },
+    { ACTOR_EN_ST,          { 1589, 380, -1262 }, {                0, 0xC000, 0 }, 0x0001 },
+    { ACTOR_EN_BOX,         { 1620, 120, -1263 }, { GI_CANE_OF_BYRNA, 0x4000, 0 }, 0x0000 }, // Chest: 00, Cane of Byrna
+    { ACTOR_BG_HIDAN_KOUSI, { 1319, 120, -1275 }, {                0, 0x4000, 0 }, 0x3803 },
+    { ACTOR_OBJ_SWITCH,     { 1850, 120, -1265 }, {                0, 0x4000, 0 }, 0x3820 },
 };
 
 RoomShapeCullable oceanside_spider_house_room_3RoomShapeCullable_0001C0 = { 
