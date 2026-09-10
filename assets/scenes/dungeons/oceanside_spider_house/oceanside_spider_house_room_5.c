@@ -32,10 +32,10 @@ s16 oceanside_spider_house_room_5ObjectList_000040[] = {
 };
 
 ActorEntry oceanside_spider_house_room_5ActorEntry_000058[] = {
-    { ACTOR_EN_SW,          { -882,   -8, -1630 }, {     0, 0x5A,   0 }, 0xFF07 },
-    { ACTOR_EN_SW,          { -796,   65, -1544 }, {  0xB4,    0,   0 }, 0xFF27 },
-    { ACTOR_EN_SW,          { -593,  -27, -1374 }, {     0,    0,   0 }, 0xFF2B },
-    { ACTOR_EN_ST,          { -641,   27, -1661 }, {     0, 0x5A,   0 }, 0x003F },
+    { ACTOR_EN_SW,          { -882,   -8, -1630 }, {     0, 0x5A,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          { -796,   65, -1544 }, {  0xB4,    0,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          { -593,  -27, -1374 }, {     0,    0,   0 }, 0x0000 },
+    { ACTOR_EN_ST,          { -641,   27, -1661 }, {     0, 0x5A,   0 }, 0x0000 },
     { ACTOR_EN_MKK,         { -816,   19, -1781 }, {     0, 0x5A,   0 }, 0xC200 },
     { ACTOR_OBJ_TSUBO,      { -713,   85, -1593 }, {     0,    0, 0x2 }, 0x001A },
     { ACTOR_OBJ_TSUBO,      { -728,  -60, -1757 }, {     0,    0,   0 }, 0x400A },

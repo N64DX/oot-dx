@@ -5,6 +5,7 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
+#include "item.h"
 
 SceneCmd oceanside_spider_house_room_3[] = {
     SCENE_CMD_ECHO_SETTINGS(4),
@@ -12,8 +13,8 @@ SceneCmd oceanside_spider_house_room_3[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&oceanside_spider_house_room_3RoomShapeCullable_0001C0),
-    SCENE_CMD_OBJECT_LIST(7, oceanside_spider_house_room_3ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(7, oceanside_spider_house_room_3ActorEntry_000058),
+    SCENE_CMD_OBJECT_LIST(8, oceanside_spider_house_room_3ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(7 + 4, oceanside_spider_house_room_3ActorEntry_000058),
     SCENE_CMD_END(),
 };
 
@@ -29,14 +30,16 @@ s16 oceanside_spider_house_room_3ObjectList_000040[] = {
   //OBJECT_KIN2_OBJ,
     OBJECT_SKB,
     OBJECT_D_HSBLOCK,
+    OBJECT_HIDAN_OBJECTS,
 };
 
 ActorEntry oceanside_spider_house_room_3ActorEntry_000058[] = {
-    { ACTOR_EN_SW,           { 138,   70, -1020 }, {    0,  0x5A,    0 }, 0x011F },
-    { ACTOR_EN_SW,           { 419,  100, -1292 }, {    0,  0xB4,    0 }, 0xFF42 },
-    { ACTOR_EN_SW,           { 439,  100, -1243 }, {    0,  0x2D,    0 }, 0xFF46 },
-    { ACTOR_EN_SW,           { 402,  100, -1241 }, {    0, 0x13B,    0 }, 0xFF4A },
-    { ACTOR_EN_SW,           { 663, -120, -1503 }, {    0, 0x138,    0 }, 0xFF65 },
+    // Room 3
+    { ACTOR_EN_SW,           { 138,   70, -1020 }, {    0,  0x5A,    0 }, 0x0000 },
+    { ACTOR_EN_SW,           { 419,  100, -1292 }, {    0,  0xB4,    0 }, 0x0000 },
+    { ACTOR_EN_SW,           { 439,  100, -1243 }, {    0,  0x2D,    0 }, 0x0000 },
+    { ACTOR_EN_SW,           { 402,  100, -1241 }, {    0, 0x13B,    0 }, 0x0000 },
+    { ACTOR_EN_SW,           { 663, -120, -1503 }, {    0, 0x138,    0 }, 0x0000 },
   //{ ACTOR_TG_SW,           { 420, -120, -1260 }, {  0x3,  0x14, 0x1E }, 0x0040 },
   //{ ACTOR_TG_SW,           { 420, -120, -1260 }, {  0x3,  0x14, 0x1E }, 0x0044 },
   //{ ACTOR_TG_SW,           { 420, -120, -1260 }, {  0x3,  0x14, 0x1E }, 0x0048 },
@@ -54,15 +57,22 @@ ActorEntry oceanside_spider_house_room_3ActorEntry_000058[] = {
   //{ ACTOR_BG_KIN2_PICTURE, { 359,  -60, -1532 }, {    0,     0,    0 }, 0x003F },
   //{ ACTOR_BG_KIN2_PICTURE, { 479,  -60, -1531 }, {    0,     0,    0 }, 0x0013 },
   //{ ACTOR_BG_KIN2_FENCE,   { 716, -120, -1263 }, {    0, 0x10E,    0 }, 0x0018 },
+
+    // Room 4
+    { ACTOR_EN_ST,          { 1589, 380, -1262 }, {                  0, 0xC000, 0 }, 0x0001 },
+    { ACTOR_EN_BOX,         { 1620, 120, -1263 }, { GI_CANE_OF_SOMARIA, 0x4000, 0 }, 0x0000 }, // Chest: 00, Cane of Somaria
+    { ACTOR_BG_HIDAN_KOUSI, { 1319, 120, -1275 }, {                  0, 0x4000, 0 }, 0x3803 },
+    { ACTOR_OBJ_SWITCH,     { 1850, 120, -1265 }, {                  0, 0x4000, 0 }, 0x3820 },
 };
 
 RoomShapeCullable oceanside_spider_house_room_3RoomShapeCullable_0001C0 = { 
-    2, 23,
+    2, 23 + 12,
     oceanside_spider_house_room_3RoomShapeCullableEntry_0001CC,
     oceanside_spider_house_room_3RoomShapeCullableEntry_0001CC + ARRAY_COUNTU(oceanside_spider_house_room_3RoomShapeCullableEntry_0001CC)
 };
 
-RoomShapeCullableEntry oceanside_spider_house_room_3RoomShapeCullableEntry_0001CC[23] = {
+RoomShapeCullableEntry oceanside_spider_house_room_3RoomShapeCullableEntry_0001CC[23 + 12] = {
+    // Room 3
     { {    420,     80,  -1263 },    426, oceanside_spider_house_room_3DL_001540, NULL },
     { {    420,    114,  -1263 },     38, oceanside_spider_house_room_3DL_006DC8, NULL },
     { {    690,     -9,  -1263 },    130, oceanside_spider_house_room_3DL_003B00, NULL },
@@ -72,8 +82,8 @@ RoomShapeCullableEntry oceanside_spider_house_room_3RoomShapeCullableEntry_0001C
     { {    424,   -105,  -1263 },    132, oceanside_spider_house_room_3DL_006818, NULL },
     { {    420,     65,  -1263 },    382, oceanside_spider_house_room_3DL_006140, NULL },
     { {   1789,    300,  -1261 },    314, oceanside_spider_house_room_3DL_004EE0, NULL },
-    { {    420,   -120,  -1263 },   -170, oceanside_spider_house_room_3DL_007208, NULL },
-    { {    690,     12,  -1263 },   -232, oceanside_spider_house_room_3DL_007500, NULL },
+    { {    420,   -120,  -1263 },    170, oceanside_spider_house_room_3DL_007208, NULL },
+    { {    690,     12,  -1263 },    232, oceanside_spider_house_room_3DL_007500, NULL },
     { {   1020,     75,  -1263 },    364, oceanside_spider_house_room_3DL_003490, NULL },
     { {   1365,    180,  -1263 },    508, oceanside_spider_house_room_3DL_003FE0, NULL },
     { {    420,     80,  -1263 },     64, oceanside_spider_house_room_3DL_006BB8, NULL },
@@ -86,9 +96,25 @@ RoomShapeCullableEntry oceanside_spider_house_room_3RoomShapeCullableEntry_0001C
     { {    690,      7,  -1263 },     80, oceanside_spider_house_room_3DL_002F40, NULL },
     { {    135,    -63,  -1263 },     76, oceanside_spider_house_room_3DL_0043B8, NULL },
     { {    673,     12,  -1263 },    232, oceanside_spider_house_room_3DL_0007A0, NULL },
+
+    // Room 4
+    { {    690,    -90,  -1263 },     58, oceanside_spider_house_room_4DL_0019E8, NULL },
+    { {   1035,      0,  -1263 },    934, oceanside_spider_house_room_4DL_002020, NULL },
+    { {   1620,    300,  -1263 },    364, oceanside_spider_house_room_4DL_0009D0, NULL },
+    { {   1620,    120,  -1263 },    162, oceanside_spider_house_room_4DL_0011C8, NULL },
+    { {    420,   -120,  -1263 },    170, oceanside_spider_house_room_4DL_003B10, NULL },
+    { {   1620,    120,  -1263 },    128, oceanside_spider_house_room_4DL_003D58, NULL },
+    { {    645,   -120,  -1263 },     92, oceanside_spider_house_room_4DL_001B98, NULL },
+    { {   1620,    300,  -1263 },    370, oceanside_spider_house_room_4DL_000E78, NULL },
+    { {   1020,     75,  -1263 },    364, oceanside_spider_house_room_4DL_0016F8, NULL },
+    { {    150,    -30,  -1263 },    286, oceanside_spider_house_room_4DL_003158, NULL },
+    { {    945,    180,  -1263 },    880, oceanside_spider_house_room_4DL_002BB8, NULL },
+    { {    424,   -105,  -1263 },    132, oceanside_spider_house_room_4DL_003800, NULL },
 };
 
 s32 oceanside_spider_house_room_3_terminatorMaybe_00033C = { 0x01000000 };
+
+// Room 3
 
 Vtx oceanside_spider_house_room_3Vtx_000340[] = {
 #include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_3Vtx_000340.vtx.inc"
@@ -1014,5 +1040,501 @@ Gfx oceanside_spider_house_room_3DL_007500[] = {
     gsSP2Triangles(12, 15, 16, 0, 12, 16, 17, 0),
     gsSP2Triangles(18, 19, 20, 0, 18, 20, 21, 0),
     gsSP2Triangles(18, 21, 22, 0, 18, 22, 23, 0),
+    gsSPEndDisplayList(),
+};
+
+// Room 4
+
+Vtx oceanside_spider_house_room_4Vtx_000150[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_000150.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_000BB8[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_000BB8.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_000FE8[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_000FE8.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_001318[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_001318.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_001868[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_001868.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_001AD8[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_001AD8.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_001C70[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_001C70.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_0021C8[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_0021C8.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_003058[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_003058.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_003240[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_003240.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_003A00[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_003A00.vtx.inc"
+};
+
+Vtx oceanside_spider_house_room_4Vtx_003C08[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Vtx_003C08.vtx.inc"
+};
+
+u64 oceanside_spider_house_room_4Tex_003E98[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Tex_003E98.rgba16.inc.c"
+};
+
+u64 oceanside_spider_house_room_4Tex_004698[] = {
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4Tex_004698.ia8.inc.c"
+};
+
+Gfx oceanside_spider_house_room_4DL_0009D0[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_000150[128], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, 0, TEXEL0, 0, TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0xAF, 255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock_4b(oceanside_spider_house_sceneTex_00AEC0, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadMultiBlock(oceanside_spider_house_sceneTex_00CEC0, 0x0100, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 15, 15),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_000150, 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_000150[32], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_000150[64], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_000150[96], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_000E78[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_000BB8[36], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00C6C0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, 15),
+    gsDPLoadMultiBlock_4b(oceanside_spider_house_sceneTex_00AEC0, 0x0100, 1, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_000BB8, 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
+    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
+    gsSP2Triangles(6, 8, 9, 0, 6, 9, 7, 0),
+    gsSP2Triangles(8, 10, 11, 0, 8, 11, 9, 0),
+    gsSP2Triangles(10, 12, 13, 0, 10, 13, 11, 0),
+    gsSP2Triangles(12, 14, 15, 0, 12, 15, 13, 0),
+    gsSP2Triangles(16, 0, 3, 0, 16, 3, 17, 0),
+    gsSP2Triangles(0, 18, 19, 0, 16, 20, 18, 0),
+    gsSP2Triangles(16, 18, 0, 0, 21, 22, 14, 0),
+    gsSP2Triangles(23, 24, 1, 0, 23, 1, 0, 0),
+    gsSP2Triangles(24, 25, 4, 0, 24, 4, 1, 0),
+    gsSP2Triangles(26, 27, 8, 0, 26, 8, 6, 0),
+    gsSP2Triangles(27, 28, 10, 0, 27, 10, 8, 0),
+    gsSP2Triangles(25, 26, 6, 0, 25, 6, 4, 0),
+    gsSP2Triangles(28, 29, 12, 0, 28, 12, 10, 0),
+    gsSP2Triangles(29, 30, 14, 0, 29, 14, 12, 0),
+    gsSP2Triangles(31, 23, 0, 0, 31, 0, 19, 0),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_000BB8[32], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_0011C8[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_000FE8[22], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, 0, TEXEL0, 0, TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0xB9, 255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock_4b(oceanside_spider_house_sceneTex_00AEC0, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadMultiBlock(oceanside_spider_house_room_4Tex_003E98, 0x0100, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_000FE8, 22, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
+    gsSP2Triangles(3, 2, 4, 0, 5, 6, 7, 0),
+    gsSP2Triangles(6, 1, 7, 0, 1, 0, 7, 0),
+    gsSP2Triangles(8, 9, 6, 0, 8, 6, 5, 0),
+    gsSP2Triangles(9, 1, 6, 0, 10, 11, 12, 0),
+    gsSP2Triangles(11, 1, 12, 0, 1, 9, 12, 0),
+    gsSP2Triangles(13, 14, 11, 0, 13, 11, 10, 0),
+    gsSP2Triangles(14, 1, 11, 0, 15, 1, 16, 0),
+    gsSP2Triangles(1, 14, 16, 0, 17, 15, 16, 0),
+    gsSP2Triangles(14, 13, 16, 0, 4, 2, 18, 0),
+    gsSP2Triangles(2, 1, 19, 0, 1, 20, 19, 0),
+    gsSP2Triangles(20, 21, 19, 0, 20, 1, 15, 0),
+    gsSP2Triangles(21, 20, 15, 0, 21, 15, 17, 0),
+    gsSP2Triangles(16, 13, 17, 0, 19, 21, 4, 0),
+    gsSP2Triangles(9, 8, 12, 0, 12, 8, 10, 0),
+    gsSP2Triangles(0, 3, 7, 0, 7, 3, 5, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_0016F8[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_001318[54], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0x7D, 255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock_4b(oceanside_spider_house_sceneTex_00AEC0, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadMultiBlock(oceanside_spider_house_sceneTex_00C6C0, 0x0100, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_001318, 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(3, 8, 9, 0, 3, 9, 0, 0),
+    gsSP2Triangles(10, 7, 6, 0, 10, 6, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(17, 20, 21, 0, 17, 21, 18, 0),
+    gsSP2Triangles(22, 23, 24, 0, 22, 24, 25, 0),
+    gsSP2Triangles(23, 26, 27, 0, 23, 27, 24, 0),
+    gsSP2Triangles(28, 25, 29, 0, 28, 29, 30, 0),
+    gsSP2Triangles(29, 27, 31, 0, 29, 31, 30, 0),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_001318[32], 22, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(2, 4, 5, 0, 2, 5, 3, 0),
+    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
+    gsSP2Triangles(8, 10, 11, 0, 8, 11, 9, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(12, 15, 16, 0, 12, 16, 17, 0),
+    gsSP2Triangles(18, 19, 15, 0, 18, 15, 14, 0),
+    gsSP2Triangles(20, 17, 16, 0, 20, 16, 21, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_0019E8[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_001868[16], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0xC3, 255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock_4b(oceanside_spider_house_sceneTex_00B6C0, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, 1, G_TX_NOLOD),
+    gsDPLoadMultiBlock(oceanside_spider_house_sceneTex_00C6C0, 0x0100, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_001868, 16, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_001B98[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_001AD8[4], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, 0, TEXEL0, 0, TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0xFF, 255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock_4b(oceanside_spider_house_sceneTex_00AEC0, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, 14, 15),
+    gsDPLoadMultiBlock(oceanside_spider_house_sceneTex_00D6C0, 0x0100, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, 5, 14, 1),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_001AD8, 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_002020[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_001C70[51], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, 0, TEXEL0, 0, TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00CEC0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadMultiBlock_4b(oceanside_spider_house_sceneTex_00AEC0, 0x0100, 1, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_001C70, 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
+    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
+    gsSP2Triangles(6, 8, 9, 0, 6, 9, 7, 0),
+    gsSP2Triangles(10, 0, 3, 0, 10, 3, 11, 0),
+    gsSP2Triangles(12, 10, 11, 0, 12, 11, 13, 0),
+    gsSP2Triangles(9, 8, 14, 0, 9, 14, 15, 0),
+    gsSP2Triangles(12, 13, 16, 0, 13, 15, 17, 0),
+    gsSP2Triangles(13, 17, 16, 0, 15, 14, 17, 0),
+    gsSP2Triangles(18, 19, 20, 0, 18, 20, 21, 0),
+    gsSP2Triangles(22, 23, 24, 0, 22, 24, 25, 0),
+    gsSP2Triangles(26, 27, 28, 0, 26, 28, 29, 0),
+    gsSP1Triangle(30, 31, 27, 0),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_001C70[32], 19, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 0, 0),
+    gsSP2Triangles(5, 3, 0, 0, 6, 3, 7, 0),
+    gsSP2Triangles(3, 8, 7, 0, 6, 3, 7, 0),
+    gsSP2Triangles(3, 8, 7, 0, 1, 0, 4, 0),
+    gsSP2Triangles(2, 5, 0, 0, 9, 6, 7, 0),
+    gsSP2Triangles(10, 7, 8, 0, 11, 12, 13, 0),
+    gsSP2Triangles(14, 15, 16, 0, 3, 6, 14, 0),
+    gsSP2Triangles(4, 3, 14, 0, 8, 3, 12, 0),
+    gsSP2Triangles(3, 5, 12, 0, 11, 8, 12, 0),
+    gsSP2Triangles(5, 13, 12, 0, 6, 15, 14, 0),
+    gsSP2Triangles(16, 4, 14, 0, 6, 9, 17, 0),
+    gsSP2Triangles(6, 17, 15, 0, 4, 16, 18, 0),
+    gsSP1Triangle(4, 18, 1, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_002BB8[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_0021C8[151], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(oceanside_spider_house_sceneTLUT_00FC40),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00E600, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_0021C8, 28, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 4, 0, 8, 4, 7, 0),
+    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
+    gsSP2Triangles(14, 10, 13, 0, 14, 13, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 16, 19, 0, 20, 19, 21, 0),
+    gsSP2Triangles(22, 23, 24, 0, 22, 24, 25, 0),
+    gsSP2Triangles(24, 26, 27, 0, 24, 27, 25, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(oceanside_spider_house_sceneTLUT_00FC40),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00EE00, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_0021C8[28], 9, 0),
+    gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
+    gsSP2Triangles(3, 1, 4, 0, 4, 1, 5, 0),
+    gsSP2Triangles(5, 1, 6, 0, 6, 1, 7, 0),
+    gsSP2Triangles(7, 1, 8, 0, 7, 1, 8, 0),
+    gsSP2Triangles(6, 1, 7, 0, 5, 1, 6, 0),
+    gsSP2Triangles(4, 1, 5, 0, 3, 1, 4, 0),
+    gsSP2Triangles(2, 1, 3, 0, 0, 1, 2, 0),
+    gsSP2Triangles(8, 1, 0, 0, 8, 1, 0, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(oceanside_spider_house_sceneTLUT_00FC40),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00F040, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_0021C8[37], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_0021C8[69], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(oceanside_spider_house_sceneTLUT_00FC40),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00F340, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_0021C8[101], 16, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(oceanside_spider_house_sceneTLUT_00FC40),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00F440, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_0021C8[117], 28, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(oceanside_spider_house_sceneTLUT_00FC40),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00F840, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_0021C8[145], 6, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(2, 4, 5, 0, 2, 5, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_003158[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_003058[8], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00C6C0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadMultiBlock_4b(oceanside_spider_house_sceneTex_00B6C0, 0x0100, 1, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_003058, 8, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 3, 2, 0, 4, 2, 5, 0),
+    gsSP2Triangles(6, 7, 4, 0, 6, 4, 5, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_003800[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_003240[84], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(oceanside_spider_house_sceneTLUT_00FC40),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00E200, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPSetGeometryMode(G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_BOTH | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_003240, 20, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 8, 0, 12, 8, 11, 0),
+    gsSP2Triangles(14, 15, 16, 0, 14, 16, 17, 0),
+    gsSP2Triangles(16, 18, 19, 0, 16, 19, 17, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(oceanside_spider_house_sceneTLUT_00FC40),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00F140, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_003240[20], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_003240[52], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_003B10[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_003A00[9], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, TEXEL0, 0, TEXEL0, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0xFF, 255, 255, 255, 129),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(oceanside_spider_house_sceneTex_00BEC0, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, 15),
+    gsDPLoadMultiBlock(oceanside_spider_house_room_4Tex_003E98, 0x0100, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_003A00, 9, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
+    gsSP2Triangles(4, 0, 5, 0, 0, 6, 5, 0),
+    gsSP2Triangles(0, 4, 7, 0, 1, 0, 7, 0),
+    gsSP2Triangles(0, 4, 7, 0, 1, 0, 7, 0),
+    gsSP2Triangles(6, 0, 8, 0, 0, 3, 8, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx oceanside_spider_house_room_4DL_003D58[] = {
+    gsSPVertex(&oceanside_spider_house_room_4Vtx_003C08[13], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
+    gsDPSetPrimColor(0, 0xFF, 255, 255, 255, 49),
+    gsDPSetEnvColor(55, 75, 155, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(oceanside_spider_house_room_4Tex_004698, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING),
+    gsSPClearGeometryMode(G_CULL_FRONT | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPVertex(oceanside_spider_house_room_4Vtx_003C08, 13, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
+    gsSP2Triangles(4, 5, 0, 0, 6, 4, 0, 0),
+    gsSP2Triangles(0, 7, 1, 0, 0, 8, 7, 0),
+    gsSP2Triangles(9, 10, 0, 0, 10, 6, 0, 0),
+    gsSP2Triangles(3, 11, 0, 0, 11, 9, 0, 0),
+    gsSP2Triangles(0, 12, 8, 0, 0, 5, 12, 0),
     gsSPEndDisplayList(),
 };

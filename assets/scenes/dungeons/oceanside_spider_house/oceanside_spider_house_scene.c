@@ -13,14 +13,14 @@
 
 SceneCmd oceanside_spider_house_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(5, NATURE_ID_NONE, NA_BGM_CAVERN),
-    SCENE_CMD_ROOM_LIST(6, oceanside_spider_house_sceneRoomList0x000130),
-    SCENE_CMD_TRANSITION_ACTOR_LIST(5, oceanside_spider_house_sceneTransitionActorList_0000A8),
+    SCENE_CMD_ROOM_LIST(5, oceanside_spider_house_sceneRoomList0x000130),
+    SCENE_CMD_TRANSITION_ACTOR_LIST(4, oceanside_spider_house_sceneTransitionActorList_0000A8),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_FORSAKEN_KINGDOM),
     SCENE_CMD_COL_HEADER(&oceanside_spider_house_sceneCollisionHeader_00AE8C),
     SCENE_CMD_SPAWN_LIST(oceanside_spider_house_sceneEntranceList0x000160),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_DUNGEON, OBJECT_GAMEPLAY_DANGEON_KEEP),
     SCENE_CMD_PATH_LIST(oceanside_spider_house_scenePathway_000220),
-    SCENE_CMD_PLAYER_ENTRY_LIST(1, oceanside_spider_house_sceneStartPositionList0x000098),
+    SCENE_CMD_PLAYER_ENTRY_LIST(7, oceanside_spider_house_sceneStartPositionList0x000098),
     SCENE_CMD_SKYBOX_SETTINGS(SKYBOX_NONE, 0, LIGHT_MODE_SETTINGS),
     SCENE_CMD_EXIT_LIST(oceanside_spider_house_sceneExitList_000164),
     SCENE_CMD_ENV_LIGHT_SETTINGS(4, oceanside_spider_house_sceneLightSettings0x000168),
@@ -28,15 +28,20 @@ SceneCmd oceanside_spider_house_scene[] = {
 };
 
 ActorEntry oceanside_spider_house_sceneStartPositionList0x000098[] = {
-    { ACTOR_PLAYER, { 1, 540, 643 }, { 0, 0x8000, 0 }, 0x0F0F },
+    { ACTOR_PLAYER, {    1,  540,   643 }, { 0, 0x8000, 0 }, 0x0F0F }, // Main entrance
+    { ACTOR_PLAYER, {    0,  540,   640 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 0
+    { ACTOR_PLAYER, {    0,  180, -1075 }, { 0, 0x8000, 0 }, 0x0DFF }, // Debug warp room 1
+    { ACTOR_PLAYER, { -400,  180, -1140 }, { 0, 0xC000, 0 }, 0x0DFF }, // Debug warp room 2
+    { ACTOR_PLAYER, {  200, -120, -1265 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 3
+    { ACTOR_PLAYER, { 1375,  120, -1265 }, { 0, 0x4000, 0 }, 0x0DFF }, // Debug warp room 4
+    { ACTOR_PLAYER, { -400, -120, -1665 }, { 0, 0xC000, 0 }, 0x0DFF }, // Debug warp room 5
 };
 
 TransitionActorEntry oceanside_spider_house_sceneTransitionActorList_0000A8[] = {
-    { 3, 255, 4, 255, ACTOR_EN_HOLL, {  840, -120, -1263 }, 0x2D80, 0x017F },
-    { 1, 255, 0, 255, ACTOR_EN_DOOR, {    0,  180, -1000 },   0x80, 0x007F },
-    { 1, 255, 3, 255, ACTOR_EN_DOOR, {  120, -120, -1263 }, 0x2D80, 0x007F },
-    { 5, 255, 1, 255, ACTOR_EN_DOOR, { -315, -120, -1660 }, 0x2D80, 0x007F },
-    { 2, 255, 1, 255, ACTOR_EN_DOOR, { -315,  180, -1143 }, 0x2D80, 0x007F },
+    { 1, 255, 0, 255, ACTOR_EN_DOOR, {    0,  180, -1000 },      0, 0x003F },
+    { 1, 255, 3, 255, ACTOR_EN_DOOR, {  120, -120, -1263 }, 0x4000, 0x003F },
+    { 4, 255, 1, 255, ACTOR_EN_DOOR, { -315, -120, -1660 }, 0x4000, 0x003F },
+    { 2, 255, 1, 255, ACTOR_EN_DOOR, { -315,  180, -1143 }, 0x4000, 0x003F },
 };
 
 RomFile oceanside_spider_house_sceneRoomList0x000130[] = {
@@ -44,12 +49,17 @@ RomFile oceanside_spider_house_sceneRoomList0x000130[] = {
     { (uintptr_t)_oceanside_spider_house_room_1SegmentRomStart, (uintptr_t)_oceanside_spider_house_room_1SegmentRomEnd },
     { (uintptr_t)_oceanside_spider_house_room_2SegmentRomStart, (uintptr_t)_oceanside_spider_house_room_2SegmentRomEnd },
     { (uintptr_t)_oceanside_spider_house_room_3SegmentRomStart, (uintptr_t)_oceanside_spider_house_room_3SegmentRomEnd },
-    { (uintptr_t)_oceanside_spider_house_room_4SegmentRomStart, (uintptr_t)_oceanside_spider_house_room_4SegmentRomEnd },
     { (uintptr_t)_oceanside_spider_house_room_5SegmentRomStart, (uintptr_t)_oceanside_spider_house_room_5SegmentRomEnd },
 };
 
 Spawn oceanside_spider_house_sceneEntranceList0x000160[] = {
-    { 0x00, 0x00 },
+    { 0x00, 0x00 }, // Main Entrance
+    { 0x01, 0x00 }, // Debug warp room 0
+    { 0x02, 0x01 }, // Debug warp room 1
+    { 0x03, 0x02 }, // Debug warp room 2
+    { 0x04, 0x03 }, // Debug warp room 3
+    { 0x05, 0x03 }, // Debug warp room 4
+    { 0x06, 0x04 }, // Debug warp room 5
 };
 
 u16 oceanside_spider_house_sceneExitList_000164[] = {

@@ -32,12 +32,12 @@ s16 oceanside_spider_house_room_2ObjectList_000040[] = {
 };
 
 ActorEntry oceanside_spider_house_room_2ActorEntry_000058[] = {
-    { ACTOR_EN_SW,           {  -810, 276,  -364 }, { 0,  0xB4, 0 }, 0xFF0B },
-    { ACTOR_EN_SW,           {  -780, 210, -1500 }, { 0,     0, 0 }, 0xFF0F },
-    { ACTOR_EN_SW,           {  -371, 300,  -687 }, { 0,  0xB5, 0 }, 0xFF13 },
-    { ACTOR_EN_SW,           {  -390, 400, -1400 }, { 0, 0x10E, 0 }, 0x0223 },
-    { ACTOR_EN_SW,           { -1168, 208,  -788 }, { 0,  0xB4, 0 }, 0xFF57 },
-    { ACTOR_EN_SW,           { -1073, 218,  -899 }, { 0,     0, 0 }, 0xFF73 },
+    { ACTOR_EN_SW,           {  -810, 276,  -364 }, { 0,  0xB4, 0 }, 0x0000 },
+    { ACTOR_EN_SW,           {  -780, 210, -1500 }, { 0,     0, 0 }, 0x0000 },
+    { ACTOR_EN_SW,           {  -371, 300,  -687 }, { 0,  0xB5, 0 }, 0x0000 },
+    { ACTOR_EN_SW,           {  -390, 400, -1400 }, { 0, 0x10E, 0 }, 0x0000 },
+    { ACTOR_EN_SW,           { -1168, 208,  -788 }, { 0,  0xB4, 0 }, 0x0000 },
+    { ACTOR_EN_SW,           { -1073, 218,  -899 }, { 0,     0, 0 }, 0x0000 },
   //{ ACTOR_EN_HINT_SKB,     {  -603, 302, -1271 }, { 0,  0xB4, 0 }, 0xF001 },
   //{ ACTOR_EN_HINT_SKB,     {  -685, 200,  -729 }, { 0,     0, 0 }, 0xF006 },
     { ACTOR_OBJ_SYOKUDAI,    { -1200, 180,  -840 }, { 0,     0, 0 }, 0x287F },
@@ -65,7 +65,7 @@ RoomShapeCullableEntry oceanside_spider_house_room_2RoomShapeCullableEntry_0001A
     { {   -330,    237,  -1143 },     76, oceanside_spider_house_room_2DL_0070E0, NULL },
     { {   -660,    180,  -1023 },    480, oceanside_spider_house_room_2DL_006A50, NULL },
     { {   -660,    395,  -1023 },    480, oceanside_spider_house_room_2DL_006D90, NULL },
-    { {   -780,    210,  -1383 },    -44, oceanside_spider_house_room_2DL_007F08, NULL },
+    { {   -780,    210,  -1383 },     44, oceanside_spider_house_room_2DL_007F08, NULL },
     { {   -900,    240,  -1198 },    130, oceanside_spider_house_room_2DL_004AF0, NULL },
     { {   -705,    240,   -888 },    154, oceanside_spider_house_room_2DL_003F00, NULL },
     { {   -653,    240,  -1121 },    106, oceanside_spider_house_room_2DL_002FC0, NULL },

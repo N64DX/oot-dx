@@ -461,13 +461,6 @@ beginseg
 endseg
 
 beginseg
-    name "oceanside_spider_house_room_4"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_4.o"
-    number 3
-endseg
-
-beginseg
     name "oceanside_spider_house_room_5"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_5.o"

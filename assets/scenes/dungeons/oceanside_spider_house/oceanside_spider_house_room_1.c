@@ -33,14 +33,14 @@ s16 oceanside_spider_house_room_1ObjectList_000040[] = {
 };
 
 ActorEntry oceanside_spider_house_room_1ActorEntry_000058[] = {
-    { ACTOR_EN_SW,          {   55,  100, -1010 }, {     0,  0xB4,   0 }, 0x0317 },
-    { ACTOR_EN_SW,          { -196,  420, -1204 }, {     0,  0x5A,   0 }, 0x001B },
-    { ACTOR_EN_SW,          {  -83,  -98, -1988 }, {     0,     0,   0 }, 0xFF3B },
-    { ACTOR_EN_SW,          {   63,  236, -1721 }, {     0, 0x13A,   0 }, 0xFF5D },
-    { ACTOR_EN_SW,          {   60,  236, -1554 }, {     0, 0x157,   0 }, 0xFF61 },
-    { ACTOR_EN_SW,          {   61,  -50, -1384 }, {     0,  0xCB,   0 }, 0xFF6D },
-    { ACTOR_EN_SW,          { -285,  234, -1377 }, {     0,  0x5A,   0 }, 0x0777 },
-    { ACTOR_EN_SW,          { -220,   22, -1571 }, {     0,  0xB4,   0 }, 0x057B },
+    { ACTOR_EN_SW,          {   55,  100, -1010 }, {     0,  0xB4,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          { -196,  420, -1204 }, {     0,  0x5A,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          {  -83,  -98, -1988 }, {     0,     0,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          {   63,  236, -1721 }, {     0, 0x13A,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          {   60,  236, -1554 }, {     0, 0x157,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          {   61,  -50, -1384 }, {     0,  0xCB,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          { -285,  234, -1377 }, {     0,  0x5A,   0 }, 0x0000 },
+    { ACTOR_EN_SW,          { -220,   22, -1571 }, {     0,  0xB4,   0 }, 0x0000 },
   //{ ACTOR_TG_SW,          {   61,  180, -1721 }, {   0x4,  0x1E, 0xC }, 0x005C },
   //{ ACTOR_TG_SW,          {   58,  180, -1554 }, {   0x4,  0x1E, 0xC }, 0x0060 },
   //{ ACTOR_TG_SW,          {   61, -120, -1382 }, {   0x4,  0x1E, 0xC }, 0x006C },
@@ -75,8 +75,8 @@ RoomShapeCullable oceanside_spider_house_room_1RoomShapeCullable_000250 = {
 RoomShapeCullableEntry oceanside_spider_house_room_1RoomShapeCullableEntry_00025C[30] = {
     { {    -98,    135,  -1495 },    598, oceanside_spider_house_room_1DL_004510, NULL },
     { {    -98,     30,  -1390 },    434, oceanside_spider_house_room_1DL_004AD0, NULL },
-    { {    -80,    -84,  -1750 },    -68, oceanside_spider_house_room_1DL_00A508, NULL },
-    { {    -98,    167,  -1390 },   -420, oceanside_spider_house_room_1DL_00ABE8, NULL },
+    { {    -80,    -84,  -1750 },     68, oceanside_spider_house_room_1DL_00A508, NULL },
+    { {    -98,    167,  -1390 },    420, oceanside_spider_house_room_1DL_00ABE8, NULL },
     { {   -128,    111,  -1492 },    154, oceanside_spider_house_room_1DL_00A288, NULL },
     { {    -98,    197,  -1492 },    100, oceanside_spider_house_room_1DL_009C68, NULL },
     { {   -195,     55,  -1327 },    210, oceanside_spider_house_room_1DL_009850, NULL },

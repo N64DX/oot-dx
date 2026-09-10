@@ -742,7 +742,6 @@ DECLARE_ROM_SEGMENT(oceanside_spider_house_room_0)
 DECLARE_ROM_SEGMENT(oceanside_spider_house_room_1)
 DECLARE_ROM_SEGMENT(oceanside_spider_house_room_2)
 DECLARE_ROM_SEGMENT(oceanside_spider_house_room_3)
-DECLARE_ROM_SEGMENT(oceanside_spider_house_room_4)
 DECLARE_ROM_SEGMENT(oceanside_spider_house_room_5)
 
 DECLARE_ROM_SEGMENT(fairy_deku_tree_room_0)

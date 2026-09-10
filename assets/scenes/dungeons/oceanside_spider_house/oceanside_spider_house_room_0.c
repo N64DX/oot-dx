@@ -34,22 +34,22 @@ s16 oceanside_spider_house_room_0ObjectList_000040[] = {
 };
 
 ActorEntry oceanside_spider_house_room_0ActorEntry_00005C[] = {
-    { ACTOR_EN_SW,            {   30, 325, -390 }, { 0xB4,  0xB4,    0, }, 0x0433 },
-    { ACTOR_EN_SW,            {  -40, 450, -120 }, { 0xB4,  0x5A,    0, }, 0x0637 },
-    { ACTOR_EN_SW,            { -122, 570, -878 }, { 0x95,     0,    0, }, 0xFF3F },
-    { ACTOR_OBJ_TSUBO,        { -195, 180, -673 }, {    0,     0,    0, }, 0x5A0A },
-    { ACTOR_OBJ_TSUBO,        { -255, 180, -735 }, {    0,     0,    0, }, 0x5C0E },
-    { ACTOR_OBJ_TSUBO,        {  190, 180, -672 }, {    0,     0,    0, }, 0x601E },
-    { ACTOR_OBJ_TSUBO,        {  252, 180, -732 }, {    0,     0,    0, }, 0x621E },
-    { ACTOR_OBJ_SYOKUDAI,     {  255, 180, -855 }, {    0,     0,    0, }, 0x287F },
-    { ACTOR_OBJ_SYOKUDAI,     { -255, 180, -855 }, {    0,     0,    0, }, 0x287F },
-    { ACTOR_OBJ_HSBLOCK,      {    1, 475, -634 }, { 0x2A,  0xB4,    0, }, 0x0002 },
-    { ACTOR_OBJ_HSBLOCK,      {    0, 329, -969 }, {    0,     0,    0, }, 0x0002 },
-  //{ ACTOR_EN_STH,           {    1, 540,  476 }, {    0,  0xB4,    0, }, 0xFE04 },
-  //{ ACTOR_EN_STH,           { -217, 180, -793 }, {    0,  0xF2,    0, }, 0xFE05 },
-  //{ ACTOR_BG_SPDWEB,        {    4, 400, -909 }, { 0x35, 0x123, 0xFF, }, 0x0A01 },
-  //{ ACTOR_BG_SPDWEB,        { -141, 450, -906 }, { 0x64, 0x123, 0xFF, }, 0x0B01 },
-  //{ ACTOR_BG_KIN2_BOMBWALL, {    0, 540,  170 }, {    0,     0,    0, }, 0x0019 },
+    { ACTOR_EN_SW,            {   60, 380, -220 }, {      0, 0xC000,    0, }, 0x0000 },
+    { ACTOR_EN_SW,            {  -60, 450, -120 }, {      0, 0x4000,    0, }, 0x0000 },
+    { ACTOR_EN_SW,            {  -50, 570, -890 }, { 0x1800,      0,    0, }, 0x0000 },
+    { ACTOR_OBJ_TSUBO,        { -195, 180, -673 }, {      0,      0,    0, }, 0x5A04 }, // Collect: 2D, drops Bomb
+    { ACTOR_OBJ_TSUBO,        { -255, 180, -735 }, {      0,      0,    0, }, 0x5C0E }, // Collect: 2C, drops Small Magic Jar
+    { ACTOR_OBJ_TSUBO,        {  190, 180, -672 }, {      0,      0,    0, }, 0x6001 }, // Collect: 30, drops Blue Rupee
+    { ACTOR_OBJ_TSUBO,        {  252, 180, -732 }, {      0,      0,    0, }, 0x6201 }, // Collect: 31, drops Blue Rupee
+    { ACTOR_OBJ_SYOKUDAI,     {  255, 180, -855 }, {      0,      0,    0, }, 0x243F },
+    { ACTOR_OBJ_SYOKUDAI,     { -255, 180, -855 }, {      0,      0,    0, }, 0x243F },
+    { ACTOR_OBJ_HSBLOCK,      {    1, 475, -634 }, { 0x2000, 0x8000,    0, }, 0x0002 },
+    { ACTOR_OBJ_HSBLOCK,      {    0, 329, -969 }, {      0,      0,    0, }, 0x0002 },
+  //{ ACTOR_EN_STH,           {    1, 540,  476 }, {      0,   0xB4,    0, }, 0xFE04 },
+  //{ ACTOR_EN_STH,           { -217, 180, -793 }, {      0,   0xF2,    0, }, 0xFE05 },
+  //{ ACTOR_BG_SPDWEB,        {    4, 400, -909 }, {   0x35,  0x123, 0xFF, }, 0x0A01 },
+  //{ ACTOR_BG_SPDWEB,        { -141, 450, -906 }, {   0x64,  0x123, 0xFF, }, 0x0B01 },
+  //{ ACTOR_BG_KIN2_BOMBWALL, {    0, 540,  170 }, {      0,      0,    0, }, 0x0019 },
 };
 
 RoomShapeCullable oceanside_spider_house_room_0RoomShapeCullable_000160 = { 
@@ -65,12 +65,12 @@ RoomShapeCullableEntry oceanside_spider_house_room_0RoomShapeCullableEntry_00016
     { {      0,    237,   -985 },     76, oceanside_spider_house_room_0DL_002F00, NULL },
     { {      0,    360,   -160 },    850, oceanside_spider_house_room_0DL_001270, NULL },
     { {      0,    180,   -770 },    214, oceanside_spider_house_room_0DL_003348, NULL },
-    { {      0,    590,    860 },   -190, oceanside_spider_house_room_0DL_0038C8, NULL },
-    { {      0,    381,   -970 },    -38, oceanside_spider_house_room_0DL_003A68, NULL },
+    { {      0,    590,    860 },    190, oceanside_spider_house_room_0DL_0038C8, NULL },
+    { {      0,    381,   -970 },     38, oceanside_spider_house_room_0DL_003A68, NULL },
     { {      0,    420,   -201 },    446, oceanside_spider_house_room_0DL_002AD0, NULL },
-    { {      0,    360,   -200 },   -416, oceanside_spider_house_room_0DL_003C48, NULL },
+    { {      0,    360,   -200 },    416, oceanside_spider_house_room_0DL_003C48, NULL },
     { {      0,    225,   -862 },    252, oceanside_spider_house_room_0DL_003648, NULL },
-    { {      0,    328,   -770 },   -316, oceanside_spider_house_room_0DL_004128, NULL },
+    { {      0,    328,   -770 },    316, oceanside_spider_house_room_0DL_004128, NULL },
     { {      0,    720,    410 },    300, oceanside_spider_house_room_0DL_000360, NULL },
     { {      0,    622,    845 },    226, oceanside_spider_house_room_0DL_001FD8, NULL },
     { {      0,    300,   -970 },    218, oceanside_spider_house_room_0DL_000EE0, NULL },

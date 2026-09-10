@@ -6,8 +6,9 @@
 extern s16 oceanside_spider_house_room_3ObjectList_000040[];
 extern ActorEntry oceanside_spider_house_room_3ActorEntry_000058[];
 extern RoomShapeCullable oceanside_spider_house_room_3RoomShapeCullable_0001C0;
-extern RoomShapeCullableEntry oceanside_spider_house_room_3RoomShapeCullableEntry_0001CC[23];
+extern RoomShapeCullableEntry oceanside_spider_house_room_3RoomShapeCullableEntry_0001CC[23 + 12];
 
+// Room 3
 extern Gfx oceanside_spider_house_room_3DL_000460[];
 extern Gfx oceanside_spider_house_room_3DL_0007A0[];
 extern Gfx oceanside_spider_house_room_3DL_001098[];
@@ -31,5 +32,19 @@ extern Gfx oceanside_spider_house_room_3DL_006DC8[];
 extern Gfx oceanside_spider_house_room_3DL_007018[];
 extern Gfx oceanside_spider_house_room_3DL_007208[];
 extern Gfx oceanside_spider_house_room_3DL_007500[];
+
+// Room 4
+extern Gfx oceanside_spider_house_room_4DL_0009D0[];
+extern Gfx oceanside_spider_house_room_4DL_000E78[];
+extern Gfx oceanside_spider_house_room_4DL_0011C8[];
+extern Gfx oceanside_spider_house_room_4DL_0016F8[];
+extern Gfx oceanside_spider_house_room_4DL_0019E8[];
+extern Gfx oceanside_spider_house_room_4DL_001B98[];
+extern Gfx oceanside_spider_house_room_4DL_002020[];
+extern Gfx oceanside_spider_house_room_4DL_002BB8[];
+extern Gfx oceanside_spider_house_room_4DL_003158[];
+extern Gfx oceanside_spider_house_room_4DL_003800[];
+extern Gfx oceanside_spider_house_room_4DL_003B10[];
+extern Gfx oceanside_spider_house_room_4DL_003D58[];
 
 #endif
