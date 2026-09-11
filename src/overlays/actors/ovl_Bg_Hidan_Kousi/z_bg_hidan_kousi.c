@@ -21,6 +21,9 @@
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
+#define TRAPLATCH_CHEST_OPEN (1 << 0)
+#define TRAPLATCH_SWITCH_SET (1 << 1)
+
 void BgHidanKousi_Init(Actor* thisx, PlayState* play);
 void BgHidanKousi_Destroy(Actor* thisx, PlayState* play);
 void BgHidanKousi_Update(Actor* thisx, PlayState* play);
@@ -32,8 +35,10 @@ void func_80889BC0(BgHidanKousi* this, PlayState* play);
 void func_80889C18(BgHidanKousi* this, PlayState* play);
 void func_80889C90(BgHidanKousi* this, PlayState* play);
 void func_80889D28(BgHidanKousi* this, PlayState* play);
+void BgHidanKousi_OpenSlide(BgHidanKousi* this, PlayState* play);
+void BgHidanKousi_CloseSlide(BgHidanKousi* this, PlayState* play);
 
-static f32 D_80889E40[] = { 120.0f, 150.0f, 150.0f };
+static f32 D_80889E40[] = { 120.0f, 150.0f, 150.0f, 150.0f };
 
 ActorProfile Bg_Hidan_Kousi_Profile = {
     /**/ ACTOR_BG_HIDAN_KOUSI,
@@ -55,6 +60,7 @@ static CollisionHeader* sMetalFencesCollisions[] = {
     &gFireTempleMetalFenceWithSlantCol,
     &gFireTempleMetalFenceCol,
     &gFireTempleMetalFence2Col,
+    &gFireTempleMetalFenceCol,
 };
 
 static s16 D_80889E7C[] = {
@@ -68,6 +74,7 @@ static Gfx* sMetalFencesDLs[] = {
     gFireTempleMetalFenceWithSlantDL,
     gFireTempleMetalFenceDL,
     gFireTempleMetalFence2DL,
+    gFireTempleMetalFenceDL,
 };
 
 void BgHidanKousi_SetupAction(BgHidanKousi* this, BgHidanKousiActionFunc actionFunc) {
@@ -93,10 +100,21 @@ void BgHidanKousi_Init(Actor* thisx, PlayState* play) {
     }
 #endif
 
+    this->trapLatch = 0;
+    if (Flags_GetTreasure(play, 0) != 0)
+        this->trapLatch |= TRAPLATCH_CHEST_OPEN;
+    if (Flags_GetSwitch(play, PARAMS_GET_U(thisx->params, 8, 8)) != 0)
+        this->trapLatch |= TRAPLATCH_SWITCH_SET;
+
     CollisionHeader_GetVirtual(sMetalFencesCollisions[PARAMS_GET_U(thisx->params, 0, 8)], &colHeader);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, thisx, colHeader);
     thisx->world.rot.y = D_80889E7C[PARAMS_GET_U(this->dyna.actor.params, 0, 8)] + thisx->shape.rot.y;
-    if (Flags_GetSwitch(play, PARAMS_GET_U(thisx->params, 8, 8))) {
+    if (PARAMS_GET_U(thisx->params, 0, 8) >= 3) {
+        thisx->world.pos.x = this->dyna.actor.home.pos.x;
+        thisx->world.pos.y = this->dyna.actor.home.pos.y + 150.0f;
+        thisx->world.pos.z = this->dyna.actor.home.pos.z;
+        BgHidanKousi_SetupAction(this, func_80889D28);
+    } else if (Flags_GetSwitch(play, PARAMS_GET_U(thisx->params, 8, 8))) {
         func_80889ACC(this);
         BgHidanKousi_SetupAction(this, func_80889D28);
     } else {
@@ -121,7 +139,10 @@ void func_80889ACC(BgHidanKousi* this) {
 
 void func_80889B5C(BgHidanKousi* this, PlayState* play) {
     if (Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 8, 8))) {
-        BgHidanKousi_SetupAction(this, func_80889BC0);
+        if (PARAMS_GET_U(this->dyna.actor.params, 0, 8) >= 3) {
+            this->dyna.actor.speed = 0.0f;
+            BgHidanKousi_SetupAction(this, BgHidanKousi_OpenSlide);
+        } else BgHidanKousi_SetupAction(this, func_80889BC0);
         OnePointCutscene_Attention(play, &this->dyna.actor);
         this->unk_168 = 0xC8;
     }
@@ -159,8 +180,85 @@ void func_80889C90(BgHidanKousi* this, PlayState* play) {
 void func_80889D28(BgHidanKousi* this, PlayState* play) {
 }
 
+void BgHidanKousi_OpenSlide(BgHidanKousi* this, PlayState* play) {
+    Vec3f openPos;
+    Vec3f* worldPos = &this->dyna.actor.world.pos;
+    f32 dx, dy, dz, dist;
+
+    openPos.x = this->dyna.actor.home.pos.x;
+    openPos.y = this->dyna.actor.home.pos.y + 150.0f;
+    openPos.z = this->dyna.actor.home.pos.z;
+    dx = openPos.x - worldPos->x;
+    dy = openPos.y - worldPos->y;
+    dz = openPos.z - worldPos->z;
+    dist = Math_Vec3f_DistXYZ(&openPos, worldPos);
+
+    this->dyna.actor.speed += 0.2f;
+    if (this->dyna.actor.speed > 2.0f)
+        this->dyna.actor.speed = 2.0f;
+    if (dist <= this->dyna.actor.speed || dist < 1.0f) {
+        worldPos->x = openPos.x;
+        worldPos->y = openPos.y;
+        worldPos->z = openPos.z;
+        this->dyna.actor.speed = 0.0f;
+        BgHidanKousi_SetupAction(this, func_80889D28);
+        Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_METALDOOR_STOP);
+    } else {
+        worldPos->x += this->dyna.actor.speed * dx / dist;
+        worldPos->y += this->dyna.actor.speed * dy / dist;
+        worldPos->z += this->dyna.actor.speed * dz / dist;
+        Actor_PlaySfx_Flagged(&this->dyna.actor, NA_SE_EV_METALDOOR_SLIDE - SFX_FLAG);
+    }
+}
+
+void BgHidanKousi_CloseSlide(BgHidanKousi* this, PlayState* play) {
+    Vec3f* homePos = &this->dyna.actor.home.pos;
+    Vec3f* worldPos = &this->dyna.actor.world.pos;
+    f32 dx = homePos->x - worldPos->x;
+    f32 dy = homePos->y - worldPos->y;
+    f32 dz = homePos->z - worldPos->z;
+    f32 dist = Math_Vec3f_DistXYZ(homePos, worldPos);
+
+    if (this->dyna.actor.speed < 8.0f)
+        this->dyna.actor.speed += 0.8f;
+    if (dist <= this->dyna.actor.speed || dist < 1.0f) {
+        worldPos->x = homePos->x;
+        worldPos->y = homePos->y;
+        worldPos->z = homePos->z;
+        this->dyna.actor.speed = 0.0f;
+        BgHidanKousi_SetupAction(this, func_80889B5C);
+        Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_METALDOOR_STOP);
+    } else {
+        worldPos->x += this->dyna.actor.speed * dx / dist;
+        worldPos->y += this->dyna.actor.speed * dy / dist;
+        worldPos->z += this->dyna.actor.speed * dz / dist;
+        Actor_PlaySfx_Flagged(&this->dyna.actor, NA_SE_EV_METALDOOR_SLIDE - SFX_FLAG);
+    }
+}
+
 void BgHidanKousi_Update(Actor* thisx, PlayState* play) {
     BgHidanKousi* this = (BgHidanKousi*)thisx;
+
+    if (PARAMS_GET_U(thisx->params, 0, 8) >= 3) {
+        bool chestOpen = Flags_GetTreasure(play, 0) != 0;
+        bool switchSet = Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 8, 8)) != 0;
+        bool wasChestOpen = (this->trapLatch & TRAPLATCH_CHEST_OPEN) != 0;
+        bool wasSwitchSet = (this->trapLatch & TRAPLATCH_SWITCH_SET) != 0;
+
+        if (chestOpen && !wasChestOpen) {
+            Flags_UnsetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 8, 8));
+            switchSet = false;
+            if (this->actionFunc != func_80889B5C) {
+                this->dyna.actor.speed = 0.0f;
+                BgHidanKousi_SetupAction(this, BgHidanKousi_CloseSlide);
+            }
+        }
+        if (chestOpen && wasSwitchSet && !switchSet && this->actionFunc != func_80889B5C && this->actionFunc != BgHidanKousi_CloseSlide) {
+            this->dyna.actor.speed = 0.0f;
+            BgHidanKousi_SetupAction(this, BgHidanKousi_CloseSlide);
+        }
+        this->trapLatch = (chestOpen ? TRAPLATCH_CHEST_OPEN : 0) | (switchSet ? TRAPLATCH_SWITCH_SET : 0);
+    }
 
     this->actionFunc(this, play);
 }

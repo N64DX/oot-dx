@@ -4,41 +4,45 @@
 
 #include "gfx.h"
 
-u64 gDropFeatherTex[TEX_LEN(u64, 32, 32, 16)] = {
-#include "assets/objects/gameplay_keep/gDropFeatherTex.rgba16.inc.c"
+// Feather
+
+u64 gDropFeatherTex[] = {
+#include "assets/objects/gameplay_keep/extra/gDropFeatherTex.rgba16.inc.c"
 };
 
-Vtx gLinkAdultHookshotChainVtx[] = {
+
+
+// Hookshot
+
+static Vtx gLinkAdultHookshotChainVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotChainVtx.inc.c"
 };
 
-#define gLinkAdultHookshotChainTex_WIDTH 16
-#define gLinkAdultHookshotChainTex_HEIGHT 32
-u64 gLinkAdultHookshotChainTex[TEX_LEN(u64, gLinkAdultHookshotChainTex_WIDTH, gLinkAdultHookshotChainTex_HEIGHT, 16)] = {
+static u64 gLinkAdultHookshotChainTex[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotChainTex.rgba16.inc.c"
 };
 
-Gfx gLinkHookshotChainDL[23] = {
+Gfx gLinkHookshotChainDL[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotChainDL.inc.c"
 };
 
-Vtx gLinkAdultHookshotTipVtx[] = {
+static Vtx gLinkAdultHookshotTipVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotTipVtx.inc.c"
 };
 
-Gfx gLinkOcarinaHookshotTipDL[22] = {
+Gfx gLinkOcarinaHookshotTipDL[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotTipDL.inc.c"
 };
 
-Vtx gLinkMajoraHookshotTipVtx[] = {
-#include "assets/objects/gameplay_keep/gLinkMajoraHookshotTipVtx.inc.c"
+static Vtx gLinkMajoraHookshotTipVtx[] = {
+#include "assets/objects/gameplay_keep/extra/gLinkMajoraHookshotTipVtx.inc.c"
 };
 
-u64 gHookshotTipLUT[] = {
+static u64 gHookshotTipLUT[] = {
 #include "assets/objects/object_link_child/other/sword_bow_hookshot_hand_tlut.rgba16.inc.c"
 };
 
-u64 gLinkMajoraHookshotDesignTex[] = {
+static u64 gLinkMajoraHookshotDesignTex[] = {
 #include "assets/objects/object_link_child/bow/heros_bow_design.ci8.inc.c"
 };
 
@@ -72,17 +76,15 @@ Gfx gLinkMajoraHookshotTipDL[] = {
     gsSPEndDisplayList(),
 };
 
-#define gLinkAdultHookshotReticleTex_WIDTH 64
-#define gLinkAdultHookshotReticleTex_HEIGHT 64
-u64 gLinkAdultHookshotReticleTex[TEX_LEN(u64, gLinkAdultHookshotReticleTex_WIDTH, gLinkAdultHookshotReticleTex_HEIGHT, 8)] = {
+static u64 gLinkAdultHookshotReticleTex[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotReticleTex.i8.inc.c"
 };
 
-Vtx gLinkAdultHookshotReticleVtx[] = {
+static Vtx gLinkAdultHookshotReticleVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotReticleVtx.inc.c"
 };
 
-Gfx gLinkHookshotReticleDL[13] = {
+Gfx gLinkHookshotReticleDL[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHookshotReticleDL.inc.c"
 };
 
@@ -90,8 +92,8 @@ Gfx gLinkHookshotReticleDL[13] = {
 
 // Spark
 
-Vtx gameplay_keepVtx_023440[] = {
-#include "assets/objects/gameplay_keep/gameplay_keep_Vtx_023440.inc.c"
+static Vtx gameplay_keepVtx_023440[] = {
+#include "assets/objects/gameplay_keep/extra/gameplay_keep_Vtx_023440.inc.c"
 };
 
 u64 gElectricSpark1Tex[] = {
@@ -131,8 +133,8 @@ Gfx gElectricSparkModelDL[] = {
 
 // Light Orb
 
-Vtx gameplay_keepVtx_023308[] = {
-#include "assets/objects/gameplay_keep/gameplay_keep_Vtx_023308.inc.c"
+static Vtx gameplay_keepVtx_023308[] = {
+#include "assets/objects/gameplay_keep/extra/gameplay_keep_Vtx_023308.inc.c"
 };
 
 Gfx gLightOrbMaterial1DL[] = {
@@ -167,16 +169,16 @@ Gfx gLightOrbModelDL[] = {
 
 // Frozen Steam
 
-Vtx gameplay_keepVtx_051080[] = {
-#include "assets/objects/gameplay_keep/gameplay_keep_Vtx_051080.inc.c"
+static Vtx gameplay_keepVtx_051080[] = {
+#include "assets/objects/gameplay_keep/extra/gameplay_keep_Vtx_051080.inc.c"
 };
 
 u64 gEffFireMask1Tex[] = {
-#include "assets/objects/gameplay_keep/eff_fire_mask_1.i4.inc.c"
+#include "assets/objects/gameplay_keep/extra/eff_fire_mask_1.i4.inc.c"
 };
 
-u64 gEffIceSmokeTex[] = {
-#include "assets/objects/gameplay_keep/eff_ice_smoke.i4.inc.c"
+static u64 gEffIceSmokeTex[] = {
+#include "assets/objects/gameplay_keep/extra/eff_ice_smoke.i4.inc.c"
 };
 
 Gfx gFrozenSteamMaterialDL[] = {
@@ -204,12 +206,12 @@ Gfx gFrozenSteamModelDL[] = {
 
 // Ice Fragment
 
-Vtx gameplay_keepVtx_0502C0[] = {
-#include "assets/objects/gameplay_keep/gameplay_keep_Vtx_0502C0.inc.c"
+static Vtx gameplay_keepVtx_0502C0[] = {
+#include "assets/objects/gameplay_keep/extra/gameplay_keep_Vtx_0502C0.inc.c"
 };
 
-u64 gEffIceFragmentTex[] = {
-#include "assets/objects/gameplay_keep/eff_ice_fragment.i8.inc.c"
+static u64 gEffIceFragmentTex[] = {
+#include "assets/objects/gameplay_keep/extra/eff_ice_fragment.i8.inc.c"
 };
 
 Gfx gEffIceFragment2MaterialDL[] = {
@@ -247,19 +249,19 @@ Gfx gEffIceFragment2ModelDL[] = {
 
 // Deku stick & Broken Giant's Knife
 
-Vtx gLinkChildLinkDekuStickVtx[] = {
+static Vtx gLinkChildLinkDekuStickVtx[] = {
 #include "assets/objects/object_link_child/gLinkChildLinkDekuStickVtx.inc.c"
 };
 
-Gfx gLinkDekuStickDL[41] = {
+Gfx gLinkDekuStickDL[] = {
 #include "assets/objects/object_link_child/gLinkChildLinkDekuStickDL.inc.c"
 };
 
-Vtx gLinkAdultBrokenGiantsKnifeBladeVtx[] = {
+static Vtx gLinkAdultBrokenGiantsKnifeBladeVtx[] = {
 #include "assets/objects/object_link_boy/gLinkAdultBrokenGiantsKnifeBladeVtx.inc.c"
 };
 
-Gfx gLinkBrokenGiantsKnifeBladeDL[28] = {
+Gfx gLinkBrokenGiantsKnifeBladeDL[] = {
 #include "assets/objects/object_link_boy/gLinkAdultBrokenGiantsKnifeBladeDL.inc.c"
 };
 
@@ -267,232 +269,180 @@ Gfx gLinkBrokenGiantsKnifeBladeDL[28] = {
 
 // Masks
 
-#define gLinkChildSpookyMaskTex_WIDTH 32
-#define gLinkChildSpookyMaskTex_HEIGHT 64
-u64 gLinkChildSpookyMaskTex[TEX_LEN(u64, gLinkChildSpookyMaskTex_WIDTH, gLinkChildSpookyMaskTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildSpookyMaskTex.ia16.inc.c"
-};
-
-#define gLinkChildKeatonMaskEyeBrowTex_WIDTH 32
-#define gLinkChildKeatonMaskEyeBrowTex_HEIGHT 16
-u64 gLinkChildKeatonMaskEyeBrowTex[TEX_LEN(u64, gLinkChildKeatonMaskEyeBrowTex_WIDTH, gLinkChildKeatonMaskEyeBrowTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildKeatonMaskEyeBrowTex.rgba16.inc.c"
-};
-
-#define gLinkChildKeatonMaskEarTex_WIDTH 8
-#define gLinkChildKeatonMaskEarTex_HEIGHT 8
-u64 gLinkChildKeatonMaskEarTex[TEX_LEN(u64, gLinkChildKeatonMaskEarTex_WIDTH, gLinkChildKeatonMaskEarTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildKeatonMaskEarTex.rgba16.inc.c"
-};
-
-#define gLinkChildSkullMaskEyeTex_WIDTH 16
-#define gLinkChildSkullMaskEyeTex_HEIGHT 16
-u64 gLinkChildSkullMaskEyeTex[TEX_LEN(u64, gLinkChildSkullMaskEyeTex_WIDTH, gLinkChildSkullMaskEyeTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildSkullMaskEyeTex.rgba16.inc.c"
-};
-
-#define gLinkChildMaskOfTruthTex_WIDTH 32
-#define gLinkChildMaskOfTruthTex_HEIGHT 64
-u64 gLinkChildMaskOfTruthTex[TEX_LEN(u64, gLinkChildMaskOfTruthTex_WIDTH, gLinkChildMaskOfTruthTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildMaskOfTruthTex.rgba16.inc.c"
-};
-
-#define gLinkChildMaskOfTruthCurveTex_WIDTH 16
-#define gLinkChildMaskOfTruthCurveTex_HEIGHT 32
-u64 gLinkChildMaskOfTruthCurveTex[TEX_LEN(u64, gLinkChildMaskOfTruthCurveTex_WIDTH, gLinkChildMaskOfTruthCurveTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildMaskOfTruthCurveTex.rgba16.inc.c"
-};
-
-#define gLinkChildGoronMaskMouthTex_WIDTH 64
-#define gLinkChildGoronMaskMouthTex_HEIGHT 32
-u64 gLinkChildGoronMaskMouthTex[TEX_LEN(u64, gLinkChildGoronMaskMouthTex_WIDTH, gLinkChildGoronMaskMouthTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildGoronMaskMouthTex.rgba16.inc.c"
-};
-
-#define gLinkChildGoronMaskEyeTex_WIDTH 32
-#define gLinkChildGoronMaskEyeTex_HEIGHT 32
-u64 gLinkChildGoronMaskEyeTex[TEX_LEN(u64, gLinkChildGoronMaskEyeTex_WIDTH, gLinkChildGoronMaskEyeTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildGoronMaskEyeTex.rgba16.inc.c"
-};
-
-#define gLinkChildGoronMaskNoseTex_WIDTH 8
-#define gLinkChildGoronMaskNoseTex_HEIGHT 8
-u64 gLinkChildGoronMaskNoseTex[TEX_LEN(u64, gLinkChildGoronMaskNoseTex_WIDTH, gLinkChildGoronMaskNoseTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildGoronMaskNoseTex.rgba16.inc.c"
-};
-
-#define gLinkChildGoronMaskHairTex_WIDTH 16
-#define gLinkChildGoronMaskHairTex_HEIGHT 16
-u64 gLinkChildGoronMaskHairTex[TEX_LEN(u64, gLinkChildGoronMaskHairTex_WIDTH, gLinkChildGoronMaskHairTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildGoronMaskHairTex.rgba16.inc.c"
-};
-
-#define gLinkChildSkullMaskTeethTex_WIDTH 8
-#define gLinkChildSkullMaskTeethTex_HEIGHT 8
-u64 gLinkChildSkullMaskTeethTex[TEX_LEN(u64, gLinkChildSkullMaskTeethTex_WIDTH, gLinkChildSkullMaskTeethTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildSkullMaskTeethTex.rgba16.inc.c"
-};
-
-#define gLinkChildGoronMaskEarTex_WIDTH 8
-#define gLinkChildGoronMaskEarTex_HEIGHT 8
-u64 gLinkChildGoronMaskEarTex[TEX_LEN(u64, gLinkChildGoronMaskEarTex_WIDTH, gLinkChildGoronMaskEarTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildGoronMaskEarTex.rgba16.inc.c"
-};
-
-#define gLinkChildZoraMaskEyeBoarderTex_WIDTH 8
-#define gLinkChildZoraMaskEyeBoarderTex_HEIGHT 8
-u64 gLinkChildZoraMaskEyeBoarderTex[TEX_LEN(u64, gLinkChildZoraMaskEyeBoarderTex_WIDTH, gLinkChildZoraMaskEyeBoarderTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildZoraMaskEyeBoarderTex.rgba16.inc.c"
-};
-
-#define gLinkChildZoraMaskEarTex_WIDTH 32
-#define gLinkChildZoraMaskEarTex_HEIGHT 32
-u64 gLinkChildZoraMaskEarTex[TEX_LEN(u64, gLinkChildZoraMaskEarTex_WIDTH, gLinkChildZoraMaskEarTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildZoraMaskEarTex.rgba16.inc.c"
-};
-
-#define gLinkChildSkullMaskNoseTex_WIDTH 8
-#define gLinkChildSkullMaskNoseTex_HEIGHT 8
-u64 gLinkChildSkullMaskNoseTex[TEX_LEN(u64, gLinkChildSkullMaskNoseTex_WIDTH, gLinkChildSkullMaskNoseTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildSkullMaskNoseTex.rgba16.inc.c"
-};
-
-#define gLinkChildZoraMaskEyeTex_WIDTH 32
-#define gLinkChildZoraMaskEyeTex_HEIGHT 32
-u64 gLinkChildZoraMaskEyeTex[TEX_LEN(u64, gLinkChildZoraMaskEyeTex_WIDTH, gLinkChildZoraMaskEyeTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildZoraMaskEyeTex.rgba16.inc.c"
-};
-
-#define gLinkChildZoraMaskMouthTex_WIDTH 32
-#define gLinkChildZoraMaskMouthTex_HEIGHT 32
-u64 gLinkChildZoraMaskMouthTex[TEX_LEN(u64, gLinkChildZoraMaskMouthTex_WIDTH, gLinkChildZoraMaskMouthTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildZoraMaskMouthTex.rgba16.inc.c"
-};
-
-#define gLinkChildGerudoMaskEyeTex_WIDTH 32
-#define gLinkChildGerudoMaskEyeTex_HEIGHT 32
-u64 gLinkChildGerudoMaskEyeTex[TEX_LEN(u64, gLinkChildGerudoMaskEyeTex_WIDTH, gLinkChildGerudoMaskEyeTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildGerudoMaskEyeTex.rgba16.inc.c"
-};
-
-#define gLinkChildGerudoMaskMouthTex_WIDTH 16
-#define gLinkChildGerudoMaskMouthTex_HEIGHT 16
-u64 gLinkChildGerudoMaskMouthTex[TEX_LEN(u64, gLinkChildGerudoMaskMouthTex_WIDTH, gLinkChildGerudoMaskMouthTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildGerudoMaskMouthTex.rgba16.inc.c"
-};
-
-#define gLinkChildGerudoMaskHairTex_WIDTH 16
-#define gLinkChildGerudoMaskHairTex_HEIGHT 16
-u64 gLinkChildGerudoMaskHairTex[TEX_LEN(u64, gLinkChildGerudoMaskHairTex_WIDTH, gLinkChildGerudoMaskHairTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildGerudoMaskHairTex.rgba16.inc.c"
-};
-
-#define gLinkChildGerudoMaskNoseTex_WIDTH 8
-#define gLinkChildGerudoMaskNoseTex_HEIGHT 8
-u64 gLinkChildGerudoMaskNoseTex[TEX_LEN(u64, gLinkChildGerudoMaskNoseTex_WIDTH, gLinkChildGerudoMaskNoseTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildGerudoMaskNoseTex.rgba16.inc.c"
-};
-
-Vtx gLinkChildSkullMaskVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildSkullMaskVtx.inc.c"
-};
-
-Vtx gLinkChildSpookyMaskVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildSpookyMaskVtx.inc.c"
-};
-
-Vtx gLinkChildKeatonMaskVtx[] = {
+static Vtx gLinkChildKeatonMaskVtx[] = {
 #include "assets/objects/object_link_child/gLinkChildKeatonMaskVtx.inc.c"
 };
 
-Vtx gLinkChildMaskOfTruthVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildMaskOfTruthVtx.inc.c"
+static Vtx gLinkChildSkullMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildSkullMaskVtx.inc.c"
 };
 
-Vtx gLinkChildGoronMaskVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildGoronMaskVtx.inc.c"
+static Vtx gLinkChildSpookyMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildSpookyMaskVtx.inc.c"
 };
 
-Vtx gLinkChildZoraMaskVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildZoraMaskVtx.inc.c"
-};
-
-Vtx gLinkChildGerudoMaskVtx[] = {
-#include "assets/objects/object_link_child/gLinkChildGerudoMaskVtx.inc.c"
-};
-
-Gfx gLinkChildSkullMaskDL[70] = {
-#include "assets/objects/object_link_child/gLinkChildSkullMaskDL.inc.c"
-};
-
-Gfx gLinkChildSpookyMaskDL[30] = {
-#include "assets/objects/object_link_child/gLinkChildSpookyMaskDL.inc.c"
-};
-
-Gfx gLinkChildKeatonMaskDL[50] = {
-#include "assets/objects/object_link_child/gLinkChildKeatonMaskDL.inc.c"
-};
-
-Gfx gLinkChildMaskOfTruthDL[44] = {
-#include "assets/objects/object_link_child/gLinkChildMaskOfTruthDL.inc.c"
-};
-
-Gfx gLinkChildGoronMaskDL[70] = {
-#include "assets/objects/object_link_child/gLinkChildGoronMaskDL.inc.c"
-};
-
-Gfx gLinkChildZoraMaskDL[65] = {
-#include "assets/objects/object_link_child/gLinkChildZoraMaskDL.inc.c"
-};
-
-Gfx gLinkChildGerudoMaskDL[84] = {
-#include "assets/objects/object_link_child/gLinkChildGerudoMaskDL.inc.c"
-};
-
-
-
-// Bunny hood
-
-#define gLinkChildBunnyHoodEyeTex_WIDTH 16
-#define gLinkChildBunnyHoodEyeTex_HEIGHT 16
-u64 gLinkChildBunnyHoodEyeTex[TEX_LEN(u64, gLinkChildBunnyHoodEyeTex_WIDTH, gLinkChildBunnyHoodEyeTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildBunnyHoodEyeTex.rgba16.inc.c"
-};
-
-#define gLinkChildBunnyHoodTex_WIDTH 16
-#define gLinkChildBunnyHoodTex_HEIGHT 32
-u64 gLinkChildBunnyHoodTex[TEX_LEN(u64, gLinkChildBunnyHoodTex_WIDTH, gLinkChildBunnyHoodTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildBunnyHoodTex.rgba16.inc.c"
-};
-
-#define gLinkChildBunnyHoodEarTex_WIDTH 16
-#define gLinkChildBunnyHoodEarTex_HEIGHT 32
-u64 gLinkChildBunnyHoodEarTex[TEX_LEN(u64, gLinkChildBunnyHoodEarTex_WIDTH, gLinkChildBunnyHoodEarTex_HEIGHT, 16)] = {
-#include "assets/objects/object_link_child/gLinkChildBunnyHoodEarTex.rgba16.inc.c"
-};
-
-Vtx gLinkChildBunnyHoodVtx[] = {
+static Vtx gLinkChildBunnyHoodVtx[] = {
 #include "assets/objects/object_link_child/gLinkChildBunnyHoodVtx.inc.c"
 };
 
-Gfx gLinkChildBunnyHoodDL[114] = {
+static Vtx gLinkChildGoronMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskVtx.inc.c"
+};
+
+static Vtx gLinkChildZoraMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskVtx.inc.c"
+};
+
+static Vtx gLinkChildGerudoMaskVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskVtx.inc.c"
+};
+
+static Vtx gLinkChildMaskOfTruthVtx[] = {
+#include "assets/objects/object_link_child/gLinkChildMaskOfTruthVtx.inc.c"
+};
+
+static u64 gLinkChildKeatonMaskEyeBrowTex[] = {
+#include "assets/objects/object_link_child/gLinkChildKeatonMaskEyeBrowTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildKeatonMaskEarTex[] = {
+#include "assets/objects/object_link_child/gLinkChildKeatonMaskEarTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildSkullMaskEyeTex[] = {
+#include "assets/objects/object_link_child/gLinkChildSkullMaskEyeTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildSkullMaskNoseTex[] = {
+#include "assets/objects/object_link_child/gLinkChildSkullMaskNoseTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildSkullMaskTeethTex[] = {
+#include "assets/objects/object_link_child/gLinkChildSkullMaskTeethTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildSpookyMaskTex[] = {
+#include "assets/objects/object_link_child/gLinkChildSpookyMaskTex.ia16.inc.c"
+};
+
+static u64 gLinkChildBunnyHoodTex[] = {
+#include "assets/objects/object_link_child/gLinkChildBunnyHoodTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildBunnyHoodEyeTex[] = {
+#include "assets/objects/object_link_child/gLinkChildBunnyHoodEyeTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildBunnyHoodEarTex[] = {
+#include "assets/objects/object_link_child/gLinkChildBunnyHoodEarTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildGoronMaskEyeTex[] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskEyeTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildGoronMaskNoseTex[] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskNoseTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildGoronMaskMouthTex[] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskMouthTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildGoronMaskHairTex[] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskHairTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildGoronMaskEarTex[] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskEarTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildZoraMaskEyeBoarderTex[] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskEyeBoarderTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildZoraMaskEarTex[] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskEarTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildZoraMaskEyeTex[] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskEyeTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildZoraMaskMouthTex[] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskMouthTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildGerudoMaskEyeTex[] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskEyeTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildGerudoMaskNoseTex[] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskNoseTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildGerudoMaskMouthTex[] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskMouthTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildGerudoMaskHairTex[] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskHairTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildMaskOfTruthTex[] = {
+#include "assets/objects/object_link_child/gLinkChildMaskOfTruthTex.rgba16.inc.c"
+};
+
+static u64 gLinkChildMaskOfTruthCurveTex[] = {
+#include "assets/objects/object_link_child/gLinkChildMaskOfTruthCurveTex.rgba16.inc.c"
+};
+
+Gfx gLinkChildKeatonMaskDL[] = {
+#include "assets/objects/object_link_child/gLinkChildKeatonMaskDL.inc.c"
+};
+
+Gfx gLinkChildSkullMaskDL[] = {
+#include "assets/objects/object_link_child/gLinkChildSkullMaskDL.inc.c"
+};
+
+Gfx gLinkChildSpookyMaskDL[] = {
+#include "assets/objects/object_link_child/gLinkChildSpookyMaskDL.inc.c"
+};
+
+Gfx gLinkChildBunnyHoodDL[] = {
 #include "assets/objects/object_link_child/gLinkChildBunnyHoodDL.inc.c"
+};
+
+Gfx gLinkChildGoronMaskDL[] = {
+#include "assets/objects/object_link_child/gLinkChildGoronMaskDL.inc.c"
+};
+
+Gfx gLinkChildZoraMaskDL[] = {
+#include "assets/objects/object_link_child/gLinkChildZoraMaskDL.inc.c"
+};
+
+Gfx gLinkChildGerudoMaskDL[] = {
+#include "assets/objects/object_link_child/gLinkChildGerudoMaskDL.inc.c"
+};
+
+Gfx gLinkChildMaskOfTruthDL[] = {
+#include "assets/objects/object_link_child/gLinkChildMaskOfTruthDL.inc.c"
 };
 
 
 
 // MM Bottle
 
+static Vtx gMMBottleVtx[] = {
+#include "assets/objects/gameplay_keep/extra/gMMbottleVtx.inc.c"
+};
+
 static u64 gMMBottleContentsTex[] = {
-#include "assets/objects/gameplay_keep/gMMBottleContentsTex.i8.inc.c"
+#include "assets/objects/gameplay_keep/extra/gMMBottleContentsTex.i8.inc.c"
 };
 
 static u64 gMMBottleGlassTex[] = {
-#include "assets/objects/gameplay_keep/gMMBottleGlassTex.i8.inc.c"
-};
-
-static Vtx gMMBottleVtx[] = {
-#include "assets/objects/gameplay_keep/gMMbottleVtx.inc.c"
+#include "assets/objects/gameplay_keep/extra/gMMBottleGlassTex.i8.inc.c"
 };
 
 Gfx gMMBottleContentsDL[] = {
@@ -574,27 +524,27 @@ LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_end_20f = {
 
 // Beehive
 
-u64 gFieldBeehiveTex[TEX_LEN(u64, gFieldBeehiveTex_WIDTH, gFieldBeehiveTex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_field_keep/gFieldBeehiveTex.rgba16.inc.c"
-};
-
-u64 gFieldBeehiveFragmentTex[TEX_LEN(u64, gFieldBeehiveFragmentTex_WIDTH, gFieldBeehiveFragmentTex_HEIGHT, 16)] = {
-#include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentTex.rgba16.inc.c"
-};
-
-Vtx gFieldBeehiveVtx[] = {
+static Vtx gFieldBeehiveVtx[] = {
 #include "assets/objects/gameplay_field_keep/gFieldBeehiveVtx.inc.c"
 };
 
-Vtx gFieldBeehiveFragmentVtx[] = {
+static Vtx gFieldBeehiveFragmentVtx[] = {
 #include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentVtx.inc.c"
 };
 
-Gfx gFieldBeehiveDL[44] = {
+static u64 gFieldBeehiveTex[] = {
+#include "assets/objects/gameplay_field_keep/gFieldBeehiveTex.rgba16.inc.c"
+};
+
+static u64 gFieldBeehiveFragmentTex[] = {
+#include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentTex.rgba16.inc.c"
+};
+
+Gfx gFieldBeehiveDL[] = {
 #include "assets/objects/gameplay_field_keep/gFieldBeehiveDL.inc.c"
 };
 
-Gfx gFieldBeehiveFragmentDL[18] = {
+Gfx gFieldBeehiveFragmentDL[] = {
 #include "assets/objects/gameplay_field_keep/gFieldBeehiveFragmentDL.inc.c"
 };
 
@@ -602,15 +552,15 @@ Gfx gFieldBeehiveFragmentDL[18] = {
 
 // Liftable Rock
 
-Vtx gFieldKakeraVtx[] = {
+static Vtx gFieldKakeraVtx[] = {
 #include "assets/objects/gameplay_field_keep/gFieldKakeraVtx.inc.c"
 };
 
-u64 gFieldKakeraTex[TEX_LEN(u64, gFieldKakeraTex_WIDTH, gFieldKakeraTex_HEIGHT, 16)] = {
+static u64 gFieldKakeraTex[] = {
 #include "assets/objects/gameplay_field_keep/gFieldKakeraTex.rgba16.inc.c"
 };
 
-Gfx gFieldKakeraDL[23] = {
+Gfx gFieldKakeraDL[] = {
 #include "assets/objects/gameplay_field_keep/gFieldKakeraDL.inc.c"
 };
 
@@ -618,19 +568,11 @@ Gfx gFieldKakeraDL[23] = {
 
 // Dash Wind Effet
 
-Vtx sDashWindConeVtx[] = {
-    VTX(0, 0, 0, 512, 2048, 0xFF, 0xFF, 0xFF, 0xFF),
-    VTX(4000, 8000, 0, 0, 0, 0xFF, 0xFF, 0xFF, 0x00),
-    VTX(2828, 8000, 2828, 256, 0, 0xFF, 0xFF, 0xFF, 0x00),
-    VTX(0, 8000, 4000, 512, 0, 0xFF, 0xFF, 0xFF, 0x00),
-    VTX(-2828, 8000, 2828, 768, 0, 0xFF, 0xFF, 0xFF, 0x00),
-    VTX(-4000, 8000, 0, 1024, 0, 0xFF, 0xFF, 0xFF, 0x00),
-    VTX(-2828, 8000, -2828, 1280, 0, 0xFF, 0xFF, 0xFF, 0x00),
-    VTX(0, 8000, -4000, 1536, 0, 0xFF, 0xFF, 0xFF, 0x00),
-    VTX(2828, 8000, -2828, 1792, 0, 0xFF, 0xFF, 0xFF, 0x00),
+static Vtx gDashWindConeVtx[] = {
+#include "assets/objects/gameplay_keep/extra/gDashWindConeVtx.inc.c"
 };
 
-u64 sDashWindTex[TEX_LEN(u64, 64, 64, 8)] = {
+static u64 sDashWindTex[] = {
 #include "assets/overlays/ovl_Magic_Wind/sTex.i8.inc.c"
 };
 
@@ -646,10 +588,323 @@ Gfx sDashWindConeDL[] = {
     gsDPSetPrimColor(0, 0x80, 255, 255, 170, 255),
     gsDPSetEnvColor(150, 255, 0, 0),
     gsSPDisplayList(0x08000000),
-    gsSPVertex(sDashWindConeVtx, 9, 0),
+    gsSPVertex(gDashWindConeVtx, 9, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(0, 3, 4, 0, 0, 4, 5, 0),
     gsSP2Triangles(0, 5, 6, 0, 0, 6, 7, 0),
     gsSP2Triangles(0, 7, 8, 0, 0, 8, 1, 0),
+    gsSPEndDisplayList(),
+};
+
+
+
+// Cane of Somaria
+
+static Vtx gCaneOfSomaria1Vtx[] = {
+#include "assets/objects/gameplay_keep/extra/gCaneOfSomaria1Vtx.inc.c"
+};
+
+static Vtx gCaneOfSomaria2Vtx[] = {
+#include "assets/objects/gameplay_keep/extra/gCaneOfSomaria2Vtx.inc.c"
+};
+
+Gfx gPlayerCaneOfSomariaDL[] = {
+    gsDPPipeSync(),
+    gsSPClearGeometryMode(G_CULL_BACK | G_FOG | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPSetGeometryMode(G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH | G_LIGHTING),
+    gsSPLoadGeometryMode(G_SHADE | G_FOG | G_CULL_BACK | G_ZBUFFER | G_SHADING_SMOOTH | G_LIGHTING),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TD_CLAMP | G_CYC_2CYCLE | G_AD_NOISE | G_CD_MAGICSQ | G_TP_PERSP | G_TL_TILE | G_TF_BILERP | G_CK_NONE | G_PM_NPRIMITIVE | G_TT_NONE | G_TC_FILT),
+    gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_FOG_SHADE_A | G_AC_NONE | G_ZS_PIXEL | G_RM_AA_ZB_OPA_SURF2),
+    gsSPTexture(65535, 65535, 0, 0, 1),
+    gsDPSetPrimColor(0, 0, 177, 50, 41, 255),
+    gsSPVertex(gCaneOfSomaria1Vtx, 30, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
+    gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 27, 28, 29, 0),
+    gsSPVertex(&gCaneOfSomaria1Vtx[30], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
+    gsSP2Triangles(9, 11, 12, 0, 13, 14, 15, 0),
+    gsSP2Triangles(13, 15, 16, 0, 17, 18, 19, 0),
+    gsSP2Triangles(17, 19, 20, 0, 21, 22, 23, 0),
+    gsSP2Triangles(21, 23, 24, 0, 25, 26, 27, 0),
+    gsSP2Triangles(25, 27, 28, 0, 29, 30, 31, 0),
+    gsSPVertex(&gCaneOfSomaria1Vtx[62], 31, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(3, 5, 6, 0, 7, 8, 9, 0),
+    gsSP2Triangles(7, 9, 10, 0, 11, 12, 13, 0),
+    gsSP2Triangles(11, 13, 14, 0, 15, 16, 17, 0),
+    gsSP2Triangles(15, 17, 18, 0, 19, 20, 21, 0),
+    gsSP2Triangles(19, 21, 22, 0, 23, 24, 25, 0),
+    gsSP2Triangles(23, 25, 26, 0, 27, 28, 29, 0),
+    gsSP1Triangle(27, 29, 30, 0),
+    gsSPVertex(&gCaneOfSomaria1Vtx[93], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&gCaneOfSomaria1Vtx[125], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 27, 25, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 31, 29, 0),
+    gsSPVertex(&gCaneOfSomaria1Vtx[157], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 7, 5, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 15, 13, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 23, 21, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 27, 25, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 31, 29, 0),
+    gsSPVertex(&gCaneOfSomaria1Vtx[189], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 19, 17, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 27, 25, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&gCaneOfSomaria1Vtx[221], 9, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 6, 7, 4, 0),
+    gsSP1Triangle(6, 8, 7, 0),
+    gsSPLoadGeometryMode(G_SHADE | G_FOG | G_CULL_BACK | G_ZBUFFER | G_SHADING_SMOOTH | G_LIGHTING),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TD_CLAMP | G_CYC_2CYCLE | G_AD_NOISE | G_CD_MAGICSQ | G_TP_PERSP | G_TL_TILE | G_TF_BILERP | G_CK_NONE | G_PM_NPRIMITIVE | G_TT_NONE | G_TC_FILT),
+    gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_FOG_SHADE_A | G_AC_NONE | G_ZS_PIXEL | G_RM_AA_ZB_OPA_SURF2),
+    gsSPTexture(65535, 65535, 0, 0, 1),
+    gsDPSetPrimColor(0, 0, 56, 83, 113, 255),
+    gsSPVertex(gCaneOfSomaria2Vtx, 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPEndDisplayList(),
+};
+
+
+
+// Hylian Elegy of Emptiness Statue
+
+static Vtx gameplay_keepVtx_01ADB0[] = {
+#include "assets/objects/gameplay_keep/extra/elegy/gameplay_keepVtx_01ADB0.inc.c"
+};
+
+static u64 gElegyShellHumanMouthTex[] = {
+#include "assets/objects/gameplay_keep/extra/elegy/elegy_shell_human_mouth.rgba16.inc.c"
+};
+
+static u64 gElegyShellHumanEyeAndNoseTex[] = {
+#include "assets/objects/gameplay_keep/extra/elegy/elegy_shell_human_eye_and_nose.rgba16.inc.c"
+};
+
+static u64 gElegyShellHumanNostrilsAndSkinTex[] = {
+#include "assets/objects/gameplay_keep/extra/elegy/elegy_shell_human_nostrils_and_skin.rgba16.inc.c"
+};
+
+static u64 gElegyShellHumanBootsTex[] = {
+#include "assets/objects/gameplay_keep/extra/elegy/elegy_shell_human_boots.rgba16.inc.c"
+};
+
+static u64 gElegyShellHumanPlatformTex[] = {
+#include "assets/objects/gameplay_keep/extra/elegy/elegy_shell_human_platform.rgba16.inc.c"
+};
+
+static u64 gElegyShellBeltAndTunicTex[] = {
+#include "assets/objects/gameplay_keep/extra/elegy/elegy_shell_human_belt_and_tunic.rgba16.inc.c"
+};
+
+static u64 gElegyShellHumanHairTex[] = {
+#include "assets/objects/gameplay_keep/extra/elegy/elegy_shell_human_hair.rgba16.inc.c"
+};
+
+Gfx gElegyShellHumanDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPDisplayList(0x0C000010),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gElegyShellHumanMouthTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(gameplay_keepVtx_01ADB0, 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 1, 0, 0),
+    gsSP2Triangles(2, 4, 5, 0, 6, 7, 8, 0),
+    gsSP2Triangles(9, 10, 11, 0, 12, 8, 7, 0),
+    gsSP2Triangles(0, 13, 3, 0, 8, 13, 0, 0),
+    gsSP2Triangles(14, 15, 16, 0, 15, 12, 16, 0),
+    gsSP2Triangles(13, 15, 14, 0, 15, 8, 12, 0),
+    gsSP2Triangles(13, 8, 15, 0, 3, 13, 14, 0),
+    gsSP2Triangles(17, 7, 18, 0, 19, 7, 17, 0),
+    gsSP2Triangles(12, 19, 16, 0, 12, 7, 19, 0),
+    gsSP2Triangles(20, 18, 21, 0, 22, 23, 24, 0),
+    gsSP2Triangles(23, 25, 26, 0, 8, 27, 6, 0),
+    gsSP1Triangle(28, 29, 30, 0),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[31], 29, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 2, 4, 0),
+    gsSP2Triangles(5, 6, 7, 0, 8, 9, 10, 0),
+    gsSPDisplayList(0x0C000010),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gElegyShellHumanEyeAndNoseTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSP2Triangles(11, 12, 13, 0, 11, 14, 12, 0),
+    gsSP2Triangles(11, 15, 14, 0, 15, 16, 14, 0),
+    gsSP2Triangles(17, 14, 16, 0, 17, 12, 14, 0),
+    gsSP2Triangles(17, 18, 12, 0, 18, 17, 19, 0),
+    gsSP2Triangles(20, 18, 19, 0, 15, 21, 16, 0),
+    gsSP2Triangles(22, 23, 24, 0, 25, 18, 20, 0),
+    gsSP2Triangles(25, 26, 18, 0, 12, 18, 26, 0),
+    gsSP2Triangles(27, 12, 26, 0, 22, 27, 26, 0),
+    gsSP2Triangles(27, 22, 24, 0, 27, 24, 28, 0),
+    gsSP2Triangles(12, 27, 28, 0, 13, 12, 28, 0),
+    gsSPDisplayList(0x0C000010),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gElegyShellHumanNostrilsAndSkinTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 8, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 3, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[60], 7, 0),
+    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
+    gsSP1Triangle(4, 5, 6, 0),
+    gsSPDisplayList(0x0C000010),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gElegyShellHumanHairTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[67], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
+    gsSP2Triangles(4, 5, 6, 0, 7, 5, 4, 0),
+    gsSP2Triangles(8, 9, 10, 0, 11, 12, 13, 0),
+    gsSP2Triangles(11, 1, 12, 0, 14, 13, 12, 0),
+    gsSP2Triangles(15, 16, 17, 0, 18, 1, 11, 0),
+    gsSP2Triangles(19, 9, 8, 0, 19, 20, 9, 0),
+    gsSP2Triangles(21, 20, 19, 0, 19, 22, 21, 0),
+    gsSP2Triangles(23, 24, 25, 0, 4, 6, 7, 0),
+    gsSP2Triangles(26, 27, 28, 0, 21, 29, 30, 0),
+    gsSP1Triangle(30, 31, 21, 0),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[99], 21, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
+    gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
+    gsSP2Triangles(10, 11, 12, 0, 10, 5, 4, 0),
+    gsSP2Triangles(11, 10, 4, 0, 13, 0, 3, 0),
+    gsSP2Triangles(14, 15, 16, 0, 17, 15, 14, 0),
+    gsSP2Triangles(18, 19, 20, 0, 18, 5, 19, 0),
+    gsSPDisplayList(0x0C000010),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gElegyShellBeltAndTunicTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[120], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(3, 6, 7, 0, 3, 7, 8, 0),
+    gsSP2Triangles(3, 8, 9, 0, 3, 9, 4, 0),
+    gsSP2Triangles(7, 6, 10, 0, 11, 7, 10, 0),
+    gsSP2Triangles(11, 10, 12, 0, 10, 13, 12, 0),
+    gsSP2Triangles(14, 15, 16, 0, 14, 17, 15, 0),
+    gsSP2Triangles(18, 19, 20, 0, 20, 13, 18, 0),
+    gsSP2Triangles(18, 21, 0, 0, 2, 18, 0, 0),
+    gsSP2Triangles(10, 21, 13, 0, 2, 22, 19, 0),
+    gsSP2Triangles(19, 22, 23, 0, 3, 24, 6, 0),
+    gsSP2Triangles(5, 24, 3, 0, 1, 22, 2, 0),
+    gsSP2Triangles(21, 25, 0, 0, 25, 21, 10, 0),
+    gsSP2Triangles(18, 13, 21, 0, 19, 18, 2, 0),
+    gsSP2Triangles(25, 24, 0, 0, 0, 24, 1, 0),
+    gsSP2Triangles(25, 10, 6, 0, 6, 24, 25, 0),
+    gsSP2Triangles(1, 5, 22, 0, 5, 1, 24, 0),
+    gsSP2Triangles(5, 4, 22, 0, 4, 26, 22, 0),
+    gsSP2Triangles(23, 22, 26, 0, 27, 28, 29, 0),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[150], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 1, 0, 9, 0),
+    gsSP2Triangles(6, 8, 10, 0, 11, 8, 7, 0),
+    gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
+    gsSP2Triangles(18, 19, 20, 0, 20, 21, 18, 0),
+    gsSP2Triangles(20, 22, 21, 0, 4, 23, 24, 0),
+    gsSP2Triangles(4, 25, 23, 0, 26, 27, 28, 0),
+    gsSP2Triangles(25, 29, 23, 0, 29, 30, 23, 0),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[181], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 5, 0, 8, 9, 10, 0),
+    gsSP2Triangles(9, 11, 10, 0, 9, 12, 11, 0),
+    gsSP2Triangles(13, 14, 15, 0, 9, 16, 12, 0),
+    gsSP2Triangles(8, 10, 17, 0, 18, 19, 20, 0),
+    gsSP2Triangles(21, 22, 13, 0, 20, 23, 24, 0),
+    gsSP2Triangles(25, 26, 27, 0, 28, 25, 27, 0),
+    gsSP1Triangle(29, 30, 31, 0),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[213], 9, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(4, 3, 6, 0, 7, 3, 1, 0),
+    gsSP1Triangle(8, 1, 3, 0),
+    gsSPDisplayList(0x0C000010),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gElegyShellHumanNostrilsAndSkinTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 8, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 3, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[222], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
+    gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
+    gsSP2Triangles(10, 11, 12, 0, 13, 12, 11, 0),
+    gsSP2Triangles(14, 15, 16, 0, 6, 17, 4, 0),
+    gsSP2Triangles(11, 18, 19, 0, 10, 18, 11, 0),
+    gsSP2Triangles(20, 21, 22, 0, 23, 20, 22, 0),
+    gsSP2Triangles(23, 22, 24, 0, 25, 3, 1, 0),
+    gsSP2Triangles(25, 1, 26, 0, 27, 28, 29, 0),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[252], 31, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(4, 6, 5, 0, 4, 7, 6, 0),
+    gsSP2Triangles(8, 9, 10, 0, 9, 11, 10, 0),
+    gsSP2Triangles(9, 12, 11, 0, 13, 7, 4, 0),
+    gsSP2Triangles(14, 13, 4, 0, 14, 4, 3, 0),
+    gsSP2Triangles(15, 16, 17, 0, 18, 16, 15, 0),
+    gsSP2Triangles(15, 19, 20, 0, 19, 15, 17, 0),
+    gsSP2Triangles(21, 22, 23, 0, 21, 23, 24, 0),
+    gsSP2Triangles(25, 23, 26, 0, 23, 22, 26, 0),
+    gsSP2Triangles(27, 28, 29, 0, 27, 30, 28, 0),
+    gsSPDisplayList(0x0C000010),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gElegyShellHumanBootsTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[283], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 6, 9, 7, 0),
+    gsSP2Triangles(10, 11, 12, 0, 13, 4, 3, 0),
+    gsSP2Triangles(14, 15, 16, 0, 17, 18, 19, 0),
+    gsSP2Triangles(20, 18, 17, 0, 2, 21, 0, 0),
+    gsSP2Triangles(22, 23, 24, 0, 25, 23, 22, 0),
+    gsSP2Triangles(26, 27, 28, 0, 29, 27, 26, 0),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[313], 24, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 1, 0, 0),
+    gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
+    gsSP2Triangles(10, 11, 12, 0, 13, 10, 12, 0),
+    gsSP2Triangles(14, 8, 7, 0, 15, 16, 17, 0),
+    gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
+    gsSPDisplayList(0x0C000010),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gElegyShellHumanPlatformTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPVertex(&gameplay_keepVtx_01ADB0[337], 23, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(3, 2, 8, 0, 3, 8, 9, 0),
+    gsSP2Triangles(7, 6, 10, 0, 7, 10, 11, 0),
+    gsSP2Triangles(12, 13, 3, 0, 4, 14, 12, 0),
+    gsSP2Triangles(12, 14, 11, 0, 3, 15, 12, 0),
+    gsSP2Triangles(16, 17, 18, 0, 19, 17, 20, 0),
+    gsSP2Triangles(18, 17, 21, 0, 20, 17, 22, 0),
     gsSPEndDisplayList(),
 };
