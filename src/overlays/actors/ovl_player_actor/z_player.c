@@ -15,6 +15,7 @@
 #include "overlays/actors/ovl_En_Fish/z_en_fish.h"
 #include "overlays/actors/ovl_En_Horse/z_en_horse.h"
 #include "overlays/actors/ovl_En_Insect/z_en_insect.h"
+#include "overlays/actors/ovl_Item_Somaria_Cube/z_item_somaria_cube.h"
 #include "overlays/effects/ovl_Effect_Ss_Fhg_Flash/z_eff_ss_fhg_flash.h"
 
 #include "libc64/qrand.h"
@@ -175,8 +176,10 @@ void Player_InitDekuStickIA(PlayState* play, Player* this);
 void Player_InitExplosiveIA(PlayState* play, Player* this);
 void Player_InitHookshotIA(PlayState* play, Player* this);
 void Player_InitBoomerangIA(PlayState* play, Player* this);
+void Player_InitCaneOfSomariaIA(PlayState* play, Player* this);
 
 s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play);
+s32 Player_UpperAction_CaneOfSomaria(Player* this, PlayState* play);
 s32 func_8083485C(Player* this, PlayState* play);
 s32 Player_UpperAction_Sword(Player* this, PlayState* play);
 s32 func_80834B5C(Player* this, PlayState* play);
@@ -842,6 +845,7 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_TUNIC_SPIRIT,              OBJECT_GI_CLOTHES,     GID_TUNIC_SPIRIT,         GETITEM_CQ_TEXT(GI_TUNIC_SPIRIT),          0x80, CHEST_ANIM_LONG),  // GI_TUNIC_SPIRIT
 	GET_ITEM(ITEM_PICTOBOX,                  OBJECT_GI_CAMERA,      GID_PICTOGRAPH_BOX,       GETITEM_CQ_TEXT(GI_PICTOBOX),              0xA0, CHEST_ANIM_SHORT), // GI_PICTOBOX
 	GET_ITEM(ITEM_SHRINE_KEY,                OBJECT_GI_ROOM_KEY,    GID_ROOM_KEY,             GETITEM_CQ_TEXT(GI_SHRINE_KEY),            0xA0, CHEST_ANIM_SHORT), // GI_SHRINE_KEY
+    GET_ITEM(ITEM_CANE_OF_SOMARIA,           OBJECT_GI_CANE,        GID_CANE_OF_SOMARIA,      GETITEM_CQ_TEXT(GI_CANE_OF_SOMARIA),       0xA0, CHEST_ANIM_LONG),  // GI_CANE_OF_SOMARIA
     GET_ITEM(ITEM_BOTTLE_POTION_SHIELD,      OBJECT_GI_LIQUID,      GID_BOTTLE_POTION_SHIELD, GETITEM_CQ_TEXT(GI_BOTTLE_POTION_SHIELD),  0x80, CHEST_ANIM_LONG),  // GI_BOTTLE_POTION_SHIELD
 	GET_ITEM(ITEM_BOOTS_PEGASUS,             OBJECT_GI_BOOTS_2,     GID_BOOTS_PEGASUS,        GETITEM_CQ_TEXT(GI_BOOTS_PEGASUS),         0x80, CHEST_ANIM_LONG),  // GI_BOOTS_PEGASUS
 	GET_ITEM(ITEM_PERFECT_BLOCK,             OBJECT_GI_TITLE_DEED,  GID_LAND_TITLE_DEED,      GETITEM_CQ_TEXT(GI_PERFECT_BLOCK),         0x80, CHEST_ANIM_LONG),  // GI_PERFECT_BLOCK
@@ -1453,32 +1457,32 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_BIGGORON,      // ITEM_SWORD_BIGGORON
     PLAYER_IA_SWORD_HEROS,         // ITEM_SWORD_HEROS
     PLAYER_IA_NONE,                // ITEM_SHIELD_DEKU,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_HYLIAN,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_MIRROR,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS,
-    PLAYER_IA_NONE,                // ITEM_TUNIC_KOKIRI,
-    PLAYER_IA_NONE,                // ITEM_TUNIC_GORON,
-    PLAYER_IA_NONE,                // ITEM_TUNIC_ZORA,
-    PLAYER_IA_NONE,                // ITEM_TUNIC_SPIRIT,
-    PLAYER_IA_NONE,                // ITEM_BOOTS_KOKIRI,
-    PLAYER_IA_NONE,                // ITEM_BOOTS_IRON,
-    PLAYER_IA_NONE,                // ITEM_BOOTS_HOVER,
-    PLAYER_IA_NONE,                // ITEM_BOOTS_PEGASUS,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_HYLIAN
+    PLAYER_IA_NONE,                // ITEM_SHIELD_MIRROR
+    PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS
+    PLAYER_IA_NONE,                // ITEM_TUNIC_KOKIRI
+    PLAYER_IA_NONE,                // ITEM_TUNIC_GORON
+    PLAYER_IA_NONE,                // ITEM_TUNIC_ZORA
+    PLAYER_IA_NONE,                // ITEM_TUNIC_SPIRIT
+    PLAYER_IA_NONE,                // ITEM_BOOTS_KOKIRI
+    PLAYER_IA_NONE,                // ITEM_BOOTS_IRON
+    PLAYER_IA_NONE,                // ITEM_BOOTS_HOVER
+    PLAYER_IA_NONE,                // ITEM_BOOTS_PEGASUS
     PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
     PLAYER_IA_NONE,                // ITEM_ROCS_FEATHER
     PLAYER_IA_NONE,                // ITEM_GOLDEN_FEATHER
-    PLAYER_IA_PICTOBOX,            // ITEM_PICTOBOX,
-    PLAYER_IA_SHRINE_KEY,          // ITEM_SHRINE_KEY,
-    PLAYER_IA_NONE,                // ITEM_CQ_1,
-    PLAYER_IA_NONE,                // ITEM_CQ_2,
-    PLAYER_IA_BOTTLE_POTION_SHIELD, // ITEM_BOTTLE_POTION_SHIELD,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_WOODEN,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_METAL,
-    PLAYER_IA_NONE,                // ITEM_GIANTS_KNIFE,
-    PLAYER_IA_NONE,                // ITEM_ADULTS_WALLET,
-    PLAYER_IA_NONE,                // ITEM_GIANTS_WALLET,
-    PLAYER_IA_NONE,                // ITEM_DEKU_SEEDS,
-    PLAYER_IA_NONE,                // ITEM_FISHING_POLE,
+    PLAYER_IA_PICTOBOX,            // ITEM_PICTOBOX
+    PLAYER_IA_SHRINE_KEY,          // ITEM_SHRINE_KEY
+    PLAYER_IA_CANE_OF_SOMARIA,     // ITEM_CANE_OF_SOMARIA
+    PLAYER_IA_NONE,                // ITEM_CQ_2
+    PLAYER_IA_BOTTLE_POTION_SHIELD, // ITEM_BOTTLE_POTION_SHIELD
+    PLAYER_IA_NONE,                // ITEM_SHIELD_WOODEN
+    PLAYER_IA_NONE,                // ITEM_SHIELD_METAL
+    PLAYER_IA_NONE,                // ITEM_GIANTS_KNIFE
+    PLAYER_IA_NONE,                // ITEM_ADULTS_WALLET
+    PLAYER_IA_NONE,                // ITEM_GIANTS_WALLET
+    PLAYER_IA_NONE,                // ITEM_DEKU_SEEDS
+    PLAYER_IA_NONE,                // ITEM_FISHING_POLE
 };
 
 static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
@@ -1505,6 +1509,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     Player_UpperAction_CarryActor, // PLAYER_IA_BOMB
     Player_UpperAction_CarryActor, // PLAYER_IA_BOMBCHU
     func_80835800,                 // PLAYER_IA_BOOMERANG
+    Player_UpperAction_CaneOfSomaria, // PLAYER_IA_CANE_OF_SOMARIA
     func_8083485C,                 // PLAYER_IA_MAGIC_SPELL_15
     func_8083485C,                 // PLAYER_IA_MAGIC_SPELL_16
     func_8083485C,                 // PLAYER_IA_MAGIC_SPELL_17
@@ -1580,6 +1585,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitExplosiveIA,      // PLAYER_IA_BOMB
     Player_InitExplosiveIA,      // PLAYER_IA_BOMBCHU
     Player_InitBoomerangIA,      // PLAYER_IA_BOOMERANG
+    Player_InitCaneOfSomariaIA,  // PLAYER_IA_CANE_OF_SOMARIA
     Player_InitDefaultIA,        // PLAYER_IA_MAGIC_SPELL_15
     Player_InitDefaultIA,        // PLAYER_IA_MAGIC_SPELL_16
     Player_InitDefaultIA,        // PLAYER_IA_MAGIC_SPELL_17
@@ -2585,6 +2591,8 @@ void Player_InitBoomerangIA(PlayState* play, Player* this) {
     this->stateFlags1 |= PLAYER_STATE1_USING_BOOMERANG;
 }
 
+void Player_InitCaneOfSomariaIA(PlayState* play, Player* this) { }
+
 void Player_InitItemAction(PlayState* play, Player* this, s8 itemAction) {
     this->unk_85C = 0.0f;
     this->unk_858 = 0.0f;
@@ -3505,6 +3513,62 @@ s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play) {
     }
 
     return true;
+}
+
+static void Player_SpawnSomariaCube(Player* this, PlayState* play) {
+    Actor* actor;
+    Actor* oldest = NULL;
+    s32 count = 0;
+    Vec3f spawnPos;
+    CollisionPoly* floorPoly = NULL;
+    s32 bgId = 0;
+    f32 floorHeight;
+    s16 yaw;
+
+    actor = play->actorCtx.actorLists[ACTORCAT_PROP].head;
+    while (actor != NULL) {
+        if (actor->id == ACTOR_ITEM_SOMARIA_CUBE && actor->update != NULL) {
+            count++;
+            oldest = actor;
+        }
+        actor = actor->next;
+    }
+
+    if (count >= 3 && oldest != NULL)
+        Actor_Kill(oldest);
+
+    yaw = this->actor.shape.rot.y;
+    spawnPos.x = this->actor.world.pos.x + Math_SinS(yaw) * 50.0f;
+    spawnPos.y = this->actor.world.pos.y;
+    spawnPos.z = this->actor.world.pos.z + Math_CosS(yaw) * 50.0f;
+    floorHeight = BgCheck_EntityRaycastDown5(play, &play->colCtx, &floorPoly, &bgId, &this->actor, &spawnPos);
+
+    if (floorHeight != BGCHECK_Y_MIN)
+        spawnPos.y = floorHeight;
+
+    Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_SOMARIA_CUBE, spawnPos.x, spawnPos.y, spawnPos.z, 0, yaw, 0, 0);
+}
+       
+
+s32 Player_UpperAction_CaneOfSomaria(Player* this, PlayState* play){
+    if (func_80834758(play,this) || func_8083499C(this, play))
+        return true;
+    if (this->meleeWeaponState != 0 || !(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
+        return false;
+
+    if (this->upperSkelAnime.animation == &gPlayerAnim_link_magic_tamashii1) {
+        if (!LinkAnimation_Update(play, &this->upperSkelAnime)) {
+            return true;
+        }
+    }
+
+    if (sUseHeldItem) {
+        sUseHeldItem = false;
+        LinkAnimation_PlayOnce(play, &this->upperSkelAnime, &gPlayerAnim_link_magic_tamashii1);
+        Player_SpawnSomariaCube(this, play);
+        return true;
+    }
+    return false;
 }
 
 s32 func_80834B5C(Player* this, PlayState* play) {

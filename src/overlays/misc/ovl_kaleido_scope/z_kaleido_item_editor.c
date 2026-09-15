@@ -462,6 +462,8 @@ char* ItemEditor_GetItem(u8 item, u8 param2, u8 slot) {
                 return "Pictobox";
             case ITEM_SHRINE_KEY:
                 return "Shrine Key";
+            case ITEM_CANE_OF_SOMARIA:
+                return "Cane of Somaria";
         }
     }
 
@@ -788,7 +790,7 @@ ItemEditorEntry sItemEditorItemEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, ITEM_WEIRD_EGG,     ITEM_SOLD_OUT,        SLOT_TRADE_CHILD,   "Child Trade",   ItemEditor_SetItem,         ItemEditor_GetItem         },
     { SHOW_OPTION_ONLY_CQ,    ITEM_ROCS_FEATHER,  ITEM_GOLDEN_FEATHER,  SLOT_FEATHER,       "Feather",       ItemEditor_SetCQItem,       ItemEditor_GetItem         },
     { SHOW_OPTION_ONLY_CQ,    ITEM_SWORD_FAIRYS,  ITEM_SWORD_FAIRYS,    SLOT_SWORD_FAIRYS,  "Fairy's Sword", ItemEditor_SetCQItem,       ItemEditor_GetItem         },
-    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_SHRINE_KEY,      SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem,       ItemEditor_GetItem         },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_CANE_OF_SOMARIA, SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem,       ItemEditor_GetItem         },
 };
 
 ItemEditorEntry sItemEditorAmmoEntries[] = {

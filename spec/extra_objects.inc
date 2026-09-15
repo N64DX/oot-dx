@@ -174,6 +174,34 @@ beginseg
 endseg
 
 beginseg
+    name "object_spdweb"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_spdweb/object_spdweb.o"
+    number 6
+endseg
+
+beginseg
+    name "object_spidertent"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_spidertent/object_spidertent.o"
+    number 6
+endseg
+
+beginseg
+    name "object_kin2_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_kin2_obj/object_kin2_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_kinsta2_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_kinsta2_obj/object_kinsta2_obj.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_gold_dust"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_gold_dust/object_gi_gold_dust.o"
@@ -219,6 +247,13 @@ beginseg
     name "object_gi_room_key"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_room_key/object_gi_room_key.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_cane"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_cane/object_gi_cane.o"
     number 6
 endseg
 
@@ -317,6 +352,13 @@ beginseg
     name "object_hammergeist"
     compress
     include "$(BUILD_DIR)/assets/objects/object_hammergeist/object_hammergeist.o"
+    number 6
+endseg
+
+beginseg
+    name "object_sbeetle"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_sbeetle/object_sbeetle.o"
     number 6
 endseg
 

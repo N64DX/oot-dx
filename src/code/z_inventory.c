@@ -169,7 +169,7 @@ void* gItemIcons[] = {
     gItemIconGoldenFeatherTex,     // ITEM_GOLDEN_FEATHER
     gItemIconPictoboxTex,          // ITEM_PICTOBOX
     gItemIconRoomKeyTex,           // ITEM_SHRINE_KEY
-    gItemIconRoomKeyTex,           // ITEM_CQ_1
+    gItemIconCaneOfSomariaTex,     // ITEM_CANE_OF_SOMARIA
     gItemIconRoomKeyTex,           // ITEM_CQ_2
     gItemIconBottlePotionShieldTex, // ITEM_BOTTLE_POTION_SHIELD
     gItemIconShieldWoodenTex,      // ITEM_SHIELD_WOODEN
@@ -307,32 +307,32 @@ u8 gItemSlots[] = {
     SLOT_TRADE_ADULT,   // ITEM_EYEBALL_FROG
     SLOT_TRADE_ADULT,   // ITEM_EYE_DROPS
     SLOT_TRADE_ADULT,   // ITEM_CLAIM_CHECK
-    SLOT_NONE,          // ITEM_BOW_FIRE,
-    SLOT_NONE,          // ITEM_BOW_ICE,
-    SLOT_NONE,          // ITEM_BOW_LIGHT,
-    SLOT_NONE,          // ITEM_SWORD_KOKIRI,
-    SLOT_NONE,          // ITEM_SWORD_MASTER,
-    SLOT_NONE,          // ITEM_SWORD_BIGGORON,
-    SLOT_NONE,          // ITEM_SWORD_HEROS,
-    SLOT_NONE,          // ITEM_SHIELD_DEKU,
-    SLOT_NONE,          // ITEM_SHIELD_HYLIAN,
-    SLOT_NONE,          // ITEM_SHIELD_MIRROR,
-    SLOT_NONE,          // ITEM_SHIELD_HEROS,
-    SLOT_NONE,          // ITEM_TUNIC_KOKIRI,
-    SLOT_NONE,          // ITEM_TUNIC_GORON,
-    SLOT_NONE,          // ITEM_TUNIC_ZORA,
-    SLOT_NONE,          // ITEM_TUNIC_SPIRIT,
-    SLOT_NONE,          // ITEM_BOOTS_KOKIRI,
-    SLOT_NONE,          // ITEM_BOOTS_IRON,
-    SLOT_NONE,          // ITEM_BOOTS_HOVER,
-    SLOT_NONE,          // ITEM_BOOTS_PEGASUS,
-    SLOT_SWORD_FAIRYS,  // ITEM_SWORD_FAIRYS,
-    SLOT_FEATHER,       // ITEM_ROCS_FEATHER,
-    SLOT_FEATHER,       // ITEM_GOLDEN_FEATHER,
-    SLOT_QUEST,         // ITEM_PICTOBOX,
-    SLOT_QUEST,         // ITEM_SHRINE_KEY,
-    SLOT_NONE,          // ITEM_CQ_ITEM_1,
-    SLOT_NONE,          // ITEM_CQ_ITEM_2,
+    SLOT_NONE,          // ITEM_BOW_FIRE
+    SLOT_NONE,          // ITEM_BOW_ICE
+    SLOT_NONE,          // ITEM_BOW_LIGHT
+    SLOT_NONE,          // ITEM_SWORD_KOKIRI
+    SLOT_NONE,          // ITEM_SWORD_MASTER
+    SLOT_NONE,          // ITEM_SWORD_BIGGORON
+    SLOT_NONE,          // ITEM_SWORD_HEROS
+    SLOT_NONE,          // ITEM_SHIELD_DEKU
+    SLOT_NONE,          // ITEM_SHIELD_HYLIAN
+    SLOT_NONE,          // ITEM_SHIELD_MIRROR
+    SLOT_NONE,          // ITEM_SHIELD_HEROS
+    SLOT_NONE,          // ITEM_TUNIC_KOKIRI
+    SLOT_NONE,          // ITEM_TUNIC_GORON
+    SLOT_NONE,          // ITEM_TUNIC_ZORA
+    SLOT_NONE,          // ITEM_TUNIC_SPIRIT
+    SLOT_NONE,          // ITEM_BOOTS_KOKIRI
+    SLOT_NONE,          // ITEM_BOOTS_IRON
+    SLOT_NONE,          // ITEM_BOOTS_HOVER
+    SLOT_NONE,          // ITEM_BOOTS_PEGASUS
+    SLOT_SWORD_FAIRYS,  // ITEM_SWORD_FAIRYS
+    SLOT_FEATHER,       // ITEM_ROCS_FEATHER
+    SLOT_FEATHER,       // ITEM_GOLDEN_FEATHER
+    SLOT_QUEST,         // ITEM_PICTOBOX
+    SLOT_QUEST,         // ITEM_SHRINE_KEY
+    SLOT_QUEST,         // ITEM_CANE_OF_SOMARIA
+    SLOT_NONE,          // ITEM_CQ_ITEM_2
     SLOT_BOTTLE_1,      // ITEM_BOTTLE_POTION_SHIELD
 };
 
