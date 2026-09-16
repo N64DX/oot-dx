@@ -617,8 +617,8 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
         if (play->specialIconAlpha == 0) {
             play->specialIconAlpha = SECONDS(3);
             Interface_LoadActionLabelB(play, DO_ACTION_SKIP);
-        }
-        else doCutsceneSkip = true;
+        } else if (play->transitionTrigger == TRANS_TRIGGER_OFF)
+            doCutsceneSkip = true;
     }
 
     if (csCtx->curFrame == cmd->startFrame || titleDemoSkipped || doCutsceneSkip) {
@@ -811,7 +811,6 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_DESERT_COLOSSUS_REQUIEM:
-                Item_Give(play, ITEM_SONG_REQUIEM);
                 play->nextEntranceIndex = ENTR_DESERT_COLOSSUS_0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 gSaveContext.save.cutsceneIndex = CS_INDEX_0;
@@ -1004,6 +1003,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_DESERT_COLOSSUS_FROM_REQUIEM:
+                Item_Give(play, ITEM_SONG_REQUIEM);
                 play->nextEntranceIndex = ENTR_DESERT_COLOSSUS_4;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_SANDSTORM_END;
@@ -1011,6 +1011,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_TEMPLE_OF_TIME_FROM_LIGHT_ARROWS:
+                Item_Give(play, ITEM_ARROW_LIGHT);
                 play->nextEntranceIndex = ENTR_TEMPLE_OF_TIME_5;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK_FAST;
@@ -1404,6 +1405,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_ROYAL_FAMILYS_TOMB_SUNS_SONG_PART_3:
+                Item_Give(play, ITEM_SONG_SUN);
                 play->nextEntranceIndex = ENTR_ROYAL_FAMILYS_TOMB_1;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK;

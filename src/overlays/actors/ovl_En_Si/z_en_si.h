@@ -13,6 +13,7 @@ typedef struct EnSi {
     /* 0x014C */ EnSiActionFunc actionFunc;
     /* 0x0150 */ ColliderCylinder collider;
     /* 0x019C */ u8 unk_19C;
+    /* 0x019D */ u8 noFreezeTimer;
 } EnSi; // size = 0x01A0
 
 #endif
