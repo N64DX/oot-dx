@@ -1885,10 +1885,10 @@ UNSKIPPABLE "No, no, no, kid! Don't even think\n"
 "yourself!"
 BOX_BREAK
 
-UNSKIPPABLE "The Power Bracelet won't fit a\n"
-"little kid like you if you try to\n"
-"equip it! I want you to be a\n"
-"good boy and give it to me!"
+UNSKIPPABLE "The power bracelet is too dangerous\n"
+"for a little kid like you!\n"
+"I want you to be a good boy and\n"
+"give it to me!"
 BOX_BREAK
 
 UNSKIPPABLE "Ganondorf and his minions are\n"

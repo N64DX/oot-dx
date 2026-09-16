@@ -68,6 +68,7 @@ void EnSi_Init(Actor* thisx, PlayState* play) {
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, NULL, &D_80AFBADC);
     Actor_SetScale(&this->actor, 0.025f);
     this->unk_19C = 0;
+    this->noFreezeTimer = 0;
     this->actionFunc = func_80AFB768;
     this->actor.shape.yOffset = 42.0f;
 }
@@ -153,6 +154,11 @@ void func_80AFB950(EnSi* this, PlayState* play) {
     if (Message_GetState(&play->msgCtx) != TEXT_STATE_CLOSING) {
 #endif
         player->actor.freezeTimer = 10;
+#if !PLATFORM_IQUE
+    } else if (DISABLE_TOKEN_FREEZE && play->msgCtx.msgMode != MSGMODE_NONE && play->msgCtx.textId == 0x9402) {
+        if (++this->noFreezeTimer > 200)
+            Message_CloseTextbox(play);
+#endif
     } else {
         SET_GS_FLAGS(PARAMS_GET_S(this->actor.params, 8, 5), PARAMS_GET_S(this->actor.params, 0, 8));
         Actor_Kill(&this->actor);

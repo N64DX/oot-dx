@@ -4899,7 +4899,7 @@ void Message_Update(PlayState* play) {
                 break;
             case MSGMODE_TEXT_STARTING:
                 msgCtx->msgMode = MSGMODE_TEXT_NEXT_MSG;
-                if (YREG(31) == 0) {
+                if (YREG(31) == 0 && interfaceCtx->unk_1FC != DO_ACTION_SKIP) {
                     Interface_SetDoAction(play, DO_ACTION_NEXT);
                 }
                 break;
