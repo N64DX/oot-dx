@@ -244,12 +244,12 @@ void BgDblueWaterfall_80B84568(BgDblueWaterfall* this, PlayState* play) {
     WaterBox* waterBox;
     s32 bgId;
     f32 sp34 = BgCheck_EntityRaycastDown5(play, &play->colCtx, &sp40, &bgId, &this->actor, &this->actor.world.pos);
-    f32 sp30;
+    f32 waterSurface;
 
-    if (WaterBox_GetSurface1(play, &play->colCtx, this->actor.world.pos.x, this->actor.world.pos.z, &sp30, &waterBox)) {
-        if (sp30 < sp34)
+    if (WaterBox_GetSurface1(play, &play->colCtx, this->actor.world.pos.x, this->actor.world.pos.z, &waterSurface, &waterBox)) {
+        if (waterSurface < sp34)
             this->unk_198 = sp34;
-        else this->unk_198 = sp30;
+        else this->unk_198 = waterSurface;
     } else this->unk_198 = sp34;
 }
 
@@ -514,12 +514,12 @@ void BgDblueWaterfall_Draw(Actor* thisx, PlayState* play) {
 
     if (this->unk_19F > 0) {
         if (this->unk_19F < 255) {
-            gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(play->gameplayFrames * 7) % 128, 32, 32, 1, 0, -(play->gameplayFrames * 6) % 128, 32, 32));
+            gSPSegment(POLY_XLU_DISP++, 0x09, D_80116280);
             gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x9B, 255, 255, 255, this->unk_19F);
             gSPDisplayList(POLY_XLU_DISP++, gGreatBayTempleObjectIceStalactiteDL);
         } else {
             Gfx_SetupDL_25Opa(play->state.gfxCtx);
-            gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(play->gameplayFrames * 7) % 128, 32, 32, 1, 0, -(play->gameplayFrames * 6) % 128, 32, 32));
+            gSPSegment(POLY_OPA_DISP++, 0x09, D_80115FF0);
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0x9B, 255, 255, 255, 255);
             MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
             gSPDisplayList(POLY_OPA_DISP++, gGreatBayTempleObjectIceStalactiteDL);

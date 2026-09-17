@@ -160,20 +160,26 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_ANCIENT_GROVE, 0x00, 0x00, 0x1C },
     { SCENE_FORSAKEN_KINGDOM, 0x00, 0x00, 0x00 },
     { SCENE_GLOOMY_GRAVEYARD, 0x00, 0x00, 0x00 },
+    { SCENE_STONE_TOWER, 0x00, 0x00, 0x00 },
     { SCENE_FORBIDDEN_WOODS, 0x00, 0x00, 0x00 },
     { SCENE_GROTTOS2, 0x00, 0x00, 0xD0 },
     { SCENE_WEBBED_SHRINE, 0x00, 0x00, 0x00 },
+    { SCENE_BENEATH_THE_GRAVEYARD, 0x00, 0x00, 0xD0 },
     { SCENE_PURPLE_ICE_CAVERN, 0x00, 0x00, 0x1C },
+    { SCENE_ROYAL_VAULT, 0x00, 0x00, 0x00 },
     { SCENE_ANCIENT_HOLLOW, 0x00, 0x00, 0x1C },
     { SCENE_GORON_MINES, 0x00, 0x00, 0x00 },
     { SCENE_WOODFALL_TEMPLE, 0x00, 0x00, 0x1C },
     { SCENE_WOODFALL_TEMPLE_BOSS, 0x00, 0x00, 0x1C },
-    { SCENE_BENEATH_THE_GRAVEYARD, 0x00, 0x00, 0xD0 },
+    { SCENE_STONE_TOWER_TEMPLE, 0x00, 0x00, 0x00 },
+    { SCENE_STONE_TOWER_TEMPLE_BOSS, 0x00, 0x00, 0x00 },
     { SCENE_RIVERSIDE_INN, 0x10, 0x10, 0x55 },
     { SCENE_RIVERSIDE_HOUSE, 0x10, 0x10, 0x55 },
     { SCENE_IGORS_HOUSE, 0x10, 0x10, 0x55 },
     { SCENE_ANCIENT_GROVE_SHOP, 0x10, 0x10, 0x55 },
     { SCENE_SPRING_LAKE_SMITHY, 0x10, 0x10, 0x55 },
+    { SCENE_STONE_TOWER_INVERTED, 0x00, 0x00, 0x00 },
+    { SCENE_STONE_TOWER_TEMPLE_INVERTED, 0x00, 0x00, 0x00 },
     { 0xFF, 0x00, 0x00, 0x00 },
 };
 
@@ -558,6 +564,8 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 case SCENE_ANCIENT_GROVE:
                 case SCENE_FORSAKEN_KINGDOM:
                 case SCENE_GLOOMY_GRAVEYARD:
+                case SCENE_STONE_TOWER:
+                case SCENE_STONE_TOWER_INVERTED:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {
@@ -5474,6 +5482,8 @@ void Interface_Update(PlayState* play) {
                 case SCENE_ANCIENT_GROVE:
                 case SCENE_FORSAKEN_KINGDOM:
                 case SCENE_GLOOMY_GRAVEYARD:
+                case SCENE_STONE_TOWER:
+                case SCENE_STONE_TOWER_INVERTED:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {
