@@ -62,6 +62,7 @@ void ObjRaillift_UpdatePosition(ObjRaillift* this, s32 index) {
 
 void ObjRaillift_Init(Actor* thisx, PlayState* play) {
     ObjRaillift* this = (ObjRaillift*)thisx;
+    
     CollisionHeader* header = NULL;
     Path* path;
     u8 type = OBJRAILLIFT_GET_TYPE(thisx);

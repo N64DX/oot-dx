@@ -287,11 +287,13 @@
         <Sample Name="SAMPLE_0_259"/>
         <Sample Name="SAMPLE_0_260"/>
         <Sample Name="SAMPLE_0_261"/>
-        <Sample Name="SAMPLE_0_LINK_433"/>
-        <Sample Name="SAMPLE_0_LINK_434"/>
-        <Sample Name="SAMPLE_0_GABORA_1"/>
-        <Sample Name="SAMPLE_0_GABORA_2"/>
+        <Sample Name="SAMPLE_0_VO_LINK_213"/>
+        <Sample Name="SAMPLE_0_VO_LINK_433"/>
+        <Sample Name="SAMPLE_0_VO_LINK_434"/>
+        <Sample Name="SAMPLE_0_VO_GABORA_1"/>
+        <Sample Name="SAMPLE_0_VO_GABORA_2"/>
         <Sample Name="SAMPLE_0_SNOW_1"/>
+        <Sample Name="SAMPLE_0_EXPLOSION_1"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_126"/>
@@ -428,12 +430,13 @@
         <Effect Name="EFFECT_131" Sample="SAMPLE_0_253"/>
         <Effect Name="EFFECT_132" Sample="SAMPLE_0_214"/>
         <Effect/>
-        <Effect Name="EFFECT_134" Sample="SAMPLE_0_155"/>
-        <Effect Name="EFFECT_135" Sample="SAMPLE_0_197"/>
-        <Effect Name="EFFECT_GABORA_1"  Sample="SAMPLE_0_GABORA_1"/>
-        <Effect Name="EFFECT_GABORA_2"  Sample="SAMPLE_0_GABORA_2"/>
-        <Effect Name="EFFECT_LASH_KID"  Sample="SAMPLE_0_LINK_433"/>
-        <Effect Name="EFFECT_LASH_KID2" Sample="SAMPLE_0_LINK_434"/>
+        <Effect Name="EFFECT_134"          Sample="SAMPLE_0_155"/>
+        <Effect Name="EFFECT_135"          Sample="SAMPLE_0_197"/>
+        <Effect Name="EFFECT_VO_GABORA_1"  Sample="SAMPLE_0_VO_GABORA_1"/>
+        <Effect Name="EFFECT_VO_GABORA_2"  Sample="SAMPLE_0_VO_GABORA_2"/>
+        <Effect Name="EFFECT_VO_FLIP_KID"  Sample="SAMPLE_0_VO_LINK_213"/>
+        <Effect Name="EFFECT_VO_LASH_KID"  Sample="SAMPLE_0_VO_LINK_433"/>
+        <Effect Name="EFFECT_VO_LASH_KID2" Sample="SAMPLE_0_VO_LINK_434"/>
     </Effects>
     <Drums>
         <Drum Name="DRUM_0" Envelope="Env6" Pan="64" Note="A0" Sample="SAMPLE_0_120"/>
@@ -534,5 +537,6 @@
         <Instrument ProgramNumber="83" Name="INST_83" Envelope="Env0" Sample="SAMPLE_0_116"/>
         <Instrument ProgramNumber="82" Name="INST_82" Envelope="Env0" Sample="SAMPLE_0_119"/>
         <Instrument ProgramNumber="92" Name="INST_92" Envelope="Env0" Sample="SAMPLE_0_SNOW_1"/>
+        <Instrument ProgramNumber="93" Name="INST_93" Envelope="Env0" Sample="SAMPLE_0_EXPLOSION_1"/>
     </Instruments>
 </Soundfont>

@@ -216,6 +216,20 @@ beginseg
 endseg
 
 beginseg
+    name "stone_tower_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/stone_tower/stone_tower_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "stone_tower_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/stone_tower/stone_tower_room_0.o"
+    number 3
+endseg
+
+beginseg
     name "old_lost_woods_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/overworld/old_lost_woods/old_lost_woods_scene.o"
@@ -863,5 +877,19 @@ beginseg
     name "mountain_smithy_room_0"
     compress
     include "$(BUILD_DIR)/assets/scenes/indoors/mountain_smithy/mountain_smithy_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "stone_tower_inverted_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/stone_tower_inverted/stone_tower_inverted_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "stone_tower_inverted_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/stone_tower_inverted/stone_tower_inverted_room_0.o"
     number 3
 endseg

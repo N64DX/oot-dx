@@ -55,6 +55,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Bg_Lbfshot"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Lbfshot/z_bg_lbfshot.o"
+endseg
+
+beginseg
     name "ovl_Obj_Flowerpot"
     compress
     flags OVERLAY
@@ -297,6 +304,34 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Numa_Hana/z_bg_numa_hana.o"
+endseg
+
+beginseg
+    name "ovl_Bg_F40_Block"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_F40_Block/z_bg_f40_block.o"
+endseg
+
+beginseg
+    name "ovl_Bg_F40_Switch"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_F40_Switch/z_bg_f40_switch.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Fireshield"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Fireshield/z_obj_fireshield.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Wturn"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Wturn/z_obj_wturn.o"
 endseg
 
 beginseg

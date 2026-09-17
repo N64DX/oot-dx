@@ -90,7 +90,7 @@ void EnWeatherTag_Destroy(Actor* thisx, PlayState* play) {
 
     if (type == EN_WEATHER_TAG_TYPE_CLOUDY_MARKET) {
         EnWeather_ResetWeather(play, 3, 60);
-    } else if (type == EN_WEATHER_TAG_TYPE_CLOUDY_LON_LON_RANCH) {
+    } else if (type == EN_WEATHER_TAG_TYPE_CLOUDY_LON_LON_RANCH || type == EN_WEATHER_TAG_TYPE_CLOUDY_STONE_TOWER) {
         EnWeather_ResetWeather(play, 2, 100);
     } else if (type == EN_WEATHER_TAG_TYPE_SNOW_ZORAS_DOMAIN) {
         EnWeather_ResetWeather(play, 2, 60);
@@ -196,6 +196,13 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
                     WeatherTag_CheckEnableWeatherEffect(this, play, 0, 1, 0, 3, 60, WEATHER_MODE_CLOUDY_CONFIG3);
             }
             EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledRainThunderGoronVillage);
+            break;
+        case EN_WEATHER_TAG_TYPE_CLOUDY_STONE_TOWER:
+            if (Flags_GetEventChkInf(EVENTCHKINF_CLEANSED_STONE_TOWER)) {
+                Actor_Kill(&this->actor);
+                this->killedOnInit = true;
+            }
+            EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledCloudyLonLonRanch);
             break;
     }
 

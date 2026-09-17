@@ -12135,8 +12135,12 @@ void Player_Init(Actor* thisx, PlayState* play2) {
 
     if (play->sceneId <= SCENE_INSIDE_GANONS_CASTLE && play->sceneId != SCENE_GANONS_TOWER && play->sceneId != SCENE_THIEVES_HIDEOUT) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[play->sceneId];
-    } else if (play->sceneId == SCENE_GORON_MINES) {
+    } else if (play->sceneId == SCENE_ANCIENT_HOLLOW) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AC_SHIFT];
+    } else if (play->sceneId == SCENE_GORON_MINES) {
+        gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AE_SHIFT];
+    } else if (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED) {
+        gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AF_SHIFT];
     }
 
     startMode = PLAYER_GET_START_MODE(thisx);
@@ -15283,7 +15287,7 @@ static s16 sWarpSongEntrances[] = {
     ENTR_SPRING_LAKE_5,
     ENTR_PATH_TO_FORTRESS_4,
     ENTR_FORSAKEN_KINGDOM_10,
-    ENTR_TEMPLE_OF_TIME_7,
+    ENTR_STONE_TOWER_3,
 };
 
 void Player_Action_8084E3C4(Player* this, PlayState* play) {
@@ -16535,7 +16539,7 @@ static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX] = {
     { -1, func_808519EC },                               // PLAYER_CSACTION_18
     { 2, &gPlayerAnim_link_demo_baru_op1 },              // PLAYER_CSACTION_19
     { 2, &gPlayerAnim_link_demo_baru_op3 },              // PLAYER_CSACTION_20
-    { 0, NULL },                                         // PLAYER_CSACTION_21
+    { 3, &gPlayerAnim_clink_demo_mimawasi },             // PLAYER_CSACTION_21
     { -1, func_80851B90 },                               // PLAYER_CSACTION_22
     { 3, &gPlayerAnim_link_demo_jibunmiru },             // PLAYER_CSACTION_23
     { 9, &gPlayerAnim_link_normal_back_downA },          // PLAYER_CSACTION_24
@@ -16618,6 +16622,7 @@ static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX] = {
     { 3, &gPlayerAnim_link_demo_kenmiru2 },              // PLAYER_CSACTION_101
     { 3, &gPlayerAnim_link_demo_kenmiru2_modori },       // PLAYER_CSACTION_102
     { -1, &PlayerCs_InitDekuWalk },                      // PLAYER_CSACTION_103
+    { 3, &gPlayerAnim_alink_fukitobu },                  // PLAYER_CSACTION_104
 };
 
 static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
@@ -16642,7 +16647,7 @@ static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
     { -1, func_80851A50 },                                // PLAYER_CSACTION_18
     { 12, &gPlayerAnim_link_demo_baru_op2 },              // PLAYER_CSACTION_19
     { 11, NULL },                                         // PLAYER_CSACTION_20
-    { 0, NULL },                                          // PLAYER_CSACTION_21
+    { 12, &gPlayerAnim_clink_demo_mimawasi_wait },        // PLAYER_CSACTION_21
     { -1, func_80851BE8 },                                // PLAYER_CSACTION_22
     { 11, NULL },                                         // PLAYER_CSACTION_23
     { -1, func_80851CA4 },                                // PLAYER_CSACTION_24
@@ -16729,6 +16734,7 @@ static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
     { 12, &gPlayerAnim_link_demo_kenmiru2_wait },  // PLAYER_CSACTION_101
     { 12, &gPlayerAnim_demo_link_nwait },          // PLAYER_CSACTION_102
     { -1, PlayerCs_DekuWalk },                     // PLAYER_CSACTION_103
+    { 12, &gPlayerAnim_alink_fukitobu },           // PLAYER_CSACTION_104
 };
 
 void Player_AnimChangeOnceMorphZeroRootYawSpeed(PlayState* play, Player* this, LinkAnimationHeader* anim) {

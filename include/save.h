@@ -268,7 +268,8 @@ typedef enum WorldMapArea {
     /* 28 */ WORLD_MAP_AREA_RIVERSIDE_VILLAGE,
     /* 29 */ WORLD_MAP_AREA_SPRING_LAKE,
     /* 30 */ WORLD_MAP_AREA_WOODFALL,
-    /* 31 */ WORLD_MAP_AREA_MAX // also grottos and fairy's/great fairy's fountains (scenes with varying locations)
+    /* 31 */ WORLD_MAP_AREA_STONE_TOWER,
+    /* 32 */ WORLD_MAP_AREA_MAX // also grottos and fairy's/great fairy's fountains (scenes with varying locations)
 } WorldMapArea;
 
 // offsets in SavePlayerData and SaveContext/Save
@@ -1159,6 +1160,8 @@ typedef enum LinkAge {
 #define INFTABLE_1AB_SHIFT 11
 #define INFTABLE_1AC_SHIFT 12
 #define INFTABLE_1AD_SHIFT 13
+#define INFTABLE_1AE_SHIFT 14
+#define INFTABLE_1AF_SHIFT 15
 
 // INFTABLE 0x1D0-0x1DF
 #define INFTABLE_INDEX_1DX INFTABLE_INDEX(INFTABLE_1D0)
