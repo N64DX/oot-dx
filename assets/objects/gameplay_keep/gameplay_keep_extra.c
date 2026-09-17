@@ -510,7 +510,7 @@ Gfx gMMBottleGlassDL[] = {
 
 
 
-// MM Style Jumps
+// MM animations
 
 LinkAnimationHeader gPlayerAnim_link_normal_newroll_jump_20f = { 
     { 13 }, gPlayerAnim_link_normal_newroll_jump_20f_Data,
@@ -526,6 +526,10 @@ LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_20f = {
 
 LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_end_20f = { 
     { 16 }, gPlayerAnim_link_normal_newside_jump_end_20f_Data,
+};
+
+LinkAnimationHeader gPlayerAnim_alink_fukitobu = {
+    { 20 }, gPlayerAnim_alink_fukitobu_Data,
 };
 
 

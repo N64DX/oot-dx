@@ -707,6 +707,8 @@ DECLARE_ROM_SEGMENT(ikana_canyon_room_4)
 DECLARE_ROM_SEGMENT(ikana_graveyard_room_0)
 DECLARE_ROM_SEGMENT(ikana_graveyard_room_1)
 
+DECLARE_ROM_SEGMENT(stone_tower_room_0)
+
 DECLARE_ROM_SEGMENT(old_lost_woods_room_0)
 
 DECLARE_ROM_SEGMENT(grottos2_room_6)
@@ -800,6 +802,8 @@ DECLARE_ROM_SEGMENT(dawngrove_house_2_room_0)
 DECLARE_ROM_SEGMENT(dawngrove_shop_room_0)
 
 DECLARE_ROM_SEGMENT(mountain_smithy_room_0)
+
+DECLARE_ROM_SEGMENT(stone_tower_inverted_room_0)
 
 // Room symbols for compiling test scenes.
 // These are not wrapped in an `#if DEBUG_ASSETS` so that debug ROMs

@@ -185,6 +185,7 @@ void Play_CopyCamera(PlayState* this, s16 destCamId, s16 srcCamId);
 s32 Play_InitCameraDataUsingPlayer(PlayState* this, s16 camId, struct Player* player, s16 setting);
 s32 Play_RequestCameraSetting(PlayState* this, s16 camId, s16 setting);
 void Play_ReturnToMainCam(PlayState* this, s16 camId, s16 duration);
+u8 Play_GetOriginalSceneId(u8 sceneId);
 void Play_SaveSceneFlags(PlayState* this);
 void Play_SetupRespawnPoint(PlayState* this, s32 respawnMode, s32 playerParams);
 void Play_TriggerVoidOut(PlayState* this);
@@ -198,6 +199,13 @@ u32 Player_UseSpecialPower(struct PlayState* this, Player* player, u8 cost, u8 c
 u16 Player_GetMaxShieldDurability(u8 shield);
 u8 Player_GetMaxEnergy(void);
 u8 Player_HasEnergyUnlocked(void);
+
+void Play_DrawMotionBlur(PlayState* this);
+void Play_InitMotionBlur(void);
+void Play_DestroyMotionBlur(void);
+void Play_SetMotionBlurAlpha(u32 alpha);
+void Play_EnableMotionBlur(u32 alpha);
+void Play_DisableMotionBlur(void);
 
 void Play_Init(GameState* thisx);
 void Play_Destroy(GameState* thisx);

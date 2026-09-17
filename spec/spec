@@ -303,6 +303,8 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_126_dawngrove_village.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_127_dawngrove_cave.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_128_ikana_region.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_129_stone_tower_temple.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_130_inv_stone_tower_temple.o"
 endseg
 
 beginseg
@@ -625,6 +627,7 @@ beginseg
     include "$(BUILD_DIR)/src/code/z_fbdemo.o"
     include "$(BUILD_DIR)/src/code/z_fbdemo_triforce.o"
     include "$(BUILD_DIR)/src/code/z_fbdemo_wipe1.o"
+    include "$(BUILD_DIR)/src/code/z_fbdemo_wipe3.o"
     include "$(BUILD_DIR)/src/code/z_fbdemo_circle.o"
     include "$(BUILD_DIR)/src/code/z_fbdemo_fade.o"
     include "$(BUILD_DIR)/src/code/shrink_window.o"

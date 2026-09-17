@@ -1,8 +1,8 @@
 #include "object_dblue_object.h"
 
 #include "gfx.h"
-#include "array_count.h"
 #include "camera.h"
+#include "array_count.h"
 
 Vtx object_dblue_objectVtx_002EB0[] = {
 #include "assets/objects/object_dblue_object/object_dblue_objectVtx_002EB0.vtx.inc"
@@ -168,7 +168,30 @@ BgCamInfo gGreatBayTempleObjectIceStalactiteColCamDataList[] = {
 };
 
 SurfaceType gGreatBayTempleObjectIceStalactiteColSurfaceType[] = {
-    {0x0000A000, 0x000007CC},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_5,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_ICE,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly gGreatBayTempleObjectIceStalactiteColPolygons[] = {
