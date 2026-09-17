@@ -693,7 +693,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
         }
 
         if ((pauseCtx->cursorSpecialPos == 0) && (cursorItem != PAUSE_ITEM_NONE) && (pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE)) {
-            if (CHECK_BTN_ALL(input->press.button, BTN_A) && (pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_CURSOR_X_UPG || pauseCtx->cursorX[PAUSE_EQUIP] == EQUIP_CURSOR_X_UPG_CQ) && !pauseCtx->itemDescriptionOn) // Give description on item through a message box
+            if (CHECK_BTN_ALL(input->press.button, BTN_A) && !pauseCtx->itemDescriptionOn && play->interfaceCtx.unk_1F0 == DO_ACTION_INFO) // Give description on item through a message box
                Message_PauseMenu_ShowDescription(play, 0x0900 + cursorItem, 3);
             else if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && pauseCtx->cursorX[PAUSE_EQUIP] != EQUIP_CURSOR_X_UPG) {
                 if (CHECK_AGE_REQ_EQUIP(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP])) {

@@ -2468,7 +2468,7 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
     if (!play->pauseCtx.itemDescriptionOn && USE_PAUSE_INFO) {
         if (pauseCtx->cursorSpecialPos == 0 && (pauseCtx->pageIndex != PAUSE_MAP || sInDungeonScene)) {
             u8 item = pauseCtx->cursorItem[pauseCtx->pageIndex];
-            if (item <= ITEM_BOW_LIGHT || (item >= ITEM_SWORD_FAIRYS && item <= ITEM_BOTTLE_POTION_SHIELD) || (item >= ITEM_BULLET_BAG_30 && item <= ITEM_PERFECT_BLOCK) || (item >= ITEM_MEDALLION_FOREST && item <= ITEM_DUNGEON_MAP) || pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_SKULL_TOKEN || pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_HEART_PIECE) {
+            if (item <= ITEM_BOW_LIGHT || (item >= ITEM_SWORD_FAIRYS && item <= ITEM_BOTTLE_POTION_SHIELD) || (item >= ITEM_BULLET_BAG_30 && item <= ITEM_PERFECT_BLOCK) || (item >= ITEM_MEDALLION_FOREST && item <= ITEM_DUNGEON_MAP) || (pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_SKULL_TOKEN && CHECK_QUEST_ITEM(QUEST_SKULL_TOKEN)) || pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_HEART_PIECE) {
                 if (play->interfaceCtx.unk_1F0 != DO_ACTION_INFO) {
                     Interface_SetDoAction(play, DO_ACTION_INFO);
                     Interface_LoadActionLabelB(play, DO_ACTION_SAVE);

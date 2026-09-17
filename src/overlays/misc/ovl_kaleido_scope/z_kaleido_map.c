@@ -215,7 +215,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
 
     if (pauseCtx->cursorSpecialPos == 0) {
         if (pauseCtx->cursorPoint[PAUSE_MAP] < 3) {
-            if (CHECK_BTN_ALL(input->press.button, BTN_A) && pauseCtx->pageIndex == PAUSE_MAP && !pauseCtx->itemDescriptionOn) // Give description on item through a message box
+            if (CHECK_BTN_ALL(input->press.button, BTN_A) && !pauseCtx->itemDescriptionOn && play->interfaceCtx.unk_1F0 == DO_ACTION_INFO) // Give description on item through a message box
                 Message_PauseMenu_ShowDescription(play, 0x0900 + pauseCtx->cursorItem[PAUSE_MAP], 3);
             pauseCtx->cursorItem[PAUSE_MAP] = ITEM_DUNGEON_BOSS_KEY + pauseCtx->cursorPoint[PAUSE_MAP];
         } else {
