@@ -108,6 +108,10 @@ static f32 sSpeeds[] = { 10.0f, 9.2f };
 #define EN_GOROIWA_SPEED(this) sSpeeds[(this)->isInKokiri]
 #endif
 
+static f32 EnGoroiwa_PathYOffset(EnGoroiwa* this) {
+    return (this->actor.params & 0x4000) ? 59.5f : 0.0f;
+}
+
 void EnGoroiwa_UpdateCollider(EnGoroiwa* this) {
     static f32 yOffsets[] = { 0.0f, 59.5f };
     Sphere16* worldSphere = &this->collider.elements[0].dim.worldSphere;
@@ -252,7 +256,7 @@ void EnGoroiwa_TeleportToWaypoint(EnGoroiwa* this, PlayState* play, s32 waypoint
     Vec3s* pointPos = (Vec3s*)SEGMENTED_TO_VIRTUAL(path->points) + waypoint;
 
     this->actor.world.pos.x = pointPos->x;
-    this->actor.world.pos.y = pointPos->y;
+    this->actor.world.pos.y = pointPos->y + EnGoroiwa_PathYOffset(this);
     this->actor.world.pos.z = pointPos->z;
 }
 
@@ -347,14 +351,14 @@ s32 EnGoroiwa_Move(EnGoroiwa* this, PlayState* play) {
     Vec3f nextPointPosF;
 
     nextPointPosF.x = nextPointPos->x;
-    nextPointPosF.y = nextPointPos->y;
+    nextPointPosF.y = nextPointPos->y + EnGoroiwa_PathYOffset(this);
     nextPointPosF.z = nextPointPos->z;
     Math_StepToF(&this->actor.speed, EN_GOROIWA_SPEED(this), 0.3f);
     if (Math3D_Vec3fDistSq(&nextPointPosF, &this->actor.world.pos) < SQ(5.0f)) {
         Math_Vec3f_Diff(&nextPointPosF, &this->actor.world.pos, &posDiff);
     } else {
         posDiff.x = nextPointPosF.x - currentPointPos->x;
-        posDiff.y = nextPointPosF.y - currentPointPos->y;
+        posDiff.y = nextPointPos->y - currentPointPos->y;
         posDiff.z = nextPointPosF.z - currentPointPos->z;
     }
     EnGoroiwa_Vec3fNormalize(&this->actor.velocity, &posDiff);
@@ -376,7 +380,8 @@ s32 EnGoroiwa_MoveUpToNextWaypoint(EnGoroiwa* this, PlayState* play) {
     Math_StepToF(&this->actor.velocity.y, EN_GOROIWA_SPEED(this) * 0.5f, 0.18f);
     this->actor.world.pos.x = nextPointPos->x;
     this->actor.world.pos.z = nextPointPos->z;
-    return Math_StepToF(&this->actor.world.pos.y, nextPointPos->y, fabsf(this->actor.velocity.y));
+    return Math_StepToF(&this->actor.world.pos.y, nextPointPos->y + EnGoroiwa_PathYOffset(this),
+                        fabsf(this->actor.velocity.y));
 }
 
 s32 EnGoroiwa_MoveDownToNextWaypoint(EnGoroiwa* this, PlayState* play) {
@@ -397,7 +402,7 @@ s32 EnGoroiwa_MoveDownToNextWaypoint(EnGoroiwa* this, PlayState* play) {
     f32 ySurface;
     Vec3f waterHitPos;
 
-    nextPointY = nextPointPos->y;
+    nextPointY = nextPointPos->y + EnGoroiwa_PathYOffset(this);
     Math_StepToF(&this->actor.velocity.y, -14.0f, 1.0f);
     this->actor.world.pos.x = nextPointPos->x;
     this->actor.world.pos.z = nextPointPos->z;

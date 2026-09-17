@@ -119,6 +119,10 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         MapSelect_LoadRoom(DBG_GORON_MINES_0, this->roomNum, 10);
     else if (entranceIndex == ENTR_WOODFALL_TEMPLE_0)
         MapSelect_LoadRoom(DBG_WOODFALL_TEMPLE_0, this->roomNum, 12);
+    else if (entranceIndex == ENTR_STONE_TOWER_0)
+        gSaveContext.save.info.sceneFlags[SCENE_STONE_TOWER].swch &= ~(1 << 0x14);
+    else if (entranceIndex == ENTR_STONE_TOWER_INVERTED_0)
+        gSaveContext.save.info.sceneFlags[SCENE_STONE_TOWER].swch |= (1 << 0x14);
 
     gSaveContext.respawnFlag = 0;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
@@ -537,17 +541,19 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "145:" T(GFXP_HIRAGANA "ｵｳｹﾉﾎｳﾓﾂｺ", "Royal Vault"), MapSelect_LoadGame, ENTR_ROYAL_VAULT_0 },
     { "146:" T(GFXP_HIRAGANA "ｵﾊｶﾉｿｺ1", "Beneath the Graveyard #1"), MapSelect_LoadGame, ENTR_BENEATH_THE_GRAVEYARD_0 },
     { "147:" T(GFXP_HIRAGANA "ｵﾊｶﾉｿｺ2", "Beneath the Graveyard #2"), MapSelect_LoadGame, ENTR_BENEATH_THE_GRAVEYARD_1 },
-    { "148:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Path to Gerudo's Fortress"), MapSelect_LoadGame, ENTR_PATH_TO_FORTRESS_0 },
-    { "149:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
-    { "150:" T(GFXP_HIRAGANA "ｺﾞﾛﾝｺｳｻﾞﾝ", "Goron Mines"), MapSelect_LoadGame, ENTR_GORON_MINES_0 },
-    { "151:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
-    { "152:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
-    { "153:" T(GFXP_HIRAGANA "ｴｲﾝｼｪﾝﾄｸﾞﾛｰﾌﾞｸﾞﾛｯﾄ", "Ancient Grove Grotto"), MapSelect_LoadGame, ENTR_GROTTOS2_7 },
-    { "154:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTOS2_0 },
-    { "155:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTOS2_2 },
-    { "156:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
-    { "157:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
-    { "158:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
+    { "148:" T(GFXP_HIRAGANA "ﾛｯｸﾋﾞﾙ", "Stone Tower"), MapSelect_LoadGame, ENTR_STONE_TOWER_0 },
+    { "149:" T(GFXP_HIRAGANA "ﾛｯｸﾋﾞﾙ", "Stone Tower (Inv)"), MapSelect_LoadGame, ENTR_STONE_TOWER_INVERTED_0 },
+    { "150:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Path to Gerudo's Fortress"), MapSelect_LoadGame, ENTR_PATH_TO_FORTRESS_0 },
+    { "151:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
+    { "152:" T(GFXP_HIRAGANA "ｺﾞﾛﾝｺｳｻﾞﾝ", "Goron Mines"), MapSelect_LoadGame, ENTR_GORON_MINES_0 },
+    { "153:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
+    { "154:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
+    { "155:" T(GFXP_HIRAGANA "ｴｲﾝｼｪﾝﾄｸﾞﾛｰﾌﾞｸﾞﾛｯﾄ", "Ancient Grove Grotto"), MapSelect_LoadGame, ENTR_GROTTOS2_7 },
+    { "156:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTOS2_0 },
+    { "157:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTOS2_2 },
+    { "158:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
+    { "159:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
+    { "15A:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };

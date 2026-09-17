@@ -101,6 +101,7 @@ extern LinkAnimationHeader gPlayerAnim_link_normal_newroll_jump_20f;
 extern LinkAnimationHeader gPlayerAnim_link_normal_newroll_jump_end_20f;
 extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_20f;
 extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_end_20f;
+extern LinkAnimationHeader gPlayerAnim_alink_fukitobu;
 
 #define gFieldBeehiveTex_WIDTH                  32
 #define gFieldBeehiveTex_HEIGHT                 32

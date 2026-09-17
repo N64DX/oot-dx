@@ -5,6 +5,7 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
+#include "item.h"
 
 SceneCmd oceanside_spider_house_room_2[] = {
     SCENE_CMD_ECHO_SETTINGS(4),
@@ -13,7 +14,7 @@ SceneCmd oceanside_spider_house_room_2[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&oceanside_spider_house_room_2RoomShapeCullable_0001A0),
     SCENE_CMD_OBJECT_LIST(15, oceanside_spider_house_room_2ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(23, oceanside_spider_house_room_2ActorEntry_000058),
+    SCENE_CMD_ACTOR_LIST(24, oceanside_spider_house_room_2ActorEntry_000058),
     SCENE_CMD_END(),
 };
 
@@ -36,31 +37,30 @@ s16 oceanside_spider_house_room_2ObjectList_000040[] = {
 };
 
 ActorEntry oceanside_spider_house_room_2ActorEntry_000058[] = {
-    { ACTOR_EN_SBEETLE,      {  -925, 180, -1175 }, { 0,      0, 0 }, 0x0003 },
-    { ACTOR_EN_SBEETLE,      {  -485, 180,  -730 }, { 0, 0xC000, 0 }, 0x0003 },
-    { ACTOR_EN_SBEETLE,      {  -915, 180, -1330 }, { 0, 0xC000, 0 }, 0x0003 },
-    { ACTOR_EN_SW,           {  -810, 276,  -364 }, { 0, 0x8000, 0 }, 0x0000 },
-    { ACTOR_EN_SW,           {  -780, 210, -1500 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_SW,           {  -345, 320,  -700 }, { 0, 0xC000, 0 }, 0x0000 },
-    { ACTOR_EN_SW,           {  -390, 360, -1383 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_SW,           { -1168, 208,  -788 }, { 0, 0x8000, 0 }, 0x0000 },
-    { ACTOR_EN_SW,           { -1073, 218,  -899 }, { 0,      0, 0 }, 0x0000 },
-  //{ ACTOR_EN_HINT_SKB,     {  -603, 302, -1271 }, { 0, 0xC000, 0 }, 0xF001 },
-  //{ ACTOR_EN_HINT_SKB,     {  -685, 200,  -729 }, { 0,      0, 0 }, 0xF006 },
-    { ACTOR_OBJ_SYOKUDAI,    { -1200, 180,  -840 }, { 0,      0, 0 }, 0x243F },
-    { ACTOR_BG_KIN2_SHELF,   {  -780, 180, -1383 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_KIN2_SHELF,   {  -750, 180, -1383 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_KIN2_SHELF,   {  -810, 180, -1383 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_BG_KIN2_SHELF,   {  -975, 180,  -843 }, { 0, 0x4000, 0 }, 0x0001 },
-    { ACTOR_BG_KIN2_PICTURE, {  -543, 290,  -665 }, { 0, 0x8000, 0 }, 0x003F },
-    { ACTOR_BG_KIN2_PICTURE, {  -812, 290,  -667 }, { 0, 0x8000, 0 }, 0x003F },
-    { ACTOR_BG_KIN2_PICTURE, {  -973, 290, -1054 }, { 0, 0x4000, 0 }, 0x003F },
-    { ACTOR_BG_KIN2_PICTURE, {  -966, 290, -1332 }, { 0, 0x4000, 0 }, 0x003F },
-    { ACTOR_EN_LIGHT,        {  -841, 215, -1211 }, { 0,      0, 0 }, 0x83F0 },
-    { ACTOR_EN_LIGHT,        {  -811, 236,  -910 }, { 0,      0, 0 }, 0x83F0 },
-    { ACTOR_EN_LIGHT,        {  -420, 215,  -820 }, { 0,      0, 0 }, 0x83F0 },
-    { ACTOR_EN_POH_SOUL,     {  -465, 300,  -965 }, { 0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_POH_SOUL,     {  -940, 300, -1255 }, { 0,      0, 0 }, 0x0001 },
+    { ACTOR_EN_SBEETLE,      {  -925, 180, -1175 }, {             0,      0, 0 }, 0x0003 },
+    { ACTOR_EN_SBEETLE,      {  -485, 180,  -730 }, {             0, 0xC000, 0 }, 0x0003 },
+    { ACTOR_EN_SBEETLE,      {  -915, 180, -1330 }, {             0, 0xC000, 0 }, 0x0003 },
+    { ACTOR_EN_SW,           {  -810, 276,  -364 }, {             0, 0x8000, 0 }, 0x0000 },
+    { ACTOR_EN_SW,           {  -780, 210, -1500 }, {             0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_SW,           {  -345, 320,  -700 }, {             0, 0xC000, 0 }, 0x0000 },
+    { ACTOR_EN_SW,           {  -390, 360, -1383 }, {             0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_SW,           { -1168, 208,  -788 }, {             0, 0x8000, 0 }, 0x0000 },
+    { ACTOR_EN_SW,           { -1073, 218,  -899 }, {             0,      0, 0 }, 0x0000 },
+    { ACTOR_OBJ_SYOKUDAI,    { -1200, 180,  -840 }, {             0,      0, 0 }, 0x243F },
+    { ACTOR_BG_KIN2_SHELF,   {  -780, 180, -1383 }, {             0,      0, 0 }, 0x0000 },
+    { ACTOR_BG_KIN2_SHELF,   {  -750, 180, -1383 }, {             0,      0, 0 }, 0x0000 },
+    { ACTOR_BG_KIN2_SHELF,   {  -810, 180, -1383 }, {             0,      0, 0 }, 0x0000 },
+    { ACTOR_BG_KIN2_SHELF,   {  -975, 180,  -843 }, {             0, 0x4000, 0 }, 0x0001 },
+    { ACTOR_BG_KIN2_PICTURE, {  -543, 290,  -665 }, {             0, 0x8000, 0 }, 0x003F },
+    { ACTOR_BG_KIN2_PICTURE, {  -812, 290,  -667 }, {             0, 0x8000, 0 }, 0x003F },
+    { ACTOR_BG_KIN2_PICTURE, {  -973, 290, -1054 }, {             0, 0x4000, 0 }, 0x003F },
+    { ACTOR_BG_KIN2_PICTURE, {  -966, 290, -1332 }, {             0, 0x4000, 0 }, 0x003F },
+    { ACTOR_EN_LIGHT,        {  -841, 215, -1211 }, {             0,      0, 0 }, 0x83F0 },
+    { ACTOR_EN_LIGHT,        {  -811, 236,  -910 }, {             0,      0, 0 }, 0x83F0 },
+    { ACTOR_EN_LIGHT,        {  -420, 215,  -820 }, {             0,      0, 0 }, 0x83F0 },
+    { ACTOR_EN_POH_SOUL,     {  -465, 300,  -965 }, {             0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_POH_SOUL,     {  -940, 300, -1255 }, {             0,      0, 0 }, 0x0001 },
+    { ACTOR_EN_BOX,          { -1150, 180,  -840 }, { GI_MAGIC_BEAN, 0xC000, 0 }, 0x5001 }, // Chest: 01, Magic Bean
 };
 
 RoomShapeCullable oceanside_spider_house_room_2RoomShapeCullable_0001A0 = { 

@@ -1,6 +1,7 @@
 #include "object_mtoride.h"
 
 #include "gfx.h"
+#include "camera.h"
 #include "array_count.h"
 
 u64 gWoodfallSceneryBranchAndLeavesTLUT[] = {
@@ -782,11 +783,34 @@ Gfx gWoodfallSceneryFloorDL[] = {
 };
 
 BgCamInfo gWoodfallSceneryPoisonWaterDamageColCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType gWoodfallSceneryPoisonWaterDamageColSurfaceType[] = {
-    {0x00004000, 0x000007C0},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_2,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_DIRT,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly gWoodfallSceneryPoisonWaterDamageColPolygons[] = {
@@ -824,11 +848,57 @@ CollisionHeader gWoodfallSceneryPoisonWaterDamageCol = {
 };
 
 BgCamInfo gWoodfallSceneryTempleRampAndPlatformColCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType gWoodfallSceneryTempleRampAndPlatformColSurfaceType[] = {
-    {0x00000000, 0x000017C2},   {0x00000400, 0x000017C2},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_STONE,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 2,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 4,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_STONE,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 2,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly gWoodfallSceneryTempleRampAndPlatformColPolygons[] = {
