@@ -1,6 +1,7 @@
 #include "object_spidertent.h"
 
 #include "gfx.h"
+#include "camera.h"
 #include "array_count.h"
 
 Vtx object_spidertentVtx_000000[] = {
@@ -52,7 +53,7 @@ Gfx object_spidertent_DL_001250[] = {
 };
 
 BgCamInfo object_spidertent_Colheader_0011ACCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType object_spidertent_Colheader_0011ACSurfaceType[] = {
@@ -89,11 +90,34 @@ CollisionHeader object_spidertent_Colheader_0011AC = {
 };
 
 BgCamInfo object_spidertent_Colheader_00238CCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType object_spidertent_Colheader_00238CSurfaceType[] = {
-    {0x0000C000, 0x000007CA},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_6,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly object_spidertent_Colheader_00238CPolygons[] = {

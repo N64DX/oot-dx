@@ -463,6 +463,7 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         50,   // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
         -49,  // WORLD_MAP_AREA_SPRING_LAKE
         50,   // WORLD_MAP_AREA_WOODFALL
+        -49,  // WORLD_MAP_AREA_STONE_TOWER
     };
     static s16 areaBoxWidths[] = {
         96, // WORLD_MAP_AREA_HYRULE_FIELD
@@ -496,6 +497,7 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         32, // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
         32, // WORLD_MAP_AREA_SPRING_LAKE
         32, // WORLD_MAP_AREA_WOODFALL
+        32, // WORLD_MAP_AREA_STONE_TOWER
     };
     static s16 areaBoxPosY[] = {
         30,  // WORLD_MAP_AREA_HYRULE_FIELD
@@ -529,6 +531,7 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         2,   // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
         -31, // WORLD_MAP_AREA_SPRING_LAKE
         2,   // WORLD_MAP_AREA_WOODFALL
+        -31, // WORLD_MAP_AREA_STONE_TOWER
     };
     static s16 areaBoxHeights[] = {
         59, // WORLD_MAP_AREA_HYRULE_FIELD
@@ -562,6 +565,7 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         17, // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
         17, // WORLD_MAP_AREA_SPRING_LAKE
         17, // WORLD_MAP_AREA_WOODFALL
+        17, // WORLD_MAP_AREA_STONE_TOWER
     };
     static void* areaBoxTexs[] = {
         gWorldMapAreaBox7Tex, // WORLD_MAP_AREA_HYRULE_FIELD
@@ -595,6 +599,7 @@ void KaleidoScope_DrawWorldMap(PlayState* play, GraphicsContext* gfxCtx) {
         gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_RIVERSIDE_VILLAGE
         gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_SPRING_LAKE
         gWorldMapAreaBox3Tex, // WORLD_MAP_AREA_WOODFALL
+        gWorldMapAreaBox3Tex  // WORLD_MAP_AREA_STONE_TOWER
     };
     static void* currentPosTitleTexs[] = LANGUAGE_ARRAY(gPauseCurrentPositionJPNTex, gPauseCurrentPositionENGTex,
                                                         gPauseCurrentPositionGERTex, gPauseCurrentPositionFRATex);

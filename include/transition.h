@@ -7,6 +7,7 @@
 #include "transition_fade.h"
 #include "transition_triforce.h"
 #include "transition_wipe.h"
+#include "transition_wipe3.h"
 #include "transition_instances.h"
 
 #define TRANS_TRIGGER_OFF 0 // transition is not active
@@ -57,7 +58,8 @@ typedef enum TransitionType {
     /* 19 */ TRANS_TYPE_FADE_BLUE,
     // transition types 20 - 31 are unused
     // transition types 32 - 55 are constructed using the TRANS_TYPE_CIRCLE macro
-    /* 56 */ TRANS_TYPE_MAX = 56
+    /* 64 */ TRANS_TYPE_64 = 64,
+    /* 65 */ TRANS_TYPE_MAX
 } TransitionType;
 
 #define TRANS_NEXT_TYPE_DEFAULT 0xFF // when `nextTransitionType` is set to default, the type will be taken from the entrance table for the ending transition
@@ -72,6 +74,7 @@ typedef struct TransitionContext {
         TransitionCircle circle;
         TransitionTriforce triforce;
         TransitionWipe wipe;
+        TransitionWipe3 wipe3;
     } instanceData;
     /* 0x228 */ s32   transitionType;
     /* 0x22C */ void* (*init)(void* transition);

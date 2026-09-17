@@ -1,6 +1,7 @@
 #include "object_dhouse.h"
 
 #include "gfx.h"
+#include "camera.h"
 #include "array_count.h"
 
 Vtx object_dhouseVtx_004E30[] = {
@@ -117,7 +118,7 @@ Gfx object_dhouse_DL_005A78[] = {
 };
 
 BgCamInfo object_dhouse_Colheader_008040CamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType object_dhouse_Colheader_008040SurfaceType[] = {

@@ -289,6 +289,8 @@ struct PlayState;
 #define R_IS_YOUNG_LINK                          HREG(77)
 #define R_ENABLE_MIRROR                          HREG(78)
 #define R_QUEST_MODE                             HREG(79)
+#define R_MOTION_BLUR_ALPHA                      SREG(90)
+#define R_MOTION_BLUR_ENABLED                    SREG(91)
 
 #define R_HREG_MODE  HREG(80) // see `HRegMode` for mode options
 

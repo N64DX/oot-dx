@@ -20,6 +20,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_lbfshot"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_lbfshot/object_lbfshot.o"
+    number 6
+endseg
+
+beginseg
     name "object_flowerpot"
     compress
     include "$(BUILD_DIR)/assets/objects/object_flowerpot/object_flowerpot.o"
@@ -198,6 +205,20 @@ beginseg
     name "object_kinsta2_obj"
     compress
     include "$(BUILD_DIR)/assets/objects/object_kinsta2_obj/object_kinsta2_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_f40_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_f40_obj/object_f40_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_f40_switch"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_f40_switch/object_f40_switch.o"
     number 6
 endseg
 

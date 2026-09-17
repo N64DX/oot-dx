@@ -1,6 +1,7 @@
 #include "object_hakaisi.h"
 
 #include "gfx.h"
+#include "camera.h"
 #include "array_count.h"
 
 Vtx object_hakaisiVtx_001D00[] = {
@@ -183,7 +184,7 @@ Gfx object_hakaisi_DL_002CC0[] = {
 };
 
 BgCamInfo object_hakaisi_Colheader_002FC4CamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType object_hakaisi_Colheader_002FC4SurfaceType[] = {

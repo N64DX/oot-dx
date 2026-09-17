@@ -152,6 +152,8 @@ void Map_InitData(PlayState* play, s16 room) {
         case SCENE_ANCIENT_GROVE:
         case SCENE_FORSAKEN_KINGDOM:
         case SCENE_GLOOMY_GRAVEYARD:
+        case SCENE_STONE_TOWER:
+        case SCENE_STONE_TOWER_INVERTED:
             extendedMapIndex = mapIndex;
             if (play->sceneId == SCENE_GRAVEYARD) {
                 if (CHECK_QUEST_ITEM(QUEST_SONG_NOCTURNE)) {
@@ -175,6 +177,8 @@ void Map_InitData(PlayState* play, s16 room) {
             } else if (play->sceneId == SCENE_GORON_SHRINE) {
                 if (room == 1)
                     Map_GetExtendedMapSizeAndOffset(0x19, 456, 304, _map_grand2_staticSegmentRomStart);
+            } else if (play->sceneId == SCENE_STONE_TOWER_INVERTED) {
+                Map_GetExtendedMapSizeAndOffset(0x1A, 976, 760, _map_grand2_staticSegmentRomStart);
             }
             PRINTF_COLOR_BLUE();
             PRINTF("ＫＫＫ＝%d\n", extendedMapIndex);
@@ -348,7 +352,19 @@ void Map_Init(PlayState* play) {
         case SCENE_ANCIENT_GROVE:
         case SCENE_FORSAKEN_KINGDOM:
         case SCENE_GLOOMY_GRAVEYARD:
+        case SCENE_STONE_TOWER:
             mapIndex = play->sceneId - SCENE_HYRULE_FIELD;
+            R_MAP_INDEX = gSaveContext.mapIndex = mapIndex;
+            R_COMPASS_SCALE_X = gMapData->owCompassInfo[mapIndex][0];
+            R_COMPASS_SCALE_Y = gMapData->owCompassInfo[mapIndex][1];
+            R_COMPASS_OFFSET_X = gMapData->owCompassInfo[mapIndex][2];
+            R_COMPASS_OFFSET_Y = gMapData->owCompassInfo[mapIndex][3];
+            Map_InitData(play, mapIndex);
+            R_OW_MINIMAP_X = gMapData->owMinimapPosX[mapIndex];
+            R_OW_MINIMAP_Y = gMapData->owMinimapPosY[mapIndex];
+            break;
+        case SCENE_STONE_TOWER_INVERTED:
+            mapIndex = 0x1A + SCENE_FORBIDDEN_WOODS - SCENE_PATH_TO_WOODFALL;
             R_MAP_INDEX = gSaveContext.mapIndex = mapIndex;
             R_COMPASS_SCALE_X = gMapData->owCompassInfo[mapIndex][0];
             R_COMPASS_SCALE_Y = gMapData->owCompassInfo[mapIndex][1];
@@ -582,6 +598,8 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_ANCIENT_GROVE:
             case SCENE_FORSAKEN_KINGDOM:
             case SCENE_GLOOMY_GRAVEYARD:
+            case SCENE_STONE_TOWER:
+            case SCENE_STONE_TOWER_INVERTED:
                 if (!R_MINIMAP_DISABLED) {
                     s8 xOffset = gMapData->overworldXOffset[extendedMapIndex] / 2;
                     

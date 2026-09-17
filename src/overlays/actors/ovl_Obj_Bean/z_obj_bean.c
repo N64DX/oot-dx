@@ -21,6 +21,7 @@
 #include "z_lib.h"
 #include "cutscene_flags.h"
 #include "effect.h"
+#include "ocarina.h"
 #include "play_state.h"
 #include "save.h"
 
@@ -489,7 +490,7 @@ void ObjBean_Init(Actor* thisx, PlayState* play) {
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
     
     if (IS_CHILD_QUEST) {
-        if ( (GET_EVENTCHKINF(EVENTCHKINF_45) && IS_DAY && Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6))) || (this->dyna.actor.params & 0x20)) {
+        if (this->dyna.actor.params & 0x20) {
             path = PARAMS_GET_U(this->dyna.actor.params, 8, 5);
             if (path == 0x1F) {
                 Actor_Kill(&this->dyna.actor);
@@ -685,6 +686,14 @@ void ObjBean_WaitForWater(ObjBean* this, PlayState* play) {
         return;
     }
 
+    if (IS_CHILD_QUEST && !(this->stateFlags & BEAN_STATE_BEEN_WATERED) && D_80B90E30 == NULL && play->msgCtx.ocarinaMode == OCARINA_MODE_04 && play->msgCtx.lastPlayedSong == OCARINA_SONG_STORMS && this->dyna.actor.xzDistToPlayer < 150.0f) {
+        ObjBean_SetupGrowWaterPhase1(this);
+        D_80B90E30 = this;
+        OnePointCutscene_Init(play, 2210, -99, &this->dyna.actor, CAM_ID_MAIN);
+        this->dyna.actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
+        return;
+    }
+
     if ((D_80B90E30 == this) && !CutsceneFlags_Get(play, 5)) {
         D_80B90E30 = NULL;
         if (D_80B90E30) {}
@@ -724,6 +733,38 @@ void ObjBean_GrowWaterPhase2(ObjBean* this, PlayState* play) {
     Actor_PlaySfx_Flagged(&this->dyna.actor, NA_SE_PL_PLANT_TALLER - SFX_FLAG);
 }
 
+/**
+ * Grow bean when it has rain on it
+ */
+static s32 ObjBean_SetupGrownFromWater(ObjBean* this, PlayState* play) {
+    s32 path;
+
+    if (!IS_CHILD_QUEST)
+        return false;
+    path = PARAMS_GET_U(this->dyna.actor.params, 8, 5);
+    if (path == 0x1F || play->pathList[path].count < 3)
+        return false;
+
+    ObjBean_SetupPathCount(this, play);
+    ObjBean_SetupPath(this, play);
+    ObjBean_Move(this);
+    ObjBean_SetupWaitForPlayer(this);
+
+    ObjBean_InitDynaPoly(this, play, &gMagicBeanPlatformCol, DYNA_TRANSFORM_POS | DYNA_TRANSFORM_ROT_Y);
+    this->stateFlags |= BEAN_STATE_DYNAPOLY_SET;
+    ObjBean_InitCollider(&this->dyna.actor, play);
+    this->stateFlags |= BEAN_STATE_COLLIDER_SET;
+
+    ActorShape_Init(&this->dyna.actor.shape, 0.0f, ActorShadow_DrawCircle, 8.8f);
+    ObjBean_FindFloor(this, play);
+    this->unk_1F6 = this->dyna.actor.home.rot.z & 3;
+
+    if (D_80B90E30 == this)
+        D_80B90E30 = NULL;
+    this->dyna.actor.flags &= ~ACTOR_FLAG_UPDATE_CULLING_DISABLED;
+    return true;
+}
+
 void ObjBean_SetupGrowWaterPhase3(ObjBean* this) {
     this->actionFunc = ObjBean_GrowWaterPhase3;
     ObjBean_SetDrawMode(this, BEAN_STATE_DRAW_SOIL | BEAN_STATE_DRAW_LEAVES | BEAN_STATE_DRAW_STALK);
@@ -744,13 +785,12 @@ void ObjBean_GrowWaterPhase3(ObjBean* this, PlayState* play) {
             itemDropPos.y = this->dyna.actor.world.pos.y - 25.0f;
             itemDropPos.z = this->dyna.actor.world.pos.z;
             for (i = 0; i < 3; i++) {
-                Item_DropCollectible(play, &itemDropPos, ITEM00_FLEXIBLE);
+                Item_DropCollectible(play, &itemDropPos, ITEM00_RUPEE_GREEN);
             }
             this->stateFlags |= BEAN_STATE_BEEN_WATERED;
-            Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_BUTTERFRY_TO_FAIRY);
             Sfx_PlaySfxCentered(NA_SE_SY_TRE_BOX_APPEAR);
         }
-    } else if (this->timer <= 0) {
+    } else if (this->timer <= 0 && !ObjBean_SetupGrownFromWater(this, play)) {
         ObjBean_SetupGrowWaterPhase4(this);
     }
 }

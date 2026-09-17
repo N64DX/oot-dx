@@ -1,6 +1,7 @@
 #include "object_numa_obj.h"
 
 #include "gfx.h"
+#include "camera.h"
 #include "array_count.h"
 
 Vtx object_numa_objVtx_000000[] = {
@@ -904,11 +905,34 @@ Gfx object_numa_obj_DL_0130A0[] = {
 };
 
 BgCamInfo gWoodenFlowerOpenedFlowerColCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType gWoodenFlowerOpenedFlowerColSurfaceType[] = {
-    {0x00000000, 0x000007CA},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly gWoodenFlowerOpenedFlowerColPolygons[] = {
@@ -1135,16 +1159,35 @@ CollisionHeader gWoodenFlowerOpenedFlowerCol = {
     0, NULL
 };
 
-u8 object_numa_obj_possiblePadding_00A00C[] = {
-    0x00, 0x00, 0x00, 0x00, 
-};
-
 BgCamInfo gWoodenFlowerClosedFlowerColCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType gWoodenFlowerClosedFlowerColSurfaceType[] = {
-    {0x00000000, 0x000007CA},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly gWoodenFlowerClosedFlowerColPolygons[] = {
@@ -1308,11 +1351,34 @@ CollisionHeader gWoodenFlowerClosedFlowerCol = {
 };
 
 BgCamInfo object_numa_obj_Colheader_012818CamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType object_numa_obj_Colheader_012818SurfaceType[] = {
-    {0x00004000, 0x080007C0},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_2,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_DIRT,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ true
+            ),
+        },
+    },
 };
 
 CollisionPoly object_numa_obj_Colheader_012818Polygons[] = {
