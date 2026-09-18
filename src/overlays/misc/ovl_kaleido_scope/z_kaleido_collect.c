@@ -295,7 +295,7 @@ void KaleidoScope_DrawQuestStatus(PlayState* play, GraphicsContext* gfxCtx) {
 
             if ((pauseCtx->state == PAUSE_STATE_MAIN) && (pauseCtx->mainState == PAUSE_MAIN_STATE_IDLE) &&
                 (pauseCtx->cursorSpecialPos == 0)) {
-                if (CHECK_BTN_ALL(input->press.button, BTN_A) && !pauseCtx->itemDescriptionOn) { // Give description on item through a message box
+                if (CHECK_BTN_ALL(input->press.button, BTN_A) && !pauseCtx->itemDescriptionOn && play->interfaceCtx.unk_1F0 == DO_ACTION_INFO) { // Give description on item through a message box
                     if (pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_SKULL_TOKEN)
                         Message_PauseMenu_ShowDescription(play, 0x0900 + ITEM_SKULL_TOKEN, 3);
                     else if (pauseCtx->cursorPoint[PAUSE_QUEST] == QUEST_HEART_PIECE)

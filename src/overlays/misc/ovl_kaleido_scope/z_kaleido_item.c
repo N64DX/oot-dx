@@ -407,7 +407,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                     if (FIX_USEFUL_GLITCHES && pauseCtx->mainState != PAUSE_MAIN_STATE_IDLE)
                         canSelectItem = false;
 
-                    if (CHECK_BTN_ALL(input->press.button, BTN_A) && !pauseCtx->itemDescriptionOn) // Give description on item through a message box
+                    if (CHECK_BTN_ALL(input->press.button, BTN_A) && !pauseCtx->itemDescriptionOn && play->interfaceCtx.unk_1F0 == DO_ACTION_INFO) // Give description on item through a message box
                         Message_PauseMenu_ShowDescription(play, 0x0900 + cursorItem, 3);
 
                     if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT) && canSelectItem) {
