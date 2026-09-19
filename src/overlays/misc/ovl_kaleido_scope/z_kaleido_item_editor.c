@@ -411,29 +411,40 @@ void ItemEditor_SetDungeon(u8 scene, u8 param2, u8 param3, PlayState* play) {
 }
 
 void ItemEditor_SetFlagsClear(u8 clear, u8 param2, u8 param3, PlayState* play) {
+    SavedSceneFlags* sf;
+    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        sf = &gSaveContext.save.info.sceneFlags[play->sceneId];
+    else if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
+        sf = &gSaveContextExtended.sceneFlags[play->sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
+    else
+        sf = NULL;
+
+    if (sf == NULL)
+        return;
+
     switch (clear) {
         case 0:
-            gSaveContext.save.info.sceneFlags[play->sceneId].chest       = play->actorCtx.flags.chest   = 0;
+            sf->chest = play->actorCtx.flags.chest = 0;
             break;
         case 1:
-            gSaveContext.save.info.sceneFlags[play->sceneId].swch        = play->actorCtx.flags.swch    = play->actorCtx.flags.tempSwch    = 0;
+            sf->swch = play->actorCtx.flags.swch = play->actorCtx.flags.tempSwch = 0;
             break;
         case 2:
-            gSaveContext.save.info.sceneFlags[play->sceneId].clear       = play->actorCtx.flags.clear   = play->actorCtx.flags.tempClear   = 0;
+            sf->clear = play->actorCtx.flags.clear = play->actorCtx.flags.tempClear = 0;
             break;
         case 3:
-            gSaveContext.save.info.sceneFlags[play->sceneId].collect     = play->actorCtx.flags.collect = play->actorCtx.flags.tempCollect = 0;
+            sf->collect = play->actorCtx.flags.collect = play->actorCtx.flags.tempCollect = 0;
             break;
         case 4:
-            gSaveContext.save.info.sceneFlags[play->sceneId].extra.quest = 0;
-            gSaveContext.save.info.sceneFlags[play->sceneId].extra.exit  = 0;
-            gSaveContext.save.info.sceneFlags[play->sceneId].extra.unk   = 0;
+            sf->extra.quest = 0;
+            sf->extra.exit = 0;
+            sf->extra.unk = 0;
             break;
         case 5:
-            gSaveContext.save.info.sceneFlags[play->sceneId].rooms       = 0;
+            sf->rooms = 0;
             break;
         case 6:
-            gSaveContext.save.info.sceneFlags[play->sceneId].floors      = 0;
+            sf->floors = 0;
             break;
     }
 }
@@ -462,6 +473,8 @@ char* ItemEditor_GetItem(u8 item, u8 param2, u8 slot) {
                 return "Pictobox";
             case ITEM_SHRINE_KEY:
                 return "Shrine Key";
+            case ITEM_CANE_OF_SOMARIA:
+                return "Cane of Somaria";
         }
     }
 
@@ -788,7 +801,7 @@ ItemEditorEntry sItemEditorItemEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, ITEM_WEIRD_EGG,     ITEM_SOLD_OUT,        SLOT_TRADE_CHILD,   "Child Trade",   ItemEditor_SetItem,         ItemEditor_GetItem         },
     { SHOW_OPTION_ONLY_CQ,    ITEM_ROCS_FEATHER,  ITEM_GOLDEN_FEATHER,  SLOT_FEATHER,       "Feather",       ItemEditor_SetCQItem,       ItemEditor_GetItem         },
     { SHOW_OPTION_ONLY_CQ,    ITEM_SWORD_FAIRYS,  ITEM_SWORD_FAIRYS,    SLOT_SWORD_FAIRYS,  "Fairy's Sword", ItemEditor_SetCQItem,       ItemEditor_GetItem         },
-    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_SHRINE_KEY,      SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem,       ItemEditor_GetItem         },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_CANE_OF_SOMARIA, SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem,       ItemEditor_GetItem         },
 };
 
 ItemEditorEntry sItemEditorAmmoEntries[] = {

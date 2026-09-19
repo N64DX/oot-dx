@@ -134,7 +134,18 @@ void Play_SetupTransition(PlayState* this, s32 transitionType) {
     transitionCtx->transitionType = transitionType;
 
     // circle types
-    if ((transitionCtx->transitionType >> 5) == 1) {
+    if (transitionCtx->transitionType & TRANS_TYPE_64) {
+        transitionCtx->init = TransitionWipe3_Init;
+        transitionCtx->destroy = TransitionWipe3_Destroy;
+        transitionCtx->start = TransitionWipe3_Start;
+        transitionCtx->isDone = TransitionWipe3_IsDone;
+        transitionCtx->draw = TransitionWipe3_Draw;
+        transitionCtx->update = TransitionWipe3_Update;
+        transitionCtx->setType = TransitionWipe3_SetType;
+        transitionCtx->setColor = TransitionWipe3_SetColor;
+        transitionCtx->setUnkColor = NULL;
+    // circle types
+    } else if ((transitionCtx->transitionType >> 5) == 1) {
         transitionCtx->init = TransitionCircle_Init;
         transitionCtx->destroy = TransitionCircle_Destroy;
         transitionCtx->start = TransitionCircle_Start;
@@ -235,6 +246,90 @@ void func_800BC88C(PlayState* this) {
 Gfx* Play_SetFog(PlayState* this, Gfx* gfx) {
     return Gfx_SetFog2(gfx, this->lightCtx.fogColor[0], this->lightCtx.fogColor[1], this->lightCtx.fogColor[2], 0,
                        this->lightCtx.fogNear, 1000);
+}
+
+typedef enum {
+    /* 0 */ MOTION_BLUR_OFF,
+    /* 1 */ MOTION_BLUR_SETUP,
+    /* 2 */ MOTION_BLUR_PROCESS
+} MotionBlurStatus;
+
+static u8 sMotionBlurStatus;
+static void* sMotionBlurFbufSave; // transient ZeldaArena frame-save buffer for motion blur (NULL when inactive)
+
+#define MOTION_BLUR_FBUF_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(u16))
+
+void Play_DrawMotionBlur(PlayState* this) {
+    GraphicsContext* gfxCtx = this->state.gfxCtx;
+    s32 alpha;
+
+    if (R_MOTION_BLUR_ENABLED && sMotionBlurFbufSave != NULL) {
+        alpha = R_MOTION_BLUR_ALPHA;
+
+        if (sMotionBlurStatus == MOTION_BLUR_OFF)
+            sMotionBlurStatus = MOTION_BLUR_SETUP;
+    } else {
+        alpha = 0;
+        sMotionBlurStatus = MOTION_BLUR_OFF;
+    }
+
+    if (sMotionBlurStatus != MOTION_BLUR_OFF) {
+        Gfx* gfxHead;
+        Gfx* gfx;
+
+        OPEN_DISPS(gfxCtx,__FILE__, __LINE__);
+        gfxHead = POLY_OPA_DISP;
+        gfx = Gfx_Open(gfxHead);
+        gSPDisplayList(OVERLAY_DISP++, gfx);
+        this->pauseBgPreRender.fbuf = gfxCtx->curFrameBuffer;
+        this->pauseBgPreRender.fbufSave = sMotionBlurFbufSave;
+
+        if (sMotionBlurStatus == MOTION_BLUR_PROCESS) // Blend the saved (previous) frame over the current framebuffer for trails
+            func_800C170C(&this->pauseBgPreRender, &gfx, this->pauseBgPreRender.fbufSave, this->pauseBgPreRender.fbuf, 255, 255, 255, alpha);
+        else sMotionBlurStatus = MOTION_BLUR_PROCESS;
+
+        PreRender_SaveFramebuffer(&this->pauseBgPreRender, &gfx);
+        gSPEndDisplayList(gfx++);
+        Gfx_Close(gfxHead, gfx);
+        POLY_OPA_DISP = gfx;
+        CLOSE_DISPS(gfxCtx, __FILE__, __LINE__);
+    }
+}
+
+void Play_InitMotionBlur(void) {
+    R_MOTION_BLUR_ENABLED = false;
+    sMotionBlurStatus = MOTION_BLUR_OFF;
+}
+
+void Play_DestroyMotionBlur(void) {
+    R_MOTION_BLUR_ENABLED = false;
+    sMotionBlurStatus = MOTION_BLUR_OFF;
+    if (sMotionBlurFbufSave != NULL) {
+        ZeldaArena_Free(sMotionBlurFbufSave);
+        sMotionBlurFbufSave = NULL;
+    }
+}
+
+void Play_SetMotionBlurAlpha(u32 alpha) {
+    R_MOTION_BLUR_ALPHA = alpha;
+}
+
+void Play_EnableMotionBlur(u32 alpha) {
+    if (sMotionBlurFbufSave == NULL) {
+        sMotionBlurFbufSave = ZeldaArena_Malloc(MOTION_BLUR_FBUF_SIZE);
+        if (sMotionBlurFbufSave == NULL)
+            return; // no heap headroom: skip blur
+    }
+    R_MOTION_BLUR_ALPHA = alpha;
+    R_MOTION_BLUR_ENABLED = true;
+}
+
+void Play_DisableMotionBlur(void) {
+    R_MOTION_BLUR_ENABLED = false;
+    if (sMotionBlurFbufSave != NULL) {
+        ZeldaArena_Free(sMotionBlurFbufSave);
+        sMotionBlurFbufSave = NULL;
+    }
 }
 
 void Play_Destroy(GameState* thisx) {
@@ -692,8 +787,9 @@ void Play_Update(PlayState* this) {
                 case TRANS_MODE_INSTANCE_INIT:
                     this->transitionCtx.init(&this->transitionCtx.instanceData);
 
-                    // circle types
-                    if ((this->transitionCtx.transitionType >> 5) == 1) {
+                    // circle and wipe3 types
+                    if (((this->transitionCtx.transitionType >> 5) == 1) ||
+                        (this->transitionCtx.transitionType & TRANS_TYPE_64)) {
                         this->transitionCtx.setType(&this->transitionCtx.instanceData,
                                                     this->transitionCtx.transitionType | TC_SET_PARAMS);
                     }
@@ -1481,6 +1577,8 @@ void Play_Draw(PlayState* this) {
             DebugDisplay_DrawObjects(this);
         }
 
+        Play_DrawMotionBlur(this);
+
         if ((R_PAUSE_BG_PRERENDER_STATE == PAUSE_BG_PRERENDER_SETUP) || (gTransitionTileState == TRANS_TILE_SETUP)) {
             Gfx* gfxP = OVERLAY_DISP;
 
@@ -2010,13 +2108,27 @@ s16 func_800C09D8(PlayState* this, s16 camId, s16 uid) {
     }
 }
 
+/**
+ * Converts the number of a scene to its "original" equivalent, the default version of the area which the player first enters.
+ */
+u8 Play_GetOriginalSceneId(u8 sceneId) {
+    if (sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED) // Inverted Stone Tower Temple -> Stone Tower Temple
+        return SCENE_STONE_TOWER_TEMPLE;
+    else if (sceneId == SCENE_STONE_TOWER_INVERTED) // Inverted Stone Tower -> Stone Tower
+        return SCENE_STONE_TOWER;
+    return sceneId;
+}
+
 void Play_SaveSceneFlags(PlayState* this) {
     SavedSceneFlags* savedSceneFlags;
+    u8 sceneId = Play_GetOriginalSceneId(this->sceneId);
 
-    if (this->sceneId >= ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+    if (sceneId >= ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
         return;
 
-    savedSceneFlags = &gSaveContext.save.info.sceneFlags[this->sceneId];
+    if (sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        savedSceneFlags = &gSaveContext.save.info.sceneFlags[sceneId];
+    else savedSceneFlags = &gSaveContextExtended.sceneFlags[sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
     savedSceneFlags->chest = this->actorCtx.flags.chest;
     savedSceneFlags->swch = this->actorCtx.flags.swch;
     savedSceneFlags->clear = this->actorCtx.flags.clear;

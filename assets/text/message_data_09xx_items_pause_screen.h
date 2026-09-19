@@ -722,6 +722,18 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x0950, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+ITEM_ICON(ITEM_CANE_OF_SOMARIA) COLOR(RED) "Cane of Somaria" COLOR(DEFAULT) "\n"
+"Press " COLOR(YELLOW) "[C]" COLOR(DEFAULT) " to summon statues\n"
+"that can hold down switches.\n"
+"Summon up to " COLOR(RED) "3" COLOR(DEFAULT) " statues!"
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x0952, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(

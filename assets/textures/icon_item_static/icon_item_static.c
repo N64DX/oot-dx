@@ -322,8 +322,8 @@ u64 gItemIconRoomKeyTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
 #include "assets/textures/icon_item_static/gItemIconRoomKeyTex.rgba32.inc.c"
 };
 
-u64 gItemIconCQ1Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
-#include "assets/textures/icon_item_static/gItemIconRoomKeyTex.rgba32.inc.c"
+u64 gItemIconCaneOfSomariaTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconCaneOfSomariaTex.rgba32.inc.c"
 };
 
 u64 gItemIconCQ2Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {

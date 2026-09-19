@@ -1,5 +1,5 @@
 #ifndef OBJECT_LADDER_H
-#define OBJECT_LADDER_H 1
+#define OBJECT_LADDER_H
 
 #include "bgcheck.h"
 #include "ultra64.h"
