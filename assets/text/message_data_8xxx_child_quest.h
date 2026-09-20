@@ -2567,28 +2567,28 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(45) "けど…　そいつぁ…\n"
 SHIFT(33) "ウチの　ババアんとこに\n"
-"おいてきたハズだが…　まあいいや！" TEXTID(0x812B)
+"おいてきたハズだが…　まあいいや！" TEXTID(0x812C)
 ),
 MSG(
 UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Hey, that saw! It's mine!"
 BOX_BREAK
 
 UNSKIPPABLE "But... I thought I left that saw\n"
-"with my old lady... Oh well..." TEXTID(0x812B)
+"with my old lady... Oh well..." TEXTID(0x812C)
 ),
 MSG(
 UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Oh, das ist ja meine Säge!"
 BOX_BREAK
 
 UNSKIPPABLE "Aber... Ich dachte, ich hätte sie\n"
-"bei der alten Frau liegen gelassen..." TEXTID(0x812B)
+"bei der alten Frau liegen gelassen..." TEXTID(0x812C)
 ),
 MSG(
 UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Hé! Mais c'est ma scie!"
 BOX_BREAK
 
 UNSKIPPABLE "Je l'avais égarée chez ma vieille \n"
-"femme...C'est fou!" TEXTID(0x812B)
+"femme...C'est fou!" TEXTID(0x812C)
 )
 )
 

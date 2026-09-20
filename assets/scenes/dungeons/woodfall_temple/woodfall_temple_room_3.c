@@ -13,7 +13,7 @@ SceneCmd woodfall_temple_room_3[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_3RoomShapeCullable_0001B0),
     SCENE_CMD_OBJECT_LIST(16, woodfall_temple_room_3ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(18, woodfall_temple_room_3ActorEntry_00006C),
+    SCENE_CMD_ACTOR_LIST(17, woodfall_temple_room_3ActorEntry_00006C),
     SCENE_CMD_END(),
 };
 
@@ -41,7 +41,6 @@ ActorEntry woodfall_temple_room_3ActorEntry_00006C[] = {
     { ACTOR_BG_YDAN_SP,    { -1110, -1100, -585 }, { 0x4000,      0,      0 }, 0x0001 }, // Sets switch: 01
     { ACTOR_EN_ST,         { -1410, -1300, -630 }, {      0, 0x1680,      0 }, 0x003F },
     { ACTOR_EN_DEKUBABA,   { -1200, -1185, -780 }, {      0, 0x0F00,      0 }, 0x0000 },
-    { ACTOR_ELF_MSG,       { -1110, -1485,    0 }, {   0x14,      0,      0 }, 0x0C0A },
     { ACTOR_OBJ_PZLBLOCK,  { -1110, -1485,    0 }, {      1,      0,      6 }, 0x073F }, // Sets switch: 3F
     { ACTOR_EN_TANRON1,    { -1350, -1405, -570 }, {      0,      0,      0 }, 0x0004 },
     { ACTOR_OBJ_SYOKUDAI,  { -1380, -1195, -210 }, {      0,      0,      0 }, 0x200A }, // Sets switch: 0A

@@ -97,6 +97,9 @@ void ObjSyokudai_Init(Actor* thisx, PlayState* play) {
     Actor_ProcessInitChain(&this->actor, sInitChain);
     ActorShape_Init(&this->actor.shape, 0.0f, NULL, 0.0f);
 
+    if ((play->sceneId == SCENE_WOODFALL || play->sceneId == SCENE_WOODFALL_TEMPLE) && PARAMS_GET_NOMASK(this->actor.params, 12) == 0)
+        this->actor.flags &= ~ACTOR_FLAG_HOOKSHOT_PULLS_PLAYER;
+
     Collider_InitCylinder(play, &this->standCollider);
     Collider_SetCylinder(play, &this->standCollider, &this->actor, &sCylInitStand);
     this->standCollider.base.colMaterial = sColMaterialsStand[PARAMS_GET_NOMASK(this->actor.params, 12)];

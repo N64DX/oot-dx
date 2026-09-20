@@ -8172,8 +8172,10 @@ void func_8083DF68(Player* this, f32 arg1, s16 arg2) {
 void func_8083DFE0(Player* this, f32* arg1, s16* arg2) {
     s16 yawDiff = this->yaw - *arg2;
 
-    if (this->meleeWeaponState == 0 && this->currentBoots != PLAYER_BOOTS_PEGASUS) {
-        this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
+    if (this->meleeWeaponState == 0) {
+        if (this->currentBoots == PLAYER_BOOTS_PEGASUS)
+            this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 50.0f), (R_RUN_SPEED_LIMIT / 50.0f));
+        else this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
     }
 
     if (ABS(yawDiff) > 0x6000) {

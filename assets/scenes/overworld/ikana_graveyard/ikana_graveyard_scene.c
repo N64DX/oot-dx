@@ -2343,4 +2343,3 @@ u64 ikana_graveyard_sceneTLUT_00DDD0[] = {
 u64 ikana_graveyard_sceneTLUT_00DFD0[] = {
 #include "assets/scenes/overworld/ikana_graveyard/ikana_graveyard_sceneTLUT_00DFD0.rgba16.inc.c"
 };
-

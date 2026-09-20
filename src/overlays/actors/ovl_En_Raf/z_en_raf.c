@@ -759,13 +759,13 @@ void EnRaf_TransformLimbDraw(PlayState* play2, s32 limbIndex, Actor* thisx) {
 
             // These matrix operations make the trap petals look a bit more "wobbly" as it chews by stretching the limbs in various random directions.
             if ((limbIndex > CARNIVOROUS_LILY_PAD_LIMB_FLOWER) && (limbIndex < CARNIVOROUS_LILY_PAD_LIMB_ROOTS)) {
-                Matrix_RotateY((this->chewLimbRot[limbIndex].y * play->gameplayFrames), MTXMODE_APPLY);
-                Matrix_RotateX((this->chewLimbRot[limbIndex].x * play->gameplayFrames), MTXMODE_APPLY);
-                Matrix_RotateZ((this->chewLimbRot[limbIndex].z * play->gameplayFrames), MTXMODE_APPLY);
+                Matrix_RotateY(BINANG_TO_RAD((s16)(this->chewLimbRot[limbIndex].y * play->gameplayFrames)), MTXMODE_APPLY);
+                Matrix_RotateX(BINANG_TO_RAD((s16)(this->chewLimbRot[limbIndex].x * play->gameplayFrames)), MTXMODE_APPLY);
+                Matrix_RotateZ(BINANG_TO_RAD((s16)(this->chewLimbRot[limbIndex].z * play->gameplayFrames)), MTXMODE_APPLY);
                 Matrix_Scale(this->chewScale + 1.0f, 1.0f, 1.0f, MTXMODE_APPLY);
-                Matrix_RotateZ(-(this->chewLimbRot[limbIndex].z * play->gameplayFrames), MTXMODE_APPLY);
-                Matrix_RotateX(-(this->chewLimbRot[limbIndex].x * play->gameplayFrames), MTXMODE_APPLY);
-                Matrix_RotateY(-(this->chewLimbRot[limbIndex].y * play->gameplayFrames), MTXMODE_APPLY);
+                Matrix_RotateZ(BINANG_TO_RAD((s16)(-(this->chewLimbRot[limbIndex].z * play->gameplayFrames))), MTXMODE_APPLY);
+                Matrix_RotateX(BINANG_TO_RAD((s16)(-(this->chewLimbRot[limbIndex].x * play->gameplayFrames))), MTXMODE_APPLY);
+                Matrix_RotateY(BINANG_TO_RAD((s16)(-(this->chewLimbRot[limbIndex].y * play->gameplayFrames))), MTXMODE_APPLY);
             }
             break;
 
@@ -869,9 +869,9 @@ void EnRaf_DrawEffects(EnRaf* this, PlayState* play) {
         if (effect->isEnabled) {
             Matrix_Translate(effect->pos.x, effect->pos.y, effect->pos.z, MTXMODE_NEW);
             Matrix_Scale(effect->scale, effect->scale, effect->scale, MTXMODE_APPLY);
-            Matrix_RotateX(effect->rot.x, MTXMODE_APPLY);
-            Matrix_RotateY(effect->rot.y, MTXMODE_APPLY);
-            Matrix_RotateZ(effect->rot.z, MTXMODE_APPLY);
+            Matrix_RotateX(BINANG_TO_RAD(effect->rot.x), MTXMODE_APPLY);
+            Matrix_RotateY(BINANG_TO_RAD(effect->rot.y), MTXMODE_APPLY);
+            Matrix_RotateZ(BINANG_TO_RAD(effect->rot.z), MTXMODE_APPLY);
 
             MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, gfxCtx, "../z_en_raf.c", 885);
             gSPDisplayList(POLY_OPA_DISP++, gCarnivorousLilyPadParticleDL);
