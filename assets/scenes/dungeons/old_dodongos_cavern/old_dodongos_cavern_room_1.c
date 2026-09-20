@@ -41,9 +41,9 @@ s16 old_dodongos_cavern_room_1ObjectList0x000038[] = {
 
 ActorEntry old_dodongos_cavern_room_1ActorList0x000044[] = {
     { ACTOR_OBJECT_KANKYO,      {    0,   0,    0 }, {   0,      0, 0 }, 0x0006 },
-    { ACTOR_EN_SPIDER,          { 2600,   0, -350 }, {   0, 0xC000, 0 }, 0x0001 },
-    { ACTOR_EN_SPIDER,          { 3355,   0, -490 }, {   0,      0, 0 }, 0x0001 },
-    { ACTOR_EN_SPIDER,          { 3103,   0, -155 }, {   0, 0x8000, 0 }, 0x0001 },
+    { ACTOR_EN_SPIDER,          { 2600,   0, -350 }, {   0, 0xC000, 0 }, 0x7F01 },
+    { ACTOR_EN_SPIDER,          { 3355,   0, -490 }, {   0,      0, 0 }, 0x7F01 },
+    { ACTOR_EN_SPIDER,          { 3103,   0, -155 }, {   0, 0x8000, 0 }, 0x7F01 },
     { ACTOR_EN_BOX,             { 3720,   0, -197 }, { 0x1, 0x4000, 0 }, 0x5001 }, // Chest: 01, Bombs (5)
     { ACTOR_BG_DBLUE_WATERFALL, { 1800, 520, -250 }, {   0,      0, 0 }, 0x700E }, // Switch: 0E
 };

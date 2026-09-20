@@ -41,8 +41,8 @@ s16 old_dodongos_cavern_room_5ObjectList0x000038[] = {
 
 ActorEntry old_dodongos_cavern_room_5ActorList0x000048[] = {
     { ACTOR_OBJECT_KANKYO, {    0,   0,     0 }, { 0,      0, 0 }, 0x0006 },
-    { ACTOR_EN_SPIDER,     { 2700,   0, -4200 }, { 0, 0x3A98, 0 }, 0x0001 },
-    { ACTOR_EN_SPIDER,     { 3200,   0, -4800 }, { 0, 0x1555, 0 }, 0x0001 },
+    { ACTOR_EN_SPIDER,     { 2700,   0, -4200 }, { 0, 0x3A98, 0 }, 0x7F01 },
+    { ACTOR_EN_SPIDER,     { 3200,   0, -4800 }, { 0, 0x1555, 0 }, 0x7F01 },
     { ACTOR_OBJ_SWITCH,    { 3000, 100, -4482 }, { 0,      0, 0 }, 0x0201 }, // Switch: 02
 };
 

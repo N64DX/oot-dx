@@ -997,17 +997,22 @@ s32 Player_GetEnvironmentalHazard(PlayState* play) {
         envHazard = PLAYER_ENV_HAZARD_HOTROOM - 1;
     } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_FREEZING) { // Room is freezing
         envHazard = PLAYER_ENV_HAZARD_FREEZINGROOM - 1;
-    } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_CURSED) { // Room is cursed
-        envHazard = PLAYER_ENV_HAZARD_CURSEDROOM - 1;
     } else if ((this->underwaterTimer > 80) &&
                ((this->currentBoots == PLAYER_BOOTS_IRON) || (this->underwaterTimer >= 300))) {
         envHazard = ((this->currentBoots == PLAYER_BOOTS_IRON) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
                         ? (PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1)
                         : (PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1);
+    } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_CURSED) { // Room is cursed
+        envHazard = PLAYER_ENV_HAZARD_CURSEDROOM - 1;
     } else if (this->stateFlags1 & PLAYER_STATE1_27) { // Swimming
         envHazard = PLAYER_ENV_HAZARD_SWIMMING - 1;
     } else {
         return PLAYER_ENV_HAZARD_NONE;
+    }
+
+    if (!Player_InCsMode(play) && play->roomCtx.curRoom.environmentType == ROOM_ENV_CURSED && this->currentTunic != PLAYER_TUNIC_SPIRIT && !(gSaveContext.envHazardTextTriggerFlags & ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM)) {
+        Message_StartTextbox(play, sEnvHazardTextTriggers[PLAYER_ENV_HAZARD_CURSEDROOM - 1].textId, NULL);
+        gSaveContext.envHazardTextTriggerFlags |= ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM;
     }
 
     triggerEntry = &sEnvHazardTextTriggers[envHazard];
@@ -1015,7 +1020,6 @@ s32 Player_GetEnvironmentalHazard(PlayState* play) {
         if ((triggerEntry->flag != 0) && !(gSaveContext.envHazardTextTriggerFlags & triggerEntry->flag) &&
             (((envHazard == (PLAYER_ENV_HAZARD_HOTROOM - 1)) && (this->currentTunic != PLAYER_TUNIC_GORON)) ||
               (envHazard == (PLAYER_ENV_HAZARD_FREEZINGROOM - 1) && this->currentTunic != PLAYER_TUNIC_ZORA) ||
-              (envHazard == (PLAYER_ENV_HAZARD_CURSEDROOM - 1) && this->currentTunic != PLAYER_TUNIC_SPIRIT) ||
              (((envHazard == (PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1)) ||
                (envHazard == (PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1))) &&
               (this->currentBoots == PLAYER_BOOTS_IRON) && (this->currentTunic != PLAYER_TUNIC_ZORA)))) {

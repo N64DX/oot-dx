@@ -405,6 +405,7 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
 
     EnHammergeist_InitAndSetCollision(this, play);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
+    this->actor.colChkInfo.defense = 3.0f;
     SkelAnime_InitFlex(play, &this->skelAnime, &gHammergeistSkel, NULL, this->jointTable, this->morphTable, GHAMMERGEISTSKEL_NUM_LIMBS);
     EnHammergeist_SetupDoNothing(this, play);
 

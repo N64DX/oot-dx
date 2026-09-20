@@ -56,8 +56,8 @@ ActorEntry old_dodongos_cavern_room_0ActorList0x000044[] = {
     { ACTOR_BG_DODOAGO2,      {    0,  360, -3330 }, {      0,      0,      0 }, 0xFF16 }, // Switch: 10 (door) & 16 (jaw)
     { ACTOR_EN_BOX,           {    0,    0, -2075 }, {   0x66, 0x8000,      0 }, 0x5000 }, // Chest: 00, Bombs (10)
     { ACTOR_EN_BEAST,         {    0,    0, -1950 }, {      0,      0,      0 }, 0x7F00 },
-    { ACTOR_EN_SPIDER,        {  665,  360, -2580 }, {      0,      0,      0 }, 0x0001 },
-    { ACTOR_EN_SPIDER,        { -665,  360, -2580 }, {      0,      0,      0 }, 0x0001 },
+    { ACTOR_EN_SPIDER,        {  665,  360, -2580 }, {      0,      0,      0 }, 0x7F01 },
+    { ACTOR_EN_SPIDER,        { -665,  360, -2580 }, {      0,      0,      0 }, 0x7F01 },
     { ACTOR_OBJ_SWITCH,       {  900,    0, -1520 }, {      0,      0,      0 }, 0x0101 }, // Switch: 01
     { ACTOR_OBJ_SWITCH,       {  900,   80, -2120 }, {      0,      0,      0 }, 0x1001 }, // Switch: 10
     { ACTOR_BG_ICE_SHELTER,   {  900,   80, -2120 }, {      0,      0,      0 }, 0x0508 }, // Switch: 08

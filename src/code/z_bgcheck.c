@@ -1520,6 +1520,7 @@ typedef struct BgCheckSceneSubdivisionEntry {
 
 static const BgCheckSceneSubdivisionEntry sceneSubdivisionList[] = {
     { SCENE_FOREST_TEMPLE, { 38, 1, 38 } },
+    { SCENE_GORON_MINES, { 16, 4, 16 } },
     { SCENE_WOODFALL, { 30, 10, 30 } },
 };
 

@@ -410,7 +410,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_A) && !pauseCtx->itemDescriptionOn && play->interfaceCtx.unk_1F0 == DO_ACTION_INFO) // Give description on item through a message box
                         Message_PauseMenu_ShowDescription(play, 0x0900 + cursorItem, 3);
 
-                    if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT) && canSelectItem) {
+                    if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT) && canSelectItem && !pauseCtx->itemDescriptionOn) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
                             if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                                 pauseCtx->equipTargetCBtn = 0;
@@ -453,7 +453,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                             SFX_PLAY_CENTERED(NA_SE_SY_ERROR);
                         }
                     }
-                    else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && canSelectItem) {
+                    else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && canSelectItem && !pauseCtx->itemDescriptionOn) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
                             u8 button;
 

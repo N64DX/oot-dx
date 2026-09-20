@@ -5699,7 +5699,7 @@ s32 func_808382DC(Player* this, PlayState* play) {
                     this->floorTypeTimer = 0;
                     this->actor.colChkInfo.damage = 4;
                     func_80837C0C(play, this, PLAYER_HIT_RESPONSE_NONE, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
-                } else if (this->floorTypeTimer >= SECONDS(5) && this->currentTunic != PLAYER_TUNIC_SPIRIT && Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_CURSEDROOM) {
+                } else if (this->floorTypeTimer >= SECONDS(5) && this->currentTunic != PLAYER_TUNIC_SPIRIT && play->roomCtx.curRoom.environmentType == ROOM_ENV_CURSED) {
                     this->floorTypeTimer = 0;
                     this->actor.colChkInfo.damage = 8;
                     func_80837C0C(play, this, PLAYER_HIT_RESPONSE_NONE, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
@@ -8172,8 +8172,10 @@ void func_8083DF68(Player* this, f32 arg1, s16 arg2) {
 void func_8083DFE0(Player* this, f32* arg1, s16* arg2) {
     s16 yawDiff = this->yaw - *arg2;
 
-    if (this->meleeWeaponState == 0 && this->currentBoots != PLAYER_BOOTS_PEGASUS) {
-        this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
+    if (this->meleeWeaponState == 0) {
+        if (this->currentBoots == PLAYER_BOOTS_PEGASUS)
+            this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 50.0f), (R_RUN_SPEED_LIMIT / 50.0f));
+        else this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
     }
 
     if (ABS(yawDiff) > 0x6000) {
@@ -12139,6 +12141,8 @@ void Player_Init(Actor* thisx, PlayState* play2) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AC_SHIFT];
     } else if (play->sceneId == SCENE_GORON_MINES) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AE_SHIFT];
+    } else if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+        gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AA_SHIFT];
     } else if (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AF_SHIFT];
     }

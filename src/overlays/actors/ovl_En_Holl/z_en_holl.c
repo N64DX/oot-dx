@@ -221,7 +221,7 @@ void EnHoll_HorizontalVisibleNarrow(EnHoll* this, PlayState* play) {
         if (orthogonalDistToPlayer > sHorizontalVisibleNarrowTriggerDists[triggerDistsIndex][1]) {
             if (play->roomCtx.prevRoom.num >= 0 && play->roomCtx.status == 0) {
                 this->actor.room = play->transitionActors.list[transitionActorIndex].sides[this->side].room;
-                if (play->roomCtx.prevRoom.num == this->actor.room || !FIX_USEFUL_GLITCHES)
+                if (play->roomCtx.prevRoom.num == this->actor.room || !FIX_USEFUL_GLITCHES || play->sceneId == SCENE_GORON_MINES)
                     EnHoll_SwapRooms(play);
                 Room_FinishRoomChange(play, &play->roomCtx);
             }

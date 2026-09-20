@@ -57,9 +57,9 @@ void EnTanron1_Init(Actor* thisx, PlayState* play) {
 void EnTanron1_Destroy(Actor* thisx, PlayState* play) { }
 
 void func_80BB4E50(EnTanron1Struct* arg0, Vec3f* arg1, s16 arg2) {
-    s16 i;
+    u8 i;
 
-    for (i = 0; i < 200; i++, arg0++) {
+    for (i=0; i<200; i++, arg0++) {
         if (arg0->unk_24 == 0) {
             arg0->unk_24 = 1;
             arg0->unk_2C = 0.0f;
@@ -80,17 +80,17 @@ void EnTanron1_Update(Actor* thisx, PlayState* play) {
     EnTanron1* this = (EnTanron1*)thisx;
     Actor* temp_a0;
     Player* player = GET_PLAYER(play);
-    s16 i;
     EnTanron1Struct* ptr = &this->unk_160[0];
     Vec3f temp;
     f32 phi_f18;
+    u8 i;
 
     if (this->unk_148 != 0)
         this->unk_148--;
 
     switch (this->unk_144) {
         case 0:
-            for (i = 0; i < this->actor.params; i++)
+            for (i=0; i<this->actor.params; i++)
                 func_80BB4E50(this->unk_160, &this->actor.world.pos, Rand_ZeroFloat(0x10000));
             this->unk_144 = 200;
             break;
@@ -140,8 +140,8 @@ void EnTanron1_Update(Actor* thisx, PlayState* play) {
             break;
 
         case 250:
-            for (i = 0; i < ARRAY_COUNT(this->unk_160); i++, ptr++) {
-                if ((ptr->unk_24 != 0) && (ptr->unk_28 < 8)) {
+            for (i=0; i<ARRAY_COUNT(this->unk_160); i++, ptr++) {
+                if (ptr->unk_24 != 0 && ptr->unk_28 < 8) {
                     ptr->unk_28 = 8;
                     ptr->unk_24 = 2;
                 }
@@ -160,9 +160,8 @@ void EnTanron1_Update(Actor* thisx, PlayState* play) {
 
         this->unk_158 = 0x5000;
         this->unk_15C = 50.0f;
-        if (this->unk_144 != 1) {
+        if (this->unk_144 != 1)
             this->unk_144 = 100;
-        }
     } else {
         temp_a0 = play->actorCtx.actorLists[ACTORCAT_EXPLOSIVE].head;
         while (temp_a0 != NULL) {
@@ -177,9 +176,8 @@ void EnTanron1_Update(Actor* thisx, PlayState* play) {
 
             this->unk_15C = 150.0f;
             this->unk_158 = 0x1000;
-            if (this->unk_144 != 1) {
+            if (this->unk_144 != 1)
                 this->unk_144 = 100;
-            }
             break;
         }
     }
@@ -195,26 +193,18 @@ void EnTanron1_Draw(Actor* thisx, PlayState* play) {
 void func_80BB5318(EnTanron1* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
     EnTanron1Struct* ptr = NULL;
-    f32 phi_f28 = 0.0f;
-    Vec3f* phi_s2 = NULL;
-    Vec3f temp;
-    s16 spBA = 0;
-    s16 spB8 = 0;
-    Vec3f* spB4 = NULL;
-    f32 spB0;
-    Vec3f spA4;
     WaterBox* waterBox;
-    f32 sp9C;
     CollisionPoly* sp98;
     Actor* temp_v0;
-    s16 i;
-    f32 temp_f30 = this->unk_15C;
+    Vec3f* phi_s2 = NULL;
+    Vec3f* spB4 = NULL;
+    Vec3f temp, spA4;
+    f32 spB0, sp9C, phi_f28 = 0.0f, temp_f30 = this->unk_15C;
+    s16 i, spBA = 0, spB8 = 0;
 
     if (player->unk_844 != 0) {
         phi_s2 = MELEE_WEAPON_INFO_TIP(&player->meleeWeaponInfo[0]);
-        if (player->meleeWeaponAnimation >= PLAYER_MWA_SPIN_ATTACK_1H)
-            phi_f28 = 2500.0f;
-        else phi_f28 = 400.0f;
+        phi_f28 = player->meleeWeaponAnimation >= PLAYER_MWA_SPIN_ATTACK_1H ?  2500.0f : 400.0f;
     }
 
     temp_v0 = play->actorCtx.actorLists[ACTORCAT_EXPLOSIVE].head;
@@ -229,119 +219,115 @@ void func_80BB5318(EnTanron1* this, PlayState* play) {
     }
 
     ptr = &this->unk_160[0];
-    for (i = 0; i < this->actor.params; i++, ptr++) {
+    for (i=0; i<this->actor.params; i++, ptr++) {
         if (ptr->unk_24 != 0) {
             ptr->unk_26++;
             ptr->unk_00.x += ptr->unk_0C.x;
             ptr->unk_00.y += ptr->unk_0C.y;
             ptr->unk_00.z += ptr->unk_0C.z;
 
-            if (ptr->unk_24 == 0) {
+            spB4 = &ptr->unk_00;
+            if (ptr->unk_28 == 0) {
+                spBA++;
+                ptr->unk_2C = Math_SinS(ptr->unk_26 * 0x5000) * 1.2f;
+                if ((ptr->unk_26 & 3) == 0) {
+                    temp.x = ptr->unk_30 + this->unk_14C.x - ptr->unk_00.x;
+                    temp.y = ptr->unk_34 + this->unk_14C.y - ptr->unk_00.y;
+                    temp.z = ptr->unk_38 + this->unk_14C.z - ptr->unk_00.z;
+
+                    ptr->unk_20 = Math_Atan2S(temp.z, temp.x);
+                    ptr->unk_1E = Math_Atan2S(sqrtf(SQXZ(temp)), temp.y);
+                    if ((ptr->unk_26 & 0xF) == 0) {
+                        ptr->unk_30 = Rand_CenteredFloat(temp_f30);
+                        ptr->unk_34 = Rand_CenteredFloat(temp_f30 * 0.5f);
+                        ptr->unk_38 = Rand_CenteredFloat(temp_f30);
+                    }
+
+                    temp.x = player->actor.world.pos.x - ptr->unk_00.x;
+                    temp.y = (player->actor.world.pos.y + 40.0f) - ptr->unk_00.y;
+                    temp.z = player->actor.world.pos.z - ptr->unk_00.z;
+
+                    if (SQXYZ(temp) < 400.0f)
+                        Actor_SetPlayerKnockback(play, &this->actor, 0.0f, 0, 0.0f, 1, 1);
+                }
+
+                Math_ApproachS(&ptr->unk_1A, ptr->unk_20, 2, this->unk_158);
+                Math_ApproachS(&ptr->unk_18, ptr->unk_1E, 2, this->unk_158);
+                Matrix_RotateY(BINANG_TO_RAD(ptr->unk_1A), MTXMODE_NEW);
+                Matrix_RotateX(BINANG_TO_RAD(-ptr->unk_18), MTXMODE_APPLY);
+                Matrix_MultVecZ(6.0f, &ptr->unk_0C);
+
+                if (phi_s2 != NULL) {
+                    temp.x = phi_s2->x - ptr->unk_00.x;
+                    temp.y = phi_s2->y - ptr->unk_00.y;
+                    temp.z = phi_s2->z - ptr->unk_00.z;
+
+                    if (SQXYZ(temp) < phi_f28) {
+                        ptr->unk_20 = Math_Atan2S(temp.z, temp.x);
+                        ptr->unk_1E = Math_Atan2S(sqrtf(SQXZ(temp)), temp.y);
+
+                        Matrix_RotateY(BINANG_TO_RAD(ptr->unk_20), MTXMODE_NEW);
+                        Matrix_RotateX(BINANG_TO_RAD(-ptr->unk_1E), MTXMODE_APPLY);
+                        Matrix_MultVecZ(-20.0f, &ptr->unk_0C);
+
+                        if (phi_f28 >= 100000.0f)
+                            ptr->unk_28 = 1;
+                        else ptr->unk_28 = 6;
+                        ptr->unk_24 = 2;
+                        spB8++;
+                    }
+                }
+            } else if (ptr->unk_28 < 9) {
+                ptr->unk_18 += 0x3000;
+                ptr->unk_1A += 0x5000;
+                ptr->unk_30 = 0.0f;
+                ptr->unk_34 = 0.0f;
+                ptr->unk_28++;
             } else {
-                spB4 = &ptr->unk_00;
-                if (ptr->unk_28 == 0) {
-                    spBA++;
-                    ptr->unk_2C = Math_SinS(ptr->unk_26 * 0x5000) * 1.2f;
-                    if ((ptr->unk_26 & 3) == 0) {
-                        temp.x = ptr->unk_30 + (this->unk_14C.x - ptr->unk_00.x);
-                        temp.y = ptr->unk_34 + (this->unk_14C.y - ptr->unk_00.y);
-                        temp.z = ptr->unk_38 + (this->unk_14C.z - ptr->unk_00.z);
+                ptr->unk_1A += ptr->unk_2A;
+                Math_ApproachS(&ptr->unk_18, 0, 0xA, 0x1000);
+                Matrix_RotateY(BINANG_TO_RAD(ptr->unk_1A), MTXMODE_NEW);
+                Matrix_MultVecZ(ptr->unk_30, &spA4);
 
-                        ptr->unk_20 = Math_Atan2S(temp.x, temp.z);
-                        ptr->unk_1E = Math_Atan2S(temp.y, sqrtf(SQXZ(temp)));
-                        if ((ptr->unk_26 & 0xF) == 0) {
-                            ptr->unk_30 = Rand_CenteredFloat(temp_f30);
-                            ptr->unk_34 = Rand_CenteredFloat(temp_f30 * 0.5f);
-                            ptr->unk_38 = Rand_CenteredFloat(temp_f30);
-                        }
+                ptr->unk_0C.x = spA4.x;
+                ptr->unk_0C.z = spA4.z;
+                ptr->unk_0C.y = -2.0f;
 
-                        temp.x = player->actor.world.pos.x - ptr->unk_00.x;
-                        temp.y = (player->actor.world.pos.y + 40.0f) - ptr->unk_00.y;
-                        temp.z = player->actor.world.pos.z - ptr->unk_00.z;
+                if (phi_s2 != NULL) {
+                    temp.x = phi_s2->x - ptr->unk_00.x;
+                    temp.y = phi_s2->y - ptr->unk_00.y;
+                    temp.z = phi_s2->z - ptr->unk_00.z;
 
-                        if (SQXYZ(temp) < 400.0f)
-                            Actor_SetPlayerKnockback(play, &this->actor, 0.0f, 0, 0.0f, 1, 1);
+                    if (SQXYZ(temp) < phi_f28) {
+                        ptr->unk_20 = Math_Atan2S(temp.z, temp.x);
+                        ptr->unk_1E = Math_Atan2S(sqrtf(SQXZ(temp)), temp.y);
+
+                        Matrix_RotateY(BINANG_TO_RAD(ptr->unk_20), MTXMODE_NEW);
+                        Matrix_RotateX(BINANG_TO_RAD(-ptr->unk_1E), MTXMODE_APPLY);
+                        Matrix_MultVecZ(-20.0f, &ptr->unk_0C);
+
+                        ptr->unk_3C = ptr->unk_00.y - 1000.0f;
+                        ptr->unk_30 = 5.0f;
                     }
+                }
 
-                    Math_ApproachS(&ptr->unk_1A, ptr->unk_20, 2, this->unk_158);
-                    Math_ApproachS(&ptr->unk_18, ptr->unk_1E, 2, this->unk_158);
-                    Matrix_RotateY(ptr->unk_1A, MTXMODE_NEW);
-                    Matrix_RotateX(-ptr->unk_18, MTXMODE_APPLY);
-                    Matrix_MultVecZ(6.0f, &ptr->unk_0C);
-
-                    if (phi_s2 != NULL) {
-                        temp.x = phi_s2->x - ptr->unk_00.x;
-                        temp.y = phi_s2->y - ptr->unk_00.y;
-                        temp.z = phi_s2->z - ptr->unk_00.z;
-
-                        if (SQXYZ(temp) < phi_f28) {
-                            ptr->unk_20 = Math_Atan2S(temp.x, temp.z);
-                            ptr->unk_1E = Math_Atan2S(temp.y, sqrtf(SQXZ(temp)));
-
-                            Matrix_RotateY(ptr->unk_20, MTXMODE_NEW);
-                            Matrix_RotateX(-ptr->unk_1E, MTXMODE_APPLY);
-                            Matrix_MultVecZ(-20.0f, &ptr->unk_0C);
-
-                            if (phi_f28 >= 100000.0f)
-                                ptr->unk_28 = 1;
-                            else ptr->unk_28 = 6;
-                            ptr->unk_24 = 2;
-                            spB8++;
-                        }
-                    }
-                } else if (ptr->unk_28 < 9) {
-                    ptr->unk_18 += 0x3000;
-                    ptr->unk_1A += 0x5000;
-                    ptr->unk_30 = 0.0f;
-                    ptr->unk_34 = 0.0f;
+                if (ptr->unk_00.y <= ptr->unk_3C + 5.0f) {
+                    ptr->unk_00.y = ptr->unk_3C + 5.0f;
+                    Math_ApproachZeroF(&ptr->unk_30, 1.0f, 0.3f);
+                    Math_ApproachS(&ptr->unk_2A, 0, 1, 0x100);
                     ptr->unk_28++;
+                    if (ptr->unk_28 > 50)
+                        ptr->unk_24 = 0;
                 } else {
-                    ptr->unk_1A += ptr->unk_2A;
-                    Math_ApproachS(&ptr->unk_18, 0, 0xA, 0x1000);
-                    Matrix_RotateY(ptr->unk_1A, MTXMODE_NEW);
-                    Matrix_MultVecZ(ptr->unk_30, &spA4);
-
-                    ptr->unk_0C.x = spA4.x;
-                    ptr->unk_0C.z = spA4.z;
-                    ptr->unk_0C.y = -2.0f;
-
-                    if (phi_s2 != NULL) {
-                        temp.x = phi_s2->x - ptr->unk_00.x;
-                        temp.y = phi_s2->y - ptr->unk_00.y;
-                        temp.z = phi_s2->z - ptr->unk_00.z;
-
-                        if (SQXYZ(temp) < phi_f28) {
-                            ptr->unk_20 = Math_Atan2S(temp.x, temp.z);
-                            ptr->unk_1E = Math_Atan2S(temp.y, sqrtf(SQXZ(temp)));
-
-                            Matrix_RotateY(ptr->unk_20, MTXMODE_NEW);
-                            Matrix_RotateX(-ptr->unk_1E, MTXMODE_APPLY);
-                            Matrix_MultVecZ(-20.0f, &ptr->unk_0C);
-
-                            ptr->unk_3C = ptr->unk_00.y - 1000.0f;
-                            ptr->unk_30 = 5.0f;
-                        }
-                    }
-
-                    if (ptr->unk_00.y <= (ptr->unk_3C + 5.0f)) {
-                        ptr->unk_00.y = (ptr->unk_3C + 5.0f);
-                        Math_ApproachZeroF(&ptr->unk_30, 1.0f, 0.3f);
-                        Math_ApproachS(&ptr->unk_2A, 0, 1, 0x100);
-                        ptr->unk_28++;
-                        if (ptr->unk_28 > 50)
-                            ptr->unk_24 = 0;
-                    } else {
-                        Math_ApproachF(&ptr->unk_30, ptr->unk_34, 1.0f, 0.5f);
-                        if ((ptr->unk_26 & 0xF) == 0) {
-                            if (Rand_ZeroOne() < 0.5f) {
-                                ptr->unk_34 = Rand_CenteredFloat(12.0f);
-                            }
-                            ptr->unk_3C = BgCheck_EntityRaycastDown1(&play->colCtx, &sp98, &ptr->unk_00);
-                            sp9C = ptr->unk_00.y;
-                            WaterBox_GetSurface1(play, &play->colCtx, ptr->unk_00.x, ptr->unk_00.z, &sp9C, &waterBox);
-                            if ((sp9C < ptr->unk_00.y) && (ptr->unk_3C < sp9C))
-                                ptr->unk_3C = sp9C;
-                        }
+                    Math_ApproachF(&ptr->unk_30, ptr->unk_34, 1.0f, 0.5f);
+                    if ((ptr->unk_26 & 0xF) == 0) {
+                        if (Rand_ZeroOne() < 0.5f)
+                            ptr->unk_34 = Rand_CenteredFloat(12.0f);
+                        ptr->unk_3C = BgCheck_EntityRaycastDown1(&play->colCtx, &sp98, &ptr->unk_00);
+                        sp9C = ptr->unk_00.y;
+                        WaterBox_GetSurface1(play, &play->colCtx, ptr->unk_00.x, ptr->unk_00.z, &sp9C, &waterBox);
+                        if (sp9C < ptr->unk_00.y && ptr->unk_3C < sp9C)
+                            ptr->unk_3C = sp9C;
                     }
                 }
             }
@@ -359,8 +345,7 @@ void func_80BB5318(EnTanron1* this, PlayState* play) {
 
 void func_80BB5AAC(EnTanron1* this, PlayState* play) {
     EnTanron1Struct* ptrBase = &this->unk_160[0];
-    s16 i;
-    u8 flag = 0;
+    u8 i, flag = 0;
     EnTanron1Struct* ptr = ptrBase;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_tanron1.c", 358);
@@ -374,8 +359,8 @@ void func_80BB5AAC(EnTanron1* this, PlayState* play) {
                 flag++;
             }
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, MTXMODE_NEW);
-            Matrix_RotateY(ptr->unk_1A, MTXMODE_APPLY);
-            Matrix_RotateX(ptr->unk_18 * -1, MTXMODE_APPLY);
+            Matrix_RotateY(BINANG_TO_RAD(ptr->unk_1A), MTXMODE_APPLY);
+            Matrix_RotateX(BINANG_TO_RAD(ptr->unk_18 * -1), MTXMODE_APPLY);
             Matrix_Scale(1.2f, ptr->unk_2C, 1.2f, MTXMODE_APPLY);
 
             MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_tanron1.c", 373);
@@ -385,7 +370,7 @@ void func_80BB5AAC(EnTanron1* this, PlayState* play) {
 
     flag = 0;
     ptr = ptrBase;
-    for (i = 0; i < this->actor.params; i++, ptr++) {
+    for (i=0; i<this->actor.params; i++, ptr++) {
         if (ptr->unk_24 == 2) {
             if (!flag) {
                 gSPDisplayList(POLY_OPA_DISP++, ovl_En_Tanron1_DL_001888);
@@ -394,8 +379,8 @@ void func_80BB5AAC(EnTanron1* this, PlayState* play) {
             }
 
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, MTXMODE_NEW);
-            Matrix_RotateY(ptr->unk_1A, MTXMODE_APPLY);
-            Matrix_RotateX(ptr->unk_18 * -1, MTXMODE_APPLY);
+            Matrix_RotateY(BINANG_TO_RAD(ptr->unk_1A), MTXMODE_APPLY);
+            Matrix_RotateX(BINANG_TO_RAD(ptr->unk_18 * -1), MTXMODE_APPLY);
             Matrix_Scale(1.0f, ptr->unk_2C, 1.0f, MTXMODE_APPLY);
 
             MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_tanron1.c", 393);

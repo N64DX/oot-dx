@@ -73,12 +73,12 @@ void ItemEditor_SetItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
 }
 
 void ItemEditor_SetCQItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
-    if (IS_CHILD_QUEST_AS_CHILD)
+    if (IS_CHILD_QUEST)
         ItemEditor_SetItem(firstItem, lastItem, slot, play);
 }
 
 void ItemEditor_SetArrow(u8 item, u8 upgrade, u8 slot, PlayState* play) {
-    if (!IS_CHILD_QUEST_AS_CHILD) {
+    if (!IS_CHILD_QUEST) {
         gSaveContext.save.info.inventory.items[slot] = (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE ? SLOT(item) : ITEM_NONE);
         if (SLOT(item))
             gSaveContext.save.info.upgradeItems |= gBitFlags[upgrade];
@@ -450,7 +450,7 @@ void ItemEditor_SetFlagsClear(u8 clear, u8 param2, u8 param3, PlayState* play) {
 }
 
 char* ItemEditor_GetItem(u8 item, u8 param2, u8 slot) {
-    if (IS_CHILD_QUEST_AS_CHILD) {
+    if (IS_CHILD_QUEST) {
         switch (item) {
             case ITEM_ARROW_FIRE:
                 return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_FIRE)  ? "Set" : "None";

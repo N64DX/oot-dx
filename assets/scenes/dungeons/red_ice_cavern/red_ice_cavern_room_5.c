@@ -13,7 +13,7 @@ SceneCmd red_ice_cavern_room_5[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&red_ice_cavern_room_5RoomShapeNormal_0001F0),
     SCENE_CMD_OBJECT_LIST(7, red_ice_cavern_room_5ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(28, red_ice_cavern_room_5ActorEntry_000050),
+    SCENE_CMD_ACTOR_LIST(29, red_ice_cavern_room_5ActorEntry_000050),
     SCENE_CMD_END(),
 };
 
@@ -29,6 +29,7 @@ s16 red_ice_cavern_room_5ObjectList_000040[] = {
 
 ActorEntry red_ice_cavern_room_5ActorEntry_000050[] = {
     { ACTOR_BG_GND_DARKMEIRO,  { 1084, 118, 1111 }, { 0,      0, 0xC004 }, 0x0701 }, // Checks switch: 07
+    { ACTOR_BG_GND_DARKMEIRO,  { 1065, 220, 1120 }, { 0, 0x4000, 0xC000 }, 0x0703 }, // Checks switch: 07
     { ACTOR_EN_KANBAN,         { 1146, 168,  937 }, { 0, 0x9C78,      0 }, 0x0062 },
     { ACTOR_OBJ_SYOKUDAI,      { 1065, 168, 1187 }, { 0,      0,      0 }, 0x2002 }, // Switch: 02
     { ACTOR_OBJ_SYOKUDAI,      { 2031, 224, 1286 }, { 0,      0,      0 }, 0x2400 },
