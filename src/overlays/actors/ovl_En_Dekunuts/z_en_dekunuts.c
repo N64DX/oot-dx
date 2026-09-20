@@ -588,7 +588,7 @@ void EnDekunuts_Update(Actor* thisx, PlayState* play) {
     s32 pad;
 
     if (this->actor.params != DEKUNUTS_FLOWER) {
-        if (play->sceneId == SCENE_WOODFALL && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && this->actor.colChkInfo.health > 0) { // Deku Scrubs will die when touching the water in the Woodfall area
+        if ((play->sceneId == SCENE_WOODFALL || play->sceneId == SCENE_ANCIENT_GROVE) && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && this->actor.colChkInfo.health > 0) { // Deku Scrubs will die when touching the water in the Woodfall or Ancient Grove areas
             Enemy_StartFinishingBlow(play, &this->actor);
             Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_DAMAGE);
             Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_CUTBODY);

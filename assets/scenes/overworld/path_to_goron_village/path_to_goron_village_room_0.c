@@ -57,8 +57,8 @@ ActorEntry path_to_goron_village_room_0ActorEntry_00005C[] = {
     { ACTOR_EN_ISHI,           {  -1264,    320,    161 }, {    0,      0,    0 }, 0x0200 },
 
     // Timeskip
-    { ACTOR_EN_WF,             {   -435,    139,    105 }, {    0,      0,    0 }, 0xFF00 },
-    { ACTOR_EN_WF,             {    769,    195,     76 }, {    0, 0xC4FA,    0 }, 0xFF00 },
+    { ACTOR_EN_WF,             {   -435,    139,    105 }, {  0x5,      0,    0 }, 0xFF00 },
+    { ACTOR_EN_WF,             {    769,    195,     76 }, {  0x5, 0xC4FA,    0 }, 0xFF00 },
     { ACTOR_EN_FR,             {     60,   -200,   -440 }, {    0, 0x8000,    0 }, 0x0221 }, // Yellow: 2 (Spring Lake)
     { ACTOR_DOOR_ANA,          {  -1309,    320,    142 }, {    0, 0x305B,    4 }, 0x0041 }, // Chest: 01
     { ACTOR_DOOR_ANA,          {    589,    195,     53 }, {    0, 0xAAAB,   19 }, 0x0000 },

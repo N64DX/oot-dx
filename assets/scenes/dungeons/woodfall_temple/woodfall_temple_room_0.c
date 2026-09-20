@@ -13,7 +13,7 @@ SceneCmd woodfall_temple_room_0[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_0RoomShapeCullable_0002E0),
     SCENE_CMD_OBJECT_LIST(16, woodfall_temple_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(23, woodfall_temple_room_0ActorEntry_00006C),
+    SCENE_CMD_ACTOR_LIST(26, woodfall_temple_room_0ActorEntry_00006C),
     SCENE_CMD_END(),
 };
 
@@ -61,6 +61,8 @@ ActorEntry woodfall_temple_room_0ActorEntry_00006C[] = {
     { ACTOR_EN_KUSA,          {  255, -1245,  -960 }, { 0, 0x4B00,    0 }, 0x003B },
     { ACTOR_EN_KUSA,          {  285, -1245,  -900 }, { 0, 0x5880,    0 }, 0x003B },
     { ACTOR_EN_KUSA,          {  498, -1365,  -960 }, { 0, 0x7700,    0 }, 0x007B },
+    { ACTOR_OBJ_SYOKUDAI,     { -120, -1185, -2100 }, { 0,      0,    0 }, 0x043F },
+    { ACTOR_OBJ_SYOKUDAI,     {  120, -1185, -2100 }, { 0,      0,    0 }, 0x043F },
 };
 
 RoomShapeCullable woodfall_temple_room_0RoomShapeCullable_0002E0 = { 

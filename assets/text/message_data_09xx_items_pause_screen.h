@@ -940,7 +940,7 @@ MSG()
 DEFINE_MESSAGE(0x096A, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-ITEM_ICON(ITEM_SCALE_SILVER) COLOR(RED) "Golden Scale" COLOR(DEFAULT) "\n"
+ITEM_ICON(ITEM_SCALE_GOLDEN) COLOR(RED) "Golden Scale" COLOR(DEFAULT) "\n"
 "A scale made of gold that\n"
 "lets you " COLOR(RED) "dive even deeper" COLOR(DEFAULT) "\n"
 "underwater."

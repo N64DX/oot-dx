@@ -34,7 +34,7 @@ s16 woodfall_temple_boss_room_0ObjectList_000040[] = {
 };
 
 ActorEntry woodfall_temple_boss_room_0ActorEntry_000050[] = {
-    { ACTOR_EN_DEKUNUTS,  {    0 , 0,    0 }, { 0, 0, 0 }, 0x03FE },
+    { ACTOR_EN_DEKUNUTS,  {    0 , 0,    0 }, { 0, 0, 0 }, 0x03FE }, // Clear: 00, Switch: 10
     { ACTOR_EN_KUSA,      { -315,  0, -690 }, { 0, 0, 0 }, 0x007B },
     { ACTOR_EN_KUSA,      {  315,  0, -690 }, { 0, 0, 0 }, 0x002B },
     { ACTOR_EN_KUSA,      { -390,  0, -660 }, { 0, 0, 0 }, 0x002B },

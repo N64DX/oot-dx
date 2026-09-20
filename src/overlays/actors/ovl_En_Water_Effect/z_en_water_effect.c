@@ -258,7 +258,7 @@ void EnWaterEffect_Draw(Actor* thisx, PlayState* play) {
             Matrix_Translate(ptr->unk_04.x, ptr->unk_04.y, ptr->unk_04.z, MTXMODE_NEW);
 
             if (ptr->unk_00 == 1)
-                Matrix_RotateY(Camera_GetInputDirYaw(GET_ACTIVE_CAM(play)), MTXMODE_APPLY);
+                Matrix_RotateY(BINANG_TO_RAD(Camera_GetInputDirYaw(GET_ACTIVE_CAM(play))), MTXMODE_APPLY);
             else Matrix_ReplaceRotation(&play->billboardMtxF);
 
             Matrix_Scale(ptr->unk_2C.x, ptr->unk_2C.y, 1.0f, MTXMODE_APPLY);
@@ -472,7 +472,7 @@ void EnWaterEffect_80A5A184(Actor* thisx, PlayState* play) {
 
             if (ptr->unk_2A >= 2)
                 Matrix_ReplaceRotation(&play->billboardMtxF);
-            else Matrix_RotateY(Camera_GetInputDirYaw(GET_ACTIVE_CAM(play)), MTXMODE_APPLY);
+            else Matrix_RotateY(BINANG_TO_RAD(Camera_GetInputDirYaw(GET_ACTIVE_CAM(play))), MTXMODE_APPLY);
 
             Matrix_Scale(ptr->unk_2C.x, ptr->unk_2C.y, 1.0f, MTXMODE_APPLY);
 
@@ -484,7 +484,7 @@ void EnWaterEffect_80A5A184(Actor* thisx, PlayState* play) {
 
             if ((ptr->unk_2A & 1) == 0) {
                 Matrix_Translate(ptr->unk_04.x, ptr->unk_04.y + 5.0f, ptr->unk_04.z, MTXMODE_NEW);
-                Matrix_RotateX(ptr->unk_28, MTXMODE_APPLY);
+                Matrix_RotateX(BINANG_TO_RAD(ptr->unk_28), MTXMODE_APPLY);
                 Matrix_Scale(ptr->unk_2C.z, ptr->unk_2C.z, ptr->unk_2C.z, MTXMODE_APPLY);
 
                 MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, __FILE__, __LINE__);

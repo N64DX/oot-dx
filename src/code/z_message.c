@@ -2007,10 +2007,10 @@ void Message_LoadItemIcon(PlayState* play, u16 itemId, s16 y) {
 
 #if !PLATFORM_IQUE
 static const char* upgrade_prefix_name_words[4][4] = {
-    { "",     "",         "",         "" },
-    { "大きい", "Big ",     "Groß ",    "Grand " },
-    { "巨大な", "Huge ",    "Riesig ", "Énorme " },
-    { "最大",  "Biggest ", "Größte ", "Le Plus Grand " },
+    { "", "", "", "" },
+    { "大きい", "Big ", "Große ",   "Grand " },
+    { "巨大な", "Huge ", "Riesig ", "Enorme " },
+    { "最大", "Biggest ", "Größte ", "Le Plus Grand " },
 };
 
 static const char* sword_words[2][4] = {
@@ -3073,7 +3073,6 @@ void Message_OpenText(PlayState* play, u16 textId) {
                 case 0x1074: textId = 0x8102; break;
 
                 case 0x3039: textId = 0x8107; break;
-                case 0x304E: textId = 0x8106; break;
                 case 0x304F: textId = 0x811C; break;
                 case 0x3053: textId = 0x810B; break;
                 case 0x3054: textId = 0x810C; break;

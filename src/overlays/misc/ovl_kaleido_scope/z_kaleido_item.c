@@ -410,7 +410,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                     if (CHECK_BTN_ALL(input->press.button, BTN_A) && !pauseCtx->itemDescriptionOn && play->interfaceCtx.unk_1F0 == DO_ACTION_INFO) // Give description on item through a message box
                         Message_PauseMenu_ShowDescription(play, 0x0900 + cursorItem, 3);
 
-                    if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT) && canSelectItem) {
+                    if (CHECK_BTN_ANY(input->press.button, BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT) && canSelectItem && !pauseCtx->itemDescriptionOn) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
                             if (CHECK_BTN_ALL(input->press.button, BTN_CLEFT)) {
                                 pauseCtx->equipTargetCBtn = 0;
@@ -421,7 +421,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                             }
 
                             currItem = gSaveContext.save.info.equips.buttonItems[pauseCtx->equipTargetCBtn + 1];
-                            if (cursorItem == currItem || (cursorItem == ITEM_ARROW_FIRE && currItem == ITEM_BOW_FIRE) || (cursorItem == ITEM_ARROW_ICE && currItem == ITEM_BOW_ICE) || (cursorItem == ITEM_ARROW_LIGHT && currItem == ITEM_BOW_LIGHT) ) {
+                            if ((cursorItem == currItem || (cursorItem == ITEM_ARROW_FIRE && currItem == ITEM_BOW_FIRE) || (cursorItem == ITEM_ARROW_ICE && currItem == ITEM_BOW_ICE) || (cursorItem == ITEM_ARROW_LIGHT && currItem == ITEM_BOW_LIGHT)) && UNEQUIP_ITEMS) {
                                 gSaveContext.save.info.equips.buttonItems[pauseCtx->equipTargetCBtn + 1] = gSaveContext.save.info.equips.cButtonSlots[pauseCtx->equipTargetCBtn] = ITEM_NONE;
                                 Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                             } else {
@@ -453,7 +453,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                             SFX_PLAY_CENTERED(NA_SE_SY_ERROR);
                         }
                     }
-                    else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && canSelectItem) {
+                    else if (CHECK_BTN_ANY(input->press.button, BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT) && canSelectItem && !pauseCtx->itemDescriptionOn) {
                         if (CHECK_AGE_REQ_SLOT(cursorSlot) && (cursorItem != ITEM_SOLD_OUT)) {
                             u8 button;
 
@@ -478,7 +478,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
                                 }
                             }
 
-                            if (DPAD_BUTTON(button) == cursorSlot) {
+                            if (DPAD_BUTTON(button) == cursorSlot && UNEQUIP_ITEMS) {
                                 DPAD_BUTTON(button) = SLOT_NONE;
                                 Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                             } else {

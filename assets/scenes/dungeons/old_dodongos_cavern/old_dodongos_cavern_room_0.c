@@ -5,6 +5,7 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
+#include "item.h"
 
 SceneCmd old_dodongos_cavern_room_0[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(old_dodongos_cavern_room_0AlternateHeaders),
@@ -42,29 +43,29 @@ s16 old_dodongos_cavern_room_0ObjectList0x000038[] = {
 };
 
 ActorEntry old_dodongos_cavern_room_0ActorList0x000044[] = {
-    { ACTOR_OBJECT_KANKYO,    {    0,    0,     0 }, {      0,      0,      0 }, 0x0006 },
-    { ACTOR_BG_BREAKWALL2,    { -800,    0,  -320 }, {      0, 0x4000,      0 }, 0x201A }, // Switch: 1A
-    { ACTOR_BG_BREAKWALL2,    { -800,    0,  -920 }, {      0, 0x4000,      0 }, 0x401B }, // Switch: 1B
-    { ACTOR_BG_BREAKWALL2,    { -800,    0, -1520 }, {      0, 0x4000,      0 }, 0x201C }, // Switch: 1C
-    { ACTOR_BG_BREAKWALL2,    {  800,    0,  -320 }, {      0, 0xC000,      0 }, 0x001D }, // Switch: 1D
-    { ACTOR_BG_BREAKWALL2,    {  800,    0,  -920 }, {      0, 0xC000,      0 }, 0x201E }, // Switch: 1E
-    { ACTOR_BG_BREAKWALL2,    {  800,    0, -1520 }, {      0, 0xC000,      0 }, 0x401F }, // Switch: 1F
-    { ACTOR_EN_ITEM00,        { -966,   11,  -325 }, {      0,      0,      0 }, 0x2002 }, // Collect: 20, Red Rupee
-    { ACTOR_EN_ITEM00,        { -878,   11, -1526 }, {      0,      0,      0 }, 0x2102 }, // Collect: 21, Red Rupee
-    { ACTOR_BG_DDAN_JD,       {    0, -140, -1120 }, {      0,      0,      0 }, 0x00FF },
-    { ACTOR_BG_DDAN_JD,       {    0, -140,  -840 }, {      0,      0,      0 }, 0x00FF },
-    { ACTOR_BG_DODOAGO2,      {    0,  360, -3330 }, {      0,      0,      0 }, 0xFF16 }, // Switch: 10 (door) & 16 (jaw)
-    { ACTOR_EN_BOX,           {    0,    0, -2075 }, {   0x66, 0x8000,      0 }, 0x5000 }, // Chest: 00, Bombs (10)
-    { ACTOR_EN_BEAST,         {    0,    0, -1950 }, {      0,      0,      0 }, 0x7F00 },
-    { ACTOR_EN_SPIDER,        {  665,  360, -2580 }, {      0,      0,      0 }, 0x0001 },
-    { ACTOR_EN_SPIDER,        { -665,  360, -2580 }, {      0,      0,      0 }, 0x0001 },
-    { ACTOR_OBJ_SWITCH,       {  900,    0, -1520 }, {      0,      0,      0 }, 0x0101 }, // Switch: 01
-    { ACTOR_OBJ_SWITCH,       {  900,   80, -2120 }, {      0,      0,      0 }, 0x1001 }, // Switch: 10
-    { ACTOR_BG_ICE_SHELTER,   {  900,   80, -2120 }, {      0,      0,      0 }, 0x0508 }, // Switch: 08
-    { ACTOR_OBJ_CRASHBOX,     {  815,   80, -2120 }, {      0,      0,      0 }, 0x0313 }, // Switch: 03
-    { ACTOR_BG_ICE_SHELTER,   {    0,  240, -2680 }, {      0,      0,      0 }, 0x050A }, // Switch: 0A
-    { ACTOR_BG_WOOD_PILLAR,   {    0,  240, -2680 }, {      0,      0,      0 }, 0x0000 },
-    { ACTOR_OBJ_KIBAKO3,      { -776,  360, -2930 }, {      0, 0x4000,      0 }, 0x0233 }, // Red: 3 (Goron Mines)
+    { ACTOR_OBJECT_KANKYO,    {    0,    0,     0 }, {              0,      0,      0 }, 0x0006 },
+    { ACTOR_BG_BREAKWALL2,    { -800,    0,  -320 }, {              0, 0x4000,      0 }, 0x201A }, // Switch: 1A
+    { ACTOR_BG_BREAKWALL2,    { -800,    0,  -920 }, {              0, 0x4000,      0 }, 0x401B }, // Switch: 1B
+    { ACTOR_BG_BREAKWALL2,    { -800,    0, -1520 }, {              0, 0x4000,      0 }, 0x201C }, // Switch: 1C
+    { ACTOR_BG_BREAKWALL2,    {  800,    0,  -320 }, {              0, 0xC000,      0 }, 0x001D }, // Switch: 1D
+    { ACTOR_BG_BREAKWALL2,    {  800,    0,  -920 }, {              0, 0xC000,      0 }, 0x201E }, // Switch: 1E
+    { ACTOR_BG_BREAKWALL2,    {  800,    0, -1520 }, {              0, 0xC000,      0 }, 0x401F }, // Switch: 1F
+    { ACTOR_EN_ITEM00,        { -966,   11,  -325 }, {              0,      0,      0 }, 0x2002 }, // Collect: 20, Red Rupee
+    { ACTOR_EN_ITEM00,        { -878,   11, -1526 }, {              0,      0,      0 }, 0x2102 }, // Collect: 21, Red Rupee
+    { ACTOR_BG_DDAN_JD,       {    0, -140, -1120 }, {              0,      0,      0 }, 0x00FF },
+    { ACTOR_BG_DDAN_JD,       {    0, -140,  -840 }, {              0,      0,      0 }, 0x00FF },
+    { ACTOR_BG_DODOAGO2,      {    0,  360, -3330 }, {              0,      0,      0 }, 0xFF16 }, // Switch: 10 (door) & 16 (jaw)
+    { ACTOR_EN_BOX,           {    0,    0, -2075 }, { GI_DUNGEON_MAP, 0x8000,      0 }, 0x0000 }, // Chest: 00, Dungeon Map
+    { ACTOR_EN_BEAST,         {    0,    0, -1950 }, {              0,      0,      0 }, 0x7F00 },
+    { ACTOR_EN_SPIDER,        {  665,  360, -2580 }, {              0,      0,      0 }, 0x0001 },
+    { ACTOR_EN_SPIDER,        { -665,  360, -2580 }, {              0,      0,      0 }, 0x0001 },
+    { ACTOR_OBJ_SWITCH,       {  900,    0, -1520 }, {              0,      0,      0 }, 0x0101 }, // Switch: 01
+    { ACTOR_OBJ_SWITCH,       {  900,   80, -2120 }, {              0,      0,      0 }, 0x1001 }, // Switch: 10
+    { ACTOR_BG_ICE_SHELTER,   {  900,   80, -2120 }, {              0,      0,      0 }, 0x0508 }, // Switch: 08
+    { ACTOR_OBJ_CRASHBOX,     {  815,   80, -2120 }, {              0,      0,      0 }, 0x0313 }, // Switch: 03
+    { ACTOR_BG_ICE_SHELTER,   {    0,  240, -2680 }, {              0,      0,      0 }, 0x050A }, // Switch: 0A
+    { ACTOR_BG_WOOD_PILLAR,   {    0,  240, -2680 }, {              0,      0,      0 }, 0x0000 },
+    { ACTOR_OBJ_KIBAKO3,      { -776,  360, -2930 }, {              0, 0x4000,      0 }, 0x0233 }, // Red: 3 (Goron Mines)
 };
 
 RoomShapeCullable old_dodongos_cavern_room_0MeshHeader0x0001A0 = {
@@ -114,26 +115,26 @@ SceneCmd old_dodongos_cavern_room_0Set_cleansed[] = {
 };
 
 ActorEntry old_dodongos_cavern_room_0ActorList_cleansed[] = {
-    { ACTOR_OBJECT_KANKYO,    {    0,    0,     0 }, {    0,      0, 0 }, 0x0006 },
-    { ACTOR_BG_BREAKWALL2,    { -800,    0,  -320 }, {    0, 0x4000, 0 }, 0x201A }, // Switch: 1A
-    { ACTOR_BG_BREAKWALL2,    { -800,    0,  -920 }, {    0, 0x4000, 0 }, 0x401B }, // Switch: 1B
-    { ACTOR_BG_BREAKWALL2,    { -800,    0, -1520 }, {    0, 0x4000, 0 }, 0x201C }, // Switch: 1C
-    { ACTOR_BG_BREAKWALL2,    {  800,    0,  -320 }, {    0, 0xC000, 0 }, 0x001D }, // Switch: 1D
-    { ACTOR_BG_BREAKWALL2,    {  800,    0,  -920 }, {    0, 0xC000, 0 }, 0x201E }, // Switch: 1E
-    { ACTOR_BG_BREAKWALL2,    {  800,    0, -1520 }, {    0, 0xC000, 0 }, 0x401F }, // Switch: 1F
-    { ACTOR_EN_ITEM00,        { -966,   11,  -325 }, {    0,      0, 0 }, 0x2002 }, // Collect: 20, Red Rupee
-    { ACTOR_EN_ITEM00,        { -878,   11, -1526 }, {    0,      0, 0 }, 0x2102 }, // Collect: 21, Red Rupee
-    { ACTOR_BG_DDAN_JD,       {    0, -140, -1120 }, {    0,      0, 0 }, 0x00FF },
-    { ACTOR_BG_DDAN_JD,       {    0, -140,  -840 }, {    0,      0, 0 }, 0x00FF },
-    { ACTOR_BG_DODOAGO2,      {    0,  360, -3330 }, {    0,      0, 0 }, 0xFF16 }, // Switch: 10 (door) & 16 (jaw)
-    { ACTOR_EN_BOX,           {    0,    0, -2075 }, { 0x66, 0x8000, 0 }, 0x5000 }, // Chest: 00, Bombs (10)
-    { ACTOR_OBJ_SWITCH,       {  900,    0, -1520 }, {    0,      0, 0 }, 0x0101 }, // Switch: 01
-    { ACTOR_OBJ_SWITCH,       {  900,   80, -2120 }, {    0,      0, 0 }, 0x1001 }, // Switch: 10
-    { ACTOR_BG_ICE_SHELTER,   {  900,   80, -2120 }, {    0,      0, 0 }, 0x0508 }, // Switch: 08
-    { ACTOR_BG_ICE_SHELTER,   {    0,  240, -2680 }, {    0,      0, 0 }, 0x050A }, // Switch: 0A
-    { ACTOR_BG_WOOD_PILLAR,   {    0,  240, -2680 }, {    0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_GO3,           {  180,    0,   -60 }, {    0, 0x9E58, 0 }, 0x0002 },
-    { ACTOR_OBJ_KIBAKO3,      { -776,  360, -2930 }, {    0, 0x4000, 0 }, 0x0233 }, // Red: 3 (Goron Mines)
+    { ACTOR_OBJECT_KANKYO,    {    0,    0,     0 }, {              0,      0, 0 }, 0x0006 },
+    { ACTOR_BG_BREAKWALL2,    { -800,    0,  -320 }, {              0, 0x4000, 0 }, 0x201A }, // Switch: 1A
+    { ACTOR_BG_BREAKWALL2,    { -800,    0,  -920 }, {              0, 0x4000, 0 }, 0x401B }, // Switch: 1B
+    { ACTOR_BG_BREAKWALL2,    { -800,    0, -1520 }, {              0, 0x4000, 0 }, 0x201C }, // Switch: 1C
+    { ACTOR_BG_BREAKWALL2,    {  800,    0,  -320 }, {              0, 0xC000, 0 }, 0x001D }, // Switch: 1D
+    { ACTOR_BG_BREAKWALL2,    {  800,    0,  -920 }, {              0, 0xC000, 0 }, 0x201E }, // Switch: 1E
+    { ACTOR_BG_BREAKWALL2,    {  800,    0, -1520 }, {              0, 0xC000, 0 }, 0x401F }, // Switch: 1F
+    { ACTOR_EN_ITEM00,        { -966,   11,  -325 }, {              0,      0, 0 }, 0x2002 }, // Collect: 20, Red Rupee
+    { ACTOR_EN_ITEM00,        { -878,   11, -1526 }, {              0,      0, 0 }, 0x2102 }, // Collect: 21, Red Rupee
+    { ACTOR_BG_DDAN_JD,       {    0, -140, -1120 }, {              0,      0, 0 }, 0x00FF },
+    { ACTOR_BG_DDAN_JD,       {    0, -140,  -840 }, {              0,      0, 0 }, 0x00FF },
+    { ACTOR_BG_DODOAGO2,      {    0,  360, -3330 }, {              0,      0, 0 }, 0xFF16 }, // Switch: 10 (door) & 16 (jaw)
+    { ACTOR_EN_BOX,           {    0,    0, -2075 }, { GI_DUNGEON_MAP, 0x8000, 0 }, 0x0000 }, // Chest: 00, Dungeon Map
+    { ACTOR_OBJ_SWITCH,       {  900,    0, -1520 }, {              0,      0, 0 }, 0x0101 }, // Switch: 01
+    { ACTOR_OBJ_SWITCH,       {  900,   80, -2120 }, {              0,      0, 0 }, 0x1001 }, // Switch: 10
+    { ACTOR_BG_ICE_SHELTER,   {  900,   80, -2120 }, {              0,      0, 0 }, 0x0508 }, // Switch: 08
+    { ACTOR_BG_ICE_SHELTER,   {    0,  240, -2680 }, {              0,      0, 0 }, 0x050A }, // Switch: 0A
+    { ACTOR_BG_WOOD_PILLAR,   {    0,  240, -2680 }, {              0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_GO3,           {  180,    0,   -60 }, {              0, 0x9E58, 0 }, 0x0002 },
+    { ACTOR_OBJ_KIBAKO3,      { -776,  360, -2930 }, {              0, 0x4000, 0 }, 0x0233 }, // Red: 3 (Goron Mines)
 };
 
 static s32 terminatorMaybe = { 0x01000000 };

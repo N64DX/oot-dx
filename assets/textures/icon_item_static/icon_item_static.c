@@ -451,7 +451,7 @@ u64 gItemIconSwordRazorTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] 
 };
 
 u64 gItemIconSwordSilverTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
-#include "assets/textures/icon_item_static/gItemIconSilverSwordTex.rgba32.inc.c"
+#include "assets/textures/icon_item_static/gItemIconSwordSilverTex.rgba32.inc.c"
 };
 
 u64 gItemIconSwordGildedTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
