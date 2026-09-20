@@ -6,7 +6,6 @@
 #include "scene.h"
 #include "ultra64.h"
 
-extern SceneCmd* swamp_spider_house_sceneAlternateHeaders[];
 extern ActorEntry swamp_spider_house_sceneStartPositionList0x000088[];
 extern TransitionActorEntry swamp_spider_house_sceneTransitionActorList_000098[];
 extern RomFile swamp_spider_house_sceneRoomList0x000118[];
@@ -15,9 +14,6 @@ extern u16 swamp_spider_house_sceneExitList_00014C[];
 extern EnvLightSettings swamp_spider_house_sceneLightSettings0x000150[];
 extern Path swamp_spider_house_scenePathway_0002F4[];
 extern CollisionHeader swamp_spider_house_sceneCollisionHeader_005CF4;
-
-extern SceneCmd swamp_spider_house_sceneSet_timeskip[];
-extern TransitionActorEntry swamp_spider_house_sceneTransitionActorList_timeskip[];
 
 extern u64 swamp_spider_house_sceneTex_005D20[];
 extern u64 swamp_spider_house_sceneTex_006520[];

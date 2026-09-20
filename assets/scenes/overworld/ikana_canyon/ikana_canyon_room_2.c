@@ -46,7 +46,7 @@ ActorEntry ikana_canyon_room_2ActorEntry_000084[] = {
     { ACTOR_OBJ_MURE,       { -2802, -658, 2752 }, { 0,      0,   0 }, 0x6322 },
     { ACTOR_EN_KANBAN,      { -2980, -505, 3087 }, { 0, 0x6A00,   0 }, 0x005C },
     { ACTOR_EN_RIVER_SOUND, { -2985, -447, 2695 }, { 0,      0,   0 }, 0x0003 },
-    { ACTOR_BG_WEATHER,     { -3000, -505, 2700 }, { 0,      0,   0 }, 0x0000 },
+    { ACTOR_BG_WEATHER,     { -3000, -505, 2700 }, { 0,      0,   0 }, 0x0001 },
 };
 
 RoomShapeCullable ikana_canyon_room_2RoomShapeCullable_0000E0 = { 

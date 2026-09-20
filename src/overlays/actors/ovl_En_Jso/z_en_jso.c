@@ -477,7 +477,7 @@ void EnJso_DashAttack(EnJso* this, PlayState* play) {
         this->rightSwordCollider.base.atFlags &= ~(AT_HIT | AT_BOUNCED);
         this->leftSwordCollider.base.atFlags &= ~(AT_HIT | AT_BOUNCED);
         if (this->swordState == EN_JSO_SWORD_STATE_BOTH_DRAWN) {
-            Matrix_RotateY(this->actor.yawTowardsPlayer, MTXMODE_NEW);
+            Matrix_RotateY(BINANG_TO_RAD(this->actor.yawTowardsPlayer), MTXMODE_NEW);
             knockbackVelocity.x = 0.0f;
             knockbackVelocity.y = 0.0f;
             knockbackVelocity.z = -10.0f;
@@ -541,7 +541,7 @@ void EnJso_Slash(EnJso* this, PlayState* play) {
         if (this->swordState == EN_JSO_SWORD_STATE_BOTH_DRAWN) {
             Vec3f knockbackVelocity;
 
-            Matrix_RotateY(this->actor.yawTowardsPlayer, MTXMODE_NEW);
+            Matrix_RotateY(BINANG_TO_RAD(this->actor.yawTowardsPlayer), MTXMODE_NEW);
             knockbackVelocity.x = 0.0f;
             knockbackVelocity.y = 0.0f;
             knockbackVelocity.z = -10.0f;
@@ -639,7 +639,7 @@ void EnJso_SetupStunned(EnJso* this) {
 
     this->actor.speed = 0.0f;
     this->timer = 40;
-    Matrix_RotateY(this->actor.yawTowardsPlayer, MTXMODE_NEW);
+    Matrix_RotateY(BINANG_TO_RAD(this->actor.yawTowardsPlayer), MTXMODE_NEW);
     Matrix_MultVecZ(-10.0f, &knockbackVelocity);
     Math_Vec3f_Copy(&this->knockbackVelocity, &knockbackVelocity);
     this->action = EN_JSO_ACTION_STUNNED;
@@ -673,7 +673,7 @@ void EnJso_SetupDamaged(EnJso* this, PlayState* play) {
     this->slashHitSomething = false;
     this->actor.velocity.y = 10.0f;
     this->actor.speed = 0.0f;
-    Matrix_RotateY(this->actor.yawTowardsPlayer, MTXMODE_NEW);
+    Matrix_RotateY(BINANG_TO_RAD(this->actor.yawTowardsPlayer), MTXMODE_NEW);
     Matrix_MultVecZ(-20.0f, &knockbackVelocity);
     Math_Vec3f_Copy(&this->knockbackVelocity, &knockbackVelocity);
 
@@ -1098,9 +1098,9 @@ void EnJso_Draw(Actor* thisx, PlayState* play) {
 
             Matrix_Translate(this->afterimagePos[index].x, this->afterimagePos[index].y, this->afterimagePos[index].z, MTXMODE_NEW);
             Matrix_Scale(this->scale, this->scale, this->scale, MTXMODE_APPLY);
-            Matrix_RotateY(this->afterimageRot[index].y, MTXMODE_APPLY);
-            Matrix_RotateX(this->afterimageRot[index].x, MTXMODE_APPLY);
-            Matrix_RotateZ(this->afterimageRot[index].z, MTXMODE_APPLY);
+            Matrix_RotateY(BINANG_TO_RAD(this->afterimageRot[index].y), MTXMODE_APPLY);
+            Matrix_RotateX(BINANG_TO_RAD(this->afterimageRot[index].x), MTXMODE_APPLY);
+            Matrix_RotateZ(BINANG_TO_RAD(this->afterimageRot[index].z), MTXMODE_APPLY);
 
             gDPPipeSync(POLY_XLU_DISP++);
             gDPSetEnvColor(POLY_XLU_DISP++, 0, 0, 0, sAfterimageAlpha[i]);

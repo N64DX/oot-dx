@@ -20,19 +20,12 @@ typedef struct EnGoomba {
     SkelAnime skelAnime;
     Vec3s jointTable[GGOOMBASKEL_NUM_LIMBS];
     Vec3s morphTable[GGOOMBASKEL_NUM_LIMBS];
-    Vec3f firePos;
-    Vec3f fleePos;
-    Vec3f targetPos;
-    ColliderCylinder collider;
-    u16 fleeTimer;
-    u8 drowned;
-    u8 spawnIceTimer;
-    u8 fireTimer;
-    s16 targetYaw;
-    s16 blinkTimer;
-    s16 eyeTexture;
-    s16 mouthTexture;
     GoombActionFunc actionFunc;
+    ColliderCylinder collider;
+    u8 drowned, spawnIceTimer, fireTimer;
+    u16 fleeTimer;
+    s16 targetYaw, blinkTimer, eyeTexture, mouthTexture;
+    Vec3f firePos, fleePos, targetPos;
 } EnGoomba;
 
 #endif

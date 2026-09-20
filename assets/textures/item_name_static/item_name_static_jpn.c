@@ -222,15 +222,15 @@ u64 gClaimCheckItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 #include "assets/textures/item_name_static/gClaimCheckItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gRazorSwordItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedWindMedallionItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gRazorSwordItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gSilverSwordItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedFireMedallionItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gSilverSwordItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gGildedSwordItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedIceMedallionItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gGildedSwordItemNameJPNTex.ia4.inc.c"
 };
 
@@ -342,19 +342,19 @@ u64 gBrokenGiantsKnifeItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME
 #include "assets/textures/item_name_static/gBrokenGiantsKnifeItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gPowerBraceletItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedBossKeyItemName1JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gPowerBraceletItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gPowerBraceletsItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedBossKeyItemName2JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gPowerBraceletsItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gGoldDustItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedBossKeyItemName3JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gGoldDustItemNameJPNTex.ia4.inc.c"
 };
 
-u64 gHerosBowItemNameJPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedBossKeyItemName4JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gHerosBowItemNameJPNTex.ia4.inc.c"
 };
 

@@ -247,7 +247,7 @@ void EnJg_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, 
 
     if (limbIndex == GORON_ELDER_LIMB_LOWER_LIP) {
         Matrix_MultVec3f(&sBreathPosOffset, &this->breathPos);
-        Matrix_RotateY(this->actor.shape.rot.y, MTXMODE_NEW);
+        Matrix_RotateY(BINANG_TO_RAD(this->actor.shape.rot.y), MTXMODE_NEW);
         Matrix_MultVec3f(&sBreathVelOffset, &this->breathVelocity);
         Matrix_MultVec3f(&sBreathAccelOffset, &this->breathAccel);
     }

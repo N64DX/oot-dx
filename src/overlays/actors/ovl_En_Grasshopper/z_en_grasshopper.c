@@ -450,7 +450,7 @@ void EnGrasshopper_Fly(EnGrasshopper* this, PlayState* play) {
 
         if (this->shouldTurn) {
             this->baseFlyHeight = Rand_CenteredFloat(50.0f) + this->flyingHomePos.y;
-            this->targetRot.y = Math_Atan2S(diffX, diffZ);
+            this->targetRot.y = Math_Atan2S(diffZ, diffX);
             this->timer = Rand_S16Offset(30, 30);
         }
     }
@@ -474,7 +474,7 @@ void EnGrasshopper_Fly(EnGrasshopper* this, PlayState* play) {
                     this->angularVelocity = 0.0f;
                 }
 
-                this->targetRot.y = Math_Atan2S(diffX, diffZ);
+                this->targetRot.y = Math_Atan2S(diffZ, diffX);
                 this->timer = Rand_S16Offset(30, 70);
                 this->baseFlyHeight = Rand_CenteredFloat(50.0f) + this->flyingHomePos.y;
             }
@@ -527,7 +527,7 @@ void EnGrasshopper_RoamInCircles(EnGrasshopper* this, PlayState* play) {
             Math_SmoothStepToS(&this->actor.world.rot.z, this->targetRot.z, 5, 0x3E8, 5);
             rotationSpeed = this->index + 70;
             targetSpeed = (this->index * 0.05f) + 4.0f;
-            this->targetRot.y = Math_Atan2S(diffX, diffZ);
+            this->targetRot.y = Math_Atan2S(diffZ, diffX);
             Math_ApproachF(&this->actor.speed, targetSpeed, 0.4f, 0.8f);
             Math_SmoothStepToS(&this->actor.world.rot.y, this->targetRot.y, rotationSpeed, 0xFA0, 0xA);
         }
@@ -753,7 +753,7 @@ void EnGrasshopper_SetupDamaged(EnGrasshopper* this, PlayState* play) {
     this->actor.speed = 0.0f;
     this->approachSpeed = 0.0f;
     this->collider.elements[1].base.atElemFlags &= ~(ATELEM_ON | ATELEM_SFX_WOOD);
-    Matrix_RotateY(this->actor.yawTowardsPlayer, MTXMODE_NEW);
+    Matrix_RotateY(BINANG_TO_RAD(this->actor.yawTowardsPlayer), MTXMODE_NEW);
     Matrix_MultVecZ(-20.0f, &damagedVelocity);
     Math_Vec3f_Copy(&this->damagedVelocity, &damagedVelocity);
     if (((this->drawDmgEffType == ACTOR_DRAW_DMGEFF_FROZEN_SFX) || (this->drawDmgEffType == ACTOR_DRAW_DMGEFF_FROZEN_NO_SFX)) && (this->drawDmgEffTimer != 0)) {

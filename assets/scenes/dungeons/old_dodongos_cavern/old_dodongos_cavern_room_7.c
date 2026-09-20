@@ -5,6 +5,7 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
+#include "item.h"
 
 SceneCmd old_dodongos_cavern_room_7[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(old_dodongos_cavern_room_7AlternateHeaders),
@@ -40,15 +41,15 @@ s16 old_dodongos_cavern_room_7ObjectList0x000038[] = {
 };
 
 ActorEntry old_dodongos_cavern_room_7ActorList0x000048[] = {
-    { ACTOR_OBJECT_KANKYO,  {     0,   0,     0 }, {    0,      0, 0 }, 0x0006 },
-    { ACTOR_EN_GOROIWA,     { -1900, 451, -1100 }, {    0,      0, 1 }, 0x0C00 },
-    { ACTOR_EN_GOROIWA,     { -2150, 451,  -750 }, {    0, 0x8000, 1 }, 0x0C01 },
-    { ACTOR_EN_GOROIWA,     { -2388, 571, -1038 }, {    0,      0, 1 }, 0x0C02 },
-    { ACTOR_OBJ_OSHIHIKI,   { -2297, 451,  -915 }, {    0, 0x4000, 0 }, 0xFF00 },
-    { ACTOR_BG_ICE_SHELTER, { -2297, 500,  -915 }, {    0,      0, 0 }, 0x050C }, // Switch: 0C
-    { ACTOR_OBJ_SYOKUDAI3,  { -2000, 451,  -915 }, {    0,      0, 0 }, 0x243F },
-    { ACTOR_EN_BOX,         { -2485, 571,  -911 }, { 0x59, 0xC000, 0 }, 0x0002 }, // Chest: 02, Ice Arrow
-    { ACTOR_EN_ITEM00,      { -2555, 582,  -911 }, {    0,      0, 0 }, 0x2202 }, // Collect 22, Red Rupee
+    { ACTOR_OBJECT_KANKYO,  {     0,   0,     0 }, {            0,      0, 0 }, 0x0006 },
+    { ACTOR_EN_GOROIWA,     { -1900, 451, -1100 }, {            0,      0, 1 }, 0x0C00 },
+    { ACTOR_EN_GOROIWA,     { -2150, 451,  -750 }, {            0, 0x8000, 1 }, 0x0C01 },
+    { ACTOR_EN_GOROIWA,     { -2388, 571, -1038 }, {            0,      0, 1 }, 0x0C02 },
+    { ACTOR_OBJ_OSHIHIKI,   { -2297, 451,  -915 }, {            0, 0x4000, 0 }, 0xFF00 },
+    { ACTOR_BG_ICE_SHELTER, { -2297, 500,  -915 }, {            0,      0, 0 }, 0x050C }, // Switch: 0C
+    { ACTOR_OBJ_SYOKUDAI3,  { -2000, 451,  -915 }, {            0,      0, 0 }, 0x243F },
+    { ACTOR_EN_BOX,         { -2485, 571,  -911 }, { GI_ARROW_ICE, 0xC000, 0 }, 0x0002 }, // Chest: 02, Ice Arrow
+    { ACTOR_EN_ITEM00,      { -2555, 582,  -911 }, {            0,      0, 0 }, 0x2202 }, // Collect 22, Red Rupee
 };
 
 RoomShapeCullable old_dodongos_cavern_room_7MeshHeader0x0000B0 = {

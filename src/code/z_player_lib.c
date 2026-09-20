@@ -997,17 +997,22 @@ s32 Player_GetEnvironmentalHazard(PlayState* play) {
         envHazard = PLAYER_ENV_HAZARD_HOTROOM - 1;
     } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_FREEZING) { // Room is freezing
         envHazard = PLAYER_ENV_HAZARD_FREEZINGROOM - 1;
-    } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_CURSED) { // Room is cursed
-        envHazard = PLAYER_ENV_HAZARD_CURSEDROOM - 1;
     } else if ((this->underwaterTimer > 80) &&
                ((this->currentBoots == PLAYER_BOOTS_IRON) || (this->underwaterTimer >= 300))) {
         envHazard = ((this->currentBoots == PLAYER_BOOTS_IRON) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
                         ? (PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1)
                         : (PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1);
+    } else if (play->roomCtx.curRoom.environmentType == ROOM_ENV_CURSED) { // Room is cursed
+        envHazard = PLAYER_ENV_HAZARD_CURSEDROOM - 1;
     } else if (this->stateFlags1 & PLAYER_STATE1_27) { // Swimming
         envHazard = PLAYER_ENV_HAZARD_SWIMMING - 1;
     } else {
         return PLAYER_ENV_HAZARD_NONE;
+    }
+
+    if (!Player_InCsMode(play) && play->roomCtx.curRoom.environmentType == ROOM_ENV_CURSED && this->currentTunic != PLAYER_TUNIC_SPIRIT && !(gSaveContext.envHazardTextTriggerFlags & ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM)) {
+        Message_StartTextbox(play, sEnvHazardTextTriggers[PLAYER_ENV_HAZARD_CURSEDROOM - 1].textId, NULL);
+        gSaveContext.envHazardTextTriggerFlags |= ENV_HAZARD_TEXT_TRIGGER_CURSEDROOM;
     }
 
     triggerEntry = &sEnvHazardTextTriggers[envHazard];
@@ -1015,7 +1020,6 @@ s32 Player_GetEnvironmentalHazard(PlayState* play) {
         if ((triggerEntry->flag != 0) && !(gSaveContext.envHazardTextTriggerFlags & triggerEntry->flag) &&
             (((envHazard == (PLAYER_ENV_HAZARD_HOTROOM - 1)) && (this->currentTunic != PLAYER_TUNIC_GORON)) ||
               (envHazard == (PLAYER_ENV_HAZARD_FREEZINGROOM - 1) && this->currentTunic != PLAYER_TUNIC_ZORA) ||
-              (envHazard == (PLAYER_ENV_HAZARD_CURSEDROOM - 1) && this->currentTunic != PLAYER_TUNIC_SPIRIT) ||
              (((envHazard == (PLAYER_ENV_HAZARD_UNDERWATER_FLOOR - 1)) ||
                (envHazard == (PLAYER_ENV_HAZARD_UNDERWATER_FREE - 1))) &&
               (this->currentBoots == PLAYER_BOOTS_IRON) && (this->currentTunic != PLAYER_TUNIC_ZORA)))) {
@@ -1744,6 +1748,28 @@ void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 arg2) {
     }
 }
 
+void Player_DrawBowReticle(PlayState* play, Player* this) {
+    static Vec3f sBowReticleOffset = { -500.0f, -100.0f, 77600.0f };
+    Vec3f sp74, sp68;
+    f32 sp64, sp60;
+
+    Matrix_MultVec3f(&sBowReticleOffset, &sp74);
+    SkinMatrix_Vec3fMtxFMultXYZW(&play->viewProjectionMtxF, &sp74, &sp68, &sp64);
+
+    if (sp64 > 1.0f) {
+        OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+        OVERLAY_DISP = Gfx_SetupDL(OVERLAY_DISP, SETUPDL_7);
+        SkinMatrix_Vec3fMtxFMultXYZW(&play->viewProjectionMtxF, &sp74, &sp68, &sp64);
+        sp60 = (sp64 < 200.0f) ? 0.08f : (sp64 / 200.0f) * 0.08f;
+        Matrix_Translate(sp74.x, sp74.y, sp74.z, MTXMODE_NEW);
+        Matrix_Scale(sp60, sp60, sp60, MTXMODE_APPLY);
+        MATRIX_FINALIZE_AND_LOAD(OVERLAY_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
+        gSPSegment(OVERLAY_DISP++, 0x06, play->objectCtx.slots[this->actor.objectSlot].segment);
+        gSPDisplayList(OVERLAY_DISP++, gLinkHookshotReticleDL);
+        CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    }
+}
+
 // Coordinates of the player focus position, in the head limb's own model space.
 Vec3f sPlayerFocusOffsetFromHead = { 1100.0f, -700.0f, 0.0f };
 
@@ -2089,7 +2115,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
                     if (func_8002DD78(this) && !skip) {
                         Matrix_Translate(R_ENABLE_MIRROR == 1 ? 800.0f : 500.0f, 300.0f, 0.0f, MTXMODE_APPLY);
-                        Player_DrawHookshotReticle(play, this, 77600.0f * 32.0f);
+                        Player_DrawBowReticle(play, this);
                     }
                 }
             }

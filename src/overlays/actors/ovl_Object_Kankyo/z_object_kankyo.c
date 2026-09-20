@@ -114,7 +114,7 @@ void ObjectKankyo_Init(Actor* thisx, PlayState* play) {
         case 6:
             if (!sIsSpawned && !GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES)) {
                 ObjectKankyo_SetupAction(this, ObjectKankyo_Snow);
-                play->envCtx.precipitation[PRECIP_SNOW_MAX] = 64;
+                play->envCtx.precipitation[PRECIP_SNOW_MAX] = 48;
                 sIsSpawned = true;
             } else {
                 Actor_Kill(&this->actor);

@@ -646,7 +646,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                 u8 item;
                 u8 equipValue = KaleidoScope_GetEquipBit(pauseCtx->cursorY[PAUSE_EQUIP], pauseCtx->cursorX[PAUSE_EQUIP] - 1) + 1;
 
-                if ((pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_TYPE_SWORD && equipValue == CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) || (pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_TYPE_SHIELD && equipValue == CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD))) {
+                if (((pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_TYPE_SWORD && equipValue == CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) || (pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_TYPE_SHIELD && equipValue == CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD))) && UNEQUIP_ITEMS) {
                     Inventory_ChangeEquipmentWithIcon(play, pauseCtx->cursorY[PAUSE_EQUIP], 0);
                     if (pauseCtx->cursorY[PAUSE_EQUIP] == EQUIP_TYPE_SWORD) {
                         gSaveContext.save.info.infTable[INFTABLE_INDEX_1DX] = 1;
@@ -734,7 +734,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                                     break;
                                 }
 
-                            if (gSaveContext.save.info.equips.buttonItems[i] == temp) {
+                            if (gSaveContext.save.info.equips.buttonItems[i] == temp && UNEQUIP_ITEMS) {
                                 gSaveContext.save.info.equips.buttonItems[i] = gSaveContext.save.info.equips.cButtonSlots[i-1] = ITEM_NONE;
                                  Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                             } else {
@@ -760,7 +760,7 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
                                     break;
                                 }
                             
-                            if (DPAD_BUTTON(i) == temp) {
+                            if (DPAD_BUTTON(i) == temp && UNEQUIP_ITEMS) {
                                 DPAD_BUTTON(i) = SLOT_NONE;
                                 Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                             } else {

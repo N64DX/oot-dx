@@ -332,27 +332,15 @@ MSG(
 )
 
 DEFINE_MESSAGE(0x8106, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
-MSG(
-SHIFT(69) "やっぱり、\n"
-SHIFT(21) "耐久性に　問題あるゴロね…\n"
-SHIFT(51) "でも、こりずに…" TEXTID(0x304F)
-),
+MSG(),
 MSG(
 "Oh. I am closed right now. All of\n"
 "the gorons are missing. I would\n"
 "love to re-open the shop if you\n"
 "could bring everyone back safely."
 ),
-MSG(
-"Oh, es scheint da ein Problem mit \n"
-"der Stabilität zu geben.\n"
-"Aber warte mal..." TEXTID(0x304F)
-),
-MSG(
-"Je n'ai pas encore résolu son \n"
-"problème de résistance...\n"
-"Mais enfin..." TEXTID(0x304F)
-)
+MSG(),
+MSG()
 )
 
 DEFINE_MESSAGE(0x8107, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
@@ -2567,28 +2555,28 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(45) "けど…　そいつぁ…\n"
 SHIFT(33) "ウチの　ババアんとこに\n"
-"おいてきたハズだが…　まあいいや！" TEXTID(0x812B)
+"おいてきたハズだが…　まあいいや！" TEXTID(0x812C)
 ),
 MSG(
 UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Hey, that saw! It's mine!"
 BOX_BREAK
 
 UNSKIPPABLE "But... I thought I left that saw\n"
-"with my old lady... Oh well..." TEXTID(0x812B)
+"with my old lady... Oh well..." TEXTID(0x812C)
 ),
 MSG(
 UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Oh, das ist ja meine Säge!"
 BOX_BREAK
 
 UNSKIPPABLE "Aber... Ich dachte, ich hätte sie\n"
-"bei der alten Frau liegen gelassen..." TEXTID(0x812B)
+"bei der alten Frau liegen gelassen..." TEXTID(0x812C)
 ),
 MSG(
 UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Hé! Mais c'est ma scie!"
 BOX_BREAK
 
 UNSKIPPABLE "Je l'avais égarée chez ma vieille \n"
-"femme...C'est fou!" TEXTID(0x812B)
+"femme...C'est fou!" TEXTID(0x812C)
 )
 )
 

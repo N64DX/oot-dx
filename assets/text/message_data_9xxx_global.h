@@ -155,7 +155,7 @@ COLOR(RED) "Heroenschwert" COLOR(DEFAULT) " hinterlassen! Es\n"
 ),
 MSG(
 UNSKIPPABLE ITEM_ICON(ITEM_SWORD_HEROS) QUICKTEXT_ENABLE "Un puissant ennemi a laissé\n"
-COLOR(RED) "l'Épée du Héros" COLOR(DEFAULT) "! Elle est à toi maintenant!" QUICKTEXT_DISABLE "\n"
+COLOR(RED) "l'Epée du Héros" COLOR(DEFAULT) "! Elle est à toi maintenant!" QUICKTEXT_DISABLE "\n"
 "Cette épée est capable de\n"
 "lancer de puissants rayons!"
 )
@@ -443,10 +443,10 @@ UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Du hast das " COLOR
 "eine größere Reichweite mit guter Kraft!"
 ),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Tu as obtenu l'" COLOR(RED) "Épée d’argent" COLOR(DEFAULT) " !" QUICKTEXT_DISABLE "\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_BIGGORON) QUICKTEXT_ENABLE "Tu as obtenu l'" COLOR(RED) "Epée d'argent" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Cette lame a été forgée par un\n"
 "forgeron expert pour avoir une\n"
-"plus grande portée et une bonne puissance!"
+"plus grande portée et puissance!"
 )
 )
 

@@ -36,6 +36,7 @@ typedef enum EnWfLimb {
 
 typedef enum EnWfAction {
     /*  0 */ WOLFOS_ACTION_WAIT_TO_APPEAR,
+    /*  1 */ WOLFOS_ACTION_SINK,
     /*  2 */ WOLFOS_ACTION_DIE = 2,
     /*  3 */ WOLFOS_ACTION_DAMAGED,
     /*  4 */ WOLFOS_ACTION_TURN_TOWARDS_PLAYER,
@@ -47,6 +48,7 @@ typedef enum EnWfAction {
     /* 10 */ WOLFOS_ACTION_SEARCH_FOR_PLAYER,
     /* 11 */ WOLFOS_ACTION_RUN_AROUND_PLAYER,
     /* 12 */ WOLFOS_ACTION_RECOIL_FROM_BLOCKED_SLASH,
+    /* 13 */ WOLFOS_ACTION_RETURN_HOME,
     /* 14 */ WOLFOS_ACTION_SIDESTEP = 14,
     /* 15 */ WOLFOS_ACTION_STUNNED
 } EnWfAction;
@@ -65,7 +67,7 @@ typedef struct EnWf {
     /* 0x02E6 */ u8 damageReaction;
     /* 0x02E8 */ s32 actionTimer; // Used to make an action last for a certain amount of time
     /* 0x02EC */ f32 runSpeed;
-    /* 0x02F4 */ f32 unk_2F4; // Set and not used
+    /* 0x02F4 */ f32 leashRange; // Home-leash radius, uses X rotation (disabled with 0)
     /* 0x02F8 */ s16 slashStatus; // Whether to slash again or not, and whether to cry
     /* 0x02FA */ s16 unk_2FA; // Set and not used
     /* 0x02FC */ s16 switchFlag;

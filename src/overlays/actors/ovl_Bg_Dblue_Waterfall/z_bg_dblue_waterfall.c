@@ -270,7 +270,7 @@ void BgDblueWaterfall_80B84610(BgDblueWaterfall* this, PlayState* play) {
     }
 
     Matrix_Push();
-    Matrix_RotateY(BINANG_ADD(this->actor.yawTowardsPlayer, 0x4000), MTXMODE_NEW);
+    Matrix_RotateY(BINANG_TO_RAD(BINANG_ADD(this->actor.yawTowardsPlayer, 0x4000)), MTXMODE_NEW);
     Matrix_MultVecZ(this->unk_1A8, &sp34);
     Matrix_Pop();
 

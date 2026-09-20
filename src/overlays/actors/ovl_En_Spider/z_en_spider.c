@@ -145,44 +145,6 @@ static ColliderJntSphInit sJntSphInit = {
     sJntSphItemsInit,
 };
 
-static ColliderJntSphElementInit sJntSphItemsMinibossInit[] = {
-    {
-        {
-            ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x04, 0x18 },
-            { 0x00000000, 0x00, 0x00 },
-            ATELEM_ON | ATELEM_SFX_NORMAL,
-            ACELEM_NONE,
-            OCELEM_NONE,
-        },
-        { ARMATURE_MANDIBLEL_LIMB, { { 0, 0, 0 }, 35 }, 60 },
-    },
-    {
-        {
-            ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x04, 0x10 },
-            { 0x00000000, 0x00, 0x00 },
-            ATELEM_ON | ATELEM_SFX_NORMAL,
-            ACELEM_NONE,
-            OCELEM_NONE,
-        },
-        { ARMATURE_MANDIBLER_LIMB, { { 0, 0, 0 }, 35 }, 60 },
-    },
-};
-
-static ColliderJntSphInit sJntSphMinibossInit = {
-    {
-        COL_MATERIAL_METAL,
-        AT_ON | AT_TYPE_ENEMY,
-        AC_ON | AC_HARD | AC_TYPE_PLAYER,
-        OC1_ON | OC1_TYPE_ALL,
-        OC2_TYPE_1,
-        COLSHAPE_JNTSPH,
-    },
-    ARRAY_COUNT(sJntSphItemsMinibossInit),
-    sJntSphItemsMinibossInit,
-};
-
 static InitChainEntry sInitChain[] = {
     ICHAIN_S8(naviEnemyId, NAVI_ENEMY_SPIDER, ICHAIN_CONTINUE),
     ICHAIN_S8(attentionRangeType, ATTENTION_RANGE_2, ICHAIN_CONTINUE),
@@ -272,9 +234,8 @@ static DamageTable sDamageTable = {
 void EnSpider_Init(Actor* thisx, PlayState* play) {
     EnSpider* this = (EnSpider*)thisx;
 
-    this->type       =  this->actor.params        & 0xFF;
-    this->miniboss   = (this->actor.params >> 15) & 1;
-    this->switchFlag = (this->actor.params >> 8)  & 0x7F;
+    this->type       =  this->actor.params       & 0xFF;
+    this->miniboss   = (this->actor.params >> 8) & 1;
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->alarmstate = false;
@@ -291,11 +252,12 @@ void EnSpider_Init(Actor* thisx, PlayState* play) {
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, &sDamageTable, &sColChkInit);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     Collider_InitJntSph(play, &this->colliderSpheres);
-    Collider_SetJntSph(play, &this->colliderSpheres, &this->actor, this->miniboss ? &sJntSphMinibossInit : &sJntSphInit, this->colliderSpheresElements);
+    Collider_SetJntSph(play, &this->colliderSpheres, &this->actor, &sJntSphInit, this->colliderSpheresElements);
 
-    if (this->miniboss)
+    if (this->miniboss) {
         this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(20, ELITE_HP);
-    else this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
+        this->colliderSpheres.elements[0].base.atDmgInfo.damage = this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0x18;
+    } else this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
 
     if (this->type == 0) {
         this->timer = 39;
@@ -313,9 +275,6 @@ void EnSpider_Init(Actor* thisx, PlayState* play) {
         EnSpider_SetupIdleP(this, play);
         this->actor.speed = 0.0f;
     }
-
-    if (this->switchFlag <= 0x3F && Flags_GetSwitch(play, this->switchFlag))
-        Actor_Kill(thisx);
 }
 
 void EnSpider_Destroy(Actor* thisx, PlayState* play) {

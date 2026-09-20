@@ -607,6 +607,7 @@ typedef enum LinkAge {
 #define TITLE_CARDS                 ((gSaveContext.options[0] >> 23) & 1)  // Bits: 23
 #define USE_MM_HUD                  ((gSaveContext.options[0] >> 24) & 1)  // Bits: 24
 #define USE_MM_PAUSE_INFO           ((gSaveContext.options[0] >> 25) & 1)  // Bits: 25
+#define UNEQUIP_ITEMS               ((gSaveContext.options[0] >> 26) & 1)  // Bits: 26
 #define HEALTH_RECOVERY             ((gSaveContext.options[1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gSaveContext.options[1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gSaveContext.options[1] >> 5)  & 7)  // Bits: 5-7
@@ -1157,6 +1158,7 @@ typedef enum LinkAge {
 #define INFTABLE_1A7_SHIFT 7
 #define INFTABLE_1A8_SHIFT 8
 #define INFTABLE_1A9_SHIFT 9
+#define INFTABLE_1AA_SHIFT 10
 #define INFTABLE_1AB_SHIFT 11
 #define INFTABLE_1AC_SHIFT 12
 #define INFTABLE_1AD_SHIFT 13
