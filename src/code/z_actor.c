@@ -316,12 +316,12 @@ static void TargetHealth_Draw(PlayState* play, Vec3f* pos, s16 health, s16 maxHe
 
     // Lost Health
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 128, 0, 0, 255);
-    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, x << 2, (y + 3) << 2, (x + width) << 2, (y + height) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
     // Left Health
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 0, 0, 255);
-    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadMultiBlock_4b(OVERLAY_DISP++, gMagicMeterFillTex, 0x0000, G_TX_RENDERTILE, G_IM_FMT_I, 16, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPTextureRectangle(OVERLAY_DISP++, x << 2, (y + 3) << 2, (x + (width * health / maxHealth)) << 2, (y + height) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_actor.c", 2158);
