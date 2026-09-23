@@ -274,7 +274,7 @@ void EnSpider_Init(Actor* thisx, PlayState* play) {
 
     this->type       =  this->actor.params        & 0xFF;
     this->miniboss   = (this->actor.params >> 15) & 1;
-    this->switchFlag = (this->actor.params >> 8)  & 0x7F;
+    this->switchFlag =  this->actor.params >> 8;
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->alarmstate = false;

@@ -61,18 +61,22 @@ extern Gfx gLinkYoungLeftHandHoldingHerosSwordDL[];
 // Razor Sword
 extern Gfx gLinkYoungLeftHandHoldingRazorSwordDL[];
 
-// Gilded Sword
+// Silver & Gilded Sword
 extern Gfx gLinkYoungLeftHandHoldingSilverSwordDL[];
 extern Gfx gLinkYoungLeftHandHoldingGoldenSwordDL[];
 
-// Master Sword
+// Goddess & Master Sword
+extern Gfx gLinkYoungLeftHandHoldingGoddessSwordDL[];
 extern Gfx gLinkYoungLeftHandHoldingMasterSwordDL2[];
+extern Gfx gLinkYoungLiftingGoddessSwordDL[];
+extern Gfx gLinkYoungLiftingMasterSwordDL[];
 
 // Sheaths
 extern Gfx gLinkYoungSheathedKokiriSwordDL[];
 extern Gfx gLinkYoungSheathedHerosSwordDL[];
 extern Gfx gLinkYoungSheathedRazorSwordDL[];
 extern Gfx gLinkYoungSheathedGildedSwordDL[];
+extern Gfx gLinkYoungSheathedGoddessSwordDL[];
 extern Gfx gLinkYoungSheathedMasterSwordDL[];
 extern Gfx gLinkYoungKokiriSwordSheathDL[];
 extern Gfx gLinkYoungHerosSwordSheathDL[];

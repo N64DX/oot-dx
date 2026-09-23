@@ -10,43 +10,18 @@ struct EnHammergeist;
 
 typedef void (*EnHammergeistActionFunc)(struct EnHammergeist*, struct PlayState*);
 
-typedef enum EnHammerGeistReward {
-    HAMMERGEIST_REWARD_NONE,
-    HAMMERGEIST_REWARD_HEROS_SWORD
-} EnHammerGeistReward;
-
 typedef struct EnHammergeist {
     Actor actor;
     Vec3s firePos[10]; // Because of the fire effect spawn function, it's necessary that firePos is exactly at this offset (0x014C)
     Vec3s jointTable[GHAMMERGEISTSKEL_NUM_LIMBS];
     Vec3s morphTable[GHAMMERGEISTSKEL_NUM_LIMBS];
-    Vec3s headRot;
-    Vec3s upperBodyRot;
+    Vec3s headRot, upperBodyRot;
     SkelAnime skelAnime;
-    ColliderCylinder collider;
-    ColliderCylinder hammerLeftCollider;
-    ColliderCylinder hammerRightCollider;
+    ColliderCylinder collider, hammerLeftCollider, hammerRightCollider;
     ColliderJntSph explosionCollider;
     ColliderJntSphElement explosionColliderItems[1];
-    s16 faceIndex;
-    s16 fireHammerIndex;
-    s16 iceHammerIndex;
-    s16 hurtboxCooldown;
-    s16 explosionTimer;
-    s16 infuseTimer;
-    s16 slamTimer;
-    s16 heavySlamTimer;
-    s16 heavySlamCooldown;
-    s16 genericAnimationTimer;
-    s16 fireTimer;
-    s16 alpha;
-    u8 explosionRadiusIncrease;
-    u8 leftHammerInfused; // Ice
-    u8 rightHammerInfused; // Fire
-    u8 playerHit;
-    u8 noHitAgain;
-    u8 switchFlag;
-    u8 reward;
+    s16 faceIndex, fireHammerIndex, iceHammerIndex, hurtboxCooldown, explosionTimer, infuseTimer, slamTimer, heavySlamTimer, heavySlamCooldown, genericAnimationTimer, fireTimer, alpha;
+    u8 explosionRadiusIncrease, leftHammerInfused, rightHammerInfused, playerHit, noHitAgain, switchFlag;
     EnHammergeistActionFunc actionFunc;
 } EnHammergeist;
 

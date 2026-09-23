@@ -223,7 +223,7 @@ u64 gClaimCheckItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 };
 
 u64 gUnusedWindMedallionItemName3JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gRazorSwordItemNameFRATex.ia4.inc.c"
+#include "assets/textures/item_name_static/gGoddessSwordItemNameFRATex.ia4.inc.c"
 };
 
 u64 gUnusedFireMedallionItemName3JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -246,8 +246,8 @@ u64 gGiantsKnifeItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "build/pal-1.0/assets/textures/item_name_static/gGiantsKnifeItemNameFRATex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameFRATex.ia4.inc.c"
+u64 gRazorSwordItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gRazorSwordItemNameFRATex.ia4.inc.c"
 };
 
 u64 gDekuShieldItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -356,6 +356,10 @@ u64 gUnusedBossKeyItemName33JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_T
 
 u64 gUnusedBossKeyItemName43JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gHerosBowItemNameFRATex.ia4.inc.c"
+};
+
+u64 gHerosSwordItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameFRATex.ia4.inc.c"
 };
 
 u64 gBulletBag30ItemNameFRATex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

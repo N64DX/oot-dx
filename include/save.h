@@ -626,8 +626,8 @@ typedef enum LinkAge {
 #define EXTENDED_DRAW_DISTANCE      ((gSaveContext.globalSettings >> 5) & 1)  // Bits: 5
 #define SHOW_STARS                  ((gSaveContext.globalSettings >> 6) & 1)  // Bits: 6
 
-#define MAX_SWORD_HEALTH 8
-#define MAGIC_COST(magic) (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? (magic / 2) : magic)
+#define MAX_SWORD_HEALTH    8
+#define MAGIC_COST(magic)   (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? (magic / 2) : magic)
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)

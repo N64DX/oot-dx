@@ -585,6 +585,7 @@ beginseg
     name "object_toki_objects"
     compress
     include "$(BUILD_DIR)/assets/objects/object_toki_objects/object_toki_objects.o"
+    include "$(BUILD_DIR)/assets/objects/object_toki_objects/object_toki_objects_extra.o"
     number 6
 endseg
 

@@ -842,6 +842,7 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_SHIELD_HEROS,              OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS,         GETITEM_CQ_TEXT(GI_SHIELD_HEROS),          0xA0, CHEST_ANIM_SHORT), // GI_SHIELD_HEROS
     GET_ITEM(ITEM_SHIELD_METAL,              OBJECT_GI_SHIELD_2_MM, GID_SHIELD_METAL,         GETITEM_CQ_TEXT(GI_SHIELD_METAL),          0xA0, CHEST_ANIM_SHORT), // GI_SHIELD_METAL
 	GET_ITEM(ITEM_SWORD_HEROS,               OBJECT_GI_SWORD_1_MM,  GID_SWORD_HEROS,          GETITEM_CQ_TEXT(GI_SWORD_HEROS),           0x80, CHEST_ANIM_LONG),  // GI_SWORD_HEROS
+    GET_ITEM(ITEM_SWORD_RAZOR,               OBJECT_GI_SWORD_2_MM,  GID_SWORD_RAZOR,          GETITEM_CQ_TEXT(GI_SWORD_RAZOR),           0x80, CHEST_ANIM_LONG),  // GI_SWORD_RAZOR
     GET_ITEM(ITEM_TUNIC_SPIRIT,              OBJECT_GI_CLOTHES,     GID_TUNIC_SPIRIT,         GETITEM_CQ_TEXT(GI_TUNIC_SPIRIT),          0x80, CHEST_ANIM_LONG),  // GI_TUNIC_SPIRIT
 	GET_ITEM(ITEM_PICTOBOX,                  OBJECT_GI_CAMERA,      GID_PICTOGRAPH_BOX,       GETITEM_CQ_TEXT(GI_PICTOBOX),              0xA0, CHEST_ANIM_SHORT), // GI_PICTOBOX
 	GET_ITEM(ITEM_SHRINE_KEY,                OBJECT_GI_ROOM_KEY,    GID_ROOM_KEY,             GETITEM_CQ_TEXT(GI_SHRINE_KEY),            0xA0, CHEST_ANIM_SHORT), // GI_SHRINE_KEY
@@ -1456,7 +1457,7 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_KOKIRI,        // ITEM_SWORD_KOKIRI
     PLAYER_IA_SWORD_MASTER,        // ITEM_SWORD_MASTER
     PLAYER_IA_SWORD_BIGGORON,      // ITEM_SWORD_BIGGORON
-    PLAYER_IA_SWORD_HEROS,         // ITEM_SWORD_HEROS
+    PLAYER_IA_SWORD_RAZOR,         // ITEM_SWORD_RAZOR
     PLAYER_IA_NONE,                // ITEM_SHIELD_DEKU,
     PLAYER_IA_NONE,                // ITEM_SHIELD_HYLIAN
     PLAYER_IA_NONE,                // ITEM_SHIELD_MIRROR
@@ -1493,7 +1494,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_MASTER
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_KOKIRI
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_BIGGORON
-    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_HEROS
+    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_RAZOR
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_FAIRYS
     func_8083485C,                 // PLAYER_IA_DEKU_STICK
     func_8083485C,                 // PLAYER_IA_HAMMER
@@ -1570,7 +1571,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_MASTER
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_KOKIRI
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_BIGGORON
-    Player_InitDefaultIA,        // PLAYER_IA_SWORD_HEROS
+    Player_InitDefaultIA,        // PLAYER_IA_SWORD_RAZOR
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_FAIRYS
     Player_InitDekuStickIA,      // PLAYER_IA_DEKU_STICK
     Player_InitHammerIA,         // PLAYER_IA_HAMMER
@@ -2806,8 +2807,8 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     static const SwordSwapEntry equipments[] = {
         { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    LINK_AGE_CHILD },
         { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
+        { ITEM_SWORD_RAZOR,    EQUIP_INV_SWORD_RAZOR,    EQUIP_INV_SWORD_RAZOR,    LINK_AGE_CHILD },
         { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
     };
 
@@ -3500,7 +3501,7 @@ s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play) {
     if (LinkAnimation_Update(play, &this->upperSkelAnime) ||
         ((Player_ItemToItemAction(this->heldItemId) == this->heldItemAction) &&
          (sUseHeldItem =
-              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && this->heldItemAction <= PLAYER_IA_SWORD_HEROS)))))) {
+              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && this->heldItemAction <= PLAYER_IA_SWORD_RAZOR)))))) {
         Player_SetUpperActionFunc(this, sItemActionUpdateFuncs[this->heldItemAction]);
         this->unk_834 = 0;
         this->idleType = PLAYER_IDLE_DEFAULT;
@@ -5175,7 +5176,7 @@ void func_80837918(Player* this, s32 quadIndex, u32 dmgFlags) {
 }
 
 static u32 D_80854488[][2] = {
-    { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI },
+    { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT }, { DMG_SLASH_MASTER, DMG_JUMP_MASTER },
     { DMG_SLASH_GIANT, DMG_JUMP_GIANT },   { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP },
 };
 
@@ -12993,7 +12994,7 @@ void Player_DetectRumbleSecrets(Player* this, PlayState* play) {
                 if (play->specialIconLast != SPECIAL_ICON_RUMBLE) {
                     InterfaceContext* interfaceCtx = &play->interfaceCtx;
                     play->specialIconLast = SPECIAL_ICON_RUMBLE;
-                    DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (8 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(ITEM_STONE_OF_AGONY)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __LINE__);
+                    DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (8 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, ITEM_STONE_OF_AGONY)), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __LINE__);
                 }
                 if (play->specialIconCount == 0)
                     play->specialIconCount++;
@@ -16160,7 +16161,7 @@ s32 Player_ActionHandler_7(Player* this, PlayState* play) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 func_80837530(play, this, 0);
                 return 1;
-            } else if (this->itemAction == PLAYER_IA_SWORD_HEROS || (this->itemAction == PLAYER_IA_SWORD_MASTER && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && gSaveContext.save.info.playerData.health >= gSaveContext.save.info.playerData.healthCapacity && IS_CHILD_QUEST)) {
+            } else if ((this->itemAction == PLAYER_IA_SWORD_KOKIRI && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS)) || (this->itemAction == PLAYER_IA_SWORD_MASTER && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && gSaveContext.save.info.playerData.health >= gSaveContext.save.info.playerData.healthCapacity && IS_CHILD_QUEST)) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 Player_SwordBeam(play, this, 0);
             }
@@ -17112,6 +17113,9 @@ void func_80851A50(PlayState* play, Player* this, CsCmdActorCue* cue) {
         } else {
             dLists = gPlayerLeftHandClosedDLs;
         }
+
+        if (IS_CHILD_QUEST_AS_CHILD)
+            dLists += play->sceneId == SCENE_WOODFALL_TEMPLE ? MAX_LINK_MODELS * 3 : MAX_LINK_MODELS * 2;
         this->leftHandDLists = dLists + GET_LINK_MODEL;
 
         Player_PlaySfx(this, sp2C->unk_00);

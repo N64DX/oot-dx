@@ -1990,7 +1990,7 @@ void Message_LoadItemIcon(PlayState* play, u16 itemId, s16 y) {
         R_TEXTBOX_ICON_XPOS = R_TEXT_INIT_XPOS - sIconItem32XOffsets[gSaveContext.language];
         R_TEXTBOX_ICON_YPOS = y + ((44 - ITEM_ICON_HEIGHT) / 2);
         R_TEXTBOX_ICON_DIMENSION = ITEM_ICON_WIDTH; // assumes the image is square
-        DMA_REQUEST_SYNC(msgCtx->textboxSegment + MESSAGE_STATIC_TEX_SIZE, GET_ITEM_ICON_VROM(play->sceneId == SCENE_CHAMBER_OF_THE_SAGES ? itemId : Interface_LoadItemIconChildQuest(itemId)), ITEM_ICON_SIZE,
+        DMA_REQUEST_SYNC(msgCtx->textboxSegment + MESSAGE_STATIC_TEX_SIZE, GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, itemId)), ITEM_ICON_SIZE,
                          "../z_message_PAL.c", 1473);
         PRINTF(T("アイテム32-0\n", "Item 32-0\n"));
     } else {
@@ -2013,9 +2013,9 @@ static const char* upgrade_prefix_name_words[4][4] = {
     { "最大", "Biggest ", "Größte ", "Le Plus Grand " },
 };
 
-static const char* sword_words[2][4] = {
+static const char* master_sword_words[2][4] = {
     { "マスターソード", "Master Sword", "Master-Schwert", "L'Epée de Légende" },
-    { "レイザーソード", "Razor Sword", "Elfenschwert", "Lame Rasoir" }
+    { "女神めがみの剣", "Goddess Sword", "Schwert der Göttin", "Epéé Divine" }
 };
 
 static const char* lad_words[2][4] = {
@@ -2576,7 +2576,7 @@ void Message_Decode(PlayState* play) {
                         words = token_words[gSaveContext.save.info.inventory.gsTokens != 1];
                         break;
                     case MESSAGE_MASTER_SWORD:
-                        words = sword_words[IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)];
+                        words = master_sword_words[IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)];
                         break;
                 }
                 ASSERT(words != NULL, "words != null", "../message.c", 2444);

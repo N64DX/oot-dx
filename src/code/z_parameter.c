@@ -1783,7 +1783,7 @@ void Interface_LoadItemIcon1(PlayState* play, u16 button) {
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (button * ITEM_ICON_SIZE),
-                      GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, 0,
+                      GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, item)), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1171);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
@@ -1797,48 +1797,52 @@ void Interface_LoadItemIcon2(PlayState* play, u16 button) {
 
     osCreateMesgQueue(&interfaceCtx->loadQueue, &interfaceCtx->loadMsg, 1);
     DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_180, interfaceCtx->iconItemSegment + (button * ITEM_ICON_SIZE),
-                      GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE, 0,
+                      GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, item)), ITEM_ICON_SIZE, 0,
                       &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1193);
     osRecvMesg(&interfaceCtx->loadQueue, NULL, OS_MESG_BLOCK);
 }
 
-typedef u8 (*ItemCondition)(void);
+typedef u8 (*ItemCondition)(PlayState* play);
 typedef struct ChildQuestIcons {
     u8 item;
     ItemCondition condition;
     u8 icon;
 } ChildQuestIcons;
 
-static u8 IsChildQuest(void)    { return IS_CHILD_QUEST_AS_CHILD;                                               }
-static u8 IsWoodenShield(void)  { return IS_CHILD_QUEST_AS_CHILD &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN); }
-static u8 IsMetalShield(void)   { return IS_CHILD_QUEST_AS_CHILD &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL);  }
-static u8 IsRazorSword(void)    { return IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER);  }
-static u8 IsSilverSword(void)   { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag; }
-static u8 IsGildedSword(void)   { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag; }
+static u8 IsChildQuest(PlayState* play)     { return IS_CHILD_QUEST_AS_CHILD;                                                                                              }
+static u8 IsWoodenShield(PlayState* play)   { return IS_CHILD_QUEST_AS_CHILD &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN);                                                }
+static u8 IsMetalShield(PlayState* play)    { return IS_CHILD_QUEST_AS_CHILD &&  CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL);                                                 }
+static u8 IsHerosSword(PlayState* play)     { return IS_CHILD_QUEST_AS_CHILD &&  CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS);                                                  }
+static u8 IsGoddessSword(PlayState* play)   { return IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER);                                                 }
+static u8 IsMasterSword(PlayState* play)    { return IS_CHILD_QUEST_AS_CHILD && (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) || play->sceneId == SCENE_CHAMBER_OF_THE_SAGES); }
+static u8 IsSilverSword(PlayState* play)    { return IS_CHILD_QUEST_AS_CHILD && !gSaveContext.save.info.playerData.bgsFlag;                                                }
+static u8 IsGildedSword(PlayState* play)    { return IS_CHILD_QUEST_AS_CHILD &&  gSaveContext.save.info.playerData.bgsFlag;                                                }
 
 static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_SHIELD_DEKU,               IsWoodenShield, ITEM_SHIELD_WOODEN  },
     { ITEM_SHIELD_HEROS,              IsMetalShield,  ITEM_SHIELD_METAL   },
     { ITEM_SHIELD_MIRROR,             IsChildQuest,   LAST_ITEM_ICON + 1  },
-    { ITEM_SWORD_MASTER,              IsRazorSword,   LAST_ITEM_ICON + 2  },
-    { ITEM_SWORD_BIGGORON,            IsSilverSword,  LAST_ITEM_ICON + 3  },
-    { ITEM_SWORD_BIGGORON,            IsGildedSword,  LAST_ITEM_ICON + 4  },
-    { ITEM_HOOKSHOT,                  IsChildQuest,   LAST_ITEM_ICON + 5  },
-    { ITEM_LONGSHOT,                  IsChildQuest,   LAST_ITEM_ICON + 6  },
-    { ITEM_BOW,                       IsChildQuest,   LAST_ITEM_ICON + 7  },
-    { ITEM_BOW_FIRE,                  IsChildQuest,   LAST_ITEM_ICON + 8  },
-    { ITEM_BOW_ICE,                   IsChildQuest,   LAST_ITEM_ICON + 9  },
-    { ITEM_BOW_LIGHT,                 IsChildQuest,   LAST_ITEM_ICON + 10 },
-    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,   LAST_ITEM_ICON + 11 },
-    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,   LAST_ITEM_ICON + 12 },
-    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,   LAST_ITEM_ICON + 13 },
-    { ITEM_STONE_OF_AGONY,            NULL,           LAST_ITEM_ICON + 14 },
+    { ITEM_SWORD_KOKIRI,              IsHerosSword,   ITEM_SWORD_HEROS    },
+    { ITEM_SWORD_MASTER,              IsMasterSword,  LAST_ITEM_ICON + 2  },
+    { ITEM_SWORD_MASTER,              IsGoddessSword, LAST_ITEM_ICON + 3  },
+    { ITEM_SWORD_BIGGORON,            IsSilverSword,  LAST_ITEM_ICON + 4  },
+    { ITEM_SWORD_BIGGORON,            IsGildedSword,  LAST_ITEM_ICON + 5  },
+    { ITEM_HOOKSHOT,                  IsChildQuest,   LAST_ITEM_ICON + 6  },
+    { ITEM_LONGSHOT,                  IsChildQuest,   LAST_ITEM_ICON + 7  },
+    { ITEM_BOW,                       IsChildQuest,   LAST_ITEM_ICON + 8  },
+    { ITEM_BOW_FIRE,                  IsChildQuest,   LAST_ITEM_ICON + 9  },
+    { ITEM_BOW_ICE,                   IsChildQuest,   LAST_ITEM_ICON + 10 },
+    { ITEM_BOW_LIGHT,                 IsChildQuest,   LAST_ITEM_ICON + 11 },
+    { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,   LAST_ITEM_ICON + 12 },
+    { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,   LAST_ITEM_ICON + 13 },
+    { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,   LAST_ITEM_ICON + 14 },
+    { ITEM_STONE_OF_AGONY,            NULL,           LAST_ITEM_ICON + 15 },
 };
 
-u8 Interface_LoadItemIconChildQuest(u8 item) {
+u8 Interface_LoadItemIconChildQuest(PlayState* play, u8 item) {
     u8 i;
     for (i=0; i<ARRAY_COUNT(sChildQuestIcons); i++)
-        if (item == sChildQuestIcons[i].item && (sChildQuestIcons[i].condition == NULL || sChildQuestIcons[i].condition()))
+        if (item == sChildQuestIcons[i].item && (sChildQuestIcons[i].condition == NULL || sChildQuestIcons[i].condition(play)))
             return sChildQuestIcons[i].icon;
     return item;
 }
@@ -1975,7 +1979,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         PRINTF_RST();
 
         return ITEM_NONE;
-    } else if ((item >= ITEM_SWORD_KOKIRI) && (item <= ITEM_SWORD_HEROS)) {
+    } else if ((item >= ITEM_SWORD_KOKIRI) && (item <= ITEM_SWORD_RAZOR)) {
         gSaveContext.save.info.inventory.equipment |=
             OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, item - ITEM_SWORD_KOKIRI + EQUIP_INV_SWORD_KOKIRI);
 
@@ -2003,10 +2007,24 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
 
         return ITEM_NONE;
+    } else if (item == ITEM_SWORD_HEROS) {
+        gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI);
+        gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
+        for (i=0; i<4; i++) {
+            if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_SWORDS)
+                Interface_LoadItemIcon1(play, i);
+            if (DPAD_BUTTON(i) == SLOT_SWORDS)
+                Interface_LoadItemIcon1(play, i+4);
+        }
+        return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_HEROS)) {
         if (item == ITEM_SHIELD_DEKU)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
+        if (item == ITEM_SHIELD_DEKU)
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
+        else if (item == ITEM_SHIELD_HEROS)
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_METAL];
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
@@ -2558,7 +2576,7 @@ u8 Item_CheckObtainability(u8 item) {
         return ITEM_NONE;
     } else if ((item >= ITEM_KOKIRI_EMERALD) && (item <= ITEM_SKULL_TOKEN)) {
         return ITEM_NONE;
-    } else if ((item >= ITEM_SWORD_KOKIRI) && (item <= ITEM_SWORD_BIGGORON)) {
+    } else if ((item >= ITEM_SWORD_KOKIRI) && (item <= ITEM_SWORD_RAZOR)) {
         if (item == ITEM_SWORD_BIGGORON) {
             return ITEM_NONE;
         } else if (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, item - ITEM_SWORD_KOKIRI + EQUIP_INV_SWORD_KOKIRI)) {
@@ -2586,8 +2604,6 @@ u8 Item_CheckObtainability(u8 item) {
         else if ((item == ITEM_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL)) || (item == ITEM_SHIELD_METAL && !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL)))
             return ITEM_NONE;
         return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS)) ? item : ITEM_NONE;
-    } else if (item == ITEM_SWORD_HEROS) {
-        return (CHECK_OWNED_EQUIP(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS)) ? item : ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_SPIRIT)) {
         if (CHECK_OWNED_EQUIP(EQUIP_TYPE_TUNIC, item - ITEM_TUNIC_KOKIRI + EQUIP_INV_TUNIC_KOKIRI)) {
             return item;
@@ -2681,7 +2697,7 @@ u8 Item_CheckObtainability(u8 item) {
         }
     } else if ((item >= ITEM_WEIRD_EGG) && (item <= ITEM_CLAIM_CHECK)) {
         return ITEM_NONE;
-    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_CANE_OF_SOMARIA) || (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK) ) {
+    } else if ( (item >= ITEM_SWORD_FAIRYS && item <= ITEM_CANE_OF_SOMARIA) || (item >= ITEM_SHIELD_DEKU_UPGRADE && item <= ITEM_SHIELD_HEROS_UPGRADE) || (item >= ITEM_AMULET_OF_ENERGY && item <= ITEM_PERFECT_BLOCK) || item == ITEM_SWORD_HEROS) {
         return ITEM_NONE;
     }
 

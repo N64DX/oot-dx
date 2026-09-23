@@ -186,7 +186,7 @@ u8 sActionModelGroups[PLAYER_IA_MAX] = {
     PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_MASTER
     PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_KOKIRI
     PLAYER_MODELGROUP_BGS,              // PLAYER_IA_SWORD_BIGGORON
-    PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_HEROS
+    PLAYER_MODELGROUP_SWORD_AND_SHIELD, // PLAYER_IA_SWORD_RAZOR
     PLAYER_MODELGROUP_SWORD_FAIRYS,     // PLAYER_IA_SWORD_FAIRYS
     PLAYER_MODELGROUP_10,               // PLAYER_IA_DEKU_STICK
     PLAYER_MODELGROUP_HAMMER,           // PLAYER_IA_HAMMER
@@ -402,7 +402,7 @@ Gfx* D_80125D88[PLAYER_SHIELD_MAX * MAX_LINK_MODELS] = {
     NULL,
 };
 
-Gfx* gPlayerLeftHandBgsDLs[MAX_LINK_MODELS * 2] = {
+Gfx* gPlayerLeftHandBgsDLs[MAX_LINK_MODELS * 4] = {
     // biggoron sword
     gLinkAdultLeftHandHoldingBgsNearDL,
     gLinkChildLeftHandHoldingMasterSwordDL,
@@ -411,6 +411,14 @@ Gfx* gPlayerLeftHandBgsDLs[MAX_LINK_MODELS * 2] = {
     gLinkAdultHandHoldingBrokenGiantsKnifeDL,
     gLinkChildLeftHandHoldingMasterSwordDL,
     gLinkYoungLeftHandHoldingMasterSwordDL,
+    // goddess sword (cq)
+    NULL,
+    gLinkChildLiftingGoddessSwordDL,
+    gLinkYoungLiftingGoddessSwordDL,
+    // master sword (cq)
+    NULL,
+    gLinkChildLiftingMasterSwordDL,
+    gLinkYoungLiftingMasterSwordDL,
 };
 
 Gfx* gPlayerLeftHandOpenDLs[MAX_LINK_MODELS] = {
@@ -430,19 +438,19 @@ Gfx* gPlayerShields[][PLAYER_SHIELD_MAX-1] = {
     { gLinkYoungDekuShieldWithMatrixDL, gLinkYoungHylianShieldAndSheathNearDL, gLinkYoungMirrorShieldWithMatrixDL, gLinkYoungHerosShieldWithMatrixDL, gLinkYoungWoodenShieldWithMatrixDL, gLinkYoungMetalShieldWithMatrixDL },
 };
 
-Gfx* gPlayerSheathedSwords[][5] = {
-    { gLinkChildSheathedKokiriSwordDL, gLinkChildSheathedRazorSwordDL, gLinkChildSheathedGildedSwordDL, gLinkChildSheathedHerosSwordDL, gLinkChildSheathedMasterSwordDL },
-    { gLinkYoungSheathedKokiriSwordDL, gLinkYoungSheathedRazorSwordDL, gLinkYoungSheathedGildedSwordDL, gLinkYoungSheathedHerosSwordDL, gLinkYoungSheathedMasterSwordDL },
+Gfx* gPlayerSheathedSwords[][6] = {
+    { gLinkChildSheathedKokiriSwordDL, gLinkChildSheathedGoddessSwordDL, gLinkChildSheathedGildedSwordDL, gLinkChildSheathedRazorSwordDL, gLinkChildSheathedHerosSwordDL, gLinkChildSheathedMasterSwordDL },
+    { gLinkYoungSheathedKokiriSwordDL, gLinkYoungSheathedGoddessSwordDL, gLinkYoungSheathedGildedSwordDL, gLinkYoungSheathedRazorSwordDL, gLinkYoungSheathedHerosSwordDL, gLinkYoungSheathedMasterSwordDL },
 };
 
-Gfx* gPlayerSwordSheaths[][5] = {
-    { gLinkChildKokiriSwordSheathDL, gLinkChildRazorSwordSheathDL, gLinkChildGildedSwordSheathDL, gLinkChildHerosSwordSheathDL, gLinkChildMasterSwordSheathDL },
-    { gLinkYoungKokiriSwordSheathDL, gLinkYoungRazorSwordSheathDL, gLinkYoungGildedSwordSheathDL, gLinkYoungHerosSwordSheathDL, gLinkYoungMasterSwordSheathDL },
+Gfx* gPlayerSwordSheaths[][6] = {
+    { gLinkChildKokiriSwordSheathDL, gLinkChildMasterSwordSheathDL, gLinkChildGildedSwordSheathDL, gLinkChildRazorSwordSheathDL, gLinkChildHerosSwordSheathDL, gLinkChildMasterSwordSheathDL },
+    { gLinkYoungKokiriSwordSheathDL, gLinkYoungMasterSwordSheathDL, gLinkYoungGildedSwordSheathDL, gLinkYoungRazorSwordSheathDL, gLinkYoungHerosSwordSheathDL, gLinkYoungMasterSwordSheathDL },
 };
 
-Gfx* gPlayerSwords[][6] = {
-    { gLinkChildLeftFistAndKokiriSwordNearDL, gLinkChildLeftHandHoldingRazorSwordDL, gLinkChildLeftHandHoldingSilverSwordDL, gLinkChildLeftHandHoldingHerosSwordDL, gLinkChildLeftHandHoldingGoldenSwordDL, gLinkChildLeftHandHoldingMasterSwordDL2 },
-    { gLinkYoungLeftFistAndKokiriSwordNearDL, gLinkYoungLeftHandHoldingRazorSwordDL, gLinkYoungLeftHandHoldingSilverSwordDL, gLinkYoungLeftHandHoldingHerosSwordDL, gLinkYoungLeftHandHoldingGoldenSwordDL, gLinkYoungLeftHandHoldingMasterSwordDL2 },
+Gfx* gPlayerSwords[][7] = {
+    { gLinkChildLeftFistAndKokiriSwordNearDL, gLinkChildLeftHandHoldingGoddessSwordDL, gLinkChildLeftHandHoldingSilverSwordDL, gLinkChildLeftHandHoldingRazorSwordDL, gLinkChildLeftHandHoldingHerosSwordDL, gLinkChildLeftHandHoldingMasterSwordDL2, gLinkChildLeftHandHoldingGoldenSwordDL  },
+    { gLinkYoungLeftFistAndKokiriSwordNearDL, gLinkYoungLeftHandHoldingGoddessSwordDL, gLinkYoungLeftHandHoldingSilverSwordDL, gLinkYoungLeftHandHoldingRazorSwordDL, gLinkYoungLeftHandHoldingHerosSwordDL, gLinkYoungLeftHandHoldingMasterSwordDL2, gLinkYoungLeftHandHoldingGoldenSwordDL  },
 };
 
 // Identical to `sPlayerLeftHandSwordDLs` and unused
@@ -1477,10 +1485,12 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
                 EquipValueSword swordEquipValue = CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD);
 
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD) {
-                    if (gSaveContext.save.info.playerData.bgsFlag && swordEquipValue == EQUIP_VALUE_SWORD_BIGGORON)
+                    if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                         *dLists = gPlayerSwords[IS_YOUNG_LINK][4];
                     else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                         *dLists = gPlayerSwords[IS_YOUNG_LINK][5];
+                    else if (gSaveContext.save.info.playerData.bgsFlag && swordEquipValue == EQUIP_VALUE_SWORD_BIGGORON)
+                        *dLists = gPlayerSwords[IS_YOUNG_LINK][6];
                     else *dLists = gPlayerSwords[IS_YOUNG_LINK][swordEquipValue - 1];
                 }
             } else if ((sLeftHandType == PLAYER_MODELTYPE_LH_BGS) && (!gSaveContext.save.info.playerData.swordHealth)) {
@@ -1509,9 +1519,11 @@ s32 Player_OverrideLimbDrawGameplayDefault(PlayState* play, s32 limbIndex, Gfx**
 
             if (LINK_IS_CHILD) {
                 EquipValueSword swordEquipValue = CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD);
-                if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+                if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                     swordEquipValue = 5;
-                
+                else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+                    swordEquipValue = 6;
+
                 if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
                     if ( (this->currentShield == PLAYER_SHIELD_NONE && this->sheathType == PLAYER_MODELTYPE_SHEATH_18) || this->sheathType == PLAYER_MODELTYPE_SHEATH_16)
                         dLists = &gPlayerSheathedSwords[IS_YOUNG_LINK][swordEquipValue - 1];
@@ -1752,7 +1764,7 @@ f32 sMeleeWeaponLengths[] = {
     4000.0f, // Master Sword
     3000.0f, // Kokiri Sword
     5500.0f, // Biggoron's Sword
-    3000.0f, // Hero's Sword
+    3000.0f, // Razor Sword
     5500.0f, // Great Fairy's Sword
     0.0f,    // Deku Stick
     2500.0f, // Hammer
@@ -1862,7 +1874,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
             if (Player_HoldsBrokenKnife(this)) {
                 sMeleeWeaponTipOffsetFromLeftHand0.x = 1500.0f;
-            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 1 && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) { // Razor Sword
+            } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 1 && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) { // Goddess Sword
                 sMeleeWeaponTipOffsetFromLeftHand0.x = 3000.0f;
             } else if (LINK_IS_CHILD && Player_GetMeleeWeaponHeld(this) == 3) { // Silver / Gilded Sword
                 sMeleeWeaponTipOffsetFromLeftHand0.x = 4000.0f;
@@ -2239,10 +2251,13 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
             modelGroup = PLAYER_MODELGROUP_SWORD_AND_SHIELD;
 
         if (limbIndex == PLAYER_LIMB_L_HAND) {
-            if (gSaveContext.save.info.playerData.bgsFlag && swordEquipValue == EQUIP_VALUE_SWORD_BIGGORON)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && swordEquipValue == EQUIP_VALUE_SWORD_KOKIRI)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][4];
             else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][5];
+            else if (gSaveContext.save.info.playerData.bgsFlag && swordEquipValue == EQUIP_VALUE_SWORD_BIGGORON)
+                *dList = gPlayerSwords[IS_YOUNG_LINK][6];
+            
             else if (swordEquipValue != EQUIP_VALUE_SWORD_NONE)
                 *dList = gPlayerSwords[IS_YOUNG_LINK][swordEquipValue - 1];
         } else if (limbIndex == PLAYER_LIMB_R_HAND) {
@@ -2257,7 +2272,9 @@ s32 Player_OverrideLimbDrawPause(PlayState* play, s32 limbIndex, Gfx** dList, Ve
             *dList = *(dLists + dListOffset);
         } else if (limbIndex == PLAYER_LIMB_SHEATH) {
             type = gPlayerModelTypes[modelGroup][PLAYER_MODELGROUPENTRY_SHEATH];
-            if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
+            if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) && swordEquipValue == EQUIP_VALUE_SWORD_RAZOR)
+                swordEquipValue = 4;
+            else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && swordEquipValue == EQUIP_VALUE_SWORD_MASTER)
                 swordEquipValue = 5;
 
             if (swordEquipValue != EQUIP_VALUE_SWORD_NONE) {
