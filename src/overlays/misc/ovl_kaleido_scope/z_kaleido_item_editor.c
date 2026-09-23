@@ -169,7 +169,18 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
 
     if (type == EQUIP_TYPE_SWORD) {
         if (upgrade) {
-            if (item == EQUIP_INV_SWORD_MASTER) {
+            if (item == EQUIP_INV_SWORD_KOKIRI) {
+                if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_HEROS];
+                } else if (!CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
+                } else {
+                    gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_HEROS];
+                }
+            } else if (item == EQUIP_INV_SWORD_MASTER) {
                 if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)) {
                     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
                     gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_MASTER];
@@ -622,8 +633,10 @@ char* ItemEditor_GetAmmo(u8 item, u8 type, u8 param3) {
 
 char* ItemEditor_GetEquipment(u8 item, u8 type, u8 upgrade) {
     if (upgrade && type == EQUIP_TYPE_SWORD) {
-        if (item == EQUIP_INV_SWORD_MASTER && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER))
-            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? "Master Sword" : "Razor Sword";
+        if (item == EQUIP_INV_SWORD_KOKIRI && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) ? "Hero's Sword" : "Kokiri Sword";
+        else if (item == EQUIP_INV_SWORD_MASTER && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? "Master Sword" : "Goddess Sword";
         else if (item == EQUIP_INV_SWORD_BIGGORON && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
             if (IS_CHILD_QUEST)
                 return gSaveContext.save.info.playerData.bgsFlag ? "Gilded Sword" : "Silver Sword";
@@ -819,12 +832,13 @@ ItemEditorEntry sItemEditorAmmoEntries[] = {
 };
 
 ItemEditorEntry sItemEditorEquipmentEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  0, "Master Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Giant's Knife", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  1, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Goddess Sword", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Silver Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_HEROS,    EQUIP_TYPE_SWORD,  0, "Hero's Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_RAZOR,    EQUIP_TYPE_SWORD,  0, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_DEKU,    EQUIP_TYPE_SHIELD, 1, "Deku Shield",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_HYLIAN,  EQUIP_TYPE_SHIELD, 0, "Hylian Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_MIRROR,  EQUIP_TYPE_SHIELD, 0, "Mirror Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },

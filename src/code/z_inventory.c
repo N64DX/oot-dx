@@ -151,7 +151,7 @@ void* gItemIcons[] = {
     gItemIconSwordKokiriTex,       // ITEM_SWORD_KOKIRI
     gItemIconSwordMasterTex,       // ITEM_SWORD_MASTER
     gItemIconSwordBiggoronTex,     // ITEM_SWORD_BIGGORON
-    gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
+    gItemIconSwordRazorTex,        // ITEM_SWORD_RAZOR
     gItemIconShieldDekuTex,        // ITEM_SHIELD_DEKU
     gItemIconShieldHylianTex,      // ITEM_SHIELD_HYLIAN
     gItemIconShieldMirrorTex,      // ITEM_SHIELD_MIRROR
@@ -179,6 +179,7 @@ void* gItemIcons[] = {
     gItemIconGiantsWalletTex,      // ITEM_GIANTS_WALLET
     gItemIconDekuSeedsTex,         // ITEM_DEKU_SEEDS
     gItemIconFishingPoleTex,       // ITEM_FISHING_POLE
+    gItemIconSwordHerosTex,        // ITEM_SWORD_HEROS
     gItemIconBulletBag30Tex,       // ITEM_BULLET_BAG_30
     gItemIconBulletBag40Tex,       // ITEM_BULLET_BAG_40
     gItemIconBulletBag50Tex,       // ITEM_BULLET_BAG_50
@@ -313,7 +314,7 @@ u8 gItemSlots[] = {
     SLOT_NONE,          // ITEM_SWORD_KOKIRI
     SLOT_NONE,          // ITEM_SWORD_MASTER
     SLOT_NONE,          // ITEM_SWORD_BIGGORON
-    SLOT_NONE,          // ITEM_SWORD_HEROS
+    SLOT_NONE,          // ITEM_SWORD_RAZOR
     SLOT_NONE,          // ITEM_SHIELD_DEKU
     SLOT_NONE,          // ITEM_SHIELD_HYLIAN
     SLOT_NONE,          // ITEM_SHIELD_MIRROR
@@ -358,7 +359,7 @@ void Inventory_ChangeEquipmentWithIcon(PlayState* play, s16 equipment, u16 value
         else shieldItem = ITEM_NONE;
 
         if (shieldItem < ITEM_SWORD_CS)
-            DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(shieldItem)), ITEM_ICON_SIZE, __FILE__, __LINE__);
+            DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, shieldItem)), ITEM_ICON_SIZE, __FILE__, __LINE__);
     }
 }
 

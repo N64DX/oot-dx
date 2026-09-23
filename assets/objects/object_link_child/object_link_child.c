@@ -708,6 +708,14 @@ static Gfx gKokiriSwordHandleDL[] = {
 
 // Hero's Sword
 
+static Vtx gHerosSwordHandleVtx[] = {
+#include "assets/objects/object_link_child/swords/heros_sword_handle.vtx.inc"
+};
+
+static Vtx gHerosSwordBladeVtx[] = {
+#include "assets/objects/object_link_child/swords/heros_sword_blade.vtx.inc"
+};
+
 static u64 gHerosSwordHandlePommelTex[] = {
 #include "assets/objects/object_link_child/swords/kokiri_sword_handle_pommel.rgba16.inc.c"
 };
@@ -724,14 +732,6 @@ static u64 gHerosSwordHandleTLUT[] = {
 #include "assets/objects/object_link_child/swords/kokiri_sword_handle_tlut.rgba16.inc.c"
 };
 
-static Vtx heros_sword_handle_vtx[] = {
-#include "assets/objects/object_link_child/swords/heros_sword_handle.vtx.inc"
-};
-
-static Vtx heros_sword_blade_vtx[] = {
-#include "assets/objects/object_link_child/swords/heros_sword_blade.vtx.inc"
-};
-
 static Gfx gHerosSwordHandleDL[] = {
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPPipeSync(),
@@ -742,7 +742,7 @@ static Gfx gHerosSwordHandleDL[] = {
     gsDPLoadTextureBlock(gHerosSwordHandleGripTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_WRAP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_sword_handle_vtx, 12, 0),
+    gsSPVertex(&gHerosSwordHandleVtx, 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 5, 6, 0, 5, 7, 6, 0),
     gsSP2Triangles(6, 8, 9, 0, 6, 7, 8, 0),
@@ -751,27 +751,27 @@ static Gfx gHerosSwordHandleDL[] = {
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsDPLoadTLUT_pal256(gHerosSwordHandleTLUT),
     gsDPLoadTextureBlock(gHerosSwordHandleCrossGuardTex, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&heros_sword_handle_vtx[12], 6, 0),
+    gsSPVertex(&gHerosSwordHandleVtx[12], 6, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
     gsDPPipeSync(),
     gsDPLoadTLUT_pal256(gHerosSwordHandleTLUT),
     gsDPLoadTextureBlock(gHerosSwordHandleCrossGuardTex, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 160, 160, 160, 255),
-    gsSPVertex(&heros_sword_handle_vtx[18], 4, 0),
+    gsSPVertex(&gHerosSwordHandleVtx[18], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsDPPipeSync(),
     gsDPLoadTLUT_pal256(gHerosSwordHandleTLUT),
     gsDPLoadTextureBlock(gHerosSwordHandleCrossGuardTex, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPVertex(&heros_sword_handle_vtx[22], 8, 0),
+    gsSPVertex(&gHerosSwordHandleVtx[22], 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 1, 0, 4, 1, 0, 0),
     gsSP2Triangles(6, 7, 5, 0, 6, 5, 4, 0),
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gHerosSwordHandlePommelTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&heros_sword_handle_vtx[30], 9, 0),
+    gsSPVertex(&gHerosSwordHandleVtx[30], 9, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(3, 4, 1, 0, 5, 6, 0, 0),
     gsSP2Triangles(6, 3, 0, 0, 6, 4, 3, 0),
@@ -790,7 +790,7 @@ static Gfx gHerosSwordBladeDL[] = {
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 3),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(heros_sword_blade_vtx, 3, 0),
+    gsSPVertex(gHerosSwordBladeVtx, 3, 0),
     gsSP1Triangle(0, 1, 2, 0),
 	
 	gsSPTexture(0x07D0, 0x0DAC, 0, G_TX_RENDERTILE, G_ON),
@@ -801,7 +801,7 @@ static Gfx gHerosSwordBladeDL[] = {
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 2, 3),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_sword_blade_vtx[3], 3, 0),
+    gsSPVertex(&gHerosSwordBladeVtx[3], 3, 0),
     gsSP1Triangle(0, 1, 2, 0),
 	
 	gsSPTexture(0x04B0, 0x0FA0, 0, G_TX_RENDERTILE, G_ON),
@@ -812,7 +812,7 @@ static Gfx gHerosSwordBladeDL[] = {
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 2, 3),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_sword_blade_vtx[6], 3, 0),
+    gsSPVertex(&gHerosSwordBladeVtx[6], 3, 0),
     gsSP1Triangle(0, 1, 2, 0),
 	
 	gsSPTexture(0x0640, 0x0BB8, 0, G_TX_RENDERTILE, G_ON),
@@ -823,7 +823,7 @@ static Gfx gHerosSwordBladeDL[] = {
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 3),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_sword_blade_vtx[9], 3, 0),
+    gsSPVertex(&gHerosSwordBladeVtx[9], 3, 0),
     gsSP1Triangle(0, 1, 2, 0),
 	
 	gsSPTexture(0x0960, 0x0BB8, 0, G_TX_RENDERTILE, G_ON),
@@ -834,7 +834,7 @@ static Gfx gHerosSwordBladeDL[] = {
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 3),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_sword_blade_vtx[12], 4, 0),
+    gsSPVertex(&gHerosSwordBladeVtx[12], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
 	
 	gsSPTexture(0x0578, 0x0BB8, 0, G_TX_RENDERTILE, G_ON),
@@ -845,7 +845,7 @@ static Gfx gHerosSwordBladeDL[] = {
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 3),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_sword_blade_vtx[16], 4, 0),
+    gsSPVertex(&gHerosSwordBladeVtx[16], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
 	
 	gsSPTexture(0x0960, 0x0BB8, 0, G_TX_RENDERTILE, G_ON),
@@ -856,7 +856,7 @@ static Gfx gHerosSwordBladeDL[] = {
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 3),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_sword_blade_vtx[20], 4, 0),
+    gsSPVertex(&gHerosSwordBladeVtx[20], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
 	
 	gsSPTexture(0x0578, 0x0BB8, 0, G_TX_RENDERTILE, G_ON),
@@ -867,7 +867,7 @@ static Gfx gHerosSwordBladeDL[] = {
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 3),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_sword_blade_vtx[24], 4, 0),
+    gsSPVertex(&gHerosSwordBladeVtx[24], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
 	
     gsSPEndDisplayList(),
@@ -883,20 +883,20 @@ Gfx gLinkChildLeftHandHoldingHerosSwordDL[] = {
 
 // Razor Sword
 
+static Vtx gRazorSwordHandleVtx[] = {
+#include "assets/objects/object_link_child/swords/razor_sword_handle.vtx.inc"
+};
+
+static Vtx gRazorSwordBladeVtx[] = {
+#include "assets/objects/object_link_child/swords/razor_sword_blade.vtx.inc"
+};
+
 static u64 gRazorSwordHandleDesignTex[] = {
 #include "assets/objects/object_link_child/swords/razor_sword_handle_design.rgba16.inc.c"
 };
 
 static u64 gRazorSwordHandleGripTex[] = {
 #include "assets/objects/object_link_child/swords/razor_sword_handle_grip.rgba16.inc.c"
-};
-
-static Vtx razor_sword_handle_vtx[] = {
-#include "assets/objects/object_link_child/swords/razor_sword_handle.vtx.inc"
-};
-
-static Vtx razor_sword_blade_vtx[] = {
-#include "assets/objects/object_link_child/swords/razor_sword_blade.vtx.inc"
 };
 
 static Gfx gRazorSwordHandleDL[] = {
@@ -909,7 +909,7 @@ static Gfx gRazorSwordHandleDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_handle_vtx, 7, 0),
+    gsSPVertex(&gRazorSwordHandleVtx, 7, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(2, 4, 3, 0, 5, 6, 2, 0),
     gsSP2Triangles(0, 5, 2, 0, 0, 2, 1, 0),
@@ -923,7 +923,7 @@ static Gfx gRazorSwordHandleDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_handle_vtx[7], 10, 0),
+    gsSPVertex(&gRazorSwordHandleVtx[7], 10, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 5, 4, 9, 0),
 	
@@ -936,7 +936,7 @@ static Gfx gRazorSwordHandleDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 3, 2),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_handle_vtx[17], 12, 0),
+    gsSPVertex(&gRazorSwordHandleVtx[17], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 7, 5, 0),
     gsSP2Triangles(8, 9, 0, 0, 3, 9, 8, 0),
@@ -952,7 +952,7 @@ static Gfx gRazorSwordHandleDL[] = {
     gsDPLoadTextureBlock(gRazorSwordHandleDesignTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_handle_vtx[29], 32, 0),
+    gsSPVertex(&gRazorSwordHandleVtx[29], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 4, 3, 0, 7, 1, 0, 0),
     gsSP2Triangles(8, 9, 7, 0, 10, 4, 6, 0),
@@ -967,13 +967,13 @@ static Gfx gRazorSwordHandleDL[] = {
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSP2Triangles(23, 24, 25, 0, 25, 26, 23, 0),
     gsSP2Triangles(27, 28, 29, 0, 29, 30, 27, 0),
-    gsSPVertex(&razor_sword_handle_vtx[60], 12, 0),
+    gsSPVertex(&gRazorSwordHandleVtx[60], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(9, 10, 7, 0, 6, 11, 4, 0),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gRazorSwordHandleGripTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&razor_sword_handle_vtx[72], 6, 0),
+    gsSPVertex(&gRazorSwordHandleVtx[72], 6, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 5, 0, 0, 2, 4, 0, 0),
 	
@@ -990,7 +990,7 @@ static Gfx gRazorSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 3, 2),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_blade_vtx, 7, 0),
+    gsSPVertex(&gRazorSwordBladeVtx, 7, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
     gsSP2Triangles(2, 4, 3, 0, 5, 6, 4, 0),
     gsSP1Triangle(3, 4, 6, 0),
@@ -1004,7 +1004,7 @@ static Gfx gRazorSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 3, 2),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_blade_vtx[7], 4, 0),
+    gsSPVertex(&gRazorSwordBladeVtx[7], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
 	
 	// Part 3
@@ -1016,7 +1016,7 @@ static Gfx gRazorSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_blade_vtx[11], 4, 0),
+    gsSPVertex(&gRazorSwordBladeVtx[11], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
 	
 	// Part 4
@@ -1028,7 +1028,7 @@ static Gfx gRazorSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_blade_vtx[15], 7, 0),
+    gsSPVertex(&gRazorSwordBladeVtx[15], 7, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 2, 1, 0),
     gsSP2Triangles(4, 3, 1, 0, 5, 3, 4, 0),
     gsSP1Triangle(4, 6, 5, 0),
@@ -1042,7 +1042,7 @@ static Gfx gRazorSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_blade_vtx[22], 12, 0),
+    gsSPVertex(&gRazorSwordBladeVtx[22], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 2, 9, 0, 0),
     gsSP2Triangles(9, 10, 0, 0, 5, 11, 8, 0),
@@ -1058,7 +1058,7 @@ static Gfx gRazorSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 2, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_blade_vtx[34], 3, 0),
+    gsSPVertex(&gRazorSwordBladeVtx[34], 3, 0),
     gsSP1Triangle(0, 1, 2, 0),
 	
 	// Part 7
@@ -1070,7 +1070,7 @@ static Gfx gRazorSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, 3, 2),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_blade_vtx[37], 12, 0),
+    gsSPVertex(&gRazorSwordBladeVtx[37], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
     gsSP2Triangles(4, 5, 6, 0, 6, 7, 4, 0),
     gsSP2Triangles(8, 9, 10, 0, 9, 8, 11, 0),
@@ -1086,7 +1086,15 @@ Gfx gLinkChildLeftHandHoldingRazorSwordDL[] = {
 
 
 
-// Gilded Sword
+// Silver & Gilded Sword
+
+static Vtx gGildedSwordHandleVtx[] = {
+#include "assets/objects/object_link_child/swords/gilded_sword_handle.vtx.inc"
+};
+
+static Vtx gGildedSwordBladeVtx[] = {
+#include "assets/objects/object_link_child/swords/gilded_sword_blade.vtx.inc"
+};
 
 static u64 object_link_child_Tex_01C380[] = {
 #include "assets/objects/object_link_child/swords/gilded_sword_tex_01C380.rgba16.inc.c"
@@ -1104,14 +1112,6 @@ static u64 object_link_child_Tex_01D340[] = {
 #include "assets/objects/object_link_child/swords/gilded_sword_tex_01D340.i8.inc.c"
 };
 
-static Vtx gilded_sword_handle_vtx[] = {
-#include "assets/objects/object_link_child/swords/gilded_sword_handle.vtx.inc"
-};
-
-static Vtx gilded_sword_blade_vtx[] = {
-#include "assets/objects/object_link_child/swords/gilded_sword_blade.vtx.inc"
-};
-
 static Gfx gGildedSwordHandleDL[] = {
 	// Part 1
 	gsSPTexture(0x0578, 0x03E8, 0, G_TX_RENDERTILE, G_ON),
@@ -1122,7 +1122,7 @@ static Gfx gGildedSwordHandleDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 4, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_handle_vtx, 5, 0),
+    gsSPVertex(&gGildedSwordHandleVtx, 5, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 0, 0),
 	
 	// Part 2
@@ -1134,7 +1134,7 @@ static Gfx gGildedSwordHandleDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 3, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_handle_vtx[5], 5, 0),
+    gsSPVertex(&gGildedSwordHandleVtx[5], 5, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 4, 0),
 	
 	// Part 3
@@ -1146,7 +1146,7 @@ static Gfx gGildedSwordHandleDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 3, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_handle_vtx[10], 32, 0),
+    gsSPVertex(&gGildedSwordHandleVtx[10], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 3, 5, 0, 2, 4, 5, 0),
     gsSP2Triangles(2, 5, 0, 0, 3, 0, 6, 0),
@@ -1177,7 +1177,7 @@ static Gfx gGildedSwordHandleDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 3, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_handle_vtx[42], 16, 0),
+    gsSPVertex(&gGildedSwordHandleVtx[42], 16, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 3, 0, 0, 5, 3, 6, 0),
     gsSP2Triangles(1, 3, 5, 0, 7, 1, 5, 0),
@@ -1194,7 +1194,7 @@ static Gfx gGildedSwordHandleDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 2, 2),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_handle_vtx[58], 10, 0),
+    gsSPVertex(&gGildedSwordHandleVtx[58], 10, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 0, 0),
     gsSP2Triangles(0, 4, 1, 0, 0, 1, 2, 0),
     gsSP2Triangles(2, 5, 6, 0, 5, 7, 6, 0),
@@ -1215,7 +1215,7 @@ static Gfx gGildedSwordHandleDL[] = {
     gsDPLoadTextureBlock(object_link_child_Tex_01C900, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_handle_vtx[68], 32, 0),
+    gsSPVertex(&gGildedSwordHandleVtx[68], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 5, 7, 6, 0),
     gsSP2Triangles(8, 9, 5, 0, 8, 5, 4, 0),
@@ -1242,7 +1242,7 @@ static Gfx gSilverSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 3, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_blade_vtx, 13, 0),
+    gsSPVertex(&gGildedSwordBladeVtx, 13, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 4, 0),
     gsSP2Triangles(5, 6, 7, 0, 6, 8, 2, 0),
     gsSP2Triangles(9, 10, 11, 0, 12, 11, 5, 0),
@@ -1256,7 +1256,7 @@ static Gfx gSilverSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 3, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_blade_vtx[13], 13, 0),
+    gsSPVertex(&gGildedSwordBladeVtx[13], 13, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 1, 0),
     gsSP2Triangles(5, 6, 4, 0, 7, 8, 6, 0),
     gsSP2Triangles(7, 9, 10, 0, 11, 9, 12, 0),
@@ -1275,7 +1275,7 @@ static Gfx gGoldenSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 3, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_blade_vtx, 13, 0),
+    gsSPVertex(&gGildedSwordBladeVtx, 13, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 4, 0),
     gsSP2Triangles(5, 6, 7, 0, 6, 8, 2, 0),
     gsSP2Triangles(9, 10, 11, 0, 12, 11, 5, 0),
@@ -1290,7 +1290,7 @@ static Gfx gGoldenSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 3, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_blade_vtx[13], 13, 0),
+    gsSPVertex(&gGildedSwordBladeVtx[13], 13, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 1, 0),
     gsSP2Triangles(5, 6, 4, 0, 7, 8, 6, 0),
     gsSP2Triangles(7, 9, 10, 0, 11, 9, 12, 0),
@@ -1308,7 +1308,7 @@ static Gfx gGildedSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 3, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_blade_vtx[26], 14, 0),
+    gsSPVertex(&gGildedSwordBladeVtx[26], 14, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 4, 0),
     gsSP2Triangles(3, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(8, 10, 11, 0, 10, 12, 13, 0),
@@ -1322,7 +1322,7 @@ static Gfx gGildedSwordBladeDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(gSwordMetalTex, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 3, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR |  G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_blade_vtx[40], 14, 0),
+    gsSPVertex(&gGildedSwordBladeVtx[40], 14, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 4, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(9, 10, 11, 0, 11, 12, 13, 0),
@@ -1346,127 +1346,159 @@ Gfx gLinkChildLeftHandHoldingGoldenSwordDL[] = {
 
 
 
-// Master Sword
+// Goddess & Master Sword
 
-static u64 master_sword_tlut_tex[] = {
-#include "assets/objects/object_link_boy/gLinkAdultTLUT4.tlut.rgba16.inc.c"
+static Vtx gFourSwordHandleVtx[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleVtx.inc.c"
 };
 
-static u64 master_sword_sheath_tex[] = {
-#include "assets/objects/object_link_boy/gLinkAdultSheathTex.ci8.tlut_gLinkAdultTLUT4.inc.c"
+static Vtx gFourSwordBladeVtx[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordBladeVtx.inc.c"
 };
 
-static u64 master_sword_band_sheath_tex[] = {
-#include "assets/objects/object_link_boy/gLinkAdultSheathBandTex.ci8.tlut_gLinkAdultTLUT4.inc.c"
+static u64 gFourSwordHandleTex1[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex1.ci8.inc.c"
 };
 
-static Vtx master_sword_vtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultLeftHandHoldingMasterSwordNearVtx.inc.c"
+static u64 gFourSwordHandleTLUT1[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex1.tlut.rgba16.inc.c"
 };
 
-static Vtx master_sword_sheath_vtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultMasterSwordAndSheathNearVtx.inc.c"
+static u64 gFourSwordDullHandleTex1[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordDullHandleTex1.ci8.inc.c"
 };
 
-static Gfx gMasterSwordHandleDL[] = {
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_RGBA16),
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTextureBlock(gLinkChildMasterSwordPommelTex, G_IM_FMT_CI, G_IM_SIZ_8b, gLinkChildMasterSwordPommelTex_WIDTH, gLinkChildMasterSwordPommelTex_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadTLUT_pal256(gLinkChildSwordsTLUT),
-    gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&master_sword_vtx[54], 19, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 3, 4, 0),
-    gsSP2Triangles(0, 4, 5, 0, 1, 0, 6, 0),
-    gsSP2Triangles(7, 8, 9, 0, 7, 9, 10, 0),
-    gsSP2Triangles(8, 7, 11, 0, 7, 10, 12, 0),
-    gsSP2Triangles(13, 14, 15, 0, 16, 17, 18, 0),
+static u64 gFourSwordDullHandleTLUT1[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordDullHandleTex1.tlut.rgba16.inc.c"
+};
 
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gLinkChildMasterSwordGuardTex, G_IM_FMT_CI, G_IM_SIZ_8b, gLinkChildMasterSwordGuardTex_WIDTH, gLinkChildMasterSwordGuardTex_HEIGHT, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&master_sword_vtx[73], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(1, 0, 4, 0, 4, 5, 6, 0),
-    gsSP2Triangles(6, 5, 7, 0, 8, 9, 10, 0),
-    gsSP2Triangles(11, 5, 10, 0, 8, 10, 5, 0),
-    gsSP2Triangles(12, 13, 14, 0, 14, 15, 16, 0),
-    gsSP2Triangles(17, 18, 19, 0, 20, 21, 22, 0),
-    gsSP2Triangles(1, 23, 24, 0, 25, 26, 24, 0),
-    gsSP2Triangles(27, 17, 19, 0, 28, 29, 13, 0),
-    gsSP2Triangles(21, 20, 15, 0, 15, 20, 30, 0),
-    gsSP2Triangles(15, 30, 16, 0, 13, 12, 18, 0),
-    gsSPVertex(&master_sword_vtx[104], 18, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSP2Triangles(4, 5, 6, 0, 2, 6, 3, 0),
-    gsSP2Triangles(7, 8, 4, 0, 9, 10, 11, 0),
-    gsSP2Triangles(12, 13, 14, 0, 11, 10, 12, 0),
-    gsSP2Triangles(11, 12, 14, 0, 15, 16, 17, 0),
+static u64 gFourSwordHandleTex2[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex2.i4.inc.c"
+};
 
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gLinkChildMasterSwordEmblemTex, G_IM_FMT_CI, G_IM_SIZ_8b, gLinkChildMasterSwordEmblemTex_WIDTH, gLinkChildMasterSwordEmblemTex_HEIGHT, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&master_sword_vtx[122], 14, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(6, 7, 8, 0, 6, 9, 7, 0),
-    gsSP2Triangles(10, 11, 12, 0, 12, 11, 13, 0),
+static u64 gFourSwordHandleTex3[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex3.ci8.inc.c"
+};
 
+static u64 gFourSwordHandleTLUT3[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex3.tlut.rgba16.inc.c"
+};
+
+static u64 gFourSwordDullHandleTex3[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordDullHandleTex3.ci8.inc.c"
+};
+
+static u64 gFourSwordDullHandleTLUT3[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordDullHandleTex3.tlut.rgba16.inc.c"
+};
+
+static u64 gFourSwordHandleTex4[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex4.ci8.inc.c"
+};
+
+static u64 gFourSwordHandleTLUT4[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex4.tlut.rgba16.inc.c"
+};
+
+static u64 gFourSwordHandleTex5[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex5.ci8.inc.c"
+};
+
+static u64 gFourSwordHandleTLUT5[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex5.tlut.rgba16.inc.c"
+};
+
+static u64 gFourSwordBladeTex[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordBladeTex.ci8.inc.c"
+};
+
+static u64 gFourSwordBladeTLUT[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordBladeTex.tlut.rgba16.inc.c"
+};
+
+static const Gfx gFourSwordHandle1DL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandle1DL.inc.c"
+};
+
+static const Gfx gFourSwordHandle2DL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandle2DL.inc.c"
+};
+
+static const Gfx gFourSwordHandle3DL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandle3DL.inc.c"
+};
+
+static const Gfx gFourSwordHandle4DL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandle4DL.inc.c"
+};
+
+static const Gfx gFourSwordHandle5DL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandle5DL.inc.c"
+};
+
+static const Gfx gFourSwordHandleDL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleDL.inc.c"
+};
+
+static const Gfx gFourSwordDullHandleDL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordDullHandleDL.inc.c"
+};
+
+static const Gfx gFourSwordBladeDL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordBladeDL.inc.c"
+};
+
+static Mtx gFourSwordDullBladeScaleMtx = gdSPDefMtx(
+    0.7, 0, 0, 216,
+      0, 1, 0,   0,
+      0, 0, 1,   0,
+      0, 0, 0,   1
+);
+
+static Mtx gFourSwordLiftingScaleMtx = gdSPDefMtx(
+   -0.6668,   0, -0.2127, 141,
+   -0.2127,   0, 0.6668,  327,
+         0, 0.7,      0, -312,
+         0,   0,      0,    1
+);
+
+Gfx gLinkChildLeftHandHoldingGoddessSwordDL[] = {
+    gsSPDisplayList(gLinkChildLeftHandNearDL),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsSPDisplayList(gFourSwordDullHandleDL),
+    gsSPMatrix(&gFourSwordDullBladeScaleMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 150),
+    gsSPDisplayList(gFourSwordBladeDL),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
     gsSPEndDisplayList(),
 };
 
-static Gfx gMasterSwordBladeDL[] = {
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsSPTexture(0x07D0, 0x09C4, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTextureBlock(gHilite1Tex, G_IM_FMT_RGBA, G_IM_SIZ_16b, gHilite1Tex_WIDTH, gHilite1Tex_HEIGHT, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, 15),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPSetGeometryMode(G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPDisplayList(0x0C000000),
-    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&master_sword_vtx[0], 3, 0),
-    gsSP1Triangle(0, 1, 2, 0),
-    gsSPVertex(&master_sword_vtx[3], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
-    gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
-    gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
-    gsSP2Triangles(24, 25, 26, 0, 27, 28, 29, 0),
-    gsSP1Triangle(2, 30, 0, 0),
-    gsSPVertex(&master_sword_vtx[34], 20, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
-    gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
-    gsSP2Triangles(15, 18, 16, 0, 19, 11, 10, 0),
-    gsSPEndDisplayList(),    
-};
-
-static Mtx gGripMasterSwordMtx = gdSPDefMtx(
-    1, 0, 0, 184,
-    0, 1, 0, 260,
-    0, 0, 1, 40,
-    0, 0, 0, 1
-);
-
-static Mtx gScaleMasterSwordMtx = gdSPDefMtx(
-  0.8,   0,   0, 0,
-    0, 0.6,   0, 0,
-    0,   0, 0.8, 0,
-    0,   0,   0, 1
-);
-
-static Mtx gScaleMasterSwordSheathMtx = gdSPDefMtx(
-  0.8,   0,   0, 0,
-    0, 0.8,   0, 0,
-    0,   0, 0.8, 0,
-    0,   0,   0, 1
-);
-
 Gfx gLinkChildLeftHandHoldingMasterSwordDL2[] = {
     gsSPDisplayList(gLinkChildLeftHandNearDL),
-    gsSPMatrix(&gScaleMasterSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
-    gsSPMatrix(&gGripMasterSwordMtx, G_MTX_MUL | G_MTX_MODELVIEW),
-    gsSPDisplayList(gMasterSwordHandleDL),
-    gsSPBranchList(gMasterSwordBladeDL),
+    gsSPDisplayList(gFourSwordHandleDL),
+	gsSPBranchList(gFourSwordBladeDL),
+};
+
+Gfx gLinkChildLiftingGoddessSwordDL[] = {
+    gsSPDisplayList(gLinkChildLeftHandNearDL),
+    gsSPMatrix(&gFourSwordLiftingScaleMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsSPDisplayList(gFourSwordDullHandleDL),
+    gsSPMatrix(&gFourSwordDullBladeScaleMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 150),
+    gsSPDisplayList(gFourSwordBladeDL),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
+    gsSPEndDisplayList(),
+};
+
+Gfx gLinkChildLiftingMasterSwordDL[] = {
+    gsSPDisplayList(gLinkChildLeftHandNearDL),
+    gsSPMatrix(&gFourSwordLiftingScaleMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPDisplayList(gFourSwordHandleDL),
+    gsSPDisplayList(gFourSwordBladeDL),
     gsSPPopMatrix(G_MTX_MODELVIEW),
     gsSPEndDisplayList(),
 };
@@ -1475,37 +1507,67 @@ Gfx gLinkChildLeftHandHoldingMasterSwordDL2[] = {
 
 // Sheaths
 
-static Vtx heros_sword_sheath_vtx[] = {
+static Vtx gHerosSwordSheathVtx[] = {
 #include "assets/objects/object_link_child/swords/heros_sword_sheath.vtx.inc"
 };
 
-static Vtx razor_sword_sheath_vtx[] = {
+static Vtx gRazorSwordSheathVtx[] = {
 #include "assets/objects/object_link_child/swords/razor_sword_sheath.vtx.inc"
 };
 
-static Vtx gilded_sword_sheath_vtx[] = {
+static Vtx gGildedSwordSheathVtx[] = {
 #include "assets/objects/object_link_child/swords/gilded_sword_sheath.vtx.inc"
 };
 
+static Vtx gMasterSwordSheathVtx[] = {
+#include "assets/objects/object_link_boy/gLinkAdultMasterSwordAndSheathNearVtx.inc.c"
+};
+
+static u64 gMasterSwordSheathTex[] = {
+#include "assets/objects/object_link_boy/gLinkAdultSheathTex.ci8.tlut_gLinkAdultTLUT4.inc.c"
+};
+
+static u64 gMasterSwordBandSheathTex[] = {
+#include "assets/objects/object_link_boy/gLinkAdultSheathBandTex.ci8.tlut_gLinkAdultTLUT4.inc.c"
+};
+
+static u64 gMasterSwordTLUT[] = {
+#include "assets/objects/object_link_boy/gLinkAdultTLUT4.tlut.rgba16.inc.c"
+};
+
 static Mtx gSheathedRazorSwordMtx = { 
-    65536      , 0          , 1          , 0          , 
-    0          , 65536      , -31391984  , -1310719   , 
-    0          , 0          , 0          , 0          , 
-    0          , 0          , 0          , 0          , 
+    65536,     0,         1,        0, 
+        0, 65536, -31391984, -1310719, 
+        0,     0,         0,        0, 
+        0,     0,         0,        0, 
 };
 
 static Mtx gSheathedGildedSwordMtx = { 
-    65536      , 0          , 1          , 0          , 
-    0          , 65536      , -37814493  , -2097151   , 
-    0          , 0          , 0          , 0          , 
-    0          , 0          , 0          , 0          , 
+    65536,     0,         1,        0, 
+        0, 65536, -37814493, -2097151, 
+        0,     0,         0,        0, 
+        0,     0,         0,        0, 
 };
+
+static Mtx gScaleMasterSwordMtx = gdSPDefMtx(
+  0.8,   0,   0, 0,
+    0, 0.6,   0, 0,
+    0,   0, 0.8, 0,
+    0,   0,   0, 1
+);
 
 static Mtx gSheathedMasterSwordMtx = gdSPDefMtx(
     1, 0, 0, -578,
     0, 1, 0, -221,
-    0, 0, 1, 62,
-    0, 0, 0, 1
+    0, 0, 1,   62,
+    0, 0, 0,    1
+);
+
+static Mtx gScaleMasterSwordSheathMtx = gdSPDefMtx(
+  0.8,   0,   0, 0,
+    0, 0.8,   0, 0,
+    0,   0, 0.8, 0,
+    0,   0,   0, 1
 );
 
 Gfx gLinkChildSheathedKokiriSwordDL[] = {
@@ -1539,11 +1601,20 @@ Gfx gLinkChildSheathedGildedSwordDL[] = {
     gsSPEndDisplayList(),
 };
 
+Gfx gLinkChildSheathedGoddessSwordDL[] = {
+    gsSPDisplayList(gLinkChildMasterSwordSheathDL),
+    gsSPMatrix(&gScaleMasterSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPMatrix(&gSheathedMasterSwordMtx, G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPDisplayList(gFourSwordDullHandleDL),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
+    gsSPEndDisplayList(),
+};
+
 Gfx gLinkChildSheathedMasterSwordDL[] = {
     gsSPDisplayList(gLinkChildMasterSwordSheathDL),
     gsSPMatrix(&gScaleMasterSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPMatrix(&gSheathedMasterSwordMtx, G_MTX_MUL | G_MTX_MODELVIEW),
-    gsSPDisplayList(gMasterSwordHandleDL),
+    gsSPDisplayList(gFourSwordDullHandleDL),
     gsSPPopMatrix(G_MTX_MODELVIEW),
     gsSPEndDisplayList(),
 };
@@ -1581,18 +1652,18 @@ Gfx gLinkChildHerosSwordSheathDL[] = {
     gsDPLoadTextureBlock(gRazorSwordHandleGripTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_sword_sheath_vtx, 8, 0),
+    gsSPVertex(&gHerosSwordSheathVtx, 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(4, 2, 3, 0, 3, 5, 4, 0),
     gsSP2Triangles(3, 6, 5, 0, 5, 6, 0, 0),
     gsSP2Triangles(7, 5, 0, 0, 0, 2, 7, 0),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gHerosSwordHandlePommelTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&heros_sword_sheath_vtx[8], 6, 0),
+    gsSPVertex(&gHerosSwordSheathVtx[8], 6, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(3, 4, 5, 0, 5, 4, 0, 0),
     gsDPSetPrimColor(0, 0x80, 0, 0, 0, 255),
-    gsSPVertex(&heros_sword_sheath_vtx[14], 4, 0),
+    gsSPVertex(&gHerosSwordSheathVtx[14], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 0, 0),
     gsSPEndDisplayList(),
 };
@@ -1607,7 +1678,7 @@ Gfx gLinkChildRazorSwordSheathDL[] = {
     gsDPLoadTextureBlock(gRazorSwordHandleDesignTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&razor_sword_sheath_vtx, 18, 0),
+    gsSPVertex(&gRazorSwordSheathVtx, 18, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(4, 6, 5, 0, 7, 8, 9, 0),
     gsSP2Triangles(10, 11, 4, 0, 10, 4, 3, 0),
@@ -1615,11 +1686,11 @@ Gfx gLinkChildRazorSwordSheathDL[] = {
     gsSP2Triangles(16, 13, 15, 0, 7, 17, 8, 0),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gRazorSwordHandleGripTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&razor_sword_sheath_vtx[18], 6, 0),
+    gsSPVertex(&gRazorSwordSheathVtx[18], 6, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(2, 1, 4, 0, 5, 2, 4, 0),
     gsDPSetPrimColor(0, 0x80, 0, 0, 0, 255),
-    gsSPVertex(&razor_sword_sheath_vtx[24], 4, 0),
+    gsSPVertex(&gRazorSwordSheathVtx[24], 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
     gsSPEndDisplayList(),
 };
@@ -1633,7 +1704,7 @@ Gfx gLinkChildGildedSwordSheathDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 3, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_sheath_vtx[57], 5, 0),
+    gsSPVertex(&gGildedSwordSheathVtx[57], 5, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 2, 4, 0),
 
     gsSPTexture(0x0578, 0x03E8, 0, G_TX_RENDERTILE, G_ON),
@@ -1644,7 +1715,7 @@ Gfx gLinkChildGildedSwordSheathDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 4, 3),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_sheath_vtx[52], 5, 0),
+    gsSPVertex(&gGildedSwordSheathVtx[52], 5, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 2, 4, 0),
 
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
@@ -1656,14 +1727,14 @@ Gfx gLinkChildGildedSwordSheathDL[] = {
     gsDPLoadTextureBlock(object_link_child_Tex_01C900, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&gilded_sword_sheath_vtx, 10, 0),
+    gsSPVertex(&gGildedSwordSheathVtx, 10, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 4, 0),
     gsSP2Triangles(1, 0, 5, 0, 4, 5, 0, 0),
     gsSP2Triangles(6, 7, 8, 0, 7, 6, 9, 0),
     gsSP2Triangles(8, 3, 6, 0, 2, 9, 6, 0),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(object_link_child_Tex_01C400, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&gilded_sword_sheath_vtx[10], 28, 0),
+    gsSPVertex(&gGildedSwordSheathVtx[10], 28, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 5, 4, 0),
     gsSP2Triangles(8, 9, 10, 0, 11, 12, 13, 0),
@@ -1675,7 +1746,7 @@ Gfx gLinkChildGildedSwordSheathDL[] = {
     gsSP2Triangles(26, 5, 7, 0, 27, 5, 26, 0),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(object_link_child_Tex_01C380, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&gilded_sword_sheath_vtx[38], 14, 0),
+    gsSPVertex(&gGildedSwordSheathVtx[38], 14, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 3, 0, 0, 5, 6, 7, 0),
     gsSP2Triangles(5, 7, 8, 0, 9, 10, 4, 0),
@@ -1696,22 +1767,22 @@ Gfx gLinkChildMasterSwordSheathDL[] = {
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPLoadTextureBlock(master_sword_sheath_tex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadTLUT_pal256(master_sword_tlut_tex),
+    gsDPLoadTextureBlock(gMasterSwordSheathTex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadTLUT_pal256(gMasterSwordTLUT),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
     gsSPDisplayList(0x0C000000),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&master_sword_sheath_vtx[0], 12, 0),
+    gsSPVertex(&gMasterSwordSheathVtx[0], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 1, 7, 0, 8, 9, 5, 0),
     gsSP2Triangles(2, 1, 10, 0, 10, 1, 6, 0),
     gsSP2Triangles(11, 8, 5, 0, 11, 5, 4, 0),
     gsDPPipeSync(),
-    gsDPLoadTextureBlock(master_sword_band_sheath_tex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&master_sword_sheath_vtx[12], 10, 0),
+    gsDPLoadTextureBlock(gMasterSwordBandSheathTex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&gMasterSwordSheathVtx[12], 10, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 5, 0, 5, 7, 3, 0),
     gsSP2Triangles(8, 1, 0, 0, 8, 9, 1, 0),
@@ -1735,6 +1806,10 @@ Gfx gLinkChildMasterSwordSheathDL[] = {
 
 
 // Hero's Shield
+
+static Vtx gHerosShieldVtx[] = {
+#include "assets/objects/object_link_child/shields/heros_shield.vtx.inc"
+};
 
 static u64 gLinkChildHerosShieldFrontTLUT[] = {
 #include "assets/objects/object_link_child/shields/heros_shield_front_tlut.rgba16.inc.c"
@@ -1764,10 +1839,6 @@ static u64 gLinkChildShieldHandleTex[] = {
 #include "assets/objects/object_link_child/shields/heros_shield_handle.ci8.inc.c"
 };
 
-static Vtx heros_shield_vtx[] = {
-#include "assets/objects/object_link_child/shields/heros_shield.vtx.inc"
-};
-
 static Mtx gHerosShieldMtx = { 
     -1         , 0          , 65535      , 0          , 
     0          , 65536      , 36175872   , 1          , 
@@ -1786,7 +1857,7 @@ Gfx gLinkChildHerosShieldDL[] = {
     gsDPLoadTextureBlock(gLinkChildShieldHandleTex, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_shield_vtx, 12, 0),
+    gsSPVertex(&gHerosShieldVtx, 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 0, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 6, 5, 7, 0),
     gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
@@ -1794,7 +1865,7 @@ Gfx gLinkChildHerosShieldDL[] = {
     gsDPLoadTLUT_pal256(gLinkChildHerosShieldBackTLUT),
     gsDPLoadTextureBlock(gLinkChildHerosShieldBackTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 32, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_shield_vtx[12], 9, 0),
+    gsSPVertex(&gHerosShieldVtx[12], 9, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
     gsSP2Triangles(4, 0, 5, 0, 5, 0, 2, 0),
     gsSP2Triangles(5, 6, 7, 0, 2, 6, 5, 0),
@@ -1802,14 +1873,14 @@ Gfx gLinkChildHerosShieldDL[] = {
     gsDPPipeSync(),
     gsDPLoadTLUT_pal256(gLinkChildHerosShieldFrontTLUT),
     gsDPLoadTextureBlock(gLinkChildHerosShieldFrontLowerTex, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 32, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&heros_shield_vtx[21], 8, 0),
+    gsSPVertex(&gHerosShieldVtx[21], 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 4, 0),
     gsSP2Triangles(2, 1, 5, 0, 6, 2, 5, 0),
     gsSP2Triangles(7, 6, 5, 0, 0, 2, 3, 0),
     gsDPPipeSync(),
     gsDPLoadTLUT_pal256(gLinkChildHerosShieldFrontTLUT),
     gsDPLoadTextureBlock(gLinkChildHerosShieldFrontUpperTex, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 32, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&heros_shield_vtx[29], 11, 0),
+    gsSPVertex(&gHerosShieldVtx[29], 11, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 0, 0),
     gsSP2Triangles(5, 1, 6, 0, 7, 6, 8, 0),
     gsSP2Triangles(5, 6, 7, 0, 2, 1, 5, 0),
@@ -1910,6 +1981,10 @@ Gfx gLinkChildWoodenShieldWithMatrixDL[] = {
 
 // Metal Shield
 
+static Vtx gMetalShieldVtx[] = {
+#include "assets/objects/object_link_child/shields/metal_shield.vtx.inc"
+};
+
 static u64 gLinkChildMetalShieldFrontLeftTLUT[] = {
 #include "assets/objects/object_link_child/shields/metal_shield_front_left.tlut.rgba16.inc.c"
 };
@@ -1926,10 +2001,6 @@ static u64 gLinkChildMetalShieldFrontRightTex[] = {
 #include "assets/objects/object_link_child/shields/metal_shield_front_right.ci8.inc.c"
 };
 
-static Vtx metal_shield_vtx[] = {
-#include "assets/objects/object_link_child/shields/metal_shield.vtx.inc"
-};
-
 Gfx gLinkChildMetalShieldDL[] = {
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_RGBA16),
@@ -1941,7 +2012,7 @@ Gfx gLinkChildMetalShieldDL[] = {
     gsSPClearGeometryMode(G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetGeometryMode(G_CULL_BACK | G_FOG | G_LIGHTING | G_CLIPPING),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(metal_shield_vtx, 7, 0),
+    gsSPVertex(gMetalShieldVtx, 7, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 0, 0),
     gsSP2Triangles(4, 5, 6, 0, 2, 6, 0, 0),
     gsSP2Triangles(4, 2, 1, 0, 2, 4, 6, 0),
@@ -1949,7 +2020,7 @@ Gfx gLinkChildMetalShieldDL[] = {
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsDPLoadTextureBlock_4b(gLinkChildShieldHandleTex, G_IM_FMT_CI, 8, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPLoadTLUT_pal16(0, gLinkChildShieldHandleTLUT),
-    gsSPVertex(&metal_shield_vtx[7], 7, 0),
+    gsSPVertex(&gMetalShieldVtx[7], 7, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 5, 2, 0, 3, 2, 1, 0),
     gsSP2Triangles(1, 4, 3, 0, 1, 0, 6, 0),
@@ -1957,14 +2028,14 @@ Gfx gLinkChildMetalShieldDL[] = {
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsDPLoadTextureBlock(gLinkChildHerosShieldBackTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPLoadTLUT_pal256(gLinkChildHerosShieldBackTLUT),
-    gsSPVertex(&metal_shield_vtx[14], 6, 0),
+    gsSPVertex(&gMetalShieldVtx[14], 6, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 2, 5, 0, 4, 3, 2, 0),
     gsDPPipeSync(),
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsDPLoadTextureBlock(gLinkChildMetalShieldFrontRightTex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
     gsDPLoadTLUT_pal256(gLinkChildMetalShieldFrontRightTLUT),
-    gsSPVertex(&metal_shield_vtx[20], 7, 0),
+    gsSPVertex(&gMetalShieldVtx[20], 7, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
     gsSP2Triangles(0, 4, 1, 0, 2, 1, 5, 0),
     gsSP2Triangles(6, 4, 3, 0, 4, 0, 3, 0),
@@ -1985,6 +2056,10 @@ Gfx gLinkChildMetalShieldWithMatrixDL[] = {
 
 // Mirror Shield
 
+static Vtx gMirrorShieldVtx[] = {
+#include "assets/objects/object_link_child/shields/mirror_shield.vtx.inc"
+};
+
 static u64 object_link_child_Tex_01C800[] = {
 #include "assets/objects/object_link_child/shields/mirror_shield_tex_01C800.rgba16.inc.c"
 };
@@ -1999,10 +2074,6 @@ static u64 object_link_child_Tex_01D300[] = {
 
 static u64 object_link_child_Tex_01D440[] = {
 #include "assets/objects/object_link_child/shields/mirror_shield_tex_01D440.i8.inc.c"
-};
-
-static Vtx mirror_shield_vtx[] = {
-#include "assets/objects/object_link_child/shields/mirror_shield.vtx.inc"
 };
 
 static Mtx gMirrorShieldMtx = { 
@@ -2021,7 +2092,7 @@ Gfx gLinkChildMirrorShieldDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 2, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&mirror_shield_vtx, 11, 0),
+    gsSPVertex(&gMirrorShieldVtx, 11, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 2, 4, 0),
     gsSP2Triangles(1, 5, 2, 0, 0, 2, 6, 0),
     gsSP2Triangles(2, 7, 6, 0, 3, 7, 2, 0),
@@ -2037,7 +2108,7 @@ Gfx gLinkChildMirrorShieldDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D440, G_IM_FMT_I, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, 2, 15),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&mirror_shield_vtx[11], 13, 0),
+    gsSPVertex(&gMirrorShieldVtx[11], 13, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
     gsSP2Triangles(4, 1, 0, 0, 4, 5, 1, 0),
     gsSP2Triangles(6, 5, 4, 0, 6, 7, 5, 0),
@@ -2053,7 +2124,7 @@ Gfx gLinkChildMirrorShieldDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D440, G_IM_FMT_I, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, 2, 15),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&mirror_shield_vtx[24], 13, 0),
+    gsSPVertex(&gMirrorShieldVtx[24], 13, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
     gsSP2Triangles(4, 0, 3, 0, 4, 5, 0, 0),
     gsSP2Triangles(6, 5, 7, 0, 8, 6, 7, 0),
@@ -2069,7 +2140,7 @@ Gfx gLinkChildMirrorShieldDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D300, G_IM_FMT_I, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 3, 3, 3, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&mirror_shield_vtx[37], 12, 0),
+    gsSPVertex(&gMirrorShieldVtx[37], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 5, 6, 0, 3, 7, 8, 0),
     gsSP2Triangles(3, 8, 1, 0, 5, 9, 6, 0),
@@ -2084,7 +2155,7 @@ Gfx gLinkChildMirrorShieldDL[] = {
     gsDPLoadTextureBlock(object_link_child_Tex_01C800, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 3, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&mirror_shield_vtx[49], 16, 0),
+    gsSPVertex(&gMirrorShieldVtx[49], 16, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(3, 4, 5, 0, 0, 3, 5, 0),
     gsSP2Triangles(6, 7, 5, 0, 4, 6, 5, 0),
@@ -2100,7 +2171,7 @@ Gfx gLinkChildMirrorShieldDL[] = {
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsDPLoadTLUT_pal256(gLinkChildShieldHandleTLUT),
     gsDPLoadTextureBlock(gLinkChildShieldHandleTex, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 3, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&mirror_shield_vtx[65], 8, 0),
+    gsSPVertex(&gMirrorShieldVtx[65], 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
     gsSP2Triangles(2, 4, 3, 0, 2, 1, 5, 0),
     gsSP2Triangles(3, 6, 7, 0, 3, 4, 6, 0),
@@ -2114,7 +2185,7 @@ Gfx gLinkChildMirrorShieldDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01CB00, G_IM_FMT_I, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&mirror_shield_vtx[73], 11, 0),
+    gsSPVertex(&gMirrorShieldVtx[73], 11, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 0, 2, 0, 4, 5, 0, 0),
     gsSP2Triangles(0, 6, 3, 0, 7, 6, 0, 0),
@@ -2138,7 +2209,7 @@ Gfx gLinkChildMirrorShieldWithMatrixDL[] = {
 
 // Megaton Hammer
 
-static Vtx hammer_vtx[] = {
+static Vtx gHammerVtx[] = {
 #include "assets/objects/object_link_child/other/hammer.vtx.inc"
 };
 
@@ -2153,7 +2224,7 @@ Gfx gLinkChildLeftHandHoldingHammerNearDL[] = {
     gsSPSetGeometryMode(G_FOG),
     gsSPDisplayList(0x0C000000),
     gsDPSetPrimColor(0, 0, 79, 0, 0, 255),
-    gsSPVertex(&hammer_vtx, 9, 0),
+    gsSPVertex(&gHammerVtx, 9, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 2, 0),
     gsSP2Triangles(5, 1, 0, 0, 2, 6, 0, 0),
     gsSP2Triangles(7, 3, 5, 0, 7, 5, 0, 0),
@@ -2165,49 +2236,49 @@ Gfx gLinkChildLeftHandHoldingHammerNearDL[] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsSPSetGeometryMode(G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsDPSetPrimColor(0, 0, 155, 192, 201, 255),
-    gsSPVertex(&hammer_vtx[9], 3, 0),
+    gsSPVertex(&gHammerVtx[9], 3, 0),
     gsSP1Triangle(0, 1, 2, 0),
-    gsSPVertex(&hammer_vtx[12], 32, 0),
+    gsSPVertex(&gHammerVtx[12], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
     gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
     gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
     gsSP2Triangles(21, 23, 24, 0, 25, 26, 27, 0),
     gsSP2Triangles(27, 28, 25, 0, 29, 30, 31, 0),
-    gsSPVertex(&hammer_vtx[44], 32, 0),
+    gsSPVertex(&gHammerVtx[44], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
     gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
     gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
     gsSP2Triangles(24, 25, 26, 0, 27, 28, 29, 0),
-    gsSPVertex(&hammer_vtx[74], 29, 0),
+    gsSPVertex(&gHammerVtx[74], 29, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
     gsSP2Triangles(12, 13, 14, 0, 12, 15, 13, 0),
     gsSP2Triangles(16, 17, 18, 0, 19, 20, 21, 0),
     gsSP2Triangles(22, 23, 24, 0, 22, 25, 23, 0),
     gsSP1Triangle(26, 27, 28, 0),
-    gsSPVertex(&hammer_vtx[103], 30, 0),
+    gsSPVertex(&gHammerVtx[103], 30, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
     gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
     gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
     gsSP2Triangles(24, 25, 26, 0, 27, 28, 29, 0),
-    gsSPVertex(&hammer_vtx[133], 32, 0),
+    gsSPVertex(&gHammerVtx[133], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
     gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
     gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
     gsSP2Triangles(24, 25, 26, 0, 27, 28, 29, 0),
     gsSP1Triangle(27, 30, 28, 0),
-    gsSPVertex(&hammer_vtx[164], 32, 0),
+    gsSPVertex(&gHammerVtx[164], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 6, 4, 0, 7, 8, 9, 0),
     gsSP2Triangles(10, 11, 12, 0, 13, 14, 15, 0),
     gsSP2Triangles(16, 17, 18, 0, 19, 20, 21, 0),
     gsSP2Triangles(22, 23, 24, 0, 22, 25, 23, 0),
     gsSP2Triangles(26, 27, 28, 0, 26, 29, 27, 0),
-    gsSPVertex(&hammer_vtx[194], 9, 0),
+    gsSPVertex(&gHammerVtx[194], 9, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP1Triangle(6, 7, 8, 0),
 	
@@ -2220,24 +2291,24 @@ Gfx gLinkChildLeftHandHoldingHammerNearDL[] = {
 
 // Hookshot
 
+static Vtx gHookshotChainVtx[] = {
+#include "assets/objects/object_link_boy/gLinkAdultHookshotChainVtx.inc.c"
+};
+
+static Vtx gHookshotHandVtx[] = {
+#include "assets/objects/object_link_child/hookshot/hookshot_hand.vtx.inc"
+};
+
+static Vtx gHookshotFarVtx[] = {
+#include "assets/objects/object_link_child/hookshot/hookshot_far.vtx.inc"
+};
+
 static u64 gLinkChildHookshotHandleTex[] = {
 #include "assets/objects/object_link_child/hookshot/hookshot_handle.ci8.inc.c"
 };
 
 static u64 gLinkChildHookshotHandTex[] = {
 #include "assets/objects/object_link_child/hookshot/hookshot_hand.ci8.inc.c"
-};
-
-static Vtx hookshot_chain_vtx[] = {
-#include "assets/objects/object_link_boy/gLinkAdultHookshotChainVtx.inc.c"
-};
-
-static Vtx hookshot_hand_vtx[] = {
-#include "assets/objects/object_link_child/hookshot/hookshot_hand.vtx.inc"
-};
-
-static Vtx hookshot_far_vtx[] = {
-#include "assets/objects/object_link_child/hookshot/hookshot_far.vtx.inc"
 };
 
 Gfx gLinkChildRightHandHoldingHookshot[] = {
@@ -2253,7 +2324,7 @@ Gfx gLinkChildRightHandHoldingHookshot[] = {
     gsDPLoadTextureBlock(gLinkChildHookshotHandleTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&hookshot_far_vtx, 32, 0),
+    gsSPVertex(&gHookshotFarVtx, 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(2, 4, 5, 0, 2, 5, 0, 0),
     gsSP2Triangles(6, 3, 0, 0, 7, 8, 9, 0),
@@ -2263,7 +2334,7 @@ Gfx gLinkChildRightHandHoldingHookshot[] = {
     gsSP2Triangles(10, 17, 19, 0, 10, 20, 17, 0),
     gsSP2Triangles(21, 22, 23, 0, 24, 23, 25, 0),
     gsSP2Triangles(26, 27, 28, 0, 29, 28, 30, 0),
-    gsSPVertex(&hookshot_far_vtx[31], 31, 0),
+    gsSPVertex(&gHookshotFarVtx[31], 31, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
     gsSP2Triangles(3, 4, 0, 0, 5, 6, 7, 0),
     gsSP2Triangles(5, 7, 2, 0, 8, 5, 2, 0),
@@ -2277,7 +2348,7 @@ Gfx gLinkChildRightHandHoldingHookshot[] = {
     gsDPPipeSync(),
     gsDPLoadTLUT_pal256(gSwordBowHookshotHandTLUT),
     gsDPLoadTextureBlock(gLinkChildBowTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&hookshot_far_vtx[62], 18, 0),
+    gsSPVertex(&gHookshotFarVtx[62], 18, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 0, 0),
     gsSP2Triangles(4, 5, 3, 0, 6, 0, 2, 0),
     gsSP2Triangles(3, 0, 4, 0, 2, 7, 6, 0),
@@ -2289,7 +2360,7 @@ Gfx gLinkChildRightHandHoldingHookshot[] = {
     gsDPPipeSync(),
     gsDPLoadTLUT_pal256(gSwordBowHookshotHandTLUT),
     gsDPLoadTextureBlock(gLinkChildBowDesignTex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&hookshot_far_vtx[80], 32, 0),
+    gsSPVertex(&gHookshotFarVtx[80], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(4, 5, 6, 0, 6, 5, 7, 0),
     gsSP2Triangles(8, 9, 10, 0, 11, 12, 0, 0),
@@ -2305,7 +2376,7 @@ Gfx gLinkChildRightHandHoldingHookshot[] = {
     gsSP2Triangles(6, 7, 24, 0, 23, 29, 6, 0),
     gsSP2Triangles(25, 4, 6, 0, 6, 29, 26, 0),
     gsSP1Triangle(30, 27, 31, 0),
-    gsSPVertex(&hookshot_far_vtx[112], 32, 0),
+    gsSPVertex(&gHookshotFarVtx[112], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 4, 0),
     gsSP2Triangles(5, 6, 7, 0, 8, 6, 5, 0),
     gsSP2Triangles(8, 9, 6, 0, 0, 2, 4, 0),
@@ -2318,7 +2389,7 @@ Gfx gLinkChildRightHandHoldingHookshot[] = {
     gsSP2Triangles(20, 22, 23, 0, 20, 24, 16, 0),
     gsSP2Triangles(25, 26, 27, 0, 22, 28, 0, 0),
     gsSP1Triangle(29, 30, 31, 0),
-    gsSPVertex(&hookshot_far_vtx[144], 11, 0),
+    gsSPVertex(&gHookshotFarVtx[144], 11, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 0, 4, 0, 4, 6, 7, 0),
     gsSP2Triangles(4, 2, 6, 0, 8, 4, 7, 0),
@@ -2339,7 +2410,7 @@ Gfx gLinkChildRightHandHoldingHookshotFarDL[] = {
 	gsDPPipeSync(),
     gsDPLoadTLUT_pal256(gSwordBowHookshotHandTLUT),
     gsDPLoadTextureBlock(gLinkChildHookshotHandTex, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&hookshot_hand_vtx, 32, 0),
+    gsSPVertex(&gHookshotHandVtx, 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 2, 1, 0, 7, 2, 8, 0),
     gsSP2Triangles(7, 8, 9, 0, 10, 11, 12, 0),
@@ -2347,7 +2418,7 @@ Gfx gLinkChildRightHandHoldingHookshotFarDL[] = {
     gsSP2Triangles(19, 20, 21, 0, 22, 23, 24, 0),
     gsSP2Triangles(25, 20, 26, 0, 27, 28, 29, 0),
     gsSP1Triangle(27, 25, 30, 0),
-    gsSPVertex(&hookshot_hand_vtx[31], 32, 0),
+    gsSPVertex(&gHookshotHandVtx[31], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 0, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(7, 9, 10, 0, 11, 7, 12, 0),
@@ -2358,7 +2429,7 @@ Gfx gLinkChildRightHandHoldingHookshotFarDL[] = {
     gsSP2Triangles(3, 0, 25, 0, 26, 21, 27, 0),
     gsSP2Triangles(26, 27, 28, 0, 24, 29, 30, 0),
     gsSP1Triangle(25, 0, 31, 0),
-    gsSPVertex(&hookshot_hand_vtx[63], 32, 0),
+    gsSPVertex(&gHookshotHandVtx[63], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(10, 11, 1, 0, 12, 13, 14, 0),
@@ -2367,7 +2438,7 @@ Gfx gLinkChildRightHandHoldingHookshotFarDL[] = {
     gsSP2Triangles(23, 24, 25, 0, 23, 26, 24, 0),
     gsSP2Triangles(23, 21, 20, 0, 27, 28, 29, 0),
     gsSP2Triangles(23, 25, 30, 0, 30, 21, 23, 0),
-    gsSPVertex(&hookshot_hand_vtx[94], 32, 0),
+    gsSPVertex(&gHookshotHandVtx[94], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 7, 6, 0),
     gsSP2Triangles(10, 11, 12, 0, 13, 14, 12, 0),
@@ -2378,7 +2449,7 @@ Gfx gLinkChildRightHandHoldingHookshotFarDL[] = {
     gsSP2Triangles(23, 24, 8, 0, 14, 17, 25, 0),
     gsSP2Triangles(26, 27, 28, 0, 11, 10, 29, 0),
     gsSP1Triangle(12, 30, 10, 0),
-    gsSPVertex(&hookshot_hand_vtx[125], 32, 0),
+    gsSPVertex(&gHookshotHandVtx[125], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 6, 4, 0, 6, 7, 4, 0),
     gsSP2Triangles(0, 8, 9, 0, 10, 11, 12, 0),
@@ -2387,7 +2458,7 @@ Gfx gLinkChildRightHandHoldingHookshotFarDL[] = {
     gsSP2Triangles(22, 14, 23, 0, 3, 23, 14, 0),
     gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
     gsSP2Triangles(28, 29, 30, 0, 27, 14, 22, 0),
-    gsSPVertex(&hookshot_hand_vtx[156], 32, 0),
+    gsSPVertex(&gHookshotHandVtx[156], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 5, 6, 0, 2, 7, 0, 0),
     gsSP2Triangles(2, 1, 8, 0, 0, 9, 10, 0),
@@ -2397,7 +2468,7 @@ Gfx gLinkChildRightHandHoldingHookshotFarDL[] = {
     gsSP2Triangles(12, 7, 2, 0, 24, 25, 8, 0),
     gsSP2Triangles(23, 26, 27, 0, 0, 10, 28, 0),
     gsSP1Triangle(29, 9, 30, 0),
-    gsSPVertex(&hookshot_hand_vtx[187], 32, 0),
+    gsSPVertex(&gHookshotHandVtx[187], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(10, 11, 12, 0, 1, 13, 14, 0),
@@ -2406,7 +2477,7 @@ Gfx gLinkChildRightHandHoldingHookshotFarDL[] = {
     gsSP2Triangles(20, 22, 21, 0, 23, 24, 25, 0),
     gsSP2Triangles(26, 24, 23, 0, 20, 27, 22, 0),
     gsSP2Triangles(18, 28, 29, 0, 18, 30, 28, 0),
-    gsSPVertex(&hookshot_hand_vtx[218], 31, 0),
+    gsSPVertex(&gHookshotHandVtx[218], 31, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 0, 2, 0, 7, 3, 5, 0),
     gsSP2Triangles(8, 9, 4, 0, 6, 2, 10, 0),
@@ -2429,15 +2500,15 @@ Gfx gLinkChildRightHandHoldingHookshotFarDL[] = {
 
 // Hero's Bow
 
-static Vtx heros_bow_vtx[] = {
+static Vtx gHerosBowVtx[] = {
 #include "assets/objects/object_link_child/bow/heros_bow.vtx.inc"
 };
 
-static Vtx heros_bow_string_vtx[] = {
+static Vtx gHerosBowStringVtx[] = {
 #include "assets/objects/object_link_child/bow/heros_bow_string.vtx.inc"
 };
 
-static Vtx heros_bow_first_person_vtx[] = {
+static Vtx gHerosBowFirstPersonVtx[] = {
 #include "assets/objects/object_link_child/bow/heros_bow_first_person.vtx.inc"
 };
 
@@ -2453,7 +2524,7 @@ Gfx gLinkChildRightHandHoldingBowNearDL[] = {
     gsDPLoadTextureBlock(gLinkChildBowTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_bow_vtx, 32, 0),
+    gsSPVertex(&gHerosBowVtx, 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(5, 6, 3, 0, 5, 7, 2, 0),
     gsSP2Triangles(3, 0, 4, 0, 0, 3, 6, 0),
@@ -2468,7 +2539,7 @@ Gfx gLinkChildRightHandHoldingBowNearDL[] = {
     gsSP2Triangles(30, 20, 29, 0, 22, 21, 26, 0),
     gsSP2Triangles(29, 28, 26, 0, 26, 30, 29, 0),
     gsSP1Triangle(22, 27, 20, 0),
-    gsSPVertex(&heros_bow_vtx[31], 24, 0),
+    gsSPVertex(&gHerosBowVtx[31], 24, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 8, 3, 9, 0),
     gsSP2Triangles(5, 4, 7, 0, 5, 9, 3, 0),
@@ -2483,7 +2554,7 @@ Gfx gLinkChildRightHandHoldingBowNearDL[] = {
     gsDPPipeSync(),
     gsDPLoadTLUT_pal256(gSwordBowHookshotHandTLUT),
     gsDPLoadTextureBlock(gLinkChildBowDesignTex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&heros_bow_vtx[55], 32, 0),
+    gsSPVertex(&gHerosBowVtx[55], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 8, 3, 9, 0),
     gsSP2Triangles(10, 11, 12, 0, 13, 11, 10, 0),
@@ -2503,7 +2574,7 @@ Gfx gLinkChildRightHandHoldingBowNearDL[] = {
     gsSP2Triangles(12, 28, 10, 0, 5, 7, 6, 0),
     gsSP2Triangles(9, 3, 5, 0, 30, 0, 2, 0),
     gsSP2Triangles(9, 31, 8, 0, 8, 31, 6, 0),
-    gsSPVertex(&heros_bow_vtx[87], 17, 0),
+    gsSPVertex(&gHerosBowVtx[87], 17, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 5, 6, 0, 6, 7, 0, 0),
     gsSP2Triangles(8, 6, 0, 0, 2, 8, 0, 0),
@@ -2526,7 +2597,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsDPLoadTextureBlock(gLinkChildBowTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(heros_bow_first_person_vtx, 32, 0),
+    gsSPVertex(gHerosBowFirstPersonVtx, 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 4, 0),
     gsSP2Triangles(3, 1, 9, 0, 9, 1, 0, 0),
@@ -2541,7 +2612,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsSP2Triangles(26, 25, 22, 0, 23, 21, 20, 0),
     gsSP2Triangles(4, 11, 7, 0, 22, 27, 20, 0),
     gsSP2Triangles(28, 29, 30, 0, 30, 29, 31, 0),
-    gsSPVertex(&heros_bow_first_person_vtx[32], 13, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[32], 13, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(3, 1, 4, 0, 4, 1, 0, 0),
     gsSP2Triangles(5, 6, 7, 0, 5, 8, 9, 0),
@@ -2552,7 +2623,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsDPPipeSync(),
     gsDPLoadTLUT_pal256(gSwordBowHookshotHandTLUT),
     gsDPLoadTextureBlock(gLinkChildBowDesignTex, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&heros_bow_first_person_vtx[45], 32, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[45], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 3, 0, 8, 9, 10, 0),
     gsSP2Triangles(11, 12, 13, 0, 11, 14, 12, 0),
@@ -2570,7 +2641,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsSP2Triangles(31, 7, 29, 0, 4, 17, 30, 0),
     gsSP2Triangles(30, 29, 4, 0, 7, 31, 12, 0),
     gsSP2Triangles(16, 11, 13, 0, 24, 26, 25, 0),
-    gsSPVertex(&heros_bow_first_person_vtx[77], 22, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[77], 22, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
     gsSP2Triangles(0, 4, 3, 0, 0, 5, 4, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 7, 6, 0),
@@ -2584,7 +2655,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsDPPipeSync(),
     gsDPLoadTLUT_pal256(gSwordBowHookshotHandTLUT),
     gsDPLoadTextureBlock(gLinkChildHookshotHandTex, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 8, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&heros_bow_first_person_vtx[99], 32, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[99], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 2, 1, 0, 7, 2, 8, 0),
     gsSP2Triangles(7, 8, 9, 0, 10, 11, 12, 0),
@@ -2592,7 +2663,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsSP2Triangles(19, 20, 21, 0, 22, 23, 24, 0),
     gsSP2Triangles(25, 20, 26, 0, 27, 28, 29, 0),
     gsSP1Triangle(27, 25, 30, 0),
-    gsSPVertex(&heros_bow_first_person_vtx[130], 32, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[130], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 1, 0, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(7, 9, 10, 0, 11, 7, 12, 0),
@@ -2603,7 +2674,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsSP2Triangles(3, 0, 25, 0, 26, 21, 27, 0),
     gsSP2Triangles(26, 27, 28, 0, 24, 29, 30, 0),
     gsSP1Triangle(25, 0, 31, 0),
-    gsSPVertex(&heros_bow_first_person_vtx[162], 32, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[162], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(10, 11, 1, 0, 12, 13, 14, 0),
@@ -2612,7 +2683,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsSP2Triangles(23, 24, 25, 0, 23, 26, 24, 0),
     gsSP2Triangles(23, 21, 20, 0, 27, 28, 29, 0),
     gsSP2Triangles(23, 25, 30, 0, 30, 21, 23, 0),
-    gsSPVertex(&heros_bow_first_person_vtx[193], 32, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[193], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 7, 6, 0),
     gsSP2Triangles(10, 11, 12, 0, 13, 14, 12, 0),
@@ -2623,7 +2694,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsSP2Triangles(23, 24, 8, 0, 14, 17, 25, 0),
     gsSP2Triangles(26, 27, 28, 0, 11, 10, 29, 0),
     gsSP1Triangle(12, 30, 10, 0),
-    gsSPVertex(&heros_bow_first_person_vtx[224], 32, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[224], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 6, 4, 0, 6, 7, 4, 0),
     gsSP2Triangles(0, 8, 9, 0, 10, 11, 12, 0),
@@ -2632,7 +2703,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsSP2Triangles(22, 14, 23, 0, 3, 23, 14, 0),
     gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
     gsSP2Triangles(28, 29, 30, 0, 27, 14, 22, 0),
-    gsSPVertex(&heros_bow_first_person_vtx[255], 32, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[255], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 5, 6, 0, 2, 7, 0, 0),
     gsSP2Triangles(2, 1, 8, 0, 0, 9, 10, 0),
@@ -2642,7 +2713,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsSP2Triangles(12, 7, 2, 0, 24, 25, 8, 0),
     gsSP2Triangles(23, 26, 27, 0, 0, 10, 28, 0),
     gsSP1Triangle(29, 9, 30, 0),
-    gsSPVertex(&heros_bow_first_person_vtx[286], 32, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[286], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(10, 11, 12, 0, 1, 13, 14, 0),
@@ -2651,7 +2722,7 @@ Gfx gLinkChildRightHandHoldingBowFirstPersonDL[] = {
     gsSP2Triangles(20, 22, 21, 0, 23, 24, 25, 0),
     gsSP2Triangles(26, 24, 23, 0, 20, 27, 22, 0),
     gsSP2Triangles(18, 28, 29, 0, 18, 30, 28, 0),
-    gsSPVertex(&heros_bow_first_person_vtx[317], 31, 0),
+    gsSPVertex(&gHerosBowFirstPersonVtx[317], 31, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 0, 2, 0, 7, 3, 5, 0),
     gsSP2Triangles(8, 9, 4, 0, 6, 2, 10, 0),
@@ -2675,7 +2746,7 @@ Gfx gLinkChildBowStringDL[] = {
     gsDPSetCombineLERP(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, SHADE, 0, 0, 0, 1),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&heros_bow_string_vtx, 6, 0),
+    gsSPVertex(&gHerosBowStringVtx, 6, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(2, 1, 4, 0, 2, 4, 5, 0),
     gsSPEndDisplayList(),
@@ -2685,12 +2756,12 @@ Gfx gLinkChildBowStringDL[] = {
 
 // Power Bracelet
 
-static u64 gLinkChildPowerSymbolTex[] = {
-#include "assets/objects/object_link_child/other/power_symbol.ia16.inc.c"
+static Vtx gBraceletRightVtx[] = {
+#include "assets/objects/object_link_child/other/bracelet_right.vtx.inc"
 };
 
-static Vtx bracelet_right_vtx[] = {
-#include "assets/objects/object_link_child/other/bracelet_right.vtx.inc"
+static u64 gLinkChildPowerSymbolTex[] = {
+#include "assets/objects/object_link_child/other/power_symbol.ia16.inc.c"
 };
 
 Gfx gLinkChildPowerBraceletDL[] = {
@@ -2738,9 +2809,9 @@ Gfx gLinkChildPowerBraceletsDL[] = {
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&bracelet_right_vtx, 3, 0),
+    gsSPVertex(&gBraceletRightVtx, 3, 0),
     gsSP1Triangle(0, 1, 2, 0),
-    gsSPVertex(&bracelet_right_vtx[3], 14, 0),
+    gsSPVertex(&gBraceletRightVtx[3], 14, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 0, 2, 0, 6, 2, 7, 0),
     gsSP2Triangles(8, 9, 1, 0, 10, 6, 7, 0),
@@ -2757,7 +2828,7 @@ Gfx gLinkChildPowerBraceletsDL[] = {
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&bracelet_right_vtx[17], 8, 0),
+    gsSPVertex(&gBraceletRightVtx[17], 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 4, 6, 0),
     gsSPBranchList(gLinkChildPowerBraceletDL),
@@ -2767,12 +2838,12 @@ Gfx gLinkChildPowerBraceletsDL[] = {
 
 // Earring
 
-static u64 gLinkChildEarringTex[] = {
-#include "assets/objects/object_link_boy/gLinkAdultEarringTex.ia16.inc.c"
+static Vtx gEarringVtx[] = {
+#include "assets/objects/object_link_child/other/earring.vtx.inc"
 };
 
-static Vtx earring_vtx[] = {
-#include "assets/objects/object_link_child/other/earring.vtx.inc"
+static u64 gLinkChildEarringTex[] = {
+#include "assets/objects/object_link_boy/gLinkAdultEarringTex.ia16.inc.c"
 };
 
 /*Gfx gLinkChildEarringsDL[] = {
@@ -2780,7 +2851,7 @@ static Vtx earring_vtx[] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPVertex(&earring_vtx, 8, 0),
+    gsSPVertex(&gEarringVtx, 8, 0),
     gsDPPipeSync(),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
     gsDPSetTextureLUT(G_TT_NONE),
@@ -2797,7 +2868,7 @@ Gfx gLinkChildEarringsAmberDL[] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
     gsDPSetPrimColor(0, 0x80, 187, 165, 61, 255),
-    gsSPVertex(&earring_vtx, 8, 0),
+    gsSPVertex(&gEarringVtx, 8, 0),
     gsDPPipeSync(),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
     gsDPSetTextureLUT(G_TT_NONE),
@@ -2813,16 +2884,16 @@ Gfx gLinkChildEarringsAmberDL[] = {
 
 // Boots
 
-static u64 gIronBootTex[] = {
-#include "assets/objects/object_link_boy/gLinkAdultIronBootTex.ci8.tlut_gLinkAdultTLUT4.inc.c"
-};
-
-static Vtx left_iron_boot_vtx[] = {
+static Vtx gLeftIronBootVtx[] = {
 #include "assets/objects/object_link_child/boots/left_iron_boot.vtx.inc"
 };
 
-static Vtx right_iron_boot_vtx[] = {
+static Vtx gRightIronBootVtx[] = {
 #include "assets/objects/object_link_child/boots/right_iron_boot.vtx.inc"
+};
+
+static u64 gIronBootTex[] = {
+#include "assets/objects/object_link_boy/gLinkAdultIronBootTex.ci8.tlut_gLinkAdultTLUT4.inc.c"
 };
 
 static Gfx gLeftIronBootDL[] = {
@@ -2831,14 +2902,14 @@ static Gfx gLeftIronBootDL[] = {
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPLoadTextureBlock(gIronBootTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadTLUT_pal256(master_sword_tlut_tex),
+    gsDPLoadTLUT_pal256(gMasterSwordTLUT),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
     gsSPDisplayList(0x0C000000),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&left_iron_boot_vtx[0], 32, 0),
+    gsSPVertex(&gLeftIronBootVtx[0], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 1, 3, 0),
     gsSP2Triangles(2, 3, 4, 0, 5, 6, 7, 0),
     gsSP2Triangles(5, 7, 8, 0, 4, 9, 10, 0),
@@ -2851,7 +2922,7 @@ static Gfx gLeftIronBootDL[] = {
     gsSP2Triangles(23, 26, 24, 0, 27, 28, 29, 0),
     gsSP2Triangles(29, 30, 31, 0, 29, 31, 27, 0),
     gsSP1Triangle(25, 19, 21, 0),
-    gsSPVertex(&left_iron_boot_vtx[32], 11, 0),
+    gsSPVertex(&gLeftIronBootVtx[32], 11, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 3, 7, 0, 0),
     gsSP1Triangle(8, 9, 10, 0),
@@ -2864,14 +2935,14 @@ static Gfx gRightIronBootDL[] = {
     gsDPSetTextureLUT(G_TT_RGBA16),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsDPLoadTextureBlock(gIronBootTex, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPLoadTLUT_pal256(master_sword_tlut_tex),
+    gsDPLoadTLUT_pal256(gMasterSwordTLUT),
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
     gsSPDisplayList(0x0C000000),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&right_iron_boot_vtx[0], 32, 0),
+    gsSPVertex(&gRightIronBootVtx[0], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 0, 0),
     gsSP2Triangles(4, 3, 0, 0, 5, 6, 7, 0),
     gsSP2Triangles(5, 7, 8, 0, 9, 3, 4, 0),
@@ -2884,7 +2955,7 @@ static Gfx gRightIronBootDL[] = {
     gsSP2Triangles(20, 23, 21, 0, 26, 27, 28, 0),
     gsSP2Triangles(28, 29, 30, 0, 28, 30, 26, 0),
     gsSP1Triangle(18, 17, 22, 0),
-    gsSPVertex(&right_iron_boot_vtx[31], 13, 0),
+    gsSPVertex(&gRightIronBootVtx[31], 13, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
     gsSP1Triangle(10, 11, 12, 0),
@@ -2900,6 +2971,14 @@ Gfx gLinkChildIronBootsDL[] = {
 
 // Hover Boots
 
+static Vtx gLeftHoverBootVtx[] = {
+#include "assets/objects/object_link_child/boots/left_hover_boot.vtx.inc"
+};
+
+static Vtx gRightHoverBootVtx[] = {
+#include "assets/objects/object_link_child/boots/right_hover_boot.vtx.inc"
+};
+
 static u64 gHoverBootsHeelTex[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHoverBootsHeelTex.rgba16.inc.c"
 };
@@ -2910,14 +2989,6 @@ static u64 gHoverBootsJetTex[] = {
 
 static u64 gHoverBootsFeatherTex[] = {
 #include "assets/objects/object_link_boy/gLinkAdultHoverBootsFeatherTex.rgba16.inc.c"
-};
-
-static Vtx left_hover_boot_vtx[] = {
-#include "assets/objects/object_link_child/boots/left_hover_boot.vtx.inc"
-};
-
-static Vtx right_hover_boot_vtx[] = {
-#include "assets/objects/object_link_child/boots/right_hover_boot.vtx.inc"
 };
 
 static Gfx gLeftHoverBootDL[65] = {
@@ -2932,7 +3003,7 @@ static Gfx gLeftHoverBootDL[65] = {
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
     gsSPDisplayList(0x0C000000),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&left_hover_boot_vtx[0], 32, 0),
+    gsSPVertex(&gLeftHoverBootVtx[0], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(10, 11, 12, 0, 8, 13, 9, 0),
@@ -2940,13 +3011,13 @@ static Gfx gLeftHoverBootDL[65] = {
     gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
     gsSP2Triangles(21, 23, 24, 0, 25, 26, 5, 0),
     gsSP2Triangles(25, 5, 4, 0, 27, 28, 29, 0),
-    gsSPVertex(&left_hover_boot_vtx[30], 12, 0),
+    gsSPVertex(&gLeftHoverBootVtx[30], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
     gsSP2Triangles(9, 10, 11, 0, 9, 11, 6, 0),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gHoverBootsJetTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&left_hover_boot_vtx[42], 27, 0),
+    gsSPVertex(&gLeftHoverBootVtx[42], 27, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 3, 6, 0),
     gsSP2Triangles(10, 11, 12, 0, 11, 13, 14, 0),
@@ -2964,7 +3035,7 @@ static Gfx gLeftHoverBootDL[65] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
     gsSPClearGeometryMode(G_CULL_BOTH),
-    gsSPVertex(&left_hover_boot_vtx[69], 8, 0),
+    gsSPVertex(&gLeftHoverBootVtx[69], 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSPEndDisplayList(),
@@ -2982,7 +3053,7 @@ static Gfx gRightHoverBootDL[65] = {
     gsSPSetGeometryMode(G_FOG | G_LIGHTING),
     gsSPDisplayList(0x0C000000),
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
-    gsSPVertex(&right_hover_boot_vtx[0], 32, 0),
+    gsSPVertex(&gRightHoverBootVtx[0], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
     gsSP2Triangles(4, 5, 6, 0, 7, 8, 9, 0),
     gsSP2Triangles(10, 11, 12, 0, 7, 13, 8, 0),
@@ -2990,13 +3061,13 @@ static Gfx gRightHoverBootDL[65] = {
     gsSP2Triangles(18, 19, 20, 0, 21, 22, 23, 0),
     gsSP2Triangles(24, 21, 23, 0, 5, 25, 26, 0),
     gsSP2Triangles(6, 5, 26, 0, 27, 28, 29, 0),
-    gsSPVertex(&right_hover_boot_vtx[30], 12, 0),
+    gsSPVertex(&gRightHoverBootVtx[30], 12, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 9, 6, 8, 0),
     gsSP2Triangles(10, 11, 9, 0, 8, 10, 9, 0),
     gsDPPipeSync(),
     gsDPLoadTextureBlock(gHoverBootsJetTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&right_hover_boot_vtx[42], 27, 0),
+    gsSPVertex(&gRightHoverBootVtx[42], 27, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 8, 5, 9, 0),
     gsSP2Triangles(10, 11, 12, 0, 13, 14, 11, 0),
@@ -3014,7 +3085,7 @@ static Gfx gRightHoverBootDL[65] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
     gsSPClearGeometryMode(G_CULL_BOTH),
-    gsSPVertex(&right_hover_boot_vtx[69], 8, 0),
+    gsSPVertex(&gRightHoverBootVtx[69], 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSPEndDisplayList(),
@@ -3029,16 +3100,16 @@ Gfx gLinkChildHoverBootsDL[] = {
 
 // Pegasus Boots
 
-static u64 gPegasusBootsFeatherTex[] = {
-#include "assets/objects/object_link_child/boots/pegasus_boots_feather.rgba16.inc.c"
-};
-
-static Vtx left_pegasus_boot_vtx[] = {
+static Vtx gLeftPegasusBootVtx[] = {
 #include "assets/objects/object_link_child/boots/left_pegasus_boot.vtx.inc"
 };
 
-static Vtx right_pegasus_boot_vtx[] = {
+static Vtx gRightPegasusBootVtx[] = {
 #include "assets/objects/object_link_child/boots/right_pegasus_boot.vtx.inc"
+};
+
+static u64 gPegasusBootsFeatherTex[] = {
+#include "assets/objects/object_link_child/boots/pegasus_boots_feather.rgba16.inc.c"
 };
 
 static Gfx gLeftPegasusBootDL[] = {
@@ -3053,7 +3124,7 @@ static Gfx gLeftPegasusBootDL[] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
     gsSPClearGeometryMode(G_CULL_BOTH),
-    gsSPVertex(left_pegasus_boot_vtx, 8, 0),
+    gsSPVertex(gLeftPegasusBootVtx, 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSPEndDisplayList(),
@@ -3071,7 +3142,7 @@ static Gfx gRightPegasusBootDL[] = {
     gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
     gsSPClearGeometryMode(G_CULL_BOTH),
-    gsSPVertex(right_pegasus_boot_vtx, 8, 0),
+    gsSPVertex(gRightPegasusBootVtx, 8, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
     gsSPEndDisplayList(),
@@ -3086,12 +3157,12 @@ Gfx gLinkChildPegasusBootsDL[] = {
 
 // Amulet of Energy
 
-static u64 gLinkChildAmuletOfEnergyTex[] = {
-#include "assets/objects/object_link_child/other/amulet_of_energy.rgba16.inc.c"
+static Vtx gAmuletOfEnergyVtx[] = {
+#include "assets/objects/object_link_child/other/amulet_of_energy.vtx.inc"
 };
 
-static Vtx amulet_of_energy_vtx[] = {
-#include "assets/objects/object_link_child/other/amulet_of_energy.vtx.inc"
+static u64 gLinkChildAmuletOfEnergyTex[] = {
+#include "assets/objects/object_link_child/other/amulet_of_energy.rgba16.inc.c"
 };
 
 Gfx gLinkChildAmuletOfEnergyDL[] = {
@@ -3102,7 +3173,7 @@ Gfx gLinkChildAmuletOfEnergyDL[] = {
     gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
     gsDPLoadTextureBlock(gLinkChildAmuletOfEnergyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPVertex(&amulet_of_energy_vtx, 15, 0),
+    gsSPVertex(&gAmuletOfEnergyVtx, 15, 0),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsDPPipeSync(),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
@@ -3119,12 +3190,12 @@ Gfx gLinkChildAmuletOfEnergyDL[] = {
 
 // Great Fairy's Sword
 
-static u64 gGreatFairysSwordDesignTex[] = {
-#include "assets/objects/object_link_child/swords/great_fairys_sword_Design_tex.rgba16.inc.c"
+static Vtx gGreatFairysSwordVtx[] = {
+#include "assets/objects/object_link_child/swords/great_fairys_sword.vtx.inc"
 };
 
-static Vtx great_fairys_sword_vtx[] = {
-#include "assets/objects/object_link_child/swords/great_fairys_sword.vtx.inc"
+static u64 gGreatFairysSwordDesignTex[] = {
+#include "assets/objects/object_link_child/swords/great_fairys_sword_design_tex.rgba16.inc.c"
 };
 
 Gfx gLinkChildGreatFairysSwordDL[] = {
@@ -3136,7 +3207,7 @@ Gfx gLinkChildGreatFairysSwordDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 3, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&great_fairys_sword_vtx, 18, 0),
+    gsSPVertex(&gGreatFairysSwordVtx, 18, 0),
     gsSP2Triangles(0, 1, 2, 0, 2, 3, 4, 0),
     gsSP2Triangles(5, 2, 4, 0, 0, 2, 5, 0),
     gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
@@ -3154,7 +3225,7 @@ Gfx gLinkChildGreatFairysSwordDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 3, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&great_fairys_sword_vtx[18], 25, 0),
+    gsSPVertex(&gGreatFairysSwordVtx[18], 25, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 1, 0, 0),
     gsSP2Triangles(4, 3, 0, 0, 5, 6, 7, 0),
     gsSP2Triangles(6, 8, 7, 0, 9, 7, 8, 0),
@@ -3174,7 +3245,7 @@ Gfx gLinkChildGreatFairysSwordDL[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(object_link_child_Tex_01D340, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 3, 1),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_SHADING_SMOOTH),
-    gsSPVertex(&great_fairys_sword_vtx[43], 25, 0),
+    gsSPVertex(&gGreatFairysSwordVtx[43], 25, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
     gsSP2Triangles(4, 5, 6, 0, 4, 7, 5, 0),
     gsSP2Triangles(4, 8, 7, 0, 7, 8, 9, 0),
@@ -3198,7 +3269,7 @@ Gfx gLinkChildGreatFairysSwordDL[] = {
     gsDPLoadTextureBlock(gGreatFairysSwordDesignTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 64, 32, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 6, 5, G_TX_NOLOD, G_TX_NOLOD),
     gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&great_fairys_sword_vtx[68], 32, 0),
+    gsSPVertex(&gGreatFairysSwordVtx[68], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
     gsSP2Triangles(3, 6, 4, 0, 7, 8, 9, 0),
     gsSP2Triangles(5, 4, 10, 0, 4, 11, 10, 0),
@@ -3211,7 +3282,7 @@ Gfx gLinkChildGreatFairysSwordDL[] = {
     gsSP2Triangles(24, 25, 26, 0, 27, 28, 29, 0),
     gsSP2Triangles(24, 30, 25, 0, 29, 30, 27, 0),
     gsSP1Triangle(31, 28, 27, 0),
-    gsSPVertex(&great_fairys_sword_vtx[100], 32, 0),
+    gsSPVertex(&gGreatFairysSwordVtx[100], 32, 0),
     gsSP2Triangles(0, 1, 2, 0, 3, 4, 1, 0),
     gsSP2Triangles(1, 4, 2, 0, 5, 6, 7, 0),
     gsSP2Triangles(7, 0, 5, 0, 8, 6, 9, 0),

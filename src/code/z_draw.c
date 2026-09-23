@@ -89,6 +89,7 @@
 #include "assets/objects/object_gi_shield_3_mm/object_gi_shield_3_mm.h"
 #include "assets/objects/object_gi_shield_2_mm/object_gi_shield_2_mm.h"
 #include "assets/objects/object_gi_sword_1_mm/object_gi_sword_1_mm.h"
+#include "assets/objects/object_gi_sword_2_mm/object_gi_sword_2_mm.h"
 #include "assets/objects/object_gi_sword_3_mm/object_gi_sword_3_mm.h"
 #include "assets/objects/object_gi_hookshot_mm/object_gi_hookshot_mm.h"
 #include "assets/objects/object_gi_heros_bow/object_gi_heros_bow.h"
@@ -398,6 +399,7 @@ DrawItemTableEntry sDrawItemTable[] = {
     { GetItem_DrawOpa0Xlu1,     { gGiHerosShieldEmblemDL, gGiHerosShieldDL } },                                                                                    // GID_SHIELD_HEROS
     { GetItem_DrawOpa01,        { gGiMetalShieldFrameDL, gGiMetalShieldSymbolDL } },                                                                               // GID_SHIELD_METAL
     { GetItem_DrawOpa0Xlu1,     { gGiHerosSwordBladeHiltDL, gGiHerosSwordGuardDL } },                                                                              // GID_SWORD_HEROS
+    { GetItem_DrawOpa0,         { gGiRazorSwordDL } },                                                                                                             // GID_SWORD_RAZOR
     { GetItem_DrawOpa0,         { gGiSilverSwordDL } },                                                                                                            // GID_SWORD_SILVER
     { GetItem_DrawOpa0,         { gGiGildedSwordDL } },                                                                                                            // GID_SWORD_GILDED
     { GetItem_DrawOpa1023,      { gGiTunicCollarDL, gGiSpiritCollarColorDL, gGiSpiritTunicColorDL, gGiTunicDL } },                                                 // GID_TUNIC_SPIRIT

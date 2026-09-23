@@ -49,7 +49,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Nukumnehtar:** Cane of Byrna/Somaria item icon
 - **OoT Randomizer:** Key chest textures
 - **SilntRavn:** 6 Save Slots layout
-- **Skijer:** custom items concepts & models (Cane of Byrna/Somaria, Pegasus Boots)
+- **Skijer:** custom items concepts & models (Cane of Byrna/Somaria, Pegasus Boots, Four Sword)
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
 - **thinedave & Aegiker:** Energy (stamina) wheel

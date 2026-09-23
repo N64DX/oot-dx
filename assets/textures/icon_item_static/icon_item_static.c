@@ -250,8 +250,8 @@ u64 gItemIconSwordBiggoronTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32
 #include "assets/textures/icon_item_static/gItemIconSwordBiggoronTex.rgba32.inc.c"
 };
 
-u64 gItemIconSwordHerosTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
-#include "assets/textures/icon_item_static/gItemIconSwordKokiriMMTex.rgba32.inc.c"
+u64 gItemIconSwordRazorTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconSwordRazorTex.rgba32.inc.c"
 };
 
 u64 gItemIconShieldDekuTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
@@ -362,6 +362,10 @@ u64 gItemIconFishingPoleTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)]
 #include "assets/textures/icon_item_static/gItemIconFishingPoleTex.rgba32.inc.c"
 };
 
+u64 gItemIconSwordHerosTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconSwordKokiriMMTex.rgba32.inc.c"
+};
+
 u64 gItemIconBulletBag30Tex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
 #include "assets/textures/icon_item_static/gItemIconBulletBag30Tex.rgba32.inc.c"
 };
@@ -446,8 +450,12 @@ u64 gItemIconShieldMirrorMMTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 3
 #include "assets/textures/icon_item_static/gItemIconShieldMirrorMMTex.rgba32.inc.c"
 };
 
-u64 gItemIconSwordRazorTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
-#include "assets/textures/icon_item_static/gItemIconSwordRazorTex.rgba32.inc.c"
+u64 gItemIconSwordFourTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconSwordFourTex.rgba32.inc.c"
+};
+
+u64 gItemIconSwordFourDullTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_static/gItemIconSwordFourDullTex.rgba32.inc.c"
 };
 
 u64 gItemIconSwordSilverTex[TEX_LEN(u64, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 32)] = {
