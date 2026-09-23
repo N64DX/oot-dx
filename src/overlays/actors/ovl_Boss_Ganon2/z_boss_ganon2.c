@@ -95,7 +95,8 @@ static Gfx gGanonFireRingDL[36];
 static Gfx gGanonZeldaMagicDL[33];
 static Gfx gGanonMasterSwordShadowDL[16];
 static Gfx gGanonMasterSwordDL[122];
-static Gfx gGanonRazorSwordDL[222];
+static Gfx gGanonFourSwordDL[5];
+static Gfx gGanonFourSwordDullDL[10];
 
 ActorProfile Boss_Ganon2_Profile = {
     /**/ ACTOR_BOSS_GANON2,
@@ -471,7 +472,7 @@ void BossGanon2_Init(Actor* thisx, PlayState* play) {
         sEffects[i].type = 0;
     }
 
-    isHyper = thisx->params == GANON_HYPER;
+    isHyper = thisx->params == GANON2_HYPER;
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
     this->actor.colChkInfo.health = BossGanon2_HealthMultiply(30);
     Collider_InitJntSph(play, &this->unk_424);
@@ -3345,7 +3346,6 @@ void BossGanon2_DrawEffects(PlayState* play) {
             f32 temp_f0;
             f32 angle;
             s32 pad;
-            u8 isRazorSword = IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER);
 
             Gfx_SetupDL_25Xlu(play->state.gfxCtx);
             spA0.x = play->envCtx.dirLight1.params.dir.x;
@@ -3353,23 +3353,19 @@ void BossGanon2_DrawEffects(PlayState* play) {
             spA0.z = play->envCtx.dirLight1.params.dir.z;
             func_8002EABC(&effect->position, &play->view.eye, &spA0, play->state.gfxCtx);
             Matrix_Translate(effect->position.x, effect->position.y, effect->position.z, MTXMODE_NEW);
-
-            if (isRazorSword) {
-                Matrix_Scale(0.02f, 0.02f, 0.02f, MTXMODE_APPLY);
-            } else {
-                Matrix_Scale(0.03f, 0.03f, 0.03f, MTXMODE_APPLY);
-            }
-
+            Matrix_Scale(0.03f, 0.03f, 0.03f, MTXMODE_APPLY);
             Matrix_RotateY(effect->unk_38.z, MTXMODE_APPLY);
             Matrix_RotateX(effect->unk_38.y, MTXMODE_APPLY);
             MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_boss_ganon2.c", 6116);
             gSPSegment(POLY_OPA_DISP++, 0x08,
                        Gfx_TexScroll(play->state.gfxCtx, 0, 0 - (play->gameplayFrames & 0x7F), 32, 32));
 
-            if (isRazorSword) {
-                gSPDisplayList(POLY_OPA_DISP++, gGanonRazorSwordDL);
-            } else {
+            if (!IS_CHILD_QUEST_AS_CHILD) {
                 gSPDisplayList(POLY_OPA_DISP++, gGanonMasterSwordDL);
+            } else if (CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) {
+                gSPDisplayList(POLY_OPA_DISP++, gGanonFourSwordDL);
+            } else {
+                gSPDisplayList(POLY_OPA_DISP++, gGanonFourSwordDullDL);
             }
 
             if ((play->envCtx.lightSetting == 1) || (play->envCtx.lightSetting == 2)) {
@@ -3377,7 +3373,7 @@ void BossGanon2_DrawEffects(PlayState* play) {
                 angle = M_PI / 5.0f;
             } else {
                 alpha = 100;
-                angle = M_PI / (isRazorSword ? 5.0f : 2.0f);
+                angle = M_PI / 2.0f;
             }
             gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 0, 0, 0, alpha);
             temp_f0 = effect->position.y - 1098.0f;
@@ -3694,26 +3690,137 @@ static Gfx gGanonMasterSwordDL[122] = {
 #include "assets/overlays/ovl_Boss_Ganon2/gGanonMasterSwordDL.inc.c"
 };
 
-static u64 gSwordMetalTex[] = {
-#include "assets/objects/object_link_child/swords/razor_sword_metal.i8.inc.c"
+static Vtx gFourSwordHandleVtx[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleVtx.inc.c"
 };
 
-static u64 gRazorSwordHandleDesignTex[] = {
-#include "assets/objects/object_link_child/swords/razor_sword_handle_design.rgba16.inc.c"
+static Vtx gFourSwordBladeVtx[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordBladeVtx.inc.c"
 };
 
-static u64 gRazorSwordHandleGripTex[] = {
-#include "assets/objects/object_link_child/swords/razor_sword_handle_grip.rgba16.inc.c"
+static u64 gFourSwordHandleTex1[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex1.ci8.inc.c"
 };
 
-static Vtx razor_sword_handle_vtx[] = {
-#include "assets/overlays/ovl_Boss_Ganon2/razor_sword_handle.vtx.inc"
+static u64 gFourSwordHandleTLUT1[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex1.tlut.rgba16.inc.c"
 };
 
-static Vtx razor_sword_blade_vtx[] = {
-#include "assets/overlays/ovl_Boss_Ganon2/razor_sword_blade.vtx.inc"
+static u64 gFourSwordDullHandleTex1[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordDullHandleTex1.ci8.inc.c"
 };
 
-static Gfx gGanonRazorSwordDL[222] = {
-#include "assets/overlays/ovl_Boss_Ganon2/gGanonRazorSwordDL.inc.c"
+static u64 gFourSwordDullHandleTLUT1[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordDullHandleTex1.tlut.rgba16.inc.c"
+};
+
+static u64 gFourSwordHandleTex2[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex2.i4.inc.c"
+};
+
+static u64 gFourSwordHandleTex3[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex3.ci8.inc.c"
+};
+
+static u64 gFourSwordHandleTLUT3[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex3.tlut.rgba16.inc.c"
+};
+
+static u64 gFourSwordDullHandleTex3[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordDullHandleTex3.ci8.inc.c"
+};
+
+static u64 gFourSwordDullHandleTLUT3[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordDullHandleTex3.tlut.rgba16.inc.c"
+};
+
+static u64 gFourSwordHandleTex4[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex4.ci8.inc.c"
+};
+
+static u64 gFourSwordHandleTLUT4[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex4.tlut.rgba16.inc.c"
+};
+
+static u64 gFourSwordHandleTex5[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex5.ci8.inc.c"
+};
+
+static u64 gFourSwordHandleTLUT5[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleTex5.tlut.rgba16.inc.c"
+};
+
+static u64 gFourSwordBladeTex[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordBladeTex.ci8.inc.c"
+};
+
+static u64 gFourSwordBladeTLUT[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordBladeTex.tlut.rgba16.inc.c"
+};
+
+static const Gfx gFourSwordHandle1DL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandle1DL.inc.c"
+};
+
+static const Gfx gFourSwordHandle2DL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandle2DL.inc.c"
+};
+
+static const Gfx gFourSwordHandle3DL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandle3DL.inc.c"
+};
+
+static const Gfx gFourSwordHandle4DL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandle4DL.inc.c"
+};
+
+static const Gfx gFourSwordHandle5DL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandle5DL.inc.c"
+};
+
+static const Gfx gFourSwordHandleDL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordHandleDL.inc.c"
+};
+
+static const Gfx gFourSwordDullHandleDL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordDullHandleDL.inc.c"
+};
+
+static const Gfx gFourSwordBladeDL[] = {
+#include "assets/objects/object_link_child/swords/gFourSwordBladeDL.inc.c"
+};
+
+static Mtx gFourSwordDullBladeScaleMtx = gdSPDefMtx(
+    0.7, 0, 0, 216,
+      0, 1, 0,   0,
+      0, 0, 1,   0,
+      0, 0, 0,   1
+);
+
+static Mtx gFourSwordMtx = gdSPDefMtx(
+       0, 0.75,    0,   0,
+   -0.75,    0,    0, 800,
+       0,    0, 0.75,   0,
+       0,    0,    0,   1
+);
+
+static Gfx gGanonFourSwordDullDL[10] = {
+    gsSPMatrix(&gFourSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsSPDisplayList(gFourSwordDullHandleDL),
+    gsSPMatrix(&gFourSwordDullBladeScaleMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
+    gsDPSetPrimColor(0, 0, 255, 255, 255, 150),
+    gsSPDisplayList(gFourSwordBladeDL),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
+    gsSPEndDisplayList(),
+};
+
+static Gfx gGanonFourSwordDL[5] = {
+    gsSPMatrix(&gFourSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
+    gsSPDisplayList(gFourSwordHandleDL),
+    gsSPDisplayList(gFourSwordBladeDL),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
+    gsSPEndDisplayList(),
 };
