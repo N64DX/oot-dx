@@ -593,6 +593,7 @@ u8 EnBox_IsItem(s16 item) {
         case GI_SWORD_KNIFE:
         case GI_SWORD_BIGGORON:
         case GI_SWORD_HEROS:
+        case GI_SWORD_RAZOR:
         case GI_SHIELD_DEKU:
         case GI_SHIELD_HYLIAN:
         case GI_SHIELD_MIRROR:

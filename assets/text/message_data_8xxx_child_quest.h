@@ -1443,7 +1443,7 @@ SHIFT(45) "それが　時の勇者…"
 ),
 MSG(
 UNSKIPPABLE "As I see you standing there\n"
-"holding the mythical " COLOR(RED) "Razor\n"
+"holding the mythical " COLOR(RED) "Goddess\n"
 "Sword" COLOR(DEFAULT) ", you really do look like the \n"
 "legendary Hero of Time..."
 ),
@@ -2636,7 +2636,7 @@ DEFINE_MESSAGE(0x8201, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 UNSKIPPABLE "Do not be startled that your\n"
-"legendary Razor Sword is gone..."
+"legendary Goddess Sword is gone..."
 BOX_BREAK
 
 UNSKIPPABLE "It is time..."
@@ -2671,7 +2671,7 @@ MSG()
 DEFINE_MESSAGE(0x8203, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_MASTER) QUICKTEXT_ENABLE "The " COLOR(RED) "Razor Sword" COLOR(DEFAULT) " has awoken\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_MASTER) QUICKTEXT_ENABLE "The " COLOR(RED) "Goddess Sword" COLOR(DEFAULT) " has awoken\n"
 "as the " COLOR(RED) "Master Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Seek it out and reclaim it in\n"
 "the Woodfall Temple sanctum!"
@@ -3664,8 +3664,9 @@ MSG(
 "Only then I allow you into the mines."
 BOX_BREAK
 
-"Show me the lost " COLOR(RED) "Hero's Sword" COLOR(DEFAULT) ",\n"
-"a " COLOR(RED) "Silver Sword" COLOR(DEFAULT) " and a " COLOR(RED) "Hero's Shield" COLOR(DEFAULT) "." EVENT
+"Show me the proof of cleansing our\n"
+COLOR(ADJUSTABLE) "shrine atop the cliffs" COLOR(DEFAULT) ", and bring me\n"
+"a " COLOR(RED) "Silver Sword" COLOR(DEFAULT) "and a " COLOR(RED) "Hero's Shield" COLOR(DEFAULT) "." EVENT
 ),
 MSG(),
 MSG()

@@ -399,7 +399,6 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
     this->playerHit = false;
     this->alpha = 255;
     this->switchFlag = PARAMS_GET_U(thisx->params, 8, 8);
-    this->reward = thisx->params & 0xFF;
 
     EnHammergeist_ChangeFace(this, HAMMERGEIST_FACE_NORMAL);
 

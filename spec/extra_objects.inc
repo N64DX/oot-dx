@@ -293,6 +293,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_gi_sword_2_mm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_sword_2_mm/object_gi_sword_2_mm.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_sword_3_mm"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_sword_3_mm/object_gi_sword_3_mm.o"

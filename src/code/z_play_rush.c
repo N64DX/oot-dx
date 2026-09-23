@@ -94,8 +94,21 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[QUEST_MEDALLION_SPIRIT];
                 gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_TUNIC, EQUIP_INV_TUNIC_SPIRIT);
                 gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_LIGHT];
-                if (!IS_CHILD_QUEST)
-                    gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
+                if (IS_CHILD_QUEST) {
+                    gSaveContext.save.info.inventory.items[SLOT_FEATHER]      = ITEM_GOLDEN_FEATHER;
+                    gSaveContext.save.info.inventory.items[SLOT_SWORD_FAIRYS] = ITEM_SWORD_FAIRYS;
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_AMULET_OF_ENERGY];
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_MASTER];
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ENHANCED_SPIN];
+                    for (i=0; i<4; i++) {
+                        if (gSaveContext.save.info.equips.buttonItems[i] == ITEM_ROCS_FEATHER) {
+                            gSaveContext.save.info.equips.buttonItems[i] = ITEM_GOLDEN_FEATHER;
+                            Interface_LoadItemIcon1(this, i);
+                        }
+                        if (DPAD_BUTTON(i) == SLOT_FEATHER)
+                            Interface_LoadItemIcon1(this, i+4);
+                    }
+                } else gSaveContext.save.info.inventory.items[SLOT_ARROW_LIGHT] = ITEM_ARROW_LIGHT;
                 Inventory_ChangeUpgrade(UPG_STRENGTH, 3);
                 break;
 
@@ -192,6 +205,8 @@ void Play_SetDungeonRushProgress(PlayState* this) {
             case ENTR_SHADOW_TEMPLE_BOSS_0:
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[QUEST_MEDALLION_WATER];
                 gSaveContext.save.info.inventory.items[SLOT_LENS_OF_TRUTH] = ITEM_LENS_OF_TRUTH;
+                if (IS_CHILD_QUEST)
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_RAZOR);
                 break;
 
             case ENTR_WATER_TEMPLE_0:
@@ -217,8 +232,6 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ARROW_FIRE];
                 if (gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] == ITEM_NONE)
                     gSaveContext.save.info.inventory.items[SLOT_BOTTLE_3] = ITEM_BOTTLE_FAIRY;
-                if (IS_CHILD_QUEST)
-                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS);
                 else gSaveContext.save.info.inventory.items[SLOT_ARROW_FIRE] = ITEM_ARROW_FIRE;
                 break;
 
@@ -258,6 +271,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
                 gSaveContext.save.info.inventory.questItems |= gBitFlags[QUEST_GORON_RUBY];
                 gSaveContext.save.info.inventory.items[SLOT_DINS_FIRE] = ITEM_DINS_FIRE;
                 gSaveContext.save.info.inventory.items[SLOT_FARORES_WIND] = ITEM_FARORES_WIND;
+                gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
                 gSaveContext.save.info.playerData.isMagicAcquired = true;
                 gSaveContext.magicFillTarget = gSaveContext.save.info.playerData.magic = 0x30;
                 gSaveContext.magicCapacity = gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = 0;
