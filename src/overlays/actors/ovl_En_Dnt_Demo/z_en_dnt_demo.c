@@ -182,7 +182,14 @@ void EnDntDemo_Judge(EnDntDemo* this, PlayState* play) {
                     }
                     FALLTHROUGH;
                 case PLAYER_MASK_TRUTH:
-                    if (!GET_ITEMGETINF(ITEMGETINF_FOREST_STAGE_NUT_UPGRADE) &&
+                    if ((
+					        // Original check, always false if Poacher's Saw has been obtained
+					        !GET_ITEMGETINF(ITEMGETINF_FOREST_STAGE_NUT_UPGRADE) ||
+					        // Give first upgrade if none has been received yet
+					        CUR_UPG_VALUE(UPG_DEKU_NUTS) <= 1 ||
+					        // Hand out the second upgrade if the first one was bought from the Deku Salesman
+					        (CUR_UPG_VALUE(UPG_DEKU_NUTS) == 2 && GET_INFTABLE(INFTABLE_HAS_DEKU_NUT_UPGRADE))
+                        ) &&
                         (Player_GetMask(play) != PLAYER_MASK_SKULL)) {
                         SFX_PLAY_CENTERED(NA_SE_SY_TRE_BOX_APPEAR);
                         this->prize = DNT_PRIZE_NUTS;
