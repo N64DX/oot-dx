@@ -24,6 +24,7 @@
 #include "save.h"
 
 #include "assets/objects/object_torch2/object_torch2.h"
+#include "assets/objects/object_torch2/object_torch2_extra.h"
 
 #pragma increment_block_number "ique-cn:128"
 
@@ -117,10 +118,10 @@ void EnTorch2_Init(Actor* thisx, PlayState* play2) {
 
     sInput.cur.button = sInput.press.button = sInput.rel.button = 0;
     sInput.cur.stick_x = sInput.cur.stick_y = 0;
-    this->currentShield = PLAYER_SHIELD_HYLIAN;
+    this->currentShield = IS_CHILD_QUEST ? PLAYER_SHIELD_HEROS : PLAYER_SHIELD_HYLIAN;
     this->heldItemAction = this->heldItemId = PLAYER_IA_SWORD_MASTER;
     Player_SetModelGroup(this, PLAYER_MODELGROUP_SWORD_AND_SHIELD);
-    play->playerInit(this, play, &gDarkLinkSkel);
+    play->playerInit(this, play, IS_CHILD_QUEST ? &gDarkYoungLinkSkel: &gDarkLinkSkel);
     this->actor.naviEnemyId = NAVI_ENEMY_DARK_LINK;
     this->cylinder.base.acFlags = AC_ON | AC_TYPE_PLAYER;
     this->meleeWeaponQuads[0].base.atFlags = this->meleeWeaponQuads[1].base.atFlags = AT_ON | AT_TYPE_ENEMY;
@@ -355,7 +356,7 @@ void EnTorch2_Update(Actor* thisx, PlayState* play2) {
                             EnTorch2_SwingSword(play, input, this);
                             sSwordJumpState++;
                         } else if (sSwordJumpTimer == 19) {
-                            func_800F4190(&this->actor.projectedPos, NA_SE_VO_LI_AUTO_JUMP);
+                            func_800F4190(&this->actor.projectedPos, IS_CHILD_QUEST ? NA_SE_VO_LI_AUTO_JUMP_KID : NA_SE_VO_LI_AUTO_JUMP);
                         }
                     }
                 } else {

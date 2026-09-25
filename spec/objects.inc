@@ -327,6 +327,7 @@ beginseg
     name "object_torch2"
     compress
     include "$(BUILD_DIR)/assets/objects/object_torch2/object_torch2.o"
+    include "$(BUILD_DIR)/assets/objects/object_torch2/object_torch2_extra.o"
     number 6
 endseg
 

@@ -1268,9 +1268,10 @@ void Player_DrawImpl(PlayState* play, void** skeleton, Vec3s* jointTable, s32 dL
 
         if (LINK_IS_CHILD) {
             u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
+            u8 ownSheathType = (overrideLimbDraw == Player_OverrideLimbDrawGameplayDefault) ? ((Player*)data)->sheathType : sheathType;
 
             if (play->pauseCtx.state <= PAUSE_STATE_WAIT_BG_PRERENDER || play->pauseCtx.state == PAUSE_STATE_GAME_OVER_START || play->pauseCtx.state == PAUSE_STATE_GAME_OVER_WAIT_BG_PRERENDER || shield == EQUIP_VALUE_SHIELD_HYLIAN)
-                if ((shield > PLAYER_SHIELD_NONE && sheathType == PLAYER_MODELTYPE_SHEATH_18) || (shield == EQUIP_VALUE_SHIELD_HYLIAN && sheathType == PLAYER_MODELTYPE_SHEATH_19 && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD)) {
+                if ((shield > PLAYER_SHIELD_NONE && ownSheathType == PLAYER_MODELTYPE_SHEATH_18) || (shield == EQUIP_VALUE_SHIELD_HYLIAN && ownSheathType == PLAYER_MODELTYPE_SHEATH_19 && sLeftHandType == PLAYER_MODELTYPE_LH_SWORD)) {
                     gDPPipeSync(POLY_OPA_DISP++);
                     gSPMatrix(POLY_OPA_DISP++, 0x0D000400, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
                     gSPDisplayList(POLY_OPA_DISP++, gPlayerShields[IS_YOUNG_LINK][shield - 1 + Player_GetShieldSkin()]);
