@@ -2015,6 +2015,8 @@ void Player_RequestRumble(Player* this, s32 sourceStrength, s32 duration, s32 de
 void Player_PlayVoiceSfx(Player* this, u16 sfxId) {
     if (this->actor.category == ACTORCAT_PLAYER) {
         Player_PlaySfx(this, sfxId + this->ageProperties->unk_92);
+    } else if (IS_CHILD_QUEST) {
+        func_800F4190(&this->actor.projectedPos, sfxId + 0x20);
     } else {
         func_800F4190(&this->actor.projectedPos, sfxId);
     }
