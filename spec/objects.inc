@@ -71,7 +71,6 @@ beginseg
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/eff_sparkles.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/hover_boots_circle.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/moon.o"
-    include "$(BUILD_DIR)/assets/objects/gameplay_keep/star.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_0x38FB0.o"
 #if OOT_NTSC
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_ntsc_0x39850.o"
@@ -328,6 +327,7 @@ beginseg
     name "object_torch2"
     compress
     include "$(BUILD_DIR)/assets/objects/object_torch2/object_torch2.o"
+    include "$(BUILD_DIR)/assets/objects/object_torch2/object_torch2_extra.o"
     number 6
 endseg
 
@@ -586,6 +586,7 @@ beginseg
     name "object_toki_objects"
     compress
     include "$(BUILD_DIR)/assets/objects/object_toki_objects/object_toki_objects.o"
+    include "$(BUILD_DIR)/assets/objects/object_toki_objects/object_toki_objects_extra.o"
     number 6
 endseg
 

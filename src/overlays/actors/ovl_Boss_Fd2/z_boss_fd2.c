@@ -886,7 +886,7 @@ void BossFd2_CollisionCheck(BossFd2* this, PlayState* play) {
             u8 canKill = false;
             u8 damage;
 
-            if ((damage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags)) == 0) {
+            if ((damage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags, bossFd->actor.colChkInfo.health)) == 0) {
                 damage = (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_ICE) ? Actor_EnemyHealthCheckMultiply(4) : Actor_EnemyHealthCheckMultiply(2);
             } else {
                 canKill = true;

@@ -334,6 +334,7 @@ void EnDinofos_Init(Actor* thisx, PlayState* play) {
     EnDinofos_SetupIdle(this);
     this->actionFunc = EnDinofos_DoNothing;
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
+    this->actor.colChkInfo.defense = 2.0f;
 
     sNumAlive++;
 }

@@ -902,7 +902,7 @@ static u64 gGreatFairysSwordTex[] = {
 };
 
 static u64 gGreatFairysSwordDesignTex[] = {
-#include "assets/objects/object_link_child/swords/great_fairys_sword_Design_tex.rgba16.inc.c"
+#include "assets/objects/object_link_child/swords/great_fairys_sword_design_tex.rgba16.inc.c"
 };
 
 static Vtx great_fairys_sword_vtx[] = {

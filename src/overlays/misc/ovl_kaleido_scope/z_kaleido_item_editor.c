@@ -73,12 +73,12 @@ void ItemEditor_SetItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
 }
 
 void ItemEditor_SetCQItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
-    if (IS_CHILD_QUEST_AS_CHILD)
+    if (IS_CHILD_QUEST)
         ItemEditor_SetItem(firstItem, lastItem, slot, play);
 }
 
 void ItemEditor_SetArrow(u8 item, u8 upgrade, u8 slot, PlayState* play) {
-    if (!IS_CHILD_QUEST_AS_CHILD) {
+    if (!IS_CHILD_QUEST) {
         gSaveContext.save.info.inventory.items[slot] = (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE ? SLOT(item) : ITEM_NONE);
         if (SLOT(item))
             gSaveContext.save.info.upgradeItems |= gBitFlags[upgrade];
@@ -169,7 +169,18 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
 
     if (type == EQUIP_TYPE_SWORD) {
         if (upgrade) {
-            if (item == EQUIP_INV_SWORD_MASTER) {
+            if (item == EQUIP_INV_SWORD_KOKIRI) {
+                if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_HEROS];
+                } else if (!CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
+                } else {
+                    gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_HEROS];
+                }
+            } else if (item == EQUIP_INV_SWORD_MASTER) {
                 if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)) {
                     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
                     gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_MASTER];
@@ -411,35 +422,46 @@ void ItemEditor_SetDungeon(u8 scene, u8 param2, u8 param3, PlayState* play) {
 }
 
 void ItemEditor_SetFlagsClear(u8 clear, u8 param2, u8 param3, PlayState* play) {
+    SavedSceneFlags* sf;
+    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        sf = &gSaveContext.save.info.sceneFlags[play->sceneId];
+    else if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
+        sf = &gSaveContextExtended.sceneFlags[play->sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
+    else
+        sf = NULL;
+
+    if (sf == NULL)
+        return;
+
     switch (clear) {
         case 0:
-            gSaveContext.save.info.sceneFlags[play->sceneId].chest       = play->actorCtx.flags.chest   = 0;
+            sf->chest = play->actorCtx.flags.chest = 0;
             break;
         case 1:
-            gSaveContext.save.info.sceneFlags[play->sceneId].swch        = play->actorCtx.flags.swch    = play->actorCtx.flags.tempSwch    = 0;
+            sf->swch = play->actorCtx.flags.swch = play->actorCtx.flags.tempSwch = 0;
             break;
         case 2:
-            gSaveContext.save.info.sceneFlags[play->sceneId].clear       = play->actorCtx.flags.clear   = play->actorCtx.flags.tempClear   = 0;
+            sf->clear = play->actorCtx.flags.clear = play->actorCtx.flags.tempClear = 0;
             break;
         case 3:
-            gSaveContext.save.info.sceneFlags[play->sceneId].collect     = play->actorCtx.flags.collect = play->actorCtx.flags.tempCollect = 0;
+            sf->collect = play->actorCtx.flags.collect = play->actorCtx.flags.tempCollect = 0;
             break;
         case 4:
-            gSaveContext.save.info.sceneFlags[play->sceneId].extra.quest = 0;
-            gSaveContext.save.info.sceneFlags[play->sceneId].extra.exit  = 0;
-            gSaveContext.save.info.sceneFlags[play->sceneId].extra.unk   = 0;
+            sf->extra.quest = 0;
+            sf->extra.exit = 0;
+            sf->extra.unk = 0;
             break;
         case 5:
-            gSaveContext.save.info.sceneFlags[play->sceneId].rooms       = 0;
+            sf->rooms = 0;
             break;
         case 6:
-            gSaveContext.save.info.sceneFlags[play->sceneId].floors      = 0;
+            sf->floors = 0;
             break;
     }
 }
 
 char* ItemEditor_GetItem(u8 item, u8 param2, u8 slot) {
-    if (IS_CHILD_QUEST_AS_CHILD) {
+    if (IS_CHILD_QUEST) {
         switch (item) {
             case ITEM_ARROW_FIRE:
                 return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_FIRE)  ? "Set" : "None";
@@ -462,6 +484,10 @@ char* ItemEditor_GetItem(u8 item, u8 param2, u8 slot) {
                 return "Pictobox";
             case ITEM_SHRINE_KEY:
                 return "Shrine Key";
+            case ITEM_CANE_OF_BYRNA:
+                return "Cane of Byrna";
+            case ITEM_CANE_OF_SOMARIA:
+                return "Cane of Somaria";
         }
     }
 
@@ -607,8 +633,10 @@ char* ItemEditor_GetAmmo(u8 item, u8 type, u8 param3) {
 
 char* ItemEditor_GetEquipment(u8 item, u8 type, u8 upgrade) {
     if (upgrade && type == EQUIP_TYPE_SWORD) {
-        if (item == EQUIP_INV_SWORD_MASTER && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER))
-            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? "Master Sword" : "Razor Sword";
+        if (item == EQUIP_INV_SWORD_KOKIRI && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) ? "Hero's Sword" : "Kokiri Sword";
+        else if (item == EQUIP_INV_SWORD_MASTER && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? "Master Sword" : "Goddess Sword";
         else if (item == EQUIP_INV_SWORD_BIGGORON && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
             if (IS_CHILD_QUEST)
                 return gSaveContext.save.info.playerData.bgsFlag ? "Gilded Sword" : "Silver Sword";
@@ -788,7 +816,7 @@ ItemEditorEntry sItemEditorItemEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, ITEM_WEIRD_EGG,     ITEM_SOLD_OUT,        SLOT_TRADE_CHILD,   "Child Trade",   ItemEditor_SetItem,         ItemEditor_GetItem         },
     { SHOW_OPTION_ONLY_CQ,    ITEM_ROCS_FEATHER,  ITEM_GOLDEN_FEATHER,  SLOT_FEATHER,       "Feather",       ItemEditor_SetCQItem,       ItemEditor_GetItem         },
     { SHOW_OPTION_ONLY_CQ,    ITEM_SWORD_FAIRYS,  ITEM_SWORD_FAIRYS,    SLOT_SWORD_FAIRYS,  "Fairy's Sword", ItemEditor_SetCQItem,       ItemEditor_GetItem         },
-    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_SHRINE_KEY,      SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem,       ItemEditor_GetItem         },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_CANE_OF_SOMARIA, SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem,       ItemEditor_GetItem         },
 };
 
 ItemEditorEntry sItemEditorAmmoEntries[] = {
@@ -804,12 +832,13 @@ ItemEditorEntry sItemEditorAmmoEntries[] = {
 };
 
 ItemEditorEntry sItemEditorEquipmentEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  0, "Master Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Giant's Knife", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  1, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Goddess Sword", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Silver Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_HEROS,    EQUIP_TYPE_SWORD,  0, "Hero's Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_RAZOR,    EQUIP_TYPE_SWORD,  0, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_DEKU,    EQUIP_TYPE_SHIELD, 1, "Deku Shield",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_HYLIAN,  EQUIP_TYPE_SHIELD, 0, "Hylian Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_MIRROR,  EQUIP_TYPE_SHIELD, 0, "Mirror Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },

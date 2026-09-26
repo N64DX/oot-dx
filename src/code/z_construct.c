@@ -27,7 +27,8 @@ void Interface_Init(PlayState* play) {
     u8 timerId;
     u8 item;
     u8 i;
-    
+
+    gItemIcons[ITEM_SWORD_MASTER]              = IS_CHILD_QUEST_AS_CHILD ? gItemIconSwordFourTex         : gItemIconSwordMasterTex;
     gItemIcons[ITEM_HOOKSHOT]                  = IS_CHILD_QUEST_AS_CHILD ? gItemIconHookshotMMTex        : gItemIconHookshotTex;
     gItemIcons[ITEM_LONGSHOT]                  = IS_CHILD_QUEST_AS_CHILD ? gItemIconLongshotMMTex        : gItemIconLongshotTex;
     gItemIcons[ITEM_BOW]                       = IS_CHILD_QUEST_AS_CHILD ? gItemIconHerosBowTex          : gItemIconBowTex;
@@ -71,7 +72,7 @@ void Interface_Init(PlayState* play) {
             INV_CONTENT(ITEM_ARROW_FIRE) = ITEM_ARROW_FIRE;
         if (INV_CONTENT(ITEM_ARROW_ICE) == ITEM_SWORD_FAIRYS)
             INV_CONTENT(ITEM_ARROW_ICE) = ITEM_ARROW_ICE;
-        if (INV_CONTENT(ITEM_ARROW_LIGHT) >= ITEM_PICTOBOX && INV_CONTENT(ITEM_ARROW_LIGHT) <= ITEM_SHRINE_KEY)
+        if (INV_CONTENT(ITEM_ARROW_LIGHT) >= ITEM_PICTOBOX && INV_CONTENT(ITEM_ARROW_LIGHT) <= ITEM_CANE_OF_SOMARIA)
             INV_CONTENT(ITEM_ARROW_LIGHT) = ITEM_ARROW_LIGHT;
     }        
 
@@ -200,7 +201,7 @@ void Interface_Init(PlayState* play) {
             item = ITEM_BOOTS_KOKIRI + BOOTS_EQUIP_TO_PLAYER(CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS));
 
         if (item < ITEM_SWORD_CS)
-            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE,  __FILE__, __LINE__);
+            DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (i * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, item)), ITEM_ICON_SIZE,  __FILE__, __LINE__);
     }
 
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == PLAYER_SHIELD_DEKU)
@@ -214,7 +215,7 @@ void Interface_Init(PlayState* play) {
     else item = ITEM_NONE;
 
     if (item < ITEM_SWORD_CS)
-        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(item)), ITEM_ICON_SIZE,  __FILE__, __LINE__);
+        DMA_REQUEST_SYNC(interfaceCtx->iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, item)), ITEM_ICON_SIZE,  __FILE__, __LINE__);
 
     PRINTF("ＥＶＥＮＴ＝%d\n", ((void)0, gSaveContext.timerState));
 

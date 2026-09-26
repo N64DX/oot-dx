@@ -67,7 +67,7 @@ static u8 sEquipmentItemOffsets[] = {
     ITEM_SWORD_KOKIRI - ITEM_SWORD_KOKIRI,   // EQUIP_VALUE_SWORD_KOKIRI
     ITEM_SWORD_MASTER - ITEM_SWORD_KOKIRI,   // EQUIP_VALUE_SWORD_MASTER
     ITEM_SWORD_BIGGORON - ITEM_SWORD_KOKIRI, // EQUIP_VALUE_SWORD_BIGGORON
-    ITEM_SWORD_HEROS - ITEM_SWORD_KOKIRI,    // EQUIP_VALUE_SWORD_HEROS
+    ITEM_SWORD_RAZOR - ITEM_SWORD_KOKIRI,    // EQUIP_VALUE_SWORD_RAZOR
     0,                                       // unused
     // EQUIP_TYPE_SHIELD
     0,                                      // unused
@@ -865,23 +865,29 @@ void KaleidoScope_DrawEquipment(PlayState* play) {
         // EQUIP_QUAD_BOOTS_KOKIRI, EQUIP_QUAD_BOOTS_IRON, EQUIP_QUAD_BOOTS_HOVER
 
         for (k = 0, bit = rowStart, point = 4; k < 4; k++, point += 4, temp++, bit++) {
+            void* icon = NULL;
+            if (gBitFlags[rowStart + KaleidoScope_GetEquipBit(i, k)] & gSaveContext.save.info.inventory.equipment) {
+                icon = gItemIcons[ITEM_SWORD_KOKIRI + rowStart + KaleidoScope_GetEquipBit(temp/4, temp%4)];
 
-            if (i == EQUIP_TYPE_SWORD && KaleidoScope_GetEquipBit(EQUIP_TYPE_SWORD, k) == EQUIP_INV_SWORD_MASTER && gBitFlags[EQUIP_INV_SWORD_MASTER] & gSaveContext.save.info.inventory.equipment) {
-                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, (IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) ? gItemIconSwordRazorTex : gItemIconSwordMasterTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-            } else if (i == EQUIP_TYPE_SWORD && KaleidoScope_GetEquipBit(EQUIP_TYPE_SWORD, k) == EQUIP_INV_SWORD_BIGGORON && gBitFlags[EQUIP_INV_SWORD_BIGGORON] & gSaveContext.save.info.inventory.equipment) {
-                void* icon;
-                if (IS_CHILD_QUEST_AS_CHILD)
-                    icon = gSaveContext.save.info.playerData.bgsFlag ? gItemIconSwordGildedTex : gItemIconSwordSilverTex;
-                else icon = gSaveContext.save.info.playerData.swordHealth ? gItemIconSwordBiggoronTex : gItemIconBrokenGiantsKnifeTex;
+                if (i == EQUIP_TYPE_SWORD) {
+                    if (KaleidoScope_GetEquipBit(EQUIP_TYPE_SWORD, k) == EQUIP_INV_SWORD_KOKIRI && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS))
+                        icon = gItemIconSwordHerosTex;
+                    else if (KaleidoScope_GetEquipBit(EQUIP_TYPE_SWORD, k) == EQUIP_INV_SWORD_MASTER && IS_CHILD_QUEST_AS_CHILD)
+                        icon = CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? gItemIconSwordFourTex : gItemIconSwordFourDullTex;
+                    else if (KaleidoScope_GetEquipBit(EQUIP_TYPE_SWORD, k) == EQUIP_INV_SWORD_BIGGORON) {
+                        if (IS_CHILD_QUEST_AS_CHILD)
+                            icon = gSaveContext.save.info.playerData.bgsFlag ? gItemIconSwordGildedTex : gItemIconSwordSilverTex;
+                        else icon = gSaveContext.save.info.playerData.swordHealth ? gItemIconSwordBiggoronTex : gItemIconBrokenGiantsKnifeTex;
+                    }
+                } else if (i == EQUIP_TYPE_SHIELD) {
+                    if (KaleidoScope_GetEquipBit(EQUIP_TYPE_SHIELD, k) == EQUIP_INV_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
+                        icon = gItemIconShieldWoodenTex;
+                    else if (KaleidoScope_GetEquipBit(EQUIP_TYPE_SHIELD, k) == EQUIP_INV_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL))
+                        icon = gItemIconShieldMetalTex;
+                }
+                
                 KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, icon, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-            } else if (i == EQUIP_TYPE_SHIELD && KaleidoScope_GetEquipBit(EQUIP_TYPE_SHIELD, k) == EQUIP_INV_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN)) {
-                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconShieldWoodenTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-            } else if (i == EQUIP_TYPE_SHIELD && KaleidoScope_GetEquipBit(EQUIP_TYPE_SHIELD, k) == EQUIP_INV_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL)) {
-                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIconShieldMetalTex, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-            } else if (gBitFlags[rowStart + KaleidoScope_GetEquipBit(i, k)] & gSaveContext.save.info.inventory.equipment) {
-                KaleidoScope_DrawQuadTextureRGBA32(play->state.gfxCtx, gItemIcons[ITEM_SWORD_KOKIRI + rowStart + KaleidoScope_GetEquipBit(temp/4, temp%4)],
-                                                   ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, point);
-            }
+            } 
         }
     }
 

@@ -3015,7 +3015,7 @@ void CollisionCheck_OC(PlayState* play, CollisionCheckContext* colChkCtx) {
  */
 void CollisionCheck_InitInfo(CollisionCheckInfo* info) {
     static CollisionCheckInfo init = {
-        NULL, { 0.0f, 0.0f, 0.0f }, 10, 10, 0, 50, 8, 0, 0, 0, 0, 0, 0,
+        NULL, { 0.0f, 0.0f, 0.0f }, 10, 10, 0, 50, 8, 0, 0, 0, 0, 0, 0, 0.0f,
     };
 
     *info = init;
@@ -3730,7 +3730,7 @@ s32 CollisionCheck_CylSideVsLineSeg(f32 radius, f32 height, f32 offset, Vec3f* a
  * Gets damage from a sword strike using generic values, and returns 0 if the attack is
  * not sword-type. Used by bosses to require that a sword attack deal the killing blow.
  */
-u8 CollisionCheck_GetSwordDamage(s32 dmgFlags) {
+u8 CollisionCheck_GetSwordDamage(s32 dmgFlags, f32 defense) {
     u8 damage = 0;
 
     if (dmgFlags & (DMG_SPIN_KOKIRI | DMG_SLASH_KOKIRI)) {
@@ -3743,7 +3743,7 @@ u8 CollisionCheck_GetSwordDamage(s32 dmgFlags) {
         damage = 8;
     }
 
-    damage = Actor_AdjustDealtDamage(damage, dmgFlags, lastItemAction);
+    damage = Actor_AdjustDealtDamage(damage, defense, dmgFlags, lastItemAction);
     Actor_RestoreShieldDurability(dmgFlags);
 
 #if DEBUG_FEATURES

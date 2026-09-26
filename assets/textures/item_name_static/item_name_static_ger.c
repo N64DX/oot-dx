@@ -222,15 +222,15 @@ u64 gClaimCheckItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HE
 #include "build/pal-1.0/assets/textures/item_name_static/gClaimCheckItemNameGERTex.ia4.inc.c"
 };
 
-u64 gRazorSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gRazorSwordItemNameGERTex.ia4.inc.c"
+u64 gUnusedWindMedallionItemName2JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gGoddessSwordItemNameGERTex.ia4.inc.c"
 };
 
-u64 gSilverSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedFireMedallionItemName2JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gSilverSwordItemNameGERTex.ia4.inc.c"
 };
 
-u64 gGildedSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedIceMedallionItemName2JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gGildedSwordItemNameGERTex.ia4.inc.c"
 };
 
@@ -246,8 +246,8 @@ u64 gGiantsKnifeItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_H
 #include "build/pal-1.0/assets/textures/item_name_static/gGiantsKnifeItemNameGERTex.ia4.inc.c"
 };
 
-u64 gHerosSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gHerosSwordItemNameGERTex.ia4.inc.c"
+u64 gBulletBag30ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag30ItemNameGERTex.ia4.inc.c"
 };
 
 u64 gDekuShieldItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -318,12 +318,12 @@ u64 gShrineKeyItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEI
 #include "assets/textures/item_name_static/gShrineKeyItemNameGERTex.ia4.inc.c"
 };
 
-u64 gCQ1ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gShrineKeyItemNameGERTex.ia4.inc.c"
+u64 gCaneOfByrnaItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gCaneOfByrnaItemNameGERTex.ia4.inc.c"
 };
 
-u64 gCQ2ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "assets/textures/item_name_static/gShrineKeyItemNameGERTex.ia4.inc.c"
+u64 gCaneOfSomariaItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gCaneOfSomariaItemNameGERTex.ia4.inc.c"
 };
 
 u64 gShieldPotionItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
@@ -342,24 +342,28 @@ u64 gBrokenGiantsKnifeItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME
 #include "build/pal-1.0/assets/textures/item_name_static/gBrokenGiantsKnifeItemNameGERTex.ia4.inc.c"
 };
 
-u64 gPowerBraceletItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedBossKeyItemName12JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gPowerBraceletItemNameGERTex.ia4.inc.c"
 };
 
-u64 gPowerBraceletsItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedBossKeyItemName22JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gPowerBraceletsItemNameGERTex.ia4.inc.c"
 };
 
-u64 gGoldDustItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedBossKeyItemName32JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gGoldDustItemNameGERTex.ia4.inc.c"
 };
 
-u64 gHerosBowItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+u64 gUnusedBossKeyItemName42JPNTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
 #include "assets/textures/item_name_static/gHerosBowItemNameGERTex.ia4.inc.c"
 };
 
-u64 gBulletBag30ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
-#include "build/pal-1.0/assets/textures/item_name_static/gBulletBag30ItemNameGERTex.ia4.inc.c"
+u64 gRazorSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gRazorSwordItemNameGERTex.ia4.inc.c"
+};
+
+u64 gHerosSwordItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {
+#include "assets/textures/item_name_static/gHerosSwordItemNameGERTex.ia4.inc.c"
 };
 
 u64 gBulletBag40ItemNameGERTex[TEX_LEN(u64, ITEM_NAME_TEX_WIDTH, ITEM_NAME_TEX_HEIGHT, 4)] = {

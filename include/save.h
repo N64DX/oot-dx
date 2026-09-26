@@ -268,7 +268,8 @@ typedef enum WorldMapArea {
     /* 28 */ WORLD_MAP_AREA_RIVERSIDE_VILLAGE,
     /* 29 */ WORLD_MAP_AREA_SPRING_LAKE,
     /* 30 */ WORLD_MAP_AREA_WOODFALL,
-    /* 31 */ WORLD_MAP_AREA_MAX // also grottos and fairy's/great fairy's fountains (scenes with varying locations)
+    /* 31 */ WORLD_MAP_AREA_STONE_TOWER,
+    /* 32 */ WORLD_MAP_AREA_MAX // also grottos and fairy's/great fairy's fountains (scenes with varying locations)
 } WorldMapArea;
 
 // offsets in SavePlayerData and SaveContext/Save
@@ -404,6 +405,11 @@ typedef struct SaveContext {
     /* 0x1426 */ char unk_1426[0x0002];
     /* 0x1428 */ u32 options[10];
 } SaveContext; // size = 0x1450
+
+typedef struct SaveContextExtended {
+    /* 0x00 */ SavedSceneFlags sceneFlags[9];
+    /* 0xFC */ char unk_FC[4];
+} SaveContextExtended; // size = 0x100
 
 typedef enum ButtonStatus {
     /* 0x00 */ BTN_ENABLED,
@@ -620,8 +626,8 @@ typedef enum LinkAge {
 #define EXTENDED_DRAW_DISTANCE      ((gSaveContext.globalSettings >> 5) & 1)  // Bits: 5
 #define SHOW_STARS                  ((gSaveContext.globalSettings >> 6) & 1)  // Bits: 6
 
-#define MAX_SWORD_HEALTH 8
-#define MAGIC_COST(magic) (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? (magic / 2) : magic)
+#define MAX_SWORD_HEALTH    8
+#define MAGIC_COST(magic)   (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? (magic / 2) : magic)
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
@@ -1154,6 +1160,8 @@ typedef enum LinkAge {
 #define INFTABLE_1AB_SHIFT 11
 #define INFTABLE_1AC_SHIFT 12
 #define INFTABLE_1AD_SHIFT 13
+#define INFTABLE_1AE_SHIFT 14
+#define INFTABLE_1AF_SHIFT 15
 
 // INFTABLE 0x1D0-0x1DF
 #define INFTABLE_INDEX_1DX INFTABLE_INDEX(INFTABLE_1D0)
@@ -1252,5 +1260,6 @@ typedef enum IngoRaceState {
 void SaveContext_Init(void);
 
 extern SaveContext gSaveContext;
+extern SaveContextExtended gSaveContextExtended;
 
 #endif

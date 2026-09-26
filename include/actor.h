@@ -408,22 +408,23 @@ typedef enum NaviEnemy {
     /* 0x5A */ NAVI_ENEMY_BIG_POE,
     /* 0x5B */ NAVI_ENEMY_TWINROVA,
     /* 0x5C */ NAVI_ENEMY_POE_WASTELAND,
-    /* 0x5D */ NAVI_ENEMY_MINIBLIN,
-    /* 0x5E */ NAVI_ENEMY_ZOL,
-    /* 0x5F */ NAVI_ENEMY_ELECTRIC_KEESE,
-    /* 0x60 */ NAVI_ENEMY_BEAST,
-    /* 0x61 */ NAVI_ENEMY_SPIDER,
-    /* 0x62 */ NAVI_ENEMY_STALMASTER,
-    /* 0x63 */ NAVI_ENEMY_WHITE_BOE,
-    /* 0x64 */ NAVI_ENEMY_BLACK_BOE,
-    /* 0x65 */ NAVI_ENEMY_GIANT_BEE,
-    /* 0x66 */ NAVI_ENEMY_DRAGONFLY,
-    /* 0x67 */ NAVI_ENEMY_SNAPPER,
-    /* 0x68 */ NAVI_ENEMY_BAD_BAT,
-    /* 0x69 */ NAVI_ENEMY_GARO,
-    /* 0x6A */ NAVI_ENEMY_KING_DEKU,
-    /* 0x6B */ NAVI_ENEMY_THEFATHER,
-    /* 0x6C */ NAVI_ENEMY_IGORS_GHOST,
+    /* 0x5D */ NAVI_ENEMY_SCISSORS_BEETLE,
+    /* 0x5E */ NAVI_ENEMY_MINIBLIN,
+    /* 0x5F */ NAVI_ENEMY_ZOL,
+    /* 0x60 */ NAVI_ENEMY_ELECTRIC_KEESE,
+    /* 0x61 */ NAVI_ENEMY_BEAST,
+    /* 0x62 */ NAVI_ENEMY_SPIDER,
+    /* 0x63 */ NAVI_ENEMY_STALMASTER,
+    /* 0x64 */ NAVI_ENEMY_WHITE_BOE,
+    /* 0x65 */ NAVI_ENEMY_BLACK_BOE,
+    /* 0x66 */ NAVI_ENEMY_GIANT_BEE,
+    /* 0x67 */ NAVI_ENEMY_DRAGONFLY,
+    /* 0x68 */ NAVI_ENEMY_SNAPPER,
+    /* 0x69 */ NAVI_ENEMY_BAD_BAT,
+    /* 0x6A */ NAVI_ENEMY_GARO,
+    /* 0x6B */ NAVI_ENEMY_KING_DEKU,
+    /* 0x6C */ NAVI_ENEMY_THEFATHER,
+    /* 0x6D */ NAVI_ENEMY_IGORS_GHOST,
     /* 0xFF */ NAVI_ENEMY_NONE = 0xFF
 } NaviEnemy;
 
@@ -814,7 +815,8 @@ void func_8003555C(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* a
 void func_800355B8(struct PlayState* play, Vec3f* pos);
 u8 func_800355E4(struct PlayState* play, Collider* collider);
 u8 Actor_ApplyDamage(Actor* actor);
-u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction);
+u8 Actor_AdjustDealtDamage(f32 damage, f32 defense, s32 dmgFlags, u8 itemAction);
+f32 Actor_SetDefensePerScene(u16 sceneId, f32 baseDefense);
 void Actor_RestoreShieldDurability(s32 dmgFlags);
 void Actor_SetDropFlag(Actor* actor, ColliderElement* elem, s32 freezeFlag);
 void Actor_SetDropFlagJntSph(Actor* actor, ColliderJntSph* jntSph, s32 freezeFlag);

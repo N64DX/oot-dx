@@ -1,6 +1,7 @@
 #include "object_hsstump.h"
 
 #include "gfx.h"
+#include "camera.h"
 #include "array_count.h"
 
 Vtx object_hsstumpVtx_000000[] = {
@@ -56,11 +57,34 @@ Gfx object_hsstump_DL_0003B8[] = {
 };
 
 BgCamInfo object_hsstump_Colheader_0011B0CamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType object_hsstump_Colheader_0011B0SurfaceType[] = {
-    {0x00000000, 0x000207CA},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ true,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly object_hsstump_Colheader_0011B0Polygons[] = {

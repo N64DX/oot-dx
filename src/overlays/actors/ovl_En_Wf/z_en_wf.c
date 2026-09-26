@@ -239,6 +239,7 @@ void EnWf_Init(Actor* thisx, PlayState* play) {
     thisx->focus.pos = thisx->world.pos;
     thisx->colChkInfo.mass = MASS_HEAVY;
     thisx->colChkInfo.health = Actor_EnemyHealthMultiply(8, ELITE_HP);
+    thisx->colChkInfo.defense = 1.0f;
     thisx->colChkInfo.cylRadius = 50;
     thisx->colChkInfo.cylHeight = 100;
     this->switchFlag = PARAMS_GET_U(thisx->params, 8, 8);

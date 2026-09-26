@@ -109,6 +109,8 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         MapSelect_LoadRoom(DBG_GANONS_TOWER_0, this->roomNum, 9);
     else if (entranceIndex == ENTR_WEBBED_SHRINE_0)
         MapSelect_LoadRoom(DBG_WEBBED_SHRINE_0, this->roomNum, 6);
+    else if (entranceIndex == ENTR_ROYAL_VAULT_0)
+        MapSelect_LoadRoom(DBG_ROYAL_VAULT_0, this->roomNum, 6);
     else if (entranceIndex == ENTR_PURPLE_ICE_CAVERN_0)
         MapSelect_LoadRoom(DBG_PURPLE_ICE_CAVERN_0, this->roomNum, 6);
     else if (entranceIndex == ENTR_ANCIENT_HOLLOW_0)
@@ -117,6 +119,10 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
         MapSelect_LoadRoom(DBG_GORON_MINES_0, this->roomNum, 10);
     else if (entranceIndex == ENTR_WOODFALL_TEMPLE_0)
         MapSelect_LoadRoom(DBG_WOODFALL_TEMPLE_0, this->roomNum, 12);
+    else if (entranceIndex == ENTR_STONE_TOWER_0)
+        gSaveContext.save.info.sceneFlags[SCENE_STONE_TOWER].swch &= ~(1 << 0x14);
+    else if (entranceIndex == ENTR_STONE_TOWER_INVERTED_0)
+        gSaveContext.save.info.sceneFlags[SCENE_STONE_TOWER].swch |= (1 << 0x14);
 
     gSaveContext.respawnFlag = 0;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = ENTR_LOAD_OPENING;
@@ -247,7 +253,9 @@ void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
             MapSelect_SetClearEventGroup(EVENTCHKINF_AA, sShadowFlags, ARRAY_COUNT(sShadowFlags));
             break;
         default:
-            gSaveContext.save.info.sceneFlags[type].clear ^= (1 << flag);
+            if (type < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+                gSaveContext.save.info.sceneFlags[type].clear ^= (1 << flag);
+            else gSaveContextExtended.sceneFlags[type - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)].clear ^= (1 << flag);
             break;
     }
 }
@@ -276,7 +284,9 @@ char* MapSelect_GetEvent(MapSelectState* this, u8 type, u16 flag) {
         case NABOORU:
             return MapSelect_GetEventText(GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE));
         default:
-            return MapSelect_GetEventText(gSaveContext.save.info.sceneFlags[type].clear & (1 << flag));
+            if (type < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+                return MapSelect_GetEventText(gSaveContext.save.info.sceneFlags[type].clear & (1 << flag));
+            else return MapSelect_GetEventText(gSaveContextExtended.sceneFlags[type - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)].clear & (1 << flag));
     }
 
 }
@@ -526,21 +536,24 @@ static MapSelectEntry sMapSelectEntries[] = {
     { "140:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉｻﾄ", "Goron Village"), MapSelect_LoadGame, ENTR_GORON_VILLAGE_0 },
     { "141:" T(GFXP_HIRAGANA "ｺﾞﾛﾝﾉﾎｺﾗ", "Goron Shrine"), MapSelect_LoadGame, ENTR_GORON_SHRINE_0 },
     { "142:" T(GFXP_HIRAGANA "ﾎﾛﾋﾞﾀｵｳｺｸ", "Forsaken Kingdom"), MapSelect_LoadGame, ENTR_FORSAKEN_KINGDOM_0 },
-    { "143:" T(GFXP_HIRAGANA "ﾑﾗｻｷﾉｺｵﾘｱﾅ", "Purple Ice Cavern"), MapSelect_LoadGame, ENTR_PURPLE_ICE_CAVERN_0 },
-    { "144:" T(GFXP_HIRAGANA "ﾌﾞｷﾐﾅﾎﾞﾁ", "Gloomy Graveyard"), MapSelect_LoadGame, ENTR_GLOOMY_GRAVEYARD_0 },
-    { "145:" T(GFXP_HIRAGANA "ｵﾊｶﾉｿｺ1", "Beneath the Graveyard #1"), MapSelect_LoadGame, ENTR_BENEATH_THE_GRAVEYARD_0 },
-    { "146:" T(GFXP_HIRAGANA "ｵﾊｶﾉｿｺ2", "Beneath the Graveyard #2"), MapSelect_LoadGame, ENTR_BENEATH_THE_GRAVEYARD_1 },
-    { "147:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Path to Gerudo's Fortress"), MapSelect_LoadGame, ENTR_PATH_TO_FORTRESS_0 },
-    { "148:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
-    { "149:" T(GFXP_HIRAGANA "ｺﾞﾛﾝｺｳｻﾞﾝ", "Goron Mines"), MapSelect_LoadGame, ENTR_GORON_MINES_0 },
-    { "150:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
-    { "151:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
-    { "152:" T(GFXP_HIRAGANA "ｴｲﾝｼｪﾝﾄｸﾞﾛｰﾌﾞｸﾞﾛｯﾄ", "Ancient Grove Grotto"), MapSelect_LoadGame, ENTR_GROTTOS2_7 },
-    { "153:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTOS2_0 },
-    { "154:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTOS2_2 },
-    { "155:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
-    { "156:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
-    { "157:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
+    { "143:" T(GFXP_HIRAGANA "ﾌﾞｷﾐﾅﾎﾞﾁ", "Gloomy Graveyard"), MapSelect_LoadGame, ENTR_GLOOMY_GRAVEYARD_0 },
+    { "144:" T(GFXP_HIRAGANA "ﾑﾗｻｷﾉｺｵﾘｱﾅ", "Purple Ice Cavern"), MapSelect_LoadGame, ENTR_PURPLE_ICE_CAVERN_0 },
+    { "145:" T(GFXP_HIRAGANA "ｵｳｹﾉﾎｳﾓﾂｺ", "Royal Vault"), MapSelect_LoadGame, ENTR_ROYAL_VAULT_0 },
+    { "146:" T(GFXP_HIRAGANA "ｵﾊｶﾉｿｺ1", "Beneath the Graveyard #1"), MapSelect_LoadGame, ENTR_BENEATH_THE_GRAVEYARD_0 },
+    { "147:" T(GFXP_HIRAGANA "ｵﾊｶﾉｿｺ2", "Beneath the Graveyard #2"), MapSelect_LoadGame, ENTR_BENEATH_THE_GRAVEYARD_1 },
+    { "148:" T(GFXP_HIRAGANA "ﾛｯｸﾋﾞﾙ", "Stone Tower"), MapSelect_LoadGame, ENTR_STONE_TOWER_0 },
+    { "149:" T(GFXP_HIRAGANA "ﾛｯｸﾋﾞﾙ", "Stone Tower (Inv)"), MapSelect_LoadGame, ENTR_STONE_TOWER_INVERTED_0 },
+    { "150:" T(GFXP_HIRAGANA "ﾄﾘﾃﾞﾐﾁ", "Path to Gerudo's Fortress"), MapSelect_LoadGame, ENTR_PATH_TO_FORTRESS_0 },
+    { "151:" T(GFXP_HIRAGANA "古代樹", "Ancient Hollow"), MapSelect_LoadGame, ENTR_ANCIENT_HOLLOW_0 },
+    { "152:" T(GFXP_HIRAGANA "ｺﾞﾛﾝｺｳｻﾞﾝ", "Goron Mines"), MapSelect_LoadGame, ENTR_GORON_MINES_0 },
+    { "153:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝ", "Woodfall Temple"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_0 },
+    { "154:" T(GFXP_HIRAGANA "ｳｯﾄﾞﾌｫｰﾙﾉｼﾝﾃﾞﾝﾎﾞｽ", "Woodfall Temple (Boss)"), MapSelect_LoadGame, ENTR_WOODFALL_TEMPLE_BOSS_0 },
+    { "155:" T(GFXP_HIRAGANA "ｴｲﾝｼｪﾝﾄｸﾞﾛｰﾌﾞｸﾞﾛｯﾄ", "Ancient Grove Grotto"), MapSelect_LoadGame, ENTR_GROTTOS2_7 },
+    { "156:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 1", "Grotto (Shortcut 1)"), MapSelect_LoadGame, ENTR_GROTTOS2_0 },
+    { "157:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 2", "Grotto (Shortcut 2)"), MapSelect_LoadGame, ENTR_GROTTOS2_2 },
+    { "158:" T(GFXP_HIRAGANA "ｼｮｰﾄｶｯﾄﾄﾋﾞｺﾐｱ 3", "Grotto (Dinolfos)"), MapSelect_LoadGame, ENTR_GROTTOS2_4 },
+    { "159:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 1"), MapSelect_LoadGame, ENTR_GROTTOS2_5 },
+    { "160:" T(GFXP_HIRAGANA "ｽﾀﾙﾏｽﾀｰﾉﾚｱｰ", "Stalmaster Miniboss 2"), MapSelect_LoadGame, ENTR_GROTTOS2_6 },
 #endif
     { "Title", (void*)MapSelect_LoadTitle, 0 },
 };

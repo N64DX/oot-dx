@@ -56,11 +56,11 @@ ActorEntry ikana_graveyard_room_0ActorEntry_000064[] = {
     { ACTOR_EN_SKB,         {  -26,  73,  -315 }, {               0,      0, 0 }, 0x1000 },
     { ACTOR_EN_SKB,         {   -4,  36,   264 }, {               0,      0, 0 }, 0x1000 },
     { ACTOR_EN_SKB,         {   -4,  72,  -407 }, {               0,      0, 0 }, 0x1000 },
-    { ACTOR_OBJ_HAKAISI,    { -470,  13,   411 }, {               0, 0xD1C0, 0 }, 0xFFFF },
-    { ACTOR_OBJ_HAKAISI,    { -179,  73,  -500 }, {               0, 0xB330, 0 }, 0xFFFF },
-    { ACTOR_OBJ_HAKAISI,    {  235,  23,   426 }, {               0, 0xD1C0, 0 }, 0x0600 },
-    { ACTOR_OBJ_HAKAISI,    { -422,  54,   -12 }, {               0, 0x27D0, 0 }, 0x0801 },
-    { ACTOR_OBJ_HAKAISI,    {  238,  60,   -80 }, {               0, 0x9B00, 0 }, 0x0702 },
+    { ACTOR_OBJ_HAKAISI,    { -470,  13,   411 }, {               0, 0x51C7, 0 }, 0xFFFF },
+    { ACTOR_OBJ_HAKAISI,    { -179,  73,  -500 }, {               0, 0x3333, 0 }, 0xFFFF },
+    { ACTOR_OBJ_HAKAISI,    {  235,  23,   426 }, {               0, 0xD1C7, 0 }, 0x0600 },
+    { ACTOR_OBJ_HAKAISI,    { -422,  54,   -12 }, {               0, 0x27D2, 0 }, 0x0801 },
+    { ACTOR_OBJ_HAKAISI,    {  238,  60,   -80 }, {               0, 0x9B05, 0 }, 0x0702 },
     { ACTOR_OBJ_HANA,       { -384,  54,    13 }, {               0,      0, 0 }, 0x0000 },
     { ACTOR_OBJ_HANA,       { -142,  75,  -477 }, {               0,      0, 0 }, 0x0000 },
     { ACTOR_OBJ_HANA,       { -137,  75,  -493 }, {               0,      0, 0 }, 0x0000 },
@@ -80,7 +80,7 @@ ActorEntry ikana_graveyard_room_0ActorEntry_000064[] = {
     { ACTOR_OBJ_DHOUSE,     { -304, 474, -2333 }, {               0,      0, 0 }, 0x0000 },
     { ACTOR_EN_BOX,         { -578, 534, -2331 }, { GI_TUNIC_SPIRIT, 0xC000, 0 }, 0x0000 }, // Chest: 00, Spirit Tunic
     { ACTOR_BG_HIDAN_FWBIG, { -250, 474, -2331 }, {               0, 0xC000, 0 }, 0x0000 },
-    { ACTOR_BG_WEATHER,     { -470,  13,   411 }, {               0,      0, 0 }, 0x0000 },
+    { ACTOR_BG_WEATHER,     { -470,  13,   411 }, {               0,      0, 0 }, 0x0001 },
   //{ ACTOR_BG_BOTIHASIRA,  {  -84, 152, -1297 }, {               0,   0xD2, 0 }, 0x0001 },
 };
 

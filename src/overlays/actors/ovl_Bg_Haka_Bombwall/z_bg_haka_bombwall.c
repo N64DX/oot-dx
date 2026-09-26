@@ -87,7 +87,7 @@ void BgHakaBombwall_80BD5E6C(BgHakaBombwall* this, PlayState* play) {
     s16 scale, phi_s0, phi_t0, gravity;
 
     Matrix_Push();
-    Matrix_RotateY(this->dyna.actor.shape.rot.y, MTXMODE_NEW);
+    Matrix_RotateY(BINANG_TO_RAD(this->dyna.actor.shape.rot.y), MTXMODE_NEW);
 
     offsetPosX = 0.0f;
     offsetPosY = 0.0f;

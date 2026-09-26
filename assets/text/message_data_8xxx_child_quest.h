@@ -1443,7 +1443,7 @@ SHIFT(45) "それが　時の勇者…"
 ),
 MSG(
 UNSKIPPABLE "As I see you standing there\n"
-"holding the mythical " COLOR(RED) "Razor\n"
+"holding the mythical " COLOR(RED) "Goddess\n"
 "Sword" COLOR(DEFAULT) ", you really do look like the \n"
 "legendary Hero of Time..."
 ),
@@ -2567,28 +2567,28 @@ BOX_BREAK
 
 UNSKIPPABLE SHIFT(45) "けど…　そいつぁ…\n"
 SHIFT(33) "ウチの　ババアんとこに\n"
-"おいてきたハズだが…　まあいいや！" TEXTID(0x812B)
+"おいてきたハズだが…　まあいいや！" TEXTID(0x812C)
 ),
 MSG(
 UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Hey, that saw! It's mine!"
 BOX_BREAK
 
 UNSKIPPABLE "But... I thought I left that saw\n"
-"with my old lady... Oh well..." TEXTID(0x812B)
+"with my old lady... Oh well..." TEXTID(0x812C)
 ),
 MSG(
 UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Oh, das ist ja meine Säge!"
 BOX_BREAK
 
 UNSKIPPABLE "Aber... Ich dachte, ich hätte sie\n"
-"bei der alten Frau liegen gelassen..." TEXTID(0x812B)
+"bei der alten Frau liegen gelassen..." TEXTID(0x812C)
 ),
 MSG(
 UNSKIPPABLE SFX(NA_SE_VO_IN_LOST) "Hé! Mais c'est ma scie!"
 BOX_BREAK
 
 UNSKIPPABLE "Je l'avais égarée chez ma vieille \n"
-"femme...C'est fou!" TEXTID(0x812B)
+"femme...C'est fou!" TEXTID(0x812C)
 )
 )
 
@@ -2636,7 +2636,7 @@ DEFINE_MESSAGE(0x8201, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 UNSKIPPABLE "Do not be startled that your\n"
-"legendary Razor Sword is gone..."
+"legendary Goddess Sword is gone..."
 BOX_BREAK
 
 UNSKIPPABLE "It is time..."
@@ -2671,7 +2671,7 @@ MSG()
 DEFINE_MESSAGE(0x8203, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-UNSKIPPABLE ITEM_ICON(ITEM_SWORD_MASTER) QUICKTEXT_ENABLE "The " COLOR(RED) "Razor Sword" COLOR(DEFAULT) " has awoken\n"
+UNSKIPPABLE ITEM_ICON(ITEM_SWORD_MASTER) QUICKTEXT_ENABLE "The " COLOR(RED) "Goddess Sword" COLOR(DEFAULT) " has awoken\n"
 "as the " COLOR(RED) "Master Sword" COLOR(DEFAULT) "!" QUICKTEXT_DISABLE "\n"
 "Seek it out and reclaim it in\n"
 "the Woodfall Temple sanctum!"
@@ -3664,8 +3664,9 @@ MSG(
 "Only then I allow you into the mines."
 BOX_BREAK
 
-"Show me the lost " COLOR(RED) "Hero's Sword" COLOR(DEFAULT) ",\n"
-"a " COLOR(RED) "Silver Sword" COLOR(DEFAULT) " and a " COLOR(RED) "Hero's Shield" COLOR(DEFAULT) "." EVENT
+"Show me the proof of cleansing our\n"
+COLOR(ADJUSTABLE) "shrine atop the cliffs" COLOR(DEFAULT) ", and bring me\n"
+"a " COLOR(RED) "Silver Sword" COLOR(DEFAULT) "and a " COLOR(RED) "Hero's Shield" COLOR(DEFAULT) "." EVENT
 ),
 MSG(),
 MSG()
@@ -4420,6 +4421,78 @@ MSG(
 QUICKTEXT_ENABLE SHIFT(35) "Royal Composer Bros.\n"
 SHIFT(51) "Tone the Elder\n"
 SHIFT(80) "R.I.P." QUICKTEXT_DISABLE EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8520, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(BLUE) "Blue" COLOR(DEFAULT) " Mask first."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8521, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(ADJUSTABLE) "Green" COLOR(DEFAULT) " Mask second."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8522, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(RED) "Red" COLOR(DEFAULT) " Mask third."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8523, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(YELLOW) "Yellow" COLOR(DEFAULT) " Mask fourth."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8524, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(ADJUSTABLE) "Green" COLOR(DEFAULT) " Mask again fifth."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8525, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"Hit the " COLOR(BLUE) "Blue" COLOR(DEFAULT) " Mask again last."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8526, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Want to know a secret?\n"
+"There is a special relic locked away\n"
+"in this room that lets you control\n"
+"empty vessels."
 ),
 MSG(),
 MSG()

@@ -11,6 +11,7 @@
                                "ntsc-1.0:0 ntsc-1.1:0 ntsc-1.2:0 pal-1.0:0 pal-1.1:0"
 
 ALIGNED(16) SaveContext gSaveContext;
+ALIGNED(16) SaveContextExtended gSaveContextExtended;
 #if PLATFORM_IQUE
 // Unknown bss padding, placed here for matching
 char sUnknownBssPadding[0x20];

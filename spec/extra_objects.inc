@@ -20,6 +20,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_lbfshot"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_lbfshot/object_lbfshot.o"
+    number 6
+endseg
+
+beginseg
     name "object_flowerpot"
     compress
     include "$(BUILD_DIR)/assets/objects/object_flowerpot/object_flowerpot.o"
@@ -174,6 +181,48 @@ beginseg
 endseg
 
 beginseg
+    name "object_spdweb"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_spdweb/object_spdweb.o"
+    number 6
+endseg
+
+beginseg
+    name "object_spidertent"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_spidertent/object_spidertent.o"
+    number 6
+endseg
+
+beginseg
+    name "object_kin2_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_kin2_obj/object_kin2_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_kinsta2_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_kinsta2_obj/object_kinsta2_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_f40_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_f40_obj/object_f40_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_f40_switch"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_f40_switch/object_f40_switch.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_gold_dust"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_gold_dust/object_gi_gold_dust.o"
@@ -223,6 +272,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_gi_cane"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_cane/object_gi_cane.o"
+    number 6
+endseg
+
+beginseg
     name "object_gi_title_deed"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_title_deed/object_gi_title_deed.o"
@@ -233,6 +289,13 @@ beginseg
     name "object_gi_sword_1_mm"
     compress
     include "$(BUILD_DIR)/assets/objects/object_gi_sword_1_mm/object_gi_sword_1_mm.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gi_sword_2_mm"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gi_sword_2_mm/object_gi_sword_2_mm.o"
     number 6
 endseg
 
@@ -317,6 +380,13 @@ beginseg
     name "object_hammergeist"
     compress
     include "$(BUILD_DIR)/assets/objects/object_hammergeist/object_hammergeist.o"
+    number 6
+endseg
+
+beginseg
+    name "object_sbeetle"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_sbeetle/object_sbeetle.o"
     number 6
 endseg
 
