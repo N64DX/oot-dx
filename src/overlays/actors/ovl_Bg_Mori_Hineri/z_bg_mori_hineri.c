@@ -216,9 +216,7 @@ void func_808A3E54(BgMoriHineri* this, PlayState* play) {
             this->moriHineriObjectSlot = objectSlot;
             this->dyna.actor.params ^= 1;
             sSubCamId = SUB_CAM_ID_DONE;
-#if OOT_VERSION >= PAL_1_0
             Sfx_PlaySfxCentered(NA_SE_SY_TRE_BOX_APPEAR);
-#endif
         } else {
             this->dyna.actor.draw = NULL;
             this->actionFunc = func_808A3D58;
