@@ -5262,6 +5262,74 @@ void Player_SetInvulnerability(Player* this, s32 timer) {
     this->damageFlickerAnimCounter = 0;
 }
 
+f32 Player_SetDamageTakenMultiplierPerScene(u16 sceneId) {
+    if (!CQ_IS_TIMESKIP)
+        return 1.0f;
+
+    switch (sceneId) {
+        case SCENE_SACRED_FOREST_MEADOW:
+        case SCENE_FOREST_TEMPLE:
+        case SCENE_FOREST_TEMPLE_BOSS:
+            return 1.1f;
+
+        case SCENE_LAKE_HYLIA:
+        case SCENE_SPRING_LAKE:
+        case SCENE_PATH_TO_GORON_VILLAGE:
+        case SCENE_GORON_VILLAGE:
+        case SCENE_FIRE_TEMPLE:
+        case SCENE_FIRE_TEMPLE_BOSS:
+            return 1.2f;
+
+        case SCENE_WEBBED_SHRINE:
+        case SCENE_GORON_MINES:
+            return 1.3f;
+
+        case SCENE_ICE_CAVERN:
+        case SCENE_WATER_TEMPLE:
+        case SCENE_WATER_TEMPLE_BOSS:
+            return 2.3f;
+
+        case SCENE_BOTTOM_OF_THE_WELL:
+        case SCENE_SHADOW_TEMPLE:
+        case SCENE_SHADOW_TEMPLE_BOSS:
+            return 2.3f;
+
+        case SCENE_PATH_TO_FORTRESS:
+        case SCENE_HAUNTED_WASTELAND:
+        case SCENE_DESERT_COLOSSUS:
+        case SCENE_SPIRIT_TEMPLE:
+        case SCENE_SPIRIT_TEMPLE_BOSS:
+            return 2.3f;
+
+        case SCENE_PATH_TO_WOODFALL:
+        case SCENE_WOODFALL:
+        case SCENE_WOODFALL_TEMPLE:
+        case SCENE_WOODFALL_TEMPLE_BOSS:
+            return 3.0f;
+
+        case SCENE_FORSAKEN_KINGDOM:
+        case SCENE_ROYAL_VAULT:
+        case SCENE_GLOOMY_GRAVEYARD:
+        case SCENE_STONE_TOWER:
+        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_TEMPLE:
+        case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+            return 3.0f;
+
+        case SCENE_INSIDE_GANONS_CASTLE:
+        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+        case SCENE_GANONS_TOWER:
+        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+        case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
+        case SCENE_GANONDORF_BOSS:
+        case SCENE_GANON_BOSS:
+            return 3.0f;
+
+        default:
+            return 1.0f;
+    }
+}
+
 /**
  * @return false if player is out of health
  */
@@ -5270,31 +5338,32 @@ s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
         return true;
     }
 
-    switch (DAMAGE_TAKEN) {
-        case 1:
-            damage *= 2;
-            break;
-        case 2:
-            damage *= 3;
-            break;
-        case 3:
-            damage *= 4;
-            break;
-        case 4:
-            damage *= 6;
-            break;
-        case 5:
-            damage *= 8;
-            break;
-        case 6:
-            damage /= 2;
-            break;
-        case 7:
-            damage /= 4;
-            break;
-    }
-
     if (damage < 0) {
+        damage *= Player_SetDamageTakenMultiplierPerScene(play->sceneId);
+        switch (DAMAGE_TAKEN) {
+            case 1:
+                damage *= 2;
+                break;
+            case 2:
+                damage *= 3;
+                break;
+            case 3:
+                damage *= 4;
+                break;
+            case 4:
+                damage *= 6;
+                break;
+            case 5:
+                damage *= 8;
+                break;
+            case 6:
+                damage /= 2;
+                break;
+            case 7:
+                damage /= 4;
+                break;
+        }
+
         if (this->currentTunic == PLAYER_TUNIC_KOKIRI) {
             if (gSaveContext.save.info.playerData.isMagicAcquired && gSaveContext.save.info.playerData.magic < gSaveContext.save.info.playerData.magicLevel * MAGIC_NORMAL_METER)
                 Player_UseSpecialPower(play, this, 15, 2, NA_SE_SY_HP_RECOVER, SPECIAL_POWER_MAGIC_REGEN, 3);
@@ -5908,39 +5977,40 @@ static s16 sReturnEntranceGroupData[] = {
     /*  1 */ ENTR_DEATH_MOUNTAIN_CRATER_3, // from Double Magic Fairy Fountain
     /*  2 */ MAP_OUTSIDE_GANONS_CASTLE_2,  // from Double Defense Fairy Fountain (as adult)
     /*  3 */ ENTR_WOODFALL_2,              // from Great Quick Spin Fairy Fountain
-    /*  4 */ ENTR_GORON_VILLAGE_2,         // from Half Magic Cost Fairy Fountain
+    /*  4 */ ENTR_GORON_VILLAGE_2,         // from 2nd Double Defense Fairy Fountain
+    /*  5 */ ENTR_FORSAKEN_KINGDOM_7,      // from Half Magic Cost Fairy Fountain
 
     // ENTR_RETURN_2
-    /*  5 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
-    /*  6 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
+    /*  6 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
+    /*  7 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
 
     // ENTR_RETURN_BAZAAR
-    /*  7 */ ENTR_KAKARIKO_VILLAGE_3,
-    /*  8 */ ENTR_MARKET_DAY_6,
+    /*  8 */ ENTR_KAKARIKO_VILLAGE_3,
+    /*  9 */ ENTR_MARKET_DAY_6,
 
     // ENTR_RETURN_4
-    /*  9 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
-    /* 10 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
+    /* 10 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
+    /* 11 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
 
     // ENTR_RETURN_SHOOTING_GALLERY
-    /* 11 */ ENTR_KAKARIKO_VILLAGE_10,
-    /* 12 */ ENTR_MARKET_DAY_8,
+    /* 12 */ ENTR_KAKARIKO_VILLAGE_10,
+    /* 13 */ ENTR_MARKET_DAY_8,
 
     // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    /* 13 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
-    /* 14 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
-    /* 15 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
+    /* 14 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
+    /* 15 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
+    /* 16 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
 };
 
 /**
  * The values are indices into `sReturnEntranceGroupData` marking the start of each group
  */
 static u8 sReturnEntranceGroupIndices[] = {
-    13, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    11, // ENTR_RETURN_SHOOTING_GALLERY
-    5,  // ENTR_RETURN_2
-    7,  // ENTR_RETURN_BAZAAR
-    9,  // ENTR_RETURN_4
+    14, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
+    12, // ENTR_RETURN_SHOOTING_GALLERY
+    6,  // ENTR_RETURN_2
+    8,  // ENTR_RETURN_BAZAAR
+    10, // ENTR_RETURN_4
     0,  // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
 };
 

@@ -675,7 +675,7 @@ void EnGoma_UpdateHit(EnGoma* this, PlayState* play) {
                         this->hurtTimer = 8;
                     }
                 } else {
-                    swordDamage = CollisionCheck_GetSwordDamage(dmgFlags);
+                    swordDamage = CollisionCheck_GetSwordDamage(dmgFlags, this->actor.colChkInfo.defense);
 
                     if (swordDamage != 0) {
                         EffectSsSibuki_SpawnBurst(play, &this->actor.focus.pos);
