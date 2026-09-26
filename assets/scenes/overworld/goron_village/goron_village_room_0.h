@@ -7,13 +7,14 @@ extern SceneCmd* goron_village_room_0AlternateHeaders[];
 extern s16 goron_village_room_0ObjectList_00004C[];
 extern ActorEntry goron_village_room_0ActorEntry_00005C[];
 extern RoomShapeCullable goron_village_room_0RoomShapeCullable_0000F0;
-extern RoomShapeCullableEntry goron_village_room_0RoomShapeCullableEntry_0000FC[39];
+extern RoomShapeCullableEntry goron_village_room_0RoomShapeCullableEntry_0000FC[40];
 
 extern SceneCmd goron_village_room_0Set_timeskip[];
 extern s16 goron_village_room_0ObjectList_timeskip[];
 extern ActorEntry goron_village_room_0ActorEntry_timeskip[];
 
 extern SceneCmd goron_village_room_0Set_cleansed[];
+extern s16 goron_village_room_0ObjectList_cleansed[];
 extern ActorEntry goron_village_room_0ActorEntry_cleansed[];
 
 extern Gfx goron_village_room_0DL_000888[];
@@ -54,6 +55,7 @@ extern Gfx goron_village_room_0DL_00C248[];
 extern Gfx goron_village_room_0DL_00C460[];
 extern Gfx goron_village_room_0DL_00C6C8[];
 extern Gfx goron_village_room_0DL_00C8D0[];
+extern Gfx goron_village_room_0DL_006018[];
 extern Gfx goron_village_room_0DL_015590[];
 
 #endif

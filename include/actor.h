@@ -815,7 +815,8 @@ void func_8003555C(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* a
 void func_800355B8(struct PlayState* play, Vec3f* pos);
 u8 func_800355E4(struct PlayState* play, Collider* collider);
 u8 Actor_ApplyDamage(Actor* actor);
-u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction);
+u8 Actor_AdjustDealtDamage(f32 damage, f32 defense, s32 dmgFlags, u8 itemAction);
+f32 Actor_SetDefensePerScene(u16 sceneId, f32 baseDefense);
 void Actor_RestoreShieldDurability(s32 dmgFlags);
 void Actor_SetDropFlag(Actor* actor, ColliderElement* elem, s32 freezeFlag);
 void Actor_SetDropFlagJntSph(Actor* actor, ColliderJntSph* jntSph, s32 freezeFlag);

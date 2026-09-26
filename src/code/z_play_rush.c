@@ -167,7 +167,7 @@ void Play_SetDungeonRushProgress(PlayState* this) {
         switch (gSaveContext.save.entranceIndex) {
             case ENTR_GANONS_TOWER_0:
             case ENTR_GANONDORF_BOSS_0:
-                gSaveContext.save.info.playerData.isDoubleDefenseAcquired = true;
+                gSaveContext.save.info.playerData.isDoubleDefenseAcquired |= 1;
                 gSaveContext.save.info.inventory.defenseHearts = 30;
                 break;
 

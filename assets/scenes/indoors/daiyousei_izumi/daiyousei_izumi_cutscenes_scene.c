@@ -8,6 +8,10 @@ CutsceneData gGreatFairyGreatQuickSpinCs[] = {
 #include "assets/scenes/indoors/daiyousei_izumi/gGreatFairyGreatQuickSpinCs.csdata.inc.c"
 };
 
+CutsceneData gGreatFairyQuadDefenseCs[] = {
+#include "assets/scenes/indoors/daiyousei_izumi/gGreatFairyQuadDefenseCs.csdata.inc.c"
+};
+
 CutsceneData gGreatFairyHalfMagicCostCs[] = {
 #include "assets/scenes/indoors/daiyousei_izumi/gGreatFairyHalfMagicCostCs.csdata.inc.c"
 };

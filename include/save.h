@@ -618,6 +618,7 @@ typedef enum LinkAge {
 #define NO_BOTTLED_FAIRIES          ((gSaveContext.options[1] >> 16) & 1)  // Bits: 16
 #define NO_ITEM_DROPS               ((gSaveContext.options[1] >> 17) & 1)  // Bits: 17
 #define SHIELD_DURABILITY           ((gSaveContext.options[1] >> 18) & 3)  // Bits: 18-19
+#define INFINITE_HEALTH             ((gSaveContext.options[2] >> 0)  & 1)  // Bits: 0
 
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1

@@ -151,6 +151,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 16, "No Bottled Fairies",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 17, "No Item Drops",          FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 18, "Shield Durability",      FileSelectOptions_SetOptionMax3, FileSelectOptions_GetShieldDurability },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 2, 0,  "Infinite Health",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {

@@ -266,6 +266,7 @@ void EnRailgibud_Init(Actor* thisx, PlayState* play) {
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
+    thisx->colChkInfo.defense = 1.0f;
     if (GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_STONE_TOWER))
         Actor_Kill(&this->actor);
 
