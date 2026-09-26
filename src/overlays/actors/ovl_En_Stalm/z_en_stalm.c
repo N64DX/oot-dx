@@ -302,6 +302,7 @@ void EnStalmaster_Init(Actor* thisx, struct PlayState* play) {
     this->actor.colChkInfo.mass = MASS_IMMOVABLE;
     this->actor.colChkInfo.damageTable = &sStalmasterDamageTable;
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(55, ELITE_HP);
+    this->actor.colChkInfo.defense = 2.0f;
 
     SkelAnime_InitFlex(play, &this->skelAnime, &Stalfos4_ao, &Stalfos4_ao2counterAnim, this->jointTable, this->morphTable, STALMASTER_LIMB_MAX );
 

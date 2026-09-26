@@ -244,6 +244,7 @@ void EnIk_InitImpl(Actor* thisx, PlayState* play) {
     thisx->colChkInfo.mass = MASS_HEAVY;
     this->isBreakingProp = false;
     thisx->colChkInfo.health = Actor_EnemyHealthMultiply(30, ELITE_HP);
+    thisx->colChkInfo.defense = 2.0f;
     thisx->gravity = -1.0f;
     this->switchFlag = IK_GET_SWITCH_FLAG(thisx);
     thisx->params = IK_GET_ARMOR_TYPE(thisx);

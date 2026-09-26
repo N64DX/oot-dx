@@ -409,6 +409,7 @@ void EnZf_Init(Actor* thisx, PlayState* play) {
 
     if (EnZf_IsDinolfos(this)) {
         thisx->colChkInfo.health = Actor_EnemyHealthMultiply(12, ELITE_HP);
+        thisx->colChkInfo.defense = 2.0f;
         thisx->naviEnemyId = NAVI_ENEMY_DINOLFOS;
         SkelAnime_Init(play, &this->skelAnime, &gZfDinolfosSkel, &gZfCryingAnim, this->jointTable, this->morphTable,
                        ENZF_LIMB_MAX);

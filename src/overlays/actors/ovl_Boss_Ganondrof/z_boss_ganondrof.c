@@ -1275,7 +1275,7 @@ void BossGanondrof_CollisionCheck(BossGanondrof* this, PlayState* play) {
                         if (dmgFlags & DMG_HOOKSHOT) {
                             return;
                         }
-                        dmg = CollisionCheck_GetSwordDamage(dmgFlags);
+                        dmg = CollisionCheck_GetSwordDamage(dmgFlags, this->actor.colChkInfo.defense);
                         (dmg == 0) ? (dmg = 2) : (canKill = true);
                         if (((s16)this->actor.colChkInfo.health > Actor_EnemyHealthCheckMultiply(2)) || canKill) {
                             this->actor.colChkInfo.health -= dmg;

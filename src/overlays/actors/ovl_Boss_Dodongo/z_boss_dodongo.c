@@ -1478,7 +1478,7 @@ void BossDodongo_UpdateDamage(BossDodongo* this, PlayState* play) {
             this->collider.elements[0].base.acElemFlags &= ~ACELEM_HIT;
             acHitElem = this->collider.elements[0].base.acHitElem;
             if ((this->actionFunc == BossDodongo_Vulnerable) || (this->actionFunc == BossDodongo_LayDown)) {
-                swordDamage = damage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags);
+                swordDamage = damage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags, this->actor.colChkInfo.defense);
 
                 if (damage != 0) {
                     Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_K_DAMAGE);

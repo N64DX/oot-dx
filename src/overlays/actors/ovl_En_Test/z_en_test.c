@@ -287,6 +287,7 @@ void EnTest_Init(Actor* thisx, PlayState* play) {
     this->actor.focus.pos = this->actor.world.pos;
     this->actor.focus.pos.y += 45.0f;
     this->actor.colChkInfo.damageTable = &sDamageTable;
+    this->actor.colChkInfo.defense = play->sceneId == SCENE_FOREST_TEMPLE ? 0.0f : 2.0f;
 
     Collider_InitCylinder(play, &this->bodyCollider);
     Collider_SetCylinder(play, &this->bodyCollider, &this->actor, &sBodyColliderInit);

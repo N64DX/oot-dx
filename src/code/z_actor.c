@@ -1035,6 +1035,7 @@ void Actor_Init(Actor* actor, PlayState* play) {
         if (actor->colChkInfo.health > 0 && (actor->category == ACTORCAT_ENEMY || ACTORCAT_BOSS))
             actor->maxHealth = actor->colChkInfo.health;
         else actor->maxHealth = 0;
+        actor->colChkInfo.defense = Actor_SetDefensePerScene(play->sceneId, actor->colChkInfo.defense);
     }
 
     if (EXTENDED_DRAW_DISTANCE && !Actor_ExtendedDrawDistanceExempt(actor, play))
@@ -2655,6 +2656,7 @@ void Actor_UpdateAll(PlayState* play, ActorContext* actorCtx) {
                     if (actor->colChkInfo.health > 0 && (actor->category == ACTORCAT_ENEMY || ACTORCAT_BOSS))
                         actor->maxHealth = actor->colChkInfo.health;
                     else actor->maxHealth = 0;
+                    actor->colChkInfo.defense = Actor_SetDefensePerScene(play->sceneId, actor->colChkInfo.defense);
                 }
                 actor = actor->next;
             } else if (!Object_IsLoaded(&play->objectCtx, actor->objectSlot)) {
@@ -4937,7 +4939,7 @@ u8 Actor_ApplyDamage(Actor* actor) {
     s32 dmgFlags = actor->colChkInfo.dmgFlags;
 
     if (damage > 0) {
-        damage = Actor_AdjustDealtDamage(damage, dmgFlags, actor->colChkInfo.itemAction);
+        damage = Actor_AdjustDealtDamage(damage, actor->colChkInfo.defense, dmgFlags, actor->colChkInfo.itemAction);
         Actor_RestoreShieldDurability(dmgFlags);
     }
 
@@ -4950,15 +4952,15 @@ u8 Actor_ApplyDamage(Actor* actor) {
     return actor->colChkInfo.health;
 }
 
-u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
-    if (damage < 1)
-        return (u8)damage;
-    
+u8 Actor_AdjustDealtDamage(f32 damage, f32 defense, s32 dmgFlags, u8 itemAction) {
+    if (damage < 1.0f)
+        return 0;
+
     if (IS_CHILD_QUEST_AS_CHILD) {
         if (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && itemAction == PLAYER_IA_SWORD_KOKIRI && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS))
-            damage *= 1.5;
+            damage *= 1.5f;
         else if (dmgFlags & (DMG_SLASH_GIANT | DMG_SPIN_GIANT | DMG_JUMP_GIANT) && itemAction == PLAYER_IA_SWORD_BIGGORON)
-            damage *= gSaveContext.save.info.playerData.bgsFlag ? 0.75 : 0.5;
+            damage *= gSaveContext.save.info.playerData.bgsFlag ? 0.75f : 0.5f;
     }
 
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_SPIRIT && gSaveContext.save.info.playerData.health < gSaveContext.save.info.playerData.healthCapacity && CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) && R_SPECIAL_POWER_TIMER == 0 && gSaveContext.save.info.energy >= 25) {
@@ -4978,7 +4980,92 @@ u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
         damage *= 1.5;
     }
 
+    if (IS_CHILD_QUEST && defense > 0.0f) {
+        if (itemAction == PLAYER_IA_SWORD_RAZOR || (itemAction == PLAYER_IA_SWORD_MASTER && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)))
+            defense = CLAMP_MIN(defense - 2.0f, 0.0f);
+        else if (dmgFlags & (DMG_JUMP_KOKIRI | DMG_JUMP_MASTER | DMG_JUMP_GIANT | DMG_HAMMER_JUMP))
+            defense += 1.0f;
+        damage = CLAMP_MIN(damage - defense, 0.5f);
+    }
+
     return (u8)(damage * DAMAGE_MULTIPLY);
+}
+
+f32 Actor_SetDefensePerScene(u16 sceneId, f32 baseDefense) {
+    u8 i;
+    f32 sceneDefense, totalDefense;
+
+    if (!CQ_IS_TIMESKIP)
+        return baseDefense;
+
+    switch (sceneId) {
+        case SCENE_FORBIDDEN_WOODS:
+        case SCENE_PATH_TO_WOODFALL:
+        case SCENE_ANCIENT_GROVE:
+        case SCENE_ANCIENT_HOLLOW:
+        case SCENE_FOREST_TEMPLE:
+        case SCENE_FOREST_TEMPLE_BOSS:
+            sceneDefense = 0.5f;
+            break;
+
+        case SCENE_SPRING_LAKE:
+        case SCENE_PATH_TO_GORON_VILLAGE:
+        case SCENE_GORON_VILLAGE:
+        case SCENE_FIRE_TEMPLE:
+        case SCENE_FIRE_TEMPLE_BOSS:
+            sceneDefense = 1.0f;
+            break;
+
+        case SCENE_ICE_CAVERN:
+        case SCENE_WEBBED_SHRINE:
+        case SCENE_GORON_MINES:
+        case SCENE_WATER_TEMPLE:
+        case SCENE_WATER_TEMPLE_BOSS:
+            sceneDefense = 1.5f;
+            break;
+
+        case SCENE_BOTTOM_OF_THE_WELL:
+        case SCENE_SHADOW_TEMPLE:
+        case SCENE_SHADOW_TEMPLE_BOSS:
+            sceneDefense = 2.0f;
+            break;
+
+        case SCENE_PATH_TO_FORTRESS:
+        case SCENE_HAUNTED_WASTELAND:
+        case SCENE_DESERT_COLOSSUS:
+        case SCENE_SPIRIT_TEMPLE:
+        case SCENE_SPIRIT_TEMPLE_BOSS:
+            sceneDefense = 2.5f;
+            break;
+
+        case SCENE_WOODFALL_TEMPLE:
+        case SCENE_WOODFALL_TEMPLE_BOSS:
+        case SCENE_FORSAKEN_KINGDOM:
+        case SCENE_ROYAL_VAULT:
+        case SCENE_GLOOMY_GRAVEYARD:
+        case SCENE_STONE_TOWER:
+        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_TEMPLE:
+        case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+        case SCENE_INSIDE_GANONS_CASTLE:
+        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+        case SCENE_GANONS_TOWER:
+        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+        case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
+        case SCENE_GANONDORF_BOSS:
+        case SCENE_GANON_BOSS:
+            sceneDefense = 3.0f;
+            break;
+
+        default:
+            return baseDefense;
+    }
+
+    totalDefense = baseDefense + sceneDefense;
+    for (i=QUEST_MEDALLION_FOREST; i<=QUEST_MEDALLION_LIGHT; i++)
+        if (CHECK_QUEST_ITEM(i))
+            totalDefense -= 0.5f;
+    return CLAMP(totalDefense, 0.0f, 255.0f);
 }
 
 void Actor_RestoreShieldDurability(s32 dmgFlags) {
