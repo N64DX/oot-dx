@@ -42,7 +42,8 @@ typedef enum BgDyYoseizoRewardType {
     /* 1 */ FAIRY_UPGRADE_DOUBLE_MAGIC,
     /* 2 */ FAIRY_UPGRADE_DOUBLE_DEFENSE,
     /* 3 */ FAIRY_UPGRADE_GREAT_QUICK_SPIN,
-    /* 4 */ FAIRY_UPGRADE_HALF_MAGIC_COST
+    /* 4 */ FAIRY_UPGRADE_SECOND_DOUBLE_DEFENSE,
+    /* 5 */ FAIRY_UPGRADE_HALF_MAGIC_COST
 } BgDyYoseizoRewardType;
 
 typedef enum BgDyYoseizoSpellType {
@@ -296,7 +297,7 @@ void BgDyYoseizo_ChooseType(BgDyYoseizo* this, PlayState* play) {
                 }
                 break;
             case FAIRY_UPGRADE_DOUBLE_DEFENSE:
-                if (!gSaveContext.save.info.playerData.isDoubleDefenseAcquired) {
+                if (!(gSaveContext.save.info.playerData.isDoubleDefenseAcquired & 1)) {
                     PRINTF(VT_FGCOL(MAGENTA) T(" ☆☆☆☆☆ ダメージ半減 ☆☆☆☆☆ \n", " ☆☆☆☆☆ Damage halved ☆☆☆☆☆ \n") VT_RST);
                     this->givingSpell = true;
                     givingReward = true;
@@ -304,6 +305,12 @@ void BgDyYoseizo_ChooseType(BgDyYoseizo* this, PlayState* play) {
                 break;
             case FAIRY_UPGRADE_GREAT_QUICK_SPIN:
                 if (!CHECK_UPGRADE_ITEM(UPGRADE_ENHANCED_SPIN)) {
+                    this->givingSpell = true;
+                    givingReward = true;
+                }
+                break;
+            case FAIRY_UPGRADE_SECOND_DOUBLE_DEFENSE:
+                if (!(gSaveContext.save.info.playerData.isDoubleDefenseAcquired & 2)) {
                     this->givingSpell = true;
                     givingReward = true;
                 }
@@ -345,7 +352,8 @@ void BgDyYoseizo_ChooseType(BgDyYoseizo* this, PlayState* play) {
                         gSaveContext.cutsceneTrigger = 1;
                         break;
                     case FAIRY_UPGRADE_DOUBLE_DEFENSE:
-                        play->csCtx.script = SEGMENTED_TO_VIRTUAL(gGreatFairyDoubleDefenseCs);
+                    case FAIRY_UPGRADE_SECOND_DOUBLE_DEFENSE:
+                        play->csCtx.script = SEGMENTED_TO_VIRTUAL(gSaveContext.save.info.playerData.isDoubleDefenseAcquired > 0 ? gGreatFairyQuadDefenseCs : gGreatFairyDoubleDefenseCs);
                         gSaveContext.cutsceneTrigger = 1;
                         break;
                     case FAIRY_UPGRADE_GREAT_QUICK_SPIN:
@@ -814,9 +822,11 @@ void BgDyYoseizo_Give_Reward(BgDyYoseizo* this, PlayState* play) {
             case FAIRY_UPGRADE_DOUBLE_DEFENSE:
                 if (this->fountainType == FAIRY_UPGRADE_GREAT_QUICK_SPIN)
                     gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_ENHANCED_SPIN];
+                else if (this->fountainType == FAIRY_UPGRADE_SECOND_DOUBLE_DEFENSE)
+                    gSaveContext.save.info.playerData.isDoubleDefenseAcquired |= 2;
                 else if (this->fountainType == FAIRY_UPGRADE_HALF_MAGIC_COST)
                     gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_HALF_MAGIC_COST];
-                else gSaveContext.save.info.playerData.isDoubleDefenseAcquired = true;
+                else gSaveContext.save.info.playerData.isDoubleDefenseAcquired |= 1;
                 Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_HEARTS_MAGIC);
                 break;
         }
@@ -870,7 +880,7 @@ void BgDyYoseizo_Give_Reward(BgDyYoseizo* this, PlayState* play) {
         this->item = NULL;
     }
 
-    if ((play->sceneId == SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC) && (play->csCtx.actorCues[0]->id == 18) && this->fountainType == FAIRY_UPGRADE_DOUBLE_DEFENSE) {
+    if ((play->sceneId == SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC) && (play->csCtx.actorCues[0]->id == 18) && (this->fountainType == FAIRY_UPGRADE_DOUBLE_DEFENSE || this->fountainType == FAIRY_UPGRADE_SECOND_DOUBLE_DEFENSE)) {
         this->giveDefenseHearts = true;
     }
 

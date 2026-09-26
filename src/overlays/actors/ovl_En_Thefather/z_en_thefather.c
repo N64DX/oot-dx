@@ -662,23 +662,23 @@ void EnThefather_CheckDamage(EnThefather* this, PlayState* play) {
 
                 acHitElem = this->colliderSpheres.elements[i].base.acHitElem;
                 dmgFlags = acHitElem->atDmgInfo.dmgFlags;
-                damage = swordDamage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags);
+                damage = swordDamage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags, this->actor.colChkInfo.defense);
 
                 switch (dmgFlags) {
                     case DMG_SLINGSHOT:
-                        damage = Actor_AdjustDealtDamage(1, dmgFlags, this->actor.colChkInfo.itemAction);;
+                        damage = Actor_AdjustDealtDamage(1, this->actor.colChkInfo.defense, dmgFlags, this->actor.colChkInfo.itemAction);;
                         break;
                     case DMG_ARROW_NORMAL:
                     case DMG_ARROW_FIRE:
                     case DMG_ARROW_LIGHT:
                     case DMG_EXPLOSIVE:
-                        damage = Actor_AdjustDealtDamage(2, dmgFlags, this->actor.colChkInfo.itemAction);
+                        damage = Actor_AdjustDealtDamage(2, this->actor.colChkInfo.defense, dmgFlags, this->actor.colChkInfo.itemAction);
                         break;
                     case DMG_MAGIC_FIRE:
-                        damage = Actor_AdjustDealtDamage(4, dmgFlags, this->actor.colChkInfo.itemAction);
+                        damage = Actor_AdjustDealtDamage(4, this->actor.colChkInfo.defense, dmgFlags, this->actor.colChkInfo.itemAction);
                         break;
                     case DMG_ARROW_ICE:
-                        damage = Actor_AdjustDealtDamage(5, dmgFlags, this->actor.colChkInfo.itemAction);
+                        damage = Actor_AdjustDealtDamage(5, this->actor.colChkInfo.defense, dmgFlags, this->actor.colChkInfo.itemAction);
                         break;
                 }
 

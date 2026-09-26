@@ -18,4 +18,7 @@
         0, // playerEntryIndex
         0, // room
     }, // 4
-
+    {
+        0, // playerEntryIndex
+        0, // room
+    }, // 5

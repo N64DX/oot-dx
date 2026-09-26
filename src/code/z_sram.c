@@ -720,7 +720,7 @@ void Sram_OpenSave(SramContext* sramCtx) {
             gSaveContext.save.info.shields[i].durability = Player_GetMaxShieldDurability(i+1);
 
     // Cheating
-    if (DAMAGE_TAKEN == 7 || MONSTER_HP == 7 || ELITE_HP == 7 || BOSS_HP == 7 || DEBUG_MODE || DEBUG_FEATURES)
+    if (DAMAGE_TAKEN == 7 || MONSTER_HP == 7 || ELITE_HP == 7 || BOSS_HP == 7 || DEBUG_MODE || DEBUG_FEATURES || INFINITE_HEALTH)
         gSaveContext.cheated = 1;
 }
 

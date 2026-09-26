@@ -2993,7 +2993,7 @@ s32 Health_ChangeBy(PlayState* play, s16 amount) {
     // clang-format off
     if (amount > 0) { SFX_PLAY_CENTERED(NA_SE_SY_HP_RECOVER);
     } else if (gSaveContext.save.info.playerData.isDoubleDefenseAcquired && (amount < 0)) {
-        amount >>= 1;
+        amount >>= 1 + (gSaveContext.save.info.playerData.isDoubleDefenseAcquired >= 3);
         PRINTF(T("ハート減少半分！！＝%d\n", "Heart decrease halved!! = %d\n"),  amount);
     }
     // clang-format on

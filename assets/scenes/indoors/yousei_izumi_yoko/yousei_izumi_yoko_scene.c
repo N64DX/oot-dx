@@ -202,4 +202,3 @@ u64 yousei_izumi_yoko_scene_0000BDA0_Tex[TEX_LEN(u64, yousei_izumi_yoko_scene_00
 u64 yousei_izumi_yoko_scene_0000C5A0_Tex[TEX_LEN(u64, yousei_izumi_yoko_scene_0000C5A0_Tex_WIDTH, yousei_izumi_yoko_scene_0000C5A0_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/indoors/yousei_izumi_yoko/yousei_izumi_yoko_scene_0000C5A0_Tex.rgba16.inc.c"
 };
-

@@ -2859,7 +2859,7 @@ void BossGanon_UpdateDamage(BossGanon* this, PlayState* play) {
                                               0x1E);
                 }
 
-                damage = flags = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags);
+                damage = flags = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags, this->actor.colChkInfo.defense);
 
                 if (flags == 0) {
                     damage = Actor_EnemyHealthCheckMultiply(2);

@@ -227,8 +227,8 @@ void EnJso_Init(Actor* thisx, PlayState* play) {
     this->actor.naviEnemyId = NAVI_ENEMY_GARO;
     this->actor.attentionRangeType = ATTENTION_RANGE_5;
     this->actor.colChkInfo.mass = 80;
-    this->actor.colChkInfo.health = 10;
-    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
+    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(10, MONSTER_HP);
+    thisx->colChkInfo.defense = 2.0f;
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 0.0f);
     this->actor.colChkInfo.damageTable = &sDamageTable;
     this->actor.shape.shadowScale = 0.0f;

@@ -1799,7 +1799,7 @@ void BossMo_CoreCollisionCheck(BossMo* this, PlayState* play) {
         }
         PRINTF(T("Core_Damage_check 当り 2 ！！\n", "Core_Damage_check hit 2 !!\n"));
         if ((this->work[MO_TENT_ACTION_STATE] != MO_CORE_UNDERWATER) && (this->work[MO_TENT_INVINC_TIMER] == 0)) {
-            u8 damage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags);
+            u8 damage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags, this->actor.colChkInfo.defense);
 
             if ((damage != 0) && (this->work[MO_TENT_ACTION_STATE] < MO_CORE_ATTACK)) {
                 PRINTF(T("Core_Damage_check 剣 当り！！\n", "Core_Damage_check sword hit!!\n"));

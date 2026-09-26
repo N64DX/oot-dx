@@ -101,4 +101,3 @@ u64 yousei_izumi_tate_scene_00007810_Tex[TEX_LEN(u64, yousei_izumi_tate_scene_00
 u64 yousei_izumi_tate_scene_00008010_Tex[TEX_LEN(u64, yousei_izumi_tate_scene_00008010_Tex_WIDTH, yousei_izumi_tate_scene_00008010_Tex_HEIGHT, 16)] = {
 #include "assets/scenes/indoors/yousei_izumi_tate/yousei_izumi_tate_scene_00008010_Tex.rgba16.inc.c"
 };
-
