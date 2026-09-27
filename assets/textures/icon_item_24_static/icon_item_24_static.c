@@ -79,3 +79,7 @@ u64 gQuestIconMagicJarSmallTex[TEX_LEN(u64, QUEST_ICON_WIDTH, QUEST_ICON_HEIGHT,
 u64 gQuestIconMagicJarBigTex[TEX_LEN(u64, QUEST_ICON_WIDTH, QUEST_ICON_HEIGHT, 32)] = {
 #include "assets/textures/icon_item_24_static/gQuestIconMagicJarBigTex.rgba32.inc.c"
 };
+
+u64 gQuestIconAutosaveTex[TEX_LEN(u64, QUEST_ICON_WIDTH, QUEST_ICON_HEIGHT, 32)] = {
+#include "assets/textures/icon_item_24_static/gQuestIconAutosaveTex.rgba32.inc.c"
+};

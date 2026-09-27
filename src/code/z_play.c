@@ -1160,7 +1160,7 @@ skip:
         if (this->specialIconLast != SPECIAL_ICON_AUTOSAVE) {
             InterfaceContext* interfaceCtx = &this->interfaceCtx;
             this->specialIconLast = SPECIAL_ICON_AUTOSAVE;
-            DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (8 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(ITEM_OCARINA_OF_TIME), ITEM_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, "../z_parameter.c", 1171);
+            DMA_REQUEST_ASYNC(&interfaceCtx->dmaRequest_160, interfaceCtx->iconItemSegment + (8 * ITEM_ICON_SIZE), GET_AUTOSAVE_ICON_VROM(), QUEST_ICON_SIZE, 0, &interfaceCtx->loadQueue, NULL, __FILE__, __LINE__);
         }
     }
 }

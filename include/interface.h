@@ -37,6 +37,9 @@ extern u8 _icon_item_24_staticSegmentRomStart[];
 #define GET_QUEST_ICON_VROM(itemId) \
     ((uintptr_t)_icon_item_24_staticSegmentRomStart + (((itemId)-ITEM_MEDALLION_FOREST) * QUEST_ICON_SIZE))
 
+#define GET_AUTOSAVE_ICON_VROM() \
+    ((uintptr_t)_icon_item_24_staticSegmentRomStart + ((ITEM_MAGIC_JAR_BIG - ITEM_MEDALLION_FOREST + 1) * QUEST_ICON_SIZE))
+
 typedef enum DoAction {
     /* 0x00 */ DO_ACTION_ATTACK,
     /* 0x01 */ DO_ACTION_CHECK,
