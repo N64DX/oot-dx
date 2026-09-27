@@ -25,5 +25,6 @@ extern u64 gQuestIconDungeonMapTex[TEX_LEN(u64, QUEST_ICON_WIDTH, QUEST_ICON_HEI
 extern u64 gQuestIconSmallKeyTex[TEX_LEN(u64, QUEST_ICON_WIDTH, QUEST_ICON_HEIGHT, 32)];
 extern u64 gQuestIconMagicJarSmallTex[TEX_LEN(u64, QUEST_ICON_WIDTH, QUEST_ICON_HEIGHT, 32)];
 extern u64 gQuestIconMagicJarBigTex[TEX_LEN(u64, QUEST_ICON_WIDTH, QUEST_ICON_HEIGHT, 32)];
+extern u64 gQuestIconAutosaveTex[TEX_LEN(u64, QUEST_ICON_WIDTH, QUEST_ICON_HEIGHT, 32)];
 
 #endif

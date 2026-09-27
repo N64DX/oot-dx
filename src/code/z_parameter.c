@@ -1824,7 +1824,6 @@ static ChildQuestIcons sChildQuestIcons[] = {
     { ITEM_STRENGTH_SILVER_GAUNTLETS, IsChildQuest,   LAST_ITEM_ICON + 11 },
     { ITEM_STRENGTH_GOLD_GAUNTLETS,   IsChildQuest,   LAST_ITEM_ICON + 12 },
     { ITEM_BROKEN_GORONS_SWORD,       IsChildQuest,   LAST_ITEM_ICON + 13 },
-    { ITEM_STONE_OF_AGONY,            NULL,           LAST_ITEM_ICON + 14 },
 };
 
 u8 Interface_LoadItemIconChildQuest(u8 item) {
@@ -4215,8 +4214,8 @@ static void Interface_DrawSpecialIcon(PlayState* play, InterfaceContext* interfa
     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, play->specialIconAlpha);
     gDPPipeSync(OVERLAY_DISP++);
 
-    gDPLoadTextureBlock(OVERLAY_DISP++, interfaceCtx->iconItemSegment + 0x8000, G_IM_FMT_RGBA, G_IM_SIZ_32b, ITEM_ICON_WIDTH, ITEM_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(x << 2), HIRES_MULTIPLY((y) << 2), HIRES_MULTIPLY((x + (isRumble ? 24 : 16)) << 2), HIRES_MULTIPLY((y + (isRumble ? 24 : 16)) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(isRumble ? 1366 : 2048), HIRES_DIVIDE(isRumble ? 1366 : 2048));
+    gDPLoadTextureBlock(OVERLAY_DISP++, interfaceCtx->iconItemSegment + 0x8000, G_IM_FMT_RGBA, G_IM_SIZ_32b, QUEST_ICON_WIDTH, QUEST_ICON_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(OVERLAY_DISP++, HIRES_MULTIPLY(x << 2), HIRES_MULTIPLY((y) << 2), HIRES_MULTIPLY((x + 24) << 2), HIRES_MULTIPLY((y + 24) << 2), G_TX_RENDERTILE, 0, 0, HIRES_DIVIDE(1536), HIRES_DIVIDE(1536));
 
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3795);
 }
