@@ -598,7 +598,7 @@ void FileSelect_UpdateMainMenu(GameState* thisx) {
                 this->newFileNameCharCount = 0;
                 this->nameEntryBoxPosX = 120;
                 this->nameEntryBoxAlpha = 0;
-                MemCpy(&this->fileNames[CURRENT_SLOT(this->buttonIndex)][0], &emptyName, sizeof(emptyName));
+                MemCopy(&this->fileNames[CURRENT_SLOT(this->buttonIndex)][0], &emptyName, sizeof(emptyName));
             } else if (this->n64ddFlags[CURRENT_SLOT(this->buttonIndex)] == this->n64ddFlag) {
                 SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_L);
                 this->actionTimer = 8;
@@ -2010,7 +2010,7 @@ void FileSelect_LoadGame(GameState* thisx) {
     if (this->buttonIndex == FS_BTN_SELECT_FILE_1 && !gSaveContext.extraSaveFiles && (DEBUG_FEATURES || DEBUG_MODE)) {
         SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_L);
         gSaveContext.fileNum = CURRENT_SLOT(this->buttonIndex);
-        MemCpy(&gSaveContext.options, &this->fileOptions[gSaveContext.fileNum], sizeof(gSaveContext.options));
+        MemCopy(&gSaveContext.options, &this->fileOptions[gSaveContext.fileNum], sizeof(gSaveContext.options));
         Sram_OpenSave(&this->sramCtx);
         gSaveContext.gameMode = GAMEMODE_NORMAL;
         SET_NEXT_GAMESTATE(&this->state, MapSelect_Init, MapSelectState);
@@ -2018,7 +2018,7 @@ void FileSelect_LoadGame(GameState* thisx) {
     } else {
         SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_L);
         gSaveContext.fileNum = CURRENT_SLOT(this->buttonIndex);
-        MemCpy(&gSaveContext.options, &this->fileOptions[gSaveContext.fileNum], sizeof(gSaveContext.options));
+        MemCopy(&gSaveContext.options, &this->fileOptions[gSaveContext.fileNum], sizeof(gSaveContext.options));
         Sram_OpenSave(&this->sramCtx);
         gSaveContext.gameMode = GAMEMODE_NORMAL;
         SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);

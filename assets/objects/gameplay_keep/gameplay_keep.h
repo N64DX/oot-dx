@@ -33,7 +33,7 @@
 #include "fairy_skel.h"
 #include "gameplay_keep_0x16A50.h"
 #include "hilite4_tex.h"
-#include "gFishOutOfWaterAnim.h"
+#include "gFishInAirAnim.h"
 #include "gFishInWaterAnim.h"
 #include "eff_shockwave.h"
 #include "eff_bubble.h"
