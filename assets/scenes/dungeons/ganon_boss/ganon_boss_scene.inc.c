@@ -2,7 +2,7 @@
     SCENE_CMD_ROOM_LIST(ARRAY_COUNT(ganon_boss_scene_02000080_RoomList), ganon_boss_scene_02000080_RoomList),
     SCENE_CMD_TRANSITION_ACTOR_LIST(ARRAY_COUNT(ganon_boss_scene_02000070_TransitionActorEntryList), ganon_boss_scene_02000070_TransitionActorEntryList),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, 21),
-    SCENE_CMD_COL_HEADER(&cq_collision),
+    SCENE_CMD_COL_HEADER(&ganon_boss_scene_02001520_Col),
     SCENE_CMD_SPAWN_LIST(ganon_boss_scene_02000088_SpawnList),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_DUNGEON, OBJECT_GAMEPLAY_DANGEON_KEEP),
     SCENE_CMD_PLAYER_ENTRY_LIST(ARRAY_COUNT(ganon_boss_scene_02000060_PlayerEntryList), ganon_boss_scene_02000060_PlayerEntryList),
