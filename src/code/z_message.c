@@ -2490,7 +2490,7 @@ void Message_Decode(PlayState* play) {
             } else if (curChar == MESSAGE_NAME) {
                 u8* fontBuf;
                 u8 playerName[8];
-                memcpy(playerName, gSaveContext.save.info.playerData.playerName, sizeof(playerName));
+                MemCopy(playerName, gSaveContext.save.info.playerData.playerName, sizeof(playerName));
 
                 // Substitute the player name control character for the file's player name.
                 for (playerNameLen = ARRAY_COUNT(playerName); playerNameLen > 0;
