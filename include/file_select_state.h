@@ -66,9 +66,9 @@ typedef struct FileSelectState {
     /* 0x1CA42 */ s16 nextConfigMode;
     /* 0x1CA44 */ s16 selectMode;
     /* 0x1CA46 */ s16 selectedFileIndex;
-    /* 0x1CA4A */ s16 fileNamesY[3];
+    /* 0x1CA4A */ s16 fileNamesY[6];
     /* 0x1CA50 */ s16 actionTimer;
-    /* 0x1CA52 */ s16 buttonYOffsets[6];
+    /* 0x1CA52 */ s16 buttonYOffsets[9];
     /* 0x1CA5E */ s16 copyDestFileIndex;
     /* 0x1CA60 */ s16 warningLabel;
     /* 0x1CA62 */ s16 warningButtonIndex;
@@ -77,11 +77,11 @@ typedef struct FileSelectState {
     /* 0x1CA68 */ s16 windowColor[3];
     /* 0x1CA6E */ s16 titleAlpha[2];
     /* 0x1CA72 */ s16 windowAlpha;
-    /* 0x1CA74 */ s16 fileButtonAlpha[3];
-    /* 0x1CA7A */ s16 nameBoxAlpha[3];
-    /* 0x1CA80 */ s16 nameAlpha[3];
-    /* 0x1CA86 */ s16 connectorAlpha[3];
-    /* 0x1CA8C */ s16 fileInfoAlpha[3];
+    /* 0x1CA74 */ s16 fileButtonAlpha[6];
+    /* 0x1CA7A */ s16 nameBoxAlpha[6];
+    /* 0x1CA80 */ s16 nameAlpha[6];
+    /* 0x1CA86 */ s16 connectorAlpha[6];
+    /* 0x1CA8C */ s16 fileInfoAlpha[6];
     /* 0x1CA92 */ s16 actionButtonAlpha[4]; // also contains the alphas for the confirm buttons
     /* 0x1CA9A */ s16 optionButtonAlpha;
     /* 0x1CA9C */ s16 nameEntryBoxAlpha;
@@ -121,7 +121,7 @@ typedef struct FileSelectState {
     /* 0x0228 */ s32 timerDown;
     /* 0x022C */ s32 lockUp;
     /* 0x0230 */ s32 lockDown;
-} FileSelectState; // size = 0x1CAE0
+} FileSelectState; // size = 0x1CB0A
 
 void FileSelect_Init(GameState* thisx);
 void FileSelect_Destroy(GameState* thisx);

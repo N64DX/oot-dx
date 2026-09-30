@@ -33,6 +33,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [MMR Music Repo](https://mega.nz/folder/4g1xHbwL#pzE9l2KBs-kwCJJr6E6IKQ)
 - [MM Recomp Bomb Arrow](https://github.com/a-priestley/MMRecompBombArrows)
 - [MM Recomp Textured Stars](https://github.com/danielryb/MMRecompTexturedStars)
+- [MM Recomp 6 Save Slots](https://github.com/SilntRavn/MajorasMask-Ultimate-6-Save-Slots)
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
@@ -45,6 +46,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Nicko (Airi):** DK64 Expansion Pak warning display
 - **Nokaubure:** Autosave concept, Gohma debris, ISG fix, Teleporter
 - **OoT Randomizer:** Key chest textures
+- **SilntRavn:** 6 Save Slots layout
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
 - **thinedave & Aegiker:** Energy (stamina) wheel
