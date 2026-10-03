@@ -235,11 +235,11 @@ void EnBat_FlyIdle(EnBat* this, PlayState* play) {
 
     if ((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) || this->actor.depthInWater > -40.0f)
         this->pitchTarget = -0x1000;
-    else if (this->actor.world.pos.y < (this->actor.home.pos.y - 100.0f))
+    else if (this->actor.world.pos.y < this->actor.home.pos.y - 100.0f)
         this->pitchTarget = -((s32)(0x800 * Rand_ZeroOne()) + 0x800);
-    else if ((this->actor.home.pos.y + 100.0f) < this->actor.world.pos.y)
+    else if (this->actor.home.pos.y + 100.0f < this->actor.world.pos.y)
         this->pitchTarget = (s32)(0x800 * Rand_ZeroOne()) + 0x800;
-    else if ((finishedRotStep) && (Rand_ZeroOne() < 0.015f)) {
+    else if (finishedRotStep && (Rand_ZeroOne() < 0.015f)) {
         this->pitchTarget += (s16)(((s32)(0x400 * Rand_ZeroOne()) + 0x400) * ((Rand_ZeroOne() < 0.5f) ? -1 : 1));
         this->pitchTarget = CLAMP(this->pitchTarget, -0x1000, 0x1000);
     }
@@ -503,9 +503,9 @@ void EnBat_Draw(Actor* thisx, PlayState* play) {
             rollAngle = this->animationFrame * (15 * (0x10000 / 360));
         else rollAngle = (this->animationFrame >= BAD_BAT_FLAP_FRAME) ? (this->animationFrame * (15 * (0x10000 / 360))) - (120 * (0x10000 / 360)) : 0;
         Matrix_MultZero(&this->bodyPartsPos[BAD_BAT_BODYPART_0]);
-        Matrix_RotateZ(rollAngle, MTXMODE_APPLY);
+        Matrix_RotateZ(BINANG_TO_RAD(rollAngle), MTXMODE_APPLY);
         Matrix_MultVecX(1700.0f, &this->bodyPartsPos[BAD_BAT_BODYPART_1]);
-        Matrix_RotateZ(-2 * rollAngle, MTXMODE_APPLY);
+        Matrix_RotateZ(BINANG_TO_RAD(-2 * rollAngle), MTXMODE_APPLY);
         Matrix_MultVecX(-1700.0f, &this->bodyPartsPos[BAD_BAT_BODYPART_2]);
         Actor_DrawDamageEffects(play, &this->actor, this->bodyPartsPos, BAD_BAT_BODYPART_MAX, this->drawDmgEffScale, this->drawDmgEffFrozenSteamScale, this->drawDmgEffAlpha, this->drawDmgEffType);
     }

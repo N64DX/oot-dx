@@ -485,7 +485,8 @@ typedef struct CollisionCheckInfo {
     /* 0x1B */ u8 acHitSpecialEffect; // Stores the hit special effect received from being attacked by an AT collider
     /* 0x1C */ s32 dmgFlags; // Stores the last damage flags being hit with
     /* 0x20 */ u8 itemAction; // Stores the last item action being hit with
-} CollisionCheckInfo; // size = 0x21
+    /* 0x21 */ f32 defense; // Stores the defense of the actor
+} CollisionCheckInfo; // size = 0x24
 
 DamageTable* DamageTable_Get(s32 index);
 void DamageTable_Clear(DamageTable* table);
@@ -580,7 +581,7 @@ void CollisionCheck_SpawnShieldParticlesMetal2(struct PlayState* play, Vec3f* v)
 void CollisionCheck_SpawnShieldParticlesWood(struct PlayState* play, Vec3f* v, Vec3f* actorPos);
 s32 CollisionCheck_CylSideVsLineSeg(f32 radius, f32 height, f32 offset, Vec3f* actorPos, Vec3f* itemPos,
                                     Vec3f* itemProjPos, Vec3f* out1, Vec3f* out2);
-u8 CollisionCheck_GetSwordDamage(s32 dmgFlags);
+u8 CollisionCheck_GetSwordDamage(s32 dmgFlags, f32 defense);
 
 #define BLENDERU_TO_ZU(x, y, z, scale) {x * scale, z * scale, (-y) * scale}
 

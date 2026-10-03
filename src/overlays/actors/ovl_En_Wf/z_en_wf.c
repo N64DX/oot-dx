@@ -62,6 +62,10 @@ void EnWf_SetupSidestep(EnWf* this, PlayState* play);
 void EnWf_Sidestep(EnWf* this, PlayState* play);
 void EnWf_SetupDie(EnWf* this);
 void EnWf_Die(EnWf* this, PlayState* play);
+void EnWf_SetupSink(EnWf* this);
+void EnWf_Sink(EnWf* this, PlayState* play);
+void EnWf_SetupReturnHome(EnWf* this);
+void EnWf_ReturnHome(EnWf* this, PlayState* play);
 s32 EnWf_DodgeRanged(PlayState* play, EnWf* this);
 
 static ColliderJntSphElementInit sJntSphElementsInit[] = {
@@ -239,12 +243,14 @@ void EnWf_Init(Actor* thisx, PlayState* play) {
     thisx->focus.pos = thisx->world.pos;
     thisx->colChkInfo.mass = MASS_HEAVY;
     thisx->colChkInfo.health = Actor_EnemyHealthMultiply(8, ELITE_HP);
+    thisx->colChkInfo.defense = 1.0f;
     thisx->colChkInfo.cylRadius = 50;
     thisx->colChkInfo.cylHeight = 100;
     this->switchFlag = PARAMS_GET_U(thisx->params, 8, 8);
     thisx->params &= 0xFF;
     this->eyeIndex = 0;
-    this->unk_2F4 = 10.0f; // Set and not used
+    this->leashRange = thisx->shape.rot.x > 0 ? (thisx->shape.rot.x * 40.0f) : 0.0f;
+    thisx->shape.rot.x = 0;
 
     Collider_InitJntSph(play, &this->colliderJntSph);
     Collider_SetJntSph(play, &this->colliderJntSph, thisx, &sJntSphInit, this->colliderJntSphElements);
@@ -307,6 +313,11 @@ s32 EnWf_ChangeAction(PlayState* play, EnWf* this, s16 mustChoose) {
     s32 pad;
     s16 wallYawDiff;
     s16 playerYawDiff;
+
+    if (this->leashRange > 0.0f && this->actor.xzDistToPlayer > 160.0f && this->leashRange < Actor_WorldDistXZToPoint(&this->actor, &this->actor.home.pos)) {
+        EnWf_SetupReturnHome(this);
+        return true;
+    }
 
     wallYawDiff = this->actor.wallYaw - this->actor.shape.rot.y;
     wallYawDiff = ABS(wallYawDiff);
@@ -402,9 +413,13 @@ void EnWf_SetupWaitToAppear(EnWf* this) {
 
 void EnWf_WaitToAppear(EnWf* this, PlayState* play) {
     if (this->actionTimer >= 6) {
+        f32 appearRange = 240.0f;
+
+        if (this->leashRange > 0.0f && this->leashRange < appearRange)
+            appearRange = this->leashRange;
         this->actor.world.pos.y = this->actor.home.pos.y - 5.0f;
 
-        if (this->actor.xzDistToPlayer < 240.0f) {
+        if (this->actor.xzDistToPlayer < appearRange) {
             this->actionTimer = 5;
             this->actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
 
@@ -1255,11 +1270,52 @@ void EnWf_Die(EnWf* this, PlayState* play) {
     }
 }
 
+void EnWf_SetupReturnHome(EnWf* this) {
+    Animation_MorphToLoop(&this->skelAnime, &gWolfosRunningAnim, -4.0f);
+    this->action = WOLFOS_ACTION_RETURN_HOME;
+    this->actor.speed = 6.0f;
+    this->actor.world.rot.y = this->actor.shape.rot.y;
+    EnWf_SetupAction(this, EnWf_ReturnHome);
+}
+
+void EnWf_ReturnHome(EnWf* this, PlayState* play) {
+    SkelAnime_Update(&this->skelAnime);
+
+    if (Actor_WorldDistXZToPoint(&this->actor, &this->actor.home.pos) < 40.0f) {
+        this->actor.speed = 0.0f;
+        EnWf_SetupSink(this);
+        return;
+    }
+
+    Math_SmoothStepToS(&this->actor.shape.rot.y, Actor_WorldYawTowardPoint(&this->actor, &this->actor.home.pos), 10, 0x800, 0x10);
+    this->actor.world.rot.y = this->actor.shape.rot.y;
+
+    if ((play->gameplayFrames & 95) == 0)
+        Actor_PlaySfx(&this->actor, NA_SE_EN_WOLFOS_CRY);
+}
+
+void EnWf_SetupSink(EnWf* this) {
+    Animation_Change(&this->skelAnime, &gWolfosRearingUpFallingOverAnim, 0.5f, 0.0f, 7.0f, ANIMMODE_ONCE_INTERP, -5.0f);
+    this->action = WOLFOS_ACTION_SINK;
+    this->actionTimer = 5;
+    EnWf_SetupAction(this, EnWf_Sink);
+}
+
+void EnWf_Sink(EnWf* this, PlayState* play) {
+    if (SkelAnime_Update(&this->skelAnime)) {
+        if (this->actionTimer > 0) {
+            this->actor.scale.y -= this->actor.scale.x * 0.2f;
+            Math_SmoothStepToF(&this->actor.shape.shadowScale, 0.0f, 1.0f, 14.0f, 0.0f);
+            this->actionTimer--;
+        } else EnWf_SetupWaitToAppear(this);
+    }
+}
+
 void func_80B36F40(EnWf* this, PlayState* play) {
     if ((this->action == WOLFOS_ACTION_WAIT) && (this->unk_2E2 != 0)) {
         this->unk_4D4.y = Math_SinS(this->unk_2E2 * 4200) * 8920.0f;
     } else if (this->action != WOLFOS_ACTION_STUNNED) {
-        if (this->action != WOLFOS_ACTION_SLASH) {
+        if (this->action != WOLFOS_ACTION_SLASH && this->action != WOLFOS_ACTION_RETURN_HOME && this->action != WOLFOS_ACTION_SINK) {
             Math_SmoothStepToS(&this->unk_4D4.y, this->actor.yawTowardsPlayer - this->actor.shape.rot.y, 1, 1500, 0);
             this->unk_4D4.y = CLAMP(this->unk_4D4.y, -0x3127, 0x3127);
         } else {

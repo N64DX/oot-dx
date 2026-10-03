@@ -21,7 +21,7 @@ typedef enum EnMThunderSwordType {
     /* 0 */ M_THUNDER_SWORD_MASTER,
     /* 1 */ M_THUNDER_SWORD_KOKIRI,
     /* 2 */ M_THUNDER_SWORD_GIANT,
-    /* 3 */ M_THUNDER_SWORD_HEROS,
+    /* 3 */ M_THUNDER_SWORD_RAZOR,
     /* 4 */ M_THUNDER_SWORD_FAIRIES
 } EnMThunderSwordType;
 
@@ -129,7 +129,7 @@ void EnMThunder_Init(Actor* thisx, PlayState* play2) {
         this->attackStrength = M_THUNDER_ATTACK_WEAK;
         switch (this->swordType) {
             case M_THUNDER_SWORD_KOKIRI:
-            case M_THUNDER_SWORD_HEROS: 
+            case M_THUNDER_SWORD_RAZOR: 
                 this->targetScale = 2;
                 break;
             case M_THUNDER_SWORD_MASTER:
@@ -252,7 +252,7 @@ void EnMThunder_ChargingSpinAttack(EnMThunder* this, PlayState* play) {
 
             switch (this->swordType) {
                 case M_THUNDER_SWORD_KOKIRI:
-                case M_THUNDER_SWORD_HEROS:
+                case M_THUNDER_SWORD_RAZOR: 
                     this->targetScale = 2;
                     break;
                 case M_THUNDER_SWORD_MASTER:

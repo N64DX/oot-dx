@@ -97,7 +97,7 @@ typedef enum EquipQuad {
     /*  1 */ EQUIP_QUAD_SWORD_KOKIRI,
     /*  2 */ EQUIP_QUAD_SWORD_MASTER,
     /*  3 */ EQUIP_QUAD_SWORD_BIGGORON,
-    /*  4 */ EQUIP_QUAD_SWORD_HEROS,
+    /*  4 */ EQUIP_QUAD_SWORD_RAZOR,
     /*  5 */ EQUIP_QUAD_UPG_BULLETBAG_QUIVER_ALT,
     // Row 1
     /*  6 */ EQUIP_QUAD_UPG_BOMB_BAG,

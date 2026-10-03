@@ -399,12 +399,12 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
     this->playerHit = false;
     this->alpha = 255;
     this->switchFlag = PARAMS_GET_U(thisx->params, 8, 8);
-    this->reward = thisx->params & 0xFF;
 
     EnHammergeist_ChangeFace(this, HAMMERGEIST_FACE_NORMAL);
 
     EnHammergeist_InitAndSetCollision(this, play);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
+    this->actor.colChkInfo.defense = 3.0f;
     SkelAnime_InitFlex(play, &this->skelAnime, &gHammergeistSkel, NULL, this->jointTable, this->morphTable, GHAMMERGEISTSKEL_NUM_LIMBS);
     EnHammergeist_SetupDoNothing(this, play);
 

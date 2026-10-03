@@ -268,7 +268,8 @@ typedef enum WorldMapArea {
     /* 28 */ WORLD_MAP_AREA_RIVERSIDE_VILLAGE,
     /* 29 */ WORLD_MAP_AREA_SPRING_LAKE,
     /* 30 */ WORLD_MAP_AREA_WOODFALL,
-    /* 31 */ WORLD_MAP_AREA_MAX // also grottos and fairy's/great fairy's fountains (scenes with varying locations)
+    /* 31 */ WORLD_MAP_AREA_STONE_TOWER,
+    /* 32 */ WORLD_MAP_AREA_MAX // also grottos and fairy's/great fairy's fountains (scenes with varying locations)
 } WorldMapArea;
 
 // offsets in SavePlayerData and SaveContext/Save
@@ -625,8 +626,8 @@ typedef enum LinkAge {
 #define EXTENDED_DRAW_DISTANCE      ((gSaveContext.globalSettings >> 5) & 1)  // Bits: 5
 #define SHOW_STARS                  ((gSaveContext.globalSettings >> 6) & 1)  // Bits: 6
 
-#define MAX_SWORD_HEALTH 8
-#define MAGIC_COST(magic) (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? (magic / 2) : magic)
+#define MAX_SWORD_HEALTH    8
+#define MAGIC_COST(magic)   (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? (magic / 2) : magic)
 
 #define SET_BIT_16(x)    ((x) |= BIT_16)
 #define CLEAR_BIT_16(x)  ((x) &= ~BIT_16)
@@ -1156,9 +1157,12 @@ typedef enum LinkAge {
 #define INFTABLE_1A7_SHIFT 7
 #define INFTABLE_1A8_SHIFT 8
 #define INFTABLE_1A9_SHIFT 9
+#define INFTABLE_1AA_SHIFT 10
 #define INFTABLE_1AB_SHIFT 11
 #define INFTABLE_1AC_SHIFT 12
 #define INFTABLE_1AD_SHIFT 13
+#define INFTABLE_1AE_SHIFT 14
+#define INFTABLE_1AF_SHIFT 15
 
 // INFTABLE 0x1D0-0x1DF
 #define INFTABLE_INDEX_1DX INFTABLE_INDEX(INFTABLE_1D0)

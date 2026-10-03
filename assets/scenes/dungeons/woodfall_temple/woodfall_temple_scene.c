@@ -357,7 +357,7 @@ SurfaceType woodfall_temple_sceneCollisionHeader_012458SurfaceType[] = {
                 FLOOR_TYPE_0,
                 /* unk18 */ 0,
                 WALL_TYPE_0,
-                FLOOR_PROPERTY_11,
+                FLOOR_PROPERTY_0,
                 /* isSoft */ false,
                 /* isHorseBlocked */ false
             ),

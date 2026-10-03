@@ -107,7 +107,11 @@ void ObjFloater_WaitDown(ObjFloater* this, PlayState* play) {
     }
 }
 
-void ObjFloater_Destroy(Actor* thisx, PlayState* play) { }
+void ObjFloater_Destroy(Actor* thisx, PlayState* play) {
+    ObjFloater* this = (ObjFloater*)thisx;
+
+    DynaPoly_DeleteBgActor(play, &play->colCtx.dyna, this->dyna.bgId);
+}
 
 void ObjFloater_Update(Actor* thisx, PlayState* play) {
     ObjFloater* this = (ObjFloater*)thisx;

@@ -156,7 +156,7 @@ s16 EnJg_UpdateTalkState(PlayState* play, Actor* thisx) {
             if (Message_ShouldAdvance(play)) {
                 if (this->actor.textId == 0x8415 || this->actor.textId == 0x8416) {
                     SET_INFTABLE(INFTABLE_PROOF_FOR_GORON_ELDER);
-                    this->actor.textId = (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) ? 0x8418 : 0x8417;
+                    this->actor.textId = (gSaveContext.save.info.sceneFlags[SCENE_WEBBED_SHRINE].swch & (1 << 0x1F) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HEROS) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) ? 0x8418 : 0x8417;
                     Message_ContinueTextbox(play, this->actor.textId);
                     return NPC_TALK_STATE_TALKING;
                 }
@@ -247,7 +247,7 @@ void EnJg_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, 
 
     if (limbIndex == GORON_ELDER_LIMB_LOWER_LIP) {
         Matrix_MultVec3f(&sBreathPosOffset, &this->breathPos);
-        Matrix_RotateY(this->actor.shape.rot.y, MTXMODE_NEW);
+        Matrix_RotateY(BINANG_TO_RAD(this->actor.shape.rot.y), MTXMODE_NEW);
         Matrix_MultVec3f(&sBreathVelOffset, &this->breathVelocity);
         Matrix_MultVec3f(&sBreathAccelOffset, &this->breathAccel);
     }
