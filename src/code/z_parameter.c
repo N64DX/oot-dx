@@ -3465,7 +3465,9 @@ void Magic_DrawMeter(PlayState* play) {
         if (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST)) {
             gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, interfaceCtx->magicAlpha);
+            gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
             OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, gUnusedAmmoDigitHalfTex, 16, 8, X_HIRES_MULTIPLY(R_MAGIC_METER_X + 4 + gSaveContext.magicCapacity), HIRES_MULTIPLY(magicMeterY + 7), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(8), X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));
+            gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);
         }
     }
 
@@ -3670,18 +3672,18 @@ void Interface_DrawItemButtons(PlayState* play) {
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 #if OOT_NTSC && !OOT_NTSC_N64
-            R_START_LABEL_SCALE = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            R_START_LABEL_WIDTH = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            R_START_LABEL_HEIGHT = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
+            R_START_LABEL_SCALE = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 99.0f);
+            R_START_LABEL_WIDTH = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 99.0f);
+            R_START_LABEL_HEIGHT = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 99.0f);
             gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL) << 2,
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language) << 2),
                                 X_HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + R_START_LABEL_WIDTH) << 2,
                                 HIRES_MULTIPLY((R_START_LABEL_Y(gSaveContext.language) + R_START_LABEL_HEIGHT) << 2), G_TX_RENDERTILE,
                                 0, 0, X_HIRES_DIVIDE(R_START_LABEL_SCALE), HIRES_DIVIDE(R_START_LABEL_SCALE));
 #else
-            texCoordScale = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            width = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
-            height = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 100.0f);
+            texCoordScale = (1 << 10) / (R_START_LABEL_DD(gSaveContext.language) / 99.0f);
+            width = DO_ACTION_TEX_WIDTH / (R_START_LABEL_DD(gSaveContext.language) / 99.0f);
+            height = DO_ACTION_TEX_HEIGHT / (R_START_LABEL_DD(gSaveContext.language) / 99.0f);
             gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL) << 2,
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language)) << 2,
                                 X_HIRES_MULTIPLY(R_START_LABEL_X(gSaveContext.language) + WS_SHIFT_FULL + width) << 2,
@@ -3692,7 +3694,7 @@ void Interface_DrawItemButtons(PlayState* play) {
             OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(268 + WS_SHIFT_FULL), HIRES_MULTIPLY(182), X_HIRES_MULTIPLY(22), HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)), (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, 255);
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(185) << 2, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL + 48) << 2, HIRES_MULTIPLY(185 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+			gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(185) << 2, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL + 48) << 2, HIRES_MULTIPLY(185 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10) - 1, HIRES_DIVIDE(1 << 10) - 1);
         }
     }
 
@@ -3724,6 +3726,7 @@ void Interface_DrawItemButtons(PlayState* play) {
             gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 0);
             gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0,
                               PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+			gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
 
 #if !PLATFORM_IQUE
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, cUpLabelTextures[gSaveContext.language], G_IM_FMT_IA, 32, 8, 0,
@@ -3739,6 +3742,8 @@ void Interface_DrawItemButtons(PlayState* play) {
                                 X_HIRES_MULTIPLY(R_C_UP_ICON_X + 40) << 2, HIRES_MULTIPLY(R_C_UP_ICON_Y + 12) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10),
                                 HIRES_DIVIDE(1 << 10));
 #endif
+
+			gDPSetTextureFilter(OVERLAY_DISP++, G_TF_BILERP);
         }
 
         sCUpTimer--;
@@ -3857,6 +3862,7 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
         ammo = AMMO(i);
 
         gDPPipeSync(OVERLAY_DISP++);
+        gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
 
         if ((button == 0) && (gSaveContext.minigameState == 1)) {
             ammo = play->interfaceCtx.hbaAmmo;
@@ -3918,6 +3924,7 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
         }
     }
 
+    gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 3158);
 }
 
@@ -4631,7 +4638,7 @@ void Interface_Draw(PlayState* play) {
                                    DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP,
                                    G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-            R_B_LABEL_DD = (1 << 10) / (R_B_LABEL_SCALE(gSaveContext.language) / 100.0f);
+            R_B_LABEL_DD = (1 << 10) / (R_B_LABEL_SCALE(gSaveContext.language) / 99.0f);
             gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(R_B_LABEL_X(gSaveContext.language)) << 2,
                                 HIRES_MULTIPLY(R_B_LABEL_Y(gSaveContext.language) << 2),
                                 X_HIRES_MULTIPLY(R_B_LABEL_X(gSaveContext.language) + DO_ACTION_TEX_WIDTH) << 2,

@@ -148,6 +148,7 @@ void MapMark_DrawForDungeon(PlayState* play) {
                 markPointX = R_ENABLE_MIRROR == 1 ? gMapData->dungeonXOffset[dungeon][interfaceCtx->mapRoomNum] + MAP_I_TEX_WIDTH - markPoint->x - (markInfo->textureWidth  * 1.0f) : markPoint->x;
 
                 gDPPipeSync(OVERLAY_DISP++);
+                gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
                 gDPLoadTextureBlock_Runtime(OVERLAY_DISP++, markInfo->texture, markInfo->imageFormat,
                                             markInfo->imageSize, markInfo->textureWidth, markInfo->textureHeight, 0,
                                             G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
@@ -158,6 +159,8 @@ void MapMark_DrawForDungeon(PlayState* play) {
                 gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(rectLeft), HIRES_MULTIPLY(rectTop), X_HIRES_MULTIPLY(markInfo->rectWidth + rectLeft),
                                     HIRES_MULTIPLY(rectTop + markInfo->rectHeight), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(markInfo->dsdx),
                                     HIRES_DIVIDE(markInfo->dtdy));
+
+                gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);
             }
             markPoint++;
         }
