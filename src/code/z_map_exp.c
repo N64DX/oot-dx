@@ -508,6 +508,7 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_ICE_CAVERN:
                 if (!R_MINIMAP_DISABLED) {
                     Gfx_SetupDL_39Overlay(play->state.gfxCtx);
+                    gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
                     gDPSetCombineLERP(OVERLAY_DISP++, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0,
                                       TEXEL0, 0, PRIMITIVE, 0);
 
@@ -536,6 +537,8 @@ void Minimap_Draw(PlayState* play) {
                         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
                         MapMark_Draw(play);
                     }
+                    
+					gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);
                 }
 
                 if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L) && !Play_InCsMode(play) && !pressed_r && minimap_timer < (60 / R_UPDATE_RATE) && sNoclipTimer == 0 && !BombArrow_IsActive(play)) {
@@ -587,6 +590,7 @@ void Minimap_Draw(PlayState* play) {
                     
                     Gfx_SetupDL_39Overlay(play->state.gfxCtx);
 
+                    gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
                     gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MINIMAP_COLOR(0), R_MINIMAP_COLOR(1), R_MINIMAP_COLOR(2),
                                     interfaceCtx->minimapAlpha);
@@ -636,6 +640,7 @@ void Minimap_Draw(PlayState* play) {
                                             0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
                     }
 
+                    gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);
                     Minimap_DrawCompassIcons(play); // Draw icons for the player spawn and current position
                 }
 
