@@ -79,10 +79,14 @@ extern u64 gPauseSave10FRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_
 extern u64 gPauseSave20FRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
 
 // Child quest exclusive tiles
-extern u64 gPauseSelectItem10CQFRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
-extern u64 gPauseSelectItem20CQFRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
-extern u64 gPauseEquipment00CQFRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
-extern u64 gPauseEquipment10CQFRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
-extern u64 gPauseEquipment20CQFRATex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseSelectItem10CQFRATex[];
+extern u64 gPauseSelectItem20CQFRATex[];
+extern u64 gPauseEquipment00CQFRATex[];
+extern u64 gPauseEquipment10CQFRATex[];
+extern u64 gPauseEquipment20CQFRATex[];
+extern u64 gPauseAncientHollowTitleFRATex[];
+extern u64 gPauseGoronMinesTitleFRATex[];
+extern u64 gPauseWoodfallTitleFRATex[];
+extern u64 gPausePurpleIceCavernTitleFRATex[];
 
 #endif

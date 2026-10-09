@@ -6035,10 +6035,12 @@ static s16 sDungeonEntrances[] = {
 };
 
 static SavedSceneFlags* Player_GetSceneFlags(PlayState* play) {
-    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
-        return &gSaveContext.save.info.sceneFlags[play->sceneId];
-    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
-        return &gSaveContextExtended.sceneFlags[play->sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
+    u8 sceneId = Play_GetOriginalSceneId(play->sceneId);
+
+    if (sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        return &gSaveContext.save.info.sceneFlags[sceneId];
+    if (sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
+        return &gSaveContextExtended.sceneFlags[sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
     return NULL;
 }
 

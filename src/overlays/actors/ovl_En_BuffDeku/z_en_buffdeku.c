@@ -627,7 +627,7 @@ void EnBuffDeku_Death(EnBuffDeku* this, PlayState* play) {
         if (isHyper) {
             u8 i;
 
-            Flags_SetClear(play, 1);
+            Flags_SetClear(play, 0);
             Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_DOOR_WARP1, 0.0f, 0.0f, 0.0f, 0, 0, 0, WARP_DUNGEON_CHILD);
             Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_B_HEART, 100.0f, 0.0f, 0.0f, 0, 0, 0, 0);
 

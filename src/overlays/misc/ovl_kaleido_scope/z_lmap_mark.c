@@ -45,7 +45,7 @@ void PauseMapMark_Init(PlayState* play) {
     gBossMarkState = 0;
     gBossMarkScale = 1.0f;
 #if OOT_VERSION <= PAL_1_1
-    if (R_QUEST_MODE == MASTER_QUEST)
+    if (R_QUEST_MODE == MASTER_QUEST || R_QUEST_MODE == CHILD_MASTER_QUEST || R_QUEST_MODE == DUNGEON_MASTER_RUSH)
         gLoadedPauseMarkDataTable = gPauseMapMarkDataMQTable;
     else gLoadedPauseMarkDataTable = gPauseMapMarkDataTable;
 #else
@@ -83,8 +83,7 @@ void PauseMapMark_DrawForDungeon(PlayState* play) {
             break;
         }
 
-        if ((mapMarkData->markType == PAUSE_MAP_MARK_BOSS) && (play->sceneId >= SCENE_DEKU_TREE_BOSS) &&
-            (play->sceneId <= SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR)) {
+        if ((mapMarkData->markType == PAUSE_MAP_MARK_BOSS) && ((play->sceneId >= SCENE_DEKU_TREE_BOSS && play->sceneId <= SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR) || (play->sceneId >= SCENE_WOODFALL_TEMPLE_BOSS && play->sceneId <= SCENE_STONE_TOWER_TEMPLE_BOSS))) {
             if (gBossMarkState == 0) {
                 Math_ApproachF(&gBossMarkScale, 1.5f, 1.0f, 0.041f);
                 if (gBossMarkScale == 1.5f) {
@@ -130,6 +129,8 @@ void PauseMapMark_DrawForDungeon(PlayState* play) {
                         case SCENE_WATER_TEMPLE_BOSS:
                         case SCENE_SPIRIT_TEMPLE_BOSS:
                         case SCENE_SHADOW_TEMPLE_BOSS:
+                        case SCENE_WOODFALL_TEMPLE_BOSS:
+                        case SCENE_STONE_TOWER_TEMPLE_BOSS:
                             display = false;
                             break;
                         default:
@@ -190,6 +191,9 @@ void PauseMapMark_Draw(PlayState* play) {
         case SCENE_SHADOW_TEMPLE:
         case SCENE_BOTTOM_OF_THE_WELL:
         case SCENE_ICE_CAVERN:
+        case SCENE_ANCIENT_HOLLOW:
+        case SCENE_GORON_MINES:
+        case SCENE_WOODFALL_TEMPLE:
             PauseMapMark_DrawForDungeon(play);
             break;
     }

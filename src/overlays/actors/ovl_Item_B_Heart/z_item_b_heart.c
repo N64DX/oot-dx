@@ -47,7 +47,7 @@ static InitChainEntry sInitChain[] = {
 void ItemBHeart_Init(Actor* thisx, PlayState* play) {
     ItemBHeart* this = (ItemBHeart*)thisx;
 
-    if (Flags_GetCollectible(play, 0x1F)) {
+    if (Flags_GetCollectible(play, play->sceneId >= SCENE_ANCIENT_HOLLOW && play->sceneId <= SCENE_STONE_TOWER_TEMPLE_BOSS ? 0x1E : 0x1F)) {
         Actor_Kill(&this->actor);
     } else {
         Actor_ProcessInitChain(&this->actor, sInitChain);
@@ -64,7 +64,7 @@ void ItemBHeart_Update(Actor* thisx, PlayState* play) {
     func_80B85264(this, play);
     Actor_UpdateBgCheckInfo(play, &this->actor, 0.0f, 0.0f, 0.0f, UPDBGCHECKINFO_FLAG_2);
     if (Actor_HasParent(&this->actor, play)) {
-        Flags_SetCollectible(play, 0x1F);
+        Flags_SetCollectible(play, play->sceneId >= SCENE_ANCIENT_HOLLOW && play->sceneId <= SCENE_STONE_TOWER_TEMPLE_BOSS ? 0x1E : 0x1F);
         Actor_Kill(&this->actor);
     } else {
         Actor_OfferGetItem(&this->actor, play, GI_HEART_CONTAINER_2, 30.0f, 40.0f);

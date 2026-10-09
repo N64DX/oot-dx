@@ -43,6 +43,22 @@ u64 gPauseIceCavernTitleFRATex[TEX_LEN(u64, gPauseIceCavernTitleFRATex_WIDTH, gP
 #include "build/pal-1.0/assets/textures/icon_item_fra_static/gPauseIceCavernTitleFRATex.ia8.inc.c"
 };
 
+u64 gPauseAncientHollowTitleFRATex[] = {
+#include "assets/textures/icon_item_fra_static/gPauseAncientHollowTitleFRATex.ia8.inc.c"
+};
+
+u64 gPauseGoronMinesTitleFRATex[] = {
+#include "assets/textures/icon_item_fra_static/gPauseGoronMinesTitleFRATex.ia8.inc.c"
+};
+
+u64 gPauseWoodfallTitleFRATex[] = {
+#include "assets/textures/icon_item_fra_static/gPauseWoodfallTitleFRATex.ia8.inc.c"
+};
+
+u64 gPausePurpleIceCavernTitleFRATex[] = {
+#include "assets/textures/icon_item_fra_static/gPausePurpleIceCavernTitleFRATex.ia8.inc.c"
+};
+
 u64 gPauseToEquipFRATex[TEX_LEN(u64, gPauseToEquipFRATex_WIDTH, gPauseToEquipFRATex_HEIGHT, 8)] = {
 #include "build/pal-1.0/assets/textures/icon_item_fra_static/gPauseToEquipFRATex.ia8.inc.c"
 };

@@ -2928,6 +2928,7 @@ s16 KaleidoScope_SetPageVertices(PlayState* play, Vtx* vtx, s16 vtxPage, s16 num
     s16 bufIAfterPageSections;
     s16 pageBgQuadX;
     s16 pageBgQuadY;
+    s16 quadWidth;
     s16* quadsX;
     s16* quadsWidth;
     s16* quadsY;
@@ -2990,9 +2991,14 @@ s16 KaleidoScope_SetPageVertices(PlayState* play, Vtx* vtx, s16 vtxPage, s16 num
         quadsHeight = sVtxPageQuadsHeight[vtxPage];
 
         for (j = 0; j < numQuads; j++, bufI += 4) {
-            vtx[bufI + 0].v.ob[0] = vtx[bufI + 2].v.ob[0] = quadsX[j];
+            quadWidth = quadsWidth[j];
 
-            vtx[bufI + 1].v.ob[0] = vtx[bufI + 3].v.ob[0] = vtx[bufI + 0].v.ob[0] + quadsWidth[j];
+            if (vtxPage == VTX_PAGE_MAP_DUNGEON && j == 2 && gSaveContext.mapIndex > SCENE_ICE_CAVERN) {
+                quadWidth = 128;
+                vtx[bufI + 0].v.ob[0] = vtx[bufI + 2].v.ob[0] = -34;
+            } else vtx[bufI + 0].v.ob[0] = vtx[bufI + 2].v.ob[0] = quadsX[j];
+
+            vtx[bufI + 1].v.ob[0] = vtx[bufI + 3].v.ob[0] = vtx[bufI + 0].v.ob[0] + quadWidth;
 
             if (!IS_PAUSE_STATE_GAMEOVER(pauseCtx)) {
                 vtx[bufI + 0].v.ob[1] = vtx[bufI + 1].v.ob[1] = quadsY[j] + pauseCtx->pagesYOrigin1;
@@ -3008,7 +3014,7 @@ s16 KaleidoScope_SetPageVertices(PlayState* play, Vtx* vtx, s16 vtxPage, s16 num
 
             vtx[bufI + 0].v.tc[0] = vtx[bufI + 0].v.tc[1] = vtx[bufI + 1].v.tc[1] = vtx[bufI + 2].v.tc[0] = 0;
 
-            vtx[bufI + 1].v.tc[0] = vtx[bufI + 3].v.tc[0] = quadsWidth[j] << 5;
+            vtx[bufI + 1].v.tc[0] = vtx[bufI + 3].v.tc[0] = quadWidth << 5;
 
             vtx[bufI + 2].v.tc[1] = vtx[bufI + 3].v.tc[1] = quadsHeight[j] << 5;
 
@@ -3998,6 +4004,9 @@ void KaleidoScope_LoadDungeonMap(PlayState* play) {
     s32 pad;
 #endif
 
+    if (gMapData->dgnTexIndexBase[gSaveContext.mapIndex] == 0xFF)
+        return;
+
     DMA_REQUEST_SYNC(interfaceCtx->mapSegment,
                      (uintptr_t)_map_48x85_staticSegmentRomStart + ((R_MAP_TEX_INDEX + 0) * MAP_48x85_TEX_SIZE),
                      MAP_48x85_TEX_SIZE, "../z_kaleido_scope_PAL.c", 3467);
@@ -4025,14 +4034,14 @@ void KaleidoScope_UpdateDungeonMap(PlayState* play) {
 
     Map_SetFloorPalettesData(play, pauseCtx->dungeonMapSlot - 3);
 
-    if ((play->sceneId >= SCENE_DEKU_TREE) && (play->sceneId <= SCENE_TREASURE_BOX_SHOP)) {
+    if ((play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_TREASURE_BOX_SHOP) || (play->sceneId >= SCENE_ANCIENT_HOLLOW && play->sceneId <= SCENE_STONE_TOWER_TEMPLE_BOSS)) {
         if (VREG(30) == pauseCtx->cursorPoint[PAUSE_MAP] - 3) {
             KaleidoScope_OverridePalIndexCI4((char*)interfaceCtx->mapSegment, MAP_48x85_TEX_SIZE,
                                              interfaceCtx->mapPaletteIndex, 14);
         }
     }
 
-    if ((play->sceneId >= SCENE_DEKU_TREE) && (play->sceneId <= SCENE_TREASURE_BOX_SHOP)) {
+    if ((play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_TREASURE_BOX_SHOP) || (play->sceneId >= SCENE_ANCIENT_HOLLOW && play->sceneId <= SCENE_STONE_TOWER_TEMPLE_BOSS)) {
         if (VREG(30) == pauseCtx->cursorPoint[PAUSE_MAP] - 3) {
             KaleidoScope_OverridePalIndexCI4((char*)interfaceCtx->mapSegment + ALIGN16(MAP_48x85_TEX_SIZE),
                                              MAP_48x85_TEX_SIZE, interfaceCtx->mapPaletteIndex, 14);
@@ -5057,6 +5066,10 @@ void KaleidoScope_Update(PlayState* play) {
                         case ENTR_GANONDORF_BOSS_0:
                             gSaveContext.save.entranceIndex = ENTR_GANONS_TOWER_0;
                             break;
+
+                        case ENTR_WOODFALL_TEMPLE_BOSS_0:
+                            gSaveContext.save.entranceIndex = ENTR_WOODFALL_TEMPLE_0;
+                            break;
                     }
                 } else {
                     SFX_PLAY_CENTERED(NA_SE_SY_DECIDE);
@@ -5157,6 +5170,10 @@ void KaleidoScope_Update(PlayState* play) {
                 case SCENE_WATER_TEMPLE_BOSS:
                 case SCENE_SPIRIT_TEMPLE_BOSS:
                 case SCENE_SHADOW_TEMPLE_BOSS:
+                case SCENE_ANCIENT_HOLLOW:
+                case SCENE_GORON_MINES:
+                case SCENE_WOODFALL_TEMPLE:
+                case SCENE_WOODFALL_TEMPLE_BOSS:
                     Map_InitData(play, interfaceCtx->mapRoomNum);
                     break;
             }

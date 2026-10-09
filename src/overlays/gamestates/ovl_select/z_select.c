@@ -253,6 +253,7 @@ void MapSelect_SetEvent(MapSelectState* this, u8 type, u16 flag) {
             MapSelect_SetClearEventGroup(EVENTCHKINF_AA, sShadowFlags, ARRAY_COUNT(sShadowFlags));
             break;
         default:
+            type = Play_GetOriginalSceneId(type);
             if (type < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
                 gSaveContext.save.info.sceneFlags[type].clear ^= (1 << flag);
             else gSaveContextExtended.sceneFlags[type - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)].clear ^= (1 << flag);
@@ -284,6 +285,7 @@ char* MapSelect_GetEvent(MapSelectState* this, u8 type, u16 flag) {
         case NABOORU:
             return MapSelect_GetEventText(GET_EVENTCHKINF(EVENTCHKINF_DEFEATED_NABOORU_KNUCKLE));
         default:
+            type = Play_GetOriginalSceneId(type);
             if (type < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
                 return MapSelect_GetEventText(gSaveContext.save.info.sceneFlags[type].clear & (1 << flag));
             else return MapSelect_GetEventText(gSaveContextExtended.sceneFlags[type - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)].clear & (1 << flag));
@@ -620,7 +622,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Killed Hyper Gohma",       SCENE_ANCIENT_HOLLOW,       13                                       },
     { 0, "Killed Giant Spider",      SCENE_WEBBED_SHRINE,        5                                        },
     { 0, "Killed Black Beast",       SCENE_GORON_MINES,          9                                        },
-    { 0, "Killed King Deku",         SCENE_WOODFALL_TEMPLE_BOSS, 1                                        },
+    { 0, "Killed King Deku",         SCENE_WOODFALL_TEMPLE_BOSS, 0                                        },
     { 0, "Completed Mask Quest",     MASK,                       ITEMGETINF_3F,                           },
     { 0, "Completed Frog Quest",     FROG,                       0,                                       },
     { 0, "Got Bottle Cucco Lady",    ITEM,                       ITEMGETINF_0C,                           },
