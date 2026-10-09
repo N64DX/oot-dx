@@ -2112,10 +2112,41 @@ s16 func_800C09D8(PlayState* this, s16 camId, s16 uid) {
  * Converts the number of a scene to its "original" equivalent, the default version of the area which the player first enters.
  */
 u8 Play_GetOriginalSceneId(u8 sceneId) {
-    if (sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED) // Inverted Stone Tower Temple -> Stone Tower Temple
-        return SCENE_STONE_TOWER_TEMPLE;
-    else if (sceneId == SCENE_STONE_TOWER_INVERTED) // Inverted Stone Tower -> Stone Tower
+    if (sceneId == SCENE_ANCIENT_HOLLOW) // Reusing (boss) dungeon scenes that do support small keys, compasses, dungeon maps and big keys
+         return SCENE_DEKU_TREE_BOSS;
+    else if (sceneId == SCENE_GORON_MINES)
+         return SCENE_JABU_JABU_BOSS;
+    else if (sceneId == SCENE_WOODFALL_TEMPLE || sceneId == SCENE_WOODFALL_TEMPLE_BOSS)
+         return SCENE_DODONGOS_CAVERN_BOSS;
+    else if (sceneId == SCENE_PURPLE_ICE_CAVERN)
+         return SCENE_GANONS_TOWER_COLLAPSE_INTERIOR;
+    else if (sceneId == SCENE_STONE_TOWER_TEMPLE || sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED || sceneId == SCENE_STONE_TOWER_TEMPLE_BOSS)
+        return SCENE_GANONS_TOWER;
+    else if (sceneId == SCENE_STONE_TOWER_INVERTED)
         return SCENE_STONE_TOWER;
+
+    else if (sceneId == SCENE_FORBIDDEN_WOODS) // Reusing shop scenes for other scenes
+        return SCENE_BAZAAR;
+    else if (sceneId == SCENE_GROTTOS2)
+        return SCENE_GORON_SHOP;
+    else if (sceneId == SCENE_WEBBED_SHRINE)
+        return SCENE_ZORA_SHOP;
+    else if (sceneId == SCENE_BENEATH_THE_GRAVEYARD)
+        return SCENE_POTION_SHOP_KAKARIKO;
+    else if (sceneId == SCENE_ROYAL_VAULT)
+        return SCENE_POTION_SHOP_MARKET;
+
+    else if (sceneId == SCENE_RIVERSIDE_INN) // Reusing Kokiri Shop scene several times for shops with almost no flags in them
+        return SCENE_KOKIRI_SHOP;
+    else if (sceneId == SCENE_RIVERSIDE_HOUSE)
+        return SCENE_KOKIRI_SHOP;
+    else if (sceneId == SCENE_IGORS_HOUSE)
+        return SCENE_KOKIRI_SHOP;
+    else if (sceneId == SCENE_ANCIENT_GROVE_SHOP)
+        return SCENE_KOKIRI_SHOP;
+    else if (sceneId == SCENE_SPRING_LAKE_SMITHY)
+        return SCENE_KOKIRI_SHOP;
+
     return sceneId;
 }
 

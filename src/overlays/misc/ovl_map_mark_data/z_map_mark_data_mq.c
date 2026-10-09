@@ -1439,6 +1439,218 @@ static MapMarkData sMapMarkIceCavern[] = {
     },
 };
 
+static MapMarkData sMapMarkAncientHollow[] = {
+    { 
+        { MAP_MARK_CHEST, 3, { // Ancient Hollow minimap 0
+            { 1, 38, 42 },
+            { 3, 64, 10 },
+            { 4, 40,  1 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, { 
+        { MAP_MARK_CHEST, 3, { // Ancient Hollow minimap 1
+            { 1, 38, 42 },
+            { 3, 64, 10 },
+            { 4, 40,  1 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 1, { // Ancient Hollow minimap 2
+            { 5, 15, 60 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 2, { // Ancient Hollow minimap 3
+            { 2, 34, 35 },
+            { 6, 86, 40 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } }, // Ancient Hollow minimap 4
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } }, // Ancient Hollow minimap 5
+    }, {
+        { MAP_MARK_CHEST, 3, { // Ancient Hollow minimap 6
+            { 1, 38, 42 },
+            { 3, 65, 11 },
+            { 4, 40,  1 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 1, { // Ancient Hollow minimap 7
+            { 5, 16, 62 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 2, { // Ancient Hollow minimap 8
+            { 2, 34, 35 },
+            { 6, 86, 40 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } } // Ancient Hollow minimap 9
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } } // Ancient Hollow minimap 10
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } } // Ancient Hollow minimap 11 
+    }, {
+        { MAP_MARK_CHEST, 3, { // Ancient Hollow minimap 12
+            { 1, 38, 42 },
+            { 3, 64, 10 },
+            { 4, 40,  1 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } }, // Ancient Hollow minimap 13
+    }, {
+        { MAP_MARK_CHEST, 1, { // Ancient Hollow minimap 14
+            { 5, 15, 60 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 2, { // Ancient Hollow minimap 15
+            { 2, 34, 35 },
+            { 6, 86, 40 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } }, // Ancient Hollow minimap 16
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } }, // Ancient Hollow minimap 17
+    }, {
+        { MAP_MARK_CHEST, 1, { // Ancient Hollow minimap 18
+            { 0, 39, 41 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_BOSS, 1, { // Ancient Hollow minimap 19
+            { 0, 35, 32 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    },
+};
+
+static MapMarkData sMapMarkGoronMines[] = {
+    {
+        { MAP_MARK_CHEST, 4, { // Goron Mines minimap 0
+            { 0, 29, 47 },
+            { 1, 73, 70 },
+            { 4, 29, 15 },
+            { 5, 48, 30 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 4, { // Goron Mines minimap 1
+            { 0, 29, 47 },
+            { 1, 73, 70 },
+            { 4, 29, 15 },
+            { 5, 48, 30 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 4, { // Goron Mines minimap 2
+            { 0, 29, 47 },
+            { 1, 73, 70 },
+            { 4, 29, 15 },
+            { 5, 48, 30 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST,  4, { // Goron Mines minimap 3
+            { 0, 29, 47 },
+            { 1, 73, 70 },
+            { 4, 29, 15 },
+            { 5, 48, 30 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 4, { // Goron Mines minimap 4
+            { 0, 29, 47 },
+            { 1, 73, 70 },
+            { 4, 29, 15 },
+            { 5, 48, 30 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 4, { // Goron Mines minimap 5
+            { 0, 29, 47 },
+            { 1, 73, 70 },
+            { 4, 29, 15 },
+            { 5, 48, 30 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 2, { // Goron Mines minimap 6
+            { 2,  0, 61 },
+            { 3, 80, 54 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 2, { // Goron Mines minimap 7
+            { 2,  0, 61 },
+            { 3, 80, 54 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 4, { // Goron Mines minimap 8
+            { 0, 29, 47 },
+            { 1, 73, 70 },
+            { 4, 29, 15 },
+            { 5, 48, 30 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 4, { // Goron Mines minimap 9
+            { 0, 29, 47 },
+            { 1, 73, 69 },
+            { 4, 29, 15 },
+            { 5, 48, 30 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 2, { // Goron Mines minimap 10
+            { 2,  0, 61 },
+            { 3, 80, 54 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 2, { // Goron Mines minimap 11
+            { 2,  0, 61 },
+            { 3, 80, 54 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 2, { // Goron Mines minimap 12
+            { 2,  0, 61 },
+            { 3, 80, 54 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, { 
+        { MAP_MARK_NONE, 0, { 0 } }, // Goron Mines minimap 13
+    },
+};
+
+static MapMarkData sMapMarkWoodfallTemple[] = {
+    {
+        { MAP_MARK_BOSS, 1, { // Woodfall Temple minimap 0
+            { 0, 45, 0 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 1, { // Woodfall Temple minimap 1
+            { 23, 44, 61 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 1, { // Woodfall Temple minimap 2
+            { 24, 65, 57 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } }, // Woodfall Temple minimap 3
+    }, {
+        { MAP_MARK_CHEST, 1, { // Woodfall Temple minimap 4
+            { 28, 44, 46 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 1, { // Woodfall Temple minimap 5
+            { 1, 42, 10 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 1, { // Woodfall Temple minimap 6
+            { 29, 44, 39 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 1, { // Woodfall Temple minimap 7
+            { 27, 43, 47 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_CHEST, 1, { // Woodfall Temple minimap 8
+            { 30, 44, 12 },
+        } }, { MAP_MARK_NONE, 0, { 0 } }, 
+    }, {
+        { MAP_MARK_CHEST, 1, { // Woodfall Temple minimap 9
+            { 25, 45, 61 },
+        } }, { MAP_MARK_NONE, 0, { 0 } },
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } }, // Woodfall Temple minimap 10
+    }, {
+        { MAP_MARK_NONE, 0, { 0 } }, // Woodfall Temple minimap 11
+    },
+};
+
 #if OOT_VERSION <= PAL_1_1
 MapMarkData* gMapMarkDataMQTable[] = {
 #else
@@ -1446,4 +1658,6 @@ MapMarkData* gMapMarkDataTable[] = {
 #endif
     sMapMarkDekuTree,    sMapMarkDodongosCavern, sMapMarkJabuJabuBelly, sMapMarkForestTemple, sMapMarkFireTemple,
     sMapMarkWaterTemple, sMapMarkSpiritTemple,   sMapMarkShadowTemple,  sMapMarkBottomWell,   sMapMarkIceCavern,
+    NULL,                NULL,                   NULL,                  NULL,                   NULL,
+    NULL,                NULL,                   sMapMarkAncientHollow, sMapMarkWoodfallTemple, sMapMarkGoronMines,
 };

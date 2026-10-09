@@ -42,8 +42,8 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
         gPauseDekuTitleENGTex, gPauseDodongoTitleENGTex,   gPauseJabuTitleENGTex,   gPauseForestTitleENGTex,
         gPauseFireTitleENGTex, gPauseWaterTitleENGTex,     gPauseSpiritTitleENGTex, gPauseShadowTitleENGTex,
         gPauseBotWTitleENGTex, gPauseIceCavernTitleENGTex, NULL,                    NULL,
-        NULL,                  NULL,                       NULL,                    NULL,
-        NULL,                  NULL,                       NULL,                    NULL,
+        NULL,                  NULL,                       gPausePurpleIceCavernTitleENGTex, NULL,
+        NULL,                  gPauseAncientHollowTitleENGTex, gPauseWoodfallTitleENGTex, gPauseGoronMinesTitleENGTex,
     };
     static void* floorIconTexs[] = {
         gDungeonMapBlankFloorButtonTex, gDungeonMap8FButtonTex, gDungeonMap7FButtonTex, gDungeonMap6FButtonTex,
@@ -246,7 +246,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
     gSPVertex(POLY_OPA_DISP++, &pauseCtx->mapPageVtx[68], 16, 0);
 
     if (dungeonTitleTexs[gSaveContext.mapIndex] != NULL) {
-        gDPLoadTextureBlock(POLY_OPA_DISP++, dungeonTitleTexs[gSaveContext.mapIndex], G_IM_FMT_IA, G_IM_SIZ_8b, 96, 16, 0, G_TX_WRAP | G_TX_NOMIRROR, G_TX_WRAP | G_TX_NOMIRROR, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, dungeonTitleTexs[gSaveContext.mapIndex], G_IM_FMT_IA, G_IM_SIZ_8b, gSaveContext.mapIndex <= SCENE_ICE_CAVERN ? 96 : 128, 16, 0, G_TX_WRAP | G_TX_NOMIRROR, G_TX_WRAP | G_TX_NOMIRROR, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
         gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
     }
 
@@ -336,7 +336,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
         KaleidoScope_DrawQuadTextureRGBA32(gfxCtx, gQuestIconGoldSkulltulaTex, QUEST_ICON_WIDTH, QUEST_ICON_HEIGHT, 8);
     }
 
-    if ((play->sceneId >= SCENE_DEKU_TREE) && (play->sceneId <= SCENE_TREASURE_BOX_SHOP)) {
+    if ((play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_TREASURE_BOX_SHOP) || (play->sceneId >= SCENE_ANCIENT_HOLLOW && play->sceneId <= SCENE_STONE_TOWER_TEMPLE_BOSS)) {
         stepR = (mapBgPulseR - mapBgPulseColors[mapBgPulseStage][0]) / mapBgPulseTimer;
         stepG = (mapBgPulseG - mapBgPulseColors[mapBgPulseStage][1]) / mapBgPulseTimer;
         stepB = (mapBgPulseB - mapBgPulseColors[mapBgPulseStage][2]) / mapBgPulseTimer;
@@ -354,6 +354,11 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
             mapBgPulseTimer = 20;
         }
     }
+
+    CLOSE_DISPS(gfxCtx, __FILE__, __LINE__);
+    if (gMapData->dgnTexIndexBase[gSaveContext.mapIndex] == 0xFF)
+        return;
+    OPEN_DISPS(gfxCtx, __FILE__, __LINE__);
 
     gDPPipeSync(POLY_OPA_DISP++);
     gDPSetTextureFilter(POLY_OPA_DISP++, G_TF_POINT);

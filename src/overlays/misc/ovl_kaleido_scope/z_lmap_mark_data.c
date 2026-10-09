@@ -531,5 +531,64 @@ PauseMapMarksData gPauseMapMarkDataTable[] = {
               { 2, 27.0f, -45.0f },
           } },
         { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
+    }, {
+        { PAUSE_MAP_MARK_CHEST, 23, sMarkChestVtx, 4, 1, { // Ancient Hollow map 0
+            { 0, 44.0f, -37.5f }, // room 0
+        } }, { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
+    }, {
+        { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } }, // Ancient Hollow map 1
+    }, {
+        { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } }, // Ancient Hollow map 2
+    }, {
+        { PAUSE_MAP_MARK_CHEST, 23, sMarkChestVtx, 4, 2, { // Ancient Hollow map 3
+            { 2, 40.0f, -32.5f }, // room 3
+            { 6, 86.0f, -37.0f }, // room 8
+        } }, { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
+    }, {
+        { PAUSE_MAP_MARK_CHEST, 23, sMarkChestVtx, 4, 1, { // Ancient Hollow map 4
+            { 5, 23.5f, -57.5f }, // room 7
+        } }, { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
+    }, {
+        { PAUSE_MAP_MARK_CHEST, 23, sMarkChestVtx, 4, 3, { // Ancient Hollow map 5
+            { 1, 43.0f, -39.5f }, // room 1
+            { 3, 67.0f, -11.0f }, // room 6
+            { 4, 45.0f,  -2.0f }, // room 6
+          } }, { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
+    }, {
+        { PAUSE_MAP_MARK_BOSS, 23, sMarkBossVtx, 4, 1, { // Ancient Hollow map 6
+            { -1, 40.0f, -30.0f },
+        } }, { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
+    }, {
+        { PAUSE_MAP_MARK_CHEST, 23, sMarkChestVtx, 4, 2, { // Goron Mines map 0
+            { 2,  9.5f, -57.0f }, // room 7
+            { 3, 80.0f, -51.0f }, // room 8
+        } }, { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
+    }, {
+        { PAUSE_MAP_MARK_CHEST, 23, sMarkChestVtx, 4, 4, { // Goron Mines map 1
+            { 0, 35.0f, -43.0f }, // room 0
+            { 1, 75.0f, -64.0f }, // room 1
+            { 4, 35.0f, -14.5f }, // room 9
+            { 5, 52.0f, -29.5f }, // room 4
+        } }, { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
+    }, {
+        { PAUSE_MAP_MARK_BOSS, 23, sMarkBossVtx, 4, 1, { // Goron Mines map 2
+            { -1, 35.0f, -12.0f },
+        } }, { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
+    }, {
+        { PAUSE_MAP_MARK_CHEST, 23, sMarkChestVtx, 4, 1, { // Woodfall Temple map 0
+            { 25, 36.0f, -37.0f }, // room 9
+        } }, { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
+    }, {
+        { PAUSE_MAP_MARK_CHEST, 23, sMarkChestVtx, 4, 7, { // Woodfall Temple map 1
+            {  1, 62.5f, -27.0f }, // room 5
+            { 23, 43.5f, -42.0f }, // room 1
+            { 24, 48.0f, -65.0f }, // room 2
+            { 27, 62.5f, -57.5f }, // room 7
+            { 28, 23.5f, -51.0f }, // room 4
+            { 29, 78.0f, -35.5f }, // room 6
+            { 30, 62.5f,  -1.0f }, // room 8
+        } }, { PAUSE_MAP_MARK_BOSS, 23, sMarkBossVtx, 4, 1, {
+            { -1, 43.0f, 0.0f },
+        } }, { PAUSE_MAP_MARK_NONE, 0, NULL, 0, 0, { 0 } },
     },
 };

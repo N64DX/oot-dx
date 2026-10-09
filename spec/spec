@@ -508,21 +508,21 @@ endseg
 #if PLATFORM_N64
 beginseg
     name "map_i_static"
-    include "$(BUILD_DIR)/assets/textures/map_i_static/map_i_static.o"
+    include "$(BUILD_DIR)/assets/textures/map_i_static/map_i_static_extra.o"
     number 11
 endseg
 #endif
 
 beginseg
     name "map_48x85_static"
-    include "$(BUILD_DIR)/assets/textures/map_48x85_static/map_48x85_static.o"
+    include "$(BUILD_DIR)/assets/textures/map_48x85_static/map_48x85_static_extra.o"
     number 11
 endseg
 
 #if !PLATFORM_N64
 beginseg
     name "map_i_static"
-    include "$(BUILD_DIR)/assets/textures/map_i_static/map_i_static.o"
+    include "$(BUILD_DIR)/assets/textures/map_i_static/map_i_static_extra.o"
     number 11
 endseg
 #endif
