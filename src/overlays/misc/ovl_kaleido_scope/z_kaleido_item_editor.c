@@ -73,13 +73,13 @@ void ItemEditor_SetItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
 }
 
 void ItemEditor_SetCQItem(u8 firstItem, u8 lastItem, u8 slot, PlayState* play) {
-    if (IS_CHILD_QUEST_AS_CHILD)
+    if (IS_CHILD_QUEST)
         ItemEditor_SetItem(firstItem, lastItem, slot, play);
 }
 
 void ItemEditor_SetArrow(u8 item, u8 upgrade, u8 slot, PlayState* play) {
-    if (!IS_CHILD_QUEST_AS_CHILD) {
-        gSaveContext.save.info.inventory.items[slot] = (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE ? SLOT(item) : ITEM_NONE);
+    if (!IS_CHILD_QUEST) {
+        gSaveContext.save.info.inventory.items[slot] = (gSaveContext.save.info.inventory.items[slot] == ITEM_NONE ? item : ITEM_NONE);
         if (SLOT(item))
             gSaveContext.save.info.upgradeItems |= gBitFlags[upgrade];
         else gSaveContext.save.info.upgradeItems &= ~gBitFlags[upgrade];
@@ -169,7 +169,18 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
 
     if (type == EQUIP_TYPE_SWORD) {
         if (upgrade) {
-            if (item == EQUIP_INV_SWORD_MASTER) {
+            if (item == EQUIP_INV_SWORD_KOKIRI) {
+                if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_HEROS];
+                } else if (!CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS)) {
+                    gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SWORD_HEROS];
+                } else {
+                    gSaveContext.save.info.inventory.equipment &= ~OWNED_EQUIP_FLAG_ALT(type, item);
+                    gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_HEROS];
+                }
+            } else if (item == EQUIP_INV_SWORD_MASTER) {
                 if (!CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER)) {
                     gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG_ALT(type, item);
                     gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SWORD_MASTER];
@@ -245,13 +256,27 @@ void ItemEditor_SetEquipment(u8 item, u8 type, u8 upgrade, PlayState* play) {
     ItemEditor_RefreshIcons(play);
 }
 
-void ItemEditor_SetHealth(u8 type, u8 max, u8 param3, PlayState* play) {
+void ItemEditor_SetHealth(u8 type, u8 max, u8 isQuad, PlayState* play) {
     s16* health;
     s16 maxHealth, minHealth;
     s16 rounded, next, prev;
 
     if (type == 2) {
-        gSaveContext.save.info.playerData.isDoubleDefenseAcquired ^= 1;
+        if (isQuad) {
+            if (play->state.input[0].press.button == BTN_A) {
+                if (gSaveContext.save.info.playerData.isDoubleDefenseAcquired == 0)
+                    gSaveContext.save.info.playerData.isDoubleDefenseAcquired = 1;
+                else if (gSaveContext.save.info.playerData.isDoubleDefenseAcquired < 3)
+                    gSaveContext.save.info.playerData.isDoubleDefenseAcquired = 3;
+                else gSaveContext.save.info.playerData.isDoubleDefenseAcquired = 0;
+            } else if (play->state.input[0].press.button == BTN_B) {
+                if (gSaveContext.save.info.playerData.isDoubleDefenseAcquired >= 3)
+                    gSaveContext.save.info.playerData.isDoubleDefenseAcquired = 1;
+                else if (gSaveContext.save.info.playerData.isDoubleDefenseAcquired >= 1)
+                    gSaveContext.save.info.playerData.isDoubleDefenseAcquired = 0;
+                else gSaveContext.save.info.playerData.isDoubleDefenseAcquired = 3;
+            }
+        } else gSaveContext.save.info.playerData.isDoubleDefenseAcquired ^= 1;
         gSaveContext.save.info.inventory.defenseHearts = gSaveContext.save.info.playerData.isDoubleDefenseAcquired ? max : 0;
         return;
     }
@@ -263,17 +288,17 @@ void ItemEditor_SetHealth(u8 type, u8 max, u8 param3, PlayState* play) {
     } else {
         health = &gSaveContext.save.info.playerData.healthCapacity;
         maxHealth = max * 0x10;
-        minHealth = 0x30;
+        minHealth = 4;
     }
 
     if (play->state.input[0].press.button == BTN_A) {
-        rounded = (*health / 0x10) * 0x10;
-        next = rounded + 0x10;
+        rounded = (*health / 4) * 4;
+        next = rounded + 4;
         *health = (next <= maxHealth) ? next : maxHealth;
     } else if (play->state.input[0].press.button == BTN_B) {
-        rounded = ((*health + 0xF) / 0x10) * 0x10;
-        prev = rounded - 0x10;
-        *health = (*health > minHealth) ? ((prev < *health) ? prev : *health - 0x10) : minHealth;
+        rounded = ((*health + 3) / 4) * 4;
+        prev = rounded - 4;
+        *health = (*health > minHealth) ? ((prev < *health) ? prev : *health - 4) : minHealth;
     } else if (play->state.input[0].press.button == BTN_CUP) {
         *health = maxHealth;
     } else if (play->state.input[0].press.button == BTN_CDOWN) {
@@ -412,12 +437,13 @@ void ItemEditor_SetDungeon(u8 scene, u8 param2, u8 param3, PlayState* play) {
 
 void ItemEditor_SetFlagsClear(u8 clear, u8 param2, u8 param3, PlayState* play) {
     SavedSceneFlags* sf;
-    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
-        sf = &gSaveContext.save.info.sceneFlags[play->sceneId];
-    else if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
-        sf = &gSaveContextExtended.sceneFlags[play->sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
-    else
-        sf = NULL;
+    s32 flagIndex = (clear >= 5) ? gSaveContext.mapIndex : Play_GetOriginalSceneId(play->sceneId);
+
+    if (flagIndex < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        sf = &gSaveContext.save.info.sceneFlags[flagIndex];
+    else if (flagIndex < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
+        sf = &gSaveContextExtended.sceneFlags[flagIndex - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
+    else sf = NULL;
 
     if (sf == NULL)
         return;
@@ -450,7 +476,7 @@ void ItemEditor_SetFlagsClear(u8 clear, u8 param2, u8 param3, PlayState* play) {
 }
 
 char* ItemEditor_GetItem(u8 item, u8 param2, u8 slot) {
-    if (IS_CHILD_QUEST_AS_CHILD) {
+    if (IS_CHILD_QUEST) {
         switch (item) {
             case ITEM_ARROW_FIRE:
                 return CHECK_UPGRADE_ITEM(UPGRADE_ARROW_FIRE)  ? "Set" : "None";
@@ -473,6 +499,10 @@ char* ItemEditor_GetItem(u8 item, u8 param2, u8 slot) {
                 return "Pictobox";
             case ITEM_SHRINE_KEY:
                 return "Shrine Key";
+            case ITEM_CANE_OF_BYRNA:
+                return "Cane of Byrna";
+            case ITEM_CANE_OF_SOMARIA:
+                return "Cane of Somaria";
         }
     }
 
@@ -618,8 +648,10 @@ char* ItemEditor_GetAmmo(u8 item, u8 type, u8 param3) {
 
 char* ItemEditor_GetEquipment(u8 item, u8 type, u8 upgrade) {
     if (upgrade && type == EQUIP_TYPE_SWORD) {
-        if (item == EQUIP_INV_SWORD_MASTER && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER))
-            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? "Master Sword" : "Razor Sword";
+        if (item == EQUIP_INV_SWORD_KOKIRI && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS) ? "Hero's Sword" : "Kokiri Sword";
+        else if (item == EQUIP_INV_SWORD_MASTER && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_MASTER))
+            return CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) ? "Master Sword" : "Goddess Sword";
         else if (item == EQUIP_INV_SWORD_BIGGORON && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) {
             if (IS_CHILD_QUEST)
                 return gSaveContext.save.info.playerData.bgsFlag ? "Gilded Sword" : "Silver Sword";
@@ -635,17 +667,39 @@ char* ItemEditor_GetEquipment(u8 item, u8 type, u8 upgrade) {
     return (CHECK_OWNED_EQUIP_ALT(type, item)) ? "Set" : "None";
 }
 
-char* ItemEditor_GetHealth(u8 type, u8 param2, u8 param3) {
-    static char buf[3];
+char* ItemEditor_GetHealth(u8 type, u8 param2, u8 isQuad) {
+    static char buf[8];
     u16 health;
+    u8 quarter = 0;
     u8 i = 0;
 
-    if (type == 0)
-        health = gSaveContext.save.info.playerData.health / 0x10;
-    else if (type == 1)
-        health = gSaveContext.save.info.playerData.healthCapacity / 0x10;
-    else if (type == 2)
+    if (type == 0) {
+        health = gSaveContext.save.info.playerData.health;
+        quarter = (health % 0x10) / 4;
+        health /= 0x10;
+    } else if (type == 1) {
+        health = gSaveContext.save.info.playerData.healthCapacity;
+        quarter = (health % 0x10) / 4;
+        health /= 0x10;
+    } else if (type == 2) {
+        if (isQuad) {
+            switch (gSaveContext.save.info.playerData.isDoubleDefenseAcquired) {
+                case 0:
+                    return "None";
+
+                case 1:
+                case 2:
+                    return "Double";
+
+                case 3:
+                    return "Quad";
+
+                default:
+                    return "Unknown";
+            }
+        }
         return gSaveContext.save.info.playerData.isDoubleDefenseAcquired ? "Set" : "None";
+    }
     else if (type == 3)
         health = gSaveContext.magicCapacity;
 
@@ -653,6 +707,12 @@ char* ItemEditor_GetHealth(u8 type, u8 param2, u8 param3) {
         buf[i++] = '0' + (health / 10 % 10);
 
     buf[i++] = '0' + (health % 10);
+    if (type <= 1) {
+        buf[i++] = ' ';
+        buf[i++] = '0' + quarter;
+        buf[i++] = '/';
+        buf[i++] = '4';
+    }
     buf[i] = '\0';
 
     return buf;
@@ -772,34 +832,34 @@ char* ItemEditor_GetFlagsClear(u8 param1, u8 param2, u8 param3) {
 char* sItemEditorTabEntries[] = { "Item Editor", "Ammo Editor", "Equipment Editor", "Upgrade Editor", "Song Editor", "Quest Editor", "Dungeon Keys Editor", "Dungeon Quest Editor", "Reset Scene Flags" };
 
 ItemEditorEntry sItemEditorItemEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_STICK,    ITEM_DEKU_STICK,      SLOT_DEKU_STICK,    "Deku Stick",    ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_NUT,      ITEM_DEKU_NUT,        SLOT_DEKU_NUT,      "Deku Nut",      ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMB,          ITEM_BOMB,            SLOT_BOMB,          "Bomb",          ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMBCHU,       ITEM_BOMBCHU,         SLOT_BOMBCHU,       "Bombchu",       ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_SLINGSHOT,     ITEM_SLINGSHOT,       SLOT_SLINGSHOT,     "Slingshot",     ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOW,           ITEM_BOW,             SLOT_BOW,           "Bow",           ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_FIRE,    UPGRADE_ARROW_FIRE,   SLOT_ARROW_FIRE,    "Fire Arrow",    ItemEditor_SetArrow,        ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_ICE,     UPGRADE_ARROW_ICE,    SLOT_ARROW_ICE,     "Ice Arrow",     ItemEditor_SetArrow,        ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_LIGHT,   UPGRADE_ARROW_LIGHT,  SLOT_ARROW_LIGHT,   "Light Arrow",   ItemEditor_SetArrow,        ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_STICK,    ITEM_DEKU_STICK,      SLOT_DEKU_STICK,    "Deku Stick",    ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_NUT,      ITEM_DEKU_NUT,        SLOT_DEKU_NUT,      "Deku Nut",      ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMB,          ITEM_BOMB,            SLOT_BOMB,          "Bomb",          ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOMBCHU,       ITEM_BOMBCHU,         SLOT_BOMBCHU,       "Bombchu",       ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_SLINGSHOT,     ITEM_SLINGSHOT,       SLOT_SLINGSHOT,     "Slingshot",     ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOW,           ITEM_BOW,             SLOT_BOW,           "Bow",           ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_FIRE,    UPGRADE_ARROW_FIRE,   SLOT_ARROW_FIRE,    "Fire Arrow",    ItemEditor_SetArrow,        ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_ICE,     UPGRADE_ARROW_ICE,    SLOT_ARROW_ICE,     "Ice Arrow",     ItemEditor_SetArrow,        ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_ARROW_LIGHT,   UPGRADE_ARROW_LIGHT,  SLOT_ARROW_LIGHT,   "Light Arrow",   ItemEditor_SetArrow,        ItemEditor_GetItem        },
     { SHOW_OPTION_ONLY_CQ,    UPGRADE_ARROW_BOMB, 0,                    0,                  "Bomb Arrow",    ItemEditor_SetUpgradeItem,  ItemEditor_GetUpgradeItem },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOOMERANG,     ITEM_BOOMERANG,       SLOT_BOOMERANG,     "Boomerang",     ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_HOOKSHOT,      ITEM_LONGSHOT,        SLOT_HOOKSHOT,      "Hookshot",      ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_HAMMER,        ITEM_HAMMER,          SLOT_HAMMER,        "Hammer",        ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_OCARINA_FAIRY, ITEM_OCARINA_OF_TIME, SLOT_OCARINA,       "Ocarina",       ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_LENS_OF_TRUTH, ITEM_LENS_OF_TRUTH,   SLOT_LENS_OF_TRUTH, "Lens of Truth", ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_MAGIC_BEAN,    ITEM_MAGIC_BEAN,      SLOT_MAGIC_BEAN,    "Magic Bean",    ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_DINS_FIRE,     ITEM_DINS_FIRE,       SLOT_DINS_FIRE,     "Din's Fire",    ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_FARORES_WIND,  ITEM_FARORES_WIND,    SLOT_FARORES_WIND,  "Farore's Wind", ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_NAYRUS_LOVE,   ITEM_NAYRUS_LOVE,     SLOT_NAYRUS_LOVE,   "Nayru's Love",  ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_1,      "Bottle #1",     ItemEditor_SetBottle,       ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_2,      "Bottle #2",     ItemEditor_SetBottle,       ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_3,      "Bottle #3",     ItemEditor_SetBottle,       ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_4,      "Bottle #4",     ItemEditor_SetBottle,       ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_POCKET_EGG,    ITEM_CLAIM_CHECK,     SLOT_TRADE_ADULT,   "Adult Trade",   ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ALL_QUESTS, ITEM_WEIRD_EGG,     ITEM_SOLD_OUT,        SLOT_TRADE_CHILD,   "Child Trade",   ItemEditor_SetItem,         ItemEditor_GetItem         },
-    { SHOW_OPTION_ONLY_CQ,    ITEM_ROCS_FEATHER,  ITEM_GOLDEN_FEATHER,  SLOT_FEATHER,       "Feather",       ItemEditor_SetCQItem,       ItemEditor_GetItem         },
-    { SHOW_OPTION_ONLY_CQ,    ITEM_SWORD_FAIRYS,  ITEM_SWORD_FAIRYS,    SLOT_SWORD_FAIRYS,  "Fairy's Sword", ItemEditor_SetCQItem,       ItemEditor_GetItem         },
-    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_SHRINE_KEY,      SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem,       ItemEditor_GetItem         },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOOMERANG,     ITEM_BOOMERANG,       SLOT_BOOMERANG,     "Boomerang",     ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_HOOKSHOT,      ITEM_LONGSHOT,        SLOT_HOOKSHOT,      "Hookshot",      ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_HAMMER,        ITEM_HAMMER,          SLOT_HAMMER,        "Hammer",        ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_OCARINA_FAIRY, ITEM_OCARINA_OF_TIME, SLOT_OCARINA,       "Ocarina",       ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_LENS_OF_TRUTH, ITEM_LENS_OF_TRUTH,   SLOT_LENS_OF_TRUTH, "Lens of Truth", ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_MAGIC_BEAN,    ITEM_MAGIC_BEAN,      SLOT_MAGIC_BEAN,    "Magic Bean",    ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_DINS_FIRE,     ITEM_DINS_FIRE,       SLOT_DINS_FIRE,     "Din's Fire",    ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_FARORES_WIND,  ITEM_FARORES_WIND,    SLOT_FARORES_WIND,  "Farore's Wind", ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_NAYRUS_LOVE,   ITEM_NAYRUS_LOVE,     SLOT_NAYRUS_LOVE,   "Nayru's Love",  ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_1,      "Bottle #1",     ItemEditor_SetBottle,       ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_2,      "Bottle #2",     ItemEditor_SetBottle,       ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_3,      "Bottle #3",     ItemEditor_SetBottle,       ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_BOTTLE_EMPTY,  ITEM_BOTTLE_POE,      SLOT_BOTTLE_4,      "Bottle #4",     ItemEditor_SetBottle,       ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_POCKET_EGG,    ITEM_CLAIM_CHECK,     SLOT_TRADE_ADULT,   "Adult Trade",   ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ALL_QUESTS, ITEM_WEIRD_EGG,     ITEM_SOLD_OUT,        SLOT_TRADE_CHILD,   "Child Trade",   ItemEditor_SetItem,         ItemEditor_GetItem        },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_ROCS_FEATHER,  ITEM_GOLDEN_FEATHER,  SLOT_FEATHER,       "Feather",       ItemEditor_SetCQItem,       ItemEditor_GetItem        },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_SWORD_FAIRYS,  ITEM_SWORD_FAIRYS,    SLOT_SWORD_FAIRYS,  "Fairy's Sword", ItemEditor_SetCQItem,       ItemEditor_GetItem        },
+    { SHOW_OPTION_ONLY_CQ,    ITEM_PICTOBOX,      ITEM_CANE_OF_SOMARIA, SLOT_QUEST,         "CQ Trade",      ItemEditor_SetCQItem,       ItemEditor_GetItem        },
 };
 
 ItemEditorEntry sItemEditorAmmoEntries[] = {
@@ -815,12 +875,13 @@ ItemEditorEntry sItemEditorAmmoEntries[] = {
 };
 
 ItemEditorEntry sItemEditorEquipmentEntries[] = {
-    { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  0, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  0, "Master Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_NO_CQ,      EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Giant's Knife", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_KOKIRI,   EQUIP_TYPE_SWORD,  1, "Kokiri Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_MASTER,   EQUIP_TYPE_SWORD,  1, "Goddess Sword", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_BIGGORON, EQUIP_TYPE_SWORD,  1, "Silver Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
-    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_HEROS,    EQUIP_TYPE_SWORD,  0, "Hero's Sword",  ItemEditor_SetEquipment, ItemEditor_GetEquipment },
+    { SHOW_OPTION_ONLY_CQ,    EQUIP_INV_SWORD_RAZOR,    EQUIP_TYPE_SWORD,  0, "Razor Sword",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_DEKU,    EQUIP_TYPE_SHIELD, 1, "Deku Shield",   ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_HYLIAN,  EQUIP_TYPE_SHIELD, 0, "Hylian Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
     { SHOW_OPTION_ALL_QUESTS, EQUIP_INV_SHIELD_MIRROR,  EQUIP_TYPE_SHIELD, 0, "Mirror Shield", ItemEditor_SetEquipment, ItemEditor_GetEquipment },
@@ -838,7 +899,7 @@ ItemEditorEntry sItemEditorUpgradesEntries[] = {
     { SHOW_OPTION_NO_CQ,      1,                       20, 0, "Max Health",               ItemEditor_SetHealth,      ItemEditor_GetHealth      },
     { SHOW_OPTION_NO_CQ,      2,                       20, 0, "Double Defense",           ItemEditor_SetHealth,      ItemEditor_GetHealth      },   
     { SHOW_OPTION_ONLY_CQ,    1,                       30, 0, "Max Health",               ItemEditor_SetHealth,      ItemEditor_GetHealth      },
-    { SHOW_OPTION_ONLY_CQ,    2,                       30, 0, "Double Defense",           ItemEditor_SetHealth,      ItemEditor_GetHealth      },
+    { SHOW_OPTION_ONLY_CQ,    2,                       30, 1, "Double Defense",           ItemEditor_SetHealth,      ItemEditor_GetHealth      },
     { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Piece of Heart",           ItemEditor_SetHeart,       ItemEditor_GetHeart       },
     { SHOW_OPTION_ALL_QUESTS, 0,                        0, 0, "Magic",                    ItemEditor_SetMagic,       ItemEditor_GetMagic       },
     { SHOW_OPTION_ONLY_CQ,    UPGRADE_HALF_MAGIC_COST,  0, 0, "Half Magic Cost",          ItemEditor_SetUpgradeItem, ItemEditor_GetUpgradeItem },

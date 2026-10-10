@@ -24,22 +24,22 @@ s16 grottos2_room_8ObjectList_000040[] = {
 };
 
 ActorEntry grottos2_room_8ActorEntry_000044[] = {
-    { ACTOR_EN_DEKUBABA, { 1116, 440,    767 }, { 0,      0,     0 }, 0x0000 },
-    { ACTOR_EN_DEKUBABA, { 1280, 440,    960 }, { 0,      0,     0 }, 0x0000 },
-    { ACTOR_EN_SW,       { 1145, 412,   1065 }, { 0,      0,     0 }, 0x0000 },
-    { ACTOR_EN_SW,       { 1164,  48,   1285 }, { 0,      0,     0 }, 0x0000 },
-    { ACTOR_EN_SW,       { 1247, 363,   1065 }, { 0,      0,     0 }, 0x0000 },
-    { ACTOR_EN_SW,       { 1289, 120,   1285 }, { 0,      0,     0 }, 0x0000 },
-    { ACTOR_EN_MKK,      { 1140, 530,   1187 }, { 0, 0xFF4A, 0xB61 }, 0xFF00 },
-    { ACTOR_EN_MKK,      { 1165, 575,   1143 }, { 0, 0xFF4A, 0xB61 }, 0xFF00 },
-    { ACTOR_EN_MKK,      { 1182, 561,   1218 }, { 0, 0xFF4A, 0xB61 }, 0xFF00 },
-    { ACTOR_EN_MKK,      { 1202, 609,   1087 }, { 0, 0xFF4A, 0xB61 }, 0xFF00 },
-    { ACTOR_EN_MKK,      { 1206, 596,   1143 }, { 0, 0xFF4A, 0xB61 }, 0xFF00 },
-    { ACTOR_EN_MKK,      { 1213, 572,   1184 }, { 0, 0xFF4A, 0xB61 }, 0xFF00 },
-    { ACTOR_EN_MKK,      { 1247, 616,   1105 }, { 0, 0xFF4A, 0xB61 }, 0xFF00 },
-    { ACTOR_EN_MKK,      { 1254, 565,   1198 }, { 0, 0xFF4A, 0xB61 }, 0xFF00 },
-    { ACTOR_EN_MKK,      { 1265, 575,   1143 }, { 0, 0xFF4A, 0xB61 }, 0xFF00 },
-    { ACTOR_EN_MKK,      { 1296, 578,   1167 }, { 0, 0xFF4A, 0xB61 }, 0xFF00 },
+    { ACTOR_EN_DEKUBABA, { 1116, 440,    767 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUBABA, { 1280, 440,    960 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_SW,       { 1145, 412,   1065 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_SW,       { 1164,  48,   1285 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_SW,       { 1247, 363,   1065 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_SW,       { 1289, 120,   1285 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_MKK,      { 1140, 530,   1187 }, { 0, 0xFF4A, 0 }, 0xFF00 },
+    { ACTOR_EN_MKK,      { 1165, 575,   1143 }, { 0, 0xFF4A, 0 }, 0xFF00 },
+    { ACTOR_EN_MKK,      { 1182, 561,   1218 }, { 0, 0xFF4A, 0 }, 0xFF00 },
+    { ACTOR_EN_MKK,      { 1202, 609,   1087 }, { 0, 0xFF4A, 0 }, 0xFF00 },
+    { ACTOR_EN_MKK,      { 1206, 596,   1143 }, { 0, 0xFF4A, 0 }, 0xFF00 },
+    { ACTOR_EN_MKK,      { 1213, 572,   1184 }, { 0, 0xFF4A, 0 }, 0xFF00 },
+    { ACTOR_EN_MKK,      { 1247, 616,   1105 }, { 0, 0xFF4A, 0 }, 0xFF00 },
+    { ACTOR_EN_MKK,      { 1254, 565,   1198 }, { 0, 0xFF4A, 0 }, 0xFF00 },
+    { ACTOR_EN_MKK,      { 1265, 575,   1143 }, { 0, 0xFF4A, 0 }, 0xFF00 },
+    { ACTOR_EN_MKK,      { 1296, 578,   1167 }, { 0, 0xFF4A, 0 }, 0xFF00 },
 };
 
 RoomShapeCullable grottos2_room_8RoomShapeCullable_000170 = { 

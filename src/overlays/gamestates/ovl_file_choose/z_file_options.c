@@ -140,6 +140,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { SHOW_OPTION_NO_IQUE    | SHOW_OPTION_NO_CQ,      0, 23, "Use MM Title Cards",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 24, "Use MM HUD",             FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_NO_CQ,      0, 25, "Use MM Pause Info",      FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 26, "Unequip Items",          FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 0,  "Health Recovery",        FileSelectOptions_SetOptionMax3, FileSelectOptions_GetHealthRecovery   },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 2,  "Damage Taken",           FileSelectOptions_SetOptionMax7, FileSelectOptions_GetDamageTaken      },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 5,  "Monster Health",         FileSelectOptions_SetOptionMax7, FileSelectOptions_GetHP               },
@@ -150,6 +151,7 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 16, "No Bottled Fairies",     FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 17, "No Item Drops",          FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 1, 18, "Shield Durability",      FileSelectOptions_SetOptionMax3, FileSelectOptions_GetShieldDurability },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 2, 0,  "Infinite Health",        FileSelectOptions_ToggleOption,  FileSelectOptions_GetOption           },
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {

@@ -59,7 +59,6 @@ static s16 sObjectIds[] = {
     OBJECT_GI_RUPY,          // ITEM_ETC_RUPEE_PURPLE_CHEST_GAME
     OBJECT_GI_HEARTS,        // ITEM_ETC_HEART_PIECE_CHEST_GAME
     OBJECT_GI_KEY,           // ITEM_ETC_KEY_SMALL_CHEST_GAME
-    OBJECT_GI_SWORD_1_MM,    // ITEM_ETC_SWORD_HEROS
     OBJECT_GI_CAMERA,        // ITEM_ETC_PICTOBOX
 };
 
@@ -79,7 +78,6 @@ static s16 sDrawItemIndices[] = {
     GID_RUPEE_PURPLE,        // ITEM_ETC_RUPEE_PURPLE_CHEST_GAME
     GID_HEART_PIECE,         // ITEM_ETC_HEART_PIECE_CHEST_GAME
     GID_SMALL_KEY,           // ITEM_ETC_KEY_SMALL_CHEST_GAME
-    GID_SWORD_HEROS,         // ITEM_ETC_SWORD_HEROS
     GID_PICTOGRAPH_BOX,      // ITEM_ETC_PICTOBOX
 };
 
@@ -98,7 +96,6 @@ static s16 sGetItemIds[] = {
     GI_NONE,                // ITEM_ETC_RUPEE_PURPLE_CHEST_GAME
     GI_NONE,                // ITEM_ETC_HEART_PIECE_CHEST_GAME
     GI_NONE,                // ITEM_ETC_KEY_SMALL_CHEST_GAME
-    GI_SWORD_HEROS,         // ITEM_ETC_SWORD_HEROS
     GI_PICTOBOX,            // ITEM_ETC_PICTOBOX
 };
 
@@ -152,10 +149,6 @@ void ItemEtcetera_Init(Actor* thisx, PlayState* play) {
             this->futureActionFunc = func_80B85B28;
             this->drawFunc = ItemEtcetera_DrawThroughLens;
             this->actor.world.pos.y += 15.0f;
-            break;
-        case ITEM_ETC_SWORD_HEROS:
-            if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS))
-                Actor_Kill(&this->actor);
             break;
         case ITEM_ETC_PICTOBOX:
             if (Flags_GetSwitch(play, 0xB))

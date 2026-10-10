@@ -1035,6 +1035,7 @@ void Actor_Init(Actor* actor, PlayState* play) {
         if (actor->colChkInfo.health > 0 && (actor->category == ACTORCAT_ENEMY || ACTORCAT_BOSS))
             actor->maxHealth = actor->colChkInfo.health;
         else actor->maxHealth = 0;
+        actor->colChkInfo.defense = Actor_SetDefensePerScene(play->sceneId, actor->colChkInfo.defense);
     }
 
     if (EXTENDED_DRAW_DISTANCE && !Actor_ExtendedDrawDistanceExempt(actor, play))
@@ -2519,11 +2520,12 @@ void Actor_InitContext(PlayState* play, ActorContext* actorCtx, ActorEntry* play
     ActorOverlay* overlayEntry;
     SavedSceneFlags* savedSceneFlags;
     s32 i;
+    u8 sceneId = Play_GetOriginalSceneId(play->sceneId);
 
-    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
-        savedSceneFlags = &gSaveContext.save.info.sceneFlags[play->sceneId];
-    else if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
-        savedSceneFlags = &gSaveContextExtended.sceneFlags[play->sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
+    if (sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        savedSceneFlags = &gSaveContext.save.info.sceneFlags[sceneId];
+    else if (sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
+        savedSceneFlags = &gSaveContextExtended.sceneFlags[sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
 
     bzero(actorCtx, sizeof(ActorContext));
 
@@ -2538,7 +2540,7 @@ void Actor_InitContext(PlayState* play, ActorContext* actorCtx, ActorEntry* play
         overlayEntry++;
     }
 
-    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags)) {
+    if (sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags)) {
         actorCtx->flags.chest = savedSceneFlags->chest;
         actorCtx->flags.swch = savedSceneFlags->swch;
         actorCtx->flags.clear = savedSceneFlags->clear;
@@ -2654,6 +2656,7 @@ void Actor_UpdateAll(PlayState* play, ActorContext* actorCtx) {
                     if (actor->colChkInfo.health > 0 && (actor->category == ACTORCAT_ENEMY || ACTORCAT_BOSS))
                         actor->maxHealth = actor->colChkInfo.health;
                     else actor->maxHealth = 0;
+                    actor->colChkInfo.defense = Actor_SetDefensePerScene(play->sceneId, actor->colChkInfo.defense);
                 }
                 actor = actor->next;
             } else if (!Object_IsLoaded(&play->objectCtx, actor->objectSlot)) {
@@ -4936,7 +4939,7 @@ u8 Actor_ApplyDamage(Actor* actor) {
     s32 dmgFlags = actor->colChkInfo.dmgFlags;
 
     if (damage > 0) {
-        damage = Actor_AdjustDealtDamage(damage, dmgFlags, actor->colChkInfo.itemAction);
+        damage = Actor_AdjustDealtDamage(damage, actor->colChkInfo.defense, dmgFlags, actor->colChkInfo.itemAction);
         Actor_RestoreShieldDurability(dmgFlags);
     }
 
@@ -4949,15 +4952,25 @@ u8 Actor_ApplyDamage(Actor* actor) {
     return actor->colChkInfo.health;
 }
 
-u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
-    if (damage < 1)
-        return (u8)damage;
-    
+u8 Actor_AdjustDealtDamage(f32 damage, f32 defense, s32 dmgFlags, u8 itemAction) {
+    if (damage < 1.0f)
+        return 0;
+
     if (IS_CHILD_QUEST_AS_CHILD) {
-        if (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && itemAction == PLAYER_IA_SWORD_HEROS)
-            damage *= 1.5;
+        if (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && itemAction == PLAYER_IA_SWORD_KOKIRI && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS))
+            damage *= 1.5f;
         else if (dmgFlags & (DMG_SLASH_GIANT | DMG_SPIN_GIANT | DMG_JUMP_GIANT) && itemAction == PLAYER_IA_SWORD_BIGGORON)
-            damage *= gSaveContext.save.info.playerData.bgsFlag ? 0.75 : 0.5;
+            damage *= gSaveContext.save.info.playerData.bgsFlag ? 0.75f : 0.5f;
+    }
+
+    if (IS_CHILD_QUEST && defense > 0.0f) {
+        if (itemAction == PLAYER_IA_SWORD_RAZOR || (itemAction == PLAYER_IA_SWORD_MASTER && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) || itemAction == PLAYER_IA_HAMMER || (dmgFlags & DMG_EXPLOSIVE)) {
+            defense = CLAMP_MIN(defense - 3.0f, 0.0f);
+            if (itemAction == PLAYER_IA_HAMMER && (dmgFlags & DMG_HAMMER_JUMP))
+                defense += 1.0f;
+        } else if (dmgFlags & (DMG_JUMP_KOKIRI | DMG_JUMP_MASTER | DMG_JUMP_GIANT | DMG_HAMMER_JUMP))
+            defense += 1.0f;
+        damage = CLAMP_MIN(damage - defense, itemAction == PLAYER_IA_SWORD_MASTER ? 1.0f : 0.5f);
     }
 
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) == EQUIP_VALUE_TUNIC_SPIRIT && gSaveContext.save.info.playerData.health < gSaveContext.save.info.playerData.healthCapacity && CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) && R_SPECIAL_POWER_TIMER == 0 && gSaveContext.save.info.energy >= 25) {
@@ -4980,8 +4993,86 @@ u8 Actor_AdjustDealtDamage(f32 damage, s32 dmgFlags, u8 itemAction) {
     return (u8)(damage * DAMAGE_MULTIPLY);
 }
 
+f32 Actor_SetDefensePerScene(u16 sceneId, f32 baseDefense) {
+    u8 i;
+    f32 sceneDefense, totalDefense;
+
+    if (!CQ_IS_TIMESKIP)
+        return baseDefense;
+
+    switch (sceneId) {
+        case SCENE_FORBIDDEN_WOODS:
+        case SCENE_PATH_TO_WOODFALL:
+        case SCENE_ANCIENT_GROVE:
+        case SCENE_ANCIENT_HOLLOW:
+        case SCENE_FOREST_TEMPLE:
+        case SCENE_FOREST_TEMPLE_BOSS:
+            sceneDefense = 0.5f;
+            break;
+
+        case SCENE_SPRING_LAKE:
+        case SCENE_PATH_TO_GORON_VILLAGE:
+        case SCENE_GORON_VILLAGE:
+        case SCENE_FIRE_TEMPLE:
+        case SCENE_FIRE_TEMPLE_BOSS:
+            sceneDefense = 1.0f;
+            break;
+
+        case SCENE_ICE_CAVERN:
+        case SCENE_WEBBED_SHRINE:
+        case SCENE_GORON_MINES:
+        case SCENE_WATER_TEMPLE:
+        case SCENE_WATER_TEMPLE_BOSS:
+            sceneDefense = 1.5f;
+            break;
+
+        case SCENE_GROTTOS2:
+        case SCENE_BOTTOM_OF_THE_WELL:
+        case SCENE_SHADOW_TEMPLE:
+        case SCENE_SHADOW_TEMPLE_BOSS:
+            sceneDefense = 2.0f;
+            break;
+
+        case SCENE_PATH_TO_FORTRESS:
+        case SCENE_HAUNTED_WASTELAND:
+        case SCENE_DESERT_COLOSSUS:
+        case SCENE_SPIRIT_TEMPLE:
+        case SCENE_SPIRIT_TEMPLE_BOSS:
+            sceneDefense = 2.5f;
+            break;
+
+        case SCENE_WOODFALL_TEMPLE:
+        case SCENE_WOODFALL_TEMPLE_BOSS:
+        case SCENE_FORSAKEN_KINGDOM:
+        case SCENE_ROYAL_VAULT:
+        case SCENE_GLOOMY_GRAVEYARD:
+        case SCENE_STONE_TOWER:
+        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_TEMPLE:
+        case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+        case SCENE_INSIDE_GANONS_CASTLE:
+        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+        case SCENE_GANONS_TOWER:
+        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+        case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
+        case SCENE_GANONDORF_BOSS:
+        case SCENE_GANON_BOSS:
+            sceneDefense = 3.0f;
+            break;
+
+        default:
+            return baseDefense;
+    }
+
+    totalDefense = baseDefense + sceneDefense;
+    for (i=QUEST_MEDALLION_FOREST; i<=QUEST_MEDALLION_LIGHT; i++)
+        if (CHECK_QUEST_ITEM(i))
+            totalDefense -= 0.5f;
+    return CLAMP(totalDefense, 0.0f, 255.0f);
+}
+
 void Actor_RestoreShieldDurability(s32 dmgFlags) {
-    if (SHIELD_DURABILITY && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_HEROS))) {
+    if (SHIELD_DURABILITY && (dmgFlags & (DMG_SLASH_KOKIRI | DMG_SPIN_KOKIRI | DMG_JUMP_KOKIRI) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_KOKIRI) && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS))) {
         u8 shield = CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD);
         if (shield != PLAYER_SHIELD_NONE) {
             ShieldDurability* sh = &gSaveContext.save.info.shields[shield - 1];
@@ -5002,7 +5093,7 @@ void Actor_SetDropFlag(Actor* actor, ColliderElement* elem, s32 freezeFlag) {
         actor->dropFlag = 0x01;
     } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_ICE) {
         actor->dropFlag = 0x02;
-    } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK1) {
+    } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_BOMB) {
         actor->dropFlag = 0x00;
     } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK2) {
         actor->dropFlag = 0x08;
@@ -5040,7 +5131,7 @@ void Actor_SetDropFlagJntSph(Actor* actor, ColliderJntSph* jntSph, s32 freezeFla
             flag = 0x01;
         } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_ICE) {
             flag = 0x02;
-        } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK1) {
+        } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_BOMB) {
             flag = 0x00;
         } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK2) {
             flag = 0x08;

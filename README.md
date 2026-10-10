@@ -33,6 +33,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - [MMR Music Repo](https://mega.nz/folder/4g1xHbwL#pzE9l2KBs-kwCJJr6E6IKQ)
 - [MM Recomp Bomb Arrow](https://github.com/a-priestley/MMRecompBombArrows)
 - [MM Recomp Textured Stars](https://github.com/danielryb/MMRecompTexturedStars)
+- [Not Enough Items SoH fork](https://github.com/skijer/Shipwright/tree/Not-Enough-Items)
 
 **Acknowledgements and contributions:**
 - **Aegiker:** Mirror mode concept
@@ -44,7 +45,9 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 - **Kenton M:** Roc's Feather concept
 - **Nicko (Airi):** DK64 Expansion Pak warning display
 - **Nokaubure:** Autosave concept, Gohma debris, ISG fix, Teleporter
+- **Nukumnehtar:** Cane of Byrna/Somaria item icon
 - **OoT Randomizer:** Key chest textures
+- **Skijer:** custom items concepts & models (Cane of Byrna/Somaria, Pegasus Boots, Four Sword)
 - **spaztron64:** Hires mode concept
 - **Syeo:** Deluxe chest textures
 - **thinedave & Aegiker:** Energy (stamina) wheel
@@ -62,7 +65,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 **Actors and objects:**
 - **GrandLovania**: Stalmaster
 - **LeSéducteur:** Buff Scrub, King Deku
-- **Syeo & Trueffel:** Miniblin, Molmauk
+- **Syeo & Trueffel:** Miniblin, Molmauk, Scissors Beetle
 - **Sunset Tides Interactive:** Beast, Giant Spider, Black Beast
 - **thinedave & Aegiker:** Harder Mad Scrub, Biri, King Dodongo, Iron Knuckle & Ganondorf
 - **Zelda Spaceworld ´97 Experience:** Zol

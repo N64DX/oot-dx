@@ -8,5 +8,6 @@ extern s16 gPlayerAnim_link_normal_newroll_jump_20f_Data[];
 extern s16 gPlayerAnim_link_normal_newroll_jump_end_20f_Data[];
 extern s16 gPlayerAnim_link_normal_newside_jump_20f_Data[];
 extern s16 gPlayerAnim_link_normal_newside_jump_end_20f_Data[];
+extern s16 gPlayerAnim_alink_fukitobu_Data[];
 
 #endif

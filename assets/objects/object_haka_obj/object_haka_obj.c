@@ -1,6 +1,7 @@
 #include "object_haka_obj.h"
 
 #include "gfx.h"
+#include "camera.h"
 #include "array_count.h"
 
 Vtx object_haka_objVtx_000000[] = {
@@ -309,7 +310,7 @@ Gfx object_haka_obj_DL_001680[] = {
 };
 
 BgCamInfo object_haka_obj_Colheader_000148CamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType object_haka_obj_Colheader_000148SurfaceType[] = {
@@ -361,7 +362,7 @@ CollisionHeader object_haka_obj_Colheader_000148 = {
 };
 
 BgCamInfo object_haka_obj_Colheader_000EE8CamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType object_haka_obj_Colheader_000EE8SurfaceType[] = {
@@ -450,7 +451,7 @@ CollisionHeader object_haka_obj_Colheader_000EE8 = {
 };
 
 BgCamInfo object_haka_obj_Colheader_001588CamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType object_haka_obj_Colheader_001588SurfaceType[] = {

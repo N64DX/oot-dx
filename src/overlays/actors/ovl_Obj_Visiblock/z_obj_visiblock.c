@@ -23,7 +23,7 @@ ActorProfile Obj_Visiblock_Profile = {
     /**/ ACTOR_OBJ_VISIBLOCK,
     /**/ ACTORCAT_BG,
     /**/ FLAGS,
-    /**/ OBJECT_ICE_OBJECTS, //OBJECT_VISIBLOCK,
+    /**/ OBJECT_ICE_OBJECTS,
     /**/ sizeof(ObjVisiblock),
     /**/ ObjVisiblock_Init,
     /**/ ObjVisiblock_Destroy,

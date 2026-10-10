@@ -5,6 +5,7 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
+#include "item.h"
 
 SceneCmd old_dodongos_cavern_room_9[] = {
     SCENE_CMD_ALTERNATE_HEADER_LIST(old_dodongos_cavern_room_9AlternateHeaders),
@@ -37,11 +38,11 @@ s16 old_dodongos_cavern_room_9ObjectList0x000038[] = {
 };
 
 ActorEntry old_dodongos_cavern_room_9ActorList0x000044[] = {
-    { ACTOR_OBJECT_KANKYO,  { 0,     0,     0 }, {   0,      0, 0 }, 0x0006 },
-    { ACTOR_BG_BREAKWALL2,  { 0,   240, -4410 }, {   0,      0, 0 }, 0x6019 }, // Switch: 19
-    { ACTOR_EN_BOX,         { 0,   240, -4650 }, { 0x1, 0x8000, 0 }, 0x5004 }, // Chest: 04, Bombs (5)
-    { ACTOR_EN_RIVER_SOUND, { 1, -1306, -4914 }, {   0,      0, 0 }, 0x0002 },
-    { ACTOR_EN_THEFATHER,   { 0, -1280, -5400 }, {   0,      0, 0 }, 0x0000 },
+    { ACTOR_OBJECT_KANKYO,  { 0,     0,     0 }, {          0,      0, 0 }, 0x0006 },
+    { ACTOR_BG_BREAKWALL2,  { 0,   240, -4410 }, {          0,      0, 0 }, 0x6019 }, // Switch: 19
+    { ACTOR_EN_BOX,         { 0,   240, -4650 }, { GI_BOMBS_5, 0x8000, 0 }, 0x5004 }, // Chest: 04, Bombs (5)
+    { ACTOR_EN_RIVER_SOUND, { 1, -1306, -4914 }, {          0,      0, 0 }, 0x0002 },
+    { ACTOR_EN_THEFATHER,   { 0, -1280, -5400 }, {          0,      0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable old_dodongos_cavern_room_9MeshHeader0x0000D0 = {

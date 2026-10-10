@@ -4,6 +4,7 @@
 #include "cutscene.h"
 
 extern CutsceneData gGreatFairyGreatQuickSpinCs[];
+extern CutsceneData gGreatFairyQuadDefenseCs[];
 extern CutsceneData gGreatFairyHalfMagicCostCs[];
 
 #endif

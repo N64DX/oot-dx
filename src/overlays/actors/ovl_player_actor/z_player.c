@@ -15,6 +15,7 @@
 #include "overlays/actors/ovl_En_Fish/z_en_fish.h"
 #include "overlays/actors/ovl_En_Horse/z_en_horse.h"
 #include "overlays/actors/ovl_En_Insect/z_en_insect.h"
+#include "overlays/actors/ovl_Item_Somaria_Cube/z_item_somaria_cube.h"
 #include "overlays/effects/ovl_Effect_Ss_Fhg_Flash/z_eff_ss_fhg_flash.h"
 
 #include "libc64/qrand.h"
@@ -175,8 +176,10 @@ void Player_InitDekuStickIA(PlayState* play, Player* this);
 void Player_InitExplosiveIA(PlayState* play, Player* this);
 void Player_InitHookshotIA(PlayState* play, Player* this);
 void Player_InitBoomerangIA(PlayState* play, Player* this);
+void Player_InitCaneOfSomariaIA(PlayState* play, Player* this);
 
 s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play);
+s32 Player_UpperAction_CaneOfSomaria(Player* this, PlayState* play);
 s32 func_8083485C(Player* this, PlayState* play);
 s32 Player_UpperAction_Sword(Player* this, PlayState* play);
 s32 func_80834B5C(Player* this, PlayState* play);
@@ -839,9 +842,12 @@ static GetItemEntry sGetItemTable[] = {
     GET_ITEM(ITEM_SHIELD_HEROS,              OBJECT_GI_SHIELD_2_MM, GID_SHIELD_HEROS,         GETITEM_CQ_TEXT(GI_SHIELD_HEROS),          0xA0, CHEST_ANIM_SHORT), // GI_SHIELD_HEROS
     GET_ITEM(ITEM_SHIELD_METAL,              OBJECT_GI_SHIELD_2_MM, GID_SHIELD_METAL,         GETITEM_CQ_TEXT(GI_SHIELD_METAL),          0xA0, CHEST_ANIM_SHORT), // GI_SHIELD_METAL
 	GET_ITEM(ITEM_SWORD_HEROS,               OBJECT_GI_SWORD_1_MM,  GID_SWORD_HEROS,          GETITEM_CQ_TEXT(GI_SWORD_HEROS),           0x80, CHEST_ANIM_LONG),  // GI_SWORD_HEROS
+    GET_ITEM(ITEM_SWORD_RAZOR,               OBJECT_GI_SWORD_2_MM,  GID_SWORD_RAZOR,          GETITEM_CQ_TEXT(GI_SWORD_RAZOR),           0x80, CHEST_ANIM_LONG),  // GI_SWORD_RAZOR
     GET_ITEM(ITEM_TUNIC_SPIRIT,              OBJECT_GI_CLOTHES,     GID_TUNIC_SPIRIT,         GETITEM_CQ_TEXT(GI_TUNIC_SPIRIT),          0x80, CHEST_ANIM_LONG),  // GI_TUNIC_SPIRIT
 	GET_ITEM(ITEM_PICTOBOX,                  OBJECT_GI_CAMERA,      GID_PICTOGRAPH_BOX,       GETITEM_CQ_TEXT(GI_PICTOBOX),              0xA0, CHEST_ANIM_SHORT), // GI_PICTOBOX
 	GET_ITEM(ITEM_SHRINE_KEY,                OBJECT_GI_ROOM_KEY,    GID_ROOM_KEY,             GETITEM_CQ_TEXT(GI_SHRINE_KEY),            0xA0, CHEST_ANIM_SHORT), // GI_SHRINE_KEY
+    GET_ITEM(ITEM_CANE_OF_BYRNA,             OBJECT_GI_CANE,        GID_CANE_OF_BYRNA,        GETITEM_CQ_TEXT(GI_CANE_OF_BYRNA),         0xA0, CHEST_ANIM_LONG),  // GI_CANE_OF_BYRNE
+    GET_ITEM(ITEM_CANE_OF_SOMARIA,           OBJECT_GI_CANE,        GID_CANE_OF_SOMARIA,      GETITEM_CQ_TEXT(GI_CANE_OF_SOMARIA),       0xA0, CHEST_ANIM_LONG),  // GI_CANE_OF_SOMARIA
     GET_ITEM(ITEM_BOTTLE_POTION_SHIELD,      OBJECT_GI_LIQUID,      GID_BOTTLE_POTION_SHIELD, GETITEM_CQ_TEXT(GI_BOTTLE_POTION_SHIELD),  0x80, CHEST_ANIM_LONG),  // GI_BOTTLE_POTION_SHIELD
 	GET_ITEM(ITEM_BOOTS_PEGASUS,             OBJECT_GI_BOOTS_2,     GID_BOOTS_PEGASUS,        GETITEM_CQ_TEXT(GI_BOOTS_PEGASUS),         0x80, CHEST_ANIM_LONG),  // GI_BOOTS_PEGASUS
 	GET_ITEM(ITEM_PERFECT_BLOCK,             OBJECT_GI_TITLE_DEED,  GID_LAND_TITLE_DEED,      GETITEM_CQ_TEXT(GI_PERFECT_BLOCK),         0x80, CHEST_ANIM_LONG),  // GI_PERFECT_BLOCK
@@ -1451,34 +1457,34 @@ static s8 sItemActions[] = {
     PLAYER_IA_SWORD_KOKIRI,        // ITEM_SWORD_KOKIRI
     PLAYER_IA_SWORD_MASTER,        // ITEM_SWORD_MASTER
     PLAYER_IA_SWORD_BIGGORON,      // ITEM_SWORD_BIGGORON
-    PLAYER_IA_SWORD_HEROS,         // ITEM_SWORD_HEROS
+    PLAYER_IA_SWORD_RAZOR,         // ITEM_SWORD_RAZOR
     PLAYER_IA_NONE,                // ITEM_SHIELD_DEKU,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_HYLIAN,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_MIRROR,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS,
-    PLAYER_IA_NONE,                // ITEM_TUNIC_KOKIRI,
-    PLAYER_IA_NONE,                // ITEM_TUNIC_GORON,
-    PLAYER_IA_NONE,                // ITEM_TUNIC_ZORA,
-    PLAYER_IA_NONE,                // ITEM_TUNIC_SPIRIT,
-    PLAYER_IA_NONE,                // ITEM_BOOTS_KOKIRI,
-    PLAYER_IA_NONE,                // ITEM_BOOTS_IRON,
-    PLAYER_IA_NONE,                // ITEM_BOOTS_HOVER,
-    PLAYER_IA_NONE,                // ITEM_BOOTS_PEGASUS,
+    PLAYER_IA_NONE,                // ITEM_SHIELD_HYLIAN
+    PLAYER_IA_NONE,                // ITEM_SHIELD_MIRROR
+    PLAYER_IA_NONE,                // ITEM_SHIELD_HEROS
+    PLAYER_IA_NONE,                // ITEM_TUNIC_KOKIRI
+    PLAYER_IA_NONE,                // ITEM_TUNIC_GORON
+    PLAYER_IA_NONE,                // ITEM_TUNIC_ZORA
+    PLAYER_IA_NONE,                // ITEM_TUNIC_SPIRIT
+    PLAYER_IA_NONE,                // ITEM_BOOTS_KOKIRI
+    PLAYER_IA_NONE,                // ITEM_BOOTS_IRON
+    PLAYER_IA_NONE,                // ITEM_BOOTS_HOVER
+    PLAYER_IA_NONE,                // ITEM_BOOTS_PEGASUS
     PLAYER_IA_SWORD_FAIRYS,        // ITEM_SWORD_FAIRYS
     PLAYER_IA_NONE,                // ITEM_ROCS_FEATHER
     PLAYER_IA_NONE,                // ITEM_GOLDEN_FEATHER
-    PLAYER_IA_PICTOBOX,            // ITEM_PICTOBOX,
-    PLAYER_IA_SHRINE_KEY,          // ITEM_SHRINE_KEY,
-    PLAYER_IA_NONE,                // ITEM_CQ_1,
-    PLAYER_IA_NONE,                // ITEM_CQ_2,
-    PLAYER_IA_BOTTLE_POTION_SHIELD, // ITEM_BOTTLE_POTION_SHIELD,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_WOODEN,
-    PLAYER_IA_NONE,                // ITEM_SHIELD_METAL,
-    PLAYER_IA_NONE,                // ITEM_GIANTS_KNIFE,
-    PLAYER_IA_NONE,                // ITEM_ADULTS_WALLET,
-    PLAYER_IA_NONE,                // ITEM_GIANTS_WALLET,
-    PLAYER_IA_NONE,                // ITEM_DEKU_SEEDS,
-    PLAYER_IA_NONE,                // ITEM_FISHING_POLE,
+    PLAYER_IA_PICTOBOX,            // ITEM_PICTOBOX
+    PLAYER_IA_SHRINE_KEY,          // ITEM_SHRINE_KEY
+    PLAYER_IA_CANE_OF_BYRNA,       // ITEM_CANE_OF_BYRNA
+    PLAYER_IA_CANE_OF_SOMARIA,     // ITEM_CANE_OF_SOMARIA
+    PLAYER_IA_BOTTLE_POTION_SHIELD, // ITEM_BOTTLE_POTION_SHIELD
+    PLAYER_IA_NONE,                // ITEM_SHIELD_WOODEN
+    PLAYER_IA_NONE,                // ITEM_SHIELD_METAL
+    PLAYER_IA_NONE,                // ITEM_GIANTS_KNIFE
+    PLAYER_IA_NONE,                // ITEM_ADULTS_WALLET
+    PLAYER_IA_NONE,                // ITEM_GIANTS_WALLET
+    PLAYER_IA_NONE,                // ITEM_DEKU_SEEDS
+    PLAYER_IA_NONE,                // ITEM_FISHING_POLE
 };
 
 static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
@@ -1488,7 +1494,7 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_MASTER
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_KOKIRI
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_BIGGORON
-    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_HEROS
+    Player_UpperAction_Sword,      // PLAYER_IA_SWORD_RAZOR
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_FAIRYS
     func_8083485C,                 // PLAYER_IA_DEKU_STICK
     func_8083485C,                 // PLAYER_IA_HAMMER
@@ -1505,6 +1511,8 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     Player_UpperAction_CarryActor, // PLAYER_IA_BOMB
     Player_UpperAction_CarryActor, // PLAYER_IA_BOMBCHU
     func_80835800,                 // PLAYER_IA_BOOMERANG
+    Player_UpperAction_CaneOfSomaria, // PLAYER_IA_CANE_OF_BYRNA
+    Player_UpperAction_CaneOfSomaria, // PLAYER_IA_CANE_OF_SOMARIA
     func_8083485C,                 // PLAYER_IA_MAGIC_SPELL_15
     func_8083485C,                 // PLAYER_IA_MAGIC_SPELL_16
     func_8083485C,                 // PLAYER_IA_MAGIC_SPELL_17
@@ -1563,7 +1571,7 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_MASTER
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_KOKIRI
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_BIGGORON
-    Player_InitDefaultIA,        // PLAYER_IA_SWORD_HEROS
+    Player_InitDefaultIA,        // PLAYER_IA_SWORD_RAZOR
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_FAIRYS
     Player_InitDekuStickIA,      // PLAYER_IA_DEKU_STICK
     Player_InitHammerIA,         // PLAYER_IA_HAMMER
@@ -1580,6 +1588,8 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitExplosiveIA,      // PLAYER_IA_BOMB
     Player_InitExplosiveIA,      // PLAYER_IA_BOMBCHU
     Player_InitBoomerangIA,      // PLAYER_IA_BOOMERANG
+    Player_InitCaneOfSomariaIA,  // PLAYER_IA_CANE_OF_BYRNA
+    Player_InitCaneOfSomariaIA,  // PLAYER_IA_CANE_OF_SOMARIA
     Player_InitDefaultIA,        // PLAYER_IA_MAGIC_SPELL_15
     Player_InitDefaultIA,        // PLAYER_IA_MAGIC_SPELL_16
     Player_InitDefaultIA,        // PLAYER_IA_MAGIC_SPELL_17
@@ -2005,6 +2015,8 @@ void Player_RequestRumble(Player* this, s32 sourceStrength, s32 duration, s32 de
 void Player_PlayVoiceSfx(Player* this, u16 sfxId) {
     if (this->actor.category == ACTORCAT_PLAYER) {
         Player_PlaySfx(this, sfxId + this->ageProperties->unk_92);
+    } else if (IS_CHILD_QUEST) {
+        func_800F4190(&this->actor.projectedPos, sfxId + 0x20);
     } else {
         func_800F4190(&this->actor.projectedPos, sfxId);
     }
@@ -2585,6 +2597,8 @@ void Player_InitBoomerangIA(PlayState* play, Player* this) {
     this->stateFlags1 |= PLAYER_STATE1_USING_BOOMERANG;
 }
 
+void Player_InitCaneOfSomariaIA(PlayState* play, Player* this) { }
+
 void Player_InitItemAction(PlayState* play, Player* this, s8 itemAction) {
     this->unk_85C = 0.0f;
     this->unk_858 = 0.0f;
@@ -2795,8 +2809,8 @@ void Player_ChangeEquipment(Player* this, PlayState* play, s32 button, u8 equipT
 void Player_ChangeSword(Player* this, PlayState* play, s32 button) {
     static const SwordSwapEntry equipments[] = {
         { ITEM_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   EQUIP_INV_SWORD_KOKIRI,   LINK_AGE_CHILD },
-        { ITEM_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    EQUIP_INV_SWORD_HEROS,    LINK_AGE_CHILD },
         { ITEM_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   EQUIP_INV_SWORD_MASTER,   LINK_AGE_ADULT },
+        { ITEM_SWORD_RAZOR,    EQUIP_INV_SWORD_RAZOR,    EQUIP_INV_SWORD_RAZOR,    LINK_AGE_CHILD },
         { ITEM_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, EQUIP_INV_SWORD_BIGGORON, LINK_AGE_ADULT },
     };
 
@@ -3230,6 +3244,8 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
                 Player_PlaySfx(this, NA_SE_PL_SKIP);
                 gSaveContext.save.info.energy -= energyCost;
             }
+        } else if ((item == ITEM_CANE_OF_BYRNA || item == ITEM_CANE_OF_SOMARIA) && (R_IS_DASHING || gSaveContext.save.info.energy < 15)) {
+            Sfx_PlaySfxCentered(NA_SE_SY_ERROR);
         } else {
             this->heldItemButton = i;
             Player_UseItem(play, this, item);
@@ -3487,7 +3503,7 @@ s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play) {
     if (LinkAnimation_Update(play, &this->upperSkelAnime) ||
         ((Player_ItemToItemAction(this->heldItemId) == this->heldItemAction) &&
          (sUseHeldItem =
-              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && this->heldItemAction <= PLAYER_IA_SWORD_HEROS)))))) {
+              (sUseHeldItem || ((this->modelAnimType != PLAYER_ANIMTYPE_3) && (play->shootingGalleryStatus == 0) && !(PULL_SWORD && this->heldItemAction <= PLAYER_IA_SWORD_RAZOR)))))) {
         Player_SetUpperActionFunc(this, sItemActionUpdateFuncs[this->heldItemAction]);
         this->unk_834 = 0;
         this->idleType = PLAYER_IDLE_DEFAULT;
@@ -3505,6 +3521,63 @@ s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play) {
     }
 
     return true;
+}
+
+static void Player_SpawnSomariaCube(Player* this, PlayState* play) {
+    Actor* actor;
+    Actor* oldest = NULL;
+    s32 count = 0;
+    Vec3f spawnPos;
+    CollisionPoly* floorPoly = NULL;
+    s32 bgId = 0;
+    f32 floorHeight;
+    s16 yaw;
+
+    actor = play->actorCtx.actorLists[ACTORCAT_PROP].head;
+    while (actor != NULL) {
+        if (actor->id == ACTOR_ITEM_SOMARIA_CUBE && actor->update != NULL) {
+            count++;
+            oldest = actor;
+        }
+        actor = actor->next;
+    }
+
+    if (count >= (this->heldItemAction == PLAYER_IA_CANE_OF_BYRNA ? 1 : 3) && oldest != NULL)
+        Actor_Kill(oldest);
+
+    yaw = this->actor.shape.rot.y;
+    spawnPos.x = this->actor.world.pos.x + Math_SinS(yaw) * 50.0f;
+    spawnPos.y = this->actor.world.pos.y;
+    spawnPos.z = this->actor.world.pos.z + Math_CosS(yaw) * 50.0f;
+    floorHeight = BgCheck_EntityRaycastDown5(play, &play->colCtx, &floorPoly, &bgId, &this->actor, &spawnPos);
+
+    if (floorHeight != BGCHECK_Y_MIN && floorHeight > spawnPos.y - 40.0f)
+        spawnPos.y = floorHeight;
+
+    Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_SOMARIA_CUBE, spawnPos.x, spawnPos.y, spawnPos.z, 0, yaw, 0, 0);
+}
+       
+
+s32 Player_UpperAction_CaneOfSomaria(Player* this, PlayState* play) {
+    if (func_80834758(play,this) || func_8083499C(this, play))
+        return true;
+    if (this->meleeWeaponState != 0 || !(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
+        return false;
+
+    if (this->upperSkelAnime.animation == &gPlayerAnim_link_magic_tamashii1) {
+        if (!LinkAnimation_Update(play, &this->upperSkelAnime)) {
+            return true;
+        }
+    }
+
+    if (sUseHeldItem) {
+        sUseHeldItem = false;
+        gSaveContext.save.info.energy -= 15;
+        LinkAnimation_PlayOnce(play, &this->upperSkelAnime, &gPlayerAnim_link_magic_tamashii1);
+        Player_SpawnSomariaCube(this, play);
+        return true;
+    }
+    return false;
 }
 
 s32 func_80834B5C(Player* this, PlayState* play) {
@@ -5105,7 +5178,7 @@ void func_80837918(Player* this, s32 quadIndex, u32 dmgFlags) {
 }
 
 static u32 D_80854488[][2] = {
-    { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI },
+    { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT }, { DMG_SLASH_MASTER, DMG_JUMP_MASTER },
     { DMG_SLASH_GIANT, DMG_JUMP_GIANT },   { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP },
 };
 
@@ -5189,6 +5262,74 @@ void Player_SetInvulnerability(Player* this, s32 timer) {
     this->damageFlickerAnimCounter = 0;
 }
 
+f32 Player_SetDamageTakenMultiplierPerScene(u16 sceneId) {
+    if (!CQ_IS_TIMESKIP)
+        return 1.0f;
+
+    switch (sceneId) {
+        case SCENE_SACRED_FOREST_MEADOW:
+        case SCENE_FOREST_TEMPLE:
+        case SCENE_FOREST_TEMPLE_BOSS:
+            return 1.1f;
+
+        case SCENE_LAKE_HYLIA:
+        case SCENE_SPRING_LAKE:
+        case SCENE_PATH_TO_GORON_VILLAGE:
+        case SCENE_GORON_VILLAGE:
+        case SCENE_FIRE_TEMPLE:
+        case SCENE_FIRE_TEMPLE_BOSS:
+            return 1.2f;
+
+        case SCENE_WEBBED_SHRINE:
+        case SCENE_GORON_MINES:
+            return 1.3f;
+
+        case SCENE_ICE_CAVERN:
+        case SCENE_WATER_TEMPLE:
+        case SCENE_WATER_TEMPLE_BOSS:
+            return 2.3f;
+
+        case SCENE_BOTTOM_OF_THE_WELL:
+        case SCENE_SHADOW_TEMPLE:
+        case SCENE_SHADOW_TEMPLE_BOSS:
+            return 2.3f;
+
+        case SCENE_PATH_TO_FORTRESS:
+        case SCENE_HAUNTED_WASTELAND:
+        case SCENE_DESERT_COLOSSUS:
+        case SCENE_SPIRIT_TEMPLE:
+        case SCENE_SPIRIT_TEMPLE_BOSS:
+            return 2.3f;
+
+        case SCENE_PATH_TO_WOODFALL:
+        case SCENE_WOODFALL:
+        case SCENE_WOODFALL_TEMPLE:
+        case SCENE_WOODFALL_TEMPLE_BOSS:
+            return 3.0f;
+
+        case SCENE_FORSAKEN_KINGDOM:
+        case SCENE_ROYAL_VAULT:
+        case SCENE_GLOOMY_GRAVEYARD:
+        case SCENE_STONE_TOWER:
+        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_TEMPLE:
+        case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+            return 3.0f;
+
+        case SCENE_INSIDE_GANONS_CASTLE:
+        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+        case SCENE_GANONS_TOWER:
+        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+        case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
+        case SCENE_GANONDORF_BOSS:
+        case SCENE_GANON_BOSS:
+            return 3.0f;
+
+        default:
+            return 1.0f;
+    }
+}
+
 /**
  * @return false if player is out of health
  */
@@ -5197,31 +5338,35 @@ s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
         return true;
     }
 
-    switch (DAMAGE_TAKEN) {
-        case 1:
-            damage *= 2;
-            break;
-        case 2:
-            damage *= 3;
-            break;
-        case 3:
-            damage *= 4;
-            break;
-        case 4:
-            damage *= 6;
-            break;
-        case 5:
-            damage *= 8;
-            break;
-        case 6:
-            damage /= 2;
-            break;
-        case 7:
-            damage /= 4;
-            break;
-    }
-
     if (damage < 0) {
+        if (INFINITE_HEALTH)
+            return true;
+
+        damage *= Player_SetDamageTakenMultiplierPerScene(play->sceneId);
+        switch (DAMAGE_TAKEN) {
+            case 1:
+                damage *= 2;
+                break;
+            case 2:
+                damage *= 3;
+                break;
+            case 3:
+                damage *= 4;
+                break;
+            case 4:
+                damage *= 6;
+                break;
+            case 5:
+                damage *= 8;
+                break;
+            case 6:
+                damage /= 2;
+                break;
+            case 7:
+                damage /= 4;
+                break;
+        }
+
         if (this->currentTunic == PLAYER_TUNIC_KOKIRI) {
             if (gSaveContext.save.info.playerData.isMagicAcquired && gSaveContext.save.info.playerData.magic < gSaveContext.save.info.playerData.magicLevel * MAGIC_NORMAL_METER)
                 Player_UseSpecialPower(play, this, 15, 2, NA_SE_SY_HP_RECOVER, SPECIAL_POWER_MAGIC_REGEN, 3);
@@ -5629,7 +5774,7 @@ s32 func_808382DC(Player* this, PlayState* play) {
                     this->floorTypeTimer = 0;
                     this->actor.colChkInfo.damage = 4;
                     func_80837C0C(play, this, PLAYER_HIT_RESPONSE_NONE, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
-                } else if (this->floorTypeTimer >= SECONDS(5) && this->currentTunic != PLAYER_TUNIC_SPIRIT && Player_GetEnvironmentalHazard(play) == PLAYER_ENV_HAZARD_CURSEDROOM) {
+                } else if (this->floorTypeTimer >= SECONDS(5) && this->currentTunic != PLAYER_TUNIC_SPIRIT && play->roomCtx.curRoom.environmentType == ROOM_ENV_CURSED) {
                     this->floorTypeTimer = 0;
                     this->actor.colChkInfo.damage = 8;
                     func_80837C0C(play, this, PLAYER_HIT_RESPONSE_NONE, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
@@ -5835,39 +5980,40 @@ static s16 sReturnEntranceGroupData[] = {
     /*  1 */ ENTR_DEATH_MOUNTAIN_CRATER_3, // from Double Magic Fairy Fountain
     /*  2 */ MAP_OUTSIDE_GANONS_CASTLE_2,  // from Double Defense Fairy Fountain (as adult)
     /*  3 */ ENTR_WOODFALL_2,              // from Great Quick Spin Fairy Fountain
-    /*  4 */ ENTR_GORON_VILLAGE_2,         // from Half Magic Cost Fairy Fountain
+    /*  4 */ ENTR_GORON_VILLAGE_2,         // from 2nd Double Defense Fairy Fountain
+    /*  5 */ ENTR_FORSAKEN_KINGDOM_7,      // from Half Magic Cost Fairy Fountain
 
     // ENTR_RETURN_2
-    /*  5 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
-    /*  6 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
+    /*  6 */ ENTR_KAKARIKO_VILLAGE_9, // from Potion Shop in Kakariko
+    /*  7 */ ENTR_MARKET_DAY_5,       // from Potion Shop in Market
 
     // ENTR_RETURN_BAZAAR
-    /*  7 */ ENTR_KAKARIKO_VILLAGE_3,
-    /*  8 */ ENTR_MARKET_DAY_6,
+    /*  8 */ ENTR_KAKARIKO_VILLAGE_3,
+    /*  9 */ ENTR_MARKET_DAY_6,
 
     // ENTR_RETURN_4
-    /*  9 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
-    /* 10 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
+    /* 10 */ ENTR_KAKARIKO_VILLAGE_11, // from House of Skulltulas
+    /* 11 */ ENTR_BACK_ALLEY_DAY_2,    // from Bombchu Shop
 
     // ENTR_RETURN_SHOOTING_GALLERY
-    /* 11 */ ENTR_KAKARIKO_VILLAGE_10,
-    /* 12 */ ENTR_MARKET_DAY_8,
+    /* 12 */ ENTR_KAKARIKO_VILLAGE_10,
+    /* 13 */ ENTR_MARKET_DAY_8,
 
     // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    /* 13 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
-    /* 14 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
-    /* 15 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
+    /* 14 */ ENTR_ZORAS_FOUNTAIN_5,  // from Farores Wind Fairy Fountain
+    /* 15 */ ENTR_HYRULE_CASTLE_2,   // from Dins Fire Fairy Fountain (as child)
+    /* 16 */ ENTR_DESERT_COLOSSUS_7, // from Nayrus Love Fairy Fountain
 };
 
 /**
  * The values are indices into `sReturnEntranceGroupData` marking the start of each group
  */
 static u8 sReturnEntranceGroupIndices[] = {
-    13, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
-    11, // ENTR_RETURN_SHOOTING_GALLERY
-    5,  // ENTR_RETURN_2
-    7,  // ENTR_RETURN_BAZAAR
-    9,  // ENTR_RETURN_4
+    14, // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_SPELLS
+    12, // ENTR_RETURN_SHOOTING_GALLERY
+    6,  // ENTR_RETURN_2
+    8,  // ENTR_RETURN_BAZAAR
+    10, // ENTR_RETURN_4
     0,  // ENTR_RETURN_GREAT_FAIRYS_FOUNTAIN_MAGIC
 };
 
@@ -5889,10 +6035,12 @@ static s16 sDungeonEntrances[] = {
 };
 
 static SavedSceneFlags* Player_GetSceneFlags(PlayState* play) {
-    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
-        return &gSaveContext.save.info.sceneFlags[play->sceneId];
-    if (play->sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
-        return &gSaveContextExtended.sceneFlags[play->sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
+    u8 sceneId = Play_GetOriginalSceneId(play->sceneId);
+
+    if (sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        return &gSaveContext.save.info.sceneFlags[sceneId];
+    if (sceneId < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
+        return &gSaveContextExtended.sceneFlags[sceneId - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
     return NULL;
 }
 
@@ -8102,8 +8250,10 @@ void func_8083DF68(Player* this, f32 arg1, s16 arg2) {
 void func_8083DFE0(Player* this, f32* arg1, s16* arg2) {
     s16 yawDiff = this->yaw - *arg2;
 
-    if (this->meleeWeaponState == 0 && this->currentBoots != PLAYER_BOOTS_PEGASUS) {
-        this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
+    if (this->meleeWeaponState == 0) {
+        if (this->currentBoots == PLAYER_BOOTS_PEGASUS)
+            this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 50.0f), (R_RUN_SPEED_LIMIT / 50.0f));
+        else this->speedXZ = CLAMP(this->speedXZ, -(R_RUN_SPEED_LIMIT / 100.0f), (R_RUN_SPEED_LIMIT / 100.0f));
     }
 
     if (ABS(yawDiff) > 0x6000) {
@@ -12065,8 +12215,14 @@ void Player_Init(Actor* thisx, PlayState* play2) {
 
     if (play->sceneId <= SCENE_INSIDE_GANONS_CASTLE && play->sceneId != SCENE_GANONS_TOWER && play->sceneId != SCENE_THIEVES_HIDEOUT) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[play->sceneId];
-    } else if (play->sceneId == SCENE_GORON_MINES) {
+    } else if (play->sceneId == SCENE_ANCIENT_HOLLOW) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AC_SHIFT];
+    } else if (play->sceneId == SCENE_GORON_MINES) {
+        gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AE_SHIFT];
+    } else if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+        gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AA_SHIFT];
+    } else if (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED) {
+        gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AF_SHIFT];
     }
 
     startMode = PLAYER_GET_START_MODE(thisx);
@@ -15213,7 +15369,7 @@ static s16 sWarpSongEntrances[] = {
     ENTR_SPRING_LAKE_5,
     ENTR_PATH_TO_FORTRESS_4,
     ENTR_FORSAKEN_KINGDOM_10,
-    ENTR_TEMPLE_OF_TIME_7,
+    ENTR_STONE_TOWER_3,
 };
 
 void Player_Action_8084E3C4(Player* this, PlayState* play) {
@@ -16084,7 +16240,7 @@ s32 Player_ActionHandler_7(Player* this, PlayState* play) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 func_80837530(play, this, 0);
                 return 1;
-            } else if (this->itemAction == PLAYER_IA_SWORD_HEROS || (this->itemAction == PLAYER_IA_SWORD_MASTER && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && gSaveContext.save.info.playerData.health >= gSaveContext.save.info.playerData.healthCapacity && IS_CHILD_QUEST)) {
+            } else if ((this->itemAction == PLAYER_IA_SWORD_KOKIRI && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS)) || (this->itemAction == PLAYER_IA_SWORD_MASTER && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER) && gSaveContext.save.info.playerData.health >= gSaveContext.save.info.playerData.healthCapacity && IS_CHILD_QUEST)) {
                 this->stateFlags2 |= PLAYER_STATE2_17;
                 Player_SwordBeam(play, this, 0);
             }
@@ -16465,7 +16621,7 @@ static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX] = {
     { -1, func_808519EC },                               // PLAYER_CSACTION_18
     { 2, &gPlayerAnim_link_demo_baru_op1 },              // PLAYER_CSACTION_19
     { 2, &gPlayerAnim_link_demo_baru_op3 },              // PLAYER_CSACTION_20
-    { 0, NULL },                                         // PLAYER_CSACTION_21
+    { 3, &gPlayerAnim_clink_demo_mimawasi },             // PLAYER_CSACTION_21
     { -1, func_80851B90 },                               // PLAYER_CSACTION_22
     { 3, &gPlayerAnim_link_demo_jibunmiru },             // PLAYER_CSACTION_23
     { 9, &gPlayerAnim_link_normal_back_downA },          // PLAYER_CSACTION_24
@@ -16548,6 +16704,7 @@ static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX] = {
     { 3, &gPlayerAnim_link_demo_kenmiru2 },              // PLAYER_CSACTION_101
     { 3, &gPlayerAnim_link_demo_kenmiru2_modori },       // PLAYER_CSACTION_102
     { -1, &PlayerCs_InitDekuWalk },                      // PLAYER_CSACTION_103
+    { 3, &gPlayerAnim_alink_fukitobu },                  // PLAYER_CSACTION_104
 };
 
 static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
@@ -16572,7 +16729,7 @@ static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
     { -1, func_80851A50 },                                // PLAYER_CSACTION_18
     { 12, &gPlayerAnim_link_demo_baru_op2 },              // PLAYER_CSACTION_19
     { 11, NULL },                                         // PLAYER_CSACTION_20
-    { 0, NULL },                                          // PLAYER_CSACTION_21
+    { 12, &gPlayerAnim_clink_demo_mimawasi_wait },        // PLAYER_CSACTION_21
     { -1, func_80851BE8 },                                // PLAYER_CSACTION_22
     { 11, NULL },                                         // PLAYER_CSACTION_23
     { -1, func_80851CA4 },                                // PLAYER_CSACTION_24
@@ -16659,6 +16816,7 @@ static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
     { 12, &gPlayerAnim_link_demo_kenmiru2_wait },  // PLAYER_CSACTION_101
     { 12, &gPlayerAnim_demo_link_nwait },          // PLAYER_CSACTION_102
     { -1, PlayerCs_DekuWalk },                     // PLAYER_CSACTION_103
+    { 12, &gPlayerAnim_alink_fukitobu },           // PLAYER_CSACTION_104
 };
 
 void Player_AnimChangeOnceMorphZeroRootYawSpeed(PlayState* play, Player* this, LinkAnimationHeader* anim) {
@@ -17034,6 +17192,9 @@ void func_80851A50(PlayState* play, Player* this, CsCmdActorCue* cue) {
         } else {
             dLists = gPlayerLeftHandClosedDLs;
         }
+
+        if (IS_CHILD_QUEST_AS_CHILD)
+            dLists += play->sceneId == SCENE_WOODFALL_TEMPLE ? MAX_LINK_MODELS * 3 : MAX_LINK_MODELS * 2;
         this->leftHandDLists = dLists + GET_LINK_MODEL;
 
         Player_PlaySfx(this, sp2C->unk_00);

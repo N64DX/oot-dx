@@ -13,7 +13,7 @@ SceneCmd woodfall_temple_room_5[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_5RoomShapeCullable_000200),
     SCENE_CMD_OBJECT_LIST(15, woodfall_temple_room_5ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(26, woodfall_temple_room_5ActorEntry_00006C),
+    SCENE_CMD_ACTOR_LIST(27, woodfall_temple_room_5ActorEntry_00006C),
     SCENE_CMD_END(),
 };
 
@@ -41,6 +41,7 @@ ActorEntry woodfall_temple_room_5ActorEntry_00006C[] = {
     { ACTOR_OBJ_RAILLIFT, { 1230, -1185, -250 }, {      0,      0, 0x19 }, 0x800A },
     { ACTOR_EN_TANRON1,   { 1125, -1345, -600 }, {      0,      0,    0 }, 0x0001 },
     { ACTOR_EN_TANRON1,   { 1335, -1345, -600 }, {      0,      0,    0 }, 0x0002 },
+    { ACTOR_EN_TANRON1,   { 1650, -1345,  -90 }, {      0,      0,    0 }, 0x0003 },
     { ACTOR_EN_TANRON1,   { 1650, -1345,   90 }, {      0,      0,    0 }, 0x0004 },
     { ACTOR_OBJ_SYOKUDAI, { 1125, -1425, -600 }, {      0,      0,    0 }, 0x2098 }, // Sets switch: 18
     { ACTOR_OBJ_SYOKUDAI, { 1335, -1425, -600 }, {      0,      0,    0 }, 0x2098 }, // Sets switch: 18

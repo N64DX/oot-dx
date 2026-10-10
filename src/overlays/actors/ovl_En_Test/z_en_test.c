@@ -237,7 +237,7 @@ static DamageTable sDamageTable = {
     /* Fire arrow    */ DMG_ENTRY(2, STALFOS_DMG_REACT_NORMAL),
     /* Ice arrow     */ DMG_ENTRY(4, STALFOS_DMG_REACT_FREEZE),
     /* Light arrow   */ DMG_ENTRY(2, STALFOS_DMG_REACT_LIGHT),
-    /* Unk arrow 1   */ DMG_ENTRY(4, STALFOS_DMG_REACT_NORMAL),
+    /* Unk arrow 1   */ DMG_ENTRY(2, STALFOS_DMG_REACT_NORMAL),
     /* Unk arrow 2   */ DMG_ENTRY(2, STALFOS_DMG_REACT_NORMAL),
     /* Unk arrow 3   */ DMG_ENTRY(2, STALFOS_DMG_REACT_NORMAL),
     /* Fire magic    */ DMG_ENTRY(0, STALFOS_DMG_REACT_FIREMAGIC),
@@ -287,6 +287,7 @@ void EnTest_Init(Actor* thisx, PlayState* play) {
     this->actor.focus.pos = this->actor.world.pos;
     this->actor.focus.pos.y += 45.0f;
     this->actor.colChkInfo.damageTable = &sDamageTable;
+    this->actor.colChkInfo.defense = play->sceneId == SCENE_FOREST_TEMPLE ? 0.0f : 3.0f;
 
     Collider_InitCylinder(play, &this->bodyCollider);
     Collider_SetCylinder(play, &this->bodyCollider, &this->actor, &sBodyColliderInit);

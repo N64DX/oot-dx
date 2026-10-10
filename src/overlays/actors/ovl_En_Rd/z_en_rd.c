@@ -204,6 +204,7 @@ void EnRd_Init(Actor* thisx, PlayState* play) {
         SkelAnime_InitFlex(play, &this->skelAnime, &gGibdoSkel, &gGibdoRedeadIdleAnim, this->jointTable,
                            this->morphTable, REDEAD_GIBDO_LIMB_MAX);
         this->actor.naviEnemyId = NAVI_ENEMY_GIBDO;
+        thisx->colChkInfo.defense = 1.0f;
     }
 
     Collider_InitCylinder(play, &this->collider);

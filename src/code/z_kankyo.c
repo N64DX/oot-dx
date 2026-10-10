@@ -38,9 +38,9 @@
 #include "assets/objects/gameplay_keep/raindrop_model.h"
 #include "assets/objects/gameplay_keep/lens_flare.h"
 #include "assets/objects/gameplay_keep/moon.h"
-#include "assets/objects/gameplay_keep/star.h"
 #include "assets/objects/gameplay_keep/gameplay_keep_0x4D160.h"
 #include "assets/objects/gameplay_field_keep/gameplay_field_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 typedef enum LightningBoltState {
     /* 0x00 */ LIGHTNING_BOLT_START,
@@ -3129,8 +3129,8 @@ void Environment_WarpSongLeave(PlayState* play) {
 }
 
 s32 Environment_IsSceneUpsideDown(PlayState* play) {
-    //if ((play->sceneId == SCENE_F41) || (play->sceneId == SCENE_INISIE_R))
-    //    return true;
+    if (play->sceneId == SCENE_STONE_TOWER_INVERTED || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED)
+        return true;
     return false;
 }
 

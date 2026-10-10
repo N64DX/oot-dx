@@ -1,9 +1,9 @@
 #include "object_ladder.h"
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 
-#include "array_count.h"
-#include "camera.h"
 #include "gfx.h"
+#include "camera.h"
+#include "array_count.h"
 
 Vtx object_ladderVtx_000000[] = {
 #include "assets/objects/object_ladder/object_ladderVtx_000000.vtx.inc"
@@ -94,7 +94,7 @@ Gfx gWoodenLadder24RungDL[] = {
 };
 
 BgCamInfo gWoodenLadder12RungColCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType gWoodenLadder12RungColSurfaceType[] = {
@@ -130,11 +130,57 @@ CollisionHeader gWoodenLadder12RungCol = {
 };
 
 BgCamInfo gWoodenLadder16RungColCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType gWoodenLadder16RungColSurfaceType[] = {
-    {0x00600000, 0x000007CA},   {0x00400000, 0x000007CA},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_3,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_2,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly gWoodenLadder16RungColPolygons[] = {
@@ -166,11 +212,57 @@ CollisionHeader gWoodenLadder16RungCol = {
 };
 
 BgCamInfo gWoodenLadder20RungColCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType gWoodenLadder20RungColSurfaceType[] = {
-    {0x00600000, 0x000007CA},   {0x00400000, 0x000007CA},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_3,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_2,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly gWoodenLadder20RungColPolygons[] = {
@@ -202,11 +294,57 @@ CollisionHeader gWoodenLadder20RungCol = {
 };
 
 BgCamInfo gWoodenLadder24RungColCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType gWoodenLadder24RungColSurfaceType[] = {
-    {0x00600000, 0x000007CA},   {0x00400000, 0x000007CA},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_3,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    }, {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_2,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_WOOD,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly gWoodenLadder24RungColPolygons[] = {

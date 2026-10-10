@@ -189,7 +189,11 @@ void EnGm_SetTextID(EnGm* this) {
             }
             break;
         case 2:
-            this->actor.textId = 0x304E;
+            if (IS_CHILD_QUEST) {
+                this->actor.textId = 0x8106;
+            } else {
+                this->actor.textId = 0x304E;
+            }
             break;
         case 3:
             this->actor.textId = 0x304D;
@@ -253,7 +257,8 @@ void func_80A3DC44(EnGm* this, PlayState* play) {
                     this->actionFunc = EnGm_ProcessChoiceIndex;
                 FALLTHROUGH;
             case 2:
-                this->actionFunc = EnGm_ProcessChoiceIndex;
+                if (!IS_CHILD_QUEST)
+                    this->actionFunc = EnGm_ProcessChoiceIndex;
                 FALLTHROUGH;
             default:
                 return;

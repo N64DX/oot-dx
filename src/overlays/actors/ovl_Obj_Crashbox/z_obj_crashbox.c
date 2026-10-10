@@ -104,6 +104,7 @@ void ObjCrashbox_Init(Actor* thisx, PlayState* play) {
 void ObjCrashbox_Destroy(Actor* thisx, PlayState* play) {
     ObjCrashbox* this = (ObjCrashbox*)thisx;
 
+    DynaPoly_DeleteBgActor(play, &play->colCtx.dyna, this->dyna.bgId);
     Collider_DestroyCylinder(play, &this->collider);
 }
 

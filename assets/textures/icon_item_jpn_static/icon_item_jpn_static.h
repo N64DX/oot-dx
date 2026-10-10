@@ -77,8 +77,12 @@ extern u64 gPauseQuestStatus20JPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_B
 extern u64 gPauseSave10JPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
 
 // Child quest exclusive tiles
-extern u64 gPauseSelectItem10CQJPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
-extern u64 gPauseSelectItem20CQJPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
-extern u64 gPauseEquipment10CQJPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_TEX_HEIGHT, 8)];
+extern u64 gPauseSelectItem10CQJPNTex[];
+extern u64 gPauseSelectItem20CQJPNTex[];
+extern u64 gPauseEquipment10CQJPNTex[];
+extern u64 gPauseAncientHollowTitleJPNTex[];
+extern u64 gPauseGoronMinesTitleJPNTex[];
+extern u64 gPauseWoodfallTitleJPNTex[];
+extern u64 gPausePurpleIceCavernTitleJPNTex[];
 
 #endif

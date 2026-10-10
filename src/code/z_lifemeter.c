@@ -218,9 +218,16 @@ void Health_UpdateMeter(PlayState* play) {
     interfaceCtx->beatingHeartEnv[1] = (u8)(gFactor + HEARTS_ENV_G) & 0xFF;
     interfaceCtx->beatingHeartEnv[2] = (u8)(bFactor + HEARTS_ENV_B) & 0xFF;
 
-    sHeartsDDPrim[0][0] = HEARTS_DD_PRIM_R;
-    sHeartsDDPrim[0][1] = HEARTS_DD_PRIM_G;
-    sHeartsDDPrim[0][2] = HEARTS_DD_PRIM_B;
+    // Quad Defense golden outline instead of the vanilla white one
+    if (gSaveContext.save.info.playerData.isDoubleDefenseAcquired >= 3) {
+        sHeartsDDPrim[0][0] = 255;
+        sHeartsDDPrim[0][1] = 215;
+        sHeartsDDPrim[0][2] = 0;
+    } else {
+        sHeartsDDPrim[0][0] = HEARTS_DD_PRIM_R;
+        sHeartsDDPrim[0][1] = HEARTS_DD_PRIM_G;
+        sHeartsDDPrim[0][2] = HEARTS_DD_PRIM_B;
+    }
 
     sHeartsDDEnv[0][0] = HEARTS_DD_ENV_R;
     sHeartsDDEnv[0][1] = HEARTS_DD_ENV_G;
@@ -238,9 +245,9 @@ void Health_UpdateMeter(PlayState* play) {
     gFactor = sHeartsDDPrimFactors[ddType][1] * ddFactor;
     bFactor = sHeartsDDPrimFactors[ddType][2] * ddFactor;
 
-    sBeatingHeartsDDPrim[0] = (u8)(rFactor + HEARTS_DD_PRIM_R) & 0xFF;
-    sBeatingHeartsDDPrim[1] = (u8)(gFactor + HEARTS_DD_PRIM_G) & 0xFF;
-    sBeatingHeartsDDPrim[2] = (u8)(bFactor + HEARTS_DD_PRIM_B) & 0xFF;
+    sBeatingHeartsDDPrim[0] = (u8)(rFactor + sHeartsDDPrim[0][0]) & 0xFF;
+    sBeatingHeartsDDPrim[1] = (u8)(gFactor + sHeartsDDPrim[0][1]) & 0xFF;
+    sBeatingHeartsDDPrim[2] = (u8)(bFactor + sHeartsDDPrim[0][2]) & 0xFF;
 
     rFactor = sHeartsDDEnvFactors[ddType][0] * ddFactor;
     gFactor = sHeartsDDEnvFactors[ddType][1] * ddFactor;
@@ -328,7 +335,7 @@ void Health_DrawMeter(PlayState* play) {
     GraphicsContext* gfxCtx = play->state.gfxCtx;
     Vtx* beatingHeartVtx = interfaceCtx->beatingHeartVtx;
     s32 curHeartFraction = gSaveContext.save.info.playerData.health % 0x10;
-    s16 totalHeartCount = gSaveContext.save.info.playerData.healthCapacity / 0x10;
+    s16 totalHeartCount = (gSaveContext.save.info.playerData.healthCapacity + 0xF) / 0x10;
     s16 fullHeartCount = gSaveContext.save.info.playerData.health / 0x10;
     s32 pad2;
     f32 beatingHeartPulsingSize = interfaceCtx->beatingHeartOscillator * 0.1f;
@@ -542,7 +549,9 @@ void Health_UpdateBeatingHeart(PlayState* play) {
 u32 Health_IsCritical(void) {
     s32 criticalHealth;
 
-    if (gSaveContext.save.info.playerData.healthCapacity <= 0x50) {
+    if (gSaveContext.save.info.playerData.healthCapacity < 0x30) {
+        criticalHealth = 0;
+    } else if (gSaveContext.save.info.playerData.healthCapacity <= 0x50) {
         criticalHealth = 0x10;
     } else if (gSaveContext.save.info.playerData.healthCapacity <= 0xA0) {
         criticalHealth = 0x18;

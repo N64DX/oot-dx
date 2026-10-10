@@ -1,6 +1,7 @@
 #include "object_wood_pillar.h"
 
 #include "gfx.h"
+#include "camera.h"
 #include "array_count.h"
 
 Vtx object_wood_pillarVtx[] = {
@@ -43,11 +44,34 @@ Gfx gWoodPillarDL[] = {
 };
 
 BgCamInfo gWoodPillarColCamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType gWoodPillarColSurfaceType[] = {
-    {0x00000000, 0x000007C0},
+    {
+        {
+            SURFACETYPE0(
+                /* bgCamIndex */ 0,
+                /* exitIndex */ 0,
+                FLOOR_TYPE_0,
+                /* unk18 */ 0,
+                WALL_TYPE_0,
+                FLOOR_PROPERTY_0,
+                /* isSoft */ false,
+                /* isHorseBlocked */ false
+            ),
+            SURFACETYPE1(
+                SURFACE_MATERIAL_DIRT,
+                FLOOR_EFFECT_0,
+                /* lightSetting */ 31,
+                /* echo */ 0,
+                /* canHookshot */ false,
+                CONVEYOR_SPEED_DISABLED,
+                CONVEYOR_DIRECTION_FROM_BINANG(0x0),
+                /* unk27 */ false
+            ),
+        },
+    },
 };
 
 CollisionPoly gWoodPillarColPolygons[] = {

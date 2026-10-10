@@ -115,7 +115,7 @@ static DamageTable sDamageTable = {
     /* Fire arrow    */ DMG_ENTRY(4, 0x2),
     /* Ice arrow     */ DMG_ENTRY(2, 0x0),
     /* Light arrow   */ DMG_ENTRY(2, 0x0),
-    /* Unk arrow 1   */ DMG_ENTRY(4, 0x0),
+    /* Unk arrow 1   */ DMG_ENTRY(2, 0x0),
     /* Unk arrow 2   */ DMG_ENTRY(2, 0x0),
     /* Unk arrow 3   */ DMG_ENTRY(2, 0x0),
     /* Fire magic    */ DMG_ENTRY(4, 0x2),
@@ -148,7 +148,7 @@ void EnDekunuts_Init(Actor* thisx, PlayState* play) {
     if (play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS) {
         Actor_SetScale(thisx, 0.02f);
         this->actor.flags |= ACTOR_FLAG_DRAW_CULLING_DISABLED;
-        if (Flags_GetClear(play, 1)) {
+        if (Flags_GetClear(play, 0)) {
             Actor_Kill(&this->actor);
             Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_DOOR_WARP1, 0.0f, 0.0f, 0.0f, 0, 0, 0, WARP_DUNGEON_CHILD);
             Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_B_HEART, 100.0f, 0.0f, 0.0f, 0, 0, 0, 0);
@@ -588,7 +588,7 @@ void EnDekunuts_Update(Actor* thisx, PlayState* play) {
     s32 pad;
 
     if (this->actor.params != DEKUNUTS_FLOWER) {
-        if (play->sceneId == SCENE_WOODFALL && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && this->actor.colChkInfo.health > 0) { // Deku Scrubs will die when touching the water in the Woodfall area
+        if ((play->sceneId == SCENE_WOODFALL || play->sceneId == SCENE_ANCIENT_GROVE) && (this->actor.bgCheckFlags & BGCHECKFLAG_WATER) && this->actor.colChkInfo.health > 0) { // Deku Scrubs will die when touching the water in the Woodfall or Ancient Grove areas
             Enemy_StartFinishingBlow(play, &this->actor);
             Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_DAMAGE);
             Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_CUTBODY);

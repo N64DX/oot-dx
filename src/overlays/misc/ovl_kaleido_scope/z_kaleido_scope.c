@@ -102,7 +102,7 @@ u8 sEquipmentItemOrder[4][4] = {
 };
 
 u8 sCQEquipmentItemOrder[4][4] = {
-    { 0, 3, 1, 2 }, // Swords
+    { 0, 1, 3, 2 }, // Swords
     { 0, 3, 1, 2 }, // Shields
     { 0, 1, 2, 3 }, // Tunics
     { 0, 1, 2, 3 }, // Boots
@@ -1044,7 +1044,7 @@ char gEquipAgeReqs[4][6] = {
         AGE_REQ_CHILD, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_KOKIRI
         AGE_REQ_ADULT, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_MASTER
         AGE_REQ_ADULT, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_BIGGORON
-        AGE_REQ_CHILD, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_HEROS
+        AGE_REQ_CHILD, // EQUIP_TYPE_SWORD EQUIP_VALUE_SWORD_RAZOR
     },
     {
         AGE_REQ_NONE,  // 0 UPG_BOMB_BAG
@@ -1132,7 +1132,7 @@ char gItemAgeReqs[] = {
     AGE_REQ_CHILD, // ITEM_SWORD_KOKIRI
     AGE_REQ_ADULT, // ITEM_SWORD_MASTER
     AGE_REQ_ADULT, // ITEM_SWORD_BIGGORON
-    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
+    AGE_REQ_CHILD, // ITEM_SWORD_RAZOR
     AGE_REQ_CHILD, // ITEM_SHIELD_DEKU
     AGE_REQ_NONE,  // ITEM_SHIELD_HYLIAN
     AGE_REQ_ADULT, // ITEM_SHIELD_MIRROR
@@ -1150,8 +1150,8 @@ char gItemAgeReqs[] = {
     AGE_REQ_CHILD, // ITEM_GOLDEN_FEATHER
     AGE_REQ_CHILD, // ITEM_PICTOBOX
     AGE_REQ_CHILD, // ITEM_SHRINE_KEY
-    AGE_REQ_CHILD, // ITEM_CQ1
-    AGE_REQ_CHILD, // ITEM_CQ2
+    AGE_REQ_CHILD, // ITEM_CANE_OF_BYRNA
+    AGE_REQ_CHILD, // ITEM_CANE_OF_SOMARIA
     AGE_REQ_NONE,  // ITEM_BOTTLE_POTION_SHIELD
     AGE_REQ_CHILD, // ITEM_SHIELD_WOODEN
     AGE_REQ_CHILD, // ITEM_SHIELD_METAL
@@ -1160,6 +1160,7 @@ char gItemAgeReqs[] = {
     AGE_REQ_NONE,  // ITEM_GIANTS_WALLET
     AGE_REQ_NONE,  // ITEM_DEKU_SEEDS
     AGE_REQ_NONE,  // ITEM_FISHING_POLE
+    AGE_REQ_CHILD, // ITEM_SWORD_HEROS
     AGE_REQ_CHILD, // ITEM_BULLET_BAG_30
     AGE_REQ_CHILD, // ITEM_BULLET_BAG_40
     AGE_REQ_CHILD, // ITEM_BULLET_BAG_50
@@ -2502,9 +2503,11 @@ void KaleidoScope_UpdateNamePanel(PlayState* play) {
             else if (pauseCtx->pageIndex == PAUSE_EQUIP) {
                 if (pauseCtx->namedItem == ITEM_SHIELD_DEKU && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_WOODEN))
                     texIndex = ITEM_SHIELD_WOODEN;
-                if (pauseCtx->namedItem == ITEM_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL))
+                else if (pauseCtx->namedItem == ITEM_SHIELD_HEROS && CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_METAL))
                     texIndex = ITEM_SHIELD_METAL;
-                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_CHILD_QUEST_AS_CHILD && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER))
+                else if (pauseCtx->namedItem == ITEM_SWORD_KOKIRI && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_HEROS))
+                    texIndex = ITEM_SWORD_HEROS;
+                else if (pauseCtx->namedItem == ITEM_SWORD_MASTER && IS_CHILD_QUEST && !CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER))
                     texIndex = ITEM_BOW_FIRE;
                 else if (pauseCtx->namedItem == ITEM_HEART_PIECE_2) // Biggoron Sword
                     texIndex = ITEM_BOW_LIGHT;
@@ -2925,6 +2928,7 @@ s16 KaleidoScope_SetPageVertices(PlayState* play, Vtx* vtx, s16 vtxPage, s16 num
     s16 bufIAfterPageSections;
     s16 pageBgQuadX;
     s16 pageBgQuadY;
+    s16 quadWidth;
     s16* quadsX;
     s16* quadsWidth;
     s16* quadsY;
@@ -2987,9 +2991,14 @@ s16 KaleidoScope_SetPageVertices(PlayState* play, Vtx* vtx, s16 vtxPage, s16 num
         quadsHeight = sVtxPageQuadsHeight[vtxPage];
 
         for (j = 0; j < numQuads; j++, bufI += 4) {
-            vtx[bufI + 0].v.ob[0] = vtx[bufI + 2].v.ob[0] = quadsX[j];
+            quadWidth = quadsWidth[j];
 
-            vtx[bufI + 1].v.ob[0] = vtx[bufI + 3].v.ob[0] = vtx[bufI + 0].v.ob[0] + quadsWidth[j];
+            if (vtxPage == VTX_PAGE_MAP_DUNGEON && j == 2 && gSaveContext.mapIndex > SCENE_ICE_CAVERN) {
+                quadWidth = 128;
+                vtx[bufI + 0].v.ob[0] = vtx[bufI + 2].v.ob[0] = -34;
+            } else vtx[bufI + 0].v.ob[0] = vtx[bufI + 2].v.ob[0] = quadsX[j];
+
+            vtx[bufI + 1].v.ob[0] = vtx[bufI + 3].v.ob[0] = vtx[bufI + 0].v.ob[0] + quadWidth;
 
             if (!IS_PAUSE_STATE_GAMEOVER(pauseCtx)) {
                 vtx[bufI + 0].v.ob[1] = vtx[bufI + 1].v.ob[1] = quadsY[j] + pauseCtx->pagesYOrigin1;
@@ -3005,7 +3014,7 @@ s16 KaleidoScope_SetPageVertices(PlayState* play, Vtx* vtx, s16 vtxPage, s16 num
 
             vtx[bufI + 0].v.tc[0] = vtx[bufI + 0].v.tc[1] = vtx[bufI + 1].v.tc[1] = vtx[bufI + 2].v.tc[0] = 0;
 
-            vtx[bufI + 1].v.tc[0] = vtx[bufI + 3].v.tc[0] = quadsWidth[j] << 5;
+            vtx[bufI + 1].v.tc[0] = vtx[bufI + 3].v.tc[0] = quadWidth << 5;
 
             vtx[bufI + 2].v.tc[1] = vtx[bufI + 3].v.tc[1] = quadsHeight[j] << 5;
 
@@ -3995,6 +4004,9 @@ void KaleidoScope_LoadDungeonMap(PlayState* play) {
     s32 pad;
 #endif
 
+    if (gMapData->dgnTexIndexBase[gSaveContext.mapIndex] == 0xFF)
+        return;
+
     DMA_REQUEST_SYNC(interfaceCtx->mapSegment,
                      (uintptr_t)_map_48x85_staticSegmentRomStart + ((R_MAP_TEX_INDEX + 0) * MAP_48x85_TEX_SIZE),
                      MAP_48x85_TEX_SIZE, "../z_kaleido_scope_PAL.c", 3467);
@@ -4022,14 +4034,14 @@ void KaleidoScope_UpdateDungeonMap(PlayState* play) {
 
     Map_SetFloorPalettesData(play, pauseCtx->dungeonMapSlot - 3);
 
-    if ((play->sceneId >= SCENE_DEKU_TREE) && (play->sceneId <= SCENE_TREASURE_BOX_SHOP)) {
+    if ((play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_TREASURE_BOX_SHOP) || (play->sceneId >= SCENE_ANCIENT_HOLLOW && play->sceneId <= SCENE_STONE_TOWER_TEMPLE_BOSS)) {
         if (VREG(30) == pauseCtx->cursorPoint[PAUSE_MAP] - 3) {
             KaleidoScope_OverridePalIndexCI4((char*)interfaceCtx->mapSegment, MAP_48x85_TEX_SIZE,
                                              interfaceCtx->mapPaletteIndex, 14);
         }
     }
 
-    if ((play->sceneId >= SCENE_DEKU_TREE) && (play->sceneId <= SCENE_TREASURE_BOX_SHOP)) {
+    if ((play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_TREASURE_BOX_SHOP) || (play->sceneId >= SCENE_ANCIENT_HOLLOW && play->sceneId <= SCENE_STONE_TOWER_TEMPLE_BOSS)) {
         if (VREG(30) == pauseCtx->cursorPoint[PAUSE_MAP] - 3) {
             KaleidoScope_OverridePalIndexCI4((char*)interfaceCtx->mapSegment + ALIGN16(MAP_48x85_TEX_SIZE),
                                              MAP_48x85_TEX_SIZE, interfaceCtx->mapPaletteIndex, 14);
@@ -5054,6 +5066,10 @@ void KaleidoScope_Update(PlayState* play) {
                         case ENTR_GANONDORF_BOSS_0:
                             gSaveContext.save.entranceIndex = ENTR_GANONS_TOWER_0;
                             break;
+
+                        case ENTR_WOODFALL_TEMPLE_BOSS_0:
+                            gSaveContext.save.entranceIndex = ENTR_WOODFALL_TEMPLE_0;
+                            break;
                     }
                 } else {
                     SFX_PLAY_CENTERED(NA_SE_SY_DECIDE);
@@ -5154,6 +5170,10 @@ void KaleidoScope_Update(PlayState* play) {
                 case SCENE_WATER_TEMPLE_BOSS:
                 case SCENE_SPIRIT_TEMPLE_BOSS:
                 case SCENE_SHADOW_TEMPLE_BOSS:
+                case SCENE_ANCIENT_HOLLOW:
+                case SCENE_GORON_MINES:
+                case SCENE_WOODFALL_TEMPLE:
+                case SCENE_WOODFALL_TEMPLE_BOSS:
                     Map_InitData(play, interfaceCtx->mapRoomNum);
                     break;
             }
