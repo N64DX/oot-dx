@@ -77,7 +77,7 @@ static DamageTable sDamageTable = {
     /* Fire arrow    */ DMG_ENTRY(4, ENGOOMBA_DMGEFF_BURN),
     /* Ice arrow     */ DMG_ENTRY(2, ENGOOMBA_DMGEFF_ICE),
     /* Light arrow   */ DMG_ENTRY(2, ENGOOMBA_DMGEFF_DEFAULT),
-    /* Unk arrow 1   */ DMG_ENTRY(4, ENGOOMBA_DMGEFF_DEFAULT),
+    /* Unk arrow 1   */ DMG_ENTRY(2, ENGOOMBA_DMGEFF_DEFAULT),
     /* Unk arrow 2   */ DMG_ENTRY(2, ENGOOMBA_DMGEFF_DEFAULT),
     /* Unk arrow 3   */ DMG_ENTRY(2, ENGOOMBA_DMGEFF_DEFAULT),
     /* Fire magic    */ DMG_ENTRY(4, ENGOOMBA_DMGEFF_BURN),

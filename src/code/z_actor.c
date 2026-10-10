@@ -4964,7 +4964,7 @@ u8 Actor_AdjustDealtDamage(f32 damage, f32 defense, s32 dmgFlags, u8 itemAction)
     }
 
     if (IS_CHILD_QUEST && defense > 0.0f) {
-        if (itemAction == PLAYER_IA_SWORD_RAZOR || (itemAction == PLAYER_IA_SWORD_MASTER && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) || itemAction == PLAYER_IA_HAMMER || itemAction == PLAYER_IA_BOMB) {
+        if (itemAction == PLAYER_IA_SWORD_RAZOR || (itemAction == PLAYER_IA_SWORD_MASTER && CHECK_UPGRADE_ITEM(UPGRADE_SWORD_MASTER)) || itemAction == PLAYER_IA_HAMMER || (dmgFlags & DMG_EXPLOSIVE)) {
             defense = CLAMP_MIN(defense - 3.0f, 0.0f);
             if (itemAction == PLAYER_IA_HAMMER && (dmgFlags & DMG_HAMMER_JUMP))
                 defense += 1.0f;
@@ -5093,7 +5093,7 @@ void Actor_SetDropFlag(Actor* actor, ColliderElement* elem, s32 freezeFlag) {
         actor->dropFlag = 0x01;
     } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_ICE) {
         actor->dropFlag = 0x02;
-    } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK1) {
+    } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_BOMB) {
         actor->dropFlag = 0x00;
     } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK2) {
         actor->dropFlag = 0x08;
@@ -5131,7 +5131,7 @@ void Actor_SetDropFlagJntSph(Actor* actor, ColliderJntSph* jntSph, s32 freezeFla
             flag = 0x01;
         } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_ICE) {
             flag = 0x02;
-        } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK1) {
+        } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_BOMB) {
             flag = 0x00;
         } else if (acHitElem->atDmgInfo.dmgFlags & DMG_ARROW_UNK2) {
             flag = 0x08;
