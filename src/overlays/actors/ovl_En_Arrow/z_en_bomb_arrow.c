@@ -9,7 +9,7 @@ void EnArrow_Link(Actor* arrow, Actor* bomb, PlayState* play) {
             player->sBombArrowLinks[i].arrow = arrow;
             player->sBombArrowLinks[i].bomb = bomb;
             player->sBombArrowLinks[i].loosed = false;
-            ((EnArrow*)arrow)->collider.elem.atDmgInfo.dmgFlags = DMG_ARROW_UNK1;
+            ((EnArrow*)arrow)->collider.elem.atDmgInfo.dmgFlags = DMG_ARROW_BOMB;
             return;
         }
 }

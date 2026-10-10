@@ -173,7 +173,7 @@ static DamageTable sDamageTable = {
     /* Fire arrow    */ DMG_ENTRY(2, EN_RAILGIBUD_DMGEFF_FIRE_ARROW),
     /* Ice arrow     */ DMG_ENTRY(4, EN_RAILGIBUD_DMGEFF_RECOIL),
     /* Light arrow   */ DMG_ENTRY(2, EN_RAILGIBUD_DMGEFF_LIGHT_ARROW),
-    /* Unk arrow 1   */ DMG_ENTRY(4, EN_RAILGIBUD_DMGEFF_NONE),
+    /* Unk arrow 1   */ DMG_ENTRY(2, EN_RAILGIBUD_DMGEFF_NONE),
     /* Unk arrow 2   */ DMG_ENTRY(2, EN_RAILGIBUD_DMGEFF_NONE),
     /* Unk arrow 3   */ DMG_ENTRY(2, EN_RAILGIBUD_DMGEFF_NONE),
     /* Fire magic    */ DMG_ENTRY(4, EN_RAILGIBUD_DMGEFF_FIRE_ARROW),
