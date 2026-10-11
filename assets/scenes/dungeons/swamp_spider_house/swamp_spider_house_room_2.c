@@ -35,8 +35,8 @@ s16 swamp_spider_house_room_2ObjectList_000040[] = {
 
 ActorEntry swamp_spider_house_room_2ActorEntry_000068[] = {
     { ACTOR_OBJ_BEAN,    { -270, 180, -1617 }, { 0,   0,      0    }, 0x0020 },
-    { ACTOR_OBJ_SWITCH,  {  329, 180, -1289 }, { 0,   0,      0    }, 0x0D00 },
-    { ACTOR_BG_LADDER,   { -180, 0,   -1410 }, { 0,   0x4000, 0    }, 0x0D00 },
+    { ACTOR_OBJ_SWITCH,  {  329, 180, -1289 }, { 0,   0,      0    }, 0x0D00 }, // Switch: 0D
+    { ACTOR_BG_LADDER,   { -180, 0,   -1410 }, { 0,   0x4000, 0    }, 0x0D00 }, // Checks switch: 0D
     { ACTOR_OBJ_TSUBO,   { -30,  20,  -1650 }, { 0,   0,      0    }, 0x0003 },
     { ACTOR_OBJ_TSUBO,   {  30,  20,  -1650 }, { 0,   0,      0    }, 0x0003 },
     { ACTOR_OBJ_TSUBO,   {  330, 180, -1651 }, { 0,   0,      0    }, 0x0000 },

@@ -1,8 +1,8 @@
 #include "object_crashbox.h"
 
 #include "gfx.h"
-#include "array_count.h"
 #include "camera.h"
+#include "array_count.h"
 
 static Vtx object_crashboxVtx[] = {
     VTX(-60, 120, 60, 1024, 0, 244, 120, 38, 255),
@@ -251,7 +251,7 @@ Gfx gDLiftBigDL[] = {
 }; 
 
 BgCamInfo gFloaterColCamDataList[] = {
-	{ CAM_SET_NONE, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 }; 
 
 SurfaceType gFloaterColSurfaceType[] = {

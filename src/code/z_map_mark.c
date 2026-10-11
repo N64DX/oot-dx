@@ -68,7 +68,7 @@ void MapMark_Init(PlayState* play) {
     u32 overlaySize;
 
 #if OOT_VERSION <= PAL_1_1
-    if (R_QUEST_MODE == MASTER_QUEST)
+    if (R_QUEST_MODE == MASTER_QUEST || R_QUEST_MODE == CHILD_MASTER_QUEST || R_QUEST_MODE == DUNGEON_MASTER_RUSH)
         overlay = &sMapMarkDataMQOvl;
     else overlay = &sMapMarkDataOvl;
 #else
@@ -184,6 +184,10 @@ void MapMark_Draw(PlayState* play) {
         case SCENE_JABU_JABU_BOSS:
         case SCENE_FOREST_TEMPLE_BOSS:
         case SCENE_FIRE_TEMPLE_BOSS:
+        case SCENE_ANCIENT_HOLLOW:
+        case SCENE_GORON_MINES:
+        case SCENE_WOODFALL_TEMPLE:
+        case SCENE_WOODFALL_TEMPLE_BOSS:
             MapMark_DrawForDungeon(play);
             break;
     }

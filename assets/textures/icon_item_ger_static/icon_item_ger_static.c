@@ -43,6 +43,22 @@ u64 gPauseIceCavernTitleGERTex[TEX_LEN(u64, gPauseIceCavernTitleGERTex_WIDTH, gP
 #include "build/pal-1.0/assets/textures/icon_item_ger_static/gPauseIceCavernTitleGERTex.ia8.inc.c"
 };
 
+u64 gPauseAncientHollowTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPauseAncientHollowTitleGERTex.ia8.inc.c"
+};
+
+u64 gPauseGoronMinesTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPauseGoronMinesTitleGERTex.ia8.inc.c"
+};
+
+u64 gPauseWoodfallTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPauseWoodfallTitleGERTex.ia8.inc.c"
+};
+
+u64 gPausePurpleIceCavernTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPausePurpleIceCavernTitleGERTex.ia8.inc.c"
+};
+
 u64 gPauseToEquipGERTex[TEX_LEN(u64, gPauseToEquipGERTex_WIDTH, gPauseToEquipGERTex_HEIGHT, 8)] = {
 #include "build/pal-1.0/assets/textures/icon_item_ger_static/gPauseToEquipGERTex.ia8.inc.c"
 };
@@ -173,6 +189,22 @@ u64 gPauseBotWTitleGERTex[TEX_LEN(u64, gPauseBotWTitleGERTex_WIDTH, gPauseBotWTi
 
 u64 gPauseIceCavernTitleGERTex[TEX_LEN(u64, gPauseIceCavernTitleGERTex_WIDTH, gPauseIceCavernTitleGERTex_HEIGHT, 8)] = {
 #include "assets/textures/icon_item_ger_static/gPauseIceCavernTitleGERTex.ia8.inc.c"
+};
+
+u64 gPauseAncientHollowTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPauseAncientHollowTitleGERTex.ia8.inc.c"
+};
+
+u64 gPauseGoronMinesTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPauseGoronMinesTitleGERTex.ia8.inc.c"
+};
+
+u64 gPauseWoodfallTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPauseWoodfallTitleGERTex.ia8.inc.c"
+};
+
+u64 gPausePurpleIceCavernTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPausePurpleIceCavernTitleGERTex.ia8.inc.c"
 };
 
 u64 gPauseToEquipGERTex[TEX_LEN(u64, gPauseToEquipGERTex_WIDTH, gPauseToEquipGERTex_HEIGHT, 8)] = {

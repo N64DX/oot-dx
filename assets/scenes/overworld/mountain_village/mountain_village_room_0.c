@@ -13,8 +13,8 @@ SceneCmd mountain_village_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_0003D0),
-    SCENE_CMD_OBJECT_LIST(15, mountain_village_room_0ObjectList_00004C),
-    SCENE_CMD_ACTOR_LIST(40, mountain_village_room_0ActorEntry_000074),
+    SCENE_CMD_OBJECT_LIST(14, mountain_village_room_0ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(39, mountain_village_room_0ActorEntry_000074),
     SCENE_CMD_END(),
 };
 
@@ -37,7 +37,6 @@ s16 mountain_village_room_0ObjectList_00004C[] = {
     OBJECT_BOX,
     OBJECT_TSUBO,
     OBJECT_KA,
-    OBJECT_WOOD_PILLAR,
     OBJECT_CROW,
     OBJECT_BOMBIWA,
 };
@@ -45,7 +44,6 @@ s16 mountain_village_room_0ObjectList_00004C[] = {
 ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_EN_KAKASI2,        {   510,  363,   900 }, {    0,      0, 14 }, 0x053E }, // Switch: 3E
     { ACTOR_OBJ_SYOKUDAI,      {  -818,    8,  -170 }, {    0, 0x1770,  0 }, 0x243F },
-    { ACTOR_OBJ_SYOKUDAI,      {   800, 1408, -1400 }, {    0, 0xEC78,  0 }, 0x205F }, // Switch: 1F
     { ACTOR_OBJ_COMB,          {  1025,  271,   695 }, {    0, 0xFE0C,  0 }, 0x0081 },
     { ACTOR_EN_ITEM00,         {    79,  -30,   807 }, {    0,      0,  0 }, 0x0902 }, // Collect: 09
     { ACTOR_OBJ_TSUBO,         {   510,  363,   700 }, {    0,      0,  0 }, 0x3914 }, // Collect: 1C
@@ -83,7 +81,6 @@ ActorEntry mountain_village_room_0ActorEntry_000074[] = {
     { ACTOR_EN_CROW,           {   311,  943,   272 }, {    0,      0,  0 }, 0x0000 },
     { ACTOR_EN_BEE,            {   219,   13,    71 }, {    0,      0,  0 }, 0x0000 },
     { ACTOR_EN_BEE,            {  -471,  -10,  1228 }, {    0,      0,  0 }, 0x0000 },
-    
 };
 
 RoomShapeCullable mountain_village_room_0RoomShapeCullable_0003D0 = { 
@@ -137,8 +134,8 @@ SceneCmd mountain_village_room_0Set_timeskip[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, false),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&mountain_village_room_0RoomShapeCullable_timeskip),
-    SCENE_CMD_OBJECT_LIST(16, mountain_village_room_0ObjectList_timeskip),
-    SCENE_CMD_ACTOR_LIST(64, mountain_village_room_0ActorEntry_timeskip),
+    SCENE_CMD_OBJECT_LIST(15, mountain_village_room_0ObjectList_timeskip),
+    SCENE_CMD_ACTOR_LIST(63, mountain_village_room_0ActorEntry_timeskip),
     SCENE_CMD_END(),
 };
 
@@ -155,7 +152,6 @@ s16 mountain_village_room_0ObjectList_timeskip[] = {
     OBJECT_BOX,
     OBJECT_TSUBO,
     OBJECT_KA,
-    OBJECT_WOOD_PILLAR,
     OBJECT_FR,
     OBJECT_OF1D_MAP,
     OBJECT_SEK,
@@ -164,7 +160,6 @@ s16 mountain_village_room_0ObjectList_timeskip[] = {
 ActorEntry mountain_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_EN_KAKASI2,        {   510,  363,   900 }, {    0,      0, 14 }, 0x053E }, // Switch: 3E
     { ACTOR_OBJ_SYOKUDAI,      {  -818,    8,  -170 }, {    0, 0x1770,  0 }, 0x243F },
-    { ACTOR_OBJ_SYOKUDAI,      {   800, 1408, -1400 }, {    0, 0xEC78,  0 }, 0x205F }, // Switch: 1F
     { ACTOR_OBJ_SYOKUDAI3,     {   400,  -40,  -300 }, {    0,      0,  0 }, 0x243F },
     { ACTOR_OBJ_COMB,          {  1025,  271,   695 }, {    0, 0xFE0C,  0 }, 0x0081 },
     { ACTOR_EN_ITEM00,         {    79,  -30,   807 }, {    0,      0,  0 }, 0x0902 }, // Collect: 09

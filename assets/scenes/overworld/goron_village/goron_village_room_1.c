@@ -12,16 +12,14 @@ SceneCmd goron_village_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&goron_village_room_1RoomShapeCullable_0000A0),
-    SCENE_CMD_OBJECT_LIST(14, goron_village_room_1ObjectList_00004C),
+    SCENE_CMD_OBJECT_LIST(12, goron_village_room_1ObjectList_00004C),
     SCENE_CMD_ACTOR_LIST(6, goron_village_room_1ActorEntry_00005C),
     SCENE_CMD_END(),
 };
 
 s16 goron_village_room_1ObjectList_00004C[] = {
     OBJECT_HORSE,
-    OBJECT_SPOT00_OBJECTS,
     OBJECT_SPOT18_OBJ,
-    OBJECT_ICE_OBJECTS,
     OBJECT_D_HSBLOCK,
     OBJECT_GM,
     OBJECT_OF1D_MAP,

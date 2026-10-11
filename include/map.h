@@ -36,7 +36,7 @@ typedef struct MapData {
     /* 0x14 */ s16 (*roomCompassOffsetX)[44]; // dungeon compass icon X offset by room
     /* 0x18 */ s16 (*roomCompassOffsetY)[44]; // dungeon compass icon Y offset by room
     /* 0x1C */ u8* dgnMinimapCount; // number of room minimaps
-    /* 0x20 */ u8* dgnMinimapTexIndexOffset; // dungeon minimap texture index offset
+    /* 0x20 */ u16* dgnMinimapTexIndexOffset; // dungeon minimap texture index offset
     /* 0x24 */ u16* owMinimapTexSize;
     /* 0x28 */ u32* owMinimapTexOffset;
     /* 0x2C */ u8* owMinimapPosX;

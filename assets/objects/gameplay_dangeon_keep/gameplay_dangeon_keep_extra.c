@@ -1,8 +1,9 @@
 #include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keep.h"
 #include "gameplay_dangeon_keep_extra.h"
 
-#include "array_count.h"
 #include "gfx.h"
+#include "camera.h"
+#include "array_count.h"
 
 Vtx gameplay_dangeon_keepVtx_01C120[] = {
 #include "assets/objects/gameplay_dangeon_keep/gameplay_dangeon_keepVtx_01C120.vtx.inc"
@@ -32,7 +33,7 @@ Gfx gameplay_dangeon_keep_DL_01C228[] = {
 };
 
 BgCamInfo gameplay_dangeon_keep_Colheader_01D488CamDataList[] = {
-    { 0x0000, 0, NULL },
+    { CAM_SET_NONE, 0, NULL },
 };
 
 SurfaceType gameplay_dangeon_keep_Colheader_01D488SurfaceType[] = {

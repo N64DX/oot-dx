@@ -138,8 +138,8 @@ static ColliderCylinderInit sCylinderInit = {
     },
     {
         ELEM_MATERIAL_UNK1,
-        { 0x00000000, 0x00, 0x00 },
-        { 0xF7EFFFFF, 0x00, 0x00 },
+        { 0x00000000, HIT_SPECIAL_EFFECT_NONE, 0x00 },
+        { 0xFFCFFFFF, HIT_BACKLASH_NONE, 0x00 },
         ATELEM_NONE | ATELEM_SFX_NORMAL,
         ACELEM_ON | ACELEM_HOOKABLE,
         OCELEM_ON,
@@ -173,7 +173,7 @@ static DamageTable sDamageTable = {
     /* Fire arrow    */ DMG_ENTRY(2, EN_RAILGIBUD_DMGEFF_FIRE_ARROW),
     /* Ice arrow     */ DMG_ENTRY(4, EN_RAILGIBUD_DMGEFF_RECOIL),
     /* Light arrow   */ DMG_ENTRY(2, EN_RAILGIBUD_DMGEFF_LIGHT_ARROW),
-    /* Unk arrow 1   */ DMG_ENTRY(4, EN_RAILGIBUD_DMGEFF_NONE),
+    /* Unk arrow 1   */ DMG_ENTRY(2, EN_RAILGIBUD_DMGEFF_NONE),
     /* Unk arrow 2   */ DMG_ENTRY(2, EN_RAILGIBUD_DMGEFF_NONE),
     /* Unk arrow 3   */ DMG_ENTRY(2, EN_RAILGIBUD_DMGEFF_NONE),
     /* Fire magic    */ DMG_ENTRY(4, EN_RAILGIBUD_DMGEFF_FIRE_ARROW),
@@ -266,6 +266,7 @@ void EnRailgibud_Init(Actor* thisx, PlayState* play) {
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, &sDamageTable, &sColChkInfoInit);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
+    thisx->colChkInfo.defense = 1.0f;
     if (GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_STONE_TOWER))
         Actor_Kill(&this->actor);
 

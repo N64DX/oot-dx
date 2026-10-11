@@ -46,7 +46,7 @@ ActorEntry ikana_canyon_room_4ActorEntry_000084[] = {
     { ACTOR_EN_ITEM00,   { 3238, -160, 3901 }, { 0,      0, 0 }, 0x1E06 },
     { ACTOR_EN_KANBAN,   { 2265, -160, 4554 }, { 0, 0x3D00, 0 }, 0x005B },
     { ACTOR_EN_SHOPNUTS, { 2657, -160, 4261 }, { 0,      0, 0 }, 0x000C },
-    { ACTOR_BG_WEATHER,  { 2500, -160, 4500 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_BG_WEATHER,  { 2500, -160, 4500 }, { 0,      0, 0 }, 0x0001 },
 };
 
 RoomShapeCullable ikana_canyon_room_4RoomShapeCullable_000140 = { 

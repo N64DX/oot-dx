@@ -2033,8 +2033,8 @@ MSG()
 DEFINE_MESSAGE(0x035C, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-COLOR(RED) "Secret shrine behind waterfall\n"
-COLOR(DEFAULT) "Now awaiting the challenges of\n"
+COLOR(RED) "Secret shrine behind waterfall" COLOR(DEFAULT) "\n"
+"Now awaiting the challenges of\n"
 "bold visitors sure of their might.\n"
 "Hee-hee-hee!"
 ),
@@ -2045,8 +2045,8 @@ MSG()
 DEFINE_MESSAGE(0x035D, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-COLOR(RED) "Forsaken Kingdom across the canyon.\n"
-COLOR(DEFAULT) "Beware of Octoroks!"
+COLOR(RED) "Forsaken Kingdom across the canyon." COLOR(DEFAULT) "\n"
+"Beware of Octoroks!"
 ),
 MSG(),
 MSG()
@@ -2055,8 +2055,8 @@ MSG()
 DEFINE_MESSAGE(0x035E, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-COLOR(RED) "Empty Well\n"
-COLOR(DEFAULT) "Entry prohibited due to ghost\n"
+COLOR(RED) "Empty Well" COLOR(DEFAULT) "\n"
+"Entry prohibited due to ghost\n"
 "sightings!"
 ),
 MSG(),
@@ -2066,8 +2066,8 @@ MSG()
 DEFINE_MESSAGE(0x035F, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-COLOR(RED) "Purple Ice Cavern\n"
-COLOR(DEFAULT) "Entry prohibited due to ghost\n"
+COLOR(RED) "Purple Ice Cavern" COLOR(DEFAULT) "\n"
+"Entry prohibited due to ghost\n"
 "sightings!"
 ),
 MSG(),
@@ -2077,9 +2077,10 @@ MSG()
 DEFINE_MESSAGE(0x0360, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-COLOR(RED) "Royal Vault\n"
-COLOR(DEFAULT) "We've prepared wandering spirits\n"
-"and are awaiting your arrival."
+COLOR(RED) "Royal Vault" COLOR(DEFAULT) "\n"
+"Entry without a permit from the\n"
+"Royal Treasurer is forbidden.\n"
+"Looters be warned!"
 ),
 MSG(),
 MSG()
@@ -2088,8 +2089,8 @@ MSG()
 DEFINE_MESSAGE(0x0361, TEXTBOX_TYPE_WOODEN, TEXTBOX_POS_VARIABLE,
 MSG(),
 MSG(
-COLOR(RED) "Condemned Castle Front Gate\n"
-COLOR(DEFAULT) "Use what you will, this sealed\n"
+COLOR(RED) "Condemned Castle Front Gate" COLOR(DEFAULT) "\n"
+"Use what you will, this sealed\n"
 "gate shall never open."
 ),
 MSG(),

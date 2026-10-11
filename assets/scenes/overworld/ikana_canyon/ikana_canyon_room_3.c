@@ -48,7 +48,7 @@ RoomShapeCullable ikana_canyon_room_3RoomShapeCullable_0000A0 = {
 };
 
 ActorEntry ikana_canyon_room_3ActorEntry_000084[] = {
-    { ACTOR_BG_WEATHER, { -1750, 109, 1600 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_BG_WEATHER, { -1750, 109, 1600 }, { 0, 0, 0 }, 0x0001 },
 };
 
 RoomShapeCullableEntry ikana_canyon_room_3RoomShapeCullableEntry_0000AC[5] = {

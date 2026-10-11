@@ -24,6 +24,7 @@
 #include "save.h"
 
 #include "assets/objects/object_torch2/object_torch2.h"
+#include "assets/objects/object_torch2/object_torch2_extra.h"
 
 #pragma increment_block_number "ique-cn:128"
 
@@ -91,7 +92,7 @@ static DamageTable sDamageTable = {
     /* Fire arrow    */ DMG_ENTRY(2, 0x0),
     /* Ice arrow     */ DMG_ENTRY(2, 0x0),
     /* Light arrow   */ DMG_ENTRY(2, 0x0),
-    /* Unk arrow 1   */ DMG_ENTRY(4, 0x0),
+    /* Unk arrow 1   */ DMG_ENTRY(2, 0x0),
     /* Unk arrow 2   */ DMG_ENTRY(2, 0x0),
     /* Unk arrow 3   */ DMG_ENTRY(2, 0x0),
     /* Fire magic    */ DMG_ENTRY(2, 0xE),
@@ -117,10 +118,10 @@ void EnTorch2_Init(Actor* thisx, PlayState* play2) {
 
     sInput.cur.button = sInput.press.button = sInput.rel.button = 0;
     sInput.cur.stick_x = sInput.cur.stick_y = 0;
-    this->currentShield = PLAYER_SHIELD_HYLIAN;
+    this->currentShield = IS_CHILD_QUEST ? PLAYER_SHIELD_HEROS : PLAYER_SHIELD_HYLIAN;
     this->heldItemAction = this->heldItemId = PLAYER_IA_SWORD_MASTER;
     Player_SetModelGroup(this, PLAYER_MODELGROUP_SWORD_AND_SHIELD);
-    play->playerInit(this, play, &gDarkLinkSkel);
+    play->playerInit(this, play, IS_CHILD_QUEST ? &gDarkYoungLinkSkel: &gDarkLinkSkel);
     this->actor.naviEnemyId = NAVI_ENEMY_DARK_LINK;
     this->cylinder.base.acFlags = AC_ON | AC_TYPE_PLAYER;
     this->meleeWeaponQuads[0].base.atFlags = this->meleeWeaponQuads[1].base.atFlags = AT_ON | AT_TYPE_ENEMY;
@@ -160,14 +161,41 @@ void EnTorch2_Destroy(Actor* thisx, PlayState* play) {
     Collider_DestroyQuad(play, &this->shieldQuad);
 }
 
+Actor* EnTorch2_GetBoomerang(PlayState* play, Player* this) {
+    Actor* actor = play->actorCtx.actorLists[ACTORCAT_MISC].head;
+    Vec3f projPos, velocity, hitPos1, hitPos2;
+
+    while (actor != NULL) {
+        if (actor->id == ACTOR_EN_BOOM) {
+            if (Math_Vec3f_DistXYZ(&this->actor.world.pos, &actor->world.pos) <= 4000.0f) {
+                velocity.x = (actor->speed * 10.0f) * Math_SinS(actor->world.rot.y);
+                velocity.y = actor->velocity.y + (actor->gravity * 10.0f);
+                velocity.z = (actor->speed * 10.0f) * Math_CosS(actor->world.rot.y);
+
+                projPos.x = actor->world.pos.x + velocity.x;
+                projPos.y = actor->world.pos.y + velocity.y;
+                projPos.z = actor->world.pos.z + velocity.z;
+
+                if (CollisionCheck_CylSideVsLineSeg(this->actor.colChkInfo.cylRadius, this->actor.colChkInfo.cylHeight, 0.0f, &this->actor.world.pos, &actor->world.pos, &projPos, &hitPos1, &hitPos2))
+                    return actor;
+            }
+        }
+        actor = actor->next;
+    }
+
+    return NULL;
+}
+
 Actor* EnTorch2_GetAttackItem(PlayState* play, Player* this) {
     Actor* rangedItem = Actor_GetProjectileActor(play, &this->actor, 4000.0f);
-
-    if (rangedItem != NULL) {
+    if (rangedItem != NULL)
         return rangedItem;
-    } else {
-        return func_80033684(play, &this->actor);
-    }
+
+    rangedItem = EnTorch2_GetBoomerang(play, this);
+    if (rangedItem != NULL)
+        return rangedItem;
+    
+    return func_80033684(play, &this->actor);
 }
 
 s32 EnTorch2_SwingSword(PlayState* play, Input* input, Player* this) {
@@ -178,7 +206,7 @@ s32 EnTorch2_SwingSword(PlayState* play, Input* input, Player* this) {
     if ((this->speedXZ < 0.0f) || (player->speedXZ < 0.0f)) {
         return 0;
     }
-    if (gSaveContext.save.info.playerData.health < Actor_EnemyHealthMultiply(0x50, ELITE_HP)) {
+    if (gSaveContext.save.info.playerData.health < 0x50 && !HARDER_ENEMIES) {
         attackDelay = 15;
         noAttackChance += 0.3f;
     }
@@ -283,7 +311,7 @@ void EnTorch2_Update(Actor* thisx, PlayState* play2) {
                  *  creating a hole in his defenses. This also makes Dark Link harder at low
                  *  health, while the other health checks are intended to make him easier.
                  */
-                if ((gSaveContext.save.info.playerData.health < Actor_EnemyHealthMultiply(0x50, ELITE_HP)) && (sCounterState != 0)) {
+                if (sCounterState != 0) {
                     sCounterState = 0;
                     sStaggerTimer = 50;
                 }
@@ -355,7 +383,7 @@ void EnTorch2_Update(Actor* thisx, PlayState* play2) {
                             EnTorch2_SwingSword(play, input, this);
                             sSwordJumpState++;
                         } else if (sSwordJumpTimer == 19) {
-                            func_800F4190(&this->actor.projectedPos, NA_SE_VO_LI_AUTO_JUMP);
+                            func_800F4190(&this->actor.projectedPos, IS_CHILD_QUEST ? NA_SE_VO_LI_AUTO_JUMP_KID : NA_SE_VO_LI_AUTO_JUMP);
                         }
                     }
                 } else {
@@ -671,7 +699,7 @@ void EnTorch2_Update(Actor* thisx, PlayState* play2) {
     if (this->speedXZ == -18.0f) {
         u8 staggerThreshold = (u32)Rand_CenteredFloat(2.0f) + 6;
 
-        if (gSaveContext.save.info.playerData.health < Actor_EnemyHealthMultiply(0x50, ELITE_HP)) {
+        if (gSaveContext.save.info.playerData.health < 0x50 && !HARDER_ENEMIES) {
             staggerThreshold = (u32)Rand_CenteredFloat(2.0f) + 3;
         }
         if (this->actor.xzDistToPlayer > 80.0f) {
@@ -768,7 +796,21 @@ s32 EnTorch2_OverrideLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3f
 void EnTorch2_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx, Gfx** gfx) {
     Player* this = (Player*)thisx;
 
+    if (sAlpha == 255) {
+        OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+        POLY_OPA_DISP = *gfx;
+        CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    }
+
     Player_PostLimbDrawGameplay(play, limbIndex, dList, rot, &this->actor);
+
+    if (sAlpha == 255) {
+        OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+        *gfx = POLY_OPA_DISP;
+        CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+        gDPPipeSync((*gfx)++);
+        gDPSetEnvColor((*gfx)++, 255, 0, 0, 255);
+    }
 }
 
 void EnTorch2_Draw(Actor* thisx, PlayState* play2) {

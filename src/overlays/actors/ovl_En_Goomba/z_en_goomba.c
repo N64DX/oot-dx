@@ -77,7 +77,7 @@ static DamageTable sDamageTable = {
     /* Fire arrow    */ DMG_ENTRY(4, ENGOOMBA_DMGEFF_BURN),
     /* Ice arrow     */ DMG_ENTRY(2, ENGOOMBA_DMGEFF_ICE),
     /* Light arrow   */ DMG_ENTRY(2, ENGOOMBA_DMGEFF_DEFAULT),
-    /* Unk arrow 1   */ DMG_ENTRY(4, ENGOOMBA_DMGEFF_DEFAULT),
+    /* Unk arrow 1   */ DMG_ENTRY(2, ENGOOMBA_DMGEFF_DEFAULT),
     /* Unk arrow 2   */ DMG_ENTRY(2, ENGOOMBA_DMGEFF_DEFAULT),
     /* Unk arrow 3   */ DMG_ENTRY(2, ENGOOMBA_DMGEFF_DEFAULT),
     /* Fire magic    */ DMG_ENTRY(4, ENGOOMBA_DMGEFF_BURN),
@@ -320,7 +320,7 @@ void EnGoomba_Attack(EnGoomba* this, PlayState* play) {
     Math_SmoothStepToF(&this->actor.speed, 0.0f, 0.1f, 1.0f, 0.0f);
 
     if (SkelAnime_Update(&this->skelAnime)) {
-        this->fleeTimer = 2 * 20;
+        this->fleeTimer = FRAMES(40);
         EnGoomba_SetupRun(this, play);
     }
 }
@@ -331,7 +331,7 @@ void EnGoomba_Damaged(EnGoomba* this, PlayState* play) {
     Math_SmoothStepToF(&this->actor.speed, 0.0f, 3.0f, 0.5f, 0.0f);
 
     if (SkelAnime_Update(&this->skelAnime)) {
-        this->fleeTimer = 6 * 20;
+        this->fleeTimer = FRAMES(120);
         EnGoomba_SetupRun(this, play);
     }
 }
@@ -390,7 +390,7 @@ void EnGoomba_CheckDamage(EnGoomba* this, PlayState* play) {
         if ((this->actionFunc != EnGoomba_Die) && (this->actionFunc != EnGoomba_Damaged)) {
             switch (this->actor.colChkInfo.damageReaction) {
                 case ENGOOMBA_DMGEFF_STUN:
-                    if (this->actor.colChkInfo.health > 1) {
+                    if (this->actor.colChkInfo.health > 0) {
                         Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_JR_FREEZE);
                         Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_BLUE, 255, COLORFILTER_BUFFLAG_OPA, 80);
                         this->actionFunc = EnGoomba_SetupStunned;
@@ -398,18 +398,18 @@ void EnGoomba_CheckDamage(EnGoomba* this, PlayState* play) {
                     }
                     break;
                 case ENGOOMBA_DMGEFF_BURN:
-                    if (this->actor.colChkInfo.health > 1) {
+                    if (this->actor.colChkInfo.health > 0) {
                         Actor_PlaySfx(&this->actor, NA_SE_EV_FLAME_OF_FIRE);
                         freqScale = 2.0f;
                         func_800F436C(&sEnGoombaSfxPos, NA_SE_EN_DEADHAND_DAMAGE, freqScale);
                         Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 80);
-                        this->fireTimer = 40;
+                        this->fireTimer = FRAMES(40);
                         this->actionFunc = EnGoomba_SetupDie;
                         break;
                     }
                     break;
                 case ENGOOMBA_DMGEFF_HAM:
-                    if (this->actor.colChkInfo.health > 1) {
+                    if (this->actor.colChkInfo.health > 0) {
                         freqScale = 0.8f;
                         func_800F436C(&sEnGoombaSfxPos, NA_SE_EN_BIRI_JUMP, freqScale);
                         Actor_PlaySfx(&this->actor, NA_SE_EN_DEADHAND_DAMAGE);
@@ -419,9 +419,9 @@ void EnGoomba_CheckDamage(EnGoomba* this, PlayState* play) {
                     }
                     break;
                 case ENGOOMBA_DMGEFF_ICE:
-                    if (this->actor.colChkInfo.health > 1) {
+                    if (this->actor.colChkInfo.health > 0) {
                         Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_BLUE, 255, COLORFILTER_BUFFLAG_OPA, 80);
-                        this->spawnIceTimer = 48;
+                        this->spawnIceTimer = FRAMES(48);
                         this->actionFunc = EnGoomba_SetupStunned;
                         break;
                     }

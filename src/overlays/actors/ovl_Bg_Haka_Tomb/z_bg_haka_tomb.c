@@ -113,9 +113,9 @@ void BgHakaTomb_Update(Actor* thisx, PlayState* play) {
     Vec3f vec;
 
     this->actionFunc(this, play);
-    Matrix_RotateY(this->dyna.actor.world.rot.y, MTXMODE_NEW);
-    Matrix_RotateX(this->dyna.actor.world.rot.x, MTXMODE_APPLY);
-    Matrix_RotateZ(this->dyna.actor.world.rot.z, MTXMODE_APPLY);
+    Matrix_RotateY(BINANG_TO_RAD(this->dyna.actor.world.rot.y), MTXMODE_NEW);
+    Matrix_RotateX(BINANG_TO_RAD(this->dyna.actor.world.rot.x), MTXMODE_APPLY);
+    Matrix_RotateZ(BINANG_TO_RAD(this->dyna.actor.world.rot.z), MTXMODE_APPLY);
     Matrix_MultVec3f(&D_80BD68A4, &vec);
     Math_Vec3f_Sum(&this->dyna.actor.world.pos, &vec, &this->dyna.actor.focus.pos);
 }

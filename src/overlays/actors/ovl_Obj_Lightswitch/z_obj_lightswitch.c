@@ -22,6 +22,7 @@
 #include "z_lib.h"
 #include "effect.h"
 #include "play_state.h"
+#include "save.h"
 
 #include "assets/objects/object_lightswitch/object_lightswitch.h"
 
@@ -109,6 +110,8 @@ void ObjLightswitch_InitCollider(ObjLightswitch* this, PlayState* play) {
 
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, &this->actor, &sColliderJntSphInit, this->colliderElements);
+    if (IS_CHILD_QUEST)
+        this->collider.elements[0].base.acDmgInfo.dmgFlags |= DMG_ARROW_LIGHT;
     Matrix_SetTranslateRotateYXZ(this->actor.world.pos.x,
                                  this->actor.world.pos.y + (this->actor.shape.yOffset * this->actor.scale.y),
                                  this->actor.world.pos.z, &this->actor.shape.rot);
@@ -218,6 +221,9 @@ void ObjLightswitch_Init(Actor* thisx, PlayState* play) {
         Actor_Kill(&this->actor);
     }
     PRINTF(T("(光スイッチ)(arg_data 0x%04x)\n", "(Light switch)(arg_data 0x%04x)\n"), this->actor.params);
+
+    if (PARAMS_GET_U(this->actor.params, 3, 1))
+        this->actor.draw = NULL;
 }
 
 void ObjLightswitch_Destroy(Actor* thisx, PlayState* play2) {

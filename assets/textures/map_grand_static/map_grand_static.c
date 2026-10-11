@@ -98,50 +98,54 @@ u64 gGerudosFortressMinimapTex[TEX_LEN(u64, gGerudosFortressMinimapTex_WIDTH, gG
 #include "assets/textures/map_grand_static/gGerudosFortressMinimapTex.ia4.inc.c"
 };
 
-u64 gRoadToSwampMinimapTex[TEX_LEN(u64, 64, 76, 4)] = {
+u64 gRoadToSwampMinimapTex[] = {
 #include "assets/textures/map_grand_static/gRoadToSwampMinimapTex.ia4.inc.c"
 };
 
-u64 gRoadToIkanaValleyMinimapTex[TEX_LEN(u64, 80, 27, 4)] = {
+u64 gRoadToIkanaValleyMinimapTex[] = {
 #include "assets/textures/map_grand_static/gRoadToIkanaValleyMinimapTex.ia4.inc.c"
 };
 
-u64 gMilkRoadMinimapTex[TEX_LEN(u64, 80, 23, 4)] = {
+u64 gMilkRoadMinimapTex[] = {
 #include "assets/textures/map_grand_static/gMilkRoadMinimapTex.ia4.inc.c"
 };
 
-u64 gMountainVillageMinimapTex[TEX_LEN(u64, 80, 60, 4)] = {
+u64 gMountainVillageMinimapTex[] = {
 #include "assets/textures/map_grand_static/gMountainVillageMinimapTex.ia4.inc.c"
 };
 
-u64 gWoodfallMinimapTex[TEX_LEN(u64, 80, 74, 4)] = {
+u64 gWoodfallMinimapTex[] = {
 #include "assets/textures/map_grand_static/gWoodfallMinimapTex.ia4.inc.c"
 };
 
-u64 gPathToGoronVillageMinimapTex[TEX_LEN(u64, 80, 54, 4)] = {
+u64 gPathToGoronVillageMinimapTex[] = {
 #include "assets/textures/map_grand_static/gPathToGoronVillageMinimapTex.ia4.inc.c"
 };
 
-u64 gGoronVillageMinimapTex[TEX_LEN(u64, 80, 47, 4)] = {
+u64 gGoronVillageMinimapTex[] = {
 #include "assets/textures/map_grand_static/gGoronVillageMinimapTex.ia4.inc.c"
 };
 
-u64 gGoronShrineMinimapTex[TEX_LEN(u64, 80, 60, 4)] = {
+u64 gGoronShrineMinimapTex[] = {
 #include "assets/textures/map_grand_static/gGoronShrineMinimapTex.ia4.inc.c"
 };
 
-u64 gDawngroveVillageMinimapTex[TEX_LEN(u64, 96, 62, 4)] = {
+u64 gDawngroveVillageMinimapTex[] = {
 #include "assets/textures/map_grand_static/gDawngroveVillageMinimapTex.ia4.inc.c"
 };
 
-u64 gDawngroveMinimapTex[TEX_LEN(u64, 64, 56, 4)] = {
+u64 gDawngroveMinimapTex[] = {
 #include "assets/textures/map_grand_static/gDawngroveMinimapTex.ia4.inc.c"
 };
 
-u64 gIkanaValleyMinimapTex[TEX_LEN(u64, 80, 83, 4)] = {
+u64 gIkanaValleyMinimapTex[] = {
 #include "assets/textures/map_grand_static/gIkanaValleyMinimapTex.ia4.inc.c"
 };
 
-u64 gIkanaGraveyardMinimapTex[TEX_LEN(u64, 48, 77, 4)] = {
+u64 gIkanaGraveyardMinimapTex[] = {
 #include "assets/textures/map_grand_static/gIkanaGraveyardMinimapTex.ia4.inc.c"
+};
+
+u64 gStoneTowerMinimapTex[] = {
+#include "assets/textures/map_grand_static/gStoneTowerMinimapTex.ia4.inc.c"
 };

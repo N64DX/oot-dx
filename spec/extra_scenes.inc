@@ -216,6 +216,20 @@ beginseg
 endseg
 
 beginseg
+    name "stone_tower_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/stone_tower/stone_tower_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "stone_tower_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/stone_tower/stone_tower_room_0.o"
+    number 3
+endseg
+
+beginseg
     name "old_lost_woods_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/overworld/old_lost_woods/old_lost_woods_scene.o"
@@ -335,6 +349,48 @@ beginseg
 endseg
 
 beginseg
+    name "beneath_the_graveyard_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_1.o"
+    number 3
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_2"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_2.o"
+    number 3
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_3"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_3.o"
+    number 3
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_4"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_4.o"
+    number 3
+endseg
+
+beginseg
     name "red_ice_cavern_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_scene.o"
@@ -380,6 +436,48 @@ beginseg
     name "red_ice_cavern_room_5"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_room_5.o"
+    number 3
+endseg
+
+beginseg
+    name "oceanside_spider_house_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "oceanside_spider_house_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "oceanside_spider_house_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_1.o"
+    number 3
+endseg
+
+beginseg
+    name "oceanside_spider_house_room_2"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_2.o"
+    number 3
+endseg
+
+beginseg
+    name "oceanside_spider_house_room_3"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_3.o"
+    number 3
+endseg
+
+beginseg
+    name "oceanside_spider_house_room_5"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_5.o"
     number 3
 endseg
 
@@ -678,48 +776,6 @@ beginseg
 endseg
 
 beginseg
-    name "beneath_the_graveyard_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "beneath_the_graveyard_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "beneath_the_graveyard_room_1"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_1.o"
-    number 3
-endseg
-
-beginseg
-    name "beneath_the_graveyard_room_2"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_2.o"
-    number 3
-endseg
-
-beginseg
-    name "beneath_the_graveyard_room_3"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_3.o"
-    number 3
-endseg
-
-beginseg
-    name "beneath_the_graveyard_room_4"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_4.o"
-    number 3
-endseg
-
-beginseg
     name "dawngrove_inn_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/indoors/dawngrove_inn/dawngrove_inn_scene.o"
@@ -821,5 +877,19 @@ beginseg
     name "mountain_smithy_room_0"
     compress
     include "$(BUILD_DIR)/assets/scenes/indoors/mountain_smithy/mountain_smithy_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "stone_tower_inverted_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/stone_tower_inverted/stone_tower_inverted_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "stone_tower_inverted_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/overworld/stone_tower_inverted/stone_tower_inverted_room_0.o"
     number 3
 endseg

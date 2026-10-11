@@ -1934,7 +1934,7 @@ void BossGoma_UpdateHit(BossGoma* this, PlayState* play) {
                 BossGoma_SetupFallStruckDown(this);
                 Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_DAM2);
             } else if (this->actionFunc == BossGoma_FloorStunned &&
-                       (damage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags)) != 0) {
+                       (damage = CollisionCheck_GetSwordDamage(acHitElem->atDmgInfo.dmgFlags, this->actor.colChkInfo.defense)) != 0) {
                 this->actor.colChkInfo.health -= damage;
                 if (isHyper) {
                     if ( (this->actor.colChkInfo.health < Actor_EnemyHealthMultiply(25, BOSS_HP) && lizalfosCount == 0) || (this->actor.colChkInfo.health < Actor_EnemyHealthMultiply(17, BOSS_HP) && lizalfosCount == 1) || (this->actor.colChkInfo.health < Actor_EnemyHealthMultiply(10, BOSS_HP) && lizalfosCount == 2) ) {

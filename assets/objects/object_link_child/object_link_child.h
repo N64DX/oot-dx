@@ -63,18 +63,22 @@ extern Gfx gLinkChildLeftHandHoldingHerosSwordDL[];
 // Razor Sword
 extern Gfx gLinkChildLeftHandHoldingRazorSwordDL[];
 
-// Gilded Sword
+// Silver & Gilded Sword
 extern Gfx gLinkChildLeftHandHoldingSilverSwordDL[];
 extern Gfx gLinkChildLeftHandHoldingGoldenSwordDL[];
 
-// Master Sword
+// Goddess & Master Sword
+extern Gfx gLinkChildLeftHandHoldingGoddessSwordDL[];
 extern Gfx gLinkChildLeftHandHoldingMasterSwordDL2[];
+extern Gfx gLinkChildLiftingGoddessSwordDL[];
+extern Gfx gLinkChildLiftingMasterSwordDL[];
 
 // Sheaths
 extern Gfx gLinkChildSheathedKokiriSwordDL[];
 extern Gfx gLinkChildSheathedHerosSwordDL[];
 extern Gfx gLinkChildSheathedRazorSwordDL[];
 extern Gfx gLinkChildSheathedGildedSwordDL[];
+extern Gfx gLinkChildSheathedGoddessSwordDL[];
 extern Gfx gLinkChildSheathedMasterSwordDL[];
 extern Gfx gLinkChildKokiriSwordSheathDL[];
 extern Gfx gLinkChildHerosSwordSheathDL[];
@@ -88,7 +92,7 @@ extern Gfx gLinkChildHerosShieldDL[];
 extern Gfx gLinkChildHoldingHerosShieldDL[];
 extern Gfx gLinkChildHerosShieldWithMatrixDL[];
 
-// Wooden Shield;
+// Wooden Shield
 extern Gfx gLinkChildWoodenShieldDL[];
 extern Gfx gLinkChildHoldingWoodenShieldDL[];
 extern Gfx gLinkChildWoodenShieldWithMatrixDL[];

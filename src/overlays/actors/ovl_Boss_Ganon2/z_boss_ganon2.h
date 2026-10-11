@@ -141,8 +141,8 @@ typedef struct BossGanon2 {
 } BossGanon2; // size = 0x08E4
 
 typedef enum BossGanon2Type {
-    /* -2 */ GANON_HYPER = -2,
-    /* -1 */ GANON_NORMAL
+    /* -2 */ GANON2_HYPER = -2,
+    /* -1 */ GANON2_NORMAL
 } BossGanon2Type;
 
 #endif

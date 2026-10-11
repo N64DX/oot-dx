@@ -62,7 +62,7 @@ ActorEntry woodfall_room_0ActorEntry_000064[] = {
     { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0,      0,    0 }, 0x0003 }, // Ramp & Platform
     { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0, 0x8000,    0 }, 0x0000 }, // Water
     { ACTOR_DM_CHAR01,      {     0,      0,      0 }, {    0,      0,    0 }, 0x0001 }, // Walls
-    { ACTOR_OBJ_RAILLIFT,   {     0,    200,    600 }, {    0,      0,    0 }, 0x8000 },
+    { ACTOR_OBJ_RAILLIFT,   {     0,    250,    600 }, {    0,      0,    0 }, 0x8000 },
     { ACTOR_OBJ_RAILLIFT,   {   750,    250,   1350 }, {    0, 0x2000,    0 }, 0x8001 },
     { ACTOR_BG_WOOD_PILLAR, {  -250,   -100,   1100 }, {    0,      0,    0 }, 0x0002 },
     { ACTOR_BG_WOOD_PILLAR, {    50,   -100,   1400 }, {    0,      0,    0 }, 0x0002 },

@@ -23,6 +23,8 @@
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
+#define HAMMERGEIST_DIST 150.0f
+
 void EnHammergeist_Init(Actor* thisx, PlayState* play);
 void EnHammergeist_Destroy(Actor* thisx, PlayState* play);
 void EnHammergeist_Update(Actor* thisx, PlayState* play);
@@ -33,6 +35,7 @@ void EnHammergeist_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec
 void EnHammergeist_DeadPostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx, Gfx** gfx); // Sets body parts in fire and body transparency
 
 void EnHammergeist_UpdateBgCheck(EnHammergeist* this, PlayState* play);
+void EnHammergeist_Separate(EnHammergeist* this, PlayState* play);
 void EnHammergeist_Movement(EnHammergeist* this, PlayState* play);
 void EnHammergeist_CheckDamage(EnHammergeist* this, PlayState* play);
 
@@ -253,7 +256,7 @@ static DamageTable sDamageTable[] = {
     /* Fire arrow    */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
     /* Ice arrow     */ DMG_ENTRY(4, ENHAMMERGEIST_DMGEFF_NONE),
     /* Light arrow   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
-    /* Unk arrow 1   */ DMG_ENTRY(4, ENHAMMERGEIST_DMGEFF_NONE),
+    /* Unk arrow 1   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
     /* Unk arrow 2   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
     /* Unk arrow 3   */ DMG_ENTRY(2, ENHAMMERGEIST_DMGEFF_NONE),
     /* Fire magic    */ DMG_ENTRY(0, ENHAMMERGEIST_DMGEFF_FIRE),
@@ -399,12 +402,12 @@ void EnHammergeist_Init(Actor* thisx, PlayState* play) {
     this->playerHit = false;
     this->alpha = 255;
     this->switchFlag = PARAMS_GET_U(thisx->params, 8, 8);
-    this->reward = thisx->params & 0xFF;
 
     EnHammergeist_ChangeFace(this, HAMMERGEIST_FACE_NORMAL);
 
     EnHammergeist_InitAndSetCollision(this, play);
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
+    this->actor.colChkInfo.defense = 3.0f;
     SkelAnime_InitFlex(play, &this->skelAnime, &gHammergeistSkel, NULL, this->jointTable, this->morphTable, GHAMMERGEISTSKEL_NUM_LIMBS);
     EnHammergeist_SetupDoNothing(this, play);
 
@@ -427,8 +430,49 @@ void EnHammergeist_Destroy(Actor* thisx, PlayState* play) {
         func_800F5B58();
 }
 
+void EnHammergeist_Separate(EnHammergeist* this, PlayState* play) {
+    Actor* other;
+
+    for (other = play->actorCtx.actorLists[ACTORCAT_ENEMY].head; other != NULL; other = other->next) {
+        f32 dx, dz, distSq, dist, push;
+
+        if (other == &this->actor || other->id != ACTOR_EN_HAMMERGEIST || !(other->flags & ACTOR_FLAG_ATTENTION_ENABLED))
+            continue;
+
+        dx = this->actor.world.pos.x - other->world.pos.x;
+        dz = this->actor.world.pos.z - other->world.pos.z;
+
+        if (ABS(this->actor.world.pos.y - other->world.pos.y) > 40.0f)
+            continue;
+
+        distSq = SQ(dx) + SQ(dz);
+        if (distSq >= SQ(HAMMERGEIST_DIST))
+            continue;
+        dist = sqrtf(distSq);
+
+        if (dist < 0.1f) {
+            dx = this->actor.home.pos.x - other->home.pos.x;
+            dz = this->actor.home.pos.z - other->home.pos.z;
+            dist = sqrtf(SQ(dx) + SQ(dz));
+
+            if (dist < 0.1f) {
+                dx = 1.0f;
+                dz = 0.0f;
+                dist = 1.0f;
+            }
+        }
+
+        push = (HAMMERGEIST_DIST - dist) * 0.4f;
+        this->actor.world.pos.x += (dx / dist) * push;
+        this->actor.world.pos.z += (dz / dist) * push;
+    }
+}
+
 void EnHammergeist_Update(Actor* thisx, PlayState* play) {
     EnHammergeist* this = (EnHammergeist*)thisx;
+
+    if (this->actionFunc == EnHammergeist_ApproachPlayer)
+        EnHammergeist_Separate(this, play);
     this->actionFunc(this, play);
 
     Actor_MoveXZGravity(thisx);

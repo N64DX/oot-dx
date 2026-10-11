@@ -246,7 +246,7 @@ ActorEntry dawngrove_village_room_0ActorEntry_timeskip[] = {
     { ACTOR_EN_ANI,         { -1855,  290,  359 }, {    0, 0x84FA,     0 }, 0x0000 },
     { ACTOR_EN_HS2,         {  -370,  189, -574 }, {    0, 0xB4A4,     0 }, 0x0000 },
     { ACTOR_EN_HY,          { -1699,  295, -171 }, {    0, 0x31C4,     0 }, 0x000C },
-    { ACTOR_ITEM_ETCETERA,  {  -132, -186, -902 }, {    0, 0x2AA8, 0xE38 }, 0x000F }, // Switch: 0B, Pictograph Box
+    { ACTOR_ITEM_ETCETERA,  {  -132, -186, -902 }, {    0, 0x2AA8, 0xE38 }, 0x000E }, // Switch: 0B, Pictograph Box
 };
 
 s32 dawngrove_village_room_0_terminatorMaybe_000474 = { 0x01000000 };

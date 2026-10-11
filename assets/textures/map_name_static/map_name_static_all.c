@@ -280,40 +280,44 @@ u64 gGanonsCastlePositionNameENGTex[TEX_LEN(u64, gGanonsCastlePositionNameENGTex
 #include "build/pal-1.0/assets/textures/map_name_static/gGanonsCastlePositionNameENGTex.ia8.inc.c"
 };
 
-u64 gAncientGrovePositionNameENGTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gAncientGrovePositionNameENGTex[] = {
 #include "assets/textures/map_name_static/gAncientGrovePositionNameENGTex.ia8.inc.c"
 };
 
-u64 gForbiddenWoodsPositionNameENGTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gForbiddenWoodsPositionNameENGTex[] = {
 #include "assets/textures/map_name_static/gForbiddenWoodsPositionNameENGTex.ia8.inc.c"
 };
 
-u64 gForsakenKingdomPositionNameENGTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gForsakenKingdomPositionNameENGTex[] = {
 #include "assets/textures/map_name_static/gForsakenKingdomPositionNameENGTex.ia8.inc.c"
 };
 
-u64 gGloomyGraveyardPositionNameENGTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGloomyGraveyardPositionNameENGTex[] = {
 #include "assets/textures/map_name_static/gGloomyGraveyardPositionNameENGTex.ia8.inc.c"
 };
 
-u64 gGoronShrinePositionNameENGTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGoronShrinePositionNameENGTex[] = {
 #include "assets/textures/map_name_static/gGoronShrinePositionNameENGTex.ia8.inc.c"
 };
 
-u64 gGoronVillagePositionNameENGTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGoronVillagePositionNameENGTex[] = {
 #include "assets/textures/map_name_static/gGoronVillagePositionNameENGTex.ia8.inc.c"
 };
 
-u64 gRiversideVillagePositionNameENGTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gRiversideVillagePositionNameENGTex[] = {
 #include "assets/textures/map_name_static/gRiversideVillagePositionNameENGTex.ia8.inc.c"
 };
 
-u64 gSpringLakePositionNameENGTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gSpringLakePositionNameENGTex[] = {
 #include "assets/textures/map_name_static/gSpringLakePositionNameENGTex.ia8.inc.c"
 };
 
-u64 gWoodfallPositionNameENGTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gWoodfallPositionNameENGTex[] = {
 #include "assets/textures/map_name_static/gWoodfallPositionNameENGTex.ia8.inc.c"
+};
+
+u64 gStoneTowerPositionNameENGTex[] = {
+#include "assets/textures/map_name_static/gStoneTowerPositionNameENGTex.ia8.inc.c"
 };
 
 u64 gHyruleFieldPositionNameGERTex[TEX_LEN(u64, gHyruleFieldPositionNameGERTex_WIDTH, gHyruleFieldPositionNameGERTex_HEIGHT, 8)] = {
@@ -404,40 +408,44 @@ u64 gGanonsCastlePositionNameGERTex[TEX_LEN(u64, gGanonsCastlePositionNameGERTex
 #include "build/pal-1.0/assets/textures/map_name_static/gGanonsCastlePositionNameGERTex.ia8.inc.c"
 };
 
-u64 gAncientGrovePositionNameGERTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gAncientGrovePositionNameGERTex[] = {
 #include "assets/textures/map_name_static/gAncientGrovePositionNameGERTex.ia8.inc.c"
 };
 
-u64 gForbiddenWoodsPositionNameGERTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gForbiddenWoodsPositionNameGERTex[] = {
 #include "assets/textures/map_name_static/gForbiddenWoodsPositionNameGERTex.ia8.inc.c"
 };
 
-u64 gForsakenKingdomPositionNameGERTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gForsakenKingdomPositionNameGERTex[] = {
 #include "assets/textures/map_name_static/gForsakenKingdomPositionNameGERTex.ia8.inc.c"
 };
 
-u64 gGloomyGraveyardPositionNameGERTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGloomyGraveyardPositionNameGERTex[] = {
 #include "assets/textures/map_name_static/gGloomyGraveyardPositionNameGERTex.ia8.inc.c"
 };
 
-u64 gGoronShrinePositionNameGERTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGoronShrinePositionNameGERTex[] = {
 #include "assets/textures/map_name_static/gGoronShrinePositionNameGERTex.ia8.inc.c"
 };
 
-u64 gGoronVillagePositionNameGERTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGoronVillagePositionNameGERTex[] = {
 #include "assets/textures/map_name_static/gGoronVillagePositionNameGERTex.ia8.inc.c"
 };
 
-u64 gRiversideVillagePositionNameGERTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gRiversideVillagePositionNameGERTex[] = {
 #include "assets/textures/map_name_static/gRiversideVillagePositionNameGERTex.ia8.inc.c"
 };
 
-u64 gSpringLakePositionNameGERTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gSpringLakePositionNameGERTex[] = {
 #include "assets/textures/map_name_static/gSpringLakePositionNameGERTex.ia8.inc.c"
 };
 
-u64 gWoodfallPositionNameGERTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gWoodfallPositionNameGERTex[] = {
 #include "assets/textures/map_name_static/gWoodfallPositionNameGERTex.ia8.inc.c"
+};
+
+u64 gStoneTowerPositionNameGERTex[] = {
+#include "assets/textures/map_name_static/gStoneTowerPositionNameGERTex.ia8.inc.c"
 };
 
 u64 gHyruleFieldPositionNameFRATex[TEX_LEN(u64, gHyruleFieldPositionNameFRATex_WIDTH, gHyruleFieldPositionNameFRATex_HEIGHT, 8)] = {
@@ -528,40 +536,44 @@ u64 gGanonsCastlePositionNameFRATex[TEX_LEN(u64, gGanonsCastlePositionNameFRATex
 #include "build/pal-1.0/assets/textures/map_name_static/gGanonsCastlePositionNameFRATex.ia8.inc.c"
 };
 
-u64 gAncientGrovePositionNameFRATex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gAncientGrovePositionNameFRATex[] = {
 #include "assets/textures/map_name_static/gAncientGrovePositionNameFRATex.ia8.inc.c"
 };
 
-u64 gForbiddenWoodsPositionNameFRATex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gForbiddenWoodsPositionNameFRATex[] = {
 #include "assets/textures/map_name_static/gForbiddenWoodsPositionNameFRATex.ia8.inc.c"
 };
 
-u64 gForsakenKingdomPositionNameFRATex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gForsakenKingdomPositionNameFRATex[] = {
 #include "assets/textures/map_name_static/gForsakenKingdomPositionNameFRATex.ia8.inc.c"
 };
 
-u64 gGloomyGraveyardPositionNameFRATex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGloomyGraveyardPositionNameFRATex[] = {
 #include "assets/textures/map_name_static/gGloomyGraveyardPositionNameFRATex.ia8.inc.c"
 };
 
-u64 gGoronShrinePositionNameFRATex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGoronShrinePositionNameFRATex[] = {
 #include "assets/textures/map_name_static/gGoronShrinePositionNameFRATex.ia8.inc.c"
 };
 
-u64 gGoronVillagePositionNameFRATex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGoronVillagePositionNameFRATex[] = {
 #include "assets/textures/map_name_static/gGoronVillagePositionNameFRATex.ia8.inc.c"
 };
 
-u64 gRiversideVillagePositionNameFRATex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gRiversideVillagePositionNameFRATex[] = {
 #include "assets/textures/map_name_static/gRiversideVillagePositionNameFRATex.ia8.inc.c"
 };
 
-u64 gSpringLakePositionNameFRATex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gSpringLakePositionNameFRATex[] = {
 #include "assets/textures/map_name_static/gSpringLakePositionNameFRATex.ia8.inc.c"
 };
 
-u64 gWoodfallPositionNameFRATex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gWoodfallPositionNameFRATex[] = {
 #include "assets/textures/map_name_static/gWoodfallPositionNameFRATex.ia8.inc.c"
+};
+
+u64 gStoneTowerPositionNameFRATex[] = {
+#include "assets/textures/map_name_static/gStoneTowerPositionNameFRATex.ia8.inc.c"
 };
 
 u64 gHyruleFieldPositionNameJPNTex[TEX_LEN(u64, gHyruleFieldPositionNameJPNTex_WIDTH, gHyruleFieldPositionNameJPNTex_HEIGHT, 8)] = {
@@ -644,39 +656,42 @@ u64 gLonLonRanchPositionNameJPNTex[TEX_LEN(u64, gLonLonRanchPositionNameJPNTex_W
 #include "assets/textures/map_name_static/gLonLonRanchPositionNameJPNTex.ia8.inc.c"
 };
 
-u64 gAncientGrovePositionNameJPNTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gAncientGrovePositionNameJPNTex[] = {
 #include "assets/textures/map_name_static/gAncientGrovePositionNameJPNTex.ia8.inc.c"
 };
 
-u64 gForbiddenWoodsPositionNameJPNTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gForbiddenWoodsPositionNameJPNTex[] = {
 #include "assets/textures/map_name_static/gForbiddenWoodsPositionNameJPNTex.ia8.inc.c"
 };
 
-u64 gForsakenKingdomPositionNameJPNTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gForsakenKingdomPositionNameJPNTex[] = {
 #include "assets/textures/map_name_static/gForsakenKingdomPositionNameJPNTex.ia8.inc.c"
 };
 
-u64 gGloomyGraveyardPositionNameJPNTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGloomyGraveyardPositionNameJPNTex[] = {
 #include "assets/textures/map_name_static/gGloomyGraveyardPositionNameJPNTex.ia8.inc.c"
 };
 
-u64 gGoronShrinePositionNameJPNTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGoronShrinePositionNameJPNTex[] = {
 #include "assets/textures/map_name_static/gGoronShrinePositionNameJPNTex.ia8.inc.c"
 };
 
-u64 gGoronVillagePositionNameJPNTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gGoronVillagePositionNameJPNTex[] = {
 #include "assets/textures/map_name_static/gGoronVillagePositionNameJPNTex.ia8.inc.c"
 };
 
-u64 gRiversideVillagePositionNameJPNTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gRiversideVillagePositionNameJPNTex[] = {
 #include "assets/textures/map_name_static/gRiversideVillagePositionNameJPNTex.ia8.inc.c"
 };
 
-u64 gSpringLakePositionNameJPNTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gSpringLakePositionNameJPNTex[] = {
 #include "assets/textures/map_name_static/gSpringLakePositionNameJPNTex.ia8.inc.c"
 };
 
-u64 gWoodfallPositionNameJPNTex[TEX_LEN(u64, 80, 32, 8)] = {
+u64 gWoodfallPositionNameJPNTex[] = {
 #include "assets/textures/map_name_static/gWoodfallPositionNameJPNTex.ia8.inc.c"
 };
 
+u64 gStoneTowerPositionNameJPNTex[] = {
+#include "assets/textures/map_name_static/gStoneTowerPositionNameJPNTex.ia8.inc.c"
+};
