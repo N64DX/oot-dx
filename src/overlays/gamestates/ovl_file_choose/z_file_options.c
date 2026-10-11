@@ -35,6 +35,7 @@ void FileSelectGlobalOptions_ToggleSaveSlotsOption(FileSelectState* this, u8 ind
     gSaveContext.globalSettings ^= 1 << shift;
     if (EXTRA_SAVE_SLOTS)
         Sram_EraseBackupSaves(this, &this->sramCtx);
+    this->doRefresh = true;
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
@@ -321,9 +322,6 @@ void FileSelectOptions_Draw(FileSelectState* this) {
         GfxPrint_Printf(&printer, "Extra save slots will be");
         GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 24);
         GfxPrint_Printf(&printer, "erased when playing non-DX ROMs");
-        GfxPrint_SetPos(&printer, 4 - WS_PX_SHIFT, 26);
-        GfxPrint_SetColor(&printer, 255, 255, 255, 255);
-        GfxPrint_Printf(&printer, "Press Z to toggle between slots");
     }
 
     POLY_OPA_DISP = GfxPrint_Close(&printer);
@@ -358,7 +356,7 @@ void FileSelectOptions_Reset(FileSelectState* this) {
         this->entries = sGlobalOptionsEntries;
         this->count = ARRAY_COUNT(sGlobalOptionsEntries);
     } else {
-        u8 questMode = this->questMode[CURRENT_SLOT(this->buttonIndex)];
+        u8 questMode = this->questMode[this->buttonIndex];
         u8 isChildQuestMode = (questMode == CHILD_QUEST || questMode == CHILD_MASTER_QUEST ||  questMode == CHILD_URA_QUEST || questMode == DUNGEON_CHILD_RUSH);
         this->entries = sFileOptionsBuffer;
         this->count = 0;

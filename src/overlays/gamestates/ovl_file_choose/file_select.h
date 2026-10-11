@@ -19,8 +19,10 @@
      (GET_NEWF(sramCtx, slotNum, 4) == 'A') || \
      (GET_NEWF(sramCtx, slotNum, 5) == 'Z'))
      
-#define NO_EMPTY_SLOTS   (!gSaveContext.extraSaveFiles &&  SLOT_OCCUPIED(sramCtx, 0) &&  SLOT_OCCUPIED(sramCtx, 1) &&  SLOT_OCCUPIED(sramCtx, 2)) || (gSaveContext.extraSaveFiles &&  SLOT_OCCUPIED(sramCtx, 3) &&  SLOT_OCCUPIED(sramCtx, 4) &&  SLOT_OCCUPIED(sramCtx, 5))
-#define ONLY_EMPTY_SLOTS (!gSaveContext.extraSaveFiles && !SLOT_OCCUPIED(sramCtx, 0) && !SLOT_OCCUPIED(sramCtx, 1) && !SLOT_OCCUPIED(sramCtx, 2)) || (gSaveContext.extraSaveFiles && !SLOT_OCCUPIED(sramCtx, 3) && !SLOT_OCCUPIED(sramCtx, 4) && !SLOT_OCCUPIED(sramCtx, 5))
+#define NO_EMPTY_SLOTS      (SLOT_OCCUPIED(sramCtx, 0) &&  SLOT_OCCUPIED(sramCtx, 1) &&  SLOT_OCCUPIED(sramCtx, 2) && (!EXTRA_SAVE_SLOTS ||  (SLOT_OCCUPIED(sramCtx, 3) &&  SLOT_OCCUPIED(sramCtx, 4) &&  SLOT_OCCUPIED(sramCtx, 5))))
+#define ONLY_EMPTY_SLOTS   (!SLOT_OCCUPIED(sramCtx, 0) && !SLOT_OCCUPIED(sramCtx, 1) && !SLOT_OCCUPIED(sramCtx, 2) && (!EXTRA_SAVE_SLOTS || (!SLOT_OCCUPIED(sramCtx, 3) && !SLOT_OCCUPIED(sramCtx, 4) && !SLOT_OCCUPIED(sramCtx, 5))))
+
+#define FILE_SELECT_SLOTS (EXTRA_SAVE_SLOTS ? 6 : 3)
 
 // Init mode: Loads saves from SRAM, handles initial language selection in PAL N64 versions
 // Config mode: Handles the bulk of the file select, various configuration tasks like picking a file, copy/erase, and the options menu
@@ -111,31 +113,43 @@ typedef enum MainMenuButtonIndex {
     /* 0 */ FS_BTN_MAIN_FILE_1,
     /* 1 */ FS_BTN_MAIN_FILE_2,
     /* 2 */ FS_BTN_MAIN_FILE_3,
-    /* 3 */ FS_BTN_MAIN_COPY,
-    /* 4 */ FS_BTN_MAIN_ERASE,
-    /* 5 */ FS_BTN_MAIN_OPTIONS
+    /* 3 */ FS_BTN_MAIN_FILE_4,
+    /* 4 */ FS_BTN_MAIN_FILE_5,
+    /* 5 */ FS_BTN_MAIN_FILE_6,
+    /* 6 */ FS_BTN_MAIN_COPY,
+    /* 7 */ FS_BTN_MAIN_ERASE,
+    /* 8 */ FS_BTN_MAIN_OPTIONS
 } MainMenuButtonIndex;
 
 typedef enum CopyMenuButtonIndex {
     /* 0 */ FS_BTN_COPY_FILE_1,
     /* 1 */ FS_BTN_COPY_FILE_2,
     /* 2 */ FS_BTN_COPY_FILE_3,
-    /* 3 */ FS_BTN_COPY_QUIT
+    /* 3 */ FS_BTN_COPY_FILE_4,
+    /* 4 */ FS_BTN_COPY_FILE_5,
+    /* 5 */ FS_BTN_COPY_FILE_6,
+    /* 6 */ FS_BTN_COPY_QUIT
 } CopyMenuButtonIndex;
 
 typedef enum EraseMenuButtonIndex {
     /* 0 */ FS_BTN_ERASE_FILE_1,
     /* 1 */ FS_BTN_ERASE_FILE_2,
     /* 2 */ FS_BTN_ERASE_FILE_3,
-    /* 3 */ FS_BTN_ERASE_QUIT
+    /* 3 */ FS_BTN_ERASE_FILE_4,
+    /* 4 */ FS_BTN_ERASE_FILE_5,
+    /* 5 */ FS_BTN_ERASE_FILE_6,
+    /* 6 */ FS_BTN_ERASE_QUIT
 } EraseMenuButtonIndex;
 
 typedef enum SelectMenuButtonIndex {
     /* 0 */ FS_BTN_SELECT_FILE_1,
     /* 1 */ FS_BTN_SELECT_FILE_2,
     /* 2 */ FS_BTN_SELECT_FILE_3,
-    /* 3 */ FS_BTN_SELECT_YES,
-    /* 4 */ FS_BTN_SELECT_QUIT
+    /* 3 */ FS_BTN_SELECT_FILE_4,
+    /* 4 */ FS_BTN_SELECT_FILE_5,
+    /* 5 */ FS_BTN_SELECT_FILE_6,
+    /* 6 */ FS_BTN_SELECT_YES,
+    /* 7 */ FS_BTN_SELECT_QUIT
 } SelectMenuButtonIndex;
 
 typedef enum ConfirmButtonIndex {

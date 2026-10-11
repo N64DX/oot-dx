@@ -352,7 +352,7 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
 #else
         if ((phi_s0 > 0) && (phi_s0 < 9)) {
 #if OOT_VERSION >= PAL_1_1
-            temp = this->fileNames[CURRENT_SLOT(this->buttonIndex)][phi_s0 - 1];
+            temp = this->fileNames[this->buttonIndex][phi_s0 - 1];
 
             this->nameEntryVtx[phi_t1].v.ob[0] = this->nameEntryVtx[phi_t1 + 2].v.ob[0] =
                 D_808125EC[phi_s0] + this->nameEntryBoxPosX + D_808124C0[temp];
@@ -420,7 +420,7 @@ void FileSelect_SetNameEntryVtx(GameState* thisx) {
 
     if (!this->selectingQuestMode)
         for (phi_s0 = 0, phi_v0 = 0; phi_s0 < 0x20; phi_s0 += 4, phi_v0++)
-            FileSelect_DrawCharacter(this->state.gfxCtx, font->fontBuf + this->fileNames[CURRENT_SLOT(this->buttonIndex)][phi_v0] * FONT_CHAR_TEX_SIZE, phi_s0);
+            FileSelect_DrawCharacter(this->state.gfxCtx, font->fontBuf + this->fileNames[this->buttonIndex][phi_v0] * FONT_CHAR_TEX_SIZE, phi_s0);
 
     this->nameEntryVtx[0x25].v.tc[0] = this->nameEntryVtx[0x26].v.tc[1] = this->nameEntryVtx[0x27].v.tc[0] =
         this->nameEntryVtx[0x27].v.tc[1] = this->nameEntryVtx[0x29].v.tc[0] = this->nameEntryVtx[0x2A].v.tc[1] =
@@ -587,25 +587,25 @@ s32 FileSelect_ApplyDiacriticToCharacter(GameState* thisx, s16 diacritic, s16 ch
 
     if (diacritic == FILENAME_SPACE) {
         for (i = 0; i < (s16)ARRAY_COUNTU(sRemoveDiacriticRangeOffset); i++) {
-            if (sRemoveDiacriticRangeMin[i] <= this->fileNames[CURRENT_SLOT(this->buttonIndex)][charIndex] &&
-                this->fileNames[CURRENT_SLOT(this->buttonIndex)][charIndex] <= sRemoveDiacriticRangeMax[i]) {
-                this->fileNames[CURRENT_SLOT(this->buttonIndex)][charIndex] += sRemoveDiacriticRangeOffset[i];
+            if (sRemoveDiacriticRangeMin[i] <= this->fileNames[this->buttonIndex][charIndex] &&
+                this->fileNames[this->buttonIndex][charIndex] <= sRemoveDiacriticRangeMax[i]) {
+                this->fileNames[this->buttonIndex][charIndex] += sRemoveDiacriticRangeOffset[i];
                 return true;
             }
         }
     } else if (diacritic == FILENAME_DAKUTEN) {
         for (i = 0; i < (s16)ARRAY_COUNTU(sDakutenDiacriticRangeOffset); i++) {
-            if (sDakutenDiacriticRangeMin[i] <= this->fileNames[CURRENT_SLOT(this->buttonIndex)][charIndex] &&
-                this->fileNames[CURRENT_SLOT(this->buttonIndex)][charIndex] <= sDakutenDiacriticRangeMax[i]) {
-                this->fileNames[CURRENT_SLOT(this->buttonIndex)][charIndex] += sDakutenDiacriticRangeOffset[i];
+            if (sDakutenDiacriticRangeMin[i] <= this->fileNames[this->buttonIndex][charIndex] &&
+                this->fileNames[this->buttonIndex][charIndex] <= sDakutenDiacriticRangeMax[i]) {
+                this->fileNames[this->buttonIndex][charIndex] += sDakutenDiacriticRangeOffset[i];
                 return true;
             }
         }
     } else if (diacritic == FILENAME_HANDAKUTEN) {
         for (i = 0; i < (s16)ARRAY_COUNTU(sHandakutenDiacriticRangeOffset); i++) {
-            if (sHandakutenDiacriticRangeMin[i] <= this->fileNames[CURRENT_SLOT(this->buttonIndex)][charIndex] &&
-                this->fileNames[CURRENT_SLOT(this->buttonIndex)][charIndex] <= sHandakutenDiacriticRangeMax[i]) {
-                this->fileNames[CURRENT_SLOT(this->buttonIndex)][charIndex] += sHandakutenDiacriticRangeOffset[i];
+            if (sHandakutenDiacriticRangeMin[i] <= this->fileNames[this->buttonIndex][charIndex] &&
+                this->fileNames[this->buttonIndex][charIndex] <= sHandakutenDiacriticRangeMax[i]) {
+                this->fileNames[this->buttonIndex][charIndex] += sHandakutenDiacriticRangeOffset[i];
                 return true;
             }
         }
@@ -862,13 +862,13 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         GfxPrint_Init(printer);
         GfxPrint_Open(printer, POLY_OPA_DISP);
 
-        GfxPrint_SetPos(printer, sQuestMessagesOffset[gSaveContext.language][this->questMode[CURRENT_SLOT(this->buttonIndex)]][0], 2);
+        GfxPrint_SetPos(printer, sQuestMessagesOffset[gSaveContext.language][this->questMode[this->buttonIndex]][0], 2);
         GfxPrint_SetColor(printer, 255, 255, 255, 255);
-        GfxPrint_Printf(printer, "%s", sQuestMessages[gSaveContext.language][this->questMode[CURRENT_SLOT(this->buttonIndex)]][0]);
+        GfxPrint_Printf(printer, "%s", sQuestMessages[gSaveContext.language][this->questMode[this->buttonIndex]][0]);
 
-        GfxPrint_SetPos(printer, sQuestMessagesOffset[gSaveContext.language][this->questMode[CURRENT_SLOT(this->buttonIndex)]][1], 3);
+        GfxPrint_SetPos(printer, sQuestMessagesOffset[gSaveContext.language][this->questMode[this->buttonIndex]][1], 3);
         GfxPrint_SetColor(printer, 255, 255, 255, 255);
-        GfxPrint_Printf(printer, "%s", sQuestMessages[gSaveContext.language][this->questMode[CURRENT_SLOT(this->buttonIndex)]][1]);
+        GfxPrint_Printf(printer, "%s", sQuestMessages[gSaveContext.language][this->questMode[this->buttonIndex]][1]);
         
         POLY_OPA_DISP = GfxPrint_Close(printer);
         GfxPrint_Destroy(printer);
@@ -876,8 +876,8 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         x = 160 - 64;
         y = 45;
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
-        FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)sQuestTextures[this->questMode[CURRENT_SLOT(this->buttonIndex)]][1], 160, 160);
-        gDPLoadTextureBlock(POLY_OPA_DISP++, sQuestTextures[this->questMode[CURRENT_SLOT(this->buttonIndex)]][0], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)sQuestTextures[this->questMode[this->buttonIndex]][1], 160, 160);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, sQuestTextures[this->questMode[this->buttonIndex]][0], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
         gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(x + WS_SHIFT_HALF) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(x + WS_SHIFT_HALF + 128) << 2, HIRES_MULTIPLY((y + 16) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));
 
         x = 48;
@@ -891,29 +891,29 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 
         if (this->stickAdjX < -30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            switch (this->questMode[CURRENT_SLOT(this->buttonIndex)]) {
-                case VANILLA_QUEST:       this->questMode[CURRENT_SLOT(this->buttonIndex)] = BOSS_RUSH;           break;
-                case MASTER_QUEST:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = VANILLA_QUEST;       break;
-                case CHILD_QUEST:         this->questMode[CURRENT_SLOT(this->buttonIndex)] = MASTER_QUEST;        break;
-                case CHILD_MASTER_QUEST:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_QUEST;         break;
-                case DUNGEON_RUSH:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_MASTER_QUEST ; break;
-                case DUNGEON_MASTER_RUSH: this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_RUSH;        break;
-                case DUNGEON_CHILD_RUSH:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_MASTER_RUSH; break;
-                case BOSS_RUSH:           this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_CHILD_RUSH;  break;
-                default:                  this->questMode[CURRENT_SLOT(this->buttonIndex)] = 0;                   break;      
+            switch (this->questMode[this->buttonIndex]) {
+                case VANILLA_QUEST:       this->questMode[this->buttonIndex] = BOSS_RUSH;           break;
+                case MASTER_QUEST:        this->questMode[this->buttonIndex] = VANILLA_QUEST;       break;
+                case CHILD_QUEST:         this->questMode[this->buttonIndex] = MASTER_QUEST;        break;
+                case CHILD_MASTER_QUEST:  this->questMode[this->buttonIndex] = CHILD_QUEST;         break;
+                case DUNGEON_RUSH:        this->questMode[this->buttonIndex] = CHILD_MASTER_QUEST ; break;
+                case DUNGEON_MASTER_RUSH: this->questMode[this->buttonIndex] = DUNGEON_RUSH;        break;
+                case DUNGEON_CHILD_RUSH:  this->questMode[this->buttonIndex] = DUNGEON_MASTER_RUSH; break;
+                case BOSS_RUSH:           this->questMode[this->buttonIndex] = DUNGEON_CHILD_RUSH;  break;
+                default:                  this->questMode[this->buttonIndex] = 0;                   break;      
             }
         } else if (this->stickAdjX > 30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            switch (this->questMode[CURRENT_SLOT(this->buttonIndex)]) {
-                case VANILLA_QUEST:       this->questMode[CURRENT_SLOT(this->buttonIndex)] = MASTER_QUEST;        break;
-                case MASTER_QUEST:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_QUEST;         break;
-                case CHILD_QUEST:         this->questMode[CURRENT_SLOT(this->buttonIndex)] = CHILD_MASTER_QUEST;  break;
-                case CHILD_MASTER_QUEST:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_RUSH;        break;
-                case DUNGEON_RUSH:        this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_MASTER_RUSH; break;
-                case DUNGEON_MASTER_RUSH: this->questMode[CURRENT_SLOT(this->buttonIndex)] = DUNGEON_CHILD_RUSH;  break;
-                case DUNGEON_CHILD_RUSH:  this->questMode[CURRENT_SLOT(this->buttonIndex)] = BOSS_RUSH;           break;
-                case BOSS_RUSH:           this->questMode[CURRENT_SLOT(this->buttonIndex)] = VANILLA_QUEST;       break;
-                default:                  this->questMode[CURRENT_SLOT(this->buttonIndex)] = QUEST_MAX;           break;
+            switch (this->questMode[this->buttonIndex]) {
+                case VANILLA_QUEST:       this->questMode[this->buttonIndex] = MASTER_QUEST;        break;
+                case MASTER_QUEST:        this->questMode[this->buttonIndex] = CHILD_QUEST;         break;
+                case CHILD_QUEST:         this->questMode[this->buttonIndex] = CHILD_MASTER_QUEST;  break;
+                case CHILD_MASTER_QUEST:  this->questMode[this->buttonIndex] = DUNGEON_RUSH;        break;
+                case DUNGEON_RUSH:        this->questMode[this->buttonIndex] = DUNGEON_MASTER_RUSH; break;
+                case DUNGEON_MASTER_RUSH: this->questMode[this->buttonIndex] = DUNGEON_CHILD_RUSH;  break;
+                case DUNGEON_CHILD_RUSH:  this->questMode[this->buttonIndex] = BOSS_RUSH;           break;
+                case BOSS_RUSH:           this->questMode[this->buttonIndex] = VANILLA_QUEST;       break;
+                default:                  this->questMode[this->buttonIndex] = QUEST_MAX;           break;
             }
         }
 
@@ -924,7 +924,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 
         if (CHECK_BTN_ALL(input->press.button, BTN_A)) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_DECIDE_L, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-            gSaveContext.fileNum = CURRENT_SLOT(this->buttonIndex);
+            gSaveContext.fileNum = this->buttonIndex;
             dayTime = ((void)0, gSaveContext.save.dayTime);
 
             this->selectingQuestMode = false;
@@ -947,12 +947,12 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
             this->kbdY = 5;
             this->kbdX = 4;
         } else if (CHECK_BTN_ALL(input->press.button, BTN_B)) {
-            if ((this->newFileNameCharCount == 7) && (this->fileNames[CURRENT_SLOT(this->buttonIndex)][7] != FILENAME_SPACE)) {
+            if ((this->newFileNameCharCount == 7) && (this->fileNames[this->buttonIndex][7] != FILENAME_SPACE)) {
                 for (i = this->newFileNameCharCount; i < 7; i++) {
-                    this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = this->fileNames[CURRENT_SLOT(this->buttonIndex)][i + 1];
+                    this->fileNames[this->buttonIndex][i] = this->fileNames[this->buttonIndex][i + 1];
                 }
 
-                this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = FILENAME_SPACE;
+                this->fileNames[this->buttonIndex][i] = FILENAME_SPACE;
                 SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_S);
             } else {
                 this->newFileNameCharCount--;
@@ -962,10 +962,10 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                     this->configMode = CM_NAME_ENTRY_TO_MAIN;
                 } else {
                     for (i = this->newFileNameCharCount; i < 7; i++) {
-                        this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = this->fileNames[CURRENT_SLOT(this->buttonIndex)][i + 1];
+                        this->fileNames[this->buttonIndex][i] = this->fileNames[this->buttonIndex][i + 1];
                     }
 
-                    this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = FILENAME_SPACE;
+                    this->fileNames[this->buttonIndex][i] = FILENAME_SPACE;
                     SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_S);
                 }
             }
@@ -991,7 +991,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 }
                             } else {
                                 SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_S);
-                                this->fileNames[CURRENT_SLOT(this->buttonIndex)][this->newFileNameCharCount] =
+                                this->fileNames[this->buttonIndex][this->newFileNameCharCount] =
                                     gCharPageHira[this->charIndex];
                                 this->newFileNameCharCount++;
                                 if (this->newFileNameCharCount >= 8) {
@@ -1014,7 +1014,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 }
                             } else {
                                 SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_S);
-                                this->fileNames[CURRENT_SLOT(this->buttonIndex)][this->newFileNameCharCount] =
+                                this->fileNames[this->buttonIndex][this->newFileNameCharCount] =
                                     gCharPageKata[this->charIndex];
                                 this->newFileNameCharCount++;
                                 if (this->newFileNameCharCount >= 8) {
@@ -1030,7 +1030,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 
                         if (CHECK_BTN_ALL(input->press.button, BTN_A)) {
                             SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_S);
-                            this->fileNames[CURRENT_SLOT(this->buttonIndex)][this->newFileNameCharCount] =
+                            this->fileNames[this->buttonIndex][this->newFileNameCharCount] =
                                 gCharPageEng[this->charIndex];
                             this->newFileNameCharCount++;
 
@@ -1064,12 +1064,12 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                     } else {
                         if (this->kbdButton == FS_KBD_BTN_BACKSPACE) {
                             if ((this->newFileNameCharCount == 7) &&
-                                (this->fileNames[CURRENT_SLOT(this->buttonIndex)][7] != FILENAME_SPACE)) {
+                                (this->fileNames[this->buttonIndex][7] != FILENAME_SPACE)) {
                                 for (i = this->newFileNameCharCount; i < 7; i++) {
-                                    this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = this->fileNames[CURRENT_SLOT(this->buttonIndex)][i + 1];
+                                    this->fileNames[this->buttonIndex][i] = this->fileNames[this->buttonIndex][i + 1];
                                 }
 
-                                this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = FILENAME_SPACE;
+                                this->fileNames[this->buttonIndex][i] = FILENAME_SPACE;
                                 SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_S);
                             } else {
                                 this->newFileNameCharCount--;
@@ -1079,17 +1079,17 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 }
 
                                 for (i = this->newFileNameCharCount; i < 7; i++) {
-                                    this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = this->fileNames[CURRENT_SLOT(this->buttonIndex)][i + 1];
+                                    this->fileNames[this->buttonIndex][i] = this->fileNames[this->buttonIndex][i + 1];
                                 }
 
-                                this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = FILENAME_SPACE;
+                                this->fileNames[this->buttonIndex][i] = FILENAME_SPACE;
                                 SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_S);
                             }
                         } else if (this->kbdButton == FS_KBD_BTN_END) {
                             validName = false;
 
                             for (i = 0; i < 8; i++) {
-                                if (this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] != FILENAME_SPACE) {
+                                if (this->fileNames[this->buttonIndex][i] != FILENAME_SPACE) {
                                     validName = true;
                                     break;
                                 }
@@ -1098,7 +1098,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                             if (validName) {
                                 SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_L);
 #if OOT_VERSION > PAL_1_1
-                                gSaveContext.fileNum = CURRENT_SLOT(this->buttonIndex);
+                                gSaveContext.fileNum = this->buttonIndex;
                                 dayTime = ((void)0, gSaveContext.save.dayTime);
                                 Sram_InitSave(this, &this->sramCtx);
                                 gSaveContext.save.dayTime = dayTime;
@@ -1107,7 +1107,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                                 this->connectorAlpha[this->buttonIndex] = 255;
                                 Rumble_Request(300.0f, 180, 20, 100);
 #else
-                                this->questMode[CURRENT_SLOT(this->buttonIndex)] = 0;
+                                this->questMode[this->buttonIndex] = 0;
                                 this->selectingQuestMode = true;
 #endif
                             } else {
@@ -1148,7 +1148,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 
                     if (CHECK_BTN_ALL(input->press.button, BTN_A)) {
                         SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_S);
-                        this->fileNames[CURRENT_SLOT(this->buttonIndex)][this->newFileNameCharCount] = gCharPageEng[this->charIndex];
+                        this->fileNames[this->buttonIndex][this->newFileNameCharCount] = gCharPageEng[this->charIndex];
                         this->newFileNameCharCount++;
 
                         if (this->newFileNameCharCount > 7) {
@@ -1158,12 +1158,12 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                 } else if (CHECK_BTN_ALL(input->press.button, BTN_A) && (this->charPage != this->kbdButton)) {
                     if (this->kbdButton == FS_KBD_BTN_BACKSPACE) {
                         if ((this->newFileNameCharCount == 7) &&
-                            (this->fileNames[CURRENT_SLOT(this->buttonIndex)][7] != FILENAME_SPACE)) {
+                            (this->fileNames[this->buttonIndex][7] != FILENAME_SPACE)) {
                             for (i = this->newFileNameCharCount; i < 7; i++) {
-                                this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = this->fileNames[CURRENT_SLOT(this->buttonIndex)][i + 1];
+                                this->fileNames[this->buttonIndex][i] = this->fileNames[this->buttonIndex][i + 1];
                             }
 
-                            this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = FILENAME_SPACE;
+                            this->fileNames[this->buttonIndex][i] = FILENAME_SPACE;
                             SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_S);
                         } else {
                             this->newFileNameCharCount--;
@@ -1173,17 +1173,17 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
                             }
 
                             for (i = this->newFileNameCharCount; i < 7; i++) {
-                                this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = this->fileNames[CURRENT_SLOT(this->buttonIndex)][i + 1];
+                                this->fileNames[this->buttonIndex][i] = this->fileNames[this->buttonIndex][i + 1];
                             }
 
-                            this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] = FILENAME_SPACE;
+                            this->fileNames[this->buttonIndex][i] = FILENAME_SPACE;
                             SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_S);
                         }
                     } else if (this->kbdButton == FS_KBD_BTN_END) {
                         validName = false;
 
                         for (i = 0; i < 8; i++) {
-                            if (this->fileNames[CURRENT_SLOT(this->buttonIndex)][i] != FILENAME_SPACE) {
+                            if (this->fileNames[this->buttonIndex][i] != FILENAME_SPACE) {
                                 validName = true;
                                 break;
                             }
@@ -1191,7 +1191,7 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
 
                         if (validName) {
                             SFX_PLAY_CENTERED(NA_SE_SY_FSEL_DECIDE_L);
-                            gSaveContext.fileNum = CURRENT_SLOT(this->buttonIndex);
+                            gSaveContext.fileNum = this->buttonIndex;
                             dayTime = ((void)0, gSaveContext.save.dayTime);
                             Sram_InitSave(this, &this->sramCtx);
                             gSaveContext.save.dayTime = dayTime;
