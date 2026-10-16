@@ -307,7 +307,7 @@ static ColliderJntSphInit sJntSphInit = {
 };
 
 static InitChainEntry sInitChain[] = {
-    ICHAIN_S8(naviEnemyId, NAVI_ENEMY_THEFATHER, ICHAIN_CONTINUE),
+    ICHAIN_S8(naviEnemyId, NAVI_ENEMY_BLACK_BEAST, ICHAIN_CONTINUE),
     ICHAIN_S8(attentionRangeType, ATTENTION_RANGE_2, ICHAIN_CONTINUE),
     ICHAIN_F32_DIV1000(gravity, -3000, ICHAIN_CONTINUE),
     ICHAIN_VEC3F_DIV1000(scale, 45, ICHAIN_STOP)

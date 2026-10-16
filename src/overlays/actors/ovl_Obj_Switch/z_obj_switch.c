@@ -270,6 +270,11 @@ void ObjSwitch_SetOn(ObjSwitch* this, PlayState* play) {
         subType = OBJSWITCH_SUBTYPE(&this->dyna.actor);
         Flags_SetSwitch(play, OBJSWITCH_SWITCH_FLAG(&this->dyna.actor));
 
+        if ((subType == OBJSWITCH_SUBTYPE_HOLD || subType == OBJSWITCH_SUBTYPE_HOLD_INVERTED) && (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INV)) {
+            this->cooldownOn = false;
+            return;
+        }
+
         if (subType == OBJSWITCH_SUBTYPE_ONCE || subType == OBJSWITCH_SUBTYPE_SYNC) {
             OnePointCutscene_AttentionSetSfx(play, &this->dyna.actor, NA_SE_SY_CORRECT_CHIME);
         } else {
@@ -300,15 +305,16 @@ void ObjSwitch_UpdateTwoTexScrollXY(ObjSwitch* this) {
     this->y2TexScroll = (this->y2TexScroll - 1) & 0x7F;
 }
 
-static u16 isStrongScenes[] = { SCENE_FOREST_TEMPLE, SCENE_FIRE_TEMPLE, SCENE_GORON_MINES, SCENE_ICE_CAVERN, SCENE_WATER_TEMPLE, SCENE_BOTTOM_OF_THE_WELL, SCENE_SHADOW_TEMPLE, SCENE_GERUDO_TRAINING_GROUND, SCENE_SPIRIT_TEMPLE, SCENE_INSIDE_GANONS_CASTLE };
+static u16 isStrongScene[] = { SCENE_FOREST_TEMPLE, SCENE_FIRE_TEMPLE, SCENE_WEBBED_SHRINE, SCENE_GORON_MINES, SCENE_ICE_CAVERN, SCENE_WATER_TEMPLE, SCENE_BOTTOM_OF_THE_WELL, SCENE_SHADOW_TEMPLE, SCENE_GERUDO_TRAINING_GROUND, SCENE_SPIRIT_TEMPLE, SCENE_INSIDE_GANONS_CASTLE, SCENE_WOODFALL_TEMPLE,
+                               SCENE_STONE_TOWER_TEMPLE, SCENE_STONE_TOWER_TEMPLE_INV };
 
 u8 ObjSwitch_IsStrong(PlayState* play) {
     u8 i;
 
     if (!IS_CHILD_QUEST)
         return false;
-    for (i=0; i<ARRAY_COUNT(isStrongScenes); i++)
-        if (isStrongScenes[i] == play->sceneId)
+    for (i=0; i<ARRAY_COUNT(isStrongScene); i++)
+        if (isStrongScene[i] == play->sceneId)
             return true;
     return false;
 }

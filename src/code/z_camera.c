@@ -1804,7 +1804,7 @@ s32 Camera_Normal1(Camera* camera) {
 
     if (roData->interfaceField & NORMAL1_FLAG_7) {
         func_800458D4(camera, &atEyeNextGeo, spA0, &rwData->yOffset, roData->interfaceField & NORMAL1_FLAG_0);
-    } else if (roData->interfaceField & NORMAL1_FLAG_5) {
+    } else if (roData->interfaceField & (NORMAL1_FLAG_5 | NORMAL1_FLAG_6)) {
         func_80045B08(camera, &atEyeNextGeo, spA0, rwData->slopePitchAdj);
     } else {
         Camera_CalcAtDefault(camera, &atEyeNextGeo, spA0, roData->interfaceField & NORMAL1_FLAG_0);
@@ -3627,6 +3627,8 @@ s32 Camera_KeepOn3(Camera* camera) {
         temp_f0 = (roData->maxDist < targetToPlayerDir.r ? 1.0f : targetToPlayerDir.r / roData->maxDist);
         rwData->animTimer = roData->initTimer;
         spBC = ((1.0f - temp_f0) * targetToPlayerDir.r) / rwData->animTimer;
+        if (roData->interfaceField & KEEPON3_FLAG_6)
+            targetToPlayerDir.pitch = 0;
         swingAngle = F32_LERPIMP(roData->swingPitchInitial, roData->swingPitchFinal, temp_f0);
         atToEyeAdj.pitch = CAM_DEG_TO_BINANG(swingAngle) + ((s16)(-(targetToPlayerDir.pitch * roData->swingPitchAdj)));
         swingAngle = F32_LERPIMP(roData->swingYawInitial, roData->swingYawFinal, temp_f0);
@@ -7606,6 +7608,30 @@ s32 Camera_Special9(Camera* camera) {
     camera->playerToAtOffset.y = camera->at.y - playerPosRot->pos.y;
     camera->playerToAtOffset.z = camera->at.z - playerPosRot->pos.z;
     return true;
+}
+
+s32 Camera_WoodfallNormal(Camera* camera) {
+    s32 ret = Camera_Normal1(camera);
+
+    if (camera->play->sceneId == SCENE_WOODFALL && camera->eye.y < 5.0f)
+        camera->eye.y = 5.0f;
+    return ret;
+}
+
+s32 Camera_WoodfallParallel(Camera* camera) {
+    s32 ret = Camera_Parallel1(camera);
+
+    if (camera->play->sceneId == SCENE_WOODFALL && camera->eye.y < 5.0f)
+        camera->eye.y = 5.0f;
+    return ret;
+}
+
+s32 Camera_WoodfallBattle(Camera* camera) {
+    s32 ret = Camera_Battle1(camera);
+
+    if (camera->play->sceneId == SCENE_WOODFALL && camera->eye.y < 5.0f)
+        camera->eye.y = 5.0f;
+    return ret;
 }
 
 Camera* Camera_Create(View* view, CollisionContext* colCtx, PlayState* play) {

@@ -131,7 +131,7 @@
 /* 0x73 */ DEFINE_SCENE(old_dodongos_cavern_scene, none, SCENE_GORON_MINES, SDC_GORON_MINES, 0, 0)
 /* 0x74 */ DEFINE_SCENE(woodfall_temple_scene, none, SCENE_WOODFALL_TEMPLE, SDC_WOODFALL_TEMPLE, 0, 0)
 /* 0x75 */ DEFINE_SCENE(red_ice_cavern_scene, none, SCENE_PURPLE_ICE_CAVERN, SDC_DEFAULT, 0, 0)
-/* 0x76 */ DEFINE_SCENE(stone_tower_scene, none, SCENE_STONE_TOWER_TEMPLE, SDC_DEFAULT, 0, 0)
+/* 0x76 */ DEFINE_SCENE(stone_tower_temple_scene, none, SCENE_STONE_TOWER_TEMPLE, SDC_STONE_TOWER_TEMPLE, 0, 0)
 
 // Scenes that share sceneFlags from here on out
 /* 0x77 */ DEFINE_SCENE(old_lost_woods_scene, none, SCENE_FORBIDDEN_WOODS, SDC_FORBIDDEN_WOODS, 0, 0) 
@@ -146,10 +146,10 @@
 /* 0x80 */ DEFINE_SCENE(cave_passage_scene, none, SCENE_CAVE_PASSAGE, SDC_DEFAULT, 0, 0)
 
 // Scenes that both share sceneFlags and textIds from here on out (or lack a textId)
-/* 0x81 */ DEFINE_SCENE(stone_tower_inverted_scene, none, SCENE_STONE_TOWER_INVERTED, SDC_DEFAULT, 0, 0)
+/* 0x81 */ DEFINE_SCENE(stone_tower_inverted_scene, none, SCENE_STONE_TOWER_INV, SDC_DEFAULT, 0, 0)
 /* 0x82 */ DEFINE_SCENE(woodfall_temple_boss_scene, none, SCENE_WOODFALL_TEMPLE_BOSS, SDC_WOODFALL_TEMPLE, 0, 0)
-/* 0x83 */ DEFINE_SCENE(stone_tower_inverted_scene, none, SCENE_STONE_TOWER_TEMPLE_INVERTED, SDC_DEFAULT, 0, 0)
-/* 0x84 */ DEFINE_SCENE(stone_tower_scene, none, SCENE_STONE_TOWER_TEMPLE_BOSS, SDC_DEFAULT, 0, 0)
+/* 0x83 */ DEFINE_SCENE(stone_tower_temple_inverted_scene, none, SCENE_STONE_TOWER_TEMPLE_INV, SDC_STONE_TOWER_TEMPLE, 0, 0)
+/* 0x84 */ DEFINE_SCENE(stone_tower_temple_inverted_scene, none, SCENE_STONE_TOWER_TEMPLE_BOSS, SDC_DEFAULT, 0, 0)
 /* 0x85 */ DEFINE_SCENE(grottos2_scene, none, SCENE_GROTTOS2, SDC_GROTTOS2, 0, 0)
 /* 0x86 */ DEFINE_SCENE(dawngrove_grottos_scene, none, SCENE_GROTTOS_GROVE, SDC_GROTTOS_GROVE, 0, 0)
 

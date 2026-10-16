@@ -48,3 +48,18 @@ void Path_CopyLastPoint(Path* path, Vec3f* dest) {
         dest->z = pointPos->z;
     }
 }
+
+s32 Path_CopyPoint(Path* path, s32 pointIndex, Vec3f* dst) {
+    Vec3s* point;
+
+    if (path == NULL)
+        return false;
+
+    point = SEGMENTED_TO_VIRTUAL(path->points);
+    point = &point[pointIndex];
+    dst->x = point->x;
+    dst->y = point->y;
+    dst->z = point->z;
+
+    return true;
+}

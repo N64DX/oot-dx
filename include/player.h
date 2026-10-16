@@ -568,7 +568,9 @@ typedef enum PlayerCsAction {
     /* 0x66 */ PLAYER_CSACTION_102,
     /* 0x67 */ PLAYER_CSACTION_103,
     /* 0x68 */ PLAYER_CSACTION_104,
-    /* 0x69 */ PLAYER_CSACTION_MAX
+    /* 0x69 */ PLAYER_CSACTION_ALINK_KYORO,
+    /* 0x6A */ PLAYER_CSACTION_WAIT2WAITR,
+    /* 0x6B */ PLAYER_CSACTION_MAX
 } PlayerCsAction;
 
 typedef enum PlayerCueId {

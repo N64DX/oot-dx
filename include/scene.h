@@ -423,14 +423,15 @@ typedef enum SceneDrawConfig {
     /* 5C */ SDC_ANCIENT_HOLLOW,
     /* 5D */ SDC_GORON_MINES,
     /* 5E */ SDC_WOODFALL_TEMPLE,
-    /* 5F */ SDC_FORBIDDEN_WOODS,
-    /* 60 */ SDC_WEBBED_SHRINE,
-    /* 61 */ SDC_BENEATH_THE_GRAVEYARD,
-    /* 62 */ SDC_RIVERSIDE_INN,
-    /* 63 */ SDC_SPRING_LAKE_SMITHY,
-    /* 64 */ SDC_GROTTOS2,
-    /* 65 */ SDC_GROTTOS_GROVE,
-    /* 66 */ SDC_MAX
+    /* 5F */ SDC_STONE_TOWER_TEMPLE,
+    /* 60 */ SDC_FORBIDDEN_WOODS,
+    /* 61 */ SDC_WEBBED_SHRINE,
+    /* 62 */ SDC_BENEATH_THE_GRAVEYARD,
+    /* 63 */ SDC_RIVERSIDE_INN,
+    /* 64 */ SDC_SPRING_LAKE_SMITHY,
+    /* 65 */ SDC_GROTTOS2,
+    /* 66 */ SDC_GROTTOS_GROVE,
+    /* 67 */ SDC_MAX
 } SceneDrawConfig;
 
 typedef void (*SceneDrawConfigFunc)(struct PlayState*);

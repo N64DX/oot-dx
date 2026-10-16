@@ -6,14 +6,18 @@
 
 struct ObjFireshield;
 
-typedef void (*ObjFireshieldActionFunc)(struct ObjFireshield*);
+#include "assets/objects/gameplay_keep/gameplay_keep_0x173D0.h"
 
-#define OBJFIRESHIELD_GET_FLAGS(thisx)          ((thisx)->params & 0x3F)
-#define OBJFIRESHIELD_GET_1F00(thisx)           (((thisx)->params >> 8) & 0x1F)
-#define OBJFIRESHIELD_GET_2000(thisx)           (((thisx)->params >> 0xD) & 1)
-#define OBJFIRESHIELD_GET_SWITCH_FLAG(thisx)    (((thisx)->params >> 7) & 0x3F)
-#define OBJFIRESHIELD_GET_C000(thisx)           (((thisx)->params >> 0xE) & 3)
-#define OBJFIRESHIELD_GET_ROTX(thisx)           ((thisx)->home.rot.x & 1)
+typedef void (*ObjFireshieldActionFunc)(struct ObjFireshield*, struct PlayState*);
+
+#define OBJFIRESHIELD_GET_FLAGS(thisx)            ((thisx)->params & 0x3F)
+#define OBJFIRESHIELD_GET_1F00(thisx)            (((thisx)->params >> 8) & 0x1F)
+#define OBJFIRESHIELD_GET_2000(thisx)            (((thisx)->params >> 0xD) & 1)
+#define OBJFIRESHIELD_GET_SWITCH_FLAG(thisx)     (((thisx)->params >> 7) & 0x3F)
+#define OBJFIRESHIELD_GET_C000(thisx)            (((thisx)->params >> 0xE) & 3)
+#define OBJFIRESHIELD_GET_ROTX(thisx)             ((thisx)->home.rot.x & 1)
+#define OBJFIRESHIELD_GET_TIMER(thisx)            ((thisx)->home.rot.y * 10)
+#define OBJFIRESHIELD_GET_NO_RETURN_FLAG(thisx)  (((thisx)->home.rot.x >> 1) & 0x3F)
 
 typedef struct ObjFireshield {
     /* 0x000 */ Actor actor;
@@ -27,6 +31,7 @@ typedef struct ObjFireshield {
     /* 0x1A6 */ u8 unk_1A6;
     /* 0x1A7 */ s8 unk_1A7;
     /* 0x1A8 */ s8 unk_1A8;
+    /* 0x1A9 */ u8 csId;
 } ObjFireshield; // size = 0x1AC
 
 #endif

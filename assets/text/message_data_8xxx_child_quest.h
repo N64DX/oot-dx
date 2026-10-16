@@ -4533,3 +4533,55 @@ MSG(
 MSG(),
 MSG()
 )
+
+DEFINE_MESSAGE(0x8530, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"To think I could be defeated...\n"
+"Although my rival, you were\n"
+"spectacular."
+BOX_BREAK
+
+"I shall take my bow by opening my\n"
+"heart and revealing my wisdom..." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8531, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"If you shoot that which releases\n"
+"the sacred golden light into the\n"
+"blood-stained, " COLOR(RED) "red emblem " COLOR(DEFAULT) "outside\n"
+"the temple..."
+BOX_BREAK
+
+"it shall rearrange things, in which\n"
+"the earth is born in the heavens\n"
+"and the moon is born on the\n"
+"earth." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8532, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"Do not forget these words...\n"
+"Die I shall, leaving no corpse." EVENT
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x8533, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_VARIABLE,
+MSG(),
+MSG(
+"That is the law of us Garo."
+),
+MSG(),
+MSG()
+)

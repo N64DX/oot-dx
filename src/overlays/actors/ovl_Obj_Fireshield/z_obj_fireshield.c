@@ -13,8 +13,10 @@
 #include "sys_matrix.h"
 #include "z_lib.h"
 #include "play_state.h"
+#include "save.h"
+#include "array_count.h"
 
-#include "assets/objects/gameplay_keep/gameplay_keep_0x173D0.h"
+#include "z_obj_fireshield_cutscene_data.c"
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -23,11 +25,11 @@ void ObjFireshield_Destroy(Actor* thisx, struct PlayState* play);
 void ObjFireshield_Update(Actor* thisx, struct PlayState* play);
 void ObjFireshield_Draw(Actor* thisx, struct PlayState* play);
 
-void ObjFireshield_80A4CABC(ObjFireshield* this);
-void ObjFireshield_80A4CB7C(ObjFireshield* this);
-void ObjFireshield_80A4CC54(ObjFireshield* this);
-void ObjFireshield_80A4CCBC(ObjFireshield* this);
-void ObjFireshield_80A4CD28(ObjFireshield* this);
+void ObjFireshield_80A4CABC(ObjFireshield* this, struct PlayState* play);
+void ObjFireshield_80A4CB7C(ObjFireshield* this, struct PlayState* play);
+void ObjFireshield_80A4CC54(ObjFireshield* this, struct PlayState* play);
+void ObjFireshield_80A4CCBC(ObjFireshield* this, struct PlayState* play);
+void ObjFireshield_80A4CD28(ObjFireshield* this, struct PlayState* play);
 
 ActorProfile Obj_Fireshield_Profile = {
     /**/ ACTOR_OBJ_FIRESHIELD,
@@ -84,31 +86,29 @@ static InitChainEntry sInitChain[] = {
 };
 
 void func_80A4CA90(ObjFireshield* this, PlayState* play) {
-    if (play->csCtx.state != CS_STATE_IDLE)
+    if (this->csId > 0)
         this->actionFunc = ObjFireshield_80A4CABC;
     else this->actionFunc = ObjFireshield_80A4CC54;
 }
 
-void ObjFireshield_80A4CABC(ObjFireshield* this) {
-    /*if (CutsceneManager_IsNext(this->actor.csId)) {
-        s32 sp18 = OBJFIRESHIELD_GET_FLAGS(&this->actor);
-        s32 temp_a0 = (sp18 & ~0x1F) >> 5;
-
-        CutsceneManager_StartWithPlayerCs(this->actor.csId, &this->actor);
-        this->actionFunc = ObjFireshield_80A4CB7C;
-        this->unk_194 = 20;
-        D_80A4D884[temp_a0] |= 1 << (sp18 & 0x1F);
-        D_80A4D894[temp_a0] |= 1 << (sp18 & 0x1F);
-    } else CutsceneManager_Queue(this->actor.csId);*/
+void ObjFireshield_80A4CABC(ObjFireshield* this, PlayState* play) {
     s32 sp18 = OBJFIRESHIELD_GET_FLAGS(&this->actor);
     s32 temp_a0 = (sp18 & ~0x1F) >> 5;
+
+    if (Player_InCsMode(play) || play->csCtx.state != CS_STATE_IDLE)
+        return;
+
+    Cutscene_SetScript(play, cutscenes[this->csId - 1]);
+    gSaveContext.cutsceneTrigger = 1;
+    Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
+
     this->actionFunc = ObjFireshield_80A4CB7C;
     this->unk_194 = 20;
     D_80A4D884[temp_a0] |= 1 << (sp18 & 0x1F);
     D_80A4D894[temp_a0] |= 1 << (sp18 & 0x1F);
 }
 
-void ObjFireshield_80A4CB7C(ObjFireshield* this) {
+void ObjFireshield_80A4CB7C(ObjFireshield* this, PlayState* play) {
     s32 sp18 = OBJFIRESHIELD_GET_FLAGS(&this->actor);
 
     if (this->unk_194 > 0) {
@@ -122,7 +122,7 @@ void ObjFireshield_80A4CB7C(ObjFireshield* this) {
     D_80A4D894[(sp18 & ~0x1F) >> 5] &= ~(1 << (sp18 & 0x1F));
 }
 
-void ObjFireshield_80A4CC54(ObjFireshield* this) {
+void ObjFireshield_80A4CC54(ObjFireshield* this, PlayState* play) {
     s32 temp_v0 = OBJFIRESHIELD_GET_FLAGS(&this->actor);
     s32 temp_v1 = 1 << (temp_v0 & 0x1F);
 
@@ -131,7 +131,7 @@ void ObjFireshield_80A4CC54(ObjFireshield* this) {
     D_80A4D894[(temp_v0 & ~0x1F) >> 5] |= temp_v1;
 }
 
-void ObjFireshield_80A4CCBC(ObjFireshield* this) {
+void ObjFireshield_80A4CCBC(ObjFireshield* this, PlayState* play) {
     s32 temp_v0 = OBJFIRESHIELD_GET_FLAGS(&this->actor);
 
     this->actionFunc = ObjFireshield_80A4CD28;
@@ -139,8 +139,7 @@ void ObjFireshield_80A4CCBC(ObjFireshield* this) {
     D_80A4D894[(temp_v0 & ~0x1F) >> 5] &= ~(1 << (temp_v0 & 0x1F));
 }
 
-void ObjFireshield_80A4CD28(ObjFireshield* this) {
-}
+void ObjFireshield_80A4CD28(ObjFireshield* this, PlayState* play) { }
 
 void func_80A4CD34(Actor* thisx, PlayState* play) {
     ObjFireshield* this = (ObjFireshield*)thisx;
@@ -172,30 +171,31 @@ void func_80A4CD34(Actor* thisx, PlayState* play) {
 }
 
 void func_80A4CE28(ObjFireshield* this, PlayState* play) {
-    s32 sp30 = OBJFIRESHIELD_GET_FLAGS(&this->actor);
-    s32 sp24, sp20;
+    u8 sp30 = OBJFIRESHIELD_GET_FLAGS(&this->actor);
+    u8 sp24, sp20;
+    u8 keepDisabled = Flags_GetSwitch(play, OBJFIRESHIELD_GET_NO_RETURN_FLAG(&this->actor)) != 0;
 
     if (this->unk_1A8 == 0) {
         if (OBJFIRESHIELD_GET_2000(&this->actor)) {
             sp24 = false;
             sp20 = false;
         } else {
-            sp24 = Flags_GetTreasure(play, OBJFIRESHIELD_GET_1F00(&this->actor));
+            sp24 = Flags_GetTreasure(play, OBJFIRESHIELD_GET_1F00(&this->actor)) != 0;
             sp20 = false;
         }
     } else {
-        sp20 = Flags_GetSwitch(play, OBJFIRESHIELD_GET_SWITCH_FLAG(&this->actor));
+        sp20 = Flags_GetSwitch(play, OBJFIRESHIELD_GET_SWITCH_FLAG(&this->actor)) != 0;
         sp24 = false;
     }
 
     if (!sp24 || !sp20 || (this->unk_19C != 0)) {
-        s32 sp1C = Flags_GetSwitch(play, sp30);
+        u8 sp1C = Flags_GetSwitch(play, sp30) != 0;
         s32 temp_v0 = (sp30 & ~0x1F) >> 5;
 
         if (this->unk_19C == 2) {
             if (Math_StepToF(&this->unk_198, 1.0f, 0.03f)) {
                 this->unk_19C = 1;
-                if (((this->actor.home.rot.z * 10) > 0) && (this->unk_1A7 != 0)) {
+                if (OBJFIRESHIELD_GET_TIMER(&this->actor) > 0 && this->unk_1A7 != 0) {
                     Flags_UnsetSwitch(play, sp30);
                     sp1C = false;
                 }
@@ -203,12 +203,12 @@ void func_80A4CE28(ObjFireshield* this, PlayState* play) {
         } else if (this->unk_19C == 3 && Math_StepToF(&this->unk_198, 0.0f, 0.03f))
             this->unk_19C = 0;
 
-        if (this->unk_1A0 > 0 && this->unk_19C == 1 && (this->actor.home.rot.z * 10) > 0 && !(D_80A4D894[temp_v0] & (1 << (sp30 & 0x1F))))
+        if (this->unk_1A0 > 0 && this->unk_19C == 1 && OBJFIRESHIELD_GET_TIMER(&this->actor) > 0 && !(D_80A4D894[temp_v0] & (1 << (sp30 & 0x1F))))
             this->unk_1A0 = 0;
 
         if ((this->unk_19C == 0) || (this->unk_19C == 3)) {
             if (!sp24 && !sp20) {
-                if ((this->actor.home.rot.z * 10) > 0) {
+                if (OBJFIRESHIELD_GET_TIMER(&this->actor) > 0 && !keepDisabled) {
                     if (this->unk_1A0 > 1)
                         this->unk_1A0--;
 
@@ -224,9 +224,9 @@ void func_80A4CE28(ObjFireshield* this, PlayState* play) {
         else if (sp1C && ((this->unk_19C == 1) || (this->unk_19C == 2))) {
             if ((D_80A4D884[temp_v0] & 1 << (sp30 & 0x1F)) && !(D_80A4D874[temp_v0] & 1 << (sp30 & 0x1F)))
                 this->unk_19C = 3;
-            else if (((this->actor.home.rot.z * 10) == 0) || (this->unk_1A0 == 0)) {
-                if ((this->actor.home.rot.z * 10) > 0)
-                    this->unk_1A0 = this->actor.home.rot.z * 10;
+            else if (OBJFIRESHIELD_GET_TIMER(&this->actor) == 0 || this->unk_1A0 == 0) {
+                if (OBJFIRESHIELD_GET_TIMER(&this->actor) > 0)
+                    this->unk_1A0 = OBJFIRESHIELD_GET_TIMER(&this->actor);
                 if (this->unk_1A7 != 0)
                     func_80A4CA90(this, play);
             }
@@ -264,10 +264,7 @@ void ObjFireshield_Init(Actor* thisx, PlayState* play) {
         this->actor.shape.rot.z = temp;
     else this->actor.shape.rot.z = 0;
 
-    this->actor.world.rot.z = 0;
-    this->actor.shape.rot.x = 0;
-    this->actor.world.rot.x = 0;
-
+    this->actor.shape.rot.y = this->actor.world.rot.y = this->actor.shape.rot.x = this->actor.world.rot.x = this->actor.world.rot.z = 0;
     this->actor.scale.x = sp2C->unk_00 * 0.0348f;
     this->actor.scale.z = this->actor.scale.x;
     this->actor.scale.y = 0.05f;
@@ -275,10 +272,14 @@ void ObjFireshield_Init(Actor* thisx, PlayState* play) {
     this->actor.cullingVolumeScale = sp2C->unk_04;
     this->unk_1A4 = Rand_ZeroOne() * 128.0f;
 
-    if ((this->actor.home.rot.z * 10) < 0) {
+    if (OBJFIRESHIELD_GET_TIMER(&this->actor) < 0) {
         this->unk_1A8 = 1;
-        this->actor.home.rot.z = -thisx->home.rot.z;
+        this->actor.home.rot.y = -thisx->home.rot.y;
     }
+
+    this->csId = this->actor.home.rot.z;
+    if (this->csId > ARRAY_COUNT(cutscenes))
+        this->csId = 0;
 
     Collider_InitCylinder(play, &this->collider);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
@@ -316,7 +317,7 @@ void ObjFireshield_Update(Actor* thisx, PlayState* play) {
 
     this->unk_1A4++;
 
-    this->actionFunc(this);
+    this->actionFunc(this, play);
 
     if (this->actionFunc == ObjFireshield_80A4CABC)
         this->collider.base.atFlags &= ~AT_HIT;

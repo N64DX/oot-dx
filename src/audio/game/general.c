@@ -175,6 +175,11 @@ u8 sAudioExtraFilter2 = 0;
 Vec3f* sSariaBgmPtr = NULL;
 f32 D_80130650 = 2000.0f;
 
+static f32* sSfxVolumeCur;
+static f32 sSfxVolumeTarget;
+static f32 sSfxVolumeRate;
+static u16 sSfxVolumeDuration = 0;
+
 #if DEBUG_FEATURES
 u8 sSeqModeInput = 0;
 #endif
@@ -1240,6 +1245,7 @@ s32 sAudioUpdateTaskEnd;
 void PadMgr_RequestPadData(PadMgr* padMgr, Input* inputs, s32 gameRequest);
 
 void Audio_StepFreqLerp(FreqLerp* lerp);
+void Audio_UpdateSfxVolumeTransition(void);
 void Audio_UpdateSceneSequenceResumePoint(void);
 void Audio_PlayNatureAmbienceSequence(u8 natureAmbienceId);
 s32 Audio_SetGanonsTowerBgmVolume(u8 targetVol);
@@ -2349,6 +2355,7 @@ void Audio_Update(void) {
         Audio_UpdateRiverSoundVolumes();
         Audio_UpdateSceneSequenceResumePoint();
         Audio_UpdateFanfare();
+        Audio_UpdateSfxVolumeTransition();
         if (gAudioSpecId == 7) {
             Audio_ClearSariaBgm();
         }
@@ -4008,6 +4015,27 @@ void func_800F6C34(void) {
 #if !(OOT_VERSION < NTSC_1_1 || !PLATFORM_N64)
     sPrevAmbienceSeqId = NA_BGM_DISABLED;
 #endif
+}
+
+void Audio_SetSfxVolumeTransition(f32* volume, f32 volumeTarget, u16 duration) {
+    sSfxVolumeCur = volume;
+    sSfxVolumeTarget = volumeTarget;
+    sSfxVolumeDuration = duration;
+    sSfxVolumeRate = (*sSfxVolumeCur - sSfxVolumeTarget) / sSfxVolumeDuration;
+}
+
+void Audio_UpdateSfxVolumeTransition(void) {
+    if (sSfxVolumeDuration != 0) {
+        sSfxVolumeDuration--;
+        if (sSfxVolumeDuration == 0)
+            *sSfxVolumeCur = sSfxVolumeTarget;
+        else *sSfxVolumeCur -= sSfxVolumeRate;
+    }
+}
+
+void Audio_PlaySfx_AtPosWithVolumeTransition(Vec3f* pos, u16 sfxId, u16 duration) {
+    func_800F4578(pos, sfxId, 0.0f);
+    Audio_SetSfxVolumeTransition(&D_8016B7E0, 1.0f, duration);
 }
 
 void Audio_SetNatureAmbienceChannelIO(u8 channelIdxRange, u8 ioPort, u8 ioData) {

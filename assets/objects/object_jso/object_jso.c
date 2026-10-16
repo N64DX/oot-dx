@@ -15,10 +15,6 @@ Vtx object_jsoVtx_008210[] = {
 #include "assets/objects/object_jso/object_jsoVtx_008210.vtx.inc"
 };
 
-u64 gGaroMasterUnusedLegWrappingTex[] = {
-#include "assets/objects/object_jso/garo_master_unused_leg_wrapping.rgba16.inc.c"
-};
-
 u64 gGaroMasterRobeFrontTex[] = {
 #include "assets/objects/object_jso/garo_master_robe_front.rgba16.inc.c"
 };

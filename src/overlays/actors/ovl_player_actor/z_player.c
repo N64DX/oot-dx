@@ -280,6 +280,7 @@ void func_808529D0(PlayState* play, Player* this, CsCmdActorCue* cue);
 void func_80852C50(PlayState* play, Player* this, CsCmdActorCue* cue);
 void PlayerCs_InitDekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue);
 void PlayerCs_DekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue);
+void PlayerCs_InitWait2WaitR(PlayState* play, Player* this, CsCmdActorCue* cue);
 int Player_IsDroppingFish(PlayState* play);
 s32 Player_StartFishing(PlayState* play);
 s32 func_80852F38(PlayState* play, Player* this);
@@ -5309,9 +5310,9 @@ f32 Player_SetDamageTakenMultiplierPerScene(u16 sceneId) {
         case SCENE_ROYAL_VAULT:
         case SCENE_GLOOMY_GRAVEYARD:
         case SCENE_STONE_TOWER:
-        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_INV:
         case SCENE_STONE_TOWER_TEMPLE:
-        case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+        case SCENE_STONE_TOWER_TEMPLE_INV:
             return 3.0f;
 
         case SCENE_INSIDE_GANONS_CASTLE:
@@ -12316,7 +12317,7 @@ void Player_Init(Actor* thisx, PlayState* play2) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AE_SHIFT];
     } else if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AA_SHIFT];
-    } else if (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED) {
+    } else if (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INV) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AF_SHIFT];
     }
 
@@ -16963,6 +16964,8 @@ static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX] = {
     { 3, &gPlayerAnim_link_demo_kenmiru2_modori },       // PLAYER_CSACTION_102
     { -1, &PlayerCs_InitDekuWalk },                      // PLAYER_CSACTION_103
     { 3, &gPlayerAnim_alink_fukitobu },                  // PLAYER_CSACTION_104
+    { 3, &gPlayerAnim_alink_kyoro },                     // PLAYER_CSACTION_ALINK_KYORO
+    { -1, PlayerCs_InitWait2WaitR },                     // PLAYER_CSACTION_WAIT2WAITR
 };
 
 static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
@@ -17075,6 +17078,8 @@ static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
     { 12, &gPlayerAnim_demo_link_nwait },          // PLAYER_CSACTION_102
     { -1, PlayerCs_DekuWalk },                     // PLAYER_CSACTION_103
     { 12, &gPlayerAnim_alink_fukitobu },           // PLAYER_CSACTION_104
+    { 12, &gPlayerAnim_alink_kyoro_loop },         // PLAYER_CSACTION_ALINK_KYORO
+    { -1, func_8085190C },                         // PLAYER_CSACTION_WAIT2WAITR
 };
 
 void Player_AnimChangeOnceMorphZeroRootYawSpeed(PlayState* play, Player* this, LinkAnimationHeader* anim) {
@@ -17366,6 +17371,12 @@ void PlayerCs_DekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
 
     if (this->av2.actionVar2 == 24)
         Player_SetCsAction(play, NULL, 9);
+}
+
+void PlayerCs_InitWait2WaitR(PlayState* play, Player* this, CsCmdActorCue* cue) {
+    Player_SetupAction(play, this, Player_Action_80840450, 1);
+    Player_AnimChangeOnceMorph(play, this, GET_PLAYER_ANIM(PLAYER_ANIMGROUP_wait2waitR, this->modelAnimType));
+    this->av2.actionVar2 = 1;
 }
 
 void func_808518DC(PlayState* play, Player* this, CsCmdActorCue* cue) {

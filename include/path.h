@@ -15,5 +15,6 @@ typedef struct Path {
 Path* Path_GetByIndex(struct PlayState* play, s16 index, s16 max);
 f32 Path_OrientAndGetDistSq(struct Actor* actor, Path* path, s16 waypoint, s16* yaw);
 void Path_CopyLastPoint(Path* path, Vec3f* dest);
+s32 Path_CopyPoint(Path* path, s32 pointIndex, Vec3f* dst);
 
 #endif
