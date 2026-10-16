@@ -1720,6 +1720,7 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
 
     if (this->selectingOptionsMode)
         FileSelectOptions_Draw(this);
+    else FileSelectOptions_DrawTimerChallengeWarning(this);
 
     CLOSE_DISPS(this->state.gfxCtx, "../z_file_choose.c", 2198);
 }

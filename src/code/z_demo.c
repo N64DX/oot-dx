@@ -482,8 +482,8 @@ void CutsceneCmd_Misc(PlayState* play, CutsceneContext* csCtx, CsCmdMisc* cmd) {
             break;
 
         case CS_MISC_SET_TIME_BASED_LIGHT_SETTING:
-            if ((gSaveContext.save.dayTime < CLOCK_TIME(4, 30)) || (gSaveContext.save.dayTime >= CLOCK_TIME(6, 30))) {
-                if ((gSaveContext.save.dayTime >= CLOCK_TIME(6, 30)) &&
+            if ((gSaveContext.save.dayTime < CLOCK_TIME(4, 30)) || (gSaveContext.save.dayTime >= DAWN_TIME)) {
+                if ((gSaveContext.save.dayTime >= DAWN_TIME) &&
                     (gSaveContext.save.dayTime < CLOCK_TIME(16, 0))) {
                     play->envCtx.lightSettingOverride = 1;
                 } else if ((gSaveContext.save.dayTime >= CLOCK_TIME(16, 0)) &&
@@ -733,6 +733,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->nextEntranceIndex = ENTR_WOODFALL_TEMPLE_1;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK;
+                Play_SaveTimerChallenge(play);
                 break;
 
             case CS_DEST_GERUDO_VALLEY_DIN_PART_2:
@@ -760,6 +761,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->nextEntranceIndex = ENTR_DEATH_MOUNTAIN_TRAIL_5;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK;
+                Play_SaveTimerChallenge(play);
                 break;
 
             case CS_DEST_ZORAS_FOUNTAIN_FROM_ZORAS_SAPPHIRE:
@@ -767,12 +769,14 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK;
                 gSaveContext.nextTransitionType = TRANS_TYPE_FADE_BLACK;
+                Play_SaveTimerChallenge(play);
                 break;
 
             case CS_DEST_KOKIRI_FOREST_FROM_KOKIRI_EMERALD:
                 play->nextEntranceIndex = ENTR_KOKIRI_FOREST_11;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK;
+                Play_SaveTimerChallenge(play);
                 break;
 
             case CS_DEST_TEMPLE_OF_TIME_KOKIRI_EMERALD_RESTORED:
@@ -805,6 +809,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->transitionType = TRANS_TYPE_FADE_BLACK;
                 Item_Give(play, ITEM_MEDALLION_LIGHT);
                 gSaveContext.nextTransitionType = TRANS_TYPE_FADE_BLACK;
+                Play_SaveTimerChallenge(play);
                 break;
 
             case CS_DEST_DEATH_MOUNTAIN_TRAIL:
@@ -829,6 +834,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_CUTSCENE_MAP_GANONDORF_DEFEATED_CREDITS:
+                Play_ResetTotalDaysTimer();
                 if (!IS_RUSH_QUEST) {
                     play->nextEntranceIndex = ENTR_CUTSCENE_MAP_0;
                     play->transitionTrigger = TRANS_TRIGGER_START;
@@ -973,6 +979,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->transitionType = TRANS_TYPE_FADE_BLACK;
                 if (doCutsceneSkip)
                     SEQCMD_STOP_SEQUENCE(SEQ_PLAYER_BGM_MAIN, 40);
+                Play_SaveTimerChallenge(play);
                 break;
 
             case CS_DEST_KAKARIKO_VILLAGE_DRAIN_WELL:
@@ -1322,6 +1329,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                     play->transitionTrigger = TRANS_TRIGGER_START;
                     play->transitionType = TRANS_TYPE_FADE_WHITE;
                     gSaveContext.nextTransitionType = TRANS_TYPE_FADE_WHITE;
+                    Play_SaveTimerChallenge(play);
                 }
                 break;
 
@@ -1336,6 +1344,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                     play->transitionTrigger = TRANS_TRIGGER_START;
                     play->transitionType = TRANS_TYPE_FADE_WHITE;
                     gSaveContext.nextTransitionType = TRANS_TYPE_FADE_WHITE;
+                    Play_SaveTimerChallenge(play);
                 }
                 break;
 
@@ -1344,6 +1353,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_WHITE;
                 gSaveContext.nextTransitionType = TRANS_TYPE_FADE_WHITE;
+                Play_SaveTimerChallenge(play);
                 break;
 
             case CS_DEST_SACRED_FOREST_MEADOW_WARP_PAD:
@@ -1359,6 +1369,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_WHITE;
                 gSaveContext.nextTransitionType = TRANS_TYPE_FADE_WHITE;
+                Play_SaveTimerChallenge(play);
                 break;
 
             case CS_DEST_DESERT_COLOSSUS_FROM_NABOORU_CAPTURE:

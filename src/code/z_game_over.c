@@ -7,6 +7,8 @@
 #include "game_over.h"
 #include "play_state.h"
 #include "save.h"
+#include "sram.h"
+#include "title_setup_state.h"
 
 void GameOver_Init(PlayState* play) {
     play->gameOverCtx.state = GAMEOVER_INACTIVE;
@@ -111,6 +113,18 @@ void GameOver_Update(PlayState* play) {
             sGameOverTimer--;
 
             if (sGameOverTimer == 0) {
+                if (TIMER_CHALLENGE > 0 && play->timeChallengeModeEnded) {
+                    Play_ResetTotalDaysTimer();
+                    gSaveContext.save.info.playerData.deaths += gSaveContext.save.info.playerData.deaths >= 999 ? 0 : 1;
+                    if (gSaveContext.fileNum != 0xFF)
+                        Sram_TimerChallengeEraseSave(gSaveContext.fileNum);
+                    Rumble_Reset();
+                    play->state.running = false;
+                    SET_NEXT_GAMESTATE(&play->state, TitleSetup_Init, TitleSetupState);
+                    gameOverCtx->state = GAMEOVER_INACTIVE;
+                    return;
+                }
+
                 if (AUTOSAVE) {
                     play->nextEntranceIndex = gSaveContext.save.entranceIndex;
                     play->transitionTrigger = TRANS_TRIGGER_START;
@@ -119,9 +133,12 @@ void GameOver_Update(PlayState* play) {
                     gameOverCtx->state = gSaveContext.healthAccumulator = gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = gSaveContext.magicState = gSaveContext.prevMagicState = 0;
                     gSaveContext.save.info.playerData.deaths += gSaveContext.save.info.playerData.deaths >= 999 ? 0 : 1;
                     Rumble_Reset();
-                    SET_AUTOSAVE(play);
+                    Play_SaveSceneFlags(play);
+                    gSaveContext.save.info.playerData.savedSceneId = play->sceneId;
+                    Sram_WriteSave(&play->sramCtx);
                     return;
                 }
+
                 play->pauseCtx.state = PAUSE_STATE_GAME_OVER_START;
                 gameOverCtx->state++;
                 Rumble_Reset();
