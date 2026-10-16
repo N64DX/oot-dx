@@ -49,8 +49,6 @@
 #include "save.h"
 #include "vis.h"
 
-#include "z_play_rush.c"
-
 #pragma increment_block_number "gc-eu:224 gc-eu-mq:224 gc-jp:224 gc-jp-ce:224 gc-jp-mq:224 gc-us:224 gc-us-mq:224" \
                                "ique-cn:224 ntsc-1.0:240 ntsc-1.1:240 ntsc-1.2:240 pal-1.0:240 pal-1.1:240"
 
@@ -471,7 +469,7 @@ void Play_Init(GameState* thisx) {
         gSaveContext.skyboxTime = gSaveContext.nextDayTime;
     }
 
-    if (gSaveContext.save.dayTime > CLOCK_TIME(18, 0) || gSaveContext.save.dayTime < CLOCK_TIME(6, 30)) {
+    if (gSaveContext.save.dayTime > CLOCK_TIME(18, 0) || gSaveContext.save.dayTime < DAWN_TIME) {
         gSaveContext.save.nightFlag = 1;
     } else {
         gSaveContext.save.nightFlag = 0;
@@ -587,7 +585,7 @@ void Play_Init(GameState* thisx) {
     this->bgCoverAlpha = 0;
     this->haltAllActors = false;
     this->specialIconAlpha = this->specialIconShake = this->specialIconCount = this->specialIconLast = R_PERFECT_BLOCK_BOOST_TIMER = R_BLOCK_TRANSITION_MINIMAP = 0;
-    this->specialIconUp = false;
+    this->specialIconUp = this->timeChallengeModeEnded = false;
 
     if (this->autosave != AUTOSAVE_ON && this->autosave != AUTOSAVE_OFF)
         this->autosave = AUTOSAVE_RESET;
@@ -760,7 +758,7 @@ void Play_Update(PlayState* this) {
                         if (!(gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, sceneLayer)].field &
                               ENTRANCE_INFO_CONTINUE_BGM_FLAG)) {
                             PRINTF(T("\n\n\nサウンドイニシャル来ました。111", "\n\n\nSound initialized. 111"));
-                            if ((this->transitionType < TRANS_TYPE_MAX) && !Environment_IsForcedSequenceDisabled()) {
+                            if ((this->transitionType < TRANS_TYPE_MAX) && !Environment_IsForcedSequenceDisabled() && Audio_GetActiveSeqId(SEQ_PLAYER_BGM_MAIN) != NA_BGM_FINAL_HOURS) {
                                 PRINTF(T("\n\n\nサウンドイニシャル来ました。222", "\n\n\nSound initialized. 222"));
                                 func_800F6964(0x14);
                                 gSaveContext.seqId = (u8)NA_BGM_DISABLED;
@@ -2339,3 +2337,12 @@ u16 Player_GetMaxShieldDurability(u8 shield) {
 
 u8 Player_GetMaxEnergy(void)        { return ((Player_HasEnergyUnlocked() != 0) * 50) + ((CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) != 0) * 50); }
 u8 Player_HasEnergyUnlocked(void)   { return HAS_ROCS_FEATHER || CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) || CHECK_UPGRADE_ITEM(UPGRADE_ENHANCED_SPIN) || CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_PEGASUS); }
+
+void Play_ResetTotalDaysTimer(void) {
+    if (TIMER_CHALLENGE > 0) {
+        gSaveContext.save.totalDays = 0;
+        gSaveContext.save.dayTime = DAWN_TIME;
+    }
+}
+
+#include "z_play_rush.c"

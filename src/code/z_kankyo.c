@@ -461,6 +461,36 @@ TimeBasedTerminaSkyboxEntry gTimeBasedTerminaSkyboxConfigs[][9] = {
         { CLOCK_TIME(17, 0), CLOCK_TIME(18, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0, 102, 102 },
         { CLOCK_TIME(18, 0), CLOCK_TIME(19, 0),     false, TERMINA_SKYBOX0, TERMINA_SKYBOX0, 102, 103 },
         { CLOCK_TIME(19, 0), CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0, 103, 103 },
+    }, { // SKYBOX_CONFIG_28: warm-amber
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   4,   4 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   4,   4 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   4,   4 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   4,   4 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   4,   4 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   4,   4 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   4,   4 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   4,   4 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX0, TERMINA_SKYBOX0,   4,   4 },
+    }, { // SKYBOX_CONFIG_29: muted overcast
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  56 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  56 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  56 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  56 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  56 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  56 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  56 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  56 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  56,  56 },
+    }, { // SKYBOX_CONFIG_30: vivid crimson
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  11,  11 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  11,  11 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  11,  11 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  11,  11 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  11,  11 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  11,  11 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  11,  11 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  11,  11 },
+        { CLOCK_TIME(0, 0),  CLOCK_TIME(24, 0) - 1, false, TERMINA_SKYBOX1, TERMINA_SKYBOX1,  11,  11 },
     },
 };
 
@@ -591,7 +621,7 @@ void Environment_Init(PlayState* play2, EnvironmentContext* envCtx, s32 unused) 
 
     //! FAKE: (void)0 on CLOCK_TIME(18, 0)
     if (((void)0, gSaveContext.save.dayTime) > ((void)0, CLOCK_TIME(18, 0)) ||
-        ((void)0, gSaveContext.save.dayTime) < CLOCK_TIME(6, 30)) {
+        ((void)0, gSaveContext.save.dayTime) < DAWN_TIME) {
         ((void)0, gSaveContext.save.nightFlag = 1);
     } else {
         ((void)0, gSaveContext.save.nightFlag = 0);
@@ -1184,7 +1214,7 @@ void Environment_UpdateSkybox(u8 skyboxId, EnvironmentContext* envCtx, SkyboxCon
             if (gSaveContext.skyboxTime >= gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].startTime && (gSaveContext.skyboxTime < gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].endTime || gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].endTime == 0xFFFF)) {
                 newSkybox1Index = gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].skybox1Index;
                 newSkybox2Index = gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].skybox2Index;
-                gSkyboxIsChanging = gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].changeSkybox;
+                gSkyboxIsChanging = newSkybox1Index != newSkybox2Index;
 
                 if (gSkyboxIsChanging)
                     skyboxBlend = Environment_LerpWeight(gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].endTime, gTimeBasedTerminaSkyboxConfigs[envCtx->skyboxConfig][i].startTime, ((void)0, gSaveContext.skyboxTime)) * 255;
@@ -1274,6 +1304,25 @@ void Environment_UpdateSkybox(u8 skyboxId, EnvironmentContext* envCtx, SkyboxCon
         }
 
         envCtx->skyboxBlend = skyboxBlend;
+
+        if (TIMER_CHALLENGE > 0 && envCtx->changeSkyboxState == CHANGE_SKYBOX_INACTIVE) {
+            s8 targetConfig;
+
+            if (TIME_UNTIL_CHALLENGE_END < CLOCK_TIME(6, 0))
+                targetConfig = 30;
+            else if (gSaveContext.save.totalDays == 2)
+                targetConfig = 29;
+            else if (gSaveContext.save.totalDays == 1)
+                targetConfig = 28;
+            else targetConfig = -1;
+
+            if (targetConfig >= 0 && envCtx->skyboxConfig != targetConfig) {
+                envCtx->changeSkyboxState = CHANGE_SKYBOX_REQUESTED;
+                envCtx->changeSkyboxNextConfig = targetConfig;
+                envCtx->changeSkyboxTimer = envCtx->changeDuration = FRAMES(200);
+            }
+        }
+
         Skybox_SetColors(skyboxCtx, F32_LERPIMPALT(sSkyboxPrimColors[color1Index].r, sSkyboxPrimColors[color2Index].r, colorWeight), F32_LERPIMPALT(sSkyboxPrimColors[color1Index].g, sSkyboxPrimColors[color2Index].g, colorWeight), F32_LERPIMPALT(sSkyboxPrimColors[color1Index].b, sSkyboxPrimColors[color2Index].b, colorWeight),
                                     F32_LERPIMPALT(sSkyboxEnvColors[color1Index].r,  sSkyboxEnvColors[color2Index].r, colorWeight),  F32_LERPIMPALT(sSkyboxEnvColors[color1Index].g,  sSkyboxEnvColors[color2Index].g, colorWeight),  F32_LERPIMPALT(sSkyboxEnvColors[color1Index].b, sSkyboxEnvColors[color2Index].b, colorWeight));
     }
@@ -1370,6 +1419,48 @@ void Environment_PrintDebugInfo(PlayState* play, Gfx** gfx) {
 void Environment_PlayTimeBasedSequence(PlayState* play);
 void Environment_UpdateRain(PlayState* play);
 
+static bool Environment_ShouldRespawnOnTimeChange(PlayState* play) {
+    if (TIMER_CHALLENGE == 0)
+        return false;
+
+    switch (play->sceneId) {
+        case SCENE_MARKET_ENTRANCE_DAY:
+        case SCENE_MARKET_ENTRANCE_NIGHT:
+        case SCENE_MARKET_DAY:
+        case SCENE_MARKET_NIGHT:
+        case SCENE_BACK_ALLEY_DAY:
+        case SCENE_BACK_ALLEY_NIGHT:
+        case SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY:
+        case SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT:
+        case SCENE_KAKARIKO_VILLAGE:
+        case SCENE_GRAVEYARD:
+        case SCENE_KOKIRI_FOREST:
+        case SCENE_LON_LON_RANCH:
+            return true;
+        default:
+            return false;
+    }
+}
+
+void Environment_AdvanceDayForTimerChallenge(PlayState* play) {
+    gSaveContext.save.totalDays++;
+    gSaveContext.save.bgsDayCount++;
+    gSaveContext.dogIsLost = true;
+    Sfx_PlaySfxCentered(NA_SE_EV_CHICKEN_CRY_M);
+    gSaveContext.save.nightFlag = 0;
+
+    if (gSaveContext.save.totalDays >= 3) {
+        play->timeChallengeModeEnded = true;
+        gSaveContext.save.info.playerData.health = 0;
+    }
+
+    gSaveContext.seqId = (u8)NA_BGM_DISABLED;
+    play->envCtx.timeSeqState = TIMESEQ_DAY_BGM;
+
+    if ((Inventory_ReplaceItem(play, ITEM_WEIRD_EGG, ITEM_CHICKEN) || Inventory_ReplaceItem(play, ITEM_POCKET_EGG, ITEM_POCKET_CUCCO)) && play->csCtx.state == 0 && !Player_InCsMode(play))
+        Message_StartTextbox(play, 0x3066, NULL);
+}
+
 void Environment_Update(PlayState* play, EnvironmentContext* envCtx, LightContext* lightCtx, PauseContext* pauseCtx,
                         MessageContext* msgCtx, GameOverContext* gameOverCtx, GraphicsContext* gfxCtx) {
     f32 timeChangeBlend;
@@ -1379,6 +1470,7 @@ void Environment_Update(PlayState* play, EnvironmentContext* envCtx, LightContex
     u16 time;
     EnvLightSettings* lightSettingsList = play->envCtx.lightSettingsList;
     u8 blendRate;
+    u8 isNight;
 
     if ((((void)0, gSaveContext.gameMode) != GAMEMODE_NORMAL) &&
         (((void)0, gSaveContext.gameMode) != GAMEMODE_END_CREDITS)) {
@@ -1421,8 +1513,9 @@ void Environment_Update(PlayState* play, EnvironmentContext* envCtx, LightContex
 
         if ((pauseCtx->state == PAUSE_STATE_OFF) && (gameOverCtx->state == GAMEOVER_INACTIVE)) {
             if (((msgCtx->msgLength == 0) && (msgCtx->msgMode == MSGMODE_NONE)) ||
+                (msgCtx->textId >= 0xA000 && msgCtx->textId <= 0xA1FF) ||
                 (((void)0, gSaveContext.gameMode) == GAMEMODE_END_CREDITS)) {
-                if ((envCtx->changeSkyboxTimer == 0) && !FrameAdvance_IsEnabled(play) &&
+                if ((envCtx->changeSkyboxTimer == 0 || TIMER_CHALLENGE > 0) && !FrameAdvance_IsEnabled(play) &&
                     (play->transitionMode == TRANS_MODE_OFF || ((void)0, gSaveContext.gameMode) != GAMEMODE_NORMAL)) {
 
                     if (IS_DAY || gTimeSpeed >= 400) {
@@ -1434,15 +1527,20 @@ void Environment_Update(PlayState* play, EnvironmentContext* envCtx, LightContex
             }
         }
 
-        //! @bug `gTimeSpeed` is unsigned, it can't be negative
-#if OOT_VERSION < PAL_1_0
-        if ((((void)0, gSaveContext.save.dayTime) > ((void)0, gSaveContext.skyboxTime)) ||
-            (((void)0, gSaveContext.save.dayTime) < CLOCK_TIME(1, 0) || gTimeSpeed < 0))
-#else
+        isNight = (gSaveContext.save.dayTime > CLOCK_TIME(18, 0)) || (gSaveContext.save.dayTime < DAWN_TIME);
+        if (TIMER_CHALLENGE > 0 && Environment_ShouldRespawnOnTimeChange(play) && play->transitionTrigger == TRANS_TRIGGER_OFF && play->transitionMode == TRANS_MODE_OFF && isNight != (gSaveContext.save.nightFlag != 0) && (isNight || gSaveContext.save.totalDays < 2)) {
+            u8 newLayer = isNight ? SCENE_LAYER_CHILD_NIGHT : SCENE_LAYER_CHILD_DAY;
+
+            gSaveContext.respawnFlag = -2;
+            play->nextEntranceIndex = gSaveContext.save.entranceIndex + gSaveContext.sceneLayer - newLayer;
+            play->transitionTrigger = TRANS_TRIGGER_START;
+            play->transitionType = TRANS_TYPE_FADE_BLACK;
+            return;
+        }
+
         if (((((void)0, gSaveContext.sceneLayer) >= 5 || gTimeSpeed != 0) &&
              ((void)0, gSaveContext.save.dayTime) > ((void)0, gSaveContext.skyboxTime)) ||
-            (((void)0, gSaveContext.save.dayTime) < CLOCK_TIME(1, 0) || gTimeSpeed < 0))
-#endif
+            (((void)0, gSaveContext.save.dayTime) < CLOCK_TIME(1, 0)))
         {
 
             gSaveContext.skyboxTime = ((void)0, gSaveContext.save.dayTime);
@@ -1450,9 +1548,11 @@ void Environment_Update(PlayState* play, EnvironmentContext* envCtx, LightContex
 
         time = gSaveContext.save.dayTime;
 
-        if (time > CLOCK_TIME(18, 0) || time < CLOCK_TIME(6, 30)) {
+        if (time > CLOCK_TIME(18, 0) || time < DAWN_TIME) {
             gSaveContext.save.nightFlag = 1;
         } else {
+            if (gSaveContext.save.nightFlag != 0 && TIMER_CHALLENGE > 0)
+                Environment_AdvanceDayForTimerChallenge(play);
             gSaveContext.save.nightFlag = 0;
         }
 
@@ -1940,6 +2040,10 @@ void Environment_DrawSunAndMoon(PlayState* play) {
         color = CLAMP_MIN(color, 0.0f);
 
         scale = -15.0f * color + 25.0f;
+        if (TIMER_CHALLENGE > 0 && gSaveContext.save.totalDays >= 2)
+            scale *= 2.0f;
+        else if (TIMER_CHALLENGE > 0 && gSaveContext.save.totalDays == 1)
+            scale *= 1.5f;
         Matrix_Scale(scale, scale, scale, MTXMODE_APPLY);
 
         temp = -y / 80.0f;
@@ -1951,8 +2055,16 @@ void Environment_DrawSunAndMoon(PlayState* play) {
             MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_kankyo.c", 2406);
             Gfx_SetupDL_51Opa(play->state.gfxCtx);
             gDPPipeSync(POLY_OPA_DISP++);
-            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 240, 255, 180, alpha);
-            gDPSetEnvColor(POLY_OPA_DISP++, 80, 70, 20, alpha);
+            if (TIMER_CHALLENGE > 0 && gSaveContext.save.totalDays >= 2) {
+                gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 60, 60, alpha);
+                gDPSetEnvColor(POLY_OPA_DISP++, 140, 10, 10, alpha);
+            } else if (TIMER_CHALLENGE > 0 && gSaveContext.save.totalDays == 1) {
+                gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 160, 90, alpha);
+                gDPSetEnvColor(POLY_OPA_DISP++, 110, 40, 15, alpha);
+            } else {
+                gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 240, 255, 180, alpha);
+                gDPSetEnvColor(POLY_OPA_DISP++, 80, 70, 20, alpha);
+            }
             gSPDisplayList(POLY_OPA_DISP++, gMoonDL);
         }
     }
@@ -2547,6 +2659,12 @@ void Environment_DrawLightning(PlayState* play, s32 unused) {
 void Environment_PlaySceneSequence(PlayState* play) {
     play->envCtx.timeSeqState = TIMESEQ_DISABLED;
 
+    if (Audio_GetActiveSeqId(SEQ_PLAYER_BGM_MAIN) == NA_BGM_FINAL_HOURS) {
+        gSaveContext.seqId = play->sceneSequences.seqId;
+        Audio_SetEnvReverb(play->roomCtx.curRoom.echo);
+        return;
+    }
+
     // both lost woods exits on the bridge from kokiri to hyrule field
     if (((void)0, gSaveContext.save.entranceIndex) == ENTR_LOST_WOODS_8 ||
         ((void)0, gSaveContext.save.entranceIndex) == ENTR_LOST_WOODS_9) {
@@ -2586,7 +2704,7 @@ void Environment_PlaySceneSequence(PlayState* play) {
             ((void)0, gSaveContext.save.dayTime) <= CLOCK_TIME(19, 0)) {
             play->envCtx.timeSeqState = TIMESEQ_EARLY_NIGHT_CRITTERS;
         } else if (((void)0, gSaveContext.save.dayTime) > CLOCK_TIME(19, 0) + 1 ||
-                   ((void)0, gSaveContext.save.dayTime) < CLOCK_TIME(6, 30)) {
+                   ((void)0, gSaveContext.save.dayTime) < DAWN_TIME) {
             play->envCtx.timeSeqState = TIMESEQ_NIGHT_CRITTERS;
         } else {
             play->envCtx.timeSeqState = TIMESEQ_MORNING_CRITTERS;
@@ -2600,6 +2718,50 @@ void Environment_PlaySceneSequence(PlayState* play) {
     PRINTF("\n     status=[%d]", play->envCtx.timeSeqState);
 
     Audio_SetEnvReverb(play->roomCtx.curRoom.echo);
+}
+
+static void Environment_UpdateFinalHoursBells(PlayState* play) {
+    u16 bellIndex = TIME_UNTIL_CHALLENGE_END / CLOCK_TIME(0, 10);
+
+    if (play->envCtx.finalHoursBellReady && bellIndex != play->envCtx.finalHoursBellIndex) {
+        u32 minutesLeft = TIME_UNTIL_CHALLENGE_END / CLOCK_TIME(1, 0);
+        u8 strength = (minutesLeft >= 60) ? 60 : (u8)(60 + ((60 - minutesLeft) * 2));
+        if (bellIndex & 1) {
+            Sfx_PlaySfxCentered(NA_SE_EV_EARTHQUAKE_BELL_TOWER);
+            Rumble_Override(0.0f, strength, 40, 20);
+        }
+        else Sfx_PlaySfxCentered(NA_SE_EV_SIGNAL_BIGBELL);
+    }
+
+    play->envCtx.finalHoursBellIndex = bellIndex;
+    play->envCtx.finalHoursBellReady = true;
+}
+
+static u16 sChallengeTempoSeqId = NA_BGM_DISABLED;
+
+static void Environment_UpdateChallengeTempo(void) {
+    u16 bgmSeqId, targetTempo = 0;
+
+    if (gSaveContext.save.totalDays == 1)
+        targetTempo = SECOND_DAY_TEMPO;
+    else if (gSaveContext.save.totalDays == 2 && TIME_UNTIL_CHALLENGE_END >= CLOCK_TIME(6, 0))
+        targetTempo = FINAL_DAY_TEMPO;
+
+    if (targetTempo == 0) {
+        if (sChallengeTempoSeqId != NA_BGM_DISABLED) {
+            SEQCMD_RESET_TEMPO(SEQ_PLAYER_BGM_MAIN, 0);
+            sChallengeTempoSeqId = NA_BGM_DISABLED;
+        }
+        return;
+    }
+
+    bgmSeqId = Audio_GetActiveSeqId(SEQ_PLAYER_BGM_MAIN);
+    if (bgmSeqId == NA_BGM_DISABLED)
+        sChallengeTempoSeqId = NA_BGM_DISABLED;
+    else if (sChallengeTempoSeqId != bgmSeqId || gAudioCtx.seqPlayers[SEQ_PLAYER_BGM_MAIN].tempo < ((targetTempo - 5) * SEQTICKS_PER_BEAT)) {
+        SEQCMD_SET_TEMPO(SEQ_PLAYER_BGM_MAIN, 0, targetTempo);
+        sChallengeTempoSeqId = bgmSeqId;
+    }
 }
 
 void Environment_PlayTimeBasedSequence(PlayState* play) {
@@ -2661,7 +2823,7 @@ void Environment_PlayTimeBasedSequence(PlayState* play) {
             break;
 
         case TIMESEQ_DAY_BEGIN_SFX:
-            if ((gSaveContext.save.dayTime <= CLOCK_TIME(19, 0)) && (gSaveContext.save.dayTime > CLOCK_TIME(6, 30))) {
+            if ((gSaveContext.save.dayTime <= CLOCK_TIME(19, 0)) && (gSaveContext.save.dayTime > DAWN_TIME) && (TIMER_CHALLENGE == 0)) {
                 gSaveContext.save.totalDays++;
                 gSaveContext.save.bgsDayCount++;
                 gSaveContext.dogIsLost = true;
@@ -2694,6 +2856,15 @@ void Environment_PlayTimeBasedSequence(PlayState* play) {
                 play->envCtx.timeSeqState = 0;
             }
             break;
+    }
+
+    if (TIMER_CHALLENGE > 0 && !IS_CUTSCENE_LAYER && play->csCtx.state == CS_STATE_IDLE && play->transitionTrigger == TRANS_TRIGGER_OFF && play->transitionMode == TRANS_MODE_OFF) {
+        Environment_UpdateChallengeTempo();
+        if (TIME_UNTIL_CHALLENGE_END < CLOCK_TIME(6, 0)) {
+            if (Audio_GetActiveSeqId(SEQ_PLAYER_BGM_MAIN) != NA_BGM_FINAL_HOURS)
+                Audio_PlaySceneSequence(NA_BGM_FINAL_HOURS);
+            Environment_UpdateFinalHoursBells(play);
+        }
     }
 }
 

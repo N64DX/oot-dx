@@ -26,6 +26,8 @@ struct View;
 
 #define TERMINA_SKYBOX0     9
 #define TERMINA_SKYBOX1     10
+#define SECOND_DAY_TEMPO    140
+#define FINAL_DAY_TEMPO     160
 
 #define AMOUNT_OF_STARS     300
 #define STARS_NAME(index)   ((u32)gSaveContext.save.info.playerData.playerName[index])
@@ -243,6 +245,9 @@ typedef struct EnvironmentContext {
     /* 0xE9 */ u8 customSkyboxFilter;
     /* 0xEA */ u8 skyboxFilterColor[4];
     /* 0xEE */ u8 precipitation[PRECIP_MAX];
+    /* 0xF3 */ u8 finalHoursBellIndex;
+    /* 0xF4 */ u16 timerChallengeSkyboxFadeTimer;
+    /* 0xF6 */ u8 finalHoursBellReady;
 } EnvironmentContext; // size = 0xFC
 
 extern u8 gSkyboxIsChanging;

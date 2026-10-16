@@ -349,7 +349,7 @@ typedef struct SaveContext {
     /* 0x1368 */ RespawnData respawn[RESPAWN_MODE_MAX]; // "restart_data"
     /* 0x13BC */ f32 entranceSpeed;
     /* 0x13C0 */ u16 entranceSound;
-    /* 0x13C2 */ u8 cheated;
+    /* 0x13C2 */ u8 gameProgress;
     /* 0x13C3 */ u8 retainWeatherMode;
     /* 0x13C4 */ s16 dogParams;
     /* 0x13C6 */ u8 envHazardTextTriggerFlags;
@@ -410,6 +410,12 @@ typedef struct SaveContextExtended {
     /* 0x00 */ SavedSceneFlags sceneFlags[9];
     /* 0xFC */ char unk_FC[4];
 } SaveContextExtended; // size = 0x100
+
+typedef enum GameProgessStatus {
+    /* 0x00 */ GAME_PROGRESS_STARTED,
+    /* 0x01 */ GAME_PROGRESS_NOT_STARTED,
+    /* 0x02 */ GAME_PROGRESS_CHEATED
+} GameProgessStatus;
 
 typedef enum ButtonStatus {
     /* 0x00 */ BTN_ENABLED,
@@ -490,7 +496,9 @@ typedef enum LinkAge {
 // In practice, both values do not lead to a cutscene being played.
 // See `CS_INDEX_NONE` below for the more common usage of value 0x0000.
 #define CS_INDEX_NIGHT 0x0000
+#define CS_INDEX_DAWN 0x4000
 #define CS_INDEX_DAY 0x8000
+#define CS_INDEX_DUSK 0xC000
 
 // Indicates that no scripted cutscene is playing (or should be played).
 // While this value overlaps with `CS_INDEX_NIGHT` defined above, it is not related to the time.
@@ -608,6 +616,7 @@ typedef enum LinkAge {
 #define USE_MM_HUD                  ((gSaveContext.options[0] >> 24) & 1)  // Bits: 24
 #define USE_MM_PAUSE_INFO           ((gSaveContext.options[0] >> 25) & 1)  // Bits: 25
 #define UNEQUIP_ITEMS               ((gSaveContext.options[0] >> 26) & 1)  // Bits: 26
+#define HUD_DISPLAY                 ((gSaveContext.options[0] >> 27) & 3)  // Bits: 27-28
 #define HEALTH_RECOVERY             ((gSaveContext.options[1] >> 0)  & 3)  // Bits: 0-1
 #define DAMAGE_TAKEN                ((gSaveContext.options[1] >> 2)  & 7)  // Bits: 2-4
 #define MONSTER_HP                  ((gSaveContext.options[1] >> 5)  & 7)  // Bits: 5-7
@@ -618,7 +627,8 @@ typedef enum LinkAge {
 #define NO_BOTTLED_FAIRIES          ((gSaveContext.options[1] >> 16) & 1)  // Bits: 16
 #define NO_ITEM_DROPS               ((gSaveContext.options[1] >> 17) & 1)  // Bits: 17
 #define SHIELD_DURABILITY           ((gSaveContext.options[1] >> 18) & 3)  // Bits: 18-19
-#define INFINITE_HEALTH             ((gSaveContext.options[2] >> 0)  & 1)  // Bits: 0
+#define TIMER_CHALLENGE             ((gSaveContext.options[2] >> 0)  & 3)  // Bits: 0-1
+#define INFINITE_HEALTH             ((gSaveContext.options[2] >> 2)  & 1)  // Bits: 2
 
 #define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
 #define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
@@ -628,6 +638,9 @@ typedef enum LinkAge {
 #define EXTENDED_DRAW_DISTANCE      ((gSaveContext.globalSettings >> 5) & 1)  // Bits: 5
 #define SHOW_STARS                  ((gSaveContext.globalSettings >> 6) & 1)  // Bits: 6
 
+#define FORCE_AUTOSAVE              (gSaveContext.options[0] |=  (1 << 1))
+#define UNDO_CHALLENGE_MODE         (gSaveContext.options[1] &= ~(3 << 20))
+
 #define MAX_SWORD_HEALTH    8
 #define MAGIC_COST(magic)   (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? (magic / 2) : magic)
 
@@ -636,6 +649,12 @@ typedef enum LinkAge {
 #define GET_BIT_16(x)    (((x) & BIT_16) >> 15)
 
 #define CLOCK_TIME(hr, min) ((s32)(((hr) * 60 + (min)) * (f32)0x10000 / (24 * 60) + 0.5f))
+#define DAY_LENGTH (CLOCK_TIME(24, 0))
+#define TIME_TO_MINUTES_F(time) ((time) * ((24.0f * 60.0f) / 0x10000)) // 0.021972656f
+#define TIME_TO_SECONDS_F(time) ((time) * ((24.0f * 60.0f * 60.0f) / 0x10000))
+#define CURRENT_DAY MIN(gSaveContext.save.totalDays, 2)
+#define TIME_UNTIL_CHALLENGE_END ((3 - CURRENT_DAY) * DAY_LENGTH - (u16)(gSaveContext.save.dayTime - CLOCK_TIME(6, 0)))
+#define DAWN_TIME (TIMER_CHALLENGE == 0 ? CLOCK_TIME(6, 30) : CLOCK_TIME(6, 0))
 
 #define IS_DAY (gSaveContext.save.nightFlag == 0)
 #define IS_NIGHT (gSaveContext.save.nightFlag == 1)
