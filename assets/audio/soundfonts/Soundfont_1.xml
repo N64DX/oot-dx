@@ -110,6 +110,15 @@
         <Sample Name="SAMPLE_0_33"/>
         <Sample Name="SAMPLE_0_105"/>
         <Sample Name="SAMPLE_0_19"/>
+        <Sample Name="SAMPLE_0_46"/>
+        <Sample Name="SAMPLE_0_49"/>
+        <Sample Name="SAMPLE_0_55"/>
+        <Sample Name="SAMPLE_0_64"/> <!-- Sword slash from SF0 -->
+        <Sample Name="SAMPLE_0_84"/> <!-- Water splash from SF0 -->
+        <Sample Name="SAMPLE_0_86"/> <!-- Flying Fairy from SF0 -->
+        <Sample Name="SAMPLE_0_GLASS_BREAK"/>
+        <Sample Name="SAMPLE_0_SHARP_FLOAT"/>
+        <Sample Name="SAMPLE_0_EXTINCT_LEV"/>
         <Sample Name="SAMPLE_0_BOE_1"/>
         <Sample Name="SAMPLE_0_BOE_2"/>
         <Sample Name="SAMPLE_0_DRAGONFLY_1"/>
@@ -140,7 +149,35 @@
         <Sample Name="SAMPLE_0_GARO_1"/>
         <Sample Name="SAMPLE_0_GARO_2"/>
         <Sample Name="SAMPLE_0_GARO_3"/>
-        <Sample Name="SAMPLE_0_49"/>
+        <Sample Name="SAMPLE_0_BOMBCHU_1"/>
+        <Sample Name="SAMPLE_0_NEJIRON_1"/>
+        <Sample Name="SAMPLE_0_CHUCHU_1"/>
+        <Sample Name="SAMPLE_0_CHUCHU_2"/>
+        <Sample Name="SAMPLE_0_CHUCHU_3"/>
+        <Sample Name="SAMPLE_0_CHUCHU_4"/>
+        <Sample Name="SAMPLE_0_CHUCHU_5"/>
+        <Sample Name="SAMPLE_0_GOMESS_1"/>
+        <Sample Name="SAMPLE_0_GOMESS_2"/>
+        <Sample Name="SAMPLE_0_GOMESS_3"/>
+        <Sample Name="SAMPLE_0_GOMESS_4"/>
+        <Sample Name="SAMPLE_0_EYEGORE_1"/>
+        <Sample Name="SAMPLE_0_WIZROBE_1"/>
+        <Sample Name="SAMPLE_0_WIZROBE_2"/>
+        <Sample Name="SAMPLE_0_WIZROBE_3"/>
+        <Sample Name="SAMPLE_0_WIZROBE_4"/>
+        <Sample Name="SAMPLE_0_WIZROBE_5"/>
+        <Sample Name="SAMPLE_0_WIZROBE_6"/>
+        <Sample Name="SAMPLE_0_WIZROBE_7"/>
+        <Sample Name="SAMPLE_0_WIZROBE_8"/>
+        <Sample Name="SAMPLE_0_WIZROBE_9"/>
+        <Sample Name="SAMPLE_0_GEKKO_1"/>
+        <Sample Name="SAMPLE_0_GEKKO_2"/>
+        <Sample Name="SAMPLE_0_GEKKO_3"/>
+        <Sample Name="SAMPLE_0_GEKKO_4"/>
+        <Sample Name="SAMPLE_0_GEKKO_5"/>
+        <Sample Name="SAMPLE_0_GEKKO_6"/>
+        <Sample Name="SAMPLE_0_GEKKO_7"/>
+        <Sample Name="SAMPLE_0_HIPLOOP_1"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
@@ -271,6 +308,43 @@
         <Instrument ProgramNumber="79" Name="INST_79" Envelope="Env0" Sample="SAMPLE_0_GARO_2"/>
         <Instrument ProgramNumber="80" Name="INST_80" Envelope="Env0" Sample="SAMPLE_0_GARO_3"/>
         <Instrument ProgramNumber="81" Name="INST_81" Envelope="Env0" Sample="SAMPLE_0_49"/> <!-- Unused draw sword sound effect, but used in MM for Garo (Master) -->
+        <Instrument ProgramNumber="82" Name="INST_82" Envelope="Env0" Sample="SAMPLE_0_BOMBCHU_1"/>
+        <Instrument ProgramNumber="83" Name="INST_83" Envelope="Env0" Sample="SAMPLE_0_NEJIRON_1"/>
+        <Instrument ProgramNumber="84" Name="INST_84" Envelope="Env0" Sample="SAMPLE_0_CHUCHU_1"/>
+        <Instrument ProgramNumber="85" Name="INST_85" Envelope="Env0" Sample="SAMPLE_0_CHUCHU_2"/>
+        <Instrument ProgramNumber="86" Name="INST_86" Envelope="Env0" Sample="SAMPLE_0_CHUCHU_3"/>
+        <Instrument ProgramNumber="87" Name="INST_87" Envelope="Env0" Sample="SAMPLE_0_CHUCHU_4"/>
+        <Instrument ProgramNumber="88" Name="INST_88" Envelope="Env0" Sample="SAMPLE_0_CHUCHU_5"/>
+        <Instrument ProgramNumber="89" Name="INST_89" Envelope="Env0" Sample="SAMPLE_0_GOMESS_1"/>
+        <Instrument ProgramNumber="90" Name="INST_90" Envelope="Env0" Sample="SAMPLE_0_GOMESS_2"/>
+        <Instrument ProgramNumber="91" Name="INST_91" Envelope="Env0" Sample="SAMPLE_0_GOMESS_3"/>
+        <Instrument ProgramNumber="92" Name="INST_92" Envelope="Env0" Sample="SAMPLE_0_GOMESS_4"/>
+        <Instrument ProgramNumber="93" Name="INST_93" Envelope="Env0" Sample="SAMPLE_0_SHARP_FLOAT"/>
+        <Instrument ProgramNumber="94" Name="INST_94" Envelope="Env0" Sample="SAMPLE_0_EXTINCT_LEV"/>
+        <Instrument ProgramNumber="95" Name="INST_95" Envelope="Env0" Sample="SAMPLE_0_EYEGORE_1"/>
+        <Instrument ProgramNumber="96" Name="INST_96" Envelope="Env0" Sample="SAMPLE_0_WIZROBE_1"/>
+        <Instrument ProgramNumber="97" Name="INST_97" Envelope="Env0" Sample="SAMPLE_0_WIZROBE_2"/>
+        <Instrument ProgramNumber="98" Name="INST_98" Envelope="Env0" Sample="SAMPLE_0_WIZROBE_3"/>
+        <Instrument ProgramNumber="99" Name="INST_99" Envelope="Env0" Sample="SAMPLE_0_WIZROBE_4"/>
+        <Instrument ProgramNumber="100" Name="INST_100" Envelope="Env0" Sample="SAMPLE_0_WIZROBE_5"/>
+        <Instrument ProgramNumber="101" Name="INST_101" Envelope="Env0" Sample="SAMPLE_0_WIZROBE_6"/>
+        <Instrument ProgramNumber="102" Name="INST_102" Envelope="Env0" Sample="SAMPLE_0_WIZROBE_7"/>
+        <Instrument ProgramNumber="103" Name="INST_103" Envelope="Env0" Sample="SAMPLE_0_WIZROBE_8"/>
+        <Instrument ProgramNumber="104" Name="INST_104" Envelope="Env0" Sample="SAMPLE_0_WIZROBE_9"/>
+        <Instrument ProgramNumber="105" Name="INST_105" Envelope="Env0" Sample="SAMPLE_0_GEKKO_1"/>
+        <Instrument ProgramNumber="106" Name="INST_106" Envelope="Env0" Sample="SAMPLE_0_GEKKO_2"/>
+        <Instrument ProgramNumber="107" Name="INST_107" Envelope="Env0" Sample="SAMPLE_0_GEKKO_3"/>
+        <Instrument ProgramNumber="108" Name="INST_108" Envelope="Env0" Sample="SAMPLE_0_GEKKO_4"/>
+        <Instrument ProgramNumber="109" Name="INST_109" Envelope="Env0" Sample="SAMPLE_0_GEKKO_5"/>
+        <Instrument ProgramNumber="110" Name="INST_110" Envelope="Env0" Sample="SAMPLE_0_GEKKO_6"/>
+        <Instrument ProgramNumber="111" Name="INST_111" Envelope="Env0" Sample="SAMPLE_0_GEKKO_7"/>
+        <Instrument ProgramNumber="112" Name="INST_112" Envelope="Env0" Sample="SAMPLE_0_86"/> <!-- Flying fairy from SF0 -->
+        <Instrument ProgramNumber="113" Name="INST_113" Envelope="Env0" Sample="SAMPLE_0_GLASS_BREAK"/>
+        <Instrument ProgramNumber="114" Name="INST_114" Envelope="Env0" Sample="SAMPLE_0_64"/> <!-- Sword slash from SF0 -->
+        <Instrument ProgramNumber="115" Name="INST_115" Envelope="Env0" Sample="SAMPLE_0_84"/> <!-- Water splash from SF0 -->
+        <Instrument ProgramNumber="116" Name="INST_116" Envelope="Env0" Sample="SAMPLE_0_55"/>
+        <Instrument ProgramNumber="117" Name="INST_117" Envelope="Env0" Sample="SAMPLE_0_46"/>
+        <Instrument ProgramNumber="118" Name="INST_118" Envelope="Env0" Sample="SAMPLE_0_HIPLOOP_1"/>
     </Instruments>
     <MatchPadding>
         0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3

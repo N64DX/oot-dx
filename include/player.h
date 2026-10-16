@@ -568,7 +568,9 @@ typedef enum PlayerCsAction {
     /* 0x66 */ PLAYER_CSACTION_102,
     /* 0x67 */ PLAYER_CSACTION_103,
     /* 0x68 */ PLAYER_CSACTION_104,
-    /* 0x69 */ PLAYER_CSACTION_MAX
+    /* 0x69 */ PLAYER_CSACTION_ALINK_KYORO,
+    /* 0x6A */ PLAYER_CSACTION_WAIT2WAITR,
+    /* 0x6B */ PLAYER_CSACTION_MAX
 } PlayerCsAction;
 
 typedef enum PlayerCueId {
@@ -1036,6 +1038,9 @@ typedef struct Player {
     /* 0x0C10 */ s16 zoraSwimTurnInputSmoothed;
     /* 0x0C12 */ u8 boostActiveTimer;
     /* 0x0C13 */ u8 boostCooldownTimer;
+    /* 0x0C14 */ f32 windSpeed;
+    /* 0x0C18 */ s16 windAngleX;
+    /* 0x0C1A */ s16 windAngleY;
 } Player; // size = 0xC14
 
 // z_player_lib.c

@@ -177,9 +177,9 @@ static RestrictionFlags sRestrictionFlags[] = {
     { SCENE_ANCIENT_GROVE_SHOP, 0x10, 0x10, 0x55 },
     { SCENE_SPRING_LAKE_SMITHY, 0x10, 0x10, 0x55 },
     { SCENE_CAVE_PASSAGE, 0x00, 0x00, 0x1C },
-    { SCENE_STONE_TOWER_INVERTED, 0x00, 0x00, 0x00 },
+    { SCENE_STONE_TOWER_INV, 0x00, 0x00, 0x00 },
     { SCENE_WOODFALL_TEMPLE_BOSS, 0x00, 0x00, 0x1C },
-    { SCENE_STONE_TOWER_TEMPLE_INVERTED, 0x00, 0x00, 0x00 },
+    { SCENE_STONE_TOWER_TEMPLE_INV, 0x00, 0x00, 0x00 },
     { SCENE_STONE_TOWER_TEMPLE_BOSS, 0x00, 0x00, 0x00 },
     { SCENE_GROTTOS2, 0x00, 0x00, 0xD0 },
     { SCENE_GROTTOS_GROVE, 0x00, 0x00, 0xD0 },
@@ -568,7 +568,7 @@ void Interface_UpdateHudAlphas(PlayState* play, s16 dimmingAlpha) {
                 case SCENE_FORSAKEN_KINGDOM:
                 case SCENE_GLOOMY_GRAVEYARD:
                 case SCENE_STONE_TOWER:
-                case SCENE_STONE_TOWER_INVERTED:
+                case SCENE_STONE_TOWER_INV:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {
@@ -4339,7 +4339,7 @@ void Energy_Update(PlayState* play, Player* player) {
         gSaveContext.save.info.energy = Player_GetMaxEnergy();
 
     if (R_IS_DASHING || (player->stateFlags3 & PLAYER_STATE3_ZORA_SWIMMING)) { // Don't regen energy while dashing or zora swimming
-        f32 interval = R_IS_DASHING ? (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) ? 0.1f : 0.15f) : (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) ? 0.3f : 0.0f);
+        f32 interval = R_IS_DASHING ? 0.1f : 0.3f;
         if (++sDashEnergyTimer >= SECONDS(interval)) {
             sDashEnergyTimer = 0;
             gSaveContext.save.info.energy = CLAMP(gSaveContext.save.info.energy - 1, 0, 255);
@@ -4509,6 +4509,8 @@ void Interface_Draw(PlayState* play) {
             case SCENE_PURPLE_ICE_CAVERN:
             case SCENE_ANCIENT_HOLLOW:
             case SCENE_WOODFALL_TEMPLE:
+            case SCENE_STONE_TOWER_TEMPLE:
+            case SCENE_STONE_TOWER_TEMPLE_INV:
                 if (gSaveContext.save.info.inventory.dungeonKeys[gSaveContext.mapIndex] >= 0) {
                     u16 posX, posY;
                     if (SHIELD_DURABILITY && !IS_PAUSED(&play->pauseCtx) && GET_PLAYER(play)->currentShield > PLAYER_SHIELD_NONE) {
@@ -5535,7 +5537,7 @@ void Interface_Update(PlayState* play) {
                 case SCENE_FORSAKEN_KINGDOM:
                 case SCENE_GLOOMY_GRAVEYARD:
                 case SCENE_STONE_TOWER:
-                case SCENE_STONE_TOWER_INVERTED:
+                case SCENE_STONE_TOWER_INV:
                     if (interfaceCtx->minimapAlpha < 170) {
                         interfaceCtx->minimapAlpha = risingAlpha;
                     } else {

@@ -13,6 +13,5 @@ extern Gfx object_water_effect_DL_0042B0[];
 extern Gfx object_water_effect_DL_0042F8[];
 extern Gfx object_water_effect_DL_004340[];
 extern Gfx object_water_effect_DL_0043E8[];
-extern Gfx object_water_effect_DL_06AB30[];
 
 #endif

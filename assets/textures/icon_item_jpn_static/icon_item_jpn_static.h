@@ -80,9 +80,13 @@ extern u64 gPauseSave10JPNTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_
 extern u64 gPauseSelectItem10CQJPNTex[];
 extern u64 gPauseSelectItem20CQJPNTex[];
 extern u64 gPauseEquipment10CQJPNTex[];
+
 extern u64 gPauseAncientHollowTitleJPNTex[];
 extern u64 gPauseGoronMinesTitleJPNTex[];
-extern u64 gPauseWoodfallTitleJPNTex[];
 extern u64 gPausePurpleIceCavernTitleJPNTex[];
+extern u64 gPauseWoodfallTitleJPNTex[];
+extern u64 gPauseSnowheadTitleJPNTex[];
+extern u64 gPauseGreatBayTitleJPNTex[];
+extern u64 gPauseStoneTowerTitleJPNTex[];
 
 #endif

@@ -80,9 +80,13 @@ extern u64 gPauseSave10ENGTex[TEX_LEN(u64, PAGE_BG_QUAD_TEX_WIDTH, PAGE_BG_QUAD_
 extern u64 gPauseSelectItem10CQENGTex[];
 extern u64 gPauseSelectItem20CQENGTex[];
 extern u64 gPauseEquipment10CQENGTex[];
+
 extern u64 gPauseAncientHollowTitleENGTex[];
 extern u64 gPauseGoronMinesTitleENGTex[];
-extern u64 gPauseWoodfallTitleENGTex[];
 extern u64 gPausePurpleIceCavernTitleENGTex[];
+extern u64 gPauseWoodfallTitleENGTex[];
+extern u64 gPauseSnowheadTitleENGTex[];
+extern u64 gPauseGreatBayTitleENGTex[];
+extern u64 gPauseStoneTowerTitleENGTex[];
 
 #endif

@@ -3,6 +3,9 @@
 
 #include "bgcheck.h"
 
+extern Gfx gameplay_dangeon_keep_DL_0182A8[];
+extern CollisionHeader gameplay_dangeon_keep_Colheader_007498;
+
 extern Gfx gameplay_dangeon_keep_DL_01C228[];
 extern CollisionHeader gameplay_dangeon_keep_Colheader_01D488;
 

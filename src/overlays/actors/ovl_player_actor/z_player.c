@@ -187,6 +187,7 @@ s32 func_8083501C(Player* this, PlayState* play);
 s32 func_808351D4(Player* this, PlayState* play);
 s32 func_808353D8(Player* this, PlayState* play);
 s32 func_80835588(Player* this, PlayState* play);
+void func_80835688(Player* this, PlayState* play);
 s32 Player_UpperAction_CarryActor(Player* this, PlayState* play);
 s32 func_80835800(Player* this, PlayState* play);
 s32 func_80835884(Player* this, PlayState* play);
@@ -280,6 +281,7 @@ void func_808529D0(PlayState* play, Player* this, CsCmdActorCue* cue);
 void func_80852C50(PlayState* play, Player* this, CsCmdActorCue* cue);
 void PlayerCs_InitDekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue);
 void PlayerCs_DekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue);
+void PlayerCs_InitWait2WaitR(PlayState* play, Player* this, CsCmdActorCue* cue);
 int Player_IsDroppingFish(PlayState* play);
 s32 Player_StartFishing(PlayState* play);
 s32 func_80852F38(PlayState* play, Player* this);
@@ -3244,8 +3246,39 @@ void Player_ProcessItemButtons(Player* this, PlayState* play) {
             u8 energyCost = (item == ITEM_ROCS_FEATHER ? 15 : 10) - (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) ? 5 : 0);
             if (((this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) || item == ITEM_GOLDEN_FEATHER) && gSaveContext.save.info.energy >= energyCost) {
                 Vec3f effectsPos = this->actor.home.pos;
+                f32 jumpVel = 7.15f;
+                u8 leafParams;
+
+                if (item == ITEM_GOLDEN_FEATHER && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && this->actor.floorBgId != BGCHECK_SCENE) {
+                    DynaPolyActor* dyna = DynaPoly_GetActor(&play->colCtx, this->actor.floorBgId);
+                    if (dyna != NULL && dyna->actor.id == ACTOR_OBJ_ETCETERA) {
+                        if (((dyna->actor.params & 0xFF80) >> 7) >= 2) { // Gold Deku Flower
+                            jumpVel    = 16.0f;
+                            leafParams = 1;
+                        } else { // Pink Deku Flower
+                            jumpVel    = 13.0f;
+                            leafParams = 0;
+                        }
+
+                        if (!(this->stateFlags1 & PLAYER_STATE1_CARRYING_ACTOR) && this->heldActor == NULL) {
+                            Actor* leaf = Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_ITEM_LEAF, this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, 0, this->actor.shape.rot.y, 0, leafParams);
+                            if (leaf != NULL) {
+                                if (this->heldItemAction != PLAYER_IA_NONE) {
+                                    this->nextModelGroup = Player_ActionToModelGroup(this, PLAYER_IA_NONE);
+                                    Player_InitItemAction(play, this, PLAYER_IA_NONE);
+                                    this->heldItemId = ITEM_NONE_FE;
+                                }
+                                this->interactRangeActor = this->heldActor = leaf;
+                                this->getItemId = GI_NONE;
+                                this->unk_3BC.y = 0;
+                                this->stateFlags1 |= PLAYER_STATE1_CARRYING_ACTOR;
+                                func_80835688(this, play);
+                            }
+                        }
+                    }
+                }
                 this->featherUseCount++;
-                func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, 7.15f, play, NA_SE_VO_LI_SWORD_N);
+                func_80838940(this, &gPlayerAnim_link_normal_newroll_jump_20f, jumpVel, play, NA_SE_VO_LI_SWORD_N);
                 this->av2.actionVar2 = 1;
                 this->speedXZ = 5.0f;
                 this->actor.world.rot.y = this->yaw = this->actor.shape.rot.y;
@@ -3902,9 +3935,17 @@ s32 Player_UpperAction_CarryActor(Player* this, PlayState* play) {
         }
 #endif
 
-        if ((heldActor->id == ACTOR_EN_NIW) && (this->actor.velocity.y <= 0.0f)) {
-            this->actor.minVelocityY = -2.0f;
-            this->actor.gravity = -0.5f;
+        if ((heldActor->id == ACTOR_EN_NIW || heldActor->id == ACTOR_ITEM_LEAF) && (this->actor.velocity.y <= 0.0f)) {
+            if (heldActor->id == ACTOR_ITEM_LEAF && heldActor->params == 1) {
+                this->actor.minVelocityY = -1.0f;
+                this->actor.gravity = -0.1f;
+            } else if (heldActor->id == ACTOR_ITEM_LEAF && heldActor->params == 0) {
+                this->actor.minVelocityY = -1.5f;
+                this->actor.gravity = -0.25f;
+            } else {
+                this->actor.minVelocityY = -2.0f;
+                this->actor.gravity = -0.5f;
+            }
             this->fallStartHeight = this->actor.world.pos.y;
         }
 
@@ -5309,9 +5350,9 @@ f32 Player_SetDamageTakenMultiplierPerScene(u16 sceneId) {
         case SCENE_ROYAL_VAULT:
         case SCENE_GLOOMY_GRAVEYARD:
         case SCENE_STONE_TOWER:
-        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_INV:
         case SCENE_STONE_TOWER_TEMPLE:
-        case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+        case SCENE_STONE_TOWER_TEMPLE_INV:
             return 3.0f;
 
         case SCENE_INSIDE_GANONS_CASTLE:
@@ -8649,7 +8690,7 @@ s32 Player_CanThrowCarriedActor(Player* this, Actor* actor) {
 }
 
 s32 Player_ActionHandler_9(Player* this, PlayState* play) {
-    if ((this->stateFlags1 & PLAYER_STATE1_CARRYING_ACTOR) && (this->heldActor != NULL) &&
+    if ((this->stateFlags1 & PLAYER_STATE1_CARRYING_ACTOR) && (this->heldActor != NULL) && this->heldActor->id != ACTOR_ITEM_LEAF &&
         CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT)) {
         if (!func_80835644(play, this, this->heldActor)) {
             if (!Player_CanThrowCarriedActor(this, this->heldActor)) {
@@ -10929,6 +10970,9 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
             if (!func_80835644(play, this, heldActor) && (heldActor->id == ACTOR_EN_NIW) &&
                 CHECK_BTN_ANY(sControlInput->press.button, BTN_A | BTN_B | BTN_CLEFT | BTN_CDOWN | BTN_CRIGHT | BTN_DUP | BTN_DRIGHT | BTN_DDOWN | BTN_DLEFT)) {
                 func_8084409C(play, this, this->speedXZ + 2.0f, this->actor.velocity.y + 2.0f);
+            } else if (!func_80835644(play, this, heldActor) && heldActor->id == ACTOR_ITEM_LEAF && CHECK_BTN_ALL(sControlInput->press.button, BTN_A)) {
+                Actor_Kill(heldActor);
+                func_80834644(play, this);
             }
         }
 
@@ -10942,6 +10986,10 @@ void Player_Action_8084411C(Player* this, PlayState* play) {
         }
 
         if (!(this->stateFlags2 & PLAYER_STATE2_19)) {
+            if (this->heldActor != NULL && this->heldActor->id == ACTOR_ITEM_LEAF && speedTarget > 0.0f && this->focusActor == NULL && !(this->stateFlags1 & PLAYER_STATE1_PARALLEL)) {
+                Math_ScaledStepToS(&this->yaw, yawTarget, 0x600);
+                Math_ScaledStepToS(&this->actor.shape.rot.y, this->yaw, 0x600);
+            }
             func_8083DFE0(this, &speedTarget, &yawTarget);
         }
 
@@ -12316,7 +12364,7 @@ void Player_Init(Actor* thisx, PlayState* play2) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AE_SHIFT];
     } else if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AA_SHIFT];
-    } else if (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED) {
+    } else if (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INV) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AF_SHIFT];
     }
 
@@ -12487,6 +12535,8 @@ void Player_UpdateInterface(PlayState* play, Player* this) {
                         } else {
                             doAction = DO_ACTION_THROW;
                         }
+                    } else if (heldActor->id == ACTOR_ITEM_LEAF) {
+                        doAction = DO_ACTION_PUTAWAY;
                     }
                 } else if (!(this->stateFlags1 & PLAYER_STATE1_27) && func_8083A0D4(this) &&
                            (this->getItemId < GI_MAX)) {
@@ -13501,15 +13551,80 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
 
             Actor_UpdateVelocityXZGravity(&this->actor);
 
-            if ((this->pushedSpeed != 0.0f) && !Player_InCsMode(play) &&
+            if ((this->pushedSpeed != 0.0f || this->windSpeed != 0.0f || play->envCtx.windSpeed >= 50.0f) && !Player_InCsMode(play) &&
                 !(this->stateFlags1 & (PLAYER_STATE1_13 | PLAYER_STATE1_14 | PLAYER_STATE1_21)) &&
                 (Player_Action_80845668 != this->actionFunc) && (Player_Action_808507F4 != this->actionFunc)) {
+                f32 temp_fv1_2;
+
                 this->actor.velocity.x += this->pushedSpeed * Math_SinS(this->pushedYaw);
                 this->actor.velocity.z += this->pushedSpeed * Math_CosS(this->pushedYaw);
+
+                temp_fv1_2 = 10.0f - this->actor.velocity.y;
+                if (temp_fv1_2 > 0.0f) {
+                    f32 sp58 = 1.0f;
+                    f32 sp54 = this->windSpeed * sp58;
+                    f32 sp50 = Math_SinS(this->windAngleX) * sp54;
+                    f32 sp4C = Math_CosS(this->windAngleX) * sp54;
+                    f32 sp48 = Math_SinS(this->windAngleY) * sp4C;
+                    f32 sp44 = Math_CosS(this->windAngleY) * sp4C;
+
+                    if (sp50 > 0.0f && !(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) && !(this->stateFlags1 & PLAYER_STATE1_CARRYING_ACTOR) && this->heldActor == NULL) {
+                        Actor* leaf = Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_ITEM_LEAF, this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, 0, this->actor.shape.rot.y, 0, 0);
+
+                        if (leaf != NULL) {
+                            if (this->heldItemAction != PLAYER_IA_NONE) {
+                                Player_InitItemAction(play, this, PLAYER_IA_NONE);
+                                this->heldItemId = ITEM_NONE_FE;
+                            }
+                            this->interactRangeActor = this->heldActor = leaf;
+                            this->getItemId = GI_NONE;
+                            this->unk_3BC.y = 0;
+                            this->stateFlags1 |= PLAYER_STATE1_CARRYING_ACTOR;
+                            func_80835688(this, play);
+                        }
+                    }
+
+                    if (play->envCtx.windSpeed >= 50.0f) {
+                        f32 temp_fa0 = play->envCtx.windDirection.x;
+                        f32 temp_fa1 = play->envCtx.windDirection.y;
+                        f32 temp_ft4 = play->envCtx.windDirection.z;
+                        f32 temp_fv0_2 = sqrtf(SQ(temp_fa0) + SQ(temp_fa1) + SQ(temp_ft4));
+
+                        if (temp_fv0_2 != 0.0f) {
+                            temp_fv0_2 = ((play->envCtx.windSpeed - 50.0f) * 0.1f * sp58) / temp_fv0_2;
+                            sp48 -= temp_fa0 * temp_fv0_2;
+                            sp50 -= temp_fa1 * temp_fv0_2;
+                            sp44 -= temp_ft4 * temp_fv0_2;
+                        }
+                    }
+
+                    if (temp_fv1_2 < sp50) {
+                        temp_fv1_2 /= sp50;
+                        sp48 *= temp_fv1_2;
+                        sp50 *= temp_fv1_2;
+                        sp44 *= temp_fv1_2;
+                    }
+
+                    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+                        f32 windPushSpeed = (sp44 * Math_CosS(this->yaw)) + (Math_SinS(this->yaw) * sp48);
+                        if (fabsf(windPushSpeed) > 4.0f)
+                            func_8084269C(play, this);
+                        func_800F4138(&this->actor.projectedPos, Player_ApplyFloorSfxOffset(this, NA_SE_PL_SLIP_LEVEL - SFX_FLAG), fabsf(windPushSpeed));
+                    }
+
+                    this->actor.velocity.x += sp48;
+                    this->actor.velocity.z += sp44;
+                    this->actor.velocity.y += sp50;
+                }
             }
 
             Actor_UpdatePos(&this->actor);
             Player_ProcessSceneCollision(play, this);
+            
+             if (this->heldActor != NULL && this->heldActor->id == ACTOR_ITEM_LEAF && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) {
+                Actor_Kill(this->heldActor);
+                func_80834644(play, this);
+            }
         } else {
             sFloorType = FLOOR_TYPE_0;
             this->floorProperty = FLOOR_PROPERTY_0;
@@ -13695,6 +13810,7 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
         this->doorType = PLAYER_DOORTYPE_NONE;
         this->knockbackType = PLAYER_KNOCKBACK_NONE;
         this->autoLockOnActor = NULL;
+        Math_StepToF(&this->windSpeed, 0.0f, 0.5f);
 
         phi_f12 =
             ((this->bodyPartsPos[PLAYER_BODYPART_L_FOOT].y + this->bodyPartsPos[PLAYER_BODYPART_R_FOOT].y) * 0.5f) +
@@ -16963,6 +17079,8 @@ static struct_80854B18 D_80854B18[PLAYER_CSACTION_MAX] = {
     { 3, &gPlayerAnim_link_demo_kenmiru2_modori },       // PLAYER_CSACTION_102
     { -1, &PlayerCs_InitDekuWalk },                      // PLAYER_CSACTION_103
     { 3, &gPlayerAnim_alink_fukitobu },                  // PLAYER_CSACTION_104
+    { 3, &gPlayerAnim_alink_kyoro },                     // PLAYER_CSACTION_ALINK_KYORO
+    { -1, PlayerCs_InitWait2WaitR },                     // PLAYER_CSACTION_WAIT2WAITR
 };
 
 static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
@@ -17075,6 +17193,8 @@ static struct_80854B18 D_80854E50[PLAYER_CSACTION_MAX] = {
     { 12, &gPlayerAnim_demo_link_nwait },          // PLAYER_CSACTION_102
     { -1, PlayerCs_DekuWalk },                     // PLAYER_CSACTION_103
     { 12, &gPlayerAnim_alink_fukitobu },           // PLAYER_CSACTION_104
+    { 12, &gPlayerAnim_alink_kyoro_loop },         // PLAYER_CSACTION_ALINK_KYORO
+    { -1, func_8085190C },                         // PLAYER_CSACTION_WAIT2WAITR
 };
 
 void Player_AnimChangeOnceMorphZeroRootYawSpeed(PlayState* play, Player* this, LinkAnimationHeader* anim) {
@@ -17366,6 +17486,12 @@ void PlayerCs_DekuWalk(PlayState* play, Player* this, CsCmdActorCue* cue) {
 
     if (this->av2.actionVar2 == 24)
         Player_SetCsAction(play, NULL, 9);
+}
+
+void PlayerCs_InitWait2WaitR(PlayState* play, Player* this, CsCmdActorCue* cue) {
+    Player_SetupAction(play, this, Player_Action_80840450, 1);
+    Player_AnimChangeOnceMorph(play, this, GET_PLAYER_ANIM(PLAYER_ANIMGROUP_wait2waitR, this->modelAnimType));
+    this->av2.actionVar2 = 1;
 }
 
 void func_808518DC(PlayState* play, Player* this, CsCmdActorCue* cue) {

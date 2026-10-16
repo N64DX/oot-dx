@@ -138,6 +138,7 @@ void EnGoomba_Init(Actor* thisx, PlayState* play) {
     this->actor.colChkInfo.mass = MASS_HEAVY;
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(6, ELITE_HP);;
     this->actor.gravity = -1.0f;
+    this->actor.naviEnemyId = NAVI_ENEMY_GOOMBA;
 
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 2.5f);
 

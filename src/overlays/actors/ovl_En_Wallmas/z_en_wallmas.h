@@ -4,6 +4,12 @@
 #include "ultra64.h"
 #include "actor.h"
 
+#define WALLMASTER_GET_TYPE(thisx)         ((thisx)->params)
+#define WALLMASTER_GET_SWITCH_FLAG(thisx) (((thisx)->params >> 8) & 0xFF)
+#define WALLMASTER_IS_FROZEN(thisx)        ((thisx)->params & 0x80)
+
+#define WALLMASTER_PARAMS(type, switchFlag, isFrozen) ((type) | (((switchFlag) << 8) & 0xFF) | (((isFrozen) << 7) & 0x80))
+
 typedef enum WallmasType {
     /* 0x00 */ WMT_TIMER,
     /* 0x01 */ WMT_PROXIMITY,

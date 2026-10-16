@@ -51,12 +51,24 @@ u64 gPauseGoronMinesTitleGERTex[] = {
 #include "assets/textures/icon_item_ger_static/gPauseGoronMinesTitleGERTex.ia8.inc.c"
 };
 
+u64 gPausePurpleIceCavernTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPausePurpleIceCavernTitleGERTex.ia8.inc.c"
+};
+
 u64 gPauseWoodfallTitleGERTex[] = {
 #include "assets/textures/icon_item_ger_static/gPauseWoodfallTitleGERTex.ia8.inc.c"
 };
 
-u64 gPausePurpleIceCavernTitleGERTex[] = {
-#include "assets/textures/icon_item_ger_static/gPausePurpleIceCavernTitleGERTex.ia8.inc.c"
+u64 gPauseSnowheadTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPauseSnowheadTitleGERTex.ia8.inc.c"
+};
+
+u64 gPauseGreatBayTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPauseGreatBayTitleGERTex.ia8.inc.c"
+};
+
+u64 gPauseStoneTowerTitleGERTex[] = {
+#include "assets/textures/icon_item_ger_static/gPauseStoneTowerTitleGERTex.ia8.inc.c"
 };
 
 u64 gPauseToEquipGERTex[TEX_LEN(u64, gPauseToEquipGERTex_WIDTH, gPauseToEquipGERTex_HEIGHT, 8)] = {

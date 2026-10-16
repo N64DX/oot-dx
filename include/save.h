@@ -1264,6 +1264,7 @@ typedef enum IngoRaceState {
 
 // Is the running man race active
 #define EVENTINF_MARATHON_ACTIVE 0x10
+#define EVENTINF_INTRO_CS_WATCHED_GOMESS 0x11
 
 // EVENTINF 0x20-0x24
 #define EVENTINF_INDEX_HAGGLING_TOWNSFOLK 0x2

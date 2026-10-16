@@ -215,7 +215,18 @@ typedef enum CameraSettingType {
     /* 0x46 */ CAM_SET_TUNNEL,
     /* 0x47 */ CAM_SET_SCENE0,
     /* 0x48 */ CAM_SET_SPIRAL_DOOR,
-    /* 0x49 */ CAM_SET_MAX
+    /* 0x49 */ CAM_SET_DUNGEON3,
+    /* 0x4C */ CAM_SET_ROOM0,
+    /* 0x51 */ CAM_SET_ROOM1,
+    /* 0x4E */ CAM_SET_ROOM2,
+    /* 0x4A */ CAM_SET_MINI_BOSS,
+    /* 0x4B */ CAM_SET_BOSS_ODOLWA,
+    /* 0x4D */ CAM_SET_INBUSH,
+    /* 0x4F */ CAM_SET_VERTICAL_CLIMB,
+    /* 0x50 */ CAM_SET_WOODFALL_SWAMP,
+    /* 0x52 */ CAM_SET_ONTHEPOLE,
+    /* 0x53 */ CAM_SET_CIRCLE6,
+    /* 0x54 */ CAM_SET_MAX
 } CameraSettingType;
 
 typedef enum CameraModeType {
@@ -316,7 +327,10 @@ typedef enum CameraFuncType {
     /* 0x44 */ CAM_FUNC_SPEC7,
     /* 0x45 */ CAM_FUNC_SPEC8,
     /* 0x46 */ CAM_FUNC_SPEC9,
-    /* 0x47 */ CAM_FUNC_MAX
+    /* 0x47 */ CAM_FUNC_WOODFALL_NORMAL,
+    /* 0x48 */ CAM_FUNC_WOODFALL_PARALLEL,
+    /* 0x49 */ CAM_FUNC_WOODFALL_BATTLE,
+    /* 0x4A */ CAM_FUNC_MAX
 } CameraFuncType;
 
 typedef enum CameraDataType {
@@ -394,8 +408,10 @@ typedef struct Normal1 {
 #define NORMAL1_FLAG_0 (1 << 0)
 #define NORMAL1_FLAG_1 (1 << 1)
 #define NORMAL1_FLAG_2 (1 << 2)
+#define NORMAL1_FLAG_3 (1 << 3)
 #define NORMAL1_FLAG_4 (1 << 4)
 #define NORMAL1_FLAG_5 (1 << 5)
+#define NORMAL1_FLAG_6 (1 << 6)
 #define NORMAL1_FLAG_7 (1 << 7)
 
 #define CAM_FUNCDATA_NORM1(yOffset, eyeDist, eyeDistNext, pitchTarget, yawUpdateRateTarget, xzUpdateRateTarget, maxYawUpdate, fov, atLerpStepScale, interfaceField) \
@@ -837,6 +853,7 @@ typedef struct KeepOn3 {
 
 #define KEEPON3_FLAG_4 (1 << 4)
 #define KEEPON3_FLAG_5 (1 << 5)
+#define KEEPON3_FLAG_6 (1 << 6)
 #define KEEPON3_FLAG_7 (1 << 7)
 
 #define CAM_FUNCDATA_KEEP3(yOffset, eyeDist, eyeDistNext, swingYawInit, swingYawFinal, swingPitchInit, swingPitchFinal, swingPitchAdj, fov, atLerpStepScale, yawUpdateRateTarget, interfaceField) \
@@ -983,6 +1000,7 @@ typedef struct Fixed2 {
 
 
 #define FIXED2_FLAG_0 (1 << 0)
+#define FIXED2_FLAG_1 (1 << 1)
 
 #define CAM_FUNCDATA_FIXD2(yOffset, yawUpdateRateTarget, xzUpdateRateTarget, fov, interfaceField) \
     { yOffset, CAM_DATA_Y_OFFSET }, \

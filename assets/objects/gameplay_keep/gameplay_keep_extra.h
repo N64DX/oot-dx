@@ -2,9 +2,13 @@
 #define GAMEPLAY_KEEP_EXTRA_H
 
 #include "tex_len.h"
+#include "keyframe.h"
 
+extern Gfx gSquareShadowDL[];
+extern Gfx gFloorImpactDL[];
+extern Gfx gWindCurrentDL[];
+extern Gfx gDekuLeafDL[];
 extern u64 gDropFeatherTex[];
-
 extern u64 gStarTex[];
 
 #define gLinkAdultHookshotChainTex_WIDTH        16
@@ -102,6 +106,8 @@ extern LinkAnimationHeader gPlayerAnim_link_normal_newroll_jump_end_20f;
 extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_20f;
 extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_end_20f;
 extern LinkAnimationHeader gPlayerAnim_alink_fukitobu;
+extern LinkAnimationHeader gPlayerAnim_alink_kyoro;
+extern LinkAnimationHeader gPlayerAnim_alink_kyoro_loop;
 
 extern LinkAnimationHeader gPlayerAnim_link_start_booster_jump;
 extern LinkAnimationHeader gPlayerAnim_link_booster_jump;
@@ -126,5 +132,8 @@ extern Gfx sDashWindConeDL[];
 extern Gfx gPlayerCaneOfByrnaDL[];
 extern Gfx gPlayerCaneOfSomariaDL[];
 extern Gfx gElegyShellHumanDL[];
+
+extern KeyFrameAnimation gameplay_keep_KFAnim_06BB0C;
+extern KeyFrameFlexSkeleton gameplay_keep_KFSkel_06EB70;
 
 #endif

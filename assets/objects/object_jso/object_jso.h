@@ -52,6 +52,8 @@ typedef enum GaroLimb {
     /* 0x14 */ GARO_LIMB_MAX
 } GaroLimb;
 
+extern Gfx gGaroMasterEyesDL[];
+
 extern FlexSkeletonHeader gGaroMasterSkel;
 
 extern AnimationHeader gGaroStaticJumpPoseAnim;

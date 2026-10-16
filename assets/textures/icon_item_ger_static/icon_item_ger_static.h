@@ -86,7 +86,10 @@ extern u64 gPauseEquipment20CQGERTex[];
 
 extern u64 gPauseAncientHollowTitleGERTex[];
 extern u64 gPauseGoronMinesTitleGERTex[];
-extern u64 gPauseWoodfallTitleGERTex[];
 extern u64 gPausePurpleIceCavernTitleGERTex[];
+extern u64 gPauseWoodfallTitleGERTex[];
+extern u64 gPauseSnowheadTitleGERTex[];
+extern u64 gPauseGreatBayTitleGERTex[];
+extern u64 gPauseStoneTowerTitleGERTex[];
 
 #endif
