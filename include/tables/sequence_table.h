@@ -151,3 +151,4 @@ DEFINE_SEQUENCE    (Sequence_127,       NA_BGM_DAWNGROVE_CAVE,   MEDIUM_CART, CA
 DEFINE_SEQUENCE    (Sequence_128,       NA_BGM_IKANA_REGION,     MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_ENEMY                         ) // ikana_region
 DEFINE_SEQUENCE    (Sequence_129,       NA_BGM_STONE_TOWER,      MEDIUM_CART, CACHE_LOAD_TEMPORARY,  0                                      ) // stone_tower_temple
 DEFINE_SEQUENCE    (Sequence_130,       NA_BGM_INV_STONE_TOWER,  MEDIUM_CART, CACHE_LOAD_TEMPORARY,  0                                      ) // inv_stone_tower_temple
+DEFINE_SEQUENCE    (Sequence_131,       NA_BGM_FINAL_HOURS,      MEDIUM_CART, CACHE_LOAD_TEMPORARY,  0                                      ) // final_hours
