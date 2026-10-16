@@ -1,0 +1,31 @@
+#ifndef STONE_TOWER_TEMPLE_INVERTED_ROOM_3_H
+#define STONE_TOWER_TEMPLE_INVERTED_ROOM_3_H
+
+#include "room.h"
+
+extern s16 stone_tower_temple_inverted_room_3ObjectList_000040[];
+extern ActorEntry stone_tower_temple_inverted_room_3ActorEntry_000070[];
+extern RoomShapeCullable stone_tower_temple_inverted_room_3RoomShapeCullable_000340;
+extern RoomShapeCullableEntry stone_tower_temple_inverted_room_3RoomShapeCullableEntry_00034C[19];
+
+extern Gfx stone_tower_temple_inverted_room_3DL_0009C0[];
+extern Gfx stone_tower_temple_inverted_room_3DL_001198[];
+extern Gfx stone_tower_temple_inverted_room_3DL_0019C0[];
+extern Gfx stone_tower_temple_inverted_room_3DL_001EB8[];
+extern Gfx stone_tower_temple_inverted_room_3DL_002220[];
+extern Gfx stone_tower_temple_inverted_room_3DL_002A70[];
+extern Gfx stone_tower_temple_inverted_room_3DL_002FF8[];
+extern Gfx stone_tower_temple_inverted_room_3DL_003288[];
+extern Gfx stone_tower_temple_inverted_room_3DL_003780[];
+extern Gfx stone_tower_temple_inverted_room_3DL_003C80[];
+extern Gfx stone_tower_temple_inverted_room_3DL_004210[];
+extern Gfx stone_tower_temple_inverted_room_3DL_004E78[];
+extern Gfx stone_tower_temple_inverted_room_3DL_005AD0[];
+extern Gfx stone_tower_temple_inverted_room_3DL_006A10[];
+extern Gfx stone_tower_temple_inverted_room_3DL_007138[];
+extern Gfx stone_tower_temple_inverted_room_3DL_0073E8[];
+extern Gfx stone_tower_temple_inverted_room_3DL_0078B8[];
+extern Gfx stone_tower_temple_inverted_room_3DL_007AC8[];
+extern Gfx stone_tower_temple_inverted_room_3DL_00A7E0[];
+
+#endif

@@ -96,11 +96,28 @@ void EnBox_SetupAction(EnBox* this, EnBoxActionFunc actionFunc) {
     this->actionFunc = actionFunc;
 }
 
+static s16 EnBox_GetBaseRotZ(EnBox* this) {
+    return this->upsideDown ? 0x8000 : 0;
+}
+
 void EnBox_ClipToGround(EnBox* this, PlayState* play) {
     f32 newY;
     CollisionPoly* poly;
     s32 bgId;
     Vec3f checkPos;
+
+    if (this->upsideDown) {
+        Vec3f endPos;
+        Vec3f hitPos;
+
+        checkPos = this->dyna.actor.world.pos;
+        checkPos.y -= 1.0f;
+        endPos = checkPos;
+        endPos.y += 100.0f;
+        if (BgCheck_EntityLineTest2(&play->colCtx, &checkPos, &endPos, &hitPos, &poly, false, false, true, false, &bgId, &this->dyna.actor))
+            this->dyna.actor.world.pos.y = hitPos.y;
+        return;
+    }
 
     checkPos = this->dyna.actor.world.pos;
     checkPos.y += 1.0f;
@@ -140,7 +157,6 @@ void EnBox_Init(Actor* thisx, PlayState* play2) {
     this->iceSmokeTimer = 0;
     this->ocarinaState = ENBOX_OCARINA_STATE_IDLE;
     this->dyna.actor.gravity = -5.5f;
-    this->giItem = this->dyna.actor.world.rot.x & 0xFF;
     this->switchFlag = this->dyna.actor.world.rot.z;
     this->dyna.actor.minVelocityY = -50.0f;
 
@@ -195,9 +211,15 @@ void EnBox_Init(Actor* thisx, PlayState* play2) {
         this->movementFlags |= ENBOX_MOVE_STICK_TO_GROUND;
     }
 
+    this->upsideDown = (u16)this->dyna.actor.home.rot.x == 0x8000;
+    if (this->dyna.actor.home.rot.x > 0 && this->dyna.actor.home.rot.x < GI_MAX)
+        this->giItem = this->dyna.actor.home.rot.x & 0xFF;
+    else this->giItem = 0;
+
     this->dyna.actor.world.rot.y += 0x8000;
     this->dyna.actor.home.rot.x = this->dyna.actor.world.rot.x = this->dyna.actor.shape.rot.x = 0;
-    this->dyna.actor.home.rot.z = this->dyna.actor.world.rot.z = this->dyna.actor.shape.rot.z = 0;
+    this->dyna.actor.home.rot.z = this->dyna.actor.world.rot.z = 0;
+    this->dyna.actor.shape.rot.z = EnBox_GetBaseRotZ(this);
 
     //! @bug Flex skeleton is used as normal skeleton
     SkelAnime_Init(play, &this->skelanime, (SkeletonHeader*)&gTreasureChestSkel, anim, this->jointTable,

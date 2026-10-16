@@ -48,6 +48,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_lightblock"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_lightblock/object_lightblock.o"
+    number 6
+endseg
+
+beginseg
     name "object_mtoride"
     compress
     include "$(BUILD_DIR)/assets/objects/object_mtoride/object_mtoride.o"
@@ -219,6 +226,13 @@ beginseg
     name "object_f40_switch"
     compress
     include "$(BUILD_DIR)/assets/objects/object_f40_switch/object_f40_switch.o"
+    number 6
+endseg
+
+beginseg
+    name "object_ikana_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_ikana_obj/object_ikana_obj.o"
     number 6
 endseg
 
@@ -443,6 +457,20 @@ beginseg
     name "object_bat"
     compress
     include "$(BUILD_DIR)/assets/objects/object_bat/object_bat.o"
+    number 6
+endseg
+
+beginseg
+    name "object_rat"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_rat/object_rat.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gmo"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gmo/object_gmo.o"
     number 6
 endseg
 

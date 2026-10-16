@@ -141,6 +141,8 @@
         <Sample Name="SAMPLE_0_GARO_2"/>
         <Sample Name="SAMPLE_0_GARO_3"/>
         <Sample Name="SAMPLE_0_49"/>
+        <Sample Name="SAMPLE_0_BOMBCHU_1"/>
+        <Sample Name="SAMPLE_0_NEJIRON_1"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
@@ -271,6 +273,8 @@
         <Instrument ProgramNumber="79" Name="INST_79" Envelope="Env0" Sample="SAMPLE_0_GARO_2"/>
         <Instrument ProgramNumber="80" Name="INST_80" Envelope="Env0" Sample="SAMPLE_0_GARO_3"/>
         <Instrument ProgramNumber="81" Name="INST_81" Envelope="Env0" Sample="SAMPLE_0_49"/> <!-- Unused draw sword sound effect, but used in MM for Garo (Master) -->
+        <Instrument ProgramNumber="82" Name="INST_82" Envelope="Env0" Sample="SAMPLE_0_BOMBCHU_1"/>
+        <Instrument ProgramNumber="83" Name="INST_83" Envelope="Env0" Sample="SAMPLE_0_NEJIRON_1"/>
     </Instruments>
     <MatchPadding>
         0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3

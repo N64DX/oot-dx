@@ -497,4 +497,6 @@
     <Sample Name="SAMPLE_0_GARO_1"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Garo_Sample1.half.aifc"/>
     <Sample Name="SAMPLE_0_GARO_2"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Garo_Sample2.half.aifc"/>
     <Sample Name="SAMPLE_0_GARO_3"       Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Garo_Sample3.half.aifc"/>
+    <Sample Name="SAMPLE_0_BOMBCHU_1"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Bombchu_Sample1.half.aifc"/>
+    <Sample Name="SAMPLE_0_NEJIRON_1"    Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Nejiron_Sample1.half.aifc"/>
 </SampleBank>

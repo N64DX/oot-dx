@@ -6,13 +6,13 @@
 
 struct BgIkanaRotaryroom;
 
-typedef void (*BgIkanaRotaryroomActionFunc)(struct BgIkanaRotaryroom*, struct PlayState*);
-typedef void (*BgIkanaRotaryroomUnkFunc)(Actor*, PlayState*);
-typedef void (*BgIkanaRotaryroomUnkFunc2)(struct BgIkanaRotaryroom*, struct PlayState*);
+typedef void (*BgIkanaRotaryroomActionFunc) (struct BgIkanaRotaryroom*, struct PlayState*);
+typedef void (*BgIkanaRotaryroomUnkFunc)    (Actor*, struct PlayState*);
+typedef void (*BgIkanaRotaryroomUnkFunc2)   (struct BgIkanaRotaryroom*, struct PlayState*);
 
-#define BGIKANAROTARYROOM_GET_1(thisx) ((thisx)->params & 1)
-#define BGIKANAROTARYROOM_GET_SWITCH_FLAG_1(thisx) (((thisx)->params >> 1) & 0x7F)
-#define BGIKANAROTARYROOM_GET_SWITCH_FLAG_2(thisx) (((thisx)->params >> 8) & 0x7F)
+#define BGIKANAROTARYROOM_GET_1(thisx)              ((thisx)->params & 1)
+#define BGIKANAROTARYROOM_GET_SWITCH_FLAG_1(thisx) (((thisx)->params >> 1) & 0x3F)
+#define BGIKANAROTARYROOM_GET_SWITCH_FLAG_2(thisx) (((thisx)->params >> 8) & 0x3F)
 
 typedef struct BgIkanaRotaryroomStruct1 {
     /* 0x00 */ Actor* unk_00;
@@ -37,7 +37,6 @@ typedef struct BgIkanaRotaryroom {
     /* 0x000 */ DynaPolyActor dyna;
     /* 0x15C */ ColliderJntSph collider;
     /* 0x17C */ ColliderJntSphElement colliderElements[2];
-    /* 0x1FC */ AnimatedMaterial* unk_1FC;
     /* 0x200 */ BgIkanaRotaryroomUnkFunc unk_200;
     /* 0x204 */ BgIkanaRotaryroomStruct1 unk_204;
     /* 0x248 */ BgIkanaRotaryroomStruct1 unk_248[2];
@@ -48,6 +47,7 @@ typedef struct BgIkanaRotaryroom {
     /* 0x57C */ BgIkanaRotaryroomUnkFunc2 unk_57C;
     /* 0x580 */ BgIkanaRotaryroomActionFunc actionFunc;
     /* 0x584 */ s16 unk_584;
+    /* 0x586 */ u8 csId;
 } BgIkanaRotaryroom; // size = 0x588
 
 #endif

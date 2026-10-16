@@ -1,0 +1,18 @@
+#ifndef STONE_TOWER_TEMPLE_INVERTED_ROOM_11_H
+#define STONE_TOWER_TEMPLE_INVERTED_ROOM_11_H
+
+#include "room.h"
+
+extern s16 stone_tower_temple_inverted_room_11ObjectList_000040[];
+extern ActorEntry stone_tower_temple_inverted_room_11ActorEntry_000070[];
+extern RoomShapeCullable stone_tower_temple_inverted_room_11RoomShapeCullable_0000D0;
+extern RoomShapeCullableEntry stone_tower_temple_inverted_room_11RoomShapeCullableEntry_0000DC[6];
+
+extern Gfx stone_tower_temple_inverted_room_11DL_0012D0[];
+extern Gfx stone_tower_temple_inverted_room_11DL_001E98[];
+extern Gfx stone_tower_temple_inverted_room_11DL_002588[];
+extern Gfx stone_tower_temple_inverted_room_11DL_002878[];
+extern Gfx stone_tower_temple_inverted_room_11DL_002BA8[];
+extern Gfx stone_tower_temple_inverted_room_11DL_002DC0[];
+
+#endif
