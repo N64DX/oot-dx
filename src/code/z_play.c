@@ -1822,7 +1822,7 @@ void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn) {
             textId = SCENE_CASTLE_COURTYARD_GUARDS_DAY;
         else if (sceneId == SCENE_GROTTOS2 || sceneId == SCENE_GROTTOS_GROVE)
             textId = SCENE_GROTTOS;
-        else if (sceneId == SCENE_STONE_TOWER_INVERTED)
+        else if (sceneId == SCENE_STONE_TOWER_INV)
             textId = SCENE_STONE_TOWER_TEMPLE;
         else if (gSaveContext.save.entranceIndex == ENTR_WINDMILL_AND_DAMPES_GRAVE_0 || gSaveContext.save.entranceIndex == ENTR_LON_LON_BUILDINGS_1 || (sceneId == SCENE_MARKET_GUARD_HOUSE && gSaveContext.sceneLayer >= 2 && gSaveContext.sceneLayer <= 3) )
             textId += 0x100;
@@ -2117,14 +2117,14 @@ u8 Play_GetOriginalSceneId(u8 sceneId) {
          return SCENE_DODONGOS_CAVERN_BOSS;
     else if (sceneId == SCENE_PURPLE_ICE_CAVERN)
          return SCENE_GANONS_TOWER_COLLAPSE_INTERIOR;
-    else if (sceneId == SCENE_STONE_TOWER_TEMPLE || sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED || sceneId == SCENE_STONE_TOWER_TEMPLE_BOSS)
+    else if (sceneId == SCENE_STONE_TOWER_TEMPLE || sceneId == SCENE_STONE_TOWER_TEMPLE_INV || sceneId == SCENE_STONE_TOWER_TEMPLE_BOSS)
         return SCENE_GANONS_TOWER;
-    else if (sceneId == SCENE_STONE_TOWER_INVERTED)
+    else if (sceneId == SCENE_STONE_TOWER_INV)
         return SCENE_STONE_TOWER;
 
     else if (sceneId == SCENE_FORBIDDEN_WOODS) // Reusing shop scenes for other scenes
         return SCENE_BAZAAR;
-    else if (sceneId == SCENE_GROTTOS2 || sceneId == SCENE_GROTTOS_GROVE || sceneId == SCENE_CAVE_PASSAGE)
+    else if (sceneId == SCENE_GROTTOS2 || SCENE_GROTTOS_GROVE || SCENE_CAVE_PASSAGE)
         return SCENE_GORON_SHOP;
     else if (sceneId == SCENE_WEBBED_SHRINE)
         return SCENE_ZORA_SHOP;

@@ -578,7 +578,7 @@ void Skybox_Setup(PlayState* play, SkyboxContext* skyboxCtx, s16 skyboxId) {
             skyboxCtx->env.b = 40;
 
             // Inverted Stone Tower Temple and Inverted Stone Tower
-            if (play->sceneId == SCENE_STONE_TOWER_INVERTED || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED)
+            if (play->sceneId == SCENE_STONE_TOWER_INV || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INV)
                 skyboxCtx->rot.z = 3.15f;
             break;
 

@@ -5309,9 +5309,9 @@ f32 Player_SetDamageTakenMultiplierPerScene(u16 sceneId) {
         case SCENE_ROYAL_VAULT:
         case SCENE_GLOOMY_GRAVEYARD:
         case SCENE_STONE_TOWER:
-        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_INV:
         case SCENE_STONE_TOWER_TEMPLE:
-        case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+        case SCENE_STONE_TOWER_TEMPLE_INV:
             return 3.0f;
 
         case SCENE_INSIDE_GANONS_CASTLE:
@@ -12316,7 +12316,7 @@ void Player_Init(Actor* thisx, PlayState* play2) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AE_SHIFT];
     } else if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AA_SHIFT];
-    } else if (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED) {
+    } else if (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INV) {
         gSaveContext.save.info.infTable[INFTABLE_INDEX_1AX] |= gBitFlags[INFTABLE_1AF_SHIFT];
     }
 

@@ -3305,7 +3305,7 @@ void Environment_WarpSongLeave(PlayState* play) {
 }
 
 s32 Environment_IsSceneUpsideDown(PlayState* play) {
-    if (play->sceneId == SCENE_STONE_TOWER_INVERTED || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INVERTED)
+    if (play->sceneId == SCENE_STONE_TOWER_INV || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INV)
         return true;
     return false;
 }

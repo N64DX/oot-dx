@@ -48,7 +48,7 @@ Spawn stone_tower_inverted_sceneEntranceList0x0000B8[] = {
 };
 
 u16 stone_tower_inverted_sceneExitList_0000BC[] = {
-    ENTR_STONE_TOWER_INVERTED_1,
+    ENTR_STONE_TOWER_INV_1,
 };
 
 EnvLightSettings stone_tower_inverted_sceneLightSettings0x0000C0[] = {
