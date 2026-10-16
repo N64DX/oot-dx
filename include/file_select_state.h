@@ -14,14 +14,18 @@ typedef struct FileSelectOptionsEntry {
     /* 0x00 */ u8 number;
     /* 0x01 */ u8 index;
     /* 0x02 */ u8 shift;
+    /* 0x03 */ u8 permanentFlag;
     /* 0x04 */ char* name;
-    /* 0x08 */ void  (*setFunc) (struct FileSelectState*, u8, u8);
+    /* 0x08 */ void  (*setFunc) (struct FileSelectState*, u8, u8, u8);
     /* 0x0C */ char* (*getFunc) (struct FileSelectState*, u8, u8);
 } FileSelectOptionsEntry; // size = 0x10
 
 #define SHOW_OPTION_ALL_QUESTS  0x00
 #define SHOW_OPTION_ONLY_CQ     0x01
 #define SHOW_OPTION_NO_CQ       0x02
+
+#define PERMANENT_FLAG          0x00
+#define NO_OPTION_FLAG          0xFF
 
 #define SHOW_OPTION_ALL_BUILDS  0x00
 #define SHOW_OPTION_NO_IQUE     0x10

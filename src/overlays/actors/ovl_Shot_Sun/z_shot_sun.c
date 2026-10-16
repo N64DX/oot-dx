@@ -202,7 +202,7 @@ void ShotSun_UpdateHyliaSun(ShotSun* this, PlayState* play) {
         }
         Actor_Kill(&this->actor);
     } else {
-        if (!(this->actor.xzDistToPlayer > 120.0f) && gSaveContext.save.dayTime >= CLOCK_TIME(6, 30) &&
+        if (!(this->actor.xzDistToPlayer > 120.0f) && gSaveContext.save.dayTime >= DAWN_TIME &&
             gSaveContext.save.dayTime < CLOCK_TIME(7, 30)) {
             cylinderPos.x = player->bodyPartsPos[PLAYER_BODYPART_HEAD].x + play->envCtx.sunPos.x * (1.0f / 6.0f);
             cylinderPos.y =

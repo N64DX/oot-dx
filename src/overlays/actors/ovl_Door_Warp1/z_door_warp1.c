@@ -522,6 +522,7 @@ void DoorWarp1_ChildWarpOut(DoorWarp1* this, PlayState* play) {
             play->progressRush = true;
         } else if (play->sceneId == SCENE_DODONGOS_CAVERN_BOSS) {
             if (!Flags_GetEventChkInf(EVENTCHKINF_25)) {
+                Play_ResetTotalDaysTimer();
                 Flags_SetEventChkInf(EVENTCHKINF_25);
                 Item_Give(play, ITEM_GORON_RUBY);
                 play->nextEntranceIndex = ENTR_DEATH_MOUNTAIN_TRAIL_0;
@@ -532,6 +533,7 @@ void DoorWarp1_ChildWarpOut(DoorWarp1* this, PlayState* play) {
             }
         } else if (play->sceneId == SCENE_DEKU_TREE_BOSS) {
             if (!Flags_GetEventChkInf(EVENTCHKINF_07)) {
+                Play_ResetTotalDaysTimer();
                 Flags_SetEventChkInf(EVENTCHKINF_07);
                 Flags_SetEventChkInf(EVENTCHKINF_09);
                 Item_Give(play, ITEM_KOKIRI_EMERALD);
@@ -554,6 +556,7 @@ void DoorWarp1_ChildWarpOut(DoorWarp1* this, PlayState* play) {
             gSaveContext.nextCutsceneIndex = CS_INDEX_NONE;
         } else if (play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS) {
             if (!Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL)) {
+                Play_ResetTotalDaysTimer();
                 Flags_SetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL);
                 play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
                 gSaveContext.chamberCutsceneNum = CHAMBER_CS_WOODFALL;
@@ -646,6 +649,7 @@ void DoorWarp1_RutoWarpOut(DoorWarp1* this, PlayState* play) {
     this->warpTimer++;
 
     if (this->warpTimer > sWarpTimerTarget && gSaveContext.nextCutsceneIndex == NEXT_CS_INDEX_NONE) {
+        Play_ResetTotalDaysTimer();
         SET_EVENTCHKINF(EVENTCHKINF_37);
         Item_Give(play, ITEM_ZORA_SAPPHIRE);
         play->nextEntranceIndex = ENTR_ZORAS_FOUNTAIN_0;
@@ -756,6 +760,7 @@ void DoorWarp1_AdultWarpOut(DoorWarp1* this, PlayState* play) {
             play->progressRush = true;
         } else if (play->sceneId == SCENE_FOREST_TEMPLE_BOSS) {
             if (!GET_EVENTCHKINF(EVENTCHKINF_48)) {
+                Play_ResetTotalDaysTimer();
                 SET_EVENTCHKINF(EVENTCHKINF_48);
                 Item_Give(play, ITEM_MEDALLION_FOREST);
                 play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
@@ -771,6 +776,7 @@ void DoorWarp1_AdultWarpOut(DoorWarp1* this, PlayState* play) {
             }
         } else if (play->sceneId == SCENE_FIRE_TEMPLE_BOSS) {
             if (!GET_EVENTCHKINF(EVENTCHKINF_49)) {
+                Play_ResetTotalDaysTimer();
                 SET_EVENTCHKINF(EVENTCHKINF_49);
                 Item_Give(play, ITEM_MEDALLION_FIRE);
                 play->nextEntranceIndex = ENTR_KAKARIKO_VILLAGE_0;
@@ -785,6 +791,7 @@ void DoorWarp1_AdultWarpOut(DoorWarp1* this, PlayState* play) {
             }
         } else if (play->sceneId == SCENE_WATER_TEMPLE_BOSS) {
             if (!GET_EVENTCHKINF(EVENTCHKINF_4A)) {
+                Play_ResetTotalDaysTimer();
                 SET_EVENTCHKINF(EVENTCHKINF_4A);
                 Item_Give(play, ITEM_MEDALLION_WATER);
                 play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
@@ -800,6 +807,7 @@ void DoorWarp1_AdultWarpOut(DoorWarp1* this, PlayState* play) {
             }
         } else if (play->sceneId == SCENE_SPIRIT_TEMPLE_BOSS) {
             if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT)) {
+                Play_ResetTotalDaysTimer();
                 Item_Give(play, ITEM_MEDALLION_SPIRIT);
                 play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
                 gSaveContext.nextCutsceneIndex = CS_INDEX_NONE;
@@ -814,6 +822,7 @@ void DoorWarp1_AdultWarpOut(DoorWarp1* this, PlayState* play) {
             }
         } else if (play->sceneId == SCENE_SHADOW_TEMPLE_BOSS) {
             if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW)) {
+                Play_ResetTotalDaysTimer();
                 Item_Give(play, ITEM_MEDALLION_SHADOW);
                 play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
                 gSaveContext.nextCutsceneIndex = CS_INDEX_NONE;

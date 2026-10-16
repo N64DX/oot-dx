@@ -482,8 +482,8 @@ void CutsceneCmd_Misc(PlayState* play, CutsceneContext* csCtx, CsCmdMisc* cmd) {
             break;
 
         case CS_MISC_SET_TIME_BASED_LIGHT_SETTING:
-            if ((gSaveContext.save.dayTime < CLOCK_TIME(4, 30)) || (gSaveContext.save.dayTime >= CLOCK_TIME(6, 30))) {
-                if ((gSaveContext.save.dayTime >= CLOCK_TIME(6, 30)) &&
+            if ((gSaveContext.save.dayTime < CLOCK_TIME(4, 30)) || (gSaveContext.save.dayTime >= DAWN_TIME)) {
+                if ((gSaveContext.save.dayTime >= DAWN_TIME) &&
                     (gSaveContext.save.dayTime < CLOCK_TIME(16, 0))) {
                     play->envCtx.lightSettingOverride = 1;
                 } else if ((gSaveContext.save.dayTime >= CLOCK_TIME(16, 0)) &&
@@ -829,6 +829,7 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 break;
 
             case CS_DEST_CUTSCENE_MAP_GANONDORF_DEFEATED_CREDITS:
+                Play_ResetTotalDaysTimer();
                 if (!IS_RUSH_QUEST) {
                     play->nextEntranceIndex = ENTR_CUTSCENE_MAP_0;
                     play->transitionTrigger = TRANS_TRIGGER_START;
