@@ -130,7 +130,7 @@ void MapSelect_LoadGame(MapSelectState* this, s32 entranceIndex) {
     gSaveContext.natureAmbienceId = 0xFF;
     gSaveContext.showTitleCard = true;
     gWeatherMode = WEATHER_MODE_CLEAR;
-    gSaveContext.cheated = 1;
+    gSaveContext.gameProgress = GAME_PROGRESS_CHEATED;
 
     this->state.running = false;
     SET_NEXT_GAMESTATE(&this->state, Play_Init, PlayState);
@@ -692,7 +692,11 @@ void MapSelect_UpdateMenu(MapSelectState* this) {
             }
 
             if (CHECK_BTN_ALL(input->press.button, BTN_Z)) {
-                if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAY) {
+                if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAWN) {
+                    gSaveContext.save.cutsceneIndex = CS_INDEX_DAY;
+                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAY) {
+                    gSaveContext.save.cutsceneIndex = CS_INDEX_DUSK;
+                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_DUSK) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_NIGHT;
                 } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_NIGHT) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_0;
@@ -717,13 +721,17 @@ void MapSelect_UpdateMenu(MapSelectState* this) {
                 } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_9) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_A;
                 } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_A) {
-                    gSaveContext.save.cutsceneIndex = CS_INDEX_DAY;
+                    gSaveContext.save.cutsceneIndex = CS_INDEX_DAWN;
                 }
             } else if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
-                if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAY) {
+                if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAWN) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_A;
-                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_NIGHT) {
+                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAY) {
+                    gSaveContext.save.cutsceneIndex = CS_INDEX_DAWN;
+                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_DUSK) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_DAY;
+                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_NIGHT) {
+                    gSaveContext.save.cutsceneIndex = CS_INDEX_DUSK;
                 } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_0) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_NIGHT;
                 } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_1) {
@@ -1029,14 +1037,21 @@ void MapSelect_PrintCutsceneSetting(MapSelectState* this, GfxPrint* printer, u16
     GfxPrint_SetColor(printer, 255, 255, 55, 255);
 
     switch (csIndex) {
+        case CS_INDEX_DUSK:
+            label = T(GFXP_HIRAGANA "ﾕｳｸﾞﾚ", "Dusk");
+            gSaveContext.save.dayTime = CLOCK_TIME(18, 0);
+            break;
         case CS_INDEX_NIGHT:
-            label = T(GFXP_HIRAGANA " ﾖﾙ " GFXP_KATAKANA "ｺﾞﾛﾝ", "Night");
+            label = T(GFXP_HIRAGANA "ﾖﾙ", "Night");
             gSaveContext.save.dayTime = CLOCK_TIME(0, 0);
             break;
+        case CS_INDEX_DAWN:
+            label = T(GFXP_HIRAGANA "ﾖｱｹ", "Dawn");
+            gSaveContext.save.dayTime = CLOCK_TIME(6, 0);
+            break;
         case CS_INDEX_DAY:
-            // clang-format off
-            gSaveContext.save.dayTime = CLOCK_TIME(12, 0); label = T(GFXP_HIRAGANA "ｵﾋﾙ " GFXP_KATAKANA "ｼﾞｬﾗ", "Day");
-            // clang-format on
+            label = T(GFXP_HIRAGANA "ｵﾋﾙ", "Day");
+            gSaveContext.save.dayTime = CLOCK_TIME(12, 0);
             break;
         case CS_INDEX_0:
             // clang-format off
@@ -1076,6 +1091,8 @@ void MapSelect_PrintCutsceneSetting(MapSelectState* this, GfxPrint* printer, u16
     };
 
     gSaveContext.skyboxTime = gSaveContext.save.dayTime;
+    if (TIMER_CHALLENGE > 0)
+        gSaveContext.save.totalDays = 0;
     GfxPrint_Printf(printer, "Stage:" GFXP_KATAKANA "%s", label);
 }
 

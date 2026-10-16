@@ -34,6 +34,7 @@
 #include "assets/textures/parameter_static/parameter_static.h"
 #include "assets/textures/parameter_static/parameter_static_all.h"
 #include "assets/textures/parameter_static/quest_title/parameter_static_quest.h"
+#include "assets/textures/parameter_static/three_day_clock/parameter_static_clock.h"
 #include "assets/textures/do_action_static/do_action_static.h"
 #include "assets/textures/icon_item_static/icon_item_static.h"
 
@@ -3427,6 +3428,9 @@ void Magic_DrawMeter(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     s16 magicMeterY;
 
+    if (HUD_DISPLAY >= 3 && !IS_PAUSED(&play->pauseCtx))
+        return;
+
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 2650);
 
     if (gSaveContext.save.info.playerData.magicLevel != 0) {
@@ -3580,38 +3584,51 @@ void Interface_DrawItemButtons(PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 2900);
 
     // D-Pad positions
-    dpad_x = R_MAGIC_METER_X + 20;
-    dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 15;
-    if (gSaveContext.save.info.playerData.magicLevel != 0)
-        dpad_y += 15;
-    if (IS_ACTIVE_TIMER && pauseCtx->state == PAUSE_STATE_OFF) {
-        dpad_y += 15;
-        if (gSaveContext.save.info.playerData.magicLevel == 0)
-            dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + HIRES_MULTIPLY(45);
-    }
-
-    if (Interface_GetItemFromDpad(0) != ITEM_NONE || Interface_GetItemFromDpad(1) != ITEM_NONE || Interface_GetItemFromDpad(2) != ITEM_NONE || Interface_GetItemFromDpad(3) != ITEM_NONE) {
-        if (gSaveContext.save.info.playerData.dpadDualSet) {
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[0]);
-        } else {
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 192, 192, 192, dpadAlphas[0]);
+    if (HUD_DISPLAY < 2 || IS_PAUSED(&play->pauseCtx)) {
+        dpad_x = R_MAGIC_METER_X + 20;
+        dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + 15;
+        if (gSaveContext.save.info.playerData.magicLevel != 0)
+            dpad_y += 15;
+        if (IS_ACTIVE_TIMER && pauseCtx->state == PAUSE_STATE_OFF) {
+            dpad_y += 15;
+            if (gSaveContext.save.info.playerData.magicLevel == 0)
+                dpad_y = ( (gSaveContext.save.info.playerData.healthCapacity > 0xA0) ? R_MAGIC_METER_Y_LOWER : R_MAGIC_METER_Y_HIGHER) + HIRES_MULTIPLY(45);
         }
-        gDPLoadTextureBlock(OVERLAY_DISP++, gDPadTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(dpad_x) << 2, HIRES_MULTIPLY(dpad_y) << 2, X_HIRES_MULTIPLY(dpad_x + 16) << 2, HIRES_MULTIPLY(dpad_y + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2 << 10), HIRES_DIVIDE(2 << 10));
+
+        if (Interface_GetItemFromDpad(0) != ITEM_NONE || Interface_GetItemFromDpad(1) != ITEM_NONE || Interface_GetItemFromDpad(2) != ITEM_NONE || Interface_GetItemFromDpad(3) != ITEM_NONE) {
+            if (gSaveContext.save.info.playerData.dpadDualSet) {
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, dpadAlphas[0]);
+            } else {
+                gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 192, 192, 192, dpadAlphas[0]);
+            }
+            gDPLoadTextureBlock(OVERLAY_DISP++, gDPadTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(dpad_x) << 2, HIRES_MULTIPLY(dpad_y) << 2, X_HIRES_MULTIPLY(dpad_x + 16) << 2, HIRES_MULTIPLY(dpad_y + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2 << 10), HIRES_DIVIDE(2 << 10));
+        }
     }
 
     // B Button Color & Texture
-    gDPPipeSync(OVERLAY_DISP++);
-    gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-    gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+    if (HUD_DISPLAY < 1 || IS_PAUSED(&play->pauseCtx)) {
+        gDPPipeSync(OVERLAY_DISP++);
+        gDPSetCombineMode(OVERLAY_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+        gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
+        OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(OVERLAY_DISP, hudTexture, 32, 32, X_HIRES_MULTIPLY(R_ITEM_BTN_X(0)), HIRES_MULTIPLY(R_ITEM_BTN_Y(0)), X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1), R_B_BTN_COLOR(0), R_B_BTN_COLOR(1), R_B_BTN_COLOR(2), interfaceCtx->bAlpha);
+        gDPPipeSync(OVERLAY_DISP++);
+    }
 
-    OVERLAY_DISP =
-        Gfx_DrawTexRectIA8_DropShadow(OVERLAY_DISP, hudTexture, 32, 32, X_HIRES_MULTIPLY(R_ITEM_BTN_X(0)), HIRES_MULTIPLY(R_ITEM_BTN_Y(0)),
-                       X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(0)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(0) << 1), R_B_BTN_COLOR(0), R_B_BTN_COLOR(1), R_B_BTN_COLOR(2), interfaceCtx->bAlpha);
-    gDPPipeSync(OVERLAY_DISP++);
+    if ((IS_CUTSCENE_LAYER || play->csCtx.state != CS_STATE_IDLE) && play->specialIconAlpha > 0 && interfaceCtx->unk_1FC == DO_ACTION_SKIP) { // Stop Cutscene
+        OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(OVERLAY_DISP, hudTexture, 32, 32, X_HIRES_MULTIPLY(268 + WS_SHIFT_FULL), HIRES_MULTIPLY(182), X_HIRES_MULTIPLY(22), HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)), (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, 255);
+        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
+        gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(185) << 2, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL + 48) << 2, HIRES_MULTIPLY(185 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+    }
+
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    if (HUD_DISPLAY >= 2 && !IS_PAUSED(&play->pauseCtx))
+        return;
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
     // C Buttons Color & Texture
-    OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(R_ITEM_BTN_X(1)), HIRES_MULTIPLY(R_ITEM_BTN_Y(1)), X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(1)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(1)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1),
+    OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(OVERLAY_DISP, hudTexture, 32, 32, X_HIRES_MULTIPLY(R_ITEM_BTN_X(1)), HIRES_MULTIPLY(R_ITEM_BTN_Y(1)), X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(1)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(1)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(1) << 1),
                        R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), interfaceCtx->cLeftAlpha);
     OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(R_ITEM_BTN_X(2)), HIRES_MULTIPLY(R_ITEM_BTN_Y(2)), X_HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(2)), HIRES_MULTIPLY(R_ITEM_BTN_WIDTH(2)), X_HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1), HIRES_DIVIDE(R_ITEM_BTN_DD(2) << 1),
                        R_C_BTN_COLOR(0), R_C_BTN_COLOR(1), R_C_BTN_COLOR(2), interfaceCtx->cDownAlpha);
@@ -3668,11 +3685,6 @@ void Interface_DrawItemButtons(PlayState* play) {
                                 HIRES_MULTIPLY(R_START_LABEL_Y(gSaveContext.language) + height) << 2, G_TX_RENDERTILE, 0, 0,
                                 X_HIRES_DIVIDE(texCoordScale), HIRES_DIVIDE(texCoordScale));
 #endif
-        } else if ((IS_CUTSCENE_LAYER || play->csCtx.state != CS_STATE_IDLE) && play->specialIconAlpha > 0 && interfaceCtx->unk_1FC == DO_ACTION_SKIP) { // Stop Cutscene
-            OVERLAY_DISP = Gfx_DrawRect_DropShadow(OVERLAY_DISP, X_HIRES_MULTIPLY(268 + WS_SHIFT_FULL), HIRES_MULTIPLY(182), X_HIRES_MULTIPLY(22), HIRES_MULTIPLY(22), (s32)(1.4277344f * X_HIRES_DIVIDE(1 << 10)), (s32)(1.4277344f * HIRES_DIVIDE(1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, 255);
-            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
-            gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL) << 2, HIRES_MULTIPLY(185) << 2, X_HIRES_MULTIPLY(255 + WS_SHIFT_FULL + 48) << 2, HIRES_MULTIPLY(185 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
         }
     }
 
@@ -3760,7 +3772,10 @@ void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
     u8  width;
     u8  item;
     s8  offset = 0;
-    
+
+    if (HUD_DISPLAY >= (button == 0 ? 1 : 2) && !IS_PAUSED(&play->pauseCtx))
+        return;
+
     if (button < 4) {
         x     = R_ITEM_ICON_X(button);
         y     = R_ITEM_ICON_Y(button);
@@ -3819,6 +3834,9 @@ void Interface_DrawItemIconTexture(PlayState* play, void* texture, s16 button) {
 void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
     s16 i;
     s16 ammo;
+
+    if (HUD_DISPLAY >= 2 && !IS_PAUSED(&play->pauseCtx))
+        return;
 
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3105);
 
@@ -3904,6 +3922,9 @@ void Interface_DrawAmmoCount(PlayState* play, s16 button, s16 alpha) {
 void Interface_DrawActionButton(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
 
+    if (HUD_DISPLAY >= 1 && !IS_PAUSED(&play->pauseCtx))
+        return;
+
     OPEN_DISPS(play->state.gfxCtx, "../z_parameter.c", 3172);
 
     Matrix_Translate(0.0f, 0.0f, XREG(18) / 10.0f, MTXMODE_NEW);
@@ -3950,9 +3971,14 @@ void Interface_DrawActionButton(PlayState* play) {
 
 void Interface_InitVertices(PlayState* play) {
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
+    s32 clockVtx, clockQuad;
     s16 i;
+    s16 sClockVtxPosX[] = { -8, -12, -12, -7, -8,  -7, -8 };
+    s16 sClockVtxWidths[] = { 16, 24, 24, 16, 16, 16, 16 };
+    s16 sClockVtxPosY[] = { 24, -82, -82, 58, 59, 58,  59 };
+    s16 sClockVtxHeights[] = { 16, 24, 24, 11, 11, 11, 11 };
 
-    interfaceCtx->actionVtx = GRAPH_ALLOC(play->state.gfxCtx, 8 * sizeof(Vtx));
+    interfaceCtx->actionVtx = GRAPH_ALLOC(play->state.gfxCtx, 40 * sizeof(Vtx));
 
     interfaceCtx->actionVtx[0].v.ob[0] = interfaceCtx->actionVtx[2].v.ob[0] = -14;
     interfaceCtx->actionVtx[1].v.ob[0] = interfaceCtx->actionVtx[3].v.ob[0] = interfaceCtx->actionVtx[0].v.ob[0] + 28;
@@ -3993,6 +4019,29 @@ void Interface_InitVertices(PlayState* play) {
 
     interfaceCtx->actionVtx[5].v.tc[0] = interfaceCtx->actionVtx[7].v.tc[0] = 1536;
     interfaceCtx->actionVtx[6].v.tc[1] = interfaceCtx->actionVtx[7].v.tc[1] = 512;
+
+    // Three-Day Clock
+    for (clockQuad=0; clockQuad<ARRAY_COUNT(sClockVtxPosX); clockQuad++) {
+        clockVtx = 12 + (clockQuad * 4);
+
+        interfaceCtx->actionVtx[clockVtx + 0].v.ob[0] = interfaceCtx->actionVtx[clockVtx + 2].v.ob[0] = sClockVtxPosX[clockQuad];
+        interfaceCtx->actionVtx[clockVtx + 1].v.ob[0] = interfaceCtx->actionVtx[clockVtx + 3].v.ob[0] = sClockVtxPosX[clockQuad] + sClockVtxWidths[clockQuad];
+        interfaceCtx->actionVtx[clockVtx + 0].v.ob[1] = interfaceCtx->actionVtx[clockVtx + 1].v.ob[1] = sClockVtxPosY[clockQuad];
+        interfaceCtx->actionVtx[clockVtx + 2].v.ob[1] = interfaceCtx->actionVtx[clockVtx + 3].v.ob[1] = sClockVtxPosY[clockQuad] - sClockVtxHeights[clockQuad];
+
+        for (i=0; i<4; i++) {
+            interfaceCtx->actionVtx[clockVtx + i].v.ob[2] = 0;
+            interfaceCtx->actionVtx[clockVtx + i].v.flag = 0;
+            interfaceCtx->actionVtx[clockVtx + i].v.cn[0] = 255;
+            interfaceCtx->actionVtx[clockVtx + i].v.cn[1] = 255;
+            interfaceCtx->actionVtx[clockVtx + i].v.cn[2] = 255;
+            interfaceCtx->actionVtx[clockVtx + i].v.cn[3] = 255;
+        }
+
+        interfaceCtx->actionVtx[clockVtx + 0].v.tc[0] = interfaceCtx->actionVtx[clockVtx + 0].v.tc[1] = interfaceCtx->actionVtx[clockVtx + 1].v.tc[1] = interfaceCtx->actionVtx[clockVtx + 2].v.tc[0] = 0;
+        interfaceCtx->actionVtx[clockVtx + 1].v.tc[0] = interfaceCtx->actionVtx[clockVtx + 3].v.tc[0] = sClockVtxWidths[clockQuad] << 5;
+        interfaceCtx->actionVtx[clockVtx + 2].v.tc[1] = interfaceCtx->actionVtx[clockVtx + 3].v.tc[1] = sClockVtxHeights[clockQuad] << 5;
+    }
 
     interfaceCtx->beatingHeartVtx = GRAPH_ALLOC(play->state.gfxCtx, 4 * sizeof(Vtx));
 
@@ -4299,10 +4348,14 @@ void Durability_DrawMeter(PlayState* play) {
     u16 meterX = 26;
     f32 scaleDivide;
 
+    if (HUD_DISPLAY >= 3 && !IS_PAUSED(&play->pauseCtx))
+        return;
+
     if (!SHIELD_DURABILITY || shield == PLAYER_SHIELD_NONE || IS_PAUSED(&play->pauseCtx)) {
         drawShieldDurability = false;
         return;
-    }
+    } else if (HUD_DISPLAY >= 1 && !IS_PAUSED(&play->pauseCtx))
+        meterY = 206;
 
     durability = gSaveContext.save.info.shields[shield-1].durability;
     capacity = Player_GetMaxShieldDurability(shield);
@@ -4352,6 +4405,8 @@ void Durability_DrawMeter(PlayState* play) {
 
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
+
+#include "z_parameter_clock.c"
 
 void Interface_Draw(PlayState* play) {
     static s16 magicArrowEffectsR[] = { 255, 100, 255 };
@@ -4416,9 +4471,11 @@ void Interface_Draw(PlayState* play) {
         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
 
         // Rupee Icon
-        gDPSetPrimColor(OVERLAY_DISP++, 0, 0, walletColors[curWallet][0], walletColors[curWallet][1], walletColors[curWallet][2], interfaceCtx->magicAlpha);
-        gDPSetEnvColor(OVERLAY_DISP++, 0, 80, 0, 255);
-        OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, USE_MM_HUD ? gMMRupeeCounterIconTex : gRupeeCounterIconTex, 16, 16, X_HIRES_MULTIPLY(26), HIRES_MULTIPLY(206), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+        if (HUD_DISPLAY < 1 || IS_PAUSED(&play->pauseCtx)) {
+            gDPSetPrimColor(OVERLAY_DISP++, 0, 0, walletColors[curWallet][0], walletColors[curWallet][1], walletColors[curWallet][2], interfaceCtx->magicAlpha);
+            gDPSetEnvColor(OVERLAY_DISP++, 0, 80, 0, 255);
+            OVERLAY_DISP = Gfx_TextureIA8(OVERLAY_DISP, USE_MM_HUD ? gMMRupeeCounterIconTex : gRupeeCounterIconTex, 16, 16, X_HIRES_MULTIPLY(26), HIRES_MULTIPLY(206), X_HIRES_MULTIPLY(16), HIRES_MULTIPLY(16), X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+        }
 
         switch (play->sceneId) {
             case SCENE_FOREST_TEMPLE:
@@ -4447,6 +4504,9 @@ void Interface_Draw(PlayState* play) {
                         posX = 26;
                         posY = 190;
                     }
+
+                    if (HUD_DISPLAY >= 1 && !IS_PAUSED(&play->pauseCtx))
+                        break;
 
                     // Small Key Icon
                     gDPPipeSync(OVERLAY_DISP++);
@@ -4541,6 +4601,9 @@ void Interface_Draw(PlayState* play) {
         svar4 = rupeeDigitsCount[curWallet];
 
         for (svar1 = 0, svar3 = 42; svar1 < svar4; svar1++, svar2++, svar3 += 8) {
+            if (HUD_DISPLAY >= 1 && !IS_PAUSED(&play->pauseCtx))
+                break;
+            
             if (USE_MM_HUD) {
                 gDPPipeSync(OVERLAY_DISP++);
                 gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 0, 0, interfaceCtx->magicAlpha);
@@ -4600,7 +4663,7 @@ void Interface_Draw(PlayState* play) {
                     Interface_DrawAmmoCount(play, 0, interfaceCtx->bAlpha);
                 }
             }
-        } else {
+        } else if (HUD_DISPLAY < 1 || IS_PAUSED(&play->pauseCtx)) {
             // B Button Do Action Label
             gDPPipeSync(OVERLAY_DISP++);
             gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0,
@@ -4691,10 +4754,12 @@ void Interface_Draw(PlayState* play) {
         MATRIX_FINALIZE_AND_LOAD(OVERLAY_DISP++, play->state.gfxCtx, "../z_parameter.c", 3701);
         gSPVertex(OVERLAY_DISP++, &interfaceCtx->actionVtx[4], 4, 0);
 
-        if ((interfaceCtx->unk_1EC < 2) || (interfaceCtx->unk_1EC == 3)) {
-            Interface_DrawActionLabel(play->state.gfxCtx, interfaceCtx->doActionSegment);
-        } else {
-            Interface_DrawActionLabel(play->state.gfxCtx, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE);
+        if (HUD_DISPLAY < 1 || IS_PAUSED(&play->pauseCtx) || interfaceCtx->unk_1FC == DO_ACTION_SKIP) {
+            if ((interfaceCtx->unk_1EC < 2) || (interfaceCtx->unk_1EC == 3)) {
+                Interface_DrawActionLabel(play->state.gfxCtx, interfaceCtx->doActionSegment);
+            } else {
+                Interface_DrawActionLabel(play->state.gfxCtx, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE);
+            }
         }
 
         gDPPipeSync(OVERLAY_DISP++);
@@ -4756,6 +4821,8 @@ void Interface_Draw(PlayState* play) {
         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
 
         if (!IS_PAUSED(&play->pauseCtx)) {
+            if (TIMER_CHALLENGE > 0)
+                Interface_DrawClock(play);
             if (gSaveContext.minigameState != 1) {
                 // Carrots rendering if the action corresponds to riding a horse
                 if (interfaceCtx->unk_1EE == 8) {
@@ -5306,7 +5373,7 @@ void Interface_Draw(PlayState* play) {
                 // Timer Counter
                 gDPPipeSync(OVERLAY_DISP++);
                 gDPSetCombineLERP(OVERLAY_DISP++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
-                if (gSaveContext.cheated) {
+                if (gSaveContext.gameProgress == GAME_PROGRESS_CHEATED) {
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 0, 0, 255);
                 }
                 for (svar1=0; svar1<8; svar1++)
@@ -5686,6 +5753,14 @@ void Interface_Update(PlayState* play) {
     }
 
     if (gSaveContext.sunsSongState != SUNSSONG_INACTIVE) {
+        if (TIMER_CHALLENGE > 0 && TIME_UNTIL_CHALLENGE_END < CLOCK_TIME(6, 0)) {
+            if (gSaveContext.sunsSongState == SUNSSONG_SPEED_TIME)
+                gTimeSpeed = sPrevTimeSpeed;
+            gSaveContext.sunsSongState = SUNSSONG_INACTIVE;
+            play->msgCtx.ocarinaMode = OCARINA_MODE_04;
+            return;
+        }
+
         // exit out of ocarina mode after suns song finishes playing
         if ((msgCtx->ocarinaAction != OCARINA_ACTION_CHECK_NOWARP_DONE) &&
             (gSaveContext.sunsSongState == SUNSSONG_START)) {
@@ -5696,7 +5771,7 @@ void Interface_Update(PlayState* play) {
         if (play->envCtx.sceneTimeSpeed != 0) {
             if (gSaveContext.sunsSongState != SUNSSONG_SPEED_TIME) {
                 D_80125B60 = false;
-                if ((gSaveContext.save.dayTime >= CLOCK_TIME(6, 30)) &&
+                if ((gSaveContext.save.dayTime >= DAWN_TIME) &&
                     (gSaveContext.save.dayTime <= CLOCK_TIME(18, 0) + 1)) {
                     D_80125B60 = true;
                 }
@@ -5705,7 +5780,7 @@ void Interface_Update(PlayState* play) {
                 sPrevTimeSpeed = gTimeSpeed;
                 gTimeSpeed = 400;
             } else if (!D_80125B60) {
-                if ((gSaveContext.save.dayTime >= CLOCK_TIME(6, 30)) &&
+                if ((gSaveContext.save.dayTime >= DAWN_TIME) &&
                     (gSaveContext.save.dayTime <= CLOCK_TIME(18, 0) + 1)) {
                     gSaveContext.sunsSongState = SUNSSONG_INACTIVE;
                     gTimeSpeed = sPrevTimeSpeed;
@@ -5717,7 +5792,7 @@ void Interface_Update(PlayState* play) {
                 play->msgCtx.ocarinaMode = OCARINA_MODE_04;
             }
         } else if ((play->roomCtx.curRoom.type != ROOM_TYPE_DUNGEON) && (interfaceCtx->restrictions.sunsSong != 3)) {
-            if ((gSaveContext.save.dayTime >= CLOCK_TIME(6, 30)) &&
+            if ((gSaveContext.save.dayTime >= DAWN_TIME) &&
                 (gSaveContext.save.dayTime < CLOCK_TIME(18, 0) + 1)) {
                 gSaveContext.nextDayTime = NEXT_TIME_NIGHT;
                 play->transitionType = TRANS_TYPE_FADE_BLACK_FAST;
