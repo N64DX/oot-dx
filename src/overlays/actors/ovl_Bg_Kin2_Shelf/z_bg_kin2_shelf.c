@@ -152,7 +152,7 @@ s32 BgKin2Shelf_80B6FEBC(BgKin2Shelf* this, PlayState* play) {
     return false;
 }
 
-bool BgKin2Shelf_80B6FF28(BgKin2Shelf* this, PlayState* play) {
+u8 BgKin2Shelf_80B6FF28(BgKin2Shelf* this, PlayState* play) {
     return (this->unk_165 > 8) && BgKin2Shelf_80B6FE48(this, play) && BgKin2Shelf_80B6FEBC(this, play) && !BgKin2Shelf_80B6FE08(this, play);
 }
 

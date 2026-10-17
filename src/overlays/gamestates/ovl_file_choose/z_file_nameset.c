@@ -28,7 +28,7 @@
 #include "assets/textures/title_static/title_static.h"
 #endif
 #if OOT_VERSION <= PAL_1_1
-#include "assets/textures/parameter_static/parameter_static_quest.h"
+#include "assets/textures/parameter_static/quest_title/parameter_static_quest.h"
 #endif
 
 void FileSelect_DrawCharacter(GraphicsContext* gfxCtx, void* texture, s16 vtx) {

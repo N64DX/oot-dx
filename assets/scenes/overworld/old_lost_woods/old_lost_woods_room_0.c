@@ -13,8 +13,8 @@ SceneCmd old_lost_woods_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(false, true),
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader_0008D0),
-    SCENE_CMD_OBJECT_LIST(9, old_lost_woods_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(129, old_lost_woods_room_0ActorList_000048),
+    SCENE_CMD_OBJECT_LIST(10, old_lost_woods_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(130, old_lost_woods_room_0ActorList_000048),
     SCENE_CMD_END(),
 };
 
@@ -34,6 +34,7 @@ s16 old_lost_woods_room_0ObjectList_000040[] = {
     OBJECT_WOOD02,
     OBJECT_OWL,
     OBJECT_FR,
+    OBJECT_DEKUCITY_OBJ,
 };
 
 ActorEntry old_lost_woods_room_0ActorList_000048[] = {
@@ -166,6 +167,7 @@ ActorEntry old_lost_woods_room_0ActorList_000048[] = {
     { ACTOR_OBJ_LOST_WOODS, { -3179,  103,   461 }, {      0, 0x238E,      0 }, 0x0023 },
     { ACTOR_OBJ_LOST_WOODS, {  -396,  215,  -965 }, {      0, 0x5555,      0 }, 0x0023 },
     { ACTOR_OBJ_LOST_WOODS, {  3000,    0,  4300 }, {      0,      0,      0 }, 0x0019 },
+    { ACTOR_OBJ_PURIFY,     { -3000, -250,  -100 }, {      0, 0xC000,      0 }, 0x0003 },
 
     // Timeskip
     { ACTOR_EN_TEST,        { -1666,  283,  -243 }, {      0, 0xC000,      0 }, 0x0003 },

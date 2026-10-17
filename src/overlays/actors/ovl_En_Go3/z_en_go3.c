@@ -243,7 +243,9 @@ void EnGo3_GetItem(EnGo3* this, PlayState* play, s32 getItemId) {
 }
 
 u16 EnGo3_GetTextIdGoronShrineGeneric(PlayState* play, EnGo3* this) {
-    if (GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES))
+    if (this->textType == 4 && GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES) && Actor_Find(&play->actorCtx, ACTOR_EN_JG, ACTORCAT_NPC) == NULL)
+        return 0x8450 + this->textType;
+    else if (GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES))
         return 0x8440 + this->textType;
     return 0x8430 + this->textType;
 }

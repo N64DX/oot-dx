@@ -94,7 +94,7 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_VEC3F_DIV1000(scale, 100, ICHAIN_STOP),
 };
 
-bool BgKin2Picture_IsSkulltulaCollected(PlayState* play, s32 skulltulaParams) {
+u8 BgKin2Picture_IsSkulltulaCollected(PlayState* play, s32 skulltulaParams) {
     s32 flag = -1;
 
     if ((u8)skulltulaParams & 3)

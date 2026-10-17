@@ -14,7 +14,8 @@ typedef struct BgHidanFwbig {
     /* 0x0150 */ s8 direction;
     /* 0x0151 */ u8 moveState;
     /* 0x0152 */ s16 timer;
-    /* 0x0154 */ ColliderCylinder collider;
-} BgHidanFwbig; // size = 0x01A0
+    /* 0x0154 */ s8 colliderSide;
+    /* 0x0158 */ ColliderCylinder collider;
+} BgHidanFwbig; // size = 0x01A4
 
 #endif

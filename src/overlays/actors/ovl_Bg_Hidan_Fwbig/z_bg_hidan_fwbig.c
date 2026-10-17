@@ -113,8 +113,10 @@ void BgHidanFwbig_Init(Actor* thisx, PlayState* play2) {
         this->actor.world.pos.y = this->actor.home.pos.y - (2400.0f * this->actor.scale.y);
     } else {
         Actor_SetScale(&this->actor, 0.1f);
-        if (play->sceneId == SCENE_GLOOMY_GRAVEYARD)
+        if (play->sceneId == SCENE_GLOOMY_GRAVEYARD) {
             this->actor.scale.x *= 0.3;
+            this->colliderSide = 1;
+        }
         this->actionFunc = BgHidanFwbig_WaitForSwitch;
     }
 }
@@ -215,7 +217,11 @@ void BgHidanFwbig_MoveCollider(BgHidanFwbig* this, PlayState* play) {
     f32 sn;
 
     Actor_WorldToActorCoords(&this->actor, &playerRelativePos, &player->actor.world.pos);
-    playerRelativePos.z = ((playerRelativePos.z >= 0.0f) ? 1.0f : -1.0f) * 25.0f * -1.0f;
+    if (play->sceneId == SCENE_GLOOMY_GRAVEYARD) {
+        if (ABS(playerRelativePos.z) > (this->collider.dim.radius * 2))
+            this->colliderSide = (playerRelativePos.z < 0.0f) ? -1 : 1;
+        playerRelativePos.z = -25.0f * this->colliderSide;
+    } else playerRelativePos.z = ((playerRelativePos.z >= 0.0f) ? 1.0f : -1.0f) * 25.0f * -1.0f;
     if (this->direction == 0) {
         playerRelativePos.x = CLAMP(playerRelativePos.x, -360.0f, 360.0f);
     } else {

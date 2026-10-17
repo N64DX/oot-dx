@@ -702,8 +702,6 @@ static const Gfx gPlayerCane2DL[] = {
 
 Gfx gPlayerCaneOfByrnaDL[] = {
     gsDPPipeSync(),
-    gsSPClearGeometryMode(G_CULL_BACK | G_FOG | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH | G_LIGHTING),
     gsSPLoadGeometryMode(G_SHADE | G_FOG | G_CULL_BACK | G_ZBUFFER | G_SHADING_SMOOTH | G_LIGHTING),
     gsDPPipeSync(),
     gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
@@ -712,12 +710,6 @@ Gfx gPlayerCaneOfByrnaDL[] = {
     gsSPTexture(65535, 65535, 0, 0, 1),
     gsDPSetPrimColor(0, 0, 41, 80, 200, 255),
     gsSPDisplayList(gPlayerCane1DL),
-    gsSPLoadGeometryMode(G_SHADE | G_FOG | G_CULL_BACK | G_ZBUFFER | G_SHADING_SMOOTH | G_LIGHTING),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
-    gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TD_CLAMP | G_CYC_2CYCLE | G_AD_NOISE | G_CD_MAGICSQ | G_TP_PERSP | G_TL_TILE | G_TF_BILERP | G_CK_NONE | G_PM_NPRIMITIVE | G_TT_NONE | G_TC_FILT),
-    gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_FOG_SHADE_A | G_AC_NONE | G_ZS_PIXEL | G_RM_AA_ZB_OPA_SURF2),
-    gsSPTexture(65535, 65535, 0, 0, 1),
     gsDPSetPrimColor(0, 0, 80, 140, 255, 255),
     gsSPDisplayList(gPlayerCane2DL),
     gsSPEndDisplayList(),
@@ -725,8 +717,6 @@ Gfx gPlayerCaneOfByrnaDL[] = {
 
 Gfx gPlayerCaneOfSomariaDL[] = {
     gsDPPipeSync(),
-    gsSPClearGeometryMode(G_CULL_BACK | G_FOG | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-    gsSPSetGeometryMode(G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH | G_LIGHTING),
     gsSPLoadGeometryMode(G_SHADE | G_FOG | G_CULL_BACK | G_ZBUFFER | G_SHADING_SMOOTH | G_LIGHTING),
     gsDPPipeSync(),
     gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
@@ -735,12 +725,6 @@ Gfx gPlayerCaneOfSomariaDL[] = {
     gsSPTexture(65535, 65535, 0, 0, 1),
     gsDPSetPrimColor(0, 0, 177, 50, 41, 255),
     gsSPDisplayList(gPlayerCane1DL),
-    gsSPLoadGeometryMode(G_SHADE | G_FOG | G_CULL_BACK | G_ZBUFFER | G_SHADING_SMOOTH | G_LIGHTING),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, 1, COMBINED, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED),
-    gsSPSetOtherMode(G_SETOTHERMODE_H, 4, 20, G_TD_CLAMP | G_CYC_2CYCLE | G_AD_NOISE | G_CD_MAGICSQ | G_TP_PERSP | G_TL_TILE | G_TF_BILERP | G_CK_NONE | G_PM_NPRIMITIVE | G_TT_NONE | G_TC_FILT),
-    gsSPSetOtherMode(G_SETOTHERMODE_L, 0, 32, G_RM_FOG_SHADE_A | G_AC_NONE | G_ZS_PIXEL | G_RM_AA_ZB_OPA_SURF2),
-    gsSPTexture(65535, 65535, 0, 0, 1),
     gsDPSetPrimColor(0, 0, 56, 83, 113, 255),
     gsSPDisplayList(gPlayerCane2DL),
     gsSPEndDisplayList(),

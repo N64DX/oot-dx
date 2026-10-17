@@ -55,7 +55,7 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_VEC3F_DIV1000(scale, 100, ICHAIN_STOP),
 };
 
-bool BgF40Block_80BC3980(BgF40Block* this, PlayState* play) {
+u8 BgF40Block_80BC3980(BgF40Block* this, PlayState* play) {
     Vec3s* points;
 
     this->unk_160 = 0;
@@ -75,7 +75,7 @@ bool BgF40Block_80BC3980(BgF40Block* this, PlayState* play) {
     return false;
 }
 
-bool BgF40Block_80BC3A2C(BgF40Block* this, PlayState* play) {
+u8 BgF40Block_80BC3A2C(BgF40Block* this, PlayState* play) {
     Vec3s* points;
 
     this->unk_160 = this->path->count - 1;
@@ -96,7 +96,7 @@ bool BgF40Block_80BC3A2C(BgF40Block* this, PlayState* play) {
     return false;
 }
 
-bool BgF40Block_80BC3B00(BgF40Block* this) {
+u8 BgF40Block_80BC3B00(BgF40Block* this) {
     Path* path;
     Vec3s* points;
     Vec3f sp28, sp24;
@@ -141,11 +141,11 @@ bool BgF40Block_80BC3B00(BgF40Block* this) {
     return false;
 }
 
-bool BgF40Block_80BC3CA4(BgF40Block* this, PlayState* play) {
+u8 BgF40Block_80BC3CA4(BgF40Block* this, PlayState* play) {
     return play->csCtx.state == CS_STATE_IDLE;
 }
 
-bool BgF40Block_80BC3D08(BgF40Block* this, PlayState* play, s32 arg2) {
+u8 BgF40Block_80BC3D08(BgF40Block* this, PlayState* play, s32 arg2) {
     CollisionPoly* sp54;
     Vec3f sp48, sp3C, sp30;
 

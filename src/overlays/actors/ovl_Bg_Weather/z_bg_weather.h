@@ -12,6 +12,8 @@ typedef struct BgWeather {
     /* 0x0160 */ f32 fogWakeX;
     /* 0x0164 */ f32 fogWakeZ;
     /* 0x0168 */ u8 fogWakeInitialized;
+    /* 0x0169 */ u8 cursed;
+    /* 0x016A */ u8 globalIntensity;
 } BgWeather; // size = 0x016C
 
 #endif

@@ -1338,8 +1338,8 @@ void BossTw_ShootBeam(BossTw* this, PlayState* play) {
             BossTw_SetupHitByBeam(otherTw, play);
             Actor_PlaySfx(&otherTw->actor, NA_SE_EN_TWINROBA_DAMAGE_VOICE);
             play->envCtx.lightBlend = 1.0f;
-            this->actor.colChkInfo.health -= DAMAGE_MULTIPLY;
-            otherTw->actor.colChkInfo.health -= DAMAGE_MULTIPLY;
+            this->actor.colChkInfo.health = CLAMP_MIN(this->actor.colChkInfo.health - DAMAGE_MULTIPLY, 0);
+            otherTw->actor.colChkInfo.health = CLAMP_MIN(otherTw->actor.colChkInfo.health - DAMAGE_MULTIPLY, 0);
         }
     }
 }
@@ -1502,7 +1502,7 @@ void BossTw_SetupWait(BossTw* this, PlayState* play) {
 void BossTw_Wait(BossTw* this, PlayState* play) {
     if ((this->actor.params == TW_TWINROVA) && (sKoumePtr->actionFunc == BossTw_FlyTo) &&
         (sKotakePtr->actionFunc == BossTw_FlyTo) &&
-        ((sKoumePtr->actor.colChkInfo.health <= 0 || sKotakePtr->actor.colChkInfo.health <= 0))) {
+        (((s16)sKoumePtr->actor.colChkInfo.health <= 0 || (s16)sKotakePtr->actor.colChkInfo.health <= 0))) {
 
         BossTw_TwinrovaSetupMergeCS(this, play);
         BossTw_SetupMergeCS(sKotakePtr, play);

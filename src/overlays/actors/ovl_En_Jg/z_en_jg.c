@@ -126,7 +126,7 @@ u16 EnJg_GetTextId(PlayState* play, Actor* thisx) {
                 return 0x8416;
             if (!GET_INFTABLE(INFTABLE_TALKED_TO_GORON_ELDER))
                return 0x8410;
-            if (!(gSaveContext.save.info.sceneFlags[SCENE_GORON_VILLAGE].swch & (1 << 0x1F)))
+            if (!(gSaveContext.save.info.sceneFlags[Play_GetOriginalSceneId(SCENE_GORON_VILLAGE)].swch & (1 << 0x1F)))
                 return 0x8411;
             return !GET_INFTABLE(INFTABLE_ASKED_BY_GORON_ELDER) ? 0x8412 : 0x8413;
         }
@@ -148,15 +148,17 @@ s16 EnJg_UpdateTalkState(PlayState* play, Actor* thisx) {
                 SET_INFTABLE(INFTABLE_GOT_PERMISSION_FROM_GORON_ELDER);
             else if (this->actor.textId == 0x841A)
                 SET_INFTABLE(INFTABLE_THANKED_BY_GORON_ELDER);
-            else if (this->actor.textId == 0x841C)
+            else if (this->actor.textId == 0x841C) {
+                SET_INFTABLE(INFTABLE_THANKED_BY_GORON_ELDER);
                 SET_INFTABLE(INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED);
+            }
             return NPC_TALK_STATE_IDLE;
 
         case TEXT_STATE_EVENT:
             if (Message_ShouldAdvance(play)) {
                 if (this->actor.textId == 0x8415 || this->actor.textId == 0x8416) {
                     SET_INFTABLE(INFTABLE_PROOF_FOR_GORON_ELDER);
-                    this->actor.textId = (gSaveContext.save.info.sceneFlags[SCENE_WEBBED_SHRINE].clear & (1 << 5) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) ? 0x8418 : 0x8417;
+                    this->actor.textId = (gSaveContext.save.info.sceneFlags[Play_GetOriginalSceneId(SCENE_WEBBED_SHRINE)].clear & (1 << 5) && CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SWORD, EQUIP_INV_SWORD_BIGGORON)) ? 0x8418 : 0x8417;
                     Message_ContinueTextbox(play, this->actor.textId);
                     return NPC_TALK_STATE_TALKING;
                 }
@@ -189,8 +191,9 @@ void EnJg_Init(Actor* thisx, PlayState* play) {
     EnJg* this = (EnJg*)thisx;
 
     u8 hasMedallions = CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST) && CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE) && CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW) && CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT);
+    u8 atPath = !GET_INFTABLE(INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED) && hasMedallions && GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_GORON_MINES);
 
-    if ((thisx->params == SPRING_LAKE_ELDER_SHRINE && !GET_INFTABLE(INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED) && hasMedallions) || (thisx->params == SPRING_LAKE_ELDER_PATH && (GET_INFTABLE(INFTABLE_FORSAKEN_KINGDOM_DOOR_OPENED) || !hasMedallions)))
+    if ((thisx->params == SPRING_LAKE_ELDER_SHRINE && atPath) || (thisx->params == SPRING_LAKE_ELDER_PATH && !atPath))
         Actor_Kill(thisx);
 
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawCircle, 20.0f);
