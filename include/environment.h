@@ -4,6 +4,7 @@
 #include "z_math.h"
 #include "light.h"
 #include "dma.h"
+#include "color.h"
 
 struct GameOverContext;
 struct MessageContext;
@@ -243,6 +244,9 @@ typedef struct EnvironmentContext {
     /* 0xE9 */ u8 customSkyboxFilter;
     /* 0xEA */ u8 skyboxFilterColor[4];
     /* 0xEE */ u8 precipitation[PRECIP_MAX];
+    /* 0xF3 */ u8 finalHoursSkyFadeTimer;
+    /* 0xF4 */ u8 finalHoursBellIndex;
+    /* 0xF5 */ u8 finalHoursBellReady;
 } EnvironmentContext; // size = 0xFC
 
 extern u8 gSkyboxIsChanging;

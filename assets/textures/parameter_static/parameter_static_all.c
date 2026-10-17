@@ -1,6 +1,10 @@
 #include "assets/textures/parameter_static/parameter_static.h"
 #include "parameter_static_all.h"
 
+u64 gDPadTex[] = {
+#include "assets/textures/parameter_static/gDPadTex.rgba32.inc.c"
+};
+
 u64 gSceneTitleCardGradientTex[] = {
 #include "assets/textures/parameter_static/gSceneTitleCardGradientTex.i8.inc.c"
 };
