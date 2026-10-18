@@ -179,7 +179,6 @@ void Player_InitBoomerangIA(PlayState* play, Player* this);
 void Player_InitCaneOfSomariaIA(PlayState* play, Player* this);
 
 s32 Player_UpperAction_ChangeHeldItem(Player* this, PlayState* play);
-s32 Player_UpperAction_CaneOfSomaria(Player* this, PlayState* play);
 s32 func_8083485C(Player* this, PlayState* play);
 s32 Player_UpperAction_Sword(Player* this, PlayState* play);
 s32 func_80834B5C(Player* this, PlayState* play);
@@ -1498,6 +1497,8 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     Player_UpperAction_Sword,      // PLAYER_IA_SWORD_FAIRYS
     func_8083485C,                 // PLAYER_IA_DEKU_STICK
     func_8083485C,                 // PLAYER_IA_HAMMER
+    func_8083485C,                 // PLAYER_IA_CANE_OF_BYRNA
+    func_8083485C,                 // PLAYER_IA_CANE_OF_SOMARIA
     func_8083501C,                 // PLAYER_IA_BOW
     func_8083501C,                 // PLAYER_IA_BOW_FIRE
     func_8083501C,                 // PLAYER_IA_BOW_ICE
@@ -1511,8 +1512,6 @@ static s32 (*sItemActionUpdateFuncs[])(Player* this, PlayState* play) = {
     Player_UpperAction_CarryActor, // PLAYER_IA_BOMB
     Player_UpperAction_CarryActor, // PLAYER_IA_BOMBCHU
     func_80835800,                 // PLAYER_IA_BOOMERANG
-    Player_UpperAction_CaneOfSomaria, // PLAYER_IA_CANE_OF_BYRNA
-    Player_UpperAction_CaneOfSomaria, // PLAYER_IA_CANE_OF_SOMARIA
     func_8083485C,                 // PLAYER_IA_MAGIC_SPELL_15
     func_8083485C,                 // PLAYER_IA_MAGIC_SPELL_16
     func_8083485C,                 // PLAYER_IA_MAGIC_SPELL_17
@@ -1575,6 +1574,8 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitDefaultIA,        // PLAYER_IA_SWORD_FAIRYS
     Player_InitDekuStickIA,      // PLAYER_IA_DEKU_STICK
     Player_InitHammerIA,         // PLAYER_IA_HAMMER
+    Player_InitCaneOfSomariaIA,  // PLAYER_IA_CANE_OF_BYRNA
+    Player_InitCaneOfSomariaIA,  // PLAYER_IA_CANE_OF_SOMARIA
     Player_InitBowOrSlingshotIA, // PLAYER_IA_BOW
     Player_InitBowOrSlingshotIA, // PLAYER_IA_BOW_FIRE
     Player_InitBowOrSlingshotIA, // PLAYER_IA_BOW_ICE
@@ -1588,8 +1589,6 @@ static void (*sItemActionInitFuncs[])(PlayState* play, Player* this) = {
     Player_InitExplosiveIA,      // PLAYER_IA_BOMB
     Player_InitExplosiveIA,      // PLAYER_IA_BOMBCHU
     Player_InitBoomerangIA,      // PLAYER_IA_BOOMERANG
-    Player_InitCaneOfSomariaIA,  // PLAYER_IA_CANE_OF_BYRNA
-    Player_InitCaneOfSomariaIA,  // PLAYER_IA_CANE_OF_SOMARIA
     Player_InitDefaultIA,        // PLAYER_IA_MAGIC_SPELL_15
     Player_InitDefaultIA,        // PLAYER_IA_MAGIC_SPELL_16
     Player_InitDefaultIA,        // PLAYER_IA_MAGIC_SPELL_17
@@ -3556,29 +3555,6 @@ static void Player_SpawnSomariaCube(Player* this, PlayState* play) {
 
     Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_SOMARIA_CUBE, spawnPos.x, spawnPos.y, spawnPos.z, 0, yaw, 0, 0);
 }
-       
-
-s32 Player_UpperAction_CaneOfSomaria(Player* this, PlayState* play) {
-    if (func_80834758(play,this) || func_8083499C(this, play))
-        return true;
-    if (this->meleeWeaponState != 0 || !(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
-        return false;
-
-    if (this->upperSkelAnime.animation == &gPlayerAnim_link_magic_tamashii1) {
-        if (!LinkAnimation_Update(play, &this->upperSkelAnime)) {
-            return true;
-        }
-    }
-
-    if (sUseHeldItem) {
-        sUseHeldItem = false;
-        gSaveContext.save.info.energy -= 15;
-        LinkAnimation_PlayOnce(play, &this->upperSkelAnime, &gPlayerAnim_link_magic_tamashii1);
-        Player_SpawnSomariaCube(this, play);
-        return true;
-    }
-    return false;
-}
 
 s32 func_80834B5C(Player* this, PlayState* play) {
     LinkAnimation_Update(play, &this->upperSkelAnime);
@@ -5046,7 +5022,7 @@ s32 Player_CanSpinAttack(Player* this) {
     s8 temp2;
     s32 i;
 
-    if ((this->heldItemAction == PLAYER_IA_DEKU_STICK) || Player_HoldsBrokenKnife(this)) {
+    if ((this->heldItemAction == PLAYER_IA_DEKU_STICK) || Player_HoldsBrokenKnife(this) || Player_HoldsCane(this)) {
         return false;
     }
 
@@ -5154,7 +5130,7 @@ s32 func_80837818(Player* this) {
                 }
             }
 
-            if (this->heldItemAction == PLAYER_IA_DEKU_STICK) {
+            if (this->heldItemAction == PLAYER_IA_DEKU_STICK || Player_HoldsCane(this)) {
                 sp18 = PLAYER_MWA_FORWARD_SLASH_1H;
             }
         }
@@ -5180,6 +5156,7 @@ void func_80837918(Player* this, s32 quadIndex, u32 dmgFlags) {
 static u32 D_80854488[][2] = {
     { DMG_SLASH_MASTER, DMG_JUMP_MASTER }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_GIANT, DMG_JUMP_GIANT }, { DMG_SLASH_MASTER, DMG_JUMP_MASTER },
     { DMG_SLASH_GIANT, DMG_JUMP_GIANT },   { DMG_DEKU_STICK, DMG_JUMP_MASTER },   { DMG_HAMMER_SWING, DMG_HAMMER_JUMP },
+    { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI }, { DMG_SLASH_KOKIRI, DMG_JUMP_KOKIRI },
 };
 
 void func_80837948(PlayState* play, Player* this, s32 arg2) {
@@ -5226,6 +5203,11 @@ void func_80837948(PlayState* play, Player* this, s32 arg2) {
 
     func_80837918(this, 0, dmgFlags);
     func_80837918(this, 1, dmgFlags);
+
+    if (Player_HoldsCane(this) && (gSaveContext.save.info.energy >= 15)) {
+        gSaveContext.save.info.energy -= 15;
+        Player_SpawnSomariaCube(this, play);
+    }
 }
 
 /**
@@ -7470,7 +7452,7 @@ s32 Player_ActionHandler_10(Player* this, PlayState* play) {
                         Player_SetupRoll(this, play);
                     }
                 } else {
-                    if ((Player_GetMeleeWeaponHeld(this) != 0) && Player_CanUpdateItems(this)) {
+                    if ((Player_GetMeleeWeaponHeld(this) != 0) && Player_CanUpdateItems(this) && !Player_HoldsCane(this)) {
                         func_8083BA90(play, this, PLAYER_MWA_JUMPSLASH_START, 5.0f, 5.0f);
                     } else {
                         Player_SetupRoll(this, play);
@@ -7644,7 +7626,7 @@ void func_8083C50C(Player* this) {
 s32 Player_ActionHandler_8(Player* this, PlayState* play) {
     if (CHECK_BTN_ALL(sControlInput->cur.button, BTN_B)) {
         if (!(this->stateFlags1 & PLAYER_STATE1_SHIELDING) && (Player_GetMeleeWeaponHeld2(this) != 0) &&
-            (this->unk_844 == 1) && (this->heldItemAction != PLAYER_IA_DEKU_STICK)) {
+            (this->unk_844 == 1) && (this->heldItemAction != PLAYER_IA_DEKU_STICK) && !Player_HoldsCane(this)) {
             if ((this->heldItemAction != PLAYER_IA_SWORD_BIGGORON) ||
                 (gSaveContext.save.info.playerData.swordHealth)) {
                 func_808377DC(play, this);

@@ -44,7 +44,7 @@
 
 #define ACTOR_FLAG_SWITCHHOOKABLE (1 << 28)
 
-#define FLAGS 0
+#define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
 void ObjSomariaCube_Init(Actor* thisx, PlayState* play);
 void ObjSomariaCube_Destroy(Actor* thisx, PlayState* play);

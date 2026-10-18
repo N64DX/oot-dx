@@ -240,10 +240,10 @@ void BgHidanKousi_Update(Actor* thisx, PlayState* play) {
     BgHidanKousi* this = (BgHidanKousi*)thisx;
 
     if (PARAMS_GET_U(thisx->params, 0, 8) >= 3) {
-        bool chestOpen = Flags_GetTreasure(play, 0) != 0;
-        bool switchSet = Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 8, 8)) != 0;
-        bool wasChestOpen = (this->trapLatch & TRAPLATCH_CHEST_OPEN) != 0;
-        bool wasSwitchSet = (this->trapLatch & TRAPLATCH_SWITCH_SET) != 0;
+        u8 chestOpen = Flags_GetTreasure(play, 0) != 0;
+        u8 switchSet = Flags_GetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 8, 8)) != 0;
+        u8 wasChestOpen = (this->trapLatch & TRAPLATCH_CHEST_OPEN) != 0;
+        u8 wasSwitchSet = (this->trapLatch & TRAPLATCH_SWITCH_SET) != 0;
 
         if (chestOpen && !wasChestOpen) {
             Flags_UnsetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 8, 8));

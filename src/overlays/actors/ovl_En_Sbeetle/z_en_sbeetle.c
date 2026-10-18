@@ -34,8 +34,8 @@ void EnSbeetle_StartPincerFastReturn(EnSbeetle* this);
 void EnSbeetle_UpdatePincers(EnSbeetle* this, struct PlayState* play);
 void EnSbeetle_CheckHurt(EnSbeetle* this, struct PlayState* play);
 void EnSbeetle_UpdateBgCheck(EnSbeetle* this, struct PlayState* play);
-bool EnSbeetle_HasLostPlayer(EnSbeetle* this, struct PlayState* play);
-bool EnSbeetle_CheckPlayerNear(EnSbeetle* this, struct PlayState* play);
+u8 EnSbeetle_HasLostPlayer(EnSbeetle* this, struct PlayState* play);
+u8 EnSbeetle_CheckPlayerNear(EnSbeetle* this, struct PlayState* play);
 void EnSbeetle_SetupDoNothing(EnSbeetle* this, struct PlayState* play);
 void EnSbeetle_DoNothing(EnSbeetle* this, struct PlayState* play);
 void EnSbeetle_IdleActionWalk(EnSbeetle* this, struct PlayState* play);
@@ -606,7 +606,7 @@ void EnSbeetle_UpdateBgCheck(EnSbeetle* this, PlayState* play) {
 /*
  * Checks whether the player has moved far enough away or changed elevation enough for the beetle to lose track of them.
  */
-bool EnSbeetle_HasLostPlayer(EnSbeetle* this, PlayState* play) {
+u8 EnSbeetle_HasLostPlayer(EnSbeetle* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
     f32 yDist;
 
@@ -622,7 +622,7 @@ bool EnSbeetle_HasLostPlayer(EnSbeetle* this, PlayState* play) {
 /* 
  * Checks whether the player is close enough and within the beetle's hearing or field-of-view range to be detected.
  */
-bool EnSbeetle_CheckPlayerNear(EnSbeetle* this, PlayState* play) {
+u8 EnSbeetle_CheckPlayerNear(EnSbeetle* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
     f32 yDist, xzDist;
     s16 yawToPlayer, yawDiff, absYawDiff;

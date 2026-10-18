@@ -190,6 +190,8 @@ u8 sActionModelGroups[PLAYER_IA_MAX] = {
     PLAYER_MODELGROUP_SWORD_FAIRYS,     // PLAYER_IA_SWORD_FAIRYS
     PLAYER_MODELGROUP_10,               // PLAYER_IA_DEKU_STICK
     PLAYER_MODELGROUP_HAMMER,           // PLAYER_IA_HAMMER
+    PLAYER_MODELGROUP_10,               // PLAYER_IA_CANE_OF_BYRNA
+    PLAYER_MODELGROUP_10,               // PLAYER_IA_CANE_OF_SOMARIA
     PLAYER_MODELGROUP_BOW,              // PLAYER_IA_BOW
     PLAYER_MODELGROUP_BOW,              // PLAYER_IA_BOW_FIRE
     PLAYER_MODELGROUP_BOW,              // PLAYER_IA_BOW_ICE
@@ -203,8 +205,6 @@ u8 sActionModelGroups[PLAYER_IA_MAX] = {
     PLAYER_MODELGROUP_EXPLOSIVES,       // PLAYER_IA_BOMB
     PLAYER_MODELGROUP_EXPLOSIVES,       // PLAYER_IA_BOMBCHU
     PLAYER_MODELGROUP_BOOMERANG,        // PLAYER_IA_BOOMERANG
-    PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_CANE_OF_BYRNA
-    PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_CANE_OF_SOMARIA
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_MAGIC_SPELL_15
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_MAGIC_SPELL_16
     PLAYER_MODELGROUP_DEFAULT,          // PLAYER_IA_MAGIC_SPELL_17
@@ -940,7 +940,7 @@ s32 Player_GetMeleeWeaponHeld(Player* this) {
 }
 
 s32 Player_HoldsTwoHandedWeapon(Player* this) {
-    if ((this->heldItemAction == PLAYER_IA_SWORD_BIGGORON || this->heldItemAction == PLAYER_IA_SWORD_FAIRYS || this->heldItemAction == PLAYER_IA_DEKU_STICK || this->heldItemAction == PLAYER_IA_HAMMER)) {
+    if ((this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) || (this->heldItemAction >= PLAYER_IA_SWORD_FAIRYS && this->heldItemAction <= PLAYER_IA_CANE_OF_SOMARIA)) {
         return (LINK_IS_CHILD && this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) ? 0 : 1;
     } else {
         return 0;
@@ -950,6 +950,10 @@ s32 Player_HoldsTwoHandedWeapon(Player* this) {
 int Player_HoldsBrokenKnife(Player* this) {
     return (this->heldItemAction == PLAYER_IA_SWORD_BIGGORON) &&
            (IS_CHILD_QUEST ? LINK_IS_ADULT && !gSaveContext.save.info.playerData.swordHealth : !gSaveContext.save.info.playerData.swordHealth);
+}
+
+u8 Player_HoldsCane(Player* this) {
+    return this->heldItemAction == PLAYER_IA_CANE_OF_BYRNA || this->heldItemAction == PLAYER_IA_CANE_OF_SOMARIA;
 }
 
 s32 Player_ActionToBottle(Player* this, s32 itemAction) {
@@ -1795,6 +1799,8 @@ f32 sMeleeWeaponLengths[] = {
     5500.0f, // Great Fairy's Sword
     0.0f,    // Deku Stick
     2500.0f, // Hammer
+    1500.0f, // Cane of Byrna
+    1500.0f, // Cane of Somaria
 };
 
 Gfx* sBottleDLists[] = { gLinkAdultBottleDL, gLinkChildBottleDL, gLinkYoungBottleDL };
@@ -1896,6 +1902,28 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
             gSPDisplayList(POLY_OPA_DISP++, gLinkDekuStickDL);
 
             CLOSE_DISPS(play->state.gfxCtx, "../z_player_lib.c", 2656);
+        } else if (Player_HoldsCane(this)) {
+            Vec3f tipPositions[3];
+
+            OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+
+            if (this->actor.scale.y >= 0.0f) {
+                sMeleeWeaponTipOffsetFromLeftHand0.x = sMeleeWeaponLengths[Player_GetMeleeWeaponHeld(this)];
+                Player_CalcMeleeWeaponTipPositions(this, tipPositions);
+                if (this->meleeWeaponState != 0)
+                    Player_UpdateMeleeWeaponInfo(play, this, tipPositions);
+                else Math_Vec3f_Copy(MELEE_WEAPON_INFO_TIP(&this->meleeWeaponInfo[0]), &tipPositions[0]);
+            }
+
+            Matrix_Translate(-428.26f, 267.2f, -33.82f, MTXMODE_APPLY);
+            Matrix_RotateZYX(-0x8000, 0, 0x4000, MTXMODE_APPLY);
+            Matrix_Translate(0.0f, 2080.0f, 0.0f, MTXMODE_APPLY);
+            Matrix_Scale(5.0f, 5.0f, 5.0f, MTXMODE_APPLY);
+
+            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
+            gSPDisplayList(POLY_OPA_DISP++, this->heldItemAction == PLAYER_IA_CANE_OF_BYRNA ? gPlayerCaneOfByrnaDL : gPlayerCaneOfSomariaDL);
+
+            CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
         } else if ((this->actor.scale.y >= 0.0f) && (this->meleeWeaponState != 0)) {
             Vec3f tipPositions[3];
 
@@ -1976,41 +2004,6 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
         }
     } else if (limbIndex == PLAYER_LIMB_R_HAND) {
         Actor* heldActor = this->heldActor;
-
-        if (this->heldItemAction == PLAYER_IA_CANE_OF_BYRNA || this->heldItemAction == PLAYER_IA_CANE_OF_SOMARIA) {
-            Vec3f forearmPos;
-            Vec3f handPos;
-            f32 dx;
-            f32 dy;
-            f32 dz;
-            f32 handYaw;
-            f32 horizDist;
-            f32 handPitch;
-
-            forearmPos = this->bodyPartsPos[PLAYER_BODYPART_R_FOREARM];
-            handPos = this->bodyPartsPos[PLAYER_BODYPART_R_HAND];
-            dx = handPos.x - forearmPos.x;
-            dy = handPos.y - forearmPos.y;
-            dz = handPos.z - forearmPos.z;
-            handYaw = Math_FAtan2F(dx, dz);
-            horizDist = sqrtf((dx * dx) + (dz * dz));
-            handPitch = Math_FAtan2F(dy, horizDist);
-
-            OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
-
-            Matrix_Push();
-            Matrix_Translate(handPos.x, handPos.y, handPos.z, MTXMODE_NEW);
-            Matrix_RotateY(handYaw, MTXMODE_APPLY);
-            Matrix_RotateX(-handPitch, MTXMODE_APPLY);
-            Matrix_RotateY(BINANG_TO_RAD(0x4000), MTXMODE_APPLY);
-            Matrix_Translate(-3.5f, 15.0f, 2.0f, MTXMODE_APPLY);
-            Matrix_Scale(0.05f, 0.05f, 0.05f, MTXMODE_APPLY);
-            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
-            gSPDisplayList(POLY_OPA_DISP++, this->heldItemAction == PLAYER_IA_CANE_OF_BYRNA ? gPlayerCaneOfByrnaDL : gPlayerCaneOfSomariaDL);
-            Matrix_Pop();
-
-            CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
-        }
 
         if (this->rightHandType == PLAYER_MODELTYPE_RH_FF) {
             Matrix_Get(&this->shieldMf);

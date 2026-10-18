@@ -347,7 +347,7 @@ s32 ObjSpidertent_80B2FB10(Vec3f* arg0, Vec3f* arg1) {
     return true;
 }
 
-bool ObjSpidertent_80B2FB94(Vec3f* arg0, f32 arg1, TriNorm* triNorm, Vec3f* arg3, f32* arg4) {
+u8 ObjSpidertent_80B2FB94(Vec3f* arg0, f32 arg1, TriNorm* triNorm, Vec3f* arg3, f32* arg4) {
     f32 temp_f0, temp_f0_2, temp_f16, temp_f2, temp_f2_2;
     Vec3f sp48, sp3C;
 
@@ -374,7 +374,7 @@ bool ObjSpidertent_80B2FB94(Vec3f* arg0, f32 arg1, TriNorm* triNorm, Vec3f* arg3
     return false;
 }
 
-bool ObjSpidertent_80B2FC98(TriNorm* triNorm, Vec3f* arg1) {
+u8 ObjSpidertent_80B2FC98(TriNorm* triNorm, Vec3f* arg1) {
     Vec3f sp84, sp78, sp4C[3];
     Vec3f* vtx;
     Vec3f* vtx2;
@@ -490,7 +490,7 @@ void ObjSpidertent_80B30410(ObjSpidertent* this, Vec3f* arg1) {
     this->unk_3C0 = 0;
 }
 
-bool ObjSpidertent_80B30480(ObjSpidertent* this, PlayState* play, Vec3f* arg2) {
+u8 ObjSpidertent_80B30480(ObjSpidertent* this, PlayState* play, Vec3f* arg2) {
     Player* player = GET_PLAYER(play);
     TriNorm* triNorm;
     Vec3f sp58;
@@ -580,7 +580,7 @@ void ObjSpidertent_80B30808(ObjSpidertent* this, PlayState* play) {
     Vec3f sp70, sp54;
     f32 temp_f0, phi_f20;
     s8 phi_s4;
-    bool phi_s0 = false;
+    u8 phi_s0 = false;
     u8 i;
 
     if (this->collider.base.acFlags & AC_HIT) {

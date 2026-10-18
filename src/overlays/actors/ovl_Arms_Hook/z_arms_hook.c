@@ -158,7 +158,7 @@ void ArmsHook_AttachToActor(ArmsHook* this, Actor* actor) {
     Math_Vec3f_Diff(&actor->world.pos, &this->actor.world.pos, &this->attachPointOffset);
 }
 
-static u16 cursedLocations[] = { SCENE_FORSAKEN_KINGDOM, SCENE_GLOOMY_GRAVEYARD, SCENE_BENEATH_THE_GRAVEYARD, SCENE_PURPLE_ICE_CAVERN };
+static u16 cursedLocations[] = { SCENE_FORSAKEN_KINGDOM, SCENE_GLOOMY_GRAVEYARD, SCENE_BENEATH_THE_GRAVEYARD, SCENE_PURPLE_ICE_CAVERN, SCENE_ROYAL_VAULT, SCENE_STONE_TOWER, SCENE_STONE_TOWER_INVERTED, SCENE_STONE_TOWER_TEMPLE, SCENE_STONE_TOWER_TEMPLE_INVERTED, SCENE_STONE_TOWER_TEMPLE_BOSS };
 
 void ArmsHook_Shoot(ArmsHook* this, PlayState* play) {
     Player* player = GET_PLAYER(play);

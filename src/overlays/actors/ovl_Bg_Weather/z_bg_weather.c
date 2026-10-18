@@ -31,6 +31,8 @@
 #define RAIN_FOG_DEPTH_START            160.0f
 #define RAIN_FOG_PRIM_BLEND             0.78f
 
+#define GLOBAL_INTENSITY_STEP           0.05f
+
 #define NIGHT_MIST_WIND_SPEED_X         1.52f
 #define NIGHT_MIST_WIND_SPEED_Z         1.20f
 #define NIGHT_MIST_WIND_SWAY            38.0f
@@ -117,6 +119,14 @@ static f32 BgWeather_Lerpf(f32 a, f32 b, f32 t) {
     return a + (b - a) * t;
 }
 
+static f32 BgWeather_GetGlobalScale(BgWeather* this) {
+    return 1.0f - ((this->globalIntensity >> 4) * GLOBAL_INTENSITY_STEP);
+}
+
+static f32 BgWeather_GetAlphaScale(BgWeather* this) {
+    return 1.0f - ((this->globalIntensity & 0xF) * GLOBAL_INTENSITY_STEP);
+}
+
 static s32 BgWeather_FloorToGridCell(f32 value, f32 cellSize) {
     s32 cell = value / cellSize;
 
@@ -192,11 +202,13 @@ static f32 BgWeather_GetNightFactor(void) {
 void BgWeather_Init(Actor* thisx, PlayState* play) {
     BgWeather* this = (BgWeather*)thisx;
 
-    if (thisx->params == 1 && GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_STONE_TOWER)) {
+    this->cursed = (thisx->params & 1) == 1;
+    if (this->cursed && GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_STONE_TOWER)) {
         Actor_Kill(thisx);
         return;
     }
 
+    this->globalIntensity = (thisx->params >> 8);
     this->rainFogIntensity = RAIN_FOG_INTENSITY;
     this->nightMistIntensity = BgWeather_GetNightFactor();
     this->fogLastEye = play->mainCamera.eye;
@@ -300,12 +312,13 @@ static void BgWeather_DrawNightMist(BgWeather* this, PlayState* play) {
     for (li=0; li<NIGHT_MIST_LAYERS; li++) {
         const FogLayer* layer = &sNightMistLayers[li];
         f32 deltaY = groundY + layer->heightOffset - eyeY;
-        f32 spacing = (layer->spreadRadius * 2.0f) / (NIGHT_MIST_GRID_DIM - 1);
+        f32 spreadRadius = layer->spreadRadius * BgWeather_GetGlobalScale(this);
+        f32 spacing = (spreadRadius * 2.0f) / (NIGHT_MIST_GRID_DIM - 1);
         f32 windX = play->gameplayFrames * windStepX + li * 95.0f;
         f32 windZ = play->gameplayFrames * windStepZ - li * 70.0f;
         s32 baseCellX = BgWeather_FloorToGridCell(eyeX - windX, spacing) - (NIGHT_MIST_GRID_DIM / 2);
         s32 baseCellZ = BgWeather_FloorToGridCell(eyeZ - windZ, spacing) - (NIGHT_MIST_GRID_DIM / 2);
-        u8 baseAlpha = (u8)CLAMP(layer->peakAlpha * mistIntensity * NIGHT_MIST_ALPHA_SCALE, 0.0f, NIGHT_MIST_MAX_ALPHA);
+        u8 baseAlpha = (u8)CLAMP(layer->peakAlpha * mistIntensity * BgWeather_GetAlphaScale(this) * NIGHT_MIST_ALPHA_SCALE, 0.0f, NIGHT_MIST_MAX_ALPHA);
         Vtx* vtx;
         s32 drawCount = 0;
         s32 gx, gz;
@@ -335,7 +348,7 @@ static void BgWeather_DrawNightMist(BgWeather* this, PlayState* play) {
                 localZ += Math_CosS((s16)(play->gameplayFrames * (61 + li * 11) + BgWeather_HashToUnit(9 + li, cellX, cellZ, 0x6B4F) * 65535.0f)) * NIGHT_MIST_WIND_SWAY;
 
                 dist = sqrtf(localX * localX + localZ * localZ);
-                distFrac = CLAMP(dist / layer->spreadRadius, 0.0f, 1.0f);
+                distFrac = CLAMP(dist / spreadRadius, 0.0f, 1.0f);
                 nearFrac = CLAMP(dist / RAIN_FOG_NEAR_FADE, 0.0f, 1.0f);
                 puffAlpha = (u8)(baseAlpha * (1.0f - distFrac * distFrac) * nearFrac);
 
@@ -451,14 +464,15 @@ static void BgWeather_DrawRainFog(BgWeather* this, PlayState* play) {
     for (li=0; li<RAIN_FOG_NUM_LAYERS; li++) {
         u8 layerIndex = sRainFogLayerOrder[li];
         const FogLayer* layer = &sRainFogLayers[layerIndex];
+        f32 spreadRadius = layer->spreadRadius * BgWeather_GetGlobalScale(this);
         f32 opacity = (layerIndex == RAIN_FOG_GROUND_LAYER) ? RAIN_FOG_GROUND_OPACITY : RAIN_FOG_OPACITY;
         f32 deltaY = groundY + layer->heightOffset - eyeY;
         f32 windX = play->gameplayFrames * windStepX + layerIndex * 180.0f;
         f32 windZ = play->gameplayFrames * windStepZ - layerIndex * 130.0f;
-        f32 cellSize = layer->spreadRadius * 0.50f;
+        f32 cellSize = spreadRadius * 0.50f;
         s32 baseCellX = BgWeather_FloorToGridCell(eyeX - windX, cellSize) - (FOG_GRID_DIM / 2);
         s32 baseCellZ = BgWeather_FloorToGridCell(eyeZ - windZ, cellSize) - (FOG_GRID_DIM / 2);
-        u8 baseAlpha = (u8)CLAMP(layer->peakAlpha * this->rainFogIntensity * heightFactor * dayFogAlphaBoost * opacity, 0.0f, RAIN_FOG_MAX_ALPHA);
+        u8 baseAlpha = (u8)CLAMP(layer->peakAlpha * this->rainFogIntensity * BgWeather_GetAlphaScale(this) * heightFactor * dayFogAlphaBoost * opacity, 0.0f, RAIN_FOG_MAX_ALPHA);
         Vtx* vtx;
         s32 drawCount = 0;
         s32 gx, gz;
@@ -491,7 +505,7 @@ static void BgWeather_DrawRainFog(BgWeather* this, PlayState* play) {
                 localX = worldCenterX - eyeX - this->fogWakeX;
                 localZ = worldCenterZ - eyeZ - this->fogWakeZ;
                 dist = sqrtf(localX * localX + localZ * localZ);
-                distFrac = CLAMP(dist / layer->spreadRadius, 0.0f, 1.0f);
+                distFrac = CLAMP(dist / spreadRadius, 0.0f, 1.0f);
                 nearFrac = CLAMP((dist - RAIN_FOG_DEPTH_START) / RAIN_FOG_NEAR_FADE, 0.0f, 1.0f);
                 forwardDot = (dist > 1.0f) ? ((localX * billForwardX + localZ * billForwardZ) / dist) : 0.0f;
                 forwardFade = CLAMP((forwardDot + 0.45f) / 1.45f, 0.25f, 1.0f);
@@ -537,6 +551,9 @@ static void BgWeather_DrawRainFog(BgWeather* this, PlayState* play) {
 
 void BgWeather_Draw(Actor* thisx, PlayState* play) {
     BgWeather* this = (BgWeather*)thisx;
+
+    if (this->cursed && play->actorCtx.lensActive)
+        return;
 
     BgWeather_DrawRainFog(this, play);
     BgWeather_DrawNightMist(this, play);

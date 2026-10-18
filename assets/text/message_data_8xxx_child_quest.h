@@ -3967,6 +3967,18 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x8454, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"You\'re looking for the Elder?\n"
+"I heard him mumbling something about\n"
+"a sealed wall at the " COLOR(ADJUSTABLE) "path towards\n"
+"our village" COLOR(DEFAULT) ". Something about a vision..."
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x84A0, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(

@@ -39,7 +39,7 @@ ActorProfile Bg_F40_Switch_Profile = {
     /**/ BgF40Switch_Draw,
 };
 
-bool sBgF40SwitchGlobalsInitialized = false;
+u8 sBgF40SwitchGlobalsInitialized = false;
 u32 sBgF40SwitchLastUpdateFrame;
 
 /*

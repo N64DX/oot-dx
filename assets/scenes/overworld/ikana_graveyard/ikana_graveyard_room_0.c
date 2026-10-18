@@ -12,7 +12,7 @@ SceneCmd ikana_graveyard_room_0[] = {
     SCENE_CMD_ECHO_SETTINGS(4),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_CURSED, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
-    SCENE_CMD_TIME_SETTINGS(255, 255, 0),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 10),
     SCENE_CMD_ROOM_SHAPE(&ikana_graveyard_room_0RoomShapeCullable_000330),
     SCENE_CMD_OBJECT_LIST(7, ikana_graveyard_room_0ObjectList_00004C),
     SCENE_CMD_ACTOR_LIST(40, ikana_graveyard_room_0ActorEntry_000064),
@@ -80,7 +80,7 @@ ActorEntry ikana_graveyard_room_0ActorEntry_000064[] = {
     { ACTOR_OBJ_DHOUSE,     { -304, 474, -2333 }, {               0,      0, 0 }, 0x0000 },
     { ACTOR_EN_BOX,         { -578, 534, -2331 }, { GI_TUNIC_SPIRIT, 0xC000, 0 }, 0x0000 }, // Chest: 00, Spirit Tunic
     { ACTOR_BG_HIDAN_FWBIG, { -250, 474, -2331 }, {               0, 0xC000, 0 }, 0x0000 },
-    { ACTOR_BG_WEATHER,     { -470,  13,   411 }, {               0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_WEATHER,     { -470,  13,   411 }, {               0,      0, 0 }, 0x4401 },
   //{ ACTOR_BG_BOTIHASIRA,  {  -84, 152, -1297 }, {               0,   0xD2, 0 }, 0x0001 },
 };
 

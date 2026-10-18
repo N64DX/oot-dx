@@ -437,12 +437,12 @@ void ItemEditor_SetDungeon(u8 scene, u8 param2, u8 param3, PlayState* play) {
 
 void ItemEditor_SetFlagsClear(u8 clear, u8 param2, u8 param3, PlayState* play) {
     SavedSceneFlags* sf;
-    s32 flagIndex = (clear >= 5) ? gSaveContext.mapIndex : Play_GetOriginalSceneId(play->sceneId);
+    u8 id = (clear >= 5) ? gSaveContext.mapIndex : Play_GetOriginalSceneId(play->sceneId);
 
-    if (flagIndex < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
-        sf = &gSaveContext.save.info.sceneFlags[flagIndex];
-    else if (flagIndex < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
-        sf = &gSaveContextExtended.sceneFlags[flagIndex - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
+    if (id < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        sf = &gSaveContext.save.info.sceneFlags[id];
+    else if (id < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
+        sf = &gSaveContextExtended.sceneFlags[id - ARRAY_COUNT(gSaveContext.save.info.sceneFlags)];
     else sf = NULL;
 
     if (sf == NULL)

@@ -132,21 +132,21 @@ typedef enum PlayerItemAction {
     /* 0x07 */ PLAYER_IA_SWORD_FAIRYS,
     /* 0x08 */ PLAYER_IA_DEKU_STICK,
     /* 0x09 */ PLAYER_IA_HAMMER,
-    /* 0x0A */ PLAYER_IA_BOW,
-    /* 0x0B */ PLAYER_IA_BOW_FIRE,
-    /* 0x0C */ PLAYER_IA_BOW_ICE,
-    /* 0x0D */ PLAYER_IA_BOW_LIGHT,
-    /* 0x0E */ PLAYER_IA_BOW_0C,
-    /* 0x0F */ PLAYER_IA_BOW_0D,
-    /* 0x10 */ PLAYER_IA_BOW_0E,
-    /* 0x11 */ PLAYER_IA_SLINGSHOT,
-    /* 0x12 */ PLAYER_IA_HOOKSHOT,
-    /* 0x13 */ PLAYER_IA_LONGSHOT,
-    /* 0x14 */ PLAYER_IA_BOMB,
-    /* 0x15 */ PLAYER_IA_BOMBCHU,
-    /* 0x16 */ PLAYER_IA_BOOMERANG,
-    /* 0x17 */ PLAYER_IA_CANE_OF_BYRNA,
-    /* 0x18 */ PLAYER_IA_CANE_OF_SOMARIA,
+    /* 0x0A */ PLAYER_IA_CANE_OF_BYRNA,
+    /* 0x0B */ PLAYER_IA_CANE_OF_SOMARIA,
+    /* 0x0C */ PLAYER_IA_BOW,
+    /* 0x0D */ PLAYER_IA_BOW_FIRE,
+    /* 0x0E */ PLAYER_IA_BOW_ICE,
+    /* 0x0F */ PLAYER_IA_BOW_LIGHT,
+    /* 0x10 */ PLAYER_IA_BOW_0C,
+    /* 0x11 */ PLAYER_IA_BOW_0D,
+    /* 0x12 */ PLAYER_IA_BOW_0E,
+    /* 0x13 */ PLAYER_IA_SLINGSHOT,
+    /* 0x14 */ PLAYER_IA_HOOKSHOT,
+    /* 0x15 */ PLAYER_IA_LONGSHOT,
+    /* 0x16 */ PLAYER_IA_BOMB,
+    /* 0x17 */ PLAYER_IA_BOMBCHU,
+    /* 0x18 */ PLAYER_IA_BOOMERANG,
     /* 0x19 */ PLAYER_IA_MAGIC_SPELL_15,
     /* 0x1A */ PLAYER_IA_MAGIC_SPELL_16,
     /* 0x1B */ PLAYER_IA_MAGIC_SPELL_17,
@@ -1053,6 +1053,7 @@ s32 Player_ActionToMeleeWeapon(s32 itemAction);
 s32 Player_GetMeleeWeaponHeld(Player* this);
 s32 Player_HoldsTwoHandedWeapon(Player* this);
 int Player_HoldsBrokenKnife(Player* this);
+u8 Player_HoldsCane(Player* this);
 s32 Player_ActionToBottle(Player* this, s32 itemAction);
 s32 Player_GetBottleHeld(Player* this);
 s32 Player_ActionToExplosive(Player* this, s32 itemAction);

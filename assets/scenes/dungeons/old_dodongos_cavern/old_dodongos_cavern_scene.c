@@ -63,7 +63,7 @@ TransitionActorEntry old_dodongos_cavern_sceneTransitionActorList0x000078[] = {
 	{ 5, -1, 3, -1, ACTOR_DOOR_SHUTTER, {  3560,   0, -3863 },      0, 0x007F },
 	{ 2, -1, 0, -1, ACTOR_DOOR_SHUTTER, { -1140,   0, -2120 }, 0x4000, 0x0081 }, // Checks switch: 01
 	{ 4, -1, 5, -1, ACTOR_DOOR_SHUTTER, {  2592,   0, -4114 }, 0x6000, 0x0082 }, // Checks switch: 02
-    { 9, -1, 9, -1, ACTOR_DOOR_SHUTTER, {     0, 240, -4090 },      0, 0x0140 }, // Switch: 00
+    { 9, -1, 9, -1, ACTOR_DOOR_SHUTTER, {     0, 240, -4090 },      0, 0x014F }, // Switch: 0F
 };
 
 RomFile old_dodongos_cavern_sceneRoomList0x000148[] = {

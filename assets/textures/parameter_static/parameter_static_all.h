@@ -4,6 +4,7 @@
 #include "tex_len.h"
 #include "ultra64.h"
 
+extern u64 gDPadTex[];
 extern u64 gSceneTitleCardGradientTex[];
 extern u64 gMMHeartQuarterTex[TEX_LEN(u64, gHeartQuarterTex_WIDTH, gHeartQuarterTex_HEIGHT, 8)];
 extern u64 gMMHeartHalfTex[TEX_LEN(u64, gHeartHalfTex_WIDTH, gHeartHalfTex_HEIGHT, 8)];
