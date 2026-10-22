@@ -7,16 +7,18 @@
 
 #include "libc64/qrand.h"
 #include "ichain.h"
-#include "one_point_cutscene.h"
 #include "sfx.h"
 #include "sys_matrix.h"
 #include "sys_math3d.h"
 #include "play_state.h"
+#include "player.h"
+#include "save.h"
 #include "effect.h"
 #include "array_count.h"
 
 #include "overlays/effects/ovl_Effect_Ss_Kakera/z_eff_ss_kakera.h"
 #include "assets/objects/object_kin2_obj/object_kin2_obj.h"
+#include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_scene.h"
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -131,7 +133,9 @@ void BgKin2Bombwall_EndBlastWall(BgKin2Bombwall* this, PlayState* play) {
 }
 
 void BgKin2Bombwall_SetupBlastWall(BgKin2Bombwall* this, PlayState* play) {
-    OnePointCutscene_Attention(play, &this->dyna.actor);
+    Cutscene_SetScript(play, gRoyalVaultBombwallCs);
+    gSaveContext.cutsceneTrigger = 1;
+    Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
     Flags_SetSwitch(play, BG_KIN2_BOMBWALL_GET_SWITCH_FLAG(&this->dyna.actor));
     SfxSource_PlaySfxAtFixedWorldPos(play, &this->dyna.actor.world.pos, 60, NA_SE_EV_WALL_BROKEN);
     DynaPoly_DisableCollision(play, &play->colCtx.dyna, this->dyna.bgId);

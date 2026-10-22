@@ -50,6 +50,14 @@
 #include "assets/scenes/overworld/spot17/spot17_scene.h"
 #include "assets/scenes/overworld/spot18/spot18_scene.h"
 #include "assets/scenes/overworld/spot20/spot20_scene.h"
+#include "assets/scenes/overworld/dawngrove/dawngrove_scene.h"
+#include "assets/scenes/overworld/dawngrove_village/dawngrove_village_scene.h"
+#include "assets/scenes/overworld/goron_shrine/goron_shrine_scene.h"
+#include "assets/scenes/overworld/mountain_village/mountain_village_scene.h"
+#include "assets/scenes/overworld/woodfall/woodfall_scene.h"
+#include "assets/scenes/overworld/ikana_canyon/ikana_canyon_scene.h"
+#include "assets/scenes/overworld/ikana_graveyard/ikana_graveyard_scene.h"
+#include "assets/scenes/overworld/stone_tower/stone_tower_scene.h"
 
 #include "assets/scenes/dungeons/bdan/bdan_scene.h"
 #include "assets/scenes/dungeons/ddan/ddan_scene.h"
@@ -57,12 +65,9 @@
 #include "assets/scenes/dungeons/ganontika/ganontika_scene.h"
 #include "assets/scenes/dungeons/jyasinboss/jyasinboss_scene.h"
 #include "assets/scenes/dungeons/ice_doukutu/ice_doukutu_scene.h"
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_scene.h"
 
 #include "assets/scenes/misc/hakaana_ouke/hakaana_ouke_scene.h"
-
-#include "assets/scenes/overworld/dawngrove/dawngrove_scene.h"
-#include "assets/scenes/overworld/dawngrove_village/dawngrove_village_scene.h"
-#include "assets/scenes/overworld/woodfall/woodfall_scene.h"
 
 u16 sCurTextId = 0;
 u16 sCurOcarinaAction = 0;
@@ -145,7 +150,13 @@ EntranceCutscene sEntranceCutsceneTable[] = {
     { ENTR_KOKIRI_FOREST_12, 2, EVENTCHKINF_C6, gKokiriForestDekuSproutPart3Cs, false },
     { ENTR_ANCIENT_GROVE_0, 2, EVENTCHKINF_SEEN_ANCIENT_GROVE_INTRO_CS, gDawngroveIntroCs, true },
     { ENTR_RIVERSIDE_VILLAGE_0, 2, EVENTCHKINF_SEEN_RIVERSIDE_VILLAGE_INTRO_CS, gDawngroveVillageIntroCs, true },
+    { ENTR_GORON_SHRINE_0, 2, EVENTCHKINF_SEEN_GORON_SHRINE_INTRO_CS, gGoronShrineIntroCs, true },
+    { ENTR_SPRING_LAKE_0, 2, EVENTCHKINF_SEEN_SPRING_LAKE_INTRO_CS, gSpringLakeIntroCs, true },
     { ENTR_WOODFALL_0, 2, EVENTCHKINF_SEEN_WOODFALL_INTRO_CS, gWoodfallIntroCs, true },
+    { ENTR_WOODFALL_TEMPLE_0, 2, EVENTCHKINF_SEEN_WOODFALL_TEMPLE_INTRO_CS, gWoodfallTempleIntroCs, true },
+    { ENTR_FORSAKEN_KINGDOM_0, 2, EVENTCHKINF_SEEN_FORSAKEN_KINGDOM_INTRO_CS, gForsakenKingdomIntroCs, true },
+    { ENTR_GLOOMY_GRAVEYARD_0, 2, EVENTCHKINF_SEEN_GLOOMY_GRAVEYARD_INTRO_CS, gGloomyGraveyardIntroCs, true },
+    { ENTR_STONE_TOWER_0, 2, EVENTCHKINF_SEEN_STONE_TOWER_INTRO_CS, gStoneTowerIntroCs, true },
 };
 
 void* sCutscenesUnknownList[] = {

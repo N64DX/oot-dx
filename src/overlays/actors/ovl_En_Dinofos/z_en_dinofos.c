@@ -758,7 +758,7 @@ void EnDinofos_SetupLand(EnDinofos* this) {
 
     this->actor.speed = 0.0f;
     EnDinofos_EnableBumperCollision(this);
-  //Actor_PlaySfx(&this->actor, NA_SE_EN_BOMCHU_WALK);
+    Actor_PlaySfx(&this->actor, NA_SE_EN_BOMCHU_WALK);
     this->actionFunc = EnDinofos_Land;
 }
 

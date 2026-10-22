@@ -1,5 +1,5 @@
-#ifndef WOODFALL_TEMPLE_SCENE_H
-#define WOODFALL_TEMPLE_SCENE_H
+#ifndef WOODFALL_SCENE_H
+#define WOODFALL_SCENE_H
 
 #include "bgcheck.h"
 #include "romfile.h"
