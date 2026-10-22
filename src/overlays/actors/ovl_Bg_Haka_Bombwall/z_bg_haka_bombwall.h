@@ -15,6 +15,7 @@ typedef struct BgHakaBombwall {
     /* 0x15C */ ColliderCylinder collider;
     /* 0x1A8 */ BgHakaBombwallActionFunc actionFunc;
     /* 0x1AC */ s8 csTimer;
+    /* 0x1AD */ u8 csId;
 } BgHakaBombwall; // size = 0x1B0
 
 #endif

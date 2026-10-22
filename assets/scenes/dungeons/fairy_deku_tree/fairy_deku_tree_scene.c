@@ -54,18 +54,18 @@ TransitionActorEntry fairy_deku_tree_sceneTransitionActorList0x000078[] = {
     {  9, -1,  9, -1, ACTOR_DOOR_SHUTTER, { 1439,  960,  -618 }, 0x105B, 0x003F }, // 5
     {  0, -1, 10, 10, ACTOR_DOOR_SHUTTER, {  798, 1400,   798 }, 0x2000, 0x009E }, // 6, Checks switch: 1E
     { 13, -1, 12, -1, ACTOR_DOOR_SHUTTER, {  344, -640,   831 }, 0x105B, 0x015C }, // 7, Sets switch: 1C
-    {  5, 11,  0, -1, ACTOR_DOOR_SHUTTER, {  299, 1480,  -299 }, 0x6000, 0x003F }, // 8
-    {  2, -1,  0, -1, ACTOR_DOOR_SHUTTER, {  299,  520,  -299 }, 0x6000, 0x003F }, // 9
-    {  2, -1,  0, -1, ACTOR_DOOR_SHUTTER, { -299,  520,   299 }, 0xE000, 0x003F }, // 10
+    {  5, -1,  0, -1, ACTOR_EN_DOOR,      {  299, 1480,  -299 }, 0x6000, 0x003F }, // 8
+    {  2, -1,  0, -1, ACTOR_EN_DOOR,      {  299,  520,  -299 }, 0x6000, 0x003F }, // 9
+    {  2, -1,  0, -1, ACTOR_EN_DOOR,      { -299,  520,   299 }, 0xE000, 0x003F }, // 10
     {  3, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,  720,   423 }, 0x0000, 0x003F }, // 11
     { 10, -1,  0, -1, ACTOR_DOOR_SHUTTER, { -798, 1320,   798 }, 0x6000, 0x003F }, // 12
-    {  6, 12,  0, -1, ACTOR_DOOR_SHUTTER, {   -1,  240, -1129 }, 0x0000, 0x003F }, // 13
-    {  6, 13,  0, -1, ACTOR_DOOR_SHUTTER, { 1129,  160,     0 }, 0xC000, 0x02DA }, // 14, Sets switch: 1A
-    {  0, -1,  9, 14, ACTOR_DOOR_SHUTTER, {  798, 1160,  -798 }, 0x6000, 0x0084 }, // 15, Checks switch: 04
-    {  2, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,  400,   423 }, 0x0000, 0x003F }, // 16
+    {  6, 11,  0, -1, ACTOR_DOOR_SHUTTER, {   -1,  240, -1129 }, 0x0000, 0x003F }, // 13
+    {  6, 12,  0, -1, ACTOR_DOOR_SHUTTER, { 1129,  160,     0 }, 0xC000, 0x02DA }, // 14, Sets switch: 1A
+    {  0, -1,  9, 13, ACTOR_DOOR_SHUTTER, {  798, 1160,  -798 }, 0x6000, 0x0084 }, // 15, Checks switch: 04
+    {  2, -1,  0, -1, ACTOR_EN_DOOR,      {    0,  400,   423 }, 0x0000, 0x003F }, // 16
     {  1, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,    0,  -643 }, 0x8000, 0x003F }, // 17
     {  0, -1,  1, -1, ACTOR_DOOR_SHUTTER, {    0,   80,   423 }, 0x8000, 0x0088 }, // 18, Checks switch: 08
-    {  0, -1,  3, -1, ACTOR_DOOR_SHUTTER, {  299,  720,  -299 }, 0xE000, 0x0081 }, // 19, Checks switch: 01
+    {  0, -1,  3, 14, ACTOR_DOOR_SHUTTER, {  299,  720,  -299 }, 0xE000, 0x0081 }, // 19, Checks switch: 01
     {  4, 15,  0, -1, ACTOR_DOOR_SHUTTER, { -299, 1000,   299 }, 0xE000, 0x0082 }, // 20, Checks switch: 02
     {  9, 16,  0, -1, ACTOR_DOOR_SHUTTER, {  798, 1080,   798 }, 0xA000, 0x0083 }, // 21, Checks switch: 03
     {  8, -1,  0, -1, ACTOR_DOOR_SHUTTER, { 1129,  760,     0 }, 0xC000, 0x01C5 }, // 22, Checks switch: 05
@@ -137,17 +137,17 @@ Vec3s fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[] = {
     {  900,   1450,  1000 }, // Cam ID: 10 (door 6 back)
     { 1000, -29000,     0 },
     {   -1,     -1,    -1 },
-    {   50,   1540,  -175 }, // Cam ID: 11 (door 8 front)
-    { 1000,  21000,     0 },
-    {   -1,     -1,    -1 },
-    {   50,    290, -1350 }, // Cam ID: 12 (door 13 front)
+    {   50,    290, -1350 }, // Cam ID: 11 (door 13 front)
     { 1000,  -3000,     0 },
     {   -1,     -1,    -1 },
-    { 1350,    220,  -120 }, // Cam ID: 13 (door 14 front)
+    { 1350,    220,  -120 }, // Cam ID: 12 (door 14 front)
     { 1000,  -9000,     0 },
     {   -1,     -1,    -1 },
-    { 1000,   1225,  -875 }, // Cam ID: 14 (door 15 back)
+    { 1000,   1225,  -875 }, // Cam ID: 13 (door 15 back)
     { 3000, -14000,     0 },
+    {   -1,     -1,    -1 },
+    {  250,    850,  -100 }, // Cam ID: 14 (door 19 back)
+    { 6000,  31500,     0 },
     {   -1,     -1,    -1 },
     { -200,   1050,   100 }, // Cam ID: 15 (door 20 front)
     { 1000,  -4500,     0 },
@@ -169,10 +169,10 @@ BgCamInfo fairy_deku_tree_sceneCollisionHeader0x00EA9C_camDataList_000003D8[] = 
    /* door 2 front  */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[6]  },
    /* door 2 back   */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[9]  },
    /* door 6 back   */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[12] },
-   /* door 8 front  */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[15] },
-   /* door 13 front */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[18] },
-   /* door 14 front */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[21] },
-   /* door 15 back  */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[24] },
+   /* door 13 front */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[15] },
+   /* door 14 front */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[18] },
+   /* door 15 back  */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[21] },
+   /* door 19 back  */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[24] },
    /* door 20 front */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[27] },
    /* door 21 front */ { CAM_SET_DOOR0,        3, &fairy_deku_tree_sceneCollisionHeader0x00EA9C_camPosData_00000300[30] },
 };

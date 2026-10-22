@@ -16,6 +16,7 @@ typedef struct BgDkjailIvy {
     /* 0x1A8 */ BgDkjailIvyActionFunc actionFunc;
     /* 0x1AC */ s8 fadeOutTimer;
     /* 0x1AD */ u8 alpha;
+    /* 0x1AE */ u8 csId;
 } BgDkjailIvy; // size = 0x1B0
 
 #endif

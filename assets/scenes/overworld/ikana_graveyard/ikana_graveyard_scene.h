@@ -4,6 +4,7 @@
 #include "bgcheck.h"
 #include "romfile.h"
 #include "scene.h"
+#include "cutscene.h"
 #include "ultra64.h"
 
 extern SceneCmd* ikana_graveyard_sceneAlternateHeaders[];
@@ -13,6 +14,7 @@ extern RomFile ikana_graveyard_sceneRoomList0x000124[];
 extern Spawn ikana_graveyard_sceneEntranceList0x000134[];
 extern u16 ikana_graveyard_sceneExitList_000140[];
 extern EnvLightSettings ikana_graveyard_sceneLightSettings0x00014C[];
+extern CutsceneData gGloomyGraveyardIntroCs[];
 extern Path ikana_graveyard_scenePathway_0004EC[];
 extern CollisionHeader ikana_graveyard_sceneCollisionHeader_006E30;
 

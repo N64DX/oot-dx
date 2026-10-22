@@ -4,6 +4,7 @@
 #include "bgcheck.h"
 #include "romfile.h"
 #include "scene.h"
+#include "cutscene.h"
 #include "ultra64.h"
 
 extern ActorEntry goron_shrine_sceneStartPositionList0x000094[];
@@ -12,6 +13,7 @@ extern RomFile goron_shrine_sceneRoomList0x0000D4[];
 extern Spawn goron_shrine_sceneEntranceList0x0000E4[];
 extern u16 goron_shrine_sceneExitList_0000EC[];
 extern EnvLightSettings goron_shrine_sceneLightSettings0x0000F0[];
+extern CutsceneData gGoronShrineIntroCs[];
 extern CollisionHeader goron_shrine_sceneCollisionHeader_005B84;
 
 extern u64 goron_shrine_sceneTex_006BC0[];

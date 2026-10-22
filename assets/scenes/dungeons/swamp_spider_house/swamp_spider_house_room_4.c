@@ -12,8 +12,8 @@ SceneCmd swamp_spider_house_room_4[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&swamp_spider_house_room_4RoomShapeCullable_000250),
-    SCENE_CMD_OBJECT_LIST(12, swamp_spider_house_room_4ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(28, swamp_spider_house_room_4ActorEntry_000068),
+    SCENE_CMD_OBJECT_LIST(13, swamp_spider_house_room_4ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(30, swamp_spider_house_room_4ActorEntry_000068),
     SCENE_CMD_END(),
 };
 
@@ -30,16 +30,19 @@ s16 swamp_spider_house_room_4ObjectList_000040[] = {
     OBJECT_ZF,
     OBJECT_BOMBIWA,
     OBJECT_BUFFDEKU,
+    OBJECT_DKJAIL_OBJ,
 };
 
 ActorEntry swamp_spider_house_room_4ActorEntry_000068[] = {
+    { ACTOR_BG_DKJAIL_IVY,      { 600,    0, -1203 }, { 0,      0, 0 }, 0x003F },
+    { ACTOR_BG_DKJAIL_IVY,      { 600,    0, -1200 }, { 0,      0, 0 }, 0x003F },
     { ACTOR_EN_ZF,              { 470,    0,  -655 }, { 0, 0x8000, 0 }, 0x00FE },
     { ACTOR_EN_ZF,              { 480,    0, -1150 }, { 0,      0, 0 }, 0x00FE },
     { ACTOR_BG_LADDER,          { 540,    0,  -690 }, { 0, 0x4000, 0 }, 0x0202 }, // Checks switch: 02
     { ACTOR_BG_LADDER,          { 475,    0, -1200 }, { 0,      0, 0 }, 0x0300 }, // Checks switch: 03
     { ACTOR_OBJ_SWITCH,         { 420,  345,  -800 }, { 0, 0x4000, 0 }, 0x0302 }, // Switch: 03
     { ACTOR_OBJ_SWITCH,         { 630,  180, -1460 }, { 0,      0, 0 }, 0x0200 }, // Switch: 02
-    { ACTOR_BG_YDAN_SP,         { 600, -100, -1205 }, { 0,      0, 0 }, 0x17C4 }, // Switch: 17
+    { ACTOR_BG_YDAN_SP,         { 600, -100, -1250 }, { 0,      0, 0 }, 0x17C4 }, // Switch: 17
     { ACTOR_OBJ_SYOKUDAI,       { 575,  180, -1460 }, { 0,      0, 0 }, 0x243F },
     { ACTOR_EN_DEKUNUTS,        { 730,    0, -1330 }, { 0, 0xC000, 0 }, 0x00A5 },
     { ACTOR_OBJ_TSUBO,          { 451,  180, -1232 }, { 0,      0, 0 }, 0x000D },

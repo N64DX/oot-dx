@@ -3,10 +3,13 @@
 
 #include "room.h"
 
+extern SceneCmd* mountain_village_room_1AlternateHeaders[];
 extern s16 mountain_village_room_1ObjectList_00004C[];
 extern ActorEntry mountain_village_room_1ActorEntry_000074[];
 extern RoomShapeCullable mountain_village_room_1RoomShapeCullable_000210;
 extern RoomShapeCullableEntry mountain_village_room_1RoomShapeCullableEntry_00021C[2];
+
+extern SceneCmd mountain_village_room_1Set_timeskip[];
 
 extern Gfx mountain_village_room_1DL_000C68[];
 extern Gfx mountain_village_room_1DL_001728[];

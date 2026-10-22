@@ -5005,6 +5005,8 @@ f32 Actor_SetDefensePerScene(u16 sceneId, f32 baseDefense) {
         case SCENE_FORBIDDEN_WOODS:
         case SCENE_PATH_TO_WOODFALL:
         case SCENE_ANCIENT_GROVE:
+        case SCENE_GROTTOS_GROVE:
+        case SCENE_CAVE_PASSAGE:
         case SCENE_ANCIENT_HOLLOW:
         case SCENE_FOREST_TEMPLE:
         case SCENE_FOREST_TEMPLE_BOSS:

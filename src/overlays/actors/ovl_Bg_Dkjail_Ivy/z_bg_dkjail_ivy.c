@@ -14,10 +14,14 @@
 #include "sys_matrix.h"
 #include "z_lib.h"
 #include "play_state.h"
+#include "player.h"
+#include "save.h"
 #include "effect.h"
+#include "array_count.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_dkjail_obj/object_dkjail_obj.h"
+#include "z_bg_dkjail_ivy_cutscene_data.c"
 
 #define FLAGS 0
 
@@ -131,6 +135,11 @@ void BgDkjailIvy_Init(Actor* thisx, PlayState* play) {
         return;
     }
 
+    this->csId = this->dyna.actor.home.rot.z;
+    this->dyna.actor.home.rot.z = this->dyna.actor.world.rot.z = this->dyna.actor.shape.rot.z = 0;
+    if (this->csId > ARRAY_COUNT(cutscenes))
+        this->csId = 0;
+
     CollisionHeader_GetVirtual(&gDkjailCol, &header);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, header);
     
@@ -157,6 +166,11 @@ void BgDkjailIvy_WaitForCut(BgDkjailIvy* this, PlayState* play) {
     if (this->collider.base.acFlags & AC_HIT) {
         this->collider.base.acFlags &= ~AC_HIT;
         this->dyna.actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
+        if (this->csId > 0) {
+            Cutscene_SetScript(play, cutscenes[this->csId-1]);
+            gSaveContext.cutsceneTrigger = 1;
+            Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
+        }
         this->fadeOutTimer = 50;
         DynaPoly_DisableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
         Flags_SetSwitch(play, BG_DKJAIL_GET_SWITCH_FLAG(&this->dyna.actor));

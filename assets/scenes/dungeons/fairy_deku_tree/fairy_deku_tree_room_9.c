@@ -13,22 +13,22 @@ SceneCmd fairy_deku_tree_room_9[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&fairy_deku_tree_room_9MeshHeader0x0000D0),
     SCENE_CMD_OBJECT_LIST(11, fairy_deku_tree_room_9ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(13, fairy_deku_tree_room_9ActorList0x000048),
+    SCENE_CMD_ACTOR_LIST(14, fairy_deku_tree_room_9ActorList0x000048),
     SCENE_CMD_END(),
 };
 
 s16 fairy_deku_tree_room_9ObjectList0x000038[] = {
+    OBJECT_DEKU_DOOR,
     OBJECT_BOX,
     OBJECT_KIBAKO2,
-    OBJECT_FR,
     OBJECT_SYOKUDAI,
     OBJECT_YDAN_OBJECTS,
-    OBJECT_GOL,
-    OBJECT_ST,
-    OBJECT_TP,
+    OBJECT_KUSA,
     OBJECT_DEKUBABA,
-    OBJECT_DEKUNUTS,
+    OBJECT_ST,
     OBJECT_GOOMBA,
+    OBJECT_TP,
+    OBJECT_FR,
 };
 
 ActorEntry fairy_deku_tree_room_9ActorList0x000048[] = {
@@ -45,6 +45,7 @@ ActorEntry fairy_deku_tree_room_9ActorList0x000048[] = {
     { ACTOR_EN_GOOMBA,   { 1600,  960,  -450 }, { 0,      0, 0 }, 0x0000 },
     { ACTOR_EN_GOOMBA,   { 1370,  960,  -920 }, { 0,      0, 0 }, 0x0000 },
     { ACTOR_EN_GOOMBA,   { 1000,  960, -1000 }, { 0,      0, 0 }, 0x0000 },
+    { ACTOR_EN_KUSA,     { 1200,  960,   200 }, { 0,      0, 0 }, 0xFF01 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_9MeshHeader0x0000D0 = {

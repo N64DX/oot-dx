@@ -230,167 +230,6 @@ beginseg
 endseg
 
 beginseg
-    name "old_lost_woods_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/old_lost_woods/old_lost_woods_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "old_lost_woods_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/overworld/old_lost_woods/old_lost_woods_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "grottos2_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "grottos2_room_6"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_6.o"
-    number 3
-endseg
-
-beginseg
-    name "grottos2_room_7"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_7.o"
-    number 3
-endseg
-
-beginseg
-    name "grottos2_room_8"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_8.o"
-    number 3
-endseg
-
-beginseg
-    name "grottos2_room_10"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_10.o"
-    number 3
-endseg
-
-beginseg
-    name "grottos2_room_13"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_13.o"
-    number 3
-endseg
-
-beginseg
-    name "dawngrove_grottos_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/dawngrove_grottos_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "cave_passage_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/cave_passage_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "swamp_spider_house_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "swamp_spider_house_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "swamp_spider_house_room_1"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1.o"
-    number 3
-endseg
-
-beginseg
-    name "swamp_spider_house_room_2"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_2.o"
-    number 3
-endseg
-
-beginseg
-    name "swamp_spider_house_room_3"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_3.o"
-    number 3
-endseg
-
-beginseg
-    name "swamp_spider_house_room_4"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_4.o"
-    number 3
-endseg
-
-beginseg
-    name "swamp_spider_house_room_5"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_5.o"
-    number 3
-endseg
-
-beginseg
-    name "beneath_the_graveyard_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "beneath_the_graveyard_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "beneath_the_graveyard_room_1"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_1.o"
-    number 3
-endseg
-
-beginseg
-    name "beneath_the_graveyard_room_2"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_2.o"
-    number 3
-endseg
-
-beginseg
-    name "beneath_the_graveyard_room_3"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_3.o"
-    number 3
-endseg
-
-beginseg
-    name "beneath_the_graveyard_room_4"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_4.o"
-    number 3
-endseg
-
-beginseg
     name "red_ice_cavern_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_scene.o"
@@ -436,48 +275,6 @@ beginseg
     name "red_ice_cavern_room_5"
     compress
     include "$(BUILD_DIR)/assets/scenes/dungeons/red_ice_cavern/red_ice_cavern_room_5.o"
-    number 3
-endseg
-
-beginseg
-    name "oceanside_spider_house_scene"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_scene.o"
-    number 2
-endseg
-
-beginseg
-    name "oceanside_spider_house_room_0"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_0.o"
-    number 3
-endseg
-
-beginseg
-    name "oceanside_spider_house_room_1"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_1.o"
-    number 3
-endseg
-
-beginseg
-    name "oceanside_spider_house_room_2"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_2.o"
-    number 3
-endseg
-
-beginseg
-    name "oceanside_spider_house_room_3"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_3.o"
-    number 3
-endseg
-
-beginseg
-    name "oceanside_spider_house_room_5"
-    compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_5.o"
     number 3
 endseg
 
@@ -762,16 +559,149 @@ beginseg
 endseg
 
 beginseg
-    name "woodfall_temple_boss_scene"
+    name "old_lost_woods_scene"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple_boss/woodfall_temple_boss_scene.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/old_lost_woods/old_lost_woods_scene.o"
     number 2
 endseg
 
 beginseg
-    name "woodfall_temple_boss_room_0"
+    name "old_lost_woods_room_0"
     compress
-    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple_boss/woodfall_temple_boss_room_0.o"
+    include "$(BUILD_DIR)/assets/scenes/overworld/old_lost_woods/old_lost_woods_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "swamp_spider_house_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "swamp_spider_house_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "swamp_spider_house_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_1.o"
+    number 3
+endseg
+
+beginseg
+    name "swamp_spider_house_room_2"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_2.o"
+    number 3
+endseg
+
+beginseg
+    name "swamp_spider_house_room_3"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_3.o"
+    number 3
+endseg
+
+beginseg
+    name "swamp_spider_house_room_4"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_4.o"
+    number 3
+endseg
+
+beginseg
+    name "swamp_spider_house_room_5"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/swamp_spider_house/swamp_spider_house_room_5.o"
+    number 3
+endseg
+
+beginseg
+    name "oceanside_spider_house_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "oceanside_spider_house_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "oceanside_spider_house_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_1.o"
+    number 3
+endseg
+
+beginseg
+    name "oceanside_spider_house_room_2"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_2.o"
+    number 3
+endseg
+
+beginseg
+    name "oceanside_spider_house_room_3"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_3.o"
+    number 3
+endseg
+
+beginseg
+    name "oceanside_spider_house_room_5"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_room_5.o"
+    number 3
+endseg
+
+beginseg
+    name "beneath_the_graveyard_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_1"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_1.o"
+    number 3
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_2"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_2.o"
+    number 3
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_3"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_3.o"
+    number 3
+endseg
+
+beginseg
+    name "beneath_the_graveyard_room_4"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_room_4.o"
     number 3
 endseg
 
@@ -881,6 +811,20 @@ beginseg
 endseg
 
 beginseg
+    name "cave_passage_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/cave_passage/cave_passage_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "cave_passage_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/cave_passage/cave_passage_room_0.o"
+    number 3
+endseg
+
+beginseg
     name "stone_tower_inverted_scene"
     compress
     include "$(BUILD_DIR)/assets/scenes/overworld/stone_tower_inverted/stone_tower_inverted_scene.o"
@@ -891,5 +835,75 @@ beginseg
     name "stone_tower_inverted_room_0"
     compress
     include "$(BUILD_DIR)/assets/scenes/overworld/stone_tower_inverted/stone_tower_inverted_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "woodfall_temple_boss_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple_boss/woodfall_temple_boss_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "woodfall_temple_boss_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/dungeons/woodfall_temple_boss/woodfall_temple_boss_room_0.o"
+    number 3
+endseg
+
+beginseg
+    name "grottos2_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "grottos2_room_6"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_6.o"
+    number 3
+endseg
+
+beginseg
+    name "grottos2_room_7"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_7.o"
+    number 3
+endseg
+
+beginseg
+    name "grottos2_room_8"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_8.o"
+    number 3
+endseg
+
+beginseg
+    name "grottos2_room_10"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_10.o"
+    number 3
+endseg
+
+beginseg
+    name "grottos2_room_13"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/grottos2/grottos2_room_13.o"
+    number 3
+endseg
+
+beginseg
+    name "dawngrove_grottos_scene"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/dawngrove_grottos/dawngrove_grottos_scene.o"
+    number 2
+endseg
+
+beginseg
+    name "dawngrove_grottos_room_0"
+    compress
+    include "$(BUILD_DIR)/assets/scenes/misc/dawngrove_grottos/dawngrove_grottos_room_0.o"
     number 3
 endseg

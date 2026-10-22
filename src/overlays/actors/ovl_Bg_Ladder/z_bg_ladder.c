@@ -16,10 +16,13 @@
 #include "sys_matrix.h"
 #include "play_state.h"
 #include "player.h"
+#include "save.h"
 #include "z_lib.h"
 #include "one_point_cutscene.h"
+#include "array_count.h"
 
 #include "assets/objects/object_ladder/object_ladder.h"
+#include "z_bg_ladder_cutscene_data.c"
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -82,6 +85,11 @@ void BgLadder_Init(Actor* thisx, PlayState* play) {
     
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
 
+    this->csId = this->dyna.actor.home.rot.z;
+    this->dyna.actor.home.rot.z = this->dyna.actor.world.rot.z = this->dyna.actor.shape.rot.z = 0;
+    if (this->csId > ARRAY_COUNT(cutscenes))
+        this->csId = 0;
+
     if (Flags_GetSwitch(play, this->switchFlag) || this->switchFlag == 0xFF) {
         // If the flag is set, then the ladder draws immediately
         this->alpha = 255;
@@ -111,9 +119,13 @@ void BgLadder_Wait(BgLadder* this, PlayState* play) {
 void BgLadder_StartCutscene(BgLadder* this, PlayState* play) {
     // Trigger the cutscene, then make the ladder fade in
     if (!Player_InCsMode(play)) {
-        OnePointCutscene_Attention(play, &this->dyna.actor);
+        if (this->csId > 0) {
+            Cutscene_SetScript(play, cutscenes[this->csId-1]);
+            gSaveContext.cutsceneTrigger = 1;
+            Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
+        } else OnePointCutscene_Attention(play, &this->dyna.actor);
         this->dyna.actor.draw = BgLadder_Draw;
-        Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_IRON_DOOR_OPEN);
+        Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_SECRET_LADDER_APPEAR);
         this->action = BgLadder_FadeIn;
     }
 }
@@ -140,13 +152,28 @@ void BgLadder_Update(Actor* thisx, PlayState* play) {
 
 void BgLadder_Draw(Actor* thisx, PlayState* play) {
     BgLadder* this = (BgLadder*)thisx;
+    Gfx* gfx;
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_bg_ladder.c", 145);
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
-    Gfx_SetupDL_25Opa(play->state.gfxCtx);
-    gDPSetEnvColor(POLY_OPA_DISP++, 255, 255, 255, this->alpha);
-    MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_bg_ladder.c", 149);
-    gSPDisplayList(POLY_OPA_DISP++, sLadderDLists[this->dyna.actor.params]);
+    if (this->alpha == 255) {
+        Scene_SetRenderModeXlu(play, 0, 0x01);
+        gfx = POLY_OPA_DISP;
+    } else {
+        Scene_SetRenderModeXlu(play, 1, 0x02);
+        gfx = POLY_XLU_DISP;
+    }
 
-    CLOSE_DISPS(play->state.gfxCtx, "../z_bg_ladder.c", 160);
+    gSPDisplayList(&gfx[0], sSetupDL[SETUPDL_25]);
+    gDPSetEnvColor(&gfx[1], 255, 255, 255, this->alpha);
+    MATRIX_FINALIZE_AND_LOAD(&gfx[2], play->state.gfxCtx, __FILE__, __LINE__);
+    gSPDisplayList(&gfx[3], sLadderDLists[this->dyna.actor.params]);
+
+    if (this->alpha == 255) {
+        POLY_OPA_DISP = gfx + 4;
+    } else {
+        POLY_XLU_DISP = gfx + 4;
+    }
+
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }

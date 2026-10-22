@@ -13,11 +13,14 @@
 #include "ichain.h"
 #include "sfx.h"
 #include "play_state.h"
-#include "array_count.h"
-#include "one_point_cutscene.h"
+#include "player.h"
 #include "save.h"
+#include "array_count.h"
+#include "cutscene.h"
+#include "one_point_cutscene.h"
 
 #include "assets/objects/object_numa_obj/object_numa_obj.h"
+#include "z_bg_numa_hana_cutscene_data.c"
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_HOOKSHOT_PULLS_PLAYER)
 
@@ -154,6 +157,11 @@ void BgNumaHana_Init(Actor* thisx, PlayState* play) {
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
     DynaPolyActor_Init(&this->dyna, DYNA_TRANSFORM_POS | DYNA_TRANSFORM_ROT_Y);
 
+    this->csId = this->dyna.actor.home.rot.z;
+    this->dyna.actor.home.rot.z = this->dyna.actor.world.rot.z = this->dyna.actor.shape.rot.z = 0;
+    if (this->csId > ARRAY_COUNT(cutscenes))
+        this->csId = 0;
+
     if (type == BG_NUMA_HANA_TYPE_OPEN_FLOWER_COLLISION) {
         CollisionHeader_GetVirtual(&gWoodenFlowerOpenedFlowerCol, &header);
         this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, header);
@@ -226,9 +234,12 @@ void BgNumaHana_ClosedIdle(BgNumaHana* this, PlayState* play) {
     if (this->fire.state != FIRE_STATE_NOT_LIT) {
         Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_FLAME_IGNITION);
         Flags_SetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE);
+        if (this->csId > 0) {
+            Cutscene_SetScript(play, cutscenes[this->csId-1]);
+            gSaveContext.cutsceneTrigger = 1;
+            Player_SetCsActionWithHaltedActors(play, &this->dyna.actor, PLAYER_CSACTION_49);
+        }
         BgNumaHana_SetupUnfoldInnerPetals(this);
-        if (!Player_InCsMode(play))
-            OnePointCutscene_Attention(play, &this->dyna.actor);
     }
 }
 

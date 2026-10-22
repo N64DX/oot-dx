@@ -4,14 +4,17 @@
 #include "bgcheck.h"
 #include "romfile.h"
 #include "scene.h"
+#include "cutscene.h"
 #include "ultra64.h"
 
+extern SceneCmd* mountain_village_sceneAlternateHeaders[];
 extern ActorEntry mountain_village_sceneStartPositionList0x00009C[];
 extern TransitionActorEntry mountain_village_sceneTransitionActorList_00012C[];
 extern RomFile mountain_village_sceneRoomList0x00015C[];
 extern Spawn mountain_village_sceneEntranceList0x00016C[];
 extern u16 mountain_village_sceneExitList_000180[];
 extern EnvLightSettings mountain_village_sceneLightSettings0x00018C[];
+extern CutsceneData gSpringLakeIntroCs[];
 extern CollisionHeader mountain_village_sceneCollisionHeader_0058E8;
 
 extern u64 mountain_village_sceneTex_006A60[];

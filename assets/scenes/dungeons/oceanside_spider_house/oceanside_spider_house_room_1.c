@@ -47,11 +47,11 @@ ActorEntry oceanside_spider_house_room_1ActorEntry_000058[] = {
     { ACTOR_EN_SW,          {   90,  -50, -1385 }, {      0, 0xC000,   0 }, 0x0000 },
     { ACTOR_EN_SW,          { -285,  234, -1377 }, {      0, 0x4000,   0 }, 0x0000 },
     { ACTOR_EN_SW,          { -220,   22, -1571 }, {      0, 0x8000,   0 }, 0x0000 },
-    { ACTOR_OBJ_TSUBO,      {   65,  -12, -1722 }, {      0,      0, 0x2 }, 0x000B },
-    { ACTOR_OBJ_TSUBO,      {    2,  -66, -1722 }, {      0,      0,   0 }, 0x018A },
-    { ACTOR_OBJ_TSUBO,      {   64, -120, -1650 }, {      0,      0,   0 }, 0x018A },
-    { ACTOR_OBJ_TSUBO,      {  -30, -120, -1050 }, {      0,      0, 0x1 }, 0x4C0E },
-    { ACTOR_OBJ_TSUBO,      {   63,  -12, -1051 }, {      0,      0,   0 }, 0x660E },
+    { ACTOR_OBJ_TSUBO,      {   65,  -12, -1722 }, {      0,      0, 0x2 }, 0x480B }, // Collect: 24, drops Bomb (5)
+    { ACTOR_OBJ_TSUBO,      {    2,  -66, -1722 }, {      0,      0,   0 }, 0x4A09 }, // Collect: 25, drops Arrows (10)
+    { ACTOR_OBJ_TSUBO,      {   64, -120, -1650 }, {      0,      0,   0 }, 0x4C09 }, // Collect: 26, drops Arrows (10)
+    { ACTOR_OBJ_TSUBO,      {  -30, -120, -1050 }, {      0,      0, 0x1 }, 0x4E0F }, // Collect: 27, drops Small Magic Jar
+    { ACTOR_OBJ_TSUBO,      {   63,  -12, -1051 }, {      0,      0,   0 }, 0x500F }, // Collect: 28, drops Small Magic Jar
     { ACTOR_OBJ_SYOKUDAI,   {   75, -120, -1320 }, {      0,      0,   0 }, 0x243F },
     { ACTOR_OBJ_SYOKUDAI,   {   60,  180, -1045 }, {      0,      0,   0 }, 0x243F },
     { ACTOR_OBJ_SYOKUDAI,   { -270,  180, -1229 }, {      0,      0,   0 }, 0x243F },

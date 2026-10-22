@@ -38,7 +38,7 @@ s16 woodfall_temple_room_7ObjectList_000040[] = {
 };
 
 ActorEntry woodfall_temple_room_7ActorEntry_00006C[] = {
-    { ACTOR_EN_DINOFOS,   { 1230,  -781, 1180 }, {               0, 0x8000, 0 }, 0xFE00 },
+    { ACTOR_EN_DINOFOS,   { 1230,  -781, 1180 }, {               0, 0x8000, 1 }, 0xFE00 },
     { ACTOR_EN_DINOFOS,   { 1330,  -781, 1180 }, {               0, 0x8000, 0 }, 0xFE00 },
     { ACTOR_EN_DINOFOS,   { 1130,  -781, 1180 }, {               0, 0x8000, 0 }, 0xFE00 },
     { ACTOR_EN_BOX,       { 1230, -1215, 1455 }, { GI_SWORD_FAIRYS,      0, 0 }, 0x101B }, // Chest: 1B, on clear, Great Fairy's Sword

@@ -16,7 +16,8 @@ typedef struct BgLadder {
     /* 0x15C */ BgLadderActionFn action;
     /* 0x160 */ s16 alpha;
     /* 0x162 */ s16 switchFlag;
-} BgLadder; // size = 0x164
+    /* 0x164 */ u8 csId;
+} BgLadder; // size = 0x168
 
 typedef enum {
     /* 0 */ LADDER_SIZE_12RUNG,

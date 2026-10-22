@@ -15,7 +15,7 @@ SceneCmd old_dodongos_cavern_room_7[] = {
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&old_dodongos_cavern_room_7MeshHeader0x0000B0),
     SCENE_CMD_OBJECT_LIST(12, old_dodongos_cavern_room_7ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(9, old_dodongos_cavern_room_7ActorList0x000048),
+    SCENE_CMD_ACTOR_LIST(11, old_dodongos_cavern_room_7ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -49,7 +49,9 @@ ActorEntry old_dodongos_cavern_room_7ActorList0x000048[] = {
     { ACTOR_BG_ICE_SHELTER, { -2297, 500,  -915 }, {            0,      0, 0 }, 0x050C }, // Switch: 0C
     { ACTOR_OBJ_SYOKUDAI3,  { -2000, 451,  -915 }, {            0,      0, 0 }, 0x243F },
     { ACTOR_EN_BOX,         { -2485, 571,  -911 }, { GI_ARROW_ICE, 0xC000, 0 }, 0x0002 }, // Chest: 02, Ice Arrow
-    { ACTOR_EN_ITEM00,      { -2555, 582,  -911 }, {            0,      0, 0 }, 0x2202 }, // Collect 22, Red Rupee
+    { ACTOR_OBJ_TSUBO,      { -1550, 451,  -750 }, {            0,      0, 0 }, 0x6409 }, // Collect: 32, drops Arrows (10)
+    { ACTOR_OBJ_TSUBO,      { -1550, 451, -1100 }, {            0,      0, 0 }, 0x660B }, // Collect: 33, drops Bombs (5)
+    { ACTOR_EN_ITEM00,      { -2555, 582,  -911 }, {            0,      0, 0 }, 0x6802 }, // Collect: 34, Red Rupee
 };
 
 RoomShapeCullable old_dodongos_cavern_room_7MeshHeader0x0000B0 = {

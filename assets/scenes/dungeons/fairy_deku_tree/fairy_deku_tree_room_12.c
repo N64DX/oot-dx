@@ -13,19 +13,21 @@ SceneCmd fairy_deku_tree_room_12[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&fairy_deku_tree_room_12MeshHeader0x0000A0),
-    SCENE_CMD_OBJECT_LIST(7, fairy_deku_tree_room_12ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(5, fairy_deku_tree_room_12ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(9, fairy_deku_tree_room_12ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(6, fairy_deku_tree_room_12ActorList0x000048),
     SCENE_CMD_END(),
 };
 
 s16 fairy_deku_tree_room_12ObjectList0x000038[] = {
+    OBJECT_DEKU_DOOR,
     OBJECT_BOX,
     OBJECT_KIBAKO2,
-    OBJECT_FR,
     OBJECT_SYOKUDAI,
     OBJECT_YDAN_OBJECTS,
+    OBJECT_KUSA,
     OBJECT_BDOOR,
     OBJECT_MINIBLIN,
+    OBJECT_FR,
 };
 
 ActorEntry fairy_deku_tree_room_12ActorList0x000048[] = {
@@ -34,6 +36,7 @@ ActorEntry fairy_deku_tree_room_12ActorList0x000048[] = {
     { ACTOR_EN_MINIBLIN, { 350, -640, 1000 }, { 0, 0x4000, 0 }, 0x0000 },
     { ACTOR_EN_MINIBLIN, {  00, -640,  900 }, { 0,      0, 0 }, 0x0000 },
     { ACTOR_OBJ_KIBAKO3, { 900, -280, 1050 }, { 0, 0x2000, 0 }, 0x0232 }, // Blue: 3 (Ancient Hollow & Forbidden Woods)
+    { ACTOR_EN_KUSA,    {  500, -640,  850 }, { 0,      0, 0 }, 0xFF01 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_12MeshHeader0x0000A0 = {

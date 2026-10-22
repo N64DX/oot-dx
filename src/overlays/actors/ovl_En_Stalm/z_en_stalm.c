@@ -501,10 +501,9 @@ void EnStalmaster_BlowupDeath(EnStalmaster* this, struct PlayState* play) {
 void EnStalmaster_BlowupArms(EnStalmaster* this, struct PlayState* play) {
     StalmasterParts* effect = this->sStalmasterParts;
 
-    for (st1=0; st1<ARRAY_COUNT(limbIds); ++st1) {
-        for (j=0; j<ARRAY_COUNT(this->sStalmasterParts); ++j) {
-            if (!(!this->flags.inSecondPhase && st1 == STALMASTER_LIMB_LOC_SWORDC) && !(!this->flags.inSecondPhase && st1 == STALMASTER_LIMB_LOC_SWORDD) 
-                && !(!this->flags.inSecondPhase && st1 == STALMASTER_LIMB_PADRD) && !(!this->flags.inSecondPhase && st1 == STALMASTER_LIMB_PADLD)) {
+    for (st1=0; st1<ARRAY_COUNT(limbIds); ++st1)
+        for (j=0; j<ARRAY_COUNT(this->sStalmasterParts); ++j)
+            if (!(!this->flags.inSecondPhase && st1 == STALMASTER_LIMB_LOC_SWORDC) && !(!this->flags.inSecondPhase && st1 == STALMASTER_LIMB_LOC_SWORDD) && !(!this->flags.inSecondPhase && st1 == STALMASTER_LIMB_PADRD) && !(!this->flags.inSecondPhase && st1 == STALMASTER_LIMB_PADLD))
                 if (j == limbIds[st1] && effect[j].invisible) {
                     effect[j].invisible = false;
                     effect[j].csHandled = false;
@@ -516,9 +515,6 @@ void EnStalmaster_BlowupArms(EnStalmaster* this, struct PlayState* play) {
                     effect[j].pos = effect[j].skeletonPos;
                     effect[j].rot = effect[j].skeletonRot;
                 }
-            }
-        }
-    }
 }
 
 void EnStalmaster_GatherArms(EnStalmaster* this, struct PlayState* play) {
@@ -1194,13 +1190,13 @@ void EnStalmaster_UpdateCollisions(EnStalmaster* this, struct PlayState* play) {
         this->bodyCollider.base.acFlags &= ~AC_HIT; // Clear the hit flag
 
         switch (this->actor.colChkInfo.damageReaction) {
-            case STALMASTER_DMGEFF_EXPLOSIVE:
-                if (this->actionFunc != EnStalmaster_BlowArms)
-                    EnStalmaster_SetupBlowArms(this, play);
-                break;
             case STALMASTER_DMGEFF_PARRY:
                 EnStalmaster_SetupGuard(this, play);
                 break;
+            case STALMASTER_DMGEFF_EXPLOSIVE:
+                //if (this->actionFunc != EnStalmaster_BlowArms)
+                //    EnStalmaster_SetupBlowArms(this, play);
+                //break;
             case STALMASTER_DMGEFF_SPIN:
             case STALMASTER_DMGEFF_NORMAL:
                 if (this->actor.colChkInfo.damageReaction == STALMASTER_DMGEFF_SPIN && this->actionFunc == EnStalmaster_Counter)
@@ -1333,7 +1329,7 @@ void EnStalmaster_Update(Actor* thisx, struct PlayState* play) {
     } else if (this->actor.colChkInfo.health <= 0 && this->actionFunc != EnStalmaster_Death)
         EnStalmaster_SetupDeath(this, play);
 
-    if (this->flags.startfade) {
+    if (this->flags.startfade)
         if (this->alpha > 0) {
             this->alpha -= 10;
             if (this->alpha <= 0) {
@@ -1341,7 +1337,6 @@ void EnStalmaster_Update(Actor* thisx, struct PlayState* play) {
                 Actor_Kill(&this->actor);
             }
         }
-    }
 }
 
 void EnStalmaster_Destroy(Actor* thisx, struct PlayState* play) {
@@ -1420,7 +1415,7 @@ void EnStalmaster_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, 
 
     StalmasterParts* limbInfo = &this->sStalmasterParts[limbIndex];
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_en_stalm.c", 1405);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     if (limbIndex == STALMASTER_LIMB_HEAD) {
         if (limbInfo->invisible) {
@@ -1435,7 +1430,7 @@ void EnStalmaster_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, 
             
             Matrix_MultVec3f(&gZeroVec, &this->actor.focus.pos);
             if (!this->flags.helmetOff) {
-                MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_stalm.c", 1420);
+                MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
                 gSPDisplayList(POLY_OPA_DISP++, HelmetDL);
             }
             Matrix_Pop();
@@ -1449,7 +1444,7 @@ void EnStalmaster_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, 
             Matrix_RotateZ(swordARotationZ * (M_PI / 180.0f), MTXMODE_APPLY);
             
             // Draw Sword A
-            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_stalm.c", 1434);
+            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
             gSPDisplayList(POLY_OPA_DISP++, SwordADL);
         }
     } else if (limbIndex == STALMASTER_LIMB_LOC_SWORDB) {
@@ -1460,7 +1455,7 @@ void EnStalmaster_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, 
             Matrix_RotateZ(swordBRotationZ * (M_PI / 180.0f), MTXMODE_APPLY);
 
             // Draw Sword B
-            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_stalm.c", 1445);
+            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
             gSPDisplayList(POLY_OPA_DISP++, SwordB);
         }
     } else if (limbIndex == STALMASTER_LIMB_LOC_SWORDC) {
@@ -1471,7 +1466,7 @@ void EnStalmaster_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, 
             Matrix_RotateZ(swordCRotationZ, MTXMODE_APPLY);
 
             // Draw Sword C
-            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_stalm.c", 1456);
+            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
             gSPDisplayList(POLY_OPA_DISP++, SwordC);
         }
     } else if (limbIndex == STALMASTER_LIMB_LOC_SWORDD) {
@@ -1482,7 +1477,7 @@ void EnStalmaster_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, 
             Matrix_RotateZ(swordDRotationZ, MTXMODE_APPLY);
 
             // Draw Sword D
-            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_stalm.c", 1467);
+            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
             gSPDisplayList(POLY_OPA_DISP++, SwordD);
         }
     }     else if (limbIndex == STALMASTER_LIMB_LOC_SWORDC2) {
@@ -1491,7 +1486,7 @@ void EnStalmaster_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, 
             Matrix_RotateY(swordC2RotationY * (M_PI / 180.0f), MTXMODE_APPLY);
             Matrix_RotateZ(swordC2RotationZ * (M_PI / 180.0f), MTXMODE_APPLY);
             
-            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_stalm.c", 1476);
+            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
             gSPDisplayList(POLY_OPA_DISP++, SwordC);
         }
     } else if (limbIndex == STALMASTER_LIMB_LOC_SWORDD2) {
@@ -1500,13 +1495,13 @@ void EnStalmaster_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, 
             Matrix_RotateY(swordD2RotationY * (M_PI / 180.0f), MTXMODE_APPLY);
             Matrix_RotateZ(swordD2RotationZ * (M_PI / 180.0f), MTXMODE_APPLY);
             
-            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_stalm.c", 1485);
+            MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
             gSPDisplayList(POLY_OPA_DISP++, SwordD);
         }
     }
 
 
-    CLOSE_DISPS(play->state.gfxCtx, "../z_en_stalm.c", 1491);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
     Matrix_Get(&mf);
 
     VEC_SET(limbInfo->skeletonPos, mf.xw, mf.yw, mf.zw);
@@ -1515,39 +1510,30 @@ void EnStalmaster_PostLimbDraw(struct PlayState* play, s32 limbIndex, Gfx** dl, 
     if (limbIndex == STALMASTER_LIMB_HANDRU) {
 		Matrix_MultVec3f(&vecSwordUROffset, &blureA);
 		Matrix_MultVec3f(&vecSwordUREffectOffset, &blureB);
-        
 		if (this->flags.swordBActive)
 			EffectBlure_AddVertex(Effect_GetByIndex(this->effectIndex3), &blureB, &blureA);
-		else
-			EffectBlure_AddSpace(Effect_GetByIndex(this->effectIndex3));
-
+		else EffectBlure_AddSpace(Effect_GetByIndex(this->effectIndex3));
         Collider_UpdateSpheres(limbIndex, &this->colliderSwordUpRight);
 	} else if (limbIndex == STALMASTER_LIMB_HANDLU) {
 		Matrix_MultVec3f(&vecSwordULOffset, &blureA);
 		Matrix_MultVec3f(&vecSwordULEffectOffset, &blureB);
 		if (this->flags.swordAActive)
 			EffectBlure_AddVertex(Effect_GetByIndex(this->effectIndex1), &blureB, &blureA);
-		else
-			EffectBlure_AddSpace(Effect_GetByIndex(this->effectIndex1));
-
+		else EffectBlure_AddSpace(Effect_GetByIndex(this->effectIndex1));
         Collider_UpdateSpheres(limbIndex, &this->colliderSwordUpLeft);
 	} else if (limbIndex == STALMASTER_LIMB_HANDRD) {
 		Matrix_MultVec3f(&vecSwordDROffset, &blureA);
 		Matrix_MultVec3f(&vecSwordDREffectOffset, &blureB);
 		if (this->flags.swordCActive)
 			EffectBlure_AddVertex(Effect_GetByIndex(this->effectIndex2), &blureB, &blureA);
-		else
-			EffectBlure_AddSpace(Effect_GetByIndex(this->effectIndex2));
-
+		else EffectBlure_AddSpace(Effect_GetByIndex(this->effectIndex2));
         Collider_UpdateSpheres(limbIndex, &this->colliderSwordDownRight);
 	} else if (limbIndex == STALMASTER_LIMB_HANDLD) {
 		Matrix_MultVec3f(&vecSwordDLOffset, &blureA);
 		Matrix_MultVec3f(&vecSwordDLEffectOffset, &blureB);
 		if (this->flags.swordDActive)
 			EffectBlure_AddVertex(Effect_GetByIndex(this->effectIndex4), &blureB, &blureA);
-		else
-			EffectBlure_AddSpace(Effect_GetByIndex(this->effectIndex4));
-
+		else EffectBlure_AddSpace(Effect_GetByIndex(this->effectIndex4));
         Collider_UpdateSpheres(limbIndex, &this->colliderSwordDownLeft);
 	}
 }
@@ -1557,7 +1543,7 @@ void EnStalmaster_Draw(Actor* thisx, struct PlayState* play) {
 
     static Vec3f sShadowScale = { 0.85f, 0.85f, 0.85f };
 
-    OPEN_DISPS(play->state.gfxCtx, "../z_en_stalm.c", 1540);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
 
@@ -1573,11 +1559,11 @@ void EnStalmaster_Draw(Actor* thisx, struct PlayState* play) {
     EnStalmaster_DrawEffects(this,play);
     EnStalmaster_DrawLimbs(this,play);
     
-    CLOSE_DISPS(play->state.gfxCtx, "../z_en_stalm.c", 1555);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
 
 void EnStalmaster_DrawEffects(EnStalmaster* this, struct PlayState* play) {
-    OPEN_DISPS(play->state.gfxCtx, "../z_en_stalm.c", 1559);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     Matrix_Push();
 
@@ -1592,7 +1578,7 @@ void EnStalmaster_DrawEffects(EnStalmaster* this, struct PlayState* play) {
         Matrix_RotateY(BINANG_TO_RAD(effect->rot.y), MTXMODE_APPLY);
         Matrix_RotateX(BINANG_TO_RAD(effect->rot.x), MTXMODE_APPLY);
         Matrix_Scale(this->actor.scale.x, this->actor.scale.y, this->actor.scale.z, MTXMODE_APPLY);
-        MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_stalm.c", 1575);
+        MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
 
         switch (effect->type) {
             case STALMASTER_EFFECT_HELMET:
@@ -1611,12 +1597,12 @@ void EnStalmaster_DrawEffects(EnStalmaster* this, struct PlayState* play) {
     }
 
     Matrix_Pop();
-    CLOSE_DISPS(play->state.gfxCtx, "../z_en_stalm.c", 1593);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }
 
 
 void EnStalmaster_DrawLimbs(EnStalmaster* this, struct PlayState* play) {
-    OPEN_DISPS(play->state.gfxCtx, "../z_en_stalm.c", 1598);
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     Matrix_Push();
 
@@ -1631,7 +1617,7 @@ void EnStalmaster_DrawLimbs(EnStalmaster* this, struct PlayState* play) {
         Matrix_RotateY(BINANG_TO_RAD(part->rot.y), MTXMODE_APPLY);
         Matrix_RotateX(BINANG_TO_RAD(part->rot.x), MTXMODE_APPLY);
         Matrix_Scale(this->actor.scale.x, this->actor.scale.y, this->actor.scale.z, MTXMODE_APPLY);
-        MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_stalm.c", 1613);
+        MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx,  __FILE__, __LINE__);
 
         switch (i) {
             case STALMASTER_LIMB_HEAD:
@@ -1692,5 +1678,5 @@ void EnStalmaster_DrawLimbs(EnStalmaster* this, struct PlayState* play) {
     }
 
     Matrix_Pop();
-    CLOSE_DISPS(play->state.gfxCtx, "../z_en_stalm.c", 1674);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 }

@@ -7,6 +7,7 @@
 #include "object.h"
 
 SceneCmd mountain_village_room_1[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(mountain_village_room_1AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(10),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
@@ -15,6 +16,12 @@ SceneCmd mountain_village_room_1[] = {
     SCENE_CMD_OBJECT_LIST(13, mountain_village_room_1ObjectList_00004C),
     SCENE_CMD_ACTOR_LIST(25, mountain_village_room_1ActorEntry_000074),
     SCENE_CMD_END(),
+};
+
+SceneCmd* mountain_village_room_1AlternateHeaders[] = {
+    NULL,
+    mountain_village_room_1Set_timeskip,
+    NULL,
 };
 
 s16 mountain_village_room_1ObjectList_00004C[] = {
@@ -31,6 +38,7 @@ s16 mountain_village_room_1ObjectList_00004C[] = {
     OBJECT_TSUBO,
     OBJECT_KA,
     OBJECT_FR,
+    OBJECT_OF1D_MAP,
 };
 
 ActorEntry mountain_village_room_1ActorEntry_000074[] = {
@@ -59,6 +67,9 @@ ActorEntry mountain_village_room_1ActorEntry_000074[] = {
     { ACTOR_DOOR_ANA,       { 2406, 1168, -1197 }, { 0,      0, 0 }, 0x00C1 }, // Chest: 01 (Generic Grotto: Goron's Key)
     { ACTOR_EN_GS,          { 3685,  837, -1101 }, { 0, 0x47D0, 0 }, 0xFF22 },
     { ACTOR_EN_FR,          { 2300, 1168, -1200 }, { 0,      0, 0 }, 0x0211 }, // Yellow: 1 (Spring Lake)
+
+    // Timeskip
+    { ACTOR_EN_GO3,         { 1900,    8,   -80 }, { 0, 0xE000, 0 }, 0x0023 },
 };
 
 RoomShapeCullable mountain_village_room_1RoomShapeCullable_000210 = { 
@@ -71,6 +82,17 @@ RoomShapeCullable mountain_village_room_1RoomShapeCullable_000210 = {
 RoomShapeCullableEntry mountain_village_room_1RoomShapeCullableEntry_00021C[2] = {
     { {   2424,    829,   -690 },   1610, mountain_village_room_1DL_000C68, NULL },
     { {   2424,    708,   -690 },   1592, mountain_village_room_1DL_001728, NULL },
+};
+
+SceneCmd mountain_village_room_1Set_timeskip[] = {
+    SCENE_CMD_ECHO_SETTINGS(10),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 10),
+    SCENE_CMD_ROOM_SHAPE(&mountain_village_room_1RoomShapeCullable_000210),
+    SCENE_CMD_OBJECT_LIST(ARRAY_COUNT(mountain_village_room_1ObjectList_00004C), mountain_village_room_1ObjectList_00004C),
+    SCENE_CMD_ACTOR_LIST(ARRAY_COUNT(mountain_village_room_1ActorEntry_000074), mountain_village_room_1ActorEntry_000074),
+    SCENE_CMD_END(),
 };
 
 s32 mountain_village_room_1_terminatorMaybe_00023C = { 0x01000000 };

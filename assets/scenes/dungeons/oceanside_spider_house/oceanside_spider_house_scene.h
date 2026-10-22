@@ -4,6 +4,7 @@
 #include "bgcheck.h"
 #include "romfile.h"
 #include "scene.h"
+#include "cutscene.h"
 #include "ultra64.h"
 
 extern ActorEntry oceanside_spider_house_sceneStartPositionList0x000098[];
@@ -12,6 +13,7 @@ extern RomFile oceanside_spider_house_sceneRoomList0x000130[];
 extern Spawn oceanside_spider_house_sceneEntranceList0x000160[];
 extern u16 oceanside_spider_house_sceneExitList_000164[];
 extern EnvLightSettings oceanside_spider_house_sceneLightSettings0x000168[];
+extern CutsceneData gRoyalVaultBombwallCs[];
 extern Path oceanside_spider_house_scenePathway_000220[];
 extern CollisionHeader oceanside_spider_house_sceneCollisionHeader_00AE8C;
 

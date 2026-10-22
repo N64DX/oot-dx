@@ -12,10 +12,13 @@
 #include "sys_matrix.h"
 #include "sys_math3d.h"
 #include "play_state.h"
+#include "player.h"
+#include "save.h"
 #include "effect.h"
 #include "array_count.h"
 
 #include "assets/objects/object_haka_obj/object_haka_obj.h"
+#include "z_bg_haka_bombwall_cutscene_data.c"
 
 #define FLAGS 0
 
@@ -149,6 +152,11 @@ void BgHakaBombwall_Init(Actor* thisx, PlayState* play) {
         return;
     }
 
+    this->csId = this->dyna.actor.home.rot.z;
+    this->dyna.actor.home.rot.z = this->dyna.actor.world.rot.z = this->dyna.actor.shape.rot.z = 0;
+    if (this->csId > ARRAY_COUNT(cutscenes))
+        this->csId = 0;
+
     CollisionHeader_GetVirtual(&object_haka_obj_Colheader_000148, &header);
     this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, header);
     Collider_SetCylinder(play, &this->collider, &this->dyna.actor, &sCylinderInit);
@@ -179,6 +187,11 @@ void BgHakaBombwall_SetupPlayCutscene(BgHakaBombwall* this) {
 }
 
 void BgHakaBombwall_PlayCutscene(BgHakaBombwall* this, PlayState* play) {
+    if (this->csId > 0) {
+        Cutscene_SetScript(play, cutscenes[this->csId-1]);
+        gSaveContext.cutsceneTrigger = 1;
+        Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
+    }
     BgHakaBombwall_80BD5E6C(this, play);
     this->dyna.actor.draw = NULL;
     Flags_SetSwitch(play, BGHAKABOMBWALL_GET_SWITCH_FLAG(&this->dyna.actor));
@@ -188,7 +201,7 @@ void BgHakaBombwall_PlayCutscene(BgHakaBombwall* this, PlayState* play) {
 }
 
 void BgHakaBombwall_SetupEndCutscene(BgHakaBombwall* this) {
-    this->csTimer = 30;
+    this->csTimer = 35;
     this->actionFunc = BgHakaBombwall_EndCutscene;
 }
 
