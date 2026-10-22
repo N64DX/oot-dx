@@ -12,10 +12,13 @@
 #include "sys_matrix.h"
 #include "sys_math3d.h"
 #include "play_state.h"
+#include "player.h"
+#include "save.h"
 #include "effect.h"
 #include "array_count.h"
 
 #include "assets/objects/object_haka_obj/object_haka_obj.h"
+#include "assets/scenes/misc/beneath_the_graveyard/beneath_the_graveyard_scene.h"
 
 #define FLAGS 0
 
@@ -179,6 +182,9 @@ void BgHakaBombwall_SetupPlayCutscene(BgHakaBombwall* this) {
 }
 
 void BgHakaBombwall_PlayCutscene(BgHakaBombwall* this, PlayState* play) {
+    Cutscene_SetScript(play, gBeneathTheGraveyardBombwallCs);
+    gSaveContext.cutsceneTrigger = 1;
+    Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
     BgHakaBombwall_80BD5E6C(this, play);
     this->dyna.actor.draw = NULL;
     Flags_SetSwitch(play, BGHAKABOMBWALL_GET_SWITCH_FLAG(&this->dyna.actor));
@@ -188,7 +194,7 @@ void BgHakaBombwall_PlayCutscene(BgHakaBombwall* this, PlayState* play) {
 }
 
 void BgHakaBombwall_SetupEndCutscene(BgHakaBombwall* this) {
-    this->csTimer = 30;
+    this->csTimer = 35;
     this->actionFunc = BgHakaBombwall_EndCutscene;
 }
 

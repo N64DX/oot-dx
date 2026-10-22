@@ -14,9 +14,9 @@ extern RomFile beneath_the_graveyard_sceneRoomList0x0000F0[];
 extern Spawn beneath_the_graveyard_sceneEntranceList0x000118[];
 extern u16 beneath_the_graveyard_sceneExitList_00011C[];
 extern EnvLightSettings beneath_the_graveyard_sceneLightSettings0x000120[];
-extern CollisionHeader beneath_the_graveyard_sceneCollisionHeader_008814;
-
 extern CutsceneData gBeneathTheGraveardEnhancedNocturneOfShadowTeachCs[];
+extern CutsceneData gBeneathTheGraveyardBombwallCs[];
+extern CollisionHeader beneath_the_graveyard_sceneCollisionHeader_008814;
 
 extern u64 beneath_the_graveyard_sceneTex_0063A8[];
 extern u64 beneath_the_graveyard_sceneTex_008840[];

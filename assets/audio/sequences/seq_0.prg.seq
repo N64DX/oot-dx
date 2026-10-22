@@ -7678,6 +7678,18 @@ LAYER_EV_EARTHQUAKE_TOWER_4:
 /* 0x37AE [0x5D 0x61 0x44          ] */ notedv      PITCH_D3, 97, 68
 /* 0x37B1 [0xF4 0xF4               ] */ rjump       LAYER_EV_EARTHQUAKE_TOWER_4
 
+.channel CHAN_EV_SECRET_LADDER_APPEAR
+/* 0x5067 [0x88 0x50 0x6B          ] */ ldlayer     0, LAYER_EV_SECRET_LADDER_APPEAR
+/* 0x506A [0xFF                    ] */ end
+
+.layer LAYER_EV_SECRET_LADDER_APPEAR
+/* 0x506B [0xC6 0x5A               ] */ instr       SF0_INST_90
+/* 0x506D [0xCB 0xC0 0x18 0xF0     ] */ env         ENVELOPE_6694, 240
+/* 0x5071 [0xC2 0x35               ] */ transpose   53
+/* 0x5073 [0xC7 0x82 0x14 0x78     ] */ portamento  0x82, PITCH_F2, 120
+/* 0x5077 [0x4E 0x81 0x39 0x64     ] */ notedv      PITCH_B1, 313, 100
+/* 0x507B [0xFF                    ] */ end
+
 #define DEFINE_SFX(lblName, sfxId, priority, decay, rand, flags) \
     entry lblName
 
@@ -15446,6 +15458,17 @@ LAYER_6576:
 /* 0x833D [0xC6 0x7E               ] */ instr       FONTANY_INSTR_SFX
 /* 0x833F [0x46 0x00 0x64          ] */ notedv      SF1_EFFECT_39, 0, 100
 /* 0x8342 [0xFF                    ] */ end
+
+.channel CHAN_EN_BOMCHU_WALK
+/* 0x6202 [0x88 0x62 0x08          ] */ ldlayer     0, LAYER_EN_BOMCHU_WALK
+/* 0x6205 [0xFF                    ] */ end
+
+.layer LAYER_EN_BOMCHU_WALK
+/* 0x6208 [0xC6 0x15               ] */ instr       SF1_INST_15
+/* 0x620A [0xC2 0x30               ] */ transpose   48
+/* 0x620C [0x6B 0x0A 0x50          ] */ notedv      PITCH_E4, 10, 80
+/* 0x620F [0x69 0x0A 0x50          ] */ notedv      PITCH_D4, 10, 80
+/* 0x6212 [0xFF                    ] */ end
 
 .channel CHAN_EN_KUROSUKE_MOVE
 /* 0x6D6C [0x88 0x6D 0x74          ] */ ldlayer     0, LAYER_EN_KUROSUKE_MOVE

@@ -14,10 +14,13 @@
 #include "sys_matrix.h"
 #include "z_lib.h"
 #include "play_state.h"
+#include "player.h"
+#include "save.h"
 #include "effect.h"
 
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
 #include "assets/objects/object_dkjail_obj/object_dkjail_obj.h"
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_scene.h"
 
 #define FLAGS 0
 
@@ -157,6 +160,11 @@ void BgDkjailIvy_WaitForCut(BgDkjailIvy* this, PlayState* play) {
     if (this->collider.base.acFlags & AC_HIT) {
         this->collider.base.acFlags &= ~AC_HIT;
         this->dyna.actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
+        if (play->sceneId == SCENE_WOODFALL_TEMPLE) {
+            Cutscene_SetScript(play, gWoodfallTempleIvyCs);
+            gSaveContext.cutsceneTrigger = 1;
+            Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
+        }
         this->fadeOutTimer = 50;
         DynaPoly_DisableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
         Flags_SetSwitch(play, BG_DKJAIL_GET_SWITCH_FLAG(&this->dyna.actor));

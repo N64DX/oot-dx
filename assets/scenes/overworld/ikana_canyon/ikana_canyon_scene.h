@@ -4,6 +4,7 @@
 #include "bgcheck.h"
 #include "romfile.h"
 #include "scene.h"
+#include "cutscene.h"
 #include "ultra64.h"
 
 extern SceneCmd* ikana_canyon_sceneAlternateHeaders[];
@@ -13,6 +14,7 @@ extern RomFile ikana_canyon_sceneRoomList0x000200[];
 extern Spawn ikana_canyon_sceneEntranceList0x000228[];
 extern u16 ikana_canyon_sceneExitList_000248[];
 extern EnvLightSettings ikana_canyon_sceneLightSettings0x000260[];
+extern CutsceneData gForsakenKingdomIntroCs[];
 extern Path ikana_canyon_scenePathway_000674[];
 extern CollisionHeader ikana_canyon_sceneCollisionHeader_00D9FC;
 
