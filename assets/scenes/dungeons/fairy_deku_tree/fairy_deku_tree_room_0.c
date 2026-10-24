@@ -12,8 +12,8 @@ SceneCmd fairy_deku_tree_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&fairy_deku_tree_room_0MeshHeader0x000150),
-    SCENE_CMD_OBJECT_LIST(17, fairy_deku_tree_room_0ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(29, fairy_deku_tree_room_0ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(19, fairy_deku_tree_room_0ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(36, fairy_deku_tree_room_0ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -23,6 +23,7 @@ s16 fairy_deku_tree_room_0ObjectList0x000038[] = {
     OBJECT_FR,
     OBJECT_SYOKUDAI,
     OBJECT_YDAN_OBJECTS,
+    OBJECT_KUSA,
     OBJECT_GOL,
     OBJECT_ST,
     OBJECT_TP,
@@ -35,6 +36,7 @@ s16 fairy_deku_tree_room_0ObjectList0x000038[] = {
     OBJECT_OS_ANIME,
     OBJECT_FIREFLY,
     OBJECT_CRASHBOX,
+    OBJECT_LADDER,
 };
 
 ActorEntry fairy_deku_tree_room_0ActorList0x000048[] = {
@@ -67,6 +69,13 @@ ActorEntry fairy_deku_tree_room_0ActorList0x000048[] = {
     { ACTOR_EN_GOOMBA,     { -450, 1320,  300 }, {    0, 0x7530, 0 }, 0x0000 },
     { ACTOR_OBJ_CRASHBOX,  {  825,    0,    0 }, {    0,      0, 0 }, 0xFF12 },
     { ACTOR_OBJ_CRASHBOX,  { 1020,    0, -155 }, {    0,  0xB00, 0 }, 0xFF11 },
+    { ACTOR_OBJ_SWITCH,    {  400,  240, -275 }, {    0, 0x2000, 0 }, 0x0900 }, // Switch: 09
+    { ACTOR_BG_LADDER,     {  550,   50, -230 }, {    0, 0x1000, 0 }, 0x0900 }, // Checks Switch: 09
+    { ACTOR_BG_LADDER,     { -669,    0,    0 }, {    0, 0xC000, 0 }, 0x0902 }, // Checks switch: 09
+    { ACTOR_BG_LADDER,     { -318,    0,  628 }, {    0, 0xE100, 0 }, 0x0903 }, // Checks switch: 09
+    { ACTOR_BG_LADDER,     {  250,  620,  620 }, {    0, 0xD000, 0 }, 0x0600 }, // Checks switch: 06
+    { ACTOR_EN_KUSA,       {  200,    0,  900 }, {    0,     0,  0 }, 0xFF01 },
+    { ACTOR_EN_KUSA,       { -200,    0,  900 }, {    0,     0,  0 }, 0xFF01 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_0MeshHeader0x000150 = {

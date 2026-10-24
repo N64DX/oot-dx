@@ -4,6 +4,7 @@
 #include "bgcheck.h"
 #include "romfile.h"
 #include "scene.h"
+#include "cutscene.h"
 #include "ultra64.h"
 
 extern SceneCmd* stone_tower_sceneAlternateHeaders[];
@@ -12,6 +13,7 @@ extern RomFile stone_tower_sceneRoomList0x0000C8[];
 extern Spawn stone_tower_sceneEntranceList0x0000D0[];
 extern u16 stone_tower_sceneExitList_0000D8[];
 extern EnvLightSettings stone_tower_sceneLightSettings0x0000DC[];
+extern CutsceneData gStoneTowerIntroCs[];
 extern Path stone_tower_scenePathway_000554[];
 extern CollisionHeader stone_tower_sceneCollisionHeader_005568;
 

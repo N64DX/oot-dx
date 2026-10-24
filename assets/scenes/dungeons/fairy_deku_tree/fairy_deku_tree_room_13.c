@@ -12,8 +12,8 @@ SceneCmd fairy_deku_tree_room_13[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&fairy_deku_tree_room_13MeshHeader0x000060),
-    SCENE_CMD_OBJECT_LIST(13, fairy_deku_tree_room_13ObjectList0x000038),
-    SCENE_CMD_ACTOR_LIST(1, fairy_deku_tree_room_13ActorList0x000048),
+    SCENE_CMD_OBJECT_LIST(14, fairy_deku_tree_room_13ObjectList0x000038),
+    SCENE_CMD_ACTOR_LIST(3, fairy_deku_tree_room_13ActorList0x000048),
     SCENE_CMD_END(),
 };
 
@@ -23,6 +23,7 @@ s16 fairy_deku_tree_room_13ObjectList0x000038[] = {
     OBJECT_FR,
     OBJECT_SYOKUDAI,
     OBJECT_YDAN_OBJECTS,
+    OBJECT_KUSA,
     OBJECT_GOL,
     OBJECT_BDOOR,
     OBJECT_MINIBLIN,
@@ -35,6 +36,8 @@ s16 fairy_deku_tree_room_13ObjectList0x000038[] = {
 
 ActorEntry fairy_deku_tree_room_13ActorList0x000048[] = {
     { ACTOR_BOSS_GOMA, { -161, -285, -350 }, { 0, 0, 0 }, 0xFFFE },
+    { ACTOR_EN_KUSA,   {  250, -640,  200 }, { 0, 0, 0 }, 0xFF01 },
+    { ACTOR_EN_KUSA,   {  -50, -640,  300 }, { 0, 0, 0 }, 0xFF01 },
 };
 
 RoomShapeCullable fairy_deku_tree_room_13MeshHeader0x000060 = {

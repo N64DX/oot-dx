@@ -7678,6 +7678,53 @@ LAYER_EV_EARTHQUAKE_TOWER_4:
 /* 0x37AE [0x5D 0x61 0x44          ] */ notedv      PITCH_D3, 97, 68
 /* 0x37B1 [0xF4 0xF4               ] */ rjump       LAYER_EV_EARTHQUAKE_TOWER_4
 
+.channel CHAN_EV_EARTHQUAKE_BELL_TOWER
+/* 0x0000 [0x88 0x00 0x00          ] */ ldlayer     0, LAYER_EV_EARTHQUAKE_BELL_TOWER
+/* 0x0000 [0xFF                    ] */ end
+
+.layer LAYER_EV_EARTHQUAKE_BELL_TOWER
+/* 0x0000 [0xC6 0x4D               ] */ instr       SF0_INST_77
+/* 0x0000 [0xCB 0xC0 0x80 0xD3     ] */ env         ENVELOPE_66FC, 211
+/* 0x0000 [0x6B 0x0E 0x33          ] */ notedv      PITCH_E4, 14, 51
+/* 0x0000 [0x70 0x80 0xC8 0x47     ] */ notedv      PITCH_A4, 100, 71
+/* 0x0000 [0xFF                    ] */ end
+
+.channel CHAN_EV_SIGNAL_BIGBELL
+/* 0x4281 [0x88 0x42 0x8A          ] */ ldlayer     0, LAYER_EV_SIGNAL_BIGBELL_1
+/* 0x4284 [0x89 0x42 0x95          ] */ ldlayer     1, LAYER_EV_SIGNAL_BIGBELL_2
+/* 0x4287 [0xFB 0x41 0xF5          ] */ end
+
+.layer LAYER_EV_SIGNAL_BIGBELL_1
+/* 0x428A [0xFC 0x3F 0x98          ] */ call        LAYER_EV_SIGNAL_BIGBELL_3
+/* 0x428D [0x6B 0x0E 0x52          ] */ notedv      PITCH_E4, 14, 82
+/* 0x4290 [0x67 0x81 0xFA 0x5A     ] */ notedv      PITCH_C4, 506, 90
+/* 0x4294 [0xFF                    ] */ end
+
+.layer LAYER_EV_SIGNAL_BIGBELL_2
+/* 0x4295 [0xC0 0x28               ] */ ldelay      40
+/* 0x4297 [0xC6 0x64               ] */ instr       SF0_INST_94
+/* 0x4299 [0xCB 0xC1 0xC0 0xA0     ] */ env         ENVELOPE_C1C0, 160
+/* 0x42A0 [0x6B 0x0E 0x34          ] */ notedv      PITCH_E4, 14, 52
+/* 0x42A6 [0x67 0x81 0xFA 0x3C     ] */ notedv      PITCH_C4, 506, 60
+/* 0x42AA [0xFF                    ] */ end
+
+.layer LAYER_EV_SIGNAL_BIGBELL_3
+/* 0x3F98 [0xC6 0x64               ] */ instr       SF0_INST_94
+/* 0x3F9A [0xCB 0xC1 0xC4 0xA0     ] */ env         ENVELOPE_C1C4, 160
+/* 0x3F9E [0xFF                    ] */ end
+
+.channel CHAN_EV_SECRET_LADDER_APPEAR
+/* 0x5067 [0x88 0x50 0x6B          ] */ ldlayer     0, LAYER_EV_SECRET_LADDER_APPEAR
+/* 0x506A [0xFF                    ] */ end
+
+.layer LAYER_EV_SECRET_LADDER_APPEAR
+/* 0x506B [0xC6 0x5A               ] */ instr       SF0_INST_90
+/* 0x506D [0xCB 0xC0 0x18 0xF0     ] */ env         ENVELOPE_6694, 240
+/* 0x5071 [0xC2 0x35               ] */ transpose   53
+/* 0x5073 [0xC7 0x82 0x14 0x78     ] */ portamento  0x82, PITCH_F2, 120
+/* 0x5077 [0x4E 0x81 0x39 0x64     ] */ notedv      PITCH_B1, 313, 100
+/* 0x507B [0xFF                    ] */ end
+
 #define DEFINE_SFX(lblName, sfxId, priority, decay, rand, flags) \
     entry lblName
 
@@ -15447,6 +15494,17 @@ LAYER_6576:
 /* 0x833F [0x46 0x00 0x64          ] */ notedv      SF1_EFFECT_39, 0, 100
 /* 0x8342 [0xFF                    ] */ end
 
+.channel CHAN_EN_BOMCHU_WALK
+/* 0x6202 [0x88 0x62 0x08          ] */ ldlayer     0, LAYER_EN_BOMCHU_WALK
+/* 0x6205 [0xFF                    ] */ end
+
+.layer LAYER_EN_BOMCHU_WALK
+/* 0x6208 [0xC6 0x15               ] */ instr       SF1_INST_15
+/* 0x620A [0xC2 0x30               ] */ transpose   48
+/* 0x620C [0x6B 0x0A 0x50          ] */ notedv      PITCH_E4, 10, 80
+/* 0x620F [0x69 0x0A 0x50          ] */ notedv      PITCH_D4, 10, 80
+/* 0x6212 [0xFF                    ] */ end
+
 .channel CHAN_EN_KUROSUKE_MOVE
 /* 0x6D6C [0x88 0x6D 0x74          ] */ ldlayer     0, LAYER_EN_KUROSUKE_MOVE
 /* 0x6D6F [0xD7 0x50               ] */ vibfreq     80
@@ -16458,6 +16516,15 @@ ENVELOPE_6A6C:
     point 1, 32700
     point 350, 30000
     point 200, 5000
+    hang
+
+.envelope ENVELOPE_C1C0
+    point 44, 32700
+.envelope ENVELOPE_C1C4
+    point 1, 32700
+    point 50, 30000
+    point 300, 17700
+    point 700, 0
     hang
 
 .envelope ENVELOPE_C4DC

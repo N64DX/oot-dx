@@ -4248,7 +4248,7 @@ void func_80836448(PlayState* play, Player* this, LinkAnimationHeader* anim) {
     if (this->actor.category == ACTORCAT_PLAYER) {
         Audio_SetBgmVolumeOffDuringFanfare();
 
-        if (Inventory_ConsumeFairy(play)) {
+        if (Inventory_ConsumeFairy(play) && !play->timeChallengeModeEnded) {
             play->gameOverCtx.state = GAMEOVER_REVIVE_START;
             this->av1.actionVar1 = 1;
         } else {
