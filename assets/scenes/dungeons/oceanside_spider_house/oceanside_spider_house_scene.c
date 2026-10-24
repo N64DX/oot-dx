@@ -8,6 +8,7 @@
 #include "segment_symbols.h"
 #include "sequence.h"
 #include "skybox.h"
+#include "cutscene_commands.h"
 #include "ultra64.h"
 #include "save.h"
 
@@ -71,6 +72,23 @@ EnvLightSettings oceanside_spider_house_sceneLightSettings0x000168[] = {
     { 0x1F, 0x17, 0x19, 0x45, 0x45, 0x45, 0x00, 0x23, 0x14, 0xBB, 0xBB, 0xBB, 0x00, 0x23, 0x14, 0x00, 0x00, 0x00, 0xFFD4, 0x1A90 },
     { 0x78, 0x5A, 0x00, 0x45, 0x45, 0x45, 0xFA, 0x87, 0x32, 0xBB, 0xBB, 0xBB, 0x1E, 0x1E, 0x3C, 0x1C, 0x14, 0x00, 0x07E1, 0x3200 },
     { 0x28, 0x28, 0x46, 0x45, 0x45, 0x45, 0x14, 0x14, 0x23, 0xBB, 0xBB, 0xBB, 0x32, 0x32, 0x64, 0x00, 0x00, 0x1E, 0x07E0, 0x3200 },
+};
+
+CutsceneData gRoyalVaultBombwallCs[] = {
+    CS_HEADER(2, 35),
+    CS_CAM_EYE_SPLINE(0, 35),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0, 0, CS_FLOAT(0x42700000, 60.000000f), 96, 638, 381, 0),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0, 0, CS_FLOAT(0x42700000, 60.000000f), 96, 638, 381, 0),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0, 0, CS_FLOAT(0x42700000, 60.000000f), 96, 638, 381, 0),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0, 0, CS_FLOAT(0x42700000, 60.000000f), 96, 638, 381, 0),
+        CS_CAM_POINT(CS_CAM_STOP, 0, 0, CS_FLOAT(0x42700000, 60.000000f), 96, 638, 381, 0),
+    CS_CAM_AT_SPLINE(0, 35),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0, 0, CS_FLOAT(0x42700000, 60.000000f), -27, 601, 184, 0),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0, 0, CS_FLOAT(0x42700000, 60.000000f), -27, 601, 184, 0),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0, 0, CS_FLOAT(0x42700000, 60.000000f), -27, 601, 184, 0),
+        CS_CAM_POINT(CS_CAM_CONTINUE, 0, 0, CS_FLOAT(0x42700000, 60.000000f), -27, 601, 184, 0),
+        CS_CAM_POINT(CS_CAM_STOP, 0, 0, CS_FLOAT(0x42700000, 60.000000f), -27, 601, 184, 0),
+    CS_END_OF_SCRIPT(),
 };
 
 Vec3s oceanside_spider_house_scenePathwayList_0001C0[] = {

@@ -13,11 +13,14 @@
 #include "ichain.h"
 #include "sfx.h"
 #include "play_state.h"
-#include "array_count.h"
-#include "one_point_cutscene.h"
+#include "player.h"
 #include "save.h"
+#include "array_count.h"
+#include "cutscene.h"
+#include "one_point_cutscene.h"
 
 #include "assets/objects/object_numa_obj/object_numa_obj.h"
+#include "assets/scenes/dungeons/woodfall_temple/woodfall_temple_scene.h"
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_HOOKSHOT_PULLS_PLAYER)
 
@@ -226,9 +229,10 @@ void BgNumaHana_ClosedIdle(BgNumaHana* this, PlayState* play) {
     if (this->fire.state != FIRE_STATE_NOT_LIT) {
         Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_FLAME_IGNITION);
         Flags_SetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE);
+        Cutscene_SetScript(play, gWoodfallTempleBigWoodenFlowerCs);
+        gSaveContext.cutsceneTrigger = 1;
+        Player_SetCsActionWithHaltedActors(play, &this->dyna.actor, PLAYER_CSACTION_49);
         BgNumaHana_SetupUnfoldInnerPetals(this);
-        if (!Player_InCsMode(play))
-            OnePointCutscene_Attention(play, &this->dyna.actor);
     }
 }
 
