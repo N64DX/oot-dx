@@ -4265,7 +4265,7 @@ void Energy_Draw(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_parameter.c", 5591);
 }
 
-void Energy_Update(PlayState* play) {
+void Energy_Update(PlayState* play, Player* player) {
     if (R_SPECIAL_POWER_TIMER > 0)
         R_SPECIAL_POWER_TIMER--;
 
@@ -4275,8 +4275,8 @@ void Energy_Update(PlayState* play) {
     if (gSaveContext.save.info.energy > Player_GetMaxEnergy())
         gSaveContext.save.info.energy = Player_GetMaxEnergy();
 
-    if (R_IS_DASHING) { // Don't regen energy while dashing
-        f32 interval = CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) ? 0.1 : 0.15;
+    if (R_IS_DASHING || (player->stateFlags3 & PLAYER_STATE3_ZORA_SWIMMING)) { // Don't regen energy while dashing or zora swimming
+        f32 interval = R_IS_DASHING ? (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) ? 0.1f : 0.15f) : (CHECK_UPGRADE_ITEM(UPGRADE_AMULET_OF_ENERGY) ? 0.3f : 0.0f);
         if (++sDashEnergyTimer >= SECONDS(interval)) {
             sDashEnergyTimer = 0;
             gSaveContext.save.info.energy = CLAMP(gSaveContext.save.info.energy - 1, 0, 255);
@@ -5631,7 +5631,7 @@ void Interface_Update(PlayState* play) {
         }
 
         Magic_Update(play);
-        Energy_Update(play);
+        Energy_Update(play, player);
     }
 
     if (gSaveContext.timerState == TIMER_STATE_OFF) {
