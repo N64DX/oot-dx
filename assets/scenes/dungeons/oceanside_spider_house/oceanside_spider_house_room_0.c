@@ -40,10 +40,10 @@ ActorEntry oceanside_spider_house_room_0ActorEntry_00005C[] = {
     { ACTOR_EN_SW,            {   60, 380, -220 }, {      0, 0xC000,      0 }, 0x0000 },
     { ACTOR_EN_SW,            {  -60, 450, -120 }, {      0, 0x4000,      0 }, 0x0000 },
     { ACTOR_EN_SW,            {  -50, 570, -890 }, { 0x1800,      0,      0 }, 0x0000 },
-    { ACTOR_OBJ_TSUBO,        { -195, 180, -673 }, {      0,      0,      0 }, 0x5A04 }, // Collect: 2D, drops Bomb
-    { ACTOR_OBJ_TSUBO,        { -255, 180, -735 }, {      0,      0,      0 }, 0x5C0E }, // Collect: 2C, drops Small Magic Jar
-    { ACTOR_OBJ_TSUBO,        {  190, 180, -672 }, {      0,      0,      0 }, 0x6001 }, // Collect: 30, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,        {  252, 180, -732 }, {      0,      0,      0 }, 0x6201 }, // Collect: 31, drops Blue Rupee
+    { ACTOR_OBJ_TSUBO,        { -195, 180, -673 }, {      0,      0,      0 }, 0x4004 }, // Collect: 20, drops Bomb
+    { ACTOR_OBJ_TSUBO,        { -255, 180, -735 }, {      0,      0,      0 }, 0x420E }, // Collect: 21, drops Small Magic Jar
+    { ACTOR_OBJ_TSUBO,        {  190, 180, -672 }, {      0,      0,      0 }, 0x4401 }, // Collect: 22, drops Blue Rupee
+    { ACTOR_OBJ_TSUBO,        {  252, 180, -732 }, {      0,      0,      0 }, 0x4601 }, // Collect: 23, drops Blue Rupee
     { ACTOR_OBJ_SYOKUDAI,     {  255, 180, -855 }, {      0,      0,      0 }, 0x243F },
     { ACTOR_OBJ_SYOKUDAI,     { -255, 180, -855 }, {      0,      0,      0 }, 0x243F },
     { ACTOR_OBJ_HSBLOCK,      {    1, 475, -634 }, { 0x2000, 0x8000,      0 }, 0x0002 },
@@ -52,7 +52,7 @@ ActorEntry oceanside_spider_house_room_0ActorEntry_00005C[] = {
   //{ ACTOR_EN_STH,           { -217, 180, -793 }, {      0,   0xF2,      0 }, 0xFE05 },
     { ACTOR_BG_SPDWEB,        {    4, 400, -909 }, { 0x25B0, 0xCEEE, 0xB555 }, 0x0A01 },
     { ACTOR_BG_SPDWEB,        { -141, 450, -906 }, { 0x471C, 0xCEEE, 0xB555 }, 0x0B01 },
-    { ACTOR_BG_KIN2_BOMBWALL, {    0, 540,  170 }, {      0,      0,      0 }, 0x0019 },
+    { ACTOR_BG_KIN2_BOMBWALL, {    0, 540,  170 }, {      0,      0,      1 }, 0x0019 },
 };
 
 RoomShapeCullable oceanside_spider_house_room_0RoomShapeCullable_000160 = { 

@@ -14,7 +14,7 @@ SceneCmd old_lost_woods_room_0[] = {
     SCENE_CMD_TIME_SETTINGS(255, 255, 0),
     SCENE_CMD_ROOM_SHAPE(&old_lost_woods_room_0MeshHeader_0008D0),
     SCENE_CMD_OBJECT_LIST(10, old_lost_woods_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(130, old_lost_woods_room_0ActorList_000048),
+    SCENE_CMD_ACTOR_LIST(133, old_lost_woods_room_0ActorList_000048),
     SCENE_CMD_END(),
 };
 
@@ -40,6 +40,9 @@ s16 old_lost_woods_room_0ObjectList_000040[] = {
 ActorEntry old_lost_woods_room_0ActorList_000048[] = {
     { ACTOR_EN_RIVER_SOUND, {  -195,  193, -3014 }, {      0,      0,      0 }, 0x0001 },
     { ACTOR_EN_A_OBJ,       {  -322,  189,  -240 }, {      0, 0xE000,      0 }, 0x4A09 },
+    { ACTOR_EN_A_OBJ,       {  -600,  222, -1500 }, {      0, 0x3000,      0 }, 0x6309 },
+    { ACTOR_EN_A_OBJ,       {  3250,  200,  -375 }, {      0, 0xC000,      0 }, 0x6409 },
+    { ACTOR_EN_A_OBJ,       {  1950,  160,  3450 }, {      0, 0xA000,      0 }, 0x6509 },
     { ACTOR_OBJ_BOMBIWA,    {   373,  209,    76 }, {      0,      0,      0 }, 0x0008 },
     { ACTOR_OBJ_BOMBIWA,    {   856,  183, -1546 }, {      0,      0,      0 }, 0x0009 },
     { ACTOR_EN_PEEHAT,      { -1924,   82,   916 }, {      0,      0,      0 }, 0xFFFE },

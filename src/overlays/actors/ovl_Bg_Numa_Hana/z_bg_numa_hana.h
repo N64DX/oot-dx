@@ -41,6 +41,7 @@ typedef struct BgNumaHana {
     /* 0x33A */ s16 outerPetalAngularVelocityZ;
     /* 0x33C */ s16 flowerAngularVelocity;
     /* 0x33E */ s16 transitionTimer;
-} BgNumaHana; // size = 0x340
+    /* 0x340 */ u8 csId;
+} BgNumaHana; // size = 0x344
 
 #endif

@@ -63,6 +63,7 @@ typedef struct EnDinofos {
     /* 0x28C */ s16 targetRotY;
     /* 0x28E */ s16 headRotY;
     /* 0x290 */ union { // multi-use timer
+        s16 cutsceneTimer;
         s16 attackTimer;
         s16 actionTimer;
         s16 headTimer;
@@ -77,6 +78,7 @@ typedef struct EnDinofos {
         s16 idleTimer;
     };
     /* 0x294 */ u8 switchFlag;
+    /* 0x295 */ u8 csId;
     /* 0x2A0 */ s32 effectIndex;
     /* 0x2A4 */ f32 circlingRate;
     /* 0x2B0 */ f32 drawDmgEffAlpha;
@@ -86,6 +88,11 @@ typedef struct EnDinofos {
     /* 0x364 */ ColliderJntSph bodyAndFireCollider;
     /* 0x384 */ ColliderJntSphElement bodyAndFireColliderElements[9];
     /* 0x5C4 */ ColliderQuad knifeCollider;
+    /* 0x644 */ s16 subCamId;
+    /* 0x648 */ f32 subCamAtStep;
+    /* 0x64C */ f32 subCamEyeStep;
+    /* 0x650 */ Vec3f subCamEye;
+    /* 0x65C */ Vec3f subCamAt;
 } EnDinofos; // size = 0x644
 
 #endif

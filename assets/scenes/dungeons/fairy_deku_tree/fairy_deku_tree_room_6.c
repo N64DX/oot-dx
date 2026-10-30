@@ -12,20 +12,18 @@ SceneCmd fairy_deku_tree_room_6[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&fairy_deku_tree_room_6MeshHeader0x000100),
-    SCENE_CMD_OBJECT_LIST(10, fairy_deku_tree_room_6ObjectList0x000038),
+    SCENE_CMD_OBJECT_LIST(8, fairy_deku_tree_room_6ObjectList0x000038),
     SCENE_CMD_ACTOR_LIST(12, fairy_deku_tree_room_6ActorList0x000048),
     SCENE_CMD_END(),
 };
 
 s16 fairy_deku_tree_room_6ObjectList0x000038[] = {
+    OBJECT_DEKU_DOOR,
     OBJECT_BOX,
     OBJECT_KIBAKO2,
-    OBJECT_FR,
     OBJECT_SYOKUDAI,
     OBJECT_YDAN_OBJECTS,
-    OBJECT_GOL,
-    OBJECT_ST,
-    OBJECT_TP,
+    OBJECT_KUSA,
     OBJECT_DEKUBABA,
     OBJECT_DEKU_PLATFORMS,
 };

@@ -503,13 +503,7 @@ void Play_Init(GameState* thisx) {
 
     if (!IS_CUTSCENE_LAYER) {
         u8 sceneId = gEntranceTable[((void)0, gSaveContext.save.entranceIndex)].sceneId;
-        if (sceneId == SCENE_GROTTOS2) {
-            if (gSaveContext.save.entranceIndex == ENTR_GROTTOS_7)
-                gSaveContext.sceneLayer = 1;
-            else if (gSaveContext.save.entranceIndex == ENTR_CAVE_PASSAGE_0 || gSaveContext.save.entranceIndex == ENTR_CAVE_PASSAGE_1)
-                gSaveContext.sceneLayer = 2;
-            else gSaveContext.sceneLayer = 0;
-        } else if (IS_CHILD_QUEST) {
+        if (IS_CHILD_QUEST) {
             if (GET_EVENTCHKINF(EVENTCHKINF_45)) {
                 if (sceneId == SCENE_KOKIRI_FOREST) 
                     gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_48) ? 3 : 2;
@@ -1825,8 +1819,10 @@ void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn) {
             textId = SCENE_REDEAD_GRAVE;
         else if (sceneId == SCENE_CASTLE_COURTYARD_GUARDS_NIGHT)
             textId = SCENE_CASTLE_COURTYARD_GUARDS_DAY;
-        else if (sceneId == SCENE_GROTTOS2)
+        else if (sceneId == SCENE_GROTTOS2 || sceneId == SCENE_GROTTOS_GROVE)
             textId = SCENE_GROTTOS;
+        else if (sceneId == SCENE_STONE_TOWER_INVERTED)
+            textId = SCENE_STONE_TOWER_TEMPLE;
         else if (gSaveContext.save.entranceIndex == ENTR_WINDMILL_AND_DAMPES_GRAVE_0 || gSaveContext.save.entranceIndex == ENTR_LON_LON_BUILDINGS_1 || (sceneId == SCENE_MARKET_GUARD_HOUSE && gSaveContext.sceneLayer >= 2 && gSaveContext.sceneLayer <= 3) )
             textId += 0x100;
         textId += 0xA000;
@@ -2127,14 +2123,14 @@ u8 Play_GetOriginalSceneId(u8 sceneId) {
 
     else if (sceneId == SCENE_FORBIDDEN_WOODS) // Reusing shop scenes for other scenes
         return SCENE_BAZAAR;
-    else if (sceneId == SCENE_GROTTOS2)
+    else if (sceneId == SCENE_GROTTOS2 || SCENE_GROTTOS_GROVE || SCENE_CAVE_PASSAGE)
         return SCENE_GORON_SHOP;
     else if (sceneId == SCENE_WEBBED_SHRINE)
         return SCENE_ZORA_SHOP;
-    else if (sceneId == SCENE_BENEATH_THE_GRAVEYARD)
-        return SCENE_POTION_SHOP_KAKARIKO;
     else if (sceneId == SCENE_ROYAL_VAULT)
         return SCENE_POTION_SHOP_MARKET;
+    else if (sceneId == SCENE_BENEATH_THE_GRAVEYARD)
+        return SCENE_POTION_SHOP_KAKARIKO;
 
     else if (sceneId == SCENE_RIVERSIDE_INN) // Reusing Kokiri Shop scene several times for shops with almost no flags in them
         return SCENE_KOKIRI_SHOP;
@@ -2184,7 +2180,7 @@ void Play_SetupRespawnPoint(PlayState* this, s32 respawnMode, s32 playerParams) 
     s32 entranceIndex;
     s8 roomIndex;
 
-    if ((this->sceneId != SCENE_FAIRYS_FOUNTAIN) && (this->sceneId != SCENE_GROTTOS) && (this->sceneId != SCENE_GROTTOS2)) {
+    if ((this->sceneId != SCENE_FAIRYS_FOUNTAIN) && (this->sceneId != SCENE_GROTTOS) && (this->sceneId != SCENE_GROTTOS2) && (this->sceneId != SCENE_GROTTOS_GROVE)) {
         roomIndex = this->roomCtx.curRoom.num;
         entranceIndex = gSaveContext.save.entranceIndex;
         Play_SetRespawnData(this, respawnMode, entranceIndex, roomIndex, playerParams, &player->actor.world.pos,

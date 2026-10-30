@@ -110,9 +110,11 @@
 /* 0x62 */ DEFINE_SCENE(spot18_scene, g_pn_41, SCENE_GORON_CITY, SDC_GORON_CITY, 0, 0)
 /* 0x63 */ DEFINE_SCENE(spot20_scene, g_pn_42, SCENE_LON_LON_RANCH, SDC_LON_LON_RANCH, 0, 0)
 /* 0x64 */ DEFINE_SCENE(ganon_tou_scene, g_pn_43, SCENE_OUTSIDE_GANONS_CASTLE, SDC_OUTSIDE_GANONS_CASTLE, 0, 0)
+
+// New overworld scenes
 /* 0x65 */ DEFINE_SCENE(road_to_swamp_scene, none, SCENE_PATH_TO_WOODFALL, SDC_PATH_TO_WOODFALL, 0, 0)
-/* 0x66 */ DEFINE_SCENE(road_to_ikana_scene, none, SCENE_PATH_TO_FORTRESS, SDC_GERUDO_VALLEY, 0, 0)
-/* 0x67 */ DEFINE_SCENE(milk_road_scene, none, SCENE_PATH_TO_LAKE_HYLIA, SDC_HYRULE_FIELD, 0, 0)
+/* 0x66 */ DEFINE_SCENE(road_to_ikana_scene, none, SCENE_PATH_TO_FORTRESS, SDC_DEFAULT, 0, 0)
+/* 0x67 */ DEFINE_SCENE(milk_road_scene, none, SCENE_PATH_TO_LAKE_HYLIA, SDC_DEFAULT, 0, 0)
 /* 0x68 */ DEFINE_SCENE(mountain_village_scene, none, SCENE_SPRING_LAKE, SDC_SPRING_LAKE, 0, 0)
 /* 0x69 */ DEFINE_SCENE(woodfall_scene, none, SCENE_WOODFALL, SDC_WOODFALL, 0, 0)
 /* 0x6A */ DEFINE_SCENE(path_to_goron_village_scene, none, SCENE_PATH_TO_GORON_VILLAGE, SDC_PATH_TO_GORON_VILLAGE, 0, 0)
@@ -123,25 +125,34 @@
 /* 0x6F */ DEFINE_SCENE(ikana_canyon_scene, none, SCENE_FORSAKEN_KINGDOM, SDC_FORSAKEN_KINGDOM, 0, 0)
 /* 0x70 */ DEFINE_SCENE(ikana_graveyard_scene, none, SCENE_GLOOMY_GRAVEYARD, SDC_DEFAULT, 0, 0)
 /* 0x71 */ DEFINE_SCENE(stone_tower_scene, none, SCENE_STONE_TOWER, SDC_DEFAULT, 0, 0)
-/* 0x72 */ DEFINE_SCENE(old_lost_woods_scene, none, SCENE_FORBIDDEN_WOODS, SDC_FORBIDDEN_WOODS, 0, 0) // Reused sceneFlags from here on out
-/* 0x73 */ DEFINE_SCENE(grottos2_scene, none, SCENE_GROTTOS2, SDC_GROTTOS2, 0, 0)
-/* 0x74 */ DEFINE_SCENE(swamp_spider_house_scene, none, SCENE_WEBBED_SHRINE, SDC_DEFAULT, 0, 0)
-/* 0x75 */ DEFINE_SCENE(beneath_the_graveyard_scene, none, SCENE_BENEATH_THE_GRAVEYARD, SDC_BENEATH_THE_GRAVEYARD, 0, 0)
-/* 0x76 */ DEFINE_SCENE(oceanside_spider_house_scene, none, SCENE_ROYAL_VAULT, SDC_DEFAULT, 0, 0)
-/* 0x77 */ DEFINE_SCENE(dawngrove_inn_scene, none, SCENE_RIVERSIDE_INN, SDC_RIVERSIDE_INN, 0, 0)
-/* 0x78 */ DEFINE_SCENE(dawngrove_house_1_scene, none, SCENE_RIVERSIDE_HOUSE, SDC_DEFAULT, 0, 0)
-/* 0x79 */ DEFINE_SCENE(dawngrove_house_2_scene, none, SCENE_IGORS_HOUSE, SDC_DEFAULT, 0, 0)
-/* 0x7A */ DEFINE_SCENE(dawngrove_shop_scene, none, SCENE_ANCIENT_GROVE_SHOP, SDC_DEFAULT, 0, 0)
-/* 0x7B */ DEFINE_SCENE(mountain_smithy_scene, none, SCENE_SPRING_LAKE_SMITHY, SDC_SPRING_LAKE_SMITHY, 0, 0)
-/* 0x7C */ DEFINE_SCENE(stone_tower_inverted_scene, none, SCENE_STONE_TOWER_INVERTED, SDC_DEFAULT, 0, 0)
-/* 0x7D */ DEFINE_SCENE(fairy_deku_tree_scene, none, SCENE_ANCIENT_HOLLOW, SDC_ANCIENT_HOLLOW, 0, 0)
-/* 0x7E */ DEFINE_SCENE(old_dodongos_cavern_scene, none, SCENE_GORON_MINES, SDC_GORON_MINES, 0, 0)
-/* 0x7F */ DEFINE_SCENE(woodfall_temple_scene, none, SCENE_WOODFALL_TEMPLE, SDC_WOODFALL_TEMPLE, 0, 0)
-/* 0x80 */ DEFINE_SCENE(red_ice_cavern_scene, none, SCENE_PURPLE_ICE_CAVERN, SDC_DEFAULT, 0, 0)
-/* 0x81 */ DEFINE_SCENE(stone_tower_scene, none, SCENE_STONE_TOWER_TEMPLE, SDC_DEFAULT, 0, 0)
-/* 0x82 */ DEFINE_SCENE(stone_tower_inverted_scene, none, SCENE_STONE_TOWER_TEMPLE_INVERTED, SDC_DEFAULT, 0, 0)
-/* 0x83 */ DEFINE_SCENE(woodfall_temple_boss_scene, none, SCENE_WOODFALL_TEMPLE_BOSS, SDC_WOODFALL_TEMPLE, 0, 0)
+
+// New dungeon scenes
+/* 0x72 */ DEFINE_SCENE(fairy_deku_tree_scene, none, SCENE_ANCIENT_HOLLOW, SDC_ANCIENT_HOLLOW, 0, 0)
+/* 0x73 */ DEFINE_SCENE(old_dodongos_cavern_scene, none, SCENE_GORON_MINES, SDC_GORON_MINES, 0, 0)
+/* 0x74 */ DEFINE_SCENE(woodfall_temple_scene, none, SCENE_WOODFALL_TEMPLE, SDC_WOODFALL_TEMPLE, 0, 0)
+/* 0x75 */ DEFINE_SCENE(red_ice_cavern_scene, none, SCENE_PURPLE_ICE_CAVERN, SDC_DEFAULT, 0, 0)
+/* 0x76 */ DEFINE_SCENE(stone_tower_scene, none, SCENE_STONE_TOWER_TEMPLE, SDC_DEFAULT, 0, 0)
+
+// Scenes that share sceneFlags from here on out
+/* 0x77 */ DEFINE_SCENE(old_lost_woods_scene, none, SCENE_FORBIDDEN_WOODS, SDC_FORBIDDEN_WOODS, 0, 0) 
+/* 0x78 */ DEFINE_SCENE(swamp_spider_house_scene, none, SCENE_WEBBED_SHRINE, SDC_DEFAULT, 0, 0)
+/* 0x79 */ DEFINE_SCENE(oceanside_spider_house_scene, none, SCENE_ROYAL_VAULT, SDC_DEFAULT, 0, 0)
+/* 0x7A */ DEFINE_SCENE(beneath_the_graveyard_scene, none, SCENE_BENEATH_THE_GRAVEYARD, SDC_BENEATH_THE_GRAVEYARD, 0, 0)
+/* 0x7B */ DEFINE_SCENE(dawngrove_inn_scene, none, SCENE_RIVERSIDE_INN, SDC_RIVERSIDE_INN, 0, 0)
+/* 0x7C */ DEFINE_SCENE(dawngrove_house_1_scene, none, SCENE_RIVERSIDE_HOUSE, SDC_DEFAULT, 0, 0)
+/* 0x7D */ DEFINE_SCENE(dawngrove_house_2_scene, none, SCENE_IGORS_HOUSE, SDC_DEFAULT, 0, 0)
+/* 0x7E */ DEFINE_SCENE(dawngrove_shop_scene, none, SCENE_ANCIENT_GROVE_SHOP, SDC_DEFAULT, 0, 0)
+/* 0x7F */ DEFINE_SCENE(mountain_smithy_scene, none, SCENE_SPRING_LAKE_SMITHY, SDC_SPRING_LAKE_SMITHY, 0, 0)
+/* 0x80 */ DEFINE_SCENE(cave_passage_scene, none, SCENE_CAVE_PASSAGE, SDC_DEFAULT, 0, 0)
+
+// Scenes that both share sceneFlags and textIds from here on out (or lack a textId)
+/* 0x81 */ DEFINE_SCENE(stone_tower_inverted_scene, none, SCENE_STONE_TOWER_INVERTED, SDC_DEFAULT, 0, 0)
+/* 0x82 */ DEFINE_SCENE(woodfall_temple_boss_scene, none, SCENE_WOODFALL_TEMPLE_BOSS, SDC_WOODFALL_TEMPLE, 0, 0)
+/* 0x83 */ DEFINE_SCENE(stone_tower_inverted_scene, none, SCENE_STONE_TOWER_TEMPLE_INVERTED, SDC_DEFAULT, 0, 0)
 /* 0x84 */ DEFINE_SCENE(stone_tower_scene, none, SCENE_STONE_TOWER_TEMPLE_BOSS, SDC_DEFAULT, 0, 0)
+/* 0x85 */ DEFINE_SCENE(grottos2_scene, none, SCENE_GROTTOS2, SDC_GROTTOS2, 0, 0)
+/* 0x86 */ DEFINE_SCENE(dawngrove_grottos_scene, none, SCENE_GROTTOS_GROVE, SDC_GROTTOS_GROVE, 0, 0)
+
 // 0x7B (124th scene) = gSaveContext.save.info.sceneFlags MAX
 // 0x84 (133th scene) = gSaveContext.save.info.sceneFlags + gSaveContextExtended.sceneFlags MAX
 

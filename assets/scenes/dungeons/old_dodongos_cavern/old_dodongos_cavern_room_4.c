@@ -48,7 +48,7 @@ ActorEntry old_dodongos_cavern_room_4ActorList0x000048[] = {
     { ACTOR_EN_BEAST,       { 2471,   0, -3077 }, {          0, 0x8000, 0 }, 0x7F00 },
     { ACTOR_EN_BEAST,       { 2227,   0, -1935 }, {          0, 0x4000, 0 }, 0x7F00 },
     { ACTOR_EN_BEAST,       { 1524,   0, -3495 }, {          0, 0x1E94, 0 }, 0x7F00 },
-    { ACTOR_EN_ITEM00,      { 1398,   0, -4299 }, {          0,      0, 0 }, 0x2702 }, // Collect: 27, Red Rupee
+    { ACTOR_EN_ITEM00,      { 1398,   0, -4299 }, {          0,      0, 0 }, 0x3002 }, // Collect: 30, Red Rupee
     { ACTOR_BG_ICE_SHELTER, { 1100,   0, -3475 }, {          0,      0, 0 }, 0x0517 }, // Switch: 17
     { ACTOR_BG_WOOD_PILLAR, { 1100, -50, -3475 }, {          0,      0, 0 }, 0x0000 },
     { ACTOR_EN_KBT,         { 1100,   0, -3475 }, {          0, 0x4000, 0 }, 0x0017 }, // Checks switch: 17

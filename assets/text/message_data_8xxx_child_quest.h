@@ -3503,6 +3503,42 @@ MSG(),
 MSG()
 )
 
+DEFINE_MESSAGE(0x840D, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"Here to see the " COLOR(RED) "shrine" COLOR(DEFAULT) "? It\'s just up\n"
+"ahead. Just roll your way all the\n"
+"way to the top!"
+BOX_BREAK 
+"Wait... What do you mean you can\'t\n"
+"roll?\n"
+"Ohhhh... Uhh... You're not a Goron..."
+BOX_BREAK 
+"No worries, you can buy a pair of\n"
+"boots near " COLOR(ADJUSTABLE) "Goron Village" COLOR(DEFAULT) " that let\n"
+"you run up steep cliffs."
+BOX_BREAK 
+"Or... You could... Just freeze the\n"
+"lake over if you had the power of " COLOR(RED) "ice" COLOR(DEFAULT) ".\n"
+"Don\'t worry if you don\'t have it yet,\n"
+"as there\'s an " COLOR(RED) "Ice Torch" COLOR(DEFAULT) " near the lake."
+),
+MSG(),
+MSG()
+)
+
+DEFINE_MESSAGE(0x840E, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
+MSG(),
+MSG(
+"I see you obtained our " COLOR(RED) "Pegasus Boots" COLOR(DEFAULT) ".\n"
+"Excellent! This is by far the quickest\n"
+"path to traverse. Although not\n"
+"necessarily the safest one..."
+),
+MSG(),
+MSG()
+)
+
 DEFINE_MESSAGE(0x8410, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(

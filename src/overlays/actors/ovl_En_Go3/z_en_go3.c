@@ -281,6 +281,8 @@ u16 EnGo3_GetTextIdWebbedShrineDoor(PlayState* play, EnGo3* this) {
             if (GET_INFTABLE(INFTABLE_WEBBED_SHRINE_DOOR_OPENED))
                 return 0x840C;
             return 0x840A;
+        case 2:
+            return CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_BOOTS, EQUIP_INV_BOOTS_PEGASUS) ? 0x840E : 0x840D;
         default:
             return 0x8407;
     }

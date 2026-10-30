@@ -471,7 +471,7 @@ void Minimap_DrawCompassIcons(PlayState* play) {
         gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 255);
         gDPSetCombineMode(OVERLAY_DISP++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
 
-        if (play->sceneId >= SCENE_HYRULE_FIELD && play->sceneId < SCENE_GROTTOS2) { // Overworld
+        if (play->sceneId >= SCENE_HYRULE_FIELD && play->sceneId < SCENE_ANCIENT_HOLLOW) { // Overworld
             mapStartPosX = R_OW_MINIMAP_X + WS_SHIFT_HALF + (gMapData->overworldXOffset[extendedMapIndex]/2);
             mapWidth = gMapData->owMinimapWidth[R_MAP_INDEX];
         } else if (play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_ICE_CAVERN) { // Dungeons

@@ -63,6 +63,17 @@ void EnDinofos_SetupDie(EnDinofos* this);
 void EnDinofos_SetupLand(EnDinofos* this);
 void EnDinofos_SetupJump(EnDinofos* this);
 void EnDinofos_SetupJumpSlash(EnDinofos* this);
+void EnDinofos_EndCutscene(EnDinofos* this, PlayState* play);
+void EnDinofos_SetupPlayCutscene(EnDinofos* this);
+void EnDinofos_PlayCutscene(EnDinofos* this, PlayState* play);
+void EnDinofos_SetupIntroCutsceneBeforeFall(EnDinofos* this, PlayState* play);
+void EnDinofos_IntroCutsceneBeforeFall(EnDinofos* this, PlayState* play);
+void EnDinofos_SetupIntroCutsceneFall(EnDinofos* this);
+void EnDinofos_IntroCutsceneFall(EnDinofos* this, PlayState* play);
+void EnDinofos_SetupIntroCutsceneLandAndBreatheFire(EnDinofos* this);
+void EnDinofos_IntroCutsceneLandAndBreatheFire(EnDinofos* this, PlayState* play);
+void EnDinofos_SetupIntroCutsceneYell(EnDinofos* this);
+void EnDinofos_IntroCutsceneYell(EnDinofos* this, PlayState* play);
 
 ActorProfile En_Dinofos_Profile = {
     /**/ ACTOR_EN_DINOFOS,
@@ -266,6 +277,8 @@ static void* sEyeTextures[] = {
 };
 
 static s8 sNumAlive = 0;
+static s16 sCsId = 0;
+static u8 sIntroPending = false;
 static u8 getAggressive;
 
 static InitChainEntry sInitChain[] = {
@@ -331,8 +344,23 @@ void EnDinofos_Init(Actor* thisx, PlayState* play) {
             Actor_Kill(thisx);
     }
 
-    EnDinofos_SetupIdle(this);
-    this->actionFunc = EnDinofos_DoNothing;
+    this->csId = this->actor.home.rot.z;
+    this->actor.home.rot.z = this->actor.world.rot.z = this->actor.shape.rot.z = 0;
+    this->subCamId = SUB_CAM_ID_DONE;
+
+    if (this->csId != 0) {
+        this->actor.gravity = 0.0f;
+        this->actor.velocity.y = 0.0f;
+        sCsId = this->csId;
+        sIntroPending = (thisx->update != NULL);
+        EnDinofos_SetupPlayCutscene(this);
+    }
+    else {
+        this->actor.gravity = 0.0f;
+        this->actor.velocity.y = 0.0f;
+        EnDinofos_SetupIdle(this);
+        this->actionFunc = EnDinofos_DoNothing;
+    }
     this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, ELITE_HP);
     this->actor.colChkInfo.defense = 3.0f;
 
@@ -480,6 +508,168 @@ u8 EnDinofos_Dodge(EnDinofos* this, PlayState* play) {
     return false;
 }
 
+void EnDinofos_EndCutscene(EnDinofos* this, PlayState* play) {
+    if (this->csId != 0)
+        sIntroPending = false;
+
+    if (this->subCamId != SUB_CAM_ID_DONE) {
+        Camera* subCam = Play_GetCamera(play, this->subCamId);
+
+        Play_SetCameraAtEye(play, CAM_ID_MAIN, &subCam->at, &subCam->eye);
+        Play_ReturnToMainCam(play, this->subCamId, 0);
+        this->subCamId = SUB_CAM_ID_DONE;
+        Cutscene_StopManual(play, &play->csCtx);
+        Player_SetCsAction(play, &this->actor, PLAYER_CSACTION_7);
+    }
+}
+
+void EnDinofos_SetupPlayCutscene(EnDinofos* this) {
+    this->actionFunc = EnDinofos_PlayCutscene;
+}
+
+void EnDinofos_PlayCutscene(EnDinofos* this, PlayState* play) {
+    Vec3f subCamEye;
+
+    if (play->csCtx.state == CS_STATE_IDLE) {
+        Camera* mainCam;
+
+        Cutscene_StartManual(play, &play->csCtx);
+        Player_SetCsAction(play, &this->actor, PLAYER_CSACTION_1);
+        Play_ClearAllSubCameras(play);
+        this->subCamId = Play_CreateSubCamera(play);
+        Play_ChangeCameraStatus(play, CAM_ID_MAIN, CAM_STAT_WAIT);
+        Play_ChangeCameraStatus(play, this->subCamId, CAM_STAT_ACTIVE);
+
+        mainCam = Play_GetCamera(play, CAM_ID_MAIN);
+        Play_SetCameraAtEye(play, this->subCamId, &mainCam->at, &mainCam->eye);
+
+        if (this->actor.colChkInfo.health == 0) {
+            subCamEye.x = (Math_SinS(this->actor.shape.rot.y) * 150.0f) + this->actor.focus.pos.x;
+            subCamEye.y = this->actor.focus.pos.y;
+            subCamEye.z = (Math_CosS(this->actor.shape.rot.y) * 150.0f) + this->actor.focus.pos.z;
+            Play_SetCameraAtEye(play, this->subCamId, &this->actor.focus.pos, &subCamEye);
+            EnDinofos_SetupDie(this);
+        }
+        else EnDinofos_SetupIntroCutsceneBeforeFall(this, play);
+    }
+}
+
+void EnDinofos_SetupIntroCutsceneBeforeFall(EnDinofos* this, PlayState* play) {
+    Camera* subCam = Play_GetCamera(play, this->subCamId);
+    Player* player = GET_PLAYER(play);
+    Vec3f diffToPlayer;
+
+    Animation_Change(&this->skelAnime, &gDinolfosJumpAnim, 1.0f, Animation_GetLastFrame(&gDinolfosJumpAnim), Animation_GetLastFrame(&gDinolfosJumpAnim), ANIMMODE_ONCE, 0.0f);
+    Math_Vec3f_Diff(&this->actor.world.pos, &player->actor.world.pos, &diffToPlayer);
+    this->subCamEye.x = player->actor.world.pos.x + (0.4f * diffToPlayer.x);
+    this->subCamEye.y = player->actor.world.pos.y + 5.0f;
+    this->subCamEye.z = player->actor.world.pos.z + (0.4f * diffToPlayer.z);
+    this->subCamAt.x = this->actor.world.pos.x;
+    this->subCamAt.y = this->actor.focus.pos.y - 400.0f;
+    this->subCamAt.z = this->actor.world.pos.z;
+    this->subCamEyeStep = Math_Vec3f_DistXYZ(&subCam->eye, &this->subCamEye) * 0.05f;
+    this->subCamAtStep = Math_Vec3f_DistXYZ(&subCam->at, &this->subCamAt) * 0.05f;
+    this->cutsceneTimer = 20;
+    this->actionFunc = EnDinofos_IntroCutsceneBeforeFall;
+}
+
+void EnDinofos_IntroCutsceneBeforeFall(EnDinofos* this, PlayState* play) {
+    Camera* subCam = Play_GetCamera(play, this->subCamId);
+
+    this->cutsceneTimer--;
+    Math_Vec3f_StepTo(&subCam->eye, &this->subCamEye, this->subCamEyeStep);
+    Math_Vec3f_StepTo(&subCam->at, &this->subCamAt, this->subCamAtStep);
+    Play_SetCameraAtEye(play, this->subCamId, &subCam->at, &subCam->eye);
+
+    if (this->cutsceneTimer == 0)
+        EnDinofos_SetupIntroCutsceneFall(this);
+}
+
+void EnDinofos_SetupIntroCutsceneFall(EnDinofos* this) {
+    this->actor.gravity = -2.0f;
+    Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_CRY);
+    this->subCamEye.x = (Math_SinS(this->actor.shape.rot.y - 0x0E00) * 86.0f) + this->actor.world.pos.x;
+    this->subCamEye.y = this->actor.floorHeight + 6.0f;
+    this->subCamEye.z = (Math_CosS(this->actor.shape.rot.y - 0x0E00) * 86.0f) + this->actor.world.pos.z;
+    this->cutsceneTimer = 0;
+    this->actionFunc = EnDinofos_IntroCutsceneFall;
+}
+
+void EnDinofos_IntroCutsceneFall(EnDinofos* this, PlayState* play) {
+    Camera* subCam = Play_GetCamera(play, this->subCamId);
+    Vec3f subCamAt;
+
+    Math_Vec3f_StepTo(&subCam->eye, &this->subCamEye, 10.0f);
+    this->cutsceneTimer++;
+
+    if (this->cutsceneTimer == 10)
+        func_800F5ACC(NA_BGM_MINI_BOSS2);
+
+    subCamAt.x = this->actor.world.pos.x;
+    subCamAt.z = this->actor.world.pos.z;
+    if (this->actor.focus.pos.y <= subCam->at.y)
+        subCamAt.y = this->actor.focus.pos.y;
+    else subCamAt.y = subCam->at.y;
+
+    Play_SetCameraAtEye(play, this->subCamId, &subCamAt, &subCam->eye);
+    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)
+        EnDinofos_SetupIntroCutsceneLandAndBreatheFire(this);
+}
+
+void EnDinofos_SetupIntroCutsceneLandAndBreatheFire(EnDinofos* this) {
+    if (this->cutsceneTimer < 10)
+        func_800F5ACC(NA_BGM_MINI_BOSS2);
+
+    Animation_PlayOnce(&this->skelAnime, &gDinolfosIntroAnim);
+    this->subCamEye.x = (Math_SinS(this->actor.shape.rot.y + 0x200) * 123.0f) + this->actor.world.pos.x;
+    this->subCamEye.y = this->actor.floorHeight + 11.0f;
+    this->subCamEye.z = (Math_CosS(this->actor.shape.rot.y + 0x200) * 123.0f) + this->actor.world.pos.z;
+    Actor_PlaySfx(&this->actor, NA_SE_EN_BOMCHU_WALK);
+    this->cutsceneTimer = 0;
+    this->timer2 = -1;
+    this->actionFunc = EnDinofos_IntroCutsceneLandAndBreatheFire;
+}
+
+void EnDinofos_IntroCutsceneLandAndBreatheFire(EnDinofos* this, PlayState* play) {
+    Camera* subCam = Play_GetCamera(play, this->subCamId);
+
+    this->cutsceneTimer++;
+    if (this->cutsceneTimer < 8)
+        Play_SetCameraAtEye(play, this->subCamId, &this->actor.focus.pos, &subCam->eye);
+
+    if (this->skelAnime.curFrame > 35.0f) {
+        if (play->sceneId == SCENE_WOODFALL_TEMPLE && Animation_OnFrame(&this->skelAnime, 38.0f))
+            play->envCtx.lightSettingOverride = 11;
+
+        Math_Vec3f_StepTo(&subCam->eye, &this->subCamEye, 10.0f);
+        Play_SetCameraAtEye(play, this->subCamId, &this->actor.focus.pos, &subCam->eye);
+        if (this->skelAnime.curFrame <= 55.0f)
+            Actor_PlaySfx_Flagged(&this->actor, NA_SE_EN_DODO_J_FIRE - SFX_FLAG);
+    }
+
+    if (play->sceneId == SCENE_WOODFALL_TEMPLE && Animation_OnFrame(&this->skelAnime, 55.0f))
+        play->envCtx.lightSettingOverride = LIGHT_SETTING_OVERRIDE_NONE;
+
+    if (SkelAnime_Update(&this->skelAnime))
+        EnDinofos_SetupIntroCutsceneYell(this);
+}
+
+void EnDinofos_SetupIntroCutsceneYell(EnDinofos* this) {
+    Animation_MorphToPlayOnce(&this->skelAnime, &gDinolfosCryAnim, -3.0f);
+    this->actionFunc = EnDinofos_IntroCutsceneYell;
+}
+
+void EnDinofos_IntroCutsceneYell(EnDinofos* this, PlayState* play) {
+    if (Animation_OnFrame(&this->skelAnime, 2.0f))
+        Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_ATTACK);
+
+    if (SkelAnime_Update(&this->skelAnime)) {
+        EnDinofos_EndCutscene(this, play);
+        this->csId = 0;
+        EnDinofos_SetupIdle(this);
+    }
+}
+
 void EnDinofos_SetupIdle(EnDinofos* this) {
     Animation_MorphToLoop(&this->skelAnime, &gDinolfosIdleAnim, -4.0f);
     this->actionTimer = (s32)Rand_ZeroFloat(20.0f) + 40;
@@ -491,6 +681,10 @@ void EnDinofos_SetupIdle(EnDinofos* this) {
 }
 
 void EnDinofos_DoNothing(EnDinofos* this, PlayState* play) {
+    if (sIntroPending || Play_InCsMode(play))
+        return;
+
+    this->actor.gravity = -2.0f;
     SkelAnime_Update(&this->skelAnime);
 
     if (getAggressive)
@@ -758,7 +952,7 @@ void EnDinofos_SetupLand(EnDinofos* this) {
 
     this->actor.speed = 0.0f;
     EnDinofos_EnableBumperCollision(this);
-  //Actor_PlaySfx(&this->actor, NA_SE_EN_BOMCHU_WALK);
+    Actor_PlaySfx(&this->actor, NA_SE_EN_BOMCHU_WALK);
     this->actionFunc = EnDinofos_Land;
 }
 
@@ -1009,8 +1203,10 @@ void EnDinofos_Die(EnDinofos* this, PlayState* play) {
     if (SkelAnime_Update(&this->skelAnime)) {
         s32 envColorAlpha = this->envColorAlpha - 10;
 
-        if (this->actor.category == ACTORCAT_ENEMY)
+        if (this->actor.category == ACTORCAT_ENEMY) {
             Actor_ChangeCategory(play, &play->actorCtx, &this->actor, ACTORCAT_PROP);
+            EnDinofos_EndCutscene(this, play);
+        }
 
         if (envColorAlpha <= 0) {
             if (this->switchFlag <= 0x3F && sNumAlive == 0)
@@ -1098,6 +1294,8 @@ u8 EnDinofos_UpdateDamage(EnDinofos* this, PlayState* play) {
         if (!Actor_ApplyDamage(&this->actor)) {
             Enemy_StartFinishingBlow(play, &this->actor);
             sNumAlive--;
+            if (sCsId != 0)
+                func_800F5B58();
         }
 
         EnDinofos_ThawIfFrozen(this, play);
@@ -1267,6 +1465,20 @@ void EnDinofos_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* 
         Matrix_MultVecX(300.0f, &this->actor.shape.feetPos[0]);
     else if (limbIndex == DINOLFOS_LIMB_RIGHT_CLAWS)
         Matrix_MultVecX(300.0f, &this->actor.shape.feetPos[1]);
+
+    if (limbIndex == DINOLFOS_LIMB_HEAD && this->actionFunc == EnDinofos_IntroCutsceneLandAndBreatheFire && this->skelAnime.curFrame > 38.0f && this->skelAnime.curFrame <= 55.0f && this->timer2 != this->cutsceneTimer) {
+        MtxF* matrix = Matrix_GetCurrent();
+        s32 dimAlphaStep = 48 - (s32)this->skelAnime.curFrame;
+        Vec3f fireVelocity;
+        Vec3f zeroAccel = { 0.0f, 0.0f, 0.0f };
+        dimAlphaStep = CLAMP_MIN(dimAlphaStep, 0);
+        Matrix_MultVec3f(&sCsFireVelocityOffset, &fireVelocity);
+        fireVelocity.x -= matrix->mf[3][0];
+        fireVelocity.y -= matrix->mf[3][1];
+        fireVelocity.z -= matrix->mf[3][2];
+        EffectSsDinoFire_Spawn(play, &this->bodyPartsPos[DINOFOS_BODYPART_JAW], &fireVelocity, &zeroAccel, 30, 22, 255 - (dimAlphaStep * 20), 20, 8);
+        this->timer2 = this->cutsceneTimer;
+    }
 }
 
 void EnDinofos_Draw(Actor* thisx, PlayState* play) {

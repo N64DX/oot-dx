@@ -18,15 +18,15 @@ SceneCmd fairy_deku_tree_room_2[] = {
 };
 
 s16 fairy_deku_tree_room_2ObjectList0x000038[] = {
+    OBJECT_DEKU_DOOR,
     OBJECT_BOX,
     OBJECT_KIBAKO2,
-    OBJECT_FR,
     OBJECT_SYOKUDAI,
     OBJECT_YDAN_OBJECTS,
-    OBJECT_GOL,
+    OBJECT_KUSA,
+    OBJECT_DEKUBABA,
     OBJECT_ST,
     OBJECT_TP,
-    OBJECT_DEKUBABA,
     OBJECT_DEKUNUTS,
 };
 
