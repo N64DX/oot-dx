@@ -388,6 +388,11 @@ BAD_RETURN(s32) Scene_CommandSkyboxSettings(PlayState* play, SceneCmd* cmd) {
     play->skyboxId = cmd->skyboxSettings.skyboxId;
     play->envCtx.skyboxConfig = play->envCtx.changeSkyboxNextConfig = cmd->skyboxSettings.skyboxConfig;
     play->envCtx.lightMode = cmd->skyboxSettings.envLightMode;
+
+    if (TIMER_CHALLENGE > 0 && play->skyboxId == SKYBOX_NORMAL_SKY) {
+        play->skyboxId = SKYBOX_TERMINA_SKY;
+        play->envCtx.skyboxConfig = play->envCtx.changeSkyboxNextConfig = 3;
+    }
 }
 
 BAD_RETURN(s32) Scene_CommandSkyboxDisables(PlayState* play, SceneCmd* cmd) {
@@ -405,6 +410,14 @@ BAD_RETURN(s32) Scene_CommandTimeSettings(PlayState* play, SceneCmd* cmd) {
         play->envCtx.sceneTimeSpeed = cmd->timeSettings.timeSpeed;
     } else {
         play->envCtx.sceneTimeSpeed = 0;
+    }
+
+    if (!IS_CUTSCENE_LAYER) {
+        switch (TIMER_CHALLENGE) {
+            case 1: play->envCtx.sceneTimeSpeed = 1; break;
+            case 2: play->envCtx.sceneTimeSpeed = 3; break;
+            case 3: play->envCtx.sceneTimeSpeed = 5; break;
+        }
     }
 
     if (gSaveContext.sunsSongState == SUNSSONG_INACTIVE) {
@@ -427,9 +440,9 @@ BAD_RETURN(s32) Scene_CommandTimeSettings(PlayState* play, SceneCmd* cmd) {
         } else if ((gSaveContext.skyboxTime >= CLOCK_TIME(6, 0)) && (gSaveContext.skyboxTime <= CLOCK_TIME(8, 0))) {
             gSaveContext.skyboxTime = CLOCK_TIME(8, 0) + 1;
 #else
-        if ((gSaveContext.skyboxTime > CLOCK_TIME(4, 0)) && (gSaveContext.skyboxTime < CLOCK_TIME(6, 30))) {
+        if ((gSaveContext.skyboxTime > CLOCK_TIME(4, 0)) && (gSaveContext.skyboxTime < DAWN_TIME)) {
             gSaveContext.skyboxTime = CLOCK_TIME(5, 0) + 1;
-        } else if ((gSaveContext.skyboxTime >= CLOCK_TIME(6, 30)) && (gSaveContext.skyboxTime <= CLOCK_TIME(8, 0))) {
+        } else if ((gSaveContext.skyboxTime >= DAWN_TIME) && (gSaveContext.skyboxTime <= CLOCK_TIME(8, 0))) {
             gSaveContext.skyboxTime = CLOCK_TIME(8, 0) + 1;
 #endif
         } else if ((gSaveContext.skyboxTime >= CLOCK_TIME(16, 0)) && (gSaveContext.skyboxTime <= CLOCK_TIME(17, 0))) {

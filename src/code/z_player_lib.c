@@ -176,6 +176,26 @@ s16 sBootData[PLAYER_BOOTS_MAX][17] = {
         400,                         // IREG(69)
         FRAMERATE_CONST(200, 240),   // MREG(95)
     },
+    // PLAYER_BOOTS_ZORA_SWIMMING,
+    {
+        200,                         // REG(19)
+        FRAMERATE_CONST(1000, 1200), // REG(30)
+        FRAMERATE_CONST(300, 360),   // REG(32)
+        800,                         // REG(34)
+        FRAMERATE_CONST(500, 600),   // REG(35)
+        FRAMERATE_CONST(400, 480),   // REG(36)
+        800,                         // REG(37)
+        FRAMERATE_CONST(400, 480),   // REG(38)
+        800,                         // R_DECELERATE_RATE
+        550,                         // R_RUN_SPEED_LIMIT
+        -100,                        // REG(68)
+        600,                         // REG(69)
+        540,                         // IREG(66)
+        750,                         // IREG(67)
+        125,                         // IREG(68)
+        400,                         // IREG(69)
+        FRAMERATE_CONST(200, 240),   // MREG(95)
+    },
 };
 
 // Used to map item actions to model groups
@@ -645,7 +665,11 @@ void Player_SetBootData(PlayState* play, Player* this) {
         }
         REG(27) = 500;
         REG(48) = 100;
-    }
+    } else if (Player_CanZoraSwim(this) && this->stateFlags3 & PLAYER_STATE3_ZORA_SWIMMING) {
+        currentBoots = PLAYER_BOOTS_ZORA_SWIMMING;
+        REG(27) = 500;
+        REG(48) = 100;
+    } 
 
     bootRegs = sBootData[currentBoots];
     REG(19) = bootRegs[0];
@@ -782,6 +806,10 @@ void Player_SetEquipmentData(PlayState* play, Player* this) {
         Player_SetModelGroup(this, Player_ActionToModelGroup(this, this->heldItemAction));
         Player_SetBootData(play, this);
     }
+}
+
+u8 Player_CanZoraSwim(Player* this) {
+     return this->currentBoots == PLAYER_BOOTS_PEGASUS;
 }
 
 void Player_UpdateBottleHeld(PlayState* play, Player* this, s32 item, s32 itemAction) {
@@ -1428,7 +1456,14 @@ s32 Player_OverrideLimbDrawGameplayCommon(PlayState* play, s32 limbIndex, Gfx** 
 
         pos->y -= this->unk_6C4;
 
-        if (this->unk_6C2 != 0) {
+        if (this->stateFlags3 & PLAYER_STATE3_ZORA_SWIMMING) {
+            Matrix_Translate(pos->x, ((Math_CosS(this->unk_6C2) - 1.0f) * 200.0f) + pos->y, pos->z, MTXMODE_APPLY);
+            Matrix_RotateX(BINANG_TO_RAD(this->unk_6C2), MTXMODE_APPLY);
+            Matrix_RotateZ(BINANG_TO_RAD(this->zoraSwimRoll), MTXMODE_APPLY);
+            Matrix_RotateZYX(rot->x, rot->y, rot->z, MTXMODE_APPLY);
+            pos->x = pos->y = pos->z = 0.0f;
+            rot->x = rot->y = rot->z = 0;
+        } else if (this->unk_6C2 != 0) {
             Matrix_Translate(pos->x, ((Math_CosS(this->unk_6C2) - 1.0f) * 200.0f) + pos->y, pos->z, MTXMODE_APPLY);
             Matrix_RotateX(BINANG_TO_RAD(this->unk_6C2), MTXMODE_APPLY);
             Matrix_RotateZYX(rot->x, rot->y, rot->z, MTXMODE_APPLY);

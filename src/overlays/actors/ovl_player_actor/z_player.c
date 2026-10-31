@@ -290,6 +290,19 @@ s32 Player_InflictDamage(PlayState* play, s32 damage);
 void Player_StartTalking(PlayState* play, Actor* actor);
 void func_80838940(Player* this, LinkAnimationHeader* anim, f32 arg2, PlayState* play, u16 sfxId);
 
+void func_8084B000(Player* this);
+s32 Player_TryStartZoraSwim(PlayState* play, Player* this);
+void Player_SetupZoraSwim(PlayState* play, Player* this);
+void Player_ReturnToStandStill(Player* this, PlayState* play);
+void Player_SpawnBoosterEffects(PlayState* play, Player* this);
+s32 Player_TryStartBoosterJump(Player* this, PlayState* play);
+
+void Player_Action_ZoraSwim(Player* this, PlayState* play);
+void Player_Action_ZoraSwimJump(Player* this, PlayState* play);
+void Player_Action_StartBoosterJump(Player* this, PlayState* play);
+void Player_Action_BoosterJump(Player* this, PlayState* play);
+void Player_Action_FinishBoosterJump(Player* this, PlayState* play);
+
 void Player_Action_80840450(Player* this, PlayState* play);
 void Player_Action_808407CC(Player* this, PlayState* play);
 void Player_Action_Idle(Player* this, PlayState* play);
@@ -4039,12 +4052,15 @@ s32 Player_SetupAction(PlayState* play, Player* this, PlayerActionFunc actionFun
     this->stateFlags1 &= ~(PLAYER_STATE1_2 | PLAYER_STATE1_TALKING | PLAYER_STATE1_26 | PLAYER_STATE1_28 |
                            PLAYER_STATE1_29 | PLAYER_STATE1_31);
     this->stateFlags2 &= ~(PLAYER_STATE2_19 | PLAYER_STATE2_USING_OCARINA | PLAYER_STATE2_IDLE_FIDGET);
-    this->stateFlags3 &= ~(PLAYER_STATE3_1 | PLAYER_STATE3_3 | PLAYER_STATE3_FLYING_WITH_HOOKSHOT);
+    this->stateFlags3 &= ~(PLAYER_STATE3_1 | PLAYER_STATE3_3 | PLAYER_STATE3_FLYING_WITH_HOOKSHOT | PLAYER_STATE3_ZORA_SWIMMING | PLAYER_STATE3_USING_BOOSTERS);
 
     this->av1.actionVar1 = 0;
     this->av2.actionVar2 = 0;
 
     this->idleType = PLAYER_IDLE_DEFAULT;
+
+    this->endZoraSwim = false;
+    this->zoraSwimRoll = this->shapeRollOffset = this->zoraSwimTurnInput = this->zoraSwimTurnInputSmoothed = 0;
 
     func_808326F0(this);
 
@@ -4248,7 +4264,7 @@ void func_80836448(PlayState* play, Player* this, LinkAnimationHeader* anim) {
     if (this->actor.category == ACTORCAT_PLAYER) {
         Audio_SetBgmVolumeOffDuringFanfare();
 
-        if (Inventory_ConsumeFairy(play)) {
+        if (Inventory_ConsumeFairy(play) && !play->timeChallengeModeEnded) {
             play->gameOverCtx.state = GAMEOVER_REVIVE_START;
             this->av1.actionVar1 = 1;
         } else {
@@ -6847,6 +6863,9 @@ void func_8083AA10(Player* this, PlayState* play) {
                 return;
             }
 
+            if (Player_Action_ZoraSwimJump == this->actionFunc || this->stateFlags3 & PLAYER_STATE3_USING_BOOSTERS)
+                return;
+
             if (!(this->stateFlags3 & PLAYER_STATE3_1) &&
                 !(this->skelAnime.movementFlags & ANIM_FLAG_OVERRIDE_MOVEMENT) &&
                 (Player_Action_8084411C != this->actionFunc) && (Player_Action_80844A44 != this->actionFunc)) {
@@ -7918,10 +7937,69 @@ void func_8083D0A8(PlayState* play, Player* this, f32 arg2) {
     Player_SetBootData(play, this);
 }
 
+void Player_ZoraSwimDamaged(Player* this, PlayState* play) {
+    func_8084B000(this);
+    Math_StepToF(&this->speedXZ, 0.0f, 0.4f);
+    if (LinkAnimation_Update(play, &this->skelAnime) && this->speedXZ < 10.0f)
+        func_80838F18(play, this);
+}
+
+s32 Player_CheckZoraSwimBonk(PlayState* play, Player* this, f32* speedXZ, f32 speedTarget) {
+    Actor* cylinderOc = NULL;
+
+    if (speedTarget <= *speedXZ) {
+        if ((this->actor.bgCheckFlags & BGCHECKFLAG_PLAYER_WALL_INTERACT) && sShapeYawToTouchedWall < 0x1C00) { // If interacting with a wall and close to facing it
+            if (!(play->transitionTrigger != TRANS_TRIGGER_OFF || play->transitionMode != TRANS_MODE_OFF)) {
+                if ((this->stateFlags3 & PLAYER_STATE3_ZORA_SWIMMING) && Player_Action_ZoraSwimJump != this->actionFunc) {
+                    Player_SetupAction(play, this, Player_ZoraSwimDamaged, 0);
+                    Player_AnimPlayOnceAdjusted(play, this, &gPlayerAnim_link_swimer_swim_hit);
+                    func_80832440(play, this);
+                    this->speedXZ *= 0.2f;
+                } else {
+                    Player_SetupAction(play, this, Player_Action_Roll, 0);
+                    Player_AnimPlayOnce(play, this, GET_PLAYER_ANIM(PLAYER_ANIMGROUP_hip_down, this->modelAnimType));
+                    this->av2.actionVar2 = 1;
+                }
+
+                this->speedXZ = -this->speedXZ;
+                Player_RequestQuake(play, 33267, 3, 12);
+                Player_RequestRumble(this, 255, 20, 150, 0);
+                Player_PlaySfx(this, NA_SE_PL_BODY_HIT);
+                Player_PlayVoiceSfx(this, NA_SE_VO_LI_CLIMB_END);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+void Player_Action_ZoraSwimJump(Player* this, PlayState* play) {
+    this->stateFlags2 |= PLAYER_STATE2_5;
+
+    if (LinkAnimation_Update(play, &this->skelAnime))
+        Player_AnimPlayLoopAdjusted(play, this, &gPlayerAnim_link_fish_swim);
+
+    Math_SmoothStepToS(&this->zoraSwimRoll, 0, 6, 0x7D0, 0x190);
+    if (!Player_CheckZoraSwimBonk(play, this, &this->speedXZ, 0.0f)) {
+        if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+            this->stateFlags3 &= ~PLAYER_STATE3_ZORA_SWIMMING;
+            Player_SetBootData(play, this);
+            if (this->unk_6C2 > 0x36B0) {
+                this->actor.colChkInfo.damage = 0x10;
+                func_80837C0C(play, this, 1, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
+            } else Player_SetupRoll(this, play);
+        } else {
+            this->actor.gravity = -1.0f;
+            this->unk_6C2 = Math_Atan2S(this->actor.speed, -this->actor.velocity.y);
+            //func_8082F164(this, BTN_R);
+        }
+    }
+}
+
 s32 func_8083D12C(PlayState* play, Player* this, Input* arg2) {
     if (!(this->stateFlags1 & PLAYER_STATE1_10) && !(this->stateFlags2 & PLAYER_STATE2_10)) {
         if ((arg2 == NULL) || (CHECK_BTN_ALL(arg2->press.button, BTN_A) && (ABS(this->unk_6C2) < 12000) &&
-                               (this->currentBoots != PLAYER_BOOTS_IRON))) {
+                               (this->currentBoots != PLAYER_BOOTS_IRON && (!Player_CanZoraSwim(this) || gSaveContext.save.info.energy < 10) && this->currentBoots != PLAYER_BOOTS_ZORA_SWIMMING))) {
 
             Player_SetupAction(play, this, Player_Action_8084DC48, 0);
             Player_AnimPlayOnce(play, this, &gPlayerAnim_link_swimer_swim_deep_start);
@@ -7940,10 +8018,27 @@ s32 func_8083D12C(PlayState* play, Player* this, Input* arg2) {
     }
 
     if ((this->stateFlags1 & PLAYER_STATE1_10) || (this->stateFlags2 & PLAYER_STATE2_10)) {
-        if (this->actor.velocity.y > 0.0f) {
+        if (this->actor.velocity.y > 0.0f && ((Player_Action_ZoraSwim != this->actionFunc && !(this->stateFlags3 & PLAYER_STATE3_ZORA_SWIMMING)) || this->unk_6C2 < -0x1555)) {
             if (this->actor.depthInWater < this->ageProperties->unk_30) {
+                s16 zoraJumpAngle;
+                f32 zoraJumpSpeed;
 
                 this->stateFlags2 &= ~PLAYER_STATE2_10;
+                func_80832340(play, this);
+
+                if (this->stateFlags3 & PLAYER_STATE3_ZORA_SWIMMING) {
+                    zoraJumpAngle = this->zoraSwimRoll;
+                    zoraJumpSpeed = this->zoraSwimYTarget * 1.5f;
+                    Player_SetupAction(play, this, Player_Action_ZoraSwimJump, 1);
+                    this->stateFlags3 |= PLAYER_STATE3_ZORA_SWIMMING;
+                    this->stateFlags1 &= ~PLAYER_STATE1_27;
+                    zoraJumpSpeed = CLAMP_MAX(zoraJumpSpeed, 13.5f);
+                    this->speedXZ = Math_CosS(this->unk_6C2) * zoraJumpSpeed;
+                    this->actor.velocity.y = -Math_SinS(this->unk_6C2) * zoraJumpSpeed;
+                    this->zoraSwimRoll = zoraJumpAngle;
+                    Player_PlaySfx(this, NA_SE_EV_JUMP_OUT_WATER);
+                    return 1;
+                }
 
                 if (arg2 != NULL) {
                     Player_SetupAction(play, this, Player_Action_8084E1EC, 1);
@@ -7955,7 +8050,6 @@ s32 func_8083D12C(PlayState* play, Player* this, Input* arg2) {
                     this->av2.actionVar2 = 2;
                 }
 
-                func_80832340(play, this);
                 Player_AnimChangeOnceMorph(play, this,
                                            (this->stateFlags1 & PLAYER_STATE1_CARRYING_ACTOR)
                                                ? &gPlayerAnim_link_swimer_swim_get
@@ -7974,6 +8068,14 @@ s32 func_8083D12C(PlayState* play, Player* this, Input* arg2) {
 }
 
 void func_8083D330(PlayState* play, Player* this) {
+    if (Player_CanZoraSwim(this)) {
+        Player_SetupAction(play, this, Player_Action_8084D84C, 0);
+        LinkAnimation_Change(play, &this->skelAnime, &gPlayerAnim_link_swimer_swim, 1.0f, Animation_GetLastFrame(&gPlayerAnim_link_swimer_swim), 0.0f, ANIMMODE_LOOP, 0.0f);
+        this->zoraSwimYTarget = 2.0f;
+        this->unk_6C2 = 16000;
+        return;
+    }
+
     Player_AnimPlayLoop(play, this, &gPlayerAnim_link_swimer_swim);
     this->unk_6C2 = 16000;
     this->av2.actionVar2 = 1;
@@ -7983,7 +8085,14 @@ void func_8083D36C(PlayState* play, Player* this) {
     if ((this->currentBoots != PLAYER_BOOTS_IRON) || !(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) {
         func_80832564(play, this);
 
-        if ((this->currentBoots != PLAYER_BOOTS_IRON) && (this->stateFlags2 & PLAYER_STATE2_10)) {
+        if (Player_Action_ZoraSwimJump == this->actionFunc) {
+            Player_SetupZoraSwim(play, this);
+            this->stateFlags3 |= PLAYER_STATE3_ZORA_SWIMMING;
+        } else if (Player_CanZoraSwim(this) && gSaveContext.save.info.energy >= 10 && Player_Action_80844A44 == this->actionFunc) {
+            Player_SetupZoraSwim(play, this);
+            this->stateFlags3 |= PLAYER_STATE3_ZORA_SWIMMING;
+            Player_AnimPlayLoopAdjusted(play, this, &gPlayerAnim_link_fish_swim);
+        } else if ((this->currentBoots != PLAYER_BOOTS_IRON) && (this->stateFlags2 & PLAYER_STATE2_10)) {
             this->stateFlags2 &= ~PLAYER_STATE2_10;
             func_8083D12C(play, this, NULL);
             this->av1.actionVar1 = 1;
@@ -8028,10 +8137,11 @@ void func_8083D53C(PlayState* play, Player* this) {
         }
     }
 
-    if ((Player_Action_80845668 != this->actionFunc) && (Player_Action_8084BDFC != this->actionFunc)) {
+    if ((Player_Action_80845668 != this->actionFunc) && (Player_Action_8084BDFC != this->actionFunc) && this->actor.parent == NULL && (Player_Action_ZoraSwimJump != this->actionFunc || this->actor.velocity.y < -2.0f)) {
         if (this->ageProperties->unk_2C < this->actor.depthInWater) {
             if (!(this->stateFlags1 & PLAYER_STATE1_27) ||
-                (!((this->currentBoots == PLAYER_BOOTS_IRON) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) &&
+                (!((this->currentBoots == PLAYER_BOOTS_IRON && this->currentBoots == PLAYER_BOOTS_ZORA_SWIMMING) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) &&
+                 (Player_Action_8084B1D8 != this->actionFunc) && (Player_Action_ZoraSwim != this->actionFunc) &&
                  (Player_Action_8084E30C != this->actionFunc) && (Player_Action_8084E368 != this->actionFunc) &&
                  (Player_Action_8084D610 != this->actionFunc) && (Player_Action_8084D84C != this->actionFunc) &&
                  (Player_Action_8084DAB4 != this->actionFunc) && (Player_Action_8084DC48 != this->actionFunc) &&
@@ -8039,7 +8149,7 @@ void func_8083D53C(PlayState* play, Player* this) {
                 func_8083D36C(play, this);
                 return;
             }
-        } else if ((this->stateFlags1 & PLAYER_STATE1_27) && (this->actor.depthInWater < this->ageProperties->unk_24)) {
+        } else if ((this->stateFlags1 & PLAYER_STATE1_27) && (this->actor.depthInWater < this->ageProperties->unk_24) && ((Player_Action_ZoraSwim != this->actionFunc && !(this->stateFlags3 & PLAYER_STATE3_ZORA_SWIMMING)) || (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))) {
             if ((this->skelAnime.movementFlags == 0) && (this->currentBoots != PLAYER_BOOTS_IRON)) {
                 Player_SetupTurnInPlace(play, this, this->actor.shape.rot.y);
             }
@@ -12385,6 +12495,8 @@ void Player_UpdateInterface(PlayState* play, Player* this) {
                     sp24 = (D_80854784[CUR_UPG_VALUE(UPG_SCALE)] - this->actor.depthInWater) / 40.0f;
                     sp24 = CLAMP(sp24, 0, 7);
                     doAction = sDiveNumberDoActions[sp24];
+                } else if (sp1C && Player_CanZoraSwim(this)) {
+                    doAction = DO_ACTION_SWIM;
                 } else if (sp1C && !(this->stateFlags2 & PLAYER_STATE2_10)) {
                     doAction = DO_ACTION_DIVE;
                 } else if (!sp1C && (!(this->stateFlags1 & PLAYER_STATE1_SHIELDING) || Player_IsZTargeting(this) ||
@@ -15018,12 +15130,158 @@ void func_8084D5CC(PlayState* play, Player* this) {
     Player_AnimChangeLoopSlowMorph(play, this, &gPlayerAnim_link_swimer_swim);
 }
 
+void Player_UpdateZoraSwimSpeed(Player* this) {
+    this->speedXZ = Math_CosS(this->unk_6C2) * this->zoraSwimYTarget;
+    this->actor.velocity.y = -Math_SinS(this->unk_6C2) * this->zoraSwimYTarget;
+}
+
+void Player_UpdateZoraSwimYaw(Player* this, f32 arg1) {
+    f32 temp_fv0;
+    s16 temp_ft0;
+
+    Math_AsymStepToF(&this->zoraSwimYTarget, arg1, 1.0f, (fabsf(this->zoraSwimYTarget) * 0.01f) + 0.4f);
+    temp_fv0 = Math_CosS(sControlInput->rel.stick_x * 0x10E);
+
+    temp_ft0 = (((sControlInput->rel.stick_x >= 0) ? 1 : -1) * (1.0f - temp_fv0) * -1100.0f);
+    temp_ft0 = CLAMP(temp_ft0, -0x1F40, 0x1F40);
+
+    this->yaw += temp_ft0;
+}
+
+void Player_Action_ZoraSwim(Player* this, PlayState* play) {
+    f32 speedTarget, fov = 0.0f;
+    s16 rollInput, yawTarget, pitchInput, sp3C, sp3A;
+
+    this->stateFlags2 |= PLAYER_STATE2_5;
+    func_8084B000(this);
+
+    if (Player_TryActionHandlerList(play, this, sActionHandlerList11, false) || func_8083D12C(play, this, sControlInput) || Player_CheckZoraSwimBonk(play, this, &this->speedXZ, 0.0f))
+        return;
+    speedTarget = 0.0f;
+
+    if (this->av2.actionVar2 != 0) {
+        if ((!(play->transitionTrigger != TRANS_TRIGGER_OFF || play->transitionMode != TRANS_MODE_OFF) && !CHECK_BTN_ALL(sControlInput->cur.button, BTN_A)) || !Player_CanZoraSwim(this) || gSaveContext.save.info.energy == 0)
+            this->endZoraSwim = true;
+
+        if (LinkAnimation_Update(play, &this->skelAnime) && (DECR(this->av2.actionVar2) == 0)) {
+            if (this->endZoraSwim == true) {
+                this->stateFlags3 &= ~PLAYER_STATE3_ZORA_SWIMMING;
+                Player_AnimPlayOnceAdjusted(play, this, &gPlayerAnim_link_swim_to_wait);
+            } else Player_AnimPlayLoopAdjusted(play, this, &gPlayerAnim_link_fish_swim);
+        } else {
+            Player_GetMovementSpeedAndYaw(this, &speedTarget, &yawTarget, SPEED_MODE_LINEAR, play);
+            Math_ScaledStepToS(&this->yaw, yawTarget, 0x640);
+
+            if (this->skelAnime.curFrame >= 13.0f) {
+                speedTarget = CHECK_BTN_ALL(sControlInput->cur.button, BTN_R) ? 24.0f : 12.0f;
+                if (LinkAnimation_OnFrame(&this->skelAnime, 13.0f))
+                    this->zoraSwimYTarget = 16.0f;
+                this->stateFlags3 |= PLAYER_STATE3_ZORA_SWIMMING;
+            } else speedTarget = 0.0f;
+        }
+
+        Math_SmoothStepToS(&this->zoraSwimRoll, sControlInput->rel.stick_x * 0xC8, 0xA, 0x3E8, 0x64);
+        Math_SmoothStepToS(&this->zoraSwimTurnInputSmoothed, this->zoraSwimRoll, IREG(40) + 1, IREG(41), IREG(42)); // Are these IREGs even set up?
+    } else if (this->endZoraSwim == false) {
+        LinkAnimation_Update(play, &this->skelAnime);
+
+        if ((!(play->transitionTrigger != TRANS_TRIGGER_OFF || play->transitionMode != TRANS_MODE_OFF) && !CHECK_BTN_ALL(sControlInput->cur.button, BTN_A)) || !Player_CanZoraSwim(this) || gSaveContext.save.info.energy == 0) {
+            this->stateFlags3 &= ~PLAYER_STATE3_ZORA_SWIMMING;
+            Player_AnimPlayOnceAdjusted(play, this, &gPlayerAnim_link_swim_to_wait);
+            this->endZoraSwim = true;
+        } else {
+            if (CHECK_BTN_ALL(sControlInput->press.button, BTN_R)) {
+                if (this->boostCooldownTimer == 0) {
+                    Player_TryStartBoosterJump(this, play);
+                    fov = 10.0f;
+                }
+                return;
+            }
+            speedTarget = 9.0f;
+            Player_PlaySfx(this, NA_SE_PL_SWIM - SFX_FLAG);
+        }
+
+        pitchInput = sControlInput->rel.stick_y * 0xC8; // Y
+        if (this->shapeRollOffset != 0) {
+            this->shapeRollOffset--;
+            pitchInput = CLAMP_MAX(pitchInput, (s16)(this->floorPitch - 0xFA0));
+        }
+
+        if (this->unk_6C2 >= -0x1555 && this->actor.depthInWater < this->ageProperties->unk_24 + 10.0f)
+            pitchInput = CLAMP_MIN(pitchInput, 0x7D0);
+        Math_SmoothStepToS(&this->unk_6C2, pitchInput, 4, 0xFA0, 0x190);
+
+        
+        rollInput = sControlInput->rel.stick_x * 0x64; // X
+        if (Math_ScaledStepToS(&this->zoraSwimTurnInput, rollInput, 0x384) && (rollInput == 0)) {
+            Math_SmoothStepToS(&this->zoraSwimRoll, 0, 4, 0x5DC, 0x64);
+            Math_SmoothStepToS(&this->zoraSwimTurnInputSmoothed, this->zoraSwimRoll, IREG(44) + 1, IREG(45), IREG(46));
+        } else {
+            sp3C = this->zoraSwimRoll;
+            sp3A = (this->zoraSwimTurnInput < 0) ? -0x3A98 : 0x3A98;
+            this->zoraSwimRoll += this->zoraSwimTurnInput;
+            Math_SmoothStepToS(&this->zoraSwimTurnInputSmoothed, this->zoraSwimRoll, IREG(47) + 1, IREG(48), IREG(49));
+
+            if (ABS_ALT(this->zoraSwimTurnInput) > 0xFA0 && (((sp3C + this->zoraSwimTurnInput) - sp3A) * (sp3C - sp3A)) <= 0)
+                Player_PlaySfx(this, NA_SE_PL_MOVE_BUBBLE);
+        }
+    } else { // Come to a stop after letting go of A
+        Math_SmoothStepToS(&this->zoraSwimRoll, 0, 4, 0xFA0, 0x190);
+        if (this->skelAnime.curFrame <= 5.0f || !Player_TryStartZoraSwim(play, this))
+            if (LinkAnimation_Update(play, &this->skelAnime))
+                func_80838F18(play, this);
+    }
+
+    if ((this->shapeRollOffset < 8) && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) { // Bounce off of floor
+        DynaPolyActor* dynaActor;
+        if (this->actor.floorBgId == BGCHECK_SCENE || (dynaActor = DynaPoly_GetActor(&play->colCtx, this->actor.floorBgId)) == NULL) {
+            this->unk_6C2 += (s16)((-this->floorPitch - this->unk_6C2) * 2);
+            this->shapeRollOffset = 0xF;
+        }
+        Player_PlaySfx(this, NA_SE_PL_BODY_BOUND);
+    }
+
+    if (speedTarget >= 9.0f) // Change FOV for speed effect
+        Math_SmoothStepToF(&play->mainCamera.fov, 70.0f + fov, 1.0f, 4.0f, 0.0f);
+
+    Player_UpdateZoraSwimYaw(this, speedTarget);
+    Player_UpdateZoraSwimSpeed(this);
+}
+
+void Player_SetupZoraSwim(PlayState* play, Player* this) {
+    Player_SetupAction(play, this, Player_Action_ZoraSwim, 0);
+    this->zoraSwimYTarget = sqrtf(SQ(this->speedXZ) + SQ(this->actor.velocity.y));
+}
+
+s32 Player_TryStartZoraSwim(PlayState* play, Player* this) {
+    if (Player_CanZoraSwim(this) && gSaveContext.save.info.energy >= 10 && CHECK_BTN_ALL(sControlInput->cur.button, BTN_A)) {
+        Player_SetupZoraSwim(play, this);
+        this->stateFlags2 |= PLAYER_STATE2_10;
+        LinkAnimation_Change(play, &this->skelAnime, &gPlayerAnim_link_water_roll, PLAYER_ANIM_ADJUSTED_SPEED, 4.0f, Animation_GetLastFrame(&gPlayerAnim_link_water_roll), ANIMMODE_ONCE, -6.0f);
+        this->av2.actionVar2 = 5;
+        this->endZoraSwim = false;
+        this->zoraSwimYTarget = this->speedXZ;
+        this->actor.velocity.y = 0.0f;
+        Player_PlaySfx(this, NA_SE_PL_ROLL);
+        return true;
+    }
+    return false;
+}
+
 void Player_Action_8084D610(Player* this, PlayState* play) {
+    this->stateFlags2 |= PLAYER_STATE2_5;
+
     func_80832CB0(play, this, &gPlayerAnim_link_swimer_swim_wait);
     func_8084B000(this);
 
+    if (this->av2.actionVar2 != 0)
+        this->av2.actionVar2--;
+
+    if (CHECK_BTN_ALL(sControlInput->press.button, BTN_A))
+        this->av2.actionVar2 = 0;
+
     if (!Player_IsTalking(play) && !Player_TryActionHandlerList(play, this, sActionHandlerList11, true) &&
-        !func_8083D12C(play, this, sControlInput)) {
+        !func_8083D12C(play, this, sControlInput) && ((this->av2.actionVar2 != 0) || !Player_TryStartZoraSwim(play, this))) {
         f32 speedTarget;
         s16 yawTarget;
 
@@ -15089,6 +15347,10 @@ void Player_Action_8084D84C(Player* this, PlayState* play) {
         Player_GetMovementSpeedAndYaw(this, &speedTarget, &yawTarget, SPEED_MODE_LINEAR, play);
 
         temp = this->actor.shape.rot.y - yawTarget;
+
+        if (Player_TryStartZoraSwim(play, this))
+            return;
+
         if ((speedTarget == 0.0f) || (ABS(temp) > 0x6000) || (this->currentBoots == PLAYER_BOOTS_IRON)) {
             func_80838F18(play, this);
         } else if (Player_IsZTargetingWithHostileUpdate(this)) {
@@ -17842,4 +18104,163 @@ void Player_StartTalking(PlayState* play, Actor* actor) {
         this->naviActor->flags |= ACTOR_FLAG_TALK;
         Player_SetTurnAroundCamera(play, CAM_ITEM_TYPE_11);
     }
+}
+
+void Player_OffsetBoosterFlames(Vec3f* flame, f32 xOffset, f32 yOffset, f32 zOffset) {
+    flame->x -= xOffset;
+    flame->y += yOffset;
+    flame->z -= zOffset;
+}
+
+void Player_SpawnBoosterEffects(PlayState* play, Player* this) {
+    Color_RGBA8 flamePrimColor = { 255, 255, 0, 255 };
+    Color_RGBA8 flameEnvColor = { 255, 0, 0, 255 };
+    Vec3f rightFlame = this->bodyPartsPos[PLAYER_BODYPART_R_HAND];
+    Vec3f leftFlame = this->bodyPartsPos[PLAYER_BODYPART_L_HAND];
+    Vec3f zeroVec = { 0.0f, 0.0f, 0.0f };
+    f32 scaleY = -0.35f;
+
+    // Initial flame effects
+    func_8002836C(play, &rightFlame, &zeroVec, &zeroVec, &flamePrimColor, &flameEnvColor, 200.0f, 0, 5);
+    func_8002836C(play, &leftFlame, &zeroVec, &zeroVec, &flamePrimColor, &flameEnvColor, 200.0f, 0, 5);
+
+    if (this->speedXZ > 10.0f) {
+        f32 xOffset = Math_SinS(this->actor.shape.rot.y) * (this->speedXZ / 2.5f);
+        f32 zOffset = Math_CosS(this->actor.shape.rot.y) * (this->speedXZ / 2.5f);
+        u8 numFlames = 3, i;
+
+        for (i=0; i<numFlames; i++) {
+            Player_OffsetBoosterFlames(&rightFlame, xOffset, this->actor.velocity.y * scaleY, zOffset);
+            Player_OffsetBoosterFlames(&leftFlame, xOffset, this->actor.velocity.y * scaleY, zOffset);
+
+            func_8002836C(play, &rightFlame, &zeroVec, &zeroVec, &flamePrimColor, &flameEnvColor, 200.0f, 0, 5);
+            func_8002836C(play, &leftFlame, &zeroVec, &zeroVec, &flamePrimColor, &flameEnvColor, 200.0f, 0, 5);
+        }
+    }
+}
+
+
+s32 Player_CheckBoosterJumpBonk(Player* this, PlayState* play, f32 speedTarget) {
+    Actor* cylinderOc = NULL;
+    DynaPolyActor* wallPolyActor;
+
+    if (speedTarget <= this->speedXZ) { // If interacting with a wall and close to facing it. Added negative speedXZ check to prevent bugs where players end up going backward...?
+        if (((this->actor.bgCheckFlags & BGCHECKFLAG_PLAYER_WALL_INTERACT) && sShapeYawToTouchedWall < 0x1C00) || ((this->cylinder.base.ocFlags1 & OC1_HIT) && (cylinderOc = this->cylinder.base.oc, (cylinderOc->id == ACTOR_EN_WOOD02 && (ABS((s16)(this->actor.world.rot.y - cylinderOc->yawTowardsPlayer)) > 0x6000)))) || this->speedXZ < 0) {
+            if (!(play->transitionTrigger != TRANS_TRIGGER_OFF || play->transitionMode != TRANS_MODE_OFF)) {
+
+                if (cylinderOc != NULL)
+                    cylinderOc->home.rot.y = 1;
+                else if (this->actor.wallBgId != BGCHECK_SCENE) {
+                    /*wallPolyActor = DynaPoly_GetActor(&play->colCtx, this->actor.wallBgId);
+                    if (wallPolyActor != NULL && wallPolyActor->actor.id == ACTOR_BOOST_BREAKWALL) {
+                        wallPolyActor->actor.home.rot.z = 1;
+                        return false;
+                    }*/
+                }
+
+                if (sYDistToFloor > 10.0f) {
+                    this->boostCooldownTimer = 10;
+                    this->actor.colChkInfo.damage = 4;
+                    func_80837C0C(play, this, 1, 9.0f, 5.0f, this->actor.shape.rot.y, 20);
+                } else {
+                    Player_SetupAction(play, this, Player_Action_Roll, 0);
+                    Player_AnimPlayOnce(play, this, GET_PLAYER_ANIM(PLAYER_ANIMGROUP_hip_down, this->modelAnimType));
+                    this->av2.actionVar2 = 1;
+                }
+
+                this->stateFlags3 &= ~PLAYER_STATE3_USING_BOOSTERS;
+                this->speedXZ = -1.0f;
+                Player_RequestQuake(play, 33267, 3, 12);
+                Player_RequestRumble(this, 255, 20, 150, 0);
+                Player_PlaySfx(this, NA_SE_PL_BODY_HIT);
+                Player_PlayVoiceSfx(this, NA_SE_VO_LI_CLIMB_END);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+void Player_Action_FinishBoosterJump(Player* this, PlayState* play) {
+    u8 animDone = LinkAnimation_Update(play, &this->skelAnime);
+
+    Math_SmoothStepToF(&this->speedXZ, -40.0f, 1.0f, 5.0f, 0.0f);
+
+    if (animDone && !(this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND | BGCHECKFLAG_WATER))) // Clear state flag, will start midair behavior
+        this->stateFlags3 &= ~PLAYER_STATE3_USING_BOOSTERS;
+
+    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+        this->stateFlags3 &= ~PLAYER_STATE3_USING_BOOSTERS;
+        Player_ZeroSpeedXZ(this);
+        Player_SetupRoll(this, play);
+    }
+}
+
+s32 Player_TryFinishBoosterJump(Player* this, PlayState* play) {
+    if (this->boostActiveTimer == 0 || this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
+        this->boostActiveTimer = 0;
+        this->boostCooldownTimer = 10;
+        if (!(this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND | BGCHECKFLAG_WATER)))
+            Player_AnimPlayOnce(play, this, &gPlayerAnim_link_finish_booster_jump);
+        Player_SetupActionPreserveItemAction(play, this, Player_Action_FinishBoosterJump, 0);
+        this->stateFlags3 |= PLAYER_STATE3_USING_BOOSTERS;
+        return 1;
+    }
+
+    return 0;
+}
+
+void Player_Action_BoosterJump(Player* this, PlayState* play) {
+    u8 animDone = LinkAnimation_Update(play, &this->skelAnime);
+
+    if (animDone && this->skelAnime.animation == &gPlayerAnim_link_start_booster_jump)
+        Player_AnimPlayLoop(play, this, &gPlayerAnim_link_booster_jump);
+
+    this->actor.gravity = -1.2f;
+    DECR(this->boostActiveTimer);
+    Math_SmoothStepToF(&this->speedXZ, 40.0f, 1.0f, 5.0f, 0.0f);
+    Math_SmoothStepToF(&play->mainCamera.fov, 70.0f, 1.0f, 2.0f, 0.0f);
+    Player_CheckBoosterJumpBonk(this, play, 10.0f);
+    Player_TryFinishBoosterJump(this, play);
+    Player_PlaySfx(this, NA_SE_EV_FIRE_PILLAR - SFX_FLAG);
+}
+
+void Player_Action_StartBoosterJump(Player* this, PlayState* play) {
+    if (this->skelAnime.animation != &gPlayerAnim_link_start_booster_jump)
+        LinkAnimation_Change(play, &this->skelAnime, &gPlayerAnim_link_start_booster_jump, 1.0f, 0.0f, Animation_GetLastFrame(&gPlayerAnim_link_start_booster_jump), ANIMMODE_ONCE, 2.0f);
+
+    LinkAnimation_Update(play, &this->skelAnime);
+    
+    if (this->skelAnime.curFrame >= 4.0f) {
+        Player_PlaySfx(this, NA_SE_EN_TWINROBA_FIRE_EXP - SFX_FLAG);
+        Player_SetupActionPreserveItemAction(play, this, Player_Action_BoosterJump, 0);
+        this->stateFlags3 |= PLAYER_STATE3_USING_BOOSTERS;
+        this->boostActiveTimer = FRAMES(20);
+        this->actor.velocity.y = 15.0f;
+        this->yaw = this->actor.shape.rot.y;
+    }
+}
+
+s32 Player_TryStartBoosterJump(Player* this, PlayState* play) {
+    u8 isHoldingForward = ABS(sControlStickAngle) < DEG_TO_BINANG(45.0f);
+    
+    if (this->stateFlags2 & PLAYER_STATE2_19 || (Player_IsZTargeting(this) && !isHoldingForward && (sControlStickMagnitude > 0.0f))) {
+        Sfx_PlaySfxCentered(NA_SE_SY_ERROR);
+        return 0;
+    }
+    
+    Player_SetupActionPreserveItemAction(play, this, Player_Action_StartBoosterJump, 0);
+    Player_ZeroSpeedXZ(this);
+    this->stateFlags3 |= PLAYER_STATE3_USING_BOOSTERS;
+    return 1;
+}
+
+s32 Player_UpperAction_WearBoosters(Player* this, PlayState* play) {
+    if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)
+        DECR(this->boostCooldownTimer);
+    if (func_80834758(play, this) || this->boostCooldownTimer > 0 || this->stateFlags1 & (PLAYER_STATE1_14))
+        return 0;
+    if (sUseHeldItem)
+        return Player_TryStartBoosterJump(this, play);
+    return 0;
 }
