@@ -77,7 +77,7 @@ ActorProfile Door_Shutter_Profile = {
     /**/ DoorShutter_Init,
     /**/ DoorShutter_Destroy,
     /**/ DoorShutter_Update,
-    /**/ DoorShutter_Draw,
+    /**/ NULL,
 };
 
 typedef enum DoorShutterGfxType {
@@ -101,7 +101,7 @@ typedef enum DoorShutterGfxType {
     /* 17 */ DOORSHUTTER_GFX_GERUDO_TRAINING_GROUND,
     /* 18 */ DOORSHUTTER_GFX_GANONS_CASTLE,
     /* 19 */ DOORSHUTTER_GFX_ROYAL_FAMILYS_TOMB,
-    /* 19 */ DOORSHUTTER_GFX_WOODFALL_TEMPLE
+    /* 1A */ DOORSHUTTER_GFX_WOODFALL_TEMPLE
 } DoorShutterGfxType;
 
 typedef enum DoorShutterStyleType {
@@ -123,7 +123,7 @@ typedef enum DoorShutterStyleType {
     /* 14 */ DOORSHUTTER_STYLE_GERUDO_TRAINING_GROUND,
     /* 15 */ DOORSHUTTER_STYLE_GANONS_CASTLE,
     /* 16 */ DOORSHUTTER_STYLE_ROYAL_FAMILYS_TOMB,
-    /* 16 */ DOORSHUTTER_STYLE_WOODFALL_TEMPLE
+    /* 17 */ DOORSHUTTER_STYLE_WOODFALL_TEMPLE
 } DoorShutterStyleType;
 
 typedef struct DoorShutterStyleInfo {
@@ -281,7 +281,7 @@ static DoorShutterGfxInfo sGfxInfo[] = {
     { gGTGDoorDL, gDoorMetalBarsDL, 130, 12, 20, 15 },                 // DOORSHUTTER_GFX_GERUDO_TRAINING_GROUND
     { gGanonsCastleDoorDL, gDoorMetalBarsDL, 130, 12, 20, 15 },        // DOORSHUTTER_GFX_GANONS_CASTLE
     { object_ouke_haka_DL_0000C0, gDoorMetalBarsDL, 130, 12, 20, 15 }, // DOORSHUTTER_GFX_ROYAL_FAMILYS_TOMB
-    { object_numa_obj_DL_007150, gDoorMetalBarsDL, 130, 12, 20, 15 }, // DOORSHUTTER_GFX_WOODFALL_TEMPLE
+    { object_numa_obj_DL_007150, gDoorMetalBarsDL, 130, 12, 20, 15 },  // DOORSHUTTER_GFX_WOODFALL_TEMPLE
 };
 
 static s8 sTypeStyles[] = {
@@ -329,9 +329,8 @@ static DoorShutterSceneInfo sSceneInfo[] = {
     { SCENE_GERUDO_TRAINING_GROUND, DOORSHUTTER_STYLE_GERUDO_TRAINING_GROUND },
     { SCENE_INSIDE_GANONS_CASTLE, DOORSHUTTER_STYLE_GANONS_CASTLE },
     { SCENE_ROYAL_FAMILYS_TOMB, DOORSHUTTER_STYLE_ROYAL_FAMILYS_TOMB },
-    { SCENE_WOODFALL_TEMPLE, DOORSHUTTER_STYLE_WOODFALL_TEMPLE },
-    { SCENE_WEBBED_SHRINE, DOORSHUTTER_STYLE_FOREST_TEMPLE },
     { SCENE_GORON_MINES, DOORSHUTTER_STYLE_DODONGOS_CAVERN },
+    { SCENE_WOODFALL_TEMPLE, DOORSHUTTER_STYLE_WOODFALL_TEMPLE },
     { SCENE_PURPLE_ICE_CAVERN, DOORSHUTTER_STYLE_ICE_CAVERN },
     { -1, DOORSHUTTER_STYLE_GENERIC },
 };
@@ -517,6 +516,7 @@ void DoorShutter_Destroy(Actor* thisx, PlayState* play) {
 void DoorShutter_WaitForObject(DoorShutter* this, PlayState* play) {
     if (Object_IsLoaded(&play->objectCtx, this->requiredObjectSlot)) {
         this->dyna.actor.objectSlot = this->requiredObjectSlot;
+        this->dyna.actor.draw = DoorShutter_Draw;
         if (this->doorType == SHUTTER_PG_BARS || this->doorType == SHUTTER_GOHMA_BLOCK) {
             // Init dynapoly for shutters of the type that uses it
             CollisionHeader* colHeader = NULL;
