@@ -81,7 +81,8 @@ typedef enum PlayerBoots {
     /* 0x04 */ PLAYER_BOOTS_INDOOR,
     /* 0x05 */ PLAYER_BOOTS_IRON_UNDERWATER,
     /* 0x06 */ PLAYER_BOOTS_KOKIRI_CHILD,
-    /* 0x07 */ PLAYER_BOOTS_MAX
+    /* 0x07 */ PLAYER_BOOTS_ZORA_SWIMMING,
+    /* 0x08 */ PLAYER_BOOTS_MAX
 } PlayerBoots;
 
 typedef enum PlayerStrength {
@@ -810,6 +811,8 @@ typedef struct WeaponInfo {
 #define PLAYER_STATE3_5 (1 << 5)
 #define PLAYER_STATE3_RESTORE_NAYRUS_LOVE (1 << 6) // Set by ocarina effects actors when destroyed to signal Nayru's Love may be restored (see `ACTOROVL_ALLOC_ABSOLUTE`)
 #define PLAYER_STATE3_FLYING_WITH_HOOKSHOT (1 << 7) // Flying in the air with the hookshot as it pulls Player toward its destination
+#define PLAYER_STATE3_ZORA_SWIMMING (1 << 8)
+#define PLAYER_STATE3_USING_BOOSTERS (1 << 9)
 
 typedef void (*PlayerActionFunc)(struct Player*, struct PlayState*);
 typedef s32 (*UpperActionFunc)(struct Player*, struct PlayState*);
@@ -907,7 +910,7 @@ typedef struct Player {
     /* 0x0688 */ Actor* boomerangActor;
     /* 0x068C */ Actor* naviActor;
     /* 0x0690 */ s16 naviTextId;
-    /* 0x0692 */ u8 stateFlags3;
+    /* 0x0692 */ u32 stateFlags3;
     /* 0x0693 */ s8 exchangeItemId;
     /* 0x0694 */ Actor* talkActor; // Actor offering to talk, or currently talking to, depending on context
     /* 0x0698 */ f32 talkActorDistance; // xz distance away from `talkActor`
@@ -1021,7 +1024,16 @@ typedef struct Player {
     /* 0x0A94 */ u8 shieldDamage;
     /* 0x0A95 */ s8 doorNext; // used with spiral staircase
     /* 0x0A98 */ BombArrowLink sBombArrowLinks[MAX_BOMB_ARROWS];
-} Player; // size = 0xD40
+    /* 0x0BEC */ f32 zoraSwimYTarget;
+    /* 0x0BF0 */ s32 zoraSwimEffectIndex[2];
+    /* 0x0BF8 */ s16 endZoraSwim;
+    /* 0x0BFA */ s16 zoraSwimRoll;
+    /* 0x0BFC */ s16 shapeRollOffset;
+    /* 0x0BFE */ s16 zoraSwimTurnInput;
+    /* 0x0C00 */ s16 zoraSwimTurnInputSmoothed;
+    /* 0x0C02 */ u8 boostActiveTimer;
+    /* 0x0C03 */ u8 boostCooldownTimer;
+} Player; // size = 0xC04
 
 // z_player_lib.c
 void Player_SetBootData(struct PlayState* play, Player* this);
@@ -1035,6 +1047,7 @@ void Player_SetModels(Player* this, s32 modelGroup);
 void Player_SetModelGroup(Player* this, s32 modelGroup);
 void func_8008EC70(Player* this);
 void Player_SetEquipmentData(struct PlayState* play, Player* this);
+u8 Player_CanZoraSwim(Player* this);
 void Player_UpdateBottleHeld(struct PlayState* play, Player* this, s32 item, s32 itemAction);
 void Player_ReleaseLockOn(Player* this);
 void Player_ClearZTargeting(Player* this);
