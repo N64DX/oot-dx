@@ -6,15 +6,13 @@
 #include "scene.h"
 #include "ultra64.h"
 
-extern SceneCmd red_ice_cavern_scene[];
-
-extern RomFile red_ice_cavern_sceneRoomList_000070[];
-extern TransitionActorEntry red_ice_cavern_sceneTransitionActorList_0000A0[];
-extern u16 red_ice_cavern_sceneExitList_000110[];
 extern ActorEntry red_ice_cavern_sceneStartPositionList_000118[];
+extern TransitionActorEntry red_ice_cavern_sceneTransitionActorList_0000A0[];
+extern RomFile red_ice_cavern_sceneRoomList_000070[];
+extern Spawn red_ice_cavern_sceneEntranceList_000190[];
+extern u16 red_ice_cavern_sceneExitList_000110[];
 extern EnvLightSettings red_ice_cavern_sceneLightSettings_000128[];
 extern Path red_ice_cavern_scenePathway_000140[];
-extern Spawn red_ice_cavern_sceneEntranceList_000190[];
 extern CollisionHeader red_ice_cavern_sceneCollisionHeader_000198;
 
 extern u64 red_ice_cavern_sceneTex_00C9D0[];

@@ -267,7 +267,7 @@ static DamageTable sDamageTable = {
     /* Unknown 2     */ DMG_ENTRY(0, DINOLFOS_DMGEFF_NONE),
 };
 
-static CollisionCheckInfoInit sColChkInfoInit = { 20, 40, 100, 80 };
+static CollisionCheckInfoInit sColChkInfoInit = { 15, 40, 100, 80 };
 
 static void* sEyeTextures[] = {
     gDinolfosEyeOpenTex,
@@ -288,12 +288,9 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_VEC3F_DIV1000(scale, 15, ICHAIN_STOP),
 };
 
-#define EFFECT_BLURE_ELEMENT_FLAG_8         (1 << 3)
-#define EFF_BLURE_DRAW_MODE_SMOOTH          2
-
 static EffectBlureInit2 sBlureInit = {
     0,
-    EFFECT_BLURE_ELEMENT_FLAG_8,
+    (1 << 3), // EFFECT_BLURE_ELEMENT_FLAG_8
     0,
     { 255, 255, 255, 255 },
     { 255, 255, 255, 64 },
@@ -301,7 +298,7 @@ static EffectBlureInit2 sBlureInit = {
     { 255, 255, 255, 0 },
     8,
     0,
-    EFF_BLURE_DRAW_MODE_SMOOTH,
+    2, // EFF_BLURE_DRAW_MODE_SMOOTH
     0,
     { 0, 0, 0, 0 },
     { 0, 0, 0, 0 },

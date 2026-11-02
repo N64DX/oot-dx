@@ -276,7 +276,7 @@ static DamageTable sDamageTable[] = {
     /* Unknown 2     */ DMG_ENTRY(0, ENHAMMERGEIST_DMGEFF_NONE),
 };
 
-static CollisionCheckInfoInit2 sColChkInit = { 20, 35, 55, 0, MASS_HEAVY };
+static CollisionCheckInfoInit2 sColChkInit = { 15, 35, 55, 0, MASS_HEAVY };
 
 static s8 sNumAlive = 0;
 
