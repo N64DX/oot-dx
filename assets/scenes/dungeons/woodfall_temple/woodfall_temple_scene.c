@@ -48,27 +48,27 @@ ActorEntry woodfall_temple_sceneStartPositionList0x000098[] = {
 };
 
 TransitionActorEntry woodfall_temple_sceneTransitionActorList_0000C8[] = {
-    { 4,  255, 3,  255, ACTOR_DOOR_SHUTTER, { -1110, -1485,   600 }, 0x8000, 0x01D3 }, // 0, Checks switch: 13
-    { 0,  255, 1,  255, ACTOR_DOOR_SHUTTER, {     0, -1185,  -720 }, 0x0000, 0x0092 }, // 1, Checks switch: 12
-    { 1,  255, 2,  255, ACTOR_DOOR_SHUTTER, {     0, -1185,   720 }, 0x0000, 0x003F }, // 2
-    { 1,  255, 3,  255, ACTOR_DOOR_SHUTTER, {  -720, -1485,     0 }, 0xC000, 0x02DD }, // 3, Sets switch: 1D
-    { 5,  255, 1,  255, ACTOR_DOOR_SHUTTER, {   720, -1485,     0 }, 0xC000, 0x003F }, // 4
-    { 5,  255, 1,  255, ACTOR_DOOR_SHUTTER, {   720, -1185,     0 }, 0xC000, 0x003F }, // 5
-    { 8,  255, 5,  255, ACTOR_DOOR_SHUTTER, {  1230, -1185,  -720 }, 0x0000, 0x01D8 }, // 6, Checks switch: 18
-    { 5,  255, 7,  255, ACTOR_DOOR_SHUTTER, {  1230, -1185,   720 }, 0x0000, 0x007F }, // 7
-    { 5,  255, 6,  255, ACTOR_DOOR_SHUTTER, {  1860, -1425,     0 }, 0x4000, 0x007F }, // 8
-    { 10, 255, 9,  255, ACTOR_DOOR_SHUTTER, {  -720,     0,   120 }, 0xC000, 0x008B }, // 9, Checks switch: 0B
-    { 8,  255, 8,  255, ACTOR_DOOR_SHUTTER, {  1230, -1185, -1725 }, 0x0000, 0x007F }, // 10
-    { 12, 255, 0,  255, ACTOR_DOOR_SHUTTER, {     0, -1185, -2280 }, 0x0000, 0x017E }, // 11
-    { 10, 255, 1,  255, ACTOR_EN_HOLL,      {   240,  -595,  -180 }, 0x0000, 0x017F }, // 12
-    { 10, 255, 1,  255, ACTOR_EN_HOLL,      {  -240,  -595,   -60 }, 0x0000, 0x017F }, // 13
-    { 10, 255, 1,  255, ACTOR_EN_HOLL,      {    60,  -595,   120 }, 0x0000, 0x017F }, // 14
-    { 10, 255, 1,  255, ACTOR_EN_HOLL,      {   300,  -595,   240 }, 0x0000, 0x017F }, // 15
-    { 10, 255, 1,  255, ACTOR_EN_HOLL,      {   -60,  -595,   420 }, 0x0000, 0x017F }, // 16
-    { 1,  255, 1,  255, ACTOR_DOOR_SPIRAL,  {   570, -1185,  -720 }, 0x0000, 0x50BF }, // 17
-    { 3,  255, 3,  255, ACTOR_DOOR_SPIRAL,  { -1110, -1185,  -960 }, 0x0000, 0x4CBF }, // 18
-    { 9,  255, 9,  255, ACTOR_DOOR_SPIRAL,  { -1065,     0,  -960 }, 0x0000, 0x483F }, // 19
-    { 10, 255, 10, 255, ACTOR_DOOR_SPIRAL,  {   570,    60,  -720 }, 0x0000, 0x443F }, // 20
+    { 4,  -1, 3,  -1, ACTOR_DOOR_SHUTTER, { -1110, -1485,   600 }, 0x8000, 0x01D3 }, // 0, Checks switch: 13
+    { 0,  -1, 1,  -1, ACTOR_DOOR_SHUTTER, {     0, -1185,  -720 }, 0x0000, 0x0092 }, // 1, Checks switch: 12
+    { 1,  -1, 2,  -1, ACTOR_DOOR_SHUTTER, {     0, -1185,   720 }, 0x0000, 0x003F }, // 2
+    { 1,  -1, 3,  -1, ACTOR_DOOR_SHUTTER, {  -720, -1485,     0 }, 0xC000, 0x02DD }, // 3, Sets switch: 1D
+    { 5,  -1, 1,  -1, ACTOR_DOOR_SHUTTER, {   720, -1485,     0 }, 0xC000, 0x003F }, // 4
+    { 5,  -1, 1,  -1, ACTOR_DOOR_SHUTTER, {   720, -1185,     0 }, 0xC000, 0x003F }, // 5
+    { 8,  -1, 5,  -1, ACTOR_DOOR_SHUTTER, {  1230, -1185,  -720 }, 0x0000, 0x01D8 }, // 6, Checks switch: 18
+    { 5,  -1, 7,  -1, ACTOR_DOOR_SHUTTER, {  1230, -1185,   720 }, 0x0000, 0x007F }, // 7
+    { 5,  -1, 6,  -1, ACTOR_DOOR_SHUTTER, {  1860, -1425,     0 }, 0x4000, 0x007F }, // 8
+    { 10, -1, 9,  -1, ACTOR_DOOR_SHUTTER, {  -720,     0,   120 }, 0xC000, 0x008B }, // 9, Checks switch: 0B
+    { 8,  -1, 8,  -1, ACTOR_DOOR_SHUTTER, {  1230, -1185, -1725 }, 0x0000, 0x007F }, // 10
+    { 12, -1, 0,  -1, ACTOR_DOOR_SHUTTER, {     0, -1185, -2280 }, 0x0000, 0x017E }, // 11
+    { 10, -1, 1,  -1, ACTOR_EN_HOLL,      {   240,  -595,  -180 }, 0x0000, 0x017F }, // 12
+    { 10, -1, 1,  -1, ACTOR_EN_HOLL,      {  -240,  -595,   -60 }, 0x0000, 0x017F }, // 13
+    { 10, -1, 1,  -1, ACTOR_EN_HOLL,      {    60,  -595,   120 }, 0x0000, 0x017F }, // 14
+    { 10, -1, 1,  -1, ACTOR_EN_HOLL,      {   300,  -595,   240 }, 0x0000, 0x017F }, // 15
+    { 10, -1, 1,  -1, ACTOR_EN_HOLL,      {   -60,  -595,   420 }, 0x0000, 0x017F }, // 16
+    { 1,  -1, 1,  -1, ACTOR_DOOR_SPIRAL,  {   570, -1185,  -720 }, 0x0000, 0x50BF }, // 17
+    { 3,  -1, 3,  -1, ACTOR_DOOR_SPIRAL,  { -1110, -1185,  -960 }, 0x0000, 0x4CBF }, // 18
+    { 9,  -1, 9,  -1, ACTOR_DOOR_SPIRAL,  { -1065,     0,  -960 }, 0x0000, 0x483F }, // 19
+    { 10, -1, 10, -1, ACTOR_DOOR_SPIRAL,  {   570,    60,  -720 }, 0x0000, 0x443F }, // 20
 };
 
 RomFile woodfall_temple_sceneRoomList0x000218[] = {
@@ -220,19 +220,19 @@ CutsceneData gWoodfallTempleIntroCs[] = {
 };
 
 Vec3s woodfall_temple_scenePathwayList_000398[] = { // 0
-    {   1230,  -1498,      0 },
-    {   1230,  -1185,      0 },
+    { 1230, -1498,    0 },
+    { 1230, -1185,    0 },
 };
 
 Vec3s woodfall_temple_scenePathwayList_0003A4[] = { // 1
-    {    -90,      0,    -90 },
-    {    -90,      0,    570 },
+    {  -90,     0,  -90 },
+    {  -90,     0,  570 },
 };
 
 Vec3s woodfall_temple_scenePathwayList_0003B0[] = { // 2
-    {    570,      0,    150 },
-    {    270,      0,    150 },
-    {    270,      0,   -570 },
+    {  570,     0,  150 },
+    {  270,     0,  150 },
+    {  270,     0, -570 },
 };
 
 Vec3s woodfall_temple_scenePathwayList_warp_spawn_room1[]  = { {   575, -1185, -600 }, }; // 3
@@ -241,26 +241,26 @@ Vec3s woodfall_temple_scenePathwayList_warp_spawn_room9[]  = { { -1065,     0, -
 Vec3s woodfall_temple_scenePathwayList_warp_spawn_room10[] = { {   575,    60, -600 }, }; // 6
 
 Vec3s woodfall_temple_scenePathwayList_railift1_room0[] = { // 7
-    {   -325,  -1350,  -1750 },
-    {   -325,  -1150,  -1750 },
-    {   -225,  -1150,  -1750 },
-    {   -225,  -1150,  -2175 },
+    { -325, -1350, -1750 },
+    { -325, -1150, -1750 },
+    { -225, -1150, -1750 },
+    { -225, -1150, -2175 },
 };
 
 Vec3s woodfall_temple_scenePathwayList_railift2_room2[] = { // 8
-    {    350,  -1150,   1100 },
-    {    350,  -1150,    900 },
-    {    250,  -1150,    900 },
+    {  350, -1150,  1100 },
+    {  350, -1150,   900 },
+    {  250, -1150,   900 },
 };
 
 Vec3s woodfall_temple_scenePathwayList_railift2_room5[] = { // 9
-    {   1230,  -1325,    250 },
-    {   1230,  -1185,    250 },
+    { 1230, -1325,   250 },
+    { 1230, -1185,   250 },
 };
 
 Vec3s woodfall_temple_scenePathwayList_railift3_room5[] = { // 10
-    {   1230,  -1325,   -250 },
-    {   1230,  -1185,   -250 },
+    { 1230, -1325,  -250 },
+    { 1230, -1185,  -250 },
 };
 
 Vec3s woodfall_temple_scenePathwayList_railift3_room10[] = { {  100, 0, 100 }, }; // 11

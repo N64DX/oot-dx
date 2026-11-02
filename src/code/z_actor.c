@@ -5033,10 +5033,10 @@ f32 Actor_SetDefensePerScene(u16 sceneId, f32 baseDefense) {
         case SCENE_BOTTOM_OF_THE_WELL:
         case SCENE_SHADOW_TEMPLE:
         case SCENE_SHADOW_TEMPLE_BOSS:
+        case SCENE_PATH_TO_FORTRESS:
             sceneDefense = 2.0f;
             break;
 
-        case SCENE_PATH_TO_FORTRESS:
         case SCENE_HAUNTED_WASTELAND:
         case SCENE_DESERT_COLOSSUS:
         case SCENE_SPIRIT_TEMPLE:
