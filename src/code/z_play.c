@@ -2123,7 +2123,7 @@ u8 Play_GetOriginalSceneId(u8 sceneId) {
 
     else if (sceneId == SCENE_FORBIDDEN_WOODS) // Reusing shop scenes for other scenes
         return SCENE_BAZAAR;
-    else if (sceneId == SCENE_GROTTOS2 || SCENE_GROTTOS_GROVE || SCENE_CAVE_PASSAGE)
+    else if (sceneId == SCENE_GROTTOS2 || sceneId == SCENE_GROTTOS_GROVE || sceneId == SCENE_CAVE_PASSAGE)
         return SCENE_GORON_SHOP;
     else if (sceneId == SCENE_WEBBED_SHRINE)
         return SCENE_ZORA_SHOP;
