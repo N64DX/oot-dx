@@ -12143,6 +12143,9 @@ void Player_Init(Actor* thisx, PlayState* play2) {
     this->giObjectSegment =
         (void*)(((uintptr_t)ZELDA_ARENA_MALLOC(0x1000 * LANGUAGE_MAX + 8, "../z_player.c", 17175) + 8) & ~0xF);
 
+    Lights_PointNoGlowSetInfo(&this->lightInfo, this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, 255, 128, 0, -1);
+    this->lightNode = LightContext_InsertLight(play, &play->lightCtx, &this->lightInfo);
+
     respawnFlag = gSaveContext.respawnFlag;
 
     if (respawnFlag != 0) {
@@ -12944,6 +12947,11 @@ void Player_UpdateBurningDekuStick(PlayState* play, Player* this) {
 
     func_8002836C(play, MELEE_WEAPON_INFO_TIP(&this->meleeWeaponInfo[0]), &D_808547A4, &D_808547B0, &D_808547BC,
                   &D_808547C0, temp * 200.0f, 0, 8);
+                  
+    if (play->roomCtx.curRoom.enablePosLights || temp > 0.0f) {
+        f32 temp_fv1 = (Rand_ZeroOne() * 30.0f) + 225.0f;
+        Lights_PointSetColorAndRadius(&this->lightInfo, temp_fv1, temp_fv1 * 0.7f, 0, temp * 300.0f);
+    }
 }
 
 void Player_UpdateBodyShock(PlayState* play, Player* this) {
@@ -13255,6 +13263,10 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
 
     Player_UpdateZTargeting(this, play);
 
+    if (play->roomCtx.curRoom.enablePosLights)
+        Lights_PointSetColorAndRadius(&this->lightInfo, 255, 255, 255, 60);
+    else this->lightInfo.params.point.radius = -1;
+
     if ((this->heldItemAction == PLAYER_IA_DEKU_STICK) && (this->unk_860 != 0)) {
         Player_UpdateBurningDekuStick(play, this);
     } else if ((this->heldItemAction == PLAYER_IA_FISHING_POLE) && (this->unk_860 < 0)) {
@@ -13498,6 +13510,7 @@ void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
         }
 
         func_8083D6EC(play, this);
+        Lights_PointSetPosition(&this->lightInfo, this->actor.world.pos.x, this->actor.world.pos.y + 40.0f, this->actor.world.pos.z);
 
         if ((this->focusActor == NULL) && (this->naviTextId == 0)) {
             this->stateFlags2 &= ~(PLAYER_STATE2_CAN_ACCEPT_TALK_OFFER | PLAYER_STATE2_21);
@@ -13902,6 +13915,7 @@ void Player_Destroy(Actor* thisx, PlayState* play) {
     Player* this = (Player*)thisx;
 
     Effect_Delete(play, this->meleeWeaponEffectIndex);
+    LightContext_RemoveLight(play, &play->lightCtx, this->lightNode);
 
     Collider_DestroyCylinder(play, &this->cylinder);
     Collider_DestroyQuad(play, &this->meleeWeaponQuads[0]);

@@ -14,6 +14,7 @@
 SceneCmd road_to_ikana_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(1, NATURE_ID_GENERAL_NIGHT, NA_BGM_GERUDO_VALLEY),
     SCENE_CMD_ROOM_LIST(1, road_to_ikana_sceneRoomList0x0000D0),
+    SCENE_CMD_LIGHT_LIST(1, road_to_ikana_sceneLightInfo0x0000C0),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_GERUDO_VALLEY),
     SCENE_CMD_COL_HEADER(&road_to_ikana_sceneCollisionHeader_002824),
     SCENE_CMD_SPAWN_LIST(road_to_ikana_sceneEntranceList0x0000D8),
@@ -32,6 +33,10 @@ ActorEntry road_to_ikana_sceneStartPositionList0x000090[] = {
     { ACTOR_PLAYER, {  5154, 575,  -240 }, { 0, 0xC300, 0 }, 0x0FFF },
     { ACTOR_PLAYER, {  1670, 200,   -94 }, { 0, 0xC000, 0 }, 0x04FF }, // Shortcut Grotto
     { ACTOR_PLAYER, {  1730, 200,    70 }, { 0, 0xA800, 0 }, 0x06FF }, // Owl Statue
+};
+
+LightInfo road_to_ikana_sceneLightInfo0x0000C0[] = {
+    { 0x00, { 1542, 234, -854, { 0x32, 0x32, 0x32 }, 0x00, 0x012C } },
 };
 
 RomFile road_to_ikana_sceneRoomList0x0000D0[] = {

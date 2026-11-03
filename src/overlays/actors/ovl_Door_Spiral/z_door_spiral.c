@@ -95,11 +95,11 @@ void DoorSpiral_SetupAction(DoorSpiral* this, DoorSpiralActionFunc actionFunc) {
 
 s32 func_809A2B70(DoorSpiral* this, PlayState* play) {
     this->unk148 = sSpiralObjectInfoTable[this->index].index;
-  /*if (this->unk148 == 7 || (this->unk148 == 2 && play->roomCtx.curRoom.enablePosLights)) {
+    if (this->unk148 == 7 || (this->unk148 == 2 && play->roomCtx.curRoom.enablePosLights)) {
         if (this->unk148 == 2)
             this->unk148 = 3;
         this->actor.flags |= ACTOR_FLAG_UCODE_POINT_LIGHT_ENABLED;
-    }*/
+    }
     DoorSpiral_SetupAction(this, func_809A2FF8);
     return 0;
 }

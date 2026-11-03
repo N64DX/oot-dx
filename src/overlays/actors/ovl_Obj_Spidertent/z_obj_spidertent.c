@@ -19,7 +19,7 @@
 
 #include "assets/objects/object_spidertent/object_spidertent.h"
 
-#define FLAGS 0
+#define FLAGS (ACTOR_FLAG_UCODE_POINT_LIGHT_ENABLED)
 
 void ObjSpidertent_Init(Actor* thisx, struct PlayState* play);
 void ObjSpidertent_Destroy(Actor* thisx, struct PlayState* play);

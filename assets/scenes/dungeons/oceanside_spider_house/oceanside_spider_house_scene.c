@@ -16,6 +16,7 @@ SceneCmd oceanside_spider_house_scene[] = {
     SCENE_CMD_SOUND_SETTINGS(5, NATURE_ID_NONE, NA_BGM_CAVERN),
     SCENE_CMD_ROOM_LIST(5, oceanside_spider_house_sceneRoomList0x000130),
     SCENE_CMD_TRANSITION_ACTOR_LIST(4, oceanside_spider_house_sceneTransitionActorList_0000A8),
+    SCENE_CMD_LIGHT_LIST(4, oceanside_spider_house_sceneLightInfo0x0000F8),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_FORSAKEN_KINGDOM),
     SCENE_CMD_COL_HEADER(&oceanside_spider_house_sceneCollisionHeader_00AE8C),
     SCENE_CMD_SPAWN_LIST(oceanside_spider_house_sceneEntranceList0x000160),
@@ -43,6 +44,13 @@ TransitionActorEntry oceanside_spider_house_sceneTransitionActorList_0000A8[] = 
     { 1, 255, 3, 255, ACTOR_EN_DOOR, {  120, -120, -1263 }, 0x4000, 0x003F },
     { 4, 255, 1, 255, ACTOR_EN_DOOR, { -315, -120, -1660 }, 0x4000, 0x003F },
     { 2, 255, 1, 255, ACTOR_EN_DOOR, { -315,  180, -1143 }, 0x4000, 0x003F },
+};
+
+LightInfo oceanside_spider_house_sceneLightInfo0x0000F8[] = {
+    { 0x00, {  418, 100, -1262, { 0x96, 0x00, 0x00 }, 0x00, 0x0258 } },
+    { 0x00, { 1619, 439, -1267, { 0x00, 0xF4, 0x00 }, 0x00, 0x01F4 } },
+    { 0x00, { -436, 108, -1734, { 0x96, 0x96, 0xFA }, 0x00, 0x00C8 } },
+    { 0x00, {    0, 634,   414, { 0xC8, 0xC8, 0xC8 }, 0x00, 0x0190 } },
 };
 
 RomFile oceanside_spider_house_sceneRoomList0x000130[] = {

@@ -481,7 +481,8 @@ typedef enum SceneCommandTypeID {
     /* 0x1A */ SCENE_CMD_ID_QUEST_HEADER_LIST,
     /* 0x1B */ SCENE_CMD_ID_TITLE_CARD,
     /* 0x1C */ SCENE_CMD_ID_RESTRICTIONS,
-    /* 0x1D */ SCENE_CMD_ID_MAX
+    /* 0x1D */ SCENE_CMD_ID_ROOM_BEHAVIOR_WITH_POS_LIGHTS,
+    /* 0x1E */ SCENE_CMD_ID_MAX
 } SceneCommandTypeID;
 
 #define SCENE_CMD_PLAYER_ENTRY_LIST(length, playerEntryList) \
@@ -522,7 +523,7 @@ typedef enum SceneCommandTypeID {
     { SCENE_CMD_ID_OBJECT_LIST, numObjects, CMD_PTR(objectList) }
 
 #define SCENE_CMD_LIGHT_LIST(numLights, lightList) \
-    { SCENE_CMD_ID_POS_LIGHT_LIST, numLights, CMD_PTR(lightList) }
+    { SCENE_CMD_ID_LIGHT_LIST, numLights, CMD_PTR(lightList) }
 
 #define SCENE_CMD_PATH_LIST(pathList) \
     { SCENE_CMD_ID_PATH_LIST, 0, CMD_PTR(pathList) }
@@ -571,6 +572,10 @@ typedef enum SceneCommandTypeID {
 
 #define SCENE_CMD_RESTRICTIONS(flags1, flags2, flags3) \
     { SCENE_CMD_ID_RESTRICTIONS, 0, CMD_BBBB(flags1, flags2, flags3, 0) }
+
+#define SCENE_CMD_ROOM_BEHAVIOR_WITH_POS_LIGHTS(type, environment, showInvisActors, disableWarpSongs) \
+    { SCENE_CMD_ID_ROOM_BEHAVIOR_WITH_POS_LIGHTS, type, \
+        environment | _SHIFTL(showInvisActors, 8, 1) | _SHIFTL(disableWarpSongs, 10, 1) }
 
 s32 Scene_ExecuteCommands(struct PlayState* play, SceneCmd* sceneCmd);
 void Scene_ResetTransitionActorList(struct GameState* state, TransitionActorList* transitionActors);

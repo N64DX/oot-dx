@@ -20,6 +20,7 @@
 #include "translation.h"
 #include "versions.h"
 #include "audio.h"
+#include "light.h"
 #include "play_state.h"
 #include "player.h"
 #include "room.h"
@@ -151,6 +152,11 @@ void Room_DrawCullable(PlayState* play, Room* room, u32 flags) {
         gSPSegment(POLY_XLU_DISP++, 0x03, room->segment);
         Gfx_SetupDL_25Xlu(play->state.gfxCtx);
         gSPMatrix(POLY_XLU_DISP++, &gIdentityMtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    }
+    
+    if (room->enablePosLights) {
+        gSPSetGeometryMode(POLY_OPA_DISP++, G_LIGHTING_POSITIONAL);
+        gSPSetGeometryMode(POLY_XLU_DISP++, G_LIGHTING_POSITIONAL);
     }
 
     roomShape = &room->roomShape->cullable;
@@ -753,6 +759,11 @@ s32 Room_ProcessRoomRequest(PlayState* play, RoomContext* roomCtx) {
             Scene_ExecuteCommands(play, roomCtx->curRoom.segment);
             Player_SetBootData(play, GET_PLAYER(play));
             Actor_SpawnTransitionActors(play, &play->actorCtx);
+            
+            if (!((play->sceneId == SCENE_FORSAKEN_KINGDOM && roomCtx->curRoom.num == 1) /*|| play->sceneId == SCENE_IKNINSIDE*/)) {
+                play->envCtx.lightSettingOverride = LIGHT_SETTING_OVERRIDE_NONE;
+                play->envCtx.lightBlendOverride = LIGHT_BLEND_OVERRIDE_NONE;
+            }
         } else {
             return false;
         }

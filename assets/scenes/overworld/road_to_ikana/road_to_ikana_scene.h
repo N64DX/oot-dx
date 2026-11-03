@@ -7,6 +7,7 @@
 #include "ultra64.h"
 
 extern ActorEntry road_to_ikana_sceneStartPositionList0x000090[];
+extern LightInfo road_to_ikana_sceneLightInfo0x0000C0[];
 extern RomFile road_to_ikana_sceneRoomList0x0000D0[];
 extern Spawn road_to_ikana_sceneEntranceList0x0000D8[];
 extern u16 road_to_ikana_sceneExitList_0000E0[];

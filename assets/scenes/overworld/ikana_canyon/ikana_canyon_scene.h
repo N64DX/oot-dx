@@ -10,6 +10,7 @@
 extern SceneCmd* ikana_canyon_sceneAlternateHeaders[];
 extern ActorEntry ikana_canyon_sceneStartPositionList0x0000B0[];
 extern TransitionActorEntry ikana_canyon_sceneTransitionActorList_0001A0[];
+extern LightInfo ikana_canyon_sceneLightInfo0x0001F0[];
 extern RomFile ikana_canyon_sceneRoomList0x000200[];
 extern Spawn ikana_canyon_sceneEntranceList0x000228[];
 extern u16 ikana_canyon_sceneExitList_000248[];

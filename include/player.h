@@ -4,6 +4,7 @@
 #include "actor.h"
 #include "alignment.h"
 #include "face_change.h"
+#include "light.h"
 
 struct Player;
 
@@ -1021,7 +1022,9 @@ typedef struct Player {
     /* 0x0A94 */ u8 shieldDamage;
     /* 0x0A95 */ s8 doorNext; // used with spiral staircase
     /* 0x0A98 */ BombArrowLink sBombArrowLinks[MAX_BOMB_ARROWS];
-} Player; // size = 0xD40
+    /* 0x0BEC */ LightNode* lightNode;
+    /* 0x0BF0 */ LightInfo lightInfo;
+} Player; // size = 0xBF4
 
 // z_player_lib.c
 void Player_SetBootData(struct PlayState* play, Player* this);

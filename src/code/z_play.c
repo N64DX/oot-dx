@@ -1492,7 +1492,9 @@ void Play_Draw(PlayState* this) {
 
         if (!DEBUG_FEATURES || (R_HREG_MODE != HREG_MODE_PLAY) || (R_PLAY_DRAW_ENV_FLAGS & PLAY_ENV_DRAW_LIGHTS)) {
             sp228 = LightContext_NewLights(&this->lightCtx, gfxCtx);
-            Lights_BindAll(sp228, this->lightCtx.listHead, NULL);
+            if (this->roomCtx.curRoom.enablePosLights)
+                sp228->enablePosLights = true;
+            Lights_BindAll(sp228, this->lightCtx.listHead, NULL, this);
             Lights_Draw(sp228, gfxCtx);
         }
 

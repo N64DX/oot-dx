@@ -3,6 +3,7 @@
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "sys_matrix.h"
+#include "skin_matrix.h"
 #include "light.h"
 #include "play_state.h"
 
@@ -39,6 +40,12 @@ void Lights_PointSetColorAndRadius(LightInfo* info, u8 r, u8 g, u8 b, s16 radius
     info->params.point.color[1] = g;
     info->params.point.color[2] = b;
     info->params.point.radius = radius;
+}
+
+void Lights_PointSetPosition(LightInfo* info, s16 x, s16 y, s16 z) {
+    info->params.point.x = x;
+    info->params.point.y = y;
+    info->params.point.z = z;
 }
 
 void Lights_DirectionalSetInfo(LightInfo* info, s8 x, s8 y, s8 z, u8 r, u8 g, u8 b) {
@@ -94,7 +101,7 @@ Light* Lights_FindSlot(Lights* lights) {
     }
 }
 
-void Lights_BindPoint(Lights* lights, LightParams* params, Vec3f* vec) {
+void Lights_BindPointWithReference(Lights* lights, LightParams* params, Vec3f* vec) {
     f32 xDiff;
     f32 yDiff;
     f32 zDiff;
@@ -102,7 +109,7 @@ void Lights_BindPoint(Lights* lights, LightParams* params, Vec3f* vec) {
     f32 scale;
     Light* light;
 
-    if (vec != NULL) {
+    if (vec != NULL && params->point.radius >= 1) {
         xDiff = params->point.x - vec->x;
         yDiff = params->point.y - vec->y;
         zDiff = params->point.z - vec->z;
@@ -132,6 +139,42 @@ void Lights_BindPoint(Lights* lights, LightParams* params, Vec3f* vec) {
     }
 }
 
+void Lights_BindPoint(Lights* lights, LightParams* params, PlayState* play) {
+    Light* light;
+    f32 kq = params->point.radius;
+    Vec3f pos, adjustedPos;
+
+    if (kq > 0.0f) {
+        pos.x = params->point.x;
+        pos.y = params->point.y;
+        pos.z = params->point.z;
+        SkinMatrix_Vec3fMtxFMultXYZ(&play->viewProjectionMtxF, &pos, &adjustedPos);
+        if (-kq < adjustedPos.z && 600.0f + kq > adjustedPos.z && fabsf(adjustedPos.x) - kq < 400.0f && fabsf(adjustedPos.y) - kq < 400.0f) {
+            light = Lights_FindSlot(lights);
+            if (light != NULL) {
+                kq = 4500000.0f / SQ(kq);
+                if (kq > 255.0f)
+                    kq = 255.0f;
+                else if (20.0f > kq)
+                    kq = 20.0f;
+
+                light->p.col[0] = params->point.color[0];
+                light->p.colc[0] = light->p.col[0];
+                light->p.col[1] = params->point.color[1];
+                light->p.colc[1] = light->p.col[1];
+                light->p.col[2] = params->point.color[2];
+                light->p.colc[2] = light->p.col[2];
+                light->p.pos[0] = params->point.x;
+                light->p.pos[1] = params->point.y;
+                light->p.pos[2] = params->point.z;
+                light->p.kc = 8;
+                light->p.kl = -1;
+                light->p.kq = (s32)kq;
+            }
+        }
+    }
+}
+
 void Lights_BindDirectional(Lights* lights, LightParams* params, Vec3f* vec) {
     Light* light = Lights_FindSlot(lights);
 
@@ -142,6 +185,7 @@ void Lights_BindDirectional(Lights* lights, LightParams* params, Vec3f* vec) {
         light->l.dir[0] = params->dir.x;
         light->l.dir[1] = params->dir.y;
         light->l.dir[2] = params->dir.z;
+        light->l.pad1 = 0;
     }
 }
 
@@ -153,14 +197,23 @@ void Lights_BindDirectional(Lights* lights, LightParams* params, Vec3f* vec) {
  * Note: Lights in a given list can only be bound to however many free slots are
  * available in the Lights group. This is at most 7 slots for a new group, but could be less.
  */
-void Lights_BindAll(Lights* lights, LightNode* listHead, Vec3f* vec) {
-    LightsBindFunc bindFuncs[] = { Lights_BindPoint, Lights_BindDirectional, Lights_BindPoint };
+void Lights_BindAll(Lights* lights, LightNode* listHead, Vec3f* refPos, PlayState* play) {
+    static LightsBindFunc bindFuncs[] = { Lights_BindPoint, (LightsBindFunc)Lights_BindDirectional, Lights_BindPoint };
+    static LightsBindFuncLegacy bindFuncsLegacy[] = { Lights_BindPointWithReference, (LightsBindFuncLegacy)Lights_BindDirectional, Lights_BindPointWithReference };
     LightInfo* info;
 
-    while (listHead != NULL) {
-        info = listHead->info;
-        bindFuncs[info->type](lights, &info->params, vec);
-        listHead = listHead->next;
+    if (listHead != NULL) {
+        if (refPos == NULL && lights->enablePosLights == 1) {
+            do {
+                bindFuncs[listHead->info->type](lights, &listHead->info->params, play);
+                listHead = listHead->next;
+            } while (listHead != NULL);
+        } else {
+            do {
+                bindFuncsLegacy[listHead->info->type](lights, &listHead->info->params, refPos);
+                listHead = listHead->next;
+            } while (listHead != NULL);
+        }
     }
 }
 
@@ -289,6 +342,7 @@ Lights* Lights_NewAndDraw(GraphicsContext* gfxCtx, u8 ambientR, u8 ambientG, u8 
     lights->l.a.l.col[0] = lights->l.a.l.colc[0] = ambientR;
     lights->l.a.l.col[1] = lights->l.a.l.colc[1] = ambientG;
     lights->l.a.l.col[2] = lights->l.a.l.colc[2] = ambientB;
+    lights->enablePosLights = false;
     lights->numLights = numLights;
 
     for (i = 0; i < numLights; i++) {
@@ -313,6 +367,7 @@ Lights* Lights_New(GraphicsContext* gfxCtx, u8 ambientR, u8 ambientG, u8 ambient
     lights->l.a.l.col[0] = lights->l.a.l.colc[0] = ambientR;
     lights->l.a.l.col[1] = lights->l.a.l.colc[1] = ambientG;
     lights->l.a.l.col[2] = lights->l.a.l.colc[2] = ambientB;
+    lights->enablePosLights = false;
     lights->numLights = 0;
 
     return lights;

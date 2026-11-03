@@ -289,6 +289,7 @@ BAD_RETURN(s32) Scene_CommandRoomBehavior(PlayState* play, SceneCmd* cmd) {
     play->roomCtx.curRoom.environmentType = cmd->roomBehavior.gpFlag2 & 0xFF;
     play->roomCtx.curRoom.lensMode = (cmd->roomBehavior.gpFlag2 >> 8) & 1;
     play->msgCtx.disableWarpSongs = (cmd->roomBehavior.gpFlag2 >> 0xA) & 1;
+    play->roomCtx.curRoom.enablePosLights = 0;
 }
 
 BAD_RETURN(s32) Scene_CommandRoomShape(PlayState* play, SceneCmd* cmd) {
@@ -597,6 +598,14 @@ BAD_RETURN(s32) Scene_CommandRestrictions(PlayState* play, SceneCmd* cmd) {
     interfaceCtx->restrictions.sceneOverride = true;
 }
 
+BAD_RETURN(s32) Scene_CommandRoomBehaviorPosLights(PlayState* play, SceneCmd* cmd) {
+    play->roomCtx.curRoom.type = cmd->roomBehavior.gpFlag1;
+    play->roomCtx.curRoom.environmentType = cmd->roomBehavior.gpFlag2 & 0xFF;
+    play->roomCtx.curRoom.lensMode = (cmd->roomBehavior.gpFlag2 >> 8) & 1;
+    play->msgCtx.disableWarpSongs = (cmd->roomBehavior.gpFlag2 >> 0xA) & 1;
+    play->roomCtx.curRoom.enablePosLights = 1;
+}
+
 SceneCmdHandlerFunc sSceneCmdHandlers[SCENE_CMD_ID_MAX] = {
     Scene_CommandPlayerEntryList,          // SCENE_CMD_ID_PLAYER_ENTRY_LIST
     Scene_CommandActorEntryList,           // SCENE_CMD_ID_ACTOR_LIST
@@ -627,6 +636,7 @@ SceneCmdHandlerFunc sSceneCmdHandlers[SCENE_CMD_ID_MAX] = {
     Scene_CommandQuestHeaderList,          // SCENE_CMD_ID_QUEST_HEADER_LIST
     Scene_CommandTitleCard,                // SCENE_CMD_ID_TITLE_CARD
     Scene_CommandRestrictions,             // SCENE_CMD_ID_RESTRICTIONS
+    Scene_CommandRoomBehaviorPosLights,    // SCENE_CMD_ID_ROOM_BEHAVIOR_WITH_POS_LIGHTS
 };
 
 RomFile sNaviQuestHintFiles[] = {

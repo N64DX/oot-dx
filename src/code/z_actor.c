@@ -2773,9 +2773,11 @@ void Actor_Draw(PlayState* play, Actor* actor) {
     OPEN_DISPS(play->state.gfxCtx, "../z_actor.c", 6035);
 
     lights = LightContext_NewLights(&play->lightCtx, play->state.gfxCtx);
+    if ((actor->flags & ACTOR_FLAG_UCODE_POINT_LIGHT_ENABLED) && play->roomCtx.curRoom.enablePosLights)
+        lights->enablePosLights = true;
 
     Lights_BindAll(lights, play->lightCtx.listHead,
-                   (actor->flags & ACTOR_FLAG_IGNORE_POINT_LIGHTS) ? NULL : &actor->world.pos);
+                   (actor->flags & (ACTOR_FLAG_UCODE_POINT_LIGHT_ENABLED | ACTOR_FLAG_IGNORE_POINT_LIGHTS)) ? NULL : &actor->world.pos, play);
     Lights_Draw(lights, play->state.gfxCtx);
 
     if (actor->flags & ACTOR_FLAG_IGNORE_QUAKE) {
