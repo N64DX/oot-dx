@@ -8,7 +8,7 @@
 
 SceneCmd woodfall_temple_room_9[] = {
     SCENE_CMD_ECHO_SETTINGS(7),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_ROOM_BEHAVIOR_WITH_POS_LIGHTS(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_9RoomShapeCullable_0001B0),

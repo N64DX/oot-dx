@@ -311,7 +311,7 @@ void EffectSs_DrawAll(PlayState* play) {
     Lights* lights = LightContext_NewLights(&play->lightCtx, play->state.gfxCtx);
     s32 i;
 
-    Lights_BindAll(lights, play->lightCtx.listHead, NULL);
+    Lights_BindAll(lights, play->lightCtx.listHead, NULL, play);
     Lights_Draw(lights, play->state.gfxCtx);
 
     for (i = 0; i < sEffectSsInfo.tableSize; i++) {

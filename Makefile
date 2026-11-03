@@ -413,9 +413,9 @@ ifeq ($(COMPILER),gcc)
   OPTFLAGS := -Os -ffast-math -fno-unsafe-math-optimizations
 endif
 
-GBI_DEFINES := -DF3DEX_GBI_2
+GBI_DEFINES := -DF3DEX_GBI_2 -DF3DEX_GBI_PL
 ifneq ($(PLATFORM),N64)
-  GBI_DEFINES += -DF3DEX_GBI_PL -DGBI_DOWHILE
+  GBI_DEFINES += -DGBI_DOWHILE
 endif
 ifeq ($(DEBUG_FEATURES),1)
   GBI_DEFINES += -DGBI_DEBUG

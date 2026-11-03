@@ -9,6 +9,7 @@
 
 extern ActorEntry oceanside_spider_house_sceneStartPositionList0x000098[];
 extern TransitionActorEntry oceanside_spider_house_sceneTransitionActorList_0000A8[];
+extern LightInfo oceanside_spider_house_sceneLightInfo0x0000F8[];
 extern RomFile oceanside_spider_house_sceneRoomList0x000130[];
 extern Spawn oceanside_spider_house_sceneEntranceList0x000160[];
 extern u16 oceanside_spider_house_sceneExitList_000164[];

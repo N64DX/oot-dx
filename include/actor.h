@@ -6,6 +6,7 @@
 #include "animation.h"
 #include "z_math.h"
 #include "collision_check.h"
+#include "light.h"
 
 #define ACTOR_NUMBER_MAX 254
 
@@ -176,6 +177,10 @@ typedef enum ActorDrawDamageEffectType {
 
 // Flag controlling the use of `Actor.sfx`. Do not use directly. See Actor_PlaySfx_FlaggedTimer
 #define ACTOR_FLAG_SFX_TIMER (1 << 28)
+
+// Specifies whether subsequent geometry is compatible with ucode point lights.
+// The current room must also enable point lights for point lights to take effect.
+#define ACTOR_FLAG_UCODE_POINT_LIGHT_ENABLED (1 << 29)
 
 #define ACTOR_FLAGS_CHECK_ALL(thisx, mask) (((thisx)->flags & (mask)) == (mask))
 
@@ -633,6 +638,7 @@ typedef struct NpcInteractInfo {
 
 extern Gfx D_80115FF0[];
 extern Gfx D_80116280[];
+extern LightNode* D_8015BC10;
 
 void ActorShape_Init(ActorShape* shape, f32 yOffset, ActorShadowFunc shadowDraw, f32 shadowScale);
 void ActorShadow_DrawCircle(Actor* actor, struct Lights* lights, struct PlayState* play);

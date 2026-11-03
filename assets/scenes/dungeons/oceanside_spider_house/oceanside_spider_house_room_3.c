@@ -9,7 +9,7 @@
 
 SceneCmd oceanside_spider_house_room_3[] = {
     SCENE_CMD_ECHO_SETTINGS(4),
-    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_ROOM_BEHAVIOR_WITH_POS_LIGHTS(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&oceanside_spider_house_room_3RoomShapeCullable_0001C0),

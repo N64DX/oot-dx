@@ -20,7 +20,7 @@
 #include "assets/objects/object_kin2_obj/object_kin2_obj.h"
 #include "assets/scenes/dungeons/oceanside_spider_house/oceanside_spider_house_scene.h"
 
-#define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
+#define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_UCODE_POINT_LIGHT_ENABLED)
 
 void BgKin2Bombwall_Init(Actor* thisx, struct PlayState* play);
 void BgKin2Bombwall_Destroy(Actor* thisx, struct PlayState* play);

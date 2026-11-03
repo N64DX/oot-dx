@@ -18,6 +18,7 @@ SceneCmd ikana_canyon_scene[] = {
     SCENE_CMD_ROOM_LIST(4, ikana_canyon_sceneRoomList0x000200),
     SCENE_CMD_MISC_SETTINGS(SCENE_CAM_TYPE_DEFAULT, WORLD_MAP_AREA_FORSAKEN_KINGDOM),
     SCENE_CMD_TRANSITION_ACTOR_LIST(5, ikana_canyon_sceneTransitionActorList_0001A0),
+    SCENE_CMD_LIGHT_LIST(1, ikana_canyon_sceneLightInfo0x0001F0),
     SCENE_CMD_COL_HEADER(&ikana_canyon_sceneCollisionHeader_00D9FC),
     SCENE_CMD_SPAWN_LIST(ikana_canyon_sceneEntranceList0x000228),
     SCENE_CMD_SPECIAL_FILES(NAVI_QUEST_HINTS_NONE, OBJECT_GAMEPLAY_FIELD_KEEP),
@@ -55,6 +56,10 @@ TransitionActorEntry ikana_canyon_sceneTransitionActorList_0001A0[] = {
     { 3, 255, 0, 255, ACTOR_EN_HOLL, {  2129, -595, 3217 }, 0xAEE0, 0x003F },
     { 3, 255, 0, 255, ACTOR_EN_HOLL, {  1992, -280, 3502 }, 0xA700, 0x003F },
     { 0, 255, 2, 255, ACTOR_EN_HOLL, { -1740,  511, 1679 }, 0x5A80, 0x017F },
+};
+
+LightInfo ikana_canyon_sceneLightInfo0x0001F0[] = {
+    { 0x00, { -2932, -468, 3067, { 0x64, 0x64, 0x64 }, 0x00, 0x15DC } },
 };
 
 RomFile ikana_canyon_sceneRoomList0x000200[] = {
