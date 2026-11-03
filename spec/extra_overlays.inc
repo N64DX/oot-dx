@@ -391,6 +391,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_En_DekunutsBoss"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Dekunuts/z_en_dekunutsboss.o"
+endseg
+
+beginseg
     name "ovl_En_BuffDeku"
     compress
     flags OVERLAY

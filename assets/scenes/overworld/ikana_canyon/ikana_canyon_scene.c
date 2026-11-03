@@ -59,7 +59,7 @@ TransitionActorEntry ikana_canyon_sceneTransitionActorList_0001A0[] = {
 };
 
 LightInfo ikana_canyon_sceneLightInfo0x0001F0[] = {
-    { 0x00, { -2932, -468, 3067, { 0x64, 0x64, 0x64 }, 0x00, 0x15DC } },
+    { 0x00, { -2932, -468, 3067, { 0x64, 0x64, 0x64 }, 0x00, 0x05DC } },
 };
 
 RomFile ikana_canyon_sceneRoomList0x000200[] = {

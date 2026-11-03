@@ -110,6 +110,7 @@ void Scene_DrawConfigAncientHollow(PlayState* play);
 void Scene_DrawConfigGoronMines(PlayState* play);
 void Scene_DrawConfigWoodfallTemple(PlayState* play);
 void Scene_DrawConfigForbiddenWoods(PlayState* play);
+void Scene_DrawConfigWebbedShrine(PlayState* play);
 void Scene_DrawConfigBeneathTheGraveyard(PlayState* play);
 void Scene_DrawConfigRiversideInn(PlayState* play);
 void Scene_DrawConfigSpringLakeSmithy(PlayState* play);
@@ -237,6 +238,7 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigGoronMines,                  // SDC_GORON_MINES
     Scene_DrawConfigWoodfallTemple,              // SDC_WOODFALL_TEMPLE
     Scene_DrawConfigForbiddenWoods,              // SDC_FORBIDDEN_WOODS
+    Scene_DrawConfigWebbedShrine,                // SDC_WEBBED_SHRINE
     Scene_DrawConfigBeneathTheGraveyard,         // SDC_BENEATH_THE_GRAVEYARD
     Scene_DrawConfigRiversideInn,                // SDC_RIVERSIDE_INN
     Scene_DrawConfigSpringLakeSmithy,            // SDC_SPRING_LAKE_SMITHY
@@ -1775,9 +1777,9 @@ void Scene_DrawConfigPathToWoodfall(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (gameplayFrames * 3) % 128, 32, 32, 1, 0, (gameplayFrames * 3) % 128, 32, 32));
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          0, 32, 32, 1, 0, -gameplayFrames,            32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  gameplayFrames,            64, 64, 1, 0, -gameplayFrames,            64, 64));
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 1) % 128, 32, 32, 1,                          0,                          0, 16, 64));
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  (gameplayFrames * 2) % 512, 64, 64, 1,                          0, (gameplayFrames * 2) % 512, 64, 64));
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  (gameplayFrames * 1) % 128, 32, 32, 1, (gameplayFrames * 1) % 128,                          0, 32, 32));
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
@@ -1785,15 +1787,21 @@ void Scene_DrawConfigPathToWoodfall(PlayState* play) {
 
 void Scene_DrawConfigSpringLake(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
+    Gfx* displayListHead;
+    static u8 sLodFrac[] = { 128, 255 };
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1)  % 128, 32,  32)); // Chimney matrix effect 
-    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          0,                           32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 1
-    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 1)  % 128, 32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 2
-    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 10) % 128, 32, 128, 1, 0,                    (gameplayFrames * 7)  % 128, 32, 128)); // Waterfall
-    gSPSegment(POLY_XLU_DISP++, 0x0C, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 10) % 128, 64,  64, 1, 0,                    (gameplayFrames * 10) % 128, 64,  64)); // Chimney fog
-    gSPSegment(POLY_OPA_DISP++, 0x0D, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                          (gameplayFrames * 1)  % 128, 32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Chimney fire
+    displayListHead = Graph_Alloc(play->state.gfxCtx, 2 * sizeof(Gfx)); // Chimney matrix effect 
+    gSPSegment(POLY_OPA_DISP++, 0x08, displayListHead);
+    gDPSetPrimColor(displayListHead++, 0, sLodFrac[gameplayFrames % 2], 255, 255, 255, 255);
+    gSPEndDisplayList(displayListHead++);
+
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                            0, 32,  32, 1, 0, -(gameplayFrames *  1) % 128, 32,  32)); // Water 1
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  (gameplayFrames *  1) % 128, 32,  32, 1, 0,  (gameplayFrames *  1) % 128, 32,  32)); // Water 2
+    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  (gameplayFrames * 10) % 512, 32, 128, 1, 0,  (gameplayFrames *  7) % 512, 32, 128)); // Waterfall
+    gSPSegment(POLY_XLU_DISP++, 0x0C, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 10) % 512, 64,  64, 1, 0, -(gameplayFrames * 10) % 512, 64,  64)); // Chimney fog
+    gSPSegment(POLY_OPA_DISP++, 0x0D, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames *  1) % 128, 32,  32, 1, 0, -(gameplayFrames *  1) % 128, 32,  32)); // Chimney fire
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
@@ -1802,14 +1810,17 @@ void Scene_DrawConfigSpringLake(PlayState* play) {
 void Scene_DrawConfigWoodfall(PlayState* play) {
     u32 gameplayFrames = play->gameplayFrames;
 
-    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 1) % 128, (gameplayFrames * 2) % 128, 32, 32, 1,                           0,  (gameplayFrames * 2) % 128, 32, 32)); // Water flowing over temple
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,                           0, (gameplayFrames * 1) % 128, 32, 32, 1,                           0,  (gameplayFrames * 1) % 128, 32, 32)); // Purified water
+    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,                           0, (gameplayFrames * 1) % 128, 32, 32, 1, -(gameplayFrames * 1) % 128,  (gameplayFrames * 1) % 128, 32, 32)); // Poisoned water
+    gSPSegment(POLY_OPA_DISP++, 0x0E, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,                           0,                          0, 32, 32, 1,                           0, -(gameplayFrames * 1) % 128, 32, 32)); // Poisoned walls
+    gSPSegment(POLY_OPA_DISP++, 0x0F, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,                           0, (gameplayFrames * 1) % 128, 32, 32, 1, -(gameplayFrames * 1) % 128,  (gameplayFrames * 1) % 128, 32, 32)); // Dynamic poisoned water
+    gSPSegment(POLY_XLU_DISP++, 0x0F, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,                           0, (gameplayFrames * 1) % 128, 32, 32, 1, -(gameplayFrames * 1) % 128,  (gameplayFrames * 1) % 128, 32, 32)); // Dynamic poisoned water
 
     Scene_SetDefaultEnvColor(play);
-    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
 
 void Scene_DrawConfigPathToGoronVillage(PlayState* play) {
@@ -1817,9 +1828,9 @@ void Scene_DrawConfigPathToGoronVillage(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0,                           64,  64, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 1
-    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0,                           32,  32, 1, 0,                    (gameplayFrames * 1)  % 128, 32,  32)); // Water 2
-    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128, 0,                           32,  32)); // Water 3
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                           0, 64,  64, 1,                    0, (gameplayFrames * 1)  % 128, 32,  32)); // Water 1
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                           0, 32,  32, 1,                    0, (gameplayFrames * 1)  % 128, 32,  32)); // Water 2
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (gameplayFrames * 1)  % 128, 32,  32, 1, gameplayFrames % 128,                           0, 32,  32)); // Water 3
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
@@ -1830,9 +1841,9 @@ void Scene_DrawConfigGoronVillage(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,  (gameplayFrames * 1), 0, 32,  32, 1, -(gameplayFrames * 1), -(gameplayFrames * 1),  32, 32));
-    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,  (gameplayFrames * 1), 0, 32,  32, 1,  (gameplayFrames * 1),                     0,  32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 2), 0, 128, 64, 1, -(gameplayFrames * 3),                     0, 128, 64));
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,  (gameplayFrames * 1), (gameplayFrames * 1),  32, 32, 1,                     0, (gameplayFrames * 1),  32, 32));
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 1),                    0,  32, 32, 1,  (gameplayFrames * 1),                    0,  32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 2),                    0, 128, 32, 1, -(gameplayFrames * 3),                    0, 128, 32));
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
@@ -1843,7 +1854,7 @@ void Scene_DrawConfigGoronShrine(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
-    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 1), 0, 32,  32, 1, gameplayFrames * 1, 0, 32,  32));
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 1) % 128, 32, 32, 1, (gameplayFrames * 1) % 128, 0, 32, 32));
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
@@ -1886,10 +1897,10 @@ void Scene_DrawConfigForsakenKingdom(PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
     gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                           0, 32,  32, 1, (gameplayFrames * 1) % 128,                           0, 32,  32)); // Coast Lighter Water
-    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                           0, 32,  32, 1,                          0, -(gameplayFrames * 1) % 128, 32,  32)); // Lighter Water
-    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 1) % 128, 32,  32, 1,                          0, -(gameplayFrames * 1) % 128, 32,  32)); // Darker Water
-    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 2) % 128, 32, 128, 1,                          0, -(gameplayFrames * 2) % 128, 32, 128)); // Waterfall
-    gSPSegment(POLY_XLU_DISP++, 0x0C, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  (gameplayFrames * 3) % 128, 64,  64, 1,                          0,  (gameplayFrames * 3) % 128, 64,  64)); // Fog
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                           0, 32,  32, 1,                          0, ( gameplayFrames * 1) % 128, 32,  32)); // Lighter Water
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  (gameplayFrames * 1) % 128, 32,  32, 1,                          0,  (gameplayFrames * 1) % 128, 32,  32)); // Darker Water
+    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  (gameplayFrames * 2) % 512, 32, 128, 1,                          0,  (gameplayFrames * 2) % 512, 32, 128)); // Waterfall
+    gSPSegment(POLY_XLU_DISP++, 0x0C, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 3) % 512, 64,  64, 1,                          0, -(gameplayFrames * 3) % 512, 64,  64)); // Fog
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
@@ -1905,9 +1916,9 @@ void Scene_DrawConfigAncientHollow(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 2) % 512, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 1
-    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 2) % 256, 0, 16, 128, 1, 0, 0, 16, 128));                        // Light Rays 2
-    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 2) % 256, 0, 64, 32, 1, 0, (gameplayFrames * 2) % 128, 64, 32)); // Boss Room Fog
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 2) % 512, 0, 16, 128, 1, 0,                          0, 16, 128)); // Light Rays 1
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 2) % 256, 0, 16, 128, 1, 0,                          0, 16, 128)); // Light Rays 2
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 2) % 256, 0, 64,  32, 1, 0, (gameplayFrames * 2) % 128, 64,  32)); // Boss Room Fog
     gSPSegment(POLY_OPA_DISP++, 0x0B, SEGMENTED_TO_VIRTUAL(sAncientHollowEntranceTextures[((void)0, gSaveContext.save.nightFlag)]));
 
     gDPPipeSync(POLY_OPA_DISP++);
@@ -1932,11 +1943,11 @@ void Scene_DrawConfigGoronMines(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                    (gameplayFrames * 7) % 128, 32, 32, 1, 0, (gameplayFrames * 6) % 128, 32, 32)); // Lava
-    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,                     gameplayFrames      % 128, 32, 32, 1, 0, 0,                          32, 32)); // Lava
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, gameplayFrames % 256, 0,                          64, 32, 1, 0,  gameplayFrames      % 128, 64, 32)); // Boss Lava
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,                          0, (gameplayFrames * 7) % 128, 32, 32, 1, 0, (gameplayFrames * 6) % 128, 32, 32)); // Lava
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,                          0, (gameplayFrames * 1) % 128, 32, 32, 1, 0,                          0, 32, 32)); // Lava
+    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 1) % 256,                          0, 64, 32, 1, 0, (gameplayFrames * 1) % 128, 64, 32)); // Boss Lava
 
-    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TexScroll(play->state.gfxCtx, gameplayFrames % 256, 0, 64, 32)); // Fog
+    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TexScroll(play->state.gfxCtx, (gameplayFrames * 1) % 256, 0, 64, 32)); // Fog
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
@@ -1947,8 +1958,8 @@ void Scene_DrawConfigWoodfallTemple(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
-    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,  (gameplayFrames * 1) % 128, (gameplayFrames * 1) % 128, 32, 32, 1,                          0,  (gameplayFrames * 1) % 128, 32, 32));
+    gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 1) % 128, (gameplayFrames * 1) % 128, 32, 32, 1, (gameplayFrames * 1) % 128, -(gameplayFrames * 1) % 128, 32, 32));
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
@@ -1959,10 +1970,21 @@ void Scene_DrawConfigForbiddenWoods(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TexScroll(play->state.gfxCtx, 0, (gameplayFrames * 10) % 128, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TexScroll(play->state.gfxCtx, 0, (gameplayFrames * 3)  % 128, 32, 32));
-    gSPSegment(POLY_OPA_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,               0, 32, 32, 1, 0, -gameplayFrames, 32, 32));
-    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  gameplayFrames, 64, 64, 1, 0, -gameplayFrames, 64, 64));
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(gameplayFrames * 1) % 128, 32, 32, 1, 0,                          0, 16, 64));
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0,  (gameplayFrames * 2) % 512, 64, 64, 1, 0, (gameplayFrames * 2) % 512, 64, 64));
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TexScroll(play->state.gfxCtx, 0, (gameplayFrames * 10) % 128, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x0B, Gfx_TexScroll(play->state.gfxCtx, 0, (gameplayFrames *  3) % 128, 32, 32));
+
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
+}
+
+void Scene_DrawConfigWebbedShrine(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
+
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (gameplayFrames * 1) % 128, (gameplayFrames * 1) % 128, 32, 32, 1, -(gameplayFrames * 1) % 128, -(gameplayFrames * 1) % 128, 32, 32));
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
@@ -1973,9 +1995,9 @@ void Scene_DrawConfigBeneathTheGraveyard(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
-    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 1) % 128,                           0, 16, 128, 1, (gameplayFrames * 1) % 128,                           0, 32, 32)); // Room 0 Exit Warp Light
-    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,                           0,  (gameplayFrames * 6) % 128, 32,  32, 1,                          0, -(gameplayFrames * 4) % 128, 32, 32)); // Room 4 Water Stream
-    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 1) % 128,                           0, 32,  32, 1, (gameplayFrames * 1) % 128,  (gameplayFrames * 1) % 128, 32, 32)); // Room 4 Water
+    gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 1) % 128,                           0, 16, 64, 1, (gameplayFrames * 1) % 128,                           0, 32, 32)); // Room 0 Exit Warp Light
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,                           0,  (gameplayFrames * 6) % 128, 32, 32, 1,                          0,  (gameplayFrames * 4) % 128, 32, 32)); // Room 4 Water Stream
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 1) % 128,                           0, 32, 32, 1, (gameplayFrames * 1) % 128, -(gameplayFrames * 1) % 128, 32, 32)); // Room 4 Water
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
@@ -2001,7 +2023,7 @@ void Scene_DrawConfigSpringLakeSmithy(PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
 
-    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0, 32,  32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32,  32)); // Shining metal
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, 0, 32, 32, 1, -(gameplayFrames * 1) % 128, -(gameplayFrames * 1) % 128, 32,  32)); // Shining metal
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);

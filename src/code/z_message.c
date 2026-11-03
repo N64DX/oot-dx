@@ -2657,7 +2657,7 @@ void Message_Decode(PlayState* play) {
                 MSG_BUF_DECODED[decodedBufPos] = digit + '0';
                 charTexIdx += FONT_CHAR_TEX_SIZE;
             } else if (curChar == MESSAGE_SHIELD_UPGRADE_PRICE) {
-                u8 index      = msgCtx->textId - 0x9211;
+                u8 index      = msgCtx->textId - 0x9212;
                 u8 upgrade    = gSaveContext.save.info.shields[index].upgrade;
                 digits[0]     = digits[1] = digits[2] = 0;
                 digits[3]     = Player_MaxShieldDurabilityPrices[index][upgrade];

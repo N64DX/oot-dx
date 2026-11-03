@@ -12,6 +12,8 @@
 #include "versions.h"
 #include "audio.h"
 #include "ocarina.h"
+#include "play_state.h"
+#include "save.h"
 
 #define ABS_ALT(x) ((x) < 0 ? -(x) : (x))
 
@@ -3550,6 +3552,8 @@ void Audio_PlaySequenceWithSeqPlayerIO(u8 seqPlayerIndex, u16 seqId, u8 fadeInDu
     SEQCMD_PLAY_SEQUENCE(seqPlayerIndex, fadeInDuration, 0, seqId);
 }
 
+#define AUDIO_GET_ENEMY_BGM (currentSceneId > SCENE_OUTSIDE_GANONS_CASTLE && IS_CHILD_QUEST ? NA_BGM_ENEMY2 : NA_BGM_ENEMY)
+
 void Audio_SetSequenceMode(u8 seqMode) {
     s32 volumeFadeInTimer;
     u16 seqId;
@@ -3566,7 +3570,7 @@ void Audio_SetSequenceMode(u8 seqMode) {
 
         seqId = gActiveSeqs[SEQ_PLAYER_BGM_MAIN].seqId;
 
-        if (seqId == NA_BGM_FIELD_LOGIC && Audio_GetActiveSeqId(SEQ_PLAYER_BGM_SUB) == (NA_BGM_ENEMY | 0x800)) {
+        if (seqId == NA_BGM_FIELD_LOGIC && Audio_GetActiveSeqId(SEQ_PLAYER_BGM_SUB) == (AUDIO_GET_ENEMY_BGM | 0x800)) {
             seqMode = SEQ_MODE_IGNORE;
         }
 
@@ -3585,7 +3589,7 @@ void Audio_SetSequenceMode(u8 seqMode) {
 
                     Audio_SetVolumeScale(SEQ_PLAYER_BGM_SUB, VOL_SCALE_INDEX_BGM_SUB, sAudioEnemyVol,
                                          volumeFadeInTimer);
-                    SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_SUB, 10, 8, NA_BGM_ENEMY);
+                    SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_SUB, 10, 8, AUDIO_GET_ENEMY_BGM);
 
 #if OOT_VERSION < PAL_1_0 || !PLATFORM_N64
                     if (seqId != NA_BGM_NATURE_AMBIENCE)
@@ -3617,14 +3621,14 @@ void Audio_SetSequenceMode(u8 seqMode) {
 #elif OOT_VERSION < PAL_1_0
                 if ((seqMode == SEQ_MODE_ENEMY) && (seqId != NA_BGM_FIELD_LOGIC) &&
                     (Audio_GetActiveSeqId(SEQ_PLAYER_BGM_SUB) == NA_BGM_DISABLED)) {
-                    SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_SUB, 10, 8, NA_BGM_ENEMY);
+                    SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_SUB, 10, 8, AUDIO_GET_ENEMY_BGM);
                     sPrevSeqMode = seqMode + 0x80;
                 }
 #else
                 // If both seqMode = sPrevSeqMode = SEQ_MODE_ENEMY
                 if ((seqMode == SEQ_MODE_ENEMY) && (Audio_GetActiveSeqId(SEQ_PLAYER_BGM_SUB) == NA_BGM_DISABLED) &&
                     (seqId != NA_BGM_DISABLED) && (sSeqFlags[seqId & 0xFF & 0xFF] & SEQ_FLAG_ENEMY)) {
-                    SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_SUB, 10, 8, NA_BGM_ENEMY);
+                    SEQCMD_PLAY_SEQUENCE(SEQ_PLAYER_BGM_SUB, 10, 8, AUDIO_GET_ENEMY_BGM);
                     sPrevSeqMode = seqMode + 0x80;
                 }
 #endif

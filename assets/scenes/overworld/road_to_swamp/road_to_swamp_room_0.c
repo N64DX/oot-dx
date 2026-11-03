@@ -901,7 +901,7 @@ Gfx road_to_swamp_room_0DL_005AA8[] = {
     gsDPSetTextureLUT(G_TT_NONE),
     gsDPLoadTextureBlock(road_to_swamp_sceneTex_002730, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, 15),
     gsDPLoadMultiBlock(road_to_swamp_sceneTex_002730, 0x0000, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, 15, G_TX_NOLOD),
-    gsSPDisplayList(0x09000000),
+    gsSPDisplayList(0x0A000000),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
     gsSPVertex(road_to_swamp_room_0Vtx_0059E8, 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),

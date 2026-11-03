@@ -1,7 +1,7 @@
 /*
  * File: z_en_buffedeku.c
  * Overlay: ovl_En_BuffDeku
- * Description: Really Fucking Buff Mad Scrub
+ * Description: Buff Scrub
  * How to spawn: set the params of a regular scrub to 0xXX80. When hit, it'll disappear and spawn the buff scrub.
   * Author: CLeSeducteur
  */
@@ -57,7 +57,7 @@ static Actor* spawnedAssists[3] = { NULL, NULL, NULL };
 static u16 spawnType[]   = {    0, ACTOR_EN_IK, ACTOR_EN_DINOFOS, ACTOR_EN_TEST, ACTOR_EN_ZF,    0 };
 static u16 spawnParams[] = {    0,      0xFF06,           0xFF00,        0x0003,      0xFFFF,    0 };
 static u8 spawnNum[]     = {    0,           2,                3,             2,           2,    0 }; 
-static f32 moveSpeed[]   = { 1.5f,        3.0f,            2.50f,          2.0f,       1.75f, 1.5f };
+static f32 moveSpeed[]   = { 1.5f,        2.5f,            2.25f,          2.0f,       1.75f, 1.5f };
 static Vec3f cameraAt;
 
 ActorProfile En_BuffDeku_Profile = {
@@ -133,7 +133,7 @@ static ColliderJntSphElementInit sJntSphItemsInit[4] = {
     {
         {
             ELEM_MATERIAL_UNK0,
-            { 0xFFCFFFFF, 0x04, 0x28 }, //0x01 : fire, 0x02: ice, 0x03 :thunder, 0x04: 
+            { 0xFFCFFFFF, 0x04, 0x20 }, //0x01 : fire, 0x02: ice, 0x03 :thunder, 0x04: 
             { 0xFFCFFFFF, 0x00, 0x00 },
             ATELEM_ON,
             ACELEM_ON,
@@ -196,7 +196,11 @@ static InitChainEntry sInitChain[] = {
 
 void EnBuffDeku_Init(Actor* thisx, PlayState* play) {
 	EnBuffDeku* this = (EnBuffDeku*)thisx;
-    isHyper = play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS;
+    
+    if (play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS) {
+        isHyper = true;
+        thisx->category = ACTORCAT_BOSS;
+    } else isHyper = false;
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
 	this->dekuStickCooldownTimer = this->attackCooldownTimer = this->timer = 0;
@@ -216,7 +220,7 @@ void EnBuffDeku_Init(Actor* thisx, PlayState* play) {
     Collider_SetCylinder(play, &this->colliderBody, &this->actor, &sCylinderInit);
 
     if (isHyper) {
-        this->colliderSpheres.elements[0].base.atDmgInfo.damage = 0x40;
+        this->colliderSpheres.elements[0].base.atDmgInfo.damage = 0x2A;
         this->colliderSpheres.elements[0].dim.scale = this->colliderSpheres.elements[1].dim.scale = this->colliderSpheres.elements[2].dim.scale = this->colliderSpheres.elements[3].dim.scale = 2.0f;
     }
 

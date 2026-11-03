@@ -214,6 +214,7 @@ void Play_Destroy(GameState* thisx);
 extern void* gDebugCutsceneScript;
 #endif
 
+extern s16 currentSceneId;
 extern TransitionTile gTransitionTile;
 extern s32 gTransitionTileState;
 extern struct VisMono gPlayVisMono;

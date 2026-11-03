@@ -597,6 +597,7 @@ static SaveSelectEntry sSaveSelectEntries[] = {
     { 0, "Drained Well",             WELL,                       EVENTCHKINF_DRAINED_WELL                 },
     { 0, "Cleansed Ancient Hollow",  EVENT,                      EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW      },
     { 0, "Cleansed Goron Mines",     EVENT,                      EVENTCHKINF_CLEANSED_GORON_MINES         },
+    { 0, "Summoned Woodfall Temple", EVENT,                      EVENTCHKINF_SUMMONED_WOODFALL_TEMPLE     },
     { 0, "Purified Woodfall Temple", EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE     },
     { 0, "Purified Woodfall",        EVENT,                      EVENTCHKINF_PURIFIED_WOODFALL            },
     { 0, "Cleansed Stone Tower",     EVENT,                      EVENTCHKINF_CLEANSED_STONE_TOWER         },
@@ -692,7 +693,11 @@ void MapSelect_UpdateMenu(MapSelectState* this) {
             }
 
             if (CHECK_BTN_ALL(input->press.button, BTN_Z)) {
-                if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAY) {
+                if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAWN) {
+                    gSaveContext.save.cutsceneIndex = CS_INDEX_DAY;
+                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAY) {
+                    gSaveContext.save.cutsceneIndex = CS_INDEX_DUSK;
+                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_DUSK) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_NIGHT;
                 } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_NIGHT) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_0;
@@ -717,13 +722,17 @@ void MapSelect_UpdateMenu(MapSelectState* this) {
                 } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_9) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_A;
                 } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_A) {
-                    gSaveContext.save.cutsceneIndex = CS_INDEX_DAY;
+                    gSaveContext.save.cutsceneIndex = CS_INDEX_DAWN;
                 }
             } else if (CHECK_BTN_ALL(input->press.button, BTN_R)) {
-                if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAY) {
+                if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAWN) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_A;
-                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_NIGHT) {
+                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_DAY) {
+                    gSaveContext.save.cutsceneIndex = CS_INDEX_DAWN;
+                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_DUSK) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_DAY;
+                } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_NIGHT) {
+                    gSaveContext.save.cutsceneIndex = CS_INDEX_DUSK;
                 } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_0) {
                     gSaveContext.save.cutsceneIndex = CS_INDEX_NIGHT;
                 } else if (gSaveContext.save.cutsceneIndex == CS_INDEX_1) {
@@ -1029,14 +1038,21 @@ void MapSelect_PrintCutsceneSetting(MapSelectState* this, GfxPrint* printer, u16
     GfxPrint_SetColor(printer, 255, 255, 55, 255);
 
     switch (csIndex) {
+        case CS_INDEX_DUSK:
+            label = T(GFXP_HIRAGANA "ﾕｳｸﾞﾚ", "Dusk");
+            gSaveContext.save.dayTime = CLOCK_TIME(18, 0);
+            break;
         case CS_INDEX_NIGHT:
-            label = T(GFXP_HIRAGANA " ﾖﾙ " GFXP_KATAKANA "ｺﾞﾛﾝ", "Night");
+            label = T(GFXP_HIRAGANA "ﾖﾙ", "Night");
             gSaveContext.save.dayTime = CLOCK_TIME(0, 0);
             break;
+        case CS_INDEX_DAWN:
+            label = T(GFXP_HIRAGANA "ﾖｱｹ", "Dawn");
+            gSaveContext.save.dayTime = CLOCK_TIME(6, 0);
+            break;
         case CS_INDEX_DAY:
-            // clang-format off
-            gSaveContext.save.dayTime = CLOCK_TIME(12, 0); label = T(GFXP_HIRAGANA "ｵﾋﾙ " GFXP_KATAKANA "ｼﾞｬﾗ", "Day");
-            // clang-format on
+            label = T(GFXP_HIRAGANA "ｵﾋﾙ", "Day");
+            gSaveContext.save.dayTime = CLOCK_TIME(12, 0);
             break;
         case CS_INDEX_0:
             // clang-format off

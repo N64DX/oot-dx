@@ -13,6 +13,7 @@ extern Spawn woodfall_sceneEntranceList0x0000F0[];
 extern u16 woodfall_sceneExitList_0000FC[];
 extern EnvLightSettings woodfall_sceneLightSettings0x000104[];
 extern CutsceneData gWoodfallIntroCs[];
+extern CutsceneData gSummonWoodfallTempleCs[];
 extern Path woodfall_scenePathway[];
 extern CollisionHeader woodfall_sceneCollisionHeader_003CEC;
 

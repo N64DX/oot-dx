@@ -798,7 +798,7 @@ void EnHy_GiveBulletBag(EnHy* this, PlayState* play) {
     if (Actor_HasParent(&this->actor, play)) {
         this->actor.parent = NULL;
         this->actionFunc = EnHy_BoughtBulletBag;
-    } else Actor_OfferGetItem(&this->actor, play, GI_BULLET_BAG_60, 415.0f, 10.0f);
+    } else Actor_OfferGetItem(&this->actor, play, GI_BULLET_BAG_60, 415.0f, 50.0f);
 
 }
 
@@ -818,7 +818,7 @@ s16 EnHy_UpdateTalkState(PlayState* play, Actor* thisx) {
                             Message_ContinueTextbox(play, 0xC8);
                         else {
                             SET_ITEMGETINF(ITEMGETINF_RIVERSIDE_VILLAGE_BULLET_BAG);
-                            Actor_OfferGetItem(&this->actor, play, GI_BULLET_BAG_60, 415.0f, 10.0f);
+                            Actor_OfferGetItem(&this->actor, play, GI_BULLET_BAG_60, 415.0f, 50.0f);
                             this->actionFunc = EnHy_GiveBulletBag;
                         }
                     }
