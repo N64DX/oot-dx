@@ -20,7 +20,6 @@
 
 #include "assets/objects/object_dekunuts/object_dekunuts.h"
 #include "assets/objects/object_dekunuts/object_dekunuts_extra.h"
-#include "overlays/actors/ovl_Door_Warp1/z_door_warp1.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE)
 
@@ -145,17 +144,6 @@ void EnDekunuts_Init(Actor* thisx, PlayState* play) {
     EnDekunuts* this = (EnDekunuts*)thisx;
     s32 pad;
 
-    if (play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS) {
-        Actor_SetScale(thisx, 0.02f);
-        this->actor.flags |= ACTOR_FLAG_DRAW_CULLING_DISABLED;
-        if (Flags_GetClear(play, 0)) {
-            Actor_Kill(&this->actor);
-            Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_DOOR_WARP1, 0.0f, 0.0f, 0.0f, 0, 0, 0, WARP_DUNGEON_CHILD);
-            Actor_Spawn(&play->actorCtx, play, ACTOR_ITEM_B_HEART, 100.0f, 0.0f, 0.0f, 0, 0, 0, 0);
-            return;
-        }
-    }
-
     Actor_ProcessInitChain(&this->actor, sInitChain);
     if (thisx->params == DEKUNUTS_FLOWER) {
         thisx->flags &= ~(ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE);
@@ -188,11 +176,10 @@ void EnDekunuts_Init(Actor* thisx, PlayState* play) {
 void EnDekunuts_Destroy(Actor* thisx, PlayState* play) {
     EnDekunuts* this = (EnDekunuts*)thisx;
 
-    if (HARDER_ENEMIES)
-        Collider_DestroyCylinder(play, &this->attackCollider);
-
     if (this->actor.params != DEKUNUTS_FLOWER) {
         Collider_DestroyCylinder(play, &this->collider);
+        if (HARDER_ENEMIES)
+            Collider_DestroyCylinder(play, &this->attackCollider);
     }
 }
 
@@ -242,9 +229,7 @@ void EnDekunuts_SetupBeginRun(EnDekunuts* this, PlayState* play) {
     this->actionFunc = EnDekunuts_BeginRun;
 
     if (this->actor.params & 0x80) {
-        Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_EN_BUFFDEKU, 
-        this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, 
-        0, this->actor.shape.rot.y, 0, this->actor.params);
+        Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_EN_BUFFDEKU,  this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, 0, this->actor.shape.rot.y, 0, this->actor.params);
         Actor_Kill(&this->actor);
     }
 }
@@ -323,10 +308,10 @@ void EnDekunuts_Spin(EnDekunuts* this, PlayState* play) {
 
     f32 curFrame = this->skelAnime.curFrame;
 
-    if(curFrame == 5.0f)
+    if (curFrame == 5.0f)
         Actor_PlaySfx(&this->actor, NA_SE_IT_MASTER_SWORD_SWING);
 
-    if(curFrame >= 5.0f)
+    if (curFrame >= 5.0f)
         Math_StepToAngleS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 255);
 
     if (curFrame >= 5.0f && curFrame <= 16.0f) {

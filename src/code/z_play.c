@@ -54,6 +54,7 @@
 #pragma increment_block_number "gc-eu:224 gc-eu-mq:224 gc-jp:224 gc-jp-ce:224 gc-jp-mq:224 gc-us:224 gc-us-mq:224" \
                                "ique-cn:224 ntsc-1.0:240 ntsc-1.1:240 ntsc-1.2:240 pal-1.0:240 pal-1.1:240"
 
+s16 currentSceneId;
 TransitionTile gTransitionTile;
 s32 gTransitionTileState;
 VisMono gPlayVisMono;
@@ -1794,7 +1795,7 @@ void Play_SpawnScene(PlayState* this, s32 sceneId, s32 spawn) {
 #endif
 
     this->loadedScene = scene;
-    this->sceneId = sceneId;
+    this->sceneId = currentSceneId = sceneId;
     this->sceneDrawConfig = scene->drawConfig;
 
     if (sceneId == SCENE_LINKS_HOUSE && R_ENABLE_MIRROR == 1)

@@ -23,7 +23,8 @@ typedef enum ItemEditorTabs {
     /* 0x06 */ ITEM_EDITOR_TAB_DUNGEON_KEYS,
     /* 0x07 */ ITEM_EDITOR_TAB_DUNGEON_QUEST,
     /* 0x08 */ ITEM_EDITOR_TAB_RESET_SCENE_FLAGS,
-    /* 0x09 */ ITEM_EDITOR_TAB_MAX
+    /* 0x09 */ ITEM_EDITOR_TAB_COMPLETE_SCENE_FLAGS,
+    /* 0x0A */ ITEM_EDITOR_TAB_MAX
 } ItemEditorTabs;
 
 typedef struct ItemEditorEntry {
@@ -45,7 +46,8 @@ typedef struct ItemEditorState {
 
 ItemEditorState state;
 
-u8 firstTimeUse = false;
+static u8 firstTimeUse = false;
+static u8 isClearing = true;
 
 void ItemEditor_RefreshIcons(PlayState* play) {
     u8 i;
@@ -438,6 +440,7 @@ void ItemEditor_SetDungeon(u8 scene, u8 param2, u8 param3, PlayState* play) {
 void ItemEditor_SetFlagsClear(u8 clear, u8 param2, u8 param3, PlayState* play) {
     SavedSceneFlags* sf;
     u8 id = (clear >= 5) ? gSaveContext.mapIndex : Play_GetOriginalSceneId(play->sceneId);
+    u32 value = isClearing ? 0 : UINT32_MAX;
 
     if (id < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
         sf = &gSaveContext.save.info.sceneFlags[id];
@@ -450,27 +453,27 @@ void ItemEditor_SetFlagsClear(u8 clear, u8 param2, u8 param3, PlayState* play) {
 
     switch (clear) {
         case 0:
-            sf->chest = play->actorCtx.flags.chest = 0;
+            sf->chest = play->actorCtx.flags.chest = value;
             break;
         case 1:
-            sf->swch = play->actorCtx.flags.swch = play->actorCtx.flags.tempSwch = 0;
+            sf->swch = play->actorCtx.flags.swch = play->actorCtx.flags.tempSwch = value;
             break;
         case 2:
-            sf->clear = play->actorCtx.flags.clear = play->actorCtx.flags.tempClear = 0;
+            sf->clear = play->actorCtx.flags.clear = play->actorCtx.flags.tempClear = value;
             break;
         case 3:
-            sf->collect = play->actorCtx.flags.collect = play->actorCtx.flags.tempCollect = 0;
+            sf->collect = play->actorCtx.flags.collect = play->actorCtx.flags.tempCollect = value;
             break;
         case 4:
-            sf->extra.quest = 0;
-            sf->extra.exit = 0;
-            sf->extra.unk = 0;
+            sf->extra.quest = value;
+            sf->extra.exit = value;
+            sf->extra.unk = value;
             break;
         case 5:
-            sf->rooms = 0;
+            sf->rooms = value;
             break;
         case 6:
-            sf->floors = 0;
+            sf->floors = value;
             break;
     }
 }
@@ -826,10 +829,10 @@ char* ItemEditor_GetDungeon(u8 scene, u8 param2, u8 param3) {
 }
 
 char* ItemEditor_GetFlagsClear(u8 param1, u8 param2, u8 param3) {
-    return "Clear";
+    return isClearing ? "Clear" : "Complete";
 }
 
-char* sItemEditorTabEntries[] = { "Item Editor", "Ammo Editor", "Equipment Editor", "Upgrade Editor", "Song Editor", "Quest Editor", "Dungeon Keys Editor", "Dungeon Quest Editor", "Reset Scene Flags" };
+char* sItemEditorTabEntries[] = { "Item Editor", "Ammo Editor", "Equipment Editor", "Upgrade Editor", "Song Editor", "Quest Editor", "Dungeon Keys Editor", "Dungeon Quest Editor", "Reset Scene Flags", "Complete Scene Flags" };
 
 ItemEditorEntry sItemEditorItemEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, ITEM_DEKU_STICK,    ITEM_DEKU_STICK,      SLOT_DEKU_STICK,    "Deku Stick",    ItemEditor_SetItem,         ItemEditor_GetItem        },
@@ -1063,6 +1066,11 @@ void KaleidoScope_UpdateItemEditorMenu(PlayState* play) {
                         break;
                     case ITEM_EDITOR_TAB_RESET_SCENE_FLAGS:
                         ItemEditor_FilterEntries(sItemEditorSceneFlagsEntries, ARRAY_COUNT(sItemEditorSceneFlagsEntries));
+                        isClearing = true;
+                        break;
+                    case ITEM_EDITOR_TAB_COMPLETE_SCENE_FLAGS:
+                        ItemEditor_FilterEntries(sItemEditorSceneFlagsEntries, ARRAY_COUNT(sItemEditorSceneFlagsEntries));
+                        isClearing = false;
                         break;
                 }
 

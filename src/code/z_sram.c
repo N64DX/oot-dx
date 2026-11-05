@@ -1208,6 +1208,7 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
 #endif
 
             MemCopy(sramCtx->readBuff, sSramDefaultHeader, sizeof(sSramDefaultHeader));
+            sramCtx->readBuff[SRAM_HEADER_GLOBAL_SETTINGS] = sramCtx->readBuff[SRAM_HEADER_EXTRA_SAVE_FILES] = 0;
 
 #if PLATFORM_GC && OOT_PAL
             sramCtx->readBuff[SRAM_HEADER_LANGUAGE] = gSaveContext.language;

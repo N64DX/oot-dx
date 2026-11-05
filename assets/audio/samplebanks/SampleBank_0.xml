@@ -461,6 +461,7 @@
     <Sample Name="SAMPLE_0_DEEPWOODS_1"  Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/DeepWoods_Sample1.aifc"/>
     <Sample Name="SAMPLE_0_DEEPWOODS_2"  Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/DeepWoods_Sample2.aifc"/>
     <Sample Name="SAMPLE_0_FLUTE"        Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/flute.aifc"/>
+    <Sample Name="SAMPLE_0_TROMBONE"     Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/trombone.aifc"/>
     <Sample Name="SAMPLE_0_VO_GABORA_1"  Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Gabora_Sample1.half.aifc"/>
     <Sample Name="SAMPLE_0_VO_GABORA_2"  Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Gabora_Sample2.half.aifc"/>
     <Sample Name="SAMPLE_0_BOE_1"        Path="$(BUILD_DIR)/assets/audio/samples/SampleBank_0/Boe_Sample1.half.aifc"/>

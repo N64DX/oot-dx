@@ -135,7 +135,7 @@
 
 // Scenes that share sceneFlags from here on out
 /* 0x77 */ DEFINE_SCENE(old_lost_woods_scene, none, SCENE_FORBIDDEN_WOODS, SDC_FORBIDDEN_WOODS, 0, 0) 
-/* 0x78 */ DEFINE_SCENE(swamp_spider_house_scene, none, SCENE_WEBBED_SHRINE, SDC_DEFAULT, 0, 0)
+/* 0x78 */ DEFINE_SCENE(swamp_spider_house_scene, none, SCENE_WEBBED_SHRINE, SDC_WEBBED_SHRINE, 0, 0)
 /* 0x79 */ DEFINE_SCENE(oceanside_spider_house_scene, none, SCENE_ROYAL_VAULT, SDC_DEFAULT, 0, 0)
 /* 0x7A */ DEFINE_SCENE(beneath_the_graveyard_scene, none, SCENE_BENEATH_THE_GRAVEYARD, SDC_BENEATH_THE_GRAVEYARD, 0, 0)
 /* 0x7B */ DEFINE_SCENE(dawngrove_inn_scene, none, SCENE_RIVERSIDE_INN, SDC_RIVERSIDE_INN, 0, 0)

@@ -7690,6 +7690,57 @@ LAYER_EV_EARTHQUAKE_TOWER_4:
 /* 0x5077 [0x4E 0x81 0x39 0x64     ] */ notedv      PITCH_B1, 313, 100
 /* 0x507B [0xFF                    ] */ end
 
+.channel CHAN_EV_FORT_RISING
+/* 0x4A20 [0xDC 0x30               ] */ panweight   48
+/* 0x4A22 [0x88 0x4A 0x2C          ] */ ldlayer     0, LAYER_EV_FORT_RISING_1
+/* 0x4A25 [0x89 0x4A 0x3D          ] */ ldlayer     1, LAYER_EV_FORT_RISING_3
+/* 0x4A28 [0x8A 0x4A 0x3B          ] */ ldlayer     2, LAYER_EV_FORT_RISING_2
+/* 0x4A2B [0xFF                    ] */ end
+
+.layer LAYER_EV_FORT_RISING_1
+/* 0x4A2C [0xC6 0x4D               ] */ instr       SF0_INST_77
+/* 0x4A2E [0xC7 0x85 0x29 0xFF     ] */ portamento  0x85, PITCH_D4, 255
+/* 0x4A32 [0x70 0x81 0xF4 0x5F     ] */ notedv      PITCH_A4, 500, 95
+/* 0x4A36 [0x64 0x83 0x84 0x5F     ] */ notedv      PITCH_A3, 900, 95
+/* 0x4A3A [0xFF                    ] */ end
+
+.layer LAYER_EV_FORT_RISING_2
+/* 0x4A3B [0xC0 0x23               ] */ ldelay      35
+.layer LAYER_EV_FORT_RISING_3
+/* 0x4A3D [0xC6 0x33               ] */ instr       SF0_INST_51
+/* 0x4A3F [0xC2 0x30               ] */ transpose   48
+/* 0x4A41 [0xCB 0xC1 0x90 0xDC     ] */ env         ENVELOPE_C190, 220
+/* 0x4A45 [0xC4                    ] */ legato
+/* 0x4A46 [0xC7 0x81 0x14 0xFF     ] */ portamento  0x81, PITCH_F2, 255
+/* 0x4A4A [0x64 0x80 0xFA 0x5C     ] */ notedv      PITCH_A3, 250, 92
+/* 0x4A4E [0xC7 0x85 0x27 0xFF     ] */ portamento  0x85, PITCH_C4, 255
+/* 0x4A52 [0x6C 0x80 0xFA 0x69     ] */ notedv      PITCH_F4, 250, 105
+/* 0x4A56 [0x64 0x80 0x64 0x5C     ] */ noteldv     PITCH_A3, 100, 92
+/* 0x4A5A [0x60 0x83 0x20 0x5C     ] */ notedv      PITCH_F3, 800, 92
+/* 0x4A5E [0xFF                    ] */ end
+
+.channel CHAN_EV_WATER_PURIFICATION
+/* 0x4A76 [0x89 0x4A 0x7D          ] */ ldlayer     1, LAYER_WATER_PURIFICATION_1
+/* 0x4A79 [0x88 0x4A 0x8D          ] */ ldlayer     0, LAYER_WATER_PURIFICATION_2
+/* 0x4A7C [0xFF                    ] */ end
+
+.layer LAYER_WATER_PURIFICATION_1
+/* 0x4A7D [0xC6 0x48               ] */ instr       SF0_INST_72
+/* 0x4A7F [0xCB 0xC1 0xD8 0xFB     ] */ env         ENVELOPE_C1D8, 251
+/* 0x4A83 [0xC4                    ] */ legato
+/* 0x4A84 [0xC7 0x85 0x18 0xC8     ] */ portamento  0x85, PITCH_A2, 200
+/* 0x4A88 [0x48 0x85 0xDC 0x69     ] */ notedv      PITCH_F1, 1500, 105
+/* 0x4A8C [0xFF                    ] */ end
+
+.layer LAYER_WATER_PURIFICATION_2
+/* 0x4A8D [0xC6 0x0D               ] */ instr       SF0_INST_13
+/* 0x4A8F [0xCB 0xC1 0xD8 0xFB     ] */ env         ENVELOPE_C1D8, 251
+/* 0x4A93 [0xC4                    ] */ legato
+/* 0x4A94 [0xC7 0x85 0x18 0xFF     ] */ portamento  0x85, PITCH_A2, 255
+LAYER_WATER_PURIFICATION_3:
+/* 0x4A98 [0x5F 0x81 0xF4 0x4B     ] */ notedv      PITCH_E3, 500, 75
+/* 0x4A9C [0xF4 0xFA               ] */ rjump       LAYER_WATER_PURIFICATION_3
+
 #define DEFINE_SFX(lblName, sfxId, priority, decay, rand, flags) \
     entry lblName
 
@@ -16481,6 +16532,17 @@ ENVELOPE_6A6C:
     point 1, 32700
     point 350, 30000
     point 200, 5000
+    hang
+
+.envelope ENVELOPE_C190
+    point 150, 32700
+    point 1200, 32700
+    point 400, 10000
+    hang
+
+.envelope ENVELOPE_C1D8
+    point 400, 32700
+    point 3000, 10000
     hang
 
 .envelope ENVELOPE_C4DC

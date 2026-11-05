@@ -1121,7 +1121,7 @@ void EnGirlA_BuyEvent_ObtainWallet(PlayState* play, EnGirlA* this) {
 
 void EnGirlA_BuyEvent_ObtainShieldUpgrade(PlayState* play, EnGirlA* this) {
     u8 index   = this->actor.params - SI_DEKU_SHIELD_UPGRADE;
-    u8 upgrade = gSaveContext.save.info.shields[index].upgrade;
+    u8 upgrade = gSaveContext.save.info.shields[index].upgrade - 1;
     Rupees_ChangeBy(-Player_MaxShieldDurabilityPrices[index][upgrade]);
 }
 

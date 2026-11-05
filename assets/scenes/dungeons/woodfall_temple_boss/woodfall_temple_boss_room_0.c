@@ -34,27 +34,27 @@ s16 woodfall_temple_boss_room_0ObjectList_000040[] = {
 };
 
 ActorEntry woodfall_temple_boss_room_0ActorEntry_000050[] = {
-    { ACTOR_EN_DEKUNUTS,  {    0 , 0,    0 }, { 0, 0, 0 }, 0x03FE }, // Clear: 00, Switch: 10
-    { ACTOR_EN_KUSA,      { -315,  0, -690 }, { 0, 0, 0 }, 0x007B },
-    { ACTOR_EN_KUSA,      {  315,  0, -690 }, { 0, 0, 0 }, 0x002B },
-    { ACTOR_EN_KUSA,      { -390,  0, -660 }, { 0, 0, 0 }, 0x002B },
-    { ACTOR_EN_KUSA,      {  390,  0, -660 }, { 0, 0, 0 }, 0x007B },
-    { ACTOR_EN_KUSA,      { -660,  0, -390 }, { 0, 0, 0 }, 0x007B },
-    { ACTOR_EN_KUSA,      {  660,  0, -390 }, { 0, 0, 0 }, 0x002B },
-    { ACTOR_EN_KUSA,      { -690,  0, -315 }, { 0, 0, 0 }, 0x002B },
-    { ACTOR_EN_KUSA,      {  690,  0, -315 }, { 0, 0, 0 }, 0x007B },
-    { ACTOR_EN_KUSA,      { -690,  0,  315 }, { 0, 0, 0 }, 0x007B },
-    { ACTOR_EN_KUSA,      {  690,  0,  315 }, { 0, 0, 0 }, 0x002B },
-    { ACTOR_EN_KUSA,      { -660,  0,  390 }, { 0, 0, 0 }, 0x002B },
-    { ACTOR_EN_KUSA,      {  660,  0,  390 }, { 0, 0, 0 }, 0x007B },
-    { ACTOR_EN_KUSA,      {  390,  0,  660 }, { 0, 0, 0 }, 0x002B },
-    { ACTOR_EN_KUSA,      { -390,  0,  660 }, { 0, 0, 0 }, 0x007B },
-    { ACTOR_EN_KUSA,      {  315,  0,  690 }, { 0, 0, 0 }, 0x007B },
-    { ACTOR_EN_KUSA,      { -315,  0,  690 }, { 0, 0, 0 }, 0x002B },
-    { ACTOR_OBJ_SYOKUDAI, {  360,  0,  690 }, { 0, 0, 0 }, 0x1050 }, // Sets switch: 0x10
-    { ACTOR_OBJ_SYOKUDAI, { -360,  0,  690 }, { 0, 0, 0 }, 0x1050 }, // Sets switch: 0x10
-    { ACTOR_EN_KAREBABA,  {  690,  0,    0 }, { 0, 0, 0 }, 0x0000 },
-    { ACTOR_EN_KAREBABA,  { -690,  0,    0 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_DEKUNUTSBOSS, {    0 , 0,    0 }, { 0, 0, 0 }, 0x03FE }, // Clear: 00, Switch: 10
+    { ACTOR_EN_KUSA,         { -315,  0, -690 }, { 0, 0, 0 }, 0x007B },
+    { ACTOR_EN_KUSA,         {  315,  0, -690 }, { 0, 0, 0 }, 0x002B },
+    { ACTOR_EN_KUSA,         { -390,  0, -660 }, { 0, 0, 0 }, 0x002B },
+    { ACTOR_EN_KUSA,         {  390,  0, -660 }, { 0, 0, 0 }, 0x007B },
+    { ACTOR_EN_KUSA,         { -660,  0, -390 }, { 0, 0, 0 }, 0x007B },
+    { ACTOR_EN_KUSA,         {  660,  0, -390 }, { 0, 0, 0 }, 0x002B },
+    { ACTOR_EN_KUSA,         { -690,  0, -315 }, { 0, 0, 0 }, 0x002B },
+    { ACTOR_EN_KUSA,         {  690,  0, -315 }, { 0, 0, 0 }, 0x007B },
+    { ACTOR_EN_KUSA,         { -690,  0,  315 }, { 0, 0, 0 }, 0x007B },
+    { ACTOR_EN_KUSA,         {  690,  0,  315 }, { 0, 0, 0 }, 0x002B },
+    { ACTOR_EN_KUSA,         { -660,  0,  390 }, { 0, 0, 0 }, 0x002B },
+    { ACTOR_EN_KUSA,         {  660,  0,  390 }, { 0, 0, 0 }, 0x007B },
+    { ACTOR_EN_KUSA,         {  390,  0,  660 }, { 0, 0, 0 }, 0x002B },
+    { ACTOR_EN_KUSA,         { -390,  0,  660 }, { 0, 0, 0 }, 0x007B },
+    { ACTOR_EN_KUSA,         {  315,  0,  690 }, { 0, 0, 0 }, 0x007B },
+    { ACTOR_EN_KUSA,         { -315,  0,  690 }, { 0, 0, 0 }, 0x002B },
+    { ACTOR_OBJ_SYOKUDAI,    {  360,  0,  690 }, { 0, 0, 0 }, 0x1050 }, // Sets switch: 0x10
+    { ACTOR_OBJ_SYOKUDAI,    { -360,  0,  690 }, { 0, 0, 0 }, 0x1050 }, // Sets switch: 0x10
+    { ACTOR_EN_KAREBABA,     {  690,  0,    0 }, { 0, 0, 0 }, 0x0000 },
+    { ACTOR_EN_KAREBABA,     { -690,  0,    0 }, { 0, 0, 0 }, 0x0000 },
 };
 
 RoomShapeCullable woodfall_temple_boss_room_0RoomShapeCullable_0001F0 = { 

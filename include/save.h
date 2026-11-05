@@ -490,7 +490,9 @@ typedef enum LinkAge {
 // In practice, both values do not lead to a cutscene being played.
 // See `CS_INDEX_NONE` below for the more common usage of value 0x0000.
 #define CS_INDEX_NIGHT 0x0000
+#define CS_INDEX_DAWN 0x4000
 #define CS_INDEX_DAY 0x8000
+#define CS_INDEX_DUSK 0xC000
 
 // Indicates that no scripted cutscene is playing (or should be played).
 // While this value overlaps with `CS_INDEX_NIGHT` defined above, it is not related to the time.
@@ -780,6 +782,7 @@ typedef enum LinkAge {
 #define EVENTCHKINF_5A 0x5A
 #define EVENTCHKINF_5B 0x5B
 #define EVENTCHKINF_5C 0x5C
+#define EVENTCHKINF_SUMMONED_WOODFALL_TEMPLE 0x5D
 #define EVENTCHKINF_65 0x65
 #define EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE 0x66
 #define EVENTCHKINF_DRAINED_WELL 0x67

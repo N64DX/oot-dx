@@ -509,7 +509,7 @@ u16 EnKo_GetTextId(PlayState* play, Actor* thisx) {
     EnKo* this = (EnKo*)thisx;
 
     if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO) {
-        if (play->sceneId == SCENE_GROTTOS2)
+        if (play->sceneId == SCENE_CAVE_PASSAGE)
             return 0x8124;
         else if (play->sceneId == SCENE_ANCIENT_HOLLOW)
             return (CHECK_DUNGEON_ITEM(DUNGEON_MAP, gSaveContext.mapIndex) && CHECK_DUNGEON_ITEM(DUNGEON_COMPASS, gSaveContext.mapIndex)) ? 0x8123 : 0x8122;
@@ -1111,7 +1111,7 @@ s32 EnKo_CanSpawn(EnKo* this, PlayState* play) {
             else if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO)
                 return (INV_CONTENT(ITEM_TRADE_ADULT) == ITEM_ODD_POTION) ? true : false;
             return false;
-        case SCENE_GROTTOS2:
+        case SCENE_CAVE_PASSAGE:
             return !GET_INFTABLE(INFTABLE_SHOWED_PICTOBOX_TO_IGOR);
         case SCENE_ANCIENT_HOLLOW:
             return !GET_EVENTCHKINF(EVENTCHKINF_CLEANSED_ANCIENT_HOLLOW);
@@ -1205,7 +1205,7 @@ void EnKo_Init(Actor* thisx, PlayState* play) {
         Actor_Kill(thisx);
     }
 
-    if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO && play->sceneId == SCENE_GROTTOS2)
+    if (ENKO_TYPE == ENKO_TYPE_CHILD_FADO && play->sceneId == SCENE_CAVE_PASSAGE)
         Actor_SpawnAsChild(&play->actorCtx, &this->actor, play, ACTOR_OBJ_SYOKUDAI, -2091, 145, -1489, 0, 0, 0, GET_INFTABLE(INFTABLE_SHOWED_PICTOBOX_TO_IGOR) ? 0x2400 : 0x2000);
 
     if (!EnKo_CanSpawn(this, play)) {

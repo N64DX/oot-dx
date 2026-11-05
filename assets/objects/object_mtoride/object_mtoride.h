@@ -10,10 +10,14 @@ extern Gfx gWoodfallSceneryPoisonWaterDL[];
 extern Gfx gWoodfallSceneryPurifiedWallsDL[];
 extern Gfx gWoodfallSceneryTempleEntrancesDL[];
 extern Gfx gWoodfallSceneryTempleDL[];
+extern Gfx gWoodfallSceneryWaterFlowingOverTempleDL[];
 extern Gfx gWoodfallSceneryTempleRampAndPlatformDL[];
 extern Gfx gWoodfallSceneryPurifiedWaterDL[];
 extern Gfx gWoodfallSceneryFloorDL[];
+
+extern CollisionPoly gWoodfallSceneryPoisonWaterDamageColPolygons[];
 extern CollisionHeader gWoodfallSceneryPoisonWaterDamageCol;
 extern CollisionHeader gWoodfallSceneryTempleRampAndPlatformCol;
+extern CollisionHeader gWoodfallSceneryTempleCol;
 
 #endif
