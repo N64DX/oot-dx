@@ -532,6 +532,32 @@ LinkAnimationHeader gPlayerAnim_alink_fukitobu = {
     { 20 }, gPlayerAnim_alink_fukitobu_Data,
 };
 
+// Zora Swim animations
+
+LinkAnimationHeader gPlayerAnim_link_start_booster_jump = {
+	{ 16 }, gPlayerAnim_link_start_booster_jump_Data, 
+};
+
+LinkAnimationHeader gPlayerAnim_link_booster_jump = {
+	{ 16 }, gPlayerAnim_link_booster_jump_Data, 
+};
+
+LinkAnimationHeader gPlayerAnim_link_finish_booster_jump = {
+	{ 16 }, gPlayerAnim_link_finish_booster_jump_Data, 
+};
+
+LinkAnimationHeader gPlayerAnim_link_fish_swim = {
+	{ 10 }, gPlayerAnim_link_fish_swim_Data, 
+};
+
+LinkAnimationHeader gPlayerAnim_link_swim_to_wait = {
+	{ 10 }, gPlayerAnim_link_swim_to_wait_Data, 
+};
+
+LinkAnimationHeader gPlayerAnim_link_water_roll = {
+	{ 18 }, gPlayerAnim_link_water_roll_Data, 
+};
+
 
 
 // Beehive

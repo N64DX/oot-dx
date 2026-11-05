@@ -194,7 +194,7 @@ void Sram_InitNewSave(void) {
     bzero(&gSaveContext.save.info, sizeof(SaveInfo));
     gSaveContext.save.totalDays = 0;
     gSaveContext.save.bgsDayCount = 0;
-    gSaveContext.cheated = 0;
+    gSaveContext.gameProgress = GAME_PROGRESS_NOT_STARTED;
     gSaveContext.save.info.energy = 0;
 
     gSaveContext.save.info.playerData = sNewSavePlayerData;
@@ -453,7 +453,7 @@ void Sram_InitDebugSave(void) {
     gSaveContext.save.entranceIndex = ENTR_HYRULE_FIELD_0;
     gSaveContext.save.info.playerData.magicLevel = 0;
     gSaveContext.save.info.sceneFlags[SCENE_WATER_TEMPLE].swch = 0x40000000;
-    gSaveContext.cheated = 1;
+    gSaveContext.gameProgress = GAME_PROGRESS_CHEATED;
     gSaveContext.save.info.energy = 0;
 }
 
@@ -603,7 +603,6 @@ void Sram_OpenSave(SramContext* sramCtx) {
         for (i=SCENE_DEKU_TREE_BOSS; i<=SCENE_SHADOW_TEMPLE_BOSS; i++)
             MemSet(&gSaveContext.save.info.sceneFlags[i], 0, sizeof(SavedSceneFlags));
 
-        gSaveContext.cheated = 0;
         gSaveContext.save.info.playtime = 0;
         gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
         gSaveContext.save.info.equips = gSaveContext.save.info.playerData.adultEquips = gSaveContext.save.info.playerData.childEquips = sNewSaveEquips;
@@ -719,9 +718,18 @@ void Sram_OpenSave(SramContext* sramCtx) {
         if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, i) && (gSaveContext.save.info.shields[i].durability == 0 || gSaveContext.save.info.shields[i].durability>= Player_GetMaxShieldDurability(i+1)) && ( (i == 3 && !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN)) || i != 3) )
             gSaveContext.save.info.shields[i].durability = Player_GetMaxShieldDurability(i+1);
 
+    if (TIMER_CHALLENGE > 0) {
+        if (gSaveContext.gameProgress == GAME_PROGRESS_NOT_STARTED)
+            gSaveContext.save.dayTime = CLOCK_TIME(6, 0);
+        FORCE_AUTOSAVE;
+    }
+
+    if (gSaveContext.gameProgress == GAME_PROGRESS_NOT_STARTED)
+        gSaveContext.gameProgress = GAME_PROGRESS_STARTED;
+
     // Cheating
     if (DAMAGE_TAKEN == 7 || MONSTER_HP == 7 || ELITE_HP == 7 || BOSS_HP == 7 || DEBUG_MODE || DEBUG_FEATURES || INFINITE_HEALTH)
-        gSaveContext.cheated = 1;
+        gSaveContext.gameProgress = GAME_PROGRESS_CHEATED;
 }
 
 void Sram_OpenSaveOptions(SramContext* sramCtx) {
