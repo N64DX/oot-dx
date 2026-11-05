@@ -1133,12 +1133,12 @@ void Fault_DisplayFrameBuffer(void) {
     } else {
         fb = osViGetNextFramebuffer();
         if ((uintptr_t)fb == K0BASE) {
-            fb = (void*)(PHYS_TO_K0(osMemSize) - sizeof(u16[SCREEN_HEIGHT][SCREEN_WIDTH]));
+            fb = (void*)(PHYS_TO_K0(osMemSize) - sizeof(u16[SCREEN_HEIGHT][SCREEN_WIDTH_MAX]));
         }
     }
 
     osViSwapBuffer(fb);
-    Fault_SetDrawerFB(fb, SCREEN_WIDTH, SCREEN_HEIGHT);
+    Fault_SetDrawerFB(fb, SCREEN_WIDTH_MAX, SCREEN_HEIGHT);
 }
 
 /**

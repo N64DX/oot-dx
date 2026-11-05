@@ -71,13 +71,13 @@ const u32 sFaultDrawerFont[] = {
 #define FAULT_DRAWER_CURSOR_Y 16
 
 FaultDrawer sFaultDrawerDefault = {
-    (u16*)(PHYS_TO_K0(0x400000) - sizeof(u16[SCREEN_HEIGHT][SCREEN_WIDTH])),
-    SCREEN_WIDTH,
+    (u16*)(PHYS_TO_K0(0x400000) - sizeof(u16[SCREEN_HEIGHT][SCREEN_WIDTH_MAX])),
+    SCREEN_WIDTH_MAX,
     SCREEN_HEIGHT,
     FAULT_DRAWER_CURSOR_Y,
     SCREEN_HEIGHT - FAULT_DRAWER_CURSOR_Y - 1,
     FAULT_DRAWER_CURSOR_X,
-    SCREEN_WIDTH - FAULT_DRAWER_CURSOR_X - 1,
+    SCREEN_WIDTH_MAX - FAULT_DRAWER_CURSOR_X - 1,
     GPACK_RGBA5551(255, 255, 255, 1),
     GPACK_RGBA5551(0, 0, 0, 0),
     FAULT_DRAWER_CURSOR_X,
@@ -343,5 +343,5 @@ void Fault_WritebackFBDCache(void) {
 
 void Fault_InitDrawer(void) {
     bcopy(&sFaultDrawerDefault, &sFaultDrawer, sizeof(FaultDrawer));
-    sFaultDrawer.fb = (u16*)(PHYS_TO_K0(osMemSize) - sizeof(u16[SCREEN_HEIGHT][SCREEN_WIDTH]));
+    sFaultDrawer.fb = (u16*)(PHYS_TO_K0(osMemSize) - sizeof(u16[SCREEN_HEIGHT][SCREEN_WIDTH_MAX]));
 }

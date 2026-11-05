@@ -8,6 +8,7 @@
 #include "sfx.h"
 #include "save.h"
 #include "regs.h"
+#include "vi_mode.h"
 
 #define SET_OPTION(option, shift, max) (option = (option & ~(max << shift)) | (((((option >> shift) & max) + 1) & max) << shift))
 
@@ -31,7 +32,16 @@ void FileSelectGlobalOptions_ToggleOption(FileSelectState* this, u8 index, u8 sh
     Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
-void FileSelectGlobalOptions_ToggleSaveSlotsOption(FileSelectState* this, u8 index, u8 shift) {
+#if INGAME_ASPECT_RATIO
+void FileSelectGlobalOptions_ToggleAspectRatio(FileSelectState* this, u8 index, u8 shift) {
+    SET_OPTION(gSaveContext.globalSettings, shift, 3);
+    ViMode_UpdateAspectRatio();
+    View_Init(&this->view, this->state.gfxCtx);
+    Audio_PlaySfxGeneral(NA_SE_IT_SWORD_IMPACT, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+}
+#endif
+
+void FileSelectGlobalOptions_ToggleSaveSlots(FileSelectState* this, u8 index, u8 shift) {
     gSaveContext.globalSettings ^= 1 << shift;
     if (EXTRA_SAVE_SLOTS)
         Sram_EraseBackupSaves(this, &this->sramCtx);
@@ -111,6 +121,19 @@ char* FileSelectOptions_GetShieldDurability(FileSelectState* this, u8 index, u8 
     }
 }
 
+#if INGAME_ASPECT_RATIO
+char* FileSelectGlobalOptions_GetAspectRatio(FileSelectState* this, u8 index, u8 shift) {
+    switch (ASPECT_RATIO) {
+        case 1:
+            return "16:9";
+        case 2:
+            return "21:9";
+        default:
+            return "4:3";
+    }
+}
+#endif
+
 char* FileSelectGlobalOptions_GetOption(FileSelectState* this, u8 index, u8 shift) {
     return ((gSaveContext.globalSettings >> shift) & 1) ? "On" : "Off";
 }
@@ -156,13 +179,16 @@ static FileSelectOptionsEntry sFileOptionsEntries[] = {
 };
 
 static FileSelectOptionsEntry sGlobalOptionsEntries[] = {
-    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 0, "Skip Logo",              FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
-    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 1, "Debug Mode",             FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
-    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 2, "Show RAM",               FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
-    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 3, "Show FPS",               FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
-    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 4, "Extra Save Slots",       FileSelectGlobalOptions_ToggleSaveSlotsOption, FileSelectGlobalOptions_GetOption },
-    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 5, "Extended Draw Distance", FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
-    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 6, "Show Stars",             FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
+#if INGAME_ASPECT_RATIO
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 0, "Aspect Ratio",           FileSelectGlobalOptions_ToggleAspectRatio, FileSelectGlobalOptions_GetAspectRatio },
+#endif
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 2, "Skip Logo",              FileSelectGlobalOptions_ToggleOption,      FileSelectGlobalOptions_GetOption      },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 3, "Debug Mode",             FileSelectGlobalOptions_ToggleOption,      FileSelectGlobalOptions_GetOption      },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 4, "Show RAM",               FileSelectGlobalOptions_ToggleOption,      FileSelectGlobalOptions_GetOption      },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 5, "Show FPS",               FileSelectGlobalOptions_ToggleOption,      FileSelectGlobalOptions_GetOption      },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 6, "Extra Save Slots",       FileSelectGlobalOptions_ToggleSaveSlots,   FileSelectGlobalOptions_GetOption      },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 7, "Extended Draw Distance", FileSelectGlobalOptions_ToggleOption,      FileSelectGlobalOptions_GetOption      },
+    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 8, "Show Stars",             FileSelectGlobalOptions_ToggleOption,      FileSelectGlobalOptions_GetOption      },
 };
 
 void FileSelectOptions_UpdateMenu(FileSelectState* this) {

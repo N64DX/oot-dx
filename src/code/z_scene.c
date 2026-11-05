@@ -383,6 +383,21 @@ void Scene_ResetTransitionActorList(GameState* state, TransitionActorList* trans
 BAD_RETURN(s32) Scene_CommandLightSettingsList(PlayState* play, SceneCmd* cmd) {
     play->envCtx.numLightSettings = cmd->lightSettingList.length;
     play->envCtx.lightSettingsList = SEGMENTED_TO_VIRTUAL(cmd->lightSettingList.data);
+
+#if INGAME_ASPECT_RATIO
+    if (ASPECT_RATIO == 2) {
+        if (play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY) {
+            play->envCtx.lightSettingsList->fogColor[0] = play->envCtx.lightSettingsList->fogColor[1] = play->envCtx.lightSettingsList->fogColor[2] = 0;
+            play->envCtx.lightSettingsList->blendRateAndFogNear = 0x07FA;
+        } else if (play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT) {
+            play->envCtx.lightSettingsList->fogColor[0] = play->envCtx.lightSettingsList->fogColor[1] = play->envCtx.lightSettingsList->fogColor[2] = 0;
+            play->envCtx.lightSettingsList->blendRateAndFogNear = 0x07DA;
+        } else if (play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS) {
+            play->envCtx.lightSettingsList->fogColor[0] = play->envCtx.lightSettingsList->fogColor[1] = play->envCtx.lightSettingsList->fogColor[2] = 0;
+            play->envCtx.lightSettingsList->blendRateAndFogNear = 0x07EA;
+        }
+    }
+#endif
 }
 
 BAD_RETURN(s32) Scene_CommandSkyboxSettings(PlayState* play, SceneCmd* cmd) {

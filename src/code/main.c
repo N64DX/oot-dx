@@ -53,7 +53,7 @@ u16 gFPS = 0;
 
 extern u8 _buffersSegmentEnd[];
 
-s32 gScreenWidth = SCREEN_WIDTH;
+s32 gScreenWidth = SCREEN_WIDTH_INIT;
 s32 gScreenHeight = SCREEN_HEIGHT;
 u32 gSystemHeapSize = 0;
 
@@ -100,7 +100,7 @@ void Main(void* arg) {
     uintptr_t fb;
 
     PRINTF(T("mainproc 実行開始\n", "mainproc Start running\n"));
-    gScreenWidth = SCREEN_WIDTH;
+    gScreenWidth = SCREEN_WIDTH_INIT;
     gScreenHeight = SCREEN_HEIGHT;
     gAppNmiBufferPtr = (PreNmiBuff*)osAppNMIBuffer;
     PreNmiBuff_Init(gAppNmiBufferPtr);
