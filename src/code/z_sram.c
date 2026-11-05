@@ -1208,7 +1208,7 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
 #endif
 
             MemCopy(sramCtx->readBuff, sSramDefaultHeader, sizeof(sSramDefaultHeader));
-            sramCtx->readBuff[SRAM_HEADER_GLOBAL_SETTINGS] = sramCtx->readBuff[SRAM_HEADER_EXTRA_SAVE_FILES] = 0;
+            sramCtx->readBuff[SRAM_HEADER_GLOBAL_SETTINGS_1] = sramCtx->readBuff[SRAM_HEADER_GLOBAL_SETTINGS_2] = 0;
 
 #if PLATFORM_GC && OOT_PAL
             sramCtx->readBuff[SRAM_HEADER_LANGUAGE] = gSaveContext.language;
@@ -1228,8 +1228,15 @@ void Sram_InitSram(GameState* gameState, SramContext* sramCtx) {
 
     gSaveContext.soundSetting = sramCtx->readBuff[SRAM_HEADER_SOUND] & 3;
     gSaveContext.zTargetSetting = sramCtx->readBuff[SRAM_HEADER_Z_TARGET] & 1;
-    gSaveContext.globalSettings = sramCtx->readBuff[SRAM_HEADER_GLOBAL_SETTINGS];
-    gSaveContext.extraSaveFiles = sramCtx->readBuff[SRAM_HEADER_EXTRA_SAVE_FILES] & 1;
+    gSaveContext.globalSettings = sramCtx->readBuff[SRAM_HEADER_GLOBAL_SETTINGS_1] | (sramCtx->readBuff[SRAM_HEADER_GLOBAL_SETTINGS_2] << 8);
+
+#if INGAME_ASPECT_RATIO
+    if (ASPECT_RATIO > 2) {
+        gSaveContext.globalSettings &= ~0x3;
+        sramCtx->readBuff[SRAM_HEADER_GLOBAL_SETTINGS_1] = (gSaveContext.globalSettings >> 8) & 0xFF;
+        Sram_WriteSramHeader(sramCtx);
+    }
+#endif
 
 #if OOT_PAL || OOT_NTSC_N64
     gSaveContext.language = sramCtx->readBuff[SRAM_HEADER_LANGUAGE];

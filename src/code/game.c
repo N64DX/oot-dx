@@ -300,6 +300,11 @@ void GameState_ReqPadData(GameState* gameState) {
 void GameState_Update(GameState* gameState) {
     GraphicsContext* gfxCtx = gameState->gfxCtx;
 
+#if INGAME_ASPECT_RATIO
+    if (R_VI_MODE_EDIT_STATE == VI_MODE_EDIT_STATE_INACTIVE)
+        ViMode_UpdateAspectRatio();
+#endif
+
     GameState_SetFrameBuffer(gfxCtx);
 
     gameState->main(gameState);
@@ -513,6 +518,10 @@ void GameState_Init(GameState* gameState, GameStateFunc init, GraphicsContext* g
     GameState_InitArena(gameState, 0x100000);
 
     R_UPDATE_RATE = 3;
+#if INGAME_ASPECT_RATIO
+    if (R_VI_MODE_EDIT_STATE == VI_MODE_EDIT_STATE_INACTIVE || !DEBUG_FEATURES)
+        ViMode_UpdateAspectRatio();
+#endif
     init(gameState);
     endTime = osGetTime();
     PRINTF(T("init 処理時間 %d us\n", "init processing time %d us\n"), OS_CYCLES_TO_USEC(endTime - startTime));

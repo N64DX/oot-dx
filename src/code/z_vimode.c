@@ -4,9 +4,11 @@
 #include "ultra64/viint.h"
 #include "controller.h"
 #include "gfx.h"
+#include "idle.h"
 #include "main.h"
 #include "printf.h"
 #include "regs.h"
+#include "save.h"
 #include "versions.h"
 
 void ViMode_LogPrint(OSViMode* osViMode) {
@@ -244,6 +246,81 @@ void ViMode_Init(ViMode* viMode) {
 
     ViMode_Save(viMode);
 }
+
+#if INGAME_ASPECT_RATIO
+static s32 sAspectRatioState, sAspectRatioTimer;
+static void* sAspectRatioFb;
+
+static void ViMode_SetBlack(u8 black) {
+#if OOT_VERSION < PAL_1_0
+    u32 prevInt = __osDisableInt();
+
+    osViBlack(black);
+    __osRestoreInt(prevInt);
+#else
+    gViConfigBlack = black;
+#endif
+}
+
+void ViMode_UpdateAspectRatio(void) {
+    s32 width;
+    void* fb;
+
+    switch (ASPECT_RATIO) {
+        case 1:
+            width = 432;
+            break;
+        case 2:
+            width = 576;
+            break;
+        default:
+            width = 320;
+            break;
+    }
+
+    if (sAspectRatioState == 1) {
+        gScreenWidth = width;
+        if (__osViCurr->state & VI_STATE_BLACK) {
+#if OOT_VERSION < PAL_1_0
+            u32 prevInt = __osDisableInt();
+#endif
+            gViConfigMode.comRegs.width = width;
+            gViConfigMode.comRegs.xScale = (width * 512) / 320;
+            gViConfigMode.fldRegs[0].origin = width * 2;
+            gViConfigMode.fldRegs[1].origin = width * 2;
+            osViSetMode(&gViConfigMode);
+            osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON | OS_VI_GAMMA_OFF);
+#if OOT_VERSION < PAL_1_0
+            osViBlack(true);
+            __osRestoreInt(prevInt);
+#endif
+            sAspectRatioState = 2;
+            sAspectRatioTimer = 3;
+            sAspectRatioFb = osViGetCurrentFramebuffer();
+        }
+        return;
+    }
+
+    if (sAspectRatioState == 2) {
+        fb = osViGetCurrentFramebuffer();
+        if (fb != sAspectRatioFb) {
+            sAspectRatioFb = fb;
+            if (--sAspectRatioTimer == 0) {
+                ViMode_SetBlack(false);
+                sAspectRatioState = 0;
+            }
+        }
+        return;
+    }
+
+    if (gScreenWidth == width && (s32)gViConfigMode.comRegs.width == width)
+        return;
+
+    gScreenWidth = width;
+    ViMode_SetBlack(true);
+    sAspectRatioState = 1;
+}
+#endif
 
 void ViMode_Destroy(ViMode* viMode) {
 }

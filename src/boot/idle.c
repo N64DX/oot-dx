@@ -170,6 +170,13 @@ void Idle_ThreadEntry(void* arg) {
     }
 #endif
 
+#if INGAME_ASPECT_RATIO
+    gViConfigMode.comRegs.width = SCREEN_WIDTH_INIT;
+    gViConfigMode.comRegs.xScale = (SCREEN_WIDTH_INIT * 512) / 320;
+    gViConfigMode.fldRegs[0].origin = SCREEN_WIDTH_INIT * 2;
+    gViConfigMode.fldRegs[1].origin = SCREEN_WIDTH_INIT * 2;
+#endif
+
 #if OOT_VERSION < PAL_1_0
     osViSetMode(&gViConfigMode);
     osViBlack(true);

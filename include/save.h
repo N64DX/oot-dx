@@ -381,10 +381,10 @@ typedef struct SaveContext {
     /* 0x1402 */ u16 mapIndex; // intended for maps/minimaps but commonly used as the dungeon index
     /* 0x1404 */ u16 minigameState;
     /* 0x1406 */ u16 minigameScore; // "yabusame_total"
-    /* 0x1408 */ u8 extraSaveFiles;
+    /* 0x1408 */ char unk_1408[0x0001];
     /* 0x1409 */ u8 language; // NTSC 0: Japanese; 1: English | PAL 0: English; 1: German; 2: French (see enum `Language`)
     /* 0x140A */ u8 soundSetting; // 0: Stereo; 1: Mono; 2: Headset; 3: Surround (see enum `SoundSetting`)
-    /* 0x140B */ u8 globalSettings;
+    /* 0x140B */ char unk_140B[0x0001];
     /* 0x140C */ u8 zTargetSetting; // 0: Switch; 1: Hold (see enum `ZTargetSetting`)
     /* 0x140E */ u16 forcedSeqId; // immediately start playing the sequence if set
     /* 0x1410 */ u8 cutsceneTransitionControl; // context dependent usage: can either trigger a delayed fade or control fill alpha
@@ -402,7 +402,7 @@ typedef struct SaveContext {
     /* 0x1420 */ s16 worldMapArea;
     /* 0x1422 */ s16 sunsSongState; // controls the effects of suns song
     /* 0x1424 */ s16 healthAccumulator;
-    /* 0x1426 */ char unk_1426[0x0002];
+    /* 0x1426 */ u16 globalSettings;
     /* 0x1428 */ u32 options[10];
 } SaveContext; // size = 0x1450
 
@@ -622,13 +622,14 @@ typedef enum LinkAge {
 #define SHIELD_DURABILITY           ((gSaveContext.options[1] >> 18) & 3)  // Bits: 18-19
 #define INFINITE_HEALTH             ((gSaveContext.options[2] >> 0)  & 1)  // Bits: 0
 
-#define SKIP_LOGO                   ((gSaveContext.globalSettings >> 0) & 1)  // Bits: 0
-#define DEBUG_MODE                  ((gSaveContext.globalSettings >> 1) & 1)  // Bits: 1
-#define SHOW_RAM                    ((gSaveContext.globalSettings >> 2) & 1)  // Bits: 2
-#define SHOW_FPS                    ((gSaveContext.globalSettings >> 3) & 1)  // Bits: 3
-#define EXTRA_SAVE_SLOTS            ((gSaveContext.globalSettings >> 4) & 1)  // Bits: 4
-#define EXTENDED_DRAW_DISTANCE      ((gSaveContext.globalSettings >> 5) & 1)  // Bits: 5
-#define SHOW_STARS                  ((gSaveContext.globalSettings >> 6) & 1)  // Bits: 6
+#define ASPECT_RATIO                ((gSaveContext.globalSettings >> 0) & 3)  // Bits: 0-1
+#define SKIP_LOGO                   ((gSaveContext.globalSettings >> 2) & 1)  // Bits: 2
+#define DEBUG_MODE                  ((gSaveContext.globalSettings >> 3) & 1)  // Bits: 3
+#define SHOW_RAM                    ((gSaveContext.globalSettings >> 4) & 1)  // Bits: 4
+#define SHOW_FPS                    ((gSaveContext.globalSettings >> 5) & 1)  // Bits: 5
+#define EXTRA_SAVE_SLOTS            ((gSaveContext.globalSettings >> 6) & 1)  // Bits: 6
+#define EXTENDED_DRAW_DISTANCE      ((gSaveContext.globalSettings >> 7) & 1)  // Bits: 7
+#define SHOW_STARS                  ((gSaveContext.globalSettings >> 8) & 1)  // Bits: 8
 
 #define MAX_SWORD_HEALTH    8
 #define MAGIC_COST(magic)   (CHECK_UPGRADE_ITEM(UPGRADE_HALF_MAGIC_COST) ? (magic / 2) : magic)

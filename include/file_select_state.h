@@ -19,12 +19,13 @@ typedef struct FileSelectOptionsEntry {
     /* 0x0C */ char* (*getFunc) (struct FileSelectState*, u8, u8);
 } FileSelectOptionsEntry; // size = 0x10
 
-#define SHOW_OPTION_ALL_QUESTS  0x00
-#define SHOW_OPTION_ONLY_CQ     0x01
-#define SHOW_OPTION_NO_CQ       0x02
+#define SHOW_OPTION_ALL_QUESTS      0x00
+#define SHOW_OPTION_ONLY_CQ         0x01
+#define SHOW_OPTION_NO_CQ           0x02
 
-#define SHOW_OPTION_ALL_BUILDS  0x00
-#define SHOW_OPTION_NO_IQUE     0x10
+#define SHOW_OPTION_ALL_BUILDS      0x00
+#define SHOW_OPTION_NO_IQUE         0x10
+#define SHOW_OPTION_ASPECT_RATIO    0x20
 
 #define GET_OPTION_QUESTS(i)    (sFileOptionsEntries[i].number & 0xF)
 #define GET_OPTION_BUILDS(i)    (sFileOptionsEntries[i].number & 0xF0)

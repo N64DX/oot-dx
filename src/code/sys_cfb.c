@@ -27,7 +27,7 @@ void SysCfb_Init(s32 n64dd) {
         LogUtils_HungupThread("../sys_cfb.c", LN4(305, 308, 322, 341, 354));
     }
 
-    screenSize = SCREEN_WIDTH * SCREEN_HEIGHT;
+    screenSize = SCREEN_WIDTH_MAX * SCREEN_HEIGHT;
     sSysCfbEnd &= ~0x3F;
 
     if (1) {}

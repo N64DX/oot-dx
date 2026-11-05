@@ -597,7 +597,7 @@ void KaleidoScope_DrawItemSelect(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, "../z_kaleido_item.c", 516);
 }
 
-static s16 sCButtonPosX[] = { C_BUTTON_EQUIP_1, C_BUTTON_EQUIP_2, C_BUTTON_EQUIP_3 };
+#define sCButtonPosX(btn) (WS_SHIFT_FULL * 5 + 660 + (btn) * 240)
 static s16 sCButtonPosY[] = { 1100, 920, 1100 };
 
 void KaleidoScope_UpdateItemEquip(PlayState* play) {
@@ -637,7 +637,7 @@ void KaleidoScope_UpdateItemEquip(PlayState* play) {
         offsetX = ABS(pauseCtx->equipAnimX - bowItemVtx->v.ob[0] * 10) / sEquipMoveTimer;
         offsetY = ABS(pauseCtx->equipAnimY - bowItemVtx->v.ob[1] * 10) / sEquipMoveTimer;
     } else {
-        offsetX = ABS(pauseCtx->equipAnimX - sCButtonPosX[pauseCtx->equipTargetCBtn]) / sEquipMoveTimer;
+        offsetX = ABS(pauseCtx->equipAnimX - sCButtonPosX(pauseCtx->equipTargetCBtn)) / sEquipMoveTimer;
         offsetY = ABS(pauseCtx->equipAnimY - sCButtonPosY[pauseCtx->equipTargetCBtn]) / sEquipMoveTimer;
     }
 
@@ -667,7 +667,7 @@ void KaleidoScope_UpdateItemEquip(PlayState* play) {
                 pauseCtx->equipAnimY += offsetY;
             }
         } else {
-            if (pauseCtx->equipAnimX >= sCButtonPosX[pauseCtx->equipTargetCBtn]) {
+            if (pauseCtx->equipAnimX >= sCButtonPosX(pauseCtx->equipTargetCBtn)) {
                 pauseCtx->equipAnimX -= offsetX;
             } else {
                 pauseCtx->equipAnimX += offsetX;
