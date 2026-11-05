@@ -4,6 +4,7 @@
 #include "ultra64.h"
 #include "libu64/pad.h"
 #include "versions.h"
+#include "resolution.h"
 
 typedef enum ViModeEditState {
 #if OOT_VERSION < PAL_1_0
@@ -41,6 +42,9 @@ typedef struct ViMode {
 void ViMode_Init(ViMode* viMode);
 void ViMode_Destroy(ViMode* viMode);
 void ViMode_Update(ViMode* viMode, Input* input);
+#if INGAME_ASPECT_RATIO
+void ViMode_UpdateAspectRatio(void);
+#endif
 
 void ViConfig_UpdateVi(u32 black);
 void ViConfig_UpdateBlack(void);

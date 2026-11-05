@@ -18,7 +18,7 @@
 // Height of the fragments the color frame buffer (CFB) is split into.
 // It is the maximum amount of lines such that all rgba16 SCREEN_WIDTH-long lines fit into
 // the half of TMEM dedicated to color-indexed data.
-#define VISMONO_CFBFRAG_HEIGHT ((TMEM_SIZE / 2) / (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES))
+#define VISMONO_CFBFRAG_HEIGHT ((TMEM_SIZE / 2) / (SCREEN_WIDTH_MONO * G_IM_SIZ_16b_BYTES))
 
 // Maximum size of the dlist written by `VisMono_DesaturateDList`.
 #define VISMONO_DLSIZE (1 + SCREEN_HEIGHT / VISMONO_CFBFRAG_HEIGHT * (7 + 2 + 2 + 3) + 2 + 2)
@@ -35,7 +35,7 @@
 extern u16 D_0F000000[];
 
 void VisMono_Init(VisMono* this) {
-#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
+#if (SCREEN_WIDTH_MONO * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     bzero(this, sizeof(VisMono));
     this->vis.type = 0;
     this->vis.scissorType = VIS_NO_SETSCISSOR;
@@ -51,13 +51,13 @@ void VisMono_Init(VisMono* this) {
 }
 
 void VisMono_Destroy(VisMono* this) {
-#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
+#if (SCREEN_WIDTH_MONO * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     SYSTEM_ARENA_FREE(this->dList, "../z_vismono.c", 137);
 #endif
 }
 
 void VisMono_DesaturateTLUT(VisMono* this, u16* tlut) {
-#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
+#if (SCREEN_WIDTH_MONO * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     s32 i;
 
     for (i = 0; i < 256; i++) {
@@ -80,7 +80,7 @@ void VisMono_DesaturateTLUT(VisMono* this, u16* tlut) {
 }
 
 Gfx* VisMono_DesaturateDList(VisMono* this, Gfx* gfx) {
-#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
+#if (SCREEN_WIDTH_MONO * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     s32 y;
     s32 height = VISMONO_CFBFRAG_HEIGHT;
     u16* cfbFrag = D_0F000000;
@@ -149,11 +149,16 @@ Gfx* VisMono_DesaturateDList(VisMono* this, Gfx* gfx) {
 }
 
 void VisMono_Draw(VisMono* this, Gfx** gfxP) {
-#if (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
+#if (SCREEN_WIDTH_MONO * G_IM_SIZ_16b_BYTES) < (TMEM_SIZE / 4)
     Gfx* gfx = *gfxP;
     u16* tlut;
     Gfx* dList;
     Gfx* dListEnd;
+
+#if INGAME_ASPECT_RATIO
+    if (SCREEN_WIDTH > SCREEN_WIDTH_MONO)
+        return;
+#endif
 
     if (this->tlut) {
         tlut = this->tlut;

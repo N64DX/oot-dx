@@ -39,7 +39,7 @@ Gfx D_801270B0[] = {
                          G_TD_CLAMP | G_TP_PERSP | G_CYC_FILL | G_PM_NPRIMITIVE,
                      G_AC_NONE | G_ZS_PIXEL | G_RM_NOOP | G_RM_NOOP2),
     gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_LIGHTING | G_SHADING_SMOOTH),
-    gsDPSetScissor(G_SC_NON_INTERLACE, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT),
+    gsDPSetScissor(G_SC_NON_INTERLACE, 0, 0, SCREEN_WIDTH_MAX, SCREEN_HEIGHT),
     gsSPClipRatio(FRUSTRATIO_1),
     gsSPEndDisplayList(),
 };

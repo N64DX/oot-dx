@@ -4,7 +4,7 @@
 #include "gfx.h"
 #include "ultra64.h"
 
-extern u16 gZBuffer[SCREEN_HEIGHT][SCREEN_WIDTH]; // 0x25800 bytes
+extern u16 gZBuffer[SCREEN_HEIGHT][SCREEN_WIDTH_MAX]; // 0x25800 bytes
 extern u64 gGfxSPTaskOutputBuffer[0x3000]; // 0x18000 bytes
 extern u64 gGfxSPTaskYieldBuffer[OS_YIELD_DATA_SIZE / sizeof(u64)]; // 0xC00 bytes
 extern u64 gGfxSPTaskStack[SP_DRAM_STACK_SIZE64]; // 0x400 bytes

@@ -31,6 +31,7 @@
 #include "actor.h"
 #include "environment.h"
 #include "save.h"
+#include "vi_mode.h"
 
 #include "assets/textures/nintendo_rogo_static/nintendo_rogo_static.h"
 #include "assets/textures/nintendo_rogo_static/nintendo_rogo_static_extra.h"
@@ -372,7 +373,6 @@ void ConsoleLogo_Init(GameState* thisx) {
     DMA_REQUEST_SYNC(this->staticSegment, (uintptr_t)_nintendo_rogo_staticSegmentRomStart, size, "../z_title.c", 615);
     R_UPDATE_RATE = 1;
     Matrix_Init(&this->state);
-    View_Init(&this->view, this->state.gfxCtx);
     this->state.main = ConsoleLogo_Main;
     this->state.destroy = ConsoleLogo_Destroy;
     this->exit = false;
@@ -389,6 +389,11 @@ void ConsoleLogo_Init(GameState* thisx) {
 
     Sram_Alloc(&this->state, &this->sramCtx);
     Sram_InitSram(&this->state, &this->sramCtx);
+
+#if INGAME_ASPECT_RATIO
+    ViMode_UpdateAspectRatio();
+#endif
+    View_Init(&this->view, this->state.gfxCtx);
 
     if (osMemSize >= 0x800000 && SKIP_LOGO)
         this->exit = true;

@@ -687,7 +687,7 @@ void func_800AF558(void) {
     if ((uintptr_t)osViGetCurrentFramebuffer() >= 0x80100000) {
         gFaultMgr.fb = osViGetCurrentFramebuffer();
     } else {
-        gFaultMgr.fb = (u16*)(PHYS_TO_K0(osMemSize) - sizeof(u16[SCREEN_HEIGHT][SCREEN_WIDTH]));
+        gFaultMgr.fb = (u16*)(PHYS_TO_K0(osMemSize) - sizeof(u16[SCREEN_HEIGHT][SCREEN_WIDTH_MAX]));
         osViSwapBuffer(gFaultMgr.fb);
     }
 }
@@ -815,8 +815,8 @@ void Fault_SetFrameBuffer(void* fb, u16 w, u16 h) {
 
 void Fault_Init(void) {
     gFaultDisplayEnable = 1;
-    gFaultMgr.fb = (u16*)(PHYS_TO_K0(osMemSize) - sizeof(u16[SCREEN_HEIGHT][SCREEN_WIDTH]));
-    gFaultMgr.fbWidth = SCREEN_WIDTH;
+    gFaultMgr.fb = (u16*)(PHYS_TO_K0(osMemSize) - sizeof(u16[SCREEN_HEIGHT][SCREEN_WIDTH_MAX]));
+    gFaultMgr.fbWidth = SCREEN_WIDTH_MAX;
     gFaultMgr.fbDepth = 16;
     gFaultMgr.clients = 0;
     osCreateMesgQueue(&gFaultMgr.queue, &gFaultMgr.msg, 1);
