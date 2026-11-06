@@ -20,6 +20,7 @@
 #include "effect.h"
 #include "ocarina.h"
 #include "save.h"
+#include "cutscene.h"
 
 #include "assets/scenes/overworld/woodfall/woodfall_scene.h"
 #include "assets/objects/object_mtoride/object_mtoride.h"
@@ -31,21 +32,17 @@ void DmChar01_Destroy(Actor* thisx, struct PlayState* play);
 void DmChar01_Update(Actor* thisx, struct PlayState* play);
 void DmChar01_Draw(Actor* thisx, struct PlayState* play);
 
-void func_80AA8698(DmChar01* this, struct PlayState* play);
-void func_80AA884C(DmChar01* this, struct PlayState* play);
-void func_80AA88A8(DmChar01* this, struct PlayState* play);
-void func_80AA892C(DmChar01* this, struct PlayState* play);
-void func_80AA8C28(DmChar01* this, struct PlayState* play);
-void func_80AA8F1C(DmChar01* this, struct PlayState* play);
-void func_80AA8F2C(DmChar01* this, struct PlayState* play);
-void func_80AA9020(DmChar01* this, struct PlayState* play);
-void func_80AA90AC(DmChar01* this, struct PlayState* play);
-void func_80AA90F4(DmChar01* this, struct PlayState* play);
+void DmChar01_CheckToSummon(DmChar01* this, struct PlayState* play);
+void DmChar01_SetupPlaySummonTempleCutscene(DmChar01* this, struct PlayState* play);
+void DmChar01_PlaySummonTempleCutscene(DmChar01* this, struct PlayState* play);
+void DmChar01_PurifyWaterDuringSummonCutscene(DmChar01* this, struct PlayState* play);
+void DmChar01_PurifyWaterDuringWoodfallClearCutscene(DmChar01* this, struct PlayState* play);
+void DmChar01_SetupRiseTemple(DmChar01* this, struct PlayState* play);
+void DmChar01_PlayRiseRampAndPlatformCutscene(DmChar01* this, struct PlayState* play);
+void DmChar01_RiseRampAndPlatform(DmChar01* this, struct PlayState* play);
+void DmChar01_RiseTemple(DmChar01* this, struct PlayState* play);
 
-s16 D_80AAAE20;
-s16 D_80AAAE22;
-s16 D_80AAAE24;
-s16 D_80AAAE26;
+s16 D_80AAAE20, D_80AAAE22, D_80AAAE24, D_80AAAE26;
 
 #include "assets/overlays/ovl_Dm_Char01/ovl_Dm_Char01.c"
 
@@ -67,6 +64,8 @@ static InitChainEntry sInitChain[] = {
 
 s16 D_80AAAAB4 = false;
 
+void DmChar01_DoNothing(DmChar01* this, PlayState* play) { }
+
 void DmChar01_Init(Actor* thisx, PlayState* play) {
     DmChar01* this = (DmChar01*)thisx;
     CollisionHeader* header = NULL;
@@ -77,15 +76,15 @@ void DmChar01_Init(Actor* thisx, PlayState* play) {
 
     this->unk_346 = 0;
     this->hasCollision = false;
-    this->actionFunc = func_80AA8F1C;
+    this->actionFunc = DmChar01_DoNothing;
     D_80AAAE24 = D_80AAAE26 = 0;
     this->cutsceneState = 0;
 
     switch (thisx->params) {
-        case 0:
+        case DMCHAR01_WATER:
             if (Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL)) {
                 this->unk_34C = 2;
-                this->actionFunc = func_80AA8F1C;
+                this->actionFunc = DmChar01_DoNothing;
                 break;
             }
 
@@ -93,7 +92,7 @@ void DmChar01_Init(Actor* thisx, PlayState* play) {
                 play->envCtx.lightConfig = 5;
                 play->envCtx.changeLightNextConfig = 5;
             }
-            this->unk_348 = 255.0f;
+            this->alpha = 255.0f;
 
             for (i=0; i<ARRAY_COUNT(this->unk_1AC); i++)
                 this->unk_1AC[i] = gWoodfallSceneryDynamicPoisonWaterVtx[i].v.ob[1] * 409.6f;
@@ -105,23 +104,23 @@ void DmChar01_Init(Actor* thisx, PlayState* play) {
             this->hasCollision = true;
             if (gSaveContext.sceneLayer == 4) {
                 this->unk_34C = 1;
-                this->actionFunc = func_80AA8C28;
+                this->actionFunc = DmChar01_PurifyWaterDuringWoodfallClearCutscene;
             } else {
                 this->unk_34C = 0;
-                this->actionFunc = func_80AA892C;
+                this->actionFunc = DmChar01_PurifyWaterDuringSummonCutscene;
             }
             break;
 
-        case 1:
+        case DMCHAR01_WALLS:
             if (Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL) || gSaveContext.sceneLayer == 4) {
                 this->unk_34C = 1;
-                this->actionFunc = func_80AA8F1C;
-            } else this->actionFunc = func_80AA8698;
+                this->actionFunc = DmChar01_DoNothing;
+            } else this->actionFunc = DmChar01_CheckToSummon;
             break;
 
-        case 2:
+        case DMCHAR01_TEMPLE:
             this->unk_34C = 0;
-            if (!Flags_GetEventChkInf(EVENTCHKINF_SUMMONED_WOODFALL_TEMPLE) && !Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL)) {
+            if (!Flags_GetEventChkInf(EVENTCHKINF_SUMMONED_WOODFALL_TEMPLE) && !Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL) && !IS_CUTSCENE_LAYER) {
                 this->unk_34C = 1;
                 this->dyna.actor.world.pos.y -= 400.0f;
             }
@@ -131,32 +130,32 @@ void DmChar01_Init(Actor* thisx, PlayState* play) {
             CollisionHeader_GetVirtual(&gWoodfallSceneryTempleCol, &header);
             this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, header);
             this->hasCollision = true;
-            this->unk_348 = 200.0f;
-            this->actionFunc = func_80AA8F2C;
+            this->alpha = 200.0f;
+            this->actionFunc = DmChar01_SetupRiseTemple;
             break;
 
-        case 3:
+        case DMCHAR01_RAMP:
             this->dyna.actor.world.rot.y += 0x8000;
             this->dyna.actor.shape.rot.y += 0x8000;
-            if (!Flags_GetEventChkInf(EVENTCHKINF_SUMMONED_WOODFALL_TEMPLE) && !Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL)) {
+            if (!Flags_GetEventChkInf(EVENTCHKINF_SUMMONED_WOODFALL_TEMPLE) && !Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL) && !IS_CUTSCENE_LAYER) {
                 Actor_Kill(&this->dyna.actor);
                 return;
             }
 
-            //Actor_Spawn(&play->actorCtx, play, ACTOR_OBJ_ETCETERA, 5.0f, 202.0f, 294.0f, 0, 0, 0, DEKU_FLOWER_PARAMS(DEKU_FLOWER_TYPE_PINK_WITH_INITIAL_BOUNCE));
+          //Actor_Spawn(&play->actorCtx, play, ACTOR_OBJ_ETCETERA, 5.0f, 202.0f, 294.0f, 0, 0, 0, DEKU_FLOWER_PARAMS(DEKU_FLOWER_TYPE_PINK_WITH_INITIAL_BOUNCE));
             DynaPolyActor_Init(&this->dyna, 0);
             CollisionHeader_GetVirtual(&gWoodfallSceneryTempleRampAndPlatformCol, &header);
             this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, header);
 
             this->hasCollision = true;
-            if (!Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL)) {
-                //this->actionFunc = func_80AA9020;
+            if (!Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL) || gSaveContext.sceneLayer == 4) {
+                this->actionFunc = DmChar01_PlayRiseRampAndPlatformCutscene;
                 this->dyna.actor.world.pos.y -= 120.0f;
-            } else this->actionFunc = func_80AA8F1C;
+            } else this->actionFunc = DmChar01_DoNothing;
             break;
 
         default:
-            this->actionFunc = func_80AA88A8;
+            this->actionFunc = DmChar01_DoNothing;
             break;
     }
 }
@@ -169,7 +168,7 @@ void DmChar01_Destroy(Actor* thisx, PlayState* play) {
     }
 }
 
-void func_80AA8698(DmChar01* this, PlayState* play) {
+void DmChar01_CheckToSummon(DmChar01* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
 
     if (Flags_GetEventChkInf(EVENTCHKINF_SUMMONED_WOODFALL_TEMPLE) || Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL))
@@ -185,22 +184,22 @@ void func_80AA8698(DmChar01* this, PlayState* play) {
     if (play->msgCtx.ocarinaMode == OCARINA_MODE_04 && play->msgCtx.lastPlayedSong == OCARINA_SONG_LULLABY) {
         if (player->actor.world.pos.x > -40.0f && player->actor.world.pos.x < 40.0f && player->actor.world.pos.z > 1000.0f && player->actor.world.pos.z < 1078.0f) {
             Flags_SetEventChkInf(EVENTCHKINF_SUMMONED_WOODFALL_TEMPLE);
-            this->actionFunc = func_80AA884C;
+            this->actionFunc = DmChar01_SetupPlaySummonTempleCutscene;
         }
     }
 }
 
-void func_80AA884C(DmChar01* this, PlayState* play) {
+void DmChar01_SetupPlaySummonTempleCutscene(DmChar01* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
 
     Cutscene_SetScript(play, gSummonWoodfallTempleCs);
     gSaveContext.cutsceneTrigger = 1;
     Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
     player->actor.world.rot.y = player->actor.shape.rot.y = 0x8000;
-    this->actionFunc = func_80AA88A8;
+    this->actionFunc = DmChar01_PlaySummonTempleCutscene;
 }
 
-void func_80AA88A8(DmChar01* this, PlayState* play) {
+void DmChar01_PlaySummonTempleCutscene(DmChar01* this, PlayState* play) {
     if (play->csCtx.state != CS_STATE_IDLE && play->csCtx.actorCues[0] != NULL && play->csCtx.actorCues[0]->id == 1) {
         if (play->csCtx.curFrame >= 20 && this->cutsceneState == 0) {
             this->cutsceneState++;
@@ -217,7 +216,7 @@ void func_80AA88A8(DmChar01* this, PlayState* play) {
     }
 }
 
-void func_80AA892C(DmChar01* this, PlayState* play) {
+void DmChar01_PurifyWaterDuringSummonCutscene(DmChar01* this, PlayState* play) {
     f32 temp_f18;
     s32 temp_v0_4, i;
 
@@ -273,7 +272,7 @@ void func_80AA892C(DmChar01* this, PlayState* play) {
     }
 }
 
-void func_80AA8C28(DmChar01* this, PlayState* play) {
+void DmChar01_PurifyWaterDuringWoodfallClearCutscene(DmChar01* this, PlayState* play) {
     f32 temp_f18;
     s32 temp_v0_4, i;
 
@@ -313,50 +312,42 @@ void func_80AA8C28(DmChar01* this, PlayState* play) {
         gWoodfallSceneryDynamicPoisonWaterVtx[i].v.ob[1] = temp_f20;
     }
 
-    Math_SmoothStepToF(&this->unk_348, 0.0f, 0.02f, 0.6f, 0.4f);
+    Math_SmoothStepToF(&this->alpha, 0.0f, 0.02f, 0.6f, 0.4f);
 
-    if (this->unk_348 < 0.01f) {
+    if (this->alpha < 0.01f) {
         this->unk_34C = 2;
-        this->actionFunc = func_80AA8F1C;
+        this->actionFunc = DmChar01_DoNothing;
     }
 }
 
-void func_80AA8F0C(DmChar01* this, PlayState* play) {
-}
-
-void func_80AA8F1C(DmChar01* this, PlayState* play) {
-}
-
-void func_80AA8F2C(DmChar01* this, PlayState* play) {
+void DmChar01_SetupRiseTemple(DmChar01* this, PlayState* play) {
     if (D_80AAAE26 != 0) {
         Math_SmoothStepToF(&this->dyna.actor.world.pos.y, 0.0f, 0.05f, 6.0f, 0.001f);
-        Math_SmoothStepToF(&this->unk_348, 0.0f, 0.01f, 0.5f, 0.4f);
-        if ((s32)this->dyna.actor.world.pos.y >= 0) {
+        Math_SmoothStepToF(&this->alpha, 0.0f, 0.01f, 0.5f, 0.4f);
+        if (this->dyna.actor.world.pos.y >= 0.0f) {
             D_80AAAE26 = 2;
-            //Actor_Spawn(&play->actorCtx, play, ACTOR_OBJ_ETCETERA, 5.0f, 202.0f, 294.0f, 0, 0, 0, DEKU_FLOWER_PARAMS(DEKU_FLOWER_TYPE_PINK_WITH_INITIAL_BOUNCE));
-            this->actionFunc = func_80AA90F4;
+          //Actor_Spawn(&play->actorCtx, play, ACTOR_OBJ_ETCETERA, 5.0f, 202.0f, 294.0f, 0, 0, 0, DEKU_FLOWER_PARAMS(DEKU_FLOWER_TYPE_PINK_WITH_INITIAL_BOUNCE));
+            this->actionFunc = DmChar01_RiseTemple;
         }
     }
-    func_80AA8F0C(this, play);
 }
 
-/*void func_80AA9020(DmChar01* this, PlayState* play) {
-    if (Cutscene_IsCueInChannel(play, CS_CMD_ACTOR_CUE_135)) {
-        CsCmdActorCue* cue = play->csCtx.actorCues[Cutscene_GetCueChannel(play, CS_CMD_ACTOR_CUE_135)];
-
-        if (cue->startFrame == play->csCtx.curFrame && cue->id == 2) {
+void DmChar01_PlayRiseRampAndPlatformCutscene(DmChar01* this, PlayState* play) {
+    if (play->csCtx.state != CS_STATE_IDLE && play->csCtx.actorCues[0] != NULL && play->csCtx.actorCues[0]->id == 1) {
+        if (play->csCtx.curFrame >= play->csCtx.actorCues[0]->startFrame && this->cutsceneState == 0) {
             Flags_SetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL);
-            this->actionFunc = func_80AA90AC;
+            this->actionFunc = DmChar01_RiseRampAndPlatform;
+            this->cutsceneState++;
         }
     }
-}*/
+}
 
-void func_80AA90AC(DmChar01* this, PlayState* play) {
+void DmChar01_RiseRampAndPlatform(DmChar01* this, PlayState* play) {
     Math_SmoothStepToF(&this->dyna.actor.world.pos.y, 0.0f, 0.05f, 2.0f, 0.001f);
 }
 
-void func_80AA90F4(DmChar01* this, PlayState* play) {
-    Math_SmoothStepToF(&this->unk_348, 0.0f, 0.02f, 0.8f, 0.4f);
+void DmChar01_RiseTemple(DmChar01* this, PlayState* play) {
+    Math_SmoothStepToF(&this->alpha, 0.0f, 0.02f, 0.8f, 0.4f);
 }
 
 void DmChar01_Update(Actor* thisx, PlayState* play) {
@@ -365,7 +356,7 @@ void DmChar01_Update(Actor* thisx, PlayState* play) {
     this->actionFunc(this, play);
 
     if (this->hasCollision) {
-        if (thisx->params == 0) {
+        if (thisx->params == DMCHAR01_WATER) {
             Player* player = GET_PLAYER(play);
 
             if (Player_GetEnvironmentalHazard(play) >= PLAYER_ENV_HAZARD_SWIMMING && !Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL) && player->actor.world.pos.y < this->dyna.actor.world.pos.y)
@@ -376,7 +367,7 @@ void DmChar01_Update(Actor* thisx, PlayState* play) {
             else DynaPoly_EnableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
         }
 
-        if (thisx->params == 2) {
+        if (thisx->params == DMCHAR01_TEMPLE) {
             if (this->dyna.actor.xzDistToPlayer > 600.0f)
                 DynaPoly_DisableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
             else DynaPoly_EnableCollision(play, &play->colCtx.dyna, this->dyna.bgId);
@@ -385,19 +376,15 @@ void DmChar01_Update(Actor* thisx, PlayState* play) {
 }
 
 void DmChar01_Draw(Actor* thisx, PlayState* play) {
-    static f32 D_80AAAAB8 = 0.0f;
-    static f32 D_80AAAABC = 0.0f;
-    static s16 D_80AAAAC0 = 0;
-    static s16 D_80AAAAC4 = 0;
-    static s16 D_80AAAAC8 = 0;
-    static s16 D_80AAAACC = 0;
+    static f32 D_80AAAAB8 = 0.0f, D_80AAAABC = 0.0f;
+    static s16 D_80AAAAC0 = 0, D_80AAAAC4 = 0, D_80AAAAC8 = 0, D_80AAAACC = 0;
     DmChar01* this = (DmChar01*)thisx;
     f32 temp_f12, spBC;
     s32 i;
     u8 spB7 = false;
 
     switch (thisx->params) {
-        case 0:
+        case DMCHAR01_WATER:
             switch (this->unk_34C) {
                 case 0:
                     Gfx_DrawDListOpa(play, gWoodfallSceneryPoisonWaterDL);
@@ -411,7 +398,7 @@ void DmChar01_Draw(Actor* thisx, PlayState* play) {
                     }
 
                     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
-                    if ((u8)this->unk_348 == 255) {
+                    if (this->alpha >= 255.0f) {
                         Gfx_SetupDL_25Opa(play->state.gfxCtx);
                         gDPSetRenderMode(POLY_OPA_DISP++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
                         gDPPipeSync(POLY_OPA_DISP++);
@@ -424,8 +411,8 @@ void DmChar01_Draw(Actor* thisx, PlayState* play) {
                         Gfx_SetupDL_25Xlu(play->state.gfxCtx);
                         gDPSetRenderMode(POLY_XLU_DISP++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2);
                         gDPPipeSync(POLY_XLU_DISP++);
-                        gDPSetEnvColor(POLY_XLU_DISP++, 0, 0, 0, (u8)this->unk_348);
-                        gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x96, 255, 255, 255, (u8)this->unk_348);
+                        gDPSetEnvColor(POLY_XLU_DISP++, 0, 0, 0, (u8)this->alpha);
+                        gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x96, 255, 255, 255, (u8)this->alpha);
                         gSPSegment(POLY_XLU_DISP++, 0x0B, gWoodfallSceneryDynamicPoisonWaterVtx);
                         MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
                         gSPDisplayList(POLY_XLU_DISP++, gWoodfallSceneryDynamicPoisonWaterDL);
@@ -440,7 +427,7 @@ void DmChar01_Draw(Actor* thisx, PlayState* play) {
             }
             break;
 
-        case 1:
+        case DMCHAR01_WALLS:
             switch (this->unk_34C) {
                 case 0:
                     Gfx_DrawDListOpa(play, gWoodfallSceneryPoisonWallsDL);
@@ -452,15 +439,15 @@ void DmChar01_Draw(Actor* thisx, PlayState* play) {
             }
             break;
 
-        case 2:
+        case DMCHAR01_TEMPLE:
             Gfx_DrawDListOpa(play, gWoodfallSceneryTempleDL);
 
-            if ((this->unk_34C != 0) && ((u8)this->unk_348 != 0)) {
+            if (this->unk_34C != 0 && this->alpha > 0) {
                 OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
                 Gfx_SetupDL_25Xlu(play->state.gfxCtx);
                 gDPPipeSync(POLY_XLU_DISP++);
-                gDPSetEnvColor(POLY_XLU_DISP++, 0, 0, 0, (u8)this->unk_348);
-                gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x80, 255, 255, 255, (u8)this->unk_348);
+                gDPSetEnvColor(POLY_XLU_DISP++, 0, 0, 0, (u8)this->alpha);
+                gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x80, 255, 255, 255, (u8)this->alpha);
                 MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
                 gSPDisplayList(POLY_XLU_DISP++, gWoodfallSceneryWaterFlowingOverTempleDL);
                 CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
@@ -514,7 +501,7 @@ void DmChar01_Draw(Actor* thisx, PlayState* play) {
             Gfx_DrawDListXlu(play, gWoodfallSceneryTempleEntrancesDL);
             break;
 
-        case 3:
+        case DMCHAR01_RAMP:
             if (thisx->world.pos.y > -120.0f)
                 Gfx_DrawDListOpa(play, gWoodfallSceneryTempleRampAndPlatformDL);
             break;

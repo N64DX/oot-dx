@@ -8,12 +8,19 @@ struct DmChar01;
 
 typedef void (*DmChar01ActionFunc)(struct DmChar01*, struct PlayState*);
 
+typedef enum DmChar01Param {
+    /* 0 */ DMCHAR01_WATER,
+    /* 1 */ DMCHAR01_WALLS,
+    /* 2 */ DMCHAR01_TEMPLE,
+    /* 3 */ DMCHAR01_RAMP
+} DmChar01Param;
+
 typedef struct DmChar01 {
     /* 0x000 */ DynaPolyActor dyna;
     /* 0x1A0 */ DmChar01ActionFunc actionFunc;
     /* 0x1AC */ s16 unk_1AC[205];
     /* 0x346 */ s16 unk_346;
-    /* 0x348 */ f32 unk_348;
+    /* 0x348 */ f32 alpha;
     /* 0x34C */ u8 unk_34C;
     /* 0x34D */ u8 hasCollision;
     /* 0x34E */ u8 cutsceneState;
