@@ -56,7 +56,7 @@ ActorEntry woodfall_temple_room_2ActorEntry_00006C[] = {
     { ACTOR_EN_MKK,       { -600, -1485, 1755 }, {      0,      0,    0 }, 0x7800 },
     { ACTOR_OBJ_SYOKUDAI, { -120, -1185,  855 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 3F
     { ACTOR_OBJ_SYOKUDAI, {  120, -1185,  855 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 3F
-    { ACTOR_OBJ_TSUBO,    {  120, -1185, 2100 }, {      0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
+    { ACTOR_OBJ_TSUBO,    {  120, -1185, 2100 }, {      0,      0,    0 }, 0x0003 }, // Recovery Heart
     { ACTOR_EN_KUSA,      {  -90, -1485, 1770 }, {      0, 0xAF80,    0 }, 0x0002 },
     { ACTOR_EN_KUSA,      {  -45, -1485, 1680 }, {      0, 0x4180,    0 }, 0x0002 },
     { ACTOR_EN_KUSA,      { -120, -1185,  930 }, {      0,      0,    0 }, 0x2202 },

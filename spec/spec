@@ -310,6 +310,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_131_dungeon_appear.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_132_enemy2.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_133_final_hours.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_134_woodfall_clear.o"
 endseg
 
 beginseg

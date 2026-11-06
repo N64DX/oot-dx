@@ -437,9 +437,11 @@ void Sram_InitDebugSave(void) {
         gSaveContext.save.info.equips.buttonItems[0] = IS_CHILD_QUEST ? ITEM_SWORD_MASTER : ITEM_SWORD_KOKIRI;
         Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, IS_CHILD_QUEST ? EQUIP_VALUE_SWORD_MASTER: EQUIP_VALUE_SWORD_KOKIRI);
         if (gSaveContext.fileNum == 0xFF) {
-            gSaveContext.save.info.equips.buttonItems[1] = ITEM_SLINGSHOT;
-            gSaveContext.save.info.equips.cButtonSlots[0] = SLOT_SLINGSHOT;
-            Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, IS_CHILD_QUEST ? EQUIP_VALUE_SHIELD_HYLIAN : EQUIP_VALUE_SHIELD_DEKU);
+            if (!IS_CHILD_QUEST) {
+                gSaveContext.save.info.equips.buttonItems[1] = ITEM_SLINGSHOT;
+                gSaveContext.save.info.equips.cButtonSlots[0] = SLOT_SLINGSHOT;
+            }
+            Inventory_ChangeEquipment(EQUIP_TYPE_SHIELD, IS_CHILD_QUEST ? EQUIP_VALUE_SHIELD_HEROS : EQUIP_VALUE_SHIELD_DEKU);
         }
     }
 

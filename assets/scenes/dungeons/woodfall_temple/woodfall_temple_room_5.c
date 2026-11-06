@@ -43,19 +43,19 @@ ActorEntry woodfall_temple_room_5ActorEntry_00006C[] = {
     { ACTOR_EN_TANRON1,   { 1335, -1345, -600 }, {      0,      0,    0 }, 0x0002 },
     { ACTOR_EN_TANRON1,   { 1650, -1345,  -90 }, {      0,      0,    0 }, 0x0003 },
     { ACTOR_EN_TANRON1,   { 1650, -1345,   90 }, {      0,      0,    0 }, 0x0004 },
-    { ACTOR_OBJ_SYOKUDAI, { 1125, -1425, -600 }, {      0,      0,    0 }, 0x2098 }, // Sets switch: 18
-    { ACTOR_OBJ_SYOKUDAI, { 1335, -1425, -600 }, {      0,      0,    0 }, 0x2098 }, // Sets switch: 18
-    { ACTOR_OBJ_SYOKUDAI, { 1650, -1425,  -90 }, {      0,      0,    0 }, 0x2098 }, // Sets switch: 18
-    { ACTOR_OBJ_SYOKUDAI, { 1650, -1425,   90 }, {      0,      0,    0 }, 0x2098 }, // Sets switch: 18
-    { ACTOR_OBJ_SYOKUDAI, { 1230, -1225,  555 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 3F
+    { ACTOR_OBJ_SYOKUDAI, { 1125, -1425, -600 }, {      0,      0,    0 }, 0x2098 }, // Switch: 18
+    { ACTOR_OBJ_SYOKUDAI, { 1335, -1425, -600 }, {      0,      0,    0 }, 0x2098 }, // Switch: 18
+    { ACTOR_OBJ_SYOKUDAI, { 1650, -1425,  -90 }, {      0,      0,    0 }, 0x2098 }, // Switch: 18
+    { ACTOR_OBJ_SYOKUDAI, { 1650, -1425,   90 }, {      0,      0,    0 }, 0x2098 }, // Switch: 18
+    { ACTOR_OBJ_SYOKUDAI, { 1230, -1225,  555 }, {      0,      0,    0 }, 0x243F }, // Switch: 3F
     { ACTOR_EN_RAF,       { 1020, -1500, -224 }, {      0,      0,    0 }, 0x0F80 },
     { ACTOR_EN_RAF,       { 1455, -1500, -224 }, {      0,      0,    0 }, 0x0F80 },
     { ACTOR_EN_RAF,       { 1020, -1500,  226 }, {      0,      0,    0 }, 0x0F80 },
     { ACTOR_EN_RAF,       { 1455, -1500,  226 }, {      0,      0,    0 }, 0x0F80 },
-    { ACTOR_OBJ_TSUBO,    { 1335, -1185,  585 }, {      0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,    { 1335, -1185,  615 }, {      0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,    { 1335, -1185,  645 }, {      0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,    { 1335, -1185,  675 }, {      0,      0,    0 }, 0x0009 }, // Drops Arrows (10)
+    { ACTOR_OBJ_TSUBO,    { 1335, -1185,  585 }, {      0,      0,    0 }, 0x0003 }, // Recovery Heart
+    { ACTOR_OBJ_TSUBO,    { 1335, -1185,  615 }, {      0,      0,    0 }, 0x0003 }, // Recovery Heart
+    { ACTOR_OBJ_TSUBO,    { 1335, -1185,  645 }, {      0,      0,    0 }, 0x0003 }, // Recovery Heart
+    { ACTOR_OBJ_TSUBO,    { 1335, -1185,  675 }, {      0,      0,    0 }, 0x0009 }, // Arrows (10)
     { ACTOR_EN_KUSA,      { 1695, -1425,   60 }, {      0, 0x7380,    0 }, 0x242B },
     { ACTOR_EN_KUSA,      { 1725, -1425,  105 }, {      0, 0x8E80,    0 }, 0x252B },
     { ACTOR_OBJ_SWITCH,   { 1230, -1215, -509 }, {      0,      0,    0 }, 0x1782 }, // Sets switch: 17

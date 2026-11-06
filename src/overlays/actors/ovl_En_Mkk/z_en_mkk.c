@@ -344,7 +344,7 @@ void func_80A4E72C(EnMkk* this, PlayState* play) {
             
             Actor_PlaySfx(&this->actor, NA_SE_EN_EXTINCT);
             if (this->unk_14C != 0)
-                Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, this->unk_14C * 0x10);
+                Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, this->unk_14C * COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_1, false));
             func_80A4EEF4(this);
         } else {
             this->actor.velocity.y *= -0.8f;

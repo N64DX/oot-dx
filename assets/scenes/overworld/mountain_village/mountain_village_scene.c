@@ -190,13 +190,13 @@ CutsceneData gSpringLakeIntroCs[] = {
 };
 
 BgCamInfo mountain_village_sceneCollisionHeader_0058E8CamDataList[] = {
-    { CAM_SET_NORMAL0,     0, NULL },
-    { CAM_SET_DUNGEON2,    0, NULL },
-    { CAM_MODE_WALL_CLIMB, 0, NULL },
-    { CAM_SET_DUNGEON0,    0, NULL },
-    { CAM_SET_DUNGEON2,    0, NULL },
-    { CAM_SET_NONE,        0, NULL },
-    { CAM_SET_BOSS_GOHMA,  0, NULL },
+    { CAM_SET_NORMAL0,        0, NULL },
+    { CAM_SET_DUNGEON3,       0, NULL },
+    { CAM_SET_VERTICAL_CLIMB, 0, NULL },
+    { CAM_SET_DUNGEON0,       0, NULL },
+    { CAM_SET_DUNGEON2,       0, NULL },
+    { CAM_SET_NONE,           0, NULL },
+    { CAM_SET_MINI_BOSS,      0, NULL },
 };
 
 SurfaceType mountain_village_sceneCollisionHeader_0058E8SurfaceType[] = {

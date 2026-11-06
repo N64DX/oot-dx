@@ -577,8 +577,8 @@ void Minimap_Draw(PlayState* play) {
                         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
                         MapMark_Draw(play);
                     }
-                    
-					gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);
+
+                    gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);
                 }
 
                 if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L) && !Play_InCsMode(play) && !pressed_r && minimap_timer < (60 / R_UPDATE_RATE) && sNoclipTimer == 0 && !BombArrow_IsActive(play)) {

@@ -116,7 +116,7 @@
 /* 0x66 */ DEFINE_SCENE(road_to_ikana_scene, none, SCENE_PATH_TO_FORTRESS, SDC_DEFAULT, 0, 0)
 /* 0x67 */ DEFINE_SCENE(milk_road_scene, none, SCENE_PATH_TO_LAKE_HYLIA, SDC_DEFAULT, 0, 0)
 /* 0x68 */ DEFINE_SCENE(mountain_village_scene, none, SCENE_SPRING_LAKE, SDC_SPRING_LAKE, 0, 0)
-/* 0x69 */ DEFINE_SCENE(woodfall_scene, none, SCENE_WOODFALL, SDC_WOODFALL, 0, 0)
+/* 0x69 */ DEFINE_SCENE(woodfall_scene, none, SCENE_WOODFALL, SDC_DEFAULT, 0, 0)
 /* 0x6A */ DEFINE_SCENE(path_to_goron_village_scene, none, SCENE_PATH_TO_GORON_VILLAGE, SDC_PATH_TO_GORON_VILLAGE, 0, 0)
 /* 0x6B */ DEFINE_SCENE(goron_village_scene, none, SCENE_GORON_VILLAGE, SDC_GORON_VILLAGE, 0, 0)
 /* 0x6C */ DEFINE_SCENE(goron_shrine_scene, none, SCENE_GORON_SHRINE, SDC_GORON_SHRINE, 0, 0)

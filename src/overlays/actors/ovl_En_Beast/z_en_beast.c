@@ -450,7 +450,7 @@ void EnBeast_Death(EnBeast* this, PlayState* play) {
     }
 
     if (this->deathTimer <= 0) {
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x10);
+        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_10, false));
         if (this->switchFlag <= 0x3F)
             Flags_SetSwitch(play, this->switchFlag);
         Actor_Kill(&this->actor);

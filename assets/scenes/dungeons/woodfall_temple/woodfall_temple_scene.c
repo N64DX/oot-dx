@@ -51,7 +51,7 @@ TransitionActorEntry woodfall_temple_sceneTransitionActorList_0000C8[] = {
     { 4,  -1, 3,  -1, ACTOR_DOOR_SHUTTER, { -1110, -1485,   600 }, 0x8000, 0x01D3 }, // 0, Checks switch: 13
     { 0,  -1, 1,  -1, ACTOR_DOOR_SHUTTER, {     0, -1185,  -720 }, 0x0000, 0x0092 }, // 1, Checks switch: 12
     { 1,  -1, 2,  -1, ACTOR_DOOR_SHUTTER, {     0, -1185,   720 }, 0x0000, 0x003F }, // 2
-    { 1,  -1, 3,  -1, ACTOR_DOOR_SHUTTER, {  -720, -1485,     0 }, 0xC000, 0x02DD }, // 3, Sets switch: 1D
+    { 1,  -1, 3,  -1, ACTOR_DOOR_SHUTTER, {  -720, -1485,     0 }, 0xC000, 0x02DD }, // 3, Switch: 1D
     { 5,  -1, 1,  -1, ACTOR_DOOR_SHUTTER, {   720, -1485,     0 }, 0xC000, 0x003F }, // 4
     { 5,  -1, 1,  -1, ACTOR_DOOR_SHUTTER, {   720, -1185,     0 }, 0xC000, 0x003F }, // 5
     { 8,  -1, 5,  -1, ACTOR_DOOR_SHUTTER, {  1230, -1185,  -720 }, 0x0000, 0x01D8 }, // 6, Checks switch: 18
@@ -272,13 +272,13 @@ Path woodfall_temple_scenePathway_0003C4[] = {
 };
 
 BgCamInfo woodfall_temple_sceneCollisionHeader_012458CamDataList[] = {
-    { CAM_SET_DUNGEON2, 0, NULL },
-    { CAM_SET_DUNGEON0, 0, NULL },
-    { CAM_SET_DUNGEON2, 0, NULL }, // CAM_SET_DUNGEON3
-    { CAM_SET_DUNGEON2, 0, NULL }, // CAM_SET_ONTHEPOLE
-    { CAM_SET_DUNGEON2, 0, NULL }, // CAM_SET_MINI_BOSS
-    { CAM_SET_DUNGEON2, 0, NULL }, // CAM_SET_ROOM0
-    { CAM_SET_NORMAL3,  0, NULL },
+    { CAM_SET_DUNGEON2,  0, NULL },
+    { CAM_SET_DUNGEON0,  0, NULL },
+    { CAM_SET_DUNGEON3,  0, NULL },
+    { CAM_SET_ONTHEPOLE, 0, NULL },
+    { CAM_SET_MINI_BOSS, 0, NULL },
+    { CAM_SET_ROOM0,     0, NULL },
+    { CAM_SET_NORMAL3,   0, NULL },
 };
 
 SurfaceType woodfall_temple_sceneCollisionHeader_012458SurfaceType[] = {

@@ -693,7 +693,7 @@ void EnKame_BurstIntoFlames(EnKame* this, PlayState* play) {
     } else {
         this->actor.scale.x -= 0.001f;
         if (this->actor.scale.x <= 0.0f) {
-            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x60);
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_10, false));
             Actor_Kill(&this->actor);
         } else {
             this->actor.scale.y = this->actor.scale.x;
