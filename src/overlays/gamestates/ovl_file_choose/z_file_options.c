@@ -159,7 +159,7 @@ static FileSelectOptionsEntry sGlobalOptionsEntries[] = {
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 0, "Skip Logo",              FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 1, "Debug Mode",             FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 2, "Show RAM",               FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
-    { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 3, "Show FPS",               FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
+    { SHOW_OPTION_NO_IQUE    | SHOW_OPTION_ALL_QUESTS, 0, 3, "Show FPS",               FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 4, "Extra Save Slots",       FileSelectGlobalOptions_ToggleSaveSlotsOption, FileSelectGlobalOptions_GetOption },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 5, "Extended Draw Distance", FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },
     { SHOW_OPTION_ALL_BUILDS | SHOW_OPTION_ALL_QUESTS, 0, 6, "Show Stars",             FileSelectGlobalOptions_ToggleOption,          FileSelectGlobalOptions_GetOption },

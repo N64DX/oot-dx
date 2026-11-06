@@ -550,7 +550,7 @@ void Graph_ThreadEntry(void* arg0) {
         while (GameState_IsRunning(gameState)) {
             OSTime newTime = osGetTime();
             Graph_Update(&gfxCtx, gameState);
-            if (SHOW_FPS) {
+            if (SHOW_FPS && !PLATFORM_IQUE) {
                 calculate_frameTime_from_OSTime(newTime - gLastOSTime);
                 if(gFrameTime >= 1.0f){
                     gFPS = gFrames;

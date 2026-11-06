@@ -760,9 +760,9 @@ MSG()
 DEFINE_MESSAGE(0x095B, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-ITEM_ICON(ITEM_BULLET_BAG_30) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_BULLET_BAG) "Bullet Bag" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "30 deku seeds" COLOR(DEFAULT) "."
+ITEM_ICON(ITEM_BULLET_BAG_30) COLOR(RED) "Bullet Bag" COLOR(DEFAULT) "\n"
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "30 deku seeds" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -772,8 +772,8 @@ DEFINE_MESSAGE(0x095C, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 ITEM_ICON(ITEM_BULLET_BAG_40) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_BULLET_BAG) "Bullet Bag" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "40 deku seeds" COLOR(DEFAULT) "."
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "40 deku seeds" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -783,8 +783,8 @@ DEFINE_MESSAGE(0x095D, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 ITEM_ICON(ITEM_BULLET_BAG_50) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_BULLET_BAG) "Bullet Bag" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "50 deku seeds" COLOR(DEFAULT) "."
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "50 deku seeds" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -794,8 +794,8 @@ DEFINE_MESSAGE(0x095E, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 ITEM_ICON(ITEM_BULLET_BAG_60) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_BULLET_BAG) "Bullet Bag" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "60 deku seeds" COLOR(DEFAULT) "."
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "60 deku seeds" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -804,9 +804,9 @@ MSG()
 DEFINE_MESSAGE(0x095F, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-ITEM_ICON(ITEM_QUIVER_30) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_QUIVER) "Quiver" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "30 arrows" COLOR(DEFAULT) "."
+ITEM_ICON(ITEM_QUIVER_30) COLOR(RED) "Quiver" COLOR(DEFAULT) "\n"
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "30 arrows" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -816,8 +816,8 @@ DEFINE_MESSAGE(0x0960, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 ITEM_ICON(ITEM_QUIVER_40) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_QUIVER) "Quiver" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "40 arrows" COLOR(DEFAULT) "."
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "40 arrows" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -827,8 +827,8 @@ DEFINE_MESSAGE(0x0961, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 ITEM_ICON(ITEM_QUIVER_50) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_QUIVER) "Quiver" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "50 arrows" COLOR(DEFAULT) "."
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "50 arrows" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -838,8 +838,8 @@ DEFINE_MESSAGE(0x0962, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 ITEM_ICON(ITEM_QUIVER_60) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_QUIVER) "Quiver" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "60 arrows" COLOR(DEFAULT) "."
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "60 arrows" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -848,9 +848,9 @@ MSG()
 DEFINE_MESSAGE(0x0963, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
-ITEM_ICON(ITEM_BOMB_BAG_20) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_BOMB_BAG) "Bomb Bag" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "20 Bombs" COLOR(DEFAULT) "."
+ITEM_ICON(ITEM_BOMB_BAG_20) COLOR(RED) "Bomb Bag" COLOR(DEFAULT) "\n"
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "20 Bombs" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -860,8 +860,8 @@ DEFINE_MESSAGE(0x0964, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 ITEM_ICON(ITEM_BOMB_BAG_30) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_BOMB_BAG) "Bomb Bag" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "30 Bombs" COLOR(DEFAULT) "."
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "30 Bombs" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -871,8 +871,8 @@ DEFINE_MESSAGE(0x0965, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 ITEM_ICON(ITEM_BOMB_BAG_40) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_BOMB_BAG) "Bomb Bag" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "40 Bombs" COLOR(DEFAULT) "."
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "40 Bombs" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
@@ -882,8 +882,8 @@ DEFINE_MESSAGE(0x0966, TEXTBOX_TYPE_BLACK, TEXTBOX_POS_BOTTOM,
 MSG(),
 MSG(
 ITEM_ICON(ITEM_BOMB_BAG_50) COLOR(RED) UPGRADE_SIZE_PREFIX(UPG_BOMB_BAG) "Bomb Bag" COLOR(DEFAULT) "\n"
-"This can hold up to a maximum of\n"
-COLOR(RED) "50 Bombs" COLOR(DEFAULT) "."
+"This can hold up to a maximum\n"
+"of " COLOR(RED) "50 Bombs" COLOR(DEFAULT) "."
 ),
 MSG(),
 MSG()
