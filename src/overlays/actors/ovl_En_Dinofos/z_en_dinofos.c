@@ -386,9 +386,7 @@ void EnDinofos_Blink(EnDinofos* this) {
 }
 
 u8 EnDinofos_IsFacingPlayer(EnDinofos* this) {
-    s16 angleToPlayer = (this->actor.yawTowardsPlayer - this->headRotY) - this->actor.shape.rot.y;
-
-    if (ABS_ALT(angleToPlayer) < 0x3000)
+    if (ABS_ALT(BINANG_SUB(this->actor.yawTowardsPlayer - this->headRotY, this->actor.shape.rot.y)) < 0x3000)
         return true;
     return false;
 }
@@ -454,14 +452,12 @@ void EnDinofos_EnableBumperCollision(EnDinofos* this) {
 }
 
 u8 EnDinofos_Dodge(EnDinofos* this, PlayState* play) {
-    Player* player = GET_PLAYER(play);
+    Actor* actor;
     s16 angleToProjectile;
     s16 angleToBombchu;
-    Actor* actor;
     u8 i;
 
-    // Subtracts headRotY from angleToProjectile to then add it back.
-    actor = Actor_GetProjectileActor(play, &this->actor, 80.0f);
+    actor = Actor_GetProjectileActor(play, &this->actor, 80.0f); // Subtracts headRotY from angleToProjectile to then add it back.
     if (actor != NULL) {
         angleToProjectile = (Actor_WorldYawTowardActor(&this->actor, actor) - this->actor.shape.rot.y) - this->headRotY;
         if (ABS_ALT(angleToProjectile) < 0x3000) {
@@ -486,12 +482,8 @@ u8 EnDinofos_Dodge(EnDinofos* this, PlayState* play) {
         return true;
     }
 
-    if ((this->actor.xzDistToPlayer < 100.0f) && (player->meleeWeaponState != 0) &&
-        this->actor.isLockedOn && (Rand_ZeroOne() < 0.5f) && EnDinofos_IsFacingPlayer(this) &&
-        Player_IsFacingActor(&this->actor, 0x2000, play)) {
-        if (Rand_ZeroOne() < 0.5f)
-            EnDinofos_SetupChooseJump(this, DINOFOS_JUMP_TYPE_BACKWARD);
-        else EnDinofos_SetupChooseJump(this, DINOFOS_JUMP_TYPE_SLASH);
+    if (this->actor.xzDistToPlayer < 100.0f && GET_PLAYER(play)->meleeWeaponState != 0 && this->actor.isLockedOn && Rand_ZeroOne() < 0.5f && EnDinofos_IsFacingPlayer(this) && Player_IsFacingActor(&this->actor, 0x2000, play)) {
+        EnDinofos_SetupChooseJump(this, (Rand_ZeroOne() < 0.5f) ? DINOFOS_JUMP_TYPE_BACKWARD : DINOFOS_JUMP_TYPE_SLASH);
         Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WARAU);
         return true;
     }
@@ -776,10 +768,8 @@ void EnDinofos_TurnToPlayer(EnDinofos* this, PlayState* play) {
 }
 
 void EnDinofos_SetupCircleAroundPlayer(EnDinofos* this, PlayState* play) {
-    Player* player = GET_PLAYER(play);
-
     if (this->actionFunc != EnDinofos_CircleAroundPlayer) {
-        s16 rotY = player->actor.shape.rot.y - this->actor.shape.rot.y;
+        s16 rotY = GET_PLAYER(play)->actor.shape.rot.y - this->actor.shape.rot.y;
         if (ABS_ALT(rotY) > 0x7800) {
             if (Rand_ZeroOne() < 0.5f)
                 this->actor.speed = 6.0f;
@@ -802,9 +792,8 @@ void EnDinofos_SetupCircleAroundPlayer(EnDinofos* this, PlayState* play) {
 }
 
 void EnDinofos_CircleAroundPlayer(EnDinofos* this, PlayState* play) {
-    Player* player = GET_PLAYER(play);
-    s16 angle;
     f32 targetDistAdjustment = 0.0f;
+    s16 angle;
 
     Math_ScaledStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 0xBB8);
     if (!EnDinofos_Dodge(this, play)) {
@@ -815,8 +804,7 @@ void EnDinofos_CircleAroundPlayer(EnDinofos* this, PlayState* play) {
 
             angle = this->actor.wallYaw - angle;
 
-            // facing wall
-            if (ABS_ALT(angle) > 0x4000) {
+            if (ABS_ALT(angle) > 0x4000) { // facing wall
                 this->actor.speed *= -0.8f;
                 if (this->actor.speed < 0.0f)
                     this->actor.speed -= 0.5f;
@@ -824,7 +812,7 @@ void EnDinofos_CircleAroundPlayer(EnDinofos* this, PlayState* play) {
             }
         }
 
-        angle = BINANG_SUB(player->actor.shape.rot.y, this->actor.shape.rot.y);
+        angle = BINANG_SUB(GET_PLAYER(play)->actor.shape.rot.y, this->actor.shape.rot.y);
         if ((angle >= 0) && (angle < 0x7800))
             this->actor.speed += 0.125f;
         else if ((angle < 0) && (angle > -0x7800))

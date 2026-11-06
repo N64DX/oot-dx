@@ -2022,11 +2022,15 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_HEROS)) {
+        u8 index = item - ITEM_SHIELD_DEKU;
         if (item == ITEM_SHIELD_DEKU)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
+        gSaveContext.save.info.shields[index].durability = Player_GetMaxShieldDurability(index+1);
         if (item == ITEM_SHIELD_DEKU)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
+        else if (item == ITEM_SHIELD_MIRROR)
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
         else if (item == ITEM_SHIELD_HEROS)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_METAL];
         for (i=0; i<4; i++)
@@ -2036,6 +2040,7 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_SHIELD_WOODEN) {
         gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_WOODEN];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 0);
+        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
@@ -2043,6 +2048,7 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_SHIELD_METAL) {
         gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_METAL];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
@@ -2052,7 +2058,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         if (gSaveContext.save.info.shields[index].upgrade < 8)
             gSaveContext.save.info.shields[index].upgrade++;
         gSaveContext.save.info.shields[index].durability = Player_GetMaxShieldDurability(index+1);
-        if (item == ITEM_SHIELD_HEROS_UPGRADE)
+        if (item == ITEM_SHIELD_MIRROR_UPGRADE)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
         return ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_SPIRIT)) {
@@ -3623,7 +3629,7 @@ void Interface_DrawItemButtons(PlayState* play) {
         OVERLAY_DISP = Gfx_DrawTexRectIA8_DropShadow(OVERLAY_DISP, hudTexture, 32, 32, (268 + WS_SHIFT_FULL), 182, 22, 22, (s32)(1.4277344f * (1 << 10)), (s32)(1.4277344f * (1 << 10)), START_BUTTON_RGB_R, START_BUTTON_RGB_G, START_BUTTON_RGB_B, 255);
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 255, 255, 255);
         gDPLoadTextureBlock_4b(OVERLAY_DISP++, interfaceCtx->doActionSegment + DO_ACTION_TEX_SIZE, G_IM_FMT_IA, DO_ACTION_TEX_WIDTH, DO_ACTION_TEX_HEIGHT, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(OVERLAY_DISP++, (255 + WS_SHIFT_FULL) << 2, 185 << 2, 255 + WS_SHIFT_FULL + 48 << 2, (185 + 16) << 2, G_TX_RENDERTILE, 0, 0, (1 << 10) - 1, (1 << 10) - 1);
+        gSPTextureRectangle(OVERLAY_DISP++, (255 + WS_SHIFT_FULL) << 2, 185 << 2, (255 + WS_SHIFT_FULL + 48) << 2, (185 + 16) << 2, G_TX_RENDERTILE, 0, 0, (1 << 10) - 1, (1 << 10) - 1);
     }
 
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
@@ -3725,7 +3731,7 @@ void Interface_DrawItemButtons(PlayState* play) {
             gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 0);
             gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0,
                               PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
-			gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
+            gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
 
 #if !PLATFORM_IQUE
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, cUpLabelTextures[gSaveContext.language], G_IM_FMT_IA, 32, 8, 0,
@@ -3742,7 +3748,7 @@ void Interface_DrawItemButtons(PlayState* play) {
                                 1 << 10);
 #endif
 
-			gDPSetTextureFilter(OVERLAY_DISP++, G_TF_BILERP);
+            gDPSetTextureFilter(OVERLAY_DISP++, G_TF_BILERP);
         }
 
         sCUpTimer--;

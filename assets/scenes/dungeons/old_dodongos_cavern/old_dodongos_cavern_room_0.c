@@ -52,14 +52,14 @@ ActorEntry old_dodongos_cavern_room_0ActorList0x000044[] = {
     { ACTOR_BG_BREAKWALL2,    {  800,    0, -1520 }, {              0, 0xC000, 0 }, 0x401F }, // Switch: 1F
     { ACTOR_EN_A_OBJ,         {  110,    0,  -185 }, {              0, 0xF000, 0 }, 0x6609 },
     { ACTOR_EN_A_OBJ,         {    0,  164, -2890 }, {              0,      0, 0 }, 0x6709 },
-    { ACTOR_OBJ_TSUBO,        {  -55,  164, -2915 }, {              0,      0, 0 }, 0x400B }, // Collect: 20, drops Bombs (5)
-    { ACTOR_OBJ_TSUBO,        {   55,  164, -2915 }, {              0,      0, 0 }, 0x420B }, // Collect: 21, drops Bombs (5)
-    { ACTOR_OBJ_TSUBO,        {  700,  360, -2915 }, {              0,      0, 0 }, 0x4409 }, // Collect: 22, drops Arrows (10)
-    { ACTOR_OBJ_TSUBO,        {  650,  360, -2915 }, {              0,      0, 0 }, 0x4603 }, // Collect: 23, drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,        {  600,  360, -2915 }, {              0,      0, 0 }, 0x480C }, // Collect: 24, drops Deku Nut
-    { ACTOR_OBJ_TSUBO,        { -700,  360, -2915 }, {              0,      0, 0 }, 0x4A09 }, // Collect: 25, drops Arrows (10)
-    { ACTOR_OBJ_TSUBO,        { -650,  360, -2915 }, {              0,      0, 0 }, 0x4C03 }, // Collect: 26, drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,        { -600,  360, -2915 }, {              0,      0, 0 }, 0x4E0C }, // Collect: 27, drops Deku Nut
+    { ACTOR_OBJ_TSUBO,        {  -55,  164, -2915 }, {              0,      0, 0 }, 0x400B }, // Collect: 20, Bombs (5)
+    { ACTOR_OBJ_TSUBO,        {   55,  164, -2915 }, {              0,      0, 0 }, 0x420B }, // Collect: 21, Bombs (5)
+    { ACTOR_OBJ_TSUBO,        {  700,  360, -2915 }, {              0,      0, 0 }, 0x4409 }, // Collect: 22, Arrows (10)
+    { ACTOR_OBJ_TSUBO,        {  650,  360, -2915 }, {              0,      0, 0 }, 0x4603 }, // Collect: 23, Recovery Heart
+    { ACTOR_OBJ_TSUBO,        {  600,  360, -2915 }, {              0,      0, 0 }, 0x480C }, // Collect: 24, Deku Nut
+    { ACTOR_OBJ_TSUBO,        { -700,  360, -2915 }, {              0,      0, 0 }, 0x4A09 }, // Collect: 25, Arrows (10)
+    { ACTOR_OBJ_TSUBO,        { -650,  360, -2915 }, {              0,      0, 0 }, 0x4C03 }, // Collect: 26, Recovery Heart
+    { ACTOR_OBJ_TSUBO,        { -600,  360, -2915 }, {              0,      0, 0 }, 0x4E0C }, // Collect: 27, Deku Nut
     { ACTOR_EN_ITEM00,        { -966,   11,  -325 }, {              0,      0, 0 }, 0x2802 }, // Collect: 28, Red Rupee
     { ACTOR_EN_ITEM00,        { -878,   11, -1526 }, {              0,      0, 0 }, 0x2902 }, // Collect: 29, Red Rupee
     { ACTOR_BG_DDAN_JD,       {    0, -140, -1120 }, {              0,      0, 0 }, 0x00FF },
@@ -134,14 +134,14 @@ ActorEntry old_dodongos_cavern_room_0ActorList_cleansed[] = {
     { ACTOR_BG_BREAKWALL2,    {  800,    0, -1520 }, {              0, 0xC000, 0 }, 0x401F }, // Switch: 1F
     { ACTOR_EN_A_OBJ,         {  110,    0,  -185 }, {              0, 0xF000, 0 }, 0x6609 },
     { ACTOR_EN_A_OBJ,         {    0,  164, -2890 }, {              0,      0, 0 }, 0x6709 },
-    { ACTOR_OBJ_TSUBO,        {  -55,  164, -2915 }, {              0,      0, 0 }, 0x400B }, // Collect: 20, drops Bombs (5)
-    { ACTOR_OBJ_TSUBO,        {   55,  164, -2915 }, {              0,      0, 0 }, 0x420B }, // Collect: 21, drops Bombs (5)
-    { ACTOR_OBJ_TSUBO,        {  700,  360, -2915 }, {              0,      0, 0 }, 0x4409 }, // Collect: 22, drops Arrows (10)
-    { ACTOR_OBJ_TSUBO,        {  650,  360, -2915 }, {              0,      0, 0 }, 0x4603 }, // Collect: 23, drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,        {  600,  360, -2915 }, {              0,      0, 0 }, 0x480C }, // Collect: 24, drops Deku Nut
-    { ACTOR_OBJ_TSUBO,        { -700,  360, -2915 }, {              0,      0, 0 }, 0x4A09 }, // Collect: 25, drops Arrows (10)
-    { ACTOR_OBJ_TSUBO,        { -650,  360, -2915 }, {              0,      0, 0 }, 0x4C03 }, // Collect: 26, drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,        { -600,  360, -2915 }, {              0,      0, 0 }, 0x4E0C }, // Collect: 27, drops Deku Nut
+    { ACTOR_OBJ_TSUBO,        {  -55,  164, -2915 }, {              0,      0, 0 }, 0x400B }, // Collect: 20, Bombs (5)
+    { ACTOR_OBJ_TSUBO,        {   55,  164, -2915 }, {              0,      0, 0 }, 0x420B }, // Collect: 21, Bombs (5)
+    { ACTOR_OBJ_TSUBO,        {  700,  360, -2915 }, {              0,      0, 0 }, 0x4409 }, // Collect: 22, Arrows (10)
+    { ACTOR_OBJ_TSUBO,        {  650,  360, -2915 }, {              0,      0, 0 }, 0x4603 }, // Collect: 23, Recovery Heart
+    { ACTOR_OBJ_TSUBO,        {  600,  360, -2915 }, {              0,      0, 0 }, 0x480C }, // Collect: 24, Deku Nut
+    { ACTOR_OBJ_TSUBO,        { -700,  360, -2915 }, {              0,      0, 0 }, 0x4A09 }, // Collect: 25, Arrows (10)
+    { ACTOR_OBJ_TSUBO,        { -650,  360, -2915 }, {              0,      0, 0 }, 0x4C03 }, // Collect: 26, Recovery Heart
+    { ACTOR_OBJ_TSUBO,        { -600,  360, -2915 }, {              0,      0, 0 }, 0x4E0C }, // Collect: 27, Deku Nut
     { ACTOR_EN_ITEM00,        { -966,   11,  -325 }, {              0,      0, 0 }, 0x2802 }, // Collect: 28, Red Rupee
     { ACTOR_EN_ITEM00,        { -878,   11, -1526 }, {              0,      0, 0 }, 0x2902 }, // Collect: 29, Red Rupee
     { ACTOR_BG_DDAN_JD,       {    0, -140, -1120 }, {              0,      0, 0 }, 0x00FF },

@@ -3,6 +3,604 @@
 #include "array_count.h"
 #include "gfx.h"
 
+Vtx object_tlVtx_000B40[] = {
+#include "assets/objects/object_tl/object_tlVtx_000B40.vtx.inc"
+};
+
+Vtx object_tlVtx_005BA0[] = {
+#include "assets/objects/object_tl/object_tlVtx_005BA0.vtx.inc"
+};
+
+u64 gSnapperShellTex[] = {
+#include "assets/objects/object_tl/snapper_shell.rgba16.inc.c"
+};
+
+u64 gSnapperBodyTex[] = {
+#include "assets/objects/object_tl/snapper_body.rgba16.inc.c"
+};
+
+u64 gSnapperLegTex[] = {
+#include "assets/objects/object_tl/snapper_leg.rgba16.inc.c"
+};
+
+u64 gSnapperHeadTex[] = {
+#include "assets/objects/object_tl/snapper_head.rgba16.inc.c"
+};
+
+u64 gSnapperMouthTex[] = {
+#include "assets/objects/object_tl/snapper_mouth.rgba16.inc.c"
+};
+
+u64 gSnapperHoleTex[] = {
+#include "assets/objects/object_tl/snapper_hole.rgba16.inc.c"
+};
+
+u64 gSnapperSpikeSkinTex[] = {
+#include "assets/objects/object_tl/snapper_spike_skin.rgba16.inc.c"
+};
+
+u64 gSnapperSpikeTex[] = {
+#include "assets/objects/object_tl/snapper_spike.rgba16.inc.c"
+};
+
+u64 gSnapperEyeOpenTex[] = {
+#include "assets/objects/object_tl/snapper_eye_open.rgba16.inc.c"
+};
+
+u64 gSnapperEyeHalfTex[] = {
+#include "assets/objects/object_tl/snapper_eye_half.rgba16.inc.c"
+};
+
+u64 gSnapperEyeClosedTex[] = {
+#include "assets/objects/object_tl/snapper_eye_closed.rgba16.inc.c"
+};
+
+Gfx gSpikedSnapperBodyDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperHeadTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(object_tlVtx_000B40, 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(2, 1, 6, 0, 5, 2, 6, 0),
+    gsSP2Triangles(1, 5, 4, 0, 1, 4, 7, 0),
+    gsSP2Triangles(1, 8, 5, 0, 7, 9, 1, 0),
+    gsSP2Triangles(10, 6, 1, 0, 1, 9, 10, 0),
+    gsSP2Triangles(5, 0, 2, 0, 11, 5, 6, 0),
+    gsSP2Triangles(3, 5, 11, 0, 10, 11, 6, 0),
+    gsDPPipeSync(),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPSetCombineLERP(0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPLoadTextureBlock(gSnapperEyeOpenTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_000B40[12], 7, 0),
+    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
+    gsSP2Triangles(4, 5, 6, 0, 6, 1, 4, 0),
+    gsDPPipeSync(),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_000B40[19], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 3, 5, 0, 7, 8, 9, 0),
+    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
+    gsSP2Triangles(14, 10, 13, 0, 15, 6, 0, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 2, 7, 0),
+    gsSP2Triangles(11, 16, 18, 0, 11, 18, 12, 0),
+    gsSP2Triangles(4, 11, 5, 0, 18, 17, 19, 0),
+    gsSP2Triangles(14, 6, 5, 0, 16, 11, 4, 0),
+    gsSP2Triangles(16, 4, 2, 0, 19, 9, 20, 0),
+    gsSP2Triangles(13, 21, 14, 0, 4, 15, 0, 0),
+    gsSP2Triangles(8, 1, 0, 0, 4, 0, 2, 0),
+    gsSP2Triangles(17, 9, 19, 0, 22, 8, 7, 0),
+    gsSP2Triangles(2, 22, 7, 0, 23, 24, 25, 0),
+    gsSP2Triangles(23, 26, 24, 0, 27, 28, 29, 0),
+    gsSP1Triangle(27, 30, 28, 0),
+    gsSPVertex(&object_tlVtx_000B40[50], 15, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 7, 5, 0),
+    gsSP2Triangles(8, 9, 10, 0, 11, 12, 13, 0),
+    gsSP2Triangles(9, 11, 10, 0, 11, 13, 10, 0),
+    gsSP1Triangle(13, 14, 10, 0),
+    gsDPPipeSync(),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPLoadTextureBlock(gSnapperHoleTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_000B40[65], 24, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(3, 6, 7, 0, 1, 3, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 11, 9, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 15, 13, 0),
+    gsSP2Triangles(16, 17, 18, 0, 19, 16, 18, 0),
+    gsSP2Triangles(20, 21, 22, 0, 23, 20, 22, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSpikedSnapperShellDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_000B40[144], 17, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(1, 6, 5, 0, 1, 5, 2, 0),
+    gsSP2Triangles(5, 4, 7, 0, 7, 2, 5, 0),
+    gsSP2Triangles(8, 4, 3, 0, 3, 9, 10, 0),
+    gsSP2Triangles(10, 9, 11, 0, 3, 10, 8, 0),
+    gsSP2Triangles(6, 3, 5, 0, 6, 9, 3, 0),
+    gsSP2Triangles(12, 13, 14, 0, 15, 12, 14, 0),
+    gsSP2Triangles(8, 10, 12, 0, 11, 13, 10, 0),
+    gsSP2Triangles(10, 13, 12, 0, 12, 4, 8, 0),
+    gsSP2Triangles(15, 2, 7, 0, 7, 4, 15, 0),
+    gsSP2Triangles(2, 15, 16, 0, 15, 14, 16, 0),
+    gsSP2Triangles(15, 4, 12, 0, 2, 16, 0, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSpikedSnapperSpikesDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperSpikeSkinTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 3, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_000B40[89], 23, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 8, 9, 6, 0),
+    gsSP2Triangles(5, 10, 3, 0, 11, 2, 1, 0),
+    gsSP2Triangles(12, 13, 14, 0, 15, 16, 5, 0),
+    gsSP2Triangles(17, 18, 19, 0, 19, 20, 17, 0),
+    gsSP2Triangles(5, 21, 15, 0, 13, 12, 22, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperSpikeTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_000B40[112], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
+    gsSP2Triangles(4, 5, 6, 0, 6, 5, 7, 0),
+    gsSP2Triangles(6, 8, 4, 0, 9, 10, 11, 0),
+    gsSP2Triangles(12, 13, 9, 0, 9, 11, 12, 0),
+    gsSP2Triangles(14, 15, 16, 0, 16, 17, 14, 0),
+    gsSP2Triangles(18, 19, 20, 0, 20, 21, 18, 0),
+    gsSP2Triangles(19, 22, 20, 0, 23, 24, 25, 0),
+    gsSP2Triangles(26, 27, 25, 0, 25, 27, 23, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperBodyDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(object_tlVtx_005BA0, 17, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(1, 6, 5, 0, 1, 5, 2, 0),
+    gsSP2Triangles(5, 4, 7, 0, 7, 2, 5, 0),
+    gsSP2Triangles(8, 4, 3, 0, 3, 9, 10, 0),
+    gsSP2Triangles(10, 9, 11, 0, 3, 10, 8, 0),
+    gsSP2Triangles(6, 3, 5, 0, 6, 9, 3, 0),
+    gsSP2Triangles(12, 13, 14, 0, 15, 12, 14, 0),
+    gsSP2Triangles(8, 10, 12, 0, 11, 13, 10, 0),
+    gsSP2Triangles(10, 13, 12, 0, 12, 4, 8, 0),
+    gsSP2Triangles(15, 2, 7, 0, 7, 4, 15, 0),
+    gsSP2Triangles(2, 15, 16, 0, 15, 14, 16, 0),
+    gsSP2Triangles(15, 4, 12, 0, 2, 16, 0, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[17], 23, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 3, 5, 0, 7, 8, 9, 0),
+    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
+    gsSP2Triangles(14, 10, 13, 0, 15, 6, 0, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 2, 7, 0),
+    gsSP2Triangles(11, 16, 18, 0, 11, 18, 12, 0),
+    gsSP2Triangles(4, 11, 5, 0, 18, 17, 19, 0),
+    gsSP2Triangles(14, 6, 5, 0, 16, 11, 4, 0),
+    gsSP2Triangles(16, 4, 2, 0, 19, 9, 20, 0),
+    gsSP2Triangles(13, 21, 14, 0, 4, 15, 0, 0),
+    gsSP2Triangles(8, 1, 0, 0, 4, 0, 2, 0),
+    gsSP2Triangles(17, 9, 19, 0, 22, 8, 7, 0),
+    gsSP1Triangle(2, 22, 7, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperBackRightLegDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPMatrix(0x0D000000, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[61], 2, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[63], 3, 2),
+    gsSPMatrix(0x0D000280, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[66], 12, 5),
+    gsSP2Triangles(5, 4, 6, 0, 4, 2, 7, 0),
+    gsSP2Triangles(8, 2, 9, 0, 2, 3, 10, 0),
+    gsSP2Triangles(11, 3, 12, 0, 3, 0, 13, 0),
+    gsSP2Triangles(14, 1, 15, 0, 1, 4, 16, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperBackRightFootDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPMatrix(0x0D000280, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[40], 5, 0),
+    gsSPMatrix(0x0D0002C0, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[45], 12, 5),
+    gsSP2Triangles(5, 3, 0, 0, 6, 0, 7, 0),
+    gsSP2Triangles(2, 4, 8, 0, 9, 2, 10, 0),
+    gsSP2Triangles(1, 2, 11, 0, 12, 1, 13, 0),
+    gsSP2Triangles(14, 0, 1, 0, 15, 1, 16, 0),
+    gsSPVertex(&object_tlVtx_005BA0[57], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperBackLeftLegDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPMatrix(0x0D000000, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[99], 2, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[101], 3, 2),
+    gsSPMatrix(0x0D000200, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[104], 12, 5),
+    gsSP2Triangles(5, 4, 6, 0, 7, 2, 4, 0),
+    gsSP2Triangles(8, 2, 9, 0, 10, 3, 2, 0),
+    gsSP2Triangles(11, 3, 12, 0, 13, 0, 3, 0),
+    gsSP2Triangles(14, 1, 15, 0, 16, 4, 1, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperBackLeftFootDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPMatrix(0x0D000200, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[78], 5, 0),
+    gsSPMatrix(0x0D000240, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[83], 12, 5),
+    gsSP2Triangles(1, 3, 5, 0, 6, 1, 7, 0),
+    gsSP2Triangles(8, 4, 2, 0, 9, 2, 10, 0),
+    gsSP2Triangles(11, 2, 0, 0, 12, 0, 13, 0),
+    gsSP2Triangles(0, 1, 14, 0, 15, 0, 16, 0),
+    gsSPVertex(&object_tlVtx_005BA0[95], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperFrontRightLegDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPMatrix(0x0D000000, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[138], 2, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[140], 4, 2),
+    gsSPMatrix(0x0D000180, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[144], 12, 6),
+    gsSP2Triangles(6, 0, 7, 0, 0, 3, 8, 0),
+    gsSP2Triangles(9, 2, 10, 0, 11, 3, 2, 0),
+    gsSP2Triangles(12, 2, 13, 0, 2, 4, 14, 0),
+    gsSP2Triangles(15, 5, 16, 0, 5, 1, 17, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperFrontRightFootDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPMatrix(0x0D000180, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[116], 6, 0),
+    gsSPMatrix(0x0D0001C0, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[122], 12, 6),
+    gsSP2Triangles(6, 1, 7, 0, 8, 0, 1, 0),
+    gsSP2Triangles(9, 1, 10, 0, 1, 4, 11, 0),
+    gsSP2Triangles(12, 2, 13, 0, 14, 5, 2, 0),
+    gsSP2Triangles(15, 0, 16, 0, 17, 3, 0, 0),
+    gsSPVertex(&object_tlVtx_005BA0[134], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperFrontLeftLegDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPMatrix(0x0D000000, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[178], 2, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[180], 4, 2),
+    gsSPMatrix(0x0D000100, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[184], 12, 6),
+    gsSP2Triangles(6, 0, 7, 0, 8, 3, 0, 0),
+    gsSP2Triangles(9, 2, 10, 0, 2, 3, 11, 0),
+    gsSP2Triangles(12, 2, 13, 0, 14, 4, 2, 0),
+    gsSP2Triangles(15, 5, 16, 0, 17, 1, 5, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperFrontLeftFootDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPMatrix(0x0D000100, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[156], 6, 0),
+    gsSPMatrix(0x0D000140, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[162], 12, 6),
+    gsSP2Triangles(6, 1, 7, 0, 1, 0, 8, 0),
+    gsSP2Triangles(9, 1, 10, 0, 11, 4, 1, 0),
+    gsSP2Triangles(12, 2, 13, 0, 2, 5, 14, 0),
+    gsSP2Triangles(15, 0, 16, 0, 0, 3, 17, 0),
+    gsSPVertex(&object_tlVtx_005BA0[174], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperHeadDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPMatrix(0x0D000000, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[218], 3, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[221], 4, 3),
+    gsSPMatrix(0x0D000040, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperHeadTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[225], 17, 7),
+    gsSP2Triangles(7, 4, 8, 0, 0, 9, 10, 0),
+    gsSP2Triangles(11, 12, 6, 0, 6, 13, 3, 0),
+    gsSP2Triangles(14, 1, 3, 0, 15, 4, 5, 0),
+    gsSP2Triangles(16, 5, 0, 0, 17, 18, 1, 0),
+    gsSP2Triangles(6, 4, 19, 0, 20, 0, 2, 0),
+    gsSP2Triangles(2, 1, 21, 0, 2, 22, 23, 0),
+    gsSPVertex(&object_tlVtx_005BA0[242], 11, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(2, 1, 6, 0, 5, 2, 6, 0),
+    gsSP2Triangles(7, 8, 1, 0, 9, 6, 1, 0),
+    gsSP2Triangles(1, 8, 9, 0, 5, 0, 2, 0),
+    gsSP2Triangles(10, 5, 6, 0, 3, 5, 10, 0),
+    gsSP1Triangle(9, 10, 6, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperMouthTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[253], 7, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(4, 0, 2, 0, 4, 5, 0, 0),
+    gsSP1Triangle(4, 6, 5, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperEyesDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetPrimColor(0, 0xFF, 255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(0x08000000, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[260], 7, 0),
+    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
+    gsSP2Triangles(4, 5, 6, 0, 6, 1, 4, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gSnapperJawDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsSPMatrix(0x0D000040, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gSnapperHeadTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(&object_tlVtx_005BA0[196], 5, 0),
+    gsSPMatrix(0x0D000080, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperHeadTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[201], 6, 5),
+    gsSP2Triangles(0, 5, 6, 0, 0, 7, 8, 0),
+    gsSP2Triangles(1, 0, 9, 0, 0, 3, 10, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperMouthTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[207], 3, 5),
+    gsSP2Triangles(4, 2, 5, 0, 4, 6, 7, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperHeadTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[210], 5, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(4, 1, 3, 0, 4, 2, 1, 0),
+    gsDPPipeSync(),
+    gsDPLoadTextureBlock(gSnapperMouthTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&object_tlVtx_005BA0[215], 3, 0),
+    gsSP1Triangle(0, 1, 2, 0),
+    gsSPEndDisplayList(),
+};
+
+StandardLimb gSpikedSnapperBodyLimb = { 
+    { 0, 1600, 0 }, SPIKED_SNAPPER_LIMB_SHELL - 1, LIMB_DONE, gSpikedSnapperBodyDL
+};
+
+StandardLimb gSpikedSnapperShellLimb = { 
+    { 1200, 0, 0 }, SPIKED_SNAPPER_LIMB_SPIKES - 1, LIMB_DONE, gSpikedSnapperShellDL
+};
+
+StandardLimb gSpikedSnapperSpikesLimb = { 
+    { 1175, 0, 0 }, LIMB_DONE, LIMB_DONE, gSpikedSnapperSpikesDL
+};
+
+void* gSpikedSnapperSkelLimbs[] = {
+    &gSpikedSnapperBodyLimb,
+    &gSpikedSnapperShellLimb,
+    &gSpikedSnapperSpikesLimb,
+};
+
+FlexSkeletonHeader gSpikedSnapperSkel = { 
+    { gSpikedSnapperSkelLimbs, ARRAY_COUNT(gSpikedSnapperSkelLimbs) }, 3
+};
+
+StandardLimb gSnapperBodyLimb = { 
+    { 0, 1600, 0 }, SNAPPER_LIMB_HEAD - 1, LIMB_DONE, gSnapperBodyDL
+};
+
+StandardLimb gSnapperHeadLimb = { 
+    { 300, 2400, 0 }, SNAPPER_LIMB_JAW - 1, SNAPPER_LIMB_FRONT_LEFT_LEG - 1, gSnapperHeadDL
+};
+
+StandardLimb gSnapperJawLimb = { 
+    { 200, 900, 0 }, LIMB_DONE, SNAPPER_LIMB_EYES - 1, gSnapperJawDL
+};
+
+StandardLimb gSnapperEyesLimb = { 
+    { 0, 0, 0 }, LIMB_DONE, LIMB_DONE, gSnapperEyesDL
+};
+
+StandardLimb gSnapperFrontLeftLegLimb = { 
+    { -100, 1300, 1661 }, SNAPPER_LIMB_FRONT_LEFT_FOOT - 1, SNAPPER_LIMB_FRONT_RIGHT_LEG - 1, gSnapperFrontLeftLegDL
+};
+
+StandardLimb gSnapperFrontLeftFootLimb = { 
+    { 1078, 0, 0 }, LIMB_DONE, LIMB_DONE, gSnapperFrontLeftFootDL
+};
+
+StandardLimb gSnapperFrontRightLegLimb = { 
+    { -100, 1300, -1661 }, SNAPPER_LIMB_FRONT_RIGHT_FOOT - 1, SNAPPER_LIMB_BACK_LEFT_LEG - 1, gSnapperFrontRightLegDL
+};
+
+StandardLimb gSnapperFrontRightFootLimb = { 
+    { 1078, 0, 0 }, LIMB_DONE, LIMB_DONE, gSnapperFrontRightFootDL
+};
+
+StandardLimb gSnapperBackLeftLegLimb = { 
+    { -293, -1275, 1795 }, SNAPPER_LIMB_BACK_LEFT_FOOT - 1, SNAPPER_LIMB_BACK_RIGHT_LEG - 1, gSnapperBackLeftLegDL
+};
+
+StandardLimb gSnapperBackLeftFootLimb = { 
+    { 590, 0, 0 }, LIMB_DONE, LIMB_DONE, gSnapperBackLeftFootDL
+};
+
+StandardLimb gSnapperBackRightLegLimb = { 
+    { -293, -1275, -1795 }, SNAPPER_LIMB_BACK_RIGHT_FOOT - 1, LIMB_DONE, gSnapperBackRightLegDL
+};
+
+StandardLimb gSnapperBackRightFootLimb = { 
+    { 590, 0, 0 }, LIMB_DONE, LIMB_DONE, gSnapperBackRightFootDL
+};
+
+void* gSnapperSkelLimbs[] = {
+    &gSnapperBodyLimb, /* SNAPPER_LIMB_BODY */
+    &gSnapperHeadLimb, /* SNAPPER_LIMB_HEAD */
+    &gSnapperJawLimb, /* SNAPPER_LIMB_JAW */
+    &gSnapperEyesLimb, /* SNAPPER_LIMB_EYES */
+    &gSnapperFrontLeftLegLimb, /* SNAPPER_LIMB_FRONT_LEFT_LEG */
+    &gSnapperFrontLeftFootLimb, /* SNAPPER_LIMB_FRONT_LEFT_FOOT */
+    &gSnapperFrontRightLegLimb, /* SNAPPER_LIMB_FRONT_RIGHT_LEG */
+    &gSnapperFrontRightFootLimb, /* SNAPPER_LIMB_FRONT_RIGHT_FOOT */
+    &gSnapperBackLeftLegLimb, /* SNAPPER_LIMB_BACK_LEFT_LEG */
+    &gSnapperBackLeftFootLimb, /* SNAPPER_LIMB_BACK_LEFT_FOOT */
+    &gSnapperBackRightLegLimb, /* SNAPPER_LIMB_BACK_RIGHT_LEG */
+    &gSnapperBackRightFootLimb, /* SNAPPER_LIMB_BACK_RIGHT_FOOT */
+};
+
+FlexSkeletonHeader gSnapperSkel = { 
+    { gSnapperSkelLimbs, ARRAY_COUNT(gSnapperSkelLimbs) }, 12
+};
+
 s16 sSnapperRearUpAnimFrameData[] = {
     0x0000, 0x0640, 0x4000, 0x1C1A, 0x0640, 0x0596, 0x0532, 0x0623, 0x0783, 0x08D4, 0x0992, 0x09D4, 0x0A04, 0x0A25, 
     0x0A37, 0x0A3C, 0x0A35, 0x0A24, 0x0A09, 0x09E7, 0x09BF, 0x0992, 0x0940, 0x08B9, 0x0815, 0x076C, 0x06D5, 0x0669, 
@@ -771,602 +1369,4 @@ JointIndex sSnapperWalkAnimJointIndices[] = {
 
 AnimationHeader gSnapperWalkAnim = { 
     { 30 }, sSnapperWalkAnimFrameData, sSnapperWalkAnimJointIndices, 3
-};
-
-Vtx object_tlVtx_000B40[] = {
-#include "assets/objects/object_tl/object_tlVtx_000B40.vtx.inc"
-};
-
-Vtx object_tlVtx_005BA0[] = {
-#include "assets/objects/object_tl/object_tlVtx_005BA0.vtx.inc"
-};
-
-u64 gSnapperShellTex[] = {
-#include "assets/objects/object_tl/snapper_shell.rgba16.inc.c"
-};
-
-u64 gSnapperBodyTex[] = {
-#include "assets/objects/object_tl/snapper_body.rgba16.inc.c"
-};
-
-u64 gSnapperLegTex[] = {
-#include "assets/objects/object_tl/snapper_leg.rgba16.inc.c"
-};
-
-u64 gSnapperHeadTex[] = {
-#include "assets/objects/object_tl/snapper_head.rgba16.inc.c"
-};
-
-u64 gSnapperMouthTex[] = {
-#include "assets/objects/object_tl/snapper_mouth.rgba16.inc.c"
-};
-
-u64 gSnapperHoleTex[] = {
-#include "assets/objects/object_tl/snapper_hole.rgba16.inc.c"
-};
-
-u64 gSnapperSpikeSkinTex[] = {
-#include "assets/objects/object_tl/snapper_spike_skin.rgba16.inc.c"
-};
-
-u64 gSnapperSpikeTex[] = {
-#include "assets/objects/object_tl/snapper_spike.rgba16.inc.c"
-};
-
-u64 gSnapperEyeOpenTex[] = {
-#include "assets/objects/object_tl/snapper_eye_open.rgba16.inc.c"
-};
-
-u64 gSnapperEyeHalfTex[] = {
-#include "assets/objects/object_tl/snapper_eye_half.rgba16.inc.c"
-};
-
-u64 gSnapperEyeClosedTex[] = {
-#include "assets/objects/object_tl/snapper_eye_closed.rgba16.inc.c"
-};
-
-Gfx gSpikedSnapperBodyDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperHeadTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(object_tlVtx_000B40, 12, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(2, 1, 6, 0, 5, 2, 6, 0),
-    gsSP2Triangles(1, 5, 4, 0, 1, 4, 7, 0),
-    gsSP2Triangles(1, 8, 5, 0, 7, 9, 1, 0),
-    gsSP2Triangles(10, 6, 1, 0, 1, 9, 10, 0),
-    gsSP2Triangles(5, 0, 2, 0, 11, 5, 6, 0),
-    gsSP2Triangles(3, 5, 11, 0, 10, 11, 6, 0),
-    gsDPPipeSync(),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    gsDPSetCombineLERP(0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPLoadTextureBlock(gSnapperEyeOpenTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_000B40[12], 7, 0),
-    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
-    gsSP2Triangles(4, 5, 6, 0, 6, 1, 4, 0),
-    gsDPPipeSync(),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_000B40[19], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(6, 3, 5, 0, 7, 8, 9, 0),
-    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
-    gsSP2Triangles(14, 10, 13, 0, 15, 6, 0, 0),
-    gsSP2Triangles(16, 17, 18, 0, 16, 2, 7, 0),
-    gsSP2Triangles(11, 16, 18, 0, 11, 18, 12, 0),
-    gsSP2Triangles(4, 11, 5, 0, 18, 17, 19, 0),
-    gsSP2Triangles(14, 6, 5, 0, 16, 11, 4, 0),
-    gsSP2Triangles(16, 4, 2, 0, 19, 9, 20, 0),
-    gsSP2Triangles(13, 21, 14, 0, 4, 15, 0, 0),
-    gsSP2Triangles(8, 1, 0, 0, 4, 0, 2, 0),
-    gsSP2Triangles(17, 9, 19, 0, 22, 8, 7, 0),
-    gsSP2Triangles(2, 22, 7, 0, 23, 24, 25, 0),
-    gsSP2Triangles(23, 26, 24, 0, 27, 28, 29, 0),
-    gsSP1Triangle(27, 30, 28, 0),
-    gsSPVertex(&object_tlVtx_000B40[50], 15, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
-    gsSP2Triangles(4, 5, 6, 0, 4, 7, 5, 0),
-    gsSP2Triangles(8, 9, 10, 0, 11, 12, 13, 0),
-    gsSP2Triangles(9, 11, 10, 0, 11, 13, 10, 0),
-    gsSP1Triangle(13, 14, 10, 0),
-    gsDPPipeSync(),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    gsDPLoadTextureBlock(gSnapperHoleTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_000B40[65], 24, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(3, 6, 7, 0, 1, 3, 7, 0),
-    gsSP2Triangles(8, 9, 10, 0, 8, 11, 9, 0),
-    gsSP2Triangles(12, 13, 14, 0, 12, 15, 13, 0),
-    gsSP2Triangles(16, 17, 18, 0, 19, 16, 18, 0),
-    gsSP2Triangles(20, 21, 22, 0, 23, 20, 22, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSpikedSnapperShellDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_000B40[144], 17, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(1, 6, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(5, 4, 7, 0, 7, 2, 5, 0),
-    gsSP2Triangles(8, 4, 3, 0, 3, 9, 10, 0),
-    gsSP2Triangles(10, 9, 11, 0, 3, 10, 8, 0),
-    gsSP2Triangles(6, 3, 5, 0, 6, 9, 3, 0),
-    gsSP2Triangles(12, 13, 14, 0, 15, 12, 14, 0),
-    gsSP2Triangles(8, 10, 12, 0, 11, 13, 10, 0),
-    gsSP2Triangles(10, 13, 12, 0, 12, 4, 8, 0),
-    gsSP2Triangles(15, 2, 7, 0, 7, 4, 15, 0),
-    gsSP2Triangles(2, 15, 16, 0, 15, 14, 16, 0),
-    gsSP2Triangles(15, 4, 12, 0, 2, 16, 0, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSpikedSnapperSpikesDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperSpikeSkinTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 3, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_000B40[89], 23, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(6, 7, 8, 0, 8, 9, 6, 0),
-    gsSP2Triangles(5, 10, 3, 0, 11, 2, 1, 0),
-    gsSP2Triangles(12, 13, 14, 0, 15, 16, 5, 0),
-    gsSP2Triangles(17, 18, 19, 0, 19, 20, 17, 0),
-    gsSP2Triangles(5, 21, 15, 0, 13, 12, 22, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperSpikeTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_000B40[112], 32, 0),
-    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
-    gsSP2Triangles(4, 5, 6, 0, 6, 5, 7, 0),
-    gsSP2Triangles(6, 8, 4, 0, 9, 10, 11, 0),
-    gsSP2Triangles(12, 13, 9, 0, 9, 11, 12, 0),
-    gsSP2Triangles(14, 15, 16, 0, 16, 17, 14, 0),
-    gsSP2Triangles(18, 19, 20, 0, 20, 21, 18, 0),
-    gsSP2Triangles(19, 22, 20, 0, 23, 24, 25, 0),
-    gsSP2Triangles(26, 27, 25, 0, 25, 27, 23, 0),
-    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperBodyDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(object_tlVtx_005BA0, 17, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(1, 6, 5, 0, 1, 5, 2, 0),
-    gsSP2Triangles(5, 4, 7, 0, 7, 2, 5, 0),
-    gsSP2Triangles(8, 4, 3, 0, 3, 9, 10, 0),
-    gsSP2Triangles(10, 9, 11, 0, 3, 10, 8, 0),
-    gsSP2Triangles(6, 3, 5, 0, 6, 9, 3, 0),
-    gsSP2Triangles(12, 13, 14, 0, 15, 12, 14, 0),
-    gsSP2Triangles(8, 10, 12, 0, 11, 13, 10, 0),
-    gsSP2Triangles(10, 13, 12, 0, 12, 4, 8, 0),
-    gsSP2Triangles(15, 2, 7, 0, 7, 4, 15, 0),
-    gsSP2Triangles(2, 15, 16, 0, 15, 14, 16, 0),
-    gsSP2Triangles(15, 4, 12, 0, 2, 16, 0, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[17], 23, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(6, 3, 5, 0, 7, 8, 9, 0),
-    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
-    gsSP2Triangles(14, 10, 13, 0, 15, 6, 0, 0),
-    gsSP2Triangles(16, 17, 18, 0, 16, 2, 7, 0),
-    gsSP2Triangles(11, 16, 18, 0, 11, 18, 12, 0),
-    gsSP2Triangles(4, 11, 5, 0, 18, 17, 19, 0),
-    gsSP2Triangles(14, 6, 5, 0, 16, 11, 4, 0),
-    gsSP2Triangles(16, 4, 2, 0, 19, 9, 20, 0),
-    gsSP2Triangles(13, 21, 14, 0, 4, 15, 0, 0),
-    gsSP2Triangles(8, 1, 0, 0, 4, 0, 2, 0),
-    gsSP2Triangles(17, 9, 19, 0, 22, 8, 7, 0),
-    gsSP1Triangle(2, 22, 7, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperBackRightLegDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPMatrix(0x0D000000, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[61], 2, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[63], 3, 2),
-    gsSPMatrix(0x0D000280, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[66], 12, 5),
-    gsSP2Triangles(5, 4, 6, 0, 4, 2, 7, 0),
-    gsSP2Triangles(8, 2, 9, 0, 2, 3, 10, 0),
-    gsSP2Triangles(11, 3, 12, 0, 3, 0, 13, 0),
-    gsSP2Triangles(14, 1, 15, 0, 1, 4, 16, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperBackRightFootDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPMatrix(0x0D000280, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[40], 5, 0),
-    gsSPMatrix(0x0D0002C0, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[45], 12, 5),
-    gsSP2Triangles(5, 3, 0, 0, 6, 0, 7, 0),
-    gsSP2Triangles(2, 4, 8, 0, 9, 2, 10, 0),
-    gsSP2Triangles(1, 2, 11, 0, 12, 1, 13, 0),
-    gsSP2Triangles(14, 0, 1, 0, 15, 1, 16, 0),
-    gsSPVertex(&object_tlVtx_005BA0[57], 4, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperBackLeftLegDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPMatrix(0x0D000000, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[99], 2, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[101], 3, 2),
-    gsSPMatrix(0x0D000200, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[104], 12, 5),
-    gsSP2Triangles(5, 4, 6, 0, 7, 2, 4, 0),
-    gsSP2Triangles(8, 2, 9, 0, 10, 3, 2, 0),
-    gsSP2Triangles(11, 3, 12, 0, 13, 0, 3, 0),
-    gsSP2Triangles(14, 1, 15, 0, 16, 4, 1, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperBackLeftFootDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPMatrix(0x0D000200, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[78], 5, 0),
-    gsSPMatrix(0x0D000240, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[83], 12, 5),
-    gsSP2Triangles(1, 3, 5, 0, 6, 1, 7, 0),
-    gsSP2Triangles(8, 4, 2, 0, 9, 2, 10, 0),
-    gsSP2Triangles(11, 2, 0, 0, 12, 0, 13, 0),
-    gsSP2Triangles(0, 1, 14, 0, 15, 0, 16, 0),
-    gsSPVertex(&object_tlVtx_005BA0[95], 4, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperFrontRightLegDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPMatrix(0x0D000000, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[138], 2, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[140], 4, 2),
-    gsSPMatrix(0x0D000180, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[144], 12, 6),
-    gsSP2Triangles(6, 0, 7, 0, 0, 3, 8, 0),
-    gsSP2Triangles(9, 2, 10, 0, 11, 3, 2, 0),
-    gsSP2Triangles(12, 2, 13, 0, 2, 4, 14, 0),
-    gsSP2Triangles(15, 5, 16, 0, 5, 1, 17, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperFrontRightFootDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPMatrix(0x0D000180, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[116], 6, 0),
-    gsSPMatrix(0x0D0001C0, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[122], 12, 6),
-    gsSP2Triangles(6, 1, 7, 0, 8, 0, 1, 0),
-    gsSP2Triangles(9, 1, 10, 0, 1, 4, 11, 0),
-    gsSP2Triangles(12, 2, 13, 0, 14, 5, 2, 0),
-    gsSP2Triangles(15, 0, 16, 0, 17, 3, 0, 0),
-    gsSPVertex(&object_tlVtx_005BA0[134], 4, 0),
-    gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperFrontLeftLegDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPMatrix(0x0D000000, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[178], 2, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[180], 4, 2),
-    gsSPMatrix(0x0D000100, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[184], 12, 6),
-    gsSP2Triangles(6, 0, 7, 0, 8, 3, 0, 0),
-    gsSP2Triangles(9, 2, 10, 0, 2, 3, 11, 0),
-    gsSP2Triangles(12, 2, 13, 0, 14, 4, 2, 0),
-    gsSP2Triangles(15, 5, 16, 0, 17, 1, 5, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperFrontLeftFootDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPMatrix(0x0D000100, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[156], 6, 0),
-    gsSPMatrix(0x0D000140, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperLegTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[162], 12, 6),
-    gsSP2Triangles(6, 1, 7, 0, 1, 0, 8, 0),
-    gsSP2Triangles(9, 1, 10, 0, 11, 4, 1, 0),
-    gsSP2Triangles(12, 2, 13, 0, 2, 5, 14, 0),
-    gsSP2Triangles(15, 0, 16, 0, 0, 3, 17, 0),
-    gsSPVertex(&object_tlVtx_005BA0[174], 4, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperHeadDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPMatrix(0x0D000000, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperShellTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[218], 3, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperBodyTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[221], 4, 3),
-    gsSPMatrix(0x0D000040, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperHeadTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[225], 17, 7),
-    gsSP2Triangles(7, 4, 8, 0, 0, 9, 10, 0),
-    gsSP2Triangles(11, 12, 6, 0, 6, 13, 3, 0),
-    gsSP2Triangles(14, 1, 3, 0, 15, 4, 5, 0),
-    gsSP2Triangles(16, 5, 0, 0, 17, 18, 1, 0),
-    gsSP2Triangles(6, 4, 19, 0, 20, 0, 2, 0),
-    gsSP2Triangles(2, 1, 21, 0, 2, 22, 23, 0),
-    gsSPVertex(&object_tlVtx_005BA0[242], 11, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(2, 1, 6, 0, 5, 2, 6, 0),
-    gsSP2Triangles(7, 8, 1, 0, 9, 6, 1, 0),
-    gsSP2Triangles(1, 8, 9, 0, 5, 0, 2, 0),
-    gsSP2Triangles(10, 5, 6, 0, 3, 5, 10, 0),
-    gsSP1Triangle(9, 10, 6, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperMouthTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[253], 7, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
-    gsSP2Triangles(4, 0, 2, 0, 4, 5, 0, 0),
-    gsSP1Triangle(4, 6, 5, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperEyesDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetPrimColor(0, 0xFF, 255, 255, 255, 255),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(0x08000000, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[260], 7, 0),
-    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
-    gsSP2Triangles(4, 5, 6, 0, 6, 1, 4, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx gSnapperJawDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsSPMatrix(0x0D000040, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(gSnapperHeadTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(&object_tlVtx_005BA0[196], 5, 0),
-    gsSPMatrix(0x0D000080, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperHeadTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[201], 6, 5),
-    gsSP2Triangles(0, 5, 6, 0, 0, 7, 8, 0),
-    gsSP2Triangles(1, 0, 9, 0, 0, 3, 10, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperMouthTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[207], 3, 5),
-    gsSP2Triangles(4, 2, 5, 0, 4, 6, 7, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperHeadTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[210], 5, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
-    gsSP2Triangles(4, 1, 3, 0, 4, 2, 1, 0),
-    gsDPPipeSync(),
-    gsDPLoadTextureBlock(gSnapperMouthTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 3, 3, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPVertex(&object_tlVtx_005BA0[215], 3, 0),
-    gsSP1Triangle(0, 1, 2, 0),
-    gsSPEndDisplayList(),
-};
-
-StandardLimb gSpikedSnapperBodyLimb = { 
-    { 0, 1600, 0 }, SPIKED_SNAPPER_LIMB_SHELL - 1, LIMB_DONE, gSpikedSnapperBodyDL
-};
-
-StandardLimb gSpikedSnapperShellLimb = { 
-    { 1200, 0, 0 }, SPIKED_SNAPPER_LIMB_SPIKES - 1, LIMB_DONE, gSpikedSnapperShellDL
-};
-
-StandardLimb gSpikedSnapperSpikesLimb = { 
-    { 1175, 0, 0 }, LIMB_DONE, LIMB_DONE, gSpikedSnapperSpikesDL
-};
-
-void* gSpikedSnapperSkelLimbs[] = {
-    &gSpikedSnapperBodyLimb, /* SPIKED_SNAPPER_LIMB_BODY */
-    &gSpikedSnapperShellLimb, /* SPIKED_SNAPPER_LIMB_SHELL */
-    &gSpikedSnapperSpikesLimb, /* SPIKED_SNAPPER_LIMB_SPIKES */
-};
-
-FlexSkeletonHeader gSpikedSnapperSkel = { 
-    { gSpikedSnapperSkelLimbs, ARRAY_COUNT(gSpikedSnapperSkelLimbs) }, 3
-};
-
-StandardLimb gSnapperBodyLimb = { 
-    { 0, 1600, 0 }, SNAPPER_LIMB_HEAD - 1, LIMB_DONE, gSnapperBodyDL
-};
-
-StandardLimb gSnapperHeadLimb = { 
-    { 300, 2400, 0 }, SNAPPER_LIMB_JAW - 1, SNAPPER_LIMB_FRONT_LEFT_LEG - 1, gSnapperHeadDL
-};
-
-StandardLimb gSnapperJawLimb = { 
-    { 200, 900, 0 }, LIMB_DONE, SNAPPER_LIMB_EYES - 1, gSnapperJawDL
-};
-
-StandardLimb gSnapperEyesLimb = { 
-    { 0, 0, 0 }, LIMB_DONE, LIMB_DONE, gSnapperEyesDL
-};
-
-StandardLimb gSnapperFrontLeftLegLimb = { 
-    { -100, 1300, 1661 }, SNAPPER_LIMB_FRONT_LEFT_FOOT - 1, SNAPPER_LIMB_FRONT_RIGHT_LEG - 1, gSnapperFrontLeftLegDL
-};
-
-StandardLimb gSnapperFrontLeftFootLimb = { 
-    { 1078, 0, 0 }, LIMB_DONE, LIMB_DONE, gSnapperFrontLeftFootDL
-};
-
-StandardLimb gSnapperFrontRightLegLimb = { 
-    { -100, 1300, -1661 }, SNAPPER_LIMB_FRONT_RIGHT_FOOT - 1, SNAPPER_LIMB_BACK_LEFT_LEG - 1, gSnapperFrontRightLegDL
-};
-
-StandardLimb gSnapperFrontRightFootLimb = { 
-    { 1078, 0, 0 }, LIMB_DONE, LIMB_DONE, gSnapperFrontRightFootDL
-};
-
-StandardLimb gSnapperBackLeftLegLimb = { 
-    { -293, -1275, 1795 }, SNAPPER_LIMB_BACK_LEFT_FOOT - 1, SNAPPER_LIMB_BACK_RIGHT_LEG - 1, gSnapperBackLeftLegDL
-};
-
-StandardLimb gSnapperBackLeftFootLimb = { 
-    { 590, 0, 0 }, LIMB_DONE, LIMB_DONE, gSnapperBackLeftFootDL
-};
-
-StandardLimb gSnapperBackRightLegLimb = { 
-    { -293, -1275, -1795 }, SNAPPER_LIMB_BACK_RIGHT_FOOT - 1, LIMB_DONE, gSnapperBackRightLegDL
-};
-
-StandardLimb gSnapperBackRightFootLimb = { 
-    { 590, 0, 0 }, LIMB_DONE, LIMB_DONE, gSnapperBackRightFootDL
-};
-
-void* gSnapperSkelLimbs[] = {
-    &gSnapperBodyLimb, /* SNAPPER_LIMB_BODY */
-    &gSnapperHeadLimb, /* SNAPPER_LIMB_HEAD */
-    &gSnapperJawLimb, /* SNAPPER_LIMB_JAW */
-    &gSnapperEyesLimb, /* SNAPPER_LIMB_EYES */
-    &gSnapperFrontLeftLegLimb, /* SNAPPER_LIMB_FRONT_LEFT_LEG */
-    &gSnapperFrontLeftFootLimb, /* SNAPPER_LIMB_FRONT_LEFT_FOOT */
-    &gSnapperFrontRightLegLimb, /* SNAPPER_LIMB_FRONT_RIGHT_LEG */
-    &gSnapperFrontRightFootLimb, /* SNAPPER_LIMB_FRONT_RIGHT_FOOT */
-    &gSnapperBackLeftLegLimb, /* SNAPPER_LIMB_BACK_LEFT_LEG */
-    &gSnapperBackLeftFootLimb, /* SNAPPER_LIMB_BACK_LEFT_FOOT */
-    &gSnapperBackRightLegLimb, /* SNAPPER_LIMB_BACK_RIGHT_LEG */
-    &gSnapperBackRightFootLimb, /* SNAPPER_LIMB_BACK_RIGHT_FOOT */
-};
-
-FlexSkeletonHeader gSnapperSkel = { 
-    { gSnapperSkelLimbs, ARRAY_COUNT(gSnapperSkelLimbs) }, 12
 };

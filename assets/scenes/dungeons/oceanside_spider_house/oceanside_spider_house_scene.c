@@ -151,9 +151,9 @@ Path oceanside_spider_house_scenePathway_000220[] = {
 };
 
 BgCamInfo oceanside_spider_house_sceneCollisionHeader_00AE8CCamDataList[] = {
-    { CAM_SET_DUNGEON0, 0, NULL }, // CAM_SET_ROOM2
+    { CAM_SET_ROOM2,    0, NULL }, 
     { CAM_SET_NONE,     0, NULL },
-    { CAM_SET_DUNGEON2, 0, NULL }, // CAM_SET_DUNGEON3
+    { CAM_SET_DUNGEON3, 0, NULL },
 };
 
 SurfaceType oceanside_spider_house_sceneCollisionHeader_00AE8CSurfaceType[] = {

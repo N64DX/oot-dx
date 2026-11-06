@@ -38,8 +38,6 @@ s16 woodfall_temple_room_10ObjectList_000040[] = {
 ActorEntry woodfall_temple_room_10ActorEntry_00006C[] = {
     { ACTOR_OBJ_RAILLIFT,   {  -90,    0,  -90 }, { 0,      0,   0x1E }, 0x8001 },
     { ACTOR_OBJ_RAILLIFT,   {  570,    0,  150 }, { 0,      0,   0x1E }, 0x8002 },
-    { ACTOR_OBJ_RAILLIFT,   {  100,    0,  100 }, { 0,      0,      0 }, 0x800B },
-    { ACTOR_OBJ_RAILLIFT,   { -350,    0,   50 }, { 0,      0,      0 }, 0x800C },
     { ACTOR_EN_GRASSHOPPER, {   60,  125, -255 }, { 0, 0xAC80,      0 }, 0x0000 },
     { ACTOR_EN_GRASSHOPPER, {  210,   50,  165 }, { 0, 0x5280,      0 }, 0x0000 },
     { ACTOR_OBJ_KIBAKO3,    {  600, -330, -600 }, { 0,      0,      0 }, 0x0224 }, // Purple: 2 (Woodfall)
@@ -57,6 +55,8 @@ ActorEntry woodfall_temple_room_10ActorEntry_00006C[] = {
     { ACTOR_EN_KUSA,        { -405, -330,  210 }, { 0, 0x0A00,      0 }, 0x003B },
     { ACTOR_EN_KUSA,        { -390, -330,  -30 }, { 0, 0x2180,      0 }, 0x003B },
     { ACTOR_EN_KUSA,        { -450, -330,  330 }, { 0, 0x4480,      0 }, 0x003B },
+    { ACTOR_OBJ_ETCETERA,   {  510,   60, -510 }, { 0,      0,      0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA,   { -570,    0,  120 }, { 0,      0,      0 }, 0x007F },
 };
 
 RoomShapeCullable woodfall_temple_room_10RoomShapeCullable_000180 = { 

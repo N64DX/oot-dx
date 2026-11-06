@@ -2,7 +2,7 @@
 
 #include "assets/objects/object_syokudai/object_syokudai.h"
 
-Vtx object_syokudaiVtx_000570[] = {
+static Vtx object_syokudaiVtx_000570[] = {
 #include "object_syokudaiVtx_000570.vtx.inc"
 };
 

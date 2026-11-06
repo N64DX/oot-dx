@@ -1,5 +1,29 @@
 #include "object_dekunuts_extra.h"
 
+#include "gfx.h"
+
+static Vtx object_dekunutsVtx_001F20[] = {
+#include "assets/objects/object_dekunuts/object_dekunutsVtx_001F20.vtx.inc"
+};
+
+static u64 gDekuScrubFlowerFragmentTex[] = {
+#include "assets/objects/object_dekunuts/deku_scrub_flower_fragment.rgba16.inc.c"
+};
+
+Gfx gDekuScrubFlowerFragmentDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gDekuScrubFlowerFragmentTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_CLAMP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(object_dekunutsVtx_001F20, 3, 0),
+    gsSP1Triangle(0, 1, 2, 0),
+    gsSPEndDisplayList(),
+};
+
 s16 gDekuNutsSkelSpinAnimFrameData[266] = {
 	0x0000, 0xffff, 0x0aab, 0x4000, 0xf567, 0xbfff, 0x8825, 0x0a2f, 0xf4e6, 0xd585, 0xec3b, 0x1691, 0x2b06, 0x13c4, 0x04e4, 0x05fd, 
 	0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 0x0695, 

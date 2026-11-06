@@ -12,8 +12,8 @@ SceneCmd woodfall_temple_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_0RoomShapeCullable_0002E0),
-    SCENE_CMD_OBJECT_LIST(16, woodfall_temple_room_0ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(26, woodfall_temple_room_0ActorEntry_00006C),
+    SCENE_CMD_OBJECT_LIST(15, woodfall_temple_room_0ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(33, woodfall_temple_room_0ActorEntry_00006C),
     SCENE_CMD_END(),
 };
 
@@ -33,13 +33,9 @@ s16 woodfall_temple_room_0ObjectList_000040[] = {
     OBJECT_DEKUBABA,
     OBJECT_KIBAKO2,
     OBJECT_FR,
-    OBJECT_JYA_IRON,
 };
 
 ActorEntry woodfall_temple_room_0ActorEntry_00006C[] = {
-    { ACTOR_EN_ITEM00,        {  -50, -1250, -1550 }, { 0,      0,    0 }, 0x001C }, // Respawnable Feather
-    { ACTOR_BG_JYA_IRONOBJ,   {  340, -1485, -1610 }, { 0, 0x4000,    0 }, 0x0000 },
-    { ACTOR_OBJ_RAILLIFT,     { -325, -1350, -1750 }, { 0,      0, 0x19 }, 0x8007 },
     { ACTOR_EN_ITEM00,        { -330, -1155, -1980 }, { 0,      0,    0 }, 0x0102 }, // Collect: 01, Red Rupee
     { ACTOR_EN_ITEM00,        {  330, -1155, -1980 }, { 0,      0,    0 }, 0x0202 }, // Collect: 02, Red Rupee
     { ACTOR_EN_ITEM00,        {   30, -1605, -1650 }, { 0,      0,    0 }, 0x0301 }, // Collect: 03, Blue Rupee
@@ -54,8 +50,8 @@ ActorEntry woodfall_temple_room_0ActorEntry_00006C[] = {
     { ACTOR_BG_HIDAN_CURTAIN, { -180, -1275, -1560 }, { 0,      0, 0x50 }, 0x2F60 },
     { ACTOR_BG_HIDAN_CURTAIN, {  180, -1275, -1560 }, { 0,      0, 0x50 }, 0x2F60 },
     { ACTOR_OBJ_SWITCH,       {  390, -1365, -1560 }, { 0,      0,    0 }, 0x6003 },
-    { ACTOR_OBJ_TSUBO,        { -120, -1185, -2220 }, { 0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,        {  120, -1185, -2220 }, { 0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
+    { ACTOR_OBJ_TSUBO,        { -120, -1185, -2220 }, { 0,      0,    0 }, 0x0003 }, // Recovery Heart
+    { ACTOR_OBJ_TSUBO,        {  120, -1185, -2220 }, { 0,      0,    0 }, 0x0003 }, // Recovery Heart
     { ACTOR_EN_KUSA,          {  530, -1365, -1042 }, { 0, 0x6980,    0 }, 0x002B },
     { ACTOR_EN_KUSA,          {  210, -1245,  -945 }, { 0, 0x5E00,    0 }, 0x003B },
     { ACTOR_EN_KUSA,          {  255, -1245,  -960 }, { 0, 0x4B00,    0 }, 0x003B },
@@ -63,6 +59,16 @@ ActorEntry woodfall_temple_room_0ActorEntry_00006C[] = {
     { ACTOR_EN_KUSA,          {  498, -1365,  -960 }, { 0, 0x7700,    0 }, 0x007B },
     { ACTOR_OBJ_SYOKUDAI,     { -120, -1185, -2100 }, { 0,      0,    0 }, 0x043F },
     { ACTOR_OBJ_SYOKUDAI,     {  120, -1185, -2100 }, { 0,      0,    0 }, 0x043F },
+    { ACTOR_OBJ_ETCETERA,     {  452, -1365, -1080 }, { 0, 0x9A50,    0 }, 0x017F },
+    { ACTOR_OBJ_ETCETERA,     {    0, -1695, -1500 }, { 0,      0,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA,     { -570, -1245, -1260 }, { 0, 0x4000,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA,     { -447, -1365, -1076 }, { 0, 0x65B0,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA,     { -390, -1365, -1560 }, { 0, 0x8000,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA,     {  180, -1275, -1560 }, { 0, 0x8000,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA,     {  390, -1125, -1560 }, { 0, 0x8000,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA,     {    0, -1605, -1080 }, { 0, 0x8000,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA,     { -240, -1485,  -990 }, { 0, 0x8000,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA,     {  240, -1485,  -990 }, { 0, 0x8000,    0 }, 0x007F },
 };
 
 RoomShapeCullable woodfall_temple_room_0RoomShapeCullable_0002E0 = { 

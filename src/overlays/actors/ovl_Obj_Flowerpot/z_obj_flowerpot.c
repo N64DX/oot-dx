@@ -493,16 +493,10 @@ void func_80A1C838(ObjFlowerpot* this, PlayState* play) {
 
         if (this->actor.xzDistToPlayer < 600.0f) {
             CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
-
             if (this->actor.xzDistToPlayer < 180.0f) {
                 CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
-
-                if (this->actor.xzDistToPlayer < 100.0f) {
-                    s16 temp_v0_3 = this->actor.yawTowardsPlayer - GET_PLAYER(play)->actor.world.rot.y;
-
-                    if (ABS_ALT(temp_v0_3) >= 0x5556)
-                        Actor_OfferGetItem(&this->actor, play, GI_NONE, 36.0f, 30.0f);
-                }
+                if (this->actor.xzDistToPlayer < 100.0f && ABS_ALT(BINANG_SUB(this->actor.yawTowardsPlayer, GET_PLAYER(play)->actor.world.rot.y)) >= 0x5556)
+                    Actor_OfferGetItem(&this->actor, play, GI_NONE, 36.0f, 30.0f);
             }
         }
     }

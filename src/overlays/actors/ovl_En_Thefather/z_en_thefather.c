@@ -666,7 +666,7 @@ void EnThefather_CheckDamage(EnThefather* this, PlayState* play) {
 
                 switch (dmgFlags) {
                     case DMG_SLINGSHOT:
-                        damage = Actor_AdjustDealtDamage(1, this->actor.colChkInfo.defense, dmgFlags, this->actor.colChkInfo.itemAction);;
+                        damage = Actor_AdjustDealtDamage(1, this->actor.colChkInfo.defense, dmgFlags, this->actor.colChkInfo.itemAction);
                         break;
                     case DMG_ARROW_NORMAL:
                     case DMG_ARROW_FIRE:

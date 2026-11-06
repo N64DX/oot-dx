@@ -569,7 +569,7 @@ void EnStalmaster_SetupLimbs(EnStalmaster* this, struct PlayState* play) {
         this->sStalmasterParts[i].pos.z = this->actor.world.pos.z + Rand_CenteredFloat(BONE_SPREAD);
         if (i == STALMASTER_LIMB_HEAD) {
             this->sStalmasterParts[i].invisible = false;
-            this->sStalmasterParts[i].pos.x = (Math_SinS(this->actor.world.rot.y) * 67.0f) + this->actor.world.pos.x;;
+            this->sStalmasterParts[i].pos.x = (Math_SinS(this->actor.world.rot.y) * 67.0f) + this->actor.world.pos.x;
             this->sStalmasterParts[i].pos.y = this->actor.world.pos.y;
             this->sStalmasterParts[i].pos.z = (Math_CosS(this->actor.world.rot.y) * 67.0f) + this->actor.world.pos.z;
         } else if (isInLimbIndices(i)) {
@@ -658,7 +658,7 @@ void EnStalmaster_Introduction(EnStalmaster* this, PlayState* play) {
             break;
         case STALMASTER_CUTSCENE_INTRO_OPENING:
             if (this->flags.miniboss) {
-                player->actor.world.pos.x = (Math_SinS(this->actor.world.rot.y) * 155.0f) + this->actor.world.pos.x;;
+                player->actor.world.pos.x = (Math_SinS(this->actor.world.rot.y) * 155.0f) + this->actor.world.pos.x;
                 player->actor.world.pos.y = this->actor.world.pos.y;
                 player->actor.world.pos.z = (Math_CosS(this->actor.world.rot.y) * 155.0f) + this->actor.world.pos.z;
                 player->actor.world.rot.y = player->actor.shape.rot.y = Actor_WorldYawTowardActor(&player->actor, &this->actor);
@@ -1151,7 +1151,7 @@ void EnStalmaster_Death(EnStalmaster* this, struct PlayState* play) {
     }
     
     if (this->animationTimer == 0) {
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xB0);
+        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_13, false));
         if (this->flags.switchFlag <= 0x3F)
             Flags_SetSwitch(play, this->flags.switchFlag);
         Actor_Kill(&this->actor);

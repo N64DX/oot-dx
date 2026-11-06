@@ -6,6 +6,7 @@
 
 #include "z_en_dekunuts.h"
 #include "overlays/effects/ovl_Effect_Ss_Hahen/z_eff_ss_hahen.h"
+#include "overlays/actors/ovl_Obj_Etcetera/z_obj_etcetera.h"
 
 #include "libc64/qrand.h"
 #include "ichain.h"
@@ -534,6 +535,10 @@ void EnDekunuts_Die(EnDekunuts* this, PlayState* play) {
         EffectSsHahen_SpawnBurst(play, &effectPos, 3.0f, 0, 12, 3, 15, HAHEN_OBJECT_DEFAULT, 10, NULL);
         Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos,
                                    COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_3, false));
+        if (play->sceneId == SCENE_WOODFALL) {
+            Actor_Spawn(&play->actorCtx, play, ACTOR_OBJ_ETCETERA, this->actor.home.pos.x, this->actor.home.pos.y, this->actor.home.pos.z, 0, this->actor.home.rot.y, 0, DEKU_FLOWER_PARAMS(DEKU_FLOWER_TYPE_PINK_WITH_INITIAL_BOUNCE));
+            EffectSsHahen_SpawnBurst(play, &this->actor.home.pos, 6.0f, 0, 6, 2, 15, OBJECT_DEKUNUTS, 10, gDekuScrubFlowerFragmentDL);
+        }
         if (this->actor.child != NULL) {
             Actor_ChangeCategory(play, &play->actorCtx, this->actor.child, ACTORCAT_PROP);
         }
@@ -578,6 +583,10 @@ void EnDekunuts_Update(Actor* thisx, PlayState* play) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_DAMAGE);
             Actor_PlaySfx(&this->actor, NA_SE_EN_NUTS_CUTBODY);
             Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, Animation_GetLastFrame(&gDekuNutsDamageAnim));
+            if (play->sceneId == SCENE_WOODFALL) {
+                Actor_Spawn(&play->actorCtx, play, ACTOR_OBJ_ETCETERA, this->actor.home.pos.x, this->actor.home.pos.y, this->actor.home.pos.z, 0, this->actor.home.rot.y, 0, DEKU_FLOWER_PARAMS(DEKU_FLOWER_TYPE_PINK_WITH_INITIAL_BOUNCE));
+                EffectSsHahen_SpawnBurst(play, &this->actor.home.pos, 6.0f, 0, 6, 2, 15, OBJECT_DEKUNUTS, 10, gDekuScrubFlowerFragmentDL);
+            }
             Actor_Kill(&this->actor);
         }
 

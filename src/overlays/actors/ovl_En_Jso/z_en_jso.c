@@ -469,8 +469,6 @@ void EnJso_SetupDashAttack(EnJso* this) {
  * between its y-rotation and the yaw towards the player is large enough (usually indicating that it has dashed past the player), or if 40 frames have passed, whichever comes first.
  */
 void EnJso_DashAttack(EnJso* this, PlayState* play) {
-    f32 curFrame = this->skelAnime.curFrame;
-    s16 yawDiff, absYawDiff;
     Vec3f knockbackVelocity;
 
     if ((this->rightSwordCollider.base.atFlags & AT_BOUNCED) || (this->leftSwordCollider.base.atFlags & AT_BOUNCED)) {
@@ -494,13 +492,10 @@ void EnJso_DashAttack(EnJso* this, PlayState* play) {
     if (this->actor.velocity.y < 0.0f && (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND))
         this->actor.velocity.y = 13.0f;
 
-    if (curFrame < this->animEndFrame)
+    if (this->skelAnime.curFrame < this->animEndFrame)
         return;
 
-    yawDiff = this->actor.yawTowardsPlayer - this->actor.shape.rot.y;
-    absYawDiff = ABS_ALT(yawDiff);
-
-    if (this->attackMovementTimer == 0 || this->actor.xzDistToPlayer < 100.0f || absYawDiff > 0x4300) {
+    if (this->attackMovementTimer == 0 || this->actor.xzDistToPlayer < 100.0f || ABS_ALT(BINANG_SUB(this->actor.yawTowardsPlayer, this->actor.shape.rot.y)) > 0x4300) {
         AudioSfx_SetChannelIO(&this->actor.projectedPos, NA_SE_EN_ANSATSUSYA_DASH_2, 0);
         Math_ApproachZeroF(&this->actor.speed, 0.3f, 3.0f);
         EnJso_SetupSlash(this, play);
