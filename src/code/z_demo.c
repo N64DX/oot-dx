@@ -729,7 +729,14 @@ void CutsceneCmd_Destination(PlayState* play, CutsceneContext* csCtx, CsCmdDesti
                 play->transitionType = TRANS_TYPE_FADE_WHITE;
                 break;
 
-            case CS_DEST_WOODFALL_TEMPLE_AFTER_CHAMBER_OF_SAGES:
+            case CS_DEST_WOODFALL_CLEAR_AFTER_CHAMBER_OF_SAGES:
+                play->nextEntranceIndex = ENTR_WOODFALL_0;
+                gSaveContext.save.cutsceneIndex = CS_INDEX_0;
+                play->transitionTrigger = TRANS_TRIGGER_START;
+                play->transitionType = TRANS_TYPE_FADE_BLACK;
+                break;
+
+            case CS_DEST_WOODFALL_TEMPLE_AFTER_WOODFALL_CLEAR:
                 play->nextEntranceIndex = ENTR_WOODFALL_TEMPLE_1;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_BLACK;
@@ -1887,6 +1894,21 @@ void CutsceneCmd_Text(PlayState* play, CutsceneContext* csCtx, CsCmdText* cmd) {
     }
 }
 
+void CutsceneCmd_MotionBlur(PlayState* play, CutsceneContext* csCtx, CsCmdMotionBlur* cmd) {
+    if (csCtx->curFrame >= cmd->startFrame && cmd->endFrame >= csCtx->curFrame) {
+        if (csCtx->curFrame == cmd->startFrame && cmd->type == CS_MOTION_BLUR_ENABLE)
+            Play_EnableMotionBlur(180);
+
+        if (cmd->type == CS_MOTION_BLUR_DISABLE) {
+            f32 lerp = Environment_LerpWeight(cmd->endFrame, cmd->startFrame, csCtx->curFrame);
+
+            if (lerp >= 0.9f)
+                Play_DisableMotionBlur();
+            else Play_SetMotionBlurAlpha((1.0f - lerp) * 180.0f);
+        }
+    }
+}
+
 void Cutscene_ProcessScript(PlayState* play, CutsceneContext* csCtx, u8* script) {
     s16 i;
     s32 totalEntries;
@@ -2281,6 +2303,16 @@ void Cutscene_ProcessScript(PlayState* play, CutsceneContext* csCtx, u8* script)
                 script += sizeof(cmdEntries);
                 CutsceneCmd_Destination(play, csCtx, (void*)script);
                 script += sizeof(CsCmdDestination);
+                break;
+
+            case CS_CMD_MOTION_BLUR:
+                MemCopy(&cmdEntries, script, sizeof(cmdEntries));
+                script += sizeof(cmdEntries);
+
+                for (j = 0; j < cmdEntries; j++) {
+                    CutsceneCmd_MotionBlur(play, csCtx, (void*)script);
+                    script += sizeof(CsCmdMotionBlur);
+                }
                 break;
 
             case CS_CMD_TEXT:

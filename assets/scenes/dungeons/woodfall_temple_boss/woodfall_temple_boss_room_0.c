@@ -51,8 +51,8 @@ ActorEntry woodfall_temple_boss_room_0ActorEntry_000050[] = {
     { ACTOR_EN_KUSA,         { -390,  0,  660 }, { 0, 0, 0 }, 0x007B },
     { ACTOR_EN_KUSA,         {  315,  0,  690 }, { 0, 0, 0 }, 0x007B },
     { ACTOR_EN_KUSA,         { -315,  0,  690 }, { 0, 0, 0 }, 0x002B },
-    { ACTOR_OBJ_SYOKUDAI,    {  360,  0,  690 }, { 0, 0, 0 }, 0x1050 }, // Sets switch: 0x10
-    { ACTOR_OBJ_SYOKUDAI,    { -360,  0,  690 }, { 0, 0, 0 }, 0x1050 }, // Sets switch: 0x10
+    { ACTOR_OBJ_SYOKUDAI,    {  360,  0,  690 }, { 0, 0, 0 }, 0x1050 }, // Switch: 0x10
+    { ACTOR_OBJ_SYOKUDAI,    { -360,  0,  690 }, { 0, 0, 0 }, 0x1050 }, // Switch: 0x10
     { ACTOR_EN_KAREBABA,     {  690,  0,    0 }, { 0, 0, 0 }, 0x0000 },
     { ACTOR_EN_KAREBABA,     { -690,  0,    0 }, { 0, 0, 0 }, 0x0000 },
 };

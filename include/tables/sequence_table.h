@@ -154,3 +154,4 @@ DEFINE_SEQUENCE    (Sequence_130,       NA_BGM_INV_STONE_TOWER,  MEDIUM_CART, CA
 DEFINE_SEQUENCE    (Sequence_131,       NA_BGM_DUNGEON_APPEAR,   MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_FANFARE                       ) // dungeon_appear
 DEFINE_SEQUENCE    (Sequence_132,       NA_BGM_ENEMY2,           MEDIUM_CART, CACHE_LOAD_TEMPORARY,  0                                      ) // enemy2
 DEFINE_SEQUENCE    (Sequence_133,       NA_BGM_FINAL_HOURS,      MEDIUM_CART, CACHE_LOAD_TEMPORARY,  0                                      ) // final_hours
+DEFINE_SEQUENCE    (Sequence_134,       NA_BGM_WOODFALL_CLEAR,   MEDIUM_CART, CACHE_LOAD_TEMPORARY,  SEQ_FLAG_FANFARE                       ) // woodfall_clear

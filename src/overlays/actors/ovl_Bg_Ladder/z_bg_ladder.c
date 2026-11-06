@@ -119,7 +119,7 @@ void BgLadder_Wait(BgLadder* this, PlayState* play) {
 void BgLadder_StartCutscene(BgLadder* this, PlayState* play) {
     // Trigger the cutscene, then make the ladder fade in
     if (!Player_InCsMode(play)) {
-        if (this->csId > 0) {
+        if (this->csId > 0 && cutscenes[this->csId] != NULL) {
             Cutscene_SetScript(play, cutscenes[this->csId-1]);
             gSaveContext.cutsceneTrigger = 1;
             Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);
