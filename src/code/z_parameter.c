@@ -1379,6 +1379,7 @@ void func_80083108(PlayState* play) {
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_BOTTLE_POE)) &&
                             !((gSaveContext.save.info.equips.buttonItems[i] >= ITEM_WEIRD_EGG) &&
                               (gSaveContext.save.info.equips.buttonItems[i] <= ITEM_CLAIM_CHECK)) &&
+                              (gSaveContext.save.info.equips.buttonItems[i] != ITEM_MAGIC_BEAN) &&
                              !(gSaveContext.save.info.equips.buttonItems[i] >= ITEM_PICTOBOX && gSaveContext.save.info.equips.buttonItems[i] <= ITEM_SHRINE_KEY) &&
                               (gSaveContext.save.info.equips.buttonItems[i] != ITEM_BOTTLE_POTION_SHIELD) &&
                             !(Interface_IsEquipmentItem(gSaveContext.save.info.equips.buttonItems[i]))) {
@@ -1400,7 +1401,8 @@ void func_80083108(PlayState* play) {
                     }
                     for (i=0; i<4; i++)
                         if (Interface_GetItemFromDpad(i) != ITEM_OCARINA_FAIRY && Interface_GetItemFromDpad(i) != ITEM_OCARINA_OF_TIME && !(Interface_GetItemFromDpad(i) >= ITEM_BOTTLE_EMPTY && Interface_GetItemFromDpad(i) <= ITEM_BOTTLE_POE) && !(Interface_GetItemFromDpad(i) >= ITEM_WEIRD_EGG &&
-                            Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK)  && !(Interface_GetItemFromDpad(i) >= ITEM_PICTOBOX && Interface_GetItemFromDpad(i) <= ITEM_SHRINE_KEY) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i)) && Interface_GetItemFromDpad(i) != ITEM_BOTTLE_POTION_SHIELD) {
+                            Interface_GetItemFromDpad(i) <= ITEM_CLAIM_CHECK) && Interface_GetItemFromDpad(i) != ITEM_MAGIC_BEAN && !(Interface_GetItemFromDpad(i) >= ITEM_PICTOBOX && Interface_GetItemFromDpad(i) <= ITEM_SHRINE_KEY) && !Interface_IsEquipmentItem(Interface_GetItemFromDpad(i)) &&
+                            Interface_GetItemFromDpad(i) != ITEM_BOTTLE_POTION_SHIELD) {
                             if (play->sceneId != SCENE_TREASURE_BOX_SHOP || Interface_GetItemFromDpad(i) != ITEM_LENS_OF_TRUTH) {
                                 if (dpadStatus[i] == BTN_ENABLED)
                                     sp28 = true;
