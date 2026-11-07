@@ -37,7 +37,7 @@
 
 // Height of the fragments the z-buffer is split into.
 // It is the maximum amount of lines such that all rgba16 SCREEN_WIDTH-long lines fit into TMEM.
-#define VISZBUF_ZBUFFRAG_HEIGHT (TMEM_SIZE / (SCREEN_WIDTH * G_IM_SIZ_16b_BYTES))
+#define VISZBUF_ZBUFFRAG_HEIGHT (TMEM_SIZE / (SCREEN_WIDTH_MAX * G_IM_SIZ_16b_BYTES))
 
 // z-buffer
 extern u16 D_0E000000[];

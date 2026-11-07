@@ -258,7 +258,7 @@ typedef enum {
 static u8 sMotionBlurStatus;
 static void* sMotionBlurFbufSave; // transient ZeldaArena frame-save buffer for motion blur (NULL when inactive)
 
-#define MOTION_BLUR_FBUF_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(u16))
+#define MOTION_BLUR_FBUF_SIZE (SCREEN_WIDTH_MAX * SCREEN_HEIGHT * sizeof(u16))
 
 void Play_DrawMotionBlur(PlayState* this) {
     GraphicsContext* gfxCtx = this->state.gfxCtx;
@@ -1281,7 +1281,7 @@ void Play_DrawOverlayElements(PlayState* this) {
 
 void Play_DrawMirrorScanline(PlayState* this, GraphicsContext* gfxCtx, u32 scanline, u32 drawPosX, u32 drawPosY, f32 scaleX, f32 scaleY, u8 mirrorX, Gfx** gfxP, void* texPtr) {
     u32 texOffset = 0; // because ido won't let you directly modify a pointer
-    s32 scanlineHeight = ((scanline + SCANLINE_DEFAULT) > SCREEN_HEIGHT) ? SCREEN_HEIGHT - scanline : SCANLINE_DEFAULT;
+    s32 scanlineHeight = ((scanline + SCANLINE_DEFAULT) > SCREEN_HEIGHT) ? (s32)(SCREEN_HEIGHT - scanline) : SCANLINE_DEFAULT;
     s32 uls = 0;
     s32 ult = 0;
     s32 lrs = SCREEN_WIDTH;

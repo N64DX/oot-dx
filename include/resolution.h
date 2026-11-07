@@ -5,8 +5,29 @@
 
 // @setting: SCREEN_MODE
 // 0: DEFAULT, 1: HIRES, 2: WIDE, 3: ULTRAWIDE, 4: HIRES_PRO
-#define SCREEN_MODE 0
+#define SCREEN_MODE         0
+#define INGAME_ASPECT_RATIO 1
 
+// Runtime aspect ratio, selected in game
+#if INGAME_ASPECT_RATIO
+    extern s32 gScreenWidth;
+
+    #define DEFAULT    0
+    #define HIRES      0
+    #define WIDESCREEN 1
+    #define ULTRA_WS   0
+    #define HIRES_PRO  0
+
+    #define SCREEN_X gScreenWidth
+
+    // @setting: SCREEN_WIDTH
+    // Framebuffer size, which should match SCREEN_X in most cases
+    // Other values will work, but an uneven SCALE_X can lead to visual inconsistencies
+    #define SCREEN_WIDTH      gScreenWidth
+    #define SCREEN_WIDTH_MAX  576
+    #define SCREEN_WIDTH_INIT 320
+    #define SCREEN_WIDTH_MONO 432
+#else
 // Derived from SCREEN_MODE
 #define DEFAULT    (SCREEN_MODE == 0 ? 1 : 0) // SCREEN_DEFAULT   (320x240)
 #define HIRES      (SCREEN_MODE == 1 ? 1 : 0) // SCREEN_HIRES     (640x480)
@@ -33,6 +54,10 @@
 #else
     #define SCREEN_WIDTH SCREEN_X
 #endif
+#define SCREEN_WIDTH_MAX  SCREEN_WIDTH
+#define SCREEN_WIDTH_INIT SCREEN_WIDTH
+#define SCREEN_WIDTH_MONO SCREEN_WIDTH
+#endif
 
 // SCREEN_HEIGHT
 #if HIRES
@@ -45,7 +70,11 @@
 
 // Scaling definitions
 #define HIRES_SCALE (SCREEN_HEIGHT / 240)
-#define SCALE_X     ((f32)(SCREEN_WIDTH) / (f32)(SCREEN_X))
+#if INGAME_ASPECT_RATIO
+    #define SCALE_X 1.0f
+#else
+    #define SCALE_X     ((f32)(SCREEN_WIDTH) / (f32)(SCREEN_X))
+#endif
 
 // Scaling macros
 #define HIRES_MULTIPLY(var)   ((var) * HIRES_SCALE)
@@ -68,16 +97,20 @@
 #define WS_SHIFT_FULL    (SCREEN_X / HIRES_SCALE - 320)
 #define WS_SHIFT_HALF    (WS_SHIFT_FULL / 2)
 #define WS_SHIFT_QUARTER (WS_SHIFT_FULL / 4)
-#define C_BUTTON_EQUIP_1 (WS_SHIFT_FULL * 5 + 660)
-#define C_BUTTON_EQUIP_2 (WS_SHIFT_FULL * 5 + 900)
-#define C_BUTTON_EQUIP_3 (WS_SHIFT_FULL * 5 + 1140)
 
 
 
 // @setting: WS_JPEG
 // Include widescreen JPEGs that have been squished from 420x240 to 320x240
 // All screen modes can handle original and widescreen backgrounds
-#if WIDESCREEN
+#if INGAME_ASPECT_RATIO
+    #define GFXPRINT_SHIFT  ((SCREEN_WIDTH == 432) ? 6 : ((SCREEN_WIDTH == 576) ? 13 : 0))
+    #define RAMPRINT_SHIFT  ((SCREEN_WIDTH == 432) ? 8 : ((SCREEN_WIDTH == 576) ? 17 : 0))
+    #define LULLABY_SHIFT   ((SCREEN_WIDTH == 432) ? 0 : ((SCREEN_WIDTH == 576) ? 70 : 0))
+    #define OCEFF_SHIFT     ((SCREEN_WIDTH == 432) ? 80 : ((SCREEN_WIDTH == 576) ? 155 : 18))
+    #define WS_JPEG         1
+    #define WS_PX_SHIFT     ((SCREEN_WIDTH == 320) ? 0 : 1)
+#elif WIDESCREEN
     #define GFXPRINT_SHIFT  6
     #define RAMPRINT_SHIFT  8
     #define LULLABY_SHIFT   0
@@ -112,7 +145,7 @@
 // Shrine scene light settings
 // Out of bounds collision can still be seen despite being recolored black
 // Changing the light settings hides it, but also changes appearance of the halo 
-#if ((WIDESCREEN && !WS_JPEG) || ULTRA_WS)
+#if (((WIDESCREEN && !WS_JPEG) || ULTRA_WS) && !INGAME_ASPECT_RATIO)
     #define SHRINE_LIGHT_1   0x00
     #define SHRINE_LIGHT_2   0x00
     #define SHRINE_LIGHT_3   0x07FA

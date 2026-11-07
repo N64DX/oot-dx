@@ -31,7 +31,7 @@ Gfx sCoverageOnlyDL[] = {
                          G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
                      G_AC_NONE | G_ZS_PRIM | G_RM_VISCVG | G_RM_VISCVG2),
     // (blendColor RGB) * (cvg)
-    gsDPFillRectangle(0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1),
+    gsDPFillRectangle(0, 0, SCREEN_WIDTH_MAX - 1, SCREEN_HEIGHT - 1),
     gsDPPipeSync(),
     gsDPSetBlendColor(0, 0, 0, 8),
     gsSPEndDisplayList(),
@@ -49,7 +49,7 @@ Gfx sCoverageRGBFogDL[] = {
                          GBL_c1(G_BL_CLR_FOG, G_BL_A_FOG, G_BL_CLR_MEM, G_BL_A_MEM) |
                          GBL_c2(G_BL_CLR_FOG, G_BL_A_FOG, G_BL_CLR_MEM, G_BL_A_MEM)),
     // (fog RGB) * (fog alpha) + (FB RGB) * (cvg)
-    gsDPFillRectangle(0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1),
+    gsDPFillRectangle(0, 0, SCREEN_WIDTH_MAX - 1, SCREEN_HEIGHT - 1),
     gsSPEndDisplayList(),
 };
 
@@ -63,7 +63,7 @@ Gfx sCoverageRGBDL[] = {
                          GBL_c1(G_BL_CLR_IN, G_BL_0, G_BL_CLR_MEM, G_BL_A_MEM) |
                          GBL_c2(G_BL_CLR_IN, G_BL_0, G_BL_CLR_MEM, G_BL_A_MEM)),
     // (FB RGB) * (cvg)
-    gsDPFillRectangle(0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1),
+    gsDPFillRectangle(0, 0, SCREEN_WIDTH_MAX - 1, SCREEN_HEIGHT - 1),
     gsSPEndDisplayList(),
 };
 
@@ -80,7 +80,7 @@ Gfx sCoverageRGBUniformDL[] = {
                          G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
                      G_AC_NONE | G_ZS_PRIM | G_RM_CLD_SURF | G_RM_CLD_SURF2),
     // stage 1 color = (primColor RGB) * (primColor Alpha) + (FB RGB) * (1 - primColor Alpha)
-    gsDPFillRectangle(0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1),
+    gsDPFillRectangle(0, 0, SCREEN_WIDTH_MAX - 1, SCREEN_HEIGHT - 1),
 
     gsDPSetOtherMode(G_AD_PATTERN | G_CD_MAGICSQ | G_CK_NONE | G_TC_CONV | G_TF_POINT | G_TT_NONE | G_TL_TILE |
                          G_TD_CLAMP | G_TP_NONE | G_CYC_1CYCLE | G_PM_NPRIMITIVE,
@@ -88,7 +88,7 @@ Gfx sCoverageRGBUniformDL[] = {
                          GBL_c1(G_BL_CLR_IN, G_BL_0, G_BL_CLR_MEM, G_BL_A_MEM) |
                          GBL_c2(G_BL_CLR_IN, G_BL_0, G_BL_CLR_MEM, G_BL_A_MEM)),
     // final color = (stage 1 RGB) * (cvg)
-    gsDPFillRectangle(0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1),
+    gsDPFillRectangle(0, 0, SCREEN_WIDTH_MAX - 1, SCREEN_HEIGHT - 1),
     gsSPEndDisplayList(),
 };
 
