@@ -46,7 +46,7 @@ void ObjWturn_Idle(ObjWturn* this, PlayState* play) {
     if (play->msgCtx.ocarinaMode == OCARINA_MODE_02 && gSaveContext.respawn[RESPAWN_MODE_RETURN].entranceIndex == ENTR_STONE_TOWER_3) {
         Flags_UnsetSwitch(play, OBJWTURN_GET_SWITCH_FLAG(&this->actor));
         Actor_Kill(&this->actor);
-    } else if ((Flags_GetSwitch(play, OBJWTURN_GET_SWITCH_FLAG(&this->actor)) && play->sceneId == SCENE_STONE_TOWER) || (!Flags_GetSwitch(play, OBJWTURN_GET_SWITCH_FLAG(&this->actor)) && play->sceneId == SCENE_STONE_TOWER_INVERTED))
+    } else if ((Flags_GetSwitch(play, OBJWTURN_GET_SWITCH_FLAG(&this->actor)) && play->sceneId == SCENE_STONE_TOWER) || (!Flags_GetSwitch(play, OBJWTURN_GET_SWITCH_FLAG(&this->actor)) && play->sceneId == SCENE_STONE_TOWER_INV))
         ObjWturn_SetupAttention(this, play);
 }
 
@@ -162,7 +162,7 @@ void ObjWturn_FallingCs(ObjWturn* this, PlayState* play) {
         gSaveContext.nextTransitionType = TRANS_TYPE_FADE_WHITE;
         gSaveContext.nextCutsceneIndex = 0;
         if (play->sceneId == SCENE_STONE_TOWER)
-            play->nextEntranceIndex = ENTR_STONE_TOWER_INVERTED_0;
+            play->nextEntranceIndex = ENTR_STONE_TOWER_INV_0;
         else play->nextEntranceIndex = ENTR_STONE_TOWER_1;
         play->transitionTrigger = TRANS_TRIGGER_START;
     }

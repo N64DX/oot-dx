@@ -1,0 +1,13 @@
+#ifndef STONE_TOWER_TEMPLE_INVERTED_ROOM_9_H
+#define STONE_TOWER_TEMPLE_INVERTED_ROOM_9_H
+
+#include "room.h"
+
+extern s16 stone_tower_temple_inverted_room_9ObjectList_000040[];
+extern ActorEntry stone_tower_temple_inverted_room_9ActorEntry_00006C[];
+extern RoomShapeCullable stone_tower_temple_inverted_room_9RoomShapeCullable_000090;
+extern RoomShapeCullableEntry stone_tower_temple_inverted_room_9RoomShapeCullableEntry_00009C[1];
+
+extern Gfx stone_tower_temple_inverted_room_9DL_000160[];
+
+#endif

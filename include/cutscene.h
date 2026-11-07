@@ -150,6 +150,7 @@ typedef enum CutsceneCmd {
     /* 0x008E */ CS_CMD_ACTOR_CUE_7_6,
     /* 0x008F */ CS_CMD_ACTOR_CUE_9_0,
     /* 0x0090 */ CS_CMD_ACTOR_CUE_0_17,
+    /* 0x0091 */ CS_CMD_MOTION_BLUR,
     /* 0x03E8 */ CS_CMD_DESTINATION = 0x03E8
 } CutsceneCmd;
 
@@ -220,6 +221,11 @@ typedef enum CutsceneTransitionType {
     /* 0x0C */ CS_TRANS_BLACK_FILL_OUT_TO_HALF, // used with `TRANS_MODE_CS_BLACK_FILL`
     /* 0x0D */ CS_TRANS_BLACK_FILL_IN_FROM_HALF
 } CutsceneTransitionType;
+
+typedef enum CsMotionBlurType {
+    /* 1 */ CS_MOTION_BLUR_ENABLE = 1,
+    /* 2 */ CS_MOTION_BLUR_DISABLE
+} CsMotionBlurType;
 
 typedef enum CutsceneDestination {
     /* 0x00 */ CS_DEST_UNIMPLEMENTED_0,
@@ -344,7 +350,8 @@ typedef enum CutsceneDestination {
     /* 0x77 */ CS_DEST_ZELDAS_COURTYARD_RECEIVE_LETTER,
     /* 0x78 */ CS_DEST_WOODFALL_TEMPLE_FROM_MASTER_SWORD,
     /* 0x79 */ CS_DEST_CHAMBER_OF_SAGES_WOODFALL_TEMPLE,
-    /* 0x7A */ CS_DEST_WOODFALL_TEMPLE_AFTER_CHAMBER_OF_SAGES
+    /* 0x7A */ CS_DEST_WOODFALL_CLEAR_AFTER_CHAMBER_OF_SAGES,
+    /* 0x7B */ CS_DEST_WOODFALL_TEMPLE_AFTER_WOODFALL_CLEAR
 } CutsceneDestination;
 
 typedef union CsCmdCam {
@@ -470,6 +477,15 @@ typedef union CsCmdActorCue {
     };
     s32 _words[12];
 } CsCmdActorCue; // size = 0x30
+
+typedef union CsCmdMotionBlur {
+    struct {
+        /* 0x00 */ u16 type;
+        /* 0x02 */ u16 startFrame;
+        /* 0x04 */ u16 endFrame;
+    };
+    s32 _words[2];
+} CsCmdMotionBlur; // size = 0x8
 
 typedef union CutsceneCameraPoint {
     struct {

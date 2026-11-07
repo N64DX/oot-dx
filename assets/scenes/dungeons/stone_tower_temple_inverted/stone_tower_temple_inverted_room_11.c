@@ -1,0 +1,402 @@
+#include "stone_tower_temple_inverted_scene.h"
+#include "stone_tower_temple_inverted_room_11.h"
+
+#include "actor.h"
+#include "array_count.h"
+#include "gfx.h"
+#include "object.h"
+
+SceneCmd stone_tower_temple_inverted_room_11[] = {
+    SCENE_CMD_ECHO_SETTINGS(7),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_DUNGEON, ROOM_ENV_DEFAULT, LENS_MODE_SHOW_ACTORS, false /* warp songs enabled */),
+    SCENE_CMD_SKYBOX_DISABLES(true, true),
+    SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
+    SCENE_CMD_ROOM_SHAPE(&stone_tower_temple_inverted_room_11RoomShapeCullable_0000D0),
+    //SCENE_CMD_OBJECT_LIST(23, stone_tower_temple_inverted_room_11ObjectList_000040),
+    //SCENE_CMD_ACTOR_LIST(6, stone_tower_temple_inverted_room_11ActorEntry_000070),
+    SCENE_CMD_END(),
+};
+
+/*s16 stone_tower_temple_inverted_room_11ObjectList_000040[] = {
+    OBJECT_IKANA_OBJ,
+    OBJECT_WARP1,
+    OBJECT_WATER_EFFECT,
+    OBJECT_BDOOR,
+    OBJECT_BOX,
+    OBJECT_D_HSBLOCK,
+    OBJECT_MIR_RAY,
+    OBJECT_LIGHTBLOCK,
+    OBJECT_EFC_TW,
+    OBJECT_LIGHTSWITCH,
+    OBJECT_ICEFLOE,
+    OBJECT_SPINYROLL,
+    OBJECT_MKK,
+    OBJECT_WDHAND,
+    OBJECT_NY,
+    OBJECT_PP,
+    OBJECT_PO,
+    OBJECT_RAT,
+    OBJECT_BB,
+    OBJECT_SLIME,
+    OBJECT_FAMOS,
+    OBJECT_EG,
+    OBJECT_DEATH,
+};*/
+
+/*ActorEntry stone_tower_temple_inverted_room_11ActorEntry_000070[] = {
+    { ACTOR_EN_DEATH,  { 2460, -300, -1260 }, { 0, 0x10E, 0 }, 0x0000 },
+    { ACTOR_OBJ_TSUBO, { 2790, -300, -1620 }, { 0,     0, 0 }, 0x000A },
+    { ACTOR_OBJ_TSUBO, { 2790, -300,  -900 }, { 0,     0, 0 }, 0x000A },
+    { ACTOR_OBJ_TSUBO, { 2070, -300,  -900 }, { 0,     0, 0 }, 0x000A },
+    { ACTOR_OBJ_TSUBO, { 2070, -300, -1620 }, { 0,     0, 0 }, 0x000A },
+    { ACTOR_EN_BOX,    { 3060, -300, -1260 }, { 0, 0x10E, 0 }, 0x27BE },
+};*/
+
+RoomShapeCullable stone_tower_temple_inverted_room_11RoomShapeCullable_0000D0 = { 
+    2, 6,
+    stone_tower_temple_inverted_room_11RoomShapeCullableEntry_0000DC,
+    stone_tower_temple_inverted_room_11RoomShapeCullableEntry_0000DC + ARRAY_COUNTU(stone_tower_temple_inverted_room_11RoomShapeCullableEntry_0000DC)
+};
+
+RoomShapeCullableEntry stone_tower_temple_inverted_room_11RoomShapeCullableEntry_0000DC[6] = {
+    { {   2895,   -180,  -1263 },    216, stone_tower_temple_inverted_room_11DL_002878, NULL },
+    { {   2880,     16,  -1260 },   -356, stone_tower_temple_inverted_room_11DL_002BA8, NULL },
+    { {   2550,     60,  -1260 },    812, stone_tower_temple_inverted_room_11DL_0012D0, NULL },
+    { {   1950,   -180,  -1260 },    174, stone_tower_temple_inverted_room_11DL_001E98, NULL },
+    { {   1950,   -220,  -1260 },   -122, stone_tower_temple_inverted_room_11DL_002DC0, NULL },
+    { {   2880,     60,  -1260 },    434, stone_tower_temple_inverted_room_11DL_002588, NULL },
+};
+
+s32 stone_tower_temple_inverted_room_11_terminatorMaybe_00013C = { 0x01000000 };
+
+Vtx stone_tower_temple_inverted_room_11Vtx_000140[] = {
+#include "assets/scenes/dungeons/stone_tower_temple_inverted/stone_tower_temple_inverted_room_11Vtx_000140.vtx.inc"
+};
+
+Vtx stone_tower_temple_inverted_room_11Vtx_0018C8[] = {
+#include "assets/scenes/dungeons/stone_tower_temple_inverted/stone_tower_temple_inverted_room_11Vtx_0018C8.vtx.inc"
+};
+
+Vtx stone_tower_temple_inverted_room_11Vtx_002198[] = {
+#include "assets/scenes/dungeons/stone_tower_temple_inverted/stone_tower_temple_inverted_room_11Vtx_002198.vtx.inc"
+};
+
+Vtx stone_tower_temple_inverted_room_11Vtx_002758[] = {
+#include "assets/scenes/dungeons/stone_tower_temple_inverted/stone_tower_temple_inverted_room_11Vtx_002758.vtx.inc"
+};
+
+Vtx stone_tower_temple_inverted_room_11Vtx_002958[] = {
+#include "assets/scenes/dungeons/stone_tower_temple_inverted/stone_tower_temple_inverted_room_11Vtx_002958.vtx.inc"
+};
+
+Vtx stone_tower_temple_inverted_room_11Vtx_002C80[] = {
+#include "assets/scenes/dungeons/stone_tower_temple_inverted/stone_tower_temple_inverted_room_11Vtx_002C80.vtx.inc"
+};
+
+u64 stone_tower_temple_inverted_room_11Tex_002ED8[] = {
+#include "assets/scenes/dungeons/stone_tower_temple_inverted/stone_tower_temple_inverted_room_11Tex_002ED8.ia8.inc.c"
+};
+
+u64 stone_tower_temple_inverted_room_11Tex_0036D8[] = {
+#include "assets/scenes/dungeons/stone_tower_temple_inverted/stone_tower_temple_inverted_room_11Tex_0036D8.rgba16.inc.c"
+};
+
+u64 stone_tower_temple_inverted_room_11Tex_003ED8[] = {
+#include "assets/scenes/dungeons/stone_tower_temple_inverted/stone_tower_temple_inverted_room_11Tex_003ED8.ci8.inc.c"
+};
+
+Gfx stone_tower_temple_inverted_room_11DL_0012D0[] = {
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[273], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_00D500, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(stone_tower_temple_inverted_room_11Vtx_000140, 22, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(0, 4, 5, 0, 0, 5, 1, 0),
+    gsSP2Triangles(4, 6, 7, 0, 4, 7, 5, 0),
+    gsSP2Triangles(5, 8, 9, 0, 5, 9, 1, 0),
+    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
+    gsSP2Triangles(12, 14, 15, 0, 12, 15, 13, 0),
+    gsSP2Triangles(15, 14, 16, 0, 15, 16, 17, 0),
+    gsSP2Triangles(14, 18, 19, 0, 14, 19, 16, 0),
+    gsSP2Triangles(20, 21, 15, 0, 20, 15, 17, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_00FE00, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[22], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
+    gsSP2Triangles(3, 2, 6, 0, 3, 6, 7, 0),
+    gsSP2Triangles(2, 5, 8, 0, 2, 8, 6, 0),
+    gsSP2Triangles(7, 6, 9, 0, 7, 9, 10, 0),
+    gsSP2Triangles(6, 8, 11, 0, 6, 11, 9, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(13, 16, 17, 0, 13, 17, 14, 0),
+    gsSP2Triangles(15, 14, 18, 0, 15, 18, 19, 0),
+    gsSP2Triangles(14, 17, 20, 0, 14, 20, 18, 0),
+    gsSP2Triangles(19, 18, 21, 0, 19, 21, 22, 0),
+    gsSP2Triangles(18, 20, 23, 0, 18, 23, 21, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(25, 28, 29, 0, 25, 29, 26, 0),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[52], 21, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
+    gsSP2Triangles(3, 2, 6, 0, 3, 6, 7, 0),
+    gsSP2Triangles(2, 5, 8, 0, 2, 8, 6, 0),
+    gsSP2Triangles(9, 10, 11, 0, 9, 11, 12, 0),
+    gsSP2Triangles(10, 13, 14, 0, 10, 14, 11, 0),
+    gsSP2Triangles(15, 16, 17, 0, 15, 17, 18, 0),
+    gsSP2Triangles(16, 19, 20, 0, 16, 20, 17, 0),
+    gsSP2Triangles(18, 17, 10, 0, 18, 10, 9, 0),
+    gsSP2Triangles(17, 20, 13, 0, 17, 13, 10, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_room_11Tex_003ED8, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[73], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 23, 21, 0),
+    gsSP2Triangles(24, 25, 26, 0, 25, 27, 26, 0),
+    gsSP2Triangles(28, 29, 30, 0, 29, 31, 30, 0),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[105], 8, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_010C00, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[113], 26, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
+    gsSP2Triangles(15, 17, 18, 0, 19, 20, 21, 0),
+    gsSP2Triangles(20, 13, 21, 0, 19, 12, 14, 0),
+    gsSP2Triangles(22, 23, 24, 0, 22, 24, 25, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_010D80, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[139], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 0, 0),
+    gsSP2Triangles(5, 6, 7, 0, 5, 7, 8, 0),
+    gsSP2Triangles(4, 1, 0, 0, 9, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 15, 16, 17, 0),
+    gsSP2Triangles(16, 18, 17, 0, 15, 19, 16, 0),
+    gsSP2Triangles(19, 18, 16, 0, 12, 20, 13, 0),
+    gsSP2Triangles(12, 10, 21, 0, 12, 21, 20, 0),
+    gsSP2Triangles(10, 22, 21, 0, 10, 23, 22, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(24, 27, 28, 0, 24, 28, 29, 0),
+    gsSP2Triangles(24, 29, 30, 0, 24, 30, 31, 0),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[171], 10, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 6, 8, 9, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_011180, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[181], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[213], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_000140[245], 28, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
+    gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx stone_tower_temple_inverted_room_11DL_001E98[] = {
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_0018C8[85], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_00E900, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(stone_tower_temple_inverted_room_11Vtx_0018C8, 22, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 10, 11, 12, 0),
+    gsSP2Triangles(11, 13, 12, 0, 14, 8, 10, 0),
+    gsSP2Triangles(14, 10, 12, 0, 14, 12, 15, 0),
+    gsSP2Triangles(10, 9, 11, 0, 12, 13, 15, 0),
+    gsSP2Triangles(16, 9, 8, 0, 17, 18, 16, 0),
+    gsSP2Triangles(17, 16, 8, 0, 14, 15, 19, 0),
+    gsSP2Triangles(20, 21, 14, 0, 20, 14, 19, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_00FA00, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_0018C8[22], 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_010A00, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_0018C8[34], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+    gsSP2Triangles(20, 11, 21, 0, 20, 21, 22, 0),
+    gsSP2Triangles(23, 24, 25, 0, 23, 25, 26, 0),
+    gsSP2Triangles(27, 28, 29, 0, 27, 29, 30, 0),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_0018C8[65], 8, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsDPPipeSync(),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_011180, G_IM_FMT_CI, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_0018C8[73], 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx stone_tower_temple_inverted_room_11DL_002588[] = {
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_002198[55], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_010D80, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(stone_tower_temple_inverted_room_11Vtx_002198, 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(2, 4, 5, 0, 4, 2, 6, 0),
+    gsSP2Triangles(7, 6, 8, 0, 7, 8, 9, 0),
+    gsSP2Triangles(10, 11, 12, 0, 13, 14, 15, 0),
+    gsSP2Triangles(14, 11, 15, 0, 3, 8, 1, 0),
+    gsSP2Triangles(3, 9, 8, 0, 3, 16, 9, 0),
+    gsSP2Triangles(3, 13, 16, 0, 17, 18, 7, 0),
+    gsSP2Triangles(19, 10, 18, 0, 16, 19, 18, 0),
+    gsSP2Triangles(16, 18, 17, 0, 13, 15, 19, 0),
+    gsSP2Triangles(13, 19, 16, 0, 20, 21, 22, 0),
+    gsSP2Triangles(21, 20, 23, 0, 21, 23, 7, 0),
+    gsSP2Triangles(23, 4, 6, 0, 23, 6, 7, 0),
+    gsSP2Triangles(20, 5, 4, 0, 20, 4, 23, 0),
+    gsSP2Triangles(2, 1, 8, 0, 2, 8, 6, 0),
+    gsSP2Triangles(7, 9, 16, 0, 7, 16, 17, 0),
+    gsSP2Triangles(10, 15, 11, 0, 10, 19, 15, 0),
+    gsSP2Triangles(24, 25, 26, 0, 25, 27, 26, 0),
+    gsSP2Triangles(28, 29, 30, 0, 28, 30, 31, 0),
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_002198[32], 23, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 0, 5, 0, 8, 5, 4, 0),
+    gsSP2Triangles(8, 4, 9, 0, 4, 7, 9, 0),
+    gsSP2Triangles(10, 11, 12, 0, 10, 12, 13, 0),
+    gsSP2Triangles(14, 15, 11, 0, 14, 11, 10, 0),
+    gsSP2Triangles(15, 16, 11, 0, 8, 15, 14, 0),
+    gsSP2Triangles(10, 13, 17, 0, 18, 10, 17, 0),
+    gsSP2Triangles(1, 18, 17, 0, 2, 1, 17, 0),
+    gsSP2Triangles(12, 19, 20, 0, 12, 20, 13, 0),
+    gsSP2Triangles(21, 19, 16, 0, 18, 1, 0, 0),
+    gsSP2Triangles(18, 0, 8, 0, 0, 3, 5, 0),
+    gsSP2Triangles(6, 5, 3, 0, 2, 17, 22, 0),
+    gsSP1Triangle(3, 2, 22, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx stone_tower_temple_inverted_room_11DL_002878[] = {
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_002758[10], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_RGBA16),
+    gsDPLoadTLUT_pal256(stone_tower_temple_inverted_sceneTLUT_011E80),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_00D900, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(stone_tower_temple_inverted_room_11Vtx_002758, 10, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(0, 3, 4, 0, 5, 6, 7, 0),
+    gsSP2Triangles(5, 7, 8, 0, 5, 8, 9, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx stone_tower_temple_inverted_room_11DL_002BA8[] = {
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_002958[29], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
+    gsDPSetPrimColor(0, 0xFF, 255, 255, 55, 59),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_sceneTex_00EA00, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(stone_tower_temple_inverted_room_11Vtx_002958, 29, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+    gsSP2Triangles(16, 17, 13, 0, 16, 13, 12, 0),
+    gsSP2Triangles(18, 19, 20, 0, 18, 20, 8, 0),
+    gsSP2Triangles(21, 22, 23, 0, 21, 23, 24, 0),
+    gsSP2Triangles(25, 26, 27, 0, 26, 28, 27, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx stone_tower_temple_inverted_room_11DL_002DC0[] = {
+    gsSPVertex(&stone_tower_temple_inverted_room_11Vtx_002C80[12], 8, 0),
+    gsSPCullDisplayList(0, 7),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, TEXEL0, 0, TEXEL0, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0xD7, 255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(stone_tower_temple_inverted_room_11Tex_002ED8, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadMultiBlock(stone_tower_temple_inverted_room_11Tex_0036D8, 0x0100, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(stone_tower_temple_inverted_room_11Vtx_002C80, 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+    gsSPEndDisplayList(),
+};

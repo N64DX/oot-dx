@@ -7,6 +7,7 @@
 #include "object.h"
 
 SceneCmd woodfall_room_0[] = {
+    SCENE_CMD_ALTERNATE_HEADER_LIST(woodfall_room_0AlternateHeaders),
     SCENE_CMD_ECHO_SETTINGS(4),
     SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_UNK_STRETCH_1, LENS_MODE_SHOW_ACTORS, false),
     SCENE_CMD_SKYBOX_DISABLES(false, false),
@@ -15,6 +16,13 @@ SceneCmd woodfall_room_0[] = {
     SCENE_CMD_OBJECT_LIST(12, woodfall_room_0ObjectList_000050),
     SCENE_CMD_ACTOR_LIST(43, woodfall_room_0ActorEntry_000064),
     SCENE_CMD_END(),
+};
+
+SceneCmd* woodfall_room_0AlternateHeaders[] = {
+    NULL,
+    NULL,
+    NULL,
+    woodfall_room_0Set_woodfallTempleCleared,
 };
 
 s16 woodfall_room_0ObjectList_000050[] = {
@@ -79,7 +87,7 @@ ActorEntry woodfall_room_0ActorEntry_000064[] = {
     { ACTOR_BG_WOOD_PILLAR, {   750,    -10,    850 }, {    0,      0,    0 }, 0x0002 },
     { ACTOR_BG_WOOD_PILLAR, {  1000,    -60,   -100 }, {    0,      0,    0 }, 0x0002 },
     { ACTOR_OBJ_BOMBIWA,    {     0,    190,   1038 }, {    0,      0,    0 }, 0x8000 }, // Switch: 00
-    { ACTOR_BG_LADDER,      {  -130,    -30,   1038 }, {    0, 0xC000,    0 }, 0x0001 }, // Checks switch: 00
+    { ACTOR_BG_LADDER,      {  -130,    -30,   1038 }, {    0, 0xC000,    4 }, 0x0001 }, // Checks switch: 00
 };
 
 RoomShapeCullable woodfall_room_0RoomShapeCullable_0003B0 = { 
@@ -113,6 +121,49 @@ RoomShapeCullableEntry woodfall_room_0RoomShapeCullableEntry_0003BC[23] = {
     { {   -103,    343,    976 },     26, woodfall_room_0DL_00F9C8, NULL },
     { {      0,    156,   1038 },    252, woodfall_room_0DL_00F6C8, NULL },
     { {    338,    140,    -50 },   1486, woodfall_room_0DL_008EC8, NULL },
+};
+
+SceneCmd woodfall_room_0Set_woodfallTempleCleared[] = {
+    SCENE_CMD_ECHO_SETTINGS(4),
+    SCENE_CMD_ROOM_BEHAVIOR(ROOM_TYPE_NORMAL, ROOM_ENV_UNK_STRETCH_1, LENS_MODE_SHOW_ACTORS, false),
+    SCENE_CMD_SKYBOX_DISABLES(false, false),
+    SCENE_CMD_TIME_SETTINGS(255, 255, 10),
+    SCENE_CMD_ROOM_SHAPE(&woodfall_room_0RoomShapeCullable_0003B0),
+    SCENE_CMD_OBJECT_LIST(2, woodfall_room_0ObjectList_woodfallTempleCleared),
+    SCENE_CMD_ACTOR_LIST(4, woodfall_room_0ActorEntry_woodfallTempleCleared),
+    SCENE_CMD_END(),
+};
+
+s16 woodfall_room_0ObjectList_woodfallTempleCleared[] = {
+    OBJECT_MTORIDE,
+  //OBJECT_LOTUS,
+    OBJECT_SEK,
+};
+
+ActorEntry woodfall_room_0ActorEntry_woodfallTempleCleared[] = {
+  //{ ACTOR_EN_WEATHER_TAG, {   -65,  12, -1700 }, {     0,      0, 0 }, 0x0604 },
+    { ACTOR_DM_CHAR01,      {     0,   0,     0 }, {     0, 0x8000, 0 }, 0x0002 }, // Woodfall Temple
+    { ACTOR_DM_CHAR01,      {     0,   0,     0 }, {     0, 0x8000, 0 }, 0x0003 }, // Ramp & Platform
+    { ACTOR_DM_CHAR01,      {     0,   0,     0 }, {     0, 0x8000, 0 }, 0x0000 }, // Water
+    { ACTOR_DM_CHAR01,      {     0,   0,     0 }, {     0,      0, 0 }, 0x0001 }, // Walls
+  /*{ ACTOR_BG_LOTUS,       {   485,   0,  1549 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       { -1506,   0,  -889 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       {  -909,   0,    27 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       {  -904,   0,   419 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       { -1266,   0,   414 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       {  1354,   0,   654 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       {  1011,   0,   455 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       { -1121,   0,  -571 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       { -1076,   0,  -230 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       {   829,   0,   953 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       {  -884,   0,  -868 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       { -1167,   0, -1084 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       { -1443,   0,  -283 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       {  1192,   0,   968 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       {  -485,   0, -1359 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       {   266,   0, -1291 }, {     0,      0, 0 }, 0x0001 },
+    { ACTOR_BG_LOTUS,       {   237,   0,  1432 }, {     0,      0, 0 }, 0x0001 },*/
+  //{ ACTOR_OBJ_WARPSTONE,  {     0, 200,  1143 }, {     0, 0x8000, 0 }, 0x000F },
 };
 
 s32 woodfall_room_0_terminatorMaybe_00052C = { 0x01000000 };

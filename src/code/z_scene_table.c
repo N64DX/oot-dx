@@ -109,6 +109,7 @@ void Scene_DrawConfigForsakenKingdom(PlayState* play);
 void Scene_DrawConfigAncientHollow(PlayState* play);
 void Scene_DrawConfigGoronMines(PlayState* play);
 void Scene_DrawConfigWoodfallTemple(PlayState* play);
+void Scene_DrawConfigStoneTowerTemple(PlayState* play);
 void Scene_DrawConfigForbiddenWoods(PlayState* play);
 void Scene_DrawConfigWebbedShrine(PlayState* play);
 void Scene_DrawConfigBeneathTheGraveyard(PlayState* play);
@@ -237,6 +238,7 @@ SceneDrawConfigFunc sSceneDrawConfigs[SDC_MAX] = {
     Scene_DrawConfigAncientHollow,               // SDC_ANCIENT_HOLLOW
     Scene_DrawConfigGoronMines,                  // SDC_GORON_MINES
     Scene_DrawConfigWoodfallTemple,              // SDC_WOODFALL_TEMPLE
+    Scene_DrawConfigStoneTowerTemple,            // SDC_STONE_TOWER_TEMPLE
     Scene_DrawConfigForbiddenWoods,              // SDC_FORBIDDEN_WOODS
     Scene_DrawConfigWebbedShrine,                // SDC_WEBBED_SHRINE
     Scene_DrawConfigBeneathTheGraveyard,         // SDC_BENEATH_THE_GRAVEYARD
@@ -1960,6 +1962,19 @@ void Scene_DrawConfigWoodfallTemple(PlayState* play) {
 
     gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE,  (gameplayFrames * 1) % 128, (gameplayFrames * 1) % 128, 32, 32, 1,                          0,  (gameplayFrames * 1) % 128, 32, 32));
     gSPSegment(POLY_OPA_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, -(gameplayFrames * 1) % 128, (gameplayFrames * 1) % 128, 32, 32, 1, (gameplayFrames * 1) % 128, -(gameplayFrames * 1) % 128, 32, 32));
+
+    Scene_SetDefaultEnvColor(play);
+    CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
+}
+
+void Scene_DrawConfigStoneTowerTemple(PlayState* play) {
+    u32 gameplayFrames = play->gameplayFrames;
+
+    OPEN_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
+
+    gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
+    gSPSegment(POLY_XLU_DISP++, 0x0A, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 127 - gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32, 1, gameplayFrames % 128, (gameplayFrames * 1) % 128, 32, 32));
 
     Scene_SetDefaultEnvColor(play);
     CLOSE_DISPS(play->state.gfxCtx,  __FILE__, __LINE__);
