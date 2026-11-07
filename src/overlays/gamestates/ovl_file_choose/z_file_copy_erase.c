@@ -262,9 +262,6 @@ void FileSelect_SetupCopyDest1(GameState* thisx) {
     SramContext* sramCtx = &this->sramCtx;
     s16 yStep;
     s16 i;
-#if PLATFORM_IQUE
-    s16* array;
-#endif
 
     if (EXTRA_SAVE_SLOTS) {
         FileSelect_ApplyCopyDestGrid(this, this->buttonIndex);
@@ -284,7 +281,6 @@ void FileSelect_SetupCopyDest1(GameState* thisx) {
         return;
     }
 
-#if !PLATFORM_IQUE
     for (i = 0; i < FILE_SELECT_SLOTS; i++) {
         yStep = ABS(this->buttonYOffsets[i] - D_8081248C_X(this->buttonIndex, i)) / this->actionTimer;
 
@@ -294,50 +290,19 @@ void FileSelect_SetupCopyDest1(GameState* thisx) {
             this->buttonYOffsets[i] -= yStep;
         }
     }
-#else
-    array = this->buttonYOffsets;
-    for (i = 0; i < FILE_SELECT_SLOTS; i++) {
-        yStep = ABS(array[i] - D_8081248C_X(this->buttonIndex, i)) / this->actionTimer;
 
-        if (array[i] <= D_8081248C_X(this->buttonIndex, i)) {
-            array[i] += yStep;
-        } else {
-            array[i] -= yStep;
-        }
-    }
-#endif
-
-#if !PLATFORM_IQUE
     this->titleAlpha[0] -= 31;
     this->titleAlpha[1] += 31;
     this->nameBoxAlpha[this->buttonIndex] -= 25;
-#else
-    array = this->titleAlpha;
-    array[0] -= 31;
-    array[1] += 31;
-    array = this->nameBoxAlpha;
-    array[this->buttonIndex] -= 25;
-#endif
 
     this->actionTimer--;
     if (this->actionTimer == 0) {
-#if !PLATFORM_IQUE
         this->buttonYOffsets[this->buttonIndex] = D_8081248C_X(this->buttonIndex, this->buttonIndex);
-#else
-        array = this->buttonYOffsets;
-        array[this->buttonIndex] = D_8081248C_X(this->buttonIndex, this->buttonIndex);
-#endif
 
         this->titleLabel = this->nextTitleLabel;
 
-#if !PLATFORM_IQUE
         this->titleAlpha[0] = 255;
         this->titleAlpha[1] = 0;
-#else
-        array = this->titleAlpha;
-        array[0] = 255;
-        array[1] = 0;
-#endif
 
         this->actionTimer = 8;
         this->configMode++;
