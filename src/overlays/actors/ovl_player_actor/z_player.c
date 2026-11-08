@@ -6740,8 +6740,8 @@ void func_8083A5C4(PlayState* play, Player* this, CollisionPoly* arg2, f32 arg3,
     func_80832564(play, this);
     Player_AnimPlayOnce(play, this, anim);
 
-    this->actor.world.pos.x -= (arg3 + (FIX_USEFUL_GLITCHES) ? 10.0f : 1.0f) * nx;
-    this->actor.world.pos.z -= (arg3 + (FIX_USEFUL_GLITCHES) ? 10.0f : 1.0f) * nz;
+    this->actor.world.pos.x -= (arg3 + 1.0f) * nx;
+    this->actor.world.pos.z -= (arg3 + 1.0f) * nz;
     this->actor.shape.rot.y = this->yaw = Math_Atan2S(nz, nx);
 
     func_80832224(this);
