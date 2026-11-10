@@ -412,13 +412,6 @@ beginseg
 endseg
 
 beginseg
-    name "ovl_En_Sbeetle"
-    compress
-    flags OVERLAY
-    include "$(BUILD_DIR)/src/overlays/actors/ovl_En_Sbeetle/z_en_sbeetle.o"
-endseg
-
-beginseg
     name "ovl_En_Miniblin"
     compress
     flags OVERLAY

@@ -13,8 +13,8 @@ SceneCmd oceanside_spider_house_room_2[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&oceanside_spider_house_room_2RoomShapeCullable_0001A0),
-    SCENE_CMD_OBJECT_LIST(15, oceanside_spider_house_room_2ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(24, oceanside_spider_house_room_2ActorEntry_000058),
+    SCENE_CMD_OBJECT_LIST(14, oceanside_spider_house_room_2ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(21, oceanside_spider_house_room_2ActorEntry_000058),
     SCENE_CMD_END(),
 };
 
@@ -30,16 +30,12 @@ s16 oceanside_spider_house_room_2ObjectList_000040[] = {
     OBJECT_KIN2_OBJ,
     OBJECT_SKB,
     OBJECT_D_HSBLOCK,
-    OBJECT_SBEETLE,
     OBJECT_HIDAN_OBJECTS,
     OBJECT_POH,
     OBJECT_PO_COMPOSER,
 };
 
 ActorEntry oceanside_spider_house_room_2ActorEntry_000058[] = {
-    { ACTOR_EN_SBEETLE,      {  -925, 180, -1175 }, {             0,      0, 0 }, 0x0003 },
-    { ACTOR_EN_SBEETLE,      {  -485, 180,  -730 }, {             0, 0xC000, 0 }, 0x0003 },
-    { ACTOR_EN_SBEETLE,      {  -915, 180, -1330 }, {             0, 0xC000, 0 }, 0x0003 },
     { ACTOR_EN_SW,           {  -810, 276,  -364 }, {             0, 0x8000, 0 }, 0x0000 },
     { ACTOR_EN_SW,           {  -780, 210, -1500 }, {             0,      0, 0 }, 0x0000 },
     { ACTOR_EN_SW,           {  -345, 320,  -700 }, {             0, 0xC000, 0 }, 0x0000 },
