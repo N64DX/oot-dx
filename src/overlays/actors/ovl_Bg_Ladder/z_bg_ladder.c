@@ -8,6 +8,7 @@
 
 #include "libc64/math64.h"
 #include "controller.h"
+#include "z_lib.h"
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "ichain.h"
@@ -17,7 +18,6 @@
 #include "play_state.h"
 #include "player.h"
 #include "save.h"
-#include "z_lib.h"
 #include "one_point_cutscene.h"
 #include "array_count.h"
 
@@ -60,8 +60,9 @@ static Gfx* sLadderDLists[] = {
 
 void BgLadder_Init(Actor* thisx, PlayState* play) {
     BgLadder* this = (BgLadder*)thisx;
+
     BgLadderSize size;
-    CollisionHeader* colHeader = NULL;
+    CollisionHeader* header = NULL;
 
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
 
@@ -70,20 +71,20 @@ void BgLadder_Init(Actor* thisx, PlayState* play) {
     DynaPolyActor_Init(&this->dyna, 0);
     size = thisx->params;
 
-    if (size == LADDER_SIZE_12RUNG) {
-        CollisionHeader_GetVirtual(&gWoodenLadder12RungCol, &colHeader);
-    } else if (size == LADDER_SIZE_16RUNG) {
-        CollisionHeader_GetVirtual(&gWoodenLadder16RungCol, &colHeader);
-    } else if (size == LADDER_SIZE_20RUNG) {
-        CollisionHeader_GetVirtual(&gWoodenLadder20RungCol, &colHeader);
-    } else if (size == LADDER_SIZE_24RUNG) {
-        CollisionHeader_GetVirtual(&gWoodenLadder24RungCol, &colHeader);
-    } else {
+    if (size == LADDER_SIZE_12RUNG)
+        CollisionHeader_GetVirtual(&gWoodenLadder12RungCol, &header);
+    else if (size == LADDER_SIZE_16RUNG)
+        CollisionHeader_GetVirtual(&gWoodenLadder16RungCol, &header);
+    else if (size == LADDER_SIZE_20RUNG)
+        CollisionHeader_GetVirtual(&gWoodenLadder20RungCol, &header);
+    else if (size == LADDER_SIZE_24RUNG)
+        CollisionHeader_GetVirtual(&gWoodenLadder24RungCol, &header);
+    else {
         Actor_Kill(&this->dyna.actor);
         return;
     }
     
-    this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
+    this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, header);
 
     this->csId = this->dyna.actor.home.rot.z;
     this->dyna.actor.home.rot.z = this->dyna.actor.world.rot.z = this->dyna.actor.shape.rot.z = 0;

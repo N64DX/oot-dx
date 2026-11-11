@@ -2022,11 +2022,15 @@ u8 Item_Give(PlayState* play, u8 item) {
         }
         return ITEM_NONE;
     } else if ((item >= ITEM_SHIELD_DEKU) && (item <= ITEM_SHIELD_HEROS)) {
+        u8 index = item - ITEM_SHIELD_DEKU;
         if (item == ITEM_SHIELD_DEKU)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, item - ITEM_SHIELD_DEKU);
+        gSaveContext.save.info.shields[index].durability = Player_GetMaxShieldDurability(index+1);
         if (item == ITEM_SHIELD_DEKU)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_WOODEN];
+        else if (item == ITEM_SHIELD_MIRROR)
+            gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
         else if (item == ITEM_SHIELD_HEROS)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_METAL];
         for (i=0; i<4; i++)
@@ -2036,6 +2040,7 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_SHIELD_WOODEN) {
         gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_WOODEN];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 0);
+        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
@@ -2043,6 +2048,7 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_SHIELD_METAL) {
         gSaveContext.save.info.upgradeItems |= gBitFlags[UPGRADE_SHIELD_METAL];
         gSaveContext.save.info.inventory.equipment |= OWNED_EQUIP_FLAG(EQUIP_TYPE_SHIELD, 3);
+        gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
         for (i=0; i<4; i++)
             if (DPAD_BUTTON(i) == SLOT_SHIELDS)
                 Interface_LoadItemIcon1(play, i+4);
@@ -2052,7 +2058,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         if (gSaveContext.save.info.shields[index].upgrade < 8)
             gSaveContext.save.info.shields[index].upgrade++;
         gSaveContext.save.info.shields[index].durability = Player_GetMaxShieldDurability(index+1);
-        if (item == ITEM_SHIELD_HEROS_UPGRADE)
+        if (item == ITEM_SHIELD_MIRROR_UPGRADE)
             gSaveContext.save.info.upgradeItems &= ~gBitFlags[UPGRADE_SHIELD_MIRROR_BROKEN];
         return ITEM_NONE;
     } else if ((item >= ITEM_TUNIC_KOKIRI) && (item <= ITEM_TUNIC_SPIRIT)) {
@@ -3720,7 +3726,7 @@ void Interface_DrawItemButtons(PlayState* play) {
             gDPSetEnvColor(OVERLAY_DISP++, 0, 0, 0, 0);
             gDPSetCombineLERP(OVERLAY_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0,
                               PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
-			gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
+            gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
 
 #if !PLATFORM_IQUE
             gDPLoadTextureBlock_4b(OVERLAY_DISP++, cUpLabelTextures[gSaveContext.language], G_IM_FMT_IA, 32, 8, 0,
@@ -3737,7 +3743,7 @@ void Interface_DrawItemButtons(PlayState* play) {
                                 HIRES_DIVIDE(1 << 10));
 #endif
 
-			gDPSetTextureFilter(OVERLAY_DISP++, G_TF_BILERP);
+            gDPSetTextureFilter(OVERLAY_DISP++, G_TF_BILERP);
         }
 
         sCUpTimer--;

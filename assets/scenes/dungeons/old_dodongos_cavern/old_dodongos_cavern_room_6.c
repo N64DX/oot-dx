@@ -47,7 +47,7 @@ ActorEntry old_dodongos_cavern_room_6ActorList0x000048[] = {
     { ACTOR_OBJ_OSHIHIKI,       { 1960,  531, -1180 }, { 0,      0, 0 }, 0xFF00 },
     { ACTOR_OBJ_FLOATER,        { 2300,  549, -1520 }, { 0,      0, 0 }, 0x9700 },
     { ACTOR_BG_DBLUE_WATERFALL, { 2300, 1171, -1520 }, { 0,      0, 0 }, 0x200D }, // Switch: 0D
-    { ACTOR_OBJ_TSUBO,          { 1750,  531, -1150 }, { 0,      0, 0 }, 0x6209 }, // Collect: 31, drops Arrows (10)
+    { ACTOR_OBJ_TSUBO,          { 1750,  531, -1150 }, { 0,      0, 0 }, 0x6209 }, // Collect: 31, Arrows (10)
 };
 
 RoomShapeCullable old_dodongos_cavern_room_6MeshHeader0x0000A0 = {

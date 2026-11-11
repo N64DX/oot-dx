@@ -526,6 +526,7 @@ void Play_Init(GameState* thisx) {
             gSaveContext.sceneLayer = GET_EVENTCHKINF(EVENTCHKINF_48) ? 3 : 2;
     }
 
+    this->progressRush = this->swapEquipment = false;
     Play_SetDungeonRushEntry(this);
     Play_SpawnScene(
         this, gEntranceTable[((void)0, gSaveContext.save.entranceIndex) + SCENE_LAYER_GOTO(this, ((void)0, gSaveContext.sceneLayer))].sceneId,

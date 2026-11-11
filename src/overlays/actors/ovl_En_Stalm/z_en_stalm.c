@@ -1151,7 +1151,7 @@ void EnStalmaster_Death(EnStalmaster* this, struct PlayState* play) {
     }
     
     if (this->animationTimer == 0) {
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xB0);
+        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_13, false));
         if (this->flags.switchFlag <= 0x3F)
             Flags_SetSwitch(play, this->flags.switchFlag);
         Actor_Kill(&this->actor);
