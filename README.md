@@ -67,7 +67,7 @@ This is a modding fork of https://github.com/zeldaret/oot, which includes many Q
 **Actors and objects:**
 - **GrandLovania**: Stalmaster
 - **LeSéducteur:** Buff Scrub, King Deku
-- **Syeo & Trueffel:** Miniblin, Molmauk, Scissors Beetle
+- **Syeo & Trueffel:** Miniblin, Molmauk
 - **Sunset Tides Interactive:** Beast, Giant Spider, Black Beast
 - **thinedave & Aegiker:** Harder Mad Scrub, Biri, King Dodongo, Iron Knuckle & Ganondorf
 - **Zelda Spaceworld ´97 Experience:** Zol
