@@ -384,13 +384,6 @@ beginseg
 endseg
 
 beginseg
-    name "object_sbeetle"
-    compress
-    include "$(BUILD_DIR)/assets/objects/object_sbeetle/object_sbeetle.o"
-    number 6
-endseg
-
-beginseg
     name "object_miniblin"
     compress
     include "$(BUILD_DIR)/assets/objects/object_miniblin/object_miniblin.o"

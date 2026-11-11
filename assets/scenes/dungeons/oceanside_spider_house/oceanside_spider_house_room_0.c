@@ -12,7 +12,7 @@ SceneCmd oceanside_spider_house_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&oceanside_spider_house_room_0RoomShapeCullable_000160),
-    SCENE_CMD_OBJECT_LIST(15, oceanside_spider_house_room_0ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(14, oceanside_spider_house_room_0ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(14, oceanside_spider_house_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
@@ -29,7 +29,6 @@ s16 oceanside_spider_house_room_0ObjectList_000040[] = {
     OBJECT_KIN2_OBJ,
     OBJECT_SKB,
     OBJECT_D_HSBLOCK,
-    OBJECT_SBEETLE,
     OBJECT_HIDAN_OBJECTS,
     OBJECT_POH,
     OBJECT_PO_COMPOSER,
