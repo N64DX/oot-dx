@@ -1375,9 +1375,10 @@ void Play_Draw(PlayState* this) {
 
 #if INGAME_ASPECT_RATIO
         if (ASPECT_RATIO == 2 && this->roomCtx.curRoom.roomShape->base.type == ROOM_SHAPE_TYPE_IMAGE && this->skyboxCtx.drawType == SKYBOX_DRAW_128)
-            gDPSetScissor(POLY_OPA_DISP++, G_SC_NON_INTERLACE, UWS_JPEG_SHIFT, 0, gScreenWidth - UWS_JPEG_SHIFT, gScreenHeight);
+            gDPSetScissor(POLY_OPA_DISP++, G_SC_NON_INTERLACE, JPEG_SHIFT, 0, gScreenWidth - JPEG_SHIFT, gScreenHeight);
 #elif ((WIDESCREEN && !WS_JPEG) || ULTRA_WS)
-        gDPSetScissor(POLY_OPA_DISP++, G_SC_NON_INTERLACE, UWS_JPEG_SHIFT, 0, gScreenWidth - UWS_JPEG_SHIFT, gScreenHeight);
+        if (this->roomCtx.curRoom.roomShape->base.type == ROOM_SHAPE_TYPE_IMAGE && this->skyboxCtx.drawType == SKYBOX_DRAW_128)
+            gDPSetScissor(POLY_OPA_DISP++, G_SC_NON_INTERLACE, JPEG_SHIFT, 0, gScreenWidth - JPEG_SHIFT, gScreenHeight);
 #endif
 
         // The billboard matrix temporarily stores the viewing matrix

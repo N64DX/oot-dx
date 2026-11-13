@@ -482,14 +482,6 @@ void EnDog_Draw(Actor* thisx, PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_dog.c", 972);
 
-#if INGAME_ASPECT_RATIO
-    if (play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT && thisx->world.pos.z > -880 && GET_ACTIVE_CAM(play)->bgCamIndex == 0 && ASPECT_RATIO == 2)
-        return;
-#elif ((WIDESCREEN && !WS_JPEG) || ULTRA_WS)
-    if (play->sceneId == SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT && thisx->world.pos.z > -880 && GET_ACTIVE_CAM(play)->bgCamIndex == 0)
-        return;
-#endif
-
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
 
     gDPPipeSync(POLY_OPA_DISP++);
