@@ -105,7 +105,6 @@
     #define OCEFF_SHIFT     ((SCREEN_WIDTH == 432) ? 80 : ((SCREEN_WIDTH == 576) ? 155 : 18))
     #define WS_JPEG         1
     #define WS_PX_SHIFT     ((SCREEN_WIDTH == 320) ? 0 : 1)
-    #define UWS_JPEG_SHIFT  73
 #elif WIDESCREEN
     #define GFXPRINT_SHIFT  6
     #define RAMPRINT_SHIFT  8
@@ -137,5 +136,8 @@
     #define JPEG_SCALE 1024
     #define JPEG_WIDTH 320
 #endif
+
+// Values for JPEG scissors
+#define JPEG_SHIFT (((SCREEN_WIDTH - JPEG_WIDTH) > 0) ? (((SCREEN_WIDTH - JPEG_WIDTH) / 2) + 1) : 0)
 
 #endif
