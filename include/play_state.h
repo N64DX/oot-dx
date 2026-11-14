@@ -151,6 +151,7 @@ typedef struct PlayState {
     /* 0x12134 */ u8 specialIconLast;
     /* 0x12135 */ u8 progressRush;
     /* 0x12136 */ u8 swapEquipment;
+    /* 0x12137 */ u8 timeChallengeModeEnded;
 } PlayState; // size = 0x12518
 
 extern Mtx D_01000000; // billboardMtx
@@ -193,12 +194,15 @@ void Play_TriggerRespawn(PlayState* this);
 int Play_CamIsNotFixed(PlayState* this);
 s32 func_800C0D34(PlayState* this, Actor* actor, s16* yaw);
 s32 func_800C0DB4(PlayState* this, Vec3f* pos);
-void Play_SetDungeonRushEntry(PlayState* this);
-void Play_SetDungeonRushProgress(PlayState* this);
+
 u32 Player_UseSpecialPower(struct PlayState* this, Player* player, u8 cost, u8 cooldown, u16 sfx, SpecialPowerType type, s32 amount);
 u16 Player_GetMaxShieldDurability(u8 shield);
 u8 Player_GetMaxEnergy(void);
 u8 Player_HasEnergyUnlocked(void);
+
+void Play_ResetTotalDaysTimer(void);
+void Play_SetDungeonRushEntry(PlayState* this);
+void Play_SetDungeonRushProgress(PlayState* this);
 
 void Play_DrawMotionBlur(PlayState* this);
 void Play_InitMotionBlur(void);

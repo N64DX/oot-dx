@@ -23,6 +23,68 @@ void GameOver_FadeInLights(PlayState* play) {
 
 s16 sGameOverTimer = 0;
 
+void GameOver_ResetChallengeScene(PlayState* play, u8 sceneId) {
+    SavedSceneFlags* sf;
+
+    if (Play_GetOriginalSceneId(sceneId) < ARRAY_COUNT(gSaveContext.save.info.sceneFlags))
+        sf = &gSaveContext.save.info.sceneFlags[Play_GetOriginalSceneId(sceneId)];
+    else if (Play_GetOriginalSceneId(sceneId) < ARRAY_COUNT(gSaveContext.save.info.sceneFlags) + ARRAY_COUNT(gSaveContextExtended.sceneFlags))
+    sf->chest = play->actorCtx.flags.chest = sf->swch = play->actorCtx.flags.swch = play->actorCtx.flags.tempSwch = sf->clear = play->actorCtx.flags.clear = play->actorCtx.flags.tempClear = sf->collect = play->actorCtx.flags.collect = play->actorCtx.flags.tempCollect = sf->extra.quest = sf->extra.exit = sf->extra.unk =  sf->rooms = sf->floors = 0;
+}
+
+void GameOver_ResetChallengeProgress(PlayState* play) {
+    SavedSceneFlags* sf;
+
+    if (!CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD)) {
+        GameOver_ResetChallengeScene(play, SCENE_DEKU_TREE);
+        GameOver_ResetChallengeScene(play, SCENE_DEKU_TREE_BOSS);
+    }
+
+    if (!CHECK_QUEST_ITEM(QUEST_GORON_RUBY)) {
+        GameOver_ResetChallengeScene(play, SCENE_DODONGOS_CAVERN);
+        GameOver_ResetChallengeScene(play, SCENE_DODONGOS_CAVERN_BOSS);
+    }
+
+    if (!CHECK_QUEST_ITEM(QUEST_ZORA_SAPPHIRE)) {
+        GameOver_ResetChallengeScene(play, SCENE_JABU_JABU);
+        GameOver_ResetChallengeScene(play, SCENE_JABU_JABU_BOSS);
+    }
+
+    if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FOREST)) {
+        GameOver_ResetChallengeScene(play, SCENE_FOREST_TEMPLE);
+        GameOver_ResetChallengeScene(play, SCENE_FOREST_TEMPLE_BOSS);
+    }
+
+    if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_FIRE)) {
+        GameOver_ResetChallengeScene(play, SCENE_FIRE_TEMPLE);
+        GameOver_ResetChallengeScene(play, SCENE_FIRE_TEMPLE_BOSS);
+    }
+
+    if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_WATER)) {
+        GameOver_ResetChallengeScene(play, SCENE_ICE_CAVERN);
+        GameOver_ResetChallengeScene(play, SCENE_WATER_TEMPLE);
+        GameOver_ResetChallengeScene(play, SCENE_WATER_TEMPLE_BOSS);
+    }
+
+    if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_SHADOW)) {
+        GameOver_ResetChallengeScene(play, SCENE_BOTTOM_OF_THE_WELL);
+        GameOver_ResetChallengeScene(play, SCENE_SHADOW_TEMPLE);
+        GameOver_ResetChallengeScene(play, SCENE_SHADOW_TEMPLE_BOSS);
+    }
+
+    if (!CHECK_QUEST_ITEM(QUEST_MEDALLION_SPIRIT)) {
+        GameOver_ResetChallengeScene(play, SCENE_GERUDO_TRAINING_GROUND);
+        GameOver_ResetChallengeScene(play, SCENE_SPIRIT_TEMPLE);
+        GameOver_ResetChallengeScene(play, SCENE_SPIRIT_TEMPLE_BOSS);
+    }
+
+    GameOver_ResetChallengeScene(play, SCENE_INSIDE_GANONS_CASTLE);
+    if (!IS_CHILD_QUEST)
+        GameOver_ResetChallengeScene(play, SCENE_GANONS_TOWER);
+
+    Play_SaveSceneFlags(play);
+}
+
 void GameOver_Update(PlayState* play) {
     GameOverContext* gameOverCtx = &play->gameOverCtx;
     s16 i;
@@ -111,6 +173,10 @@ void GameOver_Update(PlayState* play) {
             sGameOverTimer--;
 
             if (sGameOverTimer == 0) {
+                if (TIMER_CHALLENGE > 0) {
+                    Play_ResetTotalDaysTimer();
+                    GameOver_ResetChallengeProgress(play);
+                }
                 if (AUTOSAVE) {
                     play->nextEntranceIndex = gSaveContext.save.entranceIndex;
                     play->transitionTrigger = TRANS_TRIGGER_START;
@@ -119,7 +185,9 @@ void GameOver_Update(PlayState* play) {
                     gameOverCtx->state = gSaveContext.healthAccumulator = gSaveContext.save.info.playerData.magicLevel = gSaveContext.save.info.playerData.magic = gSaveContext.magicState = gSaveContext.prevMagicState = 0;
                     gSaveContext.save.info.playerData.deaths += gSaveContext.save.info.playerData.deaths >= 999 ? 0 : 1;
                     Rumble_Reset();
-                    SET_AUTOSAVE(play);
+                    Play_SaveSceneFlags(play);
+                    gSaveContext.save.info.playerData.savedSceneId = play->sceneId;
+                    Sram_WriteSave(&play->sramCtx);
                     return;
                 }
                 play->pauseCtx.state = PAUSE_STATE_GAME_OVER_START;

@@ -538,13 +538,13 @@ void Skybox_Setup(PlayState* play, SkyboxContext* skyboxCtx, s16 skyboxId) {
             break;
 
         case SKYBOX_TERMINA_SKY:
-            skyboxConfig = 4;
+            skyboxConfig = play->envCtx.skyboxConfig;
 
             for (i=0; i<ARRAY_COUNT(gTimeBasedTerminaSkyboxConfigs[skyboxConfig]); i++)
                 if (gSaveContext.skyboxTime >= gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].startTime && (gSaveContext.skyboxTime < gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].endTime || gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].endTime == 0xFFFF)) {
                     play->envCtx.skybox1Index = skybox1Index = gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].skybox1Index;
                     play->envCtx.skybox2Index = skybox2Index = gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].skybox2Index;
-                    if (gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].changeSkybox)
+                    if (skybox1Index != skybox2Index)
                         play->envCtx.skyboxBlend = Environment_LerpWeight(gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].endTime, gTimeBasedTerminaSkyboxConfigs[skyboxConfig][i].startTime, ((void)0, gSaveContext.skyboxTime)) * 255.0f;
                     else play->envCtx.skyboxBlend = 0;
                     break;

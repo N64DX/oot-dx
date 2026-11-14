@@ -163,11 +163,12 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_42_28.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_43_30.o"
     include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_44_15.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_45_red_ice_cavern.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_46_dawngrove.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_47_dawngrove_village.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_48_dawngrove_cave.o"
-    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_49_deep_woods.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_45_23.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_46_red_ice_cavern.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_47_dawngrove.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_48_dawngrove_village.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_49_dawngrove_cave.o"
+    include "$(BUILD_DIR)/assets/audio/soundfonts/Soundfont_50_deep_woods.o"
 #if OOT_VERSION >= PAL_1_0
     include "$(BUILD_DIR)/assets/audio/audiobank_padding.o"
 #endif
@@ -308,6 +309,7 @@ beginseg
     include "$(BUILD_DIR)/assets/audio/sequences/seq_130_inv_stone_tower_temple.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_131_dungeon_appear.o"
     include "$(BUILD_DIR)/assets/audio/sequences/seq_132_enemy2.o"
+    include "$(BUILD_DIR)/assets/audio/sequences/seq_133_final_hours.o"
 endseg
 
 beginseg
@@ -984,6 +986,7 @@ beginseg
     include "$(BUILD_DIR)/assets/textures/parameter_static/parameter_static.o"
     include "$(BUILD_DIR)/assets/textures/parameter_static/parameter_static_all.o"
     include "$(BUILD_DIR)/assets/textures/parameter_static/quest_title/parameter_static_quest.o"
+    include "$(BUILD_DIR)/assets/textures/parameter_static/three_day_clock/parameter_static_clock.o"
     number 2
 endseg
 
