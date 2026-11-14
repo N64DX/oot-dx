@@ -481,15 +481,15 @@ void Minimap_DrawCompassIcons(PlayState* play) {
             mapStartPosX = R_DGN_MINIMAP_X + WS_SHIFT_HALF + (gMapData->dungeonXOffset[R_MAP_INDEX][play->interfaceCtx.mapRoomNum]/2);
             mapWidth = MAP_I_TEX_WIDTH;
         }
-        mirrorOffset = ((mapWidth / 2) - ((R_COMPASS_OFFSET_X / 10) - (mapStartPosX - X_HIRES_DIVIDE(SCREEN_WIDTH) / 2))) * 2 * 10;
+        mirrorOffset = ((mapWidth / 2) - ((R_COMPASS_OFFSET_X / 10) - (mapStartPosX - SCREEN_WIDTH / 2))) * 2 * 10;
 
         tempX = player->actor.world.pos.x;
         tempZ = player->actor.world.pos.z;
         tempX /= R_COMPASS_SCALE_X * (R_ENABLE_MIRROR == 1 ? -1 : 1);
         tempZ /= R_COMPASS_SCALE_Y;
         tempXOffset = R_COMPASS_OFFSET_X + (R_ENABLE_MIRROR == 1 ? mirrorOffset : 0);
-        Matrix_Translate(HIRES_MULTIPLY((tempXOffset + tempX + (WS_SHIFT_FULL * 5)) / 10.0f), HIRES_MULTIPLY((R_COMPASS_OFFSET_Y - tempZ) / 10.0f), 0.0f, MTXMODE_NEW);
-        Matrix_Scale(HIRES_MULTIPLY(0.4f), HIRES_MULTIPLY(0.4f), HIRES_MULTIPLY(0.4f), MTXMODE_APPLY);
+        Matrix_Translate((tempXOffset + tempX + (WS_SHIFT_FULL * 5)) / 10.0f, (R_COMPASS_OFFSET_Y - tempZ) / 10.0f, 0.0f, MTXMODE_NEW);
+        Matrix_Scale(0.4f, 0.4f, 0.4f, MTXMODE_APPLY);
         Matrix_RotateX(-1.6f, MTXMODE_APPLY);
         tempX = ((0x7FFF - player->actor.shape.rot.y) / 0x400) * (R_ENABLE_MIRROR == 1 ? -1 : 1);
         Matrix_RotateY(tempX / 10.0f, MTXMODE_APPLY);
@@ -503,9 +503,9 @@ void Minimap_DrawCompassIcons(PlayState* play) {
         tempX /= R_COMPASS_SCALE_X * (R_ENABLE_MIRROR == 1 ? -1 : 1);
         tempZ /= R_COMPASS_SCALE_Y;
 
-        Matrix_Translate(HIRES_MULTIPLY((tempXOffset + tempX + (WS_SHIFT_FULL * 5)) / 10.0f), HIRES_MULTIPLY((R_COMPASS_OFFSET_Y - tempZ) / 10.0f), 0.0f, MTXMODE_NEW);
+        Matrix_Translate((tempXOffset + tempX + (WS_SHIFT_FULL * 5)) / 10.0f, (R_COMPASS_OFFSET_Y - tempZ) / 10.0f, 0.0f, MTXMODE_NEW);
 
-        Matrix_Scale(HIRES_MULTIPLY(VREG(9) / 100.0f), HIRES_MULTIPLY(VREG(9) / 100.0f), HIRES_MULTIPLY(VREG(9) / 100.0f), MTXMODE_APPLY);
+        Matrix_Scale(VREG(9) / 100.0f, VREG(9) / 100.0f, VREG(9) / 100.0f, MTXMODE_APPLY);
         Matrix_RotateX(VREG(52) / 10.0f, MTXMODE_APPLY);
         Matrix_RotateY((sPlayerInitialDirection * (R_ENABLE_MIRROR == 1 ? -1 : 1)) / 10.0f, MTXMODE_APPLY);
         MATRIX_FINALIZE_AND_LOAD(OVERLAY_DISP++, play->state.gfxCtx, "../z_map_exp.c", 603);
@@ -563,11 +563,11 @@ void Minimap_Draw(PlayState* play) {
 
                         if (R_ENABLE_MIRROR == 1) {
                             u16 x = WS_SHIFT_FULL + R_DGN_MINIMAP_X + gMapData->dungeonXOffset[mapIndex][interfaceCtx->mapRoomNum];
-                            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(x) << 2, HIRES_MULTIPLY(R_DGN_MINIMAP_Y << 2), X_HIRES_MULTIPLY(x + MAP_I_TEX_WIDTH) << 2,
-                                HIRES_MULTIPLY((R_DGN_MINIMAP_Y + MAP_I_TEX_HEIGHT) << 2), G_TX_RENDERTILE, (MAP_I_TEX_WIDTH - 1) << 5, 0, (s32)(-X_HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                            gSPTextureRectangle(OVERLAY_DISP++, x << 2, R_DGN_MINIMAP_Y << 2, (x + MAP_I_TEX_WIDTH) << 2,
+                                (R_DGN_MINIMAP_Y + MAP_I_TEX_HEIGHT) << 2, G_TX_RENDERTILE, (MAP_I_TEX_WIDTH - 1) << 5, 0, (s32)(-(1 << 10)), 1 << 10);
                         } else {
-                            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + R_DGN_MINIMAP_X) << 2, HIRES_MULTIPLY(R_DGN_MINIMAP_Y << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + R_DGN_MINIMAP_X + MAP_I_TEX_WIDTH) << 2,
-                                HIRES_MULTIPLY((R_DGN_MINIMAP_Y + MAP_I_TEX_HEIGHT) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                            gSPTextureRectangle(OVERLAY_DISP++, (WS_SHIFT_FULL + R_DGN_MINIMAP_X) << 2, R_DGN_MINIMAP_Y << 2, (WS_SHIFT_FULL + R_DGN_MINIMAP_X + MAP_I_TEX_WIDTH) << 2,
+                                (R_DGN_MINIMAP_Y + MAP_I_TEX_HEIGHT) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
                         }
                         
                         
@@ -645,11 +645,11 @@ void Minimap_Draw(PlayState* play) {
 
                     if (R_ENABLE_MIRROR == 1) {
                         u16 x = WS_SHIFT_FULL + R_OW_MINIMAP_X + (xOffset * 2);
-                        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(x) << 2, HIRES_MULTIPLY(R_OW_MINIMAP_Y << 2), X_HIRES_MULTIPLY(x + gMapData->owMinimapWidth[extendedMapIndex]) << 2, HIRES_MULTIPLY(((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[extendedMapIndex]) << 2)),
-                            G_TX_RENDERTILE, (gMapData->owMinimapWidth[extendedMapIndex] - 1) << 5, 0, (s32)(-X_HIRES_DIVIDE(1 << 10)), HIRES_DIVIDE(1 << 10));
+                        gSPTextureRectangle(OVERLAY_DISP++, x << 2, R_OW_MINIMAP_Y << 2, (x + gMapData->owMinimapWidth[extendedMapIndex]) << 2, ((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[extendedMapIndex]) << 2),
+                            G_TX_RENDERTILE, (gMapData->owMinimapWidth[extendedMapIndex] - 1) << 5, 0, (s32)(-(1 << 10)), 1 << 10);
                     } else {
-                        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + R_OW_MINIMAP_X) << 2, HIRES_MULTIPLY(R_OW_MINIMAP_Y << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + R_OW_MINIMAP_X + gMapData->owMinimapWidth[extendedMapIndex]) << 2, HIRES_MULTIPLY(((R_OW_MINIMAP_Y + gMapData->owMinimapHeight[extendedMapIndex]) << 2)),
-                            G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                        gSPTextureRectangle(OVERLAY_DISP++, (WS_SHIFT_FULL + R_OW_MINIMAP_X) << 2, R_OW_MINIMAP_Y << 2, (WS_SHIFT_FULL + R_OW_MINIMAP_X + gMapData->owMinimapWidth[extendedMapIndex]) << 2, (R_OW_MINIMAP_Y + gMapData->owMinimapHeight[extendedMapIndex]) << 2,
+                            G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
                     }
 
                     if (((play->sceneId != SCENE_KAKARIKO_VILLAGE) && (play->sceneId != SCENE_KOKIRI_FOREST) &&
@@ -665,11 +665,11 @@ void Minimap_Draw(PlayState* play) {
                                                 G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
                             gSPTextureRectangle(OVERLAY_DISP++,
-                                                X_HIRES_MULTIPLY(newX + WS_SHIFT_FULL) << 2,
-                                                HIRES_MULTIPLY(gMapData->owEntranceIconPosY[sEntranceIconMapIndex] << 2),
-                                                X_HIRES_MULTIPLY(newX + 8 + WS_SHIFT_FULL) << 2,
-                                                HIRES_MULTIPLY((gMapData->owEntranceIconPosY[sEntranceIconMapIndex] + 8) << 2),
-                                                G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                                                (newX + WS_SHIFT_FULL) << 2,
+                                                gMapData->owEntranceIconPosY[sEntranceIconMapIndex] << 2,
+                                                (newX + 8 + WS_SHIFT_FULL) << 2,
+                                                (gMapData->owEntranceIconPosY[sEntranceIconMapIndex] + 8) << 2,
+                                                G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
                         }
                     }
 
@@ -679,8 +679,8 @@ void Minimap_Draw(PlayState* play) {
                                             8, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-                        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(WS_SHIFT_FULL + (R_ENABLE_MIRROR == 1 ? (257 + xOffset) : 270)) << 2, HIRES_MULTIPLY(154 << 2), X_HIRES_MULTIPLY(WS_SHIFT_FULL + (R_ENABLE_MIRROR ? (265 + xOffset) : 278)) << 2, HIRES_MULTIPLY(162 << 2), G_TX_RENDERTILE, 0,
-                                            0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+                        gSPTextureRectangle(OVERLAY_DISP++, (WS_SHIFT_FULL + (R_ENABLE_MIRROR == 1 ? (257 + xOffset) : 270)) << 2, 154 << 2, (WS_SHIFT_FULL + (R_ENABLE_MIRROR ? (265 + xOffset) : 278)) << 2, 162 << 2, G_TX_RENDERTILE, 0,
+                                            0, 1 << 10, 1 << 10);
                     }
 
                     gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);

@@ -470,18 +470,18 @@ void Health_DrawMeter(PlayState* play) {
                 }
             }
 
-            heartCenterY = HIRES_MULTIPLY(26.0f) + offsetY;
-            heartCenterX = HIRES_MULTIPLY(30.0f) + offsetX;
+            heartCenterY = 26.0f + offsetY;
+            heartCenterX = 30.0f + offsetX;
             heartTexCoordPerPixel = 1.0f;
             heartTexCoordPerPixel /= 0.68f;
-            heartTexCoordPerPixel *= HIRES_DIVIDE(gSaveContext.save.info.playerData.healthCapacity <= 0x140 ? 1 << 10 : 1280);
+            heartTexCoordPerPixel *= gSaveContext.save.info.playerData.healthCapacity <= 0x140 ? 1 << 10 : 1280;
             halfHeartLength = 8.0f;
-            halfHeartLength *= HIRES_MULTIPLY(0.68f);
-            gSPTextureRectangle(OVERLAY_DISP++, (s32)(X_MULTIPLY((heartCenterX - halfHeartLength) * 4)),
+            halfHeartLength *= 0.68f;
+            gSPTextureRectangle(OVERLAY_DISP++, (s32)((heartCenterX - halfHeartLength) * 4),
                                 (s32)((heartCenterY - halfHeartLength) * 4),
-                                (s32)(X_MULTIPLY((heartCenterX + halfHeartLength) * 4)),
+                                (s32)((heartCenterX + halfHeartLength) * 4),
                                 (s32)((heartCenterY + halfHeartLength) * 4), G_TX_RENDERTILE, 0, 0,
-                                (s32)(X_DIVIDE(heartTexCoordPerPixel)), (s32)heartTexCoordPerPixel);
+                                (s32)(heartTexCoordPerPixel), (s32)heartTexCoordPerPixel);
         } else {
             if ((ddHeartCountMinusOne < 0) || (heartIndex > ddHeartCountMinusOne)) {
                 if (curCombineModeSet != 2) {
@@ -502,9 +502,9 @@ void Health_DrawMeter(PlayState* play) {
             {
                 Mtx* matrix = GRAPH_ALLOC(gfxCtx, sizeof(Mtx));
                 if (gSaveContext.save.info.playerData.healthCapacity > 0x140) {
-                    Matrix_SetTranslateScaleMtx2(matrix, HIRES_MULTIPLY(0.75f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY(0.75f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY(0.75f) - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY((-131.0f) - WS_SHIFT_HALF) + offsetX, HIRES_MULTIPLY(94.5f) - offsetY, 0.0f);
+                    Matrix_SetTranslateScaleMtx2(matrix, 0.75f - (0.32f * beatingHeartPulsingSize), 0.75f - (0.32f * beatingHeartPulsingSize), 0.75f - (0.32f * beatingHeartPulsingSize), (-131.0f - WS_SHIFT_HALF) + offsetX, 94.5f - offsetY, 0.0f);
                 } else {
-                    Matrix_SetTranslateScaleMtx2(matrix, HIRES_MULTIPLY(1.0f)  - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY(1.0f)  - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY(1.0f)  - (HIRES_MULTIPLY(0.32f) * beatingHeartPulsingSize), HIRES_MULTIPLY((-130.0f) - WS_SHIFT_HALF) + offsetX, HIRES_MULTIPLY(94.5f) - offsetY, 0.0f);
+                    Matrix_SetTranslateScaleMtx2(matrix, 1.0f  - (0.32f * beatingHeartPulsingSize), 1.0f  - (0.32f * beatingHeartPulsingSize), 1.0f  - (0.32f * beatingHeartPulsingSize), (-130.0f) - WS_SHIFT_HALF + offsetX, 94.5f - offsetY, 0.0f);
                 }
                 gSPMatrix(OVERLAY_DISP++, matrix, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
                 gSPVertex(OVERLAY_DISP++, beatingHeartVtx, 4, 0);
@@ -513,11 +513,11 @@ void Health_DrawMeter(PlayState* play) {
         }
 
         // Move offset to next heart
-        offsetX += HIRES_MULTIPLY(10.0f);
+        offsetX += 10.0f;
 
         // Go down one line after 10 hearts
         if (heartIndex == 9 || heartIndex == 19) {
-            offsetY += HIRES_MULTIPLY(gSaveContext.save.info.playerData.healthCapacity <= 0x140 ? 10.0f : 6.5f);
+            offsetY += gSaveContext.save.info.playerData.healthCapacity <= 0x140 ? 10.0f : 6.5f;
             offsetX = 0.0f;
         }
     }

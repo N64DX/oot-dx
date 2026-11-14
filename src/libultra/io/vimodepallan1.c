@@ -12,55 +12,19 @@
 #include "ultra64.h"
 #include "ultra64/viint.h"
 
-OSViMode osViModePalHan1 = {
-    OS_VI_PAL_HAN1, // type
-    {
-        // comRegs
-        VI_CTRL_TYPE_16 | VI_CTRL_GAMMA_DITHER_ON | VI_CTRL_GAMMA_ON | VI_CTRL_DIVOT_ON | VI_CTRL_SERRATE_ON |
-            VI_CTRL_PIXEL_ADV_DEFAULT, // ctrl
-        WIDTH(SCREEN_WIDTH_MAX * 2),       // width
-        BURST(58, 30, 4, 69),          // burst
-        VSYNC(624),                    // vSync
-        HSYNC(3177, 23),               // hSync
-        LEAP(3183, 3181),              // leap
-        HSTART(128, 768),              // hStart
-        (SCREEN_WIDTH_MAX*1024)/640,       // xScale
-        VCURRENT(0),                   // vCurrent
-    },
-    {
-        // fldRegs
-        {
-            // [0]
-            ORIGIN(SCREEN_WIDTH_MAX * 2), // origin
-            (SCREEN_HEIGHT*1024)/480, // yScale
-            VSTART(93, 567),     // vStart
-            BURST(107, 2, 9, 0), // vBurst
-            VINTR(2),            // vIntr
-        },
-        {
-            // [1]
-            ORIGIN(SCREEN_WIDTH_MAX * 4), // origin
-            (SCREEN_HEIGHT*1024)/480, // yScale
-            VSTART(95, 569),      // vStart
-            BURST(105, 2, 13, 0), // vBurst
-            VINTR(2),             // vIntr
-        },
-    },
-};
-
 OSViMode osViModePalLan1 = {
     OS_VI_PAL_LAN1, // type
     {
         // comRegs
         VI_CTRL_TYPE_16 | VI_CTRL_GAMMA_DITHER_ON | VI_CTRL_GAMMA_ON | VI_CTRL_DIVOT_ON | VI_CTRL_ANTIALIAS_MODE_1 |
             VI_CTRL_PIXEL_ADV_DEFAULT, // ctrl
-        WIDTH(SCREEN_WIDTH_MAX),           // width
+        WIDTH(SCREEN_WIDTH_MAX),       // width
         BURST(58, 30, 4, 69),          // burst
         VSYNC(625),                    // vSync
         HSYNC(3177, 23),               // hSync
         LEAP(3183, 3181),              // leap
         HSTART(128, 768),              // hStart
-        (SCREEN_WIDTH_MAX*512)/320,        // xScale
+        (SCREEN_WIDTH_MAX*512)/320,    // xScale
         VCURRENT(0),                   // vCurrent
     },
     {
@@ -68,18 +32,18 @@ OSViMode osViModePalLan1 = {
         {
             // [0]
             ORIGIN(SCREEN_WIDTH_MAX * 2),  // origin
-            (SCREEN_HEIGHT*1024)/240,  // yScale
-            VSTART(95, 569),     // vStart
-            BURST(107, 2, 9, 0), // vBurst
-            VINTR(2),            // vIntr
+            SCALE(1, 0),                   // yScale
+            VSTART(95, 569),               // vStart
+            BURST(107, 2, 9, 0),           // vBurst
+            VINTR(2),                      // vIntr
         },
         {
             // [1]
             ORIGIN(SCREEN_WIDTH_MAX * 2),  // origin
-            (SCREEN_HEIGHT*1024)/240,  // yScale
-            VSTART(95, 569),     // vStart
-            BURST(107, 2, 9, 0), // vBurst
-            VINTR(2),            // vIntr
+            SCALE(1, 0),                   // yScale
+            VSTART(95, 569),               // vStart
+            BURST(107, 2, 9, 0),           // vBurst
+            VINTR(2),                      // vIntr
         },
     },
 };

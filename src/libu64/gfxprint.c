@@ -234,14 +234,14 @@ void GfxPrint_PrintCharImpl(GfxPrint* this, u8 c) {
     if (this->flags & GFXP_FLAG_SHADOW) {
         gDPSetColor(this->dList++, G_SETPRIMCOLOR, 0);
 
-        gSPTextureRectangle(this->dList++, X_HIRES_MULTIPLY(this->posX + 4 + WS_SHIFT_HALF), HIRES_MULTIPLY(this->posY + 4), X_HIRES_MULTIPLY(this->posX + 4 + 32 + WS_SHIFT_HALF) - 2, HIRES_MULTIPLY(this->posY + 4 + 32) - 2,
-                            tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+        gSPTextureRectangle(this->dList++, this->posX + 4 + WS_SHIFT_HALF, this->posY + 4, this->posX + 4 + 32 + WS_SHIFT_HALF - 2, this->posY + 4 + 32 - 2,
+                            tile, (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 10, 1 << 10);
 
         gDPSetColor(this->dList++, G_SETPRIMCOLOR, this->color.rgba);
     }
 
-    gSPTextureRectangle(this->dList++, X_HIRES_MULTIPLY(this->posX + WS_SHIFT_HALF), HIRES_MULTIPLY(this->posY), X_HIRES_MULTIPLY(this->posX + 32 + WS_SHIFT_HALF) - 2, HIRES_MULTIPLY(this->posY + 32) - 2, tile,
-                        (u16)(c & 4) * 64, (u16)(c >> 3) * 256, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+    gSPTextureRectangle(this->dList++, this->posX + WS_SHIFT_HALF, this->posY, this->posX + 32 + WS_SHIFT_HALF - 2, this->posY + 32 - 2, tile,
+                        (u16)(c & 4) * 64, (u16)(c >> 3) * 256, 1 << 10, 1 << 10);
 
     this->posX += GFX_CHAR_X_SPACING << 2;
 }

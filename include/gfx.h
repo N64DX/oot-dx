@@ -9,6 +9,8 @@
 #include "thga.h"
 #include "versions.h"
 
+#define SCREEN_HEIGHT 240
+
 // Texture memory size, 4 KiB
 #define TMEM_SIZE 0x1000
 

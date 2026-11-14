@@ -184,7 +184,7 @@ void GameState_DrawInputDisplay(u16 input, Gfx** gfxP) {
         if (input & (1 << i)) {
             gDPSetFillColor(gfx++, (sInpDispBtnColors[i] << 0x10) | sInpDispBtnColors[i]);
             k = i + 1;
-            gDPFillRectangle(gfx++, X_HIRES_MULTIPLY((j * 4) + 226 + WS_SHIFT_FULL), HIRES_MULTIPLY(220), X_HIRES_MULTIPLY((k * 4) + 225 + WS_SHIFT_FULL), HIRES_MULTIPLY(223));
+            gDPFillRectangle(gfx++, (j * 4) + 226 + WS_SHIFT_FULL, 220, (k * 4) + 225 + WS_SHIFT_FULL, 223);
             gDPPipeSync(gfx++);
         }
     }
@@ -350,38 +350,22 @@ void GameState_Update(GameState* gameState) {
         gfxCtx->yScale = gViConfigYScale;
 
         if (SREG(63) == 6 || (SREG(63) == 2u && (u32)osTvType == OS_TV_NTSC)) {
-#if HIRES
-            gfxCtx->viMode = &osViModeNtscHan1;
-#else
             gfxCtx->viMode = &osViModeNtscLan1;
-#endif
             gfxCtx->yScale = 1.0f;
         }
 
         if (SREG(63) == 5 || (SREG(63) == 2u && (u32)osTvType == OS_TV_MPAL)) {
-#if HIRES
-            gfxCtx->viMode = &osViModeMpalHan1;
-#else
             gfxCtx->viMode = &osViModeMpalLan1;
-#endif
             gfxCtx->yScale = 1.0f;
         }
 
         if (SREG(63) == 4 || (SREG(63) == 2u && (u32)osTvType == OS_TV_PAL)) {
-#if HIRES
-            gfxCtx->viMode = &osViModePalHan1;
-#else
             gfxCtx->viMode = &osViModePalLan1;
-#endif
             gfxCtx->yScale = 1.0f;
         }
 
         if (SREG(63) == 3 || (SREG(63) == 2u && (u32)osTvType == OS_TV_PAL)) {
-#if HIRES
-            gfxCtx->viMode = &osViModeFpalHan1;
-#else
             gfxCtx->viMode = &osViModeFpalLan1;
-#endif
             gfxCtx->yScale = 0.833f;
         }
     } else {
