@@ -233,7 +233,7 @@ void FileSelect_DrawQuestImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 c
         gDPSetTextureImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, width, curTexture);
         gDPLoadSync(POLY_OPA_DISP++);
         gDPLoadTile(POLY_OPA_DISP++, G_TX_LOADTILE, 0, 0, (width - 1) << 2, (textureHeight - 1) << 2);
-        gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(rectLeft + WS_SHIFT_HALF) << 2, HIRES_MULTIPLY(rectTop) << 2, X_HIRES_MULTIPLY(rectLeft + WS_SHIFT_HALF + (s32)width) << 2, HIRES_MULTIPLY(rectTop + textureHeight) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+        gSPTextureRectangle(POLY_OPA_DISP++, (rectLeft + WS_SHIFT_HALF) << 2, rectTop << 2, (rectLeft + WS_SHIFT_HALF + (s32)width) << 2, (rectTop + textureHeight) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
         curTexture += textureSize;
         rectTop += textureHeight;
 
@@ -878,16 +878,16 @@ void FileSelect_DrawNameEntry(GameState* thisx) {
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
         FileSelect_DrawQuestImageRGBA32(this->state.gfxCtx, 150, 130, (u8*)sQuestTextures[this->questMode[this->buttonIndex]][1], 160, 160);
         gDPLoadTextureBlock(POLY_OPA_DISP++, sQuestTextures[this->questMode[this->buttonIndex]][0], G_IM_FMT_IA, G_IM_SIZ_8b, 128, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(x + WS_SHIFT_HALF) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(x + WS_SHIFT_HALF + 128) << 2, HIRES_MULTIPLY((y + 16) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));
+        gSPTextureRectangle(POLY_OPA_DISP++, (x + WS_SHIFT_HALF) << 2, y << 2, (x + WS_SHIFT_HALF + 128) << 2, (y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1024, 1024);
 
         x = 48;
         y = 115;
         gDPLoadTextureBlock(POLY_OPA_DISP++, gEmptyCLeftArrowTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(x + WS_SHIFT_HALF) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(x + WS_SHIFT_HALF + 32) << 2, HIRES_MULTIPLY((y + 32) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+        gSPTextureRectangle(POLY_OPA_DISP++, (x + WS_SHIFT_HALF) << 2, y << 2, (x + WS_SHIFT_HALF + 32) << 2, (y + 32) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
         x = 248;
         gDPLoadTextureBlock(POLY_OPA_DISP++, gEmptyCRightArrowTex, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(x + WS_SHIFT_HALF) << 2, HIRES_MULTIPLY(y << 2), X_HIRES_MULTIPLY(x + WS_SHIFT_HALF + 32) << 2, HIRES_MULTIPLY((y + 32) << 2), G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1 << 10), HIRES_DIVIDE(1 << 10));
+        gSPTextureRectangle(POLY_OPA_DISP++, (x + WS_SHIFT_HALF) << 2, y << 2, (x + WS_SHIFT_HALF + 32) << 2, (y + 32) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
         if (this->stickAdjX < -30) {
             Audio_PlaySfxGeneral(NA_SE_SY_FSEL_CURSOR, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -2219,9 +2219,9 @@ void FileSelect_DrawOptionsImpl(GameState* thisx) {
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->titleAlpha[0]);
                     
     gDPLoadTextureBlock(POLY_OPA_DISP++, gFileSelLButtonTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-    gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(30) << 2, HIRES_MULTIPLY(208 << 2), X_HIRES_MULTIPLY(30 + 16) << 2, HIRES_MULTIPLY(208 + 16) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(2048), HIRES_DIVIDE(2048));
+    gSPTextureRectangle(POLY_OPA_DISP++, 30 << 2, 208 << 2, (30 + 16) << 2, (208 + 16) << 2, G_TX_RENDERTILE, 0, 0, 2048, 2048);
     gDPLoadTextureBlock(POLY_OPA_DISP++, sOptionsMenuHeaders[4].texture[gSaveContext.language], G_IM_FMT_IA, G_IM_SIZ_8b, OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[4]), OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[4]), 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-    gSPTextureRectangle(POLY_OPA_DISP++, X_HIRES_MULTIPLY(48) << 2, HIRES_MULTIPLY(209 << 2), X_HIRES_MULTIPLY(48 + OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[4])) << 2, HIRES_MULTIPLY(209 + OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[4])) << 2, G_TX_RENDERTILE, 0, 0, X_HIRES_DIVIDE(1024), HIRES_DIVIDE(1024));
+    gSPTextureRectangle(POLY_OPA_DISP++, 48 << 2, 209 << 2, (48 + OPTIONS_MENU_TEXTURE_WIDTH(sOptionsMenuHeaders[4])) << 2, (209 + OPTIONS_MENU_TEXTURE_HEIGHT(sOptionsMenuHeaders[4])) << 2, G_TX_RENDERTILE, 0, 0, 1024, 1024);
 
     CLOSE_DISPS(this->state.gfxCtx, "../z_file_nameset_PAL.c", 1040);
 }

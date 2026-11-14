@@ -464,8 +464,8 @@ void Attention_Draw(Attention* attention, PlayState* play) {
 
         Actor_ProjectPos(play, &attention->reticlePos, &projectedPos, &invW);
 
-        projectedPos.x = ((SCREEN_X / 2) * (projectedPos.x * invW)) * projectdPosScale * (R_ENABLE_MIRROR == 1 ? -1 : 1);
-        projectedPos.x = CLAMP(projectedPos.x, -SCREEN_X, SCREEN_X);
+        projectedPos.x = ((SCREEN_WIDTH / 2) * (projectedPos.x * invW)) * projectdPosScale * (R_ENABLE_MIRROR == 1 ? -1 : 1);
+        projectedPos.x = CLAMP(projectedPos.x, -SCREEN_WIDTH, SCREEN_WIDTH);
 
         projectedPos.y = ((SCREEN_HEIGHT / 2) * (projectedPos.y * invW)) * projectdPosScale;
         projectedPos.y = CLAMP(projectedPos.y, -SCREEN_HEIGHT, SCREEN_HEIGHT);
@@ -495,7 +495,7 @@ void Attention_Draw(Attention* attention, PlayState* play) {
                     }
 
                     Matrix_Translate(reticle->pos.x, reticle->pos.y, 0.0f, MTXMODE_NEW);
-                    Matrix_Scale(HIRES_MULTIPLY(lockOnScaleX), HIRES_MULTIPLY(0.15f), 1.0f, MTXMODE_APPLY);
+                    Matrix_Scale(lockOnScaleX, 0.15f, 1.0f, MTXMODE_APPLY);
 
                     gDPSetPrimColor(OVERLAY_DISP++, 0, 0, reticle->color.r, reticle->color.g, reticle->color.b,
                                     (u8)alpha);
@@ -877,7 +877,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
     s32 titleY1;
     s32 titleY2;
     s32 textureLanguageOffset;
-    s32 dsdx = X_HIRES_DIVIDE(1 << 10);
+    s32 dsdx = 1 << 10;
     s32 s = 0;
     s16 byteStride;
 
@@ -910,7 +910,7 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
         titleY2 = titleY1 + (height * 4);
 
         if (R_ENABLE_MIRROR == 1 && play->pauseCtx.state >= 2) {
-            dsdx = -X_HIRES_DIVIDE(1 << 10);
+            dsdx = -(1 << 10);
             s = width << 5;
         }
 
@@ -923,8 +923,8 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                             width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
                             G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-        gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(titleX1), HIRES_MULTIPLY(titleY1), X_HIRES_MULTIPLY(titleX2), HIRES_MULTIPLY(titleY2 - 1), G_TX_RENDERTILE, s, 0, dsdx,
-                            HIRES_DIVIDE(1 << 10));
+        gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY1, titleX2, titleY2 - 1, G_TX_RENDERTILE, s, 0, dsdx,
+                            1 << 10);
 
         byteStride = width * height;
         height = titleCtx->height - height;
@@ -935,8 +935,8 @@ void TitleCard_Draw(PlayState* play, TitleCardContext* titleCtx) {
                                 G_IM_SIZ_8b, width, height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP,
                                 G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-            gSPTextureRectangle(OVERLAY_DISP++, X_HIRES_MULTIPLY(titleX1), HIRES_MULTIPLY(titleY2), X_HIRES_MULTIPLY(titleX2), HIRES_MULTIPLY(titleY2 + (height * 4) - 1), G_TX_RENDERTILE,
-                                s, 0, dsdx, HIRES_DIVIDE(1 << 10));
+            gSPTextureRectangle(OVERLAY_DISP++, titleX1, titleY2, titleX2, titleY2 + (height * 4) - 1, G_TX_RENDERTILE,
+                                s, 0, dsdx, 1 << 10);
         }
 
         CLOSE_DISPS(play->state.gfxCtx, "../z_actor.c", 2880);
