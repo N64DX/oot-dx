@@ -6,3 +6,7 @@
 u64 gBossDoorWoodfallTex[] = {
 #include "assets/objects/object_bdoor/gBossDoorWoodfallTex.rgba16.inc.c"
 };
+
+u64 gBossDoorStoneTowerTex[] = {
+#include "assets/objects/object_bdoor/gBossDoorStoneTowerTex.rgba16.inc.c"
+};

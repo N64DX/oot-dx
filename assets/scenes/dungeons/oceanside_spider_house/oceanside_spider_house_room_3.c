@@ -13,7 +13,7 @@ SceneCmd oceanside_spider_house_room_3[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&oceanside_spider_house_room_3RoomShapeCullable_0001C0),
-    SCENE_CMD_OBJECT_LIST(14, oceanside_spider_house_room_3ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(15, oceanside_spider_house_room_3ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(18 + 4, oceanside_spider_house_room_3ActorEntry_000058),
     SCENE_CMD_END(),
 };
@@ -30,6 +30,7 @@ s16 oceanside_spider_house_room_3ObjectList_000040[] = {
     OBJECT_KIN2_OBJ,
     OBJECT_SKB,
     OBJECT_D_HSBLOCK,
+    OBJECT_SPIDER,
     OBJECT_HIDAN_OBJECTS,
     OBJECT_POH,
     OBJECT_PO_COMPOSER,
@@ -42,8 +43,8 @@ ActorEntry oceanside_spider_house_room_3ActorEntry_000058[] = {
     { ACTOR_EN_SW,           { 439,  100, -1243 }, {      0, 0x2000,    0 }, 0x0000 },
     { ACTOR_EN_SW,           { 402,  100, -1241 }, {      0, 0xC000,    0 }, 0x0000 },
     { ACTOR_EN_SW,           { 663, -120, -1503 }, {      0, 0xC000,    0 }, 0x0000 },
-    { ACTOR_OBJ_TSUBO,       { 165, -120, -1395 }, {      0,      0,    0 }, 0x5203 }, // Collect: 29, drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,       { 165, -120, -1335 }, {      0,      0,    0 }, 0x5403 }, // Collect: 2A, drops Recovery Heart
+    { ACTOR_OBJ_TSUBO,       { 165, -120, -1395 }, {      0,      0,    0 }, 0x5203 }, // Collect: 29, Recovery Heart
+    { ACTOR_OBJ_TSUBO,       { 165, -120, -1335 }, {      0,      0,    0 }, 0x5403 }, // Collect: 2A, Recovery Heart
     { ACTOR_BG_SPDWEB,       { 179,   35, -1499 }, { 0x349F, 0x182D,    0 }, 0x0E01 },
     { ACTOR_OBJ_SPIDERTENT,  { 193,   46, -1012 }, { 0x3C71, 0x5B05,    0 }, 0x1600 },
     { ACTOR_BG_KIN2_PICTURE, { 359,  -60,  -994 }, {      0, 0x8000,    0 }, 0x003F },

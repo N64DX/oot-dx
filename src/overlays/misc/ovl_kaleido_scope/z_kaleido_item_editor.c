@@ -437,6 +437,31 @@ void ItemEditor_SetDungeon(u8 scene, u8 param2, u8 param3, PlayState* play) {
         gSaveContext.save.info.inventory.dungeonItems[scene] = 0;
 }
 
+void ItemEditor_SetDays(u8 param1, u8 param2, u8 param3, PlayState* play) {
+    if (play->state.input[0].press.button == BTN_A && gSaveContext.save.totalDays < 2)
+        gSaveContext.save.totalDays++;
+    else if (play->state.input[0].press.button == BTN_B && gSaveContext.save.totalDays > 0)
+        gSaveContext.save.totalDays--;
+}
+
+void ItemEditor_SetTime(u8 param1, u8 param2, u8 param3, PlayState* play) {
+    u16 totalMinutes = (u16)TIME_TO_MINUTES_F(gSaveContext.save.dayTime);
+    u8 hour   = totalMinutes / 60;
+    u8 minute = totalMinutes % 60;
+    u16 time;
+
+    if (play->state.input[0].press.button == BTN_A)
+        hour = (hour + 1) % 24;
+    else if (play->state.input[0].press.button == BTN_B) {
+        if (minute == 0)
+            hour = (hour + 23) % 24;
+    } else return;
+
+    time = CLOCK_TIME(hour, 0) + 1;
+    gSaveContext.save.dayTime = time;
+    gSaveContext.save.nightFlag = (time > CLOCK_TIME(18, 0) || time < DAWN_TIME) ? true : false;
+}
+
 void ItemEditor_SetFlagsClear(u8 clear, u8 param2, u8 param3, PlayState* play) {
     SavedSceneFlags* sf;
     u8 id = (clear >= 5) ? gSaveContext.mapIndex : Play_GetOriginalSceneId(play->sceneId);
@@ -828,6 +853,45 @@ char* ItemEditor_GetDungeon(u8 scene, u8 param2, u8 param3) {
     return buf;
 }
 
+char* ItemEditor_GetDays(u8 param1, u8 param2, u8 param3) {
+    switch (gSaveContext.save.totalDays) {
+        case 0:
+            return "3";
+        case 1:
+            return "2";
+        case 2:
+            return "1";
+        default:
+            return "Invalid";
+    }
+}
+
+char* ItemEditor_GetTime(u8 param1, u8 param2, u8 param3) {
+    static char buf[5];
+    u8 digits[4];
+    
+    digits[0] = 0;
+    digits[1] = (gSaveContext.save.dayTime * (24.0f * 60.0f / 0x10000)) / 60.0f;
+    while (digits[1] >= 10) {
+        digits[0]++;
+        digits[1] -= 10;
+    }
+    digits[2] = 0;
+    digits[3] = (s16)(gSaveContext.save.dayTime * (24.0f * 60.0f / 0x10000)) % 60;
+    while (digits[3] >= 10) {
+        digits[2]++;
+        digits[3] -= 10;
+    }
+
+    buf[0] = '0' + digits[0];
+    buf[1] = '0' + digits[1];
+    buf[2] = ':';
+    buf[3] = '0' + digits[2];
+    buf[4] = '0' + digits[3];
+    buf[5] = '\0';
+    return buf;
+}
+
 char* ItemEditor_GetFlagsClear(u8 param1, u8 param2, u8 param3) {
     return isClearing ? "Clear" : "Complete";
 }
@@ -955,6 +1019,8 @@ ItemEditorEntry sItemEditorQuestEntries[] = {
     { SHOW_OPTION_ALL_QUESTS, QUEST_MEDALLION_SPIRIT, 0, 0, "Spirit Medallion", ItemEditor_SetQuest, ItemEditor_GetQuest },
     { SHOW_OPTION_ALL_QUESTS, QUEST_STONE_OF_AGONY,   0, 0, "Stone of Agony",   ItemEditor_SetQuest, ItemEditor_GetQuest },
     { SHOW_OPTION_ALL_QUESTS, QUEST_GERUDOS_CARD,     0, 0, "Gerudo's Card",    ItemEditor_SetQuest, ItemEditor_GetQuest },
+    { SHOW_OPTION_ONLY_TIMER, 0,                      0, 0, "Days Left",        ItemEditor_SetDays,  ItemEditor_GetDays  },
+    { SHOW_OPTION_ONLY_TIMER, 0,                      0, 0, "Current Time",     ItemEditor_SetTime,  ItemEditor_GetTime  },
 };
 
 ItemEditorEntry sItemEditorDungeonKeysEntries[] = {
@@ -1011,7 +1077,7 @@ void ItemEditor_FilterEntries(ItemEditorEntry* entries, u8 totalCount) {
 
     state.entries = entries;
     for (i=0; i < totalCount; i++)
-        if (entries[i].questMode == SHOW_OPTION_ALL_QUESTS || (entries[i].questMode == SHOW_OPTION_ONLY_CQ && IS_CHILD_QUEST) || (entries[i].questMode == SHOW_OPTION_NO_CQ && !IS_CHILD_QUEST))
+        if (entries[i].questMode == SHOW_OPTION_ALL_QUESTS || (entries[i].questMode == SHOW_OPTION_ONLY_CQ && IS_CHILD_QUEST) || (entries[i].questMode == SHOW_OPTION_NO_CQ && !IS_CHILD_QUEST) || (entries[i].questMode == SHOW_OPTION_ONLY_TIMER && TIMER_CHALLENGE > 0))
             state.visibleIndices[j++] = i;
     state.count = j;
 }

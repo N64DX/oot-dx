@@ -234,7 +234,7 @@ void BgNumaHana_ClosedIdle(BgNumaHana* this, PlayState* play) {
     if (this->fire.state != FIRE_STATE_NOT_LIT) {
         Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_FLAME_IGNITION);
         Flags_SetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL_TEMPLE);
-        if (this->csId > 0) {
+        if (this->csId > 0 && cutscenes[this->csId] != NULL) {
             Cutscene_SetScript(play, cutscenes[this->csId-1]);
             gSaveContext.cutsceneTrigger = 1;
             Player_SetCsActionWithHaltedActors(play, &this->dyna.actor, PLAYER_CSACTION_49);

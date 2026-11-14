@@ -110,6 +110,9 @@ void ObjIcePoly_Init(Actor* thisx, PlayState* play) {
     this->hardCollider.dim.height *= thisx->scale.y;
     Actor_SetFocus(thisx, thisx->scale.y * 30.0f);
     this->actionFunc = ObjIcePoly_Idle;
+
+    thisx->shape.rot.x = 0x500;
+    thisx->shape.rot.z = -0x500;
 }
 
 void ObjIcePoly_Destroy(Actor* thisx, PlayState* play) {
@@ -206,7 +209,6 @@ void ObjIcePoly_Draw(Actor* thisx, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_obj_ice_poly.c", 421);
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
     func_8002ED80(&this->actor, play, 0);
-    Matrix_RotateZYX(0x500, 0, -0x500, MTXMODE_APPLY);
 
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_obj_ice_poly.c", 428);
     gSPSegment(POLY_XLU_DISP++, 0x08,

@@ -41,6 +41,8 @@ void EnWeatherTag_DisabledRainThunder(EnWeatherTag* this, PlayState* play);
 void EnWeatherTag_EnabledRainThunder(EnWeatherTag* this, PlayState* play);
 void EnWeatherTag_DisabledRainThunderGoronVillage(EnWeatherTag* this, PlayState* play);
 void EnWeatherTag_EnabledRainThunderGoronVillage(EnWeatherTag* this, PlayState* play);
+void EnWeatherTag_DisabledCloudyStoneTowerTemple(EnWeatherTag* this, PlayState* play);
+void EnWeatherTag_EnabledCloudyStoneTowerTemple(EnWeatherTag* this, PlayState* play);
 
 #define WEATHER_TAG_RANGE100(x) ((x >> 8) * 100.0f)
 
@@ -106,6 +108,8 @@ void EnWeatherTag_Destroy(Actor* thisx, PlayState* play) {
     } else if (type == EN_WEATHER_TAG_TYPE_THUNDERSTORM_GORON_VILLAGE) {
         if (lastEntranceIndex != gSaveContext.save.entranceIndex)
             EnWeather_ResetWeather(play, 2, 100);
+    } else if (type == EN_WEATHER_TAG_TYPE_CLOUDY_STONE_TOWER_TEMPLE) {
+        EnWeather_ResetWeather(play, 2, 10);
     }
 }
 
@@ -203,6 +207,9 @@ void EnWeatherTag_Init(Actor* thisx, PlayState* play) {
                 this->killedOnInit = true;
             }
             EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledCloudyLonLonRanch);
+            break;
+        case EN_WEATHER_TAG_TYPE_CLOUDY_STONE_TOWER_TEMPLE:
+            EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledCloudyStoneTowerTemple);
             break;
     }
 
@@ -428,6 +435,16 @@ void EnWeatherTag_EnabledRainThunderGoronVillage(EnWeatherTag* this, PlayState* 
         play->envCtx.precipitation[PRECIP_RAIN_CUR] = 10;
         EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledRainThunderGoronVillage);
     }
+}
+
+void EnWeatherTag_DisabledCloudyStoneTowerTemple(EnWeatherTag* this, PlayState* play) {
+    if (WeatherTag_CheckEnableWeatherEffect(this, play, 0, 1, 0, 2, 10, WEATHER_MODE_CLOUDY_CONFIG2))
+        EnWeatherTag_SetupAction(this, EnWeatherTag_EnabledCloudyStoneTowerTemple);
+}
+
+void EnWeatherTag_EnabledCloudyStoneTowerTemple(EnWeatherTag* this, PlayState* play) {
+    if (WeatherTag_CheckRestoreWeather(this, play, 1, 0, 2, 0, 10))
+        EnWeatherTag_SetupAction(this, EnWeatherTag_DisabledCloudyStoneTowerTemple);
 }
 
 void EnWeatherTag_Update(Actor* thisx, PlayState* play) {

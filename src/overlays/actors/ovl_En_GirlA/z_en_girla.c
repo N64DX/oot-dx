@@ -1038,27 +1038,23 @@ void EnGirlA_ItemGive_BottledItem(PlayState* play, EnGirlA* this) {
 void EnGirlA_BuyEvent_ShieldDiscount(PlayState* play, EnGirlA* this) {
     switch (this->actor.params) {
         case SI_DEKU_SHIELD:
-        case SI_WOODEN_SHIELD:
         case SI_DEKU_SHIELD_REPAIR:
-        case SI_WOODEN_SHIELD_REPAIR:
-            gSaveContext.save.info.shields[EQUIP_INV_SHIELD_DEKU].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_DEKU);
-            if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_DEKU)
+            if (SHIELD_DURABILITY && !(gSaveContext.save.info.upgradeItems &= gBitFlags[UPGRADE_SHIELD_WOODEN]))
                 DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, ITEM_SHIELD_DEKU)), ITEM_ICON_SIZE, __FILE__, __LINE__);
-            
             break;
-        case SI_HYLIAN_SHIELD:
-        case SI_HYLIAN_SHIELD_REPAIR:
-            gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HYLIAN].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HYLIAN);
-            break;
-        case SI_MIRROR_SHIELD_REPAIR:
-            gSaveContext.save.info.shields[EQUIP_INV_SHIELD_MIRROR].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_MIRROR);
+        case SI_WOODEN_SHIELD:
+        case SI_WOODEN_SHIELD_REPAIR:
+            if (SHIELD_DURABILITY && (gSaveContext.save.info.upgradeItems &= gBitFlags[UPGRADE_SHIELD_WOODEN]))
+                DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, ITEM_SHIELD_DEKU)), ITEM_ICON_SIZE, __FILE__, __LINE__);
             break;
         case SI_HEROS_SHIELD:
-        case SI_METAL_SHIELD:
         case SI_HEROS_SHIELD_REPAIR:
+            if (SHIELD_DURABILITY && !(gSaveContext.save.info.upgradeItems &= gBitFlags[UPGRADE_SHIELD_METAL]))
+                DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, ITEM_SHIELD_HEROS)), ITEM_ICON_SIZE,  __FILE__, __LINE__);
+            break;
+        case SI_METAL_SHIELD:
         case SI_METAL_SHIELD_REPAIR:
-            gSaveContext.save.info.shields[EQUIP_INV_SHIELD_HEROS].durability = Player_GetMaxShieldDurability(PLAYER_SHIELD_HEROS);
-            if (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD) == EQUIP_VALUE_SHIELD_HEROS)
+            if (SHIELD_DURABILITY && (gSaveContext.save.info.upgradeItems &= gBitFlags[UPGRADE_SHIELD_METAL]))
                 DMA_REQUEST_SYNC(play->interfaceCtx.iconItemSegment + (9 * ITEM_ICON_SIZE), GET_ITEM_ICON_VROM(Interface_LoadItemIconChildQuest(play, ITEM_SHIELD_HEROS)), ITEM_ICON_SIZE,  __FILE__, __LINE__);
             break;
     }

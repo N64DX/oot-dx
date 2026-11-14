@@ -270,6 +270,11 @@ void ObjSwitch_SetOn(ObjSwitch* this, PlayState* play) {
         subType = OBJSWITCH_SUBTYPE(&this->dyna.actor);
         Flags_SetSwitch(play, OBJSWITCH_SWITCH_FLAG(&this->dyna.actor));
 
+        if ((subType == OBJSWITCH_SUBTYPE_HOLD || subType == OBJSWITCH_SUBTYPE_HOLD_INVERTED) && (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INV)) {
+            this->cooldownOn = false;
+            return;
+        }
+
         if (subType == OBJSWITCH_SUBTYPE_ONCE || subType == OBJSWITCH_SUBTYPE_SYNC) {
             OnePointCutscene_AttentionSetSfx(play, &this->dyna.actor, NA_SE_SY_CORRECT_CHIME);
         } else {

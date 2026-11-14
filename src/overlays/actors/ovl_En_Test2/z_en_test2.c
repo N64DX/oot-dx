@@ -57,7 +57,6 @@ void EnTest2_Init(Actor* thisx, PlayState* play) {
 
 void EnTest2_Update(Actor* thisx, PlayState* play) {
     s32 objectSlot;
-    EnTest2ModelInfo* modelInfo;
     EnTest2* this = (EnTest2*)thisx;
 
     objectSlot = Object_GetSlot(&play->objectCtx, sModelInfo[ENTEST2_GET_TYPE(&this->actor)].objectId);
@@ -67,7 +66,6 @@ void EnTest2_Update(Actor* thisx, PlayState* play) {
     }
 
     if (Object_IsLoaded(&play->objectCtx, objectSlot)) {
-        modelInfo = &sModelInfo[ENTEST2_GET_TYPE(&this->actor)];
         this->actor.objectSlot = objectSlot;
         this->actor.draw = EnTest2_Draw;
 

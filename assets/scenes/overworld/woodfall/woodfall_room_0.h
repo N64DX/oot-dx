@@ -3,10 +3,15 @@
 
 #include "room.h"
 
+extern SceneCmd* woodfall_room_0AlternateHeaders[];
 extern s16 woodfall_room_0ObjectList_000050[];
 extern ActorEntry woodfall_room_0ActorEntry_000064[];
 extern RoomShapeCullable woodfall_room_0RoomShapeCullable_0003B0;
 extern RoomShapeCullableEntry woodfall_room_0RoomShapeCullableEntry_0003BC[23];
+
+extern SceneCmd woodfall_room_0Set_woodfallTempleCleared[];
+extern s16 woodfall_room_0ObjectList_woodfallTempleCleared[];
+extern ActorEntry woodfall_room_0ActorEntry_woodfallTempleCleared[];
 
 extern Gfx woodfall_room_0DL_001398[];
 extern Gfx woodfall_room_0DL_001C48[];

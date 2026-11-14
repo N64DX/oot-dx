@@ -653,7 +653,7 @@ void EnMiniblin_Die(EnMiniblin* this, struct PlayState* play) {
             if (this->deathTimer == 0) {
                 if (this->rupeeStolen == true)
                     Item_DropCollectible(play, &this->actor.world.pos, ITEM00_RUPEE_RED); // The player gets his rupee back if the Miniblin had one stolen
-                Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xE0); // The Miniblin might also drop some random collectibles
+                Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_10, false)); // The Miniblin might also drop some random collectibles
                 Actor_Kill(&this->actor);
             }
         }

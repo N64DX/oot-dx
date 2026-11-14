@@ -5052,9 +5052,9 @@ f32 Actor_SetDefensePerScene(u16 sceneId, f32 baseDefense) {
         case SCENE_ROYAL_VAULT:
         case SCENE_GLOOMY_GRAVEYARD:
         case SCENE_STONE_TOWER:
-        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_INV:
         case SCENE_STONE_TOWER_TEMPLE:
-        case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+        case SCENE_STONE_TOWER_TEMPLE_INV:
         case SCENE_INSIDE_GANONS_CASTLE:
         case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
         case SCENE_GANONS_TOWER:

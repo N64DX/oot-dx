@@ -115,8 +115,8 @@ ActorEntry Entrances_Forest_Temple_PlayerEntryList[3+22] = {
     { ACTOR_PLAYER, {  120,   470,  -2600 }, { 0, 32768, 0 }, 0x0DFF, }, // North Elevator Hallway
     { ACTOR_PLAYER, { -825,   394,  -1440 }, { 0, 49152, 0 }, 0x0DFF, }, // West Elevator Hallway
     { ACTOR_PLAYER, { -280,   827,  -3320 }, { 0, 16384, 0 }, 0x0DFF, }, // Stalfos Mini-Boss
-    { ACTOR_PLAYER, {  960,   261,  -2285 }, { 0, 24576, 0 }, 0x0DFF, }, // East Courtyard 
-    { ACTOR_PLAYER, { -725,   259,  -2285 }, { 0, 40960, 0 }, 0x0DFF, }, // West Courtyard
+    { ACTOR_PLAYER, {  960,   243,  -2285 }, { 0, 24576, 0 }, 0x0DFF, }, // East Courtyard 
+    { ACTOR_PLAYER, { -725,   243,  -2285 }, { 0, 40960, 0 }, 0x0DFF, }, // West Courtyard
     { ACTOR_PLAYER, { -1040, -236,  -1775 }, { 0, 16384, 0 }, 0x0DFF, }, // Sewers 
     { ACTOR_PLAYER, {  300,   800,  -2810 }, { 0, 49152, 0 }, 0x0DFF, }, // Hallway Connecting Courtyards
     { ACTOR_PLAYER, { -1447,  383,  -1439 }, { 0, 49152, 0 }, 0x0DFF, }, // Tall Block Pushing Hall

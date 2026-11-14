@@ -12,8 +12,8 @@ SceneCmd oceanside_spider_house_room_5[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&oceanside_spider_house_room_5RoomShapeCullable_000180),
-    SCENE_CMD_OBJECT_LIST(14, oceanside_spider_house_room_5ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(19, oceanside_spider_house_room_5ActorEntry_000058),
+    SCENE_CMD_OBJECT_LIST(15, oceanside_spider_house_room_5ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(21, oceanside_spider_house_room_5ActorEntry_000058),
     SCENE_CMD_END(),
 };
 
@@ -29,25 +29,28 @@ s16 oceanside_spider_house_room_5ObjectList_000040[] = {
     OBJECT_KIN2_OBJ,
     OBJECT_SKB,
     OBJECT_D_HSBLOCK,
+    OBJECT_SPIDER,
     OBJECT_HIDAN_OBJECTS,
     OBJECT_POH,
     OBJECT_PO_COMPOSER,
 };
 
 ActorEntry oceanside_spider_house_room_5ActorEntry_000058[] = {
+    { ACTOR_EN_SPIDER,      { -700, -120, -1550 }, {      0, 0x6000,   0 }, 0x0101 },
+    { ACTOR_EN_SPIDER,      { -600,  120, -1750 }, {      0, 0x2000,   0 }, 0x0101 },
     { ACTOR_EN_SW,          { -882,   -8, -1630 }, {      0, 0x4000,   0 }, 0x0000 },
     { ACTOR_EN_SW,          { -796,   65, -1544 }, { 0x8000,      0,   0 }, 0x0000 },
     { ACTOR_EN_SW,          { -593,  -27, -1374 }, {      0,      0,   0 }, 0x0000 },
     { ACTOR_EN_ST,          { -641,   27, -1661 }, {      0, 0x4000,   0 }, 0x0000 },
     { ACTOR_EN_MKK,         { -816,   19, -1781 }, {      0, 0x4000,   0 }, 0xC200 },
-    { ACTOR_OBJ_TSUBO,      { -569, -120, -1200 }, {      0,      0,   0 }, 0x5603 }, // Collect: 2B, drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,      { -630, -120, -1200 }, {      0,      0,   0 }, 0x5803 }, // Collect: 2C, drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,      { -728,  -60, -1757 }, {      0,      0,   0 }, 0x5A0C }, // Collect: 2D, drops Deku Nut
-    { ACTOR_OBJ_TSUBO,      { -855,  -60, -1688 }, {      0,      0,   0 }, 0x5C0D }, // Collect: 2E, drops Deku Stick
-    { ACTOR_OBJ_TSUBO,      { -713,   85, -1593 }, {      0,      0, 0x2 }, 0x5E01 }, // Collect: 2F, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,      { -714,   85, -1483 }, {      0,      0,   0 }, 0x6001 }, // Collect: 30, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,      { -713,   85, -1704 }, {      0,      0,   0 }, 0x6201 }, // Collect: 31, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,      { -715,   85, -1813 }, {      0,      0,   0 }, 0x6401 }, // Collect: 32, drops Blue Rupee
+    { ACTOR_OBJ_TSUBO,      { -569, -120, -1200 }, {      0,      0,   0 }, 0x5603 }, // Collect: 2B, Recovery Heart
+    { ACTOR_OBJ_TSUBO,      { -630, -120, -1200 }, {      0,      0,   0 }, 0x5803 }, // Collect: 2C, Recovery Heart
+    { ACTOR_OBJ_TSUBO,      { -728,  -60, -1757 }, {      0,      0,   0 }, 0x5A0C }, // Collect: 2D, Deku Nut
+    { ACTOR_OBJ_TSUBO,      { -855,  -60, -1688 }, {      0,      0,   0 }, 0x5C0D }, // Collect: 2E, Deku Stick
+    { ACTOR_OBJ_TSUBO,      { -713,   85, -1593 }, {      0,      0, 0x2 }, 0x5E01 }, // Collect: 2F, Blue Rupee
+    { ACTOR_OBJ_TSUBO,      { -714,   85, -1483 }, {      0,      0,   0 }, 0x6001 }, // Collect: 30, Blue Rupee
+    { ACTOR_OBJ_TSUBO,      { -713,   85, -1704 }, {      0,      0,   0 }, 0x6201 }, // Collect: 31, Blue Rupee
+    { ACTOR_OBJ_TSUBO,      { -715,   85, -1813 }, {      0,      0,   0 }, 0x6401 }, // Collect: 32, Blue Rupee
     { ACTOR_OBJ_KIBAKO2,    { -593, -120, -1444 }, {      0,      0,   0 }, 0xFFFF },
     { ACTOR_OBJ_KIBAKO2,    { -503, -120, -1876 }, {      0,      0,   0 }, 0xFFFF },
     { ACTOR_OBJ_HSBLOCK,    { -423,  150, -1900 }, {      0,      0,   0 }, 0x0002 },

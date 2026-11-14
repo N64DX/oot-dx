@@ -54,8 +54,8 @@ ActorEntry woodfall_temple_room_0ActorEntry_00006C[] = {
     { ACTOR_BG_HIDAN_CURTAIN, { -180, -1275, -1560 }, { 0,      0, 0x50 }, 0x2F60 },
     { ACTOR_BG_HIDAN_CURTAIN, {  180, -1275, -1560 }, { 0,      0, 0x50 }, 0x2F60 },
     { ACTOR_OBJ_SWITCH,       {  390, -1365, -1560 }, { 0,      0,    0 }, 0x6003 },
-    { ACTOR_OBJ_TSUBO,        { -120, -1185, -2220 }, { 0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
-    { ACTOR_OBJ_TSUBO,        {  120, -1185, -2220 }, { 0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
+    { ACTOR_OBJ_TSUBO,        { -120, -1185, -2220 }, { 0,      0,    0 }, 0x0003 }, // Recovery Heart
+    { ACTOR_OBJ_TSUBO,        {  120, -1185, -2220 }, { 0,      0,    0 }, 0x0003 }, // Recovery Heart
     { ACTOR_EN_KUSA,          {  530, -1365, -1042 }, { 0, 0x6980,    0 }, 0x002B },
     { ACTOR_EN_KUSA,          {  210, -1245,  -945 }, { 0, 0x5E00,    0 }, 0x003B },
     { ACTOR_EN_KUSA,          {  255, -1245,  -960 }, { 0, 0x4B00,    0 }, 0x003B },

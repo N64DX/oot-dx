@@ -3,33 +3,24 @@
 
 #include "gfx.h"
 
-Vtx object_mir_rayVtx_000000[] = {
+static Vtx object_mir_rayVtx_000000[] = {
 #include "assets/objects/object_mir_ray/object_mir_rayVtx_000000.vtx.inc"
 };
 
-Vtx object_mir_rayVtx_000400[] = {
+static Vtx object_mir_rayVtx_000400[] = {
 #include "assets/objects/object_mir_ray/object_mir_rayVtx_000400.vtx.inc"
 };
 
-u64 object_mir_ray_Tex_000558[] = {
-#include "assets/objects/object_mir_ray/tex_000558.i8.inc.c"
+static u64 object_mir_ray_Tex_000270[] = {
+#include "assets/objects/object_mir_ray/tex_000270.i4.inc.c"
 };
 
-Gfx gMajoraShieldBeamImageDL[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    gsDPPipeSync(),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(object_mir_ray_Tex_000558, G_IM_FMT_I, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
-    gsSPVertex(object_mir_rayVtx_000400, 11, 0),
-    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
-    gsSP2Triangles(4, 0, 2, 0, 4, 5, 0, 0),
-    gsSP2Triangles(0, 6, 3, 0, 7, 6, 0, 0),
-    gsSP2Triangles(8, 7, 0, 0, 9, 8, 0, 0),
-    gsSP2Triangles(9, 0, 10, 0, 0, 5, 10, 0),
-    gsSPEndDisplayList(),
+static u64 object_mir_ray_Tex_0002F0[] = {
+#include "assets/objects/object_mir_ray/tex_0002F0.i4.inc.c"
+};
+
+static u64 object_mir_ray_Tex_000558[] = {
+#include "assets/objects/object_mir_ray/tex_000558.i8.inc.c"
 };
 
 Gfx gMajoraShieldBeamGlowDL[] = {
@@ -51,5 +42,46 @@ Gfx gMajoraShieldBeamGlowDL[] = {
     gsSP2Triangles(18, 19, 17, 0, 16, 18, 17, 0),
     gsSP2Triangles(20, 21, 19, 0, 18, 20, 19, 0),
     gsSP2Triangles(1, 0, 21, 0, 20, 1, 21, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gMajoraShieldBeamGlowStoneTowerDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, TEXEL1, PRIM_LOD_FRAC, TEXEL1, TEXEL0, TEXEL1, PRIM_LOD_FRAC, TEXEL0, TEXEL1, COMBINED, PRIMITIVE, ENVIRONMENT, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_INTER2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock_4b(object_mir_ray_Tex_0002F0, G_IM_FMT_I, 16, 32, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadMultiBlock_4b(object_mir_ray_Tex_000270, 0x0020, 1, G_IM_FMT_I, 16, 16, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, 3, 1),
+    gsSPDisplayList(0x0F000000),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(object_mir_rayVtx_000000, 22, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
+    gsSP2Triangles(4, 5, 3, 0, 2, 4, 3, 0),
+    gsSP2Triangles(6, 7, 5, 0, 4, 6, 5, 0),
+    gsSP2Triangles(8, 9, 10, 0, 11, 8, 10, 0),
+    gsSP2Triangles(12, 13, 9, 0, 8, 12, 9, 0),
+    gsSP2Triangles(14, 15, 13, 0, 12, 14, 13, 0),
+    gsSP2Triangles(16, 17, 15, 0, 14, 16, 15, 0),
+    gsSP2Triangles(18, 19, 17, 0, 16, 18, 17, 0),
+    gsSP2Triangles(20, 21, 19, 0, 18, 20, 19, 0),
+    gsSP2Triangles(1, 0, 21, 0, 20, 1, 21, 0),
+    gsSPEndDisplayList(),
+};
+
+Gfx gMajoraShieldBeamImageDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
+    gsDPPipeSync(),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(object_mir_ray_Tex_000558, G_IM_FMT_I, G_IM_SIZ_8b, 32, 64, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, 5, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(object_mir_rayVtx_000400, 11, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
+    gsSP2Triangles(4, 0, 2, 0, 4, 5, 0, 0),
+    gsSP2Triangles(0, 6, 3, 0, 7, 6, 0, 0),
+    gsSP2Triangles(8, 7, 0, 0, 9, 8, 0, 0),
+    gsSP2Triangles(9, 0, 10, 0, 0, 5, 10, 0),
     gsSPEndDisplayList(),
 };

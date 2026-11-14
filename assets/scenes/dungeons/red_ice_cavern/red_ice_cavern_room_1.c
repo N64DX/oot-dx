@@ -30,7 +30,7 @@ ActorEntry red_ice_cavern_room_1ActorEntry_000048[] = {
     { ACTOR_OBJ_SYOKUDAI,    { 2119, 180,  127 }, {    0,      0,   0 }, 0x2400 },
     { ACTOR_OBJ_SYOKUDAI,    { 2119, 180,  -17 }, {    0,      0,   0 }, 0x2400 },
     { ACTOR_OBJ_BOMBIWA,     { 2060,  81,  268 }, {    0,      0,   0 }, 0x001A },
-    { ACTOR_BG_ICE_SHELTER,  { 2073, 265, -160 }, {    0,      0,   0 }, 0x001B }, // Sets switch: 1B
+    { ACTOR_BG_ICE_SHELTER,  { 2073, 265, -160 }, {    0,      0,   0 }, 0x001B }, // Switch: 1B
     { ACTOR_BG_WEATHER,      {    0,   0,    0 }, {    0,      0,   0 }, 0x0001 },
     { ACTOR_OBJECT_KANKYO,   {    0,   0,    0 }, {    0,      0,   0 }, 0x0007 },
 };

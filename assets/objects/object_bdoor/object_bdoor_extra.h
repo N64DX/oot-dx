@@ -4,5 +4,6 @@
 #include "ultra64.h"
 
 extern u64 gBossDoorWoodfallTex[];
+extern u64 gBossDoorStoneTowerTex[];
 
 #endif

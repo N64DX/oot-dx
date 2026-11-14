@@ -187,7 +187,7 @@ void BgHakaBombwall_SetupPlayCutscene(BgHakaBombwall* this) {
 }
 
 void BgHakaBombwall_PlayCutscene(BgHakaBombwall* this, PlayState* play) {
-    if (this->csId > 0) {
+    if (this->csId > 0 && cutscenes[this->csId] != NULL) {
         Cutscene_SetScript(play, cutscenes[this->csId-1]);
         gSaveContext.cutsceneTrigger = 1;
         Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);

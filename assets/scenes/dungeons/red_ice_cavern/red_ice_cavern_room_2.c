@@ -40,8 +40,8 @@ ActorEntry red_ice_cavern_room_2ActorEntry_000048[] = {
     { ACTOR_EN_BOX,          { 2276, 242,  382 }, {               0x3E, 0xEA00, 0x10 }, 0x1009 }, // Chest: 09, checks switch: 10, Piece of Heart
     { ACTOR_OBJ_SYOKUDAI,    { 2586, 217,  279 }, {                  0,  0x7D0,    0 }, 0x2400 },
     { ACTOR_OBJ_SYOKUDAI,    { 2744, 239, -116 }, {                  0,  0x888,    0 }, 0x2400 },
-    { ACTOR_BG_ICE_SHELTER,  { 2276, 242,  382 }, {                  0, 0x4720,    0 }, 0x0213 }, // Sets switch: 13
-    { ACTOR_EN_WF,           { 2579, 211,   67 }, {                  0, 0xC000,    0 }, 0x1001 }, // Sets switch: 10
+    { ACTOR_BG_ICE_SHELTER,  { 2276, 242,  382 }, {                  0, 0x4720,    0 }, 0x0213 }, // Switch: 13
+    { ACTOR_EN_WF,           { 2579, 211,   67 }, {                  0, 0xC000,    0 }, 0x1001 }, // Switch: 10
     { ACTOR_BG_WEATHER,      {    0,   0,    0 }, {                  0,      0,    0 }, 0x0001 },
     { ACTOR_OBJECT_KANKYO,   {    0,   0,    0 }, {                  0,      0,    0 }, 0x0007 },
 };

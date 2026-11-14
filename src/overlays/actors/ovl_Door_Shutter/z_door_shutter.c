@@ -44,6 +44,7 @@
 #include "assets/objects/object_demo_kekkai/object_demo_kekkai.h"
 #include "assets/objects/object_ouke_haka/object_ouke_haka.h"
 #include "assets/objects/object_numa_obj/object_numa_obj.h"
+#include "assets/objects/object_ikana_obj/object_ikana_obj.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -101,7 +102,8 @@ typedef enum DoorShutterGfxType {
     /* 17 */ DOORSHUTTER_GFX_GERUDO_TRAINING_GROUND,
     /* 18 */ DOORSHUTTER_GFX_GANONS_CASTLE,
     /* 19 */ DOORSHUTTER_GFX_ROYAL_FAMILYS_TOMB,
-    /* 1A */ DOORSHUTTER_GFX_WOODFALL_TEMPLE
+    /* 1A */ DOORSHUTTER_GFX_WOODFALL_TEMPLE,
+    /* 1A */ DOORSHUTTER_GFX_STONE_TOWER_TEMPLE
 } DoorShutterGfxType;
 
 typedef enum DoorShutterStyleType {
@@ -123,7 +125,8 @@ typedef enum DoorShutterStyleType {
     /* 14 */ DOORSHUTTER_STYLE_GERUDO_TRAINING_GROUND,
     /* 15 */ DOORSHUTTER_STYLE_GANONS_CASTLE,
     /* 16 */ DOORSHUTTER_STYLE_ROYAL_FAMILYS_TOMB,
-    /* 17 */ DOORSHUTTER_STYLE_WOODFALL_TEMPLE
+    /* 17 */ DOORSHUTTER_STYLE_WOODFALL_TEMPLE,
+    /* 17 */ DOORSHUTTER_STYLE_STONE_TOWER_TEMPLE
 } DoorShutterStyleType;
 
 typedef struct DoorShutterStyleInfo {
@@ -241,6 +244,12 @@ static DoorShutterStyleInfo sStyleInfo[] = {
         DOORSHUTTER_GFX_WOODFALL_TEMPLE,
         DOORSHUTTER_GFX_WOODFALL_TEMPLE,
     },
+    /* DOORSHUTTER_STYLE_STONE_TOWER_TEMPLE */
+    {
+        OBJECT_IKANA_OBJ,
+        DOORSHUTTER_GFX_STONE_TOWER_TEMPLE,
+        DOORSHUTTER_GFX_STONE_TOWER_TEMPLE,
+    },
 };
 
 typedef struct DoorShutterGfxInfo {
@@ -282,6 +291,7 @@ static DoorShutterGfxInfo sGfxInfo[] = {
     { gGanonsCastleDoorDL, gDoorMetalBarsDL, 130, 12, 20, 15 },        // DOORSHUTTER_GFX_GANONS_CASTLE
     { object_ouke_haka_DL_0000C0, gDoorMetalBarsDL, 130, 12, 20, 15 }, // DOORSHUTTER_GFX_ROYAL_FAMILYS_TOMB
     { object_numa_obj_DL_007150, gDoorMetalBarsDL, 130, 12, 20, 15 },  // DOORSHUTTER_GFX_WOODFALL_TEMPLE
+    { object_ikana_obj_DL_014A40, gDoorMetalBarsDL, 130, 12, 20, 15 },  // DOORSHUTTER_GFX_STONE_TOWER_TEMPLE
 };
 
 static s8 sTypeStyles[] = {
@@ -332,6 +342,8 @@ static DoorShutterSceneInfo sSceneInfo[] = {
     { SCENE_GORON_MINES, DOORSHUTTER_STYLE_DODONGOS_CAVERN },
     { SCENE_WOODFALL_TEMPLE, DOORSHUTTER_STYLE_WOODFALL_TEMPLE },
     { SCENE_PURPLE_ICE_CAVERN, DOORSHUTTER_STYLE_ICE_CAVERN },
+    { SCENE_STONE_TOWER_TEMPLE, DOORSHUTTER_STYLE_STONE_TOWER_TEMPLE },
+    { SCENE_STONE_TOWER_TEMPLE_INV, DOORSHUTTER_STYLE_STONE_TOWER_TEMPLE },
     { -1, DOORSHUTTER_STYLE_GENERIC },
 };
 
@@ -343,7 +355,8 @@ typedef enum DoorShutterBossDoorTexIndex {
     /* 4 */ DOORSHUTTER_BOSSDOORTEX_GANON,
     /* 5 */ DOORSHUTTER_BOSSDOORTEX_FOREST,
     /* 6 */ DOORSHUTTER_BOSSDOORTEX_SPIRIT,
-    /* 7 */ DOORSHUTTER_BOSSDOORTEX_WOODFALL
+    /* 7 */ DOORSHUTTER_BOSSDOORTEX_WOODFALL,
+    /* 8 */ DOORSHUTTER_BOSSDOORTEX_STONE_TOWER
 } DoorShutterBossDoorTexIndex;
 
 typedef struct DoorShutterBossDoorInfo {
@@ -359,9 +372,10 @@ static DoorShutterBossDoorInfo sBossDoorInfo[] = {
     { SCENE_GANONS_TOWER, SCENE_GANONDORF_BOSS, DOORSHUTTER_BOSSDOORTEX_GANON },
     { SCENE_FOREST_TEMPLE, SCENE_FOREST_TEMPLE_BOSS, DOORSHUTTER_BOSSDOORTEX_FOREST },
     { SCENE_SPIRIT_TEMPLE, SCENE_SPIRIT_TEMPLE_BOSS, DOORSHUTTER_BOSSDOORTEX_SPIRIT },
-    { SCENE_WOODFALL_TEMPLE, SCENE_WOODFALL_TEMPLE_BOSS, DOORSHUTTER_BOSSDOORTEX_WOODFALL },
     { SCENE_ANCIENT_HOLLOW, SCENE_ANCIENT_HOLLOW, DOORSHUTTER_BOSSDOORTEX_FOREST },
     { SCENE_GORON_MINES, SCENE_GORON_MINES, DOORSHUTTER_BOSSDOORTEX_FIRE },
+    { SCENE_WOODFALL_TEMPLE, SCENE_WOODFALL_TEMPLE_BOSS, DOORSHUTTER_BOSSDOORTEX_WOODFALL },
+    { SCENE_STONE_TOWER_TEMPLE_INV, SCENE_STONE_TOWER_TEMPLE_BOSS, DOORSHUTTER_BOSSDOORTEX_STONE_TOWER },
     { -1, -1, DOORSHUTTER_BOSSDOORTEX_0 },
 };
 
@@ -379,6 +393,7 @@ static void* sBossDoorTextures[] = {
     gBossDoorForestTex,       // DOORSHUTTER_BOSSDOORTEX_FOREST
     gBossDoorSpiritTex,       // DOORSHUTTER_BOSSDOORTEX_SPIRIT
     gBossDoorWoodfallTex,     // DOORSHUTTER_BOSSDOORTEX_WOODFALL
+    gBossDoorStoneTowerTex,   // DOORSHUTTER_BOSSDOORTEX_STONE_TOWER
 };
 
 void DoorShutter_SetupAction(DoorShutter* this, DoorShutterActionFunc actionFunc) {
@@ -454,6 +469,11 @@ void DoorShutter_Init(Actor* thisx, PlayState* play2) {
     this->dyna.actor.home.pos.z = this->dyna.actor.shape.yOffset;
     DynaPolyActor_Init(&this->dyna, 0);
     this->doorType = DOORSHUTTER_GET_TYPE(&this->dyna.actor);
+
+    if (play->sceneId == SCENE_STONE_TOWER_TEMPLE || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INV) {
+        this->dyna.actor.cullingVolumeScale = 400.0f;
+        this->dyna.actor.cullingVolumeDownward = 800.0f;
+    }
 
     styleType = sTypeStyles[this->doorType];
     if (styleType < 0) {
