@@ -1364,7 +1364,7 @@ void Message_DrawTextWide(PlayState* play, Gfx** gfxP) {
     Gfx* gfx = *gfxP;
 
     if (msgCtx->msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND && msgCtx->msgMode <= MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND && msgCtx->titleCardInfo != NULL) {
-        msgCtx->textPosX = msgCtx->titleCardInfo->textPosX;
+        msgCtx->textPosX = msgCtx->titleCardInfo->textPosX - WS_SHIFT_HALF;
         msgCtx->textPosY = msgCtx->titleCardInfo->textPosY;
     } else {
         msgCtx->textPosX = R_TEXT_INIT_XPOS;
@@ -1685,7 +1685,7 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
     Gfx* gfx = *gfxP;
 
     if (msgCtx->msgMode >= MSGMODE_SCENE_TITLE_CARD_FADE_IN_BACKGROUND && msgCtx->msgMode <= MSGMODE_SCENE_TITLE_CARD_FADE_OUT_BACKGROUND && msgCtx->titleCardInfo != NULL) {
-        msgCtx->textPosX = msgCtx->titleCardInfo->textPosX;
+        msgCtx->textPosX = msgCtx->titleCardInfo->textPosX - WS_SHIFT_HALF;
         msgCtx->textPosY = msgCtx->titleCardInfo->textPosY;
     } else {
         msgCtx->textPosX = R_TEXT_INIT_XPOS;

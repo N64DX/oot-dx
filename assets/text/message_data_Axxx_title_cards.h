@@ -127,14 +127,14 @@ DEFINE_MESSAGE(0xA020, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA023, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("時の神殿入口"),
     MSG("Outside the Temple of Time"),
-    MSG("Außerhalb des Zitadelle der Zeit"),
+    MSG("Außerhalb der Zitadelle der Zeit"),
     MSG("Entrée du Temple du Temps")
 )
 
 DEFINE_MESSAGE(0xA026, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("物知り兄の家"),
-    MSG("Know-It-All-Brother's House"),
-    MSG("Haus des Besserwissers"),
+    MSG("Know-It-All-Brothers' House"),
+    MSG("Haus der Allwissenden Brüder"),
     MSG("Maison du frère savant")
 )
 
@@ -169,7 +169,7 @@ DEFINE_MESSAGE(0xA02A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA02B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("裏路地の家"),
     MSG("Back Alley House"),
-    MSG("Seitenstraße Haus"),
+    MSG("Haus in der Seitenstraße"),
     MSG("Maison de la Ruelle Arrière")
 )
 
@@ -204,14 +204,14 @@ DEFINE_MESSAGE(0xA02F, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA030, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("カカリコ村のポーション屋"),
     MSG("Kakariko Potion Shop"),
-    MSG("Kakariko-Magie-Laden"),
+    MSG("Magie-Laden in Kakariko"),
     MSG("Apothicaire de Cocorico")
 )
 
 DEFINE_MESSAGE(0xA031, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("町のポーション屋"),
     MSG("Market Potion Shop"),
-    MSG("Marketplatz-Magie-Laden"),
+    MSG("Magie-Laden am Marktplatz"),
     MSG("Apothicaire du Marché")
 )
 
@@ -372,7 +372,7 @@ DEFINE_MESSAGE(0xA04B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA04C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("牧場の家"),
     MSG("Ranch House"),
-    MSG("Ranchhaus"),
+    MSG("Haus der Lon-Lon-Farm"),
     MSG("Maison du Ranch")
 )
 
@@ -386,7 +386,7 @@ DEFINE_MESSAGE(0xA04D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA04E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("おばあさんのポーション屋"),
     MSG("Granny's Potion Shop"),
-    MSG("Omas Magie-Laden"),
+    MSG("Asas Hexenladen"),
     MSG("Apothicaire de Mamie")
 )
 
@@ -470,7 +470,7 @@ DEFINE_MESSAGE(0xA05A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA05B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("迷いの森"),
     MSG("Lost Woods"),
-    MSG("Verlorene Walder"),
+    MSG("Verlorene Wälder"),
     MSG("Bois Perdus")
 )
 
@@ -526,7 +526,7 @@ DEFINE_MESSAGE(0xA062, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA063, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("ロンロン牧場"),
     MSG("Lon Lon Ranch"),
-    MSG("Lon Lon-Farm"),
+    MSG("Lon-Lon-Farm"),
     MSG("Ranch Lon Lon")
 )
 
@@ -561,7 +561,7 @@ DEFINE_MESSAGE(0xA067, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA068, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("スプリングレイク"),
     MSG("Spring Lake"),
-    MSG("Frühlingssee"),
+    MSG("Quellsee"),
     MSG("Lac du Printemps")
 )
 
@@ -596,14 +596,14 @@ DEFINE_MESSAGE(0xA06C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA06D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("川辺の村"),
     MSG("Riverside Village"),
-    MSG("Flussdorf"),
+    MSG("Dorf am Fluss"),
     MSG("Village de la Rivière")
 )
 
 DEFINE_MESSAGE(0xA06E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("古の森"),
     MSG("Ancient Grove"),
-    MSG("Uralter Hain"),
+    MSG("Antiker Hain"),
     MSG("Bosquet Ancien")
 )
 
@@ -631,7 +631,7 @@ DEFINE_MESSAGE(0xA071, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA072, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("古代の空洞"),
     MSG("Ancient Hollow"),
-    MSG("Uralter Hohlraum"),
+    MSG("Antiker Hohlraum"),
     MSG("Creux Antique")
 )
 
@@ -645,7 +645,7 @@ DEFINE_MESSAGE(0xA073, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA074, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("ウッドフォールの神殿"),
     MSG("Woodfall Temple"),
-    MSG("Dämmerwald Tempel"),
+    MSG("Dämmerwald-Tempel"),
     MSG("Temple de Bois-Cascade")
 )
 
@@ -659,21 +659,21 @@ DEFINE_MESSAGE(0xA075, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA076, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("ロックビルの神殿"),
     MSG("Stone Tower Temple"),
-    MSG("Felsenturm Tempel"),
+    MSG("Felsenturm-Tempel"),
     MSG("Temple de la Forteresse de Pierre")
 )
 
 DEFINE_MESSAGE(0xA077, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("禁じられた森"),
     MSG("Forbidden Woods"),
-    MSG("Verbotener Wald"),
+    MSG("Verbotene Wälder"),
     MSG("Bois Interdits")
 )
 
 DEFINE_MESSAGE(0xA078, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("くものすやしろ"),
     MSG("Webbed Shrine"),
-    MSG("Versponnener Schrein"),
+    MSG("Verwobener Schrein"),
     MSG("Sanctuaire Entoilé")
 )
 
@@ -694,14 +694,14 @@ DEFINE_MESSAGE(0xA07A, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA07B, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("川辺の宿"),
     MSG("Riverside Inn"),
-    MSG("Herberge des Flussdorfs"),
+    MSG("Gasthaus im Dorf am Fluss"),
     MSG("Auberge de la Rivière")
 )
 
 DEFINE_MESSAGE(0xA07C, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("川辺の家"),
     MSG("Riverside House"),
-    MSG("Haus im Flussdorf"),
+    MSG("Haus im Dorf am Fluss"),
     MSG("Maison de la Rivière")
 )
 
@@ -715,7 +715,7 @@ DEFINE_MESSAGE(0xA07D, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
 DEFINE_MESSAGE(0xA07E, TEXTBOX_TYPE_BLUE, TEXTBOX_POS_BOTTOM,
     MSG("古の森の店"),
     MSG("Ancient Grove Shop"),
-    MSG("Laden des Uralten Hains"),
+    MSG("Laden des Antiken Hains"),
     MSG("Boutique du Bosquet Ancien")
 )
 
