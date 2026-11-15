@@ -2913,10 +2913,10 @@ static Mtx gScaleMasterSwordMtx = gdSPDefMtx(
 );
 
 static Mtx gSheathedMasterSwordMtx = gdSPDefMtx(
-    1, 0, 0, -578,
-    0, 1, 0, -221,
-    0, 0, 1,   62,
-    0, 0, 0,    1
+    1, 0, 0, -1000,
+    0, 1, 0,  -300,
+    0, 0, 1,    62,
+    0, 0, 0,     1
 );
 
 static Mtx gScaleMasterSwordSheathMtx = gdSPDefMtx(
@@ -2963,6 +2963,7 @@ Gfx gLinkYoungSheathedGoddessSwordDL[] = {
     gsSPMatrix(&gSheathedMasterSwordMtx, G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPDisplayList(gFourSwordDullHandleDL),
     gsSPPopMatrix(G_MTX_MODELVIEW),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
     gsSPEndDisplayList(),
 };
 
@@ -2970,7 +2971,8 @@ Gfx gLinkYoungSheathedMasterSwordDL[] = {
     gsSPDisplayList(gLinkYoungMasterSwordSheathDL),
     gsSPMatrix(&gScaleMasterSwordMtx, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPMatrix(&gSheathedMasterSwordMtx, G_MTX_MUL | G_MTX_MODELVIEW),
-    gsSPDisplayList(gFourSwordDullHandleDL),
+    gsSPDisplayList(gFourSwordHandleDL),
+    gsSPPopMatrix(G_MTX_MODELVIEW),
     gsSPPopMatrix(G_MTX_MODELVIEW),
     gsSPEndDisplayList(),
 };
