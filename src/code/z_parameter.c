@@ -3473,7 +3473,7 @@ void Magic_DrawMeter(PlayState* play) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, R_MAGIC_FILL_COLOR(0), R_MAGIC_FILL_COLOR(1), R_MAGIC_FILL_COLOR(2),
                             interfaceCtx->magicAlpha);
 
-            gSPTextureRectangle(OVERLAY_DISP++, R_MAGIC_FILL_X << 2, magicMeterY + 3 << 2,
+            gSPTextureRectangle(OVERLAY_DISP++, R_MAGIC_FILL_X << 2, (magicMeterY + 3) << 2,
                                 (R_MAGIC_FILL_X + gSaveContext.magicTarget) << 2, (magicMeterY + 10) << 2,
                                 G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
         } else {
