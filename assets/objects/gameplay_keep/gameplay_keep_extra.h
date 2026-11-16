@@ -103,6 +103,13 @@ extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_20f;
 extern LinkAnimationHeader gPlayerAnim_link_normal_newside_jump_end_20f;
 extern LinkAnimationHeader gPlayerAnim_alink_fukitobu;
 
+extern LinkAnimationHeader gPlayerAnim_link_start_booster_jump;
+extern LinkAnimationHeader gPlayerAnim_link_booster_jump;
+extern LinkAnimationHeader gPlayerAnim_link_finish_booster_jump;
+extern LinkAnimationHeader gPlayerAnim_link_fish_swim;
+extern LinkAnimationHeader gPlayerAnim_link_swim_to_wait;
+extern LinkAnimationHeader gPlayerAnim_link_water_roll;
+
 #define gFieldBeehiveTex_WIDTH                  32
 #define gFieldBeehiveTex_HEIGHT                 32
 #define gFieldBeehiveFragmentTex_WIDTH          16
