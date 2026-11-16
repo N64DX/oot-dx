@@ -15,12 +15,26 @@
 #define ULTRA_WS   ((INGAME_ASPECT_RATIO) ? 0 : ((SCREEN_MODE == 2) ? 1 : 0)) // 576x240
 
 // Dynamic or static SCREEN_WIDTH
-#define SCREEN_WIDTH ((INGAME_ASPECT_RATIO) ? gScreenWidth : ((ULTRA_WS) ? 576 : ((WIDESCREEN) ? 432 : 320)))
+#if INGAME_ASPECT_RATIO
+    #define SCREEN_WIDTH gScreenWidth
+#elif ULTRA_WS
+    #define SCREEN_WIDTH 576
+#elif WIDESCREEN
+    #define SCREEN_WIDTH 432
+#else
+    #define SCREEN_WIDTH 320
+#endif
 
 // Aspect ratio variables
-#define SCREEN_WIDTH_INIT ((INGAME_ASPECT_RATIO) ? 320 : SCREEN_WIDTH)
-#define SCREEN_WIDTH_MONO ((INGAME_ASPECT_RATIO) ? 432 : SCREEN_WIDTH)
-#define SCREEN_WIDTH_MAX  ((INGAME_ASPECT_RATIO) ? 576 : SCREEN_WIDTH)
+#if INGAME_ASPECT_RATIO
+    #define SCREEN_WIDTH_INIT 320
+    #define SCREEN_WIDTH_MONO 432
+    #define SCREEN_WIDTH_MAX  576
+#else
+    #define SCREEN_WIDTH_INIT SCREEN_WIDTH
+    #define SCREEN_WIDTH_MONO SCREEN_WIDTH
+    #define SCREEN_WIDTH_MAX  SCREEN_WIDTH
+#endif
 
 // Widescreen shifts
 #define GFXPRINT_SHIFT   ((SCREEN_WIDTH == 432) ? 6  : ((SCREEN_WIDTH == 576) ? 13  : 0 ))
