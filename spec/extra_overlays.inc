@@ -6,6 +6,13 @@ beginseg
 endseg
 
 beginseg
+    name "ovl_Effect_En_Ice_Block"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/effects/ovl_Effect_En_Ice_Block/z_eff_en_ice_block.o"
+endseg
+
+beginseg
     name "ovl_Mir_Ray2"
     compress
     flags OVERLAY
@@ -129,6 +136,13 @@ beginseg
     compress
     flags OVERLAY
     include "$(BUILD_DIR)/src/overlays/actors/ovl_Bg_Icefloe/z_bg_icefloe.o"
+endseg
+
+beginseg
+    name "ovl_Obj_Iceblock"
+    compress
+    flags OVERLAY
+    include "$(BUILD_DIR)/src/overlays/actors/ovl_Obj_Iceblock/z_obj_iceblock.o"
 endseg
 
 beginseg
