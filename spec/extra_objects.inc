@@ -398,9 +398,9 @@ beginseg
 endseg
 
 beginseg
-    name "object_slime"
+    name "object_slim"
     compress
-    include "$(BUILD_DIR)/assets/objects/object_slime/object_slime.o"
+    include "$(BUILD_DIR)/assets/objects/object_slim/object_slim.o"
     number 6
 endseg
 

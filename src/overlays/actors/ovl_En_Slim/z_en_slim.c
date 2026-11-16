@@ -5,8 +5,6 @@
  */
 
 #include "z_en_slim.h"
-#include "overlays/actors/ovl_En_Encount1/z_en_encount1.h"
-#include "overlays/effects/ovl_Effect_Ss_Dead_Sound/z_eff_ss_dead_sound.h"
 
 #include "libc64/qrand.h"
 #include "gfx.h"
@@ -22,7 +20,8 @@
 #include "z_en_item00.h"
 #include "save.h"
 
-#include "assets/objects/object_slime/object_slime.h"
+#include "overlays/actors/ovl_En_Encount1/z_en_encount1.h"
+#include "overlays/effects/ovl_Effect_Ss_Dead_Sound/z_eff_ss_dead_sound.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -49,7 +48,7 @@ ActorProfile En_Slim_Profile = {
     ACTOR_EN_SLIM,
     ACTORCAT_ENEMY,
     FLAGS,
-    OBJECT_SLIME,
+    OBJECT_SLIM,
     sizeof(EnSlim),
     EnSlim_Init,
     EnSlim_Destroy,
@@ -488,8 +487,8 @@ void EnSlim_DeathCry(EnSlim* this, PlayState* play) {
 void EnSlim_FallApart(EnSlim* this, PlayState* play) {
     if (1 || BodyBreak_SpawnParts(&this->actor, &this->bodyBreak, play, (this->actor.params + 11))) {
         if (this->actor.params == TEKSLIM_BLUE)
-            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0xE0);
-        else Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x40);
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_13, false));
+        else Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_10, false));
         Actor_Kill(&this->actor);
     }
 }
@@ -622,7 +621,7 @@ void EnSlim_Draw(Actor* thisx, PlayState* play) {
     gSPMatrix(POLY_XLU_DISP++, mtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
     func_8002ED80(&this->actor, play, 1); // setup XLU hilite in segment 0x07
-    gSPDisplayList(POLY_XLU_DISP++, slimeDList);
+    gSPDisplayList(POLY_XLU_DISP++, slimDList);
     Matrix_Pop();
 
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);

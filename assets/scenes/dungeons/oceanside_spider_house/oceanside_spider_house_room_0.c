@@ -12,7 +12,7 @@ SceneCmd oceanside_spider_house_room_0[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&oceanside_spider_house_room_0RoomShapeCullable_000160),
-    SCENE_CMD_OBJECT_LIST(14, oceanside_spider_house_room_0ObjectList_000040),
+    SCENE_CMD_OBJECT_LIST(15, oceanside_spider_house_room_0ObjectList_000040),
     SCENE_CMD_ACTOR_LIST(14, oceanside_spider_house_room_0ActorEntry_00005C),
     SCENE_CMD_END(),
 };
@@ -29,6 +29,7 @@ s16 oceanside_spider_house_room_0ObjectList_000040[] = {
     OBJECT_KIN2_OBJ,
     OBJECT_SKB,
     OBJECT_D_HSBLOCK,
+    OBJECT_SPIDER,
     OBJECT_HIDAN_OBJECTS,
     OBJECT_POH,
     OBJECT_PO_COMPOSER,
@@ -39,10 +40,10 @@ ActorEntry oceanside_spider_house_room_0ActorEntry_00005C[] = {
     { ACTOR_EN_SW,            {   60, 380, -220 }, {      0, 0xC000,      0 }, 0x0000 },
     { ACTOR_EN_SW,            {  -60, 450, -120 }, {      0, 0x4000,      0 }, 0x0000 },
     { ACTOR_EN_SW,            {  -50, 570, -890 }, { 0x1800,      0,      0 }, 0x0000 },
-    { ACTOR_OBJ_TSUBO,        { -195, 180, -673 }, {      0,      0,      0 }, 0x4004 }, // Collect: 20, drops Bomb
-    { ACTOR_OBJ_TSUBO,        { -255, 180, -735 }, {      0,      0,      0 }, 0x420E }, // Collect: 21, drops Small Magic Jar
-    { ACTOR_OBJ_TSUBO,        {  190, 180, -672 }, {      0,      0,      0 }, 0x4401 }, // Collect: 22, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,        {  252, 180, -732 }, {      0,      0,      0 }, 0x4601 }, // Collect: 23, drops Blue Rupee
+    { ACTOR_OBJ_TSUBO,        { -195, 180, -673 }, {      0,      0,      0 }, 0x4004 }, // Collect: 20, Bomb
+    { ACTOR_OBJ_TSUBO,        { -255, 180, -735 }, {      0,      0,      0 }, 0x420E }, // Collect: 21, Small Magic Jar
+    { ACTOR_OBJ_TSUBO,        {  190, 180, -672 }, {      0,      0,      0 }, 0x4401 }, // Collect: 22, Blue Rupee
+    { ACTOR_OBJ_TSUBO,        {  252, 180, -732 }, {      0,      0,      0 }, 0x4601 }, // Collect: 23, Blue Rupee
     { ACTOR_OBJ_SYOKUDAI,     {  255, 180, -855 }, {      0,      0,      0 }, 0x243F },
     { ACTOR_OBJ_SYOKUDAI,     { -255, 180, -855 }, {      0,      0,      0 }, 0x243F },
     { ACTOR_OBJ_HSBLOCK,      {    1, 475, -634 }, { 0x2000, 0x8000,      0 }, 0x0002 },

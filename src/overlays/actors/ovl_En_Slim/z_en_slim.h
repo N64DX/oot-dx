@@ -4,16 +4,18 @@
 #include "ultra64.h"
 #include "actor.h"
 
+#include "assets/objects/object_slim/object_slim.h"
+
 struct EnSlim;
 
-typedef void (*EnSlimActionFunc)(struct EnSlim*, struct PlayState*);
+typedef void (*EnSlimActionFunc) (struct EnSlim*, struct PlayState*);
 
 typedef enum {
     /* -2 */ TEKSLIM_BLUE = -2,
     /* -1 */ TEKSLIM_RED
 } EnSlimType;
 
-typedef enum {
+typedef enum EnSlimAction {
     /* 0x0 */ TEKSLIM_DEATH_CRY,
     /* 0x1 */ TEKSLIM_UNK_1,
     /* 0x2 */ TEKSLIM_UNK_2,
@@ -29,14 +31,14 @@ typedef enum {
     /* 0xC */ TEKSLIM_MOVE_TOWARD_PLAYER
 } EnSlimAction;
 
-typedef enum {
+typedef enum EnSlimAttackState {
     /* 0x0 */ TEKSLIM_BEGIN_LUNGE,
     /* 0x1 */ TEKSLIM_MID_LUNGE,
     /* 0x2 */ TEKSLIM_LANDED,
     /* 0x2 */ TEKSLIM_SUBMERGED
 } EnSlimAttackState;
 
-typedef enum {
+typedef enum EnSlimFlipState {
     /* 0x0 */ TEKSLIM_INITIAL,
     /* 0x1 */ TEKSLIM_UNFLIPPED,
     /* 0x2 */ TEKSLIM_FLIPPED

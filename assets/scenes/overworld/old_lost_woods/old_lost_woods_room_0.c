@@ -28,7 +28,7 @@ s16 old_lost_woods_room_0ObjectList_000040[] = {
     OBJECT_HORSE,
     OBJECT_SK2,
     OBJECT_PEEHAT,
-    OBJECT_SLIME,
+    OBJECT_SLIM,
     OBJECT_BOMBIWA,
     OBJECT_LOST_WOODS,
     OBJECT_WOOD02,
