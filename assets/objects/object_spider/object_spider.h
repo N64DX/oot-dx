@@ -30,6 +30,17 @@ typedef enum ObjectSpiderSkel {
     /* 0x16 */ ARMATURE_NUM_LIMBS
 } ObjectSpiderSkel;
 
+extern u64 object_spider_Tex_thorax[];
+extern u64 object_spider_TLUT_thorax[];
+extern u64 object_spider_Tex_thoraxRed[];
+extern u64 object_spider_TLUT_thoraxRed[];
+extern u64 object_spider_Tex_abdomen[];
+extern u64 object_spider_TLUT_abdomen[];
+extern u64 object_spider_Tex_abdomenRed[];
+extern u64 object_spider_TLUT_abdomenRed[];
+extern u64 object_spider_Tex_legSegment[];
+extern u64 object_spider_Tex_legSegmentRed[];
+
 extern AnimationHeader ArmatureJumpsidelAnim;
 extern AnimationHeader ArmatureJumpsiderAnim;
 extern AnimationHeader ArmatureMovefAnim;

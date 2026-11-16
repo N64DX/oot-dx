@@ -12,8 +12,8 @@ SceneCmd oceanside_spider_house_room_1[] = {
     SCENE_CMD_SKYBOX_DISABLES(true, true),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&oceanside_spider_house_room_1RoomShapeCullable_000250),
-    SCENE_CMD_OBJECT_LIST(14, oceanside_spider_house_room_1ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(28, oceanside_spider_house_room_1ActorEntry_000058),
+    SCENE_CMD_OBJECT_LIST(15, oceanside_spider_house_room_1ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(31, oceanside_spider_house_room_1ActorEntry_000058),
     SCENE_CMD_END(),
 };
 
@@ -29,12 +29,16 @@ s16 oceanside_spider_house_room_1ObjectList_000040[] = {
     OBJECT_KIN2_OBJ,
     OBJECT_SKB,
     OBJECT_D_HSBLOCK,
+    OBJECT_SPIDER,
     OBJECT_HIDAN_OBJECTS,
     OBJECT_POH,
     OBJECT_PO_COMPOSER,
 };
 
 ActorEntry oceanside_spider_house_room_1ActorEntry_000058[] = {
+    { ACTOR_EN_SPIDER,      {  -40,  180, -1435 }, {      0,      0,   0 }, 0x0101 },
+    { ACTOR_EN_SPIDER,      {  -25, -120, -1400 }, {      0,      0,   0 }, 0x0101 },
+    { ACTOR_EN_SPIDER,      { -185, -120, -1675 }, {      0, 0x4000,   0 }, 0x0101 },
     { ACTOR_EN_SW,          {   55,   70, -1030 }, {      0, 0x8000,   0 }, 0x0000 },
     { ACTOR_EN_SW,          { -150,  410, -1210 }, {      0, 0x4000,   0 }, 0x0000 },
     { ACTOR_EN_SW,          {  -83,  -98, -1988 }, {      0,      0,   0 }, 0x0000 },
@@ -43,11 +47,11 @@ ActorEntry oceanside_spider_house_room_1ActorEntry_000058[] = {
     { ACTOR_EN_SW,          {   90,  -50, -1385 }, {      0, 0xC000,   0 }, 0x0000 },
     { ACTOR_EN_SW,          { -285,  234, -1377 }, {      0, 0x4000,   0 }, 0x0000 },
     { ACTOR_EN_SW,          { -220,   22, -1571 }, {      0, 0x8000,   0 }, 0x0000 },
-    { ACTOR_OBJ_TSUBO,      {   65,  -12, -1722 }, {      0,      0, 0x2 }, 0x480B }, // Collect: 24, drops Bomb (5)
-    { ACTOR_OBJ_TSUBO,      {    2,  -66, -1722 }, {      0,      0,   0 }, 0x4A09 }, // Collect: 25, drops Arrows (10)
-    { ACTOR_OBJ_TSUBO,      {   64, -120, -1650 }, {      0,      0,   0 }, 0x4C09 }, // Collect: 26, drops Arrows (10)
-    { ACTOR_OBJ_TSUBO,      {  -30, -120, -1050 }, {      0,      0, 0x1 }, 0x4E0F }, // Collect: 27, drops Small Magic Jar
-    { ACTOR_OBJ_TSUBO,      {   63,  -12, -1051 }, {      0,      0,   0 }, 0x500F }, // Collect: 28, drops Small Magic Jar
+    { ACTOR_OBJ_TSUBO,      {   65,  -12, -1722 }, {      0,      0, 0x2 }, 0x480B }, // Collect: 24, Bomb (5)
+    { ACTOR_OBJ_TSUBO,      {    2,  -66, -1722 }, {      0,      0,   0 }, 0x4A09 }, // Collect: 25, Arrows (10)
+    { ACTOR_OBJ_TSUBO,      {   64, -120, -1650 }, {      0,      0,   0 }, 0x4C09 }, // Collect: 26, Arrows (10)
+    { ACTOR_OBJ_TSUBO,      {  -30, -120, -1050 }, {      0,      0, 0x1 }, 0x4E0F }, // Collect: 27, Small Magic Jar
+    { ACTOR_OBJ_TSUBO,      {   63,  -12, -1051 }, {      0,      0,   0 }, 0x500F }, // Collect: 28, Small Magic Jar
     { ACTOR_OBJ_SYOKUDAI,   {   75, -120, -1320 }, {      0,      0,   0 }, 0x243F },
     { ACTOR_OBJ_SYOKUDAI,   {   60,  180, -1045 }, {      0,      0,   0 }, 0x243F },
     { ACTOR_OBJ_SYOKUDAI,   { -270,  180, -1229 }, {      0,      0,   0 }, 0x243F },

@@ -12,6 +12,7 @@
 #include "gfx.h"
 #include "gfx_setupdl.h"
 #include "ichain.h"
+#include "segmented_address.h"
 #include "sfx.h"
 #include "sys_matrix.h"
 #include "z_lib.h"
@@ -146,7 +147,7 @@ static ColliderJntSphInit sJntSphInit = {
 };
 
 static InitChainEntry sInitChain[] = {
-    ICHAIN_S8(naviEnemyId, NAVI_ENEMY_SPIDER, ICHAIN_CONTINUE),
+    ICHAIN_S8(naviEnemyId, NAVI_ENEMY_GIANT_SPIDER, ICHAIN_CONTINUE),
     ICHAIN_S8(attentionRangeType, ATTENTION_RANGE_2, ICHAIN_CONTINUE),
     ICHAIN_F32_DIV1000(gravity, -3000, ICHAIN_CONTINUE),
     ICHAIN_VEC3F_DIV1000(scale, 19, ICHAIN_STOP)
@@ -234,46 +235,45 @@ static DamageTable sDamageTable = {
 void EnSpider_Init(Actor* thisx, PlayState* play) {
     EnSpider* this = (EnSpider*)thisx;
 
-    this->type       =  this->actor.params       & 0xFF;
-    this->miniboss   = (this->actor.params >> 8) & 1;
+    this->type1 =  this->actor.params       & 0xFF;
+    this->type2 = (this->actor.params >> 8) & 3;
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     this->alarmstate = false;
-    if (this->type == 2)
+
+    if (this->type1 == SPIDER_ON_FLOOR_ANGRY)
         this->cantSee = false;
+    if (this->type2 == SPIDER_MINI)
+        Actor_SetScale(thisx, 0.005f);
 
     this->canDodge = true;
     ActorShape_Init(&this->actor.shape, 0.0f, ActorShadow_DrawHorse, 10.0f);
     this->actor.world.rot.y = this->actor.shape.rot.y;
     
     Collider_InitCylinder(play, &this->collider);
-    SkelAnime_InitFlex(play, &this->skelAnime, &Armature, &ArmatureIntroAnim, this->jointTable, this->morphTable, ARMATURE_NUM_LIMBS);
     Collider_SetCylinder(play, &this->collider, &this->actor, &sCylinderInit);
+    SkelAnime_InitFlex(play, &this->skelAnime, &Armature, &ArmatureIntroAnim, this->jointTable, this->morphTable, ARMATURE_NUM_LIMBS);
     CollisionCheck_SetInfo2(&this->actor.colChkInfo, &sDamageTable, &sColChkInit);
-    this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
     Collider_InitJntSph(play, &this->colliderSpheres);
     Collider_SetJntSph(play, &this->colliderSpheres, &this->actor, &sJntSphInit, this->colliderSpheresElements);
 
-    if (this->miniboss) {
-        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(20, ELITE_HP);
-        this->colliderSpheres.elements[0].base.atDmgInfo.damage = this->colliderSpheres.elements[1].base.atDmgInfo.damage = 0x18;
+    if (this->type2 == SPIDER_MINIBOSS) {
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health*2, ELITE_HP);
+        this->colliderSpheres.elements[0].base.atDmgInfo.damage = this->colliderSpheres.elements[1].base.atDmgInfo.damage *= 1.5f;
+    } else if (this->type2 == SPIDER_MINI) {
+        this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health/2, MONSTER_HP);
+        this->colliderSpheres.elements[0].base.atDmgInfo.damage = this->colliderSpheres.elements[1].base.atDmgInfo.damage *= 0.75f;
+        thisx->naviEnemyId = NAVI_ENEMY_RED_WIDOW;
     } else this->actor.colChkInfo.health = Actor_EnemyHealthMultiply(this->actor.colChkInfo.health, MONSTER_HP);
 
-    if (this->type == 0) {
-        this->timer = 39;
+    if (this->type1 == SPIDER_ON_FLOOR || this->type1 == SPIDER_ON_FLOOR_ANGRY) {
+        this->timer = FRAMES(40);
         EnSpider_SetupIdle(this, play);
-        this->actor.speed = 0.0f;
-    } else if (this->type == 1) {
+    } else if (this->type1 == SPIDER_HANGING)
         EnSpider_SetupIntro(this, play);
-        this->actor.speed = 0.0f;
-    } else if (this->type == 2) {
-        this->timer = 39;
-        EnSpider_SetupIdle(this, play);
-        this->actor.speed = 0.0f;
-    } else {
-        this->timer = 95;
+    else {
+        this->timer = FRAMES(100);
         EnSpider_SetupIdleP(this, play);
-        this->actor.speed = 0.0f;
     }
 }
 
@@ -283,7 +283,7 @@ void EnSpider_Destroy(Actor* thisx, PlayState* play) {
     Collider_DestroyCylinder(play, &this->collider);
     Collider_DestroyJntSph(play, &this->colliderSpheres);
 
-    if (this->alarmstate && this->miniboss)
+    if (this->alarmstate && this->type2 == SPIDER_MINIBOSS)
         func_800F5B58();
 }
 
@@ -296,7 +296,7 @@ void EnSpider_Update(Actor* thisx, PlayState* play) {
     s32 bgId;
     Player* player = GET_PLAYER(play);
 
-    if ((this->actionFunc != EnSpider_Intro))
+    if (this->actionFunc != EnSpider_Intro)
         Actor_MoveXZGravity(&this->actor);
     this->actionFunc(this, play);
     EnSpider_CheckDamage(this, play);
@@ -306,7 +306,7 @@ void EnSpider_Update(Actor* thisx, PlayState* play) {
         CollisionCheck_SetAT(play, &play->colChkCtx, &this->colliderSpheres.base);
     if (this->actionFunc != EnSpider_Death || this->actionFunc != EnSpider_Intro || this->actionFunc != EnSpider_IntroCont) {
         Collider_UpdateCylinder(&this->actor, &this->collider);
-        if (DECR(this->hurtboxCooldown) == 0)
+        if (DECR(this->hurtTimer) == 0)
             CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
         CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
     }
@@ -318,40 +318,51 @@ void EnSpider_Update(Actor* thisx, PlayState* play) {
     epos.y = this->actor.world.pos.y + 65.0f;
     epos.z = this->actor.world.pos.z;
 
-    if (this->type == 2)
-        this->cantSee = false;
+    this->cantSee = BgCheck_EntityLineTest1(&play->colCtx, &epos, &pos, &colPoint, &poly, true, true, true, true, &bgId) && this->actor.xzDistToPlayer < SPIDER_AGGRO_RANGE(this) && (play->gameplayFrames % FRAMES(10)) == 0 && this->type1 != 2;
 
-    if (this->actor.xzDistToPlayer < 900.0 && (play->gameplayFrames % 10) == 0 && this->type != 2) {
-        if (BgCheck_EntityLineTest1(&play->colCtx, &epos, &pos, &colPoint, &poly, true, true, true, true, &bgId))
-            this->cantSee = true;
-        else this->cantSee = false;
-    } else this->cantSee = true;
-    if (player->meleeWeaponState != 0 && player->meleeWeaponAnimation != PLAYER_MWA_JUMPSLASH_START && Actor_IsFacingPlayer(&this->actor, 0xA38) && this->actor.xzDistToPlayer < 200.0f && (play->gameplayFrames % 6) == 0 && this->actionFunc != EnSpider_Death && this->actionFunc != EnSpider_JumpSideL && this->actionFunc != EnSpider_JumpSideR && this->actionFunc != EnSpider_AttackA && this->actionFunc != EnSpider_MoveB) {
-        this->timer = 15;
-        EnSpider_ChangeAnimation(this, ARMATURE_ANIM_JUMPBACK);
-        EnSpider_SetupMoveB(this, play);
-    }
-    if (player->meleeWeaponState != 0 && player->meleeWeaponAnimation == PLAYER_MWA_JUMPSLASH_START && Actor_IsFacingPlayer(&this->actor, 0xA38) && this->actor.xzDistToPlayer < 250.0f && this->actionFunc != EnSpider_Death && this->actionFunc != EnSpider_AttackA && this->actionFunc != EnSpider_MoveB && this->actionFunc != EnSpider_JumpSideL && this->actionFunc != EnSpider_JumpSideR) {
-        s32 Randum = Rand_ZeroOne();
-        this->timer = 13;
+    if (player->meleeWeaponState != 0 && player->meleeWeaponAnimation != PLAYER_MWA_JUMPSLASH_START && Actor_IsFacingPlayer(&this->actor, 0xA38) && this->type2 != SPIDER_MINI)
+        if (this->actionFunc != EnSpider_Death && this->actionFunc != EnSpider_JumpSideL && this->actionFunc != EnSpider_JumpSideR && this->actionFunc != EnSpider_AttackA && this->actionFunc != EnSpider_MoveB) {
+            if (this->actor.xzDistToPlayer < 200.0f && (play->gameplayFrames % FRAMES(6)) == 0) {
+                this->timer = FRAMES(15);
+                EnSpider_ChangeAnimation(this, ARMATURE_ANIM_JUMPBACK);
+                EnSpider_SetupMoveB(this, play);
+            } else if (this->actor.xzDistToPlayer < 250.0f) {
+                this->timer = FRAMES(13);
 
-        if (this->actionFunc == EnSpider_MoveR) {
-            EnSpider_ChangeAnimation(this, ARMATURE_ANIM_JUMPSIDER);
-            EnSpider_SetupJumpSideR(this, play);
-        } else if (this->actionFunc == EnSpider_MoveL) {
-            EnSpider_ChangeAnimation(this, ARMATURE_ANIM_JUMPSIDEL);
-            EnSpider_SetupJumpSideL(this, play);
-        } else if (Randum > 0.5f) {
-            EnSpider_ChangeAnimation(this, ARMATURE_ANIM_JUMPSIDEL);
-            EnSpider_SetupJumpSideL(this, play);
-        } else {
-            EnSpider_ChangeAnimation(this, ARMATURE_ANIM_JUMPSIDER);
-            EnSpider_SetupJumpSideR(this, play);
+                if (this->actionFunc == EnSpider_MoveR) {
+                    EnSpider_ChangeAnimation(this, ARMATURE_ANIM_JUMPSIDER);
+                    EnSpider_SetupJumpSideR(this, play);
+                } else if (this->actionFunc == EnSpider_MoveL) {
+                    EnSpider_ChangeAnimation(this, ARMATURE_ANIM_JUMPSIDEL);
+                    EnSpider_SetupJumpSideL(this, play);
+                } else if (Rand_ZeroOne() > 0.5f) {
+                    EnSpider_ChangeAnimation(this, ARMATURE_ANIM_JUMPSIDEL);
+                    EnSpider_SetupJumpSideL(this, play);
+                } else {
+                    EnSpider_ChangeAnimation(this, ARMATURE_ANIM_JUMPSIDER);
+                    EnSpider_SetupJumpSideR(this, play);
+                }
+            }
         }
-    }
 }
 void EnSpider_Draw(Actor* thisx, PlayState* play) {
     EnSpider* this = (EnSpider*)thisx;
+
+    OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
+    if (this->type2 == SPIDER_MINI) {
+        gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(object_spider_Tex_thoraxRed));
+        gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(object_spider_TLUT_thoraxRed));
+        gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(object_spider_Tex_abdomenRed));
+        gSPSegment(POLY_OPA_DISP++, 0x0B, SEGMENTED_TO_VIRTUAL(object_spider_TLUT_abdomenRed));
+        gSPSegment(POLY_OPA_DISP++, 0x0C, SEGMENTED_TO_VIRTUAL(object_spider_Tex_legSegmentRed));
+    } else {
+        gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(object_spider_Tex_thorax));
+        gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(object_spider_TLUT_thorax));
+        gSPSegment(POLY_OPA_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(object_spider_Tex_abdomen));
+        gSPSegment(POLY_OPA_DISP++, 0x0B, SEGMENTED_TO_VIRTUAL(object_spider_TLUT_abdomen));
+        gSPSegment(POLY_OPA_DISP++, 0x0C, SEGMENTED_TO_VIRTUAL(object_spider_Tex_legSegment));
+    }
+    CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount, NULL, EnSpider_PostLimbDraw, this);
@@ -360,9 +371,9 @@ void EnSpider_Draw(Actor* thisx, PlayState* play) {
 void EnSpider_CheckDamage(EnSpider* this, PlayState* play) {
     if (this->collider.base.acFlags & AC_HIT) {
         this->collider.base.acFlags &= ~AC_HIT;
-        this->hurtboxCooldown = 20;
+        this->hurtTimer = FRAMES(20);
         if (this->actor.xzDistToPlayer > 100.0f) {
-            this->timer = 12;
+            this->timer = FRAMES(12);
             this->cantSee = false;
             this->alarmstate = true;
             EnSpider_SetupMoveF(this, play);
@@ -372,7 +383,7 @@ void EnSpider_CheckDamage(EnSpider* this, PlayState* play) {
         Actor_SetColorFilter(&this->actor, COLORFILTER_COLORFLAG_RED, 255, COLORFILTER_BUFFLAG_OPA, 20);
 
         if (this->actor.colChkInfo.health == 0) {
-            this->deathTimer = 42;
+            this->deathTimer = FRAMES(42);
             Actor_PlaySfx(&this->actor, NA_SE_EN_STALWALL_DEAD);
             EnSpider_SetupDeath(this, play);
         } else Actor_PlaySfx(&this->actor, NA_SE_EN_STALTU_DAMAGE);
@@ -395,7 +406,7 @@ void EnSpider_Death(EnSpider* this, PlayState* play) {
         Item_DropCollectible(play, &this->actor.world.pos, ITEM00_RUPEE_BLUE);
         Actor_Kill(&this->actor);
     } else if (this->deathTimer > 0) 
-        this->deathTimer -= 1;
+        this->deathTimer--;
 }
 void EnSpider_ChangeAnimation(EnSpider* this, s32 anim) {
     Animation_ChangeByInfo(&this->skelAnime, sAnimationInfo, anim);
@@ -412,10 +423,7 @@ void EnSpider_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* r
         Matrix_MultVec3f(&zeroVec, &this->head);
 
     this->actor.focus.pos = this->head;
-    if ((this->deathTimer > 1 && this->deathTimer <= 3) || (this->deathTimer > 14 && this->deathTimer <= 16) || (this->deathTimer > 28 && this->deathTimer <= 32)) {
-        s32 i;
-        Vec3f effPos;
-
+    if ((this->deathTimer > FRAMES(1) && this->deathTimer <= FRAMES(3)) || (this->deathTimer > FRAMES(14) && this->deathTimer <= FRAMES(16)) || (this->deathTimer > FRAMES(28) && this->deathTimer <= FRAMES(32))) {
         if (limbIndex == ARMATURE_ABDOMEN_LIMB)
             Matrix_MultVec3f(&zeroVec, &this->chest);
         if (limbIndex == ARMATURE_LEGR1_LIMB)
@@ -452,7 +460,7 @@ void EnSpider_StartClimb(EnSpider* this, PlayState* play) {
     }
     if (this->timer <= 0) {
         this->alarmstate = true;
-        this->timer = 12;
+        this->timer = FRAMES(12);
         EnSpider_SetupClimb(this, play);
     }
 }
@@ -471,13 +479,13 @@ void EnSpider_Climb(EnSpider* this, PlayState* play) {
         this->actor.velocity.y = 5.0f;
         this->timer--;
         if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) == 0 || (this->actor.bgCheckFlags & BGCHECKFLAG_CEILING) != 0) {
-            this->timer = 11;
+            this->timer = FRAMES(11);
             EnSpider_SetupEndClimb(this, play);
         }
         if (this->skelAnime.curFrame == 2.0f || this->skelAnime.curFrame == 4.0f || this->skelAnime.curFrame == 6.0f || this->skelAnime.curFrame == 8.0f || this->skelAnime.curFrame == 10.0f || this->skelAnime.curFrame == 12.0f)
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WALK);
     } else {
-        this->timer = 12;
+        this->timer = FRAMES(12);
         EnSpider_SetupClimb(this, play);
     }
 }
@@ -490,19 +498,19 @@ void EnSpider_EndClimb(EnSpider* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
     if (this->timer > 0) {
-        if (this->timer < 6) {
-            this->actor.speed = 4.0f;
-            this->actor.gravity = -3.0f;
+        if (this->timer < FRAMES(6)) {
+            this->actor.speed = SPIDER_SPEED(this, 4.0f, 2.0f);
+            this->actor.gravity = SPIDER_SPEED(this, -3.0f, -1.5f);
         } else {
-            this->actor.velocity.y = 3.0f;
-            this->actor.gravity = -3.0f;
+            this->actor.velocity.y = SPIDER_SPEED(this, 3.0f, 1.5f);
+            this->actor.gravity = SPIDER_SPEED(this, -3.0f, -1.5f);
         }
         this->timer--;
     }
     if (this->timer <= 0) {
         this->alarmstate = true;
-        this->timer = 12;
-        this->actor.gravity = -3.0f;
+        this->timer = FRAMES(12);
+        this->actor.gravity = SPIDER_SPEED(this, -3.0f, -1.5f);
         EnSpider_SetupMoveF(this, play);
     }
 }
@@ -512,8 +520,8 @@ void EnSpider_SetupIntro(EnSpider* this, PlayState* play) {
 }
 
 void EnSpider_Intro(EnSpider* this, PlayState* play) {
-    if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
-        this->timer = 28;
+    if (ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 && this->actor.xzDistToPlayer < SPIDER_AGGRO_RANGE(this) && !this->cantSee) {
+        this->timer = FRAMES(28);
         this->alarmstate = true;
         EnSpider_SetupIntroCont(this, play);
     }
@@ -538,10 +546,10 @@ void EnSpider_ForwardBackCheck(EnSpider* this, PlayState* play) {
     s16 relYawTowardsPlayer = ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y);
     this->canDodge = true;
 
-    if (this->type == 2)
+    if (this->type1 == SPIDER_ON_FLOOR_ANGRY)
         this->cantSee = false;
     if (this->alarmstate && this->cantSee) {
-        this->timer = 39;
+        this->timer = FRAMES(40);
         EnSpider_SetupIdle(this, play);
         this->actor.speed = 0.0f;
     } else if (this->alarmstate) {
@@ -550,34 +558,34 @@ void EnSpider_ForwardBackCheck(EnSpider* this, PlayState* play) {
             this->alarmstate = true;
             this->actor.speed = 0.0f;
             if (RandNum <= 0.44 && this->actor.xzDistToPlayer < 240.0f && relYawTowardsPlayer < 0x2000) {
-                this->timer = 36;
+                this->timer = FRAMES(36);
                 EnSpider_SetupAttackB(this, play);
             } else {
-                this->timer = 12;
+                this->timer = FRAMES(12);
                 EnSpider_SetupMoveF(this, play);
             }
         } else if (this->actor.xzDistToPlayer < 160.0f && fabsf(player->actor.world.pos.y - this->actor.world.pos.y) < 100.0f) {
             this->alarmstate = true;
             this->actor.speed = 0.0f;
-            this->timer = 35;
+            this->timer = FRAMES(35);
 
             if (RandNum <= 0.64 && relYawTowardsPlayer < 0x2000)
                 EnSpider_SetupAttackA(this, play);
             else if (Rand_ZeroOne() < 0.5) {
-                this->timer = 19;
+                this->timer = FRAMES(20);
                 EnSpider_SetupMoveL(this, play);
             } else {
-                this->timer = 19;
+                this->timer = FRAMES(20);
                 EnSpider_SetupMoveR(this, play);
             }
         } else if ((this->actor.xzDistToPlayer >= 300.0f && this->actor.xzDistToPlayer < 1200.0f && fabsf(player->actor.world.pos.y - this->actor.world.pos.y) < 100.0f) || (this->actor.xzDistToPlayer < 1200.0f && fabsf(player->actor.world.pos.y - this->actor.world.pos.y) > 100.0f)) {
             this->alarmstate = true;
             this->cantSee = false;
-            this->timer = 12;
+            this->timer = FRAMES(12);
             EnSpider_SetupMoveF(this, play);
         } else {
             this->alarmstate = false;
-            this->timer = 39;
+            this->timer = FRAMES(40);
             EnSpider_SetupIdle(this, play);
             this->actor.speed = 0.0f;
         }
@@ -590,13 +598,13 @@ void EnSpider_SetupIdle(EnSpider* this, PlayState* play) {
 }
 
 void EnSpider_Idle(EnSpider* this, PlayState* play) {
-    if (this->type == 2)
+    if (this->type1 == SPIDER_ON_FLOOR_ANGRY)
         this->cantSee = false;
     SkelAnime_Update(&this->skelAnime);
 
     if (this->timer > 0) {
-        if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
-            if (!this->alarmstate && this->miniboss)
+        if (ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 && this->actor.xzDistToPlayer < SPIDER_AGGRO_RANGE(this) && !this->cantSee) {
+            if (!this->alarmstate && this->type2 == SPIDER_MINIBOSS)
                 func_800F5ACC(NA_BGM_MINI_BOSS2);
 
             this->timer = 0;
@@ -606,7 +614,7 @@ void EnSpider_Idle(EnSpider* this, PlayState* play) {
         this->timer--;
     }
     if (this->timer <= 0) {
-        this->timer = 39;
+        this->timer = FRAMES(40);
         EnSpider_SetupIdle(this, play);
     }
 }
@@ -619,8 +627,8 @@ void EnSpider_IdleP(EnSpider* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
 
     if (this->timer > 0) {
-        if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
-            if (!this->alarmstate && this->miniboss)
+        if (ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 && this->actor.xzDistToPlayer < SPIDER_AGGRO_RANGE(this) && !this->cantSee) {
+            if (!this->alarmstate && this->type2 == SPIDER_MINIBOSS)
                 func_800F5ACC(NA_BGM_MINI_BOSS2);
 
             this->timer = 0;
@@ -631,7 +639,7 @@ void EnSpider_IdleP(EnSpider* this, PlayState* play) {
     }
 
     if (this->timer <= 0) {
-        this->timer = 12 * this->type;
+        this->timer = FRAMES(12) * this->type1;
         EnSpider_SetupMoveFP(this, play);
     }
 }
@@ -660,14 +668,14 @@ void EnSpider_MoveF(EnSpider* this, PlayState* play) {
 
     if (this->timer > 0) {
         Player* player = GET_PLAYER(play);
-        this->actor.speed = 10.0f;
+        this->actor.speed = SPIDER_SPEED(this, 10.0f, 5.0f);
         this->timer--;
 
         if (this->skelAnime.curFrame == 2.0f || this->skelAnime.curFrame == 4.0f || this->skelAnime.curFrame == 6.0f || this->skelAnime.curFrame == 8.0f || this->skelAnime.curFrame == 10.0f || this->skelAnime.curFrame == 12.0f)
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WALK);
         if (this->actor.bgCheckFlags & BGCHECKFLAG_WALL) {
             if ((player->actor.world.pos.y > this->actor.world.pos.y + 100.0f && player->actor.world.pos.y - this->actor.world.pos.y <= 1400.0f) || BgCheck_EntityLineTest1(&play->colCtx, &epos, &pos, &colPoint, &poly, true, false, false, true, &bgId)) {
-                this->timer = 13;
+                this->timer = FRAMES(13);
                 EnSpider_SetupStartClimb(this, play);
                 return;
             }
@@ -686,18 +694,18 @@ void EnSpider_MoveFP(EnSpider* this, PlayState* play) {
 
     Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.world.rot.y, 1, 0xAAF, 1);
     if ((this->timer > 0) && (this->actor.xzDistToPlayer >= 90.0f)) {
-        this->actor.speed = 8.0f;
+        this->actor.speed = SPIDER_SPEED(this, 8.0f, 4.0f);
         this->timer--;
 
         if (this->skelAnime.curFrame == 2.0f || this->skelAnime.curFrame == 4.0f || this->skelAnime.curFrame == 6.0f || this->skelAnime.curFrame == 8.0f || this->skelAnime.curFrame == 10.0f || this->skelAnime.curFrame == 12.0f)
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WALK);
-        if ((ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 || (this->actor.xzDistToPlayer < 300.0f && GET_PLAYER(play)->meleeWeaponState != 0)) && this->actor.xzDistToPlayer < 900.0f && !this->cantSee) {
+        if (ABS(this->actor.yawTowardsPlayer - this->actor.shape.rot.y) < 0x2388 && this->actor.xzDistToPlayer < SPIDER_AGGRO_RANGE(this) && !this->cantSee) {
             this->timer = 0;
             this->alarmstate = true;
             EnSpider_ForwardBackCheck(this, play);
         }
     } else {
-        this->timer = 39;
+        this->timer = FRAMES(40);
         this->actor.speed = 0.0f;
         EnSpider_SetupIdleP(this, play);
     }
@@ -726,7 +734,7 @@ void EnSpider_MoveB(EnSpider* this, PlayState* play) {
             Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xAFF, 1);
             this->actor.speed = 0.0f;
         } else if (this->skelAnime.curFrame < 15.0f)
-            this->actor.speed = -13.0f;
+            this->actor.speed = SPIDER_SPEED(this, -13.0f, -7.5f);
         else {
             if (this->actor.xzDistToPlayer < 140.0f && this->actor.xzDistToPlayer >= 70.0f) {
                 this->alarmstate = true;
@@ -750,7 +758,7 @@ void EnSpider_SetupJumpSideL(EnSpider* this, PlayState* play) {
     if (this->skelAnime.curFrame < 11.0f) {
         this->actor.world.rot.y = this->actor.yawTowardsPlayer + 0xD000;
         this->actor.shape.rot.y = this->actor.yawTowardsPlayer;
-        this->actor.speed = 14.0f;
+        this->actor.speed = SPIDER_SPEED(this, 14.0f, 7.0f);
     } else if (this->skelAnime.curFrame > 10.0f) {
         this->actor.world.rot.y = this->actor.yawTowardsPlayer + 0xD000;
         this->actor.shape.rot.y = this->actor.yawTowardsPlayer;
@@ -764,7 +772,7 @@ void EnSpider_JumpSideL(EnSpider* this, PlayState* play) {
     if (this->timer > 0)
         this->timer--;
     if (this->timer <= 0) {
-        this->timer = 33;
+        this->timer = FRAMES(33);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         EnSpider_ChangeAnimation(this, ARMATURE_ANIM_ATTACKA);
@@ -780,7 +788,7 @@ void EnSpider_SetupJumpSideR(EnSpider* this, PlayState* play) {
     if (this->skelAnime.curFrame < 11.0f) {
         this->actor.world.rot.y = this->actor.yawTowardsPlayer + 0x3000;
         this->actor.shape.rot.y = this->actor.yawTowardsPlayer;
-        this->actor.speed = 14.0f;
+        this->actor.speed = SPIDER_SPEED(this, 14.0f, 7.0f);
     } else if (this->skelAnime.curFrame > 10.0f) {
         this->actor.world.rot.y = this->actor.yawTowardsPlayer + 0x3000;
         this->actor.shape.rot.y = this->actor.yawTowardsPlayer;
@@ -794,7 +802,7 @@ void EnSpider_JumpSideR(EnSpider* this, PlayState* play) {
     if (this->timer > 0)
         this->timer--;
     if (this->timer <= 0) {
-        this->timer = 33;
+        this->timer = FRAMES(33);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xFFF, 1);
         EnSpider_ChangeAnimation(this, ARMATURE_ANIM_ATTACKA);
@@ -817,7 +825,7 @@ void EnSpider_MoveR(EnSpider* this, PlayState* play) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WALK);
         this->actor.world.rot.y = this->actor.yawTowardsPlayer + 0x4000;
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xAA0, 1);
-        this->actor.speed = 8.0f;
+        this->actor.speed = SPIDER_SPEED(this, 8.0f, 4.0f);
     }
 
     if (this->timer <= 0) {
@@ -841,7 +849,7 @@ void EnSpider_MoveL(EnSpider* this, PlayState* play) {
             Actor_PlaySfx(&this->actor, NA_SE_EN_RIZA_WALK);
         this->actor.world.rot.y = this->actor.yawTowardsPlayer + 0xC000;
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xAA0, 1);
-        this->actor.speed = 8.0f;
+        this->actor.speed = SPIDER_SPEED(this, 8.0f, 4.0f);
     }
 
     if (this->timer <= 0) {
@@ -874,11 +882,11 @@ void EnSpider_AttackA(EnSpider* this, PlayState* play) {
         }
 
         if (this->skelAnime.curFrame < 10.0f)
-            this->actor.speed = -10.0f;
+            this->actor.speed = SPIDER_SPEED(this, -10.0f, -10.0f);
         else if ((this->skelAnime.curFrame < 19.0f) && (this->skelAnime.curFrame >= 10.0f)) {
             Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xAA0, 1);
             Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xAA0, 1);
-            this->actor.speed = 17.0f;
+            this->actor.speed = SPIDER_SPEED(this, 17.0f, 17.0f);
         } else if ((this->skelAnime.curFrame < 26.0f) && (this->skelAnime.curFrame >= 19.0f)) {
             Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xAA0, 1);
             Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xAA0, 1);
@@ -886,11 +894,11 @@ void EnSpider_AttackA(EnSpider* this, PlayState* play) {
         } else if (this->skelAnime.curFrame > 26.0f) {
             Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xAA0, 1);
             Math_SmoothStepToS(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 1, 0xAA0, 1);
-            this->actor.speed = -10.0f;
+            this->actor.speed = SPIDER_SPEED(this, -10.0f, -10.0f);
         }
         this->timer--;
     } else {
-        this->timer = 15;
+        this->timer = FRAMES(15);
         EnSpider_SetupMoveB(this, play);
     }
 }
