@@ -129,6 +129,8 @@ static s16 sEffectTypeObjects[] = {
     /* 0x17 */ OBJECT_GI_M_ARROW,
     /* 0x18 */ OBJECT_EFC_TW,
     /* 0x19 */ OBJECT_EFC_TW,
+    /* 0x1A */ OBJECT_EFC_TW,
+    /* 0x1B */ OBJECT_EFC_TW,
 };
 
 static u8 sTimewarpVertexSizeIndices[] = { 1, 1, 2, 0, 1, 1, 2, 0, 1, 2, 0, 2, 1, 0, 1, 0, 2, 0, 2, 2, 0 };
@@ -471,6 +473,8 @@ void DemoEffect_Init(Actor* thisx, PlayState* play2) {
         case DEMO_EFFECT_TIMEWARP_TIMEBLOCK_SMALL:
             this->actor.flags |= ACTOR_FLAG_UPDATE_DURING_OCARINA;
             FALLTHROUGH;
+        case DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_LARGE:
+        case DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_VERY_LARGE:
         case DEMO_EFFECT_TIMEWARP_MASTERSWORD:
             this->initDrawFunc = DemoEffect_DrawTimeWarp;
             this->initUpdateFunc = DemoEffect_InitTimeWarp;
@@ -530,7 +534,7 @@ void DemoEffect_Destroy(Actor* thisx, PlayState* play) {
     DemoEffect* this = (DemoEffect*)thisx;
     s32 effectType = PARAMS_GET_S(this->actor.params, 0, 8);
 
-    if (effectType == DEMO_EFFECT_TIMEWARP_MASTERSWORD || effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_LARGE ||
+    if (effectType == DEMO_EFFECT_TIMEWARP_MASTERSWORD || effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_LARGE || effectType == DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_LARGE || effectType == DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_VERY_LARGE ||
         effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_SMALL) {
         SkelCurve_Destroy(play, &this->skelCurve);
     }
@@ -691,13 +695,17 @@ void DemoEffect_InitTimeWarp(DemoEffect* this, PlayState* play) {
         ASSERT(0, "0", "../z_demo_effect.c", 1283);
     }
 
-    if (effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_LARGE || effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_SMALL) {
+    if (effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_LARGE || effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_SMALL || effectType == DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_LARGE || effectType == DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_VERY_LARGE) {
         SkelCurve_SetAnim(&this->skelCurve, &gTimeWarpAnim, 1.0f, 59.0f, 1.0f, 1.7f);
         SkelCurve_Update(play, &this->skelCurve);
         this->updateFunc = DemoEffect_InitTimeWarpTimeblock;
 
         if (effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_LARGE) {
             Actor_SetScale(&this->actor, 0.14f);
+        } else if (effectType == DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_LARGE) {
+            Actor_SetScale(&this->actor, 168.0f * 0.001f);
+        } else if (effectType == DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_VERY_LARGE) {
+            Actor_SetScale(&this->actor, 280.0f * 0.001f);
         } else {
             Actor_SetScale(&this->actor, 84 * 0.001f);
         }
@@ -799,6 +807,10 @@ void DemoEffect_UpdateTimeWarpTimeblock(DemoEffect* this, PlayState* play) {
 
         if (PARAMS_GET_S(this->actor.params, 0, 8) == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_SMALL) {
             scale *= 0.6f;
+        } else  if (PARAMS_GET_S(this->actor.params, 0, 8) == DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_LARGE) {
+            scale *= 1.2f;
+        } else if (PARAMS_GET_S(this->actor.params, 0, 8) == DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_VERY_LARGE) {
+            scale *= 2.0f;
         }
 
         this->actor.scale.x = scale;
@@ -2024,7 +2036,7 @@ void DemoEffect_DrawTimeWarp(Actor* thisx, PlayState* play) {
     DemoEffect* this = (DemoEffect*)thisx;
     u8 effectType = PARAMS_GET_S(this->actor.params, 0, 8);
 
-    if (effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_LARGE || effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_SMALL ||
+    if (effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_LARGE || effectType == DEMO_EFFECT_TIMEWARP_TIMEBLOCK_SMALL || effectType == DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_LARGE || effectType == DEMO_EFFECT_TIMEWARP_LIGHTBLOCK_VERY_LARGE ||
         CutsceneFlags_Get(play, 1) || IS_CUTSCENE_LAYER || gSaveContext.save.entranceIndex == ENTR_TEMPLE_OF_TIME_4) {
         OPEN_DISPS(gfxCtx, "../z_demo_effect.c", 3201);
 

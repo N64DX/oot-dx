@@ -348,7 +348,7 @@ void EnBat_Die(EnBat* this, PlayState* play) {
             Actor_Kill(&this->actor);
 
             if (this->switchFlag <= 0x3F) {
-                Actor* enemy = play->actorCtx.actorLists[ACTORCAT_ENEMY].head;
+                Actor* enemy = Actor_FindActor(play, enemy, ACTORCAT_ENEMY, ACTOR_EN_BAT);
 
                 do { // Search for other EnBats. If find none, set switch flag
                     if (enemy != NULL && enemy->id == ACTOR_EN_BAT) {

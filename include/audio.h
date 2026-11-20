@@ -1201,6 +1201,7 @@ void Audio_StopBgmAndFanfare(u16 fadeOutDuration);
 void func_800F6B3C(void);
 void func_800F6BDC(void);
 void Audio_PreNMI(void);
+void Audio_PlaySfx_AtPosWithVolumeTransition(Vec3f* pos, u16 sfxId, u16 duration);
 void Audio_SetNatureAmbienceChannelIO(u8 channelIdxRange, u8 ioPort, u8 ioData);
 void Audio_PlayNatureAmbienceSequence(u8 natureAmbienceId);
 void Audio_Init(void);

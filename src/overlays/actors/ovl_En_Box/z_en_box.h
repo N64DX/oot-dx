@@ -53,6 +53,7 @@ typedef struct EnBox {
     /* 0x01FA */ u8 iceSmokeTimer;
     /* 0x01FB */ u8 ocarinaState;
     /* 0x01FC */ u8 giItem;
-} EnBox; // size = 0x01FC
+    /* 0x01FD */ u8 upsideDown;
+} EnBox; // size = 0x0200
 
 #endif

@@ -186,7 +186,7 @@ Path swamp_spider_house_scenePathway_0002F4[] = {
 BgCamInfo swamp_spider_house_sceneCollisionHeader_005CF4CamDataList[] = {
     { CAM_SET_DUNGEON0, 0, NULL },
     { CAM_SET_NONE,     0, NULL },
-    { CAM_SET_NORMAL0,  0, NULL },
+    { CAM_SET_INBUSH,   0, NULL },
 };
 
 SurfaceType swamp_spider_house_sceneCollisionHeader_005CF4SurfaceType[] = {

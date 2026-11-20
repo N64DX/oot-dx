@@ -24,20 +24,20 @@ void ObjPurify_Init(Actor* thisx, struct PlayState* play);
 void ObjPurify_Destroy(Actor* thisx, struct PlayState* play);
 void ObjPurify_Update(Actor* thisx, struct PlayState* play);
 
-void func_80A84EC0(ObjPurify* this, struct PlayState* play);
-void func_80A851C8(Actor* thisx, struct PlayState* play);
-void func_80A85074(ObjPurify* this, struct PlayState* play);
-void func_80A850B0(ObjPurify* this);
-void func_80A850E8(ObjPurify* this, struct PlayState* play);
-void func_80A85304(Actor* thisx, struct PlayState* play);
-void func_80A84FB4(ObjPurify* this, struct PlayState* play);
-void func_80A85010(ObjPurify* this, struct PlayState* play);
+void ObjPurify_80A84EC0(ObjPurify* this, struct PlayState* play);
+void ObjPurify_80A851C8(Actor* thisx, struct PlayState* play);
+void ObjPurify_80A85074(ObjPurify* this, struct PlayState* play);
+void ObjPurify_80A850B0(ObjPurify* this);
+void ObjPurify_80A850E8(ObjPurify* this, struct PlayState* play);
+void ObjPurify_80A85304(Actor* thisx, struct PlayState* play);
+void ObjPurify_80A84FB4(ObjPurify* this, struct PlayState* play);
+void ObjPurify_80A85010(ObjPurify* this, struct PlayState* play);
 void ObjPurify_DoNothing(ObjPurify* this, struct PlayState* play);
-void func_80A85048(ObjPurify* this);
-void func_80A84FA0(ObjPurify* this);
-void func_80A8515C(ObjPurify* this);
-void func_80A84FEC(ObjPurify* this);
-void func_80A84EAC(ObjPurify* this);
+void ObjPurify_80A85048(ObjPurify* this);
+void ObjPurify_80A84FA0(ObjPurify* this);
+void ObjPurify_80A8515C(ObjPurify* this);
+void ObjPurify_80A84FEC(ObjPurify* this);
+void ObjPurify_80A84EAC(ObjPurify* this);
 
 typedef struct ObjPurifyInfo {
     /* 0x00 */ s16 objectId;
@@ -124,10 +124,10 @@ void ObjPurify_Init(Actor* thisx, PlayState* play) {
     if (this->objectSlot < 0)
         Actor_Kill(&this->dyna.actor);
     else if (sp20 == 0)
-        func_80A84EAC(this);
+        ObjPurify_80A84EAC(this);
     else if (ObjPurify_IsPurified(this))
         Actor_Kill(&this->dyna.actor);
-    else func_80A84EAC(this);
+    else ObjPurify_80A84EAC(this);
 }
 
 void ObjPurify_Destroy(Actor* thisx, PlayState* play) {
@@ -136,11 +136,11 @@ void ObjPurify_Destroy(Actor* thisx, PlayState* play) {
         DynaPoly_DeleteBgActor(play, &play->colCtx.dyna, this->dyna.bgId);
 }
 
-void func_80A84EAC(ObjPurify* this) {
-    this->actionFunc = func_80A84EC0;
+void ObjPurify_80A84EAC(ObjPurify* this) {
+    this->actionFunc = ObjPurify_80A84EC0;
 }
 
-void func_80A84EC0(ObjPurify* this, PlayState* play) {
+void ObjPurify_80A84EC0(ObjPurify* this, PlayState* play) {
     s32 sp28;
     s32 index;
 
@@ -153,63 +153,63 @@ void func_80A84EC0(ObjPurify* this, PlayState* play) {
             CollisionHeader* header = NULL;
             CollisionHeader_GetVirtual(sObjPurifyInfo[index].colHeader, &header);
             this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, header);
-            func_80A84FA0(this);
+            ObjPurify_80A84FA0(this);
         } else if (ObjPurify_IsPurified(this))
-            func_80A8515C(this);
-        else func_80A84FEC(this);
+            ObjPurify_80A8515C(this);
+        else ObjPurify_80A84FEC(this);
     }
 }
 
-void func_80A84FA0(ObjPurify* this) {
-    this->actionFunc = func_80A84FB4;
+void ObjPurify_80A84FA0(ObjPurify* this) {
+    this->actionFunc = ObjPurify_80A84FB4;
 }
 
-void func_80A84FB4(ObjPurify* this, PlayState* play) {
+void ObjPurify_80A84FB4(ObjPurify* this, PlayState* play) {
     if (ObjPurify_IsPurified(this))
         Actor_Kill(&this->dyna.actor);
 }
 
-void func_80A84FEC(ObjPurify* this) {
-    this->dyna.actor.draw = func_80A851C8;
+void ObjPurify_80A84FEC(ObjPurify* this) {
+    this->dyna.actor.draw = ObjPurify_80A851C8;
     this->gfxIndex = 0;
-    this->actionFunc = func_80A85010;
+    this->actionFunc = ObjPurify_80A85010;
 }
 
-void func_80A85010(ObjPurify* this, PlayState* play) {
+void ObjPurify_80A85010(ObjPurify* this, PlayState* play) {
     if (ObjPurify_IsPurified(this))
-        func_80A85048(this);
+        ObjPurify_80A85048(this);
 }
 
-void func_80A85048(ObjPurify* this) {
-    this->dyna.actor.draw = func_80A851C8;
+void ObjPurify_80A85048(ObjPurify* this) {
+    this->dyna.actor.draw = ObjPurify_80A851C8;
     this->gfxIndex = 0;
-    this->actionFunc = func_80A85074;
+    this->actionFunc = ObjPurify_80A85074;
     this->timer = 30;
 }
 
-void func_80A85074(ObjPurify* this, PlayState* play) {
+void ObjPurify_80A85074(ObjPurify* this, PlayState* play) {
     this->timer--;
     if (this->timer <= 0)
-        func_80A850B0(this);
+        ObjPurify_80A850B0(this);
 }
 
-void func_80A850B0(ObjPurify* this) {
+void ObjPurify_80A850B0(ObjPurify* this) {
     f32 yPos = this->dyna.actor.home.pos.y;
-    this->dyna.actor.draw = func_80A85304;
+    this->dyna.actor.draw = ObjPurify_80A85304;
     this->unk168[1] = yPos - 90.0f;
-    this->actionFunc = func_80A850E8;
+    this->actionFunc = ObjPurify_80A850E8;
     this->unk168[0] = yPos;
 }
 
-void func_80A850E8(ObjPurify* this, PlayState* play) {
+void ObjPurify_80A850E8(ObjPurify* this, PlayState* play) {
     Math_StepToF(&this->unk168[0], this->dyna.actor.home.pos.y - 90.0f, 0.9f);
     if (Math_StepToF(&this->unk168[1], this->dyna.actor.home.pos.y, 0.9f))
-        func_80A8515C(this);
+        ObjPurify_80A8515C(this);
 }
 
-void func_80A8515C(ObjPurify* this) {
+void ObjPurify_80A8515C(ObjPurify* this) {
     this->dyna.actor.flags &= ~ACTOR_FLAG_UPDATE_CULLING_DISABLED;
-    this->dyna.actor.draw = func_80A851C8;
+    this->dyna.actor.draw = ObjPurify_80A851C8;
     this->gfxIndex = 1;
     this->actionFunc = ObjPurify_DoNothing;
 }
@@ -218,6 +218,7 @@ void ObjPurify_DoNothing(ObjPurify* this, PlayState* play) { }
 
 void ObjPurify_Update(Actor* thisx, PlayState* play) {
     ObjPurify* this = (ObjPurify*)thisx;
+
     Player* player = GET_PLAYER(play);
     ObjPurifyInfo* info = &sObjPurifyInfo[OBJPURIFY_GET_INFO_INDEX(&this->dyna.actor)];
 
@@ -227,8 +228,9 @@ void ObjPurify_Update(Actor* thisx, PlayState* play) {
         player->swimmingInPoisonWater = true;
 }
 
-void func_80A851C8(Actor* thisx, PlayState* play) {
+void ObjPurify_80A851C8(Actor* thisx, PlayState* play) {
     ObjPurify* this = (ObjPurify*)thisx;
+
     ObjPurifyInfo* info = &sObjPurifyInfo[OBJPURIFY_GET_INFO_INDEX(&this->dyna.actor)];
     Gfx* opaDList = info->opaDLists[this->gfxIndex];
     Gfx* xluDList = info->xluDLists[this->gfxIndex];
@@ -237,11 +239,13 @@ void func_80A851C8(Actor* thisx, PlayState* play) {
 
     if (opaDList != NULL) {
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
+        gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, -(play->state.frames * 1) % 128, 32, 32, 1, 0, 0, 16, 64));
         MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
         gSPDisplayList(POLY_OPA_DISP++, opaDList);
     }
     if (xluDList != NULL) {
         Gfx_SetupDL_25Xlu(play->state.gfxCtx);
+        gSPSegment(POLY_XLU_DISP++, 0x09, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (play->state.frames * 2) % 512, 64, 64, 1, 0, (play->state.frames * 2) % 512, 64, 64));
         MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
         gSPDisplayList(POLY_XLU_DISP++, xluDList);
     }
@@ -249,7 +253,7 @@ void func_80A851C8(Actor* thisx, PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }
 
-void func_80A85304(Actor* thisx, PlayState* play) {
+void ObjPurify_80A85304(Actor* thisx, PlayState* play) {
     ObjPurify* this = (ObjPurify*)thisx;
     ObjPurifyInfo* info = &sObjPurifyInfo[OBJPURIFY_GET_INFO_INDEX(&this->dyna.actor)];
     s32 sp6C[2];
@@ -265,14 +269,13 @@ void func_80A85304(Actor* thisx, PlayState* play) {
     }
 
     OPEN_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
-
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
     for (i=0; i<ARRAY_COUNT(sp6C); i++) {
         index = sp6C[i];
+        gSPSegment(POLY_XLU_DISP++, 0x08, Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, (play->state.frames * 1) % 128, (play->state.frames * 1) % 128, 32, 32, 1, 0, (play->state.frames * 1) % 128, 32, 32));
         ObjPurify_SetSysMatrix(this->unk168[index]);
         MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
         gSPDisplayList(POLY_XLU_DISP++, info->xluDLists[index]);
     };
-
     CLOSE_DISPS(play->state.gfxCtx, __FILE__, __LINE__);
 }

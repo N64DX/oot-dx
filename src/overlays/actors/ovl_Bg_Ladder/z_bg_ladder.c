@@ -14,14 +14,13 @@
 #include "sfx.h"
 #include "sys_math.h"
 #include "sys_matrix.h"
+#include "z_lib.h"
 #include "play_state.h"
 #include "player.h"
 #include "save.h"
-#include "z_lib.h"
 #include "one_point_cutscene.h"
 #include "array_count.h"
 
-#include "assets/objects/object_ladder/object_ladder.h"
 #include "z_bg_ladder_cutscene_data.c"
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
@@ -60,8 +59,9 @@ static Gfx* sLadderDLists[] = {
 
 void BgLadder_Init(Actor* thisx, PlayState* play) {
     BgLadder* this = (BgLadder*)thisx;
+
     BgLadderSize size;
-    CollisionHeader* colHeader = NULL;
+    CollisionHeader* header = NULL;
 
     Actor_ProcessInitChain(&this->dyna.actor, sInitChain);
 
@@ -70,20 +70,20 @@ void BgLadder_Init(Actor* thisx, PlayState* play) {
     DynaPolyActor_Init(&this->dyna, 0);
     size = thisx->params;
 
-    if (size == LADDER_SIZE_12RUNG) {
-        CollisionHeader_GetVirtual(&gWoodenLadder12RungCol, &colHeader);
-    } else if (size == LADDER_SIZE_16RUNG) {
-        CollisionHeader_GetVirtual(&gWoodenLadder16RungCol, &colHeader);
-    } else if (size == LADDER_SIZE_20RUNG) {
-        CollisionHeader_GetVirtual(&gWoodenLadder20RungCol, &colHeader);
-    } else if (size == LADDER_SIZE_24RUNG) {
-        CollisionHeader_GetVirtual(&gWoodenLadder24RungCol, &colHeader);
-    } else {
+    if (size == LADDER_SIZE_12RUNG)
+        CollisionHeader_GetVirtual(&gWoodenLadder12RungCol, &header);
+    else if (size == LADDER_SIZE_16RUNG)
+        CollisionHeader_GetVirtual(&gWoodenLadder16RungCol, &header);
+    else if (size == LADDER_SIZE_20RUNG)
+        CollisionHeader_GetVirtual(&gWoodenLadder20RungCol, &header);
+    else if (size == LADDER_SIZE_24RUNG)
+        CollisionHeader_GetVirtual(&gWoodenLadder24RungCol, &header);
+    else {
         Actor_Kill(&this->dyna.actor);
         return;
     }
     
-    this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
+    this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, header);
 
     this->csId = this->dyna.actor.home.rot.z;
     this->dyna.actor.home.rot.z = this->dyna.actor.world.rot.z = this->dyna.actor.shape.rot.z = 0;
@@ -119,7 +119,7 @@ void BgLadder_Wait(BgLadder* this, PlayState* play) {
 void BgLadder_StartCutscene(BgLadder* this, PlayState* play) {
     // Trigger the cutscene, then make the ladder fade in
     if (!Player_InCsMode(play)) {
-        if (this->csId > 0) {
+        if (this->csId > 0 && cutscenes[this->csId-1] != NULL) {
             Cutscene_SetScript(play, cutscenes[this->csId-1]);
             gSaveContext.cutsceneTrigger = 1;
             Player_SetCsActionWithHaltedActors(play, NULL, PLAYER_CSACTION_49);

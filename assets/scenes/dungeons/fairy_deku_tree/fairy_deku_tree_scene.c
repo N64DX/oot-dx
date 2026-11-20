@@ -46,21 +46,21 @@ ActorEntry fairy_deku_tree_sceneStartPositionList0x000058[] = {
 };
 
 TransitionActorEntry fairy_deku_tree_sceneTransitionActorList0x000078[] = {
-    { 12, -1,  0, -1, ACTOR_DOOR_SHUTTER, {  798,  200,   798 }, 0xA000, 0x02DD }, // 0, Sets switch: 1D
+    { 12, -1,  0, -1, ACTOR_DOOR_SHUTTER, {  798,  200,   798 }, 0xA000, 0x02DD }, // 0, Switch: 1D
     {  0, -1, 11, -1, ACTOR_DOOR_SHUTTER, {  798, 1480,  -798 }, 0x6000, 0x007F }, // 1
     {  0, -1,  4, -1, ACTOR_DOOR_SHUTTER, {  299, 1080,   299 }, 0xA000, 0x0086 }, // 2, Checks switch: 06
     {  0, -1,  5, -1, ACTOR_DOOR_SHUTTER, {  299, 1400,   299 }, 0xA000, 0x007F }, // 3
     { 11, -1, 10, -1, ACTOR_DOOR_SHUTTER, { 1375, 1400,   702 }, 0xE000, 0x0087 }, // 4, Checks switch: 07
     {  9, -1,  9, -1, ACTOR_DOOR_SHUTTER, { 1439,  960,  -618 }, 0x105B, 0x003F }, // 5
     {  0, -1, 10, -1, ACTOR_DOOR_SHUTTER, {  798, 1400,   798 }, 0x2000, 0x009E }, // 6, Checks switch: 1E
-    { 13, -1, 12, -1, ACTOR_DOOR_SHUTTER, {  344, -640,   831 }, 0x105B, 0x015C }, // 7, Sets switch: 1C
+    { 13, -1, 12, -1, ACTOR_DOOR_SHUTTER, {  344, -640,   831 }, 0x105B, 0x015C }, // 7, Switch: 1C
     {  5, -1,  0, -1, ACTOR_DOOR_SHUTTER, {  299, 1480,  -299 }, 0x6000, 0x003F }, // 8
     {  2, -1,  0, -1, ACTOR_DOOR_SHUTTER, {  299,  520,  -299 }, 0x6000, 0x003F }, // 9
     {  2, -1,  0, -1, ACTOR_DOOR_SHUTTER, { -299,  520,   299 }, 0xE000, 0x003F }, // 10
     {  3, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,  720,   423 }, 0x0000, 0x003F }, // 11
     { 10, -1,  0, -1, ACTOR_DOOR_SHUTTER, { -798, 1320,   798 }, 0x6000, 0x003F }, // 12
     {  6, -1,  0, -1, ACTOR_DOOR_SHUTTER, {   -1,  240, -1129 }, 0x0000, 0x003F }, // 13
-    {  6, -1,  0, -1, ACTOR_DOOR_SHUTTER, { 1129,  160,     0 }, 0xC000, 0x02DA }, // 14, Sets switch: 1A
+    {  6, -1,  0, -1, ACTOR_DOOR_SHUTTER, { 1129,  160,     0 }, 0xC000, 0x02DA }, // 14, Switch: 1A
     {  0, -1,  9, -1, ACTOR_DOOR_SHUTTER, {  798, 1160,  -798 }, 0x6000, 0x0084 }, // 15, Checks switch: 04
     {  2, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,  400,   423 }, 0x0000, 0x003F }, // 16
     {  1, -1,  0, -1, ACTOR_DOOR_SHUTTER, {    0,    0,  -643 }, 0x8000, 0x003F }, // 17

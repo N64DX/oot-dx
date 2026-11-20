@@ -103,7 +103,7 @@ void Map_SetFloorPalettesData(PlayState* play, s16 floor) {
         case SCENE_WOODFALL_TEMPLE_BOSS:
         case SCENE_PURPLE_ICE_CAVERN:
         //case SCENE_STONE_TOWER_TEMPLE:
-        //case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+        //case SCENE_STONE_TOWER_TEMPLE_INV:
         //case SCENE_STONE_TOWER_TEMPLE_BOSS:
             for (i = 0; i < gMapData->maxPaletteCount[mapIndex]; i++) {
                 room = gMapData->paletteRoom[mapIndex][floor][i];
@@ -161,7 +161,7 @@ void Map_InitData(PlayState* play, s16 room) {
         case SCENE_FORSAKEN_KINGDOM:
         case SCENE_GLOOMY_GRAVEYARD:
         case SCENE_STONE_TOWER:
-        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_INV:
             extendedMapIndex = mapIndex;
             if (play->sceneId == SCENE_GRAVEYARD) {
                 if (CHECK_QUEST_ITEM(QUEST_SONG_NOCTURNE)) {
@@ -185,7 +185,7 @@ void Map_InitData(PlayState* play, s16 room) {
             } else if (play->sceneId == SCENE_GORON_SHRINE) {
                 if (room == 1)
                     Map_GetExtendedMapSizeAndOffset(0x19, 456, 304, _map_grand2_staticSegmentRomStart);
-            } else if (play->sceneId == SCENE_STONE_TOWER_INVERTED) {
+            } else if (play->sceneId == SCENE_STONE_TOWER_INV) {
                 Map_GetExtendedMapSizeAndOffset(0x1A, 976, 760, _map_grand2_staticSegmentRomStart);
             }
             PRINTF_COLOR_BLUE();
@@ -221,7 +221,7 @@ void Map_InitData(PlayState* play, s16 room) {
         case SCENE_WOODFALL_TEMPLE_BOSS:
         case SCENE_PURPLE_ICE_CAVERN:
         //case SCENE_STONE_TOWER_TEMPLE:
-        //case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+        //case SCENE_STONE_TOWER_TEMPLE_INV:
         //case SCENE_STONE_TOWER_TEMPLE_BOSS:
             PRINTF_COLOR_YELLOW();
             PRINTF(T("デクの樹ダンジョンＭＡＰ テクスチャＤＭＡ(%x) scene_id_offset=%d  VREG(30)=%d\n",
@@ -285,7 +285,7 @@ void Map_InitRoomData(PlayState* play, s16 room) {
             case SCENE_WOODFALL_TEMPLE_BOSS:
             case SCENE_PURPLE_ICE_CAVERN:
             //case SCENE_STONE_TOWER_TEMPLE:
-            //case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+            //case SCENE_STONE_TOWER_TEMPLE_INV:
             //case SCENE_STONE_TOWER_TEMPLE_BOSS:
                 gSaveContext.save.info.sceneFlags[mapIndex].rooms |= gBitFlags[room];
                 PRINTF("ＲＯＯＭ＿ＩＮＦ＝%d\n", gSaveContext.save.info.sceneFlags[mapIndex].rooms);
@@ -387,7 +387,7 @@ void Map_Init(PlayState* play) {
             R_OW_MINIMAP_X = gMapData->owMinimapPosX[mapIndex];
             R_OW_MINIMAP_Y = gMapData->owMinimapPosY[mapIndex];
             break;
-        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_INV:
             mapIndex = 0x1A + SCENE_FORBIDDEN_WOODS - SCENE_PATH_TO_WOODFALL;
             R_MAP_INDEX = gSaveContext.mapIndex = mapIndex;
             R_COMPASS_SCALE_X = gMapData->owCompassInfo[mapIndex][0];
@@ -431,7 +431,7 @@ void Map_Init(PlayState* play) {
         case SCENE_WOODFALL_TEMPLE_BOSS:
         case SCENE_PURPLE_ICE_CAVERN:
         //case SCENE_STONE_TOWER_TEMPLE:
-        //case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+        //case SCENE_STONE_TOWER_TEMPLE_INV:
         //case SCENE_STONE_TOWER_TEMPLE_BOSS:
             mapIndex = (play->sceneId >= SCENE_DEKU_TREE_BOSS && play->sceneId <= SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR) ? play->sceneId - SCENE_DEKU_TREE_BOSS : Play_GetOriginalSceneId(play->sceneId);
             R_MAP_INDEX = gSaveContext.mapIndex = mapIndex;
@@ -477,7 +477,7 @@ void Minimap_DrawCompassIcons(PlayState* play) {
         } else if (play->sceneId >= SCENE_DEKU_TREE && play->sceneId <= SCENE_ICE_CAVERN) { // Dungeons
             mapStartPosX = R_DGN_MINIMAP_X + WS_SHIFT_HALF + (gMapData->dungeonXOffset[R_MAP_INDEX][play->interfaceCtx.mapRoomNum]/2);
             mapWidth = MAP_I_TEX_WIDTH;
-        } else if (play->sceneId >= SCENE_ANCIENT_HOLLOW && play->sceneId < SCENE_STONE_TOWER_TEMPLE) { // Extended dungeons
+        } else if ((play->sceneId >= SCENE_ANCIENT_HOLLOW && play->sceneId <= SCENE_STONE_TOWER_TEMPLE) || play->sceneId == SCENE_STONE_TOWER_TEMPLE_INV) { // Extended dungeons
             mapStartPosX = R_DGN_MINIMAP_X + WS_SHIFT_HALF + (gMapData->dungeonXOffset[R_MAP_INDEX][play->interfaceCtx.mapRoomNum]/2);
             mapWidth = MAP_I_TEX_WIDTH;
         }
@@ -545,8 +545,7 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_GORON_MINES:
             case SCENE_WOODFALL_TEMPLE:
             //case SCENE_STONE_TOWER_TEMPLE:
-            //case SCENE_STONE_TOWER_TEMPLE_INVERTED:
-            //case SCENE_STONE_TOWER_TEMPLE_BOSS:
+            //case SCENE_STONE_TOWER_TEMPLE_INV:
                 if (!R_MINIMAP_DISABLED) {
                     Gfx_SetupDL_39Overlay(play->state.gfxCtx);
                     gDPSetTextureFilter(OVERLAY_DISP++, G_TF_POINT);
@@ -578,8 +577,8 @@ void Minimap_Draw(PlayState* play) {
                         Gfx_SetupDL_39Overlay(play->state.gfxCtx);
                         MapMark_Draw(play);
                     }
-                    
-					gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);
+
+                    gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);
                 }
 
                 if (CHECK_BTN_ALL(play->state.input[0].rel.button, BTN_L) && !Play_InCsMode(play) && !pressed_r && minimap_timer < (60 / R_UPDATE_RATE) && sNoclipTimer == 0 && !BombArrow_IsActive(play)) {
@@ -627,7 +626,7 @@ void Minimap_Draw(PlayState* play) {
             case SCENE_FORSAKEN_KINGDOM:
             case SCENE_GLOOMY_GRAVEYARD:
             case SCENE_STONE_TOWER:
-            case SCENE_STONE_TOWER_INVERTED:
+            case SCENE_STONE_TOWER_INV:
                 if (!R_MINIMAP_DISABLED) {
                     s8 xOffset = gMapData->overworldXOffset[extendedMapIndex] / 2;
                     
@@ -763,7 +762,7 @@ void Map_Update(PlayState* play) {
             case SCENE_WOODFALL_TEMPLE:
             case SCENE_PURPLE_ICE_CAVERN:
             //case SCENE_STONE_TOWER_TEMPLE:
-            //case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+            //case SCENE_STONE_TOWER_TEMPLE_INV:
                 interfaceCtx->mapPalette[30] = 0;
                 if (CHECK_DUNGEON_ITEM(DUNGEON_MAP, mapIndex)) {
                     interfaceCtx->mapPalette[31] = 1;

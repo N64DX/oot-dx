@@ -110,6 +110,8 @@
         <Sample Name="SAMPLE_0_33"/>
         <Sample Name="SAMPLE_0_105"/>
         <Sample Name="SAMPLE_0_19"/>
+        <Sample Name="SAMPLE_0_SHARP_FLOAT"/>
+        <Sample Name="SAMPLE_0_EXTINCT_LEV"/>
         <Sample Name="SAMPLE_0_BOE_1"/>
         <Sample Name="SAMPLE_0_BOE_2"/>
         <Sample Name="SAMPLE_0_DRAGONFLY_1"/>
@@ -141,6 +143,17 @@
         <Sample Name="SAMPLE_0_GARO_2"/>
         <Sample Name="SAMPLE_0_GARO_3"/>
         <Sample Name="SAMPLE_0_49"/>
+        <Sample Name="SAMPLE_0_BOMBCHU_1"/>
+        <Sample Name="SAMPLE_0_NEJIRON_1"/>
+        <Sample Name="SAMPLE_0_CHUCHU_1"/>
+        <Sample Name="SAMPLE_0_CHUCHU_2"/>
+        <Sample Name="SAMPLE_0_CHUCHU_3"/>
+        <Sample Name="SAMPLE_0_CHUCHU_4"/>
+        <Sample Name="SAMPLE_0_CHUCHU_5"/>
+        <Sample Name="SAMPLE_0_GOMESS_1"/>
+        <Sample Name="SAMPLE_0_GOMESS_2"/>
+        <Sample Name="SAMPLE_0_GOMESS_3"/>
+        <Sample Name="SAMPLE_0_GOMESS_4"/>
     </Samples>
     <Effects>
         <Effect Name="EFFECT_0" Sample="SAMPLE_0_299"/>
@@ -271,6 +284,19 @@
         <Instrument ProgramNumber="79" Name="INST_79" Envelope="Env0" Sample="SAMPLE_0_GARO_2"/>
         <Instrument ProgramNumber="80" Name="INST_80" Envelope="Env0" Sample="SAMPLE_0_GARO_3"/>
         <Instrument ProgramNumber="81" Name="INST_81" Envelope="Env0" Sample="SAMPLE_0_49"/> <!-- Unused draw sword sound effect, but used in MM for Garo (Master) -->
+        <Instrument ProgramNumber="82" Name="INST_82" Envelope="Env0" Sample="SAMPLE_0_BOMBCHU_1"/>
+        <Instrument ProgramNumber="83" Name="INST_83" Envelope="Env0" Sample="SAMPLE_0_NEJIRON_1"/>
+        <Instrument ProgramNumber="84" Name="INST_84" Envelope="Env0" Sample="SAMPLE_0_CHUCHU_1"/>
+        <Instrument ProgramNumber="85" Name="INST_85" Envelope="Env0" Sample="SAMPLE_0_CHUCHU_2"/>
+        <Instrument ProgramNumber="86" Name="INST_86" Envelope="Env0" Sample="SAMPLE_0_CHUCHU_3"/>
+        <Instrument ProgramNumber="87" Name="INST_87" Envelope="Env0" Sample="SAMPLE_0_CHUCHU_4"/>
+        <Instrument ProgramNumber="88" Name="INST_88" Envelope="Env0" Sample="SAMPLE_0_CHUCHU_5"/>
+        <Instrument ProgramNumber="89" Name="INST_89" Envelope="Env0" Sample="SAMPLE_0_GOMESS_1"/>
+        <Instrument ProgramNumber="90" Name="INST_90" Envelope="Env0" Sample="SAMPLE_0_GOMESS_2"/>
+        <Instrument ProgramNumber="91" Name="INST_91" Envelope="Env0" Sample="SAMPLE_0_GOMESS_3"/>
+        <Instrument ProgramNumber="92" Name="INST_92" Envelope="Env0" Sample="SAMPLE_0_GOMESS_4"/>
+        <Instrument ProgramNumber="93" Name="INST_93" Envelope="Env0" Sample="SAMPLE_0_SHARP_FLOAT"/>
+        <Instrument ProgramNumber="94" Name="INST_94" Envelope="Env0" Sample="SAMPLE_0_EXTINCT_LEV"/>
     </Instruments>
     <MatchPadding>
         0xEF, 0xD7, 0xE3, 0xA4, 0xCE, 0x9E, 0xB5, 0xF3

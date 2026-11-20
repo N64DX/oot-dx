@@ -874,7 +874,7 @@ void EnGrasshopper_Fall(EnGrasshopper* this, PlayState* play) {
         }
 
         Actor_PlaySfx(&this->actor, NA_SE_EN_EXTINCT - SFX_FLAG);
-        Item_DropCollectibleRandom(play, NULL, &this->actor.world.pos, 0x60);
+        Item_DropCollectibleRandom(play, NULL, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_10, false));
         Actor_Kill(&this->actor);
     }
 }

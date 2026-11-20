@@ -4,6 +4,65 @@
 
 #include "gfx.h"
 
+// Square shadow
+
+static Vtx gSquareShadowVtx[] = {
+    VTX(-100, 0, 100, 0, 1024, 0, 0, 0, 255),
+	VTX(100, 0, 100, 1024, 1024, 0, 0, 0, 255),
+	VTX(100, 0, -100, 1024, 0, 0, 0, 0, 255),
+	VTX(-100, 0, -100, 0, 0, 0, 0, 0, 255),
+};
+
+static u64 gSquareShadowTex[] = {
+#include "assets/objects/gameplay_keep/extra/gSquareShadowTex.i4.inc.c"
+};
+
+Gfx gSquareShadowDL[] = {
+    gsDPSetAlphaCompare(G_AC_THRESHOLD),
+    gsDPLoadTextureBlock_4b(gSquareShadowTex, G_IM_FMT_I, 16, 16, 15, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPVertex(gSquareShadowVtx, 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsDPPipeSync(),
+    gsDPSetAlphaCompare(G_AC_NONE),
+    gsSPEndDisplayList(),
+};
+
+
+
+// Floor & wall impact
+
+static Vtx gameplay_keepVtx_06A980[] = {
+#include "assets/objects/gameplay_keep/extra/impact/gameplay_keep_Vtx_06A980.inc.c"
+};
+
+static u64 gameplay_keep_Tex_06ABF8[] = {
+#include "assets/objects/gameplay_keep/extra/impact/tex_06ABF8.rgba16.inc.c"
+};
+
+Gfx gFloorImpactDL[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock(gameplay_keep_Tex_06ABF8, G_IM_FMT_RGBA, G_IM_SIZ_16b, 36, 36, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
+    gsSPVertex(gameplay_keepVtx_06A980, 12, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
+    gsSP2Triangles(10, 0, 2, 0, 10, 2, 11, 0),
+    gsSPVertex(&gameplay_keepVtx_06A980[12], 7, 0),
+    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
+    gsSP2Triangles(5, 1, 0, 0, 6, 4, 3, 0),
+    gsSPVertex(&gameplay_keepVtx_06A980[19], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
+    gsSPVertex(&gameplay_keepVtx_06A980[23], 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
+    gsSPEndDisplayList(),
+};
+
+
+
 // Feather
 
 u64 gDropFeatherTex[] = {
@@ -532,6 +591,40 @@ LinkAnimationHeader gPlayerAnim_alink_fukitobu = {
     { 20 }, gPlayerAnim_alink_fukitobu_Data,
 };
 
+LinkAnimationHeader gPlayerAnim_alink_kyoro = {
+    { 15 }, gPlayerAnim_alink_kyoro_Data,
+};
+
+LinkAnimationHeader gPlayerAnim_alink_kyoro_loop = {
+    { 62 }, gPlayerAnim_alink_kyoro_loop_Data,
+};
+
+// Zora Swim animations
+
+LinkAnimationHeader gPlayerAnim_link_start_booster_jump = {
+	{ 16 }, gPlayerAnim_link_start_booster_jump_Data, 
+};
+
+LinkAnimationHeader gPlayerAnim_link_booster_jump = {
+	{ 16 }, gPlayerAnim_link_booster_jump_Data, 
+};
+
+LinkAnimationHeader gPlayerAnim_link_finish_booster_jump = {
+	{ 16 }, gPlayerAnim_link_finish_booster_jump_Data, 
+};
+
+LinkAnimationHeader gPlayerAnim_link_fish_swim = {
+	{ 10 }, gPlayerAnim_link_fish_swim_Data, 
+};
+
+LinkAnimationHeader gPlayerAnim_link_swim_to_wait = {
+	{ 10 }, gPlayerAnim_link_swim_to_wait_Data, 
+};
+
+LinkAnimationHeader gPlayerAnim_link_water_roll = {
+	{ 18 }, gPlayerAnim_link_water_roll_Data, 
+};
+
 
 
 // Beehive
@@ -937,3 +1030,129 @@ Gfx gElegyShellHumanDL[] = {
     gsSP2Triangles(18, 17, 21, 0, 20, 17, 22, 0),
     gsSPEndDisplayList(),
 };
+
+static Vtx gameplay_keepVtx_06BB20[] = {
+#include "assets/objects/gameplay_keep/extra/impact/gameplay_keep_Vtx_06BB20.inc.c"
+};
+
+static u64 gameplay_keep_Tex_06C350[] = {
+#include "assets/objects/gameplay_keep/extra/impact/tex_06C350.i4.inc.c"
+};
+
+static u64 gameplay_keep_Tex_06CB50[] = {
+#include "assets/objects/gameplay_keep/extra/impact/tex_06CB50.i4.inc.c"
+};
+
+static u64 gameplay_keep_Tex_06D350[] = {
+#include "assets/objects/gameplay_keep/extra/impact/tex_06D350.i4.inc.c"
+};
+
+static u64 gameplay_keep_Tex_06DB50[] = {
+#include "assets/objects/gameplay_keep/extra/impact/tex_06DB50.i4.inc.c"
+};
+
+static u64 gameplay_keep_Tex_06E350[] = {
+#include "assets/objects/gameplay_keep/extra/impact/tex_06E350.i4.inc.c"
+};
+
+static Gfx gameplay_keep_DL_06BFE0[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, TEXEL1, 1, PRIM_LOD_FRAC, TEXEL0, PRIMITIVE, ENVIRONMENT, COMBINED, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock_4b(gameplay_keep_Tex_06E350, G_IM_FMT_I, 64, 64, 15, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 6, 6, 15, 15),
+    gsDPLoadMultiBlock_4b(gameplay_keep_Tex_06E350, 0x0000, 1, G_IM_FMT_I, 64, 64, 15, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 6, 6, 15, 15),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(gameplay_keepVtx_06BB20, 4, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSPEndDisplayList(),
+};
+
+static Gfx gameplay_keep_DL_06C098[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, TEXEL1, 1, PRIM_LOD_FRAC, TEXEL0, PRIMITIVE, ENVIRONMENT, COMBINED, ENVIRONMENT, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 155, 80),
+    gsDPSetEnvColor(155, 155, 55, 255),
+    gsSPDisplayList(0x09000000),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_ZB_XLU_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock_4b(gameplay_keep_Tex_06D350, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadMultiBlock_4b(gameplay_keep_Tex_06CB50, 0x0100, 1, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, 13, G_TX_NOLOD),
+    gsSPDisplayList(0x0A000000),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(&gameplay_keepVtx_06BB20[44], 32, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(1, 4, 5, 0, 1, 5, 2, 0),
+    gsSP2Triangles(6, 0, 3, 0, 6, 3, 7, 0),
+    gsSP2Triangles(8, 6, 7, 0, 8, 7, 9, 0),
+    gsSP2Triangles(4, 10, 11, 0, 4, 11, 5, 0),
+    gsSP2Triangles(12, 8, 9, 0, 12, 9, 13, 0),
+    gsSP2Triangles(14, 12, 13, 0, 14, 13, 15, 0),
+    gsSP2Triangles(10, 16, 17, 0, 10, 17, 11, 0),
+    gsSP2Triangles(18, 14, 15, 0, 18, 15, 19, 0),
+    gsSP2Triangles(20, 18, 19, 0, 20, 19, 21, 0),
+    gsSP2Triangles(16, 22, 23, 0, 16, 23, 17, 0),
+    gsSP2Triangles(24, 20, 21, 0, 24, 21, 25, 0),
+    gsSP2Triangles(26, 24, 25, 0, 26, 25, 27, 0),
+    gsSP2Triangles(22, 28, 29, 0, 22, 29, 23, 0),
+    gsSP2Triangles(30, 26, 27, 0, 30, 27, 31, 0),
+    gsSP2Triangles(28, 30, 31, 0, 28, 31, 29, 0),
+    gsSPEndDisplayList(),
+};
+
+static Gfx gameplay_keep_DL_06C1E8[] = {
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, PRIM_LOD_FRAC, TEXEL0, TEXEL1, 1, PRIM_LOD_FRAC, TEXEL0, PRIMITIVE, ENVIRONMENT, COMBINED, ENVIRONMENT, COMBINED, 0, PRIMITIVE, 0),
+    gsDPSetPrimColor(0, 0x80, 255, 255, 255, 255),
+    gsDPSetEnvColor(255, 255, 255, 255),
+    gsSPDisplayList(0x08000000),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_ZB_XLU_SURF2),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPLoadTextureBlock_4b(gameplay_keep_Tex_06C350, G_IM_FMT_I, 64, 64, 15, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPLoadMultiBlock_4b(gameplay_keep_Tex_06DB50, 0x0100, 1, G_IM_FMT_I, 64, 64, 15, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 6, 6, 14, G_TX_NOLOD),
+    gsDPSetTileSize(1, 0, 0x0050, 0x00FC, 0x014C),
+    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH),
+    gsSPVertex(&gameplay_keepVtx_06BB20[4], 10, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 0, 3, 0, 4, 3, 5, 0),
+    gsSP2Triangles(6, 4, 5, 0, 6, 5, 7, 0),
+    gsSP2Triangles(8, 6, 7, 0, 8, 7, 9, 0),
+    gsSPVertex(&gameplay_keepVtx_06BB20[14], 10, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 0, 3, 0, 4, 3, 5, 0),
+    gsSP2Triangles(1, 6, 7, 0, 1, 7, 2, 0),
+    gsSP2Triangles(6, 8, 9, 0, 6, 9, 7, 0),
+    gsSPVertex(&gameplay_keepVtx_06BB20[24], 10, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+    gsSP2Triangles(8, 0, 3, 0, 8, 3, 9, 0),
+    gsSP2Triangles(5, 8, 9, 0, 5, 9, 6, 0),
+    gsSPVertex(&gameplay_keepVtx_06BB20[34], 10, 0),
+    gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+    gsSP2Triangles(4, 0, 3, 0, 4, 3, 5, 0),
+    gsSP2Triangles(1, 6, 7, 0, 1, 7, 2, 0),
+    gsSP2Triangles(8, 4, 5, 0, 8, 5, 9, 0),
+    gsSPEndDisplayList(),
+};
+
+static KeyFrame gameplay_keep_KeyFrame_06BB0C[] = {
+     { 1, 0, 0, }, { 7, 0, 0, }, { 8, 0, 9000, }, { 9, 600, 10502, }, { 10, 700, 3137, }, { 11, 809, 3352, }, { 12, 924, 3467, }, { 13, 1040, 3482, }, { 14, 1156, 3398, }, { 15, 1267, 3215, }, { 16, 1370, 2932, }, { 17, 1462, 2549, }, { 18, 1540, 2067, }, { 19, 1600, 900, }, { 20, 1600, 0, }, { 41, 1600, 0, }, { 1, 0, 0, },
+     { 7, 0, 0, }, { 8, 0, 3000, }, { 9, 200, 3094, }, { 10, 206, 148, }, { 11, 210, 76, }, { 12, 211, 19, }, { 13, 211, -25, }, { 14, 210, -56, }, { 15, 207, -72, }, { 16, 205, -74, }, { 17, 202, -62, }, { 18, 201, -37, }, { 19, 200, -10, }, { 21, 200, 0, }, { 41, 200, 0, }, { 1, 0, 0, }, { 7, 0, 0, }, { 8, 0, 9000, },
+     { 9, 600, 10503, }, { 10, 700, 3141, }, { 11, 809, 3359, }, { 12, 924, 3475, }, { 13, 1041, 3491, }, { 14, 1157, 3405, }, { 15, 1268, 3218, }, { 16, 1371, 2929, }, { 17, 1463, 2540, }, { 18, 1541, 2049, }, { 19, 1600, 889, }, { 20, 1600, 0, }, { 41, 1600, 0, }, { 1, 0, 0, }, { 7, 0, 0, }, { 8, 0, 6119, },
+     { 9, 408, 6493, }, { 10, 433, 714, }, { 11, 456, 648, }, { 12, 476, 585, }, { 13, 495, 525, }, { 14, 511, 469, }, { 15, 526, 416, }, { 16, 539, 366, }, { 17, 550, 319, }, { 18, 560, 275, }, { 19, 569, 235, }, { 20, 576, 198, }, { 21, 582, 164, }, { 22, 587, 133, }, { 23, 591, 105, }, { 24, 594, 81, }, { 25, 596, 60, },
+     { 26, 598, 42, }, { 27, 599, 27, }, { 28, 599, 16, }, { 30, 600, 2, }, { 40, 600, 0, }, { 41, 600, 0, }, { 1, 0, 0, }, { 7, 0, 0, }, { 8, 0, 358, }, { 9, 24, 766, }, { 10, 51, 848, }, { 11, 80, 905, }, { 12, 111, 953, }, { 13, 144, 991, }, { 14, 177, 1019, }, { 15, 212, 1037, }, { 17, 282, 1044, }, { 18, 316, 1033, },
+     { 19, 350, 1012, }, { 20, 384, 981, }, { 21, 416, 941, }, { 22, 446, 891, }, { 23, 475, 830, }, { 24, 502, 761, }, { 25, 526, 681, }, { 26, 547, 592, }, { 27, 565, 493, }, { 28, 580, 384, }, { 29, 591, 265, }, { 30, 598, 137, }, { 31, 600, 35, }, { 32, 600, 0, }, { 41, 600, 0, }, { 1, 0, 0, }, { 7, 0, 0, },
+     { 8, 0, 6119, }, { 9, 408, 6493, }, { 10, 433, 714, }, { 11, 456, 648, }, { 12, 476, 585, }, { 13, 495, 525, }, { 14, 511, 469, }, { 15, 526, 416, }, { 16, 539, 366, }, { 17, 550, 319, }, { 18, 560, 275, }, { 19, 569, 235, }, { 20, 576, 198, }, { 21, 582, 164, }, { 22, 587, 133, }, { 23, 591, 105, }, { 24, 594, 81, },
+     { 25, 596, 60, }, { 26, 598, 42, }, { 27, 599, 27, }, { 28, 599, 16, }, { 30, 600, 2, }, { 40, 600, 0, }, { 41, 600, 0, }, { 1, 0, 0, }, { 7, 0, 0, }, { 8, 0, 12600, }, { 9, 840, 12600, }, { 10, 840, 0, }, { 41, 840, 0, }, { 1, 0, 0, }, { 7, 0, 0, }, { 8, 0, 12600, }, { 9, 840, 12600, }, { 10, 840, 0, },
+     { 41, 840, 0, }, { 1, 0, 0, }, { 7, 0, 0, }, { 8, 0, 14400, }, { 9, 960, 14400, }, { 10, 960, 0, }, { 41, 960, 0, },
+};
+
+static u16 gameplay_keep_flexBitFlags_06BB0C[]               = { 0x0000, 0x01C0, 0x01C0, 0x01C0 };
+static s16 gameplay_keep_kfNums_06BB0C[]                     = { 0x0010, 0x0010, 0x0010, 0x001A, 0x001B, 0x001A, 0x0006, 0x0006, 0x0006 };
+static s16 gameplay_keep_presetValues_06BB0C[]               = { 0x0064, 0x0064, 0x0064, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 };
+static KeyFrameFlexLimb gameplay_keep_KeyFrameLimbs_06EB70[] = { { NULL, 0x03, 0x01, 0xFF }, { gameplay_keep_DL_06C1E8, 0x00, 0x01, 0xFF }, { gameplay_keep_DL_06C098, 0x00, 0x01, 0xFF }, { gameplay_keep_DL_06BFE0, 0x00, 0x01, 0xFF }, };
+KeyFrameFlexSkeleton gameplay_keep_KFSkel_06EB70             = { 0x04, 0x03, gameplay_keep_KeyFrameLimbs_06EB70 };
+KeyFrameAnimation gameplay_keep_KFAnim_06BB0C                = {  gameplay_keep_flexBitFlags_06BB0C, gameplay_keep_KeyFrame_06BB0C, gameplay_keep_kfNums_06BB0C, gameplay_keep_presetValues_06BB0C, 0xFFFF, 0x0029 };

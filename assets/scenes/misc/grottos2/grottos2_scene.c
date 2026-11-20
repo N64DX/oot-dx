@@ -94,7 +94,7 @@ EnvLightSettings grottos2_sceneLightSettings_000244[] = {
 BgCamInfo grottos2_sceneCollisionHeader_00AC9CCamDataList[] = {
     { CAM_SET_DUNGEON0, 0, NULL },
     { CAM_SET_DUNGEON2, 0, NULL },
-    { CAM_SET_NORMAL0,  0, NULL },
+    { CAM_SET_INBUSH,   0, NULL },
 };
 
 SurfaceType grottos2_sceneCollisionHeader_00AC9CSurfaceType[] = {

@@ -92,7 +92,6 @@ static u8 isHyper;
 static u8 lizalfosCount;
 static Actor* spawnedLizalfos[3];
 static Actor* spawnedRocks;
-static u8 stunHitsLeft;
 
 ActorProfile Boss_Goma_Profile = {
     /**/ ACTOR_BOSS_GOMA,
@@ -432,10 +431,9 @@ void BossGoma_Init(Actor* thisx, PlayState* play) {
     Collider_InitJntSph(play, &this->collider);
     Collider_SetJntSph(play, &this->collider, &this->actor, &sColliderJntSphInit, this->colliderElements);
     if (isHyper)
-        this->collider.elements[0].base.atDmgInfo.damage = 0x20;
+        this->collider.elements[0].base.atDmgInfo.damage = 0x18;
     lizalfosCount = 0;
     spawnedLizalfos[0] = spawnedLizalfos[1] = spawnedLizalfos[2] = spawnedRocks = NULL;
-    stunHitsLeft = isHyper ? 1 : 0;
     sGomaBeaming = false;
 
     if (Flags_GetClear(play, play->roomCtx.curRoom.num)) {
@@ -1954,14 +1952,12 @@ void BossGoma_UpdateHit(BossGoma* this, PlayState* play) {
                 }
 
                 this->invincibilityFrames = 10;
-            } else if (this->actionFunc != BossGoma_FloorStunned && this->patienceTimer != 0 && acHitElem->atDmgInfo.dmgFlags & (DMG_RANGED | DMG_DEKU_NUT) && stunHitsLeft > 0) {
-                stunHitsLeft--;
+            } else if (this->actionFunc != BossGoma_FloorStunned && this->patienceTimer != 0 && acHitElem->atDmgInfo.dmgFlags & (DMG_RANGED | DMG_DEKU_NUT)) {
                 Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_DAM2);
                 Audio_StopSfxById(NA_SE_EN_GOMA_CRY1);
                 this->invincibilityFrames = 5;
             } else if (this->actionFunc != BossGoma_FloorStunned && this->patienceTimer != 0 &&
                        (acHitElem->atDmgInfo.dmgFlags & (DMG_RANGED | DMG_DEKU_NUT))) {
-                stunHitsLeft = isHyper ? 1 : 0;
                 Actor_PlaySfx(&this->actor, NA_SE_EN_GOMA_DAM2);
                 Audio_StopSfxById(NA_SE_EN_GOMA_CRY1);
                 this->invincibilityFrames = 10;

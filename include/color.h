@@ -11,6 +11,10 @@ typedef struct Color_RGBA8 {
     u8 r, g, b, a;
 } Color_RGBA8;
 
+typedef struct Color_RGB16 {
+    s16 r, g, b;
+} Color_RGB16;
+
 // only use when necessary for alignment purposes
 typedef union Color_RGBA8_u32 {
     struct {

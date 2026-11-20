@@ -268,6 +268,19 @@
     CS_CMD_DESTINATION, 1, CMD_HH(destination, startFrame), CMD_HH(endFrame, endFrame)
 
 /**
+ * Declare a list of `CS_MOTION_BLUR` entries
+ */
+#define CS_MOTION_BLUR_LIST(entries) \
+    CS_CMD_MOTION_BLUR, CMD_W(entries)
+
+/**
+ * Enables or gradually disables motion blur.
+ * @see `CsMotionBlurType`
+ */
+#define CS_MOTION_BLUR(type, startFrame, endFrame) \
+    CMD_HH(type, startFrame), CMD_HH(endFrame, endFrame)
+
+/**
  * Marks the end of a command list in a cutscene script. Processing for the current frame will finish.
  */
 #define CS_END_OF_SCRIPT() CS_CMD_END_OF_SCRIPT, CMD_W(0)
