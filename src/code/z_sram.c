@@ -18,6 +18,7 @@
 #include "ss_sram.h"
 #include "regs.h"
 #include "play_state.h"
+#include "padmgr.h"
 
 #define SLOT_SIZE (sizeof(SaveContext))
 #define SLOT_EXTENDED_SIZE (sizeof(SaveContextExtended))
@@ -194,7 +195,7 @@ void Sram_InitNewSave(void) {
     bzero(&gSaveContext.save.info, sizeof(SaveInfo));
     gSaveContext.save.totalDays = 0;
     gSaveContext.save.bgsDayCount = 0;
-    gSaveContext.cheated = 0;
+    gSaveContext.gameProgress = GAME_PROGRESS_NOT_STARTED;
     gSaveContext.save.info.energy = 0;
 
     gSaveContext.save.info.playerData = sNewSavePlayerData;
@@ -453,7 +454,7 @@ void Sram_InitDebugSave(void) {
     gSaveContext.save.entranceIndex = ENTR_HYRULE_FIELD_0;
     gSaveContext.save.info.playerData.magicLevel = 0;
     gSaveContext.save.info.sceneFlags[SCENE_WATER_TEMPLE].swch = 0x40000000;
-    gSaveContext.cheated = 1;
+    gSaveContext.gameProgress = GAME_PROGRESS_CHEATED;
     gSaveContext.save.info.energy = 0;
 }
 
@@ -603,7 +604,6 @@ void Sram_OpenSave(SramContext* sramCtx) {
         for (i=SCENE_DEKU_TREE_BOSS; i<=SCENE_SHADOW_TEMPLE_BOSS; i++)
             MemSet(&gSaveContext.save.info.sceneFlags[i], 0, sizeof(SavedSceneFlags));
 
-        gSaveContext.cheated = 0;
         gSaveContext.save.info.playtime = 0;
         gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
         gSaveContext.save.info.equips = gSaveContext.save.info.playerData.adultEquips = gSaveContext.save.info.playerData.childEquips = sNewSaveEquips;
@@ -719,9 +719,18 @@ void Sram_OpenSave(SramContext* sramCtx) {
         if (CHECK_OWNED_EQUIP_ALT(EQUIP_TYPE_SHIELD, i) && (gSaveContext.save.info.shields[i].durability == 0 || gSaveContext.save.info.shields[i].durability>= Player_GetMaxShieldDurability(i+1)) && ( (i == 3 && !CHECK_UPGRADE_ITEM(UPGRADE_SHIELD_MIRROR_BROKEN)) || i != 3) )
             gSaveContext.save.info.shields[i].durability = Player_GetMaxShieldDurability(i+1);
 
+    if (TIMER_CHALLENGE > 0) {
+        if (gSaveContext.gameProgress == GAME_PROGRESS_NOT_STARTED)
+            gSaveContext.save.dayTime = CLOCK_TIME(6, 0);
+        FORCE_AUTOSAVE;
+    }
+
+    if (gSaveContext.gameProgress == GAME_PROGRESS_NOT_STARTED)
+        gSaveContext.gameProgress = GAME_PROGRESS_STARTED;
+
     // Cheating
     if (DAMAGE_TAKEN == 7 || MONSTER_HP == 7 || ELITE_HP == 7 || BOSS_HP == 7 || DEBUG_MODE || DEBUG_FEATURES || INFINITE_HEALTH)
-        gSaveContext.cheated = 1;
+        gSaveContext.gameProgress = GAME_PROGRESS_CHEATED;
 }
 
 void Sram_OpenSaveOptions(SramContext* sramCtx) {
@@ -1065,6 +1074,7 @@ void Sram_InitSave(FileSelectState* fileSelect, SramContext* sramCtx) {
     }
 
     SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000), sramCtx->readBuff, SRAM_SIZE);
+    Mempak_EraseSave(gSaveContext.fileNum);
 
     PRINTF(T("ＳＡＶＥ終了\n", "SAVE end\n"));
     PRINTF("z_common_data.file_no = %d\n", gSaveContext.fileNum);
@@ -1106,6 +1116,7 @@ void Sram_EraseSave(FileSelectState* fileSelect, SramContext* sramCtx) {
 
     MemCopy(&fileSelect->n64ddFlags[fileSelect->selectedFileIndex], sramCtx->readBuff + offset + N64DD,
             sizeof(fileSelect->n64ddFlags[0]));
+    Mempak_EraseSave(fileNum);
 
     if (EXTRA_SAVE_SLOTS)
         return;
@@ -1274,4 +1285,188 @@ u8 HasDuplicateDpadItems(void) {
                 if (gSaveContext.save.info.playerData.dpadItems[col][i] == gSaveContext.save.info.playerData.dpadItems[col][j])
                     return true;
     return false;
+}
+
+static SaveContext sMempakSave;
+static SaveContextExtended sMempakSaveExt;
+
+static u8 Mempak_CheckRamArea(OSMesgQueue* queue, s32 channel) {
+    OSPfs pfs;
+    u8 i, ret, temp1[BLOCKSIZE], temp2[BLOCKSIZE], saveReg[BLOCKSIZE];
+
+    pfs.queue   = queue;
+    pfs.channel = channel;
+    pfs.status  = 0;
+
+    if ((ret = __osPfsSelectBank(&pfs, PFS_ID_BANK_256K)) || (ret = __osContRamRead(queue, channel, 0, saveReg)))
+        return ret;
+    for (i=0; i<BLOCKSIZE; i++)
+        temp1[i] = i;
+    if ((ret = __osContRamWrite(queue, channel, 0, temp1, PFS_FORCE)) || (ret = __osContRamRead(queue, channel, 0, temp2)))
+        return ret;
+    if (bcmp(temp1, temp2, BLOCKSIZE) != 0)
+        return PFS_ERR_DEVICE;
+    return __osContRamWrite(queue, channel, 0, saveReg, PFS_FORCE);
+}
+
+static s8 Mempak_GetChannel(OSMesgQueue* queue) {
+    u8 pattern, i;
+
+    if (!osPfsIsPlug(queue, &pattern))
+        for (i=0; i < MAXCONTROLLERS; i++)
+            if ((pattern & (1 << i)) && !__osPfsGetStatus(queue, i) && !Mempak_CheckRamArea(queue, i))
+                return i;
+    return -1;
+}
+
+s8 Mempak_GetFirstChannel(void) {
+    OSMesgQueue* queue = PadMgr_AcquireSerialEventQueue(&gPadMgr);
+    s8 memPakIndex = Mempak_GetChannel(queue);
+
+    PadMgr_ReleaseSerialEventQueue(&gPadMgr, queue);
+    return memPakIndex;
+}
+
+u8 Mempak_IsPlugged(void) {
+    return Mempak_GetFirstChannel() >= 0;
+}
+
+u8 Mempak_ReadWrite(u16 offset, void* dramAddr, size_t size, s32 direction) {
+    OSMesgQueue* queue = PadMgr_AcquireSerialEventQueue(&gPadMgr);
+    size_t bytesToCopy;
+    u8* ptr = (u8*)dramAddr;
+    u16 blockIdx, blockOffset;
+    u8 block[BLOCKSIZE];
+    s8 channel = Mempak_GetChannel(queue);
+
+    if (channel < 0) {
+        PadMgr_ReleaseSerialEventQueue(&gPadMgr, queue);
+        return false;
+    }
+
+    while (size > 0) {
+        blockIdx = offset / BLOCKSIZE;
+        blockOffset = offset % BLOCKSIZE;
+        bytesToCopy = BLOCKSIZE - blockOffset;
+        if (bytesToCopy > size)
+            bytesToCopy = size;
+
+        if (direction == OS_READ) {
+            if (__osContRamRead(queue, channel, blockIdx, block) != 0) {
+                PadMgr_ReleaseSerialEventQueue(&gPadMgr, queue);
+                return false;
+            }
+            MemCopy(ptr, block + blockOffset, bytesToCopy);
+        } else {
+            if (blockOffset != 0 || bytesToCopy != BLOCKSIZE) {
+                if (__osContRamRead(queue, channel, blockIdx, block) != 0) {
+                    PadMgr_ReleaseSerialEventQueue(&gPadMgr, queue);
+                    return false;
+                }
+            }
+            MemCopy(block + blockOffset, ptr, bytesToCopy);
+            if (__osContRamWrite(queue, channel, blockIdx, block, PFS_FORCE) != 0) {
+                PadMgr_ReleaseSerialEventQueue(&gPadMgr, queue);
+                return false;
+            }
+        }
+
+        offset += bytesToCopy;
+        ptr += bytesToCopy;
+        size -= bytesToCopy;
+    }
+
+    PadMgr_ReleaseSerialEventQueue(&gPadMgr, queue);
+    return true;
+}
+
+s8 Mempak_HasSaveData(u8 fileNum) {
+    u16* ptr;
+    u16 oldChecksum, newChecksum = 0, i;
+
+    if (fileNum >= FILE_SLOTS_SIZE || !Mempak_IsPlugged() || !Mempak_ReadWrite(SLOT_OFFSET(fileNum), &sMempakSave, SLOT_SIZE, OS_READ))
+        return -1;
+
+    oldChecksum = sMempakSave.save.info.checksum.value;
+    sMempakSave.save.info.checksum.value = 0;
+    ptr = (u16*)&sMempakSave;
+    
+    for (i=0; i<CHECKSUM_SIZE; i++)
+        newChecksum += *ptr++;
+    sMempakSave.save.info.checksum.value = oldChecksum;
+
+    if (oldChecksum == 0 || newChecksum != oldChecksum || (sMempakSave.save.info.playerData.newf[0] != 'Z' || sMempakSave.save.info.playerData.newf[1] != 'E' || sMempakSave.save.info.playerData.newf[2] != 'L' || sMempakSave.save.info.playerData.newf[3] != 'D' || sMempakSave.save.info.playerData.newf[4] != 'A' || sMempakSave.save.info.playerData.newf[5] != 'Z'))
+        return 0;
+    return 1;
+}
+
+void Sram_MempakWriteSave(u8 fileNum) {
+    u16 offset;
+    u16 checksum = 0;
+    u16 j = 0;
+    u16* ptr = (u16*)&gSaveContext;
+
+    if (fileNum >= FILE_SLOTS_SIZE)
+        return;
+
+    gSaveContext.save.info.checksum.value = 0;
+    for (offset=0; offset<CHECKSUM_SIZE; offset++) {
+        if (++j == 0x20)
+            j = 0;
+        checksum += *ptr++;
+    }
+    gSaveContext.save.info.checksum.value = checksum;
+
+    Mempak_ReadWrite(SLOT_OFFSET(fileNum), &gSaveContext, SLOT_SIZE, OS_WRITE);
+    Mempak_ReadWrite(SLOT_EXTENDED_OFFSET(fileNum), &gSaveContextExtended, sizeof(gSaveContextExtended), OS_WRITE);
+}
+
+void Mempak_EraseSave(u8 fileNum) {
+    if (fileNum >= FILE_SLOTS_SIZE)
+        return;
+
+    bzero(&sMempakSave, sizeof(sMempakSave));
+    bzero(&sMempakSaveExt, sizeof(sMempakSaveExt));
+    Mempak_ReadWrite(SLOT_OFFSET(fileNum), &sMempakSave, SLOT_SIZE, OS_WRITE);
+    Mempak_ReadWrite(SLOT_EXTENDED_OFFSET(fileNum), &sMempakSaveExt, sizeof(SaveContextExtended), OS_WRITE);
+}
+
+void Sram_TimerChallengeEraseSave(u8 fileNum) {
+    u16* ptr;
+    u16 i, oldChecksum, newChecksum = 0;
+
+    if (fileNum >= FILE_SLOTS_SIZE)
+        return;
+
+    if (Mempak_IsPlugged()) {
+        if (Mempak_ReadWrite(SLOT_OFFSET(fileNum), &sMempakSave, SLOT_SIZE, OS_READ) &&
+            Mempak_ReadWrite(SLOT_EXTENDED_OFFSET(fileNum), &sMempakSaveExt, sizeof(SaveContextExtended), OS_READ)) {
+            oldChecksum = sMempakSave.save.info.checksum.value;
+            sMempakSave.save.info.checksum.value = 0;
+            ptr = (u16*)&sMempakSave;
+            for (i=0; i<CHECKSUM_SIZE; i++)
+                newChecksum += *ptr++;
+            sMempakSave.save.info.checksum.value = oldChecksum;
+
+            if (oldChecksum != 0 && newChecksum == oldChecksum && sMempakSave.save.info.playerData.newf[0] == 'Z' && sMempakSave.save.info.playerData.newf[1] == 'E' && sMempakSave.save.info.playerData.newf[2] == 'L' && sMempakSave.save.info.playerData.newf[3] == 'D' && sMempakSave.save.info.playerData.newf[4] == 'A' && sMempakSave.save.info.playerData.newf[5] == 'Z') {
+                MemCopy(&sMempakSave.options, &gSaveContext.options, sizeof(sMempakSave.options));
+                SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + gSramSlotOffsets[fileNum], &sMempakSave, SLOT_SIZE);
+                SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + SLOT_EXTENDED_OFFSET(fileNum), &sMempakSaveExt, sizeof(SaveContextExtended));
+                if (!EXTRA_SAVE_SLOTS && fileNum < 3) {
+                    SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + gSramSlotOffsets[fileNum + 3], &sMempakSave, SLOT_SIZE);
+                    SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + SLOT_EXTENDED_OFFSET(fileNum + 3), &sMempakSaveExt, sizeof(SaveContextExtended));
+                }
+                return;
+            }
+        }
+    }
+
+    Sram_InitNewSave();
+    SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + gSramSlotOffsets[fileNum], &gSaveContext, SLOT_SIZE);
+    SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + SLOT_EXTENDED_OFFSET(fileNum), &gSaveContextExtended, sizeof(SaveContextExtended));
+    if (!EXTRA_SAVE_SLOTS && fileNum < 3) {
+        SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + gSramSlotOffsets[fileNum + 3], &gSaveContext, SLOT_SIZE);
+        SRAM_WRITE(OS_K1_TO_PHYSICAL(0xA8000000) + SLOT_EXTENDED_OFFSET(fileNum + 3), &gSaveContextExtended, sizeof(SaveContextExtended));
+    }
+    Mempak_EraseSave(fileNum);
 }

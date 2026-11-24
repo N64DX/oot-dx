@@ -1,4 +1,4 @@
-<Soundfont Name="Soundfont_45_red_ice_cavern" Index="45" Medium="MEDIUM_CART" CachePolicy="CACHE_LOAD_TEMPORARY" SampleBank="$(BUILD_DIR)/assets/audio/samplebanks/SampleBank_0.xml" Indirect="1">
+<Soundfont Name="Soundfont_46_red_ice_cavern" Index="46" Medium="MEDIUM_CART" CachePolicy="CACHE_LOAD_TEMPORARY" SampleBank="$(BUILD_DIR)/assets/audio/samplebanks/SampleBank_0.xml" Indirect="1">
     <Envelopes>
         <Envelope Name="Env0" Release="117">
             <Point Delay="2" Arg="32700"/>

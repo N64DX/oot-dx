@@ -343,6 +343,9 @@ void Health_DrawMeter(PlayState* play) {
     u8* curBgImgLoaded = NULL;
     s32 ddHeartCountMinusOne = gSaveContext.save.info.inventory.defenseHearts - 1;
 
+    if (HUD_DISPLAY >= 3 && !IS_PAUSED(&play->pauseCtx))
+        return;
+
     OPEN_DISPS(gfxCtx, "../z_lifemeter.c", 353);
 
     if (!(gSaveContext.save.info.playerData.health % 0x10)) {
