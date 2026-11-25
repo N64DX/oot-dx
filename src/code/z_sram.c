@@ -29,7 +29,7 @@
 #define N64DD offsetof(SaveContext, save.info.playerData.n64ddFlag)
 #define HEALTH_CAP offsetof(SaveContext, save.info.playerData.healthCapacity)
 #define QUEST offsetof(SaveContext, save.info.inventory.questItems)
-#define DEFENSE offsetof(SaveContext, save.info.inventory.defenseHearts)
+#define DEFENSE offsetof(SaveContext, save.info.playerData.isDoubleDefenseAcquired)
 #define HEALTH offsetof(SaveContext, save.info.playerData.health)
 
 #define SLOT_OFFSET(index) (SRAM_HEADER_SIZE + (index * SLOT_SIZE))
@@ -974,15 +974,18 @@ void Sram_VerifyAndLoadAllSaves(FileSelectState* fileSelect, SramContext* sramCt
            DEFENSE);
 
     for (i=0; i<fileSlots; i++) {
-        MemCopy(&fileSelect->deaths[i],           sramCtx->readBuff + SLOT_OFFSET(i) + DEATHS,                                     sizeof(fileSelect->deaths[i]));
-        MemCopy(&fileSelect->fileNames[i],        sramCtx->readBuff + SLOT_OFFSET(i) + NAME,                                       sizeof(fileSelect->fileNames[i]));
-        MemCopy(&fileSelect->healthCapacities[i], sramCtx->readBuff + SLOT_OFFSET(i) + HEALTH_CAP,                                 sizeof(fileSelect->healthCapacities[i]));
-        MemCopy(&fileSelect->questItems[i],       sramCtx->readBuff + SLOT_OFFSET(i) + QUEST,                                      sizeof(fileSelect->questItems[i]));
-        MemCopy(&fileSelect->n64ddFlags[i],       sramCtx->readBuff + SLOT_OFFSET(i) + N64DD,                                      sizeof(fileSelect->n64ddFlags[i]));
-        MemCopy(&fileSelect->defense[i],          sramCtx->readBuff + SLOT_OFFSET(i) + DEFENSE,                                    sizeof(fileSelect->defense[i]));
-        MemCopy(&fileSelect->health[i],           sramCtx->readBuff + SLOT_OFFSET(i) + HEALTH,                                     sizeof(fileSelect->health[i]));
-        MemCopy(&fileSelect->fileOptions[i],      sramCtx->readBuff + SLOT_OFFSET(i) + offsetof(SaveContext, options),             sizeof(fileSelect->fileOptions[i]));
-        MemCopy(&fileSelect->questMode[i],        sramCtx->readBuff + SLOT_OFFSET(i) + offsetof(SaveContext, save.info.questMode), sizeof(fileSelect->questMode[i]));
+        MemCopy(&fileSelect->deaths[i],           sramCtx->readBuff + SLOT_OFFSET(i) + DEATHS,                                               sizeof(fileSelect->deaths[i]));
+        MemCopy(&fileSelect->fileNames[i],        sramCtx->readBuff + SLOT_OFFSET(i) + NAME,                                                 sizeof(fileSelect->fileNames[i]));
+        MemCopy(&fileSelect->healthCapacities[i], sramCtx->readBuff + SLOT_OFFSET(i) + HEALTH_CAP,                                           sizeof(fileSelect->healthCapacities[i]));
+        MemCopy(&fileSelect->questItems[i],       sramCtx->readBuff + SLOT_OFFSET(i) + QUEST,                                                sizeof(fileSelect->questItems[i]));
+        MemCopy(&fileSelect->n64ddFlags[i],       sramCtx->readBuff + SLOT_OFFSET(i) + N64DD,                                                sizeof(fileSelect->n64ddFlags[i]));
+        MemCopy(&fileSelect->defense[i],          sramCtx->readBuff + SLOT_OFFSET(i) + DEFENSE,                                              sizeof(fileSelect->defense[i]));
+        MemCopy(&fileSelect->health[i],           sramCtx->readBuff + SLOT_OFFSET(i) + HEALTH,                                               sizeof(fileSelect->health[i]));
+        MemCopy(&fileSelect->fileOptions[i],      sramCtx->readBuff + SLOT_OFFSET(i) + offsetof(SaveContext, options),                       sizeof(fileSelect->fileOptions[i]));
+        MemCopy(&fileSelect->questMode[i],        sramCtx->readBuff + SLOT_OFFSET(i) + offsetof(SaveContext, save.info.questMode),           sizeof(fileSelect->questMode[i]));
+        MemCopy(&fileSelect->equipment[i],        sramCtx->readBuff + SLOT_OFFSET(i) + offsetof(SaveContext, save.info.inventory.equipment), sizeof(fileSelect->equipment[i]));
+        MemCopy(&fileSelect->items[i],            sramCtx->readBuff + SLOT_OFFSET(i) + offsetof(SaveContext, save.info.inventory.items),     sizeof(fileSelect->items[i]));
+        MemCopy(&fileSelect->upgradeItems[i],     sramCtx->readBuff + SLOT_OFFSET(i) + offsetof(SaveContext, save.info.upgradeItems),        sizeof(fileSelect->upgradeItems[i]));
     }
 
     PRINTF("f_64dd=%d, %d, %d\n", fileSelect->n64ddFlags[0], fileSelect->n64ddFlags[1], fileSelect->n64ddFlags[2]);
@@ -1194,6 +1197,9 @@ void Sram_CopySave(FileSelectState* fileSelect, SramContext* sramCtx) {
            sizeof(fileSelect->health[0]));
     MemCopy(&fileSelect->questMode[fileSelect->copyDestFileIndex], sramCtx->readBuff + offset + offsetof(SaveContext, save.info.questMode), sizeof(fileSelect->questMode[0]));
     MemCopy(&fileSelect->fileOptions[fileSelect->copyDestFileIndex], sramCtx->readBuff + offset + offsetof(SaveContext, options), sizeof(fileSelect->fileOptions[0]));
+    MemCopy(&fileSelect->equipment[fileSelect->copyDestFileIndex], sramCtx->readBuff + offset + offsetof(SaveContext, save.info.inventory.equipment), sizeof(fileSelect->equipment[0]));
+    MemCopy(&fileSelect->items[fileSelect->copyDestFileIndex], sramCtx->readBuff + offset + offsetof(SaveContext, save.info.inventory.items), sizeof(fileSelect->items[0]));
+    MemCopy(&fileSelect->upgradeItems[fileSelect->copyDestFileIndex], sramCtx->readBuff + offset + offsetof(SaveContext, save.info.upgradeItems), sizeof(fileSelect->upgradeItems[0]));
 
     PRINTF("f_64dd[%d]=%d\n", gSaveContext.fileNum, fileSelect->n64ddFlags[gSaveContext.fileNum]);
     PRINTF("heart_status[%d]=%d\n", gSaveContext.fileNum, fileSelect->defense[gSaveContext.fileNum]);
