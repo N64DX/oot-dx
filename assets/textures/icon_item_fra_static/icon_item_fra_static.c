@@ -51,12 +51,24 @@ u64 gPauseGoronMinesTitleFRATex[] = {
 #include "assets/textures/icon_item_fra_static/gPauseGoronMinesTitleFRATex.ia8.inc.c"
 };
 
+u64 gPausePurpleIceCavernTitleFRATex[] = {
+#include "assets/textures/icon_item_fra_static/gPausePurpleIceCavernTitleFRATex.ia8.inc.c"
+};
+
 u64 gPauseWoodfallTitleFRATex[] = {
 #include "assets/textures/icon_item_fra_static/gPauseWoodfallTitleFRATex.ia8.inc.c"
 };
 
-u64 gPausePurpleIceCavernTitleFRATex[] = {
-#include "assets/textures/icon_item_fra_static/gPausePurpleIceCavernTitleFRATex.ia8.inc.c"
+u64 gPauseSnowheadTitleFRATex[] = {
+#include "assets/textures/icon_item_fra_static/gPauseSnowheadTitleFRATex.ia8.inc.c"
+};
+
+u64 gPauseGreatBayTitleFRATex[] = {
+#include "assets/textures/icon_item_fra_static/gPauseGreatBayTitleFRATex.ia8.inc.c"
+};
+
+u64 gPauseStoneTowerTitleFRATex[] = {
+#include "assets/textures/icon_item_fra_static/gPauseStoneTowerTitleFRATex.ia8.inc.c"
 };
 
 u64 gPauseToEquipFRATex[TEX_LEN(u64, gPauseToEquipFRATex_WIDTH, gPauseToEquipFRATex_HEIGHT, 8)] = {

@@ -48,12 +48,24 @@ u64 gPauseGoronMinesTitleJPNTex[] = {
 #include "assets/textures/icon_item_jpn_static/gPauseGoronMinesTitleJPNTex.ia8.inc.c"
 };
 
+u64 gPausePurpleIceCavernTitleJPNTex[] = {
+#include "assets/textures/icon_item_jpn_static/gPausePurpleIceCavernTitleJPNTex.ia8.inc.c"
+};
+
 u64 gPauseWoodfallTitleJPNTex[] = {
 #include "assets/textures/icon_item_jpn_static/gPauseWoodfallTitleJPNTex.ia8.inc.c"
 };
 
-u64 gPausePurpleIceCavernTitleJPNTex[] = {
-#include "assets/textures/icon_item_jpn_static/gPausePurpleIceCavernTitleJPNTex.ia8.inc.c"
+u64 gPauseSnowheadTitleJPNTex[] = {
+#include "assets/textures/icon_item_jpn_static/gPauseSnowheadTitleJPNTex.ia8.inc.c"
+};
+
+u64 gPauseGreatBayTitleJPNTex[] = {
+#include "assets/textures/icon_item_jpn_static/gPauseGreatBayTitleJPNTex.ia8.inc.c"
+};
+
+u64 gPauseStoneTowerTitleJPNTex[] = {
+#include "assets/textures/icon_item_jpn_static/gPauseStoneTowerTitleJPNTex.ia8.inc.c"
 };
 
 u64 gPauseToEquipJPNTex[TEX_LEN(u64, gPauseToEquipJPNTex_WIDTH, gPauseToEquipJPNTex_HEIGHT, 8)] = {

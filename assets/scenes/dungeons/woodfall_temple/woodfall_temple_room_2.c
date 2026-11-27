@@ -36,10 +36,6 @@ s16 woodfall_temple_room_2ObjectList_000040[] = {
 };
 
 ActorEntry woodfall_temple_room_2ActorEntry_00006C[] = {
-    { ACTOR_EN_ITEM00,    {  275, -1150, 2000 }, {      0,      0,    0 }, 0x001C }, // Respawnable Feather
-    { ACTOR_EN_ITEM00,    {  350, -1125, 1600 }, {      0,      0,    0 }, 0x001C }, // Respawnable Feather
-    { ACTOR_EN_ITEM00,    {  350, -1125, 1500 }, {      0,      0,    0 }, 0x001C }, // Respawnable Feather
-    { ACTOR_OBJ_RAILLIFT, {  350, -1150, 1100 }, {      0,      0, 0x19 }, 0x8008 },
     { ACTOR_EN_ST,        { -120,  -850,  930 }, {      0,      0,    0 }, 0x003F },
     { ACTOR_EN_ST,        {  120,  -850,  930 }, {      0,      0,    0 }, 0x003F },
     { ACTOR_EN_MKK,       {  549, -1485, 2070 }, {      0,      0,    0 }, 0x7800 },
@@ -56,7 +52,7 @@ ActorEntry woodfall_temple_room_2ActorEntry_00006C[] = {
     { ACTOR_EN_MKK,       { -600, -1485, 1755 }, {      0,      0,    0 }, 0x7800 },
     { ACTOR_OBJ_SYOKUDAI, { -120, -1185,  855 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 3F
     { ACTOR_OBJ_SYOKUDAI, {  120, -1185,  855 }, {      0,      0,    0 }, 0x243F }, // Sets switch: 3F
-    { ACTOR_OBJ_TSUBO,    {  120, -1185, 2100 }, {      0,      0,    0 }, 0x0003 }, // Drops Recovery Heart
+    { ACTOR_OBJ_TSUBO,    {  120, -1185, 2100 }, {      0,      0,    0 }, 0x0003 }, // Recovery Heart
     { ACTOR_EN_KUSA,      {  -90, -1485, 1770 }, {      0, 0xAF80,    0 }, 0x0002 },
     { ACTOR_EN_KUSA,      {  -45, -1485, 1680 }, {      0, 0x4180,    0 }, 0x0002 },
     { ACTOR_EN_KUSA,      { -120, -1185,  930 }, {      0,      0,    0 }, 0x2202 },
@@ -64,6 +60,10 @@ ActorEntry woodfall_temple_room_2ActorEntry_00006C[] = {
     { ACTOR_EN_KUSA,      { -105, -1485, 1695 }, {      0, 0x7800,    0 }, 0x0002 },
     { ACTOR_EN_BOX,       {  465, -1155, 1890 }, {    0x2, 0x4000,    0 }, 0x5018 }, // Chest: 18, Deku Nuts
     { ACTOR_OBJ_COMB,     {  -91, -1083, 1611 }, { 0xA200, 0x9580,    0 }, 0xFF02 },
+    { ACTOR_OBJ_ETCETERA, {  360, -1155, 1890 }, {      0, 0xC000,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA, {  330, -1155, 1365 }, {      0,      0,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA, { -210, -1185, 1740 }, {      0, 0x2000,    0 }, 0x007F },
+    { ACTOR_OBJ_ETCETERA, { -120, -1185, 2100 }, {      0,      0,    0 }, 0x007F },
 };
 
 RoomShapeCullable woodfall_temple_room_2RoomShapeCullable_000260 = { 

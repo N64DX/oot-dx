@@ -413,24 +413,42 @@ typedef enum NaviEnemy {
     /* 0x5A */ NAVI_ENEMY_BIG_POE,
     /* 0x5B */ NAVI_ENEMY_TWINROVA,
     /* 0x5C */ NAVI_ENEMY_POE_WASTELAND,
-    /* 0x5D */ NAVI_ENEMY_SCISSORS_BEETLE,
-    /* 0x5E */ NAVI_ENEMY_MINIBLIN,
+    /* 0x5D */ NAVI_ENEMY_MINIBLIN,
+    /* 0x5E */ NAVI_ENEMY_GOOMBA,
     /* 0x5F */ NAVI_ENEMY_ZOL,
-    /* 0x60 */ NAVI_ENEMY_ELECTRIC_KEESE,
-    /* 0x61 */ NAVI_ENEMY_BEAST,
-    /* 0x62 */ NAVI_ENEMY_GIANT_SPIDER,
-    /* 0x63 */ NAVI_ENEMY_RED_WIDOW,
-    /* 0x64 */ NAVI_ENEMY_STALMASTER,
-    /* 0x65 */ NAVI_ENEMY_WHITE_BOE,
-    /* 0x66 */ NAVI_ENEMY_BLACK_BOE,
-    /* 0x67 */ NAVI_ENEMY_GIANT_BEE,
-    /* 0x68 */ NAVI_ENEMY_BAD_BAT,
-    /* 0x69 */ NAVI_ENEMY_DRAGONFLY,
-    /* 0x6A */ NAVI_ENEMY_SNAPPER,
-    /* 0x6B */ NAVI_ENEMY_GARO,
-    /* 0x6C */ NAVI_ENEMY_KING_DEKU,
-    /* 0x6D */ NAVI_ENEMY_THEFATHER,
-    /* 0x6E */ NAVI_ENEMY_IGORS_GHOST,
+    /* 0x60 */ NAVI_ENEMY_BLUE_CHUCHU,
+    /* 0x61 */ NAVI_ENEMY_YELLOW_CHUCHU,
+    /* 0x62 */ NAVI_ENEMY_GREEN_CHUCHU,
+    /* 0x63 */ NAVI_ENEMY_RED_CHUCHU,
+    /* 0x64 */ NAVI_ENEMY_ELECTRIC_KEESE,
+    /* 0x65 */ NAVI_ENEMY_BEAST,
+    /* 0x66 */ NAVI_ENEMY_GIANT_SPIDER,
+    /* 0x67 */ NAVI_ENEMY_RED_WIDOW,
+    /* 0x68 */ NAVI_ENEMY_STALMASTER,
+    /* 0x69 */ NAVI_ENEMY_WHITE_BOE,
+    /* 0x6A */ NAVI_ENEMY_BLACK_BOE,
+    /* 0x6B */ NAVI_ENEMY_GIANT_BEE,
+    /* 0x6C */ NAVI_ENEMY_BAD_BAT,
+    /* 0x6D */ NAVI_ENEMY_REAL_BOMBCHU,
+    /* 0x6E */ NAVI_ENEMY_NEJIRON,
+    /* 0x6F */ NAVI_ENEMY_DRAGONFLY,
+    /* 0x70 */ NAVI_ENEMY_HIPLOOP,
+    /* 0x71 */ NAVI_ENEMY_MASKED_HIPLOOP,
+    /* 0x72 */ NAVI_ENEMY_SNAPPER,
+    /* 0x73 */ NAVI_ENEMY_GEKKO_SNAPPER,
+    /* 0x74 */ NAVI_ENEMY_GEKKO_GIANT_SLIME,
+    /* 0x75 */ NAVI_ENEMY_BIO_DEKU_BABA,
+    /* 0x76 */ NAVI_ENEMY_DEXIHAND,
+    /* 0x77 */ NAVI_ENEMY_SKULLFISH,
+    /* 0x78 */ NAVI_ENEMY_DEATH_ARMOS,
+    /* 0x79 */ NAVI_ENEMY_EYEGORE,
+    /* 0x7A */ NAVI_ENEMY_WIZROBE,
+    /* 0x7B */ NAVI_ENEMY_GARO,
+    /* 0x7C */ NAVI_ENEMY_GARO_MASTER,
+    /* 0x7D */ NAVI_ENEMY_KING_DEKU,
+    /* 0x7E */ NAVI_ENEMY_BLACK_BEAST,
+    /* 0x7F */ NAVI_ENEMY_GOMESS,
+    /* 0x80 */ NAVI_ENEMY_IGORS_GHOST,
     /* 0xFF */ NAVI_ENEMY_NONE = 0xFF
 } NaviEnemy;
 
@@ -488,6 +506,7 @@ typedef enum AttentionRangeType {
     /*  7 */ ATTENTION_RANGE_7, // 140  / 163.33333
     /*  8 */ ATTENTION_RANGE_8, // 240  / 576
     /*  9 */ ATTENTION_RANGE_9, // 280  / 280000
+    /* 10 */ ATTENTION_RANGE_10, // 2500 / 3750
     /* 10 */ ATTENTION_RANGE_MAX
 } AttentionRangeType;
 
@@ -643,11 +662,13 @@ extern LightNode* D_8015BC10;
 
 void ActorShape_Init(ActorShape* shape, f32 yOffset, ActorShadowFunc shadowDraw, f32 shadowScale);
 void ActorShadow_DrawCircle(Actor* actor, struct Lights* lights, struct PlayState* play);
+void ActorShadow_DrawSquare(Actor* actor, struct Lights* lights, struct PlayState* play);
 void ActorShadow_DrawWhiteCircle(Actor* actor, struct Lights* lights, struct PlayState* play);
 void ActorShadow_DrawHorse(Actor* actor, struct Lights* lights, struct PlayState* play);
 void ActorShadow_DrawFeet(Actor* actor, struct Lights* lights, struct PlayState* play);
 void Actor_SetFeetPos(Actor* actor, s32 limbIndex, s32 leftFootIndex, Vec3f* leftFootPos, s32 rightFootIndex,
                       Vec3f* rightFootPos);
+void Actor_RefreshFloor(struct PlayState* play, Actor* actor, f32 y);
 void Actor_ProjectPos(struct PlayState* play, Vec3f* src, Vec3f* xyzDest, f32* cappedInvWDest);
 void Attention_Draw(Attention* attention, struct PlayState* play);
 s32 Flags_GetSwitch(struct PlayState* play, s32 flag);
@@ -773,6 +794,7 @@ Actor* Actor_Delete(ActorContext* actorCtx, Actor* actor, struct PlayState* play
 Actor* Attention_FindActor(struct PlayState* play, ActorContext* actorCtx, Actor** attentionActorP,
                            struct Player* player);
 Actor* Actor_Find(ActorContext* actorCtx, s32 actorId, s32 actorCategory);
+Actor* Actor_FindActor(struct PlayState* play, Actor* actorListStart, u8 actorCategory, s16 actorId);
 void Enemy_StartFinishingBlow(struct PlayState* play, Actor* actor);
 void BodyBreak_Alloc(BodyBreak* bodyBreak, s32 count, struct PlayState* play);
 void BodyBreak_SetInfo(BodyBreak* bodyBreak, s32 limbIndex, s32 minLimbIndex, s32 maxLimbIndex, u32 count, Gfx** dList,
@@ -831,7 +853,9 @@ void func_80035844(Vec3f* arg0, Vec3f* arg1, Vec3s* arg2, s32 arg3);
 Actor* func_800358DC(Actor* actor, Vec3f* spawnPos, Vec3s* spawnRot, f32* arg3, s32 timer, s16* unused,
                      struct PlayState* play, s16 params, Gfx* dList);
 void func_800359B8(Actor* actor, s16 arg1, Vec3s* arg2);
+void Actor_SetYawToHitDirectionCyl(Actor* actor, ColliderCylinder* cyl);
 void func_800BE568(Actor* actor, ColliderJntSph* sph);
+void Actor_SetYawToHitDirectionJntSph(Actor* actor, ColliderJntSph* jntSph, s32 elemIndex);
 s32 Flags_GetEventChkInf(s32 flag);
 void Flags_SetEventChkInf(s32 flag);
 s32 Flags_GetInfTable(s32 flag);

@@ -616,7 +616,7 @@ void EnBuffDeku_SetupDeath(EnBuffDeku* this, PlayState* play) {
         Play_SetCameraAtEye(play, this->subCamId, &cameraAt, &eye);
         this->actor.world.rot.y = this->actor.shape.rot.y = 0;
         player->actor.world.rot.y = player->actor.shape.rot.y = 0x8000;
-        player->actor.world.pos.x = player->actor.world.pos.y = this->actor.world.pos.x = this->actor.world.pos.y = this->actor.world.pos.z = 0;;
+        player->actor.world.pos.x = player->actor.world.pos.y = this->actor.world.pos.x = this->actor.world.pos.y = this->actor.world.pos.z = 0;
         player->actor.world.pos.z = 100;
         Player_SetCsAction(play, &this->actor, PLAYER_CSACTION_5);
         Interface_ChangeHudVisibilityMode(HUD_VISIBILITY_NOTHING_ALT);

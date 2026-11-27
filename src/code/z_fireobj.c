@@ -10,7 +10,7 @@
 #include "sys_math3d.h" 
 #include "sfx.h" 
 
-ColliderCylinderInit sFireObjCollisionInit = {
+static ColliderCylinderInit sFireObjCollisionInit = {
     {
         COL_MATERIAL_NONE,
         AT_NONE,

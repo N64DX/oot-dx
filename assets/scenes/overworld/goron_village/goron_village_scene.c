@@ -115,7 +115,7 @@ Path goron_village_scenePathway_00034C[] = {
 BgCamInfo goron_village_sceneCollisionHeader_004DC4CamDataList[] = {
     { CAM_SET_NORMAL0, 0, NULL },
     { CAM_SET_NONE,    0, NULL },
-    { CAM_SET_NORMAL1, 0, NULL },
+    { CAM_SET_ROOM0,   0, NULL },
 };
 
 SurfaceType goron_village_sceneCollisionHeader_004DC4SurfaceType[] = {

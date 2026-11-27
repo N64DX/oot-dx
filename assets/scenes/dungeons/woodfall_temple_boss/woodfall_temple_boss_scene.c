@@ -49,7 +49,7 @@ EnvLightSettings woodfall_temple_boss_sceneLightSettings0x000094[] = {
 };
 
 BgCamInfo woodfall_temple_boss_sceneCollisionHeader_000778CamDataList[] = {
-    { CAM_SET_BOSS_PHANTOM_GANON, 0, NULL },
+    { CAM_SET_BOSS_ODOLWA, 0, NULL },
 };
 
 SurfaceType woodfall_temple_boss_sceneCollisionHeader_000778SurfaceType[] = {

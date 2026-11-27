@@ -477,7 +477,6 @@ void BgDblueWaterfall_80B84F20(BgDblueWaterfall* this, PlayState* play) {
             if (this->unk_19E < 250)
                 this->unk_19E += 5;
             else this->unk_19E = 255;
- 
         }
 
         if (this->unk_19F >= 6)
@@ -485,9 +484,7 @@ void BgDblueWaterfall_80B84F20(BgDblueWaterfall* this, PlayState* play) {
         else this->unk_19F = 0;
 
         Actor_PlaySfx(&this->actor, NA_SE_EV_ICE_MELT);
-    } else {
-        BgDblueWaterfall_80B8484C(this, play);
-    }
+    } else BgDblueWaterfall_80B8484C(this, play);
 }
 
 void BgDblueWaterfall_Update(Actor* thisx, PlayState* play) {
@@ -504,9 +501,7 @@ void BgDblueWaterfall_Draw(Actor* thisx, PlayState* play) {
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
 
     if (this->unk_19E > 0) {
-        s32 sp38 = this->unk_19E * 0.49803922f;
-
-        gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x8A, 255, 255, 255, sp38);
+        gDPSetPrimColor(POLY_XLU_DISP++, 0, 0x8A, 255, 255, 255, this->unk_19E * 0.49803922f);
         gSPDisplayList(POLY_XLU_DISP++, gGreatBayTempleObjectWaterfallDL);
         if (this->unk_19E == 255)
             Actor_PlaySfx(&this->actor, NA_SE_EV_WATER_WALL);

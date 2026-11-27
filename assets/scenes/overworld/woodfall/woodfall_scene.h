@@ -7,6 +7,7 @@
 #include "cutscene.h"
 #include "ultra64.h"
 
+extern SceneCmd* woodfall_sceneAlternateHeaders[];
 extern ActorEntry woodfall_sceneStartPositionList0x000098[];
 extern RomFile woodfall_sceneRoomList0x0000E8[];
 extern Spawn woodfall_sceneEntranceList0x0000F0[];
@@ -16,6 +17,11 @@ extern CutsceneData gWoodfallIntroCs[];
 extern CutsceneData gSummonWoodfallTempleCs[];
 extern Path woodfall_scenePathway[];
 extern CollisionHeader woodfall_sceneCollisionHeader_003CEC;
+
+extern SceneCmd woodfall_sceneSet_woodfallTempleCleared[];
+extern ActorEntry woodfall_sceneStartPositionList_woodfallTempleCleared[];
+extern Spawn woodfall_sceneEntranceList_woodfallTempleCleared[];
+extern CutsceneData gWoodfallTempleClearedCs[];
 
 extern u64 woodfall_sceneTex_004990[];
 extern u64 woodfall_sceneTex_005190[];

@@ -41,7 +41,7 @@ void KaleidoScope_DrawDungeonMap(PlayState* play, GraphicsContext* gfxCtx) {
     static void* dungeonTitleTexs[] = {
         gPauseDekuTitleENGTex, gPauseDodongoTitleENGTex,   gPauseJabuTitleENGTex,   gPauseForestTitleENGTex,
         gPauseFireTitleENGTex, gPauseWaterTitleENGTex,     gPauseSpiritTitleENGTex, gPauseShadowTitleENGTex,
-        gPauseBotWTitleENGTex, gPauseIceCavernTitleENGTex, NULL,                    NULL,
+        gPauseBotWTitleENGTex, gPauseIceCavernTitleENGTex, gPauseStoneTowerTitleENGTex,      NULL,
         NULL,                  NULL,                       gPausePurpleIceCavernTitleENGTex, NULL,
         NULL,                  gPauseAncientHollowTitleENGTex, gPauseWoodfallTitleENGTex, gPauseGoronMinesTitleENGTex,
     };

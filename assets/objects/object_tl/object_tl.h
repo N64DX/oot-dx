@@ -29,6 +29,13 @@ typedef enum SnapperLimb {
     /* 0x0D */ SNAPPER_LIMB_MAX
 } SnapperLimb;
 
+extern u64 gSnapperEyeOpenTex[];
+extern u64 gSnapperEyeHalfTex[];
+extern u64 gSnapperEyeClosedTex[];
+
+extern FlexSkeletonHeader gSpikedSnapperSkel;
+extern FlexSkeletonHeader gSnapperSkel;
+
 extern AnimationHeader gSnapperRearUpAnim;
 extern AnimationHeader gSnapperDamageAnim;
 extern AnimationHeader gSnapperDeathAnim;
@@ -42,12 +49,5 @@ extern AnimationHeader gSnapperWiggleLegsAnim;
 extern AnimationHeader gSnapperFailToFlipUprightAnim;
 extern AnimationHeader gSnapperEmergeFromShellAnim;
 extern AnimationHeader gSnapperBouncedUprightAnim;
-
-extern u64 gSnapperEyeOpenTex[];
-extern u64 gSnapperEyeHalfTex[];
-extern u64 gSnapperEyeClosedTex[];
-
-extern FlexSkeletonHeader gSpikedSnapperSkel;
-extern FlexSkeletonHeader gSnapperSkel;
 
 #endif

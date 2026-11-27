@@ -32,10 +32,6 @@ Vtx object_water_effectVtx_004310[] = {
 #include "assets/objects/object_water_effect/object_water_effectVtx_004310.vtx.inc"
 };
 
-Vtx object_water_effectVtx_06A980[] = {
-#include "assets/objects/object_water_effect/object_water_effectVtx_06A980.vtx.inc"
-};
-
 Vtx object_water_effectVtx_07D550[] = {
 #include "assets/objects/object_water_effect/object_water_effectVtx_07D550.vtx.inc"
 };
@@ -66,10 +62,6 @@ u64 object_water_effect_Tex_003260[] = {
 
 u64 object_water_effect_Tex_003A60[] = {
 #include "assets/objects/object_water_effect/tex_003A60.i4.inc.c"
-};
-
-u64 object_water_effect_Tex_06ABF8[] = {
-#include "assets/objects/object_water_effect/tex_06ABF8.rgba16.inc.c"
 };
 
 Gfx object_water_effect_DL_000180[] = {
@@ -231,27 +223,5 @@ Gfx object_water_effect_DL_0043E8[] = {
     gsSPDisplayList(0x08000000),
     gsSPVertex(object_water_effectVtx_07D550, 4, 0),
     gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
-    gsSPEndDisplayList(),
-};
-
-Gfx object_water_effect_DL_06AB30[] = {
-    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-    gsDPPipeSync(),
-    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
-    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, COMBINED, 0, 0, 0, 0, COMBINED),
-    gsDPSetTextureLUT(G_TT_NONE),
-    gsDPLoadTextureBlock(object_water_effect_Tex_06ABF8, G_IM_FMT_RGBA, G_IM_SIZ_16b, 36, 36, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 6, 6, G_TX_NOLOD, G_TX_NOLOD),
-    gsSPLoadGeometryMode(G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH),
-    gsSPVertex(object_water_effectVtx_06A980, 12, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(6, 7, 8, 0, 9, 10, 11, 0),
-    gsSP2Triangles(10, 0, 2, 0, 10, 2, 11, 0),
-    gsSPVertex(&object_water_effectVtx_06A980[12], 7, 0),
-    gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-    gsSP2Triangles(5, 1, 0, 0, 6, 4, 3, 0),
-    gsSPVertex(&object_water_effectVtx_06A980[19], 4, 0),
-    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
-    gsSPVertex(&object_water_effectVtx_06A980[23], 4, 0),
-    gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
     gsSPEndDisplayList(),
 };

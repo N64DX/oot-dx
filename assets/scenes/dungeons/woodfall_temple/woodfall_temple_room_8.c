@@ -5,6 +5,7 @@
 #include "array_count.h"
 #include "gfx.h"
 #include "object.h"
+#include "item.h"
 
 SceneCmd woodfall_temple_room_8[] = {
     SCENE_CMD_ECHO_SETTINGS(10),
@@ -12,8 +13,8 @@ SceneCmd woodfall_temple_room_8[] = {
     SCENE_CMD_SKYBOX_DISABLES(true /* no skybox */, true /* no sun/moon */),
     SCENE_CMD_TIME_SETTINGS(/* don't set time */ 0xFF, 0xFF, 0 /* time doesn't move */),
     SCENE_CMD_ROOM_SHAPE(&woodfall_temple_room_8RoomShapeCullable_000120),
-    SCENE_CMD_OBJECT_LIST(16, woodfall_temple_room_8ObjectList_000040),
-    SCENE_CMD_ACTOR_LIST(7, woodfall_temple_room_8ActorEntry_00006C),
+    SCENE_CMD_OBJECT_LIST(17, woodfall_temple_room_8ObjectList_000040),
+    SCENE_CMD_ACTOR_LIST(6, woodfall_temple_room_8ActorEntry_00006C),
     SCENE_CMD_END(),
 };
 
@@ -33,17 +34,17 @@ s16 woodfall_temple_room_8ObjectList_000040[] = {
     OBJECT_DEKUBABA,
     OBJECT_KIBAKO2,
     OBJECT_FR,
-    OBJECT_HAMMERGEIST,
+    OBJECT_BIGSLIME,
+    OBJECT_TL,
 };
 
 ActorEntry woodfall_temple_room_8ActorEntry_00006C[] = {
-    { ACTOR_EN_HAMMERGEIST, { 1230, -1192, -1230 }, {    0,      0, 0 }, 0x0000 },
-    { ACTOR_EN_HAMMERGEIST, { 1030, -1192, -1430 }, {    0,      0, 0 }, 0x0000 },
-    { ACTOR_OBJ_TSUBO,      { 1095,  1185, -1770 }, {    0,      0, 0 }, 0x4C01 }, // Sets collect: 26, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,      { 1140, -1185, -1770 }, {    0,      0, 0 }, 0x4E01 }, // Sets collect: 27, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,      { 1365, -1185, -1770 }, {    0,      0, 0 }, 0x5001 }, // Sets collect: 28, drops Blue Rupee
-    { ACTOR_OBJ_TSUBO,      { 1320, -1185, -1770 }, {    0,      0, 0 }, 0x5201 }, // Sets collect: 29, drops Blue Rupee
-    { ACTOR_EN_BOX,         { 1230, -1185, -1920 }, { 0x3F, 0x8000, 0 }, 0x201E }, // Chest: 1E, Boss Key
+    { ACTOR_EN_PAMETFROG,   { 1230, -1192, -1230 }, {            0,      0, 0 }, 0x0001 },
+    { ACTOR_OBJ_TSUBO,      { 1095,  1185, -1770 }, {            0,      0, 0 }, 0x4C01 }, // Collect: 26, Blue Rupee
+    { ACTOR_OBJ_TSUBO,      { 1140, -1185, -1770 }, {            0,      0, 0 }, 0x4E01 }, // Collect: 27, Blue Rupee
+    { ACTOR_OBJ_TSUBO,      { 1365, -1185, -1770 }, {            0,      0, 0 }, 0x5001 }, // Collect: 28, Blue Rupee
+    { ACTOR_OBJ_TSUBO,      { 1320, -1185, -1770 }, {            0,      0, 0 }, 0x5201 }, // Collect: 29, Blue Rupee
+    { ACTOR_EN_BOX,         { 1230, -1185, -1920 }, { GID_BOSS_KEY, 0x8000, 0 }, 0x201E }, // Chest: 1E, Boss Key
 };
 
 RoomShapeCullable woodfall_temple_room_8RoomShapeCullable_000120 = { 

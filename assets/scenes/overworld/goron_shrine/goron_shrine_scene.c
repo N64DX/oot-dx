@@ -234,9 +234,9 @@ CutsceneData gGoronShrineIntroCs[] = {
 };
 
 BgCamInfo goron_shrine_sceneCollisionHeader_005B84CamDataList[] = {
-    { CAM_SET_NORMAL0, 0, NULL },
-    { CAM_SET_NONE,    0, NULL },
-    { CAM_SET_NORMAL1, 0, NULL },
+    { CAM_SET_ROOM0, 0, NULL },
+    { CAM_SET_NONE,  0, NULL },
+    { CAM_SET_ROOM1, 0, NULL },
 };
 
 SurfaceType goron_shrine_sceneCollisionHeader_005B84SurfaceType[] = {

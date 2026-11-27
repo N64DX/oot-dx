@@ -4,6 +4,8 @@
 #include "animation.h"
 #include "ultra64.h"
 
+extern Gfx gDekuScrubFlowerFragmentDL[];
+
 extern AnimationHeader gDekuNutsSkelSpinAnim;
 
 #endif

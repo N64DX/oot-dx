@@ -427,15 +427,8 @@ void EnKame_Attack(EnKame* this, PlayState* play) {
     this->actor.shape.rot.y += this->angularVelocityY;
     EnKame_ProcessAttackEffects(this, play);
 
-    if (this->targetAngularVelocityY == -1) {
-        s32 absYawToTarget;
-        s16 yawToTarget = Actor_WorldYawTowardPoint(&this->actor, &this->targetPos) - this->actor.world.rot.y;
-
-        absYawToTarget = ABS_ALT(yawToTarget);
-
-        // If the yaw toward the targetPos is too large, that indicates the Snapper probably moved
-        // beyond its target (in other words, the target is now "behind" the Snapper).
-        if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || absYawToTarget > 0x3000 || Actor_WorldDistXZToPoint(&this->actor, &this->targetPos) < 50.0f) {
+    if (this->targetAngularVelocityY == -1) { // If the yaw toward the targetPos is too large, that indicates the Snapper probably moved beyond its target (in other words, the target is now "behind" the Snapper).
+        if ((this->actor.bgCheckFlags & BGCHECKFLAG_WALL) || ABS_ALT(BINANG_SUB(Actor_WorldYawTowardPoint(&this->actor, &this->targetPos), this->actor.world.rot.y)) > 0x3000 || Actor_WorldDistXZToPoint(&this->actor, &this->targetPos) < 50.0f) {
             if (this->targetPos.y < this->actor.home.pos.y)
                 this->targetAngularVelocityY = 0x300;
             else this->targetAngularVelocityY = 0;
@@ -693,7 +686,7 @@ void EnKame_BurstIntoFlames(EnKame* this, PlayState* play) {
     } else {
         this->actor.scale.x -= 0.001f;
         if (this->actor.scale.x <= 0.0f) {
-            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x60);
+            Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_10, false));
             Actor_Kill(&this->actor);
         } else {
             this->actor.scale.y = this->actor.scale.x;

@@ -40,5 +40,11 @@ void Sram_InitSram(struct GameState* gameState, SramContext* sramCtx);
 void Sram_Alloc(struct GameState* gameState, SramContext* sramCtx);
 void Sram_Init(struct GameState* gameState, SramContext* sramCtx);
 u8 HasDuplicateDpadItems(void);
+void Sram_MempakWriteSave(u8 fileNum);
+void Mempak_EraseSave(u8 fileNum);
+void Sram_TimerChallengeEraseSave(u8 fileNum);
+u8 Mempak_IsPlugged(void);
+s8 Mempak_GetFirstChannel(void);
+s8 Mempak_HasSaveData(u8 fileNum);
 
 #endif

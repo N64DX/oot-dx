@@ -18,8 +18,8 @@
 #include "play_state.h"
 #include "player.h"
 #include "audio.h"
-#include "effect.h"
 #include "z_en_item00.h"
+#include "effect.h"
 #include "save.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_DRAW_CULLING_DISABLED)
@@ -450,7 +450,7 @@ void EnBeast_Death(EnBeast* this, PlayState* play) {
     }
 
     if (this->deathTimer <= 0) {
-        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, 0x10);
+        Item_DropCollectibleRandom(play, &this->actor, &this->actor.world.pos, COLLECTIBLE_DROP_RANDOM_PARAMS(COLLECTIBLE_DROP_TABLE_10, false));
         if (this->switchFlag <= 0x3F)
             Flags_SetSwitch(play, this->switchFlag);
         Actor_Kill(&this->actor);

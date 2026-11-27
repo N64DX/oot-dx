@@ -307,7 +307,7 @@ static ColliderJntSphInit sJntSphInit = {
 };
 
 static InitChainEntry sInitChain[] = {
-    ICHAIN_S8(naviEnemyId, NAVI_ENEMY_THEFATHER, ICHAIN_CONTINUE),
+    ICHAIN_S8(naviEnemyId, NAVI_ENEMY_BLACK_BEAST, ICHAIN_CONTINUE),
     ICHAIN_S8(attentionRangeType, ATTENTION_RANGE_2, ICHAIN_CONTINUE),
     ICHAIN_F32_DIV1000(gravity, -3000, ICHAIN_CONTINUE),
     ICHAIN_VEC3F_DIV1000(scale, 45, ICHAIN_STOP)
@@ -666,7 +666,7 @@ void EnThefather_CheckDamage(EnThefather* this, PlayState* play) {
 
                 switch (dmgFlags) {
                     case DMG_SLINGSHOT:
-                        damage = Actor_AdjustDealtDamage(1, this->actor.colChkInfo.defense, dmgFlags, this->actor.colChkInfo.itemAction);;
+                        damage = Actor_AdjustDealtDamage(1, this->actor.colChkInfo.defense, dmgFlags, this->actor.colChkInfo.itemAction);
                         break;
                     case DMG_ARROW_NORMAL:
                     case DMG_ARROW_FIRE:

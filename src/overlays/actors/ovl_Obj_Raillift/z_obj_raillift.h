@@ -4,6 +4,8 @@
 #include "ultra64.h"
 #include "actor.h"
 
+#include "assets/objects/object_raillift/object_raillift.h"
+
 struct ObjRaillift;
 
 typedef void (*ObjRailliftActionFunc)(struct ObjRaillift*, struct PlayState*);

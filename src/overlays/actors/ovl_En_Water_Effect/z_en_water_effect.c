@@ -19,9 +19,10 @@
 #include "array_count.h"
 #include "segmented_address.h"
 
-//#include "overlays/actors/ovl_Bg_Ikana_Rotaryroom/z_bg_ikana_rotaryroom.h"
+#include "overlays/actors/ovl_Bg_Ikana_Rotaryroom/z_bg_ikana_rotaryroom.h"
 #include "assets/objects/object_water_effect/object_water_effect.h"
 #include "assets/objects/gameplay_keep/gameplay_keep.h"
+#include "assets/objects/gameplay_keep/gameplay_keep_extra.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED | ACTOR_FLAG_DRAW_CULLING_DISABLED)
 
@@ -342,21 +343,21 @@ void EnWaterEffect_80A59C04(Actor* thisx, PlayState* play) {
     f32 temp_f0_2;
     Player* player = GET_PLAYER(play);
     Vec3f sp74, sp90;
-    //Actor* rotaryRoom = play->actorCtx.actorLists[ACTORCAT_BG].first;
+    Actor* rotaryRoom = play->actorCtx.actorLists[ACTORCAT_BG].head;
     CollisionPoly* sp88;
     EnWaterEffectStruct* ptr = &this->unk_144[0];
     u8 i, j, phi_s5;
 
-    /*while (rotaryRoom != NULL) {
+    while (rotaryRoom != NULL) {
         if (rotaryRoom->id == ACTOR_BG_IKANA_ROTARYROOM)
             break;
         rotaryRoom = rotaryRoom->next;
-    }*/
+    }
 
     if (this->unk_DC6 != 0)
         this->unk_DC6--;
 
-    if (/*rotaryRoom != NULL && Flags_GetSwitch(play, BGIKANAROTARYROOM_GET_SWITCH_FLAG_1(rotaryRoom))*/true)
+    if (rotaryRoom != NULL && Flags_GetSwitch(play, BGIKANAROTARYROOM_GET_SWITCH_FLAG_1(rotaryRoom)))
         this->unk_DC6 = Rand_ZeroFloat(150.0f) + 100.0f;
     else if (!Play_InCsMode(play)) {
         this->unk_DC4++;
@@ -488,7 +489,7 @@ void EnWaterEffect_80A5A184(Actor* thisx, PlayState* play) {
                 Matrix_Scale(ptr->unk_2C.z, ptr->unk_2C.z, ptr->unk_2C.z, MTXMODE_APPLY);
 
                 MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, __FILE__, __LINE__);
-                gSPDisplayList(POLY_OPA_DISP++, object_water_effect_DL_06AB30);
+                gSPDisplayList(POLY_OPA_DISP++, gFloorImpactDL);
             }
         }
     }

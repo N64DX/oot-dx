@@ -134,6 +134,10 @@ void ActorShadow_DrawCircle(Actor* actor, Lights* lights, PlayState* play) {
     ActorShadow_Draw(actor, lights, play, gCircleShadowDL, NULL);
 }
 
+void ActorShadow_DrawSquare(Actor* actor, Lights* lights, PlayState* play) {
+    ActorShadow_Draw(actor, lights, play, gSquareShadowDL, NULL);
+}
+
 void ActorShadow_DrawWhiteCircle(Actor* actor, Lights* lights, PlayState* play) {
     static Color_RGBA8 white = { 255, 255, 255, 255 };
 
@@ -287,6 +291,17 @@ void Actor_SetFeetPos(Actor* actor, s32 limbIndex, s32 leftFootIndex, Vec3f* lef
     } else if (limbIndex == rightFootIndex) {
         Matrix_MultVec3f(rightFootPos, &actor->shape.feetPos[FOOT_RIGHT]);
     }
+}
+
+void Actor_RefreshFloor(PlayState* play, Actor* actor, f32 y) {
+    s32 floorBgId;
+    f32 yPos = actor->world.pos.y;
+
+    actor->world.pos.y += y;
+    actor->floorHeight =
+        BgCheck_EntityRaycastDown5(play, &play->colCtx, &actor->floorPoly, &floorBgId, actor, &actor->world.pos);
+    actor->floorBgId = floorBgId;
+    actor->world.pos.y = yPos;
 }
 
 void Actor_ProjectPos(PlayState* play, Vec3f* src, Vec3f* xyzDest, f32* cappedInvWDest) {
@@ -1779,6 +1794,7 @@ AttentionRangeParams sAttentionRanges[ATTENTION_RANGE_MAX] = {
     ATTENTION_RANGES(140, 163.33333), // ATTENTION_RANGE_7
     ATTENTION_RANGES(240, 576),       // ATTENTION_RANGE_8
     ATTENTION_RANGES(280, 280000),    // ATTENTION_RANGE_9
+    ATTENTION_RANGES(2500, 3750),     // ATTENTION_RANGE_10
 };
 
 /**
@@ -3355,6 +3371,8 @@ void Actor_FreeOverlay(ActorOverlay* actorOverlay) {
     PRINTF_RST();
 }
 
+static Actor* sSpawnParent = NULL;
+
 Actor* Actor_Spawn(ActorContext* actorCtx, PlayState* play, s16 actorId, f32 posX, f32 posY, f32 posZ, s16 rotX,
                    s16 rotY, s16 rotZ, s16 params) {
     s32 pad;
@@ -3498,6 +3516,11 @@ Actor* Actor_Spawn(ActorContext* actorCtx, PlayState* play, s16 actorId, f32 pos
     Actor_AddToCategory(actorCtx, actor, profile->category);
 
     temp = gSegments[6];
+    if (sSpawnParent != NULL) {
+        actor->parent = sSpawnParent;
+        sSpawnParent->child = actor;
+        sSpawnParent = NULL;
+    }
     Actor_Init(actor, play);
     gSegments[6] = temp;
 
@@ -3506,7 +3529,11 @@ Actor* Actor_Spawn(ActorContext* actorCtx, PlayState* play, s16 actorId, f32 pos
 
 Actor* Actor_SpawnAsChild(ActorContext* actorCtx, Actor* parent, PlayState* play, s16 actorId, f32 posX, f32 posY,
                           f32 posZ, s16 rotX, s16 rotY, s16 rotZ, s16 params) {
-    Actor* spawnedActor = Actor_Spawn(actorCtx, play, actorId, posX, posY, posZ, rotX, rotY, rotZ, params);
+    Actor* spawnedActor;
+
+    sSpawnParent = parent;
+    spawnedActor = Actor_Spawn(actorCtx, play, actorId, posX, posY, posZ, rotX, rotY, rotZ, params);
+    sSpawnParent = NULL;
 
     if (spawnedActor == NULL) {
         return NULL;
@@ -3763,6 +3790,16 @@ Actor* Actor_Find(ActorContext* actorCtx, s32 actorId, s32 actorCategory) {
     }
 
     return NULL;
+}
+
+Actor* Actor_FindActor(PlayState* play, Actor* actorListStart, u8 actorCategory, s16 actorId) {
+    Actor* actor = actorListStart;
+
+    if (actor == NULL)
+        actor = play->actorCtx.actorLists[actorCategory].head;
+    while ((actor != NULL) && (actorId != actor->id))
+        actor = actor->next;
+    return actor;
 }
 
 /**
@@ -5052,9 +5089,9 @@ f32 Actor_SetDefensePerScene(u16 sceneId, f32 baseDefense) {
         case SCENE_ROYAL_VAULT:
         case SCENE_GLOOMY_GRAVEYARD:
         case SCENE_STONE_TOWER:
-        case SCENE_STONE_TOWER_INVERTED:
+        case SCENE_STONE_TOWER_INV:
         case SCENE_STONE_TOWER_TEMPLE:
-        case SCENE_STONE_TOWER_TEMPLE_INVERTED:
+        case SCENE_STONE_TOWER_TEMPLE_INV:
         case SCENE_INSIDE_GANONS_CASTLE:
         case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
         case SCENE_GANONS_TOWER:
@@ -5219,10 +5256,22 @@ void func_800359B8(Actor* actor, s16 arg1, Vec3s* arg2) {
     }
 }
 
+void Actor_SetYawToHitDirectionCyl(Actor* actor, ColliderCylinder* cyl) {
+    if (cyl->elem.acHitElem->atDmgInfo.dmgFlags & (DMG_ARROW_NORMAL | DMG_ARROW_FIRE | DMG_ARROW_ICE | DMG_ARROW_LIGHT)) 
+        actor->world.rot.y = cyl->base.ac->shape.rot.y;
+    else actor->world.rot.y = Actor_WorldYawTowardActor(cyl->base.ac, actor);
+}
+
 void func_800BE568(Actor* actor, ColliderJntSph* sph) {
     if (sph->elements[0].base.acHitElem->atDmgInfo.dmgFlags & (DMG_ARROW_NORMAL | DMG_ARROW_FIRE | DMG_ARROW_ICE | DMG_ARROW_LIGHT))
         actor->world.rot.y = sph->base.ac->shape.rot.y;
     else actor->world.rot.y = Actor_WorldYawTowardActor(sph->base.ac, actor);
+}
+
+void Actor_SetYawToHitDirectionJntSph(Actor* actor, ColliderJntSph* jntSph, s32 elemIndex) {
+    if (jntSph->elements[elemIndex].base.acHitElem->atDmgInfo.dmgFlags & (DMG_ARROW_NORMAL | DMG_ARROW_FIRE | DMG_ARROW_ICE | DMG_ARROW_LIGHT))
+        actor->world.rot.y = jntSph->base.ac->shape.rot.y;
+    else actor->world.rot.y = Actor_WorldYawTowardActor(jntSph->base.ac, actor);
 }
 
 void func_80035B18(PlayState* play, Actor* actor, u16 textId) {

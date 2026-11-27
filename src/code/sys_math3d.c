@@ -126,7 +126,7 @@ s32 Math3D_LineVsLineClosestTwoPoints(Vec3f* lineAPointA, Vec3f* lineAPointB, Ve
  * Determines the closest point on the line `line` to `pos`, by forming a line perpendicular from
  * `point` to `line` closest point is placed in `closestPoint`
  */
-void Math3D_LineClosestToPoint(InfiniteLine* line, Vec3f* pos, Vec3f* closestPoint) {
+f32 Math3D_LineClosestToPoint(InfiniteLine* line, Vec3f* pos, Vec3f* closestPoint) {
     f32 dirVectorLengthSq;
     f32 t;
 
@@ -147,6 +147,8 @@ void Math3D_LineClosestToPoint(InfiniteLine* line, Vec3f* pos, Vec3f* closestPoi
     closestPoint->x = (line->dir.x * t) + line->point.x;
     closestPoint->y = (line->dir.y * t) + line->point.y;
     closestPoint->z = (line->dir.z * t) + line->point.z;
+    
+    return t;
 }
 
 void Math3D_FindPointOnPlaneIntersect(f32 planeAAxis1Norm, f32 planeAAxis2Norm, f32 planeBAxis1Norm,

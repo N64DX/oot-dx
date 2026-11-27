@@ -14,18 +14,23 @@ typedef struct FileSelectOptionsEntry {
     /* 0x00 */ u8 number;
     /* 0x01 */ u8 index;
     /* 0x02 */ u8 shift;
+    /* 0x03 */ u8 permanentFlag;
     /* 0x04 */ char* name;
-    /* 0x08 */ void  (*setFunc) (struct FileSelectState*, u8, u8);
+    /* 0x08 */ void  (*setFunc) (struct FileSelectState*, u8, u8, u8);
     /* 0x0C */ char* (*getFunc) (struct FileSelectState*, u8, u8);
 } FileSelectOptionsEntry; // size = 0x10
 
 #define SHOW_OPTION_ALL_QUESTS      0x00
 #define SHOW_OPTION_ONLY_CQ         0x01
 #define SHOW_OPTION_NO_CQ           0x02
+#define SHOW_OPTION_ONLY_TIMER      0x03
 
 #define SHOW_OPTION_ALL_BUILDS      0x00
 #define SHOW_OPTION_NO_IQUE         0x10
 #define SHOW_OPTION_ASPECT_RATIO    0x20
+
+#define PERMANENT_FLAG              0x00
+#define NO_OPTION_FLAG              0xFF
 
 #define GET_OPTION_QUESTS(i)    (sFileOptionsEntries[i].number & 0xF)
 #define GET_OPTION_BUILDS(i)    (sFileOptionsEntries[i].number & 0xF0)
@@ -59,6 +64,9 @@ typedef struct FileSelectState {
     /* 0x1CA2E */ s8 defense[FILE_SLOTS_SIZE];
     /* 0x1CA32 */ u16 health[FILE_SLOTS_SIZE];
     /* 0x1CA32 */ u32 fileOptions[FILE_SLOTS_SIZE][sizeof(gSaveContext.options)];
+    /* 0x1CA32 */ u16 equipment[FILE_SLOTS_SIZE];
+    /* 0x1CA32 */ u8 items[FILE_SLOTS_SIZE][24];
+    /* 0x1CA32 */ u32 upgradeItems[FILE_SLOTS_SIZE];
     /* 0x1CA38 */ s16 buttonIndex;
     /* 0x1CA3A */ s16 confirmButtonIndex; // 0: yes, 1: quit
     /* 0x1CA3C */ s16 menuMode;
@@ -132,6 +140,7 @@ void FileSelect_ResetDisplay(FileSelectState* thisx, SramContext* sramCtx);
 void FileSelectOptions_Reset(FileSelectState* thisx);
 void FileSelectOptions_Init(FileSelectState* thisx);
 void FileSelectOptions_Draw(FileSelectState* thisx);
+void FileSelectOptions_DrawTimerChallengeWarning(FileSelectState* thisx);
 void FileSelectOptions_UpdateMenu(FileSelectState* thisx);
 
 #endif

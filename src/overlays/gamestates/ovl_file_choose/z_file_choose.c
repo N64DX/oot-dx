@@ -105,7 +105,7 @@ static Gfx sScreenFillSetupDL[] = {
     gsSPEndDisplayList(),
 };
 
-static s16 sFileInfoBoxPartWidths[] = { 36, 36, 36, 36, 24 };
+static s16 sFileInfoBoxPartWidths[] = { 36, 36, 36, 36, 24, 28, 28 };
 
 static s16 sWindowContentColors[2][3] = {
     { 100, 150, 255 }, // blue
@@ -920,10 +920,10 @@ void FileSelect_SetWindowVtx(GameState* thisx) {
 static s16 D_80812818[] = { 0x001A, 0x000A, 0x000A, 0x000A };
 static s16 D_80812820[] = { 0x0020, 0x000C, 0x000C, 0x000C };
 static s16 D_80812828[] = { 0x0010, 0x000C, 0x000C, 0x000C };
-static s16 D_80812830[] = { 0x007C, 0x0090, 0x00A4, 0x00B8, 0x00CC, 0x00E0, 0x04E4, 0x04E8, 0x04EC };
-static s16 D_8081283C[] = { 0x007C, 0x0090, 0x00A4, 0x00B8, 0x00CC, 0x00E0, 0x04E8 };
-static s16 D_80812844[] = { 0x04E4, 0x04E8 };
-static s16 D_80812848[] = { 0x04E4, 0x04E8, 0x04EC };
+static s16 D_80812830[] = { 0x007C, 0x0090, 0x00A4, 0x00B8, 0x00CC, 0x00E0, 0x05D4, 0x05D8, 0x05DC };
+static s16 D_8081283C[] = { 0x007C, 0x0090, 0x00A4, 0x00B8, 0x00CC, 0x00E0, 0x05D8 };
+static s16 D_80812844[] = { 0x05D4, 0x05D8 };
+static s16 D_80812848[] = { 0x05D4, 0x05D8, 0x05DC };
 
 #define FS_WINDOW_CONTENT_LEFT  (-0x1A)
 #define FS_WINDOW_CONTENT_RIGHT   0xD6
@@ -941,15 +941,16 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
     s16 phi_a1;
     s16 phi_ra;
     s16 temp_t1;
+    s16 heartRowStep;
     s16 warningX;
 #if OOT_PAL_N64
     u8 fileNameChar;
 #endif
     u8 isInFileConfirm = this->menuMode == FS_MENU_MODE_SELECT && (this->selectMode == SM_FADE_IN_FILE_INFO || this->selectMode == SM_CONFIRM_FILE || this->selectMode == SM_FADE_OUT_FILE_INFO || this->selectMode == SM_FADE_OUT);
 
-    this->windowContentVtx = GRAPH_ALLOC(this->state.gfxCtx, 0x4F8 * sizeof(Vtx));
+    this->windowContentVtx = GRAPH_ALLOC(this->state.gfxCtx, 0x618 * sizeof(Vtx));
 
-    for (phi_t2 = 0; phi_t2 < 0x4F8; phi_t2 += 4) {
+    for (phi_t2 = 0; phi_t2 < 0x618; phi_t2 += 4) {
         this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = 0x12C;
         this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
             this->windowContentVtx[phi_t2].v.ob[0] + 0x10;
@@ -1128,10 +1129,17 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
 
             this->windowContentVtx[phi_t2 - 15].v.tc[0] = this->windowContentVtx[phi_t2 - 13].v.tc[0] = 0x400;
 
+            heartRowStep = 8;
+            if ((((this->questMode[phi_t5] >= CHILD_QUEST && this->questMode[phi_t5] <= CHILD_URA_QUEST) ||
+                  (this->questMode[phi_t5] == DUNGEON_CHILD_RUSH)) &&
+                 (this->healthCapacities[phi_t5] > 0x140))) {
+                heartRowStep = 4;
+            }
+
             phi_t0 = this->windowPosX + 63;
             temp_t1 += 4;
 
-            for (phi_a1 = 0; phi_a1 < 20; phi_a1++, phi_t2 += 4, phi_t0 += 9) {
+            for (phi_a1 = 0; phi_a1 < 30; phi_a1++, phi_t2 += 4, phi_t0 += 9) {
                 this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
                 this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
                     this->windowContentVtx[phi_t2].v.ob[0] + 0xA;
@@ -1139,9 +1147,9 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
                 this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
                     this->windowContentVtx[phi_t2].v.ob[1] - 0xA;
 
-                if (phi_a1 == 9) {
+                if (phi_a1 == 9 || (phi_a1 == 19 && heartRowStep == 4)) {
                     phi_t0 = this->windowPosX + 54;
-                    temp_t1 -= 8;
+                    temp_t1 -= heartRowStep;
                 }
             }
 
@@ -1157,7 +1165,7 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
                     this->windowContentVtx[phi_t2].v.ob[1] - 0x10;
             }
         } else {
-            phi_t2 += 0xA8;
+            phi_t2 += 0xD0;
         }
     }
 
@@ -1260,12 +1268,30 @@ void FileSelect_SetWindowContentVtx(GameState* thisx) {
     // Copy the vertices for the Options button from the Yes button and move it down 2 buttons
     if (isInFileConfirm)
         for (phi_t5=0; phi_t5<4; phi_t5++) {
-            this->windowContentVtx[phi_t2 + 4 + phi_t5] = this->windowContentVtx[0x4F8 - 20 + phi_t5];
+            this->windowContentVtx[phi_t2 + 4 + phi_t5] = this->windowContentVtx[0x5E8 - 20 + phi_t5];
             this->windowContentVtx[phi_t2 + 4 + phi_t5].v.ob[1] -= 32;
         }
+
+    phi_t2 = 0x5E8;
+    for (phi_t5=0; phi_t5<FILE_SLOTS_SIZE; phi_t5++, phi_t2+=8) {
+        phi_t0 = this->windowPosX - 6 + this->fileXOffsets[phi_t5] + 0xA8;
+        phi_ra = this->fileNamesY[phi_t5] + (EXTRA_SAVE_SLOTS ? 0x30 : 0x2C);
+
+        for (phi_a1=0; phi_a1<2; phi_a1++, phi_t0+=sFileInfoBoxPartWidths[5+phi_a1]) {
+            s16 vtxIndex = phi_t2 + phi_a1 * 4;
+            s16 width = sFileInfoBoxPartWidths[5 + phi_a1];
+
+            this->windowContentVtx[vtxIndex].v.ob[0]     = this->windowContentVtx[vtxIndex + 2].v.ob[0] = phi_t0;
+            this->windowContentVtx[vtxIndex + 1].v.ob[0] = this->windowContentVtx[vtxIndex + 3].v.ob[0] = phi_t0 + width;
+            this->windowContentVtx[vtxIndex].v.ob[1]     = this->windowContentVtx[vtxIndex + 1].v.ob[1] = phi_ra;
+            this->windowContentVtx[vtxIndex + 2].v.ob[1] = this->windowContentVtx[vtxIndex + 3].v.ob[1] = phi_ra - 0x38;
+            this->windowContentVtx[vtxIndex + 1].v.tc[0] = this->windowContentVtx[vtxIndex + 3].v.tc[0] = width << 5;
+            this->windowContentVtx[vtxIndex + 2].v.tc[1] = this->windowContentVtx[vtxIndex + 3].v.tc[1] = 0x700;
+        }
+    }
 }
 
-static u16 D_8081284C[] = { 0x00F4, 0x019C, 0x0244, 0x02EC, 0x0394, 0x043C };
+static u16 D_8081284C[] = { 0x00F4, 0x01C4, 0x0294, 0x0364, 0x0434, 0x0504 };
 
 static void* sQuestItemTextures[] = {
     gFileSelKokiriEmeraldTex,   gFileSelGoronRubyTex,       gFileSelZoraSapphireTex,
@@ -1295,7 +1321,33 @@ static void* sHeartTextures[][5] = {
 static u8 sHeartTextureIndices[16] = { 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3 };
 
 static s16 sHeartPrimColors[2][3] = { { 255, 70, 50 }, { 200, 0, 0 } };
-static s16 sHeartEnvColors[2][3] = { { 50, 40, 60 }, { 255, 255, 255 } };
+static s16 sHeartEnvColors[3][3] = { { 50, 40, 60 }, { 255, 255, 255 }, { 255, 215, 0 } };
+
+static void FileSelect_DrawFileInfoItemIcon(FileSelectState* this, u8 fileIndex, u8 shift, u8 condition, void* icon) {
+    Vtx* iconVtx;
+    u8 i;
+    
+    if (condition) {
+        iconVtx = GRAPH_ALLOC(this->state.gfxCtx, 4 * sizeof(Vtx));
+        for (i=0; i<4; i++) {
+            iconVtx[i] = this->windowContentVtx[D_8081284C[fileIndex] + 0xA8 + (9 * 4) + i];
+            iconVtx[i].v.ob[0] += shift;
+        }
+        iconVtx[0].v.tc[0] = iconVtx[2].v.tc[0] = iconVtx[0].v.tc[1] = iconVtx[1].v.tc[1] = 0;
+        iconVtx[1].v.tc[0] = iconVtx[3].v.tc[0] = iconVtx[2].v.tc[1] = iconVtx[3].v.tc[1] = 0x400;
+
+        OPEN_DISPS(this->state.gfxCtx, __FILE__, __LINE);
+        gSPVertex(POLY_OPA_DISP++, iconVtx, 4, 0);
+        gDPPipeSync(POLY_OPA_DISP++);
+        gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, this->fileInfoAlpha[fileIndex]);
+        gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
+        gDPLoadTextureBlock(POLY_OPA_DISP++, icon, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSP1Quadrangle(POLY_OPA_DISP++, 0, 2, 3, 1, 0);
+        CLOSE_DISPS(this->state.gfxCtx, __FILE__, __LINE);
+    }
+}
+
 
 void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
     FileSelectState* this = (FileSelectState*)thisx;
@@ -1306,6 +1358,7 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
     s16 health;
     s16 heartTextureIndex;
     s16 heartType;
+    s16 subHeartType;
     s16 vtxOffset;
     s16 deathCountSplit[3];
 
@@ -1345,14 +1398,15 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
         gDPPipeSync(POLY_OPA_DISP++);
 
         heartType = (this->defense[fileIndex] == 0) ? 0 : 1;
+        subHeartType = (this->defense[fileIndex] >= 3) ? 2 : heartType;
 
         gDPPipeSync(POLY_OPA_DISP++);
         gDPSetCombineLERP(POLY_OPA_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0,
                           PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
         gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, sHeartPrimColors[heartType][0], sHeartPrimColors[heartType][1],
                         sHeartPrimColors[heartType][2], this->fileInfoAlpha[fileIndex]);
-        gDPSetEnvColor(POLY_OPA_DISP++, sHeartEnvColors[heartType][0], sHeartEnvColors[heartType][1],
-                       sHeartEnvColors[heartType][2], 255);
+        gDPSetEnvColor(POLY_OPA_DISP++, sHeartEnvColors[subHeartType][0], sHeartEnvColors[subHeartType][1],
+                       sHeartEnvColors[subHeartType][2], 255);
 
         k = this->healthCapacities[fileIndex] / 0x10;
         health = this->health[fileIndex];
@@ -1363,7 +1417,7 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
         heartTextureIndex = 4;
 
         // draw hearts
-        for (vtxOffset = 0, j = 0; j < (k > 20 ? 20 : k); j++, vtxOffset += 4) {
+        for (vtxOffset = 0, j = 0; j < (k > 30 ? 30 : k); j++, vtxOffset += 4) {
             if (health < 16) {
                 if (health != 0) {
                     heartTextureIndex = sHeartTextureIndices[health];
@@ -1385,7 +1439,7 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
         // draw quest items
         for (vtxOffset = 0, j = 0; j < 9; j++, vtxOffset += 4) {
             if (this->questItems[fileIndex] & gBitFlags[sQuestItemFlags[j]]) {
-                gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[D_8081284C[fileIndex] + vtxOffset] + 0x80, 4, 0);
+                gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[D_8081284C[fileIndex] + vtxOffset] + 0xA8, 4, 0);
                 gDPPipeSync(POLY_OPA_DISP++);
                 gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, sQuestItemRed[j], sQuestItemGreen[j], sQuestItemBlue[j],
                                 this->fileInfoAlpha[fileIndex]);
@@ -1402,6 +1456,11 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
                 }
             }
         }
+
+        if ((this->questMode[fileIndex] >= CHILD_QUEST && this->questMode[fileIndex] <= CHILD_URA_QUEST) || this->questMode[fileIndex] == DUNGEON_CHILD_RUSH) {
+            FileSelect_DrawFileInfoItemIcon(this, fileIndex, 25, (this->equipment[fileIndex] & gBitFlags[EQUIP_INV_SWORD_MASTER + EQUIP_TYPE_SWORD * 4])                                    != 0, (this->upgradeItems[fileIndex] & gBitFlags[UPGRADE_SWORD_MASTER]) ? gFileSelSwordFourTex     : gFileSelSwordFourDullTex);
+            FileSelect_DrawFileInfoItemIcon(this, fileIndex, 40, (this->items[fileIndex][SLOT_FEATHER] == ITEM_ROCS_FEATHER || this->items[fileIndex][SLOT_FEATHER] == ITEM_GOLDEN_FEATHER) != 0, (this->items[fileIndex][SLOT_FEATHER] == ITEM_GOLDEN_FEATHER)     ? gFileSelGoldenFeatherTex : gFileSelRocsFeatherTex);
+        }
     }
 
     CLOSE_DISPS(this->state.gfxCtx, "../z_file_choose.c", 1797);
@@ -1410,6 +1469,7 @@ void FileSelect_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
 static void* sFileInfoBoxTextures[] = {
     gFileSelFileInfoBox1Tex, gFileSelFileInfoBox2Tex, gFileSelFileInfoBox3Tex,
     gFileSelFileInfoBox4Tex, gFileSelFileInfoBox5Tex,
+    gFileSelFileExtraInfoBox1Tex, gFileSelFileExtraInfoBox2Tex,
 };
 
 static void* sTitleLabels[][9] = {
@@ -1551,6 +1611,22 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
 
     gDPPipeSync(POLY_OPA_DISP++);
 
+    for (fileIndex = 0; fileIndex < FILE_SELECT_SLOTS; fileIndex++) {
+        if (!((this->questMode[fileIndex] >= CHILD_QUEST && this->questMode[fileIndex] <= CHILD_URA_QUEST) || this->questMode[fileIndex] == DUNGEON_CHILD_RUSH))
+            continue;
+
+        gDPPipeSync(POLY_OPA_DISP++);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, this->windowColor[0], this->windowColor[1], this->windowColor[2], this->fileInfoAlpha[fileIndex]);
+        gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[0x5E8 + fileIndex * 8], 8, 0);
+
+        for (quadVtxIndex = 0, i = 5; i < 7; i++, quadVtxIndex += 4) {
+            gDPLoadTextureBlock(POLY_OPA_DISP++, sFileInfoBoxTextures[i], G_IM_FMT_IA, G_IM_SIZ_16b, sFileInfoBoxPartWidths[i], 56, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+            gSP1Quadrangle(POLY_OPA_DISP++, quadVtxIndex, quadVtxIndex + 2, quadVtxIndex + 3, quadVtxIndex + 1, 0);
+        }
+    }
+
+    gDPPipeSync(POLY_OPA_DISP++);
+
     // draw file info box (large box when a file is selected)
     for (fileIndex = 0; fileIndex < 6; fileIndex++, temp += 20) {
         if (fileIndex >= FILE_SELECT_SLOTS)
@@ -1642,7 +1718,7 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
     gDPSetCombineLERP(POLY_OPA_DISP++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE,
                       ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
     gDPSetEnvColor(POLY_OPA_DISP++, 0, 0, 0, 0);
-    gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[0x4E4], 24, 0);
+    gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[0x5D4], 24, 0);
 
     // draw primary action buttons (copy/erase)
     for (quadVtxIndex = 0, i = 0; i < 2; i++, quadVtxIndex += 4) {
@@ -1720,6 +1796,7 @@ void FileSelect_DrawWindowContents(GameState* thisx) {
 
     if (this->selectingOptionsMode)
         FileSelectOptions_Draw(this);
+    else FileSelectOptions_DrawTimerChallengeWarning(this);
 
     CLOSE_DISPS(this->state.gfxCtx, "../z_file_choose.c", 2198);
 }

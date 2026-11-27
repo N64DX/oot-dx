@@ -48,12 +48,24 @@ u64 gPauseGoronMinesTitleENGTex[] = {
 #include "assets/textures/icon_item_nes_static/gPauseGoronMinesTitleENGTex.ia8.inc.c"
 };
 
+u64 gPausePurpleIceCavernTitleENGTex[] = {
+#include "assets/textures/icon_item_nes_static/gPausePurpleIceCavernTitleENGTex.ia8.inc.c"
+};
+
 u64 gPauseWoodfallTitleENGTex[] = {
 #include "assets/textures/icon_item_nes_static/gPauseWoodfallTitleENGTex.ia8.inc.c"
 };
 
-u64 gPausePurpleIceCavernTitleENGTex[] = {
-#include "assets/textures/icon_item_nes_static/gPausePurpleIceCavernTitleENGTex.ia8.inc.c"
+u64 gPauseSnowheadTitleENGTex[] = {
+#include "assets/textures/icon_item_nes_static/gPauseSnowheadTitleENGTex.ia8.inc.c"
+};
+
+u64 gPauseGreatBayTitleENGTex[] = {
+#include "assets/textures/icon_item_nes_static/gPauseGreatBayTitleENGTex.ia8.inc.c"
+};
+
+u64 gPauseStoneTowerTitleENGTex[] = {
+#include "assets/textures/icon_item_nes_static/gPauseStoneTowerTitleENGTex.ia8.inc.c"
 };
 
 u64 gPauseToEquipENGTex[TEX_LEN(u64, gPauseToEquipENGTex_WIDTH, gPauseToEquipENGTex_HEIGHT, 8)] = {

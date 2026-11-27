@@ -15,6 +15,7 @@
 #include "save.h"
 
 #include "assets/objects/object_numa_obj/object_numa_obj.h"
+#include "assets/objects/object_ikana_obj/object_ikana_obj.h"
 
 #define FLAGS (ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -59,7 +60,7 @@ SpiralInfo sSpiralInfoTable[] = {
     { { object_numa_obj_DL_004448, object_numa_obj_DL_0007A8 }, 0, 130, 12, 50, 15 },
     { { object_numa_obj_DL_0051B8, object_numa_obj_DL_0014C8 }, 0, 130, 12, 50, 15 },
     { { NULL, NULL }, 0, 130, 12, 50, 15 },
-    { { NULL, NULL }, 0, 130, 12, 50, 15 },
+    { { object_ikana_obj_DL_013EA8, object_ikana_obj_DL_012B70 }, 0, 130, 12, 50, 15 },
     { { NULL, NULL }, 0, 130, 12, 50, 15 },
     { { NULL, NULL }, 0, 130, 12, 50, 15 },
 };
@@ -69,8 +70,12 @@ typedef struct {
     /* 0x2 */ u8 index;
 } SpiralObjectInfo; // size = 0x4
 
+#define OBJECT_HAKUGIN_OBJ      OBJECT_GAMEPLAY_KEEP
+#define OBJECT_DANPEI_OBJECT    OBJECT_GAMEPLAY_KEEP
+#define OBJECT_IKNINSIDE_OBJ    OBJECT_GAMEPLAY_KEEP
+
 SpiralObjectInfo sSpiralObjectInfoTable[] = {
-    { OBJECT_GAMEPLAY_KEEP, 0 }, { OBJECT_GAMEPLAY_DANGEON_KEEP, 1 }, { OBJECT_NUMA_OBJ, 2 },
+    { OBJECT_GAMEPLAY_KEEP, 0 }, { OBJECT_GAMEPLAY_DANGEON_KEEP, 1 }, { OBJECT_NUMA_OBJ, 2 }, { OBJECT_HAKUGIN_OBJ, 4 }, { OBJECT_IKANA_OBJ, 5 }, { OBJECT_DANPEI_OBJECT, 7 }, { OBJECT_IKNINSIDE_OBJ, 6 },
 };
 
 typedef struct {
@@ -79,7 +84,7 @@ typedef struct {
 } SpiralSceneInfo; // size = 0x4
 
 SpiralSceneInfo sSpiralSceneInfoTable[] = {
-    { SCENE_WOODFALL_TEMPLE, 2 },
+    { SCENE_WOODFALL_TEMPLE, 2 }, { SCENE_STONE_TOWER_TEMPLE, 4 }, { SCENE_STONE_TOWER_TEMPLE_INV, 4 }
 };
 
 static InitChainEntry sInitChain[] = {

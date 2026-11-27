@@ -41,9 +41,30 @@ beginseg
 endseg
 
 beginseg
+    name "object_goronswitch"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_goronswitch/object_goronswitch.o"
+    number 6
+endseg
+
+beginseg
     name "object_icefloe"
     compress
     include "$(BUILD_DIR)/assets/objects/object_icefloe/object_icefloe.o"
+    number 6
+endseg
+
+beginseg
+    name "object_ice_block"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_ice_block/object_ice_block.o"
+    number 6
+endseg
+
+beginseg
+    name "object_lightblock"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_lightblock/object_lightblock.o"
     number 6
 endseg
 
@@ -219,6 +240,20 @@ beginseg
     name "object_f40_switch"
     compress
     include "$(BUILD_DIR)/assets/objects/object_f40_switch/object_f40_switch.o"
+    number 6
+endseg
+
+beginseg
+    name "object_ikana_obj"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_ikana_obj/object_ikana_obj.o"
+    number 6
+endseg
+
+beginseg
+    name "object_spinyroll"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_spinyroll/object_spinyroll.o"
     number 6
 endseg
 
@@ -405,6 +440,13 @@ beginseg
 endseg
 
 beginseg
+    name "object_slime"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_slime/object_slime.o"
+    number 6
+endseg
+
+beginseg
     name "object_beast"
     compress
     include "$(BUILD_DIR)/assets/objects/object_beast/object_beast.o"
@@ -447,6 +489,27 @@ beginseg
 endseg
 
 beginseg
+    name "object_rat"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_rat/object_rat.o"
+    number 6
+endseg
+
+beginseg
+    name "object_gmo"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_gmo/object_gmo.o"
+    number 6
+endseg
+
+beginseg
+    name "object_pp"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_pp/object_pp.o"
+    number 6
+endseg
+
+beginseg
     name "object_grasshopper"
     compress
     include "$(BUILD_DIR)/assets/objects/object_grasshopper/object_grasshopper.o"
@@ -461,6 +524,55 @@ beginseg
 endseg
 
 beginseg
+    name "object_bigslime"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_bigslime/object_bigslime.o"
+    number 6
+endseg
+
+beginseg
+    name "object_boss05"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_boss05/object_boss05.o"
+    number 6
+endseg
+
+beginseg
+    name "object_wdhand"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_wdhand/object_wdhand.o"
+    number 6
+endseg
+
+beginseg
+    name "object_pr"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_pr/object_pr.o"
+    number 6
+endseg
+
+beginseg
+    name "object_famos"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_famos/object_famos.o"
+    number 6
+endseg
+
+beginseg
+    name "object_eg"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_eg/object_eg.o"
+    number 6
+endseg
+
+beginseg
+    name "object_wiz"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_wiz/object_wiz.o"
+    number 6
+endseg
+
+beginseg
     name "object_jso"
     compress
     include "$(BUILD_DIR)/assets/objects/object_jso/object_jso.o"
@@ -471,6 +583,13 @@ beginseg
     name "object_stalm"
     compress
     include "$(BUILD_DIR)/assets/objects/object_stalm/object_stalm.o"
+    number 6
+endseg
+
+beginseg
+    name "object_death"
+    compress
+    include "$(BUILD_DIR)/assets/objects/object_death/object_death.o"
     number 6
 endseg
 

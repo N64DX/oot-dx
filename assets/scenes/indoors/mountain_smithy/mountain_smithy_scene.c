@@ -60,7 +60,7 @@ Vec3s mountain_smithy_sceneBgCamList_BgCamFuncData[] = {
 };
 
 BgCamInfo mountain_smithy_sceneCollisionHeader_0008DCCamDataList[] = {
-    { CAM_SET_NORMAL0,             0, NULL },
+    { CAM_SET_ROOM0,               0, NULL                                             },
     { CAM_SET_PIVOT_SHOP_BROWSING, 3, &mountain_smithy_sceneBgCamList_BgCamFuncData[0] },
 };
 

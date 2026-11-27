@@ -84,9 +84,13 @@ extern u64 gPauseSelectItem20CQFRATex[];
 extern u64 gPauseEquipment00CQFRATex[];
 extern u64 gPauseEquipment10CQFRATex[];
 extern u64 gPauseEquipment20CQFRATex[];
+
 extern u64 gPauseAncientHollowTitleFRATex[];
 extern u64 gPauseGoronMinesTitleFRATex[];
-extern u64 gPauseWoodfallTitleFRATex[];
 extern u64 gPausePurpleIceCavernTitleFRATex[];
+extern u64 gPauseWoodfallTitleFRATex[];
+extern u64 gPauseSnowheadTitleFRATex[];
+extern u64 gPauseGreatBayTitleFRATex[];
+extern u64 gPauseStoneTowerTitleFRATex[];
 
 #endif

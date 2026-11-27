@@ -143,6 +143,7 @@ beginseg
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_0x55DB0.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/eff_spark_textures.o"
     include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_extra.o"
+    include "$(BUILD_DIR)/assets/objects/gameplay_keep/gameplay_keep_deku_flower.o"
     number 4
 endseg
 
@@ -1435,6 +1436,7 @@ beginseg
     name "object_ny"
     compress
     include "$(BUILD_DIR)/assets/objects/object_ny/object_ny.o"
+    include "$(BUILD_DIR)/assets/objects/object_ny/object_ny_extra.o"
     number 6
 endseg
 

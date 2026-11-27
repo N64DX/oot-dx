@@ -1,15 +1,15 @@
 #include "ovl_En_Tanron1.h"
 
-u64 ovl_En_Tanron1Tex_001028[] = {
+static Vtx ovl_En_Tanron1Vtx_001828[] = {
+#include "assets/overlays/ovl_En_Tanron1/ovl_En_Tanron1Vtx_001828.vtx.inc"
+};
+
+static u64 ovl_En_Tanron1Tex_001028[] = {
 #include "assets/overlays/ovl_En_Tanron1/ovl_En_Tanron1Tex_001028.rgba16.inc.c"
 };
 
 u64 ovl_En_Tanron1_DL_001428[] = {
 #include "assets/overlays/ovl_En_Tanron1/tex_001428.rgba16.inc.c"
-};
-
-Vtx ovl_En_Tanron1Vtx_001828[] = {
-#include "assets/overlays/ovl_En_Tanron1/ovl_En_Tanron1Vtx_001828.vtx.inc"
 };
 
 Gfx ovl_En_Tanron1_DL_001888[] = {

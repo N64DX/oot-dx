@@ -1,0 +1,477 @@
+#include "aseq.h"
+#include "Soundfont_44_15.h"
+
+.startseq Sequence_134
+
+.sequence SEQ_0000
+/* 0x0000 [0xD3 0x20               ] */ mutebhv     0x20
+/* 0x0002 [0xD5 0x32               ] */ mutescale   50
+/* 0x0004 [0xD7 0x4D 0x20          ] */ initchan    0b100110100100000
+/* 0x0007 [0x95 0x00 0x36          ] */ ldchan      5, CHAN_0036
+/* 0x000A [0x98 0x00 0x8F          ] */ ldchan      8, CHAN_008F
+/* 0x000D [0x9A 0x00 0xA1          ] */ ldchan      10, CHAN_00A1
+/* 0x0010 [0x9B 0x01 0x4F          ] */ ldchan      11, CHAN_014F
+/* 0x0013 [0x9E 0x01 0xE3          ] */ ldchan      14, CHAN_01E3
+/* 0x0016 [0xDB 0x50               ] */ vol         80
+/* 0x0018 [0xDD 0x3C               ] */ tempo       60
+/* 0x001A [0xFD 0x81 0xB0          ] */ delay       432
+/* 0x001D [0xDD 0x3A               ] */ tempo       58
+/* 0x001F [0xFD 0x30               ] */ delay       48
+/* 0x0021 [0xDD 0x37               ] */ tempo       55
+/* 0x0023 [0xFD 0x30               ] */ delay       48
+/* 0x0025 [0xDD 0x36               ] */ tempo       54
+/* 0x0027 [0xFD 0x30               ] */ delay       48
+/* 0x0029 [0xDD 0x34               ] */ tempo       52
+/* 0x002B [0xFD 0x30               ] */ delay       48
+/* 0x002D [0xDD 0x32               ] */ tempo       50
+/* 0x002F [0xFD 0x81 0x20          ] */ delay       288
+/* 0x0032 [0xD6 0x4D 0x20          ] */ freechan    0b100110100100000
+/* 0x0035 [0xFF                    ] */ end
+
+.channel CHAN_0036
+/* 0x0036 [0xC4                    ] */ noshort
+/* 0x0037 [0x88 0x02 0x45          ] */ ldlayer     0, LAYER_0245
+/* 0x003A [0x89 0x02 0x55          ] */ ldlayer     1, LAYER_0255
+/* 0x003D [0xDF 0x7F               ] */ vol         127
+/* 0x003F [0xE9 0x08               ] */ notepri     0, 8
+/* 0x0041 [0xDD 0x28               ] */ pan         40
+/* 0x0043 [0xD4 0x10               ] */ reverb      16
+/* 0x0045 [0xC1 0x05               ] */ instr       SF44_INST_5
+/* 0x0047 [0xFD 0x81 0xB0          ] */ delay       432
+/* 0x004A [0xD8 0x00               ] */ vibdepth    0
+/* 0x004C [0xDF 0x5C               ] */ vol         92
+/* 0x004E [0x0C                    ] */ cdelay      12
+/* 0x004F [0xDF 0x60               ] */ vol         96
+/* 0x0051 [0x0C                    ] */ cdelay      12
+/* 0x0052 [0xDF 0x64               ] */ vol         100
+/* 0x0054 [0x0C                    ] */ cdelay      12
+/* 0x0055 [0xDF 0x6C               ] */ vol         108
+/* 0x0057 [0x0C                    ] */ cdelay      12
+/* 0x0058 [0xDF 0x7C               ] */ vol         124
+/* 0x005A [0x0C                    ] */ cdelay      12
+/* 0x005B [0xDF 0x7F               ] */ vol         127
+/* 0x005D [0xFD 0x3C               ] */ delay       60
+/* 0x005F [0xDF 0x7C               ] */ vol         124
+/* 0x0061 [0x0C                    ] */ cdelay      12
+/* 0x0062 [0xDF 0x78               ] */ vol         120
+/* 0x0064 [0x0C                    ] */ cdelay      12
+/* 0x0065 [0xDF 0x74               ] */ vol         116
+/* 0x0067 [0x0C                    ] */ cdelay      12
+/* 0x0068 [0xDF 0x6C               ] */ vol         108
+/* 0x006A [0x0C                    ] */ cdelay      12
+/* 0x006B [0xDF 0x66               ] */ vol         102
+/* 0x006D [0x0C                    ] */ cdelay      12
+/* 0x006E [0xDF 0x60               ] */ vol         96
+/* 0x0070 [0x0C                    ] */ cdelay      12
+/* 0x0071 [0xDF 0x59               ] */ vol         89
+/* 0x0073 [0x0A                    ] */ cdelay      10
+/* 0x0074 [0xD8 0x03               ] */ vibdepth    3
+/* 0x0076 [0x02                    ] */ cdelay      2
+/* 0x0077 [0xDF 0x50               ] */ vol         80
+/* 0x0079 [0x0C                    ] */ cdelay      12
+/* 0x007A [0xDF 0x4A               ] */ vol         74
+/* 0x007C [0x0C                    ] */ cdelay      12
+/* 0x007D [0xDF 0x42               ] */ vol         66
+/* 0x007F [0x0C                    ] */ cdelay      12
+/* 0x0080 [0xDF 0x38               ] */ vol         56
+/* 0x0082 [0x0C                    ] */ cdelay      12
+/* 0x0083 [0xDF 0x30               ] */ vol         48
+/* 0x0085 [0x0C                    ] */ cdelay      12
+/* 0x0086 [0xDF 0x27               ] */ vol         39
+/* 0x0088 [0x0C                    ] */ cdelay      12
+/* 0x0089 [0xDF 0x1D               ] */ vol         29
+/* 0x008B [0x0C                    ] */ cdelay      12
+/* 0x008C [0xDF 0x14               ] */ vol         20
+/* 0x008E [0xFF                    ] */ end
+
+.channel CHAN_008F
+/* 0x008F [0xC4                    ] */ noshort
+/* 0x0090 [0x88 0x02 0x65          ] */ ldlayer     0, LAYER_0265
+/* 0x0093 [0xDF 0x7F               ] */ vol         127
+/* 0x0095 [0xE9 0x06               ] */ notepri     0, 6
+/* 0x0097 [0xDD 0x18               ] */ pan         24
+/* 0x0099 [0xD4 0x10               ] */ reverb      16
+/* 0x009B [0xC1 0x08               ] */ instr       SF44_INST_8
+/* 0x009D [0xFD 0x82 0xC8          ] */ delay       712
+/* 0x00A0 [0xFF                    ] */ end
+
+.channel CHAN_00A1
+/* 0x00A1 [0xC4                    ] */ noshort
+/* 0x00A2 [0x88 0x02 0x83          ] */ ldlayer     0, LAYER_0283
+/* 0x00A5 [0xE9 0x0A               ] */ notepri     0, 10
+/* 0x00A7 [0xDD 0x20               ] */ pan         32
+/* 0x00A9 [0xD4 0x00               ] */ reverb      0
+/* 0x00AB [0xC1 0x0A               ] */ instr       SF44_INST_10
+/* 0x00AD [0xDF 0x0F               ] */ vol         15
+/* 0x00AF [0x06                    ] */ cdelay      6
+/* 0x00B0 [0xDF 0x16               ] */ vol         22
+/* 0x00B2 [0x06                    ] */ cdelay      6
+/* 0x00B3 [0xDF 0x1C               ] */ vol         28
+/* 0x00B5 [0x06                    ] */ cdelay      6
+/* 0x00B6 [0xDF 0x23               ] */ vol         35
+/* 0x00B8 [0x06                    ] */ cdelay      6
+/* 0x00B9 [0xDF 0x28               ] */ vol         40
+/* 0x00BB [0x06                    ] */ cdelay      6
+/* 0x00BC [0xDF 0x2E               ] */ vol         46
+/* 0x00BE [0x06                    ] */ cdelay      6
+/* 0x00BF [0xDF 0x33               ] */ vol         51
+/* 0x00C1 [0x06                    ] */ cdelay      6
+/* 0x00C2 [0xDF 0x39               ] */ vol         57
+/* 0x00C4 [0x06                    ] */ cdelay      6
+/* 0x00C5 [0xDF 0x3D               ] */ vol         61
+/* 0x00C7 [0x06                    ] */ cdelay      6
+/* 0x00C8 [0xDF 0x42               ] */ vol         66
+/* 0x00CA [0x06                    ] */ cdelay      6
+/* 0x00CB [0xDF 0x45               ] */ vol         69
+/* 0x00CD [0x06                    ] */ cdelay      6
+/* 0x00CE [0xDF 0x49               ] */ vol         73
+/* 0x00D0 [0x06                    ] */ cdelay      6
+/* 0x00D1 [0xDF 0x4D               ] */ vol         77
+/* 0x00D3 [0x06                    ] */ cdelay      6
+/* 0x00D4 [0xDF 0x51               ] */ vol         81
+/* 0x00D6 [0x06                    ] */ cdelay      6
+/* 0x00D7 [0xDF 0x53               ] */ vol         83
+/* 0x00D9 [0x06                    ] */ cdelay      6
+/* 0x00DA [0xDF 0x57               ] */ vol         87
+/* 0x00DC [0x06                    ] */ cdelay      6
+/* 0x00DD [0xDF 0x59               ] */ vol         89
+/* 0x00DF [0x06                    ] */ cdelay      6
+/* 0x00E0 [0xDF 0x5C               ] */ vol         92
+/* 0x00E2 [0x06                    ] */ cdelay      6
+/* 0x00E3 [0xDF 0x5D               ] */ vol         93
+/* 0x00E5 [0x06                    ] */ cdelay      6
+/* 0x00E6 [0xDF 0x60               ] */ vol         96
+/* 0x00E8 [0x06                    ] */ cdelay      6
+/* 0x00E9 [0xDF 0x61               ] */ vol         97
+/* 0x00EB [0x06                    ] */ cdelay      6
+/* 0x00EC [0xDF 0x62               ] */ vol         98
+/* 0x00EE [0x06                    ] */ cdelay      6
+/* 0x00EF [0xDF 0x63               ] */ vol         99
+/* 0x00F1 [0x06                    ] */ cdelay      6
+/* 0x00F2 [0xDF 0x64               ] */ vol         100
+/* 0x00F4 [0x06                    ] */ cdelay      6
+/* 0x00F5 [0xDF 0x65               ] */ vol         101
+/* 0x00F7 [0x0C                    ] */ cdelay      12
+/* 0x00F8 [0xDF 0x66               ] */ vol         102
+/* 0x00FA [0x0C                    ] */ cdelay      12
+/* 0x00FB [0xDF 0x65               ] */ vol         101
+/* 0x00FD [0x0C                    ] */ cdelay      12
+/* 0x00FE [0xDF 0x64               ] */ vol         100
+/* 0x0100 [0x06                    ] */ cdelay      6
+/* 0x0101 [0xDF 0x63               ] */ vol         99
+/* 0x0103 [0x06                    ] */ cdelay      6
+/* 0x0104 [0xDF 0x62               ] */ vol         98
+/* 0x0106 [0x06                    ] */ cdelay      6
+/* 0x0107 [0xDF 0x61               ] */ vol         97
+/* 0x0109 [0x06                    ] */ cdelay      6
+/* 0x010A [0xDF 0x5F               ] */ vol         95
+/* 0x010C [0x06                    ] */ cdelay      6
+/* 0x010D [0xDF 0x5D               ] */ vol         93
+/* 0x010F [0x06                    ] */ cdelay      6
+/* 0x0110 [0xDF 0x5B               ] */ vol         91
+/* 0x0112 [0x06                    ] */ cdelay      6
+/* 0x0113 [0xDF 0x59               ] */ vol         89
+/* 0x0115 [0x06                    ] */ cdelay      6
+/* 0x0116 [0xDF 0x57               ] */ vol         87
+/* 0x0118 [0x06                    ] */ cdelay      6
+/* 0x0119 [0xDF 0x53               ] */ vol         83
+/* 0x011B [0x06                    ] */ cdelay      6
+/* 0x011C [0xDF 0x51               ] */ vol         81
+/* 0x011E [0x06                    ] */ cdelay      6
+/* 0x011F [0xDF 0x4E               ] */ vol         78
+/* 0x0121 [0x06                    ] */ cdelay      6
+/* 0x0122 [0xDF 0x4A               ] */ vol         74
+/* 0x0124 [0x06                    ] */ cdelay      6
+/* 0x0125 [0xDF 0x47               ] */ vol         71
+/* 0x0127 [0x06                    ] */ cdelay      6
+/* 0x0128 [0xDF 0x44               ] */ vol         68
+/* 0x012A [0x06                    ] */ cdelay      6
+/* 0x012B [0xDF 0x3F               ] */ vol         63
+/* 0x012D [0x06                    ] */ cdelay      6
+/* 0x012E [0xDF 0x3B               ] */ vol         59
+/* 0x0130 [0x06                    ] */ cdelay      6
+/* 0x0131 [0xDF 0x38               ] */ vol         56
+/* 0x0133 [0x06                    ] */ cdelay      6
+/* 0x0134 [0xDF 0x33               ] */ vol         51
+/* 0x0136 [0x06                    ] */ cdelay      6
+/* 0x0137 [0xDF 0x2F               ] */ vol         47
+/* 0x0139 [0x06                    ] */ cdelay      6
+/* 0x013A [0xDF 0x2A               ] */ vol         42
+/* 0x013C [0x06                    ] */ cdelay      6
+/* 0x013D [0xDF 0x25               ] */ vol         37
+/* 0x013F [0x06                    ] */ cdelay      6
+/* 0x0140 [0xDF 0x21               ] */ vol         33
+/* 0x0142 [0x06                    ] */ cdelay      6
+/* 0x0143 [0xDF 0x1B               ] */ vol         27
+/* 0x0145 [0x06                    ] */ cdelay      6
+/* 0x0146 [0xDF 0x16               ] */ vol         22
+/* 0x0148 [0x06                    ] */ cdelay      6
+/* 0x0149 [0xDF 0x11               ] */ vol         17
+/* 0x014B [0xFD 0x81 0x7E          ] */ delay       382
+/* 0x014E [0xFF                    ] */ end
+
+.channel CHAN_014F
+/* 0x014F [0xC4                    ] */ noshort
+/* 0x0150 [0x88 0x02 0x8A          ] */ ldlayer     0, LAYER_028A
+/* 0x0153 [0x89 0x02 0xB0          ] */ ldlayer     1, LAYER_02B0
+/* 0x0156 [0x8A 0x02 0xC9          ] */ ldlayer     2, LAYER_02C9
+/* 0x0159 [0x8B 0x02 0xE2          ] */ ldlayer     3, LAYER_02E2
+/* 0x015C [0xDF 0x7F               ] */ vol         127
+/* 0x015E [0xE9 0x09               ] */ notepri     0, 9
+/* 0x0160 [0xDD 0x50               ] */ pan         80
+/* 0x0162 [0xD4 0x10               ] */ reverb      16
+/* 0x0164 [0xC1 0x0B               ] */ instr       SF44_INST_11
+/* 0x0166 [0xFD 0x80 0x90          ] */ delay       144
+/* 0x0169 [0xDF 0x58               ] */ vol         88
+/* 0x016B [0x0C                    ] */ cdelay      12
+/* 0x016C [0xDF 0x5E               ] */ vol         94
+/* 0x016E [0x0C                    ] */ cdelay      12
+/* 0x016F [0xDF 0x64               ] */ vol         100
+/* 0x0171 [0x0C                    ] */ cdelay      12
+/* 0x0172 [0xDF 0x6B               ] */ vol         107
+/* 0x0174 [0x0C                    ] */ cdelay      12
+/* 0x0175 [0xDF 0x70               ] */ vol         112
+/* 0x0177 [0x0C                    ] */ cdelay      12
+/* 0x0178 [0xDF 0x75               ] */ vol         117
+/* 0x017A [0x0C                    ] */ cdelay      12
+/* 0x017B [0xDF 0x78               ] */ vol         120
+/* 0x017D [0x0C                    ] */ cdelay      12
+/* 0x017E [0xDF 0x7C               ] */ vol         124
+/* 0x0180 [0x0C                    ] */ cdelay      12
+/* 0x0181 [0xDF 0x7E               ] */ vol         126
+/* 0x0183 [0x0C                    ] */ cdelay      12
+/* 0x0184 [0xDF 0x7F               ] */ vol         127
+/* 0x0186 [0xFD 0x48               ] */ delay       72
+/* 0x0188 [0xDF 0x7E               ] */ vol         126
+/* 0x018A [0x0C                    ] */ cdelay      12
+/* 0x018B [0xDF 0x7A               ] */ vol         122
+/* 0x018D [0x0C                    ] */ cdelay      12
+/* 0x018E [0xDF 0x75               ] */ vol         117
+/* 0x0190 [0x0C                    ] */ cdelay      12
+/* 0x0191 [0xDF 0x70               ] */ vol         112
+/* 0x0193 [0x0C                    ] */ cdelay      12
+/* 0x0194 [0xDF 0x6A               ] */ vol         106
+/* 0x0196 [0x0C                    ] */ cdelay      12
+/* 0x0197 [0xDF 0x64               ] */ vol         100
+/* 0x0199 [0x0C                    ] */ cdelay      12
+/* 0x019A [0xDF 0x60               ] */ vol         96
+/* 0x019C [0x0C                    ] */ cdelay      12
+/* 0x019D [0xDF 0x5C               ] */ vol         92
+/* 0x019F [0x0C                    ] */ cdelay      12
+/* 0x01A0 [0xDF 0x5A               ] */ vol         90
+/* 0x01A2 [0x0C                    ] */ cdelay      12
+/* 0x01A3 [0xDF 0x5C               ] */ vol         92
+/* 0x01A5 [0x0C                    ] */ cdelay      12
+/* 0x01A6 [0xDF 0x60               ] */ vol         96
+/* 0x01A8 [0x0C                    ] */ cdelay      12
+/* 0x01A9 [0xDF 0x64               ] */ vol         100
+/* 0x01AB [0x0C                    ] */ cdelay      12
+/* 0x01AC [0xDF 0x6C               ] */ vol         108
+/* 0x01AE [0x0C                    ] */ cdelay      12
+/* 0x01AF [0xDF 0x7C               ] */ vol         124
+/* 0x01B1 [0x0C                    ] */ cdelay      12
+/* 0x01B2 [0xDF 0x7F               ] */ vol         127
+/* 0x01B4 [0xFD 0x3C               ] */ delay       60
+/* 0x01B6 [0xDF 0x7C               ] */ vol         124
+/* 0x01B8 [0x0C                    ] */ cdelay      12
+/* 0x01B9 [0xDF 0x78               ] */ vol         120
+/* 0x01BB [0x0C                    ] */ cdelay      12
+/* 0x01BC [0xDF 0x74               ] */ vol         116
+/* 0x01BE [0x0C                    ] */ cdelay      12
+/* 0x01BF [0xDF 0x6C               ] */ vol         108
+/* 0x01C1 [0x0C                    ] */ cdelay      12
+/* 0x01C2 [0xDF 0x66               ] */ vol         102
+/* 0x01C4 [0x0C                    ] */ cdelay      12
+/* 0x01C5 [0xDF 0x60               ] */ vol         96
+/* 0x01C7 [0x0C                    ] */ cdelay      12
+/* 0x01C8 [0xDF 0x59               ] */ vol         89
+/* 0x01CA [0x0C                    ] */ cdelay      12
+/* 0x01CB [0xDF 0x50               ] */ vol         80
+/* 0x01CD [0x0C                    ] */ cdelay      12
+/* 0x01CE [0xDF 0x4A               ] */ vol         74
+/* 0x01D0 [0x0C                    ] */ cdelay      12
+/* 0x01D1 [0xDF 0x42               ] */ vol         66
+/* 0x01D3 [0x0C                    ] */ cdelay      12
+/* 0x01D4 [0xDF 0x38               ] */ vol         56
+/* 0x01D6 [0x0C                    ] */ cdelay      12
+/* 0x01D7 [0xDF 0x30               ] */ vol         48
+/* 0x01D9 [0x0C                    ] */ cdelay      12
+/* 0x01DA [0xDF 0x27               ] */ vol         39
+/* 0x01DC [0x0C                    ] */ cdelay      12
+/* 0x01DD [0xDF 0x1D               ] */ vol         29
+/* 0x01DF [0x0C                    ] */ cdelay      12
+/* 0x01E0 [0xDF 0x14               ] */ vol         20
+/* 0x01E2 [0xFF                    ] */ end
+
+.channel CHAN_01E3
+/* 0x01E3 [0xC4                    ] */ noshort
+/* 0x01E4 [0x88 0x02 0xED          ] */ ldlayer     0, LAYER_02ED
+/* 0x01E7 [0xDF 0x7F               ] */ vol         127
+/* 0x01E9 [0xE9 0x04               ] */ notepri     0, 4
+/* 0x01EB [0xDD 0x18               ] */ pan         24
+/* 0x01ED [0xD4 0x10               ] */ reverb      16
+/* 0x01EF [0xC1 0x0E               ] */ instr       SF44_INST_14
+/* 0x01F1 [0xFD 0x82 0x10          ] */ delay       528
+/* 0x01F4 [0xDF 0x74               ] */ vol         116
+/* 0x01F6 [0x09                    ] */ cdelay      9
+/* 0x01F7 [0xDF 0x71               ] */ vol         113
+/* 0x01F9 [0x09                    ] */ cdelay      9
+/* 0x01FA [0xDF 0x6B               ] */ vol         107
+/* 0x01FC [0x09                    ] */ cdelay      9
+/* 0x01FD [0xDF 0x68               ] */ vol         104
+/* 0x01FF [0x09                    ] */ cdelay      9
+/* 0x0200 [0xDF 0x63               ] */ vol         99
+/* 0x0202 [0x09                    ] */ cdelay      9
+/* 0x0203 [0xDF 0x60               ] */ vol         96
+/* 0x0205 [0x09                    ] */ cdelay      9
+/* 0x0206 [0xDF 0x5A               ] */ vol         90
+/* 0x0208 [0x09                    ] */ cdelay      9
+/* 0x0209 [0xDF 0x57               ] */ vol         87
+/* 0x020B [0x09                    ] */ cdelay      9
+/* 0x020C [0xDF 0x52               ] */ vol         82
+/* 0x020E [0x09                    ] */ cdelay      9
+/* 0x020F [0xDF 0x4F               ] */ vol         79
+/* 0x0211 [0x09                    ] */ cdelay      9
+/* 0x0212 [0xDF 0x4A               ] */ vol         74
+/* 0x0214 [0x09                    ] */ cdelay      9
+/* 0x0215 [0xDF 0x46               ] */ vol         70
+/* 0x0217 [0x09                    ] */ cdelay      9
+/* 0x0218 [0xDF 0x41               ] */ vol         65
+/* 0x021A [0x09                    ] */ cdelay      9
+/* 0x021B [0xDF 0x3E               ] */ vol         62
+/* 0x021D [0x09                    ] */ cdelay      9
+/* 0x021E [0xDF 0x39               ] */ vol         57
+/* 0x0220 [0x09                    ] */ cdelay      9
+/* 0x0221 [0xDF 0x35               ] */ vol         53
+/* 0x0223 [0x09                    ] */ cdelay      9
+/* 0x0224 [0xDF 0x30               ] */ vol         48
+/* 0x0226 [0x09                    ] */ cdelay      9
+/* 0x0227 [0xDF 0x2D               ] */ vol         45
+/* 0x0229 [0x09                    ] */ cdelay      9
+/* 0x022A [0xDF 0x28               ] */ vol         40
+/* 0x022C [0x09                    ] */ cdelay      9
+/* 0x022D [0xDF 0x24               ] */ vol         36
+/* 0x022F [0x09                    ] */ cdelay      9
+/* 0x0230 [0xDF 0x1F               ] */ vol         31
+/* 0x0232 [0x09                    ] */ cdelay      9
+/* 0x0233 [0xDF 0x1C               ] */ vol         28
+/* 0x0235 [0x09                    ] */ cdelay      9
+/* 0x0236 [0xDF 0x17               ] */ vol         23
+/* 0x0238 [0x09                    ] */ cdelay      9
+/* 0x0239 [0xDF 0x14               ] */ vol         20
+/* 0x023B [0x09                    ] */ cdelay      9
+/* 0x023C [0xDF 0x0E               ] */ vol         14
+/* 0x023E [0x09                    ] */ cdelay      9
+/* 0x023F [0xDF 0x0B               ] */ vol         11
+/* 0x0241 [0x09                    ] */ cdelay      9
+/* 0x0242 [0xDF 0x06               ] */ vol         6
+/* 0x0244 [0xFF                    ] */ end
+
+.layer LAYER_0245
+/* 0x0245 [0xC0 0x81 0xB0          ] */ ldelay      432
+/* 0x0248 [0x6C 0x30 0x52          ] */ notedv      PITCH_F4, 48, 82
+/* 0x024B [0xB8 0x6A 0x00          ] */ notevg      PITCH_F5, 106, 0
+/* 0x024E [0x77 0x80 0xB4 0x5C     ] */ notedv      PITCH_E5, 180, 92
+/* 0x0252 [0xC0 0x04               ] */ ldelay      4
+/* 0x0254 [0xFF                    ] */ end
+
+.layer LAYER_0255
+/* 0x0255 [0xC0 0x81 0xB0          ] */ ldelay      432
+/* 0x0258 [0x73 0x30 0x6C          ] */ notedv      PITCH_C5, 48, 108
+/* 0x025B [0xAF 0x58 0x00          ] */ notevg      PITCH_AF4, 88, 0
+/* 0x025E [0x6E 0x80 0xB1 0x64     ] */ notedv      PITCH_G4, 177, 100
+/* 0x0262 [0xC0 0x01               ] */ ldelay      1
+/* 0x0264 [0xFF                    ] */ end
+
+.layer LAYER_0265
+/* 0x0265 [0xC0 0x80 0x90          ] */ ldelay      144
+/* 0x0268 [0xC2 0x0C               ] */ transpose   12
+/* 0x026A [0x6E 0x30 0x62          ] */ notedv      PITCH_G4, 48, 98
+/* 0x026D [0x69 0x54 0x5C          ] */ notedv      PITCH_D4, 84, 92
+/* 0x0270 [0x6E 0x0C 0x5C          ] */ notedv      PITCH_G4, 12, 92
+/* 0x0273 [0xAE 0x62 0x00          ] */ notevg      PITCH_G4, 98, 0
+/* 0x0276 [0xB0 0x60 0x00          ] */ notevg      PITCH_A4, 96, 0
+/* 0x0279 [0xB2 0x5C 0x00          ] */ notevg      PITCH_B4, 92, 0
+/* 0x027C [0xB3 0x5A 0x00          ] */ notevg      PITCH_C5, 90, 0
+/* 0x027F [0x75 0x60 0x62          ] */ notedv      PITCH_D5, 96, 98
+/* 0x0282 [0xFF                    ] */ end
+
+.layer LAYER_0283
+/* 0x0283 [0x7E 0x81 0x50 0x52     ] */ notedv      PITCH_B5, 336, 82
+/* 0x0287 [0xC0 0x0C               ] */ ldelay      12
+/* 0x0289 [0xFF                    ] */ end
+
+.layer LAYER_028A
+/* 0x028A [0xC0 0x80 0x90          ] */ ldelay      144
+/* 0x028D [0x66 0x30 0x3D          ] */ notedv      PITCH_B3, 48, 61
+/* 0x0290 [0x69 0x54 0x5C          ] */ notedv      PITCH_D4, 84, 92
+/* 0x0293 [0x6E 0x0C 0x5C          ] */ notedv      PITCH_G4, 12, 92
+/* 0x0296 [0xAE 0x62 0x00          ] */ notevg      PITCH_G4, 98, 0
+/* 0x0299 [0xB0 0x60 0x00          ] */ notevg      PITCH_A4, 96, 0
+/* 0x029C [0xB2 0x5C 0x00          ] */ notevg      PITCH_B4, 92, 0
+/* 0x029F [0xB3 0x5A 0x00          ] */ notevg      PITCH_C5, 90, 0
+/* 0x02A2 [0x75 0x60 0x62          ] */ notedv      PITCH_D5, 96, 98
+/* 0x02A5 [0x52 0x30 0x5F          ] */ notedv      PITCH_EF2, 48, 95
+/* 0x02A8 [0xB8 0x6A 0x00          ] */ notevg      PITCH_F5, 106, 0
+/* 0x02AB [0x77 0x80 0xB4 0x5C     ] */ notedv      PITCH_E5, 180, 92
+/* 0x02AF [0xFF                    ] */ end
+
+.layer LAYER_02B0
+/* 0x02B0 [0xC0 0x80 0x90          ] */ ldelay      144
+/* 0x02B3 [0x56 0x60 0x4A          ] */ notedv      PITCH_G2, 96, 74
+/* 0x02B6 [0x94 0x4E 0x20          ] */ notevg      PITCH_F2, 78, 32
+/* 0x02B9 [0x93 0x58 0x00          ] */ notevg      PITCH_E2, 88, 0
+/* 0x02BC [0x6C 0x30 0x52          ] */ notedv      PITCH_F4, 48, 82
+/* 0x02BF [0xAF 0x58 0x00          ] */ notevg      PITCH_AF4, 88, 0
+/* 0x02C2 [0x4F 0x80 0xB2 0x58     ] */ notedv      PITCH_C2, 178, 88
+/* 0x02C6 [0xC0 0x02               ] */ ldelay      2
+/* 0x02C8 [0xFF                    ] */ end
+
+.layer LAYER_02C9
+/* 0x02C9 [0xC0 0x80 0x90          ] */ ldelay      144
+/* 0x02CC [0x6E 0x30 0x62          ] */ notedv      PITCH_G4, 48, 98
+/* 0x02CF [0x26 0x80 0x90 0x44 0x6B] */ notedvg     PITCH_B3, 144, 68, 107
+/* 0x02D4 [0x6E 0x60 0x62          ] */ notedv      PITCH_G4, 96, 98
+/* 0x02D7 [0x73 0x30 0x6C          ] */ notedv      PITCH_C5, 48, 108
+/* 0x02DA [0x90 0x61 0x00          ] */ notevg      PITCH_DF2, 97, 0
+/* 0x02DD [0x6E 0x80 0xB1 0x64     ] */ notedv      PITCH_G4, 177, 100
+/* 0x02E1 [0xFF                    ] */ end
+
+.layer LAYER_02E2
+/* 0x02E2 [0xC0 0x81 0xE0          ] */ ldelay      480
+/* 0x02E5 [0x74 0x30 0x61          ] */ notedv      PITCH_DF5, 48, 97
+/* 0x02E8 [0x72 0x80 0xB1 0x64     ] */ notedv      PITCH_B4, 177, 100
+/* 0x02EC [0xFF                    ] */ end
+
+.layer LAYER_02ED
+/* 0x02ED [0xC0 0x82 0x10          ] */ ldelay      528
+/* 0x02F0 [0x77 0x08 0x4B          ] */ notedv      PITCH_E5, 8, 75
+/* 0x02F3 [0xBA 0x56 0x00          ] */ notevg      PITCH_G5, 86, 0
+/* 0x02F6 [0xBE 0x5E 0x00          ] */ notevg      PITCH_B5, 94, 0
+/* 0x02F9 [0xB7 0x4C 0x00          ] */ notevg      PITCH_E5, 76, 0
+/* 0x02FC [0xBA 0x52 0x00          ] */ notevg      PITCH_G5, 82, 0
+/* 0x02FF [0xBE 0x5C 0x00          ] */ notevg      PITCH_B5, 92, 0
+/* 0x0302 [0xB7 0x4C 0x00          ] */ notevg      PITCH_E5, 76, 0
+/* 0x0305 [0xBA 0x52 0x00          ] */ notevg      PITCH_G5, 82, 0
+/* 0x0308 [0xBE 0x5C 0x00          ] */ notevg      PITCH_B5, 92, 0
+/* 0x030B [0xB7 0x4C 0x00          ] */ notevg      PITCH_E5, 76, 0
+/* 0x030E [0xBA 0x50 0x00          ] */ notevg      PITCH_G5, 80, 0
+/* 0x0311 [0xBE 0x5C 0x00          ] */ notevg      PITCH_B5, 92, 0
+/* 0x0314 [0xB7 0x56 0x00          ] */ notevg      PITCH_E5, 86, 0
+/* 0x0317 [0xBA 0x4E 0x00          ] */ notevg      PITCH_G5, 78, 0
+/* 0x031A [0xBE 0x5E 0x00          ] */ notevg      PITCH_B5, 94, 0
+/* 0x031D [0xB7 0x50 0x00          ] */ notevg      PITCH_E5, 80, 0
+/* 0x0320 [0xBA 0x52 0x00          ] */ notevg      PITCH_G5, 82, 0
+/* 0x0323 [0xBE 0x5E 0x00          ] */ notevg      PITCH_B5, 94, 0
+/* 0x0326 [0xB7 0x4C 0x00          ] */ notevg      PITCH_E5, 76, 0
+/* 0x0329 [0xBA 0x4E 0x00          ] */ notevg      PITCH_G5, 78, 0
+/* 0x032C [0xBE 0x58 0x00          ] */ notevg      PITCH_B5, 88, 0
+/* 0x032F [0xB7 0x56 0x00          ] */ notevg      PITCH_E5, 86, 0
+/* 0x0332 [0xBA 0x56 0x00          ] */ notevg      PITCH_G5, 86, 0
+/* 0x0335 [0xBE 0x60 0x00          ] */ notevg      PITCH_B5, 96, 0
+/* 0x0338 [0xB7 0x46 0x00          ] */ notevg      PITCH_E5, 70, 0
+/* 0x033B [0xBA 0x50 0x00          ] */ notevg      PITCH_G5, 80, 0
+/* 0x033E [0xBE 0x58 0x00          ] */ notevg      PITCH_B5, 88, 0
+/* 0x0341 [0xFF                    ] */ end
+
+.endseq Sequence_134

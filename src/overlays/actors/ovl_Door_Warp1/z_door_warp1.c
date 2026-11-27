@@ -554,7 +554,6 @@ void DoorWarp1_ChildWarpOut(DoorWarp1* this, PlayState* play) {
             gSaveContext.nextCutsceneIndex = CS_INDEX_NONE;
         } else if (play->sceneId == SCENE_WOODFALL_TEMPLE_BOSS) {
             if (!Flags_GetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL)) {
-                Flags_SetEventChkInf(EVENTCHKINF_PURIFIED_WOODFALL);
                 play->nextEntranceIndex = ENTR_CHAMBER_OF_THE_SAGES_0;
                 gSaveContext.chamberCutsceneNum = CHAMBER_CS_WOODFALL;
                 Inventory_ChangeEquipment(EQUIP_TYPE_SWORD, EQUIP_VALUE_SWORD_MASTER);
